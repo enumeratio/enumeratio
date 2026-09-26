@@ -16,12 +16,12 @@ phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary:
     tex:
       in: \Phi (1,2,1)
       out: \frac{\pi ^2}{6}
-  mpmath:
-    in: lerchphi(1, 2, 1)
-    out: "1.64493406684822643647241516665"
   sympy:
     in: lerchphi(1, 2, 1)
     out: lerchphi(1, 2, 1)
+  mpmath:
+    in: lerchphi(1, 2, 1)
+    out: "1.64493406684822643647241516665"
 phi-1-2-2-zeta-2-2-pi-2-6-1:
   epsil:
     in: LerchPhi(1, 2, 2)
@@ -40,12 +40,12 @@ phi-1-2-2-zeta-2-2-pi-2-6-1:
     tex:
       in: \Phi (1,2,2)
       out: \frac{\pi ^2}{6}-1
-  mpmath:
-    in: lerchphi(1, 2, 2)
-    out: "0.644934066848226436472415166646"
   sympy:
     in: lerchphi(1, 2, 2)
     out: lerchphi(1, 2, 2)
+  mpmath:
+    in: lerchphi(1, 2, 2)
+    out: "0.644934066848226436472415166646"
 phi-1-4-1-zeta-4-pi-4-90:
   epsil:
     in: LerchPhi(1, 4, 1)
@@ -64,12 +64,12 @@ phi-1-4-1-zeta-4-pi-4-90:
     tex:
       in: \Phi (1,4,1)
       out: \frac{\pi ^4}{90}
-  mpmath:
-    in: lerchphi(1, 4, 1)
-    out: "1.08232323371113819151600369654"
   sympy:
     in: lerchphi(1, 4, 1)
     out: lerchphi(1, 4, 1)
+  mpmath:
+    in: lerchphi(1, 4, 1)
+    out: "1.08232323371113819151600369654"
 phi-1-1-1-zeta-1-1-12:
   epsil:
     in: LerchPhi(1, -1, 1)
@@ -91,12 +91,12 @@ phi-1-1-1-zeta-1-1-12:
     verdict: disagree
     kind: convention
     note: At z = 1 compute-engine continues in s, giving ζ(-1) = -1/12; Wolfram's LerchPhi does not regularise the divergent series at z = 1 and returns ComplexInfinity (though its Zeta[-1] does).
-  mpmath:
-    in: lerchphi(1, -1, 1)
-    out: "-0.0833333333333333333333333333333"
   sympy:
     in: lerchphi(1, -1, 1)
     out: lerchphi(1, -1, 1)
+  mpmath:
+    in: lerchphi(1, -1, 1)
+    out: "-0.0833333333333333333333333333333"
 phi-1-s-a-zeta-s-a-for-symbolic-s-a:
   epsil:
     in: LerchPhi(1, s, a)
@@ -142,12 +142,12 @@ past-the-unit-disk-by-the-integral:
     verdict: disagree
     kind: precision
     note: Wolfram's machine-precision N drifts from the sixth digit here (0.00202501519…); N[LerchPhi[1 + 2 I, 3 - I, 4 + 2 I], 30] agrees with this value, as do mpmath and SymPy.
-  mpmath:
-    in: (lerchphi(mpc(1, 2), mpc(3, -1), mpc(4, 2)))
-    out: (0.00202500995700990860053946871764 + 0.00332789753681355880743808908022j)
   sympy:
     in: N(lerchphi((1 + 2*I), (3 + -1*I), (4 + 2*I)), 30)
     out: 0.00202500995700990860053946871764 + 0.00332789753681355880743808908022*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), mpc(3, -1), mpc(4, 2)))
+    out: (0.00202500995700990860053946871764 + 0.00332789753681355880743808908022j)
 phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past:
   epsil:
     in: LerchPhi(2, 0, 7)
@@ -166,12 +166,12 @@ phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past:
     tex:
       in: \Phi (2,0,7)
       out: "-1"
-  mpmath:
-    in: lerchphi(2, 0, 7)
-    out: "-1.0"
   sympy:
     in: lerchphi(2, 0, 7)
     out: lerchphi(2, 0, 7)
+  mpmath:
+    in: lerchphi(2, 0, 7)
+    out: "-1.0"
 phi-1-3-1-zeta-3-apery-s-constant:
   epsil:
     in: LerchPhi(1, 3, 1) == Zeta(3)
@@ -190,11 +190,11 @@ phi-1-3-1-zeta-3-apery-s-constant:
     tex:
       in: \Phi (1,3,1)=\zeta (3)
       out: \text{True}
-  mpmath:
-    in: almosteq(lerchphi(1, 3, 1), zeta(3), 1e-20)
-    out: True
   sympy:
     in: enumeratio_equal(lerchphi(1, 3, 1), zeta(3))
+    out: True
+  mpmath:
+    in: almosteq(lerchphi(1, 3, 1), zeta(3), 1e-20)
     out: True
 phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via:
   epsil:
@@ -231,12 +231,12 @@ inexact-arguments-should-evaluate-numerically:
     in: LerchPhi[0.5, 2, 3.5]
   wolfram:
     in: LerchPhi[0.5, 2, 3.5]
-  mpmath:
-    in: lerchphi(0.5, 2, 3.5)
-    out: "0.119386226869820471298079898276"
   sympy:
     in: lerchphi(0.5, 2, 3.5)
     out: lerchphi(0.5, 2, 3.5)
+  mpmath:
+    in: lerchphi(0.5, 2, 3.5)
+    out: "0.119386226869820471298079898276"
 s-0-far-outside-the-unit-disk-1-1-49-5:
   epsil:
     in: LerchPhi(49.5, 0, 2)
@@ -251,12 +251,12 @@ s-0-far-outside-the-unit-disk-1-1-49-5:
     in: LerchPhi[49.5, 0, 2]
   wolfram:
     in: LerchPhi[49.5, 0, 2]
-  mpmath:
-    in: lerchphi(49.5, 0, 2)
-    out: "-0.0206185567010309278350515463918"
   sympy:
     in: lerchphi(49.5, 0, 2)
     out: lerchphi(49.5, 0, 2)
+  mpmath:
+    in: lerchphi(49.5, 0, 2)
+    out: "-0.0206185567010309278350515463918"
 z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z:
   epsil:
     in: LerchPhi(7.5, 1, 2)
@@ -271,12 +271,12 @@ z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z:
     in: LerchPhi[7.5, 1, 2]
   wolfram:
     in: LerchPhi[7.5, 1, 2]
-  mpmath:
-    in: lerchphi(7.5, 1, 2)
-    out: (-0.166609816478250514251311205691 - 0.0558505360638185464615581045916j)
   sympy:
     in: lerchphi(7.5, 1, 2)
     out: lerchphi(7.5, 1, 2)
+  mpmath:
+    in: lerchphi(7.5, 1, 2)
+    out: (-0.166609816478250514251311205691 - 0.0558505360638185464615581045916j)
 uncertainty-in-z:
   epsil:
     in: LerchPhi(Around(0.5, 0.01), 1, 2)
@@ -361,12 +361,12 @@ phi-1-1-1-eta-1-ln-2-the-alternating-harmonic:
     in: LerchPhi[-1, 1, 1]
   wolfram:
     in: LerchPhi[-1, 1, 1]
-  mpmath:
-    in: lerchphi(-1, 1, 1)
-    out: "0.693147180559945309417232121458"
   sympy:
     in: lerchphi(-1, 1, 1)
     out: lerchphi(-1, 1, 1)
+  mpmath:
+    in: lerchphi(-1, 1, 1)
+    out: "0.693147180559945309417232121458"
 phi-1-2-1-1-2-ln-2:
   epsil:
     in: LerchPhi(1 / 2, 1, 1)
@@ -469,12 +469,12 @@ past-z-1-it-is-continued-on-the-cut-real-z-1-it:
     in: N[LerchPhi[2.809, 2, 2]]
   wolfram:
     in: N[LerchPhi[2.809, 2, 2]]
-  mpmath:
-    in: (lerchphi(2.809, 2, 2))
-    out: (-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)
   sympy:
     in: N(lerchphi(2.809, 2, 2), 30)
     out: -0.0565877019732228976485379048983 - 0.411220377971662588357397032992*I
+  mpmath:
+    in: (lerchphi(2.809, 2, 2))
+    out: (-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)
 where-the-continuation-s-terms-cancel-below:
   epsil:
     in: N(LerchPhi(10, 10, 10))
@@ -489,18 +489,18 @@ where-the-continuation-s-terms-cancel-below:
     in: N[LerchPhi[10, 10, 10]]
   wolfram:
     in: N[LerchPhi[10, 10, 10]]
-  mpmath:
-    in: (lerchphi(10, 10, 10))
-    out: (-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)
-    verdict: disagree
-    kind: unevaluated
-    note: compute-engine leaves Φ(10, 10, 10) unevaluated rather than return a value its continuation computes by cancellation; mpmath evaluates it.
   sympy:
     in: N(lerchphi(10, 10, 10), 30)
     out: -4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I
     verdict: disagree
     kind: unevaluated
     note: compute-engine leaves Φ(10, 10, 10) unevaluated rather than return a value its continuation computes by cancellation; SymPy evaluates it through mpmath.
+  mpmath:
+    in: (lerchphi(10, 10, 10))
+    out: (-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)
+    verdict: disagree
+    kind: unevaluated
+    note: compute-engine leaves Φ(10, 10, 10) unevaluated rather than return a value its continuation computes by cancellation; mpmath evaluates it.
 phi-1-2-2-1-2-li-2-1-2:
   epsil:
     in: N(LerchPhi(1 / 2, 2, 1))
@@ -553,11 +553,11 @@ n-lerchphi-0p5-2-1:
     tex:
       in: N[\Phi (0.5,2,1)]
       out: "1.16448"
-  mpmath:
-    in: (lerchphi(0.5, 2, 1))
-    out: "1.16448105293002501180531264032"
   sympy:
     in: N(lerchphi(0.5, 2, 1), 30)
+    out: "1.16448105293002501180531264032"
+  mpmath:
+    in: (lerchphi(0.5, 2, 1))
     out: "1.16448105293002501180531264032"
 n-lerchphi-0p5-2-2:
   epsil:
@@ -577,11 +577,11 @@ n-lerchphi-0p5-2-2:
     tex:
       in: N[\Phi (0.5,2,2)]
       out: "0.328962"
-  mpmath:
-    in: (lerchphi(0.5, 2, 2))
-    out: "0.328962105860050023610625280639"
   sympy:
     in: N(lerchphi(0.5, 2, 2), 30)
+    out: "0.328962105860050023610625280639"
+  mpmath:
+    in: (lerchphi(0.5, 2, 2))
     out: "0.328962105860050023610625280639"
 n-lerchphi-0p5-2-0p5:
   epsil:
@@ -601,11 +601,11 @@ n-lerchphi-0p5-2-0p5:
     tex:
       in: N[\Phi (0.5,2,0.5)]
       out: "4.27715"
-  mpmath:
-    in: (lerchphi(0.5, 2, 0.5))
-    out: "4.27714550058094978113448220951"
   sympy:
     in: N(lerchphi(0.5, 2, 0.5), 30)
+    out: "4.27714550058094978113448220951"
+  mpmath:
+    in: (lerchphi(0.5, 2, 0.5))
     out: "4.27714550058094978113448220951"
 n-lerchphi-0p5-2-5-over-2:
   epsil:
@@ -646,11 +646,11 @@ n-lerchphi-0p5-3-1:
     tex:
       in: N[\Phi (0.5,3,1)]
       out: "1.07443"
-  mpmath:
-    in: (lerchphi(0.5, 3, 1))
-    out: "1.07442638721608040188124645119"
   sympy:
     in: N(lerchphi(0.5, 3, 1), 30)
+    out: "1.07442638721608040188124645119"
+  mpmath:
+    in: (lerchphi(0.5, 3, 1))
     out: "1.07442638721608040188124645119"
 n-lerchphi-0p5-3-2:
   epsil:
@@ -670,12 +670,12 @@ n-lerchphi-0p5-3-2:
     tex:
       in: N[\Phi (0.5,3,2)]
       out: "0.148853"
-  mpmath:
-    in: (lerchphi(0.5, 3, 2))
-    out: "0.14885277443216080376249290238"
   sympy:
     in: N(lerchphi(0.5, 3, 2), 30)
     out: "0.148852774432160803762492902380"
+  mpmath:
+    in: (lerchphi(0.5, 3, 2))
+    out: "0.14885277443216080376249290238"
 n-lerchphi-0p5-3-0p5:
   epsil:
     in: N(LerchPhi(0.5, 3, 0.5))
@@ -694,11 +694,11 @@ n-lerchphi-0p5-3-0p5:
     tex:
       in: N[\Phi (0.5,3,0.5)]
       out: "8.16802"
-  mpmath:
-    in: (lerchphi(0.5, 3, 0.5))
-    out: "8.16802272614035063331086263478"
   sympy:
     in: N(lerchphi(0.5, 3, 0.5), 30)
+    out: "8.16802272614035063331086263478"
+  mpmath:
+    in: (lerchphi(0.5, 3, 0.5))
     out: "8.16802272614035063331086263478"
 n-lerchphi-0p5-3-5-over-2:
   epsil:
@@ -739,11 +739,11 @@ n-lerchphi-0p5-0p5-1:
     tex:
       in: N[\Phi (0.5,0.5,1)]
       out: "1.61225"
-  mpmath:
-    in: (lerchphi(0.5, 0.5, 1))
-    out: "1.61225344608570452264951562643"
   sympy:
     in: N(lerchphi(0.5, 0.5, 1), 30)
+    out: "1.61225344608570452264951562643"
+  mpmath:
+    in: (lerchphi(0.5, 0.5, 1))
     out: "1.61225344608570452264951562643"
 n-lerchphi-0p5-0p5-2:
   epsil:
@@ -763,11 +763,11 @@ n-lerchphi-0p5-0p5-2:
     tex:
       in: N[\Phi (0.5,0.5,2)]
       out: "1.22451"
-  mpmath:
-    in: (lerchphi(0.5, 0.5, 2))
-    out: "1.22450689217140904529903125286"
   sympy:
     in: N(lerchphi(0.5, 0.5, 2), 30)
+    out: "1.22450689217140904529903125286"
+  mpmath:
+    in: (lerchphi(0.5, 0.5, 2))
     out: "1.22450689217140904529903125286"
 n-lerchphi-0p5-0p5-0p5:
   epsil:
@@ -787,12 +787,12 @@ n-lerchphi-0p5-0p5-0p5:
     tex:
       in: N[\Phi (0.5,0.5,0.5)]
       out: "2.10171"
-  mpmath:
-    in: (lerchphi(0.5, 0.5, 0.5))
-    out: "2.10171246248935168109760703276"
   sympy:
     in: N(lerchphi(0.5, 0.5, 0.5), 30)
     out: "2.10171246248935172928895553923"
+  mpmath:
+    in: (lerchphi(0.5, 0.5, 0.5))
+    out: "2.10171246248935168109760703276"
 n-lerchphi-0p5-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(0.5, 0.5, 5 / 2))
@@ -832,12 +832,12 @@ n-lerchphi-0p5-neg-1-1:
     tex:
       in: N[\Phi (0.5,-1,1)]
       out: 4.
-  mpmath:
-    in: (lerchphi(0.5, -1, 1))
-    out: "4.0"
   sympy:
     in: N(lerchphi(0.5, -1, 1), 30)
     out: "4.00000000000000000000000000000"
+  mpmath:
+    in: (lerchphi(0.5, -1, 1))
+    out: "4.0"
 n-lerchphi-0p5-neg-1-2:
   epsil:
     in: N(LerchPhi(0.5, -1, 2))
@@ -856,12 +856,12 @@ n-lerchphi-0p5-neg-1-2:
     tex:
       in: N[\Phi (0.5,-1,2)]
       out: 6.
-  mpmath:
-    in: (lerchphi(0.5, -1, 2))
-    out: "6.0"
   sympy:
     in: N(lerchphi(0.5, -1, 2), 30)
     out: "6.00000000000000000000000000000"
+  mpmath:
+    in: (lerchphi(0.5, -1, 2))
+    out: "6.0"
 n-lerchphi-0p5-neg-1-0p5:
   epsil:
     in: N(LerchPhi(0.5, -1, 0.5))
@@ -880,12 +880,12 @@ n-lerchphi-0p5-neg-1-0p5:
     tex:
       in: N[\Phi (0.5,-1,0.5)]
       out: 3.
-  mpmath:
-    in: (lerchphi(0.5, -1, 0.5))
-    out: "3.0"
   sympy:
     in: N(lerchphi(0.5, -1, 0.5), 30)
     out: "3.00000000000000000000000000000"
+  mpmath:
+    in: (lerchphi(0.5, -1, 0.5))
+    out: "3.0"
 n-lerchphi-0p5-neg-1-5-over-2:
   epsil:
     in: N(LerchPhi(0.5, -1, 5 / 2))
@@ -925,12 +925,12 @@ n-lerchphi-0p5-2-plus-i-1:
     tex:
       in: N[\Phi (0.5,2+i,1)]
       out: 1.10971\, -0.116099 i
-  mpmath:
-    in: (lerchphi(0.5, mpc(2, 1), 1))
-    out: (1.1097070907066406465142538378 - 0.11609912358339430997486750338j)
   sympy:
     in: N(lerchphi(0.5, (2 + 1*I), 1), 30)
     out: 1.1097070907066406465142538378 - 0.11609912358339430997486750338*I
+  mpmath:
+    in: (lerchphi(0.5, mpc(2, 1), 1))
+    out: (1.1097070907066406465142538378 - 0.11609912358339430997486750338j)
 n-lerchphi-0p5-2-plus-i-2:
   epsil:
     in: N(LerchPhi(0.5, 2 + i, 2))
@@ -949,12 +949,12 @@ n-lerchphi-0p5-2-plus-i-2:
     tex:
       in: N[\Phi (0.5,2+i,2)]
       out: 0.219414\, -0.232198 i
-  mpmath:
-    in: (lerchphi(0.5, mpc(2, 1), 2))
-    out: (0.2194141814132812930285076756 - 0.232198247166788619949735006761j)
   sympy:
     in: N(lerchphi(0.5, (2 + 1*I), 2), 30)
     out: 0.2194141814132812930285076756 - 0.232198247166788619949735006761*I
+  mpmath:
+    in: (lerchphi(0.5, mpc(2, 1), 2))
+    out: (0.2194141814132812930285076756 - 0.232198247166788619949735006761j)
 n-lerchphi-0p5-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(0.5, 2 + i, 0.5))
@@ -973,12 +973,12 @@ n-lerchphi-0p5-2-plus-i-0p5:
     tex:
       in: N[\Phi (0.5,2+i,0.5)]
       out: 3.30855\, +2.42211 i
-  mpmath:
-    in: (lerchphi(0.5, mpc(2, 1), 0.5))
-    out: (3.30854567042098581285414395397 + 2.42210961142126253445083515094j)
   sympy:
     in: N(lerchphi(0.5, (2 + 1*I), 0.5), 30)
     out: 3.30854567042098581285414395397 + 2.42210961142126253445083515094*I
+  mpmath:
+    in: (lerchphi(0.5, mpc(2, 1), 0.5))
+    out: (3.30854567042098581285414395397 + 2.42210961142126253445083515094j)
 n-lerchphi-0p5-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(0.5, 2 + i, 5 / 2))
@@ -1018,11 +1018,11 @@ n-lerchphi-neg-0p5-2-1:
     tex:
       in: N[\Phi (-0.5,2,1)]
       out: "0.896828"
-  mpmath:
-    in: (lerchphi(-0.5, 2, 1))
-    out: "0.896828413847292404886128811832"
   sympy:
     in: N(lerchphi(-0.5, 2, 1), 30)
+    out: "0.896828413847292404886128811832"
+  mpmath:
+    in: (lerchphi(-0.5, 2, 1))
     out: "0.896828413847292404886128811832"
 n-lerchphi-neg-0p5-2-2:
   epsil:
@@ -1042,11 +1042,11 @@ n-lerchphi-neg-0p5-2-2:
     tex:
       in: N[\Phi (-0.5,2,2)]
       out: "0.206343"
-  mpmath:
-    in: (lerchphi(-0.5, 2, 2))
-    out: "0.206343172305415190227742376337"
   sympy:
     in: N(lerchphi(-0.5, 2, 2), 30)
+    out: "0.206343172305415190227742376337"
+  mpmath:
+    in: (lerchphi(-0.5, 2, 2))
     out: "0.206343172305415190227742376337"
 n-lerchphi-neg-0p5-2-0p5:
   epsil:
@@ -1066,11 +1066,11 @@ n-lerchphi-neg-0p5-2-0p5:
     tex:
       in: N[\Phi (-0.5,2,0.5)]
       out: "3.8099"
-  mpmath:
-    in: (lerchphi(-0.5, 2, 0.5))
-    out: "3.80989667651815604690476946502"
   sympy:
     in: N(lerchphi(-0.5, 2, 0.5), 30)
+    out: "3.80989667651815604690476946502"
+  mpmath:
+    in: (lerchphi(-0.5, 2, 0.5))
     out: "3.80989667651815604690476946502"
 n-lerchphi-neg-0p5-2-5-over-2:
   epsil:
@@ -1111,11 +1111,11 @@ n-lerchphi-neg-0p5-3-1:
     tex:
       in: N[\Phi (-0.5,3,1)]
       out: "0.945196"
-  mpmath:
-    in: (lerchphi(-0.5, 3, 1))
-    out: "0.945195689317793749237246386253"
   sympy:
     in: N(lerchphi(-0.5, 3, 1), 30)
+    out: "0.945195689317793749237246386253"
+  mpmath:
+    in: (lerchphi(-0.5, 3, 1))
     out: "0.945195689317793749237246386253"
 n-lerchphi-neg-0p5-3-2:
   epsil:
@@ -1135,12 +1135,12 @@ n-lerchphi-neg-0p5-3-2:
     tex:
       in: N[\Phi (-0.5,3,2)]
       out: "0.109609"
-  mpmath:
-    in: (lerchphi(-0.5, 3, 2))
-    out: (0.109608621364412501525507227494 - 9.17645433189755782860765490331e-32j)
   sympy:
     in: N(lerchphi(-0.5, 3, 2), 30)
     out: "0.109608621364412501525507227494"
+  mpmath:
+    in: (lerchphi(-0.5, 3, 2))
+    out: (0.109608621364412501525507227494 - 9.17645433189755782860765490331e-32j)
 n-lerchphi-neg-0p5-3-0p5:
   epsil:
     in: N(LerchPhi(-0.5, 3, 0.5))
@@ -1159,11 +1159,11 @@ n-lerchphi-neg-0p5-3-0p5:
     tex:
       in: N[\Phi (-0.5,3,0.5)]
       out: "7.86548"
-  mpmath:
-    in: (lerchphi(-0.5, 3, 0.5))
-    out: "7.86547751435338156162965837845"
   sympy:
     in: N(lerchphi(-0.5, 3, 0.5), 30)
+    out: "7.86547751435338156162965837845"
+  mpmath:
+    in: (lerchphi(-0.5, 3, 0.5))
     out: "7.86547751435338156162965837845"
 n-lerchphi-neg-0p5-3-5-over-2:
   epsil:
@@ -1204,11 +1204,11 @@ n-lerchphi-neg-0p5-0p5-1:
     tex:
       in: N[\Phi (-0.5,0.5,1)]
       out: "0.747504"
-  mpmath:
-    in: (lerchphi(-0.5, 0.5, 1))
-    out: "0.747504475961946112894946634766"
   sympy:
     in: N(lerchphi(-0.5, 0.5, 1), 30)
+    out: "0.747504475961946112894946634766"
+  mpmath:
+    in: (lerchphi(-0.5, 0.5, 1))
     out: "0.747504475961946112894946634766"
 n-lerchphi-neg-0p5-0p5-2:
   epsil:
@@ -1228,11 +1228,11 @@ n-lerchphi-neg-0p5-0p5-2:
     tex:
       in: N[\Phi (-0.5,0.5,2)]
       out: "0.504991"
-  mpmath:
-    in: (lerchphi(-0.5, 0.5, 2))
-    out: "0.504991048076107774210106730469"
   sympy:
     in: N(lerchphi(-0.5, 0.5, 2), 30)
+    out: "0.504991048076107774210106730469"
+  mpmath:
+    in: (lerchphi(-0.5, 0.5, 2))
     out: "0.504991048076107774210106730469"
 n-lerchphi-neg-0p5-0p5-0p5:
   epsil:
@@ -1252,12 +1252,12 @@ n-lerchphi-neg-0p5-0p5-0p5:
     tex:
       in: N[\Phi (-0.5,0.5,0.5)]
       out: "1.11759"
-  mpmath:
-    in: (lerchphi(-0.5, 0.5, 0.5))
-    out: "1.11758766890963417510965971416"
   sympy:
     in: N(lerchphi(-0.5, 0.5, 0.5), 30)
     out: "1.11758766890963423534799403569"
+  mpmath:
+    in: (lerchphi(-0.5, 0.5, 0.5))
+    out: "1.11758766890963417510965971416"
 n-lerchphi-neg-0p5-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-0.5, 0.5, 5 / 2))
@@ -1297,11 +1297,11 @@ n-lerchphi-neg-0p5-neg-1-1:
     tex:
       in: N[\Phi (-0.5,-1,1)]
       out: "0.444444"
-  mpmath:
-    in: (lerchphi(-0.5, -1, 1))
-    out: "0.444444444444444444444444444444"
   sympy:
     in: N(lerchphi(-0.5, -1, 1), 30)
+    out: "0.444444444444444444444444444444"
+  mpmath:
+    in: (lerchphi(-0.5, -1, 1))
     out: "0.444444444444444444444444444444"
 n-lerchphi-neg-0p5-neg-1-2:
   epsil:
@@ -1321,11 +1321,11 @@ n-lerchphi-neg-0p5-neg-1-2:
     tex:
       in: N[\Phi (-0.5,-1,2)]
       out: "1.11111"
-  mpmath:
-    in: (lerchphi(-0.5, -1, 2))
-    out: "1.11111111111111111111111111111"
   sympy:
     in: N(lerchphi(-0.5, -1, 2), 30)
+    out: "1.11111111111111111111111111111"
+  mpmath:
+    in: (lerchphi(-0.5, -1, 2))
     out: "1.11111111111111111111111111111"
 n-lerchphi-neg-0p5-neg-1-0p5:
   epsil:
@@ -1345,11 +1345,11 @@ n-lerchphi-neg-0p5-neg-1-0p5:
     tex:
       in: N[\Phi (-0.5,-1,0.5)]
       out: "0.111111"
-  mpmath:
-    in: (lerchphi(-0.5, -1, 0.5))
-    out: "0.111111111111111111111111111111"
   sympy:
     in: N(lerchphi(-0.5, -1, 0.5), 30)
+    out: "0.111111111111111111111111111111"
+  mpmath:
+    in: (lerchphi(-0.5, -1, 0.5))
     out: "0.111111111111111111111111111111"
 n-lerchphi-neg-0p5-neg-1-5-over-2:
   epsil:
@@ -1390,12 +1390,12 @@ n-lerchphi-neg-0p5-2-plus-i-1:
     tex:
       in: N[\Phi (-0.5,2+i,1)]
       out: 0.915063\, +0.060942 i
-  mpmath:
-    in: (lerchphi(-0.5, mpc(2, 1), 1))
-    out: (0.915063092151170455627622931022 + 0.0609420393396142279046221479857j)
   sympy:
     in: N(lerchphi(-0.5, (2 + 1*I), 1), 30)
     out: 0.915063092151170455627622931022 + 0.0609420393396142279046221479857*I
+  mpmath:
+    in: (lerchphi(-0.5, mpc(2, 1), 1))
+    out: (0.915063092151170455627622931022 + 0.0609420393396142279046221479857j)
 n-lerchphi-neg-0p5-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-0.5, 2 + i, 2))
@@ -1414,12 +1414,12 @@ n-lerchphi-neg-0p5-2-plus-i-2:
     tex:
       in: N[\Phi (-0.5,2+i,2)]
       out: 0.169874\, -0.121884 i
-  mpmath:
-    in: (lerchphi(-0.5, mpc(2, 1), 2))
-    out: (0.169873815697659088744754137956 - 0.121884078679228455809244295971j)
   sympy:
     in: N(lerchphi(-0.5, (2 + 1*I), 2), 30)
     out: 0.169873815697659088744754137956 - 0.121884078679228455809244295971*I
+  mpmath:
+    in: (lerchphi(-0.5, mpc(2, 1), 2))
+    out: (0.169873815697659088744754137956 - 0.121884078679228455809244295971j)
 n-lerchphi-neg-0p5-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-0.5, 2 + i, 0.5))
@@ -1438,12 +1438,12 @@ n-lerchphi-neg-0p5-2-plus-i-0p5:
     tex:
       in: N[\Phi (-0.5,2+i,0.5)]
       out: 2.89419\, +2.61914 i
-  mpmath:
-    in: (lerchphi(-0.5, mpc(2, 1), 0.5))
-    out: (2.89418520289133868709857513585 + 2.61914140858127183907642103658j)
   sympy:
     in: N(lerchphi(-0.5, (2 + 1*I), 0.5), 30)
     out: 2.89418520289133868709857513585 + 2.61914140858127183907642103658*I
+  mpmath:
+    in: (lerchphi(-0.5, mpc(2, 1), 0.5))
+    out: (2.89418520289133868709857513585 + 2.61914140858127183907642103658j)
 n-lerchphi-neg-0p5-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-0.5, 2 + i, 5 / 2))
@@ -1483,11 +1483,11 @@ n-lerchphi-neg-0p9-2-1:
     tex:
       in: N[\Phi (-0.9,2,1)]
       out: "0.835737"
-  mpmath:
-    in: (lerchphi(-0.9, 2, 1))
-    out: "0.835736865796957352945759386066"
   sympy:
     in: N(lerchphi(-0.9, 2, 1), 30)
+    out: "0.835736865796957352945759386066"
+  mpmath:
+    in: (lerchphi(-0.9, 2, 1))
     out: "0.835736865796957352945759386066"
 n-lerchphi-neg-0p9-2-2:
   epsil:
@@ -1507,11 +1507,11 @@ n-lerchphi-neg-0p9-2-2:
     tex:
       in: N[\Phi (-0.9,2,2)]
       out: "0.182515"
-  mpmath:
-    in: (lerchphi(-0.9, 2, 2))
-    out: "0.182514593558936270001780591055"
   sympy:
     in: N(lerchphi(-0.9, 2, 2), 30)
+    out: "0.182514593558936270001780591055"
+  mpmath:
+    in: (lerchphi(-0.9, 2, 2))
     out: "0.182514593558936270001780591055"
 n-lerchphi-neg-0p9-2-0p5:
   epsil:
@@ -1531,11 +1531,11 @@ n-lerchphi-neg-0p9-2-0p5:
     tex:
       in: N[\Phi (-0.9,2,0.5)]
       out: "3.69052"
-  mpmath:
-    in: (lerchphi(-0.9, 2, 0.5))
-    out: "3.69052247569330575199138933557"
   sympy:
     in: N(lerchphi(-0.9, 2, 0.5), 30)
+    out: "3.69052247569330575199138933557"
+  mpmath:
+    in: (lerchphi(-0.9, 2, 0.5))
     out: "3.69052247569330575199138933557"
 n-lerchphi-neg-0p9-2-5-over-2:
   epsil:
@@ -1576,11 +1576,11 @@ n-lerchphi-neg-0p9-3-1:
     tex:
       in: N[\Phi (-0.9,3,1)]
       out: "0.909598"
-  mpmath:
-    in: (lerchphi(-0.9, 3, 1))
-    out: "0.909598001715959822700364939848"
   sympy:
     in: N(lerchphi(-0.9, 3, 1), 30)
+    out: "0.909598001715959822700364939848"
+  mpmath:
+    in: (lerchphi(-0.9, 3, 1))
     out: "0.909598001715959822700364939848"
 n-lerchphi-neg-0p9-3-2:
   epsil:
@@ -1600,11 +1600,11 @@ n-lerchphi-neg-0p9-3-2:
     tex:
       in: N[\Phi (-0.9,3,2)]
       out: "0.100447"
-  mpmath:
-    in: (lerchphi(-0.9, 3, 2))
-    out: "0.100446664760044638965856734316"
   sympy:
     in: N(lerchphi(-0.9, 3, 2), 30)
+    out: "0.100446664760044638965856734316"
+  mpmath:
+    in: (lerchphi(-0.9, 3, 2))
     out: "0.100446664760044638965856734316"
 n-lerchphi-neg-0p9-3-0p5:
   epsil:
@@ -1624,12 +1624,12 @@ n-lerchphi-neg-0p9-3-0p5:
     tex:
       in: N[\Phi (-0.9,3,0.5)]
       out: "7.77305"
-  mpmath:
-    in: (lerchphi(-0.9, 3, 0.5))
-    out: "7.77305121907741245484539277341"
   sympy:
     in: N(lerchphi(-0.9, 3, 0.5), 30)
     out: 7.77305121907741245484539277341 - 1.43272190214097460724756961313e-35*I
+  mpmath:
+    in: (lerchphi(-0.9, 3, 0.5))
+    out: "7.77305121907741245484539277341"
 n-lerchphi-neg-0p9-3-5-over-2:
   epsil:
     in: N(LerchPhi(-0.9, 3, 5 / 2))
@@ -1669,12 +1669,12 @@ n-lerchphi-neg-0p9-0p5-1:
     tex:
       in: N[\Phi (-0.9,0.5,1)]
       out: 0.628362\, -\text{6.167905692361981$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-0.9, 0.5, 1))
-    out: (0.628362164954058615499453765312 + 0.0j)
   sympy:
     in: N(lerchphi(-0.9, 0.5, 1), 30)
     out: 0.628362164954058615499453765312 + 6.53052417123493043870768525621e-39*I
+  mpmath:
+    in: (lerchphi(-0.9, 0.5, 1))
+    out: (0.628362164954058615499453765312 + 0.0j)
 n-lerchphi-neg-0p9-0p5-2:
   epsil:
     in: N(LerchPhi(-0.9, 0.5, 2))
@@ -1693,11 +1693,11 @@ n-lerchphi-neg-0p9-0p5-2:
     tex:
       in: N[\Phi (-0.9,0.5,2)]
       out: "0.412931"
-  mpmath:
-    in: (lerchphi(-0.9, 0.5, 2))
-    out: "0.412930927828823750368486401755"
   sympy:
     in: N(lerchphi(-0.9, 0.5, 2), 30)
+    out: "0.412930927828823750368486401755"
+  mpmath:
+    in: (lerchphi(-0.9, 0.5, 2))
     out: "0.412930927828823750368486401755"
 n-lerchphi-neg-0p9-0p5-0p5:
   epsil:
@@ -1717,12 +1717,12 @@ n-lerchphi-neg-0p9-0p5-0p5:
     tex:
       in: N[\Phi (-0.9,0.5,0.5)]
       out: "0.973147"
-  mpmath:
-    in: (lerchphi(-0.9, 0.5, 0.5))
-    out: "0.973146783413905382130008554476"
   sympy:
     in: N(lerchphi(-0.9, 0.5, 0.5), 30)
     out: "0.973146783413905369641838660755"
+  mpmath:
+    in: (lerchphi(-0.9, 0.5, 0.5))
+    out: "0.973146783413905382130008554476"
 n-lerchphi-neg-0p9-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-0.9, 0.5, 5 / 2))
@@ -1762,11 +1762,11 @@ n-lerchphi-neg-0p9-neg-1-1:
     tex:
       in: N[\Phi (-0.9,-1,1)]
       out: "0.277008"
-  mpmath:
-    in: (lerchphi(-0.9, -1, 1))
-    out: "0.277008310249307472749829277591"
   sympy:
     in: N(lerchphi(-0.9, -1, 1), 30)
+    out: "0.277008310249307472749829277591"
+  mpmath:
+    in: (lerchphi(-0.9, -1, 1))
     out: "0.277008310249307472749829277591"
 n-lerchphi-neg-0p9-neg-1-2:
   epsil:
@@ -1786,11 +1786,11 @@ n-lerchphi-neg-0p9-neg-1-2:
     tex:
       in: N[\Phi (-0.9,-1,2)]
       out: "0.803324"
-  mpmath:
-    in: (lerchphi(-0.9, -1, 2))
-    out: "0.803324099722991677125324986038"
   sympy:
     in: N(lerchphi(-0.9, -1, 2), 30)
+    out: "0.803324099722991677125324986038"
+  mpmath:
+    in: (lerchphi(-0.9, -1, 2))
     out: "0.803324099722991677125324986038"
 n-lerchphi-neg-0p9-neg-1-0p5:
   epsil:
@@ -1810,11 +1810,11 @@ n-lerchphi-neg-0p9-neg-1-0p5:
     tex:
       in: N[\Phi (-0.9,-1,0.5)]
       out: "0.0138504"
-  mpmath:
-    in: (lerchphi(-0.9, -1, 0.5))
-    out: "0.0138504155124653705620814233666"
   sympy:
     in: N(lerchphi(-0.9, -1, 0.5), 30)
+    out: "0.0138504155124653705620814233666"
+  mpmath:
+    in: (lerchphi(-0.9, -1, 0.5))
     out: "0.0138504155124653705620814233666"
 n-lerchphi-neg-0p9-neg-1-5-over-2:
   epsil:
@@ -1855,12 +1855,12 @@ n-lerchphi-neg-0p9-2-plus-i-1:
     tex:
       in: N[\Phi (-0.9,2+i,1)]
       out: 0.860049\, +0.0920346 i
-  mpmath:
-    in: (lerchphi(-0.9, mpc(2, 1), 1))
-    out: (0.86004916531370506009807316044 + 0.0920345747015262008282669041624j)
   sympy:
     in: N(lerchphi(-0.9, (2 + 1*I), 1), 30)
     out: 0.86004916531370506009807316044 + 0.0920345747015262008282669041624*I
+  mpmath:
+    in: (lerchphi(-0.9, mpc(2, 1), 1))
+    out: (0.86004916531370506009807316044 + 0.0920345747015262008282669041624j)
 n-lerchphi-neg-0p9-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-0.9, 2 + i, 2))
@@ -1879,12 +1879,12 @@ n-lerchphi-neg-0p9-2-plus-i-2:
     tex:
       in: N[\Phi (-0.9,2+i,2)]
       out: 0.155501\, -0.102261 i
-  mpmath:
-    in: (lerchphi(-0.9, mpc(2, 1), 2))
-    out: (0.1555009274292165960545695999 - 0.102260638557251331730693994866j)
   sympy:
     in: N(lerchphi(-0.9, (2 + 1*I), 2), 30)
     out: 0.1555009274292165960545695999 - 0.102260638557251331730693994866*I
+  mpmath:
+    in: (lerchphi(-0.9, mpc(2, 1), 2))
+    out: (0.1555009274292165960545695999 - 0.102260638557251331730693994866j)
 n-lerchphi-neg-0p9-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-0.9, 2 + i, 0.5))
@@ -1903,12 +1903,12 @@ n-lerchphi-neg-0p9-2-plus-i-0p5:
     tex:
       in: N[\Phi (-0.9,2+i,0.5)]
       out: 2.77263\, +2.64699 i
-  mpmath:
-    in: (lerchphi(-0.9, mpc(2, 1), 0.5))
-    out: (2.77263195091593324356587789119 + 2.64699309175107511122547183506j)
   sympy:
     in: N(lerchphi(-0.9, (2 + 1*I), 0.5), 30)
     out: 2.77263195091593324356587789119 + 2.64699309175107511122547183506*I
+  mpmath:
+    in: (lerchphi(-0.9, mpc(2, 1), 0.5))
+    out: (2.77263195091593324356587789119 + 2.64699309175107511122547183506j)
 n-lerchphi-neg-0p9-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-0.9, 2 + i, 5 / 2))
@@ -1948,11 +1948,11 @@ n-lerchphi-neg-1-2-1:
     tex:
       in: N[\Phi (-1,2,1)]
       out: "0.822467"
-  mpmath:
-    in: (lerchphi(-1, 2, 1))
-    out: "0.822467033424113218236207583323"
   sympy:
     in: N(lerchphi(-1, 2, 1), 30)
+    out: "0.822467033424113218236207583323"
+  mpmath:
+    in: (lerchphi(-1, 2, 1))
     out: "0.822467033424113218236207583323"
 n-lerchphi-neg-1-2-2:
   epsil:
@@ -1972,11 +1972,11 @@ n-lerchphi-neg-1-2-2:
     tex:
       in: N[\Phi (-1,2,2)]
       out: "0.177533"
-  mpmath:
-    in: (lerchphi(-1, 2, 2))
-    out: "0.177532966575886781763792416677"
   sympy:
     in: N(lerchphi(-1, 2, 2), 30)
+    out: "0.177532966575886781763792416677"
+  mpmath:
+    in: (lerchphi(-1, 2, 2))
     out: "0.177532966575886781763792416677"
 n-lerchphi-neg-1-2-0p5:
   epsil:
@@ -1996,12 +1996,12 @@ n-lerchphi-neg-1-2-0p5:
     tex:
       in: N[\Phi (-1,2,0.5)]
       out: "3.66386"
-  mpmath:
-    in: (lerchphi(-1, 2, 0.5))
-    out: (3.66386237670887606021841405973 + 7.97925565338168760409178361466e-35j)
   sympy:
     in: N(lerchphi(-1, 2, 0.5), 30)
     out: "3.66386237670887606021841405973"
+  mpmath:
+    in: (lerchphi(-1, 2, 0.5))
+    out: (3.66386237670887606021841405973 + 7.97925565338168760409178361466e-35j)
 n-lerchphi-neg-1-2-5-over-2:
   epsil:
     in: N(LerchPhi(-1, 2, 5 / 2))
@@ -2041,11 +2041,11 @@ n-lerchphi-neg-1-3-1:
     tex:
       in: N[\Phi (-1,3,1)]
       out: "0.901543"
-  mpmath:
-    in: (lerchphi(-1, 3, 1))
-    out: "0.901542677369695714049803621134"
   sympy:
     in: N(lerchphi(-1, 3, 1), 30)
+    out: "0.901542677369695714049803621134"
+  mpmath:
+    in: (lerchphi(-1, 3, 1))
     out: "0.901542677369695714049803621134"
 n-lerchphi-neg-1-3-2:
   epsil:
@@ -2065,11 +2065,11 @@ n-lerchphi-neg-1-3-2:
     tex:
       in: N[\Phi (-1,3,2)]
       out: "0.0984573"
-  mpmath:
-    in: (lerchphi(-1, 3, 2))
-    out: "0.0984573226303042859501963788664"
   sympy:
     in: N(lerchphi(-1, 3, 2), 30)
+    out: "0.0984573226303042859501963788664"
+  mpmath:
+    in: (lerchphi(-1, 3, 2))
     out: "0.0984573226303042859501963788664"
 n-lerchphi-neg-1-3-0p5:
   epsil:
@@ -2089,12 +2089,12 @@ n-lerchphi-neg-1-3-0p5:
     tex:
       in: N[\Phi (-1,3,0.5)]
       out: "7.75157"
-  mpmath:
-    in: (lerchphi(-1, 3, 0.5))
-    out: "7.75156917007495504386907876678"
   sympy:
     in: N(lerchphi(-1, 3, 0.5), 30)
     out: 7.75156917007495504386907876678 - 1.56634622247069810436834143585e-36*I
+  mpmath:
+    in: (lerchphi(-1, 3, 0.5))
+    out: "7.75156917007495504386907876678"
 n-lerchphi-neg-1-3-5-over-2:
   epsil:
     in: N(LerchPhi(-1, 3, 5 / 2))
@@ -2134,11 +2134,11 @@ n-lerchphi-neg-1-0p5-1:
     tex:
       in: N[\Phi (-1,0.5,1)]
       out: "0.604899"
-  mpmath:
-    in: (lerchphi(-1, 0.5, 1))
-    out: "0.604898643421630370247265914236"
   sympy:
     in: N(lerchphi(-1, 0.5, 1), 30)
+    out: "0.604898643421630370247265914236"
+  mpmath:
+    in: (lerchphi(-1, 0.5, 1))
     out: "0.604898643421630370247265914236"
 n-lerchphi-neg-1-0p5-2:
   epsil:
@@ -2158,11 +2158,11 @@ n-lerchphi-neg-1-0p5-2:
     tex:
       in: N[\Phi (-1,0.5,2)]
       out: "0.395101"
-  mpmath:
-    in: (lerchphi(-1, 0.5, 2))
-    out: "0.395101356578369629752734085764"
   sympy:
     in: N(lerchphi(-1, 0.5, 2), 30)
+    out: "0.395101356578369629752734085764"
+  mpmath:
+    in: (lerchphi(-1, 0.5, 2))
     out: "0.395101356578369629752734085764"
 n-lerchphi-neg-1-0p5-0p5:
   epsil:
@@ -2182,12 +2182,12 @@ n-lerchphi-neg-1-0p5-0p5:
     tex:
       in: N[\Phi (-1,0.5,0.5)]
       out: "0.944258"
-  mpmath:
-    in: (lerchphi(-1, 0.5, 0.5))
-    out: "0.94425831423820007991500245073"
   sympy:
     in: N(lerchphi(-1, 0.5, 0.5), 30)
     out: "0.944258314238200079915002450730"
+  mpmath:
+    in: (lerchphi(-1, 0.5, 0.5))
+    out: "0.94425831423820007991500245073"
 n-lerchphi-neg-1-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-1, 0.5, 5 / 2))
@@ -2227,12 +2227,12 @@ n-lerchphi-neg-1-neg-1-1:
     tex:
       in: N[\Phi (-1,-1,1)]
       out: "0.25"
-  mpmath:
-    in: (lerchphi(-1, -1, 1))
-    out: "0.25"
   sympy:
     in: N(lerchphi(-1, -1, 1), 30)
     out: "0.250000000000000000000000000000"
+  mpmath:
+    in: (lerchphi(-1, -1, 1))
+    out: "0.25"
 n-lerchphi-neg-1-neg-1-2:
   epsil:
     in: N(LerchPhi(-1, -1, 2))
@@ -2251,12 +2251,12 @@ n-lerchphi-neg-1-neg-1-2:
     tex:
       in: N[\Phi (-1,-1,2)]
       out: "0.75"
-  mpmath:
-    in: (lerchphi(-1, -1, 2))
-    out: "0.75"
   sympy:
     in: N(lerchphi(-1, -1, 2), 30)
     out: "0.750000000000000000000000000000"
+  mpmath:
+    in: (lerchphi(-1, -1, 2))
+    out: "0.75"
 n-lerchphi-neg-1-neg-1-0p5:
   epsil:
     in: N(LerchPhi(-1, -1, 0.5))
@@ -2275,12 +2275,12 @@ n-lerchphi-neg-1-neg-1-0p5:
     tex:
       in: N[\Phi (-1,-1,0.5)]
       out: 0.
-  mpmath:
-    in: (lerchphi(-1, -1, 0.5))
-    out: "0.0"
   sympy:
     in: N(lerchphi(-1, -1, 0.5), 30)
     out: "0"
+  mpmath:
+    in: (lerchphi(-1, -1, 0.5))
+    out: "0.0"
 n-lerchphi-neg-1-neg-1-5-over-2:
   epsil:
     in: N(LerchPhi(-1, -1, 5 / 2))
@@ -2320,12 +2320,12 @@ n-lerchphi-neg-1-2-plus-i-1:
     tex:
       in: N[\Phi (-1,2+i,1)]
       out: 0.847689\, +0.0982684 i
-  mpmath:
-    in: (lerchphi(-1, mpc(2, 1), 1))
-    out: (0.847689164837413474522639420331 + 0.0982683895700161724669630345711j)
   sympy:
     in: N(lerchphi(-1, (2 + 1*I), 1), 30)
     out: 0.847689164837413474522639420331 + 0.0982683895700161724669630345711*I
+  mpmath:
+    in: (lerchphi(-1, mpc(2, 1), 1))
+    out: (0.847689164837413474522639420331 + 0.0982683895700161724669630345711j)
 n-lerchphi-neg-1-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-1, 2 + i, 2))
@@ -2344,12 +2344,12 @@ n-lerchphi-neg-1-2-plus-i-2:
     tex:
       in: N[\Phi (-1,2+i,2)]
       out: 0.152311\, -0.0982684 i
-  mpmath:
-    in: (lerchphi(-1, mpc(2, 1), 2))
-    out: (0.152310835162586525477360579669 - 0.0982683895700161724669630345711j)
   sympy:
     in: N(lerchphi(-1, (2 + 1*I), 2), 30)
     out: 0.152310835162586525477360579669 - 0.0982683895700161724669630345711*I
+  mpmath:
+    in: (lerchphi(-1, mpc(2, 1), 2))
+    out: (0.152310835162586525477360579669 - 0.0982683895700161724669630345711j)
 n-lerchphi-neg-1-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-1, 2 + i, 0.5))
@@ -2368,12 +2368,12 @@ n-lerchphi-neg-1-2-plus-i-0p5:
     tex:
       in: N[\Phi (-1,2+i,0.5)]
       out: 2.74492\, +2.65197 i
-  mpmath:
-    in: (lerchphi(-1, mpc(2, 1), 0.5))
-    out: (2.74491972301434082380456014946 + 2.65197294473827689625685311293j)
   sympy:
     in: N(lerchphi(-1, (2 + 1*I), 0.5), 30)
     out: 2.74491972301434082380456014946 + 2.65197294473827689625685311293*I
+  mpmath:
+    in: (lerchphi(-1, mpc(2, 1), 0.5))
+    out: (2.74491972301434082380456014946 + 2.65197294473827689625685311293j)
 n-lerchphi-neg-1-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-1, 2 + i, 5 / 2))
@@ -2413,11 +2413,11 @@ n-lerchphi-0p25-2-1:
     tex:
       in: N[\Phi (0.25,2,1)]
       out: "1.07061"
-  mpmath:
-    in: (lerchphi(0.25, 2, 1))
-    out: "1.07061055633093042767673531395"
   sympy:
     in: N(lerchphi(0.25, 2, 1), 30)
+    out: "1.07061055633093042767673531395"
+  mpmath:
+    in: (lerchphi(0.25, 2, 1))
     out: "1.07061055633093042767673531395"
 n-lerchphi-0p25-2-2:
   epsil:
@@ -2437,11 +2437,11 @@ n-lerchphi-0p25-2-2:
     tex:
       in: N[\Phi (0.25,2,2)]
       out: "0.282442"
-  mpmath:
-    in: (lerchphi(0.25, 2, 2))
-    out: "0.282442225323721710706941255805"
   sympy:
     in: N(lerchphi(0.25, 2, 2), 30)
+    out: "0.282442225323721710706941255805"
+  mpmath:
+    in: (lerchphi(0.25, 2, 2))
     out: "0.282442225323721710706941255805"
 n-lerchphi-0p25-2-0p5:
   epsil:
@@ -2461,12 +2461,12 @@ n-lerchphi-0p25-2-0p5:
     tex:
       in: N[\Phi (0.25,2,0.5)]
       out: "4.12262"
-  mpmath:
-    in: (lerchphi(0.25, 2, 0.5))
-    out: "4.1226189335546348333828829043"
   sympy:
     in: N(lerchphi(0.25, 2, 0.5), 30)
     out: "4.12261893355463483338288290430"
+  mpmath:
+    in: (lerchphi(0.25, 2, 0.5))
+    out: "4.1226189335546348333828829043"
 n-lerchphi-0p25-2-5-over-2:
   epsil:
     in: N(LerchPhi(0.25, 2, 5 / 2))
@@ -2506,11 +2506,11 @@ n-lerchphi-0p25-3-1:
     tex:
       in: N[\Phi (0.25,3,1)]
       out: "1.03385"
-  mpmath:
-    in: (lerchphi(0.25, 3, 1))
-    out: "1.03384558318629322115200051949"
   sympy:
     in: N(lerchphi(0.25, 3, 1), 30)
+    out: "1.03384558318629322115200051949"
+  mpmath:
+    in: (lerchphi(0.25, 3, 1))
     out: "1.03384558318629322115200051949"
 n-lerchphi-0p25-3-2:
   epsil:
@@ -2530,11 +2530,11 @@ n-lerchphi-0p25-3-2:
     tex:
       in: N[\Phi (0.25,3,2)]
       out: "0.135382"
-  mpmath:
-    in: (lerchphi(0.25, 3, 2))
-    out: "0.135382332745172884608002077979"
   sympy:
     in: N(lerchphi(0.25, 3, 2), 30)
+    out: "0.135382332745172884608002077979"
+  mpmath:
+    in: (lerchphi(0.25, 3, 2))
     out: "0.135382332745172884608002077979"
 n-lerchphi-0p25-3-0p5:
   epsil:
@@ -2554,11 +2554,11 @@ n-lerchphi-0p25-3-0p5:
     tex:
       in: N[\Phi (0.25,3,0.5)]
       out: "8.07849"
-  mpmath:
-    in: (lerchphi(0.25, 3, 0.5))
-    out: "8.07848830613549660447397134977"
   sympy:
     in: N(lerchphi(0.25, 3, 0.5), 30)
+    out: "8.07848830613549660447397134977"
+  mpmath:
+    in: (lerchphi(0.25, 3, 0.5))
     out: "8.07848830613549660447397134977"
 n-lerchphi-0p25-3-5-over-2:
   epsil:
@@ -2599,11 +2599,11 @@ n-lerchphi-0p25-0p5-1:
     tex:
       in: N[\Phi (0.25,0.5,1)]
       out: "1.22294"
-  mpmath:
-    in: (lerchphi(0.25, 0.5, 1))
-    out: "1.22293972159718552069599826793"
   sympy:
     in: N(lerchphi(0.25, 0.5, 1), 30)
+    out: "1.22293972159718552069599826793"
+  mpmath:
+    in: (lerchphi(0.25, 0.5, 1))
     out: "1.22293972159718552069599826793"
 n-lerchphi-0p25-0p5-2:
   epsil:
@@ -2623,11 +2623,11 @@ n-lerchphi-0p25-0p5-2:
     tex:
       in: N[\Phi (0.25,0.5,2)]
       out: "0.891759"
-  mpmath:
-    in: (lerchphi(0.25, 0.5, 2))
-    out: "0.891758886388742082783993071702"
   sympy:
     in: N(lerchphi(0.25, 0.5, 2), 30)
+    out: "0.891758886388742082783993071702"
+  mpmath:
+    in: (lerchphi(0.25, 0.5, 2))
     out: "0.891758886388742082783993071702"
 n-lerchphi-0p25-0p5-0p5:
   epsil:
@@ -2647,12 +2647,12 @@ n-lerchphi-0p25-0p5-0p5:
     tex:
       in: N[\Phi (0.25,0.5,0.5)]
       out: "1.6686"
-  mpmath:
-    in: (lerchphi(0.25, 0.5, 0.5))
-    out: "1.66860082863857016805571878695"
   sympy:
     in: N(lerchphi(0.25, 0.5, 0.5), 30)
     out: "1.66860082863857006607588573388"
+  mpmath:
+    in: (lerchphi(0.25, 0.5, 0.5))
+    out: "1.66860082863857016805571878695"
 n-lerchphi-0p25-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(0.25, 0.5, 5 / 2))
@@ -2692,11 +2692,11 @@ n-lerchphi-0p25-neg-1-1:
     tex:
       in: N[\Phi (0.25,-1,1)]
       out: "1.77778"
-  mpmath:
-    in: (lerchphi(0.25, -1, 1))
-    out: "1.77777777777777777777777777778"
   sympy:
     in: N(lerchphi(0.25, -1, 1), 30)
+    out: "1.77777777777777777777777777778"
+  mpmath:
+    in: (lerchphi(0.25, -1, 1))
     out: "1.77777777777777777777777777778"
 n-lerchphi-0p25-neg-1-2:
   epsil:
@@ -2716,11 +2716,11 @@ n-lerchphi-0p25-neg-1-2:
     tex:
       in: N[\Phi (0.25,-1,2)]
       out: "3.11111"
-  mpmath:
-    in: (lerchphi(0.25, -1, 2))
-    out: "3.11111111111111111111111111111"
   sympy:
     in: N(lerchphi(0.25, -1, 2), 30)
+    out: "3.11111111111111111111111111111"
+  mpmath:
+    in: (lerchphi(0.25, -1, 2))
     out: "3.11111111111111111111111111111"
 n-lerchphi-0p25-neg-1-0p5:
   epsil:
@@ -2740,11 +2740,11 @@ n-lerchphi-0p25-neg-1-0p5:
     tex:
       in: N[\Phi (0.25,-1,0.5)]
       out: "1.11111"
-  mpmath:
-    in: (lerchphi(0.25, -1, 0.5))
-    out: "1.11111111111111111111111111111"
   sympy:
     in: N(lerchphi(0.25, -1, 0.5), 30)
+    out: "1.11111111111111111111111111111"
+  mpmath:
+    in: (lerchphi(0.25, -1, 0.5))
     out: "1.11111111111111111111111111111"
 n-lerchphi-0p25-neg-1-5-over-2:
   epsil:
@@ -2785,12 +2785,12 @@ n-lerchphi-0p25-2-plus-i-1:
     tex:
       in: N[\Phi (0.25,2+i,1)]
       out: 1.0514\, -0.0472679 i
-  mpmath:
-    in: (lerchphi(0.25, mpc(2, 1), 1))
-    out: (1.05140073210894464922774982067 - 0.0472678876772102484885842168734j)
   sympy:
     in: N(lerchphi(0.25, (2 + 1*I), 1), 30)
     out: 1.05140073210894464922774982067 - 0.0472678876772102484885842168734*I
+  mpmath:
+    in: (lerchphi(0.25, mpc(2, 1), 1))
+    out: (1.05140073210894464922774982067 - 0.0472678876772102484885842168734j)
 n-lerchphi-0p25-2-plus-i-2:
   epsil:
     in: N(LerchPhi(0.25, 2 + i, 2))
@@ -2809,12 +2809,12 @@ n-lerchphi-0p25-2-plus-i-2:
     tex:
       in: N[\Phi (0.25,2+i,2)]
       out: 0.205603\, -0.189072 i
-  mpmath:
-    in: (lerchphi(0.25, mpc(2, 1), 2))
-    out: (0.205602928435778596910999282673 - 0.189071550708840993954336867494j)
   sympy:
     in: N(lerchphi(0.25, (2 + 1*I), 2), 30)
     out: 0.205602928435778596910999282673 - 0.189071550708840993954336867494*I
+  mpmath:
+    in: (lerchphi(0.25, mpc(2, 1), 2))
+    out: (0.205602928435778596910999282673 - 0.189071550708840993954336867494j)
 n-lerchphi-0p25-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(0.25, 2 + i, 0.5))
@@ -2833,12 +2833,12 @@ n-lerchphi-0p25-2-plus-i-0p5:
     tex:
       in: N[\Phi (0.25,2+i,0.5)]
       out: 3.18555\, +2.50264 i
-  mpmath:
-    in: (lerchphi(0.25, mpc(2, 1), 0.5))
-    out: (3.18555046384443191643233978936 + 2.50264153078898650880238239645j)
   sympy:
     in: N(lerchphi(0.25, (2 + 1*I), 0.5), 30)
     out: 3.18555046384443191643233978936 + 2.50264153078898650880238239645*I
+  mpmath:
+    in: (lerchphi(0.25, mpc(2, 1), 0.5))
+    out: (3.18555046384443191643233978936 + 2.50264153078898650880238239645j)
 n-lerchphi-0p25-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(0.25, 2 + i, 5 / 2))
@@ -2878,11 +2878,11 @@ n-lerchphi-0p9-2-1:
     tex:
       in: N[\Phi (0.9,2,1)]
       out: "1.44413"
-  mpmath:
-    in: (lerchphi(0.9, 2, 1))
-    out: "1.44412747000550972212611105469"
   sympy:
     in: N(lerchphi(0.9, 2, 1), 30)
+    out: "1.44412747000550972212611105469"
+  mpmath:
+    in: (lerchphi(0.9, 2, 1))
     out: "1.44412747000550972212611105469"
 n-lerchphi-0p9-2-2:
   epsil:
@@ -2902,11 +2902,11 @@ n-lerchphi-0p9-2-2:
     tex:
       in: N[\Phi (0.9,2,2)]
       out: "0.493475"
-  mpmath:
-    in: (lerchphi(0.9, 2, 2))
-    out: "0.493474966672788567965295170182"
   sympy:
     in: N(lerchphi(0.9, 2, 2), 30)
+    out: "0.493474966672788567965295170182"
+  mpmath:
+    in: (lerchphi(0.9, 2, 2))
     out: "0.493474966672788567965295170182"
 n-lerchphi-0p9-2-0p5:
   epsil:
@@ -2926,11 +2926,11 @@ n-lerchphi-0p9-2-0p5:
     tex:
       in: N[\Phi (0.9,2,0.5)]
       out: "4.68678"
-  mpmath:
-    in: (lerchphi(0.9, 2, 0.5))
-    out: "4.68678327308293050056315406124"
   sympy:
     in: N(lerchphi(0.9, 2, 0.5), 30)
+    out: "4.68678327308293050056315406124"
+  mpmath:
+    in: (lerchphi(0.9, 2, 0.5))
     out: "4.68678327308293050056315406124"
 n-lerchphi-0p9-2-5-over-2:
   epsil:
@@ -2971,12 +2971,12 @@ n-lerchphi-0p9-3-1:
     tex:
       in: N[\Phi (0.9,3,1)]
       out: "1.16629"
-  mpmath:
-    in: (lerchphi(0.9, 3, 1))
-    out: "1.1662877224293776397945713239"
   sympy:
     in: N(lerchphi(0.9, 3, 1), 30)
     out: "1.16628772242937763979457132390"
+  mpmath:
+    in: (lerchphi(0.9, 3, 1))
+    out: "1.1662877224293776397945713239"
 n-lerchphi-0p9-3-2:
   epsil:
     in: N(LerchPhi(0.9, 3, 2))
@@ -2995,11 +2995,11 @@ n-lerchphi-0p9-3-2:
     tex:
       in: N[\Phi (0.9,3,2)]
       out: "0.184764"
-  mpmath:
-    in: (lerchphi(0.9, 3, 2))
-    out: "0.184764136032641817435537072148"
   sympy:
     in: N(lerchphi(0.9, 3, 2), 30)
+    out: "0.184764136032641817435537072148"
+  mpmath:
+    in: (lerchphi(0.9, 3, 2))
     out: "0.184764136032641817435537072148"
 n-lerchphi-0p9-3-0p5:
   epsil:
@@ -3019,11 +3019,11 @@ n-lerchphi-0p9-3-0p5:
     tex:
       in: N[\Phi (0.9,3,0.5)]
       out: "8.35155"
-  mpmath:
-    in: (lerchphi(0.9, 3, 0.5))
-    out: "8.35154985136065300582260756704"
   sympy:
     in: N(lerchphi(0.9, 3, 0.5), 30)
+    out: "8.35154985136065300582260756704"
+  mpmath:
+    in: (lerchphi(0.9, 3, 0.5))
     out: "8.35154985136065300582260756704"
 n-lerchphi-0p9-3-5-over-2:
   epsil:
@@ -3064,11 +3064,11 @@ n-lerchphi-0p9-0p5-1:
     tex:
       in: N[\Phi (0.9,0.5,1)]
       out: 4.46883\, -\text{4.934324553889585$\grave{ }$*${}^{\wedge}$-16} i
-  mpmath:
-    in: (lerchphi(0.9, 0.5, 1))
-    out: "4.46883380830373468882132194979"
   sympy:
     in: N(lerchphi(0.9, 0.5, 1), 30)
+    out: "4.46883380830373468882132194979"
+  mpmath:
+    in: (lerchphi(0.9, 0.5, 1))
     out: "4.46883380830373468882132194979"
 n-lerchphi-0p9-0p5-2:
   epsil:
@@ -3088,11 +3088,11 @@ n-lerchphi-0p9-0p5-2:
     tex:
       in: N[\Phi (0.9,0.5,2)]
       out: "3.85426"
-  mpmath:
-    in: (lerchphi(0.9, 0.5, 2))
-    out: "3.85425978700414955915506975712"
   sympy:
     in: N(lerchphi(0.9, 0.5, 2), 30)
+    out: "3.85425978700414955915506975712"
+  mpmath:
+    in: (lerchphi(0.9, 0.5, 2))
     out: "3.85425978700414955915506975712"
 n-lerchphi-0p9-0p5-0p5:
   epsil:
@@ -3112,12 +3112,12 @@ n-lerchphi-0p9-0p5-0p5:
     tex:
       in: N[\Phi (0.9,0.5,0.5)]
       out: "5.11164"
-  mpmath:
-    in: (lerchphi(0.9, 0.5, 0.5))
-    out: "5.1116362449633495888568078361"
   sympy:
     in: N(lerchphi(0.9, 0.5, 0.5), 30)
     out: "5.11163624496334989544266136363"
+  mpmath:
+    in: (lerchphi(0.9, 0.5, 0.5))
+    out: "5.1116362449633495888568078361"
 n-lerchphi-0p9-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(0.9, 0.5, 5 / 2))
@@ -3157,11 +3157,11 @@ n-lerchphi-0p9-neg-1-1:
     tex:
       in: N[\Phi (0.9,-1,1)]
       out: 100.
-  mpmath:
-    in: (lerchphi(0.9, -1, 1))
-    out: "100.000000000000044408920985006"
   sympy:
     in: N(lerchphi(0.9, -1, 1), 30)
+    out: "100.000000000000044408920985006"
+  mpmath:
+    in: (lerchphi(0.9, -1, 1))
     out: "100.000000000000044408920985006"
 n-lerchphi-0p9-neg-1-2:
   epsil:
@@ -3181,11 +3181,11 @@ n-lerchphi-0p9-neg-1-2:
     tex:
       in: N[\Phi (0.9,-1,2)]
       out: 110.
-  mpmath:
-    in: (lerchphi(0.9, -1, 2))
-    out: "110.000000000000046629367034257"
   sympy:
     in: N(lerchphi(0.9, -1, 2), 30)
+    out: "110.000000000000046629367034257"
+  mpmath:
+    in: (lerchphi(0.9, -1, 2))
     out: "110.000000000000046629367034257"
 n-lerchphi-0p9-neg-1-0p5:
   epsil:
@@ -3205,11 +3205,11 @@ n-lerchphi-0p9-neg-1-0p5:
     tex:
       in: N[\Phi (0.9,-1,0.5)]
       out: 95.
-  mpmath:
-    in: (lerchphi(0.9, -1, 0.5))
-    out: "95.0000000000000432986979603811"
   sympy:
     in: N(lerchphi(0.9, -1, 0.5), 30)
+    out: "95.0000000000000432986979603811"
+  mpmath:
+    in: (lerchphi(0.9, -1, 0.5))
     out: "95.0000000000000432986979603811"
 n-lerchphi-0p9-neg-1-5-over-2:
   epsil:
@@ -3250,12 +3250,12 @@ n-lerchphi-0p9-2-plus-i-1:
     tex:
       in: N[\Phi (0.9,2+i,1)]
       out: 1.19293\, -0.340556 i
-  mpmath:
-    in: (lerchphi(0.9, mpc(2, 1), 1))
-    out: (1.19292877586574329252400918882 - 0.340556246338810900732380444882j)
   sympy:
     in: N(lerchphi(0.9, (2 + 1*I), 1), 30)
     out: 1.19292877586574329252400918882 - 0.340556246338810900732380444882*I
+  mpmath:
+    in: (lerchphi(0.9, mpc(2, 1), 1))
+    out: (1.19292877586574329252400918882 - 0.340556246338810900732380444882j)
 n-lerchphi-0p9-2-plus-i-2:
   epsil:
     in: N(LerchPhi(0.9, 2 + i, 2))
@@ -3274,12 +3274,12 @@ n-lerchphi-0p9-2-plus-i-2:
     tex:
       in: N[\Phi (0.9,2+i,2)]
       out: 0.214365\, -0.378396 i
-  mpmath:
-    in: (lerchphi(0.9, mpc(2, 1), 2))
-    out: (0.214365306517492541960159121431 - 0.378395829265345435922561337147j)
   sympy:
     in: N(lerchphi(0.9, (2 + 1*I), 2), 30)
     out: 0.214365306517492541960159121431 - 0.378395829265345435922561337147*I
+  mpmath:
+    in: (lerchphi(0.9, mpc(2, 1), 2))
+    out: (0.214365306517492541960159121431 - 0.378395829265345435922561337147j)
 n-lerchphi-0p9-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(0.9, 2 + i, 0.5))
@@ -3298,12 +3298,12 @@ n-lerchphi-0p9-2-plus-i-0p5:
     tex:
       in: N[\Phi (0.9,2+i,0.5)]
       out: 3.51619\, +2.15225 i
-  mpmath:
-    in: (lerchphi(0.9, mpc(2, 1), 0.5))
-    out: (3.51619166190912691651064509977 + 2.15225468127493475063667055844j)
   sympy:
     in: N(lerchphi(0.9, (2 + 1*I), 0.5), 30)
     out: 3.51619166190912691651064509977 + 2.15225468127493475063667055844*I
+  mpmath:
+    in: (lerchphi(0.9, mpc(2, 1), 0.5))
+    out: (3.51619166190912691651064509977 + 2.15225468127493475063667055844j)
 n-lerchphi-0p9-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(0.9, 2 + i, 5 / 2))
@@ -3763,12 +3763,12 @@ n-lerchphi-0p4-plus-0p3i-2-1:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2,1)]
       out: 1.10184\, +0.10988 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 2, 1))
-    out: (1.10183658874084040661032437039 + 0.109880454004132010829777309098j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 2, 1), 30)
     out: 1.10183658874084040661032437039 + 0.109880454004132010829777309098*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 2, 1))
+    out: (1.10183658874084040661032437039 + 0.109880454004132010829777309098j)
 n-lerchphi-0p4-plus-0p3i-2-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2, 2))
@@ -3787,12 +3787,12 @@ n-lerchphi-0p4-plus-0p3i-2-2:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2,2)]
       out: 0.294795\, +0.0536048 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 2, 2))
-    out: (0.294795086790303054645953693383 + 0.053604819917602741296520060062j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 2, 2), 30)
     out: 0.294795086790303054645953693383 + 0.053604819917602741296520060062*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 2, 2))
+    out: (0.294795086790303054645953693383 + 0.053604819917602741296520060062j)
 n-lerchphi-0p4-plus-0p3i-2-0p5:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2, 0.5))
@@ -3811,12 +3811,12 @@ n-lerchphi-0p4-plus-0p3i-2-0p5:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2,0.5)]
       out: 4.1815\, +0.182433 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 2, 0.5))
-    out: (4.18149924363633645497908936697 + 0.182432562673989555688037788939j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 2, 0.5), 30)
     out: 4.18149924363633645497908936697 + 0.182432562673989555688037788939*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 2, 0.5))
+    out: (4.18149924363633645497908936697 + 0.182432562673989555688037788939j)
 n-lerchphi-0p4-plus-0p3i-2-5-over-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2, 5 / 2))
@@ -3856,12 +3856,12 @@ n-lerchphi-0p4-plus-0p3i-3-1:
     tex:
       in: N[\Phi (0.4\, +0.3 i,3,1)]
       out: 1.05131\, +0.0484246 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 3, 1))
-    out: (1.05130669235246074287112696551 + 0.048424577070355342113035295229j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 3, 1), 30)
     out: 1.05130669235246074287112696551 + 0.048424577070355342113035295229*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 3, 1))
+    out: (1.05130669235246074287112696551 + 0.048424577070355342113035295229j)
 n-lerchphi-0p4-plus-0p3i-3-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 3, 2))
@@ -3880,12 +3880,12 @@ n-lerchphi-0p4-plus-0p3i-3-2:
     tex:
       in: N[\Phi (0.4\, +0.3 i,3,2)]
       out: 0.1402\, +0.0159113 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 3, 2))
-    out: (0.140200200248363595309772360689 + 0.0159112924896156618083420631996j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 3, 2), 30)
     out: 0.140200200248363595309772360689 + 0.0159112924896156618083420631996*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 3, 2))
+    out: (0.140200200248363595309772360689 + 0.0159112924896156618083420631996j)
 n-lerchphi-0p4-plus-0p3i-3-0p5:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 3, 0.5))
@@ -3904,12 +3904,12 @@ n-lerchphi-0p4-plus-0p3i-3-0p5:
     tex:
       in: N[\Phi (0.4\, +0.3 i,3,0.5)]
       out: 8.12117\, +0.10727 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 3, 0.5))
-    out: (8.12116576184305883017735324878 + 0.107270303911862803680932241447j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 3, 0.5), 30)
     out: 8.12116576184305883017735324878 + 0.107270303911862803680932241447*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 3, 0.5))
+    out: (8.12116576184305883017735324878 + 0.107270303911862803680932241447j)
 n-lerchphi-0p4-plus-0p3i-3-5-over-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 3, 5 / 2))
@@ -3949,12 +3949,12 @@ n-lerchphi-0p4-plus-0p3i-0p5-1:
     tex:
       in: N[\Phi (0.4\, +0.3 i,0.5,1)]
       out: 1.26141\, +0.415429 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 0.5, 1))
-    out: (1.26140913698825507061068091543 + 0.415428785308441460033564387418j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 0.5, 1), 30)
     out: 1.26140913698825507061068091543 + 0.415428785308441460033564387418*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 0.5, 1))
+    out: (1.26140913698825507061068091543 + 0.415428785308441460033564387418j)
 n-lerchphi-0p4-plus-0p3i-0p5-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 0.5, 2))
@@ -3973,12 +3973,12 @@ n-lerchphi-0p4-plus-0p3i-0p5-2:
     tex:
       in: N[\Phi (0.4\, +0.3 i,0.5,2)]
       out: 0.916769\, +0.350995 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 0.5, 2))
-    out: (0.91676916155133782907368878964 + 0.350995092107600284239958522416j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 0.5, 2), 30)
     out: 0.91676916155133782907368878964 + 0.350995092107600284239958522416*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 0.5, 2))
+    out: (0.91676916155133782907368878964 + 0.350995092107600284239958522416j)
 n-lerchphi-0p4-plus-0p3i-0p5-0p5:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 0.5, 0.5))
@@ -3997,12 +3997,12 @@ n-lerchphi-0p4-plus-0p3i-0p5-0p5:
     tex:
       in: N[\Phi (0.4\, +0.3 i,0.5,0.5)]
       out: 1.71973\, +0.466008 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), 0.5, 0.5))
-    out: (1.71972863991912930224808094408 + 0.466007643699248279324075284394j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), 0.5, 0.5), 30)
     out: 1.71972863991912938708139790833 + 0.466007643699248297330939294625*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), 0.5, 0.5))
+    out: (1.71972863991912930224808094408 + 0.466007643699248279324075284394j)
 n-lerchphi-0p4-plus-0p3i-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 0.5, 5 / 2))
@@ -4042,12 +4042,12 @@ n-lerchphi-0p4-plus-0p3i-neg-1-1:
     tex:
       in: N[\Phi (0.4\, +0.3 i,-1,1)]
       out: 1.33333\, +1.77778 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), -1, 1))
-    out: (1.33333333333333343201982441113 + 1.7777777777777779093597658815j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), -1, 1), 30)
     out: 1.33333333333333343201982441113 + 1.7777777777777779093597658815*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), -1, 1))
+    out: (1.33333333333333343201982441113 + 1.7777777777777779093597658815j)
 n-lerchphi-0p4-plus-0p3i-neg-1-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, -1, 2))
@@ -4066,12 +4066,12 @@ n-lerchphi-0p4-plus-0p3i-neg-1-2:
     tex:
       in: N[\Phi (0.4\, +0.3 i,-1,2)]
       out: 2.66667\, +2.44444 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), -1, 2))
-    out: (2.66666666666666681469640328335 + 2.44444444444444460069805531761j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), -1, 2), 30)
     out: 2.66666666666666681469640328335 + 2.44444444444444460069805531761*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), -1, 2))
+    out: (2.66666666666666681469640328335 + 2.44444444444444460069805531761j)
 n-lerchphi-0p4-plus-0p3i-neg-1-0p5:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, -1, 0.5))
@@ -4090,12 +4090,12 @@ n-lerchphi-0p4-plus-0p3i-neg-1-0p5:
     tex:
       in: N[\Phi (0.4\, +0.3 i,-1,0.5)]
       out: 0.666667\, +1.44444 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), -1, 0.5))
-    out: (0.66666666666666674068153497501 + 1.44444444444444456369062116344j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), -1, 0.5), 30)
     out: 0.66666666666666674068153497501 + 1.44444444444444456369062116344*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), -1, 0.5))
+    out: (0.66666666666666674068153497501 + 1.44444444444444456369062116344j)
 n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, -1, 5 / 2))
@@ -4135,12 +4135,12 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-1:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2+i,1)]
       out: 1.1601\, +0.00632893 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 1))
-    out: (1.1600967534137013647669841095 + 0.00632892769236943585594673232479j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), (2 + 1*I), 1), 30)
     out: 1.1600967534137013647669841095 + 0.00632892769236943585594673232479*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 1))
+    out: (1.1600967534137013647669841095 + 0.00632892769236943585594673232479j)
 n-lerchphi-0p4-plus-0p3i-2-plus-i-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2 + i, 2))
@@ -4159,12 +4159,12 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-2:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2+i,2)]
       out: 0.26375\, -0.18199 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 2))
-    out: (0.263749518692765508879866413323 - 0.18198981978865052459704886068j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), (2 + 1*I), 2), 30)
     out: 0.263749518692765508879866413323 - 0.18198981978865052459704886068*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 2))
+    out: (0.263749518692765508879866413323 - 0.18198981978865052459704886068j)
 n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2 + i, 0.5))
@@ -4183,12 +4183,12 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5:
     tex:
       in: N[\Phi (0.4\, +0.3 i,2+i,0.5)]
       out: 3.33935\, +2.63328 i
-  mpmath:
-    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 0.5))
-    out: (3.33934750908289148891629979198 + 2.63328056022470450949825588691j)
   sympy:
     in: N(lerchphi((0.4 + 0.3*I), (2 + 1*I), 0.5), 30)
     out: 3.33934750908289148891629979198 + 2.63328056022470450949825588691*I
+  mpmath:
+    in: (lerchphi(mpc(0.4, 0.3), mpc(2, 1), 0.5))
+    out: (3.33934750908289148891629979198 + 2.63328056022470450949825588691j)
 n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(0.4 + 0.3i, 2 + i, 5 / 2))
@@ -4228,12 +4228,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-1:
     tex:
       in: N[\Phi (-0.3+0.5 i,2,1)]
       out: 0.916799\, +0.0946791 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 2, 1))
-    out: (0.916798675997154510511806887034 + 0.0946791148674900266089516571605j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 2, 1), 30)
     out: 0.916798675997154510511806887034 + 0.0946791148674900266089516571605*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 2, 1))
+    out: (0.916798675997154510511806887034 + 0.0946791148674900266089516571605j)
 n-lerchphi-neg-0p3-plus-0p5i-2-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2, 2))
@@ -4252,12 +4252,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-2:
     tex:
       in: N[\Phi (-0.3+0.5 i,2,2)]
       out: 0.212647\, +0.0388145 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 2, 2))
-    out: (0.212646925395878413658019360997 + 0.0388144927681639355032848631386j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 2, 2), 30)
     out: 0.212646925395878413658019360997 + 0.0388144927681639355032848631386*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 2, 2))
+    out: (0.212646925395878413658019360997 + 0.0388144927681639355032848631386j)
 n-lerchphi-neg-0p3-plus-0p5i-2-0p5:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2, 0.5))
@@ -4276,12 +4276,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-0p5:
     tex:
       in: N[\Phi (-0.3+0.5 i,2,0.5)]
       out: 3.85377\, +0.178041 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 2, 0.5))
-    out: (3.85377205155802305744758420225 + 0.178041438629279081911734328305j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 2, 0.5), 30)
     out: 3.85377205155802305744758420225 + 0.178041438629279081911734328305*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 2, 0.5))
+    out: (3.85377205155802305744758420225 + 0.178041438629279081911734328305j)
 n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2, 5 / 2))
@@ -4321,12 +4321,12 @@ n-lerchphi-neg-0p3-plus-0p5i-3-1:
     tex:
       in: N[\Phi (-0.3+0.5 i,3,1)]
       out: 0.959106\, +0.0520638 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 3, 1))
-    out: (0.959105606130840380528156803007 + 0.0520638047736110190094662502268j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 3, 1), 30)
     out: 0.959105606130840380528156803007 + 0.0520638047736110190094662502268*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 3, 1))
+    out: (0.959105606130840380528156803007 + 0.0520638047736110190094662502268j)
 n-lerchphi-neg-0p3-plus-0p5i-3-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 3, 2))
@@ -4345,12 +4345,12 @@ n-lerchphi-neg-0p3-plus-0p5i-3-2:
     tex:
       in: N[\Phi (-0.3+0.5 i,3,2)]
       out: 0.112648\, +0.0142002 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 3, 2))
-    out: (0.112647707492804104831328173157 + 0.0142001632426367785461710606865j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 3, 2), 30)
     out: 0.112647707492804104831328173157 + 0.0142001632426367785461710606865*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 3, 2))
+    out: (0.112647707492804104831328173157 + 0.0142001632426367785461710606865j)
 n-lerchphi-neg-0p3-plus-0p5i-3-0p5:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 3, 0.5))
@@ -4369,12 +4369,12 @@ n-lerchphi-neg-0p3-plus-0p5i-3-0p5:
     tex:
       in: N[\Phi (-0.3+0.5 i,3,0.5)]
       out: 7.90472\, +0.129909 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 3, 0.5))
-    out: (7.90471815324867298875430312013 + 0.12990910279935874261505882124j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 3, 0.5), 30)
     out: 7.90471815324867298875430312013 + 0.12990910279935874261505882124*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 3, 0.5))
+    out: (7.90471815324867298875430312013 + 0.12990910279935874261505882124j)
 n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 3, 5 / 2))
@@ -4414,12 +4414,12 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-1:
     tex:
       in: N[\Phi (-0.3+0.5 i,0.5,1)]
       out: 0.763797\, +0.208116 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 1))
-    out: (0.763797454910583287121397463376 + 0.208115821035190713666119503727j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 0.5, 1), 30)
     out: 0.763797454910583287121397463376 + 0.208115821035190713666119503727*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 1))
+    out: (0.763797454910583287121397463376 + 0.208115821035190713666119503727j)
 n-lerchphi-neg-0p3-plus-0p5i-0p5-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 0.5, 2))
@@ -4438,12 +4438,12 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-2:
     tex:
       in: N[\Phi (-0.3+0.5 i,0.5,2)]
       out: 0.514467\, +0.163725 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 2))
-    out: (0.514466688365942269121476616108 + 0.163725077159268075707774360114j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 0.5, 2), 30)
     out: 0.514466688365942269121476616108 + 0.163725077159268075707774360114*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 2))
+    out: (0.514466688365942269121476616108 + 0.163725077159268075707774360114j)
 n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 0.5, 0.5))
@@ -4462,12 +4462,12 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5:
     tex:
       in: N[\Phi (-0.3+0.5 i,0.5,0.5)]
       out: 1.14153\, +0.248011 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 0.5))
-    out: (1.14152679335394697741069768921 + 0.248011499868293567552741722465j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), 0.5, 0.5), 30)
     out: 1.14152679335394702242467701581 + 0.248011499868293572301780613998*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), 0.5, 0.5))
+    out: (1.14152679335394697741069768921 + 0.248011499868293567552741722465j)
 n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 0.5, 5 / 2))
@@ -4507,12 +4507,12 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-1:
     tex:
       in: N[\Phi (-0.3+0.5 i,-1,1)]
       out: 0.382612\, +0.345414 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), -1, 1))
-    out: (0.382612392390264643954331222935 + 0.345413965352322251988492837376j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), -1, 1), 30)
     out: 0.382612392390264643954331222935 + 0.345413965352322251988492837376*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), -1, 1))
+    out: (0.382612392390264643954331222935 + 0.345413965352322251988492837376j)
 n-lerchphi-neg-0p3-plus-0p5i-neg-1-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, -1, 2))
@@ -4531,12 +4531,12 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-2:
     tex:
       in: N[\Phi (-0.3+0.5 i,-1,2)]
       out: 1.05272\, +0.603146 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), -1, 2))
-    out: (1.05271548517376980284135735605 + 0.603145924115208853761502540885j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), -1, 2), 30)
     out: 1.05271548517376980284135735605 + 0.603145924115208853761502540885*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), -1, 2))
+    out: (1.05271548517376980284135735605 + 0.603145924115208853761502540885j)
 n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, -1, 0.5))
@@ -4555,12 +4555,12 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5:
     tex:
       in: N[\Phi (-0.3+0.5 i,-1,0.5)]
       out: 0.0475608\, +0.216548 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), -1, 0.5))
-    out: (0.0475608459985120645108181563762 + 0.216547985970878951101987985622j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), -1, 0.5), 30)
     out: 0.0475608459985120645108181563762 + 0.216547985970878951101987985622*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), -1, 0.5))
+    out: (0.0475608459985120645108181563762 + 0.216547985970878951101987985622j)
 n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, -1, 5 / 2))
@@ -4600,12 +4600,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1:
     tex:
       in: N[\Phi (-0.3+0.5 i,2+i,1)]
       out: 0.989785\, +0.135629 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 1))
-    out: (0.989784607429555714220816600719 + 0.135628774098335944392958242018j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), (2 + 1*I), 1), 30)
     out: 0.989784607429555714220816600719 + 0.135628774098335944392958242018*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 1))
+    out: (0.989784607429555714220816600719 + 0.135628774098335944392958242018j)
 n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2 + i, 2))
@@ -4624,12 +4624,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2:
     tex:
       in: N[\Phi (-0.3+0.5 i,2+i,2)]
       out: 0.208468\, -0.10465 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 2))
-    out: (0.208467661236180174133806131721 - 0.104649811600819528293004932588j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), (2 + 1*I), 2), 30)
     out: 0.208467661236180174133806131721 - 0.104649811600819528293004932588*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 2))
+    out: (0.208467661236180174133806131721 - 0.104649811600819528293004932588j)
 n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2 + i, 0.5))
@@ -4648,12 +4648,12 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5:
     tex:
       in: N[\Phi (-0.3+0.5 i,2+i,0.5)]
       out: 2.99699\, +2.79258 i
-  mpmath:
-    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 0.5))
-    out: (2.99699425624741687137366986297 + 2.79258481569476379020720155573j)
   sympy:
     in: N(lerchphi((-0.3 + 0.5*I), (2 + 1*I), 0.5), 30)
     out: 2.99699425624741687137366986297 + 2.79258481569476379020720155573*I
+  mpmath:
+    in: (lerchphi(mpc(-0.3, 0.5), mpc(2, 1), 0.5))
+    out: (2.99699425624741687137366986297 + 2.79258481569476379020720155573j)
 n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-0.3 + 0.5i, 2 + i, 5 / 2))
@@ -4693,12 +4693,12 @@ n-lerchphi-2-2-1:
     tex:
       in: N[\Phi (2,2,1)]
       out: 1.2337\, -1.08879 i
-  mpmath:
-    in: (lerchphi(2, 2, 1))
-    out: (1.23370055013616982735431137498 - 1.08879304515180106525034444912j)
   sympy:
     in: N(lerchphi(2, 2, 1), 30)
     out: 1.23370055013616982735431137498 - 1.08879304515180106525034444912*I
+  mpmath:
+    in: (lerchphi(2, 2, 1))
+    out: (1.23370055013616982735431137498 - 1.08879304515180106525034444912j)
 n-lerchphi-2-2-2:
   epsil:
     in: N(LerchPhi(2, 2, 2))
@@ -4717,12 +4717,12 @@ n-lerchphi-2-2-2:
     tex:
       in: N[\Phi (2,2,2)]
       out: 0.11685\, -0.544397 i
-  mpmath:
-    in: (lerchphi(2, 2, 2))
-    out: (0.116850275068084913677155687492 - 0.544396522575900532625172224559j)
   sympy:
     in: N(lerchphi(2, 2, 2), 30)
     out: 0.116850275068084913677155687492 - 0.544396522575900532625172224559*I
+  mpmath:
+    in: (lerchphi(2, 2, 2))
+    out: (0.116850275068084913677155687492 - 0.544396522575900532625172224559j)
 n-lerchphi-2-2-0p5:
   epsil:
     in: N(LerchPhi(2, 2, 0.5))
@@ -4741,12 +4741,12 @@ n-lerchphi-2-2-0p5:
     tex:
       in: N[\Phi (2,2,0.5)]
       out: 4.84029\, -1.53979 i
-  mpmath:
-    in: (lerchphi(2, 2, 0.5))
-    out: (4.84029144934840464359031983142 - 1.53978589107117870951893453814j)
   sympy:
     in: N(lerchphi(2, 2, 0.5), 30)
     out: 4.84029144934840464359031983142 - 1.53978589107117870951893453814*I
+  mpmath:
+    in: (lerchphi(2, 2, 0.5))
+    out: (4.84029144934840464359031983142 - 1.53978589107117870951893453814j)
 n-lerchphi-2-2-5-over-2:
   epsil:
     in: N(LerchPhi(2, 2, 5 / 2))
@@ -4787,12 +4787,12 @@ n-lerchphi-2-2-neg-2p5:
       in: N[\Phi (2,2,-2.5)]
       out: 55.7712\, -12.3183 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(2, 2, -2.5))
-    out: (55.7712204836761260376114475402 - 12.3182871285694296761514763051j)
   sympy:
     in: N(lerchphi(2, 2, -2.5), 30)
     out: 55.7712204836761260376114475402 - 12.3182871285694296761514763051*I
+  mpmath:
+    in: (lerchphi(2, 2, -2.5))
+    out: (55.7712204836761260376114475402 - 12.3182871285694296761514763051j)
 n-lerchphi-2-3-1:
   epsil:
     in: N(LerchPhi(2, 3, 1))
@@ -4811,12 +4811,12 @@ n-lerchphi-2-3-1:
     tex:
       in: N[\Phi (2,3,1)]
       out: 1.38104\, -0.377347 i
-  mpmath:
-    in: (lerchphi(2, 3, 1))
-    out: (1.38103595311446206796832033991 - 0.377346914730124069429063940191j)
   sympy:
     in: N(lerchphi(2, 3, 1), 30)
     out: 1.38103595311446206796832033991 - 0.377346914730124069429063940191*I
+  mpmath:
+    in: (lerchphi(2, 3, 1))
+    out: (1.38103595311446206796832033991 - 0.377346914730124069429063940191j)
 n-lerchphi-2-3-2:
   epsil:
     in: N(LerchPhi(2, 3, 2))
@@ -4835,12 +4835,12 @@ n-lerchphi-2-3-2:
     tex:
       in: N[\Phi (2,3,2)]
       out: 0.190518\, -0.188673 i
-  mpmath:
-    in: (lerchphi(2, 3, 2))
-    out: (0.190517976557231033984160169953 - 0.188673457365062034714531970095j)
   sympy:
     in: N(lerchphi(2, 3, 2), 30)
     out: 0.190517976557231033984160169953 - 0.188673457365062034714531970095*I
+  mpmath:
+    in: (lerchphi(2, 3, 2))
+    out: (0.190517976557231033984160169953 - 0.188673457365062034714531970095j)
 n-lerchphi-2-3-0p5:
   epsil:
     in: N(LerchPhi(2, 3, 0.5))
@@ -4859,12 +4859,12 @@ n-lerchphi-2-3-0p5:
     tex:
       in: N[\Phi (2,3,0.5)]
       out: 8.92139\, -0.533649 i
-  mpmath:
-    in: (lerchphi(2, 3, 0.5))
-    out: (8.92139140656060395776409476053 - 0.533649124530985294495614134567j)
   sympy:
     in: N(lerchphi(2, 3, 0.5), 30)
     out: 8.92139140656060395776409476053 - 0.533649124530985294495614134567*I
+  mpmath:
+    in: (lerchphi(2, 3, 0.5))
+    out: (8.92139140656060395776409476053 - 0.533649124530985294495614134567j)
 n-lerchphi-2-3-5-over-2:
   epsil:
     in: N(LerchPhi(2, 3, 5 / 2))
@@ -4907,12 +4907,12 @@ n-lerchphi-2-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(2, 3, -2.5))
-    out: (38.7145386598922390695201654916 - 4.26919299624788235596491307653j)
   sympy:
     in: N(lerchphi(2, 3, -2.5), 30)
     out: 38.7145386598922390695201654916 - 4.26919299624788235596491307653*I
+  mpmath:
+    in: (lerchphi(2, 3, -2.5))
+    out: (38.7145386598922390695201654916 - 4.26919299624788235596491307653j)
 n-lerchphi-2-0p5-1:
   epsil:
     in: N(LerchPhi(2, 0.5, 1))
@@ -4931,12 +4931,12 @@ n-lerchphi-2-0p5-1:
     tex:
       in: N[\Phi (2,0.5,1)]
       out: -0.805031-1.06447 i
-  mpmath:
-    in: (lerchphi(2, 0.5, 1))
-    out: (-0.805030764933742522873277280703 - 1.06446701943122617931526759623j)
   sympy:
     in: N(lerchphi(2, 0.5, 1), 30)
     out: -0.805030764933742522873277280703 - 1.06446701943122617931526759623*I
+  mpmath:
+    in: (lerchphi(2, 0.5, 1))
+    out: (-0.805030764933742522873277280703 - 1.06446701943122617931526759623j)
 n-lerchphi-2-0p5-2:
   epsil:
     in: N(LerchPhi(2, 0.5, 2))
@@ -4955,12 +4955,12 @@ n-lerchphi-2-0p5-2:
     tex:
       in: N[\Phi (2,0.5,2)]
       out: -0.902515-0.532234 i
-  mpmath:
-    in: (lerchphi(2, 0.5, 2))
-    out: (-0.902515382466871261436638640351 - 0.532233509715613089657633798117j)
   sympy:
     in: N(lerchphi(2, 0.5, 2), 30)
     out: -0.902515382466871261436638640351 - 0.532233509715613089657633798117*I
+  mpmath:
+    in: (lerchphi(2, 0.5, 2))
+    out: (-0.902515382466871261436638640351 - 0.532233509715613089657633798117j)
 n-lerchphi-2-0p5-0p5:
   epsil:
     in: N(LerchPhi(2, 0.5, 0.5))
@@ -4979,12 +4979,12 @@ n-lerchphi-2-0p5-0p5:
     tex:
       in: N[\Phi (2,0.5,0.5)]
       out: -0.395386-1.50538 i
-  mpmath:
-    in: (lerchphi(2, 0.5, 0.5))
-    out: (-0.395385888231945627317643350901 - 1.5053836955785049636395767791j)
   sympy:
     in: N(lerchphi(2, 0.5, 0.5), 30)
     out: -0.395385888231945627317643350901 - 1.5053836955785049636395767791*I
+  mpmath:
+    in: (lerchphi(2, 0.5, 0.5))
+    out: (-0.395385888231945627317643350901 - 1.5053836955785049636395767791j)
 n-lerchphi-2-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(2, 0.5, 5 / 2))
@@ -5027,12 +5027,12 @@ n-lerchphi-2-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(2, 0.5, -2.5))
-    out: (-3.1630871058555650185411468072 - 19.9653725080095478361880038883j)
   sympy:
     in: N(lerchphi(2, 0.5, -2.5), 30)
     out: -3.1630871058555650185411468072 - 19.9653725080095478361880038883*I
+  mpmath:
+    in: (lerchphi(2, 0.5, -2.5))
+    out: (-3.1630871058555650185411468072 - 19.9653725080095478361880038883j)
 n-lerchphi-2-2-plus-i-1:
   epsil:
     in: N(LerchPhi(2, 2 + i, 1))
@@ -5051,12 +5051,12 @@ n-lerchphi-2-2-plus-i-1:
     tex:
       in: N[\Phi (2,2+i,1)]
       out: 0.782104\, -0.589814 i
-  mpmath:
-    in: (lerchphi(2, mpc(2, 1), 1))
-    out: (0.782103519638317149619826955327 - 0.58981438778509426513966110259j)
   sympy:
     in: N(lerchphi(2, (2 + 1*I), 1), 30)
     out: 0.782103519638317149619826955327 - 0.58981438778509426513966110259*I
+  mpmath:
+    in: (lerchphi(2, mpc(2, 1), 1))
+    out: (0.782103519638317149619826955327 - 0.58981438778509426513966110259j)
 n-lerchphi-2-2-plus-i-2:
   epsil:
     in: N(LerchPhi(2, 2 + i, 2))
@@ -5075,12 +5075,12 @@ n-lerchphi-2-2-plus-i-2:
     tex:
       in: N[\Phi (2,2+i,2)]
       out: -0.108948-0.294907 i
-  mpmath:
-    in: (lerchphi(2, mpc(2, 1), 2))
-    out: (-0.108948240180841425190086522337 - 0.294907193892547132569830551295j)
   sympy:
     in: N(lerchphi(2, (2 + 1*I), 2), 30)
     out: -0.108948240180841425190086522337 - 0.294907193892547132569830551295*I
+  mpmath:
+    in: (lerchphi(2, mpc(2, 1), 2))
+    out: (-0.108948240180841425190086522337 - 0.294907193892547132569830551295j)
 n-lerchphi-2-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(2, 2 + i, 0.5))
@@ -5099,12 +5099,12 @@ n-lerchphi-2-2-plus-i-0p5:
     tex:
       in: N[\Phi (2,2+i,0.5)]
       out: 3.26635\, +1.58142 i
-  mpmath:
-    in: (lerchphi(2, mpc(2, 1), 0.5))
-    out: (3.26634658877554835933454367277 + 1.58142399807635822579090473652j)
   sympy:
     in: N(lerchphi(2, (2 + 1*I), 0.5), 30)
     out: 3.26634658877554835933454367277 + 1.58142399807635822579090473652*I
+  mpmath:
+    in: (lerchphi(2, mpc(2, 1), 0.5))
+    out: (3.26634658877554835933454367277 + 1.58142399807635822579090473652j)
 n-lerchphi-2-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(2, 2 + i, 5 / 2))
@@ -5147,12 +5147,12 @@ n-lerchphi-2-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(2, mpc(2, 1), -2.5))
-    out: (332.097984373651740528218253378 + 238.176549803584316991271572873j)
   sympy:
     in: N(lerchphi(2, (2 + 1*I), -2.5), 30)
     out: 332.097984373651740528218253378 + 238.176549803584316991271572873*I
+  mpmath:
+    in: (lerchphi(2, mpc(2, 1), -2.5))
+    out: (332.097984373651740528218253378 + 238.176549803584316991271572873j)
 n-lerchphi-neg-2-2-1:
   epsil:
     in: N(LerchPhi(-2, 2, 1))
@@ -5171,11 +5171,11 @@ n-lerchphi-neg-2-2-1:
     tex:
       in: N[\Phi (-2,2,1)]
       out: "0.718373"
-  mpmath:
-    in: (lerchphi(-2, 2, 1))
-    out: "0.718373183441840473181451011947"
   sympy:
     in: N(lerchphi(-2, 2, 1), 30)
+    out: "0.718373183441840473181451011947"
+  mpmath:
+    in: (lerchphi(-2, 2, 1))
     out: "0.718373183441840473181451011947"
 n-lerchphi-neg-2-2-2:
   epsil:
@@ -5195,11 +5195,11 @@ n-lerchphi-neg-2-2-2:
     tex:
       in: N[\Phi (-2,2,2)]
       out: "0.140813"
-  mpmath:
-    in: (lerchphi(-2, 2, 2))
-    out: "0.140813408279079763409274494027"
   sympy:
     in: N(lerchphi(-2, 2, 2), 30)
+    out: "0.140813408279079763409274494027"
+  mpmath:
+    in: (lerchphi(-2, 2, 2))
     out: "0.140813408279079763409274494027"
 n-lerchphi-neg-2-2-0p5:
   epsil:
@@ -5219,11 +5219,11 @@ n-lerchphi-neg-2-2-0p5:
     tex:
       in: N[\Phi (-2,2,0.5)]
       out: 3.44473\, -\text{2.0380094546286109$\grave{ }$*${}^{\wedge}$-16} i
-  mpmath:
-    in: (lerchphi(-2, 2, 0.5))
-    out: "3.44473422933025673297131927065"
   sympy:
     in: N(lerchphi(-2, 2, 0.5), 30)
+    out: "3.44473422933025673297131927065"
+  mpmath:
+    in: (lerchphi(-2, 2, 0.5))
     out: "3.44473422933025673297131927065"
 n-lerchphi-neg-2-2-5-over-2:
   epsil:
@@ -5265,11 +5265,11 @@ n-lerchphi-neg-2-2-neg-2p5:
       in: N[\Phi (-2,2,-2.5)]
       out: -12.2868+\text{1.6304075637028887$\grave{ }$*${}^{\wedge}$-15} i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-2, 2, -2.5))
-    out: "-12.2867627235309427526594430541"
   sympy:
     in: N(lerchphi(-2, 2, -2.5), 30)
+    out: "-12.2867627235309427526594430541"
+  mpmath:
+    in: (lerchphi(-2, 2, -2.5))
     out: "-12.2867627235309427526594430541"
 n-lerchphi-neg-2-3-1:
   epsil:
@@ -5289,11 +5289,11 @@ n-lerchphi-neg-2-3-1:
     tex:
       in: N[\Phi (-2,3,1)]
       out: "0.834142"
-  mpmath:
-    in: (lerchphi(-2, 3, 1))
-    out: "0.834141681983285606023172657944"
   sympy:
     in: N(lerchphi(-2, 3, 1), 30)
+    out: "0.834141681983285606023172657944"
+  mpmath:
+    in: (lerchphi(-2, 3, 1))
     out: "0.834141681983285606023172657944"
 n-lerchphi-neg-2-3-2:
   epsil:
@@ -5313,11 +5313,11 @@ n-lerchphi-neg-2-3-2:
     tex:
       in: N[\Phi (-2,3,2)]
       out: "0.0829292"
-  mpmath:
-    in: (lerchphi(-2, 3, 2))
-    out: "0.0829291590083571969884136710281"
   sympy:
     in: N(lerchphi(-2, 3, 2), 30)
+    out: "0.0829291590083571969884136710281"
+  mpmath:
+    in: (lerchphi(-2, 3, 2))
     out: "0.0829291590083571969884136710281"
 n-lerchphi-neg-2-3-0p5:
   epsil:
@@ -5337,11 +5337,11 @@ n-lerchphi-neg-2-3-0p5:
     tex:
       in: N[\Phi (-2,3,0.5)]
       out: 7.56328\, +\text{1.3824347500011768$\grave{ }$*${}^{\wedge}$-15} i
-  mpmath:
-    in: (lerchphi(-2, 3, 0.5))
-    out: "7.56328461734745257105952220403"
   sympy:
     in: N(lerchphi(-2, 3, 0.5), 30)
+    out: "7.56328461734745257105952220403"
+  mpmath:
+    in: (lerchphi(-2, 3, 0.5))
     out: "7.56328461734745257105952220403"
 n-lerchphi-neg-2-3-5-over-2:
   epsil:
@@ -5385,11 +5385,11 @@ n-lerchphi-neg-2-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-2, 3, -2.5))
-    out: "-91.9776843461870279758835850397"
   sympy:
     in: N(lerchphi(-2, 3, -2.5), 30)
+    out: "-91.9776843461870279758835850397"
+  mpmath:
+    in: (lerchphi(-2, 3, -2.5))
     out: "-91.9776843461870279758835850397"
 n-lerchphi-neg-2-0p5-1:
   epsil:
@@ -5409,12 +5409,12 @@ n-lerchphi-neg-2-0p5-1:
     tex:
       in: N[\Phi (-2,0.5,1)]
       out: 0.445644\, -\text{4.163336342344337$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-2, 0.5, 1))
-    out: (0.445644355776061650990759777754 + 4.70197740328915003187494614889e-38j)
   sympy:
     in: N(lerchphi(-2, 0.5, 1), 30)
     out: "0.445644355776061650990759777754"
+  mpmath:
+    in: (lerchphi(-2, 0.5, 1))
+    out: (0.445644355776061650990759777754 + 4.70197740328915003187494614889e-38j)
 n-lerchphi-neg-2-0p5-2:
   epsil:
     in: N(LerchPhi(-2, 0.5, 2))
@@ -5433,11 +5433,11 @@ n-lerchphi-neg-2-0p5-2:
     tex:
       in: N[\Phi (-2,0.5,2)]
       out: 0.277178\, +\text{5.68356755158503$\grave{ }$*${}^{\wedge}$-18} i
-  mpmath:
-    in: (lerchphi(-2, 0.5, 2))
-    out: "0.277177822111969174504620111123"
   sympy:
     in: N(lerchphi(-2, 0.5, 2), 30)
+    out: "0.277177822111969174504620111123"
+  mpmath:
+    in: (lerchphi(-2, 0.5, 2))
     out: "0.277177822111969174504620111123"
 n-lerchphi-neg-2-0p5-0p5:
   epsil:
@@ -5457,12 +5457,12 @@ n-lerchphi-neg-2-0p5-0p5:
     tex:
       in: N[\Phi (-2,0.5,0.5)]
       out: 0.743192\, -\text{2.4228238315063152$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-2, 0.5, 0.5))
-    out: "0.74319243202883686038655825075"
   sympy:
     in: N(lerchphi(-2, 0.5, 0.5), 30)
     out: "0.743192432028836860386558250750"
+  mpmath:
+    in: (lerchphi(-2, 0.5, 0.5))
+    out: "0.74319243202883686038655825075"
 n-lerchphi-neg-2-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-2, 0.5, 5 / 2))
@@ -5505,12 +5505,12 @@ n-lerchphi-neg-2-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-2, 0.5, -2.5))
-    out: (-5.945539456230694883092466006 - 4.65631661967060399614167755592j)
   sympy:
     in: N(lerchphi(-2, 0.5, -2.5), 30)
     out: -5.945539456230694883092466006 - 4.65631661967060399614167755592*I
+  mpmath:
+    in: (lerchphi(-2, 0.5, -2.5))
+    out: (-5.945539456230694883092466006 - 4.65631661967060399614167755592j)
 n-lerchphi-neg-2-2-plus-i-1:
   epsil:
     in: N(LerchPhi(-2, 2 + i, 1))
@@ -5529,12 +5529,12 @@ n-lerchphi-neg-2-2-plus-i-1:
     tex:
       in: N[\Phi (-2,2+i,1)]
       out: 0.746277\, +0.140409 i
-  mpmath:
-    in: (lerchphi(-2, mpc(2, 1), 1))
-    out: (0.746276670223344782376142304299 + 0.140408686389416694807730557994j)
   sympy:
     in: N(lerchphi(-2, (2 + 1*I), 1), 30)
     out: 0.746276670223344782376142304299 + 0.140408686389416694807730557994*I
+  mpmath:
+    in: (lerchphi(-2, mpc(2, 1), 1))
+    out: (0.746276670223344782376142304299 + 0.140408686389416694807730557994j)
 n-lerchphi-neg-2-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-2, 2 + i, 2))
@@ -5553,12 +5553,12 @@ n-lerchphi-neg-2-2-plus-i-2:
     tex:
       in: N[\Phi (-2,2+i,2)]
       out: 0.126862\, -0.0702043 i
-  mpmath:
-    in: (lerchphi(-2, mpc(2, 1), 2))
-    out: (0.12686166488832760881192884785 - 0.070204343194708347403865278997j)
   sympy:
     in: N(lerchphi(-2, (2 + 1*I), 2), 30)
     out: 0.12686166488832760881192884785 - 0.070204343194708347403865278997*I
+  mpmath:
+    in: (lerchphi(-2, mpc(2, 1), 2))
+    out: (0.12686166488832760881192884785 - 0.070204343194708347403865278997j)
 n-lerchphi-neg-2-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-2, 2 + i, 0.5))
@@ -5577,12 +5577,12 @@ n-lerchphi-neg-2-2-plus-i-0p5:
     tex:
       in: N[\Phi (-2,2+i,0.5)]
       out: 2.51118\, +2.67605 i
-  mpmath:
-    in: (lerchphi(-2, mpc(2, 1), 0.5))
-    out: (2.51118300287402974185302258175 + 2.67605114284846415568234317467j)
   sympy:
     in: N(lerchphi(-2, (2 + 1*I), 0.5), 30)
     out: 2.51118300287402974185302258175 + 2.67605114284846415568234317467*I
+  mpmath:
+    in: (lerchphi(-2, mpc(2, 1), 0.5))
+    out: (2.51118300287402974185302258175 + 2.67605114284846415568234317467j)
 n-lerchphi-neg-2-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-2, 2 + i, 5 / 2))
@@ -5625,12 +5625,12 @@ n-lerchphi-neg-2-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-2, mpc(2, 1), -2.5))
-    out: (248.074329015288616998956798701 + 220.343874485533096552837463665j)
   sympy:
     in: N(lerchphi(-2, (2 + 1*I), -2.5), 30)
     out: 248.074329015288616998956798701 + 220.343874485533096552837463665*I
+  mpmath:
+    in: (lerchphi(-2, mpc(2, 1), -2.5))
+    out: (248.074329015288616998956798701 + 220.343874485533096552837463665j)
 n-lerchphi-3-2-1:
   epsil:
     in: N(LerchPhi(3, 2, 1))
@@ -5649,12 +5649,12 @@ n-lerchphi-3-2-1:
     tex:
       in: N[\Phi (3,2,1)]
       out: 0.773393\, -1.15046 i
-  mpmath:
-    in: (lerchphi(3, 2, 1))
-    out: (0.773393474437699465468731491234 - 1.15046409840773422047794019461j)
   sympy:
     in: N(lerchphi(3, 2, 1), 30)
     out: 0.773393474437699465468731491234 - 1.15046409840773422047794019461*I
+  mpmath:
+    in: (lerchphi(3, 2, 1))
+    out: (0.773393474437699465468731491234 - 1.15046409840773422047794019461j)
 n-lerchphi-3-2-2:
   epsil:
     in: N(LerchPhi(3, 2, 2))
@@ -5673,12 +5673,12 @@ n-lerchphi-3-2-2:
     tex:
       in: N[\Phi (3,2,2)]
       out: -0.0755355-0.383488 i
-  mpmath:
-    in: (lerchphi(3, 2, 2))
-    out: (-0.0755355085207668448437561695885 - 0.383488032802578073492646731535j)
   sympy:
     in: N(lerchphi(3, 2, 2), 30)
     out: -0.0755355085207668448437561695885 - 0.383488032802578073492646731535*I
+  mpmath:
+    in: (lerchphi(3, 2, 2))
+    out: (-0.0755355085207668448437561695885 - 0.383488032802578073492646731535j)
 n-lerchphi-3-2-0p5:
   epsil:
     in: N(LerchPhi(3, 2, 0.5))
@@ -5697,12 +5697,12 @@ n-lerchphi-3-2-0p5:
     tex:
       in: N[\Phi (3,2,0.5)]
       out: 4.30831\, -1.99266 i
-  mpmath:
-    in: (lerchphi(3, 2, 0.5))
-    out: (4.30830591009261429471108281005 - 1.99266227072611637422301777311j)
   sympy:
     in: N(lerchphi(3, 2, 0.5), 30)
     out: 4.30830591009261429471108281005 - 1.99266227072611637422301777311*I
+  mpmath:
+    in: (lerchphi(3, 2, 0.5))
+    out: (4.30830591009261429471108281005 - 1.99266227072611637422301777311j)
 n-lerchphi-3-2-5-over-2:
   epsil:
     in: N(LerchPhi(3, 2, 5 / 2))
@@ -5743,12 +5743,12 @@ n-lerchphi-3-2-neg-2p5:
       in: N[\Phi (3,2,-2.5)]
       out: 153.818\, -53.8019 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(3, 2, -2.5))
-    out: (153.817592905833919290532569205 - 53.801881309605142104021479874j)
   sympy:
     in: N(lerchphi(3, 2, -2.5), 30)
     out: 153.817592905833919290532569205 - 53.801881309605142104021479874*I
+  mpmath:
+    in: (lerchphi(3, 2, -2.5))
+    out: (153.817592905833919290532569205 - 53.801881309605142104021479874j)
 n-lerchphi-3-3-1:
   epsil:
     in: N(LerchPhi(3, 3, 1))
@@ -5767,12 +5767,12 @@ n-lerchphi-3-3-1:
     tex:
       in: N[\Phi (3,3,1)]
       out: 1.24737\, -0.631957 i
-  mpmath:
-    in: (lerchphi(3, 3, 1))
-    out: (1.24737419808024387845950985011 - 0.631956998091107131301833343961j)
   sympy:
     in: N(lerchphi(3, 3, 1), 30)
     out: 1.24737419808024387845950985011 - 0.631956998091107131301833343961*I
+  mpmath:
+    in: (lerchphi(3, 3, 1))
+    out: (1.24737419808024387845950985011 - 0.631956998091107131301833343961j)
 n-lerchphi-3-3-2:
   epsil:
     in: N(LerchPhi(3, 3, 2))
@@ -5791,12 +5791,12 @@ n-lerchphi-3-3-2:
     tex:
       in: N[\Phi (3,3,2)]
       out: 0.0824581\, -0.210652 i
-  mpmath:
-    in: (lerchphi(3, 3, 2))
-    out: (0.0824580660267479594865032833685 - 0.210652332697035710433944447987j)
   sympy:
     in: N(lerchphi(3, 3, 2), 30)
     out: 0.0824580660267479594865032833685 - 0.210652332697035710433944447987*I
+  mpmath:
+    in: (lerchphi(3, 3, 2))
+    out: (0.0824580660267479594865032833685 - 0.210652332697035710433944447987j)
 n-lerchphi-3-3-0p5:
   epsil:
     in: N(LerchPhi(3, 3, 0.5))
@@ -5815,12 +5815,12 @@ n-lerchphi-3-3-0p5:
     tex:
       in: N[\Phi (3,3,0.5)]
       out: 8.96244\, -1.09458 i
-  mpmath:
-    in: (lerchphi(3, 3, 0.5))
-    out: (8.96243548481829339004319716868 - 1.09458162889250555299459400285j)
   sympy:
     in: N(lerchphi(3, 3, 0.5), 30)
     out: 8.96243548481829339004319716868 - 1.09458162889250555299459400285*I
+  mpmath:
+    in: (lerchphi(3, 3, 0.5))
+    out: (8.96243548481829339004319716868 - 1.09458162889250555299459400285j)
 n-lerchphi-3-3-5-over-2:
   epsil:
     in: N(LerchPhi(3, 3, 5 / 2))
@@ -5863,12 +5863,12 @@ n-lerchphi-3-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(3, 3, -2.5))
-    out: (169.032869201205032642277434665 - 29.5537039800976499308540380769j)
   sympy:
     in: N(lerchphi(3, 3, -2.5), 30)
     out: 169.032869201205032642277434665 - 29.5537039800976499308540380769*I
+  mpmath:
+    in: (lerchphi(3, 3, -2.5))
+    out: (169.032869201205032642277434665 - 29.5537039800976499308540380769j)
 n-lerchphi-3-0p5-1:
   epsil:
     in: N(LerchPhi(3, 0.5, 1))
@@ -5887,12 +5887,12 @@ n-lerchphi-3-0p5-1:
     tex:
       in: N[\Phi (3,0.5,1)]
       out: -0.567338-0.563678 i
-  mpmath:
-    in: (lerchphi(3, 0.5, 1))
-    out: (-0.567338449754659571731853435251 - 0.563678480792821316624313292481j)
   sympy:
     in: N(lerchphi(3, 0.5, 1), 30)
     out: -0.567338449754659571731853435251 - 0.563678480792821316624313292481*I
+  mpmath:
+    in: (lerchphi(3, 0.5, 1))
+    out: (-0.567338449754659571731853435251 - 0.563678480792821316624313292481j)
 n-lerchphi-3-0p5-2:
   epsil:
     in: N(LerchPhi(3, 0.5, 2))
@@ -5911,12 +5911,12 @@ n-lerchphi-3-0p5-2:
     tex:
       in: N[\Phi (3,0.5,2)]
       out: -0.522446-0.187893 i
-  mpmath:
-    in: (lerchphi(3, 0.5, 2))
-    out: (-0.522446149918219857243951145084 - 0.187892826930940438874771097494j)
   sympy:
     in: N(lerchphi(3, 0.5, 2), 30)
     out: -0.522446149918219857243951145084 - 0.187892826930940438874771097494*I
+  mpmath:
+    in: (lerchphi(3, 0.5, 2))
+    out: (-0.522446149918219857243951145084 - 0.187892826930940438874771097494j)
 n-lerchphi-3-0p5-0p5:
   epsil:
     in: N(LerchPhi(3, 0.5, 0.5))
@@ -5935,12 +5935,12 @@ n-lerchphi-3-0p5-0p5:
     tex:
       in: N[\Phi (3,0.5,0.5)]
       out: -0.305888-0.97632 i
-  mpmath:
-    in: (lerchphi(3, 0.5, 0.5))
-    out: (-0.305888418127715028965135908349 - 0.976319767866404049839027190976j)
   sympy:
     in: N(lerchphi(3, 0.5, 0.5), 30)
     out: -0.305888418127715028965135908349 - 0.976319767866404049839027190976*I
+  mpmath:
+    in: (lerchphi(3, 0.5, 0.5))
+    out: (-0.305888418127715028965135908349 - 0.976319767866404049839027190976j)
 n-lerchphi-3-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(3, 0.5, 5 / 2))
@@ -5983,12 +5983,12 @@ n-lerchphi-3-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(3, 0.5, -2.5))
-    out: (-8.25898728944830578205866952541 - 42.1705010685676187494659954578j)
   sympy:
     in: N(lerchphi(3, 0.5, -2.5), 30)
     out: -8.25898728944830578205866952541 - 42.1705010685676187494659954578*I
+  mpmath:
+    in: (lerchphi(3, 0.5, -2.5))
+    out: (-8.25898728944830578205866952541 - 42.1705010685676187494659954578j)
 n-lerchphi-3-2-plus-i-1:
   epsil:
     in: N(LerchPhi(3, 2 + i, 1))
@@ -6007,12 +6007,12 @@ n-lerchphi-3-2-plus-i-1:
     tex:
       in: N[\Phi (3,2+i,1)]
       out: 0.601416\, -0.572692 i
-  mpmath:
-    in: (lerchphi(3, mpc(2, 1), 1))
-    out: (0.601415572990860513866170670316 - 0.572691588995903849275232568405j)
   sympy:
     in: N(lerchphi(3, (2 + 1*I), 1), 30)
     out: 0.601415572990860513866170670316 - 0.572691588995903849275232568405*I
+  mpmath:
+    in: (lerchphi(3, mpc(2, 1), 1))
+    out: (0.601415572990860513866170670316 - 0.572691588995903849275232568405j)
 n-lerchphi-3-2-plus-i-2:
   epsil:
     in: N(LerchPhi(3, 2 + i, 2))
@@ -6031,12 +6031,12 @@ n-lerchphi-3-2-plus-i-2:
     tex:
       in: N[\Phi (3,2+i,2)]
       out: -0.132861-0.190897 i
-  mpmath:
-    in: (lerchphi(3, mpc(2, 1), 2))
-    out: (-0.132861475669713162044609776561 - 0.190897196331967949758410856135j)
   sympy:
     in: N(lerchphi(3, (2 + 1*I), 2), 30)
     out: -0.132861475669713162044609776561 - 0.190897196331967949758410856135*I
+  mpmath:
+    in: (lerchphi(3, mpc(2, 1), 2))
+    out: (-0.132861475669713162044609776561 - 0.190897196331967949758410856135j)
 n-lerchphi-3-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(3, 2 + i, 0.5))
@@ -6055,12 +6055,12 @@ n-lerchphi-3-2-plus-i-0p5:
     tex:
       in: N[\Phi (3,2+i,0.5)]
       out: 3.07433\, +1.38209 i
-  mpmath:
-    in: (lerchphi(3, mpc(2, 1), 0.5))
-    out: (3.07433014627917589096322930026 + 1.38209065693181696710710470656j)
   sympy:
     in: N(lerchphi(3, (2 + 1*I), 0.5), 30)
     out: 3.07433014627917589096322930026 + 1.38209065693181696710710470656*I
+  mpmath:
+    in: (lerchphi(3, mpc(2, 1), 0.5))
+    out: (3.07433014627917589096322930026 + 1.38209065693181696710710470656j)
 n-lerchphi-3-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(3, 2 + i, 5 / 2))
@@ -6103,12 +6103,12 @@ n-lerchphi-3-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(3, mpc(2, 1), -2.5))
-    out: (754.439399822086498861460717339 + 554.504954092239023295571512268j)
   sympy:
     in: N(lerchphi(3, (2 + 1*I), -2.5), 30)
     out: 754.439399822086498861460717339 + 554.504954092239023295571512268*I
+  mpmath:
+    in: (lerchphi(3, mpc(2, 1), -2.5))
+    out: (754.439399822086498861460717339 + 554.504954092239023295571512268j)
 n-lerchphi-1p5-2-1:
   epsil:
     in: N(LerchPhi(1.5, 2, 1))
@@ -6127,12 +6127,12 @@ n-lerchphi-1p5-2-1:
     tex:
       in: N[\Phi (1.5,2,1)]
       out: 1.58293\, -0.849204 i
-  mpmath:
-    in: (lerchphi(1.5, 2, 1))
-    out: (1.58293018018165346711833317538 - 0.849204136613067020622087790387j)
   sympy:
     in: N(lerchphi(1.5, 2, 1), 30)
     out: 1.58293018018165346711833317538 - 0.849204136613067020622087790387*I
+  mpmath:
+    in: (lerchphi(1.5, 2, 1))
+    out: (1.58293018018165346711833317538 - 0.849204136613067020622087790387j)
 n-lerchphi-1p5-2-2:
   epsil:
     in: N(LerchPhi(1.5, 2, 2))
@@ -6151,12 +6151,12 @@ n-lerchphi-1p5-2-2:
     tex:
       in: N[\Phi (1.5,2,2)]
       out: 0.38862\, -0.566136 i
-  mpmath:
-    in: (lerchphi(1.5, 2, 2))
-    out: (0.388620120121102311412222116921 - 0.566136091075378013748058526925j)
   sympy:
     in: N(lerchphi(1.5, 2, 2), 30)
     out: 0.388620120121102311412222116921 - 0.566136091075378013748058526925*I
+  mpmath:
+    in: (lerchphi(1.5, 2, 2))
+    out: (0.388620120121102311412222116921 - 0.566136091075378013748058526925j)
 n-lerchphi-1p5-2-0p5:
   epsil:
     in: N(LerchPhi(1.5, 2, 0.5))
@@ -6175,12 +6175,12 @@ n-lerchphi-1p5-2-0p5:
     tex:
       in: N[\Phi (1.5,2,0.5)]
       out: 5.11849\, -1.04006 i
-  mpmath:
-    in: (lerchphi(1.5, 2, 0.5))
-    out: (5.11849066872607328738029339978 - 1.04005841108137618543309747233j)
   sympy:
     in: N(lerchphi(1.5, 2, 0.5), 30)
     out: 5.11849066872607328738029339978 - 1.04005841108137618543309747233*I
+  mpmath:
+    in: (lerchphi(1.5, 2, 0.5))
+    out: (5.11849066872607328738029339978 - 1.04005841108137618543309747233j)
 n-lerchphi-1p5-2-5-over-2:
   epsil:
     in: N(LerchPhi(1.5, 2, 5 / 2))
@@ -6221,12 +6221,12 @@ n-lerchphi-1p5-2-neg-2p5:
       in: N[\Phi (1.5,2,-2.5)]
       out: 27.1016\, -3.5102 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(1.5, 2, -2.5))
-    out: (27.1015726736171640115751568909 - 3.51019713739964462583670396912j)
   sympy:
     in: N(lerchphi(1.5, 2, -2.5), 30)
     out: 27.1015726736171640115751568909 - 3.51019713739964462583670396912*I
+  mpmath:
+    in: (lerchphi(1.5, 2, -2.5))
+    out: (27.1015726736171640115751568909 - 3.51019713739964462583670396912j)
 n-lerchphi-1p5-3-1:
   epsil:
     in: N(LerchPhi(1.5, 3, 1))
@@ -6245,12 +6245,12 @@ n-lerchphi-1p5-3-1:
     tex:
       in: N[\Phi (1.5,3,1)]
       out: 1.37392\, -0.172161 i
-  mpmath:
-    in: (lerchphi(1.5, 3, 1))
-    out: (1.37391833821352058086037613776 - 0.172161323528858807168848833613j)
   sympy:
     in: N(lerchphi(1.5, 3, 1), 30)
     out: 1.37391833821352058086037613776 - 0.172161323528858807168848833613*I
+  mpmath:
+    in: (lerchphi(1.5, 3, 1))
+    out: (1.37391833821352058086037613776 - 0.172161323528858807168848833613j)
 n-lerchphi-1p5-3-2:
   epsil:
     in: N(LerchPhi(1.5, 3, 2))
@@ -6269,12 +6269,12 @@ n-lerchphi-1p5-3-2:
     tex:
       in: N[\Phi (1.5,3,2)]
       out: 0.249279\, -0.114774 i
-  mpmath:
-    in: (lerchphi(1.5, 3, 2))
-    out: (0.249278892142347053906917425172 - 0.114774215685905871445899222409j)
   sympy:
     in: N(lerchphi(1.5, 3, 2), 30)
     out: 0.249278892142347053906917425172 - 0.114774215685905871445899222409*I
+  mpmath:
+    in: (lerchphi(1.5, 3, 2))
+    out: (0.249278892142347053906917425172 - 0.114774215685905871445899222409j)
 n-lerchphi-1p5-3-0p5:
   epsil:
     in: N(LerchPhi(1.5, 3, 0.5))
@@ -6293,12 +6293,12 @@ n-lerchphi-1p5-3-0p5:
     tex:
       in: N[\Phi (1.5,3,0.5)]
       out: 8.75839\, -0.210854 i
-  mpmath:
-    in: (lerchphi(1.5, 3, 0.5))
-    out: (8.75839228129125383727332542679 - 0.210853698043957933535455128003j)
   sympy:
     in: N(lerchphi(1.5, 3, 0.5), 30)
     out: 8.75839228129125383727332542679 - 0.210853698043957933535455128003*I
+  mpmath:
+    in: (lerchphi(1.5, 3, 0.5))
+    out: (8.75839228129125383727332542679 - 0.210853698043957933535455128003j)
 n-lerchphi-1p5-3-5-over-2:
   epsil:
     in: N(LerchPhi(1.5, 3, 5 / 2))
@@ -6341,12 +6341,12 @@ n-lerchphi-1p5-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(1.5, 3, -2.5))
-    out: (11.051129504913537256353028871 - 0.711631230898358025682161057009j)
   sympy:
     in: N(lerchphi(1.5, 3, -2.5), 30)
     out: 11.051129504913537256353028871 - 0.711631230898358025682161057009*I
+  mpmath:
+    in: (lerchphi(1.5, 3, -2.5))
+    out: (11.051129504913537256353028871 - 0.711631230898358025682161057009j)
 n-lerchphi-1p5-0p5-1:
   epsil:
     in: N(LerchPhi(1.5, 0.5, 1))
@@ -6365,12 +6365,12 @@ n-lerchphi-1p5-0p5-1:
     tex:
       in: N[\Phi (1.5,0.5,1)]
       out: -1.03109-1.8557 i
-  mpmath:
-    in: (lerchphi(1.5, 0.5, 1))
-    out: (-1.03109380162610715160273932578 - 1.85569643577401585155368759397j)
   sympy:
     in: N(lerchphi(1.5, 0.5, 1), 30)
     out: -1.03109380162610715160273932578 - 1.85569643577401585155368759397*I
+  mpmath:
+    in: (lerchphi(1.5, 0.5, 1))
+    out: (-1.03109380162610715160273932578 - 1.85569643577401585155368759397j)
 n-lerchphi-1p5-0p5-2:
   epsil:
     in: N(LerchPhi(1.5, 0.5, 2))
@@ -6389,12 +6389,12 @@ n-lerchphi-1p5-0p5-2:
     tex:
       in: N[\Phi (1.5,0.5,2)]
       out: -1.35406-1.23713 i
-  mpmath:
-    in: (lerchphi(1.5, 0.5, 2))
-    out: (-1.35406253441740476773515955052 - 1.23713095718267723436912506265j)
   sympy:
     in: N(lerchphi(1.5, 0.5, 2), 30)
     out: -1.35406253441740476773515955052 - 1.23713095718267723436912506265*I
+  mpmath:
+    in: (lerchphi(1.5, 0.5, 2))
+    out: (-1.35406253441740476773515955052 - 1.23713095718267723436912506265j)
 n-lerchphi-1p5-0p5-0p5:
   epsil:
     in: N(LerchPhi(1.5, 0.5, 0.5))
@@ -6413,12 +6413,12 @@ n-lerchphi-1p5-0p5-0p5:
     tex:
       in: N[\Phi (1.5,0.5,0.5)]
       out: -0.472701-2.27275 i
-  mpmath:
-    in: (lerchphi(1.5, 0.5, 0.5))
-    out: (-0.472701238866761674592013623351 - 2.2727546925738772319635623852j)
   sympy:
     in: N(lerchphi(1.5, 0.5, 0.5), 30)
     out: -0.472701238866761686008288734229 - 2.27275469257387729982156088226*I
+  mpmath:
+    in: (lerchphi(1.5, 0.5, 0.5))
+    out: (-0.472701238866761674592013623351 - 2.2727546925738772319635623852j)
 n-lerchphi-1p5-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(1.5, 0.5, 5 / 2))
@@ -6461,12 +6461,12 @@ n-lerchphi-1p5-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(1.5, 0.5, -2.5))
-    out: (-1.59536668117532065174804597881 - 12.7097280062015644331792434258j)
   sympy:
     in: N(lerchphi(1.5, 0.5, -2.5), 30)
     out: -1.59536668117532065558350495849 - 12.7097280062015638435468645184*I
+  mpmath:
+    in: (lerchphi(1.5, 0.5, -2.5))
+    out: (-1.59536668117532065174804597881 - 12.7097280062015644331792434258j)
 n-lerchphi-1p5-2-plus-i-1:
   epsil:
     in: N(LerchPhi(1.5, 2 + i, 1))
@@ -6485,12 +6485,12 @@ n-lerchphi-1p5-2-plus-i-1:
     tex:
       in: N[\Phi (1.5,2+i,1)]
       out: 0.928831\, -0.565208 i
-  mpmath:
-    in: (lerchphi(1.5, mpc(2, 1), 1))
-    out: (0.928830673042347181527866380885 - 0.565207572193658850862808232629j)
   sympy:
     in: N(lerchphi(1.5, (2 + 1*I), 1), 30)
     out: 0.928830673042347181527866380885 - 0.565207572193658850862808232629*I
+  mpmath:
+    in: (lerchphi(1.5, mpc(2, 1), 1))
+    out: (0.928830673042347181527866380885 - 0.565207572193658850862808232629j)
 n-lerchphi-1p5-2-plus-i-2:
   epsil:
     in: N(LerchPhi(1.5, 2 + i, 2))
@@ -6509,12 +6509,12 @@ n-lerchphi-1p5-2-plus-i-2:
     tex:
       in: N[\Phi (1.5,2+i,2)]
       out: -0.0474462-0.376805 i
-  mpmath:
-    in: (lerchphi(1.5, mpc(2, 1), 2))
-    out: (-0.04744621797176854564808907941 - 0.376805048129105900575205488419j)
   sympy:
     in: N(lerchphi(1.5, (2 + 1*I), 2), 30)
     out: -0.04744621797176854564808907941 - 0.376805048129105900575205488419*I
+  mpmath:
+    in: (lerchphi(1.5, mpc(2, 1), 2))
+    out: (-0.04744621797176854564808907941 - 0.376805048129105900575205488419j)
 n-lerchphi-1p5-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(1.5, 2 + i, 0.5))
@@ -6533,12 +6533,12 @@ n-lerchphi-1p5-2-plus-i-0p5:
     tex:
       in: N[\Phi (1.5,2+i,0.5)]
       out: 3.38305\, +1.74798 i
-  mpmath:
-    in: (lerchphi(1.5, mpc(2, 1), 0.5))
-    out: (3.38304838977882808399606598338 + 1.74798348435333795398915212916j)
   sympy:
     in: N(lerchphi(1.5, (2 + 1*I), 0.5), 30)
     out: 3.38304838977882808399606598338 + 1.74798348435333795398915212916*I
+  mpmath:
+    in: (lerchphi(1.5, mpc(2, 1), 0.5))
+    out: (3.38304838977882808399606598338 + 1.74798348435333795398915212916j)
 n-lerchphi-1p5-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(1.5, 2 + i, 5 / 2))
@@ -6581,12 +6581,12 @@ n-lerchphi-1p5-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(1.5, mpc(2, 1), -2.5))
-    out: (188.054525807321666081868524233 + 129.950947308879212828101046121j)
   sympy:
     in: N(lerchphi(1.5, (2 + 1*I), -2.5), 30)
     out: 188.054525807321666081868524233 + 129.950947308879212828101046121*I
+  mpmath:
+    in: (lerchphi(1.5, mpc(2, 1), -2.5))
+    out: (188.054525807321666081868524233 + 129.950947308879212828101046121j)
 n-lerchphi-neg-1p5-2-1:
   epsil:
     in: N(LerchPhi(-1.5, 2, 1))
@@ -6605,11 +6605,11 @@ n-lerchphi-neg-1p5-2-1:
     tex:
       in: N[\Phi (-1.5,2,1)]
       out: "0.76492"
-  mpmath:
-    in: (lerchphi(-1.5, 2, 1))
-    out: "0.764920440250380502719984422575"
   sympy:
     in: N(lerchphi(-1.5, 2, 1), 30)
+    out: "0.764920440250380502719984422575"
+  mpmath:
+    in: (lerchphi(-1.5, 2, 1))
     out: "0.764920440250380502719984422575"
 n-lerchphi-neg-1p5-2-2:
   epsil:
@@ -6629,12 +6629,12 @@ n-lerchphi-neg-1p5-2-2:
     tex:
       in: N[\Phi (-1.5,2,2)]
       out: 0.15672\, +\text{5.721258238267586$\grave{ }$*${}^{\wedge}$-16} i
-  mpmath:
-    in: (lerchphi(-1.5, 2, 2))
-    out: "0.15671970649974633152001038495"
   sympy:
     in: N(lerchphi(-1.5, 2, 2), 30)
     out: "0.156719706499746331520010384950"
+  mpmath:
+    in: (lerchphi(-1.5, 2, 2))
+    out: "0.15671970649974633152001038495"
 n-lerchphi-neg-1p5-2-0p5:
   epsil:
     in: N(LerchPhi(-1.5, 2, 0.5))
@@ -6653,11 +6653,11 @@ n-lerchphi-neg-1p5-2-0p5:
     tex:
       in: N[\Phi (-1.5,2,0.5)]
       out: 3.545\, -\text{5.748616730151821$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-1.5, 2, 0.5))
-    out: "3.54500455887493687800668168144"
   sympy:
     in: N(lerchphi(-1.5, 2, 0.5), 30)
+    out: "3.54500455887493687800668168144"
+  mpmath:
+    in: (lerchphi(-1.5, 2, 0.5))
     out: "3.54500455887493687800668168144"
 n-lerchphi-neg-1p5-2-5-over-2:
   epsil:
@@ -6699,11 +6699,11 @@ n-lerchphi-neg-1p5-2-neg-2p5:
       in: N[\Phi (-1.5,2,-2.5)]
       out: -3.47106+\text{1.9401581464262396$\grave{ }$*${}^{\wedge}$-16} i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-1.5, 2, -2.5))
-    out: "-3.47105705286957862993921734153"
   sympy:
     in: N(lerchphi(-1.5, 2, -2.5), 30)
+    out: "-3.47105705286957862993921734153"
+  mpmath:
+    in: (lerchphi(-1.5, 2, -2.5))
     out: "-3.47105705286957862993921734153"
 n-lerchphi-neg-1p5-3-1:
   epsil:
@@ -6723,11 +6723,11 @@ n-lerchphi-neg-1p5-3-1:
     tex:
       in: N[\Phi (-1.5,3,1)]
       out: "0.865225"
-  mpmath:
-    in: (lerchphi(-1.5, 3, 1))
-    out: "0.865224966770833431948428639927"
   sympy:
     in: N(lerchphi(-1.5, 3, 1), 30)
+    out: "0.865224966770833431948428639927"
+  mpmath:
+    in: (lerchphi(-1.5, 3, 1))
     out: "0.865224966770833431948428639927"
 n-lerchphi-neg-1p5-3-2:
   epsil:
@@ -6747,11 +6747,11 @@ n-lerchphi-neg-1p5-3-2:
     tex:
       in: N[\Phi (-1.5,3,2)]
       out: 0.08985\, +\text{2.6738770253614813$\grave{ }$*${}^{\wedge}$-16} i
-  mpmath:
-    in: (lerchphi(-1.5, 3, 2))
-    out: "0.0898500221527777120343809067151"
   sympy:
     in: N(lerchphi(-1.5, 3, 2), 30)
+    out: "0.0898500221527777120343809067151"
+  mpmath:
+    in: (lerchphi(-1.5, 3, 2))
     out: "0.0898500221527777120343809067151"
 n-lerchphi-neg-1p5-3-0p5:
   epsil:
@@ -6771,12 +6771,12 @@ n-lerchphi-neg-1p5-3-0p5:
     tex:
       in: N[\Phi (-1.5,3,0.5)]
       out: 7.65204\, +\text{1.513727336795356$\grave{ }$*${}^{\wedge}$-15} i
-  mpmath:
-    in: (lerchphi(-1.5, 3, 0.5))
-    out: (7.6520443679635566699658481718 - 5.7428776509422856201812623526e-35j)
   sympy:
     in: N(lerchphi(-1.5, 3, 0.5), 30)
     out: "7.65204436796355666996584817180"
+  mpmath:
+    in: (lerchphi(-1.5, 3, 0.5))
+    out: (7.6520443679635566699658481718 - 5.7428776509422856201812623526e-35j)
 n-lerchphi-neg-1p5-3-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5, 3, 5 / 2))
@@ -6819,12 +6819,12 @@ n-lerchphi-neg-1p5-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-1.5, 3, -2.5))
-    out: (-43.4452052974325593166902931354 + 1.938221207193021396811176044e-34j)
   sympy:
     in: N(lerchphi(-1.5, 3, -2.5), 30)
     out: "-43.4452052974325593166902931354"
+  mpmath:
+    in: (lerchphi(-1.5, 3, -2.5))
+    out: (-43.4452052974325593166902931354 + 1.938221207193021396811176044e-34j)
 n-lerchphi-neg-1p5-0p5-1:
   epsil:
     in: N(LerchPhi(-1.5, 0.5, 1))
@@ -6843,12 +6843,12 @@ n-lerchphi-neg-1p5-0p5-1:
     tex:
       in: N[\Phi (-1.5,0.5,1)]
       out: 0.511802\, -\text{3.700743415417188$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-1.5, 0.5, 1))
-    out: (0.511802181247575693538375305272 - 1.25386064087710667516665230637e-37j)
   sympy:
     in: N(lerchphi(-1.5, 0.5, 1), 30)
     out: 0.511802181247575693538375305272 + 1.56732580109638334395831538296e-38*I
+  mpmath:
+    in: (lerchphi(-1.5, 0.5, 1))
+    out: (0.511802181247575693538375305272 - 1.25386064087710667516665230637e-37j)
 n-lerchphi-neg-1p5-0p5-2:
   epsil:
     in: N(LerchPhi(-1.5, 0.5, 2))
@@ -6867,11 +6867,11 @@ n-lerchphi-neg-1p5-0p5-2:
     tex:
       in: N[\Phi (-1.5,0.5,2)]
       out: 0.325465\, +\text{1.9987578825705452$\grave{ }$*${}^{\wedge}$-18} i
-  mpmath:
-    in: (lerchphi(-1.5, 0.5, 2))
-    out: "0.325465212501616204307749796485"
   sympy:
     in: N(lerchphi(-1.5, 0.5, 2), 30)
+    out: "0.325465212501616204307749796485"
+  mpmath:
+    in: (lerchphi(-1.5, 0.5, 2))
     out: "0.325465212501616204307749796485"
 n-lerchphi-neg-1p5-0p5-0p5:
   epsil:
@@ -6891,12 +6891,12 @@ n-lerchphi-neg-1p5-0p5-0p5:
     tex:
       in: N[\Phi (-1.5,0.5,0.5)]
       out: 0.827894\, +\text{1.134070298867023$\grave{ }$*${}^{\wedge}$-17} i
-  mpmath:
-    in: (lerchphi(-1.5, 0.5, 0.5))
-    out: "0.827894231949179862345219004869"
   sympy:
     in: N(lerchphi(-1.5, 0.5, 0.5), 30)
     out: "0.827894231949179881802081126807"
+  mpmath:
+    in: (lerchphi(-1.5, 0.5, 0.5))
+    out: "0.827894231949179862345219004869"
 n-lerchphi-neg-1p5-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5, 0.5, 5 / 2))
@@ -6939,12 +6939,12 @@ n-lerchphi-neg-1p5-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-1.5, 0.5, -2.5))
-    out: (-2.79414303282848203541511414143 - 2.58969117598155067710493630101j)
   sympy:
     in: N(lerchphi(-1.5, 0.5, -2.5), 30)
     out: -2.79414303282848219822653845767 - 2.58969117598155085246958151401*I
+  mpmath:
+    in: (lerchphi(-1.5, 0.5, -2.5))
+    out: (-2.79414303282848203541511414143 - 2.58969117598155067710493630101j)
 n-lerchphi-neg-1p5-2-plus-i-1:
   epsil:
     in: N(LerchPhi(-1.5, 2 + i, 1))
@@ -6963,12 +6963,12 @@ n-lerchphi-neg-1p5-2-plus-i-1:
     tex:
       in: N[\Phi (-1.5,2+i,1)]
       out: 0.792549\, +0.123075 i
-  mpmath:
-    in: (lerchphi(-1.5, mpc(2, 1), 1))
-    out: (0.79254896572215082285162054121 + 0.123074546469532181285103976886j)
   sympy:
     in: N(lerchphi(-1.5, (2 + 1*I), 1), 30)
     out: 0.79254896572215082285162054121 + 0.123074546469532181285103976886*I
+  mpmath:
+    in: (lerchphi(-1.5, mpc(2, 1), 1))
+    out: (0.79254896572215082285162054121 + 0.123074546469532181285103976886j)
 n-lerchphi-neg-1p5-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-1.5, 2 + i, 2))
@@ -6987,12 +6987,12 @@ n-lerchphi-neg-1p5-2-plus-i-2:
     tex:
       in: N[\Phi (-1.5,2+i,2)]
       out: 0.138301\, -0.0820497 i
-  mpmath:
-    in: (lerchphi(-1.5, mpc(2, 1), 2))
-    out: (0.138300689518566118098919639193 - 0.0820496976463547875234026512573j)
   sympy:
     in: N(lerchphi(-1.5, (2 + 1*I), 2), 30)
     out: 0.138300689518566118098919639193 - 0.0820496976463547875234026512573*I
+  mpmath:
+    in: (lerchphi(-1.5, mpc(2, 1), 2))
+    out: (0.138300689518566118098919639193 - 0.0820496976463547875234026512573j)
 n-lerchphi-neg-1p5-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-1.5, 2 + i, 0.5))
@@ -7011,12 +7011,12 @@ n-lerchphi-neg-1p5-2-plus-i-0p5:
     tex:
       in: N[\Phi (-1.5,2+i,0.5)]
       out: 2.61931\, +2.66873 i
-  mpmath:
-    in: (lerchphi(-1.5, mpc(2, 1), 0.5))
-    out: (2.6193060755931965650384822576 + 2.66873263145789748196805607875j)
   sympy:
     in: N(lerchphi(-1.5, (2 + 1*I), 0.5), 30)
     out: 2.6193060755931965650384822576 + 2.66873263145789748196805607875*I
+  mpmath:
+    in: (lerchphi(-1.5, mpc(2, 1), 0.5))
+    out: (2.6193060755931965650384822576 + 2.66873263145789748196805607875j)
 n-lerchphi-neg-1p5-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5, 2 + i, 5 / 2))
@@ -7059,12 +7059,12 @@ n-lerchphi-neg-1p5-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(-1.5, mpc(2, 1), -2.5))
-    out: (139.444015517816208851556230439 + 127.214874775026812191759373981j)
   sympy:
     in: N(lerchphi(-1.5, (2 + 1*I), -2.5), 30)
     out: 139.444015517816208851556230439 + 127.214874775026812191759373981*I
+  mpmath:
+    in: (lerchphi(-1.5, mpc(2, 1), -2.5))
+    out: (139.444015517816208851556230439 + 127.214874775026812191759373981j)
 n-lerchphi-1-plus-2i-2-1:
   epsil:
     in: N(LerchPhi(1 + 2i, 2, 1))
@@ -7083,12 +7083,12 @@ n-lerchphi-1-plus-2i-2-1:
     tex:
       in: N[\Phi (1+2 i,2,1)]
       out: 0.817164\, +0.43832 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 2, 1))
-    out: (0.817164228975140788444039207374 + 0.438319513824475131782675716092j)
   sympy:
     in: N(lerchphi((1 + 2*I), 2, 1), 30)
     out: 0.817164228975140788444039207374 + 0.438319513824475131782675716092*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 2, 1))
+    out: (0.817164228975140788444039207374 + 0.438319513824475131782675716092j)
 n-lerchphi-1-plus-2i-2-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 2, 2))
@@ -7107,12 +7107,12 @@ n-lerchphi-1-plus-2i-2-2:
     tex:
       in: N[\Phi (1+2 i,2,2)]
       out: 0.138761\, +0.160798 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 2, 2))
-    out: (0.138760651324818210401878127912 + 0.160798211174838710978919460269j)
   sympy:
     in: N(lerchphi((1 + 2*I), 2, 2), 30)
     out: 0.138760651324818210401878127912 + 0.160798211174838710978919460269*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 2, 2))
+    out: (0.138760651324818210401878127912 + 0.160798211174838710978919460269j)
 n-lerchphi-1-plus-2i-2-0p5:
   epsil:
     in: N(LerchPhi(1 + 2i, 2, 0.5))
@@ -7131,12 +7131,12 @@ n-lerchphi-1-plus-2i-2-0p5:
     tex:
       in: N[\Phi (1+2 i,2,0.5)]
       out: 3.79211\, +0.856075 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 2, 0.5))
-    out: (3.79211426084678638346391802662 + 0.856074806978553841533385357637j)
   sympy:
     in: N(lerchphi((1 + 2*I), 2, 0.5), 30)
     out: 3.79211426084678638346391802662 + 0.856074806978553841533385357637*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 2, 0.5))
+    out: (3.79211426084678638346391802662 + 0.856074806978553841533385357637j)
 n-lerchphi-1-plus-2i-2-5-over-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 2, 5 / 2))
@@ -7177,12 +7177,12 @@ n-lerchphi-1-plus-2i-2-neg-2p5:
       in: N[\Phi (1+2 i,2,-2.5)]
       out: -51.3967-0.112163 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 2, -2.5))
-    out: (-51.3966628109130980905918831331 - 0.112162509568776134906186098352j)
   sympy:
     in: N(lerchphi((1 + 2*I), 2, -2.5), 30)
     out: -51.3966628109130980905918831331 - 0.112162509568776134906186098352*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 2, -2.5))
+    out: (-51.3966628109130980905918831331 - 0.112162509568776134906186098352j)
 n-lerchphi-1-plus-2i-3-1:
   epsil:
     in: N(LerchPhi(1 + 2i, 3, 1))
@@ -7201,12 +7201,12 @@ n-lerchphi-1-plus-2i-3-1:
     tex:
       in: N[\Phi (1+2 i,3,1)]
       out: 0.960539\, +0.262024 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 3, 1))
-    out: (0.960539329125924184711172313105 + 0.262023760613250942907630190805j)
   sympy:
     in: N(lerchphi((1 + 2*I), 3, 1), 30)
     out: 0.960539329125924184711172313105 + 0.262023760613250942907630190805*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 3, 1))
+    out: (0.960539329125924184711172313105 + 0.262023760613250942907630190805j)
 n-lerchphi-1-plus-2i-3-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 3, 2))
@@ -7225,12 +7225,12 @@ n-lerchphi-1-plus-2i-3-2:
     tex:
       in: N[\Phi (1+2 i,3,2)]
       out: 0.0969174\, +0.068189 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 3, 2))
-    out: (0.096917370070485214105286538943 + 0.0681890204722805146970571129188j)
   sympy:
     in: N(lerchphi((1 + 2*I), 3, 2), 30)
     out: 0.096917370070485214105286538943 + 0.0681890204722805146970571129188*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 3, 2))
+    out: (0.096917370070485214105286538943 + 0.0681890204722805146970571129188j)
 n-lerchphi-1-plus-2i-3-0p5:
   epsil:
     in: N(LerchPhi(1 + 2i, 3, 0.5))
@@ -7249,12 +7249,12 @@ n-lerchphi-1-plus-2i-3-0p5:
     tex:
       in: N[\Phi (1+2 i,3,0.5)]
       out: 8.00698\, +0.645737 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 3, 0.5))
-    out: (8.0069769544415449786232356077 + 0.645737139237069043902258145889j)
   sympy:
     in: N(lerchphi((1 + 2*I), 3, 0.5), 30)
     out: 8.0069769544415449786232356077 + 0.645737139237069043902258145889*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 3, 0.5))
+    out: (8.0069769544415449786232356077 + 0.645737139237069043902258145889j)
 n-lerchphi-1-plus-2i-3-5-over-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 3, 5 / 2))
@@ -7297,12 +7297,12 @@ n-lerchphi-1-plus-2i-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 3, -2.5))
-    out: (-63.1455685166791529733473716892 - 55.7096550330834420327639034128j)
   sympy:
     in: N(lerchphi((1 + 2*I), 3, -2.5), 30)
     out: -63.1455685166791529733473716892 - 55.7096550330834420327639034128*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 3, -2.5))
+    out: (-63.1455685166791529733473716892 - 55.7096550330834420327639034128j)
 n-lerchphi-1-plus-2i-0p5-1:
   epsil:
     in: N(LerchPhi(1 + 2i, 0.5, 1))
@@ -7321,12 +7321,12 @@ n-lerchphi-1-plus-2i-0p5-1:
     tex:
       in: N[\Phi (1+2 i,0.5,1)]
       out: 0.251873\, +0.594237 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 0.5, 1))
-    out: (0.251873370548447104104811422898 + 0.594237244072761996487189597122j)
   sympy:
     in: N(lerchphi((1 + 2*I), 0.5, 1), 30)
     out: 0.251873370548447104104811422898 + 0.594237244072761996487189597122*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 0.5, 1))
+    out: (0.251873370548447104104811422898 + 0.594237244072761996487189597122j)
 n-lerchphi-1-plus-2i-0p5-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 0.5, 2))
@@ -7345,12 +7345,12 @@ n-lerchphi-1-plus-2i-0p5-2:
     tex:
       in: N[\Phi (1+2 i,0.5,2)]
       out: 0.0880696\, +0.418098 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 0.5, 2))
-    out: (0.0880695717387942194158381234284 + 0.418098100595173557655513350265j)
   sympy:
     in: N(lerchphi((1 + 2*I), 0.5, 2), 30)
     out: 0.0880695717387942194158381234284 + 0.418098100595173557655513350265*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 0.5, 2))
+    out: (0.0880695717387942194158381234284 + 0.418098100595173557655513350265j)
 n-lerchphi-1-plus-2i-0p5-0p5:
   epsil:
     in: N(LerchPhi(1 + 2i, 0.5, 0.5))
@@ -7369,12 +7369,12 @@ n-lerchphi-1-plus-2i-0p5-0p5:
     tex:
       in: N[\Phi (1+2 i,0.5,0.5)]
       out: 0.577382\, +0.768409 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 0.5, 0.5))
-    out: (0.577382043614928305954594521053 + 0.768409107754765701766781347953j)
   sympy:
     in: N(lerchphi((1 + 2*I), 0.5, 0.5), 30)
     out: 0.577382043614928305954594521053 + 0.768409107754765701766781347953*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 0.5, 0.5))
+    out: (0.577382043614928305954594521053 + 0.768409107754765701766781347953j)
 n-lerchphi-1-plus-2i-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 0.5, 5 / 2))
@@ -7417,12 +7417,12 @@ n-lerchphi-1-plus-2i-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(1, 2), 0.5, -2.5))
-    out: (2.47546314709315229870463391096 - 6.81357569837439608407092443075j)
   sympy:
     in: N(lerchphi((1 + 2*I), 0.5, -2.5), 30)
     out: 2.47546314709315229870463391096 - 6.81357569837439608407092443075*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), 0.5, -2.5))
+    out: (2.47546314709315229870463391096 - 6.81357569837439608407092443075j)
 n-lerchphi-1-plus-2i-2-plus-i-1:
   epsil:
     in: N(LerchPhi(1 + 2i, 2 + i, 1))
@@ -7441,12 +7441,12 @@ n-lerchphi-1-plus-2i-2-plus-i-1:
     tex:
       in: N[\Phi (1+2 i,2+i,1)]
       out: 1.12603\, +0.641355 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), mpc(2, 1), 1))
-    out: (1.12602853631293655745612922068 + 0.641355365959261775996843693546j)
   sympy:
     in: N(lerchphi((1 + 2*I), (2 + 1*I), 1), 30)
     out: 1.12602853631293655745612922068 + 0.641355365959261775996843693546*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), mpc(2, 1), 1))
+    out: (1.12602853631293655745612922068 + 0.641355365959261775996843693546j)
 n-lerchphi-1-plus-2i-2-plus-i-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 2 + i, 2))
@@ -7465,12 +7465,12 @@ n-lerchphi-1-plus-2i-2-plus-i-2:
     tex:
       in: N[\Phi (1+2 i,2+i,2)]
       out: 0.281748\, +0.0778597 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), mpc(2, 1), 2))
-    out: (0.281747853646292021889963321554 + 0.0778596586666777322169170504377j)
   sympy:
     in: N(lerchphi((1 + 2*I), (2 + 1*I), 2), 30)
     out: 0.281747853646292021889963321554 + 0.0778596586666777322169170504377*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), mpc(2, 1), 2))
+    out: (0.281747853646292021889963321554 + 0.0778596586666777322169170504377j)
 n-lerchphi-1-plus-2i-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(1 + 2i, 2 + i, 0.5))
@@ -7489,12 +7489,12 @@ n-lerchphi-1-plus-2i-2-plus-i-0p5:
     tex:
       in: N[\Phi (1+2 i,2+i,0.5)]
       out: 3.19291\, +3.7885 i
-  mpmath:
-    in: (lerchphi(mpc(1, 2), mpc(2, 1), 0.5))
-    out: (3.19290583479834081767249720304 + 3.78849711300599871398179459133j)
   sympy:
     in: N(lerchphi((1 + 2*I), (2 + 1*I), 0.5), 30)
     out: 3.19290583479834081767249720304 + 3.78849711300599871398179459133*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), mpc(2, 1), 0.5))
+    out: (3.19290583479834081767249720304 + 3.78849711300599871398179459133j)
 n-lerchphi-1-plus-2i-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(1 + 2i, 2 + i, 5 / 2))
@@ -7537,12 +7537,12 @@ n-lerchphi-1-plus-2i-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(1, 2), mpc(2, 1), -2.5))
-    out: (-457.911341409628706268574872664 + 71.2277223296579947736924975491j)
   sympy:
     in: N(lerchphi((1 + 2*I), (2 + 1*I), -2.5), 30)
     out: -457.911341409628706268574872664 + 71.2277223296579947736924975491*I
+  mpmath:
+    in: (lerchphi(mpc(1, 2), mpc(2, 1), -2.5))
+    out: (-457.911341409628706268574872664 + 71.2277223296579947736924975491j)
 n-lerchphi-neg-1p5-plus-i-2-1:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2, 1))
@@ -7561,12 +7561,12 @@ n-lerchphi-neg-1p5-plus-i-2-1:
     tex:
       in: N[\Phi (-1.5+i,2,1)]
       out: 0.74469\, +0.0976769 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 2, 1))
-    out: (0.744689766677463093312476435746 + 0.0976768933442895227386709101686j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 2, 1), 30)
     out: 0.744689766677463093312476435746 + 0.0976768933442895227386709101686*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 2, 1))
+    out: (0.744689766677463093312476435746 + 0.0976768933442895227386709101686j)
 n-lerchphi-neg-1p5-plus-i-2-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2, 2))
@@ -7585,12 +7585,12 @@ n-lerchphi-neg-1p5-plus-i-2-2:
     tex:
       in: N[\Phi (-1.5+i,2,2)]
       out: 0.14789\, +0.0334754 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 2, 2))
-    out: (0.147889921024029194698448078938 + 0.0334753517864931146398514458465j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 2, 2), 30)
     out: 0.147889921024029194698448078938 + 0.0334753517864931146398514458465*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 2, 2))
+    out: (0.147889921024029194698448078938 + 0.0334753517864931146398514458465j)
 n-lerchphi-neg-1p5-plus-i-2-0p5:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2, 0.5))
@@ -7609,12 +7609,12 @@ n-lerchphi-neg-1p5-plus-i-2-0p5:
     tex:
       in: N[\Phi (-1.5+i,2,0.5)]
       out: 3.51034\, +0.209338 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 2, 0.5))
-    out: (3.51034341149099936291344276313 + 0.209338331082416546058420059681j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 2, 0.5), 30)
     out: 3.51034341149099936291344276313 + 0.209338331082416546058420059681*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 2, 0.5))
+    out: (3.51034341149099936291344276313 + 0.209338331082416546058420059681j)
 n-lerchphi-neg-1p5-plus-i-2-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2, 5 / 2))
@@ -7655,12 +7655,12 @@ n-lerchphi-neg-1p5-plus-i-2-neg-2p5:
       in: N[\Phi (-1.5+i,2,-2.5)]
       out: 7.23877\, +8.86442 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 2, -2.5))
-    out: (7.23877426753681247677504109869 + 8.86442468298540939551246289956j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 2, -2.5), 30)
     out: 7.23877426753681247677504109869 + 8.86442468298540939551246289956*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 2, -2.5))
+    out: (7.23877426753681247677504109869 + 8.86442468298540939551246289956j)
 n-lerchphi-neg-1p5-plus-i-3-1:
   epsil:
     in: N(LerchPhi(-1.5 + i, 3, 1))
@@ -7679,12 +7679,12 @@ n-lerchphi-neg-1p5-plus-i-3-1:
     tex:
       in: N[\Phi (-1.5+i,3,1)]
       out: 0.855339\, +0.064893 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 3, 1))
-    out: (0.855338745722698689211624121794 + 0.0648929890181539729113300256448j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 3, 1), 30)
     out: 0.855338745722698689211624121794 + 0.0648929890181539729113300256448*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 3, 1))
+    out: (0.855338745722698689211624121794 + 0.0648929890181539729113300256448j)
 n-lerchphi-neg-1p5-plus-i-3-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 3, 2))
@@ -7703,12 +7703,12 @@ n-lerchphi-neg-1p5-plus-i-3-2:
     tex:
       in: N[\Phi (-1.5+i,3,2)]
       out: 0.0867338\, +0.0145605 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 3, 2))
-    out: (0.0867338062874172120288904132164 + 0.0145605448461754927450402583811j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 3, 2), 30)
     out: 0.0867338062874172120288904132164 + 0.0145605448461754927450402583811*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 3, 2))
+    out: (0.0867338062874172120288904132164 + 0.0145605448461754927450402583811j)
 n-lerchphi-neg-1p5-plus-i-3-0p5:
   epsil:
     in: N(LerchPhi(-1.5 + i, 3, 0.5))
@@ -7727,12 +7727,12 @@ n-lerchphi-neg-1p5-plus-i-3-0p5:
     tex:
       in: N[\Phi (-1.5+i,3,0.5)]
       out: 7.63146\, +0.183813 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 3, 0.5))
-    out: (7.63145955229088238278862405453 + 0.183812993821420082405201639843j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 3, 0.5), 30)
     out: 7.63145955229088238278862405453 + 0.183812993821420082405201639843*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 3, 0.5))
+    out: (7.63145955229088238278862405453 + 0.183812993821420082405201639843j)
 n-lerchphi-neg-1p5-plus-i-3-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 3, 5 / 2))
@@ -7775,12 +7775,12 @@ n-lerchphi-neg-1p5-plus-i-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 3, -2.5))
-    out: (-2.0910882737014783487482629233 + 67.7913857474253749974441438621j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 3, -2.5), 30)
     out: -2.0910882737014783487482629233 + 67.7913857474253749974441438621*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 3, -2.5))
+    out: (-2.0910882737014783487482629233 + 67.7913857474253749974441438621j)
 n-lerchphi-neg-1p5-plus-i-0p5-1:
   epsil:
     in: N(LerchPhi(-1.5 + i, 0.5, 1))
@@ -7799,12 +7799,12 @@ n-lerchphi-neg-1p5-plus-i-0p5-1:
     tex:
       in: N[\Phi (-1.5+i,0.5,1)]
       out: 0.465539\, +0.138215 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 0.5, 1))
-    out: (0.465538805671105999446014143117 + 0.138214644414363705589141768497j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 0.5, 1), 30)
     out: 0.465538805671105999446014143117 + 0.138214644414363705589141768497*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 0.5, 1))
+    out: (0.465538805671105999446014143117 + 0.138214644414363705589141768497j)
 n-lerchphi-neg-1p5-plus-i-0p5-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 0.5, 2))
@@ -7823,12 +7823,12 @@ n-lerchphi-neg-1p5-plus-i-0p5-2:
     tex:
       in: N[\Phi (-1.5+i,0.5,2)]
       out: 0.289202\, +0.100658 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 0.5, 2))
-    out: (0.289201980279293755821575555022 + 0.10065822390995336682162252435j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 0.5, 2), 30)
     out: 0.289201980279293755821575555022 + 0.10065822390995336682162252435*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 0.5, 2))
+    out: (0.289201980279293755821575555022 + 0.10065822390995336682162252435j)
 n-lerchphi-neg-1p5-plus-i-0p5-0p5:
   epsil:
     in: N(LerchPhi(-1.5 + i, 0.5, 0.5))
@@ -7847,12 +7847,12 @@ n-lerchphi-neg-1p5-plus-i-0p5-0p5:
     tex:
       in: N[\Phi (-1.5+i,0.5,0.5)]
       out: 0.773036\, +0.177109 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 0.5, 0.5))
-    out: (0.773036344755627102462690321853 + 0.177108997856828727053847854443j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 0.5, 0.5), 30)
     out: 0.77303634475562710282048328736 + 0.177108997856828737083034752686*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 0.5, 0.5))
+    out: (0.773036344755627102462690321853 + 0.177108997856828727053847854443j)
 n-lerchphi-neg-1p5-plus-i-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 0.5, 5 / 2))
@@ -7895,12 +7895,12 @@ n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), 0.5, -2.5))
-    out: (-3.57485495601824380396173669869 + 3.46872899132533252879280061011j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), 0.5, -2.5), 30)
     out: -3.57485495601824387890133039036 + 3.46872899132533252242183152703*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), 0.5, -2.5))
+    out: (-3.57485495601824380396173669869 + 3.46872899132533252879280061011j)
 n-lerchphi-neg-1p5-plus-i-2-plus-i-1:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2 + i, 1))
@@ -7919,12 +7919,12 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-1:
     tex:
       in: N[\Phi (-1.5+i,2+i,1)]
       out: 0.812565\, +0.233564 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 1))
-    out: (0.812564848672119804177426390522 + 0.23356370470540928540494195109j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), (2 + 1*I), 1), 30)
     out: 0.812564848672119804177426390522 + 0.23356370470540928540494195109*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 1))
+    out: (0.812564848672119804177426390522 + 0.23356370470540928540494195109j)
 n-lerchphi-neg-1p5-plus-i-2-plus-i-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2 + i, 2))
@@ -7943,12 +7943,12 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-2:
     tex:
       in: N[\Phi (-1.5+i,2+i,2)]
       out: 0.158374\, -0.0501263 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 2))
-    out: (0.158374286676070639735016112402 - 0.0501262786862257637799505591254j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), (2 + 1*I), 2), 30)
     out: 0.158374286676070639735016112402 - 0.0501262786862257637799505591254*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 2))
+    out: (0.158374286676070639735016112402 - 0.0501262786862257637799505591254j)
 n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2 + i, 0.5))
@@ -7967,12 +7967,12 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5:
     tex:
       in: N[\Phi (-1.5+i,2+i,0.5)]
       out: 2.60302\, +2.91142 i
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 0.5))
-    out: (2.60301848239975598064580230405 + 2.9114183984878269892097798405j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), (2 + 1*I), 0.5), 30)
     out: 2.60301848239975598064580230405 + 2.9114183984878269892097798405*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), 0.5))
+    out: (2.60301848239975598064580230405 + 2.9114183984878269892097798405j)
 n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(-1.5 + i, 2 + i, 5 / 2))
@@ -8015,12 +8015,12 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), -2.5))
-    out: (244.757889059178865099019083112 - 108.837273694788290488681338415j)
   sympy:
     in: N(lerchphi((-1.5 + 1*I), (2 + 1*I), -2.5), 30)
     out: 244.757889059178865099019083112 - 108.837273694788290488681338415*I
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 1), mpc(2, 1), -2.5))
+    out: (244.757889059178865099019083112 - 108.837273694788290488681338415j)
 n-lerchphi-0p8-plus-0p9i-2-1:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2, 1))
@@ -8039,12 +8039,12 @@ n-lerchphi-0p8-plus-0p9i-2-1:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2,1)]
       out: 1.05128\, +0.35234 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 2, 1))
-    out: (1.05127535355863994238757381663 + 0.352340198251734980569656891926j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 2, 1), 30)
     out: 1.05127535355863994238757381663 + 0.352340198251734980569656891926*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 2, 1))
+    out: (1.05127535355863994238757381663 + 0.352340198251734980569656891926j)
 n-lerchphi-0p8-plus-0p9i-2-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2, 2))
@@ -8063,12 +8063,12 @@ n-lerchphi-0p8-plus-0p9i-2-2:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2,2)]
       out: 0.246984\, +0.162569 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 2, 2))
-    out: (0.246983766395498909725966190768 + 0.162568510619732436390817367818j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 2, 2), 30)
     out: 0.246983766395498909725966190768 + 0.162568510619732436390817367818*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 2, 2))
+    out: (0.246983766395498909725966190768 + 0.162568510619732436390817367818j)
 n-lerchphi-0p8-plus-0p9i-2-0p5:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2, 0.5))
@@ -8087,12 +8087,12 @@ n-lerchphi-0p8-plus-0p9i-2-0p5:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2,0.5)]
       out: 4.15741\, +0.596429 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 2, 0.5))
-    out: (4.1574069683027813416360941719 + 0.596428896905385254129534982315j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 2, 0.5), 30)
     out: 4.1574069683027813416360941719 + 0.596428896905385254129534982315*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 2, 0.5))
+    out: (4.1574069683027813416360941719 + 0.596428896905385254129534982315j)
 n-lerchphi-0p8-plus-0p9i-2-5-over-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2, 5 / 2))
@@ -8133,12 +8133,12 @@ n-lerchphi-0p8-plus-0p9i-2-neg-2p5:
       in: N[\Phi (0.8\, +0.9 i,2,-2.5)]
       out: -6.71368+9.45916 i
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 2, -2.5))
-    out: (-6.71368369106250765108046111939 + 9.45916338096596802788724957954j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 2, -2.5), 30)
     out: -6.71368369106250765108046111939 + 9.45916338096596802788724957954*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 2, -2.5))
+    out: (-6.71368369106250765108046111939 + 9.45916338096596802788724957954j)
 n-lerchphi-0p8-plus-0p9i-3-1:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 3, 1))
@@ -8157,12 +8157,12 @@ n-lerchphi-0p8-plus-0p9i-3-1:
     tex:
       in: N[\Phi (0.8\, +0.9 i,3,1)]
       out: 1.06002\, +0.163727 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 3, 1))
-    out: (1.06001839306948944880096046237 + 0.163727323847861782271727571438j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 3, 1), 30)
     out: 1.06001839306948944880096046237 + 0.163727323847861782271727571438*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 3, 1))
+    out: (1.06001839306948944880096046237 + 0.163727323847861782271727571438j)
 n-lerchphi-0p8-plus-0p9i-3-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 3, 2))
@@ -8181,12 +8181,12 @@ n-lerchphi-0p8-plus-0p9i-3-2:
     tex:
       in: N[\Phi (0.8\, +0.9 i,3,2)]
       out: 0.134737\, +0.0530795 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 3, 2))
-    out: (0.134737452357701485811924113722 + 0.0530795209074130496150239768157j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 3, 2), 30)
     out: 0.134737452357701485811924113722 + 0.0530795209074130496150239768157*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 3, 2))
+    out: (0.134737452357701485811924113722 + 0.0530795209074130496150239768157j)
 n-lerchphi-0p8-plus-0p9i-3-0p5:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 3, 0.5))
@@ -8205,12 +8205,12 @@ n-lerchphi-0p8-plus-0p9i-3-0p5:
     tex:
       in: N[\Phi (0.8\, +0.9 i,3,0.5)]
       out: 8.17623\, +0.358638 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 3, 0.5))
-    out: (8.17623308495584406829682447288 + 0.358637797014528395940562008405j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 3, 0.5), 30)
     out: 8.17623308495584406829682447288 + 0.358637797014528395940562008405*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 3, 0.5))
+    out: (8.17623308495584406829682447288 + 0.358637797014528395940562008405j)
 n-lerchphi-0p8-plus-0p9i-3-5-over-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 3, 5 / 2))
@@ -8253,12 +8253,12 @@ n-lerchphi-0p8-plus-0p9i-3-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 3, -2.5))
-    out: (-11.007681973911320906443804154 - 4.13217914012058260224190978672j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 3, -2.5), 30)
     out: -11.007681973911320906443804154 - 4.13217914012058260224190978672*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 3, -2.5))
+    out: (-11.007681973911320906443804154 - 4.13217914012058260224190978672j)
 n-lerchphi-0p8-plus-0p9i-0p5-1:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 0.5, 1))
@@ -8277,12 +8277,12 @@ n-lerchphi-0p8-plus-0p9i-0p5-1:
     tex:
       in: N[\Phi (0.8\, +0.9 i,0.5,1)]
       out: 0.646849\, +0.904298 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 0.5, 1))
-    out: (0.646848782818905049187927225846 + 0.904298262704088543957184879993j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 0.5, 1), 30)
     out: 0.646848782818905049187927225846 + 0.904298262704088543957184879993*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 0.5, 1))
+    out: (0.646848782818905049187927225846 + 0.904298262704088543957184879993j)
 n-lerchphi-0p8-plus-0p9i-0p5-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 0.5, 2))
@@ -8301,12 +8301,12 @@ n-lerchphi-0p8-plus-0p9i-0p5-2:
     tex:
       in: N[\Phi (0.8\, +0.9 i,0.5,2)]
       out: 0.366447\, +0.71812 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 0.5, 2))
-    out: (0.366446525992278408706525293597 + 0.718120486638797420117010947361j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 0.5, 2), 30)
     out: 0.366446525992278408706525293597 + 0.718120486638797420117010947361*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 0.5, 2))
+    out: (0.366446525992278408706525293597 + 0.718120486638797420117010947361j)
 n-lerchphi-0p8-plus-0p9i-0p5-0p5:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 0.5, 0.5))
@@ -8325,12 +8325,12 @@ n-lerchphi-0p8-plus-0p9i-0p5-0p5:
     tex:
       in: N[\Phi (0.8\, +0.9 i,0.5,0.5)]
       out: 1.07032\, +1.05832 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 0.5, 0.5))
-    out: (1.07031685255609475426083887856 + 1.05832327752761308989864946062j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 0.5, 0.5), 30)
     out: 1.07031685255609465556858594937 + 1.05832327752761301553618977778*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 0.5, 0.5))
+    out: (1.07031685255609475426083887856 + 1.05832327752761308989864946062j)
 n-lerchphi-0p8-plus-0p9i-0p5-5-over-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 0.5, 5 / 2))
@@ -8373,12 +8373,12 @@ n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), 0.5, -2.5))
-    out: (0.181355765541796998282496634792 - 1.49150888888843383201133795086j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), 0.5, -2.5), 30)
     out: 0.181355765541796998263635032345 - 1.4915088888884338036433518937*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), 0.5, -2.5))
+    out: (0.181355765541796998282496634792 - 1.49150888888843383201133795086j)
 n-lerchphi-0p8-plus-0p9i-2-plus-i-1:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2 + i, 1))
@@ -8397,12 +8397,12 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-1:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2+i,1)]
       out: 1.36239\, +0.28624 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 1))
-    out: (1.36238839103009364908235248886 + 0.286239732263095948518289234076j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), (2 + 1*I), 1), 30)
     out: 1.36238839103009364908235248886 + 0.286239732263095948518289234076*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 1))
+    out: (1.36238839103009364908235248886 + 0.286239732263095948518289234076j)
 n-lerchphi-0p8-plus-0p9i-2-plus-i-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2 + i, 2))
@@ -8421,12 +8421,12 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-2:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2+i,2)]
       out: 0.377604\, -0.0670054 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 2))
-    out: (0.377604463352318105833725248151 - 0.0670053559424879401761641499217j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), (2 + 1*I), 2), 30)
     out: 0.377604463352318105833725248151 - 0.0670053559424879401761641499217*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 2))
+    out: (0.377604463352318105833725248151 - 0.0670053559424879401761641499217j)
 n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2 + i, 0.5))
@@ -8445,12 +8445,12 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5:
     tex:
       in: N[\Phi (0.8\, +0.9 i,2+i,0.5)]
       out: 3.62233\, +3.13742 i
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 0.5))
-    out: (3.62232810251977800131608555449 + 3.13742239130386082657842007278j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), (2 + 1*I), 0.5), 30)
     out: 3.62232810251977800131608555449 + 3.13742239130386082657842007278*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), 0.5))
+    out: (3.62232810251977800131608555449 + 3.13742239130386082657842007278j)
 n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2:
   epsil:
     in: N(LerchPhi(0.8 + 0.9i, 2 + i, 5 / 2))
@@ -8493,12 +8493,28 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5:
     verdict: disagree
     kind: convention
     note: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
-  mpmath:
-    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), -2.5))
-    out: (-92.1275927724353596990675665665 + 93.9265460833577181101221235116j)
   sympy:
     in: N(lerchphi((0.8 + 0.9*I), (2 + 1*I), -2.5), 30)
     out: -92.1275927724353596990675665665 + 93.9265460833577181101221235116*I
+  mpmath:
+    in: (lerchphi(mpc(0.8, 0.9), mpc(2, 1), -2.5))
+    out: (-92.1275927724353596990675665665 + 93.9265460833577181101221235116j)
+certified-digits-phi-1-2-1-2-1-3:
+  epsil:
+    in: N(LerchPhi(1 / 2, 1 / 2, 1 / 3), 40)
+    out: 2.452_417_145_481_526_111_742_144_156_526_818_292_226
+  tex:
+    in: N(\mathrm{LerchPhi}(\frac{1}{2}, \frac{1}{2}, \frac{1}{3}), 40)
+    out: 2.452\,417\,145\,481\,526\,111\,74
+  traditional:
+    in: N(\Phi(\frac{1}{2}, \frac{1}{2}, \frac{1}{3}), 40)
+    out: 2.452\,417\,145\,481\,526\,111\,74
+  fullform:
+    in: N[LerchPhi[Rational[1, 2], Rational[1, 2], Rational[1, 3]], 40]
+  wolfram:
+    in: N[LerchPhi[Rational[1, 2], Rational[1, 2], Rational[1, 3]], 40]
+  sympy:
+    in: N(lerchphi(Rational(1, 2), Rational(1, 2), Rational(1, 3)), 30)
 phi-0p3-3-2-off-the-grid-sample:
   epsil:
     in: LerchPhi(0.3, 3, 2)
@@ -8513,12 +8529,12 @@ phi-0p3-3-2-off-the-grid-sample:
     in: LerchPhi[0.3, 3, 2]
   wolfram:
     in: LerchPhi[0.3, 3, 2]
-  mpmath:
-    in: lerchphi(0.3, 3, 2)
-    out: "0.137779754365473563423256316272"
   sympy:
     in: lerchphi(0.3, 3, 2)
     out: lerchphi(0.3, 3, 2)
+  mpmath:
+    in: lerchphi(0.3, 3, 2)
+    out: "0.137779754365473563423256316272"
 n-lerchphi-2p809-2-2-on-the-cut-real-z-1:
   epsil:
     in: N(LerchPhi(2.809, 2, 2))
@@ -8533,12 +8549,12 @@ n-lerchphi-2p809-2-2-on-the-cut-real-z-1:
     in: N[LerchPhi[2.809, 2, 2]]
   wolfram:
     in: N[LerchPhi[2.809, 2, 2]]
-  mpmath:
-    in: (lerchphi(2.809, 2, 2))
-    out: (-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)
   sympy:
     in: N(lerchphi(2.809, 2, 2), 30)
     out: -0.0565877019732228976485379048983 - 0.411220377971662588357397032992*I
+  mpmath:
+    in: (lerchphi(2.809, 2, 2))
+    out: (-0.0565877019732228976485379048983 - 0.411220377971662588357397032992j)
 n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up:
   epsil:
     in: N(LerchPhi(-2, 2, -2.5))
@@ -8553,11 +8569,11 @@ n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up:
     in: N[LerchPhi[-2, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[-2, 2, -2.5]]
-  mpmath:
-    in: (lerchphi(-2, 2, -2.5))
-    out: "-12.2867627235309427526594430541"
   sympy:
     in: N(lerchphi(-2, 2, -2.5), 30)
+    out: "-12.2867627235309427526594430541"
+  mpmath:
+    in: (lerchphi(-2, 2, -2.5))
     out: "-12.2867627235309427526594430541"
 n-lerchphi-10-10-10-cancels-below-precision:
   epsil:
@@ -8573,18 +8589,18 @@ n-lerchphi-10-10-10-cancels-below-precision:
     in: N[LerchPhi[10, 10, 10]]
   wolfram:
     in: N[LerchPhi[10, 10, 10]]
-  mpmath:
-    in: (lerchphi(10, 10, 10))
-    out: (-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)
-    verdict: disagree
-    kind: unevaluated
-    note: "compute-engine's N leaves Φ(10, 10, 10) unevaluated: its continuation's terms cancel below the working precision; mpmath evaluates it."
   sympy:
     in: N(lerchphi(10, 10, 10), 30)
     out: -4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I
     verdict: disagree
     kind: unevaluated
     note: "compute-engine's N leaves Φ(10, 10, 10) unevaluated: its continuation's terms cancel below the working precision; SymPy evaluates it through mpmath."
+  mpmath:
+    in: (lerchphi(10, 10, 10))
+    out: (-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)
+    verdict: disagree
+    kind: unevaluated
+    note: "compute-engine's N leaves Φ(10, 10, 10) unevaluated: its continuation's terms cancel below the working precision; mpmath evaluates it."
 n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2:
   epsil:
     in: N(LerchPhi(0.877_582_561_890_372_8 + 0.479_425_538_604_203i, -0.5, 2))
@@ -8599,12 +8615,12 @@ n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], -0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], -0.5, 2]]
-  mpmath:
-    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), -0.5, 2))
-    out: (-0.467476953371299082912219957568 + 3.09745259948601634233354098635j)
   sympy:
     in: N(lerchphi((0.8775825618903728 + 0.479425538604203*I), -0.5, 2), 30)
     out: -0.467476953371299082912219957568 + 3.09745259948601634233354098635*I
+  mpmath:
+    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), -0.5, 2))
+    out: (-0.467476953371299082912219957568 + 3.09745259948601634233354098635j)
 lerchphi-rim-theta-0p5-s-0-a-1:
   epsil:
     in: N(LerchPhi(0.877_582_561_890_372_8 + 0.479_425_538_604_203i, 0, 1))
@@ -8619,12 +8635,12 @@ lerchphi-rim-theta-0p5-s-0-a-1:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0, 1]]
-  mpmath:
-    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 0, 1))
-    out: (0.499999999999999837227819955437 + 1.95815868232297011768855635329j)
   sympy:
     in: N(lerchphi((0.8775825618903728 + 0.479425538604203*I), 0, 1), 30)
     out: 0.499999999999999837227819955437 + 1.95815868232297011768855635329*I
+  mpmath:
+    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 0, 1))
+    out: (0.499999999999999837227819955437 + 1.95815868232297011768855635329j)
 lerchphi-rim-theta-0p5-s-0p5-a-1:
   epsil:
     in: N(LerchPhi(0.877_582_561_890_372_8 + 0.479_425_538_604_203i, 0.5, 1))
@@ -8639,12 +8655,12 @@ lerchphi-rim-theta-0p5-s-0p5-a-1:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 0.5, 1))
-    out: (1.07654001583875870469588774691 + 1.3129382534588525641280643765j)
   sympy:
     in: N(lerchphi((0.8775825618903728 + 0.479425538604203*I), 0.5, 1), 30)
     out: 1.07654001583875870469588774691 + 1.3129382534588525641280643765*I
+  mpmath:
+    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 0.5, 1))
+    out: (1.07654001583875870469588774691 + 1.3129382534588525641280643765j)
 lerchphi-rim-theta-0p5-s-1-a-1:
   epsil:
     in: N(LerchPhi(0.877_582_561_890_372_8 + 0.479_425_538_604_203i, 1, 1))
@@ -8659,12 +8675,12 @@ lerchphi-rim-theta-0p5-s-1-a-1:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1, 1]]
-  mpmath:
-    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 1, 1))
-    out: (1.25067797455363097967416558128 + 0.821790902123917933399954385266j)
   sympy:
     in: N(lerchphi((0.8775825618903728 + 0.479425538604203*I), 1, 1), 30)
     out: 1.25067797455363097967416558128 + 0.821790902123917933399954385266*I
+  mpmath:
+    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 1, 1))
+    out: (1.25067797455363097967416558128 + 0.821790902123917933399954385266j)
 lerchphi-rim-theta-0p5-s-1p5-a-1:
   epsil:
     in: N(LerchPhi(0.877_582_561_890_372_8 + 0.479_425_538_604_203i, 1.5, 1))
@@ -8679,12 +8695,12 @@ lerchphi-rim-theta-0p5-s-1p5-a-1:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 1.5, 1))
-    out: (1.2598737711257380531448749934 + 0.500002001678766111731136646014j)
   sympy:
     in: N(lerchphi((0.8775825618903728 + 0.479425538604203*I), 1.5, 1), 30)
     out: 1.2598737711257380531448749934 + 0.500002001678766111731136646014*I
+  mpmath:
+    in: (lerchphi(mpc(0.8775825618903728, 0.479425538604203), 1.5, 1))
+    out: (1.2598737711257380531448749934 + 0.500002001678766111731136646014j)
 lerchphi-rim-theta-1p7-s-0-a-1:
   epsil:
     in: N(LerchPhi(-0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i, 0, 1))
@@ -8699,12 +8715,12 @@ lerchphi-rim-theta-1p7-s-0-a-1:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 0, 1))
-    out: (0.500000000000000022512205462962 + 0.439238892276005904440122695821j)
   sympy:
     in: N(lerchphi((-0.12884449429552464 + 0.9916648104524686*I), 0, 1), 30)
     out: 0.500000000000000022512205462962 + 0.439238892276005904440122695821*I
+  mpmath:
+    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 0, 1))
+    out: (0.500000000000000022512205462962 + 0.439238892276005904440122695821j)
 lerchphi-rim-theta-1p7-s-0p5-a-1:
   epsil:
     in: N(LerchPhi(-0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i, 0.5, 1))
@@ -8719,12 +8735,12 @@ lerchphi-rim-theta-1p7-s-0p5-a-1:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 0.5, 1))
-    out: (0.654823547791273869053786044488 + 0.379431450388845648358514611297j)
   sympy:
     in: N(lerchphi((-0.12884449429552464 + 0.9916648104524686*I), 0.5, 1), 30)
     out: 0.654823547791273869053786044488 + 0.379431450388845648358514611297*I
+  mpmath:
+    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 0.5, 1))
+    out: (0.654823547791273869053786044488 + 0.379431450388845648358514611297j)
 lerchphi-rim-theta-1p7-s-1-a-1:
   epsil:
     in: N(LerchPhi(-0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i, 1, 1))
@@ -8739,12 +8755,12 @@ lerchphi-rim-theta-1p7-s-1-a-1:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 1, 1))
-    out: (0.767250076249527294743586167725 + 0.31090637483393299957303457324j)
   sympy:
     in: N(lerchphi((-0.12884449429552464 + 0.9916648104524686*I), 1, 1), 30)
     out: 0.767250076249527294743586167725 + 0.31090637483393299957303457324*I
+  mpmath:
+    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 1, 1))
+    out: (0.767250076249527294743586167725 + 0.31090637483393299957303457324j)
 lerchphi-rim-theta-1p7-s-1p5-a-1:
   epsil:
     in: N(LerchPhi(-0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i, 1.5, 1))
@@ -8759,12 +8775,12 @@ lerchphi-rim-theta-1p7-s-1p5-a-1:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 1.5, 1))
-    out: (0.84573503927335057258377007053 + 0.245477686240996168827950416429j)
   sympy:
     in: N(lerchphi((-0.12884449429552464 + 0.9916648104524686*I), 1.5, 1), 30)
     out: 0.84573503927335057258377007053 + 0.245477686240996168827950416429*I
+  mpmath:
+    in: (lerchphi(mpc(-0.12884449429552464, 0.9916648104524686), 1.5, 1))
+    out: (0.84573503927335057258377007053 + 0.245477686240996168827950416429j)
 lerchphi-rim-theta-2p4-s-0-a-1:
   epsil:
     in: N(LerchPhi(-0.737_393_715_541_245_4 + 0.675_463_180_551_151i, 0, 1))
@@ -8779,12 +8795,12 @@ lerchphi-rim-theta-2p4-s-0-a-1:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 0, 1))
-    out: (0.500000000000000006673511405255 + 0.194389784684102472862670134434j)
   sympy:
     in: N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 0, 1), 30)
     out: 0.500000000000000006673511405255 + 0.194389784684102472862670134434*I
+  mpmath:
+    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 0, 1))
+    out: (0.500000000000000006673511405255 + 0.194389784684102472862670134434j)
 lerchphi-rim-theta-2p4-s-0p5-a-1:
   epsil:
     in: N(LerchPhi(-0.737_393_715_541_245_4 + 0.675_463_180_551_151i, 0.5, 1))
@@ -8799,12 +8815,12 @@ lerchphi-rim-theta-2p4-s-0p5-a-1:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 0.5, 1))
-    out: (0.615664394770336343862432076599 + 0.173226699667794066319060922481j)
   sympy:
     in: N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 0.5, 1), 30)
     out: 0.615664394770336343862432076599 + 0.173226699667794066319060922481*I
+  mpmath:
+    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 0.5, 1))
+    out: (0.615664394770336343862432076599 + 0.173226699667794066319060922481j)
 lerchphi-rim-theta-2p4-s-1-a-1:
   epsil:
     in: N(LerchPhi(-0.737_393_715_541_245_4 + 0.675_463_180_551_151i, 1, 1))
@@ -8819,12 +8835,12 @@ lerchphi-rim-theta-2p4-s-1-a-1:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 1, 1))
-    out: (0.70968348249077859746529270297 + 0.147233063131345636976332510419j)
   sympy:
     in: N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 1, 1), 30)
     out: 0.70968348249077859746529270297 + 0.147233063131345636976332510419*I
+  mpmath:
+    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 1, 1))
+    out: (0.70968348249077859746529270297 + 0.147233063131345636976332510419j)
 lerchphi-rim-theta-2p4-s-1p5-a-1:
   epsil:
     in: N(LerchPhi(-0.737_393_715_541_245_4 + 0.675_463_180_551_151i, 1.5, 1))
@@ -8839,9 +8855,9 @@ lerchphi-rim-theta-2p4-s-1p5-a-1:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1.5, 1]]
-  mpmath:
-    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 1.5, 1))
-    out: (0.783731331357530270376500713756 + 0.120757921412831669025433774527j)
   sympy:
     in: N(lerchphi((-0.7373937155412454 + 0.675463180551151*I), 1.5, 1), 30)
     out: 0.783731331357530270376500713756 + 0.120757921412831669025433774527*I
+  mpmath:
+    in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 1.5, 1))
+    out: (0.783731331357530270376500713756 + 0.120757921412831669025433774527j)

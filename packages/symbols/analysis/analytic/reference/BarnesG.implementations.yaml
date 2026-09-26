@@ -226,13 +226,13 @@ g-infty-infty:
 interval-arithmetic-g-is-increasing-on-1-17-1-18:
   epsil:
     in: BarnesG(Interval(1.17, 1.18))
-    out: Interval(1.052_216_328_686_194_3, 1.054_193_606_435_691)
+    out: Interval(1.052_216_328_686_19, 1.054_193_606_435_7)
   tex:
     in: \mathrm{BarnesG}(\mathrm{Interval}(1.17, 1.18))
-    out: \mathrm{Interval}(1.052\,216\,328\,686\,194\,3, 1.054\,193\,606\,435\,691)
+    out: \mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
   traditional:
     in: G(\mathrm{Interval}(1.17, 1.18))
-    out: \mathrm{Interval}(1.052\,216\,328\,686\,194\,3, 1.054\,193\,606\,435\,691)
+    out: \mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
   fullform:
     in: BarnesG[Interval[List[1.17, 1.18]]]
   wolfram:

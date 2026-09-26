@@ -13,15 +13,15 @@ zeta-2:
     tex:
       in: \zeta (2)
       out: \frac{\pi ^2}{6}
-  sage:
-    in: zeta(2)
-    out: 1/6*pi^2
-  mpmath:
-    in: zeta(2)
-    out: "1.64493406684822643647241516665"
   sympy:
     in: zeta(2)
     out: pi**2/6
+  mpmath:
+    in: zeta(2)
+    out: "1.64493406684822643647241516665"
+  sage:
+    in: zeta(2)
+    out: 1/6*pi^2
 zeta-4:
   epsil:
     in: Zeta(4)
@@ -37,15 +37,15 @@ zeta-4:
     tex:
       in: \zeta (4)
       out: \frac{\pi ^4}{90}
-  sage:
-    in: zeta(4)
-    out: 1/90*pi^4
-  mpmath:
-    in: zeta(4)
-    out: "1.08232323371113819151600369654"
   sympy:
     in: zeta(4)
     out: pi**4/90
+  mpmath:
+    in: zeta(4)
+    out: "1.08232323371113819151600369654"
+  sage:
+    in: zeta(4)
+    out: 1/90*pi^4
 zeta-6:
   epsil:
     in: Zeta(6)
@@ -61,15 +61,15 @@ zeta-6:
     tex:
       in: \zeta (6)
       out: \frac{\pi ^6}{945}
-  sage:
-    in: zeta(6)
-    out: 1/945*pi^6
-  mpmath:
-    in: zeta(6)
-    out: "1.01734306198444913971451792979"
   sympy:
     in: zeta(6)
     out: pi**6/945
+  mpmath:
+    in: zeta(6)
+    out: "1.01734306198444913971451792979"
+  sage:
+    in: zeta(6)
+    out: 1/945*pi^6
 threads-over-a-list-reducing-every-element-to:
   epsil:
     in: Zeta([-1, -2, -3])
@@ -85,18 +85,18 @@ threads-over-a-list-reducing-every-element-to:
     tex:
       in: \zeta (\{-1,-2,-3\})
       out: \left\{-\frac{1}{12},0,\frac{1}{120}\right\}
-  sage:
-    in: zeta([-1, -2, -3])
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Zeta is Listable and threads over the list; Sage's takes scalars only.
   sympy:
     in: zeta([-1, -2, -3])
     out: "AttributeError: 'list' object has no attribute 'is_Integer'"
     verdict: error
     kind: threading
     note: compute-engine's Zeta threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: zeta([-1, -2, -3])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta is Listable and threads over the list; Sage's takes scalars only.
 zeta-0-1-2:
   epsil:
     in: Zeta(0)
@@ -112,13 +112,13 @@ zeta-0-1-2:
     tex:
       in: \zeta (0)
       out: -\frac{1}{2}
-  sage:
+  sympy:
     in: zeta(0)
     out: -1/2
   mpmath:
     in: zeta(0)
     out: "-0.5"
-  sympy:
+  sage:
     in: zeta(0)
     out: -1/2
 trivial-zero-zeta-2n-0-for-positive-integer-n:
@@ -136,13 +136,13 @@ trivial-zero-zeta-2n-0-for-positive-integer-n:
     tex:
       in: \zeta (-2)
       out: "0"
-  sage:
+  sympy:
     in: zeta(-2)
     out: "0"
   mpmath:
     in: zeta(-2)
     out: "0.0"
-  sympy:
+  sage:
     in: zeta(-2)
     out: "0"
 zeta-3-b-4-4-1-120-via-the-bernoulli-number:
@@ -160,13 +160,13 @@ zeta-3-b-4-4-1-120-via-the-bernoulli-number:
     tex:
       in: \zeta (-3)
       out: \frac{1}{120}
-  sage:
+  sympy:
     in: zeta(-3)
     out: 1/120
   mpmath:
     in: zeta(-3)
     out: "0.00833333333333333333333333333333"
-  sympy:
+  sage:
     in: zeta(-3)
     out: 1/120
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges:
@@ -184,21 +184,21 @@ pole-at-s-1-the-harmonic-series-sum-1-n-diverges:
     tex:
       in: \zeta (1)
       out: \text{ComplexInfinity}
-  sage:
+  sympy:
     in: zeta(1)
-    out: Infinity
-    verdict: disagree
-    kind: undefined-form
-    note: The pole is ComplexInfinity here; Sage's zeta(1) spells the same pole 'Infinity', a different notation for the same divergence.
+    out: zoo
   mpmath:
     in: zeta(1)
     out: "ValueError: zeta(1) pole"
     verdict: error
     kind: undefined-form
     note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: zeta(1) pole."
-  sympy:
+  sage:
     in: zeta(1)
-    out: zoo
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: The pole is ComplexInfinity here; Sage's zeta(1) spells the same pole 'Infinity', a different notation for the same divergence.
 the-probability-that-two-random-positive:
   epsil:
     in: 1 / Zeta(2) == 6 / Pi ^ 2
@@ -217,11 +217,11 @@ the-probability-that-two-random-positive:
     tex:
       in: \frac{1}{\zeta (2)}=\frac{6}{\pi ^2}
       out: \text{True}
-  sage:
-    in: bool((1 / zeta(2)) == (6 / (pi^2)))
-    out: True
   sympy:
     in: enumeratio_equal((S(1) / zeta(2)), (S(6) / (pi**2)))
+    out: True
+  sage:
+    in: bool((1 / zeta(2)) == (6 / (pi^2)))
     out: True
 odd-integers-geq-3-have-no-known-closed-form:
   epsil:
@@ -238,13 +238,13 @@ odd-integers-geq-3-have-no-known-closed-form:
     tex:
       in: \zeta (3)
       out: \zeta (3)
-  sage:
+  sympy:
     in: zeta(3)
     out: zeta(3)
   mpmath:
     in: zeta(3)
     out: "1.20205690315959428539973816151"
-  sympy:
+  sage:
     in: zeta(3)
     out: zeta(3)
 the-notorious-sum-of-all-positive-integers:
@@ -262,13 +262,13 @@ the-notorious-sum-of-all-positive-integers:
     tex:
       in: \zeta (-1)
       out: -\frac{1}{12}
-  sage:
+  sympy:
     in: zeta(-1)
     out: -1/12
   mpmath:
     in: zeta(-1)
     out: "-0.0833333333333333333333333333333"
-  sympy:
+  sage:
     in: zeta(-1)
     out: -1/12
 on-the-critical-line-zeta-1-2-14i-0-02224-0:
@@ -286,14 +286,14 @@ on-the-critical-line-zeta-1-2-14i-0-02224-0:
     tex:
       in: N[\zeta (0.5\, +14 i)]
       out: 0.0222411\, -0.103258 i
-  sage:
-    in: N(zeta((0.5 + 14*I)))
-  mpmath:
-    in: (zeta(mpc(0.5, 14)))
-    out: (0.022241142609993589246213199204 - 0.103258123266450057902363095553j)
   sympy:
     in: N(zeta((0.5 + 14*I)), 30)
     out: 0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I
+  mpmath:
+    in: (zeta(mpc(0.5, 14)))
+    out: (0.022241142609993589246213199204 - 0.103258123266450057902363095553j)
+  sage:
+    in: N(zeta((0.5 + 14*I)))
 two-argument-zeta-s-a-via-enumeratio-analytic:
   epsil:
     in: Zeta(2, 1)
@@ -309,15 +309,15 @@ two-argument-zeta-s-a-via-enumeratio-analytic:
     tex:
       in: \zeta (2,1)
       out: \frac{\pi ^2}{6}
-  sage:
-    in: hurwitz_zeta(2, 1)
-    out: 1/6*pi^2
-  mpmath:
-    in: zeta(2, 1)
-    out: "1.64493406684822643647241516665"
   sympy:
     in: zeta(2, 1)
     out: pi**2/6
+  mpmath:
+    in: zeta(2, 1)
+    out: "1.64493406684822643647241516665"
+  sage:
+    in: hurwitz_zeta(2, 1)
+    out: 1/6*pi^2
 zeta-2-2-zeta-2-1-pi-2-6-1:
   epsil:
     in: Zeta(2, 2)
@@ -333,15 +333,15 @@ zeta-2-2-zeta-2-1-pi-2-6-1:
     tex:
       in: \zeta (2,2)
       out: \frac{\pi ^2}{6}-1
-  sage:
-    in: hurwitz_zeta(2, 2)
-    out: 1/6*pi^2 - 1
-  mpmath:
-    in: zeta(2, 2)
-    out: "0.644934066848226436472415166646"
   sympy:
     in: zeta(2, 2)
     out: -1 + pi**2/6
+  mpmath:
+    in: zeta(2, 2)
+    out: "0.644934066848226436472415166646"
+  sage:
+    in: hurwitz_zeta(2, 2)
+    out: 1/6*pi^2 - 1
 zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so:
   epsil:
     in: Zeta(2, 0)
@@ -358,24 +358,24 @@ zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so:
       in: \zeta (2,0)
       out: \frac{\pi ^2}{6}
     note: This matches Wolfram's $\mathrm{Zeta}[s, a]$; Wolfram's $\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).
-  sage:
-    in: hurwitz_zeta(2, 0)
-    out: "ValueError: psi2_eval(): pole"
-    verdict: error
-    kind: convention
-    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; Sage's hurwitz_zeta(s, 0) is a pole.
-  mpmath:
-    in: zeta(2, 0)
-    out: "ZeroDivisionError: "
-    verdict: error
-    kind: convention
-    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; mpmath's zeta(s, 0) is a pole.
   sympy:
     in: zeta(2, 0)
     out: nan
     verdict: inconclusive
     kind: convention
     note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; SymPy's zeta(s, 0) is a pole.
+  mpmath:
+    in: zeta(2, 0)
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; mpmath's zeta(s, 0) is a pole.
+  sage:
+    in: hurwitz_zeta(2, 0)
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; Sage's hurwitz_zeta(s, 0) is a pole.
 apery-s-constant-zeta-3-numerically:
   epsil:
     in: N(Zeta(3))
@@ -387,14 +387,14 @@ apery-s-constant-zeta-3-numerically:
     in: N[Zeta[3]]
   wolfram:
     in: N[Zeta[3]]
-  sage:
-    in: N(zeta(3))
-  mpmath:
-    in: (zeta(3))
-    out: "1.20205690315959428539973816151"
   sympy:
     in: N(zeta(3), 30)
     out: "1.20205690315959428539973816151"
+  mpmath:
+    in: (zeta(3))
+    out: "1.20205690315959428539973816151"
+  sage:
+    in: N(zeta(3))
 a-machine-precision-argument:
   epsil:
     in: Zeta(1.5)
@@ -406,14 +406,14 @@ a-machine-precision-argument:
     in: Zeta[1.5]
   wolfram:
     in: Zeta[1.5]
-  sage:
-    in: zeta(1.5)
-  mpmath:
-    in: zeta(1.5)
-    out: "2.61237534868548834334856756792"
   sympy:
     in: zeta(1.5)
     out: "2.61237534868549"
+  mpmath:
+    in: zeta(1.5)
+    out: "2.61237534868548834334856756792"
+  sage:
+    in: zeta(1.5)
 zeta-8-pi-8-9450:
   epsil:
     in: Zeta(8)
@@ -425,14 +425,14 @@ zeta-8-pi-8-9450:
     in: Zeta[8]
   wolfram:
     in: Zeta[8]
-  sage:
-    in: zeta(8)
-  mpmath:
-    in: zeta(8)
-    out: "1.00407735619794433937868523851"
   sympy:
     in: zeta(8)
     out: pi**8/9450
+  mpmath:
+    in: zeta(8)
+    out: "1.00407735619794433937868523851"
+  sage:
+    in: zeta(8)
 zeta-5-b-6-6-1-252:
   epsil:
     in: Zeta(-5)
@@ -444,14 +444,14 @@ zeta-5-b-6-6-1-252:
     in: Zeta[-5]
   wolfram:
     in: Zeta[-5]
-  sage:
-    in: zeta(-5)
-  mpmath:
-    in: zeta(-5)
-    out: "-0.00396825396825396825396825396825"
   sympy:
     in: zeta(-5)
     out: -1/252
+  mpmath:
+    in: zeta(-5)
+    out: "-0.00396825396825396825396825396825"
+  sage:
+    in: zeta(-5)
 arbitrary-real-arguments:
   epsil:
     in: Zeta(5.211_111_111_111_111)
@@ -463,14 +463,14 @@ arbitrary-real-arguments:
     in: Zeta[5.211111111111111]
   wolfram:
     in: Zeta[5.211111111111111]
-  sage:
-    in: zeta(5.211111111111111)
-  mpmath:
-    in: zeta(5.211111111111111)
-    out: "1.03139179693438499240335921978"
   sympy:
     in: zeta(5.211111111111111)
     out: "1.03139179693438"
+  mpmath:
+    in: zeta(5.211111111111111)
+    out: "1.03139179693438499240335921978"
+  sage:
+    in: zeta(5.211111111111111)
 left-of-the-critical-strip-via-the-functional:
   epsil:
     in: Zeta(-4.5)
@@ -482,14 +482,14 @@ left-of-the-critical-strip-via-the-functional:
     in: Zeta[-4.5]
   wolfram:
     in: Zeta[-4.5]
-  sage:
-    in: zeta(-4.5)
-  mpmath:
-    in: zeta(-4.5)
-    out: "-0.00309166924721583384482425674513"
   sympy:
     in: zeta(-4.5)
     out: "-0.00309166924721583"
+  mpmath:
+    in: zeta(-4.5)
+    out: "-0.00309166924721583384482425674513"
+  sage:
+    in: zeta(-4.5)
 complex-s-under-n:
   epsil:
     in: N(Zeta(2 + -5 * i))
@@ -501,14 +501,14 @@ complex-s-under-n:
     in: N[Zeta[Complex[2, -5]]]
   wolfram:
     in: N[Zeta[Complex[2, -5]]]
-  sage:
-    in: N(zeta((2 + -5*I)))
-  mpmath:
-    in: (zeta(mpc(2, -5)))
-    out: (0.850962943624262957210878535908 - 0.0989969461348313472271774604848j)
   sympy:
     in: N(zeta((2 + -5*I)), 30)
     out: 0.850962943624262957210878535908 - 0.0989969461348313472271774604848*I
+  mpmath:
+    in: (zeta(mpc(2, -5)))
+    out: (0.850962943624262957210878535908 - 0.0989969461348313472271774604848j)
+  sage:
+    in: N(zeta((2 + -5*I)))
 zeta-infty-1-only-the-n-1-term-survives:
   epsil:
     in: Zeta(PositiveInfinity)
@@ -531,14 +531,14 @@ two-arguments-at-a-nonpositive-integer-s-zeta-1:
     in: Zeta[-1, 5]
   wolfram:
     in: Zeta[-1, 5]
-  sage:
-    in: hurwitz_zeta(-1, 5)
-  mpmath:
-    in: zeta(-1, 5)
-    out: "-10.0833333333333333333333333333"
   sympy:
     in: zeta(-1, 5)
     out: -121/12
+  mpmath:
+    in: zeta(-1, 5)
+    out: "-10.0833333333333333333333333333"
+  sage:
+    in: hurwitz_zeta(-1, 5)
 two-arguments-inexact:
   epsil:
     in: Zeta(-1.5, 5)
@@ -550,14 +550,14 @@ two-arguments-inexact:
     in: Zeta[-1.5, 5]
   wolfram:
     in: Zeta[-1.5, 5]
-  sage:
-    in: hurwitz_zeta(-1.5, 5)
-  mpmath:
-    in: zeta(-1.5, 5)
-    out: "-17.0500647493426550141352594598"
   sympy:
     in: zeta(-1.5, 5)
     out: zeta(-1.5, 5)
+  mpmath:
+    in: zeta(-1.5, 5)
+    out: "-17.0500647493426550141352594598"
+  sage:
+    in: hurwitz_zeta(-1.5, 5)
 two-complex-arguments-under-n-to-ten-digits:
   epsil:
     in: N(Zeta(-1.5 + i, 2.5 + -1 * i), 10)
@@ -569,14 +569,14 @@ two-complex-arguments-under-n-to-ten-digits:
     in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
   wolfram:
     in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
-  sage:
-    in: N(hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I)))
-  mpmath:
-    in: (zeta(mpc(-1.5, 1), mpc(2.5, -1)))
-    out: (0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)
   sympy:
     in: N(zeta((-1.5 + 1*I), (2.5 + -1*I)), 30)
     out: 0.0184868091938106549054765537221 + 1.67553378430176591606937108736*I
+  mpmath:
+    in: (zeta(mpc(-1.5, 1), mpc(2.5, -1)))
+    out: (0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)
+  sage:
+    in: N(hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I)))
 which-with-inexact-complex-arguments-should:
   epsil:
     in: Zeta(-1.5 + i, 2.5 + -1 * i)
@@ -588,14 +588,14 @@ which-with-inexact-complex-arguments-should:
     in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
   wolfram:
     in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
-  sage:
-    in: hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I))
-  mpmath:
-    in: zeta(mpc(-1.5, 1), mpc(2.5, -1))
-    out: (0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)
   sympy:
     in: zeta((-1.5 + 1*I), (2.5 + -1*I))
     out: 0.0184868091938107 + 1.67553378430177*I
+  mpmath:
+    in: zeta(mpc(-1.5, 1), mpc(2.5, -1))
+    out: (0.0184868091938106521569164857071 + 1.67553378430176592096139476727j)
+  sage:
+    in: hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I))
 zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of:
   epsil:
     in: Zeta(20, 1 / 2)
@@ -607,11 +607,11 @@ zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of:
     in: Zeta[20, Rational[1, 2]]
   wolfram:
     in: Zeta[20, Rational[1, 2]]
-  sage:
-    in: hurwitz_zeta(20, (1/2))
   sympy:
     in: zeta(20, Rational(1, 2))
     out: zeta(20, 1/2)
+  sage:
+    in: hurwitz_zeta(20, (1/2))
 zeta-2-1-2-3-zeta-2-pi-2-2:
   epsil:
     in: Zeta(2, 1 / 2)
@@ -623,18 +623,18 @@ zeta-2-1-2-3-zeta-2-pi-2-2:
     in: Zeta[2, Rational[1, 2]]
   wolfram:
     in: Zeta[2, Rational[1, 2]]
-  sage:
-    in: hurwitz_zeta(2, (1/2))
   sympy:
     in: zeta(2, Rational(1, 2))
     out: zeta(2, 1/2)
+  sage:
+    in: hurwitz_zeta(2, (1/2))
 interval-arithmetic-zeta-is-decreasing-on-1:
   epsil:
     in: Zeta(Interval(1.1, 1.2))
-    out: Interval(5.591_582_441_177_752, 10.584_448_464_950_801)
+    out: Interval(5.591_582_441_177_75, 10.584_448_464_950_812)
   tex:
     in: \zeta(\mathrm{Interval}(1.1, 1.2))
-    out: \mathrm{Interval}(5.591\,582\,441\,177\,752, 10.584\,448\,464\,950\,801)
+    out: \mathrm{Interval}(5.591\,582\,441\,177\,75, 10.584\,448\,464\,950\,812)
   fullform:
     in: Zeta[Interval[List[1.1, 1.2]]]
   wolfram:
@@ -670,14 +670,14 @@ to-40-significant-digits-every-one-correctly:
     in: N[Zeta[3], 40]
   wolfram:
     in: N[Zeta[3], 40]
-  sage:
-    in: N(zeta(3))
-  mpmath:
-    in: (zeta(3))
-    out: "1.20205690315959428539973816151"
   sympy:
     in: N(zeta(3), 30)
     out: "1.20205690315959428539973816151"
+  mpmath:
+    in: (zeta(3))
+    out: "1.20205690315959428539973816151"
+  sage:
+    in: N(zeta(3))
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
   epsil:
     in: N(Zeta(3, -1 / 2))
@@ -689,14 +689,14 @@ zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
     in: N[Zeta[3, Rational[-1, 2]]]
   wolfram:
     in: N[Zeta[3, Rational[-1, 2]]]
-  sage:
-    in: N(hurwitz_zeta(3, (-1/2)))
   sympy:
     in: N(zeta(3, Rational(-1, 2)), 30)
     out: "0.414398322117159997798167130580"
     verdict: disagree
     kind: convention
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  sage:
+    in: N(hurwitz_zeta(3, (-1/2)))
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
   epsil:
     in: N(Zeta(-1, -2))
@@ -708,20 +708,37 @@ zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
     in: N[Zeta[-1, -2]]
   wolfram:
     in: N[Zeta[-1, -2]]
-  sage:
-    in: N(hurwitz_zeta(-1, -2))
-  mpmath:
-    in: (zeta(-1, -2))
-    out: "-3.08333333333333333333333333333"
-    verdict: disagree
-    kind: convention
-    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
   sympy:
     in: N(zeta(-1, -2), 30)
     out: "-3.08333333333333333333333333333"
     verdict: disagree
     kind: convention
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  mpmath:
+    in: (zeta(-1, -2))
+    out: "-3.08333333333333333333333333333"
+    verdict: disagree
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  sage:
+    in: N(hurwitz_zeta(-1, -2))
+certified-digits-zeta-3:
+  epsil:
+    in: N(Zeta(3), 40)
+    out: 1.202_056_903_159_594_285_399_738_161_511_449_990_765
+  tex:
+    in: N(\zeta(3), 40)
+    out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3], 40]
+  wolfram:
+    in: N[Zeta[3], 40]
+  sympy:
+    in: N(zeta(3), 30)
+  mpmath:
+    in: (zeta(3))
+  sage:
+    in: N(zeta(3))
 zeta-symbolic-s-under-n-stays-symbolic:
   epsil:
     in: N(Zeta(s))
@@ -742,11 +759,11 @@ zeta-half-stays-symbolic-until-n:
     in: Zeta[Rational[1, 2]]
   wolfram:
     in: Zeta[Rational[1, 2]]
-  sage:
-    in: zeta((1/2))
   sympy:
     in: zeta(Rational(1, 2))
     out: zeta(1/2)
+  sage:
+    in: zeta((1/2))
 zeta-complex-argument-stays-symbolic-until-n:
   epsil:
     in: Zeta(2 + i)
@@ -758,20 +775,20 @@ zeta-complex-argument-stays-symbolic-until-n:
     in: Zeta[Complex[2, 1]]
   wolfram:
     in: Zeta[Complex[2, 1]]
-  sage:
-    in: zeta((2 + 1*I))
-  mpmath:
-    in: zeta(mpc(2, 1))
-    out: (1.15035570325490267174284993474 - 0.437530865919607881117527898593j)
-    verdict: disagree
-    kind: unevaluated
-    note: compute-engine keeps ζ(2 + i) exact; mpmath only evaluates numerically.
   sympy:
     in: zeta((2 + 1*I))
     out: zeta(2 + I)
     verdict: disagree
     kind: shape
     note: Both stay symbolic; only the spelling differs.
+  mpmath:
+    in: zeta(mpc(2, 1))
+    out: (1.15035570325490267174284993474 - 0.437530865919607881117527898593j)
+    verdict: disagree
+    kind: unevaluated
+    note: compute-engine keeps ζ(2 + i) exact; mpmath only evaluates numerically.
+  sage:
+    in: zeta((2 + 1*I))
 n-zeta-complex-2-plus-i:
   epsil:
     in: N(Zeta(2 + i))
@@ -783,14 +800,14 @@ n-zeta-complex-2-plus-i:
     in: N[Zeta[Complex[2, 1]]]
   wolfram:
     in: N[Zeta[Complex[2, 1]]]
-  sage:
-    in: N(zeta((2 + 1*I)))
-  mpmath:
-    in: (zeta(mpc(2, 1)))
-    out: (1.15035570325490267174284993474 - 0.437530865919607881117527898593j)
   sympy:
     in: N(zeta((2 + 1*I)), 30)
     out: 1.15035570325490267174284993474 - 0.437530865919607881117527898593*I
+  mpmath:
+    in: (zeta(mpc(2, 1)))
+    out: (1.15035570325490267174284993474 - 0.437530865919607881117527898593j)
+  sage:
+    in: N(zeta((2 + 1*I)))
 zeta-threads-over-mixed-exact-and-inexact-list:
   epsil:
     in: Zeta([2, 0.5 + 14i])
@@ -802,14 +819,14 @@ zeta-threads-over-mixed-exact-and-inexact-list:
     in: Zeta[List[2, Complex[0.5, 14]]]
   wolfram:
     in: Zeta[List[2, Complex[0.5, 14]]]
-  sage:
-    in: zeta([2, (0.5 + 14*I)])
   sympy:
     in: zeta([2, (0.5 + 14*I)])
     out: "AttributeError: 'list' object has no attribute 'is_Integer'"
     verdict: error
     kind: threading
     note: compute-engine's Zeta is Listable and threads over the list; SymPy takes scalars only.
+  sage:
+    in: zeta([2, (0.5 + 14*I)])
 zeta-3-0-drops-pole-term-like-s-2:
   epsil:
     in: Zeta(3, 0)
@@ -821,20 +838,20 @@ zeta-3-0-drops-pole-term-like-s-2:
     in: Zeta[3, 0]
   wolfram:
     in: Zeta[3, 0]
-  sage:
-    in: hurwitz_zeta(3, 0)
-  mpmath:
-    in: zeta(3, 0)
-    out: "ZeroDivisionError: "
-    verdict: error
-    kind: convention
-    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
   sympy:
     in: zeta(3, 0)
     out: nan
     verdict: inconclusive
     kind: convention
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  mpmath:
+    in: zeta(3, 0)
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  sage:
+    in: hurwitz_zeta(3, 0)
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta:
   epsil:
     in: N(Zeta(2, -2))
@@ -846,17 +863,17 @@ zeta-2-neg-2-stays-finite-unlike-hurwitzzeta:
     in: N[Zeta[2, -2]]
   wolfram:
     in: N[Zeta[2, -2]]
-  sage:
-    in: N(hurwitz_zeta(2, -2))
-  mpmath:
-    in: (zeta(2, -2))
-    out: "ZeroDivisionError: "
-    verdict: error
-    kind: convention
-    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
   sympy:
     in: N(zeta(2, -2), 30)
     out: nan
     verdict: inconclusive
     kind: convention
     note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  mpmath:
+    in: (zeta(2, -2))
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: convention
+    note: "compute-engine's two-argument Zeta is Wolfram's Zeta[s, a]: terms ((n + a)^2)^(-s/2), skipping n + a = 0. mpmath and SymPy compute Hurwitz's ζ(s, a) = Σ (n + a)^(-s)."
+  sage:
+    in: N(hurwitz_zeta(2, -2))
