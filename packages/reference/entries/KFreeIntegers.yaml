@@ -5,6 +5,7 @@ summary: The $k$-free integers -- naturals with no prime factor raised to the $k
 signatures:
   - call: KFreeIntegers(k)
     description: the positive integers whose every prime factor has exponent $< k$, an infinite indexed collection.
+    library: enumeratio-collections
 details:
   - "A lazy indexed collection for each $k$: $Count(KFreeIntegers(k)) = +\\infty$, and $At(KFreeIntegers(k), i)$ unranks the $i$-th by scanning forward, testing each candidate's factorisation against $k$."
   - $KFreeIntegers(2)$ is exactly [[SquareFreeNumbers]] (A005117); $KFreeIntegers(3)$ is the cube-free numbers, A004709.

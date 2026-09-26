@@ -249,6 +249,12 @@ export interface ReferenceEntry {
   /** This head's own vocabulary in other systems -- Fungrim, the DLMF, Wikidata, the catalog. */
   readonly names?: ReferenceNames;
   /**
+   * Old names this head was declared under, oldest first -- a data alias, same idea as the
+   * numerals systems' aliases. `@enumeratio/statistics`'s `blessedName` reads the generated
+   * table built from these, not this field directly (design/speculative/symbol-metadata.md).
+   */
+  readonly formerly?: readonly string[];
+  /**
    * Generated rather than written, so the head has a page and a crosswalk: `engine` for a
    * compute-engine symbol we neither extend nor document by hand, `carrier` for a domain.
    */

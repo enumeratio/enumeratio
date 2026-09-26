@@ -428,6 +428,266 @@ far-left-of-the-strip-all-40-digits-agree-with:
     out: "136.361935791831144171775099936"
   sage:
     in: N(hurwitz_zeta((-41/2), (3/10)))
+precise-zeta-s-neg-41-2-a-3-10-d80:
+  epsil:
+    in: N(HurwitzZeta(-41 / 2, 3 / 10), 80)
+    out: 136.361_935_791_831_144_171_775_099_936_398_861_428_575_875_387_817_000_609_435_231_053_926_475_651_471_51
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{41}{2}, \frac{3}{10}), 80)
+    out: 136.361\,935\,791\,831\,144\,172
+  traditional:
+    in: N(\zeta(-\frac{41}{2}, \frac{3}{10}), 80)
+    out: 136.361\,935\,791\,831\,144\,172
+  fullform:
+    in: N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 80]
+  sympy:
+    in: N(zeta(Rational(-41, 2), Rational(3, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-41)/2), (mpf(3)/10)))
+  sage:
+    in: N(hurwitz_zeta((-41/2), (3/10)))
+precise-zeta-s-neg-81-2-a-2-5-d40:
+  epsil:
+    in: N(HurwitzZeta(-81 / 2, 2 / 5), 40)
+    out: 7_724_997_484_091_588.756_777_814_084_408_304_304_822
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{81}{2}, \frac{2}{5}), 40)
+    out: 7\,724\,997\,484\,091\,588.756\,78
+  traditional:
+    in: N(\zeta(-\frac{81}{2}, \frac{2}{5}), 40)
+    out: 7\,724\,997\,484\,091\,588.756\,78
+  fullform:
+    in: N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 40]
+  sympy:
+    in: N(zeta(Rational(-81, 2), Rational(2, 5)), 30)
+  mpmath:
+    in: (zeta((mpf(-81)/2), (mpf(2)/5)))
+  sage:
+    in: N(hurwitz_zeta((-81/2), (2/5)))
+precise-zeta-s-neg-81-2-a-2-5-d80:
+  epsil:
+    in: N(HurwitzZeta(-81 / 2, 2 / 5), 80)
+    out: 7_724_997_484_091_588.756_777_814_084_408_304_304_822_289_445_444_735_327_841_215_983_472_098_460_270_662_9
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{81}{2}, \frac{2}{5}), 80)
+    out: 7\,724\,997\,484\,091\,588.756\,78
+  traditional:
+    in: N(\zeta(-\frac{81}{2}, \frac{2}{5}), 80)
+    out: 7\,724\,997\,484\,091\,588.756\,78
+  fullform:
+    in: N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 80]
+  sympy:
+    in: N(zeta(Rational(-81, 2), Rational(2, 5)), 30)
+  mpmath:
+    in: (zeta((mpf(-81)/2), (mpf(2)/5)))
+  sage:
+    in: N(hurwitz_zeta((-81/2), (2/5)))
+precise-zeta-s-neg-21-2-a-3-10-d40:
+  epsil:
+    in: N(HurwitzZeta(-21 / 2, 3 / 10), 40)
+    out: -0.014_040_839_838_108_715_233_377_210_572_501_740_607_32
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{21}{2}, \frac{3}{10}), 40)
+    out: -0.014\,040\,839\,838\,108\,715\,233\,4
+  traditional:
+    in: N(\zeta(-\frac{21}{2}, \frac{3}{10}), 40)
+    out: -0.014\,040\,839\,838\,108\,715\,233\,4
+  fullform:
+    in: N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 40]
+  sympy:
+    in: N(zeta(Rational(-21, 2), Rational(3, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-21)/2), (mpf(3)/10)))
+  sage:
+    in: N(hurwitz_zeta((-21/2), (3/10)))
+precise-zeta-s-neg-21-2-a-3-10-d80:
+  epsil:
+    in: N(HurwitzZeta(-21 / 2, 3 / 10), 80)
+    out: -0.014_040_839_838_108_715_233_377_210_572_501_740_607_316_197_108_254_222_355_828_919_864_425_868_946_288_653
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{21}{2}, \frac{3}{10}), 80)
+    out: -0.014\,040\,839\,838\,108\,715\,233\,4
+  traditional:
+    in: N(\zeta(-\frac{21}{2}, \frac{3}{10}), 80)
+    out: -0.014\,040\,839\,838\,108\,715\,233\,4
+  fullform:
+    in: N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 80]
+  sympy:
+    in: N(zeta(Rational(-21, 2), Rational(3, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-21)/2), (mpf(3)/10)))
+  sage:
+    in: N(hurwitz_zeta((-21/2), (3/10)))
+precise-zeta-s-neg-11-2-a-27-10-d40:
+  epsil:
+    in: N(HurwitzZeta(-11 / 2, 27 / 10), 40)
+    out: -18.649_957_704_087_570_756_209_772_068_255_762_162_05
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{11}{2}, \frac{27}{10}), 40)
+    out: -18.649\,957\,704\,087\,570\,756\,2
+  traditional:
+    in: N(\zeta(-\frac{11}{2}, \frac{27}{10}), 40)
+    out: -18.649\,957\,704\,087\,570\,756\,2
+  fullform:
+    in: N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 40]
+  sympy:
+    in: N(zeta(Rational(-11, 2), Rational(27, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-11)/2), (mpf(27)/10)))
+  sage:
+    in: N(hurwitz_zeta((-11/2), (27/10)))
+precise-zeta-s-neg-11-2-a-27-10-d80:
+  epsil:
+    in: N(HurwitzZeta(-11 / 2, 27 / 10), 80)
+    out: -18.649_957_704_087_570_756_209_772_068_255_762_162_048_432_533_343_954_084_351_458_312_014_381_355_390_016
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{11}{2}, \frac{27}{10}), 80)
+    out: -18.649\,957\,704\,087\,570\,756\,2
+  traditional:
+    in: N(\zeta(-\frac{11}{2}, \frac{27}{10}), 80)
+    out: -18.649\,957\,704\,087\,570\,756\,2
+  fullform:
+    in: N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 80]
+  sympy:
+    in: N(zeta(Rational(-11, 2), Rational(27, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-11)/2), (mpf(27)/10)))
+  sage:
+    in: N(hurwitz_zeta((-11/2), (27/10)))
+precise-zeta-s-neg-5-2-a-3-10-d40:
+  epsil:
+    in: N(HurwitzZeta(-5 / 2, 3 / 10), 40)
+    out: -0.009_496_380_931_514_520_017_273_835_249_675_802_227_555
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{5}{2}, \frac{3}{10}), 40)
+    out: -0.009\,496\,380\,931\,514\,520\,017\,27
+  traditional:
+    in: N(\zeta(-\frac{5}{2}, \frac{3}{10}), 40)
+    out: -0.009\,496\,380\,931\,514\,520\,017\,27
+  fullform:
+    in: N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 40]
+  sympy:
+    in: N(zeta(Rational(-5, 2), Rational(3, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-5)/2), (mpf(3)/10)))
+  sage:
+    in: N(hurwitz_zeta((-5/2), (3/10)))
+precise-zeta-s-neg-5-2-a-3-10-d80:
+  epsil:
+    in: N(HurwitzZeta(-5 / 2, 3 / 10), 80)
+    out: -0.009_496_380_931_514_520_017_273_835_249_675_802_227_555_416_581_313_382_131_732_933_172_904_980_954_560_506
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{5}{2}, \frac{3}{10}), 80)
+    out: -0.009\,496\,380\,931\,514\,520\,017\,27
+  traditional:
+    in: N(\zeta(-\frac{5}{2}, \frac{3}{10}), 80)
+    out: -0.009\,496\,380\,931\,514\,520\,017\,27
+  fullform:
+    in: N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 80]
+  sympy:
+    in: N(zeta(Rational(-5, 2), Rational(3, 10)), 30)
+  mpmath:
+    in: (zeta((mpf(-5)/2), (mpf(3)/10)))
+  sage:
+    in: N(hurwitz_zeta((-5/2), (3/10)))
+precise-zeta-s-neg-1-2-a-1-20-d40:
+  epsil:
+    in: N(HurwitzZeta(-1 / 2, 1 / 20), 40)
+    out: -0.021_594_443_260_264_743_339_354_686_769_395_891_926_8
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{1}{2}, \frac{1}{20}), 40)
+    out: -0.021\,594\,443\,260\,264\,743\,339\,4
+  traditional:
+    in: N(\zeta(-\frac{1}{2}, \frac{1}{20}), 40)
+    out: -0.021\,594\,443\,260\,264\,743\,339\,4
+  fullform:
+    in: N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 40]
+  sympy:
+    in: N(zeta(Rational(-1, 2), Rational(1, 20)), 30)
+  mpmath:
+    in: (zeta((mpf(-1)/2), (mpf(1)/20)))
+  sage:
+    in: N(hurwitz_zeta((-1/2), (1/20)))
+precise-zeta-s-neg-1-2-a-1-20-d80:
+  epsil:
+    in: N(HurwitzZeta(-1 / 2, 1 / 20), 80)
+    out: -0.021_594_443_260_264_743_339_354_686_769_395_891_926_797_425_874_307_039_905_670_121_968_697_451_342_879_039
+  tex:
+    in: N(\mathrm{HurwitzZeta}(-\frac{1}{2}, \frac{1}{20}), 80)
+    out: -0.021\,594\,443\,260\,264\,743\,339\,4
+  traditional:
+    in: N(\zeta(-\frac{1}{2}, \frac{1}{20}), 80)
+    out: -0.021\,594\,443\,260\,264\,743\,339\,4
+  fullform:
+    in: N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 80]
+  sympy:
+    in: N(zeta(Rational(-1, 2), Rational(1, 20)), 30)
+  mpmath:
+    in: (zeta((mpf(-1)/2), (mpf(1)/20)))
+  sage:
+    in: N(hurwitz_zeta((-1/2), (1/20)))
+precise-zeta-s-1-2-a-5-4-d40:
+  epsil:
+    in: N(HurwitzZeta(1 / 2, 5 / 4), 40)
+    out: -1.760_036_475_504_369_044_662_425_689_839_422_774_102
+  tex:
+    in: N(\mathrm{HurwitzZeta}(\frac{1}{2}, \frac{5}{4}), 40)
+    out: -1.760\,036\,475\,504\,369\,044\,66
+  traditional:
+    in: N(\zeta(\frac{1}{2}, \frac{5}{4}), 40)
+    out: -1.760\,036\,475\,504\,369\,044\,66
+  fullform:
+    in: N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 40]
+  wolfram:
+    in: N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 40]
+  sympy:
+    in: N(zeta(Rational(1, 2), Rational(5, 4)), 30)
+  mpmath:
+    in: (zeta((mpf(1)/2), (mpf(5)/4)))
+  sage:
+    in: N(hurwitz_zeta((1/2), (5/4)))
+precise-zeta-s-1-2-a-5-4-d80:
+  epsil:
+    in: N(HurwitzZeta(1 / 2, 5 / 4), 80)
+    out: -1.760_036_475_504_369_044_662_425_689_839_422_774_102_135_563_198_229_957_332_371_062_549_910_029_200_439_1
+  tex:
+    in: N(\mathrm{HurwitzZeta}(\frac{1}{2}, \frac{5}{4}), 80)
+    out: -1.760\,036\,475\,504\,369\,044\,66
+  traditional:
+    in: N(\zeta(\frac{1}{2}, \frac{5}{4}), 80)
+    out: -1.760\,036\,475\,504\,369\,044\,66
+  fullform:
+    in: N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 80]
+  wolfram:
+    in: N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 80]
+  sympy:
+    in: N(zeta(Rational(1, 2), Rational(5, 4)), 30)
+  mpmath:
+    in: (zeta((mpf(1)/2), (mpf(5)/4)))
+  sage:
+    in: N(hurwitz_zeta((1/2), (5/4)))
 left-of-the-strip-at-a-non-integer-a:
   epsil:
     in: N(HurwitzZeta(-20, 0.7))

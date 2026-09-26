@@ -9171,3 +9171,165 @@ lerchphi-rim-theta-2p4-s-1p5-a-1:
   mpmath:
     in: (lerchphi(mpc(-0.7373937155412454, 0.675463180551151), 1.5, 1))
     out: (0.783731331357530270376500713756 + 0.120757921412831669025433774527j)
+lerch-continuation-z3-s2p5-a1p5:
+  epsil:
+    in: N(LerchPhi(3, 2.5, 1.5))
+    out: 0.259_043_193_993_909 - 0.523_719_168_554_282_9i
+  tex:
+    in: N(\mathrm{LerchPhi}(3, 2.5, 1.5))
+    out: 0.259\,043\,193\,993\,909-0.523\,719\,168\,554\,282\,9i
+  traditional:
+    in: N(\Phi(3, 2.5, 1.5))
+    out: 0.259\,043\,193\,993\,909-0.523\,719\,168\,554\,282\,9i
+  fullform:
+    in: N[LerchPhi[3, 2.5, 1.5]]
+  wolfram:
+    in: N[LerchPhi[3, 2.5, 1.5]]
+  sympy:
+    in: N(lerchphi(3, 2.5, 1.5), 30)
+  mpmath:
+    in: (lerchphi(3, 2.5, 1.5))
+lerch-continuation-zneg5-s2-a1:
+  epsil:
+    in: N(LerchPhi(-5, 2, 1))
+    out: 0.549_855_825_212_162
+  tex:
+    in: N(\mathrm{LerchPhi}(-5, 2, 1))
+    out: 0.549\,855\,825\,212\,162
+  traditional:
+    in: N(\Phi(-5, 2, 1))
+    out: 0.549\,855\,825\,212\,162
+  fullform:
+    in: N[LerchPhi[-5, 2, 1]]
+  wolfram:
+    in: N[LerchPhi[-5, 2, 1]]
+  sympy:
+    in: N(lerchphi(-5, 2, 1), 30)
+  mpmath:
+    in: (lerchphi(-5, 2, 1))
+lerch-continuation-z2p3i-s1neg2i-a3:
+  epsil:
+    in: N(LerchPhi(2 + 3i, 1 - 2i, 3))
+    out: -0.108_147_767_607_783_33 - 0.013_143_410_626_897_091i
+  tex:
+    in: N(\mathrm{LerchPhi}(2+3i, 1-2i, 3))
+    out: -0.108\,147\,767\,607\,783\,33-0.013\,143\,410\,626\,897\,091i
+  traditional:
+    in: N(\Phi(2+3i, 1-2i, 3))
+    out: -0.108\,147\,767\,607\,783\,33-0.013\,143\,410\,626\,897\,091i
+  fullform:
+    in: N[LerchPhi[Complex[2, 3], Complex[1, -2], 3]]
+  wolfram:
+    in: N[LerchPhi[Complex[2, 3], Complex[1, -2], 3]]
+  sympy:
+    in: N(lerchphi((2 + 3*I), (1 + -2*I), 3), 30)
+  mpmath:
+    in: (lerchphi(mpc(2, 3), mpc(1, -2), 3))
+lerch-continuation-zneg3p0p5i-s1p5-a2:
+  epsil:
+    in: N(LerchPhi(-3 + 0.5i, 1.5, 2))
+    out: 0.145_493_815_105_330_58 + 0.013_071_247_988_415_69i
+  tex:
+    in: N(\mathrm{LerchPhi}(-3+0.5i, 1.5, 2))
+    out: 0.145\,493\,815\,105\,330\,58+0.013\,071\,247\,988\,415\,69i
+  traditional:
+    in: N(\Phi(-3+0.5i, 1.5, 2))
+    out: 0.145\,493\,815\,105\,330\,58+0.013\,071\,247\,988\,415\,69i
+  fullform:
+    in: N[LerchPhi[Complex[-3, 0.5], 1.5, 2]]
+  wolfram:
+    in: N[LerchPhi[Complex[-3, 0.5], 1.5, 2]]
+  sympy:
+    in: N(lerchphi((-3 + 0.5*I), 1.5, 2), 30)
+  mpmath:
+    in: (lerchphi(mpc(-3, 0.5), 1.5, 2))
+lerch-continuation-z10-s0p5-a3:
+  epsil:
+    in: N(LerchPhi(10, 0.5, 3))
+    out: -0.082_696_733_641_005_53 - 0.001_168_065_218_145_733_3i
+  tex:
+    in: N(\mathrm{LerchPhi}(10, 0.5, 3))
+    out: -0.082\,696\,733\,641\,005\,53-0.001\,168\,065\,218\,145\,733\,3i
+  traditional:
+    in: N(\Phi(10, 0.5, 3))
+    out: -0.082\,696\,733\,641\,005\,53-0.001\,168\,065\,218\,145\,733\,3i
+  fullform:
+    in: N[LerchPhi[10, 0.5, 3]]
+  wolfram:
+    in: N[LerchPhi[10, 0.5, 3]]
+  sympy:
+    in: N(lerchphi(10, 0.5, 3), 30)
+  mpmath:
+    in: (lerchphi(10, 0.5, 3))
+lerch-continuation-z4-s3-a0p3:
+  epsil:
+    in: N(LerchPhi(4, 3, 0.3))
+    out: 38.689_235_424_245_965 - 1.991_648_956_368_573_3i
+  tex:
+    in: N(\mathrm{LerchPhi}(4, 3, 0.3))
+    out: 38.689\,235\,424\,245\,965-1.991\,648\,956\,368\,573\,3i
+  traditional:
+    in: N(\Phi(4, 3, 0.3))
+    out: 38.689\,235\,424\,245\,965-1.991\,648\,956\,368\,573\,3i
+  fullform:
+    in: N[LerchPhi[4, 3, 0.3]]
+  wolfram:
+    in: N[LerchPhi[4, 3, 0.3]]
+  sympy:
+    in: N(lerchphi(4, 3, 0.3), 30)
+  mpmath:
+    in: (lerchphi(4, 3, 0.3))
+lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7:
+  epsil:
+    in: N(LerchPhi(-1.5 + 2.5i, 2 - i, 0.7))
+    out: 1.412_993_647_054_496_4 - 0.558_305_334_451_270_7i
+  tex:
+    in: N(\mathrm{LerchPhi}(-1.5+2.5i, 2-i, 0.7))
+    out: 1.412\,993\,647\,054\,496\,4-0.558\,305\,334\,451\,270\,7i
+  traditional:
+    in: N(\Phi(-1.5+2.5i, 2-i, 0.7))
+    out: 1.412\,993\,647\,054\,496\,4-0.558\,305\,334\,451\,270\,7i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 2.5], Complex[2, -1], 0.7]]
+  wolfram:
+    in: N[LerchPhi[Complex[-1.5, 2.5], Complex[2, -1], 0.7]]
+  sympy:
+    in: N(lerchphi((-1.5 + 2.5*I), (2 + -1*I), 0.7), 30)
+  mpmath:
+    in: (lerchphi(mpc(-1.5, 2.5), mpc(2, -1), 0.7))
+lerch-continuation-z100-sneg2-a1:
+  epsil:
+    in: N(LerchPhi(100, -2, 1))
+    out: -0.000_104_091_625_364_732_82
+  tex:
+    in: N(\mathrm{LerchPhi}(100, -2, 1))
+    out: -0.000\,104\,091\,625\,364\,732\,82
+  traditional:
+    in: N(\Phi(100, -2, 1))
+    out: -0.000\,104\,091\,625\,364\,732\,82
+  fullform:
+    in: N[LerchPhi[100, -2, 1]]
+  wolfram:
+    in: N[LerchPhi[100, -2, 1]]
+  sympy:
+    in: N(lerchphi(100, -2, 1), 30)
+  mpmath:
+    in: (lerchphi(100, -2, 1))
+lerch-continuation-z1p0001-s2-a1:
+  epsil:
+    in: N(LerchPhi(1.000_1, 2, 1))
+    out: 1.645_790_473_289_574 - 0.000_314_112_147_228_072_8i
+  tex:
+    in: N(\mathrm{LerchPhi}(1.000\,1, 2, 1))
+    out: 1.645\,790\,473\,289\,574-0.000\,314\,112\,147\,228\,072\,8i
+  traditional:
+    in: N(\Phi(1.000\,1, 2, 1))
+    out: 1.645\,790\,473\,289\,574-0.000\,314\,112\,147\,228\,072\,8i
+  fullform:
+    in: N[LerchPhi[1.0001, 2, 1]]
+  wolfram:
+    in: N[LerchPhi[1.0001, 2, 1]]
+  sympy:
+    in: N(lerchphi(1.0001, 2, 1), 30)
+  mpmath:
+    in: (lerchphi(1.0001, 2, 1))

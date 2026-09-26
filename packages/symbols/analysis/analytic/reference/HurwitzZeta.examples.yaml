@@ -104,6 +104,58 @@
   expected: { num: "136.3619357918311441717750999363988614286" }
   category: Scope
   caption: Far left of the strip, all 40 digits agree with mpmath
+- role: test
+  id: precise-zeta-s-neg-41-2-a-3-10-d80
+  expr: [N, [HurwitzZeta, [Rational, -41, 2], [Rational, 3, 10]], 80]
+  expected: { num: "136.36193579183114417177509993639886142857587538781700060943523105392647565147151" }
+- role: test
+  id: precise-zeta-s-neg-81-2-a-2-5-d40
+  expr: [N, [HurwitzZeta, [Rational, -81, 2], [Rational, 2, 5]], 40]
+  expected: { num: "7724997484091588.756777814084408304304822" }
+- role: test
+  id: precise-zeta-s-neg-81-2-a-2-5-d80
+  expr: [N, [HurwitzZeta, [Rational, -81, 2], [Rational, 2, 5]], 80]
+  expected: { num: "7724997484091588.7567778140844083043048222894454447353278412159834720984602706629" }
+- role: test
+  id: precise-zeta-s-neg-21-2-a-3-10-d40
+  expr: [N, [HurwitzZeta, [Rational, -21, 2], [Rational, 3, 10]], 40]
+  expected: { num: "-0.01404083983810871523337721057250174060732" }
+- role: test
+  id: precise-zeta-s-neg-21-2-a-3-10-d80
+  expr: [N, [HurwitzZeta, [Rational, -21, 2], [Rational, 3, 10]], 80]
+  expected: { num: "-0.014040839838108715233377210572501740607316197108254222355828919864425868946288653" }
+- role: test
+  id: precise-zeta-s-neg-11-2-a-27-10-d40
+  expr: [N, [HurwitzZeta, [Rational, -11, 2], [Rational, 27, 10]], 40]
+  expected: { num: "-18.64995770408757075620977206825576216205" }
+- role: test
+  id: precise-zeta-s-neg-11-2-a-27-10-d80
+  expr: [N, [HurwitzZeta, [Rational, -11, 2], [Rational, 27, 10]], 80]
+  expected: { num: "-18.649957704087570756209772068255762162048432533343954084351458312014381355390016" }
+- role: test
+  id: precise-zeta-s-neg-5-2-a-3-10-d40
+  expr: [N, [HurwitzZeta, [Rational, -5, 2], [Rational, 3, 10]], 40]
+  expected: { num: "-0.009496380931514520017273835249675802227555" }
+- role: test
+  id: precise-zeta-s-neg-5-2-a-3-10-d80
+  expr: [N, [HurwitzZeta, [Rational, -5, 2], [Rational, 3, 10]], 80]
+  expected: { num: "-0.009496380931514520017273835249675802227555416581313382131732933172904980954560506" }
+- role: test
+  id: precise-zeta-s-neg-1-2-a-1-20-d40
+  expr: [N, [HurwitzZeta, [Rational, -1, 2], [Rational, 1, 20]], 40]
+  expected: { num: "-0.0215944432602647433393546867693958919268" }
+- role: test
+  id: precise-zeta-s-neg-1-2-a-1-20-d80
+  expr: [N, [HurwitzZeta, [Rational, -1, 2], [Rational, 1, 20]], 80]
+  expected: { num: "-0.021594443260264743339354686769395891926797425874307039905670121968697451342879039" }
+- role: test
+  id: precise-zeta-s-1-2-a-5-4-d40
+  expr: [N, [HurwitzZeta, [Rational, 1, 2], [Rational, 5, 4]], 40]
+  expected: { num: "-1.760036475504369044662425689839422774102" }
+- role: test
+  id: precise-zeta-s-1-2-a-5-4-d80
+  expr: [N, [HurwitzZeta, [Rational, 1, 2], [Rational, 5, 4]], 80]
+  expected: { num: "-1.7600364755043690446624256898394227741021355631982299573323710625499100292004391" }
 - id: left-of-the-strip-at-a-non-integer-a
   expr: [N, [HurwitzZeta, -20, 0.7]]
   expected: { num: "-80.0909738762535913363158842634494985634654608317388" }

@@ -78,6 +78,12 @@
     "names": {
       "$ref": "#/$defs/ReferenceNames"
     },
+    "formerly": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "stub": {
       "enum": ["engine", "carrier"]
     }
