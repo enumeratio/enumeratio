@@ -23,7 +23,7 @@ export interface Cardinality {
 export const CARDINALITIES: readonly Cardinality[] = [
   {
     head: "StandardTableauCount",
-    on: "IntegerPartition",
+    on: "IntegerPartitions",
     counts: "StandardTableaux",
     why: "The size of StandardTableaux(λ), not a property of λ's diagram. The hook-length formula is one way to compute that size; Count over the collection is another, and neither belongs in a statistics table.",
   },

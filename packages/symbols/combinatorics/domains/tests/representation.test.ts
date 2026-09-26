@@ -9,7 +9,7 @@ const ce = new ComputeEngine();
 declareDomains(ce);
 declareRendering(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
 
-const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
+const perm = (...entries: number[]): unknown => ["Permutations", ["List", ...entries]];
 const text = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;
 
 function permutations(n: number): number[][] {
@@ -52,7 +52,7 @@ test("Render and ParseAs are inverse through the engine", () => {
     for (const name of ["oneline", "cycle", "dense"]) {
       const written = ce.box(["Render", perm(...p), `'${name}'`] as never).evaluate();
       const back = ce.box(["ParseAs", written, "'permutation'", `'${name}'`] as never).evaluate();
-      expect(back.json, `${name} [${p}]`).toEqual(["Permutation", ["List", ...p]]);
+      expect(back.json, `${name} [${p}]`).toEqual(["Permutations", ["List", ...p]]);
     }
   }
 });
@@ -61,13 +61,13 @@ test("Render reads the carrier off the value, and refuses a name from another ca
   // The representation is looked up by (carrier, name), so asking for a partition's spelling
   // of a permutation finds nothing rather than producing nonsense.
   expect(text(["Render", perm(2, 1), "'parts'"])).not.toBe("'2 + 1'");
-  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'parts'"])).toBe("'3 + 1'");
-  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'"])).toBe("'3^2 1'");
+  expect(text(["Render", ["IntegerPartitions", ["List", 3, 1]], "'parts'"])).toBe("'3 + 1'");
+  expect(text(["Render", ["IntegerPartitions", ["List", 3, 3, 1]], "'exponential'"])).toBe("'3^2 1'");
 });
 
 test("a bare Render uses the canonical representation", () => {
   expect(text(["Render", perm(2, 3, 1)])).toBe("'2 3 1'");
-  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]]])).toBe("'3 + 1'");
+  expect(text(["Render", ["IntegerPartitions", ["List", 3, 1]]])).toBe("'3 + 1'");
 });
 
 test("exactly one representation per carrier and medium is canonical", () => {

@@ -29,7 +29,7 @@ import {
   where,
 } from "./vocabulary.ts";
 
-const on = "DyckPath";
+const on = "DyckPaths";
 const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
   head,
   on,

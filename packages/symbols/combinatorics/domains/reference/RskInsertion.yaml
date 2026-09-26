@@ -3,10 +3,10 @@ domain: Combinatorial maps
 signature: RskInsertion(Permutation)
 summary: The insertion tableau of the RSK correspondence.
 details:
-  - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutations` and returns a `StandardTableaux` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau. Emitted as a ROW WORD because that is what the carrier is; with RskShape it determines the tableau. See tableau.ts for the indexing rule that makes it evaluate at all.
 examples:
   - id: the-one-line-word-231
-    expr: [RskInsertion, [Permutation, [List, 2, 3, 1]]]
-    expected: [StandardTableau, [List, 1, 3, 2]]
+    expr: [RskInsertion, [Permutations, [List, 2, 3, 1]]]
+    expected: [StandardTableaux, [List, 1, 3, 2]]
     caption: the one-line word $231$

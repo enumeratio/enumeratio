@@ -750,7 +750,7 @@ const NOVEL = [
   "Pick",
   "ReplacePart",
   "AssociationThread",
-  // The Wolfram-frontier misc heads (misc-frontier.ts): all nine are genuinely Wolfram's own
+  // The Wolfram-frontier misc heads (misc-frontier.ts): all ten are genuinely Wolfram's own
   // names (see HEADS in @enumeratio/wolfram), waiting on the same coverage run to fill in
   // `elsewhere`.
   "DiagonalMatrix",
@@ -762,6 +762,7 @@ const NOVEL = [
   "NumberQ",
   "ReIm",
   "RandomComplex",
+  "KaryTree",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

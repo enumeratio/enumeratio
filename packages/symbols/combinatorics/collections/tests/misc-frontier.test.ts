@@ -200,12 +200,29 @@ test("RandomComplex({zmin, zmax}) lands in that rectangle", () => {
   expect(z[2]).toBeLessThanOrEqual(1);
 });
 
-// ─── not implemented / out of scope, documented on the module ──────────────────────────
+// ─── KaryTree ────────────────────────────────────────────────────────────────────────────
 //
-// KaryTree was pulled from this wave (see the module doc): the site's per-symbol page
-// generator collided on case with the existing KAryTree domain (#260).
-test("KaryTree, WeightedAdjacencyMatrix and BooleanConvert are intentionally not declared", () => {
-  expect(ce.lookupDefinition("KaryTree")).toBeUndefined();
+// Independent reference: n - 1 edges (a tree), and vertex i's parent is floor((i-2)/k) + 1
+// — built from scratch here rather than by calling karyTree's own formula back at itself.
+function refKaryTreeEdges(n: number, k: number): [number, number][] {
+  const edges: [number, number][] = [];
+  for (let i = 2; i <= n; i++) edges.push([Math.floor((i - 2) / k) + 1, i]);
+  return edges;
+}
+
+test("KaryTree(n, k) has n - 1 edges and matches the heap-layout parent formula", () => {
+  const g = run(["KaryTree", 10, 3]) as [string, unknown, [string, ...[string, number, number][]]];
+  const edgeList = g[2].slice(1) as [string, number, number][];
+  expect(edgeList.length).toBe(9);
+  const got = edgeList.map(([, a, b]) => [a, b] as [number, number]);
+  expect(got).toEqual(refKaryTreeEdges(10, 3));
+});
+test("KaryTree(n) defaults to k = 2 (binary)", () => {
+  expect(run(["KaryTree", 7])).toEqual(run(["KaryTree", 7, 2]));
+});
+
+// ─── not implemented / out of scope, documented on the module ──────────────────────────
+test("WeightedAdjacencyMatrix and BooleanConvert are intentionally not declared", () => {
   expect(ce.lookupDefinition("WeightedAdjacencyMatrix")).toBeUndefined();
   expect(ce.lookupDefinition("BooleanConvert")).toBeUndefined();
 });
