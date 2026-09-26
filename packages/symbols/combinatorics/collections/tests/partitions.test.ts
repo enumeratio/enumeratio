@@ -13,7 +13,7 @@ import { entries as coreEntries } from "../src/families/core.ts";
 // compositions.test.ts.
 const PARAMS: Record<string, number[][]> = {
   OddPartitions: Array.from({ length: 16 }, (_, n) => [n]),
-  PrimePartition: Array.from({ length: 16 }, (_, n) => [n]),
+  PrimePartitions: Array.from({ length: 16 }, (_, n) => [n]),
   SquarePartitions: Array.from({ length: 16 }, (_, n) => [n]),
   TriangularPartitions: Array.from({ length: 16 }, (_, n) => [n]),
   LargestPartPartitions: Array.from({ length: 9 }, (_, n) => Array.from({ length: n + 1 }, (_, m) => [n, m])).flat(),
@@ -67,7 +67,7 @@ function isPrime(x: number): boolean {
 // Independent (brute-force-side) predicates — deliberately not sharing code with the kernels.
 const PREDICATES: Record<string, (parts: number[]) => boolean> = {
   OddPartitions: (p) => p.every((x) => x % 2 === 1),
-  PrimePartition: (p) => p.every(isPrime),
+  PrimePartitions: (p) => p.every(isPrime),
   SquarePartitions: (p) => p.every(isSquare),
   TriangularPartitions: (p) => p.every(isTriangular),
 };
@@ -142,8 +142,8 @@ test("OddPartitions count = A000009, and equals DistinctPartitions (Euler)", () 
   expect(distinctPartitions).toBeDefined();
   expect(oddCounts).toEqual(range(21).map((p) => distinctPartitions?.count(p)));
 });
-test("PrimePartition count = A000607", () => {
-  expect(countsOf("PrimePartition", range(21))).toEqual([
+test("PrimePartitions count = A000607", () => {
+  expect(countsOf("PrimePartitions", range(21))).toEqual([
     1, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 9, 10, 12, 14, 17, 19, 23, 26,
   ]);
 });

@@ -87,11 +87,11 @@ const COMPOSITION_RESTRICTION_NAMES = new Set([
   "FibonacciCompositions",
   "TriCompositions",
   "TetraCompositions",
-  "TriangularComposition",
+  "TriangularCompositions",
   "PrimeCompositions",
   "CarlitzCompositions",
   "PalindromicCompositions",
-  "ZigzagComposition",
+  "ZigzagCompositions",
 ]);
 
 test("composition restrictions agree with their kernels for n = 0..8", () => {
@@ -115,7 +115,7 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
 
 const PARTITION_RESTRICTION_NAMES = new Set([
   "OddPartitions",
-  "PrimePartition",
+  "PrimePartitions",
   "SquarePartitions",
   "TriangularPartitions",
 ]);

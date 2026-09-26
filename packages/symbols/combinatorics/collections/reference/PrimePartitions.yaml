@@ -1,9 +1,9 @@
-name: PrimePartition
+name: PrimePartitions
 domain: Collections
-signature: PrimePartition(n)
+signature: PrimePartitions(n)
 summary: The partitions of $n$ into prime parts.
 signatures:
-  - call: PrimePartition(n)
+  - call: PrimePartitions(n)
     description: the partitions of $n$ into prime parts
     library: enumeratio-collections
 details:

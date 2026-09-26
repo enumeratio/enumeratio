@@ -162,7 +162,7 @@ function resolveIntegerPartitions(ops: readonly BoxedExpression[]): Resolved<num
 
   if (ops.length === 3) {
     // IntegerPartitions(n, All, parts): parts drawn only from the given list -- the same
-    // partsInSet(inSet) DP that OddPartitions/PrimePartition/… already use (partitions.ts),
+    // partsInSet(inSet) DP that OddPartitions/PrimePartitions/… already use (partitions.ts),
     // instantiated on `parts.includes` instead of a fixed predicate.
     if (symbolNameOf(second) !== "All") return undefined;
     const listArg = ops[2];

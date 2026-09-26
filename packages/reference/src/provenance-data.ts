@@ -2020,7 +2020,7 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "PrimePartition",
+    name: "PrimePartitions",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
@@ -2622,7 +2622,7 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "TriangularComposition",
+    name: "TriangularCompositions",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
@@ -2804,7 +2804,7 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "ZigzagComposition",
+    name: "ZigzagCompositions",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,

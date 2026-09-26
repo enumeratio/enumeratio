@@ -112,7 +112,7 @@
   "PowersOfTwo",
   "PracticalNumbers",
   "PrimeCompositions",
-  "PrimePartition",
+  "PrimePartitions",
   "PrimePowerNumbers",
   "PrimitiveBinaryStrings",
   "PrimorialNumbers",
@@ -162,7 +162,7 @@
   "Tournaments",
   "TriCompositions",
   "TriStrings",
-  "TriangularComposition",
+  "TriangularCompositions",
   "TriangularNumbers",
   "TriangularPartitions",
   "Tuples",
@@ -172,5 +172,5 @@
   "WeakCompositions",
   "WeirdNumbers",
   "Words",
-  "ZigzagComposition"
+  "ZigzagCompositions"
 ]

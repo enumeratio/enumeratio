@@ -149,7 +149,7 @@ export const entries: NumberKernel[] = [
     (a) => oddPart.rank(a),
   ),
   ints(
-    "PrimePartition",
+    "PrimePartitions",
     1,
     ([n]) => primePart.count(n),
     ([n], r) => primePart.unrank(n, r),

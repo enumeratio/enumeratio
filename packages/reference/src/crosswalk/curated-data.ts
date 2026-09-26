@@ -425,7 +425,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A023360",
     },
   ],
-  PrimePartition: [
+  PrimePartitions: [
     {
       system: "oeis",
       identity: "A000607",
@@ -541,7 +541,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000073",
     },
   ],
-  TriangularComposition: [
+  TriangularCompositions: [
     {
       system: "oeis",
       identity: "A023361",
@@ -553,7 +553,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A007294",
     },
   ],
-  ZigzagComposition: [
+  ZigzagCompositions: [
     {
       system: "oeis",
       identity: "A025047",

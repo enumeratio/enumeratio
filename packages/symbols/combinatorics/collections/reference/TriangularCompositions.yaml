@@ -1,9 +1,9 @@
-name: TriangularComposition
+name: TriangularCompositions
 domain: Collections
-signature: TriangularComposition(n)
+signature: TriangularCompositions(n)
 summary: The compositions of $n$ into triangular-number parts.
 signatures:
-  - call: TriangularComposition(n)
+  - call: TriangularCompositions(n)
     description: the compositions of $n$ into triangular-number parts
     library: enumeratio-collections
 details:
