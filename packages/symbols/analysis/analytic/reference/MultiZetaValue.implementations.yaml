@@ -16,6 +16,60 @@ zeta-3-3-frac-12-zeta-3-2-zeta-6:
     out: 0.213\,798\,868\,224\,592\,5
   fullform:
     in: N[MultiZetaValue[3, 3]]
+zeta-2-3:
+  epsil:
+    in: N(MultiZetaValue(2, 3))
+    out: 0.711_566_197_550_413
+  tex:
+    in: N(\mathrm{MultiZetaValue}(2, 3))
+    out: 0.711\,566\,197\,550\,413
+  fullform:
+    in: N[MultiZetaValue[2, 3]]
+zeta-3-2:
+  epsil:
+    in: N(MultiZetaValue(3, 2))
+    out: 0.228_810_397_602_849_7
+  tex:
+    in: N(\mathrm{MultiZetaValue}(3, 2))
+    out: 0.228\,810\,397\,602\,849\,7
+  fullform:
+    in: N[MultiZetaValue[3, 2]]
+zeta-4-2:
+  epsil:
+    in: N(MultiZetaValue(4, 2))
+    out: 0.088_483_382_454_752_96
+  tex:
+    in: N(\mathrm{MultiZetaValue}(4, 2))
+    out: 0.088\,483\,382\,454\,752\,96
+  fullform:
+    in: N[MultiZetaValue[4, 2]]
+zeta-2-4:
+  epsil:
+    in: N(MultiZetaValue(2, 4))
+    out: 0.674_523_914_033_936
+  tex:
+    in: N(\mathrm{MultiZetaValue}(2, 4))
+    out: 0.674\,523\,914\,033\,936
+  fullform:
+    in: N[MultiZetaValue[2, 4]]
+zeta-5-2:
+  epsil:
+    in: N(MultiZetaValue(5, 2))
+    out: 0.038_575_124_342_795_405
+  tex:
+    in: N(\mathrm{MultiZetaValue}(5, 2))
+    out: 0.038\,575\,124\,342\,795\,405
+  fullform:
+    in: N[MultiZetaValue[5, 2]]
+zeta-3-4:
+  epsil:
+    in: N(MultiZetaValue(3, 4))
+    out: 0.207_505_014_615_580_57
+  tex:
+    in: N(\mathrm{MultiZetaValue}(3, 4))
+    out: 0.207\,505\,014\,615\,580\,57
+  fullform:
+    in: N[MultiZetaValue[3, 4]]
 s-1-2-stays-symbolic-outside-the-depth-2-both:
   epsil:
     in: MultiZetaValue(1, 2)

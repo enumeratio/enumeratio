@@ -8,3 +8,19 @@
   expected: [List, [List, 1, 1, 1], [List]]
   category: Scope
   caption: The first skew shape of size 3, as an outer/inner partition pair
+- role: test
+  id: every-element-of-skewpartitions-3
+  expr: [Take, [SkewPartitions, 3], 9]
+  expected:
+    [
+      List,
+      [List, [List, 1, 1, 1], [List]],
+      [List, [List, 2, 1], [List]],
+      [List, [List, 2, 1, 1], [List, 1]],
+      [List, [List, 2, 2], [List, 1]],
+      [List, [List, 2, 2, 1], [List, 1, 1]],
+      [List, [List, 3], [List]],
+      [List, [List, 3, 1], [List, 1]],
+      [List, [List, 3, 2], [List, 2]],
+      [List, [List, 3, 2, 1], [List, 2, 1]],
+    ]

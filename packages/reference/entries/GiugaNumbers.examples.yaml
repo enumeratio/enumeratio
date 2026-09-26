@@ -1,0 +1,4 @@
+- role: test
+  id: the-first-4-terms
+  expr: [Take, GiugaNumbers, 4]
+  expected: [List, 30, 858, 1722, 66198]

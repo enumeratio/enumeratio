@@ -42,6 +42,39 @@ continued-off-the-integers:
     in: Hyperfactorial[0.5]
   wolfram:
     in: Hyperfactorial[0.5]
+hyperfactorial-1-5:
+  epsil:
+    in: Hyperfactorial(1.5)
+    out: 1.617_488_527_948_912_6
+  tex:
+    in: \mathrm{Hyperfactorial}(1.5)
+    out: 1.617\,488\,527\,948\,912\,6
+  fullform:
+    in: Hyperfactorial[1.5]
+  wolfram:
+    in: Hyperfactorial[1.5]
+hyperfactorial-2-5:
+  epsil:
+    in: Hyperfactorial(2.5)
+    out: 15.984_211_992_223_353
+  tex:
+    in: \mathrm{Hyperfactorial}(2.5)
+    out: 15.984\,211\,992\,223\,353
+  fullform:
+    in: Hyperfactorial[2.5]
+  wolfram:
+    in: Hyperfactorial[2.5]
+hyperfactorial-6-25:
+  epsil:
+    in: Hyperfactorial(6.25)
+    out: 92_229_745_540_487.84
+  tex:
+    in: \mathrm{Hyperfactorial}(6.25)
+    out: 92\,229\,745\,540\,487.84
+  fullform:
+    in: Hyperfactorial[6.25]
+  wolfram:
+    in: Hyperfactorial[6.25]
 h-10-well-past-double-range-exact-bigint:
   epsil:
     in: Hyperfactorial(10)

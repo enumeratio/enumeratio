@@ -3,3 +3,16 @@
   expected: 11
   category: Basic
   caption: $Count(UnlabeledFreeTrees(7)) = 11$, A000055
+- role: test
+  id: every-element-of-unlabeledfreetrees-6
+  expr: [Take, [UnlabeledFreeTrees, 6], 6]
+  expected:
+    [
+      List,
+      [List, 0, 1, 1, 1, 1, 1],
+      [List, 0, 1, 2, 1, 1, 1],
+      [List, 0, 1, 2, 1, 2, 1],
+      [List, 0, 1, 2, 2, 1, 1],
+      [List, 0, 1, 2, 2, 1, 2],
+      [List, 0, 1, 2, 3, 1, 2],
+    ]

@@ -3,3 +3,16 @@
   expected: 6
   category: Basic
   caption: "$Count(ShiftedStandardTableaux(5)) = 6$: standard fillings of every shifted shape of a strict partition of 5"
+- role: test
+  id: every-element-of-shiftedstandardtableaux-5
+  expr: [Take, [ShiftedStandardTableaux, 5], 6]
+  expected:
+    [
+      List,
+      [List, [List, 1, 2, 3, 4, 5]],
+      [List, [List, 1, 2, 4, 5], [List, 3]],
+      [List, [List, 1, 2, 3, 5], [List, 4]],
+      [List, [List, 1, 2, 3, 4], [List, 5]],
+      [List, [List, 1, 2, 4], [List, 3, 5]],
+      [List, [List, 1, 2, 3], [List, 4, 5]],
+    ]

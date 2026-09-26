@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/binary-word-families.ts";
 
 // Self-cert every family: rank(unrank(p, r), p) === r across the whole family, unranked
@@ -245,39 +243,4 @@ test("KBracelets(n, 2) agrees with BinaryBracelets(n)", () => {
   for (const n of [0, 1, 2, 3, 4, 5, 6, 7]) {
     expect(kBracelets.count([n, 2])).toBe(binaryBracelets.count([n]));
   }
-});
-
-// Golden JSON (AGENTS.md); regenerate with `UPDATE_BINARY_WORD_FAMILIES_GOLDEN=1 vp test`.
-const GOLDEN = fileURLToPath(new URL("./binary-word-families.golden.json", import.meta.url));
-const updating = process.env.UPDATE_BINARY_WORD_FAMILIES_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[][]> = {
-  BinaryBracelets: [[6]],
-  KBracelets: [[4, 3]],
-  TriStrings: [[6]],
-  PrimitiveBinaryStrings: [[6]],
-  TernaryGrayCodes: [[3]],
-  StirlingPermutations: [[4]],
-};
-
-for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {
-  for (const p of paramsList) {
-    const key = `${head}(${p.join(",")})`;
-    test(`golden: ${key}`, () => {
-      const entry = byHead.get(head)!;
-      const total = entry.count(p);
-      const elements = Array.from({ length: total }, (_, r) => entry.unrank(p, r));
-      if (updating) {
-        fresh[key] = elements;
-        return;
-      }
-      expect(elements).toEqual(golden[key]);
-    });
-  }
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

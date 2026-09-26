@@ -1,7 +1,5 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-recurrence.ts";
 import { declareCollections } from "../src/library.ts";
 
@@ -295,29 +293,4 @@ test("Element membership on SternDiatomicSequence is every non-negative integer"
   expect(ce.box(["Element", 0, "SternDiatomicSequence"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", 42, "SternDiatomicSequence"]).evaluate().toString()).toBe('"True"');
   expect(ce.box(["Element", -1, "SternDiatomicSequence"]).evaluate().toString()).toBe('"False"');
-});
-
-// ─── Golden JSON (AGENTS.md); regenerate with `UPDATE_NUMERIC_RECURRENCE_GOLDEN=1 vp test`. ───
-
-const GOLDEN = fileURLToPath(new URL("./numeric-recurrence.golden.json", import.meta.url));
-const updating = process.env.UPDATE_NUMERIC_RECURRENCE_GOLDEN === "1";
-const golden: Record<string, string[]> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, string[]> = {};
-
-const GOLDEN_TERMS = 40;
-
-for (const entry of entries) {
-  test(`golden: ${entry.head}`, () => {
-    // bigint doesn't survive JSON.stringify, so the golden file stores decimal strings.
-    const elements = Array.from({ length: GOLDEN_TERMS }, (_, r) => String(entry.unrank([], r)));
-    if (updating) {
-      fresh[entry.head] = elements;
-      return;
-    }
-    expect(elements).toEqual(golden[entry.head]);
-  });
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

@@ -1,6 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
-import { expect, test, afterAll } from "vite-plus/test";
+import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/tableaux-plane.ts";
 
 const byHead = new Map(entries.map((e) => [e.head, e]));
@@ -480,42 +478,4 @@ test("SemistandardTableaux(3,k) for k=1..4 is 1,6,19,44", () => {
 test("AlternatingSignMatrices(n) = A005130: 1,1,2,7,42,429", () => {
   const entry = byHead.get("AlternatingSignMatrices")!;
   expect([0, 1, 2, 3, 4, 5].map((n) => entry.count([n]))).toEqual([1, 1, 2, 7, 42, 429]);
-});
-
-// Golden JSON (AGENTS.md); regenerate with `UPDATE_TABLEAUX_PLANE_GOLDEN=1 vp test`.
-const GOLDEN = fileURLToPath(new URL("./tableaux-plane.golden.json", import.meta.url));
-const updating = process.env.UPDATE_TABLEAUX_PLANE_GOLDEN === "1";
-const golden: Record<string, unknown> = updating ? {} : JSON.parse(readFileSync(GOLDEN, "utf8"));
-const fresh: Record<string, unknown> = {};
-
-const GOLDEN_CASES: Record<string, number[][]> = {
-  SemistandardTableaux: [[3, 2]],
-  GelfandTsetlin: [[3, 2]],
-  AlternatingSignMatrices: [[4]],
-  SkewPartitions: [[3]],
-  SkewStandardTableaux: [[3]],
-  ShiftedStandardTableaux: [[5]],
-  StandardTableauPairs: [[4]],
-  PlanePartitions: [[5]],
-  BoxedPlanePartitions: [[2, 2, 2]],
-};
-
-for (const [head, paramsList] of Object.entries(GOLDEN_CASES)) {
-  for (const p of paramsList) {
-    const key = `${head}(${p.join(",")})`;
-    test(`golden: ${key}`, () => {
-      const entry = byHead.get(head)!;
-      const total = entry.count(p);
-      const elements = Array.from({ length: total }, (_, r) => entry.unrank(p, r));
-      if (updating) {
-        fresh[key] = elements;
-        return;
-      }
-      expect(elements).toEqual(golden[key]);
-    });
-  }
-}
-
-afterAll(() => {
-  if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });

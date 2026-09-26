@@ -7,3 +7,56 @@ count-alternatingsignmatrices-4-42-the-asm:
     out: "42"
   fullform:
     in: Count[AlternatingSignMatrices[4]]
+every-element-of-alternatingsignmatrices-4:
+  epsil:
+    in: Take(AlternatingSignMatrices(4), 42)
+    out: |-
+      [
+        [[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]],
+        [[0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]],
+        [[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0]],
+        [[0, 0, 0, 1], [0, 1, 0, 0], [1, -1, 1, 0], [0, 1, 0, 0]],
+        [[0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0]],
+        [[0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0]],
+        [[0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]],
+        [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0], [1, 0, 0, 0]],
+        [[0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 1, 0, 0]],
+        [[0, 0, 1, 0], [0, 1, -1, 1], [0, 0, 1, 0], [1, 0, 0, 0]],
+        [[0, 0, 1, 0], [0, 1, -1, 1], [1, -1, 1, 0], [0, 1, 0, 0]],
+        [[0, 0, 1, 0], [0, 1, -1, 1], [1, 0, 0, 0], [0, 0, 1, 0]],
+        [[0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]],
+        [[0, 0, 1, 0], [0, 1, 0, 0], [1, -1, 0, 1], [0, 1, 0, 0]],
+        [[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, -1, 1], [0, 0, 1, 0]],
+        [[0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1]],
+        [[0, 0, 1, 0], [1, 0, -1, 1], [0, 0, 1, 0], [0, 1, 0, 0]],
+        [[0, 0, 1, 0], [1, 0, -1, 1], [0, 1, 0, 0], [0, 0, 1, 0]],
+        [[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0]],
+        [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, -1, 1], [0, 0, 1, 0]],
+        [[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]],
+        [[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [1, 0, 0, 0]],
+        [[0, 1, 0, 0], [0, 0, 0, 1], [1, -1, 1, 0], [0, 1, 0, 0]],
+        [[0, 1, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0], [0, 0, 1, 0]],
+        [[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [1, 0, 0, 0]],
+        [[0, 1, 0, 0], [0, 0, 1, 0], [1, -1, 0, 1], [0, 1, 0, 0]],
+        [[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, -1, 1], [0, 0, 1, 0]],
+        [[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]],
+        [[0, 1, 0, 0], [1, -1, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]],
+        [[0, 1, 0, 0], [1, -1, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]],
+        [[0, 1, 0, 0], [1, -1, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]],
+        [[0, 1, 0, 0], [1, -1, 1, 0], [0, 1, -1, 1], [0, 0, 1, 0]],
+        [[0, 1, 0, 0], [1, -1, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]],
+        [[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]],
+        [[0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+        [[1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]],
+        [[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]],
+        [[1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]],
+        [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, -1, 1], [0, 0, 1, 0]],
+        [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]],
+        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]],
+        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{AlternatingSignMatrices}(4), 42)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, -1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, -1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, -1, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, -1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[AlternatingSignMatrices[4], 42]

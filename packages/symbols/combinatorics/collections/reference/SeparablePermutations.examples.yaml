@@ -3,3 +3,32 @@
   expected: 90
   category: Basic
   caption: $Count(SeparablePermutations(5)) = 90$, the large Schröder numbers A006318
+- role: test
+  id: every-element-of-separablepermutations-4
+  expr: [Take, [SeparablePermutations, 4], 22]
+  expected:
+    [
+      List,
+      [List, 1, 2, 3, 4],
+      [List, 1, 2, 4, 3],
+      [List, 1, 3, 2, 4],
+      [List, 1, 3, 4, 2],
+      [List, 1, 4, 2, 3],
+      [List, 1, 4, 3, 2],
+      [List, 2, 1, 3, 4],
+      [List, 2, 1, 4, 3],
+      [List, 2, 3, 1, 4],
+      [List, 2, 3, 4, 1],
+      [List, 2, 4, 3, 1],
+      [List, 3, 1, 2, 4],
+      [List, 3, 2, 1, 4],
+      [List, 3, 2, 4, 1],
+      [List, 3, 4, 1, 2],
+      [List, 3, 4, 2, 1],
+      [List, 4, 1, 2, 3],
+      [List, 4, 1, 3, 2],
+      [List, 4, 2, 1, 3],
+      [List, 4, 2, 3, 1],
+      [List, 4, 3, 1, 2],
+      [List, 4, 3, 2, 1],
+    ]

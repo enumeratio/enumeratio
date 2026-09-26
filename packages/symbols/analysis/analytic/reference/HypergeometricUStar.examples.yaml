@@ -6,6 +6,22 @@
   expr: [HypergeometricUStar, 1.3, 2.7, 4]
   expected: 1.1137052905867906
   caption: a generic point, checked against mpmath's `hyperu`
+- id: a-complex-point-checked-against-mpmath-s-hyperu
+  expr: [HypergeometricUStar, 1, 2.5, [Complex, 3, 1]]
+  expected: [Complex, 1.1347341768643813, -0.04036080125312244]
+  role: test
+- id: another-point-checked-against-mpmath-s-hyperu
+  expr: [HypergeometricUStar, 0.2, 0.6, 1.5]
+  expected: 0.94573733904295
+  role: test
+- id: a-third-point-checked-against-mpmath-s-hyperu
+  expr: [HypergeometricUStar, 2, 4.5, 5]
+  expected: 1.680941114165958
+  role: test
+- id: a-negative-a-checked-against-mpmath-s-hyperu
+  expr: [HypergeometricUStar, -0.5, 1.5, 2]
+  expected: 0.75
+  role: test
 - id: integer-b-stays-symbolic-the-connection-formula
   expr: [HypergeometricUStar, 1, 2, 3]
   expected: [HypergeometricUStar, 1, 2, 3]

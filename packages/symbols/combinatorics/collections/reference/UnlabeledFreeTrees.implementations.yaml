@@ -7,3 +7,20 @@ count-unlabeledfreetrees-7-11-a000055:
     out: "11"
   fullform:
     in: Count[UnlabeledFreeTrees[7]]
+every-element-of-unlabeledfreetrees-6:
+  epsil:
+    in: Take(UnlabeledFreeTrees(6), 6)
+    out: |-
+      [
+        [0, 1, 1, 1, 1, 1],
+        [0, 1, 2, 1, 1, 1],
+        [0, 1, 2, 1, 2, 1],
+        [0, 1, 2, 2, 1, 1],
+        [0, 1, 2, 2, 1, 2],
+        [0, 1, 2, 3, 1, 2],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{UnlabeledFreeTrees}(6), 6)
+    out: \bigl\lbrack\bigl\lbrack0, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 1, 2, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 2, 2, 1, 2\bigr\rbrack, \bigl\lbrack0, 1, 2, 3, 1, 2\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[UnlabeledFreeTrees[6], 6]

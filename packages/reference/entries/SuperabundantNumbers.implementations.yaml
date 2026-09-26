@@ -1,0 +1,36 @@
+the-first-25-terms:
+  epsil:
+    in: Take(SuperabundantNumbers, 25)
+    out: |-
+      [
+        1,
+        2,
+        4,
+        6,
+        12,
+        24,
+        36,
+        48,
+        60,
+        120,
+        180,
+        240,
+        360,
+        720,
+        840,
+        1_260,
+        1_680,
+        2_520,
+        5_040,
+        10_080,
+        15_120,
+        25_200,
+        27_720,
+        55_440,
+        110_880,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SuperabundantNumbers}, 25)
+    out: \bigl\lbrack1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, 840, 1\,260, 1\,680, 2\,520, 5\,040, 10\,080, 15\,120, 25\,200, 27\,720, 55\,440, 110\,880\bigr\rbrack
+  fullform:
+    in: Take[SuperabundantNumbers, 25]

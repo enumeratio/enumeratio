@@ -16,6 +16,33 @@ the-zero-in-1-0:
     out: -0.504\,083\,008\,264\,455\,4
   fullform:
     in: N[DigammaFunctionZero[1]]
+the-zero-in-2-1:
+  epsil:
+    in: N(DigammaFunctionZero(2))
+    out: -1.573_498_473_162_390_4
+  tex:
+    in: N(\mathrm{DigammaFunctionZero}(2))
+    out: -1.573\,498\,473\,162\,390\,4
+  fullform:
+    in: N[DigammaFunctionZero[2]]
+the-zero-in-3-2:
+  epsil:
+    in: N(DigammaFunctionZero(3))
+    out: -2.610_720_868_444_144_7
+  tex:
+    in: N(\mathrm{DigammaFunctionZero}(3))
+    out: -2.610\,720\,868\,444\,144\,7
+  fullform:
+    in: N[DigammaFunctionZero[3]]
+the-zero-in-4-3:
+  epsil:
+    in: N(DigammaFunctionZero(4))
+    out: -3.635_293_366_436_901
+  tex:
+    in: N(\mathrm{DigammaFunctionZero}(4))
+    out: -3.635\,293\,366\,436\,901
+  fullform:
+    in: N[DigammaFunctionZero[4]]
 psi-vanishes-exactly-there-by-construction:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(2))))

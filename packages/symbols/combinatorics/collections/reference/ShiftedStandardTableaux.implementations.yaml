@@ -7,3 +7,20 @@ count-shiftedstandardtableaux-5-6-standard:
     out: "6"
   fullform:
     in: Count[ShiftedStandardTableaux[5]]
+every-element-of-shiftedstandardtableaux-5:
+  epsil:
+    in: Take(ShiftedStandardTableaux(5), 6)
+    out: |-
+      [
+        [[1, 2, 3, 4, 5]],
+        [[1, 2, 4, 5], [3]],
+        [[1, 2, 3, 5], [4]],
+        [[1, 2, 3, 4], [5]],
+        [[1, 2, 4], [3, 5]],
+        [[1, 2, 3], [4, 5]],
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{ShiftedStandardTableaux}(5), 6)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 4, 5\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3, 5\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack3, 5\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Take[ShiftedStandardTableaux[5], 6]

@@ -53,3 +53,14 @@ heavisidelambda-1-4:
     in: HeavisideLambda[Rational[1, 4]]
   wolfram:
     in: HeavisideLambda[Rational[1, 4]]
+heavisidelambda-1-2:
+  epsil:
+    in: HeavisideLambda(1 / 2)
+    out: 1 / 2
+  tex:
+    in: \mathrm{HeavisideLambda}(\frac{1}{2})
+    out: \frac{1}{2}
+  fullform:
+    in: HeavisideLambda[Rational[1, 2]]
+  wolfram:
+    in: HeavisideLambda[Rational[1, 2]]

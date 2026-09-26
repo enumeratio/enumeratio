@@ -53,6 +53,17 @@ unitbox-product-of-two-boxes:
     in: UnitBox[0, 0]
   wolfram:
     in: UnitBox[0, 0]
+unitbox-product-second-at-its-boundary:
+  epsil:
+    in: UnitBox(0, 1 / 2)
+    out: "1"
+  tex:
+    in: \mathrm{UnitBox}(0, \frac{1}{2})
+    out: "1"
+  fullform:
+    in: UnitBox[0, Rational[1, 2]]
+  wolfram:
+    in: UnitBox[0, Rational[1, 2]]
 unitbox-derivative-away-from-the-jump:
   epsil:
     in: D(UnitBox(x), x)
