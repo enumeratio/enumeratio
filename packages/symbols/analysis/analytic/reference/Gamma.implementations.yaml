@@ -230,10 +230,10 @@ the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
       in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
+    in: enumeratio_equal((S(((pi)**2)) / gamma(3)), (S(((pi)**2)) / 2))
     out: True
   sage:
-    in: bool(((pi^2) / gamma(3)) == ((pi^2) / 2))
+    in: bool((((pi)^2) / gamma(3)) == (((pi)^2) / 2))
     out: True
   rust:
     in: equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))
@@ -257,10 +257,10 @@ squaring-the-reflection-formula-at-z-1-2:
       in: \Gamma \left(\frac{1}{2}\right)^2=\pi
       out: \text{True}
   sympy:
-    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
+    in: enumeratio_equal(((gamma(Rational(1, 2)))**2), pi)
     out: True
   sage:
-    in: bool((gamma((1/2))^2) == pi)
+    in: bool(((gamma((1/2)))^2) == pi)
     out: True
   rust:
     in: equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))
@@ -628,13 +628,13 @@ gamma-i-2-pi-sinh-pi-0-27203:
   wolfram:
     in: N[Power[Abs[Gamma[I]], 2]]
   sympy:
-    in: N((Abs(gamma(I))**2), 30)
+    in: N(((Abs(gamma(I)))**2), 30)
     out: "0.272029054982133162950236583672"
   mpmath:
-    in: ((fabs(gamma(mpc(0,1)))**2))
+    in: (((fabs(gamma(mpc(0,1))))**2))
     out: "0.272029054982133162950236583672"
   sage:
-    in: N((abs(gamma(I))^2))
+    in: N(((abs(gamma(I)))^2))
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Gamma(1 / 3), 40)

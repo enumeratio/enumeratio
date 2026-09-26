@@ -699,13 +699,13 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
   wolfram:
     in: N[Cos[Power[10, 100]]]
   sympy:
-    in: N(cos((10**100)), 30)
+    in: N(cos(((10)**100)), 30)
     out: "-0.928081905074655343456194643777"
   mpmath:
-    in: (cos((10**100)))
+    in: (cos(((10)**100)))
     out: "-0.928081905074655343456194643777"
   sage:
-    in: N(cos((10^100)))
+    in: N(cos(((10)^100)))
   rust:
     in: nf(cos(power(n(10), n(100))))
     out: "0.9247242387519338"

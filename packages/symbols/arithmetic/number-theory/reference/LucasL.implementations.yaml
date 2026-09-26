@@ -261,10 +261,10 @@ l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
   wolfram:
     in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
   sympy:
-    in: ((lucas(10)**2) - (5 * (fibonacci(10)**2)))
+    in: (((lucas(10))**2) - (5 * ((fibonacci(10))**2)))
     out: "4"
   sage:
-    in: ((lucas_number2(10, 1, -1)^2) - (5 * (fibonacci(10)^2)))
+    in: (((lucas_number2(10, 1, -1))^2) - (5 * ((fibonacci(10))^2)))
   julia:
     in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(BigInt(fibonacci(ZZ(10))))^2)))
     out: "4"
@@ -341,10 +341,10 @@ a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
       in: L_4 L_6-\left(L_5\right){}^2
       out: "5"
   sympy:
-    in: ((lucas(4) * lucas(6)) - (lucas(5)**2))
+    in: ((lucas(4) * lucas(6)) - ((lucas(5))**2))
     out: "5"
   sage:
-    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))
+    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - ((lucas_number2(5, 1, -1))^2))
     out: "5"
   julia:
     in: ((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))

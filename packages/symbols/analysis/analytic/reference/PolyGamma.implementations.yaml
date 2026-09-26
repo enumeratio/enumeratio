@@ -71,10 +71,10 @@ psi-1-2-pi-2-2:
       in: \psi ^{(1)}\left(\frac{1}{2}\right)=\frac{\pi ^2}{2}
       out: \text{True}
   sympy:
-    in: enumeratio_equal(polygamma(1, Rational(1, 2)), (S((pi**2)) / 2))
+    in: enumeratio_equal(polygamma(1, Rational(1, 2)), (S(((pi)**2)) / 2))
     out: True
   sage:
-    in: bool(psi(1, (1/2)) == ((pi^2) / 2))
+    in: bool(psi(1, (1/2)) == (((pi)^2) / 2))
     out: True
 recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2:
   epsil:
