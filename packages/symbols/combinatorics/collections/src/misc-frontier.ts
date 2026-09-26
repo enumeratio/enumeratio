@@ -15,14 +15,15 @@ import { rngFor } from "./list-frontier.ts";
 // web/.vitepress/data/reference-assemble.ts by dropping the carrier's stub page in favour
 // of the documented head, rather than by renaming either symbol.
 //
-// Out of scope for this wave, with reasons: WeightedAdjacencyMatrix (Graph has no edge-weight
-// representation — see graphs.ts, edges are a bare List of UndirectedEdge with no attribute
-// slot — so there is nothing to read a weight OFF of; would need to land graph weights first)
-// and BooleanConvert (compute-engine's logic heads have no DNF/CNF normal-form routine to
-// build on — `And`/`Or`/`Not` `.simplify()` doesn't produce a canonical normal form, and
-// bare boolean symbols default-infer as `number`, so even a probe call needs explicit
-// typing before it does anything useful — writing a full boolean normalizer from scratch is
-// out of scope here).
+// Out of scope for this wave: BooleanConvert (compute-engine's logic heads have no DNF/CNF
+// normal-form routine to build on — `And`/`Or`/`Not` `.simplify()` doesn't produce a
+// canonical normal form, and bare boolean symbols default-infer as `number`, so even a
+// probe call needs explicit typing before it does anything useful — writing a full boolean
+// normalizer from scratch is out of scope here).
+//
+// WeightedAdjacencyMatrix, once out of scope for the reason above (no edge-weight
+// representation to read a weight off of), has since landed — `EdgeWeight -> {…}` on
+// `Graph` (graphs.ts's `graphOf`), the head itself declared in graphs-2.ts (graph-weights.ts).
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>

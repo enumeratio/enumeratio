@@ -5143,6 +5143,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "VertexOutDegree",
   },
   {
+    name: "WeightedAdjacencyMatrix",
+    wolfram: "WeightedAdjacencyMatrix",
+  },
+  {
     name: "WheelGraph",
     wolfram: "WheelGraph",
   },
