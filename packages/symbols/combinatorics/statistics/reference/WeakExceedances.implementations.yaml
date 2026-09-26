@@ -1,18 +1,18 @@
 the-one-line-word-312:
   epsil:
-    in: WeakExceedances(Permutations([3, 1, 2]))
+    in: WeakExceedances(Permutation([3, 1, 2]))
     out: "1"
   tex:
-    in: \mathrm{WeakExceedances}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{WeakExceedances}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "1"
   fullform:
-    in: WeakExceedances[Permutations[List[3, 1, 2]]]
+    in: WeakExceedances[Permutation[List[3, 1, 2]]]
 the-one-line-word-2413:
   epsil:
-    in: WeakExceedances(Permutations([2, 4, 1, 3]))
+    in: WeakExceedances(Permutation([2, 4, 1, 3]))
     out: "2"
   tex:
-    in: \mathrm{WeakExceedances}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{WeakExceedances}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "2"
   fullform:
-    in: WeakExceedances[Permutations[List[2, 4, 1, 3]]]
+    in: WeakExceedances[Permutation[List[2, 4, 1, 3]]]

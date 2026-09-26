@@ -1,18 +1,18 @@
 the-one-line-word-312:
   epsil:
-    in: TwoCycleCount(Permutations([3, 1, 2]))
+    in: TwoCycleCount(Permutation([3, 1, 2]))
     out: "0"
   tex:
-    in: \mathrm{TwoCycleCount}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{TwoCycleCount}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "0"
   fullform:
-    in: TwoCycleCount[Permutations[List[3, 1, 2]]]
+    in: TwoCycleCount[Permutation[List[3, 1, 2]]]
 the-one-line-word-2413:
   epsil:
-    in: TwoCycleCount(Permutations([2, 4, 1, 3]))
+    in: TwoCycleCount(Permutation([2, 4, 1, 3]))
     out: "0"
   tex:
-    in: \mathrm{TwoCycleCount}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{TwoCycleCount}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "0"
   fullform:
-    in: TwoCycleCount[Permutations[List[2, 4, 1, 3]]]
+    in: TwoCycleCount[Permutation[List[2, 4, 1, 3]]]

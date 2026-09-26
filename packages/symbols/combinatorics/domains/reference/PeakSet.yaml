@@ -3,10 +3,10 @@ domain: Combinatorial maps
 signature: PeakSet(Permutation)
 summary: The interior positions that rise then fall.
 details:
-  - Takes a `Permutations` and returns a `Finsets` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutation` and returns a `Finset` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
   - Its size is the Peaks statistic, exactly as DescentSet's is Descents.
 examples:
   - id: the-one-line-word-231
-    expr: [PeakSet, [Permutations, [List, 2, 3, 1]]]
-    expected: [Finsets, [Tuple, [List, 2], 3]]
+    expr: [PeakSet, [Permutation, [List, 2, 3, 1]]]
+    expected: [Finset, [Tuple, [List, 2], 3]]
     caption: the one-line word $231$

@@ -1,14 +1,14 @@
 name: Peaks
-domain: Permutations statistics
+domain: Permutation statistics
 signature: Peaks(p)
 summary: Interior positions with p(i-1) < p(i) > p(i+1).
 details:
-  - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Takes a `Permutations`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
-  - "A separate definition exists for `DyckPaths` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner."
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
+  - "A separate definition exists for `DyckPath` (Occurrences of an up step immediately followed by a down step.) but is not the one declared: one head, one owner."
 examples:
   - id: the-one-line-word-312
-    expr: [Peaks, [Permutations, [List, 3, 1, 2]]]
+    expr: [Peaks, [Permutation, [List, 3, 1, 2]]]
     expected: 0
     caption: the one-line word $312$
   - id: the-one-line-word-312-as-a-plain-list
@@ -16,6 +16,6 @@ examples:
     expected: 0
     caption: the one-line word $312$, as a plain list
   - id: the-one-line-word-2413
-    expr: [Peaks, [Permutations, [List, 2, 4, 1, 3]]]
+    expr: [Peaks, [Permutation, [List, 2, 4, 1, 3]]]
     expected: 1
     caption: the one-line word $2413$

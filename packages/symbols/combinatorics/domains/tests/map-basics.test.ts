@@ -11,7 +11,7 @@ test("a map is typed by carrier, and rejects the wrong one", () => {
   // deliberately behave differently; see the next test.
   expect(String(ce.box(["CycleType", perm(2, 3, 1)] as never).evaluate().type)).toBe("integer_partition");
   expect(ce.box(["CycleType", ["List", 2, 3, 1]]).evaluate().operator).toBe("Error");
-  expect(ce.box(["CycleType", ["IntegerPartitions", ["List", 2, 1]]] as never).evaluate().operator).toBe("Error");
+  expect(ce.box(["CycleType", ["IntegerPartition", ["List", 2, 1]]] as never).evaluate().operator).toBe("Error");
 });
 
 test("extending a built-in keeps everything the built-in did", () => {

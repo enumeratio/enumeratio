@@ -3,15 +3,15 @@ domain: Dyck path statistics
 signature: Coarea(path)
 summary: The complement of the area within the enclosing triangle.
 details:
-  - Defined over `DyckPaths` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `DyckPaths` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+  - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
   - Defined against the n(n+1)/2 triangle for a path of 2n steps.
 examples:
   - id: the-step-word-uuddud
-    expr: [Coarea, [DyckPaths, [List, 1, 1, 0, 0, 1, 0]]]
+    expr: [Coarea, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]
     expected: 1
     caption: the step word $UUDDUD$
   - id: the-step-word-uduudd
-    expr: [Coarea, [DyckPaths, [List, 1, 0, 1, 1, 0, 0]]]
+    expr: [Coarea, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]
     expected: 1
     caption: the step word $UDUUDD$

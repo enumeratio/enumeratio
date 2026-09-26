@@ -1,4 +1,4 @@
-export { contentsOf, declareDomainConstructors, declareDomains, declareDomainTypes } from "./declare.ts";
+export { contentsOf, declareDomains } from "./declare.ts";
 export { applyComposition, declareCompose } from "./compose.ts";
 export { type Extension, extendBuiltin, PRIVATE_SUFFIX, privateNameFor, publicName } from "./extend.ts";
 export { type CombinatorialMap, declareMaps, type Law, MAPS } from "./map.ts";

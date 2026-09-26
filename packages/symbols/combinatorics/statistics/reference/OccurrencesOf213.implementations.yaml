@@ -1,12 +1,12 @@
 the-one-line-word-312:
   epsil:
-    in: OccurrencesOf213(Permutations([3, 1, 2]))
+    in: OccurrencesOf213(Permutation([3, 1, 2]))
     out: "0"
   tex:
-    in: \mathrm{OccurrencesOf213}(\mathrm{Permutations}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    in: \mathrm{OccurrencesOf213}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))
     out: "0"
   fullform:
-    in: OccurrencesOf213[Permutations[List[3, 1, 2]]]
+    in: OccurrencesOf213[Permutation[List[3, 1, 2]]]
 the-one-line-word-312-as-a-plain-list:
   epsil:
     in: OccurrencesOf213([3, 1, 2])
@@ -18,10 +18,10 @@ the-one-line-word-312-as-a-plain-list:
     in: OccurrencesOf213[List[3, 1, 2]]
 the-one-line-word-2413:
   epsil:
-    in: OccurrencesOf213(Permutations([2, 4, 1, 3]))
+    in: OccurrencesOf213(Permutation([2, 4, 1, 3]))
     out: "1"
   tex:
-    in: \mathrm{OccurrencesOf213}(\mathrm{Permutations}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
+    in: \mathrm{OccurrencesOf213}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))
     out: "1"
   fullform:
-    in: OccurrencesOf213[Permutations[List[2, 4, 1, 3]]]
+    in: OccurrencesOf213[Permutation[List[2, 4, 1, 3]]]

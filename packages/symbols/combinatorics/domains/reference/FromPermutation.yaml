@@ -3,10 +3,10 @@ domain: Combinatorial maps
 signature: FromPermutation(Permutation)
 summary: "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right."
 details:
-  - Takes a `Permutations` and returns a `IncreasingBinaryTrees` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-  - "Paired with ToPermutation, whose overload set (IncreasingBinaryTrees among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts)."
+  - Takes a `Permutation` and returns a `IncreasingBinaryTree` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts)."
 examples:
   - id: the-one-line-word-231
-    expr: [FromPermutation, [Permutations, [List, 2, 3, 1]]]
-    expected: [IncreasingBinaryTrees, [Tuple, 1, [List, 2, 0, 0], [List, 0, 3, 0]]]
+    expr: [FromPermutation, [Permutation, [List, 2, 3, 1]]]
+    expected: [IncreasingBinaryTree, [Tuple, 1, [List, 2, 0, 0], [List, 0, 3, 0]]]
     caption: the one-line word $231$

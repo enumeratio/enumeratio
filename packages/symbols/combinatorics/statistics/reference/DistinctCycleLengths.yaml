@@ -1,16 +1,16 @@
 name: DistinctCycleLengths
-domain: Permutations statistics
+domain: Permutation statistics
 signature: DistinctCycleLengths(p)
 summary: How many distinct cycle sizes occur.
 details:
-  - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `Permutations` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
 examples:
   - id: the-one-line-word-312
-    expr: [DistinctCycleLengths, [Permutations, [List, 3, 1, 2]]]
+    expr: [DistinctCycleLengths, [Permutation, [List, 3, 1, 2]]]
     expected: 1
     caption: the one-line word $312$
   - id: the-one-line-word-2413
-    expr: [DistinctCycleLengths, [Permutations, [List, 2, 4, 1, 3]]]
+    expr: [DistinctCycleLengths, [Permutation, [List, 2, 4, 1, 3]]]
     expected: 1
     caption: the one-line word $2413$

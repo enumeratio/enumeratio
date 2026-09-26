@@ -17,7 +17,15 @@ export function assemble(loaded: readonly ReferenceEntry[]) {
   const byName = new Map<string, ReferenceEntry>(loaded.map((entry) => [entry.name, entry]));
   /** The documented heads -- the ones with examples, and the ones prose auto-links. */
   const documented: readonly ReferenceEntry[] = [...byName.values()];
-  const carrierStubs: ReferenceEntry[] = DOMAINS.filter((d) => !byName.has(d.name)).map((d) => ({
+  // Page generation keys files by name CASE-INSENSITIVELY (macOS's default filesystem), so a
+  // domain's singular inhabitant constructor (e.g. `KAryTree`) can't get its own stub page
+  // when a documented head differs only in case (Wolfram's `KaryTree` graph constructor) --
+  // that collision broke the site build once already (#260). The documented head wins; the
+  // carrier still gets its crosswalk via the documented page instead of a stub.
+  const byNameLower = new Set([...byName.keys()].map((name) => name.toLowerCase()));
+  const carrierStubs: ReferenceEntry[] = DOMAINS.filter(
+    (d) => !byName.has(d.name) && !byNameLower.has(d.name.toLowerCase()),
+  ).map((d) => ({
     name: d.name,
     domain: "Carrier domains",
     signature: `${d.name}: ${d.shape}`,

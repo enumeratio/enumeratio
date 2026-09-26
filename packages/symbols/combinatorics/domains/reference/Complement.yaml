@@ -3,9 +3,9 @@ domain: Combinatorial maps
 signature: Complement(Permutation)
 summary: Each entry replaced by n + 1 minus itself.
 details:
-  - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 examples:
   - id: the-one-line-word-231
-    expr: [Complement, [Permutations, [List, 2, 3, 1]]]
-    expected: [Permutations, [List, 2, 1, 3]]
+    expr: [Complement, [Permutation, [List, 2, 3, 1]]]
+    expected: [Permutation, [List, 2, 1, 3]]
     caption: the one-line word $231$

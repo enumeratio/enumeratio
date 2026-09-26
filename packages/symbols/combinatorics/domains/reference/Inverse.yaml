@@ -3,9 +3,9 @@ domain: Combinatorial maps
 signature: Inverse(Permutation)
 summary: "The inverse permutation: position of each value."
 details:
-  - Takes a `Permutations` and returns a `Permutations` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 examples:
   - id: the-one-line-word-231
-    expr: [Inverse, [Permutations, [List, 2, 3, 1]]]
-    expected: [Permutations, [List, 3, 1, 2]]
+    expr: [Inverse, [Permutation, [List, 2, 3, 1]]]
+    expected: [Permutation, [List, 3, 1, 2]]
     caption: the one-line word $231$

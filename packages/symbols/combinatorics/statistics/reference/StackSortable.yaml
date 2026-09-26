@@ -1,13 +1,13 @@
 name: StackSortable
-domain: Permutations statistics
+domain: Permutation statistics
 signature: StackSortable(p)
 summary: 1 when p avoids the pattern 231, 0 otherwise — exactly the stack-sortable permutations.
 details:
-  - Defined over `Permutations` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Takes a `Permutations`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
 examples:
   - id: the-one-line-word-312
-    expr: [StackSortable, [Permutations, [List, 3, 1, 2]]]
+    expr: [StackSortable, [Permutation, [List, 3, 1, 2]]]
     expected: 1
     caption: the one-line word $312$
   - id: the-one-line-word-312-as-a-plain-list
@@ -15,6 +15,6 @@ examples:
     expected: 1
     caption: the one-line word $312$, as a plain list
   - id: the-one-line-word-2413
-    expr: [StackSortable, [Permutations, [List, 2, 4, 1, 3]]]
+    expr: [StackSortable, [Permutation, [List, 2, 4, 1, 3]]]
     expected: 0
     caption: the one-line word $2413$

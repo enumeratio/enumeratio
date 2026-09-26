@@ -144,9 +144,7 @@ test("a head whose Wolfram name means something else emits into our context", ()
   // Falling through by name would produce `Area[DyckPath[…]]`, which a kernel reads as the
   // area of a region — a wrong answer rather than a missing one.
   expect(toWolfram(["Area", ["DyckPath", ["List", 1, 0]]])).toBe("enumeratio`Area[DyckPath[List[1, 0]]]");
-  // Wolfram's GaussianIntegers is an option flag, never a callable, so ours has to stay in
-  // our own context rather than pass through under its name.
-  expect(toWolfram(["GaussianIntegers", ["List", 2, 1]])).toBe("enumeratio`GaussianIntegers[List[2, 1]]");
+  expect(toWolfram(["Composition", ["List", 2, 1]])).toBe("enumeratio`Composition[List[2, 1]]");
   // And we do not claim a kernel can answer it.
   expect(isWolframHead("Area")).toBe(false);
 });

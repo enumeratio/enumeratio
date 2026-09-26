@@ -2,7 +2,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 // Buildless src subpaths: the entry tests must run without a prior `vp pack`.
 import { declareCollections } from "@enumeratio/collections/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIER_TYPES, declareCarrierConstructors, declareCarrierTypes } from "../scripts/carriers.ts";
+import { CARRIER_TYPES, declareCarriers } from "../scripts/carriers.ts";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
 import { declareDistributions } from "../src/distributions.ts";
@@ -14,17 +14,13 @@ import { readEntries } from "@enumeratio/entry/node";
 
 const entries = readEntries(new URL("../reference/", import.meta.url));
 
-// The order both engines use: carrier TYPES, collections (which owns the fast permutation
-// heads AND the plain collection a shared name like Permutations already is), THEN the
-// carrier constructors (so they layer onto collections' declaration instead of colliding
-// with it -- see carriers.ts), then the definitions with `skipDeclared`. A statistic is a
-// function OF a carrier, so that is what these heads take. (@enumeratio/domains itself is
-// NOT imported: it depends on this package, so reaching back would be a build cycle -- see
-// scripts/carriers.ts.)
+// The order both engines use: carriers, collections (which owns the fast permutation heads),
+// then the definitions with `skipDeclared`. A statistic is a function OF a carrier, so that
+// is what these heads take. (@enumeratio/domains itself is NOT imported: it depends on this
+// package, so reaching back would be a build cycle -- see scripts/carriers.ts.)
 const ce = new ComputeEngine();
-declareCarrierTypes(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutations });
-declareCarrierConstructors(ce);
+declareCarriers(ce);
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
 declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
 declareDistributions(ce);
 declareDistributions2(ce);
