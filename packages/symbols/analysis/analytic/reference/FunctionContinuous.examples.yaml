@@ -1,0 +1,18 @@
+- id: reciprocal-not-continuous
+  expr: [FunctionContinuous, [Power, x, -1], x]
+  expected: False
+  caption: $1/x$ has a pole, so it is not continuous for ALL real $x$
+- id: polynomial-continuous
+  expr: [FunctionContinuous, [Power, x, 2], x]
+  expected: True
+  caption: a polynomial is entire
+- id: reciprocal-restricted-domain
+  expr: [FunctionContinuous, [Power, x, -1], x, [Greater, x, 0]]
+  expected: True
+  category: Scope
+  caption: $1/x$ restricted to $x>0$ avoids its only pole
+- id: sqrt-closed-boundary
+  expr: [FunctionContinuous, [Sqrt, x], x, [GreaterEqual, x, 0]]
+  expected: True
+  category: Scope
+  caption: $\sqrt x$ is continuous on its own closed domain boundary $x=0$

@@ -1,0 +1,36 @@
+exp-neg-ar-order0:
+  epsil:
+    in: Assuming(a > 0, HankelTransform(Exp(-(a * r)), r, s))
+    out: a / (a ^ 2 + s ^ 2) ^ (3 / 2)
+  tex:
+    in: \mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s))
+    out: (a)(\sqrt{a^2+s^2}^{3})^{-1}
+  fullform:
+    in: Assuming[Greater[a, 0], HankelTransform[Exp[Minus[Times[a, r]]], r, s]]
+one-over-r:
+  epsil:
+    in: HankelTransform(1 / r, r, s)
+    out: 1 / s
+  tex:
+    in: \mathrm{HankelTransform}(\frac{1}{r}, r, s)
+    out: \frac{1}{s}
+  fullform:
+    in: HankelTransform[Divide[1, r], r, s]
+one-over-sqrt-r2-a2:
+  epsil:
+    in: Assuming(a > 0, HankelTransform(1 / Sqrt(r ^ 2 + a ^ 2), r, s))
+    out: ExponentialE ^ (-(a * s)) / s
+  tex:
+    in: \mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\frac{1}{\sqrt{r^2+a^2}}, r, s))
+    out: \frac{\exp(-(as))}{s}
+  fullform:
+    in: Assuming[Greater[a, 0], HankelTransform[Divide[1, Sqrt[Plus[Power[r, 2], Power[a, 2]]]], r, s]]
+exp-neg-ar-order1:
+  epsil:
+    in: Assuming(a > 0, HankelTransform(Exp(-(a * r)), r, s, 1))
+    out: s / (a ^ 2 + s ^ 2) ^ (3 / 2)
+  tex:
+    in: \mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s, 1))
+    out: (s)(\sqrt{a^2+s^2}^{3})^{-1}
+  fullform:
+    in: Assuming[Greater[a, 0], HankelTransform[Exp[Minus[Times[a, r]]], r, s, 1]]

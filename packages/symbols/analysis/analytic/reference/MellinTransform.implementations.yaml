@@ -1,0 +1,45 @@
+exp-neg-x-gamma:
+  epsil:
+    in: MellinTransform(Exp(-x), x, s)
+    out: Gamma(s)
+  tex:
+    in: \mathrm{MellinTransform}(\exp(-x), x, s)
+    out: \Gamma(s)
+  fullform:
+    in: MellinTransform[Exp[Minus[x]], x, s]
+one-over-one-plus-x:
+  epsil:
+    in: MellinTransform(1 / (1 + x), x, s)
+    out: Pi * Csc(Pi * s)
+  tex:
+    in: \mathrm{MellinTransform}(\frac{1}{1+x}, x, s)
+    out: \pi\csc(\pi s)
+  fullform:
+    in: MellinTransform[Divide[1, Plus[1, x]], x, s]
+gaussian:
+  epsil:
+    in: MellinTransform(Exp(-x ^ 2), x, s)
+    out: 1 / 2 * Gamma(1 / 2 * s)
+  tex:
+    in: \mathrm{MellinTransform}(\exp(-x^2), x, s)
+    out: \frac{\Gamma(\frac{s}{2})}{2}
+  fullform:
+    in: MellinTransform[Exp[Minus[Power[x, 2]]], x, s]
+log-one-plus-x:
+  epsil:
+    in: MellinTransform(Ln(1 + x), x, s)
+    out: Pi * Csc(Pi * s) / s
+  tex:
+    in: \mathrm{MellinTransform}(\ln(1+x), x, s)
+    out: \frac{1}{s}(\pi\csc(\pi s))
+  fullform:
+    in: MellinTransform[Log[Plus[1, x]], x, s]
+power-shift-x-c-exp:
+  epsil:
+    in: MellinTransform(x ^ a * Exp(-x), x, s)
+    out: Gamma(a + s)
+  tex:
+    in: \mathrm{MellinTransform}(x^{a}\exp(-x), x, s)
+    out: \Gamma(a+s)
+  fullform:
+    in: MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]

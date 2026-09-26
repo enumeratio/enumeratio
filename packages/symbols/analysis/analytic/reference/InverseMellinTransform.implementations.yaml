@@ -1,0 +1,36 @@
+gamma-to-exp:
+  epsil:
+    in: InverseMellinTransform(Gamma(s), s, x)
+    out: ExponentialE ^ (-x)
+  tex:
+    in: \mathrm{InverseMellinTransform}(\Gamma(s), s, x)
+    out: e^{-x}
+  fullform:
+    in: InverseMellinTransform[Gamma[s], s, x]
+pi-csc-to-one-over-one-plus-x:
+  epsil:
+    in: InverseMellinTransform(Pi * Csc(Pi * s), s, x)
+    out: 1 / (x + 1)
+  tex:
+    in: \mathrm{InverseMellinTransform}(\pi\csc(\pi s), s, x)
+    out: \frac{1}{x+1}
+  fullform:
+    in: InverseMellinTransform[Times[Pi, Csc[Times[Pi, s]]], s, x]
+pi-csc-over-s-to-log-reciprocal:
+  epsil:
+    in: InverseMellinTransform(Pi * Csc(Pi * s) / s, s, x)
+    out: Ln(1 / x + 1)
+  tex:
+    in: \mathrm{InverseMellinTransform}(\frac{1}{s}(\pi\csc(\pi s)), s, x)
+    out: \ln(\frac{1}{x}+1)
+  fullform:
+    in: InverseMellinTransform[Divide[Times[Pi, Csc[Times[Pi, s]]], s], s, x]
+shift-gamma-a-plus-s:
+  epsil:
+    in: InverseMellinTransform(Gamma(a + s), s, x)
+    out: ExponentialE ^ (-x) * x ^ a
+  tex:
+    in: \mathrm{InverseMellinTransform}(\Gamma(a+s), s, x)
+    out: \exp(-x)x^{a}
+  fullform:
+    in: InverseMellinTransform[Gamma[Plus[a, s]], s, x]

@@ -67,6 +67,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CaputoD",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "CaputoD",
+    elsewhere: [],
+  },
+  {
+    name: "DSolveValue",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "DSolveValue",
+    elsewhere: [],
+  },
+  {
     name: "Piecewise",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -3140,6 +3154,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "FunctionContinuous",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "FunctionContinuous",
+    elsewhere: [],
+  },
+  {
     name: "FunctionConvexity",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -4848,6 +4869,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "TrigFactor",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "TrigFactor",
+    elsewhere: [],
+  },
+  {
     name: "Fourier",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -4876,6 +4904,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "HankelTransform",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "HankelTransform",
+    elsewhere: [],
+  },
+  {
     name: "InverseFourier",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -4897,10 +4932,24 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "InverseMellinTransform",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "InverseMellinTransform",
+    elsewhere: [],
+  },
+  {
     name: "LaplaceTransform",
     provenance: "extension",
     declared: "enumeratio-analytic",
     wolframAlias: "LaplaceTransform",
+    elsewhere: [],
+  },
+  {
+    name: "MellinTransform",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "MellinTransform",
     elsewhere: [],
   },
 ];

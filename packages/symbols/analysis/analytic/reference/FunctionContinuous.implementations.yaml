@@ -1,0 +1,50 @@
+reciprocal-not-continuous:
+  epsil:
+    in: FunctionContinuous(x ^ -1, x)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[Power[x, -1], x]
+polynomial-continuous:
+  epsil:
+    in: FunctionContinuous(x ^ 2, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(x^2, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(x^2, x)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[Power[x, 2], x]
+reciprocal-restricted-domain:
+  epsil:
+    in: FunctionContinuous(x ^ -1, x, x > 0)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\gt0)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\gt0)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[List[Power[x, -1], Greater[x, 0]], x]
+    back: [FunctionContinuous, [List, [Power, x, -1], [Greater, x, 0]], x]
+sqrt-closed-boundary:
+  epsil:
+    in: FunctionContinuous(Sqrt(x), x, x >= 0)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x, x\ge0)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x, x\ge0)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[List[Sqrt[x], GreaterEqual[x, 0]], x]
+    back: [FunctionContinuous, [List, [Sqrt, x], [GreaterEqual, x, 0]], x]
