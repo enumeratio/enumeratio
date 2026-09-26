@@ -22,7 +22,7 @@ export const SUBJECT = "_x";
 /** One (head, carrier) pair, defined as an expression over `_x`. */
 export interface Definition {
   readonly head: string;
-  /** The carrier this definition is for — `Permutation`, `IntegerPartition`, … */
+  /** The carrier this definition is for — `Permutations`, `IntegerPartitions`, … */
   readonly on: string;
   /** The defining expression, over `_x`. Evaluable: this IS the implementation. */
   readonly expr: MathJSON;

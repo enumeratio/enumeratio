@@ -13,7 +13,7 @@
 // ranges are what an expression definition evaluates in reasonable time -- about a minute
 // per statistic over 873 permutations, so 153 it is.
 //
-//   vp node packages/reference/scripts/find-findstat.ts [--only Descents@Permutation]
+//   vp node packages/reference/scripts/find-findstat.ts [--only Descents@Permutations]
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
@@ -85,7 +85,7 @@ interface Carrier {
 
 const list = (ce: ComputeEngine, xs: readonly number[]) => ce.box(["List", ...xs]);
 const CARRIERS: Readonly<Record<string, Carrier>> = {
-  Permutation: {
+  Permutations: {
     domain: "Cc0001",
     sizes: [1, 2, 3, 4, 5],
     small: [1, 2, 3, 4],
@@ -93,7 +93,7 @@ const CARRIERS: Readonly<Record<string, Carrier>> = {
     spell: (p) => `[${(p as number[]).join(",")}]`,
     box: (ce, p) => list(ce, p as number[]),
   },
-  IntegerPartition: {
+  IntegerPartitions: {
     domain: "Cc0002",
     sizes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     small: [1, 2, 3, 4, 5, 6, 7],
@@ -101,7 +101,7 @@ const CARRIERS: Readonly<Record<string, Carrier>> = {
     spell: (p) => `[${(p as number[]).join(",")}]`,
     box: (ce, p) => list(ce, p as number[]),
   },
-  DyckPath: {
+  DyckPaths: {
     domain: "Cc0005",
     sizes: [1, 2, 3, 4, 5],
     small: [1, 2, 3, 4],
@@ -109,7 +109,7 @@ const CARRIERS: Readonly<Record<string, Carrier>> = {
     spell: (w) => `[${(w as number[]).join(",")}]`,
     box: (ce, w) => list(ce, w as number[]),
   },
-  SetPartition: {
+  SetPartitions: {
     domain: "Cc0009",
     sizes: [1, 2, 3, 4, 5],
     small: [1, 2, 3, 4],

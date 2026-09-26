@@ -29,7 +29,7 @@ export const ALL = [0, 1, 2, 3, 4, 5, 6].flatMap(setPartitions);
 export const evaluate = (head: string, blocks: number[][]): number =>
   applyDefinition(
     ce,
-    index.get(`${head}@SetPartition`)!,
+    index.get(`${head}@SetPartitions`)!,
     ce.box(["List", ...blocks.map((b) => ["List", ...b])] as never),
   ).re;
 

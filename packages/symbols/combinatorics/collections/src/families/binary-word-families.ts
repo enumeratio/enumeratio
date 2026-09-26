@@ -426,7 +426,7 @@ export const entries: NumberKernel[] = [
       (a, [n]) => braceletValid(a, n, 2),
       (a, [n]) => braceletRank(a, n, 2),
     ),
-    declared: wordClass("BinaryWord", 2),
+    declared: wordClass("BinaryWords", 2),
   },
   // KBracelets(size, base): base-letter words up to rotation and reflection.
   {
@@ -438,7 +438,7 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => braceletValid(a, n, k),
       (a, [n, k]) => braceletRank(a, n, k),
     ),
-    declared: wordClass("Word"),
+    declared: wordClass("Words"),
   },
   // TriStrings(n): binary words with no 3 consecutive 1s.
   ints(
