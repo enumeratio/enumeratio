@@ -8,17 +8,22 @@ const PROD_HOST = "enumeratio.dev";
 // `<sha7>.enumeratio.pages.dev` -- the per-commit Cloudflare Pages preview (see
 // AGENTS.md's CI-and-deployment section). A 7-hex-digit short SHA subdomain.
 const PREVIEW_HOST_RE = /^[0-9a-f]{7}\.enumeratio\.pages\.dev$/;
+// The dev server itself -- an absolute link naming it by host (rather than already
+// being a relative path) still resolves local; the port doesn't matter since we only
+// ever keep the path/search/hash and navigate the router of whatever's running now.
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 
 export type ResolvedReviewLink = { kind: "local"; path: string } | { kind: "external"; href: string };
 
 /**
  * Resolve a backlog item's `link` for the review sidebar:
  * - a same-site path (already relative, or absolute with no host) navigates locally as-is.
- * - `https://enumeratio.dev/<path>` and `https://<sha7>.enumeratio.pages.dev/<path>` rewrite
- *   to the local `<path>` (plus search/hash) -- framing or opening the live site is pointless
- *   when the reviewer is looking at the same page locally.
- * - anything else (github.com, other hosts, or an unparsable string) is left external, to be
- *   rendered as an "Open in new tab" link rather than navigated to.
+ * - `https://enumeratio.dev/<path>`, `https://<sha7>.enumeratio.pages.dev/<path>` and a local
+ *   dev server (localhost/127.0.0.1/[::1], any port) rewrite to the local `<path>` (plus
+ *   search/hash) -- these are origins we control, so the site itself can navigate there.
+ * - anything else (github.com, other hosts, or an unparsable string) is left external. Those
+ *   hosts commonly send `X-Frame-Options`/`frame-ancestors` and refuse to be framed anyway
+ *   (github.com does), so the panel renders an "Open in new tab" card instead of navigating.
  */
 export function resolveReviewLink(link: string): ResolvedReviewLink {
   const trimmed = link.trim();
@@ -35,7 +40,7 @@ export function resolveReviewLink(link: string): ResolvedReviewLink {
   if (url.protocol !== "http:" && url.protocol !== "https:") {
     return { kind: "external", href: link };
   }
-  if (url.hostname === PROD_HOST || PREVIEW_HOST_RE.test(url.hostname)) {
+  if (url.hostname === PROD_HOST || PREVIEW_HOST_RE.test(url.hostname) || LOCAL_HOSTS.has(url.hostname)) {
     return { kind: "local", path: `${url.pathname}${url.search}${url.hash}` };
   }
   return { kind: "external", href: link };
