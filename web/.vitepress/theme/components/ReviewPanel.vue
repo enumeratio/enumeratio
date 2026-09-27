@@ -7,9 +7,11 @@
 // selecting an item now navigates the SITE ITSELF (VitePress's router) instead of
 // framing it in an iframe. See web/.vitepress/review/link.ts for the link rewrite.
 import { useRoute, useRouter } from "vitepress";
-import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { getEntry } from "../../data/reference.ts";
 import type { BacklogItem, ItemStatus } from "../../review/backlog.ts";
-import { resolveReviewLink } from "../../review/link.ts";
+import { resolveReviewLink, splitHash } from "../../review/link.ts";
+import { exampleIdFromAnchor, lookForText, symbolNameFromPath } from "../../review/look-for.ts";
 import { reviewModeOn, toggleReviewMode } from "../review/mode.ts";
 import { area, prField, prNumber, useReviewStore } from "../review/store.ts";
 
@@ -39,6 +41,30 @@ function goToItem(item: BacklogItem): void {
 }
 
 const linkFor = (item: BacklogItem) => resolveReviewLink(item.link ?? "");
+
+function hostnameOf(link: string): string {
+  try {
+    return new URL(link).hostname;
+  } catch {
+    return "this host";
+  }
+}
+
+/** For an item whose link targets `#example/<id>`: that example's caption (or expr,
+ * with no caption) pulled from the reference data -- what the reviewer should look
+ * for on the page, since the item's title is a summary that never appears there. */
+const lookFor = computed((): string | undefined => {
+  const item = store.selected.value;
+  if (!item?.link) return undefined;
+  const resolved = resolveReviewLink(item.link);
+  if (resolved.kind !== "local") return undefined;
+  const { path, id } = splitHash(resolved.path);
+  const exampleId = exampleIdFromAnchor(id);
+  if (!exampleId) return undefined;
+  const name = symbolNameFromPath(path);
+  const example = name ? getEntry(name)?.examples.find((ex) => ex.id === exampleId) : undefined;
+  return example ? lookForText(example) : undefined;
+});
 
 function choose(id: string): void {
   store.selectItem(id);
@@ -251,6 +277,7 @@ onBeforeUnmount(() => {
           </button>
           <span>{{ store.selected.value.title }}</span>
         </h3>
+        <p v-if="lookFor" class="review-field"><strong>Look for</strong> {{ lookFor }}</p>
         <p v-if="store.selected.value.check" class="review-field">
           <strong>Check</strong> {{ store.selected.value.check }}
         </p>
@@ -265,17 +292,24 @@ onBeforeUnmount(() => {
             rel="noreferrer"
             >PR {{ prField(store.selected.value, 0) }}</a
           >
-          <template v-if="store.selected.value.link">
-            <a
-              v-if="linkFor(store.selected.value).kind === 'external'"
-              :href="store.selected.value.link"
-              target="_blank"
-              rel="noreferrer"
-              >Open in new tab ↗</a
-            >
-            <a v-else href="#" @click.prevent="goToItem(store.selected.value)">Go to page</a>
-          </template>
+          <a
+            v-if="store.selected.value.link && linkFor(store.selected.value).kind === 'local'"
+            href="#"
+            @click.prevent="goToItem(store.selected.value)"
+            >Go to page</a
+          >
         </p>
+        <div
+          v-if="store.selected.value.link && linkFor(store.selected.value).kind === 'external'"
+          class="review-external"
+        >
+          <p class="review-external-note">
+            Can't be shown here — {{ hostnameOf(store.selected.value.link) }} refuses to be framed.
+          </p>
+          <a class="review-external-open" :href="store.selected.value.link" target="_blank" rel="noreferrer"
+            >Open in new tab ↗</a
+          >
+        </div>
         <label class="review-feedback-label" for="review-feedback">
           Feedback
           <span class="review-save-state" :class="store.saveState.value">{{
@@ -486,6 +520,25 @@ onBeforeUnmount(() => {
   gap: 0.75rem;
   margin: 0;
   font-size: 0.8rem;
+}
+.review-external {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--vp-c-warning-1);
+  border-radius: 6px;
+  background: var(--vp-c-bg-soft);
+}
+.review-external-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--vp-c-text-2);
+}
+.review-external-open {
+  font-weight: 600;
 }
 .review-feedback-label {
   display: flex;
