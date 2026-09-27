@@ -615,31 +615,42 @@ upstream -- and, once there, to delete here.
 ## 10. The upstream folder
 
 What we have offered compute-engine, or expect to, lives apart from what is ours, so that
-landing upstream is a deletion, not an excavation, and a pull request is a copy of one folder. The model is Mathlib's `ForMathlib/`: code written in our
-repo, shaped for theirs.
+landing upstream is a deletion, not an excavation. The model is Mathlib's `ForMathlib/`:
+code written in our repo, shaped for theirs.
 
 - **`upstream/compute-engine/`** is a workspace package, `@enumeratio/for-compute-engine`.
   It is a leaf: it depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
 - **Candidates, not just offers.** Anything compute-engine would plausibly take (a head
   Wolfram or mpmath already has, a fix or widening of a native head: Tiers 1 and 2 of §4)
   is written here from the start, whether or not an issue exists yet. What is only ours
-  (Tier 4) stays in its package. The folder is the list of what should eventually go.
-- **One folder per candidate**, `src/<slug>/`, sized like the pull request it would become:
-  the kernel, the declaration, its tests, and the reference entries of the heads it
-  declares. Its `patch.ts` says where the code goes in compute-engine, and names the issue
-  and PR once there are any. Kernels several candidates share live in `src/shared/`.
+  (Tier 4) stays in its package. The patches are the list of what should eventually go.
+- **Laid out like compute-engine.** `src/compute-engine/` mirrors compute-engine's own tree:
+  pure kernels in `numerics/`, definitions in `library/` as `SymbolDefinitions` records
+  (the shape compute-engine's standard library uses), lowerings in `compilation/`. A pull
+  request copies files to the same paths. Only the code goes upstream.
+- **A patch is a manifest**, `src/patches/<slug>.ts`, sized like the pull request it would
+  become: the files it owns, the library record it declares, where it lands, and the issue
+  and PR once there are any. `apply(ce)` declares its record. A definition that extends a
+  native head (capturing the native handler) is a function of the engine, and says so.
+- **Symbols are cheap to list.** The heads a patch declares are the keys of its record, so
+  the package knows its symbols without building an engine, as compute-engine's own
+  `ComputeEngine.getStandardLibrary()` does for its heads.
+- **Metadata stays ours.** Reference entries, examples, implementation goldens and oracle
+  answers for these heads live in `packages/reference/entries/`, beside those of
+  compute-engine's own heads. They describe a head wherever it is declared, and they
+  don't go upstream.
 - **A patch knows when it has landed.** `fixed(ce)` asks the engine whether it already
   answers correctly (the issue's own repro, as a probe). `applyPatches(ce)` applies only
   the patches that are not fixed, and applying twice is a no-op, so any package may call
   it from its own `declare`.
 - **A test turns a landing into a to-do.** It asserts every patch is still unfixed on the
-  compute-engine we pin. When an upgrade fixes one, the test fails naming the folder to
-  delete.
+  compute-engine we pin. When an upgrade fixes one, the test fails naming the patch to
+  retire.
 - **Packages import from it, never the other way.** `residues` and `analytic` call
   `applyPatches` and import the kernels they share with a patch. When a patch lands, a
   kernel still used elsewhere moves back into its package, or the package calls the
   compute-engine head instead.
-- **Upstream erratum, no code of ours**, as with a corpus entry: no folder. The workaround
+- **Upstream erratum, no code of ours**, as with a corpus entry: no patch. The workaround
   that points at it links the issue.
 
 The pull requests themselves are built in a compute-engine checkout beside this repo,
