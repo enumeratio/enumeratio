@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf } from "@enumeratio/boxed";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 import { evaluateExpToTrig } from "./exp-to-trig.ts";
 
 // FullSimplify(expr) — compute-engine's own `simplify()` (the Pythagorean identity and the

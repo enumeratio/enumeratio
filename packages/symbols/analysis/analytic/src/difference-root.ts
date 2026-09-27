@@ -1,6 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import type { EvalOptions, NativeEval } from "./box.ts";
+import type { EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
 
 // DifferenceRootReduce(f(n), n) / DifferenceRoot(...)[n]: Wolfram's holonomic (P-recursive)
 // representation of a sequence — DifferenceRoot[Function[{y, n}, {recurrence == 0, y[i] ==

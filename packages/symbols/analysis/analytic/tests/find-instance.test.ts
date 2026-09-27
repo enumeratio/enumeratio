@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // FindInstance(expr, vars, [domain], [n]) -- scoped to a provably correct core. Every case
 // here checks EITHER an exact returned instance (re-verifiable by hand) or a decline/proven-

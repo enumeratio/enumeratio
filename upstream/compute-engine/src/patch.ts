@@ -7,8 +7,8 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 export interface Patch {
   /** The folder under `src/` this patch lives in. */
   readonly id: string;
-  /** The compute-engine issue this was reported as, as a full GitHub URL. */
-  readonly issue: string;
+  /** The compute-engine issue this was reported as, as a full GitHub URL, once one exists. */
+  readonly issue?: string;
   /** The compute-engine pull request offering the fix, once one exists. */
   readonly pr?: string;
   /** Where the code goes in compute-engine, once it lands. */

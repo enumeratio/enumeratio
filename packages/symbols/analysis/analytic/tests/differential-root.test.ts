@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // DifferentialRootReduce / DifferentialRoot (differential-root.ts): the holonomic (D-finite)
 // reduction of a function, and its Taylor-series evaluator. Every case below is checked

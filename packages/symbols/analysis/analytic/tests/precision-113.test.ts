@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // #113 "wrong answers today" (§7): HarmonicNumber(2.5, 1), LogGamma(10^300) and
 // Rationalize(Pi, 0.001) each had a wrong or non-finite value. Every value here was

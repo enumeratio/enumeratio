@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
-import type { EvalOptions } from "./box.ts";
+import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // A handful of symbolic Sin normalisations Wolfram applies automatically and
 // compute-engine's native Sin leaves as is: parity, a shift by an integer multiple of

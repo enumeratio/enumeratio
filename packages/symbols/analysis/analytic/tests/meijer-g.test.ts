@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // MeijerG (numeric, via the DLMF 16.17.2 reduction to pFq series) and MeijerGReduce
 // (elementary/special functions rewritten into MeijerG form) — see meijer-g.ts and

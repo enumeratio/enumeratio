@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/boxed";
-import { type EvalOptions, isFiniteNum } from "./box.ts";
+import { type EvalOptions, isFiniteNum } from "@enumeratio/for-compute-engine";
 
 // RealAbs(x) and RealSign(x) — Wolfram's real-only Abs and Sign: defined only on the
 // reals, unlike compute-engine's native `Abs`/`Sign`, which are complex-valued. Both

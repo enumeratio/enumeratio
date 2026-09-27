@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // MultiZetaValue(s1, s2) — see multizeta.ts for the partial-sum + Zeta-tail summation.
 // A fast mpmath partial-sum + tail (same method, at 50-digit precision) is pinned as

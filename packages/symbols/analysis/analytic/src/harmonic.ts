@@ -1,7 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
-import type { Json } from "./bernoulli.ts";
-import { bernoulliRational } from "./bernoulli.ts";
-import { type BoxInput, isRealInt } from "./box.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
+import { bernoulliRational, type BoxInput, isRealInt } from "@enumeratio/for-compute-engine";
 
 // HarmonicNumber(n) = Σ_{k=1}^n 1/k and HarmonicNumber(n, r) = Σ_{k=1}^n k^{-r} — exact
 // rationals for a non-negative integer n (r any integer, either arity). Off the integer

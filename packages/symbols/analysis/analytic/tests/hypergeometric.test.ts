@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Hypergeometric0F1, Hypergeometric0F1Regularized, Hypergeometric1F1Regularized,
 // Hypergeometric2F1Regularized, Hypergeometric3F2Regularized and HypergeometricU — see

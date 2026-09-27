@@ -1,6 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
-import { declined, type EvalOptions, isRealInt, type NativeEval } from "./box.ts";
+import { declined, type EvalOptions, isRealInt, type NativeEval } from "@enumeratio/for-compute-engine";
 
 type Q = readonly [bigint, bigint];
 const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcdBig(b, a % b));

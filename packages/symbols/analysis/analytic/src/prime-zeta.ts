@@ -1,6 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, clog, cx, type Cx, scale } from "./complex.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  add,
+  clog,
+  cx,
+  type Cx,
+  scale,
+} from "@enumeratio/for-compute-engine";
 
 // PrimeZetaP(s) = Σ_p p^(−s), the sum over primes. Rather than sieving primes and summing
 // directly — which converges far too slowly to be useful past a couple of digits — this uses

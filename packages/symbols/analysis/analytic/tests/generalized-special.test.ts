@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Issue #113: the Hurwitz-zeta, Lerch, and Nielsen-polylogarithm identities. Every value
 // here was checked against `wolframscript` before being pinned (see the reference entries

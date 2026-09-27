@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // RiemannSiegelTheta, RiemannSiegelZ, RiemannZetaZero. Held to the oracle values in
 // riemann-siegel.golden.json, gathered by scripts/collect-riemann-siegel-goldens.ts from

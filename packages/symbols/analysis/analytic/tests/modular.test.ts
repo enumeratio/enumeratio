@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // ModularJ, ModularLambda, EisensteinG — see modular.ts for the SL2(Z) reduction and
 // back-transform each delegates through to compute-engine's native EisensteinE /

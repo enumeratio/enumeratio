@@ -1,7 +1,25 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, casin, ccos, clog, csech, csin, csqrt, ctanh, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  add,
+  casin,
+  ccos,
+  clog,
+  csech,
+  csin,
+  csqrt,
+  ctanh,
+  cx,
+  type Cx,
+  div,
+  mul,
+  scale,
+  sub,
+} from "@enumeratio/for-compute-engine";
 
 // The twelve Jacobi elliptic functions (Glaisher's `pq(u,m)` notation: `sn`, `cn`, `dn`
 // and their nine quotients/reciprocals), `JacobiAmplitude` and `JacobiZN` (Wolfram's

@@ -1,7 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { lower, upper } from "./ball.ts";
+import { lower, upper, DOUBLE_DIGITS } from "@enumeratio/for-compute-engine";
 import { enclosure } from "./certified.ts";
-import { DOUBLE_DIGITS } from "./precise.ts";
 
 // `N(x, d)`: `x` to `d` significant digits, every one of them right -- the last included.
 //

@@ -1,6 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { abs, cx, mul, sub } from "./complex.ts";
-import { type EvalOptions, isFiniteNum, isRealInt, numberResult, wantsNumber } from "./box.ts";
+import {
+  abs,
+  cx,
+  mul,
+  sub,
+  type EvalOptions,
+  isFiniteNum,
+  isRealInt,
+  numberResult,
+  wantsNumber,
+} from "@enumeratio/for-compute-engine";
 
 // The q-series heads: QPochhammer(a, q, n), QFactorial(n, q), QBinomial(n, k, q).
 // Wolfram names all three; compute-engine has none of them (`ce.lookupDefinition`

@@ -3,8 +3,17 @@ import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
 import type { CertifiedGolden } from "../scripts/collect-certified-goldens.ts";
-import { type Ball, exact, exp, ln, lower, pow, rational, upper } from "../src/ball.ts";
-import { atDigits } from "../src/bigzeta.ts";
+import {
+  type Ball,
+  exact,
+  ballExp as exp,
+  ballLn as ln,
+  lower,
+  ballPow as pow,
+  rational,
+  upper,
+  atDigits,
+} from "@enumeratio/for-compute-engine";
 import { CERTIFIED_HEADS, enclosure } from "../src/certified.ts";
 import { declareAnalytic, enclosureOf } from "../src/index.ts";
 

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { isRealInt } from "./box.ts";
+import { isRealInt } from "@enumeratio/for-compute-engine";
 
 // FallingFactorial(x, n) = x(x−1)…(x−n+1). Integer n: (−1)^n·Pochhammer(−x, n), exact and
 // zero past a pole. Otherwise Γ(x+1)/Γ(x+1−n), numeric only.

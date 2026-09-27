@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // KeiperLiLambda(n) — the Keiper–Li coefficients (see keiper-li.ts for the contour-
 // differentiation kernel). Golden values are an independent mpmath implementation of

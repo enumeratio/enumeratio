@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // IncompleteEllipticF, IncompleteEllipticE — Fungrim's names for compute-engine's native
 // two-argument EllipticF(φ, m) / EllipticE(φ, m). IncompleteEllipticPi(n, φ, m) is a

@@ -1,8 +1,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import type { Json } from "../src/bernoulli.ts";
+import type { Json } from "@enumeratio/for-compute-engine";
 import { DEFINITIONS } from "../src/definitions.ts";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Three things about the definitions in src/definitions.ts:
 //

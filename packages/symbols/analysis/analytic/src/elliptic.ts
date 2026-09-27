@@ -1,8 +1,21 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { applyPatch, ellipticEComplex } from "@enumeratio/for-compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
+import {
+  applyPatch,
+  ellipticEComplex,
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  add,
+  ccos,
+  csin,
+  cx,
+  type Cx,
+  mul,
+  scale,
+  sub,
+} from "@enumeratio/for-compute-engine";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
-import { add, ccos, csin, cx, type Cx, mul, scale, sub } from "./complex.ts";
 
 // The incomplete Legendre elliptic integrals, and one precision fix for the native
 // complete one. compute-engine already declares EllipticE/EllipticF/EllipticK/EllipticPi

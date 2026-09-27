@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // TrigFactor — see trig-factor.ts for the two strategies and their scope. Expected
 // values match `wolframscript`'s own `TrigFactor` up to reordering (confirmed in the

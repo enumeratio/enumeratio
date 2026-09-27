@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, wantsNumber } from "./box.ts";
+import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // ExpIntegralE(n, z) = E_n(z) = ∫₁^∞ e^{−zt}/tⁿ dt, built on this package's own generalized
 // incomplete Gamma (`Gamma(s, z₀)`, already extended for complex operands): the standard

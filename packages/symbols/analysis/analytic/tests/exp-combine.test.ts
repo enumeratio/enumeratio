@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // e^a e^b = e^(a+b) holds for every complex a, b, unlike x^a x^b in general -- see
 // exp-combine.ts. Exact symbolic identities throughout, not a golden file.

@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // Inequality(v1, rel1, v2, rel2, ...) -- Wolfram's chained-comparison form. Exact symbolic
 // and boolean identities throughout, not a golden file -- see inequality.ts.

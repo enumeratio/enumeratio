@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // The twelve Jacobi `pq` functions (sn, cn, dn and their nine quotients/reciprocals),
 // JacobiAmplitude and JacobiZN — Wolfram/mpmath's m = k² parameter convention throughout.

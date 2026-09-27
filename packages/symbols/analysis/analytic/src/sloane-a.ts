@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt } from "./box.ts";
+import { type EvalOptions, isRealInt } from "@enumeratio/for-compute-engine";
 
 // SloaneA(id, n) — Fungrim's "the n-th term of OEIS sequence `id`" head, id a quoted
 // A-number string. A general OEIS lookup is out of reach (most sequences have no

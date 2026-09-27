@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // The ten backlog heads landed in this pass — ExpIntegralE, LambertW (branches other than
 // 0/-1), InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY, NorlundB,

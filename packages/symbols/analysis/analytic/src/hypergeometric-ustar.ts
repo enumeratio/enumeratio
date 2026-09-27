@@ -1,7 +1,20 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, cexp, cpow, cx, type Cx, div, mul, scale, sub } from "./complex.ts";
-import { logGamma } from "./loggamma.ts";
+import {
+  type EvalOptions,
+  isFiniteNum,
+  numberResult,
+  wantsNumber,
+  add,
+  cexp,
+  cpow,
+  cx,
+  type Cx,
+  div,
+  mul,
+  scale,
+  sub,
+  logGamma,
+} from "@enumeratio/for-compute-engine";
 
 // HypergeometricUStar(a, b, z) — Fungrim's regularized Tricomi confluent
 // hypergeometric function, U*(a, b, z) = z^a U(a, b, z) (fungrim:c8fcc7 is exactly

@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // LaplaceTransform — see transforms.ts for the rule table and its scope, and each head's
 // reference/*.yaml for the pinned closed forms. These need an assumption on a

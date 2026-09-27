@@ -2,7 +2,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { symbolNameOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // The Wolfram signal / piecewise-waveform family (signals.ts). Every case here is exact
 // (rational in, rational out) -- unlike elementary.test.ts's Gudermannian/Hyperfactorial

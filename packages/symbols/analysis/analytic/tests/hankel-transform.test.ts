@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // HankelTransform — see hankel-transform.ts for the rule table and its scope. Expected
 // values are each verified against `wolframscript` directly (see the head's

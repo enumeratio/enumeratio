@@ -1,12 +1,26 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
-import { type Ball, add, certify, div, exact, ln, lower, magnitude, mul, neg, sub, upper } from "./ball.ts";
-import { barnesGBall, pi } from "./barnes-g-big.ts";
-import { atDigits } from "./bigzeta.ts";
+import {
+  type Ball,
+  ballAdd as add,
+  certify,
+  ballDiv as div,
+  exact,
+  ballLn as ln,
+  lower,
+  magnitude,
+  ballMul as mul,
+  neg,
+  ballSub as sub,
+  upper,
+  barnesGBall,
+  barnesGPi as pi,
+  atDigits,
+  hurwitzZetaBall,
+  lerchPhiBall,
+  stieltjesGammaBall,
+} from "@enumeratio/for-compute-engine";
 import { argumentBall } from "./certified.ts";
-import { hurwitzZetaBall } from "./hurwitz-ball.ts";
-import { lerchPhiBall } from "./lerch-big.ts";
-import { stieltjesGammaBall } from "./stieltjes-big.ts";
 
 // A head's image over an interval, proven: the route interval.ts takes for the heads whose
 // critical points aren't known but whose value and first two derivatives have certified

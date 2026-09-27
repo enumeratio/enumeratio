@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // QPochhammer, QFactorial, QBinomial. Held to the oracle values in q-series.golden.json,
 // gathered by scripts/collect-q-series-goldens.ts from mpmath (`qp`, plus independent

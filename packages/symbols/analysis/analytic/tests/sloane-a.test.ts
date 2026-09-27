@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 import { landauFunction } from "../src/sloane-a.ts";
 
 // SloaneA(id, n) — see sloane-a.ts for the scope (the specific OEIS ids Fungrim's own

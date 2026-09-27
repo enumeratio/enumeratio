@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { declareAnalytic } from "../src/declare.ts";
 
 // The exact-value overrides in widened.ts closed by issue #92 group B: Digamma past
 // compute-engine's plain-evaluate policy of leaving exact arguments symbolic. Pinned
