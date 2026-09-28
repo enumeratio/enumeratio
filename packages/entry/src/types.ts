@@ -42,6 +42,19 @@ export interface ReferenceExample {
   readonly id: string;
   readonly expr: MathJSON;
   readonly expected: MathJSON;
+  /**
+   * A value this example is known to have, from outside our own evaluation: an exact
+   * expression (`[Divide, [Power, Pi, 2], 6]`) or a high-precision number. `expected` pins what
+   * we compute, which a regeneration could silently change; `known` is what we must agree with
+   * (tests/known.test.ts), so a change to `expected` that breaks it is a bug, not an update.
+   */
+  readonly known?: MathJSON;
+  /** Tolerance for comparing `expected` with a numeric `known`: relative above magnitude 1,
+   * absolute below it (default 1e-12). */
+  readonly tolerance?: number;
+  /** Where `known` comes from: `DLMF 25.6.E1`, `OEIS A000110`, `Fungrim 2f8a1c`, `FindStat
+   * St000001`, `mpmath 1.3 zeta`, … Required with `known`. */
+  readonly source?: string;
   readonly caption?: string;
   /**
    * Grouping heading -- "Basic", "Scope", "Applications", "Properties",

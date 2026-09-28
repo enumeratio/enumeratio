@@ -32,6 +32,8 @@ export interface JsonSchema {
   readonly pattern?: string;
   readonly maxLength?: number;
   readonly minimum?: number;
+  readonly exclusiveMinimum?: number;
+  readonly dependentRequired?: Readonly<Record<string, readonly string[]>>;
 }
 
 const MATHJSON: JsonSchema = {
@@ -77,6 +79,9 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     id: { type: "string", pattern: "^[a-z0-9]+(-[a-z0-9]+)*$", maxLength: 48 },
     expr: { $ref: "#/$defs/MathJSON" },
     expected: { $ref: "#/$defs/MathJSON" },
+    known: { $ref: "#/$defs/MathJSON" },
+    tolerance: { type: "number", exclusiveMinimum: 0 },
+    source: { type: "string" },
     caption: { type: "string" },
     category: { type: "string" },
     role: EXAMPLE_ROLE,
@@ -89,6 +94,8 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     others: { type: "object", additionalProperties: OTHER_SYSTEM_RUN },
   },
   required: ["id", "expr", "expected"],
+  // A known value carries where it comes from; a tolerance or source means nothing without one.
+  dependentRequired: { known: ["source"], source: ["known"], tolerance: ["known"] },
   additionalProperties: false,
 };
 
