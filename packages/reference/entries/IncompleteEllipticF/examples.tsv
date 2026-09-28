@@ -1,14 +1,14 @@
-id	section	role	expr	expected
-f-0-5-0-3		test	[N, [IncompleteEllipticF, 0.5, 0.3]]	0.5061402119623554
-f-1-2-0-7		test	[N, [IncompleteEllipticF, 1.2, 0.7]]	1.4294484330227635
-f-0-8-0-4		test	[N, [IncompleteEllipticF, -0.8, 0.4]]	-0.833343010862597
-f-2-5-0-3		test	[N, [IncompleteEllipticF, 2.5, 0.3]]	2.7733811775576194
-f-3-0-6		test	[N, [IncompleteEllipticF, -3, 0.6]]	-3.7572585774059926
-f-0-3-0-4i-0-5		test	[N, [IncompleteEllipticF, [Complex, 0.3, 0.4], 0.5]]	[Complex, 0.2902320216653951, 0.403598147717592]
-f-1-0-5i-0-2		test	[N, [IncompleteEllipticF, [Complex, 1, -0.5], 0.2]]	[Complex, 1.0135464730513384, -0.5410344560844551]
-f-0-6-0-57-0-23i		test	[N, [IncompleteEllipticF, 0.6, [Complex, 0.57, 0.23]]]	[Complex, 0.6205167553706088, 0.009225906501081826]
-f-1-1-0-1-0-9i		test	[N, [IncompleteEllipticF, 1.1, [Complex, 0.1, 0.9]]]	[Complex, 1.0666327023707152, 0.14586895972365066]
-f-3-711592653589793-0-57-0-23i		test	[N, [IncompleteEllipticF, 3.711592653589793, [Complex, 0.57, 0.23]]]	[Complex, 4.307419948322291, 0.42547669413142836]
-f-3-711592653589793-0-23i-0-57-0-23i		test	[N, [IncompleteEllipticF, [Complex, 3.711592653589793, 0.23], [Complex, 0.57, 0.23]]]	[Complex, 4.289764434700574, 0.6711124299873337]
-f-3-0-57-0-23i		test	[N, [IncompleteEllipticF, -3, [Complex, 0.57, 0.23]]]	[Complex, -3.577957673312077, -0.4175363858034027]
-f-4-5-0-1-0-9i		test	[N, [IncompleteEllipticF, 4.5, [Complex, 0.1, 0.9]]]	[Complex, 4.209502419983872, 0.8277592810892387]
+id	section	role	expr	expected	known	tolerance	source
+f-0-5-0-3		test	[N, [IncompleteEllipticF, 0.5, 0.3]]	0.5061402119623554	{num: "0.5061402119623553"}	1e-11	mpmath 1.3.0 ellipf
+f-1-2-0-7		test	[N, [IncompleteEllipticF, 1.2, 0.7]]	1.4294484330227635	{num: "1.4294484330227635"}	1e-11	mpmath 1.3.0 ellipf
+f-0-8-0-4		test	[N, [IncompleteEllipticF, -0.8, 0.4]]	-0.833343010862597	{num: "-0.8333430108625968"}	1e-11	mpmath 1.3.0 ellipf
+f-2-5-0-3		test	[N, [IncompleteEllipticF, 2.5, 0.3]]	2.7733811775576194	{num: "2.77338117755762"}	1e-11	mpmath 1.3.0 ellipf
+f-3-0-6		test	[N, [IncompleteEllipticF, -3, 0.6]]	-3.7572585774059926	{num: "-3.7572585774059926"}	1e-11	mpmath 1.3.0 ellipf
+f-0-3-0-4i-0-5		test	[N, [IncompleteEllipticF, [Complex, 0.3, 0.4], 0.5]]	[Complex, 0.2902320216653951, 0.403598147717592]	[Complex, 0.29023202166539497, 0.40359814771759206]	1e-11	mpmath 1.3.0 ellipf
+f-1-0-5i-0-2		test	[N, [IncompleteEllipticF, [Complex, 1, -0.5], 0.2]]	[Complex, 1.0135464730513384, -0.5410344560844551]	[Complex, 1.0135464730513384, -0.5410344560844551]	1e-11	mpmath 1.3.0 ellipf
+f-0-6-0-57-0-23i		test	[N, [IncompleteEllipticF, 0.6, [Complex, 0.57, 0.23]]]	[Complex, 0.6205167553706088, 0.009225906501081826]	[Complex, 0.6205167553706088, 0.009225906501081826]	1e-11	mpmath 1.3.0 ellipf
+f-1-1-0-1-0-9i		test	[N, [IncompleteEllipticF, 1.1, [Complex, 0.1, 0.9]]]	[Complex, 1.0666327023707152, 0.14586895972365066]	[Complex, 1.066632702370715, 0.1458689597236506]	1e-11	mpmath 1.3.0 ellipf
+f-3-711592653589793-0-57-0-23i		test	[N, [IncompleteEllipticF, 3.711592653589793, [Complex, 0.57, 0.23]]]	[Complex, 4.307419948322291, 0.42547669413142836]	[Complex, 4.307419948322291, 0.4254766941314284]	1e-11	mpmath 1.3.0 ellipf
+f-3-711592653589793-0-23i-0-57-0-23i		test	[N, [IncompleteEllipticF, [Complex, 3.711592653589793, 0.23], [Complex, 0.57, 0.23]]]	[Complex, 4.289764434700574, 0.6711124299873337]	[Complex, 4.289764434700575, 0.6711124299873338]	1e-11	mpmath 1.3.0 ellipf
+f-3-0-57-0-23i		test	[N, [IncompleteEllipticF, -3, [Complex, 0.57, 0.23]]]	[Complex, -3.577957673312077, -0.4175363858034027]	[Complex, -3.5779576733120773, -0.4175363858034028]	1e-11	mpmath 1.3.0 ellipf
+f-4-5-0-1-0-9i		test	[N, [IncompleteEllipticF, 4.5, [Complex, 0.1, 0.9]]]	[Complex, 4.209502419983872, 0.8277592810892387]	[Complex, 4.209502419983872, 0.827759281089238]	1e-11	mpmath 1.3.0 ellipf

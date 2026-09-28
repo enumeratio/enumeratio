@@ -1,13 +1,13 @@
-id	section	role	expr	expected	caption
-lambertw-0			[LambertW, 0]	0	
-1-cdot-e-1-e			[LambertW, ExponentialE]	1	$1 \cdot e^1 = e$
-branch-2-at-5		test	[N, [LambertW, 5, 2]]	[Complex, -0.7840863392558513, 10.923920160375756]	
-branch-1-at-neg-1		test	[N, [LambertW, -1, 1]]	[Complex, -2.062277729598284, 7.588631178472513]	
-branch-5-at-10		test	[N, [LambertW, 10, 5]]	[Complex, -1.0928795829909042, 29.808483249094696]	
-branch-3-at-a-complex-argument		test	[N, [LambertW, [Complex, 1, 2], 3]]	[Complex, -2.1072075066264553, 18.27108543113687]	
-the-branch-point-1-e	Scope		[LambertW, [Negate, [Divide, 1, ExponentialE]]]	-1	The branch point $-1/e$
-2e-2-w-e-w-at-w-2	Scope		[LambertW, [Multiply, 2, [Power, ExponentialE, 2]]]	2	$2e^2 = w e^w$ at $w = 2$
-ln-2-cdot-e-ln-2-frac-ln-2-2	Scope		[LambertW, [Negate, [Divide, [Ln, 2], 2]]]	[Negate, [Ln, 2]]	$-\ln 2 \cdot e^{-\ln 2} = -\tfrac{\ln 2}{2}$
-a-branch-other-than-0-or-1-checked-against-n	Scope		[N, [LambertW, -0.14, -3]]	[Complex, -4.645279174278859, -13.812745325218817]	A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`
-the-branch-k-1-written-in-compute-engine-s-z-k	Scope		[N, [LambertW, 1, 1]]	[Complex, -1.5339133197935744, 4.375185153061898]	The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's `ProductLog[1, 1]`
-the-real-branch-k-1-on-1-e-z-0	Scope		[N, [LambertW, -0.2, -1]]	{num: "-2.54264135777352642429"}	The real branch $k = -1$ on $-1/e < z < 0$
+id	section	role	expr	expected	known	tolerance	source	caption
+lambertw-0			[LambertW, 0]	0				
+1-cdot-e-1-e			[LambertW, ExponentialE]	1				$1 \cdot e^1 = e$
+branch-2-at-5		test	[N, [LambertW, 5, 2]]	[Complex, -0.7840863392558513, 10.923920160375756]	[Complex, -0.7840863392558513, 10.923920160375756]	1e-9	Wolfram 15.0.0 ProductLog	
+branch-1-at-neg-1		test	[N, [LambertW, -1, 1]]	[Complex, -2.062277729598284, 7.588631178472513]	[Complex, -2.062277729598284, 7.588631178472513]	1e-9	Wolfram 15.0.0 ProductLog	
+branch-5-at-10		test	[N, [LambertW, 10, 5]]	[Complex, -1.0928795829909042, 29.808483249094696]	[Complex, -1.0928795829909042, 29.808483249094696]	1e-9	Wolfram 15.0.0 ProductLog	
+branch-3-at-a-complex-argument		test	[N, [LambertW, [Complex, 1, 2], 3]]	[Complex, -2.1072075066264553, 18.27108543113687]	[Complex, -2.1072075066264553, 18.27108543113687]	1e-9	Wolfram 15.0.0 ProductLog	
+the-branch-point-1-e	Scope		[LambertW, [Negate, [Divide, 1, ExponentialE]]]	-1				The branch point $-1/e$
+2e-2-w-e-w-at-w-2	Scope		[LambertW, [Multiply, 2, [Power, ExponentialE, 2]]]	2				$2e^2 = w e^w$ at $w = 2$
+ln-2-cdot-e-ln-2-frac-ln-2-2	Scope		[LambertW, [Negate, [Divide, [Ln, 2], 2]]]	[Negate, [Ln, 2]]				$-\ln 2 \cdot e^{-\ln 2} = -\tfrac{\ln 2}{2}$
+a-branch-other-than-0-or-1-checked-against-n	Scope		[N, [LambertW, -0.14, -3]]	[Complex, -4.645279174278859, -13.812745325218817]	[Complex, -4.645279174278859, -13.812745325218817]	1e-9	Wolfram 15.0.0 ProductLog	A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`
+the-branch-k-1-written-in-compute-engine-s-z-k	Scope		[N, [LambertW, 1, 1]]	[Complex, -1.5339133197935744, 4.375185153061898]				The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's `ProductLog[1, 1]`
+the-real-branch-k-1-on-1-e-z-0	Scope		[N, [LambertW, -0.2, -1]]	{num: "-2.54264135777352642429"}				The real branch $k = -1$ on $-1/e < z < 0$

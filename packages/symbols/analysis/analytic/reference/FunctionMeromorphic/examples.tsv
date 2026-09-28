@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-a-rational-function-is-meromorphic			[FunctionMeromorphic, [Divide, 1, x], x]	True	A rational function is meromorphic even though it isn't entire
-tangent-is-a-ratio-of-entire-functions			[FunctionMeromorphic, [Tan, x], x]	True	Tangent is sine over cosine, a ratio of entire functions
-a-branch-point-is-not-a-pole			[FunctionMeromorphic, [Ln, x], x]	False	A branch point disqualifies log even though it has no poles
-polynomials-are-meromorphic			[FunctionMeromorphic, [Power, x, 2], x]	True	Polynomials are entire, hence meromorphic
+id	section	role	expr	expected	known	source	caption
+a-rational-function-is-meromorphic			[FunctionMeromorphic, [Divide, 1, x], x]	True	True	Wolfram 15.0.0, hand cross-checked	A rational function is meromorphic even though it isn't entire
+tangent-is-a-ratio-of-entire-functions			[FunctionMeromorphic, [Tan, x], x]	True	True	Wolfram 15.0.0, hand cross-checked	Tangent is sine over cosine, a ratio of entire functions
+a-branch-point-is-not-a-pole			[FunctionMeromorphic, [Ln, x], x]	False	False	Wolfram 15.0.0, hand cross-checked	A branch point disqualifies log even though it has no poles
+polynomials-are-meromorphic			[FunctionMeromorphic, [Power, x, 2], x]	True			Polynomials are entire, hence meromorphic

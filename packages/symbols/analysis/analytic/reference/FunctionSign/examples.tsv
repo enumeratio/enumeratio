@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-a-perfect-square-is-never-negative			[FunctionSign, [Power, x, 2], x]	1	A perfect square is never negative		
-a-sum-of-a-square-and-a-positive-constant			[FunctionSign, [Divide, 1, [Add, [Power, x, 2], 1]], x]	1	1/(x^2+1) is defined and positive for every real x		
-exp-is-always-positive			[FunctionSign, [Exp, x], x]	1	Exp is always positive		
-a-cubic-changes-sign	Properties		[FunctionSign, [Power, x, 3], x]	Indeterminate	A cubic is negative for x<0 and positive for x>0	undefined-form	Same Indeterminate-vs-NaN spelling gap as FunctionConvexity/FunctionMonotonicity — Wolfram's own FunctionSign also answers Indeterminate.
+id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
+a-perfect-square-is-never-negative			[FunctionSign, [Power, x, 2], x]	1	1	Wolfram 15.0.0, hand cross-checked	A perfect square is never negative		
+a-sum-of-a-square-and-a-positive-constant			[FunctionSign, [Divide, 1, [Add, [Power, x, 2], 1]], x]	1	1	Wolfram 15.0.0, hand cross-checked	1/(x^2+1) is defined and positive for every real x		
+exp-is-always-positive			[FunctionSign, [Exp, x], x]	1			Exp is always positive		
+a-cubic-changes-sign	Properties		[FunctionSign, [Power, x, 3], x]	Indeterminate	Indeterminate	Wolfram 15.0.0, hand cross-checked	A cubic is negative for x<0 and positive for x>0	undefined-form	Same Indeterminate-vs-NaN spelling gap as FunctionConvexity/FunctionMonotonicity — Wolfram's own FunctionSign also answers Indeterminate.

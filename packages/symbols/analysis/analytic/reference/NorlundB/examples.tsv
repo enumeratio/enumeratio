@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption
-at-a-1-it-is-the-bernoulli-number-b-2			[NorlundB, 2, 1]	[Rational, 1, 6]	At a = 1 it is the Bernoulli number $B_2$
-norlundb-4-1			[NorlundB, 4, 1]	[Rational, -1, 30]	
-norlundb-2-2			[NorlundB, 2, 2]	[Rational, 5, 6]	
-norlundb-3-2			[NorlundB, 3, 2]	[Rational, -1, 2]	
-norlundb-6-4		test	[NorlundB, 6, 4]	[Rational, 221, 42]	
-norlundb-5-3		test	[NorlundB, 5, 3]	[Rational, -3, 4]	
-norlundb-7-2		test	[NorlundB, 7, 2]	[Rational, -1, 6]	
-a-polynomial-in-a	Scope		[NorlundB, 1, a]	[Multiply, [Rational, -1, 2], a]	A polynomial in a
+id	section	role	expr	expected	known	tolerance	source	caption
+at-a-1-it-is-the-bernoulli-number-b-2			[NorlundB, 2, 1]	[Rational, 1, 6]				At a = 1 it is the Bernoulli number $B_2$
+norlundb-4-1			[NorlundB, 4, 1]	[Rational, -1, 30]				
+norlundb-2-2			[NorlundB, 2, 2]	[Rational, 5, 6]				
+norlundb-3-2			[NorlundB, 3, 2]	[Rational, -1, 2]				
+norlundb-6-4		test	[NorlundB, 6, 4]	[Rational, 221, 42]	{num: "5.261904761904762"}	1e-9	Wolfram 15.0.0 NorlundB	
+norlundb-5-3		test	[NorlundB, 5, 3]	[Rational, -3, 4]	{num: "-0.75"}	1e-9	Wolfram 15.0.0 NorlundB	
+norlundb-7-2		test	[NorlundB, 7, 2]	[Rational, -1, 6]	{num: "-0.16666666666666666"}	1e-9	Wolfram 15.0.0 NorlundB	
+a-polynomial-in-a	Scope		[NorlundB, 1, a]	[Multiply, [Rational, -1, 2], a]				A polynomial in a

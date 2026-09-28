@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption
-a-floating-point-argument-evaluates-directly-to			[N, [JacobiCD, 0.3, 0.5]]	0.9772503364442499	A floating-point argument evaluates directly to a decimal
-jacobicd-0-4-0-5i-0-3		test	[N, [JacobiCD, [Complex, 0.4, 0.5], 0.3]]	[Complex, 1.0340171900053388, -0.13933796721263517]	
-m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiCD, 0.3, 1.5]]	1.023633106578735	m greater than 1, via the reciprocal-modulus transformation
-u-0-is-1-for-any-m	Properties		[JacobiCD, 0, m]	1	u = 0 is 1, for any m
-symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiCD, u, m]	[JacobiCD, u, m]	Symbolic arguments are left unevaluated rather than guessed at
+id	section	role	expr	expected	known	tolerance	source	caption
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiCD, 0.3, 0.5]]	0.9772503364442499	{num: "0.9772503364442499"}	1e-13	mpmath 1.3.0 ellipfun	A floating-point argument evaluates directly to a decimal
+jacobicd-0-4-0-5i-0-3		test	[N, [JacobiCD, [Complex, 0.4, 0.5], 0.3]]	[Complex, 1.0340171900053388, -0.13933796721263517]	[Complex, 1.0340171900053388, -0.13933796721263514]	1e-13	mpmath 1.3.0 ellipfun	
+m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiCD, 0.3, 1.5]]	1.023633106578735				m greater than 1, via the reciprocal-modulus transformation
+u-0-is-1-for-any-m	Properties		[JacobiCD, 0, m]	1				u = 0 is 1, for any m
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiCD, u, m]	[JacobiCD, u, m]				Symbolic arguments are left unevaluated rather than guessed at

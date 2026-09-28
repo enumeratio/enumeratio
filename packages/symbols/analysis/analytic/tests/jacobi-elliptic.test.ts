@@ -1,78 +1,15 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
 // The twelve Jacobi `pq` functions (sn, cn, dn and their nine quotients/reciprocals),
 // JacobiAmplitude and JacobiZN — Wolfram/mpmath's m = k² parameter convention throughout.
-// Numeric evaluation (descending Landen/AGM, Abramowitz & Stegun 16.4) is held to the
-// oracle values in jacobi-elliptic.golden.json, gathered from mpmath (ellipfun) and a
-// Wolfram kernel by scripts/collect-jacobi-elliptic-goldens.ts (neither oracle is needed
-// to run this file).
+// Numeric evaluation (descending Landen/AGM, Abramowitz & Stegun 16.4). Oracle coverage
+// (mpmath and a Wolfram kernel, across real/complex u and m) now lives as `known` values
+// on the reference examples (packages/reference/tests/known.test.ts), not here.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-interface GoldenCase {
-  head: string;
-  args: unknown[];
-  label: string;
-  tol: number;
-  mpmath?: [number, number];
-  wolfram?: [number, number];
-}
-
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./jacobi-elliptic.golden.json", import.meta.url), "utf8"),
-);
-
-const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
-
-const byHead = new Map<string, GoldenCase[]>();
-for (const g of goldens) byHead.set(g.head, [...(byHead.get(g.head) ?? []), g]);
-
-for (const [head, cases] of byHead) {
-  test(`${head}: ${cases.length} cases match the oracles`, () => {
-    const off: string[] = [];
-    for (const g of cases) {
-      const r = ce.box([g.head, ...g.args] as never).N();
-      const ours: [number, number] = [r.re, r.im];
-      expect(g.mpmath ?? g.wolfram, g.label).toBeDefined();
-      for (const [name, ref] of [
-        ["mpmath", g.mpmath],
-        ["wolfram", g.wolfram],
-      ] as const) {
-        if (!ref) continue;
-        const err = relErr(ours, ref);
-        if (!(err <= g.tol)) off.push(`${g.label} vs ${name}: relerr ${err.toExponential(2)}`);
-      }
-    }
-    expect(off).toEqual([]);
-  });
-}
-
-test("the golden file covers every head", () => {
-  const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].toSorted()).toEqual(
-    [
-      "JacobiSN",
-      "JacobiCN",
-      "JacobiDN",
-      "JacobiCD",
-      "JacobiCS",
-      "JacobiDC",
-      "JacobiDS",
-      "JacobiNC",
-      "JacobiND",
-      "JacobiNS",
-      "JacobiSC",
-      "JacobiSD",
-      "JacobiAmplitude",
-      "JacobiZN",
-    ].toSorted(),
-  );
-});
 
 // --- Exact special values ------------------------------------------------------------
 
