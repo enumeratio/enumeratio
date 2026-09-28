@@ -339,6 +339,14 @@
       "disagree": 0
     }
   ],
+  "ClausenCl": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 6,
+      "disagree": 3
+    }
+  ],
   "Commonest": [
     {
       "system": "wolfram",
@@ -2391,6 +2399,14 @@
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 11,
       "disagree": 0
+    }
+  ],
+  "SloaneA": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 10,
+      "disagree": 1
     }
   ],
   "Sort": [
