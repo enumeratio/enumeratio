@@ -550,7 +550,7 @@ function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpre
 
 export function declareGraphs2(ce: ComputeEngine): void {
   ce.declare("GraphDistanceMatrix", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<list<real | signed_infinity>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -572,7 +572,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("WeightedAdjacencyMatrix", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<list<number>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : weightedAdjacencyMatrixExpr(ce, g);
@@ -580,7 +580,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("VertexEccentricity", {
-    signature: "(value, any?) -> value",
+    signature: "(value, any?) -> real | signed_infinity | list<real | signed_infinity>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -596,7 +596,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("GraphRadius", {
-    signature: "(value) -> value",
+    signature: "(value) -> real | signed_infinity",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || g.order.length === 0) return undefined;
@@ -606,7 +606,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("GraphDiameter", {
-    signature: "(value) -> value",
+    signature: "(value) -> real | signed_infinity",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || g.order.length === 0) return undefined;
@@ -616,7 +616,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("GraphCenter", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<any>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -632,7 +632,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("GraphPeriphery", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<any>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -658,7 +658,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("VertexInDegree", {
-    signature: "(value, any?) -> value",
+    signature: "(value, any?) -> integer | list<integer>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -674,7 +674,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("VertexOutDegree", {
-    signature: "(value, any?) -> value",
+    signature: "(value, any?) -> integer | list<integer>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -690,7 +690,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("ClosenessCentrality", {
-    signature: "(value, any?) -> value",
+    signature: "(value, any?) -> number | list<number>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -706,7 +706,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("EigenvectorCentrality", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<number>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : eigenvectorCentrality(ce, g);
@@ -785,7 +785,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("CirculantGraph", {
-    signature: "(integer, any) -> value",
+    signature: "(integer, integer | list<integer>) -> value",
     evaluate: (ops) => {
       const n = ops[0] === undefined ? undefined : integerAt(ops[0]);
       if (n === undefined || ops[1] === undefined) return undefined;

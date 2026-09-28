@@ -62,7 +62,7 @@ export function evaluateExpToTrig(ce: ComputeEngine, ops: readonly BoxedExpressi
 
 export function declareExpToTrig(ce: ComputeEngine): void {
   ce.declare("ExpToTrig", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => evaluateExpToTrig(ce, ops),
   });
 }

@@ -6,7 +6,7 @@ signatures:
   - call: PermutationReplace(i, perm)
     description: $\sigma(i)$, or $i$ itself past `perm`'s own support
     library: enumeratio-groupalgebra
-    type: (value, value) -> value
+    type: (expression<Cycles> | integer | list<integer>, expression<Cycles> | list<integer>) -> expression<Cycles> | integer | list<integer>
   - call: PermutationReplace(list, perm)
     description: '`list` with every entry $i$ replaced by $\sigma(i)$'
     library: enumeratio-groupalgebra

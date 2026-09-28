@@ -6,7 +6,7 @@ signatures:
   - call: MinValue(f, x)
     description: the global minimum of f over its own natural domain.
     library: "@enumeratio/analytic"
-    type: (any, any) -> any
+    type: (expression, list<symbol> | symbol) -> expression
   - call: MinValue({f, cons}, x)
     description: the global minimum of f restricted to a simple interval constraint cons.
     library: "@enumeratio/analytic"

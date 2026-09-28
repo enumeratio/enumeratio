@@ -357,11 +357,28 @@ export function declareCallForms(ce: ComputeEngine): void {
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
-  widenSignature(ce, "SetPartitions", "(any, integer?) -> list<list<list<any>>>");
+  widenSignature(ce, "SetPartitions", "(integer | collection<any>, integer?) -> list<list<list<any>>>");
   setCollection(ce, "SetPartitions", polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions));
 
-  widenSignature(ce, "Subsets", "(any, any?) -> list<list<any>>");
+  widenSignature(ce, "Subsets", "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));
+
+  // `Permutations(n)`: the permutations of [n], the family `SymmetricGroup(n)` already is.
+  // compute-engine's own `Permutations` takes a collection (the permutations of a given
+  // list), so this is one more arm beside it, not a replacement: an integer is never a
+  // collection, and the native arms still answer everything else.
+  const permutations = operatorOf(ce, "Permutations");
+  if (permutations !== undefined) {
+    const native = permutations.evaluate;
+    const signature = `${permutations.signature as unknown as string}`;
+    (permutations as { signature: unknown }).signature = ce.type(
+      `${signature} & ((integer<0..>) -> indexed_collection<list<integer>>)`,
+    );
+    permutations.evaluate = (ops, options) => {
+      const n = ops.length === 1 ? integerAt(ops[0]) : undefined;
+      return n !== undefined && n >= 0 ? ce.function("SymmetricGroup", [ce.number(n)]) : native?.(ops, options);
+    };
+  }
 
   // GroupOrder(SymmetricGroup(n)) -> n! is wired from packages/symbols/algebras/groupalgebra/src/declare.ts
   // (the package that declares GroupOrder), not here: this module and groupalgebra declare

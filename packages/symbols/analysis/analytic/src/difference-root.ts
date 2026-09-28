@@ -327,7 +327,7 @@ export function declareDifferenceRoot(ce: ComputeEngine): void {
   ce.declare("DifferenceRoot", { signature: "(any) -> any" }); // inert data carrier, never evaluated directly
 
   ce.declare("DifferenceRootReduce", {
-    signature: "(any, symbol) -> any",
+    signature: "(expression, symbol) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [expr, varExpr] = ops;

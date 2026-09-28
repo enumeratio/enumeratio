@@ -491,7 +491,7 @@ export function declareListHeads(ce: ComputeEngine): void {
   // Commonest(c): every element tied for the highest frequency, Wolfram's answer to a
   // tied Mode — which stays a single value. See [[Mode]].
   ce.declare("Commonest", {
-    signature: "(indexed_collection<any>) -> list<any>",
+    signature: "(indexed_collection<T>) -> list<T> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const tally: { value: BoxedExpression; count: number }[] = [];
@@ -511,7 +511,7 @@ export function declareListHeads(ce: ComputeEngine): void {
   // (T) -> boolean function and answers a flat `list<integer>`. That call form — a second
   // operand that IS a function — is untouched; only a plain VALUE in the second slot (not
   // a function) gets Wolfram's value-matching, each-wrapped-in-its-own-list answer.
-  widenSignature(ce, "Position", "(indexed_collection<any>, any) -> list<any>");
+  widenSignature(ce, "Position", "(indexed_collection<any>, any) -> list<integer> | list<list<integer>>");
   wrapOperator(
     ce,
     ["Position", 1, 1],

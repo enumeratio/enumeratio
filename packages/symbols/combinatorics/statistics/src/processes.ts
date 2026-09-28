@@ -95,6 +95,9 @@ function sliceDistributionOf(
 
 function declareSliceDistribution(ce: ComputeEngine): void {
   ce.declare("SliceDistribution", {
+    // `proc` stays `any`, not `expression<WienerProcess> | expression<PoissonProcess>`: a
+    // process kind this file doesn't know (any other distribution, say) has to stay
+    // unevaluated rather than fail boxing outright — see `sliceDistributionOf`'s `default`.
     signature: "(any, any) -> distribution",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops.length !== 2) return undefined;

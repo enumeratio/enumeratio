@@ -6,7 +6,7 @@ signatures:
   - call: BraidIsKnot(braid)
     description: whether the closure has exactly one component
     library: enumeratio-braid
-    type: (value) -> boolean
+    type: (expression<Braid> | string) -> boolean
 seeAlso:
   - BraidComponents
   - SeifertGenus

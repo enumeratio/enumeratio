@@ -6,7 +6,7 @@ signatures:
   - call: SubsetsWithoutConsecutive(n)
     description: subsets of $\{1, \dots, n\}$ with no two consecutive elements
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 seeAlso:
   - Subsets
   - FibonacciWords

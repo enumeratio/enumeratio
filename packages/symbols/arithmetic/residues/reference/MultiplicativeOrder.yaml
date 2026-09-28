@@ -8,7 +8,7 @@ signatures:
   - call: MultiplicativeOrder(a, n, {r1, r2, …})
     description: smallest positive $k$ with $a^k \equiv r_i \pmod n$ for some $i$ — a discrete logarithm
     library: enumeratio-residues
-    type: (any, integer?, list<integer>?) -> integer
+    type: (integer | value, integer?, list<integer>?) -> integer
     overrides: compute-engine
 details:
   - Also called the modulo order; defined only when $\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.

@@ -420,7 +420,12 @@ export function declareNumerals(ce: ComputeEngine): void {
   // Wolfram's IntegerString[n, b] and IntegerString[n, b, len]: bigint arithmetic throughout,
   // since the native handler goes through a double and drifts past about 15-16 significant
   // digits (IntegerString(50!, 16) is wrong after ~13 hex digits).
-  widenSignature(ce, "IntegerString", "(integer, any?, integer?) -> string", (op) => bigIntegerAt(op) !== undefined);
+  widenSignature(
+    ce,
+    "IntegerString",
+    "(integer, (integer | string)?, integer?) -> string",
+    (op) => bigIntegerAt(op) !== undefined,
+  );
   wrapOperator(
     ce,
     ["IntegerString", 5, 2],
@@ -495,7 +500,11 @@ export function declareNumerals(ce: ComputeEngine): void {
 
   // Wolfram's DigitCount[n, b, digit, len]: a 4th argument widens the digit list to `len`
   // places (leading zeros included) before tallying, so padding zeros count too.
-  widenSignature(ce, "DigitCount", "(integer, integer?, any?, integer?) -> any");
+  widenSignature(
+    ce,
+    "DigitCount",
+    "(integer, integer?, (integer | list<integer>)?, integer?) -> integer | list<integer>",
+  );
   wrapOperator(
     ce,
     ["DigitCount", 5, 10, 0, 9],
@@ -544,7 +553,8 @@ export function declareNumerals(ce: ComputeEngine): void {
 
   /** What a system's numerals look like, as a Dictionary — for discovery. */
   ce.declare("NumeralSystemShape", {
-    signature: "(any) -> any",
+    // A system is named by its head (`ZeckendorfNumerals`), which types as a function.
+    signature: "(any) -> dictionary",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const system = ops[0] === undefined ? undefined : systemOf(ops[0]);
       if (system === undefined) return undefined;

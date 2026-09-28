@@ -495,7 +495,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("Graph", { signature: "(any, any*) -> value" });
 
   ce.declare("VertexList", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<any>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined ? undefined : vertexListExpr(ce, g);
@@ -503,7 +503,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("EdgeList", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<value>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       return g === undefined
@@ -548,7 +548,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("AdjacencyMatrix", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<list<integer>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -573,7 +573,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("IncidenceMatrix", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<list<integer>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -603,7 +603,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("ConnectedComponents", {
-    signature: "(value) -> list",
+    signature: "(value) -> list<list<any>>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined) return undefined;
@@ -628,7 +628,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("FindShortestPath", {
-    signature: "(value, any, any) -> list",
+    signature: "(value, any, any) -> list<any>",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[2] === undefined) return undefined;
@@ -715,7 +715,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("Subgraph", {
-    signature: "(value, list) -> value",
+    signature: "(value, list<any>) -> value",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[1].operator !== "List") return undefined;
@@ -754,7 +754,7 @@ export function declareGraphs(ce: ComputeEngine): void {
   });
 
   ce.declare("GridGraph", {
-    signature: "(any) -> value",
+    signature: "(list<integer>) -> value",
     evaluate: (ops) => {
       const spec = ops[0];
       if (spec === undefined) return undefined;

@@ -6,7 +6,7 @@ signatures:
   - call: TransformedDistribution(expr, Distributed(x, dist))
     description: the distribution of expr(x) for x ~ dist; exact for expr affine in x, plus x^2 of a standard normal.
     library: enumeratio-statistics
-    type: (any, any) -> distribution
+    type: (any, expression<Distributed>) -> distribution
 details:
   - '$expr = a\,x + b$ ($a \ne 0$): change of variables — $PDF(y) = PDF(dist,(y-b)/a)/|a|$; $CDF(y) = CDF(dist,(y-b)/a)$ for $a>0$, or $1 - CDF(dist,(y-b)/a)$ (plus $PDF(dist,(y-b)/a)$ when $dist$ is discrete, since the inequality flips through an equality) for $a<0$; $Mean = a\,Mean(dist)+b$; $Variance = a^2\,Variance(dist)$ exactly.'
   - "$expr = x^2$, $dist = $ [[NormalDistribution]]$(0,1)$: `ChiSquareDistribution(1)` by definition — [[PDF]]/[[CDF]]/[[Mean]]/[[Variance]]/[[RandomVariate]] all forward to it."

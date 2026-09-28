@@ -432,7 +432,7 @@ function matchInverseFourier(
 
 export function declareTransforms(ce: ComputeEngine): void {
   ce.declare("LaplaceTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, t, s] = ops;
       if (f === undefined || t === undefined || s === undefined) return undefined;
@@ -440,7 +440,7 @@ export function declareTransforms(ce: ComputeEngine): void {
     },
   });
   ce.declare("InverseLaplaceTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [F, s, t] = ops;
       if (F === undefined || s === undefined || t === undefined) return undefined;
@@ -448,7 +448,7 @@ export function declareTransforms(ce: ComputeEngine): void {
     },
   });
   ce.declare("FourierTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, t, w] = ops;
       if (f === undefined || t === undefined || w === undefined || ops.length > 3) return undefined;
@@ -456,7 +456,7 @@ export function declareTransforms(ce: ComputeEngine): void {
     },
   });
   ce.declare("InverseFourierTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [F, w, t] = ops;
       if (F === undefined || w === undefined || t === undefined || ops.length > 3) return undefined;

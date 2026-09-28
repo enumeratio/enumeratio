@@ -6,7 +6,7 @@ signatures:
   - call: GraphPeriphery(g)
     description: every vertex with the largest (finite) eccentricity, in VertexList(g) order.
     library: enumeratio-collections
-    type: (value) -> list
+    type: (value) -> list<any>
 seeAlso:
   - GraphCenter
   - GraphDiameter

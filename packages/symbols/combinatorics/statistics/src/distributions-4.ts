@@ -573,9 +573,14 @@ const dirichletVariance = (
 // --- declare constructors ------------------------------------------------------------------
 
 function declareConstructors4(ce: ComputeEngine): void {
-  ce.declare("TruncatedDistribution", { signature: "(any, any) -> distribution" });
-  ce.declare("MixtureDistribution", { signature: "(any, any) -> distribution" });
-  ce.declare("ProductDistribution", { signature: "(any*) -> distribution" });
+  ce.declare("TruncatedDistribution", { signature: "(list<real>, distribution) -> distribution" });
+  ce.declare("MixtureDistribution", { signature: "(list<real>, list<distribution>) -> distribution" });
+  // `(distribution*)`, plus the `({d, n})` sugar `productCanonical` rewrites at construction
+  // into n copies before this signature is ever checked against — same idiom as
+  // `UniformDistribution`'s own zero/one-argument sugar.
+  ce.declare("ProductDistribution", {
+    signature: "((distribution*) -> distribution) & ((list<any>) -> distribution)",
+  });
   {
     const definition = ce.lookupDefinition("ProductDistribution");
     const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
@@ -583,13 +588,13 @@ function declareConstructors4(ce: ComputeEngine): void {
       (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[]) => productCanonical(ce, ops);
     }
   }
-  ce.declare("TransformedDistribution", { signature: "(any, any) -> distribution" });
+  ce.declare("TransformedDistribution", { signature: "(any, expression<Distributed>) -> distribution" });
   ce.declare("MarginalDistribution", {
-    signature: "(any, any) -> distribution",
+    signature: "(expression<ProductDistribution>, integer | list<integer>) -> distribution",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
       ops.length === 2 ? marginalOf(ce, ops[0], ops[1], options) : undefined,
   });
-  ce.declare("DirichletDistribution", { signature: "(list<any>) -> distribution" });
+  ce.declare("DirichletDistribution", { signature: "(list<real>) -> distribution" });
 }
 
 // --- extend PDF/CDF/Mean/Variance/RandomVariate in place, via wrapOperator ----------------------

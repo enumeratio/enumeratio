@@ -12,4 +12,4 @@ signatures:
   - call: IsCentral(...)
     description: Mapped through to oscar for the oracle; not yet written up here.
     library: enumeratio-groupalgebra
-    type: (value, number) -> boolean
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>, expression) -> boolean

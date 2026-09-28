@@ -6,7 +6,7 @@ signatures:
   - call: Assuming(cond, expr)
     description: evaluate $expr$ under a single assumed condition, a `List` of them (an implicit conjunction), or an `And` of them.
     library: "@enumeratio/analytic"
-    type: (value, value) -> unknown
+    type: (expression, expression) -> expression
 details:
   - "Built on compute-engine's own assumption store: the condition is pushed in a fresh scope (`ce.pushScope`/`ce.assume`), $expr$ is evaluated, and the scope is popped — compute-engine documents assumptions as scoped, so popping restores exactly what was in force before, even nested and even mid-evaluation (unlike `ce.checkpoint`, which refuses there)."
   - "No leakage: an assumption made here is gone once the call returns, whatever $expr$ does — verified by asking about the assumed symbol immediately after."

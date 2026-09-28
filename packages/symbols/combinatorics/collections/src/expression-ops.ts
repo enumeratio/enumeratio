@@ -166,7 +166,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // same length; a ragged input is left unevaluated. The 3-argument (level-spec) Wolfram
   // form isn't implemented.
   ce.declare("MapThread", {
-    signature: "(function: any, lists: any) -> list<any>",
+    signature: "(function: any, lists: list<any>) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [fn, listsExpr] = ops;
       if (fn === undefined || listsExpr === undefined || listsExpr.operator !== "List") return undefined;
@@ -260,7 +260,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // silently no-ops on a literal (non-wildcard) match target through the `Rule`-expression
   // form `evaluate()` sees here.
   ce.declare("Replace", {
-    signature: "(any, any) -> any",
+    signature: "(any, expression<Rule> | list<expression<Rule>>) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const exprRaw = ops[0];
@@ -284,7 +284,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // applied in order (a later rule's position is resolved against the result of the earlier
   // ones — harmless here since only values change, never the shape).
   ce.declare("ReplacePart", {
-    signature: "(any, any) -> any",
+    signature: "(any, expression<Rule> | list<expression<Rule>>) -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [expr, ruleSpec] = ops;
       if (expr === undefined || ruleSpec === undefined) return undefined;
@@ -339,7 +339,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // AssociationThread(keys, values) / AssociationThread(keys -> values): builds the SAME
   // `Association` (Rule-pair) head as `list-functional.ts` — see module doc.
   ce.declare("AssociationThread", {
-    signature: "(any, any?) -> any",
+    signature: "(collection<any> | expression<Rule>, collection<any>?) -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       let keysExpr: BoxedExpression | undefined;
       let valuesExpr: BoxedExpression | undefined;
@@ -374,7 +374,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // character alone. StringTake(s, {m, n}): characters m through n, inclusive, 1-based,
   // negative counting from the end.
   ce.declare("StringTake", {
-    signature: "(string, any) -> string",
+    signature: "(string, integer | list<integer>) -> string",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const text = stringAt(ops[0]);
       const spec = ops[1];
@@ -414,7 +414,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // FromCharacterCode(n): the single character with code point n. FromCharacterCode({n…}):
   // the string of all of them, in order — the inverse of ToCharacterCode either way.
   ce.declare("FromCharacterCode", {
-    signature: "(any) -> string",
+    signature: "(integer | list<integer>) -> string",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const codesExpr = ops[0];
       if (codesExpr === undefined) return undefined;

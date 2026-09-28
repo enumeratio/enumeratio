@@ -6,7 +6,7 @@ signatures:
   - call: BraidCrossings(braid)
     description: the length of the word
     library: enumeratio-braid
-    type: (value) -> integer
+    type: (expression<Braid> | string) -> integer
 seeAlso:
   - BraidWrithe
   - BraidStrands

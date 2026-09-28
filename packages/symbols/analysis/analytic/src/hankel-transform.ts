@@ -169,7 +169,7 @@ export function matchHankel(
 
 export function declareHankelTransform(ce: ComputeEngine): void {
   ce.declare("HankelTransform", {
-    signature: "(value, value, value, value?) -> value",
+    signature: "(expression, expression, expression, number?) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, r, s, n] = ops;
       if (f === undefined || r === undefined || s === undefined || ops.length > 4) return undefined;

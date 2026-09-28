@@ -6,7 +6,7 @@ signatures:
   - call: ModularSTWord(matrix)
     description: the list of $T$-exponents
     library: enumeratio-modular
-    type: (value) -> list
+    type: (expression<ModularMatrix> | list | string) -> list<integer>
 seeAlso:
   - ModularFromSTWord
   - ModularWord

@@ -6,7 +6,7 @@ signatures:
   - call: DifferenceRootReduce(f(n), n)
     description: the P-recursive reduction of $f(n)$, as $\mathrm{DifferenceRoot}(\ldots)(n)$.
     library: "@enumeratio/analytic"
-    type: (any, symbol) -> any
+    type: (expression, symbol) -> expression
 details:
   - "Order 1 (a single recurrence step, one or two initial conditions): Factorial(n), $a^n$, CatalanNumber(n), polynomials in n, and Binomial(n, k) for k a concrete non-negative integer — plus products and quotients of these. Binomial's recurrence has a genuine pole at $n = k - 1$ (its own ratio $C(n{+}1,k)/C(n,k)$ divides by $n{+}1{-}k$), so it carries two anchors, at $n=-1$ and $n=k$, straddling it — confirmed against a local wolframscript, which makes the identical choice."
   - "Order 2, constant coefficients: Fibonacci(n) and LucasL(n), $y(n{+}2) = y(n{+}1) + y(n)$ with $(y(0),y(1)) = (0,1)$ or $(2,1)$."

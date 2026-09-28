@@ -74,7 +74,7 @@ export function declareResidues(ce: ComputeEngine): void {
   // MultiplicativeOrder[k, n, {r₁, …}]: the least m > 0 with kᵐ ≡ some rᵢ — a discrete log.
   ce.declare("MultiplicativeOrder", {
     description: SUMMARIES.MultiplicativeOrder,
-    signature: "(any, integer?, list<integer>?) -> integer",
+    signature: "(integer | value, integer?, list<integer>?) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
       // MultiplicativeOrder(IntegerMod(k, n)) is MultiplicativeOrder(k, n).
       const unit = ops.length === 1 ? integerModOf(ops[0]) : undefined;

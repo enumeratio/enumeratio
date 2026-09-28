@@ -6,7 +6,7 @@ signatures:
   - call: WordSymbol(word)
     description: $R$'s minus $L$'s
     library: enumeratio-modular
-    type: (value) -> integer
+    type: (expression<ModularMatrix> | list | string) -> integer
 seeAlso:
   - RademacherSymbol
   - ModularWord

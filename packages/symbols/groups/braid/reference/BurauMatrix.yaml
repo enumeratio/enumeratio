@@ -6,7 +6,7 @@ signatures:
   - call: BurauMatrix(braid)
     description: the reduced Burau matrix itself
     library: enumeratio-braid
-    type: (value) -> list
+    type: (expression<Braid> | string) -> list<list<expression>>
 seeAlso:
   - AlexanderPolynomial
   - Braid

@@ -106,7 +106,10 @@ export function declareModular(ce: ComputeEngine): void {
     );
   const rationalExpression = ([n, d]: readonly [number, number]): BoxedExpression => ce.box(["Rational", n, d]);
 
-  ce.declare("ModularMatrix", { signature: "(any, any?, any?, any?) -> value" });
+  ce.declare("ModularMatrix", {
+    signature:
+      "((string) -> expression<ModularMatrix>) & ((integer, integer, integer, integer) -> expression<ModularMatrix>)",
+  });
 
   /** A head taking a matrix (or word) and returning a value. */
   const aboutMatrix = (head: string, signature: string, answer: (m: Matrix) => BoxedExpression | undefined): void => {
@@ -141,7 +144,12 @@ export function declareModular(ce: ComputeEngine): void {
 
   const matrixType = ce.type("matrix");
 
-  widenSignature(ce, "Dot", "(value, value) -> value", (op) => op.type.matches(ce.type("matrix | tuple | vector")));
+  widenSignature(
+    ce,
+    "Dot",
+    "(matrix | tuple | vector | expression<ModularMatrix> | string, matrix | tuple | vector | expression<ModularMatrix> | string) -> matrix | vector | number | expression<ModularMatrix>",
+    (op) => op.type.matches(ce.type("matrix | tuple | vector")),
+  );
   wrapOperator(
     ce,
     ["Dot", 1, 1],
@@ -156,7 +164,7 @@ export function declareModular(ce: ComputeEngine): void {
   widenSignature(
     ce,
     "MatrixPower",
-    "(value, real) -> value",
+    "(matrix | real | expression<ModularMatrix> | string, real) -> matrix | real | expression<ModularMatrix>",
     (op) => op.type.matches(matrixType) || op.type.matches(ce.type("real")),
   );
   wrapOperator(
@@ -172,7 +180,12 @@ export function declareModular(ce: ComputeEngine): void {
     2,
   );
 
-  widenSignature(ce, "Inverse", "(value) -> value", (op) => op.type.matches(matrixType));
+  widenSignature(
+    ce,
+    "Inverse",
+    "(matrix | expression<ModularMatrix> | string) -> matrix | expression<ModularMatrix>",
+    (op) => op.type.matches(matrixType),
+  );
   wrapOperator(
     ce,
     ["Inverse", 1],
@@ -184,9 +197,11 @@ export function declareModular(ce: ComputeEngine): void {
     1,
   );
 
-  aboutMatrix("ModularTrace", "(value) -> integer", (m) => ce.number(trace(m)));
+  const matrixLike = "expression<ModularMatrix> | string | list";
+
+  aboutMatrix("ModularTrace", `(${matrixLike}) -> integer`, (m) => ce.number(trace(m)));
   /** Identity, Elliptic, Parabolic or Hyperbolic — the trichotomy by |trace| against 2. */
-  aboutMatrix("ModularKind", "(value) -> string", (m) => {
+  aboutMatrix("ModularKind", `(${matrixLike}) -> string`, (m) => {
     const kind = classify(m);
     return kind === undefined ? undefined : ce.string(kind.charAt(0).toUpperCase() + kind.slice(1));
   });
@@ -194,12 +209,12 @@ export function declareModular(ce: ComputeEngine): void {
   // ── words ───────────────────────────────────────────────────────────────────
 
   /** The unique positive word in L and R, for a matrix with non-negative entries. */
-  aboutMatrix("ModularWord", "(value) -> string", (m) => {
+  aboutMatrix("ModularWord", `(${matrixLike}) -> string`, (m) => {
     const word = positiveWord(m);
     return word === undefined ? undefined : ce.string(word);
   });
   /** The alternating S/T factorisation, as its list of T-exponents. */
-  aboutMatrix("ModularSTWord", "(value) -> list", (m) => {
+  aboutMatrix("ModularSTWord", `(${matrixLike}) -> list<integer>`, (m) => {
     const word = stWord(m);
     return word === undefined
       ? undefined
@@ -209,7 +224,7 @@ export function declareModular(ce: ComputeEngine): void {
         );
   });
   ce.declare("ModularFromSTWord", {
-    signature: "(list) -> value",
+    signature: "(list<integer>) -> expression<ModularMatrix>",
     evaluate: (ops) => {
       const exponents = operandsOf(ops[0] as BoxedExpression).map(integerAt);
       if (!exponents.every((e): e is number => e !== undefined)) return undefined;
@@ -279,7 +294,7 @@ export function declareModular(ce: ComputeEngine): void {
     ce.box(["Rational", ce.number(n), ce.number(d)]);
 
   ce.declare("Convergents", {
-    signature: "(value, integer?) -> list",
+    signature: "(value, integer?) -> list<number>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       // A bare list is read as the terms of a continued fraction directly; anything
       // else goes through compute-engine's own `ContinuedFraction` first — exact for a
@@ -302,7 +317,7 @@ export function declareModular(ce: ComputeEngine): void {
   });
 
   ce.declare("ContinuedFractionK", {
-    signature: "(any, any, tuple) -> value",
+    signature: "(any, any, tuple<symbol, integer, any>) -> number",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [fExpr, gExpr, iterExpr] = ops;
@@ -676,11 +691,13 @@ export function declareModular(ce: ComputeEngine): void {
   // ── the flow: conjugacy classes, and the Rademacher symbol ──────────────────
 
   /** The canonical name of a conjugacy class: the least rotation of its word. */
-  aboutWord("ModularClass", "(value) -> string", (word) => {
+  aboutWord("ModularClass", `(${matrixLike}) -> string`, (word) => {
     const name = conjugacyClassName(word);
     return name === undefined ? undefined : ce.string(name);
   });
-  aboutWord("IsPrimitiveClass", "(value) -> boolean", (word) => ce.symbol(isPrimitiveWord(word) ? "True" : "False"));
+  aboutWord("IsPrimitiveClass", `(${matrixLike}) -> boolean`, (word) =>
+    ce.symbol(isPrimitiveWord(word) ? "True" : "False"),
+  );
   /** Every closed geodesic whose word has the given length, as a list of class names. */
   ce.declare("ModularClasses", {
     signature: "(integer, boolean?) -> list",
@@ -706,21 +723,21 @@ export function declareModular(ce: ComputeEngine): void {
       return sum === undefined ? undefined : rationalExpression(sum);
     },
   });
-  aboutMatrix("RademacherPhi", "(value) -> integer", (m) => {
+  aboutMatrix("RademacherPhi", `(${matrixLike}) -> integer`, (m) => {
     const phi = rademacherPhi(m);
     return phi === undefined ? undefined : ce.number(phi);
   });
-  aboutMatrix("RademacherSymbol", "(value) -> integer", (m) => {
+  aboutMatrix("RademacherSymbol", `(${matrixLike}) -> integer`, (m) => {
     const symbol = rademacherSymbol(m);
     return symbol === undefined ? undefined : ce.number(symbol);
   });
   /** Ghys's theorem, as a head: the modular knot's linking number with the trefoil. */
-  aboutMatrix("LinkingWithTrefoil", "(value) -> integer", (m) => {
+  aboutMatrix("LinkingWithTrefoil", `(${matrixLike}) -> integer`, (m) => {
     const linking = linkingWithTrefoil(m);
     return linking === undefined ? undefined : ce.number(linking);
   });
   /** The same number counted off the word, which is how it is cheap. */
-  aboutWord("WordSymbol", "(value) -> integer", (word) => {
+  aboutWord("WordSymbol", `(${matrixLike}) -> integer`, (word) => {
     const symbol = wordSymbol(word);
     return symbol === undefined ? undefined : ce.number(symbol);
   });
@@ -741,7 +758,7 @@ export function declareModular(ce: ComputeEngine): void {
       : undefined;
   };
 
-  ce.declare("QuadraticForm", { signature: "(integer, integer, integer) -> value" });
+  ce.declare("QuadraticForm", { signature: "(integer, integer, integer) -> expression<QuadraticForm>" });
 
   /** A head taking a form. */
   const aboutForm = (head: string, signature: string, answer: (f: Form) => BoxedExpression | undefined): void => {
@@ -769,25 +786,27 @@ export function declareModular(ce: ComputeEngine): void {
     });
   };
 
-  aboutForm("FormDiscriminant", "(value) -> integer", (f) => ce.number(formDiscriminant(f)));
-  aboutForm("IsIndefinite", "(value) -> boolean", (f) => ce.symbol(isIndefinite(f) ? "True" : "False"));
-  aboutForm("IsReducedForm", "(value) -> boolean", (f) => ce.symbol(isReduced(f) ? "True" : "False"));
-  aboutForm("ReduceForm", "(value) -> value", (f) => {
+  const formType = "expression<QuadraticForm>";
+
+  aboutForm("FormDiscriminant", `(${formType}) -> integer`, (f) => ce.number(formDiscriminant(f)));
+  aboutForm("IsIndefinite", `(${formType}) -> boolean`, (f) => ce.symbol(isIndefinite(f) ? "True" : "False"));
+  aboutForm("IsReducedForm", `(${formType}) -> boolean`, (f) => ce.symbol(isReduced(f) ? "True" : "False"));
+  aboutForm("ReduceForm", `(${formType}) -> ${formType}`, (f) => {
     const reduced = reduceForm(f);
     return reduced === undefined ? undefined : formExpression(reduced);
   });
   /** One step round the cycle — the continued-fraction step, in form coordinates. */
-  aboutForm("FormRho", "(value) -> value", (f) => {
+  aboutForm("FormRho", `(${formType}) -> ${formType}`, (f) => {
     const next = rho(f);
     return next === undefined ? undefined : formExpression(next);
   });
   /** The whole cycle: the class, listed. Its length is always even. */
-  aboutForm("FormCycle", "(value) -> list", (f) => {
+  aboutForm("FormCycle", `(${formType}) -> list<${formType}>`, (f) => {
     const cycle = cycleOf(f);
     return cycle === undefined ? undefined : formListExpression(cycle);
   });
   /** The automorph: the hyperbolic matrix generating the form's stabiliser. */
-  aboutForm("FormAutomorph", "(value) -> value", (f) => {
+  aboutForm("FormAutomorph", `(${formType}) -> expression<ModularMatrix>`, (f) => {
     const m = automorph(f);
     return m === undefined ? undefined : matrixExpression(m);
   });
@@ -811,7 +830,7 @@ export function declareModular(ce: ComputeEngine): void {
   });
 
   ce.declare("FormAction", {
-    signature: "(value, value) -> value",
+    signature: `(${formType}, ${matrixLike}) -> ${formType}`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const f = formOf(ops[0]);
       const m = matrixOf(ops[1]);
@@ -821,7 +840,7 @@ export function declareModular(ce: ComputeEngine): void {
     },
   });
   ce.declare("EvaluateForm", {
-    signature: "(value, integer, integer) -> integer",
+    signature: `(${formType}, integer, integer) -> integer`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const f = formOf(ops[0]);
       const [x, y] = [integerAt(ops[1]), integerAt(ops[2])];

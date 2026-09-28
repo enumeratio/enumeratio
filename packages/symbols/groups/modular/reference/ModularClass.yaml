@@ -6,7 +6,7 @@ signatures:
   - call: ModularClass(word)
     description: the least rotation
     library: enumeratio-modular
-    type: (value) -> string
+    type: (expression<ModularMatrix> | list | string) -> string
 seeAlso:
   - ModularClasses
   - ModularWord

@@ -6,7 +6,7 @@ signatures:
   - call: AssociationThread(keys, values)
     description: Association(Rule(keys[1], values[1]), …) — keys and values the same length
     library: enumeratio-collections
-    type: (any, any?) -> any
+    type: (collection<any> | expression<Rule>, collection<any>?) -> any
   - call: AssociationThread(keys -> values)
     description: the same, with keys and values given as one Rule instead of two arguments
     library: enumeratio-collections

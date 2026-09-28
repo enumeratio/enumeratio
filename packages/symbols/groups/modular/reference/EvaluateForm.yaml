@@ -6,7 +6,7 @@ signatures:
   - call: EvaluateForm(form, x, y)
     description: $ax^2+bxy+cy^2$ at $(x,y)$
     library: enumeratio-modular
-    type: (value, integer, integer) -> integer
+    type: (expression<QuadraticForm>, integer, integer) -> integer
 seeAlso:
   - QuadraticForm
   - FormClassNumber

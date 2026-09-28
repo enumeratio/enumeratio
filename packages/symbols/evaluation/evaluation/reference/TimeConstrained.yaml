@@ -6,7 +6,7 @@ signatures:
   - call: TimeConstrained(expr, t)
     description: aborts to $Aborted past $t$ seconds.
     library: enumeratio-evaluation
-    type: (any, number, any?) time -> any
+    type: (any, real, any?) time -> any
   - call: TimeConstrained(expr, t, failexpr)
     description: aborts to $\mathit{failexpr}$ instead.
     library: enumeratio-evaluation

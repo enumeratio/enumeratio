@@ -129,8 +129,16 @@ export function declareGeometric(ce: ComputeEngine): void {
     },
   });
 
+  // A named algebra (`CliffordAlgebra(...)` and friends) or one of the bare-symbol
+  // names (`Quaternions`, `H_doublestruck`, …) `@enumeratio/hypercomplex`'s `algebraOf`
+  // reads. `@enumeratio/hypercomplex` declares every one of those constructors' return
+  // type as `value` — not `expression<Head>` — so an algebra carrier's own boxed type
+  // is `value`; the bare-symbol names are undeclared and box as `unknown`, which passes
+  // `value` too.
+  const algebraLike = "value";
+
   ce.declare("Pseudoscalar", {
-    signature: "(any) -> number",
+    signature: `(${algebraLike}) -> number`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const algebra = readAlgebra(ops[0]);
       return algebra === undefined ? undefined : toExpression(ce, pseudoscalar(ce, algebra.generators));
@@ -138,7 +146,7 @@ export function declareGeometric(ce: ComputeEngine): void {
   });
 
   ce.declare("Dual", {
-    signature: "(number, any) -> number",
+    signature: `(number, ${algebraLike}) -> number`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const mv = read(ce, ops[0]);
       const algebra = readAlgebra(ops[1]);
@@ -149,7 +157,7 @@ export function declareGeometric(ce: ComputeEngine): void {
   });
 
   ce.declare("Vee", {
-    signature: "(number, number, any) -> number",
+    signature: `(number, number, ${algebraLike}) -> number`,
     commutative: false,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const a = read(ce, ops[0]);

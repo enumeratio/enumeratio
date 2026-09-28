@@ -6,7 +6,7 @@ signatures:
   - call: BraidWrithe(braid)
     description: the exponent sum, i.e. the abelianisation $B_n \to \mathbb{Z}$
     library: enumeratio-braid
-    type: (value) -> integer
+    type: (expression<Braid> | string) -> integer
 seeAlso:
   - BraidCrossings
   - BracketInvariant

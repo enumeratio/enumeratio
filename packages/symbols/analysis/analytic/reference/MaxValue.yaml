@@ -6,7 +6,7 @@ signatures:
   - call: MaxValue(f, x)
     description: the global maximum of f over its own natural domain.
     library: "@enumeratio/analytic"
-    type: (any, any) -> any
+    type: (expression, list<symbol> | symbol) -> expression
   - call: MaxValue({f, cons}, x)
     description: the global maximum of f restricted to a simple interval constraint cons.
     library: "@enumeratio/analytic"

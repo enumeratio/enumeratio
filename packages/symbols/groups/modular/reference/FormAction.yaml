@@ -6,7 +6,7 @@ signatures:
   - call: FormAction(form, matrix)
     description: the form after the substitution
     library: enumeratio-modular
-    type: (value, value) -> value
+    type: (expression<QuadraticForm>, expression<ModularMatrix> | list | string) -> expression<QuadraticForm>
 seeAlso:
   - QuadraticForm
   - FormClassNumber

@@ -6,7 +6,7 @@ signatures:
   - call: SplitAlgebra(n)
     description: the split algebra on $n$ commuting generators squaring to $+1$
     library: enumeratio-hypercomplex
-    type: (integer, integer?) -> value
+    type: (integer) -> value
 seeAlso:
   - Basis
   - MulticomplexAlgebra

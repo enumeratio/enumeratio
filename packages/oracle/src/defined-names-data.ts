@@ -725,6 +725,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "RademacherSymbol",
   "RamanujanTau",
   "Ramp",
+  "Random",
   "RandomComplex",
   "RandomGraph",
   "RandomInteger",

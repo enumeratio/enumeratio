@@ -18,7 +18,7 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
   // step carry exactness through on its own). Rebuilding it explicitly as a `bigint` node
   // is what keeps a rational step exact all the way to the result now.
   for (const head of ["Floor", "Ceil"] as const) {
-    widenSignature(ce, head, "(any, any?) -> any");
+    widenSignature(ce, head, "(number, number?) -> number");
     wrapOperator(
       ce,
       [head, 226, 10],
@@ -36,7 +36,7 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
 
   // Chop(x, tolerance): the same near-zero cleanup as the 1-argument form, but with the
   // threshold as an argument instead of the fixed ~1e-10.
-  widenSignature(ce, "Chop", "(any, any?) -> any");
+  widenSignature(ce, "Chop", "(any, number?) -> any");
   wrapOperator(
     ce,
     ["Chop", 0.001, 0.01],

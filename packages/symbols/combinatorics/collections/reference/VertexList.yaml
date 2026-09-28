@@ -6,7 +6,7 @@ signatures:
   - call: VertexList(g)
     description: every vertex of $g$, in the order [[Graph]]'s doc describes.
     library: enumeratio-collections
-    type: (value) -> list
+    type: (value) -> list<any>
 seeAlso:
   - Graph
   - EdgeList

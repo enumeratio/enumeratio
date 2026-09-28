@@ -6,7 +6,7 @@ signatures:
   - call: Expectation(f, Distributed(x, dist))
     description: exact for `f` constant, linear or quadratic in `x`; otherwise stays unevaluated.
     library: enumeratio-statistics
-    type: (any, any) -> any
+    type: (any, expression<Distributed>) -> real
 details:
   - 'Closed forms: $E[c] = c$; $E[x] = Mean(dist)$; $E[x^2] = Variance(dist) + Mean(dist)^2$; extended over `Add` and `Multiply`-by-constant by linearity — $E[2x+1] = 2\,E[x]+1$, and so on, recursively.'
   - Never approximated on its own — apply `N` to the result for a numeric value.

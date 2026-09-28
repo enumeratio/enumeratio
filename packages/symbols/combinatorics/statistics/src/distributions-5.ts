@@ -477,7 +477,7 @@ function declareConstructors5(ce: ComputeEngine): void {
   ce.declare("Conditioned", { signature: "(any, any) -> expression<Conditioned>" });
 
   ce.declare("NExpectation", {
-    signature: "(any, any) -> number",
+    signature: "(any, expression<Distributed>) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
@@ -488,7 +488,7 @@ function declareConstructors5(ce: ComputeEngine): void {
   });
 
   ce.declare("NProbability", {
-    signature: "(any, any) -> number",
+    signature: "(any, expression<Distributed>) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);

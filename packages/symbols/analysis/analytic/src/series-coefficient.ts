@@ -58,7 +58,7 @@ function seriesCoefficient(
 
 export function declareSeriesCoefficient(ce: ComputeEngine): void {
   ce.declare("SeriesCoefficient", {
-    signature: "(value, value) -> unknown",
+    signature: "(expression, list<any^3>) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, triple] = ops;
       if (!f || !triple || triple.operator !== "List") return undefined;

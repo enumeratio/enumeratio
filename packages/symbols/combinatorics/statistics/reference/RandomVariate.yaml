@@ -1,12 +1,12 @@
 name: RandomVariate
 domain: Statistics
 signature: RandomVariate(dist, n)
-summary: A random draw from a distribution, or a list of them.
+summary: A random draw from a distribution, or a list of them -- [[Random]] over the distribution, by its Wolfram name.
 signatures:
   - call: RandomVariate(dist)
     description: one draw.
     library: enumeratio-statistics
-    type: (any, integer?) random -> any
+    type: (any, integer<0..>?) random -> any
   - call: RandomVariate(dist, n)
     description: a list of $n$ draws.
     library: enumeratio-statistics

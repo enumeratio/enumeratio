@@ -190,7 +190,7 @@ const asInt = (n: BoxedExpression): number | undefined => (n.im === 0 && Number.
 
 export function declareFourierSeries(ce: ComputeEngine): void {
   ce.declare("FourierCoefficient", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, integer) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, xExpr, nExpr] = ops;
       if (f === undefined || xExpr === undefined || nExpr === undefined) return undefined;
@@ -202,7 +202,7 @@ export function declareFourierSeries(ce: ComputeEngine): void {
   });
 
   ce.declare("FourierSeries", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, integer<0..>) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, xExpr, nExpr] = ops;
       if (f === undefined || xExpr === undefined || nExpr === undefined) return undefined;

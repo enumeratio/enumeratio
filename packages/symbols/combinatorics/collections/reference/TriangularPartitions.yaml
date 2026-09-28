@@ -6,7 +6,7 @@ signatures:
   - call: TriangularPartitions(n)
     description: the partitions of $n$ into triangular-number parts
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - Count is A007294.
 seeAlso:

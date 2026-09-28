@@ -8,7 +8,7 @@ signatures:
   - call: Ceil(x, step)
     description: the least multiple of `step` at or above x, $\mathrm{step}\cdot\lceil x/\mathrm{step}\rceil$.
     library: enumeratio-collections
-    type: (any, any?) -> any
+    type: (number, number?) -> number
     overrides: enumeratio-analytic
   - call: Ceil(z)
     description: for a complex $z$, the real and imaginary parts rounded up separately.

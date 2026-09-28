@@ -288,13 +288,13 @@ const mgfOf = (
 
 function declareTransforms(ce: ComputeEngine): void {
   ce.declare("CharacteristicFunction", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, real) -> complex",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
       ops.length === 2 ? cfOf(ce, ops[0], ops[1], options) : undefined,
   });
 
   ce.declare("MomentGeneratingFunction", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, complex) -> complex",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
       ops.length === 2 ? mgfOf(ce, ops[0], ops[1], options) : undefined,
   });

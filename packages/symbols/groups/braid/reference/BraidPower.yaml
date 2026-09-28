@@ -6,7 +6,7 @@ signatures:
   - call: BraidPower(braid, k)
     description: the word repeated $k$ times
     library: enumeratio-braid
-    type: (value, integer) -> value
+    type: (expression<Braid> | string, integer) -> expression<Braid>
 seeAlso:
   - BraidProduct
   - BraidInverse

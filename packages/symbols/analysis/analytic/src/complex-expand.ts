@@ -123,7 +123,7 @@ export function evaluateComplexExpand(ce: ComputeEngine, ops: readonly BoxedExpr
 
 export function declareComplexExpand(ce: ComputeEngine): void {
   ce.declare("ComplexExpand", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => evaluateComplexExpand(ce, ops),
   });
 }

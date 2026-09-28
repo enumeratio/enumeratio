@@ -6,7 +6,7 @@ signatures:
   - call: GraphRadius(g)
     description: min over v of VertexEccentricity(g, v); PositiveInfinity if g is disconnected.
     library: enumeratio-collections
-    type: (value) -> value
+    type: (value) -> real | signed_infinity
 details:
   - radius <= diameter <= 2 * radius always holds for a connected graph.
 seeAlso:

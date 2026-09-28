@@ -6,7 +6,7 @@ signatures:
   - call: NMinimize({f, cons}, x)
     description: the numeric global minimum of f over the bounded interval cons implies, for any real-valued f (not just the exact core [[Minimize]] covers).
     library: "@enumeratio/analytic"
-    type: (any, any) -> any
+    type: (tuple<expression, expression>, list<symbol> | symbol) -> expression
 details:
   - "Method: sample f at 201 points across the interval (endpoints included), then refine the best sample with a golden-section search bracketed by its two neighbours (or use it as-is when the best sample IS an endpoint, with no interior bracket to refine into). Converges to a bracket width under 1e-11 (relative to the interval)."
   - Always numeric -- unlike [[Minimize]], never returns an exact closed form, and works on any real-valued f, not just a recognized shape.

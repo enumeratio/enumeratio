@@ -6,7 +6,7 @@ signatures:
   - call: ConjugacyClasses(group)
     description: the classes, as a list of lists
     library: enumeratio-groupalgebra
-    type: (value) -> list
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>) -> list<list<expression<GroupBasis>>>
   - call: GroupCentreDimension(group)
     description: how many there are
     library: enumeratio-groupalgebra

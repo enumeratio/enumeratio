@@ -6,7 +6,7 @@ signatures:
   - call: ReIm(z)
     description: the pair {Re(z), Im(z)}
     library: enumeratio-collections
-    type: (any) -> any
+    type: (list<any> | number) -> list<any>
 details:
   - "Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair."
 seeAlso:

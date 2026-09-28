@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { ensureRandom, integerAt, operandsOf, seedRandom, symbolNameOf, uniform01 } from "@enumeratio/engine";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's
@@ -164,39 +164,18 @@ const declareSparseArray = (ce: ComputeEngine): void => {
   });
 };
 
-// --- RandomInteger (seeded) --------------------------------------------------------------
+// --- RandomInteger: the Wolfram spelling of Random over a Range --------------------------
+//
+// One seeded stream per engine lives in @enumeratio/engine (`Random`, design/random.md);
+// `SeedRandom` restarts it and every draw -- RandomInteger, RandomGraph, RandomComplex,
+// statistics' RandomVariate -- comes from it.
 
-/** A tiny deterministic PRNG (mulberry32) — NOT Wolfram's generator, so the same seed draws
- *  a different sequence; only the shape and range of `RandomInteger`'s answer are
- *  guaranteed to match, documented as a divergence in the reference entry. One generator
- *  per engine instance, reseeded by `SeedRandom` and defaulting to a fixed seed so examples
- *  are reproducible even without an explicit `SeedRandom` call. */
-const mulberry32 = (seed: number): (() => number) => {
-  let state = seed | 0;
-  return () => {
-    state = (state + 0x6d2b79f5) | 0;
-    let t = Math.imul(state ^ (state >>> 15), 1 | state);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-};
-
-const rngState = new WeakMap<ComputeEngine, { next: () => number }>();
-const DEFAULT_SEED = 42;
-
-/** Exported so `graphs-2.ts`'s `RandomGraph` draws from the SAME per-engine seeded stream
- *  as `RandomInteger`, rather than duplicating a PRNG. */
-export const rngFor = (ce: ComputeEngine): (() => number) => {
-  let entry = rngState.get(ce);
-  if (entry === undefined) {
-    entry = { next: mulberry32(DEFAULT_SEED) };
-    rngState.set(ce, entry);
-  }
-  return entry.next;
-};
-
-const nextIntInRange = (ce: ComputeEngine, min: number, max: number): number =>
-  min + Math.floor(rngFor(ce)() * (max - min + 1));
+/** The engine's stream as a draw function, for the heads here that build a random object
+ *  (a graph, a complex point) rather than pick from a domain. */
+export const rngFor =
+  (ce: ComputeEngine): (() => number) =>
+  () =>
+    uniform01(ce);
 
 /** `RandomInteger[]` (0 or 1) / `RandomInteger[max]` / `RandomInteger[{min, max}]`, each
  *  with an optional `n` (a flat list of `n` draws) or `{n1, …, nk}` (a nested array of
@@ -216,38 +195,25 @@ const declareRandomInteger = (ce: ComputeEngine): void => {
   ce.declare("SeedRandom", {
     signature: "(integer?) state -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const seed = ops[0] !== undefined ? (integerAt(ops[0]) ?? DEFAULT_SEED) : DEFAULT_SEED;
-      rngState.set(ce, { next: mulberry32(seed) });
+      if (ops[0] === undefined) seedRandom(ce);
+      else seedRandom(ce, integerAt(ops[0]) ?? undefined);
       return ce.symbol("Nothing");
     },
   });
 
+  // `RandomInteger(n)` is `Random(Range(0, n))`, `RandomInteger([a, b])` is `Random(Range(a, b))`,
+  // and a count or shape passes straight through: the same draws from the same stream.
   ce.declare("RandomInteger", {
-    signature: "(any?, any?) random -> any",
+    signature: "((integer | list<integer>)?, (integer<0..> | list<integer<0..>>)?) random -> integer | list",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const range = rangeOf(ops[0]);
       if (range === undefined) return undefined;
       const [min, max] = range;
-      if (ops[1] === undefined) return ce.number(nextIntInRange(ce, min, max));
-      const n = integerAt(ops[1]);
-      if (n !== undefined) {
-        return ce.function(
-          "List",
-          Array.from({ length: n }, () => ce.number(nextIntInRange(ce, min, max))),
-        );
-      }
-      const dims = dimsOf(ops[1]);
-      if (dims === undefined) return undefined;
-      const build = (dimIndex: number): BoxedExpression =>
-        dimIndex === dims.length
-          ? ce.number(nextIntInRange(ce, min, max))
-          : ce.function(
-              "List",
-              Array.from({ length: dims[dimIndex] }, () => build(dimIndex + 1)),
-            );
-      return build(0);
+      const domain = ce.function("Range", [ce.number(min), ce.number(max), ce.number(1)]);
+      return ce.function("Random", ops[1] === undefined ? [domain] : [domain, ops[1]]).evaluate();
     },
   });
+  ensureRandom(ce);
 };
 
 // --- MachineNumberQ / NumericQ / Precision ------------------------------------------------
@@ -305,7 +271,7 @@ const declareNumericPredicates = (ce: ComputeEngine): void => {
   // Precision(expr): the number of significant decimal digits tracked — Infinity for an
   // exact number (Wolfram's own convention: exact values carry infinite precision).
   ce.declare("Precision", {
-    signature: "(any) -> any",
+    signature: "(any) -> integer<1..> | signed_infinity",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const x = ops[0];
       if (x === undefined || x.isNumber !== true) return undefined;

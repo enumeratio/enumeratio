@@ -6,7 +6,7 @@ signatures:
   - call: BraidProduct(a, b)
     description: the two words concatenated
     library: enumeratio-braid
-    type: (value, value) -> value
+    type: (expression<Braid> | string, expression<Braid> | string) -> expression<Braid>
 seeAlso:
   - BraidInverse
   - BraidPower

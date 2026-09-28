@@ -225,7 +225,8 @@ export function declareWidened(ce: ComputeEngine): void {
   // `PolynomialGCD` are compute-engine's own; multivariate GCD (`x^3 - x^2 y`) and content
   // extraction are handled by its own `polynomialGCDMulti`/`PolynomialGCD` machinery, not
   // reimplemented here.
-  widenSignature(ce, "IsSquareFree", "(any, any?) -> boolean");
+  // The variable stays `expression`: typed `symbol`, it clashes with the same symbol inside the polynomial.
+  widenSignature(ce, "IsSquareFree", "(expression, expression?) -> boolean");
   wrapOperator(
     ce,
     ["IsSquareFree", 1, 1],

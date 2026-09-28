@@ -6,6 +6,6 @@ signatures:
   - call: BinaryStrings(n)
     description: the binary strings of length $n$
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 seeAlso:
   - BinaryWords

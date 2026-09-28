@@ -6,7 +6,7 @@ signatures:
   - call: LetterNumber(c)
     description: the 1-based alphabet position of a single character c (0 if not a letter)
     library: enumeratio-collections
-    type: (string, string?) -> any
+    type: (string, string?) -> integer | list<integer>
   - call: LetterNumber(s)
     description: a list, one position per character of string s
     library: enumeratio-collections

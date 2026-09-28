@@ -105,7 +105,7 @@ function solve(
 
 function declareValueHead(ce: ComputeEngine, name: string, direction: "min" | "max"): void {
   ce.declare(name, {
-    signature: "(any, any) -> any",
+    signature: "(expression, symbol | list<symbol>) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [firstArg, varsArg] = ops;
@@ -117,7 +117,7 @@ function declareValueHead(ce: ComputeEngine, name: string, direction: "min" | "m
 
 function declareMinMax(ce: ComputeEngine, name: string, direction: "min" | "max"): void {
   ce.declare(name, {
-    signature: "(any, any) -> any",
+    signature: "(expression, symbol | list<symbol>) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [firstArg, varsArg] = ops;

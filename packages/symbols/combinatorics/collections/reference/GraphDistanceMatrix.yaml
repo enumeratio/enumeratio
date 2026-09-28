@@ -6,7 +6,7 @@ signatures:
   - call: GraphDistanceMatrix(g)
     description: row/column order follows VertexList(g); entry (i, j) is GraphDistance(g, v_i, v_j).
     library: enumeratio-collections
-    type: (value) -> list
+    type: (value) -> list<list<real | signed_infinity>>
 details:
   - Respects edge direction, same as [[GraphDistance]] itself -- row i is the distances FROM vertex i.
   - An unreachable pair reads PositiveInfinity, matching GraphDistance on a disconnected graph.

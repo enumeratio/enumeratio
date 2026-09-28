@@ -43,7 +43,7 @@ function evaluatePiecewise(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
 
 export function declarePiecewise(ce: ComputeEngine): void {
   ce.declare("Piecewise", {
-    signature: "(value, value?) -> unknown",
+    signature: "(list, expression?) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => evaluatePiecewise(ce, ops),
   });
 }
@@ -101,7 +101,7 @@ function expand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
 
 export function declarePiecewiseExpand(ce: ComputeEngine): void {
   ce.declare("PiecewiseExpand", {
-    signature: "(value, value?) -> unknown",
+    signature: "(expression, expression?) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, assumptions] = ops;

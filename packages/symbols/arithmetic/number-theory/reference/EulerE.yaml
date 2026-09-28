@@ -6,7 +6,7 @@ signatures:
   - call: EulerE(n)
     description: the $n$th Euler number
     library: enumeratio-number-theory
-    type: (value, expression?) -> number
+    type: (value, expression?) -> expression | list<number> | number
   - call: EulerE(n, x)
     description: the $n$th Euler polynomial, evaluated at $x$
     library: enumeratio-number-theory

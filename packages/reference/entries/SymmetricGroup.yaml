@@ -6,7 +6,7 @@ signatures:
   - call: SymmetricGroup(n)
     description: the $n!$ permutations of $\{1, …, n\}$.
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - 'A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.'
   - Each element is the image word $[\pi(1), …, \pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.

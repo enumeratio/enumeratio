@@ -152,11 +152,11 @@ function evaluateFourier(
 
 export function declareFourierTransform(ce: ComputeEngine): void {
   ce.declare("Fourier", {
-    signature: "(list, any?) -> list",
+    signature: "(list<number> | list<list<number>>, expression?) -> list<number> | list<list<number>>",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateFourier(ce, ops, false),
   });
   ce.declare("InverseFourier", {
-    signature: "(list, any?) -> list",
+    signature: "(list<number> | list<list<number>>, expression?) -> list<number> | list<list<number>>",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateFourier(ce, ops, true),
   });
 }

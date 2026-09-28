@@ -6,7 +6,7 @@ signatures:
   - call: ModularKind(matrix)
     description: Identity, Elliptic, Parabolic or Hyperbolic
     library: enumeratio-modular
-    type: (value) -> string
+    type: (expression<ModularMatrix> | list | string) -> string
 seeAlso:
   - ModularMatrix
   - ModularTrace
