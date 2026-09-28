@@ -75,7 +75,7 @@ const speculative =
         }))
     : [];
 
-export default withMermaid(
+const config = withMermaid(
   defineConfig({
     vite: {
       resolve: { alias: srcAliases },
@@ -257,3 +257,12 @@ export default withMermaid(
     },
   }),
 );
+
+// vitepress-plugin-mermaid pre-bundles mermaid's own dependencies by bare name, which
+// pnpm's strict layout doesn't let the site resolve; unbundled, dev serves dayjs's UMD
+// build and every page fails to load. Reach them through mermaid instead.
+const MERMAID_DEPS = new Set(["@braintree/sanitize-url", "dayjs", "debug", "cytoscape-cose-bilkent", "cytoscape"]);
+const deps = config.vite?.optimizeDeps;
+if (deps?.include) deps.include = deps.include.map((dep) => (MERMAID_DEPS.has(dep) ? `mermaid > ${dep}` : dep));
+
+export default config;
