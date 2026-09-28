@@ -38,7 +38,8 @@ export interface MathMLOptions {
 }
 
 const MATHML_NS = "http://www.w3.org/1998/Math/MathML";
-export const INTERPRETATION_ENCODING = "application/mathjson+json";
+/** MathJSON's media type: RFC 6839's `+json` suffix on the format's own name. Unregistered. */
+export const MATHJSON_MIME = "application/mathjson+json";
 export const TAG_ENCODING = "application/x-box-tag";
 const FRAME_STYLE = "border:1px solid currentColor;padding:0.1em 0.2em";
 
@@ -122,7 +123,7 @@ function writeNode(box: BoxNode): string {
     case "InterpretationBox":
       return element(
         "semantics",
-        write(box[1]) + element("annotation", escape(JSON.stringify(box[2])), { encoding: INTERPRETATION_ENCODING }),
+        write(box[1]) + element("annotation", escape(JSON.stringify(box[2])), { encoding: MATHJSON_MIME }),
       );
     case "ErrorBox":
       return element("merror", write(box[1]));
@@ -303,7 +304,7 @@ function read(el: XmlElement): Box {
       if (shown === undefined) throw new MathMLSyntaxError("<semantics> needs a child");
       const boxes = read(shown);
       for (const a of annotations) {
-        if (a.attrs.encoding === INTERPRETATION_ENCODING) {
+        if (a.attrs.encoding === MATHJSON_MIME) {
           return interpretation(boxes, JSON.parse(textOf(a)) as MathJsonExpression);
         }
         if (a.attrs.encoding === TAG_ENCODING) return tag(boxes, textOf(a));

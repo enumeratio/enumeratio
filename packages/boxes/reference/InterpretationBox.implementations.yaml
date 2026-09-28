@@ -1,0 +1,11 @@
+held:
+  epsil:
+    in: InterpretationBox("F", 2 + 3)
+    out: InterpretationBox("F", 2 + 3)
+  tex:
+    in: \mathrm{InterpretationBox}(\text{F}, 2+3)
+    out: \mathrm{InterpretationBox}(\text{F}, 2+3)
+  fullform:
+    in: InterpretationBox["F", Plus[2, 3]]
+  wolfram:
+    in: InterpretationBox["F", Plus[2, 3]]

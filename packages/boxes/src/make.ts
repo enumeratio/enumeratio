@@ -23,6 +23,7 @@ import {
   underoverscript,
   underscript,
 } from "./box.ts";
+import { fromMathJson } from "./json.ts";
 
 // Binding strength, loosest to tightest. A node binding at `ATOM` never needs parens.
 const OR = 1;
@@ -546,6 +547,15 @@ function makeFunction(head: string, ops: unknown[]): Made {
 
     case "Error":
       return atom(error(row(ops.map((op) => make(op).box))));
+
+    // Boxes given as boxes are drawn as themselves; a malformed argument prints as a call.
+    case "DisplayForm":
+    case "RawBoxes":
+      try {
+        return atom(fromMathJson(ops[0] as MathJsonExpression));
+      } catch {
+        return makeCall(head, ops);
+      }
 
     default: {
       const relation = RELATIONS[head];

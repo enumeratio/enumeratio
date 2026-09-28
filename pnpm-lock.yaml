@@ -231,6 +231,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
@@ -592,6 +595,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
@@ -1276,6 +1282,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../packages/symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../packages/boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../packages/symbols/groups/braid

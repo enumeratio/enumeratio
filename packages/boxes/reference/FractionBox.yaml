@@ -1,0 +1,16 @@
+name: FractionBox
+domain: Boxes
+signature: FractionBox(numerator, denominator)
+summary: A numerator over a denominator.
+signatures:
+  - call: FractionBox(numerator, denominator)
+    description: A numerator over a denominator.
+    library: enumeratio-boxes
+details:
+  - "`FractionLine -> False` drops the bar, as a binomial coefficient's stack does."
+  - MathML's `mfrac`.
+seeAlso:
+  - SqrtBox
+  - GridBox
+names:
+  wolframIdentity: true

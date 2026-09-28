@@ -1,0 +1,14 @@
+name: TextBox
+domain: Boxes
+signature: TextBox("text")
+summary: Literal text inside boxes, set as text rather than read as tokens.
+signatures:
+  - call: TextBox("text")
+    description: Literal text inside boxes, set as text rather than read as tokens.
+    library: enumeratio-boxes
+details:
+  - Where Wolfram quotes a string inside a string (`"\"otherwise\""`), this is a head of its own. Wolfram's own `TextBox` is undocumented, so this one's meaning is ours.
+  - "`ShowStringCharacters -> True` shows a string value with its quotes (MathML's `ms`)."
+seeAlso:
+  - RowBox
+  - StyleBox

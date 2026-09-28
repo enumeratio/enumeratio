@@ -1,9 +1,10 @@
 # Design: boxes
 
-Status: **first slice landed** (`@enumeratio/boxes`: the primitives, MathML / LaTeX /
-linear-text serialisers, a MathML reader, and `makeBoxes` for the core heads, which
-`formats`' MathMLForm now runs through). Declaring the box heads in the engine, reading
-boxes back into expressions, and moving the other printers onto boxes are next.
+Status: **landed** -- `@enumeratio/boxes`: the primitives, MathML / LaTeX / linear-text
+serialisers, a MathML reader, `makeBoxes` for the core heads (which `formats`' MathMLForm
+runs through), and the box heads declared in the engine with `ToBoxes`, `MakeBoxes`,
+`DisplayForm` and `RawBoxes`. Reading boxes back into expressions, and moving the other
+printers onto boxes, are next.
 
 ## Three things, not two
 
@@ -91,8 +92,8 @@ insistence.
 Literal text is not a quoted string. Wolfram writes it `"\"otherwise\""` -- a string
 whose content starts with a quote -- which is the ambiguity every reader of boxes trips
 on. Here it is `TextBox("otherwise")`, and a string _value_ shown with its quotes is
-`TextBox("hello", ShowStringCharacters -> True)`. `TextBox` is our only name without a
-Wolfram precedent.
+`TextBox("hello", ShowStringCharacters -> True)`. Wolfram has a `TextBox` symbol, but
+undocumented; ours is the one head whose meaning is our own.
 
 ### The link back to meaning
 
@@ -164,20 +165,40 @@ MathMLForm is `toMathML(makeBoxes(json))`, and its goldens (moved into `boxes` w
 corpus) are the parity proof that the port changed nothing. A box serialiser is one more
 kind of format -- which is what Wolfram's `DisplayForm` is.
 
+## In the engine
+
+`declareBoxes(ce)` declares the box heads and a structural type,
+`boxes = string | expression<RowBox> | expression<SuperscriptBox> | …`, so signatures say
+what they take and give: `RowBox` is `(list<boxes>) -> boxes`, and `RowBox([x + 1])` is an
+`incompatible-type` error, not a row. The box heads are inert; `InterpretationBox` holds
+its expression.
+
+| head          | signature               |                                                 |
+| ------------- | ----------------------- | ----------------------------------------------- |
+| `ToBoxes`     | `(any) -> boxes`        | evaluates, then `makeBoxes`                     |
+| `MakeBoxes`   | `(any) -> boxes`        | holds: the notation of what was written         |
+| `DisplayForm` | `(boxes) -> expression` | stays; typesets as its boxes (`BOXES_LATEX`)    |
+| `RawBoxes`    | `(boxes) -> expression` | stays; `makeBoxes` uses its boxes for that part |
+
+Our `ToBoxes` gives the traditional notation. Wolfram's defaults to StandardForm, whose
+boxes are its input syntax laid out; ours would be Epsil's tokens in `RowBox`es, which is
+where `MakeExpression` starts. Rules print back as `(FractionLine, False)`, the `Tuple`
+compute-engine canonicalises a symbol-keyed `->` to -- the same as every option.
+
+One collision to settle before prose: notatio already has a `Cell` head (a notebook
+cell's input and output), and Wolfram's prose `Cell` is a different thing.
+
 ## Next
 
-1. **Declare the box heads** as inert heads of a nominal type (`ce.declareType`), so a
-   signature can say `(expression) -> boxes` and `ToBoxes`, `MakeBoxes`, `DisplayForm`
-   and `RawBoxes` work in a cell. `InterpretationBox` holds its expression.
-2. **Boxes → expression.** `MakeExpression` for what `makeBoxes` produces (the tokens in
+1. **Boxes → expression.** `MakeExpression` for what `makeBoxes` produces (the tokens in
    a `RowBox` are Epsil's), `InterpretationBox` exact, `TagBox` guided.
-3. **Notation as data.** `traditional.ts`'s LaTeX dictionary entries become `makeBoxes`
+2. **Notation as data.** `traditional.ts`'s LaTeX dictionary entries become `makeBoxes`
    rules declared per head, and TeX export becomes `toLatex(makeBoxes(…))`.
-4. **Formatting constructs** -- `Row`, `Column`, `Grid`, `Labeled`, `Panel`,
+3. **Formatting constructs** -- `Row`, `Column`, `Grid`, `Labeled`, `Panel`,
    `Superscript` -- become `makeBoxes` rules to the layout boxes, and their elements
    render the boxes.
-5. **Prose and Markdown**: `Cell`, `TextData`, `ButtonBox`, `DynamicBox`; `toMarkdown`
+4. **Prose and Markdown**: `Cell`, `TextData`, `ButtonBox`, `DynamicBox`; `toMarkdown`
    and the subset reader; the prose template moved onto them.
-6. **Two-dimensional text** for the terminal, and `GraphicsBox` for the glyphs and plots.
-7. **The Wolfram oracle**: compare `makeBoxes` with `ToBoxes[_, TraditionalForm]` once
+5. **Two-dimensional text** for the terminal, and `GraphicsBox` for the glyphs and plots.
+6. **The Wolfram oracle**: compare `makeBoxes` with `ToBoxes[_, TraditionalForm]` once
    `TemplateBox` and `FormBox` are understood on our side.

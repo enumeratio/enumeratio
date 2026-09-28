@@ -6,6 +6,7 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { compile, GLSLTarget, PythonTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import { MATHJSON_MIME } from "@enumeratio/boxes";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { toInputForm } from "./inputform.ts";
 import { type MathMLOptions, toMathML } from "./mathml.ts";
@@ -86,7 +87,7 @@ registerFormat({
 registerFormat({
   name: "MathJSON",
   aliases: ["mathjson"],
-  mimeTypes: ["application/json"],
+  mimeTypes: [MATHJSON_MIME, "application/json"],
   extensions: ["json"],
   binary: false,
   encode: (v) => JSON.stringify(asExpr(v).json),
