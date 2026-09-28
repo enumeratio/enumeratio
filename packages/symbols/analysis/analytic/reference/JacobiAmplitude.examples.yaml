@@ -27,3 +27,19 @@
   expected: [JacobiAmplitude, u, m]
   category: Possible issues
   caption: Symbolic arguments are left unevaluated rather than guessed at
+- id: am-1-1-0-9
+  expr: [N, [JacobiAmplitude, 1.1, 0.9]]
+  expected: 0.9450708981878118
+  role: test
+- id: am-0-7-0-2
+  expr: [N, [JacobiAmplitude, -0.7, 0.2]]
+  expected: -0.6896673935732983
+  role: test
+- id: am-1-1i-0-3
+  expr: [N, [JacobiAmplitude, [Complex, 1, 1], 0.3]]
+  expected: [Complex, 1.049001435160329, 0.87362414304091]
+  role: test
+- id: am-0-1-5i-0-4
+  expr: [N, [JacobiAmplitude, [Complex, 0.1, 5], 0.4]]
+  expected: [Complex, 3.002226882438044, -1.2148782180960305]
+  role: test
