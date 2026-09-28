@@ -7,7 +7,7 @@
 // dividing the order of k, as √q — cheap for smooth orders, and exactly as hard as the
 // cryptographers need it to be for a safe prime.
 
-import { checkpoint } from "@enumeratio/boxed";
+import { checkpoint } from "@enumeratio/engine";
 import { crt, gcd, mod, powMod } from "./arith.ts";
 import { factorInteger } from "./primes.ts";
 import { discreteLogPrimePower } from "./cyclic.ts";

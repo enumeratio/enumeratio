@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // NSum(f, {n, a, b}) -- a numeric series, either a finite range or `b = Infinity`.
 //

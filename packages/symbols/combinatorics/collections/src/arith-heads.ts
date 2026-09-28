@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // #113 arithmetic-head extensions that don't belong to any single family, and are kept
 // OUT of packages/symbols/analysis/analytic on purpose:

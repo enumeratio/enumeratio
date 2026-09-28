@@ -8,7 +8,7 @@
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { runKernel } from "@enumeratio/oracle/bounded";
 import { declareAnalytic } from "../src/index.ts";
 

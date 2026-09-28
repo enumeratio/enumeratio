@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // Exact values compute-engine leaves symbolic for the hyperbolic functions, though it has

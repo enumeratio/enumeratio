@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { factorInteger, gcd as gcdBig, isqrt } from "@enumeratio/residues";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 

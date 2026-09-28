@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // General symbolic rules for `Product`, layered on top of compute-engine's native
 // evaluate (which already handles a literal-bound product by unrolling it term by

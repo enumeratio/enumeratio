@@ -3,14 +3,14 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
 import { withMermaid } from "vitepress-plugin-mermaid";
-import { generate } from "@enumeratio/notatio/generate";
+import { generate } from "@enumeratio/frontend/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
 // The symbols as Vue components are generated here, before the theme is bundled, so
-// `@enumeratio/notatio`'s `src/vue-generated.ts` exists for the theme to register.
+// `@enumeratio/frontend`'s `src/vue-generated.ts` exists for the theme to register.
 generate("vue");
 
 // Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs

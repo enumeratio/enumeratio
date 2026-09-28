@@ -4,7 +4,7 @@ What we have offered `@cortex-js/compute-engine` upstream, kept apart from what 
 the model is Mathlib's `ForMathlib/`: code written in our repo, shaped for theirs. See
 `design/upstreaming.md` §10.
 
-A leaf package: depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
+A leaf package: depends on compute-engine and `@enumeratio/engine`, nothing else of ours.
 Other packages import from here; this package never imports from them.
 
 **Laid out like compute-engine itself.** `src/compute-engine/` mirrors compute-engine's own

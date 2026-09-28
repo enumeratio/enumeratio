@@ -23,13 +23,13 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/boxed": "workspace:*"
+    "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
-    "@enumeratio/boxed": "workspace:*",
     "@enumeratio/catalog": "workspace:*",
     "@enumeratio/collections": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/plausible": "workspace:*",
     "@enumeratio/statistics": "workspace:*",

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 

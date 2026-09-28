@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { stringAt } from "@enumeratio/boxed";
+import { stringAt } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { invMod, mod } from "@enumeratio/residues";
 import * as adic from "../src/adic.ts";

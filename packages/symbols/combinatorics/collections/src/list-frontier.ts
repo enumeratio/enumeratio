@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's

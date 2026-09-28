@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt } from "@enumeratio/boxed";
+import { bigIntegerAt } from "@enumeratio/engine";
 import { logBarnesG, cx, logGamma } from "@enumeratio/for-compute-engine";
 
 // Hyperfactorial H(n) = ∏_{k=1}^n k^k, continued off the integers by

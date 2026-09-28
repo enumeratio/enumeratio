@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // #113: MatrixRank of a square matrix whose entries are pairwise-distinct symbols is n,
 // its full size — Wolfram's documented "generic rank" answer, and provably so: the

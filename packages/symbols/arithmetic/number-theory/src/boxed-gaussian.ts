@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt } from "@enumeratio/boxed";
+import { bigIntegerAt } from "@enumeratio/engine";
 import type { Gaussian } from "./gaussian.ts";
 
 /** An integer part as MathJSON reads it: a JSON number, or `{ num }` past a double. */

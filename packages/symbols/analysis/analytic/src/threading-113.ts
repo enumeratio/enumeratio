@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
 
 /** No free variable anywhere in `expr` — a plain number, `Pi`/`ExponentialE`, or a closed

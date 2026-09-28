@@ -1,5 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // Mod(x, m) for a bare symbolic numeric constant (Pi, ExponentialE, …) against a positive
 // numeric modulus: compute-engine's native Mod leaves this unevaluated, but the answer is

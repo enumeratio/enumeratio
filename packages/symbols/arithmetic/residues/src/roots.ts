@@ -17,7 +17,7 @@
 // p^k roots — so the enumeration is capped at `MAX_ROOTS` and answers undefined past it.
 // And the only thing that can make it impossible is factoring m.
 
-import { checkpoint } from "@enumeratio/boxed";
+import { checkpoint } from "@enumeratio/engine";
 import { invMod, mod, powMod } from "./arith.ts";
 import { type Group, rootsInCyclicGroup } from "./cyclic.ts";
 import { factorInteger } from "./primes.ts";

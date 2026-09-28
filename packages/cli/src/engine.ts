@@ -8,7 +8,7 @@ import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/com
 import { declareCollections } from "@enumeratio/collections";
 import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
-import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
+import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import {
   ALL_STATISTICS,
   declareDistributions,

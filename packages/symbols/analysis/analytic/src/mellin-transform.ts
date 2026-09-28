@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // MellinTransform(f, x, s) = ∫_0^∞ f(x) x^(s-1) dx and InverseMellinTransform(F, s, x): a
 // rule table over nine standard pairs (Wolfram's own reference examples), plus the two

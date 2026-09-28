@@ -171,21 +171,6 @@ importers:
         specifier: 'catalog:'
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
-  packages/boxed:
-    devDependencies:
-      '@cortex-js/compute-engine':
-        specifier: ^0.139.0
-        version: 0.139.0
-      typescript:
-        specifier: ^7.0.2
-        version: 7.0.2
-      vite:
-        specifier: 'catalog:'
-        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
-      vite-plus:
-        specifier: 'catalog:'
-        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
-
   packages/boxes:
     dependencies:
       '@enumeratio/manifest':
@@ -207,9 +192,9 @@ importers:
 
   packages/catalog:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../boxed
+        version: link:../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -235,9 +220,6 @@ importers:
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
-      '@enumeratio/aestimatio':
-        specifier: workspace:*
-        version: link:../symbols/evaluation/aestimatio
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
@@ -259,9 +241,15 @@ importers:
       '@enumeratio/domains':
         specifier: workspace:*
         version: link:../symbols/combinatorics/domains
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
+      '@enumeratio/frontend':
+        specifier: workspace:*
+        version: link:../frontend
       '@enumeratio/geometric':
         specifier: workspace:*
         version: link:../symbols/algebras/geometric
@@ -283,9 +271,6 @@ importers:
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../symbols/groups/modular
-      '@enumeratio/notatio':
-        specifier: workspace:*
-        version: link:../notatio
       '@enumeratio/number-theory':
         specifier: workspace:*
         version: link:../symbols/arithmetic/number-theory
@@ -337,9 +322,9 @@ importers:
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
-      '@enumeratio/notatio':
+      '@enumeratio/frontend':
         specifier: workspace:*
-        version: link:../notatio
+        version: link:../frontend
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
@@ -353,6 +338,79 @@ importers:
       tsx:
         specifier: ^4.19.2
         version: 4.23.13
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite:
+        specifier: 'catalog:'
+        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
+
+  packages/components:
+    dependencies:
+      '@enumeratio/analytic':
+        specifier: workspace:*
+        version: link:../symbols/analysis/analytic
+      '@enumeratio/cli':
+        specifier: workspace:*
+        version: link:../cli
+      '@enumeratio/domains':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/domains
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
+      '@enumeratio/formats':
+        specifier: workspace:*
+        version: link:../formats
+      '@enumeratio/frontend':
+        specifier: workspace:*
+        version: link:../frontend
+      '@enumeratio/polytope':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/polytope
+      '@enumeratio/wolfram':
+        specifier: workspace:*
+        version: link:../wolfram
+      '@xterm/addon-fit':
+        specifier: 0.10.0
+        version: 0.10.0(@xterm/xterm@5.5.0)
+      '@xterm/xterm':
+        specifier: 5.5.0
+        version: 5.5.0
+      lit:
+        specifier: ^3.3.3
+        version: 3.3.3
+      mathlive:
+        specifier: ^0.110.0
+        version: 0.110.0
+    devDependencies:
+      '@cortex-js/compute-engine':
+        specifier: ^0.139.0
+        version: 0.139.0
+      '@webgpu/types':
+        specifier: ^0.1.60
+        version: 0.1.72
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite:
+        specifier: 'catalog:'
+        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
+
+  packages/engine:
+    devDependencies:
+      '@cortex-js/compute-engine':
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -390,12 +448,12 @@ importers:
 
   packages/formats:
     dependencies:
-      '@enumeratio/boxed':
-        specifier: workspace:*
-        version: link:../boxed
       '@enumeratio/boxes':
         specifier: workspace:*
         version: link:../boxes
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
@@ -419,35 +477,14 @@ importers:
         specifier: 'catalog:'
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
-  packages/manifest:
-    devDependencies:
-      '@cortex-js/compute-engine':
-        specifier: ^0.139.0
-        version: 0.139.0
-      '@enumeratio/entry':
-        specifier: workspace:*
-        version: link:../entry
-      '@types/node':
-        specifier: ^24
-        version: 24.13.4
-      typescript:
-        specifier: ^7.0.2
-        version: 7.0.2
-      vite:
-        specifier: 'catalog:'
-        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
-      vite-plus:
-        specifier: 'catalog:'
-        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
-
-  packages/notatio:
+  packages/frontend:
     dependencies:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../boxed
+        version: link:../engine
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
@@ -501,54 +538,17 @@ importers:
         specifier: ^3.5.42
         version: 3.5.42(typescript@7.0.2)
 
-  packages/notatio-lit:
-    dependencies:
-      '@enumeratio/aestimatio':
-        specifier: workspace:*
-        version: link:../symbols/evaluation/aestimatio
-      '@enumeratio/analytic':
-        specifier: workspace:*
-        version: link:../symbols/analysis/analytic
-      '@enumeratio/boxed':
-        specifier: workspace:*
-        version: link:../boxed
-      '@enumeratio/cli':
-        specifier: workspace:*
-        version: link:../cli
-      '@enumeratio/domains':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/domains
-      '@enumeratio/formats':
-        specifier: workspace:*
-        version: link:../formats
-      '@enumeratio/notatio':
-        specifier: workspace:*
-        version: link:../notatio
-      '@enumeratio/polytope':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/polytope
-      '@enumeratio/wolfram':
-        specifier: workspace:*
-        version: link:../wolfram
-      '@xterm/addon-fit':
-        specifier: 0.10.0
-        version: 0.10.0(@xterm/xterm@5.5.0)
-      '@xterm/xterm':
-        specifier: 5.5.0
-        version: 5.5.0
-      lit:
-        specifier: ^3.3.3
-        version: 3.3.3
-      mathlive:
-        specifier: ^0.110.0
-        version: 0.110.0
+  packages/manifest:
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
         version: 0.139.0
-      '@webgpu/types':
-        specifier: ^0.1.60
-        version: 0.1.72
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
+      '@types/node':
+        specifier: ^24
+        version: 24.13.4
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -623,9 +623,6 @@ importers:
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
-      '@enumeratio/aestimatio':
-        specifier: workspace:*
-        version: link:../symbols/evaluation/aestimatio
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
@@ -650,6 +647,9 @@ importers:
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
       '@enumeratio/for-compute-engine':
         specifier: workspace:*
         version: link:../../upstream/compute-engine
@@ -734,9 +734,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -756,9 +756,9 @@ importers:
 
   packages/symbols/algebras/geometric:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -781,9 +781,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -806,9 +806,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -831,9 +831,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -856,9 +856,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -878,9 +878,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -903,9 +903,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -925,9 +925,9 @@ importers:
 
   packages/symbols/analysis/analytic:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/for-compute-engine':
         specifier: workspace:*
         version: link:../../../../upstream/compute-engine
@@ -950,9 +950,9 @@ importers:
 
   packages/symbols/arithmetic/adeles:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
@@ -981,9 +981,9 @@ importers:
 
   packages/symbols/arithmetic/number-theory:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/for-compute-engine':
         specifier: workspace:*
         version: link:../../../../upstream/compute-engine
@@ -1015,9 +1015,9 @@ importers:
 
   packages/symbols/arithmetic/numerals:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../residues
@@ -1040,9 +1040,9 @@ importers:
 
   packages/symbols/arithmetic/residues:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
@@ -1062,9 +1062,9 @@ importers:
 
   packages/symbols/combinatorics/collections:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../../../formats
@@ -1096,9 +1096,9 @@ importers:
 
   packages/symbols/combinatorics/domains:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1130,9 +1130,9 @@ importers:
 
   packages/symbols/combinatorics/polytope:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1149,9 +1149,9 @@ importers:
 
   packages/symbols/combinatorics/statistics:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1175,11 +1175,11 @@ importers:
         specifier: 'catalog:'
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
-  packages/symbols/evaluation/aestimatio:
+  packages/symbols/evaluation/evaluation:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
@@ -1205,12 +1205,12 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../../algebras/algebra
-      '@enumeratio/boxed':
-        specifier: workspace:*
-        version: link:../../../boxed
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../../algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1233,9 +1233,9 @@ importers:
       '@enumeratio/algebra':
         specifier: workspace:*
         version: link:../../algebras/algebra
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../../boxed
+        version: link:../../../engine
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../../arithmetic/residues
@@ -1303,9 +1303,9 @@ importers:
 
   upstream/compute-engine:
     dependencies:
-      '@enumeratio/boxed':
+      '@enumeratio/engine':
         specifier: workspace:*
-        version: link:../../packages/boxed
+        version: link:../../packages/engine
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1328,9 +1328,6 @@ importers:
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../packages/symbols/arithmetic/adeles
-      '@enumeratio/aestimatio':
-        specifier: workspace:*
-        version: link:../packages/symbols/evaluation/aestimatio
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../packages/symbols/analysis/analytic
@@ -1346,15 +1343,24 @@ importers:
       '@enumeratio/collections':
         specifier: workspace:*
         version: link:../packages/symbols/combinatorics/collections
+      '@enumeratio/components':
+        specifier: workspace:*
+        version: link:../packages/components
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../packages/symbols/algebras/diagram
       '@enumeratio/domains':
         specifier: workspace:*
         version: link:../packages/symbols/combinatorics/domains
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../packages/symbols/evaluation/evaluation
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../packages/formats
+      '@enumeratio/frontend':
+        specifier: workspace:*
+        version: link:../packages/frontend
       '@enumeratio/geometric':
         specifier: workspace:*
         version: link:../packages/symbols/algebras/geometric
@@ -1376,12 +1382,6 @@ importers:
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../packages/symbols/groups/modular
-      '@enumeratio/notatio':
-        specifier: workspace:*
-        version: link:../packages/notatio
-      '@enumeratio/notatio-lit':
-        specifier: workspace:*
-        version: link:../packages/notatio-lit
       '@enumeratio/number-theory':
         specifier: workspace:*
         version: link:../packages/symbols/arithmetic/number-theory

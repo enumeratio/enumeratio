@@ -218,24 +218,26 @@ alongside the kernels' answers. What stays global moves to `packages/oracle/kern
 ## 7. Package layout
 
 Symbol packages move to `packages/symbols/<group>/<package>/`. Each group's
-symbol-specific components go into one package, `packages/components/<group>/`. Tooling
-and the general interface stay at `packages/<name>`. Package names do not change
-(`design/component-naming.md`); only paths move. The workspace globs become `packages/*`,
-`packages/symbols/*/*` and `packages/components/*`.
+symbol-specific components go into one package beside them,
+`packages/symbols/<group>/components/` (`@enumeratio/<group>-components`), which the
+`packages/symbols/*/*` glob already covers. Tooling and the general interface stay at
+`packages/<name>`; `packages/components/` is the general custom elements
+(`@enumeratio/components`). The workspace globs are `packages/*` and
+`packages/symbols/*/*`.
 
-| Group           | Symbol packages                                                                                           | Components (`packages/components/<group>`)                                                                                             |
-| --------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `arithmetic`    | `residues`, `numerals`, `number-theory`, `adeles`                                                         | —                                                                                                                                      |
-| `analysis`      | `analytic`                                                                                                | —                                                                                                                                      |
-| `combinatorics` | `collections`, `statistics`, `domains`, `polytope`                                                        | `notatio-combinatorics`: `notatio-collection-table`, `notatio-polytope`, with their renderers (`collection-table.ts`, `polytope3d.ts`) |
-| `algebras`      | `algebra`, `hypercomplex`, `geometric`, `diagram`, `groupalgebra`, `hecke`, `hopf`, `incidence`, `quiver` | —                                                                                                                                      |
-| `groups`        | `braid`, `modular`                                                                                        | `notatio-groups`: `notatio-torus-square` (`torussquare.ts`); torus knots are `braid`'s                                                 |
-| `evaluation`    | `aestimatio`                                                                                              | —                                                                                                                                      |
+| Group           | Symbol packages                                                                                           | Components (`packages/symbols/<group>/components`)                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `arithmetic`    | `residues`, `numerals`, `number-theory`, `adeles`                                                         | —                                                                                                                                         |
+| `analysis`      | `analytic`                                                                                                | —                                                                                                                                         |
+| `combinatorics` | `collections`, `statistics`, `domains`, `polytope`                                                        | `combinatorics-components`: `notatio-collection-table`, `notatio-polytope`, with their renderers (`collection-table.ts`, `polytope3d.ts`) |
+| `algebras`      | `algebra`, `hypercomplex`, `geometric`, `diagram`, `groupalgebra`, `hecke`, `hopf`, `incidence`, `quiver` | —                                                                                                                                         |
+| `groups`        | `braid`, `modular`                                                                                        | `groups-components`: `notatio-torus-square` (`torussquare.ts`); torus knots are `braid`'s                                                 |
+| `evaluation`    | `evaluation`                                                                                              | —                                                                                                                                         |
 
 Tooling and the interface stay at `packages/`. What each package is for, and how they
 depend on each other, is in [packages.md](./packages.md).
 
-`notatio-lit` keeps everything that renders a Wolfram-general symbol — plots, `GraphPlot`,
+`components` keeps everything that renders a Wolfram-general symbol — plots, `GraphPlot`,
 `Curve3D`, the notebook, the controls. A group gets a component package the day it gets
 its first renderer, never an empty placeholder.
 

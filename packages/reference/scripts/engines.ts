@@ -7,7 +7,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
-import { declareAestimatio } from "@enumeratio/aestimatio/src";
+import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCollections } from "@enumeratio/collections/src";
@@ -24,10 +24,10 @@ import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
 
-/** Every library we ship BESIDES `@enumeratio/aestimatio`, in the order the reference
+/** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
- * module `@enumeratio/aestimatio/node`'s isolated evaluator loads into a worker) can
- * declare exactly these — the worker's own engine already declares aestimatio itself
+ * module `@enumeratio/evaluation/node`'s isolated evaluator loads into a worker) can
+ * declare exactly these — the worker's own engine already declares evaluation itself
  * (redeclaring throws: "already declared in this scope"). */
 const LIBRARY_DECLARATIONS = [
   declareBoxes,
@@ -54,7 +54,7 @@ const LIBRARY_DECLARATIONS = [
 ];
 
 /** Every library we ship, in the order the reference tests declare them. */
-export const DECLARATIONS = [declareAestimatio, ...LIBRARY_DECLARATIONS];
+export const DECLARATIONS = [declareEvaluation, ...LIBRARY_DECLARATIONS];
 
 export const declaredEngine = (): ComputeEngine => {
   const ce = new ComputeEngine();
@@ -63,11 +63,11 @@ export const declaredEngine = (): ComputeEngine => {
 };
 
 /**
- * `configure(ce)` for `@enumeratio/aestimatio/node`'s isolated evaluator (`evaluateIsolated`,
+ * `configure(ce)` for `@enumeratio/evaluation/node`'s isolated evaluator (`evaluateIsolated`,
  * `openSession`, `runCases`'s `setup` option): declares every library the reference engine
  * declares, so a case evaluated in a worker means the same thing it would in-process. Not
  * `declaredEngine`'s `DECLARATIONS` verbatim — the worker's own engine already declares
- * `@enumeratio/aestimatio` before running `setup` (see `worker.ts`/`session-worker.ts`).
+ * `@enumeratio/evaluation` before running `setup` (see `worker.ts`/`session-worker.ts`).
  */
 export function configure(ce: ComputeEngine): void {
   for (const declare of LIBRARY_DECLARATIONS) declare(ce);

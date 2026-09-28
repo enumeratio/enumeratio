@@ -7,7 +7,7 @@
 // which is exactly the case RSA relies on. So it is budgeted: past `RHO_BUDGET` steps it
 // gives up and says so, rather than hanging.
 
-import { checkpoint } from "@enumeratio/boxed";
+import { checkpoint } from "@enumeratio/engine";
 import { gcd, isqrt, mod, powMod, valuation } from "./arith.ts";
 
 const SMALL_PRIMES: readonly bigint[] = (() => {

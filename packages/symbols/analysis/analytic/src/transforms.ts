@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // LaplaceTransform(f, t, s) / InverseLaplaceTransform(F, s, t) and
 // FourierTransform(f, t, w) / InverseFourierTransform(F, w, t): a rule table over the

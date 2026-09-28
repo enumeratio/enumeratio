@@ -1,6 +1,6 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
-import { POWER_LATEX } from "@enumeratio/boxed";
+import { POWER_LATEX } from "@enumeratio/engine";
 import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX

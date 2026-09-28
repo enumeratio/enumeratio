@@ -4,8 +4,8 @@
 // stands in where it does not, and what the control strip draws under itself.
 
 import { optionsOf } from "@enumeratio/formats";
-import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "../../notatio/src/symbols.ts";
-import { textPlot } from "../../notatio/src/textplot.ts";
+import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "../../frontend/src/symbols.ts";
+import { textPlot } from "../../frontend/src/textplot.ts";
 import type { PlotPoint, Session } from "./engine.ts";
 
 type Json = Parameters<typeof headOf>[0];

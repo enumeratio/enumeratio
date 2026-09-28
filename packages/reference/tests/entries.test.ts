@@ -1,6 +1,6 @@
 // Buildless src subpath: the reference tests must run without a prior `vp pack` of
 // @enumeratio/analytic (CI runs tests before builds).
-import { runCases } from "@enumeratio/aestimatio/src/node";
+import { runCases } from "@enumeratio/evaluation/src/node";
 import { expect, test } from "vite-plus/test";
 import { referenceData } from "../src/node.ts";
 
@@ -85,9 +85,9 @@ const masked = (node: unknown, keys: ReadonlySet<string>): unknown => {
   return node.map((child) => masked(child, keys));
 };
 
-// `@enumeratio/aestimatio/node`'s `runCases` `setup` module — declares every library the
+// `@enumeratio/evaluation/node`'s `runCases` `setup` module — declares every library the
 // reference engine declares (see scripts/engines.ts's own comment on why it's not
-// `DECLARATIONS` verbatim: the worker's engine already has `@enumeratio/aestimatio`).
+// `DECLARATIONS` verbatim: the worker's engine already has `@enumeratio/evaluation`).
 const setup = new URL("../scripts/engines.ts", import.meta.url).href;
 
 /** Per-example caps: generous for a real reference example, tight enough that a runaway

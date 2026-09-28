@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
 // CenteredInterval(c, r) — Wolfram's center-radius form of an interval, c ± r. Unlike

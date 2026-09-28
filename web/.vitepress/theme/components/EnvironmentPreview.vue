@@ -15,7 +15,7 @@ import {
   loadEngine,
   mediaSignals,
   reduce,
-} from "@enumeratio/notatio";
+} from "@enumeratio/frontend";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from "vue";
 import { fragment, setFragment } from "../fragment.ts";

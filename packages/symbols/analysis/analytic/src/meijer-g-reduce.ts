@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // MeijerGReduce(expr, x): rewrites a handful of elementary/special functions into
 // MeijerG form, using identities that hold for the operand as a whole (not just a

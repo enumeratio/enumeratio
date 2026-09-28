@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // TrigFactor(expr): the factoring counterpart of compute-engine's native TrigExpand /
 // TrigReduce / TrigToExp (all three already ship in bare compute-engine — confirmed by

@@ -11,7 +11,7 @@
 // same reduction analysis applies to it.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";

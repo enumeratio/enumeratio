@@ -19,7 +19,7 @@
 //   node packages/reference/scripts/oracle-plausible.ts julia --seed 2026-09-25 --samples 4
 
 import { appendFileSync, writeFileSync } from "node:fs";
-import { runCases } from "@enumeratio/aestimatio/src/node";
+import { runCases } from "@enumeratio/evaluation/src/node";
 import { allEntries, type FamilyKernel } from "@enumeratio/collections/src";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
 import { between as edgeBiased } from "@enumeratio/plausible";

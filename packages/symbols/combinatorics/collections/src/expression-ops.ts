@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 import { toInputForm } from "@enumeratio/formats";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { integerAt, operandsOf, stringAt } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt } from "@enumeratio/engine";
 import {
   alexanderPolynomial,
   type Braid,

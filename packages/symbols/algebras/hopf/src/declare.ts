@@ -1,6 +1,6 @@
 import { registerAlgebra } from "@enumeratio/algebra";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
   completeToRibbon,
   conjugateComposition,

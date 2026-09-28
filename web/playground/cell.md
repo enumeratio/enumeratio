@@ -115,7 +115,7 @@ exactly what the ordinal-reference rejection above is about.
 
 `Evaluator -> "Worker"` -- Wolfram's own option name for `Dynamic`'s kernel choice --
 runs a `DynamicModule`'s cells off this page's own thread, in an
-`@enumeratio/aestimatio/browser` session: one worker holding the module's bindings, so
+`@enumeratio/evaluation/browser` session: one worker holding the module's bindings, so
 `a := 5` then `a^2` still read each other back, just not on the thread that has to keep
 the page responsive. A cell shows the usual pending dots while its call is out, plus a
 stop control (or Escape) that aborts it.

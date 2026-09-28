@@ -7,7 +7,7 @@ import {
   threadOverLists,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";

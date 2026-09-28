@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // A second wave of Wolfram list heads compute-engine doesn't have at all (Riffle, Gather,
 // GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue), plus two heads that exist

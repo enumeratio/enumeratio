@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // DSolveValue(eqn, y(x), x) / DSolveValue({eqn, ic1, ic2, ...}, y(x), x): linear
 // constant-coefficient ODEs of order 1 or 2. `y'`/`y''` are written the way

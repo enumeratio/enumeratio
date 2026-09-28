@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
   CLASS_ADMITS,
   composeDiagrams,

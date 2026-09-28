@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // #113 rounding and clamping widenings: Floor/Ceil to a step, Chop with a tolerance,
 // Clamp with Clip's replacement values, and the empty-call identity elements of Min/Max.

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { wrapOperator } from "@enumeratio/boxed";
+import { wrapOperator } from "@enumeratio/engine";
 import {
   isFiniteNum,
   numberResult,

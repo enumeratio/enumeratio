@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // The Wolfram `Function*` property family (FunctionDomain, FunctionRange,
 // FunctionMonotonicity, FunctionConvexity, FunctionSign, FunctionInjective,
@@ -81,7 +81,7 @@ function hasForeignSymbol(expr: BoxedExpression, x: string): boolean {
 
 /**
  * `isNumberLiteral` lives on compute-engine's NARROWED expression interface (like
- * `.ops`/`.symbol` — see `@enumeratio/boxed`'s header comment); `BoxedExpression` is
+ * `.ops`/`.symbol` — see `@enumeratio/engine`'s header comment); `BoxedExpression` is
  * an alias for the public `Expression` union, which doesn't carry it. Read it
  * structurally rather than casting to the internal type.
  */

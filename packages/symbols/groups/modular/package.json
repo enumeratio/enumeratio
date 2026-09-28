@@ -24,13 +24,13 @@
   },
   "dependencies": {
     "@enumeratio/algebra": "workspace:*",
-    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/residues": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/algebra": "workspace:*",
-    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "typescript": "^7.0.2",

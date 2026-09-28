@@ -29,13 +29,13 @@ compute-engine parses, evaluates and compiles. We extend it, head by head:
 
 - **Handlers.** A head we declare carries an `evaluate` handler (symbolic, and `N` where the
   head is numeric), and optionally a `compile` handler. A head compute-engine already has is
-  extended in place (`@enumeratio/boxed`'s `wrapOperator`, `widenSignature`), never
+  extended in place (`@enumeratio/engine`'s `wrapOperator`, `widenSignature`), never
   re-declared, so its other handlers survive. `design/upstreaming.md` tracks what should move
   into compute-engine itself.
 - **Kernels.** The arithmetic under the handlers: bigint number theory in `residues`,
   big-decimal kernels in `analytic` (`bigzeta.ts`, the Euler–Maclaurin sums, correctly rounded
   `N(x, d)`), exact combinatorics in `collections`.
-- **Bounds.** `@enumeratio/aestimatio` (§5): cancellation, deadlines, isolated evaluators,
+- **Bounds.** `@enumeratio/evaluation` (§5): cancellation, deadlines, isolated evaluators,
   sessions and `VerificationTest`.
 
 ## 2. Interpretation
@@ -114,7 +114,7 @@ without a kernel) goes through §3.
 
 ## 5. Bounding a computation
 
-`@enumeratio/aestimatio` decides **when** a computation runs, **how long** and **how much
+`@enumeratio/evaluation` decides **when** a computation runs, **how long** and **how much
 memory** it may take, **whether it is cancelled**, and **whether its answer checks out**. It
 applies to evaluation (§3). A compiled function (§4) is plain code with no
 checkpoints, so only an isolated evaluator's hard kill (§5.3) can stop it. It exists so a page,
@@ -139,7 +139,7 @@ discarded.
 - **async** `evaluateAsync` handler: the caller's signal combined with a timeout signal.
 
 A deadline only interrupts code that looks at it. compute-engine's loops do; our bigint kernels
-did not. `@enumeratio/boxed` therefore carries a small cooperative checkpoint — a deadline stack
+did not. `@enumeratio/engine` therefore carries a small cooperative checkpoint — a deadline stack
 set by `TimeConstrained` (and anyone else), and `checkpoint()` that throws when it has passed —
 and the long loops in `@enumeratio/residues` (Pollard–Brent rho, baby-step giant-step, root
 enumeration) call it. It lives in `boxed` so the kernels need no dependency on this package.
@@ -150,12 +150,12 @@ JavaScript cannot cap the memory of a synchronous computation in its own process
 `MemoryConstrained(expr, bytes, failexpr)` is enforced only when evaluation runs in an isolated
 evaluator; in-process it stays unevaluated (said plainly, never silently ignored).
 
-- **Node** (`@enumeratio/aestimatio/node`): `evaluateIsolated(json, { memoryBytes, timeMs,
+- **Node** (`@enumeratio/evaluation/node`): `evaluateIsolated(json, { memoryBytes, timeMs,
 setup })` runs one evaluation in a `worker_threads` Worker with `resourceLimits` sized from
   the constraint — a real heap cap — and `terminate()` as the hard time kill. `setup` names a
   module whose `configure(ce)` declares the libraries the host engine has, so the worker's
   engine means the same things.
-- **Browser** (`@enumeratio/aestimatio/browser`): a plain `Worker`, `terminate()` for time,
+- **Browser** (`@enumeratio/evaluation/browser`): a plain `Worker`, `terminate()` for time,
   best-effort memory only (browsers expose no per-worker cap, so this polls the page's own
   memory instead — see `probeMemoryBytes`).
 
@@ -165,7 +165,7 @@ workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIso
 `evaluateInWorker` use a default pool.
 
 `timeMs` is tried cooperatively INSIDE the worker first (`ce.withTimeLimit` plus
-`@enumeratio/boxed`'s `withDeadline`/`checkpoint()` — the same machinery `TimeConstrained`
+`@enumeratio/engine`'s `withDeadline`/`checkpoint()` — the same machinery `TimeConstrained`
 uses), so a call built from compute-engine's own loops or a `checkpoint()`-ing kernel answers
 `Aborted` as an ordinary value well before anything is killed: the worker is reused, and a
 session keeps its bindings (`reset: false`). Only a tight, uncooperative loop the deadline
@@ -197,9 +197,9 @@ TestID -> "…")` holds `input`, evaluates it under the constraints, compares wi
 `ExpectedOutput`, `AbsoluteTimeUsed` and `TestID`. It draws as a cell with an outcome badge.
 Reference examples are, in effect, verification tests; they may be expressed this way later.
 
-### 5.5 Running our own test suites under aestimatio
+### 5.5 Running our own test suites under evaluation
 
-`runCases(cases, { setup, timeMs, memoryBytes, concurrency, pool? })` (`@enumeratio/aestimatio/node`)
+`runCases(cases, { setup, timeMs, memoryBytes, concurrency, pool? })` (`@enumeratio/evaluation/node`)
 batch-evaluates independent `{ id, input }` cases (MathJSON), each on a pooled worker (§5.3's
 pool and worker.ts) under its own time/memory cap — a per-case `timeMs`/`memoryBytes`
 overrides the batch default. Each result is `{ id, outcome: "Evaluated" | "Aborted" |
@@ -217,7 +217,7 @@ example, tight enough that a runaway one fails fast as `"Aborted"` instead of ha
 suite or growing without bound), then one `vitest` `test` per example asserting the masked
 `toEqual` against the batched result, same as before. The `setup` module is
 `packages/reference/scripts/engines.ts`'s `configure(ce)`, which declares every library the
-reference engine declares EXCEPT `@enumeratio/aestimatio` itself — the worker's own engine
+reference engine declares EXCEPT `@enumeratio/evaluation` itself — the worker's own engine
 already has it (worker.ts), and redeclaring throws.
 
 `worker.ts` keeps ONE configured `ComputeEngine` per `setup` URL for a worker's whole
@@ -239,4 +239,4 @@ function against `N`, and against the other systems' compiled paths (Julia, Rust
 functions the plotters and portraits compile.
 
 Future work (`AbsoluteTiming`, `CheckAbort`, evaluation history) is in
-design/speculative/aestimatio.md.
+design/speculative/evaluation.md.

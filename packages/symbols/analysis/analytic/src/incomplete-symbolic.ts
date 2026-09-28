@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, isRealInt } from "@enumeratio/for-compute-engine";
 
 // A handful of exact symbolic reductions the Wolfram page documents for the incomplete

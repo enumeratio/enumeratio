@@ -7,7 +7,7 @@
 // reject a bare list — and, more usefully, reject a SetPartition.
 
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { DOMAINS } from "./domain-data.ts";
 import type { Domain } from "./types.ts";
 
@@ -38,7 +38,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
  * One carrier's constructor. Held, with no `evaluate` — unless the name is already
  * declared (a compute-engine native, or another library's head), in which case the two
  * become overloads of it. Attached IN PLACE, same reasoning as `wrapOperator`
- * (`@enumeratio/boxed`): `ce.declare` throws the SECOND time any name is declared, native
+ * (`@enumeratio/engine`): `ce.declare` throws the SECOND time any name is declared, native
  * or not, so a plain re-declare only ever worked here by luck of engine composition order.
  *
  * `ContinuedFraction` is the case that forced overloading at all: compute-engine computes

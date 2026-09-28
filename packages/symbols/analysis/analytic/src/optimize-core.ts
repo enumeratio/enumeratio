@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { containsVar, type Recognized, recognize, signShape } from "./function-properties.ts";
 
 // Shared machinery behind Minimize/Maximize/MinValue/MaxValue/ArgMin/ArgMax: an exact

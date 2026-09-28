@@ -15,7 +15,7 @@ _timings_ for the same questions, asked the same way, with no translation cost i
   `history.json` on the orphan `perf-data` branch (last 60 runs). It flags drift against the
   trailing median: at least 5 prior runs, and both ≥1.5× and ≥200 ms. It cpu-profiles the
   three slowest files. This measures _test suites_, not math. It stays as it is.
-- **`@enumeratio/aestimatio`**. `evaluateDetailed` returns `ms` per call, but that is wall
+- **`@enumeratio/evaluation`**. `evaluateDetailed` returns `ms` per call, but that is wall
   time through a worker, including queue wait and messaging. That's fine for deadlines and too
   coarse for timing. `verificationTest` times in process with `performance.now()`, rounded to
   milliseconds.

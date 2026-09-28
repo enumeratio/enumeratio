@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf } from "@enumeratio/boxed";
+import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 

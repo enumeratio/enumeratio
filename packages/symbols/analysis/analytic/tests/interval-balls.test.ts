@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import type { ImageGolden } from "../scripts/collect-image-goldens.ts";
 import { declareAnalytic } from "../src/index.ts";

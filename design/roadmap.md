@@ -91,9 +91,9 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   waits for a quiet moment, and [component-naming.md](./component-naming.md) is how the
   last one went.
 
-- **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
+- **Run our own test suites under controlled evaluation** — an isolated evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
-  today (see design/speculative/aestimatio.md).
+  today (see design/speculative/evaluation.md).
 
 ## 5. What this file is not
 

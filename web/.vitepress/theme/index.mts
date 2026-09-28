@@ -1,13 +1,13 @@
 import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
-import { registerNotatio } from "@enumeratio/notatio/vue";
+import { registerNotatio } from "@enumeratio/frontend/vue";
 import DefaultTheme from "vitepress/theme";
 import { applyEngineLibraries } from "./engine-libraries.ts";
 import Layout from "./Layout.vue";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
-// @enumeratio/notatio-lit (the whole element + compute-engine tree) via Playground, and
+// @enumeratio/components (the whole element + compute-engine tree) via Playground, and
 // @enumeratio/reference (all the entry data) via the reference/component pages — which,
 // resolved from source, is ~all of the monorepo. Keeping them out of the initial theme
 // bundle lets a page's shell paint immediately; each page pulls only the components it
@@ -28,7 +28,7 @@ const ComponentPage = defineAsyncComponent(() => import("./components/ComponentP
 const BenchViewer = defineAsyncComponent(() => import("./components/bench/BenchViewer.vue"));
 const EnvironmentPreview = defineAsyncComponent(() => import("./components/EnvironmentPreview.vue"));
 // The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
-// from @enumeratio/notatio/vue, generated there from the element sources.
+// from @enumeratio/frontend/vue, generated there from the element sources.
 
 export default {
   extends: DefaultTheme,
@@ -59,7 +59,7 @@ export default {
     if (!import.meta.env.SSR) {
       // Publish the readiness promise synchronously (before any element mounts) so
       // the shared engine waits for these libraries to be declared before its first
-      // evaluation — see `loadEngine` in @enumeratio/notatio-lit. The imports resolve
+      // evaluation — see `loadEngine` in @enumeratio/components. The imports resolve
       // from source here, which is slower than a prebuilt dist, so this gate is what
       // keeps cells/plots from rendering before their heads exist.
       const startEngine = async (): Promise<void> => {
@@ -85,9 +85,9 @@ export default {
           { declareNumberTheory },
           { declareAdeles },
           { declareBraid },
-          { declareAestimatio },
+          { declareEvaluation },
         ] = await Promise.all([
-          import("@enumeratio/notatio-lit"),
+          import("@enumeratio/components"),
           import("@enumeratio/collections"),
           import("@enumeratio/statistics"),
           import("@enumeratio/domains"),
@@ -108,7 +108,7 @@ export default {
           import("@enumeratio/number-theory"),
           import("@enumeratio/adeles"),
           import("@enumeratio/braid"),
-          import("@enumeratio/aestimatio"),
+          import("@enumeratio/evaluation"),
         ]);
         // Notation has to be in before the engine is built: its dictionary is fixed then.
         configureLatex(RESIDUES_LATEX);
@@ -141,7 +141,7 @@ export default {
           declareAdeles,
           declareBraid,
         });
-        configureEngine(declareAestimatio);
+        configureEngine(declareEvaluation);
       };
       // The promise is assigned synchronously (any element's loadEngine awaits it), but
       // the heavy 15-package source import is deferred to browser idle, so the initial
@@ -160,7 +160,7 @@ export default {
       );
       // Points an `Evaluator -> "Worker"` `<notatio-dynamic-module>` at the module
       // whose `configure(ce)` declares this page's own libraries into its
-      // `@enumeratio/aestimatio/browser` session -- `notatio-dynamic-module.ts`'s own
+      // `@enumeratio/evaluation/browser` session -- `notatio-dynamic-module.ts`'s own
       // `#openSession` reads this the same way `loadEngine` reads
       // `__notatioEngineReady` above. A `URL` (not a bare specifier) so the worker's
       // own `import(setup)` -- running in a different module graph -- can resolve it.

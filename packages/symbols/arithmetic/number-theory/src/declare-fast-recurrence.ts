@@ -5,7 +5,7 @@
 // (falls through to the native handler) past a documented size rather than pretend a budget
 // it doesn't have.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
 import { fibonacci, lucasL } from "./fast-recurrence.ts";
 
 /** Above this, F(n)/L(n) would run past ~2M decimal digits — plenty past the bench range

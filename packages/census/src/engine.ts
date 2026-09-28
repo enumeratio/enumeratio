@@ -14,7 +14,7 @@
 
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
-import { declareAestimatio } from "@enumeratio/aestimatio/src";
+import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
@@ -40,7 +40,7 @@ import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
-import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
+import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
@@ -59,7 +59,7 @@ import {
 
 /** Every declaration, in an order that satisfies what depends on what. */
 export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
-  declareAestimatio,
+  declareEvaluation,
   declareAnalytic,
   declareHypercomplex,
   declareGeometric,
