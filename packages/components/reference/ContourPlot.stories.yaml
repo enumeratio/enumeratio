@@ -1,0 +1,66 @@
+- id: saddle
+  caption: A saddle
+  category: Function contours
+  notes: The classic hyperbolic-paraboloid saddle -- contours open along both diagonals.
+  expr: [ContourPlot, [Add, [Power, x, 2], [Negate, [Power, y, 2]]], [Tuple, x, -3, 3], [Tuple, y, -3, 3]]
+- id: trig-field
+  caption: A trig field
+  category: Function contours
+  expr: [ContourPlot, [Add, [Sin, x], [Cos, y]], [Tuple, x, -6.283, 6.283], [Tuple, y, -6.283, 6.283]]
+- id: concentric-circles
+  caption: Concentric circles (radial field)
+  category: Function contours
+  notes: "`levels` as a JSON array picks explicit contour values instead of the automatic ~8 evenly spaced ones."
+  expr:
+    [
+      ContourPlot,
+      [Add, [Power, x, 2], [Power, y, 2]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Levels, [List, 1, 2, 4, 6, 8]],
+    ]
+- id: level-count
+  caption: A level count
+  category: Function contours
+  notes: A bare number for `levels` sets the auto level count; `n` controls the sampling grid's resolution.
+  expr:
+    [
+      ContourPlot,
+      [Sin, [Multiply, x, y]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Levels, 12],
+      [Tuple, N, 60],
+      [Tuple, Label, "'sin(xy)'"],
+    ]
+- id: filled-saddle
+  caption: Filled saddle
+  category: Filled bands
+  notes: "`filled` shades the bands between levels with a sequential ramp instead of drawing lines."
+  expr:
+    [
+      ContourPlot,
+      [Add, [Power, x, 2], [Negate, [Power, y, 2]]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Filled, True],
+    ]
+- id: filled-radial-labels
+  caption: Filled radial field with labels
+  category: Filled bands
+  expr:
+    [
+      ContourPlot,
+      [Add, [Power, x, 2], [Power, y, 2]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Filled, True],
+      [Tuple, XLabel, "'x'"],
+      [Tuple, YLabel, "'y'"],
+      [Tuple, Label, "'x² + y²'"],
+    ]
+- id: pre-sampled-grid
+  caption: A pre-sampled grid
+  category: List contours
+  notes: "`ListContourPlot` contours a pre-sampled grid directly -- no expression evaluation, so it's the natural fit for numerical data."
+  expr: [ListContourPlot, [List, [List, 0, 1, 2, 3], [List, 1, 2, 3, 4], [List, 2, 3, 4, 5], [List, 3, 4, 5, 6]]]

@@ -7669,6 +7669,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy"],
   },
   {
+    name: "ListContourPlot",
+    provenance: "unknown",
+    declared: "enumeratio-formats",
+    wolframAlias: "ListContourPlot",
+    elsewhere: [],
+  },
+  {
+    name: "ListDensityPlot",
+    provenance: "unknown",
+    declared: "enumeratio-formats",
+    wolframAlias: "ListDensityPlot",
+    elsewhere: [],
+  },
+  {
     name: "ListLinePlot",
     provenance: "unknown",
     declared: "enumeratio-formats",
@@ -7695,6 +7709,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-formats",
     wolframAlias: "ListPlot3D",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "ListPolarPlot",
+    provenance: "unknown",
+    declared: "enumeratio-formats",
+    wolframAlias: "ListPolarPlot",
+    elsewhere: [],
   },
   {
     name: "Locator",

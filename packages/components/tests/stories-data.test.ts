@@ -8,12 +8,22 @@
 import { readdirSync } from "node:fs";
 import { COMPONENT_STORIES_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { readStories, STORIES_SUFFIX } from "@enumeratio/entry/node";
+import { markupOf, renderingOf } from "@enumeratio/frontend/symbols";
 import { structuralMarkupOf } from "@enumeratio/frontend/reflect";
-import { structuralOf } from "@enumeratio/frontend/vdom";
+import { structuralOf, vdomOf } from "@enumeratio/frontend/vdom";
 import { expect, test } from "vite-plus/test";
-import { type StoryData, STORIES_DATA } from "../src/stories-data.ts";
+import { type StoryData, type StoryForm, STORIES_DATA } from "../src/stories-data.ts";
 
 const referenceDir = new URL("../reference/", import.meta.url);
+
+/** Every written form of `expr`, mirroring collect-stories.ts's `formsOf`. */
+function formsOf(expr: StoryData["expr"]): StoryForm[] {
+  const json = expr as never;
+  return [
+    { id: "head", label: "<Head>", text: structuralMarkupOf(structuralOf(json)) },
+    { id: "html", label: "Web component", text: markupOf(renderingOf(json) ?? vdomOf(json)) },
+  ];
+}
 
 test("stories-data.ts is what the current records collect to", () => {
   const names = readdirSync(referenceDir)
@@ -28,15 +38,15 @@ test("stories-data.ts is what the current records collect to", () => {
     expect(new Set(stories.map((s) => s.id)).size, `${name}: duplicate story id`).toBe(stories.length);
     rebuilt[name] = stories.map((story) => ({
       ...story,
-      markup: structuralMarkupOf(structuralOf(story.expr as never)),
+      forms: formsOf(story.expr),
     }));
   }
 
   expect(STORIES_DATA).toEqual(rebuilt);
 });
 
-test("every story's pinned markup is its own expr's structuralMarkupOf, not something re-derived live", () => {
+test("every story's pinned forms are its own expr's formsOf, not something re-derived live", () => {
   for (const stories of Object.values(STORIES_DATA)) {
-    for (const story of stories) expect(story.markup).toBe(structuralMarkupOf(structuralOf(story.expr as never)));
+    for (const story of stories) expect(story.forms).toEqual(formsOf(story.expr));
   }
 });

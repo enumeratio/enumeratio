@@ -1,14 +1,15 @@
 <script setup lang="ts">
 // Storybook cards on a component's reference page: each of the component's stories
 // (packages/components/reference/<Name>.stories.yaml, via stories-data.ts) as a live render
-// plus its markup. `expr` is the source of truth (design/vdom.md); the live render is
+// plus its source. `expr` is the source of truth (design/vdom.md); the live render is
 // `vdomOf(expr)` handed to Vue's `h` through `toVNode`, computed here at runtime -- that
-// lowering is cheap and pure. The markup shown under it is the STRUCTURAL tree
-// (`structuralOf`) printed with PascalCase heads, derived once at generation time and pinned
-// in the generated data (`structuralMarkupOf`, `@enumeratio/frontend/reflect`) -- never
-// re-derived here, so it cannot show something that doesn't match what was reviewed.
+// lowering is cheap and pure. The source panel shows `story.forms`, a tab per written form
+// (today: `head`, the STRUCTURAL tree with PascalCase heads; `html`, the lit-tag markup a
+// plain-HTML host would write), each derived once at generation time and pinned in the
+// generated data -- never re-derived here, so a tab cannot show something that doesn't match
+// what was reviewed. More forms land as more tabs, not a wider switch statement.
 import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
-import { h } from "vue";
+import { h, reactive } from "vue";
 import { renderProseMath } from "../../prose-math.ts";
 import type { StoryData } from "../../data/stories.ts";
 
@@ -21,6 +22,13 @@ const prose = (text?: string): string => renderProseMath(text ?? "");
 
 /** A render-function component for one story: `<component :is="liveNode(story)" />`. */
 const liveNode = (story: StoryData) => () => toVNode(vdomOf(story.expr as never), h);
+
+/** The active tab per story id, defaulting to the first form (`head`). */
+const activeForm = reactive(new Map<string, string>());
+const formFor = (story: StoryData): string => activeForm.get(story.id) ?? story.forms[0]?.id ?? "";
+const selectForm = (story: StoryData, id: string): void => {
+  activeForm.set(story.id, id);
+};
 
 /** Stories grouped by category, in first-seen order; an uncategorised story falls under "". */
 function grouped(stories: readonly StoryData[]): { category: string; stories: StoryData[] }[] {
@@ -53,8 +61,25 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
           </ClientOnly>
         </div>
         <details class="story-code">
-          <summary>markup</summary>
-          <pre><code>{{ story.markup }}</code></pre>
+          <summary>source</summary>
+          <div v-if="story.forms.length > 1" class="story-tabs" role="tablist">
+            <button
+              v-for="form in story.forms"
+              :key="form.id"
+              type="button"
+              role="tab"
+              :aria-selected="formFor(story) === form.id"
+              :class="{ active: formFor(story) === form.id }"
+              @click="selectForm(story, form.id)"
+            >
+              {{ form.label }}
+            </button>
+          </div>
+          <pre
+            v-for="form in story.forms.filter((f) => f.id === formFor(story))"
+            :key="form.id"
+            role="tabpanel"
+          ><code>{{ form.text }}</code></pre>
         </details>
       </div>
     </template>
@@ -134,5 +159,31 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
   font-family: var(--vp-font-family-mono);
   font-size: 0.8rem;
   color: var(--vp-c-text-1);
+}
+.story-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0 1rem;
+}
+.story-tabs button {
+  padding: 0.25rem 0.6rem;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  background: none;
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+}
+.story-tabs button:hover {
+  color: var(--vp-c-text-2);
+}
+.story-tabs button.active {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}
+.story-tabs button:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: -2px;
 }
 </style>

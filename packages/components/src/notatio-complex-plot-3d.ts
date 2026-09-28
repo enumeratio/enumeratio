@@ -46,6 +46,11 @@ const log = debug("complex-plot-3d");
  * A grid past `CANVAS_THRESHOLD` samples a side is painted on a canvas rather than
  * serialised as SVG: the same projection and painter's order, but no DOM node per face,
  * so a GPU-resolution surface still turns under the pointer.
+ *
+ * The surface is cut at `max-height` rather than left to grow without bound near a pole,
+ * as Wolfram's is, so a single pole does not flatten everything else to the floor. A
+ * face's hue is the circular mean of its corners, so a cell straddling `arg = ±π` takes
+ * the hue between its sides rather than the opposite one.
  */
 export class NotatioComplexPlot3D extends LitElement {
   static properties = {

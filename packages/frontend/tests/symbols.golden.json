@@ -32,7 +32,7 @@
     },
     "markup": "<notatio-plot-3d value=\"x * y\" xvar=\"x\" x-domain=\"-1,1\" yvar=\"y\" y-domain=\"-1,1\"></notatio-plot-3d>"
   },
-  "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2))": {
+  "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
       "tag": "notatio-contour-plot",
       "attributes": {
@@ -40,12 +40,23 @@
         "xvar": "x",
         "xrange": "-2,2",
         "yvar": "y",
-        "yrange": "-2,2"
+        "yrange": "-2,2",
+        "x-label": "x",
+        "y-label": "y"
       }
     },
-    "markup": "<notatio-contour-plot expr=\"x ^ 2 + y ^ 2\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-contour-plot>"
+    "markup": "<notatio-contour-plot expr=\"x ^ 2 + y ^ 2\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\" x-label=\"x\" y-label=\"y\"></notatio-contour-plot>"
   },
-  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6))": {
+  "ListContourPlot([[0, 1], [1, 0]])": {
+    "rendering": {
+      "tag": "notatio-contour-plot",
+      "attributes": {
+        "data": "[[0,1],[1,0]]"
+      }
+    },
+    "markup": "<notatio-contour-plot data=\"[[0,1],[1,0]]\"></notatio-contour-plot>"
+  },
+  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
       "tag": "notatio-density-plot",
       "attributes": {
@@ -53,10 +64,21 @@
         "xvar": "x",
         "xrange": "0,6",
         "yvar": "y",
-        "yrange": "0,6"
+        "yrange": "0,6",
+        "x-label": "x",
+        "y-label": "y"
       }
     },
-    "markup": "<notatio-density-plot expr=\"Sin(x) * Cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\"></notatio-density-plot>"
+    "markup": "<notatio-density-plot expr=\"Sin(x) * Cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" x-label=\"x\" y-label=\"y\"></notatio-density-plot>"
+  },
+  "ListDensityPlot([[0, 1], [1, 0]])": {
+    "rendering": {
+      "tag": "notatio-density-plot",
+      "attributes": {
+        "data": "[[0,1],[1,0]]"
+      }
+    },
+    "markup": "<notatio-density-plot data=\"[[0,1],[1,0]]\"></notatio-density-plot>"
   },
   "PolarPlot(1 + Cos(t), (t, 0, 2 * Pi))": {
     "rendering": {
@@ -69,7 +91,16 @@
     },
     "markup": "<notatio-polar-plot expr=\"1 + Cos(t)\" tvar=\"t\" trange=\"0,2Pi\"></notatio-polar-plot>"
   },
-  "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))": {
+  "ListPolarPlot([[0, 1], [1.57, 2]])": {
+    "rendering": {
+      "tag": "notatio-polar-plot",
+      "attributes": {
+        "data": "[[0,1],[1.57,2]]"
+      }
+    },
+    "markup": "<notatio-polar-plot data=\"[[0,1],[1.57,2]]\"></notatio-polar-plot>"
+  },
+  "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
       "tag": "notatio-vector-plot",
       "attributes": {
@@ -78,10 +109,12 @@
         "xvar": "x",
         "xrange": "-2,2",
         "yvar": "y",
-        "yrange": "-2,2"
+        "yrange": "-2,2",
+        "x-label": "x",
+        "y-label": "y"
       }
     },
-    "markup": "<notatio-vector-plot u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-vector-plot>"
+    "markup": "<notatio-vector-plot u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\" x-label=\"x\" y-label=\"y\"></notatio-vector-plot>"
   },
   "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))": {
     "rendering": {

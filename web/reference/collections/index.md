@@ -5,7 +5,7 @@ Every collection head in `@enumeratio/collections` — the enumerable families
 them. Each is a lazy indexed family: `Count` is closed-form and `At` unranks. The
 badge is the head's signature. Enumerable families carry their own
 [symbol page](/reference/symbol/) with a live table; see the
-[collection table](/playground/collection-table) to page any of them. The OEIS
+[collection table](/reference/components/notatio-collection-table) to page any of them. The OEIS
 numbers are established by count — the family's own kernel for the first sizes, matched
 against the sequence's terms — and a ✓ says so.
 

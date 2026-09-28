@@ -1,0 +1,85 @@
+- id: subsets-4-with-glyph
+  caption: Subsets(4), every subset drawn
+  category: Basic
+  notes: Sixteen rows, in the binary (Gray-free) order the kernel unranks. Sort by `Length` to group by size; filter `Length(_) == 2` for the six pairs -- the count goes exact at once, since sixteen rows scan in a millisecond. The `Sum` column is any expression over the row, not just a head.
+  expr:
+    [
+      CollectionTable,
+      [Subsets, 4],
+      [Tuple, Columns, "'Length, Sum'"],
+      [Tuple, Glyph, "'subset'"],
+      [Tuple, PageSize, 10],
+    ]
+- id: symmetric-group-5-statistics
+  caption: SymmetricGroup(5), the classical statistics
+  category: Basic
+  notes: The 44 derangements of five, picked out of 120 by the filter, each with its `Descents` number, `MajorIndex`, `Inversions` count and `Cycles` count. Clear the filter to see all 120; sort by `Inversions` to see that it and `MajorIndex` are equidistributed but not equal; add `Peaks`, `Excedances` or `LeftToRightMaxima` as further columns.
+  expr:
+    [
+      CollectionTable,
+      [SymmetricGroup, 5],
+      [Tuple, Columns, "'Descents, MajorIndex, Inversions, CycleCount, FixedPoints'"],
+      [Tuple, Glyph, "'permutation'"],
+      [Tuple, Filter, "'FixedPoints(_) == 0'"],
+    ]
+- id: symmetric-group-12-paging
+  caption: SymmetricGroup(12) -- paging without materialising
+  category: Basic
+  notes: 479,001,600 permutations. The pager opens on page one million -- `At` unranks the ten rows there directly. Type a page number, or jump to the last page. Sorting here orders only the first two thousand rows (the bound is adjustable) and says so; a filter scans twenty thousand rows at a time and offers to continue.
+  expr:
+    [
+      CollectionTable,
+      [SymmetricGroup, 12],
+      [Tuple, Columns, "'Descents, Inversions'"],
+      [Tuple, Glyph, "'permutation'"],
+      [Tuple, Page, "'1000000'"],
+      [Tuple, PageSize, 10],
+    ]
+- id: symmetric-group-20-beyond-2-53
+  caption: SymmetricGroup(20)
+  category: Beyond 2⁵³
+  notes: 2,432,902,008,176,640,000 rows -- past Number.MAX_SAFE_INTEGER, so the count shows as approximate and the pager stops at the last exactly-indexable page. The kernel counts and unranks in doubles; indexing past 2⁵³ would silently round, so the table refuses rather than guess. `readonly` hides the editors.
+  expr:
+    [
+      CollectionTable,
+      [SymmetricGroup, 20],
+      [Tuple, Columns, "'Descents, CycleCount'"],
+      [Tuple, PageSize, 10],
+      [Tuple, Readonly, True],
+    ]
+- id: integer-partitions-8-ferrers
+  caption: IntegerPartitions(8) as Ferrers diagrams
+  category: Other carriers
+  notes: Partitions unrank in reverse-lexicographic order. The partition statistics come from @enumeratio/statistics, where each is a definition over the part list; filter `IsSelfConjugate(_) == 1` for the two self-conjugate partitions of 8, or `Length(_) == 3` for the five into three parts.
+  expr:
+    [
+      CollectionTable,
+      [IntegerPartitions, 8],
+      [Tuple, Columns, "'Length, LargestPart, DistinctParts, DurfeeSquare, Crank'"],
+      [Tuple, Glyph, "'partition'"],
+      [Tuple, PageSize, 10],
+    ]
+- id: dyck-paths-4-step-words
+  caption: DyckPaths(4) as step words
+  category: Other carriers
+  notes: Fourteen paths (Catalan), as up/down words drawn as mountain ranges. `Height`, `Area`, `Returns` (touches of the axis) and `Hills` are Dyck-path statistics; sort by `Returns` to see the Narayana-like split, or filter `Returns(_) == 1` for the five primitive paths.
+  expr:
+    [
+      CollectionTable,
+      [DyckPaths, 4],
+      [Tuple, Columns, "'Height, Area, Returns, Hills'"],
+      [Tuple, Glyph, "'dyck'"],
+      [Tuple, PageSize, 14],
+    ]
+- id: set-partitions-4-blocks
+  caption: SetPartitions(4), blocks as pills
+  category: Other carriers
+  notes: Fifteen set partitions (Bell). The element is the block list; the glyph converts it to the restricted-growth string the set-partition figure draws. `Length` counts blocks -- sort by it to walk from one block to four -- and `Max(Map(Length, _))` is the largest block.
+  expr:
+    [
+      CollectionTable,
+      [SetPartitions, 4],
+      [Tuple, Columns, "'Length, Max(Map(Length, _))'"],
+      [Tuple, Glyph, "'set-partition'"],
+      [Tuple, PageSize, 15],
+    ]

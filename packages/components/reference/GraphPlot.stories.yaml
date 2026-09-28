@@ -1,0 +1,93 @@
+- id: tree-rooted-tidy
+  caption: A rooted tree, laid out tidily by depth
+  category: TreePlot
+  notes: Leaves take sequential x left-to-right; each internal node sits at the mean x of its children.
+  expr:
+    [
+      TreeGraph,
+      {
+        dict:
+          {
+            label: "'root'",
+            children:
+              [
+                List,
+                { dict: { label: "'a'", children: [List, { dict: { label: "'a1'" } }, { dict: { label: "'a2'" } }] } },
+                { dict: { label: "'b'" } },
+              ],
+          },
+      },
+    ]
+- id: graph-undirected-circular
+  caption: Undirected graph on a deterministic circular layout
+  category: GraphPlot
+  notes: Node order (and so position) comes from first appearance in `edges` when `nodes` is omitted.
+  expr:
+    [
+      GraphPlot,
+      {
+        dict:
+          {
+            edges:
+              [
+                List,
+                [List, "'a'", "'b'"],
+                [List, "'b'", "'c'"],
+                [List, "'c'", "'d'"],
+                [List, "'d'", "'a'"],
+                [List, "'a'", "'c'"],
+              ],
+          },
+      },
+    ]
+- id: graph-directed-arrowheads
+  caption: "Directed: arrowheads on each edge"
+  category: GraphPlot
+  expr:
+    [
+      GraphPlot,
+      { dict: { edges: [List, [List, "'a'", "'b'"], [List, "'b'", "'c'"], [List, "'c'", "'a'"]] } },
+      [Tuple, Directed, True],
+    ]
+- id: layered-dag-top-to-bottom
+  caption: A DAG laid out top-to-bottom by longest-path layer
+  category: LayeredGraphPlot
+  notes: Layer(v) = 1 + the longest path from any source into v; nodes within a layer keep a deterministic (first-seen) order.
+  expr:
+    [
+      LayeredGraphPlot,
+      {
+        dict:
+          {
+            edges:
+              [
+                List,
+                [List, "'a'", "'b'"],
+                [List, "'a'", "'c'"],
+                [List, "'b'", "'d'"],
+                [List, "'c'", "'d'"],
+                [List, "'d'", "'e'"],
+              ],
+          },
+      },
+    ]
+- id: dendrogram-merge-heights
+  caption: A merge tree, brackets drawn at each merge height
+  category: Dendrogram
+  notes: Leaves sit along the x axis; each internal node's `height` sets where its bracket is drawn (inferred as one more than its tallest child when omitted).
+  expr:
+    [
+      Dendrogram,
+      {
+        dict:
+          {
+            height: 3,
+            children:
+              [
+                List,
+                { dict: { height: 1, children: [List, { dict: { label: "'x'" } }, { dict: { label: "'y'" } }] } },
+                { dict: { height: 2, children: [List, { dict: { label: "'z'" } }, { dict: { label: "'w'" } }] } },
+              ],
+          },
+      },
+    ]

@@ -1,0 +1,28 @@
+- id: cardioid
+  caption: A cardioid
+  category: Function curves
+  notes: r = 1 + cos theta over the default full turn.
+  expr: [PolarPlot, [Add, [Cos, theta], 1]]
+- id: four-petal-rose
+  caption: A four-petal rose
+  category: Function curves
+  notes: "`filled` shades the enclosed region under the stroked curve. The petals that fall on a negative radius sweep out the opposite quadrants."
+  expr: [PolarPlot, [Cos, [Multiply, 2, theta]], [Tuple, Filled, True], [Tuple, Label, "'r = cos 2θ'"]]
+- id: archimedean-spiral
+  caption: An Archimedean spiral
+  category: Function curves
+  notes: "`trange` takes theta well past a single turn; `n` raises the angular sampling to keep the outer windings smooth."
+  expr: [PolarPlot, theta, [Tuple, theta, 0, 18.85], [Tuple, N, 600]]
+- id: limacon-no-grid
+  caption: A limaçon, without the grid
+  category: Function curves
+  expr: [PolarPlot, [Add, [Multiply, 2, [Cos, theta]], 1], [Tuple, Axes, "'false'"]]
+- id: explicit-pairs
+  caption: Explicit (θ, r) pairs
+  category: List polar plots
+  notes: "`closed` joins the last point back to the first."
+  expr: [ListPolarPlot, [List, [List, 0, 1], [List, 1.57, 2], [List, 3.14, 1], [List, 4.71, 2]], [Tuple, Closed, True]]
+- id: bare-radii
+  caption: Bare radii over a turn
+  category: List polar plots
+  expr: [ListPolarPlot, [List, 1, 1.5, 2, 1.5, 1, 1.5, 2, 1.5, 1]]
