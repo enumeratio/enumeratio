@@ -118,3 +118,40 @@
   expected: [Complex, { num: "0.6176522310450641336650331038297415246" }, 0.3334815406585523]
   category: Scope
   caption: $Q(s, z)$ at a complex order $s$ — beyond what the native two-argument handler covers
+- role: test
+  id: q-1-0-2-all-integers
+  expr: [N, [GammaRegularized, 1, 0, 2]]
+  expected: { num: "0.8646647167633873081060005050275155965924" }
+- role: test
+  id: q-2-5-1-5-3
+  expr: [GammaRegularized, 2.5, 1.5, 3]
+  expected: 0.39376691746534853
+- role: test
+  id: q-0-5-0-0-25
+  expr: [GammaRegularized, 0.5, 0, 0.25]
+  expected: 0.5204998778130467
+- role: test
+  id: q-3-1-7-all-integers
+  expr: [N, [GammaRegularized, 3, 1, 7]]
+  expected: { num: "0.89006243904808402722870750266035048325410475" }
+- role: test
+  id: q-2-5-0-complex-1-5-plus-i
+  expr: [GammaRegularized, 2.5, 0, [Complex, 1.5, 1]]
+  expected:
+    [
+      Complex,
+      { num: "0.3118269944561238003877678189584777868561907252713691396016969330106525171650356" },
+      0.34118877092475924,
+    ]
+- role: test
+  id: q-complex-2-plus-i-0-1-5
+  expr: [N, [GammaRegularized, [Complex, 2, 1], 0, 1.5]]
+  expected: [Complex, { num: "0.3823477689549358689747329756884714751299699022893320798" }, -0.33348154065855223]
+- role: test
+  id: q-three-complex-arguments
+  expr: [N, [GammaRegularized, [Complex, 2, 1], [Complex, 0.5, -1], [Complex, 1.5, 1]]]
+  expected: [Complex, { num: "1.509764918616015852275665995948099244935101301100757506" }, 0.9563829092138736]
+- role: test
+  id: q-0-1-4-all-integers
+  expr: [N, [GammaRegularized, 0, 1, 4]]
+  expected: 0

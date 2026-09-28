@@ -837,3 +837,80 @@ three-arguments-fully-symbolic-in-both-order-and:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Gamma (s,0,z)-\Gamma (s,0,z)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(\frac{7}{3},0,-\frac{11}{5}\right)-\Gamma \left(\frac{7}{3},0,-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{13}{4},0,-\frac{17}{6}\right)-\Gamma \left(\frac{13}{4},0,-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{19}{8},0,-\frac{23}{9}\right)-\Gamma \left(\frac{19}{8},0,-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+gamma-0-5-0-0-25:
+  epsil:
+    in: Gamma(0.5, 0, 0.25)
+    out: 0.922_562_012_825_585_3
+  tex:
+    in: \Gamma(0.5, 0, 0.25)
+    out: 0.922\,562\,012\,825\,585\,3
+  fullform:
+    in: Gamma[0.5, 0, 0.25]
+  wolfram:
+    in: Gamma[0.5, 0, 0.25]
+gamma-neg1-5-0-1-5:
+  epsil:
+    in: Gamma(-1.5, 0, 1.5)
+    out: 2.328_437_350_591_27
+  tex:
+    in: \Gamma(-1.5, 0, 1.5)
+    out: 2.328\,437\,350\,591\,27
+  fullform:
+    in: Gamma[-1.5, 0, 1.5]
+  wolfram:
+    in: Gamma[-1.5, 0, 1.5]
+gamma-3-1-7-all-integers:
+  epsil:
+    in: N(Gamma(3, 1, 7))
+    out: 1.780_124_878_096_168_054_457_415_005_320_700_966_508_209_5
+  tex:
+    in: N(\Gamma(3, 1, 7))
+    out: 1.780\,124\,878\,096\,168\,054\,46
+  fullform:
+    in: N[Gamma[3, 1, 7]]
+  wolfram:
+    in: N[Gamma[3, 1, 7]]
+gamma-2-5-0-complex-1-5-plus-i:
+  epsil:
+    in: Gamma(2.5, 0, 1.5 + i)
+    out: 0.414_524_217_855_037_220_473_625_612_505_858_887_098 + 0.453_556_013_183_482_1i
+  tex:
+    in: \Gamma(2.5, 0, 1.5+i)
+    out: 0.414\,524\,217\,855\,037\,220\,474+0.453\,556\,013\,183\,482\,1i
+  fullform:
+    in: Gamma[2.5, 0, Complex[1.5, 1]]
+  wolfram:
+    in: Gamma[2.5, 0, Complex[1.5, 1]]
+gamma-complex-2-plus-i-0-1-5:
+  epsil:
+    in: Gamma(2 + i, 0, 1.5)
+    out: 0.364_066_025_570_145_13 - 0.086_581_481_284_565_94i
+  tex:
+    in: \Gamma(2+i, 0, 1.5)
+    out: 0.364\,066\,025\,570\,145\,13-0.086\,581\,481\,284\,565\,94i
+  fullform:
+    in: Gamma[Complex[2, 1], 0, 1.5]
+  wolfram:
+    in: Gamma[Complex[2, 1], 0, 1.5]
+gamma-three-complex-arguments:
+  epsil:
+    in: Gamma(2 + i, 0.5 - i, 1.5 + i)
+    out: 0.657_722_093_626_211_1 + 1.142_433_810_813_164_2i
+  tex:
+    in: \Gamma(2+i, 0.5-i, 1.5+i)
+    out: 0.657\,722\,093\,626\,211\,1+1.142\,433\,810\,813\,164\,2i
+  fullform:
+    in: Gamma[Complex[2, 1], Complex[0.5, -1], Complex[1.5, 1]]
+  wolfram:
+    in: Gamma[Complex[2, 1], Complex[0.5, -1], Complex[1.5, 1]]
+gamma-0-1-4-all-integers:
+  epsil:
+    in: N(Gamma(0, 1, 4))
+    out: 0.215_604_581_985_671_6
+  tex:
+    in: N(\Gamma(0, 1, 4))
+    out: 0.215\,604\,581\,985\,671\,6
+  fullform:
+    in: N[Gamma[0, 1, 4]]
+  wolfram:
+    in: N[Gamma[0, 1, 4]]

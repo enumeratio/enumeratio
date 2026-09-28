@@ -3,12 +3,10 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
-// Gamma / GammaRegularized's generalized (three-argument) incomplete-gamma extension, and
-// HarmonicNumber -- the heads special-functions.ts still declares directly (the zeta-family
-// cousins that moved upstream as #340 patches -- BarnesG, LogGamma, ClausenCl, the Dirichlet
-// family, StieltjesGamma -- have their own tests in upstream/compute-engine/tests/). Numeric
-// evaluation is held to the oracle values in special-functions.golden.json, gathered by
-// scripts/collect-special-goldens.ts from mpmath and a Wolfram kernel.
+// GammaRegularized's generalized (three-argument) incomplete-gamma extension has no mapped
+// oracle binding (see GammaRegularized.yaml), so its numeric evaluation is held here to the
+// oracle values in special-functions.golden.json, gathered by scripts/collect-special-goldens.ts
+// from mpmath and a Wolfram kernel.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -59,7 +57,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head still declared here", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(["Gamma", "GammaRegularized", "HarmonicNumber"].sort());
+  expect([...heads].sort()).toEqual(["GammaRegularized"]);
 });
 
 // --- Catalan -------------------------------------------------------------------------
