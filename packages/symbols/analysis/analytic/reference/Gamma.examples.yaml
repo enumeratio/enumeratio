@@ -192,3 +192,31 @@
   id: three-arguments-fully-symbolic-in-both-order-and
   expr: [Gamma, s, 0, z]
   expected: [Gamma, s, 0, z]
+- role: test
+  id: gamma-0-5-0-0-25
+  expr: [Gamma, 0.5, 0, 0.25]
+  expected: 0.9225620128255853
+- role: test
+  id: gamma-neg1-5-0-1-5
+  expr: [Gamma, -1.5, 0, 1.5]
+  expected: 2.32843735059127
+- role: test
+  id: gamma-3-1-7-all-integers
+  expr: [N, [Gamma, 3, 1, 7]]
+  expected: { num: "1.7801248780961680544574150053207009665082095" }
+- role: test
+  id: gamma-2-5-0-complex-1-5-plus-i
+  expr: [Gamma, 2.5, 0, [Complex, 1.5, 1]]
+  expected: [Complex, { num: "0.414524217855037220473625612505858887098" }, 0.4535560131834821]
+- role: test
+  id: gamma-complex-2-plus-i-0-1-5
+  expr: [Gamma, [Complex, 2, 1], 0, 1.5]
+  expected: [Complex, { num: "0.36406602557014513" }, -0.08658148128456594]
+- role: test
+  id: gamma-three-complex-arguments
+  expr: [Gamma, [Complex, 2, 1], [Complex, 0.5, -1], [Complex, 1.5, 1]]
+  expected: [Complex, 0.6577220936262111, 1.1424338108131642]
+- role: test
+  id: gamma-0-1-4-all-integers
+  expr: [N, [Gamma, 0, 1, 4]]
+  expected: 0.2156045819856716

@@ -1,9 +1,7 @@
-// Collect oracle values for the heads special-functions.ts still declares directly --
-// Gamma / GammaRegularized's generalized (three-argument) incomplete-gamma extension, and
-// HarmonicNumber -- from BOTH mpmath and a Wolfram kernel, and write them to
-// tests/special-functions.golden.json. The zeta-family cousins that moved upstream as #340
-// patches (BarnesG, LogGamma, ClausenCl, the Dirichlet family, StieltjesGamma) have their
-// own oracle script and golden in upstream/compute-engine/ (design/upstreaming.md §10).
+// Collect oracle values for GammaRegularized's generalized (three-argument) incomplete-gamma
+// extension -- the only head here without a mapped oracle binding (see GammaRegularized.yaml)
+// -- from BOTH mpmath and a Wolfram kernel, and write them to
+// tests/special-functions.golden.json.
 //
 // Requires python3 + mpmath and wolframscript on PATH. Run from the package:
 //   node scripts/collect-special-goldens.ts
@@ -45,7 +43,6 @@ const label = (v: Val): string =>
     : "rat" in v
       ? `${v.rat[0]}/${v.rat[1]}`
       : `${v.c[0]}${v.c[1] < 0 ? "" : "+"}${v.c[1]}i`;
-const isReal = (v: Val): boolean => typeof v === "number" || "rat" in v;
 
 interface Pending {
   golden: GoldenCase;
@@ -55,7 +52,7 @@ interface Pending {
 const pending: Pending[] = [];
 const push = (p: Pending): void => void pending.push(p);
 
-// --- Gamma(s, z₀, z₁) / GammaRegularized(s, z₀, z₁) ---------------------------------
+// --- GammaRegularized(s, z₀, z₁) ---------------------------------------------------
 // The third argument is ours; the two-argument kernel underneath is compute-engine's, so
 // these rows check the difference, the z₀ = 0 lower incomplete gamma included.
 const gammaArgs: [Val, Val, Val][] = [
@@ -71,65 +68,18 @@ const gammaArgs: [Val, Val, Val][] = [
   [0, 1, 4],
 ];
 for (const [s, z0, z1] of gammaArgs) {
-  for (const head of ["Gamma", "GammaRegularized"] as const) {
-    const wlHead = head === "Gamma" ? "Gamma" : "GammaRegularized";
-    const pyCall =
-      head === "Gamma"
-        ? `(gammainc(${toPy(s)}, ${toPy(z0)}, inf) - gammainc(${toPy(s)}, ${toPy(z1)}, inf))`
-        : `(gammainc(${toPy(s)}, ${toPy(z0)}, inf, regularized=True) - gammainc(${toPy(s)}, ${toPy(z1)}, inf, regularized=True))`;
-    push({
-      golden: {
-        head,
-        args: [toCE(s), toCE(z0), toCE(z1)],
-        label: `${head === "Gamma" ? "Γ" : "Q"}(${label(s)}, ${label(z0)}, ${label(z1)})`,
-        tol: 1e-12,
-      },
-      // mpmath's gammainc(z, a, b) is the integral between the limits, so Γ(s, z₀) − Γ(s, z₁)
-      // is the difference of two upper tails — spelled out rather than using gammainc(s,z₀,z₁)
-      // so the row checks the same two calls the head makes.
-      py: pyCall,
-      wl: `${wlHead}[${toWL(s)}, ${toWL(z0)}, ${toWL(z1)}]`,
-    });
-  }
-}
-
-// --- HarmonicNumber(z) / HarmonicNumber(z, r): mpmath.harmonic (1-arg only) plus the
-// ζ(r) − ζ(r, z+1) identity mpmath's Hurwitz zeta also lets us check the 2-arg form with.
-const harmonicZGrid: Val[] = [
-  2.5,
-  0.5,
-  -0.5,
-  -2.5,
-  10.5,
-  { rat: [7, 3] },
-  { c: [3, 2] },
-  { c: [-1.5, 4] },
-  { c: [0.2, -3] },
-];
-for (const z of harmonicZGrid) {
-  push({
-    golden: { head: "HarmonicNumber", args: [toCE(z)], label: `H(${label(z)})`, tol: 1e-11 },
-    py: isReal(z) ? `harmonic(${toPy(z)})` : undefined,
-    wl: `HarmonicNumber[${toWL(z)}]`,
-  });
-}
-const harmonicRGrid: [Val, Val][] = [
-  [2.5, 2],
-  [0.5, 3],
-  [{ c: [3, 2] }, 2],
-  [5, { rat: [1, 2] }],
-  [{ c: [-1.5, 4] }, { rat: [3, 2] }],
-];
-for (const [z, r] of harmonicRGrid) {
   push({
     golden: {
-      head: "HarmonicNumber",
-      args: [toCE(z), toCE(r)],
-      label: `H(${label(z)}, ${label(r)})`,
-      tol: 1e-10,
+      head: "GammaRegularized",
+      args: [toCE(s), toCE(z0), toCE(z1)],
+      label: `Q(${label(s)}, ${label(z0)}, ${label(z1)})`,
+      tol: 1e-12,
     },
-    py: `(zeta(${toPy(r)}) - zeta(${toPy(r)}, ${toPy(z)} + 1))`,
-    wl: `HarmonicNumber[${toWL(z)}, ${toWL(r)}]`,
+    // mpmath's gammainc(z, a, b) is the integral between the limits, so Q(s, z₀) − Q(s, z₁)
+    // is the difference of two upper tails — spelled out rather than using gammainc(s,z₀,z₁)
+    // so the row checks the same two calls the head makes.
+    py: `(gammainc(${toPy(s)}, ${toPy(z0)}, inf, regularized=True) - gammainc(${toPy(s)}, ${toPy(z1)}, inf, regularized=True))`,
+    wl: `GammaRegularized[${toWL(s)}, ${toWL(z0)}, ${toWL(z1)}]`,
   });
 }
 
@@ -145,7 +95,7 @@ const parseLines = (out: string, clean: (s: string) => number): Map<number, Pair
 
 const pyCases = pending.map((p, k) => (p.py ? `    (${k}, ${p.py}),` : "")).filter(Boolean);
 const py = `
-from mpmath import mp, mpf, mpc, inf, gammainc, harmonic, zeta
+from mpmath import mp, mpf, mpc, inf, gammainc
 mp.dps = 30
 cases = [
 ${pyCases.join("\n")}

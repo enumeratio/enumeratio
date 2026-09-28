@@ -175,3 +175,43 @@
   id: h-2-is-three-halves
   expr: [HarmonicNumber, 2]
   expected: [Rational, 3, 2]
+- role: test
+  id: h-neg0-5
+  expr: [HarmonicNumber, -0.5]
+  expected: { num: "-1.3862943611198906188344642429163531361508" }
+- role: test
+  id: h-neg2-5
+  expr: [HarmonicNumber, -2.5]
+  expected: { num: "1.2803723055467760478322024237503135305157" }
+- role: test
+  id: h-10-5
+  expr: [HarmonicNumber, 10.5]
+  expected: { num: "2.9754547944373144739743437361702637213642" }
+- role: test
+  id: n-harmonicnumber-7-3-rational
+  expr: [N, [HarmonicNumber, [Rational, 7, 3]]]
+  expected: { num: "1.6237533134521551090386644443665621483152" }
+- role: test
+  id: h-complex-neg1-5-plus-4i
+  expr: [HarmonicNumber, [Complex, -1.5, 4]]
+  expected: [Complex, { num: "1.9916455964528293606065120900824024310422" }, 1.816950172910536]
+- role: test
+  id: h-complex-0-2-minus-3i
+  expr: [HarmonicNumber, [Complex, 0.2, -3]]
+  expected: [Complex, { num: "1.6983479033451581606065120900824024310422" }, -1.3395520039987705]
+- role: test
+  id: h-2-5-order-2
+  expr: [HarmonicNumber, 2.5, 2]
+  expected: { num: "1.3145763107479915714996141111523940660066" }
+- role: test
+  id: h-0-5-order-3
+  expr: [HarmonicNumber, 0.5, 3]
+  expected: { num: "0.7876585810424342876015710309313000554101" }
+- role: test
+  id: n-harmonicnumber-complex-3-plus-2i-order-2
+  expr: [N, [HarmonicNumber, [Complex, 3, 2], 2]]
+  expected: [Complex, { num: "1.429588703523849896472415166646025189219" }, 0.12181963298746644]
+- role: test
+  id: h-complex-neg1-5-plus-4i-order-3-2
+  expr: [HarmonicNumber, [Complex, -1.5, 4], [Rational, 3, 2]]
+  expected: [Complex, { num: "2.005917820915590443348567567924071630571" }, 0.7781594851952996]

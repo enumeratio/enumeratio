@@ -389,3 +389,97 @@ q-s-z-at-a-complex-order-s-beyond-what-the:
     in: N[GammaRegularized[Complex[2, 1], 1.5]]
   wolfram:
     in: N[GammaRegularized[Complex[2, 1], 1.5]]
+q-1-0-2-all-integers:
+  epsil:
+    in: N(GammaRegularized(1, 0, 2))
+    out: 0.864_664_716_763_387_308_106_000_505_027_515_596_592_4
+  tex:
+    in: N(\operatorname{GammaRegularized}(1, 0, 2))
+    out: 0.864\,664\,716\,763\,387\,308\,106
+  fullform:
+    in: N[GammaRegularized[1, 0, 2]]
+  wolfram:
+    in: N[GammaRegularized[1, 0, 2]]
+q-2-5-1-5-3:
+  epsil:
+    in: GammaRegularized(2.5, 1.5, 3)
+    out: 0.393_766_917_465_348_53
+  tex:
+    in: \operatorname{GammaRegularized}(2.5, 1.5, 3)
+    out: 0.393\,766\,917\,465\,348\,53
+  fullform:
+    in: GammaRegularized[2.5, 1.5, 3]
+  wolfram:
+    in: GammaRegularized[2.5, 1.5, 3]
+q-0-5-0-0-25:
+  epsil:
+    in: GammaRegularized(0.5, 0, 0.25)
+    out: 0.520_499_877_813_046_7
+  tex:
+    in: \operatorname{GammaRegularized}(0.5, 0, 0.25)
+    out: 0.520\,499\,877\,813\,046\,7
+  fullform:
+    in: GammaRegularized[0.5, 0, 0.25]
+  wolfram:
+    in: GammaRegularized[0.5, 0, 0.25]
+q-3-1-7-all-integers:
+  epsil:
+    in: N(GammaRegularized(3, 1, 7))
+    out: 0.890_062_439_048_084_027_228_707_502_660_350_483_254_104_75
+  tex:
+    in: N(\operatorname{GammaRegularized}(3, 1, 7))
+    out: 0.890\,062\,439\,048\,084\,027\,229
+  fullform:
+    in: N[GammaRegularized[3, 1, 7]]
+  wolfram:
+    in: N[GammaRegularized[3, 1, 7]]
+q-2-5-0-complex-1-5-plus-i:
+  epsil:
+    in: GammaRegularized(2.5, 0, 1.5 + i)
+    out: |-
+      0.311_826_994_456_123_800_387_767_818_958_477_786_856_190_725_271_369_139_601_696_933_010_652_517_165_035_6 +
+      0.341_188_770_924_759_24i
+  tex:
+    in: \operatorname{GammaRegularized}(2.5, 0, 1.5+i)
+    out: 0.311\,826\,994\,456\,123\,800\,388+0.341\,188\,770\,924\,759\,24i
+  fullform:
+    in: GammaRegularized[2.5, 0, Complex[1.5, 1]]
+  wolfram:
+    in: GammaRegularized[2.5, 0, Complex[1.5, 1]]
+q-complex-2-plus-i-0-1-5:
+  epsil:
+    in: N(GammaRegularized(2 + i, 0, 1.5))
+    out: |-
+      0.382_347_768_954_935_868_974_732_975_688_471_475_129_969_902_289_332_079_8 -
+      0.333_481_540_658_552_23i
+  tex:
+    in: N(\operatorname{GammaRegularized}(2+i, 0, 1.5))
+    out: 0.382\,347\,768\,954\,935\,868\,975-0.333\,481\,540\,658\,552\,23i
+  fullform:
+    in: N[GammaRegularized[Complex[2, 1], 0, 1.5]]
+  wolfram:
+    in: N[GammaRegularized[Complex[2, 1], 0, 1.5]]
+q-three-complex-arguments:
+  epsil:
+    in: N(GammaRegularized(2 + i, 0.5 - i, 1.5 + i))
+    out: |-
+      1.509_764_918_616_015_852_275_665_995_948_099_244_935_101_301_100_757_506 +
+      0.956_382_909_213_873_6i
+  tex:
+    in: N(\operatorname{GammaRegularized}(2+i, 0.5-i, 1.5+i))
+    out: 1.509\,764\,918\,616\,015\,852\,28+0.956\,382\,909\,213\,873\,6i
+  fullform:
+    in: N[GammaRegularized[Complex[2, 1], Complex[0.5, -1], Complex[1.5, 1]]]
+  wolfram:
+    in: N[GammaRegularized[Complex[2, 1], Complex[0.5, -1], Complex[1.5, 1]]]
+q-0-1-4-all-integers:
+  epsil:
+    in: N(GammaRegularized(0, 1, 4))
+    out: "0"
+  tex:
+    in: N(\operatorname{GammaRegularized}(0, 1, 4))
+    out: "0"
+  fullform:
+    in: N[GammaRegularized[0, 1, 4]]
+  wolfram:
+    in: N[GammaRegularized[0, 1, 4]]
