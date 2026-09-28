@@ -6,6 +6,7 @@ signatures:
   - call: Pick(list, sel)
     description: elements of list where the corresponding sel element is True
     library: enumeratio-collections
+    type: (list<any>, list<any>, any?) -> list<any>
   - call: Pick(list, sel, patt)
     description: elements of list where the corresponding sel element matches patt
     library: enumeratio-collections

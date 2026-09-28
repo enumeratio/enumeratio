@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { symbolNameOf } from "@enumeratio/boxed";
+import { symbolNameOf } from "@enumeratio/engine";
 import { isDiagonal, listOf, rowsOf, squareMatrixError } from "./matrix-exp.ts";
 import { type EvalOptions, wantsNumber } from "@enumeratio/for-compute-engine";
 

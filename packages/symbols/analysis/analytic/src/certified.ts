@@ -1,6 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { BigDecimal } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import {
   type Ball,
   certify,

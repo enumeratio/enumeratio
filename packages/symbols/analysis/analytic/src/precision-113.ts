@@ -1,5 +1,5 @@
 import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/engine";
 import { isFiniteNum, cx, logGamma, DOUBLE_DIGITS } from "@enumeratio/for-compute-engine";
 
 /**

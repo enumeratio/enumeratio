@@ -102,7 +102,7 @@ Pseudo-Vue, both spellings:
 
 The second spelling is the one every generic element already has; a built component
 supports it because the element adopts its structural children (`structure.ts` in
-`notatio-lit`) -- the same lowering, applied by the element to its own children instead
+`components`) -- the same lowering, applied by the element to its own children instead
 of by `renderingOf` to the AST. One map, used from both sides. A head with a fixed
 signature also takes its arguments by name, from the reference entry's parameters:
 `<Binomial n="5" k="2" />`.
@@ -228,7 +228,7 @@ since an expression is self-contained by intent; hand-written markup needs none.
 
 ## Where the lowering lives
 
-Only in the elements. `notatio/vue` and `notatio/react` render `structuralOf` and
+Only in the elements. `frontend/vue` and `frontend/react` render `structuralOf` and
 nothing else: heads to tags, arguments to children, options to props. A `<Plot>` that
 reaches the DOM with a `<Sin>` inside it is lowered by `<notatio-plot>` when it adopts
 its children (`structure.ts`), and a `<Dynamic>` beside a `<Slider>` reads the slider's
@@ -256,17 +256,17 @@ adding one is a change to one table in the base.
 
 Two, split along the dependency that matters:
 
-| package                   | what                                                                                                                                                                                                                     | depends on              |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
-| `@enumeratio/notatio`     | the base: `symbols.ts` (head → tag, the lowering), `vdom.ts`, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers, the shared engine; and the framework glue at `./vue` and `./react` | compute-engine, formats |
-| `@enumeratio/notatio-lit` | every `notatio-*` element, the DOM half of the contract (`define.ts`), structural adoption, the frame loops, bindings, styles, popovers, MathLive, xterm                                                                 | notatio, lit, mathlive  |
+| package                  | what                                                                                                                                                                                                                     | depends on              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `@enumeratio/frontend`   | the base: `symbols.ts` (head → tag, the lowering), `vdom.ts`, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers, the shared engine; and the framework glue at `./vue` and `./react` | compute-engine, formats |
+| `@enumeratio/components` | every `notatio-*` element, the DOM half of the contract (`define.ts`), structural adoption, the frame loops, bindings, styles, popovers, MathLive, xterm                                                                 | frontend, lit, mathlive |
 
 The base has no UI framework and no DOM at import; the CLI draws through it in Node.
 `./vue` and `./react` are subpaths, so they cost nothing unless imported, and `vue` /
 `react` are optional peers: each is `<Notatio expr>` over `structuralOf` and
 `toVNode(h)` plus the generated per-symbol wrappers (`<Slider>`, `<Plot>`,
 `<Binomial>`), sixty lines of glue that name the elements without registering them --
-a page imports `@enumeratio/notatio-lit` once for that. The vue and react packages of
+a page imports `@enumeratio/components` once for that. The vue and react packages of
 the first split (2026-09-16) folded back the same day: they had no dependency of their
 own to justify a package. The lit package stays separate because MathLive and xterm
 are heavy and DOM-only, and a Node consumer must not install them.
@@ -280,9 +280,9 @@ are heavy and DOM-only, and a Node consumer must not install them.
 - `options.ts` in `formats`: `optionsOf` / `withOptions`; `lowerOptions` and
   `VisualSymbol.options` in the base's `symbols.ts`; `primitives.ts` for what `Epilog`
   carries.
-- Generic elements in `notatio-lit` (`generic.ts`): one class per head in the base's
-  `HEADS` (`heads-data.ts`, collected from the engine's symbols, the reference entries
-  and the drawing heads, with `PARAMS` for the fixed signatures), registered at its tag
+- Generic elements in `components` (`generic.ts`): one class per head in the base's
+  `HEADS` (`head-names.ts`: every head in the symbol manifest, design/manifest.md, and
+  the drawing heads, with `PARAMS` for the fixed signatures), registered at its tag
   unless a hand-written element owns it; `expression` from `value`, the children or the
   named attributes; only the outermost typesets. `structure.ts` adopts the same
   spelling on the hand-written components.

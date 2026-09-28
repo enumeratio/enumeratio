@@ -71,7 +71,7 @@ release. Add a tool name to select part of the graph. For example, run
 - Beside each entry, `<Head>.implementations.yaml` holds every example's forms (`epsil`, `tex`,
   `traditional`, each system's `in`) and what the oracle kernels answered. After adding or
   changing an example (or a printer or transpiler), run
-  `UPDATE_FORMS=1 node packages/notatio/scripts/collect-forms.ts`; notatio's forms test says so
+  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`; notatio's forms test says so
   when it's needed. Kernel answers come from `oracle-scan.ts --accept`; notes and
   classifications on a row are written by hand.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
@@ -101,6 +101,10 @@ release. Add a tool name to select part of the graph. For example, run
   `packages/cli/tests/demos.test.ts` for the pattern.
 - **Patches in `upstream/` test the way their upstream does**, snapshots included, so a test
   can go upstream with its code.
+- **Long sweeps run nightly; the standard run stays fast.** A test that samples or enumerates
+  takes a small budget by default and its full one under `DEEP_TESTS=1`, which `nightly.yml`'s
+  `deep-tests` job sets (give the package a filter there). Keep the important cases in the
+  standard run as fixed examples, not left to the sample.
 
 ## CI and deployment
 

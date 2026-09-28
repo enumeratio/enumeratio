@@ -12,3 +12,8 @@ bindings:
     template: group_algebra(QQ, symmetric_group($1))
     arity: 1
 stub: carrier
+signatures:
+  - call: SymmetricGroupAlgebra(...)
+    description: Mapped through to sage, oscar for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (integer) -> value

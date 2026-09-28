@@ -6,6 +6,7 @@ signatures:
   - call: SetAttributes(f, attr)
     description: Turns $attr$ on for $f$'s operator definition, in place.
     library: enumeratio-collections
+    type: (symbol, any) -> any
   - call: SetAttributes(f, {attr1, attr2, ...})
     description: Turns on several attributes at once.
     library: enumeratio-collections
@@ -16,3 +17,5 @@ seeAlso:
   - Attributes
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

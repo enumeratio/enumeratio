@@ -19,3 +19,8 @@ grades:
   - name: n
     role: axis
 carrier: Surjection
+signatures:
+  - call: Surjections(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+    library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>

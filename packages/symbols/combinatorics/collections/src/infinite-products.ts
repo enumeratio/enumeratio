@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { dependsOn, limitsOf } from "./products.ts";
 
 // Closed forms for ∏_{k=k0}^∞ P(k)/Q(k), a rational function of the index whose

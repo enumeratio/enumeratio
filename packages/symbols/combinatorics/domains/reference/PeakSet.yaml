@@ -7,3 +7,8 @@ details:
   - Its size is the Peaks statistic, exactly as DescentSet's is Descents.
 mapOn:
   - Permutation
+signatures:
+  - call: PeakSet(Permutation)
+    description: The interior positions that rise then fall.
+    library: enumeratio-domains
+    type: (permutation) -> finset

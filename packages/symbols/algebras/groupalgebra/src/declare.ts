@@ -1,6 +1,6 @@
 import { registerAlgebra } from "@enumeratio/algebra";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import {
   basisElement,
   classSum,

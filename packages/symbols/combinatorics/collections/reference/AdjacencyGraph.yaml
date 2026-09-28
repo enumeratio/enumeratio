@@ -6,6 +6,7 @@ signatures:
   - call: AdjacencyGraph(matrix)
     description: vertices 1..n; a SYMMETRIC matrix gives an undirected graph (one edge per i < j with a nonzero entry), anything else gives a directed graph (one edge per nonzero (i, j), including self-loops).
     library: enumeratio-collections
+    type: (any, any?) -> value
   - call: AdjacencyGraph(vertices, matrix)
     description: the same, with vertices labelled by the given list instead of 1..n.
     library: enumeratio-collections

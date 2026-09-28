@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
 
 // DifferenceRootReduce(f(n), n) / DifferenceRoot(...)[n]: Wolfram's holonomic (P-recursive)

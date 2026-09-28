@@ -57,7 +57,7 @@ Heads like `Add`, `Power`, `Rational` and `Equal` carry Wolfram names and oracle
 
 `to-wolfram` and the oracle emitters run in the browser and in CI, and they need synchronous lookups. So do the `ce.declare` descriptions. There are two ways to give them the data:
 
-- A generated `*-data.ts` per consumer, pinned by a test that the generated file is current. This is how `heads-data.ts` and the forms work today.
+- A generated `*-data.ts` per consumer, pinned by a test that the generated file is current. This is how the forms work today (`heads-data.ts` did too, until the manifest replaced it: design/manifest.md).
 - The `virtual:reference-entries` Vite module plus the Node loader. This only works where the consumer already runs under Vite or the loader.
 
 I'd default to the generated files. No consumer has to learn about YAML, and tree-shaking keeps the browser bundles small.

@@ -6,6 +6,7 @@ signatures:
   - call: Probability(Conditioned(pred, cond), Distributed(x, dist))
     description: P(pred | cond) = P(pred, cond) / P(cond), for the discrete and closed-form-CDF cases Probability itself handles; otherwise stays unevaluated.
     library: enumeratio-statistics
+    type: (any, any) -> expression<Conditioned>
   - call: Expectation(Conditioned(f, cond), Distributed(x, dist))
     description: "E[f | cond]: exact for cond pinning x to a point (any distribution), or cond bounding x to a finite interval on a discrete distribution; otherwise stays unevaluated."
     library: enumeratio-statistics

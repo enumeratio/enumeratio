@@ -5,6 +5,11 @@ summary: 'Hyperbolic tangent: $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$.'
 signatures:
   - call: Tanh(x)
     description: the hyperbolic tangent of x.
+  - call: Tanh(x)
+    description: 'Hyperbolic tangent: $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$.'
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 details:
   - $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$, ranging over $(-1, 1)$.
   - 'Odd function: $\tanh(-x) = -\tanh(x)$.'

@@ -5,7 +5,7 @@
 // @enumeratio/collections), the two are held together by a differential test instead.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { bySignature, type Definition, SUBJECT } from "./types.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];

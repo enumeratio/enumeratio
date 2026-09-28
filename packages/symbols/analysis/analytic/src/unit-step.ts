@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf } from "@enumeratio/boxed";
+import { bigRationalAt, operandsOf } from "@enumeratio/engine";
 import { isFiniteNum } from "@enumeratio/for-compute-engine";
 
 // UnitStep(x1, x2, …) — 0 where any argument is negative, 1 otherwise (1 at exactly 0,

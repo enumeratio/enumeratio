@@ -6,6 +6,7 @@ signatures:
   - call: ModularWord(matrix)
     description: the positive $LR$ word
     library: enumeratio-modular
+    type: (value) -> string
   - call: ModularMatrix(a, b, c, d)
     description: a matrix; every head here also accepts the word in its place
     library: enumeratio-modular

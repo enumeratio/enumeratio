@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt } from "@enumeratio/engine";
 import {
   bernoulliRational,
   type Rat,

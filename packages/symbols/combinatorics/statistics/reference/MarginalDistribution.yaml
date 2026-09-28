@@ -6,6 +6,7 @@ signatures:
   - call: MarginalDistribution(ProductDistribution(d1, ..., dn), k)
     description: the k-th factor, dk, directly.
     library: enumeratio-statistics
+    type: (any, any) -> distribution
   - call: MarginalDistribution(ProductDistribution(d1, ..., dn), {k1, k2, ...})
     description: ProductDistribution(dk1, dk2, ...), the joint marginal of the named factors.
     library: enumeratio-statistics

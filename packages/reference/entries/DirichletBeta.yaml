@@ -6,6 +6,7 @@ signatures:
   - call: DirichletBeta(s)
     description: the Dirichlet beta function $\beta(s)$.
     library: enumeratio-analytic
+    type: (number) -> number
 details:
   - $\beta(s) = 4^{-s}\left(\zeta(s, \tfrac14) - \zeta(s, \tfrac34)\right)$ in terms of [[HurwitzZeta]], which is how it is evaluated numerically (complex $s$ included).
   - 'Odd positive integers have closed forms in $\pi$ and the Euler numbers: $\beta(2k+1) = (-1)^k E_{2k}\,\pi^{2k+1} / (4^{k+1}(2k)!)$ — $\beta(1) = \pi/4$ (Leibniz), $\beta(3) = \pi^3/32$, $\beta(5) = 5\pi^5/1536$.'

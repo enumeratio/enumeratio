@@ -8,6 +8,8 @@ signatures:
   - call: Clamp(x)
     description: x clamped to the default range $[-1, 1]$, Wolfram's Clip[x].
     library: enumeratio-collections
+    type: (any, any?, any?, any?, any?) -> any
+    overrides: compute-engine
   - call: Clamp(x, lower, upper, vLower, vUpper)
     description: "Wolfram's Clip[x, {lower, upper}, {vLower, vUpper}]: a replacement value outside the range, rather than the nearer bound."
     library: enumeratio-collections

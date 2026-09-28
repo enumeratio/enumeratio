@@ -6,6 +6,7 @@ signatures:
   - call: RandomComplex()
     description: uniform over the unit square (real and imaginary parts each in [0, 1])
     library: enumeratio-collections
+    type: (any?) random -> any
   - call: RandomComplex(zmax)
     description: uniform over the rectangle with corners 0 and zmax
     library: enumeratio-collections

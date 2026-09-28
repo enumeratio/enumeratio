@@ -9,7 +9,7 @@ This is what landed.
 The first slices landed on this branch (2026-09-17); nothing needed a second renderer to
 be useful:
 
-- **`Environment`** (`notatio/src/environment.ts`): the axes as a record, the presets
+- **`Environment`** (`frontend/src/environment.ts`): the axes as a record, the presets
   (`WEB`, `PRINT`, `TTY`, `PIPE`, `COMPACT`), and two detectors that take their signals
   as arguments -- `nodeEnvironment({ isTTY, env })` and `browserEnvironment(mediaSignals(matchMedia))`.
 - **`reduce(expr, env)`** (`reduce.ts`): `declarations` reads every control and
@@ -42,7 +42,7 @@ runs deepest-first and puts an `expression` on what it adopts).
 Second round (same branch): `<Notatio>` in Vue and React reduces for the page's own
 environment (`pageEnvironment` / `watchPageEnvironment`: printing pins or samples, a
 narrow window stacks the rows) or for an `env="print"` it is given; `textPlot`
-(`notatio/src/textplot.ts`) draws a `Plot` on braille cells, which the CLI uses for an
+(`frontend/src/textplot.ts`) draws a `Plot` on braille cells, which the CLI uses for an
 evaluated `Plot` at a terminal without an image protocol and under the control strip;
 one-shot text output (a pipe) reduces for `PIPE` while `--json` keeps the expression
 whole; a pinned `Locator` is `Epilog -> Point(…)` on the first `Plot` in the tree.

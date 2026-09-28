@@ -24,7 +24,7 @@
 // never a reimplementation. This is the "small extension" the sibling families don't pay
 // for, confined to the one file that needs it.
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature } from "@enumeratio/engine";
 import {
   BellB,
   IsSetPartitionOf,

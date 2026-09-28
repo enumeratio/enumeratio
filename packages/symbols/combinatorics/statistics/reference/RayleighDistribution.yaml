@@ -6,6 +6,7 @@ signatures:
   - call: RayleighDistribution(sigma)
     description: an inert distribution object — carries $\sigma$, unevaluated.
     library: enumeratio-statistics
+    type: (real<0..>) -> distribution
 details:
   - $PDF(x) = (x/\sigma^2)e^{-x^2/(2\sigma^2)}$ for $x \geq 0$.
   - $CDF(x) = 1-e^{-x^2/(2\sigma^2)}$, clamped to $0$ below $x=0$.

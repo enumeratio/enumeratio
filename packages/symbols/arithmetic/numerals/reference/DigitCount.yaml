@@ -12,6 +12,8 @@ signatures:
   - call: DigitCount(n, base, digit(s), width)
     description: counted over exactly `width` digits, padded or truncated to fit.
     library: enumeratio-numerals
+    type: (integer, integer?, any?, integer?) -> any
+    overrides: compute-engine
 details:
   - Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.
   - The default base-10 form orders counts 1 through 9, then 0 last.

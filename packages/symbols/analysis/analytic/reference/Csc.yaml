@@ -5,6 +5,11 @@ summary: Cosecant, the reciprocal of [[Sin]].
 signatures:
   - call: Csc(x)
     description: the cosecant of x, $\frac{1}{\sin(x)}$.
+  - call: Csc(x)
+    description: Cosecant, the reciprocal of [[Sin]].
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
 details:
   - $\csc(x) = \frac{1}{\sin(x)}$.
   - Odd function, period $2\pi$, same as [[Sin]].

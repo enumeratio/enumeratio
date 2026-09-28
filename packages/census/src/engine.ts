@@ -14,7 +14,7 @@
 
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
-import { declareAestimatio } from "@enumeratio/aestimatio/src";
+import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
@@ -40,7 +40,7 @@ import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
-import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
+import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
@@ -57,54 +57,80 @@ import {
   declareStatistics,
 } from "@enumeratio/statistics/src";
 
-/** Every declaration, in an order that satisfies what depends on what. */
-export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
-  declareAestimatio,
-  declareAnalytic,
-  declareHypercomplex,
-  declareGeometric,
-  declareDiagrams,
-  declareResidues,
-  declareNumerals,
-  declareHecke,
-  declareIncidence,
-  declareQuiver,
-  declareHopf,
-  declareGroupAlgebra,
-  declareModular,
-  declareNumberTheory,
-  declareAdeles,
-  declareBraid,
-  declareCollections,
-  declareGraphics,
-  declareBoxes,
-  declareDomains,
-  (ce) => {
-    // AFTER declareCollections (above), so a plural a collection family already claims
-    // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
-    // bare symbol first.
-    declareDomainPlurals(ce);
-    declareDomainElement(ce);
-    // Statistics, maps and restrictions all key off the carrier types, so they take the
-    // same (type → constructor) index and have to follow `declareDomains`.
-    const domainTypes = Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
-    declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes });
-    declareDistributions(ce);
-    declareDistributions2(ce);
-    declareDistributions3(ce);
-    declareDistributions4(ce);
-    declareDistributions5(ce);
-    declareDistributions6(ce);
-    declareProcesses(ce);
-    declareMaps(ce, domainTypes);
-    declareRestricted(ce);
-    declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });
-  },
-  declareCompose,
-  (ce) => {
-    declareCatalog(ce, { bless: [ENUMERATIO] });
-  },
+type Declare = (ce: ComputeEngine) => void;
+
+// Carriers index statistics, maps and restrictions by (type -> constructor).
+const domainTypes = (): Record<string, string> =>
+  Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
+
+/**
+ * Every declaration with the package that owns it, in an order that satisfies what depends
+ * on what. The package is the directory name, as the manifest names packages: what a step
+ * adds or re-signs is that package's contribution (design/manifest.md).
+ */
+export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = [
+  ["evaluation", declareEvaluation],
+  ["analytic", declareAnalytic],
+  ["hypercomplex", declareHypercomplex],
+  ["geometric", declareGeometric],
+  ["diagram", declareDiagrams],
+  ["residues", declareResidues],
+  ["numerals", declareNumerals],
+  ["hecke", declareHecke],
+  ["incidence", declareIncidence],
+  ["quiver", declareQuiver],
+  ["hopf", declareHopf],
+  ["groupalgebra", declareGroupAlgebra],
+  ["modular", declareModular],
+  ["adeles", declareAdeles],
+  ["braid", declareBraid],
+  // After adeles, as in reference's engines: adeles' Fibonacci/LucasL widening, declared
+  // later, would replace this package's wider signature (the real index, the two-argument
+  // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
+  ["number-theory", declareNumberTheory],
+  ["collections", declareCollections],
+  ["formats", declareGraphics],
+  ["boxes", declareBoxes],
+  ["domains", declareDomains],
+  // AFTER declareCollections (above), so a plural a collection family already claims
+  // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
+  // bare symbol first.
+  [
+    "domains",
+    (ce) => {
+      declareDomainPlurals(ce);
+      declareDomainElement(ce);
+    },
+  ],
+  // Statistics, maps and restrictions all key off the carrier types, so they have to follow
+  // `declareDomains`.
+  [
+    "statistics",
+    (ce) => {
+      declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: domainTypes() });
+      declareDistributions(ce);
+      declareDistributions2(ce);
+      declareDistributions3(ce);
+      declareDistributions4(ce);
+      declareDistributions5(ce);
+      declareDistributions6(ce);
+      declareProcesses(ce);
+    },
+  ],
+  [
+    "domains",
+    (ce) => {
+      declareMaps(ce, domainTypes());
+      declareRestricted(ce);
+      declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });
+    },
+  ],
+  ["domains", declareCompose],
+  ["catalog", (ce) => declareCatalog(ce, { bless: [ENUMERATIO] })],
 ];
+
+/** Every declaration, in order. */
+export const DECLARATIONS: readonly Declare[] = PACKAGE_DECLARATIONS.map(([, declare]) => declare);
 
 /** An engine with everything we ship declared on it. */
 export const fullEngine = (): ComputeEngine => {

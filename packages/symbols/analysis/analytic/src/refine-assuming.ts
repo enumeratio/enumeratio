@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 // Assuming(cond, expr) and Refine(expr, cond?) — thin wrappers over compute-engine's own
 // assumption system (`ce.assume`/`ce.pushScope`/`ce.popScope`), which already makes several

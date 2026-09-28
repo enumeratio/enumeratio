@@ -6,6 +6,7 @@ signatures:
   - call: UpTo(n)
     description: at most $n$ — never an error for asking for more than a collection holds. Never evaluated on its own — read by [[Take]], [[Partition]] and [[Ordering]].
     library: enumeratio-collections
+    type: (integer) -> unknown
 details:
   - "Never reduces by itself: a count specification other heads read, not a value."
   - In [[Take]], takes at most n elements with no error when fewer are available.

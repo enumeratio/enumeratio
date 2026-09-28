@@ -8,3 +8,8 @@ details:
 mapOn:
   - Permutation
   - StandardTableau
+signatures:
+  - call: DescentComposition(Permutation)
+    description: The composition of n cut at the descent positions.
+    library: enumeratio-domains
+    type: (permutation) -> composition

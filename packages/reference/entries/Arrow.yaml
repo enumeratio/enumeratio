@@ -5,3 +5,8 @@ summary: Wolfram's own Arrow, held inert -- the expression is what a worksheet o
 names:
   wolframIdentity: true
 stub: carrier
+signatures:
+  - call: Arrow(...)
+    description: Wolfram's own Arrow, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+    library: enumeratio-formats
+    type: (any*) -> any

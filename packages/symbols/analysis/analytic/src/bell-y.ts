@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf } from "@enumeratio/boxed";
+import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
 
 // BellY(n, k, {x1, …, x_{n−k+1}}) — the partial (incomplete) Bell polynomial B_{n,k},
 // by its textbook recurrence (Comtet):

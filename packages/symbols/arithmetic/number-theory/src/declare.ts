@@ -7,7 +7,7 @@ import {
   threadOverLists,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
@@ -21,7 +21,7 @@ import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { hermiteDecomposition } from "./hermite.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // Number theory past ℤ/m, on top of @enumeratio/residues (declare that first): PowerMod and
 // PowerModList reach ℤ[i], plus rational reconstruction, integer valuations and Hermite

@@ -5,6 +5,11 @@ summary: "The Stirling number of the second kind $S(n, k)$: the number of ways t
 signatures:
   - call: Stirling(n, k)
     description: the number of partitions of an $n$-set into $k$ blocks
+  - call: Stirling(n, k)
+    description: "The Stirling number of the second kind $S(n, k)$: the number of ways to partition an n-set into k non-empty blocks"
+    library: enumeratio-number-theory
+    type: (integer, integer) -> integer
+    overrides: compute-engine
 details:
   - compute-engine spells the second-kind number $\left\{{n\atop k}\right\}$ as $\mathrm{Stirling}$.
   - It satisfies the recurrence $S(n, k) = k\,S(n-1, k) + S(n-1, k-1)$

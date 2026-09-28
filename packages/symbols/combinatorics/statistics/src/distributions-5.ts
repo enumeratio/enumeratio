@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { type EvaluateOptions, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { bindingOf, finish, mentions, numAt } from "./distributions.ts";
 
 // The fifth wave of Wolfram-frontier probability heads, narrowed (mid-batch) to exactly two

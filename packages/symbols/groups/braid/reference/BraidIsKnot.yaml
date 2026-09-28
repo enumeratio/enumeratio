@@ -1,0 +1,12 @@
+name: BraidIsKnot
+domain: Braids and knots
+signature: BraidIsKnot(braid)
+summary: Whether a braid's closure is a knot rather than a multi-component link — its underlying permutation is a single cycle.
+signatures:
+  - call: BraidIsKnot(braid)
+    description: whether the closure has exactly one component
+    library: enumeratio-braid
+    type: (value) -> boolean
+seeAlso:
+  - BraidComponents
+  - SeifertGenus

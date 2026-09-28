@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // The Wolfram-frontier distribution heads: Distributed, RandomVariate, EmpiricalDistribution,
 // BetaDistribution, GammaDistribution, BinormalDistribution, Expectation, Probability — plus
@@ -637,7 +637,7 @@ function wireSeedRandom(ce: ComputeEngine): void {
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) {
     ce.declare("SeedRandom", {
-      signature: "(integer?) -> any",
+      signature: "(integer?) state -> any",
       evaluate: (ops: readonly BoxedExpression[]) => {
         reseed(ops[0] !== undefined ? (integerAt(ops[0]) ?? DEFAULT_SEED) : DEFAULT_SEED);
         return ce.symbol("Nothing");
@@ -787,7 +787,7 @@ function declareRandomVariate(ce: ComputeEngine): void {
   wireSeedRandom(ce);
 
   ce.declare("RandomVariate", {
-    signature: "(any, integer?) -> any",
+    signature: "(any, integer?) random -> any",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const dist = ops[0];
       if (dist === undefined || !isDistribution(dist)) return undefined;

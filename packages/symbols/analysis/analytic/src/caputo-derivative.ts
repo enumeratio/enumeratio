@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // CaputoD(f, {x, alpha}): the Caputo fractional derivative of order `alpha` > 0 of `f`
 // with respect to `x`, at base point 0 — D^alpha_C f(x) = 1/Gamma(n - alpha) *

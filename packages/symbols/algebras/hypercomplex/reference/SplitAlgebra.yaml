@@ -1,0 +1,16 @@
+name: SplitAlgebra
+domain: Hypercomplex algebra
+signature: SplitAlgebra(n)
+summary: The multi-perplex algebra $\mathbb{R}[j_1,\ldots,j_n]/(j_k^2-1)$ on $n$ commuting generators, each squaring to $+1$.
+signatures:
+  - call: SplitAlgebra(n)
+    description: the split algebra on $n$ commuting generators squaring to $+1$
+    library: enumeratio-hypercomplex
+    type: (integer, integer?) -> value
+seeAlso:
+  - Basis
+  - MulticomplexAlgebra
+  - DualAlgebra
+references:
+  - system: wikipedia
+    identity: Split-complex number

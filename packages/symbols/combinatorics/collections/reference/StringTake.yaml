@@ -6,6 +6,7 @@ signatures:
   - call: StringTake(s, n)
     description: the first n characters of s; the last |n| if n is negative
     library: enumeratio-collections
+    type: (string, any) -> string
   - call: StringTake(s, {n})
     description: the nth character alone, as a length-1 string
     library: enumeratio-collections

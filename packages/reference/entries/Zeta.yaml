@@ -17,7 +17,7 @@ bindings:
   - origin: component
     form: <notatio-complex-plot>
     environment: browser
-    source: packages/notatio-lit/src/notatio-complex-plot.ts
+    source: packages/components/src/notatio-complex-plot.ts
     produces: a rendered phase portrait
     note: "For a plotted ζ the head's meaning bottoms out here: the element IS the answer, and there is no expression it reduces to."
   - origin: mapped
@@ -67,6 +67,8 @@ signatures:
   - call: Zeta(s, a)
     description: the two-argument generalized (Hurwitz-type) zeta $\zeta(s, a)$; see [[HurwitzZeta]] for the difference.
     library: enumeratio-analytic
+    type: (number, number?) -> number
+    overrides: compute-engine
 details:
   - 'Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.'
   - 'Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.'

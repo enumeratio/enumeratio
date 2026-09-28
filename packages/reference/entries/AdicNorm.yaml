@@ -8,3 +8,8 @@ bindings:
     template: adic_norm($1)
     arity: 1
 stub: carrier
+signatures:
+  - call: AdicNorm(...)
+    description: Mapped through to rust for the oracle; not yet written up here.
+    library: enumeratio-numerals
+    type: (any) -> number

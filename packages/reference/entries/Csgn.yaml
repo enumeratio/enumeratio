@@ -6,6 +6,7 @@ signatures:
   - call: Csgn(z)
     description: broadcasts element-wise over a list, like compute-engine's other numeric heads
     library: "@enumeratio/analytic"
+    type: (number) -> number
 seeAlso:
   - RealSign
   - Sign

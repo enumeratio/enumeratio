@@ -119,6 +119,12 @@
     },
     "stub": {
       "enum": ["engine", "carrier"]
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "enum": ["HoldAll"]
+      }
     }
   },
   "required": ["name", "domain", "signature", "summary"],
@@ -161,6 +167,12 @@
         },
         "arity": {
           "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "overrides": {
+          "type": "string"
         },
         "references": {
           "type": "array",

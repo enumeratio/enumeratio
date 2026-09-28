@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's
@@ -214,7 +214,7 @@ const rangeOf = (range: BoxedExpression | undefined): [number, number] | undefin
 
 const declareRandomInteger = (ce: ComputeEngine): void => {
   ce.declare("SeedRandom", {
-    signature: "(integer?) -> any",
+    signature: "(integer?) state -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const seed = ops[0] !== undefined ? (integerAt(ops[0]) ?? DEFAULT_SEED) : DEFAULT_SEED;
       rngState.set(ce, { next: mulberry32(seed) });
@@ -223,7 +223,7 @@ const declareRandomInteger = (ce: ComputeEngine): void => {
   });
 
   ce.declare("RandomInteger", {
-    signature: "(any?, any?) -> any",
+    signature: "(any?, any?) random -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const range = rangeOf(ops[0]);
       if (range === undefined) return undefined;

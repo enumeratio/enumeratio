@@ -8,6 +8,8 @@ signatures:
   - call: IsPrime(n, GaussianIntegers -> True)
     description: tests whether $n$ is prime in $\mathbb{Z}[i]$; a complex $n$ is always tested there
     library: enumeratio-number-theory
+    type: (number, any*) -> boolean
+    overrides: compute-engine
 details:
   - A prime has no positive divisors other than 1 and itself; 1 itself is not prime.
   - Returns False unless n is provably prime -- there's no third "unknown" outcome.

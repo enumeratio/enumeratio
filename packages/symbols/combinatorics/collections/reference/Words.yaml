@@ -6,6 +6,7 @@ signatures:
   - call: Words(size, base)
     description: the strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$
     library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>
 details:
   - Count is $base^{size}$; the same family as [[Tuples]], with grades reordered.
 seeAlso:

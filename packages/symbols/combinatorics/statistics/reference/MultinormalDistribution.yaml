@@ -6,6 +6,7 @@ signatures:
   - call: MultinormalDistribution(mu, Sigma)
     description: mean mu, covariance Sigma.
     library: enumeratio-statistics
+    type: (list<any>, list<any>?) -> distribution
   - call: MultinormalDistribution(Sigma)
     description: mean the zero vector, covariance Sigma.
     library: enumeratio-statistics

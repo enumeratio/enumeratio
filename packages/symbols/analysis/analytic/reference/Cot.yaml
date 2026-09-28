@@ -5,6 +5,11 @@ summary: Cotangent, the reciprocal of [[Tan]].
 signatures:
   - call: Cot(x)
     description: the cotangent of x, $\frac{1}{\tan(x)}$.
+  - call: Cot(x)
+    description: Cotangent, the reciprocal of [[Tan]].
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
 details:
   - $\cot(x) = \frac{\cos(x)}{\sin(x)} = \frac{1}{\tan(x)}$.
   - Period $\pi$, same as [[Tan]].

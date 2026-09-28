@@ -8,6 +8,8 @@ signatures:
   - call: FactorInteger(n, GaussianIntegers -> True)
     description: 'the factorisation in $\mathbb{Z}[i]$: a unit first when it is not 1, then first-quadrant primes; a complex $n$ is always factored there'
     library: enumeratio-number-theory
+    type: (number, any*) -> list
+    overrides: compute-engine
 details:
   - For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.
   - Multiplying the $p^e$ factors back together recovers $n$.

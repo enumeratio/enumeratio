@@ -6,6 +6,7 @@ signatures:
   - call: JacobiDN(u, m)
     description: the Jacobi elliptic delta amplitude, argument u, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel; for real u, dn comes from $\operatorname{dn}^2 = 1-m\operatorname{sn}^2$ (exact, no branch ambiguity there). For complex u, dn comes from DLMF 22.8's real addition formulas instead (real-u sn/cn/dn combined algebraically) — verified against mpmath to ~1e-13 relative across all four quadrants, large $\operatorname{Im}(u)$, and close to dn's own pole structure.

@@ -15,6 +15,36 @@ summary: |-
 signatures:
   - call: Element(any, any, boolean?) -> boolean
     description: as compute-engine declares it
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-hypercomplex
+    type: (any, any, boolean?) -> boolean
+    overrides: compute-engine
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-domains
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-hypercomplex
 bindings:
   - origin: mapped
     form: wolfram

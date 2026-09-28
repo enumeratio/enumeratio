@@ -6,6 +6,7 @@ signatures:
   - call: LegendrePolynomial(n, x)
     description: the degree-$n$ Legendre polynomial at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
+    type: (integer, number) -> number
 details:
   - $P_0 = 1$, $P_1 = x$, and Bonnet's recurrence $(n+1)\,P_{n+1} = (2n+1)\,x\,P_n - n\,P_{n-1}$. The coefficients are rationals whose denominators are powers of 2.
   - $\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = \dfrac{2}{2n+1}\,\delta_{mn}$.

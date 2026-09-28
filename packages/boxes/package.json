@@ -22,6 +22,9 @@
     "test": "vp test",
     "check": "vp check"
   },
+  "dependencies": {
+    "@enumeratio/manifest": "workspace:*"
+  },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
     "typescript": "^7.0.2",

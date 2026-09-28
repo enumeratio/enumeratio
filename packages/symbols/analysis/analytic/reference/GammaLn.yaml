@@ -5,6 +5,11 @@ summary: The natural logarithm of $\Gamma(z)$, avoiding the overflow of computin
 signatures:
   - call: GammaLn(z)
     description: $\ln \Gamma(z)$, useful where $\Gamma(z)$ itself would overflow.
+  - call: GammaLn(z)
+    description: The natural logarithm of $\Gamma(z)$, avoiding the overflow of computing [[Gamma]] directly for large z.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 details:
   - 'Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.'
   - Called gammaln in MATLAB and SciPy, lgamma in C's math library.

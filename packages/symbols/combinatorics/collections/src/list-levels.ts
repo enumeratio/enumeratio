@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // Level-aware and structural list operations compute-engine doesn't answer yet: Partition's
 // multi-dimensional block form and its wraparound/padded overhangs, Flatten's infinite

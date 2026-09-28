@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { parseExpression, serializeExpression } from "../src/expression.ts";
-import { isOptionList, optionsOf, ruleOf, withOptions } from "@enumeratio/boxed";
+import { isOptionList, optionsOf, ruleOf, withOptions } from "@enumeratio/engine";
 
 const parse = (src: string) => parseExpression(src).json;
 

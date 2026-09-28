@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf } from "@enumeratio/engine";
 import { allPairsWeightedDistances, weightedAdjacencyMatrixExpr } from "./graph-weights.ts";
 import { degrees, directedAdjacency, type GraphModel, graphOf, integerGraph, listOf, vertexKey } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
@@ -840,7 +840,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("RandomGraph", {
-    signature: "(any) -> value",
+    signature: "(any) random -> value",
     evaluate: (ops) => {
       const spec = ops[0];
       if (spec === undefined || spec.operator !== "List") return undefined;

@@ -6,6 +6,7 @@ signatures:
   - call: KaryTree(n)
     description: the binary (k = 2) tree on n vertices
     library: enumeratio-collections
+    type: (integer, integer?) -> value
   - call: KaryTree(n, k)
     description: the k-ary tree on n vertices
     library: enumeratio-collections

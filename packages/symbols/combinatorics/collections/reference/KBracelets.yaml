@@ -6,6 +6,7 @@ signatures:
   - call: KBracelets(n, k)
     library: enumeratio-collections
     description: the bracelets of $n$ beads, each one of $k$ colours.
+    type: (integer, integer) -> list<list<integer>>
 details:
   - A lazy indexed collection; generalises [[BinaryBracelets]] from $k=2$ to any alphabet size, by the same Burnside sum over $D_n$.
   - Each element is the lexicographically-least word in its rotation-and-reflection orbit, over letters $0,…,k-1$.

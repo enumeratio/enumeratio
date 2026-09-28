@@ -16,3 +16,8 @@ statOn:
   - DyckPath
   - KDyckPath
   - MotzkinPath
+signatures:
+  - call: Returns(path)
+    description: Points where the path comes back to height 0.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

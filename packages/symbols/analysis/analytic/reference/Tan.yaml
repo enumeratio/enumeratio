@@ -5,6 +5,11 @@ summary: The tangent of x, in radians.
 signatures:
   - call: Tan(x)
     description: the tangent of x, in radians.
+  - call: Tan(x)
+    description: The tangent of x, in radians.
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
 details:
   - $\tan(x) = \frac{\sin(x)}{\cos(x)}$.
   - 'Odd function: $\tan(-x) = -\tan(x)$.'

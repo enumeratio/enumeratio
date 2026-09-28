@@ -6,6 +6,7 @@ signatures:
   - call: Braid(strands, word)
     description: the braid
     library: enumeratio-braid
+    type: (integer, list?) -> value
   - call: BraidPermutation(braid)
     description: the image in the symmetric group — forget which strand went over
     library: enumeratio-braid

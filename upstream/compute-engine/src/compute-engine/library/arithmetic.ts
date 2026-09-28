@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 
 /**

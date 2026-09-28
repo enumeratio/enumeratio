@@ -8,3 +8,8 @@ details:
 statOn:
   - SetComposition
   - SetPartition
+signatures:
+  - call: LastBlockSize(partition)
+    description: The size of the final block.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

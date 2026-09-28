@@ -6,6 +6,7 @@ signatures:
   - call: While(test)
     description: Re-evaluates $test$ until it reads other than $True$.
     library: enumeratio-collections
+    type: (any, any?) -> any
   - call: While(test, body)
     description: Evaluates $body$ each time $test$ (re-evaluated first) reads $True$; stops as soon as it doesn't.
     library: enumeratio-collections
@@ -17,3 +18,5 @@ seeAlso:
   - NestWhile
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

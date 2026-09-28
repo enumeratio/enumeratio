@@ -6,6 +6,7 @@ signatures:
   - call: RandomFunction(proc, [List, tmin, tmax])
     description: samples [[WienerProcess]] or [[PoissonProcess]] over $100$ equal steps from $tmin$ to $tmax$ (the fixed default step count, since this engine has no adaptive-resolution mechanism to match Wolfram's own).
     library: enumeratio-statistics
+    type: (any, list<real>) random -> any
   - call: RandomFunction(proc, [List, tmin, tmax, dt])
     description: samples over steps of size $dt$ from $tmin$ to $tmax$ (the final step may be short, landing exactly on $tmax$).
     library: enumeratio-statistics

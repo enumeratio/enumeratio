@@ -6,6 +6,7 @@ signatures:
   - call: Level(expr, n)
     description: levels 1 through n
     library: enumeratio-collections
+    type: (any, any) -> list<any>
   - call: Level(expr, {n})
     description: level n alone
     library: enumeratio-collections

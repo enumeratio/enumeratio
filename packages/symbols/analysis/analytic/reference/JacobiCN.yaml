@@ -6,6 +6,7 @@ signatures:
   - call: JacobiCN(u, m)
     description: the Jacobi elliptic cosine, argument u, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel (Abramowitz & Stegun 16.4); see there for the m-outside-[0,1] and complex-u coverage this rests on.

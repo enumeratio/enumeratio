@@ -36,5 +36,7 @@ for (const entry of entries) {
 }
 
 test("every map entry carries an example", () => {
-  for (const entry of entries) expect(entry.examples.length).toBeGreaterThan(0);
+  const maps = entries.filter((entry) => entry.mapOn !== undefined);
+  expect(maps.length).toBeGreaterThan(20);
+  for (const entry of maps) expect(entry.examples.length, entry.name).toBeGreaterThan(0);
 });

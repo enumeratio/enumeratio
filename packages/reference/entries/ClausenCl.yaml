@@ -6,6 +6,7 @@ signatures:
   - call: ClausenCl(n, θ)
     description: the Clausen function $\mathrm{Cl}_n(\theta)$ of integer order $n \ge 1$ and real $\theta$.
     library: enumeratio-analytic
+    type: (integer, number) -> number
 details:
   - $\mathrm{Cl}_2(\theta) = -\int_0^\theta \ln\left|2\sin\tfrac{t}{2}\right|\,dt$ is the classical Clausen function; $\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$, infinite at $\theta \equiv 0$.
   - "Parity alternates with the order (DLMF §25.12(ii), mpmath's `clsin` / `clcos`): even $n$ gives the odd, $2\\pi$-periodic sine series, odd $n$ the even cosine series, so that $\\mathrm{Cl}_n(\\theta) = \\operatorname{Im}\\operatorname{Li}_n(e^{i\\theta})$ or $\\operatorname{Re}\\operatorname{Li}_n(e^{i\\theta})$ respectively. See [[PolyLog]]."

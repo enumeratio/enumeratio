@@ -5,6 +5,11 @@ summary: The sine of x, in radians.
 signatures:
   - call: Sin(x)
     description: the sine of x, in radians.
+  - call: Sin(x)
+    description: The sine of x, in radians.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 details:
   - 'Odd function: $\sin(-x) = -\sin(x)$.'
   - 'Period $2\pi$: $\sin(x + 2\pi) = \sin(x)$.'

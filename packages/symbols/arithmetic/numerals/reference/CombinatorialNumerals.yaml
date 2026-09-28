@@ -1,0 +1,12 @@
+name: CombinatorialNumerals
+domain: Numeral systems
+signature: CombinatorialNumerals(k)
+summary: 'The combinatorial number system of degree $k$: $n \leftrightarrow$ the strictly decreasing tuple $c_k > \dots > c_1 \ge 0$ with $n = \binom{c_k}{k} + \dots + \binom{c_1}{1}$ — the unranking of $k$-subsets in colexicographic order.'
+signatures:
+  - call: CombinatorialNumerals(k)
+    description: the system, width $k$, strictly decreasing digits
+    library: enumeratio-numerals
+    type: (integer) -> value
+seeAlso:
+  - IntegerDigits
+  - CombinatorialSystem

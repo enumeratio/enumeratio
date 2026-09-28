@@ -12,3 +12,8 @@ bindings:
     template: EnumeratioDiagramAlgebra(:planar, $1)
     arity: 1
 stub: carrier
+signatures:
+  - call: PlanarPartitionAlgebra(...)
+    description: Mapped through to sage, oscar for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (integer) -> value

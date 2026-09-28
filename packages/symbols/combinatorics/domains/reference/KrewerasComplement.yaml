@@ -15,3 +15,8 @@ catalog:
     on: Permutation
 mapOn:
   - Permutation
+signatures:
+  - call: KrewerasComplement(Permutation)
+    description: w⁻¹c, for w below the long cycle c = (1 2 ... n) in absolute order.
+    library: enumeratio-domains
+    type: (permutation) -> permutation

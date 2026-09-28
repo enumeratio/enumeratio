@@ -42,7 +42,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { DOMAINS } from "@enumeratio/domains";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { NUMERAL_ALIASES } from "@enumeratio/numerals";
-import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/notatio/symbols";
+import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/frontend/symbols";
 import { referenceEntries as loadEntries } from "@enumeratio/reference/node";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { fullEngine } from "../src/engine.ts";
@@ -310,7 +310,7 @@ function returnKinds(returnType: string): ReturnKind[] {
 /** `true` when the sample produced a real answer of the expected kind.
  *
  *  `BoxedExpression` is an alias for compute-engine's `Expression` union, and `.symbol`
- *  lives only on its narrowed symbol member — same story as `@enumeratio/boxed`'s
+ *  lives only on its narrowed symbol member — same story as `@enumeratio/engine`'s
  *  `symbolNameOf`, not reused here to avoid a new cross-package dependency for one line. */
 function producedAnswer(ce: ComputeEngine, head: string, args: unknown[], kind: ReturnKind): boolean {
   const boxed = ce.box([head, ...args] as never);

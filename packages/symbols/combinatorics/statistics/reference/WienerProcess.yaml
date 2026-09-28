@@ -6,6 +6,7 @@ signatures:
   - call: WienerProcess()
     description: standard Wiener process, $\mu = 0$, $\sigma = 1$.
     library: enumeratio-statistics
+    type: (real?, real<0..>?) -> expression<WienerProcess>
   - call: WienerProcess(mu, sigma)
     description: an inert process object — carries its two parameters, unevaluated. [[SliceDistribution]] and [[RandomFunction]] both read it.
     library: enumeratio-statistics

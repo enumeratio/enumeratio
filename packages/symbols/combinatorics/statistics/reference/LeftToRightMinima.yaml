@@ -7,3 +7,8 @@ details:
   - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
 statOn:
   - Permutation
+signatures:
+  - call: LeftToRightMinima(p)
+    description: Positions smaller than everything before them.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

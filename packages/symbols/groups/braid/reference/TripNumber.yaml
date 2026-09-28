@@ -1,0 +1,12 @@
+name: TripNumber
+domain: Braids and knots
+signature: TripNumber(word)
+summary: The trip number of a modular geodesic's $LR$ word — the count of $LR$ corners, and the braid index of the Lorenz link it draws.
+signatures:
+  - call: TripNumber(word)
+    description: the count of $LR$ corners — the braid index of the link
+    library: enumeratio-braid
+    type: (string) -> integer
+seeAlso:
+  - LorenzBraid
+  - LorenzPermutation

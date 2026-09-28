@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, symbolNameOf } from "@enumeratio/boxed";
-import { SUMMARIES } from "./summaries-data.ts";
+import { bigRationalAt, symbolNameOf } from "@enumeratio/engine";
+import { SUMMARIES } from "@enumeratio/manifest/package/collections";
 
 // GeneratingFunction / ExponentialGeneratingFunction / FindSequenceFunction / DiscreteRatio
 // (Wolfram frontier). The three sequence-recognition heads share one pipeline: sample the

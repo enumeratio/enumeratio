@@ -13,3 +13,8 @@ catalog:
 statOn:
   - SetComposition
   - SetPartition
+signatures:
+  - call: LargestBlock(partition)
+    description: The size of the largest block.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

@@ -103,6 +103,14 @@ export interface ReferenceSignature {
   /** Operand count of this call form, when the head means something else at another. */
   readonly arity?: number;
   /**
+   * This overload's compute-engine type, `(boxes, boxes, expression*) -> boxes`. The
+   * declaring package declares it from here (design/manifest.md); a reference test checks
+   * the engine agrees.
+   */
+  readonly type?: string;
+  /** The library whose overlapping overload this one replaces (design/manifest.md). */
+  readonly overrides?: string;
+  /**
    * Where THIS call form lives elsewhere, when the head's references do not apply to it
    * wholesale -- two-argument `Zeta` is Hurwitz's function and links to Hurwitz's pages.
    */
@@ -310,7 +318,11 @@ export interface ReferenceEntry {
    * compute-engine symbol we neither extend nor document by hand, `carrier` for a domain.
    */
   readonly stub?: "engine" | "carrier";
+  /** Wolfram-style attributes; `HoldAll` is compute-engine's `lazy` (design/manifest.md). */
+  readonly attributes?: readonly SymbolAttribute[];
 }
+
+export type SymbolAttribute = "HoldAll";
 
 // --- the implementations record (design/examples-as-data.md §2, §6) -----------------------
 //

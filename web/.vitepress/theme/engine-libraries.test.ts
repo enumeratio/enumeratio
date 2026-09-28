@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAestimatio } from "@enumeratio/aestimatio";
+import { declareEvaluation } from "@enumeratio/evaluation";
 import { expect, test } from "vite-plus/test";
 import { configure } from "./worker-engine-setup.ts";
 
@@ -7,10 +7,10 @@ import { configure } from "./worker-engine-setup.ts";
 // reference engine nor census's uses. A head two libraries both declare only throws in the
 // order that meets it second -- and when the site's engine throws, every Cell on every page
 // shows the error (#184's PermutationCycles). So build the site's engine here, the way a
-// session worker does: aestimatio first, then the shared sequence.
+// session worker does: evaluation first, then the shared sequence.
 const siteEngine = (): ComputeEngine => {
   const ce = new ComputeEngine();
-  declareAestimatio(ce);
+  declareEvaluation(ce);
   configure(ce);
   return ce;
 };

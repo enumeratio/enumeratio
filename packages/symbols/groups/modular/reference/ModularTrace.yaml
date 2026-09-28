@@ -1,18 +1,15 @@
 name: ModularTrace
 domain: The modular group
 signature: ModularTrace(matrix)
-summary: The trace $a + d$ of a matrix in $\mathrm{PSL}(2,\mathbb{Z})$, or of the $LR$ word standing for one.
+summary: The trace of a matrix in $\mathrm{PSL}(2,\mathbb{Z})$.
 signatures:
   - call: ModularTrace(matrix)
-    description: the trace, $a + d$
+    description: $a+d$
     library: enumeratio-modular
-details:
-  - Every head here also accepts a WORD in place of a matrix -- see [[ModularMatrix]]
-  - '`ModularKind` sorts by $|\mathrm{tr}|$ against $2$ off this same value -- elliptic, parabolic, hyperbolic'
+    type: (value) -> integer
 seeAlso:
-  - ModularMatrix
-  - ModularWord
   - ModularKind
+  - ModularMatrix
 bindings:
   - origin: mapped
     form: wolfram

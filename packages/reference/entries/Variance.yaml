@@ -5,6 +5,11 @@ summary: Sample variance of a collection of numbers.
 signatures:
   - call: Variance((collection<any> | distribution | number)+) -> nan | real<0..>
     description: as compute-engine declares it
+  - call: Variance((collection<any> | distribution | number)+) -> nan | real<0..>
+    description: Sample variance of a collection of numbers.
+    library: enumeratio-statistics
+    type: ((collection<any> | distribution | number)+) -> nan | real<0..>
+    overrides: compute-engine
 names:
   wolframIdentity: true
 stub: engine

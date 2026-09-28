@@ -86,7 +86,7 @@ function svgOf(expr: BoxedExpression): string | undefined {
  * The heads that draw. Each names a picture rather than a value -- Wolfram's `Plot`,
  * `Histogram`, `Manipulate` print as pictures, not formulas -- and each has a component
  * of the same name (kebab-cased, `notatio-` in front) that is its rendering; the
- * argument-to-attribute map lives with the components (`@enumeratio/notatio/symbols`).
+ * argument-to-attribute map lives with the components (`@enumeratio/frontend/symbols`).
  * Here they are declared so the engine can *hold* one: `Plot(Sin(x), (x, 0, 10))` is an
  * expression a REPL prints, a cell evaluates to, a worksheet composites. Evaluation
  * leaves them alone, and a `Manipulate` body keeps its free parameters because a free
@@ -191,7 +191,7 @@ export function declareGraphics(ce: ComputeEngine): void {
 
   // `Notebook([Cell(...), ...])` -- Wolfram's transcript: a `DynamicModule` configured
   // with a `List` of `Cell`s as its body, evaluated in document order in one shared scope
-  // (`@enumeratio/notatio/transcript`). Held like `Cell`, for the same reason: the cells
+  // (`@enumeratio/frontend/transcript`). Held like `Cell`, for the same reason: the cells
   // are evaluated by whatever renders the notebook, one at a time, not by boxing the whole
   // tree at once. Variadic (`any*`), matching `DynamicModule` above: `Notebook` takes the
   // same trailing options (`TrackedSymbols`, `Evaluator`, …) `DynamicModule` does -- a

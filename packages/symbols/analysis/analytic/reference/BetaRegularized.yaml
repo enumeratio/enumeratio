@@ -5,6 +5,11 @@ summary: The regularized incomplete beta function $I_x(a, b)$, the CDF of the Be
 signatures:
   - call: BetaRegularized(x, a, b)
     description: the regularized incomplete beta function $I_x(a, b)$.
+  - call: BetaRegularized(x, a, b)
+    description: The regularized incomplete beta function $I_x(a, b)$, the CDF of the Beta(a, b) distribution and a bridge to the binomial CDF.
+    library: enumeratio-analytic
+    type: (number, number, number, number?) -> number
+    overrides: compute-engine
 details:
   - "Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$."
   - "Symmetry: $I_x(a, b) + I_{1-x}(b, a) = 1$."

@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { collectMessages } from "@enumeratio/boxed";
+import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 

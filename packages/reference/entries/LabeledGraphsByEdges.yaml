@@ -9,3 +9,8 @@ grades:
     role: axis
 carrier: LabeledGraph
 stub: carrier
+signatures:
+  - call: LabeledGraphsByEdges(...)
+    description: Graphs on [n] with exactly m edges — the (n,m) refinement of labeled_graphs.
+    library: enumeratio-collections
+    type: (integer, integer) -> list<list<list<integer>>>

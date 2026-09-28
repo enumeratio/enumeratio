@@ -1,0 +1,12 @@
+name: PartitionsIntoKParts
+domain: Collections
+signature: PartitionsIntoKParts(n, k)
+summary: The integer partitions of $n$ into exactly $k$ positive parts.
+signatures:
+  - call: PartitionsIntoKParts(n, k)
+    description: partitions of $n$ with exactly $k$ parts
+    library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>
+seeAlso:
+  - IntegerPartitions
+  - PartitionsInBox

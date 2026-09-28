@@ -6,6 +6,7 @@ signatures:
   - call: PathGraph(vertices)
     description: a path along `vertices`, in the order given — Wolfram's own (and only) form.
     library: enumeratio-collections
+    type: (any) -> value
   - call: PathGraph(n)
     description: the path $1 - 2 - \dots - n$ — our own convenience extension.
     library: enumeratio-collections

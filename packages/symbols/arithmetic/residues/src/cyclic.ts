@@ -4,7 +4,7 @@
 // residue field of an inert Gaussian prime — so they are written once against the few
 // operations a group needs.
 
-import { checkpoint } from "@enumeratio/boxed";
+import { checkpoint } from "@enumeratio/engine";
 import { gcd, invMod, isqrt, mod, valuation } from "./arith.ts";
 
 export interface Group<T> {

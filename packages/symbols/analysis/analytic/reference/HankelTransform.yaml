@@ -6,6 +6,7 @@ signatures:
   - call: HankelTransform(f, r, s)
     description: the order-0 Hankel transform of `f`, $\int_0^\infty f(r)\,J_0(sr)\,r\,dr$.
     library: "@enumeratio/analytic"
+    type: (value, value, value, value?) -> value
   - call: HankelTransform(f, r, s, n)
     description: the order-$n$ Hankel transform.
     library: "@enumeratio/analytic"

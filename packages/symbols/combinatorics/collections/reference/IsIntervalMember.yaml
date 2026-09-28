@@ -6,6 +6,7 @@ signatures:
   - call: IsIntervalMember(Interval(lo, hi), x)
     description: True if lo (or) x (or) hi, closed by default, open where wrapped in Open(...)
     library: enumeratio-collections
+    type: (any, any) -> boolean
 details:
   - "Open(...) on either bound makes that side strict: IsIntervalMember(Interval(Open(1), 5), 1) is False."
   - Only a single Interval(lo, hi) -- Wolfram's union-of-intervals form Interval({a, b}, {c, d}, ...) isn't handled.

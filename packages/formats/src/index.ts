@@ -3,7 +3,7 @@
 import "./formats.ts";
 
 export { normalizeInputForm, toInputForm } from "./inputform.ts";
-export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "@enumeratio/boxed";
+export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "@enumeratio/engine";
 export { type MathMLOptions, toMathML } from "./mathml.ts";
 export {
   collectWildcards,

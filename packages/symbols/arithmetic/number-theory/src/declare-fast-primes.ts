@@ -12,7 +12,7 @@
 // already owns for something else entirely. NthPrime is (and stays) the only head name for
 // it on our side; the crosswalk already maps NthPrime <-> Wolfram's Prime.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, wrapOperator } from "@enumeratio/engine";
 import { nthPrime, PRIME_PI_LIMIT, primeCountUpTo } from "@enumeratio/residues";
 
 export function declareFastPrimes(ce: ComputeEngine): void {

@@ -1,10 +1,17 @@
 name: D
 domain: Compute engine
-signature: D(expr, x, ...)
-summary: The derivative of `expr` with respect to `x`, repeated once per extra variable given.
+signature: D(expr, vars*)
+summary: The symbolic partial derivative of an expression with respect to one or more variables.
 signatures:
-  - call: D(expr, x, ...)
-    description: as compute-engine declares it
+  - call: D(expr, vars*)
+    description: Re-evaluates compute-engine's own $D$ once more so a head this package differentiates through [[Derivative]] lands on the closed-form derivative instead of stopping one step short at the inert `Apply(Derivative(f, …), …)` form.
+    library: enumeratio-analytic
+    type: "(expression, variables: symbol*) -> expression"
+    overrides: compute-engine
+attributes:
+  - HoldAll
+seeAlso:
+  - Derivative
 names:
   wolframIdentity: true
 bindings:
@@ -42,4 +49,3 @@ bindings:
     checked:
       version: "10.9"
       on: 2026-09-27
-stub: engine

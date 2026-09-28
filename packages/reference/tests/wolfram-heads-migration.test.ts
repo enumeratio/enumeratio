@@ -3,7 +3,7 @@
 // `packages/reference/scripts/collect-wolfram-names.ts`), rebuilt from every head's
 // `names.wolfram` / `names.wolframIdentity` field -- `to-wolfram.ts` runs in the browser too,
 // so it can't parse YAML at runtime. This pins that the generated table is current;
-// `packages/notatio/tests/forms.test.ts` (unchanged by this migration -- 0 records rewritten
+// `packages/frontend/tests/forms.test.ts` (unchanged by this migration -- 0 records rewritten
 // on regen) is the proof `toWolfram`'s output over every reference example didn't move, and
 // `packages/wolfram/tests/*` (also unchanged) is the proof for that package's own suite.
 

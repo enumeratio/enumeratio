@@ -10,6 +10,8 @@ signatures:
   - call: Flatten(collection, PositiveInfinity)
     description: an explicit infinite depth, the same as the default.
     library: enumeratio-collections
+    type: (any, any?) -> any
+    overrides: compute-engine
   - call: Flatten(collection, {{p1}, {p2}, …})
     description: a permutation-shaped list of levels regroups the array's dimensions — transposing a matrix, say.
     library: enumeratio-collections

@@ -6,6 +6,7 @@ signatures:
   - call: UnitStep(x)
     description: 0 if x < 0, 1 if x >= 0.
     library: "@enumeratio/analytic"
+    type: (list<number> | number, number*) -> list<number> | number
   - call: UnitStep(x1, x2, …)
     description: the product of the unit steps -- 0 as soon as any argument is negative.
     library: "@enumeratio/analytic"

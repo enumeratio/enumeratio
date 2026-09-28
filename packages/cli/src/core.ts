@@ -6,8 +6,8 @@
 
 import { allFormats, exportFormats, importFormats, mimeTypeToFormatList } from "@enumeratio/formats";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { can, type Environment, ENVIRONMENTS, environmentNamed } from "../../notatio/src/environment.ts";
-import { evaluateReadouts, reduce } from "../../notatio/src/reduce.ts";
+import { can, type Environment, ENVIRONMENTS, environmentNamed } from "../../frontend/src/environment.ts";
+import { evaluateReadouts, reduce } from "../../frontend/src/reduce.ts";
 import { bold, cyan, dim, red } from "./ansi.ts";
 import {
   FORM_LABEL,

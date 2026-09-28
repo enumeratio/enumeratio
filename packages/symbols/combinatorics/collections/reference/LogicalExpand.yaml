@@ -6,6 +6,7 @@ signatures:
   - call: LogicalExpand(expr)
     description: expr, boolean-connective-eliminated and distributed into an Or of Ands
     library: enumeratio-collections
+    type: (any) -> any
 details:
   - "Structural, not type-inferring: And/Or/Not/Implies/Equivalent/Xor/Nand/Nor are walked by operator, so a bare symbol is a boolean variable here regardless of what compute-engine would otherwise infer its type to be."
   - Implies(a, b) becomes Or(Not(a), b); Xor and Equivalent are eliminated via their pairwise expansions before distribution; Nand/Nor become Not(And(...))/Not(Or(...)).
@@ -16,3 +17,5 @@ seeAlso:
   - BooleanConvert
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

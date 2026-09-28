@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // Heads that take or build with a FUNCTION argument (Nest, NestList, FixedPoint, Outer,
 // RecurrenceTable), two heads that generate exact recurrence sequences (LinearRecurrence,

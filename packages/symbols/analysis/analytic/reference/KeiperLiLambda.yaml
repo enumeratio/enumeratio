@@ -6,6 +6,7 @@ signatures:
   - call: KeiperLiLambda(n)
     description: the n-th Keiper–Li coefficient, for a nonnegative integer n.
     library: "@enumeratio/analytic"
+    type: (integer) -> number
 details:
   - $\xi(s) = \tfrac12 s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$, the completed (Riemann) xi function — entire, and sharing ζ's nontrivial zeros.
   - $\lambda_0 = 0$ and $\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi) \approx 0.02310$ are closed forms; both evaluate exactly under plain evaluation, not just under N().

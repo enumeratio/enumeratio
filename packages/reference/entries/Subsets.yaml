@@ -6,6 +6,7 @@ signatures:
   - call: Subsets(n)
     description: the $2^n$ subsets of $\{1, …, n\}$.
     library: enumeratio-collections
+    type: (any, any?) -> list<list<any>>
   - call: Subsets(collection)
     description: the subsets of any finite collection.
     library: enumeratio-collections

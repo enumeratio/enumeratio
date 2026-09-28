@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // A handful of symbolic Sin normalisations Wolfram applies automatically and

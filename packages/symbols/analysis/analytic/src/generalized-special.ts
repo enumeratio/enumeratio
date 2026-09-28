@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, isRealInt, type NativeEval } from "@enumeratio/for-compute-engine";
 
 type Q = readonly [bigint, bigint];

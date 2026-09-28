@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { Resolver } from "./tagged-arithmetic.ts";
 
 // e^a · e^b = e^(a+b) holds for every complex a, b — unlike x^a · x^b, which only combines

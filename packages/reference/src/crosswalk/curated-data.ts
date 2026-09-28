@@ -1429,6 +1429,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "HopfAlgebra",
     },
   ],
+  ConjugateComposition: [
+    {
+      system: "wikipedia",
+      identity: "Quasisymmetric function#Related algebras",
+    },
+  ],
   Coproduct: [
     {
       system: "wikipedia",
@@ -1437,6 +1443,24 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "HopfAlgebra",
+    },
+  ],
+  Counit: [
+    {
+      system: "wikipedia",
+      identity: "Hopf algebra",
+    },
+  ],
+  NSymH: [
+    {
+      system: "wikipedia",
+      identity: "Quasisymmetric function#Related algebras",
+    },
+  ],
+  QSymF: [
+    {
+      system: "wikipedia",
+      identity: "Quasisymmetric function#Related algebras",
     },
   ],
   QSymM: [
@@ -1467,6 +1491,18 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "VectorBasis",
     },
   ],
+  DualAlgebra: [
+    {
+      system: "wikipedia",
+      identity: "Dual number",
+    },
+  ],
+  MulticomplexAlgebra: [
+    {
+      system: "wikipedia",
+      identity: "Multicomplex number",
+    },
+  ],
   Norm: [
     {
       system: "wikipedia",
@@ -1485,6 +1521,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "Quaternion",
+    },
+  ],
+  SplitAlgebra: [
+    {
+      system: "wikipedia",
+      identity: "Split-complex number",
     },
   ],
   MoebiusFunction: [

@@ -18,3 +18,8 @@ catalog:
 statOn:
   - PerfectMatching
   - SetPartition
+signatures:
+  - call: Nestings(partition)
+    description: Pairs of arcs a < b < c < d with a~d and b~c.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

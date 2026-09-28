@@ -6,6 +6,7 @@ signatures:
   - call: DiscreteShift(f, n)
     description: f with every free occurrence of the symbol n replaced by n + 1.
     library: "@enumeratio/analytic"
+    type: (value, value) -> value
   - call: DiscreteShift(f, {n, h})
     description: f with every free occurrence of n replaced by n + h -- an h-step shift, given as the {n, h} pair.
     library: "@enumeratio/analytic"

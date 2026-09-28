@@ -6,6 +6,7 @@ signatures:
   - call: ModularMatrix(a, b, c, d)
     description: the matrix $\begin{pmatrix}a&b\\c&d\end{pmatrix}$, determinant 1
     library: enumeratio-modular
+    type: (any, any?, any?, any?) -> value
   - call: Dot(m, n)
     description: the group product — compute-engine's own head
   - call: MatrixPower(m, k)

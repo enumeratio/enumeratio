@@ -12,3 +12,8 @@ catalog:
     on: SetPartition
 statOn:
   - SetPartition
+signatures:
+  - call: Blocks(partition)
+    description: The number of blocks.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

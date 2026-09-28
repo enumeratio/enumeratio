@@ -6,6 +6,7 @@ signatures:
   - call: PrimeCompositions(n)
     description: the compositions of $n$ into prime parts
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is A023360.
 seeAlso:

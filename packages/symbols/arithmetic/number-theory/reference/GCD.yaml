@@ -5,6 +5,11 @@ summary: The greatest common divisor of the arguments.
 signatures:
   - call: GCD(a, b, …)
     description: greatest common divisor of two or more integers.
+  - call: GCD(a, b, …)
+    description: The greatest common divisor of the arguments.
+    library: enumeratio-number-theory
+    type: (any*) -> number
+    overrides: compute-engine
 details:
   - "Also called the greatest common factor: the largest positive integer dividing every argument."
   - Paired with [[LCM]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.

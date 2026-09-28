@@ -1,5 +1,5 @@
 // The worker Vite must actually BUNDLE for a static build, not resolve at runtime the
-// way @enumeratio/aestimatio's own browser.ts does internally: it computes
+// way @enumeratio/evaluation's own browser.ts does internally: it computes
 // `new URL('./browser-session-worker.ts', import.meta.url)` in one function
 // (`sessionWorkerUrl`) and hands the resulting URL to `new Worker(url, options)` in a
 // different one (`globalWorkerFactory`'s returned closure). Vite's worker plugin only
@@ -14,8 +14,8 @@
 // silently reverted to nothing running at all.
 //
 // The literal points at `./session-worker-entry.ts`, THIS SITE's own worker entry --
-// not `@enumeratio/aestimatio/browser-session-worker.ts` directly -- because that
-// aestimatio file ALSO takes its `configure` (this site's ~20-library declare list) as
+// not `@enumeratio/evaluation/browser-session-worker.ts` directly -- because that
+// evaluation file ALSO takes its `configure` (this site's ~20-library declare list) as
 // a URL, resolved via a runtime `import()` inside the worker. That has the identical
 // problem one level down: invisible to the bundler, and a production build's own asset
 // handling can turn a `.ts` URL into something typed as `video/mp2t`, which a worker's
@@ -28,18 +28,18 @@
 // shouldn't hardcode) this site's own directory layout, and the literal-path
 // requirement means the `new URL(...)` has to live in a file whose OWN `import.meta.url`
 // sits next to the target. So this site-owned module writes it once, for both worker
-// kinds aestimatio already accepts a factory for (`createWorker`/`createSharedWorker`
+// kinds evaluation already accepts a factory for (`createWorker`/`createSharedWorker`
 // on `openSession`), and `./index.mts` hands them down through the `__notatioWorkerFactories`
 // gate -- the same seam `__notatioWorkerSetup` used for the (now unused, for this site's
 // own worker) `setup` module URL.
 //
-// Each factory ignores the `url`/`options.name` aestimatio would otherwise compute and
-// pass in: the whole point is that THIS file's own `import.meta.url`, not aestimatio's,
+// Each factory ignores the `url`/`options.name` evaluation would otherwise compute and
+// pass in: the whole point is that THIS file's own `import.meta.url`, not evaluation's,
 // is what has to sit next to the literal relative path for Vite to find it. The literal
 // is repeated (not hoisted to a shared constant) because Vite's detection is per call
 // site, not per string value.
 
-import type { SharedWorkerFactory, WorkerFactory, WorkerLike } from "@enumeratio/aestimatio/browser";
+import type { SharedWorkerFactory, WorkerFactory, WorkerLike } from "@enumeratio/evaluation/browser";
 
 export const createSessionWorker: WorkerFactory = () =>
   new Worker(new URL("./session-worker-entry.ts", import.meta.url), {

@@ -6,6 +6,7 @@ signatures:
   - call: IntegerLength(n)
     description: the number of base-10 digits of $n$
     library: enumeratio-numerals
+    type: (integer, integer?) -> integer
   - call: IntegerLength(n, base)
     description: the number of digits in the given base
 details:

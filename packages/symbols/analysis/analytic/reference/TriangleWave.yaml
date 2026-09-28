@@ -6,6 +6,7 @@ signatures:
   - call: TriangleWave(x)
     description: a triangular approximation to sin(2*Pi*x) -- 0 at x = 0, 1 at x = 1/4, 0 at x = 1/2, -1 at x = 3/4.
     library: "@enumeratio/analytic"
+    type: (value, value?) -> number
   - call: TriangleWave({min, max}, x)
     description: the triangle wave rescaled to vary from min to max, unit period.
     library: "@enumeratio/analytic"

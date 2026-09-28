@@ -5,6 +5,11 @@ summary: 'The inverse error function: $\operatorname{erfinv}(x)$ solves $\operat
 signatures:
   - call: ErfInv(x)
     description: the inverse error function, solving $\operatorname{erf}(y) = x$.
+  - call: ErfInv(x)
+    description: 'The inverse error function: $\operatorname{erfinv}(x)$ solves $\operatorname{erf}(y) = x$ for $-1 < x < 1$.'
+    library: enumeratio-analytic
+    type: (number, number?) -> number
+    overrides: compute-engine
 details:
   - 'Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.'
   - $\operatorname{erfinv}(0) = 0$, and $\operatorname{erfinv}(x) \to \pm\infty$ as $x \to \pm 1$, the limits where Erf itself saturates.
