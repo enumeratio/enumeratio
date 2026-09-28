@@ -121,6 +121,18 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   signs. It is a candidate head, and a Wolfram counterpart for number-theory's quadratic-field
   work.
 
+- **Quadratic and algebraic integers.** number-theory has the Gaussian integers ℤ[i]. The
+  same treatment belongs to every quadratic integer ring ℤ[(1+√d)/2] (norm, units, class
+  number, factorisation where it's unique), and past that to rings of integers of number fields
+  in general. This is the number-field layer the adeles' next phase and the quaternion places in
+  design/speculative/algebras-units-places.md both wait on. Sage's `QuadraticField` /
+  `NumberField` and Mathlib's `NumberField.RingOfIntegers` are the precedents.
+- **Fixed-precision decimals and money.** A decimal type with a fixed scale: exact, and
+  rounding to its last place by a stated rule. Money is the motivating case. It is not a ring
+  (money times money isn't money), but an ordered additive group that rationals can scale. Its
+  ticks are whole units or cents, so it floors and rounds through structures' `FloorOrder`
+  extension without needing one.
+
 ## 5. What this file is not
 
 Not a priority order, and not a commitment. If something here has been done, delete the line
