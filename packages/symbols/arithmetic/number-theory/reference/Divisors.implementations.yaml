@@ -194,6 +194,10 @@ divisors-3-plus-4i:
     in: Divisors[13, Rule[GaussianIntegers, True]]
   wolfram:
     in: Divisors[13, Rule[GaussianIntegers, True]]
+    out: "{1, 2 + 3*I, 3 + 2*I, 13}"
+    tex:
+      in: \text{Divisors}[13,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,2+3 i,3+2 i,13\}
 divisors-6:
   epsil:
     in: Divisors(6)
@@ -318,3 +322,7 @@ a-non-integer-stays-unevaluated:
     in: Divisors[5, Rule[GaussianIntegers, True]]
   wolfram:
     in: Divisors[5, Rule[GaussianIntegers, True]]
+    out: "{1, 1 + 2*I, 2 + I, 5}"
+    tex:
+      in: \text{Divisors}[5,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,1+2 i,2+i,5\}

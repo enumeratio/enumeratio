@@ -57,6 +57,10 @@ as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1:
     in: TrigToExp[ArcCoth[2]]
   wolfram:
     in: TrigToExp[ArcCoth[2]]
+    out: Log[3/2]/2 + Log[2]/2
+    tex:
+      in: \text{TrigToExp}\left[\coth ^{-1}(2)\right]
+      out: \frac{1}{2} \log \left(\frac{3}{2}\right)+\frac{\log (2)}{2}
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Arcoth(-x)
@@ -83,3 +87,7 @@ derivative-frac-1-1-x-2:
     in: D[ArcCoth[x], x]
   wolfram:
     in: D[ArcCoth[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \coth ^{-1}(x)}{\partial x}-\frac{1}{-x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\coth ^{-1}\left(\frac{7}{3}\right)-\frac{1}{-\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\coth ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{-\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\coth ^{-1}\left(\frac{13}{4}\right)-\frac{1}{-\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

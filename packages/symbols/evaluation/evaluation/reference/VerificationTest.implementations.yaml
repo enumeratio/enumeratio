@@ -66,6 +66,13 @@ memoryconstraint-in-process-is-an-error-not-a:
     in: VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]
   wolfram:
     in: VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]
+    out: TestObject[<|"Outcome" -> "Success", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldForm[5], "ActualOutput" -> HoldForm[5]|>]
+    tex:
+      in: \text{VerificationTest}[2+3,5,\text{MemoryConstraint}\to 1000000]
+      out: \text{TestObject}[\unicode{f113}\text{Outcome}\to \text{Success},\text{Input}\to 2+3,\text{ExpectedOutput}\to 5,\text{ActualOutput}\to 5\unicode{f114}]
+    verdict: disagree
+    kind: convention
+    note: "Deliberate, not just the representational gap the sibling rows note: ours treats an in-process MemoryConstraint as an Error outcome (see this example's own caption); Wolfram's own VerificationTest just runs the call and reports Success, since nothing in-process enforces the limit there."
 one-argument-a-predicate-that-evaluates-to-true:
   epsil:
     in: VerificationTest(2 > 1)
@@ -141,6 +148,13 @@ a-testid-is-carried-into-the-result:
     in: VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]
   wolfram:
     in: VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]
+    out: TestObject[<|"Outcome" -> "Success", "Input" -> HoldForm[1/0], "ExpectedOutput" -> HoldForm[ComplexInfinity], "ActualOutput" -> HoldForm[ComplexInfinity]|>]
+    tex:
+      in: \text{VerificationTest}\left[\frac{1}{0},\text{ComplexInfinity},\text{TestID}\to \text{pole}\right]
+      out: \text{TestObject}\left[\unicode{f113}\text{Outcome}\to \text{Success},\text{Input}\to \frac{1}{0},\text{ExpectedOutput}\to \text{ComplexInfinity},\text{ActualOutput}\to \text{ComplexInfinity}\unicode{f114}\right]
+    verdict: disagree
+    kind: convention
+    note: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
 the-default-comparison-is-structural:
   epsil:
     in: VerificationTest(x ^ 2 + 2x + 1, (x + 1) ^ 2)
@@ -192,3 +206,10 @@ a-sametest-with-a-tolerance-22-7-3-14-0-01:
       ]
   wolfram:
     in: VerificationTest[Divide[22, 7], 3.14, Rule[SameTest, Function[List[a, b], Less[Abs[Subtract[a, b]], 0.01]]]]
+    out: TestObject[<|"Outcome" -> "Success", "Input" -> HoldForm[22/7], "ExpectedOutput" -> HoldForm[3.14], "ActualOutput" -> HoldForm[22/7]|>]
+    tex:
+      in: \text{VerificationTest}\left[\frac{22}{7},3.14,\text{SameTest}\to (\{a,b\}\unicode{f4a1}| a-b| <0.01)\right]
+      out: \text{TestObject}\left[\unicode{f113}\text{Outcome}\to \text{Success},\text{Input}\to \frac{22}{7},\text{ExpectedOutput}\to 3.14,\text{ActualOutput}\to \frac{22}{7}\unicode{f114}\right]
+    verdict: disagree
+    kind: convention
+    note: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.

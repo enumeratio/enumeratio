@@ -263,6 +263,10 @@ derivative-frac-1-1-x-2:
     in: D[ArcTan[x], x]
   wolfram:
     in: D[ArcTan[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \tan ^{-1}(x)}{\partial x}-\frac{1}{x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\tan ^{-1}\left(\frac{7}{3}\right)-\frac{1}{\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\tan ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\tan ^{-1}\left(\frac{13}{4}\right)-\frac{1}{\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 antiderivative:
   epsil:
     in: Integrate(Arctan(x), x)
@@ -311,6 +315,10 @@ as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2:
     in: TrigToExp[ArcTan[x]]
   wolfram:
     in: TrigToExp[ArcTan[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}\left[\tan ^{-1}(x)\right]-((\text{Rational}[-1,2] i) \log (i x+1)+(\text{Rational}[1,2] i) \log (-i x+1))\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(\frac{7}{3}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \frac{7}{3}+1\right)+(\text{Rational}[1,2] i) \log \left(-i \frac{7}{3}+1\right)\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(-\frac{11}{5}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \left(-\frac{11}{5}\right)+1\right)+(\text{Rational}[1,2] i) \log \left(-i \left(-\frac{11}{5}\right)+1\right)\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(\frac{13}{4}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \frac{13}{4}+1\right)+(\text{Rational}[1,2] i) \log \left(-i \frac{13}{4}+1\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 euler-s-machin-like-identity-arctan-frac-12:
   epsil:
     in: FullSimplify(Arctan(1 / 2) + Arctan(1 / 3))

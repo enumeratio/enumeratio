@@ -280,8 +280,8 @@ const OVERRIDDEN = [
   "Multinomial",
   "MultiplicativeOrder",
   "Multiply",
-  // "N" itself dropped off compute-engine 0.139: whatever corpus example used to surface a
-  // divergence through it (the same "outer head" pattern as Add/Sum above) no longer does.
+  // Our N rounds to the requested digits; a bare `N(Pi, 30)` prints 34.
+  "N",
   "NextPrime",
   "Norm",
   "NthPrime",

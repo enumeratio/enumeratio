@@ -9,6 +9,10 @@ a000045-is-the-fibonacci-numbers-the-10th-is-55:
     in: SloaneA["A000045", 10]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000045", "Offset"]}, ResourceFunction["OEISSequence"]["A000045"][[10 - s + 1]]]
+    out: "55"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000045},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000045}][[10-s+1]]]
+      out: "55"
 a000793-landau-s-function-g-10-30:
   epsil:
     in: SloaneA("A000793", 10)
@@ -20,6 +24,10 @@ a000793-landau-s-function-g-10-30:
     in: SloaneA["A000793", 10]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000793", "Offset"]}, ResourceFunction["OEISSequence"]["A000793"][[10 - s + 1]]]
+    out: "30"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000793},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000793}][[10-s+1]]]
+      out: "30"
 an-oeis-id-outside-the-declared-alias-table:
   epsil:
     in: SloaneA("A060691", 5)
@@ -31,6 +39,13 @@ an-oeis-id-outside-the-declared-alias-table:
     in: SloaneA["A060691", 5]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A060691", "Offset"]}, ResourceFunction["OEISSequence"]["A060691"][[5 - s + 1]]]
+    out: "-496"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A060691},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A060691}][[5-s+1]]]
+      out: "-496"
+    verdict: disagree
+    kind: domain
+    note: Outside our alias table, so ours stays unevaluated by design; the OEIS lookup has every sequence.
 a000040-5-11-the-5th-prime:
   epsil:
     in: SloaneA("A000040", 5)
@@ -42,6 +57,10 @@ a000040-5-11-the-5th-prime:
     in: SloaneA["A000040", 5]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000040", "Offset"]}, ResourceFunction["OEISSequence"]["A000040"][[5 - s + 1]]]
+    out: "11"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000040},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000040}][[5-s+1]]]
+      out: "11"
 a000041-10-42-the-number-of-partitions-of-10:
   epsil:
     in: SloaneA("A000041", 10)
@@ -53,6 +72,10 @@ a000041-10-42-the-number-of-partitions-of-10:
     in: SloaneA["A000041", 10]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000041", "Offset"]}, ResourceFunction["OEISSequence"]["A000041"][[10 - s + 1]]]
+    out: "42"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000041},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000041}][[10-s+1]]]
+      out: "42"
 a000110-5-52-the-5th-bell-number:
   epsil:
     in: SloaneA("A000110", 5)
@@ -64,6 +87,10 @@ a000110-5-52-the-5th-bell-number:
     in: SloaneA["A000110", 5]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000110", "Offset"]}, ResourceFunction["OEISSequence"]["A000110"][[5 - s + 1]]]
+    out: "52"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000110},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000110}][[5-s+1]]]
+      out: "52"
 a000142-5-120-5:
   epsil:
     in: SloaneA("A000142", 5)
@@ -75,6 +102,10 @@ a000142-5-120-5:
     in: SloaneA["A000142", 5]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000142", "Offset"]}, ResourceFunction["OEISSequence"]["A000142"][[5 - s + 1]]]
+    out: "120"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000142},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000142}][[5-s+1]]]
+      out: "120"
 a000720-20-8-pi-20-the-prime-counting-function:
   epsil:
     in: SloaneA("A000720", 20)
@@ -86,6 +117,10 @@ a000720-20-8-pi-20-the-prime-counting-function:
     in: SloaneA["A000720", 20]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000720", "Offset"]}, ResourceFunction["OEISSequence"]["A000720"][[20 - s + 1]]]
+    out: "8"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000720},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000720}][[20-s+1]]]
+      out: "8"
 a027641-12-691-b-12-s-numerator:
   epsil:
     in: SloaneA("A027641", 12)
@@ -97,6 +132,10 @@ a027641-12-691-b-12-s-numerator:
     in: SloaneA["A027641", 12]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A027641", "Offset"]}, ResourceFunction["OEISSequence"]["A027641"][[12 - s + 1]]]
+    out: "-691"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A027641},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A027641}][[12-s+1]]]
+      out: "-691"
 a027642-12-2730-b-12-s-denominator:
   epsil:
     in: SloaneA("A027642", 12)
@@ -108,6 +147,10 @@ a027642-12-2730-b-12-s-denominator:
     in: SloaneA["A027642", 12]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A027642", "Offset"]}, ResourceFunction["OEISSequence"]["A027642"][[12 - s + 1]]]
+    out: "2730"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A027642},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A027642}][[12-s+1]]]
+      out: "2730"
 a000793-15-105-landau-s-function-g-15:
   epsil:
     in: SloaneA("A000793", 15)
@@ -119,3 +162,7 @@ a000793-15-105-landau-s-function-g-15:
     in: SloaneA["A000793", 15]
   wolfram:
     in: With[{s = ResourceFunction["OEISSequenceData"]["A000793", "Offset"]}, ResourceFunction["OEISSequence"]["A000793"][[15 - s + 1]]]
+    out: "105"
+    tex:
+      in: \text{With}[\{s=\text{ResourceFunction}[\text{OEISSequenceData}][\text{A000793},\text{Offset}]\},\text{ResourceFunction}[\text{OEISSequence}][\text{A000793}][[15-s+1]]]
+      out: "105"

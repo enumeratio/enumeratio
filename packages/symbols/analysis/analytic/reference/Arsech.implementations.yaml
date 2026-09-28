@@ -68,3 +68,10 @@ derivative-frac-1-x-sqrt-1-x-2:
     in: D[ArcSech[x], x]
   wolfram:
     in: D[ArcSech[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{sech}^{-1}(x)}{\partial x}--\frac{1}{x \sqrt{-x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{sech}^{-1}\left(\frac{7}{3}\right)--\frac{1}{\frac{7}{3} \sqrt{-\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{sech}^{-1}\left(-\frac{11}{5}\right)-\frac{-1}{-\frac{11}{5} \sqrt{-\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{sech}^{-1}\left(\frac{13}{4}\right)--\frac{1}{\frac{13}{4} \sqrt{-\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: convention
+    note: "The symbolic-agreement probe (FullSimplify at a few rational test points, #342) came back Indeterminate rather than proving equality -- ArcSech's branch cut and Sqrt(1-x^2)'s sign convention are a known rough spot for FullSimplify, not evidence the derivative is wrong (D[ArcSech[x],x] and -1/(x Sqrt(1-x^2)) do agree everywhere on the principal branch)."

@@ -9,6 +9,10 @@ zeta-2-2-frac-34-zeta-4:
     in: N[MultiZetaValue[2, 2]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-2) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.8117424252833536"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^2 \text{n2}^2}\right)\right]\right]
+      out: "0.811742"
   mpmath:
     in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-3-3-frac-12-zeta-3-2-zeta-6:
@@ -22,6 +26,10 @@ zeta-3-3-frac-12-zeta-3-2-zeta-6:
     in: N[MultiZetaValue[3, 3]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-3) n2^(-3), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.2137988682245927"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^3 \text{n2}^3}\right)\right]\right]
+      out: "0.213799"
   mpmath:
     in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-3), [1, n1 - 1]), [2, inf]))"
 zeta-2-3:
@@ -35,6 +43,10 @@ zeta-2-3:
     in: N[MultiZetaValue[2, 3]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-2) n2^(-3), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.7115661975505736"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^2 \text{n2}^3}\right)\right]\right]
+      out: "0.711566"
   mpmath:
     in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-3), [1, n1 - 1]), [2, inf]))"
 zeta-3-2:
@@ -48,6 +60,10 @@ zeta-3-2:
     in: N[MultiZetaValue[3, 2]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-3) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.2288103976033531"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^3 \text{n2}^2}\right)\right]\right]
+      out: "0.22881"
   mpmath:
     in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-4-2:
@@ -61,6 +77,10 @@ zeta-4-2:
     in: N[MultiZetaValue[4, 2]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-4) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.08848338245436893"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^4 \text{n2}^2}\right)\right]\right]
+      out: "0.0884834"
   mpmath:
     in: "(nsum(lambda n1: n1**(-4) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-2-4:
@@ -74,6 +94,10 @@ zeta-2-4:
     in: N[MultiZetaValue[2, 4]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-2) n2^(-4), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.6745239140339674"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^2 \text{n2}^4}\right)\right]\right]
+      out: "0.674524"
   mpmath:
     in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-4), [1, n1 - 1]), [2, inf]))"
 zeta-5-2:
@@ -87,6 +111,10 @@ zeta-5-2:
     in: N[MultiZetaValue[5, 2]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-5) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.03857512434275456"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^5 \text{n2}^2}\right)\right]\right]
+      out: "0.0385751"
   mpmath:
     in: "(nsum(lambda n1: n1**(-5) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-3-4:
@@ -100,6 +128,10 @@ zeta-3-4:
     in: N[MultiZetaValue[3, 4]]
   wolfram:
     in: N[N[Sum[Sum[n1^(-3) n2^(-4), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+    out: "0.20750501461572843"
+    tex:
+      in: N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^3 \text{n2}^4}\right)\right]\right]
+      out: "0.207505"
   mpmath:
     in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-4), [1, n1 - 1]), [2, inf]))"
 s-1-2-stays-symbolic-outside-the-depth-2-both:
@@ -113,6 +145,13 @@ s-1-2-stays-symbolic-outside-the-depth-2-both:
     in: MultiZetaValue[1, 2]
   wolfram:
     in: N[Sum[Sum[n1^(-1) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]
+    out: "315188.1291752872"
+    tex:
+      in: N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1} \text{n2}^2}\right)\right]
+      out: 315188.
+    verdict: disagree
+    kind: domain
+    note: "Expected: s1=1 is outside our depth-2, both-weights->=2 scope, so ours stays symbolic by design (see this entry's own details). The wolfram row's fixed Sum template has no scope gate, so Wolfram happily returns a concrete (if not absolutely-convergent-by-our-standard) number for the same expression."
   mpmath:
     in: "nsum(lambda n1: n1**(-1) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf])"
 zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
@@ -126,3 +165,7 @@ zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
     in: Chop[Subtract[N[MultiZetaValue[2, 2]], Times[0.75, N[Zeta[4]]]]]
   wolfram:
     in: Chop[Subtract[N[N[Sum[Sum[n1^(-2) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]], Times[0.75, N[Zeta[4]]]]]
+    out: "0"
+    tex:
+      in: \text{Chop}\left[N\left[N\left[\sum _{\text{n1}=2}^{\infty } \left(\sum _{\text{n2}=1}^{\text{n1}-1} \frac{1}{\text{n1}^2 \text{n2}^2}\right)\right]\right]-0.75 N[\zeta (4)]\right]
+      out: "0"

@@ -191,6 +191,10 @@ derivative-in-base-3-frac-1-x-ln-3:
     in: D[Log[3, x], x]
   wolfram:
     in: D[Log[3, x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \log _3(x)}{\partial x}-\frac{1}{x \log (3)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\log _3\left(\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \log (3)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\log _3\left(-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \log (3)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\log _3\left(\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \log (3)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 log-2-frac-18-3-an-exact-negative-power-of-the:
   epsil:
     in: Log(1 / 8, 2)

@@ -912,6 +912,10 @@ derivative-frac-d-dx-sin-x-cos-x:
     in: D[Sin[x], x]
   wolfram:
     in: D[Sin[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \sin (x)}{\partial x}-\cos (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\sin \left(\frac{7}{3}\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\sin \left(-\frac{11}{5}\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\sin \left(\frac{13}{4}\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(sin(Symbol("x")), Symbol("x"))
   sage:
@@ -927,6 +931,10 @@ second-derivative:
     in: D[Sin[x], x, x]
   wolfram:
     in: D[Sin[x], x, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial ^2\sin (x)}{\partial x\, \partial x}--\sin (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial ^2}{\partial \frac{7}{3}\, \partial \frac{7}{3}}\sin \left(\frac{7}{3}\right)--\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial ^2}{\partial -\frac{11}{5}\, \partial -\frac{11}{5}}\sin \left(-\frac{11}{5}\right)--\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial ^2}{\partial \frac{13}{4}\, \partial \frac{13}{4}}\sin \left(\frac{13}{4}\right)--\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))
   sage:
@@ -1038,6 +1046,10 @@ euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
     in: TrigToExp[Sin[x]]
   wolfram:
     in: TrigToExp[Sin[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}[\sin (x)]-\left((\text{Rational}[-1,2] i) e^{i x}+(\text{Rational}[1,2] i) e^{-i x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin \left(\frac{7}{3}\right)\right]-\left((\text{Rational}[-1,2] i) e^{i \frac{7}{3}}+(\text{Rational}[1,2] i) e^{-i \frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin \left(-\frac{11}{5}\right)\right]-\left((\text{Rational}[-1,2] i) e^{i \left(-\frac{11}{5}\right)}+(\text{Rational}[1,2] i) e^{-i \left(-\frac{11}{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin \left(\frac{13}{4}\right)\right]-\left((\text{Rational}[-1,2] i) e^{i \frac{13}{4}}+(\text{Rational}[1,2] i) e^{-i \frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 simplify-knows-the-pythagorean-identity:
   epsil:
     in: Simplify(Sin(x) ^ 2 + Cos(x) ^ 2)

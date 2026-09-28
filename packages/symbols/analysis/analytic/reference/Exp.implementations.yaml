@@ -523,6 +523,10 @@ its-own-derivative:
     in: D[Exp[x], x]
   wolfram:
     in: D[Exp[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial }{\partial x}\exp (x)-e^x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\exp \left(\frac{7}{3}\right)-e^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\exp \left(-\frac{11}{5}\right)-e^{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\exp \left(\frac{13}{4}\right)-e^{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(exp(Symbol("x")), Symbol("x"))
   sage:
