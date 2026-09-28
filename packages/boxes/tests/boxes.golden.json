@@ -1,0 +1,1185 @@
+{
+  "integer": {
+    "boxes": "42",
+    "latex": "42",
+    "text": "42"
+  },
+  "negative integer": {
+    "boxes": ["RowBox", ["−", "7"]],
+    "latex": "-7",
+    "text": "−7"
+  },
+  "big integer": {
+    "boxes": "123456789012345678901234567890",
+    "latex": "123456789012345678901234567890",
+    "text": "123456789012345678901234567890"
+  },
+  "decimal": {
+    "boxes": "3.25",
+    "latex": "3.25",
+    "text": "3.25"
+  },
+  "scientific": {
+    "boxes": ["RowBox", ["6.02", "×", ["SuperscriptBox", "10", "23"]]],
+    "latex": "6.02\\times10^{23}",
+    "text": "6.02 × 10^23"
+  },
+  "scientific negative exponent": {
+    "boxes": ["RowBox", ["1", "×", ["SuperscriptBox", "10", ["RowBox", ["−", "9"]]]]],
+    "latex": "1\\times10^{-9}",
+    "text": "1 × 10^(−9)"
+  },
+  "repeating decimal": {
+    "boxes": ["RowBox", ["1.", ["OverscriptBox", "3", "‾"]]],
+    "latex": "1.\\overline3",
+    "text": "1.3̅"
+  },
+  "not a number": {
+    "boxes": "NaN",
+    "latex": "\\operatorname{NaN}",
+    "text": "NaN"
+  },
+  "positive infinity": {
+    "boxes": "∞",
+    "latex": "\\infty",
+    "text": "∞"
+  },
+  "negative infinity": {
+    "boxes": ["RowBox", ["−", "∞"]],
+    "latex": "-\\infty",
+    "text": "−∞"
+  },
+  "symbol": {
+    "boxes": "x",
+    "latex": "x",
+    "text": "x"
+  },
+  "multi-letter symbol": {
+    "boxes": "speed",
+    "latex": "\\operatorname{speed}",
+    "text": "speed"
+  },
+  "symbol object": {
+    "boxes": "y",
+    "latex": "y",
+    "text": "y"
+  },
+  "greek symbol": {
+    "boxes": "α",
+    "latex": "\\alpha",
+    "text": "α"
+  },
+  "constant pi": {
+    "boxes": "π",
+    "latex": "\\pi",
+    "text": "π"
+  },
+  "constant e": {
+    "boxes": "e",
+    "latex": "e",
+    "text": "e"
+  },
+  "constant i": {
+    "boxes": "i",
+    "latex": "i",
+    "text": "i"
+  },
+  "constant infinity": {
+    "boxes": "∞",
+    "latex": "\\infty",
+    "text": "∞"
+  },
+  "constant negative infinity": {
+    "boxes": ["RowBox", ["−", "∞"]],
+    "latex": "-\\infty",
+    "text": "−∞"
+  },
+  "half": {
+    "boxes": ["FractionBox", "1", "2"],
+    "latex": "\\frac{1}{2}",
+    "text": "1/2"
+  },
+  "subscripted symbol": {
+    "boxes": ["SubscriptBox", "x", "1"],
+    "latex": "x_1",
+    "text": "x_1"
+  },
+  "symbol with word subscript": {
+    "boxes": ["SubscriptBox", "v", "max"],
+    "latex": "v_{\\max}",
+    "text": "v_max"
+  },
+  "string literal": {
+    "boxes": [
+      "TextBox",
+      "hello",
+      {
+        "ShowStringCharacters": true
+      }
+    ],
+    "latex": "\\text{“hello”}",
+    "text": "\"hello\""
+  },
+  "quoted string": {
+    "boxes": [
+      "TextBox",
+      "hi",
+      {
+        "ShowStringCharacters": true
+      }
+    ],
+    "latex": "\\text{“hi”}",
+    "text": "\"hi\""
+  },
+  "add two": {
+    "boxes": ["RowBox", ["x", "+", "1"]],
+    "latex": "x+1",
+    "text": "x + 1"
+  },
+  "add many": {
+    "boxes": ["RowBox", ["a", "+", "b", "+", "c", "+", "d"]],
+    "latex": "a+b+c+d",
+    "text": "a + b + c + d"
+  },
+  "add negative literal": {
+    "boxes": ["RowBox", ["x", "−", "2"]],
+    "latex": "x-2",
+    "text": "x − 2"
+  },
+  "add negate": {
+    "boxes": ["RowBox", ["x", "−", "y"]],
+    "latex": "x-y",
+    "text": "x − y"
+  },
+  "add negative coefficient": {
+    "boxes": ["RowBox", [["RowBox", [["RowBox", ["−", "2"]], "⁢", "x"]], "+", "1"]],
+    "latex": "-2x+1",
+    "text": "−2 x + 1"
+  },
+  "add minus-one coefficient": {
+    "boxes": ["RowBox", ["1", "−", "x"]],
+    "latex": "1-x",
+    "text": "1 − x"
+  },
+  "add leading negative": {
+    "boxes": ["RowBox", [["RowBox", ["−", "2"]], "+", "x"]],
+    "latex": "-2+x",
+    "text": "−2 + x"
+  },
+  "add double negative": {
+    "boxes": ["RowBox", ["a", "−", ["RowBox", ["(", ["RowBox", ["−", "b"]], ")"]]]],
+    "latex": "a-(-b)",
+    "text": "a − (−b)"
+  },
+  "add nested add": {
+    "boxes": ["RowBox", ["a", "+", ["RowBox", ["(", ["RowBox", ["b", "+", "c"]], ")"]]]],
+    "latex": "a+(b+c)",
+    "text": "a + (b + c)"
+  },
+  "subtract": {
+    "boxes": ["RowBox", ["x", "−", "y"]],
+    "latex": "x-y",
+    "text": "x − y"
+  },
+  "subtract a sum": {
+    "boxes": ["RowBox", ["a", "−", ["RowBox", ["(", ["RowBox", ["b", "+", "c"]], ")"]]]],
+    "latex": "a-(b+c)",
+    "text": "a − (b + c)"
+  },
+  "subtract a negative": {
+    "boxes": ["RowBox", ["a", "−", ["RowBox", ["(", ["RowBox", ["−", "3"]], ")"]]]],
+    "latex": "a-(-3)",
+    "text": "a − (−3)"
+  },
+  "subtract chain": {
+    "boxes": ["RowBox", [["RowBox", ["x", "−", "y"]], "−", "z"]],
+    "latex": "x-y-z",
+    "text": "x − y − z"
+  },
+  "unary minus": {
+    "boxes": ["RowBox", ["−", "x"]],
+    "latex": "-x",
+    "text": "−x"
+  },
+  "unary minus of sum": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]]]],
+    "latex": "-(x+1)",
+    "text": "−(x + 1)"
+  },
+  "unary minus of product": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["2", "⁢", "x"]]]],
+    "latex": "-2x",
+    "text": "−2 x"
+  },
+  "unary minus of power": {
+    "boxes": ["RowBox", ["−", ["SuperscriptBox", "x", "2"]]],
+    "latex": "-x^2",
+    "text": "−x^2"
+  },
+  "double unary minus": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["(", ["RowBox", ["−", "x"]], ")"]]]],
+    "latex": "-(-x)",
+    "text": "−(−x)"
+  },
+  "unary minus of negative literal": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["(", ["RowBox", ["−", "1"]], ")"]]]],
+    "latex": "-(-1)",
+    "text": "−(−1)"
+  },
+  "multiply symbols": {
+    "boxes": ["RowBox", ["a", "⁢", "b"]],
+    "latex": "ab",
+    "text": "a b"
+  },
+  "multiply coefficient": {
+    "boxes": ["RowBox", ["2", "⁢", "x"]],
+    "latex": "2x",
+    "text": "2 x"
+  },
+  "multiply numbers": {
+    "boxes": ["RowBox", ["2", "⋅", "3"]],
+    "latex": "2\\cdot3",
+    "text": "2⋅3"
+  },
+  "multiply minus-one": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["x", "⁢", "y"]]]],
+    "latex": "-xy",
+    "text": "−x y"
+  },
+  "multiply by negative": {
+    "boxes": ["RowBox", ["a", "⁢", ["RowBox", ["(", ["RowBox", ["−", "b"]], ")"]]]],
+    "latex": "a(-b)",
+    "text": "a (−b)"
+  },
+  "multiply by negative literal": {
+    "boxes": ["RowBox", ["a", "⁢", ["RowBox", ["(", ["RowBox", ["−", "2"]], ")"]]]],
+    "latex": "a(-2)",
+    "text": "a (−2)"
+  },
+  "multiply sums": {
+    "boxes": [
+      "RowBox",
+      [["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]], "⁢", ["RowBox", ["(", ["RowBox", ["x", "−", "1"]], ")"]]]
+    ],
+    "latex": "(x+1)(x-1)",
+    "text": "(x + 1) (x − 1)"
+  },
+  "multiply fraction": {
+    "boxes": ["RowBox", ["2", "⋅", ["FractionBox", "1", "2"]]],
+    "latex": "2\\cdot\\frac{1}{2}",
+    "text": "2⋅1/2"
+  },
+  "invisible operator": {
+    "boxes": ["RowBox", ["2", "⁢", "x"]],
+    "latex": "2x",
+    "text": "2 x"
+  },
+  "divide": {
+    "boxes": ["FractionBox", "x", "y"],
+    "latex": "\\frac{x}{y}",
+    "text": "x/y"
+  },
+  "divide sums": {
+    "boxes": ["FractionBox", ["RowBox", ["x", "+", "1"]], ["RowBox", ["y", "−", "2"]]],
+    "latex": "\\frac{x+1}{y-2}",
+    "text": "(x + 1)/(y − 2)"
+  },
+  "nested fractions": {
+    "boxes": ["FractionBox", ["FractionBox", "1", "2"], ["FractionBox", "3", "4"]],
+    "latex": "\\frac{\\frac{1}{2}}{\\frac{3}{4}}",
+    "text": "(1/2)/(3/4)"
+  },
+  "fraction in numerator": {
+    "boxes": ["FractionBox", ["FractionBox", "a", "b"], "c"],
+    "latex": "\\frac{\\frac{a}{b}}{c}",
+    "text": "(a/b)/c"
+  },
+  "rational": {
+    "boxes": ["FractionBox", "2", "3"],
+    "latex": "\\frac{2}{3}",
+    "text": "2/3"
+  },
+  "negative rational": {
+    "boxes": ["FractionBox", ["RowBox", ["−", "1"]], "3"],
+    "latex": "\\frac{-1}{3}",
+    "text": "(−1)/3"
+  },
+  "power": {
+    "boxes": ["SuperscriptBox", "x", "2"],
+    "latex": "x^2",
+    "text": "x^2"
+  },
+  "power of sum": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]], "2"],
+    "latex": "(x+1)^2",
+    "text": "(x + 1)^2"
+  },
+  "power of power": {
+    "boxes": ["SuperscriptBox", ["SuperscriptBox", "x", "2"], "3"],
+    "latex": "{x^2}^3",
+    "text": "(x^2)^3"
+  },
+  "power of negative": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["RowBox", ["−", "2"]], ")"]], "2"],
+    "latex": "(-2)^2",
+    "text": "(−2)^2"
+  },
+  "power of negate": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["RowBox", ["−", "x"]], ")"]], "2"],
+    "latex": "(-x)^2",
+    "text": "(−x)^2"
+  },
+  "power of fraction": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["FractionBox", "1", "2"], ")"]], "n"],
+    "latex": "(\\frac{1}{2})^n",
+    "text": "(1/2)^n"
+  },
+  "power negative exponent": {
+    "boxes": ["SuperscriptBox", "x", ["RowBox", ["−", "1"]]],
+    "latex": "x^{-1}",
+    "text": "x^(−1)"
+  },
+  "power fraction exponent": {
+    "boxes": ["SuperscriptBox", "x", ["FractionBox", "1", "2"]],
+    "latex": "x^{\\frac{1}{2}}",
+    "text": "x^(1/2)"
+  },
+  "power of product": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["RowBox", ["a", "⁢", "b"]], ")"]], "2"],
+    "latex": "(ab)^2",
+    "text": "(a b)^2"
+  },
+  "power of function": {
+    "boxes": ["SuperscriptBox", ["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]], "2"],
+    "latex": "{\\sin(x)}^2",
+    "text": "(sin(x))^2"
+  },
+  "power of subscript": {
+    "boxes": ["SuperscriptBox", ["SubscriptBox", "x", "1"], "2"],
+    "latex": "{x_1}^2",
+    "text": "(x_1)^2"
+  },
+  "power tower": {
+    "boxes": ["SuperscriptBox", "a", ["SuperscriptBox", "b", "c"]],
+    "latex": "a^{b^c}",
+    "text": "a^(b^c)"
+  },
+  "power in product": {
+    "boxes": ["RowBox", ["3", "⁢", ["SuperscriptBox", "x", "2"]]],
+    "latex": "3x^2",
+    "text": "3 x^2"
+  },
+  "euler identity": {
+    "boxes": ["RowBox", [["SuperscriptBox", "e", ["RowBox", ["i", "⁢", "π"]]], "+", "1"]],
+    "latex": "e^{i\\pi}+1",
+    "text": "e^(i π) + 1"
+  },
+  "square": {
+    "boxes": ["SuperscriptBox", "x", "2"],
+    "latex": "x^2",
+    "text": "x^2"
+  },
+  "exp": {
+    "boxes": ["SuperscriptBox", "e", ["RowBox", ["−", "x"]]],
+    "latex": "e^{-x}",
+    "text": "e^(−x)"
+  },
+  "sqrt": {
+    "boxes": ["SqrtBox", "x"],
+    "latex": "\\sqrt{x}",
+    "text": "√x"
+  },
+  "sqrt of sum": {
+    "boxes": ["SqrtBox", ["RowBox", [["SuperscriptBox", "x", "2"], "+", "1"]]],
+    "latex": "\\sqrt{x^2+1}",
+    "text": "√(x^2 + 1)"
+  },
+  "nested sqrt": {
+    "boxes": ["SqrtBox", ["RowBox", ["1", "+", ["SqrtBox", "2"]]]],
+    "latex": "\\sqrt{1+\\sqrt{2}}",
+    "text": "√(1 + √2)"
+  },
+  "root": {
+    "boxes": ["RadicalBox", "x", "3"],
+    "latex": "\\sqrt[3]{x}",
+    "text": "x^(1/3)"
+  },
+  "root of fraction": {
+    "boxes": ["RadicalBox", ["FractionBox", "1", "x"], "n"],
+    "latex": "\\sqrt[n]{\\frac{1}{x}}",
+    "text": "(1/x)^(1/n)"
+  },
+  "abs": {
+    "boxes": ["RowBox", ["|", ["RowBox", ["x", "−", "y"]], "|"]],
+    "latex": "|x-y|",
+    "text": "|x − y|"
+  },
+  "norm": {
+    "boxes": ["RowBox", ["‖", "v", "‖"]],
+    "latex": "\\Vert v\\Vert",
+    "text": "‖v‖"
+  },
+  "floor": {
+    "boxes": ["RowBox", ["⌊", "x", "⌋"]],
+    "latex": "\\lfloor x\\rfloor",
+    "text": "⌊x⌋"
+  },
+  "ceil": {
+    "boxes": ["RowBox", ["⌈", "x", "⌉"]],
+    "latex": "\\lceil x\\rceil",
+    "text": "⌈x⌉"
+  },
+  "factorial": {
+    "boxes": ["RowBox", ["n", "!"]],
+    "latex": "n!",
+    "text": "n!"
+  },
+  "factorial of sum": {
+    "boxes": ["RowBox", [["RowBox", ["(", ["RowBox", ["n", "+", "1"]], ")"]], "!"]],
+    "latex": "(n+1)!",
+    "text": "(n + 1)!"
+  },
+  "double factorial": {
+    "boxes": ["RowBox", ["n", "!!"]],
+    "latex": "n!!",
+    "text": "n!!"
+  },
+  "binomial": {
+    "boxes": [
+      "RowBox",
+      [
+        "(",
+        [
+          "FractionBox",
+          "n",
+          "k",
+          {
+            "FractionLine": false
+          }
+        ],
+        ")"
+      ]
+    ],
+    "latex": "\\binom{n}{k}",
+    "text": "(n; k)"
+  },
+  "complex number": {
+    "boxes": ["RowBox", ["2", "+", ["RowBox", ["3", "⁢", "i"]]]],
+    "latex": "2+3i",
+    "text": "2 + 3 i"
+  },
+  "complex unit imaginary": {
+    "boxes": ["RowBox", ["2", "+", "i"]],
+    "latex": "2+i",
+    "text": "2 + i"
+  },
+  "complex pure imaginary": {
+    "boxes": ["RowBox", ["3", "⁢", "i"]],
+    "latex": "3i",
+    "text": "3 i"
+  },
+  "complex object form": {
+    "boxes": ["RowBox", ["x", "+", "1"]],
+    "latex": "x+1",
+    "text": "x + 1"
+  },
+  "sin": {
+    "boxes": ["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "\\sin(x)",
+    "text": "sin(x)"
+  },
+  "sin of product": {
+    "boxes": ["RowBox", ["sin", "⁡", ["RowBox", ["(", ["RowBox", ["2", "⁢", "x"]], ")"]]]],
+    "latex": "\\sin(2x)",
+    "text": "sin(2 x)"
+  },
+  "sin times cos": {
+    "boxes": [
+      "RowBox",
+      [["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]], "⁢", ["RowBox", ["cos", "⁡", ["RowBox", ["(", "y", ")"]]]]]
+    ],
+    "latex": "\\sin(x)\\cos(y)",
+    "text": "sin(x) cos(y)"
+  },
+  "ln": {
+    "boxes": ["RowBox", ["ln", "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "\\ln(x)",
+    "text": "ln(x)"
+  },
+  "log base": {
+    "boxes": ["RowBox", [["SubscriptBox", "log", "2"], "⁡", ["RowBox", ["(", "8", ")"]]]],
+    "latex": "\\log_2(8)",
+    "text": "log_2(8)"
+  },
+  "lb": {
+    "boxes": ["RowBox", ["lb", "⁡", ["RowBox", ["(", "8", ")"]]]],
+    "latex": "\\operatorname{lb}(8)",
+    "text": "lb(8)"
+  },
+  "gamma function": {
+    "boxes": ["RowBox", ["Γ", "⁡", ["RowBox", ["(", ["RowBox", ["n", "+", "1"]], ")"]]]],
+    "latex": "\\Gamma(n+1)",
+    "text": "Γ(n + 1)"
+  },
+  "user function": {
+    "boxes": ["RowBox", ["f", "⁡", ["RowBox", ["(", "x", ",", "y", ")"]]]],
+    "latex": "f(x,y)",
+    "text": "f(x, y)"
+  },
+  "user function no args": {
+    "boxes": ["RowBox", ["f", "⁡", ["RowBox", ["(", ")"]]]],
+    "latex": "f()",
+    "text": "f()"
+  },
+  "unknown head": {
+    "boxes": ["RowBox", ["Zeta", "⁡", ["RowBox", ["(", "s", ")"]]]],
+    "latex": "\\operatorname{Zeta}(s)",
+    "text": "Zeta(s)"
+  },
+  "nested calls": {
+    "boxes": [
+      "RowBox",
+      [
+        "f",
+        "⁡",
+        [
+          "RowBox",
+          [
+            "(",
+            ["RowBox", ["g", "⁡", ["RowBox", ["(", "x", ")"]]]],
+            ",",
+            ["RowBox", ["h", "⁡", ["RowBox", ["(", "y", ",", "z", ")"]]]],
+            ")"
+          ]
+        ]
+      ]
+    ],
+    "latex": "f(g(x),h(y,z))",
+    "text": "f(g(x), h(y, z))"
+  },
+  "subscript": {
+    "boxes": ["SubscriptBox", "a", "n"],
+    "latex": "a_n",
+    "text": "a_n"
+  },
+  "subscript of sum": {
+    "boxes": ["SubscriptBox", ["RowBox", ["(", ["RowBox", ["a", "+", "b"]], ")"]], "n"],
+    "latex": "(a+b)_n",
+    "text": "(a + b)_n"
+  },
+  "superscript": {
+    "boxes": ["SuperscriptBox", "A", "T"],
+    "latex": "A^T",
+    "text": "A^T"
+  },
+  "subscript and power": {
+    "boxes": ["SuperscriptBox", ["SubscriptBox", "a", "n"], "2"],
+    "latex": "{a_n}^2",
+    "text": "(a_n)^2"
+  },
+  "list": {
+    "boxes": ["RowBox", ["[", "1", ",", "2", ",", "3", "]"]],
+    "latex": "[1,2,3]",
+    "text": "[1, 2, 3]"
+  },
+  "empty list": {
+    "boxes": ["RowBox", ["[", "]"]],
+    "latex": "[]",
+    "text": "[]"
+  },
+  "list of lists": {
+    "boxes": ["RowBox", ["[", ["RowBox", ["[", "1", ",", "2", "]"]], ",", ["RowBox", ["[", "3", ",", "4", "]"]], "]"]],
+    "latex": "[[1,2],[3,4]]",
+    "text": "[[1, 2], [3, 4]]"
+  },
+  "set": {
+    "boxes": ["RowBox", ["{", "a", ",", "b", "}"]],
+    "latex": "\\{a,b\\}",
+    "text": "{a, b}"
+  },
+  "tuple": {
+    "boxes": ["RowBox", ["(", "x", ",", "0", ",", "1", ")"]],
+    "latex": "(x,0,1)",
+    "text": "(x, 0, 1)"
+  },
+  "pair": {
+    "boxes": ["RowBox", ["(", "x", ",", "y", ")"]],
+    "latex": "(x,y)",
+    "text": "(x, y)"
+  },
+  "matrix": {
+    "boxes": [
+      "RowBox",
+      [
+        "(",
+        [
+          "GridBox",
+          [
+            ["1", "2"],
+            ["3", "4"]
+          ]
+        ],
+        ")"
+      ]
+    ],
+    "latex": "\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}",
+    "text": "{{1, 2}, {3, 4}}"
+  },
+  "matrix with brackets": {
+    "boxes": [
+      "RowBox",
+      [
+        "[",
+        [
+          "GridBox",
+          [
+            ["1", "2"],
+            ["3", "4"]
+          ]
+        ],
+        "]"
+      ]
+    ],
+    "latex": "\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}",
+    "text": "{{1, 2}, {3, 4}}"
+  },
+  "matrix with str delimiters": {
+    "boxes": [
+      "RowBox",
+      [
+        "|",
+        [
+          "GridBox",
+          [
+            ["1", "2"],
+            ["3", "4"]
+          ]
+        ],
+        "|"
+      ]
+    ],
+    "latex": "\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}",
+    "text": "{{1, 2}, {3, 4}}"
+  },
+  "matrix no delimiters": {
+    "boxes": [
+      "RowBox",
+      [
+        [
+          "GridBox",
+          [
+            ["1", "2"],
+            ["3", "4"]
+          ]
+        ]
+      ]
+    ],
+    "latex": "\\begin{matrix}1&2\\\\3&4\\end{matrix}",
+    "text": "{{1, 2}, {3, 4}}"
+  },
+  "matrix of expressions": {
+    "boxes": [
+      "RowBox",
+      [
+        "(",
+        [
+          "GridBox",
+          [
+            [
+              ["FractionBox", "1", "2"],
+              ["RowBox", ["−", "x"]]
+            ],
+            [
+              ["SuperscriptBox", "x", "2"],
+              ["SqrtBox", "2"]
+            ]
+          ]
+        ],
+        ")"
+      ]
+    ],
+    "latex": "\\begin{pmatrix}\\frac{1}{2}&-x\\\\x^2&\\sqrt{2}\\end{pmatrix}",
+    "text": "{{1/2, −x}, {x^2, √2}}"
+  },
+  "column vector": {
+    "boxes": ["RowBox", ["(", ["GridBox", [["1"], ["2"], ["3"]]], ")"]],
+    "latex": "\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}",
+    "text": "{{1}, {2}, {3}}"
+  },
+  "nested matrices": {
+    "boxes": [
+      "RowBox",
+      [
+        "(",
+        [
+          "GridBox",
+          [
+            [
+              [
+                "RowBox",
+                [
+                  "(",
+                  [
+                    "GridBox",
+                    [
+                      ["1", "0"],
+                      ["0", "1"]
+                    ]
+                  ],
+                  ")"
+                ]
+              ],
+              "0"
+            ],
+            ["0", "1"]
+          ]
+        ],
+        ")"
+      ]
+    ],
+    "latex": "\\begin{pmatrix}\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}&0\\\\0&1\\end{pmatrix}",
+    "text": "{{{{1, 0}, {0, 1}}, 0}, {0, 1}}"
+  },
+  "delimiter": {
+    "boxes": ["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]],
+    "latex": "(x+1)",
+    "text": "(x + 1)"
+  },
+  "delimiter brackets": {
+    "boxes": ["RowBox", ["[", "a", ";", "b", "]"]],
+    "latex": "[a;b]",
+    "text": "[a;b]"
+  },
+  "delimited negate": {
+    "boxes": ["RowBox", ["−", ["RowBox", ["(", ["RowBox", ["−", "x"]], ")"]]]],
+    "latex": "-(-x)",
+    "text": "−(−x)"
+  },
+  "equal": {
+    "boxes": ["RowBox", ["x", "=", "1"]],
+    "latex": "x=1",
+    "text": "x = 1"
+  },
+  "equal sum": {
+    "boxes": ["RowBox", [["RowBox", ["x", "+", "y"]], "=", ["RowBox", ["2", "⁢", "z"]]]],
+    "latex": "x+y=2z",
+    "text": "x + y = 2 z"
+  },
+  "not equal": {
+    "boxes": ["RowBox", ["x", "≠", "y"]],
+    "latex": "x\\ne y",
+    "text": "x ≠ y"
+  },
+  "less": {
+    "boxes": ["RowBox", ["a", "<", "b"]],
+    "latex": "a<b",
+    "text": "a < b"
+  },
+  "less equal": {
+    "boxes": ["RowBox", ["3", "≤", "x"]],
+    "latex": "3\\le x",
+    "text": "3 ≤ x"
+  },
+  "greater": {
+    "boxes": ["RowBox", ["a", ">", "b"]],
+    "latex": "a>b",
+    "text": "a > b"
+  },
+  "greater equal": {
+    "boxes": ["RowBox", ["x", "≥", "3"]],
+    "latex": "x\\ge3",
+    "text": "x ≥ 3"
+  },
+  "approx": {
+    "boxes": ["RowBox", ["π", "≈", "3.14"]],
+    "latex": "\\pi\\approx3.14",
+    "text": "π ≈ 3.14"
+  },
+  "chained relation": {
+    "boxes": ["RowBox", ["a", "<", "b", "<", "c"]],
+    "latex": "a<b<c",
+    "text": "a < b < c"
+  },
+  "mixed relation": {
+    "boxes": ["RowBox", [["RowBox", ["(", ["RowBox", ["a", "<", "b"]], ")"]], "≤", "c"]],
+    "latex": "(a<b)\\le c",
+    "text": "(a < b) ≤ c"
+  },
+  "relation of relations": {
+    "boxes": [
+      "RowBox",
+      [["RowBox", ["(", ["RowBox", ["a", "<", "b"]], ")"]], "=", ["RowBox", ["(", ["RowBox", ["c", ">", "d"]], ")"]]]
+    ],
+    "latex": "(a<b)=(c>d)",
+    "text": "(a < b) = (c > d)"
+  },
+  "relation in sum": {
+    "boxes": ["RowBox", [["RowBox", ["(", ["RowBox", ["a", "=", "b"]], ")"]], "+", "1"]],
+    "latex": "(a=b)+1",
+    "text": "(a = b) + 1"
+  },
+  "element": {
+    "boxes": ["RowBox", ["x", "∈", "ℝ"]],
+    "latex": "x\\in\\mathbb{R}",
+    "text": "x ∈ ℝ"
+  },
+  "and": {
+    "boxes": ["RowBox", [["RowBox", ["a", "<", "b"]], "∧", ["RowBox", ["b", "≤", "c"]]]],
+    "latex": "a<b\\land b\\le c",
+    "text": "a < b ∧ b ≤ c"
+  },
+  "or": {
+    "boxes": ["RowBox", ["p", "∨", "q"]],
+    "latex": "p\\lor q",
+    "text": "p ∨ q"
+  },
+  "and of or": {
+    "boxes": ["RowBox", [["RowBox", ["(", ["RowBox", ["p", "∨", "q"]], ")"]], "∧", "r"]],
+    "latex": "(p\\lor q)\\land r",
+    "text": "(p ∨ q) ∧ r"
+  },
+  "or of and": {
+    "boxes": ["RowBox", [["RowBox", ["p", "∧", "q"]], "∨", "r"]],
+    "latex": "p\\land q\\lor r",
+    "text": "p ∧ q ∨ r"
+  },
+  "not": {
+    "boxes": ["RowBox", ["¬", "p"]],
+    "latex": "\\lnot p",
+    "text": "¬p"
+  },
+  "not of and": {
+    "boxes": ["RowBox", ["¬", ["RowBox", ["(", ["RowBox", ["p", "∧", "q"]], ")"]]]],
+    "latex": "\\lnot(p\\land q)",
+    "text": "¬(p ∧ q)"
+  },
+  "implies": {
+    "boxes": ["RowBox", ["p", "⇒", "q"]],
+    "latex": "p\\Rightarrow q",
+    "text": "p ⇒ q"
+  },
+  "equivalent": {
+    "boxes": ["RowBox", ["p", "⇔", "q"]],
+    "latex": "p\\Leftrightarrow q",
+    "text": "p ⇔ q"
+  },
+  "sum with limits": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderoverscriptBox", "∑", ["RowBox", ["n", "=", "1"]], "10"],
+        ["SuperscriptBox", "n", "2"]
+      ]
+    ],
+    "latex": "\\sum_{n=1}^{10}n^2",
+    "text": "∑_(n = 1)^10 n^2"
+  },
+  "sum with tuple": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderoverscriptBox", "∑", ["RowBox", ["n", "=", "1"]], "10"],
+        ["SuperscriptBox", "n", "2"]
+      ]
+    ],
+    "latex": "\\sum_{n=1}^{10}n^2",
+    "text": "∑_(n = 1)^10 n^2"
+  },
+  "sum canonical": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderoverscriptBox", "∑", ["RowBox", ["n", "=", "1"]], "10"],
+        ["SuperscriptBox", "n", "2"]
+      ]
+    ],
+    "latex": "\\sum_{n=1}^{10}n^2",
+    "text": "∑_(n = 1)^10 n^2"
+  },
+  "sum of sum": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderoverscriptBox", "∑", ["RowBox", ["n", "=", "0"]], "∞"],
+        ["RowBox", ["(", ["RowBox", ["n", "+", "1"]], ")"]]
+      ]
+    ],
+    "latex": "\\sum_{n=0}^{\\infty}(n+1)",
+    "text": "∑_(n = 0)^∞ (n + 1)"
+  },
+  "sum no bounds": {
+    "boxes": ["RowBox", ["∑", ["SubscriptBox", "a", "n"]]],
+    "latex": "\\sum a_n",
+    "text": "∑a_n"
+  },
+  "sum variable only": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderscriptBox", "∑", "n"],
+        ["SubscriptBox", "a", "n"]
+      ]
+    ],
+    "latex": "\\sum_na_n",
+    "text": "∑_n a_n"
+  },
+  "product": {
+    "boxes": ["RowBox", [["UnderoverscriptBox", "∏", ["RowBox", ["k", "=", "1"]], "5"], "k"]],
+    "latex": "\\prod_{k=1}^5k",
+    "text": "∏_(k = 1)^5 k"
+  },
+  "definite integral": {
+    "boxes": [
+      "RowBox",
+      [
+        ["SubsuperscriptBox", "∫", "0", "1"],
+        ["SuperscriptBox", "x", "2"],
+        ["RowBox", ["d", "x"]]
+      ]
+    ],
+    "latex": "\\int_0^1x^2dx",
+    "text": "∫_0^1 x^2 dx"
+  },
+  "indefinite integral": {
+    "boxes": ["RowBox", ["∫", ["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]], ["RowBox", ["d", "x"]]]],
+    "latex": "\\int\\sin(x)dx",
+    "text": "∫sin(x) dx"
+  },
+  "integral of sum": {
+    "boxes": [
+      "RowBox",
+      [
+        ["SubsuperscriptBox", "∫", "0", "1"],
+        ["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]],
+        ["RowBox", ["d", "x"]]
+      ]
+    ],
+    "latex": "\\int_0^1(x+1)dx",
+    "text": "∫_0^1 (x + 1) dx"
+  },
+  "limit": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderscriptBox", "lim", ["RowBox", ["x", "→", "0"]]],
+        ["FractionBox", ["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]], "x"]
+      ]
+    ],
+    "latex": "\\lim_{x\\to0}\\frac{\\sin(x)}{x}",
+    "text": "lim_(x → 0) (sin(x))/x"
+  },
+  "limit raw": {
+    "boxes": [
+      "RowBox",
+      [
+        ["UnderscriptBox", "lim", ["RowBox", ["x", "→", "0"]]],
+        ["FractionBox", ["RowBox", ["sin", "⁡", ["RowBox", ["(", "x", ")"]]]], "x"]
+      ]
+    ],
+    "latex": "\\lim_{x\\to0}\\frac{\\sin(x)}{x}",
+    "text": "lim_(x → 0) (sin(x))/x"
+  },
+  "derivative": {
+    "boxes": [
+      "RowBox",
+      [
+        ["FractionBox", "d", ["RowBox", ["d", "x"]]],
+        ["SuperscriptBox", "x", "2"]
+      ]
+    ],
+    "latex": "\\frac{d}{dx}x^2",
+    "text": "d/(dx) x^2"
+  },
+  "derivative prime": {
+    "boxes": ["RowBox", [["RowBox", ["f", "′"]], "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "f'(x)",
+    "text": "f′(x)"
+  },
+  "derivative double prime": {
+    "boxes": ["RowBox", [["RowBox", ["f", "″"]], "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "f''(x)",
+    "text": "f″(x)"
+  },
+  "derivative high order": {
+    "boxes": ["RowBox", [["SuperscriptBox", "f", ["RowBox", ["(", "5", ")"]]], "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "f^{(5)}(x)",
+    "text": "f^(5)(x)"
+  },
+  "derivative default order": {
+    "boxes": ["RowBox", [["RowBox", ["f", "′"]], "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "f'(x)",
+    "text": "f′(x)"
+  },
+  "apply": {
+    "boxes": ["RowBox", ["f", "⁡", ["RowBox", ["(", "x", ")"]]]],
+    "latex": "f(x)",
+    "text": "f(x)"
+  },
+  "apply many": {
+    "boxes": ["RowBox", ["f", "⁡", ["RowBox", ["(", "x", ",", "y", ")"]]]],
+    "latex": "f(x,y)",
+    "text": "f(x, y)"
+  },
+  "interval closed": {
+    "boxes": ["RowBox", ["[", ["RowBox", ["0", ",", "1"]], "]"]],
+    "latex": "[0,1]",
+    "text": "[0, 1]"
+  },
+  "interval open": {
+    "boxes": ["RowBox", ["(", ["RowBox", ["0", ",", "1"]], ")"]],
+    "latex": "(0,1)",
+    "text": "(0, 1)"
+  },
+  "interval half open right": {
+    "boxes": ["RowBox", ["[", ["RowBox", ["0", ",", "1"]], ")"]],
+    "latex": "[0,1)",
+    "text": "[0, 1)"
+  },
+  "interval half open left": {
+    "boxes": ["RowBox", ["(", ["RowBox", ["0", ",", "1"]], "]"]],
+    "latex": "(0,1]",
+    "text": "(0, 1]"
+  },
+  "subset": {
+    "boxes": ["RowBox", ["A", "⊂", "B"]],
+    "latex": "A\\subset B",
+    "text": "A ⊂ B"
+  },
+  "subset equal": {
+    "boxes": ["RowBox", ["A", "⊆", "B"]],
+    "latex": "A\\subseteq B",
+    "text": "A ⊆ B"
+  },
+  "not element": {
+    "boxes": ["RowBox", ["x", "∉", "ℤ"]],
+    "latex": "x\\notin\\mathbb{Z}",
+    "text": "x ∉ ℤ"
+  },
+  "piecewise two cases": {
+    "boxes": [
+      "RowBox",
+      [
+        "{",
+        [
+          "GridBox",
+          [
+            [
+              ["SuperscriptBox", "x", "2"],
+              [
+                "RowBox",
+                [
+                  ["TextBox", "if "],
+                  ["RowBox", ["x", ">", "0"]]
+                ]
+              ]
+            ],
+            [
+              ["RowBox", ["−", "x"]],
+              ["TextBox", "otherwise"]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "latex": "\\begin{cases}x^2&\\text{if }x>0\\\\-x&\\text{otherwise}\\end{cases}",
+    "text": "{x^2 if x > 0; −x otherwise}"
+  },
+  "piecewise no default": {
+    "boxes": [
+      "RowBox",
+      [
+        "{",
+        [
+          "GridBox",
+          [
+            [
+              "x",
+              [
+                "RowBox",
+                [
+                  ["TextBox", "if "],
+                  ["RowBox", ["x", ">", "0"]]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "latex": "\\begin{cases}x&\\text{if }x>0\\end{cases}",
+    "text": "{x if x > 0}"
+  },
+  "wedge": {
+    "boxes": ["RowBox", ["a", "∧", "b"]],
+    "latex": "a\\land b",
+    "text": "a ∧ b"
+  },
+  "wedge three": {
+    "boxes": ["RowBox", ["a", "∧", "b", "∧", "c"]],
+    "latex": "a\\land b\\land c",
+    "text": "a ∧ b ∧ c"
+  },
+  "vee": {
+    "boxes": ["RowBox", ["a", "∨", "b"]],
+    "latex": "a\\lor b",
+    "text": "a ∨ b"
+  },
+  "wedge of sum": {
+    "boxes": ["RowBox", [["RowBox", ["(", ["RowBox", ["a", "+", "1"]], ")"]], "∧", "b"]],
+    "latex": "(a+1)\\land b",
+    "text": "(a + 1) ∧ b"
+  },
+  "ordered juxtaposition": {
+    "boxes": ["RowBox", [["SubscriptBox", "e", "2"], "⁢", ["SubscriptBox", "e", "1"]]],
+    "latex": "e_2e_1",
+    "text": "e_2 e_1"
+  },
+  "error": {
+    "boxes": [
+      "ErrorBox",
+      [
+        "RowBox",
+        [
+          [
+            "TextBox",
+            "unknown-symbol",
+            {
+              "ShowStringCharacters": true
+            }
+          ]
+        ]
+      ]
+    ],
+    "latex": "\\textcolor{red}{\\text{“unknown-symbol”}}",
+    "text": "\"unknown-symbol\""
+  },
+  "xml special characters": {
+    "boxes": [
+      "RowBox",
+      [
+        [
+          "TextBox",
+          "a<b",
+          {
+            "ShowStringCharacters": true
+          }
+        ],
+        "<",
+        [
+          "TextBox",
+          "c&d",
+          {
+            "ShowStringCharacters": true
+          }
+        ]
+      ]
+    ],
+    "latex": "\\text{“a<b”}<\\text{“c\\&d”}",
+    "text": "\"a<b\" < \"c&d\""
+  },
+  "dictionary": {
+    "boxes": ["ErrorBox", ["TextBox", "{\"dict\":{\"a\":1}}"]],
+    "latex": "\\textcolor{red}{\\text{\\{\"dict\":\\{\"a\":1\\}\\}}}",
+    "text": "{\"dict\":{\"a\":1}}"
+  }
+}
