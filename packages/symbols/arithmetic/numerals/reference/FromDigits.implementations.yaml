@@ -66,8 +66,8 @@ an-empty-digit-list-is-left-unevaluated-rather:
     in: FromDigits([])
     out: FromDigits([])
   tex:
-    in: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack)
-    out: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{FromDigits}(\bigl\lbrack\bigr\rbrack)
+    out: \mathrm{FromDigits}(\bigl\lbrack\bigr\rbrack)
   fullform:
     in: FromDigits[List[]]
   wolfram:
@@ -325,7 +325,7 @@ bijective-base-26-the-empty-numeral-is-zero:
     in: FromDigits([], BijectiveNumerals(26))
     out: "0"
   tex:
-    in: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack, \mathrm{BijectiveNumerals}(26))
+    in: \mathrm{FromDigits}(\bigl\lbrack\bigr\rbrack, \mathrm{BijectiveNumerals}(26))
     out: "0"
   fullform:
     in: FromDigits[List[], BijectiveNumerals[26]]

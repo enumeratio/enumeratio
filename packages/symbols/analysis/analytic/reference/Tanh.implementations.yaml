@@ -176,7 +176,7 @@ derivative-sech-2-x:
     in: D(Tanh(x), x)
     out: Sech(x) ^ 2
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\tanh(x)
+    in: \frac{\mathrm{d}\tanh(x)}{\mathrm{d}x}
     out: \mathrm{sech}(x)^2
   fullform:
     in: D[Tanh[x], x]

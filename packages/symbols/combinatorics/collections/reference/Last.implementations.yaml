@@ -51,7 +51,7 @@ a-second-argument-supplies-a-default-for-an:
     in: Last([], 99)
     out: "99"
   tex:
-    in: \mathrm{Last}(\bigl\lbrack \bigr\rbrack, 99)
+    in: \mathrm{Last}(\bigl\lbrack\bigr\rbrack, 99)
     out: "99"
   fullform:
     in: Last[List[], 99]
@@ -117,7 +117,7 @@ an-empty-collection-has-no-last-element-compute:
     in: Last([])
     out: Missing
   tex:
-    in: \mathrm{Last}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{Last}(\bigl\lbrack\bigr\rbrack)
     out: \mathrm{Missing}
   fullform:
     in: Last[List[]]

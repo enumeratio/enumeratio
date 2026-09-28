@@ -4,7 +4,7 @@ the-documented-subsets-collection-form-listed-in:
     out: "[[], [a], [b], [a, b], [c], [a, c], [b, c], [a, b, c]]"
   tex:
     in: \mathrm{Subsets}(\bigl\lbrack a, b, c\bigr\rbrack)
-    out: \bigl\lbrack\bigl\lbrack \bigr\rbrack, \bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack, \bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack, \bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack
   fullform:
     in: Subsets[List[a, b, c]]
   wolfram:

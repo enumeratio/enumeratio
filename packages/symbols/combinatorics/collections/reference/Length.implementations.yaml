@@ -111,7 +111,7 @@ the-empty-list-has-length-0:
     in: Length([])
     out: "0"
   tex:
-    in: \mathrm{Length}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{Length}(\bigl\lbrack\bigr\rbrack)
     out: "0"
   fullform:
     in: Length[List[]]

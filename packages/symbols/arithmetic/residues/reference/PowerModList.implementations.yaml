@@ -36,7 +36,7 @@ the-cubes-mod-7-are-only-0-1-6-so-2-has-no-cube:
     out: "[]"
   tex:
     in: \mathrm{PowerModList}(2, \frac{1}{3}, 7)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PowerModList[2, Rational[1, 3], 7]
   wolfram:
@@ -161,7 +161,7 @@ threads-over-lists-the-squares-mod-5-are-exactly:
     out: "[[1, 4], [], [], [2, 3]]"
   tex:
     in: \mathrm{PowerModList}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \frac{1}{2}, 5)
-    out: \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack1, 4\bigr\rbrack, \bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack
   fullform:
     in: PowerModList[List[1, 2, 3, 4], Rational[1, 2], 5]
   wolfram:
@@ -438,7 +438,7 @@ no-square-root-of-1-3-equiv-3-pmod-4-blocks-its:
     out: "[]"
   tex:
     in: \mathrm{PowerModList}(-1, \frac{1}{2}, 15)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PowerModList[-1, Rational[1, 2], 15]
   wolfram:
@@ -456,7 +456,7 @@ no-inverse-when-gcd-a-m-ne-1-so-the-list-is:
     out: "[]"
   tex:
     in: \mathrm{PowerModList}(2, -1, 4)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PowerModList[2, -1, 4]
   wolfram:
@@ -660,7 +660,7 @@ no-cube-root-of-4-modulo-13:
     out: "[]"
   tex:
     in: \mathrm{PowerModList}(2, \frac{2}{3}, 13)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PowerModList[2, Rational[2, 3], 13]
   wolfram:

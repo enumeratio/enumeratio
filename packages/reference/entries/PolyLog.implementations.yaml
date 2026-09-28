@@ -520,7 +520,7 @@ frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
     in: D(PolyLog(n, x), x)
     out: PolyLog(n - 1, x) / x
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{Li}_{n}(x)
+    in: \frac{\mathrm{d}\operatorname{Li}_{n}(x)}{\mathrm{d}x}
     out: \frac{\operatorname{Li}_{n-1}(x)}{x}
   fullform:
     in: D[PolyLog[n, x], x]

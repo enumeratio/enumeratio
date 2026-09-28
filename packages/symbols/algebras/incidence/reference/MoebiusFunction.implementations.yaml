@@ -27,10 +27,10 @@
     in: MoebiusFunction(BooleanLattice(3), [], [1, 2, 3])
     out: "-1"
   tex:
-    in: \mathrm{MoebiusFunction}(\mathrm{BooleanLattice}(3), \bigl\lbrack \bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    in: \mathrm{MoebiusFunction}(\mathrm{BooleanLattice}(3), \bigl\lbrack\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "-1"
   traditional:
-    in: \mathrm{MoebiusFunction}(B_{3}, \bigl\lbrack \bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    in: \mathrm{MoebiusFunction}(B_{3}, \bigl\lbrack\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "-1"
   fullform:
     in: MoebiusFunction[BooleanLattice[3], List[], List[1, 2, 3]]

@@ -230,12 +230,22 @@ const OVERRIDDEN = [
   "FixedPoint",
   "Flatten",
   "Floor",
+  // compute-engine 0.139 changed Fold's own canonicalization/evaluation enough that a
+  // corpus example comparable against ours before (`compute-engine`) now genuinely
+  // diverges (`override`) -- see collect-provenance.ts's diff. Not something this upgrade
+  // set out to change; worth a closer look if it matters.
+  "Fold",
   "FromContinuedFraction",
   "FromDigits",
   "GCD",
   "Gamma",
   "GammaLn",
   "GammaRegularized",
+  // #340: HurwitzZeta/Zeta's own declarations landed in compute-engine 0.139, but only in
+  // double precision -- the zeta-hurwitz patch still overrides both for the arbitrary-
+  // precision N(x, d) path (see for-compute-engine/src/patches/zeta-hurwitz.ts), so
+  // HurwitzZeta now genuinely diverges bare compute-engine (it didn't exist there before).
+  "HurwitzZeta",
   "IntegerDigits",
   "IntegerString",
   "Integrate",
@@ -270,7 +280,8 @@ const OVERRIDDEN = [
   "Multinomial",
   "MultiplicativeOrder",
   "Multiply",
-  "N",
+  // "N" itself dropped off compute-engine 0.139: whatever corpus example used to surface a
+  // divergence through it (the same "outer head" pattern as Add/Sum above) no longer does.
   "NextPrime",
   "Norm",
   "NthPrime",
@@ -610,6 +621,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "DiscreteDelta",
     "DiscreteRatio",
     "DiscreteShift",
+    "DisplayForm",
     "DivisorSum",
     "Do",
     "Echo",
@@ -681,7 +693,6 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "HeavisideTheta",
     "HermiteDecomposition",
     "HilbertMatrix",
-    "HurwitzZeta",
     "HypercubeGraph",
     "Hyperfactorial",
     "Hypergeometric0F1",
@@ -697,6 +708,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "IntegerPart",
     "IntegerPartitions",
     "IntegerReverse",
+    "InterpretationBox",
     "InverseBetaRegularized",
     "InverseErfc",
     "InverseFourier",
@@ -733,6 +745,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "LogBarnesG",
     "LogGamma",
     "LogicalExpand",
+    "MakeBoxes",
     "MangoldtLambda",
     "MapAt",
     "MapIndexed",
@@ -812,6 +825,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "Riffle",
     "RisingFactorial",
     "RomanNumeral",
+    "RowBox",
     "SawtoothWave",
     "SeedRandom",
     "SeriesCoefficient",
@@ -837,6 +851,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "Through",
     "Throw",
     "TimeConstrained",
+    "ToBoxes",
     "ToCharacterCode",
     "ToString",
     "TriangleWave",

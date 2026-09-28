@@ -44,17 +44,18 @@
   },
   "dependencies": {
     "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/raster": "workspace:*",
     "@enumeratio/wolfram": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.134.0",
+    "@cortex-js/compute-engine": "^0.139.0",
     "@types/node": "^24",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.134.0"
+    "@cortex-js/compute-engine": "^0.139.0"
   }
 }

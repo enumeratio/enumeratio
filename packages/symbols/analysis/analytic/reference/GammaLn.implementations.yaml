@@ -206,13 +206,13 @@ complex-arguments-here-the-principal-ln-gamma-z:
 a-huge-inexact-argument-should-still-evaluate:
   epsil:
     in: GammaLn(10e999)
-    out: 230_158_509_299_404_568_402e983
+    out: 2_301_585_092_994_045_684_017_991_454_684_364_207_601e964
   tex:
     in: \mathrm{GammaLn}(10^{1000})
-    out: 230\,158\,509\,299\,404\,568\,402\cdot10^{983}
+    out: 2\,301\,585\,092\,994\,045\,684\,017\,991\,454\,684\,364\,207\,601\cdot10^{964}
   traditional:
     in: \log\Gamma(10^{1000})
-    out: 230\,158\,509\,299\,404\,568\,402\cdot10^{983}
+    out: 2\,301\,585\,092\,994\,045\,684\,017\,991\,454\,684\,364\,207\,601\cdot10^{964}
   fullform:
     in: LogGamma[1.0*^1000]
     back: [GammaLn, { num: Infinity }]
@@ -248,10 +248,10 @@ the-derivative-of-ln-gamma-is-the-digamma:
     in: D(GammaLn(x), x)
     out: Digamma(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{GammaLn}(x)
+    in: \frac{\mathrm{d}\mathrm{GammaLn}(x)}{\mathrm{d}x}
     out: \mathrm{Digamma}(x)
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\log\Gamma(x)
+    in: \frac{\mathrm{d}\log\Gamma(x)}{\mathrm{d}x}
     out: \psi(x)
   fullform:
     in: D[LogGamma[x], x]

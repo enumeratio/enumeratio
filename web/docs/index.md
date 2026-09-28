@@ -21,5 +21,7 @@ How to use enumeratio and notatio, and where to look things up.
   and pipes. Both run live in the browser: the [REPL](/docs/cli/repl) and the
   [command line](/docs/cli/command-line).
 - [**Worksheet**](/worksheet/) and [**notebook**](/notebook/) — the two kinds of sheet.
+- [**Packages**](/packages/) — a short page per workspace package, and
+  [how they fit together](/design/packages).
 - [**Playground**](/playground/) — every notatio component on its own page, for trying
   one out or embedding it in yours.

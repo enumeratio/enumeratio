@@ -40,7 +40,7 @@ no-real-root-is-a-proven-empty-result:
     out: "[]"
   tex:
     in: \mathrm{FindInstance}(x^2=-1, x, \mathrm{Reals})
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], -1], x, Reals]
 a-non-integer-root-is-also-proven-empty:
@@ -49,7 +49,7 @@ a-non-integer-root-is-also-proven-empty:
     out: "[]"
   tex:
     in: \mathrm{FindInstance}(x^2=2, x, \mathbb{Z})
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], 2], x, Integers]
 a-bounded-integer-search:

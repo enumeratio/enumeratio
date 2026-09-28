@@ -1,0 +1,14 @@
+- id: power
+  expr: [ToBoxes, [Power, x, 2]]
+  expected: [SuperscriptBox, "'x'", "'2'"]
+- id: evaluates-first
+  expr: [ToBoxes, [Add, 2, 3]]
+  expected: "'5'"
+  caption: evaluates its argument first; see [[MakeBoxes]]
+- id: binomial
+  expr: [ToBoxes, [Binomial, n, k]]
+  expected: [RowBox, [List, "'('", [FractionBox, "'n'", "'k'", [Tuple, FractionLine, False]], "')'"]]
+  caption: "a binomial coefficient: a fraction without its bar, in parentheses"
+- id: square-root-over-y
+  expr: [ToBoxes, [Divide, [Sqrt, x], y]]
+  expected: [FractionBox, [SqrtBox, "'x'"], "'y'"]

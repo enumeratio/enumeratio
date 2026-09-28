@@ -143,7 +143,7 @@ the-mean-of-no-data-is-nan:
     in: Mean([])
     out: "`NaN`"
   tex:
-    in: \mathrm{mean}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{mean}(\bigl\lbrack\bigr\rbrack)
     out: \operatorname{NaN}
   fullform:
     in: Mean[List[]]

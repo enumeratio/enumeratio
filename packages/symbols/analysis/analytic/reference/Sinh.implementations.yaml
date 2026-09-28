@@ -231,7 +231,7 @@ derivative-cosh-x:
     in: D(Sinh(x), x)
     out: Cosh(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\sinh(x)
+    in: \frac{\mathrm{d}\sinh(x)}{\mathrm{d}x}
     out: \cosh(x)
   fullform:
     in: D[Sinh[x], x]

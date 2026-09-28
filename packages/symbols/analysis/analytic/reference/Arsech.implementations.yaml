@@ -62,7 +62,7 @@ derivative-frac-1-x-sqrt-1-x-2:
     in: D(Arsech(x), x)
     out: -1 / (x * Sqrt(-x ^ 2 + 1))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arsech}(x)
+    in: \frac{\mathrm{d}\mathrm{arsech}(x)}{\mathrm{d}x}
     out: -(x\sqrt{1-x^2})^{-1}
   fullform:
     in: D[ArcSech[x], x]

@@ -87,7 +87,7 @@ empty-data-has-no-mode-compute-engine-returns:
     in: Mode([])
     out: "`NaN`"
   tex:
-    in: \mathrm{Mode}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{Mode}(\bigl\lbrack\bigr\rbrack)
     out: \operatorname{NaN}
   fullform:
     in: First[Commonest[List[]]]

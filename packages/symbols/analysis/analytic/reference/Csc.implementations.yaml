@@ -203,7 +203,7 @@ derivative-csc-x-cot-x:
     in: D(Csc(x), x)
     out: -(Csc(x) * Cot(x))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\csc(x)
+    in: \frac{\mathrm{d}\csc(x)}{\mathrm{d}x}
     out: -(\csc(x)\cot(x))
   fullform:
     in: D[Csc[x], x]

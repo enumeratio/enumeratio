@@ -198,7 +198,7 @@ derivative-frac-1-x-ln-10:
     in: D(Log10(x), x)
     out: 1 / (x * Ln(10))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\log_{10}(x)
+    in: \frac{\mathrm{d}\log_{10}(x)}{\mathrm{d}x}
     out: \frac{1}{x\ln(10)}
   fullform:
     in: D[Log10[x], x]

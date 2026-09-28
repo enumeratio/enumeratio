@@ -628,7 +628,7 @@ derivative-sin-x:
     in: D(Cos(x), x)
     out: -Sin(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\cos(x)
+    in: \frac{\mathrm{d}\cos(x)}{\mathrm{d}x}
     out: -\sin(x)
   fullform:
     in: D[Cos[x], x]

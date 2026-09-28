@@ -1,0 +1,11 @@
+superscript:
+  epsil:
+    in: DisplayForm(SuperscriptBox("x", "2"))
+    out: DisplayForm(SuperscriptBox("x", "2"))
+  tex:
+    in: \mathrm{DisplayForm}(\mathrm{SuperscriptBox}(\text{x}, \text{2}))
+    out: \mathrm{DisplayForm}(\mathrm{SuperscriptBox}(\text{x}, \text{2}))
+  fullform:
+    in: DisplayForm[SuperscriptBox["x", "2"]]
+  wolfram:
+    in: DisplayForm[SuperscriptBox["x", "2"]]

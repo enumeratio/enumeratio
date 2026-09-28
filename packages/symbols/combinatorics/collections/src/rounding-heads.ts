@@ -11,9 +11,12 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
   // Floor(x, step) / Ceil(x, step): round to the nearest multiple of `step` at or below
   // (resp. at or above) x -- step*Floor(x/step). The native 1-argument Floor/Ceil only
   // decides a BARE constant (Floor(Pi)) numerically, not a compound expression like
-  // `4/5*(2π-e)` -- so the division is forced through `.N()` to pick the integer, and that
-  // integer is then multiplied by the untouched, still-exact step (never the `.N()`'d one),
-  // which is what keeps a rational step exact all the way to the result.
+  // `4/5*(2π-e)` -- so the division is forced through `.N()` to pick the integer. That
+  // integer comes back `isExact: false` (it is, after all, a numeric approximation) --
+  // compute-engine no longer re-promotes an inexact-but-whole-valued double back to exact
+  // when it feeds a later `Multiply` (0.139; it used to, which is what let the untouched
+  // step carry exactness through on its own). Rebuilding it explicitly as a `bigint` node
+  // is what keeps a rational step exact all the way to the result now.
   for (const head of ["Floor", "Ceil"] as const) {
     widenSignature(ce, head, "(any, any?) -> any");
     wrapOperator(
@@ -23,7 +26,9 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
       () => (ops) => {
         const [x, step] = ops;
         const rounded = ce.function(head, [ce.function("Divide", [x, step])]).N();
-        return ce.function("Multiply", [step, rounded]).evaluate();
+        const n = rounded.re;
+        if (n === undefined || !Number.isFinite(n)) return undefined;
+        return ce.function("Multiply", [step, ce.number(BigInt(n))]).evaluate();
       },
       2,
     );

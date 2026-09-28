@@ -16,7 +16,7 @@ test("CaputoD: power function, general case", () => {
   // Gamma(3)/Gamma(2.5) * x^1.5 = 1.5045055561273502 * x^1.5 (matches wolframscript and mpmath.quad)
   expect(evalOf(["CaputoD", ["Power", "x", 2], ["List", "x", 0.5]])).toEqual([
     "Multiply",
-    { num: "1.504505556127350098532" },
+    { num: "1.5045055561273500985282118708287268955844" },
     ["Power", "x", 1.5],
   ]);
 });
@@ -35,8 +35,8 @@ test("CaputoD: the integer edge case vanishes (beta a nonnegative integer < n)",
 test("CaputoD: linearity over a polynomial", () => {
   expect(evalOf(["CaputoD", ["Add", ["Power", "x", 2], ["Multiply", 3, "x"], 1], ["List", "x", 0.5]])).toEqual([
     "Add",
-    ["Multiply", { num: "1.504505556127350098532" }, ["Power", "x", 1.5]],
-    ["Multiply", { num: "3.3851375012865377217" }, ["Sqrt", "x"]],
+    ["Multiply", { num: "1.5045055561273500985282118708287268955844" }, ["Power", "x", 1.5]],
+    ["Multiply", { num: "3.385137501286537721688476709364635515064" }, ["Sqrt", "x"]],
   ]);
 });
 

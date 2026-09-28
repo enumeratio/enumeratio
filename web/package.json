@@ -5,8 +5,8 @@
   "license": "WTFPL",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "review": "vitepress dev --open /review",
+    "dev": "node scripts/ensure-dists.ts && vitepress dev",
+    "review": "node scripts/ensure-dists.ts && vitepress dev --open /review",
     "build": "vitepress build",
     "preview": "vitepress preview",
     "test": "vp test",
@@ -16,6 +16,7 @@
     "@enumeratio/adeles": "workspace:*",
     "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/cli": "workspace:*",
     "@enumeratio/collections": "workspace:*",
@@ -39,9 +40,11 @@
     "@enumeratio/statistics": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.134.0",
+    "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/domains": "workspace:*",
+    "mermaid": "catalog:",
     "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "catalog:",
     "vue": "^3.5.42"
   }
 }

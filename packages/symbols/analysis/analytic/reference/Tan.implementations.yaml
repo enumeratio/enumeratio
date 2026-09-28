@@ -573,7 +573,7 @@ derivative-sec-2-x:
     in: D(Tan(x), x)
     out: Sec(x) ^ 2
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\tan(x)
+    in: \frac{\mathrm{d}\tan(x)}{\mathrm{d}x}
     out: \sec(x)^2
   fullform:
     in: D[Tan[x], x]

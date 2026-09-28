@@ -78,7 +78,7 @@ onto-the-empty-list:
     in: Append([], x)
     out: "[x]"
   tex:
-    in: \mathrm{Append}(\bigl\lbrack \bigr\rbrack, x)
+    in: \mathrm{Append}(\bigl\lbrack\bigr\rbrack, x)
     out: \bigl\lbrack x\bigr\rbrack
   fullform:
     in: Append[List[], x]

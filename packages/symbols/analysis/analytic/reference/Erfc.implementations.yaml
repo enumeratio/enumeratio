@@ -241,11 +241,11 @@ frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2:
     in: D(Erfc(x), x)
     out: -2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Erfc}(x)
-    out: -\frac{2}{e^{x^2}}/\sqrt{\pi}
+    in: \frac{\mathrm{d}\mathrm{Erfc}(x)}{\mathrm{d}x}
+    out: (-\frac{2}{e^{x^2}})/\sqrt{\pi}
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{erfc}(x)
-    out: -\frac{2}{e^{x^2}}/\sqrt{\pi}
+    in: \frac{\mathrm{d}\operatorname{erfc}(x)}{\mathrm{d}x}
+    out: (-\frac{2}{e^{x^2}})/\sqrt{\pi}
   fullform:
     in: D[Erfc[x], x]
 far-in-the-tail-erfc-keeps-full-relative:

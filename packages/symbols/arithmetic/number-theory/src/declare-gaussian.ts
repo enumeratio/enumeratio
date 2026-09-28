@@ -8,7 +8,6 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { applyPatch, numberTheoryLargeIntegers } from "@enumeratio/for-compute-engine";
 import { factorInteger, gcd as bigGcd, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
@@ -159,13 +158,10 @@ export function declareGaussian(ce: ComputeEngine): void {
     2,
   );
 
-  // The negative-modulus sign convention (ModularInverse(3, -7) = -2) moved to
-  // @enumeratio/for-compute-engine's number-theory-large-integers patch, offered upstream
-  // as cortex-js/compute-engine#339/#347 — applied here, in the same spot it used to run
-  // in, so a real call falls through to it (via the native handler it wraps) once this
-  // wrapper below declines. Only the genuinely Gaussian case (a or m off the real line)
-  // is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
-  applyPatch(ce, numberTheoryLargeIntegers);
+  // The negative-modulus sign convention (ModularInverse(3, -7) = -2, cortex-js/compute-
+  // engine#339/#347) landed natively in compute-engine 0.139 -- the for-compute-engine
+  // patch that used to apply it here was retired. Only the genuinely Gaussian case (a or m
+  // off the real line) is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
   widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
   wrapOperator(
     ce,

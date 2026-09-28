@@ -18,7 +18,7 @@ the-empty-product-is-1-by-convention-matching:
     in: Product([])
     out: "1"
   tex:
-    in: \prod\bigl\lbrack \bigr\rbrack
+    in: \prod\bigl\lbrack\bigr\rbrack
     out: "1"
   fullform:
     in: Apply[Times, List[]]
@@ -78,7 +78,7 @@ a-symbolic-upper-limit-prod-i-1-n-i-2-n-2:
     out: n! ^ 2
   tex:
     in: \prod_{i=1}^{n}i^2
-    out: \left(n!\right)^2
+    out: (n!)^2
   fullform:
     in: Product[Power[i, 2], List[i, 1, n]]
   wolfram:

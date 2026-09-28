@@ -544,10 +544,10 @@ frac-d-dx-psi-n-x-psi-n-1-x:
     in: D(PolyGamma(n, x), x)
     out: PolyGamma(n + 1, x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{PolyGamma}(n, x)
+    in: \frac{\mathrm{d}\mathrm{PolyGamma}(n, x)}{\mathrm{d}x}
     out: \mathrm{PolyGamma}(n+1, x)
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\psi^{(n)}(x)
+    in: \frac{\mathrm{d}\psi^{(n)}(x)}{\mathrm{d}x}
     out: \psi^{(n+1)}(x)
   fullform:
     in: D[PolyGamma[n, x], x]

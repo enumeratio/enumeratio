@@ -53,6 +53,7 @@ const CORE = [
   "Range",
   "Subtract",
   "Sum",
+  "Typed",
   "Union",
 ];
 

@@ -53,7 +53,7 @@ square-2-over-3:
     in: Square(2 / 3)
     out: 4 / 9
   tex:
-    in: \left(\frac{2}{3}\right)^2
+    in: (\frac{2}{3})^2
     out: \frac{4}{9}
   fullform:
     in: Power[Rational[2, 3], 2]
@@ -156,10 +156,10 @@ even-function-x-2-x-2:
     in: Square(1 + i) == 2i
     out: True
   tex:
-    in: \left(1+i\right)^2=2i
+    in: (1+i)^2=2i
     out: \top
   traditional:
-    in: \left(1+i\right)^2=2i
+    in: (1+i)^2=2i
     out: \mathrm{True}
   fullform:
     in: Equal[Power[Complex[1, 1], 2], Complex[0, 2]]

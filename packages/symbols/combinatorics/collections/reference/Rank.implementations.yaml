@@ -164,7 +164,7 @@ the-empty-list-is-still-a-vector-of-length-0:
     in: Rank([])
     out: "1"
   tex:
-    in: \mathrm{Rank}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{Rank}(\bigl\lbrack\bigr\rbrack)
     out: "1"
   fullform:
     in: ArrayDepth[List[]]
@@ -175,7 +175,7 @@ and-a-1-0-matrix:
     in: Rank([[]])
     out: "2"
   tex:
-    in: \mathrm{Rank}(\bigl\lbrack\bigl\lbrack \bigr\rbrack\bigr\rbrack)
+    in: \mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigr\rbrack\bigr\rbrack)
     out: "2"
   fullform:
     in: ArrayDepth[List[List[]]]

@@ -236,7 +236,7 @@ derivative-sec-x-tan-x:
     in: D(Sec(x), x)
     out: Tan(x) * Sec(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\sec(x)
+    in: \frac{\mathrm{d}\sec(x)}{\mathrm{d}x}
     out: \tan(x)\sec(x)
   fullform:
     in: D[Sec[x], x]

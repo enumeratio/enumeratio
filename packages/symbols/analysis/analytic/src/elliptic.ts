@@ -1,7 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
-  applyPatch,
-  ellipticEComplex,
   type EvalOptions,
   isFiniteNum,
   numberResult,
@@ -23,10 +21,12 @@ import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 //
 // `EllipticE`'s precision loss at complex modulus (design/upstreaming.md §8: three
 // Fungrim identities catch it, e.g. m = 0.57 + 0.23i gives four correct digits against
-// mpmath and the engine's own Hypergeometric2F1 identity) moved to
-// @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
-// cortex-js/compute-engine#346/#348 — applied below (`applyPatch`), in the same spot it
-// used to run in.
+// mpmath and the engine's own Hypergeometric2F1 identity), cortex-js/compute-engine
+// #346/#348, landed natively in compute-engine 0.139 (with hardening beyond what our PR
+// sent -- an overflow guard, a rewrite around `.pow(1.5)`'s NaN above |A| ≈ 1e154, and a
+// φ = π/2 near m = 1 special case, all inside compute-engine's own Carlson code, not
+// duplicated here) -- the elliptic-e-complex patch that used to apply it here was
+// retired.
 
 /**
  * Declare `IncompleteEllipticF(φ, m)` — Fungrim's name for the incomplete Legendre
@@ -183,7 +183,6 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
 }
 
 export function declareElliptic(ce: ComputeEngine): void {
-  applyPatch(ce, ellipticEComplex);
   declareIncompleteF(ce);
   declareIncompleteE(ce);
   declareIncompleteEllipticPi(ce);

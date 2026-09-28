@@ -46,10 +46,13 @@ export const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSO
  * scan is rebuilt at every reference, every iteration. Binding it here evaluates `value`
  * once and substitutes the result — `Crossings` on a set partition of [6] went from 430ms to
  * 24ms, same answer. Use it for anything non-trivial that is read more than once.
+ *
+ * The parameter is typed (`collection` by default): compute-engine maps an untyped function
+ * literal over a collection argument instead of binding the collection whole.
  */
-export const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
+export const bind = (name: string, value: MathJSON, body: MathJSON, type = "collection"): MathJSON => [
   "Apply",
-  ["Function", body, name],
+  ["Function", body, ["Typed", name, `'${type}'`]],
   value,
 ];
 /** The sum of `body` over `over`. */

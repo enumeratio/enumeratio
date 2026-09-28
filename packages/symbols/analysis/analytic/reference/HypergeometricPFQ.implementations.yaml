@@ -36,7 +36,7 @@
     in: HypergeometricPFQ([], [], z)
     out: ExponentialE ^ z
   tex:
-    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack, z)
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)
     out: e^{z}
   fullform:
     in: HypergeometricPFQ[List[], List[], z]
@@ -47,7 +47,7 @@
     in: HypergeometricPFQ([a], [], z)
     out: (-z + 1) ^ (-a)
   tex:
-    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack \bigr\rbrack, z)
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)
     out: (1-z)^{-a}
   fullform:
     in: HypergeometricPFQ[List[a], List[], z]

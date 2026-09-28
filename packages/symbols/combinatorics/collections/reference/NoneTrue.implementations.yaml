@@ -31,10 +31,10 @@ vacuously-true-on-an-empty-list:
     in: NoneTrue([], IsEven)
     out: True
   tex:
-    in: \mathrm{NoneTrue}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{NoneTrue}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \top
   traditional:
-    in: \mathrm{NoneTrue}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{NoneTrue}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \mathrm{True}
   fullform:
     in: NoneTrue[List[], EvenQ]

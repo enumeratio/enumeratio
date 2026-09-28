@@ -421,10 +421,10 @@ partial-a-zeta-s-a-s-zeta-s-1-a:
     in: D(HurwitzZeta(s, a), a)
     out: -(s * HurwitzZeta(s + 1, a))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}a}\mathrm{HurwitzZeta}(s, a)
+    in: \frac{\mathrm{d}\mathrm{HurwitzZeta}(s, a)}{\mathrm{d}a}
     out: -(s\mathrm{HurwitzZeta}(s+1, a))
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}a}\zeta(s, a)
+    in: \frac{\mathrm{d}\zeta(s, a)}{\mathrm{d}a}
     out: -(s\zeta(s+1, a))
   fullform:
     in: D[HurwitzZeta[s, a], a]

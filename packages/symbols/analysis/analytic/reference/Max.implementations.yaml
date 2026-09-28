@@ -363,7 +363,7 @@ the-max-of-an-empty-list-is-nan-too:
     in: Max([])
     out: "`NaN`"
   tex:
-    in: \max(\bigl\lbrack \bigr\rbrack)
+    in: \max(\bigl\lbrack\bigr\rbrack)
     out: \operatorname{NaN}
   fullform:
     in: Max[List[]]

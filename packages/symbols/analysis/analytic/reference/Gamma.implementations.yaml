@@ -583,10 +583,10 @@ gamma-infty-infty:
 values-far-past-the-double-range-gamma-200-5:
   epsil:
     in: Gamma(200.5)
-    out: 557_316_894_480_137_913_364e353
+    out: 5_573_168_944_801_379_133_643_202_962_906_591_494_178e334
   tex:
     in: \Gamma(200.5)
-    out: 557\,316\,894\,480\,137\,913\,364\cdot10^{353}
+    out: 5\,573\,168\,944\,801\,379\,133\,643\,202\,962\,906\,591\,494\,178\cdot10^{334}
   fullform:
     in: Gamma[200.5]
   wolfram:
@@ -713,10 +713,10 @@ gamma-x-gamma-x-psi-x-so-the-logarithmic:
     in: D(Gamma(x), x) / Gamma(x)
     out: Digamma(x)
   tex:
-    in: \frac{\frac{\mathrm{d}}{\mathrm{d}x}\Gamma(x)}{\Gamma(x)}
+    in: \frac{\frac{\mathrm{d}\Gamma(x)}{\mathrm{d}x}}{\Gamma(x)}
     out: \mathrm{Digamma}(x)
   traditional:
-    in: \frac{\frac{\mathrm{d}}{\mathrm{d}x}\Gamma(x)}{\Gamma(x)}
+    in: \frac{\frac{\mathrm{d}\Gamma(x)}{\mathrm{d}x}}{\Gamma(x)}
     out: \psi(x)
   fullform:
     in: Divide[D[Gamma[x], x], Gamma[x]]

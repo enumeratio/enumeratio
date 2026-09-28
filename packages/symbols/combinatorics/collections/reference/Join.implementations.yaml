@@ -108,7 +108,7 @@ with-no-arguments-the-empty-list:
     out: "[]"
   tex:
     in: \mathrm{Join}()
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Join[]
   wolfram:

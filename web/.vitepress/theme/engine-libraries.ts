@@ -30,6 +30,7 @@ export interface EngineLibraries {
   readonly declareAnalytic: typeof import("@enumeratio/analytic").declareAnalytic;
   readonly declareFractals: typeof import("@enumeratio/analytic").declareFractals;
   readonly declareGraphics: typeof import("@enumeratio/formats").declareGraphics;
+  readonly declareBoxes: typeof import("@enumeratio/boxes").declareBoxes;
   readonly declareHypercomplex: typeof import("@enumeratio/hypercomplex").declareHypercomplex;
   readonly declareGeometric: typeof import("@enumeratio/geometric").declareGeometric;
   readonly declareDiagrams: typeof import("@enumeratio/diagram").declareDiagrams;
@@ -81,6 +82,7 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);
   apply(libs.declareGraphics);
+  apply(libs.declareBoxes);
   apply(libs.declareHypercomplex);
   // The geometric-algebra layer sits ON hypercomplex: its heads read the generators
   // and the ordered product that library declares, so it has to come after.

@@ -36,8 +36,8 @@ the-empty-list:
     in: Split([])
     out: "[]"
   tex:
-    in: \mathrm{Split}(\bigl\lbrack \bigr\rbrack)
-    out: \bigl\lbrack \bigr\rbrack
+    in: \mathrm{Split}(\bigl\lbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Split[List[]]
   wolfram:

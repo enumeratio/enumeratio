@@ -13,10 +13,11 @@
     "check": "vp check"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.134.0",
+    "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/adeles": "workspace:*",
     "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/catalog": "workspace:*",
     "@enumeratio/collections": "workspace:*",
