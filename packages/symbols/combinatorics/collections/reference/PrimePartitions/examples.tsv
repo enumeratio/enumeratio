@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-primepartition-12	Basic		[Count, [PrimePartitions, 12]]	7	$Count(PrimePartitions(12)) = 7$
-first-element-of-primepartition-12	Basic		[At, [PrimePartitions, 12], 1]	[List, 7, 5]	The first element in enumeration order
-every-element-of-primepartition-12		test	[Take, [PrimePartitions, 12], 7]	[List, [List, 7, 5], [List, 7, 3, 2], [List, 5, 5, 2], [List, 5, 3, 2, 2], [List, 3, 3, 3, 3], [List, 3, 3, 2, 2, 2], [List, 2, 2, 2, 2, 2, 2]]	
+first-element-of-primepartition-12	Basic		[At, [PrimePartitions, 12], 1]	[IntegerPartition, [List, 7, 5]]	The first element in enumeration order
+every-element-of-primepartition-12		test	[Take, [PrimePartitions, 12], 7]	[List, [IntegerPartition, [List, 7, 5]], [IntegerPartition, [List, 7, 3, 2]], [IntegerPartition, [List, 5, 5, 2]], [IntegerPartition, [List, 5, 3, 2, 2]], [IntegerPartition, [List, 3, 3, 3, 3]], [IntegerPartition, [List, 3, 3, 2, 2, 2]], [IntegerPartition, [List, 2, 2, 2, 2, 2, 2]]]	

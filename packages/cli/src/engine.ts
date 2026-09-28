@@ -204,7 +204,7 @@ export class Session {
     // A combinatorial statistic is a function of a carrier, so that is what these heads take.
     // The ones that are ALSO plain list functions -- they compare entries with each other
     // rather than with their positions -- accept a bare list too; see `Definition.alsoOnList`.
-    declareCollections(this.ce, { permutationType: "permutation" });
+    declareCollections(this.ce, { permutationType: "permutation", carrierTypes: DOMAIN_TYPES });
     // Every domain's plural type-space name, and Element membership over it -- AFTER
     // collections, so a plural a collection family already claims (Permutations, DyckPaths,
     // ...) is still free when this checks, not raced by minting a bare symbol first.

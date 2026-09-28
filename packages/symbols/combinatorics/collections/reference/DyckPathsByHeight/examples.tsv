@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-dyckpathsbyheight-4-2	Basic		[Count, [DyckPathsByHeight, 4, 2]]	7	$Count(DyckPathsByHeight(4, 2)) = 7$
-first-element-of-dyckpathsbyheight-4-2	Basic		[At, [DyckPathsByHeight, 4, 2], 1]	[List, 1, 1, 0, 1, 0, 1, 0, 0]	The first element in enumeration order
-every-element-of-dyckpathsbyheight-4-2		test	[Take, [DyckPathsByHeight, 4, 2], 5]	[List, [List, 1, 1, 0, 1, 0, 1, 0, 0], [List, 1, 1, 0, 1, 0, 0, 1, 0], [List, 1, 1, 0, 0, 1, 1, 0, 0], [List, 1, 1, 0, 0, 1, 0, 1, 0], [List, 1, 0, 1, 1, 0, 1, 0, 0]]	
+first-element-of-dyckpathsbyheight-4-2	Basic		[At, [DyckPathsByHeight, 4, 2], 1]	[DyckPath, [List, 1, 1, 0, 1, 0, 1, 0, 0]]	The first element in enumeration order
+every-element-of-dyckpathsbyheight-4-2		test	[Take, [DyckPathsByHeight, 4, 2], 5]	[List, [DyckPath, [List, 1, 1, 0, 1, 0, 1, 0, 0]], [DyckPath, [List, 1, 1, 0, 1, 0, 0, 1, 0]], [DyckPath, [List, 1, 1, 0, 0, 1, 1, 0, 0]], [DyckPath, [List, 1, 1, 0, 0, 1, 0, 1, 0]], [DyckPath, [List, 1, 0, 1, 1, 0, 1, 0, 0]]]	

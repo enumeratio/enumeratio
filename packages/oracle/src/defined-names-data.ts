@@ -219,6 +219,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "DoubleFactorialNumbers",
   "DualNumbers",
   "DyadicCompositions",
+  "DyckPath",
   "DyckPaths",
   "DyckPathsByHeight",
   "Echo",

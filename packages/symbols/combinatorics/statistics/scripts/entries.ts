@@ -71,7 +71,7 @@ const CORE_OWNED = new Set(
 
 const ce = new ComputeEngine();
 declareCarriers(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation, carrierTypes: CARRIER_TYPES });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 
 // `declareStatistics` declares the FIRST definition of each head and skips the rest, so a

@@ -7,7 +7,7 @@ signatures:
   - call: OddPartitions(n)
     description: the partitions of $n$ into odd parts
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<integer_partition>
 details:
   - Count is A000009; by Euler's theorem, equal to the count of partitions into distinct parts.
 seeAlso:

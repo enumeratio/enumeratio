@@ -116,7 +116,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // The carriers before collections: the permutation families yield `Permutation` values, typed
   // by the minted type, as the site's engine has them.
   ["domains", declareDomains],
-  ["collections", (ce) => declareCollections(ce, { permutationType: "permutation" })],
+  ["collections", (ce) => declareCollections(ce, { permutationType: "permutation", carrierTypes: carrierTypes() })],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   ["structures", declareStructures],
   ["formats", declareGraphics],

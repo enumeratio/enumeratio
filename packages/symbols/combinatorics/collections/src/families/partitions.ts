@@ -142,44 +142,59 @@ function isLargestPart(parts: unknown, n: number, m: number): boolean {
 }
 
 export const entries: NumberKernel[] = [
-  ints(
-    "OddPartitions",
-    1,
-    ([n]) => oddPart.count(n),
-    ([n], r) => oddPart.unrank(n, r),
-    (a, [n]) => oddPart.valid(a, n),
-    (a) => oddPart.rank(a),
-  ),
-  ints(
-    "PrimePartitions",
-    1,
-    ([n]) => primePart.count(n),
-    ([n], r) => primePart.unrank(n, r),
-    (a, [n]) => primePart.valid(a, n),
-    (a) => primePart.rank(a),
-  ),
-  ints(
-    "SquarePartitions",
-    1,
-    ([n]) => squarePart.count(n),
-    ([n], r) => squarePart.unrank(n, r),
-    (a, [n]) => squarePart.valid(a, n),
-    (a) => squarePart.rank(a),
-  ),
-  ints(
-    "TriangularPartitions",
-    1,
-    ([n]) => triangularPart.count(n),
-    ([n], r) => triangularPart.unrank(n, r),
-    (a, [n]) => triangularPart.valid(a, n),
-    (a) => triangularPart.rank(a),
-  ),
-  ints(
-    "LargestPartPartitions",
-    2,
-    ([n, m]) => largestPartCount(n, m),
-    ([n, m], r) => largestPartUnrank(n, m, r),
-    (a, [n, m]) => isLargestPart(a, n, m),
-    (a, [, m]) => largestPartRank(a, m),
-  ),
+  {
+    ...ints(
+      "OddPartitions",
+      1,
+      ([n]) => oddPart.count(n),
+      ([n], r) => oddPart.unrank(n, r),
+      (a, [n]) => oddPart.valid(a, n),
+      (a) => oddPart.rank(a),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "PrimePartitions",
+      1,
+      ([n]) => primePart.count(n),
+      ([n], r) => primePart.unrank(n, r),
+      (a, [n]) => primePart.valid(a, n),
+      (a) => primePart.rank(a),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "SquarePartitions",
+      1,
+      ([n]) => squarePart.count(n),
+      ([n], r) => squarePart.unrank(n, r),
+      (a, [n]) => squarePart.valid(a, n),
+      (a) => squarePart.rank(a),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "TriangularPartitions",
+      1,
+      ([n]) => triangularPart.count(n),
+      ([n], r) => triangularPart.unrank(n, r),
+      (a, [n]) => triangularPart.valid(a, n),
+      (a) => triangularPart.rank(a),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "LargestPartPartitions",
+      2,
+      ([n, m]) => largestPartCount(n, m),
+      ([n, m], r) => largestPartUnrank(n, m, r),
+      (a, [n, m]) => isLargestPart(a, n, m),
+      (a, [, m]) => largestPartRank(a, m),
+    ),
+    carrier: "IntegerPartition",
+  },
 ];
