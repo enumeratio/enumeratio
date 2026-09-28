@@ -2443,7 +2443,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "Primes",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "Primes",
     elsewhere: ["wolfram"],
   },
   {
@@ -6272,7 +6272,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "D",
     provenance: "unknown",
     declared: "enumeratio-analytic",
-    wolframAlias: null,
+    wolframAlias: "D",
     elsewhere: ["wolfram"],
   },
   {
@@ -6511,6 +6511,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "KeyValuePair",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: "Rule",
     elsewhere: [],
   },
   {
@@ -6832,7 +6839,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "TrigToExp",
     provenance: "unknown",
     declared: "enumeratio-analytic",
-    wolframAlias: null,
+    wolframAlias: "TrigToExp",
     elsewhere: ["wolfram"],
   },
   {

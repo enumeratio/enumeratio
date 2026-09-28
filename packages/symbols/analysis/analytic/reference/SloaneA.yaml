@@ -19,10 +19,10 @@ bindings:
   - origin: mapped
     form: wolfram
     counterpart: false
-    note: "No general OEIS-by-id lookup in Wolfram (kernel-verified: SloaneA is an unknown symbol), and each aliased id targets a different head here -- no single fixed template covers A000045's Fibonacci and A000793's Landau's function alike."
+    note: 'No built-in OEIS-by-id lookup (kernel-verified: SloaneA is an unknown symbol). The Wolfram Function Repository has ResourceFunction["OEISSequence"]/["OEISSequenceData"]/["OEISLookup"], general enough by id that a single template could plausibly cover every alias here -- but each needs an internet round trip to oeis.org and per-sequence offset arithmetic (A000045''s a(0)=0 vs A000040''s a(1)=2) to land on the n-th term our signature promises, and this environment has no Wolfram Cloud connection to call or verify either. Left unmapped rather than templated blind.'
     checked:
       version: 15.0.0
-      on: 2026-09-27
+      on: 2026-09-28
 seeAlso:
   - Fibonacci
   - BellNumber

@@ -33,10 +33,10 @@ bindings:
   - origin: mapped
     form: wolfram
     counterpart: false
-    note: No Clausen head; it's spelled Im/Re PolyLog[n, E^(I θ)] with the branch chosen by n's parity (see this entry's own Which/IsEven reference row), which a single fixed template can't express.
+    note: No built-in Clausen head; it's spelled Im/Re PolyLog[n, E^(I θ)] with the branch chosen by n's parity (see this entry's own Which/IsEven reference row), which a single fixed template can't express. The Wolfram Function Repository has ResourceFunction["ClausenCl"][n, θ] under this same name and arity, but this environment has no Wolfram Cloud connection to call or verify it, so it stays unmapped rather than templated blind.
     checked:
       version: 15.0.0
-      on: 2026-09-27
+      on: 2026-09-28
   - origin: mapped
     form: mpmath
     environment: external
