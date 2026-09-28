@@ -17,3 +17,7 @@
   expected: [JacobiCD, u, m]
   category: Possible issues
   caption: Symbolic arguments are left unevaluated rather than guessed at
+- id: jacobicd-0-4-0-5i-0-3
+  expr: [N, [JacobiCD, [Complex, 0.4, 0.5], 0.3]]
+  expected: [Complex, 1.0340171900053388, -0.13933796721263517]
+  role: test

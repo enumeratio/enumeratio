@@ -1,0 +1,44 @@
+- id: rf-1-2-3
+  expr: [N, [CarlsonRF, 1, 2, 3]]
+  expected: 0.7269459354689083
+  role: test
+- id: rf-1-1-1
+  expr: [N, [CarlsonRF, 1, 1, 1]]
+  expected: 1
+  role: test
+- id: rf-2-2-2
+  expr: [N, [CarlsonRF, 2, 2, 2]]
+  expected: 0.7071067811865476
+  role: test
+- id: rf-0-1-2
+  expr: [N, [CarlsonRF, 0, 1, 2]]
+  expected: 1.3110287771460603
+  role: test
+- id: rf-0-2-3
+  expr: [N, [CarlsonRF, 0, 2, 3]]
+  expected: 1.0010773804561062
+  role: test
+- id: rf-0-5-1-1-5
+  expr: [N, [CarlsonRF, 0.5, 1, 1.5]]
+  expected: 1.0280568010521265
+  role: test
+- id: rf-1-4-4
+  expr: [N, [CarlsonRF, 1, 4, 4]]
+  expected: 0.6045997880780727
+  role: test
+- id: rf-1-1i-2-3
+  expr: [N, [CarlsonRF, [Complex, 1, 1], 2, 3]]
+  expected: [Complex, 0.6984564628349881, -0.07830401971724628]
+  role: test
+- id: rf-3-2i-1-1i-5
+  expr: [N, [CarlsonRF, [Complex, 3, -2], [Complex, 1, 1], 5]]
+  expected: [Complex, 0.5835452640550799, 0.007015540406256118]
+  role: test
+- id: rf-0-5-0-5i-0-5-0-5i-2
+  expr: [N, [CarlsonRF, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]
+  expected: 1.014900023903115
+  role: test
+- id: rf-1-3-2-5-2
+  expr: [N, [CarlsonRF, [Rational, 1, 3], 2, [Rational, 5, 2]]]
+  expected: 0.8506573005609459
+  role: test

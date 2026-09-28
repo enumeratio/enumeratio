@@ -1,0 +1,143 @@
+f-0-5-0-3:
+  epsil:
+    in: N(IncompleteEllipticF(0.5, 0.3))
+    out: 0.506_140_211_962_355_4
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(0.5, 0.3))
+    out: 0.506\,140\,211\,962\,355\,4
+  fullform:
+    in: N[EllipticF[0.5, 0.3]]
+  wolfram:
+    in: N[EllipticF[0.5, 0.3]]
+f-1-2-0-7:
+  epsil:
+    in: N(IncompleteEllipticF(1.2, 0.7))
+    out: 1.429_448_433_022_763_5
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(1.2, 0.7))
+    out: 1.429\,448\,433\,022\,763\,5
+  fullform:
+    in: N[EllipticF[1.2, 0.7]]
+  wolfram:
+    in: N[EllipticF[1.2, 0.7]]
+f-0-8-0-4:
+  epsil:
+    in: N(IncompleteEllipticF(-0.8, 0.4))
+    out: -0.833_343_010_862_597
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(-0.8, 0.4))
+    out: -0.833\,343\,010\,862\,597
+  fullform:
+    in: N[EllipticF[-0.8, 0.4]]
+  wolfram:
+    in: N[EllipticF[-0.8, 0.4]]
+f-2-5-0-3:
+  epsil:
+    in: N(IncompleteEllipticF(2.5, 0.3))
+    out: 2.773_381_177_557_619_4
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(2.5, 0.3))
+    out: 2.773\,381\,177\,557\,619\,4
+  fullform:
+    in: N[EllipticF[2.5, 0.3]]
+  wolfram:
+    in: N[EllipticF[2.5, 0.3]]
+f-3-0-6:
+  epsil:
+    in: N(IncompleteEllipticF(-3, 0.6))
+    out: -3.757_258_577_405_992_6
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(-3, 0.6))
+    out: -3.757\,258\,577\,405\,992\,6
+  fullform:
+    in: N[EllipticF[-3, 0.6]]
+  wolfram:
+    in: N[EllipticF[-3, 0.6]]
+f-0-3-0-4i-0-5:
+  epsil:
+    in: N(IncompleteEllipticF(0.3 + 0.4i, 0.5))
+    out: 0.290_232_021_665_395_1 + 0.403_598_147_717_592i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(0.3+0.4i, 0.5))
+    out: 0.290\,232\,021\,665\,395\,1+0.403\,598\,147\,717\,592i
+  fullform:
+    in: N[EllipticF[Complex[0.3, 0.4], 0.5]]
+  wolfram:
+    in: N[EllipticF[Complex[0.3, 0.4], 0.5]]
+f-1-0-5i-0-2:
+  epsil:
+    in: N(IncompleteEllipticF(1 - 0.5i, 0.2))
+    out: 1.013_546_473_051_338_4 - 0.541_034_456_084_455_1i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(1-0.5i, 0.2))
+    out: 1.013\,546\,473\,051\,338\,4-0.541\,034\,456\,084\,455\,1i
+  fullform:
+    in: N[EllipticF[Complex[1, -0.5], 0.2]]
+  wolfram:
+    in: N[EllipticF[Complex[1, -0.5], 0.2]]
+f-0-6-0-57-0-23i:
+  epsil:
+    in: N(IncompleteEllipticF(0.6, 0.57 + 0.23i))
+    out: 0.620_516_755_370_608_8 + 0.009_225_906_501_081_826i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(0.6, 0.57+0.23i))
+    out: 0.620\,516\,755\,370\,608\,8+0.009\,225\,906\,501\,081\,826i
+  fullform:
+    in: N[EllipticF[0.6, Complex[0.57, 0.23]]]
+  wolfram:
+    in: N[EllipticF[0.6, Complex[0.57, 0.23]]]
+f-1-1-0-1-0-9i:
+  epsil:
+    in: N(IncompleteEllipticF(1.1, 0.1 + 0.9i))
+    out: 1.066_632_702_370_715_2 + 0.145_868_959_723_650_66i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(1.1, 0.1+0.9i))
+    out: 1.066\,632\,702\,370\,715\,2+0.145\,868\,959\,723\,650\,66i
+  fullform:
+    in: N[EllipticF[1.1, Complex[0.1, 0.9]]]
+  wolfram:
+    in: N[EllipticF[1.1, Complex[0.1, 0.9]]]
+f-3-711592653589793-0-57-0-23i:
+  epsil:
+    in: N(IncompleteEllipticF(3.711_592_653_589_793, 0.57 + 0.23i))
+    out: 4.307_419_948_322_291 + 0.425_476_694_131_428_36i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(3.711\,592\,653\,589\,793, 0.57+0.23i))
+    out: 4.307\,419\,948\,322\,291+0.425\,476\,694\,131\,428\,36i
+  fullform:
+    in: N[EllipticF[3.711592653589793, Complex[0.57, 0.23]]]
+  wolfram:
+    in: N[EllipticF[3.711592653589793, Complex[0.57, 0.23]]]
+f-3-711592653589793-0-23i-0-57-0-23i:
+  epsil:
+    in: N(IncompleteEllipticF(3.711_592_653_589_793 + 0.23i, 0.57 + 0.23i))
+    out: 4.289_764_434_700_574 + 0.671_112_429_987_333_7i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(3.711\,592\,653\,589\,793+0.23i, 0.57+0.23i))
+    out: 4.289\,764\,434\,700\,574+0.671\,112\,429\,987\,333\,7i
+  fullform:
+    in: N[EllipticF[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
+  wolfram:
+    in: N[EllipticF[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
+f-3-0-57-0-23i:
+  epsil:
+    in: N(IncompleteEllipticF(-3, 0.57 + 0.23i))
+    out: -3.577_957_673_312_077 - 0.417_536_385_803_402_7i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(-3, 0.57+0.23i))
+    out: -3.577\,957\,673\,312\,077-0.417\,536\,385\,803\,402\,7i
+  fullform:
+    in: N[EllipticF[-3, Complex[0.57, 0.23]]]
+  wolfram:
+    in: N[EllipticF[-3, Complex[0.57, 0.23]]]
+f-4-5-0-1-0-9i:
+  epsil:
+    in: N(IncompleteEllipticF(4.5, 0.1 + 0.9i))
+    out: 4.209_502_419_983_872 + 0.827_759_281_089_238_7i
+  tex:
+    in: N(\mathrm{IncompleteEllipticF}(4.5, 0.1+0.9i))
+    out: 4.209\,502\,419\,983\,872+0.827\,759\,281\,089\,238\,7i
+  fullform:
+    in: N[EllipticF[4.5, Complex[0.1, 0.9]]]
+  wolfram:
+    in: N[EllipticF[4.5, Complex[0.1, 0.9]]]

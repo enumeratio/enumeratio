@@ -51,3 +51,47 @@ the-inversion-generating-function-of:
     out: q^3+2q^2+2q+1
   fullform:
     in: Expand[QFactorial[3, q]]
+qfactorial-3-2:
+  epsil:
+    in: N(QFactorial(3, 2))
+    out: "21"
+  tex:
+    in: N(\mathrm{QFactorial}(3, 2))
+    out: "21"
+  fullform:
+    in: N[QFactorial[3, 2]]
+  wolfram:
+    in: N[QFactorial[3, 2]]
+qfactorial-4-2-2:
+  epsil:
+    in: N(QFactorial(4, 2))
+    out: "315"
+  tex:
+    in: N(\mathrm{QFactorial}(4, 2))
+    out: "315"
+  fullform:
+    in: N[QFactorial[4, 2]]
+  wolfram:
+    in: N[QFactorial[4, 2]]
+qfactorial-3-1-2:
+  epsil:
+    in: N(QFactorial(3, 1 / 2))
+    out: "2.625"
+  tex:
+    in: N(\mathrm{QFactorial}(3, \frac{1}{2}))
+    out: "2.625"
+  fullform:
+    in: N[QFactorial[3, Rational[1, 2]]]
+  wolfram:
+    in: N[QFactorial[3, Rational[1, 2]]]
+qfactorial-6-3:
+  epsil:
+    in: N(QFactorial(6, 3))
+    out: 91_611_520
+  tex:
+    in: N(\mathrm{QFactorial}(6, 3))
+    out: 91\,611\,520
+  fullform:
+    in: N[QFactorial[6, 3]]
+  wolfram:
+    in: N[QFactorial[6, 3]]

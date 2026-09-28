@@ -76,3 +76,25 @@ symbolic-arguments-are-left-unevaluated-rather:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{zn}(u|m)-\text{zn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{zn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{zn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{zn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{zn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{zn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{zn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+zn-0-7-0-2:
+  epsil:
+    in: N(JacobiZN(-0.7, 0.2))
+    out: -0.051_550_286_367_310_294
+  tex:
+    in: N(\mathrm{JacobiZN}(-0.7, 0.2))
+    out: -0.051\,550\,286\,367\,310\,294
+  fullform:
+    in: N[JacobiZN[-0.7, 0.2]]
+  wolfram:
+    in: N[JacobiZN[-0.7, 0.2]]
+zn-2-5-0-3:
+  epsil:
+    in: N(JacobiZN(2.5, 0.3))
+    out: -0.080_518_503_671_937_58
+  tex:
+    in: N(\mathrm{JacobiZN}(2.5, 0.3))
+    out: -0.080\,518\,503\,671\,937\,58
+  fullform:
+    in: N[JacobiZN[2.5, 0.3]]
+  wolfram:
+    in: N[JacobiZN[2.5, 0.3]]
