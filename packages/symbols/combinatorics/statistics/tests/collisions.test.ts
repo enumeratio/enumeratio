@@ -12,13 +12,15 @@ test("collections' own kernels take the names, and the definitions sit beside th
   expect(inversions("Inversions")).toEqual(2);
 });
 
-test("compute-engine's own name is left to it, and the statistic is reached by the table", () => {
+test("compute-engine's own head takes the carrier too, keeping its own meaning", () => {
   const ce = new ComputeEngine();
   declareCarriers(ce);
   declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
   expect(ce.box(["Sign", -3] as never).evaluate().json).toEqual(-1);
   const sign = ["CombinatorialStat", ["Permutation", ["List", 2, 1]], "'Sign'"];
   expect(ce.box(sign as never).evaluate().json).toEqual(-1);
+  expect(ce.box(["Sign", ["Permutation", ["List", 2, 1]]] as never).evaluate().json).toEqual(-1);
+  expect(ce.box(["Sign", ["Permutation", ["List", 3, 1, 2]]] as never).evaluate().json).toEqual(1);
 });
 
 test("any other taken name is an error that lists every collision", () => {

@@ -13,5 +13,5 @@ signatures:
   - call: TouchPointCount(path)
     description: Points where the path touches the axis — the returns.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

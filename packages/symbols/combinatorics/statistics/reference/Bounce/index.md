@@ -18,5 +18,5 @@ signatures:
   - call: Bounce(path)
     description: The bounce statistic, which walks the path bouncing off its own peaks.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

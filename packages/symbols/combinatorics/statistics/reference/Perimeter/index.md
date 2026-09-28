@@ -12,5 +12,5 @@ signatures:
   - call: Perimeter(partition)
     description: "The perimeter of the Young diagram: largest part plus number of parts."
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

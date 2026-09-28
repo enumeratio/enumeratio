@@ -69,6 +69,14 @@ type Declare = (ce: ComputeEngine) => void;
 const domainTypes = (): Record<string, string> =>
   Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
 
+// Statistics take each carrier's type by its name, as the site's engine gives them.
+// SetPartition is held back there: domains reads it as a restricted growth string, while
+// every set-partition definition works in blocks.
+const carrierTypes = (): Record<string, string> =>
+  Object.fromEntries(
+    DOMAINS.filter((domain) => domain.name !== "SetPartition").map((domain) => [domain.name, domain.type]),
+  );
+
 /**
  * Every declaration with the package that owns it, in an order that satisfies what depends
  * on what. The package is the directory name, as the manifest names packages: what a step
@@ -126,7 +134,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   [
     "statistics",
     (ce) => {
-      declareStatistics(ce, ALL_STATISTICS, { domainTypes: domainTypes() });
+      declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes() });
       declareDistributions(ce);
       declareDistributions2(ce);
       declareDistributions3(ce);

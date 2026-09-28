@@ -12,5 +12,5 @@ signatures:
   - call: IsSelfConjugate(partition)
     description: 1 when λ equals its conjugate, 0 otherwise.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

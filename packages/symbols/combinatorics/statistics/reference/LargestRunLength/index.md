@@ -12,5 +12,5 @@ signatures:
   - call: LargestRunLength(p)
     description: The length of the longest increasing run (the catalog's second spelling of LongestRun).
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

@@ -12,5 +12,5 @@ signatures:
   - call: InteriorReturns(path)
     description: Returns to height 0 strictly before the end.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

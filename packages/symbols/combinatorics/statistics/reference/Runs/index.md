@@ -18,5 +18,5 @@ signatures:
   - call: Runs(p)
     description: Maximal increasing runs — one more than the number of descents.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

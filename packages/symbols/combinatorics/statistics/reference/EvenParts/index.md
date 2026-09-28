@@ -12,5 +12,5 @@ signatures:
   - call: EvenParts(partition)
     description: Parts that are even.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

@@ -12,5 +12,5 @@ signatures:
   - call: OddParts(partition)
     description: Parts that are odd.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

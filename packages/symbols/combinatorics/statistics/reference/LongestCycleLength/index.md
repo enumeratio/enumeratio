@@ -12,5 +12,5 @@ signatures:
   - call: LongestCycleLength(p)
     description: The size of the largest cycle (the catalog's second spelling).
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

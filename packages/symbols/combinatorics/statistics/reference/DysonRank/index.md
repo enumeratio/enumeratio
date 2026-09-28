@@ -20,5 +20,5 @@ signatures:
   - call: DysonRank(partition)
     description: Largest part minus number of parts.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

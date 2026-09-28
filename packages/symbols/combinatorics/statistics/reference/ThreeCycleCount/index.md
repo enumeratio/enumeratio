@@ -12,5 +12,5 @@ signatures:
   - call: ThreeCycleCount(p)
     description: Cycles of size exactly three.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---
