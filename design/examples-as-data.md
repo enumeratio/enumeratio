@@ -232,8 +232,8 @@ and the general interface stay at `packages/<name>`. Package names do not change
 | `groups`        | `braid`, `modular`                                                                                        | `notatio-groups`: `notatio-torus-square` (`torussquare.ts`); torus knots are `braid`'s                                                 |
 | `evaluation`    | `aestimatio`                                                                                              | —                                                                                                                                      |
 
-These stay at `packages/`: `boxed`, `entry`, `oracle`, `wolfram`, `formats`, `reference`,
-`census`, `catalog`, `cli`, `raster`, `utils`, `notatio`, `notatio-lit`.
+Tooling and the interface stay at `packages/`. What each package is for, and how they
+depend on each other, is in [packages.md](./packages.md).
 
 `notatio-lit` keeps everything that renders a Wolfram-general symbol — plots, `GraphPlot`,
 `Curve3D`, the notebook, the controls. A group gets a component package the day it gets
