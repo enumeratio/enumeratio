@@ -11,10 +11,14 @@ import { containsVar, type Recognized, recognize, signShape } from "./function-p
 // denominator/radicand has, which side of an asymptote is unbounded, whether a shape is in
 // scope at all. Every NUMBER this file actually returns -- a critical point, an extreme
 // value, a domain edge -- comes back out of the ORIGINAL exact expression through
-// compute-engine's own `D` (derivative), `Solve` (critical points, poles, domain zeros),
-// `Limit` (tail/edge behaviour) and `subs`+`evaluate` (the value at a point). None of that
-// is reimplemented by hand, so none of it can silently drift from what compute-engine
-// itself would say about the same expression.
+// compute-engine's own `D` (derivative), `Limit` (tail/edge behaviour) and `subs`+`evaluate`
+// (the value at a point). Roots of an equation (critical points, poles, domain zeros) go
+// through `exactRealRootsOf`: `Factor` first, then a linear or quadratic piece by our own
+// textbook formula (applied to that piece's own exact coefficients -- still compute-engine
+// arithmetic throughout, never a floating-point shortcut), anything left over via
+// compute-engine's own `Solve`. None of it can silently drift from what compute-engine
+// itself would say about the same expression, and one inexact piece declines the whole
+// root set rather than return an incomplete one.
 //
 // Scope (see each declaring file's reference entry for the precise list):
 //   - poly, rational (P/Q with a real denominator), sqrt/log of an affine-or-quadratic
@@ -134,11 +138,15 @@ export function parseInterval(ce: ComputeEngine, cons: BoxedExpression, x: strin
 // ---- exact real solutions of an equation, via compute-engine's own Solve ---------------
 
 /**
- * The real roots of `lhs = 0` in `x`, EXACT and COMPLETE, or `undefined` when `Solve`
- * couldn't fully solve it (a numeric fallback root, or a non-`List` result). Never used to
- * conclude "no roots" from a decline -- only an actual `[]` list means that.
+ * `lhs = 0`'s real roots via compute-engine's own `Solve`, EXACT and COMPLETE, or
+ * `undefined` when `Solve` couldn't fully solve it (a numeric fallback root, or a
+ * non-`List` result). Never used to conclude "no roots" from a decline -- only an actual
+ * `[]` list means that. This is the fallback `exactRealRootsOf` reaches for once factoring
+ * (below) has pulled out every linear/quadratic piece it can -- what's left is whatever
+ * `Solve` itself can still do exactly (typically degree <= 2 already, occasionally a
+ * cubic/quartic with a nice closed form; a `Root` object counts as exact here too).
  */
-export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] | undefined {
+function realRootsViaSolve(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] | undefined {
   const solved = ce.function("Solve", [ce.function("Equal", [lhs, 0]), ce.symbol(x)]).evaluate();
   if (solved.operator !== "List") return undefined;
   const out: BoxedExpression[] = [];
@@ -159,6 +167,165 @@ export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: str
     out.push(r);
   }
   return out;
+}
+
+// ---- exact real roots of a LINEAR or QUADRATIC factor, by our own formula -------------
+//
+// `Solve` falls back to a float for a cubic-or-higher equation even when it FACTORS into
+// pieces `Solve` would happily do exactly on their own (`4x^3 - 8x = 4x(x^2-2)`, from
+// Minimize(x^4-4x^2)'s derivative -- `Solve` alone gives +-1.41421...; factored first, the
+// quadratic piece `x^2-2` is just the textbook formula, exactly). `exactRealRootsOf` below
+// runs `Factor` first and solves each piece this way before ever falling back to `Solve`.
+
+/** One `Add` term of a LINEAR/QUADRATIC-in-`x` factor, as `(coeff, power)` -- `coeff` an
+ * x-free `BoxedExpression`, `power` the exponent of `x` it scales (0, 1, or 2 -- anything
+ * else, or a shape not built from `Negate`/`Multiply`/`Power`/bare `x`/a constant,
+ * `undefined`s the whole parse). Terms straight out of `Factor` are already this simple
+ * within each irreducible piece -- this does not attempt to expand a nested product. */
+function termOf(
+  ce: ComputeEngine,
+  term: BoxedExpression,
+  x: string,
+): { readonly coeff: BoxedExpression; readonly power: number } | undefined {
+  if (!containsVar(term, x)) return { coeff: term, power: 0 };
+  if (symbolNameOf(term) === x) return { coeff: ce.One, power: 1 };
+  if (term.operator === "Negate" && operandsOf(term).length === 1) {
+    const inner = termOf(ce, operandsOf(term)[0]!, x);
+    return inner === undefined
+      ? undefined
+      : { coeff: ce.function("Negate", [inner.coeff]).evaluate(), power: inner.power };
+  }
+  if (term.operator === "Power" && operandsOf(term).length === 2) {
+    const [base, exp] = operandsOf(term) as [BoxedExpression, BoxedExpression];
+    if (symbolNameOf(base) !== x) return undefined;
+    const n = exp.N();
+    if (n.im !== 0 || !Number.isInteger(n.re) || n.re < 0) return undefined;
+    return { coeff: ce.One, power: n.re };
+  }
+  if (term.operator === "Multiply") {
+    const ops = operandsOf(term);
+    const xOps = ops.filter((o) => containsVar(o, x));
+    const consts = ops.filter((o) => !containsVar(o, x));
+    if (xOps.length !== 1) return undefined; // two x-dependent factors: not this simple a term
+    const inner = termOf(ce, xOps[0]!, x);
+    if (inner === undefined) return undefined;
+    const coeff = consts.length === 0 ? inner.coeff : ce.function("Multiply", [...consts, inner.coeff]).evaluate();
+    return { coeff, power: inner.power };
+  }
+  return undefined;
+}
+
+/**
+ * `factor`'s exact coefficients of `x^0`, `x^1`, `x^2` -- summing every `Add` term that
+ * lands on each power -- or `undefined` when `factor` isn't built entirely from powers of
+ * `x` up to 2 (a genuine higher-degree or otherwise-unrecognized factor: the caller falls
+ * back to `Solve` on it instead).
+ */
+function quadraticCoeffsOf(
+  ce: ComputeEngine,
+  factor: BoxedExpression,
+  x: string,
+): { readonly c0: BoxedExpression; readonly c1: BoxedExpression; readonly c2: BoxedExpression } | undefined {
+  const terms = factor.operator === "Add" ? operandsOf(factor) : [factor];
+  const byPower: BoxedExpression[][] = [[], [], []];
+  for (const term of terms) {
+    const parsed = termOf(ce, term, x);
+    if (parsed === undefined || parsed.power > 2) return undefined;
+    byPower[parsed.power]!.push(parsed.coeff);
+  }
+  const sum = (parts: BoxedExpression[]): BoxedExpression =>
+    parts.length === 0 ? ce.Zero : parts.length === 1 ? parts[0]! : ce.function("Add", parts).evaluate();
+  return { c0: sum(byPower[0]!), c1: sum(byPower[1]!), c2: sum(byPower[2]!) };
+}
+
+/**
+ * The real roots of `factor = 0`, EXACT, via the linear or quadratic formula applied
+ * directly to `factor`'s own coefficients -- or `undefined` when `factor` isn't linear or
+ * quadratic in `x` (the caller falls back to `Solve`). `[]` is a proven "no real roots"
+ * (a quadratic with negative discriminant), same contract as `realRootsViaSolve`.
+ */
+function realRootsOfLinearOrQuadratic(
+  ce: ComputeEngine,
+  factor: BoxedExpression,
+  x: string,
+): BoxedExpression[] | undefined {
+  const coeffs = quadraticCoeffsOf(ce, factor, x);
+  if (coeffs === undefined) return undefined;
+  const { c0, c1, c2 } = coeffs;
+  const a = c2.N();
+  if (a.im !== 0) return undefined;
+  if (a.re === 0) {
+    // Linear: c1*x + c0 = 0.
+    const b = c1.N();
+    if (b.im !== 0 || b.re === 0) return undefined; // no x term at all -- not an equation in x
+    return [ce.function("Divide", [ce.function("Negate", [c0]), c1]).evaluate()];
+  }
+  // Quadratic: c2*x^2 + c1*x + c0 = 0.
+  const disc = ce
+    .function("Subtract", [ce.function("Power", [c1, 2]), ce.function("Multiply", [4, c2, c0])])
+    .evaluate();
+  const discN = disc.N();
+  if (discN.im !== 0) return undefined;
+  if (discN.re < 0) return []; // proven no real roots, not a decline
+  const twoA = ce.function("Multiply", [2, c2]).evaluate();
+  if (discN.re === 0) return [ce.function("Divide", [ce.function("Negate", [c1]), twoA]).evaluate()];
+  const sq = ce.function("Sqrt", [disc]).evaluate();
+  return [
+    ce.function("Divide", [ce.function("Subtract", [ce.function("Negate", [c1]), sq]), twoA]).evaluate(),
+    ce.function("Divide", [ce.function("Add", [ce.function("Negate", [c1]), sq]), twoA]).evaluate(),
+  ];
+}
+
+/**
+ * `lhs`'s multiplicative factors that still depend on `x`, from `Factor`'s own output --
+ * `Multiply` split into its operands, a repeated `Power(base, k)` unwrapped to `base`
+ * (same real roots), an x-free factor (a leading constant) dropped, everything else kept
+ * as one factor. `[lhs]` itself when `Factor` didn't decompose it at all (already
+ * irreducible, or `Factor` declined to run) -- the same shape `realRootsOfLinearOrQuadratic`/
+ * `realRootsViaSolve` would see without any factoring.
+ */
+function factorsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] {
+  const factored = ce.function("Factor", [lhs]).evaluate();
+  const raw = factored.operator === "Multiply" ? operandsOf(factored) : [factored];
+  const out: BoxedExpression[] = [];
+  for (const f0 of raw) {
+    const f = f0.operator === "Negate" && operandsOf(f0).length === 1 ? operandsOf(f0)[0]! : f0;
+    if (!containsVar(f, x)) continue; // a constant factor (incl. an overall sign) has no roots
+    if (f.operator === "Power" && operandsOf(f).length === 2) {
+      const n = operandsOf(f)[1]!.N();
+      if (n.im === 0 && Number.isInteger(n.re) && n.re > 0) {
+        out.push(operandsOf(f)[0]!);
+        continue;
+      }
+    }
+    out.push(f);
+  }
+  return out.length === 0 ? [lhs] : out;
+}
+
+/**
+ * The real roots of `lhs = 0` in `x`, EXACT and COMPLETE, or `undefined` when they can't
+ * all be produced exactly. `lhs` is factored first (`Factor`), and each factor is solved
+ * on its own: exactly by our own formula when it's linear or quadratic in `x`, else via
+ * `Solve`. Declines (returns `undefined`) the moment ANY factor can't be solved exactly --
+ * one inexact piece means the overall root set isn't complete, so nothing is used. This is
+ * what lets a quartic's cubic derivative (`4x^3-8x = 4x(x^2-2)`) answer exactly: `Solve`
+ * alone gives a float for `x^2 = 2`, but factored, that piece is just the quadratic
+ * formula.
+ *
+ * Sorted ascending before returning: `Solve` itself always answered this way (every
+ * caller, notably `extremize`'s tie-break between equally-good critical points, was built
+ * against that order), and factoring collects roots piece by piece, not ascending.
+ */
+export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: string): BoxedExpression[] | undefined {
+  const factors = factorsOf(ce, lhs, x);
+  const out: BoxedExpression[] = [];
+  for (const factor of factors) {
+    const roots = realRootsOfLinearOrQuadratic(ce, factor, x) ?? realRootsViaSolve(ce, factor, x);
+    if (roots === undefined) return undefined;
+    out.push(...roots);
+  }
+  return out.sort((p, q) => p.N().re - q.N().re);
 }
 
 // ---- tail/edge behaviour, via compute-engine's own Limit -------------------------------

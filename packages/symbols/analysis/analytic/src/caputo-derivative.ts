@@ -36,9 +36,13 @@ const isSym = (x: BoxedExpression, name: string): boolean => symbolNameOf(x) ===
 const hasVar = (expr: BoxedExpression, name: string): boolean => expr.has(name);
 
 /** A concrete (non-`x`-dependent) real number literal — `NaN`/complex declines by
- * returning `undefined`. */
+ * returning `undefined`. `CaputoD` is declared `lazy`, so an operand like an exact
+ * `1/2` order arrives as an uncanonicalized `Rational(1, 2)` call, not a boxed number
+ * (`.re`/`.im` are `NaN` on that raw form) — `evaluate()` first canonicalizes it
+ * (x-free, so this can't touch `f`'s own `x`-dependence). */
 function realLiteral(expr: BoxedExpression): number | undefined {
-  return expr.im === 0 && Number.isFinite(expr.re) ? expr.re : undefined;
+  const value = expr.evaluate();
+  return value.im === 0 && Number.isFinite(value.re) ? value.re : undefined;
 }
 
 /** `x^beta` (`beta` a real-literal exponent) or bare `x` (`beta = 1`) — the one shape
