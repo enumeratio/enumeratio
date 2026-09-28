@@ -1,0 +1,19 @@
+id	in	out	tex.in	tex.out	verdict
+issquarefree-10	SquareFreeQ[10]	True	\text{SquareFreeQ}[10]	\text{True}	
+issquarefree-4	SquareFreeQ[4]	False	\text{SquareFreeQ}[4]	\text{False}	
+issquarefree-12	SquareFreeQ[12]	False	\text{SquareFreeQ}[12]	\text{False}	
+every-prime-is-squarefree	SquareFreeQ[17]	True	\text{SquareFreeQ}[17]	\text{True}	
+issquarefree-20	SquareFreeQ[20]				
+threads-element-wise-over-a-list	SquareFreeQ[List[10, 4, 12]]	SquareFreeQ[{10, 4, 12}]	\text{SquareFreeQ}[\{10,4,12\}]	\text{SquareFreeQ}[\{10,4,12\}]	disagree
+gaussian-integers-3-2i-is-a-gaussian-prime	SquareFreeQ[Complex[3, 2]]				
+gaussianintegers-true-2-i-1-i-2	SquareFreeQ[2, Rule[GaussianIntegers, True]]	False	\text{SquareFreeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}	
+rationals-numerator-and-denominator-are-both	SquareFreeQ[Rational[2, 3]]				
+polynomials-x-2-6x-6-has-no-repeated-factor	SquareFreeQ[Plus[Power[x, 2], Times[6, x], 6]]	True	\text{SquareFreeQ}\left[x^2+6 x+6\right]	\text{True}	
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Times[Power[x, 2], y]]]	False	\text{SquareFreeQ}\left[x^3-x^2 y\right]	\text{False}	
+squarefree-as-a-polynomial-in-x-alone-y-is-just	SquareFreeQ[Times[x, Power[y, 2]], x]	True	\text{SquareFreeQ}\left[x y^2,x\right]	\text{True}	
+but-not-in-y-alone-y-appears-squared	SquareFreeQ[Times[x, Power[y, 2]], y]	False	\text{SquareFreeQ}\left[x y^2,y\right]	\text{False}	
+a-non-squarefree-rational	SquareFreeQ[Rational[4, 3]]				
+x-1-2-has-a-repeated-root	SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1]]	False	\text{SquareFreeQ}\left[x^2-2 x+1\right]	\text{False}	
+x-3-y-3-has-no-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Power[y, 3]]]	True	\text{SquareFreeQ}\left[x^3-y^3\right]	\text{True}	
+n-is-squarefree-exactly-when-mu-n-neq-0-see	(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])	True	\text{SquareFreeQ}[10]=(\neg \mu (10)=0)	\text{True}	
+1-is-vacuously-squarefree-it-has-no-repeated	SquareFreeQ[1]	True	\text{SquareFreeQ}[1]	\text{True}	

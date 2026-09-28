@@ -1,0 +1,9 @@
+---
+name: SuperRootTree
+domain: Combinatorics
+signature: SuperRootTree(...)
+summary: As the super-root labeled tree
+mapOn:
+  - LabeledTree
+stub: carrier
+---

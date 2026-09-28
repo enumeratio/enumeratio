@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+a-hand-built-first-order-recurrence			[[DifferenceRoot, [Function, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]], y, n]], 5]	5	$y(n{+}1) = y(n) + 1$, $y(0){=}0$: $y(5) = 5$
+a-hand-built-fibonacci-recurrence-at-10		test	[[DifferenceRoot, [Function, [List, [Equal, [Add, [Negate, [y, n]], [Negate, [y, [Add, n, 1]]], [y, [Add, n, 2]]], 0], [Equal, [y, 0], 0], [Equal, [y, 1], 1]], y, n]], 10]	55	
+symbolic-n-stays-inert	Properties		[[DifferenceRoot, [Function, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]], y, n]], n]	[Apply, [DifferenceRoot, [Function, [Block, [List, [Equal, [Add, [Negate, [y, n]], [y, [Add, n, 1]], -1], 0], [Equal, [y, 0], 0]]], y, n]], n]	A symbolic index leaves the call unevaluated rather than dropping the argument

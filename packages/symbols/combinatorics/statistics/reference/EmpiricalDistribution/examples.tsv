@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+empirical-pdf-is-the-observed-proportion			[PDF, [EmpiricalDistribution, [List, 1, 2, 2, 3]], 2]	[Rational, 1, 2]	2 of the 4 elements are 2
+empirical-cdf-is-the-observed-proportion-at-most			[CDF, [EmpiricalDistribution, [List, 1, 2, 2, 3]], 2]	[Rational, 3, 4]	
+empirical-mean-matches-mean-of-the-data			[Mean, [EmpiricalDistribution, [List, 1, 2, 2, 3]]]	2	
+empirical-variance-matches-variance-of-the-data			[Variance, [EmpiricalDistribution, [List, 1, 2, 2, 3]]]	[Rational, 2, 3]	

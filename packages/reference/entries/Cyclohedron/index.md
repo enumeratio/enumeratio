@@ -1,0 +1,11 @@
+---
+name: Cyclohedron
+domain: Combinatorics
+signature: Cyclohedron(...)
+summary: Faces of the type-B associahedron / Bott–Taubes polytope (centrally symmetric polygon dissections).
+grades:
+  - name: n
+    role: axis
+carrier: Dissection
+stub: carrier
+---

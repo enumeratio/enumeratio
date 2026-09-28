@@ -1,0 +1,23 @@
+id	in	out
+5-6-7	\mathrm{Pochhammer}(5, 3)	210
+an-empty-product-is-1	\mathrm{Pochhammer}(2, 0)	1
+1-5-equals-5	\mathrm{Pochhammer}(1, 5)	120
+pochhammer-3-4	\mathrm{Pochhammer}(3, 4)	360
+10-11-12-13-14-15	\mathrm{Pochhammer}(10, 6)	3\,603\,600
+at-pochhammer-3-2	N(\mathrm{Pochhammer}(3, 2))	12
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Pochhammer}(\bigl\lbrack2, 3, 4\bigr\rbrack, 2)	\bigl\lbrack6, 12, 20\bigr\rbrack
+a-symbolic-base-with-integer-order-expands-to	\mathrm{Pochhammer}(n, 5)	n\times(n+1)(n+2)(n+3)(n+4)
+a-negative-order-expands-to-the-reciprocal	\mathrm{Pochhammer}(n, -5)	((n-1)(n-2)(n-3)(n-4)(n-5))^{-1}
+real-base-and-order-evaluate-as-frac-gamma-a-n	\mathrm{Pochhammer}(2.4, 8.5)	2\,310\,224.673\,240\,707\,780\,57
+a-zero-base-gives-0-for-any-positive-order	\mathrm{Pochhammer}(0, 1\,285)	0
+a-rational-base-frac-12-cdot-frac-32-cdot-frac	\mathrm{Pochhammer}(\frac{1}{2}, 3)	\frac{15}{8}
+a-rational-order-evaluates-through-gamma-exactly	\mathrm{Pochhammer}(\frac{3}{2}, \frac{1}{2})	\frac{2}{\sqrt{\pi}}
+complex-base-and-order-evaluate-through-gamma	\mathrm{Pochhammer}(2+5i, 8i)	0.000\,002\,138\,682\,291\,868\,096\,3-0.000\,014\,218\,737\,711\,709\,974i
+dividing-by-k-counts-multisets-binom-n-k-1-k	\frac{\mathrm{Pochhammer}(5, 3)}{3!}	35
+1-n-n-since-the-rising-factorial-from-1-just	\mathrm{Pochhammer}(1, 5)=5!	\top
+negative-order-gives-the-reciprocal-a-n-frac-1-a	\mathrm{Pochhammer}(5, -2)	\frac{1}{12}
+order-0-is-the-empty-product-a-0-1	\mathrm{Pochhammer}(a, 0)	1
+a-1-a	\mathrm{Pochhammer}(a, 1)	a
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	\mathrm{Pochhammer}(4, 3)=\frac{\Gamma(7)}{\Gamma(4)}	\top
+rising-and-falling-factorials-x-underline-n-1-n	\mathrm{FallingFactorial}(5, 3)=-\mathrm{Pochhammer}(-5, 3)	\top
+if-a-is-a-non-positive-integer-with-a-n-the	\mathrm{Pochhammer}(-3, 4)	0

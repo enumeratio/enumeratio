@@ -1,0 +1,13 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note
+adicdigits-adicnumeral-10-third-6			[AdicDigits, [AdicNumeral, 10, [Rational, 1, 3]], 6]	[List, 7, 6, 6, 6, 6, 6]	Least significant first — the trailing 7 of $…6667$ comes first	domain	Base 10 is composite; Sage's Qp is prime-p only, so this demo example (not scanned as role test) has no counterpart there.
+adicdigits-adicnumeral-2-minus1		test	[AdicDigits, [AdicNumeral, 2, -1], 8]	[List, 1, 1, 1, 1, 1, 1, 1, 1]	$-1$ carries forever, so every digit is the top one		
+adicdigits-adicnumeral-2-third		test	[AdicDigits, [AdicNumeral, 2, [Rational, 1, 3]], 8]	[List, 1, 1, 0, 1, 0, 1, 0, 1]			
+adicdigits-adicnumeral-3-minus4-9		test	[AdicDigits, [AdicNumeral, 3, [Rational, -4, 9]], 8]	[List, 2, 1, 2, 2, 2, 2, 2, 2]			
+adicdigits-adicnumeral-5-7-25		test	[AdicDigits, [AdicNumeral, 5, [Rational, 7, 25]], 8]	[List, 2, 1, 0, 0, 0, 0, 0, 0]			
+adicdigits-adicnumeral-5-100		test	[AdicDigits, [AdicNumeral, 5, 100], 8]	[List, 4, 0, 0, 0, 0, 0, 0, 0]			
+adicdigits-adicnumeral-7-2-7		test	[AdicDigits, [AdicNumeral, 7, [Rational, 2, 7]], 8]	[List, 2, 0, 0, 0, 0, 0, 0, 0]			
+adicdigits-adicnumeral-11-100		test	[AdicDigits, [AdicNumeral, 11, 100], 8]	[List, 1, 9, 0, 0, 0, 0, 0, 0]			
+adicdigits-adicnumeral-7-minus1-3		test	[AdicDigits, [AdicNumeral, 7, [Rational, -1, 3]], 8]	[List, 2, 2, 2, 2, 2, 2, 2, 2]			
+adicdigits-adicnumeral-2-100	Scope	test	[AdicDigits, [AdicNumeral, 2, 100], 8]	[List, 1, 0, 0, 1, 1, 0, 0, 0]	Positive valuation — the low digits are the trailing zeros of $100 = 4 \cdot 25$		
+adicdigits-adicnumeral-3-third	Scope	test	[AdicDigits, [AdicNumeral, 3, [Rational, 1, 3]], 8]	[List, 1, 0, 0, 0, 0, 0, 0, 0]	Negative valuation — digits below the point come first		
+adicdigits-adicnumeral-11-minus1	Scope	test	[AdicDigits, [AdicNumeral, 11, -1], 8]	[List, 10, 10, 10, 10, 10, 10, 10, 10]	Base 11 digits run past 9 — printed with brackets in AdicExpansion, plain here		

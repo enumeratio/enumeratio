@@ -1,0 +1,5 @@
+id	in	out
+negativebinomial-pdf-exact	PDF(NegativeBinomialDistribution(5, 1 / 3), 2)	20 / 729
+negativebinomial-cdf-exact	CDF(NegativeBinomialDistribution(5, 1 / 3), 2)	BetaRegularized(1 / 3, 5, 3)
+negativebinomial-mean-exact	Mean(NegativeBinomialDistribution(5, 1 / 3))	10
+negativebinomial-variance-exact	Variance(NegativeBinomialDistribution(5, 1 / 3))	30

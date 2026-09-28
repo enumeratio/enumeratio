@@ -1,0 +1,2 @@
+id	in
+the-value-half-is-deterministic	Part[AbsoluteTiming[Plus[1, 2]], 2]

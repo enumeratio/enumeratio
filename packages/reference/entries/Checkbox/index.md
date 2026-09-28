@@ -1,0 +1,14 @@
+---
+name: Checkbox
+domain: Graphics
+signature: Checkbox(...)
+summary: Wolfram's own Checkbox, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: Checkbox(...)
+    description: Wolfram's own Checkbox, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+    library: enumeratio-formats
+    type: (any*) -> any
+---

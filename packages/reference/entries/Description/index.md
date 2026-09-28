@@ -1,0 +1,9 @@
+---
+name: Description
+domain: Combinatorics
+signature: Description(...)
+summary: Description
+statOn:
+  - Text
+stub: carrier
+---

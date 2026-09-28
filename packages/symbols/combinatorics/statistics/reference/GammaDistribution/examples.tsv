@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+gamma-pdf-exact			[PDF, [GammaDistribution, 2, 2], 3]	[Divide, 3, [Multiply, 4, [Gamma, 2], [Power, ExponentialE, [Rational, 3, 2]]]]	$\approx 0.16734762011132237$, cross-checked against wolframscript's `N[PDF[GammaDistribution[2,2],3]]`
+gamma-cdf-exact			[CDF, [GammaDistribution, 2, 2], 3]	[Add, 1, [Divide, -5, [Multiply, 2, [Power, ExponentialE, [Rational, 3, 2]]]]]	$\approx 0.44217459962892543$, cross-checked against wolframscript's `N[CDF[GammaDistribution[2,2],3]] = 0.4421745996289253`
+gamma-mean-exact			[Mean, [GammaDistribution, 2, 2]]	4	
+gamma-variance-exact			[Variance, [GammaDistribution, 2, 2]]	8	
+gamma-distribution-one-argument-defaults-scale	Scope		[GammaDistribution, 2]	[GammaDistribution, 2, 1]	
+gamma-cdf-clamps-below-support	Possible issues		[N, [CDF, [GammaDistribution, 2, 2], -1]]	0	

@@ -1,0 +1,4 @@
+id	in	out
+dirac-delta-at-origin	FourierTransform(DiracDelta(t), t, w)	Sqrt(1 / (2Pi))
+gaussian	FourierTransform(ExponentialE ^ (-t ^ 2), t, w)	Sqrt(2) / 2 * ExponentialE ^ (-1 / 4 * w ^ 2)
+cosine	FourierTransform(Cos(a * t), t, w)	Sqrt(2) / 2 * (DiracDelta(a + w) + DiracDelta(-a + w)) * Sqrt(Pi)

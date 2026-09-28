@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+wiener-slice-mean			[Mean, [SliceDistribution, [WienerProcess, 2, 3], 5]]	10	$Mean(WienerProcess(\mu,\sigma)[t]) = \mu t$
+wiener-slice-variance			[Variance, [SliceDistribution, [WienerProcess, 0, 3], 4]]	36	$Variance(WienerProcess(\mu,\sigma)[t]) = \sigma^2 t$
+wiener-default-slice	Scope		[SliceDistribution, [WienerProcess], 4]	[NormalDistribution, 0, 2]	Standard Wiener process — $NormalDistribution(0, \sqrt{4}) = NormalDistribution(0, 2)$

@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+the-first-4-terms		test	[Take, GiugaNumbers, 4]	[List, 30, 858, 1722, 66198]

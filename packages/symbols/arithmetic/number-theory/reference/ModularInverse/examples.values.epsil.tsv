@@ -1,0 +1,32 @@
+id	in	out
+3-cdot-5-15-equiv-1	ModularInverse(3, 7)	5
+modularinverse-2-11	ModularInverse(2, 11)	6
+a-negative-argument-3-cdot-2-6-equiv-1	ModularInverse(-3, 7)	2
+a-21-digit-modulus	ModularInverse(3, 10 ^ 20 + 1)	33_333_333_333_333_333_334
+listable-threads-over-a-list	ModularInverse([2, 3, 4], 11)	[6, 4, 3]
+2-i-6-4i-8-14i-equiv-1-pmod-7	ModularInverse(2 + i, 7)	6 + 4i
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	ModularInverse(11 - 7i, 7 + 4i)	-1 + 2i
+a-gaussian-base-and-a-gaussian-modulus	ModularInverse(3 - i, 5 + 2i)	-1 - i
+inverse-mod-a-unit-is-always-0	ModularInverse(3 + 4i, 1)	0
+inverse-mod-i-is-always-0	ModularInverse(3 + 4i, i)	0
+a-unit-is-its-own-inverse-mod-anything-it-s-a	ModularInverse(i, 2 + i)	-i
+inverse-of-a-gaussian-prime-mod-a-coprime	ModularInverse(2 + i, 2 - i)	-1
+inverse-mod-a-real-prime-3-mod-4	ModularInverse(2 + i, 3)	1 + i
+no-inverse-when-the-gcd-isn-t-a-unit-shared	ModularInverse(3 + 4i, 2 + i)	ModularInverse(3 + 4i, 2 + i)
+inverse-mod-a-negative-real-prime	ModularInverse(2 + i, -7)	-1 - 3i
+inverse-mod-a-composite-gaussian-modulus-norm-25	ModularInverse(1 + i, 3 + 4i)	3i
+inverse-mod-a-modulus-past-2-53	ModularInverse(4 + i, 100_000_000_000_000_000_001 + 9_007_199_254_740_993i)	-47_059_883_199_912_322_470 + 11_760_467_200_350_710_121i
+inverse-mod-1-4i-the-other-prime-above-17	ModularInverse(8 + 2i, 1 + 4i)	-1
+a-real-base-inverted-mod-a-gaussian-modulus	ModularInverse(5, 2 + i)	ModularInverse(5, 2 + i)
+inverse-mod-a-large-norm-gaussian	ModularInverse(1 + i, 123 + 456i)	-166 + 289i
+inverse-mod-a-negative-real-composite-has-none	ModularInverse(5 + 5i, -15)	ModularInverse(5 + 5i, -15)
+inverse-of-a-prime-above-13-mod-the-other-prime	ModularInverse(3 + 2i, 2 + 3i)	-2
+inverse-mod-a-negative-associate	ModularInverse(2 + i, -2 - 3i)	-1 - i
+inverse-mod-a-real-composite-5-squared-has-none	ModularInverse(5 + 5i, 25)	ModularInverse(5 + 5i, 25)
+inverse-of-a-real-prime-s-associate-by-i-mod-a	ModularInverse(7i, 3 + 2i)	-2 * i
+inverse-mod-a-real-prime-19	ModularInverse(2 + i, 19)	8 + 15i
+no-inverse-mod-0	ModularInverse(2 + i, 0)	ModularInverse(2 + i, 0)
+a-real-base-with-no-inverse-mod-a-shared-factor	ModularInverse(5, 5 + 5i)	ModularInverse(5, 5 + 5i)
+the-same-as-powermod-with-exponent-1	ModularInverse(3, 7) == PowerMod(3, -1, 7)	True
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	12_345 * ModularInverse(12_345, 2 ^ 61 - 1) % (2 ^ 61 - 1)	1
+gcd-2-4-2-no-inverse	ModularInverse(2, 4)	ModularInverse(2, 4)

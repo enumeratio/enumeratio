@@ -1,0 +1,3 @@
+id	in
+no-throw-evaluates-normally	Catch[Plus[1, 2]]
+tag-matched-catch-recovers-the-value	Catch[Throw[ok, done], done]

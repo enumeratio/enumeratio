@@ -1,0 +1,12 @@
+id	section	role	expr	expected	caption
+primenu-24			[PrimeNu, 24]	2	
+primenu-360			[PrimeNu, 360]	3	
+primenu-105			[PrimeNu, 105]	3	
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[PrimeNu, [List, 4, 28, 180]]	[List, 1, 2, 3]	Threads element-wise over a list, as Wolfram's Listable heads do
+large-integers-the-15-primes-up-to-50-divide-50	Scope		[PrimeNu, [Factorial, 50]]	15	Large integers: the 15 primes up to 50 divide $50!$
+gaussian-integers-3-i-1-i-2-i	Scope		[PrimeNu, [Complex, 3, 1]]	2	Gaussian integers: $3+i=(1+i)(2-i)$
+gaussianintegers-true-5-splits-so-105-has-4	Scope		[PrimeNu, 105, [KeyValuePair, GaussianIntegers, True]]	4	GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors
+listable-over-a-range	Scope		[PrimeNu, [Range, 20]]	[List, 0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]	Listable over a [[Range]]
+primenu-n-is-the-length-of-factorinteger-n	Properties		[Equal, [PrimeNu, 50], [Length, [FactorInteger, 50]]]	True	PrimeNu(n) is the length of [[FactorInteger]](n)
+32-2-5-has-just-one-distinct-prime-factor	Possible issues		[PrimeNu, 32]	1	$32=2^5$ has just one distinct prime factor despite the high power
+1-has-no-prime-factors	Possible issues		[PrimeNu, 1]	0	1 has no prime factors

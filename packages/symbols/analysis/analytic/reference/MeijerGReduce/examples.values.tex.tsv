@@ -1,0 +1,5 @@
+id	in	out
+exp	\mathrm{MeijerGReduce}(e^{x}, x)	\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, -x)
+sin	\mathrm{MeijerGReduce}(\sin(x), x)	\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\frac{1}{2}\bigr\rbrack, \bigl\lbrack0\bigr\rbrack\bigr\rbrack, \frac{x^2}{4})\sqrt{\pi}
+log1p	\mathrm{MeijerGReduce}(\ln(1+x), x)	\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack0\bigr\rbrack\bigr\rbrack, x)
+bessel-j	\mathrm{MeijerGReduce}(\operatorname{J}_{n}(x), x)	\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\frac{n}{2}\bigr\rbrack, \bigl\lbrack-\frac{n}{2}\bigr\rbrack\bigr\rbrack, \frac{x^2}{4})

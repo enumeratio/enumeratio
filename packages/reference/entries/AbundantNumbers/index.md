@@ -1,0 +1,31 @@
+---
+name: AbundantNumbers
+domain: Collections
+signature: AbundantNumbers
+summary: The abundant numbers $12, 18, 20, 24, …$ -- integers whose proper divisors sum past them -- as a lazy indexed collection.
+signatures:
+  - call: AbundantNumbers
+    description: the $n$ with $\sigma(n) - n > n$ (proper-divisor sum exceeds $n$), an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(AbundantNumbers) = +\infty$, and $At(AbundantNumbers, k)$ unranks the $k$-th abundant number by scanning forward from the last cached match -- $At(AbundantNumbers, 5) = 30$.'
+  - OEIS A005101.
+  - "Membership goes through [[Element]]: $Element(12, AbundantNumbers)$ is true, $Element(28, AbundantNumbers)$ is false (perfect, not abundant)."
+enumerate:
+  expr: Take(AbundantNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - Primes
+  - SquareNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Abundant
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+  - system: oeis
+    identity: A005101
+    url: https://oeis.org/A005101
+grades: []
+carrier: Numeric
+unbounded: true
+---

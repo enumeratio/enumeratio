@@ -1,0 +1,4 @@
+id	in	back
+a-hand-built-first-order-recurrence	DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], y[Plus[n, 1]], -1], 0], Equal[y[0], 0]]]][5]	Unreadable
+a-hand-built-fibonacci-recurrence-at-10	DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], Minus[y[Plus[n, 1]]], y[Plus[n, 2]]], 0], Equal[y[0], 0], Equal[y[1], 1]]]][10]	Unreadable
+symbolic-n-stays-inert	DifferenceRoot[Function[List[y, n], List[Equal[Plus[Minus[y[n]], y[Plus[n, 1]], -1], 0], Equal[y[0], 0]]]][n]	Unreadable

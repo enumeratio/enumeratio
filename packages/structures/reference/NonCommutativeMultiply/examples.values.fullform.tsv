@@ -1,0 +1,10 @@
+id	in
+the-canonical-order	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2]]
+scalars-the-implied-identity-factor	CircleTimes[2, 3]
+commuting-units-agrees-with-times	CircleTimes[Subscript[i, 2], Subscript[i, 1]]
+the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	NonCommutativeMultiply[Plus[1, Times[2, Subscript[f, 1]], Times[3, Subscript[f, 2]], Times[4, Subscript[f, 1], Subscript[f, 2]]], Plus[2, Minus[Subscript[f, 1]], Subscript[f, 2], Times[-3, Subscript[f, 1], Subscript[f, 2]]]]
+reversing-the-operands-flips-the-sign	NonCommutativeMultiply[Subscript[e, 2], Subscript[e, 1]]
+e-1e-2-2-1	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2], Subscript[e, 1], Subscript[e, 2]]
+associative-nested-products-flatten	NonCommutativeMultiply[a, NonCommutativeMultiply[b, c]]
+plain-times-declines-both-orders-arrive	Times[Subscript[e, 2], Subscript[e, 1]]
+undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply[b, a]

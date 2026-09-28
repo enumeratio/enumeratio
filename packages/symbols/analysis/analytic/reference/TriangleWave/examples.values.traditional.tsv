@@ -1,0 +1,7 @@
+id	in	out
+trianglewave-zero		
+trianglewave-quarter-peak		
+trianglewave-half		
+trianglewave-three-quarters-trough		
+trianglewave-ranged		
+trianglewave-periodic	\mathrm{TriangleWave}(\frac{1}{4})=\mathrm{TriangleWave}(3\frac{1}{4})	\mathrm{True}

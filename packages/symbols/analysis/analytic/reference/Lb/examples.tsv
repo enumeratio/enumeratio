@@ -1,0 +1,11 @@
+id	section	role	expr	expected	caption
+lb-8			[Lb, 8]	3	
+lb-1			[Lb, 1]	0	
+lb-1-024			[Lb, 1024]	10	
+a-machine-precision-argument-evaluates			[Lb, 1.4142]	{num: "0.499986164421874256467"}	A machine-precision argument evaluates numerically
+lb-2-pow-10			[Lb, [Power, 2, 10]]	10	
+same-exact-negative-power-fold-as-log2-lb-frac	Scope		[Lb, [Rational, 1, 8]]	-3	Same exact negative power fold as [[Log2]]: $\operatorname{lb}\tfrac18 = -3$
+lb-0	Scope		[Lb, 0]	NegativeInfinity	
+threads-element-wise-over-a-list	Scope		[Lb, [List, 1, 2, 4, 8]]	[List, 0, 1, 2, 3]	Threads element-wise over a list
+same-as-log2-the-logarithm-of-complex-infinity	Scope		[Lb, ComplexInfinity]	PositiveInfinity	Same as [[Log2]]: the logarithm of complex infinity is $+\infty$
+identical-to-log2	Properties		[Equal, [Lb, 64], [Log2, 64]]	True	Identical to [[Log2]]

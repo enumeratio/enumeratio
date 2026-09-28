@@ -1,0 +1,14 @@
+---
+name: BraidCrossings
+domain: Braids and knots
+signature: BraidCrossings(braid)
+summary: The number of crossings in a braid word — its length.
+signatures:
+  - call: BraidCrossings(braid)
+    description: the length of the word
+    library: enumeratio-braid
+    type: (expression<Braid> | string) -> integer
+seeAlso:
+  - BraidWrithe
+  - BraidStrands
+---

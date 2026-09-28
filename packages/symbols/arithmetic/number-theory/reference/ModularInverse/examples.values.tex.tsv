@@ -1,0 +1,32 @@
+id	in	out
+3-cdot-5-15-equiv-1	\mathrm{ModularInverse}(3, 7)	5
+modularinverse-2-11	\mathrm{ModularInverse}(2, 11)	6
+a-negative-argument-3-cdot-2-6-equiv-1	\mathrm{ModularInverse}(-3, 7)	2
+a-21-digit-modulus	\mathrm{ModularInverse}(3, 10^{20}+1)	33\,333\,333\,333\,333\,333\,334
+listable-threads-over-a-list	\mathrm{ModularInverse}(\bigl\lbrack2, 3, 4\bigr\rbrack, 11)	\bigl\lbrack6, 4, 3\bigr\rbrack
+2-i-6-4i-8-14i-equiv-1-pmod-7	\mathrm{ModularInverse}(2+i, 7)	6+4i
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	\mathrm{ModularInverse}(11-7i, 7+4i)	-1+2i
+a-gaussian-base-and-a-gaussian-modulus	\mathrm{ModularInverse}(3-i, 5+2i)	-1-i
+inverse-mod-a-unit-is-always-0	\mathrm{ModularInverse}(3+4i, 1)	0
+inverse-mod-i-is-always-0	\mathrm{ModularInverse}(3+4i, i)	0
+a-unit-is-its-own-inverse-mod-anything-it-s-a	\mathrm{ModularInverse}(i, 2+i)	-i
+inverse-of-a-gaussian-prime-mod-a-coprime	\mathrm{ModularInverse}(2+i, 2-i)	-1
+inverse-mod-a-real-prime-3-mod-4	\mathrm{ModularInverse}(2+i, 3)	1+i
+no-inverse-when-the-gcd-isn-t-a-unit-shared	\mathrm{ModularInverse}(3+4i, 2+i)	\mathrm{ModularInverse}(3+4i, 2+i)
+inverse-mod-a-negative-real-prime	\mathrm{ModularInverse}(2+i, -7)	-1-3i
+inverse-mod-a-composite-gaussian-modulus-norm-25	\mathrm{ModularInverse}(1+i, 3+4i)	3i
+inverse-mod-a-modulus-past-2-53	\mathrm{ModularInverse}(4+i, 100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i)	-47\,059\,883\,199\,912\,322\,470+11\,760\,467\,200\,350\,710\,121i
+inverse-mod-1-4i-the-other-prime-above-17	\mathrm{ModularInverse}(8+2i, 1+4i)	-1
+a-real-base-inverted-mod-a-gaussian-modulus	\mathrm{ModularInverse}(5, 2+i)	\mathrm{ModularInverse}(5, 2+i)
+inverse-mod-a-large-norm-gaussian	\mathrm{ModularInverse}(1+i, 123+456i)	-166+289i
+inverse-mod-a-negative-real-composite-has-none	\mathrm{ModularInverse}(5+5i, -15)	\mathrm{ModularInverse}(5+5i, -15)
+inverse-of-a-prime-above-13-mod-the-other-prime	\mathrm{ModularInverse}(3+2i, 2+3i)	-2
+inverse-mod-a-negative-associate	\mathrm{ModularInverse}(2+i, -2-3i)	-1-i
+inverse-mod-a-real-composite-5-squared-has-none	\mathrm{ModularInverse}(5+5i, 25)	\mathrm{ModularInverse}(5+5i, 25)
+inverse-of-a-real-prime-s-associate-by-i-mod-a	\mathrm{ModularInverse}(7i, 3+2i)	-2i
+inverse-mod-a-real-prime-19	\mathrm{ModularInverse}(2+i, 19)	8+15i
+no-inverse-mod-0	\mathrm{ModularInverse}(2+i, 0)	\mathrm{ModularInverse}(2+i, 0)
+a-real-base-with-no-inverse-mod-a-shared-factor	\mathrm{ModularInverse}(5, 5+5i)	\mathrm{ModularInverse}(5, 5+5i)
+the-same-as-powermod-with-exponent-1	\mathrm{ModularInverse}(3, 7)=\mathrm{PowerMod}(3, -1, 7)	\top
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	12\,345\mathrm{ModularInverse}(12\,345, 2^{61}-1)\bmod(2^{61}-1)	1
+gcd-2-4-2-no-inverse	\mathrm{ModularInverse}(2, 4)	\mathrm{ModularInverse}(2, 4)

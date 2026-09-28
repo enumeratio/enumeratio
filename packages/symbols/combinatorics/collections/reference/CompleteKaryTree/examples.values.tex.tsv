@@ -1,0 +1,8 @@
+id	in	out
+a-3-level-binary-tree-has-7-vertices	\mathrm{VertexCount}(\mathrm{CompleteKaryTree}(3, 2))	7
+a-single-level-tree-is-one-vertex	\mathrm{VertexCount}(\mathrm{CompleteKaryTree}(1, 2))	1
+a-3-level-binary-tree-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteKaryTree}(3, 2))	\top
+root-degree-of-a-ternary-tree	\mathrm{VertexDegree}(\mathrm{CompleteKaryTree}(3, 3), 1)	3
+a-3-level-ternary-tree-has-13-vertices	\mathrm{VertexCount}(\mathrm{CompleteKaryTree}(3, 3))	13
+the-1-arg-form-defaults-to-binary	\mathrm{VertexCount}(\mathrm{CompleteKaryTree}(4))	15
+edge-list-of-a-3-level-binary-tree	\mathrm{EdgeList}(\mathrm{CompleteKaryTree}(3, 2))	\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3), \mathrm{UndirectedEdge}(2, 4), \mathrm{UndirectedEdge}(2, 5), \mathrm{UndirectedEdge}(3, 6), \mathrm{UndirectedEdge}(3, 7)\bigr\rbrack

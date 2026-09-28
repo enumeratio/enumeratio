@@ -1,0 +1,2 @@
+id	in	out
+the-one-line-word-231	\mathrm{FromPermutation}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))	\mathrm{IncreasingBinaryTree}(\operatorname{Tuple}(1,\bigl\lbrack2, 0, 0\bigr\rbrack,\bigl\lbrack0, 3, 0\bigr\rbrack))

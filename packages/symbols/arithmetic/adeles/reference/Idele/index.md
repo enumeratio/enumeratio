@@ -1,0 +1,21 @@
+---
+name: Idele
+domain: Adèles and idèles
+signature: Idele(r, s?, units?)
+summary: 'An idèle: a unit of the adèle ring — a real $r$ together with $s \in \mathbb{Q}^\times$ principal everywhere except at a listed finite set of primes, where distinguished units override it.'
+signatures:
+  - call: Idele(r, s, units)
+    description: real $r$, principal value $s$ at every prime not named in `units`
+    library: enumeratio-adeles
+    type: (value, value?, list<value>?) -> value
+  - call: Idele(q)
+    description: "the principal idèle of a non-zero rational $q$: $q$ at every place"
+    library: enumeratio-adeles
+details:
+  - '`Multiply` on idèles multiplies real parts, principal values and any shared or distinguished unit parts; an idèle is invertible whenever $r \ne 0$ and $s \ne 0$.'
+  - "`units` is a list of [[AdicNumeral]] values at distinct primes, each overriding the principal value $s$ there."
+  - "[[Adele]]`(idele)` forgets the idèle structure and keeps only its value as an adèle."
+seeAlso:
+  - Adele
+  - ProfiniteNumber
+---

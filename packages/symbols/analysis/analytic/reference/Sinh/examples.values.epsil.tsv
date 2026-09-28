@@ -1,0 +1,25 @@
+id	in	out
+n-forces-the-numeric-result-that-plain	N(Sinh(0))	0
+n-sinh-1	N(Sinh(1))	1.175_201_193_643_801_456_88
+stays-symbolic-even-at-0-compute-engine-doesn-t	Sinh(0)	0
+a-float-argument-evaluates-directly-no-n-needed	Sinh(1.4)	1.904_301_501_451_534_055_14
+arbitrary-precision-via-n	N(Sinh(7 / 5))	1.904_301_501_451_534_055_14
+evaluates-at-a-complex-argument	Sinh(2.5 + i)	3.268_939_432_079_549 + 5.160_143_667_579_705i
+sinh-i-pi-2-i-sin-pi-2-i	Sinh(ImaginaryUnit * (Pi / 2))	i
+element-wise-over-a-matrix-of-imaginary	"Sinh([\n       [ImaginaryUnit * (1Pi / 3), -(ImaginaryUnit * (1Pi / 3))],\n       [0, -(ImaginaryUnit * (1Pi / 6))],\n     ])"	[[Sqrt(3) / 2 * i, -(Sqrt(3) / 2) * i], [0, -1 / 2 * i]]
+interval-arithmetic-sinh-is-increasing-so-sinh-0	Sinh(Interval(0, Ln(3)))	Interval(0, 4 / 3)
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1	Sinh(Around(2 / Sqrt(3), 0.1))	Around(1.428_960_581_481_575_8, 0.174_411_248_015_377_8)
+sinh-positiveinfinity	Sinh(PositiveInfinity)	PositiveInfinity
+sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic	Sinh(Ln(2))	3 / 4
+a-real-symbolic-argument-is-untouched	Sinh(x)	Sinh(x)
+oddness-pulls-the-sign-out-of-a-symbolic	Sinh(-x)	-Sinh(x)
+sinh-arsinh-x-x-for-every-x	Sinh(Arsinh(x))	x
+sinh-arsinh-2-2-for-every-x	Sinh(Arsinh(2))	2
+derivative-cosh-x	D(Sinh(x), x)	Cosh(x)
+antiderivative	Integrate(Sinh(x), x)	Cosh(x)
+taylor-series-about-0	Series(Sinh(x), x, 0, 5)	1 / 120 * x ^ 5 + 1 / 6 * x ^ 3 + x + BigO(x ^ 7)
+to-30-significant-digits-not-yet-the-last-digit	N(Sinh(1), 30)	1.175_201_193_643_801_456_882_381_850_60
+n-decimalizes-sinh-i-pi-2-not-just-the-exact	N(Sinh(ImaginaryUnit * (Pi / 2)))	i
+odd-function-sinh-x-sinh-x	Sinh(-1) == -Sinh(1)	True
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	Sinh(1) == (Exp(1) - Exp(-1)) / 2	True
+the-definition-sinh-x-frac-e-x-e-x-2	TrigToExp(Sinh(x))	1 / 2 * (-ExponentialE ^ (-x) + ExponentialE ^ x)

@@ -1,0 +1,21 @@
+---
+name: Through
+domain: Collections
+signature: Through(h(f, g, …)(x, …))
+summary: A list or sum of functions, called with the same arguments, distributed over head h.
+signatures:
+  - call: Through(head(f, g, …)(args…))
+    description: head(f(args…), g(args…), …) for head = List or Add
+    library: enumeratio-collections
+    type: (any) -> any
+details:
+  - Only the `List` and `Add` head forms are supported — Wolfram's fully general `h(f, g)(x) = h(f(x), g(x))` for an arbitrary head h is not.
+  - compute-engine canonicalizes a call with a compound head (`{f, g}(x)`) to `Apply(head, x)`, which `Through` reads directly — it stays lazy so it sees that form BEFORE `Apply`'s own (eager) evaluate runs, which would otherwise try to call `List`/`Add` as a function and fail.
+seeAlso:
+  - MapThread
+  - Apply
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

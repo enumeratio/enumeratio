@@ -1,0 +1,23 @@
+id	in	out	tex.in	tex.out
+catalannumber-0	CatalanNumber[0]	1	C_0	1
+catalannumber-1	CatalanNumber[1]	1	C_1	1
+catalannumber-5	CatalanNumber[5]	42	C_5	42
+catalannumber-10	CatalanNumber[10]	16796	C_{10}	16796
+catalannumber-30	CatalanNumber[30]			
+catalannumber-neg-1-is-neg-1	CatalanNumber[-1]			
+catalannumber-0-past-neg-1	CatalanNumber[-2]			
+catalannumber-neg-5-is-also-0	CatalanNumber[-5]			
+threads-element-wise-over-a-list-as-wolfram-s	CatalanNumber[List[1, 2, 3, 4]]	{1, 2, 5, 14}	C_{\{1,2,3,4\}}	\{1,2,5,14\}
+half-integer-arguments-evaluate-exactly-through	CatalanNumber[Rational[5, 2]]	1024/(105*Pi)	C_{\frac{5}{2}}	\frac{1024}{105 \pi }
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	CatalanNumber[2.3]			
+complex-arguments-evaluate-through-the-same	CatalanNumber[Complex[1.2, 1]]			
+c-1-2-frac-8-3-pi-by-analytic-continuation	CatalanNumber[Rational[1, 2]]			
+an-interval-argument-should-give-an-enclosing	CatalanNumber[Interval[List[0.5, 0.6]]]			
+the-5-ways-to-balance-3-pairs-of-parentheses	CatalanNumber[3]	5	C_3	5
+the-14-triangulations-of-a-hexagon-and-the-14	CatalanNumber[4]	14	C_4	14
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]	42	\frac{\binom{2\ 5}{5}}{5+1}	42
+the-closed-form-through-a-negative-n-in-binomial	Divide[Binomial[Times[2, -13], 5], Plus[4, 1]]			
+equivalently-c-n-binom-2n-n-binom-2n-n-1	Subtract[Binomial[10, 5], Binomial[10, 6]]	42	\binom{10}{5}-\binom{10}{6}	42
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	Divide[CatalanNumber[6], CatalanNumber[5]]	22/7	\frac{C_6}{C_5}	\frac{22}{7}
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	(CatalanNumber[4] == Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]])			
+they-grow-fast-c-15-already-passes-nine-million	CatalanNumber[15]	9694845	C_{15}	9694845

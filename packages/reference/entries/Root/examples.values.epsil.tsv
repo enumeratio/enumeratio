@@ -1,0 +1,14 @@
+id	in	out
+the-cube-root-of-27	Root(27, 3)	3
+root-16-4	Root(16, 4)	2
+odd-roots-of-a-negative-number-stay-real	Root(-8, 3)	-2
+stays-symbolic-when-x-isn-t-a-perfect-power	Root(2, 3)	Root(2, 3)
+a-negative-index-gives-the-reciprocal-root-x-1-n	Root(16, -2)	1 / 4
+the-real-cube-root-wolfram-s-surd-27-3	Root(-27, 3)	-3
+any-odd-root-of-a-negative-number-is-real	Root(-32, 5)	-2
+approximate-negative-radicands-stay-real-too	Root(-3.5, 5)	-1.284_735_157_123_439_338_68
+threads-element-wise-over-a-list	Root([-8, 27], 3)	[-2, 3]
+the-edge-length-of-a-cube-with-volume-1000	Root(1_000, 3)	10
+sqrt-n-x-n-x-for-a-perfect-nth-power	Root(8, 3) ^ 3 == 8	True
+root-x-2-agrees-with-sqrt	Root(16, 2) == Sqrt(16)	True
+an-even-root-of-a-negative-non-perfect-power	Root(-8, 2)	Sqrt(-8)

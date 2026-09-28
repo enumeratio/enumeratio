@@ -1,0 +1,34 @@
+---
+name: DigitSum
+domain: Numeral systems
+signature: DigitSum(n, base?, k?)
+summary: The sum of the digits of n in the given base (default 10).
+signatures:
+  - call: DigitSum(n)
+    description: sum of the digits of $n$, base 10.
+  - call: DigitSum(n, base)
+    description: sum of the digits of $n$ in the given base.
+  - call: DigitSum(n, base, k)
+    description: sum of just the first $k$ digits (most significant first); a negative $k$ sums the last $|k|$ instead (least significant first).
+    library: enumeratio-numerals
+    type: (integer, integer?, integer?) -> integer
+    overrides: compute-engine
+details:
+  - Equivalent to summing [[IntegerDigits]](n, base).
+  - In base 2, the digit sum is the number of set bits (population count).
+  - $n\equiv\mathrm{DigitSum}(n)\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.
+  - The sign of n is discarded before summing.
+seeAlso:
+  - DigitCount
+references:
+  - system: wikipedia
+    identity: Digit sum
+  - system: mathworld
+    identity: DigitSum
+  - system: rosettacode
+    identity: Sum digits of an integer
+names:
+  wolframIdentity: true
+statOn:
+  - Numeric
+---

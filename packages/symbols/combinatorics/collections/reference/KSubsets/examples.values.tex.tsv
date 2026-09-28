@@ -1,0 +1,4 @@
+id	in	out
+binom-5-2	\mathrm{Count}(\mathrm{KSubsets}(5, 2))	10
+ksubsets-5-2-list-1	\mathrm{KSubsets}(5, 2)[1]	\bigl\lbrack1, 2\bigr\rbrack
+colex-not-lex-lexicographic-order-would-give-1-4	\mathrm{KSubsets}(5, 2)[3]	\bigl\lbrack2, 3\bigr\rbrack

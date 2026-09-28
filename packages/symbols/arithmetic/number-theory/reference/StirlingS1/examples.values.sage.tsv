@@ -1,0 +1,18 @@
+id	in	out	verdict
+stirlings1-5-2	stirling_number1(5, 2)	50	disagree
+stirlings1-4-2	stirling_number1(4, 2)	11	
+s-n-n-is-always-1	stirling_number1(3, 3)	1	
+s-n-0-is-0-for-n-0	stirling_number1(5, 0)	0	
+stirlings1-20-10	stirling_number1(20, 10)	381922055502195	
+threads-element-wise-over-a-list-as-wolfram-s	[stirling_number1(2, 2), stirling_number1(4, 2), stirling_number1(6, 2)]	[1, 11, 274]	
+exact-for-large-n	stirling_number1(50, 2)	2724619372591264761651711494187624530726005154239846809600000000	
+a-mid-sized-n-and-k-past-the-fast-paths	stirling_number1(40, 14)	1640591781294212129275881145293779479141760	
+the-number-of-permutations-of-5-elements-with	stirling_number1(5, 3)	35	
+the-unsigned-values-in-a-row-sum-to-n			
+the-signed-row-sum-vanishes-for-n-ge-2			
+s-n-n-1-binom-n-2	bool(stirling_number1(6, 5) == (-binomial(6, 2)))	False	disagree
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+the-empty-case-s-0-0-1-by-convention-distinct	stirling_number1(0, 0)	1	
+k-n-is-0	stirling_number1(5, 6)	0	
+a-negative-k-stays-symbolic	stirling_number1(4, -1)	0	inconclusive
+s-n-1-1-n-1-n-1-so-s-10-1-9	stirling_number1(10, 1)	362880	disagree

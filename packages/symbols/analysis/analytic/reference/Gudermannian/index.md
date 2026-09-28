@@ -1,0 +1,18 @@
+---
+name: Gudermannian
+domain: Elementary functions
+signature: Gudermannian(x)
+summary: The Gudermannian function $\operatorname{gd}(x) = 2\arctan(\tanh(x/2)) = \arctan(\sinh(x))$, linking circular and hyperbolic functions without complex numbers.
+signatures:
+  - call: Gudermannian(x)
+    description: the Gudermannian function of x.
+    library: "@enumeratio/analytic"
+    type: (number) -> number
+details:
+  - $\operatorname{gd}(0) = 0$, and $\operatorname{gd}(x) \to \pm\pi/2$ as $x \to \pm\infty$ -- the horizontal asymptotes.
+  - 'An odd function: $\operatorname{gd}(-x) = -\operatorname{gd}(x)$.'
+  - $\operatorname{gd}'(x) = \operatorname{sech}(x)$; differentiable via [[D]].
+  - Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.
+names:
+  wolframIdentity: true
+---

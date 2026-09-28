@@ -1,0 +1,5 @@
+id	in
+halfnormal-pdf-exact	PDF[HalfNormalDistribution[1], 1]
+halfnormal-cdf-exact	CDF[HalfNormalDistribution[1], 1]
+halfnormal-mean-exact	Mean[HalfNormalDistribution[1]]
+halfnormal-variance-exact	Variance[HalfNormalDistribution[1]]

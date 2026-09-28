@@ -1,0 +1,2 @@
+id	in	out
+the-first-25-terms	\mathrm{Take}(\mathrm{TetrahedralNumbers}, 25)	\bigl\lbrack1, 4, 10, 20, 35, 56, 84, 120, 165, 220, 286, 364, 455, 560, 680, 816, 969, 1\,140, 1\,330, 1\,540, 1\,771, 2\,024, 2\,300, 2\,600, 2\,925\bigr\rbrack

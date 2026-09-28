@@ -1,0 +1,4 @@
+id	in	out
+marginal-single-factor	\mathrm{MarginalDistribution}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2)), 2)	\operatorname{NormalDistribution}(5, 2)
+marginal-single-factor-mean	\mathrm{mean}(\mathrm{MarginalDistribution}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2)), 2))	5
+marginal-index-list	\mathrm{MarginalDistribution}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2), \operatorname{NormalDistribution}(9, 1)), \bigl\lbrack1, 3\bigr\rbrack)	\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(9, 1))

@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+frac-2-4-1-2-3-1-2-2-1-2-1-35			[QBinomial, 4, 2, 2]	35	$\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$
+qbinomial-4-2-2		test	[N, [QBinomial, 4, 2, 2]]	35	
+qbinomial-6-3-1		test	[N, [QBinomial, 6, 3, 1]]	20	
+qbinomial-5-2-3		test	[N, [QBinomial, 5, 2, 3]]	1210	
+qbinomial-8-3-2		test	[N, [QBinomial, 8, 3, 2]]	97155	
+a-polynomial-in-q-whose-coefficients-count	Scope		[Expand, [QBinomial, 4, 2, q]]	[Add, [Power, q, 4], [Power, q, 3], [Multiply, 2, [Power, q, 2]], q, 1]	A polynomial in q whose coefficients count partitions in a 2 × 2 box
+the-number-of-2-dimensional-subspaces-of-f-3-5	Applications		[QBinomial, 5, 2, 3]	1210	The number of 2-dimensional subspaces of $\mathbb{F}_3^5$
+at-q-1-it-is-binomial-6-3	Properties		[QBinomial, 6, 3, 1]	20	At q = 1 it is Binomial(6, 3)

@@ -1,0 +1,16 @@
+id	in	out
+rank-5	\mathrm{Rank}(5)	0
+rank-list-1-2-3	\mathrm{Rank}(\bigl\lbrack1, 2, 3\bigr\rbrack)	1
+rank-list-list-1-0-list-0-1	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	2
+rank-list-list-list-1-2-list-3-4-list-list-5-6	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack)	3
+symbolic-entries	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	2
+a-symbol-is-a-scalar	\mathrm{Rank}(x)	0
+rectangular-arrays	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack)	2
+rank-identitymatrix-3	\mathrm{Rank}(\mathrm{IdentityMatrix}(3))	2
+a-ragged-list-has-depth-1-only-its-outer-level	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)	1
+likewise-a-list-mixing-scalars-and-lists	\mathrm{Rank}(\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack)	1
+the-empty-list-is-still-a-vector-of-length-0	\mathrm{Rank}(\bigl\lbrack\bigr\rbrack)	1
+and-a-1-0-matrix	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigr\rbrack\bigr\rbrack)	2
+a-2-3-grid-of-unevaluated-calls-still-reads-as-a	\mathrm{Rank}(\mathrm{Tabulate}(f, 2, 3))	2
+the-length-of-the-array-s-shape	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\top
+a-singular-2-2-matrix-still-has-rank-2-its	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack)	2

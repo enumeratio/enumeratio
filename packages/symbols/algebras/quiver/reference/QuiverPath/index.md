@@ -1,0 +1,26 @@
+---
+name: QuiverPath
+domain: Path algebras
+signature: QuiverPath(start, arrows)
+summary: "A directed path in a quiver: where it starts, and the arrow indices it follows. The basis of the path algebra $kQ$, with one trivial path per vertex."
+signatures:
+  - call: QuiverPath(v, [])
+    description: the trivial path at vertex $v$ — a local identity
+    library: enumeratio-quiver
+    type: (integer, list<integer>) -> number
+  - call: QuiverPath(v, [i, j, …])
+    description: the path from $v$ along arrows $i$, $j$, …
+    library: enumeratio-quiver
+details:
+  - Arrows are indexed by position in the quiver's arrow list, so PARALLEL arrows are distinct basis elements
+  - "Composition is [[QuiverCompose]], which needs the quiver: a path alone does not know which quiver it belongs to"
+  - 'The trivial paths are local identities: $e_{\text{start}}p = p = pe_{\text{end}}$'
+  - "Quivers: `LinearQuiver(n)` ($A_n$), `JordanQuiver` (one loop), `KroneckerQuiver`, or `Quiver(n, [[from,to],…])`"
+seeAlso:
+  - QuiverCompose
+  - QuiverIsAcyclic
+  - Basis
+references:
+  - system: wikipedia
+    identity: Quiver (mathematics)
+---

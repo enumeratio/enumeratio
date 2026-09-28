@@ -1,0 +1,6 @@
+id	in
+replaces-a-point	PermutationReplace[2, Cycles[List[List[1, 2, 3]]]]
+replaces-every-entry-of-a-list	PermutationReplace[List[1, 2, 3, 4], Cycles[List[List[1, 2, 3]]]]
+conjugates-cycles	PermutationReplace[Cycles[List[List[1, 2, 3]]], Cycles[List[List[1, 2]]]]
+conjugation-is-canonicalised	PermutationReplace[Cycles[List[List[1, 2]]], Cycles[List[List[1, 3, 2]]]]
+composition-law	PermutationReplace[PermutationReplace[Cycles[List[List[1, 2, 3]]], Cycles[List[List[1, 2]]]], Cycles[List[List[1, 2, 3]]]]

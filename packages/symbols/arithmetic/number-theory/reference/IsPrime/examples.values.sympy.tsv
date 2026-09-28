@@ -1,0 +1,46 @@
+id	in	out	verdict
+1-is-not-prime-by-definition	isprime(1)	False	
+2-is-the-only-even-prime	isprime(2)	True	
+isprime-13	isprime(13)	True	
+isprime-4	isprime(4)	False	
+isprime-97	isprime(97)	True	
+threads-element-wise-over-a-list	isprime([1, 2, 3, 4, 5, 6])	ValueError: [1, 2, 3, 4, 5, 6] is not an integer	error
+isprime-5	isprime(5)	True	
+isprime-7	isprime(7)	True	
+threads-element-wise-over-a-short-list	isprime([2, 3, 4])	ValueError: [2, 3, 4] is not an integer	error
+7-is-prime-its-associate-7-is-matching-wolfram-s	isprime(-7)	False	disagree
+a-gaussian-prime-its-norm-5-is-prime	isprime((2 + 1*I))	ValueError: 2 + I is not an integer	error
+5-2-i-2-i-splits-in-z-i			
+large-integers-10-3000-1-is-divisible-by-10-8-1	isprime(((S(10)**3000) + 1))	False	
+isprime-neg-1-is-false	isprime(-1)	False	
+isprime-neg-4-is-false	isprime(-4)	False	
+isprime-neg-2-is-true	isprime(-2)	False	disagree
+a-unit-is-not-prime	isprime(1)		
+i-a-unit-is-not-prime	isprime((0 + 1*I))		
+0-is-not-prime	isprime(0)		
+the-ramified-prime-above-2	isprime((1 + 1*I))		
+a-prime-above-5	isprime((2 + 1*I))		
+the-other-prime-above-5	isprime((2 + -1*I))		
+a-prime-above-13	isprime((3 + 2*I))		
+a-composite-of-norm-25	isprime((3 + 4*I))		
+an-associate-of-a-composite-is-still-composite	isprime((-3 + -4*I))		
+a-real-prime-s-associate-by-the-unit-i-is-still	isprime((0 + 7*I))		
+a-large-norm-composite	isprime((123 + 456*I))		
+3-3-mod-4-stays-prime-in-z-i			
+7-3-mod-4-stays-prime-in-z-i			
+19-3-mod-4-stays-prime-in-z-i			
+a-negative-prime-3-mod-4-stays-prime			
+5-1-mod-4-splits-and-is-no-longer-prime			
+13-1-mod-4-splits-and-is-no-longer-prime			
+2-ramifies-and-is-no-longer-prime			
+4-was-never-prime-and-still-isn-t			
+a-real-composite-5-squared-is-not-prime			
+1-is-not-prime-gaussian-or-not			
+0-is-not-prime-gaussian-or-not			
+a-common-choice-of-prime-modulus-for-hashing	isprime(1000000007)	True	
+an-odd-prime-stays-prime-in-z-i-exactly-when-p			
+non-integers-are-not-prime	isprime(Rational(1, 2))	ValueError: 1/2 is not an integer	error
+another-non-integer-3-halves	isprime(Rational(3, 2))	ValueError: 3/2 is not an integer	error
+a-symbol-stays-unevaluated	isprime(Symbol("x"))	ValueError: x is not an integer	error
+the-mersenne-prime-2-31-1	isprime(((S(2)**31) + -1))	True	
+the-fermat-number-f-5-2-32-1-is-composite-641	isprime(((S(2)**32) + 1))	False	

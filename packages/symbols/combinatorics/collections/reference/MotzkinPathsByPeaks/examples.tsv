@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-motzkinpathsbypeaks-5-1	Basic		[Count, [MotzkinPathsByPeaks, 5, 1]]	10	$Count(MotzkinPathsByPeaks(5, 1)) = 10$
+first-element-of-motzkinpathsbypeaks-5-1	Basic		[At, [MotzkinPathsByPeaks, 5, 1], 1]	[List, 1, 1, -1, 0, -1]	The first element in enumeration order
+every-element-of-motzkinpathsbypeaks-5-1		test	[Take, [MotzkinPathsByPeaks, 5, 1], 5]	[List, [List, 1, 1, -1, 0, -1], [List, 1, 1, -1, -1, 0], [List, 1, 0, 1, -1, -1], [List, 1, 0, -1, 1, -1], [List, 1, -1, 1, 0, -1]]	

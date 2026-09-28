@@ -1,0 +1,9 @@
+---
+name: EvenElements
+domain: Combinatorics
+signature: EvenElements(...)
+summary: Number of even elements
+statOn:
+  - Finset
+stub: carrier
+---

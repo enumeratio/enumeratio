@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+the-principal-idele-7-at-every-place			[Idele, 7]	[Idele, 7, 7]	the principal idèle: 7 at every place
+7-and-its-inverse-cancel-everywhere			[Multiply, [Idele, 7], [Idele, [Rational, 1, 7]]]	[Idele, 1, 1]	7 and its inverse cancel everywhere
+idele-with-a-zero-real-part			[Idele, 0, 1]	[Idele, 0, 1]	
+a-listed-component-carries-its-valuation-into	Scope		[Idele, 1, 1, [List, [AdicNumeral, 5, [Rational, 15, 7], 4]]]	[Idele, 1, 5, [List, [AdicNumeral, 5, 54, 3]]]	a listed component carries its valuation into the scale
+a-unit-known-mod-2-says-nothing-at-2	Possible issues		[Idele, 1, 1, [List, [AdicNumeral, 2, 3, 1]]]	[Idele, 1, 1, [List]]	at 2 a unit known mod 2 says nothing

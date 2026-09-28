@@ -1,0 +1,5 @@
+id	in	out
+riemannsiegelz-1p5	RiemannSiegelZ(1.5)	-0.595_568_336_782_887
+riemannsiegelz-20p5	RiemannSiegelZ(20.5)	0.599_328_702_514_751_3
+riemannsiegelz-100	N(RiemannSiegelZ(100))	2.692_697_056_664_463_7
+z-0-zeta-1-2	N(RiemannSiegelZ(0))	-1.460_354_508_809_586_8

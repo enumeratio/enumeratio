@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+polynomials-are-entire			[FunctionAnalytic, [Power, x, 2], x]	True	Polynomials are entire
+a-pole-anywhere-in-the-plane-disqualifies-it			[FunctionAnalytic, [Divide, 1, x], x]	False	A pole anywhere in the complex plane disqualifies it, real domain or not
+sqrt-has-a-branch-point			[FunctionAnalytic, [Sqrt, x], x]	False	Sqrt has a branch point at the origin
+sine-is-entire			[FunctionAnalytic, [Sin, x], x]	True	Sine is entire

@@ -1,3 +1,0 @@
-- id: reads-ascii-code-points
-  expr: [ToCharacterCode, [String, ABC]]
-  expected: [List, 65, 66, 67]

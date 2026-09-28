@@ -1,0 +1,4 @@
+id	in	out
+count-squarepartitions-12	\mathrm{Count}(\mathrm{SquarePartitions}(12))	5
+first-element-of-squarepartitions-12	\mathrm{SquarePartitions}(12)[1]	\bigl\lbrack9, 1, 1, 1\bigr\rbrack
+every-element-of-squarepartitions-12	\mathrm{Take}(\mathrm{SquarePartitions}(12), 5)	\bigl\lbrack\bigl\lbrack9, 1, 1, 1\bigr\rbrack, \bigl\lbrack4, 4, 4\bigr\rbrack, \bigl\lbrack4, 4, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack4, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack

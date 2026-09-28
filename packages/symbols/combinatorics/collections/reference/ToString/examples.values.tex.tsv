@@ -1,0 +1,3 @@
+id	in	out
+prints-a-list-as-notatio-source	\mathrm{ToString}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\text{[1, 2, 3]}
+prints-an-arithmetic-expression	\mathrm{ToString}(x+1)	\text{x + 1}

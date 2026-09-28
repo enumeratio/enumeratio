@@ -1,0 +1,6 @@
+id	in	out
+probability-equal-is-pdf-for-discrete	\mathrm{Probability}(x=2, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	\frac{9}{2e^{3}}
+probability-equal-is-zero-for-continuous	\mathrm{Probability}(x=2, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))	0
+probability-lessequal-is-cdf	\mathrm{Probability}(x\le5, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	\frac{92}{5e^{3}}
+probability-of-a-chained-range	\mathrm{Probability}(1\le x\land x\le5, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	\frac{87}{5e^{3}}
+probability-greater-is-canonicalized-first	N(\mathrm{Probability}(x\gt0, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))))	0.5

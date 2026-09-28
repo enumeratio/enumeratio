@@ -1,0 +1,4 @@
+id	in	out
+single-position	MapAt(f, [a, b, c], 2)	[a, f(b), c]
+negative-position	MapAt(f, [a, b, c], -1)	[a, b, f(c)]
+several-positions	MapAt(f, [a, b, c], [[1], [3]])	[f(a), b, f(c)]

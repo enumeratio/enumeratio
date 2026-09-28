@@ -1,0 +1,11 @@
+id	in	out
+lb-8		
+lb-1		
+lb-1-024		
+a-machine-precision-argument-evaluates		
+lb-2-pow-10		
+same-exact-negative-power-fold-as-log2-lb-frac		
+lb-0		
+threads-element-wise-over-a-list		
+same-as-log2-the-logarithm-of-complex-infinity		
+identical-to-log2	\log_{2}(64)=\log_{2}(64)	\mathrm{True}

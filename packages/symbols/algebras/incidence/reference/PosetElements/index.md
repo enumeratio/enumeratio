@@ -1,0 +1,23 @@
+---
+name: PosetElements
+domain: Incidence algebras
+signature: PosetElements(poset)
+summary: The elements of a finite poset, in a linear extension — the order every other head here indexes values by.
+signatures:
+  - call: PosetElements(poset)
+    description: the elements, listed so that smaller ones come first
+    library: enumeratio-incidence
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>) -> list<list<integer> | number>
+details:
+  - The linear extension is what makes $\zeta$ upper-triangular with ones on the diagonal, hence invertible over the integers — and therefore what makes $\mu$ integral
+  - '`DivisorLattice` elements are integers; `BooleanLattice` elements are subsets; `Chain` elements are $1 \dots n$'
+  - '`AlgebraDimension(IncidenceAlgebra(poset))` counts the intervals: $\binom{n+1}{2}$ for a chain, $3^n$ for the Boolean lattice'
+seeAlso:
+  - MoebiusFunction
+  - MoebiusInvert
+references:
+  - system: wikipedia
+    identity: Partially ordered set
+  - system: mathworld
+    identity: PartiallyOrderedSet
+---

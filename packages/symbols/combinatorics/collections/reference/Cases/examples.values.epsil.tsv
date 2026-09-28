@@ -1,0 +1,6 @@
+id	in	out
+cases-wildcard-keeps-everything	Cases([1, a, 2, b], _)	[1, a, 2, b]
+cases-literal-value	Cases([1, 2, 1, 3, 1], 1)	[1, 1, 1]
+cases-structural-pattern	Cases([[1], 2, [3]], [_a])	[[1], [3]]
+cases-count-agree-on-length	Length(Cases([1, 2, 1, 3, 1], 1)) == Count([1, 2, 1, 3, 1], 1)	True
+cases-typed-pattern-not-typed-here	Length(Cases([1, a, 2, b], _Integer))	4

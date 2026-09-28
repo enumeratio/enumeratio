@@ -1,0 +1,6 @@
+id	in	out
+j-i-1	N(\mathrm{KleinInvariantJ}(i))	1
+j-2i-66-3-1728-1331-8	N(\mathrm{KleinInvariantJ}(2i))	166.375
+j-1-2i-modular-invariance-with-2i	N(\mathrm{KleinInvariantJ}(1+2i))	166.375
+exact-at-the-elliptic-point-i	\mathrm{KleinInvariantJ}(i)	1
+heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	N(\mathrm{KleinInvariantJ}(\frac{1}{2}(1+163^{1/2}i)))	-151\,931\,373\,055\,998.97

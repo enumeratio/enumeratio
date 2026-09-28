@@ -1,0 +1,30 @@
+---
+name: Rationalize
+domain: Arithmetic
+signature: Rationalize(x, tolerance?)
+summary: Finds a simple rational number near x.
+signatures:
+  - call: Rationalize(x)
+    description: the simplest rational within about one machine epsilon of x.
+  - call: Rationalize(x, tolerance)
+    description: the simplest rational within the given tolerance of x.
+  - call: Rationalize(x, tolerance?)
+    description: Finds a simple rational number near x.
+    library: enumeratio-analytic
+    type: (value, number?) -> value
+    overrides: compute-engine
+  - call: Rationalize(x, tolerance?)
+    description: Finds a simple rational number near x.
+    library: enumeratio-collections
+    type: (value, number?) -> value
+    overrides: enumeratio-analytic
+details:
+  - Finds a simple rational number near x.
+  - With one argument, it finds the simplest fraction within about one machine epsilon of x's current value; a second argument sets an explicit tolerance instead.
+  - An already-exact rational (or integer) is returned unchanged.
+  - Builds the approximation via continued fractions, the same technique behind classic approximations like $\pi \approx 355/113$.
+seeAlso:
+  - Round
+names:
+  wolframIdentity: true
+---

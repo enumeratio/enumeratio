@@ -1,0 +1,3 @@
+id	in	out
+listable	IsPerfect([6, 28, 12])	[True, True, False]
+negative-numbers-are-not-perfect	IsPerfect(-6)	False

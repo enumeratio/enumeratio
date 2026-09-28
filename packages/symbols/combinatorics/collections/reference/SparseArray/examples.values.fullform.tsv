@@ -1,0 +1,5 @@
+id	in	back
+sparsearray-vector	SparseArray[List[Rule[1, x], Rule[3, y]], 4]	[SparseArray, [List, [KeyValuePair, 1, x], [KeyValuePair, 3, y]], 4]
+sparsearray-infers-dims	SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]	[SparseArray, [List, [KeyValuePair, [List, 1, 1], 5], [KeyValuePair, [List, 2, 2], 7]]]
+sparsearray-custom-default	SparseArray[List[Rule[2, 9]], 3, -1]	[SparseArray, [List, [KeyValuePair, 2, 9]], 3, -1]
+sparsearray-normal-is-identity	Normal[SparseArray[List[Rule[1, a]], 2]]	[Normal, [SparseArray, [List, [KeyValuePair, 1, a]], 2]]

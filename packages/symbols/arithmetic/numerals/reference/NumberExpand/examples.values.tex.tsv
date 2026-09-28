@@ -1,0 +1,4 @@
+id	in	out
+numberexpand-1-234	\mathrm{NumberExpand}(1\,234)	\bigl\lbrack1\,000, 200, 30, 4\bigr\rbrack
+base-2-zero-terms-kept	\mathrm{NumberExpand}(10, 2)	\bigl\lbrack8, 0, 2, 0\bigr\rbrack
+every-term-carries-the-sign	\mathrm{NumberExpand}(-123)	\bigl\lbrack-100, -20, -3\bigr\rbrack

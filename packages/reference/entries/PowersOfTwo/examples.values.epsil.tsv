@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms	Take(PowersOfTwo, 25)	"[\n  1,\n  2,\n  4,\n  8,\n  16,\n  32,\n  64,\n  128,\n  256,\n  512,\n  1_024,\n  2_048,\n  4_096,\n  8_192,\n  16_384,\n  32_768,\n  65_536,\n  131_072,\n  262_144,\n  524_288,\n  1_048_576,\n  2_097_152,\n  4_194_304,\n  8_388_608,\n  16_777_216,\n]"
+64-is-a-power-of-two	64 in PowersOfTwo	True
+48-is-not-a-power-of-two	48 in PowersOfTwo	False

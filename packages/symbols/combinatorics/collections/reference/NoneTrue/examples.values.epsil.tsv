@@ -1,0 +1,5 @@
+id	in	out
+nonetrue-list-1-3-5-iseven	NoneTrue([1, 3, 5], IsEven)	True
+nonetrue-list-1-2-3-iseven	NoneTrue([1, 2, 3], IsEven)	False
+vacuously-true-on-an-empty-list	NoneTrue([], IsEven)	True
+the-negation-of-any	NoneTrue([4, 6, 9], IsPrime) == !Any([4, 6, 9], IsPrime)	True

@@ -1,0 +1,2 @@
+id	in	out
+the-first-20-terms	Take(PalindromicPrimes, 20)	"[\n  2,\n  3,\n  5,\n  7,\n  11,\n  101,\n  131,\n  151,\n  181,\n  191,\n  313,\n  353,\n  373,\n  383,\n  727,\n  757,\n  787,\n  797,\n  919,\n  929,\n]"

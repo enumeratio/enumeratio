@@ -1,0 +1,11 @@
+---
+name: ConstGlaisher
+domain: Wolfram
+signature: ConstGlaisher
+summary: The Glaisher-Kinkelin constant $A \approx 1.2824271291006226\ldots$ -- Wolfram's own `Glaisher`.
+signatures:
+  - call: ConstGlaisher
+    description: a constant, held until N()
+names:
+  wolfram: Glaisher
+---

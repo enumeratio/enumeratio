@@ -1,0 +1,4 @@
+id	in	out
+count-connectedpermutations-4	Count(ConnectedPermutations(4))	13
+first-element-of-connectedpermutations-4	ConnectedPermutations(4)[1]	[2, 3, 4, 1]
+every-element-of-connectedpermutations-4	Take(ConnectedPermutations(4), 13)	"[\n  [2, 3, 4, 1],\n  [2, 4, 1, 3],\n  [2, 4, 3, 1],\n  [3, 4, 1, 2],\n  [3, 4, 2, 1],\n  [3, 1, 4, 2],\n  [3, 2, 4, 1],\n  [4, 1, 2, 3],\n  [4, 1, 3, 2],\n  [4, 2, 1, 3],\n  [4, 2, 3, 1],\n  [4, 3, 1, 2],\n  [4, 3, 2, 1],\n]"

@@ -1,0 +1,9 @@
+id	in	out
+8-2-3	MangoldtLambda(8)	Ln(2)
+6-is-not-a-prime-power	MangoldtLambda(6)	0
+mangoldtlambda-7	MangoldtLambda(7)	Ln(7)
+mangoldtlambda-9	MangoldtLambda(9)	Ln(3)
+numerically-ln-3	N(MangoldtLambda(9))	1.098_612_288_668_109_8
+listable	MangoldtLambda([2, 4, 6, 25])	[Ln(2), Ln(2), 0, Ln(5)]
+n-of-a-zero-result-is-still-0	N(MangoldtLambda(6))	0
+lambda-1-0	MangoldtLambda(1)	0

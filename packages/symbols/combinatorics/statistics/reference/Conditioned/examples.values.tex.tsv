@@ -1,0 +1,7 @@
+id	in	out
+conditioned-probability-point-given-bound	\mathrm{Probability}(\mathrm{Conditioned}(x=2, x\le5), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	\frac{45}{184}
+conditioned-expectation-mean-given-bound	\mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	1.961\,538\,461\,538\,462
+conditioned-expectation-point	\mathrm{Expectation}(\mathrm{Conditioned}(x^2, x=3), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	9
+conditioned-probability-interval-given-bound	\mathrm{Probability}(\mathrm{Conditioned}(x\le3, 1\le x), \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))	(12)((1-e^{-3})e^{3})^{-1}
+conditioned-probability-continuous-interval	\mathrm{Probability}(\mathrm{Conditioned}(x\le0, -1\le x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))	-\frac{\operatorname{erf}(-\frac{2^{1/2}}{2})}{1-\operatorname{erf}(-2^{1/2}/2)}
+conditioned-expectation-continuous-unevaluated	\mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))	\mathrm{Expectation}(\mathrm{Conditioned}(x, x\le3), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1)))

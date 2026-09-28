@@ -1,0 +1,6 @@
+id	in	out
+abs-of-a-real-variable	PiecewiseExpand(Abs(x), x in RealNumbers)	Piecewise([[-x, x < 0]], x)
+sign-of-a-real-variable	PiecewiseExpand(Sign(x), x in RealNumbers)	Piecewise([[-1, x < 0], [1, 0 < x]], 0)
+clip-of-a-real-variable	PiecewiseExpand(Clip(x, [-1, 1]), x in RealNumbers)	Piecewise([[-1, x < -1], [1, 1 < x]], x)
+max-of-two-real-variables	PiecewiseExpand(Max(x, y), x in RealNumbers && y in RealNumbers)	Piecewise([[x, y <= x]], y)
+without-a-realness-assumption-it-declines	PiecewiseExpand(Abs(x))	Abs(x)

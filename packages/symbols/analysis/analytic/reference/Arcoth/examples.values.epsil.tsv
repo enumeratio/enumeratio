@@ -1,0 +1,8 @@
+id	in	out
+n-arcoth-2	N(Arcoth(2))	0.549_306_144_334_054_845_7
+a-logarithmic-singularity-at-1	Arcoth(1)	PositiveInfinity
+arcoth-positiveinfinity	Arcoth(PositiveInfinity)	0
+a-float-argument-evaluates-directly	Arcoth(3.5)	0.293_893_332_451_059_504_095
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	TrigToExp(Arcoth(2))	1 / 2 * Ln(3)
+oddness-pulls-the-sign-out-of-a-symbolic	Arcoth(-x)	-Arcoth(x)
+derivative-frac-1-1-x-2	D(Arcoth(x), x)	1 / (-x ^ 2 + 1)

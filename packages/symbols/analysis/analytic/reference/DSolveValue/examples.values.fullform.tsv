@@ -1,0 +1,6 @@
+id	in	back
+harmonic-oscillator	DSolveValue[Equal[Plus[Derivative[2][Y][x], Y[x]], 0], Y[x], x]	Unreadable
+with-initial-conditions	DSolveValue[List[Equal[Plus[Derivative[2][Y][x], Y[x]], 0], Equal[Y[0], 1], Equal[Derivative[1][Y][0], 0]], Y[x], x]	Unreadable
+distinct-real-roots	DSolveValue[Equal[Plus[Derivative[2][Y][x], Minus[Times[3, Derivative[1][Y][x]]], Times[2, Y[x]]], 0], Y[x], x]	Unreadable
+repeated-root	DSolveValue[Equal[Plus[Derivative[2][Y][x], Minus[Times[4, Derivative[1][Y][x]]], Times[4, Y[x]]], 0], Y[x], x]	Unreadable
+resonance-sine-forcing	DSolveValue[Equal[Plus[Derivative[2][Y][x], Y[x]], Sin[x]], Y[x], x]	Unreadable

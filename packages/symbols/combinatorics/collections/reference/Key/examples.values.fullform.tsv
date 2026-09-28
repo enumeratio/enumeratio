@@ -1,0 +1,3 @@
+id	in	back
+looks-up-an-existing-key	Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]	[At, [Association, [KeyValuePair, a, 1], [KeyValuePair, b, 2]], [Key, b]]
+missing-key-answers-missing	Part[Association[Rule[a, 1]], Key[z]]	[At, [Association, [KeyValuePair, a, 1]], [Key, z]]

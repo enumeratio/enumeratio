@@ -1,0 +1,15 @@
+id	in	out
+totient-12	(Nat.totient 12)	4
+totient-36	(Nat.totient 36)	12
+totient-1	(Nat.totient 1)	1
+totient-10	(Nat.totient 10)	
+varphi-0-0-as-in-wolfram	(Nat.totient 0)	
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.totient [2, 4, 6])	
+large-integers-varphi-50	(Nat.totient (Nat.factorial 50))	
+negative-n-varphi-n-varphi-n	(Nat.totient (-10))	
+rsa-key-setup-varphi-17-times-23-16-times-22-352	(Nat.totient 391)	352
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when		
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	((Nat.totient 1) + (Nat.totient 2) + (Nat.totient 3) + (Nat.totient 4) + (Nat.totient 6) + (Nat.totient 12))	12
+multiplicative-varphi-mn-varphi-m-varphi-n-when	(decide ((Nat.totient 12) = ((Nat.totient 4) * (Nat.totient 3))))	true
+varphi-p-p-1-for-a-prime-p	(Nat.totient 17)	
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	(Nat.totient 81)	

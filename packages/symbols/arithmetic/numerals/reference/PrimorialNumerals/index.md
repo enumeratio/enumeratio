@@ -1,0 +1,14 @@
+---
+name: PrimorialNumerals
+domain: Numeral systems
+signature: PrimorialNumerals()
+summary: 'Primorial base: place $k$ has weight $p_1 \cdots p_k$ and digit below $p_{k+1}$ — the same idea as [[FactorialNumerals]] with the primes in place of the naturals.'
+signatures:
+  - call: PrimorialNumerals()
+    description: the system, place $k$ weighted $p_1\cdots p_k$
+    library: enumeratio-numerals
+    type: () -> value
+seeAlso:
+  - IntegerDigits
+  - FactorialNumerals
+---

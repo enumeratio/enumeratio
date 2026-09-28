@@ -1,0 +1,39 @@
+id	in	out	verdict
+lcm-4-6	lcm(4, 6)	12	
+lcm-is-variadic-it-accepts-any-number-of			
+lcm-2-3-5			
+over-the-rationals-the-lcm-of-the-numerators			
+1-3i-i-3-i-associates-share-their-multiples	lcm((3 + 1*I), (-1 + 3*I))	-1 + 3*I	disagree
+negative-integers			
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the	lcm((-4 + 5*I), (2 + 3*I))	-23 - 2*I	disagree
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	lcm((Rational(1, 2) + Rational(3, 5)*I), (Rational(1, 3) + 1*I))	-13 + 21*I	disagree
+big-integers-the-exact-118-digit-lcm-past-where	lcm(factorial(20), ((S(10)**100) + 3))	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	
+listable-a-single-list-argument-threads-element	[lcm(12, 3), lcm(12, 7), lcm(12, 40)]	[12, 84, 120]	
+a-large-integer-against-a-negative-rational	lcm(factorial(20), ((S(10)**-1) + -2))	2432902008176640000	
+lcm-with-a-unit-is-the-other-argument-normalised	lcm((3 + 4*I), 1)		
+lcm-with-i-a-unit-is-the-other-argument	lcm((3 + 4*I), (0 + 1*I))		
+lcm-with-0-is-0	lcm(0, (-4 + 3*I))		
+two-gaussian-primes-above-5-multiply-straight	lcm((2 + 1*I), (2 + -1*I))		
+a-gaussian-prime-and-a-real-prime-3-mod-4	lcm((2 + 1*I), 3)		
+an-associate-pair-has-lcm-equal-to-their-common	lcm((3 + 4*I), (-4 + 3*I))		
+another-associate-pair-by-1	lcm((3 + 4*I), (-3 + -4*I))		
+two-unrelated-composites-of-norm-25	lcm((3 + 4*I), (4 + 3*I))		
+lcm-with-a-negative-real-prime	lcm((3 + 4*I), -7)		
+lcm-of-two-large-norm-gaussians	lcm((123 + 456*I), (1000 + 1*I))		
+lcm-past-2-53-in-both-parts	lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
+a-real-split-prime-and-its-gaussian-factor	lcm(5, (2 + 1*I))		
+lcm-of-two-real-composites-plain-integer-case	lcm(4, 9)		
+lcm-with-a-negative-real-composite	lcm(-15, (5 + 5*I))		
+lcm-with-an-associate-times-1	lcm((8 + 2*I), (-3 + -4*I))		
+lcm-with-an-associate-times-i	lcm((8 + 2*I), (4 + -3*I))		
+two-primes-above-13-multiply-straight-through	lcm((3 + 2*I), (2 + 3*I))		
+lcm-with-a-real-prime-s-associate-by-the-unit-i	lcm((3 + 4*I), (0 + 7*I))		
+lcm-with-a-real-composite-5-squared	lcm((3 + 4*I), 25)		
+lcm-with-a-negative-associate	lcm((6 + 8*I), (-2 + -3*I))		
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm((123 + 456*I), 19)		
+lcm-of-two-composites-sharing-the-prime-above-13	lcm((6 + 8*I), (9 + 6*I))		
+the-smallest-number-divisible-by-each-of-1			
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))	True	
+a-single-argument-is-returned-unchanged			
+0-absorbs-the-lcm-with-0-is-0	lcm(0, 5)	0	
+signs-are-discarded-before-computing-the-lcm	lcm(-3, 7)	21	

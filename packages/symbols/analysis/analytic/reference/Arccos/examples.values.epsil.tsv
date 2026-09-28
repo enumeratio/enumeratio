@@ -1,0 +1,21 @@
+id	in	out
+arccos-1	Arccos(1)	0
+arccos-1-over-2	Arccos(1 / 2)	1 / 3 * Pi
+arccos-0	Arccos(0)	1 / 2 * Pi
+the-top-of-the-principal-range	Arccos(-1)	Pi
+a-machine-precision-argument-evaluates	Arccos(0.4)	1.159_279_480_727_408_599_85
+outside-1-1-the-value-is-purely-imaginary	Arccos(1.5)	0.962_423_650_119_206_9i
+arbitrary-precision-via-n	N(Arccos(1 / 3))	1.230_959_417_340_774_682_14
+evaluates-at-a-complex-argument	Arccos(2.5 + i)	0.406_172_816_505_511_85 - 1.658_693_298_856_434_7i
+threads-element-wise-over-a-matrix	Arccos([[1, 1 / Sqrt(2)], [0, 1 / Sqrt(2)]])	[[0, 1 / 4 * Pi], [1 / 2 * Pi, 1 / 4 * Pi]]
+exact-inverse-of-a-special-value	Arccos(Sqrt(3) / 2)	1 / 6 * Pi
+arccos-neg-sqrt-2-over-2	Arccos(-(Sqrt(2) / 2))	3 / 4 * Pi
+recognizes-cos-pi-5-frac-1-sqrt-5-4	Arccos((1 + Sqrt(5)) / 4)	1 / 5 * Pi
+interval-arithmetic-decreasing-so-arccos-frac-13	Arccos(Interval(1 / 3, 1 / 2))	Interval(1 / 3 * Pi, Arccos(1 / 3))
+uncertainty-propagation-arccos-0-9-pm-0-1-approx	Arccos(Around(0.9, 0.1))	Around(0.451_026_811_796_262_36, 0.229_415_733_870_561_8)
+derivative-frac-1-sqrt-1-x-2	D(Arccos(x), x)	-1 / Sqrt(-x ^ 2 + 1)
+antiderivative	Integrate(Arccos(x), x)	x * Arccos(x) - Sqrt(-x ^ 2 + 1)
+not-simply-4-4-is-outside-the-principal-range-0	Arccos(Cos(4))	-4 + 2Pi
+cos-arccos-x-x-on-the-principal-branch	Cos(Arccos(1 / 2)) == 1 / 2	True
+reflection-arccos-x-pi-arccos-x	Arccos(-x)	-Arccos(x) + Pi
+outside-1-1-this-stays-symbolic-same-as-arcsin-n	Arccos(2)	Arccos(2)

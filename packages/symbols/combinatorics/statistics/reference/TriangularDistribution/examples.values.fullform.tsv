@@ -1,0 +1,5 @@
+id	in
+triangular-pdf-exact	PDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+triangular-cdf-exact	CDF[TriangularDistribution[List[0, 1]], Rational[1, 4]]
+triangular-mean-exact	Mean[TriangularDistribution[List[0, 1]]]
+triangular-variance-exact	Variance[TriangularDistribution[List[0, 1]]]

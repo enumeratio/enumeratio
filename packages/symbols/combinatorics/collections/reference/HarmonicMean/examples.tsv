@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+3-1-frac-12-frac-14-frac-12-7			[HarmonicMean, [List, 1, 2, 4]]	[Rational, 12, 7]	$3 / (1 + \frac12 + \frac14) = \frac{12}{7}$
+frac-12-5			[HarmonicMean, [List, 2, 3]]	[Rational, 12, 5]	$\frac{12}{5}$
+driving-equal-distances-at-40-and-60-averages-48	Applications		[HarmonicMean, [List, 40, 60]]	48	Driving equal distances at 40 and 60 averages 48, not 50
+equal-values-are-their-own-harmonic-mean	Properties		[HarmonicMean, [List, 5, 5, 5]]	5	Equal values are their own harmonic mean

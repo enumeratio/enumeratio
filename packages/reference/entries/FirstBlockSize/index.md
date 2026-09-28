@@ -1,0 +1,9 @@
+---
+name: FirstBlockSize
+domain: Combinatorics
+signature: FirstBlockSize(...)
+summary: First block size
+statOn:
+  - SetComposition
+stub: carrier
+---

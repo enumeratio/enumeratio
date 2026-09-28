@@ -1,0 +1,9 @@
+---
+name: SquareFreePart
+domain: Combinatorics
+signature: SquareFreePart(...)
+summary: q in n = ±s²·q — the square-free kernel
+mapOn:
+  - IntegerFactorization
+stub: carrier
+---

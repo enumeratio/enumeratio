@@ -1,0 +1,15 @@
+id	in	out
+primitiverootlist-7	\mathrm{PrimitiveRootList}(7)	\bigl\lbrack3, 5\bigr\rbrack
+10-2-cdot-5-is-of-the-form-2p	\mathrm{PrimitiveRootList}(10)	\bigl\lbrack3, 7\bigr\rbrack
+an-odd-prime-power-varphi-varphi-25-8-generators	\mathrm{PrimitiveRootList}(25)	\bigl\lbrack2, 3, 8, 12, 13, 17, 22, 23\bigr\rbrack
+n-4-is-one-of-the-small-cyclic-cases	\mathrm{PrimitiveRootList}(4)	\bigl\lbrack3\bigr\rbrack
+threads-over-a-list	\mathrm{PrimitiveRootList}(\bigl\lbrack9, 11\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack2, 6, 7, 8\bigr\rbrack\bigr\rbrack
+18-2-cdot-3-2-is-of-the-form-2p-k	\mathrm{PrimitiveRootList}(18)	\bigl\lbrack5, 11\bigr\rbrack
+length-primitiverootlist-1-009	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))	288
+there-are-varphi-varphi-n-of-them	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{Totient}(\mathrm{Totient}(1\,009))	\top
+the-first-is-primitiveroot	\mathrm{First}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{PrimitiveRoot}(1\,009)	\top
+z-12-times-cong-c-2-times-c-2-is-not-cyclic	\mathrm{PrimitiveRootList}(12)	\bigl\lbrack\bigr\rbrack
+z-8-times-cong-c-2-times-c-2-is-not-cyclic	\mathrm{PrimitiveRootList}(8)	\bigl\lbrack\bigr\rbrack
+past-100-000-roots-the-list-is-not-built-but-its	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,000\,003))	333\,332
+past-the-cap-primitiverootlist-itself-stays	\mathrm{PrimitiveRootList}(1\,000\,003)	\mathrm{PrimitiveRootList}(1\,000\,003)
+the-first-element-still-answers-past-the-cap	\mathrm{PrimitiveRootList}(1\,000\,003)[1]	2

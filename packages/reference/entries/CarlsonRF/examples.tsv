@@ -1,0 +1,12 @@
+id	section	role	expr	expected
+rf-1-2-3		test	[N, [CarlsonRF, 1, 2, 3]]	0.7269459354689083
+rf-1-1-1		test	[N, [CarlsonRF, 1, 1, 1]]	1
+rf-2-2-2		test	[N, [CarlsonRF, 2, 2, 2]]	0.7071067811865476
+rf-0-1-2		test	[N, [CarlsonRF, 0, 1, 2]]	1.3110287771460603
+rf-0-2-3		test	[N, [CarlsonRF, 0, 2, 3]]	1.0010773804561062
+rf-0-5-1-1-5		test	[N, [CarlsonRF, 0.5, 1, 1.5]]	1.0280568010521265
+rf-1-4-4		test	[N, [CarlsonRF, 1, 4, 4]]	0.6045997880780727
+rf-1-1i-2-3		test	[N, [CarlsonRF, [Complex, 1, 1], 2, 3]]	[Complex, 0.6984564628349881, -0.07830401971724628]
+rf-3-2i-1-1i-5		test	[N, [CarlsonRF, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.5835452640550799, 0.007015540406256118]
+rf-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRF, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	1.014900023903115
+rf-1-3-2-5-2		test	[N, [CarlsonRF, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.8506573005609459

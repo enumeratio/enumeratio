@@ -1,0 +1,25 @@
+id	in	out
+g-5-0-1-2-3-12	\mathrm{BarnesG}(5)	12
+g-7-34560	\mathrm{BarnesG}(7)	34\,560
+the-superfactorials-threaded-over-a-list	\mathrm{BarnesG}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack1, 1, 1, 2, 12, 288\bigr\rbrack
+a-floating-point-argument-evaluates-numerically	\mathrm{BarnesG}(2.5)	0.947\,573\,901\,084\,062\,7
+g-10-prod-k-0-8-k-exact	\mathrm{BarnesG}(10)	5\,056\,584\,744\,960\,000
+g-3-0-1-1	\mathrm{BarnesG}(3)	1
+g-frac-12-to-machine-precision	\mathrm{BarnesG}(0.5)	0.603\,244\,281\,209\,589\,3
+g-1-1	\mathrm{BarnesG}(1)	1
+g-2-1	\mathrm{BarnesG}(2)	1
+g-4-2	\mathrm{BarnesG}(4)	2
+g-6-288	\mathrm{BarnesG}(6)	288
+barnesg-of-a-symbol-stays-symbolic	\mathrm{BarnesG}(z)	\mathrm{BarnesG}(z)
+n-barnesg-5-over-2	N(\mathrm{BarnesG}(\frac{5}{2}))	0.947\,573\,901\,083\,825\,776\,884
+complex-arguments	\mathrm{BarnesG}(1.3+i)	1.444\,613\,935\,050\,315\,3-0.298\,548\,825\,211\,568\,7i
+negative-non-integer-arguments-between-the-zeros	\mathrm{BarnesG}(-2.5)	0.076\,172\,979\,656\,884\,05
+threads-elementwise-over-an-array	\mathrm{BarnesG}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack1, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{BarnesG}(\frac{1}{2}), 1\bigr\rbrack, \bigl\lbrack1, \mathrm{BarnesG}(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+g-infty-infty	\mathrm{BarnesG}(\infty)	\infty
+interval-arithmetic-g-is-increasing-on-1-17-1-18	\mathrm{BarnesG}(\mathrm{Interval}(1.17, 1.18))	\mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	\mathrm{BarnesG}(\mathrm{Around}(2.1, 0.01))	\mathrm{Around}(0.984\,772\,724\,354\,046\,5, 0.001\,449\,505\,695\,943\,639)
+to-30-significant-digits-not-yet-the-requested	N(\mathrm{BarnesG}(\frac{1}{2}), 30)	0.603\,244\,281\,209\,446\,206\,191
+g-vanishes-at-the-nonpositive-integers	\mathrm{BarnesG}(0)	0
+all-of-them	\mathrm{BarnesG}(-3)	0
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	\frac{\Gamma(6)^5}{\mathrm{BarnesG}(6)}	86\,400\,000
+an-exact-non-integer-argument-stays-symbolic	\mathrm{BarnesG}(\frac{5}{2})	\mathrm{BarnesG}(\frac{5}{2})

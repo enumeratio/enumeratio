@@ -1,0 +1,10 @@
+id	in	out
+commonest-list-1-1-2-2-3	\mathrm{Commonest}(\bigl\lbrack1, 1, 2, 2, 3\bigr\rbrack)	\bigl\lbrack1, 2\bigr\rbrack
+with-a-unique-mode-commonest-returns-a-single	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack)	\bigl\lbrack2\bigr\rbrack
+every-element-tied-for-most-frequent-symbols-and	\mathrm{Commonest}(\bigl\lbrack b, a, c, 2, a, b, 1, 2\bigr\rbrack)	\bigl\lbrack b, a, 2\bigr\rbrack
+a-single-most-frequent-element-still-comes-back	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\bigl\lbrack3\bigr\rbrack
+all-distinct-all-tie	\mathrm{Commonest}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
+the-n-commonest-most-frequent-first	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 2)	\bigl\lbrack3, 2\bigr\rbrack
+with-a-unique-mode-commonest-c-mode-c-see-mode	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))	2
+without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\top
+a-frequency-tie-between-4-and-1-is-broken-by	\mathrm{Commonest}(\bigl\lbrack4, 1, 1, 4\bigr\rbrack, 1)	\bigl\lbrack4\bigr\rbrack

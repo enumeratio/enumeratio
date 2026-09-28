@@ -1,0 +1,17 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+erfinv-0			[ErfInv, 0]	0			
+erfinv-1			[ErfInv, 1]	PositiveInfinity			
+erfinv-neg-1			[ErfInv, -1]	NegativeInfinity			
+a-floating-point-argument-evaluates-directly-to			[ErfInv, 0.5]	{num: "0.476936276204469873381"}	A floating-point argument evaluates directly to a high-precision decimal		
+a-machine-precision-argument			[ErfInv, 0.6]	{num: "0.595116081449994850019"}	A machine-precision argument		
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[ErfInv, [List, 0, 1]]	[List, 0, PositiveInfinity]	Threads element-wise over a list, as Wolfram's Listable heads do		
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	Scope		[ErfInv, 0.4, 0.2]	0.6317759030550063	Two arguments: $\operatorname{erfinv}(z_0, z)$ solves $z = \operatorname{erf}(z_0, x) = \operatorname{erf}(x) - \operatorname{erf}(z_0)$		
+interval-arithmetic-the-inverse-is-increasing-so	Scope		[ErfInv, [Interval, 0.5, 0.6]]	[Interval, 0.4769362762044699, 0.5951160814499948]	Interval arithmetic: the inverse is increasing, so endpoints map to endpoints		
+uncertainty-propagation	Scope		[ErfInv, [Around, 0.5, 0.01]]	[Around, 0.4769362762044699, 0.011125848189719498]	Uncertainty propagation		
+to-30-significant-digits-every-one-correctly	Scope		[N, [ErfInv, [Rational, 1, 2]], 30]	{num: "0.476936276204469873381418353643"}	To 30 significant digits, every one correctly rounded		
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	Applications		[Multiply, [Sqrt, 2], [ErfInv, 0.95]]	{num: "1.95996398454005423552746040017785193571357792"}	The normal quantile $\sqrt2\,\operatorname{erfinv}(2p - 1)$ at $p = 0.975$: the 1.96 of a 95% confidence interval		
+inverse-of-erf-erf-erfinv-x-x-see-erf	Properties		[Equal, [Erf, [ErfInv, 0.5]], 0.5]	True	Inverse of Erf: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$. See [[Erf]]		
+odd-erfinv-x-erfinv-x-applied-symbolically	Properties		[ErfInv, [Negate, x]]	[Negate, [ErfInv, x]]	Odd: $\operatorname{erfinv}(-x) = -\operatorname{erfinv}(x)$ applied symbolically	domain	The fixed rational substitution points (chosen without knowing InverseErf's valid domain) land outside where InverseErf evaluates to a clean real number, so the fallback check can't cleanly decide either. A known limitation of the 3-fixed-point fallback (symbolic.ts), not a value disagreement.
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	Properties		[D, [ErfInv, x], x]	[Multiply, [Rational, 1, 2], [Power, ExponentialE, [Power, [ErfInv, x], 2]], [Sqrt, Pi]]	$\frac{d}{dx}\operatorname{erfinv}(x) = \frac{\sqrt\pi}{2}e^{\operatorname{erfinv}(x)^2}$		
+outside-its-real-domain-1-1-compute-engine	Possible issues		[ErfInv, 2]	[ErfInv, 2]	Outside its real domain $[-1, 1]$, compute-engine leaves the call unevaluated rather than returning NaN or a complex value		
+blows-up-near-the-boundary-erfinv-0-9999-is	Neat examples		[ErfInv, 0.9999]	{num: "2.75106390571206079615"}	Blows up near the boundary: $\operatorname{erfinv}(0.9999)$ is already past 2.7		

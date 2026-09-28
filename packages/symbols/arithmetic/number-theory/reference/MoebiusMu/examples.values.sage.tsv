@@ -1,0 +1,11 @@
+id	in	out	verdict
+moebiusmu-1	moebius(1)	1	
+moebiusmu-11	moebius(11)	-1	
+12-22-3-is-not-squarefree	moebius(12)	0	
+10-2-5-a-product-of-an-even-number-of-distinct	moebius(10)	1	
+threads-element-wise-over-a-list-as-wolfram-s	[moebius(1), moebius(2), moebius(3), moebius(4)]	[1, -1, -1, 0]	
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	moebius((5 + 6*I))	-1	
+listable-threads-over-a-list	[moebius(4), moebius(10), moebius(17), moebius(20)]	[0, 1, -1, 0]	
+listable-over-a-range			
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))	0	
+mu-is-only-defined-for-positive-integers-compute	moebius(0)	0	inconclusive

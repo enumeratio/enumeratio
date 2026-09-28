@@ -1,0 +1,32 @@
+id	in	out	tex.in	tex.out
+a-floating-point-argument-evaluates-directly-to	N[JacobiDN[0.3, 0.5]]			
+dn-1-1-0-9	N[JacobiDN[1.1, 0.9]]			
+dn-0-7-0-2	N[JacobiDN[-0.7, 0.2]]			
+dn-0-3-0	N[JacobiDN[0.3, 0]]			
+dn-0-3-1	N[JacobiDN[0.3, 1]]			
+dn-1-2-3	N[JacobiDN[1.2, 3]]			
+dn-0-9-0-5	N[JacobiDN[0.9, -0.5]]			
+dn-0-4-0-5i-0-3	N[JacobiDN[Complex[0.4, 0.5], 0.3]]			
+dn-0-4-0-5i-0-3-2	N[JacobiDN[Complex[0.4, -0.5], 0.3]]			
+dn-0-4-0-5i-0-3-3	N[JacobiDN[Complex[-0.4, 0.5], 0.3]]			
+dn-0-4-0-5i-0-3-4	N[JacobiDN[Complex[-0.4, -0.5], 0.3]]			
+dn-1-1-0-7i-0-3	N[JacobiDN[Complex[1.1, -0.7], 0.3]]			
+dn-1-1i-0-3	N[JacobiDN[Complex[1, 1], 0.3]]			
+dn-0-2-8i-0-4	N[JacobiDN[Complex[0.2, 8], 0.4]]			
+dn-0-2-8i-0-4-2	N[JacobiDN[Complex[0.2, -8], 0.4]]			
+dn-5-4i-0-6	N[JacobiDN[Complex[5, 4], 0.6]]			
+dn-0-05-1-9753631352924692i-0-3	N[JacobiDN[Complex[0.05, 1.9753631352924692], 0.3]]			
+dn-0-05-2-0653631352924693i-0-3	N[JacobiDN[Complex[0.05, 2.0653631352924693], 0.3]]			
+dn-0-05-2-074363135292469i-0-3	N[JacobiDN[Complex[0.05, 2.074363135292469], 0.3]]			
+dn-0-05-2-075263135292469i-0-3	N[JacobiDN[Complex[0.05, 2.075263135292469], 0.3]]			
+dn-0-3-0-2i-1-5	N[JacobiDN[Complex[0.3, 0.2], 1.5]]			
+dn-0-5-0-3i-3	N[JacobiDN[Complex[0.5, -0.3], 3]]			
+dn-0-3-0-2i-0-7	N[JacobiDN[Complex[0.3, 0.2], -0.7]]			
+dn-0-5-0-3i-3-2	N[JacobiDN[Complex[0.5, -0.3], -3]]			
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiDN[0.3, 1.5]]			
+m-less-than-0-via-the-imaginary-modulus	N[JacobiDN[0.3, -2]]			
+a-complex-argument-u	N[JacobiDN[Complex[0.3, 0.4], 0.5]]			
+u-0-is-1-for-any-m	JacobiDN[0, m]	1	\text{dn}(0|m)	1
+m-0-is-1-for-any-u	JacobiDN[u, 0]	1	\text{dn}(u|0)	1
+the-quarter-period-u-elliptick-m-is-sqrt				
+symbolic-arguments-are-left-unevaluated-rather	JacobiDN[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{dn}(u|m)-\text{dn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{dn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{dn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{dn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{dn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{dn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{dn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

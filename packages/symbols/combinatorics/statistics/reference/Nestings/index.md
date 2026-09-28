@@ -1,0 +1,27 @@
+---
+name: Nestings
+domain: Set partition statistics
+signature: Nestings(partition)
+summary: Pairs of arcs a < b < c < d with a~d and b~c.
+details:
+  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
+  - "The complementary case to Crossings: one arc's span strictly contains the other's. Equidistributed with Crossings over set partitions of [n] (Kasraoui–Zeng), and the noncrossing and nonnesting partitions are each counted by the Catalan numbers."
+catalog:
+  - system: findstat
+    identity: St000041
+    url: https://www.findstat.org/St000041
+    on: PerfectMatching
+  - system: findstat
+    identity: St000233
+    url: https://www.findstat.org/St000233
+    on: SetPartition
+statOn:
+  - PerfectMatching
+  - SetPartition
+signatures:
+  - call: Nestings(partition)
+    description: Pairs of arcs a < b < c < d with a~d and b~c.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number
+---

@@ -1,0 +1,8 @@
+id	in	out
+four-rights-one-left	RademacherSymbol("LRRRR")	3
+the-arithmetic-side	DedekindSum(4, 3)	1 / 18
+phi-on-t-n-just-counts	RademacherPhi(ModularMatrix(1, 7, 0, 1))	7
+the-same-number-by-counting-letters	WordSymbol("LRRRR")	3
+and-again-by-the-linking-number	LinkingWithTrefoil("LRRRR")	3
+s-1-5	DedekindSum(1, 5)	1 / 5
+turning-equally-both-ways-gives-linking-number	LinkingWithTrefoil("LLRR")	0

@@ -1,0 +1,5 @@
+---
+name: Bad
+domain: Numbers
+signature: Bad(x)
+---

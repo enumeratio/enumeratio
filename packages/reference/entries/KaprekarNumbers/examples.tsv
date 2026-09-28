@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+the-first-20-terms		test	[Take, KaprekarNumbers, 20]	[List, 1, 9, 45, 55, 99, 297, 703, 999, 2223, 2728, 4879, 4950, 5050, 5292, 7272, 7777, 9999, 17344, 22222, 38962]

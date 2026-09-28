@@ -1,0 +1,4 @@
+id	in	out
+3-at-position-2-tops-both-neighbors	\mathrm{Peaks}(\bigl\lbrack2, 3, 1\bigr\rbrack)	1
+monotone-increasing-has-no-interior-peak	\mathrm{Peaks}(\bigl\lbrack1, 2, 3\bigr\rbrack)	0
+the-lone-peak-at-position-2	\mathrm{Peaks}(\bigl\lbrack1, 3, 2, 4\bigr\rbrack)	1

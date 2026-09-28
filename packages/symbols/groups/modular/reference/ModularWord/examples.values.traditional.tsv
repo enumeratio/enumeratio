@@ -1,0 +1,14 @@
+id	in	out
+the-shortest-geodesic	\mathrm{ModularWord}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{LR}
+a-word-evaluates-as-its-matrix		
+the-s-t-exponents-are-a-continued-fraction	\mathrm{ModularSTWord}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	\bigl\lbrack5\bigr\rbrack
+the-identity-matrix	\mathrm{ModularKind}(\begin{pmatrix}1&0\\0&1\end{pmatrix})	\text{Identity}
+s-is-elliptic	\mathrm{ModularKind}(\begin{pmatrix}0&-1\\1&0\end{pmatrix})	\text{Elliptic}
+t-is-parabolic	\mathrm{ModularKind}(\begin{pmatrix}1&1\\0&1\end{pmatrix})	\text{Parabolic}
+lr-is-hyperbolic	\mathrm{ModularKind}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{Hyperbolic}
+the-trace-of-a-plain-matrix	\mathrm{ModularTrace}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	3
+the-trace-of-a-bare-word		
+a-word-wrapped-as-modularmatrix		
+a-nested-list-matrix-works-too		
+t-5-fixes-a-cusp	\mathrm{ModularKind}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	\text{Parabolic}
+the-s-t-round-trip-can-negate	\mathrm{ModularTrace}(\mathrm{ModularFromSTWord}(\mathrm{ModularSTWord}(\begin{pmatrix}3&2\\4&3\end{pmatrix})))	-6

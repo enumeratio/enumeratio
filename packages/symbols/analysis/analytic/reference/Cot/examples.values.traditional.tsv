@@ -1,0 +1,27 @@
+id	in	out
+cot-pi-over-6		
+cot-pi-over-4		
+cot-pi-over-3		
+cot-60-circ-frac-sqrt-3-3-exactly		
+a-machine-precision-argument-evaluates		
+a-huge-24-40-argument		
+a-huge-10-100-argument		
+a-huge-3-200-argument		
+a-huge-neg-7-60-argument		
+a-huge-10-80-plus-1-over-3-argument		
+cot-7-under-n		
+n-of-an-exact-argument-gives-an-arbitrary		
+evaluates-at-a-complex-argument		
+threads-element-wise-over-a-matrix		
+cot-pi-8-1-sqrt-2		
+cot-pi-12-2-sqrt-3		
+cot-pi-over-5		
+an-interval-straddling-the-pole-at-0-maps-to-two		
+uncertainty-propagation-near-a-pole-grows-fast		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-csc-2-x		
+antiderivative-ln-sin-x		
+reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\mathrm{True}
+pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\mathrm{True}
+a-pole-sin-0-0		
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero		

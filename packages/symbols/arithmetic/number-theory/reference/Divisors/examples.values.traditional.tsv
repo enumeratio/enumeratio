@@ -1,0 +1,33 @@
+id	in	out
+divisors-1-729		
+divisors-20		
+a-prime-s-only-divisors-are-1-and-itself		
+divisors-6		
+threads-element-wise-over-a-list-as-wolfram-s		
+divisors-3-plus-4i		
+13-2-3i-3-2i-splits-so-it-gains-two-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+6-4i-i-1-i-2-3-2i		
+listable-threads-over-a-list		
+5-in-the-gaussian-integers	\mathrm{Divisors}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 1+2i, 2+i, 5\bigr\rbrack
+a-unit-s-only-divisor-is-1-its-own-normalisation		
+a-gaussian-prime-s-only-divisors-are-1-and		
+a-prime-above-5		
+a-composite-of-norm-25-2-i-2		
+a-composite-with-a-real-and-a-gaussian-factor		
+a-prime-above-13		
+an-associate-has-the-same-divisors-up-to-that		
+a-real-prime-s-associate-by-the-unit-i		
+a-negative-real-prime-complex-argument-form		
+7-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 7\bigr\rbrack
+13-1-mod-4-gains-gaussian-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+a-real-composite-5-squared	\mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 1+2i, 2+i, 3+4i, 4+3i, 5, 5+10i, 10+5i, 25\bigr\rbrack
+2-ramifies-divisors-run-through-1-i	\mathrm{Divisors}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 1+i, 2\bigr\rbrack
+19-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 19\bigr\rbrack
+a-negative-real-composite	\mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
+the-divisor-count-d-n-equals-sigma-0-n-see	\mathrm{Length}(\mathrm{Divisors}(20))=\sigma_{0}(20)	\mathrm{True}
+1-has-exactly-one-divisor-itself		
+only-positive-divisors-even-for-negative-n		
+divisors-neg-12		
+divisors-0-stays-unevaluated		
+a-non-integer-stays-unevaluated		
+720-is-highly-composite-30-divisors-more-than		

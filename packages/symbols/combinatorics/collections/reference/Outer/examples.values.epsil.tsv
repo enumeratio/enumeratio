@@ -1,0 +1,7 @@
+id	in	out
+the-outer-product-of-two-vectors-a-3-times-2	Outer(Multiply, [1, 2, 3], [1, 2])	[[1, 2], [2, 4], [3, 6]]
+symbolic-entries	Outer(Multiply, [1, 2, 3], [x, y])	[[x, y], [2x, 2y], [3x, 3y]]
+outer-matrix-of-right-shape	Outer(Add, [1, 2], [10, 20, 30])	[[11, 21, 31], [12, 22, 32]]
+any-binary-function-an-addition-table	Outer(Add, [1, 2], [10, 20])	[[11, 21], [12, 22]]
+a-table-of-powers	Outer(Power, [2, 3], [1, 2, 3])	[[2, 4, 8], [3, 9, 27]]
+list-gives-every-pair-like-a-cartesian-product	Outer(List, [a, b], [x, y])	[[[a, x], [a, y]], [[b, x], [b, y]]]

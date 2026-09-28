@@ -1,0 +1,33 @@
+---
+name: Clamp
+domain: Arithmetic
+signature: Clamp(x, lower, upper)
+summary: Constrains x to the range [lower, upper].
+signatures:
+  - call: Clamp(x, lower, upper)
+    description: x if it's already in $[\mathrm{lower}, \mathrm{upper}]$, else the nearer bound.
+  - call: Clamp(x)
+    description: x clamped to the default range $[-1, 1]$, Wolfram's Clip[x].
+    library: enumeratio-collections
+    type: (any, any?, any?, any?, any?) -> any
+    overrides: compute-engine
+  - call: Clamp(x, lower, upper, vLower, vUpper)
+    description: "Wolfram's Clip[x, {lower, upper}, {vLower, vUpper}]: a replacement value outside the range, rather than the nearer bound."
+    library: enumeratio-collections
+  - call: Clamp(x, lower, upper)
+    description: in any lattice, $\mathrm{Max}(\mathrm{lower}, \mathrm{Min}(x, \mathrm{upper}))$.
+    library: enumeratio-structures
+    type: (any, any?, any?, any?, any?) -> any
+    overrides: enumeratio-collections
+details:
+  - 'Constrains a value to $[\mathrm{lower}, \mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.'
+  - A 1-argument $\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].
+  - "Idempotent: clamping an already-clamped value changes nothing."
+  - Doesn't validate that lower $\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.
+seeAlso:
+  - Min
+  - Max
+references:
+  - system: wikipedia
+    identity: Clamp (function)
+---

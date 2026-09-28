@@ -1,0 +1,9 @@
+---
+name: ToNoncrossingPartition
+domain: Combinatorics
+signature: ToNoncrossingPartition(...)
+summary: To non-crossing partition
+mapOn:
+  - DyckPath
+stub: carrier
+---

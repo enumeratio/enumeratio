@@ -4,12 +4,12 @@
 //
 //   node packages/manifest/scripts/build.ts
 
-import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { parseYaml, type ReferenceEntry } from "@enumeratio/entry";
-import { isEntryFile, recordDirs } from "@enumeratio/entry/node";
+import type { ReferenceEntry } from "@enumeratio/entry";
+import { headNames, INDEX_FILE, parseIndex, recordDirs } from "@enumeratio/entry/node";
 import { canonicalOrder } from "../src/canonical.ts";
 import type { DeclaredSymbol, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
 
@@ -41,8 +41,11 @@ function paramsOf(signature: string): string[] | undefined {
 
 const records: { package: string; record: Record_ }[] = [];
 for (const { package: pkg, dir } of recordDirs(PACKAGES)) {
-  for (const file of readdirSync(dir).filter(isEntryFile).sort(cmp)) {
-    records.push({ package: pkg, record: parseYaml(readFileSync(join(dir, file), "utf8")) as Record_ });
+  for (const head of headNames(dir).sort(cmp)) {
+    records.push({
+      package: pkg,
+      record: parseIndex(readFileSync(join(dir, head, INDEX_FILE), "utf8")).fields as Record_,
+    });
   }
 }
 

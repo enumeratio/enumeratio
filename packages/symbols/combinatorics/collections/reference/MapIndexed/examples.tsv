@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+pairs-each-element-with-its-1-based-index			[MapIndexed, f, [List, a, b, c]]	[List, [f, a, [List, 1]], [f, b, [List, 2]], [f, c, [List, 3]]]

@@ -1,0 +1,4 @@
+id	in	out	verdict
+1-i-j-k	list((SR.var("Quaternions")).basis())	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'basis'	error
+the-bicomplex-basis			
+an-element-from-a-coefficient-tuple			

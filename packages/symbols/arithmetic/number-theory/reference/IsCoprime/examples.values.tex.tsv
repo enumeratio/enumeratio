@@ -1,0 +1,7 @@
+id	in	out
+iscoprime-4-9	\mathrm{IsCoprime}(4, 9)	\top
+both-are-divisible-by-3	\mathrm{IsCoprime}(6, 9)	\bot
+several-arguments-every-pair-must-be-coprime	\mathrm{IsCoprime}(2, 3, 5)	\top
+gaussian-integers-2-i-and-2-i-are-non-associate	\mathrm{IsCoprime}(2+i, 2-i)	\top
+listable	\mathrm{IsCoprime}(3, \bigl\lbrack4, 6\bigr\rbrack)	\bigl\lbrack\top, \bot\bigr\rbrack
+pairwise-not-collectively-gcd-6-10-15-1-yet-no	\mathrm{IsCoprime}(6, 10, 15)	\bot

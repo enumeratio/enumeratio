@@ -1,0 +1,14 @@
+---
+name: BraidInverse
+domain: Braids and knots
+signature: BraidInverse(braid)
+summary: The inverse of a braid — its word reversed with every letter negated.
+signatures:
+  - call: BraidInverse(braid)
+    description: the word reversed, with every letter negated
+    library: enumeratio-braid
+    type: (expression<Braid> | string) -> expression<Braid>
+seeAlso:
+  - BraidProduct
+  - BraidPower
+---

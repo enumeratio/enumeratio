@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+level-expr-1-gives-the-top-level-operands			[Level, [List, 1, [List, 2, 3], 4], 1]	[List, 1, [List, 2, 3], 4]	
+level-expr-0-is-just-expr-itself	Scope		[Level, [List, 1, [List, 2, 3]], [List, 0]]	[List, [List, 1, [List, 2, 3]]]	
+level-expr-2-gives-levels-1-and-2-together	Scope		[Level, [List, 1, [List, 2, 3], 4], 2]	[List, 1, 2, 3, [List, 2, 3], 4]	post-order: {2, 3} prints after its own parts 2 and 3
+level-expr-1-gives-every-leaf	Scope		[Level, [List, 1, [List, 2, 3], 4], [List, -1]]	[List, 1, 2, 3, 4]	{-1} is Wolfram's own leaves shorthand
+level-expr-infinity-reaches-every-level	Scope		[Level, [List, 1, [List, 2, [List, 3]]], PositiveInfinity]	[List, 1, 2, 3, [List, 3], [List, 2, [List, 3]]]	

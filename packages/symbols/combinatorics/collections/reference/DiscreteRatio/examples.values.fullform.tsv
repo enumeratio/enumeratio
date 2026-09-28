@@ -1,0 +1,3 @@
+id	in
+factorial-ratio	DiscreteRatio[Factorial[n], n]
+geometric-ratio	DiscreteRatio[Power[2, n], n]

@@ -1,0 +1,4 @@
+id	in
+marginal-single-factor	MarginalDistribution[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2]], 2]
+marginal-single-factor-mean	Mean[MarginalDistribution[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2]], 2]]
+marginal-index-list	MarginalDistribution[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2], NormalDistribution[9, 1]], List[1, 3]]

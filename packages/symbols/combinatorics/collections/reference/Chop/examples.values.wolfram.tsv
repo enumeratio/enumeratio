@@ -1,0 +1,18 @@
+id	in	out	tex.in	tex.out
+values-not-near-zero-pass-through-unchanged	Chop[1.2]	1.2	\text{Chop}[1.2]	1.2
+values-smaller-than-about-10-10-collapse-to	Chop[1*^-11]	1/100000000000	\text{Chop}\left[\frac{1}{100000000000}\right]	\frac{1}{100000000000}
+negative-values-chop-the-same-way	Chop[-1*^-11]	-1/100000000000	\text{Chop}\left[-\frac{1}{100000000000}\right]	-\frac{1}{100000000000}
+chops-the-real-and-imaginary-parts-independently	Chop[Complex[1*^-12, 3]]	1/1000000000000 + 3*I	\text{Chop}\left[\frac{1}{1000000000000}+3 i\right]	\frac{1}{1000000000000}+3 i
+chop-0p001-0p0001-keeps-a-value-inside-the	Chop[0.001, 0.0001]			
+chop-1e-15-with-the-default-tolerance	Chop[1*^-15]			
+chops-parts-independently-with-a-tolerance	Chop[Complex[0.005, 3], 0.01]			
+threads-element-wise-over-a-list	Chop[List[1.2, 1*^-11, 3.5]]			
+a-negligible-imaginary-part-is-dropped-leaving-a	Chop[Plus[1, Complex[0, 1*^-14]]]			
+stays-symbolic	Chop[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Chop}[x]-\text{Chop}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Chop}\left[\frac{7}{3}\right]-\text{Chop}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Chop}\left[-\frac{11}{5}\right]-\text{Chop}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Chop}\left[\frac{13}{4}\right]-\text{Chop}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+exact-numbers-not-near-zero-pass-through	Chop[Rational[1, 3]]			
+a-second-argument-sets-the-tolerance-here	Chop[0.001, 0.01]			
+and-a-tighter-tolerance-keeps-a-value-the	Chop[1*^-15, 1*^-20]			
+cleans-up-the-floating-point-residue-from	Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]	0	\text{Chop}\left[3 N\left[\frac{1}{3}\right]-1\right]	0
+only-the-value-s-own-magnitude-matters-this	Chop[Plus[1, 1*^-12]]	1000000000001/1000000000000	\text{Chop}\left[1+\frac{1}{1000000000000}\right]	\frac{1000000000001}{1000000000000}
+a-hard-cutoff-at-about-10-10-a-value-just-above	Chop[1.0000000001*^-10]	1.0000000001*^-10	\text{Chop}[\text{1.0000000001$\grave{ }$*${}^{\wedge}$-10}]	\text{1.0000000001$\grave{ }$*${}^{\wedge}$-10}
+an-exact-small-number-is-chopped-too	Chop[Power[10, -20]]			

@@ -7,10 +7,13 @@
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { basename } from "node:path";
+import { basename, dirname } from "node:path";
+import { decodeCell, parseTsv } from "../../packages/entry/src/tsv.ts";
 import { parseYaml } from "../../packages/entry/src/yaml.ts";
 
 const RECORD = /^packages\/(.*\/reference|reference\/entries)\/[^/]+\.yaml$/;
+// A head folder's examples, `<dir>/<Head>/examples.tsv`.
+const TABLE = /^packages\/(.*\/reference|reference\/entries)\/[^/]+\/examples\.tsv$/;
 const git = (...args: string[]): string => execFileSync("git", args, { encoding: "utf8", maxBuffer: 1 << 28 });
 const base = process.env.BASE ?? git("merge-base", "HEAD", "origin/main").trim();
 
@@ -19,8 +22,17 @@ type Example = { id: string; expr: unknown };
 const collect = (files: string[], read: (file: string) => string): Ids => {
   const out: Ids = new Map();
   for (const file of files) {
-    if (!RECORD.test(file) || file.endsWith(".implementations.yaml") || file.includes("/tests/")) continue;
-    // Examples sit in `<Head>.examples.yaml`; before that split they were `<Head>.yaml`'s `examples:`.
+    if (file.includes("/tests/")) continue;
+    if (TABLE.test(file)) {
+      const head = basename(dirname(file));
+      const ids = out.get(head) ?? new Map<string, string>();
+      for (const row of parseTsv(read(file)).rows)
+        ids.set(row["id"]!, JSON.stringify(decodeCell(row["expr"] ?? "", "flow")));
+      out.set(head, ids);
+      continue;
+    }
+    if (!RECORD.test(file) || file.endsWith(".implementations.yaml")) continue;
+    // Before head folders, examples sat in `<Head>.examples.yaml`, and before that in `<Head>.yaml`.
     const data = parseYaml(read(file)) as Example[] | { examples?: Example[] };
     const head = basename(file, ".yaml").replace(/\.examples$/, "");
     const ids = out.get(head) ?? new Map<string, string>();

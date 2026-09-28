@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out	verdict
+n-arsech-1-over-2	N[ArcSech[Rational[1, 2]]]	1.3169578969248166	N\left[\text{sech}^{-1}\left(\frac{1}{2}\right)\right]	1.31696	
+arsech-1-0-exactly	ArcSech[1]				
+a-logarithmic-singularity-at-0	ArcSech[0]				
+a-float-argument-evaluates-directly	ArcSech[0.25]				
+past-1-the-value-is-imaginary-arsech-2-arcosh	ArcSech[2]				
+derivative-frac-1-x-sqrt-1-x-2	D[ArcSech[x], x]	Indeterminate	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{sech}^{-1}(x)}{\partial x}--\frac{1}{x \sqrt{-x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{sech}^{-1}\left(\frac{7}{3}\right)--\frac{1}{\frac{7}{3} \sqrt{-\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{sech}^{-1}\left(-\frac{11}{5}\right)-\frac{-1}{-\frac{11}{5} \sqrt{-\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{sech}^{-1}\left(\frac{13}{4}\right)--\frac{1}{\frac{13}{4} \sqrt{-\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive

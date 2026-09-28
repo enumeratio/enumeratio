@@ -20,7 +20,7 @@ runs:
       if: ${{ !cancelled() }}
       shell: bash
       run: |
-        git ls-files -m -o --exclude-standard -- '*.implementations.yaml' 'packages/reference/golden/oracle/*' > accepted.txt
+        git ls-files -m -o --exclude-standard -- '*/examples.values.*.tsv' '*/examples.tsv' 'packages/reference/golden/oracle/*' > accepted.txt
         [ -s accepted.txt ] && tar czf "oracle-${{ inputs.system }}.tgz" -T accepted.txt || true
     - if: ${{ !cancelled() }}
       uses: actions/upload-artifact@v4

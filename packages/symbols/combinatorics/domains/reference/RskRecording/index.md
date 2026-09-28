@@ -1,0 +1,24 @@
+---
+name: RskRecording
+domain: Combinatorial maps
+signature: RskRecording(Permutation)
+summary: The recording tableau of the RSK correspondence, as a row word.
+details:
+  - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.
+references:
+  - system: wikipedia
+    identity: Robinson–Schensted correspondence
+catalog:
+  - system: findstat
+    identity: Mp00070
+    url: https://www.findstat.org/Mp00070
+    on: Permutation
+mapOn:
+  - Permutation
+signatures:
+  - call: RskRecording(Permutation)
+    description: The recording tableau of the RSK correspondence, as a row word.
+    library: enumeratio-domains
+    type: (permutation) -> standard_tableau
+---

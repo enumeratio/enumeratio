@@ -1,0 +1,4 @@
+id	in	out
+count-dyckpathsbyheight-4-2	\mathrm{Count}(\mathrm{DyckPathsByHeight}(4, 2))	7
+first-element-of-dyckpathsbyheight-4-2	\mathrm{DyckPathsByHeight}(4, 2)[1]	\bigl\lbrack1, 1, 0, 1, 0, 1, 0, 0\bigr\rbrack
+every-element-of-dyckpathsbyheight-4-2	\mathrm{Take}(\mathrm{DyckPathsByHeight}(4, 2), 5)	\bigl\lbrack\bigl\lbrack1, 1, 0, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 1, 0, 1, 0, 0\bigr\rbrack\bigr\rbrack

@@ -1,0 +1,8 @@
+id	in	out
+the-fibonacci-numbers-a-n-a-n-1-a-n-2	LinearRecurrence([1, 1], [1, 1], 10)	[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+linearrecurrence-stays-exact-over-rationals	LinearRecurrence([1 / 2], [4], 5)	[4, 2, 1, 1 / 2, 1 / 4]
+the-lucas-numbers-same-kernel-other-initial	LinearRecurrence([1, 1], [2, 1], 8)	[2, 1, 3, 4, 7, 11, 18, 29]
+a-n-2a-n-1-a-n-2-is-arithmetic	LinearRecurrence([2, -1], [1, 3], 5)	[1, 3, 5, 7, 9]
+tribonacci	LinearRecurrence([1, 1, 1], [0, 0, 1], 10)	[0, 0, 1, 1, 2, 4, 7, 13, 24, 44]
+just-the-10th-term	LinearRecurrence([1, 1], [1, 1], [10])	[55]
+terms-5-through-8	LinearRecurrence([1, 1], [1, 1], [5, 8])	[5, 8, 13, 21]

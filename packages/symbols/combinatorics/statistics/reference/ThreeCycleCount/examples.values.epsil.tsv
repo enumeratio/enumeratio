@@ -1,0 +1,3 @@
+id	in	out
+the-one-line-word-312	ThreeCycleCount(Permutation([3, 1, 2]))	1
+the-one-line-word-2413	ThreeCycleCount(Permutation([2, 4, 1, 3]))	0

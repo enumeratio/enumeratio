@@ -1,0 +1,3 @@
+id	in
+letters-a-through-e	CharacterRange[String[a], String[e]]
+by-code-point	CharacterRange[97, 101]

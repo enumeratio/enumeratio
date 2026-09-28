@@ -1,0 +1,6 @@
+---
+name: FromDigits
+domain: Residues
+signature: FromDigits(digits, base)
+summary: Reconstructs a number from a list of digits, an arbitrary base.
+---

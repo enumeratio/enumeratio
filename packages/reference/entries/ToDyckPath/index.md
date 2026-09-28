@@ -1,0 +1,10 @@
+---
+name: ToDyckPath
+domain: Combinatorics
+signature: ToDyckPath(...)
+summary: To Dyck path
+mapOn:
+  - BinaryTree
+  - OrderedTree
+stub: carrier
+---

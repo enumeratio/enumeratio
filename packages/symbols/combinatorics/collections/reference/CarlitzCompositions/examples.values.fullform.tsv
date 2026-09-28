@@ -1,0 +1,4 @@
+id	in
+count-carlitzcompositions-5	Count[CarlitzCompositions[5]]
+first-element-of-carlitzcompositions-5	Part[CarlitzCompositions[5], 1]
+every-element-of-carlitzcompositions-5	Take[CarlitzCompositions[5], 7]

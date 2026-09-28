@@ -1,0 +1,10 @@
+id	in	out
+square-5	5^2	25
+same-result-for-x-and-x	(-5)^2	25
+square-2-over-3	(\frac{2}{3})^2	\frac{4}{9}
+canonicalizes-to-x-2	x^2	x^2
+threads-element-wise-over-a-list	\bigl\lbrack2, 3, -4\bigr\rbrack^2	\bigl\lbrack4, 9, 16\bigr\rbrack
+the-area-of-a-3-3-square-tile	3^2	9
+even-function-x-2-x-2	(-5)^2=5^2	\top
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	(1+i)^2=2i	\top
+infinity-squared-stays-infinite-rather-than	\infty^2	\infty

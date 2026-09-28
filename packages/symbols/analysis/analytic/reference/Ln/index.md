@@ -1,0 +1,54 @@
+---
+name: Ln
+domain: Elementary functions
+signature: Ln(x)
+summary: The natural logarithm, the inverse of [[Exp]].
+signatures:
+  - call: Ln(x)
+    description: the natural logarithm of x, base $e$.
+  - call: Ln(x)
+    description: The natural logarithm, the inverse of [[Exp]].
+    library: enumeratio-analytic
+    type: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity"
+    overrides: compute-engine
+details:
+  - 'Inverse of [[Exp]]: $\ln(e^x) = x$.'
+  - "The natural logarithm. Note compute-engine's own [[Log]] is not a synonym: it defaults to base 10 (see that entry)."
+  - $\ln(0) = -\infty$. A negative real argument reduces to the principal value $\ln(-q) = \ln(q) + i\pi$ for a positive rational $q$ (`@enumeratio/analytic`); compute-engine's own plain evaluation would otherwise leave it symbolic.
+seeAlso:
+  - Exp
+  - Log
+  - Log2
+references:
+  - system: wikipedia
+    identity: Natural logarithm
+  - system: mathworld
+    identity: NaturalLogarithm
+  - system: dlmf
+    identity: "4.2"
+names:
+  fungrim: Log
+  dlmf: principal branch of logarithm function
+  wolfram: Log
+bindings:
+  - origin: mapped
+    form: sympy
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: log($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: ln($1)
+    arity: 1
+    threadArg: 1
+---

@@ -1,0 +1,5 @@
+id	in
+exp-neg-ar-order0	Assuming[Greater[a, 0], HankelTransform[Exp[Minus[Times[a, r]]], r, s]]
+one-over-r	HankelTransform[Divide[1, r], r, s]
+one-over-sqrt-r2-a2	Assuming[Greater[a, 0], HankelTransform[Divide[1, Sqrt[Plus[Power[r, 2], Power[a, 2]]]], r, s]]
+exp-neg-ar-order1	Assuming[Greater[a, 0], HankelTransform[Exp[Minus[Times[a, r]]], r, s, 1]]

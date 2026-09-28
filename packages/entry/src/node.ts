@@ -1,4 +1,4 @@
-// Node-only: read and write reference YAML. The reference package's loader
+// Node-only: read and write the reference records. The reference package's loader
 // (`@enumeratio/reference/node`) reads every package, validates and collision-checks; this
 // is the writer every tool goes through, and the reader for a package's own tests, which
 // can't depend on reference (it depends on them).
@@ -12,43 +12,23 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { join } from "node:path";
 import { format } from "oxfmt";
 import { FORMAT } from "./format.ts";
-import type { ComponentStory, ReferenceEntry, ReferenceExample } from "./types.ts";
+import type { ComponentStory, ReferenceEntry } from "./types.ts";
 import { parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
+import { EXAMPLES_FILE, headExists, headFiles, headNames, readHead, removeHead, updateHead } from "./record.ts";
 
-// A head's record is up to three files side by side: `<Head>.yaml` (the entry, all but its
-// examples), `<Head>.examples.yaml` (a list, absent when there are none) and
-// `<Head>.implementations.yaml` (generated; see collect-forms and the oracle scan).
-export const EXAMPLES_SUFFIX = ".examples.yaml";
-export const IMPLEMENTATIONS_SUFFIX = ".implementations.yaml";
 // A component's stories: `<Name>.stories.yaml` beside the element sources, one file per
-// component (packages/components/reference/), a plain list like `<Head>.examples.yaml`.
+// component (packages/components/reference/), a plain list.
 export const STORIES_SUFFIX = ".stories.yaml";
 
-/** True for a `<Head>.yaml` entry file, not one of its companions -- nor a component's
- * `<Name>.stories.yaml`, which can share a `reference/` directory but not the shape. */
-export const isEntryFile = (file: string): boolean =>
-  file.endsWith(".yaml") &&
-  !file.endsWith(EXAMPLES_SUFFIX) &&
-  !file.endsWith(IMPLEMENTATIONS_SUFFIX) &&
-  !file.endsWith(STORIES_SUFFIX);
-
-/** The head's entry, with its examples from `<Head>.examples.yaml` (none if it's absent). */
+/** The head's entry, from its folder (see ./record.ts). */
 export function readEntry(dir: string, head: string): ReferenceEntry {
-  const entry = parseYaml(readFileSync(join(dir, `${head}.yaml`), "utf8")) as Omit<ReferenceEntry, "examples">;
-  const examplesPath = join(dir, `${head}${EXAMPLES_SUFFIX}`);
-  const examples = existsSync(examplesPath)
-    ? (parseYaml(readFileSync(examplesPath, "utf8")) as ReferenceExample[])
-    : [];
-  return { ...entry, examples };
+  return readHead(dir, head).entry;
 }
 
-/** Every entry in `dir`, by file name. */
+/** Every entry in `dir`, by head name. */
 export function readEntries(dir: string | URL): ReferenceEntry[] {
   const path = typeof dir === "string" ? dir : dir.pathname;
-  return readdirSync(path)
-    .filter(isEntryFile)
-    .sort()
-    .map((f) => readEntry(path, f.slice(0, -".yaml".length)));
+  return headNames(path).map((head) => readEntry(path, head));
 }
 
 /** One component's stories, in page order (absent file reads as none). */
@@ -120,21 +100,19 @@ export async function isWrittenYaml(path: string, options?: StringifyOptions): P
   return (await formatYaml(parseYaml(text), options)) === text;
 }
 
-/** `entry` as the files it's written to, by name: `<Head>.yaml`, and `<Head>.examples.yaml`
- * when it has examples. */
-export async function entryFiles(entry: ReferenceEntry): Promise<Map<string, string>> {
-  const { examples, ...rest } = JSON.parse(JSON.stringify(entry)) as ReferenceEntry;
-  const files = new Map([[`${entry.name}.yaml`, await formatYaml(rest)]]);
-  if (examples.length > 0) files.set(`${entry.name}${EXAMPLES_SUFFIX}`, await formatYaml(examples));
-  return files;
+/** True if a head's folder is exactly what the writer makes of its own data. */
+export async function isWrittenHead(dir: string, head: string): Promise<string[]> {
+  const drift: string[] = [];
+  for (const [file, text] of await headFiles(readHead(dir, head))) {
+    const path = join(dir, head, file);
+    if (!existsSync(path) || readFileSync(path, "utf8") !== text) drift.push(file);
+  }
+  return drift;
 }
 
-/** Write `entry` as `dir/<Head>.yaml` and `dir/<Head>.examples.yaml` (removed when it has none). */
+/** Write `entry` into its folder in `dir`, keeping the head's implementations and body. */
 export async function writeEntry(dir: string, entry: ReferenceEntry): Promise<void> {
-  const files = await entryFiles(entry);
-  for (const [file, text] of files) writeFileSync(join(dir, file), text);
-  if (!files.has(`${entry.name}${EXAMPLES_SUFFIX}`))
-    rmSync(join(dir, `${entry.name}${EXAMPLES_SUFFIX}`), { force: true });
+  await updateHead(dir, entry.name, { entry });
 }
 
 /** A generator's output: its entries, every head it owns (written or not) and the fields it
@@ -149,7 +127,7 @@ export interface GeneratedEntries {
 
 /** `entry` with the hand-curated fields of the record already in `dir`, after its own. */
 function withCurated(dir: string, entry: ReferenceEntry, fields: ReadonlySet<string>): ReferenceEntry {
-  if (!existsSync(join(dir, `${entry.name}.yaml`))) return entry;
+  if (!headExists(dir, entry.name)) return entry;
   const curated = Object.entries(readEntry(dir, entry.name)).filter(([key]) => !fields.has(key));
   return { ...entry, ...Object.fromEntries(curated) };
 }
@@ -157,14 +135,26 @@ function withCurated(dir: string, entry: ReferenceEntry, fields: ReadonlySet<str
 /** What `writeEntries` would change in `dir`: each file it would write, rewrite or remove. */
 export async function staleEntries(dir: string | URL, { entries, owned, fields }: GeneratedEntries): Promise<string[]> {
   const path = typeof dir === "string" ? dir : dir.pathname;
-  const onDisk = (file: string): string | undefined =>
-    existsSync(join(path, file)) ? readFileSync(join(path, file), "utf8") : undefined;
-  const expected = new Map<string, string | undefined>();
-  for (const head of owned)
-    for (const suffix of [".yaml", EXAMPLES_SUFFIX]) expected.set(`${head}${suffix}`, undefined);
-  for (const entry of entries)
-    for (const [file, text] of await entryFiles(withCurated(path, entry, fields))) expected.set(file, text);
-  return [...expected].filter(([file, text]) => onDisk(file) !== text).map(([file]) => file);
+  const stale: string[] = [];
+  const heads = new Set(entries.map((e) => e.name));
+  for (const head of owned) if (!heads.has(head) && headExists(path, head)) stale.push(`${head}/`);
+  for (const entry of entries) {
+    const current = headExists(path, entry.name) ? readHead(path, entry.name) : undefined;
+    const want = await headFiles({
+      entry: withCurated(path, entry, fields),
+      implementations: current?.implementations,
+      body: current?.body ?? "",
+    });
+    const onDisk = existsSync(join(path, entry.name)) ? readdirSync(join(path, entry.name)) : [];
+    for (const [file, text] of want) {
+      const at = join(path, entry.name, file);
+      if (!existsSync(at) || readFileSync(at, "utf8") !== text) stale.push(`${entry.name}/${file}`);
+    }
+    for (const file of onDisk)
+      if (!want.has(file) && (file === EXAMPLES_FILE || file.startsWith("examples.values.")))
+        stale.push(`${entry.name}/${file}`);
+  }
+  return stale;
 }
 
 /** Write a generator's entries into `dir`, one head each, and remove the records of heads it
@@ -176,8 +166,23 @@ export async function writeEntries(dir: string | URL, { entries, owned, fields }
   if (stray.length > 0) throw new Error(`writeEntries: not owned: ${stray.join(", ")}`);
   mkdirSync(path, { recursive: true });
   const heads = new Set(entries.map((e) => e.name));
-  for (const entry of entries) await writeEntry(path, withCurated(path, entry, fields));
-  for (const head of owned)
-    if (!heads.has(head))
-      for (const suffix of [".yaml", EXAMPLES_SUFFIX]) rmSync(join(path, `${head}${suffix}`), { force: true });
+  for (const entry of entries) await updateHead(path, entry.name, { entry: withCurated(path, entry, fields) });
+  for (const head of owned) if (!heads.has(head)) removeHead(path, head);
 }
+
+export {
+  decodeHead,
+  EXAMPLES_FILE,
+  headExists,
+  headFiles,
+  headNames,
+  type HeadRecord,
+  INDEX_FILE,
+  isValuesFile,
+  parseIndex,
+  readHead,
+  removeHead,
+  updateHead,
+  valuesFile,
+  writeHead,
+} from "./record.ts";

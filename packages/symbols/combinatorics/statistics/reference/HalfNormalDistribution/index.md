@@ -1,0 +1,23 @@
+---
+name: HalfNormalDistribution
+domain: Statistics
+signature: HalfNormalDistribution(theta)
+summary: The half-normal distribution with parameter $\theta$ — $|Z|/\theta$ for a standard normal $Z$.
+signatures:
+  - call: HalfNormalDistribution(theta)
+    description: "an inert distribution object — carries $\\theta$, unevaluated. Wolfram's own parameterization: $\\theta$ is inversely proportional to scale, not the scale itself."
+    library: enumeratio-statistics
+    type: (real<0..>) -> distribution
+details:
+  - $PDF(x) = \sqrt{2/\pi}\,\theta\, e^{-x^2\theta^2/2}$ for $x \geq 0$.
+  - $CDF(x) = Erf(x\theta/\sqrt{2})$ via [[Erf]], clamped to $0$ below $x=0$.
+  - $Mean = \sqrt{2/\pi}/\theta$, $Variance = (\pi-2)/(\pi\theta^2)$, both exact.
+  - '[[RandomVariate]] samples $|Z|/\theta$ for a standard normal $Z$.'
+seeAlso:
+  - ChiDistribution
+  - NormalDistribution
+  - PDF
+  - CDF
+names:
+  wolframIdentity: true
+---

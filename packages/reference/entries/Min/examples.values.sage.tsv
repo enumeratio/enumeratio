@@ -1,0 +1,22 @@
+id	in	out	verdict
+min-3-1-4-1-5	enumeratio_min(3, 1, 4, 1, 5)	1	
+also-accepts-a-single-list-argument	enumeratio_min([3, 1, 4])	1	
+min-neg-1-neg-5	enumeratio_min(-1, -5)	-5	
+a-single-argument-is-returned-unchanged	enumeratio_min(3)	3	
+min-9-2	enumeratio_min(9, 2)	2	
+min-list-4-1-7-2	enumeratio_min([4, 1, 7, 2])	1	
+min-5p56-neg-4p8-7p3	enumeratio_min(5.56, -4.8, 7.3)	-4.80000000000000	
+min-min-folds-into-a-normal-call	enumeratio_min(enumeratio_min(), 5)	ValueError: min() iterable argument is empty	error
+nested-lists-are-flattened-into-the-pool	enumeratio_min(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])	-5/3	
+exact-numbers-are-compared-numerically	enumeratio_min(sqrt(2), (3/2))	sqrt(2)	
+the-numeric-arguments-collapse-to-their-minimum	enumeratio_min(3, SR.var("x"), 5)	True	
+compares-exact-constants-numerically-min-e-pi-5	enumeratio_min([e, pi, 5])	e	
+the-min-of-two-intervals-is-the-interval-of			
+the-day-s-low-from-the-same-hourly-readings-see	enumeratio_min(68, 72, 65, 80, 74)	65	
+commutative-order-doesn-t-matter	bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))	True	
+min-a-b-max-a-b-a-b-see-max	bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))	True	
+idempotent-min-x-x-x	enumeratio_min(SR.var("x"), SR.var("x"))	True	
+infinities-participate-directly-in-the	enumeratio_min(-oo, 3)		
+multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0	
+with-no-arguments-it-returns-the-identity	enumeratio_min()	ValueError: min() iterable argument is empty	error
+the-min-of-an-empty-list-is-nan	enumeratio_min([])	ValueError: min() iterable argument is empty	error

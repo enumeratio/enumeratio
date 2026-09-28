@@ -1,0 +1,71 @@
+---
+name: GCD
+domain: Number theory
+signature: GCD(a, b, …)
+summary: The greatest common divisor of the arguments.
+signatures:
+  - call: GCD(a, b, …)
+    description: greatest common divisor of two or more integers.
+  - call: GCD(a, b, …)
+    description: The greatest common divisor of the arguments.
+    library: enumeratio-number-theory
+    type: (any*) -> number
+    overrides: compute-engine
+details:
+  - "Also called the greatest common factor: the largest positive integer dividing every argument."
+  - Paired with [[LCM]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.
+  - compute-engine discards signs before computing, so $\gcd(-a,b)=\gcd(a,b)$.
+  - $\gcd(0,n)=n$ since every integer divides 0; with no arguments at all compute-engine returns 0, GCD's identity element.
+  - 'Extends to rationals: $\gcd(p_1/q_1, \dots) = \gcd(p_1, \dots)/\operatorname{lcm}(q_1, \dots)$.'
+seeAlso:
+  - LCM
+  - ExtendedGCD
+references:
+  - system: wikipedia
+    identity: Greatest common divisor
+  - system: mathworld
+    identity: GreatestCommonDivisor
+  - system: rosettacode
+    identity: Greatest common divisor
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: GCD[$1, $2]
+    arity: 2
+    threadArg: 2
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+  - origin: mapped
+    form: sympy
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sage
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: oscar
+    template: gcd(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: julia
+    template: gcd(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: mathlib4
+    template: (Int.gcd $1 $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: rust
+    template: gcd($1, $2)
+    arity: 2
+    threadArg: 2
+---

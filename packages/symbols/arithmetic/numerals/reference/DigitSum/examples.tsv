@@ -1,0 +1,14 @@
+id	section	role	expr	expected	caption
+digitsum-58-127			[DigitSum, 58127]	23	
+in-base-2-this-is-the-number-of-set-bits			[DigitSum, 58127, 2]	9	In base 2 this is the number of set bits
+255-ff-16-15-15	Scope		[DigitSum, 255, 16]	30	$255 = \mathrm{ff}_{16}$: $15 + 15$
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[DigitSum, [List, 12, 345]]	[List, 3, 12]	Threads element-wise over a list, as Wolfram's Listable heads do
+just-the-first-4-digits-6-3-4-5-18-not-the-full	Scope		[DigitSum, 6345354, 10, 4]	18	Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)
+a-negative-k-sums-the-last-3-digits-instead	Scope	test	[DigitSum, 6345354, 10, -3]	12	a negative $k$ sums the last 3 digits instead: $3+5+4=12$
+k-at-least-the-digit-count-is-the-plain-sum	Scope	test	[DigitSum, 6345354, 10, 7]	30	$k$ at least the digit count is the plain digit sum
+digit-sum-n-mod-9-the-basis-of-the-classic	Properties		[Equal, [Mod, [DigitSum, 58127], 9], [Mod, 58127, 9]]	True	Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root
+digitsum-0	Possible issues		[DigitSum, 0]	0	
+the-sign-is-discarded	Possible issues		[DigitSum, -123]	6	The sign is discarded
+sign-is-discarded-in-the-3-argument-form-too	Possible issues	test	[DigitSum, -6345354, 10, 4]	18	the sign is discarded in the 3-argument form too
+digitsum-100-factorial	Neat examples		[DigitSum, [Factorial, 100]]	648	
+the-digit-sum-of-2-1000	Neat examples		[DigitSum, [Power, 2, 1000]]	1366	The digit sum of $2^{1000}$

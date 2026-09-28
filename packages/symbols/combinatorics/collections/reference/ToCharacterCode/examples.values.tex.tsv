@@ -1,0 +1,2 @@
+id	in	out
+reads-ascii-code-points	\mathrm{ToCharacterCode}(\text{\mathrm{ABC}})	\bigl\lbrack65, 66, 67\bigr\rbrack

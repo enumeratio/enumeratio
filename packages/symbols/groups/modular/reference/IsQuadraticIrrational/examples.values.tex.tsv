@@ -1,0 +1,10 @@
+id	in	out
+isquadraticirrational-sqrt-2	\mathrm{IsQuadraticIrrational}(\sqrt{2})	\top
+the-golden-ratio	\mathrm{IsQuadraticIrrational}(\frac{1+\sqrt{5}}{2})	\top
+a-cube-root-is-algebraic-of-degree-3	\mathrm{IsQuadraticIrrational}(\sqrt[3]{2})	\bot
+transcendental	\mathrm{IsQuadraticIrrational}(\pi)	\bot
+sqrt-4-is-rational-once-simplified	\mathrm{IsQuadraticIrrational}(\sqrt{4})	\bot
+a-plain-integer	\mathrm{IsQuadraticIrrational}(5)	\bot
+a-rational-multiple-of-a-surd	\mathrm{IsQuadraticIrrational}(3\sqrt{2})	\top
+a-surd-subtracted-from-a-rational	\mathrm{IsQuadraticIrrational}(1-\sqrt{3})	\top
+a-rational-is-not-irrational	\mathrm{IsQuadraticIrrational}(\frac{3}{4})	\bot

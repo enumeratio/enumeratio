@@ -1,0 +1,12 @@
+id	in	out
+erfc-1-1-2-erf-1-1-2		
+erfc-1-1-0		
+argument-1-7		
+deep-tail-0-001		
+erfc-1-0-infty		
+erfc-1-2-infty		
+arguments-in-1-2-give-negative-values		
+listable		
+sqrt-2-times-this-2-5758-is-the-two-sided-99		
+erfc-erfc-1-x-x	\operatorname{erfc}(\mathrm{InverseErfc}(x))	x
+deep-in-the-tail-it-keeps-full-precision-where		

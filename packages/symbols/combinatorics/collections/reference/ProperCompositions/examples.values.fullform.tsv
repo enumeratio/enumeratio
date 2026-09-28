@@ -1,0 +1,4 @@
+id	in
+count-propercompositions-6	Count[ProperCompositions[6]]
+first-element-of-propercompositions-6	Part[ProperCompositions[6], 1]
+every-element-of-propercompositions-6	Take[ProperCompositions[6], 5]

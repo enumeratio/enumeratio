@@ -1,0 +1,3 @@
+id	in
+count-skewstandardtableaux-3-24-standard	Count[SkewStandardTableaux[3]]
+every-element-of-skewstandardtableaux-3	Take[SkewStandardTableaux[3], 24]

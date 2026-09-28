@@ -1,0 +1,15 @@
+id	in	out
+first-list-1-2-3	First([1, 2, 3])	1
+first-list-10-20-30	First([10, 20, 30])	10
+first-list-a-b-c	First([a, b, c])	a
+first-default-ignored-when-nonempty	First([1, 2, 3], 99)	1
+first-of-association-is-first-value	First(Association(Rule(1, a), Rule(2, b), Rule(3, c)))	a
+first-of-empty-association-falls-through	First(Association(), 99)	99
+first-of-nonempty-association-ignores-default	First(Association(Rule(1, a), Rule(2, b)), 99)	a
+a-second-argument-supplies-a-default-for-an	First([], 99)	99
+of-a-matrix-the-first-row	First([[a, b], [c, d]])	[a, b]
+a-lazy-range-works-too	First(Range(5, 10))	5
+any-expression-not-just-a-list-the-first-term-of	First(a ^ 2 + b ^ 2)	a ^ 2
+a-default-is-ignored-when-the-collection-has-a	First([a, b], x)	a
+first-c-at-c-1-see-at	First([1, 2, 3]) == [1, 2, 3][1]	True
+an-empty-collection-has-no-first-element-compute	First([])	Missing

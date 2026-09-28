@@ -1,0 +1,31 @@
+---
+name: SimplePermutations
+domain: Collections
+signature: SimplePermutations(n)
+summary: The permutations of $\{1, …, n\}$ with no non-trivial interval — no contiguous run of positions, other than a single position or the whole permutation, whose values form a contiguous range — as a lazy indexed family.
+signatures:
+  - call: SimplePermutations(n)
+    library: enumeratio-collections
+    description: the permutations of $\{1, …, n\}$ with no non-trivial interval.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - A lazy indexed collection; there is no closed-form count implemented, so it is the enumeration's own length — A111111, $1, 2, 0, 2, 6, 46, 338, 2926, …$
+  - Every permutation of size $\geq 4$ decomposes into simple permutations by substitution, which makes this family the atoms [[SeparablePermutations]] and every other substitution-closed class are built from.
+  - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those with no non-trivial interval.
+enumerate:
+  expr: SimplePermutations(5)
+  columns: Descents, Inversions
+  glyph: permutation
+seeAlso:
+  - SeparablePermutations
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A111111
+    url: https://oeis.org/A111111
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+---

@@ -1,0 +1,9 @@
+---
+name: MaxMultiplicity
+domain: Combinatorics
+signature: MaxMultiplicity(...)
+summary: Maximum multiplicity
+statOn:
+  - Multiset
+stub: carrier
+---

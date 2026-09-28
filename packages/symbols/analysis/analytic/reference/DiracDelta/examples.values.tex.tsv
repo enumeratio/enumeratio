@@ -1,0 +1,5 @@
+id	in	out
+diracdelta-zero-unevaluated	\mathrm{DiracDelta}(0)	\mathrm{DiracDelta}(0)
+diracdelta-nonzero	\mathrm{DiracDelta}(2)	0
+diracdelta-negative	\mathrm{DiracDelta}(-3)	0
+diracdelta-multivariate-one-nonzero	\mathrm{DiracDelta}(0, 1)	0

@@ -1,0 +1,5 @@
+id	in
+a-quadratic-s-minimum-value	MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]
+a-simple-interval-constraint	MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]
+the-amplitude-of-cosine-alone-is-exact	MinValue[Cos[Subtract[Times[3, x], 1]], x]
+exp-s-infimum	MinValue[Exp[x], x]

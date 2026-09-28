@@ -1,0 +1,4 @@
+id	in	out
+merging-four-points-into-one-block-1-3-3	PartitionMobius(Diagram([[1], [2], [-1], [-2]]), Diagram([[1, 2, -1, -2]]))	-6
+the-coarsest-partition-has-nothing-above-it	InOrbitBasis(Diagram([[1, -1]]))	OrbitDiagram([[1, -1]])
+the-interval-of-length-zero	PartitionMobius(Diagram([[1, -1]]), Diagram([[1, -1]]))	1

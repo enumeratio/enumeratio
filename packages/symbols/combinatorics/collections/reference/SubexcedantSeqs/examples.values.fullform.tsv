@@ -1,0 +1,4 @@
+id	in
+count-subexcedantseqs-4	Count[SubexcedantSeqs[4]]
+first-element-of-subexcedantseqs-4	Part[SubexcedantSeqs[4], 1]
+every-element-of-subexcedantseqs-4	Take[SubexcedantSeqs[4], 24]

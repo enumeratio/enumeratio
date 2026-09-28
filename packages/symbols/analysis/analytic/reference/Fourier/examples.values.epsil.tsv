@@ -1,0 +1,6 @@
+id	in	out
+dft-of-1-2-3-4	Fourier([1, 2, 3, 4])	[5, -1 - i, -1, -1 + i]
+round-trips-through-inversefourier	InverseFourier(Fourier([1, 2, 3, 4]))	[1, 2, 3, 4]
+a-2x2-matrix-the-separable-2d-transform	Fourier([[1, 2], [3, 4]])	[[5, -1], [-2, 0]]
+a-custom-fourierparameters	Fourier([1, 2, 3, 4], FourierParameters -> [1, -1])	[10, -2 + 2i, -2, -2 - 2i]
+declines-a-symbolic-list	Fourier([a, b])	Fourier([a, b])

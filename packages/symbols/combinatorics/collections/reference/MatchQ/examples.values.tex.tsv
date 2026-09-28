@@ -1,0 +1,4 @@
+id	in	out
+add-of-two-wildcards-matches-an-add	\mathrm{MatchQ}(x+1, \operatorname{\_a}+\operatorname{\_b})	\top
+a-product-does-not-match-an-add-pattern	\mathrm{MatchQ}(xy, \operatorname{\_a}+\operatorname{\_b})	\bot
+a-sequence-wildcard-matches-the-rest-of-a-list	\mathrm{MatchQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\operatorname{\_a}, \operatorname{\_\_rest}\bigr\rbrack)	\top

@@ -1,0 +1,5 @@
+id	in
+randominteger-default-seed-is-reproducible	Last[List[SeedRandom[42], RandomInteger[100]]]
+randominteger-range-scope	Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]
+randominteger-list-of-draws	Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]
+randominteger-array-shape	Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]

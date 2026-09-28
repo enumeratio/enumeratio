@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-one-line-word-231			[RskShape, [Permutation, [List, 2, 3, 1]]]	[IntegerPartition, [List, 2, 1]]	the one-line word $231$

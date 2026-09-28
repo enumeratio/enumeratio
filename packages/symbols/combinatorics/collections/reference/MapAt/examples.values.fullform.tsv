@@ -1,0 +1,4 @@
+id	in
+single-position	MapAt[f, List[a, b, c], 2]
+negative-position	MapAt[f, List[a, b, c], -1]
+several-positions	MapAt[f, List[a, b, c], List[List[1], List[3]]]

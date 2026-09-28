@@ -1,0 +1,10 @@
+---
+name: UpSteps
+domain: Combinatorics
+signature: UpSteps(...)
+summary: Number of up steps
+statOn:
+  - ColoredMotzkinPath
+  - MotzkinPath
+stub: carrier
+---

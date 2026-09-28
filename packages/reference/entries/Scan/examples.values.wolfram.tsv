@@ -1,0 +1,10 @@
+id	in	out	tex.in	tex.out	verdict
+scan-list-1-2-3-4-add	FoldList[Plus, List[1, 2, 3, 4]]	{1, 3, 6, 10}	\text{FoldList}[\text{Plus},\{1,2,3,4\}]	\{1,3,6,10\}	
+the-shape-of-a-running-fold	FoldList[f, List[a, b, c]]	{a, f[a, b], f[f[a, b], c]}	\text{FoldList}[f,\{a,b,c\}]	\{a,f(a,b),f(f(a,b),c)\}	
+the-running-maximum	FoldList[Max, List[1, 2, 3, 4]]	{1, 2, 3, 4}	\text{FoldList}[\text{Max},\{1,2,3,4\}]	\{1,2,3,4\}	
+running-products-the-factorials	FoldList[Times, List[1, 2, 3, 4, 5]]				
+running-sums-of-symbolic-elements-wolfram-s	FoldList[Plus, List[a, b, c]]	{a, a + b, a + b + c}	\text{FoldList}[\text{Plus},\{a,b,c\}]	\{a,a+b,a+b+c\}	
+the-running-minimum	FoldList[Min, List[3, 1, 4, 1, 5]]				
+an-empty-list-scans-to-an-empty-list	FoldList[Plus, List[]]				
+the-values-of-every-prefix-of-the-binary-digits	FoldList[Function[Plus[Times[2, Slot[1]], Slot[2]]], List[1, 0, 1, 1]]				
+the-seeded-form-is-still-the-same-length-as-xs	enumeratio`Scan[List[1, 2, 3], Plus, 10]	enumeratio`Scan[{1, 2, 3}, Plus, 10]	\text{enumeratio$\grave{ }$Scan}(\{1,2,3\},\text{Plus},10)	\text{enumeratio$\grave{ }$Scan}(\{1,2,3\},\text{Plus},10)	disagree

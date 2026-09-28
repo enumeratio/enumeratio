@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption
+chi-1-mod-5-is-principal-1-on-the-units		test	[DirichletCharacter, 5, 1, 2]	1	$\chi_1$ mod 5 is the principal character — 1 on the units
+the-nontrivial-character-mod-4-chi-2-3-1-this-is			[DirichletCharacter, 4, 2, 3]	-1	The nontrivial character mod 4: $\chi_2(3) = -1$ (this is the one behind [[DirichletBeta]])
+chi-2-2-i-mod-5-2-is-a-primitive-root-so-it			[DirichletCharacter, 5, 2, 2]	[Complex, 0, 1]	$\chi_2(2) = i$ mod 5 — 2 is a primitive root, so it takes the generating fourth root of unity
+values-are-roots-of-unity-3-generates-z-7-times	Scope		[DirichletCharacter, 7, 3, 3]	[Add, [Rational, -1, 2], [Complex, 0, [Divide, [Sqrt, 3], 2]]]	Values are roots of unity: 3 generates $(\mathbb{Z}/7)^\times$, and $\chi_3(3) = e^{2\pi i/3}$
+listable-in-n-the-nontrivial-character-mod-3	Scope		[DirichletCharacter, 3, 2, [List, 1, 2, 3, 4, 5]]	[List, 1, -1, 0, 1, -1]	Listable in $n$: the nontrivial character mod 3 over $1, \dots, 5$
+a-character-vanishes-where-gcd-n-k-1	Properties		[DirichletCharacter, 5, 2, 5]	0	A character vanishes where $\gcd(n, k) > 1$
+chi-3-mod-5-is-the-quadratic-character-its	Properties		[DirichletCharacter, 5, 3, 2]	-1	$\chi_3$ mod 5 is the quadratic character: its period is $1, -1, -1, 1, 0$, the Legendre symbol $\left(\tfrac{n}{5}\right)$
+the-trivial-character-mod-1-is-1-everywhere-its	Properties		[DirichletCharacter, 1, 1, 7]	1	The trivial character mod 1 is 1 everywhere — its L-function is $\zeta$
+j-must-be-at-most-varphi-k-4-out-of-range-names	Possible issues		[DirichletCharacter, 5, 9, 2]	[DirichletCharacter, 5, 9, 2]	$j$ must be at most $\varphi(k) = 4$; out of range names no character and stays unevaluated

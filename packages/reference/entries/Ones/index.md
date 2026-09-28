@@ -1,0 +1,9 @@
+---
+name: Ones
+domain: Combinatorics
+signature: Ones(...)
+summary: Ones
+statOn:
+  - HyperbinaryWord
+stub: carrier
+---

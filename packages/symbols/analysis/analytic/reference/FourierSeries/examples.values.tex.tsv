@@ -1,0 +1,6 @@
+id	in	out
+order-2-series-of-x	\mathrm{FourierSeries}(x, x, 2)	-i\exp(i x)+(-\frac{1}{2}i)\exp(-2i x)+(\frac{1}{2}i)\exp(2i x)+i\exp(-i x)
+order-3-series-of-sin-is-itself	\mathrm{FourierSeries}(\sin(x), x, 3)	(-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
+cos-squared-a-sin-cos-polynomial	\mathrm{FourierSeries}(\cos(x)^2, x, 2)	\frac{1}{4}(\exp(-2i x))+\frac{1}{4}(\exp(2i x))+\frac{1}{2}
+order-0-series-of-x-squared-is-its-average	\mathrm{FourierSeries}(x^2, x, 0)	\frac{\pi^2}{3}
+declines-a-mixed-polynomial-trig-product	\mathrm{FourierSeries}(x\cos(x), x, 1)	\mathrm{FourierSeries}(x\cos(x), x, 1)

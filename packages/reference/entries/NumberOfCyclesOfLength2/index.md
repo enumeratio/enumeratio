@@ -1,0 +1,9 @@
+---
+name: NumberOfCyclesOfLength2
+domain: Combinatorics
+signature: NumberOfCyclesOfLength2(...)
+summary: Number of 2-cycles
+statOn:
+  - Permutation
+stub: carrier
+---

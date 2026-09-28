@@ -1,0 +1,2 @@
+id	in	out
+the-first-8-terms	Take(MersennePrimes, 8)	[3, 7, 31, 127, 8_191, 131_071, 524_287, 2_147_483_647]

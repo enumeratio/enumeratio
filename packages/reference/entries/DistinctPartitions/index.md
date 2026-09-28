@@ -1,0 +1,29 @@
+---
+name: DistinctPartitions
+domain: Combinatorics
+signature: DistinctPartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage, wolfram; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Nat.Partition.distincts
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Partition/Basic.html#Nat.Partition.distincts
+  - system: oeis
+    identity: A000009
+    url: https://oeis.org/A000009
+  - system: sage
+    identity: Partitions(n, max_slope=-1)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+  - system: wolfram
+    identity: PartitionsQ
+    url: https://reference.wolfram.com/language/ref/PartitionsQ.html
+stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition
+signatures:
+  - call: DistinctPartitions(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage, wolfram; not yet written up here.
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+---

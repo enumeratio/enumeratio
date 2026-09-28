@@ -1,0 +1,16 @@
+id	in	out
+neg-5	(-5)	-5
+5	(--5)	5
+its-own-negation	(-0)	0
+neg-3-over-4	(-(3/4))	-3/4
+threads-element-wise-over-a-list	[(-1), (--2), (-3)]	[-1, 2, -3]
+stays-symbolic	(-SR.var("x"))	True
+neg-1-plus-2i	(-(1 + 2*I))	-2*I - 1
+threads-over-a-matrix-entry-by-entry	[[(-1), (--2)], [(-3), (-4)]]	[[-1, 2], [-3, -4]]
+folds-into-a-numeric-coefficient	(-(2 * SR.var("x")))	True
+recording-a-42-50-charge-as-a-negative-balance	(-42.5)	-42.5000000000000
+double-negation-cancels-x-x	(-(-SR.var("x")))	True
+distributes-over-a-sum-a-b-a-b	bool((-(SR.var("a") + SR.var("b"))) == ((-SR.var("a")) + (-SR.var("b"))))	True
+a-b-b-a	(-(SR.var("a") - SR.var("b")))	True
+the-additive-inverse-x-x-0	((-SR.var("x")) + SR.var("x"))	0
+flips-signed-infinities-too	(-oo)	

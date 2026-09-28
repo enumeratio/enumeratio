@@ -30,7 +30,7 @@ beforeEach(() => {
 const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
 
 // A path drawn under `[SeedRandom, seed]` then reset back to the default seed afterward —
-// same "reseed, extract, reseed back to default" idiom `reference/RandomFunction.examples.yaml`
+// same "reseed, extract, reseed back to default" idiom `reference/RandomFunction/examples.tsv`
 // uses, so a test run doesn't leak RNG state into whatever test runs after it.
 const seededPath = (seed: number, proc: unknown, spec: unknown): number[][] => {
   const out = evalOf(["Last", ["List", ["SeedRandom", seed], ["RandomFunction", proc, spec], ["SeedRandom", 42]]]);

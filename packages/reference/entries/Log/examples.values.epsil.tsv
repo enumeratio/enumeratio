@@ -1,0 +1,15 @@
+id	in	out
+default-base-is-10	Log(100)	2
+same-result-written-with-an-explicit-base	Log(100, 10)	2
+base-2-via-the-explicit-second-argument	Log(8, 2)	3
+log-3-1-5-at-machine-precision	Log(1.5, 3)	0.369_070_246_428_542_562_9
+log-9-3	Log(9, 3)	2
+threads-over-a-list-of-values	Log([2, 4, 8], 2)	[1, 2, 3]
+threads-over-a-list-of-bases	Log(2.5, [2, ExponentialE, 10])	"[\n  1.321_928_094_887_362_347_87,\n  0.916_290_731_874_155_144_52,\n  0.397_940_008_672_037_609_573,\n]"
+derivative-in-base-3-frac-1-x-ln-3	D(Log(x, 3), x)	1 / (x * Ln(3))
+log-2-frac-18-3-an-exact-negative-power-of-the	Log(1 / 8, 2)	-3
+confirms-the-default-base-is-10	Log(100) == Log(100, 10)	True
+product-rule-log-b-xy-log-b-x-log-b-y	Log(8 * 4, 2) == Log(8, 2) + Log(4, 2)	True
+power-rule-log-b-x-k-k-log-b-x	Log(2 ^ 5, 2) == 5 * Log(2, 2)	True
+log-10-0-infty	Log(0)	NegativeInfinity
+a-negative-argument-stays-symbolic-with-the	Log(-5)	Log(-5, 10)

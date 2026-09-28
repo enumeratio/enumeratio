@@ -1,0 +1,9 @@
+---
+name: MinGap
+domain: Combinatorics
+signature: MinGap(...)
+summary: Minimum gap
+statOn:
+  - BinaryWord
+stub: carrier
+---

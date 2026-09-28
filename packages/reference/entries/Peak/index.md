@@ -1,0 +1,9 @@
+---
+name: Peak
+domain: Combinatorics
+signature: Peak(...)
+summary: Peak value reached
+statOn:
+  - CollatzTrajectory
+stub: carrier
+---

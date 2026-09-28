@@ -1,0 +1,6 @@
+id	in
+string-take-s-n-takes-the-first-n-characters	StringTake["hello world", 5]
+string-take-s-negative-n-takes-last-n-chars	StringTake["hello world", -5]
+string-take-s-n-takes-the-nth-character-alone	StringTake["hello", List[2]]
+string-take-s-m-n-takes-an-inclusive-range	StringTake["hello world", List[1, 5]]
+string-take-s-m-negative-n-counts-from-end	StringTake["hello world", List[1, -7]]

@@ -1,4 +1,4 @@
-// Write every reference example's forms (forms.ts) into its head's implementations record,
+// Write every reference example's forms (forms.ts) into its head's record (the values files),
 // keeping what the kernels answered and what people wrote. Run after changing a printer, a
 // transpiler or an example:
 //
@@ -7,10 +7,8 @@
 // (The variable is a guard: tests/forms.test.ts names this command when the records and the
 // printers disagree, and nothing should rewrite 600 files by accident.)
 
-import { existsSync, rmSync } from "node:fs";
-import { dirname, join } from "node:path";
 import { orderImplementations } from "@enumeratio/entry";
-import { writeYaml } from "@enumeratio/entry/node";
+import { updateHead } from "@enumeratio/entry/node";
 import { SYSTEMS } from "@enumeratio/oracle/src";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
 import { recordWithForms } from "./forms.ts";
@@ -32,10 +30,7 @@ for (const h of heads) {
   );
   // Order counts: a record another tool wrote in its own order is rewritten in this one.
   if (JSON.stringify(next) === JSON.stringify(h.implementations ?? {})) continue;
-  const path = h.implementationsPath ?? join(dirname(h.entryPath), `${h.head}.implementations.yaml`);
-  if (Object.keys(next).length === 0) {
-    if (existsSync(path)) rmSync(path);
-  } else await writeYaml(path, next);
+  await updateHead(h.dir, h.head, { implementations: Object.keys(next).length === 0 ? undefined : next });
   written++;
 }
 console.log(`${written} of ${heads.length} records rewritten`);

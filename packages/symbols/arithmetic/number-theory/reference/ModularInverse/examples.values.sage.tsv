@@ -1,0 +1,32 @@
+id	in	out	verdict
+3-cdot-5-15-equiv-1	inverse_mod(3, 7)	5	
+modularinverse-2-11	inverse_mod(2, 11)	6	
+a-negative-argument-3-cdot-2-6-equiv-1	inverse_mod(-3, 7)	2	
+a-21-digit-modulus	inverse_mod(3, (((10)^20) + 1))	33333333333333333334	
+listable-threads-over-a-list	inverse_mod([2, 3, 4], 11)	TypeError: unable to coerce <class 'list'> to an integer	error
+2-i-6-4i-8-14i-equiv-1-pmod-7	inverse_mod((2 + 1*I), 7)	-3*I - 1	disagree
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	inverse_mod((11 + -7*I), (7 + 4*I))	28	inconclusive
+a-gaussian-base-and-a-gaussian-modulus	inverse_mod((3 + -1*I), (5 + 2*I))	16	inconclusive
+inverse-mod-a-unit-is-always-0	inverse_mod((3 + 4*I), 1)		
+inverse-mod-i-is-always-0	inverse_mod((3 + 4*I), (0 + 1*I))		
+a-unit-is-its-own-inverse-mod-anything-it-s-a	inverse_mod((0 + 1*I), (2 + 1*I))		
+inverse-of-a-gaussian-prime-mod-a-coprime	inverse_mod((2 + 1*I), (2 + -1*I))		
+inverse-mod-a-real-prime-3-mod-4	inverse_mod((2 + 1*I), 3)		
+no-inverse-when-the-gcd-isn-t-a-unit-shared	inverse_mod((3 + 4*I), (2 + 1*I))		
+inverse-mod-a-negative-real-prime	inverse_mod((2 + 1*I), -7)		
+inverse-mod-a-composite-gaussian-modulus-norm-25	inverse_mod((1 + 1*I), (3 + 4*I))		
+inverse-mod-a-modulus-past-2-53	inverse_mod((4 + 1*I), (100000000000000000001 + 9007199254740993*I))		
+inverse-mod-1-4i-the-other-prime-above-17	inverse_mod((8 + 2*I), (1 + 4*I))		
+a-real-base-inverted-mod-a-gaussian-modulus	inverse_mod(5, (2 + 1*I))		
+inverse-mod-a-large-norm-gaussian	inverse_mod((1 + 1*I), (123 + 456*I))		
+inverse-mod-a-negative-real-composite-has-none	inverse_mod((5 + 5*I), -15)		
+inverse-of-a-prime-above-13-mod-the-other-prime	inverse_mod((3 + 2*I), (2 + 3*I))		
+inverse-mod-a-negative-associate	inverse_mod((2 + 1*I), (-2 + -3*I))		
+inverse-mod-a-real-composite-5-squared-has-none	inverse_mod((5 + 5*I), 25)		
+inverse-of-a-real-prime-s-associate-by-i-mod-a	inverse_mod((0 + 7*I), (3 + 2*I))		
+inverse-mod-a-real-prime-19	inverse_mod((2 + 1*I), 19)		
+no-inverse-mod-0	inverse_mod((2 + 1*I), 0)		
+a-real-base-with-no-inverse-mod-a-shared-factor	inverse_mod(5, (5 + 5*I))		
+the-same-as-powermod-with-exponent-1	bool(inverse_mod(3, 7) == power_mod(3, -1, 7))	True	
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	((12345 * inverse_mod(12345, (((2)^61) - 1))) % (((2)^61) - 1))	1	
+gcd-2-4-2-no-inverse	inverse_mod(2, 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error

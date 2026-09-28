@@ -1,0 +1,66 @@
+---
+name: BarnesG
+domain: Special functions
+signature: BarnesG(z)
+summary: The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z+1) = \Gamma(z)\,G(z)$ with $G(1) = 1$ — so $G(n) = \prod_{k=0}^{n-2} k!$, the superfactorial, at positive integers. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: BarnesG(z)
+    description: the Barnes G-function $G(z)$.
+    library: enumeratio-analytic
+    type: (number) -> number
+details:
+  - Functional equation $G(z+1) = \Gamma(z)\,G(z)$, the analogue of $\Gamma(z+1) = z\,\Gamma(z)$ one level up; see [[Gamma]].
+  - 'At positive integers $G(n) = 0!\,1!\,2!\cdots(n-2)!$ — the superfactorial: $G(1) = G(2) = G(3) = 1$, $G(4) = 2$, $G(5) = 12$, $G(6) = 288$, $G(7) = 34560$. Exact and arbitrarily large.'
+  - Zeros at the nonpositive integers $0, -1, -2, \dots$ (where $\Gamma$ has poles); entire, with no poles of its own.
+  - "Numeric evaluation exponentiates [[LogBarnesG]]: the asymptotic series for $\\ln G(z+1)$ for large $\\operatorname{Re}(z)$, reached through the functional equation in logarithms. Complex $z$ supported; aligned with Wolfram's $\\mathrm{BarnesG}[z]$."
+  - The value itself overflows a double past $|z| \approx 60$ (G(60) $\approx 4.6\times10^{1971}$); use [[LogBarnesG]] there, or stay exact at integers.
+bindings:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr:
+      [
+        Exp,
+        [
+          Add,
+          [Divide, [Multiply, [Subtract, _z, 1], [Ln, [Multiply, 2, Pi]]], 2],
+          [Negate, [Divide, [Multiply, [Subtract, _z, 1], [Add, [Subtract, _z, 1], 1]], 2]],
+          [Negate, [Divide, [Multiply, EulerGamma, [Power, [Subtract, _z, 1], 2]], 2]],
+          [
+            Sum,
+            [
+              Add,
+              [Multiply, k, [Ln, [Add, 1, [Divide, [Subtract, _z, 1], k]]]],
+              [Divide, [Power, [Subtract, _z, 1], 2], [Multiply, 2, k]],
+              [Negate, [Subtract, _z, 1]],
+            ],
+            [Triple, k, 1, Infinity],
+          ],
+        ],
+      ]
+    note: G = exp(ln G) over the Weierstrass series of [[LogBarnesG]]; see there for what it costs to evaluate.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: upstream/compute-engine/src/compute-engine/numerics/barnes-g.ts
+    note: exp of the LogBarnesG kernel; exact superfactorials at the integers come from the head.
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: BarnesG[z] and mpmath.barnesg(z), same normalisation.
+seeAlso:
+  - LogBarnesG
+  - Gamma
+  - LogGamma
+  - Factorial
+references:
+  - system: wikipedia
+    identity: Barnes G-function
+  - system: mathworld
+    identity: BarnesG-Function
+  - system: dlmf
+    identity: "5.17"
+names:
+  dlmf: Barnes' G-function (or double gamma function)
+  wolframIdentity: true
+---

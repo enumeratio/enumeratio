@@ -1,0 +1,6 @@
+id	in	out
+squarewave-zero	\mathrm{SquareWave}(0)	1
+squarewave-half	\mathrm{SquareWave}(\frac{1}{2})	-1
+squarewave-neg-quarter	\mathrm{SquareWave}(-\frac{1}{4})	-1
+squarewave-ranged	\mathrm{SquareWave}(\bigl\lbrack0, 10\bigr\rbrack, 0)	10
+squarewave-periodic	\mathrm{SquareWave}(\frac{1}{4})=\mathrm{SquareWave}(2\frac{1}{4})	\top

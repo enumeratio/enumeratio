@@ -1,0 +1,12 @@
+id	in
+power-x2-alpha-half	CaputoD[Power[x, 2], List[x, 0.5]]
+constant-vanishes	CaputoD[5, List[x, 0.5]]
+integer-edge-case-vanishes	CaputoD[x, List[x, 1.5]]
+exact-order-constant-half	CaputoD[5, List[x, Rational[1, 2]]]
+exact-order-x-half	CaputoD[x, List[x, Rational[1, 2]]]
+exact-order-x-vanishes	CaputoD[x, List[x, Rational[3, 2]]]
+exact-order-power-x2-half	CaputoD[Power[x, 2], List[x, Rational[1, 2]]]
+exact-order-power-x2-three-half	CaputoD[Power[x, 2], List[x, Rational[3, 2]]]
+exact-order-power-x2-third	CaputoD[Power[x, 2], List[x, Rational[1, 3]]]
+polynomial-linearity	CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]
+exact-order-polynomial-half	CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, Rational[1, 2]]]

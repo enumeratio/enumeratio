@@ -1,0 +1,4 @@
+id	in	out
+count-ballotsequences-4	\mathrm{Count}(\mathrm{BallotSequences}(4))	14
+first-element-of-ballotsequences-4	\mathrm{BallotSequences}(4)[1]	\bigl\lbrack1, 1, 1, 1, 0, 0, 0, 0\bigr\rbrack
+every-element-of-ballotsequences-4	\mathrm{Take}(\mathrm{BallotSequences}(4), 5)	\bigl\lbrack\bigl\lbrack1, 1, 1, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 1, 0, 0, 0\bigr\rbrack\bigr\rbrack

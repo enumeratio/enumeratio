@@ -1,0 +1,14 @@
+id	section	role	expr	expected	caption
+digitcount-2-147			[DigitCount, 2147]	[List, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0]	
+in-base-2-counts-of-digit-1-then-digit-0			[DigitCount, 2147, 2]	[List, 5, 7]	In base 2, counts of digit 1 then digit 0
+2147-100001100011-2-has-five-1-bits			[DigitCount, 2147, 2, 1]	5	$2147 = 100001100011_2$ has five 1 bits
+digitcount-122-000			[DigitCount, 122000]	[List, 1, 2, 0, 0, 0, 0, 0, 0, 0, 3]	
+an-explicit-base-10-is-the-default	Scope		[DigitCount, 122000, 10]	[List, 1, 2, 0, 0, 0, 0, 0, 0, 0, 3]	an explicit base 10 is the default
+the-digits-of-100-30-of-them-zeros	Scope		[DigitCount, [Factorial, 100]]	[List, 15, 19, 10, 10, 14, 19, 7, 14, 20, 30]	the digits of $100!$, 30 of them zeros
+a-width-counts-padding-zeros-too-000122000-has	Scope		[DigitCount, 122000, 10, 0, 9]	6	a width counts padding zeros too: $000122000$ has six
+a-list-of-digit-values-gives-one-count-each	Scope		[DigitCount, 242442422, 3, [List, 1, 2]]	[List, 6, 7]	a list of digit values gives one count each
+counts-over-the-12-least-significant-base-3	Scope		[DigitCount, 242442422, 3, [List, 1, 2], 12]	[List, 4, 4]	counts over the 12 least-significant base-3 digits
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[DigitCount, [List, 23, 45]]	[List, [List, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [List, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]	Threads element-wise over a list, as Wolfram's Listable heads do
+the-3-argument-form-isolates-a-single-digit-s	Applications		[DigitCount, 2147, 10, 1]	1	The 3-argument form isolates a single digit's count
+three-trailing-zeros-not-four-122000-has-digits	Possible issues		[DigitCount, 122000, 10, 0]	3	Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$
+0-has-one-digit-a-zero	Possible issues		[DigitCount, 0]	[List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]	0 has one digit, a zero

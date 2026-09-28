@@ -1,0 +1,5 @@
+id	in	out
+abelian-one-class-per-element	\mathrm{GroupCentreDimension}(C_{6})	6
+d-3-cong-s-3	\mathrm{GroupCentreDimension}(D_{3})	3
+direct-products-work-too	\left|C_{2}\times C_{3}\right|	6
+4-6-2	\mathrm{GroupCentreDimension}(D_{4})	5

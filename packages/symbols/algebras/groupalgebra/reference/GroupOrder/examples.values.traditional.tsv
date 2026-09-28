@@ -1,0 +1,4 @@
+id	in	out
+a-dihedral-group	\left|D_{100}\right|	200
+a-permutation-group	\left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 9, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|	6
+the-symmetric-group	\left|\mathrm{SymmetricGroup}(4)\right|	24

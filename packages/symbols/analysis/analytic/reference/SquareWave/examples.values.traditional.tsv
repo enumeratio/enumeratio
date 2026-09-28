@@ -1,0 +1,6 @@
+id	in	out
+squarewave-zero		
+squarewave-half		
+squarewave-neg-quarter		
+squarewave-ranged		
+squarewave-periodic	\mathrm{SquareWave}(\frac{1}{4})=\mathrm{SquareWave}(2\frac{1}{4})	\mathrm{True}

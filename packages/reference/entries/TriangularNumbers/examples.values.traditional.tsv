@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms		
+15-is-triangular	15\in\mathrm{TriangularNumbers}	\mathrm{True}
+14-is-not-triangular	14\in\mathrm{TriangularNumbers}	\mathrm{False}

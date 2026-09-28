@@ -1,0 +1,21 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note
+bernoullib-0			[BernoulliB, 0]	1					
+bernoullib-1			[BernoulliB, 1]	[Rational, -1, 2]				convention	SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+bernoullib-2			[BernoulliB, 2]	[Rational, 1, 6]					
+bernoullib-4			[BernoulliB, 4]	[Rational, -1, 30]					
+bernoullib-12			[BernoulliB, 12]	[Rational, -691, 2730]					
+bernoullib-10			[BernoulliB, 10]	[Rational, 5, 66]					
+exact-rationals-at-any-index	Scope		[BernoulliB, 60]	[Rational, {num: "-1215233140483755572040304994079820246041491"}, 56786730]	Exact rationals at any index				
+listable-b-n-threads-over-a-list-of-indices	Scope		[BernoulliB, [List, 2, 4, 6]]	[List, [Rational, 1, 6], [Rational, -1, 30], [Rational, 1, 42]]	Listable: $B_n$ threads over a list of indices				
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac	Scope		[BernoulliB, 4, x]	[Add, [Power, x, 4], [Multiply, -2, [Power, x, 3]], [Power, x, 2], [Rational, -1, 30]]	The Bernoulli polynomial $B_4(x) = x^4 - 2x^3 + x^2 - \frac{1}{30}$				
+the-bernoulli-polynomial-at-a-rational-point-b-2	Scope		[BernoulliB, 2, [Rational, 1, 2]]	[Rational, -1, 12]	The Bernoulli polynomial at a rational point: $B_2(\frac12) = -\frac{1}{12}$				
+with-a-second-argument-the-bernoulli-polynomial	Scope		[BernoulliB, 1, x]	[Add, x, [Rational, -1, 2]]	With a second argument, the Bernoulli polynomial $B_n(x)$ — [[BernoulliPolynomial]] under Wolfram's name				
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[BernoulliB, [List, 1, 2, 3]]	[List, [Rational, -1, 2], [Rational, 1, 6], 0]	Threads element-wise over a list, as Wolfram's Listable heads do			convention	SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2.
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	Applications		[Divide, [Add, [Multiply, [Binomial, 3, 0], [BernoulliB, 0], [Power, 5, 3]], [Multiply, [Binomial, 3, 1], [BernoulliB, 1], [Power, 5, 2]], [Multiply, [Binomial, 3, 2], [BernoulliB, 2], [Power, 5, 1]]], 3]	30	Faulhaber's formula recovers $\sum_{k=0}^{4} k^2 = 30$ from $B_0, B_1, B_2$ weighted by $\binom{3}{j}$. See [[Binomial]]			convention	SymPy (since 1.12) takes B₁ = +1/2; compute-engine keeps B₁ = −1/2, as Wolfram does.
+von-staudt-clausen-the-denominator-of-b-2n-is	Properties		[Denominator, [BernoulliB, 12]]	2730	von Staudt–Clausen: the denominator of $B_{2n}$ is the product of the primes $p$ with $(p-1) \mid 2n$, here $2 \cdot 3 \cdot 5 \cdot 7 \cdot 13$				
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	Properties		[Equal, [Zeta, -3], [Negate, [Divide, [BernoulliB, 4], 4]]]	True	$\zeta(-n) = -\frac{B_{n+1}}{n+1}$, here $\zeta(-3) = \frac{1}{120}$. See [[Zeta]]				
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	Properties		[Add, [Multiply, [Binomial, 5, 0], [BernoulliB, 0]], [Multiply, [Binomial, 5, 1], [BernoulliB, 1]], [Multiply, [Binomial, 5, 2], [BernoulliB, 2]], [Multiply, [Binomial, 5, 3], [BernoulliB, 3]], [Multiply, [Binomial, 5, 4], [BernoulliB, 4]]]	0	The recurrence $\sum_{k=0}^{n-1} \binom{n}{k} B_k = 0$, here at $n = 5$			convention	SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2, so the recurrence sums differ.
+b-n-0-for-every-odd-n-1	Properties		[Equal, [BernoulliB, 5], 0]	True	$B_n = 0$ for every odd $n > 1$				
+b-1-1-frac-12-is-the-other-convention-for-b-1	Possible issues		[BernoulliB, 1, 1]	[Rational, 1, 2]	$B_1(1) = +\frac12$ is the other convention for $B_1$				
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	Possible issues		[BernoulliB, -1]	[BernoulliB, -1]	Bernoulli numbers are only defined for $n \ge 0$; a negative index is left unevaluated	undefined-form	Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.	undefined-form	Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated.
+numerators-and-denominators-grow-quickly-b-20	Neat examples		[BernoulliB, 20]	[Rational, -174611, 330]	Numerators and denominators grow quickly: $B_{20} = -\frac{174611}{330}$				

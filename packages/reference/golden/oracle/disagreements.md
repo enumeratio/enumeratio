@@ -10,7 +10,7 @@ the review:
   branch cut, signed versus unsigned Stirling numbers of the first kind)
 - **our bug** — the interesting case, and the reason this exists
 
-Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
+Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
 ## wolfram — agree 2407, disagree 144, inconclusive 44, error 3

@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+array-f-5	Array[f, 5]	{f[1], f[2], f[3], f[4], f[5]}	\text{Array}[f,5]	\{f(1),f(2),f(3),f(4),f(5)\}
+array-squares	Array[Function[Power[Slot[1], 2]], 5]			
+array-f-2-2	Array[f, List[2, 2]]	{{f[1, 1], f[1, 2]}, {f[2, 1], f[2, 2]}}	\text{Array}[f,\{2,2\}]	\left( \begin{array}{cc}  f(1,1) & f(1,2) \\  f(2,1) & f(2,2) \\ \end{array} \right)
+array-f-3-0	Array[f, 3, 0]	{f[0], f[1], f[2]}	\text{Array}[f,3,0]	\{f(0),f(1),f(2)\}
+array-f-3-1-g	Array[f, 3, 1, g]	g[f[1], f[2], f[3]]	\text{Array}[f,3,1,g]	g(f(1),f(2),f(3))

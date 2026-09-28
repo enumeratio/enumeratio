@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+probability-equal-is-pdf-for-discrete			[Probability, [Equal, x, 2], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 9, [Multiply, 2, [Power, ExponentialE, 3]]]	
+probability-equal-is-zero-for-continuous			[Probability, [Equal, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]	0	
+probability-lessequal-is-cdf			[Probability, [LessEqual, x, 5], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 92, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.9160820579686966$, cross-checked against wolframscript's `N[CDF[PoissonDistribution[3],5]]`
+probability-of-a-chained-range	Scope		[Probability, [And, [LessEqual, 1, x], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 87, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.8662949896008326$, cross-checked against wolframscript's `N[Probability[1<=x<=5, x \[Distributed] PoissonDistribution[3]]]`
+probability-greater-is-canonicalized-first	Scope		[N, [Probability, [Greater, x, 0], [Distributed, x, [NormalDistribution, 0, 1]]]]	0.5	compute-engine rewrites `x > 0` to `Less(0, x)` before this evaluator sees it

@@ -1,0 +1,15 @@
+---
+name: Contains
+domain: Collections
+signature: Contains(xs, v)
+summary: Whether a collection has an element structurally equal to v.
+signatures:
+  - call: Contains(xs, v)
+    description: $True$ if some element of $xs$ is structurally equal to $v$, else $False$.
+seeAlso:
+  - Any
+names:
+  wolfram: MemberQ
+statOn:
+  - Text
+---

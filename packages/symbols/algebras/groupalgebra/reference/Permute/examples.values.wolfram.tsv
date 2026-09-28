@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out	verdict
+by-a-cycle	Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]	{b, c, a, d}	\text{Permute}\left[\{a,b,c,d\},\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	\{b,c,a,d\}	
+by-disjoint-cycles	Permute[List[a, b, c, d], Cycles[List[List[1, 3], List[2, 4]]]]	{c, d, a, b}	\text{Permute}\left[\{a,b,c,d\},\text{Cycles}\left[\left( \begin{array}{cc}  1 & 3 \\  2 & 4 \\ \end{array} \right)\right]\right]	\{c,d,a,b\}	
+by-a-one-line-word	Permute[List[a, b, c, d], List[2, 3, 4, 1]]	{d, a, b, c}	\text{Permute}[\{a,b,c,d\},\{2,3,4,1\}]	\{d,a,b,c\}	
+by-a-permutation-group	Permute[List[a, b, c], PermutationGroup[List[Cycles[List[List[1, 2, 3]]]]]]	{{a, b, c}, {b, c, a}, {c, a, b}}	\text{Permute}\left[\{a,b,c\},\text{PermutationGroup}\left[\left\{\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\ \end{array} \right)\right]\right\}\right]\right]	\left( \begin{array}{ccc}  a & b & c \\  b & c & a \\  c & a & b \\ \end{array} \right)	disagree

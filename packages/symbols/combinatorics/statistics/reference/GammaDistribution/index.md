@@ -1,0 +1,26 @@
+---
+name: GammaDistribution
+domain: Statistics
+signature: GammaDistribution(k, theta)
+summary: The Gamma distribution with shape $k$ and scale $\theta$.
+signatures:
+  - call: GammaDistribution(k, theta)
+    description: an inert distribution object with shape $k$ and scale $\theta$.
+    library: enumeratio-statistics
+    type: (real<0..>, real<0..>?) -> distribution
+  - call: GammaDistribution(k)
+    description: scale defaults to $1$. NOT a Wolfram call form — `GammaDistribution[alpha]` alone errors there (`GammaDistribution::argbu`, confirmed against wolframscript); this is our own convenience.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = \dfrac{x^{k-1}e^{-x/\theta}}{\theta^k\,\Gamma(k)}$, via [[Gamma]]. No domain clamp outside $x \ge 0$.
+  - $CDF(x) = 1 - Q(k, x/\theta)$ via the native two-argument [[GammaRegularized]] (not the three-argument generalized form `@enumeratio/analytic` adds — this has no dependency on that package), clamped to $0$ below $x=0$.
+  - $Mean = k\theta$, $Variance = k\theta^2$, both exact.
+  - '[[RandomVariate]] samples via Marsaglia–Tsang (shape $\ge 1$; boosted via a $Gamma(k+1)$ draw scaled by $U^{1/k}$ below $1$) — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram.'
+seeAlso:
+  - BetaDistribution
+  - PDF
+  - CDF
+  - RandomVariate
+names:
+  wolframIdentity: true
+---

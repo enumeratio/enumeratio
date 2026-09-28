@@ -1,0 +1,10 @@
+---
+name: Cardinality
+domain: Combinatorics
+signature: Cardinality(...)
+summary: Cardinality
+statOn:
+  - BinaryWord
+  - Finset
+stub: carrier
+---

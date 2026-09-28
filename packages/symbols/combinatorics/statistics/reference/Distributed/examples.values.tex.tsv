@@ -1,0 +1,3 @@
+id	in	out
+distributed-stays-itself	\mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))	\mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))
+distributed-reached-through-expectation	\mathrm{Expectation}(x, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))	2

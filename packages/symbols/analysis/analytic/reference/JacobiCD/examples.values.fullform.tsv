@@ -1,0 +1,6 @@
+id	in
+a-floating-point-argument-evaluates-directly-to	N[JacobiCD[0.3, 0.5]]
+jacobicd-0-4-0-5i-0-3	N[JacobiCD[Complex[0.4, 0.5], 0.3]]
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCD[0.3, 1.5]]
+u-0-is-1-for-any-m	JacobiCD[0, m]
+symbolic-arguments-are-left-unevaluated-rather	JacobiCD[u, m]

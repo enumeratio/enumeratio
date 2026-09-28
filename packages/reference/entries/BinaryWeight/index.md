@@ -1,0 +1,9 @@
+---
+name: BinaryWeight
+domain: Combinatorics
+signature: BinaryWeight(...)
+summary: Binary weight (popcount)
+statOn:
+  - Numeric
+stub: carrier
+---

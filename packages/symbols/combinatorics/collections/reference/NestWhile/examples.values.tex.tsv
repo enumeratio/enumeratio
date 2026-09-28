@@ -1,0 +1,2 @@
+id	in	out
+halve-while-even	\mathrm{NestWhile}(()\mapsto\frac{\operatorname{\_1}}{2}, 96, ()\mapsto\operatorname{\_1}\bmod2=0)	3

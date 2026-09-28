@@ -1,0 +1,22 @@
+---
+name: CompleteKaryTree
+domain: Collections
+signature: CompleteKaryTree(levels, k)
+summary: The full (perfect) $k$-ary tree of the given depth — every level completely filled.
+signatures:
+  - call: CompleteKaryTree(levels)
+    description: binary ($k = 2$); `levels` is a LEVEL count, not a vertex count.
+    library: enumeratio-collections
+    type: (integer, integer?) -> value
+  - call: CompleteKaryTree(levels, k)
+    description: $n = (k^{\text{levels}} - 1) / (k - 1)$ vertices, 1-indexed heap layout — vertex $i$'s children are $k(i-1)+2, \dots, k(i-1)+k+1$.
+    library: enumeratio-collections
+    arity: 2
+details:
+  - "`levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7."
+seeAlso:
+  - StarGraph
+  - IsTreeGraph
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,24 @@
+---
+name: Replace
+domain: Collections
+signature: Replace(expr, lhs -> rhs)
+summary: expr rewritten by lhs -> rhs, but ONLY if the whole expression matches — unlike ReplaceAll, this never looks inside subexpressions.
+signatures:
+  - call: Replace(expr, lhs -> rhs)
+    description: rhs (with wildcards substituted) if expr matches lhs at the top level, else expr unchanged
+    library: enumeratio-collections
+    type: (any, expression<Rule> | list<expression<Rule>>) -> any
+  - call: Replace(expr, {rule1, rule2, …})
+    description: like the 2-argument form, trying each rule in order and using the first that matches
+    library: enumeratio-collections
+details:
+  - "TOP LEVEL ONLY: this is the difference from compute-engine's own ReplaceAll (Wolfram's `/.`), which recurses into every subexpression. Replace is Wolfram's own `/.` restricted to depth 0 — closer to Wolfram's ReplaceAll would actually be `ReplaceAll` here."
+  - Built on BoxedExpression's own match/subs rather than compute-engine's replace method, which (probed) silently no-ops on a literal, non-wildcard match target reached through a boxed Rule.
+seeAlso:
+  - MatchQ
+  - ReplacePart
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

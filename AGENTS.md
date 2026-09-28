@@ -59,23 +59,30 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## Reference entries
 
-- Each head's entry is `reference/<Head>.yaml` in the package that declares it
-  (`packages/reference/entries/` for compute-engine's own heads): what the head is, everything
-  but its examples. Those are a list in `<Head>.examples.yaml` beside it (no file when there are
-  none). Every example has an `id`: lowercase words joined by `-`, unique within the head, kept
-  when the example is edited.
-- The YAML is read through `@enumeratio/entry`'s `parseYaml` and written through
-  `@enumeratio/entry/node`'s `writeYaml`: the strict-schema structure, laid out by oxfmt, so a
-  record is what `vp fmt` makes of it. Hand edits are fine; `vp fmt` or
-  `node packages/reference/scripts/format-records.ts` tidies them.
-- Beside each entry, `<Head>.implementations.yaml` holds every example's forms (`epsil`, `tex`,
-  `traditional`, each system's `in`) and what the oracle kernels answered. After adding or
-  changing an example (or a printer or transpiler), run
+- Each head's record is a folder, `reference/<Head>/`, in the package that declares it
+  (`packages/reference/entries/` for compute-engine's own heads):
+  - `index.md`: what the head is, as front matter (summary, signatures, details, bindings,
+    references…), and an optional markdown description below it.
+  - `examples.tsv`: one row per example, in page order (each section's rows together, in
+    `SECTIONS` order), with everything written by hand: `id`, `section`, `role`, `expr` and
+    `expected` as flow MathJSON (`[Mod, 5, 0]`), `caption`, …, and each system's hand
+    classification as `<system>.kind`, `<system>.note`, `<system>.issue`, `<system>.tolerance`.
+    Every example has an `id`: lowercase words joined by `-`, unique within the head, kept when
+    the example is edited.
+  - `examples.values.<system>.tsv`: generated, one per system, with the same rows: our own forms
+    (`epsil`, `tex`, `traditional`, `fullform`) and each oracle's `in`, and what it answered.
+- Read and write a record through `@enumeratio/entry/node` (`readHead`, `writeHead`,
+  `updateHead`, `readEntries`, `writeEntries`), never by hand-parsing its files. Hand edits to
+  `index.md` and `examples.tsv` are fine; `node packages/reference/scripts/format-records.ts`
+  tidies them (and puts rows back in page order). A TSV cell is its text as written (TeX's
+  backslashes and all); an empty cell is an absent field, and a cell that can't sit in a row
+  as written (a tab or line break, a leading `"`, the empty string) is a JSON string.
+- After adding or changing an example (or a printer or transpiler), run
   `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`; notatio's forms test says so
   when it's needed. Kernel answers come from `oracle-scan.ts --accept`; notes and
-  classifications on a row are written by hand.
+  classifications are the hand columns in `examples.tsv`.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
-  site gets them from its `virtual:reference-entries` module. Add a head by adding its file.
+  site gets them from its `virtual:reference-entries` module. Add a head by adding its folder.
 
 ## Git hygiene
 
@@ -132,7 +139,7 @@ release. Add a tool name to select part of the graph. For example, run
   for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
   adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
   too many to render (grid points, edge cases) are still data: `role: test` examples in the
-  head's `<Head>.examples.yaml`, tested and scanned like the rest. A lane fails when a row it
+  head's `examples.tsv`, tested and scanned like the rest. A lane fails when a row it
   had answered changes verdict, classification or input, not on a float's printed digits. A
   row answered for the first time (a new example the weekly kernels hadn't seen) is a
   warning, and every lane uploads what it accepted as an `oracle-records-<system>` artifact

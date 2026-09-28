@@ -1,0 +1,7 @@
+id	in	out
+fibonacci	\mathrm{GeneratingFunction}(F_{n}, n, x)	(x)(-x^2-x+1)^{-1}
+catalan-numbers	\mathrm{GeneratingFunction}(C_{n}, n, x)	\frac{1-\sqrt{1-4x}}{2x}
+dyck-paths-via-count		
+fixed-k-binomial		
+geometric		
+no-closed-form		

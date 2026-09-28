@@ -1,0 +1,4 @@
+id	in
+only-3-1	Descents[List[3, 1, 2]]
+every-step-falls	Descents[List[3, 2, 1]]
+descents-and-ascents-partition-the-n-1-steps	Equal[Plus[Descents[List[3, 1, 2]], Ascents[List[3, 1, 2]]], 2]

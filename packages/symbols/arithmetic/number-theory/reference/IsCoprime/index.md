@@ -1,0 +1,20 @@
+---
+name: IsCoprime
+domain: Number theory
+signature: IsCoprime(a, b, …)
+summary: Tests whether the arguments are pairwise relatively prime.
+signatures:
+  - call: IsCoprime(a, b, …)
+    description: true when every pair of arguments is coprime
+    library: enumeratio-number-theory
+    type: (number+) -> boolean
+details:
+  - 'Pairwise, not collectively: $\gcd$ of the whole set being 1 is not enough — every pair must itself be coprime.'
+  - Extends to Gaussian integers, over the same [[GCD]] this widens.
+  - Wolfram's `CoprimeQ`.
+seeAlso:
+  - GCD
+  - IsPrime
+names:
+  wolfram: CoprimeQ
+---

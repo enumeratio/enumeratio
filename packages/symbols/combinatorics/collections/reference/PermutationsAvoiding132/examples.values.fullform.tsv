@@ -1,0 +1,4 @@
+id	in
+count-permutationsavoiding132-4	Count[PermutationsAvoiding132[4]]
+first-element-of-permutationsavoiding132-4	Part[PermutationsAvoiding132[4], 1]
+every-element-of-permutationsavoiding132-4	Take[PermutationsAvoiding132[4], 14]

@@ -1,0 +1,4 @@
+id	in	out
+a-tree-is-acyclic	"IsAcyclicGraph(Graph([1, 2, 3, 4], [\n                                     UndirectedEdge(1, 2),\n                                     UndirectedEdge(2, 3),\n                                     UndirectedEdge(3, 4),\n                                   ]))"	True
+a-cycle-is-not-acyclic	IsAcyclicGraph(CycleGraph(4))	False
+a-directed-2-cycle-is-a-cycle	IsAcyclicGraph(Graph([1, 2], [DirectedEdge(1, 2), DirectedEdge(2, 1)]))	False

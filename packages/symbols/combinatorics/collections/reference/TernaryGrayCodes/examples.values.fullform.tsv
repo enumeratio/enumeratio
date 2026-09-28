@@ -1,0 +1,3 @@
+id	in
+count-ternarygraycodes-4-3-4-81	Count[TernaryGrayCodes[4]]
+every-element-of-ternarygraycodes-3	Take[TernaryGrayCodes[3], 27]

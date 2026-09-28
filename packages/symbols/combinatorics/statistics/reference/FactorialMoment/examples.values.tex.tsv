@@ -1,0 +1,2 @@
+id	in	out
+factorialmoment-order-2	\mathrm{FactorialMoment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)	18

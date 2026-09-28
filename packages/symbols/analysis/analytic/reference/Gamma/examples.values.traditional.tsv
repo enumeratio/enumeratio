@@ -1,0 +1,48 @@
+id	in	out
+a-pole-of-gamma		
+a-pole-of-gamma-at-negative-1		
+a-pole-of-gamma-at-negative-2		
+a-floating-point-argument-evaluates-directly-to		
+threads-over-a-list-so-poles-evaluate-concretely		
+three-arguments-the-integral-between-two-limits		
+int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3		
+a-machine-precision-argument-gamma-4-5-11-6317		
+gamma-5-4-24		
+two-arguments-with-a-complex-second-argument		
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z		
+three-arguments-fully-symbolic-in-both-order-and		
+gamma-0-5-0-0-25		
+gamma-neg1-5-0-1-5		
+gamma-3-1-7-all-integers		
+gamma-2-5-0-complex-1-5-plus-i		
+gamma-complex-2-plus-i-0-1-5		
+gamma-three-complex-arguments		
+gamma-0-1-4-all-integers		
+threads-over-a-list-and-reduces-each-integer		
+gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer		
+complex-arguments-evaluate-directly		
+half-integers-have-closed-forms-gamma-7-2-frac		
+including-negative-half-integers-gamma-3-2-frac		
+gamma-infty-infty		
+values-far-past-the-double-range-gamma-200-5		
+two-arguments-the-upper-incomplete-gamma-gamma-5		
+an-integer-order-reduces-to-a-closed-form-gamma		
+gamma-2-1-2-e-the-same-closed-form-at-an-exact		
+listable-threads-elementwise-over-a-matrix-and		
+interval-arithmetic-the-image-of-1-4-1-5-whose		
+uncertainty-propagation-gamma-2-5-pm-0-01-1-3293		
+to-40-significant-digits-every-one-correctly		
+the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	\frac{\pi^2}{\Gamma(3)}=\frac{\pi^2}{2}	\mathrm{True}
+extends-the-factorial-gamma-n-1-n-so-gamma-6-5	\Gamma(6)=5!	\mathrm{True}
+functional-equation-gamma-z-1-z-gamma-z-here-at	\Gamma(6)=5\Gamma(5)	\mathrm{True}
+reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z	\Gamma(\frac{1}{3})\Gamma(\frac{2}{3})=\frac{\pi}{\sin(\frac{\pi}{3})}	\mathrm{True}
+gamma-1-2-sqrt-pi	\Gamma(\frac{1}{2})=\sqrt{\pi}	\mathrm{True}
+gamma-1-z-e-z-exact-and-symbolic-in-z		
+so-gamma-1-z-1-e-z-the-exponential-distribution		
+now-that-gamma-2-z-has-a-closed-form-the-three		
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero		
+gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2		
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc	\Gamma(\frac{1}{2}, x)	\operatorname{erfc}(\sqrt{x})\sqrt{\pi}
+gamma-x-gamma-x-psi-x-so-the-logarithmic	\frac{\frac{\mathrm{d}\Gamma(x)}{\mathrm{d}x}}{\Gamma(x)}	\psi(x)
+squaring-the-reflection-formula-at-z-1-2	\Gamma(1/2)^2=\pi	\mathrm{True}
+gamma-i-2-pi-sinh-pi-0-27203		

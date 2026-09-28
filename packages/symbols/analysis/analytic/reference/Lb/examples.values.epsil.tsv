@@ -1,0 +1,11 @@
+id	in	out
+lb-8	Lb(8)	3
+lb-1	Lb(1)	0
+lb-1-024	Lb(1_024)	10
+a-machine-precision-argument-evaluates	Lb(1.414_2)	0.499_986_164_421_874_256_467
+lb-2-pow-10	Lb(2 ^ 10)	10
+same-exact-negative-power-fold-as-log2-lb-frac	Lb(1 / 8)	-3
+lb-0	Lb(0)	NegativeInfinity
+threads-element-wise-over-a-list	Lb([1, 2, 4, 8])	[0, 1, 2, 3]
+same-as-log2-the-logarithm-of-complex-infinity	Lb(ComplexInfinity)	PositiveInfinity
+identical-to-log2	Lb(64) == Log2(64)	True

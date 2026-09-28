@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+the-repeating-block-of-1-7-0-overline-142857			[RealDigits, [Rational, 1, 7]]	[List, [List, [List, 1, 4, 2, 8, 5, 7]], 0]	the repeating block of $1/7 = 0.\overline{142857}$
+the-first-10-digits-of-pi-truncated-not-rounded			[RealDigits, Pi, 10, 10]	[List, [List, 3, 1, 4, 1, 5, 9, 2, 6, 5, 3], 1]	the first 10 digits of $\pi$ (truncated, not rounded)
+19-7-2-overline-714285-one-digit-before-the	Scope		[RealDigits, [Rational, 19, 7]]	[List, [List, 2, [List, 7, 1, 4, 2, 8, 5]], 1]	$19/7 = 2.\overline{714285}$, one digit before the point
+a-terminating-rational	Scope		[RealDigits, [Rational, 5, 4]]	[List, [List, 1, 2, 5], 1]	a terminating rational
+1-8-0-001-2	Scope		[RealDigits, [Rational, 1, 8], 2]	[List, [List, 1], -2]	$1/8 = 0.001_2$
+realdigits-sqrt-2-10-5	Scope		[RealDigits, [Sqrt, 2], 10, 5]	[List, [List, 1, 4, 1, 4, 2], 1]	
+realdigits-exponentiale-10-5	Scope		[RealDigits, ExponentialE, 10, 5]	[List, [List, 2, 7, 1, 8, 2], 1]	
+an-integer-six-digits-before-the-point	Scope		[RealDigits, 123456]	[List, [List, 1, 2, 3, 4, 5, 6], 6]	an integer: six digits before the point

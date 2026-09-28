@@ -1,0 +1,12 @@
+id	in	out
+power-x2-alpha-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}
+constant-vanishes	\mathrm{CaputoD}(5, \bigl\lbrack x, 0.5\bigr\rbrack)	0
+integer-edge-case-vanishes	\mathrm{CaputoD}(x, \bigl\lbrack x, 1.5\bigr\rbrack)	0
+exact-order-constant-half	\mathrm{CaputoD}(5, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	0
+exact-order-x-half	\mathrm{CaputoD}(x, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{2\sqrt{x}}{\sqrt{\pi}}
+exact-order-x-vanishes	\mathrm{CaputoD}(x, \bigl\lbrack x, \frac{3}{2}\bigr\rbrack)	0
+exact-order-power-x2-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}
+exact-order-power-x2-three-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{3}{2}\bigr\rbrack)	\frac{4\sqrt{x}}{\sqrt{\pi}}
+exact-order-power-x2-third	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{3}\bigr\rbrack)	\frac{2x^{\frac{5}{3}}}{\Gamma(\frac{8}{3})}
+polynomial-linearity	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}
+exact-order-polynomial-half	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{6\sqrt{x}}{\sqrt{\pi}}+\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+no-throw-evaluates-normally			[Catch, [Add, 1, 2]]	3	with no Throw inside, Catch just returns the value
+tag-matched-catch-recovers-the-value			[Catch, [Throw, ok, done], done]	ok	Catch(expr, tag) recovers a Throw with a matching tag

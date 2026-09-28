@@ -1,0 +1,3 @@
+id	in	out
+letters-a-through-e	\mathrm{CharacterRange}(\text{a}, \text{e})	\bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}\bigr\rbrack
+by-code-point	\mathrm{CharacterRange}(97, 101)	\bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}\bigr\rbrack

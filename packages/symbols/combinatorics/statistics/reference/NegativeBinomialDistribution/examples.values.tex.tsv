@@ -1,0 +1,5 @@
+id	in	out
+negativebinomial-pdf-exact	\operatorname{PDF}(\mathrm{NegativeBinomialDistribution}(5, \frac{1}{3}), 2)	\frac{20}{729}
+negativebinomial-cdf-exact	\operatorname{CDF}(\mathrm{NegativeBinomialDistribution}(5, \frac{1}{3}), 2)	\operatorname{BetaRegularized}(\frac{1}{3}, 5, 3)
+negativebinomial-mean-exact	\mathrm{mean}(\mathrm{NegativeBinomialDistribution}(5, \frac{1}{3}))	10
+negativebinomial-variance-exact	\mathrm{Variance}(\mathrm{NegativeBinomialDistribution}(5, \frac{1}{3}))	30

@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+isnumeric-pi			[IsNumeric, Pi]	True	
+isnumeric-literal			[IsNumeric, 5]	True	
+isnumeric-plain-symbol	Scope		[IsNumeric, x]	False	A plain symbol carries no definite numeric value
+isnumeric-sqrt-2	Scope		[IsNumeric, [Sqrt, 2]]	True	Built from numeric literals and a known numeric function

@@ -1,0 +1,10 @@
+id	in	out
+chi-1-mod-5-is-principal-1-on-the-units	\chi_{5,1}(2)	1
+the-nontrivial-character-mod-4-chi-2-3-1-this-is	\chi_{4,2}(3)	-1
+chi-2-2-i-mod-5-2-is-a-primitive-root-so-it	\chi_{5,2}(2)	i
+values-are-roots-of-unity-3-generates-z-7-times	\chi_{7,3}(3)	\frac{\sqrt{3}}{2}i-\frac{1}{2}
+listable-in-n-the-nontrivial-character-mod-3		
+a-character-vanishes-where-gcd-n-k-1	\chi_{5,2}(5)	0
+chi-3-mod-5-is-the-quadratic-character-its	\chi_{5,3}(2)	-1
+the-trivial-character-mod-1-is-1-everywhere-its	\chi_{1,1}(7)	1
+j-must-be-at-most-varphi-k-4-out-of-range-names	\chi_{5,9}(2)	\chi_{5,9}(2)

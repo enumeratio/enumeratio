@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+c5-is-not-bipartite			[IsBipartiteGraph, [CycleGraph, 5]]	False	An odd cycle is never bipartite
+c6-is-bipartite			[IsBipartiteGraph, [CycleGraph, 6]]	True	An even cycle is bipartite

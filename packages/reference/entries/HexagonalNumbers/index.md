@@ -1,0 +1,38 @@
+---
+name: HexagonalNumbers
+domain: Collections
+signature: HexagonalNumbers
+summary: The hexagonal numbers $1, 6, 15, 28, …$ — $H(n) = n(2n-1)$ — dots in a hexagon.
+signatures:
+  - call: HexagonalNumbers
+    description: $H(n) = n(2n-1)$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(HexagonalNumbers) = +\infty$, and $At(HexagonalNumbers, k) = k(2k-1)$ unranks in closed form -- $At(HexagonalNumbers, 5) = 45$.'
+  - OEIS A000384.
+  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(45, HexagonalNumbers)$ is true, $Element(44, HexagonalNumbers)$ is false.
+  - Every hexagonal number is triangular ($H(n) = T(2n-1)$); the $k$-gonal case $k=6$ of [[PolygonalNumbers]].
+enumerate:
+  expr: Take(HexagonalNumbers, 20)
+seeAlso:
+  - PolygonalNumbers
+  - TriangularNumbers
+  - PentagonalNumbers
+  - Count
+  - At
+  - Element
+catalog:
+  - system: oeis
+    identity: A000384
+    url: https://oeis.org/A000384
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(6, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=6 fixed for the hexagonal case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=6 fixed for the hexagonal case; PolygonalNumber(6,r) — their n = our r
+grades: []
+carrier: Numeric
+unbounded: true
+---

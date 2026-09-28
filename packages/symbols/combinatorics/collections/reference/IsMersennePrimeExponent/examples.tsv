@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+7-is-a-mersenne-prime-exponent			[IsMersennePrimeExponent, 7]	True
+11-is-prime-but-not-a-mersenne-prime-exponent	Scope		[IsMersennePrimeExponent, 11]	False
+9-is-not-even-prime	Scope		[IsMersennePrimeExponent, 9]	False
+2-31-1-is-the-8th-mersenne-prime	Scope		[IsMersennePrimeExponent, 31]	True

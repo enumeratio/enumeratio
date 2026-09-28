@@ -1,0 +1,4 @@
+id	in	out
+the-one-line-word-312	LargestRunLength(Permutation([3, 1, 2]))	2
+the-one-line-word-312-as-a-plain-list	LargestRunLength([3, 1, 2])	2
+the-one-line-word-2413	LargestRunLength(Permutation([2, 4, 1, 3]))	2

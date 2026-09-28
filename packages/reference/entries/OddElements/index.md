@@ -1,0 +1,9 @@
+---
+name: OddElements
+domain: Combinatorics
+signature: OddElements(...)
+summary: Number of odd elements
+statOn:
+  - Finset
+stub: carrier
+---

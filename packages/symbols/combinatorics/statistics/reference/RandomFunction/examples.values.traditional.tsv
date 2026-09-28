@@ -1,0 +1,5 @@
+id	in	out
+randomfunction-poisson-counts-nondecreasing		
+randomfunction-default-grid-length		
+randomfunction-wiener-path-starts-at-zero		
+randomfunction-reproducible-for-a-fixed-seed	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)	\mathrm{True}

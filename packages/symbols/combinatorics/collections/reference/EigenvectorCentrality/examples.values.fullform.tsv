@@ -1,0 +1,3 @@
+id	in
+path-4-matches-wolfram	EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+star-4-hub-is-most-central	EigenvectorCentrality[StarGraph[4]]

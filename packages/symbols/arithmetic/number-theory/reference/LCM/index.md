@@ -1,0 +1,77 @@
+---
+name: LCM
+domain: Number theory
+signature: LCM(a, b, …)
+summary: The least common multiple of the arguments.
+signatures:
+  - call: LCM(a, b, …)
+    description: least common multiple of two or more integers.
+  - call: LCM(a, b, …)
+    description: The least common multiple of the arguments.
+    library: enumeratio-number-theory
+    type: (any*) -> number
+    overrides: compute-engine
+details:
+  - "Also called the smallest common multiple: the smallest positive integer that is a multiple of every argument."
+  - Paired with [[GCD]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.
+  - compute-engine discards signs before computing, so $\operatorname{lcm}(-a,b)=\operatorname{lcm}(a,b)$.
+  - '$\operatorname{lcm}(0,n)=0$: 0 absorbs, since 0 is a multiple of everything but nothing else divides back into it.'
+  - 'Extends to rationals: $\operatorname{lcm}(p_1/q_1, \dots) = \operatorname{lcm}(p_1, \dots)/\gcd(q_1, \dots)$.'
+seeAlso:
+  - GCD
+references:
+  - system: wikipedia
+    identity: Least common multiple
+  - system: mathworld
+    identity: LeastCommonMultiple
+  - system: rosettacode
+    identity: Least common multiple
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: LCM[$1, $2]
+    arity: 2
+    threadArg: 2
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: sympy
+    template: lcm($1, $2)
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: sage
+    template: lcm($1, $2)
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: oscar
+    template: lcm(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: julia
+    template: lcm(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: mathlib4
+    template: (Int.lcm $1 $2)
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+  - origin: mapped
+    form: rust
+    template: lcm($1, $2)
+    arity: 2
+    threadArg: 2
+    note: compute-engine extends LCM to rationals (lcm of the numerators over the gcd of the denominators); Nemo/Oscar's ZZ conversion only accepts integers, so a rational operand here is a domain gap in the mapping, not a bug on either side.
+---

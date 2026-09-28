@@ -1,0 +1,4 @@
+id	in	out	verdict
+ijk-1	(SR.var("f_1") * SR.var("f_2") * (SR.var("f_1") * SR.var("f_2")))	f_1^2*f_2^2	inconclusive
+k-in-h	enumeratio_element((SR.var("f_1") * SR.var("f_2")), SR.var("Quaternions"))	TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable	error
+a-multicomplex-unit-is-not-a-quaternion	enumeratio_element(SR.var("i_1"), SR.var("Quaternions"))	TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable	error

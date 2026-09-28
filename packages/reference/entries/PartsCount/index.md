@@ -1,0 +1,9 @@
+---
+name: PartsCount
+domain: Combinatorics
+signature: PartsCount(...)
+summary: Number of parts
+statOn:
+  - Composition
+stub: carrier
+---

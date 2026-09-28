@@ -1,0 +1,10 @@
+id	in	out
+the-group-product	\mathrm{Dot}(\mathrm{ModularMatrix}(1, 1, 0, 1), \mathrm{ModularMatrix}(1, 0, 1, 1))	\mathrm{ModularMatrix}(2, 1, 1, 1)
+no-division-needed-at-determinant-1	\mathrm{ModularMatrix}(1, 1, 0, 1)^{-1}	\mathrm{ModularMatrix}(1, -1, 0, 1)
+t-5	\mathrm{MatrixPower}(\mathrm{ModularMatrix}(1, 1, 0, 1), 5)	\mathrm{ModularMatrix}(1, 5, 0, 1)
+words-multiply-their-matrices	\mathrm{Dot}(\text{L}, \text{R})	\mathrm{ModularMatrix}(1, 1, 1, 2)
+the-inverse-of-a-word	\text{L}^{-1}	\mathrm{ModularMatrix}(1, 0, -1, 1)
+r-3	\mathrm{MatrixPower}(\text{R}, 3)	\mathrm{ModularMatrix}(1, 3, 0, 1)
+negative-powers-are-powers-of-the-inverse	\mathrm{MatrixPower}(\mathrm{ModularMatrix}(1, 1, 1, 2), -2)	\mathrm{ModularMatrix}(5, -3, -3, 2)
+a-plain-integer-matrix-goes-to-compute-engine-s	\mathrm{MatrixPower}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack, 10)	\bigl\lbrack\bigl\lbrack89, 55\bigr\rbrack, \bigl\lbrack55, 34\bigr\rbrack\bigr\rbrack
+the-zeroth-power-is-the-identity	\mathrm{MatrixPower}(\mathrm{ModularMatrix}(1, 1, 0, 1), 0)	\mathrm{ModularMatrix}(1, 0, 0, 1)

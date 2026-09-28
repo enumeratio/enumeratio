@@ -1,0 +1,40 @@
+---
+name: SemistandardTableaux
+domain: Collections
+signature: SemistandardTableaux(size, max_entry)
+summary: Semistandard Young tableaux of $n$ cells with entries in $\{1, …, k\}$, summed over every shape $\lambda \vdash n$, as a lazy indexed family.
+signatures:
+  - call: SemistandardTableaux(size, max_entry)
+    library: enumeratio-collections
+    description: the SSYT of `size` cells over every partition shape, entries from 1 to `max_entry`.
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
+details:
+  - A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
+  - "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau)."
+  - "Unranked in shape-then-entries order: by row-length shape first, then the flattened filling."
+enumerate:
+  expr: SemistandardTableaux(4, 3)
+  columns: Length
+seeAlso:
+  - IntegerPartitions
+  - Count
+  - At
+catalog:
+  - system: mathlib4
+    identity: SemistandardYoungTableau
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Young/SemistandardTableau.html
+  - system: sage
+    identity: SemistandardTableaux(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
+  - system: wikipedia
+    identity: Young tableau
+    url: https://en.wikipedia.org/wiki/Young_tableau
+    note: the article covers both standard and semistandard tableaux under one page
+    relation: conceptual
+grades:
+  - name: size
+    role: axis
+  - name: max_entry
+    role: axis
+carrier: SemistandardTableau
+---

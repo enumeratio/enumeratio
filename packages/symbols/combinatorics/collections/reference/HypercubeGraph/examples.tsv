@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+q3-has-8-vertices-12-edges			[List, [VertexCount, [HypercubeGraph, 3]], [EdgeCount, [HypercubeGraph, 3]]]	[List, 8, 12]	$Q_3$: 8 vertices, $3 \cdot 2^2 = 12$ edges

@@ -1,0 +1,9 @@
+---
+name: ToDistinct
+domain: Combinatorics
+signature: ToDistinct(...)
+summary: "Euler (Glaisher): odd → distinct"
+mapOn:
+  - IntegerPartition
+stub: carrier
+---

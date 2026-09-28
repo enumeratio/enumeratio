@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+four-closed-geodesics-of-symbolic-length-4			[ModularClasses, 4]	[List, "'LLLR'", "'LLRR'", "'LRLR'", "'LRRR'"]	four closed geodesics of symbolic length 4
+same-word-length-as-lllr-different-geodesic	Scope		[ModularTrace, "'LRLR'"]	7	same word length as $LLLR$, different geodesic length
+the-same-geodesic-entered-elsewhere	Properties		[ModularClass, "'LRL'"]	"'LLR'"	the same geodesic, entered elsewhere
+lrlr-is-lr-traversed-twice	Properties		[IsPrimitiveClass, "'LRLR'"]	False	$LRLR$ is $LR$ traversed twice
+the-same-geodesic-yet-again	Properties		[ModularClass, "'RLL'"]	"'LLR'"	the same geodesic, entered yet another way
+lrr-is-primitive	Properties		[IsPrimitiveClass, "'LRR'"]	True	$LRR$ is primitive

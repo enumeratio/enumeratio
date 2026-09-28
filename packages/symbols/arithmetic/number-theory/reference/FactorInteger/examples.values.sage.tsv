@@ -1,0 +1,44 @@
+id	in	out	verdict
+factorinteger-360	list(factor(360))	[(2, 3), (3, 2), (5, 1)]	
+factorinteger-84	list(factor(84))	[(2, 2), (3, 1), (7, 1)]	
+factorinteger-120	list(factor(120))	[(2, 3), (3, 1), (5, 1)]	
+factorinteger-36	list(factor(36))	[(2, 2), (3, 2)]	
+threads-element-wise-over-a-list-as-wolfram-s	list(factor([12, 18]))	TypeError: unable to factor [12, 18]	error
+5-i-1-2i-2-i			
+3-4i-2-i-2	list(factor((3 + 4*I)))	[(2*I - 1, 2)]	disagree
+a-21-digit-gaussian-integer-through-its-norm	list(factor((100000000000000000039 + 100000000000000000129*I)))	[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)]	disagree
+rationals-the-denominator-s-primes-get-negative	list(factor((3/8)))	[(2, -3), (3, 1)]	
+9-12i-3-2-i-2	list(factor((9 + 12*I)))	[(2*I - 1, 2), (3, 1)]	disagree
+36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime			
+listable-threads-over-a-list	list(factor([11, 101, 1001]))	TypeError: unable to factor [11, 101, 1001]	error
+a-21-digit-prime-cubed-factors-at-once	list(factor(((100000000000000000039)^3)))	[(100000000000000000039, 3)]	
+factorinteger-of-a-negative-rational	list(factor((-3/8)))	[(2, -3), (3, 1)]	disagree
+a-unit-factors-as-itself	list(factor((0 + 1*I)))		
+the-ramified-prime-above-2-factors-as-itself	list(factor((1 + 1*I)))		
+a-prime-above-5-factors-as-itself	list(factor((2 + 1*I)))		
+a-composite-of-norm-25-2-i-2	list(factor((3 + 4*I)))		
+a-composite-of-norm-25-the-conjugate-family	list(factor((4 + 3*I)))		
+an-associate-carries-its-normalising-unit-in	list(factor((-3 + -4*I)))		
+a-composite-with-a-real-and-a-gaussian-factor	list(factor((6 + 8*I)))		
+a-large-norm-composite	list(factor((123 + 456*I)))		
+an-associate-carries-its-unit-times-i	list(factor((4 + -3*I)))		
+a-prime-above-13-factors-as-itself	list(factor((3 + 2*I)))		
+a-real-prime-s-associate-by-the-unit-i-factors	list(factor((0 + 7*I)))		
+a-negative-real-prime-complex-argument-form	list(factor(-7))		
+a-composite-past-2-53-through-its-norm	list(factor((100000000000000000001 + 9007199254740993*I)))		
+7-3-mod-4-factors-as-itself-in-z-i			
+a-negative-prime-3-mod-4			
+13-1-mod-4-splits-into-two-gaussian-primes			
+a-real-composite-5-squared-factors-through-its			
+a-negative-real-composite			
+19-3-mod-4-factors-as-itself			
+2-ramifies-as-i-1-i-2			
+4-factors-through-the-ramified-prime			
+multiplying-the-p-e-factors-back-together	bool((((2)^3) * ((3)^2) * 5) == 360)	True	
+compute-engine-returns-the-trivial-factor-1-1	list(factor(1))	[]	disagree
+0-is-represented-as-0-1	list(factor(0))	ArithmeticError: factorization of 0 is not defined	error
+negative-numbers-carry-an-explicit-1-unit-factor	list(factor(-60))	[(2, 2), (3, 1), (5, 1)]	disagree
+1-is-a-unit-and-factors-as-itself	list(factor(-1))	[]	disagree
+factorinteger-neg-12	list(factor(-12))	[(2, 2), (3, 1)]	disagree
+a-non-integer-real-stays-unevaluated	list(factor(2.5))	[]	disagree
+the-hardy-ramanujan-taxicab-number-7-times-13	list(factor(1729))	[(7, 1), (13, 1), (19, 1)]	

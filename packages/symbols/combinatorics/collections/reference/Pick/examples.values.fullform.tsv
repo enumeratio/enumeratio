@@ -1,0 +1,3 @@
+id	in
+keeps-elements-where-sel-is-true	Pick[List[a, b, c], List[True, False, True]]
+an-explicit-pattern-keeps-elements-matching	Pick[List[a, b, c, d], List[1, 0, 1, 0], 1]

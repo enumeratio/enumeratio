@@ -1,0 +1,9 @@
+---
+name: Ties
+domain: Combinatorics
+signature: Ties(...)
+summary: Ties (repeated preferences)
+statOn:
+  - ParkingFunction
+stub: carrier
+---

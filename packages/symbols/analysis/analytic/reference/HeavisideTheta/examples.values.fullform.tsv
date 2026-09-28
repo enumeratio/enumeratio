@@ -1,0 +1,7 @@
+id	in
+heavisidetheta-negative	HeavisideTheta[-1]
+heavisidetheta-positive	HeavisideTheta[1]
+heavisidetheta-zero-unevaluated	HeavisideTheta[0]
+heavisidetheta-product-both-positive	HeavisideTheta[1, 2]
+heavisidetheta-product-one-negative	HeavisideTheta[1, -1]
+heavisidetheta-derivative	D[HeavisideTheta[x], x]

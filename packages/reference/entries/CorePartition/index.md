@@ -1,0 +1,13 @@
+---
+name: CorePartition
+domain: Combinatorics
+signature: CorePartition(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: CorePartition(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> core_partition
+---

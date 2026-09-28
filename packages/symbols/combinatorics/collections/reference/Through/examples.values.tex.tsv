@@ -1,0 +1,3 @@
+id	in	out
+distributes-a-list-of-functions-over-argument	\mathrm{Through}(\bigl\lbrack f, g\bigr\rbrack\lhd x)	\bigl\lbrack f(x), g(x)\bigr\rbrack
+distributes-an-add-of-functions-evaluates-sum	\mathrm{Through}(f+g\lhd x)	g(x)+f(x)

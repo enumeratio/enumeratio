@@ -1,0 +1,18 @@
+id	in	out
+join-list-1-2-list-3-4	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
+join-list-1-2-list-3-4-list-5	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5\bigr\rbrack)	\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+join-list-a-b-c-list-x-y-list-u-v-w	\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack)	\bigl\lbrack a, b, c, x, y, u, v, w\bigr\rbrack
+join-tolerates-shorter-array-second	\mathrm{Join}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack1, 2, x\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+join-splices-any-shared-head	\mathrm{Join}(f(a), f(b), f(c))	f(a, b, c)
+join-associations-first-seen-order	\mathrm{Join}(\mathrm{Association}(\mathrm{Rule}(a, b)), \mathrm{Association}(\mathrm{Rule}(c, d), \mathrm{Rule}(a, f)))	\mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
+a-trailing-integer-argument-joins-at-that-level	\mathrm{Join}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack1, 2, 5, 6\bigr\rbrack, \bigl\lbrack3, 4, 7, 8\bigr\rbrack\bigr\rbrack
+joining-matrices-stacks-their-rows	\mathrm{Join}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+sets-as-well-as-lists-as-long-as-all-arguments	\mathrm{Join}(\lbrace1, 2\rbrace, \lbrace3\rbrace)	\lbrace1, 2, 3\rbrace
+a-lazy-range-is-spliced-in	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, 3..5)	\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+with-no-arguments-the-empty-list	\mathrm{Join}()	\bigl\lbrack\bigr\rbrack
+at-level-2-matrices-are-joined-side-by-side	\mathrm{Join}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack a, b, 1, 2\bigr\rbrack, \bigl\lbrack c, d, 3, 4\bigr\rbrack\bigr\rbrack
+ragged-rows-join-at-level-2-too	\mathrm{Join}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack7\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack4\bigr\rbrack, \bigl\lbrack8\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5, 6, 7, 8\bigr\rbrack\bigr\rbrack
+a-row-missing-from-the-shorter-array-simply-isn	\mathrm{Join}(\bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+any-head-as-long-as-all-the-arguments-share-it	\mathrm{Join}(f(a), f(b))	f(a, b)
+join-a-b-flatten-a-b-1-see-flatten	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)=\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)	\top
+join-is-associative	\mathrm{Join}(\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack), \bigl\lbrack u, v, w\bigr\rbrack)=\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Join}(\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack))	\top

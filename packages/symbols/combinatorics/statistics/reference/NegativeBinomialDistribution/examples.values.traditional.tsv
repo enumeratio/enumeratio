@@ -1,0 +1,5 @@
+id	in	out
+negativebinomial-pdf-exact		
+negativebinomial-cdf-exact	\operatorname{CDF}(\mathrm{NegativeBinomialDistribution}(5, \frac{1}{3}), 2)	I_{\frac{1}{3}}(5, 3)
+negativebinomial-mean-exact		
+negativebinomial-variance-exact		

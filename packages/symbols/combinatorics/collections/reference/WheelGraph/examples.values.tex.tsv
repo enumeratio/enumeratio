@@ -1,0 +1,2 @@
+id	in	out
+wheel-6-edge-count	\mathrm{EdgeCount}(\mathrm{WheelGraph}(6))	10

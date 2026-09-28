@@ -1,3 +1,0 @@
-- id: wheel-6-edge-count
-  expr: [EdgeCount, [WheelGraph, 6]]
-  expected: 10

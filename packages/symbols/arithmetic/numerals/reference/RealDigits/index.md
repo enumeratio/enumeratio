@@ -1,0 +1,26 @@
+---
+name: RealDigits
+domain: Numeral systems
+signature: RealDigits(x, base?, len?)
+summary: The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.
+signatures:
+  - call: RealDigits(x)
+    description: the exact digits of a rational (integers included), any repeating block nested
+    library: enumeratio-numerals
+    type: (value, integer?, integer?) -> list
+  - call: RealDigits(x, base)
+    description: the same, in the given base
+  - call: RealDigits(x, base, len)
+    description: "`len` digits — the exact expansion for a rational, or `len` digits of a numeric approximation (base 10 only) for anything else"
+details:
+  - "The result is `{{d₁, d₂, ...}, n}`: the value is `0.d₁d₂d₃... × baseⁿ`, so `n` is the count of digits before the point"
+  - "A rational's expansion is EXACT: a terminating one stops, a repeating one nests its period as the list's last element — `RealDigits(1/7)` is `{{{1,4,2,8,5,7}}, 0}`"
+  - When the integer part is 0, leading fractional zeros are dropped from the digit list and folded into a more negative exponent instead of spelled out — `RealDigits(1/8, 2)` is `{{1}, -2}`, not `{{0,0,1}, 0}`
+  - For anything without an exact rational value — `Pi`, a `Sqrt`, `ExponentialE` — `len` is required, and the digits are TRUNCATED, not rounded, from a numeric approximation computed a little beyond `len` digits
+  - Sign is dropped, like every other digit head here
+seeAlso:
+  - IntegerDigits
+  - FromDigits
+names:
+  wolframIdentity: true
+---

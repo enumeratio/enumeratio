@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+keeps-elements-where-sel-is-true			[Pick, [List, a, b, c], [List, True, False, True]]	[List, a, c]
+an-explicit-pattern-keeps-elements-matching	Scope		[Pick, [List, a, b, c, d], [List, 1, 0, 1, 0], 1]	[List, a, c]

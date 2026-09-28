@@ -1,0 +1,14 @@
+---
+name: FormDiscriminant
+domain: The modular group
+signature: FormDiscriminant(form)
+summary: The discriminant $D = b^2 - 4ac$ of a [[QuadraticForm]].
+signatures:
+  - call: FormDiscriminant(form)
+    description: $b^2-4ac$
+    library: enumeratio-modular
+    type: (expression<QuadraticForm>) -> integer
+seeAlso:
+  - QuadraticForm
+  - FormClassNumber
+---

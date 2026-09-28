@@ -1,0 +1,7 @@
+id	in	out
+the-partitions-of-10-into-distinct-parts		
+the-empty-partition		
+exact-for-large-n		
+threads-over-a-list		
+counts-the-distinctpartitions-family	\mathrm{PartitionsQ}(10)=\mathrm{Count}(\mathrm{DistinctPartitions}(10))	\mathrm{True}
+euler-as-many-partitions-into-odd-parts-as-into	\mathrm{PartitionsQ}(12)=\mathrm{Count}(\mathrm{IntegerPartitions}(12, \mathrm{All}, \bigl\lbrack1, 3, 5, 7, 9, 11\bigr\rbrack))	\mathrm{True}

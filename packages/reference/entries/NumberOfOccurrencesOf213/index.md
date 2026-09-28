@@ -1,0 +1,9 @@
+---
+name: NumberOfOccurrencesOf213
+domain: Combinatorics
+signature: NumberOfOccurrencesOf213(...)
+summary: Number of occurrences of the vincular pattern 21-3
+statOn:
+  - Permutation
+stub: carrier
+---

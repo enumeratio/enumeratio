@@ -1,0 +1,6 @@
+id	in	out
+the-principal-square-root-of-a-diagonal-matrix	\mathrm{MatrixFunction}(\mathrm{Sqrt}, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack
+on-a-diagonal-matrix-f-acts-on-the-diagonal	\mathrm{MatrixFunction}(f, \bigl\lbrack\bigl\lbrack a, 0\bigr\rbrack, \bigl\lbrack0, b\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack f(a), 0\bigr\rbrack, \bigl\lbrack0, f(b)\bigr\rbrack\bigr\rbrack
+matrixfunction-cos-list-list-0-0-list-0-0	\mathrm{MatrixFunction}(\cos, \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+with-exp-it-is-matrixexp	\mathrm{MatrixFunction}(\mathrm{Exp}, \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+a-polynomial-f-agrees-with-the-matrix-power	\mathrm{MatrixFunction}(()\mapsto\operatorname{\_1}^2, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack

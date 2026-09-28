@@ -1,0 +1,32 @@
+id	in	out	tex.in	tex.out
+3-cdot-5-15-equiv-1	ModularInverse[3, 7]	5	\text{ModularInverse}[3,7]	5
+modularinverse-2-11	ModularInverse[2, 11]			
+a-negative-argument-3-cdot-2-6-equiv-1	ModularInverse[-3, 7]			
+a-21-digit-modulus	ModularInverse[3, Plus[Power[10, 20], 1]]			
+listable-threads-over-a-list	ModularInverse[List[2, 3, 4], 11]			
+2-i-6-4i-8-14i-equiv-1-pmod-7	ModularInverse[Complex[2, 1], 7]	6 + 4*I	\text{ModularInverse}[2+i,7]	6+4 i
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	ModularInverse[Complex[11, -7], Complex[7, 4]]	-1 + 2*I	\text{ModularInverse}[11-7 i,7+4 i]	-1+2 i
+a-gaussian-base-and-a-gaussian-modulus	ModularInverse[Complex[3, -1], Complex[5, 2]]			
+inverse-mod-a-unit-is-always-0	ModularInverse[Complex[3, 4], 1]	0	\text{ModularInverse}[3+4 i,1]	0
+inverse-mod-i-is-always-0	ModularInverse[Complex[3, 4], Complex[0, 1]]	0	\text{ModularInverse}[3+4 i,i]	0
+a-unit-is-its-own-inverse-mod-anything-it-s-a	ModularInverse[Complex[0, 1], Complex[2, 1]]	-I	\text{ModularInverse}[i,2+i]	-i
+inverse-of-a-gaussian-prime-mod-a-coprime	ModularInverse[Complex[2, 1], Complex[2, -1]]	-1	\text{ModularInverse}[2+i,2-i]	-1
+inverse-mod-a-real-prime-3-mod-4	ModularInverse[Complex[2, 1], 3]	1 + I	\text{ModularInverse}[2+i,3]	1+i
+no-inverse-when-the-gcd-isn-t-a-unit-shared	ModularInverse[Complex[3, 4], Complex[2, 1]]	ModularInverse[3 + 4*I, 2 + I]	\text{ModularInverse}[3+4 i,2+i]	\text{ModularInverse}[3+4 i,2+i]
+inverse-mod-a-negative-real-prime	ModularInverse[Complex[2, 1], -7]	-1 - 3*I	\text{ModularInverse}[2+i,-7]	-1-3 i
+inverse-mod-a-composite-gaussian-modulus-norm-25	ModularInverse[Complex[1, 1], Complex[3, 4]]	3*I	\text{ModularInverse}[1+i,3+4 i]	3 i
+inverse-mod-a-modulus-past-2-53	ModularInverse[Complex[4, 1], Complex[100000000000000000001, 9007199254740993]]	-47059883199912322470 + 11760467200350710121*I	\text{ModularInverse}[4+i,100000000000000000001+9007199254740993 i]	-47059883199912322470+11760467200350710121 i
+inverse-mod-1-4i-the-other-prime-above-17	ModularInverse[Complex[8, 2], Complex[1, 4]]	-1	\text{ModularInverse}[8+2 i,1+4 i]	-1
+a-real-base-inverted-mod-a-gaussian-modulus	ModularInverse[5, Complex[2, 1]]	ModularInverse[5, 2 + I]	\text{ModularInverse}[5,2+i]	\text{ModularInverse}[5,2+i]
+inverse-mod-a-large-norm-gaussian	ModularInverse[Complex[1, 1], Complex[123, 456]]	-166 + 289*I	\text{ModularInverse}[1+i,123+456 i]	-166+289 i
+inverse-mod-a-negative-real-composite-has-none	ModularInverse[Complex[5, 5], -15]	ModularInverse[5 + 5*I, -15]	\text{ModularInverse}[5+5 i,-15]	\text{ModularInverse}[5+5 i,-15]
+inverse-of-a-prime-above-13-mod-the-other-prime	ModularInverse[Complex[3, 2], Complex[2, 3]]	-2	\text{ModularInverse}[3+2 i,2+3 i]	-2
+inverse-mod-a-negative-associate	ModularInverse[Complex[2, 1], Complex[-2, -3]]	-1 - I	\text{ModularInverse}[2+i,-2-3 i]	-1-i
+inverse-mod-a-real-composite-5-squared-has-none	ModularInverse[Complex[5, 5], 25]	ModularInverse[5 + 5*I, 25]	\text{ModularInverse}[5+5 i,25]	\text{ModularInverse}[5+5 i,25]
+inverse-of-a-real-prime-s-associate-by-i-mod-a	ModularInverse[Complex[0, 7], Complex[3, 2]]	-2*I	\text{ModularInverse}[7 i,3+2 i]	-2 i
+inverse-mod-a-real-prime-19	ModularInverse[Complex[2, 1], 19]	8 + 15*I	\text{ModularInverse}[2+i,19]	8+15 i
+no-inverse-mod-0	ModularInverse[Complex[2, 1], 0]	ModularInverse[2 + I, 0]	\text{ModularInverse}[2+i,0]	\text{ModularInverse}[2+i,0]
+a-real-base-with-no-inverse-mod-a-shared-factor	ModularInverse[5, Complex[5, 5]]	ModularInverse[5, 5 + 5*I]	\text{ModularInverse}[5,5+5 i]	\text{ModularInverse}[5,5+5 i]
+the-same-as-powermod-with-exponent-1	(ModularInverse[3, 7] == PowerMod[3, -1, 7])			
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]			
+gcd-2-4-2-no-inverse	ModularInverse[2, 4]	ModularInverse[2, 4]	\text{ModularInverse}[2,4]	\text{ModularInverse}[2,4]

@@ -1,0 +1,6 @@
+id	in	out
+multinormal-mean	Mean(MultinormalDistribution([1, 2], [[4, 0], [0, 9]]))	[1, 2]
+multinormal-mean-one-arg	Mean(MultinormalDistribution([[1, 0], [0, 1]]))	[0, 0]
+multinormal-variance	Variance(MultinormalDistribution([1, 2], [[4, 0], [0, 9]]))	[4, 9]
+multinormal-covariance	Covariance(MultinormalDistribution([1, 2], [[4, 1], [1, 9]]))	[[4, 1], [1, 9]]
+multinormal-pdf-standard-origin	PDF(MultinormalDistribution([0, 0], [[1, 0], [0, 1]]), [0, 0])	1 / (2Pi)

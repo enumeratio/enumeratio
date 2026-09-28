@@ -1,0 +1,6 @@
+id	in	out
+truncated-uniform-pdf	PDF(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)), 1 / 2)	2
+truncated-uniform-pdf-outside	PDF(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)), 1 / 10)	0
+truncated-uniform-mean	Mean(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)))	1 / 2
+truncated-normal-mean-symmetric	Mean(TruncatedDistribution([-1, 1], NormalDistribution(0, 1)))	0
+truncated-discrete-half-open-excludes-lower	PDF(TruncatedDistribution([1, 4], PoissonDistribution(2)), 1)	0

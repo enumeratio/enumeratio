@@ -1,0 +1,12 @@
+id	in	back
+five-six-seven	Pochhammer[5, 3]	[Pochhammer, 5, 3]
+from-1-is-the-factorial	Pochhammer[1, 5]	[Pochhammer, 1, 5]
+at-risingfactorial-2-5i	N[Pochhammer[Complex[2, 5], Complex[3, 2]]]	[N, [Pochhammer, [Complex, 2, 5], [Complex, 3, 2]]]
+a-symbolic-base	Pochhammer[a, 3]	[Pochhammer, a, 3]
+a-rational-base	Pochhammer[Rational[1, 2], 3]	[Pochhammer, [Rational, 1, 2], 3]
+a-symbolic-order-is-pochhammer	Pochhammer[a, n]	[Pochhammer, a, n]
+complex-base-and-order	N[Pochhammer[Complex[2, 5], Complex[3, 2]]]	[N, [Pochhammer, [Complex, 2, 5], [Complex, 3, 2]]]
+agrees-with-pochhammer	Equal[Pochhammer[4, 3], Pochhammer[4, 3]]	[Equal, [Pochhammer, 4, 3], [Pochhammer, 4, 3]]
+negative-order	Pochhammer[5, -2]	[Pochhammer, 5, -2]
+a-zero-factor	Pochhammer[-3, 4]	[Pochhammer, -3, 4]
+a-pole-of-gamma-a	N[Pochhammer[-2, Complex[1, 1]]]	[N, [Pochhammer, -2, [Complex, 1, 1]]]

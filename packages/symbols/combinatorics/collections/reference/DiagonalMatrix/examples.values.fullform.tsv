@@ -1,0 +1,4 @@
+id	in
+main-diagonal	DiagonalMatrix[List[1, 2, 3]]
+super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]
+sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]

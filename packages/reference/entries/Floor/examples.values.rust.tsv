@@ -1,0 +1,28 @@
+id	in	out	verdict
+floor-7-over-2	floor(rational(n(7), n(2)))	3	
+floor-3p7	floor(x(3.7))	3.0	
+integers-pass-through-unchanged	floor(n(5))	5	
+threads-element-wise-over-a-list	floor(list(vec![x(1.2), x(-1.2), x(3.7)]))	panic: threading: a list where the crate takes a scalar	error
+floor-2p4	floor(x(2.4))	2.0	
+floor-2p6	floor(x(2.6))	2.0	
+floor-2p7	floor(x(2.7))	2.0	
+floor-add-x-1-a-free-variable-is-untouched			
+stays-symbolic			
+exact-radicals-are-decided-numerically	floor(sqrt(n(50)))	7.0	
+a-negative-radicand-inside-floor	floor(sqrt(n(-1)))	NaN	disagree
+evaluates-at-an-exact-constant-lfloor-pi-rfloor	floor(x(std::f64::consts::PI))	3.0	
+and-at-its-negative-lfloor-pi-rfloor-4	floor((-(x(std::f64::consts::PI))))	-4.0	
+a-second-argument-floors-to-a-multiple-of-it-the			
+the-step-needn-t-be-an-integer-3-5-cdot-lfloor			
+nor-rational-2-pi-e-approx-3-57-floors-to-the			
+floors-the-real-and-imaginary-parts-separately			
+how-many-full-5-item-packs-fit-in-17-items	floor((n(17) / n(5)))	3	
+legendre-s-formula-100-ends-in-lfloor-100-5	(floor((n(100) / n(5))) + floor((n(100) / n(25))))	24	
+the-number-of-decimal-digits-of-n-is-lfloor-log			
+the-first-four-digits-of-e	floor((n(1000) * x(std::f64::consts::E)))	2718.0	
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))	true	
+lfloor-x-rfloor-lceil-x-rceil	equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))	true	
+idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor			
+a-zero-divisor-inside-floor	floor((n(17) / n(0)))	panic: denominator == 0	error
+rounds-toward-infty-not-toward-0-floor-3-2-is-4	floor(x(-3.2))	-4.0	
+infinities-pass-through-unchanged			

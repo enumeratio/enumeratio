@@ -1,0 +1,4 @@
+id	in	out
+falling-factorial-5-3-60	\mathrm{FallingFactorial}(5, 3)	60
+falling-factorial-3-5-0	\mathrm{FallingFactorial}(3, 5)	0
+falling-factorial-half-2-neg-1-4	\mathrm{FallingFactorial}(\frac{1}{2}, 2)	-\frac{1}{4}

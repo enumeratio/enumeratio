@@ -1,0 +1,7 @@
+id	in
+heavisidelambda-peak	HeavisideLambda[0]
+heavisidelambda-endpoint	HeavisideLambda[1]
+heavisidelambda-neg-endpoint	HeavisideLambda[-1]
+heavisidelambda-outside	HeavisideLambda[2]
+heavisidelambda-1-4	HeavisideLambda[Rational[1, 4]]
+heavisidelambda-1-2	HeavisideLambda[Rational[1, 2]]

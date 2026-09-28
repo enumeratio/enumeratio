@@ -1,0 +1,5 @@
+id	in	out
+sigma1sigma2-cycles-the-three-strands	\mathrm{BraidPermutation}(\mathrm{Braid}(3, \bigl\lbrack1, 2\bigr\rbrack))	\bigl\lbrack2, 3, 1\bigr\rbrack
+two-positive-crossings-and-one-negative	\mathrm{BraidWrithe}(\mathrm{Braid}(3, \bigl\lbrack1, -2, 1\bigr\rbrack))	1
+the-hopf-link	\mathrm{BraidComponents}(\mathrm{Braid}(2, \bigl\lbrack1, 1\bigr\rbrack))	2
+t-2-q-is-a-knot-for-odd-q	\mathrm{BraidIsKnot}(\mathrm{TorusBraid}(2, 5))	\top

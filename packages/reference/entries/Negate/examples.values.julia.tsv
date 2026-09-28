@@ -1,0 +1,16 @@
+id	in	out
+neg-5	(-(5))	-5
+5	(-(-5))	5
+its-own-negation	(-(0))	0
+neg-3-over-4	(-((3 // 4)))	-0.75
+threads-element-wise-over-a-list	[(-(1)), (-(-2)), (-(3))]	[-1, 2, -3]
+stays-symbolic		
+neg-1-plus-2i	(-(complex(1, 2)))	(-1-2j)
+threads-over-a-matrix-entry-by-entry	[[(-(1)), (-(-2))], [(-(3)), (-(4))]]	[[-1, 2], [-3, -4]]
+folds-into-a-numeric-coefficient		
+recording-a-42-50-charge-as-a-negative-balance	(-(42.5))	-42.5
+double-negation-cancels-x-x		
+distributes-over-a-sum-a-b-a-b		
+a-b-b-a		
+the-additive-inverse-x-x-0		
+flips-signed-infinities-too		

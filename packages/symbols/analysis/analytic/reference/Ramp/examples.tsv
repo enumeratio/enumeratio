@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+ramp-negative			[Ramp, -2]	0	
+ramp-positive			[Ramp, 3]	3	
+ramp-zero			[Ramp, 0]	0	
+ramp-equals-x-times-unitstep	Properties		[Equal, [Ramp, 5], [Multiply, 5, [UnitStep, 5]]]	True	Ramp(x) = x * [[UnitStep]](x)
+ramp-derivative	Properties		[D, [Ramp, x], x]	[Piecewise, [List, [List, 0, [Less, x, 0]], [List, 1, [Less, 0, x]]], Indeterminate]	0 or 1 away from the kink, undefined at x = 0

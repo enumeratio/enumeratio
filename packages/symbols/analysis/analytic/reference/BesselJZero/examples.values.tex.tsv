@@ -1,0 +1,8 @@
+id	in	out
+j-3-2-1-4-4934-also-the-first-positive-root-of	N(\mathrm{BesselJZero}(\frac{3}{2}, 1))	4.493\,409\,457\,909\,064
+j-0-1-2-4048	N(\mathrm{BesselJZero}(0, 1))	2.404\,825\,557\,695\,773
+the-third-zero-of-j-0	N(\mathrm{BesselJZero}(0, 3))	8.653\,727\,912\,911\,013
+j-3-2-2	N(\mathrm{BesselJZero}(\frac{3}{2}, 2))	7.725\,251\,836\,937\,707
+j-1-2	N(\mathrm{BesselJZero}(1, 2))	7.015\,586\,669\,815\,619
+j-5-2-1	N(\mathrm{BesselJZero}(\frac{5}{2}, 1))	5.763\,459\,196\,894\,55
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	\mathrm{chop}(\tan(N(\mathrm{BesselJZero}(3/2, 1)))-N(\mathrm{BesselJZero}(3/2, 1)))	0

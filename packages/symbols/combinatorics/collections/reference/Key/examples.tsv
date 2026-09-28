@@ -1,0 +1,3 @@
+id	section	role	expr	expected	wolfram.kind	wolfram.note
+looks-up-an-existing-key			[At, [Association, [Rule, a, 1], [Rule, b, 2]], [Key, b]]	2		
+missing-key-answers-missing	Scope		[At, [Association, [Rule, a, 1]], [Key, z]]	Missing	convention	compute-engine's Missing is a bare marker symbol; Wolfram's Part/Association returns the compound Missing["KeyAbsent", Key[z]], carrying the failed key along. Same outcome, different spelling of absent.

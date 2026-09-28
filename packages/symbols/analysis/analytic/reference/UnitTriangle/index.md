@@ -1,0 +1,16 @@
+---
+name: UnitTriangle
+domain: Elementary functions
+signature: UnitTriangle(x)
+summary: "The unit triangle function: 1 - |x| for -1 <= x <= 1, 0 otherwise."
+signatures:
+  - call: UnitTriangle(x)
+    description: max(1 - |x|, 0).
+    library: "@enumeratio/analytic"
+    type: (real) -> number
+details:
+  - Continuous everywhere, including the endpoints -- UnitTriangle(±1) = 0 falls out of the formula itself, no special case needed.
+  - The same function as [[HeavisideLambda]]; Wolfram keeps both names for the two contexts (elementary vs. the Heaviside/Dirac generalized-function family) it shows up in.
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,5 @@
+id	in	out
+isnumeric-pi	\mathrm{IsNumeric}(\pi)	\mathrm{True}
+isnumeric-literal	\mathrm{IsNumeric}(5)	\mathrm{True}
+isnumeric-plain-symbol	\mathrm{IsNumeric}(x)	\mathrm{False}
+isnumeric-sqrt-2	\mathrm{IsNumeric}(\sqrt{2})	\mathrm{True}

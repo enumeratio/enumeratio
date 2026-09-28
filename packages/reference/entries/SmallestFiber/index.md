@@ -1,0 +1,9 @@
+---
+name: SmallestFiber
+domain: Combinatorics
+signature: SmallestFiber(...)
+summary: Smallest fiber
+statOn:
+  - Surjection
+stub: carrier
+---

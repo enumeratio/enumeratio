@@ -1,0 +1,34 @@
+id	in	out	verdict
+ln-1	log(1)	0	
+ln-exponentiale	log(E)	1	
+ln-0	log(0)	zoo	disagree
+a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
+a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + I*pi	
+ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
+n-for-a-decimal-value	N(log(1000), 30)	6.90775527898213705205397436405	
+arbitrary-precision-via-n	N(log(Rational(5, 2)), 30)	0.916290731874155065183527211768	
+evaluates-at-a-complex-argument	log((2.5 + 1*I))	0.990500734433292 + 0.380506377112365*I	
+a-negative-float-gives-the-principal-complex	log(-2.5)	0.916290731874155 + I*pi	
+threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]	
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	log(1000)	
+ln-exponentiale-pow-3	log((S(E)**3))	3	
+ln-positiveinfinity	log(oo)		
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(zoo)		
+ln-i-i-pi-2-exactly	log(I)	I*pi/2	
+a-unit-fraction-becomes-a-negated-logarithm-ln	log(Rational(1, 2))	-log(2)	
+interval-arithmetic-ln-is-increasing-so-ln-frac			
+uncertainty-propagation-ln-2-pm-0-01-approx-0			
+ln-exp-x	log(exp(Symbol("x")))	True	
+derivative-1-x	diff(log(Symbol("x")), Symbol("x"))		
+antiderivative-x-ln-x-x			
+mercator-series-for-ln-1-x			
+to-40-significant-digits-every-one-correctly	N(log(2), 30)	0.693147180559945309417232121458	
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log(Rational(-1, 2))	-log(2) + I*pi	
+n-decimalizes-ln-i-not-just-the-exact-form	N(log(I), 30)	1.57079632679489661923132169164*I	
+an-integer-power-negative-argument	log(-2)	log(2) + I*pi	
+n-of-a-negative-integer-argument	N(log(-2), 30)	0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
+ln-neg-6	log(-6)	log(6) + I*pi	
+n-of-a-negative-rational-argument	N(log(Rational(-1, 2)), 30)	-0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
+inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
+product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
+powerexpand-splits-a-logarithm-of-a-product			

@@ -1,0 +1,3 @@
+id	in	out
+a-plain-triangle-is-simple	IsSimpleGraph(CompleteGraph(3))	True
+a-repeated-undirected-edge-is-not-simple	IsSimpleGraph(Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 1)]))	False

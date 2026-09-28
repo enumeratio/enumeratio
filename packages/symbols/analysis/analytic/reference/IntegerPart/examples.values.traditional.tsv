@@ -1,0 +1,9 @@
+id	in	out
+integerpart-2p4		
+truncates-toward-0-unlike-floor		
+integerpart-7-over-2		
+integerpart-neg-7-over-2		
+exact-numeric-arguments-stay-exact		
+threads-element-wise-over-a-list		
+complex-numbers-real-and-imaginary-parts		
+x-integerpart-x-fractionalpart-x	\mathrm{IntegerPart}(-\frac{7}{2})+\mathrm{FractionalPart}(-\frac{7}{2})=-\frac{7}{2}	\mathrm{True}

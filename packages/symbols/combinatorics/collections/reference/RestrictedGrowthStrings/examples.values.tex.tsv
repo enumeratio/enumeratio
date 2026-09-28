@@ -1,0 +1,4 @@
+id	in	out
+count-restrictedgrowthstrings-4	\mathrm{Count}(\mathrm{RestrictedGrowthStrings}(4))	15
+first-element-of-restrictedgrowthstrings-4	\mathrm{RestrictedGrowthStrings}(4)[1]	\bigl\lbrack0, 0, 0, 0\bigr\rbrack
+every-element-of-restrictedgrowthstrings-4	\mathrm{Take}(\mathrm{RestrictedGrowthStrings}(4), 5)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 2\bigr\rbrack\bigr\rbrack

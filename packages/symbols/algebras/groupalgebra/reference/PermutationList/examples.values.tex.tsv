@@ -1,0 +1,4 @@
+id	in	out
+cycle-to-image-list	\mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack3, 1, 2\bigr\rbrack
+padded-to-length	\mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack), 5)	\bigl\lbrack1, 3, 2, 4, 5\bigr\rbrack
+round-trips-with-permutation-cycles	\mathrm{PermutationCycles}(\mathrm{PermutationList}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)))	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)

@@ -1,0 +1,17 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
+multiplicativeorder-5-8			[MultiplicativeOrder, 5, 8]	2					
+multiplicativeorder-3-7			[MultiplicativeOrder, 3, 7]	6					
+multiplicativeorder-5-7			[MultiplicativeOrder, 5, 7]	6					
+2-3-8-equiv-1-pmod-7-and-no-smaller-power-works			[MultiplicativeOrder, 2, 7]	3	$2^3=8\equiv1\pmod7$, and no smaller power works				
+a-negative-base-5-equiv-2-pmod-7	Scope		[MultiplicativeOrder, -5, 7]	3	a negative base: $-5 \equiv 2 \pmod 7$				
+the-first-power-of-5-to-reach-3-or-11-equiv-4-5	Scope		[MultiplicativeOrder, 5, 7, [List, 3, 11]]	2	the first power of 5 to reach 3 or $11 \equiv 4$: $5^2 = 25 \equiv 4$				
+a-10-001-digit-base-modulo-the-prime-7919	Scope		[MultiplicativeOrder, [Power, 10, 10000], 7919]	3959	a 10 001-digit base modulo the prime 7919				
+the-first-power-of-3-to-reach-pm-1-3-3-27-equiv	Scope		[MultiplicativeOrder, 3, 7, [List, -1, 1]]	3	the first power of 3 to reach $\pm 1$: $3^3 = 27 \equiv -1$				
+5-2-25-equiv-4	Scope		[MultiplicativeOrder, 5, 7, [List, 2, 3, 4]]	2	$5^2 = 25 \equiv 4$				
+a-discrete-log-mod-the-mersenne-prime-2-61-1	Scope		[MultiplicativeOrder, 3, [Subtract, [Power, 2, 61], 1], [List, 2]]	{num: "159602976958324900"}	a discrete log mod the Mersenne prime $2^{61} - 1$, whose $p - 1$ is smooth	resource	Wolfram hit the scan's per-item time or memory cap on this input; we answer it.		
+3-has-order-p-1-3-modulo-2-127-1	Scope		[MultiplicativeOrder, 3, [Subtract, [Power, 2, 127], 1]]	{num: "56713727820156410577229101238628035242"}	3 has order $(p-1)/3$ modulo $2^{127} - 1$				
+1-is-the-only-element-of-order-1	Properties		[MultiplicativeOrder, 1, 7]	1	1 is the only element of order 1				
+the-multiplicative-order-always-divides-varphi-n	Properties		[Equal, [Mod, [Totient, 7], [MultiplicativeOrder, 3, 7]], 0]	True	The multiplicative order always divides $\varphi(n)$. See [[Totient]]				
+the-discrete-log-inverts-powermod	Properties		[PowerMod, 3, [MultiplicativeOrder, 3, [Subtract, [Power, 2, 61], 1], [List, 2]], [Subtract, [Power, 2, 61], 1]]	2	the discrete log inverts [[PowerMod]]	resource	Wolfram hit the scan's per-item time or memory cap on this input; we answer it.		
+no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	Possible issues		[MultiplicativeOrder, 10, 22]	[MultiplicativeOrder, 10, 22]	No order exists when $\gcd(a,n)\neq1$; here $\gcd(10,22)=2$, so compute-engine leaves it unevaluated			undefined-form	Both decline: compute-engine answers ["MultiplicativeOrder", 10, 22] and Sage raises an error.
+3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	Possible issues		[MultiplicativeOrder, 2, 7, [List, 3]]	[MultiplicativeOrder, 2, 7, [List, 3]]	3 is not a power of 2 mod 7 — the powers are $\{1, 2, 4\}$				

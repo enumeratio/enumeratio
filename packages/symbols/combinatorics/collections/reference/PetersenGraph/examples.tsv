@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+petersen-is-3-regular			[VertexDegree, [PetersenGraph]]	[List, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]	Every vertex has degree 3
+petersen-is-not-bipartite			[IsBipartiteGraph, [PetersenGraph]]	False	Its girth is 5 (odd), so it is not bipartite
+petersen-has-10-vertices		test	[VertexCount, [PetersenGraph]]	10	
+petersen-has-15-edges		test	[EdgeCount, [PetersenGraph]]	15	

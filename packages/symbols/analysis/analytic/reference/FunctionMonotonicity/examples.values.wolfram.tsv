@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out	verdict
+a-cubic-is-increasing-everywhere	FunctionMonotonicity[Power[x, 3], x]	1	\text{FunctionMonotonicity}\left[x^3,x\right]	1	
+a-parabola-is-not-globally-monotonic	FunctionMonotonicity[Power[x, 2], x]	Indeterminate	\text{FunctionMonotonicity}\left[x^2,x\right]	\text{Indeterminate}	disagree
+exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity[Exp[x], x]	1	\text{FunctionMonotonicity}[\exp (x),x]	1	
+a-restricted-domain-answers-indeterminate	FunctionMonotonicity[Sqrt[x], x]	Indeterminate	\text{FunctionMonotonicity}\left[\sqrt{x},x\right]	\text{Indeterminate}	disagree

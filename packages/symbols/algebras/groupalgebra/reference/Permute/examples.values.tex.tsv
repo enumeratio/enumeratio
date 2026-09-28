@@ -1,0 +1,5 @@
+id	in	out
+by-a-cycle	\mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack b, c, a, d\bigr\rbrack
+by-disjoint-cycles	\mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack))	\bigl\lbrack c, d, a, b\bigr\rbrack
+by-a-one-line-word	\mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack2, 3, 4, 1\bigr\rbrack)	\bigl\lbrack d, a, b, c\bigr\rbrack
+by-a-permutation-group	\mathrm{Permute}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack)\bigr\rbrack))	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack c, a, b\bigr\rbrack, \bigl\lbrack b, c, a\bigr\rbrack\bigr\rbrack

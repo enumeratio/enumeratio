@@ -1,0 +1,19 @@
+---
+name: Arcsec
+domain: Elementary functions
+signature: Arcsec(x)
+summary: Arcsecant, the inverse of [[Sec]].
+signatures:
+  - call: Arcsec(x)
+    description: the value $y$ with $\sec(y) = x$.
+  - call: Arcsec(x)
+    description: Arcsecant, the inverse of [[Sec]].
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+seeAlso:
+  - Sec
+  - Arccos
+names:
+  wolfram: ArcSec
+---

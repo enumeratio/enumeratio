@@ -1,0 +1,22 @@
+---
+name: ClosenessCentrality
+domain: Collections
+signature: ClosenessCentrality(g, v)
+summary: How close a vertex of a [[Graph]] is, on average, to every other vertex it can reach.
+signatures:
+  - call: ClosenessCentrality(g)
+    description: every vertex's closeness centrality, in VertexList(g) order.
+    library: enumeratio-collections
+    type: (value, any?) -> list<number> | number
+  - call: ClosenessCentrality(g, v)
+    description: just v's closeness centrality.
+    library: enumeratio-collections
+details:
+  - Defined as (r - 1) / (sum of distances from v to those r - 1 vertices), where r is the number of vertices reachable from v INCLUDING v itself -- restricting to the reachable set rather than treating a disconnected graph as an error. 0 for a vertex with nothing reachable.
+  - Distances respect edge direction, same as GraphDistance (out-distances from v). Kernel-unverified against a live Wolfram session -- see the PR notes for the exact formula chosen.
+seeAlso:
+  - EigenvectorCentrality
+  - GraphDistance
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out
+belly-4-2-list-x1-x2-x3	BellY[4, 2, List[x1, x2, x3]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Y_{4,2}(\text{x1},\text{x2},\text{x3})-\left(3 \text{x2}^2+4 \text{x1} \text{x3}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Y_{4,2}\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)-\left(3 \left(-\frac{11}{5}\right)^2+4 \frac{7}{3} \frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[Y_{4,2}\left(-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right)-\left(3 \left(\frac{19}{8}\right)^2+4 \left(-\frac{17}{6}\right) \left(-\frac{23}{9}\right)\right)\right]\right],\text{Chop}\left[N\left[Y_{4,2}\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)-\left(3 \left(-\frac{11}{5}\right)^2+4 \frac{7}{3} \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+belly-5-3-list-1-2-3	BellY[5, 3, List[1, 2, 3]]			
+belly-6-2-list-2-3-5-7-11	BellY[6, 2, List[2, 3, 5, 7, 11]]			
+belly-7-4-list-1-1-2-5	BellY[7, 4, List[1, 1, 2, 5]]			
+all-ones-arguments-give-stirling-6-2	BellY[6, 2, List[1, 1, 1, 1, 1]]			
+x-j-j-gives-the-lah-number-l-4-2	BellY[4, 2, List[1, 2, 6]]			

@@ -1,0 +1,9 @@
+---
+name: ImaginaryPart
+domain: Combinatorics
+signature: ImaginaryPart(...)
+summary: Imaginary part
+statOn:
+  - GaussianInteger
+stub: carrier
+---

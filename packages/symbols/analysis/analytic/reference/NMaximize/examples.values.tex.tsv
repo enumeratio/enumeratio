@@ -1,0 +1,3 @@
+id	in	out
+two-trig-terms-on-a-bounded-interval	\mathrm{NMaximize}(\bigl\lbrack\sin(x)+\cos(2x), x\ge0\land x\le6\bigr\rbrack, x)	\bigl\lbrack1.125, \bigl\lbrack\mathrm{Rule}(x, 2.888\,912\,406\,121\,017\,6)\bigr\rbrack\bigr\rbrack
+declines-without-a-bounded-constraint	\mathrm{NMaximize}(-x^2, x)	\mathrm{NMaximize}(-x^2, x)

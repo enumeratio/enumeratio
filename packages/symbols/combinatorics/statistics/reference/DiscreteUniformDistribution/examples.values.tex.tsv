@@ -1,0 +1,5 @@
+id	in	out
+discreteuniform-pdf-exact	\operatorname{PDF}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack), 3)	\frac{1}{6}
+discreteuniform-cdf-exact	\operatorname{CDF}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack), 3)	\frac{1}{2}
+discreteuniform-mean-exact	\mathrm{mean}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack))	\frac{7}{2}
+discreteuniform-variance-exact	\mathrm{Variance}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack))	\frac{35}{12}

@@ -1,0 +1,6 @@
+id	in	out
+replaces-a-point	PermutationReplace(2, Cycles([[1, 2, 3]]))	3
+replaces-every-entry-of-a-list	PermutationReplace([1, 2, 3, 4], Cycles([[1, 2, 3]]))	[2, 3, 1, 4]
+conjugates-cycles	PermutationReplace(Cycles([[1, 2, 3]]), Cycles([[1, 2]]))	Cycles([[1, 3, 2]])
+conjugation-is-canonicalised	PermutationReplace(Cycles([[1, 2]]), Cycles([[1, 3, 2]]))	Cycles([[1, 3]])
+composition-law	"PermutationReplace(\n                    PermutationReplace(Cycles([[1, 2, 3]]), Cycles([[1, 2]])),\n                    Cycles([[1, 2, 3]]),\n                  )"	Cycles([[1, 3, 2]])

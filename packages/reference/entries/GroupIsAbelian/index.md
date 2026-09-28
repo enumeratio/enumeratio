@@ -1,0 +1,17 @@
+---
+name: GroupIsAbelian
+domain: Oracle
+signature: GroupIsAbelian(...)
+summary: Mapped through to oscar for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: oscar
+    template: is_abelian(($1).G)
+    arity: 1
+stub: carrier
+signatures:
+  - call: GroupIsAbelian(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-groupalgebra
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>) -> boolean
+---

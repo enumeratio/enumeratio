@@ -1,0 +1,2 @@
+id	in	out
+a-hand-built-first-order-ode	\mathrm{DifferentialRoot}((y, x)\mapsto\begin{cases}y^{\prime}(x)-y(x)=0\\y(0)=1\end{cases})\lhd2	7.389\,056\,098\,930\,649

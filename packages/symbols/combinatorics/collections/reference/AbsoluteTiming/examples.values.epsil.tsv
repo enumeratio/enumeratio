@@ -1,0 +1,2 @@
+id	in	out
+the-value-half-is-deterministic	AbsoluteTiming(1 + 2)[2]	3

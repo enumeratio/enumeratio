@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption
+the-first-prime-is-2			[NthPrime, 1]	2	The first prime is 2
+nthprime-10			[NthPrime, 10]	29	
+nthprime-100			[NthPrime, 100]	541	
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[NthPrime, [List, 1, 3, 4, 10]]	[List, 2, 5, 7, 29]	Threads element-wise over a list, as Wolfram's Listable heads do
+the-millionth-prime	Scope		[NthPrime, 1000000]	15485863	The millionth prime
+a-prime-gap-p-31-p-30-127-113	Applications		[Subtract, [NthPrime, 31], [NthPrime, 30]]	14	A prime gap: $p_{31}-p_{30}=127-113$
+primepi-and-nthprime-are-inverses-pi-p-n-n	Properties		[Equal, [PrimePi, [NthPrime, 100]], 100]	True	[[PrimePi]] and NthPrime are inverses: $\pi(p_n)=n$
+n-must-be-a-positive-integer-compute-engine	Possible issues		[NthPrime, 0]	[NthPrime, 0]	n must be a positive integer; compute-engine leaves NthPrime(0) unevaluated
+the-1000th-prime	Neat examples		[NthPrime, 1000]	7919	The 1000th prime

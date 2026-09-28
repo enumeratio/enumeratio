@@ -1,0 +1,6 @@
+id	in
+order-2-series-of-x	FourierSeries[x, x, 2]
+order-3-series-of-sin-is-itself	FourierSeries[Sin[x], x, 3]
+cos-squared-a-sin-cos-polynomial	FourierSeries[Power[Cos[x], 2], x, 2]
+order-0-series-of-x-squared-is-its-average	FourierSeries[Power[x, 2], x, 0]
+declines-a-mixed-polynomial-trig-product	FourierSeries[Times[x, Cos[x]], x, 1]

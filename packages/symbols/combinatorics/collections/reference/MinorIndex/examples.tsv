@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+the-lone-ascent-at-position-2			[MinorIndex, [List, 3, 1, 2]]	2	the lone ascent, at position 2
+ascents-at-both-positions-1-2			[MinorIndex, [List, 1, 2, 3]]	3	ascents at both positions: $1 + 2$
+no-ascents			[MinorIndex, [List, 3, 2, 1]]	0	no ascents
+major-and-minor-index-split-binom-n-2	Properties		[Equal, [Add, [MajorIndex, [List, 3, 1, 2]], [MinorIndex, [List, 3, 1, 2]]], [Binomial, 3, 2]]	True	major and minor index split $\binom{n}{2}$

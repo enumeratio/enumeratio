@@ -1,0 +1,3 @@
+id	in	out
+fixed-points-are-dropped	Cycles([[1, 3, 2], [5], [4]])	Cycles([[1, 3, 2]])
+applying-a-cycle	Permute([a, b, c, d], Cycles([[1, 3, 2]]))	[b, c, a, d]

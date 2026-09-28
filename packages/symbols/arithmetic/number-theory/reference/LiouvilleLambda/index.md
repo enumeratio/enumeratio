@@ -1,0 +1,19 @@
+---
+name: LiouvilleLambda
+domain: Number theory
+signature: LiouvilleLambda(n)
+summary: The Liouville function $\lambda(n)=(-1)^{\Omega(n)}$.
+signatures:
+  - call: LiouvilleLambda(n)
+    description: $(-1)^{\Omega(n)}$
+    library: enumeratio-number-theory
+    type: (integer) -> integer
+details:
+  - 'Completely multiplicative: $\lambda(mn)=\lambda(m)\lambda(n)$ for every $m,n$, not just coprime ones — unlike [[MoebiusMu]].'
+  - $\sum_{d\mid n}\lambda(d)$ is 1 when $n$ is a perfect square and 0 otherwise.
+seeAlso:
+  - MoebiusMu
+  - PrimeOmega
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,10 @@
+id	in	out
+square-5		
+same-result-for-x-and-x		
+square-2-over-3		
+canonicalizes-to-x-2		
+threads-element-wise-over-a-list		
+the-area-of-a-3-3-square-tile		
+even-function-x-2-x-2	(-5)^2=5^2	\mathrm{True}
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	(1+i)^2=2i	\mathrm{True}
+infinity-squared-stays-infinite-rather-than		

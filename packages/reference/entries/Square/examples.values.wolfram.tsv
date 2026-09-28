@@ -1,0 +1,10 @@
+id	in	out	tex.in	tex.out
+square-5	(5)^2	25	5^2	25
+same-result-for-x-and-x	(-5)^2	25	(-5)^2	25
+square-2-over-3	(Rational[2, 3])^2	4/9	\left(\frac{2}{3}\right)^2	\frac{4}{9}
+canonicalizes-to-x-2	(x)^2	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[x^2-x^2\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)^2-\left(\frac{7}{3}\right)^2\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)^2-\left(-\frac{11}{5}\right)^2\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)^2-\left(\frac{13}{4}\right)^2\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+threads-element-wise-over-a-list	(List[2, 3, -4])^2	{4, 9, 16}	\{2,3,-4\}^2	\{4,9,16\}
+the-area-of-a-3-3-square-tile	(3)^2	9	3^2	9
+even-function-x-2-x-2	((-5)^2 == (5)^2)	True	(-5)^2=5^2	\text{True}
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	((Complex[1, 1])^2 == Complex[0, 2])	True	(1+i)^2=2 i	\text{True}
+infinity-squared-stays-infinite-rather-than	(Infinity)^2	Infinity	\infty ^2	\infty

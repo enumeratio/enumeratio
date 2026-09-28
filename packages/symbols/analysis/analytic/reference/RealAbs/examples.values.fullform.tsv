@@ -1,0 +1,6 @@
+id	in
+the-absolute-value-of-a-real-number	RealAbs[-2.5]
+realabs-neg-7-over-2	RealAbs[Rational[-7, 2]]
+threads-element-wise-over-a-list	RealAbs[List[-1, 2, -3]]
+exact-numeric-arguments	RealAbs[Minus[Pi]]
+agrees-with-abs-on-the-reals	Equal[RealAbs[-5], Abs[-5]]

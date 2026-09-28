@@ -1,0 +1,9 @@
+---
+name: SqrtCount
+domain: Combinatorics
+signature: SqrtCount(...)
+summary: Number of square roots
+statOn:
+  - ModularResidue
+stub: carrier
+---

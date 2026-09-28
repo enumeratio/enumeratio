@@ -1,0 +1,5 @@
+id	in	out
+the-shortest-knotted-geodesic-draws-a-trefoil	AlexanderPolynomial("LLRLR")	t ^ 2 - t + 1
+a-rotation-by-2-on-5-points-hence-t-2-3	LorenzPermutation("LLRLR")	[3, 4, 5, 1, 2]
+braid-index-2	TripNumber("LLRLR")	2
+one-hump-each-way-is-unknotted-however-long	AlexanderPolynomial("LLLRRRR")	1

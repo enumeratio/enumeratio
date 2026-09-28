@@ -1,0 +1,8 @@
+id	in	out
+the-principal-adele-5-at-every-place		
+adele-2-profinitenumber-1-6-times-3		
+adding-a-principal-adele-and-one-carrying-pi		
+equal-adeles-need-not-share-a-modulus	\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\mathrm{True}
+unequal-real-parts-are-not-equal	\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\mathrm{False}
+the-adele-underlying-an-idele		
+an-adele-and-a-bare-profinite-don-t-combine		

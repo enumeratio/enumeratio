@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+runs-not-groups-the-two-runs-of-1-stay-apart	Split[List[1, 1, 2, 2, 2, 3, 1, 1]]			
+symbolic-elements	Split[List[a, a, b, b, b, a]]	{{a, a}, {b, b, b}, {a}}	\text{Split}[\{a,a,b,b,b,a\}]	\{\{a,a\},\{b,b,b\},\{a\}\}
+a-test-between-neighbours-split-into-increasing	Split[List[1, 2, 3, 5, 4, 6], Less]			
+the-empty-list	Split[List[]]			

@@ -6,12 +6,12 @@ import { type Gaussian, norm, mul, powerModRaw } from "../src/gaussian.ts";
 // (Mod/Quotient/GCD/LCM/ExtendedGCD/ModularInverse/PowerMod, plus IsPrime/FactorInteger/
 // Divisors with GaussianIntegers -> True) is gone: every one of those heads now carries a
 // verified `wolfram` binding, and the grid is sampled as `role: test` examples on each
-// head's own record (<Head>.examples.yaml), scanned the same way `oracle-scan.ts` scans
+// head's own record (<Head>/examples.tsv), scanned the same way `oracle-scan.ts` scans
 // everything else. The handful of genuine conventions the golden's `divergence()` used to
 // carry by hand -- ExtendedGCD's non-unique Bezout coefficients and its shape (flat Tuple vs
 // Wolfram's nested pair), and PowerMod's negative-exponent invertibility check against
 // N(m) rather than m for a Gaussian modulus -- are now classified on the disagreeing rows in
-// each head's <Head>.implementations.yaml instead.
+// each head's <Head>/examples.values.*.tsv instead.
 
 test("Gaussian roots agree with a scan of ℤ[i]/(m)", () => {
   // x ≡ y (mod m) iff (x − y)·m̄ ≡ 0 componentwise mod N(m): a canonical key per class.

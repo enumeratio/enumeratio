@@ -1,0 +1,10 @@
+---
+name: MaxDegree
+domain: Combinatorics
+signature: MaxDegree(...)
+summary: Maximum vertex degree
+statOn:
+  - LabeledTree
+  - OrderedTree
+stub: carrier
+---

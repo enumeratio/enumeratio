@@ -1,0 +1,6 @@
+id	in	out
+the-absolute-value-of-a-real-number	\mathrm{RealAbs}(-2.5)	2.5
+realabs-neg-7-over-2	\mathrm{RealAbs}(-\frac{7}{2})	\frac{7}{2}
+threads-element-wise-over-a-list	\mathrm{RealAbs}(\bigl\lbrack-1, 2, -3\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
+exact-numeric-arguments	\mathrm{RealAbs}(-\pi)	\pi
+agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\top

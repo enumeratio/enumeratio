@@ -1,0 +1,14 @@
+---
+name: RightContraction
+domain: Geometric algebra
+signature: RightContraction(a, b)
+summary: 'The right contraction $a \llcorner b$: the geometric product of $a$ and $b$ at grade $|a|-|b|$, the mirror of [[LeftContraction]].'
+signatures:
+  - call: RightContraction(a, b)
+    description: $a \llcorner b$, the geometric product of $a$ and $b$ at grade $|a|-|b|$
+    library: enumeratio-geometric
+    type: (number, number) -> number
+seeAlso:
+  - LeftContraction
+  - ScalarProduct
+---

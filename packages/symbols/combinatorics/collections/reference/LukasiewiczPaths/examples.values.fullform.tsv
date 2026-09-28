@@ -1,0 +1,4 @@
+id	in
+count-lukasiewiczpaths-4	Count[LukasiewiczPaths[4]]
+first-element-of-lukasiewiczpaths-4	Part[LukasiewiczPaths[4], 1]
+every-element-of-lukasiewiczpaths-4	Take[LukasiewiczPaths[4], 5]

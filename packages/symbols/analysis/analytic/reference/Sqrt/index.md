@@ -1,0 +1,51 @@
+---
+name: Sqrt
+domain: Arithmetic
+signature: Sqrt(x)
+summary: 'The principal square root of x: $\sqrt{x}$.'
+signatures:
+  - call: Sqrt(x)
+    description: the principal square root $\sqrt{x} = x^{1/2}$.
+  - call: Sqrt(x)
+    description: 'The principal square root of x: $\sqrt{x}$.'
+    library: enumeratio-analytic
+    type: (complex | infinity) -> complex | infinity
+    overrides: compute-engine
+details:
+  - 'The principal square root: $\sqrt{x} = x^{1/2}$. See [[Root]] for other roots and [[Square]] for the inverse operation.'
+  - Evaluates exactly only when the radicand is a perfect square (or a ratio of perfect squares); otherwise it stays in symbolic surd form, like $\sqrt{2}$.
+  - A negative radicand gives an imaginary result, $\sqrt{-a} = i\sqrt{a}$ for $a>0$ -- but only reduces to an exact Complex number when $a$ itself is a perfect square.
+  - $\sqrt{0} = 0$.
+  - "compute-engine's Sqrt is a special case of the more general [[Root]]: $\\mathrm{Root}(x, 2)$ canonicalizes to $\\mathrm{Sqrt}(x)$."
+seeAlso:
+  - Root
+  - Square
+references:
+  - system: wikipedia
+    identity: Square root
+  - system: mathworld
+    identity: SquareRoot
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: sqrt($1)
+    arity: 1
+    threadArg: 1
+---

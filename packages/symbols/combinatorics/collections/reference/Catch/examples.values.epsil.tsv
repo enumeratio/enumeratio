@@ -1,0 +1,3 @@
+id	in	out
+no-throw-evaluates-normally	Catch(1 + 2)	3
+tag-matched-catch-recovers-the-value	Catch(Throw(ok, done), done)	ok

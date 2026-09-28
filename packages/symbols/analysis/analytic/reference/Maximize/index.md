@@ -1,0 +1,30 @@
+---
+name: Maximize
+domain: Calculus
+signature: Maximize(f, x)
+summary: The global maximum of f over the real line (or a simple interval constraint), as {value, {x -> point}} -- an exact, provably global answer, not a local one.
+signatures:
+  - call: Maximize(f, x)
+    description: the global maximum of f, a real expression in the single variable x, over f's own natural domain.
+    library: "@enumeratio/analytic"
+    type: (expression, list<symbol> | symbol) -> expression
+  - call: Maximize(f, {x})
+    description: same as Maximize(f, x) -- Wolfram accepts the variable either bare or wrapped in a one-element list.
+    library: "@enumeratio/analytic"
+  - call: Maximize({f, cons}, x)
+    description: the global maximum of f restricted to cons, a simple interval constraint (x >= a, a <= x <= b, an And of two one-sided bounds, ...).
+    library: "@enumeratio/analytic"
+details:
+  - "[[Minimize]]'s exact mirror image -- same scope, same machinery ([[D]]/[[Factor]]/[[Solve]]/[[Limit]] on the ORIGINAL expression), same declines. See its `details` for the full account; this entry only lists Maximize's own examples."
+seeAlso:
+  - Minimize
+  - MinValue
+  - MaxValue
+  - NMaximize
+  - Solve
+  - Limit
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

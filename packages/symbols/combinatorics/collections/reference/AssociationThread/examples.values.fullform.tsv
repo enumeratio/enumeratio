@@ -1,0 +1,4 @@
+id	in	back
+pairs-keys-with-values-two-argument-form	AssociationThread[List[a, b], List[1, 2]]	
+accepts-the-one-argument-rule-keys-values-form	AssociationThread[Rule[List[a, b], List[1, 2]]]	[AssociationThread, [KeyValuePair, [List, a, b], [List, 1, 2]]]
+length-on-the-result-agrees-with-association	Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]	

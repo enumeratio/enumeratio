@@ -1,0 +1,9 @@
+---
+name: Grades
+domain: Combinatorics
+signature: Grades(...)
+summary: Grade axes
+statOn:
+  - Text
+stub: carrier
+---

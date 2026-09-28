@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+the-given-generators-come-back			[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]]]	[List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]

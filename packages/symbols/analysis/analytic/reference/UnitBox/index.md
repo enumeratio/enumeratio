@@ -1,0 +1,20 @@
+---
+name: UnitBox
+domain: Elementary functions
+signature: UnitBox(x1, x2, …)
+summary: "The unit box function: 1 on the closed [-1/2, 1/2], 0 outside."
+signatures:
+  - call: UnitBox(x)
+    description: 1 for -1/2 <= x <= 1/2, 0 otherwise.
+    library: "@enumeratio/analytic"
+    type: (real, real*) -> number
+  - call: UnitBox(x1, x2, …)
+    description: the product of the unit boxes -- 0 as soon as any argument is outside its own [-1/2, 1/2].
+    library: "@enumeratio/analytic"
+    arity: 2
+details:
+  - Defined everywhere, including the boundary -- unlike [[HeavisidePi]], the same rectangular pulse shape but left unevaluated at x = ±1/2 instead of closed there. UnitBox and HeavisidePi differ exactly at the boundary.
+  - D(UnitBox(x), x) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 away from the jump, undefined exactly at the two points where UnitBox is discontinuous.
+names:
+  wolframIdentity: true
+---

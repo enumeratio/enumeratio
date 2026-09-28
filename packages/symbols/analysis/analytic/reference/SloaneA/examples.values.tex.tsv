@@ -1,0 +1,12 @@
+id	in	out
+a000045-is-the-fibonacci-numbers-the-10th-is-55	\mathrm{SloaneA}(\text{A000045}, 10)	55
+a000793-landau-s-function-g-10-30	\mathrm{SloaneA}(\text{A000793}, 10)	30
+a000040-5-11-the-5th-prime	\mathrm{SloaneA}(\text{A000040}, 5)	11
+a000041-10-42-the-number-of-partitions-of-10	\mathrm{SloaneA}(\text{A000041}, 10)	42
+a000110-5-52-the-5th-bell-number	\mathrm{SloaneA}(\text{A000110}, 5)	52
+a000142-5-120-5	\mathrm{SloaneA}(\text{A000142}, 5)	120
+a000720-20-8-pi-20-the-prime-counting-function	\mathrm{SloaneA}(\text{A000720}, 20)	8
+a027641-12-691-b-12-s-numerator	\mathrm{SloaneA}(\text{A027641}, 12)	-691
+a027642-12-2730-b-12-s-denominator	\mathrm{SloaneA}(\text{A027642}, 12)	2\,730
+a000793-15-105-landau-s-function-g-15	\mathrm{SloaneA}(\text{A000793}, 15)	105
+an-oeis-id-outside-the-declared-alias-table	\mathrm{SloaneA}(\text{A060691}, 5)	\mathrm{SloaneA}(\text{A060691}, 5)
