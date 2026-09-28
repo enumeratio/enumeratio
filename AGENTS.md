@@ -53,7 +53,9 @@ release. Add a tool name to select part of the graph. For example, run
 
 - A head or fix compute-engine would plausibly take (Wolfram or mpmath has it, or it fixes or
   widens a native head) is written in `upstream/compute-engine/` as a patch, not in a symbol
-  package, even before anything is proposed upstream. See `design/upstreaming.md` §10.
+  package, even before anything is proposed upstream. Its code is laid out as in
+  compute-engine (`src/compute-engine/{numerics,library,compilation}`); its reference entries
+  live in `packages/reference/entries/` and never go upstream. See `design/upstreaming.md` §10.
 
 ## Reference entries
 

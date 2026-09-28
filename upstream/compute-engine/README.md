@@ -7,24 +7,38 @@ the model is Mathlib's `ForMathlib/`: code written in our repo, shaped for their
 A leaf package: depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
 Other packages import from here; this package never imports from them.
 
-One folder per candidate, `src/<slug>/`, holding its kernel, its declaration, and its
-`patch.ts` — the issue and PR it was offered as, where the code lands in compute-engine,
-and how to tell whether it has landed (`fixed(ce)`). `applyPatches(ce)` applies every patch
-that has not landed yet, and is idempotent per engine, so any package can call it (or a
-single patch's `apply`) from its own `declare`.
+**Laid out like compute-engine itself.** `src/compute-engine/` mirrors compute-engine's own
+tree: pure numeric kernels in `numerics/`, head definitions in `library/` as
+`SymbolDefinitions`-shaped records (or a function of the engine, for a widening that
+captures a native handler), lowerings in `compilation/`. `src/support/` holds glue that is
+ours only and would never go upstream as-is (the boxing helpers, precision helpers).
+
+**A patch is a manifest**, `src/patches/<slug>.ts`: the issue and PR it was offered as, the
+`src/compute-engine/...` files a pull request for it would carry, the library record it
+declares, where it lands, and how to tell whether it has landed (`fixed(ce)`).
+`applyPatches(ce)` applies every patch that has not landed yet, and is idempotent per
+engine, so any package can call it (or a single patch's `apply`) from its own `declare`.
+`symbols()` and `patchSymbols(patch)` list every head a patch declares without building an
+engine (a plain record's own keys; a function-form patch states them as `heads`).
+
+**Reference entries, examples and oracle goldens for these heads live in
+`packages/reference/`**, beside compute-engine's own heads — they describe a head wherever
+it is declared, and don't go upstream with the code.
 
 **Retiring a patch**: once `fixed(ce)` is true on the compute-engine version this repo
-pins, `tests/landed.test.ts` fails, naming the folder to delete and its PR. Delete the
-folder, remove it from the registry in `src/index.ts`, and drop the `applyPatches` (or
-single-patch) call from whatever package made it — the package's own tests are the net
-that catches anything that quietly depended on the patch rather than on the native head.
+pins, `tests/landed.test.ts` fails, naming the manifest to delete and its PR. Delete
+`src/patches/<slug>.ts` and the files it lists, remove it from the registry in
+`src/index.ts`, and drop the `applyPatches` (or single-patch) call from whatever package
+made it — the package's own tests are the net that catches anything that quietly depended
+on the patch rather than on the native head.
 
-**cortex-js/compute-engine#340** (the analytic special-function family) lives here as ten
+**cortex-js/compute-engine#340** (the analytic special-function family) is most of these
 patches: `zeta-hurwitz` (complex `Zeta`, `Zeta(s, a)`, `HurwitzZeta`; offered as PR #350),
 `lerch-phi` (`LerchPhi`), `polylog-order` and `polygamma-complex` (`PolyLog`/`PolyGamma`
 widened to non-integer/complex arguments), `dirichlet` (`DirichletEta`, `DirichletBeta`,
 `DirichletCharacter`, `DirichletL`), `barnes-g` (`BarnesG`, `LogBarnesG`), `log-gamma`
-(`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`). Their shared
-kernels (complex arithmetic, Bernoulli numbers and polynomials, arbitrary-precision helpers,
-the WGSL complex kernels) live in `src/shared/`. `@enumeratio/analytic`'s `declareAnalytic`
-applies each at the point its declaration used to run.
+(`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`).
+`hyperbolic-zero`, `elliptic-e-complex` and `number-theory-large-integers` are each their
+own, smaller issue. `@enumeratio/analytic`'s `declareAnalytic` and
+`@enumeratio/number-theory`'s Gaussian-integer declare apply the ones each needs, at the
+point its declaration used to run.

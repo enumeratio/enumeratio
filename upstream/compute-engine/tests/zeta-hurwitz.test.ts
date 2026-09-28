@@ -2,8 +2,12 @@ import { readFileSync } from "node:fs";
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
-import { bigCx, hurwitzZetaBig } from "../src/shared/bigzeta.ts";
 import {
+  bigCx,
+  hurwitzZetaBig,
+  cx,
+  lerchPhi,
+  lerchPhiReal,
   applyAllPatches,
   hurwitzZeta,
   hurwitzZetaReal,
@@ -11,8 +15,6 @@ import {
   zetaGeneralized,
   zetaGeneralizedReal,
 } from "../src/index.ts";
-import { cx } from "../src/shared/complex.ts";
-import { lerchPhi, lerchPhiReal } from "../src/lerch-phi/lerch.ts";
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
@@ -141,7 +143,9 @@ interface ZetaGolden {
   mpmath: [number, number];
   mpmath40: [string, string];
 }
-const zetaGoldens: ZetaGolden[] = JSON.parse(readFileSync(new URL("./zeta.golden.json", import.meta.url), "utf8"));
+const zetaGoldens: ZetaGolden[] = JSON.parse(
+  readFileSync(new URL("../../../packages/reference/golden/upstream/zeta.golden.json", import.meta.url), "utf8"),
+);
 
 const offBy = (rows: ZetaGolden[], value: (g: ZetaGolden) => { re: number; im: number }): string[] =>
   rows.flatMap((g) => {

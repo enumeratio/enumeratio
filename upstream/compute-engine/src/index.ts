@@ -1,27 +1,27 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { ellipticEComplex } from "./elliptic-e-complex/patch.ts";
-import { hyperbolicZero } from "./hyperbolic-zero/patch.ts";
-import { numberTheoryLargeIntegers } from "./number-theory-large-integers/patch.ts";
-import { zetaHurwitz } from "./zeta-hurwitz/patch.ts";
-import { lerchPhiPatch } from "./lerch-phi/patch.ts";
-import { polylogOrder } from "./polylog-order/patch.ts";
-import { polygammaComplex } from "./polygamma-complex/patch.ts";
-import { dirichlet } from "./dirichlet/patch.ts";
-import { barnesGPatch } from "./barnes-g/patch.ts";
-import { logGammaPatch } from "./log-gamma/patch.ts";
-import { clausenPatch } from "./clausen/patch.ts";
-import { stieltjes } from "./stieltjes/patch.ts";
-import { applyPatches, type Patch } from "./patch.ts";
+import { ellipticEComplex } from "./patches/elliptic-e-complex.ts";
+import { hyperbolicZero } from "./patches/hyperbolic-zero.ts";
+import { numberTheoryLargeIntegers } from "./patches/number-theory-large-integers.ts";
+import { zetaHurwitz } from "./patches/zeta-hurwitz.ts";
+import { lerchPhiPatch } from "./patches/lerch-phi.ts";
+import { polylogOrder } from "./patches/polylog-order.ts";
+import { polygammaComplex } from "./patches/polygamma-complex.ts";
+import { dirichlet } from "./patches/dirichlet.ts";
+import { barnesGPatch } from "./patches/barnes-g.ts";
+import { logGammaPatch } from "./patches/log-gamma.ts";
+import { clausenPatch } from "./patches/clausen.ts";
+import { stieltjes } from "./patches/stieltjes.ts";
+import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
-export type { Patch } from "./patch.ts";
-export { applyPatch, applyPatches } from "./patch.ts";
-export { ellipticEComplex } from "./elliptic-e-complex/patch.ts";
-export { hyperbolicZero } from "./hyperbolic-zero/patch.ts";
-export { numberTheoryLargeIntegers } from "./number-theory-large-integers/patch.ts";
+export type { LibraryRecord, Patch } from "./patch.ts";
+export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.ts";
+export { ellipticEComplex } from "./patches/elliptic-e-complex.ts";
+export { hyperbolicZero } from "./patches/hyperbolic-zero.ts";
+export { numberTheoryLargeIntegers } from "./patches/number-theory-large-integers.ts";
 
 // #340 special-function family (design/upstreaming.md §10; @enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
-export { zetaHurwitz, evaluateHurwitz, evaluateZeta } from "./zeta-hurwitz/patch.ts";
+export { zetaHurwitz, evaluateHurwitz, evaluateZeta } from "./patches/zeta-hurwitz.ts";
 export {
   hurwitzZeta,
   hurwitzZetaReal,
@@ -29,10 +29,32 @@ export {
   zetaGeneralized,
   zetaGeneralizedReal,
   type ZetaKernel,
-} from "./zeta-hurwitz/kernel.ts";
-export { lerchPhiPatch, lerchPhi, lerchPhiReal, lerchContinued, lerchPhiBig, lerchPhiBall } from "./lerch-phi/patch.ts";
-export { polylogOrder, polyLog, polyLogReal, evaluatePolyLog } from "./polylog-order/patch.ts";
-export { polygammaComplex, digamma, polygamma, polygammaReal, evaluatePolygamma } from "./polygamma-complex/patch.ts";
+} from "./compute-engine/library/special-functions.ts";
+export {
+  type BigCx,
+  bigCx,
+  atDigits,
+  hurwitzZetaBig,
+  zetaGeneralizedBig,
+  add as bigAdd,
+  mul as bigMul,
+  div as bigDiv,
+  scale as bigScale,
+  exp as bigExp,
+  log as bigLog,
+  pow as bigPow,
+  round as bigRound,
+} from "./compute-engine/numerics/hurwitz-zeta-big.ts";
+export {
+  lerchPhiPatch,
+  lerchPhi,
+  lerchPhiReal,
+  lerchContinued,
+  lerchPhiBig,
+  lerchPhiBall,
+} from "./patches/lerch-phi.ts";
+export { polylogOrder, polyLog, polyLogReal, evaluatePolyLog } from "./patches/polylog-order.ts";
+export { polygammaComplex, digamma, polygamma, polygammaReal, evaluatePolygamma } from "./patches/polygamma-complex.ts";
 export {
   dirichlet,
   dirichletEta,
@@ -44,30 +66,32 @@ export {
   dirichletL,
   dirichletLReal,
   eulerPhi,
-} from "./dirichlet/patch.ts";
+} from "./patches/dirichlet.ts";
 export {
   barnesGPatch,
+  evaluateBarnesG,
   barnesG,
   barnesGReal,
   logBarnesG,
   logBarnesGReal,
   barnesGBig,
   barnesGBall,
-  pi as barnesGPi,
-} from "./barnes-g/patch.ts";
-export { logGammaPatch, logGamma, logGammaReal, logGammaBig } from "./log-gamma/patch.ts";
-export { clausenPatch, clausen } from "./clausen/patch.ts";
+  barnesGPi,
+} from "./patches/barnes-g.ts";
+export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } from "./patches/log-gamma.ts";
+export { clausenPatch, evaluateClausen, clausen } from "./patches/clausen.ts";
 export {
   stieltjes,
-  STIELTJES_MAX_ORDER,
+  evaluateStieltjes,
   stieltjesGamma,
   stieltjesGammaReal,
   stieltjesGammaBall,
   stieltjesGammaBig,
-} from "./stieltjes/patch.ts";
+  STIELTJES_MAX_ORDER,
+} from "./patches/stieltjes.ts";
 
-// Shared kernels several of the above (and @enumeratio/analytic's own non-candidate heads)
-// depend on -- see design/upstreaming.md §10 ("Kernels several candidates share").
+// Kernels several of the above (and @enumeratio/analytic's own non-candidate heads) depend
+// on -- see design/upstreaming.md §10 ("Kernels several candidates share").
 export {
   type Cx,
   cx,
@@ -91,7 +115,7 @@ export {
   csech,
   csqrt,
   casin,
-} from "./shared/complex.ts";
+} from "./compute-engine/numerics/complex-arithmetic.ts";
 export {
   type BoxInput,
   type NativeEval,
@@ -102,7 +126,7 @@ export {
   wantsNumber,
   declined,
   realCompile,
-} from "./shared/box.ts";
+} from "./support/box.ts";
 export {
   type Rat,
   type Json,
@@ -110,24 +134,9 @@ export {
   bernoulliNumber,
   bernoulliPolyAt,
   bernoulliPolyExpr,
-} from "./shared/bernoulli.ts";
-export { evaluateBernoulliPolynomial } from "./shared/bernoulli-polynomial.ts";
-export { DOUBLE_DIGITS, atEnginePrecision, withGuardDigits, bigRealOperand, bigResult } from "./shared/precise.ts";
-export {
-  type BigCx,
-  bigCx,
-  atDigits,
-  hurwitzZetaBig,
-  zetaGeneralizedBig,
-  add as bigAdd,
-  mul as bigMul,
-  div as bigDiv,
-  scale as bigScale,
-  exp as bigExp,
-  log as bigLog,
-  pow as bigPow,
-  round as bigRound,
-} from "./shared/bigzeta.ts";
+} from "./compute-engine/numerics/bernoulli-rational.ts";
+export { evaluateBernoulliPolynomial } from "./support/bernoulli-polynomial.ts";
+export { DOUBLE_DIGITS, atEnginePrecision, withGuardDigits, bigRealOperand, bigResult } from "./support/precise.ts";
 export {
   type Ball,
   certify,
@@ -146,9 +155,9 @@ export {
   pow as ballPow,
   exp as ballExp,
   ln as ballLn,
-} from "./shared/ball.ts";
-export { hurwitzZetaBall } from "./shared/hurwitz-ball.ts";
-export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./shared/wgsl-complex.ts";
+} from "./compute-engine/numerics/ball.ts";
+export { hurwitzZetaBall } from "./compute-engine/numerics/hurwitz-zeta-ball.ts";
+export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/compilation/wgsl-complex.ts";
 
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
@@ -169,4 +178,9 @@ export const PATCHES: readonly Patch[] = [
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
 export function applyAllPatches(ce: ComputeEngine): void {
   applyPatches(ce, PATCHES);
+}
+
+/** Every head any patch declares -- cheap, no engine needed (design/upstreaming.md §10). */
+export function symbols(): readonly string[] {
+  return symbolsOf(PATCHES);
 }

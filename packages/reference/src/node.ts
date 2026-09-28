@@ -59,10 +59,9 @@ function headName(fileName: string): string {
 }
 
 /** Where the YAML lives under `packages/`: `<package>/reference/`, a symbol package's
- * `symbols/<group>/<package>/reference/`, reference's own `entries/` (the engine's heads),
- * and `upstream/<package>/reference/` -- a #340-style candidate's own heads, offered to
- * compute-engine but not yet landed (design/upstreaming.md §10). `upstream/` sits beside
- * `packages/`, not under it. */
+ * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (every head's
+ * metadata, including compute-engine upstreaming candidates -- design/upstreaming.md §10
+ * says metadata for those stays here, not under `upstream/`). */
 function dataDirs(packagesRoot: string): { package: string; dir: string }[] {
   const subdirs = (dir: string): string[] =>
     existsSync(dir)
@@ -71,7 +70,6 @@ function dataDirs(packagesRoot: string): { package: string; dir: string }[] {
           .map((e) => e.name)
           .sort()
       : [];
-  const upstreamRoot = join(packagesRoot, "..", "upstream");
   const packages = [
     ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
     ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
@@ -80,7 +78,6 @@ function dataDirs(packagesRoot: string): { package: string; dir: string }[] {
         dir: join(packagesRoot, "symbols", group, pkg),
       })),
     ),
-    ...subdirs(upstreamRoot).map((pkg) => ({ pkg, dir: join(upstreamRoot, pkg) })),
   ];
   return packages
     .map(({ pkg, dir }) => ({

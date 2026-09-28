@@ -30,6 +30,7 @@
     "@enumeratio/diagram": "workspace:*",
     "@enumeratio/domains": "workspace:*",
     "@enumeratio/entry": "workspace:*",
+    "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/groupalgebra": "workspace:*",
     "@enumeratio/hecke": "workspace:*",
     "@enumeratio/hopf": "workspace:*",
