@@ -529,8 +529,108 @@ def enumeratio_partition_mobius(a, b):
     relabel = lambda d: SetPartition([[point(p) for p in blk] for blk in d])
     return posets.SetPartitions(2 * k).moebius_function(relabel(da), relabel(db))
 
+# Adeles (Hertogh's package, github.com/mathehertogh/adeles): the is_* helpers Sage 10.9
+# removed, revived the same way packages/symbols/arithmetic/adeles/scripts/collect-golden.py
+# revives them, so ProfiniteNumber/Idele/Adele's mapped rows below can import and use it.
+# Guarded: a Sage without the adeles package (a plain image, a local run) still runs
+# every other mapped call; only the adeles rows would then error.
+try:
+    import sage.rings.number_field.number_field as _enumeratio_nf
+    import sage.rings.number_field.number_field_element as _enumeratio_nfe
+    import sage.rings.number_field.number_field_ideal as _enumeratio_nfi
+    import sage.rings.quotient_ring as _enumeratio_qr
+    from sage.rings.number_field.number_field_base import NumberField as _EnumeratioNumberField
+
+    _enumeratio_nf.is_NumberField = lambda K: isinstance(K, _EnumeratioNumberField)
+    _enumeratio_nfi.is_NumberFieldIdeal = lambda x: isinstance(x, _enumeratio_nfi.NumberFieldFractionalIdeal)
+    _enumeratio_nfe.is_NumberFieldElement = lambda x: isinstance(x, _enumeratio_nfe.NumberFieldElement)
+    _enumeratio_qr.is_QuotientRing = lambda x: isinstance(x, _enumeratio_qr.QuotientRing_generic)
+
+    from adeles.all import Adeles, Ideles, Qhat  # noqa: E402
+    from adeles.matrix import factor_GLQhat  # noqa: E402
+except ImportError:
+    pass
+
+# Qhat/Idele/Adele are foreign objects with no str() that means what we mean -- these mirror
+# collect-golden.py's own num()/profinite()/idele() conversions into our MathJSON shape, the
+# same reason that script has them.
+def _enumeratio_adic_int(n):
+    n = int(n)
+    return n if abs(n) < 2**53 else {"num": str(n)}
+
+def _enumeratio_adic_num(x):
+    x = QQ(x)
+    if x.denominator() == 1:
+        return _enumeratio_adic_int(x.numerator())
+    return ["Rational", _enumeratio_adic_int(x.numerator()), _enumeratio_adic_int(x.denominator())]
+
+def _enumeratio_profinite_json(z):
+    if z.modulus() == 0:
+        return _enumeratio_adic_num(z.value())
+    return ["ProfiniteNumber", _enumeratio_adic_num(z.value()), _enumeratio_adic_num(z.modulus())]
+
+def _enumeratio_idele_json(u):
+    r = _enumeratio_adic_num(u.infinite_part()[0].center())
+    if u.has_exact_finite_part():
+        return ["Idele", r, _enumeratio_adic_num(u.finite_part())]
+    # The units-list branch: an AdicNumeral per listed prime. AdicNumeral has no sage binding
+    # (packages/symbols/arithmetic/numerals' own lane), so this branch only matters for a
+    # RESULT we are printing back, never for emitting one of our own examples as sage source.
+    scale, units = QQ(1), []
+    for p in sorted(u.stored_primes()):
+        c, n = u[p].center(), u[p].prec()
+        v = c.valuation(p)
+        scale *= QQ(p) ** v
+        unit = c / QQ(p) ** v
+        if n == Infinity:
+            units.append(["AdicNumeral", int(p), _enumeratio_adic_num(unit)])
+        elif n > (1 if p == 2 else 0):
+            m = int(p) ** int(n)
+            units.append(["AdicNumeral", int(p), int(mod(unit, m).lift()), int(n)])
+    return ["Idele", r, _enumeratio_adic_num(scale), ["List", *units]]
+
+def _enumeratio_adele_json(a):
+    return ["Adele", _enumeratio_adic_num(a.infinite_part()[0].center()), _enumeratio_profinite_json(a.finite_part())]
+
+def _enumeratio_is_adeles_object(x):
+    return getattr(type(x), "__module__", "").startswith("adeles.")
+
+def _enumeratio_adeles_json(x):
+    if hasattr(x, "has_exact_finite_part"):
+        return _enumeratio_idele_json(x)
+    if hasattr(x, "finite_part") and hasattr(x, "infinite_part"):
+        return _enumeratio_adele_json(x)
+    return _enumeratio_profinite_json(x)
+
+# ProfiniteDecomposition(m, d): Hertogh's Algorithm 8.4, factor_GLQhat -- no one-liner since it
+# needs the matrix built from $1's nested List first. Returns the JSON text directly (not a
+# plain value) so enumeratio_value's fallthrough (a str it cannot interpret further) hands it
+# back unchanged.
+# A's entries are compared the way compute-engine's own leaf() (oracle-verdict.ts) reduces a
+# bare Rational -- a decimal NUMBER, not a structured ["Rational", n, d] -- since the whole
+# decomposition answer is one flat text comparison (compare.ts), not a per-leaf one; there is no
+# tolerance step to paper over a quoted string or a stray ["Rational", ...] here. json.dumps on a
+# plain int/float keeps the digits unquoted so they line up with show()'s String(x).
+def _enumeratio_bare_num(x):
+    import json
+    x = QQ(x)
+    return json.dumps(int(x)) if x.denominator() == 1 else repr(float(x))
+
+def enumeratio_profinite_decomposition(rows, d):
+    import json
+    n = len(rows)
+    M = matrix(Qhat, n, n, [rows[i][j] for i in range(n) for j in range(n)])
+    A = factor_GLQhat(M, d)
+    B = M * A.inverse().change_ring(Qhat)
+    row = lambda cells: "[" + ", ".join(cells) + "]"
+    b_text = row([row([json.dumps(_enumeratio_profinite_json(B[i, j])) for j in range(n)]) for i in range(n)])
+    a_text = row([row([_enumeratio_bare_num(A[i, j]) for j in range(n)]) for i in range(n)])
+    return row([b_text, a_text])
+
 def enumeratio_value(x):
     import json
+    if _enumeratio_is_adeles_object(x):
+        return json.dumps(_enumeratio_adeles_json(x))
     if isinstance(x, list) and x and all(_enumeratio_is_element(e) for e in x):
         return "combinations:" + json.dumps([_enumeratio_terms(e) for e in x])
     if _enumeratio_is_element(x):

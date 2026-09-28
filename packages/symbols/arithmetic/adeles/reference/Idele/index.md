@@ -18,4 +18,21 @@ details:
 seeAlso:
   - Adele
   - ProfiniteNumber
+bindings:
+  - origin: mapped
+    form: sage
+    template: Ideles(QQ)([$1], $1)
+    arity: 1
+    note: Hertogh's adeles package; the principal idele of a rational, $1 at every place.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: Ideles(QQ)([$1], $2)
+    arity: 2
+    note: Hertogh's adeles package; real $1 beside a principal finite value $2. The units-list call form (arity 3) has no row -- it needs AdicNumeral, which is unmapped for sage.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
 ---

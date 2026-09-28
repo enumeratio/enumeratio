@@ -15,6 +15,15 @@ statOn:
   - BinaryWord
   - RationalNumber
 stub: engine
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).numerator()
+    arity: 1
+    note: Generic -- works for a plain rational/integer and for a ProfiniteNumber's Sage counterpart (Qhat) alike.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
 attributes:
   - HoldAll
 ---

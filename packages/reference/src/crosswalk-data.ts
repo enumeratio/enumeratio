@@ -146,6 +146,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Plus",
   },
   {
+    name: "Adele",
+    oracle: [
+      {
+        system: "sage",
+        call: "Adeles(QQ)($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "Adeles(QQ)([$1], $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "AdicDigits",
     oracle: [
       {
@@ -3337,6 +3352,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Idele",
+    oracle: [
+      {
+        system: "sage",
+        call: "Ideles(QQ)([$1], $1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "Ideles(QQ)([$1], $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "Imaginary",
     fungrimEntries: [
       "037a6e",
@@ -5261,6 +5291,31 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Product",
     fungrimEntries: ["33f13a"],
     wolfram: "Product",
+  },
+  {
+    name: "ProfiniteDecomposition",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_profinite_decomposition($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "ProfiniteNumber",
+    oracle: [
+      {
+        system: "sage",
+        call: "Qhat($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "Qhat($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "QBinomial",

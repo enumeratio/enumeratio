@@ -2,5 +2,16 @@ id	in	out
 the-principal-idele-7-at-every-place	\mathrm{Idele}(7)	\mathrm{Idele}(7, 7)
 7-and-its-inverse-cancel-everywhere	\mathrm{Idele}(7)\mathrm{Idele}(\frac{1}{7})	\mathrm{Idele}(1, 1)
 idele-with-a-zero-real-part	\mathrm{Idele}(0, 1)	\mathrm{Idele}(0, 1)
+golden-multiply-rational-real-parts	\mathrm{Idele}(-1, \frac{1}{4})\mathrm{Idele}(1, \frac{7}{3})	\mathrm{Idele}(-1, \frac{7}{12})
+golden-multiply-integer-idele	\mathrm{Idele}(-1, 6)\mathrm{Idele}(1, 2)	\mathrm{Idele}(-1, 12)
+golden-divide-rational-real-parts	\frac{\mathrm{Idele}(-1, \frac{1}{4})}{\mathrm{Idele}(1, \frac{7}{3})}	\mathrm{Idele}(-1, \frac{3}{28})
+golden-divide-integer-idele	\frac{\mathrm{Idele}(-1, 6)}{\mathrm{Idele}(1, 2)}	\mathrm{Idele}(-1, 3)
+principal-idele-of-negative-rational	\mathrm{Idele}(-\frac{5}{2})	\mathrm{Idele}(-\frac{5}{2}, -\frac{5}{2})
+real-and-finite-parts-can-differ-in-sign	\mathrm{Idele}(-1, 3)	\mathrm{Idele}(-1, 3)
+multiplying-by-the-identity-idele	\mathrm{Idele}(5, 2)\mathrm{Idele}(1, 1)	\mathrm{Idele}(5, 2)
+squaring-an-idele	\mathrm{Idele}(2, 3)^2	\mathrm{Idele}(4, 9)
+equal-ideles	\mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 3)	\top
+unequal-ideles-differ-in-finite-part	\mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 5)	\bot
+inverting-an-idele	\frac{\mathrm{Idele}(1, 1)}{\mathrm{Idele}(-2, \frac{3}{5})}	\mathrm{Idele}(-\frac{1}{2}, \frac{5}{3})
 a-listed-component-carries-its-valuation-into	\mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(5, \frac{15}{7}, 4)\bigr\rbrack)	\mathrm{Idele}(1, 5, \bigl\lbrack\mathrm{AdicNumeral}(5, 54, 3)\bigr\rbrack)
 a-unit-known-mod-2-says-nothing-at-2	\mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(2, 3, 1)\bigr\rbrack)	\mathrm{Idele}(1, 1, \bigl\lbrack\bigr\rbrack)

@@ -32,6 +32,22 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "Adele",
+    arity: 1,
+    emit: {
+      sage: "Adeles(QQ)($1)",
+    },
+    note: "Hertogh's adeles package; coerces a rational (the principal adele) or an idele (forgetting its idele structure) -- Sage's own coercion dispatches on the argument's type, like ours.",
+  },
+  {
+    head: "Adele",
+    arity: 2,
+    emit: {
+      sage: "Adeles(QQ)([$1], $2)",
+    },
+    note: "Hertogh's adeles package; real $1 beside the finite part $2 (a ProfiniteNumber).",
+  },
+  {
     head: "AdicDigits",
     arity: 2,
     emit: {
@@ -226,6 +242,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       sympy: "diff($1, $2, $3)",
       sage: "diff($1, $2, $3)",
     },
+  },
+  {
+    head: "Denominator",
+    arity: 1,
+    emit: {
+      sage: "($1).denominator()",
+    },
+    note: "Generic -- works for a plain rational/integer and for a ProfiniteNumber's Sage counterpart (Qhat) alike.",
   },
   {
     head: "Diagram",
@@ -442,6 +466,22 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       sage: "hurwitz_zeta($1, $2)",
     },
     note: "mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.",
+  },
+  {
+    head: "Idele",
+    arity: 1,
+    emit: {
+      sage: "Ideles(QQ)([$1], $1)",
+    },
+    note: "Hertogh's adeles package; the principal idele of a rational, $1 at every place.",
+  },
+  {
+    head: "Idele",
+    arity: 2,
+    emit: {
+      sage: "Ideles(QQ)([$1], $2)",
+    },
+    note: "Hertogh's adeles package; real $1 beside a principal finite value $2. The units-list call form (arity 3) has no row -- it needs AdicNumeral, which is unmapped for sage.",
   },
   {
     head: "IntegerExponent",
@@ -709,6 +749,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "Numerator",
+    arity: 1,
+    emit: {
+      sage: "($1).numerator()",
+    },
+    note: "Generic -- works for a plain rational/integer and for a ProfiniteNumber's Sage counterpart (Qhat) alike.",
+  },
+  {
     head: "PartitionAlgebra",
     arity: 1,
     emit: {
@@ -816,6 +864,30 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       sage: "enumeratio_primitive_root_list($1)",
     },
     note: "Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).",
+  },
+  {
+    head: "ProfiniteDecomposition",
+    arity: 2,
+    emit: {
+      sage: "enumeratio_profinite_decomposition($1, $2)",
+    },
+    note: "Hertogh's Algorithm 8.4 (factor_GLQhat); no one-liner, so run.ts's SAGE_PREAMBLE carries the matrix-building helper. The arity-1 form (det computed from $1) has no row -- Sage's generic matrix determinant does not work over the Qhat ring (checked; TypeError coercing a ProfiniteNumber to an integer).",
+  },
+  {
+    head: "ProfiniteNumber",
+    arity: 1,
+    emit: {
+      sage: "Qhat($1)",
+    },
+    note: "Hertogh's adeles package (github.com/mathehertogh/adeles); the exact case, modulus 0. The list-of-AdicNumeral glue form also has arity 1, but AdicNumeral itself is unmapped for sage, so those examples simply fail to emit rather than being mis-evaluated by this row.",
+  },
+  {
+    head: "ProfiniteNumber",
+    arity: 2,
+    emit: {
+      sage: "Qhat($1, $2)",
+    },
+    note: "Hertogh's adeles package; $1 known modulo $2.",
   },
   {
     head: "Quotient",
