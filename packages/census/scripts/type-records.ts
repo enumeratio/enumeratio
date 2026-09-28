@@ -32,7 +32,9 @@ interface Located {
 const records = new Map<string, Located>();
 const dirOf = new Map<string, string>();
 // reference's own copy is the canonical one (design/examples-as-data.md §9).
-const dirs = recordDirs(PACKAGES).sort((a, b) => Number(b.package === "reference") - Number(a.package === "reference"));
+const dirs = recordDirs(PACKAGES).toSorted(
+  (a, b) => Number(b.package === "reference") - Number(a.package === "reference"),
+);
 for (const { package: pkg, dir } of dirs) {
   dirOf.set(pkg, dir);
   for (const head of headNames(dir)) {
@@ -62,7 +64,7 @@ function domainFor(pkg: string): string {
   const counts = new Map<string, number>();
   for (const r of records.values())
     if (r.pkg === pkg) counts.set(r.entry.domain, (counts.get(r.entry.domain) ?? 0) + 1);
-  return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] ?? pkg;
+  return [...counts].toSorted((a, b) => b[1] - a[1])[0]?.[0] ?? pkg;
 }
 
 // --- writing -----------------------------------------------------------------------------
@@ -70,7 +72,7 @@ function domainFor(pkg: string): string {
 const touched = new Set<Located>();
 let created = 0;
 let typed = 0;
-for (const [name, list] of [...contributions].sort(([a], [b]) => (a < b ? -1 : 1))) {
+for (const [name, list] of [...contributions].toSorted(([a], [b]) => (a < b ? -1 : 1))) {
   let located = records.get(name);
   if (located === undefined) {
     // A head of the engine's own lives with the engine's records, in reference's entries.

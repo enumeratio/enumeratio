@@ -182,7 +182,7 @@ export function collectComponents(srcDir: string): ComponentDoc[] {
     .filter((f) => f.startsWith("notatio-") && f.endsWith(".ts"))
     .map((f) => parse(srcDir, f, table))
     .filter((c): c is ComponentDoc => c !== undefined)
-    .sort((a, b) => a.tag.localeCompare(b.tag));
+    .toSorted((a, b) => a.tag.localeCompare(b.tag));
 }
 
 /** `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: a wrapper's name. */

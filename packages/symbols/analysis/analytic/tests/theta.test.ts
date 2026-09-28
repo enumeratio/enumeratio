@@ -50,7 +50,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(["EllipticTheta", "EllipticThetaPrime"].sort());
+  expect([...heads].toSorted()).toEqual(["EllipticTheta", "EllipticThetaPrime"].toSorted());
 });
 
 test("stays symbolic under plain evaluate at symbolic operands; a float argument evaluates numerically", () => {

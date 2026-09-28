@@ -127,6 +127,8 @@ function writeNode(box: BoxNode): string {
       );
     case "ErrorBox":
       return element("merror", write(box[1]));
+    default:
+      throw new Error("unreachable: BoxNode's tags are exhaustive above");
   }
 }
 

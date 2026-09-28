@@ -211,6 +211,8 @@ function writeNode(box: BoxNode): string {
       return write(box[1]);
     case "ErrorBox":
       return `\\textcolor{red}{${write(box[1])}}`;
+    default:
+      throw new Error("unreachable: BoxNode's tags are exhaustive above");
   }
 }
 

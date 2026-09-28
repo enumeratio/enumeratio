@@ -59,7 +59,7 @@ const rows = (head: string, record: Record_): Map<string, Row> => {
 const said = (row: Row | undefined): string => {
   if (row === undefined) return "(no row)";
   const { out: _out, shown: _shown, ...rest } = row;
-  return JSON.stringify(rest, Object.keys(rest).sort());
+  return JSON.stringify(rest, Object.keys(rest).toSorted());
 };
 
 /** Written by collect-forms, never answered by this system. */

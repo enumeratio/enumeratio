@@ -32,7 +32,7 @@ function elementsOf(expr: unknown): unknown[] {
   return out;
 }
 
-const canon = (rows: readonly (readonly number[])[]): string[] => rows.map((r) => JSON.stringify(r)).sort();
+const canon = (rows: readonly (readonly number[])[]): string[] => rows.map((r) => JSON.stringify(r)).toSorted();
 
 // ─── independent generators ──────────────────────────────────────────────────────────
 
@@ -90,13 +90,13 @@ function bruteForceSetPartitions(n: number): number[][][] {
     blocks.pop();
   };
   rec(1, []);
-  return out.map((blocks) => blocks.map((b) => [...b].sort((x, y) => x - y)));
+  return out.map((blocks) => blocks.map((b) => [...b].toSorted((x, y) => x - y)));
 }
 
 const canonBlocks = (partitions: readonly (readonly (readonly number[])[])[]): string[] =>
   partitions
-    .map((blocks) => JSON.stringify([...blocks].map((b) => [...b]).sort((a, b) => (a[0] ?? 0) - (b[0] ?? 0))))
-    .sort();
+    .map((blocks) => JSON.stringify([...blocks].map((b) => [...b]).toSorted((a, b) => (a[0] ?? 0) - (b[0] ?? 0))))
+    .toSorted();
 
 // ─── IntegerPartitions(n, k) -- at most k parts ──────────────────────────────────────
 

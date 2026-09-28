@@ -193,7 +193,7 @@ export interface Layer<T> {
 export function stackLayers<T>(items: readonly T[], kindOf: (item: T) => string): Layer<T>[] {
   const ordered = items
     .map((item, index) => ({ item, index }))
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       const byDimension = PROJECTION_DIMENSION[kindOf(b.item)] - PROJECTION_DIMENSION[kindOf(a.item)];
       // Higher dimension first, so it ends up underneath.
       return byDimension !== 0 ? byDimension : b.index - a.index;

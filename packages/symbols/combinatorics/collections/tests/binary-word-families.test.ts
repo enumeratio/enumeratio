@@ -67,7 +67,7 @@ function rotations(w: number[]): number[][] {
   return Array.from({ length: n }, (_, s) => Array.from({ length: n }, (_, i) => w[(i + s) % n]));
 }
 function orbitKeys(w: number[]): string[] {
-  const rev = w.slice().reverse();
+  const rev = w.slice().toReversed();
   return [...rotations(w), ...rotations(rev)].map((x) => x.join(","));
 }
 function hasNoRunOfK(w: number[], k: number): boolean {

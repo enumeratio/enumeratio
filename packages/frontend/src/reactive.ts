@@ -324,7 +324,7 @@ export const missingProjection = (ce: ComputeEngine): BoxedExpression => ce.symb
 export function freeVariables(expr: BoxedExpression, bound: ReadonlySet<string>): string[] {
   const out = new Set<string>();
   for (const name of expr.unknowns) if (!bound.has(name)) out.add(name);
-  return [...out].sort();
+  return [...out].toSorted();
 }
 
 // --- the evaluation pass -------------------------------------------------------------

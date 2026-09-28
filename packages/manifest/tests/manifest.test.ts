@@ -24,5 +24,5 @@ test("a package module carries what its declare reads", () => {
 
 test("names are in code-unit order, so the output is stable", () => {
   const names = Object.keys(SYMBOLS);
-  expect(names).toEqual([...names].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0)));
+  expect(names).toEqual([...names].toSorted((a, b) => (a < b ? -1 : a > b ? 1 : 0)));
 });

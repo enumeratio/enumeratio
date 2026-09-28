@@ -81,7 +81,7 @@ test("the specification agrees with the fast kernel — as a SET", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
+      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
     }
   }
 });
@@ -114,7 +114,7 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
+      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
     }
   }
 });
@@ -140,7 +140,7 @@ test("partition restrictions agree with their kernels for n = 0..8", () => {
       ];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(members(kernel).sort());
+      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
     }
   }
 });

@@ -137,7 +137,7 @@ function merge(groups: readonly (readonly ResolvedReference[])[]): ResolvedRefer
   // the head-wide ones.
   return kept
     .map((reference, index) => ({ reference, index }))
-    .sort(
+    .toSorted(
       (a, b) =>
         rank(a.reference.system) - rank(b.reference.system) ||
         (a.reference.arity ?? 0) - (b.reference.arity ?? 0) ||
@@ -274,7 +274,7 @@ export function crosswalkFor(name: string, entry?: ReferenceEntry): ResolvedRefe
   // The plain family (`SetCompositions` for `SetComposition`) speaks first; the refined
   // ones (`Permutahedron`) add what it did not say.
   const carried = COLLECTIONS.filter((collection) => collection.carrier === name)
-    .sort((a, b) => Number(b.name === `${name}s`) - Number(a.name === `${name}s`))
+    .toSorted((a, b) => Number(b.name === `${name}s`) - Number(a.name === `${name}s`))
     .flatMap((collection) => catalogRows(collection.name).map((row) => ({ ...row, via: collection.name })));
 
   // Derived rows outrank the catalog's for the same pointer: the engine's Wikidata id and
@@ -340,7 +340,7 @@ function foundByCount(head: string): ResolvedReference[] {
   );
   const rank = (m: (typeof found)[number]): number =>
     (recorded.has(m.oeis) ? 0 : 100) + Math.abs(m.shift) * 2 + (m.atZero ? 1 : 0);
-  const sorted = [...found].sort((a, b) => rank(a) - rank(b));
+  const sorted = [...found].toSorted((a, b) => rank(a) - rank(b));
   return sorted.map((m, i) => ({
     ...resolve(
       {

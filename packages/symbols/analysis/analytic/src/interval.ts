@@ -220,7 +220,7 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   /** `[a, b]` pieces merged where they overlap or touch, as one `Interval`, or a `Union` of
    * disjoint ones in increasing order. */
   const unionOf = (pieces: readonly (readonly [BoxedExpression, BoxedExpression])[]) => {
-    const sorted = [...pieces].sort((x, y) => numAt(x[0]) - numAt(y[0]));
+    const sorted = [...pieces].toSorted((x, y) => numAt(x[0]) - numAt(y[0]));
     const merged: [BoxedExpression, BoxedExpression][] = [];
     for (const [a, b] of sorted) {
       const last = merged.at(-1);

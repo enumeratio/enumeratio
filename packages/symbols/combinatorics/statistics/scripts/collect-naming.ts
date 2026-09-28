@@ -21,7 +21,7 @@ for (const entry of entries) {
   for (const oldName of entry.formerly ?? []) renamed[oldName] = entry.name;
 }
 
-const sorted = Object.fromEntries(Object.entries(renamed).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+const sorted = Object.fromEntries(Object.entries(renamed).toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
 
 await writeFormatted(
   new URL("../src/naming-data.ts", import.meta.url),

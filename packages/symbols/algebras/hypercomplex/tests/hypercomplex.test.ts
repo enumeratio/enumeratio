@@ -140,7 +140,7 @@ test("an imaginary Clifford generator is also reachable as i·e_k", () => {
 test("the six families are the whole square × commutation grid", () => {
   const grid = FAMILIES.map((f) => `${f.square}/${f.anticommutes ? "anti" : "comm"}`);
   expect(new Set(grid).size).toBe(6);
-  expect([...grid].sort()).toEqual(["-1/anti", "-1/comm", "0/anti", "0/comm", "1/anti", "1/comm"].sort());
+  expect([...grid].toSorted()).toEqual(["-1/anti", "-1/comm", "0/anti", "0/comm", "1/anti", "1/comm"].toSorted());
 });
 
 test("⊗ is an infix alias for the ordered product", () => {

@@ -22,7 +22,7 @@ export function runRepl(defaults: SessionDefaults = {}): void {
   const rl = createInterface({
     input: process.stdin,
     output: process.stdout,
-    history: [...lines].reverse(), // readline's history option is newest-first
+    history: [...lines].toReversed(), // readline's history option is newest-first
     historySize: 500,
     terminal: color,
   });

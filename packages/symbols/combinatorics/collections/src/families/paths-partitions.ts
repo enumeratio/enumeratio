@@ -113,7 +113,8 @@ function rankTailPartition(blocks: number[][], n: number, mode: TailMode): numbe
   blocks.forEach((b, bi) => b.forEach((x) => (blockIndexOf[x] = bi)));
   const predOf = new Array(n + 1).fill(0); // predOf[x] = element right before x in its block (0 = block minimum)
   blocks.forEach((b) => {
-    const sorted = [...b].sort((x, y) => x - y);
+    const sorted = [...b];
+    sorted.sort((x, y) => x - y);
     for (let k = 1; k < sorted.length; k++) predOf[sorted[k]] = sorted[k - 1];
   });
   const f = buildTailLevelTable(n);
@@ -143,7 +144,8 @@ function canonicalBlocksOf(e: unknown): number[][] | undefined {
   const seen = new Set<number>();
   for (const b of e) {
     if (!Array.isArray(b) || b.length === 0) return undefined;
-    const sorted = [...b].sort((x, y) => x - y);
+    const sorted = [...b];
+    sorted.sort((x, y) => x - y);
     for (const x of sorted) {
       if (typeof x !== "number" || !Number.isInteger(x) || seen.has(x)) return undefined;
       seen.add(x);
@@ -214,7 +216,8 @@ function matchingFromDyckSteps(steps: number[], mode: MatchMode): number[][] {
       pairs.push([Math.min(partner, point), Math.max(partner, point)]);
     }
   }
-  return pairs.sort((a, b) => a[0] - b[0]);
+  pairs.sort((a, b) => a[0] - b[0]);
+  return pairs;
 }
 
 function dyckStepsFromMatching(pairs: number[][], n: number, mode: MatchMode): number[] {

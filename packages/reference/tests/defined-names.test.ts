@@ -31,8 +31,8 @@ test("defined-names-data.ts is current", () => {
     }
   }
   const ce = declaredEngine();
-  const defined = [...names].filter((name) => ce.lookupDefinition(name) !== undefined).sort();
+  const defined = [...names].filter((name) => ce.lookupDefinition(name) !== undefined).toSorted();
   expect(defined, "regenerate: vp node packages/reference/scripts/collect-defined-names.ts").toEqual(
-    [...DEFINED_NAMES].sort(),
+    [...DEFINED_NAMES].toSorted(),
   );
 }, 60_000); // walks every reference example and boxes every symbol through the full engine

@@ -64,7 +64,7 @@ function divisorsOf(n: bigint): bigint[] | undefined {
     }
     divisors = divisors.flatMap((d) => powers.map((pw) => d * pw));
   }
-  return divisors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+  return divisors.toSorted((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 }
 
 /** Apply a `Function` literal (or symbol naming one) to a single boxed argument. */

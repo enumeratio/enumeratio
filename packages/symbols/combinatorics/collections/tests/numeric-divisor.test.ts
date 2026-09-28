@@ -14,7 +14,7 @@ function divisorsBF(n: number): number[] {
     out.push(d);
     if (d * d !== n) out.push(n / d);
   }
-  return out.sort((a, b) => a - b);
+  return out.toSorted((a, b) => a - b);
 }
 const sigmaBF = (n: number): number => divisorsBF(n).reduce((a, b) => a + b, 0);
 const properDivisorsBF = (n: number): number[] => divisorsBF(n).filter((d) => d !== n);

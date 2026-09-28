@@ -18,7 +18,7 @@ test("CycleType crosses carriers and partitions n", () => {
       } while (at !== start);
       lengths.push(length);
     }
-    return lengths.sort((a, b) => b - a);
+    return lengths.toSorted((a, b) => b - a);
   };
   expect(String(ce.box(["CycleType", perm(2, 3, 1)] as never).evaluate().type)).toBe("integer_partition");
   for (const p of ALL)

@@ -29,7 +29,7 @@ test("stories-data.ts is what the current records collect to", () => {
   const names = readdirSync(referenceDir)
     .filter((f) => f.endsWith(STORIES_SUFFIX))
     .map((f) => f.slice(0, -STORIES_SUFFIX.length))
-    .sort();
+    .toSorted();
 
   const rebuilt: Record<string, StoryData[]> = {};
   for (const name of names) {

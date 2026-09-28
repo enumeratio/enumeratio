@@ -264,6 +264,8 @@ export function runCommand(argv: readonly string[], stdin?: string, defaults: Se
     case "eval":
     case "convert":
       return evaluate(parsed, stdin, defaults);
+    default:
+      throw new Error("unreachable: subcommand is exhaustive above");
   }
 }
 

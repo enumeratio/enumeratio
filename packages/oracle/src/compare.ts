@@ -176,7 +176,7 @@ function blocksLabel(label: MathJSON): string | undefined {
     if (!Array.isArray(block) || block[0] !== "List") return undefined;
     const points = block.slice(1) as MathJSON[];
     if (!points.every((p): p is number => typeof p === "number")) return undefined;
-    blocks.push([...points].sort((a, b) => a - b));
+    blocks.push([...points].toSorted((a, b) => a - b));
   }
   blocks.sort((a, b) => {
     for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return a[i]! - b[i]!;
@@ -210,7 +210,7 @@ function monomialOf(powers: readonly [string, number][]): string {
   for (const [symbol, n] of powers) by.set(symbol, (by.get(symbol) ?? 0) + n);
   return [...by]
     .filter(([, n]) => n !== 0)
-    .sort(([a], [b]) => a.localeCompare(b))
+    .toSorted(([a], [b]) => a.localeCompare(b))
     .map(([symbol, n]) => `*${symbol}^${n}`)
     .join("");
 }
@@ -268,11 +268,11 @@ export function compareCombinations(ours: MathJSON, theirs: string): Verdict {
     JSON.stringify(
       Object.entries(m)
         .filter(([, c]) => c !== 0)
-        .sort(([x], [y]) => x.localeCompare(y)),
+        .toSorted(([x], [y]) => x.localeCompare(y)),
     );
   const parsed = JSON.parse(theirs.slice("combinations:".length)) as Record<string, number>[];
   const byText = (x: string, y: string): number => x.localeCompare(y);
-  const a = mine.map((m) => canon(Object.fromEntries(m!))).sort(byText);
-  const b = parsed.map(canon).sort(byText);
+  const a = mine.map((m) => canon(Object.fromEntries(m!))).toSorted(byText);
+  const b = parsed.map(canon).toSorted(byText);
   return JSON.stringify(a) === JSON.stringify(b) ? "agree" : "disagree";
 }

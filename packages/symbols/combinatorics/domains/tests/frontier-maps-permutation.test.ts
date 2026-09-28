@@ -115,7 +115,7 @@ function insertionTableauRef(p: readonly number[]): number[][] {
   return rows;
 }
 /** The reading word: bottom row to top, each left to right. */
-const readingWordRef = (p: readonly number[]): number[] => insertionTableauRef(p).reverse().flat();
+const readingWordRef = (p: readonly number[]): number[] => insertionTableauRef(p).toReversed().flat();
 
 test("KnuthClassRepresentative is the reading word of the insertion tableau, up to n = 4", () => {
   for (const p of ALL4)
@@ -187,7 +187,7 @@ function crosses(a: readonly number[], b: readonly number[]): boolean {
 const isNonCrossing = (p: readonly number[]): boolean => {
   const cycles = cyclesOf(p);
   for (const cycle of cycles) {
-    const sorted = [...cycle].sort((a, b) => a - b);
+    const sorted = [...cycle].toSorted((a, b) => a - b);
     for (let j = 0; j < sorted.length; j++) {
       const expected = sorted[(j + 1) % sorted.length]!;
       if (p[sorted[j]! - 1] !== expected) return false;

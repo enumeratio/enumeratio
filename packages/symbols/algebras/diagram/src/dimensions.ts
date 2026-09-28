@@ -70,6 +70,8 @@ export function dimensionOf(cls: DiagramClass, n: number): number {
       return rookCount(n);
     case "symmetric":
       return factorial(n);
+    default:
+      throw new Error("unreachable: DiagramClass is exhaustive above");
   }
 }
 

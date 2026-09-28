@@ -314,6 +314,8 @@ export function exactPart(expr: BoxedExpression, tag: Recognized["tag"]): BoxedE
       return (op === "Sin" || op === "Cos" || op === "Tan") && ops.length === 1 ? ops[0] : undefined;
     case "poly":
       return undefined;
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -358,7 +360,7 @@ export function naturalDomain(
       // root cases were already routed away above): nonneg BETWEEN them (downward
       // quadratic) is the only single-interval case; nonneg OUTSIDE them (upward) is two
       // disjoint rays -- decline.
-      const [a, b] = zeros.sort((p, q) => p.N().re - q.N().re) as [BoxedExpression, BoxedExpression];
+      const [a, b] = zeros.toSorted((p, q) => p.N().re - q.N().re) as [BoxedExpression, BoxedExpression];
       const leadPositive = rec.radicand[rec.radicand.length - 1]! > 0;
       if (leadPositive) return undefined; // outside the roots: two disjoint rays
       return { lo: { expr: a, approx: a.N().re, closed: true }, hi: { expr: b, approx: b.N().re, closed: true } };
@@ -374,6 +376,8 @@ export function naturalDomain(
     }
     case "trig":
       return undefined; // handled separately -- see optimize.ts
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 

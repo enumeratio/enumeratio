@@ -72,7 +72,7 @@ export function cellBindings(
   } catch {
     return { id, assigns, reads: [], ordinal };
   }
-  const reads = [...new Set(boxed.unknowns)].filter((n) => n !== assigns).sort();
+  const reads = [...new Set(boxed.unknowns)].filter((n) => n !== assigns).toSorted();
   return { id, assigns, reads, ordinal };
 }
 
@@ -143,7 +143,7 @@ export function schedule(cells: readonly CellBindings[]): Schedule {
   // Kahn's algorithm over the cells that have no diagnostic yet -- a duplicate
   // definition has no position to run at, so it is excluded from the order entirely.
   const bad = new Set(diagnostics.map((d) => d.cellId));
-  const live = cells.filter((c) => !bad.has(c.id)).sort((a, b) => a.id - b.id);
+  const live = cells.filter((c) => !bad.has(c.id)).toSorted((a, b) => a.id - b.id);
   const indegree = new Map<number, number>(live.map((c) => [c.id, 0]));
   for (const cell of live) {
     for (const reader of edgesOut.get(cell.id) ?? []) {

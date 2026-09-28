@@ -10,7 +10,7 @@ import { CALL_FORMS, FRONTIER } from "../src/wolfram-frontier-data.ts";
 test("the frontier is ranked, and every entry is a real Wolfram symbol", () => {
   expect(FRONTIER.length).toBeGreaterThan(100);
   const uses = FRONTIER.map((entry) => entry.uses);
-  expect([...uses].sort((a, b) => b - a)).toEqual(uses);
+  expect([...uses].toSorted((a, b) => b - a)).toEqual(uses);
   expect(FRONTIER.filter((entry) => !isSystemName(entry.head))).toEqual([]);
 });
 

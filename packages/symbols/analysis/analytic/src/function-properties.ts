@@ -395,6 +395,8 @@ export function domainOf(
       // union of intervals, so this is genuinely outside FunctionDomain's interval
       // vocabulary; decline rather than approximate it as "True".
       return undefined;
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -443,6 +445,8 @@ export function rangeOf(ce: ComputeEngine, rec: Recognized, y: string): BoxedExp
     case "trig":
       if (rec.fn === "Tan") return ce.symbol("True");
       return ce.function("LessEqual", [-1, y, 1]);
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -469,6 +473,8 @@ export function monotonicityOf(rec: Recognized, domainIsAll: boolean): Trend | u
     case "log":
     case "trig":
       return "indeterminate";
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -491,6 +497,8 @@ export function convexityOf(rec: Recognized, domainIsAll: boolean): Trend | unde
     case "log":
     case "trig":
       return "indeterminate";
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -522,6 +530,8 @@ export function signOf(rec: Recognized, domainIsAll: boolean): Trend | undefined
     case "log":
     case "trig":
       return "indeterminate";
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -547,6 +557,8 @@ export function injectiveOf(rec: Recognized): boolean | undefined {
       return degreeOf(rec.num) === 0 && rec.num[0] !== 0 && degreeOf(rec.den) === 1 ? true : undefined;
     case "trig":
       return false; // periodic: many-to-one over the whole domain
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -571,6 +583,8 @@ export function surjectiveOntoRealsOf(rec: Recognized): boolean | undefined {
         : undefined;
     case "trig":
       return rec.fn === "Tan" ? true : false;
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -606,6 +620,8 @@ export function singularitiesOf(ce: ComputeEngine, rec: Recognized, x: string): 
     case "trig":
       if (rec.fn === "Tan") return ce.function("Equal", [ce.function("Cos", [x]), 0]);
       return ce.symbol("False");
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -627,6 +643,8 @@ export function analyticOf(rec: Recognized): boolean {
     case "log":
       return false; // a nonconstant rational function always has a complex pole;
     // sqrt/log have a branch point — neither is entire
+    default:
+      return false; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -641,6 +659,8 @@ export function meromorphicOf(rec: Recognized): boolean {
     case "sqrt":
     case "log":
       return false; // a branch point is not a pole
+    default:
+      return false; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -661,6 +681,8 @@ export function periodOf(ce: ComputeEngine, rec: Recognized): BoxedExpression | 
       const basePi: BoxedExpression = rec.fn === "Tan" ? ce.symbol("Pi") : ce.function("Multiply", [2, "Pi"]);
       return ce.function("Divide", [basePi, Math.abs(rec.a)]);
     }
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 
@@ -738,6 +760,8 @@ function continuousIntervalsOf(rec: Recognized): readonly RealInterval[] | undef
         ? [{ lo: z!, loClosed: false, hi: Infinity, hiClosed: false }]
         : [{ lo: -Infinity, loClosed: false, hi: z!, hiClosed: false }];
     }
+    default:
+      return undefined; // Recognized's tags are exhaustive above; unreachable
   }
 }
 

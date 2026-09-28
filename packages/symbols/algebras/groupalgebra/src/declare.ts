@@ -189,7 +189,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     ce.function("GroupBasis", [ce.string(g.elements[i]!)]);
 
   const toExpression = (g: Group, element: Element): BoxedExpression => {
-    const terms = [...element].sort(([a], [b]) => a - b);
+    const terms = [...element].toSorted(([a], [b]) => a - b);
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(([index, coefficient]) => {
       const b = basisExpression(g, index);
@@ -454,7 +454,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
         // Wolfram: (i1 i2 … ik)⁻¹ is written (i1 ik … i2), not the bare array reversal.
         return cyclesExpression(
           ce,
-          cycles.map((cycle) => [cycle[0]!, ...cycle.slice(1).reverse()]),
+          cycles.map((cycle) => [cycle[0]!, ...cycle.slice(1).toReversed()]),
         );
       }
       const perm = permutationWordOf(input);

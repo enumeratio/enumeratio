@@ -63,7 +63,7 @@ export function detectDrift(current: Report, prior: readonly Report[], options: 
     if (r.status !== "ok" || r.median === undefined || past === undefined) continue;
     if (past.length < options.minRuns) continue;
     const trailingNs = quantile(
-      [...past].sort((a, b) => a - b),
+      [...past].toSorted((a, b) => a - b),
       0.5,
     );
     const ratio = r.median / trailingNs;
@@ -71,5 +71,5 @@ export function detectDrift(current: Report, prior: readonly Report[], options: 
       drifted.push({ name: r.name, medianNs: r.median, trailingNs, ratio, priorRuns: past.length });
     }
   }
-  return drifted.sort((a, b) => b.ratio - a.ratio);
+  return drifted.toSorted((a, b) => b.ratio - a.ratio);
 }

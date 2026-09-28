@@ -189,5 +189,5 @@ interface Scope {
 /** What declaring our libraries ADDS to a bare engine — the census proper. */
 export function declaredNames(): string[] {
   const bare = bindings(new ComputeEngine());
-  return [...bindings(fullEngine())].filter((name) => !bare.has(name)).sort();
+  return [...bindings(fullEngine())].filter((name) => !bare.has(name)).toSorted();
 }

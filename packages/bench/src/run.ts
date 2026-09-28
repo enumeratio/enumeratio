@@ -185,6 +185,8 @@ export function excluded(name: string, cell: PlanCell | undefined): CaseResult |
       return { name, status: "precision" };
     case "denied":
       return { name, status: "denied", reason: cell.note };
+    default:
+      return undefined; // cell.reason is exhaustive above; unreachable
   }
 }
 

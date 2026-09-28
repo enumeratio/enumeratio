@@ -48,11 +48,13 @@ export function KSubsetUnrank(n: number, k: number, rank: number): number[] {
     idx.push(c);
     r -= Binomial(c, i);
   }
-  return idx.reverse().map((c) => c + 1); // ascending, 1-based
+  idx.reverse();
+  return idx.map((c) => c + 1); // ascending, 1-based
 }
 /** k-subset (ascending 1-based) → its colex rank. */
 export function KSubsetRank(s: number[]): number {
-  const idx = [...s].map((x) => x - 1).sort((a, b) => a - b); // 0-based ascending
+  const idx = [...s].map((x) => x - 1); // 0-based ascending
+  idx.sort((a, b) => a - b);
   let r = 0;
   for (let i = 0; i < idx.length; i++) r += Binomial(idx[i], i + 1);
   return r;
@@ -175,7 +177,9 @@ export function MultisetUnrank(n: number, k: number, rank: number): number[] {
   return s.map((x, i) => x - i);
 }
 export function MultisetRank(m: number[]): number {
-  const s = [...m].sort((a, b) => a - b).map((x, i) => x + i);
+  const sorted = [...m];
+  sorted.sort((a, b) => a - b);
+  const s = sorted.map((x, i) => x + i);
   return KSubsetRank(s);
 }
 export function IsMultisetOf(m: number[], n: number, k: number): boolean {
@@ -848,7 +852,8 @@ export function DistinctPartitionUnrank(n: number, rank: number): number[] {
   return out;
 }
 export function DistinctPartitionRank(p: number[], n: number): number {
-  const parts = [...p].sort((a, b) => b - a);
+  const parts = [...p];
+  parts.sort((a, b) => b - a);
   let r = 0,
     m = n,
     upper = n;
@@ -886,7 +891,8 @@ export function PartitionsInBoxUnrank(a: number, b: number, rank: number): numbe
   return parts.filter((x) => x > 0); // drop zero parts
 }
 export function PartitionsInBoxRank(p: number[], a: number, b: number): number {
-  const parts = [...p].sort((x, y) => y - x);
+  const parts = [...p];
+  parts.sort((x, y) => y - x);
   while (parts.length < a) parts.push(0); // pad to a parts
   // reconstruct the 0/1 path: eBefore_i = b - part_i (non-decreasing since parts non-increasing)
   const path: number[] = [];
@@ -1362,7 +1368,8 @@ export function PartitionsMaxPartUnrank(n: number, m: number, rank: number): num
   return out;
 }
 export function PartitionsMaxPartRank(p: number[], m: number): number {
-  const parts = [...p].sort((a, b) => b - a);
+  const parts = [...p];
+  parts.sort((a, b) => b - a);
   const n = parts.reduce((a, b) => a + b, 0);
   let r = 0,
     rem = n,
@@ -1486,7 +1493,9 @@ export function IntegerLengthKernel(n: number, base = 10): number {
 }
 /** The integer with the base-b digits reversed (Wolfram IntegerReverse). */
 export function IntegerReverseKernel(n: number, base = 10): number {
-  return FromDigitsKernel(IntegerDigitsKernel(Math.abs(Math.trunc(n)), base).reverse(), base);
+  const digits = IntegerDigitsKernel(Math.abs(Math.trunc(n)), base);
+  digits.reverse();
+  return FromDigitsKernel(digits, base);
 }
 /** Sum of the base-b digits (Total @ IntegerDigits). */
 export function DigitSumKernel(n: number, base = 10): number {

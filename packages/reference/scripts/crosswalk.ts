@@ -40,7 +40,7 @@ interface Definition {
  */
 export function engineSymbols(ce: ComputeEngine): EngineSymbol[] {
   const out: EngineSymbol[] = [];
-  for (const name of bindings(ce).sort()) {
+  for (const name of bindings(ce).toSorted()) {
     if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) continue;
     const found = ce.lookupDefinition(name) as { operator?: Definition; value?: Definition } | undefined;
     const definition = found?.operator ?? found?.value;
@@ -104,7 +104,7 @@ export function crosswalk(
   }
   const records: CrosswalkRecord[] = [];
   for (const name of names) {
-    const fungrimEntries = [...(fungrimByHead.get(name) ?? [])].sort();
+    const fungrimEntries = [...(fungrimByHead.get(name) ?? [])].toSorted();
     // A head map value is sometimes an expression rather than a symbol (`-Infinity`); only a
     // symbol has a reference page.
     const alias = wolframHeads[name];

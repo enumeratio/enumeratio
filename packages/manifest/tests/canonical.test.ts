@@ -22,7 +22,7 @@ test("the order is the same however the overloads are listed", () => {
     { package: "y", type: "(integer, value) -> value" },
     { package: "z", type: "(string) -> string" },
   ];
-  expect(order(overloads)).toEqual(order([...overloads].reverse()));
+  expect(order(overloads)).toEqual(order([...overloads].toReversed()));
   expect(order(overloads)[0]).toBe("x: (integer, integer) -> integer");
 });
 

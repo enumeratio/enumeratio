@@ -66,7 +66,7 @@ export function declareHecke(ce: ComputeEngine): void {
   };
 
   const toExpression = (element: Element<BoxedExpression>): BoxedExpression => {
-    const terms = [...element.values()].sort((a, b) => permutationKey(a.w).localeCompare(permutationKey(b.w)));
+    const terms = [...element.values()].toSorted((a, b) => permutationKey(a.w).localeCompare(permutationKey(b.w)));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map((term) => {
       const basis = ce.function("HeckeT", [

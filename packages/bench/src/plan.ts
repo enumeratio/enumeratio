@@ -46,7 +46,7 @@ export function planCell(c: ConcreteCase, system: BenchSystem): PlanCell {
     if (out.ok) sources.push(out.source);
     else for (const head of out.missing) missing.add(head);
   }
-  if (missing.size > 0) return { reason: "unmapped", missing: [...missing].sort() };
+  if (missing.size > 0) return { reason: "unmapped", missing: [...missing].toSorted() };
   return { sources };
 }
 

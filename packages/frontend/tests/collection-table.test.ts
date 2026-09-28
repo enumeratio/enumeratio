@@ -37,7 +37,7 @@ test("counts are exact below 2^53 and flagged approximate above", () => {
 
 test("cells sort numerically first, then by text", () => {
   const cells = [{ text: "b" }, { num: 3, text: "3" }, { text: "a" }, { num: -1, text: "-1" }];
-  expect([...cells].sort(compareCells).map((c) => c.text)).toEqual(["-1", "3", "a", "b"]);
+  expect([...cells].toSorted(compareCells).map((c) => c.text)).toEqual(["-1", "3", "a", "b"]);
 });
 
 test("glyph adapters read flat lists and set-partition blocks", () => {

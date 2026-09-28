@@ -231,11 +231,11 @@ export function adoptStructures(root: ParentNode): void {
   const within = Array.from(root.querySelectorAll(rest.join(","))).filter(
     (el) => el.parentElement?.closest(controls.join(",")) != null,
   );
-  for (const el of within.reverse()) adoptStructure(el);
+  for (const el of within.toReversed()) adoptStructure(el);
   for (const el of root.querySelectorAll(controls.join(","))) adoptStructure(el);
   // Reverse document order: a descendant always follows its ancestor.
   const others = Array.from(root.querySelectorAll(rest.join(",")));
-  for (const el of others.reverse()) adoptStructure(el);
+  for (const el of others.toReversed()) adoptStructure(el);
 }
 
 let watching = false;

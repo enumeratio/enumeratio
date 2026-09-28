@@ -79,7 +79,7 @@ export function createReviewStore(source: BacklogSource = pickSource()) {
       const a = area(it);
       if (a) set.add(a);
     }
-    return [...set].sort();
+    return [...set].toSorted();
   });
 
   const filtered = computed(() => {

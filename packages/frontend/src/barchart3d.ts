@@ -122,9 +122,9 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
         return [lo[k], lo[m], hi[m], hi[k]];
       });
       const visible = [...sides]
-        .sort((a, b) => centreDepth(b) - centreDepth(a))
+        .toSorted((a, b) => centreDepth(b) - centreDepth(a))
         .slice(0, 2)
-        .sort((a, b) => centreDepth(a) - centreDepth(b));
+        .toSorted((a, b) => centreDepth(a) - centreDepth(b));
 
       const barDepth = centreDepth(lo);
       // Sides first, top last: the top can never be occluded by its own bar.

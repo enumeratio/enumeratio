@@ -227,7 +227,7 @@ for (const missing of Object.values(missingBySystem)) {
     cost.set(head, (cost.get(head) ?? 0) + count);
   }
 }
-const queue = [...cost].sort((a, b) => b[1] - a[1]).slice(0, 30);
+const queue = [...cost].toSorted((a, b) => b[1] - a[1]).slice(0, 30);
 
 if (!digestOnly)
   writeFileSync(
@@ -320,7 +320,7 @@ if (accept && !isDeepStrictEqual(kernels, data.kernels))
   writeFileSync(
     KERNELS,
     `${JSON.stringify(
-      Object.fromEntries(Object.entries(kernels).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))),
+      Object.fromEntries(Object.entries(kernels).toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))),
       null,
       2,
     )}\n`,
@@ -392,7 +392,7 @@ const lines: string[] = [
   "",
 ];
 for (const system of scanned) {
-  const rows = (rowsBySystem.get(system) ?? []).sort((a, b) => a.id.localeCompare(b.id));
+  const rows = (rowsBySystem.get(system) ?? []).toSorted((a, b) => a.id.localeCompare(b.id));
   const bad = rows.filter((row) => row.verdict === "disagree");
   const broken = rows.filter((row) => row.verdict === "error");
   const tally = (verdict: string) => rows.filter((row) => row.verdict === verdict).length;
