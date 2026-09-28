@@ -59,5 +59,5 @@ catalog:
 grades:
   - name: size
     role: axis
-carrier: PermutationCycles
+carrier: Permutation
 ---
