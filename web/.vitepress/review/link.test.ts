@@ -38,7 +38,15 @@ describe("resolveReviewLink", () => {
     });
   });
 
-  test("leaves an unrelated host external", () => {
+  test("rewrites the local dev server to a local path, any port", () => {
+    expect(resolveReviewLink("http://localhost:5173/reference/symbol/Floor")).toEqual({
+      kind: "local",
+      path: "/reference/symbol/Floor",
+    });
+    expect(resolveReviewLink("http://127.0.0.1:4173/guide/")).toEqual({ kind: "local", path: "/guide/" });
+  });
+
+  test("leaves github.com (and other unrelated hosts) external, e.g. because it refuses to be framed", () => {
     expect(resolveReviewLink("https://github.com/enumeratio/notatio/pull/101")).toEqual({
       kind: "external",
       href: "https://github.com/enumeratio/notatio/pull/101",
