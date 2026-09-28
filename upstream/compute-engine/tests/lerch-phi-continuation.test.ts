@@ -27,8 +27,11 @@ describe("LERCH PHI CONTINUATION", () => {
 
   // s = 1, a a positive integer: Φ(z, 1, a) reduces to −ln(1−z)/z minus the finite sum of the
   // first (a−1) terms; the simplest closed form used at a = 2: Φ(z,1,2) = (−ln(1−z) − z)/z².
-  // Checked against the general Hermite-integral continuation itself, at several z outside
-  // the disk (real, negative real, and complex).
+  // Checked against the general Hermite-integral continuation itself, at several z outside the
+  // disk (real and complex) but inside the region where compute-engine's Gamma(s, x) is still
+  // trustworthy (|x| ≤ 2.5 for Re(x) < 0). A negative real z always puts arg(x) at exactly π,
+  // pushing |x| past 2π ≈ 6.28 regardless of |z| — that region now declines instead, covered
+  // below.
   function phiS1A2Closed(z: Cx): Cx {
     // On the real axis past the cut (z.im exactly 0, z.re > 1), take the side approached from
     // below, as lerchContinued does: 1 − z sits at −0i's negation, +0i, not −0i.
@@ -46,7 +49,7 @@ describe("LERCH PHI CONTINUATION", () => {
     return cx((numRe * z2re + numIm * z2im) / denom, (numIm * z2re - numRe * z2im) / denom);
   }
 
-  for (const z of [cx(7.5, 0), cx(-4, 0), cx(3, 2), cx(-2, -3)] as const) {
+  for (const z of [cx(2.5, 0), cx(1.8, 1.2), cx(1.5, -1)] as const) {
     test(`s=1 closed form matches the general continuation at z=${z.re}+${z.im}i`, () => {
       const closed = phiS1A2Closed(z);
       const continued = lerchContinued(z, cx(1, 0), cx(2, 0), upperGamma);
@@ -74,5 +77,14 @@ describe("LERCH PHI CONTINUATION", () => {
   test("declines rather than guess where the continuation's terms cancel", () => {
     const r = ce.box(["N", ["LerchPhi", 10, 10, 10]]).evaluate();
     expect(r.operator).toBe("LerchPhi");
+  });
+
+  // compute-engine's Gamma(s, x) loses digits anywhere Re(x) < 0 past |x| ≈ 2.75 (measured
+  // against mpmath); the guard declines a bit inside that, at |x| > 2.5. A negative real z
+  // always puts arg(x) at π, so even a z close to the unit circle exceeds it (cortex-js/
+  // compute-engine#356's fix, ported here — see lerch-phi-continuation.ts).
+  test("declines where Gamma(s, x) would lose digits near the negative real axis", () => {
+    const r = lerchContinued(cx(-1.3, 0), cx(1, 0), cx(2, 0), upperGamma);
+    expect(r).toBeUndefined();
   });
 });

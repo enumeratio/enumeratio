@@ -9,6 +9,11 @@ import { type Cx, applyAllPatches, cx, lerchContinued } from "@enumeratio/for-co
 // `lerchContinued` kernel directly. A curated handful of these points (plus the branch-cut
 // and closed-form checks) lives beside the code, in
 // upstream/compute-engine/tests/lerch-phi-continuation.test.ts.
+//
+// Several rows are marked `declines: true` -- their x = -log(z)·(shifted a) sits where
+// compute-engine's Gamma(s, x) has lost too many digits to trust (Re(x) < 0, |x| > 2.5).
+// mpmath's value is kept on the row for provenance; the assertion is that we decline, not
+// that we match it.
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
@@ -25,15 +30,22 @@ interface Golden {
   s: [number, number];
   a: [number, number];
   mpmath: [number, number];
+  /** Past the Gamma(s, x) decline guard (Re(x) < 0, |x| > 2.5): `mpmath` is kept for
+   * provenance, but `lerchContinued` must decline rather than trust that region. */
+  declines?: boolean;
 }
 
 const GOLDEN: readonly Golden[] = JSON.parse(
   readFileSync(new URL("../golden/upstream/lerch-continuation.golden.json", import.meta.url), "utf8"),
 );
 
-for (const { label, z, s, a, mpmath } of GOLDEN) {
+for (const { label, z, s, a, mpmath, declines } of GOLDEN) {
   test(`lerchContinued: ${label}`, () => {
     const out = lerchContinued(cx(...z), cx(...s), cx(...a), upperGamma);
+    if (declines) {
+      expect(out).toBeUndefined();
+      return;
+    }
     expect(out).not.toBeUndefined();
     expect(out!.re).toBeCloseTo(mpmath[0], 9);
     expect(out!.im).toBeCloseTo(mpmath[1], 9);
