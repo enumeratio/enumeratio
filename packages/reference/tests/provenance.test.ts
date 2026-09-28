@@ -374,7 +374,8 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * (Sage's `rational_reconstruction`, Maple's `iratrecon`), IntegerMod and IntegerModRing (Sage's
  * `Mod(a, m)` and `Zmod(m)`), the Is… predicates (Wolfram's …Q), SetPartitions (SymPy's
  * `multiset_partitions`) and IncompleteEllipticPi (Wolfram's EllipticPi[n, φ, m], mpmath's
- * ellippi). KeiperLiLambda has no known equivalent anywhere.
+ * ellippi), and likewise IncompleteEllipticE/F (EllipticE/F), ModularJ (KleinInvariantJ) and
+ * EisensteinG (EisensteinE, up to normalisation). KeiperLiLambda has no known equivalent anywhere.
  */
 const NOVEL = [
   "Adele",
@@ -417,9 +418,9 @@ const NOVEL = [
   "Descents",
   "Diagram",
   "DigammaFunctionZero",
-  "LegendrePolynomial",
   "DyadicCompositions",
   "DyckPathsByHeight",
+  "EisensteinG",
   "EvenPermutations",
   "Excedances",
   "FibStrings",
@@ -438,6 +439,8 @@ const NOVEL = [
   "Hypergeometric3F2Regularized",
   "HypergeometricUStar",
   "Idele",
+  "IncompleteEllipticE",
+  "IncompleteEllipticF",
   "IncompleteEllipticPi",
   "IntegerCompositions",
   "IntegerMod",
@@ -478,6 +481,7 @@ const NOVEL = [
   "KSubsets",
   "KeiperLiLambda",
   "LargestPartPartitions",
+  "LegendrePolynomial",
   "LehmerCodes",
   "LucasStrings",
   "LukasiewiczPaths",
@@ -485,6 +489,7 @@ const NOVEL = [
   "MajorIndex",
   "MinorIndex",
   "ModularClasses",
+  "ModularJ",
   "ModularMatrix",
   "ModularWord",
   "MoebiusFunction",
@@ -591,6 +596,11 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "BesselJZero",
     "BooleanConvert",
     "CaputoD",
+    "CarlsonRC",
+    "CarlsonRD",
+    "CarlsonRF",
+    "CarlsonRG",
+    "CarlsonRJ",
     "Cases",
     "Catch",
     "CellularAutomaton",
@@ -767,6 +777,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "MersennePrimeExponent",
     "MinValue",
     "Minimize",
+    "ModularLambda",
     "Module",
     "MovingMap",
     "NMaximize",
