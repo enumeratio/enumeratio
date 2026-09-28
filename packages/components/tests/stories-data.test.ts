@@ -8,21 +8,12 @@
 import { readdirSync } from "node:fs";
 import { COMPONENT_STORIES_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { readStories, STORIES_SUFFIX } from "@enumeratio/entry/node";
-import type { StoryVdom as EntryStoryVdom } from "@enumeratio/entry";
-import { markupOf, type Rendering } from "@enumeratio/frontend";
+import { structuralMarkupOf } from "@enumeratio/frontend/reflect";
+import { structuralOf } from "@enumeratio/frontend/vdom";
 import { expect, test } from "vite-plus/test";
-import { type StoryData, type StoryVdom, STORIES_DATA } from "../src/stories-data.ts";
+import { type StoryData, STORIES_DATA } from "../src/stories-data.ts";
 
 const referenceDir = new URL("../reference/", import.meta.url);
-
-// `StoryVdom` (both the entry type and the generated module's mirror of it) leaves
-// `attributes` optional; `Rendering` always carries it. Mirrors collect-stories.ts.
-const asRendering = (vdom: StoryVdom | EntryStoryVdom): Rendering => ({
-  tag: vdom.tag,
-  attributes: vdom.attributes ?? {},
-  children: vdom.children?.map(asRendering),
-  text: vdom.text,
-});
 
 test("stories-data.ts is what the current records collect to", () => {
   const names = readdirSync(referenceDir)
@@ -34,14 +25,18 @@ test("stories-data.ts is what the current records collect to", () => {
   for (const name of names) {
     const stories = readStories(referenceDir, name);
     expect(validateSchema(COMPONENT_STORIES_SCHEMA, stories), name).toEqual([]);
-    rebuilt[name] = stories.map((story) => ({ ...story, markup: markupOf(asRendering(story.vdom)) }));
+    expect(new Set(stories.map((s) => s.id)).size, `${name}: duplicate story id`).toBe(stories.length);
+    rebuilt[name] = stories.map((story) => ({
+      ...story,
+      markup: structuralMarkupOf(structuralOf(story.expr as never)),
+    }));
   }
 
   expect(STORIES_DATA).toEqual(rebuilt);
 });
 
-test("every story's pinned markup is its own vdom's markupOf, not something re-derived live", () => {
+test("every story's pinned markup is its own expr's structuralMarkupOf, not something re-derived live", () => {
   for (const stories of Object.values(STORIES_DATA)) {
-    for (const story of stories) expect(story.markup).toBe(markupOf(asRendering(story.vdom)));
+    for (const story of stories) expect(story.markup).toBe(structuralMarkupOf(structuralOf(story.expr as never)));
   }
 });

@@ -250,19 +250,6 @@ export const REFERENCE_EXAMPLES_SCHEMA: JsonSchema = {
   $defs: { MathJSON: MATHJSON, ReferenceExample: REFERENCE_EXAMPLE, Reference: REFERENCE },
 };
 
-const VDOM_NODE: JsonSchema = {
-  description: "One node of a component story's vdom tree: a tag, its attributes, and its children or text.",
-  type: "object",
-  properties: {
-    tag: { type: "string" },
-    attributes: { type: "object", additionalProperties: { type: "string" } },
-    children: { type: "array", items: { $ref: "#/$defs/StoryVdom" } },
-    text: { type: "string" },
-  },
-  required: ["tag"],
-  additionalProperties: false,
-};
-
 const COMPONENT_STORY: JsonSchema = {
   type: "object",
   properties: {
@@ -270,9 +257,9 @@ const COMPONENT_STORY: JsonSchema = {
     caption: { type: "string" },
     category: { type: "string" },
     notes: { type: "string" },
-    vdom: { $ref: "#/$defs/StoryVdom" },
+    expr: { $ref: "#/$defs/MathJSON" },
   },
-  required: ["id", "caption", "vdom"],
+  required: ["id", "caption", "expr"],
   additionalProperties: false,
 };
 
@@ -284,7 +271,7 @@ export const COMPONENT_STORIES_SCHEMA: JsonSchema = {
   description: "One component's <Name>.stories.yaml: its stories, in page order.",
   type: "array",
   items: { $ref: "#/$defs/ComponentStory" },
-  $defs: { StoryVdom: VDOM_NODE, ComponentStory: COMPONENT_STORY },
+  $defs: { MathJSON: MATHJSON, ComponentStory: COMPONENT_STORY },
 };
 
 const RENDERED_FORM: JsonSchema = {

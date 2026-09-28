@@ -396,28 +396,19 @@ export type HeadImplementations = Readonly<Record<string, ExampleImplementations
 
 // --- component stories (design/vdom.md) ----------------------------------------------------
 //
-// A component's demos, as data, the way a head's examples are: `packages/components/reference/
-// <Name>.stories.yaml` beside the element sources, one file per component, read and written
-// through the same `@enumeratio/entry` machinery. A story's payload is a vdom tree rather than
-// a MathJSON expression -- `{ tag, attributes, children }` is the shape `@enumeratio/frontend`'s
-// `Rendering` renders from (children are positional arguments, attributes are named options) --
-// redeclared here rather than imported, the same way `MathJSON` mirrors compute-engine's type
-// instead of depending on it.
-
-/** One node of a story's vdom tree: a tag, its attributes (always strings -- an element's
- * props are DOM attributes), and its children, or literal text for a leaf. */
-export interface StoryVdom {
-  readonly tag: string;
-  readonly attributes?: Readonly<Record<string, string>>;
-  readonly children?: readonly StoryVdom[];
-  readonly text?: string;
-}
+// A component's demos, as data, the same way a head's examples are: `packages/components/
+// reference/<Name>.stories.yaml` beside the element sources, one file per component, read and
+// written through the same `@enumeratio/entry` machinery. A story's payload is `expr`, a
+// MathJSON expression over the component's own head -- exactly what an example's `expr` is --
+// not a vdom tree: "a MathJSON node `[head, ...args]` and a vdom node `{ tag, props, children }`
+// are the same tree under a renaming" (design/vdom.md), and the vdom is a RENDERING of the
+// expression (`structuralOf` / `vdomOf` in `@enumeratio/frontend`), never stored on its own.
 
 /** One demo on a component's reference page. */
 export interface ComponentStory {
   /**
    * Stable within the component: `^[a-z0-9]+(-[a-z0-9]+)*$`, at most 48 characters. Assigned
-   * once and kept when the caption or vdom changes. The deep link is `#story/<id>`.
+   * once and kept when the caption or `expr` changes. The deep link is `#story/<id>`.
    */
   readonly id: string;
   /** Prose introducing the demo -- may use `$…$` for inline math, same as an example's caption. */
@@ -426,7 +417,11 @@ export interface ComponentStory {
   readonly category?: string;
   /** Longer prose kept from the story's original write-up, shown under the caption. */
   readonly notes?: string;
-  /** What the demo renders, as a vdom tree -- the pinned source of truth; its markup is
-   * derived from this, never the other way around. */
-  readonly vdom: StoryVdom;
+  /**
+   * The demo, as a MathJSON expression over the component's head -- `BarChart3D([[1, 2], [3,
+   * 4]])`, options as Wolfram-style trailing rules (`RowLabels -> "x,y"`). The pinned source of
+   * truth: the live render (`vdomOf`) and the shown markup (`structuralOf` printed) are both
+   * derived from this, never the other way around.
+   */
+  readonly expr: MathJSON;
 }

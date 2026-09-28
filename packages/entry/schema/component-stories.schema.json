@@ -8,31 +8,28 @@
     "$ref": "#/$defs/ComponentStory"
   },
   "$defs": {
-    "StoryVdom": {
-      "description": "One node of a component story's vdom tree: a tag, its attributes, and its children or text.",
-      "type": "object",
-      "properties": {
-        "tag": {
+    "MathJSON": {
+      "description": "A MathJSON expression: form-agnostic compute-engine input/output.",
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
           "type": "string"
         },
-        "attributes": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
+        {
+          "type": "boolean"
         },
-        "children": {
+        {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/StoryVdom"
+            "$ref": "#/$defs/MathJSON"
           }
         },
-        "text": {
-          "type": "string"
+        {
+          "type": "object"
         }
-      },
-      "required": ["tag"],
-      "additionalProperties": false
+      ]
     },
     "ComponentStory": {
       "type": "object",
@@ -51,11 +48,11 @@
         "notes": {
           "type": "string"
         },
-        "vdom": {
-          "$ref": "#/$defs/StoryVdom"
+        "expr": {
+          "$ref": "#/$defs/MathJSON"
         }
       },
-      "required": ["id", "caption", "vdom"],
+      "required": ["id", "caption", "expr"],
       "additionalProperties": false
     }
   }

@@ -1,14 +1,16 @@
 <script setup lang="ts">
 // Storybook cards on a component's reference page: each of the component's stories
 // (packages/components/reference/<Name>.stories.yaml, via stories-data.ts) as a live render
-// plus its markup. The vdom is the source of truth and renders through `toVNode`; the markup
-// shown under it is `markupOf(story.vdom)`, derived once at generation time and pinned in the
-// generated data -- never re-derived here, so it cannot show something the live render didn't.
-import type { Rendering } from "@enumeratio/frontend/symbols";
-import { toVNode } from "@enumeratio/frontend/vdom";
+// plus its markup. `expr` is the source of truth (design/vdom.md); the live render is
+// `vdomOf(expr)` handed to Vue's `h` through `toVNode`, computed here at runtime -- that
+// lowering is cheap and pure. The markup shown under it is the STRUCTURAL tree
+// (`structuralOf`) printed with PascalCase heads, derived once at generation time and pinned
+// in the generated data (`structuralMarkupOf`, `@enumeratio/frontend/reflect`) -- never
+// re-derived here, so it cannot show something that doesn't match what was reviewed.
+import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
 import { h } from "vue";
 import { renderProseMath } from "../../prose-math.ts";
-import type { StoryData, StoryVdom } from "../../data/stories.ts";
+import type { StoryData } from "../../data/stories.ts";
 
 defineProps<{ stories: readonly StoryData[] }>();
 
@@ -17,18 +19,8 @@ defineProps<{ stories: readonly StoryData[] }>();
 // `linkify` and the guides' markdown-it plugin -- the same syntax works the same way everywhere).
 const prose = (text?: string): string => renderProseMath(text ?? "");
 
-/** A story's vdom, with every node's attributes defaulted -- `toVNode` reads them unconditionally. */
-function asRendering(vdom: StoryVdom): Rendering {
-  return {
-    tag: vdom.tag,
-    attributes: vdom.attributes ?? {},
-    children: vdom.children?.map(asRendering),
-    text: vdom.text,
-  };
-}
-
 /** A render-function component for one story: `<component :is="liveNode(story)" />`. */
-const liveNode = (story: StoryData) => () => toVNode(asRendering(story.vdom), h);
+const liveNode = (story: StoryData) => () => toVNode(vdomOf(story.expr as never), h);
 
 /** Stories grouped by category, in first-seen order; an uncategorised story falls under "". */
 function grouped(stories: readonly StoryData[]): { category: string; stories: StoryData[] }[] {

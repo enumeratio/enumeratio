@@ -4,9 +4,9 @@
 // the component's Vue/React wrapper name, the same rule ComponentPage.vue's `wrapper`
 // computed derives a tag by.
 
-import { STORIES_DATA, type StoryData, type StoryVdom } from "../../../packages/components/src/stories-data.ts";
+import { STORIES_DATA, type StoryData } from "../../../packages/components/src/stories-data.ts";
 
-export type { StoryData, StoryVdom };
+export type { StoryData };
 
 /** A component's stories, by its Vue/React wrapper name (`BarChart3D`), or none. */
 export function storiesFor(name: string): readonly StoryData[] {

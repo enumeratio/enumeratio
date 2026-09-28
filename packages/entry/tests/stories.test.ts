@@ -22,7 +22,7 @@ afterEach(() => {
 const STORY: ComponentStory = {
   id: "a-3-3-matrix",
   caption: "A 3×3 matrix",
-  vdom: { tag: "notatio-bar-chart-3d", attributes: { data: "[[1,2,3],[2,4,3],[3,1,5]]" } },
+  expr: ["BarChart3D", ["List", ["List", 1, 2, 3], ["List", 2, 4, 3], ["List", 3, 1, 5]]],
 };
 
 test("readStories on a component with no stories file reads as none", () => {

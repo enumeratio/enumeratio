@@ -87,7 +87,7 @@ test("rejects an unknown verdict", () => {
 const STORY = {
   id: "a-3-3-matrix",
   caption: "A 3×3 matrix",
-  vdom: { tag: "notatio-bar-chart-3d", attributes: { data: "[[1,2,3],[2,4,3],[3,1,5]]" } },
+  expr: ["BarChart3D", ["List", ["List", 1, 2, 3], ["List", 2, 4, 3], ["List", 3, 1, 5]]],
 };
 
 test("a well-formed story passes, with and without category/notes", () => {
@@ -95,29 +95,15 @@ test("a well-formed story passes, with and without category/notes", () => {
   expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, notes: "More prose." }])).toEqual([]);
 });
 
-test("a story's vdom can nest children and text", () => {
-  const nested = {
-    ...STORY,
-    vdom: { tag: "notatio-row", children: [{ tag: "span", text: "so" }] },
-  };
-  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [nested])).toEqual([]);
-});
-
-test("rejects a story missing its required vdom", () => {
-  const { vdom: _vdom, ...withoutVdom } = STORY;
-  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [withoutVdom])).toEqual(['$[0]: missing required property "vdom"']);
+test("rejects a story missing its required expr", () => {
+  const { expr: _expr, ...withoutExpr } = STORY;
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [withoutExpr])).toEqual(['$[0]: missing required property "expr"']);
 });
 
 test("rejects an unknown property on a story (typo guard)", () => {
   expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, caputre: "oops" }])).toEqual([
     '$[0]: unexpected property "caputre"',
   ]);
-});
-
-test("rejects an unknown property on a story's vdom node (typo guard)", () => {
-  expect(
-    validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, vdom: { ...STORY.vdom, atributes: STORY.vdom.attributes } }]),
-  ).toEqual(['$[0].vdom: unexpected property "atributes"']);
 });
 
 test("rejects a malformed story id", () => {
