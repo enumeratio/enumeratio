@@ -33,6 +33,8 @@ export const DIVERGENCE_KINDS = {
   resource: "the other system ran out of time or memory",
   /** The other system is right and this is a gap or bug here; the row names its issue. */
   ours: "a gap or bug here, tracked by an issue",
+  /** The scan tooling itself mishandled this one row — neither system's answer is at fault. */
+  harness: "a bug in the scan tooling, not a real answer from either system",
   /** Not yet reviewed — a scan adds these and a person replaces them. */
   unclassified: "not yet reviewed",
 } as const;

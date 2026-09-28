@@ -226,6 +226,13 @@ gaussianintegers-true-squares-of-1-1-i-2-3-3-3i:
     in: DivisorSigma[2, 6, Rule[GaussianIntegers, True]]
   wolfram:
     in: DivisorSigma[2, 6, Rule[GaussianIntegers, True]]
+    out: -30 + 20*I
+    tex:
+      in: \sigma _2(6)
+      out: -30+20 i
+    verdict: disagree
+    kind: convention
+    note: "Not a bug on our side: Wolfram's own Divisors[6, GaussianIntegers->True] lists {1, 1+I, 2, 3, 3+3I, 6} -- exactly our caption's divisor set -- and summing THEIR squares by hand (Total[#^2& /@ %]) gives 50+20I, matching us exactly. Wolfram's DivisorSigma built-in with GaussianIntegers->True evidently picks a different associate per divisor internally (-30+20I) than its own Divisors[] enumerates; kernel-verified both ways."
 listable-in-n:
   epsil:
     in: DivisorSigma(2, [1, 2, 3, 4, 5])

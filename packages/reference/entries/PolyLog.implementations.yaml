@@ -559,6 +559,10 @@ frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
     in: D[PolyLog[n, x], x]
   wolfram:
     in: D[PolyLog[n, x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{Li}_n(x)}{\partial x}-\frac{\text{Li}_{n-1}(x)}{x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{Li}_{\frac{7}{3}}\left(-\frac{11}{5}\right)--\frac{\text{Li}_{\frac{7}{3}-1}\left(-\frac{11}{5}\right)}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\text{Li}_{\frac{13}{4}}\left(-\frac{17}{6}\right)--\frac{\text{Li}_{\frac{13}{4}-1}\left(-\frac{17}{6}\right)}{\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\text{Li}_{\frac{19}{8}}\left(-\frac{23}{9}\right)--\frac{\text{Li}_{\frac{19}{8}-1}\left(-\frac{23}{9}\right)}{\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))
   sage:

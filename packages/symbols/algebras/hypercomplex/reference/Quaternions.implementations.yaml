@@ -36,6 +36,13 @@ k-in-h:
     in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
   wolfram:
     in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
+    out: Element[Subscript[f, 1]*Subscript[f, 2], Quaternions]
+    tex:
+      in: f_1 f_2\in \text{Quaternions}
+      out: f_1 f_2\in \text{Quaternions}
+    verdict: disagree
+    kind: domain
+    note: "Same as the ijk-1 row above: Wolfram has no built-in quaternion multiplication table for our basis elements, so Element stays unevaluated instead of resolving to True."
   sage:
     in: enumeratio_element((SR.var("f_1") * SR.var("f_2")), SR.var("Quaternions"))
     out: "TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable"
@@ -56,6 +63,13 @@ a-multicomplex-unit-is-not-a-quaternion:
     in: Element[Subscript[i, 1], Quaternions]
   wolfram:
     in: Element[Subscript[i, 1], Quaternions]
+    out: Element[Subscript[5, 1], Quaternions]
+    tex:
+      in: i_1\in \text{Quaternions}
+      out: 5_1\in \text{Quaternions}
+    verdict: disagree
+    kind: harness
+    note: "run.ts's runWolfram drives every item through Do[..., {i, 1, n}], and this item landed at loop position 5, so our bare symbol i (Subscript[i, 1], our own name, not the imaginary unit) collided with the Do loop's own iterator, bound to 5 at that point. Isolated (wolframscript -code 'Element[Subscript[i, 1], Quaternions]' outside the batch stays unevaluated, matching ours). Needs the harness to avoid i as its loop variable or scope it -- out of this lane's scope to fix (packages/oracle/src/run.ts)."
   sage:
     in: enumeratio_element(SR.var("i_1"), SR.var("Quaternions"))
     out: "TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable"

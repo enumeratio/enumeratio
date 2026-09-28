@@ -213,6 +213,10 @@ derivative-csc-x-cot-x:
     in: D[Csc[x], x]
   wolfram:
     in: D[Csc[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \csc (x)}{\partial x}--(\csc (x) \cot (x))\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\csc \left(\frac{7}{3}\right)--\left(\csc \left(\frac{7}{3}\right) \cot \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\csc \left(-\frac{11}{5}\right)--\left(\csc \left(-\frac{11}{5}\right) \cot \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\csc \left(\frac{13}{4}\right)--\left(\csc \left(\frac{13}{4}\right) \cot \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 antiderivative-ln-csc-x-cot-x:
   epsil:
     in: Integrate(Csc(x), x)

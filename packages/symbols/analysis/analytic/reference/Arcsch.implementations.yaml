@@ -57,6 +57,10 @@ as-a-logarithm-arcsch-1-ln-1-sqrt-2:
     in: TrigToExp[ArcCsch[1]]
   wolfram:
     in: TrigToExp[ArcCsch[1]]
+    out: Log[1 + Sqrt[2]]
+    tex:
+      in: \text{TrigToExp}\left[\text{csch}^{-1}(1)\right]
+      out: \log \left(1+\sqrt{2}\right)
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Arcsch(-x)

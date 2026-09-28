@@ -749,6 +749,10 @@ gamma-x-gamma-x-psi-x-so-the-logarithmic:
     in: Divide[D[Gamma[x], x], Gamma[x]]
   wolfram:
     in: Divide[D[Gamma[x], x], Gamma[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\frac{\partial \Gamma (x)}{\partial x}}{\Gamma (x)}-\psi (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\frac{\partial }{\partial \frac{7}{3}}\Gamma \left(\frac{7}{3}\right)}{\Gamma \left(\frac{7}{3}\right)}-\psi \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\frac{\partial }{\partial -\frac{11}{5}}\Gamma \left(-\frac{11}{5}\right)}{\Gamma \left(-\frac{11}{5}\right)}-\psi \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\frac{\partial }{\partial \frac{13}{4}}\Gamma \left(\frac{13}{4}\right)}{\Gamma \left(\frac{13}{4}\right)}-\psi \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (S(diff(gamma(Symbol("x")), Symbol("x"))) / gamma(Symbol("x")))
   sage:

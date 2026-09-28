@@ -159,6 +159,10 @@ gaussianintegers-true-12-1-i-4-cdot-3:
     in: PrimeOmega[12, Rule[GaussianIntegers, True]]
   wolfram:
     in: PrimeOmega[12, Rule[GaussianIntegers, True]]
+    out: "5"
+    tex:
+      in: \text{PrimeOmega}[12,\text{GaussianIntegers}\to \text{True}]
+      out: "5"
 listable-over-a-range:
   epsil:
     in: PrimeOmega(Range(20))

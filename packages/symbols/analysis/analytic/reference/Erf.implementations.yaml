@@ -287,6 +287,10 @@ frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the:
     in: D[Erf[x], x]
   wolfram:
     in: D[Erf[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{erf}(x)}{\partial x}-\frac{2 e^{-x^2}}{\sqrt{\pi }}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{erf}\left(\frac{7}{3}\right)-\frac{2 e^{-\left(\frac{7}{3}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{erf}\left(-\frac{11}{5}\right)-\frac{2 e^{-\left(-\frac{11}{5}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{erf}\left(\frac{13}{4}\right)-\frac{2 e^{-\left(\frac{13}{4}\right)^2}}{\sqrt{\pi }}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Erf(1), 40)
