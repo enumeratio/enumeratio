@@ -138,6 +138,12 @@ a-padding-element-fills-the-overhang-instead-of:
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
   fullform:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[1, 1], x]
+  wolfram:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[1, 1], x]
+    out: "{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {4, 5, 6}, {5, 6, x}, {6, x, x}}"
+    tex:
+      in: \text{Partition}[\{1,2,3,4,5,6\},3,1,\{1,1\},x]
+      out: \left( \begin{array}{ccc}  1 & 2 & 3 \\  2 & 3 & 4 \\  3 & 4 & 5 \\  4 & 5 & 6 \\  5 & 6 & x \\  6 & x & x \\ \end{array} \right)
 padding-on-the-left-with-overhangs-1-1:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6], 3, 1, [-1, -1], x)
@@ -147,6 +153,12 @@ padding-on-the-left-with-overhangs-1-1:
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack
   fullform:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, -1], x]
+  wolfram:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, -1], x]
+    out: "{{x, x, 1}, {x, 1, 2}, {1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {4, 5, 6}}"
+    tex:
+      in: \text{Partition}[\{1,2,3,4,5,6\},3,1,\{-1,-1\},x]
+      out: \left( \begin{array}{ccc}  x & x & 1 \\  x & 1 & 2 \\  1 & 2 & 3 \\  2 & 3 & 4 \\  3 & 4 & 5 \\  4 & 5 & 6 \\ \end{array} \right)
 padding-on-both-sides-with-overhangs-1-1:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6], 3, 1, [-1, 1], x)
@@ -166,6 +178,12 @@ padding-on-both-sides-with-overhangs-1-1:
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
   fullform:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, 1], x]
+  wolfram:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, 1], x]
+    out: "{{x, x, 1}, {x, 1, 2}, {1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {4, 5, 6}, {5, 6, x}, {6, x, x}}"
+    tex:
+      in: \text{Partition}[\{1,2,3,4,5,6\},3,1,\{-1,1\},x]
+      out: \left( \begin{array}{ccc}  x & x & 1 \\  x & 1 & 2 \\  1 & 2 & 3 \\  2 & 3 & 4 \\  3 & 4 & 5 \\  4 & 5 & 6 \\  5 & 6 & x \\  6 & x & x \\ \end{array} \right)
 reshaping-a-list-of-9-into-a-3-times-3-matrix:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6, 7, 8, 9], 3)

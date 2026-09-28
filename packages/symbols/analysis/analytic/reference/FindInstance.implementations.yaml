@@ -7,6 +7,12 @@ a-quadratic-with-two-real-roots:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], 4], x, Reals]
+  wolfram:
+    in: FindInstance[(Power[x, 2] == 4), x, Reals]
+    out: "{{x -> 2}}"
+    tex:
+      in: \text{FindInstance}\left[x^2=4,x,\mathbb{R}\right]
+      out: \{\{x\to 2\}\}
 both-roots-with-an-explicit-count:
   epsil:
     in: FindInstance(x ^ 2 == 4, x, Reals, 2)
@@ -16,6 +22,15 @@ both-roots-with-an-explicit-count:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, -2)\bigr\rbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], 4], x, Reals, 2]
+  wolfram:
+    in: FindInstance[(Power[x, 2] == 4), x, Reals, 2]
+    out: "{{x -> -2}, {x -> 2}}"
+    tex:
+      in: \text{FindInstance}\left[x^2=4,x,\mathbb{R},2\right]
+      out: \{\{x\to -2\},\{x\to 2\}\}
+    verdict: disagree
+    kind: convention
+    note: Both {2,-2}; Wolfram's FindInstance and ours enumerate the two roots in a different order.
 an-irrational-root-is-exact:
   epsil:
     in: FindInstance(x ^ 2 == 2, x, Reals)
@@ -25,6 +40,15 @@ an-irrational-root-is-exact:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, \sqrt{2})\bigr\rbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], 2], x, Reals]
+  wolfram:
+    in: FindInstance[(Power[x, 2] == 2), x, Reals]
+    out: "{{x -> -Sqrt[2]}}"
+    tex:
+      in: \text{FindInstance}\left[x^2=2,x,\mathbb{R}\right]
+      out: \left\{\left\{x\to -\sqrt{2}\right\}\right\}
+    verdict: disagree
+    kind: convention
+    note: FindInstance promises A solution, not a canonical one; Wolfram picked -sqrt(2), ours pinned sqrt(2). Both solve x^2=2.
 a-linear-equation:
   epsil:
     in: FindInstance(2x + 3 == 7, x, Reals)
@@ -34,6 +58,12 @@ a-linear-equation:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Plus[Times[2, x], 3], 7], x, Reals]
+  wolfram:
+    in: FindInstance[(Plus[Times[2, x], 3] == 7), x, Reals]
+    out: "{{x -> 2}}"
+    tex:
+      in: \text{FindInstance}[2 x+3=7,x,\mathbb{R}]
+      out: \{\{x\to 2\}\}
 no-real-root-is-a-proven-empty-result:
   epsil:
     in: FindInstance(x ^ 2 == -1, x, Reals)
@@ -43,6 +73,12 @@ no-real-root-is-a-proven-empty-result:
     out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FindInstance[Equal[Power[x, 2], -1], x, Reals]
+  wolfram:
+    in: FindInstance[(Power[x, 2] == -1), x, Reals]
+    out: "{}"
+    tex:
+      in: \text{FindInstance}\left[x^2=-1,x,\mathbb{R}\right]
+      out: \{\}
 a-non-integer-root-is-also-proven-empty:
   epsil:
     in: FindInstance(x ^ 2 == 2, x, Integers)
@@ -85,6 +121,12 @@ declines-without-an-explicit-domain:
     out: \mathrm{FindInstance}(x\gt0, x)
   fullform:
     in: FindInstance[Greater[x, 0], x]
+  wolfram:
+    in: FindInstance[Greater[x, 0], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FindInstance}[x>0,x]-\text{FindInstance}[x>0,x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FindInstance}\left[\frac{7}{3}>0,\frac{7}{3}\right]-\text{FindInstance}\left[\frac{7}{3}>0,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5}\right]-\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[\frac{13}{4}>0,\frac{13}{4}\right]-\text{FindInstance}\left[\frac{13}{4}>0,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-on-a-pure-inequality-over-reals:
   epsil:
     in: FindInstance(x > 0, x, Reals)
@@ -94,3 +136,9 @@ declines-on-a-pure-inequality-over-reals:
     out: \mathrm{FindInstance}(x\gt0, x, \mathrm{Reals})
   fullform:
     in: FindInstance[Greater[x, 0], x, Reals]
+  wolfram:
+    in: FindInstance[Greater[x, 0], x, Reals]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FindInstance}[x>0,x,\mathbb{R}]-\text{FindInstance}[x>0,x,\mathbb{R}]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5},\frac{7}{3}\right]-\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5},\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[-\frac{17}{6}>0,-\frac{17}{6},\frac{13}{4}\right]-\text{FindInstance}\left[-\frac{17}{6}>0,-\frac{17}{6},\frac{13}{4}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[-\frac{23}{9}>0,-\frac{23}{9},\frac{19}{8}\right]-\text{FindInstance}\left[-\frac{23}{9}>0,-\frac{23}{9},\frac{19}{8}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

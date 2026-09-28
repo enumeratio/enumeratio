@@ -104,6 +104,12 @@ symbolic-entries:
     out: "2"
   fullform:
     in: ArrayDepth[List[List[a, b], List[c, d]]]
+  wolfram:
+    in: ArrayDepth[List[List[a, b], List[c, d]]]
+    out: "2"
+    tex:
+      in: \text{ArrayDepth}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]
+      out: "2"
 a-symbol-is-a-scalar:
   epsil:
     in: Rank(x)
@@ -113,6 +119,12 @@ a-symbol-is-a-scalar:
     out: "0"
   fullform:
     in: ArrayDepth[x]
+  wolfram:
+    in: ArrayDepth[x]
+    out: "0"
+    tex:
+      in: \text{ArrayDepth}[x]
+      out: "0"
 rectangular-arrays:
   epsil:
     in: Rank([[1, 2, 3], [4, 5, 6]])
@@ -187,3 +199,9 @@ a-2-3-grid-of-unevaluated-calls-still-reads-as-a:
   fullform:
     in: ArrayDepth[Array[f, List[2, 3]]]
     back: [Rank, [Array, f, [List, 2, 3]]]
+  wolfram:
+    in: ArrayDepth[Array[f, List[2, 3]]]
+    out: "2"
+    tex:
+      in: \text{ArrayDepth}[\text{Array}[f,\{2,3\}]]
+      out: "2"

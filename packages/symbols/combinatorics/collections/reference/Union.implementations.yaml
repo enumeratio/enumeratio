@@ -101,6 +101,12 @@ union-list-a-b-c-list-b-c-d:
     out: \lbrace a, b, c, d\rbrace
   fullform:
     in: Union[List[a, b, c], List[b, c, d]]
+  wolfram:
+    in: Union[List[a, b, c], List[b, c, d]]
+    out: "{a, b, c, d}"
+    tex:
+      in: \{a,b,c\}\cup \{b,c,d\}
+      out: \{a,b,c,d\}
 a-single-list-is-de-duplicated:
   epsil:
     in: Union([1, 2, 1, 3, 6, 2, 2])
@@ -121,6 +127,12 @@ symbolic-elements-merged-across-three-lists:
     out: \lbrace a, b, c, d, f\rbrace
   fullform:
     in: Union[List[a, b, a, c], List[d, a, f, b], List[c, a]]
+  wolfram:
+    in: Union[List[a, b, a, c], List[d, a, f, b], List[c, a]]
+    out: "{a, b, c, d, f}"
+    tex:
+      in: \{a,b,a,c\}\cup \{d,a,f,b\}\cup \{c,a\}
+      out: \{a,b,c,d,f\}
 elements-can-themselves-be-lists-1-2-and-2-1:
   epsil:
     in: Union([[1, 2], [1, 2, 3]], [[2, 1], [1, 2]], [[3, 2, 1], [1, 2, 3]])

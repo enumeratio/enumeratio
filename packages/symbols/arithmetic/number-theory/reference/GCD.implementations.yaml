@@ -575,3 +575,15 @@ symbolic-arguments-stay-unevaluated:
     out: \gcd(x, y)
   fullform:
     in: GCD[x, y]
+  wolfram:
+    in: GCD[x, y]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\gcd (x,y)-\gcd (x,y)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\gcd \left(\frac{7}{3},-\frac{11}{5}\right)-\gcd \left(\frac{7}{3},-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{13}{4},-\frac{17}{6}\right)-\gcd \left(\frac{13}{4},-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{19}{8},-\frac{23}{9}\right)-\gcd \left(\frac{19}{8},-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: gcd(Symbol("x"), Symbol("y"))
+    out: True
+  sage:
+    in: gcd(SR.var("x"), SR.var("y"))
+    out: True

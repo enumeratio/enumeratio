@@ -66,6 +66,12 @@ last-list-a-b-c:
     out: c
   fullform:
     in: Last[List[a, b, c]]
+  wolfram:
+    in: Last[List[a, b, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Last}[\{a,b,c\}]-c],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Last}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left\{-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}\right]--\frac{23}{9}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 of-a-matrix-the-last-row:
   epsil:
     in: Last([[a, b], [c, d], [f, g]])
@@ -75,6 +81,12 @@ of-a-matrix-the-last-row:
     out: \bigl\lbrack f, g\bigr\rbrack
   fullform:
     in: Last[List[List[a, b], List[c, d], List[f, g]]]
+  wolfram:
+    in: Last[List[List[a, b], List[c, d], List[f, g]]]
+    out: "{f, g}"
+    tex:
+      in: \text{Last}\left[\left( \begin{array}{cc}  a & b \\  c & d \\  f & g \\ \end{array} \right)\right]
+      out: \{f,g\}
 a-lazy-range-works-too:
   epsil:
     in: Last(Range(5, 10))
@@ -95,6 +107,12 @@ any-expression-not-just-a-list-the-last-term-of:
     out: b^2
   fullform:
     in: Last[Plus[Power[a, 2], Power[b, 2]]]
+  wolfram:
+    in: Last[Plus[Power[a, 2], Power[b, 2]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Last}\left[a^2+b^2\right]-b^2\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Last}\left[\left(\frac{7}{3}\right)^2+\left(-\frac{11}{5}\right)^2\right]-\left(-\frac{11}{5}\right)^2\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left(\frac{13}{4}\right)^2+\left(-\frac{17}{6}\right)^2\right]-\left(-\frac{17}{6}\right)^2\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left(\frac{19}{8}\right)^2+\left(-\frac{23}{9}\right)^2\right]-\left(-\frac{23}{9}\right)^2\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-default-is-ignored-when-the-collection-has-a:
   epsil:
     in: Last([a, b], x)
@@ -104,6 +122,12 @@ a-default-is-ignored-when-the-collection-has-a:
     out: b
   fullform:
     in: Last[List[a, b], x]
+  wolfram:
+    in: Last[List[a, b], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Last}[\{a,b\},x]-b],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Last}\left[\left\{\frac{7}{3},-\frac{11}{5}\right\},\frac{13}{4}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left\{-\frac{17}{6},\frac{19}{8}\right\},-\frac{23}{9}\right]-\frac{19}{8}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\left\{\frac{7}{3},-\frac{11}{5}\right\},\frac{13}{4}\right]--\frac{11}{5}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 an-empty-collection-has-no-last-element-compute:
   epsil:
     in: Last([])
@@ -136,7 +160,12 @@ last-of-association-is-last-value:
     out: c
   fullform:
     in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
-    back: [Last, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b], [KeyValuePair, 3, c]]]
+  wolfram:
+    in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Last}[\text{Association}[1\to a,2\to b,3\to c]]-c],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to \frac{7}{3},2\to -\frac{11}{5},3\to \frac{13}{4}\right]\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to -\frac{17}{6},2\to \frac{19}{8},3\to -\frac{23}{9}\right]\right]--\frac{23}{9}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to \frac{7}{3},2\to -\frac{11}{5},3\to \frac{13}{4}\right]\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 last-of-empty-association-falls-through:
   epsil:
     in: Last(Association(), 99)

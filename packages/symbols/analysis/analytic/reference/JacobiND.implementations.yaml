@@ -18,6 +18,12 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiND[0, m]
+  wolfram:
+    in: JacobiND[0, m]
+    out: "1"
+    tex:
+      in: \text{nd}(0|m)
+      out: "1"
 m-greater-than-1-via-the-reciprocal-modulus:
   epsil:
     in: N(JacobiND(0.3, 1.5))
@@ -38,3 +44,9 @@ symbolic-arguments-are-left-unevaluated-rather:
     out: \mathrm{JacobiND}(u, m)
   fullform:
     in: JacobiND[u, m]
+  wolfram:
+    in: JacobiND[u, m]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{nd}(u|m)-\text{nd}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{nd}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{nd}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{nd}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{nd}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{nd}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{nd}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

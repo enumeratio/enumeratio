@@ -7,3 +7,12 @@ turn-on-orderless:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Orderless}\bigr\rbrack\bigr\rbrack
   fullform:
     in: List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]
+  wolfram:
+    in: List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]
+    out: "{Null, {Orderless, Protected, ReadProtected}}"
+    tex:
+      in: \{\text{SetAttributes}[\text{HarmonicMean},\text{Orderless}],\text{Attributes}[\text{HarmonicMean}]\}
+      out: \{\text{Null},\{\text{Orderless},\text{Protected},\text{ReadProtected}\}\}
+    verdict: disagree
+    kind: convention
+    note: Wolfram's real HarmonicMean symbol already carries Protected/ReadProtected attributes we don't model, so Attributes[HarmonicMean] returns all three, not just the Orderless this example adds; also Wolfram's SetAttributes returns Null (kept in the list), where our own semantics vanish a Nothing result.

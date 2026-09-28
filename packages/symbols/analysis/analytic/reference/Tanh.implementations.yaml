@@ -147,6 +147,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\tanh(x)
   fullform:
     in: Tanh[Minus[x]]
+  wolfram:
+    in: Tanh[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\tanh (-x)--\tanh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tanh \left(-\frac{7}{3}\right)--\tanh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tanh \left(-\left(-\frac{11}{5}\right)\right)--\tanh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tanh \left(-\frac{13}{4}\right)--\tanh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 tanh-artanh-x-x-for-every-x:
   epsil:
     in: Tanh(Artanh(x))
@@ -156,6 +162,12 @@ tanh-artanh-x-x-for-every-x:
     out: x
   fullform:
     in: Tanh[ArcTanh[x]]
+  wolfram:
+    in: Tanh[ArcTanh[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tanh \left(\tanh ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tanh \left(\tanh ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\tanh \left(\tanh ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\tanh \left(\tanh ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 tanh-artanh-2-2-past-the-real-domain:
   epsil:
     in: Tanh(Artanh(2))
@@ -185,6 +197,12 @@ antiderivative-ln-cosh-x:
     out: \ln(\cosh(x))
   fullform:
     in: Integrate[Tanh[x], x]
+  wolfram:
+    in: Integrate[Tanh[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \tanh (x) \, dx-\log (\cosh (x))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \tanh \left(\frac{7}{3}\right) \, d\frac{7}{3}-\log \left(\cosh \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tanh \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\log \left(\cosh \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tanh \left(\frac{13}{4}\right) \, d\frac{13}{4}-\log \left(\cosh \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x:
   epsil:
     in: TrigToExp(Tanh(x))

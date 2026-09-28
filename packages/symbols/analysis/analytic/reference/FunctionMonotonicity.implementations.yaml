@@ -7,6 +7,12 @@ a-cubic-is-increasing-everywhere:
     out: "1"
   fullform:
     in: FunctionMonotonicity[Power[x, 3], x]
+  wolfram:
+    in: FunctionMonotonicity[Power[x, 3], x]
+    out: "1"
+    tex:
+      in: \text{FunctionMonotonicity}\left[x^3,x\right]
+      out: "1"
 a-parabola-is-not-globally-monotonic:
   epsil:
     in: FunctionMonotonicity(x ^ 2, x)
@@ -16,6 +22,15 @@ a-parabola-is-not-globally-monotonic:
     out: \mathrm{Indeterminate}
   fullform:
     in: FunctionMonotonicity[Power[x, 2], x]
+  wolfram:
+    in: FunctionMonotonicity[Power[x, 2], x]
+    out: Indeterminate
+    tex:
+      in: \text{FunctionMonotonicity}\left[x^2,x\right]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: Same Indeterminate-vs-NaN spelling gap as FunctionConvexity — Wolfram's own FunctionMonotonicity also answers Indeterminate, but fromWolfram reads that back as NaN.
 exp-of-an-affine-argument-is-always-monotonic:
   epsil:
     in: FunctionMonotonicity(Exp(x), x)
@@ -25,6 +40,12 @@ exp-of-an-affine-argument-is-always-monotonic:
     out: "1"
   fullform:
     in: FunctionMonotonicity[Exp[x], x]
+  wolfram:
+    in: FunctionMonotonicity[Exp[x], x]
+    out: "1"
+    tex:
+      in: \text{FunctionMonotonicity}[\exp (x),x]
+      out: "1"
 a-restricted-domain-answers-indeterminate:
   epsil:
     in: FunctionMonotonicity(Sqrt(x), x)
@@ -34,3 +55,12 @@ a-restricted-domain-answers-indeterminate:
     out: \mathrm{Indeterminate}
   fullform:
     in: FunctionMonotonicity[Sqrt[x], x]
+  wolfram:
+    in: FunctionMonotonicity[Sqrt[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{FunctionMonotonicity}\left[\sqrt{x},x\right]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: Same Indeterminate-vs-NaN spelling gap as the other FunctionMonotonicity example.

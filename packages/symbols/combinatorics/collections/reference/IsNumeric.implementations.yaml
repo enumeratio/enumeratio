@@ -24,6 +24,12 @@ isnumeric-plain-symbol:
     out: \mathrm{False}
   fullform:
     in: NumericQ[x]
+  wolfram:
+    in: NumericQ[x]
+    out: False
+    tex:
+      in: \text{NumericQ}[x]
+      out: \text{False}
 isnumeric-sqrt-2:
   epsil:
     in: IsNumeric(Sqrt(2))

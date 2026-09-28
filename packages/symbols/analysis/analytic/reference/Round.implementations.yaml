@@ -230,6 +230,12 @@ stays-symbolic:
     out: \mathrm{round}(x)
   fullform:
     in: Round[x]
+  wolfram:
+    in: Round[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Round}[x]-\text{Round}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Round}\left[\frac{7}{3}\right]-\text{Round}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Round}\left[-\frac{11}{5}\right]-\text{Round}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Round}\left[\frac{13}{4}\right]-\text{Round}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-the-nearest-ten:
   epsil:
     in: Round(226, -1)
@@ -309,3 +315,9 @@ idempotent-round-round-x-round-x:
     out: \mathrm{round}(x)
   fullform:
     in: Round[Round[x]]
+  wolfram:
+    in: Round[Round[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Round}[\text{Round}[x]]-\text{Round}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Round}\left[\text{Round}\left[\frac{7}{3}\right]\right]-\text{Round}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Round}\left[\text{Round}\left[-\frac{11}{5}\right]\right]-\text{Round}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Round}\left[\text{Round}\left[\frac{13}{4}\right]\right]-\text{Round}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

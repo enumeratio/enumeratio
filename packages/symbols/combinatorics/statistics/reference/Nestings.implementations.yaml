@@ -7,3 +7,5 @@ the-partition-1-3-mid-2-as-a-plain-list:
     out: "0"
   fullform:
     in: Nestings[List[List[1, 3], List[2]]]
+  wolfram:
+    in: Nestings[List[List[1, 3], List[2]]]

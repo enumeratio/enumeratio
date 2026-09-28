@@ -7,7 +7,15 @@ sparsearray-vector:
     out: \bigl\lbrack x, 0, y, 0\bigr\rbrack
   fullform:
     in: SparseArray[List[Rule[1, x], Rule[3, y]], 4]
-    back: [SparseArray, [List, [KeyValuePair, 1, x], [KeyValuePair, 3, y]], 4]
+  wolfram:
+    in: SparseArray[List[Rule[1, x], Rule[3, y]], 4]
+    out: SparseArray[Automatic, {4}, 0, {1, {{0, 2}, {{1}, {3}}}, {x, y}}]
+    tex:
+      in: \text{SparseArray}[\{1\to x,3\to y\},4]
+      out: \text{SparseArray}\left[\right]
+    verdict: disagree
+    kind: shape
+    note: Both describe the same sparse vector (x at position 1, y at position 3, 0 elsewhere); Wolfram's FullForm shows its own internal SparseArray[...] representation instead of the dense list our own printer/expected uses.
 sparsearray-infers-dims:
   epsil:
     in: SparseArray([Rule([1, 1], 5), Rule([2, 2], 7)])
@@ -17,7 +25,6 @@ sparsearray-infers-dims:
     out: \bigl\lbrack\bigl\lbrack5, 0\bigr\rbrack, \bigl\lbrack0, 7\bigr\rbrack\bigr\rbrack
   fullform:
     in: SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]
-    back: [SparseArray, [List, [KeyValuePair, [List, 1, 1], 5], [KeyValuePair, [List, 2, 2], 7]]]
   wolfram:
     in: SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]
 sparsearray-custom-default:
@@ -29,7 +36,6 @@ sparsearray-custom-default:
     out: \bigl\lbrack-1, 9, -1\bigr\rbrack
   fullform:
     in: SparseArray[List[Rule[2, 9]], 3, -1]
-    back: [SparseArray, [List, [KeyValuePair, 2, 9]], 3, -1]
   wolfram:
     in: SparseArray[List[Rule[2, 9]], 3, -1]
 sparsearray-normal-is-identity:
@@ -41,7 +47,6 @@ sparsearray-normal-is-identity:
     out: \bigl\lbrack a, 0\bigr\rbrack
   fullform:
     in: Normal[SparseArray[List[Rule[1, a]], 2]]
-    back: [Normal, [SparseArray, [List, [KeyValuePair, 1, a]], 2]]
   wolfram:
     in:
     note: Wolfram's SparseArray keeps a distinct sparse representation until Normal densifies it.

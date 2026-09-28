@@ -130,6 +130,12 @@ a-single-symbolic-argument-is-also-1:
     out: "1"
   fullform:
     in: Multinomial[n]
+  wolfram:
+    in: Multinomial[n]
+    out: "1"
+    tex:
+      in: (+n;n)
+      out: "1"
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: Multinomial([2, 3, 5], 3)

@@ -280,6 +280,15 @@ q-a-0-1-for-symbolic-a:
     out: "1"
   fullform:
     in: GammaRegularized[a, 0]
+  wolfram:
+    in: GammaRegularized[a, 0]
+    out: GammaRegularized[a, 0]
+    tex:
+      in: Q(a,0)
+      out: Q(a,0)
+    verdict: disagree
+    kind: unevaluated
+    note: Wolfram's automatic evaluator leaves GammaRegularized[a,0] symbolic for a free (real) a rather than resolving the a->0 limit automatically; ours applies the known limit. Needs an explicit Limit[] on the Wolfram side, not a plain call.
 q-a-infty-0:
   epsil:
     in: GammaRegularized(a, PositiveInfinity)
@@ -292,6 +301,12 @@ q-a-infty-0:
     out: "0"
   fullform:
     in: GammaRegularized[a, Infinity]
+  wolfram:
+    in: GammaRegularized[a, Infinity]
+    out: "0"
+    tex:
+      in: Q(a,\infty )
+      out: "0"
 q-1-x-e-x-symbolically:
   epsil:
     in: GammaRegularized(1, x)
@@ -304,6 +319,12 @@ q-1-x-e-x-symbolically:
     out: e^{-x}
   fullform:
     in: GammaRegularized[1, x]
+  wolfram:
+    in: GammaRegularized[1, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q(1,x)-e^{-x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(1,\frac{7}{3}\right)-e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[Q\left(1,-\frac{11}{5}\right)-e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[Q\left(1,\frac{13}{4}\right)-e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
   epsil:
     in: GammaRegularized(2, x)
@@ -316,6 +337,12 @@ q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
     out: (x+1)\exp(-x)
   fullform:
     in: GammaRegularized[2, x]
+  wolfram:
+    in: GammaRegularized[2, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q(2,x)-(x+1) e^{-x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(2,\frac{7}{3}\right)-\left(\frac{7}{3}+1\right) e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[Q\left(2,-\frac{11}{5}\right)-\left(-\frac{11}{5}+1\right) e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[Q\left(2,\frac{13}{4}\right)-\left(\frac{13}{4}+1\right) e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 q-1-2-x-erfc-sqrt-x-see-erfc:
   epsil:
     in: GammaRegularized(1 / 2, x)
@@ -328,6 +355,12 @@ q-1-2-x-erfc-sqrt-x-see-erfc:
     out: \operatorname{erfc}(\sqrt{x})
   fullform:
     in: GammaRegularized[Rational[1, 2], x]
+  wolfram:
+    in: GammaRegularized[Rational[1, 2], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q\left(\frac{1}{2},x\right)-\text{erfc}\left(\sqrt{x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(\frac{1}{2},\frac{7}{3}\right)-\text{erfc}\left(\sqrt{\frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[Q\left(\frac{1}{2},-\frac{11}{5}\right)-\text{erfc}\left(\sqrt{-\frac{11}{5}}\right)\right]\right],\text{Chop}\left[N\left[Q\left(\frac{1}{2},\frac{13}{4}\right)-\text{erfc}\left(\sqrt{\frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:
     in: N(GammaRegularized(2, 1), 30)

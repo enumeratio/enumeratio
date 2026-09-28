@@ -40,6 +40,12 @@
     out: e^{z}
   fullform:
     in: HypergeometricPFQ[List[], List[], z]
+  wolfram:
+    in: HypergeometricPFQ[List[], List[], z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\, _0F_0(;;z)-e^z\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\, _0F_0\left(;;\frac{7}{3}\right)-e^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\, _0F_0\left(;;-\frac{11}{5}\right)-e^{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\, _0F_0\left(;;\frac{13}{4}\right)-e^{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 1f-0-a-z-1-z-a:
   epsil:
     in: HypergeometricPFQ([a], [], z)
@@ -49,3 +55,9 @@
     out: (1-z)^{-a}
   fullform:
     in: HypergeometricPFQ[List[a], List[], z]
+  wolfram:
+    in: HypergeometricPFQ[List[a], List[], z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\, _1F_0(a;;z)-(-z+1)^{-a}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\, _1F_0\left(\frac{7}{3};;-\frac{11}{5}\right)-\left(-\left(-\frac{11}{5}\right)+1\right)^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\, _1F_0\left(\frac{13}{4};;-\frac{17}{6}\right)-\left(-\left(-\frac{17}{6}\right)+1\right)^{-\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\, _1F_0\left(\frac{19}{8};;-\frac{23}{9}\right)-\left(-\left(-\frac{23}{9}\right)+1\right)^{-\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

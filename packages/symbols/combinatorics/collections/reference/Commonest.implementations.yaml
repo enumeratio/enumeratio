@@ -40,6 +40,12 @@ every-element-tied-for-most-frequent-symbols-and:
     out: \bigl\lbrack b, a, 2\bigr\rbrack
   fullform:
     in: Commonest[List[b, a, c, 2, a, b, 1, 2]]
+  wolfram:
+    in: Commonest[List[b, a, c, 2, a, b, 1, 2]]
+    out: "{b, a, 2}"
+    tex:
+      in: \text{Commonest}[\{b,a,c,2,a,b,1,2\}]
+      out: \{b,a,2\}
 all-distinct-all-tie:
   epsil:
     in: Commonest([1, 2, 3])

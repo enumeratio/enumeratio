@@ -18,6 +18,12 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiCN[0, m]
+  wolfram:
+    in: JacobiCN[0, m]
+    out: "1"
+    tex:
+      in: \text{cn}(0|m)
+      out: "1"
 m-0-reduces-to-cos-u:
   epsil:
     in: JacobiCN(u, 0)
@@ -27,6 +33,12 @@ m-0-reduces-to-cos-u:
     out: \cos(u)
   fullform:
     in: JacobiCN[u, 0]
+  wolfram:
+    in: JacobiCN[u, 0]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cn}(u|0)-\cos (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{7}{3}\right|0\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.-\frac{11}{5}\right|0\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{13}{4}\right|0\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-quarter-period-u-elliptick-m-is-0:
   epsil:
     in: JacobiCN(EllipticK(m), m)
@@ -78,3 +90,9 @@ symbolic-arguments-are-left-unevaluated-rather:
     out: \mathrm{JacobiCN}(u, m)
   fullform:
     in: JacobiCN[u, m]
+  wolfram:
+    in: JacobiCN[u, m]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cn}(u|m)-\text{cn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{cn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{cn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{cn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

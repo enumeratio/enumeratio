@@ -66,6 +66,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\mathrm{arcoth}(x)
   fullform:
     in: ArcCoth[Minus[x]]
+  wolfram:
+    in: ArcCoth[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\coth ^{-1}(-x)--\coth ^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\coth ^{-1}\left(-\frac{7}{3}\right)--\coth ^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\coth ^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\coth ^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\coth ^{-1}\left(-\frac{13}{4}\right)--\coth ^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-frac-1-1-x-2:
   epsil:
     in: D(Arcoth(x), x)

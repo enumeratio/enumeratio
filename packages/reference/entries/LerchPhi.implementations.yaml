@@ -109,6 +109,18 @@ phi-1-s-a-zeta-s-a-for-symbolic-s-a:
     out: \zeta(s, a)
   fullform:
     in: LerchPhi[1, s, a]
+  wolfram:
+    in: LerchPhi[1, s, a]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Phi (1,s,a)-\zeta (s,a)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(1,-\frac{11}{5},\frac{7}{3}\right)-\zeta \left(-\frac{11}{5},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Phi \left(1,-\frac{17}{6},\frac{13}{4}\right)-\zeta \left(-\frac{17}{6},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\Phi \left(1,-\frac{23}{9},\frac{19}{8}\right)-\zeta \left(-\frac{23}{9},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: A LerchPhi/Zeta identity for a symbolic parameter that FullSimplify doesn't confirm automatically; the substitution fallback doesn't settle it either (LerchPhi's numeric evaluation at an arbitrary point is itself nontrivial).
+  sympy:
+    in: lerchphi(1, Symbol("s"), Symbol("a"))
+    out: True
 phi-z-0-a-1-1-z-independent-of-a:
   epsil:
     in: LerchPhi(z, 0, a)
@@ -121,6 +133,15 @@ phi-z-0-a-1-1-z-independent-of-a:
     out: \frac{1}{1-z}
   fullform:
     in: LerchPhi[z, 0, a]
+  wolfram:
+    in: LerchPhi[z, 0, a]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,0,a)-\frac{1}{-z+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},0,\frac{7}{3}\right)-\frac{1}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{17}{6},0,\frac{13}{4}\right)-\frac{1}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{23}{9},0,\frac{19}{8}\right)-\frac{1}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: lerchphi(Symbol("z"), 0, Symbol("a"))
+    out: True
 past-the-unit-disk-by-the-integral:
   epsil:
     in: N(LerchPhi(1 + 2i, 3 - i, 4 + 2i))
@@ -303,6 +324,15 @@ phi-0-s-a-a-s-only-the-n-0-term-survives:
     out: a^{-s}
   fullform:
     in: LerchPhi[0, s, a]
+  wolfram:
+    in: LerchPhi[0, s, a]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (0,s,a)-a^{-s}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(0,-\frac{11}{5},\frac{7}{3}\right)-\left(\frac{7}{3}\right)^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\Phi \left(0,-\frac{17}{6},\frac{13}{4}\right)-\left(\frac{13}{4}\right)^{-\left(-\frac{17}{6}\right)}\right]\right],\text{Chop}\left[N\left[\Phi \left(0,-\frac{23}{9},\frac{19}{8}\right)-\left(\frac{19}{8}\right)^{-\left(-\frac{23}{9}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: lerchphi(0, Symbol("s"), Symbol("a"))
+    out: True
 phi-z-s-1-li-s-z-z-symbolically-see-polylog:
   epsil:
     in: LerchPhi(z, s, 1)
@@ -315,6 +345,18 @@ phi-z-s-1-li-s-z-z-symbolically-see-polylog:
     out: \frac{\operatorname{Li}_{s}(z)}{z}
   fullform:
     in: LerchPhi[z, s, 1]
+  wolfram:
+    in: LerchPhi[z, s, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,s,1)-\frac{\text{Li}_s(z)}{z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},\frac{7}{3},1\right)--\frac{\text{Li}_{\frac{7}{3}}\left(-\frac{11}{5}\right)}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{17}{6},\frac{13}{4},1\right)--\frac{\text{Li}_{\frac{13}{4}}\left(-\frac{17}{6}\right)}{\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{23}{9},\frac{19}{8},1\right)--\frac{\text{Li}_{\frac{19}{8}}\left(-\frac{23}{9}\right)}{\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: lerchphi(Symbol("z"), Symbol("s"), 1)
+    out: "TimeoutError: over 30s"
+    verdict: error
+    kind: resource
+    note: sympys lerchphi evaluation for two free symbolic parameters exceeds the scans 30s per-item budget.
 phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1:
   epsil:
     in: LerchPhi(z, 1, 1)
@@ -327,6 +369,15 @@ phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1:
     out: -\frac{\ln(1-z)}{z}
   fullform:
     in: LerchPhi[z, 1, 1]
+  wolfram:
+    in: LerchPhi[z, 1, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,1,1)--\frac{\log (-z+1)}{z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(\frac{7}{3},1,1\right)--\frac{\log \left(-\frac{7}{3}+1\right)}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},1,1\right)-\frac{-\log \left(-\left(-\frac{11}{5}\right)+1\right)}{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\Phi \left(\frac{13}{4},1,1\right)--\frac{\log \left(-\frac{13}{4}+1\right)}{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: lerchphi(Symbol("z"), 1, 1)
+    out: True
 phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through:
   epsil:
     in: LerchPhi(1, 2, 1 / 4)

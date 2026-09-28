@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{BinaryTree}(\bigl\lbrack2, 0, 2\bigr\rbrack)
   fullform:
     in: BinarySearchTree[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: BinarySearchTree[Permutation[List[2, 3, 1]]]

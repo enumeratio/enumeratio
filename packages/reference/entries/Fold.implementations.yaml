@@ -37,6 +37,12 @@ the-shape-of-a-left-fold:
     out: f(f(f(x, a), b), c)
   fullform:
     in: Fold[f, x, List[a, b, c]]
+  wolfram:
+    in: Fold[f, x, List[a, b, c]]
+    out: f[f[f[x, a], b], c]
+    tex:
+      in: \text{Fold}[f,x,\{a,b,c\}]
+      out: f(f(f(x,a),b),c)
 fold-max-0-list-3-1-4-1-5:
   epsil:
     in: Fold(Max, 0, [3, 1, 4, 1, 5])
@@ -57,6 +63,12 @@ symbolic-elements:
     out: a+b+c
   fullform:
     in: Fold[Plus, 0, List[a, b, c]]
+  wolfram:
+    in: Fold[Plus, 0, List[a, b, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Fold}[\text{Plus},0,\{a,b,c\}]-(a+b+c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Fold}\left[\text{Plus},0,\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}\right]-\left(\frac{7}{3}-\frac{11}{5}+\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[\text{Plus},0,\left\{-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}\right]-\left(-\frac{17}{6}+\frac{19}{8}-\frac{23}{9}\right)\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[\text{Plus},0,\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}\right]-\left(\frac{7}{3}-\frac{11}{5}+\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 any-two-argument-function-here-one-that-nests:
   epsil:
     in: Fold(Function([_1, _2]), x, [a, b])
@@ -67,6 +79,12 @@ any-two-argument-function-here-one-that-nests:
     out: \bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack
   fullform:
     in: Fold[Function[List[Slot[1], Slot[2]]], x, List[a, b]]
+  wolfram:
+    in: Fold[Function[List[Slot[1], Slot[2]]], x, List[a, b]]
+    out: "{{x, a}, b}"
+    tex:
+      in: \text{Fold}[\{\text{$\#$1},\text{$\#$2}\}\&,x,\{a,b\}]
+      out: \{\{x,a\},b\}
 without-a-seed-folding-starts-from-the-first:
   epsil:
     in: Fold(f, [a, b, c])
@@ -76,6 +94,12 @@ without-a-seed-folding-starts-from-the-first:
     out: f(f(a, b), c)
   fullform:
     in: Fold[f, List[a, b, c]]
+  wolfram:
+    in: Fold[f, List[a, b, c]]
+    out: f[f[a, b], c]
+    tex:
+      in: \text{Fold}[f,\{a,b,c\}]
+      out: f(f(a,b),c)
 folding-an-empty-list-returns-the-seed:
   epsil:
     in: Fold(f, x, [])
@@ -85,6 +109,12 @@ folding-an-empty-list-returns-the-seed:
     out: x
   fullform:
     in: Fold[f, x, List[]]
+  wolfram:
+    in: Fold[f, x, List[]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Fold}[f,x,\{\}]-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Fold}\left[\frac{7}{3},-\frac{11}{5},\{\}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[\frac{13}{4},-\frac{17}{6},\{\}\right]--\frac{17}{6}\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[\frac{19}{8},-\frac{23}{9},\{\}\right]--\frac{23}{9}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 folding-with-add-is-a-sum-1-2-100:
   epsil:
     in: Fold(Add, 0, Range(100))
@@ -130,6 +160,12 @@ horner-s-rule-for-ax-2-bx-c:
     out: x\times(ax+b)+c
   fullform:
     in: Fold[Function[Plus[Times[x, Slot[1]], Slot[2]]], 0, List[a, b, c]]
+  wolfram:
+    in: Fold[Function[Plus[Times[x, Slot[1]], Slot[2]]], 0, List[a, b, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Fold}[x \text{$\#$1}+\text{$\#$2}\&,0,\{a,b,c\}]-(x (a x+b)+c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Fold}\left[-\frac{17}{6} \text{$\#$1}+\text{$\#$2}\&,0,\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}\right]-\left(-\frac{17}{6} \left(\frac{7}{3} \left(-\frac{17}{6}\right)-\frac{11}{5}\right)+\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[-\frac{11}{5} \text{$\#$1}+\text{$\#$2}\&,0,\left\{\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right\}\right]-\left(-\frac{11}{5} \left(\frac{19}{8} \left(-\frac{11}{5}\right)-\frac{23}{9}\right)+\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Fold}\left[-\frac{23}{9} \text{$\#$1}+\text{$\#$2}\&,0,\left\{\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right\}\right]-\left(-\frac{23}{9} \left(\frac{13}{4} \left(-\frac{23}{9}\right)-\frac{17}{6}\right)+\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 evaluate-the-continued-fraction-1-2-2-2-from-the:
   epsil:
     in: Fold(Function(_2 + 1 / _1), 2, [2, 2, 1])

@@ -81,6 +81,12 @@ a-symbolic-upper-limit-prod-i-1-n-i-2-n-2:
     out: (n!)^2
   fullform:
     in: Product[Power[i, 2], List[i, 1, n]]
+  wolfram:
+    in: Product[Power[i, 2], List[i, 1, n]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{i=1}^n i^2-(n!)^2\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{i=1}^{\frac{7}{3}} i^2-\left(\frac{7}{3}!\right)^2\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^{-\frac{11}{5}} i^2-\left(\left(-\frac{11}{5}\right)!\right)^2\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^{\frac{13}{4}} i^2-\left(\frac{13}{4}!\right)^2\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-symbolic-upper-limit-prod-k-1-n-k-n-see:
   epsil:
     in: Product(k, (k, 1, n))
@@ -90,6 +96,12 @@ a-symbolic-upper-limit-prod-k-1-n-k-n-see:
     out: n!
   fullform:
     in: Product[k, List[k, 1, n]]
+  wolfram:
+    in: Product[k, List[k, 1, n]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{k=1}^n k-n!\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{k=1}^{\frac{7}{3}} k-\frac{7}{3}!\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{-\frac{11}{5}} k-\left(-\frac{11}{5}\right)!\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{\frac{13}{4}} k-\frac{13}{4}!\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
   epsil:
     in: Product(x ^ k, (k, 1, n))
@@ -99,6 +111,12 @@ exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
     out: \sqrt{x}^{n\times(n+1)}
   fullform:
     in: Product[Power[x, k], List[k, 1, n]]
+  wolfram:
+    in: Product[Power[x, k], List[k, 1, n]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{k=1}^n x^k-x^{\frac{1}{2} n (n+1)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{k=1}^{\frac{7}{3}} \left(-\frac{11}{5}\right)^k-\left(-\frac{11}{5}\right)^{\frac{1}{2} \frac{7}{3} \left(\frac{7}{3}+1\right)}\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{\frac{13}{4}} \left(-\frac{17}{6}\right)^k-\left(-\frac{17}{6}\right)^{\frac{1}{2} \frac{13}{4} \left(\frac{13}{4}+1\right)}\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{\frac{19}{8}} \left(-\frac{23}{9}\right)^k-\left(-\frac{23}{9}\right)^{\frac{1}{2} \frac{19}{8} \left(\frac{19}{8}+1\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
   epsil:
     in: Product((k + 1) / k, (k, 1, n))
@@ -108,6 +126,12 @@ a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
     out: n+1
   fullform:
     in: Product[Divide[Plus[k, 1], k], List[k, 1, n]]
+  wolfram:
+    in: Product[Divide[Plus[k, 1], k], List[k, 1, n]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{k=1}^n \frac{k+1}{k}-(n+1)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{k=1}^{\frac{7}{3}} \frac{k+1}{k}-\left(\frac{7}{3}+1\right)\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{-\frac{11}{5}} \frac{k+1}{k}-\left(-\frac{11}{5}+1\right)\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^{\frac{13}{4}} \frac{k+1}{k}-\left(\frac{13}{4}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 an-undefined-function-expanded-term-by-term:
   epsil:
     in: Product(f(i), (i, 1, 4))
@@ -117,6 +141,12 @@ an-undefined-function-expanded-term-by-term:
     out: f(1)f(2)f(3)f(4)
   fullform:
     in: Product[f[i], List[i, 1, 4]]
+  wolfram:
+    in: Product[f[i], List[i, 1, 4]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-step-of-2-takes-every-other-index:
   epsil:
     in: Product(f(i), (i, 1, 4, 2))
@@ -126,6 +156,12 @@ a-step-of-2-takes-every-other-index:
     out: f(1)f(3)
   fullform:
     in: Product[f[i], List[i, 1, 4, 2]]
+  wolfram:
+    in: Product[f[i], List[i, 1, 4, 2]]
+    out: True
+    tex:
+      in: \text{Module}[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)],10,\text{$\$$Aborted}]]\},\text{If}[d\text{===}0,\text{True},\text{Module}[\{s=\{\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]],\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]],\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]]\}\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]]]]
+      out: \text{True}
 over-an-explicit-list-of-values:
   epsil:
     in: Product(f(i), i in [a, b, c])
@@ -144,6 +180,12 @@ a-polynomial-with-roots-1-2-and-3:
     out: (x-3)(x-2)(x-1)
   fullform:
     in: Product[Subtract[x, k], List[k, 1, 3]]
+  wolfram:
+    in: Product[Subtract[x, k], List[k, 1, 3]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{k=1}^3 (x-k)-(x-3) (x-2) (x-1)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{k=1}^3 \left(\frac{7}{3}-k\right)-\left(\frac{7}{3}-3\right) \left(\frac{7}{3}-2\right) \left(\frac{7}{3}-1\right)\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^3 \left(-\frac{11}{5}-k\right)-\left(-\frac{11}{5}-3\right) \left(-\frac{11}{5}-2\right) \left(-\frac{11}{5}-1\right)\right]\right],\text{Chop}\left[N\left[\prod _{k=1}^3 \left(\frac{13}{4}-k\right)-\left(\frac{13}{4}-3\right) \left(\frac{13}{4}-2\right) \left(\frac{13}{4}-1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-double-product-over-a-3-times-3-grid:
   epsil:
     in: Product(i + j, (i, 1, 3), (j, 1, 3))
@@ -175,6 +217,12 @@ a-symbolic-triangular-product-prod-i-1-p-prod-j:
     out: \sqrt{2}^{p\times(p+1)^2}
   fullform:
     in: Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]
+  wolfram:
+    in: Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{i=1}^p \prod _{j=1}^i 2^{i+j}-2^{\frac{1}{2} p (p+1)^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{i=1}^{\frac{7}{3}} \prod _{j=1}^i 2^{i+j}-2^{\frac{1}{2} \frac{7}{3} \left(\frac{7}{3}+1\right)^2}\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^{-\frac{11}{5}} \prod _{j=1}^i 2^{i+j}-2^{\frac{1}{2} \left(-\frac{11}{5}\right) \left(-\frac{11}{5}+1\right)^2}\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^{\frac{13}{4}} \prod _{j=1}^i 2^{i+j}-2^{\frac{1}{2} \frac{13}{4} \left(\frac{13}{4}+1\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 an-infinite-product-with-a-closed-form-prod-k-1:
   epsil:
     in: Product(1 + 1 / k ^ 2, (k, 1, PositiveInfinity))
@@ -228,6 +276,12 @@ symbolic-elements:
     out: abc
   fullform:
     in: Apply[Times, List[a, b, c]]
+  wolfram:
+    in: Apply[Times, List[a, b, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Times}\text{@@}\{a,b,c\}-a b c],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Times}\text{@@}\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}-\frac{7}{3} \left(-\frac{11}{5}\right) \frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Times}\text{@@}\left\{-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}--\frac{17}{6} \frac{19}{8} \left(-\frac{23}{9}\right)\right]\right],\text{Chop}\left[N\left[\text{Times}\text{@@}\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}-\frac{7}{3} \left(-\frac{11}{5}\right) \frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2:
   epsil:
     in: Product(4 * k ^ 2 / (4 * k ^ 2 - 1), (k, 1, PositiveInfinity))

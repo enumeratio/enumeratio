@@ -7,6 +7,8 @@ momentgeneratingfunction-gamma:
     out: \frac{1}{(1-t)^2}
   fullform:
     in: MomentGeneratingFunction[GammaDistribution[2, 1], t]
+  wolfram:
+    in: MomentGeneratingFunction[GammaDistribution[2, 1], t]
 momentgeneratingfunction-poisson-at-zero:
   epsil:
     in: MomentGeneratingFunction(PoissonDistribution(2), 0)

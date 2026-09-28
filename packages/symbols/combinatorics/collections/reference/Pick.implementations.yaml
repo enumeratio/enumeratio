@@ -10,6 +10,12 @@ keeps-elements-where-sel-is-true:
     out: \bigl\lbrack a, c\bigr\rbrack
   fullform:
     in: Pick[List[a, b, c], List[True, False, True]]
+  wolfram:
+    in: Pick[List[a, b, c], List[True, False, True]]
+    out: "{a, c}"
+    tex:
+      in: \text{Pick}[\{a,b,c\},\{\text{True},\text{False},\text{True}\}]
+      out: \{a,c\}
 an-explicit-pattern-keeps-elements-matching:
   epsil:
     in: Pick([a, b, c, d], [1, 0, 1, 0], 1)
@@ -19,3 +25,9 @@ an-explicit-pattern-keeps-elements-matching:
     out: \bigl\lbrack a, c\bigr\rbrack
   fullform:
     in: Pick[List[a, b, c, d], List[1, 0, 1, 0], 1]
+  wolfram:
+    in: Pick[List[a, b, c, d], List[1, 0, 1, 0], 1]
+    out: "{a, c}"
+    tex:
+      in: \text{Pick}[\{a,b,c,d\},\{1,0,1,0\},1]
+      out: \{a,c\}

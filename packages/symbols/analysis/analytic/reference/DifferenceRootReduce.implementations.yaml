@@ -15,6 +15,15 @@ fibonacci-order-2:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[Fibonacci[n], n]
+  wolfram:
+    in: DifferenceRootReduce[Fibonacci[n], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {-\[FormalY][\[FormalN]] - \[FormalY][1 + \[FormalN]] + \[FormalY][2 + \[FormalN]] == 0, \[FormalY][0] == 0, \[FormalY][1] == 1}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}\left[F_n,n\right]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 factorial-order-1:
   epsil:
     in: DifferenceRootReduce(n!, n)
@@ -29,6 +38,15 @@ factorial-order-1:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}((-1)-\mathrm{n2})y(\mathrm{n2})+y(\mathrm{n2}+1)=0\\y(0)=1\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[Factorial[n], n]
+  wolfram:
+    in: DifferenceRootReduce[Factorial[n], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {(-1 - \[FormalN])*\[FormalY][\[FormalN]] + \[FormalY][1 + \[FormalN]] == 0, \[FormalY][0] == 1}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}[n!,n]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 binomial-anchors-either-side-of-the-pole:
   epsil:
     in: DifferenceRootReduce(Binomial(n, 3), n)
@@ -43,6 +61,15 @@ binomial-anchors-either-side-of-the-pole:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}-2)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})=0\\y(-1)=-1\\y(3)=1\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[Binomial[n, 3], n]
+  wolfram:
+    in: DifferenceRootReduce[Binomial[n, 3], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {(-1 - \[FormalN])*\[FormalY][\[FormalN]] + (-2 + \[FormalN])*\[FormalY][1 + \[FormalN]] == 0, \[FormalY][-1] == -1, \[FormalY][3] == 1}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}[\binom{n}{3},n]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 harmonicnumber-order-1-inhomogeneous:
   epsil:
     in: DifferenceRootReduce(HarmonicNumber(n), n)
@@ -60,6 +87,15 @@ harmonicnumber-order-1-inhomogeneous:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+1)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})-1=0\\y(0)=0\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[HarmonicNumber[n], n]
+  wolfram:
+    in: DifferenceRootReduce[HarmonicNumber[n], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {-1 + (-1 - \[FormalN])*\[FormalY][\[FormalN]] + (1 + \[FormalN])*\[FormalY][1 + \[FormalN]] == 0, \[FormalY][0] == 0}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}\left[H_n,n\right]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 sum-of-two-hypergeometric-terms:
   epsil:
     in: DifferenceRootReduce(2 ^ n + 3 ^ n, n)
@@ -74,6 +110,15 @@ sum-of-two-hypergeometric-terms:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-5y(\mathrm{n2}+1)+6y(\mathrm{n2})+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=5\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[Plus[Power[2, n], Power[3, n]], n]
+  wolfram:
+    in: DifferenceRootReduce[Plus[Power[2, n], Power[3, n]], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {6*\[FormalY][\[FormalN]] - 5*\[FormalY][1 + \[FormalN]] + \[FormalY][2 + \[FormalN]] == 0, \[FormalY][0] == 2, \[FormalY][1] == 5}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}\left[2^n+3^n,n\right]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 catalannumber-order-1:
   epsil:
     in: DifferenceRootReduce(CatalanNumber(n), n)
@@ -88,6 +133,15 @@ catalannumber-order-1:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+2)y(\mathrm{n2}+1)-2(2\mathrm{n2}+1)y(\mathrm{n2})=0\\y(0)=1\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[CatalanNumber[n], n]
+  wolfram:
+    in: DifferenceRootReduce[CatalanNumber[n], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {(-2 - 4*\[FormalN])*\[FormalY][\[FormalN]] + (2 + \[FormalN])*\[FormalY][1 + \[FormalN]] == 0, \[FormalY][0] == 1}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}\left[C_n,n\right]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 lucasl-order-2:
   epsil:
     in: DifferenceRootReduce(LucasL(n), n)
@@ -105,6 +159,15 @@ lucasl-order-2:
     out: \mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=1\end{cases})\lhd n
   fullform:
     in: DifferenceRootReduce[LucasL[n], n]
+  wolfram:
+    in: DifferenceRootReduce[LucasL[n], n]
+    out: DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {-\[FormalY][\[FormalN]] - \[FormalY][1 + \[FormalN]] + \[FormalY][2 + \[FormalN]] == 0, \[FormalY][0] == 2, \[FormalY][1] == 1}]][n]
+    tex:
+      in: \text{DifferenceRootReduce}\left[L_n,n\right]
+      out: (n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's own DifferenceRoot object represents the recurrence rather than a closed form; FullSimplify can't algebraically compare it against our closed-form answer, and it isn't itself a plain number to substitute into.
 evaluated-at-a-concrete-n-runs-the-recurrence:
   tex:
     in: N(\mathrm{DifferenceRootReduce}(\mathrm{Fibonacci}(n), n)\lhd20)
@@ -124,3 +187,9 @@ a-symbolic-order-declines:
     out: \mathrm{DifferenceRootReduce}(\binom{n}{k}, n)
   fullform:
     in: DifferenceRootReduce[Binomial[n, k], n]
+  wolfram:
+    in: DifferenceRootReduce[Binomial[n, k], n]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{DifferenceRootReduce}[\binom{n}{k},n]-\text{DifferenceRootReduce}[\binom{n}{k},n]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DifferenceRootReduce}\left[\binom{-\frac{11}{5}}{\frac{7}{3}},-\frac{11}{5}\right]-\text{DifferenceRootReduce}\left[\binom{-\frac{11}{5}}{\frac{7}{3}},-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{DifferenceRootReduce}\left[\binom{-\frac{17}{6}}{\frac{13}{4}},-\frac{17}{6}\right]-\text{DifferenceRootReduce}\left[\binom{-\frac{17}{6}}{\frac{13}{4}},-\frac{17}{6}\right]\right]\right],\text{Chop}\left[N\left[\text{DifferenceRootReduce}\left[\binom{-\frac{23}{9}}{\frac{19}{8}},-\frac{23}{9}\right]-\text{DifferenceRootReduce}\left[\binom{-\frac{23}{9}}{\frac{19}{8}},-\frac{23}{9}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

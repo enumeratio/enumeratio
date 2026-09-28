@@ -18,6 +18,12 @@ symbolic-entries:
     out: \bigl\lbrack\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack2x, 2y\bigr\rbrack, \bigl\lbrack3x, 3y\bigr\rbrack\bigr\rbrack
   fullform:
     in: Outer[Times, List[1, 2, 3], List[x, y]]
+  wolfram:
+    in: Outer[Times, List[1, 2, 3], List[x, y]]
+    out: "{{x, y}, {2*x, 2*y}, {3*x, 3*y}}"
+    tex:
+      in: \text{Outer}[\text{Times},\{1,2,3\},\{x,y\}]
+      out: \left( \begin{array}{cc}  x & y \\  2 x & 2 y \\  3 x & 3 y \\ \end{array} \right)
 any-binary-function-an-addition-table:
   epsil:
     in: Outer(Add, [1, 2], [10, 20])
@@ -49,6 +55,12 @@ list-gives-every-pair-like-a-cartesian-product:
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack a, y\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: Outer[List, List[a, b], List[x, y]]
+  wolfram:
+    in: Outer[List, List[a, b], List[x, y]]
+    out: "{{{a, x}, {a, y}}, {{b, x}, {b, y}}}"
+    tex:
+      in: \text{Outer}[\text{List},\{a,b\},\{x,y\}]
+      out: \left( \begin{array}{cc}  \{a,x\} & \{a,y\} \\  \{b,x\} & \{b,y\} \\ \end{array} \right)
 outer-matrix-of-right-shape:
   epsil:
     in: Outer(Add, [1, 2], [10, 20, 30])

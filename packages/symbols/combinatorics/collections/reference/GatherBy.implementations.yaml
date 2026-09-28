@@ -30,3 +30,9 @@ pairs-grouped-by-their-last-element:
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, 1\bigr\rbrack, \bigl\lbrack c, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: GatherBy[List[List[a, 1], List[b, 2], List[c, 1]], Last]
+  wolfram:
+    in: GatherBy[List[List[a, 1], List[b, 2], List[c, 1]], Last]
+    out: "{{{a, 1}, {c, 1}}, {{b, 2}}}"
+    tex:
+      in: \text{GatherBy}\left[\left( \begin{array}{cc}  a & 1 \\  b & 2 \\  c & 1 \\ \end{array} \right),\text{Last}\right]
+      out: \left\{\left( \begin{array}{cc}  a & 1 \\  c & 1 \\ \end{array} \right),\left( \begin{array}{cc}  b & 2 \\ \end{array} \right)\right\}

@@ -89,6 +89,12 @@ a-list-of-strings-sorts-lexicographically:
     out: \bigl\lbrack\mathrm{apple}, \mathrm{banana}, \mathrm{cherry}\bigr\rbrack
   fullform:
     in: Sort[List[banana, apple, cherry]]
+  wolfram:
+    in: Sort[List[banana, apple, cherry]]
+    out: "{apple, banana, cherry}"
+    tex:
+      in: \text{Sort}[\{\text{banana},\text{apple},\text{cherry}\}]
+      out: \{\text{apple},\text{banana},\text{cherry}\}
 symbols-sort-alphabetically:
   epsil:
     in: Sort([d, b, c, a])
@@ -98,6 +104,12 @@ symbols-sort-alphabetically:
     out: \bigl\lbrack a, b, c, d\bigr\rbrack
   fullform:
     in: Sort[List[d, b, c, a]]
+  wolfram:
+    in: Sort[List[d, b, c, a]]
+    out: "{a, b, c, d}"
+    tex:
+      in: \text{Sort}[\{d,b,c,a\}]
+      out: \{a,b,c,d\}
 integers-rationals-and-floats-together-sort-by:
   epsil:
     in: Sort([3 / 2, 1, 0.5, -2])
@@ -153,6 +165,12 @@ sorting-pairs-by-their-second-element-with-a:
     out: \bigl\lbrack\bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack
   fullform:
     in: Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]
+  wolfram:
+    in: Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]
+    out: "{{c, 1}, {a, 2}, {d, 3}}"
+    tex:
+      in: \text{Sort}\left[\left( \begin{array}{cc}  a & 2 \\  c & 1 \\  d & 3 \\ \end{array} \right),\text{$\#$1}[[2]]<\text{$\#$2}[[2]]\&\right]
+      out: \left( \begin{array}{cc}  c & 1 \\  a & 2 \\  d & 3 \\ \end{array} \right)
 sorts-the-arguments-of-any-head-not-just-a-list:
   epsil:
     in: Sort(f(b, a, c))
@@ -162,6 +180,12 @@ sorts-the-arguments-of-any-head-not-just-a-list:
     out: f(a, b, c)
   fullform:
     in: Sort[f[b, a, c]]
+  wolfram:
+    in: Sort[f[b, a, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sort}[f(b,a,c)]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{23}{9},\frac{19}{8},\frac{7}{3}\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{17}{6},\frac{13}{4},\frac{19}{8}\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-result-doesn-t-depend-on-the-input-order:
   epsil:
     in: Sort(Reverse([3, 1, 2])) == Sort([3, 1, 2])
@@ -196,4 +220,9 @@ sort-association-orders-by-value:
     out: \mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))
   fullform:
     in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
-    back: [Sort, [Association, [KeyValuePair, a, 4], [KeyValuePair, b, 1], [KeyValuePair, c, 3]]]
+  wolfram:
+    in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
+    out: <|b -> 1, c -> 3, a -> 4|>
+    tex:
+      in: \text{Sort}[\text{Association}[a\to 4,b\to 1,c\to 3]]
+      out: \unicode{f113}b\to 1,c\to 3,a\to 4\unicode{f114}

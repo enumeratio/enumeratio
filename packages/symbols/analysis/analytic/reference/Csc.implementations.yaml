@@ -196,6 +196,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\csc(x)
   fullform:
     in: Csc[Minus[x]]
+  wolfram:
+    in: Csc[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\csc (-x)--\csc (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\csc \left(-\frac{7}{3}\right)--\csc \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\csc \left(-\left(-\frac{11}{5}\right)\right)--\csc \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\csc \left(-\frac{13}{4}\right)--\csc \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-csc-x-cot-x:
   epsil:
     in: D(Csc(x), x)
@@ -214,3 +220,12 @@ antiderivative-ln-csc-x-cot-x:
     out: -\ln(\vert\csc(x)+\cot(x)\vert)
   fullform:
     in: Integrate[Csc[x], x]
+  wolfram:
+    in: Integrate[Csc[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \csc (x) \, dx--\log (| \csc (x)+\cot (x)| )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \csc \left(\frac{7}{3}\right) \, d\frac{7}{3}--\log \left(\left| \csc \left(\frac{7}{3}\right)+\cot \left(\frac{7}{3}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \csc \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)--\log \left(\left| \csc \left(-\frac{11}{5}\right)+\cot \left(-\frac{11}{5}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \csc \left(\frac{13}{4}\right) \, d\frac{13}{4}--\log \left(\left| \csc \left(\frac{13}{4}\right)+\cot \left(\frac{13}{4}\right)\right| \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: Same as Cot — an antiderivative identity FullSimplify doesn't confirm automatically, and the substitution fallback doesn't settle it either.

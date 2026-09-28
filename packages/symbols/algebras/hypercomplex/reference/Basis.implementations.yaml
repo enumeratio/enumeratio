@@ -7,6 +7,12 @@
     out: \bigl\lbrack1, f_1, f_2, f_1f_2\bigr\rbrack
   fullform:
     in: Basis[Quaternions]
+  sage:
+    in: list((SR.var("Quaternions")).basis())
+    out: "AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'basis'"
+    verdict: error
+    kind: domain
+    note: "Same root cause as AlgebraDimension: Quaternions isn't compute-engine-defined, so it's emitted as a free symbolic variable instead of the actual domain object Sage's .basis() needs."
 the-bicomplex-basis:
   epsil:
     in: Basis(MulticomplexAlgebra(2))

@@ -7,6 +7,12 @@ a-parabola-is-convex:
     out: "1"
   fullform:
     in: FunctionConvexity[Power[x, 2], x]
+  wolfram:
+    in: FunctionConvexity[Power[x, 2], x]
+    out: "1"
+    tex:
+      in: \text{FunctionConvexity}\left[x^2,x\right]
+      out: "1"
 a-cubic-has-an-inflection-point:
   epsil:
     in: FunctionConvexity(x ^ 3, x)
@@ -16,6 +22,15 @@ a-cubic-has-an-inflection-point:
     out: \mathrm{Indeterminate}
   fullform:
     in: FunctionConvexity[Power[x, 3], x]
+  wolfram:
+    in: FunctionConvexity[Power[x, 3], x]
+    out: Indeterminate
+    tex:
+      in: \text{FunctionConvexity}\left[x^3,x\right]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: "Both sides say the classification is undecidable, spelled differently: we pin the bare symbol Indeterminate, Wolfram's own FunctionConvexity also answers Indeterminate but fromWolfram translates that symbol to our NaN, so the structural comparison sees NaN against Indeterminate."
 exp-is-always-convex:
   epsil:
     in: FunctionConvexity(Exp(x), x)
@@ -25,6 +40,12 @@ exp-is-always-convex:
     out: "1"
   fullform:
     in: FunctionConvexity[Exp[x], x]
+  wolfram:
+    in: FunctionConvexity[Exp[x], x]
+    out: "1"
+    tex:
+      in: \text{FunctionConvexity}[\exp (x),x]
+      out: "1"
 a-restricted-domain-answers-indeterminate:
   epsil:
     in: FunctionConvexity(1 / x, x)
@@ -34,3 +55,12 @@ a-restricted-domain-answers-indeterminate:
     out: \mathrm{Indeterminate}
   fullform:
     in: FunctionConvexity[Divide[1, x], x]
+  wolfram:
+    in: FunctionConvexity[Divide[1, x], x]
+    out: Indeterminate
+    tex:
+      in: \text{FunctionConvexity}\left[\frac{1}{x},x\right]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: "Same Indeterminate-vs-NaN spelling gap as the cubic example: fromWolfram always maps Wolfram's Indeterminate to our NaN, losing the distinction from our own Indeterminate classification marker."

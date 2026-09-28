@@ -534,6 +534,12 @@ zeta-infty-1-only-the-n-1-term-survives:
     in: Zeta[Infinity]
   wolfram:
     in: Zeta[Infinity]
+  sympy:
+    in: zeta(oo)
+  mpmath:
+    in: zeta(inf)
+  sage:
+    in: zeta(oo)
 two-arguments-at-a-nonpositive-integer-s-zeta-1:
   epsil:
     in: Zeta(-1, 5)
@@ -685,6 +691,18 @@ zeta-s-1-zeta-s-for-symbolic-s:
     out: \zeta(s)
   fullform:
     in: Zeta[s, 1]
+  wolfram:
+    in: Zeta[s, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\zeta (s,1)-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(\frac{7}{3},1\right)-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-\frac{11}{5},1\right)-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(\frac{13}{4},1\right)-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: zeta(Symbol("s"), 1)
+    out: True
+  sage:
+    in: hurwitz_zeta(SR.var("s"), 1)
+    out: True
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Zeta(3), 40)
@@ -792,6 +810,21 @@ zeta-symbolic-s-under-n-stays-symbolic:
     out: \zeta(s)
   fullform:
     in: N[Zeta[s]]
+  wolfram:
+    in: N[Zeta[s]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[N[\zeta (s)]-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[N\left[\zeta \left(\frac{7}{3}\right)\right]-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[N\left[\zeta \left(-\frac{11}{5}\right)\right]-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[N\left[\zeta \left(\frac{13}{4}\right)\right]-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: N(zeta(Symbol("s")), 30)
+    out: True
+  sage:
+    in: N(zeta(SR.var("s")))
+    out: "TypeError: cannot evaluate symbolic expression numerically"
+    verdict: error
+    kind: domain
+    note: Sages N() cannot numerically evaluate zeta(s) for a free symbolic s at all (TypeError) rather than leaving it symbolic; our own N(Zeta(s)) leaves it symbolic instead of erroring.
 zeta-half-stays-symbolic-until-n:
   epsil:
     in: Zeta(1 / 2)

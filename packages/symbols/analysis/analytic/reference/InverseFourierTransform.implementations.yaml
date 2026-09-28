@@ -7,6 +7,12 @@ dirac-delta:
     out: \sqrt{\frac{1}{2\pi}}
   fullform:
     in: InverseFourierTransform[DiracDelta[w], w, t]
+  wolfram:
+    in: InverseFourierTransform[DiracDelta[w], w, t]
+    out: 1/Sqrt[2*Pi]
+    tex:
+      in: \mathcal{F}_w^{-1}[\delta (w)](t)
+      out: \frac{1}{\sqrt{2 \pi }}
 constant:
   epsil:
     in: InverseFourierTransform(1, w, t)
@@ -16,3 +22,12 @@ constant:
     out: \sqrt{2\pi}
   fullform:
     in: InverseFourierTransform[1, w, t]
+  wolfram:
+    in: InverseFourierTransform[1, w, t]
+    out: Sqrt[2*Pi]*DiracDelta[t]
+    tex:
+      in: \mathcal{F}_w^{-1}[1](t)
+      out: \sqrt{2 \pi } \delta (t)
+    verdict: disagree
+    kind: convention
+    note: Wolfram's InverseFourierTransform[1,w,t] answers the full distribution sqrt(2 pi)*DiracDelta(t); our pinned expected is just sqrt(2 pi), missing the DiracDelta(t) factor. Worth a second look/an issue rather than assuming Wolfram's convention differs.

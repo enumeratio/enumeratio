@@ -7,6 +7,12 @@ sqrt-x-2-x-for-positive-x:
     out: x
   fullform:
     in: PowerExpand[Sqrt[Power[x, 2]]]
+  wolfram:
+    in: PowerExpand[Sqrt[Power[x, 2]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{PowerExpand}\left[\sqrt{x^2}\right]-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\left(\frac{7}{3}\right)^2}\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\left(-\frac{11}{5}\right)^2}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\left(\frac{13}{4}\right)^2}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 splits-a-logarithm-of-a-product:
   epsil:
     in: PowerExpand(Ln(x * y))
@@ -16,6 +22,12 @@ splits-a-logarithm-of-a-product:
     out: \ln(x)+\ln(y)
   fullform:
     in: PowerExpand[Log[Times[x, y]]]
+  wolfram:
+    in: PowerExpand[Log[Times[x, y]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PowerExpand}[\log (x y)]-(\log (x)+\log (y))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)\right]-\left(\log \left(\frac{7}{3}\right)+\log \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{13}{4} \left(-\frac{17}{6}\right)\right)\right]-\left(\log \left(\frac{13}{4}\right)+\log \left(-\frac{17}{6}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{19}{8} \left(-\frac{23}{9}\right)\right)\right]-\left(\log \left(\frac{19}{8}\right)+\log \left(-\frac{23}{9}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 pulls-out-an-exponent:
   epsil:
     in: PowerExpand(Ln(x ^ n))
@@ -25,6 +37,12 @@ pulls-out-an-exponent:
     out: n\ln(x)
   fullform:
     in: PowerExpand[Log[Power[x, n]]]
+  wolfram:
+    in: PowerExpand[Log[Power[x, n]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{PowerExpand}\left[\log \left(x^n\right)\right]-n \log (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\left(-\frac{11}{5}\right)^{\frac{7}{3}}\right)\right]-\frac{7}{3} \log \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\left(-\frac{17}{6}\right)^{\frac{13}{4}}\right)\right]-\frac{13}{4} \log \left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\left(-\frac{23}{9}\right)^{\frac{19}{8}}\right)\right]-\frac{19}{8} \log \left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 distributes-a-power-over-a-product:
   epsil:
     in: PowerExpand((a * b) ^ c)
@@ -34,6 +52,12 @@ distributes-a-power-over-a-product:
     out: a^{c}b^{c}
   fullform:
     in: PowerExpand[Power[Times[a, b], c]]
+  wolfram:
+    in: PowerExpand[Power[Times[a, b], c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{PowerExpand}\left[(a b)^c\right]-a^c b^c\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)^{\frac{13}{4}}\right]-\left(\frac{7}{3}\right)^{\frac{13}{4}} \left(-\frac{11}{5}\right)^{\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\left(-\frac{17}{6} \frac{19}{8}\right)^{-\frac{23}{9}}\right]-\left(-\frac{17}{6}\right)^{-\frac{23}{9}} \left(\frac{19}{8}\right)^{-\frac{23}{9}}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)^{\frac{13}{4}}\right]-\left(\frac{7}{3}\right)^{\frac{13}{4}} \left(-\frac{11}{5}\right)^{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 powerexpand-sqrt-a-times-b:
   epsil:
     in: PowerExpand(Sqrt(a * b))
@@ -43,3 +67,9 @@ powerexpand-sqrt-a-times-b:
     out: \sqrt{a}\sqrt{b}
   fullform:
     in: PowerExpand[Sqrt[Times[a, b]]]
+  wolfram:
+    in: PowerExpand[Sqrt[Times[a, b]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{PowerExpand}\left[\sqrt{a b}\right]-\sqrt{a} \sqrt{b}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\frac{7}{3} \left(-\frac{11}{5}\right)}\right]-\sqrt{\frac{7}{3}} \sqrt{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\frac{13}{4} \left(-\frac{17}{6}\right)}\right]-\sqrt{\frac{13}{4}} \sqrt{-\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\sqrt{\frac{19}{8} \left(-\frac{23}{9}\right)}\right]-\sqrt{\frac{19}{8}} \sqrt{-\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

@@ -99,3 +99,9 @@ erfc-erfc-1-x-x:
     out: x
   fullform:
     in: Erfc[InverseErfc[x]]
+  wolfram:
+    in: Erfc[InverseErfc[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erfc}\left(\text{erfc}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

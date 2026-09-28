@@ -7,7 +7,12 @@ looks-up-an-existing-key:
     out: "2"
   fullform:
     in: Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]
-    back: [At, [Association, [KeyValuePair, a, 1], [KeyValuePair, b, 2]], [Key, b]]
+  wolfram:
+    in: Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]
+    out: "2"
+    tex:
+      in: \text{Association}[a\to 1,b\to 2][[\text{Key}[b]]]
+      out: "2"
 missing-key-answers-missing:
   epsil:
     in: Association(Rule(a, 1))[Key(z)]
@@ -17,4 +22,12 @@ missing-key-answers-missing:
     out: \mathrm{Missing}
   fullform:
     in: Part[Association[Rule[a, 1]], Key[z]]
-    back: [At, [Association, [KeyValuePair, a, 1]], [Key, z]]
+  wolfram:
+    in: Part[Association[Rule[a, 1]], Key[z]]
+    out: Missing["KeyAbsent", Key[z]]
+    tex:
+      in: \text{Association}[a\to 1][[\text{Key}[z]]]
+      out: ---
+    verdict: disagree
+    kind: convention
+    note: compute-engine's Missing is a bare marker symbol; Wolfram's Part/Association returns the compound Missing["KeyAbsent", Key[z]], carrying the failed key along. Same outcome, different spelling of absent.

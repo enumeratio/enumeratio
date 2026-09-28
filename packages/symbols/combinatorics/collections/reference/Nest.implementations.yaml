@@ -7,6 +7,12 @@ nest-f-x-3:
     out: f(f(f(x)))
   fullform:
     in: Nest[f, x, 3]
+  wolfram:
+    in: Nest[f, x, 3]
+    out: f[f[f[x]]]
+    tex:
+      in: \text{Nest}[f,x,3]
+      out: f(f(f(x)))
 repeated-squaring-2-2-2-2:
   epsil:
     in: Nest(Function(_1 ^ 2), 2, 3)
@@ -28,6 +34,12 @@ zero-applications-leave-x-alone:
     out: x
   fullform:
     in: Nest[f, x, 0]
+  wolfram:
+    in: Nest[f, x, 0]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Nest}[f,x,0]-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Nest}\left[\frac{7}{3},-\frac{11}{5},0\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Nest}\left[\frac{13}{4},-\frac{17}{6},0\right]--\frac{17}{6}\right]\right],\text{Chop}\left[N\left[\text{Nest}\left[\frac{19}{8},-\frac{23}{9},0\right]--\frac{23}{9}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 nest-function-2-times-1-1-10:
   epsil:
     in: Nest(Function(2 * _1), 1, 10)

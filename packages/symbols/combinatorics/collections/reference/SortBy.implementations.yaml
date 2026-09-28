@@ -18,6 +18,12 @@ pairs-sorted-by-their-last-element:
     out: \bigl\lbrack\bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack
   fullform:
     in: SortBy[List[List[a, 2], List[c, 1], List[d, 3]], Last]
+  wolfram:
+    in: SortBy[List[List[a, 2], List[c, 1], List[d, 3]], Last]
+    out: "{{c, 1}, {a, 2}, {d, 3}}"
+    tex:
+      in: \text{SortBy}\left[\left( \begin{array}{cc}  a & 2 \\  c & 1 \\  d & 3 \\ \end{array} \right),\text{Last}\right]
+      out: \left( \begin{array}{cc}  c & 1 \\  a & 2 \\  d & 3 \\ \end{array} \right)
 sorted-by-the-square-of-each-element:
   epsil:
     in: SortBy([4, -5, 1, 3, -2], Function(_1 ^ 2))

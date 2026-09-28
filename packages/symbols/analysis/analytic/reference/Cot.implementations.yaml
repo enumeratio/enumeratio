@@ -229,6 +229,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\cot(x)
   fullform:
     in: Cot[Minus[x]]
+  wolfram:
+    in: Cot[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cot (-x)--\cot (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cot \left(-\frac{7}{3}\right)--\cot \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cot \left(-\left(-\frac{11}{5}\right)\right)--\cot \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cot \left(-\frac{13}{4}\right)--\cot \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-csc-2-x:
   epsil:
     in: D(Cot(x), x)
@@ -247,3 +253,12 @@ antiderivative-ln-sin-x:
     out: \ln(\vert\sin(x)\vert)
   fullform:
     in: Integrate[Cot[x], x]
+  wolfram:
+    in: Integrate[Cot[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \cot (x) \, dx-\log (| \sin (x)| )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \cot \left(\frac{7}{3}\right) \, d\frac{7}{3}-\log \left(\left| \sin \left(\frac{7}{3}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \cot \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\log \left(\left| \sin \left(-\frac{11}{5}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \cot \left(\frac{13}{4}\right) \, d\frac{13}{4}-\log \left(\left| \sin \left(\frac{13}{4}\right)\right| \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: An antiderivative identity FullSimplify doesn't confirm automatically (branch/log-form rewriting), and the 3 fixed-rational substitution points don't settle it either. We believe the closed form is correct; Wolfram just doesn't auto-verify it.

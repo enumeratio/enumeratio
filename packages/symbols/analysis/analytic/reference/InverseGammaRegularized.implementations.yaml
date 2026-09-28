@@ -40,6 +40,15 @@ q-a-0-1:
     out: "0"
   fullform:
     in: InverseGammaRegularized[a, 1]
+  wolfram:
+    in: InverseGammaRegularized[a, 1]
+    out: InverseGammaRegularized[a, 1]
+    tex:
+      in: Q^{-1}(a,1)
+      out: Q^{-1}(a,1)
+    verdict: disagree
+    kind: unevaluated
+    note: Same conservative auto-evaluation as GammaRegularized — Wolfram doesn't resolve this degenerate-parameter identity without an explicit Limit[].
 q-a-infty-0:
   epsil:
     in: InverseGammaRegularized(a, 0)
@@ -49,6 +58,15 @@ q-a-infty-0:
     out: \infty
   fullform:
     in: InverseGammaRegularized[a, 0]
+  wolfram:
+    in: InverseGammaRegularized[a, 0]
+    out: InverseGammaRegularized[a, 0]
+    tex:
+      in: Q^{-1}(a,0)
+      out: Q^{-1}(a,0)
+    verdict: disagree
+    kind: unevaluated
+    note: Same conservative auto-evaluation as the other InverseGammaRegularized example.
 order-1-inverts-e-z:
   epsil:
     in: InverseGammaRegularized(1, s)
@@ -58,3 +76,12 @@ order-1-inverts-e-z:
     out: -\ln(s)
   fullform:
     in: InverseGammaRegularized[1, s]
+  wolfram:
+    in: InverseGammaRegularized[1, s]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[Q^{-1}(1,s)--\log (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q^{-1}\left(1,\frac{7}{3}\right)--\log \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[Q^{-1}\left(1,-\frac{11}{5}\right)--\log \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[Q^{-1}\left(1,\frac{13}{4}\right)--\log \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: Same conservative auto-evaluation as the other InverseGammaRegularized examples — Wolfram leaves this symbolic without an explicit Limit[].

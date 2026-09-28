@@ -514,6 +514,24 @@ tan-ix-i-tanh-x:
     out: i\tanh(x)
   fullform:
     in: Tan[Times[I, x]]
+  wolfram:
+    in: Tan[Times[I, x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\tan (i x)-i \tanh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(i \frac{7}{3}\right)-i \tanh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(i \left(-\frac{11}{5}\right)\right)-i \tanh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(i \frac{13}{4}\right)-i \tanh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: tan((I * Symbol("x")))
+    out: I*tanh(x)
+    verdict: disagree
+    kind: convention
+    note: "Same root cause as Cos/Sin: tanh has no sympy mapping row yet, so the comparison falls back to text instead of the free-symbol identity check."
+  sage:
+    in: tan((I * SR.var("x")))
+    out: I*tanh(x)
+    verdict: disagree
+    kind: convention
+    note: "Same root cause as Cos/Sin: tanh has no sage mapping row yet, so the comparison falls back to text instead of the free-symbol identity check."
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Tan(-x)
@@ -523,6 +541,18 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\tan(x)
   fullform:
     in: Tan[Minus[x]]
+  wolfram:
+    in: Tan[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\tan (-x)--\tan (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(-\frac{7}{3}\right)--\tan \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(-\left(-\frac{11}{5}\right)\right)--\tan \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(-\frac{13}{4}\right)--\tan \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: tan((-Symbol("x")))
+    out: True
+  sage:
+    in: tan((-SR.var("x")))
+    out: True
 tan-arctan-x-x-for-every-x:
   epsil:
     in: Tan(Arctan(x))
@@ -532,6 +562,12 @@ tan-arctan-x-x-for-every-x:
     out: x
   fullform:
     in: Tan[ArcTan[x]]
+  wolfram:
+    in: Tan[ArcTan[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan \left(\tan ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 tan-arctan-2-2-for-every-x:
   epsil:
     in: Tan(Arctan(2))
@@ -552,6 +588,12 @@ tan-arcsin-x-frac-x-sqrt-1-x-2:
     out: \frac{x}{\sqrt{1-x^2}}
   fullform:
     in: Tan[ArcSin[x]]
+  wolfram:
+    in: Tan[ArcSin[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan \left(\sin ^{-1}(x)\right)-\frac{x}{\sqrt{-x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(\frac{7}{3}\right)\right)-\frac{\frac{7}{3}}{\sqrt{-\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{\frac{11}{5}}{\sqrt{-\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(\frac{13}{4}\right)\right)-\frac{\frac{13}{4}}{\sqrt{-\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-sec-2-x:
   epsil:
     in: D(Tan(x), x)
@@ -570,6 +612,15 @@ antiderivative-ln-sec-x:
     out: \ln(\vert\sec(x)\vert)
   fullform:
     in: Integrate[Tan[x], x]
+  wolfram:
+    in: Integrate[Tan[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \tan (x) \, dx-\log (| \sec (x)| )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \tan \left(\frac{7}{3}\right) \, d\frac{7}{3}-\log \left(\left| \sec \left(\frac{7}{3}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \tan \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\log \left(\left| \sec \left(-\frac{11}{5}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \tan \left(\frac{13}{4}\right) \, d\frac{13}{4}-\log \left(\left| \sec \left(\frac{13}{4}\right)\right| \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: Same as Cot/Csc/Sec — an antiderivative identity FullSimplify doesn't confirm automatically.
 taylor-series-about-0:
   epsil:
     in: Series(Tan(x), x, 0, 7)

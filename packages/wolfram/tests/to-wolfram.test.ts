@@ -121,7 +121,9 @@ test("DigitSum is Wolfram's own head, third argument included", () => {
 });
 
 test("special forms lowered to a Wolfram expression with no head of its own", () => {
-  expect(toWolfram(["IndexOf", ["List", 1, 2, 3], 9])).toBe("First[FirstPosition[List[1, 2, 3], 9, List[0]]]");
+  // Level spec List[1]: IndexOf scans the collection's own elements only, not every depth —
+  // FirstPosition without it would find a value nested inside a sublist too (#A-72).
+  expect(toWolfram(["IndexOf", ["List", 1, 2, 3], 9])).toBe("First[FirstPosition[List[1, 2, 3], 9, List[0], List[1]]]");
   expect(toWolfram(["Degrees", 30])).toBe("Times[30, Degree]");
   expect(toWolfram(["Mode", ["List", 1, 2, 2]])).toBe("First[Commonest[List[1, 2, 2]]]");
 });

@@ -5,13 +5,14 @@
 // that counts those is a work queue rather than a verdict.
 
 import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 export type Emitted =
-  | { readonly ok: true; readonly source: string }
+  | { readonly ok: true; readonly source: string; readonly freeSymbols?: readonly string[] }
   | { readonly ok: false; readonly missing: readonly string[] };
 
 const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
@@ -42,6 +43,17 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
     sage: "False",
     rust: "V::Bool(false)",
   },
+  // Named values, not free variables — a bare `NaN` or `ComplexInfinity` used to fall through
+  // to the same "unknown bare symbol" path a real free variable does, which the symbolic-
+  // system fix below (#A-72) would otherwise turn into a bogus `Symbol("NaN")`: a variable
+  // named NaN, not the not-a-number value. sympy has no exact Glaisher/Khinchin, so those two
+  // stay unmapped there rather than guessed at.
+  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  ComplexInfinity: { wolfram: "ComplexInfinity", sympy: "zoo", sage: "unsigned_infinity" },
+  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo" },
+  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },
+  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher" },
+  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin" },
 };
 
 /**
@@ -64,6 +76,9 @@ export function emit(expr: MathJSON, system: System): Emitted {
   const missing: string[] = [];
   // Variables an enclosing Sum/Product iterator binds — not free, so not missing.
   const bound = new Set<string>();
+  // Every free bare symbol actually seen, regardless of system — the numeric-only lanes still
+  // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
+  const free = new Set<string>();
 
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
@@ -83,9 +98,33 @@ export function emit(expr: MathJSON, system: System): Emitted {
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
-      // An unknown bare symbol is a free variable; emitting it is fine for SymPy and Sage
-      // but meaningless numerically, so treat it as missing rather than guess.
-      if (!bound.has(node)) missing.push(`symbol:${node}`);
+      if (!bound.has(node)) {
+        // A symbol is unknown (a free variable) exactly when compute-engine has no
+        // definition for it — DEFINED_NAMES (defined-names-data.ts) is generated from the
+        // fully-declared reference engine's own `lookupDefinition`, over every symbol this
+        // codebase's reference data actually uses. `Primes` and `NaN` are defined (a domain,
+        // a constant — `Element(x, Primes)`'s `Primes` is not a value to guess at, and
+        // letting the symbolic-agreement fallback (symbolic.ts) substitute a random rational
+        // FOR a set would be nonsense); `x` and DSolveValue's `Y` are not, so they're free.
+        // `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is
+        // undefined too, but still not a free variable — Wolfram's own pattern syntax is a
+        // SUFFIX underscore (`a_`), so `_a` bare would parse there as `Blank[a]`, a different
+        // pattern altogether; staying missing is honest, passing it through wouldn't be.
+        if (DEFINED_NAMES.has(node) || node in CONSTANTS || /^_[A-Za-z]/.test(node)) {
+          missing.push(`symbol:${node}`);
+          return node;
+        }
+        // A genuinely unknown lowercase bare symbol is a free variable. A symbolic system can
+        // carry it through — Wolfram verbatim (toWolfram passes an unmapped name through
+        // unchanged), SymPy and Sage as an explicit symbolic value, since neither
+        // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
+        // do with a name, so it stays missing.
+        free.add(node);
+        if (system === "wolfram") return toWolfram(node);
+        if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
+        if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
+        missing.push(`symbol:${node}`);
+      }
       return node;
     }
     if (!isCall(node)) {
@@ -152,16 +191,46 @@ export function emit(expr: MathJSON, system: System): Emitted {
       }
       return fill(template, operands.map(walk));
     }
+    // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
+    // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an
+    // ASSIGNMENT there (`Set[n, 10]`) — left as `Equal`, the vars list isn't a valid
+    // local-variable spec and the whole call stays unevaluated (found scanning #A-72 phase
+    // 2's newly-emitting rows: `Module[List[Equal[n,10]], ...]` never ran). `toWolfram`'s own
+    // `Module`/`With` SPECIAL cases do this rewrite already, but only see it when GIVEN the
+    // raw tree — the generic fallback below hands it pre-walked (already-stringified)
+    // operands, which is opaque to that rewrite, so this rewrite has to happen before
+    // walking, on the raw operand tree, leaf-by-leaf through `walk` (for `missing` tracking).
+    if (system === "wolfram" && (head === "Module" || head === "With") && operands.length === 2) {
+      const [vars, body] = operands;
+      const rewriteBinding = (v: MathJSON): string =>
+        isCall(v) && v[0] === "Equal" && v.length === 3 ? `Set[${walk(v[1])}, ${walk(v[2])}]` : walk(v);
+      const varsSource =
+        isCall(vars) && vars[0] === "List"
+          ? `List[${vars.slice(1).map(rewriteBinding).join(", ")}]`
+          : rewriteBinding(vars);
+      return `${head}[${varsSource}, ${walk(body)}]`;
+    }
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.
     if (system === "wolfram" && isWolframHead(head)) return toWolfram([head, ...operands.map(walk)]);
+    // An undefined head used AS a function — `Y(x)` for DSolveValue's unknown solution `Y` —
+    // is the same "free variable" case as a bare undefined symbol, just called instead of
+    // referenced. Wolfram reads `Y[x]` with an undefined `Y` exactly as compute-engine means
+    // it: an unevaluated symbolic function application, not an error. A pattern-variable-
+    // shaped name (`_a`) is excluded for the same reason a bare one is (emit.ts's string
+    // branch, above) — this codebase's own convention, not a math name.
+    if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
+      free.add(head);
+      return toWolfram([head, ...operands.map(walk)]);
+    }
     missing.push(`${head}/${operands.length}`);
     return "0";
   };
 
   const source = walk(expr);
-  return missing.length > 0 ? { ok: false, missing } : { ok: true, source };
+  if (missing.length > 0) return { ok: false, missing };
+  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].sort() } : {}) };
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */
