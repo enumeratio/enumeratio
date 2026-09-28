@@ -3,15 +3,12 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 
-// Repo-wide guard: tests assert against committed golden-example JSON (`toEqual`
-// a file the test can regenerate with an UPDATE_* env flag), never vitest snapshot
-// matchers. Two reasons:
-//   1. `toMatchSnapshot` / `toMatchInlineSnapshot` throw "SnapshotClient.setup()"
-//      when the `test` task runs through `vp run` (what `vp run -r test` / CI use);
-//      they pass only under a bare `vp test`, so a snapshot test is green locally
-//      and red in the sweep. This bit us twice (demos.test.ts, cli-demos.test.ts).
-//   2. Golden JSON is plain data: reviewable in diffs, and reusable/repurposable
-//      (docs, fixtures, cross-checks) in ways an opaque .snap file is not.
+// Guard for packages/: tests assert against committed golden-example JSON (`toEqual` a
+// file the test can regenerate with an UPDATE_* env flag), never vitest snapshot matchers.
+// Golden JSON is plain data: reviewable in diffs, and reusable (docs, fixtures,
+// cross-checks) in ways an opaque .snap file is not. Snapshots used to fail under
+// `vp run` too; they no longer do, which is why upstream/ (patches tested the way their
+// upstream tests) is outside this guard.
 // Regenerate a golden with its own flag, e.g. `UPDATE_CLI_DEMOS=1 vp test`.
 
 const SNAPSHOT_CALL = /\btoMatch(?:Inline)?Snapshot\s*\(/;
