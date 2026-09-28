@@ -76,3 +76,47 @@ symbolic-arguments-are-left-unevaluated-rather:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{am}(u|m)-\text{am}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{am}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{am}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{am}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{am}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{am}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{am}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+am-1-1-0-9:
+  epsil:
+    in: N(JacobiAmplitude(1.1, 0.9))
+    out: 0.945_070_898_187_811_8
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(1.1, 0.9))
+    out: 0.945\,070\,898\,187\,811\,8
+  fullform:
+    in: N[JacobiAmplitude[1.1, 0.9]]
+  wolfram:
+    in: N[JacobiAmplitude[1.1, 0.9]]
+am-0-7-0-2:
+  epsil:
+    in: N(JacobiAmplitude(-0.7, 0.2))
+    out: -0.689_667_393_573_298_3
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(-0.7, 0.2))
+    out: -0.689\,667\,393\,573\,298\,3
+  fullform:
+    in: N[JacobiAmplitude[-0.7, 0.2]]
+  wolfram:
+    in: N[JacobiAmplitude[-0.7, 0.2]]
+am-1-1i-0-3:
+  epsil:
+    in: N(JacobiAmplitude(1 + i, 0.3))
+    out: 1.049_001_435_160_329 + 0.873_624_143_040_91i
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(1+i, 0.3))
+    out: 1.049\,001\,435\,160\,329+0.873\,624\,143\,040\,91i
+  fullform:
+    in: N[JacobiAmplitude[Complex[1, 1], 0.3]]
+  wolfram:
+    in: N[JacobiAmplitude[Complex[1, 1], 0.3]]
+am-0-1-5i-0-4:
+  epsil:
+    in: N(JacobiAmplitude(0.1 + 5i, 0.4))
+    out: 3.002_226_882_438_044 - 1.214_878_218_096_030_5i
+  tex:
+    in: N(\mathrm{JacobiAmplitude}(0.1+5i, 0.4))
+    out: 3.002\,226\,882\,438\,044-1.214\,878\,218\,096\,030\,5i
+  fullform:
+    in: N[JacobiAmplitude[Complex[0.1, 5], 0.4]]
+  wolfram:
+    in: N[JacobiAmplitude[Complex[0.1, 5], 0.4]]

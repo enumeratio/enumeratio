@@ -46,3 +46,188 @@
   expected: 1
   category: Possible issues
   caption: $(a/0)=1$ for $a=\pm1$
+- id: a-n-0
+  expr: [KroneckerSymbol, 0, 0]
+  expected: 0
+  caption: a = n = 0
+  role: test
+- id: n-0-a-1
+  expr: [KroneckerSymbol, 1, 0]
+  expected: 1
+  caption: n = 0, a = 1
+  role: test
+- id: n-0-even-a-not-a-unit
+  expr: [KroneckerSymbol, 2, 0]
+  expected: 0
+  caption: n = 0, even a (not a unit)
+  role: test
+- id: n-0-odd-a-1
+  expr: [KroneckerSymbol, 3, 0]
+  expected: 0
+  caption: n = 0, odd a != +-1
+  role: test
+- id: a-0-n-1
+  expr: [KroneckerSymbol, 0, 1]
+  expected: 1
+  caption: a = 0, n = 1
+  role: test
+- id: n-1-is-always-1
+  expr: [KroneckerSymbol, 5, 1]
+  expected: 1
+  caption: n = 1 is always 1
+  role: test
+- id: n-1-negative-a
+  expr: [KroneckerSymbol, -7, 1]
+  expected: 1
+  caption: n = 1, negative a
+  role: test
+- id: a-0-n-1-2
+  expr: [KroneckerSymbol, 0, -1]
+  expected: 1
+  caption: a = 0, n = -1
+  role: test
+- id: n-1-positive-a
+  expr: [KroneckerSymbol, 3, -1]
+  expected: 1
+  caption: n = -1, positive a
+  role: test
+- id: n-1-negative-a-sign-of-a
+  expr: [KroneckerSymbol, -5, -1]
+  expected: -1
+  caption: "n = -1, negative a: sign of a"
+  role: test
+- id: a-0-odd-n-1
+  expr: [KroneckerSymbol, 0, 5]
+  expected: 0
+  caption: a = 0, odd n > 1
+  role: test
+- id: a-0-even-n
+  expr: [KroneckerSymbol, 0, 4]
+  expected: 0
+  caption: a = 0, even n
+  role: test
+- id: a-0-negative-odd-n
+  expr: [KroneckerSymbol, 0, -5]
+  expected: 0
+  caption: a = 0, negative odd n
+  role: test
+- id: a-0-n-prime
+  expr: [KroneckerSymbol, 0, 7]
+  expected: 0
+  caption: a = 0, n prime
+  role: test
+- id: a-1-is-always-1
+  expr: [KroneckerSymbol, 1, 7]
+  expected: 1
+  caption: a = 1 is always 1
+  role: test
+- id: a-1-negative-n
+  expr: [KroneckerSymbol, 1, -7]
+  expected: 1
+  caption: a = 1, negative n
+  role: test
+- id: 1-p-p-7-3-mod-4
+  expr: [KroneckerSymbol, -1, 7]
+  expected: -1
+  caption: (-1/p), p = 7 = 3 mod 4
+  role: test
+- id: 1-p-p-5-1-mod-4
+  expr: [KroneckerSymbol, -1, 5]
+  expected: 1
+  caption: (-1/p), p = 5 = 1 mod 4
+  role: test
+- id: 2-n-character-n-7-7-mod-8
+  expr: [KroneckerSymbol, 2, 7]
+  expected: 1
+  caption: (2/n) character, n = 7 = 7 mod 8
+  role: test
+- id: 2-n-character-n-3-3-mod-8
+  expr: [KroneckerSymbol, 2, 3]
+  expected: -1
+  caption: (2/n) character, n = 3 = 3 mod 8
+  role: test
+- id: 2-n-character-n-5-5-mod-8
+  expr: [KroneckerSymbol, 2, 5]
+  expected: -1
+  caption: (2/n) character, n = 5 = 5 mod 8
+  role: test
+- id: 2-n-character
+  expr: [KroneckerSymbol, -2, 7]
+  expected: -1
+  caption: (-2/n) character
+  role: test
+- id: a-2-odd-a-5-5-mod-8
+  expr: [KroneckerSymbol, 5, 2]
+  expected: -1
+  caption: (a/2), odd a = 5 = 5 mod 8
+  role: test
+- id: a-2-odd-a-9-1-mod-8
+  expr: [KroneckerSymbol, 9, 2]
+  expected: 1
+  caption: (a/2), odd a = 9 = 1 mod 8
+  role: test
+- id: a-2-even-a-0
+  expr: [KroneckerSymbol, 4, 2]
+  expected: 0
+  caption: (a/2), even a = 0
+  role: test
+- id: even-a-and-even-n
+  expr: [KroneckerSymbol, 6, 4]
+  expected: 0
+  caption: even a and even n
+  role: test
+- id: odd-square-a-9-mod-2-3
+  expr: [KroneckerSymbol, 9, 8]
+  expected: 1
+  caption: odd square a = 9 mod 2^3
+  role: test
+- id: even-composite-n-2-3-negative
+  expr: [KroneckerSymbol, 7, -6]
+  expected: 1
+  caption: even composite n = 2*3, negative
+  role: test
+- id: even-a-negative-even-n
+  expr: [KroneckerSymbol, 10, -6]
+  expected: 0
+  caption: even a, negative even n
+  role: test
+- id: negative-odd-n
+  expr: [KroneckerSymbol, 5, -3]
+  expected: -1
+  caption: negative odd n
+  role: test
+- id: negative-a-negative-odd-n
+  expr: [KroneckerSymbol, -5, -9]
+  expected: -1
+  caption: negative a, negative odd n
+  role: test
+- id: perfect-square-a-qr
+  expr: [KroneckerSymbol, 4, 7]
+  expected: 1
+  caption: "perfect-square a: QR"
+  role: test
+- id: non-square-a-qnr-mod-7
+  expr: [KroneckerSymbol, 3, 7]
+  expected: -1
+  caption: "non-square a: QNR mod 7"
+  role: test
+- id: both-at-negative-grid-edge
+  expr: [KroneckerSymbol, -10, -10]
+  expected: 0
+  caption: both at negative grid edge
+  role: test
+- id: mixed-sign-edge
+  expr: [KroneckerSymbol, 10, -10]
+  expected: 0
+  caption: mixed-sign edge
+  role: test
+- id: composite-a-prime-n
+  expr: [KroneckerSymbol, 10, 7]
+  expected: -1
+  caption: composite a, prime n
+  role: test
+- id: negative-a-odd-square-n-9
+  expr: [KroneckerSymbol, -10, 9]
+  expected: 1
+  caption: negative a, odd square n = 9
+  role: test
