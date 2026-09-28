@@ -194,28 +194,44 @@ _name_ type to `FiniteDimensionalAlgebra` and left the ordered product as a regi
 
 **1. Element-level conformance: yes.** `Generator(A, k)`, and every element built from it,
 carries a type minted by its family (`quaternion_element`, `clifford_element`, …). That type
-conforms to `Ring` and, later, `Module` over the base and a star ring for conjugation (Mathlib's
-`StarRing`), exactly where Mathlib puts `Algebra R A`. The algebra's name type keeps
+conforms to `Ring`, `StarRing` for conjugation and, later, `Module` over the base, exactly
+where Mathlib puts `Algebra R A`. The algebra's name type keeps
 `FiniteDimensionalAlgebra`, as a Sage parent: `Basis` and `AlgebraDimension` are questions about
 the algebra, the product is a question about elements. Once a family's elements are typed, its
-product dispatches on them and it leaves the registry; when the last family has moved,
-`registerProduct` goes. The algebra's parameters live in the value, not the type, unless
-compute-engine's types can carry them; operands from two different algebras then decline in the
-member rather than failing the type check.
+product dispatches on them and it leaves the registry. The algebra's parameters live in the
+value, not the type, unless compute-engine's types can carry them. The member dispatches on its
+first operand's type only, so operands from two different algebras decline inside the member
+rather than failing the type check.
+
+**Bridge while families migrate.** Once `NonCommutativeMultiply` is a protocol member, the
+protocol declares the head, and an untyped operand gets `protocol-implementation-missing` where
+today it gets a registry answer. So structures wraps the member head: member dispatch first,
+then the `registerProduct` registry as a fallback. `GeometricProduct` and `CircleTimes` stay
+registry heads until their families move. The fallback and `registerProduct` are deleted with
+the last family.
 
 **2. Ring operations: split them.** Keep `Add` and `Negate` as compute-engine's. Addition is
 commutative in every ring, so canonical sorting is harmless there, and wrapping `Add` would put
 a gate on the hottest head in the engine and still run after canonicalisation. The product is
 different: `Multiply` sorts its operands before any handler runs, so a noncommutative ring
-cannot ride on it. Give the product a free member name; `NonCommutativeMultiply` is already our
-own head, not compute-engine's, so it can become the member itself, with juxtaposition still
-routed to it at the `InvisibleOperator` seam. `Ring` stays a marker for commutative carriers,
-and a noncommutative element type conforms through the product member. Open: whether
+cannot ride on it. So `Ring` stays Mathlib's `Ring`, possibly noncommutative, and gains the
+product as a member: `NonCommutativeMultiply`, already our own head rather than compute-engine's,
+with juxtaposition still routed to it at the `InvisibleOperator` seam. A new `CommutativeRing`
+marker refines `Ring` for carriers whose product is compute-engine's `Multiply`; `real` conforms
+to both, with `NonCommutativeMultiply` implemented as `Multiply`, so numbers keep the native
+path. `FloorRing` still refines `Ring`, unchanged.
+
+**`Conjugate` reaches `Star`.** A `StarRing` protocol (Mathlib's name) refines `Ring` with one
+member, `Star`. `Conjugate` joins structures' generic heads: a non-number dispatches to `Star`,
+the way `Min` reaches `Compare`, and numbers stay native.
+
+Open: whether
 compute-engine's `Add` accepts non-number operand types at all, or needs the widened signature
 the order heads got. To probe before building.
 
-**3. Naming.** Every proposed head and member was checked against compute-engine's definitions
-(`lookupDefinition`) and against the repo's records:
+**3. Naming.** Every proposed head, member and protocol was checked against compute-engine
+0.139's definitions (`lookupDefinition`, bare and with every package declared) and against the
+repo's records. `CommutativeRing` and `StarRing` are free too.
 
 | name                                                 | status                                                                                                |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -231,10 +247,24 @@ the order heads got. To probe before building.
 | `Discriminant`, `Norm`, `Trace`, `Conjugate`         | compute-engine's (polynomial discriminant, vector norm, matrix trace, complex conjugate): not widened |
 | `GaussianRationals`                                  | an existing carrier record: reuse, don't redeclare                                                    |
 
-`Conjugate` is the one compute-engine head worth routing through: quaternion conjugation is the
-same involution complex conjugation is, so `Conjugate` of a non-number dispatches to `Star`,
-the way `Min` reaches `Compare`. `Norm`, `Trace` and `Discriminant` mean something else on an
-algebra, so they get the `Reduced…` names instead.
+`Conjugate` is the one compute-engine head worth routing through, since quaternion conjugation
+is the same involution complex conjugation is. `Norm`, `Trace` and `Discriminant` mean
+something else on an algebra, so they get the `Reduced…` names instead. `ReducedNorm` over
+Mathlib's `normSq` is a departure, marked as one: `normSq` reads as the square of a norm, which
+is wrong for an indefinite algebra.
+
+**New rows for the hierarchy table** in design/structures.md, added there when they are built:
+
+| protocol          | refines | members                  | laws                                                                           | Mathlib    |
+| ----------------- | ------- | ------------------------ | ------------------------------------------------------------------------------ | ---------- |
+| `Ring`            | --      | `NonCommutativeMultiply` | a ring: associative, distributive, unital; `Add` and `Negate` compute-engine's | `Ring`     |
+| `CommutativeRing` | `Ring`  | --                       | the product commutes; it is compute-engine's `Multiply`                        | `CommRing` |
+| `StarRing`        | `Ring`  | `Star`                   | an involutive anti-automorphism                                                | `StarRing` |
+
+The element types (`quaternion_element`, `clifford_element`, …) conform to `Ring` and
+`StarRing`, and their algebras' name types keep `FiniteDimensionalAlgebra`. The two extensions
+are `Generator` and `QuaternionAlgebra`'s characteristic-2 restriction. `HilbertSymbol` and
+`RamifiedPlaces` are plain heads, not protocols.
 
 ## 7. First slice
 
@@ -243,6 +273,13 @@ algebra, so they get the `Reduced…` names instead.
   `ReducedNorm` and `ReducedTrace`, and `Basis` / `AlgebraDimension` through the existing
   protocol.
 - `HilbertSymbol(a, b, v)` and `RamifiedPlaces(B)`, ∞ included.
+- `Ring` with its product member, `CommutativeRing`, `StarRing`, and the registry bridge.
+- `Quaternions` changes type. #364 made it a typed constant of `clifford_algebra`, for `Basis`
+  and `Element` dispatch; that is also why its two examples lost their Wolfram rows, since it is
+  now defined rather than free. As an alias of `QuaternionAlgebra(Reals, -1, -1)` it takes the
+  quaternion algebra's name type instead. `Basis(Quaternions)` then returns (1, i, j, k) as
+  `Generator` values, printed under a binding, not the Cl(0, 2) blades `f_1`, `f_2`, `f_1f_2`.
+  Cl(0, 2) keeps its blades and reaches ℍ through the equivalence of §3.
 - Rename the hypercomplex `Norm` to `AlgebraNorm`.
 - Respell the existing quaternion examples with `Generator`, so the oracle rows compare values,
   not free symbols.
@@ -266,6 +303,3 @@ orders.
   resolve through a context's declared embeddings?
 - **The unit families.** Do `e_k` / `f_k` stay parseable symbols that canonicalise to
   `Generator(…)`, or become printed names only?
-- **Mathlib's `normSq` versus `ReducedNorm`.** Mathlib's name reads as the square of a norm,
-  which is wrong for an indefinite algebra; the textbook and Sage say reduced norm. Take the
-  departure, or follow Mathlib?
