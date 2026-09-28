@@ -1,5 +1,3 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareModular } from "../src/declare.ts";
@@ -8,17 +6,8 @@ import { kroneckerSymbol } from "../src/kronecker.ts";
 const ce = new ComputeEngine();
 declareModular(ce);
 
-// Pinned against a Wolfram kernel — the full a, n ∈ [-10, 10] grid. Regenerate with
-// `node scripts/collect-kronecker-golden.ts` (requires wolframscript on PATH).
-const GOLDEN = fileURLToPath(new URL("./kronecker.golden.json", import.meta.url));
-const golden: readonly { a: number; n: number; value: number }[] = JSON.parse(readFileSync(GOLDEN, "utf8"));
-
-test("KroneckerSymbol matches the Wolfram kernel over a, n ∈ [-10, 10]", () => {
-  for (const { a, n, value } of golden) {
-    expect(kroneckerSymbol(BigInt(a), BigInt(n)), `(${a}/${n})`).toBe(BigInt(value));
-    expect(ce.box(["KroneckerSymbol", a, n]).evaluate().re, `(${a}/${n})`).toBe(value);
-  }
-});
+// The a, n ∈ [-10, 10] grid this used to pin against a golden file is now sampled as
+// role: test examples on KroneckerSymbol.examples.yaml, scanned against Wolfram there.
 
 test("agrees with JacobiSymbol/LegendreSymbol on their shared domain", () => {
   // Odd positive n: Kronecker specializes to Jacobi, which specializes to Legendre at

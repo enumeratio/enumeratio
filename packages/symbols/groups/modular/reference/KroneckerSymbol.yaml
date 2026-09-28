@@ -18,3 +18,11 @@ seeAlso:
   - LegendreSymbol
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: KroneckerSymbol[$1, $2]
+    arity: 2
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
