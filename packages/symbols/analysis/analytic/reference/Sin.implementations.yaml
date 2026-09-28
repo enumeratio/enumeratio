@@ -1209,3 +1209,96 @@ a-huge-24-40-argument-reduces-exactly-mod-2-pi:
     verdict: disagree
     kind: precision
     note: Rust reduces the argument in f64, which can't hold 24^40 exactly; compute-engine reduces it exactly.
+a-huge-10-100-argument:
+  epsil:
+    in: N(Sin(10 ^ 100))
+    out: -0.372_376_123_661_276_688_262_08
+  tex:
+    in: N(\sin(10^{100}))
+    out: -0.372\,376\,123\,661\,276\,688\,262
+  fullform:
+    in: N[Sin[Power[10, 100]]]
+  wolfram:
+    in: N[Sin[Power[10, 100]]]
+  sympy:
+    in: N(sin((S(10)**100)), 30)
+  mpmath:
+    in: (sin(((10)**100)))
+  sage:
+    in: N(sin(((10)^100)))
+  rust:
+    in: nf(sin(power(n(10), n(100))))
+a-huge-3-200-argument:
+  epsil:
+    in: N(Sin(3 ^ 200))
+    out: -0.938_731_708_607_074_919_637_14
+  tex:
+    in: N(\sin(3^{200}))
+    out: -0.938\,731\,708\,607\,074\,919\,637
+  fullform:
+    in: N[Sin[Power[3, 200]]]
+  wolfram:
+    in: N[Sin[Power[3, 200]]]
+  sympy:
+    in: N(sin((S(3)**200)), 30)
+  mpmath:
+    in: (sin(((3)**200)))
+  sage:
+    in: N(sin(((3)^200)))
+  rust:
+    in: nf(sin(power(n(3), n(200))))
+a-huge-neg-7-60-argument:
+  epsil:
+    in: N(Sin(-7 ^ 60))
+    out: 0.365_121_600_402_355_550_076_03
+  tex:
+    in: N(\sin(-7^{60}))
+    out: 0.365\,121\,600\,402\,355\,550\,076
+  fullform:
+    in: N[Sin[Minus[Power[7, 60]]]]
+  wolfram:
+    in: N[Sin[Minus[Power[7, 60]]]]
+  sympy:
+    in: N(sin((-(S(7)**60))), 30)
+  mpmath:
+    in: (sin((-((7)**60))))
+  sage:
+    in: N(sin((-((7)^60))))
+  rust:
+    in: nf(sin((-(power(n(7), n(60))))))
+a-huge-10-80-plus-1-over-3-argument:
+  epsil:
+    in: N(Sin((10 ^ 80 + 1) / 3))
+    out: 0.985_348_301_498_115_921_755_50
+  tex:
+    in: N(\sin(\frac{10^{80}+1}{3}))
+    out: 0.985\,348\,301\,498\,115\,921\,756
+  fullform:
+    in: N[Sin[Divide[Plus[Power[10, 80], 1], 3]]]
+  wolfram:
+    in: N[Sin[Divide[Plus[Power[10, 80], 1], 3]]]
+  sympy:
+    in: N(sin((S(((S(10)**80) + 1)) / 3)), 30)
+  sage:
+    in: N(sin(((((10)^80) + 1) / 3)))
+  rust:
+    in: nf(sin(((power(n(10), n(80)) + n(1)) / n(3))))
+sin-1-under-n:
+  epsil:
+    in: N(Sin(1))
+    out: 0.841_470_984_807_896_5
+  tex:
+    in: N(\sin(1))
+    out: 0.841\,470\,984\,807\,896\,5
+  fullform:
+    in: N[Sin[1]]
+  wolfram:
+    in: N[Sin[1]]
+  sympy:
+    in: N(sin(1), 30)
+  mpmath:
+    in: (sin(1))
+  sage:
+    in: N(sin(1))
+  rust:
+    in: nf(sin(n(1)))

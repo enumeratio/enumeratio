@@ -11,3 +11,15 @@
   expected: 36
   category: Properties
   caption: $x_j = j!$ gives the Lah number L(4, 2)
+- id: belly-5-3-list-1-2-3
+  expr: [BellY, 5, 3, [List, 1, 2, 3]]
+  expected: 90
+  role: test
+- id: belly-6-2-list-2-3-5-7-11
+  expr: [BellY, 6, 2, [List, 2, 3, 5, 7, 11]]
+  expected: 697
+  role: test
+- id: belly-7-4-list-1-1-2-5
+  expr: [BellY, 7, 4, [List, 1, 1, 2, 5]]
+  expected: 700
+  role: test

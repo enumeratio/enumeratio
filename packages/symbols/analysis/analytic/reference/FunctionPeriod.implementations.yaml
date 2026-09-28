@@ -58,3 +58,14 @@ exp-is-not-periodic:
     tex:
       in: \text{FunctionPeriod}[\exp (x),x]
       out: "0"
+a-polynomial-is-not-periodic:
+  epsil:
+    in: FunctionPeriod(x ^ 2, x)
+    out: "0"
+  tex:
+    in: \mathrm{FunctionPeriod}(x^2, x)
+    out: "0"
+  fullform:
+    in: FunctionPeriod[Power[x, 2], x]
+  wolfram:
+    in: FunctionPeriod[Power[x, 2], x]

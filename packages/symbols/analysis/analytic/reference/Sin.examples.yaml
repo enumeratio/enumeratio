@@ -329,3 +329,23 @@
   expected: { num: "0.400083152719766047071" }
   category: Scope
   caption: $24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\pi$ before Sin sees it, not rounded to working precision first
+- id: a-huge-10-100-argument
+  expr: [N, [Sin, [Power, 10, 100]]]
+  expected: { num: "-0.37237612366127668826208" }
+  role: test
+- id: a-huge-3-200-argument
+  expr: [N, [Sin, [Power, 3, 200]]]
+  expected: { num: "-0.93873170860707491963714" }
+  role: test
+- id: a-huge-neg-7-60-argument
+  expr: [N, [Sin, [Negate, [Power, 7, 60]]]]
+  expected: { num: "0.36512160040235555007603" }
+  role: test
+- id: a-huge-10-80-plus-1-over-3-argument
+  expr: [N, [Sin, [Divide, [Add, [Power, 10, 80], 1], 3]]]
+  expected: { num: "0.98534830149811592175550" }
+  role: test
+- id: sin-1-under-n
+  expr: [N, [Sin, 1]]
+  expected: 0.8414709848078965
+  role: test

@@ -16,3 +16,8 @@
   expected: -151931373055998.97
   category: Neat examples
   caption: 'Heegner number 163: $J\bigl(\tfrac{1+i\sqrt{163}}2\bigr) = -640320^3/1728$, to double precision'
+- id: j-1-2i-modular-invariance-with-2i
+  expr: [N, [KleinInvariantJ, [Complex, 1, 2]]]
+  expected: 166.375
+  role: test
+  caption: Modular invariance — the same value as $J(2i)$

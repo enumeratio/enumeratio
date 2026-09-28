@@ -31,3 +31,14 @@ riemannsiegeltheta-0:
     in: RiemannSiegelTheta[0]
   wolfram:
     in: RiemannSiegelTheta[0]
+riemannsiegeltheta-50:
+  epsil:
+    in: N(RiemannSiegelTheta(50))
+    out: 26.461_366_070_161_41
+  tex:
+    in: N(\mathrm{RiemannSiegelTheta}(50))
+    out: 26.461\,366\,070\,161\,41
+  fullform:
+    in: N[RiemannSiegelTheta[50]]
+  wolfram:
+    in: N[RiemannSiegelTheta[50]]

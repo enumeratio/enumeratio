@@ -2,9 +2,8 @@
 // LambertW (branches other than 0/-1), InverseErfc, InverseGammaRegularized,
 // InverseBetaRegularized, BellY, NorlundB, PrimeZetaP, HypergeometricPFQ and
 // KleinInvariantJ — from a Wolfram kernel, and write them to
-// tests/backlog-heads.golden.json. Same shape as collect-hypergeometric-goldens.ts: the
-// test suite checks our numeric evaluation against these pinned values, so `vp test`
-// needs no oracle installed; this script does.
+// tests/backlog-heads.golden.json. The test suite checks our numeric evaluation against
+// these pinned values, so `vp test` needs no oracle installed; this script does.
 //
 // Requires wolframscript on PATH. Run from the package:
 //   node scripts/collect-backlog-goldens.ts

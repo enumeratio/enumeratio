@@ -157,3 +157,51 @@ a-generic-matrix-with-no-closed-form-stays:
     in: MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]
   wolfram:
     in: MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]
+a-generic-2-2-matrix-no-special-structure:
+  epsil:
+    in: N(MatrixExp([[1, 2], [3, 4]]))
+    out: |-
+      [
+        [51.968_956_198_705, 74.736_564_567_003_21],
+        [112.104_846_850_504_81, 164.073_803_049_209_83],
+      ]
+  tex:
+    in: N(\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack51.968\,956\,198\,705, 74.736\,564\,567\,003\,21\bigr\rbrack, \bigl\lbrack112.104\,846\,850\,504\,81, 164.073\,803\,049\,209\,83\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: N[MatrixExp[List[List[1, 2], List[3, 4]]]]
+  wolfram:
+    in: N[MatrixExp[List[List[1, 2], List[3, 4]]]]
+an-upper-triangular-3-3-matrix-numeric-path:
+  epsil:
+    in: N(MatrixExp([[1, 2, 0], [0, 3, 4], [0, 0, 5]]))
+    out: |-
+      [
+        [2.718_281_828_459_045, 17.367_255_094_728_623, 110.960_367_084_660_32],
+        [0, 20.085_536_923_187_668, 256.655_244_358_777_85],
+        [0, 0, 148.413_159_102_576_6],
+      ]
+  tex:
+    in: N(\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 0\bigr\rbrack, \bigl\lbrack0, 3, 4\bigr\rbrack, \bigl\lbrack0, 0, 5\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack2.718\,281\,828\,459\,045, 17.367\,255\,094\,728\,623, 110.960\,367\,084\,660\,32\bigr\rbrack, \bigl\lbrack0, 20.085\,536\,923\,187\,668, 256.655\,244\,358\,777\,85\bigr\rbrack, \bigl\lbrack0, 0, 148.413\,159\,102\,576\,6\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: N[MatrixExp[List[List[1, 2, 0], List[0, 3, 4], List[0, 0, 5]]]]
+  wolfram:
+    in: N[MatrixExp[List[List[1, 2, 0], List[0, 3, 4], List[0, 0, 5]]]]
+a-nilpotent-4-4-generator-numeric-path:
+  epsil:
+    in: N(MatrixExp([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]))
+    out: |-
+      [
+        [1, 1, 0.5, 0.166_666_666_666_666_66],
+        [0, 1, 1, 0.5],
+        [0, 0, 1, 1],
+        [0, 0, 0, 1],
+      ]
+  tex:
+    in: N(\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack1, 1, 0.5, 0.166\,666\,666\,666\,666\,66\bigr\rbrack, \bigl\lbrack0, 1, 1, 0.5\bigr\rbrack, \bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: N[MatrixExp[List[List[0, 1, 0, 0], List[0, 0, 1, 0], List[0, 0, 0, 1], List[0, 0, 0, 0]]]]
+  wolfram:
+    in: N[MatrixExp[List[List[0, 1, 0, 0], List[0, 0, 1, 0], List[0, 0, 0, 1], List[0, 0, 0, 0]]]]

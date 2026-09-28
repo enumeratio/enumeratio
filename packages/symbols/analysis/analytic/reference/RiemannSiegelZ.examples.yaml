@@ -9,3 +9,7 @@
   expected: -1.4603545088095868
   category: Properties
   caption: $Z(0) = \zeta(1/2)$
+- id: riemannsiegelz-100
+  expr: [N, [RiemannSiegelZ, 100]]
+  expected: 2.6926970566644637
+  role: test

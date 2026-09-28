@@ -61,3 +61,14 @@
     tex:
       in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\, _1F_0(a;;z)-(-z+1)^{-a}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\, _1F_0\left(\frac{7}{3};;-\frac{11}{5}\right)-\left(-\left(-\frac{11}{5}\right)+1\right)^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\, _1F_0\left(\frac{13}{4};;-\frac{17}{6}\right)-\left(-\left(-\frac{17}{6}\right)+1\right)^{-\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\, _1F_0\left(\frac{19}{8};;-\frac{23}{9}\right)-\left(-\left(-\frac{23}{9}\right)+1\right)^{-\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+2f-1-2-3-5-z-0-3:
+  epsil:
+    in: HypergeometricPFQ([2, 3], [5], 0.3)
+    out: 1.510_911_782_159_569_7
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack5\bigr\rbrack, 0.3)
+    out: 1.510\,911\,782\,159\,569\,7
+  fullform:
+    in: HypergeometricPFQ[List[2, 3], List[5], 0.3]
+  wolfram:
+    in: HypergeometricPFQ[List[2, 3], List[5], 0.3]

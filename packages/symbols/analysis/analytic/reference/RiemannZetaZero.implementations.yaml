@@ -31,3 +31,14 @@ n-riemannzetazero-10:
     in: N[ZetaZero[10]]
   wolfram:
     in: N[ZetaZero[10]]
+n-riemannzetazero-50:
+  epsil:
+    in: N(RiemannZetaZero(50))
+    out: 0.5 + 143.111_845_807_620_63i
+  tex:
+    in: N(\mathrm{RiemannZetaZero}(50))
+    out: 0.5+143.111\,845\,807\,620\,63i
+  fullform:
+    in: N[ZetaZero[50]]
+  wolfram:
+    in: N[ZetaZero[50]]

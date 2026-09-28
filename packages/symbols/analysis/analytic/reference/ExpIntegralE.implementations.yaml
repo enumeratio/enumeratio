@@ -68,3 +68,25 @@ e-0-x-e-x-x:
     tex:
       in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[E_0(x)-\frac{e^{-x}}{x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[E_0\left(\frac{7}{3}\right)-\frac{e^{-\frac{7}{3}}}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[E_0\left(-\frac{11}{5}\right)--\frac{e^{-\left(-\frac{11}{5}\right)}}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[E_0\left(\frac{13}{4}\right)-\frac{e^{-\frac{13}{4}}}{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+e-3-2:
+  epsil:
+    in: N(ExpIntegralE(3, 2))
+    out: 0.030_133_379_797_815_89
+  tex:
+    in: N(\mathrm{ExpIntegralE}(3, 2))
+    out: 0.030\,133\,379\,797\,815\,89
+  fullform:
+    in: N[ExpIntegralE[3, 2]]
+  wolfram:
+    in: N[ExpIntegralE[3, 2]]
+order-1-5-at-3-2:
+  epsil:
+    in: ExpIntegralE(1.5, 3.2)
+    out: 0.009_156_991_428_870_985
+  tex:
+    in: \mathrm{ExpIntegralE}(1.5, 3.2)
+    out: 0.009\,156\,991\,428\,870\,985
+  fullform:
+    in: ExpIntegralE[1.5, 3.2]
+  wolfram:
+    in: ExpIntegralE[1.5, 3.2]

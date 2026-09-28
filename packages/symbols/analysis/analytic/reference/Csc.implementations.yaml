@@ -235,3 +235,69 @@ antiderivative-ln-csc-x-cot-x:
     verdict: inconclusive
     kind: unevaluated
     note: Same as Cot — an antiderivative identity FullSimplify doesn't confirm automatically, and the substitution fallback doesn't settle it either.
+a-huge-24-40-argument:
+  epsil:
+    in: N(Csc(24 ^ 40))
+    out: 2.499_480_403_516_114_245_745_403
+  tex:
+    in: N(\csc(24^{40}))
+    out: 2.499\,480\,403\,516\,114\,245\,75
+  fullform:
+    in: N[Csc[Power[24, 40]]]
+  wolfram:
+    in: N[Csc[Power[24, 40]]]
+a-huge-10-100-argument:
+  epsil:
+    in: N(Csc(10 ^ 100))
+    out: -2.685_456_817_606_348_002_023_834
+  tex:
+    in: N(\csc(10^{100}))
+    out: -2.685\,456\,817\,606\,348\,002\,02
+  fullform:
+    in: N[Csc[Power[10, 100]]]
+  wolfram:
+    in: N[Csc[Power[10, 100]]]
+a-huge-3-200-argument:
+  epsil:
+    in: N(Csc(3 ^ 200))
+    out: -1.065_267_094_773_902_176_582_317
+  tex:
+    in: N(\csc(3^{200}))
+    out: -1.065\,267\,094\,773\,902\,176\,58
+  fullform:
+    in: N[Csc[Power[3, 200]]]
+  wolfram:
+    in: N[Csc[Power[3, 200]]]
+a-huge-neg-7-60-argument:
+  epsil:
+    in: N(Csc(-7 ^ 60))
+    out: 2.738_813_586_755_818_206_167_883
+  tex:
+    in: N(\csc(-7^{60}))
+    out: 2.738\,813\,586\,755\,818\,206\,17
+  fullform:
+    in: N[Csc[Minus[Power[7, 60]]]]
+  wolfram:
+    in: N[Csc[Minus[Power[7, 60]]]]
+a-huge-10-80-plus-1-over-3-argument:
+  epsil:
+    in: N(Csc((10 ^ 80 + 1) / 3))
+    out: 1.014_869_562_853_670_879_001_739
+  tex:
+    in: N(\csc(\frac{10^{80}+1}{3}))
+    out: 1.014\,869\,562\,853\,670\,879
+  fullform:
+    in: N[Csc[Divide[Plus[Power[10, 80], 1], 3]]]
+  wolfram:
+    in: N[Csc[Divide[Plus[Power[10, 80], 1], 3]]]
+csc-5-under-n:
+  epsil:
+    in: N(Csc(5))
+    out: -1.042_835_212_771_405_8
+  tex:
+    in: N(\csc(5))
+    out: -1.042\,835\,212\,771\,405\,8
+  fullform:
+    in: N[Csc[5]]
+  wolfram:
+    in: N[Csc[5]]

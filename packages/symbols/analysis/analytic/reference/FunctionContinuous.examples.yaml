@@ -16,3 +16,43 @@
   expected: True
   category: Scope
   caption: $\sqrt x$ is continuous on its own closed domain boundary $x=0$
+- id: sqrt-not-continuous-everywhere
+  expr: [FunctionContinuous, [Sqrt, x], x]
+  expected: False
+  role: test
+- id: log-not-continuous-everywhere
+  expr: [FunctionContinuous, [Ln, x], x]
+  expected: False
+  role: test
+- id: tangent-has-poles
+  expr: [FunctionContinuous, [Tan, x], x]
+  expected: False
+  role: test
+- id: a-rational-function-with-no-real-poles
+  expr: [FunctionContinuous, [Power, [Add, [Power, x, 2], 1], -1], x]
+  expected: True
+  role: test
+- id: sqrt-of-an-always-positive-quantity
+  expr: [FunctionContinuous, [Sqrt, [Add, [Power, x, 2], 1]], x]
+  expected: True
+  role: test
+- id: reciprocal-restricted-past-its-pole
+  expr: [FunctionContinuous, [Power, x, -1], x, [Greater, x, -1]]
+  expected: False
+  role: test
+- id: sqrt-restricted-past-its-own-domain
+  expr: [FunctionContinuous, [Sqrt, x], x, [Greater, x, -5]]
+  expected: False
+  role: test
+- id: log-restricted-to-its-own-domain
+  expr: [FunctionContinuous, [Ln, x], x, [Greater, x, 0]]
+  expected: True
+  role: test
+- id: log-restricted-includes-its-singular-boundary
+  expr: [FunctionContinuous, [Ln, x], x, [GreaterEqual, x, 0]]
+  expected: False
+  role: test
+- id: reciprocal-restricted-below-its-pole
+  expr: [FunctionContinuous, [Power, x, -1], x, [Less, x, 0]]
+  expected: True
+  role: test
