@@ -1,7 +1,4 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { ellipticEComplex } from "./patches/elliptic-e-complex.ts";
-import { hyperbolicZero } from "./patches/hyperbolic-zero.ts";
-import { numberTheoryLargeIntegers } from "./patches/number-theory-large-integers.ts";
 import { zetaHurwitz } from "./patches/zeta-hurwitz.ts";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { polylogOrder } from "./patches/polylog-order.ts";
@@ -11,16 +8,17 @@ import { barnesGPatch } from "./patches/barnes-g.ts";
 import { logGammaPatch } from "./patches/log-gamma.ts";
 import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
+import { roundPlaces } from "./patches/round-places.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
 export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.ts";
-export { ellipticEComplex } from "./patches/elliptic-e-complex.ts";
-export { hyperbolicZero } from "./patches/hyperbolic-zero.ts";
-export { numberTheoryLargeIntegers } from "./patches/number-theory-large-integers.ts";
 
 // #340 special-function family (design/upstreaming.md §10; @enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
+// The API landed in compute-engine 0.139; the arbitrary-precision N(x, d) path (this
+// patch's remaining job) has not -- see zeta-hurwitz.ts.
+export { roundPlaces } from "./patches/round-places.ts";
 export { zetaHurwitz, evaluateHurwitz, evaluateZeta } from "./patches/zeta-hurwitz.ts";
 export {
   hurwitzZeta,
@@ -161,9 +159,6 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
-  hyperbolicZero,
-  ellipticEComplex,
-  numberTheoryLargeIntegers,
   zetaHurwitz,
   lerchPhiPatch,
   polylogOrder,
@@ -173,6 +168,7 @@ export const PATCHES: readonly Patch[] = [
   logGammaPatch,
   clausenPatch,
   stieltjes,
+  roundPlaces,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

@@ -37,7 +37,7 @@ frobeniussolve-list-12-16-20-27-117:
     out: "[]"
   tex:
     in: \mathrm{FrobeniusSolve}(\bigl\lbrack6, 9, 20\bigr\rbrack, 43)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FrobeniusSolve[List[6, 9, 20], 43]
   wolfram:

@@ -816,7 +816,7 @@ derivative-frac-d-dx-sin-x-cos-x:
     in: D(Sin(x), x)
     out: Cos(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
+    in: \frac{\mathrm{d}\sin(x)}{\mathrm{d}x}
     out: \cos(x)
   fullform:
     in: D[Sin[x], x]
@@ -825,7 +825,7 @@ second-derivative:
     in: D(Sin(x), x, x)
     out: -Sin(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\sin(x)
+    in: \frac{\mathrm{d}\sin(x)}{\mathrm{d}x}
     out: -\sin(x)
   fullform:
     in: D[Sin[x], x, x]

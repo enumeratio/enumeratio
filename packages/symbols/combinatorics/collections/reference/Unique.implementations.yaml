@@ -49,8 +49,8 @@ unique-list:
     in: Unique([])
     out: "[]"
   tex:
-    in: \mathrm{Unique}(\bigl\lbrack \bigr\rbrack)
-    out: \bigl\lbrack \bigr\rbrack
+    in: \mathrm{Unique}(\bigl\lbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: DeleteDuplicates[List[]]
   wolfram:

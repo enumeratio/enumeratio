@@ -473,7 +473,7 @@ derivative-1-x:
     in: D(Ln(x), x)
     out: 1 / x
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\ln(x)
+    in: \frac{\mathrm{d}\ln(x)}{\mathrm{d}x}
     out: \frac{1}{x}
   fullform:
     in: D[Log[x], x]

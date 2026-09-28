@@ -185,7 +185,7 @@ derivative-in-base-3-frac-1-x-ln-3:
     in: D(Log(x, 3), x)
     out: 1 / (x * Ln(3))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\log_{3}(x)
+    in: \frac{\mathrm{d}\log_{3}(x)}{\mathrm{d}x}
     out: \frac{1}{x\ln(3)}
   fullform:
     in: D[Log[3, x], x]

@@ -234,7 +234,7 @@ derivative-csc-2-x:
     in: D(Cot(x), x)
     out: -Csc(x) ^ 2
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\cot(x)
+    in: \frac{\mathrm{d}\cot(x)}{\mathrm{d}x}
     out: -\csc(x)^2
   fullform:
     in: D[Cot[x], x]

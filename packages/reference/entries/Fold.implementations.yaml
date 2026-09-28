@@ -81,7 +81,7 @@ folding-an-empty-list-returns-the-seed:
     in: Fold(f, x, [])
     out: x
   tex:
-    in: \mathrm{Fold}(f, x, \bigl\lbrack \bigr\rbrack)
+    in: \mathrm{Fold}(f, x, \bigl\lbrack\bigr\rbrack)
     out: x
   fullform:
     in: Fold[f, x, List[]]

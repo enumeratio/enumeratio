@@ -13,7 +13,7 @@ the-empty-list-when-the-value-isn-t-found:
     out: "[]"
   tex:
     in: \mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, c\bigr\rbrack\bigr\rbrack, b)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FirstPosition[List[a, List[a, c]], b]
 a-match-nested-inside-an-earlier-sublist-beats-a:

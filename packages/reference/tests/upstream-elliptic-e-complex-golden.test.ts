@@ -1,16 +1,14 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { applyPatch, ellipticEComplex } from "@enumeratio/for-compute-engine/src";
 
 // The full oracle comparison for EllipticE(m) at a complex modulus -- golden values gathered
 // from mpmath (ellipe) and a Wolfram kernel by @enumeratio/analytic's
 // scripts/collect-elliptic-goldens.ts, moved here with the patch (design/upstreaming.md
-// §10). compute-engine 0.139 has already shipped this fix, so ellipticEComplex is retired
-// as soon as this package's peer range moves past ^0.134.0.
+// §10). compute-engine 0.139 shipped this fix natively, so the for-compute-engine
+// elliptic-e-complex patch was retired -- this now checks native EllipticE directly.
 
 const ce = new ComputeEngine();
-applyPatch(ce, ellipticEComplex);
 
 interface GoldenCase {
   head: string;

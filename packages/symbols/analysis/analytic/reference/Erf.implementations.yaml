@@ -263,8 +263,8 @@ frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the:
     in: D(Erf(x), x)
     out: 2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{erf}(x)
-    out: \frac{2}{e^{x^2}}/\sqrt{\pi}
+    in: \frac{\mathrm{d}\operatorname{erf}(x)}{\mathrm{d}x}
+    out: (\frac{2}{e^{x^2}})/\sqrt{\pi}
   fullform:
     in: D[Erf[x], x]
 to-40-significant-digits-every-one-correctly:

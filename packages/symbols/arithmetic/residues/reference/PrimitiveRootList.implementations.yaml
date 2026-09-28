@@ -81,7 +81,7 @@ z-12-times-cong-c-2-times-c-2-is-not-cyclic:
     out: "[]"
   tex:
     in: \mathrm{PrimitiveRootList}(12)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PrimitiveRootList[12]
   wolfram:
@@ -164,7 +164,7 @@ z-8-times-cong-c-2-times-c-2-is-not-cyclic:
     out: "[]"
   tex:
     in: \mathrm{PrimitiveRootList}(8)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PrimitiveRootList[8]
   wolfram:

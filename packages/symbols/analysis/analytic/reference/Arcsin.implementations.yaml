@@ -246,7 +246,7 @@ derivative-frac-1-sqrt-1-x-2:
     in: D(Arcsin(x), x)
     out: 1 / Sqrt(-x ^ 2 + 1)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\arcsin(x)
+    in: \frac{\mathrm{d}\arcsin(x)}{\mathrm{d}x}
     out: \frac{1}{\sqrt{1-x^2}}
   fullform:
     in: D[ArcSin[x], x]

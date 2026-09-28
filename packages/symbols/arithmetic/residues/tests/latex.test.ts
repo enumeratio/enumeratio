@@ -32,7 +32,10 @@ test("IntegerMod and IntegerModRing write what reads back", () => {
     expect(parse(latex(expr)), latex(expr)).toEqual(expr);
   }
   expect(latex(["IntegerMod", 2, 5])).toBe("2\\pmod{5}");
-  expect(latex(["Power", ["IntegerMod", 3, 7], "k"])).toBe("\\left(3\\pmod{7}\\right)^{k}");
+  // compute-engine #345 (design/upstreaming.md §10): `wrapPowerBase` only fences a
+  // Power/Square base under a power when it ends with a superscript now, so a plain,
+  // non-power base like IntegerMod gets bare parens, matching Add's below.
+  expect(latex(["Power", ["IntegerMod", 3, 7], "k"])).toBe("(3\\pmod{7})^{k}");
   expect(latex(["Power", ["Add", "x", 1], 2])).toBe("(x+1)^2");
   expect(latex(["IntegerModRing", 6])).toBe("\\mathbb{Z}/6\\mathbb{Z}");
   expect(ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate().json).toEqual(["IntegerModRing", 6]);

@@ -22,7 +22,7 @@ a-rational-function-s-irrational-point:
     out: "[-Sqrt(2) / (1 + (1 - Sqrt(2)) ^ 2), [Rule(x, 1 - Sqrt(2))]]"
   tex:
     in: \mathrm{Minimize}(\frac{x-1}{x^2+1}, x)
-    out: \bigl\lbrack-(\sqrt{2})(1+{(1-2^{1/2})}^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack-(\sqrt{2})(1+(1-2^{1/2})^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
   fullform:
     in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
 a-simple-interval-constraint:

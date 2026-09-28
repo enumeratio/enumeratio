@@ -604,7 +604,7 @@ derivative-sin-x:
     in: D(Cos(x), x)
     out: -Sin(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\cos(x)
+    in: \frac{\mathrm{d}\cos(x)}{\mathrm{d}x}
     out: -\sin(x)
   fullform:
     in: D[Cos[x], x]
@@ -727,7 +727,7 @@ to-1-significant-digit:
     out: "0.540302305868139717400936607443"
     verdict: disagree
     kind: precision
-    note: "The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit."
+    note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   mpmath:
     in: (cos(1))
     out: "0.540302305868139717400936607443"

@@ -37,7 +37,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "00cdb7",
     heads: ["Artanh", "CarlsonRC"],
     verdict: "disagree",
-    detail: "at _x = 1.17, _y = 1.17: 0.5761719383305023 vs 0.5761719383305024 (relative gap 1.0e+0)",
+    detail: "at _x = 1.17, _y = 1.17: 0.5761719383305024 vs 0.5761719383305024 (relative gap 1.0e+0)",
   },
   {
     entry: "00e608",
@@ -74,6 +74,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["PolyGamma", "Zeta"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "03e2a6",
+    heads: ["Coth", "Digamma", "Imaginary"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "03ee0b",
@@ -646,6 +652,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "22a9cd",
+    heads: ["Coth", "Digamma", "Imaginary"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "22dc6e",
     heads: ["Fibonacci"],
     verdict: "agree",
@@ -1066,6 +1078,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "3ac0ce",
+    heads: ["Coth", "Digamma", "Imaginary"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
     entry: "3aed02",
     heads: ["IncompleteEllipticE"],
     verdict: "agree",
@@ -1248,8 +1266,8 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "42eb01",
     heads: ["ChebyshevT", "ChebyshevU"],
-    verdict: "disagree",
-    detail: 'at _x = ["Complex",0.5700000000000001,0.23], _n = 1: -0.456 vs 1 (relative gap 1.5e+0)',
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "4366b2",
@@ -1308,9 +1326,8 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "48333c",
     heads: ["CarlsonRG", "EllipticE", "EllipticK", "Imaginary", "Real"],
-    verdict: "disagree",
-    detail:
-      'at _x = ["Complex",0.5700000000000001,0.23], _c = 0.17: 0.33756511460500216 vs 0.3385103774909951 (relative gap 1.0e-3)',
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "483e7e",
@@ -1387,9 +1404,8 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "4c7aeb",
     heads: ["ChebyshevU", "Cos", "Sin"],
-    verdict: "disagree",
-    detail:
-      'at _x = ["Complex",0.5700000000000001,0.23], _n = 1: 1.0064740744747467 vs 0.5539683488008468 (relative gap 4.5e-1)',
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "4c882a",
@@ -1753,9 +1769,9 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   },
   {
     entry: "5f09f4",
-    heads: ["ChebyshevT", "ChebyshevU"],
-    verdict: "disagree",
-    detail: 'at _n = 1, _x = ["Complex",0.5700000000000001,0.23]: 0.544 vs 0.0880000000000003 (relative gap 6.9e-1)',
+    heads: ["ChebyshevU"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "5f84d9",
@@ -2100,6 +2116,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "6f3fec",
+    heads: ["Digamma", "Imaginary", "Tanh"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "6f63dd",
     heads: [],
     verdict: "agree",
@@ -2354,6 +2376,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "7ef2c7",
     heads: ["Fibonacci"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "7f355d",
+    heads: ["Erf", "Erfc"],
     verdict: "agree",
     samples: 3,
   },
@@ -3120,6 +3148,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "aa47cd",
+    heads: ["Conjugate", "Digamma"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "aaa244",
     heads: ["Fibonacci", "GCD"],
     verdict: "agree",
@@ -3530,6 +3564,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "be9a45",
     heads: ["ChebyshevU"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "bfc86e",
+    heads: ["Erf", "Erfc"],
     verdict: "agree",
     samples: 3,
   },
@@ -4272,6 +4312,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "ec0205",
+    heads: ["Erfc"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "ec7f2d",
     heads: ["Arccos", "Arctan", "Csgn"],
     verdict: "agree",
@@ -4840,11 +4886,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Digamma",
-    identities: 7,
-    declared: true,
-  },
-  {
     head: "Totient",
     identities: 7,
     declared: true,
@@ -4900,17 +4941,7 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Conjugate",
-    identities: 4,
-    declared: true,
-  },
-  {
     head: "EllipticPi",
-    identities: 4,
-    declared: true,
-  },
-  {
-    head: "Erf",
     identities: 4,
     declared: true,
   },
@@ -4921,11 +4952,6 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "HypergeometricUStar",
-    identities: 4,
-    declared: true,
-  },
-  {
-    head: "Imaginary",
     identities: 4,
     declared: true,
   },
@@ -4950,17 +4976,12 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Coth",
+    head: "Conjugate",
     identities: 3,
     declared: true,
   },
   {
     head: "Divides",
-    identities: 3,
-    declared: true,
-  },
-  {
-    head: "Erfc",
     identities: 3,
     declared: true,
   },
@@ -5025,7 +5046,17 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
+    head: "Digamma",
+    identities: 2,
+    declared: true,
+  },
+  {
     head: "EisensteinG",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "Erf",
     identities: 2,
     declared: true,
   },
@@ -5181,11 +5212,6 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Stirling",
-    identities: 1,
-    declared: true,
-  },
-  {
-    head: "Tanh",
     identities: 1,
     declared: true,
   },

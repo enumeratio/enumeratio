@@ -1079,7 +1079,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "42eb01",
       "4b83c6",
       "5bd0ec",
-      "5f09f4",
       "6582c4",
       "6a24ab",
       "7b2c26",

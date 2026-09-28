@@ -228,10 +228,10 @@ partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the:
     in: D(Beta(a, b), a)
     out: (Digamma(a) - Digamma(a + b)) * Beta(a, b)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}a}\mathrm{B}(a, b)
+    in: \frac{\mathrm{d}\mathrm{B}(a, b)}{\mathrm{d}a}
     out: (\mathrm{Digamma}(a)-\mathrm{Digamma}(a+b))\mathrm{B}(a, b)
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}a}\mathrm{B}(a, b)
+    in: \frac{\mathrm{d}\mathrm{B}(a, b)}{\mathrm{d}a}
     out: (\psi(a)-\psi(a+b))\mathrm{B}(a, b)
   fullform:
     in: D[Beta[a, b], a]

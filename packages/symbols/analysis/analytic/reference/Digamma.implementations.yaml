@@ -256,10 +256,10 @@ psi-x-is-the-trigamma-psi-1-x:
     in: D(Digamma(x), x)
     out: Trigamma(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Digamma}(x)
+    in: \frac{\mathrm{d}\mathrm{Digamma}(x)}{\mathrm{d}x}
     out: \mathrm{Trigamma}(x)
   traditional:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\psi(x)
+    in: \frac{\mathrm{d}\psi(x)}{\mathrm{d}x}
     out: \mathrm{Trigamma}(x)
   fullform:
     in: D[PolyGamma[x], x]

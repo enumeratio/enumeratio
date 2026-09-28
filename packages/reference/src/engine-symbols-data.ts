@@ -157,12 +157,18 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Append",
     kind: "operator",
     description: "Add one or more elements to the end of a collection.",
-    signature: "(collection<any>, value+) -> collection",
+    signature: "(collection<any>, (missing | value)+) -> collection",
   },
   {
     name: "Apply",
     kind: "operator",
     description: "Apply a function to a list of arguments",
+    signature: "(name: any, arguments: any*) -> unknown",
+  },
+  {
+    name: "ApplyWhole",
+    kind: "operator",
+    description: "Apply a function to arguments, each bound whole (engine-internal).",
     signature: "(name: any, arguments: any*) -> unknown",
   },
   {
@@ -622,6 +628,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
   },
   {
+    name: "Closed",
+    kind: "operator",
+    description:
+      "Closed(x): the endpoint x of an Interval, marked as included. A marker with no value of its own; Interval normalizes it away.",
+    signature: "(number) -> number",
+  },
+  {
     name: "Coalesce",
     kind: "operator",
     description:
@@ -735,7 +748,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Comprehension",
     kind: "operator",
     description:
-      "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into an indexed collection (a `List`). Later clauses see earlier bindings; independent clauses produce a Cartesian product.",
+      "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into an indexed collection (a `List`). Later clauses see earlier bindings; independent clauses produce a Cartesian product. A clause with a third operand, `Element(x, xs, cond)`, is a guard: only the elements for which `cond` evaluates to `True` are visited.",
     signature: "(body: expression, iterators: expression+) -> indexed_collection",
   },
   {
@@ -774,7 +787,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Contains",
     kind: "operator",
     description:
-      "Return True if the collection contains the given element (structural identity, like `===`), False otherwise.\n\nEquivalent to `Any(xs, (e) => e === v)`; use `Any` to test an arbitrary predicate instead of a specific value.",
+      "Return True if the collection contains the given element (structural identity, like `===`), False otherwise. An absent element is found where the same marker sits: `Contains([1, NaN], NaN)` is True.\n\nEquivalent to `Any(xs, (e) => e === v)`; use `Any` to test an arbitrary predicate instead of a specific value.",
     signature: "(collection<any>, element: any) -> boolean",
   },
   {
@@ -1739,6 +1752,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(number, number, number, number?) -> color",
   },
   {
+    name: "HurwitzZeta",
+    kind: "operator",
+    description: "Hurwitz zeta function ζ(s,a) = Σ_{n=0}^∞ (n+a)^{-s}",
+    signature: "(complex | infinity, complex | infinity, integer?) -> number",
+    wikidata: "Q1638777",
+  },
+  {
     name: "Hypergeometric1F1",
     kind: "operator",
     description: "Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).",
@@ -1820,7 +1840,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "IndexOf",
     kind: "operator",
-    description: "Return the 1-based index of the first occurrence of value in collection, or 0 if not found.",
+    description:
+      "Return the 1-based index of the first occurrence of value in collection, or 0 if not found. The comparison is structural, so an absent value is found where the same marker sits: `IndexOf([1, NaN], NaN)` is 2.",
     signature: "(collection<any>, any) -> integer",
   },
   {
@@ -1886,7 +1907,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Integrate",
     kind: "operator",
     description: "Symbolic integral with optional bounds.",
-    signature: "(function, limits+) -> number",
+    signature: "(function, limits+) -> list<number> | number",
     wikidata: "Q80091",
     keywords: ["antiderivative", "primitive", "integral", "definite integral"],
   },
@@ -2241,7 +2262,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Length",
     kind: "operator",
     description:
-      "Number of elements in a collection. Returns +oo for an unbounded Range, an `incompatible-type` error for an operand that is decidably not a collection, and stays unevaluated for an infinite collection whose length is not decided.",
+      "Number of elements in a collection. Returns +oo for an unbounded Range, an `incompatible-type` error for an operand that is decidably not a collection, `NaN` for an absent operand (`Missing`), and stays unevaluated for an infinite collection whose length is not decided.",
     signature: "(any) -> infinity | integer",
     keywords: ["size"],
   },
@@ -2515,7 +2536,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "ModularInverse",
     kind: "operator",
     description:
-      "Return the modular multiplicative inverse of `a` modulo `m`: the integer `x` in [0, m) with `a·x ≡ 1 (mod m)`. Undefined when `a` and `m` are not coprime.",
+      "Return the modular multiplicative inverse of `a` modulo `m`: the integer `x` with `a·x ≡ 1 (mod m)`. The sign of `x` follows the sign of `m` (the same floored-division convention as `Mod`). Undefined when `a` and `m` are not coprime.",
     signature: "(integer, integer) -> integer",
   },
   {
@@ -2897,6 +2918,12 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Matrix filled with ones.",
     signature: "(integer, integer?) -> matrix",
+  },
+  {
+    name: "Open",
+    kind: "operator",
+    description: "Open(x): the endpoint x of an Interval, marked as excluded. A marker with no value of its own.",
+    signature: "(number) -> number",
   },
   {
     name: "Or",
@@ -4394,7 +4421,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "When",
     kind: "operator",
     description:
-      'Conditional/restriction value. `When(e, cond)` evaluates to:\n  - `e` when `cond` evaluates to `True`\n  - `Missing` when `cond` evaluates to `False` (the "masking rule": the position-preserving absent datum, the same answer a selection with no selected branch gives; consumers like 2D plotters skip masked points)\n  - `When(e, cond_simplified)` when `cond` is indeterminate (holds)\nStacked restrictions canonicalize: `When(When(e, c1), c2)` → `When(e, And(c1, c2))`.\nCompiles to ternary `(cond) ? (e) : NaN` in JS and GLSL.',
+      'Conditional/restriction value. `When(e, cond)` evaluates to:\n  - `e` when `cond` evaluates to `True`\n  - the absence marker of the type of `e` when `cond` evaluates to `False` (the "masking rule"): `NaN` for a number, `Missing` — the position-preserving absent datum, the answer a selection with no selected branch gives — for a point, a list, a string or a value not provably numeric; consumers like 2D plotters skip masked points\n  - `When(e, cond_simplified)` when `cond` is indeterminate (holds)\nStacked restrictions canonicalize: `When(When(e, c1), c2)` → `When(e, And(c1, c2))`.\nCompiles to ternary `(cond) ? (e) : NaN` in JS and GLSL.',
     signature: "(expression, boolean) -> any",
   },
   {
@@ -4445,8 +4472,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Zeta",
     kind: "operator",
-    description: "Riemann zeta function",
-    signature: "(complex | infinity) -> number",
+    description: "Riemann zeta function; with two arguments, the Hurwitz zeta function ζ(s,a) = Σ_{n=0}^∞ (n+a)^{-s}.",
+    signature: "(complex | infinity, (complex | infinity)?) -> number",
     wikidata: "Q187235",
   },
   {

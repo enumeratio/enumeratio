@@ -40,7 +40,7 @@
     "@enumeratio/statistics": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.134.0",
+    "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/domains": "workspace:*",
     "mermaid": "catalog:",
     "vitepress": "^1.6.4",

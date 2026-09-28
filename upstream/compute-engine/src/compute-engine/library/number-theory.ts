@@ -1,10 +1,7 @@
 // The number-theory heads offered upstream (design/upstreaming.md §10): the Dirichlet
-// family (DirichletEta, DirichletBeta, DirichletCharacter, DirichletL) and ModularInverse's
-// negative-modulus widening. A pull request for the Dirichlet record adds it to
-// compute-engine's own library/number-theory.ts; ModularInverse's widening is an edit to
-// the native definition already there.
+// family (DirichletEta, DirichletBeta, DirichletCharacter, DirichletL). A pull request for
+// the Dirichlet record adds it to compute-engine's own library/number-theory.ts.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import type { EvalOptions } from "../../support/box.ts";
 import { isFiniteNum, isRealInt, numberResult, wantsNumber } from "../../support/box.ts";
 import { atEnginePrecision } from "../../support/precise.ts";
@@ -12,7 +9,6 @@ import { cx } from "../numerics/complex-arithmetic.ts";
 import { bernoulliPolyExpr } from "../numerics/bernoulli-rational.ts";
 import { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "../numerics/dirichlet.ts";
 import { character, characterExponent, dirichletL, dirichletLReal, eulerPhi } from "../numerics/dirichlet-l.ts";
-import { inverseModSigned } from "../numerics/modular-inverse.ts";
 import type { LibraryRecord } from "../../patch.ts";
 
 type Json = number | string | { num: string } | Json[];
@@ -226,35 +222,10 @@ export const dirichletLibrary: LibraryRecord = {
   },
 };
 
-// --- ModularInverse, negative modulus -------------------------------------------------
-// cortex-js/compute-engine#339, PR #347. Only the sign-taking convention lives here. The
-// FactorInteger, Divisors and MultiplicativeOrder wrappers run on residues' factoriser,
-// which other residues heads share, so they stay in number-theory and residues.
-
-export const modularInverseRepro = { a: 3, m: -7, answer: -2n };
-
-/** Widens ModularInverse to a negative modulus -- upstream an edit to the native
- * definition (library/number-theory.ts). Uses `wrapOperator`/`widenSignature`, which have
- * no record form, so the mutation happens here; the returned record is bookkeeping only. */
-export function modularInverseLibrary(ce: ComputeEngine): LibraryRecord {
-  widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
-  wrapOperator(
-    ce,
-    ["ModularInverse", 1, 1],
-    (ops) => {
-      const m = bigIntegerAt(ops[1]);
-      return m !== undefined && m < 0n && bigIntegerAt(ops[0]) !== undefined;
-    },
-    () => (ops) => {
-      const a = bigIntegerAt(ops[0])!;
-      const m = bigIntegerAt(ops[1])!;
-      const inverse = inverseModSigned(a, m);
-      return inverse === undefined ? undefined : ce.number(inverse);
-    },
-    2,
-  );
-  return { ModularInverse: true };
-}
+// ModularInverse's negative-modulus widening (cortex-js/compute-engine#339, PR #347)
+// landed in compute-engine 0.139 -- retired from here. The FactorInteger, Divisors and
+// MultiplicativeOrder wrappers run on residues' factoriser, which other residues heads
+// share, so they stay in number-theory and residues.
 
 export {
   dirichletEta,

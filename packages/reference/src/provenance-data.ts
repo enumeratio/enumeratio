@@ -173,7 +173,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "N",
-    provenance: "override",
+    provenance: "compute-engine",
     declared: null,
     wolframAlias: "N",
     elsewhere: ["wolfram", "sympy"],
@@ -1097,7 +1097,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Fold",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Fold",
     elsewhere: ["wolfram"],
@@ -8461,7 +8461,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "HurwitzZeta",
-    provenance: "extension",
+    provenance: "override",
     declared: "enumeratio-analytic",
     wolframAlias: "HurwitzZeta",
     elsewhere: ["wolfram"],

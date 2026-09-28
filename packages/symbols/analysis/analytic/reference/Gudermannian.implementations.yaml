@@ -69,7 +69,7 @@ gd-x-sech-x:
     in: D(Gudermannian(x), x)
     out: Sech(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Gudermannian}(x)
+    in: \frac{\mathrm{d}\mathrm{Gudermannian}(x)}{\mathrm{d}x}
     out: \mathrm{sech}(x)
   fullform:
     in: D[Gudermannian[x], x]

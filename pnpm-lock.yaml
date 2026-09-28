@@ -156,8 +156,8 @@ importers:
         version: link:../oracle
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4
@@ -174,8 +174,8 @@ importers:
   packages/boxed:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -189,8 +189,8 @@ importers:
   packages/boxes:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -208,8 +208,8 @@ importers:
         version: link:../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/collections':
         specifier: workspace:*
         version: link:../symbols/combinatorics/collections
@@ -226,8 +226,8 @@ importers:
   packages/census:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
@@ -322,8 +322,8 @@ importers:
   packages/cli:
     dependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/collections':
         specifier: workspace:*
         version: link:../symbols/combinatorics/collections
@@ -400,8 +400,8 @@ importers:
         version: link:../wolfram
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -431,8 +431,8 @@ importers:
         version: link:../symbols/combinatorics/polytope
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
@@ -516,8 +516,8 @@ importers:
         version: 0.110.0
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@webgpu/types':
         specifier: ^0.1.60
         version: 0.1.72
@@ -538,8 +538,8 @@ importers:
         version: link:../wolfram
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -590,8 +590,8 @@ importers:
   packages/reference:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
@@ -686,8 +686,8 @@ importers:
   packages/symbols/algebras/algebra:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -708,8 +708,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -733,8 +733,8 @@ importers:
         version: link:../hypercomplex
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -755,8 +755,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -780,8 +780,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -805,8 +805,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -830,8 +830,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -852,8 +852,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -877,8 +877,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
@@ -902,8 +902,8 @@ importers:
         version: link:../../../../upstream/compute-engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
@@ -933,8 +933,8 @@ importers:
         version: link:../residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -961,8 +961,8 @@ importers:
         version: link:../residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
@@ -986,8 +986,8 @@ importers:
         version: link:../residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
@@ -1008,8 +1008,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1033,8 +1033,8 @@ importers:
         version: link:../../arithmetic/residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry
@@ -1058,8 +1058,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/catalog':
         specifier: workspace:*
         version: link:../../../catalog
@@ -1092,8 +1092,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1111,8 +1111,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/catalog':
         specifier: workspace:*
         version: link:../../../catalog
@@ -1139,8 +1139,8 @@ importers:
         version: link:../../../boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4
@@ -1167,8 +1167,8 @@ importers:
         version: link:../../algebras/diagram
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../modular
@@ -1195,8 +1195,8 @@ importers:
         version: link:../../arithmetic/residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
@@ -1262,8 +1262,8 @@ importers:
         version: link:../../packages/boxed
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../packages/oracle
@@ -1356,8 +1356,8 @@ importers:
         version: link:../packages/symbols/combinatorics/statistics
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       mermaid:
         specifier: 'catalog:'
         version: 11.17.2
@@ -1495,8 +1495,8 @@ packages:
   '@chevrotain/types@11.1.2':
     resolution: {integrity: sha512-U+HFai5+zmJCkK86QsaJtoITlboZHBqrVketcO2ROv865xfCMSFpELQoz1GkX5GzME8pTa+3kbKrZHQtI0gdbw==}
 
-  '@cortex-js/compute-engine@0.134.0':
-    resolution: {integrity: sha512-Ct2DN7oJryYORF3cB+8yFgENmdhp4hW8bE00J+DcSxEYpLy6jVbNRTK03qCEc7RxMZOI8iP2wP/CX0hxJwe7XA==}
+  '@cortex-js/compute-engine@0.139.0':
+    resolution: {integrity: sha512-/bwQMSl647Zrvo1acmnIPWAIu04K7xb0ApiuhmVVehtFFkLBlBmcR2vEuFbl7B32qX1leLlKYrIgHy7Vtu/d+A==}
     engines: {node: '>=22.3.0', npm: '>=10.5.0'}
     hasBin: true
 
@@ -4376,7 +4376,7 @@ snapshots:
 
   '@chevrotain/types@11.1.2': {}
 
-  '@cortex-js/compute-engine@0.134.0':
+  '@cortex-js/compute-engine@0.139.0':
     dependencies:
       '@arnog/colors': 0.7.0
       complex-esm: 2.1.1-esm1

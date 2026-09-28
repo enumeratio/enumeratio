@@ -69,7 +69,7 @@ derivative-for-real-x-ne-0:
     in: D(Arcsch(x), x)
     out: -1 / (Abs(x) * Sqrt(x ^ 2 + 1))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arcsch}(x)
+    in: \frac{\mathrm{d}\mathrm{arcsch}(x)}{\mathrm{d}x}
     out: -(\vert x\vert\sqrt{x^2+1})^{-1}
   fullform:
     in: D[ArcCsch[x], x]

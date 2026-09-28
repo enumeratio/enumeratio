@@ -15,7 +15,7 @@ nothing-sown-gives-an-empty-group-list:
     out: "[5, []]"
   tex:
     in: \mathrm{Reap}(5)
-    out: \bigl\lbrack5, \bigl\lbrack \bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack5, \bigl\lbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: Reap[5]
   wolfram:
