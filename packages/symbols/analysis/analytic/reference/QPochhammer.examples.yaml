@@ -16,3 +16,19 @@
   expected: 0.2887880950866024
   category: Scope
   caption: The infinite product, Euler's function at $q = \tfrac12$
+- id: qpochhammer-2-3-3
+  expr: [N, [QPochhammer, 2, 3, 3]]
+  expected: -85
+  role: test
+- id: qpochhammer-1-2-1-2-3
+  expr: [N, [QPochhammer, [Rational, 1, 2], [Rational, 1, 2], 3]]
+  expected: 0.328125
+  role: test
+- id: qpochhammer-3-2-4
+  expr: [N, [QPochhammer, 3, 2, 4]]
+  expected: 2530
+  role: test
+- id: qpochhammer-1-3-2
+  expr: [N, [QPochhammer, -1, 3, 2]]
+  expected: 8
+  role: test

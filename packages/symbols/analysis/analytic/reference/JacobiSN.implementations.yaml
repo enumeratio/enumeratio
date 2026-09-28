@@ -113,3 +113,256 @@ a-genuinely-complex-m-is-declined:
     in: N[JacobiSN[0.3, Complex[0.5, 0.2]]]
   wolfram:
     in: N[JacobiSN[0.3, Complex[0.5, 0.2]]]
+sn-1-1-0-9:
+  epsil:
+    in: N(JacobiSN(1.1, 0.9))
+    out: 0.810_538_459_859_418
+  tex:
+    in: N(\mathrm{JacobiSN}(1.1, 0.9))
+    out: 0.810\,538\,459\,859\,418
+  fullform:
+    in: N[JacobiSN[1.1, 0.9]]
+  wolfram:
+    in: N[JacobiSN[1.1, 0.9]]
+sn-0-7-0-2:
+  epsil:
+    in: N(JacobiSN(-0.7, 0.2))
+    out: -0.636_280_625_636_431_3
+  tex:
+    in: N(\mathrm{JacobiSN}(-0.7, 0.2))
+    out: -0.636\,280\,625\,636\,431\,3
+  fullform:
+    in: N[JacobiSN[-0.7, 0.2]]
+  wolfram:
+    in: N[JacobiSN[-0.7, 0.2]]
+sn-0-3-0:
+  epsil:
+    in: N(JacobiSN(0.3, 0))
+    out: 0.295_520_206_661_339_575_105_320_745_685_027_373_677_8
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, 0))
+    out: 0.295\,520\,206\,661\,339\,575\,105
+  fullform:
+    in: N[JacobiSN[0.3, 0]]
+  wolfram:
+    in: N[JacobiSN[0.3, 0]]
+sn-0-3-1:
+  epsil:
+    in: N(JacobiSN(0.3, 1))
+    out: 0.291_312_612_451_590_905_818_221_272_823_765_928_153_6
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3, 1))
+    out: 0.291\,312\,612\,451\,590\,905\,818
+  fullform:
+    in: N[JacobiSN[0.3, 1]]
+  wolfram:
+    in: N[JacobiSN[0.3, 1]]
+sn-1-2-3:
+  epsil:
+    in: N(JacobiSN(1.2, 3))
+    out: 0.554_360_493_899_046_5
+  tex:
+    in: N(\mathrm{JacobiSN}(1.2, 3))
+    out: 0.554\,360\,493\,899\,046\,5
+  fullform:
+    in: N[JacobiSN[1.2, 3]]
+  wolfram:
+    in: N[JacobiSN[1.2, 3]]
+sn-0-9-0-5:
+  epsil:
+    in: N(JacobiSN(0.9, -0.5))
+    out: 0.814_586_677_357_013_4
+  tex:
+    in: N(\mathrm{JacobiSN}(0.9, -0.5))
+    out: 0.814\,586\,677\,357\,013\,4
+  fullform:
+    in: N[JacobiSN[0.9, -0.5]]
+  wolfram:
+    in: N[JacobiSN[0.9, -0.5]]
+sn-0-4-0-5i-0-3:
+  epsil:
+    in: N(JacobiSN(0.4 + 0.5i, 0.3))
+    out: 0.449_566_590_595_548_43 + 0.470_515_774_421_122i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.4+0.5i, 0.3))
+    out: 0.449\,566\,590\,595\,548\,43+0.470\,515\,774\,421\,122i
+  fullform:
+    in: N[JacobiSN[Complex[0.4, 0.5], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.4, 0.5], 0.3]]
+sn-0-4-0-5i-0-3-2:
+  epsil:
+    in: N(JacobiSN(0.4 - 0.5i, 0.3))
+    out: 0.449_566_590_595_548_43 - 0.470_515_774_421_122i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.4-0.5i, 0.3))
+    out: 0.449\,566\,590\,595\,548\,43-0.470\,515\,774\,421\,122i
+  fullform:
+    in: N[JacobiSN[Complex[0.4, -0.5], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.4, -0.5], 0.3]]
+sn-0-4-0-5i-0-3-3:
+  epsil:
+    in: N(JacobiSN(-0.4 + 0.5i, 0.3))
+    out: -0.449_566_590_595_548_43 + 0.470_515_774_421_122i
+  tex:
+    in: N(\mathrm{JacobiSN}(-0.4+0.5i, 0.3))
+    out: -0.449\,566\,590\,595\,548\,43+0.470\,515\,774\,421\,122i
+  fullform:
+    in: N[JacobiSN[Complex[-0.4, 0.5], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[-0.4, 0.5], 0.3]]
+sn-0-4-0-5i-0-3-4:
+  epsil:
+    in: N(JacobiSN(-0.4 - 0.5i, 0.3))
+    out: -0.449_566_590_595_548_43 - 0.470_515_774_421_122i
+  tex:
+    in: N(\mathrm{JacobiSN}(-0.4-0.5i, 0.3))
+    out: -0.449\,566\,590\,595\,548\,43-0.470\,515\,774\,421\,122i
+  fullform:
+    in: N[JacobiSN[Complex[-0.4, -0.5], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[-0.4, -0.5], 0.3]]
+sn-1-1-0-7i-0-3:
+  epsil:
+    in: N(JacobiSN(1.1 - 0.7i, 0.3))
+    out: 1.051_959_751_164_200_5 - 0.302_319_997_271_350_95i
+  tex:
+    in: N(\mathrm{JacobiSN}(1.1-0.7i, 0.3))
+    out: 1.051\,959\,751\,164\,200\,5-0.302\,319\,997\,271\,350\,95i
+  fullform:
+    in: N[JacobiSN[Complex[1.1, -0.7], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[1.1, -0.7], 0.3]]
+sn-1-1i-0-3:
+  epsil:
+    in: N(JacobiSN(1 + i, 0.3))
+    out: 1.219_336_969_173_077_8 + 0.492_989_335_294_582_7i
+  tex:
+    in: N(\mathrm{JacobiSN}(1+i, 0.3))
+    out: 1.219\,336\,969\,173\,077\,8+0.492\,989\,335\,294\,582\,7i
+  fullform:
+    in: N[JacobiSN[Complex[1, 1], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[1, 1], 0.3]]
+sn-0-2-8i-0-4:
+  epsil:
+    in: N(JacobiSN(0.2 + 8i, 0.4))
+    out: 0.203_756_876_678_282_27 + 0.197_922_427_682_555_86i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.2+8i, 0.4))
+    out: 0.203\,756\,876\,678\,282\,27+0.197\,922\,427\,682\,555\,86i
+  fullform:
+    in: N[JacobiSN[Complex[0.2, 8], 0.4]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.2, 8], 0.4]]
+sn-0-2-8i-0-4-2:
+  epsil:
+    in: N(JacobiSN(0.2 - 8i, 0.4))
+    out: 0.203_756_876_678_282_27 - 0.197_922_427_682_555_86i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.2-8i, 0.4))
+    out: 0.203\,756\,876\,678\,282\,27-0.197\,922\,427\,682\,555\,86i
+  fullform:
+    in: N[JacobiSN[Complex[0.2, -8], 0.4]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.2, -8], 0.4]]
+sn-5-4i-0-6:
+  epsil:
+    in: N(JacobiSN(5 + 4i, 0.6))
+    out: -0.903_096_725_220_301_2 - 0.177_211_435_530_960_1i
+  tex:
+    in: N(\mathrm{JacobiSN}(5+4i, 0.6))
+    out: -0.903\,096\,725\,220\,301\,2-0.177\,211\,435\,530\,960\,1i
+  fullform:
+    in: N[JacobiSN[Complex[5, 4], 0.6]]
+  wolfram:
+    in: N[JacobiSN[Complex[5, 4], 0.6]]
+sn-0-05-1-9753631352924692i-0-3:
+  epsil:
+    in: N(JacobiSN(0.05 + 1.975_363_135_292_469_2i, 0.3))
+    out: 7.322_739_161_223_441 + 14.566_378_469_681_709i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.05+1.975\,363\,135\,292\,469\,2i, 0.3))
+    out: 7.322\,739\,161\,223\,441+14.566\,378\,469\,681\,709i
+  fullform:
+    in: N[JacobiSN[Complex[0.05, 1.9753631352924692], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.05, 1.9753631352924692], 0.3]]
+sn-0-05-2-0653631352924693i-0-3:
+  epsil:
+    in: N(JacobiSN(0.05 + 2.065_363_135_292_469_3i, 0.3))
+    out: 35.130_199_798_225_33 + 7.018_127_909_099_528i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.05+2.065\,363\,135\,292\,469\,3i, 0.3))
+    out: 35.130\,199\,798\,225\,33+7.018\,127\,909\,099\,528i
+  fullform:
+    in: N[JacobiSN[Complex[0.05, 2.0653631352924693], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.05, 2.0653631352924693], 0.3]]
+sn-0-05-2-074363135292469i-0-3:
+  epsil:
+    in: N(JacobiSN(0.05 + 2.074_363_135_292_469i, 0.3))
+    out: 36.520_016_595_463_886 + 0.729_609_124_770_623_8i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.05+2.074\,363\,135\,292\,469i, 0.3))
+    out: 36.520\,016\,595\,463\,886+0.729\,609\,124\,770\,623\,8i
+  fullform:
+    in: N[JacobiSN[Complex[0.05, 2.074363135292469], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.05, 2.074363135292469], 0.3]]
+sn-0-05-2-075263135292469i-0-3:
+  epsil:
+    in: N(JacobiSN(0.05 + 2.075_263_135_292_469i, 0.3))
+    out: 36.534_470_632_307_915 + 0.072_989_820_549_050_77i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.05+2.075\,263\,135\,292\,469i, 0.3))
+    out: 36.534\,470\,632\,307\,915+0.072\,989\,820\,549\,050\,77i
+  fullform:
+    in: N[JacobiSN[Complex[0.05, 2.075263135292469], 0.3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.05, 2.075263135292469], 0.3]]
+sn-0-3-0-2i-1-5:
+  epsil:
+    in: N(JacobiSN(0.3 + 0.2i, 1.5))
+    out: 0.302_591_158_715_408_7 + 0.181_141_885_851_602_87i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3+0.2i, 1.5))
+    out: 0.302\,591\,158\,715\,408\,7+0.181\,141\,885\,851\,602\,87i
+  fullform:
+    in: N[JacobiSN[Complex[0.3, 0.2], 1.5]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.3, 0.2], 1.5]]
+sn-0-5-0-3i-3:
+  epsil:
+    in: N(JacobiSN(0.5 - 0.3i, 3))
+    out: 0.486_170_468_293_726_95 - 0.183_285_202_007_505_8i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.5-0.3i, 3))
+    out: 0.486\,170\,468\,293\,726\,95-0.183\,285\,202\,007\,505\,8i
+  fullform:
+    in: N[JacobiSN[Complex[0.5, -0.3], 3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.5, -0.3], 3]]
+sn-0-3-0-2i-0-7:
+  epsil:
+    in: N(JacobiSN(0.3 + 0.2i, -0.7))
+    out: 0.300_861_189_818_684_26 + 0.197_611_578_759_262_25i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.3+0.2i, -0.7))
+    out: 0.300\,861\,189\,818\,684\,26+0.197\,611\,578\,759\,262\,25i
+  fullform:
+    in: N[JacobiSN[Complex[0.3, 0.2], -0.7]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.3, 0.2], -0.7]]
+sn-0-5-0-3i-3-2:
+  epsil:
+    in: N(JacobiSN(0.5 - 0.3i, -3))
+    out: 0.515_967_478_449_379_6 - 0.360_169_749_587_144_65i
+  tex:
+    in: N(\mathrm{JacobiSN}(0.5-0.3i, -3))
+    out: 0.515\,967\,478\,449\,379\,6-0.360\,169\,749\,587\,144\,65i
+  fullform:
+    in: N[JacobiSN[Complex[0.5, -0.3], -3]]
+  wolfram:
+    in: N[JacobiSN[Complex[0.5, -0.3], -3]]

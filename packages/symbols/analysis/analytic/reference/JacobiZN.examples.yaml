@@ -27,3 +27,11 @@
   expected: [JacobiZN, u, m]
   category: Possible issues
   caption: Symbolic arguments are left unevaluated rather than guessed at
+- id: zn-0-7-0-2
+  expr: [N, [JacobiZN, -0.7, 0.2]]
+  expected: -0.051550286367310294
+  role: test
+- id: zn-2-5-0-3
+  expr: [N, [JacobiZN, 2.5, 0.3]]
+  expected: -0.08051850367193758
+  role: test

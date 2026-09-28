@@ -479,6 +479,13 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     note: "Wolfram's own option-rule head, `key -> value`.",
   },
   {
+    head: "KroneckerSymbol",
+    arity: 2,
+    emit: {
+      wolfram: "KroneckerSymbol[$1, $2]",
+    },
+  },
+  {
     head: "LCM",
     arity: 2,
     emit: {
