@@ -1093,6 +1093,9 @@ importers:
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../../arithmetic/residues
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
@@ -1174,6 +1177,9 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0

@@ -9692,6 +9692,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CombinatorialMap",
+    provenance: "extension",
+    declared: "enumeratio-structures",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "CombinatorialStatistic",
+    provenance: "extension",
+    declared: "enumeratio-structures",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "Compare",
     provenance: "unknown",
     declared: "enumeratio-structures",

@@ -78,7 +78,7 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply(libs.declareDomainElement);
   // Collections already declares the fast permutation heads under the same names, so
   // those are skipped here — one head, one owner.
-  apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { skipDeclared: true, domainTypes }));
+  apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { domainTypes }));
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);

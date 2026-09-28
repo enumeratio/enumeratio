@@ -212,7 +212,7 @@ export class Session {
     declareDomainElement(this.ce);
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.
-    declareStatistics(this.ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: DOMAIN_TYPES });
+    declareStatistics(this.ce, ALL_STATISTICS, { domainTypes: DOMAIN_TYPES });
     declareDistributions(this.ce);
     declareDistributions2(this.ce);
     declareDistributions3(this.ce);

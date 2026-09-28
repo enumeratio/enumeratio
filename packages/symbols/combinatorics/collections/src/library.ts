@@ -1,9 +1,11 @@
+import { registerCollectionCarrier } from "@enumeratio/structures";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareArithHeads } from "./arith-heads.ts";
 import { declareControl } from "./control.ts";
 import { declareExpressionOps } from "./expression-ops.ts";
 import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
+import { allEntries } from "./families/index.ts";
 import { declareGeneratingFunctions } from "./generating-functions.ts";
 import { declareGraphs } from "./graphs.ts";
 import { declareGraphs2 } from "./graphs-2.ts";
@@ -50,6 +52,9 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareArithHeads(ce);
   declareExpressionOps(ce);
   declareStats(ce, options);
+  // Which carrier each family's elements inhabit, for `CombinatorialStatistic(family, name)`.
+  for (const family of allEntries)
+    if (family.declared !== undefined) registerCollectionCarrier(ce, family.head, family.declared.carrier);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);

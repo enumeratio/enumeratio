@@ -24,7 +24,7 @@ export { type OracleAgreement, oracleAgreements } from "./crosswalk/oracle.ts";
 export { fungrimEntryVerdict, type FungrimScore, fungrimScore, KNOWN_CAUSES } from "./crosswalk/fungrim.ts";
 export { fungrimVerified, type FungrimVerdict } from "./fungrim-verified-data.ts";
 export { dlmf, type DlmfNotation } from "./dlmf-data.ts";
-export { findstat, type FindStatMatch } from "./findstat-data.ts";
+export { findstat, type FindStatMatch } from "@enumeratio/statistics/src";
 export { oeis, type OeisMatch } from "./oeis-data.ts";
 export {
   type CrosswalkSource,

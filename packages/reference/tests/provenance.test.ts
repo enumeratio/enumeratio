@@ -410,6 +410,8 @@ const NOVEL = [
   "ClassSum",
   "ClausenCl",
   "CograssmannianPermutations",
+  "CombinatorialMap",
+  "CombinatorialStatistic",
   "CongruentMod",
   "ConnectedPermutations",
   "Csgn",

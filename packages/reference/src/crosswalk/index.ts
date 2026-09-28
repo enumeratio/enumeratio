@@ -25,7 +25,7 @@ import { COLLECTIONS } from "@enumeratio/catalog/src";
 import { crosswalk as derived } from "../crosswalk-data.ts";
 import { CATALOG_REFERENCES } from "./catalog-references-data.ts";
 import { engineSymbols } from "../engine-symbols-data.ts";
-import { findstat } from "../findstat-data.ts";
+import { findstat } from "@enumeratio/statistics/src";
 import { oeis } from "../oeis-data.ts";
 import { fungrimSymbols } from "../fungrim-symbols-data.ts";
 import type { ReferenceEntry } from "../types.ts";

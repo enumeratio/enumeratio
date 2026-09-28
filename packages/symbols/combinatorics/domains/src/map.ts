@@ -12,6 +12,7 @@
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { registerOperation } from "@enumeratio/structures";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
@@ -574,6 +575,10 @@ export function declareMaps(
       const argument = extra.length === 0 ? main : ce.function("Tuple", [main, ...extra]).evaluate();
       return ce.function(wrap, [argument]).evaluate();
     };
+
+    const from = constructorFor[map.from];
+    if (from !== undefined)
+      registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, definition: handle });
 
     // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending
     // rather than replacing keeps every overload they had — see extend.ts for why that is

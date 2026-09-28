@@ -17,13 +17,13 @@ import { readEntries } from "@enumeratio/entry/node";
 const entries = readEntries(new URL("../reference/", import.meta.url));
 
 // The order both engines use: carriers, collections (which owns the fast permutation heads),
-// then the definitions with `skipDeclared`. A statistic is a function OF a carrier, so that
+// then the definitions, which leave collections' heads to it. A statistic is a function OF a carrier, so that
 // is what these heads take. (@enumeratio/domains itself is NOT imported: it depends on this
 // package, so reaching back would be a build cycle -- see scripts/carriers.ts.)
 const ce = new ComputeEngine();
 declareCarriers(ce);
 declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
-declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
+declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 declareDistributions(ce);
 declareDistributions2(ce);
 declareDistributions3(ce);

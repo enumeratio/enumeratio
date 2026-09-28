@@ -45,7 +45,12 @@ import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
-import { declareStructures, ensureAlgebraHeads, ensureProtocols } from "@enumeratio/structures/src";
+import {
+  declareStructures,
+  ensureAlgebraHeads,
+  ensureOperationHeads,
+  ensureProtocols,
+} from "@enumeratio/structures/src";
 import {
   ALL_STATISTICS,
   declareDistributions,
@@ -71,13 +76,15 @@ const domainTypes = (): Record<string, string> =>
  */
 export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = [
   ["evaluation", declareEvaluation],
-  // The protocols and algebra heads first: the algebra libraries conform to them. The generic
+  // The protocols, algebra and operation heads first: the libraries below conform to them and
+  // fill their tables. The generic
   // heads come later (below).
   [
     "structures",
     (ce) => {
       ensureProtocols(ce);
       ensureAlgebraHeads(ce);
+      ensureOperationHeads(ce);
     },
   ],
   ["analytic", declareAnalytic],
@@ -119,7 +126,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   [
     "statistics",
     (ce) => {
-      declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: domainTypes() });
+      declareStatistics(ce, ALL_STATISTICS, { domainTypes: domainTypes() });
       declareDistributions(ce);
       declareDistributions2(ce);
       declareDistributions3(ce);
@@ -134,7 +141,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
     (ce) => {
       declareMaps(ce, domainTypes());
       declareRestricted(ce);
-      declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });
+      declareRestrictions(ce, RESTRICTIONS);
     },
   ],
   ["domains", declareCompose],
