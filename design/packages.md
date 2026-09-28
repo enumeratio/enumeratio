@@ -47,12 +47,14 @@ Everything else, with the symbol packages as one box:
 
 ```mermaid
 flowchart BT
-  sym[symbol packages] --> fce[for-compute-engine]
+  sym[symbol packages] --> fce[for-compute-engine] & manifest
   sym -- collections --> formats
-  formats --> wolfram & raster
+  formats --> wolfram & raster & boxes
+  boxes --> manifest
+  manifest -.-> entry
   oracle --> wolfram
   bench --> oracle & entry
-  notatio --> formats & sym
+  notatio --> formats & manifest & sym
   cli --> notatio & formats & raster & sym
   notatio-lit --> notatio & cli & formats & wolfram & sym
   web --> notatio-lit & sym
@@ -67,14 +69,15 @@ Side: **e** = enumeratio (meaning: declaring and evaluating, and checking that e
 
 ### Foundation
 
-| Package              | Purpose                                                                                                 | Side | Depends on |
-| -------------------- | ------------------------------------------------------------------------------------------------------- | ---- | ---------- |
-| `boxed`              | Checked accessors for compute-engine `BoxedExpression`s (operands, integers, strings) instead of casts. | e    | —          |
-| `entry`              | The shape of a reference entry and its implementations block. A leaf, so head owners can type entries.  | e    | —          |
-| `plausible`          | Seeded, size-aware generators for the Plausible property sampler. A leaf.                               | e    | —          |
-| `wolfram`            | MathJSON → Wolfram Language transpiler, a compute-engine compile target, used to cross-check.           | e    | —          |
-| `raster`             | SVG → PNG via resvg, no DOM (Wolfram's `Rasterize`) for Node.                                           | n    | —          |
-| `for-compute-engine` | Heads and fixes compute-engine would plausibly take, kept apart so landing upstream is a deletion.      | e    | —          |
+| Package              | Purpose                                                                                                                            | Side | Depends on   |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---- | ------------ |
+| `boxed`              | Checked accessors for compute-engine `BoxedExpression`s (operands, integers, strings) instead of casts.                            | e    | —            |
+| `entry`              | The shape of a reference entry and its implementations block. A leaf, so head owners can type entries.                             | e    | —            |
+| `plausible`          | Seeded, size-aware generators for the Plausible property sampler. A leaf.                                                          | e    | —            |
+| `wolfram`            | MathJSON → Wolfram Language transpiler, a compute-engine compile target, used to cross-check.                                      | e    | —            |
+| `raster`             | SVG → PNG via resvg, no DOM (Wolfram's `Rasterize`) for Node.                                                                      | n    | —            |
+| `for-compute-engine` | Heads and fixes compute-engine would plausibly take, kept apart so landing upstream is a deletion.                                 | e    | —            |
+| `manifest`           | Every head's metadata (packages, overloads and types, parameters, summary), built from the records. ([manifest.md](./manifest.md)) | e    | dev: `entry` |
 
 ### Symbol packages
 
@@ -121,8 +124,9 @@ the interface side.
 
 | Package       | Purpose                                                                                                                                                    | Side | Depends on                                                                              |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---- | --------------------------------------------------------------------------------------- |
-| `formats`     | Wolfram-style format registry: `Import`/`Export` over MathJSON, Wolfram, TeX, code, images.                                                                | n    | `wolfram`, `raster`                                                                     |
-| `notatio`     | The base: symbol → component map and lowering, the vdom, the control contract, pure SVG renderers; `./vue` and `./react` glue. No UI framework of its own. | n    | `formats`, `analytic`, `polytope`                                                       |
+| `boxes`       | Wolfram-style `*Box` presentation primitives, `makeBoxes`, and their MathML / LaTeX / text serialisers ([boxes.md](./boxes.md)).                           | n    | `manifest`                                                                              |
+| `formats`     | Wolfram-style format registry: `Import`/`Export` over MathJSON, Wolfram, TeX, code, images.                                                                | n    | `wolfram`, `raster`, `boxes`                                                            |
+| `notatio`     | The base: symbol → component map and lowering, the vdom, the control contract, pure SVG renderers; `./vue` and `./react` glue. No UI framework of its own. | n    | `formats`, `manifest`, `analytic`, `polytope`                                           |
 | `notatio-lit` | The `<notatio-*>` web components (Lit): everything that draws or controls, the notebook, the editors.                                                      | n    | `notatio`, `cli`, `formats`, `wolfram`, `analytic`, `polytope`, `domains`, `aestimatio` |
 | `cli`         | The REPL and one-shot evaluator, with terminal show mode.                                                                                                  | n    | `notatio`, `formats`, `raster`, `collections`, `domains`, `statistics`                  |
 | `web`         | The docs site (VitePress): guide, reference, explore, playground.                                                                                          | n    | the interface and symbol packages                                                       |
@@ -155,8 +159,8 @@ split out.
 
 - **`boxed` vs `boxes`.** `boxed` is plumbing for compute-engine's `BoxedExpression` — the
   engine's word for a canonicalised expression object. It has nothing to do with
-  presentation. `boxes` (being added) is Wolfram-style `*Box` presentation primitives
-  (`RowBox`, `FractionBox`, …): notatio, the showing side.
+  presentation. `boxes` is Wolfram-style `*Box` presentation primitives (`RowBox`,
+  `FractionBox`, …): notatio, the showing side.
 - **`notatio` vs `notatio-lit`.** `notatio` is the framework-free base (vdom, lowering,
   control contract, Vue and React glue as subpaths); `notatio-lit` is the Lit elements
   built on it. The Vue and React wrappers are not separate packages.
