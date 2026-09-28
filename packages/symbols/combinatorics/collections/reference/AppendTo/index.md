@@ -1,0 +1,19 @@
+---
+name: AppendTo
+domain: Collections
+signature: AppendTo(s, elem)
+summary: Appends an element to a bound variable's value, and reassigns it in place.
+signatures:
+  - call: AppendTo(s, elem)
+    description: Reads $s$'s current value, appends $elem$, reassigns $s$ to the result, and returns it.
+    library: enumeratio-collections
+    type: (symbol, any) -> any
+details:
+  - $s$ is held — its NAME, not its value, is the first operand — so it can be reassigned. Works for any symbol already carrying a value (via a plain assignment, or a [[Module]] local).
+seeAlso:
+  - Module
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

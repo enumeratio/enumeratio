@@ -1,0 +1,9 @@
+---
+name: LargestPartialQuotient
+domain: Combinatorics
+signature: LargestPartialQuotient(...)
+summary: Largest partial quotient
+statOn:
+  - ContinuedFraction
+stub: carrier
+---

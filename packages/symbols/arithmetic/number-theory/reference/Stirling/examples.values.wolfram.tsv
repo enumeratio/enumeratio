@@ -1,0 +1,19 @@
+id	in	out	tex.in	tex.out
+stirling-5-2	StirlingS2[5, 2]	15	\mathcal{S}_5^{(2)}	15
+stirling-6-3	StirlingS2[6, 3]	90	\mathcal{S}_6^{(3)}	90
+stirling-20-10	StirlingS2[20, 10]			
+exact-for-large-n	StirlingS2[50, 2]			
+threads-element-wise-over-a-list-as-wolfram-s	StirlingS2[List[2, 4, 6], 2]			
+the-ways-to-split-10-distinct-items-among-3	StirlingS2[10, 3]			
+one-block-means-one-partition-s-n-1-1	StirlingS2[5, 1]	1	\mathcal{S}_5^{(1)}	1
+singletons-only-s-n-n-1	StirlingS2[5, 5]	1	\mathcal{S}_5^{(5)}	1
+row-sums-give-the-bell-numbers	(Sum[StirlingS2[4, k], List[k, 0, 4]] == BellB[4])	True	\sum _{k=0}^4 \mathcal{S}_4^{(k)}=B_4	\text{True}
+two-blocks-s-n-2-2-n-1-1	(StirlingS2[10, 2] == Subtract[Power[2, 9], 1])			
+s-n-n-1-binom-n-2-one-block-is-a-pair	(StirlingS2[6, 5] == Binomial[6, 2])			
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	(StirlingS2[6, 3] == Divide[Sum[Times[Power[-1, Subtract[3, j]], Binomial[3, j], Power[j, 6]], List[j, 0, 3]], Factorial[3]])			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Sum[Times[StirlingS1[4, k], StirlingS2[k, 2]], List[k, 0, 4]]			
+the-empty-set-has-one-partition-into-no-blocks	StirlingS2[0, 0]	1	\mathcal{S}_0^{(0)}	1
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	StirlingS2[5, 0]			
+k-n-is-0	StirlingS2[3, 5]			
+stirling-0-1-is-also-0	StirlingS2[0, 1]			
+a-negative-k-stays-symbolic	StirlingS2[10, -5]			

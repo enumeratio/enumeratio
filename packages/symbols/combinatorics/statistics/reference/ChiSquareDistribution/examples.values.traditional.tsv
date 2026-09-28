@@ -1,0 +1,5 @@
+id	in	out
+chisquare-pdf-exact		
+chisquare-cdf-exact	\operatorname{CDF}(\mathrm{ChiSquareDistribution}(3), 2)	1-Q(\frac{3}{2}, 1)
+chisquare-mean-exact		
+chisquare-variance-exact		

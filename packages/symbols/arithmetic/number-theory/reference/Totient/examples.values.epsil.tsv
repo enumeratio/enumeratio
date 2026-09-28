@@ -1,0 +1,15 @@
+id	in	out
+totient-12	Totient(12)	4
+totient-36	Totient(36)	12
+totient-1	Totient(1)	1
+totient-10	Totient(10)	4
+varphi-0-0-as-in-wolfram	Totient(0)	0
+threads-element-wise-over-a-list-as-wolfram-s	Totient([2, 4, 6])	[1, 2, 2]
+large-integers-varphi-50	Totient(50!)	4_218_559_200_885_839_042_679_312_107_816_703_841_788_854_953_574_400_000_000_000_000
+negative-n-varphi-n-varphi-n	Totient(-10)	4
+rsa-key-setup-varphi-17-times-23-16-times-22-352	Totient(391)	352
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	PowerMod(7, Totient(10), 10)	1
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Totient(1) + Totient(2) + Totient(3) + Totient(4) + Totient(6) + Totient(12)	12
+multiplicative-varphi-mn-varphi-m-varphi-n-when	Totient(12) == Totient(4) * Totient(3)	True
+varphi-p-p-1-for-a-prime-p	Totient(17)	16
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	Totient(81)	54

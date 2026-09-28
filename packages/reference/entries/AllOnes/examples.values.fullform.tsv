@@ -1,0 +1,4 @@
+id	in
+the-first-25-terms	Take[AllOnes, 25]
+1-is-in-allones	Element[1, AllOnes]
+2-is-not-in-allones	Element[2, AllOnes]

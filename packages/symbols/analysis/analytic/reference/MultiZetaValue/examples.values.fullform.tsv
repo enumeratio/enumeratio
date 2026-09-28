@@ -1,0 +1,11 @@
+id	in
+zeta-2-2-frac-34-zeta-4	N[MultiZetaValue[2, 2]]
+zeta-3-3-frac-12-zeta-3-2-zeta-6	N[MultiZetaValue[3, 3]]
+zeta-2-3	N[MultiZetaValue[2, 3]]
+zeta-3-2	N[MultiZetaValue[3, 2]]
+zeta-4-2	N[MultiZetaValue[4, 2]]
+zeta-2-4	N[MultiZetaValue[2, 4]]
+zeta-5-2	N[MultiZetaValue[5, 2]]
+zeta-3-4	N[MultiZetaValue[3, 4]]
+zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	Chop[Subtract[N[MultiZetaValue[2, 2]], Times[0.75, N[Zeta[4]]]]]
+s-1-2-stays-symbolic-outside-the-depth-2-both	MultiZetaValue[1, 2]

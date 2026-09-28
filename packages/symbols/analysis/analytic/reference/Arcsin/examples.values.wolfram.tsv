@@ -1,0 +1,29 @@
+id	in	out	tex.in	tex.out
+arcsin-0	ArcSin[0]	0	\sin ^{-1}(0)	0
+arcsin-1-over-2	ArcSin[Rational[1, 2]]	Pi/6	\sin ^{-1}\left(\frac{1}{2}\right)	\frac{\pi }{6}
+the-top-of-the-principal-range	ArcSin[1]	Pi/2	\sin ^{-1}(1)	\frac{\pi }{2}
+arcsin-neg-1	ArcSin[-1]	-1/2*Pi	\sin ^{-1}(-1)	-\frac{\pi }{2}
+a-machine-precision-argument-evaluates	ArcSin[0.4]			
+outside-1-1-a-float-argument-gives-the-complex	ArcSin[1.5]			
+outside-1-1-reduces-to-the-exact-closed-form	ArcSin[2]	ArcSin[2]	\sin ^{-1}(2)	\sin ^{-1}(2)
+arbitrary-precision-via-n	N[ArcSin[Rational[1, 3]]]			
+evaluates-at-a-complex-argument	ArcSin[Complex[2.5, 1]]			
+threads-element-wise-over-a-matrix	ArcSin[List[List[1, Divide[1, Sqrt[2]]], List[0, Divide[1, Sqrt[2]]]]]			
+exact-inverse-of-a-special-value	ArcSin[Divide[Sqrt[2], 2]]			
+arcsin-sqrt-3-over-2	ArcSin[Divide[Sqrt[3], 2]]			
+recognizes-the-radical-value-sin-pi-12	ArcSin[Divide[Subtract[Sqrt[6], Sqrt[2]], 4]]			
+recognizes-sin-pi-10-frac-sqrt-5-1-4	ArcSin[Divide[Subtract[Sqrt[5], 1], 4]]			
+interval-arithmetic-arcsin-frac-13-frac-12	ArcSin[Interval[List[Rational[-1, 3], Rational[1, 2]]]]			
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx	ArcSin[Around[0.9, 0.1]]			
+oddness-pulls-the-sign-out-of-a-symbolic	ArcSin[Minus[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sin ^{-1}(-x)--\sin ^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin ^{-1}\left(-\frac{7}{3}\right)--\sin ^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin ^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\sin ^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin ^{-1}\left(-\frac{13}{4}\right)--\sin ^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+derivative-frac-1-sqrt-1-x-2	D[ArcSin[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \sin ^{-1}(x)}{\partial x}-\frac{1}{\sqrt{-x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\sin ^{-1}\left(\frac{7}{3}\right)-\frac{1}{\sqrt{-\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\sin ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{\sqrt{-\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\sin ^{-1}\left(\frac{13}{4}\right)-\frac{1}{\sqrt{-\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+antiderivative	Integrate[ArcSin[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \sin ^{-1}(x) \, dx-\left(x \sin ^{-1}(x)+\sqrt{-x^2+1}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sin ^{-1}\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{7}{3} \sin ^{-1}\left(\frac{7}{3}\right)+\sqrt{-\left(\frac{7}{3}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^{-1}\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\frac{11}{5} \sin ^{-1}\left(-\frac{11}{5}\right)+\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^{-1}\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{13}{4} \sin ^{-1}\left(\frac{13}{4}\right)+\sqrt{-\left(\frac{13}{4}\right)^2+1}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+taylor-series-about-0	""			
+arcsin-sin-1-2-is-already-principal	ArcSin[Sin[Rational[1, 2]]]			
+to-30-significant-digits-not-yet-the-last-digit	N[ArcSin[Rational[1, 3]], 30]			
+arcsin-2-past-1-1-the-odd-function-mirror-of	ArcSin[-2]			
+sin-arcsin-x-x-on-the-principal-branch	(Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])	True	\sin \left(\sin ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}	\text{True}
+co-function-identity-arcsin-x-arccos-x-pi-2	(Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])	True	\sin ^{-1}\left(\frac{1}{2}\right)+\cos ^{-1}\left(\frac{1}{2}\right)=\frac{\pi }{2}	\text{True}
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	TrigToExp[ArcSin[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}\left[\sin ^{-1}(x)\right]--i \log \left(i x+\sqrt{-x^2+1}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(\frac{7}{3}\right)\right]--i \log \left(i \frac{7}{3}+\sqrt{-\left(\frac{7}{3}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(-\frac{11}{5}\right)\right]--i \log \left(i \left(-\frac{11}{5}\right)+\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(\frac{13}{4}\right)\right]--i \log \left(i \frac{13}{4}+\sqrt{-\left(\frac{13}{4}\right)^2+1}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+not-simply-2-2-is-outside-the-principal-range-pi	ArcSin[Sin[2]]			
+arcsin-sin-neg-2-mirrors-through-0	ArcSin[Sin[-2]]			

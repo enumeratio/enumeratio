@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+the-shortest-knotted-geodesic-draws-a-trefoil			[AlexanderPolynomial, "'LLRLR'"]	[Add, [Power, t, 2], [Negate, t], 1]	the shortest knotted geodesic draws a trefoil
+a-rotation-by-2-on-5-points-hence-t-2-3	Scope		[LorenzPermutation, "'LLRLR'"]	[List, 3, 4, 5, 1, 2]	a rotation by 2 on 5 points — hence $T(2,3)$
+braid-index-2	Properties		[TripNumber, "'LLRLR'"]	2	braid index 2
+one-hump-each-way-is-unknotted-however-long	Properties		[AlexanderPolynomial, "'LLLRRRR'"]	1	one hump each way is unknotted, however long

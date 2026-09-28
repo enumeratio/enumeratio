@@ -1,0 +1,9 @@
+---
+name: InternalVertices
+domain: Combinatorics
+signature: InternalVertices(...)
+summary: Number of internal (non-leaf) vertices
+statOn:
+  - LabeledTree
+stub: carrier
+---

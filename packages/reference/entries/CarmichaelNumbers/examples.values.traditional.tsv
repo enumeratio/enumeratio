@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms		
+561-is-the-smallest-carmichael-number	561\in\mathrm{CarmichaelNumbers}	\mathrm{True}
+560-is-not-carmichael	560\in\mathrm{CarmichaelNumbers}	\mathrm{False}

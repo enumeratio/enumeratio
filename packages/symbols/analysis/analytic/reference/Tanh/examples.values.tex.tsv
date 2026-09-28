@@ -1,0 +1,20 @@
+id	in	out
+n-forces-the-numeric-result-that-plain	N(\tanh(0))	0
+n-tanh-1	N(\tanh(1))	0.761\,594\,155\,955\,764\,888\,119
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	\tanh(0)	0
+a-float-argument-evaluates-directly-no-n-needed	\tanh(2.2)	0.975\,743\,130\,031\,451\,520\,414
+arbitrary-precision-via-n	N(\tanh(\frac{11}{5}))	0.975\,743\,130\,031\,451\,520\,414
+evaluates-at-a-complex-argument	\tanh(2.5+i)	1.005\,548\,011\,895\,06+0.012\,322\,138\,255\,828\,353i
+interval-arithmetic-tanh-is-increasing-so-tanh-0	\tanh(\mathrm{Interval}(0, \ln(2)))	\mathrm{Interval}(0, \frac{3}{5})
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	\tanh(\mathrm{Around}(\frac{2}{\sqrt{3}}, 0.1))	\mathrm{Around}(0.819\,305\,290\,078\,300\,8, 0.032\,873\,884\,164\,971\,15)
+the-horizontal-asymptote-at-infty	\tanh(\infty)	1
+tanh-i-pi-4-i-tan-pi-4-i	\tanh(\frac{i\pi}{4})	i
+oddness-pulls-the-sign-out-of-a-symbolic	\tanh(-x)	-\tanh(x)
+tanh-artanh-x-x-for-every-x	\tanh(\mathrm{artanh}(x))	x
+tanh-artanh-2-2-past-the-real-domain	\tanh(\mathrm{artanh}(2))	2
+derivative-sech-2-x	\frac{\mathrm{d}\tanh(x)}{\mathrm{d}x}	\mathrm{sech}(x)^2
+antiderivative-ln-cosh-x	\int\!\tanh(x)\, \mathrm{d}x	\ln(\cosh(x))
+tanh-has-no-limit-at-complex-infinity-undefined	\tanh(\tilde\infty)	\operatorname{NaN}
+to-30-significant-digits-every-one-correctly	N(\tanh(1), 30)	0.761\,594\,155\,955\,764\,888\,119
+tanh-x-frac-sinh-x-cosh-x	\tanh(1)=\frac{\sinh(1)}{\cosh(1)}	\top
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	\mathrm{TrigToExp}(\tanh(x))	\frac{e^{x}-\exp(-x)}{e^{x}+\exp(-x)}

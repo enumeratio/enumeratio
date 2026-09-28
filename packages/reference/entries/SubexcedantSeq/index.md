@@ -1,0 +1,13 @@
+---
+name: SubexcedantSeq
+domain: Combinatorics
+signature: SubexcedantSeq(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: SubexcedantSeq(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> subexcedant_seq
+---

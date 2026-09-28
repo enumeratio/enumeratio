@@ -1,0 +1,4 @@
+id	in	out
+count-fibstrings-4	Count(FibStrings(4))	8
+first-element-of-fibstrings-4	FibStrings(4)[1]	[0, 0, 0, 0]
+every-element-of-fibstrings-4	Take(FibStrings(4), 8)	"[\n  [0, 0, 0, 0],\n  [0, 0, 0, 1],\n  [0, 0, 1, 0],\n  [0, 1, 0, 0],\n  [0, 1, 0, 1],\n  [1, 0, 0, 0],\n  [1, 0, 0, 1],\n  [1, 0, 1, 0],\n]"

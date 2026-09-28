@@ -1,0 +1,4 @@
+id	in
+algebrasignature-quaternions	AlgebraSignature[Quaternions]
+cl-2-1	AlgebraSignature[CliffordAlgebra[2, 1]]
+nilpotent	AlgebraSignature[DualNumbers]

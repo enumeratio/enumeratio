@@ -1,0 +1,22 @@
+---
+name: Split
+domain: Collections
+signature: Split(list)
+summary: Split a list into runs of identical adjacent elements.
+signatures:
+  - call: Split(list)
+    description: runs of adjacent equal elements.
+    library: enumeratio-collections
+    type: (indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T
+  - call: Split(list, test)
+    description: runs on which adjacent elements agree by a custom two-argument test.
+    library: enumeratio-collections
+details:
+  - "Runs, not groups: only ADJACENT equal elements join a run, so the same value can appear in several separate runs. See [[Gather]] to group every occurrence together regardless of position."
+seeAlso:
+  - Gather
+  - SplitBy
+  - Partition
+names:
+  wolframIdentity: true
+---

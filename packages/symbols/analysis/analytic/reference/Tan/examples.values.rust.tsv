@@ -1,0 +1,43 @@
+id	in	out	verdict
+tan-0	tan(n(0))	0.0	
+tan-pi-over-6	tan((x(std::f64::consts::PI) / n(6)))	0.5773502691896257	
+tan-pi-over-4	tan((x(std::f64::consts::PI) / n(4)))	0.9999999999999999	
+tan-pi-over-3	tan((x(std::f64::consts::PI) / n(3)))	1.7320508075688767	
+tan-30-circ-frac-sqrt-3-3-exactly			
+a-machine-precision-argument-evaluates	tan(x(1.2))	2.5721516221263188	
+a-huge-24-40-argument	nf(tan(power(n(24), n(40))))		
+a-huge-10-100-argument	nf(tan(power(n(10), n(100))))		
+a-huge-3-200-argument	nf(tan(power(n(3), n(200))))		
+a-huge-neg-7-60-argument	nf(tan((-(power(n(7), n(60))))))		
+a-huge-10-80-plus-1-over-3-argument	nf(tan(((power(n(10), n(80)) + n(1)) / n(3))))		
+tan-100-under-n	nf(tan(n(100)))		
+n-of-an-exact-argument-gives-an-arbitrary	nf(tan(rational(n(6), n(5))))	2.5721516221263188	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	tan(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), x(std::f64::consts::PI)]), list(vec![(x(std::f64::consts::PI) / n(3)), (-(x(std::f64::consts::PI)))])]))	panic: threading: a list where the crate takes a scalar	error
+tan-pi-8-sqrt-2-1	tan((x(std::f64::consts::PI) / n(8)))	0.41421356237309503	
+tan-pi-12-2-sqrt-3	tan((x(std::f64::consts::PI) / n(12)))	0.2679491924311227	
+tan-pi-5-sqrt-5-2-sqrt-5	tan((x(std::f64::consts::PI) / n(5)))	0.7265425280053609	
+tan-pi-10-sqrt-1-2-sqrt-5	tan((x(std::f64::consts::PI) / n(10)))	0.3249196962329063	
+tan-5-pi-12-2-sqrt-3	tan((rational(n(5), n(12)) * x(std::f64::consts::PI)))	3.7320508075688776	
+tan-3-over-4-times-pi	tan((rational(n(3), n(4)) * x(std::f64::consts::PI)))	-1.0000000000000002	
+interval-arithmetic-the-image-of-0-pi-3-is-0			
+uncertainty-propagation-tan-2-pm-0-02-approx-2			
+tan-ix-i-tanh-x			
+oddness-pulls-the-sign-out-of-a-symbolic			
+tan-arctan-x-x-for-every-x			
+tan-arctan-2-2-for-every-x			
+tan-arcsin-x-frac-x-sqrt-1-x-2			
+derivative-sec-2-x			
+antiderivative-ln-sec-x			
+taylor-series-about-0			
+to-30-significant-digits-every-one-correctly	nf(tan(n(1)))	1.5574077246549023	
+threads-element-wise-over-a-list	tan(list(vec![n(0), (x(std::f64::consts::PI) / n(4))]))	panic: threading: a list where the crate takes a scalar	error
+tan-x-frac-sin-x-cos-x	equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))	true	
+odd-function-tan-x-tan-x	tan((-((x(std::f64::consts::PI) / n(4)))))	-0.9999999999999999	
+period-pi-not-2-pi-adding-a-half-turn-doesn-t	tan(((x(std::f64::consts::PI) / n(4)) + x(std::f64::consts::PI)))	0.9999999999999997	
+sin-x-cos-x-should-simplify-to-tan-x-simplify			
+rewritten-in-exponentials			
+a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((x(std::f64::consts::PI) / n(2)))	1.633123935319537e16	inconclusive
+same-rule-as-sin-and-cos-a-non-special-numeric	tan(n(1))	1.5574077246549023	
+a-pole-at-negative-pi-over-2-too	tan((x(std::f64::consts::PI) / n(-2)))	-1.633123935319537e16	inconclusive
+a-pole-reached-through-periodicity-unreduced	tan(((x(std::f64::consts::PI) / n(-2)) + x(std::f64::consts::PI)))	1.633123935319537e16	inconclusive

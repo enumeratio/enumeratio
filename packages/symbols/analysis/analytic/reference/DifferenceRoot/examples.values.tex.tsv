@@ -1,0 +1,4 @@
+id	in	out
+a-hand-built-first-order-recurrence	\mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd5	5
+a-hand-built-fibonacci-recurrence-at-10	\mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)-y(n+1)+y(n+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd10	55
+symbolic-n-stays-inert	\mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd n	\mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}-y(n)+y(n+1)-1=0\\y(0)=0\end{cases})\lhd n

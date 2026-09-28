@@ -1,0 +1,22 @@
+---
+name: TimeConstrained
+domain: Controlling evaluation
+signature: TimeConstrained(expr, t, failexpr)
+summary: Evaluates expr, but aborts after t seconds and returns failexpr.
+signatures:
+  - call: TimeConstrained(expr, t)
+    description: aborts to \$Aborted past $t$ seconds.
+    library: enumeratio-evaluation
+    type: (any, real, any?) time -> any
+  - call: TimeConstrained(expr, t, failexpr)
+    description: aborts to $\mathit{failexpr}$ instead.
+    library: enumeratio-evaluation
+details:
+  - "A deadline only interrupts code that LOOKS at it: compute-engine's own loops (Sum, Pollard's rho inside FactorInteger, …) cooperate, so a computation built entirely from them can actually be cut off mid-flight."
+  - "Held: expr and failexpr are not evaluated until it is known which one is wanted."
+  - "There is also an evaluateAsync route, used automatically inside an async evaluation (e.g. a notebook cell): the caller's own AbortSignal and the timeout race each other, and only the timeout converts to failexpr — the caller's own cancellation propagates."
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

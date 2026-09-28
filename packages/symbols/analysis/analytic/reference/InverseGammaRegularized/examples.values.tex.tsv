@@ -1,0 +1,9 @@
+id	in	out
+q-1-z-e-z-so-the-inverse-at-1-2-is-ln-2	\mathrm{InverseGammaRegularized}(1, 0.5)	0.693\,147\,180\,559\,945\,3
+the-median-of-the-gamma-2-1-distribution	\mathrm{InverseGammaRegularized}(2, 0.5)	1.678\,346\,990\,016\,660\,8
+inversegammaregularized-2p5-0p3	\mathrm{InverseGammaRegularized}(2.5, 0.3)	3.032\,214\,992\,077\,453
+qinv-5-0-1	\mathrm{InverseGammaRegularized}(5, 0.1)	7.993\,589\,586\,052\,63
+qinv-0-5-0-9	\mathrm{InverseGammaRegularized}(0.5, 0.9)	0.007\,895\,387\,046\,715\,613
+q-a-0-1	\mathrm{InverseGammaRegularized}(a, 1)	0
+q-a-infty-0	\mathrm{InverseGammaRegularized}(a, 0)	\infty
+order-1-inverts-e-z	\mathrm{InverseGammaRegularized}(1, s)	-\ln(s)

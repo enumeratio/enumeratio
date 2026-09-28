@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+factorial-ratio			[DiscreteRatio, [Factorial, n], n]	[Add, n, 1]	$(n+1)!/n! = n + 1$
+geometric-ratio			[DiscreteRatio, [Power, 2, n], n]	2	a constant ratio for a geometric sequence

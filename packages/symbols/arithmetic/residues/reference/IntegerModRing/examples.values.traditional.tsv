@@ -1,0 +1,8 @@
+id	in	out
+listfrom-integermodring-3		
+count-integermodring-12		
+count-integermodring-5		
+z-12-z		
+z-5-z		
+integermod-3-5-in-integermodring-5	\mathrm{IntegerMod}(3, 5)\in\mathrm{IntegerModRing}(5)	\mathrm{True}
+integermod-3-7-not-in-integermodring-5	\mathrm{IntegerMod}(3, 7)\in\mathrm{IntegerModRing}(5)	\mathrm{False}

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+already-in-gl-n-q-upper-triangular-form-b-is-the			[ProfiniteDecomposition, [List, [List, 2, 1], [List, 0, 3]]]	[List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 2, 1], [List, 0, 3]]]	already in $GL_n^+(\mathbb{Q})$ upper-triangular form: $b$ is the identity

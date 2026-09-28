@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+a-5-vertex-path			[VertexDegree, [PathGraph, 5]]	[List, 1, 2, 2, 2, 1]	A 5-vertex path — the ends have degree 1
+a-path-along-named-vertices			[PathGraph, [List, a, b, c]]	[Graph, [List, a, b, c], [List, [UndirectedEdge, a, b], [UndirectedEdge, b, c]]]	A path along named vertices

@@ -1,0 +1,199 @@
+id	in	out	verdict
+zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	zeta(2, 1)	pi**2/6	
+zeta-2-2-pi-2-6-1	zeta(2, 2)	-1 + pi**2/6	
+an-inexact-a-evaluates-numerically-without-n	zeta(3, 0.2)	zeta(3, 0.2)	
+inside-the-critical-strip-under-n	N(zeta(0.51, 0.87), 30)	-1.32015502369495840717661394592	
+precise-zeta-s-neg-41-2-a-3-10-d80	N(zeta(Rational(-41, 2), Rational(3, 10)), 30)		
+precise-zeta-s-neg-81-2-a-2-5-d40	N(zeta(Rational(-81, 2), Rational(2, 5)), 30)		
+precise-zeta-s-neg-81-2-a-2-5-d80	N(zeta(Rational(-81, 2), Rational(2, 5)), 30)		
+precise-zeta-s-neg-21-2-a-3-10-d40	N(zeta(Rational(-21, 2), Rational(3, 10)), 30)		
+precise-zeta-s-neg-21-2-a-3-10-d80	N(zeta(Rational(-21, 2), Rational(3, 10)), 30)		
+precise-zeta-s-neg-11-2-a-27-10-d40	N(zeta(Rational(-11, 2), Rational(27, 10)), 30)		
+precise-zeta-s-neg-11-2-a-27-10-d80	N(zeta(Rational(-11, 2), Rational(27, 10)), 30)		
+precise-zeta-s-neg-5-2-a-3-10-d40	N(zeta(Rational(-5, 2), Rational(3, 10)), 30)		
+precise-zeta-s-neg-5-2-a-3-10-d80	N(zeta(Rational(-5, 2), Rational(3, 10)), 30)		
+precise-zeta-s-neg-1-2-a-1-20-d40	N(zeta(Rational(-1, 2), Rational(1, 20)), 30)		
+precise-zeta-s-neg-1-2-a-1-20-d80	N(zeta(Rational(-1, 2), Rational(1, 20)), 30)		
+precise-zeta-s-1-2-a-5-4-d40	N(zeta(Rational(1, 2), Rational(5, 4)), 30)		
+precise-zeta-s-1-2-a-5-4-d80	N(zeta(Rational(1, 2), Rational(5, 4)), 30)		
+zeta-0-a-exact-at-a-3	zeta(0, 3)	-5/2	
+zeta-0-a-exact-at-a-5-over-2	zeta(0, Rational(5, 2))	-2	
+zeta-neg-1-a-exact-at-a-3	zeta(-1, 3)	-37/12	
+zeta-neg-1-a-exact-at-a-5-over-2	zeta(-1, Rational(5, 2))	-47/24	
+zeta-neg-1-a-exact-at-a-7-over-3	zeta(-1, Rational(7, 3))	-59/36	
+zeta-neg-2-a-exact-at-a-5-over-2	zeta(-2, Rational(5, 2))	-5/2	
+zeta-neg-3-a-exact-at-a-5-over-2	zeta(-3, Rational(5, 2))	-3367/960	
+zeta-neg-4-a-exact-at-a-5-over-2	zeta(-4, Rational(5, 2))	-41/8	
+pole-at-s-1-for-symbolic-a	zeta(1, Symbol("a"))	zoo	
+pole-at-a-neg-2-re-s-positive	N(zeta(2, -2), 30)	nan	disagree
+pole-at-a-neg-1-inexact-s	N(zeta(0.158, -1), 30)	nan	disagree
+pole-at-a-0-re-s-positive	N(zeta(3, 0), 30)	nan	disagree
+re-s-0-a-neg-1-is-indeterminate	N(zeta((0 + -1*I), -1), 30)	nan	
+re-s-positive-complex-s-is-a-pole	N(zeta((2 + 1*I), 0), 30)	nan	disagree
+n-hurwitzzeta-2-1	N(zeta(2, 1), 30)	1.64493406684822643647241516665	
+n-hurwitzzeta-2-2	N(zeta(2, 2), 30)	0.644934066848226436472415166646	
+n-hurwitzzeta-2-3	N(zeta(2, 3), 30)	0.394934066848226436472415166646	
+n-hurwitzzeta-2-0p5	N(zeta(2, 0.5), 30)	4.93480220054467930941724549994	
+n-hurwitzzeta-2-0p25	N(zeta(2, 0.25), 30)	17.1973291545071107392713191193	
+n-hurwitzzeta-2-1p3	N(zeta(2, 1.3), 30)	1.13425343499661930114006530531	
+n-hurwitzzeta-2-7-over-3	N(zeta(2, Rational(7, 3)), 30)	0.533097125427094081792004099893	
+n-hurwitzzeta-2-1-plus-i	N(zeta(2, (1 + 1*I)), 30)	0.463000096622763786298326518184 - 0.794233542759318865583013617157*I	
+n-hurwitzzeta-2-2-plus-neg-0p5-times-i	N(zeta(2, (2 + -0.5*I)), 30)	0.588197890950061371189124653327 + 0.18504197243379084853372529811*I	
+n-hurwitzzeta-2-neg-0p5	N(zeta(2, -0.5), 30)	8.93480220054467930941724549994	
+n-hurwitzzeta-2-neg-1p5	N(zeta(2, -1.5), 30)	9.37924664498912375386168994438	
+n-hurwitzzeta-3-1	N(zeta(3, 1), 30)	1.20205690315959428539973816151	
+n-hurwitzzeta-3-2	N(zeta(3, 2), 30)	0.202056903159594285399738161511	
+n-hurwitzzeta-3-3	N(zeta(3, 3), 30)	0.0770569031595942853997381615114	
+n-hurwitzzeta-3-0p5	N(zeta(3, 0.5), 30)	8.41439832211715999779816713058	
+n-hurwitzzeta-3-0p25	N(zeta(3, 0.25), 30)	64.6638699687684601666689835894	
+n-hurwitzzeta-3-1p3	N(zeta(3, 1.3), 30)	0.599231257325978243034187573631	
+n-hurwitzzeta-3-7-over-3	N(zeta(3, Rational(7, 3)), 30)	0.139186199700803776227877977408	
+n-hurwitzzeta-3-1-plus-i	N(zeta(3, (1 + 1*I)), 30)	-0.18427646579396758586831727149 - 0.383326425172533106201347688816*I	
+n-hurwitzzeta-3-2-plus-neg-0p5-times-i	N(zeta(3, (2 + -0.5*I)), 30)	0.153693633730308241664189905562 + 0.10422634741373262482544551828*I	
+n-hurwitzzeta-3-neg-0p5	N(zeta(3, -0.5), 30)	0.414398322117159997798167130580	
+n-hurwitzzeta-3-neg-1p5	N(zeta(3, -1.5), 30)	0.118102025820863701501870834284	
+n-hurwitzzeta-5-1	N(zeta(5, 1), 30)	1.03692775514336992633136548646	
+n-hurwitzzeta-5-2	N(zeta(5, 2), 30)	0.0369277551433699263313654864570	
+n-hurwitzzeta-5-3	N(zeta(5, 3), 30)	0.00567775514336992633136548645703	
+n-hurwitzzeta-5-0p5	N(zeta(5, 0.5), 30)	32.1447604094444677162723300802	
+n-hurwitzzeta-5-0p25	N(zeta(5, 0.25), 30)	1024.34897452658057223159279802	
+n-hurwitzzeta-5-1p3	N(zeta(5, 1.3), 30)	0.288556067518526511794153290203	
+n-hurwitzzeta-5-7-over-3	N(zeta(5, Rational(7, 3)), 30)	0.0179852769188750622367864472925	
+n-hurwitzzeta-5-1-plus-i	N(zeta(5, (1 + 1*I)), 30)	-0.136646173710168721646303099648 + 0.107525502140082017767557627968*I	
+n-hurwitzzeta-5-2-plus-neg-0p5-times-i	N(zeta(5, (2 + -0.5*I)), 30)	0.012993573083069943354546415604 + 0.0288772717953140897584058482529*I	
+n-hurwitzzeta-5-neg-0p5	N(zeta(5, -0.5), 30)	0.144760409444467716272330080168	
+n-hurwitzzeta-5-neg-1p5	N(zeta(5, -1.5), 30)	0.0130731666461138068073095040364	
+n-hurwitzzeta-neg-1-1	N(zeta(-1, 1), 30)	-0.0833333333333333333333333333333	
+n-hurwitzzeta-neg-1-2	N(zeta(-1, 2), 30)	-1.08333333333333333333333333333	
+n-hurwitzzeta-neg-1-3	N(zeta(-1, 3), 30)	-3.08333333333333333333333333333	
+n-hurwitzzeta-neg-1-0p5	N(zeta(-1, 0.5), 30)	0.0416666666666666851703837437526	
+n-hurwitzzeta-neg-1-0p25	N(zeta(-1, 0.25), 30)	0.0104166666666666712925959359382	
+n-hurwitzzeta-neg-1-1p3	N(zeta(-1, 1.3), 30)	-0.278333333333333432513256866514	
+n-hurwitzzeta-neg-1-7-over-3	N(zeta(-1, Rational(7, 3)), 30)	-1.63888888888888888888888888889	
+n-hurwitzzeta-neg-1-1-plus-i	N(zeta(-1, (1 + 1*I)), 30)	0.416666666666666666666666666667 - 0.5*I	
+n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i	N(zeta(-1, (2 + -0.5*I)), 30)	-0.958333333333333333333333333333 + 0.75*I	
+n-hurwitzzeta-neg-1-neg-0p5	N(zeta(-1, -0.5), 30)	-0.458333333333333314829616256247	
+n-hurwitzzeta-neg-1-neg-1p5	N(zeta(-1, -1.5), 30)	-1.95833333333333348136306995002	
+n-hurwitzzeta-neg-2-1	N(zeta(-2, 1), 30)	0	
+n-hurwitzzeta-neg-2-2	N(zeta(-2, 2), 30)	-1.00000000000000000000000000000	
+n-hurwitzzeta-neg-2-3	N(zeta(-2, 3), 30)	-5.00000000000000000000000000000	
+n-hurwitzzeta-neg-2-0p5	N(zeta(-2, 0.5), 30)	0	
+n-hurwitzzeta-neg-2-0p25	N(zeta(-2, 0.25), 30)	-0.0156250000000000000000000000000	
+n-hurwitzzeta-neg-2-1p3	N(zeta(-2, 1.3), 30)	-0.103999999999999939714889762854	
+n-hurwitzzeta-neg-2-7-over-3	N(zeta(-2, Rational(7, 3)), 30)	-1.90123456790123456790123456790	
+n-hurwitzzeta-neg-2-1-plus-i	N(zeta(-2, (1 + 1*I)), 30)	0.5 + 0.166666666666666666666666666667*I	
+n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i	N(zeta(-2, (2 + -0.5*I)), 30)	-0.625 + 1.0416666666666666620407373974*I	
+n-hurwitzzeta-neg-2-neg-0p5	N(zeta(-2, -0.5), 30)	0.250000000000000000000000000000	
+n-hurwitzzeta-neg-2-neg-1p5	N(zeta(-2, -1.5), 30)	2.50000000000000000000000000000	
+n-hurwitzzeta-neg-3-1	N(zeta(-3, 1), 30)	0.00833333333333333333333333333333	
+n-hurwitzzeta-neg-3-2	N(zeta(-3, 2), 30)	-0.991666666666666666666666666667	
+n-hurwitzzeta-neg-3-3	N(zeta(-3, 3), 30)	-8.99166666666666666666666666667	
+n-hurwitzzeta-neg-3-0p5	N(zeta(-3, 0.5), 30)	-0.00729166666666666851703837437526	
+n-hurwitzzeta-neg-3-0p25	N(zeta(-3, 0.25), 30)	-0.000455729166666666782314898398454	
+n-hurwitzzeta-neg-3-1p3	N(zeta(-3, 1.3), 30)	-0.0296916666666667827811920687964	
+n-hurwitzzeta-neg-3-7-over-3	N(zeta(-3, Rational(7, 3)), 30)	-2.41141975308641975308641975309	
+n-hurwitzzeta-neg-3-1-plus-i	N(zeta(-3, (1 + 1*I)), 30)	0.00833333333333333333333333333333 + 0.5*I	
+n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i	N(zeta(-3, (2 + -0.5*I)), 30)	-0.194791666666666666666666666667 + 1.3125*I	
+n-hurwitzzeta-neg-3-neg-0p5	N(zeta(-3, -0.5), 30)	-0.132291666666666668517038374375	
+n-hurwitzzeta-neg-3-neg-1p5	N(zeta(-3, -1.5), 30)	-3.50729166666666669627261399000	
+n-hurwitzzeta-0p5-1	N(zeta(0.5, 1), 30)	-1.46035450880958683761434713233	
+n-hurwitzzeta-0p5-2	N(zeta(0.5, 2), 30)	-2.46035450880958681288949915252	
+n-hurwitzzeta-0p5-3	N(zeta(0.5, 3), 30)	-3.16746128999613433729034351462	
+n-hurwitzzeta-0p5-0p5	N(zeta(0.5, 0.5), 30)	-0.604898643421630355376805709966	
+n-hurwitzzeta-0p5-0p25	N(zeta(0.5, 0.25), 30)	0.239963524495630964317172129086	
+n-hurwitzzeta-0p5-1p3	N(zeta(0.5, 1.3), 30)	-1.81458907804058400259350491979	
+n-hurwitzzeta-0p5-7-over-3	N(zeta(0.5, Rational(7, 3)), 30)	-2.71615953928753765938562368305	
+n-hurwitzzeta-0p5-1-plus-i	N(zeta(0.5, (1 + 1*I)), 30)	-1.79881374448648561202690527835 - 1.09357687572110832310512079141*I	
+n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i	N(zeta(0.5, (2 + -0.5*I)), 30)	-2.49147423528800970871088793501 + 0.398328078684049180502313447505*I	
+n-hurwitzzeta-0p5-neg-0p5	N(zeta(0.5, -0.5), 30)	-0.604898643421630355376805709966 - 1.41421356237309514547462185874*I	
+n-hurwitzzeta-0p5-neg-1p5	N(zeta(0.5, -1.5), 30)	-0.604898643421630355376805709966 - 2.23071014330082117993470092188*I	
+n-hurwitzzeta-1p5-1	N(zeta(1.5, 1), 30)	2.61237534868548815225608450419	
+n-hurwitzzeta-1p5-2	N(zeta(1.5, 2), 30)	1.61237534868548834334856756792	
+n-hurwitzzeta-1p5-3	N(zeta(1.5, 3), 30)	1.25882195809221458114814538687	
+n-hurwitzzeta-1p5-0p5	N(zeta(1.5, 0.5), 30)	4.77653794755483307454824171145	
+n-hurwitzzeta-1p5-0p25	N(zeta(1.5, 0.25), 30)	10.2130553604666012290635990212	
+n-hurwitzzeta-1p5-1p3	N(zeta(1.5, 1.3), 30)	2.15195547695787725572813542385	
+n-hurwitzzeta-1p5-7-over-3	N(zeta(1.5, Rational(7, 3)), 30)	1.46425424919948810837063411564	
+n-hurwitzzeta-1p5-1-plus-i	N(zeta(1.5, (1 + 1*I)), 30)	1.65093475194936526472337412481 - 0.967357065698767936714622288237*I	
+n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i	N(zeta(1.5, (2 + -0.5*I)), 30)	1.55659577776575130947378511337 + 0.242106322325134348805164563601*I	
+n-hurwitzzeta-1p5-neg-0p5	N(zeta(1.5, -0.5), 30)	4.77653794755483307454824171145 + 2.82842712474619029094924371748*I	
+n-hurwitzzeta-1p5-neg-1p5	N(zeta(1.5, -1.5), 30)	4.77653794755483307454824171145 + 3.3727581786980076472559630929*I	
+n-hurwitzzeta-2p5-1	N(zeta(2.5, 1), 30)	1.34148725725091710891945240292	
+n-hurwitzzeta-2p5-2	N(zeta(2.5, 2), 30)	0.341487257250917179756769693349	
+n-hurwitzzeta-2p5-3	N(zeta(2.5, 3), 30)	0.164710561954280298656558602822	
+n-hurwitzzeta-2p5-0p5	N(zeta(2.5, 0.5), 30)	6.24711063456881188216129885404	
+n-hurwitzzeta-2p5-0p25	N(zeta(2.5, 0.25), 30)	32.8474519546976893025203025900	
+n-hurwitzzeta-2p5-1p3	N(zeta(2.5, 1.3), 30)	0.783218553908237247185297746910	
+n-hurwitzzeta-2p5-7-over-3	N(zeta(2.5, Rational(7, 3)), 30)	0.257447605150205592648448682764	
+n-hurwitzzeta-2p5-1-plus-i	N(zeta(2.5, (1 + 1*I)), 30)	0.0187398370957181676840132330085 - 0.589547708338161577275128534562*I	
+n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i	N(zeta(2.5, (2 + -0.5*I)), 30)	0.287820164365366448766536677795 + 0.139696684393935705026379423543*I	
+n-hurwitzzeta-2p5-neg-0p5	N(zeta(2.5, -0.5), 30)	6.24711063456881188216129885404 - 5.65685424949238058189848743496*I	
+n-hurwitzzeta-2p5-neg-1p5	N(zeta(2.5, -1.5), 30)	6.24711063456881188216129885404 - 6.01974161879359215276963368524*I	
+n-hurwitzzeta-neg-0p5-1	N(zeta(-0.5, 1), 30)	-0.207886224977354566734177865328	
+n-hurwitzzeta-neg-0p5-2	N(zeta(-0.5, 2), 30)	-1.20788622497735456601730672540	
+n-hurwitzzeta-neg-0p5-3	N(zeta(-0.5, 3), 30)	-2.62209978735044961481899544961	
+n-hurwitzzeta-neg-0p5-0p5	N(zeta(-0.5, 0.5), 30)	0.0608884655805949220885864292541	
+n-hurwitzzeta-neg-0p5-0p25	N(zeta(-0.5, 0.25), 30)	0.0903222587612462490813669546696	
+n-hurwitzzeta-neg-0p5-1p3	N(zeta(-0.5, 1.3), 30)	-0.454363742420250849018970029647	
+n-hurwitzzeta-neg-0p5-7-over-3	N(zeta(-0.5, Rational(7, 3)), 30)	-1.63960452469900834923927408468	
+n-hurwitzzeta-neg-0p5-1-plus-i	N(zeta(-0.5, (1 + 1*I)), 30)	0.0878459278201809127336080976957 - 0.795101413593407063333942139081*I	
+n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i	N(zeta(-0.5, (2 + -0.5*I)), 30)	-1.15780111352733006135906634881 + 0.61771120231064835515155664325*I	
+n-hurwitzzeta-neg-0p5-neg-0p5	N(zeta(-0.5, -0.5), 30)	0.0608884655805949220885864292541 + 0.707106781186547572737310929369*I	
+n-hurwitzzeta-neg-0p5-neg-1p5	N(zeta(-0.5, -1.5), 30)	0.0608884655805949220885864292541 + 1.93185165257813662442742952408*I	
+n-hurwitzzeta-2-plus-i-1	N(zeta((2 + 1*I), 1), 30)	1.15035570325490267174284993474 - 0.437530865919607881117527898593*I	
+n-hurwitzzeta-2-plus-i-2	N(zeta((2 + 1*I), 2), 30)	0.150355703254902671742849934745 - 0.437530865919607881117527898593*I	
+n-hurwitzzeta-2-plus-i-3	N(zeta((2 + 1*I), 3), 30)	-0.0419540220860903599017325636705 - 0.277790546841199180830019670727*I	
+n-hurwitzzeta-2-plus-i-0p5	N(zeta((2 + 1*I), 0.5), 30)	3.50749884820183067616451307266 + 2.03139880893398782551982607558*I	
+n-hurwitzzeta-2-plus-i-0p25	N(zeta((2 + 1*I), 0.25), 30)	3.63422079882473552115246274444 + 15.1953701855705405484935402918*I	
+n-hurwitzzeta-2-plus-i-1p3	N(zeta((2 + 1*I), 1.3), 30)	0.634178650268900045053828062433 - 0.536110383539212620040387354445*I	
+n-hurwitzzeta-2-plus-i-7-over-3	N(zeta((2 + 1*I), Rational(7, 3)), 30)	0.0551333896367952252482168603076 - 0.37686265504836735060377137832*I	
+n-hurwitzzeta-2-plus-i-1-plus-i	N(zeta((2 + 1*I), (1 + 1*I)), 30)	-0.63530434344001180456897952815 - 1.65884864360589497797149230322*I	
+n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i	N(zeta((2 + 1*I), (2 + -0.5*I)), 30)	0.185393489012994582531484082187 - 0.270373692422873642905619648044*I	
+n-hurwitzzeta-2-plus-i-neg-0p5	N(zeta((2 + 1*I), -0.5), 30)	74.7103827587637849705587912878 + 61.1754248066226585559344898217*I	
+n-hurwitzzeta-2-plus-i-neg-1p5	N(zeta((2 + 1*I), -1.5), 30)	84.161237415055409650499022448 + 57.1186433542858189025965213012*I	
+n-hurwitzzeta-0p5-plus-3i-1	N(zeta((0.5 + 3*I), 1), 30)	0.53273667097423293981250935758 - 0.0788965134258333838923604730553*I	
+n-hurwitzzeta-0p5-plus-3i-2	N(zeta((0.5 + 3*I), 2), 30)	-0.467263329025767116076615878319 - 0.078896513425833382656205086906*I	
+n-hurwitzzeta-0p5-plus-3i-3	N(zeta((0.5 + 3*I), 3), 30)	-0.122906273682167260444497631381 + 0.538694142619969261508183348355*I	
+n-hurwitzzeta-0p5-plus-3i-0p5	N(zeta((0.5 + 3*I), 0.5), 30)	-0.802188434581937226397485574125 + 0.791260035759493662865793339734*I	
+n-hurwitzzeta-0p5-plus-3i-0p25	N(zeta((0.5 + 3*I), 0.25), 30)	-0.821315995611797911024609675223 - 2.11791354690106903291280104895*I	
+n-hurwitzzeta-0p5-plus-3i-1p3	N(zeta((0.5 + 3*I), 1.3), 30)	0.157370174830999132176145849371 - 0.442640214770041895420149558049*I	
+n-hurwitzzeta-0p5-plus-3i-7-over-3	N(zeta((0.5 + 3*I), Rational(7, 3)), 30)	-0.453727021657171526533270182058 + 0.204440194003099030670447355214*I	
+n-hurwitzzeta-0p5-plus-3i-1-plus-i	N(zeta((0.5 + 3*I), (1 + 1*I)), 30)	-1.4173015059291314197405886803 - 8.33564356221337593341880950942*I	
+n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i	N(zeta((0.5 + 3*I), (2 + -0.5*I)), 30)	-0.181016361585113888521547664823 + 0.00931234027233905636844468745039*I	
+n-hurwitzzeta-0p5-plus-3i-neg-0p5	N(zeta((0.5 + 3*I), -0.5), 30)	15305.1296099250284896697849035 + 8535.09396001409550081007182598*I	
+n-hurwitzzeta-0p5-plus-3i-neg-1p5	N(zeta((0.5 + 3*I), -1.5), 30)	5816.16316701183404802577570081 + 5023.94892708939732983708381653*I	
+n-hurwitzzeta-neg-0p5-plus-i-1	N(zeta((-0.5 + 1*I), 1), 30)	-0.000817893132952544790574556099472 - 0.223071688697777659182719389719*I	
+n-hurwitzzeta-neg-0p5-plus-i-2	N(zeta((-0.5 + 1*I), 2), 30)	-1.00081789313295254479383301055 - 0.223071688697777648274801679711*I	
+n-hurwitzzeta-neg-0p5-plus-i-3	N(zeta((-0.5 + 1*I), 3), 30)	-2.08868598014686144983543654238 + 0.680556014096187341595372950046*I	
+n-hurwitzzeta-neg-0p5-plus-i-0p5	N(zeta((-0.5 + 1*I), 0.5), 30)	0.101159892022160746716252788246 + 0.101365867626040426219269363628*I	
+n-hurwitzzeta-neg-0p5-plus-i-0p25	N(zeta((-0.5 + 1*I), 0.25), 30)	-0.105599710390195944409441608514 + 0.172605566681920757909907138128*I	
+n-hurwitzzeta-neg-0p5-plus-i-1p3	N(zeta((-0.5 + 1*I), 1.3), 30)	-0.243310938687762046139795302224 - 0.330441278258437387549406594189*I	
+n-hurwitzzeta-neg-0p5-plus-i-7-over-3	N(zeta((-0.5 + 1*I), Rational(7, 3)), 30)	-1.38218514408713650371244848583 - 0.00905630825006344816221532599897*I	
+n-hurwitzzeta-neg-0p5-plus-i-1-plus-i	N(zeta((-0.5 + 1*I), (1 + 1*I)), 30)	1.040957543118526317724814795 - 1.79991043233683439483901105885*I	
+n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N(zeta((-0.5 + 1*I), (2 + -0.5*I)), 30)	-0.746153397257610095927304882935 + 0.249257816033080004114452776776*I	
+n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N(zeta((-0.5 + 1*I), -0.5), 30)	-10.3541255703876196037072077161 + 12.6883763809252592125176306581*I	
+n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N(zeta((-0.5 + 1*I), -1.5), 30)	0.825049555351030194927375305269 + 38.7318693646863536628188739996*I	
+a-positive-integer-a-peels-off-the-first-terms	zeta(7, 5)	-36130315/35831808 + zeta(7)	
+complex-a	N(zeta(2.3, (8 + 1*I)), 30)	0.0544700827321306866228092072147 - 0.00944851533647025008110366459698*I	
+listable-threads-over-a-list-of-orders	zeta([2, 3, 4], 0.5)	AttributeError: 'list' object has no attribute 'is_Integer'	error
+uncertainty-in-a			
+zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2	zeta(2, Rational(1, 2))	zeta(2, 1/2)	
+zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g	zeta(2, Rational(1, 4))	zeta(2, 1/4)	inconclusive
+to-30-significant-digits-not-yet-the-last-digit	N(zeta(3, Rational(1, 3)), 30)	27.5610611997008037762278779774	
+far-left-of-the-strip-all-40-digits-agree-with	N(zeta(Rational(-41, 2), Rational(3, 10)), 30)	136.361935791831144171775099936	
+left-of-the-strip-at-a-non-integer-a	N(zeta(-20, 0.7), 30)	-80.0909738762537273260022629984	
+left-of-the-strip-at-a-non-integer-a-and-s	N(zeta(-40.5, 0.4), 30)	7724997484091589.00000000000000	
+a-negative-a-frac-12-5-is-real-and-so-is-the	N(zeta(5, Rational(-1, 2)), 30)	0.144760409444467716272330080168	
+certified-digits-zeta-1-2-1-3	N(zeta(Rational(1, 2), Rational(1, 3)), 30)	-0.118083327934221719094454170794	
+zeta-0-a-frac-12-a-exact-and-symbolic-in-a	zeta(0, Symbol("a"))	True	
+zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	zeta(-1, Symbol("a"))	True	
+pole-at-s-1-for-every-a	zeta(1, 3)	zoo	
+zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s	zeta(Symbol("s"), Rational(1, 2))	True	
+zeta-s-1-zeta-s-for-symbolic-s	zeta(Symbol("s"), 1)	True	
+zeta-0-a-frac-12-a-holds-at-a-0-too	zeta(0, 0)	1/2	
+zeta-2-a-b-3-a-3	zeta(-2, Symbol("a"))	True	
+partial-a-zeta-s-a-s-zeta-s-1-a			
+zeta-4-2-pi-4-90-1	zeta(4, 2)	-1 + pi**4/90	
+zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	zeta(-3, Rational(7, 3))	-7813/3240	
+re-s-0-a-0-is-indeterminate	N(zeta((0 + -1*I), 0), 30)	nan	
+re-s-negative-a-drops-the-term-cleanly	N(zeta((-1.5 + 0.5*I), -2), 30)	nan	disagree

@@ -1,0 +1,7 @@
+id	in	out	verdict
+n-pi-30	N(pi, 30)	3.14159265358979323846264338328	
+the-last-digit-correctly-rounded-computing-at-30			
+a-list-number-by-number	N([pi, E, sqrt(2)], 30)	AttributeError: 'list' object has no attribute 'evalf'	error
+an-exact-tie-rounds-to-the-even-digit-0-125	N(Rational(1, 8), 30)	0.125000000000000000000000000000	disagree
+and-0-375-to-0-38	N(Rational(3, 8), 30)	0.375000000000000000000000000000	disagree
+n-pi-1-digit	N(pi, 30)	3.14159265358979323846264338328	disagree

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+csgn-1-1			[Csgn, 1]	1	
+csgn-neg-3-neg-1			[Csgn, -3]	-1	Exact for a negative integer, no N() needed
+csgn-0-0			[Csgn, 0]	0	
+csgn-i-1	Scope		[N, [Csgn, [Complex, 0, 1]]]	1	$\mathrm{Csgn}(i) = 1$ -- $\mathrm{Re}(i) = 0$ and $\mathrm{Im}(i) > 0$
+csgn-neg-i-neg-1	Scope		[N, [Csgn, [Complex, 0, -1]]]	-1	$\mathrm{Csgn}(-i) = -1$ -- $\mathrm{Re}(-i) = 0$ and $\mathrm{Im}(-i) < 0$

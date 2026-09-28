@@ -1,0 +1,19 @@
+---
+name: FactorialMoment
+domain: Statistics
+signature: FactorialMoment(dist, r)
+summary: The factorial moment $E[X(X-1)\cdots(X-r+1)]$.
+signatures:
+  - call: FactorialMoment(dist, r)
+    description: exact for $r=0,1,2$ via the raw-moment identity $E[X(X-1)]=E[X^2]-E[X]$; $r\geq 3$ stays unevaluated.
+    library: enumeratio-statistics
+    type: (distribution, integer) -> real
+details:
+  - Generic over every distribution this package's [[Moment]] answers, old or new.
+seeAlso:
+  - Moment
+  - CentralMoment
+  - Cumulant
+names:
+  wolframIdentity: true
+---

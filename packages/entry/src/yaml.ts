@@ -1,5 +1,5 @@
 // The strict YAML schema and the single reader/writer (design/examples-as-data.md §4). Every
-// `reference/<Head>.yaml` and `reference/<Head>.implementations.yaml` file goes through these
+// `reference/<Head>/index.md` and `reference/<Head>/examples.values.*.tsv` file goes through these
 // two functions, and nothing else in the repo is allowed to import `yaml` directly (see
 // `packages/utils/tests/no-yaml-imports.test.ts`) -- a stray `yaml.parse` with YAML 1.2's core
 // schema would quietly turn `True` into `true` and `0o17` into `15`.
@@ -123,4 +123,16 @@ export function stringifyYaml(value: unknown, options: StringifyOptions = {}): s
 /** True if `text` is exactly what {@link stringifyYaml} would produce for its own parse. */
 export function isCanonicalYaml(text: string, options?: StringifyOptions): boolean {
   return stringifyYaml(parseYaml(text), options) === text;
+}
+
+/**
+ * `value` in flow style on one line, the way a table cell holds it: `[Mod, 5, 0]`,
+ * `{code: warn, text: …}`, a scalar quoted only when it must be. {@link parseYaml} reads it back.
+ */
+export function stringifyFlow(value: unknown): string {
+  const doc = new Document(value, SCHEMA_OPTIONS);
+  visit(doc, (_key, node) => {
+    if (isMap(node) || isSeq(node)) node.flow = true;
+  });
+  return doc.toString({ lineWidth: 0, flowCollectionPadding: false }).trimEnd();
 }

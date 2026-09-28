@@ -1,0 +1,15 @@
+id	in	out	tex.in	tex.out
+reciprocal-not-continuous	FunctionContinuous[Power[x, -1], x]	False	\text{FunctionContinuous}\left[\frac{1}{x},x\right]	\text{False}
+polynomial-continuous	FunctionContinuous[Power[x, 2], x]	True	\text{FunctionContinuous}\left[x^2,x\right]	\text{True}
+sqrt-not-continuous-everywhere	FunctionContinuous[Sqrt[x], x]			
+log-not-continuous-everywhere	FunctionContinuous[Log[x], x]			
+tangent-has-poles	FunctionContinuous[Tan[x], x]			
+a-rational-function-with-no-real-poles	FunctionContinuous[Power[Plus[Power[x, 2], 1], -1], x]			
+sqrt-of-an-always-positive-quantity	FunctionContinuous[Sqrt[Plus[Power[x, 2], 1]], x]			
+reciprocal-restricted-past-its-pole	FunctionContinuous[List[Power[x, -1], Greater[x, -1]], x]			
+sqrt-restricted-past-its-own-domain	FunctionContinuous[List[Sqrt[x], Greater[x, -5]], x]			
+log-restricted-to-its-own-domain	FunctionContinuous[List[Log[x], Greater[x, 0]], x]			
+log-restricted-includes-its-singular-boundary	FunctionContinuous[List[Log[x], GreaterEqual[x, 0]], x]			
+reciprocal-restricted-below-its-pole	FunctionContinuous[List[Power[x, -1], Less[x, 0]], x]			
+reciprocal-restricted-domain	FunctionContinuous[List[Power[x, -1], Greater[x, 0]], x]	True	\text{FunctionContinuous}\left[\left\{\frac{1}{x},x>0\right\},x\right]	\text{True}
+sqrt-closed-boundary	FunctionContinuous[List[Sqrt[x], GreaterEqual[x, 0]], x]	True	\text{FunctionContinuous}\left[\left\{\sqrt{x},x\geq 0\right\},x\right]	\text{True}

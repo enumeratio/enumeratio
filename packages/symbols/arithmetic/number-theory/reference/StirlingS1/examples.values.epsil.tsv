@@ -1,0 +1,18 @@
+id	in	out	back
+stirlings1-5-2	StirlingS1(5, 2)	-50	
+stirlings1-4-2	StirlingS1(4, 2)	11	
+s-n-n-is-always-1	StirlingS1(3, 3)	1	
+s-n-0-is-0-for-n-0	StirlingS1(5, 0)	0	
+stirlings1-20-10	StirlingS1(20, 10)	381_922_055_502_195	
+threads-element-wise-over-a-list-as-wolfram-s	StirlingS1([2, 4, 6], 2)	[1, 11, 274]	
+exact-for-large-n	StirlingS1(50, 2)	2_724_619_372_591_264_761_651_711_494_187_624_530_726_005_154_239_846_809_600_000_000	
+a-mid-sized-n-and-k-past-the-fast-paths	StirlingS1(40, 14)	1_640_591_781_294_212_129_275_881_145_293_779_479_141_760	
+the-number-of-permutations-of-5-elements-with	StirlingS1(5, 3)	35	
+the-unsigned-values-in-a-row-sum-to-n	Sum(Abs(StirlingS1(4, k)), (k, 0, 4)) == 4!	True	
+the-signed-row-sum-vanishes-for-n-ge-2	Sum(StirlingS1(6, k), (k, 0, 6))	0	
+s-n-n-1-binom-n-2	StirlingS1(6, 5) == -Binomial(6, 2)	True	
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	"Sum(StirlingS1(4, k) * x ^ k, (k, 0, 4)) == Expand(x * (x - 1) * (x - 2) * (x -\n                                                                            3))"	True	[Equal, [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]], [Expand, [Multiply, [Multiply, [Multiply, x, [Subtract, x, 1]], [Subtract, x, 2]], [Subtract, x, 3]]]]
+the-empty-case-s-0-0-1-by-convention-distinct	StirlingS1(0, 0)	1	
+k-n-is-0	StirlingS1(5, 6)	0	
+a-negative-k-stays-symbolic	StirlingS1(4, -1)	StirlingS1(4, -1)	
+s-n-1-1-n-1-n-1-so-s-10-1-9	StirlingS1(10, 1)	-362_880	

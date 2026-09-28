@@ -1,0 +1,20 @@
+id	in	out
+n-forces-the-numeric-result-that-plain		
+n-tanh-1		
+stays-symbolic-even-at-0-same-as-sinh-and-cosh		
+a-float-argument-evaluates-directly-no-n-needed		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+interval-arithmetic-tanh-is-increasing-so-tanh-0		
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1		
+the-horizontal-asymptote-at-infty		
+tanh-i-pi-4-i-tan-pi-4-i		
+oddness-pulls-the-sign-out-of-a-symbolic		
+tanh-artanh-x-x-for-every-x		
+tanh-artanh-2-2-past-the-real-domain		
+derivative-sech-2-x		
+antiderivative-ln-cosh-x		
+tanh-has-no-limit-at-complex-infinity-undefined		
+to-30-significant-digits-every-one-correctly		
+tanh-x-frac-sinh-x-cosh-x	\tanh(1)=\frac{\sinh(1)}{\cosh(1)}	\mathrm{True}
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x		

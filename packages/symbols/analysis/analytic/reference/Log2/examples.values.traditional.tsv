@@ -1,0 +1,19 @@
+id	in	out
+log2-8		
+log2-1		
+log2-1-024		
+log2-2-pow-10		
+a-machine-precision-argument-evaluates		
+an-exact-negative-power-of-2-folds-too-log-2		
+a-symbolic-argument-becomes-the-two-argument-log		
+an-integer-power-is-pulled-out-2-log-2-3		
+n-log2-9		
+log2-0		
+as-with-ln-the-logarithm-of-complex-infinity-is		
+element-wise-over-a-matrix-including-the-exact		
+interval-arithmetic-log-2-frac-13-2-log-2-3-1		
+uncertainty-propagation-log-2-frac-15-pm-0-01		
+derivative-frac-1-x-ln-2		
+to-30-significant-digits-every-one-correctly		
+a-float-argument-folds-even-for-a-fractional		
+same-as-log-z-2	\log_{2}(8)=\log_{2}(8)	\mathrm{True}

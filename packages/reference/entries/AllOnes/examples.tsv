@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+the-first-25-terms		test	[Take, AllOnes, 25]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+1-is-in-allones	Properties		[Element, 1, AllOnes]	True
+2-is-not-in-allones	Properties		[Element, 2, AllOnes]	False

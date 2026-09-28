@@ -1,0 +1,4 @@
+id	in
+nprobability-normal-outside-one-sigma-ish	NProbability[Greater[Power[x, 2], 1], Distributed[x, NormalDistribution[0, 1]]]
+nprobability-poisson-is-even	NProbability[Equal[Mod[x, 2], 0], Distributed[x, PoissonDistribution[4]]]
+nprobability-agrees-with-exact-cdf	NProbability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]

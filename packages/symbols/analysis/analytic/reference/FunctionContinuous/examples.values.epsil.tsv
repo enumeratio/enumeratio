@@ -1,0 +1,15 @@
+id	in	out
+reciprocal-not-continuous	FunctionContinuous(x ^ -1, x)	False
+polynomial-continuous	FunctionContinuous(x ^ 2, x)	True
+sqrt-not-continuous-everywhere	FunctionContinuous(Sqrt(x), x)	False
+log-not-continuous-everywhere	FunctionContinuous(Ln(x), x)	False
+tangent-has-poles	FunctionContinuous(Tan(x), x)	False
+a-rational-function-with-no-real-poles	FunctionContinuous((x ^ 2 + 1) ^ -1, x)	True
+sqrt-of-an-always-positive-quantity	FunctionContinuous(Sqrt(x ^ 2 + 1), x)	True
+reciprocal-restricted-past-its-pole	FunctionContinuous(x ^ -1, x, x > -1)	False
+sqrt-restricted-past-its-own-domain	FunctionContinuous(Sqrt(x), x, x > -5)	False
+log-restricted-to-its-own-domain	FunctionContinuous(Ln(x), x, x > 0)	True
+log-restricted-includes-its-singular-boundary	FunctionContinuous(Ln(x), x, x >= 0)	False
+reciprocal-restricted-below-its-pole	FunctionContinuous(x ^ -1, x, x < 0)	True
+reciprocal-restricted-domain	FunctionContinuous(x ^ -1, x, x > 0)	True
+sqrt-closed-boundary	FunctionContinuous(Sqrt(x), x, x >= 0)	True

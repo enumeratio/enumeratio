@@ -1,0 +1,9 @@
+---
+name: NumberOfTriangles
+domain: Combinatorics
+signature: NumberOfTriangles(...)
+summary: Number of triangles
+statOn:
+  - LabeledGraph
+stub: carrier
+---

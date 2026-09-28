@@ -1,0 +1,24 @@
+---
+name: IsPerfect
+domain: Number theory
+signature: IsPerfect(n)
+summary: Tests whether $n$ equals the sum of its proper divisors.
+signatures:
+  - call: IsPerfect(n)
+    description: $n = \sigma_1(n) - n$
+  - call: IsPerfect(n)
+    description: Tests whether $n$ equals the sum of its proper divisors.
+    library: enumeratio-number-theory
+    type: (integer) -> boolean
+    overrides: compute-engine
+details:
+  - compute-engine has this natively; the gap closed here is negative $n$ (never perfect) and threading over a list.
+  - The even perfect numbers are exactly $2^{p-1}(2^p-1)$ for a Mersenne prime exponent $p$ — see [[PerfectNumber]] and [[MersennePrimeExponent]]. Whether an odd perfect number exists is open.
+  - Wolfram's `PerfectNumberQ`.
+seeAlso:
+  - PerfectNumber
+  - MersennePrimeExponent
+  - DivisorSigma
+names:
+  wolfram: PerfectNumberQ
+---

@@ -1,0 +1,8 @@
+id	in
+four-rights-one-left	RademacherSymbol["LRRRR"]
+the-arithmetic-side	DedekindSum[4, 3]
+phi-on-t-n-just-counts	RademacherPhi[ModularMatrix[1, 7, 0, 1]]
+the-same-number-by-counting-letters	WordSymbol["LRRRR"]
+and-again-by-the-linking-number	LinkingWithTrefoil["LRRRR"]
+s-1-5	DedekindSum[1, 5]
+turning-equally-both-ways-gives-linking-number	LinkingWithTrefoil["LLRR"]

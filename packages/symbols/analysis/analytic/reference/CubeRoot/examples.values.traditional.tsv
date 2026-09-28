@@ -1,0 +1,6 @@
+id	in	out
+the-cube-root-of-a-perfect-cube		
+the-real-root-of-a-negative-number-not-a-complex		
+at-a-non-perfect-cube-n-forces-the-numeric		
+threads-element-wise-over-a-list		
+the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\mathrm{True}

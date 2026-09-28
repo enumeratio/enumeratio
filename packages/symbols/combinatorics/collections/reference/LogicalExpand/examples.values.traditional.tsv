@@ -1,0 +1,5 @@
+id	in	out
+implies-becomes-or-not		
+distributes-and-over-or		
+xor-eliminated-into-dnf		
+a-contradictory-term-drops-out	\mathrm{LogicalExpand}(p\land\lnot p)	\mathrm{False}

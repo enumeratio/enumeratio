@@ -1,0 +1,9 @@
+id	in
+q-1-z-e-z-so-the-inverse-at-1-2-is-ln-2	InverseGammaRegularized[1, 0.5]
+the-median-of-the-gamma-2-1-distribution	InverseGammaRegularized[2, 0.5]
+inversegammaregularized-2p5-0p3	InverseGammaRegularized[2.5, 0.3]
+qinv-5-0-1	InverseGammaRegularized[5, 0.1]
+qinv-0-5-0-9	InverseGammaRegularized[0.5, 0.9]
+q-a-0-1	InverseGammaRegularized[a, 1]
+q-a-infty-0	InverseGammaRegularized[a, 0]
+order-1-inverts-e-z	InverseGammaRegularized[1, s]

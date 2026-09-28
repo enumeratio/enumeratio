@@ -1,0 +1,4 @@
+id	in	out
+numberexpand-1-234	NumberExpand(1_234)	[1_000, 200, 30, 4]
+base-2-zero-terms-kept	NumberExpand(10, 2)	[8, 0, 2, 0]
+every-term-carries-the-sign	NumberExpand(-123)	[-100, -20, -3]

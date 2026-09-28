@@ -1,0 +1,6 @@
+id	in	out
+selects-the-second-branch	Piecewise([[1, x < 0], [2, x >= 0]])	Piecewise([[1, x < 0], [2, 0 <= x]])
+evaluated-at-a-concrete-point-below-zero	ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, -5))	1
+evaluated-at-a-concrete-point-at-or-above-zero	ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, 5))	2
+falls-through-to-the-explicit-default	Piecewise([[x ^ 2, x < 0]], 99)	Piecewise([[x ^ 2, x < 0]], 99)
+every-clause-eliminated-falls-through-to-default	Piecewise([[1, 2 > 3]], 99)	99

@@ -1,0 +1,5 @@
+id	in	out
+one-line-to-cycles	\mathrm{PermutationCycles}(\bigl\lbrack2, 5, 3, 6, 1, 8, 7, 9, 4, 10\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)
+identity-has-no-cycles	\mathrm{PermutationCycles}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigr\rbrack)
+with-a-custom-head	\mathrm{PermutationCycles}(\bigl\lbrack2, 5, 3, 6, 1, 8, 7, 9, 4, 10\bigr\rbrack, \mathrm{head})	\mathrm{head}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack, \bigl\lbrack7\bigr\rbrack, \bigl\lbrack10\bigr\rbrack\bigr\rbrack)
+idempotent-on-cycles	\mathrm{PermutationCycles}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack))	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack)

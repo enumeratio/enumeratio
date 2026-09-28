@@ -1,0 +1,4 @@
+id	in	out
+count-words-3-2	Count(Words(3, 2))	8
+first-element-of-words-3-2	Words(3, 2)[1]	[1, 1, 1]
+every-element-of-words-3-2	Take(Words(3, 2), 8)	"[\n  [1, 1, 1],\n  [1, 1, 2],\n  [1, 2, 1],\n  [1, 2, 2],\n  [2, 1, 1],\n  [2, 1, 2],\n  [2, 2, 1],\n  [2, 2, 2],\n]"

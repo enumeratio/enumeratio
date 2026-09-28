@@ -1,9 +1,0 @@
-xgcd-240-46:
-  epsil:
-    in: XGCD(240, 46)
-    out: (2, -9, 47)
-  tex:
-    in: \mathrm{XGCD}(240, 46)
-    out: (2,-9,47)
-  fullform:
-    in: XGCD[240, 46]

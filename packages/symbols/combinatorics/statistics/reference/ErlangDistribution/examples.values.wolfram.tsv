@@ -1,0 +1,5 @@
+id	in
+erlang-pdf-exact	PDF[ErlangDistribution[3, 2], 1]
+erlang-cdf-exact	CDF[ErlangDistribution[3, 2], 1]
+erlang-mean-exact	Mean[ErlangDistribution[3, 2]]
+erlang-variance-exact	Variance[ErlangDistribution[3, 2]]

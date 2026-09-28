@@ -1,0 +1,3 @@
+id	in	back
+substitute-a-fixed-value	With[List[Set[x, 3]], Times[x, x]]	[With, [List, [Set, x, 3]], [Multiply, x, x]]
+several-bindings-at-once	With[List[Set[x, 2], Set[y, 5]], Plus[x, y]]	[With, [List, [Set, x, 2], [Set, y, 5]], [Add, x, y]]

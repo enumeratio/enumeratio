@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+held			[MakeBoxes, [Add, 2, 3]]	[RowBox, [List, "'2'", "'+'", "'3'"]]	holds its argument, so the notation is of the sum as written

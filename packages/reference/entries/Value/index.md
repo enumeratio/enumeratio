@@ -1,0 +1,9 @@
+---
+name: Value
+domain: Combinatorics
+signature: Value(...)
+summary: Value
+statOn:
+  - BinaryWord
+stub: carrier
+---

@@ -1,0 +1,19 @@
+---
+name: FunctionMonotonicity
+domain: Elementary functions
+signature: FunctionMonotonicity(f, x)
+summary: 1 if f is increasing over its whole domain, -1 if decreasing, 0 if constant, Indeterminate otherwise.
+signatures:
+  - call: FunctionMonotonicity(f, x)
+    description: whether f is monotonic in the real variable x over the whole real line.
+    library: "@enumeratio/analytic"
+    type: (expression, symbol) -> expression
+details:
+  - Matches Wolfram's own convention, confirmed against `wolframscript`, that a proper (non-`Reals`) domain already answers `Indeterminate` -- `FunctionMonotonicity(Sqrt(x), x)` and `FunctionMonotonicity(Log(x), x)` are `Indeterminate`, not declined, because their domain isn't all of $\mathbb R$, not because this file can't analyze them.
+  - For a polynomial with domain $\mathbb R$, the sign of its derivative is read off in closed form -- constant sign (possibly touching zero at one point) gives 1 or -1, a proven sign change gives `Indeterminate`. Exp of an affine argument is always 1 or -1, by the sign of the argument's slope.
+  - Declines only when the classifier itself declines (see [[FunctionDomain]]) or when a polynomial's derivative is a genuine multi-term polynomial of degree > 2 (its sign isn't determined here).
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

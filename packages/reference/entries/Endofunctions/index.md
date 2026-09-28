@@ -1,0 +1,23 @@
+---
+name: Endofunctions
+domain: Combinatorics
+signature: Endofunctions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Function.End (Fin n)
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Group/End.html
+  - system: oeis
+    identity: A000312
+    url: https://oeis.org/A000312
+stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Endofunction
+signatures:
+  - call: Endofunctions(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis; not yet written up here.
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+---

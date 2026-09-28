@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+characteristicfunction-normal			[CharacteristicFunction, [NormalDistribution, 2, 3], t]	[Power, ExponentialE, [Add, [Multiply, [Rational, -9, 2], [Power, t, 2]], [Multiply, [Complex, 0, 2], t]]]
+characteristicfunction-poisson			[CharacteristicFunction, [PoissonDistribution, 2], 0]	1
+characteristicfunction-cauchy-standard			[CharacteristicFunction, [CauchyDistribution, 0, 1], t]	[Power, ExponentialE, [Negate, [Abs, t]]]

@@ -1,0 +1,4 @@
+id	in
+count-noncrossingpartitions-4	Count[NonCrossingPartitions[4]]
+first-element-of-noncrossingpartitions-4	Part[NonCrossingPartitions[4], 1]
+every-element-of-noncrossingpartitions-4	Take[NonCrossingPartitions[4], 5]

@@ -1,0 +1,50 @@
+---
+name: PowerModList
+domain: Modular arithmetic
+signature: PowerModList(a, s/r, m)
+summary: Every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$ — all the values $a^{s/r}$ can take modulo $m$.
+signatures:
+  - call: PowerModList(a, s/r, m)
+    description: every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$, ascending
+    library: enumeratio-residues
+    type: (number, number, number) -> list<number>
+  - call: PowerModList(a, k, m)
+    description: an integer exponent gives the single value $\{a^k \bmod m\}$
+    library: enumeratio-residues
+  - call: PowerModList(a, -1, m)
+    description: the modular inverse $\{a^{-1}\}$, or $\{\}$ when $\gcd(a, m) \ne 1$
+    library: enumeratio-residues
+  - call: PowerModList(a, s/r, m)
+    description: Every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$ — all the values $a^{s/r}$ can take modulo $m$.
+    library: enumeratio-number-theory
+    type: (number, number, number) -> list<number>
+    overrides: enumeratio-residues
+details:
+  - "The problem splits over the prime powers of $m$ by the Chinese remainder theorem: a root mod $m$ is one root per channel $p^e$, every combination, so the count is the product of the channel counts."
+  - Mod a prime $p$ the units are cyclic of order $p - 1$, so $x^r \equiv b$ has exactly $\gcd(r, p-1)$ roots or none. One root is built Sylow subgroup by Sylow subgroup — only the primes dividing $r$ need a discrete log — so $p - 1$ is never factored and a 30-digit prime costs a millisecond.
+  - 'Roots are Hensel-lifted up each prime power: a root with $r x^{r-1} \not\equiv 0 \pmod p$ lifts uniquely; a singular one (the 2-adic channel of a square root, or $p \mid x$) lifts to all $p$ of its lifts or to none.'
+  - The modulus has to be factored, by trial division and Pollard's rho under a step budget. A product of two large primes is out of reach, and the call stays unevaluated — which is the whole security of the Rabin cryptosystem.
+  - At most 100 000 roots are listed; past that the call stays unevaluated rather than build the list.
+  - Beyond Wolfram, a rational $a = u/v$ with $\gcd(v, m) = 1$ is read in $\mathbb{Z}/m$ as $u \cdot v^{-1}$, the image of $\mathbb{Z}_{(m)}$; a denominator sharing a factor with $m$ has no image, and the list is empty. See [[RationalReconstruction]] for the way back.
+  - Threads over lists in any argument.
+  - 'Over the Gaussian integers — beyond Wolfram, whose PowerModList takes integers only — $m$ factors into Gaussian prime powers: a split prime maps onto $\mathbb{Z}/p^e$ by $i \mapsto \sqrt{-1}$, an inert $p$ has residue field $\mathbb{F}_{p^2}$ and lifts by Hensel, and $1 + i$ lifts by testing both residues.'
+seeAlso:
+  - PowerMod
+  - ModularInverse
+  - MultiplicativeOrder
+  - PrimitiveRootList
+  - RationalReconstruction
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PowerModList[$1, $2, $3]
+    arity: 3
+    note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.
+  - origin: mapped
+    form: sage
+    template: enumeratio_power_mod_list($1, $2, $3)
+    arity: 3
+    note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.
+---

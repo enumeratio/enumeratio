@@ -1,0 +1,70 @@
+id	in	out	verdict
+sin-0	sin(n(0))	0.0	
+exact-value-at-a-special-angle	sin((x(std::f64::consts::PI) / n(6)))	0.49999999999999994	
+sin-pi-over-4	sin((x(std::f64::consts::PI) / n(4)))	0.7071067811865475	
+sin-pi-over-3	sin((x(std::f64::consts::PI) / n(3)))	0.8660254037844386	
+sin-pi-over-2	sin((x(std::f64::consts::PI) / n(2)))	1.0	
+sin-pi	sin(x(std::f64::consts::PI))	1.2246467991473532e-16	
+degrees-d-converts-to-radians-so-sin-60-circ-is			
+a-machine-precision-argument-evaluates	sin(x(1.2))	0.9320390859672263	
+a-huge-10-100-argument	nf(sin(power(n(10), n(100))))		
+a-huge-3-200-argument	nf(sin(power(n(3), n(200))))		
+a-huge-neg-7-60-argument	nf(sin((-(power(n(7), n(60))))))		
+a-huge-10-80-plus-1-over-3-argument	nf(sin(((power(n(10), n(80)) + n(1)) / n(3))))		
+sin-1-under-n	nf(sin(n(1)))		
+n-of-an-exact-argument-gives-an-arbitrary	nf(sin(rational(n(6), n(5))))	0.9320390859672263	
+evaluates-at-a-complex-argument			
+threads-element-wise-over-a-matrix	sin(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))	panic: threading: a list where the crate takes a scalar	error
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	sin((x(std::f64::consts::PI) / n(12)))	0.25881904510252074	
+sin-pi-8-frac-sqrt-2-sqrt-2-2	sin((x(std::f64::consts::PI) / n(8)))	0.3826834323650898	
+sin-pi-10-frac-sqrt-5-1-4	sin((x(std::f64::consts::PI) / n(10)))	0.3090169943749474	
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	sin((rational(n(5), n(12)) * x(std::f64::consts::PI)))	0.9659258262890683	
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	sin((rational(n(3), n(8)) * x(std::f64::consts::PI)))	0.9238795325112867	
+large-rational-multiples-of-pi-are-reduced	sin((rational(n(100), n(3)) * x(std::f64::consts::PI)))	-0.8660254037844414	
+any-integer-multiple-of-pi-is-a-zero-of-sine	sin((n(1000001) * x(std::f64::consts::PI)))	3.4473322826621095e-10	
+sin-negate-pi-is-also-zero	sin((-(x(std::f64::consts::PI))))	-1.2246467991473532e-16	
+sin-4-pi-is-zero	sin((n(4) * x(std::f64::consts::PI)))	-4.898587196589413e-16	
+a-full-turn-shift-of-a-symbolic-argument-doesn-t			
+sin-i-pi-2-i-sinh-pi-2-exactly			
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form			
+interval-arithmetic-the-image-of-pi-6-pi-6-is			
+the-image-of-the-whole-real-line-is-1-1			
+wolfram-answers-sin-infty-with-the-range-of-its			
+uncertainty-propagation-sin-2-pm-0-01-approx-0			
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i			
+oddness-pulls-the-sign-out-of-a-symbolic			
+a-half-period-shift-reduces-sin-x-pi-sin-x			
+sin-arcsin-x-x-for-every-x			
+sin-arcsin-2-2-past-the-real-domain			
+sin-arcsin-of-a-complex-argument			
+sin-arccos-x-sqrt-1-x-2			
+sin-arctan-x-frac-x-sqrt-1-x-2			
+derivative-frac-d-dx-sin-x-cos-x			
+second-derivative			
+antiderivative			
+area-under-one-arch-int-0-pi-sin-x-dx-2			
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers			
+taylor-series-about-0-only-odd-powers-appear			
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
+to-30-significant-digits-every-one-correctly	nf(sin(n(1)))	0.8414709848078965	
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	nf(sin(power(n(24), n(40))))	-0.5897765161315717	disagree
+threads-element-wise-over-a-list	sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
+degrees-d-converts-a-degree-measure-to-radians			
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))	1.0	
+odd-function-sin-x-sin-x	equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))	true	
+period-2-pi-adding-a-full-turn-doesn-t-change	sin(((x(std::f64::consts::PI) / n(6)) + (n(2) * x(std::f64::consts::PI))))	0.5	
+double-angle-formula-via-trigexpand			
+angle-addition-formula-via-trigexpand			
+triple-angle-formula			
+power-reduction-sin-2-x-frac-1-cos-2x-2			
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
+simplify-knows-the-pythagorean-identity			
+the-same-through-fullsimplify			
+1-radian-isn-t-a-recognized-special-angle-so	sin(n(1))	0.8414709848078965	
+sin-2-a-generic-argument-stays-symbolic	sin(n(2))	0.9092974268256817	
+sin-x-plus-y-stays-symbolic			
+pi-15-has-a-radical-form-but-like-wolfram-s	sin((x(std::f64::consts::PI) / n(15)))	0.20791169081775931	
+a-huge-exact-argument-is-reduced-modulo-2-pi	nf(sin(power(n(10), n(20))))	-0.6452512852657808	
+an-even-huger-argument-11-38	nf(sin(power(n(11), n(38))))	-0.7172457893515806	disagree
+the-special-angle-table-reaches-past-30-45-60	sin((x(std::f64::consts::PI) / n(5)))	0.5877852522924731	
+functionexpand-gives-the-nested-radical-form			

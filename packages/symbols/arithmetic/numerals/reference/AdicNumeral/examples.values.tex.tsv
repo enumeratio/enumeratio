@@ -1,0 +1,13 @@
+id	in	out
+6667-3-1-1-3-is-a-10-adic-integer	3\mathrm{AdicNumeral}(10, \frac{1}{3})	\mathrm{AdicNumeral}(10, 1)
+999-1-0-carrying-forever	\mathrm{AdicNumeral}(10, -1)+1	\mathrm{AdicNumeral}(10, 0)
+capped-the-representative-modulo-10-8	\mathrm{AdicNumeral}(10, \frac{1}{3}, 8)	\mathrm{AdicNumeral}(10, 66\,666\,667, 8)
+prime-base-q-5-is-a-field-so-the-point-moves	\frac{\mathrm{AdicNumeral}(5, 3)}{5}	\mathrm{AdicNumeral}(5, \frac{3}{5})
+a-negative-power-inverts-exactly-3-1-1-3-in-z-10	\frac{1}{\mathrm{AdicNumeral}(10, 3)}	\mathrm{AdicNumeral}(10, \frac{1}{3})
+adding-two-capped-numerals-keeps-only-the-weaker	\mathrm{AdicNumeral}(10, \frac{1}{3}, 8)+\mathrm{AdicNumeral}(10, \frac{1}{3}, 5)	\mathrm{AdicNumeral}(10, 33\,334, 5)
+multiplying-by-p-2-raises-the-absolute-precision	25\mathrm{AdicNumeral}(5, 3, 6)	\mathrm{AdicNumeral}(5, 75, 8)
+dividing-by-zero-stays-complexinfinity	\frac{\mathrm{AdicNumeral}(5, -1)}{0}	\tilde\infty
+composite-base-2-is-not-a-unit-of-z-10-so-this	\frac{\mathrm{AdicNumeral}(10, 3)}{2}	\frac{\mathrm{AdicNumeral}(10, 3)}{2}
+numerals-over-different-bases-never-combine-and	\mathrm{AdicNumeral}(7, 2)+\mathrm{AdicNumeral}(5, 2)	\mathrm{AdicNumeral}(7, 2)+\mathrm{AdicNumeral}(5, 2)
+the-exact-zero-has-infinite-valuation	\mathrm{AdicValuation}(\mathrm{AdicNumeral}(10, 0))	\infty
+a-capped-zero-is-only-o-b-prec-so-its-valuation	\mathrm{AdicValuation}(\mathrm{AdicNumeral}(10, 0, 8))	8

@@ -1,0 +1,9 @@
+---
+name: ToNonCrossing
+domain: Combinatorics
+signature: ToNonCrossing(...)
+summary: "Crossing↔nesting swap: non-nesting → non-crossing"
+mapOn:
+  - SetPartition
+stub: carrier
+---

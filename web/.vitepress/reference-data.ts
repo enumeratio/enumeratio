@@ -2,13 +2,14 @@
 // from every package's YAML. In dev, a change to any record (entry or implementations) invalidates the
 // module and reloads the page.
 
-import { dirname, resolve } from "node:path";
+import { resolve } from "node:path";
 import { referenceData } from "@enumeratio/reference/node";
 import type { Plugin, ViteDevServer } from "vite";
 
 const ID = "virtual:reference-entries";
 const RESOLVED = `\0${ID}`;
-const WATCHED = /\/packages\/.*(\/reference\/[^/]+\.yaml|\/reference\/entries\/[^/]+\.yaml)$/;
+// A head folder's files: index.md, examples.tsv and the generated examples.values.<system>.tsv.
+const WATCHED = /\/packages\/.*\/(reference|entries)\/[^/]+\/(index\.md|examples(\.values\.[^/.]+)?\.tsv)$/;
 
 export function referenceDataPlugin(): Plugin {
   return {
@@ -23,7 +24,7 @@ export function referenceDataPlugin(): Plugin {
       const packages = `${resolve(server.config.root, "../packages")}/`;
       // Every directory the loader read a record from.
       const { heads } = referenceData();
-      server.watcher.add([...new Set(heads.map((h) => dirname(h.entryPath)))]);
+      server.watcher.add([...new Set(heads.map((h) => h.dir))]);
       const refresh = (file: string): void => {
         if (!WATCHED.test(file)) return;
         const mod = server.moduleGraph.getModuleById(RESOLVED);

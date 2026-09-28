@@ -1,0 +1,5 @@
+id	in	out
+product-pdf	\operatorname{PDF}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2)), \bigl\lbrack0, 5\bigr\rbrack)	\frac{1}{4\pi}
+product-mean	\mathrm{mean}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2)))	\bigl\lbrack0, 5\bigr\rbrack
+product-variance	\mathrm{Variance}(\mathrm{ProductDistribution}(\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(5, 2)))	\bigl\lbrack1, 4\bigr\rbrack
+product-repeated-form-mean	\mathrm{mean}(\mathrm{ProductDistribution}(\bigl\lbrack\operatorname{NormalDistribution}(0, 1), 3\bigr\rbrack))	\bigl\lbrack0, 0, 0\bigr\rbrack

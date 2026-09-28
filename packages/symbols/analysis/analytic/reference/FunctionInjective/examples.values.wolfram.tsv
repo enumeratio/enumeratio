@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+a-reciprocal-is-injective-on-its-own-domain	FunctionInjective[Divide[1, x], x]	True	\text{FunctionInjective}\left[\frac{1}{x},x\right]	\text{True}
+a-cubic-is-injective	FunctionInjective[Power[x, 3], x]	True	\text{FunctionInjective}\left[x^3,x\right]	\text{True}
+a-parabola-is-not-injective	FunctionInjective[Power[x, 2], x]	False	\text{FunctionInjective}\left[x^2,x\right]	\text{False}
+an-affine-function-is-injective	FunctionInjective[Plus[Times[2, x], 1], x]	True	\text{FunctionInjective}[2 x+1,x]	\text{True}

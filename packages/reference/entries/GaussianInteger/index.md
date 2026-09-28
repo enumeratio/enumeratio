@@ -1,0 +1,15 @@
+---
+name: GaussianInteger
+domain: Combinatorics
+signature: GaussianInteger(...)
+summary: As a Gaussian integer
+catalogCarrier: true
+mapOn:
+  - GaussianInteger
+stub: carrier
+signatures:
+  - call: GaussianInteger(...)
+    description: As a Gaussian integer
+    library: enumeratio-domains
+    type: (tuple<integer, integer>) -> gaussian_integer
+---

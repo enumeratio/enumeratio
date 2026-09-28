@@ -1,0 +1,9 @@
+id	in	out
+all-list-2-4-6-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\top
+all-list-2-4-5-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 5\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\bot
+a-named-predicate	\mathrm{All}(\bigl\lbrack2, 3, 5, 7\bigr\rbrack, \mathrm{IsPrime})	\top
+all-list-1-2-3-function-1-gt-0	\mathrm{All}(\bigl\lbrack1, 2, 3\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0)	\top
+one-definite-failure-decides-the-answer-even	\mathrm{All}(\bigl\lbrack1, x\bigr\rbrack, \mathrm{IsEven})	\bot
+without-a-predicate-tests-the-elements	\mathrm{All}(\bigl\lbrack\top, \top\bigr\rbrack)	\top
+a-level-argument-tests-the-elements-at-depth-2	\mathrm{All}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0, 2)	\top
+vacuously-true-on-an-empty-list	\mathrm{All}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})	\top

@@ -1,0 +1,28 @@
+---
+name: SophieGermainPrimes
+domain: Collections
+signature: SophieGermainPrimes
+summary: "The Sophie Germain primes $2, 3, 5, 11, 23, …$: primes $p$ with $2p+1$ also prime."
+signatures:
+  - call: SophieGermainPrimes
+    description: the prime $p$ with $2p+1$ also prime, an indexed collection of open infinitude.
+details:
+  - A lazy indexed collection; whether there are infinitely many is open, so $Count(SophieGermainPrimes) = NaN$. OEIS A005384.
+  - $At(SophieGermainPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $2n+1$ -- $At(SophieGermainPrimes, 4) = 11$ ($23$ is prime).
+  - "Membership goes through [[Element]]: $Element(11, SophieGermainPrimes)$ is true, $Element(7, SophieGermainPrimes)$ is false ($15$ is not prime)."
+enumerate:
+  expr: Take(SophieGermainPrimes, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - SafePrimes
+  - Primes
+catalog:
+  - system: oeis
+    identity: A005384
+    url: https://oeis.org/A005384
+grades: []
+carrier: Numeric
+unbounded: true
+---

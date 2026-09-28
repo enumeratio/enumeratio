@@ -1,0 +1,31 @@
+---
+name: ErfInv
+domain: Special functions
+signature: ErfInv(x)
+summary: 'The inverse error function: $\operatorname{erfinv}(x)$ solves $\operatorname{erf}(y) = x$ for $-1 < x < 1$.'
+signatures:
+  - call: ErfInv(x)
+    description: the inverse error function, solving $\operatorname{erf}(y) = x$.
+  - call: ErfInv(x)
+    description: 'The inverse error function: $\operatorname{erfinv}(x)$ solves $\operatorname{erf}(y) = x$ for $-1 < x < 1$.'
+    library: enumeratio-analytic
+    type: (number, number?) -> number
+    overrides: compute-engine
+details:
+  - 'Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.'
+  - $\operatorname{erfinv}(0) = 0$, and $\operatorname{erfinv}(x) \to \pm\infty$ as $x \to \pm 1$, the limits where Erf itself saturates.
+  - Computed by Newton's method on Erf itself, refining an initial approximation to full machine precision.
+  - 'Intrinsically ill-conditioned near $x = \pm1$: a tiny change in x there produces a large change in the result.'
+  - compute-engine leaves a call outside $[-1, 1]$ unevaluated rather than erroring or returning NaN.
+seeAlso:
+  - Erf
+  - Erfc
+references:
+  - system: wikipedia
+    identity: Error function
+  - system: mathworld
+    identity: InverseErf
+names:
+  dlmf: inverse error function
+  wolfram: InverseErf
+---

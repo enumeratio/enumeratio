@@ -1,0 +1,9 @@
+---
+name: Repeats
+domain: Combinatorics
+signature: Repeats(...)
+summary: Repeats
+statOn:
+  - AscentSequence
+stub: carrier
+---

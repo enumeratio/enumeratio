@@ -1,0 +1,2 @@
+id	in	out
+q3-has-8-vertices-12-edges	\bigl\lbrack\mathrm{VertexCount}(\mathrm{HypercubeGraph}(3)), \mathrm{EdgeCount}(\mathrm{HypercubeGraph}(3))\bigr\rbrack	\bigl\lbrack8, 12\bigr\rbrack

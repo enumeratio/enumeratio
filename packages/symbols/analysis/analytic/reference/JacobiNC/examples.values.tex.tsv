@@ -1,0 +1,5 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiNC}(0.3, 1.5))	1.044\,645\,321\,516\,758\,4
+m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiNC}(0.3, -2))	1.049\,687\,404\,895\,594\,6
+u-0-is-1-for-any-m	\mathrm{JacobiNC}(0, m)	1
+symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiNC}(u, m)	\mathrm{JacobiNC}(u, m)

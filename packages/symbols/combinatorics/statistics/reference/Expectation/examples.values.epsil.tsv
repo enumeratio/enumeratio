@@ -1,0 +1,5 @@
+id	in	out
+expectation-of-the-bound-variable-is-the-mean	Expectation(x, Distributed(x, NormalDistribution(2, 3)))	2
+expectation-of-x-squared	Expectation(x ^ 2, Distributed(x, NormalDistribution(2, 3)))	13
+expectation-is-linear	Expectation(2x + 1, Distributed(x, NormalDistribution(2, 3)))	5
+a-shape-with-no-closed-form-stays-unevaluated	Expectation(Sin(x), Distributed(x, NormalDistribution(2, 3)))	Expectation(Sin(x), Distributed(x, NormalDistribution(2, 3)))

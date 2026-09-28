@@ -1,0 +1,33 @@
+---
+name: Arccos
+domain: Elementary functions
+signature: Arccos(x)
+summary: Arccosine, the inverse of [[Cos]] restricted to $[0, \pi]$.
+signatures:
+  - call: Arccos(x)
+    description: the principal value $y \in [0, \pi]$ with $\cos(y) = x$.
+  - call: Arccos(x)
+    description: Arccosine, the inverse of [[Cos]] restricted to $[0, \pi]$.
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
+details:
+  - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
+  - 'Co-function with [[Arcsin]]: $\arccos(x) = \pi/2 - \arcsin(x)$.'
+  - 'Undoes [[Cos]] on its principal branch: $\cos(\arccos(x)) = x$ for $x \in [-1, 1]$.'
+seeAlso:
+  - Cos
+  - Arcsin
+  - Arctan
+references:
+  - system: wikipedia
+    identity: Inverse trigonometric functions
+  - system: mathworld
+    identity: InverseCosine
+  - system: dlmf
+    identity: "4.23"
+names:
+  fungrim: Acos
+  dlmf: arccosine function
+  wolfram: ArcCos
+---

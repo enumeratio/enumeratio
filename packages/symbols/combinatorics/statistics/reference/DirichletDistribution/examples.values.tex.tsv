@@ -1,0 +1,4 @@
+id	in	out
+dirichlet-mean	\mathrm{mean}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack))	\bigl\lbrack\frac{1}{10}, \frac{2}{5}\bigr\rbrack
+dirichlet-variance	\mathrm{Variance}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack))	\bigl\lbrack\frac{9}{1\,100}, \frac{6}{275}\bigr\rbrack
+dirichlet-pdf	\operatorname{PDF}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack), \bigl\lbrack\frac{1}{10}, \frac{2}{5}\bigr\rbrack)	(\Gamma(10))(250\Gamma(1)\Gamma(4)\Gamma(5))^{-1}

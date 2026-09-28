@@ -1,0 +1,4 @@
+id	in
+momentgeneratingfunction-gamma	MomentGeneratingFunction[GammaDistribution[2, 1], t]
+momentgeneratingfunction-poisson-at-zero	MomentGeneratingFunction[PoissonDistribution[2], 0]
+momentgeneratingfunction-cauchy-undeclared	MomentGeneratingFunction[CauchyDistribution[0, 1], 1]

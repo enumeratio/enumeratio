@@ -1,0 +1,18 @@
+id	in	out
+the-2-2-closed-form-exact-not-decimalized	MatrixExp([[0, 1], [1, 0]])	[[Cosh(1), Sinh(1)], [Sinh(1), Cosh(1)]]
+the-exponential-of-the-zero-matrix-is-the	MatrixExp([[0, 0], [0, 0]])	[[1, 0], [0, 1]]
+a-diagonal-matrix-exponentiates-entry-by-entry	MatrixExp([[1, 0], [0, 2]])	[[ExponentialE, 0], [0, ExponentialE ^ 2]]
+a-generic-2-2-matrix-no-special-structure	N(MatrixExp([[1, 2], [3, 4]]))	"[\n  [51.968_956_198_705, 74.736_564_567_003_21],\n  [112.104_846_850_504_81, 164.073_803_049_209_83],\n]"
+an-upper-triangular-3-3-matrix-numeric-path	N(MatrixExp([[1, 2, 0], [0, 3, 4], [0, 0, 5]]))	"[\n  [2.718_281_828_459_045, 17.367_255_094_728_623, 110.960_367_084_660_32],\n  [0, 20.085_536_923_187_668, 256.655_244_358_777_85],\n  [0, 0, 148.413_159_102_576_6],\n]"
+a-nilpotent-4-4-generator-numeric-path	N(MatrixExp([[0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1], [0, 0, 0, 0]]))	"[\n  [1, 1, 0.5, 0.166_666_666_666_666_66],\n  [0, 1, 1, 0.5],\n  [0, 0, 1, 1],\n  [0, 0, 0, 1],\n]"
+a-nilpotent-matrix-i-a-since-a-2-0	MatrixExp([[0, 1], [0, 0]])	[[1, 1], [0, 1]]
+a-diagonal-matrix-exp-of-each-diagonal-entry	MatrixExp([[1, 0, 0], [0, 2, 0], [0, 0, 3]])	[[ExponentialE, 0, 0], [0, ExponentialE ^ 2, 0], [0, 0, ExponentialE ^ 3]]
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2	N(MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]]))	"[\n  [1_892_793.801_966_466_5, 2_319_804.348_433_83, 2_921_688.794_284_903_4],\n  [4_267_596.877_957_099, 5_230_361.132_647_167, 6_587_401.226_390_927],\n  [7_065_281.732_605_146, 8_659_197.695_551_049, 10_905_868.064_094_879],\n]"
+a-jordan-block-e-i-n-e-i-n	MatrixExp([[1, 1], [0, 1]])	[[ExponentialE, ExponentialE], [0, ExponentialE]]
+applied-to-a-vector-e-a-v-computed-as-e-a-via	MatrixExp([[0, 1], [0, 0]], [1, 1])	[2, 1]
+a-3-times-3-nilpotent-generator-the-exponential	MatrixExp([[0, 1, 0], [0, 0, 1], [0, 0, 0]])	[[1, 1, 1 / 2], [0, 1, 1], [0, 0, 1]]
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	MatrixExp([[2, 1], [0, 2]])	[[ExponentialE ^ 2, ExponentialE ^ 2], [0, ExponentialE ^ 2]]
+a-skew-symmetric-generator-gives-a-rotation	MatrixExp([[0, 1], [-1, 0]])	[[Cos(1), Sin(1)], [-Sin(1), Cos(1)]]
+rejects-a-non-square-argument	MatrixExp([[1, 2, 3], [4, 5, 6]])	Error("expected-square-matrix", "[[1,2,3],[4,5,6]]")
+a-generic-matrix-with-no-closed-form-stays	MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])	MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
+euler-s-identity-for-matrices-rotation-by-pi-is	MatrixExp([[0, -Pi], [Pi, 0]])	[[-1, 0], [0, -1]]

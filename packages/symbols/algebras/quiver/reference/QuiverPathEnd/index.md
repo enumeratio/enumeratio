@@ -1,0 +1,14 @@
+---
+name: QuiverPathEnd
+domain: Path algebras
+signature: QuiverPathEnd(quiver, path)
+summary: The vertex a path ends at, following its arrows through the quiver from its start.
+signatures:
+  - call: QuiverPathEnd(quiver, path)
+    description: the vertex the path ends at
+    library: enumeratio-quiver
+    type: (expression<LinearQuiver> | expression<Quiver> | symbol, number) -> integer
+seeAlso:
+  - QuiverPath
+  - QuiverCompose
+---

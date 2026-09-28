@@ -1,0 +1,13 @@
+id	in	out
+isodd-3	IsOdd(3)	True
+isodd-4	IsOdd(4)	False
+negative-integers-count-too	IsOdd(-7)	True
+isodd-0	IsOdd(0)	False
+a-non-integer-is-not-odd	IsOdd(3.5)	False
+isodd-1-over-3	IsOdd(1 / 3)	False
+big-integers	IsOdd(2 ^ 100 + 1)	True
+pi-is-known-not-to-be-an-integer-so-it-is	IsOdd(Pi)	False
+threads-element-wise-over-a-list	IsOdd([1, 2, 3])	[True, False, True]
+select-the-odd-numbers-up-to-10	Filter(Range(10), IsOdd)	[1, 3, 5, 7, 9]
+an-integer-is-odd-exactly-when-it-is-not-even	IsOdd(7) == !IsEven(7)	True
+a-symbol-stays-undecided-rather-than-false	IsOdd(x)	IsOdd(x)

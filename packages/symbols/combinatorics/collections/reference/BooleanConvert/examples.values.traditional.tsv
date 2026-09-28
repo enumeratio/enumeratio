@@ -1,0 +1,6 @@
+id	in	out
+default-form-is-dnf		
+cnf-distributes-or-over-and		
+nnf-pushes-not-to-the-leaves-not-distributed		
+a-tautological-clause-drops-out-of-cnf	\mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})	\mathrm{True}
+an-unimplemented-form-stays-unevaluated		

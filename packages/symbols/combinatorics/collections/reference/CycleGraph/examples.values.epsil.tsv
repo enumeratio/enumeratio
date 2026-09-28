@@ -1,0 +1,3 @@
+id	in	out
+c5-is-not-bipartite	IsBipartiteGraph(CycleGraph(5))	False
+c6-is-bipartite	IsBipartiteGraph(CycleGraph(6))	True

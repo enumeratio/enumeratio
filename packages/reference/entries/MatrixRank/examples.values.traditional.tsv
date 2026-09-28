@@ -1,0 +1,23 @@
+id	in	out
+matrixrank-list-list-1-0-list-0-1		
+matrixrank-list-list-1-2-list-2-4		
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9		
+non-square-matrices-too		
+matrixrank-list-list-0-0-list-0-0		
+a-matrix-of-pairwise-distinct-symbols-has-full		
+approximate-entries		
+complex-entries-the-second-row-is-i-times-the		
+exact-numeric-entries		
+the-second-row-is-sqrt-2-times-the-first		
+a-3-4-matrix-with-one-dependent-row		
+matrixrank-identitymatrix-5		
+a-3-times-3-matrix-of-pairwise-distinct-symbols		
+the-4-4-hilbert-matrix-is-badly-conditioned-but		
+row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\mathrm{True}
+rank-nullity-the-rank-plus-the-dimension-of-the		
+an-outer-product-u-v-top-has-rank-1-a-lazy		
+a-symbolic-matrix-stays-unevaluated-wolfram		
+a-vector-is-treated-as-a-1-n-matrix-wolfram		
+a-non-square-matrix-of-distinct-symbols-stays		
+repeating-a-symbol-across-rows-doesn-t-qualify		
+every-matrix-with-entries-i-j-has-rank-2		

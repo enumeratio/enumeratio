@@ -1,0 +1,3 @@
+id	in	out
+vertices-of-a-path	VertexList(Graph([UndirectedEdge(3, 1), UndirectedEdge(1, 2)]))	[3, 1, 2]
+declared-vertices-come-before-edge-endpoints	VertexList(Graph([5, 1], [UndirectedEdge(1, 2)]))	[5, 1, 2]

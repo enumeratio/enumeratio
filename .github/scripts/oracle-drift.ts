@@ -1,4 +1,4 @@
-// Fail when a rescan changed what the committed implementations records SAY: a row's
+// Fail when a rescan changed what the committed records SAY: a row's
 // verdict, classification, input or presence. A row's printed output is only reported,
 // since a float's last digits can differ between the machine that committed it and the
 // runner, and the verdict already says whether the value agrees.
@@ -11,29 +11,41 @@
 //   node .github/scripts/oracle-drift.ts        # after oracle-scan.ts, in a checkout
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { basename } from "node:path";
-import { parseYaml } from "../../packages/entry/src/yaml.ts";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { basename, dirname, join } from "node:path";
+import { decodeHead } from "../../packages/entry/src/record.ts";
 
 type Row = Record<string, unknown>;
 type Record_ = Record<string, Record<string, Row>>;
 
-// maxBuffer: execFileSync's 1 MiB default throws ENOBUFS on a large implementations.yaml
+// maxBuffer: execFileSync's 1 MiB default throws ENOBUFS on a large values file
 // (a collection's sage/wolfram answer can run to several MB), which the catch below would
 // then silently read as "no committed row" for every id in the file.
 const git = (...args: string[]): string => execFileSync("git", args, { encoding: "utf8", maxBuffer: 1024 * 1024 * 64 });
-const RECORD = /^packages\/.*\/(reference|entries)\/[^/]+\.implementations\.yaml$/;
+// A head's folder: `<dir>/<Head>/index.md`, its examples.tsv and generated values files.
+const INDEX = /^packages\/.*\/(reference|entries)\/[^/]+\/index\.md$/;
 // Committed records, and any the scan just created.
-const files = [
+const folders = [
   ...new Set([...git("ls-files").split("\n"), ...git("ls-files", "--others", "--exclude-standard").split("\n")]),
-].filter((f) => RECORD.test(f));
+]
+  .filter((f) => INDEX.test(f))
+  .map(dirname);
 
-const read = (text: string | undefined): Record_ => (text ? ((parseYaml(text) ?? {}) as Record_) : {});
-const committed = (file: string): string | undefined => {
+const committed = (folder: string): Map<string, string> => {
+  const files = new Map<string, string>();
+  for (const file of git("ls-tree", "--name-only", `HEAD:${folder}`).split("\n").filter(Boolean))
+    files.set(file, git("show", `HEAD:${folder}/${file}`));
+  return files;
+};
+const working = (folder: string): Map<string, string> =>
+  new Map(existsSync(folder) ? readdirSync(folder).map((f) => [f, readFileSync(join(folder, f), "utf8")]) : []);
+const read = (files: Map<string, string>): Record_ =>
+  files.has("index.md") ? ((decodeHead(files).implementations ?? {}) as unknown as Record_) : {};
+const safely = (f: () => Map<string, string>): Map<string, string> => {
   try {
-    return git("show", `HEAD:${file}`);
+    return f();
   } catch {
-    return undefined;
+    return new Map();
   }
 };
 
@@ -57,10 +69,10 @@ const unscanned = (row: Row | undefined): boolean =>
 const changed: string[] = [];
 const fresh: string[] = [];
 const printed: string[] = [];
-for (const file of files) {
-  const head = basename(file, ".implementations.yaml");
-  const before = rows(head, read(committed(file)));
-  const after = rows(head, read(existsSync(file) ? readFileSync(file, "utf8") : undefined));
+for (const folder of folders) {
+  const head = basename(folder);
+  const before = rows(head, read(safely(() => committed(folder))));
+  const after = rows(head, read(working(folder)));
   for (const id of new Set([...before.keys(), ...after.keys()])) {
     const [b, a] = [before.get(id), after.get(id)];
     if (said(b) === said(a)) {

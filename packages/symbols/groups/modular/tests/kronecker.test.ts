@@ -7,7 +7,7 @@ const ce = new ComputeEngine();
 declareModular(ce);
 
 // The a, n ∈ [-10, 10] grid this used to pin against a golden file is now sampled as
-// role: test examples on KroneckerSymbol.examples.yaml, scanned against Wolfram there.
+// role: test examples on KroneckerSymbol/examples.tsv, scanned against Wolfram there.
 
 test("agrees with JacobiSymbol/LegendreSymbol on their shared domain", () => {
   // Odd positive n: Kronecker specializes to Jacobi, which specializes to Legendre at

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+romannumeral-1-988			[RomanNumeral, 1988]	"'MCMLXXXVIII'"	
+romannumeral-2-024			[RomanNumeral, 2024]	"'MMXXIV'"	
+the-largest-with-standard-symbols	Scope		[RomanNumeral, 3999]	"'MMMCMXCIX'"	the largest with standard symbols
+listable-4-is-written-subtractively	Scope		[RomanNumeral, [List, 1, 2, 3, 4]]	[List, "'I'", "'II'", "'III'", "'IV'"]	Listable; 4 is written subtractively
+zero-is-written-n-for-nulla	Possible issues		[RomanNumeral, 0]	"'N'"	zero is written N, for nulla

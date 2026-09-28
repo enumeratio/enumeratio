@@ -1,0 +1,23 @@
+id	in	out	back
+catalannumber-0	CatalanNumber(0)	1	
+catalannumber-1	CatalanNumber(1)	1	
+catalannumber-5	CatalanNumber(5)	42	
+catalannumber-10	CatalanNumber(10)	16_796	
+catalannumber-30	CatalanNumber(30)	3_814_986_502_092_304	
+catalannumber-neg-1-is-neg-1	CatalanNumber(-1)	-1	
+catalannumber-0-past-neg-1	CatalanNumber(-2)	0	
+catalannumber-neg-5-is-also-0	CatalanNumber(-5)	0	
+threads-element-wise-over-a-list-as-wolfram-s	CatalanNumber([1, 2, 3, 4])	[1, 2, 5, 14]	
+half-integer-arguments-evaluate-exactly-through	CatalanNumber(5 / 2)	1_024 / (105Pi)	
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	CatalanNumber(2.3)	2.590_352_154_019_323_3	
+complex-arguments-evaluate-through-the-same	CatalanNumber(1.2 + i)	0.730_728_624_207_283_9 + 0.569_846_406_969_342_5i	
+c-1-2-frac-8-3-pi-by-analytic-continuation	CatalanNumber(1 / 2)	8 / (3Pi)	
+an-interval-argument-should-give-an-enclosing	CatalanNumber(Interval(0.5, 0.6))	Interval(0.848_826_363_156_775_1, 0.862_540_968_873_452_3)	
+the-5-ways-to-balance-3-pairs-of-parentheses	CatalanNumber(3)	5	
+the-14-triangulations-of-a-hexagon-and-the-14	CatalanNumber(4)	14	
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	Binomial(2 * 5, 5) / (5 + 1)	42	
+the-closed-form-through-a-negative-n-in-binomial	Binomial(2 * -13, 5) / (4 + 1)	-142_506 / 5	
+equivalently-c-n-binom-2n-n-binom-2n-n-1	Binomial(10, 5) - Binomial(10, 6)	42	
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	CatalanNumber(6) / CatalanNumber(5)	22 / 7	
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	CatalanNumber(4) == Sum(CatalanNumber(i) * CatalanNumber(3 - i), (i, 0, 3))	True	[Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]
+they-grow-fast-c-15-already-passes-nine-million	CatalanNumber(15)	9_694_845	

@@ -1,0 +1,42 @@
+id	in	out	tex.in	tex.out	verdict
+extendedgcd-2-3	ExtendedGCD[2, 3]	{1, {-1, 1}}	\text{ExtendedGCD}[2,3]	\{1,\{-1,1\}\}	disagree
+extendedgcd-12-18	ExtendedGCD[12, 18]	{6, {-1, 1}}	\text{ExtendedGCD}[12,18]	\{6,\{-1,1\}\}	disagree
+extendedgcd-3-5	ExtendedGCD[3, 5]				
+extendedgcd-6-4	ExtendedGCD[6, 4]				
+any-number-of-arguments-folding-pairwise-6-times	ExtendedGCD[6, 15, 30]				
+gaussian-integers-by-euclid-with-the-rounded	ExtendedGCD[Complex[7, 2], Complex[3, -5]]	{1, {-1 - 2*I, -2 + 2*I}}	\text{ExtendedGCD}[7+2 i,3-5 i]	\{1,\{-1-2 i,-2+2 i\}\}	disagree
+negative-arguments-12-18-6	ExtendedGCD[-12, 18]				
+big-integers-the-coefficients-stay-minimal-x-b	ExtendedGCD[Power[2, 100], Power[3, 50]]				
+three-arguments-4-cdot-4-6-cdot-4-9-1	ExtendedGCD[4, 6, 9]				
+listable-threads-over-a-list	ExtendedGCD[3, List[5, 15]]				
+gaussian-integer-and-a-plain-integer	ExtendedGCD[Complex[3, 1], 5]				
+one-argument-a-unit-the-identity-bezout-pair	ExtendedGCD[Complex[3, 4], 1]	{1, {0, 1}}	\text{ExtendedGCD}[3+4 i,1]	\{1,\{0,1\}\}	disagree
+one-argument-i-a-unit	ExtendedGCD[Complex[3, 4], Complex[0, 1]]	{1, {0, -I}}	\text{ExtendedGCD}[3+4 i,i]	\{1,\{0,-i\}\}	disagree
+a-zero-first-argument	ExtendedGCD[0, Complex[-4, 3]]	{3 + 4*I, {0, -I}}	\text{ExtendedGCD}[0,-4+3 i]	\{3+4 i,\{0,-i\}\}	disagree
+a-zero-second-argument	ExtendedGCD[Complex[-4, 3], 0]	{3 + 4*I, {-I, 0}}	\text{ExtendedGCD}[-4+3 i,0]	\{3+4 i,\{-i,0\}\}	disagree
+two-coprime-gaussian-primes-above-5	ExtendedGCD[Complex[2, 1], Complex[2, -1]]	{1, {-1, 1 + I}}	\text{ExtendedGCD}[2+i,2-i]	\{1,\{-1,1+i\}\}	disagree
+a-gaussian-prime-and-a-real-prime-3-mod-4	ExtendedGCD[Complex[2, 1], 3]	{1, {1 + I, -I}}	\text{ExtendedGCD}[2+i,3]	\{1,\{1+i,-i\}\}	disagree
+an-associate-pair-by-i	ExtendedGCD[Complex[3, 4], Complex[-4, 3]]	{3 + 4*I, {0, -I}}	\text{ExtendedGCD}[3+4 i,-4+3 i]	\{3+4 i,\{0,-i\}\}	disagree
+an-associate-pair-by-1	ExtendedGCD[Complex[3, 4], Complex[-3, -4]]	{3 + 4*I, {0, -1}}	\text{ExtendedGCD}[3+4 i,-3-4 i]	\{3+4 i,\{0,-1\}\}	disagree
+two-unrelated-composites-of-norm-25	ExtendedGCD[Complex[3, 4], Complex[4, 3]]	{1, {-4, 4 + I}}	\text{ExtendedGCD}[3+4 i,4+3 i]	\{1,\{-4,4+i\}\}	disagree
+with-a-negative-real-prime	ExtendedGCD[Complex[3, 4], -7]	{1, {-1 - I, -I}}	\text{ExtendedGCD}[3+4 i,-7]	\{1,\{-1-i,-i\}\}	disagree
+two-large-norm-gaussians	ExtendedGCD[Complex[123, 456], Complex[1000, 1]]	{1, {203 - 296*I, -160 - 56*I}}	\text{ExtendedGCD}[123+456 i,1000+i]	\{1,\{203-296 i,-160-56 i\}\}	disagree
+past-2-53-in-both-parts	ExtendedGCD[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]	{1, {2, -47059883199912322470 + 11760467200350710121*I}}	\text{ExtendedGCD}[100000000000000000001+9007199254740993 i,4+i]	\{1,\{2,-47059883199912322470+11760467200350710121 i\}\}	disagree
+a-real-split-prime-and-its-gaussian-factor	ExtendedGCD[5, Complex[2, 1]]	{2 + I, {0, 1}}	\text{ExtendedGCD}[5,2+i]	\{2+i,\{0,1\}\}	disagree
+two-real-composites-plain-integer-case	ExtendedGCD[4, 9]	{1, {-2, 1}}	\text{ExtendedGCD}[4,9]	\{1,\{-2,1\}\}	disagree
+with-a-negative-real-composite	ExtendedGCD[-15, Complex[5, 5]]	{5, {1, 2 - 2*I}}	\text{ExtendedGCD}[-15,5+5 i]	\{5,\{1,2-2 i\}\}	disagree
+the-larger-norm-argument-given-first	ExtendedGCD[Complex[2, 1], Complex[123, 456]]	{1, {-140 - 158*I, 1}}	\text{ExtendedGCD}[2+i,123+456 i]	\{1,\{-140-158 i,1\}\}	disagree
+with-an-associate-times-1	ExtendedGCD[Complex[8, 2], Complex[-3, -4]]	{1, {4, 5 - 4*I}}	\text{ExtendedGCD}[8+2 i,-3-4 i]	\{1,\{4,5-4 i\}\}	disagree
+with-an-associate-times-i	ExtendedGCD[Complex[8, 2], Complex[4, -3]]	{1, {4, -4 - 5*I}}	\text{ExtendedGCD}[8+2 i,4-3 i]	\{1,\{4,-4-5 i\}\}	disagree
+two-coprime-primes-above-13	ExtendedGCD[Complex[3, 2], Complex[2, 3]]	{1, {-2, 2 - I}}	\text{ExtendedGCD}[3+2 i,2+3 i]	\{1,\{-2,2-i\}\}	disagree
+recovering-a-shared-prime-above-13	ExtendedGCD[Complex[6, 8], Complex[3, 2]]	{1, {2, -5 - 2*I}}	\text{ExtendedGCD}[6+8 i,3+2 i]	\{1,\{2,-5-2 i\}\}	disagree
+with-a-real-prime-s-associate-by-the-unit-i	ExtendedGCD[Complex[3, 4], Complex[0, 7]]	{1, {-1 - I, 1}}	\text{ExtendedGCD}[3+4 i,7 i]	\{1,\{-1-i,1\}\}	disagree
+with-a-real-composite-5-squared	ExtendedGCD[Complex[3, 4], 25]	{3 + 4*I, {1, 0}}	\text{ExtendedGCD}[3+4 i,25]	\{3+4 i,\{1,0\}\}	disagree
+with-a-negative-associate	ExtendedGCD[Complex[6, 8], Complex[-2, -3]]	{1, {I, 3*I}}	\text{ExtendedGCD}[6+8 i,-2-3 i]	\{1,\{i,3 i\}\}	disagree
+a-large-norm-gaussian-and-a-real-prime-19	ExtendedGCD[Complex[123, 456], 19]	{1, {-2, 13 + 48*I}}	\text{ExtendedGCD}[123+456 i,19]	\{1,\{-2,13+48 i\}\}	disagree
+the-modular-inverse-of-3-mod-11-is-4-since-3	ExtendedGCD[3, 11]	{1, {4, -1}}	\text{ExtendedGCD}[3,11]	\{1,\{4,-1\}\}	disagree
+confirms-the-coefficients-above-satisfy-2x-3y	Plus[Times[2, -1], Times[3, 1]]	1	2 (-1)+3\ 1	1	
+bezout-coefficients-when-a-0-0-times-0-5-times-1	ExtendedGCD[0, 5]	{5, {0, 1}}	\text{ExtendedGCD}[0,5]	\{5,\{0,1\}\}	disagree
+a-real-two-argument-case-stays-unevaluated	ExtendedGCD[2.5, 3]				
+a-gaussian-third-argument-past-two-declines	ExtendedGCD[Complex[3, 1], 5, 2]				
+a-real-argument-past-two-also-declines	ExtendedGCD[2.5, 3, 4]				

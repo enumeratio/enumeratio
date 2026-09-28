@@ -1,0 +1,14 @@
+id	in	out
+the-shortest-geodesic	ModularWord(ModularMatrix(1, 1, 1, 2))	"\"LR\""
+a-word-evaluates-as-its-matrix	ModularTrace("LRLR")	7
+the-s-t-exponents-are-a-continued-fraction	ModularSTWord(ModularMatrix(1, 5, 0, 1))	[5]
+the-identity-matrix	ModularKind(ModularMatrix(1, 0, 0, 1))	"\"Identity\""
+s-is-elliptic	ModularKind(ModularMatrix(0, -1, 1, 0))	"\"Elliptic\""
+t-is-parabolic	ModularKind(ModularMatrix(1, 1, 0, 1))	"\"Parabolic\""
+lr-is-hyperbolic	ModularKind(ModularMatrix(1, 1, 1, 2))	"\"Hyperbolic\""
+the-trace-of-a-plain-matrix	ModularTrace(ModularMatrix(1, 1, 1, 2))	3
+the-trace-of-a-bare-word	ModularTrace("LR")	3
+a-word-wrapped-as-modularmatrix	ModularTrace(ModularMatrix("LRLR"))	7
+a-nested-list-matrix-works-too	ModularTrace([[1, 1], [1, 2]])	3
+t-5-fixes-a-cusp	ModularKind(ModularMatrix(1, 5, 0, 1))	"\"Parabolic\""
+the-s-t-round-trip-can-negate	ModularTrace(ModularFromSTWord(ModularSTWord(ModularMatrix(3, 2, 4, 3))))	-6

@@ -1,0 +1,25 @@
+id	section	role	expr	expected	caption	wolfram.note
+rationalize-0p1			[Rationalize, 0.1]	[Rational, 1, 10]		
+an-exact-integer-is-returned-unchanged			[Rationalize, 2]	2	An exact integer is returned unchanged	
+rationalize-2p5			[Rationalize, 2.5]	[Rational, 5, 2]		
+recognizes-a-float-that-is-to-machine-precision			[Rationalize, 0.3333333333333333]	[Rational, 1, 3]	Recognizes a float that is, to machine precision, a simple fraction	
+rationalize-6p75			[Rationalize, 6.75]	[Rational, 27, 4]		
+a-second-argument-sets-the-tolerance			[Rationalize, Pi, 0.01]	[Rational, 22, 7]	A second argument sets the tolerance	
+a-zero-tolerance-still-returns-an-exact-integer		test	[Rationalize, 2, 0]	2	A zero tolerance still returns an exact integer unchanged	
+a-tolerance-still-routes-to-search-not-the-exact		test	[Rationalize, 0.1, 0.01]	[Rational, 1, 10]	With a nonzero tolerance, still routes to a tolerance search rather than the exact dyadic form	
+an-already-exact-value-unchanged-with-tolerance		test	[Rationalize, [Rational, 1, 3], 0.1]	[Rational, 1, 3]	An already-exact value is returned unchanged even with a tolerance given	
+any-exact-numeric-expression-to-any-tolerance	Scope		[Rationalize, [Exp, [Sqrt, 2]], [Power, 2, -12]]	[Rational, 218, 53]	Any exact numeric expression, to any tolerance	
+rationalize-sqrt-2-0p001	Scope		[Rationalize, [Sqrt, 2], 0.001]	[Rational, 41, 29]		
+rationalize-neg-0p125	Scope		[Rationalize, -0.125]	[Rational, -1, 8]		
+the-rational-with-the-smallest-denominator	Scope		[Rationalize, Pi, 0.001]	[Rational, 201, 64]	The rational with the smallest denominator within 0.001 of $\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$	
+a-tolerance-finer-than-a-double	Scope		[Rationalize, Pi, 1e-16]	[Rational, 245850922, 78256779]	A tolerance finer than a double can resolve is still honoured -- the simplest fraction within $10^{-16}$ of $\pi$ itself, not of $N(\pi)$, which is already $1.2 \times 10^{-16}$ away	
+rationalizes-every-approximate-number-inside-an	Scope		[Rationalize, [Add, 1.2, [Multiply, 6.7, x]]]	[Add, [Multiply, [Rational, 67, 10], x], [Rational, 6, 5]]	Rationalizes every approximate number inside an expression	
+threads-element-wise-over-a-list-compute-engine	Scope		[Rationalize, [List, 0.5, 0.25, 0.2]]	[List, [Rational, 1, 2], [Rational, 1, 4], [Rational, 1, 5]]	Threads element-wise over a list; compute-engine's own Rationalize takes only a single real	
+a-zero-tolerance-gives-the-exact-rational-the	Scope		[Rationalize, [N, Pi], 0]	[Rational, 884279719003555, 281474976710656]	A zero tolerance gives the exact rational the machine double denotes -- $N(\pi)$'s own dyadic value, $884279719003555/2^{48}$, not merely a rational within some epsilon of it	
+recovers-a-simple-fraction-from-a-decimal	Applications		[Rationalize, 0.75]	[Rational, 3, 4]	Recovers a simple fraction from a decimal measurement	
+recognizes-a-ratio-of-consecutive-fibonacci	Applications		[Rationalize, 0.618034, 0.0001]	[Rational, 55, 89]	Recognizes a ratio of consecutive Fibonacci numbers in a decimal approximation of $1/\varphi$	
+with-an-explicit-tolerance-recovers-a-classic	Properties		[Equal, [Rationalize, Pi, 0.01], [Rational, 22, 7]]	True	With an explicit tolerance, recovers a classic approximation: 22/7 is within 0.01 of π	
+without-enough-repeating-digits-to-reach-machine	Possible issues		[Rationalize, 0.333333]	[Rational, 333333, 1000000]	Without enough repeating digits to reach machine precision, it just returns the exact decimal as a fraction rather than snapping to 1/3	
+a-loose-tolerance-can-snap-to-something-far	Possible issues		[Rationalize, 0.1, 0.5]	0	A loose tolerance can snap to something far simpler -- 0 is within 0.5 of 0.1	
+without-a-tolerance-a-float-with-no-simple	Possible issues		[Rationalize, [N, Pi]]	[Rational, 80143857, 25510582]	Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator	Wolfram returns $\mathrm{Rationalize}[N[\pi]]$ unchanged as 3.14159: no $p/q$ lies close enough to it, relative to $1/q^2$.
+milu-zu-chongzhi-s-5th-century-approximation-of	Neat examples		[Rationalize, Pi, 0.000001]	[Rational, 355, 113]	Milü, Zu Chongzhi's 5th-century approximation of π, accurate to six decimal places	

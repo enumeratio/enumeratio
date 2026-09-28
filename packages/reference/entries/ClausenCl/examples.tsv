@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+cl-2-pi-2-g-catalan-s-constant			[ClausenCl, 2, [Divide, Pi, 2]]	Catalan	$\mathrm{Cl}_2(\pi/2) = G$, Catalan's constant		
+odd-orders-are-cosine-series-cl-3-0-zeta-3			[ClausenCl, 3, 0]	[Zeta, 3]	Odd orders are cosine series: $\mathrm{Cl}_3(0) = \zeta(3)$	unevaluated	The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute ζ(3).
+cl-2-0-0		test	[ClausenCl, 2, 0]	0		unevaluated	The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute 0.
+cl-3-pi-2-frac-3-32-zeta-3		test	[ClausenCl, 3, [Divide, Pi, 2]]	[Multiply, [Rational, -3, 32], [Zeta, 3]]	$\mathrm{Cl}_3(\pi/2) = -2^{-3}\eta(3) = -\tfrac{3}{32}\zeta(3)$		
+cl-2-pi-3-1-01494-the-maximum-of-cl-2			[ClausenCl, 2, 1.0471975511965976]	1.0149416064096533	$\mathrm{Cl}_2(\pi/3) = 1.01494\ldots$, the maximum of $\mathrm{Cl}_2$		
+cl-2-pi-0-the-sine-series-vanishes-at-multiples	Properties		[ClausenCl, 2, Pi]	0	$\mathrm{Cl}_2(\pi) = 0$: the sine series vanishes at multiples of $\pi$		
+cl-3-pi-eta-3-frac-34-zeta-3	Properties		[ClausenCl, 3, Pi]	[Multiply, [Rational, -3, 4], [Zeta, 3]]	$\mathrm{Cl}_3(\pi) = -\eta(3) = -\tfrac34\zeta(3)$		
+cl-4-pi-2-beta-4-which-has-no-closed-form-of-its	Properties		[ClausenCl, 4, [Divide, Pi, 2]]	[DirichletBeta, 4]	$\mathrm{Cl}_4(\pi/2) = \beta(4)$, which has no closed form of its own	shape	Wolfram answers (ζ(4,1/4) − ζ(4,3/4))/256, which is β(4) spelled through Hurwitz zeta.
+cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0	Possible issues		[ClausenCl, 1, 0]	PositiveInfinity	$\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$ diverges at $\theta = 0$		

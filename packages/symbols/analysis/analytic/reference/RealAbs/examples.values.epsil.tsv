@@ -1,0 +1,6 @@
+id	in	out
+the-absolute-value-of-a-real-number	RealAbs(-2.5)	2.5
+realabs-neg-7-over-2	RealAbs(-7 / 2)	7 / 2
+threads-element-wise-over-a-list	RealAbs([-1, 2, -3])	[1, 2, 3]
+exact-numeric-arguments	RealAbs(-Pi)	Pi
+agrees-with-abs-on-the-reals	RealAbs(-5) == Abs(-5)	True

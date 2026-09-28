@@ -1,0 +1,13 @@
+---
+name: Grade
+domain: Geometric algebra
+signature: Grade(x)
+summary: The single grade of a homogeneous multivector $x$; undefined if $x$ mixes grades.
+signatures:
+  - call: Grade(x)
+    description: the single grade of a homogeneous multivector $x$; undefined if $x$ mixes grades
+    library: enumeratio-geometric
+    type: (number) -> integer
+seeAlso:
+  - GradePart
+---

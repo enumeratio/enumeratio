@@ -1,0 +1,4 @@
+id	in
+count-connectedpermutations-4	Count[ConnectedPermutations[4]]
+first-element-of-connectedpermutations-4	Part[ConnectedPermutations[4], 1]
+every-element-of-connectedpermutations-4	Take[ConnectedPermutations[4], 13]

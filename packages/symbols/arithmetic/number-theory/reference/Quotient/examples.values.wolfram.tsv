@@ -1,0 +1,36 @@
+id	in	out	tex.in	tex.out	verdict
+quotient-17-5	Quotient[17, 5]	3	\text{Quotient}[17,5]	3	
+the-floor-not-truncation	Quotient[-7, 2]	-4	\text{Quotient}[-7,2]	-4	
+the-remainder-takes-the-sign-of-n	Quotient[17, -5]				
+7-5i-2-i-3-8-0-6i-rounded	Quotient[Complex[7, 5], Complex[2, 1]]	4 + I	\text{Quotient}[7+5 i,2+i]	4+i	
+real-arguments-lfloor-7-5-2-rfloor	Quotient[7.5, 2]				
+rational-arguments-lfloor-21-2-rfloor	Quotient[Rational[7, 2], Rational[1, 3]]				
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q	Quotient[17, 5, 3]				
+listable-threads-over-a-list	Quotient[List[10, 20, 30], 7]				
+quotient-by-a-unit-is-the-dividend-itself-up-to	Quotient[Complex[3, 4], Complex[0, 1]]	4 - 3*I	\text{Quotient}[3+4 i,i]	4-3 i	
+a-zero-dividend-quotients-to-0	Quotient[0, Complex[2, 1]]	0	\text{Quotient}[0,2+i]	0	
+quotient-by-a-gaussian-prime-norm-5	Quotient[Complex[3, 4], Complex[2, 1]]	2 + I	\text{Quotient}[3+4 i,2+i]	2+i	
+quotient-by-the-other-prime-above-5	Quotient[Complex[3, 4], Complex[2, -1]]	2*I	\text{Quotient}[3+4 i,2-i]	2 i	
+quotient-by-a-real-prime-3-mod-4	Quotient[Complex[3, 4], 3]	1 + I	\text{Quotient}[3+4 i,3]	1+i	
+a-real-dividend-by-a-gaussian-divisor	Quotient[5, Complex[2, 1]]	2 - I	\text{Quotient}[5,2+i]	2-i	
+quotient-by-an-associate	Quotient[Complex[8, 2], Complex[-4, 3]]	-1 - I	\text{Quotient}[8+2 i,-4+3 i]	-1-i	
+quotient-by-a-negative-real-divisor	Quotient[Complex[3, 4], -7]	-I	\text{Quotient}[3+4 i,-7]	-i	
+quotient-by-a-composite-gaussian-divisor-norm-25	Quotient[Complex[123, 456], Complex[3, 4]]	88 + 35*I	\text{Quotient}[123+456 i,3+4 i]	88+35 i	
+a-gaussian-divisor-past-2-53-in-both-parts	Quotient[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]	23529941599956161235 - 5880233600175355061*I	\text{Quotient}[100000000000000000001+9007199254740993 i,4+i]	23529941599956161235-5880233600175355061 i	
+quotient-by-1-4i-the-other-prime-above-17	Quotient[Complex[8, 2], Complex[1, 4]]	1 - 2*I	\text{Quotient}[8+2 i,1+4 i]	1-2 i	
+a-large-norm-gaussian-divided-by-a-small-unit	Quotient[Complex[1000, 1], Complex[1, 1]]	500 - 500*I	\text{Quotient}[1000+i,1+i]	500-500 i	
+quotient-by-1-negates-each-part	Quotient[Complex[2, 1], -1]	-2 - I	\text{Quotient}[2+i,-1]	-2-i	
+quotient-by-i-rotates-by-that-unit	Quotient[Complex[5, 5], Complex[0, -1]]	-5 + 5*I	\text{Quotient}[5+5 i,-i]	-5+5 i	
+a-negative-real-dividend-gaussian-divisor	Quotient[Complex[-5, -5], Complex[2, 1]]	-3 - I	\text{Quotient}[-5-5 i,2+i]	-3-i	
+quotient-by-an-associate-times-1	Quotient[Complex[8, 2], Complex[-3, -4]]	-1 + I	\text{Quotient}[8+2 i,-3-4 i]	-1+i	
+quotient-by-an-associate-times-i	Quotient[Complex[8, 2], Complex[4, -3]]	1 + I	\text{Quotient}[8+2 i,4-3 i]	1+i	
+quotient-by-the-other-prime-above-13	Quotient[Complex[6, 8], Complex[2, 3]]	3	\text{Quotient}[6+8 i,2+3 i]	3	
+quotient-by-a-prime-above-13	Quotient[Complex[6, 8], Complex[3, 2]]	3 + I	\text{Quotient}[6+8 i,3+2 i]	3+i	
+quotient-by-a-real-prime-s-associate-by-the-unit	Quotient[Complex[3, 4], Complex[0, 7]]	1	\text{Quotient}[3+4 i,7 i]	1	
+quotient-by-a-real-composite-5-squared	Quotient[Complex[3, 4], 25]	0	\text{Quotient}[3+4 i,25]	0	
+a-negative-associate-as-the-divisor	Quotient[Complex[6, 8], Complex[-2, -3]]	-3	\text{Quotient}[6+8 i,-2-3 i]	-3	
+dividing-a-large-norm-gaussian-by-a-real-prime	Quotient[Complex[123, 456], 19]	6 + 24*I	\text{Quotient}[123+456 i,19]	6+24 i	
+dividing-by-zero-is-undefined	Quotient[Complex[3, 4], 0]	ComplexInfinity	\text{Quotient}[3+4 i,0]	\text{ComplexInfinity}	disagree
+dividing-zero-by-zero-is-undefined	Quotient[0, 0]	Indeterminate	\text{Quotient}[0,0]	\text{Indeterminate}	disagree
+m-n-quotient-m-n-mod-m-n-see-mod	Plus[Times[5, Quotient[17, 5]], Mod[17, 5]]				
+2-5-2-5i-rounds-to-even-in-each-part	Quotient[Complex[5, 5], 2]	2 + 2*I	\text{Quotient}[5+5 i,2]	2+2 i	

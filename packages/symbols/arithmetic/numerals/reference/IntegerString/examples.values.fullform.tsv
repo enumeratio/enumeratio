@@ -1,0 +1,13 @@
+id	in
+integerstring-42	IntegerString[42]
+integerstring-17-651-2	IntegerString[17651, 2]
+bases-above-10-use-letters-a-z	IntegerString[255, 16]
+base-36-is-the-largest-with-digit-values-up-to-z	IntegerString[35, 36]
+threads-over-a-list	IntegerString[List[1, 2, 3]]
+50-in-hexadecimal-exact-past-double-precision	IntegerString[Factorial[50], 16]
+roman-numerals-with-the-base-roman	IntegerString[1988, "Roman"]
+a-width-pads-with-leading-zeros	IntegerString[255, 16, 4]
+a-width-shorter-than-the-numeral-keeps-the-least	IntegerString[1234567, 10, 3]
+a-third-argument-pads-with-leading-zeros-to-that	IntegerString[5, 2, 8]
+integerstring-0	IntegerString[0]
+compute-engine-keeps-the-sign	IntegerString[-42]

@@ -1,0 +1,3 @@
+id	in
+an-actual-path-is-a-path	PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
+a-cycle-is-not-a-path	PathGraphQ[CycleGraph[4]]

@@ -1,0 +1,11 @@
+id	in
+moebiusmu-1	MoebiusMu[1]
+moebiusmu-11	MoebiusMu[11]
+12-22-3-is-not-squarefree	MoebiusMu[12]
+10-2-5-a-product-of-an-even-number-of-distinct	MoebiusMu[10]
+threads-element-wise-over-a-list-as-wolfram-s	MoebiusMu[List[1, 2, 3, 4]]
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	MoebiusMu[Complex[5, 6]]
+listable-threads-over-a-list	MoebiusMu[List[4, 10, 17, 20]]
+listable-over-a-range	MoebiusMu[Range[20]]
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]
+mu-is-only-defined-for-positive-integers-compute	MoebiusMu[0]

@@ -4,7 +4,7 @@
 // pages (`fungrim.org/symbol/RiemannZeta/`); the compiled identities the engine ships name
 // heads OUR way, so the correspondence has to come from Fungrim itself. A head whose name is
 // in this list links straight through; the ones Fungrim spells differently are on the head's
-// own record (`names.fungrim` in `<Head>.yaml`, rebuilt into `crosswalk/curated-data.ts`'s
+// own record (`names.fungrim` in `<Head>/index.md`, rebuilt into `crosswalk/curated-data.ts`'s
 // FUNGRIM_NAMES).
 //
 // Fungrim declares every builtin in pygrim's `expr.py`, but only publishes a page for a

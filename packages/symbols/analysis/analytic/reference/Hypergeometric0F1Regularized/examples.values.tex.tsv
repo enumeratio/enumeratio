@@ -1,0 +1,15 @@
+id	in	out
+matches-hypergeometric0f1-2-0-5-gamma-2	\mathrm{Hypergeometric0F1Regularized}(2, 0.5)	1.271\,723\,456\,312\,136\,5
+b-1-is-a-pole-of-gamma-but-the-regularized-form	\mathrm{Hypergeometric0F1Regularized}(-1, 0.5)	0.147\,179\,736\,722\,106\,7
+at-the-pole-b-1-under-n	N(\mathrm{Hypergeometric0F1Regularized}(-1, 2))	3.715\,035\,560\,458\,436\,4
+b-1-5-at-neg-0-7	\mathrm{Hypergeometric0F1Regularized}(1.5, -0.7)	0.670\,794\,625\,574\,135\,2
+rational-order-7-3-at-2-5	\mathrm{Hypergeometric0F1Regularized}(\frac{7}{3}, 2.5)	2.150\,351\,150\,907\,756
+complex-order-1-plus-i-at-0-5	N(\mathrm{Hypergeometric0F1Regularized}(1+i, 0.5))	2.476\,270\,194\,944\,867+0.188\,853\,295\,620\,278\,78i
+order-2-at-a-complex-argument	N(\mathrm{Hypergeometric0F1Regularized}(2, 0.5+0.5i))	1.248\,175\,636\,885\,929+0.293\,401\,296\,264\,334\,1i
+negative-order-neg-0-5-at-0-3	\mathrm{Hypergeometric0F1Regularized}(-0.5, 0.3)	-0.058\,572\,402\,140\,824\,23
+complex-order-and-argument	N(\mathrm{Hypergeometric0F1Regularized}(-2.5+1.5i, 1.2-0.8i))	2.735\,665\,297\,487\,038\,6+25.894\,454\,183\,167\,475i
+order-0	\mathrm{Hypergeometric0F1Regularized}(0, 0.5)	0.635\,861\,728\,156\,068\,6
+order-neg-2-at-0-7	\mathrm{Hypergeometric0F1Regularized}(-2, 0.7)	0.067\,899\,051\,474\,626\,27
+order-0-at-a-complex-argument	N(\mathrm{Hypergeometric0F1Regularized}(0, 0.3+0.4i))	0.254\,883\,343\,005\,815\,44+0.523\,422\,395\,184\,101\,5i
+order-neg-1-at-a-complex-argument	N(\mathrm{Hypergeometric0F1Regularized}(-1, -0.5+0.2i))	0.094\,271\,666\,089\,704\,03-0.078\,024\,919\,432\,037\,83i
+exact-arguments-stay-unevaluated-n-gives-the	\mathrm{Hypergeometric0F1Regularized}(-1, 2)	\mathrm{Hypergeometric0F1Regularized}(-1, 2)

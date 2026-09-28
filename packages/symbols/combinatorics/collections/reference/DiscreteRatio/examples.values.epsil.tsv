@@ -1,0 +1,3 @@
+id	in	out
+factorial-ratio	DiscreteRatio(n!, n)	n + 1
+geometric-ratio	DiscreteRatio(2 ^ n, n)	2

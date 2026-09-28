@@ -1,0 +1,12 @@
+---
+name: Not
+domain: Compute engine
+signature: Not(boolean) -> boolean
+summary: Logical negation (NOT).
+signatures:
+  - call: Not(boolean) -> boolean
+    description: as compute-engine declares it
+names:
+  wolframIdentity: true
+stub: engine
+---

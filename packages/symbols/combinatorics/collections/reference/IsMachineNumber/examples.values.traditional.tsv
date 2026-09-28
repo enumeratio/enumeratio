@@ -1,0 +1,4 @@
+id	in	out
+ismachinenumber-ordinary-float	\mathrm{IsMachineNumber}(2.5)	\mathrm{True}
+ismachinenumber-exact-integer	\mathrm{IsMachineNumber}(2)	\mathrm{False}
+ismachinenumber-extended-precision	\mathrm{IsMachineNumber}(3.141\,592\,653\,589\,793)	\mathrm{False}

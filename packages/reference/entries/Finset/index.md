@@ -1,0 +1,23 @@
+---
+name: Finset
+domain: Combinatorics
+signature: Finset(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Finset
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
+    note: Finset (Fin n) when n finite, Finset ℕ when n NULL
+  - system: mathlib4
+    identity: Finset
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
+stub: carrier
+catalogCarrier: true
+mapOn:
+  - Finset
+signatures:
+  - call: Finset(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+    library: enumeratio-domains
+    type: (tuple<list<integer>, integer>) -> finset
+---

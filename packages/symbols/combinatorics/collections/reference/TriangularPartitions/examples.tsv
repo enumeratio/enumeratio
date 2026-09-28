@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-triangularpartitions-12	Basic		[Count, [TriangularPartitions, 12]]	10	$Count(TriangularPartitions(12)) = 10$
+first-element-of-triangularpartitions-12	Basic		[At, [TriangularPartitions, 12], 1]	[List, 10, 1, 1]	The first element in enumeration order
+every-element-of-triangularpartitions-12		test	[Take, [TriangularPartitions, 12], 10]	[List, [List, 10, 1, 1], [List, 6, 6], [List, 6, 3, 3], [List, 6, 3, 1, 1, 1], [List, 6, 1, 1, 1, 1, 1, 1], [List, 3, 3, 3, 3], [List, 3, 3, 3, 1, 1, 1], [List, 3, 3, 1, 1, 1, 1, 1, 1], [List, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1], [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]	

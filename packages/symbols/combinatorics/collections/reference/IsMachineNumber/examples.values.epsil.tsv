@@ -1,0 +1,4 @@
+id	in	out
+ismachinenumber-ordinary-float	IsMachineNumber(2.5)	True
+ismachinenumber-exact-integer	IsMachineNumber(2)	False
+ismachinenumber-extended-precision	IsMachineNumber(3.141_592_653_589_793)	False

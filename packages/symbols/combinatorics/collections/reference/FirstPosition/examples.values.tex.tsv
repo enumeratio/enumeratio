@@ -1,0 +1,4 @@
+id	in	out
+the-first-occurrence-of-b-nested-inside-the	\mathrm{FirstPosition}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, \bigl\lbrack b, a, a\bigr\rbrack, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b)	\bigl\lbrack1, 3\bigr\rbrack
+the-empty-list-when-the-value-isn-t-found	\mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, c\bigr\rbrack\bigr\rbrack, b)	\bigl\lbrack\bigr\rbrack
+a-match-nested-inside-an-earlier-sublist-beats-a	\mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, b\bigr\rbrack, b\bigr\rbrack, b)	\bigl\lbrack2, 2\bigr\rbrack

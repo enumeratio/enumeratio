@@ -1,0 +1,10 @@
+id	in	out
+arccsc-1	Arccsc(1)	1 / 2 * Pi
+arccsc-2	Arccsc(2)	1 / 6 * Pi
+arccsc-sqrt-2-pi-4	Arccsc(Sqrt(2))	1 / 4 * Pi
+an-odd-function	Arccsc(-2)	-1 / 6 * Pi
+inside-1-1-the-value-is-complex	Arccsc(0.5)	1.570_796_326_794_896_6 - 1.316_957_896_924_816_6i
+arccsc-positiveinfinity	Arccsc(PositiveInfinity)	0
+a-pole-arccsc-0-is-complex-infinity	Arccsc(0)	ComplexInfinity
+derivative-for-real-x-1	D(Arccsc(x), x)	-1 / (Abs(x) * Sqrt(x ^ 2 - 1))
+undoes-csc-csc-arccsc-x-x	Csc(Arccsc(2)) == 2	True

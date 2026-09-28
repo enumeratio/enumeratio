@@ -1,0 +1,4 @@
+id	in
+the-3-cycle-1-2-3	CycleCount[List[2, 3, 1]]
+three-singleton-cycles	CycleCount[List[1, 2, 3]]
+1-2-3	CycleCount[List[2, 1, 3]]

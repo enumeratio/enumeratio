@@ -1,0 +1,13 @@
+---
+name: IncreasingBinaryTree
+domain: Combinatorics
+signature: IncreasingBinaryTree(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: IncreasingBinaryTree(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (tuple<integer, list<integer>, list<integer>>) -> increasing_binary_tree
+---

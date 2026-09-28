@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms	\mathrm{Take}(\mathrm{TriangularNumbers}, 25)	\bigl\lbrack1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325\bigr\rbrack
+15-is-triangular	15\in\mathrm{TriangularNumbers}	\top
+14-is-not-triangular	14\in\mathrm{TriangularNumbers}	\bot

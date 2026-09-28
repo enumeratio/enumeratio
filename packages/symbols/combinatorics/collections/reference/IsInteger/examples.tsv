@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+a-plain-integer			[IsInteger, 4]	True
+a-rational-is-not-an-integer	Scope		[IsInteger, [Rational, 1, 2]]	False
+a-free-symbol-is-false	Scope		[IsInteger, x]	False
+a-negative-integer	Scope		[IsInteger, -3]	True

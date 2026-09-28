@@ -1,0 +1,7 @@
+id	in	out
+integerlength-12-345	\mathrm{IntegerLength}(12\,345)	5
+integerlength-2-pow-100	\mathrm{IntegerLength}(2^{100})	31
+255-ff-16	\mathrm{IntegerLength}(255, 16)	2
+listable	\mathrm{IntegerLength}(\bigl\lbrack1, 10, 100\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
+the-sign-is-not-counted	\mathrm{IntegerLength}(-123)	3
+0-has-length-0-unlike-its-one-element	\mathrm{IntegerLength}(0)	0

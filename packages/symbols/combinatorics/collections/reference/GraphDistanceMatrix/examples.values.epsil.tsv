@@ -1,0 +1,4 @@
+id	in	out
+a-3-cycle	GraphDistanceMatrix(CycleGraph(3))	[[0, 1, 1], [1, 0, 1], [1, 1, 0]]
+unreachable-pair-is-infinite	"GraphDistanceMatrix(Graph([1, 2, 3, 4], [\n                                          UndirectedEdge(1, 2),\n                                          UndirectedEdge(3, 4),\n                                        ]))"	"[\n  [0, 1, PositiveInfinity, PositiveInfinity],\n  [1, 0, PositiveInfinity, PositiveInfinity],\n  [PositiveInfinity, PositiveInfinity, 0, 1],\n  [PositiveInfinity, PositiveInfinity, 1, 0],\n]"
+weighted-matrix-summed-weight	"GraphDistanceMatrix(Graph([1, 2, 3], [\n                                       UndirectedEdge(1, 2),\n                                       UndirectedEdge(2, 3),\n                                     ], EdgeWeight -> [5, 7]))"	[[0, 5, 12], [5, 0, 7], [12, 7, 0]]

@@ -1,0 +1,15 @@
+id	section	role	expr	expected	caption
+reciprocal-not-continuous			[FunctionContinuous, [Power, x, -1], x]	False	$1/x$ has a pole, so it is not continuous for ALL real $x$
+polynomial-continuous			[FunctionContinuous, [Power, x, 2], x]	True	a polynomial is entire
+sqrt-not-continuous-everywhere		test	[FunctionContinuous, [Sqrt, x], x]	False	
+log-not-continuous-everywhere		test	[FunctionContinuous, [Ln, x], x]	False	
+tangent-has-poles		test	[FunctionContinuous, [Tan, x], x]	False	
+a-rational-function-with-no-real-poles		test	[FunctionContinuous, [Power, [Add, [Power, x, 2], 1], -1], x]	True	
+sqrt-of-an-always-positive-quantity		test	[FunctionContinuous, [Sqrt, [Add, [Power, x, 2], 1]], x]	True	
+reciprocal-restricted-past-its-pole		test	[FunctionContinuous, [Power, x, -1], x, [Greater, x, -1]]	False	
+sqrt-restricted-past-its-own-domain		test	[FunctionContinuous, [Sqrt, x], x, [Greater, x, -5]]	False	
+log-restricted-to-its-own-domain		test	[FunctionContinuous, [Ln, x], x, [Greater, x, 0]]	True	
+log-restricted-includes-its-singular-boundary		test	[FunctionContinuous, [Ln, x], x, [GreaterEqual, x, 0]]	False	
+reciprocal-restricted-below-its-pole		test	[FunctionContinuous, [Power, x, -1], x, [Less, x, 0]]	True	
+reciprocal-restricted-domain	Scope		[FunctionContinuous, [Power, x, -1], x, [Greater, x, 0]]	True	$1/x$ restricted to $x>0$ avoids its only pole
+sqrt-closed-boundary	Scope		[FunctionContinuous, [Sqrt, x], x, [GreaterEqual, x, 0]]	True	$\sqrt x$ is continuous on its own closed domain boundary $x=0$

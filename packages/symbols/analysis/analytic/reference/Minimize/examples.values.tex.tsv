@@ -1,0 +1,11 @@
+id	in	out
+a-quadratic-s-vertex	\mathrm{Minimize}(x^2, x)	\bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+unbounded-below-reports-negative-infinity	\mathrm{Minimize}(x^3, x)	\bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
+a-simple-interval-constraint	\mathrm{Minimize}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)	\bigl\lbrack1, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
+the-variable-as-a-one-element-list	\mathrm{Minimize}(x^2, \bigl\lbrack x\bigr\rbrack)	\bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+a-rational-function-s-irrational-point	\mathrm{Minimize}(\frac{x-1}{x^2+1}, x)	\bigl\lbrack-(\sqrt{2})(1+(1-2^{1/2})^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
+log-s-minimum-is-at-its-domain-edge	\mathrm{Minimize}(\ln(x), x)	\bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+exp-s-infimum-is-not-attained	\mathrm{Minimize}(e^{x}, x)	\bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
+declines-a-non-exact-critical-point	\mathrm{Minimize}(x^4-4x^2, x)	\mathrm{Minimize}(x^4-4x^2, x)
+declines-more-than-one-variable	\mathrm{Minimize}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)	\mathrm{Minimize}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)
+declines-sin-s-point-despite-an-exact-value	\mathrm{Minimize}(\sin(x), x)	\mathrm{Minimize}(\sin(x), x)

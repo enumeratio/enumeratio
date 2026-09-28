@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+the-group-product			[Dot, [ModularMatrix, 1, 1, 0, 1], [ModularMatrix, 1, 0, 1, 1]]	[ModularMatrix, 2, 1, 1, 1]	the group product		
+no-division-needed-at-determinant-1			[Inverse, [ModularMatrix, 1, 1, 0, 1]]	[ModularMatrix, 1, -1, 0, 1]	no division needed at determinant 1		
+t-5			[MatrixPower, [ModularMatrix, 1, 1, 0, 1], 5]	[ModularMatrix, 1, 5, 0, 1]	$T^5$		
+words-multiply-their-matrices	Scope		[Dot, "'L'", "'R'"]	[ModularMatrix, 1, 1, 1, 2]	words multiply their matrices	domain	Wolfram has no word spelling for a modular-group element; its Dot leaves two strings unevaluated.
+the-inverse-of-a-word	Scope		[Inverse, "'L'"]	[ModularMatrix, 1, 0, -1, 1]	the inverse of a word		
+r-3	Scope		[MatrixPower, "'R'", 3]	[ModularMatrix, 1, 3, 0, 1]	$R^3$		
+negative-powers-are-powers-of-the-inverse	Scope		[MatrixPower, [ModularMatrix, 1, 1, 1, 2], -2]	[ModularMatrix, 5, -3, -3, 2]	negative powers are powers of the inverse		
+a-plain-integer-matrix-goes-to-compute-engine-s	Applications		[MatrixPower, [List, [List, 1, 1], [List, 1, 0]], 10]	[List, [List, 89, 55], [List, 55, 34]]	a plain integer matrix goes to compute-engine's own `MatrixPower`: the Fibonacci numbers $F_{11}, F_{10}, F_9$		
+the-zeroth-power-is-the-identity	Properties		[MatrixPower, [ModularMatrix, 1, 1, 0, 1], 0]	[ModularMatrix, 1, 0, 0, 1]	the zeroth power is the identity		

@@ -1,0 +1,3 @@
+id	in
+a-5-vertex-path	VertexDegree[enumeratio`PathGraph[5]]
+a-path-along-named-vertices	enumeratio`PathGraph[List[a, b, c]]

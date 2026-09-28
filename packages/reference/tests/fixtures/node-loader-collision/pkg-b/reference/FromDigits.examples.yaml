@@ -1,4 +1,0 @@
-- id: base-ten
-  expr: [FromDigits, [List, 1, 2, 3], 10]
-  expected: 123
-  category: Basic

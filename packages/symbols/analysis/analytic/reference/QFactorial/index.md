@@ -1,0 +1,31 @@
+---
+name: QFactorial
+domain: Special functions
+signature: QFactorial(n, q)
+summary: The q-factorial $[n]_q! = [1]_q [2]_q \cdots [n]_q$, where $[k]_q = 1 + q + \cdots + q^{k-1}$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: QFactorial(n, q)
+    description: the q-factorial $[n]_q!$.
+    library: "@enumeratio/analytic"
+    type: (integer, complex) -> number
+details:
+  - Built as a product of q-integers $[k]_q$, each a sum of $k$ powers of $q$ — exact boxed arithmetic throughout, so it reduces to a number for numeric $q$ (rational stays rational) and to a genuine polynomial in $q$ that `Expand` can open up for symbolic $q$.
+  - At $q = 1$, $[k]_1 = k$ termwise (no division, so no $q \to 1$ limit to take), reducing exactly to $n!$.
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/q-series.ts
+    note: product of q-integers, built at canonicalization time (not evaluate) so Expand sees the tree to open up.
+  - origin: mapped
+    form: wolfram
+    environment: external
+    note: QFactorial[n, q].
+seeAlso:
+  - QPochhammer
+  - QBinomial
+  - Factorial
+names:
+  wolframIdentity: true
+---

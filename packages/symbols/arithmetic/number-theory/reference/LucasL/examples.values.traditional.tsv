@@ -1,0 +1,21 @@
+id	in	out
+lucasl-0	L_{0}	2
+lucasl-1	L_{1}	1
+lucasl-5	L_{5}	11
+lucasl-10	L_{10}	123
+exact-at-any-size	L_{100}	792\,070\,839\,848\,372\,253\,127
+an-odd-negative-index-flips-the-sign-l-11-l-11	L_{-11}	-199
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	L_{2.333\,333\,333\,333\,333\,5}	3.236\,211\,879\,491\,621\,3
+the-two-argument-lucas-polynomial-l-7-x-from-l-n	L_{7}(x)	x^7+7x^5+14x^3+7x
+the-lucas-polynomial-at-x-1-is-the-lucas-number	L_{143}(1)	767\,772\,505\,664\,398\,093\,937\,756\,525\,279
+special-value-of-the-lucas-polynomial-l-1-0-0	L_{1}(0)	0
+special-value-of-the-lucas-polynomial-l-0-0-2	L_{0}(0)	2
+l-2-x-x-2-2-threads-element-wise-over-a-matrix		
+threads-element-wise-over-a-list-as-wolfram-s		
+consecutive-ratios-l-n-1-l-n-converge-to-the	\frac{L_{15}}{L_{14}}	\frac{1\,364}{843}
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	L_{10}^2-5F_{10}^2	4
+l-n-f-n-1-f-n-1-here-at-n-6	L_{6}=F_{5}+F_{7}	\mathrm{True}
+conversely-f-n-frac-l-n-1-l-n-1-5	F_{6}=\frac{L_{5}+L_{7}}{5}	\mathrm{True}
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	L_{4}L_{6}-L_{5}^2	5
+negative-indices-are-supported-via-l-n-1-n-l-n	L_{-1}	-1
+l-30-already-tops-1-8-million-growing-at-the	L_{30}	1\,860\,498

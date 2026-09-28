@@ -1,0 +1,4 @@
+id	in	out
+x-occurs-in-x-2-plus-1	FreeQ(x ^ 2 + 1, x)	False
+y-never-occurs	FreeQ(x ^ 2 + 1, y)	True
+looks-inside-subexpressions-not-just-top-level	FreeQ([[a, b]], b)	False

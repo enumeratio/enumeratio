@@ -1,0 +1,23 @@
+id	in	out	back
+matrixrank-list-list-1-0-list-0-1	MatrixRank([[1, 0], [0, 1]])	2	
+matrixrank-list-list-1-2-list-2-4	MatrixRank([[1, 2], [2, 4]])	1	
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	MatrixRank([[1, 2, 3], [4, 5, 6], [7, 8, 9]])	2	
+non-square-matrices-too	MatrixRank([[1, 2, 3], [2, 4, 6]])	1	
+matrixrank-list-list-0-0-list-0-0	MatrixRank([[0, 0], [0, 0]])	0	
+a-matrix-of-pairwise-distinct-symbols-has-full	MatrixRank([[a, b], [c, d]])	2	
+approximate-entries	MatrixRank([[1, 2.5], [3.5, 4]])	2	
+complex-entries-the-second-row-is-i-times-the	MatrixRank([[1, ImaginaryUnit], [ImaginaryUnit, -1]])	1	
+exact-numeric-entries	MatrixRank([[Pi, ExponentialE], [2Pi, 2 * ExponentialE]])	1	
+the-second-row-is-sqrt-2-times-the-first	MatrixRank([[Sqrt(2), 1], [2, Sqrt(2)]])	1	
+a-3-4-matrix-with-one-dependent-row	MatrixRank([[1, 2, 3, 4], [2, 4, 6, 8], [1, 0, 1, 0]])	2	
+matrixrank-identitymatrix-5	MatrixRank(IdentityMatrix(5))	5	
+a-3-times-3-matrix-of-pairwise-distinct-symbols	MatrixRank([[p, q, r], [s, t, u], [v, w, x]])	3	
+the-4-4-hilbert-matrix-is-badly-conditioned-but	MatrixRank(Tabulate(Function(1 / (_1 + _2 - 1)), 4, 4))	4	Unreadable
+row-rank-equals-column-rank	"MatrixRank([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == MatrixRank(Transpose([\n                                                                        [\n                                                                          1,\n                                                                          2,\n                                                                          3,\n                                                                        ],\n                                                                        [\n                                                                          4,\n                                                                          5,\n                                                                          6,\n                                                                        ],\n                                                                        [\n                                                                          7,\n                                                                          8,\n                                                                          9,\n                                                                        ],\n                                                                      ]))"	True	
+rank-nullity-the-rank-plus-the-dimension-of-the	"MatrixRank([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) + Length(Kernel([\n                                                                [1, 2, 3],\n                                                                [4, 5, 6],\n                                                                [7, 8, 9],\n                                                              ]))"	3	
+an-outer-product-u-v-top-has-rank-1-a-lazy	MatrixRank(Tabulate(Multiply, 4, 4))	1	
+a-symbolic-matrix-stays-unevaluated-wolfram	MatrixRank([[x, 1], [1, x]])	MatrixRank([[x, 1], [1, x]])	
+a-vector-is-treated-as-a-1-n-matrix-wolfram	MatrixRank([1, 2, 3])	1	
+a-non-square-matrix-of-distinct-symbols-stays	MatrixRank([[a, b, c], [d, g, h]])	MatrixRank([[a, b, c], [d, g, h]])	
+repeating-a-symbol-across-rows-doesn-t-qualify	MatrixRank([[a, b], [a, b]])	1	
+every-matrix-with-entries-i-j-has-rank-2	MatrixRank(Tabulate(Add, 4, 4))	2	

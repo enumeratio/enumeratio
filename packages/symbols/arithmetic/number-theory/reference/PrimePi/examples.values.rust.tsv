@@ -1,0 +1,12 @@
+id	in	out	verdict
+no-primes-are-1	prime_pi(n(1))	0	
+primepi-2	prime_pi(n(2))	1	
+primepi-15	prime_pi(n(15))	6	
+primepi-100	prime_pi(n(100))	25	
+threads-element-wise-over-a-list-as-wolfram-s	prime_pi(list(vec![n(10), n(100)]))	panic: threading: a list where the crate takes a scalar	error
+rational-arguments-the-primes-up-to-7-2-are-2	prime_pi(rational(n(7), n(2)))	panic: an integer, not 7/2	error
+real-arguments	prime_pi(x(15.25))	panic: an integer, not 15.25	error
+the-primes-below-a-million	prime_pi(n(1000000))	78498	
+listable-threads-over-a-list	prime_pi(list(vec![n(3), n(5), n(17), n(25)]))	panic: threading: a list where the crate takes a scalar	error
+same-inverse-relation-viewed-from-primepi-s-side			
+no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer	error

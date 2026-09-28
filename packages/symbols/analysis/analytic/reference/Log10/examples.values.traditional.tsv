@@ -1,0 +1,18 @@
+id	in	out
+log10-1-000		
+log10-1		
+log10-100-000		
+log10-1-000-000		
+n-for-a-decimal-value		
+an-exact-negative-power-of-10-folds-too-log-10		
+a-symbolic-argument-becomes-compute-engine-s		
+log10-5p5		
+threads-element-wise-over-a-list		
+element-wise-over-a-matrix-including-the-exact		
+as-with-ln-the-logarithm-of-complex-infinity-is		
+interval-arithmetic-log-10-frac-13-2-log-10-3		
+uncertainty-propagation-log-10-frac-1-101-pm-0		
+derivative-frac-1-x-ln-10		
+to-30-significant-digits-every-one-correctly		
+a-float-argument-folds-even-for-a-fractional		
+same-as-compute-engine-s-default-base-log	\log_{10}(1\,000)=\log_{10}(1\,000)	\mathrm{True}

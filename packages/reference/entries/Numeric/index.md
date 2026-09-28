@@ -1,0 +1,8 @@
+---
+name: Numeric
+domain: Combinatorics
+signature: Numeric(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+---

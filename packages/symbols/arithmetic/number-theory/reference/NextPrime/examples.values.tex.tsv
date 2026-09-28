@@ -1,0 +1,15 @@
+id	in	out
+nextprime-10	\mathrm{NextPrime}(10)	11
+nextprime-100	\mathrm{NextPrime}(100)	101
+the-second-prime-after-10	\mathrm{NextPrime}(10, 2)	13
+nextprime-6	\mathrm{NextPrime}(6)	7
+the-second-prime-after-50	\mathrm{NextPrime}(50, 2)	59
+the-largest-prime-below-50	\mathrm{NextPrime}(50, -1)	47
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{NextPrime}(\bigl\lbrack1, 5, 10, 15\bigr\rbrack)	\bigl\lbrack2, 7, 11, 17\bigr\rbrack
+large-integers-the-first-prime-past-a-googol-is	\mathrm{NextPrime}(10^{100})	10\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,267
+rational-n-the-next-prime-above-7-2	\mathrm{NextPrime}(\frac{7}{2})	5
+real-n-the-next-prime-above-100-5	\mathrm{NextPrime}(100.5)	101
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	\mathrm{NextPrime}(\mathrm{NthPrime}(20))=\mathrm{NthPrime}(21)	\top
+a-negative-k-walks-backward-giving-the-prime	\mathrm{NextPrime}(10, -1)	7
+negative-n-wolfram-counts-7-as-prime-and-returns	\mathrm{NextPrime}(-10)	-7
+nextprime-neg-2	\mathrm{NextPrime}(-2)	2

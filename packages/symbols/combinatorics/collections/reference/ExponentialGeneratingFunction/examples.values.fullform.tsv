@@ -1,0 +1,5 @@
+id	in
+factorial	ExponentialGeneratingFunction[Factorial[n], n, x]
+derangements	ExponentialGeneratingFunction[Subfactorial[n], n, x]
+bell-numbers	ExponentialGeneratingFunction[BellB[n], n, x]
+fibonacci	ExponentialGeneratingFunction[Fibonacci[n], n, x]

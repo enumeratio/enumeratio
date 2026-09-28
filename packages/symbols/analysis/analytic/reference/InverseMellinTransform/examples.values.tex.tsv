@@ -1,0 +1,5 @@
+id	in	out
+gamma-to-exp	\mathrm{InverseMellinTransform}(\Gamma(s), s, x)	e^{-x}
+pi-csc-to-one-over-one-plus-x	\mathrm{InverseMellinTransform}(\pi\csc(\pi s), s, x)	\frac{1}{x+1}
+pi-csc-over-s-to-log-reciprocal	\mathrm{InverseMellinTransform}(\frac{1}{s}(\pi\csc(\pi s)), s, x)	\ln(\frac{1}{x}+1)
+shift-gamma-a-plus-s	\mathrm{InverseMellinTransform}(\Gamma(a+s), s, x)	\exp(-x)x^{a}

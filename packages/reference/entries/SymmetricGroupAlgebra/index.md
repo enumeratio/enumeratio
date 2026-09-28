@@ -1,0 +1,21 @@
+---
+name: SymmetricGroupAlgebra
+domain: Oracle
+signature: SymmetricGroupAlgebra(...)
+summary: Mapped through to sage, oscar for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: sage
+    template: SymmetricGroupAlgebra(QQ, $1)
+    arity: 1
+  - origin: mapped
+    form: oscar
+    template: group_algebra(QQ, symmetric_group($1))
+    arity: 1
+stub: carrier
+signatures:
+  - call: SymmetricGroupAlgebra(...)
+    description: Mapped through to sage, oscar for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (integer) -> diagram_algebra
+---

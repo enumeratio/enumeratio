@@ -1,0 +1,4 @@
+id	in	out
+rewrites-the-whole-expr-matches-top-level	Replace(x + 1, Rule(_a + 1, _a * 100))	100x
+tries-a-list-of-rules-in-order	Replace(b, [Rule(a, 1), Rule(b, 2)])	2
+leaves-expr-untouched-when-only-subexpr-matches	Replace([x + 1], Rule(_a + 1, _a * 100))	[x + 1]

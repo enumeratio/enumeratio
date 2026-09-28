@@ -1,0 +1,19 @@
+id	in	out	verdict
+stirling-5-2	Combinatorics.stirlings2(big(5), 2)	15	
+stirling-6-3	Combinatorics.stirlings2(big(6), 3)	90	
+stirling-20-10	Combinatorics.stirlings2(big(20), 10)	5917584964655	
+exact-for-large-n	Combinatorics.stirlings2(big(50), 2)	562949953421311	
+threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.stirlings2(big(2), 2), Combinatorics.stirlings2(big(4), 2), Combinatorics.stirlings2(big(6), 2)]	[1, 7, 31]	
+the-ways-to-split-10-distinct-items-among-3	Combinatorics.stirlings2(big(10), 3)	9330	
+one-block-means-one-partition-s-n-1-1	Combinatorics.stirlings2(big(5), 1)	1	
+singletons-only-s-n-n-1	Combinatorics.stirlings2(big(5), 5)	1	
+row-sums-give-the-bell-numbers			
+two-blocks-s-n-2-2-n-1-1	(Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 1))	true	
+s-n-n-1-binom-n-2-one-block-is-a-pair	(Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))	true	
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+the-empty-set-has-one-partition-into-no-blocks	Combinatorics.stirlings2(big(0), 0)	1	
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Combinatorics.stirlings2(big(5), 0)	0	
+k-n-is-0	Combinatorics.stirlings2(big(3), 5)	0	
+stirling-0-1-is-also-0	Combinatorics.stirlings2(big(0), 1)	0	
+a-negative-k-stays-symbolic	Combinatorics.stirlings2(big(10), -5)	0	inconclusive

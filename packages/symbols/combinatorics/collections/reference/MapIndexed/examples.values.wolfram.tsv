@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+pairs-each-element-with-its-1-based-index	MapIndexed[f, List[a, b, c]]	{f[a, {1}], f[b, {2}], f[c, {3}]}	\text{MapIndexed}[f,\{a,b,c\}]	\{f(a,\{1\}),f(b,\{2\}),f(c,\{3\})\}

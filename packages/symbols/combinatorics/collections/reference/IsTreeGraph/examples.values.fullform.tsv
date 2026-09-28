@@ -1,0 +1,7 @@
+id	in
+a-star-is-a-tree	TreeGraphQ[StarGraph[5]]
+a-cycle-is-not-a-tree	TreeGraphQ[CycleGraph[4]]
+a-disconnected-forest-is-not-a-tree	TreeGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
+a-path-is-a-tree	TreeGraphQ[enumeratio`PathGraph[5]]
+a-ternary-complete-tree-is-a-tree	TreeGraphQ[CompleteKaryTree[3, 3]]
+a-complete-graph-past-k2-is-not-a-tree	TreeGraphQ[CompleteGraph[4]]

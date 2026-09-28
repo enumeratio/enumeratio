@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+array-f-5			[Array, f, 5]	[List, [f, 1], [f, 2], [f, 3], [f, 4], [f, 5]]	
+array-squares			[Array, [Function, [Power, _1, 2]], 5]	[List, 1, 4, 9, 16, 25]	
+array-f-2-2	Scope		[Array, f, [List, 2, 2]]	[List, [List, [f, 1, 1], [f, 1, 2]], [List, [f, 2, 1], [f, 2, 2]]]	A list of dimensions builds a multi-dimensional array
+array-f-3-0	Scope		[Array, f, 3, 0]	[List, [f, 0], [f, 1], [f, 2]]	A third argument pins where the index range starts
+array-f-3-1-g	Scope		[Array, f, 3, 1, g]	[g, [f, 1], [f, 2], [f, 3]]	A fourth argument wraps the result in that head instead of List

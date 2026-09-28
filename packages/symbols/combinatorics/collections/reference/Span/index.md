@@ -1,0 +1,22 @@
+---
+name: Span
+domain: Collections
+signature: Span(i, j, step)
+summary: A range of positions i;;j;;step used as a part specification.
+signatures:
+  - call: Span(i, j, step?)
+    description: positions $i, i+step, \dots$ up to $j$; a negative position counts from the end. Never evaluated on its own — read by [[At]].
+    library: enumeratio-collections
+    type: (integer, integer, integer?) -> unknown
+details:
+  - "Never reduces by itself: it is a part specification other heads read, the way $Range$ describes a sequence of numbers. [[At]] is the only head here that reads one."
+  - $step$ defaults to 1; a negative $step$ walks from $i$ down to $j$.
+  - Negative $i$/$j$ count from the end, exactly as a plain negative index does in [[At]].
+seeAlso:
+  - At
+  - UpTo
+names:
+  wolframIdentity: true
+statOn:
+  - Finset
+---

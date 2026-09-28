@@ -1,0 +1,7 @@
+id	in	out
+the-base-10-digits-reversed	\mathrm{IntegerReverse}(1\,234)	4\,321
+1234-10011010010-2-reversed-is-1001011001-2-601	\mathrm{IntegerReverse}(1\,234, 2)	601
+padded-to-5-digits-first-00123-reversed	\mathrm{IntegerReverse}(123, 10, 5)	32\,100
+listable	\mathrm{IntegerReverse}(\bigl\lbrack12, 345\bigr\rbrack)	\bigl\lbrack21, 543\bigr\rbrack
+a-palindrome-is-its-own-reversal	\mathrm{IntegerReverse}(12\,321)	12\,321
+trailing-zeros-become-leading-zeros-and-vanish	\mathrm{IntegerReverse}(1\,200)	21

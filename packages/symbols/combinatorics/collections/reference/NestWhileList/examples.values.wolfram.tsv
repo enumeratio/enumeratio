@@ -1,0 +1,2 @@
+id	in
+halve-while-even-collecting-every-step	NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]

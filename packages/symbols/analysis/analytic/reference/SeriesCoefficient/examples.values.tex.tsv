@@ -1,0 +1,8 @@
+id	in	out
+exp-about-a-nonzero-point	\mathrm{SeriesCoefficient}(e^{x}, \bigl\lbrack x, 1, 2\bigr\rbrack)	\frac{e}{2}
+sin-about-zero	\mathrm{SeriesCoefficient}(\sin(x), \bigl\lbrack x, 0, 5\bigr\rbrack)	\frac{1}{120}
+geometric-series	\mathrm{SeriesCoefficient}(\frac{1}{1-x}, \bigl\lbrack x, 0, 10\bigr\rbrack)	1
+log-series	\mathrm{SeriesCoefficient}(\ln(1+x), \bigl\lbrack x, 0, 4\bigr\rbrack)	-\frac{1}{4}
+a-puiseux-half-integer-order-declines	\mathrm{SeriesCoefficient}(\sqrt{x}, \bigl\lbrack x, 0, \frac{1}{2}\bigr\rbrack)	\mathrm{SeriesCoefficient}(\sqrt{x}, \bigl\lbrack x, 0, \frac{1}{2}\bigr\rbrack)
+a-negative-order-laurent-coefficient-declines	\mathrm{SeriesCoefficient}(\frac{1}{x}, \bigl\lbrack x, 0, -1\bigr\rbrack)	\mathrm{SeriesCoefficient}(\frac{1}{x}, \bigl\lbrack x, 0, -1\bigr\rbrack)
+a-removable-singularity-declines	\mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)	\mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)

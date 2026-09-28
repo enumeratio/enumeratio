@@ -1,0 +1,10 @@
+---
+name: ColorSum
+domain: Combinatorics
+signature: ColorSum(...)
+summary: Sum of level-step colors
+statOn:
+  - ColoredMotzkinPath
+  - ColoredPermutation
+stub: carrier
+---

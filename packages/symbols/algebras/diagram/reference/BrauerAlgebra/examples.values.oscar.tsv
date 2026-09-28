@@ -1,0 +1,5 @@
+id	in	out
+5	dim(EnumeratioDiagramAlgebra(:brauer, 3))	15
+algebradimension-braueralgebra-4	dim(EnumeratioDiagramAlgebra(:brauer, 4))	105
+a-crossing-is-a-brauer-diagram		
+but-not-a-planar-one		

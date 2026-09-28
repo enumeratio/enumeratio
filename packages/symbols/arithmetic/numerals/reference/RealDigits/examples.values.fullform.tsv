@@ -1,0 +1,9 @@
+id	in
+the-repeating-block-of-1-7-0-overline-142857	RealDigits[Rational[1, 7]]
+the-first-10-digits-of-pi-truncated-not-rounded	RealDigits[Pi, 10, 10]
+19-7-2-overline-714285-one-digit-before-the	RealDigits[Rational[19, 7]]
+a-terminating-rational	RealDigits[Rational[5, 4]]
+1-8-0-001-2	RealDigits[Rational[1, 8], 2]
+realdigits-sqrt-2-10-5	RealDigits[Sqrt[2], 10, 5]
+realdigits-exponentiale-10-5	RealDigits[E, 10, 5]
+an-integer-six-digits-before-the-point	RealDigits[123456]

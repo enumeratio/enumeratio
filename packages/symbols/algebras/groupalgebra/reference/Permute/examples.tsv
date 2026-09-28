@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+by-a-cycle			[Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3, 2]]]]	[List, b, c, a, d]			
+by-disjoint-cycles	Scope		[Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]	[List, c, d, a, b]			
+by-a-one-line-word	Scope		[Permute, [List, a, b, c, d], [List, 2, 3, 4, 1]]	[List, d, a, b, c]			
+by-a-permutation-group	Applications		[Permute, [List, a, b, c], [PermutationGroup, [List, [Cycles, [List, [List, 1, 2, 3]]]]]]	[List, [List, a, b, c], [List, c, a, b], [List, b, c, a]]	one permuted copy per element of the cyclic group of order 3	convention	Both sides give the same three permutations (the cyclic group's orbit), listed in a different order — our own group-orbit generation and Wolfram's Permute/PermutationGroup enumerate a group's elements in different orders.

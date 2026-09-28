@@ -1,0 +1,23 @@
+id	in	out
+fibonacci-0	F_{0}	0
+fibonacci-1	F_{1}	1
+fibonacci-10	F_{10}	55
+fibonacci-20	F_{20}	6\,765
+fibonacci-8	F_{8}	21
+exact-at-any-size-f-100-has-21-digits	F_{100}	354\,224\,848\,179\,261\,915\,075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	F_{1.5}	0.920\,442\,065\,259\,926
+the-two-argument-fibonacci-polynomial-f-7-x-from	F_{7}(x)	x^6+5x^4+6x^2+1
+the-fibonacci-polynomial-at-a-real-order-and	F_{5.8}(3)	283.482\,730\,832\,949\,9
+special-value-of-the-fibonacci-polynomial-f-1-0	F_{1}(0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	F_{0}(0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix		
+threads-element-wise-over-a-list-as-wolfram-s		
+consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{F_{20}}{F_{19}}	\frac{6\,765}{4\,181}
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}F_{k}	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	F_{20}=F_{10}L_{10}	\mathrm{True}
+the-defining-recurrence-f-10-f-9-f-8	F_{10}=F_{9}+F_{8}	\mathrm{True}
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	F_{5}F_{7}-F_{6}^2	1
+gcd-f-12-f-18-f-gcd-12-18	\gcd(F_{12}, F_{18})=F_{\gcd(12, 18)}	\mathrm{True}
+negative-indices-are-supported-via-f-n-1-n-1-f-n	F_{-5}	5
+f-1000-has-209-digits-see-integerdigits	\mathrm{Length}(\mathrm{IntegerDigits}(F_{1\,000}))	209
+they-grow-fast-f-50-already-exceeds-twelve	F_{50}	12\,586\,269\,025

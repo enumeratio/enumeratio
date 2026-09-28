@@ -1,0 +1,9 @@
+---
+name: DiagonalSteps
+domain: Combinatorics
+signature: DiagonalSteps(...)
+summary: Number of diagonal steps
+statOn:
+  - DelannoyPath
+stub: carrier
+---

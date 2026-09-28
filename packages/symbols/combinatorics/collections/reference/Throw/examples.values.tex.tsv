@@ -1,0 +1,3 @@
+id	in	out
+throw-aborts-to-the-nearest-catch	\mathrm{Catch}(\mathrm{Throw}(\mathrm{abandoned}))	\mathrm{abandoned}
+a-tag-mismatch-propagates-past-a-catch	\mathrm{Catch}(\mathrm{Catch}(\mathrm{Throw}(\mathrm{deep}, x), y), x)	\mathrm{deep}

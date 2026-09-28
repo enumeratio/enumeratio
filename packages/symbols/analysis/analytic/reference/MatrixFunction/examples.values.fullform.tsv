@@ -1,0 +1,6 @@
+id	in
+the-principal-square-root-of-a-diagonal-matrix	MatrixFunction[Sqrt, List[List[4, 0], List[0, 9]]]
+on-a-diagonal-matrix-f-acts-on-the-diagonal	MatrixFunction[f, List[List[a, 0], List[0, b]]]
+matrixfunction-cos-list-list-0-0-list-0-0	MatrixFunction[Cos, List[List[0, 0], List[0, 0]]]
+with-exp-it-is-matrixexp	MatrixFunction[Exp, List[List[0, 0], List[0, 0]]]
+a-polynomial-f-agrees-with-the-matrix-power	MatrixFunction[Function[Power[Slot[1], 2]], List[List[1, 1], List[0, 1]]]

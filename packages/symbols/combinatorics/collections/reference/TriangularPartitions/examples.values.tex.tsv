@@ -1,0 +1,4 @@
+id	in	out
+count-triangularpartitions-12	\mathrm{Count}(\mathrm{TriangularPartitions}(12))	10
+first-element-of-triangularpartitions-12	\mathrm{TriangularPartitions}(12)[1]	\bigl\lbrack10, 1, 1\bigr\rbrack
+every-element-of-triangularpartitions-12	\mathrm{Take}(\mathrm{TriangularPartitions}(12), 10)	\bigl\lbrack\bigl\lbrack10, 1, 1\bigr\rbrack, \bigl\lbrack6, 6\bigr\rbrack, \bigl\lbrack6, 3, 3\bigr\rbrack, \bigl\lbrack6, 3, 1, 1, 1\bigr\rbrack, \bigl\lbrack6, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 3, 3, 3\bigr\rbrack, \bigl\lbrack3, 3, 3, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 3, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack3, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack

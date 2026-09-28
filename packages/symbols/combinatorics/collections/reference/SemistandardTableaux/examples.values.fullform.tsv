@@ -1,0 +1,4 @@
+id	in
+count-semistandardtableaux-4-3-39-every-ssyt-of	Count[SemistandardTableaux[4, 3]]
+every-element-of-semistandardtableaux-3-2	Take[SemistandardTableaux[3, 2], 6]
+the-first-ssyt-of-3-cells-with-entries-in-1-2-as	Part[SemistandardTableaux[3, 2], 1]

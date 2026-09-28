@@ -1,0 +1,12 @@
+id	in	out
+erfc-1-1-2-erf-1-1-2	\mathrm{InverseErfc}(0.5)	0.476\,936\,276\,204\,469\,9
+erfc-1-1-0	\mathrm{InverseErfc}(1)	0
+argument-1-7	\mathrm{InverseErfc}(1.7)	-0.732\,869\,077\,959\,217
+deep-tail-0-001	\mathrm{InverseErfc}(0.001)	2.326\,753\,765\,513\,524\,6
+erfc-1-0-infty	\mathrm{InverseErfc}(0)	\infty
+erfc-1-2-infty	\mathrm{InverseErfc}(2)	-\infty
+arguments-in-1-2-give-negative-values	\mathrm{InverseErfc}(1.5)	-0.476\,936\,276\,204\,469\,9
+listable	\mathrm{InverseErfc}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack\infty, 0\bigr\rbrack
+sqrt-2-times-this-2-5758-is-the-two-sided-99	\mathrm{InverseErfc}(0.01)	1.821\,386\,367\,718\,449\,6
+erfc-erfc-1-x-x	\mathrm{Erfc}(\mathrm{InverseErfc}(x))	x
+deep-in-the-tail-it-keeps-full-precision-where	\mathrm{InverseErfc}(10^{-10})	4.572\,824\,967\,389\,485

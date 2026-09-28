@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+factorial			[ExponentialGeneratingFunction, [Factorial, n], n, x]	[Divide, 1, [Add, [Negate, x], 1]]	$1/(1-x)$
+derangements			[ExponentialGeneratingFunction, [Subfactorial, n], n, x]	[Divide, [Power, ExponentialE, [Negate, x]], [Add, [Negate, x], 1]]	$e^{-x}/(1-x)$
+bell-numbers			[ExponentialGeneratingFunction, [BellNumber, n], n, x]	[Power, ExponentialE, [Add, [Power, ExponentialE, x], -1]]	$e^{e^x-1}$ -- the exponential formula for set partitions
+fibonacci			[ExponentialGeneratingFunction, [Fibonacci, n], n, x]	[Add, [Multiply, [Negate, [Divide, [Sqrt, 5], 5]], [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Negate, [Sqrt, 5]]]]]], [Multiply, [Divide, [Sqrt, 5], 5], [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Sqrt, 5]]]]]]	Binet's formula, exponentiated -- built from the order-2 recurrence's own roots $(1\pm\sqrt5)/2$

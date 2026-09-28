@@ -1,0 +1,6 @@
+id	in
+nestlist-f-x-3	NestList[f, x, 3]
+powers-of-2	NestList[Function[Times[2, Slot[1]]], 1, 5]
+zero-steps-just-the-seed	NestList[f, x, 0]
+3-is-a-primitive-root-mod-7-its-powers-visit	NestList[Function[Mod[Times[3, Slot[1]], 7]], 1, 6]
+newton-iterates-converging-to-sqrt-2	NestList[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1, 3]

@@ -1,0 +1,5 @@
+id	in	out
+euler-s-formula	\mathrm{ExpToTrig}(\exp(i x))	i\sin(x)+\cos(x)
+a-real-exponential-splits-into-hyperbolic-parts	\mathrm{ExpToTrig}(e^{x})	\sinh(x)+\cosh(x)
+recognizes-cosh	\mathrm{ExpToTrig}(\frac{1}{2}(e^{x}+\exp(-x)))	\cosh(x)
+recognizes-sin	\mathrm{ExpToTrig}(\frac{\exp(i x)-\exp(-(i x))}{2i})	\sin(x)

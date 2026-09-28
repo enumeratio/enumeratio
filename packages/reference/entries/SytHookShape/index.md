@@ -1,0 +1,25 @@
+---
+name: SytHookShape
+domain: Combinatorics
+signature: SytHookShape(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000079
+    url: https://oeis.org/A000079
+    note: "2^(n-1): SYT of a hook with n cells"
+  - system: sage
+    identity: sage.combinat.tableau.StandardTableaux
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/tableau.html
+    note: sage's StandardTableaux(shape) takes ONE partition; ours unions every hook shape (a,1ᵇ) at fixed n — Σ_{b=0}^{n−1} StandardTableaux([n−b] ++ [1]*b)
+stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableau
+signatures:
+  - call: SytHookShape(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+---

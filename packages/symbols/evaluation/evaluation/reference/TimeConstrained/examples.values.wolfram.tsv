@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out	verdict
+finishes-well-inside-the-deadline-so-the-value	TimeConstrained[Sum[k, List[k, 1, 10]], 1]	55	\text{TimeConstrained}\left[\sum _{k=1}^{10} k,1\right]	55	
+factoring-a-30-digit-semiprime-outruns-a-50-ms	TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]	{{1000000000000037, 1}, {1001000000000003, 1}}	\text{TimeConstrained}[\text{FactorInteger}[1001000000000040037000000000111],0.05]	\left( \begin{array}{cc}  1000000000000037 & 1 \\  1001000000000003 & 1 \\ \end{array} \right)	disagree
+a-custom-failexpr-replaces-the-default-aborted	TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]	{{1000000000000037, 1}, {1001000000000003, 1}}	\text{TimeConstrained}[\text{FactorInteger}[1001000000000040037000000000111],0.05,-1]	\left( \begin{array}{cc}  1000000000000037 & 1 \\  1001000000000003 & 1 \\ \end{array} \right)	disagree
+an-infinite-time-limit-imposes-no-constraint	TimeConstrained[Plus[1, 2], Infinity]				
+failexpr-is-held-it-is-never-evaluated-when-expr	TimeConstrained[Plus[2, 3], 1, Divide[1, 0]]				

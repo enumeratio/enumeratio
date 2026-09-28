@@ -1,0 +1,37 @@
+id	in	out	verdict
+sqrt-16	sqrt(n(16))	4.0	
+stays-symbolic-when-the-radicand-isn-t-a-perfect	sqrt(n(2))	1.4142135623730951	
+sqrt-4-over-9	sqrt(rational(n(4), n(9)))	0.6666666666666666	
+sqrt-0	sqrt(n(0))	0.0	
+a-perfect-square-radicand-evaluates-exactly-even	sqrt(n(-4))	NaN	disagree
+an-approximate-number-gives-an-approximate-root	sqrt(x(3.5))	1.8708286933869707	
+pulls-perfect-square-factors-out-of-the-radical	sqrt(n(200))	14.142135623730951	
+sqrt-neg-25	sqrt(n(-25))	NaN	disagree
+sqrt-8	sqrt(n(8))	2.8284271247461903	
+rationalizes-the-denominator	sqrt(rational(n(1), n(2)))	0.7071067811865476	
+sqrt-12-over-5	sqrt(rational(n(12), n(5)))	1.5491933384829668	
+sqrt-neg-2p5	sqrt(x(-2.5))	NaN	disagree
+an-exact-complex-square-2-i-2-3-4i			
+sqrt-positiveinfinity			
+threads-element-wise-over-a-list	sqrt(list(vec![n(1), n(4), n(9)]))	panic: threading: a list where the crate takes a scalar	error
+threads-over-a-matrix-entry-by-entry-this-is-not	sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))	panic: threading: a list where the crate takes a scalar	error
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1			
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1			
+to-45-significant-digits-every-one-correctly	nf(sqrt(n(2)))	1.4142135623730951	
+an-approximate-negative-radicand-stays-complex	sqrt(x(-2.875))	NaN	disagree
+sqrt-neg-4-over-9	sqrt(rational(n(-4), n(9)))	NaN	disagree
+sqrt-neg-1-half	sqrt(rational(n(-1), n(2)))	NaN	disagree
+sqrt-neg-1	sqrt(n(-1))	NaN	disagree
+sqrt-neg-12-over-5	sqrt(rational(n(-12), n(5)))	NaN	disagree
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle			
+sqrt-x-2-x-for-a-perfect-square-see-square			
+sqrt-x-x-1-2	equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))	true	
+sqrt-x-2-x-for-every-x			
+negative-but-not-a-perfect-square-stays-symbolic	sqrt(n(-2))	NaN	disagree
+a-negative-rational-still-evaluates-exactly-when	sqrt(rational(n(-4), n(9)))	NaN	disagree
+sqrt-x-2-is-not-simplified-to-x-which-would-be			
+at-x-1-sqrt-x-2-1-not-1	sqrt(power(n(-1), n(2)))	1.0	
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	(sqrt(n(-1)) * sqrt(n(-1)))	NaN	inconclusive
+while-sqrt-1-1-1	sqrt((n(-1) * n(-1)))	1.0	
+sqrt-36-negative	sqrt(n(-36))	NaN	disagree
+sqrt-2-times-sqrt-neg-1	(sqrt(n(1)) * sqrt(n(-1)))	NaN	disagree

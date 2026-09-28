@@ -1,0 +1,9 @@
+---
+name: LongerLeg
+domain: Combinatorics
+signature: LongerLeg(...)
+summary: Longer leg
+statOn:
+  - PythagoreanTriple
+stub: carrier
+---

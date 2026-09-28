@@ -1,0 +1,14 @@
+id	in	out
+digitsum-58-127	\mathrm{DigitSum}(58\,127)	23
+in-base-2-this-is-the-number-of-set-bits	\mathrm{DigitSum}(58\,127, 2)	9
+255-ff-16-15-15	\mathrm{DigitSum}(255, 16)	30
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{DigitSum}(\bigl\lbrack12, 345\bigr\rbrack)	\bigl\lbrack3, 12\bigr\rbrack
+just-the-first-4-digits-6-3-4-5-18-not-the-full	\mathrm{DigitSum}(6\,345\,354, 10, 4)	18
+a-negative-k-sums-the-last-3-digits-instead	\mathrm{DigitSum}(6\,345\,354, 10, -3)	12
+k-at-least-the-digit-count-is-the-plain-sum	\mathrm{DigitSum}(6\,345\,354, 10, 7)	30
+digit-sum-n-mod-9-the-basis-of-the-classic	\mathrm{DigitSum}(58\,127)\bmod9=58\,127\bmod9	\top
+digitsum-0	\mathrm{DigitSum}(0)	0
+the-sign-is-discarded	\mathrm{DigitSum}(-123)	6
+sign-is-discarded-in-the-3-argument-form-too	\mathrm{DigitSum}(-6\,345\,354, 10, 4)	18
+digitsum-100-factorial	\mathrm{DigitSum}(100!)	648
+the-digit-sum-of-2-1000	\mathrm{DigitSum}(2^{1\,000})	1\,366

@@ -1,0 +1,5 @@
+id	in
+nexpectation-sin-of-normal	NExpectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]
+nexpectation-cube-of-exponential	NExpectation[Power[x, 3], Distributed[x, ExponentialDistribution[2]]]
+nexpectation-poisson-reciprocal	NExpectation[Power[Plus[x, 1], -1], Distributed[x, PoissonDistribution[3]]]
+nexpectation-binomial-cube-finite-sum	NExpectation[Power[x, 3], Distributed[x, BinomialDistribution[5, Rational[2, 5]]]]

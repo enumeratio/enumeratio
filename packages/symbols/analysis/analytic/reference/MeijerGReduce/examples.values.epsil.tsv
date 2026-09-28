@@ -1,0 +1,5 @@
+id	in	out
+exp	MeijerGReduce(ExponentialE ^ x, x)	MeijerG([[], []], [[0], []], -x)
+sin	MeijerGReduce(Sin(x), x)	MeijerG([[], []], [[1 / 2], [0]], 1 / 4 * x ^ 2) * Sqrt(Pi)
+log1p	MeijerGReduce(Ln(1 + x), x)	MeijerG([[1, 1], []], [[1], [0]], x)
+bessel-j	MeijerGReduce(BesselJ(n, x), x)	MeijerG([[], []], [[1 / 2 * n], [-1 / 2 * n]], 1 / 4 * x ^ 2)

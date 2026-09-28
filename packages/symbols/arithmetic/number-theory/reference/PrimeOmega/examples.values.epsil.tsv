@@ -1,0 +1,12 @@
+id	in	out
+primeomega-30	PrimeOmega(30)	3
+primeomega-360	PrimeOmega(360)	6
+primeomega-12	PrimeOmega(12)	3
+threads-element-wise-over-a-list-as-wolfram-s	PrimeOmega([4, 12, 24])	[2, 3, 4]
+large-integers	PrimeOmega(30!)	59
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	PrimeOmega(5 + 9i)	2
+gaussianintegers-true-12-1-i-4-cdot-3	PrimeOmega(12, GaussianIntegers -> True)	5
+listable-over-a-range	PrimeOmega(Range(20))	[0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3]
+completely-additive-omega-mn-omega-m-omega-n-for	PrimeOmega(24 * 40) == PrimeOmega(24) + PrimeOmega(40)	True
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	PrimeOmega(8) >= PrimeNu(8)	True
+1-has-no-prime-factors	PrimeOmega(1)	0

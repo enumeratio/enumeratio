@@ -1,0 +1,19 @@
+id	in	out
+pi-n-0-m-0	IncompleteEllipticPi(0.5, 0, 0.3)	0
+a-floating-point-argument-evaluates-directly-to	N(IncompleteEllipticPi(0.5, 0.4, 0.3))	0.414_151_736_824_476_76
+pi-0-5-0-4-0-3	N(IncompleteEllipticPi(0.5, -0.4, 0.3))	-0.414_151_736_824_476_76
+pi-0-5-1-9-0-3	N(IncompleteEllipticPi(0.5, 1.9, 0.3))	3.216_516_537_015_119
+pi-2-0-4-0-3	N(IncompleteEllipticPi(2, 0.4, 0.3))	0.455_004_749_092_808_14
+pi-0-5-3-5-0-3	N(IncompleteEllipticPi(0.5, 3.5, 0.3))	5.291_058_653_963_574
+pi-0-2-2-0-5	N(IncompleteEllipticPi(0.2, 2, 0.5))	2.820_425_540_921_485_6
+pi-0-5-0-4-0-7-0-2i	N(IncompleteEllipticPi(0.5, 0.4, 0.7 + 0.2i))	0.418_772_472_659_035_67 + 0.002_398_866_657_940_282_5i
+pi-0-5-0-2i-0-4-0-3	N(IncompleteEllipticPi(0.5 + 0.2i, 0.4, 0.3))	0.414_060_319_808_096 + 0.004_608_575_942_138_294i
+pi-0-5-0-4-0-3i-0-6-0-1i	N(IncompleteEllipticPi(0.5, 0.4 + 0.3i, 0.6 + 0.1i))	0.384_711_358_107_325_65 + 0.329_996_740_971_807i
+pi-0-2-2-0-5i-0-3	N(IncompleteEllipticPi(0.2, 2 + 0.5i, 0.3))	2.615_928_301_488_492_6 + 0.701_563_176_993_066_6i
+pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	"N(IncompleteEllipticPi(\n                        1.17 + 0.45i,\n                        10.594_777_960_769_38 + 0.45i,\n                        1.17 + 0.45i,\n                      ))"	-0.103_480_823_340_681_65 + 15.113_381_465_309_939i
+pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	"N(IncompleteEllipticPi(1.17 + 0.45i, -5.113_185_307_179_586 + 0.45i, 1.17 +\n                                                                     0.45i))"	0.640_677_318_606_682_5 - 8.277_778_194_614_966i
+a-complex-amplitude-phi-where-native-ellipticpi	N(IncompleteEllipticPi(0.2, 1.2 + 0.5i, 0.3))	1.321_415_376_117_118 + 0.718_665_718_875_180_6i
+all-three-arguments-complex-matches-mpmath-s	N(IncompleteEllipticPi(1.17 + 0.45i, 1.17 + 0.45i, 1.17 + 0.45i))	0.343_014_061_827_736_86 + 1.078_685_669_354_995_8i
+characteristic-n-1	N(IncompleteEllipticPi(0.3, 1.1, 0.4))	1.323_800_815_047_493_6
+n-0-reduces-to-the-incomplete-elliptic-integral	N(IncompleteEllipticPi(0, 0.4, 0.3))	0.403_164_991_947_139_34
+symbolic-arguments-are-left-unevaluated-rather	IncompleteEllipticPi(n, phi, m)	IncompleteEllipticPi(n, phi, m)

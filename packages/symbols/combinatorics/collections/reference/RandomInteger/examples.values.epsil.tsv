@@ -1,0 +1,5 @@
+id	in	out
+randominteger-default-seed-is-reproducible	Last([SeedRandom(42), RandomInteger(100)])	60
+randominteger-range-scope	Last([SeedRandom(1), RandomInteger([10, 20])])	16
+randominteger-list-of-draws	Length(Last([SeedRandom(2), RandomInteger(6, 10)]))	10
+randominteger-array-shape	Shape(Last([SeedRandom(3), RandomInteger(1, [2, 3])]))	(2, 3)

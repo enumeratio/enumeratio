@@ -1,0 +1,5 @@
+id	in	back
+symbolic-falling	FactorialPower[x, 3]	[FallingFactorial, x, 3]
+numeric	FactorialPower[5, 3]	[FallingFactorial, 5, 3]
+step	FactorialPower[x, 2, h]	[FallingFactorial, x, 2, h]
+zero	FactorialPower[x, 0]	[FallingFactorial, x, 0]

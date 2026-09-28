@@ -1,0 +1,5 @@
+id	in	out
+a-plain-integer	IsInteger(4)	True
+a-rational-is-not-an-integer	IsInteger(1 / 2)	False
+a-free-symbol-is-false	IsInteger(x)	False
+a-negative-integer	IsInteger(-3)	True

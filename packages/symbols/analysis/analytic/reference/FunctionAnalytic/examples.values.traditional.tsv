@@ -1,0 +1,5 @@
+id	in	out
+polynomials-are-entire	\mathrm{FunctionAnalytic}(x^2, x)	\mathrm{True}
+a-pole-anywhere-in-the-plane-disqualifies-it	\mathrm{FunctionAnalytic}(\frac{1}{x}, x)	\mathrm{False}
+sqrt-has-a-branch-point	\mathrm{FunctionAnalytic}(\sqrt{x}, x)	\mathrm{False}
+sine-is-entire	\mathrm{FunctionAnalytic}(\sin(x), x)	\mathrm{True}

@@ -1,0 +1,18 @@
+---
+name: Lb
+domain: Elementary functions
+signature: Lb(z)
+summary: The binary logarithm of z, identical to [[Log2]].
+signatures:
+  - call: Lb(z)
+    description: the base-2 logarithm of z, $\log_2(z)$.
+details:
+  - An alias for [[Log2]] -- the "lb" notation is borrowed from information theory and computer science, as opposed to "lg" for base 10.
+  - $\mathrm{Lb}$ is the binary logarithm, identical to [[Log2]].
+seeAlso:
+  - Log2
+  - Log
+  - Log10
+names:
+  wolfram: Log2
+---

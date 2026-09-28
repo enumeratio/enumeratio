@@ -1,0 +1,21 @@
+id	in	out
+bernoullib-0	\mathrm{BernoulliB}(0)	1
+bernoullib-1	\mathrm{BernoulliB}(1)	-\frac{1}{2}
+bernoullib-2	\mathrm{BernoulliB}(2)	\frac{1}{6}
+bernoullib-4	\mathrm{BernoulliB}(4)	-\frac{1}{30}
+bernoullib-12	\mathrm{BernoulliB}(12)	-\frac{691}{2\,730}
+bernoullib-10	\mathrm{BernoulliB}(10)	\frac{5}{66}
+exact-rationals-at-any-index	\mathrm{BernoulliB}(60)	-\frac{1\,215\,233\,140\,483\,755\,572\,040\,304\,994\,079\,820\,246\,041\,491}{56\,786\,730}
+listable-b-n-threads-over-a-list-of-indices	\mathrm{BernoulliB}(\bigl\lbrack2, 4, 6\bigr\rbrack)	\bigl\lbrack\frac{1}{6}, -\frac{1}{30}, \frac{1}{42}\bigr\rbrack
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac	\mathrm{BernoulliB}(4, x)	x^4-2x^3+x^2-\frac{1}{30}
+the-bernoulli-polynomial-at-a-rational-point-b-2	\mathrm{BernoulliB}(2, \frac{1}{2})	-\frac{1}{12}
+with-a-second-argument-the-bernoulli-polynomial	\mathrm{BernoulliB}(1, x)	x-\frac{1}{2}
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{BernoulliB}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack-\frac{1}{2}, \frac{1}{6}, 0\bigr\rbrack
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	\frac{1}{3}(\binom{3}{0}\mathrm{BernoulliB}(0)\times5^3+\binom{3}{1}\mathrm{BernoulliB}(1)\times5^2+\binom{3}{2}\mathrm{BernoulliB}(2)\times5^1)	30
+von-staudt-clausen-the-denominator-of-b-2n-is	\mathrm{Denominator}(\mathrm{BernoulliB}(12))	2\,730
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	\zeta(-3)=-\frac{\mathrm{BernoulliB}(4)}{4}	\top
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	\binom{5}{0}\mathrm{BernoulliB}(0)+\binom{5}{1}\mathrm{BernoulliB}(1)+\binom{5}{2}\mathrm{BernoulliB}(2)+\binom{5}{3}\mathrm{BernoulliB}(3)+\binom{5}{4}\mathrm{BernoulliB}(4)	0
+b-n-0-for-every-odd-n-1	\mathrm{BernoulliB}(5)=0	\top
+b-1-1-frac-12-is-the-other-convention-for-b-1	\mathrm{BernoulliB}(1, 1)	\frac{1}{2}
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	\mathrm{BernoulliB}(-1)	\mathrm{BernoulliB}(-1)
+numerators-and-denominators-grow-quickly-b-20	\mathrm{BernoulliB}(20)	-\frac{174\,611}{330}

@@ -1,0 +1,14 @@
+id	in	out
+digitsum-58-127	DigitSum(58_127)	23
+in-base-2-this-is-the-number-of-set-bits	DigitSum(58_127, 2)	9
+255-ff-16-15-15	DigitSum(255, 16)	30
+threads-element-wise-over-a-list-as-wolfram-s	DigitSum([12, 345])	[3, 12]
+just-the-first-4-digits-6-3-4-5-18-not-the-full	DigitSum(6_345_354, 10, 4)	18
+a-negative-k-sums-the-last-3-digits-instead	DigitSum(6_345_354, 10, -3)	12
+k-at-least-the-digit-count-is-the-plain-sum	DigitSum(6_345_354, 10, 7)	30
+digit-sum-n-mod-9-the-basis-of-the-classic	DigitSum(58_127) % 9 == 58_127 % 9	True
+digitsum-0	DigitSum(0)	0
+the-sign-is-discarded	DigitSum(-123)	6
+sign-is-discarded-in-the-3-argument-form-too	DigitSum(-6_345_354, 10, 4)	18
+digitsum-100-factorial	DigitSum(100!)	648
+the-digit-sum-of-2-1000	DigitSum(2 ^ 1_000)	1_366

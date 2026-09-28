@@ -1,0 +1,14 @@
+---
+name: InFundamentalBasis
+domain: Hopf algebras
+signature: InFundamentalBasis(x)
+summary: Rewrite an element of QSym in the fundamental basis `QSymF`.
+signatures:
+  - call: InFundamentalBasis(x)
+    description: $x$ rewritten in the $F$ basis
+    library: enumeratio-hopf
+    type: (number) -> number
+seeAlso:
+  - QSymF
+  - InMonomialBasis
+---

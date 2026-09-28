@@ -1,0 +1,5 @@
+id	in	out
+gather-list-1-7-3-7-2-3-9		
+symbolic-elements		
+a-test-decides-which-elements-belong-together		
+the-group-sizes-are-the-multiplicities-of-the	\mathrm{Map}(\mathrm{Length}, \mathrm{Gather}(\bigl\lbrack1, 7, 3, 7, 2, 3, 9\bigr\rbrack))=\bigl\lbrack1, 2, 2, 1, 1\bigr\rbrack	\mathrm{True}

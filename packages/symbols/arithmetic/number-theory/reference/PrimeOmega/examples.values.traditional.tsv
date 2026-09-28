@@ -1,0 +1,12 @@
+id	in	out
+primeomega-30	\Omega(30)	3
+primeomega-360	\Omega(360)	6
+primeomega-12	\Omega(12)	3
+threads-element-wise-over-a-list-as-wolfram-s		
+large-integers	\Omega(30!)	59
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	\Omega(5+9i)	2
+gaussianintegers-true-12-1-i-4-cdot-3	\mathrm{PrimeOmega}(12, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	5
+listable-over-a-range	\Omega(1..20)	\bigl\lbrack0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3\bigr\rbrack
+completely-additive-omega-mn-omega-m-omega-n-for	\Omega(24\times40)=\Omega(24)+\Omega(40)	\mathrm{True}
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	\Omega(8)\ge\omega(8)	\mathrm{True}
+1-has-no-prime-factors	\Omega(1)	0

@@ -1,0 +1,9 @@
+---
+name: DistinctLetters
+domain: Combinatorics
+signature: DistinctLetters(...)
+summary: Number of distinct letters
+statOn:
+  - Word
+stub: carrier
+---

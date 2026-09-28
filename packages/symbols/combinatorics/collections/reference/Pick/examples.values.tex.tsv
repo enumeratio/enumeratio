@@ -1,0 +1,3 @@
+id	in	out
+keeps-elements-where-sel-is-true	\mathrm{Pick}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\top, \bot, \top\bigr\rbrack)	\bigl\lbrack a, c\bigr\rbrack
+an-explicit-pattern-keeps-elements-matching	\mathrm{Pick}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack, 1)	\bigl\lbrack a, c\bigr\rbrack

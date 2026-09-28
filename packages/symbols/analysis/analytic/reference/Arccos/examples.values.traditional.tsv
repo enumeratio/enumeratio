@@ -1,0 +1,21 @@
+id	in	out
+arccos-1		
+arccos-1-over-2		
+arccos-0		
+the-top-of-the-principal-range		
+a-machine-precision-argument-evaluates		
+outside-1-1-the-value-is-purely-imaginary		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+threads-element-wise-over-a-matrix		
+exact-inverse-of-a-special-value		
+arccos-neg-sqrt-2-over-2		
+recognizes-cos-pi-5-frac-1-sqrt-5-4		
+interval-arithmetic-decreasing-so-arccos-frac-13		
+uncertainty-propagation-arccos-0-9-pm-0-1-approx		
+derivative-frac-1-sqrt-1-x-2		
+antiderivative		
+not-simply-4-4-is-outside-the-principal-range-0		
+cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
+reflection-arccos-x-pi-arccos-x		
+outside-1-1-this-stays-symbolic-same-as-arcsin-n		

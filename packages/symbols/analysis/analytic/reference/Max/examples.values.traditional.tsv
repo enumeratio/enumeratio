@@ -1,0 +1,21 @@
+id	in	out
+max-3-1-4-1-5		
+also-accepts-a-single-list-argument		
+max-neg-1-neg-5		
+a-single-argument-is-returned-unchanged		
+max-9-2		
+max-list-4-1-7-2		
+max-5p56-neg-4p8-7p3		
+nested-lists-are-flattened-into-the-pool		
+exact-numbers-are-compared-numerically		
+max-1-positiveinfinity		
+the-numeric-arguments-collapse-to-their-maximum		
+compares-exact-constants-numerically-max-e-pi-2		
+the-max-of-two-intervals-is-the-interval-of		
+the-day-s-high-from-a-handful-of-hourly-readings		
+commutative-order-doesn-t-matter	\max(3, 7)=\max(7, 3)	\mathrm{True}
+multiple-list-arguments-are-flattened-into-one	\max(\bigl\lbrack3, 1, 4\bigr\rbrack, \bigl\lbrack9, 2\bigr\rbrack)=9	\mathrm{True}
+idempotent-max-x-x-x		
+with-no-arguments-compute-engine-returns-nan		
+nan-poisons-the-result-overriding-every-other		
+the-max-of-an-empty-list-is-nan-too		

@@ -1,0 +1,14 @@
+id	in	out	tex.in	tex.out
+digitcount-2-147	DigitCount[2147]	{1, 1, 0, 1, 0, 0, 1, 0, 0, 0}	\text{DigitCount}[2147]	\{1,1,0,1,0,0,1,0,0,0\}
+in-base-2-counts-of-digit-1-then-digit-0	DigitCount[2147, 2]	{5, 7}	\text{DigitCount}[2147,2]	\{5,7\}
+2147-100001100011-2-has-five-1-bits	DigitCount[2147, 2, 1]			
+digitcount-122-000	DigitCount[122000]			
+an-explicit-base-10-is-the-default	DigitCount[122000, 10]			
+the-digits-of-100-30-of-them-zeros	DigitCount[Factorial[100]]			
+a-width-counts-padding-zeros-too-000122000-has	DigitCount[122000, 10, 0, 9]			
+a-list-of-digit-values-gives-one-count-each	DigitCount[242442422, 3, List[1, 2]]			
+counts-over-the-12-least-significant-base-3	DigitCount[242442422, 3, List[1, 2], 12]			
+threads-element-wise-over-a-list-as-wolfram-s	DigitCount[List[23, 45]]	{{0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 0, 0, 0, 0, 0}}	\text{DigitCount}[\{23,45\}]	\left( \begin{array}{cccccccccc}  0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\  0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\ \end{array} \right)
+the-3-argument-form-isolates-a-single-digit-s	DigitCount[2147, 10, 1]	1	\text{DigitCount}[2147,10,1]	1
+three-trailing-zeros-not-four-122000-has-digits	DigitCount[122000, 10, 0]	3	\text{DigitCount}[122000,10,0]	3
+0-has-one-digit-a-zero	DigitCount[0]			

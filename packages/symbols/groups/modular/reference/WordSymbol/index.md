@@ -1,0 +1,14 @@
+---
+name: WordSymbol
+domain: The modular group
+signature: WordSymbol(word)
+summary: "The Rademacher symbol read straight off an $LR$ word: the number of $R$'s minus the number of $L$'s."
+signatures:
+  - call: WordSymbol(word)
+    description: $R$'s minus $L$'s
+    library: enumeratio-modular
+    type: (expression<ModularMatrix> | list | string) -> integer
+seeAlso:
+  - RademacherSymbol
+  - ModularWord
+---

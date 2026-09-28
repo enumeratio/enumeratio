@@ -1,0 +1,5 @@
+id	in	out
+7-is-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(7)	\mathrm{True}
+11-is-prime-but-not-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(11)	\mathrm{False}
+9-is-not-even-prime	\mathrm{IsMersennePrimeExponent}(9)	\mathrm{False}
+2-31-1-is-the-8th-mersenne-prime	\mathrm{IsMersennePrimeExponent}(31)	\mathrm{True}

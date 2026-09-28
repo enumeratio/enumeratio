@@ -1,0 +1,9 @@
+---
+name: TwoCore
+domain: Combinatorics
+signature: TwoCore(...)
+summary: 2-core
+mapOn:
+  - IntegerPartition
+stub: carrier
+---

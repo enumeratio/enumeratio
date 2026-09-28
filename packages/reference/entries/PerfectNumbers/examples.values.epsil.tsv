@@ -1,0 +1,2 @@
+id	in	out
+the-first-7-terms	Take(PerfectNumbers, 7)	[6, 28, 496, 8_128, 33_550_336, 8_589_869_056, 137_438_691_328]

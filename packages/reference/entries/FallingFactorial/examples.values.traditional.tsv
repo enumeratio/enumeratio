@@ -1,0 +1,4 @@
+id	in	out
+falling-factorial-5-3-60	5^{\underline{3}}	60
+falling-factorial-3-5-0	3^{\underline{5}}	0
+falling-factorial-half-2-neg-1-4	(\frac{1}{2})^{\underline{2}}	-\frac{1}{4}

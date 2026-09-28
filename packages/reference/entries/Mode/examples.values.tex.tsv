@@ -1,0 +1,8 @@
+id	in	out
+mode-list-1-2-2-3	\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack)	2
+mode-list-1-2-3-3-2-3	\mathrm{Mode}(\bigl\lbrack1, 2, 3, 3, 2, 3\bigr\rbrack)	3
+exact-rationals	\mathrm{Mode}(\bigl\lbrack\frac{1}{2}, 1, \frac{1}{2}\bigr\rbrack)	\frac{1}{2}
+symbols-and-numbers-mixed-three-way-tie-wolfram	\mathrm{Mode}(\bigl\lbrack b, a, c, 2, a, b, 1, 2\bigr\rbrack)	b
+the-mode-occurs-exactly-as-many-times-as-the	\mathrm{Count}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack, \mathrm{Mode}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))=2	\top
+with-a-tie-for-most-frequent-mode-returns-just	\mathrm{Mode}(\bigl\lbrack1, 1, 2, 2, 3\bigr\rbrack)	1
+empty-data-has-no-mode-compute-engine-returns	\mathrm{Mode}(\bigl\lbrack\bigr\rbrack)	\operatorname{NaN}

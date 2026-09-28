@@ -1,0 +1,5 @@
+id	in	out
+multivariate-poisson-mean	Mean(MultivariatePoissonDistribution(1, [2, 3]))	[3, 4]
+multivariate-poisson-variance	Variance(MultivariatePoissonDistribution(1, [2, 3]))	[3, 4]
+multivariate-poisson-covariance	Covariance(MultivariatePoissonDistribution(1, [2, 3]))	[[3, 1], [1, 4]]
+multivariate-poisson-pdf	PDF(MultivariatePoissonDistribution(1, [2, 3]), [1, 1])	7 / ExponentialE ^ 6

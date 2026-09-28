@@ -1,0 +1,55 @@
+---
+name: LogBarnesG
+domain: Special functions
+signature: LogBarnesG(z)
+summary: The logarithm of the Barnes G-function, $\ln G(z)$, as an analytic continuation — the form that stays finite where $G$ itself overflows. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: LogBarnesG(z)
+    description: the log-Barnes function $\ln G(z)$, analytically continued.
+    library: enumeratio-analytic
+    type: (number) -> number
+details:
+  - $\ln G(z+1) \sim \left(\tfrac{z^2}{2} - \tfrac{1}{12}\right)\ln z - \tfrac{3z^2}{4} + \tfrac{z}{2}\ln 2\pi + \zeta'(-1) + \sum_{k\ge1} \dfrac{B_{2k+2}}{4k(k+1)\,z^{2k}}$ as $\operatorname{Re}(z) \to \infty$, with $\zeta'(-1) = \tfrac{1}{12} - \ln A$ ($A$ Glaisher's constant). This is the numeric kernel, reached through $\ln G(z) = \ln G(z+n) - \sum_{k<n} \ln\Gamma(z+k)$.
+  - "It is the continuation, not $\\ln$ of the value: on the negative real axis its imaginary part is a multiple of $\\pi$ fixed by continuity from above, so $\\mathrm{LogBarnesG}(-2.5) = -2.5747\\ldots + 6\\pi i$ while $\\ln G(-2.5)$ taken literally would be real. This matches Wolfram's $\\mathrm{LogBarnesG}$."
+  - 'At positive integers it reduces through the exact superfactorial: $\ln G(4) = \ln 2$, $\ln G(3) = 0$.'
+  - $-\infty$ at the nonpositive integers, where $G$ vanishes.
+bindings:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr:
+      [
+        Add,
+        [Divide, [Multiply, [Subtract, _z, 1], [Ln, [Multiply, 2, Pi]]], 2],
+        [Negate, [Divide, [Multiply, [Subtract, _z, 1], [Add, [Subtract, _z, 1], 1]], 2]],
+        [Negate, [Divide, [Multiply, EulerGamma, [Power, [Subtract, _z, 1], 2]], 2]],
+        [
+          Sum,
+          [
+            Add,
+            [Multiply, k, [Ln, [Add, 1, [Divide, [Subtract, _z, 1], k]]]],
+            [Divide, [Power, [Subtract, _z, 1], 2], [Multiply, 2, k]],
+            [Negate, [Subtract, _z, 1]],
+          ],
+          [Triple, k, 1, Infinity],
+        ],
+      ]
+    note: "The Weierstrass product in logarithms. Its terms are O(w³/k²), so it converges — slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series."
+  - origin: native
+    form: typescript
+    environment: engine
+    source: upstream/compute-engine/src/compute-engine/numerics/barnes-g.ts
+seeAlso:
+  - BarnesG
+  - LogGamma
+  - Gamma
+references:
+  - system: wikipedia
+    identity: Barnes G-function
+  - system: mathworld
+    identity: BarnesG-Function
+  - system: dlmf
+    identity: "5.17"
+names:
+  wolframIdentity: true
+---

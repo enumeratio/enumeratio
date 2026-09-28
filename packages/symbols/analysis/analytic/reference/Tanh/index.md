@@ -1,0 +1,31 @@
+---
+name: Tanh
+domain: Elementary functions
+signature: Tanh(x)
+summary: 'Hyperbolic tangent: $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$.'
+signatures:
+  - call: Tanh(x)
+    description: the hyperbolic tangent of x.
+  - call: Tanh(x)
+    description: 'Hyperbolic tangent: $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$.'
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+details:
+  - $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$, ranging over $(-1, 1)$.
+  - 'Odd function: $\tanh(-x) = -\tanh(x)$.'
+  - Same fold-only-with-N(...) behavior as [[Sinh]] and [[Cosh]].
+seeAlso:
+  - Sinh
+  - Cosh
+references:
+  - system: wikipedia
+    identity: Hyperbolic functions
+  - system: mathworld
+    identity: HyperbolicTangent
+  - system: dlmf
+    identity: "4.28"
+names:
+  dlmf: hyperbolic tangent function
+  wolframIdentity: true
+---

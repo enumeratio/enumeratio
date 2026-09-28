@@ -1,0 +1,5 @@
+id	in
+power	ToBoxes[Power[x, 2]]
+evaluates-first	ToBoxes[Plus[2, 3]]
+binomial	ToBoxes[Binomial[n, k]]
+square-root-over-y	ToBoxes[Divide[Sqrt[x], y]]

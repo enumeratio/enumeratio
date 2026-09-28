@@ -1,0 +1,29 @@
+id	in	out
+arctan-0		
+arctan-1		
+arctan-sqrt-3		
+a-machine-precision-argument-evaluates		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+wolfram-s-two-argument-arctan-x-y-is-compute		
+arctan2-takes-y-first-the-angle-of-the-point-0-5		
+arctan-2-sqrt-3-5-pi-12		
+arctan-2-sqrt-3-pi-12		
+arctan-sqrt-2-1-pi-8		
+arctan-1-over-sqrt-3		
+arctan-neg-1		
+threads-element-wise-over-a-matrix		
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-frac-1-1-x-2		
+antiderivative		
+gregory-s-series-about-0		
+the-limit-at-infty		
+to-30-significant-digits-every-one-correctly		
+tan-arctan-x-x	\tan(\arctan(1))=1	\mathrm{True}
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2		
+compute-engine-s-arctan-takes-only-one-argument		
+the-horizontal-asymptote-as-x-to-infty		
+and-as-x-to-infty		
+euler-s-machin-like-identity-arctan-frac-12		
+machin-s-formula-4-arctan-frac-15-arctan-frac-1		

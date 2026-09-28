@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+heavisidetheta-negative			[HeavisideTheta, -1]	0	
+heavisidetheta-positive			[HeavisideTheta, 1]	1	
+heavisidetheta-zero-unevaluated			[HeavisideTheta, 0]	[HeavisideTheta, 0]	Unevaluated at exactly 0 -- unlike [[UnitStep]]
+heavisidetheta-product-both-positive	Scope		[HeavisideTheta, 1, 2]	1	Several arguments: the product of their steps
+heavisidetheta-product-one-negative	Scope		[HeavisideTheta, 1, -1]	0	Zero as soon as any argument is negative
+heavisidetheta-derivative	Properties		[D, [HeavisideTheta, x], x]	[DiracDelta, x]	Derivative is [[DiracDelta]]

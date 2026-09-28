@@ -1,0 +1,15 @@
+id	in	out	verdict
+totient-12	euler_phi(ZZ(12))	4	
+totient-36	euler_phi(ZZ(36))	12	
+totient-1	euler_phi(ZZ(1))	1	
+totient-10	euler_phi(ZZ(10))	4	
+varphi-0-0-as-in-wolfram	euler_phi(ZZ(0))	DomainError with 0: Argument must be positive	error
+threads-element-wise-over-a-list-as-wolfram-s	[euler_phi(ZZ(2)), euler_phi(ZZ(4)), euler_phi(ZZ(6))]	[1, 2, 2]	
+large-integers-varphi-50	euler_phi(ZZ(factorial(ZZ(50))))	4218559200885839042679312107816703841788854953574400000000000000	
+negative-n-varphi-n-varphi-n	euler_phi(ZZ(-10))	DomainError with -10: Argument must be positive	error
+rsa-key-setup-varphi-17-times-23-16-times-22-352	euler_phi(ZZ(391))	352	
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when			
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	(euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))	12	
+multiplicative-varphi-mn-varphi-m-varphi-n-when	(euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))	true	
+varphi-p-p-1-for-a-prime-p	euler_phi(ZZ(17))	16	
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	euler_phi(ZZ(81))	54	

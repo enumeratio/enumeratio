@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+fractionalpart-2p5			[FractionalPart, 2.5]	0.5	
+fractionalpart-7-over-2			[FractionalPart, [Rational, 7, 2]]	[Rational, 1, 2]	
+keeps-the-sign-of-x-unlike-compute-engine-s			[FractionalPart, [Rational, -7, 2]]	[Rational, -1, 2]	Keeps the sign of x, unlike compute-engine's [[Fract]]
+exact-numeric-arguments-stay-exact	Scope		[FractionalPart, Pi]	[Add, -3, Pi]	Exact numeric arguments stay exact
+threads-element-wise-over-a-list	Scope		[FractionalPart, [List, [Rational, 7, 2], [Rational, -1, 3]]]	[List, [Rational, 1, 2], [Rational, -1, 3]]	Threads element-wise over a list
+zero-exactly-on-the-integers	Properties		[FractionalPart, 5]	0	Zero exactly on the integers

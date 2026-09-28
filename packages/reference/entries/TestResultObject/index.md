@@ -1,0 +1,14 @@
+---
+name: TestResultObject
+domain: Wolfram
+signature: TestResultObject(...)
+summary: Wolfram's own TestResultObject, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: TestResultObject(...)
+    description: Wolfram's own TestResultObject, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-evaluation
+    type: (any*) -> value
+---

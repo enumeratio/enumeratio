@@ -1,0 +1,25 @@
+---
+name: GeometricDistribution
+domain: Statistics
+signature: GeometricDistribution(p)
+summary: "The Geometric distribution: the number of failures before the first success, with success probability $p$."
+signatures:
+  - call: GeometricDistribution(p)
+    description: an inert distribution object — carries $p$, unevaluated. [[PDF]], [[CDF]], [[Mean]], [[Variance]] and [[RandomVariate]] all read it.
+    library: enumeratio-statistics
+    type: (real<0..1>) -> distribution
+details:
+  - "Wolfram's own convention: support is the nonnegative integers $0, 1, 2, \\ldots$ (failures before the first success), not $1, 2, \\ldots$."
+  - $PDF(k) = p(1-p)^k$ — no support check outside the nonnegative integers (a documented divergence, same policy as unclamped PDFs elsewhere in this package).
+  - $CDF(x) = 1 - (1-p)^{\lfloor x\rfloor + 1}$, clamped to $0$ below $x=0$.
+  - $Mean = (1-p)/p$, $Variance = (1-p)/p^2$, both exact.
+  - '[[RandomVariate]] samples via inverse transform: $\lfloor \log U / \log(1-p) \rfloor$.'
+seeAlso:
+  - BernoulliDistribution
+  - NegativeBinomialDistribution
+  - PDF
+  - CDF
+  - RandomVariate
+names:
+  wolframIdentity: true
+---

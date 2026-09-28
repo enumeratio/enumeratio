@@ -1,0 +1,6 @@
+id	in	out
+a-2x2-is-a-matrix	IsMatrix([[1, 2], [3, 4]])	True
+a-flat-list-is-not-a-matrix	IsMatrix([1, 2, 3])	False
+a-ragged-list-of-lists-is-not-a-matrix	IsMatrix([[1, 2], [3]])	False
+an-empty-list-is-not-a-matrix	IsMatrix([])	False
+a-test-function-must-hold-of-every-entry	IsMatrix([[2, 4], [6, 8]], IsEven)	True

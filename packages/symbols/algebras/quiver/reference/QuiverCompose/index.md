@@ -1,0 +1,21 @@
+---
+name: QuiverCompose
+domain: Path algebras
+signature: QuiverCompose(quiver, p, q)
+summary: Concatenate two paths — or zero, when $q$ does not start where $p$ ends. Most products in a path algebra are zero, and that is the structure rather than a failure.
+signatures:
+  - call: QuiverCompose(quiver, p, q)
+    description: $p$ then $q$, or 0
+    library: enumeratio-quiver
+    type: (expression<LinearQuiver> | expression<Quiver> | symbol, number, number) -> number
+details:
+  - Associative, and the trivial paths act as local identities
+  - Zero is an honest answer here — it is returned as 0, not left symbolic
+  - The quiver is an argument because a path carries no reference to its own quiver
+seeAlso:
+  - QuiverPath
+  - QuiverIsAcyclic
+references:
+  - system: wikipedia
+    identity: Quiver (mathematics)
+---

@@ -1,4 +1,0 @@
-- id: echo-returns-its-argument
-  expr: [Echo, 42]
-  expected: 42
-  caption: Echo returns its argument unchanged

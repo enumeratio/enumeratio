@@ -1,0 +1,4 @@
+id	in	out
+count-lukasiewiczpaths-4	Count(LukasiewiczPaths(4))	14
+first-element-of-lukasiewiczpaths-4	LukasiewiczPaths(4)[1]	[0, 0, 0, 0, -1]
+every-element-of-lukasiewiczpaths-4	Take(LukasiewiczPaths(4), 5)	"[\n  [0, 0, 0, 0, -1],\n  [0, 0, 1, -1, -1],\n  [0, 1, 0, -1, -1],\n  [1, 0, 0, -1, -1],\n  [0, 1, -1, 0, -1],\n]"

@@ -1,0 +1,2 @@
+id	in	out
+halve-and-floor-down-to-the-fixed-point	\mathrm{FixedPointList}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 10)	\bigl\lbrack10, 5, 2, 1, 0, 0\bigr\rbrack

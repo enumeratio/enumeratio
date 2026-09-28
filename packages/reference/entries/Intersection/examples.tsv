@@ -1,0 +1,13 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+intersection-list-1-2-3-list-2-3-4			[Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]	[Set, 2, 3]			
+intersection-list-1-2-3-4-list-2-3-4-5			[Intersection, [List, 1, 2, 3, 4], [List, 2, 3, 4, 5]]	[Set, 2, 3, 4]			
+with-three-or-more-collections-only-elements			[Intersection, [List, 1, 2, 3], [List, 2, 3, 4], [List, 2, 3, 5]]	[Set, 2, 3]	With three or more collections, only elements common to all of them survive		
+duplicates-are-dropped-as-well			[Intersection, [List, 1, 1, 2, 3], [List, 3, 1, 4], [List, 4, 1, 3, 3]]	[Set, 1, 3]	Duplicates are dropped as well		
+symbolic-elements	Scope		[Intersection, [List, a, b, c], [List, b, c, d]]	[Set, b, c]	Symbolic elements		
+a-single-collection-comes-back-as-a-set	Scope		[Intersection, [List, 1, 2, 3]]	[Set, 1, 2, 3]	A single collection comes back as a set		
+the-divisors-common-to-45-and-78	Applications		[Intersection, [Divisors, 45], [Divisors, 78]]	[Set, 1, 3]	The divisors common to 45 and 78		
+intersection-is-idempotent-a-cap-a-a	Properties		[Equal, [Intersection, [Set, 1, 2, 3], [Set, 1, 2, 3]], [Set, 1, 2, 3]]	True	$Intersection$ is idempotent: $A \cap A = A$		
+the-same-inclusion-exclusion-count-rearranged-a	Properties		[Equal, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Add, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]	True	The same inclusion-exclusion count, rearranged: $|A| + |B| = |A \cup B| + |A \cap B|$. See [[Union]]		
+intersecting-with-the-empty-set-gives-the-empty	Properties		[Intersection, [List, 1, 2, 3], EmptySet]	EmptySet	Intersecting with the empty set gives the empty set: $A \cap \varnothing = \varnothing$		
+disjoint-collections-intersect-to-the-special	Possible issues		[Intersection, [List, 1, 2], [List, 3, 4]]	EmptySet	Disjoint collections intersect to the special symbol $EmptySet$, not an empty $Set$	shape	An empty result is the symbol EmptySet here and the empty list {} in Wolfram.
+the-result-keeps-the-order-elements-were-met-in	Possible issues		[Intersection, [List, c, b, a], [List, a, b]]	[Set, b, a]	The result keeps the order elements were met in the first collection, not sorted order		

@@ -1,0 +1,19 @@
+id	in	out	verdict
+stirling-5-2	stirling(5, 2)	15	
+stirling-6-3	stirling(6, 3)	90	
+stirling-20-10	stirling(20, 10)	5917584964655	
+exact-for-large-n	stirling(50, 2)	562949953421311	
+threads-element-wise-over-a-list-as-wolfram-s	[stirling(2, 2), stirling(4, 2), stirling(6, 2)]	[1, 7, 31]	
+the-ways-to-split-10-distinct-items-among-3	stirling(10, 3)	9330	
+one-block-means-one-partition-s-n-1-1	stirling(5, 1)	1	
+singletons-only-s-n-n-1	stirling(5, 5)	1	
+row-sums-give-the-bell-numbers			
+two-blocks-s-n-2-2-n-1-1	enumeratio_equal(stirling(10, 2), ((S(2)**9) - 1))	True	
+s-n-n-1-binom-n-2-one-block-is-a-pair	enumeratio_equal(stirling(6, 5), binomial(6, 2))	True	
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+the-empty-set-has-one-partition-into-no-blocks	stirling(0, 0)	1	
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	stirling(5, 0)	0	
+k-n-is-0	stirling(3, 5)	0	
+stirling-0-1-is-also-0	stirling(0, 1)	0	
+a-negative-k-stays-symbolic	stirling(10, -5)	IndexError: list index out of range	error

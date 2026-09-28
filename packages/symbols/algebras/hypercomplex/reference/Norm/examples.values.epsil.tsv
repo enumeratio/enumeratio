@@ -1,0 +1,6 @@
+id	in	out
+3-2-4-2-the-gaussian-norm	Norm(3 + 4i_1)	25
+the-4-times-4-multiplication-determinant	Norm(1 + 2i_1 + 3 * i_1 * i_2)	160
+split-units-give-a-2-b-2-which-is-indefinite	Norm(3 + 4j_1)	-7
+a-zero-divisor	Norm(1 + i_1 * i_2)	0
+each-factor-has-norm-2-over-c-1-but-4-over-c-2	Norm((1 + i_1) * (1 + i_2))	16

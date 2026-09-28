@@ -1,0 +1,6 @@
+id	in	out
+beta-pdf-exact		
+beta-cdf-exact	\operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})	I_{\frac{1}{2}}(2, 3)
+beta-mean-exact		
+beta-variance-exact		
+beta-cdf-clamps-below-support		

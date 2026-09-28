@@ -1,0 +1,4 @@
+id	in	out
+count-delannoypaths-3	\mathrm{Count}(\mathrm{DelannoyPaths}(3))	63
+first-element-of-delannoypaths-3	\mathrm{DelannoyPaths}(3)[1]	\bigl\lbrack0, 0, 0, 1, 1, 1\bigr\rbrack
+every-element-of-delannoypaths-3	\mathrm{Take}(\mathrm{DelannoyPaths}(3), 5)	\bigl\lbrack\bigl\lbrack0, 0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 2\bigr\rbrack\bigr\rbrack

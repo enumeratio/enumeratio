@@ -1,0 +1,41 @@
+---
+name: CatalanNumbers
+domain: Collections
+signature: CatalanNumbers
+summary: The Catalan numbers $1, 1, 2, 5, 14, 42, …$ as a lazy indexed collection.
+signatures:
+  - call: CatalanNumbers
+    description: $C_n = \binom{2n}{n}/(n+1)$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(CatalanNumbers) = +\infty$, and $At(CatalanNumbers, k)$ unranks $C_{k-1}$ exactly (bigint arithmetic; $C_{30}$ already exceeds $2^{53}$) -- $At(CatalanNumbers, 1) = C_0 = 1$.'
+  - "OEIS A000108, starting exactly at its offset-0 term: $1, 1, 2, 5, 14, 42, 132, …$; counts balanced parenthesizations, binary trees, Dyck paths and more."
+  - "Membership goes through [[Element]]: $Element(14, CatalanNumbers)$ is true, $Element(10, CatalanNumbers)$ is false."
+enumerate:
+  expr: Take(CatalanNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - MotzkinNumbers
+  - SymmetricGroup
+catalog:
+  - system: mathlib4
+    identity: catalan
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Catalan/Basic.html
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: sage.combinat.combinat.catalan_number(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+  - system: wikipedia
+    identity: Catalan number
+    url: https://en.wikipedia.org/wiki/Catalan_number
+    relation: conceptual
+  - system: wolfram
+    identity: CatalanNumber
+    url: https://reference.wolfram.com/language/ref/CatalanNumber.html
+grades: []
+carrier: Numeric
+unbounded: true
+---

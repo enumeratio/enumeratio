@@ -1,0 +1,4 @@
+id	in	out
+from-character-code-of-a-single-code-point	\mathrm{FromCharacterCode}(65)	\text{A}
+inverts-tocharactercode	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\mathrm{hello}}))	\text{hello}
+round-trips-a-non-ascii-string-emoji-astral	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))	\text{a😀b→c}

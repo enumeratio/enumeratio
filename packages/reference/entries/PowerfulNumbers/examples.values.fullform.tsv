@@ -1,0 +1,4 @@
+id	in
+the-first-25-terms	Take[PowerfulNumbers, 25]
+36-is-powerful	Element[36, PowerfulNumbers]
+12-is-not-powerful	Element[12, PowerfulNumbers]

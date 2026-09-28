@@ -26,8 +26,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
-import { existsSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import {
@@ -44,7 +43,7 @@ import {
   wiredSystems,
 } from "@enumeratio/oracle/src";
 import { orderImplementations, type SystemImplementation } from "@enumeratio/entry";
-import { writeYaml } from "@enumeratio/entry/node";
+import { updateHead } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";
 import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
 
@@ -118,7 +117,7 @@ const missingBySystem: Record<string, Record<string, number>> = {};
 
 // ── the implementations records ─────────────────────────────────────────────────
 //
-// One `<Head>.implementations.yaml` beside each `<Head>.yaml`, keyed by example id then
+// One `<Head>/examples.values.*.tsv` beside each `<Head>/index.md`, keyed by example id then
 // system. A scan of a system rewrites only that system's rows (`in`, `out`, `tex`, `shown`,
 // `verdict`) for the heads touched this run, keeps every other system's, carries the hand
 // classification (`kind`, `note`, `issue`, `tolerance`) forward while the verdict holds, and
@@ -126,7 +125,7 @@ const missingBySystem: Record<string, Record<string, number>> = {};
 // the scan can't reach) stays until someone removes it.
 
 type Record_ = Record<string, Record<string, SystemImplementation>>;
-const recordPathOf = new Map<string, string>();
+const dirOf = new Map<string, string>();
 const records = new Map<string, Record_>();
 const exampleIdsOf = new Map<string, string[]>();
 for (const h of data.heads) {
@@ -135,7 +134,7 @@ for (const h of data.heads) {
     h.head,
     h.entry.examples.map((e) => e.id),
   );
-  recordPathOf.set(h.head, h.implementationsPath ?? join(dirname(h.entryPath), `${h.head}.implementations.yaml`));
+  dirOf.set(h.head, h.dir);
   records.set(h.head, structuredClone((h.implementations ?? {}) as Record_));
 }
 const loaded = new Map([...records].map(([head, record]) => [head, structuredClone(record)]));
@@ -306,18 +305,16 @@ const written: string[] = [];
 if (accept)
   for (const [head, record] of records) {
     if (isDeepStrictEqual(record, loaded.get(head))) continue;
-    const path = recordPathOf.get(head)!;
-    if (Object.keys(record).length === 0) {
-      if (existsSync(path)) rmSync(path);
-    } else
-      await writeYaml(
-        path,
-        orderImplementations(
-          record,
-          exampleIdsOf.get(head) ?? [],
-          SYSTEMS.map((s) => s.name),
-        ),
-      );
+    await updateHead(dirOf.get(head)!, head, {
+      implementations:
+        Object.keys(record).length === 0
+          ? undefined
+          : orderImplementations(
+              record,
+              exampleIdsOf.get(head) ?? [],
+              SYSTEMS.map((s) => s.name),
+            ),
+    });
   }
 if (accept && !isDeepStrictEqual(kernels, data.kernels))
   writeFileSync(
@@ -390,7 +387,7 @@ const lines: string[] = [
   "  branch cut, signed versus unsigned Stirling numbers of the first kind)",
   "- **our bug** — the interesting case, and the reason this exists",
   "",
-  "Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.",
+  "Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.",
   "Counts cover mapped examples only; unmapped ones have no row.",
   "",
 ];

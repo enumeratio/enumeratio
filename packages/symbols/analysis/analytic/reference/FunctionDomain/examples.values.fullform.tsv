@@ -1,0 +1,10 @@
+id	in
+a-polynomial-is-defined-everywhere	FunctionDomain[Power[x, 2], x]
+division-by-zero-excludes-the-origin	FunctionDomain[Divide[1, x], x]
+sqrt-of-a-bounded-quadratic	FunctionDomain[Sqrt[Plus[Minus[Power[x, 2]], 4]], x]
+a-monomial-with-negative-integer-exponent	FunctionDomain[Power[x, -3], x]
+a-multivariate-expression-declines	FunctionDomain[Times[x, y], x]
+a-rational-function-with-two-real-poles	FunctionDomain[Divide[1, Plus[Power[x, 2], -1]], x]
+an-even-root-needs-a-nonnegative-radicand	FunctionDomain[Sqrt[Plus[Power[x, 2], -1]], x]
+a-natural-log-needs-a-positive-argument	FunctionDomain[Log[Subtract[2, x]], x]
+tangent-s-domain-is-declined	FunctionDomain[Tan[x], x]

@@ -1,0 +1,9 @@
+---
+name: CyclicPoints
+domain: Combinatorics
+signature: CyclicPoints(...)
+summary: Cyclic points
+statOn:
+  - Endofunction
+stub: carrier
+---

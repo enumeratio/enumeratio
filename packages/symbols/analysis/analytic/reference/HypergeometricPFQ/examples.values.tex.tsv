@@ -1,0 +1,7 @@
+id	in	out
+2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2	\mathrm{HypergeometricPFQ}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, 0.5)	1.386\,294\,361\,119\,890\,6
+1f-1-1-2-z-e-z-1-z	\mathrm{HypergeometricPFQ}(\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, 0.5)	1.297\,442\,541\,400\,256\,4
+2f-1-2-3-5-z-0-3	\mathrm{HypergeometricPFQ}(\bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack5\bigr\rbrack, 0.3)	1.510\,911\,782\,159\,569\,7
+3f-2	\mathrm{HypergeometricPFQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack, 0.5)	1.189\,874\,754\,256\,423
+0f-0-z-e-z	\mathrm{HypergeometricPFQ}(\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)	e^{z}
+1f-0-a-z-1-z-a	\mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)	(1-z)^{-a}

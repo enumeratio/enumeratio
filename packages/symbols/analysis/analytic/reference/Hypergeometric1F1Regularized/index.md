@@ -1,0 +1,29 @@
+---
+name: Hypergeometric1F1Regularized
+domain: Special functions
+signature: Hypergeometric1F1Regularized(a, b, z)
+summary: The regularized Kummer confluent hypergeometric function ${}_1F_1(a,b;z) / \Gamma(b)$ — entire in $b$ and $z$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: Hypergeometric1F1Regularized(a, b, z)
+    description: ${}_1F_1(a,b;z) / \Gamma(b)$.
+    library: "@enumeratio/analytic"
+    type: (number, number, number) -> number
+details:
+  - compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.
+  - Entire in $z$ ($p = q$ for this series), so never declines on $z$.
+primitive: numeric
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/hypergeometric.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: Hypergeometric1F1Regularized[a,b,z]; mpmath's own regularized series (rgamma per term).
+seeAlso:
+  - Hypergeometric2F1Regularized
+  - HypergeometricU
+names:
+  wolframIdentity: true
+---

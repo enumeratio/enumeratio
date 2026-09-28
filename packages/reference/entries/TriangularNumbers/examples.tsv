@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+the-first-25-terms		test	[Take, TriangularNumbers, 25]	[List, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325]
+15-is-triangular	Properties		[Element, 15, TriangularNumbers]	True
+14-is-not-triangular	Properties		[Element, 14, TriangularNumbers]	False

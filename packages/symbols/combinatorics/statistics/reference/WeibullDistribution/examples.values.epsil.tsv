@@ -1,0 +1,4 @@
+id	in	out
+weibull-pdf-exact	PDF(WeibullDistribution(2, 5), 4)	8 / (25 * ExponentialE ^ (16 / 25))
+weibull-cdf-exact	CDF(WeibullDistribution(2, 5), 4)	1 - ExponentialE ^ (-16 / 25)
+weibull-mean-exact	Mean(WeibullDistribution(2, 5))	5 * Gamma(3 / 2)

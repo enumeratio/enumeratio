@@ -1,0 +1,5 @@
+id	in	out
+b-6	dim(EnumeratioDiagramAlgebra(:partition, 3))	203
+b-8-the-closed-form-answers-past-any-useful	dim(EnumeratioDiagramAlgebra(:partition, 4))	4140
+c-6-planarity-cuts-203-down-to-132	dim(EnumeratioDiagramAlgebra(:planar, 3))	132
+a-block-of-three-is-a-partition-diagram-and		

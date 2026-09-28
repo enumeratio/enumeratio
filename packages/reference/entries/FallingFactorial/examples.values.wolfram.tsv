@@ -1,0 +1,4 @@
+id	in
+falling-factorial-5-3-60	FactorialPower[5, 3]
+falling-factorial-3-5-0	FactorialPower[3, 5]
+falling-factorial-half-2-neg-1-4	FactorialPower[Rational[1, 2], 2]

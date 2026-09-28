@@ -1,0 +1,11 @@
+id	section	role	expr	expected	caption
+append-list-1-2-3-4			[Append, [List, 1, 2, 3], 4]	[List, 1, 2, 3, 4]	
+append-list-a-b-c-d-x			[Append, [List, a, b, c, d], x]	[List, a, b, c, d, x]	
+a-set-as-well-as-a-list	Scope		[Append, [Set, 1, 2, 3], 4]	[Set, 1, 2, 3, 4]	A set as well as a list
+onto-the-empty-list	Scope		[Append, [List], x]	[List, x]	Onto the empty list
+a-lazy-range-is-materialised-first	Scope		[Append, [Range, 1, 3], 4]	[List, 1, 2, 3, 4]	A lazy [[Range]] is materialised first
+any-head-not-just-a-list	Scope		[Append, [f, a, b], c]	[f, a, b, c]	Any head, not just a list
+adding-a-row-to-a-matrix	Applications		[Append, [List, [List, 1, 2], [List, 3, 4]], [List, 5, 6]]	[List, [List, 1, 2], [List, 3, 4], [List, 5, 6]]	Adding a row to a matrix
+append-c-x-join-c-x-see-join	Properties		[Equal, [Append, [List, 1, 2, 3], 4], [Join, [List, 1, 2, 3], [List, 4]]]	True	$Append(c, x) = Join(c, \{x\})$. See [[Join]]
+appending-adds-exactly-one-element-see-length	Properties		[Equal, [Length, [Append, [List, 1, 2, 3], 4]], [Add, [Length, [List, 1, 2, 3]], 1]]	True	Appending adds exactly one element. See [[Length]]
+appending-a-list-nests-it-as-a-single-element	Possible issues		[Append, [List, 1, 2, 3], [List, 9]]	[List, 1, 2, 3, [List, 9]]	Appending a list nests it as a single element rather than splicing its contents in

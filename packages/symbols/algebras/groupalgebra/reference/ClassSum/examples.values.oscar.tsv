@@ -1,0 +1,5 @@
+id	in	out
+the-identity-s-class-is-a-singleton	enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 1)	combination:{"GroupBasis(0)":1}
+in-an-abelian-group-everything-is-central	enumeratio_is_central(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("3"))	true
+class-sums-are-central	enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 2))	true
+a-lone-reflection-is-not	enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), EnumeratioBasis("s0"))	false

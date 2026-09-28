@@ -1,0 +1,4 @@
+id	in
+posetelements-divisorlattice-12	PosetElements[DivisorLattice[12]]
+posetelements-chain-4	PosetElements[Chain[4]]
+3-3-intervals	AlgebraDimension[IncidenceAlgebra[BooleanLattice[3]]]

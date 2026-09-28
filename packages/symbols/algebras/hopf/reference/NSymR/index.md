@@ -1,0 +1,36 @@
+---
+name: NSymR
+domain: Combinatorial Hopf algebras
+signature: NSymR(composition)
+summary: The ribbon basis of NSym, and the fundamental basis `QSymF` of QSym. A composition of $n$ is a subset of $\{1,\ldots,n-1\}$, so the compositions form a Boolean lattice; these bases come from summing over it and inverting.
+signatures:
+  - call: NSymR(composition)
+    description: a ribbon basis element of NSym
+    library: enumeratio-hopf
+    type: (list<integer>) -> number
+  - call: QSymF(composition)
+    description: a fundamental basis element of QSym
+    library: enumeratio-hopf
+  - call: InCompleteBasis(x) / InRibbonBasis(x)
+    description: change of basis within NSym
+    library: enumeratio-hopf
+  - call: InMonomialBasis(x) / InFundamentalBasis(x)
+    description: change of basis within QSym
+    library: enumeratio-hopf
+  - call: ConjugateComposition(composition)
+    description: the transpose of the ribbon's skew shape
+    library: enumeratio-hopf
+details:
+  - $H_\alpha = \sum_{\beta \text{ coarsens } \alpha} R_\beta$, and the inverse carries the sign $(-1)^{\ell(\alpha)-\ell(\beta)}$ — Möbius inversion over the Boolean lattice
+  - $F_\alpha = \sum_{\beta \text{ refines } \alpha} M_\beta$ — the OPPOSITE direction, because NSym and QSym are dual with $H$ dual to $M$ and $R$ dual to $F$
+  - $\langle R_\alpha, F_\beta\rangle = \delta_{\alpha\beta}$, which holds only if both transition matrices are right; they are written down separately
+  - 'The ribbon product has two terms: $R_\alpha R_\beta = R_{\alpha\cdot\beta} + R_{\alpha\triangleright\beta}$, for concatenation and near-concatenation'
+  - 'The ribbon antipode has ONE term: $S(R_\alpha) = (-1)^{|\alpha|}R_{\alpha^{*}}$ — against an alternating sum over all coarsenings in the $H$ basis'
+  - Products, coproducts and antipodes answer in the basis they were asked in; the two algebras still refuse to mix
+seeAlso:
+  - Coproduct
+  - Antipode
+references:
+  - system: wikipedia
+    identity: Quasisymmetric function#Related algebras
+---

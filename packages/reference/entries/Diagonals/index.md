@@ -1,0 +1,9 @@
+---
+name: Diagonals
+domain: Combinatorics
+signature: Diagonals(...)
+summary: Number of diagonals
+statOn:
+  - Dissection
+stub: carrier
+---

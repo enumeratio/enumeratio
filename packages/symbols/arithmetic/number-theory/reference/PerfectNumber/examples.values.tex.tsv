@@ -1,0 +1,5 @@
+id	in	out
+perfectnumber-1	\mathrm{PerfectNumber}(1)	6
+perfectnumber-3	\mathrm{PerfectNumber}(3)	496
+perfectnumber-5	\mathrm{PerfectNumber}(5)	33\,550\,336
+listable	\mathrm{PerfectNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack6, 28, 496, 8\,128\bigr\rbrack

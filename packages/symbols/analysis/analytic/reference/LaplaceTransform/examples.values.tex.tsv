@@ -1,0 +1,6 @@
+id	in	out
+t-cubed	\mathrm{LaplaceTransform}(t^3, t, s)	\frac{6}{s^4}
+exp-at	\mathrm{LaplaceTransform}(\exp(2t), t, s)	\frac{1}{s-2}
+sin-at	\mathrm{LaplaceTransform}(\sin(3t), t, s)	\frac{3}{s^2+9}
+t-cubed-exp-shift	\mathrm{LaplaceTransform}(\exp(2t)t^3, t, s)	\frac{6}{(s-2)^4}
+exp-sin-shift	\mathrm{LaplaceTransform}(\exp(2t)\sin(3t), t, s)	(3)((s-2)^2+9)^{-1}

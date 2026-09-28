@@ -1,0 +1,9 @@
+---
+name: Within
+domain: Combinatorics
+signature: Within(...)
+summary: Within
+statOn:
+  - Text
+stub: carrier
+---

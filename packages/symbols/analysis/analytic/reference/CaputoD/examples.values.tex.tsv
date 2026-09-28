@@ -1,0 +1,5 @@
+id	in	out
+power-x2-alpha-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}
+constant-vanishes	\mathrm{CaputoD}(5, \bigl\lbrack x, 0.5\bigr\rbrack)	0
+integer-edge-case-vanishes	\mathrm{CaputoD}(x, \bigl\lbrack x, 1.5\bigr\rbrack)	0
+polynomial-linearity	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}

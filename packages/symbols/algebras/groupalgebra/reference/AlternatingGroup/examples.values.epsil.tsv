@@ -1,0 +1,8 @@
+id	in	out
+order-is-n-factorial-over-two	GroupOrder(AlternatingGroup(5))	60
+generators-odd-n	GroupGenerators(AlternatingGroup(5))	[Cycles([[1, 2, 3]]), Cycles([[1, 2, 3, 4, 5]])]
+generators-even-n	GroupGenerators(AlternatingGroup(4))	[Cycles([[1, 2, 3]]), Cycles([[2, 3, 4]])]
+generators-collapse-at-three	GroupGenerators(AlternatingGroup(3))	[Cycles([[1, 2, 3]])]
+elements-of-a3	GroupElements(AlternatingGroup(3))	[Cycles([]), Cycles([[1, 2, 3]]), Cycles([[1, 3, 2]])]
+trivial-for-n-equals-one	GroupOrder(AlternatingGroup(1))	1
+trivial-for-n-equals-two	GroupOrder(AlternatingGroup(2))	1

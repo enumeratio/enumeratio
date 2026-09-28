@@ -1,0 +1,40 @@
+---
+name: KDescentPermutations
+domain: Collections
+signature: KDescentPermutations(n, k)
+summary: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle.
+signatures:
+  - call: KDescentPermutations(n, k)
+    description: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle
+    library: enumeratio-collections
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is the Eulerian number $\left\langle{n \atop k}\right\rangle$ (A008292).
+seeAlso:
+  - SymmetricGroup
+  - KCyclePermutations
+  - KInversionPermutations
+references:
+  - system: oeis
+    identity: A008292
+catalog:
+  - system: oeis
+    identity: A008292
+    url: https://oeis.org/A008292
+  - system: sage
+    identity: sage.combinat.combinat.eulerian_number(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: fiber_count(n,k) = eulerian_number(n,k) exactly, 0-indexed k (0..n-1) same as ours; verified live n=4,5
+    relation: aggregate
+  - system: sage
+    identity: sage.combinat.combinat.eulerian_polynomial(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: .list() gives the whole ⟨n,·⟩ row at once, the same object generating_functions.sql calls gf_eulerian_row(n); verified live n=3,4,5
+    relation: aggregate
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Permutation
+---

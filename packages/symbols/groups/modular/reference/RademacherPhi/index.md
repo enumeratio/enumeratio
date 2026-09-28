@@ -1,0 +1,14 @@
+---
+name: RademacherPhi
+domain: The modular group
+signature: RademacherPhi(matrix)
+summary: Rademacher's $\Phi$ function, built from Dedekind sums — the correction term that makes $\log\eta$ transform correctly under the modular group. Unlike [[RademacherSymbol]] it is not a class function.
+signatures:
+  - call: RademacherPhi(matrix)
+    description: $\Phi(M) = (a+d)/c - 12\,\mathrm{sign}(c)\,s(d,|c|)$
+    library: enumeratio-modular
+    type: (expression<ModularMatrix> | list | string) -> integer
+seeAlso:
+  - RademacherSymbol
+  - DedekindSum
+---

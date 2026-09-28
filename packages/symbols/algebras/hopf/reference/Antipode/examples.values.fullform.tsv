@@ -1,0 +1,4 @@
+id	in
+s-m-1-m-1	Antipode[QSymM[List[1]]]
+s-2-id-since-qsym-is-commutative	Antipode[Antipode[QSymM[List[1, 2]]]]
+the-product-is-homogeneous-so-degrees-add	HopfDegree[NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]]

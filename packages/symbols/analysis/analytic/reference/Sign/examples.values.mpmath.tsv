@@ -1,0 +1,24 @@
+id	in	out
+sign-neg-3	sign(-3)	-1.0
+sign-3	sign(3)	1.0
+zero-is-its-own-sign	sign(0)	0.0
+sign-neg-1-over-2	sign((mpf(-1)/2))	-1.0
+the-unit-complex-number-pointing-the-same	sign(mpc(3, 4))	(0.6 + 0.8j)
+threads-element-wise-over-a-list	[sign(-3), sign(0), sign(7)]	[mpf('-1.0'), mpf('0.0'), mpf('1.0')]
+sign-neg-2p5	sign(-2.5)	-1.0
+sign-3p14	sign(3.14)	1.0
+a-complex-number-with-approximate-parts	sign(mpc(1.4, 2.3))	(0.519946946895745222042694276671 + 0.854198555614438567289384025405j)
+an-exact-complex-argument-comes-back-exact-sign	sign(mpc(1, 1))	(0.707106781186547524400844362105 + 0.707106781186547524400844362105j)
+threads-over-a-matrix-entry-by-entry	[[sign((mpf(1)/2)), sign(-1)], [sign((mpf(-5)/3)), sign((mpf(1)/2))]]	[[mpf('1.0'), mpf('-1.0')], [mpf('-1.0'), mpf('1.0')]]
+exact-numeric-constants	sign(pi)	1.0
+sign-neg-exponentiale	sign((-e))	-1.0
+sign-imaginaryunit	sign(mpc(0,1))	(0.0 + 1.0j)
+sign-positiveinfinity	sign(inf)	
+an-interval-entirely-above-0-has-sign-1		
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	sign((sqrt(2) - 2))	-1.0
+2-sqrt-2-is-the-same-certified-decision-the	sign((2 - sqrt(2)))	1.0
+tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1.0
+sign-z-z-z-see-abs		
+x-cdot-sign-x-x-here-at-x-5	almosteq((-5 * sign(-5)), fabs(-5), 1e-20)	True
+the-sign-of-a-nonzero-complex-number-lies-on-the	almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)	True
+nan-propagates-rather-than-being-treated-as-0	sign(nan)	

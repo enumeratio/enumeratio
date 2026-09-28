@@ -1,0 +1,7 @@
+---
+name: Compositions
+domain: Collections
+signature: Compositions(n)
+summary: "The compositions of a positive integer: ordered sequences of positive parts summing to it."
+stub: carrier
+---

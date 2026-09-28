@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+a-reciprocal-is-injective-on-its-own-domain			[FunctionInjective, [Divide, 1, x], x]	True	A reciprocal is injective on its own domain, even though that domain excludes 0
+a-cubic-is-injective			[FunctionInjective, [Power, x, 3], x]	True	A cubic is injective (its derivative never goes negative)
+a-parabola-is-not-injective			[FunctionInjective, [Power, x, 2], x]	False	A parabola gives the same value at x and -x
+an-affine-function-is-injective			[FunctionInjective, [Add, [Multiply, 2, x], 1], x]	True	A nonzero-slope affine function is injective

@@ -1,0 +1,25 @@
+---
+name: SelfConjugatePartitions
+domain: Combinatorics
+signature: SelfConjugatePartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000700
+    url: https://oeis.org/A000700
+  - system: sage
+    identity: sage.combinat.partition.Partition.conjugate
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+    note: no dedicated self-conjugate filter in Partitions() — our collection is the fixed points of the conjugate() involution on Partitions(n)
+    relation: partial
+stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition
+signatures:
+  - call: SelfConjugatePartitions(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+    library: enumeratio-domains
+    type: (integer) -> collection
+---

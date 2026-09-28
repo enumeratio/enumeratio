@@ -10,7 +10,7 @@ import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ReferenceEntry, ReferenceSignature } from "@enumeratio/entry";
-import { isEntryFile, readEntry, recordDirs, writeEntry } from "@enumeratio/entry/node";
+import { headNames, readEntry, recordDirs, writeEntry } from "@enumeratio/entry/node";
 import { contributions as contributionsOf, ENGINE } from "../src/contributions.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
@@ -35,8 +35,8 @@ const dirOf = new Map<string, string>();
 const dirs = recordDirs(PACKAGES).sort((a, b) => Number(b.package === "reference") - Number(a.package === "reference"));
 for (const { package: pkg, dir } of dirs) {
   dirOf.set(pkg, dir);
-  for (const file of readdirSync(dir).filter(isEntryFile).sort()) {
-    const entry = readEntry(dir, file.slice(0, -".yaml".length));
+  for (const head of headNames(dir)) {
+    const entry = readEntry(dir, head);
     if (!records.has(entry.name)) records.set(entry.name, { dir, pkg, entry });
   }
 }

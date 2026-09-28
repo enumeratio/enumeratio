@@ -1,0 +1,3 @@
+id	in	out
+vertex-count-of-k4	VertexCount(CompleteGraph(4))	4
+vertex-count-of-a-triangle	"VertexCount(Graph([\n                    UndirectedEdge(1, 2),\n                    UndirectedEdge(2, 3),\n                    UndirectedEdge(3, 1),\n                  ]))"	3

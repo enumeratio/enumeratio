@@ -1,0 +1,16 @@
+id	section	role	expr	expected	caption
+four-classes-of-discriminant-60			[FormClassNumber, 60]	4	four classes of discriminant 60
+the-discriminant-of-a-form	Scope		[FormDiscriminant, [QuadraticForm, 1, 1, -1]]	5	the discriminant of a form
+indefinite-when-d-5	Scope		[IsIndefinite, [QuadraticForm, 1, 1, -1]]	True	indefinite when $D=5$
+definite-when-d-4	Scope		[IsIndefinite, [QuadraticForm, 1, 0, 1]]	False	definite when $D=-4$
+already-reduced	Scope		[IsReducedForm, [QuadraticForm, 1, 1, -1]]	True	already reduced
+evaluate-a-form-at-a-point	Scope		[EvaluateForm, [QuadraticForm, 1, 1, -1], 2, 3]	1	$x^2+xy-y^2$ at $(2,3)$
+one-class-of-discriminant-5	Scope		[FormClassNumber, 5]	1	one class of discriminant 5
+two-classes-of-discriminant-12	Scope		[FormClassNumber, 12]	2	two classes of discriminant 12
+the-class-read-back-as-a-geodesic	Applications		[ModularWord, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]	"'LR'"	the class, read back as a geodesic
+the-action-preserves-the-discriminant	Properties		[FormDiscriminant, [FormAction, [QuadraticForm, 1, 1, -1], [ModularMatrix, 1, 1, 0, 1]]]	5	the action preserves the discriminant
+3-2-5-cdot-1-2-4	Properties		[PellSolution, 5]	[List, 3, 1]	$3^2 - 5\cdot 1^2 = 4$
+4-2-12-cdot-1-2-4	Properties		[PellSolution, 12]	[List, 4, 1]	$4^2 - 12\cdot 1^2 = 4$
+the-automorph-fixes-the-form	Properties		[FormAction, [QuadraticForm, 1, 1, -1], [FormAutomorph, [QuadraticForm, 1, 1, -1]]]	[QuadraticForm, 1, 1, -1]	the automorph fixes the form
+the-automorph-is-hyperbolic	Properties		[ModularTrace, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]	3	the automorph is hyperbolic
+confirmed-by-modularkind	Properties		[ModularKind, [FormAutomorph, [QuadraticForm, 1, 1, -1]]]	"'Hyperbolic'"	confirmed by `ModularKind`

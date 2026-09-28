@@ -1,0 +1,2 @@
+id	in	out
+the-first-20-terms	\mathrm{Take}(\mathrm{KaprekarNumbers}, 20)	\bigl\lbrack1, 9, 45, 55, 99, 297, 703, 999, 2\,223, 2\,728, 4\,879, 4\,950, 5\,050, 5\,292, 7\,272, 7\,777, 9\,999, 17\,344, 22\,222, 38\,962\bigr\rbrack

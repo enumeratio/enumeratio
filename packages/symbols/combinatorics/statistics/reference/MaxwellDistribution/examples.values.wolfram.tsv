@@ -1,0 +1,5 @@
+id	in
+maxwell-pdf-exact	PDF[MaxwellDistribution[1], 2]
+maxwell-cdf-exact	CDF[MaxwellDistribution[1], 2]
+maxwell-mean-exact	Mean[MaxwellDistribution[1]]
+maxwell-variance-exact	Variance[MaxwellDistribution[1]]

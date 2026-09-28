@@ -1,0 +1,7 @@
+id	in
+8-2-3	PrimePowerQ[8]
+12-2-2-cdot-3-has-two-distinct-primes	PrimePowerQ[12]
+a-prime-is-its-own-first-power	PrimePowerQ[7]
+listable	PrimePowerQ[List[2, 4, 6, 9, 10, 16]]
+large-integers	PrimePowerQ[Power[3, 40]]
+1-is-p-0-which-does-not-count	PrimePowerQ[1]

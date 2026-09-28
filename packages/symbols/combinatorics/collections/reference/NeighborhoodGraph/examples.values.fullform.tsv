@@ -1,0 +1,3 @@
+id	in
+immediate-neighbours-on-a-path	VertexList[NeighborhoodGraph[enumeratio`PathGraph[7], 4]]
+radius-2	VertexList[NeighborhoodGraph[enumeratio`PathGraph[7], 4, 2]]

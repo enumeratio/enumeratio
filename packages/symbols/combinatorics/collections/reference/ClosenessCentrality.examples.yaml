@@ -1,3 +1,0 @@
-- id: star-hub-is-maximally-close
-  expr: [ClosenessCentrality, [StarGraph, 5], 1]
-  expected: 1

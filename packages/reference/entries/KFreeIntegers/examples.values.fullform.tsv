@@ -1,0 +1,3 @@
+id	in
+the-first-25-terms	Take[KFreeIntegers[4], 25]
+k-2-agrees-with-squarefreenumbers	Take[KFreeIntegers[2], 10]

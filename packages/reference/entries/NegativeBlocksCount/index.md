@@ -1,0 +1,9 @@
+---
+name: NegativeBlocksCount
+domain: Combinatorics
+signature: NegativeBlocksCount(...)
+summary: Number of negative blocks
+statOn:
+  - SignedSetComposition
+stub: carrier
+---

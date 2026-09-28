@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-binarypalindromes-4	Basic		[Count, [BinaryPalindromes, 4]]	4	$Count(BinaryPalindromes(4)) = 4$
+first-element-of-binarypalindromes-4	Basic		[At, [BinaryPalindromes, 4], 1]	[List, 0, 0, 0, 0]	The first element in enumeration order
+every-element-of-binarypalindromes-4		test	[Take, [BinaryPalindromes, 4], 4]	[List, [List, 0, 0, 0, 0], [List, 0, 1, 1, 0], [List, 1, 0, 0, 1], [List, 1, 1, 1, 1]]	

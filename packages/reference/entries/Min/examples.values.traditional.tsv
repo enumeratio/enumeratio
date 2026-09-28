@@ -1,0 +1,22 @@
+id	in	out
+min-3-1-4-1-5		
+also-accepts-a-single-list-argument		
+min-neg-1-neg-5		
+a-single-argument-is-returned-unchanged		
+min-9-2		
+min-list-4-1-7-2		
+min-5p56-neg-4p8-7p3		
+min-min-folds-into-a-normal-call		
+nested-lists-are-flattened-into-the-pool		
+exact-numbers-are-compared-numerically		
+the-numeric-arguments-collapse-to-their-minimum		
+compares-exact-constants-numerically-min-e-pi-5		
+the-min-of-two-intervals-is-the-interval-of		
+the-day-s-low-from-the-same-hourly-readings-see		
+commutative-order-doesn-t-matter	\min(3, 7)=\min(7, 3)	\mathrm{True}
+min-a-b-max-a-b-a-b-see-max	\min(4, 9)+\max(4, 9)=4+9	\mathrm{True}
+idempotent-min-x-x-x		
+infinities-participate-directly-in-the		
+multiple-arguments-lists-included-are-flattened		
+with-no-arguments-it-returns-the-identity		
+the-min-of-an-empty-list-is-nan		

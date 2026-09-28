@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+3-4-5			[Normalize, [List, 3, 4]]	[List, [Rational, 3, 5], [Rational, 4, 5]]	The 3-4-5 triangle's direction vector, normalized to unit length
+zero-vector	Scope		[Normalize, [List, 0, 0]]	[List, 0, 0]	The zero vector has no direction, so it is left unchanged

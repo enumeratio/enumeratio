@@ -1,0 +1,9 @@
+---
+name: ToKSubset
+domain: Combinatorics
+signature: ToKSubset(...)
+summary: 1-positions (combinatorial number system)
+mapOn:
+  - BinaryWord
+stub: carrier
+---

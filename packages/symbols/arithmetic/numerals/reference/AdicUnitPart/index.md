@@ -1,0 +1,14 @@
+---
+name: AdicUnitPart
+domain: Numeral systems
+signature: AdicUnitPart(x)
+summary: The unit part $u$ of a [[AdicNumeral]] $x = b^{v_b(x)} \cdot u$.
+signatures:
+  - call: AdicUnitPart(x)
+    description: $x / b^{v_b(x)}$, a unit of $\mathbb{Z}_b$
+    library: enumeratio-numerals
+    type: (value) -> value
+seeAlso:
+  - AdicValuation
+  - AdicNumeral
+---

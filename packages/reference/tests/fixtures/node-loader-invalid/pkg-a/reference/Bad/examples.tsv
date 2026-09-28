@@ -1,0 +1,2 @@
+id	section	role	expr	expected	typo
+bad-one			[Bad, 1]	1	oops

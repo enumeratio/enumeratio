@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+a-pole-is-a-discontinuity			[FunctionDiscontinuities, [Divide, 1, x], x]	[Equal, x, 0]	A pole is a discontinuity
+tangent-s-poles			[FunctionDiscontinuities, [Tan, x], x]	[Equal, [Cos, x], 0]	Tangent's poles, where cosine vanishes
+a-polynomial-is-continuous-everywhere			[FunctionDiscontinuities, [Power, x, 2], x]	False	A polynomial is continuous everywhere

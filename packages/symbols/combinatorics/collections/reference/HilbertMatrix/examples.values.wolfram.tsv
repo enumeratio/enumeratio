@@ -1,0 +1,3 @@
+id	in
+three-by-three	HilbertMatrix[3]
+rectangular	HilbertMatrix[List[2, 3]]

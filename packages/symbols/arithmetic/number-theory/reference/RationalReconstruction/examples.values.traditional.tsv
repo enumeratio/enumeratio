@@ -1,0 +1,9 @@
+id	in	out
+2-cdot-6-12-equiv-1-pmod-11		
+a-round-trip-through-z-1000003	\mathrm{RationalReconstruction}(\left((\frac{22}{7})^1\bmod 1\,000\,003\right), 1\,000\,003)	\frac{22}{7}
+explicit-bounds-denominators-of-1-only		
+rationalreconstruction-list-6-9-10-11		
+the-harmonic-number-h-20-back-from-its-image-mod	\mathrm{RationalReconstruction}(\left((\frac{55\,835\,135}{15\,519\,504})^1\bmod 2^{61}-1\right), 2^{61}-1)	\frac{55\,835\,135}{15\,519\,504}
+one-word-size-prime-is-not-enough-for-h-20-2nd-m	\mathrm{RationalReconstruction}(\left((\frac{55\,835\,135}{15\,519\,504})^1\bmod 1\,000\,000\,007\right), 1\,000\,000\,007)	\mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
+multi-modular-arithmetic-glue-two-images-with	\mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\left((55\,835\,135/15\,519\,504)^1\bmod 1\,000\,000\,007\right), \left((55\,835\,135/15\,519\,504)^1\bmod 1\,000\,000\,009\right)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)	\frac{55\,835\,135}{15\,519\,504}
+mod-11-the-bounds-are-n-d-le-2-and-no-such		

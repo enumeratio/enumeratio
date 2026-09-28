@@ -1,0 +1,14 @@
+---
+name: BraidPower
+domain: Braids and knots
+signature: BraidPower(braid, k)
+summary: A braid raised to an integer power — its word repeated $k$ times, or the inverse's word repeated $|k|$ times when $k$ is negative.
+signatures:
+  - call: BraidPower(braid, k)
+    description: the word repeated $k$ times
+    library: enumeratio-braid
+    type: (expression<Braid> | string, integer) -> expression<Braid>
+seeAlso:
+  - BraidProduct
+  - BraidInverse
+---

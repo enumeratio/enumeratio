@@ -1,0 +1,5 @@
+id	in
+binormal-pdf-rho-only-form	PDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]
+binormal-mean-is-the-mean-vector	Mean[BinormalDistribution[List[1, 2], List[1, 1], Rational[1, 2]]]
+binormal-variance-is-the-covariance-matrix	Variance[BinormalDistribution[Rational[1, 2]]]
+binormal-cdf-has-no-closed-form	CDF[BinormalDistribution[Rational[1, 2]], List[0, 0]]

@@ -1,0 +1,26 @@
+---
+name: StirlingPermutations
+domain: Collections
+signature: StirlingPermutations(n)
+summary: Permutations of the multiset $\{1,1,2,2,…,n,n\}$ where everything between the two copies of $i$ exceeds $i$, a lazy indexed family of $(2n-1)!!$.
+signatures:
+  - call: StirlingPermutations(n)
+    library: enumeratio-collections
+    description: the $(2n-1)!!$ permutations of $\{1,1,…,n,n\}$ with that betweenness property.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - A lazy indexed collection; the count is the double factorial $(2n-1)!!$. See [[Factorial2]].
+  - Built by inserting the pair $(k,k)$, for $k=2,…,n$ increasing, into any of the $2(k-1)+1$ gaps of a Stirling permutation of order $k-1$ — every gap is valid because a later pair always carries a larger label.
+  - Each element is the length-$2n$ word itself; $At$ unranks the per-$k$ gap choices as mixed-radix digits (radix $2k-1$ at level $k$), combined by the standard Horner scheme.
+enumerate:
+  expr: StirlingPermutations(4)
+  columns: Descents, Ascents, MajorIndex, Inversions
+seeAlso:
+  - Factorial2
+  - Count
+  - At
+grades:
+  - name: n
+    role: axis
+carrier: Word
+---

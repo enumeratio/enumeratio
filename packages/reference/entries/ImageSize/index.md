@@ -1,0 +1,10 @@
+---
+name: ImageSize
+domain: Combinatorics
+signature: ImageSize(...)
+summary: Image size
+statOn:
+  - Endofunction
+  - Surjection
+stub: carrier
+---

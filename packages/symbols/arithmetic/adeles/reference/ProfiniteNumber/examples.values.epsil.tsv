@@ -1,0 +1,27 @@
+id	in	out
+12-hat-z-8-hat-z-4-hat-z	ProfiniteNumber(3, 12) + ProfiniteNumber(5, 8)	ProfiniteNumber(0, 4)
+profinitenumber-3-12-times-profinitenumber-5-8	ProfiniteNumber(3, 12) * ProfiniteNumber(5, 8)	ProfiniteNumber(3, 12)
+equal-cosets-need-not-share-a-modulus	ProfiniteNumber(6, 20) == ProfiniteNumber(6, 40)	True
+numerator-profinitenumber-2-over-3-5	Numerator(ProfiniteNumber(2 / 3, 5))	ProfiniteNumber(2, 15)
+denominator-profinitenumber-2-over-3-5	Denominator(ProfiniteNumber(2 / 3, 5))	3
+projecting-to-q-2	AdicNumeral(2, ProfiniteNumber(100, 24))	AdicNumeral(2, 4, 3)
+projecting-to-q-3	AdicNumeral(3, ProfiniteNumber(100, 24))	AdicNumeral(3, 1, 1)
+profinitenumber-26-20-normalises-to-6-20	ProfiniteNumber(26, 20)	ProfiniteNumber(6, 20)
+a-negative-value-normalises-into-the-coset	ProfiniteNumber(-1, 12)	ProfiniteNumber(11, 12)
+a-negative-modulus-normalises-to-positive	ProfiniteNumber(5, -12)	ProfiniteNumber(5, 12)
+a-rational-value-reduces-mod-a-rational-modulus	ProfiniteNumber(7 / 2, 3 / 2)	ProfiniteNumber(1 / 2, 3 / 2)
+modulus-zero-collapses-to-the-rational-itself	ProfiniteNumber(1 / 3, 0)	1 / 3
+subtracting-an-integer-from-a-profinite-number	ProfiniteNumber(7, 30) - 2	ProfiniteNumber(5, 30)
+squaring-a-profinite-number	ProfiniteNumber(3, 12) ^ 2	ProfiniteNumber(9, 36)
+dividing-by-an-exact-integer-divisor	ProfiniteNumber(4, 12) / 2	ProfiniteNumber(2, 6)
+crt-glued-from-its-2-adic-and-3-adic-images	ProfiniteNumber([AdicNumeral(2, 20, 5), AdicNumeral(3, 7, 2)])	ProfiniteNumber(52, 288)
+a-rational-value-and-a-rational-modulus	ProfiniteNumber(1 / 2, 97 / 5) + ProfiniteNumber(1 / 3, 10)	ProfiniteNumber(1 / 30, 1 / 5)
+lenstra-s-profinite-fibonacci-numbers	Fibonacci(ProfiniteNumber(3, 10))	ProfiniteNumber(2, 11)
+lenstra-s-profinite-lucas-numbers	LucasL(ProfiniteNumber(3, 10))	ProfiniteNumber(4, 11)
+gluing-projections-back-by-crt-is-the-identity	"ProfiniteNumber([\n                  AdicNumeral(2, ProfiniteNumber(100, 24)),\n                  AdicNumeral(3, ProfiniteNumber(100, 24)),\n                ])"	ProfiniteNumber(4, 24)
+5-doesn-t-divide-the-modulus-so-nothing-is-known	AdicNumeral(5, ProfiniteNumber(100, 24))	AdicNumeral(5, ProfiniteNumber(4, 24))
+dividing-by-a-profinite-number-stays-unevaluated	1 / ProfiniteNumber(5, 12)	1 / ProfiniteNumber(5, 12)
+a-non-integer-numerator-refuses-fibonacci	Fibonacci(ProfiniteNumber(1 / 2, 3))	Fibonacci(ProfiniteNumber(1 / 2, 3))
+numerator-of-a-plain-rational-is-untouched	Numerator(3 / 4)	3
+denominator-of-a-plain-rational-is-untouched	Denominator(3 / 4)	4
+only-profinitenumber-gets-numerator-not-adele	Numerator(Adele(5))	Numerator(Adele(5))

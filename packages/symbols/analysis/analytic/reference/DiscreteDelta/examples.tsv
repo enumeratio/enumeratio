@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+discretedelta-zero			[DiscreteDelta, 0]	1	
+discretedelta-nonzero			[DiscreteDelta, 1]	0	
+discretedelta-multi-all-zero	Scope		[DiscreteDelta, 0, 0]	1	Multi-argument -- 1 only when every argument is 0
+discretedelta-multi-one-nonzero	Scope		[DiscreteDelta, 1, 0]	0	

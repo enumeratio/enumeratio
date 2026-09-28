@@ -1,0 +1,20 @@
+id	in	out	verdict
+5-factorial	factorial(ZZ(5))	120	
+6-factorial	factorial(ZZ(6))	720	
+the-empty-product-is-1-by-convention	factorial(ZZ(0))	1	
+10-factorial	factorial(ZZ(10))	3628800	
+threads-element-wise-over-a-list	factorial(ZZ([1, 2, 3, 4]))	MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but 	error
+frac-n-n-1-simplifies-to-n-under-simplify-plain			
+real-arguments-evaluate-as-gamma-n-1	factorial(ZZ(3.5))	InexactError: convert(ZZRingElem, 3.5)	error
+negative-non-integers-are-defined-too-2-5-gamma	factorial(ZZ(-2.5))	InexactError: convert(ZZRingElem, -2.5)	error
+complex-arguments-1-i-gamma-2-i	factorial(ZZ(complex(1, 1)))	MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but	error
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	factorial(ZZ((-1 // 2)))	AssertionError: denominator(x) == 1	error
+infty-infty			
+the-number-of-ways-to-arrange-8-distinct-books	factorial(ZZ(8))	40320	
+recurrence-n-n-n-1	(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))	true	
+extends-to-non-integers-via-the-gamma-function	factorial(ZZ((1 // 2)))	AssertionError: denominator(x) == 1	error
+n-gamma-n-1-see-gamma			
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+negative-integers-are-poles-of-the-gamma	factorial(ZZ(-1))	DomainError with -1: Argument must be non-negative	error
+factorials-grow-fast-20-already-exceeds-2-times	factorial(ZZ(20))	2432902008176640000	
+30-has-33-digits-and-ends-in-seven-zeros	factorial(ZZ(30))	265252859812191058636308480000000	

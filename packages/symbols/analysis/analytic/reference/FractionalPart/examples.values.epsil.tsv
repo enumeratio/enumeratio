@@ -1,0 +1,7 @@
+id	in	out
+fractionalpart-2p5	FractionalPart(2.5)	0.5
+fractionalpart-7-over-2	FractionalPart(7 / 2)	1 / 2
+keeps-the-sign-of-x-unlike-compute-engine-s	FractionalPart(-7 / 2)	-1 / 2
+exact-numeric-arguments-stay-exact	FractionalPart(Pi)	-3 + Pi
+threads-element-wise-over-a-list	FractionalPart([7 / 2, -1 / 3])	[1 / 2, -1 / 3]
+zero-exactly-on-the-integers	FractionalPart(5)	0

@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+string-take-s-n-takes-the-first-n-characters			[StringTake, [String, hello world], 5]	"'hello'"	
+string-take-s-negative-n-takes-last-n-chars	Scope		[StringTake, [String, hello world], -5]	"'world'"	
+string-take-s-n-takes-the-nth-character-alone	Scope		[StringTake, [String, hello], [List, 2]]	"'e'"	
+string-take-s-m-n-takes-an-inclusive-range	Scope		[StringTake, [String, hello world], [List, 1, 5]]	"'hello'"	
+string-take-s-m-negative-n-counts-from-end	Scope		[StringTake, [String, hello world], [List, 1, -7]]	"'hello'"	-7 counts back from the end, landing on the same range as {1, 5}

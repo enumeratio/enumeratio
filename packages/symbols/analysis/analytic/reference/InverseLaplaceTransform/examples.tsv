@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+one-over-s-squared			[InverseLaplaceTransform, [Power, s, -2], s, t]	t	$\mathcal{L}^{-1}\{1/s^2\} = t$
+one-over-s-minus-a			[InverseLaplaceTransform, [Power, [Add, s, [Negate, a]], -1], s, t]	[Power, ExponentialE, [Multiply, a, t]]	$\mathcal{L}^{-1}\{1/(s-a)\} = e^{at}$
+s-over-s-squared-plus-a-squared			[InverseLaplaceTransform, [Divide, s, [Add, [Power, s, 2], [Power, a, 2]]], s, t]	[Cos, [Multiply, a, t]]	$\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$

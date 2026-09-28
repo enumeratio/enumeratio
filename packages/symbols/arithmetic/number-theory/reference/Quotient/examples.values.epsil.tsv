@@ -1,0 +1,36 @@
+id	in	out
+quotient-17-5	Quotient(17, 5)	3
+the-floor-not-truncation	Quotient(-7, 2)	-4
+the-remainder-takes-the-sign-of-n	Quotient(17, -5)	-4
+7-5i-2-i-3-8-0-6i-rounded	Quotient(7 + 5i, 2 + i)	4 + i
+real-arguments-lfloor-7-5-2-rfloor	Quotient(7.5, 2)	3
+rational-arguments-lfloor-21-2-rfloor	Quotient(7 / 2, 1 / 3)	10
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q	Quotient(17, 5, 3)	2
+listable-threads-over-a-list	Quotient([10, 20, 30], 7)	[1, 2, 4]
+quotient-by-a-unit-is-the-dividend-itself-up-to	Quotient(3 + 4i, i)	4 - 3i
+a-zero-dividend-quotients-to-0	Quotient(0, 2 + i)	0
+quotient-by-a-gaussian-prime-norm-5	Quotient(3 + 4i, 2 + i)	2 + i
+quotient-by-the-other-prime-above-5	Quotient(3 + 4i, 2 - i)	2i
+quotient-by-a-real-prime-3-mod-4	Quotient(3 + 4i, 3)	1 + i
+a-real-dividend-by-a-gaussian-divisor	Quotient(5, 2 + i)	2 - i
+quotient-by-an-associate	Quotient(8 + 2i, -4 + 3i)	-1 - i
+quotient-by-a-negative-real-divisor	Quotient(3 + 4i, -7)	-i
+quotient-by-a-composite-gaussian-divisor-norm-25	Quotient(123 + 456i, 3 + 4i)	88 + 35i
+a-gaussian-divisor-past-2-53-in-both-parts	Quotient(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)	23_529_941_599_956_161_235 - 5_880_233_600_175_355_000i
+quotient-by-1-4i-the-other-prime-above-17	Quotient(8 + 2i, 1 + 4i)	1 - 2i
+a-large-norm-gaussian-divided-by-a-small-unit	Quotient(1_000 + i, 1 + i)	500 - 500i
+quotient-by-1-negates-each-part	Quotient(2 + i, -1)	-2 - i
+quotient-by-i-rotates-by-that-unit	Quotient(5 + 5i, -i)	-5 + 5i
+a-negative-real-dividend-gaussian-divisor	Quotient(-5 - 5i, 2 + i)	-3 - i
+quotient-by-an-associate-times-1	Quotient(8 + 2i, -3 - 4i)	-1 + i
+quotient-by-an-associate-times-i	Quotient(8 + 2i, 4 - 3i)	1 + i
+quotient-by-the-other-prime-above-13	Quotient(6 + 8i, 2 + 3i)	3
+quotient-by-a-prime-above-13	Quotient(6 + 8i, 3 + 2i)	3 + i
+quotient-by-a-real-prime-s-associate-by-the-unit	Quotient(3 + 4i, 7i)	1
+quotient-by-a-real-composite-5-squared	Quotient(3 + 4i, 25)	0
+a-negative-associate-as-the-divisor	Quotient(6 + 8i, -2 - 3i)	-3
+dividing-a-large-norm-gaussian-by-a-real-prime	Quotient(123 + 456i, 19)	6 + 24i
+dividing-by-zero-is-undefined	Quotient(3 + 4i, 0)	Quotient(3 + 4i, 0)
+dividing-zero-by-zero-is-undefined	Quotient(0, 0)	Quotient(0, 0)
+m-n-quotient-m-n-mod-m-n-see-mod	5 * Quotient(17, 5) + 17 % 5	17
+2-5-2-5i-rounds-to-even-in-each-part	Quotient(5 + 5i, 2)	2 + 2i

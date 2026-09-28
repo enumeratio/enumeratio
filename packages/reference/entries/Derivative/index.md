@@ -1,0 +1,16 @@
+---
+name: Derivative
+domain: Compute engine
+signature: Derivative(f, orders*)
+summary: "The derivative operator: the function that is the $n$th derivative of $f$."
+signatures:
+  - call: Derivative(f, orders*)
+    description: Adds a closed-form derivative table for the heads this package defines, keyed by head and by $\partial$-order vector, so `Derivative(f, orders*)` returns a function literal instead of compute-engine's inert symbolic form; any head not in the table still falls through to native behavior.
+    library: enumeratio-analytic
+    type: "(function, order: number*) -> function"
+    overrides: compute-engine
+attributes:
+  - HoldAll
+seeAlso:
+  - D
+---

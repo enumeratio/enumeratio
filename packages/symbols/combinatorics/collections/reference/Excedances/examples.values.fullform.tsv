@@ -1,0 +1,4 @@
+id	in
+only-position-1-3-1	Excedances[List[3, 1, 2]]
+the-identity-has-none	Excedances[List[1, 2, 3]]
+excedances-antiexcedances-and-fixed-points	Equal[Plus[Excedances[List[2, 3, 1]], Antiexcedances[List[2, 3, 1]], FixedPoints[List[2, 3, 1]]], 3]

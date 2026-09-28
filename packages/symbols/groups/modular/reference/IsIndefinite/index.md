@@ -1,0 +1,14 @@
+---
+name: IsIndefinite
+domain: The modular group
+signature: IsIndefinite(form)
+summary: "Whether a [[QuadraticForm]] is indefinite: its discriminant is positive and not a perfect square."
+signatures:
+  - call: IsIndefinite(form)
+    description: $D>0$ and not a perfect square
+    library: enumeratio-modular
+    type: (expression<QuadraticForm>) -> boolean
+seeAlso:
+  - QuadraticForm
+  - FormClassNumber
+---

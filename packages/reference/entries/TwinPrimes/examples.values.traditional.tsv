@@ -1,0 +1,5 @@
+id	in	out
+the-first-20-lesser-twin-primes-oeis-a001359		
+count-twinprimes-is-unknown-but-the-first-20		
+11-is-a-lesser-twin-prime	11\in\mathrm{TwinPrimes}	\mathrm{True}
+13-is-not-13-2-15-not-prime	13\in\mathrm{TwinPrimes}	\mathrm{False}

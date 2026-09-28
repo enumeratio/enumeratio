@@ -1,0 +1,4 @@
+id	in	out
+count-propercompositions-6	\mathrm{Count}(\mathrm{ProperCompositions}(6))	5
+first-element-of-propercompositions-6	\mathrm{ProperCompositions}(6)[1]	\bigl\lbrack2, 2, 2\bigr\rbrack
+every-element-of-propercompositions-6	\mathrm{Take}(\mathrm{ProperCompositions}(6), 5)	\bigl\lbrack\bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack4, 2\bigr\rbrack, \bigl\lbrack6\bigr\rbrack\bigr\rbrack

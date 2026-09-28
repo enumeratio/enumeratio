@@ -1,0 +1,24 @@
+id	in	out
+sign-neg-3	\mathrm{sgn}(-3)	-1
+sign-3	\mathrm{sgn}(3)	1
+zero-is-its-own-sign	\mathrm{sgn}(0)	0
+sign-neg-1-over-2	\mathrm{sgn}(-\frac{1}{2})	-1
+the-unit-complex-number-pointing-the-same	\mathrm{sgn}(3+4i)	\frac{3}{5}+\frac{4}{5}i
+threads-element-wise-over-a-list	\mathrm{sgn}(\bigl\lbrack-3, 0, 7\bigr\rbrack)	\bigl\lbrack-1, 0, 1\bigr\rbrack
+sign-neg-2p5	\mathrm{sgn}(-2.5)	-1
+sign-3p14	\mathrm{sgn}(3.14)	1
+a-complex-number-with-approximate-parts	\mathrm{sgn}(1.4+2.3i)	0.519\,946\,946\,895\,745\,216\,81+0.854\,198\,555\,614\,438\,5i
+an-exact-complex-argument-comes-back-exact-sign	\mathrm{sgn}(1+i)	\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+threads-over-a-matrix-entry-by-entry	\mathrm{sgn}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack-1, 1\bigr\rbrack\bigr\rbrack
+exact-numeric-constants	\mathrm{sgn}(\pi)	1
+sign-neg-exponentiale	\mathrm{sgn}(-e)	-1
+sign-imaginaryunit	\mathrm{sgn}(i)	i
+sign-positiveinfinity	\mathrm{sgn}(\infty)	1
+an-interval-entirely-above-0-has-sign-1	\mathrm{sgn}(\mathrm{Interval}(1, 3))	1
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	\mathrm{sgn}(\sqrt{2}-2)	-1
+2-sqrt-2-is-the-same-certified-decision-the	\mathrm{sgn}(2-\sqrt{2})	1
+tells-you-the-temperature-dropped-but-not-by-how	\mathrm{sgn}(70-95)	-1
+sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\top
+x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\top
+the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\top
+nan-propagates-rather-than-being-treated-as-0	\mathrm{sgn}(\operatorname{NaN})	\operatorname{NaN}

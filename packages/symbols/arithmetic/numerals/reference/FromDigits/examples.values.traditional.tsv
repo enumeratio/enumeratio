@@ -1,0 +1,35 @@
+id	in	out
+fromdigits-list-5-1-2-8		
+fromdigits-list-1-0-1-1-0-1-1-2		
+1d-2h-3m-4s-back-to-seconds		
+crt-reconstruction		
+the-digits-can-be-given-as-a-string-0-9-then-a-z		
+a-digit-string-in-a-given-base		
+roman-numerals-with-the-base-roman		
+a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s		
+the-inverse-of-integerdigits-137-mixedradix-3-12		
+digits-past-9-are-plain-integers-1-cdot-16-15		
+a-symbolic-base-gives-the-polynomial-x-2-2x-3		
+a-negative-base-1-cdot-4-1-cdot-2-0-2		
+a-digits-exponent-pair-the-shape-realdigits		
+ordinary-base-2-as-a-system-value		
+zeckendorf-100-89-8-3-back-through-fromdigits		
+a-factoradic-lehmer-code-back-to-463		
+balanced-ternary-1-1-1-back-to-5		
+combinatorial-base-3-3-2-1-back-to-3		
+ostrowski-golden-digits-back-to-12		
+bijective-base-26-the-empty-numeral-is-zero		
+the-horner-reduction-in-base-5		
+a-negative-base-minus-3-1-0-1		
+a-negative-base-minus-4-3-2-1		
+a-digits-exponent-pair-exponent-3-is-an-exact		
+a-digits-exponent-pair-exponent-5-is-12-300		
+a-lehmer-code-back-to-its-rank		
+fromdigits-inverts-integerdigits	\mathrm{FromDigits}(\mathrm{IntegerDigits}(58\,127))=58\,127	\mathrm{True}
+the-round-trip-holds-in-any-base		
+an-empty-digit-list-is-left-unevaluated-rather		
+two-adjacent-ones-is-not-a-numeral-so-it-denotes		
+ostrowski-declines-a-string-past-its-ceiling		
+non-coprime-residues-an-inconsistent-string		
+a-malformed-roman-numeral-declines		
+digits-the-base-carry-into-higher-place-values-7		

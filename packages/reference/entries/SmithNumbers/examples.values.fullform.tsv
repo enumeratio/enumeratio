@@ -1,0 +1,4 @@
+id	in
+the-first-20-terms	Take[SmithNumbers, 20]
+4-is-a-smith-number	Element[4, SmithNumbers]
+6-is-not-a-smith-number	Element[6, SmithNumbers]

@@ -1,0 +1,4 @@
+id	in	out
+count-finepaths-5	\mathrm{Count}(\mathrm{FinePaths}(5))	18
+first-element-of-finepaths-5	\mathrm{FinePaths}(5)[1]	\bigl\lbrack1, 1, 0, 0, 1, 1, 1, 0, 0, 0\bigr\rbrack
+every-element-of-finepaths-5	\mathrm{Take}(\mathrm{FinePaths}(5), 5)	\bigl\lbrack\bigl\lbrack1, 1, 0, 0, 1, 1, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0, 1, 1, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 0, 0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 1, 0, 0, 1, 1, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack

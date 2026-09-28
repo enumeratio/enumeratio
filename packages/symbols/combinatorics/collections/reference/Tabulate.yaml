@@ -1,9 +1,0 @@
-name: Tabulate
-domain: Collections
-signature: Tabulate(f, n)
-summary: The list of $f$ applied to each index from 1 to $n$ (or a rectangular grid of them).
-signatures:
-  - call: Tabulate(f, n)
-    description: $[f(1), f(2), \ldots, f(n)]$.
-  - call: Tabulate(f, n, m, …)
-    description: the nested array of $f$ applied to every index tuple in the $n \times m \times \ldots$ grid, each 1-based.

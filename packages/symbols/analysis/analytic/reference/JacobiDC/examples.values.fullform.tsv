@@ -1,0 +1,5 @@
+id	in
+a-floating-point-argument-evaluates-directly-to	N[JacobiDC[0.6, 0.4]]
+m-less-than-0-via-the-imaginary-modulus	N[JacobiDC[0.3, -0.7]]
+u-0-is-1-for-any-m	JacobiDC[0, m]
+symbolic-arguments-are-left-unevaluated-rather	JacobiDC[u, m]

@@ -1,0 +1,13 @@
+id	in	out
+intersection-list-1-2-3-list-2-3-4		
+intersection-list-1-2-3-4-list-2-3-4-5		
+with-three-or-more-collections-only-elements		
+duplicates-are-dropped-as-well		
+symbolic-elements		
+a-single-collection-comes-back-as-a-set		
+the-divisors-common-to-45-and-78		
+intersection-is-idempotent-a-cap-a-a	\lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace	\mathrm{True}
+the-same-inclusion-exclusion-count-rearranged-a	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\mathrm{True}
+intersecting-with-the-empty-set-gives-the-empty		
+disjoint-collections-intersect-to-the-special		
+the-result-keeps-the-order-elements-were-met-in		

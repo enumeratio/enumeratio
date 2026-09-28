@@ -1,0 +1,5 @@
+id	in	out
+heavisidepi-inside	\mathrm{HeavisidePi}(0)	1
+heavisidepi-boundary-unevaluated	\mathrm{HeavisidePi}(\frac{1}{2})	\mathrm{HeavisidePi}(\frac{1}{2})
+heavisidepi-neg-boundary-unevaluated	\mathrm{HeavisidePi}(-\frac{1}{2})	\mathrm{HeavisidePi}(-\frac{1}{2})
+heavisidepi-outside	\mathrm{HeavisidePi}(1)	0

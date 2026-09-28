@@ -1,0 +1,17 @@
+---
+name: KMotzkinPaths
+domain: Combinatorics
+signature: KMotzkinPaths(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A055151
+    url: https://oeis.org/A055151
+stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: KMotzkinPath
+---

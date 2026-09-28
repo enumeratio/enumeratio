@@ -1,0 +1,4 @@
+id	in	out
+a-dihedral-group	GroupOrder(DihedralGroup(100))	200
+a-permutation-group	GroupOrder(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))	6
+the-symmetric-group	GroupOrder(SymmetricGroup(4))	24

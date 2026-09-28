@@ -1,0 +1,98 @@
+id	in	out
+li-2-1-zeta-2-pi-2-6	PolyLog(2, 1)	1 / 6 * Pi ^ 2
+li-2-1-eta-2-pi-2-12	PolyLog(2, -1)	-1 / 12 * Pi ^ 2
+li-4-1-zeta-4-pi-4-90	PolyLog(4, 1)	1 / 90 * Pi ^ 4
+a-machine-precision-argument	PolyLog(2, 0.9)	1.299_714_723_004_958_8
+li-0-z-z-1-z-past-the-unit-disk	PolyLog(0, 5.5)	-1.222_222_222_222_222_222_221
+li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac	PolyLog(3, 1 / 2)	-1 / 12 * Ln(2) * Pi ^ 2 + 1 / 6 * Ln(2) ^ 3 + 7 / 8 * Zeta(3)
+n-polylog-2-0p5	N(PolyLog(2, 0.5))	0.582_240_526_465_012_5
+n-polylog-2-neg-0p5	N(PolyLog(2, -0.5))	-0.448_414_206_923_646_36
+n-polylog-2-0p25	N(PolyLog(2, 0.25))	0.267_652_639_082_732_5
+n-polylog-2-0p9	N(PolyLog(2, 0.9))	1.299_714_723_004_958_8
+n-polylog-2-1-over-3	N(PolyLog(2, 1 / 3))	0.366_213_229_977_063_4
+n-polylog-2-0p4-plus-0p3i	N(PolyLog(2, 0.4 + 0.3i))	0.407_770_499_295_096_57 + 0.374_503_158_223_905i
+n-polylog-3-0p5	N(PolyLog(3, 0.5))	0.537_213_193_608_040_3
+n-polylog-3-neg-0p5	N(PolyLog(3, -0.5))	-0.472_597_844_658_897_04
+n-polylog-3-0p25	N(PolyLog(3, 0.25))	0.258_461_395_796_573_23
+n-polylog-3-0p9	N(PolyLog(3, 0.9))	1.049_658_950_186_439_7
+n-polylog-3-1-over-3	N(PolyLog(3, 1 / 3))	0.348_827_861_154_840_05
+n-polylog-3-0p4-plus-0p3i	N(PolyLog(3, 0.4 + 0.3i))	0.405_995_303_819_877_75 + 0.334_761_838_533_880_25i
+n-polylog-0p5-0p5	N(PolyLog(0.5, 0.5))	0.806_126_723_042_852_2
+n-polylog-0p5-neg-0p5	N(PolyLog(0.5, -0.5))	-0.373_752_237_980_973
+n-polylog-0p5-0p25	N(PolyLog(0.5, 0.25))	0.305_734_930_399_296_4
+n-polylog-0p5-0p9	N(PolyLog(0.5, 0.9))	4.021_950_427_473_364
+n-polylog-0p5-1-over-3	N(PolyLog(0.5, 1 / 3))	0.442_108_835_280_675_46
+n-polylog-0p5-0p4-plus-0p3i	N(PolyLog(0.5, 0.4 + 0.3i))	0.379_935_019_202_769_3 + 0.544_594_255_219_852_8i
+n-polylog-1p5-0p5	N(PolyLog(1.5, 0.5))	0.624_837_020_819_914
+n-polylog-1p5-neg-0p5	N(PolyLog(1.5, -0.5))	-0.429_887_321_580_579_35
+n-polylog-1p5-0p25	N(PolyLog(1.5, 0.25))	0.275_700_508_644_822_9
+n-polylog-1p5-0p9	N(PolyLog(1.5, 0.9))	1.614_438_528_566_339
+n-polylog-1p5-1-over-3	N(PolyLog(1.5, 1 / 3))	0.381_783_507_869_016_16
+n-polylog-1p5-0p4-plus-0p3i	N(PolyLog(1.5, 0.4 + 0.3i))	0.406_193_979_594_026_37 + 0.410_075_868_348_374_95i
+n-polylog-2p5-0p5	N(PolyLog(2.5, 0.5))	0.554_997_278_717_512_4
+n-polylog-2p5-neg-0p5	N(PolyLog(2.5, -0.5))	-0.462_297_782_190_063_46
+n-polylog-2p5-0p25	N(PolyLog(2.5, 0.25))	0.262_193_770_428_551_6
+n-polylog-2p5-0p9	N(PolyLog(2.5, 0.9))	1.139_003_025_202_156_3
+n-polylog-2p5-1-over-3	N(PolyLog(2.5, 1 / 3))	0.355_830_740_032_320_74
+n-polylog-2p5-0p4-plus-0p3i	N(PolyLog(2.5, 0.4 + 0.3i))	0.407_221_711_324_621_6 + 0.350_742_483_763_195_6i
+n-polylog-neg-1-0p5	N(PolyLog(-1, 0.5))	2
+n-polylog-neg-1-neg-0p5	N(PolyLog(-1, -0.5))	-0.222_222_222_222_222_222_222
+n-polylog-neg-1-0p25	N(PolyLog(-1, 0.25))	0.444_444_444_444_444_444_445
+n-polylog-neg-1-0p9	N(PolyLog(-1, 0.9))	90
+n-polylog-neg-1-1-over-3	N(PolyLog(-1, 1 / 3))	0.749_999_999_999_999_999_999_25
+n-polylog-neg-1-0p4-plus-0p3i	N(PolyLog(-1, 0.4 + 0.3i))	19_136e-20 + 1.111_111_111_111_111_4i
+n-polylog-2-plus-i-0p5	N(PolyLog(2 + i, 0.5))	0.554_853_545_353_320_5 - 0.058_049_561_791_697_15i
+n-polylog-2-plus-i-neg-0p5	N(PolyLog(2 + i, -0.5))	-0.457_531_546_075_585_2 - 0.030_471_019_669_807_11i
+n-polylog-2-plus-i-0p25	N(PolyLog(2 + i, 0.25))	0.262_850_183_027_236_23 - 0.011_816_971_919_302_564i
+n-polylog-2-plus-i-0p9	N(PolyLog(2 + i, 0.9))	1.073_635_898_279_169 - 0.306_500_621_704_929_9i
+n-polylog-2-plus-i-1-over-3	N(PolyLog(2 + i, 1 / 3))	0.356_694_556_200_713_8 - 0.022_385_462_317_962_054i
+n-polylog-2-plus-i-0p4-plus-0p3i	N(PolyLog(2 + i, 0.4 + 0.3i))	0.462_140_023_057_769_9 + 0.350_560_597_101_058_36i
+n-polylog-0p5-plus-neg-1-times-i-0p5	N(PolyLog(0.5 - i, 0.5))	0.670_039_797_076_198_3 + 0.233_019_269_757_713_28i
+n-polylog-0p5-plus-neg-1-times-i-neg-0p5	N(PolyLog(0.5 - i, -0.5))	-0.391_310_316_111_742_9 + 0.069_751_466_633_279_12i
+n-polylog-0p5-plus-neg-1-times-i-0p25	N(PolyLog(0.5 - i, 0.25))	0.288_406_466_124_705_9 + 0.038_753_470_608_298_05i
+n-polylog-0p5-plus-neg-1-times-i-0p9	N(PolyLog(0.5 - i, 0.9))	0.580_361_076_526_937 + 2.242_263_748_000_801i
+n-polylog-0p5-plus-neg-1-times-i-1-over-3	N(PolyLog(0.5 - i, 1 / 3))	0.404_329_932_237_944_8 + 0.077_925_724_560_642_56i
+n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i	N(PolyLog(0.5 - i, 0.4 + 0.3i))	0.246_545_234_792_888_67 + 0.432_156_736_424_442_9i
+li-0-1-a-pole-of-the-rational-form	PolyLog(0, 1)	ComplexInfinity
+li-neg-1-1-a-pole-of-the-rational-form	PolyLog(-1, 1)	ComplexInfinity
+li-neg-2-1-a-pole-of-the-rational-form	PolyLog(-2, 1)	ComplexInfinity
+li-3-over-2-1-zeta-3-2-non-integer-order	N(PolyLog(3 / 2, 1))	2.612_375_348_685_488_343_35
+li-1-1-2-ln-2	N(PolyLog(1, 1 / 2))	0.693_147_180_559_945_309_417
+n-polylog-rim-theta-0p5-s-neg-0p5-z	N(PolyLog(-0.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))	-1.981_412_803_241_631_6 + 1.759_618_028_095_421i
+polylog-rim-theta-0p5-s-0-z	N(PolyLog(0, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))	-0.500_000_000_000_000_379_457_391_008_370_314_432 + 1.958_158_682_322_970_2i
+polylog-rim-theta-0p5-s-0p5-z	N(PolyLog(0.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))	0.315_296_615_758_708_27 + 1.668_332_492_996_765_1i
+polylog-rim-theta-0p5-s-1-z	N(PolyLog(1, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))	0.703_585_635_137_844_8 + 1.320_796_326_794_896_8i
+polylog-rim-theta-0p5-s-1p5-z	N(PolyLog(1.5, 0.877_582_561_890_372_8 + 0.479_425_538_604_203i))	0.865_929_522_764_989_1 + 1.042_808_698_878_829_4i
+polylog-rim-theta-1p7-s-0-z	N(PolyLog(0, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))	-0.499_999_999_999_999_972_940_231_359_823_872_284_8 + 0.439_238_892_276_005_9i
+polylog-rim-theta-1p7-s-0p5-z	N(PolyLog(0.5, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))	-0.460_639_226_197_527_23 + 0.600_477_816_055_078_9i
+polylog-rim-theta-1p7-s-1-z	N(PolyLog(1, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))	-0.407_170_859_340_729_44 + 0.720_796_326_794_896_6i
+polylog-rim-theta-1p7-s-1p5-z	N(PolyLog(1.5, -0.128_844_494_295_524_64 + 0.991_664_810_452_468_6i))	-0.352_399_886_639_668_2 + 0.807_057_229_069_461_3i
+polylog-rim-theta-2p4-s-0-z	N(PolyLog(0, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))	-0.500_000_000_000_000_007_557_877_937_207_423_088_8 + 0.194_389_784_684_102_45i
+polylog-rim-theta-2p4-s-0p5-z	N(PolyLog(0.5, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))	-0.570_995_313_100_138_4 + 0.288_122_350_544_688_4i
+polylog-rim-theta-2p4-s-1-z	N(PolyLog(1, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))	-0.622_766_653_117_112_8 + 0.370_796_326_794_896_66i
+polylog-rim-theta-2p4-s-1p5-z	N(PolyLog(1.5, -0.737_393_715_541_245_4 + 0.675_463_180_551_151i))	-0.659_486_088_090_073_3 + 0.440_335_525_424_700_1i
+order-one-half-at-1-is-zeta-one-half	N(PolyLog(1 / 2, 1))	-1.460_354_508_809_586_8
+threads-over-a-list-of-arguments	PolyLog(2, [0.5, 0.25])	[0.582_240_526_465_012_5, 0.267_652_639_082_732_5]
+a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog(2.5, 2)	2.789_660_332_382_777_8 - 1.363_803_700_539_351i
+complex-order-and-argument	PolyLog(0.2 + i, 0.5 - 0.5i)	0.070_326_520_550_516_03 - 0.563_293_262_539_874_4i
+past-z-1-the-continuation-is-complex	PolyLog(2, 2.5)	2.420_790_806_565_934 - 2.878_612_231_808_261i
+li-3-1-eta-3-frac-34-zeta-3	PolyLog(3, -1)	-3 / 4 * Zeta(3)
+li-2-2-pi-2-4-i-pi-ln-2-exactly	PolyLog(2, 2)	-i * Pi * Ln(2) + 1 / 4 * Pi ^ 2
+li-n-1-1-2-1-n-zeta-n-for-symbolic-n	PolyLog(n, -1)	(2 ^ (-n + 1) - 1) * Zeta(n)
+li-2-z-z-1-z-1-z-3	PolyLog(-2, z)	z * (z + 1) / (-z + 1) ^ 3
+interval-arithmetic	PolyLog(2, Interval(0.7, 0.8))	Interval(0.889_377_624_286_038, 1.074_794_600_008_25)
+three-arguments-the-nielsen-generalized	PolyLog(1, 2, 1)	Zeta(3)
+s-2-2-1-pi-4-360	PolyLog(2, 2, 1)	1 / 360 * Pi ^ 4
+s-1-2-1-2-zeta-3-8-ln-3-2-6	PolyLog(1, 2, 0.5)	0.094_753_004_230_127_7
+to-30-significant-digits-not-yet-the-requested	N(PolyLog(2, 1 / 2), 30)	0.582_240_526_465_012_505_902_656_320_160
+li-1-2-1-zeta-1-2-a-non-integer-order-from	PolyLog(0.5, 1)	-1.460_354_508_809_586_812_89
+li-1-2-1-2-0-80612672-via-the-lerch-series	PolyLog(0.5, 0.5)	0.806_126_723_042_852_2
+li-5-2-1-2-0-46229778-the-alternating-side-euler	PolyLog(2.5, -0.5)	-0.462_297_782_190_063_46
+certified-digits-li-2-1-3	N(PolyLog(2, 1 / 3), 40)	0.366_213_229_977_063_487_616_746_297_664_262_763_802_1
+certified-digits-li-5-2-minus-1-2	N(PolyLog(5 / 2, -1 / 2), 40)	-0.462_297_782_190_063_438_189_164_323_274_546_489_886_9
+li-1-z-ln-1-z-symbolically	PolyLog(1, z)	-Ln(-z + 1)
+li-1-z-z-1-z-2-negative-orders-are-rational	PolyLog(-1, z)	z / (-z + 1) ^ 2
+li-2-1-2-pi-2-12-ln-2-2-2	PolyLog(2, 0.5) + 0.5 * Ln(2) ^ 2 == Pi ^ 2 / 12	True
+li-s-1-zeta-s-for-symbolic-s	PolyLog(s, 1)	Zeta(s)
+frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	D(PolyLog(n, x), x)	PolyLog(n - 1, x) / x
+an-exact-argument-stays-symbolic-under-plain	PolyLog(2, 1 / 2)	PolyLog(2, 1 / 2)

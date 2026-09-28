@@ -1,0 +1,4 @@
+id	in
+the-order-of-s-5-is-5	GroupOrder[SymmetricGroup[5]]
+s-10-10	GroupOrder[SymmetricGroup[10]]
+the-one-line-words-are-compute-engine-s	Length[Permutations[List[1, 2, 3]]]

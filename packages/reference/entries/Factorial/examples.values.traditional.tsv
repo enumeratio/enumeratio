@@ -1,0 +1,20 @@
+id	in	out
+5-factorial		
+6-factorial		
+the-empty-product-is-1-by-convention		
+10-factorial		
+threads-element-wise-over-a-list		
+frac-n-n-1-simplifies-to-n-under-simplify-plain		
+real-arguments-evaluate-as-gamma-n-1		
+negative-non-integers-are-defined-too-2-5-gamma		
+complex-arguments-1-i-gamma-2-i		
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a		
+infty-infty		
+the-number-of-ways-to-arrange-8-distinct-books		
+recurrence-n-n-n-1	5!=5\times4!	\mathrm{True}
+extends-to-non-integers-via-the-gamma-function		
+n-gamma-n-1-see-gamma	5!=\Gamma(6)	\mathrm{True}
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e		
+negative-integers-are-poles-of-the-gamma		
+factorials-grow-fast-20-already-exceeds-2-times		
+30-has-33-digits-and-ends-in-seven-zeros		

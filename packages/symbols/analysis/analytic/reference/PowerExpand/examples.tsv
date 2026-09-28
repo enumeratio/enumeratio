@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+sqrt-x-2-x-for-positive-x			[PowerExpand, [Sqrt, [Power, x, 2]]]	x	$\sqrt{x^2} = x$ for positive $x$
+splits-a-logarithm-of-a-product			[PowerExpand, [Ln, [Multiply, x, y]]]	[Add, [Ln, x], [Ln, y]]	Splits a logarithm of a product
+pulls-out-an-exponent	Scope		[PowerExpand, [Ln, [Power, x, n]]]	[Multiply, n, [Ln, x]]	Pulls out an exponent
+distributes-a-power-over-a-product	Scope		[PowerExpand, [Power, [Multiply, a, b], c]]	[Multiply, [Power, a, c], [Power, b, c]]	Distributes a power over a product
+powerexpand-sqrt-a-times-b	Scope		[PowerExpand, [Sqrt, [Multiply, a, b]]]	[Multiply, [Sqrt, a], [Sqrt, b]]	

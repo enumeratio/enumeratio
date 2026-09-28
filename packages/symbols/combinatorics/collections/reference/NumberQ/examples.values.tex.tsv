@@ -1,0 +1,4 @@
+id	in	out
+an-integer-literal	\mathrm{NumberQ}(2)	\top
+a-symbolic-constant-is-not-numberq	\mathrm{NumberQ}(\pi)	\bot
+a-plain-symbol-is-not-numberq	\mathrm{NumberQ}(x)	\bot

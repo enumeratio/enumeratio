@@ -1,0 +1,23 @@
+id	in	out	verdict
+catalannumber-0	Combinatorics.catalannum(0)	1	
+catalannumber-1	Combinatorics.catalannum(1)	1	
+catalannumber-5	Combinatorics.catalannum(5)	42	
+catalannumber-10	Combinatorics.catalannum(10)	16796	
+catalannumber-30	Combinatorics.catalannum(30)	3814986502092304	
+catalannumber-neg-1-is-neg-1	Combinatorics.catalannum(-1)	DomainError with -1: n must be nonnegative	error
+catalannumber-0-past-neg-1	Combinatorics.catalannum(-2)	DomainError with -2: n must be nonnegative	error
+catalannumber-neg-5-is-also-0	Combinatorics.catalannum(-5)	DomainError with -5: n must be nonnegative	error
+threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.catalannum(1), Combinatorics.catalannum(2), Combinatorics.catalannum(3), Combinatorics.catalannum(4)]	[1, 2, 5, 14]	
+half-integer-arguments-evaluate-exactly-through	Combinatorics.catalannum((5 // 2))	MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but 	error
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	Combinatorics.catalannum(2.3)	MethodError: no method matching catalannum(::Float64) The function `catalannum` exists, but no metho	error
+complex-arguments-evaluate-through-the-same	Combinatorics.catalannum(complex(1.2, 1))	MethodError: no method matching catalannum(::ComplexF64) The function `catalannum` exists, but no me	error
+c-1-2-frac-8-3-pi-by-analytic-continuation	Combinatorics.catalannum((1 // 2))	MethodError: no method matching catalannum(::Rational{Int64}) The function `catalannum` exists, but 	error
+an-interval-argument-should-give-an-enclosing			
+the-5-ways-to-balance-3-pairs-of-parentheses	Combinatorics.catalannum(3)	5	
+the-14-triangulations-of-a-hexagon-and-the-14	Combinatorics.catalannum(4)	14	
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))	42.0	
+the-closed-form-through-a-negative-n-in-binomial	(binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))		
+equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))	42	
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(Combinatorics.catalannum(6) // Combinatorics.catalannum(5))	3.142857142857143	
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
+they-grow-fast-c-15-already-passes-nine-million	Combinatorics.catalannum(15)	9694845	

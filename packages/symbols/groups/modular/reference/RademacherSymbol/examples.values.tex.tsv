@@ -1,0 +1,8 @@
+id	in	out
+four-rights-one-left	\mathrm{RademacherSymbol}(\text{LRRRR})	3
+the-arithmetic-side	\mathrm{DedekindSum}(4, 3)	\frac{1}{18}
+phi-on-t-n-just-counts	\mathrm{RademacherPhi}(\mathrm{ModularMatrix}(1, 7, 0, 1))	7
+the-same-number-by-counting-letters	\mathrm{WordSymbol}(\text{LRRRR})	3
+and-again-by-the-linking-number	\mathrm{LinkingWithTrefoil}(\text{LRRRR})	3
+s-1-5	\mathrm{DedekindSum}(1, 5)	\frac{1}{5}
+turning-equally-both-ways-gives-linking-number	\mathrm{LinkingWithTrefoil}(\text{LLRR})	0

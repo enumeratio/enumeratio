@@ -1,0 +1,5 @@
+id	in	out
+maxwell-pdf-exact	\operatorname{PDF}(\mathrm{MaxwellDistribution}(1), 2)	\frac{4\sqrt{2}}{e^{2}\sqrt{\pi}}
+maxwell-cdf-exact	\operatorname{CDF}(\mathrm{MaxwellDistribution}(1), 2)	1-\operatorname{GammaRegularized}(\frac{3}{2}, 2)
+maxwell-mean-exact	\mathrm{mean}(\mathrm{MaxwellDistribution}(1))	\frac{2\sqrt{2}}{\sqrt{\pi}}
+maxwell-variance-exact	\mathrm{Variance}(\mathrm{MaxwellDistribution}(1))	\frac{3\pi-8}{\pi}

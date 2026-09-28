@@ -1,0 +1,11 @@
+id	in	back
+tabulate-function-1-pow-2-5	Array[Function[Power[Slot[1], 2]], 5]	[Array, [Function, [Power, _1, 2]], 5]
+a-symbolic-function-shows-the-indices	Array[f, 3]	[Array, f, 3]
+the-multi-dimensional-form-a-rectangular-grid	Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]	[Array, [Function, [Multiply, _1, _2]], [List, 2, 2]]
+a-2-3-grid	Array[f, List[2, 3]]	[Array, f, [List, 2, 3]]
+tabulate-add-2-2	Array[Plus, List[2, 2]]	[Array, Add, [List, 2, 2]]
+three-dimensions-give-a-2-2-2-array	Array[f, List[2, 2, 2]]	[Array, f, [List, 2, 2, 2]]
+length-0-gives-the-empty-list	Array[f, 0]	[Array, f, 0]
+the-3-3-hilbert-matrix-1-i-j-1	Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]	[Array, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], [List, 3, 3]]
+the-3-3-identity-matrix	Array[Function[If[Equal[Slot[1], Slot[2]], 1, 0]], List[3, 3]]	[Array, [Function, [If, [Equal, _1, _2], 1, 0]], [List, 3, 3]]
+pascal-s-triangle-as-a-lower-triangular-matrix	Array[Binomial, List[3, 3]]	[Array, Binomial, [List, 3, 3]]

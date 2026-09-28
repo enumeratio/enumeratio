@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption
+the-trefoil			[AlexanderPolynomial, [Braid, 2, [List, 1, 1, 1]]]	[Add, [Power, t, 2], [Negate, t], 1]	the trefoil
+the-figure-eight-knot			[AlexanderPolynomial, [BraidPower, [Braid, 3, [List, 1, -2]], 2]]	[Add, [Power, t, 2], [Multiply, -3, t], 1]	the figure-eight knot
+and-under-its-own-name-twistknot-1	Scope		[AlexanderPolynomial, [FigureEightKnot]]	[Add, [Power, t, 2], [Multiply, -3, t], 1]	…and under its own name, TwistKnot(1)
+the-stevedore-knot-61-two-half-twists	Scope		[AlexanderPolynomial, [TwistKnot, 2]]	[Add, [Multiply, 2, [Power, t, 2]], [Multiply, -5, t], 2]	the Stevedore knot, 6₁ — two half-twists
+p-1-1-1-is-the-unknot	Scope		[AlexanderPolynomial, [PretzelKnot, 1, 1, -1]]	1	P(1,1,-1) is the unknot
+3-1-4-1-2	Properties		[SeifertGenus, [TorusBraid, 3, 4]]	3	$(3-1)(4-1)/2$
+a-twist-knot-s-genus-does-not-grow-with-the	Properties		[SeifertGenus, [TwistKnot, 5]]	1	a twist knot's genus does not grow with the twist count
+a-mixed-braid-has-no-bennequin-genus-so-the-call	Possible issues		[SeifertGenus, [Braid, 3, [List, 1, -2]]]	[SeifertGenus, [Braid, 3, [List, 1, -2]]]	a mixed braid has no Bennequin genus, so the call is left alone
+an-even-band-is-not-this-family-so-the-call-is	Possible issues		[SeifertGenus, [PretzelKnot, 2, 1, 1]]	[SeifertGenus, [PretzelKnot, 2, 1, 1]]	an even band is not this family, so the call is left alone

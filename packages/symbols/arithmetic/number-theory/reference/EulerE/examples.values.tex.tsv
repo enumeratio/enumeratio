@@ -1,0 +1,7 @@
+id	in	out
+eulere-10	\mathrm{EulerE}(10)	-50\,521
+eulere-8	\mathrm{EulerE}(8)	1\,385
+listable-odd-indices-vanish	\mathrm{EulerE}(\bigl\lbrack0, 1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 0, -1, 0, 5\bigr\rbrack
+the-euler-polynomial-e-2-x-x-2-x	\mathrm{EulerE}(2, x)	x^2-x
+e-4-x-x-4-2x-3-x	\mathrm{EulerE}(4, x)	x^4-2x^3+x
+e-n-2-n-e-n-frac-12-and-e-3-0	\mathrm{EulerE}(3, \frac{1}{2})	0

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+xgcd-240-46			[XGCD, 240, 46]	[Tuple, 2, -9, 47]	$\gcd(240, 46) = 2 = 240\cdot(-9) + 46\cdot47$

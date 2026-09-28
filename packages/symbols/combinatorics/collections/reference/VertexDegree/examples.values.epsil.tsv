@@ -1,0 +1,6 @@
+id	in	out
+degrees-around-a-path	VertexDegree(PathGraph(5))	[1, 2, 2, 2, 1]
+the-degree-of-one-vertex	VertexDegree(StarGraph(6), 1)	5
+a-self-loop-counts-twice-at-its-own-vertex	"VertexDegree(Graph([\n                     UndirectedEdge(1, 2),\n                     UndirectedEdge(2, 3),\n                     UndirectedEdge(3, 1),\n                     UndirectedEdge(1, 1),\n                   ]))"	[4, 2, 2]
+the-degree-of-vertex-2-in-a-mixed-graph	"VertexDegree(Graph([\n                     UndirectedEdge(1, 2),\n                     UndirectedEdge(2, 3),\n                     DirectedEdge(3, 1),\n                   ]), 2)"	2
+the-degree-of-vertex-3-in-a-mixed-graph	"VertexDegree(Graph([\n                     UndirectedEdge(1, 2),\n                     UndirectedEdge(2, 3),\n                     DirectedEdge(3, 1),\n                   ]), 3)"	2

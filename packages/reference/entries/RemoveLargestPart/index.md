@@ -1,0 +1,9 @@
+---
+name: RemoveLargestPart
+domain: Combinatorics
+signature: RemoveLargestPart(...)
+summary: Remove the largest part
+mapOn:
+  - IntegerPartition
+stub: carrier
+---

@@ -1,0 +1,5 @@
+id	in
+cauchy-pdf-exact	PDF[CauchyDistribution[0, 1], 0]
+cauchy-cdf-exact	CDF[CauchyDistribution[0, 1], 1]
+cauchy-default-is-standard	CauchyDistribution[]
+cauchy-mean-indeterminate	Mean[CauchyDistribution[0, 1]]

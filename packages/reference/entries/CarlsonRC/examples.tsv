@@ -1,0 +1,9 @@
+id	section	role	expr	expected
+rc-1-4		test	[N, [CarlsonRC, 1, 4]]	0.6045997880780727
+rc-1-1		test	[N, [CarlsonRC, 1, 1]]	1
+rc-3-2		test	[N, [CarlsonRC, 3, 2]]	0.6584789484624086
+rc-1-2i-3		test	[N, [CarlsonRC, [Complex, 1, 2], 3]]	[Complex, 0.6128536899156413, -0.10481507789285571]
+rc-0-1i-0-1i		test	[N, [CarlsonRC, [Complex, 0, 1], [Complex, 0, -1]]]	[Complex, 1.2260849569072199, 0.3447113698876769]
+rc-1-1-2		test	[N, [CarlsonRC, 1, -1]]	0.6232252401402307
+rc-4-3		test	[N, [CarlsonRC, 4, -3]]	0.3729174986774664
+rc-2-0-5		test	[N, [CarlsonRC, 2, -0.5]]	0.913035242516903

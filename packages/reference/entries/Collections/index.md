@@ -1,0 +1,11 @@
+---
+name: Collections
+domain: Combinatorics
+signature: Collections(...)
+summary: Every collection in the catalog, as a collection.
+grades: []
+carrier: Text
+statOn:
+  - Text
+stub: carrier
+---

@@ -1,0 +1,5 @@
+id	in	out
+isnumeric-pi	IsNumeric(Pi)	True
+isnumeric-literal	IsNumeric(5)	True
+isnumeric-plain-symbol	IsNumeric(x)	False
+isnumeric-sqrt-2	IsNumeric(Sqrt(2))	True

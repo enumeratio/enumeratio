@@ -1,0 +1,9 @@
+---
+name: EastSteps
+domain: Combinatorics
+signature: EastSteps(...)
+summary: Number of east steps
+statOn:
+  - DelannoyPath
+stub: carrier
+---

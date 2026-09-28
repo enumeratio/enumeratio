@@ -1,0 +1,5 @@
+id	in
+logistic-pdf-exact	PDF[LogisticDistribution[0, 1], 0]
+logistic-cdf-exact	CDF[LogisticDistribution[0, 1], 0]
+logistic-mean-exact	Mean[LogisticDistribution[0, 1]]
+logistic-variance-exact	Variance[LogisticDistribution[0, 1]]

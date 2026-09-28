@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+geometric-pdf-exact			[PDF, [GeometricDistribution, [Rational, 1, 4]], 2]	[Rational, 9, 64]
+geometric-cdf-exact			[CDF, [GeometricDistribution, [Rational, 1, 4]], 2]	[Rational, 37, 64]
+geometric-mean-exact			[Mean, [GeometricDistribution, [Rational, 1, 4]]]	3
+geometric-variance-exact			[Variance, [GeometricDistribution, [Rational, 1, 4]]]	12

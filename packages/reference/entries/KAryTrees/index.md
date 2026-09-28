@@ -1,0 +1,18 @@
+---
+name: KAryTrees
+domain: Combinatorics
+signature: KAryTrees(...)
+summary: Trees where every internal node has exactly k children — the Fuss-Catalan count.
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: KAryTree
+stub: carrier
+signatures:
+  - call: KAryTrees(...)
+    description: Trees where every internal node has exactly k children — the Fuss-Catalan count.
+    library: enumeratio-collections
+    type: (integer<0..>, integer<0..>) -> indexed_collection<any>
+---

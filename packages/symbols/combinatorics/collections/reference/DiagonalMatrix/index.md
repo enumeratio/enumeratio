@@ -1,0 +1,20 @@
+---
+name: DiagonalMatrix
+domain: Collections
+signature: DiagonalMatrix(list) / DiagonalMatrix(list, k)
+summary: A square matrix with list down the k-th diagonal (default the main diagonal), zero elsewhere.
+signatures:
+  - call: DiagonalMatrix(list)
+    description: an n×n matrix (n = Length(list)) with list on the main diagonal
+    library: enumeratio-collections
+    type: (list<any>, integer?) -> list<any>
+  - call: DiagonalMatrix(list, k)
+    description: an (n + |k|)×(n + |k|) matrix with list on the k-th diagonal (k > 0 above, k < 0 below)
+    library: enumeratio-collections
+details:
+  - The result grows with k rather than staying n×n — Wolfram's own convention, kernel-checked (`DiagonalMatrix[{1, 2}, 1]` is 3×3, not 2×2).
+seeAlso:
+  - HilbertMatrix
+names:
+  wolframIdentity: true
+---

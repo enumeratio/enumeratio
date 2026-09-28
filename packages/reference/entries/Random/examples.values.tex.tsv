@@ -1,0 +1,4 @@
+id	in	out
+a-permutation-of-4-seeded	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{Random}(\mathrm{Permutations}(4))\bigr\rbrack)	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
+a-count-draws-that-many	\mathrm{Length}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{Random}(\mathrm{IntegerPartitions}(10), 3)\bigr\rbrack))	3
+randominteger-is-random-over-a-range	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomInteger}(\bigl\lbrack10, 20\bigr\rbrack)\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(10..20)\bigr\rbrack)	\top

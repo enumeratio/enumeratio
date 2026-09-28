@@ -1,0 +1,10 @@
+---
+name: ToFactoradic
+domain: Combinatorics
+signature: ToFactoradic(...)
+summary: To factoradic
+mapOn:
+  - PermutationInversion
+  - SubexcedantSeq
+stub: carrier
+---

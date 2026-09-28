@@ -1,0 +1,3 @@
+id	in	out
+an-actual-path-is-a-path	"IsPathGraph(Graph([1, 2, 3, 4], [\n                                  UndirectedEdge(1, 2),\n                                  UndirectedEdge(2, 3),\n                                  UndirectedEdge(3, 4),\n                                ]))"	True
+a-cycle-is-not-a-path	IsPathGraph(CycleGraph(4))	False

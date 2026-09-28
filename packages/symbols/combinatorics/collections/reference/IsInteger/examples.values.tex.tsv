@@ -1,0 +1,5 @@
+id	in	out
+a-plain-integer	\mathrm{IsInteger}(4)	\top
+a-rational-is-not-an-integer	\mathrm{IsInteger}(\frac{1}{2})	\bot
+a-free-symbol-is-false	\mathrm{IsInteger}(x)	\bot
+a-negative-integer	\mathrm{IsInteger}(-3)	\top

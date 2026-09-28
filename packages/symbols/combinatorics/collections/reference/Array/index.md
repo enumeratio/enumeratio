@@ -1,0 +1,30 @@
+---
+name: Array
+domain: Collections
+signature: Array(f, n)
+summary: f applied over every point of an n-dimensional index range.
+signatures:
+  - call: Array(f, n)
+    description: $\{f(1), \ldots, f(n)\}$.
+    library: enumeratio-collections
+    type: ((integer) any -> any, any, any?, symbol?) -> collection
+  - call: Array(f, {n1, …, nk})
+    description: the $n_1 \times \cdots \times n_k$ array with $f$ applied to every index tuple.
+    library: enumeratio-collections
+  - call: Array(f, n, r)
+    description: like $Array(f, n)$, but the index range starts at $r$ instead of 1.
+    library: enumeratio-collections
+  - call: Array(f, {n1, …, nk}, {r1, …, rk})
+    description: like the multi-dimensional form, with each dimension's index range starting at its own origin.
+    library: enumeratio-collections
+  - call: Array(f, n, r, h)
+    description: like $Array(f, n, r)$, wrapped in $h$ at every level instead of $List$.
+    library: enumeratio-collections
+details:
+  - The scalar forms of $n$ and $r$ are shorthand for $\{n\}$ and every dimension sharing origin $r$.
+  - See [[Tabulate]] for a lazy array read without materialising it.
+seeAlso:
+  - Tabulate
+names:
+  wolframIdentity: true
+---

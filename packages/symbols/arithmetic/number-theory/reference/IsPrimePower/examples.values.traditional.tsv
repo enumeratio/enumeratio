@@ -1,0 +1,7 @@
+id	in	out
+8-2-3	\mathrm{IsPrimePower}(8)	\mathrm{True}
+12-2-2-cdot-3-has-two-distinct-primes	\mathrm{IsPrimePower}(12)	\mathrm{False}
+a-prime-is-its-own-first-power	\mathrm{IsPrimePower}(7)	\mathrm{True}
+listable	\mathrm{IsPrimePower}(\bigl\lbrack2, 4, 6, 9, 10, 16\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
+large-integers	\mathrm{IsPrimePower}(3^{40})	\mathrm{True}
+1-is-p-0-which-does-not-count	\mathrm{IsPrimePower}(1)	\mathrm{False}

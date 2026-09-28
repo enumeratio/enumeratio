@@ -1,0 +1,4 @@
+id	in	out
+the-one-line-word-312	MajorIndex(Permutation([3, 1, 2]))	1
+the-one-line-word-312-as-a-plain-list	MajorIndex([3, 1, 2])	1
+the-one-line-word-2413	MajorIndex(Permutation([2, 4, 1, 3]))	2

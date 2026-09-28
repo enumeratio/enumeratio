@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+histogram-distribution-pdf			[PDF, [HistogramDistribution, [List, 1, 1, 2, 2, 2, 3, 3, 4], [List, 0, 5, 1]], [Rational, 3, 2]]	[Rational, 1, 4]	bin [1,2) has 2 of the 8 points -> height 2/(8*1).
+histogram-distribution-pdf-outside			[PDF, [HistogramDistribution, [List, 1, 1, 2, 2, 2, 3, 3, 4], [List, 0, 5, 1]], 10]	0	
+histogram-distribution-cdf			[CDF, [HistogramDistribution, [List, 1, 1, 2, 2, 2, 3, 3, 4], [List, 0, 5, 1]], 2]	[Rational, 1, 4]	P(X < 2) = the two points below 2, out of 8.
+histogram-distribution-mean			[Mean, [HistogramDistribution, [List, 1, 1, 2, 2, 2, 3, 3, 4], [List, 0, 5, 1]]]	[Rational, 11, 4]	
+histogram-distribution-dx-only-form			[PDF, [HistogramDistribution, [List, 1, 2, 2, 3], [List, 1]], [Rational, 3, 2]]	[Rational, 1, 4]	the {dx} form picks x0 = floor(min(data)/dx)*dx = 1 as the first bin's left edge.

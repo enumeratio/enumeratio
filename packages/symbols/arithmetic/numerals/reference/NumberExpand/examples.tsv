@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+numberexpand-1-234			[NumberExpand, 1234]	[List, 1000, 200, 30, 4]	
+base-2-zero-terms-kept	Scope		[NumberExpand, 10, 2]	[List, 8, 0, 2, 0]	base 2, zero terms kept
+every-term-carries-the-sign	Scope		[NumberExpand, -123]	[List, -100, -20, -3]	every term carries the sign

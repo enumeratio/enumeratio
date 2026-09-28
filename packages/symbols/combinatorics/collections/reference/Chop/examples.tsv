@@ -1,0 +1,18 @@
+id	section	role	expr	expected	caption	wolfram.note
+values-not-near-zero-pass-through-unchanged			[Chop, 1.2]	1.2	Values not near zero pass through unchanged	
+values-smaller-than-about-10-10-collapse-to			[Chop, 1e-11]	0	Values smaller than about $10^{-10}$ collapse to exactly 0	
+negative-values-chop-the-same-way			[Chop, -1e-11]	0	Negative values chop the same way	
+chops-the-real-and-imaginary-parts-independently			[Chop, [Complex, 1e-12, 3]]	[Complex, 0, 3]	Chops the real and imaginary parts independently	
+chop-0p001-0p0001-keeps-a-value-inside-the		test	[Chop, 0.001, 0.0001]	0.001	A tighter tolerance keeps a value the default second-argument threshold would chop	
+chop-1e-15-with-the-default-tolerance		test	[Chop, 1e-15]	0		
+chops-parts-independently-with-a-tolerance		test	[Chop, [Complex, 0.005, 3], 0.01]	[Complex, 0, 3]	With an explicit tolerance, still chops the real and imaginary parts independently	
+threads-element-wise-over-a-list	Scope		[Chop, [List, 1.2, 1e-11, 3.5]]	[List, 1.2, 0, 3.5]	Threads element-wise over a list	
+a-negligible-imaginary-part-is-dropped-leaving-a	Scope		[Chop, [Add, 1, [Complex, 0, 1e-14]]]	1	A negligible imaginary part is dropped, leaving a real number	
+stays-symbolic	Scope		[Chop, x]	[Chop, x]	Stays symbolic	
+exact-numbers-not-near-zero-pass-through	Scope		[Chop, [Rational, 1, 3]]	[Rational, 1, 3]	Exact numbers not near zero pass through	
+a-second-argument-sets-the-tolerance-here	Scope		[Chop, 0.001, 0.01]	0	A second argument sets the tolerance, here chopping anything below 0.01	
+and-a-tighter-tolerance-keeps-a-value-the	Scope		[Chop, 1e-15, 1e-20]	1e-15	...and a tighter tolerance keeps a value the default would chop	
+cleans-up-the-floating-point-residue-from	Applications		[Chop, [Subtract, [Multiply, 3, [N, [Divide, 1, 3]]], 1]]	0	Cleans up the floating-point residue from computing $3\times(1/3)-1$ numerically	
+only-the-value-s-own-magnitude-matters-this	Possible issues		[Chop, [Add, 1, 1e-12]]	1.000000000001	Only the value's own magnitude matters -- this stays as is since it isn't close to 0, even though it's close to the integer 1	
+a-hard-cutoff-at-about-10-10-a-value-just-above	Possible issues		[Chop, 1.0000000001e-10]	1.0000000001e-10	A hard cutoff at about $10^{-10}$: a value just above the threshold survives untouched	
+an-exact-small-number-is-chopped-too	Possible issues		[Chop, [Power, 10, -20]]	0	An exact small number is chopped too	Wolfram's Chop only touches approximate numbers: $\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$.

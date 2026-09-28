@@ -1,0 +1,4 @@
+id	in	out
+chi-pdf-exact	\operatorname{PDF}(\mathrm{ChiDistribution}(3), 1)	(\sqrt{2})(2\Gamma(\frac{3}{2})\sqrt{e})^{-1}
+chi-cdf-exact	\operatorname{CDF}(\mathrm{ChiDistribution}(3), 1)	1-\operatorname{GammaRegularized}(\frac{3}{2}, \frac{1}{2})
+chi-mean-exact	\mathrm{mean}(\mathrm{ChiDistribution}(3))	\frac{\sqrt{2}\Gamma(2)}{\Gamma(\frac{3}{2})}

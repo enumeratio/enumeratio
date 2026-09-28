@@ -1,0 +1,6 @@
+id	in
+degrees-around-a-path	
+the-degree-of-one-vertex	VertexDegree[StarGraph[6], 1]
+a-self-loop-counts-twice-at-its-own-vertex	VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1], UndirectedEdge[1, 1]]]]
+the-degree-of-vertex-2-in-a-mixed-graph	VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 2]
+the-degree-of-vertex-3-in-a-mixed-graph	VertexDegree[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]], 3]

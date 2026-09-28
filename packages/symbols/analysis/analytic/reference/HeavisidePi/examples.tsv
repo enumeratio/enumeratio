@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+heavisidepi-inside			[HeavisidePi, 0]	1	
+heavisidepi-boundary-unevaluated			[HeavisidePi, [Rational, 1, 2]]	[HeavisidePi, [Rational, 1, 2]]	Unevaluated at the boundary -- unlike [[UnitBox]]
+heavisidepi-neg-boundary-unevaluated			[HeavisidePi, [Rational, -1, 2]]	[HeavisidePi, [Rational, -1, 2]]	
+heavisidepi-outside	Scope		[HeavisidePi, 1]	0	

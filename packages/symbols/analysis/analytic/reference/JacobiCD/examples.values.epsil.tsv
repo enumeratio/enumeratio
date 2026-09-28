@@ -1,0 +1,6 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(JacobiCD(0.3, 0.5))	0.977_250_336_444_249_9
+jacobicd-0-4-0-5i-0-3	N(JacobiCD(0.4 + 0.5i, 0.3))	1.034_017_190_005_338_8 - 0.139_337_967_212_635_17i
+m-greater-than-1-via-the-reciprocal-modulus	N(JacobiCD(0.3, 1.5))	1.023_633_106_578_735
+u-0-is-1-for-any-m	JacobiCD(0, m)	1
+symbolic-arguments-are-left-unevaluated-rather	JacobiCD(u, m)	JacobiCD(u, m)

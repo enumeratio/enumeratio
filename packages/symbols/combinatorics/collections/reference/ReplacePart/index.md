@@ -1,0 +1,22 @@
+---
+name: ReplacePart
+domain: Collections
+signature: ReplacePart(expr, i -> new)
+summary: expr with the operand at position i replaced by new — Wolfram 1-based positions, negative counting from the end.
+signatures:
+  - call: ReplacePart(expr, i -> new)
+    description: expr with its ith operand replaced (1-based; i < 0 counts from the end)
+    library: enumeratio-collections
+    type: (any, expression<Rule> | list<expression<Rule>>) -> any
+  - call: ReplacePart(expr, {i, j, …} -> new)
+    description: like the scalar form, drilling into nested operands along the given path
+    library: enumeratio-collections
+  - call: ReplacePart(expr, {rule1, rule2, …})
+    description: applies every rule, each position resolved against the RESULT of the earlier ones
+    library: enumeratio-collections
+seeAlso:
+  - Replace
+  - Level
+names:
+  wolframIdentity: true
+---

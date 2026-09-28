@@ -1,0 +1,10 @@
+id	in
+1-2-2-2-3-2-1-cdot-3-cdot-7	QFactorial[3, 2]
+qfactorial-4-2	QFactorial[4, 2]
+qfactorial-3-2	N[QFactorial[3, 2]]
+qfactorial-4-2-2	N[QFactorial[4, 2]]
+qfactorial-3-1-2	N[QFactorial[3, Rational[1, 2]]]
+qfactorial-6-3	N[QFactorial[6, 3]]
+qfactorial-3-1-over-2	QFactorial[3, Rational[1, 2]]
+the-inversion-generating-function-of	Expand[QFactorial[3, q]]
+at-q-1-it-is-the-ordinary-factorial	QFactorial[5, 1]

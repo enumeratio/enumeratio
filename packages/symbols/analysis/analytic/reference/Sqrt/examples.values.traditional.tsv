@@ -1,0 +1,37 @@
+id	in	out
+sqrt-16		
+stays-symbolic-when-the-radicand-isn-t-a-perfect		
+sqrt-4-over-9		
+sqrt-0		
+a-perfect-square-radicand-evaluates-exactly-even		
+an-approximate-number-gives-an-approximate-root		
+pulls-perfect-square-factors-out-of-the-radical		
+sqrt-neg-25		
+sqrt-8		
+rationalizes-the-denominator		
+sqrt-12-over-5		
+sqrt-neg-2p5		
+an-exact-complex-square-2-i-2-3-4i		
+sqrt-positiveinfinity		
+threads-element-wise-over-a-list		
+threads-over-a-matrix-entry-by-entry-this-is-not		
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1		
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1		
+to-45-significant-digits-every-one-correctly		
+an-approximate-negative-radicand-stays-complex		
+sqrt-neg-4-over-9		
+sqrt-neg-1-half		
+sqrt-neg-1		
+sqrt-neg-12-over-5		
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle		
+sqrt-x-2-x-for-a-perfect-square-see-square	\sqrt{16}^2=16	\mathrm{True}
+sqrt-x-x-1-2	\sqrt{16}=\sqrt{16}	\mathrm{True}
+sqrt-x-2-x-for-every-x		
+negative-but-not-a-perfect-square-stays-symbolic		
+a-negative-rational-still-evaluates-exactly-when		
+sqrt-x-2-is-not-simplified-to-x-which-would-be		
+at-x-1-sqrt-x-2-1-not-1		
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b		
+while-sqrt-1-1-1		
+sqrt-36-negative		
+sqrt-2-times-sqrt-neg-1		

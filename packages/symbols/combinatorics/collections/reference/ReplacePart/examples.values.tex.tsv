@@ -1,0 +1,5 @@
+id	in	out
+replaces-a-single-1-based-position	\mathrm{ReplacePart}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Rule}(2, z))	\bigl\lbrack a, z, c\bigr\rbrack
+with-a-negative-position-counts-from-the-end	\mathrm{ReplacePart}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Rule}(-1, z))	\bigl\lbrack a, b, z\bigr\rbrack
+applies-a-list-of-rules	\mathrm{ReplacePart}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(1, x), \mathrm{Rule}(3, y)\bigr\rbrack)	\bigl\lbrack x, b, y\bigr\rbrack
+with-a-nested-i-j-position-drills-into-a-sublist	\mathrm{ReplacePart}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, c\bigr\rbrack, \mathrm{Rule}(\bigl\lbrack1, 2\bigr\rbrack, z))	\bigl\lbrack\bigl\lbrack a, z\bigr\rbrack, c\bigr\rbrack

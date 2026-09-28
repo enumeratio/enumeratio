@@ -1,0 +1,15 @@
+id	in	out	verdict
+totient-12	totient(12)	4	
+totient-36	totient(36)	12	
+totient-1	totient(1)	1	
+totient-10	totient(10)	4	
+varphi-0-0-as-in-wolfram	totient(0)	ValueError: n should be a positive integer	error
+threads-element-wise-over-a-list-as-wolfram-s	[totient(2), totient(4), totient(6)]	[1, 2, 2]	
+large-integers-varphi-50	totient(factorial(50))	4218559200885839042679312107816703841788854953574400000000000000	
+negative-n-varphi-n-varphi-n	totient(-10)	ValueError: n should be a positive integer	error
+rsa-key-setup-varphi-17-times-23-16-times-22-352	totient(391)	352	
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when			
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	(totient(1) + totient(2) + totient(3) + totient(4) + totient(6) + totient(12))	12	
+multiplicative-varphi-mn-varphi-m-varphi-n-when	enumeratio_equal(totient(12), (totient(4) * totient(3)))	True	
+varphi-p-p-1-for-a-prime-p	totient(17)	16	
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	totient(81)	54	

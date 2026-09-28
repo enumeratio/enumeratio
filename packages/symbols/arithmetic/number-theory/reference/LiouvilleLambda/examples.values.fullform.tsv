@@ -1,0 +1,6 @@
+id	in
+omega-12-3	LiouvilleLambda[12]
+liouvillelambda-10	LiouvilleLambda[10]
+liouvillelambda-1	LiouvilleLambda[1]
+listable	LiouvilleLambda[Range[10]]
+lambda-n-1-omega-n-see-primeomega	Equal[LiouvilleLambda[360], Power[-1, PrimeOmega[360]]]

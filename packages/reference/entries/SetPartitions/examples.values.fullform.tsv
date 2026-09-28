@@ -1,0 +1,6 @@
+id	in
+the-set-partitions-of-an-explicit-list-in-the	SetPartitions[List[a, b, c]]
+exactly-2-blocks	SetPartitions[3, 2]
+the-partitions-of-a-4-set-into-2-blocks-number-s	Count[SetPartitions[4, 2]]
+the-family-has-b-4-15-members-see-bellnumber	BellB[4]
+those-with-exactly-2-blocks-number-s-4-2-7-see	StirlingS2[4, 2]

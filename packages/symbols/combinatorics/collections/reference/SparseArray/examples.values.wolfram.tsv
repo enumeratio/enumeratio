@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out	verdict
+sparsearray-vector	SparseArray[List[Rule[1, x], Rule[3, y]], 4]	SparseArray[Automatic, {4}, 0, {1, {{0, 2}, {{1}, {3}}}, {x, y}}]	\text{SparseArray}[\{1\to x,3\to y\},4]	\text{SparseArray}\left[\right]	disagree
+sparsearray-infers-dims	SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]				
+sparsearray-custom-default	SparseArray[List[Rule[2, 9]], 3, -1]				
+sparsearray-normal-is-identity	""				

@@ -1,0 +1,2 @@
+id	in	out
+append-to-a-bound-list	\bigl\lbrack\mathrm{appendToDemoList}\coloneq\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{AppendTo}(\mathrm{appendToDemoList}, 4)\bigr\rbrack	\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack

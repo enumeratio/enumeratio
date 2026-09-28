@@ -1,0 +1,15 @@
+---
+name: Dissections
+domain: Combinatorics
+signature: Dissections(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A001003
+    url: https://oeis.org/A001003
+stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: Dissection
+---

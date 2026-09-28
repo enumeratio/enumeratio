@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+diracdelta-zero-unevaluated			[DiracDelta, 0]	[DiracDelta, 0]	Unevaluated at 0
+diracdelta-nonzero			[DiracDelta, 2]	0	
+diracdelta-negative			[DiracDelta, -3]	0	
+diracdelta-multivariate-one-nonzero	Scope		[DiracDelta, 0, 1]	0	Zero as soon as any argument is a nonzero real

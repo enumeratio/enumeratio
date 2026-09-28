@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out	verdict
+power	ToBoxes[Power[x, 2]]	SuperscriptBox["x", "2"]	\text{ToBoxes}\left[x^2\right]	\text{SuperscriptBox}[\text{x},2]	
+evaluates-first	ToBoxes[Plus[2, 3]]				
+binomial	ToBoxes[Binomial[n, k]]	RowBox[{"Binomial", "[", RowBox[{"n", ",", "k"}], "]"}]	\text{ToBoxes}[\binom{n}{k}]	\text{RowBox}[\{\text{Binomial},[,\text{RowBox}[\{\text{n},,,\text{k}\}],]\}]	disagree
+square-root-over-y	ToBoxes[Divide[Sqrt[x], y]]	FractionBox[SqrtBox["x"], "y"]	\text{ToBoxes}\left[\frac{\sqrt{x}}{y}\right]	\text{FractionBox}[\text{SqrtBox}[\text{x}],\text{y}]	

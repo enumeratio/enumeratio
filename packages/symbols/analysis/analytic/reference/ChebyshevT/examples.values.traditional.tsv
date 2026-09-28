@@ -1,0 +1,21 @@
+id	in	out
+the-cubic		
+the-quartic		
+at-an-integer		
+at-a-real		
+at-t0-0-7		
+at-t1-0-7		
+at-t2-0-7		
+at-t5-0-7		
+at-t5-2		
+at-t-5-0-7		
+at-t4-2-3i		
+at-a-rational		
+at-a-complex-argument		
+a-symbolic-order-stays-unevaluated		
+cos-n-theta	\mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})	\mathrm{True}
+at-1		
+at-minus-1		
+parity	\mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})	\mathrm{True}
+negative-order		
+pell-identity		

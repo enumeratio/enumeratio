@@ -1,0 +1,17 @@
+---
+name: ConjugateComposition
+domain: Hopf algebras
+signature: ConjugateComposition(composition)
+summary: "The conjugate (transpose) composition $\\alpha^{*}$: the transpose of the ribbon's skew shape, gotten by complementing the descent set inside $\\{1,\\ldots,n-1\\}$ and reversing."
+signatures:
+  - call: ConjugateComposition(composition)
+    description: $\alpha^{*}$, the transpose of `composition`
+    library: enumeratio-hopf
+    type: (list<integer>) -> list
+seeAlso:
+  - NSymH
+  - Antipode
+references:
+  - system: wikipedia
+    identity: Quasisymmetric function#Related algebras
+---

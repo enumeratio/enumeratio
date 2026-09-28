@@ -1,0 +1,4 @@
+id	in	out
+the-first-five-primes	\mathrm{Take}(\mathbb{P}, 5)	\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack
+11-is-prime	11\in\mathbb{P}	\top
+9-is-not-prime	9\in\mathbb{P}	\bot

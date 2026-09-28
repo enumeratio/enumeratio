@@ -1,0 +1,17 @@
+id	in	out	verdict
+bellnumber-0	bell(0)	1	
+bellnumber-1	bell(1)	1	
+bellnumber-3	bell(3)	5	
+bellnumber-5	bell(5)	52	
+bellnumber-10	bell(10)	115975	
+threads-element-wise-over-a-list-as-wolfram-s	bell([1, 2, 3, 4])	MethodError: no method matching bell(::Vector{Int64}) The function `bell` exists, but no method is d	error
+exact-for-large-n	bell(30)	InexactError: convert(Int64, 846749014511809332450147)	error
+the-two-argument-form-gives-the-bell-touchard			
+the-bell-polynomial-at-a-real-point-b-20-0-5			
+the-number-of-ways-to-partition-a-4-element-set	bell(4)	15	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))	true	
+the-bell-polynomial-at-1-is-the-bell-number-b-n			
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac			
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))	true	
+a-negative-argument-is-left-unevaluated	bell(-1)	DomainError with -1: Argument must be non-negative	error
+a-zero-modulus-inside-a-congruence-check-is-nan	(mod(bell(9), 23) == mod((bell(4) + bell(5)), 0))	DivideError: integer division error	error

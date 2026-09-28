@@ -1,0 +1,14 @@
+---
+name: ComplexPlot
+domain: Graphics
+signature: ComplexPlot(...)
+summary: Wolfram's own ComplexPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: ComplexPlot(...)
+    description: Wolfram's own ComplexPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+    library: enumeratio-formats
+    type: (any*) -> any
+---

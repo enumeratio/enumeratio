@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+centre-degree-of-a-6-vertex-star			[VertexDegree, [StarGraph, 6], 1]	5	The centre of a 6-vertex star has degree 5

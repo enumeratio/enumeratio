@@ -1,0 +1,32 @@
+---
+name: BinaryNecklaces
+domain: Collections
+signature: BinaryNecklaces(n)
+summary: The binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit.
+signatures:
+  - call: BinaryNecklaces(n)
+    description: the binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is A000031, a Burnside sum over the cyclic group $C_n$.
+seeAlso:
+  - LyndonWords
+  - KNecklaces
+references:
+  - system: oeis
+    identity: A000031
+catalog:
+  - system: sage
+    identity: Necklaces(content)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/necklace.html
+    note: binary necklaces of length n = ⋃_{k=0}^{n} Necklaces([k, n−k]) — sage's class fixes content (weight), not just length
+  - system: sympy
+    identity: necklaces
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.necklaces
+    note: necklaces(n, 2), free=False (the default) — same lex-least-under-rotation representative convention as ours
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord
+---

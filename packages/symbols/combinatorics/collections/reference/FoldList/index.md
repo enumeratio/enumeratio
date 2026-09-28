@@ -1,0 +1,22 @@
+---
+name: FoldList
+domain: Collections
+signature: FoldList(f, x0, list)
+summary: Every intermediate result of folding f over a list.
+signatures:
+  - call: FoldList(f, x0, list)
+    description: $\{x_0, f(x_0,a_1), f(f(x_0,a_1),a_2), \ldots\}$ — one longer than $list$.
+    library: enumeratio-collections
+    type: ((any, any) any -> any, any, collection<any>?) -> collection
+  - call: FoldList(f, list)
+    description: like the 3-argument form, using the first element of $list$ as $x_0$ and folding over the rest.
+    library: enumeratio-collections
+details:
+  - The last element equals [[Fold]]($f$, $x_0$, $list$).
+  - See [[Accumulate]] for the common case $f = Add$.
+seeAlso:
+  - Fold
+  - Accumulate
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,3 @@
+id	in	out
+dirac-delta	InverseFourierTransform(DiracDelta(w), w, t)	Sqrt(1 / (2Pi))
+constant	InverseFourierTransform(1, w, t)	Sqrt(2Pi)

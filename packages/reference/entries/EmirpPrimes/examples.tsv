@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+the-first-20-terms		test	[Take, EmirpPrimes, 20]	[List, 13, 17, 31, 37, 71, 73, 79, 97, 107, 113, 149, 157, 167, 179, 199, 311, 337, 347, 359, 389]

@@ -1,0 +1,9 @@
+---
+name: Glyphs
+domain: Combinatorics
+signature: Glyphs(...)
+summary: The page-space glyph kinds the renderer draws.
+grades: []
+carrier: GlyphKind
+stub: carrier
+---

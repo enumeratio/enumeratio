@@ -1,0 +1,4 @@
+id	in
+count-kbracelets-4-3-21-bracelets-of-length-4	Count[KBracelets[4, 3]]
+every-element-of-kbracelets-4-3	Take[KBracelets[4, 3], 21]
+kbracelets-n-2-agrees-with-binarybracelets-n	Equal[Count[KBracelets[5, 2]], Count[BinaryBracelets[5]]]

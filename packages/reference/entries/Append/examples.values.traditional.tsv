@@ -1,0 +1,11 @@
+id	in	out
+append-list-1-2-3-4		
+append-list-a-b-c-d-x		
+a-set-as-well-as-a-list		
+onto-the-empty-list		
+a-lazy-range-is-materialised-first		
+any-head-not-just-a-list		
+adding-a-row-to-a-matrix		
+append-c-x-join-c-x-see-join	\mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4)=\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack)	\mathrm{True}
+appending-adds-exactly-one-element-see-length	\mathrm{Length}(\mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+1	\mathrm{True}
+appending-a-list-nests-it-as-a-single-element		

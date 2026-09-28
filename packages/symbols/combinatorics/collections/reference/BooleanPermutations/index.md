@@ -1,0 +1,32 @@
+---
+name: BooleanPermutations
+domain: Collections
+signature: BooleanPermutations(n)
+summary: The permutations of $\{1, …, n\}$ with no non-adjacent inversion — every inversion $\pi(i) > \pi(j)$ has $j = i+1$ — as a lazy indexed family.
+signatures:
+  - call: BooleanPermutations(n)
+    library: enumeratio-collections
+    description: the permutations of $\{1, …, n\}$ whose inversions are all adjacent.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - A lazy indexed collection; the count is $F(n+1)$ — $1, 1, 2, 3, 5, 8, …$, A000045. See [[Fibonacci]].
+  - As implemented here this is NOT Tenner's "Boolean permutations" $Av(321, 3412)$, counted by $F(2n-1)$ (A001519, $1, 1, 2, 5, 13, …$); the two readings first differ at $n = 3$ (3 here against 5 there).
+  - Each permutation is a product of pairwise non-adjacent adjacent transpositions — a bijection with independent sets of the path graph on $\{1, …, n-1\}$, i.e. with a length-$(n-1)$ Fibonacci word. $At$ unranks that word and applies its transpositions to the identity.
+enumerate:
+  expr: BooleanPermutations(4)
+  columns: Descents, Inversions
+  glyph: permutation
+seeAlso:
+  - Fibonacci
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000045
+    url: https://oeis.org/A000045
+    note: "F(n+1): no non-adjacent inversion (independent sets of a path)"
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+---
