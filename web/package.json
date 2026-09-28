@@ -5,8 +5,8 @@
   "license": "WTFPL",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "review": "vitepress dev --open /review",
+    "dev": "node scripts/ensure-dists.ts && vitepress dev",
+    "review": "node scripts/ensure-dists.ts && vitepress dev --open /review",
     "build": "vitepress build",
     "preview": "vitepress preview",
     "test": "vp test",
