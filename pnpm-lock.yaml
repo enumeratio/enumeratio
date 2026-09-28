@@ -422,8 +422,8 @@ importers:
   packages/manifest:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.134.0
-        version: 0.134.0
+        specifier: ^0.139.0
+        version: 0.139.0
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
