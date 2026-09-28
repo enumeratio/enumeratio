@@ -6,7 +6,7 @@ signatures:
   - call: LinearQuiver(n)
     description: the chain quiver $1\to2\to\cdots\to n$
     library: enumeratio-quiver
-    type: (integer) -> value
+    type: (integer) -> expression<LinearQuiver>
 seeAlso:
   - Quiver
   - QuiverIsAcyclic

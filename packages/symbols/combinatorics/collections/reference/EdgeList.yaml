@@ -6,7 +6,7 @@ signatures:
   - call: EdgeList(g)
     description: every edge of $g$ ([[UndirectedEdge]]/[[DirectedEdge]]), in declaration order.
     library: enumeratio-collections
-    type: (value) -> list
+    type: (value) -> list<value>
 seeAlso:
   - Graph
   - VertexList

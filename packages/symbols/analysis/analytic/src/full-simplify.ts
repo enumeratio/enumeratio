@@ -189,7 +189,7 @@ export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
 
 export function declareFullSimplify(ce: ComputeEngine): void {
   ce.declare("FullSimplify", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : fullSimplify(ce, expr);

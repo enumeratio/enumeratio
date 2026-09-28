@@ -172,10 +172,19 @@ const algebraOf = (expr: BoxedExpression): Group | undefined =>
     : undefined;
 
 export function declareGroupAlgebra(ce: ComputeEngine): void {
-  ce.declare("CyclicGroup", { signature: "(integer) -> value" });
-  ce.declare("DihedralGroup", { signature: "(integer) -> value" });
-  ce.declare("GroupDirectProduct", { signature: "(value, value) -> value" });
-  ce.declare("GroupAlgebra", { signature: "(value) -> value" });
+  /** A group, as `groupOf` reads it: one of the Cayley-table carriers, nested. */
+  const groupLike = "expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>";
+  /** Every carrier `GroupOrder` answers, including the lazy families with no Cayley table --
+   *  collections' permutation families, which type as the collection they are. */
+  const anyGroupLike = `${groupLike} | expression<SymmetricGroup> | expression<PermutationGroup> | expression<AlternatingGroup> | indexed_collection<list<integer>>`;
+
+  ce.declare("CyclicGroup", { signature: "(integer) -> expression<CyclicGroup>" });
+  ce.declare("DihedralGroup", { signature: "(integer) -> expression<DihedralGroup>" });
+  ce.declare("GroupDirectProduct", { signature: `(${groupLike}, ${groupLike}) -> expression<GroupDirectProduct>` });
+  // Return type stays `value`, not `expression<GroupAlgebra>`: @enumeratio/algebra's
+  // shared `Basis`/`AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …`
+  // for ANY registered algebra's carrier, and `expression<Head>` does not subtype `value`.
+  ce.declare("GroupAlgebra", { signature: `(${groupLike}) -> value` });
   ce.declare("GroupBasis", { signature: "(string) -> number" });
 
   const basisExpression = (g: Group, i: number): BoxedExpression =>
@@ -235,7 +244,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     });
   };
 
-  aboutGroup("GroupOrder", "(value) -> integer", (g) => ce.number(order(g)));
+  aboutGroup("GroupOrder", `(${anyGroupLike}) -> integer`, (g) => ce.number(order(g)));
   // GroupOrder(SymmetricGroup(n)) -> n!. SymmetricGroup is @enumeratio/collections' own
   // lazy indexed family (n! one-line words) rather than a Group this package builds a
   // Cayley table for -- n! elements would make that table, not the answer, the expensive
@@ -268,8 +277,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     1,
   );
 
-  aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) => ce.symbol(isAbelian(g) ? "True" : "False"));
-  aboutGroup("GroupElements", "(value) -> list", (g) =>
+  aboutGroup("GroupIsAbelian", `(${groupLike}) -> boolean`, (g) => ce.symbol(isAbelian(g) ? "True" : "False"));
+  aboutGroup("GroupElements", `(${groupLike}) -> list<expression<GroupBasis>>`, (g) =>
     ce.function(
       "List",
       g.elements.map((_, i) => basisExpression(g, i)),
@@ -280,7 +289,11 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   // Cayley-table Group's string labels. A second, list argument selects elements by
   // POSITION in the (sorted) closure -- Part semantics, negative counts from the end --
   // rather than picking points of the domain, matching Wolfram's own GroupElements(g, list).
-  widenSignature(ce, "GroupElements", "(value, value?) -> list");
+  widenSignature(
+    ce,
+    "GroupElements",
+    `(${groupLike} | expression<PermutationGroup> | expression<AlternatingGroup>, list<integer>?) -> list<expression>`,
+  );
   wrapOperator(
     ce,
     ["GroupElements", ["PermutationGroup", 1]],
@@ -308,7 +321,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     },
     { min: 1, max: 2 },
   );
-  aboutGroup("ConjugacyClasses", "(value) -> list", (g) =>
+  aboutGroup("ConjugacyClasses", `(${groupLike}) -> list<list<expression<GroupBasis>>>`, (g) =>
     ce.function(
       "List",
       conjugacyClasses(g).map((members) =>
@@ -320,11 +333,11 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     ),
   );
   // The dimension of the centre — and the number of irreducible characters of G.
-  aboutGroup("GroupCentreDimension", "(value) -> integer", (g) => ce.number(conjugacyClasses(g).length));
+  aboutGroup("GroupCentreDimension", `(${groupLike}) -> integer`, (g) => ce.number(conjugacyClasses(g).length));
 
   /** The k-th class sum: a basis element of the centre of k[G]. */
   ce.declare("ClassSum", {
-    signature: "(value, integer) -> number",
+    signature: `(${groupLike}, integer) -> expression`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       const k = integerAt(ops[1]);
@@ -337,7 +350,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** Whether an element lies in the centre. */
   ce.declare("IsCentral", {
-    signature: "(value, number) -> boolean",
+    signature: `(${groupLike}, expression) -> boolean`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       const element = g === undefined || ops[1] === undefined ? undefined : toElement(g, ops[1]);
@@ -348,7 +361,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** The product of k[G] — it takes the group, since a basis element does not carry it. */
   ce.declare("GroupProduct", {
-    signature: "(value, number, number) -> number",
+    signature: `(${groupLike}, expression, expression) -> expression`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const g = ops[0] === undefined ? undefined : groupOf(ops[0]);
       if (g === undefined) return undefined;
@@ -364,7 +377,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   /** `Cycles(List(cycle, …))` — a carrier for a permutation in disjoint-cycle notation.
    *  Canonicalises by dropping fixed points (singleton cycles), same as Wolfram's own. */
   ce.declare("Cycles", {
-    signature: "(list) -> value",
+    signature: "(list<list<integer>>) -> expression<Cycles>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const cycles = ops[0] === undefined ? undefined : cycleListOf(ops[0]);
       if (cycles === undefined || !cyclesAreValid(cycles)) return undefined;
@@ -404,15 +417,24 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       ),
     ]);
   };
+  /** Either notation `permutationOf` reads, on its own or paired with a wrapping head. */
+  const permutationLike = "expression<Cycles> | list<integer>";
   const existing = ce.lookupDefinition("PermutationCycles");
   if (existing === undefined || !("operator" in existing)) {
     ce.declare("PermutationCycles", {
-      signature: "(value, any?) -> value",
+      // The wrapping head (second arg) is a bare name like `head`, but also legally the
+      // name of an existing function like `Identity` — which boxes with a FUNCTION type,
+      // not `symbol`, so the parameter can't be narrower than `any`.
+      signature: `(${permutationLike}, any?) -> any`,
       evaluate: permutationCycles,
     });
   } else {
     // @enumeratio/domains' carrier constructor got the name first; a second declare throws.
-    widenSignature(ce, "PermutationCycles", `(${String(existing.operator.signature)}) & ((value, any?) -> value)`);
+    widenSignature(
+      ce,
+      "PermutationCycles",
+      `(${String(existing.operator.signature)}) & ((${permutationLike}, any?) -> any)`,
+    );
     wrapOperator(
       ce,
       ["PermutationCycles"],
@@ -423,7 +445,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** `InversePermutation(perm)`, in either notation. */
   ce.declare("InversePermutation", {
-    signature: "(value) -> value",
+    signature: `(${permutationLike}) -> ${permutationLike}`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const input = ops[0];
       if (input === undefined) return undefined;
@@ -451,7 +473,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  in either notation. `Permute(list, group)` (a `PermutationGroup`) instead returns
    *  the list permuted by EVERY element of the group. */
   ce.declare("Permute", {
-    signature: "(list, value) -> value",
+    signature: `(list<any>, ${permutationLike} | expression<PermutationGroup>) -> list<any> | list<list<any>>`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const listExpr = ops[0];
       const permExpr = ops[1];
@@ -478,7 +500,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  pads that list to length `n` with fixed points (an `n` short of the cycles' own
    *  support leaves the call unevaluated — there is nowhere for the extra points to go). */
   ce.declare("PermutationList", {
-    signature: "(value, integer?) -> list",
+    signature: "(expression<Cycles>, integer?) -> list<integer>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const input = ops[0];
       if (input === undefined || input.operator !== "Cycles") return undefined;
@@ -503,7 +525,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
    *  names. A point past `perm`'s own support is a fixed point of `perm` and passes
    *  through unchanged. */
   ce.declare("PermutationReplace", {
-    signature: "(value, value) -> value",
+    signature: `(integer | list<integer> | expression<Cycles>, ${permutationLike}) -> integer | list<integer> | expression<Cycles>`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const expr = ops[0];
       const permExpr = ops[1];
@@ -550,11 +572,11 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   // PermutationGroup(List(Cycles(...), …)) and PermutationGroup(List(...), n) are pure
   // carriers, read by `permutationGroupOf` above -- same shape as CyclicGroup/DihedralGroup,
   // which stay symbolic rather than evaluating to anything.
-  ce.declare("PermutationGroup", { signature: "(list, integer?) -> value" });
+  ce.declare("PermutationGroup", { signature: "(list<expression<Cycles>>, integer?) -> expression<PermutationGroup>" });
 
   /** `GroupGenerators(PermutationGroup(gens))` -> the given generators, in cycle notation. */
   ce.declare("GroupGenerators", {
-    signature: "(value) -> list",
+    signature: "(expression<PermutationGroup> | expression<AlternatingGroup>) -> list<expression<Cycles>>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const group = ops[0] === undefined ? undefined : permutationGroupOf(ops[0]);
       if (group === undefined) return undefined;
@@ -571,7 +593,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   // would make the TABLE, not the answer, the expensive part). Declared down here, after
   // GroupOrder/GroupElements/GroupGenerators all exist, since `wrapOperator` needs the
   // probed head already declared.
-  ce.declare("AlternatingGroup", { signature: "(integer) -> value" });
+  ce.declare("AlternatingGroup", { signature: "(integer) -> expression<AlternatingGroup>" });
   wrapOperator(
     ce,
     ["GroupOrder", ["AlternatingGroup", 1]],

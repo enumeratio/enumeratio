@@ -15,4 +15,4 @@ signatures:
   - call: DihedralGroup(...)
     description: Wolfram's own DihedralGroup, mapped through for the transpiler and the oracle but not yet written up here.
     library: enumeratio-groupalgebra
-    type: (integer) -> value
+    type: (integer) -> expression<DihedralGroup>

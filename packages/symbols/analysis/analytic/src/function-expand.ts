@@ -61,7 +61,7 @@ export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpr
 
 export function declareFunctionExpand(ce: ComputeEngine): void {
   ce.declare("FunctionExpand", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : functionExpand(ce, expr);

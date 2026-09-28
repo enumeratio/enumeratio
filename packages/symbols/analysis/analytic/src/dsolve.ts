@@ -695,7 +695,7 @@ function solveODE(
 
 export function declareDSolveValue(ce: ComputeEngine): void {
   ce.declare("DSolveValue", {
-    signature: "(any, any, symbol) -> any",
+    signature: "(expression, expression, symbol) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [spec, yApplied, xExpr] = ops;

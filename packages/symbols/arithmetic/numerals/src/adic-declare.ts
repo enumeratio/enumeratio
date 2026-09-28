@@ -69,7 +69,7 @@ export function declareAdic(ce: ComputeEngine): void {
   // Evaluating the constructor normalises: reduces the rational, caps to `prec`, and
   // declines a rational the base cannot expand (1/2 in Z_10).
   ce.declare(ADIC, {
-    signature: "(integer, any, integer?) -> value",
+    signature: "(integer, rational | value, integer?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const value = adicOf(ce.function(ADIC, ops));
       return value === undefined ? undefined : toExpression(ce, value);
@@ -141,27 +141,27 @@ export function declareAdic(ce: ComputeEngine): void {
     });
   };
 
-  unary("AdicValuation", "(any) -> number", (x) => {
+  unary("AdicValuation", "(value) -> integer | signed_infinity", (x) => {
     const v = adic.valuationOf(x);
     return Number.isFinite(v) ? ce.number(v) : ce.symbol("PositiveInfinity");
   });
 
   // |x|_b = b^(−v): small when highly divisible by b.
-  unary("AdicNorm", "(any) -> number", (x) => {
+  unary("AdicNorm", "(value) -> rational", (x) => {
     const v = adic.valuationOf(x);
     if (!Number.isFinite(v)) return ce.number(0);
     const scale = adic.pow(x.base, Math.abs(v));
     return ce.number(v >= 0 ? [1n, scale] : scale);
   });
 
-  unary("AdicUnitPart", "(any) -> value", (x) => {
+  unary("AdicUnitPart", "(value) -> value", (x) => {
     const u = adic.unitPart(x);
     return u === undefined ? undefined : toExpression(ce, u);
   });
 
   // Digits from the valuation upward, LEAST significant first: an adic has a right end
   // and no left end, so this is the only order that lists it.
-  unary("AdicDigits", "(any, integer?) -> list<integer>", (x, ops) => {
+  unary("AdicDigits", "(value, integer?) -> list<integer>", (x, ops) => {
     const count = precisionAt(ops[1]) ?? adic.DEFAULT_PRECISION;
     const { digits } = adic.expansion(x, count);
     return ce.function(
@@ -170,11 +170,11 @@ export function declareAdic(ce: ComputeEngine): void {
     );
   });
 
-  unary("AdicExpansion", "(any, integer?) -> string", (x, ops) =>
+  unary("AdicExpansion", "(value, integer?) -> string", (x, ops) =>
     ce.string(adic.render(x, precisionAt(ops[1]) ?? adic.DEFAULT_PRECISION)),
   );
 
-  unary("AdicSqrt", "(any, integer?) -> value", (x, ops) => {
+  unary("AdicSqrt", "(value, integer?) -> value", (x, ops) => {
     const root = adic.sqrt(x, precisionAt(ops[1]) ?? adic.DEFAULT_PRECISION);
     return root === undefined ? undefined : toExpression(ce, root);
   });

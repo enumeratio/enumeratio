@@ -6,7 +6,7 @@ signatures:
   - call: Probability(cond, Distributed(x, dist))
     description: exact for `Equal`/`Less`/`LessEqual` conditions on `x` (a chained range too); otherwise stays unevaluated.
     library: enumeratio-statistics
-    type: (any, any) -> any
+    type: (any, expression<Distributed>) -> real
 details:
   - "`Equal(x, k)`: [[PDF]]$(k)$ for a discrete distribution, $0$ for a continuous one."
   - '`LessEqual(x, k)`: [[CDF]]$(k)$. `Less(x, k)`: $CDF(k) - PDF(k)$ for discrete (subtracting $P(X{=}k)$), just $CDF(k)$ for continuous (where a point has probability $0$). A constant on the LEFT (`k \[LessEqual] x`) is the complement of the opposite strict relation.'

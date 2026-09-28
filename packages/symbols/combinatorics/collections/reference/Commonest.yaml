@@ -6,7 +6,7 @@ signatures:
   - call: Commonest(collection)
     description: every element tied for the highest frequency, in the order first encountered.
     library: enumeratio-collections
-    type: (indexed_collection<any>, integer?) -> list<any>
+    type: (indexed_collection<T>, integer?) -> list<T> where T
   - call: Commonest(collection, n)
     description: the $n$ commonest elements, most frequent first, ties broken by first appearance.
     library: enumeratio-collections

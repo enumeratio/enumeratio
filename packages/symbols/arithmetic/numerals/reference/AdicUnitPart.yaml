@@ -6,7 +6,7 @@ signatures:
   - call: AdicUnitPart(x)
     description: $x / b^{v_b(x)}$, a unit of $\mathbb{Z}_b$
     library: enumeratio-numerals
-    type: (any) -> value
+    type: (value) -> value
 seeAlso:
   - AdicValuation
   - AdicNumeral

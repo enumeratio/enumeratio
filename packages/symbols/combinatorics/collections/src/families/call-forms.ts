@@ -357,10 +357,10 @@ export function declareCallForms(ce: ComputeEngine): void {
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
-  widenSignature(ce, "SetPartitions", "(any, integer?) -> list<list<list<any>>>");
+  widenSignature(ce, "SetPartitions", "(integer | collection<any>, integer?) -> list<list<list<any>>>");
   setCollection(ce, "SetPartitions", polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions));
 
-  widenSignature(ce, "Subsets", "(any, any?) -> list<list<any>>");
+  widenSignature(ce, "Subsets", "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));
 
   // GroupOrder(SymmetricGroup(n)) -> n! is wired from packages/symbols/algebras/groupalgebra/src/declare.ts

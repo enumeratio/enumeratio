@@ -6,7 +6,7 @@ signatures:
   - call: ModularFromSTWord(exponents)
     description: the matrix $T^{e_0}ST^{e_1}S\cdots$
     library: enumeratio-modular
-    type: (list) -> value
+    type: (list<integer>) -> expression<ModularMatrix>
 seeAlso:
   - ModularSTWord
   - ModularMatrix

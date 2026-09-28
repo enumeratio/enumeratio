@@ -6,7 +6,7 @@ signatures:
   - call: IsIndefinite(form)
     description: $D>0$ and not a perfect square
     library: enumeratio-modular
-    type: (value) -> boolean
+    type: (expression<QuadraticForm>) -> boolean
 seeAlso:
   - QuadraticForm
   - FormClassNumber

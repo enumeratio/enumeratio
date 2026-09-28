@@ -6,7 +6,7 @@ signatures:
   - call: TorusKnot(p, q)
     description: $T(p,q)$ as a knot — the closed form, with no braid involved
     library: enumeratio-braid
-    type: (integer, integer) -> value
+    type: (integer, integer) -> expression<TorusKnot>
 seeAlso:
   - TorusBraid
   - AlexanderPolynomial

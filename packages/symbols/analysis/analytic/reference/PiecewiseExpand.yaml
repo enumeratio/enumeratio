@@ -6,7 +6,7 @@ signatures:
   - call: PiecewiseExpand(expr)
     description: rewrite using whatever is already assumed real (e.g. inside an enclosing [[Assuming]]).
     library: "@enumeratio/analytic"
-    type: (value, value?) -> unknown
+    type: (expression, expression?) -> expression
   - call: PiecewiseExpand(expr, assumptions)
     description: assume $assumptions$ (scoped, as in [[Assuming]]) for the rewrite, then forget it.
     library: "@enumeratio/analytic"

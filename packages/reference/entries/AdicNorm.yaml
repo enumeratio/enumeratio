@@ -12,4 +12,4 @@ signatures:
   - call: AdicNorm(...)
     description: Mapped through to rust for the oracle; not yet written up here.
     library: enumeratio-numerals
-    type: (any) -> number
+    type: (value) -> rational

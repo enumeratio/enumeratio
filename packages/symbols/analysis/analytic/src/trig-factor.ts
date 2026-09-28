@@ -194,7 +194,7 @@ export function matchTrigFactor(ce: ComputeEngine, expr: BoxedExpression): Boxed
 
 export function declareTrigFactor(ce: ComputeEngine): void {
   ce.declare("TrigFactor", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr] = ops;
       if (expr === undefined || ops.length !== 1) return undefined;

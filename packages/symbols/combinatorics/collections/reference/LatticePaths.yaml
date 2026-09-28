@@ -6,6 +6,6 @@ signatures:
   - call: LatticePaths(a, b)
     description: the monotone north/east lattice paths in an $a \times b$ grid
     library: enumeratio-collections
-    type: (integer, integer) -> list<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
 seeAlso:
   - PartitionsInBox

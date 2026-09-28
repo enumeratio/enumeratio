@@ -866,7 +866,7 @@ function declareUnary(
   f: (ce: ComputeEngine, rec: Recognized, x: string) => BoxedExpression | undefined,
 ): void {
   ce.declare(name, {
-    signature: "(any, symbol) -> any",
+    signature: "(expression, symbol) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, xExpr] = ops;
@@ -883,7 +883,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   declareUnary(ce, "FunctionDomain", (ce_, rec, x) => domainOf(ce_, rec, x)?.expr);
 
   ce.declare("FunctionRange", {
-    signature: "(any, symbol, symbol) -> any",
+    signature: "(expression, symbol, symbol) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, xExpr, yExpr] = ops;
@@ -915,7 +915,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   });
 
   ce.declare("FunctionSurjective", {
-    signature: "(any, symbol, any?) -> any",
+    signature: "(expression, symbol, symbol?) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, xExpr, codomain] = ops;
@@ -938,7 +938,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   declareUnary(ce, "FunctionPeriod", (ce_, rec) => periodOf(ce_, rec));
 
   ce.declare("FunctionContinuous", {
-    signature: "(any, symbol, any?) -> any",
+    signature: "(expression, symbol, expression?) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, xExpr, domain] = ops;

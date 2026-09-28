@@ -135,11 +135,14 @@ export function declareAlgebras(ce: ComputeEngine): void {
   };
 
   // The constructors themselves stay inert: an algebra is a NAME, and evaluating it to
-  // its own basis would conflate the algebra with the list of its blades.
+  // its own basis would conflate the algebra with the list of its blades. Return type
+  // stays `value`, not `expression<Head>`: @enumeratio/algebra's shared `Basis`/
+  // `AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …` for ANY
+  // registered algebra's carrier, and `expression<Head>` does not subtype `value`.
   for (const head of Object.keys(SINGLE_FAMILY)) {
-    ce.declare(head, { signature: "(integer, integer?) -> value" });
+    ce.declare(head, { signature: "(integer) -> value" });
   }
-  // Clifford takes the third, degenerate count as well: Cl(p, q, r).
+  // Clifford takes p, and the optional q and r (default 0): Cl(p, q, r).
   ce.declare("CliffordAlgebra", { signature: "(integer, integer?, integer?) -> value" });
 
   /** Whether every generator occurring in `expr` belongs to `algebra`. */

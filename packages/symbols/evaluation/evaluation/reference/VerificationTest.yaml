@@ -6,7 +6,7 @@ signatures:
   - call: VerificationTest(input)
     description: Success whenever input evaluates without erroring or aborting.
     library: enumeratio-evaluation
-    type: (any*) time -> any
+    type: (any*) time -> expression<TestResultObject>
   - call: VerificationTest(input, expected)
     description: compares against expected by structural sameness (SameTest's default).
     library: enumeratio-evaluation

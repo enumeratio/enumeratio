@@ -6,7 +6,7 @@ signatures:
   - call: ReduceForm(form)
     description: the reduced form in its cycle
     library: enumeratio-modular
-    type: (value) -> value
+    type: (expression<QuadraticForm>) -> expression<QuadraticForm>
 seeAlso:
   - FormRho
   - IsReducedForm

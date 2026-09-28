@@ -6,6 +6,6 @@ signatures:
   - call: KPermutations(n, k)
     description: the $n!/(n-k)!$ ordered $k$-element selections from $\{1, \dots, n\}$
     library: enumeratio-collections
-    type: (integer, integer) -> list<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
 seeAlso:
   - Arrangements

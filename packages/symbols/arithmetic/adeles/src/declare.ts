@@ -129,7 +129,7 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   ce.declare(PROFINITE, {
     description: SUMMARIES.ProfiniteNumber,
-    signature: "(any, number?) -> value",
+    signature: "(value | list<value>, number?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
@@ -315,7 +315,7 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   ce.declare(ADELE, {
     description: SUMMARIES.Adele,
-    signature: "(any, any?) -> value",
+    signature: "(value, value?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
@@ -335,7 +335,7 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   ce.declare(IDELE, {
     description: SUMMARIES.Idele,
-    signature: "(any, any?, list?) -> value",
+    signature: "(value, value?, list<value>?) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
@@ -382,7 +382,9 @@ export function declareAdeles(ce: ComputeEngine): void {
     },
     1,
   );
-  widenSignature(ce, "Denominator", "(number | value) -> nothing | number | value", isNumber);
+  // Unlike Numerator, a profinite's denominator is always a plain integer level, never a
+  // profinite value itself.
+  widenSignature(ce, "Denominator", "(number | value) -> nothing | number", isNumber);
   wrapOperator(
     ce,
     ["Denominator", "x"],
@@ -470,7 +472,7 @@ function declareProfinitePlot(ce: ComputeEngine): void {
   // congruent to it mod gcd(M, k!). The picture it evaluates to is an ArrayPlot.
   ce.declare("ProfinitePlot", {
     description: SUMMARIES.ProfinitePlot,
-    signature: "(any, symbol, integer?) -> any",
+    signature: "(expression, symbol, integer?) -> expression<ArrayPlot>",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, x, levelExpr] = ops;

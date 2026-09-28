@@ -6,7 +6,7 @@ signatures:
   - call: TwistKnot(n)
     description: the twist knot with $n$ half-twists past its clasp
     library: enumeratio-braid
-    type: (integer) -> value
+    type: (integer) -> expression<TwistKnot>
 seeAlso:
   - FigureEightKnot
   - PretzelKnot

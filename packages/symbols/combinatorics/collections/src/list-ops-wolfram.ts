@@ -251,7 +251,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // Riffle(list, x, n?): interleave a scalar separator or a second list between list's
   // elements. See `riffleZip` and `rifflePeriodic` for the two shapes' semantics.
   ce.declare("Riffle", {
-    signature: "(collection<any>, any, integer?) -> collection",
+    signature: "(list<any>, any, integer?) -> collection",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const list = ops[0];
       const x = ops[1];
@@ -272,7 +272,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // Gather(list, test?): group identical (or `test`-equivalent) elements, first-appearance
   // order, elements within a group in their original relative order.
   ce.declare("Gather", {
-    signature: "(indexed_collection<any>, ((any, any) any -> boolean)?) -> list<list<any>>",
+    signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const test = ops[1];
@@ -287,7 +287,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
 
   // GatherBy(list, f): group by the value of f(element), same ordering rules as Gather.
   ce.declare("GatherBy", {
-    signature: "(indexed_collection<any>, (any) any -> any) -> list<list<any>>",
+    signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const f = ops[1];
@@ -305,7 +305,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
 
   // Split(list, test?): runs of adjacent elements the test (default equality) agrees on.
   ce.declare("Split", {
-    signature: "(indexed_collection<any>, ((any, any) any -> boolean)?) -> list<list<any>>",
+    signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const test = ops[1];
@@ -320,7 +320,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
 
   // SplitBy(list, f): runs on which f(element) is constant.
   ce.declare("SplitBy", {
-    signature: "(indexed_collection<any>, (any) any -> any) -> list<list<any>>",
+    signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const f = ops[1];
@@ -343,7 +343,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
 
   // SortBy(collection, f): sorted by the value of f on each element, stable on ties.
   ce.declare("SortBy", {
-    signature: "(collection<any>, (any) any -> any) -> collection",
+    signature: "(collection<T>, (T) any -> any) -> collection<T> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       const f = ops[1];
@@ -361,7 +361,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
     ["PadRight", "right"],
   ] as const) {
     ce.declare(name, {
-      signature: "(collection<any>, integer?, any?) -> collection",
+      signature: "(list<any>, integer?, any?) -> collection",
       evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
         const list = ops[0];
         if (list === undefined || list.operator !== "List") return undefined;
@@ -377,7 +377,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // NoneTrue(xs, predicate): no element satisfies predicate — the negation of Any, which
   // compute-engine already declares (as does All, its NoneTrue-adjacent AllTrue).
   ce.declare("NoneTrue", {
-    signature: "(indexed_collection<any>, (any) any -> boolean) -> boolean",
+    signature: "(indexed_collection<T>, (T) any -> boolean) -> boolean where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       if (ops[0] === undefined || ops[1] === undefined) return undefined;
       const any = ce.box(["Any", ops[0], ops[1]]).evaluate();

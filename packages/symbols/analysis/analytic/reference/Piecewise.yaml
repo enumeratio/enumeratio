@@ -6,7 +6,7 @@ signatures:
   - call: Piecewise(pairs)
     description: pairs is a `List` of two-element `List`s `{value, condition}`; the default is 0.
     library: "@enumeratio/analytic"
-    type: (value, value?) -> unknown
+    type: (list, expression?) -> expression
   - call: Piecewise(pairs, default)
     description: same, with an explicit fallback value.
     library: "@enumeratio/analytic"

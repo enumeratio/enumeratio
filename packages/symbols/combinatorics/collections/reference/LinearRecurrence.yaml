@@ -6,7 +6,7 @@ signatures:
   - call: LinearRecurrence(kernel, init, n)
     description: the first $n$ terms of $a_i = kernel_1 \, a_{i-1} + \dots + kernel_k \, a_{i-k}$, seeded by $init$.
     library: enumeratio-collections
-    type: "(kernel: list<any>, init: list<any>, n: any) -> list<any>"
+    type: "(kernel: list<any>, init: list<any>, n: integer | list<integer>) -> list<any>"
   - call: LinearRecurrence(kernel, init, {m})
     description: just the $m$-th term, as a one-element list.
   - call: LinearRecurrence(kernel, init, {m1, m2})

@@ -6,7 +6,7 @@ signatures:
   - call: GraphDiameter(g)
     description: max over v of VertexEccentricity(g, v); PositiveInfinity if g is disconnected.
     library: enumeratio-collections
-    type: (value) -> value
+    type: (value) -> real | signed_infinity
 seeAlso:
   - GraphRadius
   - GraphPeriphery

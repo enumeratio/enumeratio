@@ -162,7 +162,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   // engine#339/#347) landed natively in compute-engine 0.139 -- the for-compute-engine
   // patch that used to apply it here was retired. Only the genuinely Gaussian case (a or m
   // off the real line) is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
-  widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
+  widenSignature(ce, "ModularInverse", "(number, number) -> number", mayBeInteger);
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],

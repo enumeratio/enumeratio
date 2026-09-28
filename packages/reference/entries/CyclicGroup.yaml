@@ -14,4 +14,4 @@ signatures:
   - call: CyclicGroup(...)
     description: Wolfram's own CyclicGroup, mapped through for the transpiler and the oracle but not yet written up here.
     library: enumeratio-groupalgebra
-    type: (integer) -> value
+    type: (integer) -> expression<CyclicGroup>

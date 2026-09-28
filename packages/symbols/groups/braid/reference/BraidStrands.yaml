@@ -6,6 +6,6 @@ signatures:
   - call: BraidStrands(braid)
     description: the strand count $n$
     library: enumeratio-braid
-    type: (value) -> integer
+    type: (expression<Braid> | string) -> integer
 seeAlso:
   - BraidCrossings

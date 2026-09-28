@@ -6,7 +6,7 @@ signatures:
   - call: GroupGenerators(group)
     description: the generators passed to `PermutationGroup`, unchanged; or `AlternatingGroup(n)`'s canonical pair
     library: enumeratio-groupalgebra
-    type: (value) -> list
+    type: (expression<AlternatingGroup> | expression<PermutationGroup>) -> list<expression<Cycles>>
 seeAlso:
   - PermutationGroup
   - AlternatingGroup

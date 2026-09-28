@@ -6,7 +6,7 @@ signatures:
   - call: PadRight(list)
     description: a ragged array (a list of lists) padded with 0s to a full matrix.
     library: enumeratio-collections
-    type: (collection<any>, integer?, any?) -> collection
+    type: (list<any>, integer?, any?) -> collection
   - call: PadRight(list, n, x?)
     description: padded on the right with $x$ (default 0) to length $n$; a shorter $n$ drops elements from the right instead.
     library: enumeratio-collections

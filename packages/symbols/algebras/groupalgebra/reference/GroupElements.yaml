@@ -6,7 +6,7 @@ signatures:
   - call: GroupElements(group)
     description: all of `group`'s elements
     library: enumeratio-groupalgebra
-    type: (value, value?) -> list
+    type: (expression<AlternatingGroup> | expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct> | expression<PermutationGroup>, list<integer>?) -> list<expression>
   - call: GroupElements(group, positions)
     description: a `PermutationGroup`'s or `AlternatingGroup`'s elements at `positions`, in its own order
     library: enumeratio-groupalgebra

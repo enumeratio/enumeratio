@@ -404,9 +404,9 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // rather than this gate silently swallowing the call first.
   const acceptsIntegerOrProfinite = (op: BoxedExpression): boolean =>
     integerAt(op) !== undefined || op.operator === "ProfiniteNumber";
-  widenSignature(ce, "Fibonacci", "(any, any?) -> any", acceptsIntegerOrProfinite);
-  widenSignature(ce, "LucasL", "(any, any?) -> any", acceptsIntegerOrProfinite);
-  widenSignature(ce, "BellNumber", "(any, any?) -> any", isInteger);
+  widenSignature(ce, "Fibonacci", "(number | value, any?) -> any", acceptsIntegerOrProfinite);
+  widenSignature(ce, "LucasL", "(number | value, any?) -> any", acceptsIntegerOrProfinite);
+  widenSignature(ce, "BellNumber", "(integer, any?) -> any", isInteger);
 
   // Fibonacci and Lucas at a real (non-integer) index, via Binet's formula: with
   // φ = (1+√5)/2, F_ν = (φ^ν - cos(πν) φ^{-ν}) / √5 and L_ν = φ^ν + cos(πν) φ^{-ν}.

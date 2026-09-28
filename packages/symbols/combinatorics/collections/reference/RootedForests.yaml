@@ -6,4 +6,4 @@ signatures:
   - call: RootedForests(n)
     description: the rooted forests on $\{1, \dots, n\}$, as parent arrays
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>

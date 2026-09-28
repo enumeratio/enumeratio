@@ -6,7 +6,7 @@ signatures:
   - call: Chain(n)
     description: the chain $1 < 2 < \cdots < n$
     library: enumeratio-incidence
-    type: (integer) -> value
+    type: (integer) -> expression<Chain>
 seeAlso:
   - IncidenceAlgebra
   - PosetElements

@@ -6,7 +6,7 @@ signatures:
   - call: AdicDigits(x, count?)
     description: the first `count` digits (default 20), least significant first
     library: enumeratio-numerals
-    type: (any, integer?) -> list<integer>
+    type: (value, integer?) -> list<integer>
 seeAlso:
   - AdicExpansion
   - AdicNumeral

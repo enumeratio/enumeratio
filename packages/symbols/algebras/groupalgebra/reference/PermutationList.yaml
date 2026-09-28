@@ -6,7 +6,7 @@ signatures:
   - call: PermutationList(perm)
     description: the one-line word, as long as `perm`'s own support
     library: enumeratio-groupalgebra
-    type: (value, integer?) -> list
+    type: (expression<Cycles>, integer?) -> list<integer>
   - call: PermutationList(perm, n)
     description: the one-line word, padded with fixed points to length $n$
     library: enumeratio-groupalgebra

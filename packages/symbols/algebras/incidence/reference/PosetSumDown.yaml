@@ -6,7 +6,7 @@ signatures:
   - call: PosetSumDown(poset, values)
     description: $g(y) = \sum_{x \le y} f(x)$
     library: enumeratio-incidence
-    type: (value, list<number>) -> list<number>
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, list<number>) -> list<number>
 seeAlso:
   - MoebiusInvert
   - MoebiusFunction

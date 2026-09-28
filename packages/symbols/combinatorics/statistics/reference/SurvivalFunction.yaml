@@ -6,7 +6,7 @@ signatures:
   - call: SurvivalFunction(dist, x)
     description: generic over every distribution this package's [[CDF]] answers, old or new — it goes back through [[CDF]] rather than switching on the distribution's head.
     library: enumeratio-statistics
-    type: (any, any) -> any
+    type: (distribution, list<real> | real | signed_infinity) -> real
 details:
   - Exact wherever [[CDF]] is exact for `dist`; unevaluated otherwise.
 seeAlso:

@@ -6,7 +6,7 @@ signatures:
   - call: SortBy(collection, f)
     description: sorted by $f(element)$, ascending, stable on ties.
     library: enumeratio-collections
-    type: (collection<any>, (any) any -> any) -> collection
+    type: (collection<T>, (T) any -> any) -> collection<T> where T
 seeAlso:
   - Sort
   - GatherBy

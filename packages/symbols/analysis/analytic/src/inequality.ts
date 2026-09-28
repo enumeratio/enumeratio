@@ -17,7 +17,7 @@ const RELATIONS = new Set(["Equal", "NotEqual", "Less", "LessEqual", "Greater", 
 
 export function declareInequality(ce: ComputeEngine): void {
   ce.declare("Inequality", {
-    signature: "(any, any, any, any*) -> boolean",
+    signature: "(expression, expression, expression, expression*) -> boolean",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       // Value, relation, value, relation, ..., value: an odd count, relations at every

@@ -8,7 +8,7 @@ signatures:
   - call: Floor(x, step)
     description: the greatest multiple of `step` at or below x, $\mathrm{step}\cdot\lfloor x/\mathrm{step}\rfloor$.
     library: enumeratio-collections
-    type: (any, any?) -> any
+    type: (number, number?) -> number
     overrides: enumeratio-analytic
   - call: Floor(z)
     description: for a complex $z$, the real and imaginary parts floored separately.

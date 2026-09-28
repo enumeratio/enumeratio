@@ -506,7 +506,7 @@ function findSequenceFunctionCore(ce: ComputeEngine, ops: readonly BoxedExpressi
 function declareFindSequenceFunction(ce: ComputeEngine): void {
   ce.declare("FindSequenceFunction", {
     description: SUMMARIES.FindSequenceFunction,
-    signature: "(list, symbol) -> any",
+    signature: "(list<any>, symbol) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => findSequenceFunctionCore(ce, ops),
   });

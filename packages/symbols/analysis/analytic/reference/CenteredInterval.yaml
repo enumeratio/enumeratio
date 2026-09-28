@@ -6,7 +6,7 @@ signatures:
   - call: CenteredInterval(c, r)
     description: the ball of radius r centered at c.
     library: "@enumeratio/analytic"
-    type: (value, number?) -> number
+    type: (number | set<real>, real?) -> number
   - call: CenteredInterval(interval)
     description: an [[Interval]] converted to center-radius form.
     library: "@enumeratio/analytic"

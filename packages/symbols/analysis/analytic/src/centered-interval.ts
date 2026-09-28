@@ -73,7 +73,7 @@ export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<st
  */
 export function declareCenteredInterval(ce: ComputeEngine): void {
   ce.declare("CenteredInterval", {
-    signature: "(value, number?) -> number",
+    signature: "(number | set<real>, real?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const single = ops[0];
       if (ops.length === 1 && single !== undefined && single.operator === "Interval") {

@@ -6,7 +6,7 @@ signatures:
   - call: BraidComponents(braid)
     description: the cycle count of the closure's permutation
     library: enumeratio-braid
-    type: (value) -> integer
+    type: (expression<Braid> | string) -> integer
 seeAlso:
   - BraidPermutation
   - BraidIsKnot

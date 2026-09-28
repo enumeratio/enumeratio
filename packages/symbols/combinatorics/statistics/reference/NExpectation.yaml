@@ -6,7 +6,7 @@ signatures:
   - call: NExpectation(f, Distributed(x, dist))
     description: tries the exact Expectation first; otherwise sums (discrete) or integrates (continuous) numerically. Always returns a machine float.
     library: enumeratio-statistics
-    type: (any, any) -> number
+    type: (any, expression<Distributed>) -> number
 details:
   - "Tries `Expectation(f, Distributed(x, dist))` first — a real (exact) answer whenever it resolves, just converted to a float. Only falls back to a numeric approximation past `Expectation`'s own reach: `f` past a linear/quadratic polynomial in `x`, or a distribution `Expectation` has no closed form for at all."
   - "Discrete, finite support (e.g. [[BinomialDistribution]]): an exact finite sum, converted to a float."

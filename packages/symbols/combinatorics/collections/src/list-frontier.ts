@@ -305,7 +305,7 @@ const declareNumericPredicates = (ce: ComputeEngine): void => {
   // Precision(expr): the number of significant decimal digits tracked — Infinity for an
   // exact number (Wolfram's own convention: exact values carry infinite precision).
   ce.declare("Precision", {
-    signature: "(any) -> any",
+    signature: "(any) -> integer<1..> | signed_infinity",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const x = ops[0];
       if (x === undefined || x.isNumber !== true) return undefined;

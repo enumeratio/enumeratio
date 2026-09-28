@@ -44,7 +44,7 @@ function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[]
 
 function declareAssuming(ce: ComputeEngine): void {
   ce.declare("Assuming", {
-    signature: "(value, value) -> unknown",
+    signature: "(expression, expression) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [cond, body] = ops;
@@ -56,7 +56,7 @@ function declareAssuming(ce: ComputeEngine): void {
 
 function declareRefine(ce: ComputeEngine): void {
   ce.declare("Refine", {
-    signature: "(value, value?) -> unknown",
+    signature: "(expression, expression?) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, cond] = ops;

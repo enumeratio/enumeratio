@@ -189,7 +189,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   });
 
   ce.declare("LinearRecurrence", {
-    signature: "(kernel: list<any>, init: list<any>, n: any) -> list<any>",
+    signature: "(kernel: list<any>, init: list<any>, n: integer | list<integer>) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const kernel = operandsOf(ops[0]);
       const init = operandsOf(ops[1]);
@@ -294,7 +294,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   // ...], ...]`), and every example here keys on a plain number. First/Last/Length/Join/Sort
   // are extended for it below, each falling through to its list handling otherwise.
   ce.declare("Association", {
-    signature: "(rules: any*) -> any",
+    signature: "(rules: expression<Rule>*) -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression => ce.box(["Association", ...ops]),
   });
 
@@ -388,7 +388,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   );
 
   ce.declare("GeometricMean", {
-    signature: "(collection<any>) -> any",
+    signature: "(collection<any>) -> number",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       if (items.length === 0) return undefined;
@@ -398,7 +398,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   });
 
   ce.declare("HarmonicMean", {
-    signature: "(collection<any>) -> any",
+    signature: "(collection<any>) -> number",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const items = operandsOf(ops[0]);
       if (items.length === 0) return undefined;

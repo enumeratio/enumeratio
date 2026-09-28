@@ -6,7 +6,7 @@ signatures:
   - call: MoebiusInvert(poset, values)
     description: $f(y) = \sum_{x \le y} \mu(x,y)\,g(x)$
     library: enumeratio-incidence
-    type: (value, list<number>) -> list<number>
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, list<number>) -> list<number>
   - call: PosetSumDown(poset, values)
     description: the map it undoes, $g(y) = \sum_{x \le y} f(x)$
     library: enumeratio-incidence

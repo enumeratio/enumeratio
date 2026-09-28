@@ -6,7 +6,7 @@ signatures:
   - call: HistogramDistribution(data, {dx})
     description: bins of width dx, starting at floor(min(data)/dx)*dx.
     library: enumeratio-statistics
-    type: (list<any>, list<any>) -> distribution
+    type: (list<real>, list<real>) -> distribution
   - call: HistogramDistribution(data, {x0, x1, dx})
     description: bins of width dx over the explicit range [x0, x1].
     library: enumeratio-statistics

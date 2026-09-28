@@ -6,7 +6,7 @@ signatures:
   - call: KSubsets(n, k)
     description: the $\binom{n}{k}$ subsets of size $k$
     library: enumeratio-collections
-    type: (integer, integer) -> list<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
 details:
   - Count is the binomial coefficient $\binom{n}{k}$
   - 'Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\{2,3\}$ precedes $\{1,4\}$'

@@ -6,7 +6,7 @@ signatures:
   - call: TorusBraid(p, q)
     description: $(\sigma_1\cdots\sigma_{p-1})^q$, whose closure is $T(p,q)$
     library: enumeratio-braid
-    type: (integer, integer) -> value
+    type: (integer, integer) -> expression<Braid>
 seeAlso:
   - TorusKnot
   - Braid

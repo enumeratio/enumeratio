@@ -6,7 +6,7 @@ signatures:
   - call: Refine(expr, cond)
     description: simplify $expr$ under $cond$ (a single condition, a `List`, or an `And`), then forget it.
     library: "@enumeratio/analytic"
-    type: (value, value?) -> unknown
+    type: (expression, expression?) -> expression
   - call: Refine(expr)
     description: simplify $expr$ under whatever is already assumed (e.g. inside an enclosing [[Assuming]]).
     library: "@enumeratio/analytic"
