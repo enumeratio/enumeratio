@@ -3,6 +3,7 @@
 // library/special-functions.ts, which calls hurwitzZeta/zetaGeneralized below.
 import { bernoulliNumber } from "./bernoulli-rational.ts";
 import { add, cexp, clog, cosPi, cpow, cx, type Cx, mul, scale, sinPi } from "./complex-arithmetic.ts";
+import { GAUSS_LEGENDRE_20 } from "./gauss-legendre.ts";
 import { logGamma } from "./log-gamma.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
@@ -138,32 +139,136 @@ const TAYLOR_RADIUS = 0.75;
  */
 const EM_BEYOND = 4;
 
+/** Below this many times ζ, the Taylor series' largest term is as good as Hermite's integral gets. */
+const TAYLOR_TRUSTED = 30;
+
 /**
  * Numeric ζ(s, a) for complex s, a. Terms where (n+a)=0 (a a nonpositive integer) are
  * dropped, matching Wolfram's `HurwitzZeta`, which omits the singular term rather than
  * diverging there. Returns a non-finite part at the s=1 pole.
  *
- * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 with a near the real axis and not
- * far past where its direct terms end: there those terms grow like N^(−Re s) and cancel down
- * to an O(1) result. Instead a is shifted by an integer to b = 1 + h, |Re h| ≤ ½, and
- * ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) sums Riemann zetas, each from the functional
- * equation, with no cancellation to speak of: the terms fall off like (2πh)ᵏ/k! against
- * ζ(s)'s own scale, so at most e^π of it is lost. An integer a is h = 0, ζ(s) alone.
+ * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 not far past where its direct terms
+ * end: there those terms grow like N^(−Re s) and cancel down to an O(1) result. Instead, near
+ * the real axis, the Taylor series in a about 1 (`hurwitzTaylor`); off it, or wherever that
+ * series cancels, Hermite's integral (`hurwitzHermite`), whichever measures the smaller loss.
  */
 export function hurwitzZeta(s: Cx, a: Cx): Cx {
-  if (s.re >= 0 || a.re >= EM_BEYOND * emEdge(s)) return hurwitzEM(s, a);
+  if (s.re >= 0 || a.re >= EM_BEYOND * emEdge(s) || !Number.isFinite(a.re) || !Number.isFinite(a.im)) {
+    return hurwitzEM(s, a);
+  }
+  const taylor = hurwitzTaylor(s, a);
+  if (taylor && taylor.lost <= TAYLOR_TRUSTED) return taylor.value;
+  const hermite = hurwitzHermite(s, a);
+  return taylor && !(hermite.lost < taylor.lost) ? taylor.value : hermite.value;
+}
+
+/**
+ * a shifted by an integer to b = 1 + h, |Re h| ≤ ½, and ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k)
+ * summed over Riemann zetas, each from the functional equation. For real s its terms fall off
+ * like (2πh)ᵏ/k! against ζ(s)'s own scale, so at most e^π is lost inside `TAYLOR_RADIUS`, but
+ * that e^(2π|h|) grows fast off the axis, and faster still for complex s. An integer a is
+ * h = 0, ζ(s) alone. Undefined past the radius; `lost` is the largest term over the result.
+ */
+function hurwitzTaylor(s: Cx, a: Cx): { value: Cx; lost: number } | undefined {
   const m = Math.floor(a.re - 0.5); // a − m has real part in [½, 3/2)
   const h = cx(a.re - m - 1, a.im);
-  if (!(Math.hypot(h.re, h.im) <= TAYLOR_RADIUS)) return hurwitzEM(s, a); // NaN included
+  if (!(Math.hypot(h.re, h.im) <= TAYLOR_RADIUS)) return undefined;
   // ζ(s, a) = ζ(s, a+1) + a^(−s): walk a to 1 + h, carrying the terms passed over.
-  let z = zetaNearOne(s, h);
+  let { value: z, largest } = zetaNearOne(s, h);
   for (let j = 0; j < Math.abs(m); j++) {
     const br = m > 0 ? h.re + 1 + j : a.re + j;
     if (br === 0 && a.im === 0) continue; // the dropped (n+a)=0 term
     cpowInto(br, a.im, -s.re, -s.im);
+    largest = Math.max(largest, Math.hypot(_pr, _pi));
     z = m > 0 ? cx(z.re - _pr, z.im - _pi) : cx(z.re + _pr, z.im + _pi);
   }
-  return z;
+  return { value: z, lost: largest / Math.hypot(z.re, z.im) };
+}
+
+/** Hermite's integral shifts a no nearer the axis than this; past it the shift's a^(−s) cancels. */
+const HERMITE_MIN_RE = 0.125;
+
+/** Past this t, e^(−2πt) is below any term a double could hold beside ζ. */
+const HERMITE_T_MAX = 60;
+
+/**
+ * Hermite's integral, for any s ≠ 1 once Re(a) > 0:
+ *
+ *   ζ(s, a) = ½a^(−s) + a^(1−s)/(s−1) + i ∫₀^∞ ((a+it)^(−s) − (a−it)^(−s)) / (e^(2πt) − 1) dt.
+ *
+ * The integrand's branch points ±ia sit Re(a) off the path, so it is summed in Gauss–Legendre
+ * panels no wider than that. An a nearer the axis than `HERMITE_MIN_RE` is first shifted by
+ * ζ(s, a) = a^(−s) + ζ(s, a+1). Left of Re(s) = 0 with a off the axis nothing here is much
+ * bigger than ζ itself (a digit or so), where the direct terms of Euler–Maclaurin or the Taylor
+ * series in a lose up to seven or more. `lost` is the largest part over the result.
+ */
+function hurwitzHermite(s: Cx, a: Cx): { value: Cx; lost: number } {
+  let headR = 0;
+  let headI = 0;
+  let largest = 0; // the biggest thing summed, for `lost`
+  let bRe = a.re;
+  const bIm = a.im;
+  for (; bRe < HERMITE_MIN_RE; bRe++) {
+    if (bRe === 0 && bIm === 0) continue; // the dropped (n+a)=0 term
+    cpowInto(bRe, bIm, -s.re, -s.im);
+    headR += _pr;
+    headI += _pi;
+    largest = Math.max(largest, Math.hypot(_pr, _pi));
+  }
+
+  cpowInto(bRe, bIm, -s.re, -s.im); // b^(−s)
+  let sumR = headR + 0.5 * _pr;
+  let sumI = headI + 0.5 * _pi;
+  // b^(1−s)/(s−1) = b·b^(−s)/(s−1)
+  const pr = bRe * _pr - bIm * _pi;
+  const pi = bRe * _pi + bIm * _pr;
+  const dr = s.re - 1;
+  const dd = dr * dr + s.im * s.im;
+  const qr = (pr * dr + pi * s.im) / dd;
+  const qi = (pi * dr - pr * s.im) / dd;
+  sumR += qr;
+  sumI += qi;
+  largest = Math.max(largest, 0.5 * Math.hypot(_pr, _pi), Math.hypot(qr, qi));
+
+  // The integrand peaks near t = −Re(s)/2π and then falls like e^(−2πt); stop once two
+  // panels past the peak add nothing a double can see.
+  const { x, w } = GAUSS_LEGENDRE_20;
+  const peak = Math.max(0, -s.re) / (2 * Math.PI);
+  const width = Math.min(1, bRe);
+  let intR = 0;
+  let intI = 0;
+  let intAbs = 0; // ∫ |integrand|
+  let panelLargest = 0;
+  let small = 0;
+  for (let p = 0; p * width < HERMITE_T_MAX; p++) {
+    let panR = 0;
+    let panI = 0;
+    let panAbs = 0;
+    for (let i = 0; i < x.length; i++) {
+      const t = width * (p + 0.5 + 0.5 * x[i]);
+      cpowInto(bRe, bIm + t, -s.re, -s.im);
+      const uR = _pr;
+      const uI = _pi;
+      cpowInto(bRe, bIm - t, -s.re, -s.im);
+      const k = (0.5 * width * w[i]) / Math.expm1(2 * Math.PI * t);
+      // i·(u − v)
+      const vR = k * (uR - _pr);
+      const vI = k * (uI - _pi);
+      panR -= vI;
+      panI += vR;
+      panAbs += Math.hypot(vR, vI);
+    }
+    intR += panR;
+    intI += panI;
+    intAbs += panAbs;
+    const size = panAbs;
+    panelLargest = Math.max(panelLargest, size);
+    if ((p + 1) * width > peak && size <= 1e-17 * panelLargest) {
+      if (++small === 2) break;
+    } else small = 0;
+  }
+  const value = cx(sumR + intR, sumI + intI);
+  return { value, lost: Math.max(largest, intAbs) / Math.hypot(value.re, value.im) };
 }
 
 /** Where `hurwitzEM` starts its asymptotic tail; a at or past it sums no cancelling terms. */
@@ -171,8 +276,8 @@ function emEdge(s: Cx): number {
   return Math.max(12, Math.ceil(Math.abs(s.re) + Math.abs(s.im)) + 6);
 }
 
-/** ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) for |h| < 1 — see `hurwitzZeta`. */
-function zetaNearOne(s: Cx, h: Cx): Cx {
+/** ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k) for |h| < 1, with its largest term — see `hurwitzTaylor`. */
+function zetaNearOne(s: Cx, h: Cx): { value: Cx; largest: number } {
   let sum = riemannZeta(s);
   let c = cx(1, 0); // C(−s, k)
   let hk = cx(1, 0); // hᵏ
@@ -187,7 +292,7 @@ function zetaNearOne(s: Cx, h: Cx): Cx {
       // s = 1 − k, an integer: C(−s, k) → 0 as ζ(s + k) → ∞, and their product → −C(−s, k−1)/k.
       // Every later C(−s, k) is 0, so the series ends here (a Bernoulli polynomial).
       const t = scale(mul(c, hk), -1 / k);
-      return add(sum, t);
+      return { value: add(sum, t), largest: Math.max(largest, Math.hypot(t.re, t.im)) };
     }
     c = scale(mul(c, f), 1 / k);
     const t = mul(mul(c, hk), riemannZeta(cx(s.re + k, s.im)));
@@ -199,7 +304,7 @@ function zetaNearOne(s: Cx, h: Cx): Cx {
       if (++small === 2) break;
     } else small = 0;
   }
-  return sum;
+  return { value: sum, largest };
 }
 
 /**

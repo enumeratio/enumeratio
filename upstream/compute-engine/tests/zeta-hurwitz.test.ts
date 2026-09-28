@@ -163,6 +163,50 @@ test("the double ζ(s, a) kernel matches mpmath, complex s and left of the strip
   expect(offBy(zetaGoldens, (g) => hurwitzZeta(cx(...g.s), cx(g.a)))).toEqual([]);
 });
 
+// mpmath.zeta(s, a) at dps 30. Off the axis the Taylor series in a and Euler–Maclaurin's direct
+// terms both cancel left of the strip (the last two lost ten digits); Hermite's integral doesn't.
+const complexA: [[number, number], [number, number], [number, number]][] = [
+  [
+    [-3.1, 0],
+    [0.498, -2.645],
+    [-13.981649049083694, 2.257375643516622],
+  ],
+  [
+    [-6, 0],
+    [0.38, -2.39],
+    [-27.255450791559646, -81.31448214002623],
+  ],
+  [
+    [-8.1, 0],
+    [0.5, 1.5],
+    [2.2938135033482614, -14.482568046811453],
+  ],
+  [
+    [-10, 0],
+    [0.2, 3],
+    [-23226.23160245248, 14866.048585118255],
+  ],
+  [
+    [-7.5434669321832, -5.842559411490806],
+    [1.1482136138878813, 2.436120494561046],
+    [0.06980460198689101, 0.08527998037180706],
+  ],
+  [
+    [-9, 6.737365124032138],
+    [0.6464518128893662, -1.4763603663938716],
+    [-0.0010147884679548146, 0.0013387157186172535],
+  ],
+];
+
+test("the double ζ(s, a) kernel matches mpmath left of the strip with a off the axis", () => {
+  const off = complexA.flatMap(([s, a, ref]) => {
+    const z = hurwitzZeta(cx(...s), cx(...a));
+    const err = Math.hypot(z.re - ref[0], z.im - ref[1]) / Math.hypot(...ref);
+    return err <= 1e-12 ? [] : [`ζ(${s.join()}, ${a.join()}): relerr ${err.toExponential(2)}`];
+  });
+  expect(off).toEqual([]);
+});
+
 /** Within one unit in the 39th significant digit — each side is rounded to 40. */
 const agrees40 = (ours: BigDecimal, ref: string): boolean => {
   const r = new BigDecimal(ref);
