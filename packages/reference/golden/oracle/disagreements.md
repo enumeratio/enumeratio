@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 2401, disagree 142, inconclusive 44, error 3
+## wolfram — agree 2401, disagree 140, inconclusive 44, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -135,9 +135,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `PowerModList/no-inverse-when-gcd-a-m-ne-1-so-the-list-is`         | undefined-form | `[]`                                                                                         | `PowerModList[2, -1, 4]`                                                                     |
 | `PowerModList/the-moduli-with-four-or-more-square-roots-of-1`      | domain         | `[[1, 3, 5, 7], [1, 4, 11, 14], [1, 8, 13, 20], [1, 5, 7, 11, 13, 17, 19, 23]]`              | `PowerModList[1, 1/2, {8, 15, 21, 24}]`                                                      |
 | `PowerModList/threads-over-lists-the-squares-mod-5-are-exactly`    | domain         | `[[1, 4], [], [], [2, 3]]`                                                                   | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
-| `Quaternions/a-multicomplex-unit-is-not-a-quaternion`              | domain         | `false`                                                                                      | `Element[Subscript[i, 1], Quaternions]`                                                      |
 | `Quaternions/ijk-1`                                                | domain         | `-1`                                                                                         | `Subscript[f, 1]**Subscript[f, 2]**(Subscript[f, 1]*Subscript[f, 2])`                        |
-| `Quaternions/k-in-h`                                               | domain         | `true`                                                                                       | `Element[Subscript[f, 1]*Subscript[f, 2], Quaternions]`                                      |
 | `Quotient/dividing-by-zero-is-undefined`                           | undefined-form | `["Quotient",["Complex",3,4],0]`                                                             | `ComplexInfinity`                                                                            |
 | `Quotient/dividing-zero-by-zero-is-undefined`                      | undefined-form | `["Quotient",0,0]`                                                                           | `Indeterminate`                                                                              |
 | `Root/odd-roots-of-a-negative-number-stay-real`                    | convention     | `-2`                                                                                         | `2*(-1)^(1/3)`                                                                               |
@@ -312,7 +310,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 1002, disagree 71, inconclusive 24, error 108
+## sage — agree 1066, disagree 71, inconclusive 24, error 108
 
 | example                                                                | kind           | ours                                                                                         | theirs                                                                                       |
 | ---------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |

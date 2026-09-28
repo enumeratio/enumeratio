@@ -12,7 +12,7 @@ const entries = [
   ...readEntries(new URL("../reference/", import.meta.url)),
   // structures' heads over the carriers' tables need the carriers, so they run here.
   ...readEntries(new URL("../../../../structures/reference/", import.meta.url)).filter((entry) =>
-    ["CombinatorialStatistic", "CombinatorialMap"].includes(entry.name),
+    ["CombinatorialStat", "CombinatorialMap"].includes(entry.name),
   ),
 ];
 

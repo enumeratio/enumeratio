@@ -9,7 +9,7 @@ import { referenceData } from "../src/node.ts";
 // their own engines, in their own packages' tests.
 // So do the heads that read the carriers' tables, which need the carriers.
 const OWN_ENGINE = new Set(["statistics", "domains"]);
-const ON_CARRIERS = new Set(["CombinatorialStatistic", "CombinatorialMap"]);
+const ON_CARRIERS = new Set(["CombinatorialStat", "CombinatorialMap"]);
 const { heads } = referenceData();
 const loaded = heads.filter((h) => !OWN_ENGINE.has(h.package) && !ON_CARRIERS.has(h.head));
 const copies = new Map<string, number>();

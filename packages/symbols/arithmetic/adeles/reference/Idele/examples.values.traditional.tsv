@@ -1,0 +1,17 @@
+id	in	out
+the-principal-idele-7-at-every-place		
+7-and-its-inverse-cancel-everywhere		
+idele-with-a-zero-real-part		
+golden-multiply-rational-real-parts		
+golden-multiply-integer-idele		
+golden-divide-rational-real-parts		
+golden-divide-integer-idele		
+principal-idele-of-negative-rational		
+real-and-finite-parts-can-differ-in-sign		
+multiplying-by-the-identity-idele		
+squaring-an-idele		
+equal-ideles	\mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 3)	\mathrm{True}
+unequal-ideles-differ-in-finite-part	\mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 5)	\mathrm{False}
+inverting-an-idele		
+a-listed-component-carries-its-valuation-into		
+a-unit-known-mod-2-says-nothing-at-2		

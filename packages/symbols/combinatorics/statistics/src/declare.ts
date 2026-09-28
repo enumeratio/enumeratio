@@ -6,6 +6,7 @@
 
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { symbolInfo } from "@enumeratio/manifest";
 import { operationOf, registerCarrier, registerOperation } from "@enumeratio/structures";
 import { findstat } from "./findstat-data.ts";
 import { bySignature, type Definition, signatureOf, SUBJECT } from "./types.ts";
@@ -33,7 +34,7 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
 
 /**
  * The ways a caller can wire the statistics. Each definition always goes into its carrier's
- * `CombinatorialStatistic` table; it is also a head of its own unless that name is taken.
+ * `CombinatorialStat` table; it is also a head of its own unless that name is taken.
  */
 export interface DeclareOptions {
   /**
@@ -44,7 +45,7 @@ export interface DeclareOptions {
    * `Cycles(Permutation([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —
    * which is the whole reason the domains exist. A definition marked `alsoOnList` additionally
    * accepts a bare list, because that reading stands on its own (see `Definition.alsoOnList`).
-   * It is also what lets `CombinatorialStatistic` find a value's carrier from its type.
+   * It is also what lets `CombinatorialStat` find a value's carrier from its type.
    *
    * Omit it and every head takes a bare list instead, which is what the definition tests use.
    */
@@ -81,21 +82,30 @@ function subjectType(definition: Definition, options: DeclareOptions): string {
   return definition.alsoOnList === true ? `${carrier} | ${bare}` : carrier;
 }
 
-/** FindStat's ids for each of our statistics, by signature. */
-const FINDSTAT_IDS: ReadonlyMap<string, readonly string[]> = new Map(
+/** FindStat's ids for each of our statistics, by signature: matched by value, as findstat-data
+ *  records, and as the head's record states. */
+const BY_VALUE: ReadonlyMap<string, readonly string[]> = new Map(
   findstat.map((match) => [`${match.head}@${match.on}`, match.findstat]),
 );
+const findstatIds = (definition: Definition): string[] => [
+  ...new Set([
+    ...(BY_VALUE.get(signatureOf(definition)) ?? []),
+    ...(symbolInfo(definition.head)?.findstat ?? [])
+      .filter((ref) => ref.on === undefined || ref.on === definition.on)
+      .map((ref) => ref.id),
+  ]),
+];
 
 let bare: ComputeEngine | undefined;
 /** Whether compute-engine itself defines `head`, with a meaning of its own (`Sign`). */
 const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).lookupDefinition(head) !== undefined;
 
 /**
- * File every definition in its carrier's `CombinatorialStatistic` table, and declare it as a
+ * File every definition in its carrier's `CombinatorialStat` table, and declare it as a
  * head of its own where the name is free. A taken name is fine in two cases, both explicit: the
  * table already holds another package's kernel for this very statistic (@enumeratio/collections'
  * permutation statistics), or compute-engine owns the name with another meaning (`Sign`), when
- * the statistic is reached through `CombinatorialStatistic` only. Anything else is a
+ * the statistic is reached through `CombinatorialStat` only. Anything else is a
  * `StatisticCollisionError`, listing every one.
  *
  * Definitions for one head on several carriers share the head, the first declaring it; every
@@ -113,10 +123,9 @@ export function declareStatistics(
   for (const definition of definitions) {
     const type = options.domainTypes?.[definition.on];
     registerCarrier(ce, { name: definition.on, ...(type === undefined ? {} : { type }) });
-    const findstatIds = FINDSTAT_IDS.get(signatureOf(definition));
-    registerOperation(ce, "CombinatorialStatistic", definition.on, {
+    registerOperation(ce, "CombinatorialStat", definition.on, {
       name: definition.head,
-      ...(findstatIds === undefined ? {} : { findstat: findstatIds }),
+      findstat: findstatIds(definition),
       definition: (subject) =>
         applyDefinition(
           ce,
@@ -128,7 +137,7 @@ export function declareStatistics(
     if (claimed.has(definition.head)) continue;
     claimed.add(definition.head);
     if (ce.lookupDefinition(definition.head) !== undefined) {
-      const kernel = operationOf(ce, "CombinatorialStatistic", definition.on, definition.head)?.kernel;
+      const kernel = operationOf(ce, "CombinatorialStat", definition.on, definition.head)?.kernel;
       if (kernel === undefined && !isEngineHead(definition.head)) collisions.push(signatureOf(definition));
       continue;
     }

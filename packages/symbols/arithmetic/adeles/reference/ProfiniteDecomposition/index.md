@@ -17,4 +17,13 @@ details:
 seeAlso:
   - HermiteDecomposition
   - ProfiniteNumber
+bindings:
+  - origin: mapped
+    form: sage
+    template: enumeratio_profinite_decomposition($1, $2)
+    arity: 2
+    note: Hertogh's Algorithm 8.4 (factor_GLQhat); no one-liner, so run.ts's SAGE_PREAMBLE carries the matrix-building helper. The arity-1 form (det computed from $1) has no row -- Sage's generic matrix determinant does not work over the Qhat ring (checked; TypeError coercing a ProfiniteNumber to an integer).
+    checked:
+      version: "10.9"
+      on: 2026-09-28
 ---

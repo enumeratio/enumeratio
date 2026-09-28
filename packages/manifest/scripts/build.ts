@@ -11,7 +11,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry } from "@enumeratio/entry";
 import { headNames, INDEX_FILE, parseIndex, recordDirs } from "@enumeratio/entry/node";
 import { canonicalOrder } from "../src/canonical.ts";
-import type { DeclaredSymbol, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
+import type { DeclaredSymbol, FindStatId, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 const OUT = fileURLToPath(new URL("../src/generated/", import.meta.url));
@@ -77,11 +77,18 @@ function engineTypes(): Map<string, string> {
 
 const byName = new Map<
   string,
-  { documented: string[]; overloads: Overload[]; params?: string[]; attributes: Set<SymbolAttribute> }
+  {
+    documented: string[];
+    overloads: Overload[];
+    params?: string[];
+    attributes: Set<SymbolAttribute>;
+    findstat: Map<string, FindStatId>;
+  }
 >();
 const entry = (name: string) => {
   let info = byName.get(name);
-  if (info === undefined) byName.set(name, (info = { documented: [], overloads: [], attributes: new Set() }));
+  if (info === undefined)
+    byName.set(name, (info = { documented: [], overloads: [], attributes: new Set(), findstat: new Map() }));
   return info;
 };
 
@@ -97,6 +104,12 @@ for (const { package: pkg, record } of ranked) {
   info.documented.push(pkg);
   info.params ??= paramsOf(record.signature);
   for (const attribute of record.attributes ?? []) info.attributes.add(attribute);
+  for (const row of [...(record.references ?? []), ...(record.catalog ?? [])])
+    if (row.system === "findstat")
+      info.findstat.set(`${row.identity}@${row.on ?? ""}`, {
+        id: row.identity,
+        ...(row.on !== undefined ? { on: row.on } : {}),
+      });
   for (const row of record.signatures ?? []) {
     const from = packageOf(row.library);
     if (from === ENGINE) continue; // the engine's overload already came from the engine
@@ -125,6 +138,9 @@ for (const name of [...byName.keys()].toSorted(cmp)) {
     overloads: canonicalOrder(info.overloads, typing),
     ...(info.params !== undefined ? { params: info.params } : {}),
     ...(info.attributes.size > 0 ? { attributes: [...info.attributes].toSorted(cmp) } : {}),
+    ...(info.findstat.size > 0
+      ? { findstat: [...info.findstat.keys()].toSorted(cmp).map((key) => info.findstat.get(key)!) }
+      : {}),
   };
 }
 

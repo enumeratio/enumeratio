@@ -22,6 +22,14 @@ export interface SymbolInfo {
   /** Parameter names, for a head of fixed arity whose record spells them. */
   readonly params?: readonly string[];
   readonly attributes?: readonly SymbolAttribute[];
+  /** FindStat's ids for it (`St000018`, `Mp00066`), each with the carrier it is on, when the
+   *  record says. A statistic or map is also reached by these. */
+  readonly findstat?: readonly FindStatId[];
+}
+
+export interface FindStatId {
+  readonly id: string;
+  readonly on?: string;
 }
 
 /** What a package's `declare` reads for one of its heads. */

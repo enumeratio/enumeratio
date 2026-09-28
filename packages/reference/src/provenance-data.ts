@@ -9699,7 +9699,7 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
-    name: "CombinatorialStatistic",
+    name: "CombinatorialStat",
     provenance: "extension",
     declared: "enumeratio-structures",
     wolframAlias: null,

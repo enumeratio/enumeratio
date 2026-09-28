@@ -13,6 +13,14 @@
       "disagree": 0
     }
   ],
+  "Adele": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 15,
+      "disagree": 0
+    }
+  ],
   "AdicDigits": [
     {
       "system": "sage",
@@ -1171,6 +1179,14 @@
       "disagree": 0
     }
   ],
+  "Idele": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 11,
+      "disagree": 0
+    }
+  ],
   "IncompleteEllipticPi": [
     {
       "system": "wolfram",
@@ -2210,6 +2226,22 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 13,
+      "disagree": 0
+    }
+  ],
+  "ProfiniteDecomposition": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 14,
+      "disagree": 0
+    }
+  ],
+  "ProfiniteNumber": [
+    {
+      "system": "sage",
+      "kernel": "SageMath version 10.9, Release Date: 2026-05-04",
+      "agree": 24,
       "disagree": 0
     }
   ],
