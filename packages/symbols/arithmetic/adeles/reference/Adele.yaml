@@ -26,8 +26,14 @@ bindings:
     template: Adeles(QQ)($1)
     arity: 1
     note: Hertogh's adeles package; coerces a rational (the principal adele) or an idele (forgetting its idele structure) -- Sage's own coercion dispatches on the argument's type, like ours.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
   - origin: mapped
     form: sage
     template: Adeles(QQ)([$1], $2)
     arity: 2
     note: Hertogh's adeles package; real $1 beside the finite part $2 (a ProfiniteNumber).
+    checked:
+      version: "10.9"
+      on: 2026-09-28

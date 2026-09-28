@@ -36,8 +36,14 @@ bindings:
     template: Qhat($1)
     arity: 1
     note: Hertogh's adeles package (github.com/mathehertogh/adeles); the exact case, modulus 0. The list-of-AdicNumeral glue form also has arity 1, but AdicNumeral itself is unmapped for sage, so those examples simply fail to emit rather than being mis-evaluated by this row.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
   - origin: mapped
     form: sage
     template: Qhat($1, $2)
     arity: 2
     note: Hertogh's adeles package; $1 known modulo $2.
+    checked:
+      version: "10.9"
+      on: 2026-09-28

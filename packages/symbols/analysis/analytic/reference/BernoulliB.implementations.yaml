@@ -236,6 +236,8 @@ von-staudt-clausen-the-denominator-of-b-2n-is:
     out: 2\,730
   fullform:
     in: Denominator[BernoulliB[12]]
+  sage:
+    in: (bernoulli(12)).denominator()
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see:
   epsil:
     in: Zeta(-3) == -(BernoulliB(4) / 4)

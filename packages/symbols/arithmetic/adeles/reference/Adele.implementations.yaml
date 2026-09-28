@@ -7,6 +7,8 @@ the-principal-adele-5-at-every-place:
     out: \mathrm{Adele}(5, 5)
   fullform:
     in: Adele[5]
+  sage:
+    in: Adeles(QQ)(5)
 adele-2-profinitenumber-1-6-times-3:
   epsil:
     in: Adele(2, ProfiniteNumber(1, 6)) * 3
@@ -16,6 +18,8 @@ adele-2-profinitenumber-1-6-times-3:
     out: \mathrm{Adele}(6, \mathrm{ProfiniteNumber}(3, 18))
   fullform:
     in: Times[Adele[2, ProfiniteNumber[1, 6]], 3]
+  sage:
+    in: (Adeles(QQ)([2], Qhat(1, 6)) * 3)
 the-adele-underlying-an-idele:
   epsil:
     in: Adele(Idele(1, 1, [AdicNumeral(3, 2, 2)]))
@@ -34,6 +38,8 @@ adding-a-principal-adele-and-one-carrying-pi:
     out: \mathrm{Adele}(5+\pi, \mathrm{ProfiniteNumber}(0, 6))
   fullform:
     in: Plus[Adele[5], Adele[Pi, ProfiniteNumber[1, 6]]]
+  sage:
+    in: (Adeles(QQ)(5) + Adeles(QQ)([pi], Qhat(1, 6)))
 equal-adeles-need-not-share-a-modulus:
   epsil:
     in: Adele(1, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))
@@ -46,6 +52,8 @@ equal-adeles-need-not-share-a-modulus:
     out: \mathrm{True}
   fullform:
     in: Equal[Adele[1, ProfiniteNumber[2, 6]], Adele[1, ProfiniteNumber[5, 9]]]
+  sage:
+    in: bool(Adeles(QQ)([1], Qhat(2, 6)) == Adeles(QQ)([1], Qhat(5, 9)))
 unequal-real-parts-are-not-equal:
   epsil:
     in: Adele(2, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))
@@ -58,6 +66,8 @@ unequal-real-parts-are-not-equal:
     out: \mathrm{False}
   fullform:
     in: Equal[Adele[2, ProfiniteNumber[2, 6]], Adele[1, ProfiniteNumber[5, 9]]]
+  sage:
+    in: bool(Adeles(QQ)([2], Qhat(2, 6)) == Adeles(QQ)([1], Qhat(5, 9)))
 an-adele-and-a-bare-profinite-don-t-combine:
   epsil:
     in: Adele(1, ProfiniteNumber(2, 6)) + ProfiniteNumber(1, 6)
@@ -67,3 +77,185 @@ an-adele-and-a-bare-profinite-don-t-combine:
     out: \mathrm{ProfiniteNumber}(1, 6)+\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))
   fullform:
     in: Plus[Adele[1, ProfiniteNumber[2, 6]], ProfiniteNumber[1, 6]]
+  sage:
+    in: (Adeles(QQ)([1], Qhat(2, 6)) + Qhat(1, 6))
+golden-idele-to-adele-1:
+  epsil:
+    in: Adele(Idele(-1, -5 / 2))
+    out: Adele(-1, -5 / 2)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(-1, -\frac{5}{2}))
+    out: \mathrm{Adele}(-1, -\frac{5}{2})
+  fullform:
+    in: Adele[Idele[-1, Rational[-5, 2]]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([-1], (-5/2)))
+    out: (-1, -5/2)
+golden-idele-to-adele-2:
+  epsil:
+    in: Adele(Idele(-1, 4 / 3))
+    out: Adele(-1, 4 / 3)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(-1, \frac{4}{3}))
+    out: \mathrm{Adele}(-1, \frac{4}{3})
+  fullform:
+    in: Adele[Idele[-1, Rational[4, 3]]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([-1], (4/3)))
+    out: (-1, 4/3)
+golden-idele-to-adele-3:
+  epsil:
+    in: Adele(Idele(-1, -1))
+    out: Adele(-1, -1)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(-1, -1))
+    out: \mathrm{Adele}(-1, -1)
+  fullform:
+    in: Adele[Idele[-1, -1]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([-1], -1))
+    out: (-1, -1)
+golden-idele-to-adele-4:
+  epsil:
+    in: Adele(Idele(1, 2))
+    out: Adele(1, 2)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, 2))
+    out: \mathrm{Adele}(1, 2)
+  fullform:
+    in: Adele[Idele[1, 2]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([1], 2))
+    out: (1, 2)
+golden-idele-to-adele-5:
+  epsil:
+    in: Adele(Idele(-1, -2 / 3))
+    out: Adele(-1, -2 / 3)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(-1, -\frac{2}{3}))
+    out: \mathrm{Adele}(-1, -\frac{2}{3})
+  fullform:
+    in: Adele[Idele[-1, Rational[-2, 3]]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([-1], (-2/3)))
+    out: (-1, -2/3)
+golden-idele-to-adele-6:
+  epsil:
+    in: Adele(Idele(-1, -7))
+    out: Adele(-1, -7)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(-1, -7))
+    out: \mathrm{Adele}(-1, -7)
+  fullform:
+    in: Adele[Idele[-1, -7]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([-1], -7))
+    out: (-1, -7)
+golden-idele-to-adele-7:
+  epsil:
+    in: Adele(Idele(1, 5))
+    out: Adele(1, 5)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, 5))
+    out: \mathrm{Adele}(1, 5)
+  fullform:
+    in: Adele[Idele[1, 5]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([1], 5))
+    out: (1, 5)
+golden-idele-to-adele-8:
+  epsil:
+    in: Adele(Idele(1, 5 / 4))
+    out: Adele(1, 5 / 4)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, \frac{5}{4}))
+    out: \mathrm{Adele}(1, \frac{5}{4})
+  fullform:
+    in: Adele[Idele[1, Rational[5, 4]]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([1], (5/4)))
+    out: (1, 5/4)
+golden-idele-to-adele-9:
+  epsil:
+    in: Adele(Idele(1, -7 / 2))
+    out: Adele(1, -7 / 2)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, -\frac{7}{2}))
+    out: \mathrm{Adele}(1, -\frac{7}{2})
+  fullform:
+    in: Adele[Idele[1, Rational[-7, 2]]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([1], (-7/2)))
+    out: (1, -7/2)
+golden-idele-to-adele-10:
+  epsil:
+    in: Adele(Idele(1, -1))
+    out: Adele(1, -1)
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, -1))
+    out: \mathrm{Adele}(1, -1)
+  fullform:
+    in: Adele[Idele[1, -1]]
+  sage:
+    in: Adeles(QQ)(Ideles(QQ)([1], -1))
+    out: (1, -1)
+adele-with-a-profinite-finite-part:
+  epsil:
+    in: Adele(3, ProfiniteNumber(2, 7))
+    out: Adele(3, ProfiniteNumber(2, 7))
+  tex:
+    in: \mathrm{Adele}(3, \mathrm{ProfiniteNumber}(2, 7))
+    out: \mathrm{Adele}(3, \mathrm{ProfiniteNumber}(2, 7))
+  fullform:
+    in: Adele[3, ProfiniteNumber[2, 7]]
+  sage:
+    in: Adeles(QQ)([3], Qhat(2, 7))
+    out: (3, 2 mod 7)
+principal-adele-of-a-rational:
+  epsil:
+    in: Adele(2 / 5)
+    out: Adele(2 / 5, 2 / 5)
+  tex:
+    in: \mathrm{Adele}(\frac{2}{5})
+    out: \mathrm{Adele}(\frac{2}{5}, \frac{2}{5})
+  fullform:
+    in: Adele[Rational[2, 5]]
+  sage:
+    in: Adeles(QQ)((2/5))
+    out: (0.4000000000000000?, 2/5)
+adding-two-adeles-with-profinite-parts:
+  epsil:
+    in: Adele(1, ProfiniteNumber(1, 6)) + Adele(2, ProfiniteNumber(2, 9))
+    out: Adele(3, ProfiniteNumber(0, 3))
+  tex:
+    in: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(1, 6))+\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 9))
+    out: \mathrm{Adele}(3, \mathrm{ProfiniteNumber}(0, 3))
+  fullform:
+    in: Plus[Adele[1, ProfiniteNumber[1, 6]], Adele[2, ProfiniteNumber[2, 9]]]
+  sage:
+    in: (Adeles(QQ)([1], Qhat(1, 6)) + Adeles(QQ)([2], Qhat(2, 9)))
+    out: (3, 0 mod 3)
+multiplying-an-adele-by-a-principal-one:
+  epsil:
+    in: Adele(2, ProfiniteNumber(1, 6)) * Adele(3)
+    out: Adele(6, ProfiniteNumber(3, 18))
+  tex:
+    in: \mathrm{Adele}(2, \mathrm{ProfiniteNumber}(1, 6))\mathrm{Adele}(3)
+    out: \mathrm{Adele}(6, \mathrm{ProfiniteNumber}(3, 18))
+  fullform:
+    in: Times[Adele[2, ProfiniteNumber[1, 6]], Adele[3]]
+  sage:
+    in: (Adeles(QQ)([2], Qhat(1, 6)) * Adeles(QQ)(3))
+    out: (6, 3 mod 18)
+negating-an-adele-with-a-profinite-finite-part:
+  epsil:
+    in: -Adele(3, ProfiniteNumber(2, 7))
+    out: Adele(-3, ProfiniteNumber(5, 7))
+  tex:
+    in: -\mathrm{Adele}(3, \mathrm{ProfiniteNumber}(2, 7))
+    out: \mathrm{Adele}(-3, \mathrm{ProfiniteNumber}(5, 7))
+  fullform:
+    in: Minus[Adele[3, ProfiniteNumber[2, 7]]]
+  sage:
+    in: (-Adeles(QQ)([3], Qhat(2, 7)))
+    out: (-3, 5 mod 7)

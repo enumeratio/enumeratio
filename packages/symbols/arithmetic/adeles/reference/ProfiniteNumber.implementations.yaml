@@ -7,6 +7,8 @@
     out: \mathrm{ProfiniteNumber}(0, 4)
   fullform:
     in: Plus[ProfiniteNumber[3, 12], ProfiniteNumber[5, 8]]
+  sage:
+    in: (Qhat(3, 12) + Qhat(5, 8))
 profinitenumber-3-12-times-profinitenumber-5-8:
   epsil:
     in: ProfiniteNumber(3, 12) * ProfiniteNumber(5, 8)
@@ -16,6 +18,8 @@ profinitenumber-3-12-times-profinitenumber-5-8:
     out: \mathrm{ProfiniteNumber}(3, 12)
   fullform:
     in: Times[ProfiniteNumber[3, 12], ProfiniteNumber[5, 8]]
+  sage:
+    in: (Qhat(3, 12) * Qhat(5, 8))
 equal-cosets-need-not-share-a-modulus:
   epsil:
     in: ProfiniteNumber(6, 20) == ProfiniteNumber(6, 40)
@@ -28,6 +32,8 @@ equal-cosets-need-not-share-a-modulus:
     out: \mathrm{True}
   fullform:
     in: Equal[ProfiniteNumber[6, 20], ProfiniteNumber[6, 40]]
+  sage:
+    in: bool(Qhat(6, 20) == Qhat(6, 40))
 crt-glued-from-its-2-adic-and-3-adic-images:
   epsil:
     in: ProfiniteNumber([AdicNumeral(2, 20, 5), AdicNumeral(3, 7, 2)])
@@ -46,6 +52,8 @@ a-rational-value-and-a-rational-modulus:
     out: \mathrm{ProfiniteNumber}(\frac{1}{30}, \frac{1}{5})
   fullform:
     in: Plus[ProfiniteNumber[Rational[1, 2], Rational[97, 5]], ProfiniteNumber[Rational[1, 3], 10]]
+  sage:
+    in: (Qhat((1/2), (97/5)) + Qhat((1/3), 10))
 numerator-profinitenumber-2-over-3-5:
   epsil:
     in: Numerator(ProfiniteNumber(2 / 3, 5))
@@ -55,6 +63,8 @@ numerator-profinitenumber-2-over-3-5:
     out: \mathrm{ProfiniteNumber}(2, 15)
   fullform:
     in: Numerator[ProfiniteNumber[Rational[2, 3], 5]]
+  sage:
+    in: (Qhat((2/3), 5)).numerator()
 denominator-profinitenumber-2-over-3-5:
   epsil:
     in: Denominator(ProfiniteNumber(2 / 3, 5))
@@ -64,6 +74,8 @@ denominator-profinitenumber-2-over-3-5:
     out: "3"
   fullform:
     in: Denominator[ProfiniteNumber[Rational[2, 3], 5]]
+  sage:
+    in: (Qhat((2/3), 5)).denominator()
 lenstra-s-profinite-fibonacci-numbers:
   epsil:
     in: Fibonacci(ProfiniteNumber(3, 10))
@@ -76,6 +88,8 @@ lenstra-s-profinite-fibonacci-numbers:
     out: \mathrm{ProfiniteNumber}(2, 11)
   fullform:
     in: Fibonacci[ProfiniteNumber[3, 10]]
+  sage:
+    in: fibonacci(Qhat(3, 10))
 projecting-to-q-2:
   epsil:
     in: AdicNumeral(2, ProfiniteNumber(100, 24))
@@ -85,6 +99,8 @@ projecting-to-q-2:
     out: \mathrm{AdicNumeral}(2, 4, 3)
   fullform:
     in: AdicNumeral[2, ProfiniteNumber[100, 24]]
+  sage:
+    in: Qp(2, 60)(QQ(Qhat(100, 24)))
 projecting-to-q-3:
   epsil:
     in: AdicNumeral(3, ProfiniteNumber(100, 24))
@@ -94,6 +110,8 @@ projecting-to-q-3:
     out: \mathrm{AdicNumeral}(3, 1, 1)
   fullform:
     in: AdicNumeral[3, ProfiniteNumber[100, 24]]
+  sage:
+    in: Qp(3, 60)(QQ(Qhat(100, 24)))
 5-doesn-t-divide-the-modulus-so-nothing-is-known:
   epsil:
     in: AdicNumeral(5, ProfiniteNumber(100, 24))
@@ -103,6 +121,8 @@ projecting-to-q-3:
     out: \mathrm{AdicNumeral}(5, \mathrm{ProfiniteNumber}(4, 24))
   fullform:
     in: AdicNumeral[5, ProfiniteNumber[100, 24]]
+  sage:
+    in: Qp(5, 60)(QQ(Qhat(100, 24)))
 gluing-projections-back-by-crt-is-the-identity:
   epsil:
     in: |-
@@ -116,6 +136,8 @@ gluing-projections-back-by-crt-is-the-identity:
     out: \mathrm{ProfiniteNumber}(4, 24)
   fullform:
     in: ProfiniteNumber[List[AdicNumeral[2, ProfiniteNumber[100, 24]], AdicNumeral[3, ProfiniteNumber[100, 24]]]]
+  sage:
+    in: Qhat([Qp(2, 60)(QQ(Qhat(100, 24))), Qp(3, 60)(QQ(Qhat(100, 24)))])
 profinitenumber-26-20-normalises-to-6-20:
   epsil:
     in: ProfiniteNumber(26, 20)
@@ -125,6 +147,8 @@ profinitenumber-26-20-normalises-to-6-20:
     out: \mathrm{ProfiniteNumber}(6, 20)
   fullform:
     in: ProfiniteNumber[26, 20]
+  sage:
+    in: Qhat(26, 20)
 a-negative-value-normalises-into-the-coset:
   epsil:
     in: ProfiniteNumber(-1, 12)
@@ -134,6 +158,8 @@ a-negative-value-normalises-into-the-coset:
     out: \mathrm{ProfiniteNumber}(11, 12)
   fullform:
     in: ProfiniteNumber[-1, 12]
+  sage:
+    in: Qhat(-1, 12)
 a-negative-modulus-normalises-to-positive:
   epsil:
     in: ProfiniteNumber(5, -12)
@@ -143,6 +169,8 @@ a-negative-modulus-normalises-to-positive:
     out: \mathrm{ProfiniteNumber}(5, 12)
   fullform:
     in: ProfiniteNumber[5, -12]
+  sage:
+    in: Qhat(5, -12)
 a-rational-value-reduces-mod-a-rational-modulus:
   epsil:
     in: ProfiniteNumber(7 / 2, 3 / 2)
@@ -152,6 +180,8 @@ a-rational-value-reduces-mod-a-rational-modulus:
     out: \mathrm{ProfiniteNumber}(\frac{1}{2}, \frac{3}{2})
   fullform:
     in: ProfiniteNumber[Rational[7, 2], Rational[3, 2]]
+  sage:
+    in: Qhat((7/2), (3/2))
 modulus-zero-collapses-to-the-rational-itself:
   epsil:
     in: ProfiniteNumber(1 / 3, 0)
@@ -161,6 +191,8 @@ modulus-zero-collapses-to-the-rational-itself:
     out: \frac{1}{3}
   fullform:
     in: ProfiniteNumber[Rational[1, 3], 0]
+  sage:
+    in: Qhat((1/3), 0)
 subtracting-an-integer-from-a-profinite-number:
   epsil:
     in: ProfiniteNumber(7, 30) - 2
@@ -170,6 +202,8 @@ subtracting-an-integer-from-a-profinite-number:
     out: \mathrm{ProfiniteNumber}(5, 30)
   fullform:
     in: Subtract[ProfiniteNumber[7, 30], 2]
+  sage:
+    in: (Qhat(7, 30) - 2)
 squaring-a-profinite-number:
   epsil:
     in: ProfiniteNumber(3, 12) ^ 2
@@ -179,6 +213,8 @@ squaring-a-profinite-number:
     out: \mathrm{ProfiniteNumber}(9, 36)
   fullform:
     in: Power[ProfiniteNumber[3, 12], 2]
+  sage:
+    in: ((Qhat(3, 12))^2)
 dividing-by-an-exact-integer-divisor:
   epsil:
     in: ProfiniteNumber(4, 12) / 2
@@ -188,6 +224,8 @@ dividing-by-an-exact-integer-divisor:
     out: \mathrm{ProfiniteNumber}(2, 6)
   fullform:
     in: Divide[ProfiniteNumber[4, 12], 2]
+  sage:
+    in: (Qhat(4, 12) / 2)
 dividing-by-a-profinite-number-stays-unevaluated:
   epsil:
     in: 1 / ProfiniteNumber(5, 12)
@@ -197,6 +235,8 @@ dividing-by-a-profinite-number-stays-unevaluated:
     out: \frac{1}{\mathrm{ProfiniteNumber}(5, 12)}
   fullform:
     in: Divide[1, ProfiniteNumber[5, 12]]
+  sage:
+    in: (1 / Qhat(5, 12))
 lenstra-s-profinite-lucas-numbers:
   epsil:
     in: LucasL(ProfiniteNumber(3, 10))
@@ -209,6 +249,8 @@ lenstra-s-profinite-lucas-numbers:
     out: \mathrm{ProfiniteNumber}(4, 11)
   fullform:
     in: LucasL[ProfiniteNumber[3, 10]]
+  sage:
+    in: lucas_number2(Qhat(3, 10), 1, -1)
 a-non-integer-numerator-refuses-fibonacci:
   epsil:
     in: Fibonacci(ProfiniteNumber(1 / 2, 3))
@@ -221,6 +263,8 @@ a-non-integer-numerator-refuses-fibonacci:
     out: F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}
   fullform:
     in: Fibonacci[ProfiniteNumber[Rational[1, 2], 3]]
+  sage:
+    in: fibonacci(Qhat((1/2), 3))
 numerator-of-a-plain-rational-is-untouched:
   epsil:
     in: Numerator(3 / 4)
@@ -230,6 +274,8 @@ numerator-of-a-plain-rational-is-untouched:
     out: "3"
   fullform:
     in: Numerator[Rational[3, 4]]
+  sage:
+    in: ((3/4)).numerator()
 denominator-of-a-plain-rational-is-untouched:
   epsil:
     in: Denominator(3 / 4)
@@ -239,6 +285,8 @@ denominator-of-a-plain-rational-is-untouched:
     out: "4"
   fullform:
     in: Denominator[Rational[3, 4]]
+  sage:
+    in: ((3/4)).denominator()
 only-profinitenumber-gets-numerator-not-adele:
   epsil:
     in: Numerator(Adele(5))
@@ -248,3 +296,305 @@ only-profinitenumber-gets-numerator-not-adele:
     out: \mathrm{Numerator}(\mathrm{Adele}(5))
   fullform:
     in: Numerator[Adele[5]]
+  sage:
+    in: (Adeles(QQ)(5)).numerator()
+golden-add-2-4-3-mod-37-6:
+  epsil:
+    in: -2 + ProfiniteNumber(4 / 3, 37 / 6)
+    out: ProfiniteNumber(11 / 2, 37 / 6)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})-2
+    out: \mathrm{ProfiniteNumber}(\frac{11}{2}, \frac{37}{6})
+  fullform:
+    in: Plus[-2, ProfiniteNumber[Rational[4, 3], Rational[37, 6]]]
+  sage:
+    in: (-2 + Qhat((4/3), (37/6)))
+    out: 11/2 mod 37/6
+golden-add-11-mod-18-2-mod-35:
+  epsil:
+    in: ProfiniteNumber(11, 18) + ProfiniteNumber(2, 35)
+    out: ProfiniteNumber(0, 1)
+  tex:
+    in: \mathrm{ProfiniteNumber}(11, 18)+\mathrm{ProfiniteNumber}(2, 35)
+    out: \mathrm{ProfiniteNumber}(0, 1)
+  fullform:
+    in: Plus[ProfiniteNumber[11, 18], ProfiniteNumber[2, 35]]
+  sage:
+    in: (Qhat(11, 18) + Qhat(2, 35))
+    out: 0 mod 1
+golden-add-187-4-mod-47-1-mod-3:
+  epsil:
+    in: ProfiniteNumber(187 / 4, 47) + ProfiniteNumber(1, 3)
+    out: ProfiniteNumber(3 / 4, 1)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{187}{4}, 47)+\mathrm{ProfiniteNumber}(1, 3)
+    out: \mathrm{ProfiniteNumber}(\frac{3}{4}, 1)
+  fullform:
+    in: Plus[ProfiniteNumber[Rational[187, 4], 47], ProfiniteNumber[1, 3]]
+  sage:
+    in: (Qhat((187/4), 47) + Qhat(1, 3))
+    out: 3/4 mod 1
+golden-add-7-4-mod-57-2-1-4:
+  epsil:
+    in: ProfiniteNumber(7 / 4, 57 / 2) + 1 / 4
+    out: ProfiniteNumber(2, 57 / 2)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{7}{4}, \frac{57}{2})+\frac{1}{4}
+    out: \mathrm{ProfiniteNumber}(2, \frac{57}{2})
+  fullform:
+    in: Plus[ProfiniteNumber[Rational[7, 4], Rational[57, 2]], Rational[1, 4]]
+  sage:
+    in: (Qhat((7/4), (57/2)) + (1/4))
+    out: 2 mod 57/2
+golden-add-2-mod-48-12:
+  epsil:
+    in: ProfiniteNumber(2, 48) + 12
+    out: ProfiniteNumber(14, 48)
+  tex:
+    in: \mathrm{ProfiniteNumber}(2, 48)+12
+    out: \mathrm{ProfiniteNumber}(14, 48)
+  fullform:
+    in: Plus[ProfiniteNumber[2, 48], 12]
+  sage:
+    in: (Qhat(2, 48) + 12)
+    out: 14 mod 48
+golden-add-2-27-mod-31:
+  epsil:
+    in: 2 + ProfiniteNumber(27, 31)
+    out: ProfiniteNumber(29, 31)
+  tex:
+    in: 2+\mathrm{ProfiniteNumber}(27, 31)
+    out: \mathrm{ProfiniteNumber}(29, 31)
+  fullform:
+    in: Plus[2, ProfiniteNumber[27, 31]]
+  sage:
+    in: (2 + Qhat(27, 31))
+    out: 29 mod 31
+golden-multiply-2-4-3-mod-37-6:
+  epsil:
+    in: -2 * ProfiniteNumber(4 / 3, 37 / 6)
+    out: ProfiniteNumber(29 / 3, 37 / 3)
+  tex:
+    in: -2\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})
+    out: \mathrm{ProfiniteNumber}(\frac{29}{3}, \frac{37}{3})
+  fullform:
+    in: Times[-2, ProfiniteNumber[Rational[4, 3], Rational[37, 6]]]
+  sage:
+    in: (-2 * Qhat((4/3), (37/6)))
+    out: 29/3 mod 37/3
+golden-multiply-11-mod-18-2-mod-35:
+  epsil:
+    in: ProfiniteNumber(11, 18) * ProfiniteNumber(2, 35)
+    out: ProfiniteNumber(0, 1)
+  tex:
+    in: \mathrm{ProfiniteNumber}(11, 18)\mathrm{ProfiniteNumber}(2, 35)
+    out: \mathrm{ProfiniteNumber}(0, 1)
+  fullform:
+    in: Times[ProfiniteNumber[11, 18], ProfiniteNumber[2, 35]]
+  sage:
+    in: (Qhat(11, 18) * Qhat(2, 35))
+    out: 0 mod 1
+golden-multiply-187-4-mod-47-1-mod-3:
+  epsil:
+    in: ProfiniteNumber(187 / 4, 47) * ProfiniteNumber(1, 3)
+    out: ProfiniteNumber(0, 1 / 4)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{187}{4}, 47)\mathrm{ProfiniteNumber}(1, 3)
+    out: \mathrm{ProfiniteNumber}(0, \frac{1}{4})
+  fullform:
+    in: Times[ProfiniteNumber[Rational[187, 4], 47], ProfiniteNumber[1, 3]]
+  sage:
+    in: (Qhat((187/4), 47) * Qhat(1, 3))
+    out: 0 mod 1/4
+golden-multiply-7-4-mod-57-2-1-4:
+  epsil:
+    in: ProfiniteNumber(7 / 4, 57 / 2) * (1 / 4)
+    out: ProfiniteNumber(7 / 16, 57 / 8)
+  tex:
+    in: \frac{1}{4}(\mathrm{ProfiniteNumber}(\frac{7}{4}, \frac{57}{2}))
+    out: \mathrm{ProfiniteNumber}(\frac{7}{16}, \frac{57}{8})
+  fullform:
+    in: Times[ProfiniteNumber[Rational[7, 4], Rational[57, 2]], Rational[1, 4]]
+  sage:
+    in: (Qhat((7/4), (57/2)) * (1/4))
+    out: 7/16 mod 57/8
+golden-multiply-2-mod-48-12:
+  epsil:
+    in: ProfiniteNumber(2, 48) * 12
+    out: ProfiniteNumber(24, 576)
+  tex:
+    in: 12\mathrm{ProfiniteNumber}(2, 48)
+    out: \mathrm{ProfiniteNumber}(24, 576)
+  fullform:
+    in: Times[ProfiniteNumber[2, 48], 12]
+  sage:
+    in: (Qhat(2, 48) * 12)
+    out: 24 mod 576
+golden-multiply-2-27-mod-31:
+  epsil:
+    in: 2 * ProfiniteNumber(27, 31)
+    out: ProfiniteNumber(54, 62)
+  tex:
+    in: 2\mathrm{ProfiniteNumber}(27, 31)
+    out: \mathrm{ProfiniteNumber}(54, 62)
+  fullform:
+    in: Times[2, ProfiniteNumber[27, 31]]
+  sage:
+    in: (2 * Qhat(27, 31))
+    out: 54 mod 62
+golden-equal-2-4-3-mod-37-6:
+  epsil:
+    in: -2 == ProfiniteNumber(4 / 3, 37 / 6)
+    out: False
+  tex:
+    in: -2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})
+    out: \bot
+  traditional:
+    in: -2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})
+    out: \mathrm{False}
+  fullform:
+    in: Equal[-2, ProfiniteNumber[Rational[4, 3], Rational[37, 6]]]
+  sage:
+    in: bool(-2 == Qhat((4/3), (37/6)))
+    out: False
+golden-equal-11-mod-18-2-mod-35:
+  epsil:
+    in: ProfiniteNumber(11, 18) == ProfiniteNumber(2, 35)
+    out: True
+  tex:
+    in: \mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)
+    out: \top
+  traditional:
+    in: \mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[ProfiniteNumber[11, 18], ProfiniteNumber[2, 35]]
+  sage:
+    in: bool(Qhat(11, 18) == Qhat(2, 35))
+    out: True
+golden-equal-2-mod-29-3-3-mod-5:
+  epsil:
+    in: ProfiniteNumber(2, 29 / 3) == ProfiniteNumber(3, 5)
+    out: True
+  tex:
+    in: \mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)
+    out: \top
+  traditional:
+    in: \mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[ProfiniteNumber[2, Rational[29, 3]], ProfiniteNumber[3, 5]]
+  sage:
+    in: bool(Qhat(2, (29/3)) == Qhat(3, 5))
+    out: True
+golden-equal-2-mod-48-12:
+  epsil:
+    in: ProfiniteNumber(2, 48) == 12
+    out: False
+  tex:
+    in: \mathrm{ProfiniteNumber}(2, 48)=12
+    out: \bot
+  traditional:
+    in: \mathrm{ProfiniteNumber}(2, 48)=12
+    out: \mathrm{False}
+  fullform:
+    in: Equal[ProfiniteNumber[2, 48], 12]
+  sage:
+    in: bool(Qhat(2, 48) == 12)
+    out: False
+golden-numerator-2:
+  epsil:
+    in: Numerator(-2)
+    out: "-2"
+  tex:
+    in: \mathrm{Numerator}(-2)
+    out: "-2"
+  fullform:
+    in: Numerator[-2]
+  sage:
+    in: (-2).numerator()
+    out: "-2"
+golden-numerator-11-mod-18:
+  epsil:
+    in: Numerator(ProfiniteNumber(11, 18))
+    out: ProfiniteNumber(11, 18)
+  tex:
+    in: \mathrm{Numerator}(\mathrm{ProfiniteNumber}(11, 18))
+    out: \mathrm{ProfiniteNumber}(11, 18)
+  fullform:
+    in: Numerator[ProfiniteNumber[11, 18]]
+  sage:
+    in: (Qhat(11, 18)).numerator()
+    out: 11 mod 18
+golden-numerator-187-4-mod-47:
+  epsil:
+    in: Numerator(ProfiniteNumber(187 / 4, 47))
+    out: ProfiniteNumber(187, 188)
+  tex:
+    in: \mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{187}{4}, 47))
+    out: \mathrm{ProfiniteNumber}(187, 188)
+  fullform:
+    in: Numerator[ProfiniteNumber[Rational[187, 4], 47]]
+  sage:
+    in: (Qhat((187/4), 47)).numerator()
+    out: 187 mod 188
+golden-numerator-4-3:
+  epsil:
+    in: Numerator(-4 / 3)
+    out: "-4"
+  tex:
+    in: \mathrm{Numerator}(-\frac{4}{3})
+    out: "-4"
+  fullform:
+    in: Numerator[Rational[-4, 3]]
+  sage:
+    in: ((-4/3)).numerator()
+    out: "-4"
+golden-denominator-2:
+  epsil:
+    in: Denominator(-2)
+    out: "1"
+  tex:
+    in: \mathrm{Denominator}(-2)
+    out: "1"
+  fullform:
+    in: Denominator[-2]
+  sage:
+    in: (-2).denominator()
+    out: "1"
+golden-denominator-11-mod-18:
+  epsil:
+    in: Denominator(ProfiniteNumber(11, 18))
+    out: "1"
+  tex:
+    in: \mathrm{Denominator}(\mathrm{ProfiniteNumber}(11, 18))
+    out: "1"
+  fullform:
+    in: Denominator[ProfiniteNumber[11, 18]]
+  sage:
+    in: (Qhat(11, 18)).denominator()
+    out: "1"
+golden-denominator-187-4-mod-47:
+  epsil:
+    in: Denominator(ProfiniteNumber(187 / 4, 47))
+    out: "4"
+  tex:
+    in: \mathrm{Denominator}(\mathrm{ProfiniteNumber}(\frac{187}{4}, 47))
+    out: "4"
+  fullform:
+    in: Denominator[ProfiniteNumber[Rational[187, 4], 47]]
+  sage:
+    in: (Qhat((187/4), 47)).denominator()
+    out: "4"
+golden-denominator-4-3:
+  epsil:
+    in: Denominator(-4 / 3)
+    out: "3"
+  tex:
+    in: \mathrm{Denominator}(-\frac{4}{3})
+    out: "3"
+  fullform:
+    in: Denominator[Rational[-4, 3]]
+  sage:
+    in: ((-4/3)).denominator()
+    out: "3"

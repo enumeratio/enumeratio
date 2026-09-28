@@ -601,20 +601,26 @@ def _enumeratio_adeles_json(x):
 # needs the matrix built from $1's nested List first. Returns the JSON text directly (not a
 # plain value) so enumeratio_value's fallthrough (a str it cannot interpret further) hands it
 # back unchanged.
-def enumeratio_profinite_decomposition(rows, d=None):
+# A's entries are compared the way compute-engine's own leaf() (oracle-verdict.ts) reduces a
+# bare Rational -- a decimal NUMBER, not a structured ["Rational", n, d] -- since the whole
+# decomposition answer is one flat text comparison (compare.ts), not a per-leaf one; there is no
+# tolerance step to paper over a quoted string or a stray ["Rational", ...] here. json.dumps on a
+# plain int/float keeps the digits unquoted so they line up with show()'s String(x).
+def _enumeratio_bare_num(x):
+    import json
+    x = QQ(x)
+    return json.dumps(int(x)) if x.denominator() == 1 else repr(float(x))
+
+def enumeratio_profinite_decomposition(rows, d):
     import json
     n = len(rows)
     M = matrix(Qhat, n, n, [rows[i][j] for i in range(n) for j in range(n)])
-    if d is None:
-        d = M.det()
     A = factor_GLQhat(M, d)
     B = M * A.inverse().change_ring(Qhat)
-    return json.dumps(
-        [
-            [[_enumeratio_profinite_json(B[i, j]) for j in range(n)] for i in range(n)],
-            [[_enumeratio_adic_num(A[i, j]) for j in range(n)] for i in range(n)],
-        ]
-    )
+    row = lambda cells: "[" + ", ".join(cells) + "]"
+    b_text = row([row([json.dumps(_enumeratio_profinite_json(B[i, j])) for j in range(n)]) for i in range(n)])
+    a_text = row([row([_enumeratio_bare_num(A[i, j]) for j in range(n)]) for i in range(n)])
+    return row([b_text, a_text])
 
 def enumeratio_value(x):
     import json

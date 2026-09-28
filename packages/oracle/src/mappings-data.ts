@@ -867,19 +867,11 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
   },
   {
     head: "ProfiniteDecomposition",
-    arity: 1,
-    emit: {
-      sage: "enumeratio_profinite_decomposition($1)",
-    },
-    note: "Same helper, det computed from $1 over the profinite ring -- unverified until checked against Sage; may need to drop if that determinant misbehaves.",
-  },
-  {
-    head: "ProfiniteDecomposition",
     arity: 2,
     emit: {
       sage: "enumeratio_profinite_decomposition($1, $2)",
     },
-    note: "Hertogh's Algorithm 8.4 (factor_GLQhat); no one-liner, so run.ts's SAGE_PREAMBLE carries the matrix-building helper.",
+    note: "Hertogh's Algorithm 8.4 (factor_GLQhat); no one-liner, so run.ts's SAGE_PREAMBLE carries the matrix-building helper. The arity-1 form (det computed from $1) has no row -- Sage's generic matrix determinant does not work over the Qhat ring (checked; TypeError coercing a ProfiniteNumber to an integer).",
   },
   {
     head: "ProfiniteNumber",

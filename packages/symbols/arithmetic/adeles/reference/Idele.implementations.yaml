@@ -7,6 +7,8 @@ the-principal-idele-7-at-every-place:
     out: \mathrm{Idele}(7, 7)
   fullform:
     in: Idele[7]
+  sage:
+    in: Ideles(QQ)([7], 7)
 7-and-its-inverse-cancel-everywhere:
   epsil:
     in: Idele(7) * Idele(1 / 7)
@@ -16,6 +18,8 @@ the-principal-idele-7-at-every-place:
     out: \mathrm{Idele}(1, 1)
   fullform:
     in: Times[Idele[7], Idele[Rational[1, 7]]]
+  sage:
+    in: (Ideles(QQ)([7], 7) * Ideles(QQ)([(1/7)], (1/7)))
 a-listed-component-carries-its-valuation-into:
   epsil:
     in: Idele(1, 1, [AdicNumeral(5, 15 / 7, 4)])
@@ -43,3 +47,143 @@ idele-with-a-zero-real-part:
     out: \mathrm{Idele}(0, 1)
   fullform:
     in: Idele[0, 1]
+  sage:
+    in: Ideles(QQ)([0], 1)
+golden-multiply-rational-real-parts:
+  epsil:
+    in: Idele(-1, 1 / 4) * Idele(1, 7 / 3)
+    out: Idele(-1, 7 / 12)
+  tex:
+    in: \mathrm{Idele}(-1, \frac{1}{4})\mathrm{Idele}(1, \frac{7}{3})
+    out: \mathrm{Idele}(-1, \frac{7}{12})
+  fullform:
+    in: Times[Idele[-1, Rational[1, 4]], Idele[1, Rational[7, 3]]]
+  sage:
+    in: (Ideles(QQ)([-1], (1/4)) * Ideles(QQ)([1], (7/3)))
+    out: "Idèle with values:"
+golden-multiply-integer-idele:
+  epsil:
+    in: Idele(-1, 6) * Idele(1, 2)
+    out: Idele(-1, 12)
+  tex:
+    in: \mathrm{Idele}(-1, 6)\mathrm{Idele}(1, 2)
+    out: \mathrm{Idele}(-1, 12)
+  fullform:
+    in: Times[Idele[-1, 6], Idele[1, 2]]
+  sage:
+    in: (Ideles(QQ)([-1], 6) * Ideles(QQ)([1], 2))
+    out: "Idèle with values:"
+golden-divide-rational-real-parts:
+  epsil:
+    in: Idele(-1, 1 / 4) / Idele(1, 7 / 3)
+    out: Idele(-1, 3 / 28)
+  tex:
+    in: \frac{\mathrm{Idele}(-1, \frac{1}{4})}{\mathrm{Idele}(1, \frac{7}{3})}
+    out: \mathrm{Idele}(-1, \frac{3}{28})
+  fullform:
+    in: Divide[Idele[-1, Rational[1, 4]], Idele[1, Rational[7, 3]]]
+  sage:
+    in: (Ideles(QQ)([-1], (1/4)) / Ideles(QQ)([1], (7/3)))
+    out: "Idèle with values:"
+golden-divide-integer-idele:
+  epsil:
+    in: Idele(-1, 6) / Idele(1, 2)
+    out: Idele(-1, 3)
+  tex:
+    in: \frac{\mathrm{Idele}(-1, 6)}{\mathrm{Idele}(1, 2)}
+    out: \mathrm{Idele}(-1, 3)
+  fullform:
+    in: Divide[Idele[-1, 6], Idele[1, 2]]
+  sage:
+    in: (Ideles(QQ)([-1], 6) / Ideles(QQ)([1], 2))
+    out: "Idèle with values:"
+principal-idele-of-negative-rational:
+  epsil:
+    in: Idele(-5 / 2)
+    out: Idele(-5 / 2, -5 / 2)
+  tex:
+    in: \mathrm{Idele}(-\frac{5}{2})
+    out: \mathrm{Idele}(-\frac{5}{2}, -\frac{5}{2})
+  fullform:
+    in: Idele[Rational[-5, 2]]
+  sage:
+    in: Ideles(QQ)([(-5/2)], (-5/2))
+    out: "Idèle with values:"
+real-and-finite-parts-can-differ-in-sign:
+  epsil:
+    in: Idele(-1, 3)
+    out: Idele(-1, 3)
+  tex:
+    in: \mathrm{Idele}(-1, 3)
+    out: \mathrm{Idele}(-1, 3)
+  fullform:
+    in: Idele[-1, 3]
+  sage:
+    in: Ideles(QQ)([-1], 3)
+    out: "Idèle with values:"
+multiplying-by-the-identity-idele:
+  epsil:
+    in: Idele(5, 2) * Idele(1, 1)
+    out: Idele(5, 2)
+  tex:
+    in: \mathrm{Idele}(5, 2)\mathrm{Idele}(1, 1)
+    out: \mathrm{Idele}(5, 2)
+  fullform:
+    in: Times[Idele[5, 2], Idele[1, 1]]
+  sage:
+    in: (Ideles(QQ)([5], 2) * Ideles(QQ)([1], 1))
+    out: "Idèle with values:"
+squaring-an-idele:
+  epsil:
+    in: Idele(2, 3) ^ 2
+    out: Idele(4, 9)
+  tex:
+    in: \mathrm{Idele}(2, 3)^2
+    out: \mathrm{Idele}(4, 9)
+  fullform:
+    in: Power[Idele[2, 3], 2]
+  sage:
+    in: ((Ideles(QQ)([2], 3))^2)
+    out: "Idèle with values:"
+equal-ideles:
+  epsil:
+    in: Idele(2, 3) == Idele(2, 3)
+    out: True
+  tex:
+    in: \mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 3)
+    out: \top
+  traditional:
+    in: \mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 3)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Idele[2, 3], Idele[2, 3]]
+  sage:
+    in: bool(Ideles(QQ)([2], 3) == Ideles(QQ)([2], 3))
+    out: True
+unequal-ideles-differ-in-finite-part:
+  epsil:
+    in: Idele(2, 3) == Idele(2, 5)
+    out: False
+  tex:
+    in: \mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 5)
+    out: \bot
+  traditional:
+    in: \mathrm{Idele}(2, 3)=\mathrm{Idele}(2, 5)
+    out: \mathrm{False}
+  fullform:
+    in: Equal[Idele[2, 3], Idele[2, 5]]
+  sage:
+    in: bool(Ideles(QQ)([2], 3) == Ideles(QQ)([2], 5))
+    out: False
+inverting-an-idele:
+  epsil:
+    in: Idele(1, 1) / Idele(-2, 3 / 5)
+    out: Idele(-1 / 2, 5 / 3)
+  tex:
+    in: \frac{\mathrm{Idele}(1, 1)}{\mathrm{Idele}(-2, \frac{3}{5})}
+    out: \mathrm{Idele}(-\frac{1}{2}, \frac{5}{3})
+  fullform:
+    in: Divide[Idele[1, 1], Idele[-2, Rational[3, 5]]]
+  sage:
+    in: (Ideles(QQ)([1], 1) / Ideles(QQ)([-2], (3/5)))
+    out: "Idèle with values:"
