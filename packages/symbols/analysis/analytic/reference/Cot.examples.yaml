@@ -97,3 +97,27 @@
   expected: [Ln, [Abs, [Sin, x]]]
   category: Scope
   caption: 'Antiderivative: $\ln|\sin x|$'
+- id: a-huge-24-40-argument
+  expr: [N, [Cot, [Power, 24, 40]]]
+  expected: { num: "2.290720910010880678424893" }
+  role: test
+- id: a-huge-10-100-argument
+  expr: [N, [Cot, [Power, 10, 100]]]
+  expected: { num: "2.492323879279820694866405" }
+  role: test
+- id: a-huge-3-200-argument
+  expr: [N, [Cot, [Power, 3, 200]]]
+  expected: { num: "0.36714300103369787917328" }
+  role: test
+- id: a-huge-neg-7-60-argument
+  expr: [N, [Cot, [Negate, [Power, 7, 60]]]]
+  expected: { num: "-2.549725448552896594744082" }
+  role: test
+- id: a-huge-10-80-plus-1-over-3-argument
+  expr: [N, [Cot, [Divide, [Add, [Power, 10, 80], 1], 3]]]
+  expected: { num: "0.17309023544614244604558" }
+  role: test
+- id: cot-7-under-n
+  expr: [N, [Cot, 7]]
+  expected: 1.1475154224051356
+  role: test

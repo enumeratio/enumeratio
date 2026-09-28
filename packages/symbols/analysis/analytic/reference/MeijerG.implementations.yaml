@@ -31,3 +31,333 @@ two-b-terms:
     in: MeijerG[List[List[], List[]], List[List[0, Rational[1, 2]], List[]], 1.3]
   wolfram:
     in: MeijerG[List[List[], List[]], List[List[0, Rational[1, 2]], List[]], 1.3]
+m-1-n-1-p-1-q-2:
+  epsil:
+    in: MeijerG([[0.5], []], [[0.2, 0.9], []], 0.6)
+    out: 0.760_588_901_128_242
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.6)
+    out: 0.760\,588\,901\,128\,242
+  fullform:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 0.6]
+  wolfram:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 0.6]
+m-1-n-1-p-1-q-2-larger-z:
+  epsil:
+    in: N(MeijerG([[0.5], []], [[0.2, 0.9], []], 5))
+    out: 0.440_760_307_784_382_63
+  tex:
+    in: N(\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 5))
+    out: 0.440\,760\,307\,784\,382\,63
+  fullform:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 5]]
+  wolfram:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 5]]
+m-1-n-1-p-1-q-2-z-10:
+  epsil:
+    in: N(MeijerG([[0.5], []], [[0.2, 0.9], []], 10))
+    out: 0.334_180_264_193_562_34
+  tex:
+    in: N(\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 10))
+    out: 0.334\,180\,264\,193\,562\,34
+  fullform:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 10]]
+  wolfram:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 10]]
+p-q-1-z-near-1-0-9:
+  epsil:
+    in: MeijerG([[0.4], []], [[0.9], []], 0.9)
+    out: 0.307_774_615_731_634_6
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.9)
+    out: 0.307\,774\,615\,731\,634\,6
+  fullform:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[]], 0.9]
+  wolfram:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[]], 0.9]
+p-q-1-z-near-1-0-85:
+  epsil:
+    in: MeijerG([[0.4], []], [[0.9], []], -0.85)
+    out: -12.534_049_652_555_14 + 4.072_559_605_676_381i
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, -0.85)
+    out: -12.534\,049\,652\,555\,14+4.072\,559\,605\,676\,381i
+  fullform:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[]], -0.85]
+  wolfram:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[]], -0.85]
+p-q-1-z-near-1-0-88:
+  epsil:
+    in: MeijerG([[0.2], []], [[0.6], []], 0.88)
+    out: 0.339_563_800_531_446_9
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.2\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.6\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.88)
+    out: 0.339\,563\,800\,531\,446\,9
+  fullform:
+    in: MeijerG[List[List[0.2], List[]], List[List[0.6], List[]], 0.88]
+  wolfram:
+    in: MeijerG[List[List[0.2], List[]], List[List[0.6], List[]], 0.88]
+two-b-terms-z-0-5:
+  epsil:
+    in: MeijerG([[], []], [[0, 0.5], []], 0.5)
+    out: 0.430_913_192_167_496_63
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.5)
+    out: 0.430\,913\,192\,167\,496\,63
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], 0.5]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], 0.5]
+two-b-terms-z-3-0:
+  epsil:
+    in: N(MeijerG([[], []], [[0, 0.5], []], 3))
+    out: 0.055_479_778_708_610_95
+  tex:
+    in: N(\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 3))
+    out: 0.055\,479\,778\,708\,610\,95
+  fullform:
+    in: N[MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], 3]]
+  wolfram:
+    in: N[MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], 3]]
+two-b-terms-z-0-05-near-z-0:
+  epsil:
+    in: MeijerG([[], []], [[0.1, 0.6], []], 0.05)
+    out: 0.839_942_468_030_146_4
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.1, 0.6\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.05)
+    out: 0.839\,942\,468\,030\,146\,4
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0.1, 0.6], List[]], 0.05]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0.1, 0.6], List[]], 0.05]
+close-b-s-m-2-strong-cancellation:
+  epsil:
+    in: MeijerG([[], []], [[0.01, 0.51], []], 1.7)
+    out: 0.131_334_242_387_276_3
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.01, 0.51\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1.7)
+    out: 0.131\,334\,242\,387\,276\,3
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0.01, 0.51], List[]], 1.7]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0.01, 0.51], List[]], 1.7]
+close-b-s-m-2-strong-cancellation-2:
+  epsil:
+    in: MeijerG([[], []], [[0.2, 0.7], []], 2.2)
+    out: 0.106_839_990_480_520_73
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.7\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 2.2)
+    out: 0.106\,839\,990\,480\,520\,73
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0.2, 0.7], List[]], 2.2]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0.2, 0.7], List[]], 2.2]
+m-3-p-0-q-3:
+  epsil:
+    in: MeijerG([[], []], [[0, 0.3, 0.7], []], 1.1)
+    out: 0.165_440_720_152_658_45
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0.3, 0.7\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1.1)
+    out: 0.165\,440\,720\,152\,658\,45
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.3, 0.7], List[]], 1.1]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.3, 0.7], List[]], 1.1]
+m-3-p-1-q-3:
+  epsil:
+    in: MeijerG([[0.4], []], [[0.1, 0.5, 0.9], []], 0.8)
+    out: 0.760_328_590_547_471_9
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.1, 0.5, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.8)
+    out: 0.760\,328\,590\,547\,471\,9
+  fullform:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.1, 0.5, 0.9], List[]], 0.8]
+  wolfram:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.1, 0.5, 0.9], List[]], 0.8]
+negative-b:
+  epsil:
+    in: MeijerG([[], []], [[-0.3, 0.4], []], 1.2)
+    out: 0.200_037_426_887_945_62
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack-0.3, 0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1.2)
+    out: 0.200\,037\,426\,887\,945\,62
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[-0.3, 0.4], List[]], 1.2]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[-0.3, 0.4], List[]], 1.2]
+negative-a-and-b:
+  epsil:
+    in: MeijerG([[-0.2], []], [[-0.5], []], 0.7)
+    out: 1.070_113_740_928_455_8
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack-0.2\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack-0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.7)
+    out: 1.070\,113\,740\,928\,455\,8
+  fullform:
+    in: MeijerG[List[List[-0.2], List[]], List[List[-0.5], List[]], 0.7]
+  wolfram:
+    in: MeijerG[List[List[-0.2], List[]], List[List[-0.5], List[]], 0.7]
+negative-z:
+  epsil:
+    in: MeijerG([[0.3], []], [[0.6, 1.2], []], -1.4)
+    out: 1.009_248_560_687_353_8 - 0.381_008_521_266_678_8i
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.3\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.6, 1.2\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, -1.4)
+    out: 1.009\,248\,560\,687\,353\,8-0.381\,008\,521\,266\,678\,8i
+  fullform:
+    in: MeijerG[List[List[0.3], List[]], List[List[0.6, 1.2], List[]], -1.4]
+  wolfram:
+    in: MeijerG[List[List[0.3], List[]], List[List[0.6, 1.2], List[]], -1.4]
+negative-z-two-b:
+  epsil:
+    in: MeijerG([[], []], [[0.1, 0.6], []], -0.8)
+    out: 0.166_319_856_670_804_4 - 1.725_342_775_467_998_9i
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.1, 0.6\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, -0.8)
+    out: 0.166\,319\,856\,670\,804\,4-1.725\,342\,775\,467\,998\,9i
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0.1, 0.6], List[]], -0.8]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0.1, 0.6], List[]], -0.8]
+larger-params:
+  epsil:
+    in: MeijerG([[2.3], []], [[1.7, 5], []], 1.5)
+    out: 9.882_348_007_771_196
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack2.3\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1.7, 5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1.5)
+    out: 9.882\,348\,007\,771\,196
+  fullform:
+    in: MeijerG[List[List[2.3], List[]], List[List[1.7, 5], List[]], 1.5]
+  wolfram:
+    in: MeijerG[List[List[2.3], List[]], List[List[1.7, 5], List[]], 1.5]
+larger-params-2:
+  epsil:
+    in: MeijerG([[3.1, 0.5], []], [[2.2, 4.4], []], 0.9)
+    out: 11.775_360_812_755_713
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack3.1, 0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2.2, 4.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.9)
+    out: 11.775\,360\,812\,755\,713
+  fullform:
+    in: MeijerG[List[List[3.1, 0.5], List[]], List[List[2.2, 4.4], List[]], 0.9]
+  wolfram:
+    in: MeijerG[List[List[3.1, 0.5], List[]], List[List[2.2, 4.4], List[]], 0.9]
+a-in-block2-only:
+  epsil:
+    in: MeijerG([[], [1.2]], [[0.4], []], 0.6)
+    out: 0.841_026_775_745_052
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack1.2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.6)
+    out: 0.841\,026\,775\,745\,052
+  fullform:
+    in: MeijerG[List[List[], List[1.2]], List[List[0.4], List[]], 0.6]
+  wolfram:
+    in: MeijerG[List[List[], List[1.2]], List[List[0.4], List[]], 0.6]
+b-in-block2-only:
+  epsil:
+    in: MeijerG([[0.4], []], [[0.9], [1.5]], 0.6)
+    out: -0.084_700_401_456_189_36
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.4\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.9\bigr\rbrack, \bigl\lbrack1.5\bigr\rbrack\bigr\rbrack, 0.6)
+    out: -0.084\,700\,401\,456\,189\,36
+  fullform:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[1.5]], 0.6]
+  wolfram:
+    in: MeijerG[List[List[0.4], List[]], List[List[0.9], List[1.5]], 0.6]
+complex-z:
+  epsil:
+    in: MeijerG([[0.5], []], [[0.2, 0.9], []], 0.6 + 0.3i)
+    out: 0.757_156_379_107_412_2 - 0.050_622_836_325_122_12i
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.6+0.3i)
+    out: 0.757\,156\,379\,107\,412\,2-0.050\,622\,836\,325\,122\,12i
+  fullform:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], Complex[0.6, 0.3]]
+  wolfram:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], Complex[0.6, 0.3]]
+complex-z-two-b:
+  epsil:
+    in: MeijerG([[], []], [[0, 0.5], []], 1 + 0.4i)
+    out: 0.213_336_640_957_011_82 - 0.088_320_255_012_895_5i
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0, 0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1+0.4i)
+    out: 0.213\,336\,640\,957\,011\,82-0.088\,320\,255\,012\,895\,5i
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], Complex[1, 0.4]]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[0, 0.5], List[]], Complex[1, 0.4]]
+complex-b:
+  epsil:
+    in: MeijerG([[], []], [[0.2 + 0.1i, 0.2 - 0.1i], []], 1.1)
+    out: 0.204_409_246_307_959_42
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2+0.1i, 0.2-0.1i\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1.1)
+    out: 0.204\,409\,246\,307\,959\,42
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[Complex[0.2, 0.1], Complex[0.2, -0.1]], List[]], 1.1]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[Complex[0.2, 0.1], Complex[0.2, -0.1]], List[]], 1.1]
+very-close-b-s-tiny-result:
+  epsil:
+    in: N(MeijerG([[], []], [[0.001, 0.501], []], 1))
+    out: 0.239_875_543_936_122_9
+  tex:
+    in: N(\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.001, 0.501\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1))
+    out: 0.239\,875\,543\,936\,122\,9
+  fullform:
+    in: N[MeijerG[List[List[], List[]], List[List[0.001, 0.501], List[]], 1]]
+  wolfram:
+    in: N[MeijerG[List[List[], List[]], List[List[0.001, 0.501], List[]], 1]]
+m-2-n-1-p-2-q-2:
+  epsil:
+    in: MeijerG([[0.3], [1.1]], [[0.2, 0.8], []], 0.5)
+    out: 0.707_514_465_759_054_3
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.3\bigr\rbrack, \bigl\lbrack1.1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.8\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.5)
+    out: 0.707\,514\,465\,759\,054\,3
+  fullform:
+    in: MeijerG[List[List[0.3], List[1.1]], List[List[0.2, 0.8], List[]], 0.5]
+  wolfram:
+    in: MeijerG[List[List[0.3], List[1.1]], List[List[0.2, 0.8], List[]], 0.5]
+m-1-n-2-p-2-q-3:
+  epsil:
+    in: MeijerG([[0.2, 0.9], []], [[0.1, 0.5, 1.3], []], 0.7)
+    out: 6.576_773_579_406_729
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.1, 0.5, 1.3\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.7)
+    out: 6.576\,773\,579\,406\,729
+  fullform:
+    in: MeijerG[List[List[0.2, 0.9], List[]], List[List[0.1, 0.5, 1.3], List[]], 0.7]
+  wolfram:
+    in: MeijerG[List[List[0.2, 0.9], List[]], List[List[0.1, 0.5, 1.3], List[]], 0.7]
+z-1-p-q:
+  epsil:
+    in: N(MeijerG([[0.5], []], [[0.2, 0.9], []], 1))
+    out: 0.700_186_808_316_293_4
+  tex:
+    in: N(\mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 1))
+    out: 0.700\,186\,808\,316\,293\,4
+  fullform:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 1]]
+  wolfram:
+    in: N[MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 1]]
+small-z:
+  epsil:
+    in: MeijerG([[0.5], []], [[0.2, 0.9], []], 0.01)
+    out: 0.625_949_983_813_140_8
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack0.5\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack0.2, 0.9\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.01)
+    out: 0.625\,949\,983\,813\,140\,8
+  fullform:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 0.01]
+  wolfram:
+    in: MeijerG[List[List[0.5], List[]], List[List[0.2, 0.9], List[]], 0.01]
+m-2-spread-b:
+  epsil:
+    in: MeijerG([[], []], [[-1.3, 2.6], []], 0.9)
+    out: 4.543_274_438_127_216
+  tex:
+    in: \mathrm{MeijerG}(\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack-1.3, 2.6\bigr\rbrack, \bigl\lbrack\bigr\rbrack\bigr\rbrack, 0.9)
+    out: 4.543\,274\,438\,127\,216
+  fullform:
+    in: MeijerG[List[List[], List[]], List[List[-1.3, 2.6], List[]], 0.9]
+  wolfram:
+    in: MeijerG[List[List[], List[]], List[List[-1.3, 2.6], List[]], 0.9]

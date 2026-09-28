@@ -14,3 +14,7 @@
   expr: [FunctionSurjective, [Divide, 1, x], x, Reals]
   expected: False
   caption: A reciprocal never takes the value 0
+- id: an-unsupported-codomain-declines
+  expr: [FunctionSurjective, [Power, x, 3], x, Integers]
+  expected: [FunctionSurjective, [Power, x, 3], x, Integers]
+  role: test

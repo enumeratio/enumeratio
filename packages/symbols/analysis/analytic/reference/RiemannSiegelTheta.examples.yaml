@@ -8,3 +8,7 @@
   expr: [RiemannSiegelTheta, 0]
   expected: 0
   category: Properties
+- id: riemannsiegeltheta-50
+  expr: [N, [RiemannSiegelTheta, 50]]
+  expected: 26.46136607016141
+  role: test

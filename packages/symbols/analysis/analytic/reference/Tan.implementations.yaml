@@ -746,3 +746,115 @@ a-pole-reached-through-periodicity-unreduced:
     verdict: inconclusive
     kind: undefined-form
     note: "Both decline: compute-engine answers ComplexInfinity, and Rust's f64 tan at this pole gives a huge finite float (1/cos(pi/2) never quite reaches an exact 0) rather than the pole itself."
+a-huge-24-40-argument:
+  epsil:
+    in: N(Tan(24 ^ 40))
+    out: 0.436_543_795_287_244_358_085_11
+  tex:
+    in: N(\tan(24^{40}))
+    out: 0.436\,543\,795\,287\,244\,358\,085
+  fullform:
+    in: N[Tan[Power[24, 40]]]
+  wolfram:
+    in: N[Tan[Power[24, 40]]]
+  sympy:
+    in: N(tan((S(24)**40)), 30)
+  mpmath:
+    in: (tan(((24)**40)))
+  sage:
+    in: N(tan(((24)^40)))
+  rust:
+    in: nf(tan(power(n(24), n(40))))
+a-huge-10-100-argument:
+  epsil:
+    in: N(Tan(10 ^ 100))
+    out: 0.401_231_961_990_814_354_185_75
+  tex:
+    in: N(\tan(10^{100}))
+    out: 0.401\,231\,961\,990\,814\,354\,186
+  fullform:
+    in: N[Tan[Power[10, 100]]]
+  wolfram:
+    in: N[Tan[Power[10, 100]]]
+  sympy:
+    in: N(tan((S(10)**100)), 30)
+  mpmath:
+    in: (tan(((10)**100)))
+  sage:
+    in: N(tan(((10)^100)))
+  rust:
+    in: nf(tan(power(n(10), n(100))))
+a-huge-3-200-argument:
+  epsil:
+    in: N(Tan(3 ^ 200))
+    out: 2.723_734_341_072_774_336_434_671
+  tex:
+    in: N(\tan(3^{200}))
+    out: 2.723\,734\,341\,072\,774\,336\,43
+  fullform:
+    in: N[Tan[Power[3, 200]]]
+  wolfram:
+    in: N[Tan[Power[3, 200]]]
+  sympy:
+    in: N(tan((S(3)**200)), 30)
+  mpmath:
+    in: (tan(((3)**200)))
+  sage:
+    in: N(tan(((3)^200)))
+  rust:
+    in: nf(tan(power(n(3), n(200))))
+a-huge-neg-7-60-argument:
+  epsil:
+    in: N(Tan(-7 ^ 60))
+    out: -0.392_199_089_736_329_312_748_44
+  tex:
+    in: N(\tan(-7^{60}))
+    out: -0.392\,199\,089\,736\,329\,312\,748
+  fullform:
+    in: N[Tan[Minus[Power[7, 60]]]]
+  wolfram:
+    in: N[Tan[Minus[Power[7, 60]]]]
+  sympy:
+    in: N(tan((-(S(7)**60))), 30)
+  mpmath:
+    in: (tan((-((7)**60))))
+  sage:
+    in: N(tan((-((7)^60))))
+  rust:
+    in: nf(tan((-(power(n(7), n(60))))))
+a-huge-10-80-plus-1-over-3-argument:
+  epsil:
+    in: N(Tan((10 ^ 80 + 1) / 3))
+    out: 5.777_333_408_915_218_939_564_447
+  tex:
+    in: N(\tan(\frac{10^{80}+1}{3}))
+    out: 5.777\,333\,408\,915\,218\,939\,56
+  fullform:
+    in: N[Tan[Divide[Plus[Power[10, 80], 1], 3]]]
+  wolfram:
+    in: N[Tan[Divide[Plus[Power[10, 80], 1], 3]]]
+  sympy:
+    in: N(tan((S(((S(10)**80) + 1)) / 3)), 30)
+  sage:
+    in: N(tan(((((10)^80) + 1) / 3)))
+  rust:
+    in: nf(tan(((power(n(10), n(80)) + n(1)) / n(3))))
+tan-100-under-n:
+  epsil:
+    in: N(Tan(100))
+    out: -0.587_213_915_156_920_7
+  tex:
+    in: N(\tan(100))
+    out: -0.587\,213\,915\,156\,920\,7
+  fullform:
+    in: N[Tan[100]]
+  wolfram:
+    in: N[Tan[100]]
+  sympy:
+    in: N(tan(100), 30)
+  mpmath:
+    in: (tan(100))
+  sage:
+    in: N(tan(100))
+  rust:
+    in: nf(tan(n(100)))

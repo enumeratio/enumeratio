@@ -93,3 +93,27 @@
   expected: [Ln, [Abs, [Add, [Tan, x], [Sec, x]]]]
   category: Scope
   caption: 'Antiderivative: $\ln|\sec x + \tan x|$'
+- id: a-huge-24-40-argument
+  expr: [N, [Sec, [Power, 24, 40]]]
+  expected: { num: "1.091132661597017500545567" }
+  role: test
+- id: a-huge-10-100-argument
+  expr: [N, [Sec, [Power, 10, 100]]]
+  expected: { num: "-1.077491107769803497330819" }
+  role: test
+- id: a-huge-3-200-argument
+  expr: [N, [Sec, [Power, 3, 200]]]
+  expected: { num: "-2.901504568450503094879764" }
+  role: test
+- id: a-huge-neg-7-60-argument
+  expr: [N, [Sec, [Negate, [Power, 7, 60]]]]
+  expected: { num: "-1.074160195683123091990666" }
+  role: test
+- id: a-huge-10-80-plus-1-over-3-argument
+  expr: [N, [Sec, [Divide, [Add, [Power, 10, 80], 1], 3]]]
+  expected: { num: "5.863239831165696429804646" }
+  role: test
+- id: sec-3-under-n
+  expr: [N, [Sec, 3]]
+  expected: -1.0101086659079939
+  role: test

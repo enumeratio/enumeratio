@@ -31,3 +31,14 @@ primezetap-2p5:
     in: PrimeZetaP[2.5]
   wolfram:
     in: PrimeZetaP[2.5]
+n-primezetap-4:
+  epsil:
+    in: N(PrimeZetaP(4))
+    out: 0.076_993_139_764_246_85
+  tex:
+    in: N(\mathrm{PrimeZetaP}(4))
+    out: 0.076\,993\,139\,764\,246\,85
+  fullform:
+    in: N[PrimeZetaP[4]]
+  wolfram:
+    in: N[PrimeZetaP[4]]

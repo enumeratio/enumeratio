@@ -35,3 +35,19 @@
   expected: { num: "-2.54264135777352642429" }
   category: Scope
   caption: The real branch $k = -1$ on $-1/e < z < 0$
+- id: branch-2-at-5
+  expr: [N, [LambertW, 5, 2]]
+  expected: [Complex, -0.7840863392558513, 10.923920160375756]
+  role: test
+- id: branch-1-at-neg-1
+  expr: [N, [LambertW, -1, 1]]
+  expected: [Complex, -2.062277729598284, 7.588631178472513]
+  role: test
+- id: branch-5-at-10
+  expr: [N, [LambertW, 10, 5]]
+  expected: [Complex, -1.0928795829909042, 29.808483249094696]
+  role: test
+- id: branch-3-at-a-complex-argument
+  expr: [N, [LambertW, [Complex, 1, 2], 3]]
+  expected: [Complex, -2.1072075066264553, 18.27108543113687]
+  role: test

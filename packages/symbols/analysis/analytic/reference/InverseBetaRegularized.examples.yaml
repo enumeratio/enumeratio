@@ -27,3 +27,7 @@
   expr: [InverseBetaRegularized, 1, 2, 3]
   expected: 1
   category: Properties
+- id: iinv-0-7-4-2
+  expr: [InverseBetaRegularized, 0.7, 4, 2]
+  expected: 0.7819730842367751
+  role: test

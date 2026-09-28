@@ -72,3 +72,148 @@ sqrt-closed-boundary:
     tex:
       in: \text{FunctionContinuous}\left[\left\{\sqrt{x},x\geq 0\right\},x\right]
       out: \text{True}
+sqrt-not-continuous-everywhere:
+  epsil:
+    in: FunctionContinuous(Sqrt(x), x)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[Sqrt[x], x]
+  wolfram:
+    in: FunctionContinuous[Sqrt[x], x]
+log-not-continuous-everywhere:
+  epsil:
+    in: FunctionContinuous(Ln(x), x)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\ln(x), x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\ln(x), x)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[Log[x], x]
+  wolfram:
+    in: FunctionContinuous[Log[x], x]
+tangent-has-poles:
+  epsil:
+    in: FunctionContinuous(Tan(x), x)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\tan(x), x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\tan(x), x)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[Tan[x], x]
+  wolfram:
+    in: FunctionContinuous[Tan[x], x]
+a-rational-function-with-no-real-poles:
+  epsil:
+    in: FunctionContinuous((x ^ 2 + 1) ^ -1, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x^2+1}, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x^2+1}, x)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[Power[Plus[Power[x, 2], 1], -1], x]
+  wolfram:
+    in: FunctionContinuous[Power[Plus[Power[x, 2], 1], -1], x]
+sqrt-of-an-always-positive-quantity:
+  epsil:
+    in: FunctionContinuous(Sqrt(x ^ 2 + 1), x)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\sqrt{x^2+1}, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\sqrt{x^2+1}, x)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[Sqrt[Plus[Power[x, 2], 1]], x]
+  wolfram:
+    in: FunctionContinuous[Sqrt[Plus[Power[x, 2], 1]], x]
+reciprocal-restricted-past-its-pole:
+  epsil:
+    in: FunctionContinuous(x ^ -1, x, x > -1)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\gt-1)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\gt-1)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[List[Power[x, -1], Greater[x, -1]], x]
+    back: [FunctionContinuous, [List, [Power, x, -1], [Greater, x, -1]], x]
+  wolfram:
+    in: FunctionContinuous[List[Power[x, -1], Greater[x, -1]], x]
+sqrt-restricted-past-its-own-domain:
+  epsil:
+    in: FunctionContinuous(Sqrt(x), x, x > -5)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x, x\gt-5)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\sqrt{x}, x, x\gt-5)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[List[Sqrt[x], Greater[x, -5]], x]
+    back: [FunctionContinuous, [List, [Sqrt, x], [Greater, x, -5]], x]
+  wolfram:
+    in: FunctionContinuous[List[Sqrt[x], Greater[x, -5]], x]
+log-restricted-to-its-own-domain:
+  epsil:
+    in: FunctionContinuous(Ln(x), x, x > 0)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\ln(x), x, x\gt0)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\ln(x), x, x\gt0)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[List[Log[x], Greater[x, 0]], x]
+    back: [FunctionContinuous, [List, [Ln, x], [Greater, x, 0]], x]
+  wolfram:
+    in: FunctionContinuous[List[Log[x], Greater[x, 0]], x]
+log-restricted-includes-its-singular-boundary:
+  epsil:
+    in: FunctionContinuous(Ln(x), x, x >= 0)
+    out: False
+  tex:
+    in: \mathrm{FunctionContinuous}(\ln(x), x, x\ge0)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionContinuous}(\ln(x), x, x\ge0)
+    out: \mathrm{False}
+  fullform:
+    in: FunctionContinuous[List[Log[x], GreaterEqual[x, 0]], x]
+    back: [FunctionContinuous, [List, [Ln, x], [GreaterEqual, x, 0]], x]
+  wolfram:
+    in: FunctionContinuous[List[Log[x], GreaterEqual[x, 0]], x]
+reciprocal-restricted-below-its-pole:
+  epsil:
+    in: FunctionContinuous(x ^ -1, x, x < 0)
+    out: True
+  tex:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\lt0)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionContinuous}(\frac{1}{x}, x, x\lt0)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionContinuous[List[Power[x, -1], Less[x, 0]], x]
+    back: [FunctionContinuous, [List, [Power, x, -1], [Less, x, 0]], x]
+  wolfram:
+    in: FunctionContinuous[List[Power[x, -1], Less[x, 0]], x]

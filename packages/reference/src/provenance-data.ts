@@ -9731,7 +9731,7 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: "enumeratio-structures",
     wolframAlias: null,
-    elsewhere: [],
+    elsewhere: ["wolfram"],
   },
   {
     name: "UpperTick",

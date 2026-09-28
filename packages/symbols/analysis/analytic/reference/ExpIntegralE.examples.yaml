@@ -25,3 +25,11 @@
   expected: [Divide, [Power, ExponentialE, [Negate, x]], x]
   category: Properties
   caption: $E_0(x) = e^{-x}/x$
+- id: e-3-2
+  expr: [N, [ExpIntegralE, 3, 2]]
+  expected: 0.03013337979781589
+  role: test
+- id: order-1-5-at-3-2
+  expr: [ExpIntegralE, 1.5, 3.2]
+  expected: 0.009156991428870985
+  role: test

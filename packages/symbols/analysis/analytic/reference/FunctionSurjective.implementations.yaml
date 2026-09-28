@@ -70,3 +70,12 @@ a-reciprocal-never-hits-zero:
     tex:
       in: \text{FunctionSurjective}\left[\frac{1}{x},x,\mathbb{R}\right]
       out: \text{False}
+an-unsupported-codomain-declines:
+  epsil:
+    in: FunctionSurjective(x ^ 3, x, Integers)
+    out: FunctionSurjective(x ^ 3, x, Integers)
+  tex:
+    in: \mathrm{FunctionSurjective}(x^3, x, \mathbb{Z})
+    out: \mathrm{FunctionSurjective}(x^3, x, \mathbb{Z})
+  fullform:
+    in: FunctionSurjective[Power[x, 3], x, Integers]

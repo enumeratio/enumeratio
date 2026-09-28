@@ -16,3 +16,15 @@
   expected: [Multiply, [Rational, -1, 2], a]
   category: Scope
   caption: A polynomial in a
+- id: norlundb-6-4
+  expr: [NorlundB, 6, 4]
+  expected: [Rational, 221, 42]
+  role: test
+- id: norlundb-5-3
+  expr: [NorlundB, 5, 3]
+  expected: [Rational, -3, 4]
+  role: test
+- id: norlundb-7-2
+  expr: [NorlundB, 7, 2]
+  expected: [Rational, -1, 6]
+  role: test
