@@ -23,7 +23,7 @@ import {
   type VisualSymbol,
 } from "@enumeratio/frontend";
 import { controlSelector } from "./define.ts";
-import { isExpressive } from "./generic.ts";
+import { defineUsed, isExpressive } from "./generic.ts";
 
 const BY_TAG = new Map<string, VisualSymbol>();
 for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag) && s.fixed === undefined) BY_TAG.set(s.tag, s);
@@ -154,8 +154,9 @@ function scopeNames(el: Element): Set<string> {
 export function adoptStructure(el: Element): void {
   const symbol = BY_TAG.get(el.localName);
   if (symbol === undefined || ADOPTED.has(el)) return;
-  // The children may not have been upgraded yet, and their expressions live on the
-  // instances.
+  // The children may not have been defined or upgraded yet, and their expressions live
+  // on the instances.
+  defineUsed(el);
   customElements.upgrade(el);
   let args = argumentsOf(el);
   const options = optionsOn(el, symbol);

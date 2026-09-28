@@ -291,11 +291,51 @@ export function defineGeneric(head: string): boolean {
   return true;
 }
 
-/** Register every head that has no hand-written element. Idempotent. */
+/** Register every head that has no hand-written element, eagerly. Idempotent. */
 export function defineGenerics(heads: readonly string[] = HEADS): number {
   let n = 0;
   for (const head of heads) if (defineGeneric(head)) n++;
   return n;
+}
+
+// On demand (design/manifest.md, "Cost at scale"): a page defines the generic elements it
+// uses, not one per head the manifest knows. An element already in the page upgrades when
+// its class arrives, and an outer generic re-reads its arguments when an inner one does.
+
+let headByTag: Map<string, string> | undefined;
+
+/** The head a `notatio-*` tag stands for, or undefined. */
+const headOfTag = (tag: string): string | undefined =>
+  (headByTag ??= new Map(HEADS.map((head) => [tagOf(head), head]))).get(tag);
+
+/**
+ * Define the generic elements `root` uses that nothing has defined yet -- deepest first, so
+ * an outer element finds its arguments already upgraded. Returns how many it defined.
+ */
+export function defineUsed(root: ParentNode): number {
+  const deepest = new Map<string, number>();
+  const consider = (el: Element): void => {
+    const tag = el.localName;
+    if (!tag.startsWith("notatio-") || customElements.get(tag) !== undefined || headOfTag(tag) === undefined) return;
+    let depth = 0;
+    for (let p = el.parentElement; p !== null; p = p.parentElement) depth++;
+    deepest.set(tag, Math.max(depth, deepest.get(tag) ?? 0));
+  };
+  if (root instanceof Element) consider(root);
+  for (const el of root.querySelectorAll("*")) consider(el);
+  const tags = [...deepest].sort((a, b) => b[1] - a[1]);
+  for (const [tag] of tags) defineGeneric(headOfTag(tag)!);
+  return tags.length;
+}
+
+/** Define what `root` uses now, and keep defining generic elements as they are inserted. */
+export function defineOnDemand(root: Document | ShadowRoot = document): MutationObserver {
+  defineUsed(root);
+  const observer = new MutationObserver((records) => {
+    for (const record of records) for (const node of record.addedNodes) if (node instanceof Element) defineUsed(node);
+  });
+  observer.observe(root, { childList: true, subtree: true });
+  return observer;
 }
 
 /** The expression a whole subtree of elements stands for, from its outermost generic. */
