@@ -23,7 +23,9 @@ function rotateLeft(w: number[], s: number): number[] {
   return Array.from({ length: n }, (_, i) => w[(i + s) % n]);
 }
 function reversed(w: number[]): number[] {
-  return w.slice().reverse();
+  const r = w.slice();
+  r.reverse();
+  return r;
 }
 
 // ─── number theory (mirrors words.ts's private copy — needed here for KBracelets/Burnside). ───────
@@ -35,7 +37,8 @@ function divisorsOf(n: number): number[] {
       if (d !== n / d) out.push(n / d);
     }
   }
-  return out.sort((a, b) => a - b);
+  out.sort((a, b) => a - b);
+  return out;
 }
 function eulerPhi(n: number): number {
   let result = n;
@@ -294,7 +297,11 @@ function ternaryGrayList(n: number): number[][] {
     const prev = ternaryGrayList(n - 1);
     list = [];
     for (let digit = 0; digit < 3; digit++) {
-      const block = digit % 2 === 0 ? prev : prev.slice().reverse();
+      let block = prev;
+      if (digit % 2 !== 0) {
+        block = prev.slice();
+        block.reverse();
+      }
       for (const w of block) list.push([digit, ...w]);
     }
   }

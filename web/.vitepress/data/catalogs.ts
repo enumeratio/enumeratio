@@ -41,7 +41,7 @@ export const statisticsRows: readonly CatalogRow[] = [...ALL_STATISTICS]
     note: d.note,
     references: crosswalkForStatistic(d.head, d.on),
   }))
-  .sort(byName);
+  .toSorted(byName);
 
 // A map's endpoints are carrier TYPES (`permutation`); the crosswalk is keyed by the carrier's
 // domain name (`Permutation`).
@@ -65,7 +65,7 @@ export const mapsRows: readonly CatalogRow[] = [
     frontier: true,
     references: crosswalkForMap(m.name, carrierName(m.from)),
   })),
-].sort(byName);
+].toSorted(byName);
 
 // Carrier domains — the nominal types combinatorial objects are stored as; badge is the
 // underlying storage shape.
@@ -77,7 +77,7 @@ export const domainsRows: readonly CatalogRow[] = [...DOMAINS]
     summary: d.restricts ? `restricts ${d.restricts}` : undefined,
     references: crosswalkFor(d.name),
   }))
-  .sort(byName);
+  .toSorted(byName);
 
 // The enumerable collection families — each a head whose elements are one kind of
 // combinatorial object, taking one or two size parameters.
@@ -88,4 +88,4 @@ export const collectionsRows: readonly CatalogRow[] = [...allEntries]
     badges: [e.kind, `${e.paramCount} param${e.paramCount > 1 ? "s" : ""}`],
     references: crosswalkForCollection(e.head),
   }))
-  .sort(byName);
+  .toSorted(byName);

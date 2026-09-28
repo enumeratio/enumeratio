@@ -165,7 +165,7 @@ export function gaussianRoots(b: Gaussian, r: bigint, m: Gaussian): Gaussian[] |
     glued = glued.flatMap((x) => roots.map((c) => add(x, mul(combined, mod(mul(sub(c, x), inverse), modulus)!))));
     combined = mul(combined, modulus);
   }
-  return glued.map((x) => mod(x, m)!).sort(compare);
+  return glued.map((x) => mod(x, m)!).toSorted(compare);
 }
 
 /**

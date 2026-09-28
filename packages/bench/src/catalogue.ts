@@ -34,7 +34,7 @@ export function loadCatalogue(dir = CATALOGUE_DIR): BenchCase[] {
   const seen = new Set<string>();
   for (const file of readdirSync(dir)
     .filter((f) => f.endsWith(".yaml"))
-    .sort()) {
+    .toSorted()) {
     const doc = parseYaml(readFileSync(join(dir, file), "utf8")) as Record<string, unknown[]>;
     for (const [head, list] of Object.entries(doc)) {
       for (const raw of list) {

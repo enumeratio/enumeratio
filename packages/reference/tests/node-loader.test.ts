@@ -49,8 +49,8 @@ test("flags an id collision on a head shared between two packages (§9)", () => 
 test("flags schema violations instead of throwing", () => {
   const result = loadReferenceData(fixture("node-loader-invalid"));
   expect(result.heads).toHaveLength(1);
-  expect(result.issues.map((i) => i.message).sort()).toEqual(
-    ['$[0]: unexpected property "typo"', '$: missing required property "summary"'].sort(),
+  expect(result.issues.map((i) => i.message).toSorted()).toEqual(
+    ['$[0]: unexpected property "typo"', '$: missing required property "summary"'].toSorted(),
   );
 });
 

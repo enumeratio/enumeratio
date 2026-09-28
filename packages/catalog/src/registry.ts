@@ -29,7 +29,7 @@ export class ResourceRegistry {
   }
 
   get contexts(): readonly string[] {
-    return [...this.#contexts.keys()].sort();
+    return [...this.#contexts.keys()].toSorted();
   }
 
   get searchPath(): readonly string[] {

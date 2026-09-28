@@ -54,7 +54,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(
+  expect([...heads].toSorted()).toEqual(
     [
       "JacobiSN",
       "JacobiCN",
@@ -70,7 +70,7 @@ test("the golden file covers every head", () => {
       "JacobiSD",
       "JacobiAmplitude",
       "JacobiZN",
-    ].sort(),
+    ].toSorted(),
   );
 });
 

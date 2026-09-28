@@ -149,6 +149,6 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
 
 test("the controls' variables are collected, and only where they are declared", () => {
   const { json } = parseExpression("Row([Slider(k, (0, 5)), Dynamic(k^2), Checkbox(on)])");
-  expect([...controlNames(json)].sort()).toEqual(["k", "on"]);
+  expect([...controlNames(json)].toSorted()).toEqual(["k", "on"]);
   expect(controlNames(parseExpression("Sin(k)").json).size).toBe(0);
 });

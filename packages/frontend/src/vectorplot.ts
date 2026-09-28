@@ -186,7 +186,7 @@ export function streamline(
 
   const fwd = march(opts.step);
   const back = opts.bidirectional === false ? [] : march(-opts.step);
-  return [...back.reverse(), { x: sx, y: sy }, ...fwd];
+  return [...back.toReversed(), { x: sx, y: sy }, ...fwd];
 }
 
 export interface VectorPlotOptions {

@@ -107,7 +107,7 @@ test("factoradic: digit at place k is at most k, and the weights are factorials"
   for (const n of range(0, 300)) {
     const digits = factoradic().toDigits(n)!;
     // Least-significant-first, digit at place k must satisfy 0 ≤ d ≤ k.
-    const reversed = [...digits].reverse();
+    const reversed = [...digits].toReversed();
     reversed.forEach((d, place) => {
       expect(d, `${n} place ${place}`).toBeGreaterThanOrEqual(0);
       expect(d, `${n} place ${place}`).toBeLessThanOrEqual(place);
@@ -199,7 +199,7 @@ test("mixed radix reads a second count as days, hours, minutes, seconds", () => 
 test("primorial base: digit at place k is below the (k+1)-th prime", () => {
   const primes = [2, 3, 5, 7, 11, 13];
   for (const n of range(0, 300)) {
-    const reversed = [...primorialRadix().toDigits(n)!].reverse();
+    const reversed = [...primorialRadix().toDigits(n)!].toReversed();
     reversed.forEach((d, place) => expect(d).toBeLessThan(primes[place]!));
   }
   expect(primorialRadix().toDigits(30)).toEqual([1, 0, 0, 0]); // 1·30

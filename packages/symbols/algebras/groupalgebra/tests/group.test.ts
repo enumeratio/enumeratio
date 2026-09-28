@@ -17,7 +17,7 @@ import {
   order,
 } from "../src/group.ts";
 
-const show = (e: Element) => [...e].sort(([a], [b]) => a - b);
+const show = (e: Element) => [...e].toSorted(([a], [b]) => a - b);
 const groups = (): Group[] => [
   cyclicGroup(1)!,
   cyclicGroup(5)!,

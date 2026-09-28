@@ -13,7 +13,9 @@ const main = files["src/main.rs"] as string;
 const cases = planned(plan, "rust");
 
 test("emits the crate's project files, and only those", () => {
-  expect(Object.keys(files).sort()).toEqual([".gitignore", "Cargo.toml", "rust-toolchain.toml", "src/main.rs"].sort());
+  expect(Object.keys(files).toSorted()).toEqual(
+    [".gitignore", "Cargo.toml", "rust-toolchain.toml", "src/main.rs"].toSorted(),
+  );
   expect(main.length).toBeGreaterThan(0);
 });
 

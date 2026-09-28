@@ -22,7 +22,7 @@ const candidates = [
   ...new Set(
     [...source.matchAll(/inject_builtin\("""([\s\S]*?)"""\)/g)].flatMap((m) => m[1]!.split(/\s+/).filter(Boolean)),
   ),
-].sort();
+].toSorted();
 if (candidates.length < 300) throw new Error(`only ${candidates.length} builtins in ${SOURCE}`);
 
 // A few at a time, with a retry: the host answers HEADs fine but resolver hiccups under

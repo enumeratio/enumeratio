@@ -5,7 +5,7 @@ import { isOpaqueField, PROJECTION_DIMENSION, stackLayers } from "../src/space.t
 const kindOf = (s: string) => s.split(":")[0];
 const stack = (...items: string[]) =>
   stackLayers(items, kindOf)
-    .sort((a, b) => a.z - b.z)
+    .toSorted((a, b) => a.z - b.z)
     .map((l) => l.item);
 
 test("lower-dimensional things sit above higher-dimensional ones", () => {
@@ -35,7 +35,7 @@ test("an opaque field discards only what is beneath it", () => {
 
 test("z-indices are consecutive from the bottom", () => {
   const layers = stackLayers(["point:a", "curve:b", "surface:c"], kindOf);
-  expect(layers.map((l) => l.z).sort((a, b) => a - b)).toEqual([0, 1, 2]);
+  expect(layers.map((l) => l.z).toSorted((a, b) => a - b)).toEqual([0, 1, 2]);
 });
 
 test("an empty or single-item stack is well-formed", () => {

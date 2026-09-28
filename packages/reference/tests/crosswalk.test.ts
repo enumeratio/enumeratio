@@ -39,7 +39,7 @@ test("the generated engine-symbol and crosswalk data are what the collector deri
   // and a dependency bump (a new engine, a new oracle row) has to show up as a diff here.
   const symbols = engineSymbols(new ComputeEngine());
   expect(symbols).toEqual(engineData);
-  const names = [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].sort();
+  const names = [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].toSorted();
   expect(crosswalk(names, FUNGRIM_CORE.rules, { ...SYMBOLS, ...HEADS }, MAPPINGS)).toEqual(derivedData);
 });
 
@@ -102,7 +102,7 @@ test("a carrier inherits what the catalog knows about its collections", () => {
 test("a head's crosswalk draws on every origin", () => {
   const binomial = crosswalkFor("Binomial");
   const origins = new Set(binomial.map((r) => r.origin));
-  expect([...origins].sort()).toEqual(["curated", "engine", "fungrim", "oracle", "wikidata", "wolfram"]);
+  expect([...origins].toSorted()).toEqual(["curated", "engine", "fungrim", "oracle", "wikidata", "wolfram"]);
   const wikidata = binomial.find((r) => r.system === "wikidata");
   expect(wikidata?.identity).toBe("Q209875");
   expect(wikidata?.href).toBe("https://www.wikidata.org/wiki/Q209875");
@@ -289,7 +289,7 @@ test("every Fungrim identity that disagrees has been looked into", () => {
   // waiting to be made, not a thing to leave lying in the data.
   const disagreeing = fungrimVerified.filter((row) => row.verdict === "disagree");
   expect(disagreeing.filter((row) => !KNOWN_CAUSES[row.entry]).map((row) => row.entry)).toEqual([]);
-  expect(Object.keys(KNOWN_CAUSES).sort()).toEqual(disagreeing.map((row) => row.entry).sort());
+  expect(Object.keys(KNOWN_CAUSES).toSorted()).toEqual(disagreeing.map((row) => row.entry).toSorted());
 });
 
 test("a head's Fungrim chip carries how its identities came out", () => {

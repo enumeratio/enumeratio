@@ -117,7 +117,7 @@ test("adaptiveSample refines where the curve bends, and stays ascending", () => 
   const pts = adaptiveSample((x) => Math.sin(1 / x), 0.05, 1, { init: 21, maxDepth: 8 });
   expect(pts.length).toBeGreaterThan(21); // the fast wiggle near lo forces splits
   const xs = pts.map((p) => p.x);
-  expect([...xs].sort((a, b) => a - b)).toEqual(xs); // sorted, no dupes reorder
+  expect([...xs].toSorted((a, b) => a - b)).toEqual(xs); // sorted, no dupes reorder
   // Density is higher near the small-x end (rapid oscillation) than the flat end.
   const half = (lo: number, hi: number): number => xs.filter((x) => x >= lo && x < hi).length;
   expect(half(0.05, 0.5)).toBeGreaterThan(half(0.5, 1));
@@ -203,7 +203,7 @@ test("adaptiveParam keeps t-order and refines a curved arc more than a straight 
   // First point is t=0 -> (1,0); the samples are NOT sorted by x (parametric).
   expect(circle[0].x).toBeCloseTo(1);
   const xs = circle.map((p) => p.x);
-  expect([...xs].sort((a, b) => a - b)).not.toEqual(xs);
+  expect([...xs].toSorted((a, b) => a - b)).not.toEqual(xs);
 });
 
 test("colorBy draws per-segment coloured strokes along a ramp", () => {

@@ -229,7 +229,7 @@ test("NeighborhoodGraph(g, v, r) keeps exactly the vertices within distance r (c
     const nbhd = run(["NeighborhoodGraph", g, 4, r]) as unknown as [string, unknown[], unknown[]];
     const vertexList = (nbhd[1] as unknown as [string, ...number[]]).slice(1);
     const expected = [1, 2, 3, 4, 5, 6, 7].filter((v) => Math.abs(v - 4) <= r);
-    expect([...vertexList].sort((a, b) => (a as number) - (b as number))).toEqual(expected);
+    expect([...vertexList].toSorted((a, b) => (a as number) - (b as number))).toEqual(expected);
   }
 });
 

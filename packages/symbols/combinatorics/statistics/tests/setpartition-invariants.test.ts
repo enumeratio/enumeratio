@@ -16,8 +16,8 @@ const CATALAN = [1, 1, 2, 5, 14, 42, 132, 429];
 test("Crossings and nestings are equidistributed over set partitions of [n], n <= 7", () => {
   for (let n = 0; n <= 7; n++) {
     const parts = setPartitions(n);
-    const crossings = parts.map((b) => countArcPairs(b, "crossing")).sort((a, c) => a - c);
-    const nestings = parts.map((b) => countArcPairs(b, "nesting")).sort((a, c) => a - c);
+    const crossings = parts.map((b) => countArcPairs(b, "crossing")).toSorted((a, c) => a - c);
+    const nestings = parts.map((b) => countArcPairs(b, "nesting")).toSorted((a, c) => a - c);
     expect(crossings, `n=${n}`).toEqual(nestings);
   }
 });

@@ -28,7 +28,7 @@ const read = (path: string): unknown => (existsSync(path) ? parseYaml(readFileSy
 let moved = 0;
 const orphans: string[] = [];
 for (const dir of referenceDirs(PACKAGES))
-  for (const file of readdirSync(dir).sort()) {
+  for (const file of readdirSync(dir).toSorted()) {
     if (!file.endsWith(".yaml") || OLD.some((suffix) => file.endsWith(suffix))) continue;
     const head = file.slice(0, -".yaml".length);
     const fields = read(join(dir, file)) as Omit<ReferenceEntry, "examples"> & { examples?: ReferenceExample[] };

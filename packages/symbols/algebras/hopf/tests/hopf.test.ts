@@ -18,8 +18,8 @@ import {
   unit,
 } from "../src/hopf.ts";
 
-const show = (e: Element) => [...e].sort(([a], [b]) => a.localeCompare(b));
-const showTensor = (t: Tensor) => [...t].sort(([a], [b]) => a.localeCompare(b));
+const show = (e: Element) => [...e].toSorted(([a], [b]) => a.localeCompare(b));
+const showTensor = (t: Tensor) => [...t].toSorted(([a], [b]) => a.localeCompare(b));
 const algebras: HopfAlgebra[] = [nsym, qsym];
 const smallBasis = (n: number) => compositions(n).map(basis);
 
@@ -80,7 +80,7 @@ test("both coproducts are coassociative", () => {
       }
       const byKey = (a: readonly [string, number], b: readonly [string, number]): number =>
         a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0;
-      expect([...left].sort(byKey), `${algebra.name} coassociativity`).toEqual([...right].sort(byKey));
+      expect([...left].toSorted(byKey), `${algebra.name} coassociativity`).toEqual([...right].toSorted(byKey));
     }
   }
 });

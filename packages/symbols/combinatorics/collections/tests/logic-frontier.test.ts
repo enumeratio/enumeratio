@@ -75,7 +75,7 @@ function freeVars(expr: BoxedExpression, into: Set<string> = new Set()): Set<str
 /** Every one of `expr`'s 2^n assignments (n = its free-variable count, capped well under 6
  *  by every fixture below) agrees between the independent oracle and `converted`. */
 function assertTruthTableEquivalent(expr: BoxedExpression, converted: BoxedExpression): void {
-  const vars = [...freeVars(expr)].sort();
+  const vars = [...freeVars(expr)].toSorted();
   expect(vars.length).toBeLessThanOrEqual(6);
   for (let bits = 0; bits < 1 << vars.length; bits++) {
     const assignment: Record<string, boolean> = {};

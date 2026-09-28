@@ -271,7 +271,7 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
       }
     }
   }
-  const order = Uint32Array.from(faceAt.keys()).sort((p, q) => depth[p] - depth[q]);
+  const order = Uint32Array.from(faceAt.keys()).toSorted((p, q) => depth[p] - depth[q]);
 
   const shade = (base: string, t: number): string => `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
   const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));

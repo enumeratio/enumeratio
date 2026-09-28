@@ -32,7 +32,7 @@ function playgroundPages(): Map<string, string> {
   const pages = new Map<string, string>();
   // A page named for the component wins; an index page, which mentions many of them,
   // is the last resort.
-  const files = playgroundFiles().sort((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
+  const files = playgroundFiles().toSorted((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
   for (const file of files) {
     const text = readFileSync(join(playgroundDir, file), "utf8");
     const slug = file.replace(/(?:\/?index)?\.md$/, "");

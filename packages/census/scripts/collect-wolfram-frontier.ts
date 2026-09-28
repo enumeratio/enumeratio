@@ -30,7 +30,7 @@ import { runKernel } from "@enumeratio/oracle/bounded";
  *  grows with the head map instead of drifting from it. */
 const targets = [...new Set([...Object.values(HEADS), ...Object.values(SYMBOLS)])]
   .filter((name) => /^[A-Z][A-Za-z0-9]*$/.test(name))
-  .sort();
+  .toSorted();
 
 const work = mkdtempSync(join(tmpdir(), "wolfram-frontier-"));
 const out = join(work, "examples.json");
@@ -143,7 +143,7 @@ const frontier: FrontierEntry[] = [...uses]
   // head map already carries the row. Neither a gap nor a mapping to add.
   .filter(([head]) => !ours.has(head) && !underAnotherName.has(head))
   .map(([head, n]) => ({ head, uses: n }))
-  .sort((a, b) => b.uses - a.uses || a.head.localeCompare(b.head));
+  .toSorted((a, b) => b.uses - a.uses || a.head.localeCompare(b.head));
 
 /** Per-symbol call forms, for the symbols we do map — the "what does theirs take that ours
  *  does not" list. Basic and Scope only: the later categories are applications, which

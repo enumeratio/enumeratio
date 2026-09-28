@@ -190,6 +190,8 @@ function buildHomogeneous(
         ])
         .evaluate();
     }
+    default:
+      throw new Error("unreachable: Roots.kind is exhaustive above");
   }
 }
 
@@ -207,6 +209,8 @@ function realRootMultiplicity(roots: Roots, target: BoxedExpression): number {
       return (eq(roots.r1) ? 1 : 0) + (eq(roots.r2) ? 1 : 0);
     case "complex":
       return 0;
+    default:
+      throw new Error("unreachable: Roots.kind is exhaustive above");
   }
 }
 
@@ -558,6 +562,8 @@ function solveParticular(
         .evaluate();
       return solveUndetermined(ce, basis, s, forcingExpr, a, xSym, forcing.w);
     }
+    default:
+      return undefined; // Forcing's kinds are exhaustive above; unreachable
   }
 }
 

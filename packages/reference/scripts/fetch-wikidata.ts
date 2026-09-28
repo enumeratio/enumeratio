@@ -74,7 +74,7 @@ const ids = [
       return id ? [id] : [];
     }),
   ),
-].sort();
+].toSorted();
 const titles = [
   ...new Set(
     [
@@ -85,7 +85,7 @@ const titles = [
       .filter((r) => r.system === "wikipedia")
       .map((r) => wikipediaTitle(r.identity)),
   ),
-].sort();
+].toSorted();
 
 const items = new Map<string, WikidataItem>();
 for (const chunk of chunks(ids, 50)) {
@@ -97,7 +97,7 @@ for (const chunk of chunks(titles, 50)) {
   const query = `sites=enwiki&titles=${chunk.map(encodeURIComponent).join("|")}`;
   for (const entity of await fetchEntities(query)) items.set(entity.id, toItem(entity));
 }
-const sorted = [...items.values()].sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
+const sorted = [...items.values()].toSorted((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
 
 writeFileSync(
   new URL("../src/wikidata-data.ts", import.meta.url),

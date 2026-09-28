@@ -16,6 +16,6 @@ export function bySection<T extends Pick<ReferenceExample, "category">>(examples
   };
   return examples
     .map((example, i) => ({ example, i }))
-    .sort((a, b) => rank(a.example.category) - rank(b.example.category) || a.i - b.i)
+    .toSorted((a, b) => rank(a.example.category) - rank(b.example.category) || a.i - b.i)
     .map(({ example }) => example);
 }

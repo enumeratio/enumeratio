@@ -27,7 +27,7 @@ import {
   nsymProduct,
 } from "../src/hopf.ts";
 
-const show = (e: Element) => [...e].filter(([, c]) => c !== 0).sort(([a], [b]) => (a < b ? -1 : 1));
+const show = (e: Element) => [...e].filter(([, c]) => c !== 0).toSorted(([a], [b]) => (a < b ? -1 : 1));
 const same = (a: Element, b: Element) => expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
 
 test("a composition is a subset, and the correspondence round-trips", () => {

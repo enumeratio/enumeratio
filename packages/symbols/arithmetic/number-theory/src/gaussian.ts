@@ -217,7 +217,7 @@ export function divisorsGaussian(z: Gaussian): Gaussian[] | undefined {
     }
     divisors = next;
   }
-  return divisors.map((d) => normalize(d)[0]).sort(compare);
+  return divisors.map((d) => normalize(d)[0]).toSorted(compare);
 }
 
 /** The prime factors of `factorGaussian`, less the leading unit entry it carries for a non-associate z. */

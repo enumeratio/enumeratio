@@ -87,5 +87,7 @@ complete -c notatio -l json -d 'structured JSON output'
 complete -c notatio -s h -l help -d 'show help'
 complete -c notatio -s V -l version -d 'show version'
 `;
+    default:
+      throw new Error("unreachable: Shell is exhaustive above");
   }
 }

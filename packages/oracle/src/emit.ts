@@ -230,7 +230,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
 
   const source = walk(expr);
   if (missing.length > 0) return { ok: false, missing };
-  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].sort() } : {}) };
+  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].toSorted() } : {}) };
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */

@@ -137,5 +137,5 @@ for (const { name, sources, tracked, changed } of CASES) {
 
 test("golden file is up to date", () => {
   if (updating) writeFileSync(GOLDEN, JSON.stringify(fresh, null, 2) + "\n");
-  else expect(Object.keys(fresh).sort()).toEqual(Object.keys(golden).sort());
+  else expect(Object.keys(fresh).toSorted()).toEqual(Object.keys(golden).toSorted());
 });

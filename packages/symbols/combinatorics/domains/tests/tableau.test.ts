@@ -132,7 +132,7 @@ test("the recording tableau is standard", () => {
   // bijection onto PAIRS of standard tableaux rather than merely a map into them.
   for (const p of ALL) {
     const { recording } = rskTableaux(p);
-    expect(recording.flat().sort((a, b) => a - b)).toEqual(Array.from({ length: p.length }, (_, i) => i + 1));
+    expect(recording.flat().toSorted((a, b) => a - b)).toEqual(Array.from({ length: p.length }, (_, i) => i + 1));
     for (const row of recording) for (let i = 1; i < row.length; i++) expect(row[i]!).toBeGreaterThan(row[i - 1]!);
     for (let r = 1; r < recording.length; r++)
       for (const [c, entry] of recording[r]!.entries())

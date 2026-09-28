@@ -22,7 +22,7 @@ test("Foata's defining property holds on S_n for n <= 7 (reference algorithm)", 
     for (const p of permutations(n)) {
       const image = foataOf(p);
       expect(
-        image.slice().sort((a, b) => a - b),
+        image.slice().toSorted((a, b) => a - b),
         `[${p.join(", ")}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));

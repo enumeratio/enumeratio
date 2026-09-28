@@ -183,7 +183,8 @@ function divisorsOf(n: number): number[] {
       if (d !== n / d) out.push(n / d);
     }
   }
-  return out.sort((a, b) => a - b);
+  out.sort((a, b) => a - b);
+  return out;
 }
 function mobiusMu(n: number): number {
   if (n === 1) return 1;

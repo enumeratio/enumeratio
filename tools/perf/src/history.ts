@@ -30,7 +30,7 @@ export const EMPTY_HISTORY: History = { runs: [] };
 
 export function median(values: readonly number[]): number {
   if (values.length === 0) return NaN;
-  const sorted = [...values].sort((a, b) => a - b);
+  const sorted = [...values].toSorted((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
   return sorted.length % 2 === 0 ? (sorted[mid - 1]! + sorted[mid]!) / 2 : sorted[mid]!;
 }
@@ -111,7 +111,7 @@ export function detectDrift(current: RunRecord, priorHistory: History, options: 
     }
   }
   // Worst offenders first.
-  return flags.sort((a, b) => b.ratio - a.ratio);
+  return flags.toSorted((a, b) => b.ratio - a.ratio);
 }
 
 /** The slowest N files in a run, across all packages, by wall time. For the --cpu-prof step. */
@@ -122,5 +122,5 @@ export function slowestFiles(run: RunRecord, n = 3): Array<{ package: string; fi
       all.push({ package: packageName, file, durationMs });
     }
   }
-  return all.sort((a, b) => b.durationMs - a.durationMs).slice(0, n);
+  return all.toSorted((a, b) => b.durationMs - a.durationMs).slice(0, n);
 }

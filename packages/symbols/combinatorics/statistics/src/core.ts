@@ -34,7 +34,9 @@ export function headUsage(definitions: readonly Definition[] = ALL_STATISTICS): 
  */
 export function core(definitions: readonly Definition[] = ALL_STATISTICS): string[] {
   const defined = new Set(definitions.map((d) => d.head));
-  return [...headUsage(definitions).keys()].filter((head) => !defined.has(head)).sort();
+  const heads = [...headUsage(definitions).keys()].filter((head) => !defined.has(head));
+  heads.sort();
+  return heads;
 }
 
 /**

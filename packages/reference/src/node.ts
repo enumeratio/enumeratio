@@ -145,7 +145,7 @@ export function canonicalHeads(heads: readonly LoadedHead[]): ReadonlyMap<string
   const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
   const rank = (h: LoadedHead): string => `${h.package === "reference" ? "0" : "1"}${h.entryPath}`;
   const chosen = new Map<string, LoadedHead>();
-  for (const h of [...heads].sort((a, b) => cmp(rank(a), rank(b)))) if (!chosen.has(h.head)) chosen.set(h.head, h);
+  for (const h of [...heads].toSorted((a, b) => cmp(rank(a), rank(b)))) if (!chosen.has(h.head)) chosen.set(h.head, h);
   return chosen;
 }
 
@@ -229,7 +229,9 @@ export function referenceData(
   // By code unit, not localeCompare: generated files must sort the same in every locale.
   const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
   const chosen = canonicalHeads(heads);
-  const entries = [...chosen.values()].map(withRecord).sort((a, b) => cmp(a.domain, b.domain) || cmp(a.name, b.name));
+  const entries = [...chosen.values()]
+    .map(withRecord)
+    .toSorted((a, b) => cmp(a.domain, b.domain) || cmp(a.name, b.name));
 
   const packageOf = new Map([...chosen].map(([head, h]) => [head, h.package]));
   const data = { entries, packageOf, heads, kernels };
@@ -243,7 +245,7 @@ export function oracleAgreementsOf(
   data: ReferenceData,
 ): Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> {
   const out: Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> = {};
-  for (const entry of [...data.entries].sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const entry of [...data.entries].toSorted((a, b) => a.name.localeCompare(b.name))) {
     const tally = new Map<string, { agree: number; disagree: number }>();
     for (const example of entry.examples)
       for (const [system, run] of Object.entries(example.others ?? {})) {
@@ -255,7 +257,7 @@ export function oracleAgreementsOf(
       }
     // By system name, so the order rows sit in a record doesn't matter.
     const rows = [...tally]
-      .sort(([a], [b]) => a.localeCompare(b))
+      .toSorted(([a], [b]) => a.localeCompare(b))
       .filter(([system, row]) => (row.agree || row.disagree) && data.kernels[system] !== undefined)
       .map(([system, row]) => ({ system, kernel: data.kernels[system]!, ...row }));
     if (rows.length > 0) out[entry.name] = rows;

@@ -68,7 +68,7 @@ export function ring(
   return vertices
     .filter((vertex) => polytope.hasVertex(face.face, vertex.face))
     .map((vertex) => project(vertex.at))
-    .sort((a, b) => Math.atan2(a.y - centre.y, a.x - centre.x) - Math.atan2(b.y - centre.y, b.x - centre.x));
+    .toSorted((a, b) => Math.atan2(a.y - centre.y, a.x - centre.x) - Math.atan2(b.y - centre.y, b.x - centre.x));
 }
 
 export interface DrawOptions {
@@ -133,7 +133,7 @@ export function drawn(polytope: Polytope, n: number, project: Project, options: 
       depth: project(face.at).depth,
       selected: isChosen(face.face),
     }))
-    .sort((a, b) => a.depth - b.depth);
+    .toSorted((a, b) => a.depth - b.depth);
 
   const edges = skeleton(polytope, points).map(({ face, ends: [from, to] }) => ({
     face: face.face,

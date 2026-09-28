@@ -750,6 +750,8 @@ export function preludeFor(system: System): Prelude {
       };
     case "rust":
       return { binary: "cargo", preamble: RUST_HEADER.join("\n"), project: local("rust") };
+    default:
+      throw new Error("unreachable: System is exhaustive above");
   }
 }
 
@@ -809,5 +811,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
       return runLean(sources);
     case "rust":
       return runRust(sources);
+    default:
+      throw new Error("unreachable: System is exhaustive above");
   }
 }
