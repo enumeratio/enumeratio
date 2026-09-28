@@ -56,7 +56,7 @@ test("Gaussian roots agree with a scan of ℤ[i]/(m)", () => {
           }
         }
         const got = gaussianRoots(b, r, m);
-        const label = `x^${r} ≡ ${b} mod ${m}`;
+        const label = `x^${r} ≡ ${b.join(",")} mod ${m.join(",")}`;
         expect(got, label).toBeDefined();
         expect(new Set(got!.map((x) => key(x, m))), label).toEqual(want);
         expect(got!.length, label).toBe(want.size);

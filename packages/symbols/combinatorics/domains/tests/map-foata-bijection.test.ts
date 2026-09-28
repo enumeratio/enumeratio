@@ -17,10 +17,10 @@ test("Foata (via the engine) is a bijection on S_n for n <= 5, sending k cycles 
       const image = word.slice(1) as number[];
       expect(
         image.slice().sort((a, b) => a - b),
-        `[${p}] a permutation`,
+        `[${p.join(", ")}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));
-      expect(leftToRightMaxima(image), `[${p}] maxima = cycles`).toBe(cyclesOf(p).length);
+      expect(leftToRightMaxima(image), `[${p.join(", ")}] maxima = cycles`).toBe(cyclesOf(p).length);
     }
     expect(seen.size, `S${n} bijective`).toBe(permutations(n).length);
   }

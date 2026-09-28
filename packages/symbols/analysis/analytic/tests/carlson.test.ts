@@ -146,7 +146,7 @@ test("CarlsonRF/RC/RD/RJ/RG evaluate through compute-engine, complex included", 
   expect(num(["CarlsonRC", 1, 4])).toBeCloseTo(0.6045997880780726, 12);
   expect(num(["CarlsonRD", 1, 2, 3])).toBeCloseTo(0.29046028102899063, 11);
   expect(num(["CarlsonRJ", 1, 2, 3, 4])).toBeCloseTo(0.2398480997495678, 10);
-  expect(num(["CarlsonRG", 1, 2, 3])).toBeCloseTo(1.4018470999908951, 11);
+  expect(num(["CarlsonRG", 1, 2, 3])).toBeCloseTo(1.4018470999908952, 11);
   const c = ce.box(["CarlsonRF", ["Complex", 1, 1], 2, 3]).N();
   expect(c.re).toBeGreaterThan(0);
   expect(im(["CarlsonRF", ["Complex", 1, 1], 2, 3])).not.toBe(0);
@@ -160,7 +160,7 @@ test("stays symbolic under plain evaluate; a float argument evaluates numericall
 
 test("RJ's real p < 0 branch is the Cauchy principal value (Carlson 1995 eq. (33)), pinned against Wolfram's CarlsonRJ", () => {
   const cases: [number, number, number, number, number][] = [
-    [1, 2, 3, -1, -0.09324045243867641],
+    [1, 2, 3, -1, -0.09324045243867642],
     [0, 2, 3, -1, -0.8732889802533521], // one argument 0
     [1, 2, 3, -2.5, -0.24776810835275714],
   ];
@@ -268,8 +268,8 @@ test("RJ(0, 0.7, 1, p) at complex p with Re(p) < 0 — the 19.26.7 α/β sum's b
   // magnitude under the old α² / β per-step formula, even though only p is off the positive
   // real axis. The d_m/e_m (√p-based) formula fixes it. Pinned against mpmath.elliprj.
   const v = carlsonRJ(cx(0), cx(0.7), cx(1), cx(-0.17, -0.45));
-  expect(v.re).toBeCloseTo(0.996149702888963152968278427468, 10);
-  expect(v.im).toBeCloseTo(5.09469837233177608274683435409, 10);
+  expect(v.re).toBeCloseTo(0.9961497028889632, 10);
+  expect(v.im).toBeCloseTo(5.094698372331776, 10);
 });
 
 test("CarlsonRJ still evaluates numerically right next to a declined region", () => {

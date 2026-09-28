@@ -5,7 +5,10 @@ import { ALL, conjugateOf, cycleTypeOf, perm, restrictedGrowthStrings, result } 
 
 test("ConjugateAfterCycleType is the conjugate of the cycle type", () => {
   for (const p of ALL) {
-    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${p}]`).toEqual(["List", ...conjugateOf(cycleTypeOf(p))]);
+    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${p.join(", ")}]`).toEqual([
+      "List",
+      ...conjugateOf(cycleTypeOf(p)),
+    ]);
   }
 });
 
@@ -19,7 +22,7 @@ test("ArcRepresentation links each position to the next in its block", () => {
     });
   for (const n of [1, 2, 3, 4, 5])
     for (const rgs of restrictedGrowthStrings(n))
-      expect(result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]), `${rgs}`).toEqual([
+      expect(result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]), `${rgs.join(", ")}`).toEqual([
         "List",
         ...linking(rgs),
       ]);
@@ -33,12 +36,12 @@ test("DescentComposition cuts n at the descents", () => {
       .filter((i) => p[i - 1]! > p[i]!);
     const bounds = [0, ...descents, p.length];
     const parts = bounds.slice(1).map((b, k) => b - bounds[k]!);
-    expect(result(["DescentComposition", perm(...p)]), `[${p}]`).toEqual(["List", ...parts]);
+    expect(result(["DescentComposition", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...parts]);
     expect(
       parts.reduce((a, b) => a + b, 0),
-      `[${p}] sums to n`,
+      `[${p.join(", ")}] sums to n`,
     ).toBe(p.length);
-    expect(parts.length, `[${p}] length`).toBe(descents.length + 1);
+    expect(parts.length, `[${p.join(", ")}] length`).toBe(descents.length + 1);
   }
 });
 

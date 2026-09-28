@@ -55,11 +55,11 @@ function buildTailLevelTable(n: number): number[][] {
   const cached = _tailTableMemo.get(n);
   if (cached) return cached;
   const maxA = n + 1;
-  const f: number[][] = Array.from({ length: n + 1 }, () => new Array(maxA + 1).fill(0));
+  const f: number[][] = Array.from({ length: n + 1 }, () => Array.from({ length: maxA + 1 }, () => 0));
   for (let a = 0; a <= maxA; a++) f[0][a] = 1;
   for (let t = 1; t <= n; t++) {
     const prev = f[t - 1];
-    const prefix = new Array(maxA + 1).fill(0);
+    const prefix = Array.from({ length: maxA + 1 }, () => 0);
     for (let a = 1; a <= maxA; a++) prefix[a] = prefix[a - 1] + prev[a];
     for (let a = 0; a <= maxA; a++) f[t][a] = (a + 1 <= maxA ? prev[a + 1] : 0) + prefix[a];
   }
@@ -109,9 +109,9 @@ function unrankTailPartition(n: number, r: number, mode: TailMode): number[][] {
 }
 
 function rankTailPartition(blocks: number[][], n: number, mode: TailMode): number {
-  const blockIndexOf = new Array(n + 1).fill(-1);
+  const blockIndexOf = Array.from({ length: n + 1 }, () => -1);
   blocks.forEach((b, bi) => b.forEach((x) => (blockIndexOf[x] = bi)));
-  const predOf = new Array(n + 1).fill(0); // predOf[x] = element right before x in its block (0 = block minimum)
+  const predOf = Array.from({ length: n + 1 }, () => 0); // predOf[x] = element right before x in its block (0 = block minimum)
   blocks.forEach((b) => {
     const sorted = [...b].sort((x, y) => x - y);
     for (let k = 1; k < sorted.length; k++) predOf[sorted[k]] = sorted[k - 1];
@@ -165,7 +165,7 @@ function isSetPartitionShape(blocks: number[][], n: number): boolean {
 }
 
 function blockIndexArray(blocks: number[][], n: number): number[] {
-  const blockOf = new Array(n + 1).fill(-1);
+  const blockOf = Array.from({ length: n + 1 }, () => -1);
   blocks.forEach((b, bi) => b.forEach((x) => (blockOf[x] = bi)));
   return blockOf;
 }
@@ -218,7 +218,7 @@ function matchingFromDyckSteps(steps: number[], mode: MatchMode): number[][] {
 }
 
 function dyckStepsFromMatching(pairs: number[][], n: number, mode: MatchMode): number[] {
-  const partnerOf = new Array(2 * n + 1).fill(0);
+  const partnerOf = Array.from({ length: 2 * n + 1 }, () => 0);
   for (const [a, b] of pairs) {
     partnerOf[a] = b;
     partnerOf[b] = a;
@@ -272,7 +272,7 @@ const _delannoyMemo = new Map<number, number[][]>();
 function delannoyTable(n: number): number[][] {
   const cached = _delannoyMemo.get(n);
   if (cached) return cached;
-  const f: number[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+  const f: number[][] = Array.from({ length: n + 1 }, () => Array.from({ length: n + 1 }, () => 0));
   f[n][n] = 1;
   for (let i = n; i >= 0; i--) {
     for (let j = n; j >= 0; j--) {

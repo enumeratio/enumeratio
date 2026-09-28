@@ -51,7 +51,7 @@ function catalan(n: number): number {
  *  descending by value comparison from the root (always p(1)) until an empty side is found. */
 function bstParentsRef(p: readonly number[]): number[] {
   const n = p.length;
-  const parent = new Array<number>(n + 1).fill(0); // 1-indexed by value
+  const parent = Array.from({ length: n + 1 }, () => 0); // 1-indexed by value
   const root = p[0]!;
   for (let i = 1; i < n; i++) {
     const x = p[i]!;
@@ -72,7 +72,7 @@ function bstParentsRef(p: readonly number[]): number[] {
 
 test("BinarySearchTree agrees with plain insertion, up to n = 4", () => {
   for (const p of ALL4)
-    expect(contents(["BinarySearchTree", perm(...p)]), `[${p}]`).toEqual(["List", ...bstParentsRef(p)]);
+    expect(contents(["BinarySearchTree", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...bstParentsRef(p)]);
 });
 
 test("BinarySearchTree is typed as binary_tree", () => {
@@ -119,14 +119,17 @@ const readingWordRef = (p: readonly number[]): number[] => insertionTableauRef(p
 
 test("KnuthClassRepresentative is the reading word of the insertion tableau, up to n = 4", () => {
   for (const p of ALL4)
-    expect(contents(["KnuthClassRepresentative", perm(...p)]), `[${p}]`).toEqual(["List", ...readingWordRef(p)]);
+    expect(contents(["KnuthClassRepresentative", perm(...p)]), `[${p.join(", ")}]`).toEqual([
+      "List",
+      ...readingWordRef(p),
+    ]);
 });
 
 test("KnuthClassRepresentative is idempotent and keeps σ's insertion tableau, up to n = 4", () => {
   for (const p of ALL4) {
     const rep = readingWordRef(p);
-    expect(readingWordRef(rep), `idempotent [${p}]`).toEqual(rep);
-    expect(insertionTableauRef(rep), `same P [${p}]`).toEqual(insertionTableauRef(p));
+    expect(readingWordRef(rep), `idempotent [${p.join(", ")}]`).toEqual(rep);
+    expect(insertionTableauRef(rep), `same P [${p.join(", ")}]`).toEqual(insertionTableauRef(p));
   }
 });
 
@@ -150,7 +153,7 @@ const krewerasRef = (p: readonly number[]): number[] => p.map((_, i) => p.indexO
 
 /** w's cycles, as sets of 1-indexed points. */
 function cyclesOf(p: readonly number[]): number[][] {
-  const seen = new Array<boolean>(p.length).fill(false);
+  const seen = Array.from({ length: p.length }, () => false);
   const cycles: number[][] = [];
   for (let start = 0; start < p.length; start++) {
     if (seen[start]) continue;
@@ -199,11 +202,11 @@ test("KrewerasComplement agrees with w⁻¹c on the non-crossing permutations, u
   for (const p of ALL4) {
     const evaluated = ce.box(["KrewerasComplement", perm(...p)] as never).evaluate();
     if (isNonCrossing(p)) {
-      expect(contents(["KrewerasComplement", perm(...p)]), `[${p}]`).toEqual(["List", ...krewerasRef(p)]);
+      expect(contents(["KrewerasComplement", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...krewerasRef(p)]);
     } else {
       // Declines: the call stays headed by `KrewerasComplement` rather than being answered
       // wrong — the way an unmatched `Filter` predicate is never materialised at all.
-      expect(evaluated.operator, `[${p}] declines`).toBe("KrewerasComplement");
+      expect(evaluated.operator, `[${p.join(", ")}] declines`).toBe("KrewerasComplement");
     }
   }
 });
@@ -223,10 +226,10 @@ test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", ()
     const images = new Set<string>();
     for (const w of nc) {
       const k = krewerasRef(w);
-      expect(isNonCrossing(k), `K(w) stays in NC(n) [n=${n}] [${w}]`).toBe(true);
+      expect(isNonCrossing(k), `K(w) stays in NC(n) [n=${n}] [${w.join(", ")}]`).toBe(true);
       const kk = krewerasRef(k);
       const conjugated = w.map((_, i) => cInvOf(w[cOf(i + 1) - 1]!));
-      expect(kk, `K(K(w)) = c⁻¹wc [n=${n}] [${w}]`).toEqual(conjugated);
+      expect(kk, `K(K(w)) = c⁻¹wc [n=${n}] [${w.join(", ")}]`).toEqual(conjugated);
       images.add(JSON.stringify(k));
     }
     expect(images.size, `K is injective on NC(${n})`).toBe(nc.length);
@@ -245,8 +248,8 @@ function fromPermutationRef(p: readonly number[]): {
   right: number[];
 } {
   const n = p.length;
-  const left = new Array<number>(n + 1).fill(0);
-  const right = new Array<number>(n + 1).fill(0);
+  const left = Array.from({ length: n + 1 }, () => 0);
+  const right = Array.from({ length: n + 1 }, () => 0);
   const build = (lo: number, hi: number): number => {
     if (lo > hi) return 0;
     let mi = lo;
@@ -270,15 +273,15 @@ test("FromPermutation agrees with minimum-splitting recursion, up to n = 4", () 
   for (const p of ALL4) {
     const ref = fromPermutationRef(p);
     const tuple = tupleOf(["FromPermutation", perm(...p)]);
-    expect(tuple?.[0]?.json, `root [${p}]`).toBe(ref.root);
-    expect(tuple?.[1]?.json, `left_child [${p}]`).toEqual(["List", ...ref.left]);
-    expect(tuple?.[2]?.json, `right_child [${p}]`).toEqual(["List", ...ref.right]);
+    expect(tuple?.[0]?.json, `root [${p.join(", ")}]`).toBe(ref.root);
+    expect(tuple?.[1]?.json, `left_child [${p.join(", ")}]`).toEqual(["List", ...ref.left]);
+    expect(tuple?.[2]?.json, `right_child [${p.join(", ")}]`).toEqual(["List", ...ref.right]);
   }
 });
 
 test("FromPermutation's root is always 1", () => {
   for (const p of ALL4) {
-    expect(tupleOf(["FromPermutation", perm(...p)])?.[0]?.json, `[${p}]`).toBe(1);
+    expect(tupleOf(["FromPermutation", perm(...p)])?.[0]?.json, `[${p.join(", ")}]`).toBe(1);
   }
 });
 

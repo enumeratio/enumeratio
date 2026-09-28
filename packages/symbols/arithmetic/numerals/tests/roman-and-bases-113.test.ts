@@ -17,7 +17,7 @@ test("RomanNumeral and FromDigits(_, 'Roman') round-trip for 0..3999", () => {
 test("FromDigits(roman, 'Roman') inverts RomanNumeral through the engine", () => {
   for (const n of [1, 4, 9, 14, 40, 90, 400, 900, 1988, 2024, 3999, 0]) {
     const roman = value(["RomanNumeral", n]);
-    expect(value(["FromDigits", roman, "'Roman'"]), String(roman)).toEqual(n);
+    expect(value(["FromDigits", roman, "'Roman'"]), JSON.stringify(roman)).toEqual(n);
   }
 });
 test("a malformed Roman numeral (IIII, non-canonical) is rejected", () => {

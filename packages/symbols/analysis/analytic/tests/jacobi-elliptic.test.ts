@@ -159,8 +159,8 @@ test("dn^2 + m*sn^2 = 1 at a complex point", () => {
 // digits) now that jacobi-elliptic.ts uses DLMF 22.8's real addition formulas instead.
 test("JacobiCN(1+i, 0.3) matches mpmath/Wolfram to double precision (regression)", () => {
   const r = ce.box(["JacobiCN", ["Complex", 1, 1], 0.3]).N();
-  expect(r.re).toBeCloseTo(0.701054852177762148, 13);
-  expect(r.im).toBeCloseTo(-0.857450911387921485, 13);
+  expect(r.re).toBeCloseTo(0.7010548521777622, 13);
+  expect(r.im).toBeCloseTo(-0.8574509113879215, 13);
 });
 
 test("sn/cn/dn stay accurate very close to sn's pole at u = i*K'(m)", () => {

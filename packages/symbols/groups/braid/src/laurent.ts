@@ -35,7 +35,7 @@ export function add(p: Laurent, q: Laurent): Laurent {
   if (b.coefficients.length === 0) return a;
   const offset = Math.min(a.offset, b.offset);
   const length = Math.max(a.offset + a.coefficients.length, b.offset + b.coefficients.length) - offset;
-  const coefficients = new Array<number>(length).fill(0);
+  const coefficients = Array.from({ length }, () => 0);
   for (const [source, list] of [
     [a.offset - offset, a.coefficients],
     [b.offset - offset, b.coefficients],
@@ -58,7 +58,7 @@ export function multiply(p: Laurent, q: Laurent): Laurent {
   const a = trim(p);
   const b = trim(q);
   if (a.coefficients.length === 0 || b.coefficients.length === 0) return ZERO;
-  const coefficients = new Array<number>(a.coefficients.length + b.coefficients.length - 1).fill(0);
+  const coefficients = Array.from({ length: a.coefficients.length + b.coefficients.length - 1 }, () => 0);
   a.coefficients.forEach((x, i) => {
     b.coefficients.forEach((y, j) => {
       coefficients[i + j] = (coefficients[i + j] as number) + x * y;

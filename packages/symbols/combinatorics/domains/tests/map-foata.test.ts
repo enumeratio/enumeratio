@@ -6,7 +6,7 @@ import { ALL, cyclesOf, foataOf, leftToRightMaxima, perm, permutations, result }
 
 test("Foata agrees with the cycle-rotation reading", () => {
   for (const p of ALL) {
-    expect(result(["Foata", perm(...p)]), `[${p}]`).toEqual(["List", ...foataOf(p)]);
+    expect(result(["Foata", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...foataOf(p)]);
   }
 });
 
@@ -23,10 +23,10 @@ test("Foata's defining property holds on S_n for n <= 7 (reference algorithm)", 
       const image = foataOf(p);
       expect(
         image.slice().sort((a, b) => a - b),
-        `[${p}] a permutation`,
+        `[${p.join(", ")}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));
-      expect(leftToRightMaxima(image), `[${p}] maxima = cycles`).toBe(cyclesOf(p).length);
+      expect(leftToRightMaxima(image), `[${p.join(", ")}] maxima = cycles`).toBe(cyclesOf(p).length);
     }
     expect(seen.size, `S${n} bijective`).toBe(permutations(n).length);
   }

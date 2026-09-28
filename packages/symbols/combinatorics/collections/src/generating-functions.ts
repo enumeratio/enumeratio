@@ -103,14 +103,14 @@ function berlekampMassey(s: readonly Frac[]): Frac[] | undefined {
     const delta = fSub(s[i]!, t);
     if (fIsZero(delta)) continue;
     if (cur.length === 0) {
-      cur = new Array(i + 1).fill(F0);
+      cur = Array.from({ length: i + 1 }, () => F0);
       lf = i;
       ld = delta;
       continue;
     }
     const k = fDiv(delta, ld);
     const shift = i - lf - 1;
-    const c: Frac[] = new Array(Math.max(cur.length, shift + 1 + ls.length)).fill(F0);
+    const c: Frac[] = Array.from({ length: Math.max(cur.length, shift + 1 + ls.length) }, () => F0);
     for (let j = 0; j < cur.length; j++) c[j] = cur[j]!;
     c[shift] = fAdd(c[shift]!, k);
     for (let j = 0; j < ls.length; j++) c[shift + 1 + j] = fSub(c[shift + 1 + j]!, fMul(k, ls[j]!));

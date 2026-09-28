@@ -69,7 +69,7 @@ export function denert(p: number[]): number {
 /** Cycle lengths, read by walking orbits with a visited set — the ordinary algorithm, which
  *  is exactly what the expression definition deliberately does NOT do. */
 export function cycleLengths(p: number[]): number[] {
-  const seen = new Array<boolean>(p.length).fill(false);
+  const seen = Array.from({ length: p.length }, () => false);
   const lengths: number[] = [];
   for (let start = 0; start < p.length; start++) {
     if (seen[start]) continue;
@@ -173,7 +173,7 @@ export function checkAgainstEngine(heads: readonly string[]): void {
     test(`${head} agrees over every permutation of 1..${upTo}`, () => {
       const expected = EXPECTED[head];
       if (!expected) throw new Error(`no expected reading for ${head}`);
-      for (const p of universe) expect(evaluate(head, p), `[${p}]`).toBe(expected(p));
+      for (const p of universe) expect(evaluate(head, p), `[${p.join(", ")}]`).toBe(expected(p));
     });
   }
 }
