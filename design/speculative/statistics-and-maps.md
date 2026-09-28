@@ -546,6 +546,13 @@ collections-package filing problem, independent of this document's central quest
   elements lazily, so `Tally(CombinatorialStat(SymmetricGroup(4), "Inversions"))` is the
   Mahonian numbers. The result is a collection, not a function: compute-engine's `Map` takes
   only a literal `Function` as its mapping. `CombinatorialStat(C, "Count")` is `Count(C)`.
+- **Dispatch cost.** A value's carrier is found by its constructor first, then by type with
+  each carrier's parsed type cached. Parsing every carrier's type on every call made
+  `CombinatorialStat` about 19× slower than the statistic's own head over the permutations of
+  8 (BL-7). Measured on the census engine over the 5,040 permutations of 7:
+  `CombinatorialStat(Permutation(p), "FixedPoints")` takes 1.24× the time of
+  `FixedPoints(Permutation(p))`. Hot per-element callers (collection tables, `Filter` scans,
+  Plausible) still call the statistic's head directly.
 - **Kernel beside definition.** collections files its permutation kernels as each
   statistic's preferred implementation; statistics files the defining expression beside them.
   The same part twice is an `OperationCollisionError`.
