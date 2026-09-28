@@ -141,7 +141,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `PolyGamma/n-polygamma-neg1-neg0p5`                            | convention     | `{"re":1.2655121234846451,"im":-3.141592653589793}`    | `0.346573590279972626385172340912 - 3.14159265358979311599796346854*I`        |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`         | convention     | `2.91666666666666666667`                               | `-3.08333333333333333333333333333`                                            |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                 | convention     | `16.4143983221171599978`                               | `0.414398322117159997798167130580`                                            |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`            | shape          | `["Zeta",["Complex",2,1]]`                             | `zeta(2 + I)`                                                                 |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`            | shape          | `{"re":1.1503557032549026,"im":-0.4375308659196079}`   | `zeta(2 + I)`                                                                 |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -181,7 +181,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 928, disagree 16, inconclusive 6, error 26
+## mpmath — agree 931, disagree 15, inconclusive 6, error 26
 
 | example                                                  | kind           | ours                                                | theirs                                                                                |
 | -------------------------------------------------------- | -------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -200,7 +200,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `N/n-pi-1-digit`                                         | precision      | `3`                                                 | `3.14159265358979323846264338328`                                                     |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`   | convention     | `2.91666666666666666667`                            | `-3.08333333333333333333333333333`                                                    |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`           | convention     | `16.4143983221171599978`                            | `0.41439832211715999779816713058`                                                     |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`      | unevaluated    | `["Zeta",["Complex",2,1]]`                          | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`               |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -301,7 +300,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`          | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`           | convention     | `2.91666666666666666667`                                                                     | `-3.08333333333333`                                                                          |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                   | convention     | `16.4143983221171599978`                                                                     | `0.414398322117160`                                                                          |
-| `Zeta/zeta-complex-argument-stays-symbolic-until-n`              | shape          | `["Zeta",["Complex",2,1]]`                                                                   | `zeta(I + 2)`                                                                                |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`              | shape          | `{"re":1.1503557032549026,"im":-0.4375308659196079}`                                         | `zeta(I + 2)`                                                                                |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -622,7 +621,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Exp/to-1-significant-digit`                                     | precision      | `3`                                                 | `2.718281828459045`                                          |
 | `Floor/a-negative-radicand-inside-floor`                         | domain         | `{"re":0,"im":1}`                                   | `NaN`                                                        |
 | `Gamma/a-pole-of-gamma`                                          | undefined-form | `ComplexInfinity`                                   | `PositiveInfinity`                                           |
-| `Gamma/values-far-past-the-double-range-gamma-200-5`             | precision      | `5.57316894480137913364e+373`                       | `PositiveInfinity`                                           |
+| `Gamma/values-far-past-the-double-range-gamma-200-5`             | precision      | `5.573168944801379133643202962906591494178e+373`    | `PositiveInfinity`                                           |
 | `Ln/a-machine-precision-negative-argument`                       | domain         | `{"re":1.548625773037343,"im":3.141592653589793}`   | `NaN`                                                        |
 | `Ln/a-negative-float-gives-the-principal-complex`                | domain         | `{"re":0.9162907318741551,"im":3.141592653589793}`  | `NaN`                                                        |
 | `Ln/an-integer-power-negative-argument`                          | domain         | `{"re":0.6931471805599453,"im":3.141592653589793}`  | `NaN`                                                        |
