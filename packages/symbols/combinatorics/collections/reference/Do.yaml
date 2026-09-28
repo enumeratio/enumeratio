@@ -6,6 +6,7 @@ signatures:
   - call: Do(body, n)
     description: Evaluates $body$ $n$ times, with no loop variable.
     library: enumeratio-collections
+    type: (any, any) -> any
   - call: Do(body, {i, imax})
     description: Evaluates $body$ with $i$ running $1, 2, \dots, imax$.
     library: enumeratio-collections
@@ -25,3 +26,5 @@ seeAlso:
   - Module
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

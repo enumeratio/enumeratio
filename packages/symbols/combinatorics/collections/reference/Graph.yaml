@@ -6,6 +6,7 @@ signatures:
   - call: Graph(edges)
     description: the vertex set is inferred from the edges' endpoints, in first-appearance order.
     library: enumeratio-collections
+    type: (any, any*) -> value
   - call: Graph(vertices, edges)
     description: an explicit vertex list, so an isolated vertex (mentioned by no edge) can be included.
     library: enumeratio-collections

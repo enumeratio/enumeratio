@@ -6,6 +6,7 @@ signatures:
   - call: ModularClasses(length)
     description: the classes, each named by the least rotation of its word
     library: enumeratio-modular
+    type: (integer, boolean?) -> list
   - call: ModularClasses(length, True)
     description: only the primitive ones — not a repeat of a shorter geodesic
     library: enumeratio-modular

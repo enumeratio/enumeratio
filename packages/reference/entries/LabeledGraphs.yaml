@@ -7,3 +7,8 @@ grades:
     role: axis
 carrier: LabeledGraph
 stub: carrier
+signatures:
+  - call: LabeledGraphs(...)
+    description: Simple undirected graphs on the labeled vertex set [n].
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

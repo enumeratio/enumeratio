@@ -7,3 +7,8 @@ grades:
     role: axis
 carrier: Tournament
 stub: carrier
+signatures:
+  - call: Tournaments(...)
+    description: Orientations of the complete graph on [n].
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

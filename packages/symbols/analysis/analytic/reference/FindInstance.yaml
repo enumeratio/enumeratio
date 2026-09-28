@@ -6,6 +6,7 @@ signatures:
   - call: FindInstance(expr, vars)
     description: one instance of vars satisfying expr. Declined here -- the unstated domain is Wolfram's Complexes, outside this scope. See below.
     library: "@enumeratio/analytic"
+    type: (any, any, any?, any?) -> any
   - call: FindInstance(expr, vars, domain)
     description: one instance over domain, which must be Reals or Integers.
     library: "@enumeratio/analytic"
@@ -24,3 +25,5 @@ seeAlso:
   - Inequality
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

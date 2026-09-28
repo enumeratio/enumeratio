@@ -6,6 +6,7 @@ signatures:
   - call: QuiverCompose(quiver, p, q)
     description: $p$ then $q$, or 0
     library: enumeratio-quiver
+    type: (value, number, number) -> number
 details:
   - Associative, and the trivial paths act as local identities
   - Zero is an honest answer here — it is returned as 0, not left symbolic

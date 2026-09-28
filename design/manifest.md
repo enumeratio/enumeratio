@@ -41,9 +41,14 @@ attributes: [HoldAll]
 ```
 
 The declaring package reads its heads' types and summaries back from the manifest
-(`@enumeratio/manifest/package/<name>`), so a signature is written once, in the record. A
-reference test declares every library and checks each typed row against what the engine
-ended up with, so the record cannot claim a signature the code does not have.
+(`@enumeratio/manifest/package/<name>`), so a signature is written once, in the record.
+census declares every package in order and notes what each one does to each head -- adds
+it, re-signs it, replaces its handler (`src/contributions.ts`); its manifest test requires a
+typed row for every such contribution, with the type the engine ends up printing and
+`overrides` naming whoever had the head before. So the record cannot claim a signature the
+code does not have, and code cannot change a head the record doesn't mention.
+`scripts/type-records.ts` writes those rows from the engine; a head with no record gets one
+whose summary a person then writes.
 
 `HoldAll` is compute-engine's `lazy`. The name is Wolfram's because the rest of the
 record's vocabulary is.

@@ -6,6 +6,7 @@ signatures:
   - call: LerchPhi(z, s, a)
     description: the Lerch transcendent $\Phi(z, s, a)$.
     library: enumeratio-analytic
+    type: (number, number, number) -> number
 details:
   - 'At $z = 1$ it is the Hurwitz zeta: $\Phi(1, s, a) = \zeta(s, a)$, so $\Phi(1, s, 1) = \zeta(s)$. See [[HurwitzZeta]].'
   - 'It carries the polylogarithm: $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ — e.g. $\operatorname{Li}_2(1/2) = \tfrac12\Phi(1/2, 2, 1) = \pi^2/12 - (\ln 2)^2/2$.'

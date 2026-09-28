@@ -1,0 +1,12 @@
+name: KauffmanBracket
+domain: Braids and knots
+signature: KauffmanBracket(knot)
+summary: The Kauffman bracket $\langle L\rangle$ of a knot or link, in $A$ — defined for links too, unlike the Jones polynomial, and not itself an invariant until the writhe is corrected for (see [[BracketInvariant]]).
+signatures:
+  - call: KauffmanBracket(knot)
+    description: $\langle L\rangle$ in $A$
+    library: enumeratio-braid
+    type: (value) -> expression
+seeAlso:
+  - BracketInvariant
+  - JonesPolynomial

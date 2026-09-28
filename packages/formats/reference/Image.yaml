@@ -1,0 +1,9 @@
+name: Image
+domain: Graphics
+signature: Image(uri, width, height)
+summary: A picture as a value, carrying a `data:` or other URI rather than pixels, so it serializes the same way in Node and in a browser; see [[Rasterize]] to build one from an SVG document.
+signatures:
+  - call: Image(uri, width, height)
+    description: a picture as a value, carrying a `data:` or other URI rather than pixels
+    library: enumeratio-formats
+    type: (string, number?, number?) -> expression

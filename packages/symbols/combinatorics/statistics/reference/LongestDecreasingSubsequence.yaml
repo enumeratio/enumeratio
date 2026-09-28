@@ -11,3 +11,8 @@ references:
     identity: Longest increasing subsequence
 statOn:
   - Permutation
+signatures:
+  - call: LongestDecreasingSubsequence(p)
+    description: The length of a longest decreasing subsequence.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

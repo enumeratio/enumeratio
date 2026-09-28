@@ -6,6 +6,7 @@ signatures:
   - call: GatherBy(list, f)
     description: elements grouped by $f(element)$, in first-appearance order.
     library: enumeratio-collections
+    type: (indexed_collection<any>, (any) any -> any) -> list<list<any>>
 details:
   - '[[Gather]] with the equivalence "same $f$ value" instead of plain equality.'
 seeAlso:

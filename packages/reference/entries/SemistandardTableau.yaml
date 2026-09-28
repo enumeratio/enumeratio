@@ -9,3 +9,8 @@ references:
     identity: YoungTableau
 stub: carrier
 catalogCarrier: true
+signatures:
+  - call: SemistandardTableau(list)
+    description: The singular-inhabitant constructor for a semistandard Young tableau, as its rows.
+    library: enumeratio-domains
+    type: (tuple<list<integer>, list<integer>>) -> semistandard_tableau

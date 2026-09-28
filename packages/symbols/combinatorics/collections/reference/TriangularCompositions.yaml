@@ -6,6 +6,7 @@ signatures:
   - call: TriangularCompositions(n)
     description: the compositions of $n$ into triangular-number parts
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is A023361.
 seeAlso:

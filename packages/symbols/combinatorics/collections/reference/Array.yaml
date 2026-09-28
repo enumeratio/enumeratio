@@ -6,6 +6,7 @@ signatures:
   - call: Array(f, n)
     description: $\{f(1), \ldots, f(n)\}$.
     library: enumeratio-collections
+    type: ((integer) any -> any, any, any?, symbol?) -> collection
   - call: Array(f, {n1, …, nk})
     description: the $n_1 \times \cdots \times n_k$ array with $f$ applied to every index tuple.
     library: enumeratio-collections

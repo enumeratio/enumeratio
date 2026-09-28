@@ -1,0 +1,13 @@
+name: InOrbitBasis
+domain: Diagram algebras
+signature: InOrbitBasis(x)
+summary: Rewrite a partition-algebra element in the orbit basis $x_\lambda$, which asks for exactly those points to be connected and nothing else.
+signatures:
+  - call: InOrbitBasis(x)
+    description: the element rewritten in the orbit basis
+    library: enumeratio-diagram
+    type: (number) -> number
+seeAlso:
+  - Diagram
+  - OrbitDiagram
+  - InDiagramBasis

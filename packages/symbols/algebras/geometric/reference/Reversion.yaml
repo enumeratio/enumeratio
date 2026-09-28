@@ -1,0 +1,13 @@
+name: Reversion
+domain: Geometric algebra
+signature: Reversion(x)
+summary: 'Reversion $\tilde{x}$: reverse the order of generators in every blade of $x$, costing sign $(-1)^{k(k-1)/2}$ per grade $k$.'
+signatures:
+  - call: Reversion(x)
+    description: $\tilde{x}$, the reverse of $x$
+    library: enumeratio-geometric
+    type: (number) -> number
+seeAlso:
+  - GradeInvolution
+  - CliffordConjugate
+  - Sandwich

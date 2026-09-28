@@ -1,0 +1,12 @@
+name: AdicDigits
+domain: Numeral systems
+signature: AdicDigits(x, count?)
+summary: The digits of a [[AdicNumeral]] as a list, least significant first — the only order that lists something with no left end.
+signatures:
+  - call: AdicDigits(x, count?)
+    description: the first `count` digits (default 20), least significant first
+    library: enumeratio-numerals
+    type: (any, integer?) -> list<integer>
+seeAlso:
+  - AdicExpansion
+  - AdicNumeral

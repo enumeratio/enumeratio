@@ -6,6 +6,7 @@ signatures:
   - call: Convergents(list)
     description: the convergents of a term list, such as one `ContinuedFraction` returns
     library: enumeratio-modular
+    type: (value, integer?) -> list
   - call: Convergents(x)
     description: every convergent of a rational $x$ — the last one is $x$ itself
     library: enumeratio-modular

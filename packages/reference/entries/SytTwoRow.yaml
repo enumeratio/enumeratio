@@ -15,3 +15,8 @@ grades:
   - name: size
     role: axis
 carrier: StandardTableau
+signatures:
+  - call: SytTwoRow(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

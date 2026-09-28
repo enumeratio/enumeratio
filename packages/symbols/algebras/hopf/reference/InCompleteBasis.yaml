@@ -1,0 +1,12 @@
+name: InCompleteBasis
+domain: Hopf algebras
+signature: InCompleteBasis(x)
+summary: Rewrite an element of NSym in the complete basis $H_\alpha$.
+signatures:
+  - call: InCompleteBasis(x)
+    description: $x$ rewritten in the $H$ basis
+    library: enumeratio-hopf
+    type: (number) -> number
+seeAlso:
+  - NSymH
+  - InRibbonBasis

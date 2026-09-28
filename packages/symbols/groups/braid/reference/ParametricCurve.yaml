@@ -1,0 +1,12 @@
+name: ParametricCurve
+domain: Braids and knots
+signature: ParametricCurve(x, y, z, span?, samples?)
+summary: A curve as three coordinate expressions in $t$, compiled and sampled over $[0,\text{span}]$ — the general form [[KnotCurve]] is a convenience over.
+signatures:
+  - call: ParametricCurve(x, y, z, span?, samples?)
+    description: the sampled points of the parameterisation
+    library: enumeratio-braid
+    type: (any, any, any, number?, number?) -> list
+seeAlso:
+  - KnotCurve
+  - LorenzCurve

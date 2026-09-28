@@ -8,3 +8,8 @@ bindings:
     template: enumeratio_direct_product($1, $2)
     arity: 2
 stub: carrier
+signatures:
+  - call: GroupDirectProduct(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-groupalgebra
+    type: (value, value) -> value

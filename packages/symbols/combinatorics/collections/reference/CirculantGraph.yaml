@@ -6,6 +6,7 @@ signatures:
   - call: CirculantGraph(n, k)
     description: vertex i joined to i +/- k (mod n), for a single offset k.
     library: enumeratio-collections
+    type: (integer, any) -> value
   - call: CirculantGraph(n, {k1, k2, …})
     description: the union of the connection sets for every offset given.
     library: enumeratio-collections

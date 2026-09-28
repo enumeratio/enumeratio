@@ -5,6 +5,11 @@ summary: The rising factorial (a)_n = a(a+1)(a+2)…(a+n−1).
 signatures:
   - call: Pochhammer(a, n)
     description: the rising factorial $(a)_n$.
+  - call: Pochhammer(a, n)
+    description: The rising factorial (a)_n = a(a+1)(a+2)…(a+n−1).
+    library: enumeratio-number-theory
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
 details:
   - 'Closed form via the Gamma function: $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$.'
   - $(1)_n = n!$, since the rising factorial from 1 just counts up to n.

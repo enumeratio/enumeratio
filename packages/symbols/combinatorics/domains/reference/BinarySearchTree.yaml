@@ -10,3 +10,8 @@ references:
     identity: Binary search tree
 mapOn:
   - Permutation
+signatures:
+  - call: BinarySearchTree(Permutation)
+    description: The tree built by inserting σ(1), σ(2), ... into an empty binary search tree.
+    library: enumeratio-domains
+    type: (permutation) -> binary_tree

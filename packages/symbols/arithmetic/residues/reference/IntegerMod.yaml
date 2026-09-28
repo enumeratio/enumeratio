@@ -6,6 +6,7 @@ signatures:
   - call: IntegerMod(a, m)
     description: the residue class of $a$, normalised into $[0, m)$
     library: enumeratio-residues
+    type: (any, integer) -> value
   - call: IntegerMod(u/v, m)
     description: a rational reads as $u \cdot v^{-1}$, when $v$ is a unit mod $m$
     library: enumeratio-residues

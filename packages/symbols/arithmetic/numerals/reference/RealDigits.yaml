@@ -6,6 +6,7 @@ signatures:
   - call: RealDigits(x)
     description: the exact digits of a rational (integers included), any repeating block nested
     library: enumeratio-numerals
+    type: (value, integer?, integer?) -> list
   - call: RealDigits(x, base)
     description: the same, in the given base
   - call: RealDigits(x, base, len)

@@ -3,8 +3,8 @@ import { SUMMARIES, SYMBOLS as BOXES } from "../src/generated/package/boxes.ts";
 import { SYMBOLS, symbolInfo } from "../src/index.ts";
 
 test("the engine's own heads come typed from a bare compute-engine", () => {
-  expect(symbolInfo("Add")?.overloads[0]?.package).toBe("compute-engine");
-  expect(symbolInfo("Add")?.overloads[0]?.type).toMatch(/->/);
+  const engine = symbolInfo("Add")?.overloads.find((o) => o.package === "compute-engine");
+  expect(engine?.type).toMatch(/->/);
 });
 
 test("a record's rows are overloads of the package they name; its signature spells the parameters", () => {

@@ -7,6 +7,16 @@ signatures:
     description: the simplest rational within about one machine epsilon of x.
   - call: Rationalize(x, tolerance)
     description: the simplest rational within the given tolerance of x.
+  - call: Rationalize(x, tolerance?)
+    description: Finds a simple rational number near x.
+    library: enumeratio-analytic
+    type: (value, number?) -> value
+    overrides: compute-engine
+  - call: Rationalize(x, tolerance?)
+    description: Finds a simple rational number near x.
+    library: enumeratio-collections
+    type: (value, number?) -> value
+    overrides: enumeratio-analytic
 details:
   - Finds a simple rational number near x.
   - With one argument, it finds the simplest fraction within about one machine epsilon of x's current value; a second argument sets an explicit tolerance instead.

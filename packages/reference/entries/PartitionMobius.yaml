@@ -9,3 +9,8 @@ bindings:
     arity: 2
     note: "Sage's posets.SetPartitions, on the 2k points relabelled 1…2k: finer below coarser."
 stub: carrier
+signatures:
+  - call: PartitionMobius(...)
+    description: Mapped through to sage for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (number, number) -> integer

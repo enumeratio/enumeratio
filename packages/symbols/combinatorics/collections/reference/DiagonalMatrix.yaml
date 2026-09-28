@@ -6,6 +6,7 @@ signatures:
   - call: DiagonalMatrix(list)
     description: an n×n matrix (n = Length(list)) with list on the main diagonal
     library: enumeratio-collections
+    type: (any, integer?) -> list<any>
   - call: DiagonalMatrix(list, k)
     description: an (n + |k|)×(n + |k|) matrix with list on the k-th diagonal (k > 0 above, k < 0 below)
     library: enumeratio-collections

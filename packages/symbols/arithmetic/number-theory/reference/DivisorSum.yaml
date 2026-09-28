@@ -6,6 +6,7 @@ signatures:
   - call: DivisorSum(n, f)
     description: $\sum_{d\mid n} f(d)$
     library: enumeratio-number-theory
+    type: (integer, function, function?) -> number
   - call: DivisorSum(n, f, cond)
     description: $\sum_{d\mid n,\ \mathrm{cond}(d)} f(d)$
     library: enumeratio-number-theory

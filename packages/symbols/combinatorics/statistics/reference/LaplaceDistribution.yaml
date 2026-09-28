@@ -6,6 +6,7 @@ signatures:
   - call: LaplaceDistribution(mu, b)
     description: an inert distribution object — carries $\mu, b$, unevaluated.
     library: enumeratio-statistics
+    type: (any, real<0..>) -> distribution
 details:
   - $PDF(x) = e^{-|x-\mu|/b}/(2b)$, exact.
   - $CDF(x) = e^{(x-\mu)/b}/2$ for $x < \mu$, $1-e^{-(x-\mu)/b}/2$ otherwise.

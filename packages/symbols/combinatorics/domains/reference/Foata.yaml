@@ -12,3 +12,8 @@ catalog:
     on: Permutation
 mapOn:
   - Permutation
+signatures:
+  - call: Foata(Permutation)
+    description: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
+    library: enumeratio-domains
+    type: (permutation) -> permutation

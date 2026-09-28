@@ -8,9 +8,16 @@ signatures:
   - call: Fibonacci(nu)
     description: a real (non-integer) index via Binet's formula, $F_\nu = \frac{\varphi^\nu - \cos(\pi\nu)\varphi^{-\nu}}{\sqrt5}$.
     library: enumeratio-number-theory
+    type: (any, any?) -> any
+    overrides: enumeratio-adeles
   - call: Fibonacci(n, x)
     description: the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n and numeric via the two-variable Binet formula for a real order.
     library: enumeratio-number-theory
+  - call: Fibonacci(n)
+    description: The nth Fibonacci number, with $F_0 = 0$ and $F_1 = 1$, extended to negative n by the same recurrence.
+    library: enumeratio-adeles
+    type: (integer | value) -> integer | value
+    overrides: compute-engine
 details:
   - Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.
   - "Closed form (Binet's formula): $F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5}$, where $\\varphi = \\frac{1+\\sqrt5}{2}$ and $\\psi = \\frac{1-\\sqrt5}{2}$."

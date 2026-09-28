@@ -1,0 +1,12 @@
+name: ModularTrace
+domain: The modular group
+signature: ModularTrace(matrix)
+summary: The trace of a matrix in $\mathrm{PSL}(2,\mathbb{Z})$.
+signatures:
+  - call: ModularTrace(matrix)
+    description: $a+d$
+    library: enumeratio-modular
+    type: (value) -> integer
+seeAlso:
+  - ModularKind
+  - ModularMatrix

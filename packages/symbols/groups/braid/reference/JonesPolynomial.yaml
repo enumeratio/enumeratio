@@ -6,6 +6,7 @@ signatures:
   - call: JonesPolynomial(knot)
     description: $V(t)$, for a knot however it is named
     library: enumeratio-braid
+    type: (value) -> expression
   - call: TorusKnot(p, q)
     description: $T(p,q)$ as a knot — no braid, no bracket, no diagrams
     library: enumeratio-braid

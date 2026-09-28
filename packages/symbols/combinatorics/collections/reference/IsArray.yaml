@@ -6,6 +6,7 @@ signatures:
   - call: IsArray(t)
     description: True if t is a List whose nesting is rectangular at every level (a "full array")
     library: enumeratio-collections
+    type: (any, function?) -> boolean
   - call: IsArray(t, test)
     description: as above, and test holds of every leaf
     library: enumeratio-collections

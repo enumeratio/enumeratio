@@ -6,6 +6,7 @@ signatures:
   - call: EllipticTheta(a, u, q)
     description: the a-th Jacobi theta function (a = 1, 2, 3, or 4), argument u, nome q.
     library: "@enumeratio/analytic"
+    type: (number, number, number) -> number
 details:
   - $q$ is the nome, $|q| < 1$ — the same convention mpmath's `jtheta(a, u, q)` uses, not the "half-period ratio" $\tau$ some other references parameterize by.
   - Direct q-series (DLMF 20.2.1-20.2.4), term-summed until three consecutive terms fall under $10^{-15}$ or 20000 terms are reached.

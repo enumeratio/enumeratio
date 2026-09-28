@@ -6,6 +6,7 @@ signatures:
   - call: Reap(expr)
     description: "$\\{value, \\{\\{sown, ...\\}, ...\\}\\}$: $expr$'s value, and one list per distinct tag [[Sow]] used while evaluating it (untagged sows share one group), in first-appearance order. $\\{value, \\{\\}\\}$ if nothing was sown."
     library: enumeratio-collections
+    type: (any, any?) -> any
   - call: Reap(expr, tag)
     description: Like $Reap(expr)$, but the second element holds only the group whose tag matches $tag$ exactly (or several groups, one per entry, for $Reap(expr, \{tag1, tag2, ...\})$) — a requested tag nothing was sown under comes back as $\{\}$.
     library: enumeratio-collections
@@ -16,3 +17,5 @@ seeAlso:
   - Sow
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

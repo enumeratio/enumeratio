@@ -1,0 +1,12 @@
+name: LorenzPermutation
+domain: Braids and knots
+signature: LorenzPermutation(word)
+summary: How the modular flow permutes a closed geodesic's branch-line points, from its $LR$ word.
+signatures:
+  - call: LorenzPermutation(word)
+    description: how the flow permutes the orbit's branch-line points
+    library: enumeratio-braid
+    type: (string) -> list
+seeAlso:
+  - LorenzBraid
+  - TripNumber

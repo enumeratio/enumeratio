@@ -6,6 +6,7 @@ signatures:
   - call: AdicExpansion(x, count?)
     description: the first `count` digits (default 20) as a string
     library: enumeratio-numerals
+    type: (any, integer?) -> string
   - call: AdicDigits(x, count?)
     description: the same digits as a list, LEAST significant first — the only order that lists something with no left end
     library: enumeratio-numerals

@@ -9,3 +9,8 @@ stub: carrier
 catalogCarrier: true
 mapOn:
   - SetComposition
+signatures:
+  - call: SetComposition(list)
+    description: The singular-inhabitant constructor for a composition of a set, as its ordered blocks.
+    library: enumeratio-domains
+    type: (list<integer>) -> set_composition

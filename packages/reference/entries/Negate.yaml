@@ -5,6 +5,31 @@ summary: "The additive inverse of x: $-x$."
 signatures:
   - call: Negate(x)
     description: the additive inverse $-x$.
+  - call: Negate(x)
+    description: "The additive inverse of x: $-x$."
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+  - call: Negate(x)
+    description: "The additive inverse of x: $-x$."
+    library: enumeratio-hypercomplex
+    type: (complex | infinity) -> number
+    overrides: enumeratio-analytic
+  - call: Negate(x)
+    description: "The additive inverse of x: $-x$."
+    library: enumeratio-residues
+    type: (complex | infinity) -> number
+    overrides: enumeratio-hypercomplex
+  - call: Negate(x)
+    description: "The additive inverse of x: $-x$."
+    library: enumeratio-numerals
+    type: (complex | infinity) -> number
+    overrides: enumeratio-residues
+  - call: Negate(x)
+    description: "The additive inverse of x: $-x$."
+    library: enumeratio-adeles
+    type: (complex | infinity) -> number
+    overrides: enumeratio-numerals
 details:
   - 'The additive inverse: $\operatorname{Negate}(x) = -x$.'
   - "Double negation cancels: $-(-x) = x$."

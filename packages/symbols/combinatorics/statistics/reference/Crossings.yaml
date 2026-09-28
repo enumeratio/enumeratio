@@ -18,3 +18,8 @@ catalog:
 statOn:
   - PerfectMatching
   - SetPartition
+signatures:
+  - call: Crossings(partition)
+    description: Pairs of arcs a < b < c < d with a~c and b~d.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

@@ -5,6 +5,11 @@ summary: The signed Stirling number of the first kind, relating falling factoria
 signatures:
   - call: StirlingS1(n, k)
     description: the signed Stirling number of the first kind $s(n, k)$.
+  - call: StirlingS1(n, k)
+    description: The signed Stirling number of the first kind, relating falling factorials to powers of n.
+    library: enumeratio-number-theory
+    type: (integer, integer) -> integer
+    overrides: compute-engine
 details:
   - 'Coefficients relating falling factorials to ordinary powers: $(x)_n = \sum_{k} s(n, k)\, x^k$.'
   - $|s(n, k)|$ counts the permutations of n elements with exactly k cycles.

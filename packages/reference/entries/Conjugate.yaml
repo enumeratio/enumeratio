@@ -5,6 +5,11 @@ summary: Complex conjugate of a number, or the pointwise conjugate of a function
 signatures:
   - call: "Conjugate(T) -> T where T: number"
     description: as compute-engine declares it
+  - call: "Conjugate(T) -> T where T: number"
+    description: Complex conjugate of a number, or the pointwise conjugate of a function.
+    library: enumeratio-hypercomplex
+    type: "(T) -> T where T: number"
+    overrides: compute-engine
 catalog:
   - system: findstat
     identity: Mp00041

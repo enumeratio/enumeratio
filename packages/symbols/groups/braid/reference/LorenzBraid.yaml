@@ -6,6 +6,7 @@ signatures:
   - call: LorenzBraid(word)
     description: the positive permutation braid of the orbit
     library: enumeratio-braid
+    type: (string) -> value
   - call: LorenzPermutation(word)
     description: how the flow permutes the orbit's branch-line points
     library: enumeratio-braid

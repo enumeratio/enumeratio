@@ -23,3 +23,8 @@ grades:
   - name: size
     role: axis
 carrier: StandardTableau
+signatures:
+  - call: StandardTableaux(n)
+    description: "Standard Young tableaux: fillings of a partition shape, weakly increasing along rows and columns."
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

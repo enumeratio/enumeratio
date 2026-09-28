@@ -6,6 +6,7 @@ signatures:
   - call: Catch(expr)
     description: $expr$'s value, or (if a [[Throw]] happened while evaluating it) the value that $Throw$ carried.
     library: enumeratio-collections
+    type: (any, any?) -> any
   - call: Catch(expr, tag)
     description: Like $Catch(expr)$, but only catches a $Throw$ whose tag matches $tag$ exactly — any other $Throw$ (untagged, or a different tag) propagates past this $Catch$.
     library: enumeratio-collections
@@ -16,3 +17,5 @@ seeAlso:
   - Throw
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

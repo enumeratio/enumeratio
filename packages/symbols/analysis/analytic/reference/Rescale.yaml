@@ -6,6 +6,7 @@ signatures:
   - call: Rescale(list)
     description: rescale every element of list so its own minimum maps to 0 and its maximum to 1.
     library: "@enumeratio/analytic"
+    type: (value, value?, value?) -> value
   - call: Rescale(x, {min, max})
     description: (x - min) / (max - min) -- x rescaled from {min, max} to {0, 1}.
     library: "@enumeratio/analytic"

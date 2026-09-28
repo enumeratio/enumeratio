@@ -8,6 +8,8 @@ signatures:
   - call: Median(matrix)
     description: the column-wise median, one value per column.
     library: enumeratio-collections
+    type: ((collection<any> | number)+) -> nan | real | signed_infinity
+    overrides: compute-engine
 details:
   - For an odd-length collection, the median is the middle element of [[Sort]]'s result; for even length, it's the average of the two middle elements.
   - Much less sensitive to outliers than [[Mean]] — a single extreme value barely moves it.

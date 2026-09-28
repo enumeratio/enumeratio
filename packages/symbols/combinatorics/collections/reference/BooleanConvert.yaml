@@ -6,6 +6,7 @@ signatures:
   - call: BooleanConvert(expr)
     description: expr in disjunctive normal form (an Or of Ands) — same as LogicalExpand
     library: enumeratio-collections
+    type: (any, string?) -> any
   - call: BooleanConvert(expr, "CNF")
     description: expr in conjunctive normal form (an And of Ors)
     library: enumeratio-collections
@@ -21,3 +22,5 @@ seeAlso:
   - LogicalExpand
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

@@ -6,6 +6,7 @@ signatures:
   - call: PosetElements(poset)
     description: the elements, listed so that smaller ones come first
     library: enumeratio-incidence
+    type: (value) -> list
 details:
   - The linear extension is what makes $\zeta$ upper-triangular with ones on the diagonal, hence invertible over the integers — and therefore what makes $\mu$ integral
   - '`DivisorLattice` elements are integers; `BooleanLattice` elements are subsets; `Chain` elements are $1 \dots n$'

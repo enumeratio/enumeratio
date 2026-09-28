@@ -6,6 +6,7 @@ signatures:
   - call: SparseArray(rules)
     description: a dense array whose dimensions are the largest index seen on each axis, elsewhere 0.
     library: enumeratio-collections
+    type: (any, any?, any?) -> collection
   - call: SparseArray(rules, dims)
     description: like the 1-argument form, with the dimensions given explicitly.
     library: enumeratio-collections

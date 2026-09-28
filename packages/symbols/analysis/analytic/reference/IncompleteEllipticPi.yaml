@@ -6,6 +6,7 @@ signatures:
   - call: IncompleteEllipticPi(n, phi, m)
     description: the incomplete elliptic integral of the third kind, characteristic n, amplitude φ, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - '$\varphi = \pi/2$ is the complete integral: $\Pi(n;\pi/2,m) = $ [[EllipticPi]]$(n,m)$.'

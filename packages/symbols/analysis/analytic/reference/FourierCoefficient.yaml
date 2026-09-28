@@ -6,6 +6,7 @@ signatures:
   - call: FourierCoefficient(f, x, n)
     description: $c_n$, for a concrete integer $n$.
     library: "@enumeratio/analytic"
+    type: (value, value, value) -> value
 details:
   - "Covered, combined by linearity (a sum, a negation, a constant factor free of $x$):"
   - '- a trig monomial $\cos(x)^p \sin(x)^q$ (nonnegative integer $p, q$ — a plain $\cos(x)$ or $\sin(x)$ is $p=1,q=0$ or $p=0,q=1$), via the exponential binomial expansion $\cos(x) = (E+E^{-1})/2$, $\sin(x) = (E-E^{-1})/(2i)$, $E = e^{ix}$ -- exact, and what covers a "sin/cos polynomial" like $\cos^2(x)$ (checked against Wolfram directly).'

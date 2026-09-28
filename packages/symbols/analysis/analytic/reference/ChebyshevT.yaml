@@ -6,6 +6,7 @@ signatures:
   - call: ChebyshevT(n, x)
     description: the degree-$n$ Chebyshev polynomial of the first kind at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
+    type: (integer, number) -> number
 details:
   - $T_0 = 1$, $T_1 = x$, and $T_{n+1} = 2x\,T_n - T_{n-1}$. The coefficients are integers and the leading one is $2^{n-1}$ for $n \ge 1$.
   - $T_n(\cos\theta) = \cos(n\theta)$, so on $[-1, 1]$ the polynomial oscillates between $-1$ and $1$, and $T_n(1) = 1$, $T_n(-1) = (-1)^n$.

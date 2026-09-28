@@ -6,6 +6,7 @@ signatures:
   - call: Refine(expr, cond)
     description: simplify $expr$ under $cond$ (a single condition, a `List`, or an `And`), then forget it.
     library: "@enumeratio/analytic"
+    type: (value, value?) -> unknown
   - call: Refine(expr)
     description: simplify $expr$ under whatever is already assumed (e.g. inside an enclosing [[Assuming]]).
     library: "@enumeratio/analytic"
@@ -14,3 +15,5 @@ details:
   - A condition that `simplify()` has no rule for is left alone, same as Wolfram's `Refine` declines a fact it can't use — this is not a general decision procedure for arbitrary predicates.
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

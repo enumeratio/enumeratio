@@ -8,6 +8,8 @@ signatures:
   - call: Chop(x, tolerance)
     description: 0 if $|x|$ is smaller than `tolerance`, else x unchanged.
     library: enumeratio-collections
+    type: (any, any?) -> any
+    overrides: compute-engine
 details:
   - Replaces a value smaller in magnitude than about $10^{-10}$ with exact 0 -- cleanup for the floating-point noise left over from a numeric computation.
   - Chops the real and imaginary parts of a complex number independently.

@@ -1,0 +1,12 @@
+name: BraidComponents
+domain: Braids and knots
+signature: BraidComponents(braid)
+summary: The number of components in a braid's closure — the cycle count of its [[BraidPermutation]].
+signatures:
+  - call: BraidComponents(braid)
+    description: the cycle count of the closure's permutation
+    library: enumeratio-braid
+    type: (value) -> integer
+seeAlso:
+  - BraidPermutation
+  - BraidIsKnot

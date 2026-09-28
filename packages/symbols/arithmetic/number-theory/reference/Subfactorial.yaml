@@ -5,6 +5,11 @@ summary: "The number of derangements of n objects: permutations that leave no el
 signatures:
   - call: Subfactorial(n)
     description: the number of derangements $D_n$ of n objects.
+  - call: Subfactorial(n)
+    description: "The number of derangements of n objects: permutations that leave no element in its original position."
+    library: enumeratio-number-theory
+    type: (any) -> any
+    overrides: compute-engine
 details:
   - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.
   - 'Recurrence: $D_n = n\,D_{n-1} + (-1)^n$, with $D_0 = 1$.'

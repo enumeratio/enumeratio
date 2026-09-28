@@ -5,6 +5,11 @@ summary: The product of the positive integers up to n, written n!.
 signatures:
   - call: Factorial(n)
     description: $n!$, the product of the integers from 1 to n.
+  - call: Factorial(n)
+    description: The product of the positive integers up to n, written n!.
+    library: enumeratio-number-theory
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 details:
   - $0! = 1$ by convention, the empty product.
   - 'Recurrence: $n! = n\,(n-1)!$.'

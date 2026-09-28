@@ -6,6 +6,7 @@ signatures:
   - call: Inequality(v1, rel1, v2, rel2, v3, ...)
     description: the conjunction of every consecutive link, where each relᵢ is one of Equal, NotEqual, Less, LessEqual, Greater, GreaterEqual.
     library: "@enumeratio/analytic"
+    type: (any, any, any, any*) -> boolean
 details:
   - A chain that uses the SAME relation throughout (0 < x < 5) is already [[Less]] or [[LessEqual]] etc. taking more than two arguments -- see those heads. Inequality exists for a chain that MIXES relations (0 <= x < 5), which compute-engine's own n-ary comparison heads don't represent.
   - Evaluates as the And of its pairwise links, applied through the relation heads compute-engine already ships -- so a fully numeric chain folds all the way to True/False, and a symbolic one is left as And of whatever didn't fold.
@@ -17,3 +18,5 @@ seeAlso:
   - FunctionDomain
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

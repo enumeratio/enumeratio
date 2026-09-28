@@ -6,6 +6,7 @@ signatures:
   - call: Inversions(p)
     description: the inversion count of a one-line permutation $p$
     library: enumeratio-collections
+    type: (list) -> integer
 details:
   - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)
   - Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$

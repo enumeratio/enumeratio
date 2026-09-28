@@ -6,6 +6,7 @@ signatures:
   - call: MaxwellDistribution(sigma)
     description: an inert distribution object — carries $\sigma$, unevaluated.
     library: enumeratio-statistics
+    type: (real<0..>) -> distribution
 details:
   - $PDF(x) = \sqrt{2/\pi}\,x^2 e^{-x^2/(2\sigma^2)}/\sigma^3$ for $x \geq 0$.
   - $CDF(x) = P(3/2, x^2/(2\sigma^2))$ via [[GammaRegularized]] (the standard chi-square-CDF identity for Maxwell), clamped to $0$ below $x=0$.

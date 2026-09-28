@@ -6,6 +6,7 @@ signatures:
   - call: VertexDegree(g)
     description: the degree of every vertex of $g$, as a list in [[VertexList]] order.
     library: enumeratio-collections
+    type: (value, any?) -> value
   - call: VertexDegree(g, v)
     description: the degree of $v$ alone.
     library: enumeratio-collections

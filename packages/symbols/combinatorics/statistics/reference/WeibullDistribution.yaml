@@ -6,6 +6,7 @@ signatures:
   - call: WeibullDistribution(alpha, beta)
     description: an inert distribution object — carries $\alpha, \beta$, unevaluated.
     library: enumeratio-statistics
+    type: (real<0..>, real<0..>) -> distribution
 details:
   - $PDF(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}e^{-(x/\beta)^\alpha}$ for $x \geq 0$.
   - $CDF(x) = 1-e^{-(x/\beta)^\alpha}$, clamped to $0$ below $x=0$.

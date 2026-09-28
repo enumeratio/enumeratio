@@ -6,6 +6,7 @@ signatures:
   - call: IsNumeric(expr)
     description: $True$ for a number literal or an expression built from numeric literals and constants like $\pi$, $False$ otherwise.
     library: enumeratio-collections
+    type: (any) -> boolean
 details:
   - Wolfram spells this `NumericQ`; renamed to the `Is…` convention used across compute-engine predicates.
   - A plain symbol with no numeric value (like `x`) is not numeric, even though it could later be assigned one.

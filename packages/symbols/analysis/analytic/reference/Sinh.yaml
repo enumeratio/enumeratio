@@ -5,6 +5,11 @@ summary: 'Hyperbolic sine: $\sinh(x) = \frac{e^x - e^{-x}}{2}$.'
 signatures:
   - call: Sinh(x)
     description: the hyperbolic sine of x.
+  - call: Sinh(x)
+    description: 'Hyperbolic sine: $\sinh(x) = \frac{e^x - e^{-x}}{2}$.'
+    library: enumeratio-analytic
+    type: (complex | signed_infinity) -> number
+    overrides: compute-engine
 details:
   - 'Defined in terms of [[Exp]]: $\sinh(x) = \frac{e^x - e^{-x}}{2}$.'
   - 'Odd function: $\sinh(-x) = -\sinh(x)$.'

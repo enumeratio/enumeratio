@@ -9,3 +9,8 @@ references:
     identity: DyckPath
 stub: carrier
 catalogCarrier: true
+signatures:
+  - call: DyckPath(list)
+    description: The singular-inhabitant constructor for a Dyck path, as its up/down steps.
+    library: enumeratio-domains
+    type: (list<integer>) -> dyck_path

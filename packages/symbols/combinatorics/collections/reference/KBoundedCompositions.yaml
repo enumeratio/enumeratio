@@ -6,6 +6,7 @@ signatures:
   - call: KBoundedCompositions(n, k)
     description: the compositions of $n$ into parts from $\{1, …, k\}$
     library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>
 details:
   - Count is the generalized $k$-nacci sequence; specializes to [[FibonacciCompositions]] at $k=2$, [[TriCompositions]] at $k=3$, [[TetraCompositions]] at $k=4$.
 seeAlso:

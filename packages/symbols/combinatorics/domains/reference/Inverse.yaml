@@ -15,3 +15,14 @@ catalog:
 mapOn:
   - Permutation
   - SignedPermutation
+signatures:
+  - call: Inverse(Permutation)
+    description: "The inverse permutation: position of each value."
+    library: enumeratio-modular
+    type: (value) -> value
+    overrides: compute-engine
+  - call: Inverse(Permutation)
+    description: "The inverse permutation: position of each value."
+    library: enumeratio-domains
+    type: ((value) -> value) & ((permutation) -> permutation)
+    overrides: enumeratio-modular

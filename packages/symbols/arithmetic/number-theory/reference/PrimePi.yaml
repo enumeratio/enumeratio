@@ -5,6 +5,11 @@ summary: "The prime-counting function: how many primes are ≤ n."
 signatures:
   - call: PrimePi(n)
     description: count of primes $\le n$.
+  - call: PrimePi(n)
+    description: "The prime-counting function: how many primes are ≤ n."
+    library: enumeratio-number-theory
+    type: (real) -> integer
+    overrides: compute-engine
 details:
   - 'Inverse of [[NthPrime]]: $\pi(p_n)=n$.'
   - Asymptotically $\pi(x)\sim x/\ln x$, the prime number theorem.

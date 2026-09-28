@@ -6,6 +6,7 @@ signatures:
   - call: DifferentialRootReduce(f(x), x)
     description: the D-finite reduction of $f(x)$, as $\mathrm{DifferentialRoot}(\ldots)(x)$.
     library: "@enumeratio/analytic"
+    type: (any, symbol) -> any
 details:
   - Expands about $x_0 = 0$ wherever that's an ordinary point of the ODE (every case except BesselJ, whose coefficient of $y''$ vanishes at $x=0$); BesselJ expands about $x_0=1$ instead, matching a local wolframscript's own choice there. A single-pole rational function $A/(x{-}a)$ also moves off $a$ itself.
   - Every reduction's initial conditions come from evaluating $f$ and its derivatives (via compute-engine's own `D`) at the expansion point directly, so they stay exact wherever compute-engine's own arithmetic is (e.g. AiryAi(0), or $2/\sqrt\pi$ for erf); BesselJ's derivative uses the standard identity $J_\nu'(x) = (J_{\nu-1}(x) - J_{\nu+1}(x))/2$.
@@ -20,3 +21,5 @@ seeAlso:
   - Erf
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

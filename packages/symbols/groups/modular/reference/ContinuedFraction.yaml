@@ -8,6 +8,8 @@ signatures:
   - call: ContinuedFraction(x)
     description: for a quadratic irrational, the exact eventually-periodic expansion $[a_0, \overline{a_1,\dots,a_k}]$, the period written as a nested list
     library: enumeratio-modular
+    type: (real, integer?) -> list<integer>
+    overrides: compute-engine
   - call: ContinuedFraction(x, n)
     description: the first $n$ terms — exact for a quadratic irrational, certified-precision otherwise (compute-engine's own signature, extended)
   - call: FromContinuedFraction(list)
@@ -21,6 +23,11 @@ signatures:
   - call: FareySequence(n)
     description: every reduced $p/q$ in $[0,1]$ with $q \le n$, in order
     library: enumeratio-modular
+  - call: ContinuedFraction(x)
+    description: The regular continued fraction $[a_0; a_1, a_2, \dots]$ of $p/q$. Its partial quotients are the run lengths of the rational's Stern–Brocot path, and the $T$-exponents of its matrix — one object under three names.
+    library: enumeratio-domains
+    type: ((list<integer>) -> continued_fraction) & ((real, integer?) -> list<integer>)
+    overrides: enumeratio-modular
 details:
   - '`ContinuedFraction` and `FromContinuedFraction` are compute-engine''s heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"'
   - For a quadratic irrational $(a+b\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision

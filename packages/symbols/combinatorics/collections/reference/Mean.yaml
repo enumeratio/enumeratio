@@ -8,6 +8,13 @@ signatures:
   - call: Mean(matrix)
     description: the column-wise mean, one value per column.
     library: enumeratio-collections
+    type: ((collection<any> | distribution | number)+) -> number
+    overrides: compute-engine
+  - call: Mean(collection)
+    description: The arithmetic average of the elements of the collection.
+    library: enumeratio-statistics
+    type: ((collection<any> | distribution | number)+) -> number
+    overrides: enumeratio-collections
 details:
   - $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].
   - Sensitive to outliers — a single extreme value can drag the mean far from the bulk of the data. See [[Median]] for a more robust alternative.

@@ -18,3 +18,8 @@ mapOn:
   - DyckPath
   - MotzkinPath
   - Permutation
+signatures:
+  - call: ReverseComplement(Permutation)
+    description: Reverse, then complement.
+    library: enumeratio-domains
+    type: (permutation) -> permutation

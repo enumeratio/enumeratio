@@ -6,6 +6,7 @@ signatures:
   - call: VertexOutDegree(g)
     description: every vertex's out-degree, in VertexList(g) order.
     library: enumeratio-collections
+    type: (value, any?) -> value
   - call: VertexOutDegree(g, v)
     description: just v's out-degree.
     library: enumeratio-collections

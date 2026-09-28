@@ -6,6 +6,7 @@ signatures:
   - call: IntegerExponent(n, b)
     description: the multiplicity of $b$ in $n$
     library: enumeratio-number-theory
+    type: (number, number?) -> integer | number
   - call: IntegerExponent(n)
     description: base 10
     library: enumeratio-number-theory

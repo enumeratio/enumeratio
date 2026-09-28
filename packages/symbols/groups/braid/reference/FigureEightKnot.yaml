@@ -1,0 +1,12 @@
+name: FigureEightKnot
+domain: Braids and knots
+signature: FigureEightKnot()
+summary: The figure-eight knot — [[TwistKnot]]$(1)$ under its own name.
+signatures:
+  - call: FigureEightKnot()
+    description: TwistKnot(1) under its own name
+    library: enumeratio-braid
+    type: () -> value
+seeAlso:
+  - TwistKnot
+  - AlexanderPolynomial

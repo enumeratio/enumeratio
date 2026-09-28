@@ -6,6 +6,7 @@ signatures:
   - call: BarnesG(z)
     description: the Barnes G-function $G(z)$.
     library: enumeratio-analytic
+    type: (number) -> number
 details:
   - Functional equation $G(z+1) = \Gamma(z)\,G(z)$, the analogue of $\Gamma(z+1) = z\,\Gamma(z)$ one level up; see [[Gamma]].
   - 'At positive integers $G(n) = 0!\,1!\,2!\cdots(n-2)!$ — the superfactorial: $G(1) = G(2) = G(3) = 1$, $G(4) = 2$, $G(5) = 12$, $G(6) = 288$, $G(7) = 34560$. Exact and arbitrarily large.'

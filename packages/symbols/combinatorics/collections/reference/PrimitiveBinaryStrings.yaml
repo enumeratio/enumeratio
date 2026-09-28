@@ -6,6 +6,7 @@ signatures:
   - call: PrimitiveBinaryStrings(n)
     library: enumeratio-collections
     description: the length-$n$ binary strings that are not themselves a shorter word repeated.
+    type: (integer) -> list<list<integer>>
 details:
   - A lazy indexed collection; the count is $\sum_{d\mid n}\mu(d)\,2^{n/d}$, the un-normalised sum inside the binary Lyndon-word count. See [[MoebiusMu]].
   - Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.

@@ -6,6 +6,7 @@ signatures:
   - call: StarGraph(n)
     description: vertex 1 is the centre, joined to vertices $2, \dots, n$.
     library: enumeratio-collections
+    type: (integer) -> value
 seeAlso:
   - PathGraph
   - CompleteKaryTree

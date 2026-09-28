@@ -6,6 +6,7 @@ signatures:
   - call: IsMatrix(m)
     description: True if m is a List of Lists, all the same length, none containing a further List
     library: enumeratio-collections
+    type: (any, function?) -> boolean
   - call: IsMatrix(m, test)
     description: as above, and test holds of every entry
     library: enumeratio-collections

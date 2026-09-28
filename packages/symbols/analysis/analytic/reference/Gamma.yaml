@@ -10,6 +10,8 @@ signatures:
   - call: Gamma(s, z0, z1)
     description: the generalized incomplete gamma $\Gamma(s, z_0) - \Gamma(s, z_1) = \int_{z_0}^{z_1} t^{s-1} e^{-t}\,dt$; at $z_0 = 0$ the LOWER incomplete gamma $\gamma(s, z_1)$.
     library: "@enumeratio/analytic"
+    type: (complex | infinity, (complex | infinity)?, (complex | infinity)?) -> number
+    overrides: compute-engine
 details:
   - 'Extends the factorial: $\Gamma(n) = (n-1)!$ for positive integers n, so [[Factorial]] is $\Gamma(n+1)$.'
   - 'Functional equation: $\Gamma(z+1) = z\,\Gamma(z)$.'

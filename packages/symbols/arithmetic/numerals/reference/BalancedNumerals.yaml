@@ -1,0 +1,13 @@
+name: BalancedNumerals
+domain: Numeral systems
+signature: BalancedNumerals(b)
+summary: 'Balanced base $b$ (odd): digits run $-(b-1)/2,\dots,(b-1)/2$ — it spells negative integers with no sign at all, and rounding to nearest is just truncation. Balanced ternary ($b=3$) is the famous case.'
+signatures:
+  - call: BalancedNumerals(b)
+    description: the system, digits $-(b-1)/2,\dots,(b-1)/2$
+    library: enumeratio-numerals
+    type: (integer) -> value
+seeAlso:
+  - IntegerDigits
+  - NegativeNumerals
+  - BalancedRadix

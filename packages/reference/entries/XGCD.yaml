@@ -6,6 +6,7 @@ signatures:
   - call: XGCD(a, b) -> Tuple(g, x, y)
     description: Bezout coefficients alongside the gcd
     library: "@enumeratio/analytic"
+    type: (integer, integer) -> tuple<integer, integer, integer>
 seeAlso:
   - GCD
   - ExtendedGCD

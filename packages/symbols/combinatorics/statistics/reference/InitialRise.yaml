@@ -8,3 +8,8 @@ details:
   - Height equals the index exactly while every step so far has been an up step.
 statOn:
   - DyckPath
+signatures:
+  - call: InitialRise(path)
+    description: The length of the opening run of up steps.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

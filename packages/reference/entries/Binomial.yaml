@@ -5,6 +5,16 @@ summary: The binomial coefficient $\binom{n}{k}$, the number of k-element subset
 signatures:
   - call: Binomial(n, k)
     description: the binomial coefficient $\binom{n}{k}$.
+  - call: Binomial(n, k)
+    description: The binomial coefficient $\binom{n}{k}$, the number of k-element subsets of an n-element set.
+    library: enumeratio-analytic
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
+  - call: Binomial(n, k)
+    description: The binomial coefficient $\binom{n}{k}$, the number of k-element subsets of an n-element set.
+    library: enumeratio-number-theory
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: enumeratio-analytic
 details:
   - 'The general definition runs through the Gamma function: $\binom{n}{k} = \frac{\Gamma(n+1)}{\Gamma(k+1)\,\Gamma(n-k+1)}$.'
   - 'Symmetric in its arguments: $\binom{n}{k} = \binom{n}{n-k}$.'
