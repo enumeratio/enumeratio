@@ -532,19 +532,24 @@ def enumeratio_partition_mobius(a, b):
 # Adeles (Hertogh's package, github.com/mathehertogh/adeles): the is_* helpers Sage 10.9
 # removed, revived the same way packages/symbols/arithmetic/adeles/scripts/collect-golden.py
 # revives them, so ProfiniteNumber/Idele/Adele's mapped rows below can import and use it.
-import sage.rings.number_field.number_field as _enumeratio_nf
-import sage.rings.number_field.number_field_element as _enumeratio_nfe
-import sage.rings.number_field.number_field_ideal as _enumeratio_nfi
-import sage.rings.quotient_ring as _enumeratio_qr
-from sage.rings.number_field.number_field_base import NumberField as _EnumeratioNumberField
+# Guarded: a Sage without the adeles package (a plain image, a local run) still runs
+# every other mapped call; only the adeles rows would then error.
+try:
+    import sage.rings.number_field.number_field as _enumeratio_nf
+    import sage.rings.number_field.number_field_element as _enumeratio_nfe
+    import sage.rings.number_field.number_field_ideal as _enumeratio_nfi
+    import sage.rings.quotient_ring as _enumeratio_qr
+    from sage.rings.number_field.number_field_base import NumberField as _EnumeratioNumberField
 
-_enumeratio_nf.is_NumberField = lambda K: isinstance(K, _EnumeratioNumberField)
-_enumeratio_nfi.is_NumberFieldIdeal = lambda x: isinstance(x, _enumeratio_nfi.NumberFieldFractionalIdeal)
-_enumeratio_nfe.is_NumberFieldElement = lambda x: isinstance(x, _enumeratio_nfe.NumberFieldElement)
-_enumeratio_qr.is_QuotientRing = lambda x: isinstance(x, _enumeratio_qr.QuotientRing_generic)
+    _enumeratio_nf.is_NumberField = lambda K: isinstance(K, _EnumeratioNumberField)
+    _enumeratio_nfi.is_NumberFieldIdeal = lambda x: isinstance(x, _enumeratio_nfi.NumberFieldFractionalIdeal)
+    _enumeratio_nfe.is_NumberFieldElement = lambda x: isinstance(x, _enumeratio_nfe.NumberFieldElement)
+    _enumeratio_qr.is_QuotientRing = lambda x: isinstance(x, _enumeratio_qr.QuotientRing_generic)
 
-from adeles.all import Adeles, Ideles, Qhat  # noqa: E402
-from adeles.matrix import factor_GLQhat  # noqa: E402
+    from adeles.all import Adeles, Ideles, Qhat  # noqa: E402
+    from adeles.matrix import factor_GLQhat  # noqa: E402
+except ImportError:
+    pass
 
 # Qhat/Idele/Adele are foreign objects with no str() that means what we mean -- these mirror
 # collect-golden.py's own num()/profinite()/idele() conversions into our MathJSON shape, the
