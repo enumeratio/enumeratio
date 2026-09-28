@@ -1,0 +1,55 @@
+- id: adicdigits-adicnumeral-10-third-6
+  expr: [AdicDigits, [AdicNumeral, 10, [Rational, 1, 3]], 6]
+  expected: [List, 7, 6, 6, 6, 6, 6]
+  caption: Least significant first — the trailing 7 of $…6667$ comes first
+- id: adicdigits-adicnumeral-2-minus1
+  expr: [AdicDigits, [AdicNumeral, 2, -1], 8]
+  expected: [List, 1, 1, 1, 1, 1, 1, 1, 1]
+  caption: $-1$ carries forever, so every digit is the top one
+  role: test
+- id: adicdigits-adicnumeral-2-third
+  expr: [AdicDigits, [AdicNumeral, 2, [Rational, 1, 3]], 8]
+  expected: [List, 1, 1, 0, 1, 0, 1, 0, 1]
+  role: test
+- id: adicdigits-adicnumeral-2-100
+  expr: [AdicDigits, [AdicNumeral, 2, 100], 8]
+  expected: [List, 1, 0, 0, 1, 1, 0, 0, 0]
+  caption: Positive valuation — the low digits are the trailing zeros of $100 = 4 \cdot 25$
+  category: Scope
+  role: test
+- id: adicdigits-adicnumeral-3-third
+  expr: [AdicDigits, [AdicNumeral, 3, [Rational, 1, 3]], 8]
+  expected: [List, 1, 0, 0, 0, 0, 0, 0, 0]
+  caption: Negative valuation — digits below the point come first
+  category: Scope
+  role: test
+- id: adicdigits-adicnumeral-3-minus4-9
+  expr: [AdicDigits, [AdicNumeral, 3, [Rational, -4, 9]], 8]
+  expected: [List, 2, 1, 2, 2, 2, 2, 2, 2]
+  role: test
+- id: adicdigits-adicnumeral-5-7-25
+  expr: [AdicDigits, [AdicNumeral, 5, [Rational, 7, 25]], 8]
+  expected: [List, 2, 1, 0, 0, 0, 0, 0, 0]
+  role: test
+- id: adicdigits-adicnumeral-5-100
+  expr: [AdicDigits, [AdicNumeral, 5, 100], 8]
+  expected: [List, 4, 0, 0, 0, 0, 0, 0, 0]
+  role: test
+- id: adicdigits-adicnumeral-7-2-7
+  expr: [AdicDigits, [AdicNumeral, 7, [Rational, 2, 7]], 8]
+  expected: [List, 2, 0, 0, 0, 0, 0, 0, 0]
+  role: test
+- id: adicdigits-adicnumeral-11-minus1
+  expr: [AdicDigits, [AdicNumeral, 11, -1], 8]
+  expected: [List, 10, 10, 10, 10, 10, 10, 10, 10]
+  caption: Base 11 digits run past 9 — printed with brackets in AdicExpansion, plain here
+  category: Scope
+  role: test
+- id: adicdigits-adicnumeral-11-100
+  expr: [AdicDigits, [AdicNumeral, 11, 100], 8]
+  expected: [List, 1, 9, 0, 0, 0, 0, 0, 0]
+  role: test
+- id: adicdigits-adicnumeral-7-minus1-3
+  expr: [AdicDigits, [AdicNumeral, 7, [Rational, -1, 3]], 8]
+  expected: [List, 2, 2, 2, 2, 2, 2, 2, 2]
+  role: test

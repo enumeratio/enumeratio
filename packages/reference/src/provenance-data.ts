@@ -8510,7 +8510,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "AdicDigits",
-    provenance: "unknown",
+    provenance: "extension",
     declared: "enumeratio-numerals",
     wolframAlias: null,
     elsewhere: [],

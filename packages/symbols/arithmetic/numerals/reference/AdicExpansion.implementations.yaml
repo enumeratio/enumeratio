@@ -34,6 +34,8 @@ as-a-list-least-significant-first:
     out: \bigl\lbrack7, 6, 6, 6, 6, 6\bigr\rbrack
   fullform:
     in: AdicDigits[AdicNumeral[10, Rational[1, 3]], 6]
+  sage:
+    in: list((Qp(10, 60)(QQ((1/3)))).unit_part().expansion())[:6]
 a-plain-non-negative-integer-terminates-with-no:
   epsil:
     in: AdicExpansion(AdicNumeral(10, 42))
@@ -70,3 +72,5 @@ digits-run-least-significant-first-1-s-first:
     out: \bigl\lbrack9, 9, 9, 9\bigr\rbrack
   fullform:
     in: AdicDigits[AdicNumeral[10, -1], 4]
+  sage:
+    in: list((Qp(10, 60)(QQ(-1))).unit_part().expansion())[:4]

@@ -312,10 +312,12 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 978, disagree 69, inconclusive 24, error 100
+## sage — agree 1002, disagree 71, inconclusive 24, error 108
 
 | example                                                                | kind           | ours                                                                                         | theirs                                                                                       |
 | ---------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `AdicNumeral/prime-base-q-5-is-a-field-so-the-point-moves`             | shape          | `["AdicNumeral",5,["Rational",3,5]]`                                                         | `3*5^-1 + O(5^59)`                                                                           |
+| `AdicValuation/the-valuation-of-zero-is-positive-infinity`             | convention     | `PositiveInfinity`                                                                           | `+Infinity`                                                                                  |
 | `Binomial/both-arguments-negative-integers-the-limiting`               | convention     | `6`                                                                                          | `0`                                                                                          |
 | `Binomial/equal-negative-arguments-binom-2-2-1`                        | convention     | `1`                                                                                          | `0`                                                                                          |
 | `CatalanNumber/catalannumber-neg-1-is-neg-1`                           | convention     | `-1`                                                                                         | `-1/2`                                                                                       |
@@ -390,6 +392,14 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 | example                                                                   | message                                                                                      |
 | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `AdicDigits/adicdigits-adicnumeral-10-third-6`                            | `ValueError: p must be prime`                                                                |
+| `AdicNumeral/6667-3-1-1-3-is-a-10-adic-integer`                           | `ValueError: p must be prime`                                                                |
+| `AdicNumeral/999-1-0-carrying-forever`                                    | `ValueError: p must be prime`                                                                |
+| `AdicNumeral/a-negative-power-inverts-exactly-3-1-1-3-in-z-10`            | `ValueError: p must be prime`                                                                |
+| `AdicNumeral/composite-base-2-is-not-a-unit-of-z-10-so-this`              | `ValueError: p must be prime`                                                                |
+| `AdicNumeral/dividing-by-zero-stays-complexinfinity`                      | `ZeroDivisionError: cannot divide by zero`                                                   |
+| `AdicNumeral/numerals-over-different-bases-never-combine-and`             | `TypeError: unsupported operand parent(s) for +: '7-adic Field with capped relative precisi` |
+| `AdicNumeral/the-exact-zero-has-infinite-valuation`                       | `ValueError: p must be prime`                                                                |
 | `AlgebraDimension/algebradimension-quaternions`                           | `AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'dimension'`  |
 | `Basis/1-i-j-k`                                                           | `AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'basis'`      |
 | `BellNumber/a-negative-argument-is-left-unevaluated`                      | `ArithmeticError: Bell numbers not defined for negative indices`                             |

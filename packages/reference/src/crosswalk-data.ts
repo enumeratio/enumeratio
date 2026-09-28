@@ -146,6 +146,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Plus",
   },
   {
+    name: "AdicDigits",
+    oracle: [
+      {
+        system: "sage",
+        call: "list(($1).unit_part().expansion())[:$2]",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "AdicNorm",
     oracle: [
       {
@@ -161,6 +171,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "rust",
         call: "adic($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "sage",
+        call: "Qp($1, 60)(QQ($2))",
         arity: 2,
       },
     ],

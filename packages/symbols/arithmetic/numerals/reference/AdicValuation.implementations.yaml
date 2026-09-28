@@ -10,6 +10,9 @@ adicvaluation-adicnumeral-5-75:
     out: "2"
   fullform:
     in: AdicValuation[AdicNumeral[5, 75]]
+  sage:
+    in: (Qp(5, 60)(QQ(75))).valuation()
+    out: "2"
   rust:
     in: adic_valuation(adic(n(5), n(75)))
     out: "2"
@@ -25,6 +28,12 @@ the-valuation-of-zero-is-positive-infinity:
     out: \infty
   fullform:
     in: AdicValuation[AdicNumeral[5, 0]]
+  sage:
+    in: (Qp(5, 60)(QQ(0))).valuation()
+    out: +Infinity
+    verdict: disagree
+    kind: convention
+    note: Sage's exact zero has an unbounded (+Infinity) valuation too, spelled differently than our PositiveInfinity — a printed-form difference, not a value disagreement.
   rust:
     in: adic_valuation(adic(n(5), n(0)))
     out: PositiveInfinity
@@ -64,6 +73,196 @@ negative-in-q-5:
     out: "-2"
   fullform:
     in: AdicValuation[AdicNumeral[5, Rational[3, 25]]]
+  sage:
+    in: (Qp(5, 60)(QQ((3/25)))).valuation()
+    out: "-2"
   rust:
     in: adic_valuation(adic(n(5), rational(n(3), n(25))))
     out: "-2"
+adicvaluation-adicnumeral-2-minus1:
+  epsil:
+    in: AdicValuation(AdicNumeral(2, -1))
+    out: "0"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(2, -1))
+    out: "0"
+  traditional:
+    in: v_{2}(-1)
+    out: "0"
+  fullform:
+    in: AdicValuation[AdicNumeral[2, -1]]
+  sage:
+    in: (Qp(2, 60)(QQ(-1))).valuation()
+    out: "0"
+  rust:
+    in: adic_valuation(adic(n(2), n(-1)))
+adicvaluation-adicnumeral-2-100:
+  epsil:
+    in: AdicValuation(AdicNumeral(2, 100))
+    out: "2"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(2, 100))
+    out: "2"
+  traditional:
+    in: v_{2}(100)
+    out: "2"
+  fullform:
+    in: AdicValuation[AdicNumeral[2, 100]]
+  sage:
+    in: (Qp(2, 60)(QQ(100))).valuation()
+    out: "2"
+  rust:
+    in: adic_valuation(adic(n(2), n(100)))
+adicvaluation-adicnumeral-3-third-negative:
+  epsil:
+    in: AdicValuation(AdicNumeral(3, 1 / 3))
+    out: "-1"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(3, \frac{1}{3}))
+    out: "-1"
+  traditional:
+    in: v_{3}(\frac{1}{3})
+    out: "-1"
+  fullform:
+    in: AdicValuation[AdicNumeral[3, Rational[1, 3]]]
+  sage:
+    in: (Qp(3, 60)(QQ((1/3)))).valuation()
+    out: "-1"
+  rust:
+    in: adic_valuation(adic(n(3), rational(n(1), n(3))))
+adicvaluation-adicnumeral-3-minus4-9:
+  epsil:
+    in: AdicValuation(AdicNumeral(3, -4 / 9))
+    out: "-2"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(3, -\frac{4}{9}))
+    out: "-2"
+  traditional:
+    in: v_{3}(-\frac{4}{9})
+    out: "-2"
+  fullform:
+    in: AdicValuation[AdicNumeral[3, Rational[-4, 9]]]
+  sage:
+    in: (Qp(3, 60)(QQ((-4/9)))).valuation()
+    out: "-2"
+  rust:
+    in: adic_valuation(adic(n(3), rational(n(-4), n(9))))
+adicvaluation-adicnumeral-5-7-25:
+  epsil:
+    in: AdicValuation(AdicNumeral(5, 7 / 25))
+    out: "-2"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(5, \frac{7}{25}))
+    out: "-2"
+  traditional:
+    in: v_{5}(\frac{7}{25})
+    out: "-2"
+  fullform:
+    in: AdicValuation[AdicNumeral[5, Rational[7, 25]]]
+  sage:
+    in: (Qp(5, 60)(QQ((7/25)))).valuation()
+    out: "-2"
+  rust:
+    in: adic_valuation(adic(n(5), rational(n(7), n(25))))
+adicvaluation-adicnumeral-5-100:
+  epsil:
+    in: AdicValuation(AdicNumeral(5, 100))
+    out: "2"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(5, 100))
+    out: "2"
+  traditional:
+    in: v_{5}(100)
+    out: "2"
+  fullform:
+    in: AdicValuation[AdicNumeral[5, 100]]
+  sage:
+    in: (Qp(5, 60)(QQ(100))).valuation()
+    out: "2"
+  rust:
+    in: adic_valuation(adic(n(5), n(100)))
+adicvaluation-adicnumeral-7-2-7:
+  epsil:
+    in: AdicValuation(AdicNumeral(7, 2 / 7))
+    out: "-1"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(7, \frac{2}{7}))
+    out: "-1"
+  traditional:
+    in: v_{7}(\frac{2}{7})
+    out: "-1"
+  fullform:
+    in: AdicValuation[AdicNumeral[7, Rational[2, 7]]]
+  sage:
+    in: (Qp(7, 60)(QQ((2/7)))).valuation()
+    out: "-1"
+  rust:
+    in: adic_valuation(adic(n(7), rational(n(2), n(7))))
+adicvaluation-adicnumeral-11-minus1:
+  epsil:
+    in: AdicValuation(AdicNumeral(11, -1))
+    out: "0"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(11, -1))
+    out: "0"
+  traditional:
+    in: v_{11}(-1)
+    out: "0"
+  fullform:
+    in: AdicValuation[AdicNumeral[11, -1]]
+  sage:
+    in: (Qp(11, 60)(QQ(-1))).valuation()
+    out: "0"
+  rust:
+    in: adic_valuation(adic(n(11), n(-1)))
+adicvaluation-adicnumeral-11-100:
+  epsil:
+    in: AdicValuation(AdicNumeral(11, 100))
+    out: "0"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(11, 100))
+    out: "0"
+  traditional:
+    in: v_{11}(100)
+    out: "0"
+  fullform:
+    in: AdicValuation[AdicNumeral[11, 100]]
+  sage:
+    in: (Qp(11, 60)(QQ(100))).valuation()
+    out: "0"
+  rust:
+    in: adic_valuation(adic(n(11), n(100)))
+adicvaluation-adicnumeral-2-minus4-9:
+  epsil:
+    in: AdicValuation(AdicNumeral(2, -4 / 9))
+    out: "2"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(2, -\frac{4}{9}))
+    out: "2"
+  traditional:
+    in: v_{2}(-\frac{4}{9})
+    out: "2"
+  fullform:
+    in: AdicValuation[AdicNumeral[2, Rational[-4, 9]]]
+  sage:
+    in: (Qp(2, 60)(QQ((-4/9)))).valuation()
+    out: "2"
+  rust:
+    in: adic_valuation(adic(n(2), rational(n(-4), n(9))))
+adicvaluation-adicnumeral-7-minus1-3:
+  epsil:
+    in: AdicValuation(AdicNumeral(7, -1 / 3))
+    out: "0"
+  tex:
+    in: \mathrm{AdicValuation}(\mathrm{AdicNumeral}(7, -\frac{1}{3}))
+    out: "0"
+  traditional:
+    in: v_{7}(-\frac{1}{3})
+    out: "0"
+  fullform:
+    in: AdicValuation[AdicNumeral[7, Rational[-1, 3]]]
+  sage:
+    in: (Qp(7, 60)(QQ((-1/3)))).valuation()
+    out: "0"
+  rust:
+    in: adic_valuation(adic(n(7), rational(n(-1), n(3))))
