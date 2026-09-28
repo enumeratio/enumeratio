@@ -6,9 +6,14 @@ substitute-a-fixed-value:
     in: \mathrm{With}(\bigl\lbrack x=3\bigr\rbrack, xx)
     out: "9"
   fullform:
-    in: With[List[Equal[x, 3]], Times[x, x]]
+    in: With[List[Set[x, 3]], Times[x, x]]
+    back: [With, [List, [Set, x, 3]], [Multiply, x, x]]
   wolfram:
-    in: With[List[(x == 3)], Times[x, x]]
+    in: With[List[Set[x, 3]], Times[x, x]]
+    out: "9"
+    tex:
+      in: \text{With}[\{x=3\},x x]
+      out: "9"
 several-bindings-at-once:
   epsil:
     in: With([x == 2, y == 5], x + y)
@@ -17,6 +22,11 @@ several-bindings-at-once:
     in: \mathrm{With}(\begin{cases}x=2\\y=5\end{cases}, x+y)
     out: "7"
   fullform:
-    in: With[List[Equal[x, 2], Equal[y, 5]], Plus[x, y]]
+    in: With[List[Set[x, 2], Set[y, 5]], Plus[x, y]]
+    back: [With, [List, [Set, x, 2], [Set, y, 5]], [Add, x, y]]
   wolfram:
-    in: With[List[(x == 2), (y == 5)], Plus[x, y]]
+    in: With[List[Set[x, 2], Set[y, 5]], Plus[x, y]]
+    out: "7"
+    tex:
+      in: \text{With}[\{x=2,y=5\},x+y]
+      out: "7"

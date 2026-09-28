@@ -9,6 +9,10 @@ match-a-literal-form:
     in: Switch[2, 1, one, 2, two, 3, three]
   wolfram:
     in: Switch[2, 1, one, 2, two, 3, three]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Switch}[2,1,\text{one},2,\text{two},3,\text{three}]-\text{two}],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Switch}\left[2,1,\frac{7}{3},2,\frac{13}{4},3,-\frac{11}{5}\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Switch}\left[2,1,-\frac{17}{6},2,-\frac{23}{9},3,\frac{19}{8}\right]--\frac{23}{9}\right]\right],\text{Chop}\left[N\left[\text{Switch}\left[2,1,\frac{7}{3},2,\frac{13}{4},3,-\frac{11}{5}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 fall-through-to-a-blank-default:
   epsil:
     in: Switch(99, 1, one, _, other)
@@ -21,3 +25,10 @@ fall-through-to-a-blank-default:
     back: [Switch, 99, 1, one, _1, other]
   wolfram:
     in: Switch[99, 1, one, Slot[1], other]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Switch}[99,1,\text{one},\text{$\#$1},\text{other}]-\text{other}],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Switch}\left[99,1,-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Switch}\left[99,1,\frac{19}{8},-\frac{17}{6},-\frac{23}{9}\right]--\frac{23}{9}\right]\right],\text{Chop}\left[N\left[\text{Switch}\left[99,1,-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: convention
+    note: The free-symbol identity check (symbolic.ts) isn't the right tool for Switch's own semantics (structural case dispatch, not an algebraic claim); it fell into the generic free-symbol path since the fallthrough marker and branch symbols are unbound names to the emitter.

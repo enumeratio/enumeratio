@@ -10,6 +10,9 @@ c-2-of-x:
   wolfram:
     in: FourierCoefficient[x, x, 2]
     out: I/2
+    tex:
+      in: \text{FourierCoefficient}[x,x,2]
+      out: \frac{i}{2}
 c-2-of-cos-squared:
   epsil:
     in: FourierCoefficient(Cos(x) ^ 2, x, 2)
@@ -22,6 +25,9 @@ c-2-of-cos-squared:
   wolfram:
     in: FourierCoefficient[Power[Cos[x], 2], x, 2]
     out: 1/4
+    tex:
+      in: \text{FourierCoefficient}\left[\cos ^2(x),x,2\right]
+      out: \frac{1}{4}
 c-0-of-x-squared-is-the-average:
   epsil:
     in: FourierCoefficient(x ^ 2, x, 0)
@@ -34,6 +40,9 @@ c-0-of-x-squared-is-the-average:
   wolfram:
     in: FourierCoefficient[Power[x, 2], x, 0]
     out: Pi^2/3
+    tex:
+      in: \text{FourierCoefficient}\left[x^2,x,0\right]
+      out: \frac{\pi ^2}{3}
 c-0-of-abs-x:
   epsil:
     in: FourierCoefficient(Abs(x), x, 0)
@@ -46,6 +55,9 @@ c-0-of-abs-x:
   wolfram:
     in: FourierCoefficient[Abs[x], x, 0]
     out: Pi/2
+    tex:
+      in: \text{FourierCoefficient}[| x| ,x,0]
+      out: \frac{\pi }{2}
 c-1-of-abs-x:
   epsil:
     in: FourierCoefficient(Abs(x), x, 1)
@@ -58,6 +70,9 @@ c-1-of-abs-x:
   wolfram:
     in: FourierCoefficient[Abs[x], x, 1]
     out: -2/Pi
+    tex:
+      in: \text{FourierCoefficient}[| x| ,x,1]
+      out: -\frac{2}{\pi }
     note: "Checked against an independent numeric quadrature in addition to Wolfram: `Integrate[Abs[x]*Exp[-I*x], {x, -Pi, Pi}]` on its own (ours and Wolfram's FourierCoefficient both agree here) evaluates to -2 in compute-engine, but the correct value -- confirmed by direct numeric integration -- is -4, so compute-engine's own `Integrate` cannot be trusted for this shape and this head does not call it."
 c-1-of-exp-x:
   epsil:
@@ -71,6 +86,9 @@ c-1-of-exp-x:
   wolfram:
     in: FourierCoefficient[Exp[x], x, 1]
     out: ((-1/2 - I/2)*Sinh[Pi])/Pi
+    tex:
+      in: \text{FourierCoefficient}[\exp (x),x,1]
+      out: -\frac{\left(\frac{1}{2}+\frac{i}{2}\right) \sinh (\pi )}{\pi }
 declines-a-symbolic-order:
   epsil:
     in: FourierCoefficient(x, x, n)
@@ -82,7 +100,10 @@ declines-a-symbolic-order:
     in: FourierCoefficient[x, x, n]
   wolfram:
     in: FourierCoefficient[x, x, n]
-    out: Piecewise[{{0, n == 0}}, (I*(-1)^n)/n]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FourierCoefficient}[x,x,n]-\text{FourierCoefficient}[x,x,n]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierCoefficient}\left[-\frac{11}{5},-\frac{11}{5},\frac{7}{3}\right]-\text{FourierCoefficient}\left[-\frac{11}{5},-\frac{11}{5},\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FourierCoefficient}\left[-\frac{17}{6},-\frac{17}{6},\frac{13}{4}\right]-\text{FourierCoefficient}\left[-\frac{17}{6},-\frac{17}{6},\frac{13}{4}\right]\right]\right],\text{Chop}\left[N\left[\text{FourierCoefficient}\left[-\frac{23}{9},-\frac{23}{9},\frac{19}{8}\right]-\text{FourierCoefficient}\left[-\frac{23}{9},-\frac{23}{9},\frac{19}{8}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
     note: "Wolfram gives a general Piecewise formula for symbolic n; deriving that closed form is materially more work than any single atom here, so a symbolic order is declined rather than attempted. Not marked as a disagreement: the free variables `x` and `n` mean the automated oracle scan cannot check this pair by re-evaluating it numerically."
 declines-tan-x-no-closed-form-here:
   epsil:
@@ -95,5 +116,8 @@ declines-tan-x-no-closed-form-here:
     in: FourierCoefficient[Tan[x], x, 1]
   wolfram:
     in: FourierCoefficient[Tan[x], x, 1]
-    out: "0"
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FourierCoefficient}[\tan (x),x,1]-\text{FourierCoefficient}[\tan (x),x,1]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierCoefficient}\left[\tan \left(\frac{7}{3}\right),\frac{7}{3},1\right]-\text{FourierCoefficient}\left[\tan \left(\frac{7}{3}\right),\frac{7}{3},1\right]\right]\right],\text{Chop}\left[N\left[\text{FourierCoefficient}\left[\tan \left(-\frac{11}{5}\right),-\frac{11}{5},1\right]-\text{FourierCoefficient}\left[\tan \left(-\frac{11}{5}\right),-\frac{11}{5},1\right]\right]\right],\text{Chop}\left[N\left[\text{FourierCoefficient}\left[\tan \left(\frac{13}{4}\right),\frac{13}{4},1\right]-\text{FourierCoefficient}\left[\tan \left(\frac{13}{4}\right),\frac{13}{4},1\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
     note: "Wolfram formally returns 0 by symmetry, but tan(x) has poles at ±Pi/2, inside [-Pi, Pi] -- the defining integral does not actually converge there, so we decline rather than trust the formal symmetry argument over an undefined integral. Not marked as a disagreement: the free variable `x` means the automated oracle scan cannot check this pair by re-evaluating it numerically."

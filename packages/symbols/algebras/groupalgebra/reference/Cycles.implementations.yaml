@@ -20,3 +20,7 @@ applying-a-cycle:
     in: Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]
   wolfram:
     in: Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]
+    out: "{b, c, a, d}"
+    tex:
+      in: \text{Permute}\left[\{a,b,c,d\},\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]
+      out: \{b,c,a,d\}

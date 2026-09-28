@@ -360,10 +360,16 @@ stays-symbolic:
     in: Ceiling[x]
   wolfram:
     in: Ceiling[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil x\rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \frac{7}{3}\right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil -\frac{11}{5}\right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \frac{13}{4}\right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: ceiling(Symbol("x"))
+    out: True
   sage:
     in: ceil(SR.var("x"))
+    out: True
 exact-radicals-are-decided-numerically:
   epsil:
     in: Ceil(Sqrt(50))
@@ -488,7 +494,13 @@ idempotent-lceil-lceil-x-rceil-rceil:
     in: Ceiling[Ceiling[x]]
   wolfram:
     in: Ceiling[Ceiling[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil \lceil x\rceil \rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{7}{3}\right\rceil \right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil -\frac{11}{5}\right\rceil \right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{13}{4}\right\rceil \right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: ceiling(ceiling(Symbol("x")))
+    out: True
   sage:
     in: ceil(ceil(SR.var("x")))
+    out: True

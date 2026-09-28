@@ -236,6 +236,10 @@ erfc-x-2-erfc-x-applied-symbolically:
     in: Erfc[Minus[x]]
   wolfram:
     in: Erfc[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{erfc}(-x)-(-\text{erfc}(x)+2)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(-\frac{7}{3}\right)-\left(-\text{erfc}\left(\frac{7}{3}\right)+2\right)\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(-\left(-\frac{11}{5}\right)\right)-\left(-\text{erfc}\left(-\frac{11}{5}\right)+2\right)\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(-\frac{13}{4}\right)-\left(-\text{erfc}\left(\frac{13}{4}\right)+2\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2:
   epsil:
     in: D(Erfc(x), x)

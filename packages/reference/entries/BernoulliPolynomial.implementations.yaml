@@ -10,6 +10,10 @@ b-0-x-1:
     back: [BernoulliB, 0, x]
   wolfram:
     in: BernoulliB[0, x]
+    out: "1"
+    tex:
+      in: B_0(x)
+      out: "1"
 b-1-x-x-1-2:
   epsil:
     in: BernoulliPolynomial(1, x)
@@ -22,6 +26,10 @@ b-1-x-x-1-2:
     back: [BernoulliB, 1, x]
   wolfram:
     in: BernoulliB[1, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1(x)-\left(x-\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1\left(\frac{7}{3}\right)-\left(\frac{7}{3}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(-\frac{11}{5}\right)-\left(-\frac{11}{5}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(\frac{13}{4}\right)-\left(\frac{13}{4}-\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 b-2-0-1-6:
   epsil:
     in: N(BernoulliPolynomial(2, 0))

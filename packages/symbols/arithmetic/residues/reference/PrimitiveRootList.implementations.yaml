@@ -123,7 +123,7 @@ length-primitiverootlist-1-009:
       in: \text{Length}[\text{PrimitiveRootList}[1009]]
       out: "288"
   sage:
-    in: (len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else 0)
+    in: (len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else (len(enumeratio_primitive_root_list(1009).operands()) if hasattr(enumeratio_primitive_root_list(1009), 'operands') else 0))
     out: "288"
 there-are-varphi-varphi-n-of-them:
   epsil:
@@ -144,7 +144,7 @@ there-are-varphi-varphi-n-of-them:
       in: \text{Length}[\text{PrimitiveRootList}[1009]]=\phi (\phi (1009))
       out: \text{True}
   sage:
-    in: bool((len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else 0) == euler_phi(euler_phi(1009)))
+    in: bool((len(enumeratio_primitive_root_list(1009)) if hasattr(enumeratio_primitive_root_list(1009), '__len__') else (len(enumeratio_primitive_root_list(1009).operands()) if hasattr(enumeratio_primitive_root_list(1009), 'operands') else 0)) == euler_phi(euler_phi(1009)))
     out: True
 the-first-is-primitiveroot:
   epsil:
@@ -192,7 +192,7 @@ past-100-000-roots-the-list-is-not-built-but-its:
       in: \text{Length}[\text{PrimitiveRootList}[1000003]]
       out: "333332"
   sage:
-    in: (len(enumeratio_primitive_root_list(1000003)) if hasattr(enumeratio_primitive_root_list(1000003), '__len__') else 0)
+    in: (len(enumeratio_primitive_root_list(1000003)) if hasattr(enumeratio_primitive_root_list(1000003), '__len__') else (len(enumeratio_primitive_root_list(1000003).operands()) if hasattr(enumeratio_primitive_root_list(1000003), 'operands') else 0))
     out: "333332"
 past-the-cap-primitiverootlist-itself-stays:
   epsil:

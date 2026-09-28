@@ -10,6 +10,13 @@ cases-wildcard-keeps-everything:
     back: [Cases, [List, 1, a, 2, b], _1]
   wolfram:
     in: Cases[List[1, a, 2, b], Slot[1]]
+    out: "{}"
+    tex:
+      in: \text{Cases}[\{1,a,2,b\},\text{$\#$1}]
+      out: \{\}
+    verdict: disagree
+    kind: convention
+    note: compute-engine's bare wildcard is the same textual form (_1) as a Function slot, and the emitter currently spells it Wolfram's Slot[1] (for Fold/Function contexts) rather than Blank[] (Wolfram's own pattern wildcard) — Cases needs the latter. A known gap worth an emitter follow-up, not fixed here.
 cases-literal-value:
   epsil:
     in: Cases([1, 2, 1, 3, 1], 1)
@@ -29,8 +36,6 @@ cases-structural-pattern:
     in: \mathrm{Cases}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, 2, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\operatorname{\_a}\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
   fullform:
-    in: Cases[List[List[1], 2, List[3]], List[_a]]
-  wolfram:
     in: Cases[List[List[1], 2, List[3]], List[_a]]
 cases-count-agree-on-length:
   epsil:

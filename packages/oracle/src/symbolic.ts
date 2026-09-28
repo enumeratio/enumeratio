@@ -20,6 +20,18 @@ import { emit, type MathJSON } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
 
+/** Heads whose VALUE is a structure, not a scalar — a list, an association, a set of rules.
+ * "Is the difference zero" is nonsense for these: subtracting two lists (or a `Rule`, which
+ * isn't a number at all) doesn't test the thing this module exists to test, and every one of
+ * these found scanning #A-72 phase 2's newly-emitting rows came back `Indeterminate` — not a
+ * kernel quirk, a category error in asking the question at all. Checked at the top level of
+ * both `expr` and `expected`, which is where every case found so far showed it (`Append`
+ * returns the whole list, `Maximize` its `{value, {x -> argmax}}` pair, and so on) — a
+ * structure nested deeper inside an otherwise scalar answer is not this module's problem. */
+const STRUCTURED_HEADS = new Set(["List", "Tuple", "Set", "Association", "Rule", "KeyValuePair", "Missing"]);
+const isStructured = (expr: MathJSON): boolean =>
+  Array.isArray(expr) && typeof expr[0] === "string" && STRUCTURED_HEADS.has(expr[0]);
+
 /** Small fixed rationals, none of them 0/1/-1 and no two equal, so a substitution steers
  * past the roots and poles a real identity is more likely to trip on at a "nice" point.
  * Fixed, not re-randomised per run: a flaky verdict would be worse than a lucky one. */
@@ -81,8 +93,16 @@ function trialSources(
 
 /**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
- * form carries a free symbol. `undefined` when either side doesn't emit for `system` — the
- * caller falls back to the ordinary (structural or text) verdict, unaffected by this module.
+ * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
+ * `expected` doesn't depend on the SAME free symbol at all — the caller falls back to the
+ * ordinary (structural or text) verdict, unaffected by this module.
+ *
+ * That second case is not an edge case to shrug at: `IndexOf(…, b)` free in `b`, expected the
+ * constant `0`, or `FunctionConvexity(x^3, x)` free in `x`, expected the constant symbol
+ * `Indeterminate` — neither `expected` mentions the variable at all, so "the difference is
+ * zero" is not the claim being made; it would compare a variable expression against a
+ * constant and call any answer other than that exact constant a disagreement, which
+ * `compareTrees` (structural.ts) already does correctly without this module's help.
  */
 export function symbolicAgreementSource(
   system: SymbolicSystem,
@@ -90,16 +110,22 @@ export function symbolicAgreementSource(
   expected: MathJSON,
   freeSymbols: readonly string[],
 ): string | undefined {
+  if (isStructured(expr) || isStructured(expected)) return undefined;
   const theirs = emit(expr, system);
   const ours = emit(expected, system);
   if (!theirs.ok || !ours.ok) return undefined;
+  if (!(ours.freeSymbols ?? []).some((name) => freeSymbols.includes(name))) return undefined;
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );
   if (system === "wolfram") {
     const points = trials.map((t) => (t === undefined ? "Indeterminate" : `Chop[N[(${t.theirs}) - (${t.ours})]]`));
+    // FullSimplify can run away on an identity it won't reduce; TimeConstrained caps it at
+    // 10s and reports $Aborted rather than eating the item's whole 30s budget (run.ts,
+    // ITEM_SECONDS) — an aborted simplification isn't `0` either, so it falls straight
+    // through to the substitution trials, same as any other non-zero result.
     return (
-      `Module[{d = Quiet[FullSimplify[(${theirs.source}) - (${ours.source})]]}, ` +
+      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirs.source}) - (${ours.source})], 10, $Aborted]]}, ` +
       `If[d === 0, True, Module[{s = {${points.join(", ")}}}, ` +
       `If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
     );

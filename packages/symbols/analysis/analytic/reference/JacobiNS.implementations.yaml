@@ -20,6 +20,10 @@ u-0-is-a-pole-for-any-m:
     in: JacobiNS[0, m]
   wolfram:
     in: JacobiNS[0, m]
+    out: ComplexInfinity
+    tex:
+      in: \text{ns}(0|m)
+      out: \text{ComplexInfinity}
 m-less-than-0-via-the-imaginary-modulus:
   epsil:
     in: N(JacobiNS(0.3, -2))
@@ -42,3 +46,7 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: JacobiNS[u, m]
   wolfram:
     in: JacobiNS[u, m]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{ns}(u|m)-\text{ns}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ns}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{ns}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{ns}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{ns}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{ns}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{ns}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

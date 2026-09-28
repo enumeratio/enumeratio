@@ -53,3 +53,7 @@ a-polynomial-in-a:
     in: NorlundB[1, a]
   wolfram:
     in: NorlundB[1, a]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1^{(a)}--\frac{1}{2} a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1^{\left(\frac{7}{3}\right)}--\frac{1}{2} \frac{7}{3}\right]\right],\text{Chop}\left[N\left[B_1^{\left(-\frac{11}{5}\right)}--\frac{1}{2} \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_1^{\left(\frac{13}{4}\right)}--\frac{1}{2} \frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

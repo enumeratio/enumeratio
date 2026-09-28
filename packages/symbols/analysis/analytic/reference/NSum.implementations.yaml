@@ -9,6 +9,10 @@ zeta-2-via-euler-maclaurin:
     in: NSum[Power[n, -2], List[n, 1, Infinity]]
   wolfram:
     in: NSum[Power[n, -2], List[n, 1, Infinity]]
+    out: "1.6449340667600105"
+    tex:
+      in: \text{NSum}\left[\frac{1}{n^2},\{n,1,\infty \}\right]
+      out: "1.64493"
 the-alternating-harmonic-series:
   epsil:
     in: NSum((-1) ^ (n + 1) / n, [n, 1, PositiveInfinity])
@@ -20,6 +24,10 @@ the-alternating-harmonic-series:
     in: NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
   wolfram:
     in: NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
+    out: "0.6931471805599444"
+    tex:
+      in: \text{NSum}\left[\frac{(-1)^{n+1}}{n},\{n,1,\infty \}\right]
+      out: "0.693147"
 e-minus-one:
   epsil:
     in: NSum(1 / n!, [n, 1, PositiveInfinity])
@@ -31,6 +39,10 @@ e-minus-one:
     in: NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
   wolfram:
     in: NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
+    out: "1.7182818284590453"
+    tex:
+      in: \text{NSum}\left[\frac{1}{n!},\{n,1,\infty \}\right]
+      out: "1.71828"
 a-much-more-slowly-convergent-power-law:
   epsil:
     in: NSum(n ^ -1.1, [n, 1, PositiveInfinity])
@@ -42,6 +54,10 @@ a-much-more-slowly-convergent-power-law:
     in: NSum[Power[n, -1.1], List[n, 1, Infinity]]
   wolfram:
     in: NSum[Power[n, -1.1], List[n, 1, Infinity]]
+    out: "10.584448464728068"
+    tex:
+      in: \text{NSum}\left[\frac{1}{n^{1.1}},\{n,1,\infty \}\right]
+      out: "10.5844"
 a-finite-range-is-a-direct-sum:
   epsil:
     in: NSum(n, [n, 1, 5])
@@ -53,6 +69,10 @@ a-finite-range-is-a-direct-sum:
     in: NSum[n, List[n, 1, 5]]
   wolfram:
     in: NSum[n, List[n, 1, 5]]
+    out: 15.
+    tex:
+      in: \text{NSum}[n,\{n,1,5\}]
+      out: 15.
 declines-the-harmonic-series:
   epsil:
     in: NSum(1 / n, [n, 1, PositiveInfinity])
@@ -64,6 +84,10 @@ declines-the-harmonic-series:
     in: NSum[Divide[1, n], List[n, 1, Infinity]]
   wolfram:
     in: NSum[Divide[1, n], List[n, 1, Infinity]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{NSum}\left[\frac{1}{n},\{n,1,\infty \}\right]-\text{NSum}\left[\frac{1}{n},\{n,1,\infty \}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{NSum}\left[\frac{1}{\frac{7}{3}},\left\{\frac{7}{3},1,\infty \right\}\right]-\text{NSum}\left[\frac{1}{\frac{7}{3}},\left\{\frac{7}{3},1,\infty \right\}\right]\right]\right],\text{Chop}\left[N\left[\text{NSum}\left[-\frac{1}{\frac{11}{5}},\left\{-\frac{11}{5},1,\infty \right\}\right]-\text{NSum}\left[-\frac{1}{\frac{11}{5}},\left\{-\frac{11}{5},1,\infty \right\}\right]\right]\right],\text{Chop}\left[N\left[\text{NSum}\left[\frac{1}{\frac{13}{4}},\left\{\frac{13}{4},1,\infty \right\}\right]-\text{NSum}\left[\frac{1}{\frac{13}{4}},\left\{\frac{13}{4},1,\infty \right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-a-series-whose-terms-grow:
   epsil:
     in: NSum(n, [n, 1, PositiveInfinity])
@@ -75,3 +99,7 @@ declines-a-series-whose-terms-grow:
     in: NSum[n, List[n, 1, Infinity]]
   wolfram:
     in: NSum[n, List[n, 1, Infinity]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{NSum}[n,\{n,1,\infty \}]-\text{NSum}[n,\{n,1,\infty \}]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{NSum}\left[\frac{7}{3},\left\{\frac{7}{3},1,\infty \right\}\right]-\text{NSum}\left[\frac{7}{3},\left\{\frac{7}{3},1,\infty \right\}\right]\right]\right],\text{Chop}\left[N\left[\text{NSum}\left[-\frac{11}{5},\left\{-\frac{11}{5},1,\infty \right\}\right]-\text{NSum}\left[-\frac{11}{5},\left\{-\frac{11}{5},1,\infty \right\}\right]\right]\right],\text{Chop}\left[N\left[\text{NSum}\left[\frac{13}{4},\left\{\frac{13}{4},1,\infty \right\}\right]-\text{NSum}\left[\frac{13}{4},\left\{\frac{13}{4},1,\infty \right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

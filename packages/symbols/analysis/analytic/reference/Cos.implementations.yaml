@@ -560,10 +560,22 @@ an-imaginary-argument-rewrites-to-cosh-cos-ix:
     in: Cos[Times[I, x]]
   wolfram:
     in: Cos[Times[I, x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cos (i x)-\cosh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(i \frac{7}{3}\right)-\cosh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(i \left(-\frac{11}{5}\right)\right)-\cosh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(i \frac{13}{4}\right)-\cosh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: cos((I * Symbol("x")))
+    out: cosh(x)
+    verdict: disagree
+    kind: convention
+    note: sympy own evaluation already agrees (cos(I*x) reduces to cosh(x), confirmed via simplify), but Cosh has no sympy mapping row yet, so the comparison falls back to our raw JSON text against sympys printed cosh(x) instead of the free-symbol identity check. Add a Cosh/sympy mapping to fix properly.
   sage:
     in: cos((I * SR.var("x")))
+    out: cosh(x)
+    verdict: disagree
+    kind: convention
+    note: Sage own evaluation already agrees (cos(I*x) reduces to cosh(x)), but Cosh has no sage mapping row yet, so the comparison falls back to our raw JSON text against Sages printed cosh(x) instead of the free-symbol identity check. Add a Cosh/sage mapping to fix properly.
 evenness-drops-the-sign-of-a-symbolic-argument:
   epsil:
     in: Cos(-x)
@@ -575,10 +587,16 @@ evenness-drops-the-sign-of-a-symbolic-argument:
     in: Cos[Minus[x]]
   wolfram:
     in: Cos[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cos (-x)-\cos (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(-\frac{7}{3}\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(-\left(-\frac{11}{5}\right)\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(-\frac{13}{4}\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: cos((-Symbol("x")))
+    out: True
   sage:
     in: cos((-SR.var("x")))
+    out: True
 cos-arccos-x-x-for-every-x:
   epsil:
     in: Cos(Arccos(x))
@@ -590,6 +608,10 @@ cos-arccos-x-x-for-every-x:
     in: Cos[ArcCos[x]]
   wolfram:
     in: Cos[ArcCos[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\cos ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cos-arccos-2-2-past-the-real-domain:
   epsil:
     in: Cos(Arccos(2))
@@ -612,6 +634,10 @@ cos-arcsin-x-sqrt-1-x-2:
     in: Cos[ArcSin[x]]
   wolfram:
     in: Cos[ArcSin[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\sin ^{-1}(x)\right)-\sqrt{-x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(\frac{7}{3}\right)\right)-\sqrt{-\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(-\frac{11}{5}\right)\right)-\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(\frac{13}{4}\right)\right)-\sqrt{-\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cos-arctan-x-frac-1-sqrt-1-x-2:
   epsil:
     in: Cos(Arctan(x))
@@ -623,6 +649,10 @@ cos-arctan-x-frac-1-sqrt-1-x-2:
     in: Cos[ArcTan[x]]
   wolfram:
     in: Cos[ArcTan[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\tan ^{-1}(x)\right)-\frac{1}{\sqrt{x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(\frac{7}{3}\right)\right)-\frac{1}{\sqrt{\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(-\frac{11}{5}\right)\right)-\frac{1}{\sqrt{\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(\frac{13}{4}\right)\right)-\frac{1}{\sqrt{\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-sin-x:
   epsil:
     in: D(Cos(x), x)
@@ -643,6 +673,10 @@ antiderivative:
     in: Integrate[Cos[x], x]
   wolfram:
     in: Integrate[Cos[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \cos (x) \, dx-\sin (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \cos \left(\frac{7}{3}\right) \, d\frac{7}{3}-\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\int \cos \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\int \cos \left(\frac{13}{4}\right) \, d\frac{13}{4}-\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 taylor-series-about-0-only-even-powers-appear:
   epsil:
     in: Series(Cos(x), x, 0, 6)

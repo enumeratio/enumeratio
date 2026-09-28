@@ -9,6 +9,10 @@ a-pole-is-a-discontinuity:
     in: FunctionDiscontinuities[Divide[1, x], x]
   wolfram:
     in: FunctionDiscontinuities[Divide[1, x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionDiscontinuities}\left[\frac{1}{x},x\right]-(x=0)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[\frac{1}{\frac{7}{3}},\frac{7}{3}\right]-\left(\frac{7}{3}=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[-\frac{1}{\frac{11}{5}},-\frac{11}{5}\right]-\left(-\frac{11}{5}=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[\frac{1}{\frac{13}{4}},\frac{13}{4}\right]-\left(\frac{13}{4}=0\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 tangent-s-poles:
   epsil:
     in: FunctionDiscontinuities(Tan(x), x)
@@ -20,6 +24,10 @@ tangent-s-poles:
     in: FunctionDiscontinuities[Tan[x], x]
   wolfram:
     in: FunctionDiscontinuities[Tan[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FunctionDiscontinuities}[\tan (x),x]-(\cos (x)=0)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[\tan \left(\frac{7}{3}\right),\frac{7}{3}\right]-\left(\cos \left(\frac{7}{3}\right)=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[\tan \left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(\cos \left(-\frac{11}{5}\right)=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionDiscontinuities}\left[\tan \left(\frac{13}{4}\right),\frac{13}{4}\right]-\left(\cos \left(\frac{13}{4}\right)=0\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-polynomial-is-continuous-everywhere:
   epsil:
     in: FunctionDiscontinuities(x ^ 2, x)
@@ -34,3 +42,7 @@ a-polynomial-is-continuous-everywhere:
     in: FunctionDiscontinuities[Power[x, 2], x]
   wolfram:
     in: FunctionDiscontinuities[Power[x, 2], x]
+    out: False
+    tex:
+      in: \text{FunctionDiscontinuities}\left[x^2,x\right]
+      out: \text{False}

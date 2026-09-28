@@ -165,8 +165,12 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     a.length === 2 && !a.some((b) => Array.isArray(b) && b[0] === "Open")
       ? `Interval[${call("List", a)}]`
       : call("Interval", a),
-  // IndexOf returns 0 when absent; FirstPosition returns Missing unless given a default.
-  IndexOf: (a) => `First[FirstPosition[${toWolfram(a[0])}, ${toWolfram(a[1])}, List[0]]]`,
+  // IndexOf returns 0 when absent; FirstPosition returns Missing unless given a default. And
+  // IndexOf is a TOP-LEVEL scan only (the collection's own elements, like Array.indexOf) —
+  // FirstPosition without a level spec searches every depth, so `IndexOf({{a,a,b},…}, b)`
+  // would find `b` nested inside a sublist instead of correctly reporting 0 (found scanning
+  // #A-72 phase 2's newly-emitting rows: `First[FirstPosition[{{a,a,b},…}, b, {0}]]` gave 1).
+  IndexOf: (a) => `First[FirstPosition[${toWolfram(a[0])}, ${toWolfram(a[1])}, List[0], List[1]]]`,
   // Degrees(x) is the angle x° — Wolfram multiplies by the `Degree` constant.
   Degrees: (a) => `Times[${toWolfram(a[0])}, Degree]`,
   // Divides(a, b) is "a divides b"; Divisible(n, m) is "n is divisible by m" — the
@@ -241,7 +245,24 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
     return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
   },
+  // Module(vars, body)/With(vars, body): compute-engine spells a local's initial value
+  // `Equal(n, 10)` (`n == 10`, a mathematical equality) — the same head an actual equation
+  // uses. Wolfram's Module/With need an ASSIGNMENT there (`Set[n, 10]`, its FullForm for
+  // `n = 10`); left as `Equal`, Wolfram reads a boolean test where it expects a binding, so
+  // the vars list isn't a valid local-variable spec at all and the whole call stays
+  // unevaluated. Only a binding's own `Equal` is rewritten, not one deeper in the body.
+  Module: (a) => localScope("Module", a),
+  With: (a) => localScope("With", a),
 };
+
+function localScope(head: string, args: MathJson[]): string {
+  const [vars, body] = args;
+  const rewrite = (v: MathJson): string =>
+    Array.isArray(v) && v[0] === "Equal" ? `Set[${toWolfram(v[1])}, ${toWolfram(v[2])}]` : toWolfram(v);
+  const varsSource =
+    Array.isArray(vars) && vars[0] === "List" ? `List[${vars.slice(1).map(rewrite).join(", ")}]` : rewrite(vars);
+  return `${head}[${varsSource}, ${toWolfram(body)}]`;
+}
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */
 export const isWolframHead = (head: string): boolean => head in HEADS || head in SPECIAL;

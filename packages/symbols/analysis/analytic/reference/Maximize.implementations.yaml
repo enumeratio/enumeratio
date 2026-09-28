@@ -9,6 +9,10 @@ a-downward-parabola-s-vertex:
     in: Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
   wolfram:
     in: Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+    out: "{3, {x -> 2}}"
+    tex:
+      in: \text{Maximize}\left[-x^2+4 x-1,x\right]
+      out: \{3,\{x\to 2\}\}
 unbounded-above-reports-positive-infinity:
   epsil:
     in: Maximize(x ^ 3, x)
@@ -20,6 +24,10 @@ unbounded-above-reports-positive-infinity:
     in: Maximize[Power[x, 3], x]
   wolfram:
     in: Maximize[Power[x, 3], x]
+    out: "{Infinity, {x -> Infinity}}"
+    tex:
+      in: \text{Maximize}\left[x^3,x\right]
+      out: \{\infty ,\{x\to \infty \}\}
 a-bounded-interval-constraint:
   epsil:
     in: Maximize([-x ^ 2 + 4x - 1, x >= 0 && x <= 1], x)
@@ -31,6 +39,10 @@ a-bounded-interval-constraint:
     in: Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
   wolfram:
     in: Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
+    out: "{2, {x -> 1}}"
+    tex:
+      in: \text{Maximize}\left[\left\{-x^2+4 x-1,x\geq 0\land x\leq 1\right\},x\right]
+      out: \{2,\{x\to 1\}\}
 exp-of-a-negated-argument-is-unbounded-above:
   epsil:
     in: Maximize(Exp(-x), x)
@@ -42,6 +54,10 @@ exp-of-a-negated-argument-is-unbounded-above:
     in: Maximize[Exp[Minus[x]], x]
   wolfram:
     in: Maximize[Exp[Minus[x]], x]
+    out: "{Infinity, {x -> -Infinity}}"
+    tex:
+      in: \text{Maximize}[\exp (-x),x]
+      out: \{\infty ,\{x\to -\infty \}\}
 a-downward-quadratic-radicand:
   epsil:
     in: Maximize(Sqrt(4 - x ^ 2), x)
@@ -53,6 +69,10 @@ a-downward-quadratic-radicand:
     in: Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
   wolfram:
     in: Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
+    out: "{2, {x -> 0}}"
+    tex:
+      in: \text{Maximize}\left[\sqrt{4-x^2},x\right]
+      out: \{2,\{x\to 0\}\}
 declines-more-than-one-variable:
   epsil:
     in: Maximize(-(x ^ 2 + y ^ 2), [x, y])
@@ -64,3 +84,7 @@ declines-more-than-one-variable:
     in: Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]
   wolfram:
     in: Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Maximize}\left[-\left(x^2+y^2\right),\{x,y\}\right]-\text{Maximize}\left[-\left(x^2+y^2\right),\{x,y\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Maximize}\left[-\left(\left(\frac{7}{3}\right)^2+\left(-\frac{11}{5}\right)^2\right),\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]-\text{Maximize}\left[-\left(\left(\frac{7}{3}\right)^2+\left(-\frac{11}{5}\right)^2\right),\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Maximize}\left[-\left(\left(\frac{13}{4}\right)^2+\left(-\frac{17}{6}\right)^2\right),\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]-\text{Maximize}\left[-\left(\left(\frac{13}{4}\right)^2+\left(-\frac{17}{6}\right)^2\right),\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Maximize}\left[-\left(\left(\frac{19}{8}\right)^2+\left(-\frac{23}{9}\right)^2\right),\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]-\text{Maximize}\left[-\left(\left(\frac{19}{8}\right)^2+\left(-\frac{23}{9}\right)^2\right),\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

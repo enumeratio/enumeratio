@@ -9,6 +9,13 @@ exp:
     in: MeijerGReduce[Power[E, x], x]
   wolfram:
     in: MeijerGReduce[Power[E, x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{MeijerGReduce}\left[e^x,x\right]-G_{0,1}^{1,0}\left(-x\left| \begin{array}{c}  0 \\ \end{array} \right.\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{MeijerGReduce}\left[e^{\frac{7}{3}},\frac{7}{3}\right]-G_{0,1}^{1,0}\left(-\frac{7}{3}| \begin{array}{c}  0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[e^{-\frac{11}{5}},-\frac{11}{5}\right]-G_{0,1}^{1,0}\left(-\left(-\frac{11}{5}\right)| \begin{array}{c}  0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[e^{\frac{13}{4}},\frac{13}{4}\right]-G_{0,1}^{1,0}\left(-\frac{13}{4}| \begin{array}{c}  0 \\ \end{array} \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: A Meijer-G reduction identity that FullSimplify doesn't confirm automatically for a symbolic argument.
 sin:
   epsil:
     in: MeijerGReduce(Sin(x), x)
@@ -20,6 +27,13 @@ sin:
     in: MeijerGReduce[Sin[x], x]
   wolfram:
     in: MeijerGReduce[Sin[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{MeijerGReduce}[\sin (x),x]-G_{0,2}^{1,0}\left(\frac{1}{4} x^2| \begin{array}{c}  \frac{1}{2},0 \\ \end{array} \right) \sqrt{\pi }\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\sin \left(\frac{7}{3}\right),\frac{7}{3}\right]-G_{0,2}^{1,0}\left(\frac{1}{4} \left(\frac{7}{3}\right)^2| \begin{array}{c}  \frac{1}{2},0 \\ \end{array} \right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\sin \left(-\frac{11}{5}\right),-\frac{11}{5}\right]-G_{0,2}^{1,0}\left(\frac{1}{4} \left(-\frac{11}{5}\right)^2| \begin{array}{c}  \frac{1}{2},0 \\ \end{array} \right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\sin \left(\frac{13}{4}\right),\frac{13}{4}\right]-G_{0,2}^{1,0}\left(\frac{1}{4} \left(\frac{13}{4}\right)^2| \begin{array}{c}  \frac{1}{2},0 \\ \end{array} \right) \sqrt{\pi }\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: A Meijer-G reduction identity that FullSimplify doesn't confirm automatically for a symbolic argument.
 log1p:
   epsil:
     in: MeijerGReduce(Ln(1 + x), x)
@@ -31,6 +45,10 @@ log1p:
     in: MeijerGReduce[Log[Plus[1, x]], x]
   wolfram:
     in: MeijerGReduce[Log[Plus[1, x]], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{MeijerGReduce}[\log (1+x),x]-G_{2,2}^{1,2}\left(x\left| \begin{array}{c}  1,1 \\  1,0 \\ \end{array} \right.\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\log \left(1+\frac{7}{3}\right),\frac{7}{3}\right]-G_{2,2}^{1,2}\left(\frac{7}{3}| \begin{array}{c}  1,1 \\  1,0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\log \left(1-\frac{11}{5}\right),-\frac{11}{5}\right]-G_{2,2}^{1,2}\left(-\frac{11}{5}| \begin{array}{c}  1,1 \\  1,0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\text{MeijerGReduce}\left[\log \left(1+\frac{13}{4}\right),\frac{13}{4}\right]-G_{2,2}^{1,2}\left(\frac{13}{4}| \begin{array}{c}  1,1 \\  1,0 \\ \end{array} \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 bessel-j:
   epsil:
     in: MeijerGReduce(BesselJ(n, x), x)

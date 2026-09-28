@@ -9,7 +9,13 @@ the-documented-subsets-collection-form-listed-in:
     in: Subsets[List[a, b, c]]
   wolfram:
     in: Subsets[List[a, b, c]]
-    note: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …"
+    out: "{{}, {a}, {b}, {c}, {a, b}, {a, c}, {b, c}, {a, b, c}}"
+    tex:
+      in: \text{Subsets}[\{a,b,c\}]
+      out: \{\{\},\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}
+    verdict: disagree
+    kind: convention
+    note: Both sides give the same 8 subsets of {a,b,c}; ours lists them in the documented binary-mask order, Wolfram's own Subsets lists them by increasing size. A documented, deliberate ordering choice on our side.
 a-size-bound-the-subsets-with-at-most-2-elements:
   epsil:
     in: Count(Subsets(4, 2))

@@ -827,7 +827,16 @@ a-free-symbol-is-untouched:
     in: Mod[x, 2]
   wolfram:
     in: Mod[x, 2]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[(x \bmod 2)-(x \bmod 2)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[(\frac{7}{3} \bmod 2)-(\frac{7}{3} \bmod 2)\right]\right],\text{Chop}\left[N\left[(\left(-\frac{11}{5}\right) \bmod 2)-(\left(-\frac{11}{5}\right) \bmod 2)\right]\right],\text{Chop}\left[N\left[(\frac{13}{4} \bmod 2)-(\frac{13}{4} \bmod 2)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (Symbol("x") % 2)
+    out: True
   sage:
     in: (SR.var("x") % 2)
+    out: "TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'"
+    verdict: error
+    kind: domain
+    note: Sages %% on the Symbolic Ring is not defined at all (TypeError) for two symbolic operands; our own Mod leaves a free symbol unevaluated instead of erroring. Different domains for the same operation.

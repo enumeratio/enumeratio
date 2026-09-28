@@ -37,6 +37,10 @@ a-symbolic-mixed-chain-partially-simplifies:
     in: Inequality[0, LessEqual, x, Less, 5]
   wolfram:
     in: Inequality[0, LessEqual, x, Less, 5]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[(0\leq x<5)-(0\leq x\land x<5)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(0\leq \frac{7}{3}<5\right)-\left(0\leq \frac{7}{3}\land \frac{7}{3}<5\right)\right]\right],\text{Chop}\left[N\left[\left(0\leq -\frac{11}{5}<5\right)-\left(0\leq -\frac{11}{5}\land -\frac{11}{5}<5\right)\right]\right],\text{Chop}\left[N\left[\left(0\leq \frac{13}{4}<5\right)-\left(0\leq \frac{13}{4}\land \frac{13}{4}<5\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-three-link-chain:
   epsil:
     in: Inequality(1, Less, 2, LessEqual, 2, Less, 10)
@@ -62,6 +66,10 @@ equal-and-notequal-are-valid-links-too:
     in: Inequality[0, Less, x, Unequal, 3]
   wolfram:
     in: Inequality[0, Less, x, Unequal, 3]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[(0<x\neq 3)-(0<x\land x\neq 3)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(0<\frac{7}{3}\neq 3\right)-\left(0<\frac{7}{3}\land \frac{7}{3}\neq 3\right)\right]\right],\text{Chop}\left[N\left[\left(0<-\frac{11}{5}\neq 3\right)-\left(0<-\frac{11}{5}\land -\frac{11}{5}\neq 3\right)\right]\right],\text{Chop}\left[N\left[\left(0<\frac{13}{4}\neq 3\right)-\left(0<\frac{13}{4}\land \frac{13}{4}\neq 3\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-homogeneous-chain-still-goes-through-and:
   epsil:
     in: Inequality(0, Less, x, Less, 5)
@@ -73,6 +81,10 @@ a-homogeneous-chain-still-goes-through-and:
     in: Inequality[0, Less, x, Less, 5]
   wolfram:
     in: Inequality[0, Less, x, Less, 5]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[(0<x<5)-(0<x\land x<5)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(0<\frac{7}{3}<5\right)-\left(0<\frac{7}{3}\land \frac{7}{3}<5\right)\right]\right],\text{Chop}\left[N\left[\left(0<-\frac{11}{5}<5\right)-\left(0<-\frac{11}{5}\land -\frac{11}{5}<5\right)\right]\right],\text{Chop}\left[N\left[\left(0<\frac{13}{4}<5\right)-\left(0<\frac{13}{4}\land \frac{13}{4}<5\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-on-a-non-relation-link:
   epsil:
     in: Inequality(0, Add, 5)

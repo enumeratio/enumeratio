@@ -31,3 +31,7 @@ reap-only-a-matching-tag:
     in: Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]
   wolfram:
     in: Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]
+    out: "{0, {{1, 3}}}"
+    tex:
+      in: \text{Reap}[\text{Last}[\{\text{Sow}[1,a],\text{Sow}[2,b],\text{Sow}[3,a],0\}],a]
+      out: \left\{0,\left( \begin{array}{cc}  1 & 3 \\ \end{array} \right)\right\}

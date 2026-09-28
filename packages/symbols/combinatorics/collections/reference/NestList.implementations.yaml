@@ -9,6 +9,10 @@ nestlist-f-x-3:
     in: NestList[f, x, 3]
   wolfram:
     in: NestList[f, x, 3]
+    out: "{x, f[x], f[f[x]], f[f[f[x]]]}"
+    tex:
+      in: \text{NestList}[f,x,3]
+      out: \{x,f(x),f(f(x)),f(f(f(x)))\}
 powers-of-2:
   epsil:
     in: NestList(Function(2 * _1), 1, 5)
@@ -56,3 +60,7 @@ zero-steps-just-the-seed:
     in: NestList[f, x, 0]
   wolfram:
     in: NestList[f, x, 0]
+    out: "{x}"
+    tex:
+      in: \text{NestList}[f,x,0]
+      out: \{x\}

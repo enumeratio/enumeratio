@@ -9,6 +9,10 @@ a-quadratic-s-vertex:
     in: Minimize[Power[x, 2], x]
   wolfram:
     in: Minimize[Power[x, 2], x]
+    out: "{0, {x -> 0}}"
+    tex:
+      in: \text{Minimize}\left[x^2,x\right]
+      out: \{0,\{x\to 0\}\}
 unbounded-below-reports-negative-infinity:
   epsil:
     in: Minimize(x ^ 3, x)
@@ -20,6 +24,10 @@ unbounded-below-reports-negative-infinity:
     in: Minimize[Power[x, 3], x]
   wolfram:
     in: Minimize[Power[x, 3], x]
+    out: "{-Infinity, {x -> -Infinity}}"
+    tex:
+      in: \text{Minimize}\left[x^3,x\right]
+      out: \{-\infty ,\{x\to -\infty \}\}
 a-rational-function-s-irrational-point:
   epsil:
     in: Minimize((x - 1) / (x ^ 2 + 1), x)
@@ -31,6 +39,13 @@ a-rational-function-s-irrational-point:
     in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
   wolfram:
     in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
+    out: "{-(Sqrt[2]/(1 + (1 - Sqrt[2])^2)), {x -> 1 - Sqrt[2]}}"
+    tex:
+      in: \text{Minimize}\left[\frac{x-1}{x^2+1},x\right]
+      out: \left\{-\frac{\sqrt{2}}{1+\left(1-\sqrt{2}\right)^2},\left\{x\to 1-\sqrt{2}\right\}\right\}
+    verdict: disagree
+    kind: shape
+    note: Both sides give the same {value, {x -> argmin}} pair, but the exact irrational argmin is written as a different (equal) radical expression — the structural comparison doesn't verify algebraic equivalence of a value nested inside a List.
 a-simple-interval-constraint:
   epsil:
     in: Minimize([x ^ 2, x >= 1], x)
@@ -42,6 +57,10 @@ a-simple-interval-constraint:
     in: Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
   wolfram:
     in: Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
+    out: "{1, {x -> 1}}"
+    tex:
+      in: \text{Minimize}\left[\left\{x^2,x\geq 1\right\},x\right]
+      out: \{1,\{x\to 1\}\}
 log-s-minimum-is-at-its-domain-edge:
   epsil:
     in: Minimize(Ln(x), x)
@@ -53,6 +72,10 @@ log-s-minimum-is-at-its-domain-edge:
     in: Minimize[Log[x], x]
   wolfram:
     in: Minimize[Log[x], x]
+    out: "{-Infinity, {x -> 0}}"
+    tex:
+      in: \text{Minimize}[\log (x),x]
+      out: \{-\infty ,\{x\to 0\}\}
 exp-s-infimum-is-not-attained:
   epsil:
     in: Minimize(Exp(x), x)
@@ -64,6 +87,10 @@ exp-s-infimum-is-not-attained:
     in: Minimize[Exp[x], x]
   wolfram:
     in: Minimize[Exp[x], x]
+    out: "{0, {x -> -Infinity}}"
+    tex:
+      in: \text{Minimize}[\exp (x),x]
+      out: \{0,\{x\to -\infty \}\}
 the-variable-as-a-one-element-list:
   epsil:
     in: Minimize(x ^ 2, [x])
@@ -75,6 +102,10 @@ the-variable-as-a-one-element-list:
     in: Minimize[Power[x, 2], List[x]]
   wolfram:
     in: Minimize[Power[x, 2], List[x]]
+    out: "{0, {x -> 0}}"
+    tex:
+      in: \text{Minimize}\left[x^2,\{x\}\right]
+      out: \{0,\{x\to 0\}\}
 declines-a-non-exact-critical-point:
   epsil:
     in: Minimize(x ^ 4 - 4 * x ^ 2, x)
@@ -86,6 +117,10 @@ declines-a-non-exact-critical-point:
     in: Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
   wolfram:
     in: Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Minimize}\left[x^4-4 x^2,x\right]-\text{Minimize}\left[x^4-4 x^2,x\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Minimize}\left[\left(\frac{7}{3}\right)^4-4 \left(\frac{7}{3}\right)^2,\frac{7}{3}\right]-\text{Minimize}\left[\left(\frac{7}{3}\right)^4-4 \left(\frac{7}{3}\right)^2,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\left(-\frac{11}{5}\right)^4-4 \left(-\frac{11}{5}\right)^2,-\frac{11}{5}\right]-\text{Minimize}\left[\left(-\frac{11}{5}\right)^4-4 \left(-\frac{11}{5}\right)^2,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\left(\frac{13}{4}\right)^4-4 \left(\frac{13}{4}\right)^2,\frac{13}{4}\right]-\text{Minimize}\left[\left(\frac{13}{4}\right)^4-4 \left(\frac{13}{4}\right)^2,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-more-than-one-variable:
   epsil:
     in: Minimize(x ^ 2 + y ^ 2, [x, y])
@@ -97,6 +132,10 @@ declines-more-than-one-variable:
     in: Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
   wolfram:
     in: Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Minimize}\left[x^2+y^2,\{x,y\}\right]-\text{Minimize}\left[x^2+y^2,\{x,y\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Minimize}\left[\left(\frac{7}{3}\right)^2+\left(-\frac{11}{5}\right)^2,\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]-\text{Minimize}\left[\left(\frac{7}{3}\right)^2+\left(-\frac{11}{5}\right)^2,\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\left(\frac{13}{4}\right)^2+\left(-\frac{17}{6}\right)^2,\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]-\text{Minimize}\left[\left(\frac{13}{4}\right)^2+\left(-\frac{17}{6}\right)^2,\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\left(\frac{19}{8}\right)^2+\left(-\frac{23}{9}\right)^2,\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]-\text{Minimize}\left[\left(\frac{19}{8}\right)^2+\left(-\frac{23}{9}\right)^2,\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-sin-s-point-despite-an-exact-value:
   epsil:
     in: Minimize(Sin(x), x)
@@ -108,3 +147,7 @@ declines-sin-s-point-despite-an-exact-value:
     in: Minimize[Sin[x], x]
   wolfram:
     in: Minimize[Sin[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Minimize}[\sin (x),x]-\text{Minimize}[\sin (x),x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Minimize}\left[\sin \left(\frac{7}{3}\right),\frac{7}{3}\right]-\text{Minimize}\left[\sin \left(\frac{7}{3}\right),\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\sin \left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\text{Minimize}\left[\sin \left(-\frac{11}{5}\right),-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Minimize}\left[\sin \left(\frac{13}{4}\right),\frac{13}{4}\right]-\text{Minimize}\left[\sin \left(\frac{13}{4}\right),\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

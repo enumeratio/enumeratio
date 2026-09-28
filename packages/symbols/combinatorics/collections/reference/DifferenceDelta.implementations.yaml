@@ -9,6 +9,10 @@ quadratic:
     in: DifferenceDelta[Power[n, 2], n]
   wolfram:
     in: DifferenceDelta[Power[n, 2], n]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\unicode{f4a4}_nn^2-(2 n+1)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\unicode{f4a4}_{\frac{7}{3}}\left(\frac{7}{3}\right)^2-\left(2 \frac{7}{3}+1\right)\right]\right],\text{Chop}\left[N\left[\unicode{f4a4}_{-\frac{11}{5}}\left(-\frac{11}{5}\right)^2-\left(2 \left(-\frac{11}{5}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\unicode{f4a4}_{\frac{13}{4}}\left(\frac{13}{4}\right)^2-\left(2 \frac{13}{4}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 linear:
   epsil:
     in: DifferenceDelta(3n + 5, n)
@@ -20,3 +24,7 @@ linear:
     in: DifferenceDelta[Plus[Times[3, n], 5], n]
   wolfram:
     in: DifferenceDelta[Plus[Times[3, n], 5], n]
+    out: "3"
+    tex:
+      in: \unicode{f4a4}_n(3 n+5)
+      out: "3"

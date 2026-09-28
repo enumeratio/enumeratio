@@ -20,6 +20,10 @@ a-padding-element:
     in: PadRight[List[1, 2, 3], 5, x]
   wolfram:
     in: PadRight[List[1, 2, 3], 5, x]
+    out: "{1, 2, 3, x, x}"
+    tex:
+      in: \text{PadRight}[\{1,2,3\},5,x]
+      out: \{1,2,3,x,x\}
 a-shorter-length-drops-elements-from-the-right:
   epsil:
     in: PadRight([1, 2, 3, 4, 5], 3)

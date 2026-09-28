@@ -224,6 +224,10 @@ rationalizes-every-approximate-number-inside-an:
     in: Rationalize[Plus[1.2, Times[6.7, x]]]
   wolfram:
     in: Rationalize[Plus[1.2, Times[6.7, x]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Rationalize}[1.2\, +6.7 x]-\left(\frac{67}{10} x+\frac{6}{5}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Rationalize}\left[1.2\, +6.7 \frac{7}{3}\right]-\left(\frac{67}{10} \frac{7}{3}+\frac{6}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Rationalize}\left[1.2\, +6.7 \left(-\frac{11}{5}\right)\right]-\left(\frac{67}{10} \left(-\frac{11}{5}\right)+\frac{6}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Rationalize}\left[1.2\, +6.7 \frac{13}{4}\right]-\left(\frac{67}{10} \frac{13}{4}+\frac{6}{5}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 threads-element-wise-over-a-list-compute-engine:
   epsil:
     in: Rationalize([0.5, 0.25, 0.2])

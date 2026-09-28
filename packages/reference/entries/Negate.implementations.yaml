@@ -192,10 +192,16 @@ double-negation-cancels-x-x:
     in: Minus[Minus[x]]
   wolfram:
     in: Minus[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[-(-x)-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[-\left(-\frac{7}{3}\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[-\left(-\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[-\left(-\frac{13}{4}\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (-(-Symbol("x")))
+    out: True
   sage:
     in: (-(-SR.var("x")))
+    out: True
 distributes-over-a-sum-a-b-a-b:
   epsil:
     in: -(a + b) == -a - b
@@ -210,10 +216,16 @@ distributes-over-a-sum-a-b-a-b:
     in: Equal[Minus[Plus[a, b]], Plus[Minus[a], Minus[b]]]
   wolfram:
     in: (Minus[Plus[a, b]] == Plus[Minus[a], Minus[b]])
+    out: True
+    tex:
+      in: -(a+b)=-a-b
+      out: \text{True}
   sympy:
     in: enumeratio_equal((-(Symbol("a") + Symbol("b"))), ((-Symbol("a")) + (-Symbol("b"))))
+    out: True
   sage:
     in: bool((-(SR.var("a") + SR.var("b"))) == ((-SR.var("a")) + (-SR.var("b"))))
+    out: True
 recording-a-42-50-charge-as-a-negative-balance:
   epsil:
     in: "-42.5"
@@ -282,10 +294,16 @@ stays-symbolic:
     in: Minus[x]
   wolfram:
     in: Minus[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[-x--x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[-\frac{7}{3}--\frac{7}{3}\right]\right],\text{Chop}\left[N\left[-\left(-\frac{11}{5}\right)--\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[-\frac{13}{4}--\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (-Symbol("x"))
+    out: True
   sage:
     in: (-SR.var("x"))
+    out: True
 neg-1-plus-2i:
   epsil:
     in: -(1 + 2i)
@@ -361,10 +379,16 @@ folds-into-a-numeric-coefficient:
     in: Minus[Times[2, x]]
   wolfram:
     in: Minus[Times[2, x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[-(2 x)--2 x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[-\left(2 \frac{7}{3}\right)--2 \frac{7}{3}\right]\right],\text{Chop}\left[N\left[-\left(2 \left(-\frac{11}{5}\right)\right)--2 \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[-\left(2 \frac{13}{4}\right)--2 \frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (-(2 * Symbol("x")))
+    out: True
   sage:
     in: (-(2 * SR.var("x")))
+    out: True
 a-b-b-a:
   epsil:
     in: -(a - b)
@@ -376,10 +400,16 @@ a-b-b-a:
     in: Minus[Subtract[a, b]]
   wolfram:
     in: Minus[Subtract[a, b]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[-(a-b)-(-a+b)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[-\left(\frac{7}{3}--\frac{11}{5}\right)-\left(-\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[-\left(\frac{13}{4}--\frac{17}{6}\right)-\left(-\frac{13}{4}-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[-\left(\frac{19}{8}--\frac{23}{9}\right)-\left(-\frac{19}{8}-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (-(Symbol("a") - Symbol("b")))
+    out: True
   sage:
     in: (-(SR.var("a") - SR.var("b")))
+    out: True
 the-additive-inverse-x-x-0:
   epsil:
     in: -x + x
@@ -391,7 +421,13 @@ the-additive-inverse-x-x-0:
     in: Plus[Minus[x], x]
   wolfram:
     in: Plus[Minus[x], x]
+    out: "0"
+    tex:
+      in: -x+x
+      out: "0"
   sympy:
     in: ((-Symbol("x")) + Symbol("x"))
+    out: "0"
   sage:
     in: ((-SR.var("x")) + SR.var("x"))
+    out: "0"

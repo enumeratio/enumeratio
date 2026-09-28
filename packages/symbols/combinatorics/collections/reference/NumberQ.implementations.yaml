@@ -40,3 +40,7 @@ a-plain-symbol-is-not-numberq:
     in: NumberQ[x]
   wolfram:
     in: NumberQ[x]
+    out: False
+    tex:
+      in: \text{NumberQ}[x]
+      out: \text{False}

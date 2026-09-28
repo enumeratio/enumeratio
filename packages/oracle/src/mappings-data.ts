@@ -62,6 +62,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "Assuming",
+    arity: 2,
+    emit: {
+      wolfram: "Assuming[$1, FullSimplify[$2]]",
+    },
+    note: "Wolfram's own Assuming only affects functions that consult $Assumptions (Simplify, FullSimplify, Refine) — a bare Abs(x) inside it stays symbolic, unlike compute-engine's own eager assumption-aware evaluate(). Wrapping the body in FullSimplify is what makes the oracle check the same claim we do.",
+  },
+  {
     head: "Basis",
     arity: 1,
     emit: {
@@ -439,10 +447,10 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     arity: 1,
     emit: {
       wolfram: "Length[$1]",
-      sympy: "(len($1) if hasattr($1, '__len__') else 0)",
-      sage: "(len($1) if hasattr($1, '__len__') else 0)",
+      sympy: "(len($1) if hasattr($1, '__len__') else (len($1.args) if hasattr($1, 'args') else 0))",
+      sage: "(len($1) if hasattr($1, '__len__') else (len($1.operands()) if hasattr($1, 'operands') else 0))",
     },
-    note: "Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded.",
+    note: "Wolfram's Length of an atom (not a list) is 0, not an error, matching ours; a bare len() raises on a non-list, so it is guarded. A Sage symbolic expression (not a Python list) has no __len__ but counts its own terms via .operands() — a method, unlike sympy's .args tuple (Add(a,b,c,d).operands() has 4 elements; a bare variable's is empty, giving 0 like an atom).",
   },
   {
     head: "LerchPhi",

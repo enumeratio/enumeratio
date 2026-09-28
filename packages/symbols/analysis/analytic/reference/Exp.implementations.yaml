@@ -63,10 +63,16 @@ compute-engine-represents-exp-x-as-e-x-once-the:
     in: Exp[x]
   wolfram:
     in: Exp[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\exp (x)-e^x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\exp \left(\frac{7}{3}\right)-e^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\exp \left(-\frac{11}{5}\right)-e^{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{13}{4}\right)-e^{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: exp(Symbol("x"))
+    out: True
   sage:
     in: exp(SR.var("x"))
+    out: True
 inverse-of-ln-e-ln-x-x:
   epsil:
     in: Exp(Ln(5)) == 5
@@ -365,10 +371,16 @@ inverse-of-ln-symbolically:
     in: Exp[Log[x]]
   wolfram:
     in: Exp[Log[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\exp (\log (x))-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\exp \left(\log \left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\exp \left(\log \left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\exp \left(\log \left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: exp(log(Symbol("x")))
+    out: True
   sage:
     in: exp(log(SR.var("x")))
+    out: True
 exp-ln-of-a-complex-argument-is-that-argument:
   epsil:
     in: Exp(Ln(1 + 2i))
@@ -520,6 +532,10 @@ its-own-antiderivative:
     in: Integrate[Exp[x], x]
   wolfram:
     in: Integrate[Exp[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \exp (x) \, dx-e^x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \exp \left(\frac{7}{3}\right) \, d\frac{7}{3}-e^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\int \exp \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-e^{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\int \exp \left(\frac{13}{4}\right) \, d\frac{13}{4}-e^{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 taylor-series-about-0:
   epsil:
     in: Series(Exp(x), x, 0, 4)
@@ -560,10 +576,16 @@ a-product-of-exponentials-should-combine-e-x-e-y:
     in: Times[Exp[x], Exp[y]]
   wolfram:
     in: Times[Exp[x], Exp[y]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\exp (x) \exp (y)-e^{x+y}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\exp \left(\frac{7}{3}\right) \exp \left(-\frac{11}{5}\right)-e^{\frac{7}{3}-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{13}{4}\right) \exp \left(-\frac{17}{6}\right)-e^{\frac{13}{4}-\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{19}{8}\right) \exp \left(-\frac{23}{9}\right)-e^{\frac{19}{8}-\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (exp(Symbol("x")) * exp(Symbol("y")))
+    out: True
   sage:
     in: (exp(SR.var("x")) * exp(SR.var("y")))
+    out: True
 combines-past-two-factors:
   epsil:
     in: Exp(a) * Exp(b) * Exp(c)
@@ -575,10 +597,16 @@ combines-past-two-factors:
     in: Times[Exp[a], Exp[b], Exp[c]]
   wolfram:
     in: Times[Exp[a], Exp[b], Exp[c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\exp (a) \exp (b) \exp (c)-e^{a+b+c}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\exp \left(\frac{7}{3}\right) \exp \left(-\frac{11}{5}\right) \exp \left(\frac{13}{4}\right)-e^{\frac{7}{3}-\frac{11}{5}+\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\exp \left(-\frac{17}{6}\right) \exp \left(\frac{19}{8}\right) \exp \left(-\frac{23}{9}\right)-e^{-\frac{17}{6}+\frac{19}{8}-\frac{23}{9}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{7}{3}\right) \exp \left(-\frac{11}{5}\right) \exp \left(\frac{13}{4}\right)-e^{\frac{7}{3}-\frac{11}{5}+\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (exp(Symbol("a")) * exp(Symbol("b")) * exp(Symbol("c")))
+    out: True
   sage:
     in: (exp(SR.var("a")) * exp(SR.var("b")) * exp(SR.var("c")))
+    out: True
 combines-past-extra-non-exponential-factors:
   epsil:
     in: 2 * Exp(x) * Exp(y) * z
@@ -590,10 +618,16 @@ combines-past-extra-non-exponential-factors:
     in: Times[2, Exp[x], Exp[y], z]
   wolfram:
     in: Times[2, Exp[x], Exp[y], z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[2 \exp (x) \exp (y) z-2 z e^{x+y}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[2 \exp \left(\frac{7}{3}\right) \exp \left(-\frac{11}{5}\right) \frac{13}{4}-2 \frac{13}{4} e^{\frac{7}{3}-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[2 \exp \left(-\frac{17}{6}\right) \exp \left(\frac{19}{8}\right) \left(-\frac{23}{9}\right)-2 \left(-\frac{23}{9}\right) e^{-\frac{17}{6}+\frac{19}{8}}\right]\right],\text{Chop}\left[N\left[2 \exp \left(\frac{7}{3}\right) \exp \left(-\frac{11}{5}\right) \frac{13}{4}-2 \frac{13}{4} e^{\frac{7}{3}-\frac{11}{5}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (2 * exp(Symbol("x")) * exp(Symbol("y")) * Symbol("z"))
+    out: True
   sage:
     in: (2 * exp(SR.var("x")) * exp(SR.var("y")) * SR.var("z"))
+    out: True
 e-x-e-x-cancels-to-1:
   epsil:
     in: Exp(x) * Exp(-x)
@@ -605,10 +639,16 @@ e-x-e-x-cancels-to-1:
     in: Times[Exp[x], Exp[Minus[x]]]
   wolfram:
     in: Times[Exp[x], Exp[Minus[x]]]
+    out: "1"
+    tex:
+      in: \exp (x) \exp (-x)
+      out: "1"
   sympy:
     in: (exp(Symbol("x")) * exp((-Symbol("x"))))
+    out: "1"
   sage:
     in: (exp(SR.var("x")) * exp((-SR.var("x"))))
+    out: "1"
 a-lone-exp-factor-is-untouched:
   epsil:
     in: Exp(x) * y
@@ -620,10 +660,16 @@ a-lone-exp-factor-is-untouched:
     in: Times[Exp[x], y]
   wolfram:
     in: Times[Exp[x], y]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\exp (x) y-y e^x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\exp \left(\frac{7}{3}\right) \left(-\frac{11}{5}\right)--\frac{11}{5} e^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{13}{4}\right) \left(-\frac{17}{6}\right)--\frac{17}{6} e^{\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\exp \left(\frac{19}{8}\right) \left(-\frac{23}{9}\right)--\frac{23}{9} e^{\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: (exp(Symbol("x")) * Symbol("y"))
+    out: True
   sage:
     in: (exp(SR.var("x")) * SR.var("y"))
+    out: True
 n-decimalizes-a-combined-product:
   epsil:
     in: N(Exp(1) * Exp(2))
@@ -671,10 +717,16 @@ same-base-non-e-powers-are-left-alone:
     in: Times[Power[2, x], Power[2, y]]
   wolfram:
     in: Times[Power[2, x], Power[2, y]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[2^x 2^y-2^x 2^y\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[2^{\frac{7}{3}} 2^{-\frac{11}{5}}-2^{\frac{7}{3}} 2^{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[2^{\frac{13}{4}} 2^{-\frac{17}{6}}-2^{\frac{13}{4}} 2^{-\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[2^{\frac{19}{8}} 2^{-\frac{23}{9}}-2^{\frac{19}{8}} 2^{-\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: ((S(2)**Symbol("x")) * (S(2)**Symbol("y")))
+    out: True
   sage:
     in: (((2)^SR.var("x")) * ((2)^SR.var("y")))
+    out: True
 euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
   epsil:
     in: ExpToTrig(Exp(ImaginaryUnit * x))
@@ -686,6 +738,10 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
     in: ExpToTrig[Exp[Times[I, x]]]
   wolfram:
     in: ExpToTrig[Exp[Times[I, x]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{ExpToTrig}[\exp (i x)]-(i \sin (x)+\cos (x))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExpToTrig}\left[\exp \left(i \frac{7}{3}\right)\right]-\left(i \sin \left(\frac{7}{3}\right)+\cos \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{ExpToTrig}\left[\exp \left(i \left(-\frac{11}{5}\right)\right)\right]-\left(i \sin \left(-\frac{11}{5}\right)+\cos \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{ExpToTrig}\left[\exp \left(i \frac{13}{4}\right)\right]-\left(i \sin \left(\frac{13}{4}\right)+\cos \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-50-significant-digits-every-one-correctly:
   epsil:
     in: N(Exp(1), 50)

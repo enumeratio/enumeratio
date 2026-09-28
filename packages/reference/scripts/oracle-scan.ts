@@ -22,6 +22,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --accept           # everything wired, written
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
+//   vp node packages/reference/scripts/oracle-scan.ts --head Foo,Bar,Baz     # several heads, one kernel process
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
@@ -62,8 +63,17 @@ const trim = (text: string): string => text.replace(/`/g, "'").replace(/\|/g, "/
 
 const args = process.argv.slice(2);
 const headIndex = args.indexOf("--head");
-const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
-const requested = args.filter((argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head");
+// Comma-separated: `--head Foo,Bar` scans several heads in one kernel process, cheaper than
+// one invocation per head when a fix (or this free-symbol pass) touches many heads at once.
+const headFilter = headIndex >= 0 ? new Set((args[headIndex + 1] ?? "").split(",")) : undefined;
+const idsIndex = args.indexOf("--ids");
+// Comma-separated full example ids (`Head/key`), for a run that only touches SOME examples of
+// a head — the free-symbol pass is the reason this exists: touching every mapped head's
+// examples would drag in disagreements this lane has nothing to do with.
+const idFilter = idsIndex >= 0 ? new Set((args[idsIndex + 1] ?? "").split(",")) : undefined;
+const requested = args.filter(
+  (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head" && args[index - 1] !== "--ids",
+);
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
 const digestOnly = args.includes("--digest");
 // Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
@@ -71,7 +81,10 @@ const digestOnly = args.includes("--digest");
 const accept = args.includes("--accept");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
-const cases: Case[] = referenceEntries(data).flatMap((entry) =>
+// Every non-aspirational example, UNFILTERED — the authority for "does this example still
+// exist" (the write-out loop's deletion guard, below), so a partial `--head`/`--ids` run
+// can't be misread as "every other example of this head is gone."
+const allCases: Case[] = referenceEntries(data).flatMap((entry) =>
   entry.examples
     .filter((example) => example.aspirational !== true)
     .map((example) => ({
@@ -80,8 +93,11 @@ const cases: Case[] = referenceEntries(data).flatMap((entry) =>
       key: example.id,
       expr: example.expr as MathJSON,
       expected: example.expected as MathJSON,
-    }))
-    .filter((item) => headFilter === undefined || item.head === headFilter),
+    })),
+);
+const cases: Case[] = allCases.filter(
+  (item) =>
+    (headFilter === undefined || headFilter.has(item.head)) && (idFilter === undefined || idFilter.has(item.id)),
 );
 
 type Outcome = {
@@ -238,7 +254,9 @@ for (const system of systems) {
   for (const head of headsThisRun) {
     const record = records.get(head) ?? {};
     const ofHead = cases.filter((c) => c.head === head);
-    const current = new Set(ofHead.map((c) => c.key));
+    // From `allCases`, not `ofHead`: a `--head`/`--ids`-scoped run still has to see every
+    // OTHER example of this head as present, or it would delete their rows as "gone".
+    const current = new Set(allCases.filter((c) => c.head === head).map((c) => c.key));
     const put = (id: string, row: SystemImplementation | undefined): void => {
       const { [system]: _old, ...rest } = record[id] ?? {};
       const next = row === undefined ? rest : { ...rest, [system]: row };

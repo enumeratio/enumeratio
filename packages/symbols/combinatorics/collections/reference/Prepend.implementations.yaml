@@ -9,6 +9,10 @@ prepend-list-a-b-c-d-x:
     in: Prepend[List[a, b, c, d], x]
   wolfram:
     in: Prepend[List[a, b, c, d], x]
+    out: "{x, a, b, c, d}"
+    tex:
+      in: \text{Prepend}[\{a,b,c,d\},x]
+      out: \{x,a,b,c,d\}
 prepend-c-x-join-x-c-see-join:
   epsil:
     in: Prepend([1, 2, 3], 0) == Join([0], [1, 2, 3])
@@ -34,6 +38,10 @@ a-rule-inserted-at-the-front-of-an-association:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]
   wolfram:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]
+    out: <|3 -> d, 1 -> a, 2 -> b|>
+    tex:
+      in: \text{Prepend}[\text{Association}[1\to a,2\to b],3\to d]
+      out: \unicode{f113}3\to d,1\to a,2\to b\unicode{f114}
 several-rules-prepended-at-once:
   epsil:
     in: Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])
@@ -45,6 +53,10 @@ several-rules-prepended-at-once:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
   wolfram:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
+    out: <|3 -> d, 4 -> e, 1 -> a, 2 -> b|>
+    tex:
+      in: \text{Prepend}[\text{Association}[1\to a,2\to b],\{3\to d,4\to e\}]
+      out: \unicode{f113}3\to d,4\to e,1\to a,2\to b\unicode{f114}
 prepend-front-of-list:
   epsil:
     in: Prepend([1, 2, 3], 0)

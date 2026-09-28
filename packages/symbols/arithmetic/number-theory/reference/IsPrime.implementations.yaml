@@ -620,11 +620,22 @@ a-symbol-stays-unevaluated:
     in: PrimeQ[x]
   wolfram:
     in: PrimeQ[x]
-    note: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PrimeQ}[x]-\text{PrimeQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PrimeQ}\left[\frac{7}{3}\right]-\text{PrimeQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{PrimeQ}\left[-\frac{11}{5}\right]-\text{PrimeQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{PrimeQ}\left[\frac{13}{4}\right]-\text{PrimeQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: isprime(Symbol("x"))
+    out: "ValueError: x is not an integer"
+    verdict: error
+    kind: domain
+    note: sympys isprime requires a concrete integer and raises ValueError on a free symbol; our own IsPrime leaves a free symbol unevaluated instead of erroring. Different domains for the same question.
   sage:
     in: is_prime(SR.var("x"))
+    out: "TypeError: unable to convert x to an integer"
+    verdict: error
+    kind: domain
+    note: Sages is_prime requires a concrete integer and errors on a free symbol; our own IsPrime leaves a free symbol unevaluated instead of erroring.
 isprime-7:
   epsil:
     in: IsPrime(7)

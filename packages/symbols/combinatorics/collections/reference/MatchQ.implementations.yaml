@@ -10,8 +10,6 @@ add-of-two-wildcards-matches-an-add:
     out: \mathrm{True}
   fullform:
     in: MatchQ[Plus[x, 1], Plus[_a, _b]]
-  wolfram:
-    in: MatchQ[Plus[x, 1], Plus[_a, _b]]
 a-product-does-not-match-an-add-pattern:
   epsil:
     in: MatchQ(x * y, _a + _b)
@@ -24,8 +22,6 @@ a-product-does-not-match-an-add-pattern:
     out: \mathrm{False}
   fullform:
     in: MatchQ[Times[x, y], Plus[_a, _b]]
-  wolfram:
-    in: MatchQ[Times[x, y], Plus[_a, _b]]
 a-sequence-wildcard-matches-the-rest-of-a-list:
   epsil:
     in: MatchQ([1, 2, 3], [_a, __rest])
@@ -37,6 +33,4 @@ a-sequence-wildcard-matches-the-rest-of-a-list:
     in: \mathrm{MatchQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\operatorname{\_a}, \operatorname{\_\_rest}\bigr\rbrack)
     out: \mathrm{True}
   fullform:
-    in: MatchQ[List[1, 2, 3], List[_a, __rest]]
-  wolfram:
     in: MatchQ[List[1, 2, 3], List[_a, __rest]]

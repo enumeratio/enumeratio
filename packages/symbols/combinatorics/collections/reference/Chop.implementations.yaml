@@ -136,6 +136,10 @@ stays-symbolic:
     in: Chop[x]
   wolfram:
     in: Chop[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Chop}[x]-\text{Chop}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Chop}\left[\frac{7}{3}\right]-\text{Chop}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{Chop}\left[-\frac{11}{5}\right]-\text{Chop}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{Chop}\left[\frac{13}{4}\right]-\text{Chop}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 exact-numbers-not-near-zero-pass-through:
   epsil:
     in: Chop(1 / 3)

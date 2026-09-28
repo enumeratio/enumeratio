@@ -11,6 +11,10 @@ sigma-2-20-see-divisorsigma:
     back: [DivisorSum, 20, [Function, d, [Power, d, 2]]]
   wolfram:
     in: DivisorSum[20, Function[d, Power[d, 2]]]
+    out: "546"
+    tex:
+      in: \sum _{\unicode{f80d}|20} \unicode{f80d}^2
+      out: "546"
 only-the-odd-divisors-1-3-5-15:
   epsil:
     in: DivisorSum(30, Function(d, d), Function(IsOdd(d), d))
@@ -24,6 +28,10 @@ only-the-odd-divisors-1-3-5-15:
     back: [DivisorSum, 30, [Function, d, d], [Function, d, [IsOdd, d]]]
   wolfram:
     in: DivisorSum[30, Function[d, d], Function[d, OddQ[d]]]
+    out: "24"
+    tex:
+      in: \sum _{\unicode{f80d}|30\land \text{OddQ}[\unicode{f80d}]} \unicode{f80d}
+      out: "24"
 sum-d-mid-n-mu-d-0-for-n-1:
   epsil:
     in: DivisorSum(12, Function(MoebiusMu(d), d))
@@ -40,6 +48,10 @@ sum-d-mid-n-mu-d-0-for-n-1:
     back: [DivisorSum, 12, [Function, d, [MoebiusMu, d]]]
   wolfram:
     in: DivisorSum[12, Function[d, MoebiusMu[d]]]
+    out: "0"
+    tex:
+      in: \sum _{\unicode{f80d}|12} \mu (\unicode{f80d})
+      out: "0"
 sum-d-mid-n-varphi-d-n:
   epsil:
     in: DivisorSum(36, Function(Totient(d), d))
@@ -56,6 +68,10 @@ sum-d-mid-n-varphi-d-n:
     back: [DivisorSum, 36, [Function, d, [Totient, d]]]
   wolfram:
     in: DivisorSum[36, Function[d, EulerPhi[d]]]
+    out: "36"
+    tex:
+      in: \sum _{\unicode{f80d}|36} \phi (\unicode{f80d})
+      out: "36"
 1-has-one-divisor:
   epsil:
     in: DivisorSum(1, Function(d, d))
@@ -68,3 +84,7 @@ sum-d-mid-n-varphi-d-n:
     in: DivisorSum[1, Function[d, d]]
   wolfram:
     in: DivisorSum[1, Function[d, d]]
+    out: "1"
+    tex:
+      in: \sum _{\unicode{f80d}|1} \unicode{f80d}
+      out: "1"

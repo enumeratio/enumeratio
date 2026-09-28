@@ -61,6 +61,10 @@ symbols-order-alphabetically:
     in: Ordering[List[c, a, b]]
   wolfram:
     in: Ordering[List[c, a, b]]
+    out: "{2, 3, 1}"
+    tex:
+      in: \text{Ordering}[\{c,a,b\}]
+      out: \{2,3,1\}
 a-negative-count-gives-the-positions-of-the:
   epsil:
     in: Ordering([2, 6, 1, 9, 1, 2, 3], -1)

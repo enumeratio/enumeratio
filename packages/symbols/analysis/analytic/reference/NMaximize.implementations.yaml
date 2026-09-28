@@ -9,6 +9,13 @@ two-trig-terms-on-a-bounded-interval:
     in: NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
   wolfram:
     in: NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
+    out: "{1.125, {x -> 0.25268025516236814}}"
+    tex:
+      in: \text{NMaximize}[\{\sin (x)+\cos (2 x),x\geq 0\land x\leq 6\},x]
+      out: \{1.125,\{x\to 0.25268\}\}
+    verdict: disagree
+    kind: convention
+    note: The maximum value (9/8) agrees exactly; Sin(x)+Cos(2x) attains it at more than one point on [0,6] (the caption says so), and Wolfram's numeric optimizer converges to a different, equally valid maximizer than ours.
 declines-without-a-bounded-constraint:
   epsil:
     in: NMaximize(-x ^ 2, x)
@@ -20,3 +27,7 @@ declines-without-a-bounded-constraint:
     in: NMaximize[Minus[Power[x, 2]], x]
   wolfram:
     in: NMaximize[Minus[Power[x, 2]], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{NMaximize}\left[-x^2,x\right]-\text{NMaximize}\left[-x^2,x\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{NMaximize}\left[-\left(\frac{7}{3}\right)^2,\frac{7}{3}\right]-\text{NMaximize}\left[-\left(\frac{7}{3}\right)^2,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{NMaximize}\left[-\left(-\frac{11}{5}\right)^2,-\frac{11}{5}\right]-\text{NMaximize}\left[-\left(-\frac{11}{5}\right)^2,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{NMaximize}\left[-\left(\frac{13}{4}\right)^2,\frac{13}{4}\right]-\text{NMaximize}\left[-\left(\frac{13}{4}\right)^2,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

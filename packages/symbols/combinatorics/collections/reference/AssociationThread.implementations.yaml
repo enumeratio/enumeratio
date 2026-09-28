@@ -9,6 +9,10 @@ pairs-keys-with-values-two-argument-form:
     in: AssociationThread[List[a, b], List[1, 2]]
   wolfram:
     in: AssociationThread[List[a, b], List[1, 2]]
+    out: <|a -> 1, b -> 2|>
+    tex:
+      in: \text{AssociationThread}[\{a,b\},\{1,2\}]
+      out: \unicode{f113}a\to 1,b\to 2\unicode{f114}
 accepts-the-one-argument-rule-keys-values-form:
   epsil:
     in: AssociationThread(Rule([a, b], [1, 2]))
@@ -20,6 +24,10 @@ accepts-the-one-argument-rule-keys-values-form:
     in: AssociationThread[Rule[List[a, b], List[1, 2]]]
   wolfram:
     in: AssociationThread[Rule[List[a, b], List[1, 2]]]
+    out: <|a -> 1, b -> 2|>
+    tex:
+      in: \text{AssociationThread}[\{a,b\}\to \{1,2\}]
+      out: \unicode{f113}a\to 1,b\to 2\unicode{f114}
 length-on-the-result-agrees-with-association:
   epsil:
     in: Length(AssociationThread([a, b, c], [1, 2, 3]))
@@ -31,3 +39,7 @@ length-on-the-result-agrees-with-association:
     in: Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]
   wolfram:
     in: Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]
+    out: "3"
+    tex:
+      in: \text{Length}[\text{AssociationThread}[\{a,b,c\},\{1,2,3\}]]
+      out: "3"

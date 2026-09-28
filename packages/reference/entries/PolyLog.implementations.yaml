@@ -81,10 +81,16 @@ li-1-z-ln-1-z-symbolically:
     in: PolyLog[1, z]
   wolfram:
     in: PolyLog[1, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Li}_1(z)--\log (-z+1)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_1\left(\frac{7}{3}\right)--\log \left(-\frac{7}{3}+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(-\frac{11}{5}\right)--\log \left(-\left(-\frac{11}{5}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(\frac{13}{4}\right)--\log \left(-\frac{13}{4}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: polylog(1, Symbol("z"))
+    out: True
   sage:
     in: polylog(1, SR.var("z"))
+    out: True
 li-1-z-z-1-z-2-negative-orders-are-rational:
   epsil:
     in: PolyLog(-1, z)
@@ -96,10 +102,16 @@ li-1-z-z-1-z-2-negative-orders-are-rational:
     in: PolyLog[-1, z]
   wolfram:
     in: PolyLog[-1, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-1}(z)-\frac{z}{(-z+1)^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{7}{3}\right)-\frac{\frac{7}{3}}{\left(-\frac{7}{3}+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5}}{\left(-\left(-\frac{11}{5}\right)+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{13}{4}\right)-\frac{\frac{13}{4}}{\left(-\frac{13}{4}+1\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: polylog(-1, Symbol("z"))
+    out: True
   sage:
     in: polylog(-1, SR.var("z"))
+    out: True
 li-2-1-2-pi-2-12-ln-2-2-2:
   epsil:
     in: PolyLog(2, 0.5) + 0.5 * Ln(2) ^ 2 == Pi ^ 2 / 12
@@ -437,10 +449,16 @@ li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
     in: PolyLog[n, -1]
   wolfram:
     in: PolyLog[n, -1]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_n(-1)-\left(2^{-n+1}-1\right) \zeta (n)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{\frac{7}{3}}(-1)-\left(2^{-\frac{7}{3}+1}-1\right) \zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{-\frac{11}{5}}(-1)-\left(2^{-\left(-\frac{11}{5}\right)+1}-1\right) \zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{\frac{13}{4}}(-1)-\left(2^{-\frac{13}{4}+1}-1\right) \zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: polylog(Symbol("n"), -1)
+    out: True
   sage:
     in: polylog(SR.var("n"), -1)
+    out: True
 li-2-z-z-1-z-1-z-3:
   epsil:
     in: PolyLog(-2, z)
@@ -452,10 +470,16 @@ li-2-z-z-1-z-1-z-3:
     in: PolyLog[-2, z]
   wolfram:
     in: PolyLog[-2, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-2}(z)-\frac{z (z+1)}{(-z+1)^3}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{7}{3}\right)-\frac{\frac{7}{3} \left(\frac{7}{3}+1\right)}{\left(-\frac{7}{3}+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5} \left(-\frac{11}{5}+1\right)}{\left(-\left(-\frac{11}{5}\right)+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{13}{4}\right)-\frac{\frac{13}{4} \left(\frac{13}{4}+1\right)}{\left(-\frac{13}{4}+1\right)^3}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: polylog(-2, Symbol("z"))
+    out: True
   sage:
     in: polylog(-2, SR.var("z"))
+    out: True
 interval-arithmetic:
   epsil:
     in: PolyLog(2, Interval(0.7, 0.8))
@@ -511,10 +535,19 @@ li-s-1-zeta-s-for-symbolic-s:
     in: PolyLog[s, 1]
   wolfram:
     in: PolyLog[s, 1]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Li}_s(1)-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{\frac{7}{3}}(1)-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{-\frac{11}{5}}(1)-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{\frac{13}{4}}(1)-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: A PolyLog/Zeta identity for a symbolic parameter that FullSimplify doesn't confirm automatically.
   sympy:
     in: polylog(Symbol("s"), 1)
+    out: True
   sage:
     in: polylog(SR.var("s"), 1)
+    out: True
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
   epsil:
     in: D(PolyLog(n, x), x)

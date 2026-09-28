@@ -114,7 +114,29 @@ test("Max/Min flatten a (possibly nested) list argument, matching Wolfram — ba
 test("Length of an atom emits 0 (matching Wolfram), not len()'s TypeError", () => {
   expect(emit(["Length", 4], "sympy")).toEqual({
     ok: true,
-    source: "(len(4) if hasattr(4, '__len__') else 0)",
+    source: "(len(4) if hasattr(4, '__len__') else (len(4.args) if hasattr(4, 'args') else 0))",
+  });
+});
+
+// Found scanning the newly-emitting free-symbol rows against real sympy (#A-72 phase 2):
+// a sympy Add expression has no __len__ (unlike a Python list) but counts its own terms via
+// `.args`, so `Length(a + b + c + d)` used to fall through to the atom case and wrongly emit
+// 0 instead of 4.
+test("Length of a compound sympy expression counts its .args, not just Python's __len__", () => {
+  expect(emit(["Length", ["Add", "a", "b", "c", "d"]], "sympy")).toEqual({
+    ok: true,
+    source:
+      '(len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'__len__\') else (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")).args) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'args\') else 0))',
+    freeSymbols: ["a", "b", "c", "d"],
+  });
+});
+
+test("Length of a compound Sage expression counts its .operands(), Sage's own .args equivalent", () => {
+  expect(emit(["Length", ["Add", "a", "b", "c", "d"]], "sage")).toEqual({
+    ok: true,
+    source:
+      '(len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), \'__len__\') else (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")).operands()) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), \'operands\') else 0))',
+    freeSymbols: ["a", "b", "c", "d"],
   });
 });
 
@@ -206,6 +228,45 @@ test("a free bare symbol emits verbatim on a symbolic system, and stays missing 
     ok: true,
     source: '(Symbol("y") + Symbol("x") + Symbol("x"))',
     freeSymbols: ["x", "y"],
+  });
+});
+
+// Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):
+// `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is bare and
+// unmapped, so it used to fall into the same "free variable" bucket `x` does — but Wolfram's
+// pattern syntax is a SUFFIX underscore (`a_`); `_a` there parses as `Blank[a]`, a different
+// pattern. Passing it through as if it were an ordinary symbol silently asks Wolfram the
+// wrong question instead of leaving the case honestly unmapped.
+test("a prefix-underscore pattern variable (_a) stays missing, not a free symbol", () => {
+  expect(emit(["Add", "_a", 1], "wolfram")).toEqual({ ok: false, missing: ["symbol:_a"] });
+  expect(emit(["Add", "_a", 1], "sympy")).toEqual({ ok: false, missing: ["symbol:_a"] });
+  // The numeric Function-slot form (_1, _2) is unaffected — that's a real, mappable value.
+  expect(emit(["Add", "_1", 1], "wolfram")).toEqual({ ok: true, source: "Plus[Slot[1], 1]" });
+});
+
+// Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):
+// Module/With's binding list uses our own `Equal` head (`n == 10`), but Wolfram's Module/With
+// need an ASSIGNMENT there (`Set[n, 10]`) or the vars list isn't a valid local-variable spec
+// and the whole call stays unevaluated. Confirmed against wolframscript directly.
+test("Module/With rewrite an Equal binding to Set, so Wolfram actually localizes it", () => {
+  expect(emit(["Module", ["List", ["Equal", "n", 10]], ["Add", "n", 1]], "wolfram")).toEqual({
+    ok: true,
+    source: "Module[List[Set[n, 10]], Plus[n, 1]]",
+    freeSymbols: ["n"],
+  });
+  expect(emit(["With", ["List", ["Equal", "x", 3], ["Equal", "y", 5]], ["Add", "x", "y"]], "wolfram")).toEqual({
+    ok: true,
+    source: "With[List[Set[x, 3], Set[y, 5]], Plus[x, y]]",
+    // Module/With don't bind these the way Sum/Product's iterator does (emit.ts has no
+    // notion of a Module-local), so the names it assigns are reported free too — harmless
+    // for the emitted source (they're being assigned, not read), just imprecise metadata.
+    freeSymbols: ["x", "y"],
+  });
+  // A single (non-List) binding, and a binding that isn't `Equal`, pass through unchanged.
+  expect(emit(["Module", ["Equal", "n", 10], "n"], "wolfram")).toEqual({
+    ok: true,
+    source: "Module[Set[n, 10], n]",
+    freeSymbols: ["n"],
   });
 });
 

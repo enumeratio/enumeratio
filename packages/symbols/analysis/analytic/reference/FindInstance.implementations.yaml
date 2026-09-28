@@ -87,6 +87,10 @@ declines-without-an-explicit-domain:
     in: FindInstance[Greater[x, 0], x]
   wolfram:
     in: FindInstance[Greater[x, 0], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FindInstance}[x>0,x]-\text{FindInstance}[x>0,x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FindInstance}\left[\frac{7}{3}>0,\frac{7}{3}\right]-\text{FindInstance}\left[\frac{7}{3}>0,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5}\right]-\text{FindInstance}\left[-\frac{11}{5}>0,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{FindInstance}\left[\frac{13}{4}>0,\frac{13}{4}\right]-\text{FindInstance}\left[\frac{13}{4}>0,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 declines-on-a-pure-inequality-over-reals:
   epsil:
     in: FindInstance(x > 0, x, Reals)

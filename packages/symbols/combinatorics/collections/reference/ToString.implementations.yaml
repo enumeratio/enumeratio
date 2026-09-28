@@ -20,3 +20,10 @@ prints-an-arithmetic-expression:
     in: ToString[Plus[x, 1]]
   wolfram:
     in: ToString[Plus[x, 1]]
+    out: '"1 + x"'
+    tex:
+      in: \text{ToString}[x+1]
+      out: \text{1 + x}
+    verdict: disagree
+    kind: convention
+    note: Wolfram's default term order for Plus prints the integer first ("1 + x"); ours prints the variable first ("x + 1"). Same expression, different default ordering convention.

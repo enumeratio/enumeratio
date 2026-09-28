@@ -10,7 +10,7 @@ const expected = ["Multiply", 2, "x"];
 
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
-    "Module[{d = Quiet[FullSimplify[(Plus[x, x]) - (Times[2, x])]]}, " +
+    "Module[{d = Quiet[TimeConstrained[FullSimplify[(Plus[x, x]) - (Times[2, x])], 10, $Aborted]]}, " +
       "If[d === 0, True, Module[{s = {Chop[N[(Plus[Rational[7, 3], Rational[7, 3]]) - (Times[2, Rational[7, 3]])]], " +
       "Chop[N[(Plus[Rational[-11, 5], Rational[-11, 5]]) - (Times[2, Rational[-11, 5]])]], " +
       "Chop[N[(Plus[Rational[13, 4], Rational[13, 4]]) - (Times[2, Rational[13, 4]])]]}}, " +
@@ -43,6 +43,39 @@ test("two free symbols get distinct trial values, not the same one repeated", ()
 
 test("undefined when `expected` doesn't emit for the system — falls back to the ordinary verdict", () => {
   expect(symbolicAgreementSource("sympy", expr, ["RademacherSymbol", "'LRRRR'"], ["x"])).toBeUndefined();
+});
+
+// Found scanning the newly-emitting rows against real kernels (#A-72 phase 2):
+// `FunctionConvexity(x^3, x)` is free in `x`, but its expected answer is the constant
+// `Indeterminate` — it doesn't mention `x` at all. `FullSimplify[(theirs) - Indeterminate]`
+// is not a meaningful question (arithmetic on a non-numeric marker), and wrongly disagreed
+// even though Wolfram's own FunctionConvexity genuinely answers `Indeterminate` too — the
+// plain structural comparison (compareTrees) gets that right without this module.
+// Found scanning the newly-emitting rows against real kernels (#A-72 phase 2): `Append({a,b,c,d},
+// x)` is free in every one of a,b,c,d,x, and its expected `List(a,b,c,d,x)` shares all of
+// them — so the old gate let it through, and `FullSimplify[list - list]` (or a `Rule`,
+// `Missing`, `Association`) isn't a question that has a zero/nonzero answer; every such case
+// bottomed out at a false `Indeterminate` instead of falling back to the (correct) structural
+// comparison. Same story for `Maximize`'s `{value, {x -> argmax}}` pair.
+test("undefined when either side is a structure (List, Association, Rule, …), not a scalar", () => {
+  expect(
+    symbolicAgreementSource("wolfram", ["Append", ["List", "a"], "x"], ["List", "a", "x"], ["a", "x"]),
+  ).toBeUndefined();
+  expect(
+    symbolicAgreementSource(
+      "wolfram",
+      ["Maximize", ["Add", ["Negate", ["Power", "x", 2]], ["Multiply", 4, "x"], -1], "x"],
+      ["List", 3, ["List", ["Rule", "x", 2]]],
+      ["x"],
+    ),
+  ).toBeUndefined();
+});
+
+test("undefined when `expected` doesn't depend on any of `expr`'s free symbols", () => {
+  expect(symbolicAgreementSource("wolfram", ["Add", "x", "x"], "Indeterminate", ["x"])).toBeUndefined();
+  expect(symbolicAgreementSource("wolfram", ["Add", "x", "x"], 0, ["x"])).toBeUndefined();
+  // Both sides free in the SAME symbol still goes through the agreement check.
+  expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBeDefined();
 });
 
 test("interpretSymbolicAgreement reads True/False/anything-else as agree/disagree/inconclusive", () => {

@@ -9,6 +9,10 @@ the-first-occurrence-of-b-nested-inside-the:
     in: FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
   wolfram:
     in: FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
+    out: "{1, 3}"
+    tex:
+      in: \text{FirstPosition}\left[\left( \begin{array}{ccc}  a & a & b \\  b & a & a \\  a & b & a \\ \end{array} \right),b\right]
+      out: \{1,3\}
 the-empty-list-when-the-value-isn-t-found:
   epsil:
     in: FirstPosition([a, [a, c]], b)
@@ -20,6 +24,13 @@ the-empty-list-when-the-value-isn-t-found:
     in: FirstPosition[List[a, List[a, c]], b]
   wolfram:
     in: FirstPosition[List[a, List[a, c]], b]
+    out: Missing["NotFound"]
+    tex:
+      in: \text{FirstPosition}[\{a,\{a,c\}\},b]
+      out: ---
+    verdict: disagree
+    kind: convention
+    note: Ours returns the empty list when nothing matches (no default given); Wolfram's own FirstPosition returns Missing["NotFound"] in that case. Different not-found sentinels, same search.
 a-match-nested-inside-an-earlier-sublist-beats-a:
   epsil:
     in: FirstPosition([a, [a, b], b], b)
@@ -31,3 +42,7 @@ a-match-nested-inside-an-earlier-sublist-beats-a:
     in: FirstPosition[List[a, List[a, b], b], b]
   wolfram:
     in: FirstPosition[List[a, List[a, b], b], b]
+    out: "{2, 2}"
+    tex:
+      in: \text{FirstPosition}[\{a,\{a,b\},b\},b]
+      out: \{2,2\}

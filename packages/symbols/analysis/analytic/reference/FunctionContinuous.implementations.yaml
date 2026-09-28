@@ -12,6 +12,10 @@ reciprocal-not-continuous:
     in: FunctionContinuous[Power[x, -1], x]
   wolfram:
     in: FunctionContinuous[Power[x, -1], x]
+    out: False
+    tex:
+      in: \text{FunctionContinuous}\left[\frac{1}{x},x\right]
+      out: \text{False}
 polynomial-continuous:
   epsil:
     in: FunctionContinuous(x ^ 2, x)
@@ -26,6 +30,10 @@ polynomial-continuous:
     in: FunctionContinuous[Power[x, 2], x]
   wolfram:
     in: FunctionContinuous[Power[x, 2], x]
+    out: True
+    tex:
+      in: \text{FunctionContinuous}\left[x^2,x\right]
+      out: \text{True}
 reciprocal-restricted-domain:
   epsil:
     in: FunctionContinuous(x ^ -1, x, x > 0)
@@ -41,6 +49,10 @@ reciprocal-restricted-domain:
     back: [FunctionContinuous, [List, [Power, x, -1], [Greater, x, 0]], x]
   wolfram:
     in: FunctionContinuous[List[Power[x, -1], Greater[x, 0]], x]
+    out: True
+    tex:
+      in: \text{FunctionContinuous}\left[\left\{\frac{1}{x},x>0\right\},x\right]
+      out: \text{True}
 sqrt-closed-boundary:
   epsil:
     in: FunctionContinuous(Sqrt(x), x, x >= 0)
@@ -56,3 +68,7 @@ sqrt-closed-boundary:
     back: [FunctionContinuous, [List, [Sqrt, x], [GreaterEqual, x, 0]], x]
   wolfram:
     in: FunctionContinuous[List[Sqrt[x], GreaterEqual[x, 0]], x]
+    out: True
+    tex:
+      in: \text{FunctionContinuous}\left[\left\{\sqrt{x},x\geq 0\right\},x\right]
+      out: \text{True}

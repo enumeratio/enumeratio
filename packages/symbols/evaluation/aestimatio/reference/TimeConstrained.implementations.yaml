@@ -25,6 +25,13 @@ factoring-a-30-digit-semiprime-outruns-a-50-ms:
     back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05]
   wolfram:
     in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]
+    out: "{{1000000000000037, 1}, {1001000000000003, 1}}"
+    tex:
+      in: \text{TimeConstrained}[\text{FactorInteger}[1001000000000040037000000000111],0.05]
+      out: \left( \begin{array}{cc}  1000000000000037 & 1 \\  1001000000000003 & 1 \\ \end{array} \right)
+    verdict: disagree
+    kind: resource
+    note: The example pins a semiprime chosen to outrun a 50ms budget on the machine it was authored on; this machine's FactorInteger is fast enough to finish inside 50ms instead of timing out. Hardware-dependent, not a value disagreement.
 a-custom-failexpr-replaces-the-default-aborted:
   epsil:
     in: |-
@@ -42,6 +49,13 @@ a-custom-failexpr-replaces-the-default-aborted:
     back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05, -1]
   wolfram:
     in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]
+    out: "{{1000000000000037, 1}, {1001000000000003, 1}}"
+    tex:
+      in: \text{TimeConstrained}[\text{FactorInteger}[1001000000000040037000000000111],0.05,-1]
+      out: \left( \begin{array}{cc}  1000000000000037 & 1 \\  1001000000000003 & 1 \\ \end{array} \right)
+    verdict: disagree
+    kind: resource
+    note: Same timing dependency as the other TimeConstrained example — FactorInteger finished inside the 50ms budget on this machine instead of triggering the custom failexpr.
 an-infinite-time-limit-imposes-no-constraint:
   epsil:
     in: TimeConstrained(1 + 2, PositiveInfinity)

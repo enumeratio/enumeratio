@@ -24,6 +24,10 @@ unique-list-a-b-a-c-b:
     in: DeleteDuplicates[List[a, b, a, c, b]]
   wolfram:
     in: DeleteDuplicates[List[a, b, a, c, b]]
+    out: "{a, b, c}"
+    tex:
+      in: \text{DeleteDuplicates}[\{a,b,a,c,b\}]
+      out: \{a,b,c\}
 keeps-first-occurrence-order-without-sorting:
   epsil:
     in: Unique([1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1])

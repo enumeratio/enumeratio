@@ -31,6 +31,10 @@ the-empty-product:
     in: QPochhammer[a, q, 0]
   wolfram:
     in: QPochhammer[a, q, 0]
+    out: "1"
+    tex:
+      in: (a;q)_0
+      out: "1"
 the-infinite-product-euler-s-function-at-q-frac:
   epsil:
     in: QPochhammer(0.5, 0.5, PositiveInfinity)

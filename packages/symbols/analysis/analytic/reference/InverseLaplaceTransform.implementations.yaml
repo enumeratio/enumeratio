@@ -9,6 +9,10 @@ one-over-s-squared:
     in: InverseLaplaceTransform[Power[s, -2], s, t]
   wolfram:
     in: InverseLaplaceTransform[Power[s, -2], s, t]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{L}_s^{-1}\left[\frac{1}{s^2}\right](t)-t\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{L}_{\frac{7}{3}}^{-1}\left[\frac{1}{\left(\frac{7}{3}\right)^2}\right]\left(-\frac{11}{5}\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{\frac{13}{4}}^{-1}\left[\frac{1}{\left(\frac{13}{4}\right)^2}\right]\left(-\frac{17}{6}\right)--\frac{17}{6}\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{\frac{19}{8}}^{-1}\left[\frac{1}{\left(\frac{19}{8}\right)^2}\right]\left(-\frac{23}{9}\right)--\frac{23}{9}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 one-over-s-minus-a:
   epsil:
     in: InverseLaplaceTransform((s - a) ^ -1, s, t)
@@ -20,6 +24,10 @@ one-over-s-minus-a:
     in: InverseLaplaceTransform[Power[Plus[s, Minus[a]], -1], s, t]
   wolfram:
     in: InverseLaplaceTransform[Power[Plus[s, Minus[a]], -1], s, t]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{L}_s^{-1}\left[\frac{1}{s-a}\right](t)-e^{a t}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{L}_{-\frac{11}{5}}^{-1}\left[\frac{1}{-\frac{11}{5}-\frac{7}{3}}\right]\left(\frac{13}{4}\right)-e^{\frac{7}{3} \frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{\frac{19}{8}}^{-1}\left[\frac{1}{\frac{19}{8}--\frac{17}{6}}\right]\left(-\frac{23}{9}\right)-e^{-\frac{17}{6} \left(-\frac{23}{9}\right)}\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{-\frac{11}{5}}^{-1}\left[\frac{1}{-\frac{11}{5}-\frac{7}{3}}\right]\left(\frac{13}{4}\right)-e^{\frac{7}{3} \frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 s-over-s-squared-plus-a-squared:
   epsil:
     in: InverseLaplaceTransform(s / (s ^ 2 + a ^ 2), s, t)
@@ -31,3 +39,7 @@ s-over-s-squared-plus-a-squared:
     in: InverseLaplaceTransform[Divide[s, Plus[Power[s, 2], Power[a, 2]]], s, t]
   wolfram:
     in: InverseLaplaceTransform[Divide[s, Plus[Power[s, 2], Power[a, 2]]], s, t]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{L}_s^{-1}\left[\frac{s}{s^2+a^2}\right](t)-\cos (a t)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{L}_{-\frac{11}{5}}^{-1}\left[-\frac{\frac{11}{5}}{\left(-\frac{11}{5}\right)^2+\left(\frac{7}{3}\right)^2}\right]\left(\frac{13}{4}\right)-\cos \left(\frac{7}{3} \frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{\frac{19}{8}}^{-1}\left[\frac{\frac{19}{8}}{\left(\frac{19}{8}\right)^2+\left(-\frac{17}{6}\right)^2}\right]\left(-\frac{23}{9}\right)-\cos \left(-\frac{17}{6} \left(-\frac{23}{9}\right)\right)\right]\right],\text{Chop}\left[N\left[\mathcal{L}_{-\frac{11}{5}}^{-1}\left[-\frac{\frac{11}{5}}{\left(-\frac{11}{5}\right)^2+\left(\frac{7}{3}\right)^2}\right]\left(\frac{13}{4}\right)-\cos \left(\frac{7}{3} \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

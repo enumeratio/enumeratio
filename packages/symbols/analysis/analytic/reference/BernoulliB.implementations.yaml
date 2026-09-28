@@ -192,6 +192,10 @@ the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
     in: BernoulliB[4, x]
   wolfram:
     in: BernoulliB[4, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_4(x)-\left(x^4-2 x^3+x^2-\frac{1}{30}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_4\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^4-2 \left(\frac{7}{3}\right)^3+\left(\frac{7}{3}\right)^2-\frac{1}{30}\right)\right]\right],\text{Chop}\left[N\left[B_4\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^4-2 \left(-\frac{11}{5}\right)^3+\left(-\frac{11}{5}\right)^2-\frac{1}{30}\right)\right]\right],\text{Chop}\left[N\left[B_4\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^4-2 \left(\frac{13}{4}\right)^3+\left(\frac{13}{4}\right)^2-\frac{1}{30}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-bernoulli-polynomial-at-a-rational-point-b-2:
   epsil:
     in: BernoulliB(2, 1 / 2)
@@ -376,6 +380,10 @@ with-a-second-argument-the-bernoulli-polynomial:
     in: BernoulliB[1, x]
   wolfram:
     in: BernoulliB[1, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1(x)-\left(x-\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1\left(\frac{7}{3}\right)-\left(\frac{7}{3}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(-\frac{11}{5}\right)-\left(-\frac{11}{5}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(\frac{13}{4}\right)-\left(\frac{13}{4}-\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:
     in: BernoulliB([1, 2, 3])

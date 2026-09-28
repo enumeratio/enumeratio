@@ -20,6 +20,10 @@ u-0-is-0-for-any-m:
     in: JacobiZN[0, m]
   wolfram:
     in: JacobiZN[0, m]
+    out: "0"
+    tex:
+      in: \text{zn}(0|m)
+      out: "0"
 m-0-is-0-for-any-u:
   epsil:
     in: JacobiZN(u, 0)
@@ -31,6 +35,10 @@ m-0-is-0-for-any-u:
     in: JacobiZN[u, 0]
   wolfram:
     in: JacobiZN[u, 0]
+    out: "0"
+    tex:
+      in: \text{zn}(u|0)
+      out: "0"
 a-parameter-close-to-its-m-1-boundary:
   epsil:
     in: N(JacobiZN(1.1, 0.9))
@@ -64,3 +72,7 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: JacobiZN[u, m]
   wolfram:
     in: JacobiZN[u, m]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{zn}(u|m)-\text{zn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{zn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{zn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{zn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{zn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{zn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{zn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

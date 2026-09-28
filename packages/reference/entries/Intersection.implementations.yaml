@@ -140,6 +140,10 @@ symbolic-elements:
     in: Intersection[List[a, b, c], List[b, c, d]]
   wolfram:
     in: Intersection[List[a, b, c], List[b, c, d]]
+    out: "{b, c}"
+    tex:
+      in: \{a,b,c\}\cap \{b,c,d\}
+      out: \{b,c\}
 a-single-collection-comes-back-as-a-set:
   epsil:
     in: Intersection([1, 2, 3])
@@ -171,4 +175,7 @@ the-result-keeps-the-order-elements-were-met-in:
     in: Intersection[List[c, b, a], List[a, b]]
   wolfram:
     in: Intersection[List[c, b, a], List[a, b]]
-    note: "Wolfram sorts the result: Intersection[{c, b, a}, {a, b}] is {a, b}."
+    out: "{a, b}"
+    tex:
+      in: \{c,b,a\}\cap \{a,b\}
+      out: \{a,b\}

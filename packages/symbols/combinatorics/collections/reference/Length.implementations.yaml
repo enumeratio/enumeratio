@@ -14,10 +14,10 @@ length-list-1-2-3-4:
       in: \text{Length}[\{1,2,3,4\}]
       out: "4"
   sympy:
-    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
+    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else (len([1, 2, 3, 4].args) if hasattr([1, 2, 3, 4], 'args') else 0))
     out: "4"
   sage:
-    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
+    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else (len([1, 2, 3, 4].operands()) if hasattr([1, 2, 3, 4], 'operands') else 0))
     out: "4"
 length-list-1-2-3-4-5:
   epsil:
@@ -35,10 +35,10 @@ length-list-1-2-3-4-5:
       in: \text{Length}[\{1,2,3,4,5\}]
       out: "5"
   sympy:
-    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
+    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else (len([1, 2, 3, 4, 5].args) if hasattr([1, 2, 3, 4, 5], 'args') else 0))
     out: "5"
   sage:
-    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
+    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else (len([1, 2, 3, 4, 5].operands()) if hasattr([1, 2, 3, 4, 5], 'operands') else 0))
     out: "5"
 works-on-any-collection-not-just-list:
   epsil:
@@ -86,10 +86,10 @@ an-atom-has-no-parts-so-its-length-is-0:
   wolfram:
     in: Length[5]
   sympy:
-    in: (len(5) if hasattr(5, '__len__') else 0)
+    in: (len(5) if hasattr(5, '__len__') else (len(5.args) if hasattr(5, 'args') else 0))
     out: "0"
   sage:
-    in: (len(5) if hasattr(5, '__len__') else 0)
+    in: (len(5) if hasattr(5, '__len__') else (len(5.operands()) if hasattr(5, 'operands') else 0))
     out: "0"
 length-list-a-b-c-d:
   epsil:
@@ -102,10 +102,16 @@ length-list-a-b-c-d:
     in: Length[List[a, b, c, d]]
   wolfram:
     in: Length[List[a, b, c, d]]
+    out: "4"
+    tex:
+      in: \text{Length}[\{a,b,c,d\}]
+      out: "4"
   sympy:
-    in: (len([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")]) if hasattr([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")], '__len__') else 0)
+    in: (len([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")]) if hasattr([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")], '__len__') else (len([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")].args) if hasattr([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")], 'args') else 0))
+    out: "4"
   sage:
-    in: (len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")]) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], '__len__') else 0)
+    in: (len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")]) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], '__len__') else (len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")].operands()) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], 'operands') else 0))
+    out: "4"
 the-empty-list-has-length-0:
   epsil:
     in: Length([])
@@ -118,10 +124,10 @@ the-empty-list-has-length-0:
   wolfram:
     in: Length[List[]]
   sympy:
-    in: (len([]) if hasattr([], '__len__') else 0)
+    in: (len([]) if hasattr([], '__len__') else (len([].args) if hasattr([], 'args') else 0))
     out: "0"
   sage:
-    in: (len([]) if hasattr([], '__len__') else 0)
+    in: (len([]) if hasattr([], '__len__') else (len([].operands()) if hasattr([], 'operands') else 0))
     out: "0"
 of-a-matrix-the-number-of-rows:
   epsil:
@@ -135,10 +141,10 @@ of-a-matrix-the-number-of-rows:
   wolfram:
     in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
   sympy:
-    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else (len([[1, 2], [3, 4], [5, 6]].args) if hasattr([[1, 2], [3, 4], [5, 6]], 'args') else 0))
     out: "3"
   sage:
-    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else (len([[1, 2], [3, 4], [5, 6]].operands()) if hasattr([[1, 2], [3, 4], [5, 6]], 'operands') else 0))
     out: "3"
 a-set-holds-each-element-once-so-a-repeated:
   epsil:
@@ -163,10 +169,16 @@ any-expression-the-number-of-terms-in-a-sum:
     in: Length[Plus[a, b, c, d]]
   wolfram:
     in: Length[Plus[a, b, c, d]]
+    out: "4"
+    tex:
+      in: \text{Length}[a+b+c+d]
+      out: "4"
   sympy:
-    in: (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), '__len__') else 0)
+    in: (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), '__len__') else (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")).args) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), 'args') else 0))
+    out: "4"
   sage:
-    in: (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else 0)
+    in: (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")).operands()) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), 'operands') else 0))
+    out: "4"
 the-number-of-arguments-of-a-call-counting-only:
   epsil:
     in: Length(f(g(x, y), z))
@@ -188,10 +200,10 @@ a-symbol-such-as-pi-is-an-atom-of-length-0:
   wolfram:
     in: Length[Pi]
   sympy:
-    in: (len(pi) if hasattr(pi, '__len__') else 0)
+    in: (len(pi) if hasattr(pi, '__len__') else (len(pi.args) if hasattr(pi, 'args') else 0))
     out: "0"
   sage:
-    in: (len(pi) if hasattr(pi, '__len__') else 0)
+    in: (len(pi) if hasattr(pi, '__len__') else (len(pi.operands()) if hasattr(pi, 'operands') else 0))
     out: "0"
 a-lazy-range-is-counted-without-being:
   epsil:
@@ -215,3 +227,7 @@ length-of-association-counts-values:
     in: Length[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
   wolfram:
     in: Length[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+    out: "3"
+    tex:
+      in: \text{Length}[\text{Association}[1\to a,2\to b,3\to c]]
+      out: "3"

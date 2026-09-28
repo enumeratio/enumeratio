@@ -216,6 +216,10 @@ b-a-1-1-a-for-symbolic-a:
     in: Beta[a, 1]
   wolfram:
     in: Beta[a, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B(a,1)-\frac{1}{a}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B\left(\frac{7}{3},1\right)-\frac{1}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[B\left(-\frac{11}{5},1\right)--\frac{1}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[B\left(\frac{13}{4},1\right)-\frac{1}{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 b-2-b-frac-1-b-b-1-not-yet:
   epsil:
     in: Beta(2, b)
@@ -227,6 +231,10 @@ b-2-b-frac-1-b-b-1-not-yet:
     in: Beta[2, b]
   wolfram:
     in: Beta[2, b]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B(2,b)-\frac{1}{b (b+1)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B\left(2,\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \left(\frac{7}{3}+1\right)}\right]\right],\text{Chop}\left[N\left[B\left(2,-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \left(-\frac{11}{5}+1\right)}\right]\right],\text{Chop}\left[N\left[B\left(2,\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \left(\frac{13}{4}+1\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the:
   epsil:
     in: D(Beta(a, b), a)

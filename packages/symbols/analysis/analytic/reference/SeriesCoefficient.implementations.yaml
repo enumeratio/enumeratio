@@ -9,6 +9,10 @@ exp-about-a-nonzero-point:
     in: SeriesCoefficient[Exp[x], List[x, 1, 2]]
   wolfram:
     in: SeriesCoefficient[Exp[x], List[x, 1, 2]]
+    out: E/2
+    tex:
+      in: \text{SeriesCoefficient}[\exp (x),\{x,1,2\}]
+      out: \frac{e}{2}
 sin-about-zero:
   epsil:
     in: SeriesCoefficient(Sin(x), [x, 0, 5])
@@ -20,6 +24,10 @@ sin-about-zero:
     in: SeriesCoefficient[Sin[x], List[x, 0, 5]]
   wolfram:
     in: SeriesCoefficient[Sin[x], List[x, 0, 5]]
+    out: 1/120
+    tex:
+      in: \text{SeriesCoefficient}[\sin (x),\{x,0,5\}]
+      out: \frac{1}{120}
 geometric-series:
   epsil:
     in: SeriesCoefficient(1 / (1 - x), [x, 0, 10])
@@ -31,6 +39,10 @@ geometric-series:
     in: SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
   wolfram:
     in: SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
+    out: "1"
+    tex:
+      in: \text{SeriesCoefficient}\left[\frac{1}{1-x},\{x,0,10\}\right]
+      out: "1"
 log-series:
   epsil:
     in: SeriesCoefficient(Ln(1 + x), [x, 0, 4])
@@ -42,6 +54,10 @@ log-series:
     in: SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
   wolfram:
     in: SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
+    out: -1/4
+    tex:
+      in: \text{SeriesCoefficient}[\log (1+x),\{x,0,4\}]
+      out: -\frac{1}{4}
 a-puiseux-half-integer-order-declines:
   epsil:
     in: SeriesCoefficient(Sqrt(x), [x, 0, 1 / 2])
@@ -53,6 +69,10 @@ a-puiseux-half-integer-order-declines:
     in: SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
   wolfram:
     in: SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{SeriesCoefficient}\left[\sqrt{x},\left\{x,0,\frac{1}{2}\right\}\right]-\text{SeriesCoefficient}\left[\sqrt{x},\left\{x,0,\frac{1}{2}\right\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\sqrt{\frac{7}{3}},\left\{\frac{7}{3},0,\frac{1}{2}\right\}\right]-\text{SeriesCoefficient}\left[\sqrt{\frac{7}{3}},\left\{\frac{7}{3},0,\frac{1}{2}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\sqrt{-\frac{11}{5}},\left\{-\frac{11}{5},0,\frac{1}{2}\right\}\right]-\text{SeriesCoefficient}\left[\sqrt{-\frac{11}{5}},\left\{-\frac{11}{5},0,\frac{1}{2}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\sqrt{\frac{13}{4}},\left\{\frac{13}{4},0,\frac{1}{2}\right\}\right]-\text{SeriesCoefficient}\left[\sqrt{\frac{13}{4}},\left\{\frac{13}{4},0,\frac{1}{2}\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-negative-order-laurent-coefficient-declines:
   epsil:
     in: SeriesCoefficient(1 / x, [x, 0, -1])
@@ -64,6 +84,10 @@ a-negative-order-laurent-coefficient-declines:
     in: SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
   wolfram:
     in: SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{SeriesCoefficient}\left[\frac{1}{x},\{x,0,-1\}\right]-\text{SeriesCoefficient}\left[\frac{1}{x},\{x,0,-1\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\frac{1}{\frac{7}{3}},\left\{\frac{7}{3},0,-1\right\}\right]-\text{SeriesCoefficient}\left[\frac{1}{\frac{7}{3}},\left\{\frac{7}{3},0,-1\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[-\frac{1}{\frac{11}{5}},\left\{-\frac{11}{5},0,-1\right\}\right]-\text{SeriesCoefficient}\left[-\frac{1}{\frac{11}{5}},\left\{-\frac{11}{5},0,-1\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\frac{1}{\frac{13}{4}},\left\{\frac{13}{4},0,-1\right\}\right]-\text{SeriesCoefficient}\left[\frac{1}{\frac{13}{4}},\left\{\frac{13}{4},0,-1\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-removable-singularity-declines:
   epsil:
     in: SeriesCoefficient(Sin(x) / x, [x, 0, 0])
@@ -75,3 +99,7 @@ a-removable-singularity-declines:
     in: SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]
   wolfram:
     in: SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{SeriesCoefficient}\left[\frac{\sin (x)}{x},\{x,0,0\}\right]-\text{SeriesCoefficient}\left[\frac{\sin (x)}{x},\{x,0,0\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\frac{\sin \left(\frac{7}{3}\right)}{\frac{7}{3}},\left\{\frac{7}{3},0,0\right\}\right]-\text{SeriesCoefficient}\left[\frac{\sin \left(\frac{7}{3}\right)}{\frac{7}{3}},\left\{\frac{7}{3},0,0\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[-\frac{\sin \left(-\frac{11}{5}\right)}{\frac{11}{5}},\left\{-\frac{11}{5},0,0\right\}\right]-\text{SeriesCoefficient}\left[-\frac{\sin \left(-\frac{11}{5}\right)}{\frac{11}{5}},\left\{-\frac{11}{5},0,0\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{SeriesCoefficient}\left[\frac{\sin \left(\frac{13}{4}\right)}{\frac{13}{4}},\left\{\frac{13}{4},0,0\right\}\right]-\text{SeriesCoefficient}\left[\frac{\sin \left(\frac{13}{4}\right)}{\frac{13}{4}},\left\{\frac{13}{4},0,0\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

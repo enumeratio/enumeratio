@@ -173,4 +173,7 @@ a-symbol-stays-undecided-rather-than-false:
     in: OddQ[x]
   wolfram:
     in: OddQ[x]
-    note: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{OddQ}[x]-\text{OddQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{OddQ}\left[\frac{7}{3}\right]-\text{OddQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{OddQ}\left[-\frac{11}{5}\right]-\text{OddQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{OddQ}\left[\frac{13}{4}\right]-\text{OddQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

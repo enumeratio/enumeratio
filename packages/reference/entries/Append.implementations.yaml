@@ -73,6 +73,10 @@ append-list-a-b-c-d-x:
     in: Append[List[a, b, c, d], x]
   wolfram:
     in: Append[List[a, b, c, d], x]
+    out: "{a, b, c, d, x}"
+    tex:
+      in: \text{Append}[\{a,b,c,d\},x]
+      out: \{a,b,c,d,x\}
 onto-the-empty-list:
   epsil:
     in: Append([], x)
@@ -84,6 +88,10 @@ onto-the-empty-list:
     in: Append[List[], x]
   wolfram:
     in: Append[List[], x]
+    out: "{x}"
+    tex:
+      in: \text{Append}[\{\},x]
+      out: \{x\}
 a-lazy-range-is-materialised-first:
   epsil:
     in: Append(Range(1, 3), 4)

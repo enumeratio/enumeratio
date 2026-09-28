@@ -246,10 +246,16 @@ doesn-t-factor-constants-out-of-a-symbolic:
     in: Abs[Times[-3, x]]
   wolfram:
     in: Abs[Times[-3, x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[| -3 x| -| -3 x| ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left| -3 \frac{7}{3}\right| -\left| -3 \frac{7}{3}\right| \right]\right],\text{Chop}\left[N\left[\left| -3 \left(-\frac{11}{5}\right)\right| -\left| -3 \left(-\frac{11}{5}\right)\right| \right]\right],\text{Chop}\left[N\left[\left| -3 \frac{13}{4}\right| -\left| -3 \frac{13}{4}\right| \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: Abs((-3 * Symbol("x")))
+    out: True
   sage:
     in: abs((-3 * SR.var("x")))
+    out: True
 abs-neg-2p5:
   epsil:
     in: Abs(-2.5)

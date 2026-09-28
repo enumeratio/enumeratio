@@ -12,6 +12,10 @@ a-reciprocal-is-injective-on-its-own-domain:
     in: FunctionInjective[Divide[1, x], x]
   wolfram:
     in: FunctionInjective[Divide[1, x], x]
+    out: True
+    tex:
+      in: \text{FunctionInjective}\left[\frac{1}{x},x\right]
+      out: \text{True}
 a-cubic-is-injective:
   epsil:
     in: FunctionInjective(x ^ 3, x)
@@ -26,6 +30,10 @@ a-cubic-is-injective:
     in: FunctionInjective[Power[x, 3], x]
   wolfram:
     in: FunctionInjective[Power[x, 3], x]
+    out: True
+    tex:
+      in: \text{FunctionInjective}\left[x^3,x\right]
+      out: \text{True}
 a-parabola-is-not-injective:
   epsil:
     in: FunctionInjective(x ^ 2, x)
@@ -40,6 +48,10 @@ a-parabola-is-not-injective:
     in: FunctionInjective[Power[x, 2], x]
   wolfram:
     in: FunctionInjective[Power[x, 2], x]
+    out: False
+    tex:
+      in: \text{FunctionInjective}\left[x^2,x\right]
+      out: \text{False}
 an-affine-function-is-injective:
   epsil:
     in: FunctionInjective(2x + 1, x)
@@ -54,3 +66,7 @@ an-affine-function-is-injective:
     in: FunctionInjective[Plus[Times[2, x], 1], x]
   wolfram:
     in: FunctionInjective[Plus[Times[2, x], 1], x]
+    out: True
+    tex:
+      in: \text{FunctionInjective}[2 x+1,x]
+      out: \text{True}

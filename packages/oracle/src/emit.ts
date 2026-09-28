@@ -106,7 +106,11 @@ export function emit(expr: MathJSON, system: System): Emitted {
         // constant we haven't added yet, or a head passed as a value Capitalized — treating
         // `Primes` in `Element(x, Primes)` as a variable would let the symbolic-agreement
         // fallback (symbolic.ts) substitute a random rational FOR a set, which is nonsense.
-        if (node in CONSTANTS || /^[A-Z]/.test(node)) {
+        // And `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is
+        // not a free variable either — Wolfram's own pattern syntax is a SUFFIX underscore
+        // (`a_`), so `_a` bare would parse there as `Blank[a]`, a different pattern
+        // altogether; staying missing is honest, passing it through wouldn't be.
+        if (node in CONSTANTS || /^[A-Z]/.test(node) || /^_[A-Za-z]/.test(node)) {
           missing.push(`symbol:${node}`);
           return node;
         }
@@ -186,6 +190,25 @@ export function emit(expr: MathJSON, system: System): Emitted {
         return threadOver(threaded, template, others, threadArg);
       }
       return fill(template, operands.map(walk));
+    }
+    // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
+    // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an
+    // ASSIGNMENT there (`Set[n, 10]`) — left as `Equal`, the vars list isn't a valid
+    // local-variable spec and the whole call stays unevaluated (found scanning #A-72 phase
+    // 2's newly-emitting rows: `Module[List[Equal[n,10]], ...]` never ran). `toWolfram`'s own
+    // `Module`/`With` SPECIAL cases do this rewrite already, but only see it when GIVEN the
+    // raw tree — the generic fallback below hands it pre-walked (already-stringified)
+    // operands, which is opaque to that rewrite, so this rewrite has to happen before
+    // walking, on the raw operand tree, leaf-by-leaf through `walk` (for `missing` tracking).
+    if (system === "wolfram" && (head === "Module" || head === "With") && operands.length === 2) {
+      const [vars, body] = operands;
+      const rewriteBinding = (v: MathJSON): string =>
+        isCall(v) && v[0] === "Equal" && v.length === 3 ? `Set[${walk(v[1])}, ${walk(v[2])}]` : walk(v);
+      const varsSource =
+        isCall(vars) && vars[0] === "List"
+          ? `List[${vars.slice(1).map(rewriteBinding).join(", ")}]`
+          : rewriteBinding(vars);
+      return `${head}[${varsSource}, ${walk(body)}]`;
     }
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare

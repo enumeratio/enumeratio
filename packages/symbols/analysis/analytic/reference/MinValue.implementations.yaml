@@ -9,6 +9,10 @@ a-quadratic-s-minimum-value:
     in: MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]
   wolfram:
     in: MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]
+    out: "-1"
+    tex:
+      in: \text{MinValue}\left[x^2-4 x+3,x\right]
+      out: "-1"
 the-amplitude-of-cosine-alone-is-exact:
   epsil:
     in: MinValue(Cos(3x - 1), x)
@@ -20,6 +24,10 @@ the-amplitude-of-cosine-alone-is-exact:
     in: MinValue[Cos[Subtract[Times[3, x], 1]], x]
   wolfram:
     in: MinValue[Cos[Subtract[Times[3, x], 1]], x]
+    out: "-1"
+    tex:
+      in: \text{MinValue}[\cos (3 x-1),x]
+      out: "-1"
 exp-s-infimum:
   epsil:
     in: MinValue(Exp(x), x)
@@ -31,6 +39,10 @@ exp-s-infimum:
     in: MinValue[Exp[x], x]
   wolfram:
     in: MinValue[Exp[x], x]
+    out: "0"
+    tex:
+      in: \text{MinValue}[\exp (x),x]
+      out: "0"
 a-simple-interval-constraint:
   epsil:
     in: MinValue([x ^ 2, x >= 1], x)
@@ -42,3 +54,7 @@ a-simple-interval-constraint:
     in: MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]
   wolfram:
     in: MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]
+    out: "1"
+    tex:
+      in: \text{MinValue}\left[\left\{x^2,x\geq 1\right\},x\right]
+      out: "1"

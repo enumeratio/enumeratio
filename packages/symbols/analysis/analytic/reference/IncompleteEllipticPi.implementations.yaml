@@ -53,6 +53,10 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: EllipticPi[n, phi, m]
   wolfram:
     in: EllipticPi[n, phi, m]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Pi (n;\phi |m)-\Pi (n;\phi |m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)-\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Pi \left(\frac{19}{8};-\frac{23}{9}|-\frac{17}{6}\right)-\Pi \left(\frac{19}{8};-\frac{23}{9}|-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)-\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 all-three-arguments-complex-matches-mpmath-s:
   epsil:
     in: N(IncompleteEllipticPi(1.17 + 0.45i, 1.17 + 0.45i, 1.17 + 0.45i))

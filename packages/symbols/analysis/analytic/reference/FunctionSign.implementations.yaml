@@ -9,6 +9,10 @@ a-perfect-square-is-never-negative:
     in: FunctionSign[Power[x, 2], x]
   wolfram:
     in: FunctionSign[Power[x, 2], x]
+    out: "1"
+    tex:
+      in: \text{FunctionSign}\left[x^2,x\right]
+      out: "1"
 a-sum-of-a-square-and-a-positive-constant:
   epsil:
     in: FunctionSign(1 / (x ^ 2 + 1), x)
@@ -20,6 +24,10 @@ a-sum-of-a-square-and-a-positive-constant:
     in: FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]
   wolfram:
     in: FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]
+    out: "1"
+    tex:
+      in: \text{FunctionSign}\left[\frac{1}{x^2+1},x\right]
+      out: "1"
 exp-is-always-positive:
   epsil:
     in: FunctionSign(Exp(x), x)
@@ -31,6 +39,10 @@ exp-is-always-positive:
     in: FunctionSign[Exp[x], x]
   wolfram:
     in: FunctionSign[Exp[x], x]
+    out: "1"
+    tex:
+      in: \text{FunctionSign}[\exp (x),x]
+      out: "1"
 a-cubic-changes-sign:
   epsil:
     in: FunctionSign(x ^ 3, x)
@@ -42,3 +54,10 @@ a-cubic-changes-sign:
     in: FunctionSign[Power[x, 3], x]
   wolfram:
     in: FunctionSign[Power[x, 3], x]
+    out: Indeterminate
+    tex:
+      in: \text{FunctionSign}\left[x^3,x\right]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: Same Indeterminate-vs-NaN spelling gap as FunctionConvexity/FunctionMonotonicity — Wolfram's own FunctionSign also answers Indeterminate.

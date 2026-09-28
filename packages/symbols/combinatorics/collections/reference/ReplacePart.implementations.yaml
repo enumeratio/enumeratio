@@ -9,6 +9,10 @@ replaces-a-single-1-based-position:
     in: ReplacePart[List[a, b, c], Rule[2, z]]
   wolfram:
     in: ReplacePart[List[a, b, c], Rule[2, z]]
+    out: "{a, z, c}"
+    tex:
+      in: \text{ReplacePart}[\{a,b,c\},2\to z]
+      out: \{a,z,c\}
 with-a-negative-position-counts-from-the-end:
   epsil:
     in: ReplacePart([a, b, c], Rule(-1, z))
@@ -20,6 +24,10 @@ with-a-negative-position-counts-from-the-end:
     in: ReplacePart[List[a, b, c], Rule[-1, z]]
   wolfram:
     in: ReplacePart[List[a, b, c], Rule[-1, z]]
+    out: "{a, b, z}"
+    tex:
+      in: \text{ReplacePart}[\{a,b,c\},-1\to z]
+      out: \{a,b,z\}
 applies-a-list-of-rules:
   epsil:
     in: ReplacePart([a, b, c], [Rule(1, x), Rule(3, y)])
@@ -31,6 +39,10 @@ applies-a-list-of-rules:
     in: ReplacePart[List[a, b, c], List[Rule[1, x], Rule[3, y]]]
   wolfram:
     in: ReplacePart[List[a, b, c], List[Rule[1, x], Rule[3, y]]]
+    out: "{x, b, y}"
+    tex:
+      in: \text{ReplacePart}[\{a,b,c\},\{1\to x,3\to y\}]
+      out: \{x,b,y\}
 with-a-nested-i-j-position-drills-into-a-sublist:
   epsil:
     in: ReplacePart([[a, b], c], Rule([1, 2], z))
@@ -42,3 +54,7 @@ with-a-nested-i-j-position-drills-into-a-sublist:
     in: ReplacePart[List[List[a, b], c], Rule[List[1, 2], z]]
   wolfram:
     in: ReplacePart[List[List[a, b], c], Rule[List[1, 2], z]]
+    out: "{{a, z}, c}"
+    tex:
+      in: \text{ReplacePart}[\{\{a,b\},c\},\{1,2\}\to z]
+      out: \{\{a,z\},c\}

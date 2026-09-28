@@ -185,7 +185,10 @@ a-symbolic-base-with-integer-order-expands-to:
     in: Pochhammer[n, 5]
   wolfram:
     in: Pochhammer[n, 5]
-    note: Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand.
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[(n)_5-n (n+1) (n+2) (n+3) (n+4)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)_5-\frac{7}{3} \left(\frac{7}{3}+1\right) \left(\frac{7}{3}+2\right) \left(\frac{7}{3}+3\right) \left(\frac{7}{3}+4\right)\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)_5--\frac{11}{5} \left(-\frac{11}{5}+1\right) \left(-\frac{11}{5}+2\right) \left(-\frac{11}{5}+3\right) \left(-\frac{11}{5}+4\right)\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)_5-\frac{13}{4} \left(\frac{13}{4}+1\right) \left(\frac{13}{4}+2\right) \left(\frac{13}{4}+3\right) \left(\frac{13}{4}+4\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-negative-order-expands-to-the-reciprocal:
   epsil:
     in: Pochhammer(n, -5)
@@ -200,7 +203,10 @@ a-negative-order-expands-to-the-reciprocal:
     in: Pochhammer[n, -5]
   wolfram:
     in: Pochhammer[n, -5]
-    note: Wolfram keeps Pochhammer[n, -5] unexpanded until FunctionExpand.
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[(n)_{-5}-\frac{1}{(n-1) (n-2) (n-3) (n-4) (n-5)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)_{-5}-\frac{1}{\left(\frac{7}{3}-1\right) \left(\frac{7}{3}-2\right) \left(\frac{7}{3}-3\right) \left(\frac{7}{3}-4\right) \left(\frac{7}{3}-5\right)}\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)_{-5}-\frac{1}{\left(-\frac{11}{5}-1\right) \left(-\frac{11}{5}-2\right) \left(-\frac{11}{5}-3\right) \left(-\frac{11}{5}-4\right) \left(-\frac{11}{5}-5\right)}\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)_{-5}-\frac{1}{\left(\frac{13}{4}-1\right) \left(\frac{13}{4}-2\right) \left(\frac{13}{4}-3\right) \left(\frac{13}{4}-4\right) \left(\frac{13}{4}-5\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 real-base-and-order-evaluate-as-frac-gamma-a-n:
   epsil:
     in: Pochhammer(2.4, 8.5)
@@ -285,6 +291,10 @@ order-0-is-the-empty-product-a-0-1:
     in: Pochhammer[a, 0]
   wolfram:
     in: Pochhammer[a, 0]
+    out: "1"
+    tex:
+      in: (a)_0
+      out: "1"
 a-1-a:
   epsil:
     in: Pochhammer(a, 1)
@@ -299,6 +309,10 @@ a-1-a:
     in: Pochhammer[a, 1]
   wolfram:
     in: Pochhammer[a, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[(a)_1-a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)_1-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)_1--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)_1-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see:
   epsil:
     in: Pochhammer(4, 3) == Gamma(7) / Gamma(4)

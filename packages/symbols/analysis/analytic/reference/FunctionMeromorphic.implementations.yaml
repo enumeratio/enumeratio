@@ -12,6 +12,10 @@ a-rational-function-is-meromorphic:
     in: FunctionMeromorphic[Divide[1, x], x]
   wolfram:
     in: FunctionMeromorphic[Divide[1, x], x]
+    out: True
+    tex:
+      in: \text{FunctionMeromorphic}\left[\frac{1}{x},x\right]
+      out: \text{True}
 tangent-is-a-ratio-of-entire-functions:
   epsil:
     in: FunctionMeromorphic(Tan(x), x)
@@ -26,6 +30,10 @@ tangent-is-a-ratio-of-entire-functions:
     in: FunctionMeromorphic[Tan[x], x]
   wolfram:
     in: FunctionMeromorphic[Tan[x], x]
+    out: True
+    tex:
+      in: \text{FunctionMeromorphic}[\tan (x),x]
+      out: \text{True}
 a-branch-point-is-not-a-pole:
   epsil:
     in: FunctionMeromorphic(Ln(x), x)
@@ -40,6 +48,10 @@ a-branch-point-is-not-a-pole:
     in: FunctionMeromorphic[Log[x], x]
   wolfram:
     in: FunctionMeromorphic[Log[x], x]
+    out: False
+    tex:
+      in: \text{FunctionMeromorphic}[\log (x),x]
+      out: \text{False}
 polynomials-are-meromorphic:
   epsil:
     in: FunctionMeromorphic(x ^ 2, x)
@@ -54,3 +66,7 @@ polynomials-are-meromorphic:
     in: FunctionMeromorphic[Power[x, 2], x]
   wolfram:
     in: FunctionMeromorphic[Power[x, 2], x]
+    out: True
+    tex:
+      in: \text{FunctionMeromorphic}\left[x^2,x\right]
+      out: \text{True}

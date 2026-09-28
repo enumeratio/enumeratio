@@ -20,6 +20,10 @@ symbolic-entries:
     in: Outer[Times, List[1, 2, 3], List[x, y]]
   wolfram:
     in: Outer[Times, List[1, 2, 3], List[x, y]]
+    out: "{{x, y}, {2*x, 2*y}, {3*x, 3*y}}"
+    tex:
+      in: \text{Outer}[\text{Times},\{1,2,3\},\{x,y\}]
+      out: \left( \begin{array}{cc}  x & y \\  2 x & 2 y \\  3 x & 3 y \\ \end{array} \right)
 any-binary-function-an-addition-table:
   epsil:
     in: Outer(Add, [1, 2], [10, 20])
@@ -53,6 +57,10 @@ list-gives-every-pair-like-a-cartesian-product:
     in: Outer[List, List[a, b], List[x, y]]
   wolfram:
     in: Outer[List, List[a, b], List[x, y]]
+    out: "{{{a, x}, {a, y}}, {{b, x}, {b, y}}}"
+    tex:
+      in: \text{Outer}[\text{List},\{a,b\},\{x,y\}]
+      out: \left( \begin{array}{cc}  \{a,x\} & \{a,y\} \\  \{b,x\} & \{b,y\} \\ \end{array} \right)
 outer-matrix-of-right-shape:
   epsil:
     in: Outer(Add, [1, 2], [10, 20, 30])

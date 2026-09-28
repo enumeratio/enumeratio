@@ -57,5 +57,8 @@ declines-a-symbolic-list:
     in: Fourier[List[a, b]]
   wolfram:
     in: Fourier[List[a, b]]
-    out: Fourier[{a, b}]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Fourier}[\{a,b\}]-\text{Fourier}[\{a,b\}]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Fourier}\left[\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]-\text{Fourier}\left[\left\{\frac{7}{3},-\frac{11}{5}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Fourier}\left[\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]-\text{Fourier}\left[\left\{\frac{13}{4},-\frac{17}{6}\right\}\right]\right]\right],\text{Chop}\left[N\left[\text{Fourier}\left[\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]-\text{Fourier}\left[\left\{\frac{19}{8},-\frac{23}{9}\right\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
     note: Wolfram raises `Fourier::fftl` ("... is not a nonempty list or rectangular array of numeric quantities") and returns the call unevaluated -- the same decline we make.

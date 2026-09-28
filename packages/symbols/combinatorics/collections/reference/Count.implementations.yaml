@@ -66,6 +66,10 @@ count-list-a-b-a-a-b-c-b-b:
     in: Count[List[a, b, a, a, b, c, b], b]
   wolfram:
     in: Count[List[a, b, a, a, b, c, b], b]
+    out: "3"
+    tex:
+      in: \text{Count}[\{a,b,a,a,b,c,b\},b]
+      out: "3"
 the-value-can-itself-be-a-list:
   epsil:
     in: Count([[1, 2], [1, 2], 3], [1, 2])
@@ -100,6 +104,10 @@ only-top-level-elements-are-compared-by-default:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b]
   wolfram:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b]
+    out: "1"
+    tex:
+      in: \text{Count}[\{\{a,a,b\},b,\{a,b,a\}\},b]
+      out: "1"
 a-bare-level-spec-counts-matches-down-through:
   epsil:
     in: Count([[a, a, b], b, [a, b, a]], b, 2)
@@ -111,6 +119,10 @@ a-bare-level-spec-counts-matches-down-through:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b, 2]
   wolfram:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b, 2]
+    out: "3"
+    tex:
+      in: \text{Count}[\{\{a,a,b\},b,\{a,b,a\}\},b,2]
+      out: "3"
 2-counts-matches-at-level-2-only:
   epsil:
     in: Count([[a, a, b], b, [a, b, a]], b, [2])
@@ -122,6 +134,10 @@ a-bare-level-spec-counts-matches-down-through:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b, List[2]]
   wolfram:
     in: Count[List[List[a, a, b], b, List[a, b, a]], b, List[2]]
+    out: "2"
+    tex:
+      in: \text{Count}[\{\{a,a,b\},b,\{a,b,a\}\},b,\{2\}]
+      out: "2"
 count-tests-exact-equality-so-a-pattern-like:
   epsil:
     in: Count([a, 2, a, a, 1, c, b, 3, 3], _Integer)

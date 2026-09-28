@@ -12,6 +12,10 @@ x-occurs-in-x-2-plus-1:
     in: FreeQ[Plus[Power[x, 2], 1], x]
   wolfram:
     in: FreeQ[Plus[Power[x, 2], 1], x]
+    out: False
+    tex:
+      in: \text{FreeQ}\left[x^2+1,x\right]
+      out: \text{False}
 y-never-occurs:
   epsil:
     in: FreeQ(x ^ 2 + 1, y)
@@ -26,6 +30,10 @@ y-never-occurs:
     in: FreeQ[Plus[Power[x, 2], 1], y]
   wolfram:
     in: FreeQ[Plus[Power[x, 2], 1], y]
+    out: True
+    tex:
+      in: \text{FreeQ}\left[x^2+1,y\right]
+      out: \text{True}
 looks-inside-subexpressions-not-just-top-level:
   epsil:
     in: FreeQ([[a, b]], b)
@@ -40,3 +48,7 @@ looks-inside-subexpressions-not-just-top-level:
     in: FreeQ[List[List[a, b]], b]
   wolfram:
     in: FreeQ[List[List[a, b]], b]
+    out: False
+    tex:
+      in: \text{FreeQ}\left[\left( \begin{array}{cc}  a & b \\ \end{array} \right),b\right]
+      out: \text{False}

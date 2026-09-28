@@ -72,6 +72,10 @@ flatten-list-list-a-b-list-c-list-d-f-list-g:
     in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]]]
   wolfram:
     in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]]]
+    out: "{a, b, c, d, f, g, h, k}"
+    tex:
+      in: \text{Flatten}[\{\{a,b\},\{c,\{d\},f\},\{g,\{h,k\}\}\}]
+      out: \{a,b,c,d,f,g,h,k\}
 flatten-only-the-first-level:
   epsil:
     in: Flatten([[a, b], [c, [d], f], [g, [h, k]]], 1)
@@ -83,6 +87,10 @@ flatten-only-the-first-level:
     in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]], 1]
   wolfram:
     in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]], 1]
+    out: "{a, b, c, {d}, f, g, {h, k}}"
+    tex:
+      in: \text{Flatten}[\{\{a,b\},\{c,\{d\},f\},\{g,\{h,k\}\}\},1]
+      out: \{a,b,c,\{d\},f,g,\{h,k\}\}
 depth-0-leaves-the-list-unchanged:
   epsil:
     in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], 0)

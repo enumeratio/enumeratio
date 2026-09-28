@@ -9,6 +9,10 @@ array-f-5:
     in: Array[f, 5]
   wolfram:
     in: Array[f, 5]
+    out: "{f[1], f[2], f[3], f[4], f[5]}"
+    tex:
+      in: \text{Array}[f,5]
+      out: \{f(1),f(2),f(3),f(4),f(5)\}
 array-f-2-2:
   epsil:
     in: Array(f, [2, 2])
@@ -20,6 +24,10 @@ array-f-2-2:
     in: Array[f, List[2, 2]]
   wolfram:
     in: Array[f, List[2, 2]]
+    out: "{{f[1, 1], f[1, 2]}, {f[2, 1], f[2, 2]}}"
+    tex:
+      in: \text{Array}[f,\{2,2\}]
+      out: \left( \begin{array}{cc}  f(1,1) & f(1,2) \\  f(2,1) & f(2,2) \\ \end{array} \right)
 array-f-3-0:
   epsil:
     in: Array(f, 3, 0)
@@ -31,6 +39,10 @@ array-f-3-0:
     in: Array[f, 3, 0]
   wolfram:
     in: Array[f, 3, 0]
+    out: "{f[0], f[1], f[2]}"
+    tex:
+      in: \text{Array}[f,3,0]
+      out: \{f(0),f(1),f(2)\}
 array-f-3-1-g:
   epsil:
     in: Array(f, 3, 1, g)
@@ -42,6 +54,10 @@ array-f-3-1-g:
     in: Array[f, 3, 1, g]
   wolfram:
     in: Array[f, 3, 1, g]
+    out: g[f[1], f[2], f[3]]
+    tex:
+      in: \text{Array}[f,3,1,g]
+      out: g(f(1),f(2),f(3))
 array-squares:
   epsil:
     in: Array(Function(_1 ^ 2), 5)

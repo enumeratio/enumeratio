@@ -627,10 +627,16 @@ a-full-turn-shift-of-a-symbolic-argument-doesn-t:
     in: Sin[Plus[x, Times[2, Pi]]]
   wolfram:
     in: Sin[Plus[x, Times[2, Pi]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (x+2 \pi )-\sin (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\frac{7}{3}+2 \pi \right)-\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(-\frac{11}{5}+2 \pi \right)-\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{13}{4}+2 \pi \right)-\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: sin((Symbol("x") + (2 * pi)))
+    out: True
   sage:
     in: sin((SR.var("x") + (2 * pi)))
+    out: True
 sin-2-a-generic-argument-stays-symbolic:
   epsil:
     in: Sin(2)
@@ -665,10 +671,16 @@ sin-x-plus-y-stays-symbolic:
     in: Sin[Plus[x, y]]
   wolfram:
     in: Sin[Plus[x, y]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (x+y)-\sin (x+y)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\frac{7}{3}-\frac{11}{5}\right)-\sin \left(\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{13}{4}-\frac{17}{6}\right)-\sin \left(\frac{13}{4}-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{19}{8}-\frac{23}{9}\right)-\sin \left(\frac{19}{8}-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: sin((Symbol("x") + Symbol("y")))
+    out: True
   sage:
     in: sin((SR.var("x") + SR.var("y")))
+    out: True
 sin-i-pi-2-i-sinh-pi-2-exactly:
   epsil:
     in: Sin(ImaginaryUnit * (Pi / 2))
@@ -764,10 +776,22 @@ an-imaginary-argument-rewrites-to-sinh-sin-ix-i:
     in: Sin[Times[I, x]]
   wolfram:
     in: Sin[Times[I, x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (i x)-i \sinh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(i \frac{7}{3}\right)-i \sinh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(i \left(-\frac{11}{5}\right)\right)-i \sinh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(i \frac{13}{4}\right)-i \sinh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: sin((I * Symbol("x")))
+    out: I*sinh(x)
+    verdict: disagree
+    kind: convention
+    note: "Same root cause as Cos: sinh has no sympy mapping row yet, so the comparison falls back to text instead of the free-symbol identity check that would confirm sin(I*x) = i*sinh(x)."
   sage:
     in: sin((I * SR.var("x")))
+    out: I*sinh(x)
+    verdict: disagree
+    kind: convention
+    note: "Same root cause as Cos: sinh has no sage mapping row yet, so the comparison falls back to text instead of the free-symbol identity check that would confirm sin(I*x) = i*sinh(x)."
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sin(-x)
@@ -779,10 +803,16 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     in: Sin[Minus[x]]
   wolfram:
     in: Sin[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (-x)--\sin (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(-\frac{7}{3}\right)--\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(-\left(-\frac{11}{5}\right)\right)--\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(-\frac{13}{4}\right)--\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: sin((-Symbol("x")))
+    out: True
   sage:
     in: sin((-SR.var("x")))
+    out: True
 a-half-period-shift-reduces-sin-x-pi-sin-x:
   epsil:
     in: Sin(x + Pi)
@@ -794,10 +824,16 @@ a-half-period-shift-reduces-sin-x-pi-sin-x:
     in: Sin[Plus[x, Pi]]
   wolfram:
     in: Sin[Plus[x, Pi]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (x+\pi )--\sin (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\frac{7}{3}+\pi \right)--\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(-\frac{11}{5}+\pi \right)--\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{13}{4}+\pi \right)--\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: sin((Symbol("x") + pi))
+    out: True
   sage:
     in: sin((SR.var("x") + pi))
+    out: True
 sin-arcsin-x-x-for-every-x:
   epsil:
     in: Sin(Arcsin(x))
@@ -809,6 +845,10 @@ sin-arcsin-x-x-for-every-x:
     in: Sin[ArcSin[x]]
   wolfram:
     in: Sin[ArcSin[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sin \left(\sin ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\sin ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\sin \left(\sin ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\sin \left(\sin ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 sin-arcsin-2-2-past-the-real-domain:
   epsil:
     in: Sin(Arcsin(2))
@@ -842,6 +882,10 @@ sin-arccos-x-sqrt-1-x-2:
     in: Sin[ArcCos[x]]
   wolfram:
     in: Sin[ArcCos[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sin \left(\cos ^{-1}(x)\right)-\sqrt{-x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\cos ^{-1}\left(\frac{7}{3}\right)\right)-\sqrt{-\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\sin \left(\cos ^{-1}\left(-\frac{11}{5}\right)\right)-\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\sin \left(\cos ^{-1}\left(\frac{13}{4}\right)\right)-\sqrt{-\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 sin-arctan-x-frac-x-sqrt-1-x-2:
   epsil:
     in: Sin(Arctan(x))
@@ -853,6 +897,10 @@ sin-arctan-x-frac-x-sqrt-1-x-2:
     in: Sin[ArcTan[x]]
   wolfram:
     in: Sin[ArcTan[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sin \left(\tan ^{-1}(x)\right)-\frac{x}{\sqrt{x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\tan ^{-1}\left(\frac{7}{3}\right)\right)-\frac{\frac{7}{3}}{\sqrt{\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\sin \left(\tan ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{\frac{11}{5}}{\sqrt{\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\sin \left(\tan ^{-1}\left(\frac{13}{4}\right)\right)-\frac{\frac{13}{4}}{\sqrt{\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-frac-d-dx-sin-x-cos-x:
   epsil:
     in: D(Sin(x), x)
@@ -882,6 +930,10 @@ antiderivative:
     in: Integrate[Sin[x], x]
   wolfram:
     in: Integrate[Sin[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \sin (x) \, dx--\cos (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sin \left(\frac{7}{3}\right) \, d\frac{7}{3}--\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\int \sin \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)--\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\int \sin \left(\frac{13}{4}\right) \, d\frac{13}{4}--\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 area-under-one-arch-int-0-pi-sin-x-dx-2:
   epsil:
     in: Integrate(Sin(x), (x, 0, Pi))
@@ -902,6 +954,10 @@ int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers:
     in: Integrate[Power[Sin[x], 3], x]
   wolfram:
     in: Integrate[Power[Sin[x], 3], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \sin ^3(x) \, dx-\left(\frac{1}{3} \cos ^3(x)-\cos (x)\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sin ^3\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{1}{3} \cos ^3\left(\frac{7}{3}\right)-\cos \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^3\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(\frac{1}{3} \cos ^3\left(-\frac{11}{5}\right)-\cos \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^3\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{1}{3} \cos ^3\left(\frac{13}{4}\right)-\cos \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 taylor-series-about-0-only-odd-powers-appear:
   epsil:
     in: Series(Sin(x), x, 0, 10)
@@ -988,6 +1044,10 @@ the-same-through-fullsimplify:
     in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
   wolfram:
     in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+    out: "1"
+    tex:
+      in: \text{FullSimplify}\left[\sin ^2(x)+\cos ^2(x)\right]
+      out: "1"
 pi-15-has-a-radical-form-but-like-wolfram-s:
   epsil:
     in: Sin(Pi / 15)

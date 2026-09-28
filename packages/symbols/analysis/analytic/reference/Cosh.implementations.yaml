@@ -182,6 +182,10 @@ evenness-drops-the-sign-of-a-symbolic-argument:
     in: Cosh[Minus[x]]
   wolfram:
     in: Cosh[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cosh (-x)-\cosh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cosh \left(-\frac{7}{3}\right)-\cosh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cosh \left(-\left(-\frac{11}{5}\right)\right)-\cosh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cosh \left(-\frac{13}{4}\right)-\cosh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cosh-arcosh-x-x-for-every-x:
   epsil:
     in: Cosh(Arcosh(x))
@@ -193,6 +197,10 @@ cosh-arcosh-x-x-for-every-x:
     in: Cosh[ArcCosh[x]]
   wolfram:
     in: Cosh[ArcCosh[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cosh \left(\cosh ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cosh \left(\cosh ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\cosh \left(\cosh ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\cosh \left(\cosh ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cosh-arcosh-2-2:
   epsil:
     in: Cosh(Arcosh(2))
@@ -235,6 +243,10 @@ antiderivative:
     in: Integrate[Cosh[x], x]
   wolfram:
     in: Integrate[Cosh[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \cosh (x) \, dx-\sinh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \cosh \left(\frac{7}{3}\right) \, d\frac{7}{3}-\sinh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\int \cosh \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\sinh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\int \cosh \left(\frac{13}{4}\right) \, d\frac{13}{4}-\sinh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-definition-cosh-x-frac-e-x-e-x-2:
   epsil:
     in: TrigToExp(Cosh(x))

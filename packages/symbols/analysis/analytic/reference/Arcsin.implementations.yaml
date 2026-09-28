@@ -243,6 +243,10 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     in: ArcSin[Minus[x]]
   wolfram:
     in: ArcSin[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sin ^{-1}(-x)--\sin ^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin ^{-1}\left(-\frac{7}{3}\right)--\sin ^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sin ^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\sin ^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin ^{-1}\left(-\frac{13}{4}\right)--\sin ^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-frac-1-sqrt-1-x-2:
   epsil:
     in: D(Arcsin(x), x)
@@ -263,6 +267,10 @@ antiderivative:
     in: Integrate[ArcSin[x], x]
   wolfram:
     in: Integrate[ArcSin[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \sin ^{-1}(x) \, dx-\left(x \sin ^{-1}(x)+\sqrt{-x^2+1}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sin ^{-1}\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{7}{3} \sin ^{-1}\left(\frac{7}{3}\right)+\sqrt{-\left(\frac{7}{3}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^{-1}\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\frac{11}{5} \sin ^{-1}\left(-\frac{11}{5}\right)+\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^{-1}\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{13}{4} \sin ^{-1}\left(\frac{13}{4}\right)+\sqrt{-\left(\frac{13}{4}\right)^2+1}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 taylor-series-about-0:
   epsil:
     in: Series(Arcsin(x), x, 0, 5)

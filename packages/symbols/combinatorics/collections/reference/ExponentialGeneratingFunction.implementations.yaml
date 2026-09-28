@@ -9,6 +9,10 @@ factorial:
     in: ExponentialGeneratingFunction[Factorial[n], n, x]
   wolfram:
     in: ExponentialGeneratingFunction[Factorial[n], n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}[n!,n,x]-\frac{1}{-x+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\frac{7}{3}!,\frac{7}{3},-\frac{11}{5}\right]-\frac{1}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\frac{13}{4}!,\frac{13}{4},-\frac{17}{6}\right]-\frac{1}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\frac{19}{8}!,\frac{19}{8},-\frac{23}{9}\right]-\frac{1}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derangements:
   epsil:
     in: ExponentialGeneratingFunction(Subfactorial(n), n, x)
@@ -23,6 +27,10 @@ derangements:
     in: ExponentialGeneratingFunction[Subfactorial[n], n, x]
   wolfram:
     in: ExponentialGeneratingFunction[Subfactorial[n], n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}[\text{Subfactorial}[n],n,x]-\frac{e^{-x}}{-x+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{7}{3}\right],\frac{7}{3},-\frac{11}{5}\right]-\frac{e^{-\left(-\frac{11}{5}\right)}}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{13}{4}\right],\frac{13}{4},-\frac{17}{6}\right]-\frac{e^{-\left(-\frac{17}{6}\right)}}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{19}{8}\right],\frac{19}{8},-\frac{23}{9}\right]-\frac{e^{-\left(-\frac{23}{9}\right)}}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 bell-numbers:
   epsil:
     in: ExponentialGeneratingFunction(BellNumber(n), n, x)
@@ -37,6 +45,10 @@ bell-numbers:
     in: ExponentialGeneratingFunction[BellB[n], n, x]
   wolfram:
     in: ExponentialGeneratingFunction[BellB[n], n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}\left[B_n,n,x\right]-e^{e^x-1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{7}{3}},\frac{7}{3},-\frac{11}{5}\right]-e^{e^{-\frac{11}{5}}-1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{13}{4}},\frac{13}{4},-\frac{17}{6}\right]-e^{e^{-\frac{17}{6}}-1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{19}{8}},\frac{19}{8},-\frac{23}{9}\right]-e^{e^{-\frac{23}{9}}-1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 fibonacci:
   epsil:
     in: ExponentialGeneratingFunction(Fibonacci(n), n, x)
@@ -57,3 +69,7 @@ fibonacci:
     in: ExponentialGeneratingFunction[Fibonacci[n], n, x]
   wolfram:
     in: ExponentialGeneratingFunction[Fibonacci[n], n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}\left[F_n,n,x\right]-\left(-\frac{\sqrt{5}}{5} e^{\frac{1}{2} x \left(1-\sqrt{5}\right)}+\frac{\sqrt{5}}{5} e^{\frac{1}{2} x \left(1+\sqrt{5}\right)}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[F_{\frac{7}{3}},\frac{7}{3},-\frac{11}{5}\right]-\left(-\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{11}{5}\right) \left(1-\sqrt{5}\right)}+\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{11}{5}\right) \left(1+\sqrt{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[F_{\frac{13}{4}},\frac{13}{4},-\frac{17}{6}\right]-\left(-\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{17}{6}\right) \left(1-\sqrt{5}\right)}+\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{17}{6}\right) \left(1+\sqrt{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[F_{\frac{19}{8}},\frac{19}{8},-\frac{23}{9}\right]-\left(-\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{23}{9}\right) \left(1-\sqrt{5}\right)}+\frac{\sqrt{5}}{5} e^{\frac{1}{2} \left(-\frac{23}{9}\right) \left(1+\sqrt{5}\right)}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

@@ -9,6 +9,10 @@ nested-path-drills-in:
     in: Extract[List[List[a, b], List[c, d]], List[2, 1]]
   wolfram:
     in: Extract[List[List[a, b], List[c, d]], List[2, 1]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Extract}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right),\{2,1\}\right]-c\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Extract}\left[\left( \begin{array}{cc}  \frac{7}{3} & -\frac{11}{5} \\  \frac{13}{4} & -\frac{17}{6} \\ \end{array} \right),\{2,1\}\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Extract}\left[\left( \begin{array}{cc}  \frac{19}{8} & -\frac{23}{9} \\  \frac{7}{3} & -\frac{11}{5} \\ \end{array} \right),\{2,1\}\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Extract}\left[\left( \begin{array}{cc}  \frac{13}{4} & -\frac{17}{6} \\  \frac{19}{8} & -\frac{23}{9} \\ \end{array} \right),\{2,1\}\right]-\frac{19}{8}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 negative-position-counts-from-the-end:
   epsil:
     in: Extract([a, b, c], -1)
@@ -20,6 +24,10 @@ negative-position-counts-from-the-end:
     in: Extract[List[a, b, c], -1]
   wolfram:
     in: Extract[List[a, b, c], -1]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Extract}[\{a,b,c\},-1]-c],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Extract}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\},-1\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{Extract}\left[\left\{-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\},-1\right]--\frac{23}{9}\right]\right],\text{Chop}\left[N\left[\text{Extract}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\},-1\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 list-of-paths-extracts-several-parts:
   epsil:
     in: Extract([[a, b], [c, d]], [[1, 1], [2, 2]])
@@ -31,3 +39,7 @@ list-of-paths-extracts-several-parts:
     in: Extract[List[List[a, b], List[c, d]], List[List[1, 1], List[2, 2]]]
   wolfram:
     in: Extract[List[List[a, b], List[c, d]], List[List[1, 1], List[2, 2]]]
+    out: "{a, d}"
+    tex:
+      in: \text{Extract}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right),\left( \begin{array}{cc}  1 & 1 \\  2 & 2 \\ \end{array} \right)\right]
+      out: \{a,d\}

@@ -9,6 +9,10 @@ the-cubic:
     in: ChebyshevT[3, x]
   wolfram:
     in: ChebyshevT[3, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[T_3(x)-\left(4 x^3-3 x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[T_3\left(\frac{7}{3}\right)-\left(4 \left(\frac{7}{3}\right)^3-3 \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[T_3\left(-\frac{11}{5}\right)-\left(4 \left(-\frac{11}{5}\right)^3-3 \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[T_3\left(\frac{13}{4}\right)-\left(4 \left(\frac{13}{4}\right)^3-3 \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-quartic:
   epsil:
     in: ChebyshevT(4, x)
@@ -20,6 +24,10 @@ the-quartic:
     in: ChebyshevT[4, x]
   wolfram:
     in: ChebyshevT[4, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[T_4(x)-\left(8 x^4-8 x^2+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[T_4\left(\frac{7}{3}\right)-\left(8 \left(\frac{7}{3}\right)^4-8 \left(\frac{7}{3}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[T_4\left(-\frac{11}{5}\right)-\left(8 \left(-\frac{11}{5}\right)^4-8 \left(-\frac{11}{5}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[T_4\left(\frac{13}{4}\right)-\left(8 \left(\frac{13}{4}\right)^4-8 \left(\frac{13}{4}\right)^2+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 at-an-integer:
   epsil:
     in: ChebyshevT(5, 2)
@@ -91,6 +99,10 @@ a-symbolic-order-stays-unevaluated:
     in: ChebyshevT[n, x]
   wolfram:
     in: ChebyshevT[n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[T_n(x)-T_n(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[T_{\frac{7}{3}}\left(-\frac{11}{5}\right)-T_{\frac{7}{3}}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[T_{\frac{13}{4}}\left(-\frac{17}{6}\right)-T_{\frac{13}{4}}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[T_{\frac{19}{8}}\left(-\frac{23}{9}\right)-T_{\frac{19}{8}}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cos-n-theta:
   epsil:
     in: ChebyshevT(6, 1 / 2) == Cos(6 * (Pi / 3))
@@ -168,6 +180,10 @@ negative-order:
     in: ChebyshevT[-3, x]
   wolfram:
     in: ChebyshevT[-3, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[T_{-3}(x)-\left(4 x^3-3 x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[T_{-3}\left(\frac{7}{3}\right)-\left(4 \left(\frac{7}{3}\right)^3-3 \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[T_{-3}\left(-\frac{11}{5}\right)-\left(4 \left(-\frac{11}{5}\right)^3-3 \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[T_{-3}\left(\frac{13}{4}\right)-\left(4 \left(\frac{13}{4}\right)^3-3 \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 pell-identity:
   epsil:
     in: ChebyshevT(4, 3) ^ 2 - 8 * ChebyshevU(3, 3) ^ 2

@@ -20,6 +20,10 @@ first-is-the-first-value-not-the-first-rule:
     in: First[Association[Rule[1, a], Rule[2, b]]]
   wolfram:
     in: First[Association[Rule[1, a], Rule[2, b]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{First}[\text{Association}[1\to a,2\to b]]-a],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{First}\left[\text{Association}\left[1\to \frac{7}{3},2\to -\frac{11}{5}\right]\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{First}\left[\text{Association}\left[1\to \frac{13}{4},2\to -\frac{17}{6}\right]\right]-\frac{13}{4}\right]\right],\text{Chop}\left[N\left[\text{First}\left[\text{Association}\left[1\to \frac{19}{8},2\to -\frac{23}{9}\right]\right]-\frac{19}{8}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 last-is-the-last-value:
   epsil:
     in: Last(Association(Rule(1, a), Rule(2, b)))
@@ -31,6 +35,10 @@ last-is-the-last-value:
     in: Last[Association[Rule[1, a], Rule[2, b]]]
   wolfram:
     in: Last[Association[Rule[1, a], Rule[2, b]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Last}[\text{Association}[1\to a,2\to b]]-b],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to \frac{7}{3},2\to -\frac{11}{5}\right]\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to \frac{13}{4},2\to -\frac{17}{6}\right]\right]--\frac{17}{6}\right]\right],\text{Chop}\left[N\left[\text{Last}\left[\text{Association}\left[1\to \frac{19}{8},2\to -\frac{23}{9}\right]\right]--\frac{23}{9}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 join-merges-keys-a-later-value-for-a-repeated:
   epsil:
     in: Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))
@@ -42,6 +50,10 @@ join-merges-keys-a-later-value-for-a-repeated:
     in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]
   wolfram:
     in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]
+    out: <|a -> f, c -> d|>
+    tex:
+      in: \text{Join}[\text{Association}[a\to b],\text{Association}[c\to d,a\to f]]
+      out: \unicode{f113}a\to f,c\to d\unicode{f114}
 sort-orders-the-entries-by-value:
   epsil:
     in: Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))
@@ -53,3 +65,7 @@ sort-orders-the-entries-by-value:
     in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
   wolfram:
     in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
+    out: <|b -> 1, c -> 3, a -> 4|>
+    tex:
+      in: \text{Sort}[\text{Association}[a\to 4,b\to 1,c\to 3]]
+      out: \unicode{f113}b\to 1,c\to 3,a\to 4\unicode{f114}

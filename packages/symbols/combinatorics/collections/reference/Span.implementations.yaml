@@ -9,6 +9,10 @@ positions-2-through-4-2-4-in-wolfram:
     in: Part[List[a, b, c, d, f], Span[2, 4]]
   wolfram:
     in: Part[List[a, b, c, d, f], Span[2, 4]]
+    out: "{b, c, d}"
+    tex:
+      in: \{a,b,c,d,f\}[[2\text{;;}4]]
+      out: \{b,c,d\}
 every-other-element-through-the-last-1-1-2:
   epsil:
     in: "[a, b, c, d, f][Span(1, -1, 2)]"
@@ -20,6 +24,10 @@ every-other-element-through-the-last-1-1-2:
     in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
   wolfram:
     in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
+    out: "{a, c, f}"
+    tex:
+      in: \{a,b,c,d,f\}[[1\text{;;}-1\text{;;}2]]
+      out: \{a,c,f\}
 a-negative-step-walks-backwards-1-1-1:
   epsil:
     in: "[a, b, c, d, f][Span(-1, 1, -1)]"
@@ -31,6 +39,10 @@ a-negative-step-walks-backwards-1-1-1:
     in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
   wolfram:
     in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
+    out: "{f, d, c, b, a}"
+    tex:
+      in: \{a,b,c,d,f\}[[-1\text{;;}1\text{;;}-1]]
+      out: \{f,d,c,b,a\}
 negative-bounds-the-last-two-elements:
   epsil:
     in: "[a, b, c, d, f][Span(-2, -1)]"
@@ -42,6 +54,10 @@ negative-bounds-the-last-two-elements:
     in: Part[List[a, b, c, d, f], Span[-2, -1]]
   wolfram:
     in: Part[List[a, b, c, d, f], Span[-2, -1]]
+    out: "{d, f}"
+    tex:
+      in: \{a,b,c,d,f\}[[-2\text{;;}-1]]
+      out: \{d,f\}
 spans-at-two-levels-cut-out-a-submatrix:
   epsil:
     in: "[[1, 2, 3], [4, 5, 6], [7, 8, 9]][Span(2, 3), Span(1, 2)]"

@@ -7,8 +7,6 @@ rewrites-the-whole-expr-matches-top-level:
     out: 100x
   fullform:
     in: Replace[Plus[x, 1], Rule[Plus[_a, 1], Times[_a, 100]]]
-  wolfram:
-    in: Replace[Plus[x, 1], Rule[Plus[_a, 1], Times[_a, 100]]]
 leaves-expr-untouched-when-only-subexpr-matches:
   epsil:
     in: Replace([x + 1], Rule(_a + 1, _a * 100))
@@ -17,8 +15,6 @@ leaves-expr-untouched-when-only-subexpr-matches:
     in: \mathrm{Replace}(\bigl\lbrack x+1\bigr\rbrack, \mathrm{Rule}(\operatorname{\_a}+1, 100\operatorname{\_a}))
     out: \bigl\lbrack x+1\bigr\rbrack
   fullform:
-    in: Replace[List[Plus[x, 1]], Rule[Plus[_a, 1], Times[_a, 100]]]
-  wolfram:
     in: Replace[List[Plus[x, 1]], Rule[Plus[_a, 1], Times[_a, 100]]]
 tries-a-list-of-rules-in-order:
   epsil:
@@ -31,3 +27,7 @@ tries-a-list-of-rules-in-order:
     in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
   wolfram:
     in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
+    out: "2"
+    tex:
+      in: \text{Replace}[b,\{a\to 1,b\to 2\}]
+      out: "2"

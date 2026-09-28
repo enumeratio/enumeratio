@@ -9,8 +9,19 @@ ijk-1:
     in: NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
   wolfram:
     in: NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
+    out: Subscript[f, 1]**Subscript[f, 2]**(Subscript[f, 1]*Subscript[f, 2])
+    tex:
+      in: f_1\text{**}f_2\text{**}\left(f_1 f_2\right)
+      out: f_1\text{**}f_2\text{**}\left(f_1 f_2\right)
+    verdict: disagree
+    kind: domain
+    note: "Same as NonCommutativeMultiply generally: Wolfram has no built-in quaternion multiplication table for our basis elements, so the call stays unevaluated regardless of the actual product."
   sage:
     in: (SR.var("f_1") * SR.var("f_2") * (SR.var("f_1") * SR.var("f_2")))
+    out: f_1^2*f_2^2
+    verdict: inconclusive
+    kind: domain
+    note: "Same as NonCommutativeMultiply: Sages symbolic ring has no built-in quaternion multiplication table, so it just multiplies the basis symbols as ordinary commuting variables."
 k-in-h:
   epsil:
     in: f_1 * f_2 in Quaternions

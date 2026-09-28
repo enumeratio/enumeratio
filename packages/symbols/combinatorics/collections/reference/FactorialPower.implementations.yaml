@@ -10,6 +10,10 @@ symbolic-falling:
     back: [FallingFactorial, x, 3]
   wolfram:
     in: FactorialPower[x, 3]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[x^{(3)}-x^{(3)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)^{(3)}-\left(\frac{7}{3}\right)^{(3)}\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)^{(3)}-\left(-\frac{11}{5}\right)^{(3)}\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)^{(3)}-\left(\frac{13}{4}\right)^{(3)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 numeric:
   epsil:
     in: FactorialPower(5, 3)
@@ -34,6 +38,10 @@ step:
     back: [FallingFactorial, x, 2, h]
   wolfram:
     in: FactorialPower[x, 2, h]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[x^{(2,h)}-x^{(2,h)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)^{\left(2,\frac{7}{3}\right)}-\left(-\frac{11}{5}\right)^{\left(2,\frac{7}{3}\right)}\right]\right],\text{Chop}\left[N\left[\left(-\frac{17}{6}\right)^{\left(2,\frac{13}{4}\right)}-\left(-\frac{17}{6}\right)^{\left(2,\frac{13}{4}\right)}\right]\right],\text{Chop}\left[N\left[\left(-\frac{23}{9}\right)^{\left(2,\frac{19}{8}\right)}-\left(-\frac{23}{9}\right)^{\left(2,\frac{19}{8}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 zero:
   epsil:
     in: FactorialPower(x, 0)
@@ -46,3 +54,7 @@ zero:
     back: [FallingFactorial, x, 0]
   wolfram:
     in: FactorialPower[x, 0]
+    out: "1"
+    tex:
+      in: x^{(0)}
+      out: "1"
