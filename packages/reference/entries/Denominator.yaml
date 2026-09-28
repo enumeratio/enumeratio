@@ -14,5 +14,11 @@ statOn:
   - BinaryWord
   - RationalNumber
 stub: engine
+bindings:
+  - origin: mapped
+    form: sage
+    template: ($1).denominator()
+    arity: 1
+    note: Generic -- works for a plain rational/integer and for a ProfiniteNumber's Sage counterpart (Qhat) alike.
 attributes:
   - HoldAll

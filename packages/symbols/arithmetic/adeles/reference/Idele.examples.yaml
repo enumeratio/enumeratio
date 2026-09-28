@@ -19,3 +19,58 @@
 - id: idele-with-a-zero-real-part
   expr: [Idele, 0, 1]
   expected: [Idele, 0, 1]
+- id: golden-multiply-rational-real-parts
+  expr: [Multiply, [Idele, -1, [Rational, 1, 4]], [Idele, 1, [Rational, 7, 3]]]
+  expected: [Idele, -1, [Rational, 7, 12]]
+  caption: "-1 at infinity times 1 at infinity: the reals multiply too"
+  role: test
+- id: golden-multiply-integer-idele
+  expr: [Multiply, [Idele, -1, 6], [Idele, 1, 2]]
+  expected: [Idele, -1, 12]
+  caption: two principal ideles multiply componentwise
+  role: test
+- id: golden-divide-rational-real-parts
+  expr: [Divide, [Idele, -1, [Rational, 1, 4]], [Idele, 1, [Rational, 7, 3]]]
+  expected: [Idele, -1, [Rational, 3, 28]]
+  caption: dividing two principal ideles with rational finite values
+  role: test
+- id: golden-divide-integer-idele
+  expr: [Divide, [Idele, -1, 6], [Idele, 1, 2]]
+  expected: [Idele, -1, 3]
+  caption: dividing two principal ideles with integer finite values
+  role: test
+- id: principal-idele-of-negative-rational
+  expr: [Idele, [Rational, -5, 2]]
+  expected: [Idele, [Rational, -5, 2], [Rational, -5, 2]]
+  caption: the principal idele of a negative rational
+  role: test
+- id: real-and-finite-parts-can-differ-in-sign
+  expr: [Idele, -1, 3]
+  expected: [Idele, -1, 3]
+  caption: real and finite principal parts can carry different signs
+  role: test
+- id: multiplying-by-the-identity-idele
+  expr: [Multiply, [Idele, 5, 2], [Idele, 1, 1]]
+  expected: [Idele, 5, 2]
+  caption: the identity idele leaves any idele unchanged
+  role: test
+- id: squaring-an-idele
+  expr: [Power, [Idele, 2, 3], 2]
+  expected: [Idele, 4, 9]
+  caption: squaring multiplies both the real and finite parts by themselves
+  role: test
+- id: equal-ideles
+  expr: [Equal, [Idele, 2, 3], [Idele, 2, 3]]
+  expected: True
+  caption: two ideles built the same way are equal
+  role: test
+- id: unequal-ideles-differ-in-finite-part
+  expr: [Equal, [Idele, 2, 3], [Idele, 2, 5]]
+  expected: False
+  caption: "same real part, different finite part: not equal"
+  role: test
+- id: inverting-an-idele
+  expr: [Divide, [Idele, 1, 1], [Idele, -2, [Rational, 3, 5]]]
+  expected: [Idele, [Rational, -1, 2], [Rational, 5, 3]]
+  caption: dividing the identity by an idele inverts it
+  role: test

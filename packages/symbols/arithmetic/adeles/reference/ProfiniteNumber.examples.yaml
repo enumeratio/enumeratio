@@ -106,3 +106,147 @@
   expected: [Numerator, [Adele, 5]]
   caption: only ProfiniteNumber gets Numerator; Adele does not
   category: Possible issues
+- id: golden-add-2-4-3-mod-37-6
+  expr: [Add, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]
+  expected: [ProfiniteNumber, [Rational, 11, 2], [Rational, 37, 6]]
+  caption: -2 + 4/3 mod 37/6 = 11/2 mod 37/6
+  role: test
+  category: Properties
+- id: golden-add-11-mod-18-2-mod-35
+  expr: [Add, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]
+  expected: [ProfiniteNumber, 0, 1]
+  caption: 11 mod 18 + 2 mod 35 = 0 mod 1
+  role: test
+  category: Properties
+- id: golden-add-187-4-mod-47-1-mod-3
+  expr: [Add, [ProfiniteNumber, [Rational, 187, 4], 47], [ProfiniteNumber, 1, 3]]
+  expected: [ProfiniteNumber, [Rational, 3, 4], 1]
+  caption: 187/4 mod 47 + 1 mod 3 = 3/4 mod 1
+  role: test
+  category: Properties
+- id: golden-add-7-4-mod-57-2-1-4
+  expr: [Add, [ProfiniteNumber, [Rational, 7, 4], [Rational, 57, 2]], [Rational, 1, 4]]
+  expected: [ProfiniteNumber, 2, [Rational, 57, 2]]
+  caption: 7/4 mod 57/2 + 1/4 = 2 mod 57/2
+  role: test
+  category: Properties
+- id: golden-add-2-mod-48-12
+  expr: [Add, [ProfiniteNumber, 2, 48], 12]
+  expected: [ProfiniteNumber, 14, 48]
+  caption: 2 mod 48 + 12 = 14 mod 48
+  role: test
+  category: Properties
+- id: golden-add-2-27-mod-31
+  expr: [Add, 2, [ProfiniteNumber, 27, 31]]
+  expected: [ProfiniteNumber, 29, 31]
+  caption: 2 + 27 mod 31 = 29 mod 31
+  role: test
+  category: Properties
+- id: golden-multiply-2-4-3-mod-37-6
+  expr: [Multiply, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]
+  expected: [ProfiniteNumber, [Rational, 29, 3], [Rational, 37, 3]]
+  caption: -2 times 4/3 mod 37/6 = 29/3 mod 37/3
+  role: test
+  category: Properties
+- id: golden-multiply-11-mod-18-2-mod-35
+  expr: [Multiply, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]
+  expected: [ProfiniteNumber, 0, 1]
+  caption: 11 mod 18 times 2 mod 35 = 0 mod 1
+  role: test
+  category: Properties
+- id: golden-multiply-187-4-mod-47-1-mod-3
+  expr: [Multiply, [ProfiniteNumber, [Rational, 187, 4], 47], [ProfiniteNumber, 1, 3]]
+  expected: [ProfiniteNumber, 0, [Rational, 1, 4]]
+  caption: 187/4 mod 47 times 1 mod 3 = 0 mod 1/4
+  role: test
+  category: Properties
+- id: golden-multiply-7-4-mod-57-2-1-4
+  expr: [Multiply, [ProfiniteNumber, [Rational, 7, 4], [Rational, 57, 2]], [Rational, 1, 4]]
+  expected: [ProfiniteNumber, [Rational, 7, 16], [Rational, 57, 8]]
+  caption: 7/4 mod 57/2 times 1/4 = 7/16 mod 57/8
+  role: test
+  category: Properties
+- id: golden-multiply-2-mod-48-12
+  expr: [Multiply, [ProfiniteNumber, 2, 48], 12]
+  expected: [ProfiniteNumber, 24, 576]
+  caption: 2 mod 48 times 12 = 24 mod 576
+  role: test
+  category: Properties
+- id: golden-multiply-2-27-mod-31
+  expr: [Multiply, 2, [ProfiniteNumber, 27, 31]]
+  expected: [ProfiniteNumber, 54, 62]
+  caption: 2 times 27 mod 31 = 54 mod 62
+  role: test
+  category: Properties
+- id: golden-equal-2-4-3-mod-37-6
+  expr: [Equal, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]
+  expected: False
+  caption: -2 and 4/3 mod 37/6 are not equal
+  role: test
+  category: Properties
+- id: golden-equal-11-mod-18-2-mod-35
+  expr: [Equal, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]
+  expected: True
+  caption: 11 mod 18 and 2 mod 35 are equal
+  role: test
+  category: Properties
+- id: golden-equal-2-mod-29-3-3-mod-5
+  expr: [Equal, [ProfiniteNumber, 2, [Rational, 29, 3]], [ProfiniteNumber, 3, 5]]
+  expected: True
+  caption: 2 mod 29/3 and 3 mod 5 are equal
+  role: test
+  category: Properties
+- id: golden-equal-2-mod-48-12
+  expr: [Equal, [ProfiniteNumber, 2, 48], 12]
+  expected: False
+  caption: 2 mod 48 and 12 are not equal
+  role: test
+  category: Properties
+- id: golden-numerator-2
+  expr: [Numerator, -2]
+  expected: -2
+  caption: numerator of -2 is -2
+  role: test
+  category: Properties
+- id: golden-numerator-11-mod-18
+  expr: [Numerator, [ProfiniteNumber, 11, 18]]
+  expected: [ProfiniteNumber, 11, 18]
+  caption: numerator of 11 mod 18 is 11 mod 18
+  role: test
+  category: Properties
+- id: golden-numerator-187-4-mod-47
+  expr: [Numerator, [ProfiniteNumber, [Rational, 187, 4], 47]]
+  expected: [ProfiniteNumber, 187, 188]
+  caption: numerator of 187/4 mod 47 is 187 mod 188
+  role: test
+  category: Properties
+- id: golden-numerator-4-3
+  expr: [Numerator, [Rational, -4, 3]]
+  expected: -4
+  caption: numerator of -4/3 is -4
+  role: test
+  category: Properties
+- id: golden-denominator-2
+  expr: [Denominator, -2]
+  expected: 1
+  caption: denominator of -2 is 1
+  role: test
+  category: Properties
+- id: golden-denominator-11-mod-18
+  expr: [Denominator, [ProfiniteNumber, 11, 18]]
+  expected: 1
+  caption: denominator of 11 mod 18 is 1
+  role: test
+  category: Properties
+- id: golden-denominator-187-4-mod-47
+  expr: [Denominator, [ProfiniteNumber, [Rational, 187, 4], 47]]
+  expected: 4
+  caption: denominator of 187/4 mod 47 is 4
+  role: test
+  category: Properties
+- id: golden-denominator-4-3
+  expr: [Denominator, [Rational, -4, 3]]
+  expected: 3
+  caption: denominator of -4/3 is 3
+  role: test
+  category: Properties
