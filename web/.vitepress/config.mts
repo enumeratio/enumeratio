@@ -245,6 +245,7 @@ const config = withMermaid(
                 { text: "Compute Engine", link: "/playground/inspirations/compute-engine" },
                 { text: "Wolfram Language", link: "/playground/inspirations/wolfram" },
                 { text: "SageMath", link: "/playground/inspirations/sage" },
+                { text: "Mathlib", link: "/playground/inspirations/mathlib" },
                 { text: "Tangle", link: "/playground/inspirations/tangle" },
                 { text: "ganja.js", link: "/playground/inspirations/ganja" },
               ],

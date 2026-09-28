@@ -1,45 +1,12 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
-// QPochhammer, QFactorial, QBinomial. Held to the oracle values in q-series.golden.json,
-// gathered by scripts/collect-q-series-goldens.ts from mpmath (`qp`, plus independent
-// product/quotient code for the other two heads) and a Wolfram kernel (all three heads
-// native there) — neither is needed to run this file.
+// QPochhammer, QFactorial, QBinomial — all three carry mapped wolfram bindings, so the
+// oracle scan cross-checks their reference examples against a Wolfram kernel directly.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-interface GoldenCase {
-  label: string;
-  head: "QPochhammer" | "QFactorial" | "QBinomial";
-  args: (number | [number, number])[];
-  tol: number;
-  mpmath?: number;
-  wolfram?: number;
-}
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./q-series.golden.json", import.meta.url), "utf8"));
-
-const argExpr = (a: number | [number, number]): unknown => (Array.isArray(a) ? ["Rational", a[0], a[1]] : a);
-
-test("q-series: every golden case matches the oracles under N()", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const ours = ce.box([g.head, ...g.args.map(argExpr)] as never).N().re;
-    expect(g.mpmath ?? g.wolfram, g.label).toBeDefined();
-    for (const [name, ref] of [
-      ["mpmath", g.mpmath],
-      ["wolfram", g.wolfram],
-    ] as const) {
-      if (ref === undefined) continue;
-      const err = Math.abs(ours - ref) / Math.max(1, Math.abs(ref));
-      if (!(err <= g.tol)) off.push(`${g.label} vs ${name}: ours=${ours} ref=${ref}`);
-    }
-  }
-  expect(off).toEqual([]);
-});
 
 // Exact-arithmetic cases: plain evaluate() (no N()), pinned to exact rationals/integers.
 test("QPochhammer: exact rational arithmetic, no N() needed", () => {

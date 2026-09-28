@@ -10,6 +10,13 @@ and unranking, plus the statistics and maps over them. Around that sit number th
 special functions and a range of algebras. Definitions are written in the engine's
 language, [Epsil](https://epsil.dev).
 
+What holds it together is structure. A head says what structure it needs (`Min` a linear
+order or a lattice, `Floor` ticks, `Basis` a finite-dimensional algebra), and a type
+provides that structure by conforming to the engine's protocols. So a head is written once
+and works on every type with enough structure, including one a user declares
+([design](design/structures.md), after Mathlib's hierarchy). The interface, notatio, sits
+on top of that.
+
 Every symbol has a reference entry whose examples are tested, and are cross-checked against
 external systems (Wolfram, SageMath, SymPy, mpmath, the OEIS, FindStat, Fungrim, …) wherever
 a claim can be computed.
