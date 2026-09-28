@@ -53,7 +53,7 @@ test("the induced map really is a permutation, and the braid realises it", () =>
   for (const word of necklaces(10)) {
     const permutation = lorenzPermutation(word)!;
     expect(
-      [...permutation].sort((a, b) => a - b),
+      [...permutation].toSorted((a, b) => a - b),
       word,
     ).toEqual(permutation.map((_, i) => i));
     const b = lorenzBraid(word)!;

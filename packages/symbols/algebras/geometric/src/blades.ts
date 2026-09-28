@@ -76,7 +76,7 @@ export function bySign(ce: ComputeEngine, mv: Multivector, sign: (grade: number)
 export function gradesOf(mv: Multivector): number[] {
   const grades = new Set<number>();
   for (const t of mv.terms.values()) grades.add(t.blade.length);
-  return [...grades].sort((a, b) => a - b);
+  return [...grades].toSorted((a, b) => a - b);
 }
 
 /** `mv` restricted to one grade. */

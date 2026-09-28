@@ -12,7 +12,7 @@ const taggable = (name: string): boolean => /^[A-Za-z][A-Za-z0-9]*$/.test(name);
 
 export const HEADS: readonly string[] = [...new Set([...Object.keys(SYMBOLS), ...GRAPHICS_HEADS, ...ATOMS])]
   .filter(taggable)
-  .sort();
+  .toSorted();
 
 /**
  * The parameter names of the heads of fixed arity, from the reference signatures --

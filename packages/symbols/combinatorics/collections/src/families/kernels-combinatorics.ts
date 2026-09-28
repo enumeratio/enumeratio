@@ -376,7 +376,8 @@ export function CompositionRank(parts: number[]): number {
 
 /** Integer partition of n → its largest-part-first rank. */
 export function IntegerPartitionRank(p: number[], n: number): number {
-  const parts = [...p].sort((a, z) => z - a);
+  const parts = [...p];
+  parts.sort((a, z) => z - a);
   let r = 0,
     m = n,
     max = n;
@@ -390,7 +391,8 @@ export function IntegerPartitionRank(p: number[], n: number): number {
 
 /** Integer partition of n into k parts → its rank within that k-slice. */
 export function IntegerPartitionKRank(p: number[], n: number): number {
-  const parts = [...p].sort((a, z) => z - a);
+  const parts = [...p];
+  parts.sort((a, z) => z - a);
   const k = parts.length;
   let r = 0,
     m = n,
@@ -461,7 +463,8 @@ export function SetCompositionRank(labels: number[], n: number): number {
 
 /** Blocks → canonical RGS: blocks ordered by least element, w[x-1] = that block's 0-based position. */
 export function BlocksToRgs(blocks: number[][], n: number): number[] {
-  const ordered = blocks.filter((b) => b.length).sort((a, b) => Math.min(...a) - Math.min(...b));
+  const ordered = blocks.filter((b) => b.length);
+  ordered.sort((a, b) => Math.min(...a) - Math.min(...b));
   const w = Array.from({ length: n }, () => 0);
   ordered.forEach((blk, bi) => blk.forEach((x) => (w[x - 1] = bi)));
   return w;

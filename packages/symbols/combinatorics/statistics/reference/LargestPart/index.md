@@ -21,5 +21,5 @@ signatures:
   - call: LargestPart(partition)
     description: The largest part.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

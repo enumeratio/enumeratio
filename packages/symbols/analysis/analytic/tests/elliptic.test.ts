@@ -60,7 +60,9 @@ test("the golden file covers every head", () => {
   // EllipticE's own complex-modulus cases moved to @enumeratio/for-compute-engine's
   // elliptic-e-complex patch tests, with the patch (design/upstreaming.md §10).
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(["IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].sort());
+  expect([...heads].toSorted()).toEqual(
+    ["IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].toSorted(),
+  );
 });
 
 // --- Direct checks not tied to the golden grid --------------------------------------

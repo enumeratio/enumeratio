@@ -221,7 +221,7 @@ export function render(x: Adic, count: number): string {
   const fractional = Math.max(0, -start);
   const padded = [...Array.from({ length: Math.max(0, start) }, () => 0), ...digits];
   const below = padded.slice(0, fractional).map(glyph).join("");
-  const above = padded.slice(fractional).map(glyph).reverse().join("") || "0";
+  const above = padded.slice(fractional).map(glyph).toReversed().join("") || "0";
   // Nothing hides to the left when the value is an exact non-negative b^v · integer that
   // fits in the digits shown: the ellipsis would only cover zeros.
   const unit = x.prec === undefined ? unitPart(x) : undefined;
@@ -233,7 +233,7 @@ export function render(x: Adic, count: number): string {
       .digits.slice(count)
       .every((d) => d === 0);
   const head = terminates ? above.replace(/^0+(?=\d)/, "") : `…${above}`;
-  const body = fractional > 0 ? `${head}.${below.split("").reverse().join("")}` : head;
+  const body = fractional > 0 ? `${head}.${below.split("").toReversed().join("")}` : head;
   return isCapped ? `${body} + O(${x.base}^${x.prec})` : body;
 }
 

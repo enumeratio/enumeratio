@@ -40,7 +40,7 @@ function padDigits(digits: readonly bigint[], width: number | undefined): bigint
 /** `IntegerReverse`: the digits of |n|, padded to `width` if given, then reversed. */
 export function integerReverse(n: bigint, base: bigint, width?: number): bigint {
   const digits = padDigits(digitsOfBigInt(n, base), width);
-  return fromDigitsBigInt([...digits].reverse(), base);
+  return fromDigitsBigInt([...digits].toReversed(), base);
 }
 
 /** `NumberExpand`: each digit of n times its place value, carrying n's sign throughout. */

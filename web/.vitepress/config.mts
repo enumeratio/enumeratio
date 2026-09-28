@@ -68,7 +68,7 @@ const speculative =
   dev && existsSync(speculativeLink)
     ? readdirSync(speculativeLink)
         .filter((f) => f.endsWith(".md"))
-        .sort()
+        .toSorted()
         .map((f) => ({
           text: f.replace(/\.md$/, ""),
           link: `/speculative/${f.replace(/\.md$/, "")}`,
@@ -172,7 +172,7 @@ const config = withMermaid(
             { text: "Collections", link: "/reference/collections/" },
             { text: "Domains", link: "/reference/domains/" },
             { text: "Formats", link: "/reference/formats/" },
-            { text: "Components", link: "/reference/components/" },
+            { text: "Components", link: "/reference/component/" },
           ],
         },
         {
@@ -221,18 +221,18 @@ const config = withMermaid(
             { text: "Figure (glyphs)", link: "/playground/figure" },
             { text: "Plot", link: "/playground/plot" },
             { text: "Plot 3D", link: "/playground/plot-3d" },
-            { text: "Contour Plot", link: "/reference/components/notatio-contour-plot" },
-            { text: "Density Plot", link: "/reference/components/notatio-density-plot" },
-            { text: "Vector & Stream Plot", link: "/reference/components/notatio-vector-plot" },
-            { text: "Polar Plot", link: "/reference/components/notatio-polar-plot" },
-            { text: "List Plot 3D", link: "/reference/components/notatio-list-plot-3d" },
-            { text: "Bar Chart 3D", link: "/reference/components/notatio-bar-chart-3d" },
-            { text: "Chart", link: "/reference/components/notatio-chart" },
-            { text: "GraphPlot", link: "/reference/components/notatio-graph-plot" },
+            { text: "Contour Plot", link: "/reference/component/ContourPlot" },
+            { text: "Density Plot", link: "/reference/component/DensityPlot" },
+            { text: "Vector & Stream Plot", link: "/reference/component/VectorPlot" },
+            { text: "Polar Plot", link: "/reference/component/PolarPlot" },
+            { text: "List Plot 3D", link: "/reference/component/ListPlot3D" },
+            { text: "Bar Chart 3D", link: "/reference/component/BarChart3D" },
+            { text: "Chart", link: "/reference/component/Chart" },
+            { text: "GraphPlot", link: "/reference/component/GraphPlot" },
             { text: "Polytope", link: "/playground/polytope" },
             { text: "Complex Plot", link: "/playground/complex-plot" },
-            { text: "Complex Plot 3D", link: "/reference/components/notatio-complex-plot-3d" },
-            { text: "Collection table", link: "/reference/components/notatio-collection-table" },
+            { text: "Complex Plot 3D", link: "/reference/component/ComplexPlot3D" },
+            { text: "Collection table", link: "/reference/component/CollectionTable" },
             { text: "Worksheet", link: "/playground/worksheet" },
             { text: "Manipulate", link: "/playground/manipulate" },
             { text: "Controls", link: "/playground/controls" },

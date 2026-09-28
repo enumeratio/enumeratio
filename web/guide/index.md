@@ -63,7 +63,7 @@ they declare are catalogued in the [symbol reference](/reference/symbol/).
 How an expression is **written** and what it comes back out **as** — LaTeX, MathJSON,
 Wolfram, NumPy, the shader languages — is reference material, not a walkthrough:
 see [formats](/reference/formats/). The components these pages are built from have
-their own [reference](/reference/components/), and the
+their own [reference](/reference/component/), and the
 [playground](/playground/) exercises each one in isolation.
 
 The analytic special functions — Hurwitz zeta, the Lerch transcendent, the polylog and

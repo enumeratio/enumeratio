@@ -21,7 +21,7 @@ export function hexOf(rgb: readonly [number, number, number]): string {
 }
 
 /**
- * `<notatio-color-slider name="c" value="#3451b2">` -- a swatch that opens the colour
+ * `<ColorSlider name="c" value="#3451b2">` -- a swatch that opens the colour
  * picker, Wolfram's `ColorSlider`. The binding `_c` is `RGBColor(r, g, b)` with the
  * parts in `0..1`, which is what a plot's colour attribute or a template can read.
  */

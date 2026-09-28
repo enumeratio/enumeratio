@@ -35,7 +35,8 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  * a bare list — see `StatsOptions`. The carrier types have to exist on `ce` already.
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
-  declareFamilies(ce);
+  const { permutationType, permutationCarrier = "Permutation" } = options;
+  declareFamilies(ce, permutationType === undefined ? {} : { [permutationCarrier]: permutationType });
   declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);

@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
-a-permutation-of-4-seeded			[Last, [List, [SeedRandom, 7], [Random, [Permutations, 4]]]]	[List, 1, 2, 3, 4]	one permutation of $\{1, 2, 3, 4\}$, drawn uniformly by index from the collection; seeded, so it is the same every time
+a-permutation-of-4-seeded			[Last, [List, [SeedRandom, 7], [Random, [Permutations, 4]]]]	[Permutation, [List, 1, 2, 3, 4]]	one permutation of $\{1, 2, 3, 4\}$, drawn uniformly by index from the collection; seeded, so it is the same every time
 a-count-draws-that-many	Scope		[Length, [Last, [List, [SeedRandom, 1], [Random, [IntegerPartitions, 10], 3]]]]	3	a count after the domain draws that many elements
 randominteger-is-random-over-a-range	Properties & Relations		[Equal, [Last, [List, [SeedRandom, 5], [RandomInteger, [List, 10, 20]]]], [Last, [List, [SeedRandom, 5], [Random, [Range, 10, 20]]]]]	True	[[RandomInteger]] is its Wolfram spelling over a [[Range]]: the same draw from the same stream

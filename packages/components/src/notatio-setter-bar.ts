@@ -4,13 +4,13 @@ import { ChoiceControl } from "./choice-control.ts";
 import { defineControl } from "./define.ts";
 
 /**
- * `<notatio-setter-bar name="k" values="1|2|3|5">` -- a row of buttons of which **one is
+ * `<SetterBar name="k" values="1|2|3|5">` -- a row of buttons of which **one is
  * down**, Wolfram's `SetterBar`. Click one to set it; arrows move the selection along
  * the bar. Entries are `|`-separated and may be `value -> label`; a value that looks
  * like mathematics is typeset. Inside a scope the binding `_k` is the entry's value
  * (a number, a named value) or its index for a bare word.
  *
- * `<notatio-radio-button-bar>` is the same control drawn with radio buttons.
+ * `<RadioButtonBar>` is the same control drawn with radio buttons.
  */
 export class NotatioSetterBar extends ChoiceControl {
   get multiple(): boolean {

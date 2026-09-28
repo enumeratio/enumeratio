@@ -96,6 +96,25 @@ const findstatIds = (definition: Definition): string[] => [
   ]),
 ];
 
+/**
+ * Give compute-engine's own head a statistic's carrier as one more argument: `Sign` of a
+ * permutation is its ±1, the same map onto the signs that a number's `Sign` is (Dean,
+ * 2026-09-28), so it generalises the head rather than overloading it. Every arm the head had
+ * is kept; only a value of the carrier reaches the definition.
+ */
+function extendEngineHead(ce: ComputeEngine, definition: Definition, type: string | undefined): void {
+  const found = ce.lookupDefinition(definition.head);
+  const operator = found !== undefined && "operator" in found ? found.operator : undefined;
+  if (operator === undefined || type === undefined) return;
+  (operator as { signature: unknown }).signature = ce.type(`((${type}) -> number) & ${String(operator.signature)}`);
+  const native = operator.evaluate;
+  operator.evaluate = (ops, options) => {
+    const subject = ops[0];
+    if (subject?.operator === definition.on) return applyDefinition(ce, definition, operandsOf(subject)[0] ?? subject);
+    return native?.(ops, options);
+  };
+}
+
 let bare: ComputeEngine | undefined;
 /** Whether compute-engine itself defines `head`, with a meaning of its own (`Sign`). */
 const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).lookupDefinition(head) !== undefined;
@@ -104,8 +123,8 @@ const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).l
  * File every definition in its carrier's `CombinatorialStat` table, and declare it as a
  * head of its own where the name is free. A taken name is fine in two cases, both explicit: the
  * table already holds another package's kernel for this very statistic (@enumeratio/collections'
- * permutation statistics), or compute-engine owns the name with another meaning (`Sign`), when
- * the statistic is reached through `CombinatorialStat` only. Anything else is a
+ * permutation statistics), or compute-engine owns the name (`Sign`), when its head is
+ * generalised to take the carrier too. Anything else is a
  * `StatisticCollisionError`, listing every one.
  *
  * Definitions for one head on several carriers share the head, the first declaring it; every
@@ -138,7 +157,9 @@ export function declareStatistics(
     claimed.add(definition.head);
     if (ce.lookupDefinition(definition.head) !== undefined) {
       const kernel = operationOf(ce, "CombinatorialStat", definition.on, definition.head)?.kernel;
-      if (kernel === undefined && !isEngineHead(definition.head)) collisions.push(signatureOf(definition));
+      if (kernel !== undefined) continue;
+      if (isEngineHead(definition.head)) extendEngineHead(ce, definition, type);
+      else collisions.push(signatureOf(definition));
       continue;
     }
 

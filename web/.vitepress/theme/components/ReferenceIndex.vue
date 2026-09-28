@@ -57,7 +57,7 @@ const reach = (() => {
       label: SOURCES[system as keyof typeof SOURCES].label,
       ...row,
     }))
-    .sort((a, b) => b.pointers - a.pointers);
+    .toSorted((a, b) => b.pointers - a.pointers);
   return { heads, covered, systems, pointers: systems.reduce((n, s) => n + s.pointers, 0) };
 })();
 const all = groups.reduce((n, group) => n + group.entries.length, 0);

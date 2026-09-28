@@ -7,5 +7,8 @@ a-rational-function-s-irrational-point	Minimize[Divide[Subtract[x, 1], Plus[Powe
 log-s-minimum-is-at-its-domain-edge	Minimize[Log[x], x]
 exp-s-infimum-is-not-attained	Minimize[Exp[x], x]
 declines-a-non-exact-critical-point	Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
+a-quartic-with-a-doubled-root	Minimize[Plus[Power[x, 4], Times[-2, Power[x, 2]], 1], x]
+a-product-of-two-quadratics	Minimize[Times[Plus[Power[x, 2], -3], Plus[Power[x, 2], -5]], x]
+declines-an-irreducible-cubic-factor	Minimize[Subtract[Subtract[Times[Rational[1, 4], Power[x, 4]], Times[Rational[1, 2], Power[x, 2]]], x], x]
 declines-more-than-one-variable	Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
 declines-sin-s-point-despite-an-exact-value	Minimize[Sin[x], x]

@@ -12,5 +12,5 @@ signatures:
   - call: TwoCycleCount(p)
     description: Cycles of size exactly two.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

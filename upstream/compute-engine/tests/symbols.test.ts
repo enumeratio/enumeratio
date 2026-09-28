@@ -12,8 +12,8 @@ test("a function-form patch's `heads` matches the keys its library function actu
   for (const patch of PATCHES) {
     if (typeof patch.library !== "function") continue;
     expect(patch.heads, patch.id).toBeDefined();
-    const returned = Object.keys(patch.library(ce)).sort();
-    expect(returned, patch.id).toEqual([...patch.heads!].sort());
+    const returned = Object.keys(patch.library(ce)).toSorted();
+    expect(returned, patch.id).toEqual([...patch.heads!].toSorted());
   }
 });
 

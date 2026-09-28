@@ -93,8 +93,8 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
 }
 
 /**
- * `<notatio-cell>` -- one In/Out pair: an editable input over a live read-only
- * `<notatio-out>` of the result. Renders in light DOM so the nested output inherits
+ * `<Cell>` -- one In/Out pair: an editable input over a live read-only
+ * `<Out>` of the result. Renders in light DOM so the nested output inherits
  * the page's MathLive styles.
  *
  * `value` is written in the syntax `format` names (`epsil` by default, or `latex`,
@@ -114,13 +114,13 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
  * both transitions; `notatio-change` fires on every edit, with the result as both
  * Epsil text and MathJSON.
  *
- * Inside a transcript (a `<notatio-dynamic-module>` ancestor, `transcriptHostOf`), a
+ * Inside a transcript (a `<DynamicModule>` ancestor, `transcriptHostOf`), a
  * cell evaluates only on COMMIT -- Enter or blur -- never on every keystroke: Wolfram
  * evaluates a notebook cell on Shift+Enter, not as you type, since each evaluation
  * advances the shared `$Line` history (`Out(n)` would otherwise land on every
  * intermediate keystroke). The `standard` (MathLive) editor already commits live
  * outside a transcript; inside one it holds the new value in `_raw` (so the field
- * itself stays responsive) and reflects `pending` until `<notatio-in>`'s own
+ * itself stays responsive) and reflects `pending` until `<In>`'s own
  * `notatio-commit` -- MathLive's native `change`, on Enter or blur -- lands. The text
  * editors (`input`/`full`/`wolfram`/`tex`) already commit only on Enter/blur outside
  * a transcript too, so this only changes the `standard` editor's behavior inside one.
@@ -150,7 +150,7 @@ export class NotatioCell extends LitElement {
     /** Forwarded to the Out: also report the substituted-but-unevaluated input. */
     plot: { type: Boolean },
     /**
-     * Pin the `standard` editor to a binding, forwarded to `<notatio-in>`: the symbol
+     * Pin the `standard` editor to a binding, forwarded to `<In>`: the symbol
      * name and its `\coloneq` become fixed chrome, and only the value can be edited. A
      * page *about* p keeps a p bound to something, whatever the reader types into it.
      */

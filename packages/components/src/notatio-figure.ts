@@ -31,7 +31,7 @@ function parseList(value: string): number[] {
 }
 
 /**
- * `<notatio-figure kind="permutation" value="[3,1,2]">` -- renders a
+ * `<Figure kind="permutation" value="[3,1,2]">` -- renders a
  * combinatorial element as an inline SVG glyph. `kind` is one of permutation,
  * partition, composition, subset, dyck, tree (preorder child-count word),
  * binary-tree (preorder shape word, 1 = internal); `value` is the element as an

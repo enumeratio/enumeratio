@@ -4,11 +4,20 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type ComponentDoc as Reflected, collectComponents as reflect } from "@enumeratio/frontend/reflect";
+import {
+  type ComponentDoc as Reflected,
+  collectComponents as reflect,
+  wrapperName,
+} from "@enumeratio/frontend/reflect";
 
 export type { AttributeDoc } from "@enumeratio/frontend/reflect";
 
 export interface ComponentDoc extends Reflected {
+  /** The Vue/React wrapper name (`BarChart3D`) -- the page's own name, and its route. Read
+   * here (Node, filesystem-free) rather than reimplemented client-side, since `wrapperName`
+   * itself is pure; the browser build just can't pull in this module for one function
+   * (`collectComponents` reads the filesystem at import time). */
+  name: string;
   /** The playground page that exercises this component, when there is one. */
   playground?: string;
 }
@@ -32,7 +41,7 @@ function playgroundPages(): Map<string, string> {
   const pages = new Map<string, string>();
   // A page named for the component wins; an index page, which mentions many of them,
   // is the last resort.
-  const files = playgroundFiles().sort((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
+  const files = playgroundFiles().toSorted((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
   for (const file of files) {
     const text = readFileSync(join(playgroundDir, file), "utf8");
     const slug = file.replace(/(?:\/?index)?\.md$/, "");
@@ -48,5 +57,5 @@ function playgroundPages(): Map<string, string> {
 /** Re-read every element module. Called per build (and per change, in dev). */
 export function collectComponents(): ComponentDoc[] {
   const playgrounds = playgroundPages();
-  return reflect(srcDir).map((c) => ({ ...c, playground: playgrounds.get(c.tag) }));
+  return reflect(srcDir).map((c) => ({ ...c, name: wrapperName(c.tag), playground: playgrounds.get(c.tag) }));
 }

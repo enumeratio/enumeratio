@@ -10,10 +10,10 @@ the review:
   branch cut, signed versus unsigned Stirling numbers of the first kind)
 - **our bug** — the interesting case, and the reason this exists
 
-Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.
+Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 2401, disagree 140, inconclusive 44, error 3
+## wolfram — agree 2407, disagree 144, inconclusive 44, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -21,6 +21,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `At/an-out-of-range-index-evaluates-to-nan-rather`                 | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
 | `BarnesG/an-exact-non-integer-argument-stays-symbolic`             | unevaluated    | `["BarnesG",["Rational",5,2]]`                                                               | `(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))`                                              |
 | `BetaRegularized/an-x-outside-0-1-is-left-unevaluated-rather-than` | domain         | `["BetaRegularized",2,2,3]`                                                                  | `8`                                                                                          |
+| `CaputoD/exact-order-x-vanishes`                                   | domain         | `0`                                                                                          | `CaputoD[x, {x, 3/2}]`                                                                       |
 | `CaputoD/integer-edge-case-vanishes`                               | domain         | `0`                                                                                          | `CaputoD[x, {x, 1.5}]`                                                                       |
 | `Cases/cases-wildcard-keeps-everything`                            | convention     | `[1, a, 2, b]`                                                                               | `{}`                                                                                         |
 | `ClausenCl/cl-2-0-0`                                               | unevaluated    | `0`                                                                                          | `If[OddQ, Zeta[2], 0]`                                                                       |
@@ -113,7 +114,10 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `MatrixRank/a-vector-is-treated-as-a-1-n-matrix-wolfram`           | domain         | `1`                                                                                          | `MatrixRank[{1, 2, 3}]`                                                                      |
 | `Max/with-no-arguments-compute-engine-returns-nan`                 | convention     | `NaN`                                                                                        | `-Infinity`                                                                                  |
 | `MemoryConstrained/in-process-the-call-simply-does-not-reduce-see` | unevaluated    | `["MemoryConstrained",["Add",1,2],1000000]`                                                  | `3`                                                                                          |
+| `Minimize/a-product-of-two-quadratics`                             | shape          | `[-1, [["Rule","x",-2]]]`                                                                    | `{-1, {x -> -2}}`                                                                            |
+| `Minimize/a-quartic-with-a-doubled-root`                           | shape          | `[0, [["Rule","x",-1]]]`                                                                     | `{0, {x -> -1}}`                                                                             |
 | `Minimize/a-rational-function-s-irrational-point`                  | shape          | `[-1.2071067811865475, [["Rule","x",["Add",1,["Negate",["Sqrt",2]]]]]]`                      | `{-(Sqrt[2]/(1 + (1 - Sqrt[2])^2)), {x -> 1 - Sqrt[2]}}`                                     |
+| `Minimize/declines-a-non-exact-critical-point`                     | shape          | `[-4, [["Rule","x",["Negate",["Sqrt",2]]]]]`                                                 | `{-4, {x -> -Sqrt[2]}}`                                                                      |
 | `ModularMatrix/words-multiply-their-matrices`                      | domain         | `["ModularMatrix",1,1,1,2]`                                                                  | `"L" . "R"`                                                                                  |
 | `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`       | domain         | `["MoebiusMu",0]`                                                                            | `0`                                                                                          |
 | `MultiZetaValue/s-1-2-stays-symbolic-outside-the-depth-2-both`     | domain         | `["MultiZetaValue",1,2]`                                                                     | `315188.1291752872`                                                                          |

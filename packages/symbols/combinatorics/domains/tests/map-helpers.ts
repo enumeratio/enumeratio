@@ -54,7 +54,7 @@ export function cyclesOf(p: number[]): number[][] {
 export const cycleTypeOf = (p: number[]): number[] =>
   cyclesOf(p)
     .map((c) => c.length)
-    .sort((a, b) => b - a);
+    .toSorted((a, b) => b - a);
 export const conjugateOf = (parts: number[]): number[] => {
   const max = Math.max(0, ...parts);
   return Array.from({ length: max }, (_, k) => parts.filter((part) => part >= k + 1).length);

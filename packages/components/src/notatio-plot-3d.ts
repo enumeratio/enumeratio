@@ -40,7 +40,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
   (e as unknown as { ops?: readonly BoxedExpression[] }).ops;
 
 /**
- * `<notatio-plot-3d value="Sin(x) * Cos(y)" x-domain="-3,3" y-domain="-3,3">` --
+ * `<Plot3D value="Sin(x) * Cos(y)" x-domain="-3,3" y-domain="-3,3">` --
  * a surface plot of a bivariate expression, projected to SVG. `value` is
  * **Epsil**; LaTeX is accepted inside a `$…$` island.
  * Samples an `n`×`n` grid by substituting the two free variables (defaulting to

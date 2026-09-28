@@ -249,8 +249,11 @@ function areIsomorphic(g1: GraphModel, g2: GraphModel): boolean | undefined {
   if (n > ISOMORPHISM_VERTEX_LIMIT) return undefined;
   const deg1 = degrees(g1);
   const deg2 = degrees(g2);
-  const sorted = (m: ReadonlyMap<string, number>, order: readonly string[]): number[] =>
-    order.map((v) => m.get(v) ?? 0).sort((a, b) => a - b);
+  const sorted = (m: ReadonlyMap<string, number>, order: readonly string[]): number[] => {
+    const degs = order.map((v) => m.get(v) ?? 0);
+    degs.sort((a, b) => a - b);
+    return degs;
+  };
   if (JSON.stringify(sorted(deg1, g1.order)) !== JSON.stringify(sorted(deg2, g2.order))) return false;
 
   const target = pairSet(g1, g1.order);

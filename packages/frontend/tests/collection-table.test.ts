@@ -41,13 +41,17 @@ test("counts are exact below 2^53 and flagged approximate above", () => {
 
 test("cells sort numerically first, then by text", () => {
   const cells = [{ text: "b" }, { num: 3, text: "3" }, { text: "a" }, { num: -1, text: "-1" }];
-  expect([...cells].sort(compareCells).map((c) => c.text)).toEqual(["-1", "3", "a", "b"]);
+  expect([...cells].toSorted(compareCells).map((c) => c.text)).toEqual(["-1", "3", "a", "b"]);
 });
 
 test("glyph adapters read flat lists and set-partition blocks", () => {
   expect(flatInts(["List", 2, 1])).toEqual([2, 1]);
   expect(flatInts(["List", ["List", 1], 2])).toBeUndefined();
   expect(blocksToRgs([[1, 2, 4], [3], [5]])).toEqual([0, 0, 1, 0, 2]);
+});
+
+test("flatInts unwraps a carrier value so the permutation glyph still draws it", () => {
+  expect(flatInts(["Permutation", ["List", 2, 1]])).toEqual([2, 1]);
 });
 
 // The per-column wrap decision (BL-1): a statistic wraps the row in its carrier only when

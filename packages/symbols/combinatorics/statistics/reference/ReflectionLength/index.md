@@ -12,5 +12,5 @@ signatures:
   - call: ReflectionLength(p)
     description: n minus the number of cycles — the minimum number of transpositions.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

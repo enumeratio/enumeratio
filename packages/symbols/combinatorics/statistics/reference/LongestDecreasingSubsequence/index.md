@@ -16,5 +16,5 @@ signatures:
   - call: LongestDecreasingSubsequence(p)
     description: The length of a longest decreasing subsequence.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

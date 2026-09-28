@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
+import { visualSymbol } from "@enumeratio/frontend/symbols";
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
+import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
 import { escapeHtml, renderProseMath } from "../../prose-math.ts";
@@ -9,6 +11,14 @@ import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue
 
 const props = defineProps<{ name: string }>();
 const entry = computed(() => getEntry(props.name));
+
+// Where this head is drawn, if it is -- symbols.ts's own head<->tag map
+// (design/components-and-symbols.md), not the record's `bindings` (a `component` binding is
+// about an implementation origin, not this cross-link).
+const drawnAs = computed(() => {
+  const tag = visualSymbol(props.name)?.tag;
+  return tag === undefined ? undefined : components.find((c) => c.tag === tag)?.name;
+});
 
 // Where this head lives elsewhere. Rows about one call form (Zeta at two arguments is
 // Hurwitz's) sit with that signature; everything else heads the page.
@@ -210,7 +220,7 @@ const grouped = computed(() => {
     return i === -1 ? CATEGORY_ORDER.length : i;
   };
   return [...byCategory.entries()]
-    .sort(([a], [b]) => rank(a) - rank(b))
+    .toSorted(([a], [b]) => rank(a) - rank(b))
     .map(([category, items]) => ({ category, items }));
 });
 // Examples kept as data (grid points, edge cases) that the page leaves out.
@@ -246,6 +256,15 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 
     <p class="ref-meta">
       <span>Domain: {{ entry.domain }}</span>
+      <template v-if="drawnAs">
+        <span class="sep">·</span>
+        <span
+          >Drawn as
+          <a :href="`/reference/component/${drawnAs}`"
+            ><code>{{ drawnAs }}</code></a
+          ></span
+        >
+      </template>
     </p>
 
     <details v-if="entry.details?.length" id="details" class="ref-details" open>
@@ -342,6 +361,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
               <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
             </template>
           </template>
+          <!-- The value is held to one known from outside our evaluation (tests/known.test.ts). -->
+          <p v-if="ex.source" class="ref-known">Known value · {{ ex.source }}</p>
         </div>
       </details>
     </ClientOnly>
@@ -507,6 +528,11 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 .ref-example.is-planned {
   border-style: dashed;
   border-color: var(--vp-c-brand-1);
+}
+.ref-known {
+  margin: 0.25rem 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.78rem;
 }
 .ref-planned-badge {
   margin-left: 0.5rem;

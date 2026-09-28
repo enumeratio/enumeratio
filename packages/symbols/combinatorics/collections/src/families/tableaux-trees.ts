@@ -108,7 +108,8 @@ export function ParkingFunctionRank(e: number[], n: number): number {
 export function IsParkingFunctionOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e) || e.length !== n) return false;
   for (const x of e) if (!Number.isInteger(x) || x < 1 || x > n) return false;
-  const b = (e as number[]).slice().sort((x, y) => x - y);
+  const b = (e as number[]).slice();
+  b.sort((x, y) => x - y);
   for (let i = 0; i < n; i++) if (b[i] > i + 1) return false;
   return true;
 }
@@ -197,7 +198,8 @@ export function LabeledGraphUnrank(n: number, rank: number): number[][] {
 }
 export function LabeledGraphRank(e: number[][], n: number): number {
   const edges = edgePairs(n);
-  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v)).sort((a, b) => a - b);
+  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v));
+  idx.sort((a, b) => a - b);
   return SubsetRank(idx);
 }
 export function IsLabeledGraphOf(e: unknown, n: number): boolean {
@@ -226,7 +228,8 @@ export function LabeledGraphByEdgesUnrank(n: number, m: number, rank: number): n
 }
 export function LabeledGraphByEdgesRank(e: number[][], n: number): number {
   const edges = edgePairs(n);
-  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v)).sort((a, b) => a - b);
+  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v));
+  idx.sort((a, b) => a - b);
   return KSubsetRank(idx);
 }
 export function IsLabeledGraphByEdgesOf(e: unknown, n: number, m: number): boolean {

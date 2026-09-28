@@ -14,5 +14,5 @@ signatures:
   - call: LongestRun(p)
     description: The length of the longest run of consecutive increases.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

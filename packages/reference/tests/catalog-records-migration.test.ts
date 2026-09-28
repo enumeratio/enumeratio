@@ -45,7 +45,7 @@ test("catalog-records-data.ts is what the current records collect to", () => {
   }
 
   const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
-  const byName = <T extends { name: string }>(rows: T[]): T[] => [...rows].sort((a, b) => cmp(a.name, b.name));
+  const byName = <T extends { name: string }>(rows: T[]): T[] => [...rows].toSorted((a, b) => cmp(a.name, b.name));
 
   expect(CARRIERS.map((c) => c.name)).toEqual(byName(carriers).map((c) => c.name));
   expect(COLLECTIONS.map(({ description: _d, ...rest }) => rest)).toEqual(byName(collections).map((c) => c));

@@ -70,7 +70,7 @@ const GLYPH_KINDS = new Set<GlyphKind>([
 ]);
 
 /**
- * `<notatio-collection-table expr="Subsets(4)">` -- a paged table over a lazy indexed
+ * `<CollectionTable expr="Subsets(4)">` -- a paged table over a lazy indexed
  * collection. Rows are produced by unranking (`At(expr, i)`), one page at a time, so a
  * collection is never materialised: `SymmetricGroup(20)` pages as cheaply as
  * `Subsets(4)`, and the `#` column is the index that reproduces each row.

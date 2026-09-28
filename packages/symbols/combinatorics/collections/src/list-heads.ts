@@ -83,6 +83,8 @@ const applyOrderingSpec = (full: readonly number[], spec: OrderingSpec): number[
       if (start === undefined || end === undefined || end < start) return [];
       return full.slice(start, end + 1);
     }
+    default:
+      throw new Error("unreachable: OrderingSpec.kind is exhaustive above");
   }
 };
 
@@ -248,7 +250,11 @@ export function declareListHeads(ce: ComputeEngine): void {
     () => (ops) => {
       const items = operandsOf(ops[0]);
       const full = fullOrdering(items);
-      if (ops.length === 3) return ce.box(["List", ...[...full].reverse()]);
+      if (ops.length === 3) {
+        const reversed = [...full];
+        reversed.reverse();
+        return ce.box(["List", ...reversed]);
+      }
       if (ops.length === 1) return ce.box(["List", ...full]);
       return ce.box(["List", ...applyOrderingSpec(full, orderingSpecOf(ops[1])!)]);
     },
@@ -292,7 +298,11 @@ export function declareListHeads(ce: ComputeEngine): void {
       ops[0].operator === "List" &&
       operandsOf(ops[0]).length > 0 &&
       operandsOf(ops[0]).every((element) => stringAt(element) !== undefined),
-    () => (ops) => ce.box(["List", ...[...operandsOf(ops[0])].sort(naturalCompare)]),
+    () => (ops) => {
+      const sorted = [...operandsOf(ops[0])];
+      sorted.sort(naturalCompare);
+      return ce.box(["List", ...sorted]);
+    },
     1,
   );
 
@@ -306,7 +316,9 @@ export function declareListHeads(ce: ComputeEngine): void {
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       if (result !== undefined && result.operator !== "Error") return result;
-      return ce.function(ops[0].operator, [...operandsOf(ops[0])].sort(naturalCompare));
+      const sorted = [...operandsOf(ops[0])];
+      sorted.sort(naturalCompare);
+      return ce.function(ops[0].operator, sorted);
     },
     1,
   );
@@ -319,9 +331,10 @@ export function declareListHeads(ce: ComputeEngine): void {
     () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
-      return result === undefined || result.operator !== "Set"
-        ? result
-        : ce.box(["Set", ...[...operandsOf(result)].sort(naturalCompare)]);
+      if (result === undefined || result.operator !== "Set") return result;
+      const sorted = [...operandsOf(result)];
+      sorted.sort(naturalCompare);
+      return ce.box(["Set", ...sorted]);
     },
     { min: 1 },
   );

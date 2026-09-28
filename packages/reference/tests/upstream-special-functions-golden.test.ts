@@ -59,7 +59,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every moved head", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(
+  expect([...heads].toSorted()).toEqual(
     [
       "BarnesG",
       "ClausenCl",
@@ -70,6 +70,6 @@ test("the golden file covers every moved head", () => {
       "LogBarnesG",
       "LogGamma",
       "StieltjesGamma",
-    ].sort(),
+    ].toSorted(),
   );
 });

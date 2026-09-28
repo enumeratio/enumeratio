@@ -135,9 +135,18 @@ export function operationOf(
 }
 
 /** The carrier `subject` is a value of: its type matched as protocol dispatch matches it. */
+const parsedTypes = new WeakMap<Carrier, ReturnType<ComputeEngine["type"]>>();
+
 function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpression): Carrier | undefined {
-  for (const carrier of registry.carriers.values())
-    if (carrier.type !== undefined && subject.type.matches(ce.type(carrier.type))) return carrier;
+  // A carrier's own constructor names it outright: `Permutation([…])` is a permutation.
+  const named = subject.operator === undefined ? undefined : registry.carriers.get(subject.operator);
+  if (named?.type !== undefined) return named;
+  for (const carrier of registry.carriers.values()) {
+    if (carrier.type === undefined) continue;
+    let type = parsedTypes.get(carrier);
+    if (type === undefined) parsedTypes.set(carrier, (type = ce.type(carrier.type)));
+    if (subject.type.matches(type)) return carrier;
+  }
   return undefined;
 }
 
@@ -180,8 +189,12 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
         const collection = symbolNameOf(subject) ?? subject.operator;
         const element = collection === undefined ? undefined : registry.collections.get(collection);
         if (element === undefined || operationOf(ce, head, element, name) === undefined) return undefined;
+        // A collection typed by its carrier already yields carrier values; a bare one gets each
+        // element constructed.
+        const type = registry.carriers.get(element)?.type;
+        const typed = type !== undefined && subject.type.matches(ce.type(`collection<${type}>`));
         const x = ce.symbol("_element");
-        const each = ce.function("Function", [ce.function(head, [ce.function(element, [x]), key]), x]);
+        const each = ce.function("Function", [ce.function(head, [typed ? x : ce.function(element, [x]), key]), x]);
         return ce.function("Map", [each, subject]).evaluate(options);
       },
     });

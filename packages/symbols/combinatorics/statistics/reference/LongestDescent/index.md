@@ -12,5 +12,5 @@ signatures:
   - call: LongestDescent(path)
     description: The longest run of consecutive down steps.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

@@ -31,12 +31,12 @@ import {
 } from "@enumeratio/frontend";
 
 /**
- * Typeset markup by the LaTeX that produced it, shared by every `<notatio-out>` on the
+ * Typeset markup by the LaTeX that produced it, shared by every `<Out>` on the
  * page. Converting LaTeX to markup is the expensive part of a re-render, and a control
  * driving a cell (a worksheet's slider) re-renders every frame -- so without this, a
  * dragged control re-typesets every *unchanged* result on the page too, dozens of times
  * a second, which measured as a frozen renderer rather than a merely slow one. General,
- * not worksheet-specific: any `<notatio-out>` benefits, since a hit costs nothing and a
+ * not worksheet-specific: any `<Out>` benefits, since a hit costs nothing and a
  * distinct LaTeX result is not one worth losing sleep over.
  */
 const markupCache = new Map<string, string>();
@@ -88,7 +88,7 @@ function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefin
     const substituted = substitutedForm(engine, raw);
     return {
       source: toInputForm(substituted.json as MathJsonExpression),
-      free: [...substituted.unknowns].sort(),
+      free: [...substituted.unknowns].toSorted(),
     };
   } catch {
     return undefined;
@@ -150,7 +150,7 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
   return expr;
 }
 
-/** A `<notatio-dynamic-module>` that can hand out its shared evaluation scope. */
+/** A `<DynamicModule>` that can hand out its shared evaluation scope. */
 interface TranscriptHost extends Element {
   transcriptFor(engine: ComputeEngine): Transcript;
   /**
@@ -173,11 +173,11 @@ interface TranscriptHost extends Element {
 }
 
 /**
- * The nearest ancestor `<notatio-dynamic-module>`, if this Out sits inside one -- the way
+ * The nearest ancestor `<DynamicModule>`, if this Out sits inside one -- the way
  * a forced `env` is read from `closest("[env]")` (`#visualize`, below). A cell outside any
  * module evaluates exactly as it does today: no scope, no history, no `%`/`Out(n)`.
  *
- * Exported so `<notatio-cell>` can ask the same question: inside a transcript, Wolfram
+ * Exported so `<Cell>` can ask the same question: inside a transcript, Wolfram
  * evaluates a cell only on Shift+Enter, so the cell defers handing a new value to its Out
  * until the editor commits, rather than on every keystroke.
  */
@@ -271,7 +271,7 @@ const FORM_LANG: Partial<Record<Form, string>> = {
 };
 
 /**
- * `<notatio-out>` -- read-only typeset rendering of a compute-engine
+ * `<Out>` -- read-only typeset rendering of a compute-engine
  * expression. Accepts LaTeX (the default: it renders an encoding it is handed, and the
  * cell hands it the editor's LaTeX), MathJSON or Epsil; optionally evaluates first.
  * Renders in light DOM so the host page's MathLive static stylesheet applies.
@@ -325,7 +325,7 @@ export class NotatioOut extends LitElement {
      * `notatio-result` event's `plot` detail, for a consumer that draws the INPUT rather
      * than the fully-evaluated output -- so a complex portrait or plot doesn't collapse
      * at a pole a bound parameter crosses (`substitutedForm`). Only meaningful for a cell
-     * inside a `<notatio-dynamic-module>` (`evaluate` and a shared scope); ignored
+     * inside a `<DynamicModule>` (`evaluate` and a shared scope); ignored
      * otherwise.
      */
     plot: { type: Boolean },
@@ -699,7 +699,7 @@ export class NotatioOut extends LitElement {
   // portrait's fragment shader (<notatio-complex-plot>); one or two reals, the plot grid's
   // compute shader (gpu-eval). Anything neither path takes has no shader form.
   async #gpuShader(expr: { unknowns: ReadonlyArray<string> }): Promise<string | undefined> {
-    const unknowns = [...expr.unknowns].sort();
+    const unknowns = [...expr.unknowns].toSorted();
     if (unknowns.length === 0 || unknowns.length > 2) return undefined;
     try {
       if (unknowns.length === 1) {

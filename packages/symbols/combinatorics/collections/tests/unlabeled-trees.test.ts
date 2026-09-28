@@ -94,7 +94,7 @@ function canonicalRooted(adj: number[][], root: number, parent: number): string 
   const kids = adj[root]
     .filter((v) => v !== parent)
     .map((v) => canonicalRooted(adj, v, root))
-    .sort();
+    .toSorted();
   return `(${kids.join("")})`;
 }
 function centroids(adj: number[][], n: number): number[] {
@@ -134,7 +134,7 @@ function centroids(adj: number[][], n: number): number[] {
 function canonicalFree(adj: number[][], n: number): string {
   if (n === 1) return "()";
   const cs = centroids(adj, n);
-  return cs.map((c) => canonicalRooted(adj, c, 0)).sort()[0];
+  return cs.map((c) => canonicalRooted(adj, c, 0)).toSorted()[0];
 }
 
 test("brute force: RootedUnlabeledTrees(n) isomorphism-class count matches A000081", () => {

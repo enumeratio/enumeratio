@@ -323,7 +323,7 @@ export function defineUsed(root: ParentNode): number {
   };
   if (root instanceof Element) consider(root);
   for (const el of root.querySelectorAll("*")) consider(el);
-  const tags = [...deepest].sort((a, b) => b[1] - a[1]);
+  const tags = [...deepest].toSorted((a, b) => b[1] - a[1]);
   for (const [tag] of tags) defineGeneric(headOfTag(tag)!);
   return tags.length;
 }

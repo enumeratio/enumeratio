@@ -12,5 +12,5 @@ signatures:
   - call: Depth(p)
     description: Half the total displacement, (1/2) * sum |p(i) - i|.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

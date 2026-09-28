@@ -137,7 +137,9 @@ function canonicalizeAndOr(ce: ComputeEngine, expr: BoxedExpression): BoxedExpre
 function dedupeSorted(exprs: readonly BoxedExpression[]): BoxedExpression[] {
   const seen = new Map<string, BoxedExpression>();
   for (const e of exprs) seen.set(exprKey(e), e);
-  return [...seen.values()].sort((a, b) => exprKey(a).localeCompare(exprKey(b)));
+  const uniq = [...seen.values()];
+  uniq.sort((a, b) => exprKey(a).localeCompare(exprKey(b)));
+  return uniq;
 }
 
 /** A literal, decomposed into its polarity and the key of the atom it names — `Not(p)` and
@@ -169,7 +171,9 @@ function hasComplementaryPair(literals: readonly Literal[]): boolean {
 function dedupeLiterals(literals: readonly Literal[]): Literal[] {
   const seen = new Map<string, Literal>();
   for (const l of literals) seen.set(literalSortKey(l), l);
-  return [...seen.values()].sort((a, b) => literalSortKey(a).localeCompare(literalSortKey(b)));
+  const uniq = [...seen.values()];
+  uniq.sort((a, b) => literalSortKey(a).localeCompare(literalSortKey(b)));
+  return uniq;
 }
 
 /** Flatten `expr` (an NNF tree of `And`/`Or`/literal) into a list of clauses by distributing
@@ -206,9 +210,8 @@ function buildNormalForm(
 ): BoxedExpression {
   const clauses = rawClauses.map((c) => dedupeLiterals(c.map(toLiteral))).filter((c) => !hasComplementaryPair(c));
   const clauseKey = (c: readonly Literal[]) => c.map(literalSortKey).join(",");
-  const uniqueClauses = [...new Map(clauses.map((c) => [clauseKey(c), c])).values()].sort((a, b) =>
-    clauseKey(a).localeCompare(clauseKey(b)),
-  );
+  const uniqueClauses = [...new Map(clauses.map((c) => [clauseKey(c), c])).values()];
+  uniqueClauses.sort((a, b) => clauseKey(a).localeCompare(clauseKey(b)));
   if (uniqueClauses.length === 0) return ce.symbol(emptyValue);
   const clauseExprs = uniqueClauses.map((literals) => {
     const exprs = literals.map((l) => l.expr);

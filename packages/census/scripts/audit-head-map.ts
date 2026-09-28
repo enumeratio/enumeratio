@@ -331,6 +331,8 @@ function producedAnswer(ce: ComputeEngine, head: string, args: unknown[], kind: 
       const count = boxed.evaluate().count;
       return typeof count === "number" && Number.isFinite(count);
     }
+    default:
+      throw new Error("unreachable: ReturnKind is exhaustive above");
   }
 }
 
@@ -349,7 +351,7 @@ export function auditHeadMap(): AuditEntry[] {
   const ce = fullEngine();
   const entries: AuditEntry[] = [];
 
-  for (const head of Object.keys(HEADS).sort()) {
+  for (const head of Object.keys(HEADS).toSorted()) {
     const def = ce.lookupDefinition(head);
     const op = def && "operator" in def ? def.operator : undefined;
 

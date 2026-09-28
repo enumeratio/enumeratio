@@ -23,5 +23,5 @@ signatures:
   - call: DurfeeSquare(partition)
     description: "The side of the Durfee square: the largest d with at least d parts of size at least d."
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

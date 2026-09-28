@@ -77,7 +77,7 @@ export function multiply(x: IdeleFinite, y: IdeleFinite): IdeleFinite | undefine
 function withScale(scale: Rational, units: readonly Adic[]): IdeleFinite {
   const map = new Map<bigint, Adic>();
   for (const u of units) if (informative(u)) map.set(u.base, u);
-  return { kind: "local", scale, units: new Map([...map].sort(([a], [b]) => (a < b ? -1 : 1))) };
+  return { kind: "local", scale, units: new Map([...map].toSorted(([a], [b]) => (a < b ? -1 : 1))) };
 }
 
 export function invert(x: IdeleFinite): IdeleFinite | undefined {

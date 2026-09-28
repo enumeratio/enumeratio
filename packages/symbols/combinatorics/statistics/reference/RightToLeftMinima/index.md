@@ -12,5 +12,5 @@ signatures:
   - call: RightToLeftMinima(p)
     description: Positions smaller than everything after them.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

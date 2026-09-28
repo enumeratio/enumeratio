@@ -12,5 +12,5 @@ signatures:
   - call: MultiplicityOfLargestPart(partition)
     description: How many parts equal the largest.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

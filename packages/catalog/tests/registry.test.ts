@@ -29,7 +29,7 @@ test("search path order is the precedence rule, and shadowing is reportable", ()
     reg
       .candidates("Trees")
       .map((r) => r.context)
-      .sort(),
+      .toSorted(),
   ).toEqual(["ada", "enumeratio"]);
 
   reg.unbless("ada");

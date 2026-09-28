@@ -170,7 +170,7 @@ export function divergingHeads(bare: ComputeEngine, ours: ComputeEngine, corpus:
     while (isCall(e) && e[0] === "N" && e.length === 2) e = e[1] as MathJSON;
     if (isCall(e)) heads.add(e[0] as string);
   }
-  return [...heads].sort();
+  return [...heads].toSorted();
 }
 
 /** The whole catalogue, classified. */

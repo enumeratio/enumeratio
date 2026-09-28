@@ -12,5 +12,5 @@ signatures:
   - call: PartsAtLeastTwo(partition)
     description: Parts of size at least 2.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

@@ -16,7 +16,7 @@ test("Foata (via the engine) is a bijection on S_n for n <= 5, sending k cycles 
       const word = result(["Foata", perm(...p)]) as readonly unknown[];
       const image = word.slice(1) as number[];
       expect(
-        image.slice().sort((a, b) => a - b),
+        image.slice().toSorted((a, b) => a - b),
         `[${p.join(", ")}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));

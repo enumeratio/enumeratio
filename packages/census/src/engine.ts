@@ -69,6 +69,14 @@ type Declare = (ce: ComputeEngine) => void;
 const domainTypes = (): Record<string, string> =>
   Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
 
+// Statistics take each carrier's type by its name, as the site's engine gives them.
+// SetPartition is held back there: domains reads it as a restricted growth string, while
+// every set-partition definition works in blocks.
+const carrierTypes = (): Record<string, string> =>
+  Object.fromEntries(
+    DOMAINS.filter((domain) => domain.name !== "SetPartition").map((domain) => [domain.name, domain.type]),
+  );
+
 /**
  * Every declaration with the package that owns it, in an order that satisfies what depends
  * on what. The package is the directory name, as the manifest names packages: what a step
@@ -105,12 +113,14 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // later, would replace this package's wider signature (the real index, the two-argument
   // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
   ["number-theory", declareNumberTheory],
-  ["collections", declareCollections],
+  // The carriers before collections: the permutation families yield `Permutation` values, typed
+  // by the minted type, as the site's engine has them.
+  ["domains", declareDomains],
+  ["collections", (ce) => declareCollections(ce, { permutationType: "permutation" })],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   ["structures", declareStructures],
   ["formats", declareGraphics],
   ["boxes", declareBoxes],
-  ["domains", declareDomains],
   // AFTER declareCollections (above), so a plural a collection family already claims
   // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
   // bare symbol first.
@@ -126,7 +136,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   [
     "statistics",
     (ce) => {
-      declareStatistics(ce, ALL_STATISTICS, { domainTypes: domainTypes() });
+      declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes() });
       declareDistributions(ce);
       declareDistributions2(ce);
       declareDistributions3(ce);
@@ -189,5 +199,5 @@ interface Scope {
 /** What declaring our libraries ADDS to a bare engine — the census proper. */
 export function declaredNames(): string[] {
   const bare = bindings(new ComputeEngine());
-  return [...bindings(fullEngine())].filter((name) => !bare.has(name)).sort();
+  return [...bindings(fullEngine())].filter((name) => !bare.has(name)).toSorted();
 }

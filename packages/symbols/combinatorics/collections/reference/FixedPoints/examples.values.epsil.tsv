@@ -1,4 +1,4 @@
 id	in	out
-only-1-is-fixed	FixedPoints([1, 3, 2])	1
-the-identity-fixes-all	FixedPoints([1, 2, 3])	3
-a-derangement-fixes-nothing	FixedPoints([2, 3, 1])	0
+only-1-is-fixed	FixedPoints(Permutation([1, 3, 2]))	1
+the-identity-fixes-all	FixedPoints(Permutation([1, 2, 3]))	3
+a-derangement-fixes-nothing	FixedPoints(Permutation([2, 3, 1]))	0

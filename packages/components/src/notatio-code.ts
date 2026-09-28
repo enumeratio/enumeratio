@@ -3,7 +3,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { highlightCode } from "@enumeratio/frontend";
 
 /**
- * `<notatio-code language="wolfram" value="Binomial[n, k]">` -- a small code box
+ * `<Code language="wolfram" value="Binomial[n, k]">` -- a small code box
  * for source in a named language (wolfram, python, javascript, latex, json,
  * glsl, …). Read-only by default (a `<pre>`), or an editable `<textarea>` that
  * emits `notatio-code-change` with `{ value }`. Syntax highlighting is a planned

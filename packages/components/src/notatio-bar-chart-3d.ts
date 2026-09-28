@@ -38,7 +38,7 @@ function toLabels(raw: string): string[] | undefined {
 }
 
 /**
- * `<notatio-bar-chart-3d data="[[1,2],[3,4]]">` -- a matrix of heights as 3-D
+ * `<BarChart3D data="[[1,2],[3,4]]">` -- a matrix of heights as 3-D
  * bars (Wolfram's `BarChart3D`), orthographically projected. `data[j][i]` is
  * the bar in row `j`, column `i`; a flat list reads as a single row. Each bar
  * shows its top face and the two sides that turn toward the viewer, shaded by

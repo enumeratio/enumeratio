@@ -33,7 +33,7 @@ export interface Poset {
  */
 function build(name: string, labels: readonly string[], leq: (a: string, b: string) => boolean): Poset {
   const below = new Map(labels.map((a) => [a, labels.filter((b) => leq(b, a)).length]));
-  const sorted = [...labels].sort((a, b) => (below.get(a) ?? 0) - (below.get(b) ?? 0) || a.localeCompare(b));
+  const sorted = [...labels].toSorted((a, b) => (below.get(a) ?? 0) - (below.get(b) ?? 0) || a.localeCompare(b));
   return {
     name,
     elements: sorted,

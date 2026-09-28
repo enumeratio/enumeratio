@@ -43,6 +43,9 @@ const EXAMPLE_COLUMNS: readonly (readonly [column: string, field: string, cell: 
   ["group", "group", "text"],
   ["expr", "expr", "flow"],
   ["expected", "expected", "flow"],
+  ["known", "known", "flow"],
+  ["tolerance", "tolerance", "flow"],
+  ["source", "source", "text"],
   ["caption", "caption", "text"],
   ["aspirational", "aspirational", "flow"],
   ["volatile", "volatile", "flow"],
@@ -96,13 +99,13 @@ async function indexText(fields: Record<string, unknown>, body: string): Promise
 
 function exampleTable(examples: readonly ReferenceExample[], record: HeadImplementations): string {
   const fields = new Set(EXAMPLE_COLUMNS.map(([, field]) => field));
-  const extra = [...new Set(examples.flatMap(Object.keys))].filter((k) => !fields.has(k) && k !== "others").sort();
+  const extra = [...new Set(examples.flatMap(Object.keys))].filter((k) => !fields.has(k) && k !== "others").toSorted();
   const hand = new Map<string, Set<string>>(); // system -> hand fields it uses
   for (const rows of Object.values(record))
     for (const [system, row] of Object.entries(rows))
       for (const field of Object.keys(row))
         if (HAND.has(field)) (hand.get(system) ?? hand.set(system, new Set()).get(system)!).add(field);
-  const systems = [...hand.keys()].sort(bySystem);
+  const systems = [...hand.keys()].toSorted(bySystem);
   const handColumns = systems.flatMap((system) =>
     HAND_FIELDS.filter(([field]) => hand.get(system)!.has(field)).map(([field, cell]) => ({ system, field, cell })),
   );
@@ -138,7 +141,7 @@ function valueTable(system: string, examples: readonly ReferenceExample[], recor
         if (field === "tex") ["tex.in", "tex.out"].forEach((c) => present.add(c));
         else if (value !== undefined) present.add(field);
   const known = VALUE_COLUMNS.map(([c]) => c).filter((c) => present.has(c));
-  const extra = [...present].filter((c) => !VALUE_COLUMNS.some(([k]) => k === c)).sort();
+  const extra = [...present].filter((c) => !VALUE_COLUMNS.some(([k]) => k === c)).toSorted();
   const columns = ["id", ...known, ...extra];
   const rows = examples.map(({ id }) => {
     const source = rowOf(id) ?? {};
@@ -164,7 +167,7 @@ function bySystem(a: string, b: string): number {
 
 /** Every system with a row for some example. */
 function systemsOf(record: HeadImplementations): string[] {
-  return [...new Set(Object.values(record).flatMap((rows) => Object.keys(rows)))].sort(bySystem);
+  return [...new Set(Object.values(record).flatMap((rows) => Object.keys(rows)))].toSorted(bySystem);
 }
 
 // --- a head's folder ------------------------------------------------------------------
@@ -183,7 +186,7 @@ export function headNames(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true })
     .filter((e) => e.isDirectory() && existsSync(join(dir, e.name, INDEX_FILE)))
     .map((e) => e.name)
-    .sort();
+    .toSorted();
 }
 
 export const headExists = (dir: string, head: string): boolean => existsSync(join(dir, head, INDEX_FILE));
@@ -232,7 +235,7 @@ export function decodeHead(files: ReadonlyMap<string, string>): HeadRecord {
     }
   }
   const ids = examples.map((e) => e.id);
-  for (const [file, text] of [...files].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
+  for (const [file, text] of [...files].toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
     if (!file.startsWith(VALUES_PREFIX) || !file.endsWith(VALUES_SUFFIX)) continue;
     const system = file.slice(VALUES_PREFIX.length, -VALUES_SUFFIX.length);
     const table = parseTsv(text);

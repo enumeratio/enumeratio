@@ -24,7 +24,7 @@ features:
   - title: Checked, not claimed
     details: Every symbol crosswalks to Wikipedia, MathWorld, the DLMF, Fungrim, the OEIS, Wolfram, Sage and more — and where a claim can be computed, it is. <a href="/reference/statistics/">Statistics</a> and <a href="/reference/maps/">maps</a> are checked against FindStat by value.
   - title: Live in the page
-    details: A reactive <a href="/worksheet/">worksheet</a>, and plots, glyphs and controls as <a href="/reference/components/">components</a> for plain HTML, Vue or React — with the same evaluation at the <a href="/docs/cli/">command line</a>.
+    details: A reactive <a href="/worksheet/">worksheet</a>, and plots, glyphs and controls as <a href="/reference/component/">components</a> for plain HTML, Vue or React — with the same evaluation at the <a href="/docs/cli/">command line</a>.
 ---
 
 <style>

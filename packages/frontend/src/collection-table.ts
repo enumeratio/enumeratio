@@ -208,8 +208,11 @@ export function compareCells(a: CellValue, b: CellValue): number {
   return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
 }
 
-/** A flat integer list from a `["List", …]` MathJSON, or undefined for anything else. */
+/** A flat integer list from a `["List", …]` MathJSON, or from a carrier value wrapping one
+ *  (`["Permutation", ["List", …]]`), or undefined for anything else. */
 export function flatInts(json: MathJsonExpression): number[] | undefined {
+  if (Array.isArray(json) && json.length === 2 && Array.isArray(json[1]) && json[1][0] === "List")
+    return flatInts(json[1] as unknown as MathJsonExpression);
   if (!Array.isArray(json) || json[0] !== "List") return undefined;
   const items: unknown[] = (json as readonly unknown[]).slice(1);
   return items.every((x) => typeof x === "number" && Number.isInteger(x)) ? (items as number[]) : undefined;

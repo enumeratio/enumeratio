@@ -17,5 +17,5 @@ signatures:
   - call: Corners(partition)
     description: Corner cells — parts strictly larger than the next part (the last part always counts).
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

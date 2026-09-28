@@ -57,7 +57,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head still declared here", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(["GammaRegularized"]);
+  expect([...heads].toSorted()).toEqual(["GammaRegularized"]);
 });
 
 // --- Catalan -------------------------------------------------------------------------

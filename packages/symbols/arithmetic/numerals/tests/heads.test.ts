@@ -78,7 +78,7 @@ test("every old spelling is a working alias for its `…Numerals` name", () => {
     ResidueSystem: { args: [L(3, 5, 7)], n: 23 },
     MixedRadix: { args: [L(24, 60, 60)], n: 93784 },
   };
-  expect(Object.keys(ARGS).sort()).toEqual(Object.keys(NUMERAL_ALIASES).sort());
+  expect(Object.keys(ARGS).toSorted()).toEqual(Object.keys(NUMERAL_ALIASES).toSorted());
   for (const [alias, canonical] of Object.entries(NUMERAL_ALIASES)) {
     const { args, n } = ARGS[alias]!;
     const aliasExpr: Expr = args.length === 0 ? alias : [alias, ...args];

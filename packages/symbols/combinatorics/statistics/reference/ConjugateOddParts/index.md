@@ -12,5 +12,5 @@ signatures:
   - call: ConjugateOddParts(partition)
     description: Odd parts of the conjugate — equivalently, the distinct part sizes of λ.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

@@ -12,5 +12,5 @@ signatures:
   - call: CyclicDescents(p)
     description: Descents of p read cyclically, counting position n when p(n) > p(1).
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

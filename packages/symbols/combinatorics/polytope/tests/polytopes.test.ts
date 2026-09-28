@@ -25,7 +25,7 @@ const ringSizes = (P: Polytope, n: number): number[] => {
   const vertices = stratum(points, 0);
   return stratum(points, 2)
     .map((face) => vertices.filter((v) => P.hasVertex(face.face, v.face)).length)
-    .sort((a, b) => a - b);
+    .toSorted((a, b) => a - b);
 };
 
 test("the simplex is the Boolean lattice, so order 4 is a tetrahedron", () => {

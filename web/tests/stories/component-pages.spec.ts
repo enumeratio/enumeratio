@@ -55,7 +55,7 @@ for (const [name, stories] of Object.entries(STORIES_DATA)) {
         });
         page.on("pageerror", (err) => consoleErrors.push(String(err)));
 
-        await page.goto(`/reference/components/${tag}#story/${story.id}`);
+        await page.goto(`/reference/component/${name}#story/${story.id}`);
 
         // An attribute selector, not `#story/<id>` -- the id itself contains a literal `/`
         // (Stories.vue, mirroring ReferencePage.vue's `example/<id>` anchors), which a CSS ID

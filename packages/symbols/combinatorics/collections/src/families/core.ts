@@ -179,6 +179,7 @@ const factorialBig = (n: number): bigint => {
 export const bigintEntries: FamilyKernel[] = [
   {
     head: "SymmetricGroup",
+    carrier: "Permutation",
     paramCount: 1,
     kind: "ints",
     count: ([n]) => factorialBig(n),
@@ -228,30 +229,39 @@ export const entries: NumberKernel[] = [
     (a, [n]) => IsSignedPermutationOf(a, n),
     (a) => SignedPermutationRank(a),
   ),
-  ints(
-    "CyclicPermutations",
-    1,
-    ([n]) => CyclicPermutationCount(n),
-    ([n], r) => CyclicPermutationUnrank(n, r),
-    (a, [n]) => IsCyclicPermutationOf(a, n),
-    (a) => CyclicPermutationRank(a),
-  ),
-  ints(
-    "Involutions",
-    1,
-    ([n]) => InvolutionCount(n),
-    ([n], r) => InvolutionUnrank(n, r),
-    (a, [n]) => IsInvolutionOf(a, n),
-    (a) => InvolutionRank(a),
-  ),
-  ints(
-    "Derangements",
-    1,
-    ([n]) => DerangementCount(n),
-    ([n], r) => DerangementUnrank(n, r),
-    (a, [n]) => IsDerangementOf(a, n),
-    (a) => DerangementRank(a),
-  ),
+  {
+    ...ints(
+      "CyclicPermutations",
+      1,
+      ([n]) => CyclicPermutationCount(n),
+      ([n], r) => CyclicPermutationUnrank(n, r),
+      (a, [n]) => IsCyclicPermutationOf(a, n),
+      (a) => CyclicPermutationRank(a),
+    ),
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
+      "Involutions",
+      1,
+      ([n]) => InvolutionCount(n),
+      ([n], r) => InvolutionUnrank(n, r),
+      (a, [n]) => IsInvolutionOf(a, n),
+      (a) => InvolutionRank(a),
+    ),
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
+      "Derangements",
+      1,
+      ([n]) => DerangementCount(n),
+      ([n], r) => DerangementUnrank(n, r),
+      (a, [n]) => IsDerangementOf(a, n),
+      (a) => DerangementRank(a),
+    ),
+    carrier: "Permutation",
+  },
   {
     head: "ColoredPermutations",
     paramCount: 2,

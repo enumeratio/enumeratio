@@ -13,5 +13,5 @@ signatures:
   - call: PartsEqualOne(partition)
     description: Parts equal to 1.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

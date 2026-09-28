@@ -16,6 +16,11 @@ signatures:
     library: enumeratio-collections
     type: (complex | signed_infinity) -> complex
     overrides: enumeratio-analytic
+  - call: Sign(p)
+    description: "A permutation's sign: 1 when it has an even number of inversions, -1 when odd (FindStat St000037)."
+    library: enumeratio-statistics
+    type: ((permutation) -> number) & ((complex | signed_infinity) -> complex)
+    overrides: enumeratio-collections
 details:
   - $\operatorname{sign}(x) = -1, 0, 1$ for $x < 0$, $x = 0$, $x > 0$ respectively.
   - For a complex number, $\operatorname{sign}(z) = z/|z|$, the unit complex number pointing toward z. See [[Abs]].

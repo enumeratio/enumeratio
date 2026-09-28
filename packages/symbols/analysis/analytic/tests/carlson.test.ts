@@ -58,7 +58,7 @@ for (const [head, cases] of byHead) {
 
 test("the golden file covers every head", () => {
   const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].sort()).toEqual(["CarlsonRC", "CarlsonRD", "CarlsonRF", "CarlsonRG", "CarlsonRJ"].sort());
+  expect([...heads].toSorted()).toEqual(["CarlsonRC", "CarlsonRD", "CarlsonRF", "CarlsonRG", "CarlsonRJ"].toSorted());
 });
 
 // --- Elementary identities, checked directly against the kernels (not just the grid) ---

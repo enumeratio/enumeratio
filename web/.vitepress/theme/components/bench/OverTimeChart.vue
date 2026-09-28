@@ -22,7 +22,7 @@ const PAD_R = 16;
 const PAD_T = 16;
 const PAD_B = 32;
 
-const sorted = computed(() => [...props.points].sort((a, b) => a.date.localeCompare(b.date)));
+const sorted = computed(() => [...props.points].toSorted((a, b) => a.date.localeCompare(b.date)));
 
 const times = computed(() => sorted.value.map((p) => new Date(p.date).getTime()));
 const tMin = computed(() => Math.min(...times.value));
@@ -61,7 +61,7 @@ const linePath = computed(() =>
 const bandPath = computed(() => {
   if (sorted.value.length === 0) return "";
   const top = sorted.value.map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q3)}`);
-  const bottom = [...sorted.value].reverse().map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q1)}`);
+  const bottom = [...sorted.value].toReversed().map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q1)}`);
   return `M${top.join(" L")} L${bottom.join(" L")} Z`;
 });
 

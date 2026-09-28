@@ -281,7 +281,7 @@ export function diagramSvg(rgs: number[], unit = 26): string {
   let body = `<rect x="${n2(-unit / 2 + 1)}" y="${n2(-unit * 0.18)}" width="${n2(n * unit - 2)}" height="${n2(height + unit * 0.36)}" rx="3" fill="none" stroke="${BORDER}" stroke-width="1" opacity="0.45"/>`;
   for (const points of blocks.values()) {
     // Draw the block as a chain: top row left to right, then bottom row left to right.
-    const ordered = [...points].sort((a, b) => Math.floor(a / n) - Math.floor(b / n) || a - b);
+    const ordered = [...points].toSorted((a, b) => Math.floor(a / n) - Math.floor(b / n) || a - b);
     for (let k = 1; k < ordered.length; k++) {
       const from = at(ordered[k - 1]!);
       const to = at(ordered[k]!);
@@ -376,5 +376,7 @@ export function renderGlyph(kind: GlyphKind, value: number[], opts?: { n?: numbe
       return latticePathSvg(value);
     case "diagram":
       return diagramSvg(value);
+    default:
+      throw new Error("unreachable: GlyphKind is exhaustive above");
   }
 }

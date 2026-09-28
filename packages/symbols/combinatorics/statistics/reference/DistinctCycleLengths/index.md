@@ -12,5 +12,5 @@ signatures:
   - call: DistinctCycleLengths(p)
     description: How many distinct cycle sizes occur.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

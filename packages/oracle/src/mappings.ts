@@ -54,4 +54,4 @@ export function mappingFor(head: string, arity: number): Mapping | undefined {
 }
 
 /** Every head this table says anything about. */
-export const mappedHeads = (): string[] => [...new Set(MAPPINGS.map((m) => m.head))].sort();
+export const mappedHeads = (): string[] => [...new Set(MAPPINGS.map((m) => m.head))].toSorted();

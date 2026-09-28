@@ -67,7 +67,7 @@ export function generatorsOf(mv: Multivector): Generator[] {
       if (!found.some((h) => sameGenerator(g, h))) found.push(g);
     }
   }
-  return found.sort(compareGenerators);
+  return found.toSorted(compareGenerators);
 }
 
 // ── the blade product ────────────────────────────────────────────────────────────
@@ -415,7 +415,7 @@ export function toMultivector(ce: ComputeEngine, expr: BoxedExpression): Multive
 
 /** Render a multivector back as an expression, in canonical blade order. */
 export function toExpression(ce: ComputeEngine, mv: Multivector): BoxedExpression {
-  const terms = [...mv.terms.values()].sort(
+  const terms = [...mv.terms.values()].toSorted(
     (a, b) => a.blade.length - b.blade.length || bladeKey(a.blade).localeCompare(bladeKey(b.blade)),
   );
   const parts = terms.map((term) => {

@@ -12,5 +12,5 @@ signatures:
   - call: LegOfFirstCell(partition)
     description: "The leg of cell (1,1): the number of parts minus one."
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

@@ -55,7 +55,7 @@ export function splitField(raw: string): [string, string] | undefined {
 const log = debug("vectorplot");
 
 /**
- * `<notatio-vector-plot u="-y" v="x" xrange="-2,2" yrange="-2,2">` -- a planar
+ * `<VectorPlot u="-y" v="x" xrange="-2,2" yrange="-2,2">` -- a planar
  * vector field (Wolfram's `VectorPlot`): `u`/`v` are the two components in
  * Epsil, or `field="-y, x"` gives both at once. Arrows sit on an `n`×`n` grid
  * of cell centres, their length and colour scaling with |F|.
