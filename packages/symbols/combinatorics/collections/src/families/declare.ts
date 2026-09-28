@@ -40,10 +40,13 @@ const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
   }
 };
 
-const signatureOf = ({ kind, paramCount }: FamilyKernel): string => {
+const signatureOf = ({ kind, paramCount }: FamilyKernel, elementType?: string): string => {
   const params = Array.from({ length: paramCount }, () => "integer<0..>").join(", ");
-  return `(${params}) -> ${collectionTypeOf(kind)}`;
+  return `(${params}) -> ${elementType === undefined ? collectionTypeOf(kind) : `indexed_collection<${elementType}>`}`;
 };
+
+/** A family's carrier, when it has one. */
+const carrierOf = (family: FamilyKernel): string | undefined => family.carrier ?? family.declared?.carrier;
 
 // element codecs (element -> boxed MathJSON encoder, boxed -> element decoder).
 const encoderFor = (kind: FamilyKernel["kind"]) =>
@@ -54,9 +57,16 @@ const decoderFor = (kind: FamilyKernel["kind"]) =>
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. CE speaks plain numbers; a count past 2^53 answers
  *  `undefined` (unknown to CE) rather than a rounded one. */
-function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers {
-  const encode = encoderFor(family.kind);
-  const decode = decoderFor(family.kind);
+function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): CollectionHandlers {
+  const bareEncode = encoderFor(family.kind);
+  const bareDecode = decoderFor(family.kind);
+  // A carrier's elements are its values, `Permutation([2, 1])`; membership takes either form.
+  const encode =
+    carrier === undefined ? bareEncode : (element: never) => [carrier, (bareEncode as (x: never) => unknown)(element)];
+  const decode = (b: Boxed) =>
+    bareDecode(
+      (carrier !== undefined && (b as unknown as BoxedExpression).operator === carrier ? b.ops?.[0] : b) as never,
+    );
   const params = (c: BoxedExpression): number[] => {
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
@@ -139,19 +149,22 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
 }
 
 /** Declare every family on `ce`: an indexed-collection operator, or for paramCount 0 an
- *  indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this engine. */
-export function declareFamilies(ce: ComputeEngine): void {
+ *  indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this engine.
+ *  `carrierTypes` names the minted type of each carrier whose values a family's elements are. */
+export function declareFamilies(ce: ComputeEngine, carrierTypes: Readonly<Record<string, string>> = {}): void {
   const byHead = new Map<string, FamilyKernel>();
   for (const family of allEntries) {
     byHead.set(family.head, family);
-    const collection = handlersOf(ce, family);
+    const carrier = carrierOf(family);
+    const elementType = carrier === undefined ? undefined : carrierTypes[carrier];
+    const collection = handlersOf(ce, family, elementType === undefined ? undefined : carrier);
     if (family.declared?.work !== undefined) {
       defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
     }
     if (family.paramCount === 0) {
       ce.declare(family.head, { type: "indexed_collection<integer>", collection });
     } else {
-      ce.declare(family.head, { signature: signatureOf(family), collection });
+      ce.declare(family.head, { signature: signatureOf(family, elementType), collection });
     }
   }
 

@@ -182,8 +182,12 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
         const collection = symbolNameOf(subject) ?? subject.operator;
         const element = collection === undefined ? undefined : registry.collections.get(collection);
         if (element === undefined || operationOf(ce, head, element, name) === undefined) return undefined;
+        // A collection typed by its carrier already yields carrier values; a bare one gets each
+        // element constructed.
+        const type = registry.carriers.get(element)?.type;
+        const typed = type !== undefined && subject.type.matches(ce.type(`collection<${type}>`));
         const x = ce.symbol("_element");
-        const each = ce.function("Function", [ce.function(head, [ce.function(element, [x]), key]), x]);
+        const each = ce.function("Function", [ce.function(head, [typed ? x : ce.function(element, [x]), key]), x]);
         return ce.function("Map", [each, subject]).evaluate(options);
       },
     });

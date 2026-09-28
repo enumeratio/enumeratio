@@ -1,4 +1,4 @@
 id	in	out
-positions-2-and-3-1-2-and-2-3	Antiexcedances([3, 1, 2])	2
-the-identity-has-none	Antiexcedances([1, 2, 3])	0
-positions-3-and-4-2-3-and-1-4	Antiexcedances([4, 3, 2, 1])	2
+positions-2-and-3-1-2-and-2-3	Antiexcedances(Permutation([3, 1, 2]))	2
+the-identity-has-none	Antiexcedances(Permutation([1, 2, 3]))	0
+positions-3-and-4-2-3-and-1-4	Antiexcedances(Permutation([4, 3, 2, 1]))	2

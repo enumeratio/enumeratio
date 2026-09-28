@@ -374,30 +374,39 @@ export const entries: NumberKernel[] = [
     ),
     declared: baxterClass.declared,
   },
-  ints(
-    "BooleanPermutations",
-    1,
-    ([n]) => booleanCount(n),
-    ([n], r) => booleanUnrank(n, r),
-    (a, [n]) => IsPermutationOf(a, n) && isBooleanPermutation(a),
-    (a) => booleanRank(a),
-  ),
-  ints(
-    "GrassmannianPermutations",
-    1,
-    ([n]) => grassmannianCount(n),
-    ([n], r) => grassmannianUnrank(n, r),
-    (a, [n]) => isGrassmannian(a, n),
-    (a) => grassmannianRank(a),
-  ),
-  ints(
-    "CograssmannianPermutations",
-    1,
-    ([n]) => grassmannianCount(n),
-    ([n], r) => cograssmannianUnrank(n, r),
-    (a, [n]) => isCograssmannian(a, n),
-    (a) => cograssmannianRank(a),
-  ),
+  {
+    ...ints(
+      "BooleanPermutations",
+      1,
+      ([n]) => booleanCount(n),
+      ([n], r) => booleanUnrank(n, r),
+      (a, [n]) => IsPermutationOf(a, n) && isBooleanPermutation(a),
+      (a) => booleanRank(a),
+    ),
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
+      "GrassmannianPermutations",
+      1,
+      ([n]) => grassmannianCount(n),
+      ([n], r) => grassmannianUnrank(n, r),
+      (a, [n]) => isGrassmannian(a, n),
+      (a) => grassmannianRank(a),
+    ),
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
+      "CograssmannianPermutations",
+      1,
+      ([n]) => grassmannianCount(n),
+      ([n], r) => cograssmannianUnrank(n, r),
+      (a, [n]) => isCograssmannian(a, n),
+      (a) => cograssmannianRank(a),
+    ),
+    carrier: "Permutation",
+  },
   {
     ...ints(
       "NonCrossingPermutations",

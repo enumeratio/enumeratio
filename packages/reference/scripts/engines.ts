@@ -11,6 +11,7 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCollections } from "@enumeratio/collections/src";
+import { declareDomains } from "@enumeratio/domains/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -36,7 +37,10 @@ const LIBRARY_DECLARATIONS = [
   declareFractals,
   declareHypercomplex,
   declareDiagrams,
-  declareCollections,
+  // The carriers, so the permutation families yield `Permutation` values, as the site's engine
+  // has them.
+  declareDomains,
+  (ce: ComputeEngine) => declareCollections(ce, { permutationType: "permutation" }),
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   declareStructures,
   declareResidues,

@@ -7,7 +7,7 @@ signatures:
   - call: VexillaryPermutations(n)
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ avoiding $2143$.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 details:
   - A lazy indexed collection; the count is A005802 — $1, 2, 6, 23, 103, 513, …$
   - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2143$.

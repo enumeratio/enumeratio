@@ -105,12 +105,14 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // later, would replace this package's wider signature (the real index, the two-argument
   // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
   ["number-theory", declareNumberTheory],
-  ["collections", declareCollections],
+  // The carriers before collections: the permutation families yield `Permutation` values, typed
+  // by the minted type, as the site's engine has them.
+  ["domains", declareDomains],
+  ["collections", (ce) => declareCollections(ce, { permutationType: "permutation" })],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   ["structures", declareStructures],
   ["formats", declareGraphics],
   ["boxes", declareBoxes],
-  ["domains", declareDomains],
   // AFTER declareCollections (above), so a plural a collection family already claims
   // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
   // bare symbol first.

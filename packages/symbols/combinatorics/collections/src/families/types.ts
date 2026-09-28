@@ -64,6 +64,10 @@ export interface Declared {
 
 interface Family {
   readonly head: string;
+  /** The domain its elements inhabit when that is a carrier with a constructor (`Permutation`).
+   *  Given the carrier's type, the elements are built as carrier values and the collection is
+   *  typed by it; otherwise they stay bare lists. Defaults to `declared.carrier`. */
+  readonly carrier?: string;
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly valid: (element: unknown, p: number[]) => boolean;
@@ -106,6 +110,7 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     paramCount: k.paramCount,
     kind: k.kind,
     valid: k.valid,
+    ...(k.carrier === undefined ? {} : { carrier: k.carrier }),
     ...(k.declared === undefined ? {} : { declared: k.declared }),
     count: (p) => {
       const c = k.count(p);

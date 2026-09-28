@@ -313,7 +313,8 @@ export class NotatioCollectionTable extends LitElement {
    * permutation takes a `Permutation`, not a list -- the wrapping is what lets it be asked.
    */
   #subject(elt: BoxedExpression): MathJsonExpression {
-    return this.carrier ? ([this.carrier, elt.json] as MathJsonExpression) : elt.json;
+    // A family typed by its carrier already yields carrier values.
+    return this.carrier && elt.operator !== this.carrier ? ([this.carrier, elt.json] as MathJsonExpression) : elt.json;
   }
 
   /** Evaluate a column at a row; memoised per (column, index) for the collection. */
