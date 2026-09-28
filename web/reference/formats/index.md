@@ -21,7 +21,7 @@ The ways to write an expression.
 
 Epsil itself — the syntax the components take in their expression
 attributes — is documented with the components, in the
-[component reference](/reference/components/); printing an expression back out
+[component reference](/reference/component/); printing an expression back out
 as Epsil is [InputForm](/reference/formats/inputform).
 
 ## Output syntax
