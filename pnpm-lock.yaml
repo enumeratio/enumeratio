@@ -592,6 +592,9 @@ importers:
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
+      '@enumeratio/for-compute-engine':
+        specifier: workspace:*
+        version: link:../../upstream/compute-engine
       '@enumeratio/groupalgebra':
         specifier: workspace:*
         version: link:../symbols/algebras/groupalgebra
