@@ -45,7 +45,7 @@ import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
-import { declareStructures } from "@enumeratio/structures/src";
+import { declareStructures, ensureAlgebraHeads, ensureProtocols } from "@enumeratio/structures/src";
 import {
   ALL_STATISTICS,
   declareDistributions,
@@ -71,6 +71,15 @@ const domainTypes = (): Record<string, string> =>
  */
 export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = [
   ["evaluation", declareEvaluation],
+  // The protocols and algebra heads first: the algebra libraries conform to them. The generic
+  // heads come later (below).
+  [
+    "structures",
+    (ce) => {
+      ensureProtocols(ce);
+      ensureAlgebraHeads(ce);
+    },
+  ],
   ["analytic", declareAnalytic],
   ["hypercomplex", declareHypercomplex],
   ["geometric", declareGeometric],

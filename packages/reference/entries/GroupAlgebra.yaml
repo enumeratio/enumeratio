@@ -12,4 +12,4 @@ signatures:
   - call: GroupAlgebra(...)
     description: Mapped through to oscar for the oracle; not yet written up here.
     library: enumeratio-groupalgebra
-    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>) -> value
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>) -> group_algebra

@@ -556,6 +556,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     note: "Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).",
   },
   {
+    head: "Midpoint",
+    arity: 2,
+    emit: {
+      wolfram: "Midpoint[{$1, $2}]",
+    },
+    note: "Wolfram's takes the segment as one list of its two ends.",
+  },
+  {
     head: "Min",
     emit: {
       wolfram: "Min[$*,]",

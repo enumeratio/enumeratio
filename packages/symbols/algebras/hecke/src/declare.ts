@@ -1,4 +1,4 @@
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
@@ -117,11 +117,12 @@ export function declareHecke(ce: ComputeEngine): void {
     return sizes.size <= 1;
   };
 
-  ce.declare("HeckeAlgebra", { signature: "(integer) -> value" });
+  ce.declareType("hecke_algebra", "expression<HeckeAlgebra>", { mint: true });
+  ce.declare("HeckeAlgebra", { signature: "(integer) -> hecke_algebra" });
   ce.declare("HeckeT", { signature: "(list<integer>) -> number" });
 
-  registerAlgebra(ce, {
-    name: "hecke",
+  declareAlgebra(ce, {
+    type: "hecke_algebra",
     basis: (expr) => {
       const n = algebraSize(expr);
       if (n === undefined || n > 6) return undefined; // 720 basis elements is already plenty

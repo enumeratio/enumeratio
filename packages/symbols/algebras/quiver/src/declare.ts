@@ -1,4 +1,4 @@
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import {
@@ -75,10 +75,8 @@ export function declareQuiver(ce: ComputeEngine): void {
   // `value` parameter. An undeclared symbol types as unknown and passes — so it is
   // named here as `symbol` rather than left out of the union.
   const quiverLike = "expression<Quiver> | expression<LinearQuiver> | symbol";
-  // Return type stays `value`, not `expression<PathAlgebra>`: @enumeratio/algebra's
-  // shared `Basis`/`AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …`
-  // for ANY registered algebra's carrier, and `expression<Head>` does not subtype `value`.
-  ce.declare("PathAlgebra", { signature: `(${quiverLike}) -> value` });
+  ce.declareType("path_algebra", "expression<PathAlgebra>", { mint: true });
+  ce.declare("PathAlgebra", { signature: `(${quiverLike}) -> path_algebra` });
   ce.declare("QuiverPath", { signature: "(integer, list<integer>) -> number" });
 
   const pathExpression = (p: Path): BoxedExpression =>
@@ -138,8 +136,8 @@ export function declareQuiver(ce: ComputeEngine): void {
     },
   });
 
-  registerAlgebra(ce, {
-    name: "quiver",
+  declareAlgebra(ce, {
+    type: "path_algebra",
     basis: (expr) => {
       const q = algebraOf(expr);
       if (q === undefined) return undefined;

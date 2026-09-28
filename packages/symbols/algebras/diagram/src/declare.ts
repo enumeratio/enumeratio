@@ -18,7 +18,7 @@ import {
   orbitToDiagram,
   partitionMobius,
 } from "./orbit.ts";
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import { dimensionOf } from "./dimensions.ts";
 
 // How diagrams reach compute-engine. Same seam as @enumeratio/hypercomplex: replace an
@@ -107,9 +107,9 @@ export function declareDiagrams(ce: ComputeEngine): void {
       return d === undefined ? undefined : toExpression(d);
     },
   });
-  for (const head of Object.keys(CONSTRUCTORS)) {
-    ce.declare(head, { signature: "(integer) -> value" });
-  }
+  const constructors = Object.keys(CONSTRUCTORS);
+  ce.declareType("diagram_algebra", constructors.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  for (const head of constructors) ce.declare(head, { signature: "(integer) -> diagram_algebra" });
 
   /** a·b = δ^loops · (a∘b). */
   const product = (parts: readonly Diagram[]): BoxedExpression | undefined => {
@@ -128,9 +128,6 @@ export function declareDiagrams(ce: ComputeEngine): void {
       : ce.function("Multiply", [ce.function("Power", [ce.symbol(LOOP_PARAMETER), ce.number(loops)]), body]);
   };
 
-  // Everything shared lives on the seam: Basis, AlgebraDimension, the ordered product
-  // and Element are declared once by @enumeratio/algebra and dispatched over providers,
-  // so this library and @enumeratio/hypercomplex can both answer for them.
   // ── the orbit basis ─────────────────────────────────────────────────────────
 
   /** The orbit basis element x_λ, carrying the same blocks as the diagram d_λ. */
@@ -236,8 +233,8 @@ export function declareDiagrams(ce: ComputeEngine): void {
     },
   });
 
-  registerAlgebra(ce, {
-    name: "diagram",
+  declareAlgebra(ce, {
+    type: "diagram_algebra",
     basis: (expr) => {
       const algebra = algebraOf(expr);
       if (algebra === undefined) return undefined;

@@ -19,6 +19,8 @@ export function conformNumbers(ce: ComputeEngine): void {
     FloorOrder: { LowerTick: (x) => call("Floor", x), UpperTick: (x) => call("Ceil", x) },
     MidpointOrder: { Midpoint: (a, b) => call("Divide", call("Add", a, b), ce.number(2)) },
     TickParity: { IsEvenTick: (x) => call("IsEven", x) },
+    Ring: {},
+    FloorRing: { IntegerFloor: (x) => call("Floor", x), IntegerCeil: (x) => call("Ceil", x) },
   });
 
   // Strings by code unit, as compute-engine's `Sort` orders them.

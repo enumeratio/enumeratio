@@ -94,8 +94,8 @@ language.
 **The all-in-one kernel.** Wolfram's coherence comes from everything living in one
 system with one evaluator. Ours has to come from a seam — a set of libraries
 declaring heads on a shared engine — and that is a real cost. Two libraries that
-both want `Basis` have to agree to share it, which is why
-`@enumeratio/algebra` exists at all.
+both want `Basis` have to agree to share it, which is why `Basis` is a protocol member
+that each algebra's type conforms to.
 
 **`Dynamic` everywhere.** Wolfram's reactivity is ambient: any displayed thing can
 be `Dynamic` and the front end keeps it live. Ours is scoped on purpose, to the

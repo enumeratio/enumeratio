@@ -9,4 +9,4 @@ signatures:
   - call: GrassmannAlgebra(...)
     description: Wolfram's own GrassmannAlgebra, mapped through for the transpiler and the oracle but not yet written up here.
     library: enumeratio-hypercomplex
-    type: (integer) -> value
+    type: (integer) -> clifford_algebra
