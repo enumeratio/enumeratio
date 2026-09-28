@@ -52,7 +52,7 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareArithHeads(ce);
   declareExpressionOps(ce);
   declareStats(ce, options);
-  // Which carrier each family's elements inhabit, for `CombinatorialStatistic(family, name)`.
+  // Which carrier each family's elements inhabit, for `CombinatorialStat(family, name)`.
   for (const family of allEntries)
     if (family.declared !== undefined) registerCollectionCarrier(ce, family.head, family.declared.carrier);
   declareGeneratingFunctions(ce);

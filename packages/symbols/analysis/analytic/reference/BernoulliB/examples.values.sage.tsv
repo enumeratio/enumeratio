@@ -12,7 +12,7 @@ the-bernoulli-polynomial-at-a-rational-point-b-2
 with-a-second-argument-the-bernoulli-polynomial			
 threads-element-wise-over-a-list-as-wolfram-s	[bernoulli(1), bernoulli(2), bernoulli(3)]	[-1/2, 1/6, 0]	
 faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	(((binomial(3, 0) * bernoulli(0) * ((5)^3)) + (binomial(3, 1) * bernoulli(1) * ((5)^2)) + (binomial(3, 2) * bernoulli(2) * ((5)^1))) / 3)	30	
-von-staudt-clausen-the-denominator-of-b-2n-is			
+von-staudt-clausen-the-denominator-of-b-2n-is	(bernoulli(12)).denominator()		
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	bool(zeta(-3) == (-(bernoulli(4) / 4)))	True	
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))	0	
 b-n-0-for-every-odd-n-1	bool(bernoulli(5) == 0)	True	

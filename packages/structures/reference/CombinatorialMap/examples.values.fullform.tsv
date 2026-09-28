@@ -1,3 +1,4 @@
 id	in
 inverse-of-a-permutation	CombinatorialMap[Permutation[List[3, 1, 2]], "Inverse"]
 reverse-of-a-permutation	CombinatorialMap[Permutation[List[3, 1, 2]], "Reverse"]
+by-findstat-id	CombinatorialMap[Permutation[List[3, 1, 2]], "Mp00066"]

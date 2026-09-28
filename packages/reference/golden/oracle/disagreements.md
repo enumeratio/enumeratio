@@ -314,7 +314,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 1002, disagree 71, inconclusive 24, error 108
+## sage — agree 1066, disagree 71, inconclusive 24, error 108
 
 | example                                                                | kind           | ours                                                                                         | theirs                                                                                       |
 | ---------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |

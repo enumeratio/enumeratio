@@ -17,7 +17,7 @@ const engine = (): ComputeEngine => {
   ce.declare("Tagged", { signature: "(integer) -> tagged" });
   registerCarrier(ce, { name: "Tagged", type: "tagged" });
   const value = (x: ReturnType<typeof ce.box>) => operandsOf(x)[0]!.re;
-  registerOperation(ce, "CombinatorialStatistic", "Tagged", {
+  registerOperation(ce, "CombinatorialStat", "Tagged", {
     name: "Double",
     findstat: ["St999999"],
     type: "integer",
@@ -37,39 +37,39 @@ const evaluate = (ce: ComputeEngine, json: unknown) => ce.box(json as never).eva
 describe("operations on a carrier", () => {
   const ce = engine();
   const cases: [unknown, unknown][] = [
-    [["CombinatorialStatistic", ["Tagged", 5], "'Double'"], 10],
+    [["CombinatorialStat", ["Tagged", 5], "'Double'"], 10],
     // A FindStat id is another key for the same statistic.
-    [["CombinatorialStatistic", ["Tagged", 5], "'St999999'"], 10],
+    [["CombinatorialStat", ["Tagged", 5], "'St999999'"], 10],
     [
       ["CombinatorialMap", ["Tagged", 5], "'Successor'"],
       ["Tagged", 6],
     ],
     // Unknown names, and values of no registered carrier, stay as written.
     [
-      ["CombinatorialStatistic", ["Tagged", 5], "'Nope'"],
-      ["CombinatorialStatistic", ["Tagged", 5], "'Nope'"],
+      ["CombinatorialStat", ["Tagged", 5], "'Nope'"],
+      ["CombinatorialStat", ["Tagged", 5], "'Nope'"],
     ],
     [
-      ["CombinatorialStatistic", 5, "'Double'"],
-      ["CombinatorialStatistic", 5, "'Double'"],
+      ["CombinatorialStat", 5, "'Double'"],
+      ["CombinatorialStat", 5, "'Double'"],
     ],
     // A statistic of the collection itself.
-    [["CombinatorialStatistic", ["Range", 1, 4], "'Count'"], 4],
+    [["CombinatorialStat", ["Range", 1, 4], "'Count'"], 4],
   ];
   for (const [input, expected] of cases) it(JSON.stringify(input), () => expect(evaluate(ce, input)).toEqual(expected));
 
   it("maps a statistic over a collection", () =>
     expect(
-      ce.box(["CombinatorialStatistic", ["Range", 1, 3], "'Double'"] as never).evaluate({ materialization: true }).json,
+      ce.box(["CombinatorialStat", ["Range", 1, 3], "'Double'"] as never).evaluate({ materialization: true }).json,
     ).toEqual(["List", 2, 4, 6]));
 
   it("prefers a kernel, and keeps the definition beside it", () => {
-    registerOperation(ce, "CombinatorialStatistic", "Tagged", { name: "Double", kernel: () => ce.number(-1) });
-    expect(evaluate(ce, ["CombinatorialStatistic", ["Tagged", 5], "'Double'"])).toEqual(-1);
+    registerOperation(ce, "CombinatorialStat", "Tagged", { name: "Double", kernel: () => ce.number(-1) });
+    expect(evaluate(ce, ["CombinatorialStat", ["Tagged", 5], "'Double'"])).toEqual(-1);
   });
 
   it("refuses a second definition of the same operation", () =>
     expect(() =>
-      registerOperation(ce, "CombinatorialStatistic", "Tagged", { name: "Double", definition: () => ce.One }),
+      registerOperation(ce, "CombinatorialStat", "Tagged", { name: "Double", definition: () => ce.One }),
     ).toThrow(OperationCollisionError));
 });
