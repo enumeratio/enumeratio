@@ -8,6 +8,7 @@ import { barnesGPatch } from "./patches/barnes-g.ts";
 import { logGammaPatch } from "./patches/log-gamma.ts";
 import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
+import { roundPlaces } from "./patches/round-places.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -17,6 +18,7 @@ export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
 // The API landed in compute-engine 0.139; the arbitrary-precision N(x, d) path (this
 // patch's remaining job) has not -- see zeta-hurwitz.ts.
+export { roundPlaces } from "./patches/round-places.ts";
 export { zetaHurwitz, evaluateHurwitz, evaluateZeta } from "./patches/zeta-hurwitz.ts";
 export {
   hurwitzZeta,
@@ -166,6 +168,7 @@ export const PATCHES: readonly Patch[] = [
   logGammaPatch,
   clausenPatch,
   stieltjes,
+  roundPlaces,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

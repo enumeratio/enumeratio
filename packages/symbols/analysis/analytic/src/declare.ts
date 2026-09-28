@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { threadOverLists } from "@enumeratio/boxed";
 import {
+  roundPlaces,
   applyPatch,
   type EvalOptions,
   type NativeEval,
@@ -148,6 +149,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   // HurwitzZeta/Zeta's API (cortex-js/compute-engine#340) landed natively in compute-
   // engine 0.139; the arbitrary-precision N(x, d) path has not, so zeta-hurwitz still
   // applies -- see its own comment.
+  applyPatch(ce, roundPlaces);
   applyPatch(ce, zetaHurwitz);
   applyPatch(ce, lerchPhiPatch);
   applyPatch(ce, polylogOrder);
