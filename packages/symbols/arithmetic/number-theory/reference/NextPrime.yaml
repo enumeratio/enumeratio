@@ -7,6 +7,11 @@ signatures:
     description: smallest prime strictly greater than $n$.
   - call: NextPrime(n, k)
     description: the $k$th prime after $n$; negative $k$ walks backward.
+  - call: NextPrime(n, k?)
+    description: The next prime strictly greater than n, or the kth prime after n.
+    library: enumeratio-number-theory
+    type: (number, number?) -> integer
+    overrides: compute-engine
 details:
   - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.
   - NextPrime(n, k) generalizes to the $(m+k)$th prime, so a negative $k$ steps backward to a prime below $n$.

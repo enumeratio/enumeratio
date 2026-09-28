@@ -8,9 +8,21 @@ signatures:
   - call: Mod(a, b, d)
     description: the $x \equiv a \pmod b$ with $d \le x < d + b$.
     library: enumeratio-number-theory
+    type: (number, number, number?) -> number
+    overrides: enumeratio-residues
   - call: Mod(z, m)
     description: 'for Gaussian integers, $z - m\,\mathrm{Quotient}(z, m)$: the remainder in the box around 0'
     library: enumeratio-number-theory
+  - call: Mod(a, b, d?)
+    description: The remainder of a on division by b.
+    library: enumeratio-analytic
+    type: (real, real) -> real
+    overrides: compute-engine
+  - call: Mod(a, b, d?)
+    description: The remainder of a on division by b.
+    library: enumeratio-residues
+    type: (real, real) -> real
+    overrides: enumeratio-analytic
 details:
   - Equivalent to $a-b\,\mathrm{Quotient}(a,b)$, i.e. $a-b\lfloor a/b\rfloor$.
   - When $b>0$ the result lies in $[0,b)$; the sign of the result always matches the sign of $b$.

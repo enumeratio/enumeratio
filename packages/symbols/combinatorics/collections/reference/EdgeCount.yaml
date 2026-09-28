@@ -6,6 +6,7 @@ signatures:
   - call: EdgeCount(g)
     description: $|E(g)|$.
     library: enumeratio-collections
+    type: (value) -> integer
 seeAlso:
   - VertexCount
   - EdgeList

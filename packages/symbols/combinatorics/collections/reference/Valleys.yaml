@@ -6,6 +6,7 @@ signatures:
   - call: Valleys(p)
     description: the valley count of a one-line permutation $p$
     library: enumeratio-collections
+    type: (list) -> integer
 details:
   - Only interior positions count ($1 < i < n$), so $\mathrm{Valleys}(p) = 0$ whenever $n \leq 2$
   - The local minima, complementary in shape to the local maxima counted by [[Peaks]]

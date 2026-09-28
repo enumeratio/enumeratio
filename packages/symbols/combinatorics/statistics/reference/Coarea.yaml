@@ -8,3 +8,8 @@ details:
   - Defined against the n(n+1)/2 triangle for a path of 2n steps.
 statOn:
   - DyckPath
+signatures:
+  - call: Coarea(path)
+    description: The complement of the area within the enclosing triangle.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

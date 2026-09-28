@@ -6,6 +6,7 @@ signatures:
   - call: IsVector(list)
     description: True if list is a List none of whose elements is itself a List
     library: enumeratio-collections
+    type: (any, function?) -> boolean
   - call: IsVector(list, test)
     description: as above, and test holds of every element
     library: enumeratio-collections

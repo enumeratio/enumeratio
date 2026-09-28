@@ -6,6 +6,7 @@ signatures:
   - call: ProfiniteNumber(x, m)
     description: $x$ known modulo $m$ — a coset of $m\hat{\mathbb{Z}}$
     library: enumeratio-adeles
+    type: (any, number?) -> value
   - call: ProfiniteNumber(x)
     description: "exact: modulus 0, so just the rational $x$"
     library: enumeratio-adeles

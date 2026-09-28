@@ -8,6 +8,8 @@ signatures:
   - call: ExtendedGCD(a, b, c, …)
     description: $\gcd$ of any number of arguments, together with one Bézout coefficient per argument, folded pairwise from the two-argument case.
     library: enumeratio-number-theory
+    type: (number, number, number*) -> tuple
+    overrides: compute-engine
 details:
   - Implements the extended Euclidean algorithm, the standard way to compute modular inverses. See [[PowerMod]].
   - The coefficients are not unique; the algorithm returns one particular solution, by folding the two-argument case pairwise across the arguments left to right.

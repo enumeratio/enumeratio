@@ -6,6 +6,7 @@ signatures:
   - call: JacobiDC(u, m)
     description: the Jacobi elliptic function dc, argument u, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
   - $\operatorname{dc}(u,m) = \operatorname{dn}(u,m)/\operatorname{cn}(u,m)$ — [[JacobiDN]] and [[JacobiCN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).

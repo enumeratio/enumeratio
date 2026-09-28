@@ -6,6 +6,7 @@ signatures:
   - call: PalindromicCompositions(n)
     description: the compositions of $n$ that read the same forwards and backwards
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is $2^{\lfloor n/2 \rfloor}$ (A016116).
 seeAlso:

@@ -6,6 +6,7 @@ signatures:
   - call: WeightedAdjacencyMatrix(g)
     description: entry $(i, j)$ is the weight of the edge from vertex $i$ to vertex $j$ (both directions, for an undirected edge) — 1, [[AdjacencyMatrix]]'s own default, when $g$ carries no EdgeWeight at all.
     library: enumeratio-collections
+    type: (value) -> list
 details:
   - $g$ carries its weights via `EdgeWeight -> {w1, w2, …}`, one weight per edge in EdgeList order, given as a Graph(edges, EdgeWeight -> {…}) option — see [[Graph]]'s own note. The Property/PropertyValue per-edge form is not supported.
   - A multi-edge (two edges between the same ordered pair) sums its parallel edges' weights, matching how AdjacencyMatrix sums parallel edges' counts.

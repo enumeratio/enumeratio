@@ -5,6 +5,31 @@ summary: Product of two or more values.
 signatures:
   - call: Multiply(number*) -> number
     description: as compute-engine declares it
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-analytic
+    type: (number*) -> number
+    overrides: compute-engine
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-hypercomplex
+    type: (number*) -> number
+    overrides: enumeratio-analytic
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-residues
+    type: (number*) -> number
+    overrides: enumeratio-hypercomplex
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-numerals
+    type: (number*) -> number
+    overrides: enumeratio-residues
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-adeles
+    type: (number*) -> number
+    overrides: enumeratio-numerals
 names:
   wikidataConfirmed: true
   wolfram: Times
@@ -31,3 +56,5 @@ bindings:
   - origin: mapped
     form: rust
     template: ($**)
+attributes:
+  - HoldAll

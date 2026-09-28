@@ -6,6 +6,7 @@ signatures:
   - call: DiscreteUniformDistribution({min, max})
     description: an inert distribution object — Wolfram's own call shape, a single two-element list.
     library: enumeratio-statistics
+    type: (list<integer>) -> distribution
 details:
   - $PDF(k) = 1/(max-min+1)$ — no bounds check outside $\{min,\ldots,max\}$ (a documented divergence).
   - $CDF(x) = (\lfloor x\rfloor - min + 1)/(max-min+1)$, clamped to $0$ below $min$ and $1$ above $max$.

@@ -6,6 +6,7 @@ signatures:
   - call: ProbabilityDistribution(pdf, {x, min, max})
     description: continuous, density pdf(x) over [min, max].
     library: enumeratio-statistics
+    type: (any, list<any>) -> distribution
   - call: ProbabilityDistribution(pdf, {x, min, max, 1})
     description: discrete, mass pdf(x) over {min, ..., max} — step size pinned to 1.
     library: enumeratio-statistics

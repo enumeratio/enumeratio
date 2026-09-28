@@ -6,6 +6,7 @@ signatures:
   - call: InversePermutation(perm)
     description: $\sigma^{-1}$, in the same notation as `perm`
     library: enumeratio-groupalgebra
+    type: (value) -> value
 details:
   - For a one-line word, $\sigma^{-1}(\sigma(i)) = i$ for every $i$
   - For [[Cycles]], each cycle $(i_1\,i_2\,\dots\,i_k)$ inverts to $(i_1\,i_k\,\dots\,i_2)$ — reversed but still starting at $i_1$

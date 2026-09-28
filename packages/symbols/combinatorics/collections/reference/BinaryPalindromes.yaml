@@ -6,6 +6,7 @@ signatures:
   - call: BinaryPalindromes(n)
     description: the binary words of length $n$ that read the same reversed
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is $2^{\lceil n/2 \rceil}$.
 seeAlso:

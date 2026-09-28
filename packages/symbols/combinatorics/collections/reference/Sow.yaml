@@ -6,6 +6,7 @@ signatures:
   - call: Sow(e)
     description: Records $e$ (evaluated) into the nearest enclosing [[Reap]]'s untagged group, and returns $e$.
     library: enumeratio-collections
+    type: (any, any?) -> any
   - call: Sow(e, tag)
     description: Like $Sow(e)$, but records under $tag$ instead of the untagged group.
     library: enumeratio-collections
@@ -16,3 +17,5 @@ seeAlso:
   - Reap
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

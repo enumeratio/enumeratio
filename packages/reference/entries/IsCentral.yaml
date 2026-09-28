@@ -8,3 +8,8 @@ bindings:
     template: enumeratio_is_central($1, $2)
     arity: 2
 stub: carrier
+signatures:
+  - call: IsCentral(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-groupalgebra
+    type: (value, number) -> boolean

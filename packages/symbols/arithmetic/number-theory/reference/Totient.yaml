@@ -5,6 +5,11 @@ summary: "Euler's totient function: the count of integers in 1..n coprime to n."
 signatures:
   - call: Totient(n)
     description: count of integers in $[1,n]$ coprime to $n$, Euler's $\varphi(n)$.
+  - call: Totient(n)
+    description: "Euler's totient function: the count of integers in 1..n coprime to n."
+    library: enumeratio-number-theory
+    type: (number) -> integer
+    overrides: compute-engine
 details:
   - Also called Euler's phi function; central to RSA key generation and elementary number theory.
   - 'Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ whenever $\gcd(m,n)=1$.'

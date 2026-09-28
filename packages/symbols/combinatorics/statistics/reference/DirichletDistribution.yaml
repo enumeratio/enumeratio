@@ -6,6 +6,7 @@ signatures:
   - call: DirichletDistribution({alpha1, ..., alphak})
     description: distribution on the (k-1)-simplex, parameterised over the first k-1 coordinates.
     library: enumeratio-statistics
+    type: (list<any>) -> distribution
 details:
   - "Wolfram's own parameterisation is over the FIRST $k-1$ coordinates: $PDF$ takes a $(k-1)$-list $\\{x_1,\\ldots,x_{k-1}\\}$, with $x_k := 1-\\sum_{i<k} x_i$ implicit, and $Mean$/$Variance$ are each $(k-1)$-lists — $\\alpha_k$'s own coordinate is never reported directly (confirmed from Wolfram's own `DirichletDistribution` reference page: `Mean`/`Variance` examples for a 3-parameter call return length-2 lists)."
   - $PDF(x) = \left(\prod_{i=1}^k x_i^{\alpha_i-1}\right) / B(\alpha)$, $B(\alpha) = \prod_i \Gamma(\alpha_i) / \Gamma(\sum_i \alpha_i)$.

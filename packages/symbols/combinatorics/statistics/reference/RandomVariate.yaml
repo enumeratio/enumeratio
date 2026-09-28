@@ -6,6 +6,7 @@ signatures:
   - call: RandomVariate(dist)
     description: one draw.
     library: enumeratio-statistics
+    type: (any, integer?) random -> any
   - call: RandomVariate(dist, n)
     description: a list of $n$ draws.
     library: enumeratio-statistics

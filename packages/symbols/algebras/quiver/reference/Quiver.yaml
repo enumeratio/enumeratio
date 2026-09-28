@@ -1,0 +1,13 @@
+name: Quiver
+domain: Path algebras
+signature: Quiver(vertices, arrows)
+summary: A directed multigraph named by its vertex count and its arrows as $(\text{from},\text{to})$ pairs — loops and parallel arrows allowed.
+signatures:
+  - call: Quiver(vertices, arrows)
+    description: the quiver on that many vertices with those arrows
+    library: enumeratio-quiver
+    type: (integer, list) -> value
+seeAlso:
+  - QuiverPath
+  - LinearQuiver
+  - PathAlgebra

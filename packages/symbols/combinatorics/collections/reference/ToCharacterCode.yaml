@@ -6,6 +6,7 @@ signatures:
   - call: ToCharacterCode(s)
     description: "{code1, code2, …}, one per Unicode CODE POINT of s"
     library: enumeratio-collections
+    type: (string) -> list<integer>
 details:
   - Counts Unicode CODE POINTS, not UTF-16 units — the same convention compute-engine's own `Characters` already uses, so an astral character (outside the Basic Multilingual Plane, such as most emoji) counts as one.
 seeAlso:

@@ -6,6 +6,7 @@ signatures:
   - call: ClassSum(group, k)
     description: the sum of the $k$-th conjugacy class (1-indexed)
     library: enumeratio-groupalgebra
+    type: (value, integer) -> number
   - call: IsCentral(group, element)
     description: whether an element commutes with everything
     library: enumeratio-groupalgebra

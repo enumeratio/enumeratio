@@ -6,6 +6,7 @@ signatures:
   - call: Split(list)
     description: runs of adjacent equal elements.
     library: enumeratio-collections
+    type: (indexed_collection<any>, ((any, any) any -> boolean)?) -> list<list<any>>
   - call: Split(list, test)
     description: runs on which adjacent elements agree by a custom two-argument test.
     library: enumeratio-collections

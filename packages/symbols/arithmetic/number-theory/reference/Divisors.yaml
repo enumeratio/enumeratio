@@ -8,6 +8,8 @@ signatures:
   - call: Divisors(n, GaussianIntegers -> True)
     description: the first-quadrant divisors in $\mathbb{Z}[i]$, by real part then imaginary
     library: enumeratio-number-theory
+    type: (number, any*) -> list
+    overrides: compute-engine
 details:
   - Includes both 1 and $n$ itself; a prime's only divisors are those two.
   - The count of divisors, $d(n)$, equals $\sigma_0(n)$. See [[DivisorSigma]].

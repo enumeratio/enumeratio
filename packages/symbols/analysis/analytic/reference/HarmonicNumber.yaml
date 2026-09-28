@@ -6,6 +6,7 @@ signatures:
   - call: HarmonicNumber(n)
     description: the harmonic number $H_n = \sum_{k=1}^n 1/k$.
     library: "@enumeratio/analytic"
+    type: (number, number?) -> number
   - call: HarmonicNumber(n, r)
     description: the generalized harmonic number $H_n^{(r)} = \sum_{k=1}^n k^{-r}$.
     library: "@enumeratio/analytic"

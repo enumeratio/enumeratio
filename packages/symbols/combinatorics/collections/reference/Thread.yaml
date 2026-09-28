@@ -6,6 +6,7 @@ signatures:
   - call: Thread(f(a1, …, an))
     description: f threaded over every List-headed operand
     library: enumeratio-collections
+    type: (any, symbol?) -> any
   - call: Thread(f(a1, …, an), h)
     description: like Thread(f(...)), threading only over operands headed by h instead of List
     library: enumeratio-collections
@@ -18,3 +19,5 @@ seeAlso:
   - Array
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

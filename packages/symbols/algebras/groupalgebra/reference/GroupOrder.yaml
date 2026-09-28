@@ -6,6 +6,7 @@ signatures:
   - call: GroupOrder(group)
     description: the number of elements of `group`
     library: enumeratio-groupalgebra
+    type: (value) -> integer
 details:
   - For a `PermutationGroup`, the order comes from a breadth-first closure over its generators, not a stored table
   - "`GroupOrder(SymmetricGroup(n))` is $n!$, and `GroupOrder(AlternatingGroup(n))` is $n!/2$, without materialising the permutations"

@@ -6,6 +6,7 @@ signatures:
   - call: OddCompositions(n)
     description: the compositions of $n$ into odd parts
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is the Fibonacci number $F_n$ (A000045).
 seeAlso:

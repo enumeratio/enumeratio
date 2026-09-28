@@ -6,6 +6,7 @@ signatures:
   - call: ChiDistribution(k)
     description: an inert distribution object — carries $k$, unevaluated.
     library: enumeratio-statistics
+    type: (real<0..>) -> distribution
 details:
   - $PDF(x) = 2^{1-k/2}x^{k-1}e^{-x^2/2}/\Gamma(k/2)$ for $x \geq 0$.
   - $CDF(x) = P(k/2, x^2/2)$ via [[GammaRegularized]] (same convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.

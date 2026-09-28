@@ -10,3 +10,8 @@ references:
     identity: Robinson–Schensted correspondence
 mapOn:
   - Permutation
+signatures:
+  - call: RskInsertion(Permutation)
+    description: The insertion tableau of the RSK correspondence.
+    library: enumeratio-domains
+    type: (permutation) -> standard_tableau

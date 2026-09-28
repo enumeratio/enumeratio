@@ -502,7 +502,7 @@ function defineEchoMessagesOnce(ce: ComputeEngine): void {
 function declareEcho(ce: ComputeEngine): void {
   defineEchoMessagesOnce(ce);
   ce.declare("Echo", {
-    signature: "(any, any?, ((any) -> any)?) -> any",
+    signature: "(any, any?, ((any) -> any)?) console -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const value = ops[0];
       if (value === undefined) return undefined;
@@ -522,7 +522,7 @@ function declareEcho(ce: ComputeEngine): void {
  *  pin the timing. */
 function declareAbsoluteTiming(ce: ComputeEngine): void {
   ce.declare("AbsoluteTiming", {
-    signature: "(any) -> any",
+    signature: "(any) time -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const expr = ops[0];

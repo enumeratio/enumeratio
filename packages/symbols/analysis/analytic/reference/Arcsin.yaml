@@ -5,6 +5,11 @@ summary: Arcsine, the inverse of [[Sin]] restricted to $[-\pi/2, \pi/2]$.
 signatures:
   - call: Arcsin(x)
     description: the principal value $y \in [-\pi/2, \pi/2]$ with $\sin(y) = x$.
+  - call: Arcsin(x)
+    description: Arcsine, the inverse of [[Sin]] restricted to $[-\pi/2, \pi/2]$.
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
 details:
   - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
   - 'Odd function: $\arcsin(-x) = -\arcsin(x)$.'

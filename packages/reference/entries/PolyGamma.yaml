@@ -8,6 +8,8 @@ signatures:
   - call: PolyGamma(m, z)
     description: extends the same call to complex $z$, for integer order $m \geq 1$.
     library: enumeratio-analytic
+    type: (number, number?) -> number
+    overrides: compute-engine
 details:
   - $\psi^{(0)}$ is the digamma — see [[Digamma]] — and $\psi^{(1)}$ the trigamma.
   - 'For $m \geq 1$ it is a Hurwitz zeta in disguise: $\psi^{(m)}(z) = (-1)^{m+1}\, m!\, \zeta(m+1, z)$. See [[HurwitzZeta]].'

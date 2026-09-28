@@ -5,6 +5,11 @@ summary: The number of prime factors of n, counted with multiplicity.
 signatures:
   - call: PrimeOmega(n)
     description: number of prime factors of $n$, counted with multiplicity.
+  - call: PrimeOmega(n)
+    description: The number of prime factors of n, counted with multiplicity.
+    library: enumeratio-number-theory
+    type: (number, any*) -> integer
+    overrides: compute-engine
 details:
   - Counts every prime factor with multiplicity -- $\Omega(2^5)=5$, unlike [[PrimeNu]]'s 1.
   - 'Completely additive: $\Omega(mn)=\Omega(m)+\Omega(n)$ for all $m,n$, not just coprime ones.'

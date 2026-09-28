@@ -6,6 +6,7 @@ signatures:
   - call: KDescentPermutations(n, k)
     description: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle
     library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>
 details:
   - Count is the Eulerian number $\left\langle{n \atop k}\right\rangle$ (A008292).
 seeAlso:

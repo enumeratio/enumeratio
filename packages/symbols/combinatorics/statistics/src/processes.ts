@@ -147,7 +147,7 @@ function simulatePath(ce: ComputeEngine, proc: BoxedExpression, grid: readonly n
 }
 
 function declareRandomFunction(ce: ComputeEngine): void {
-  ce.declare("RandomFunction", { signature: "(any, list<real>) -> any" });
+  ce.declare("RandomFunction", { signature: "(any, list<real>) random -> any" });
   const definition = ce.lookupDefinition("RandomFunction");
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;

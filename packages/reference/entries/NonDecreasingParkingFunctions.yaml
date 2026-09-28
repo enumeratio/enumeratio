@@ -11,3 +11,8 @@ grades:
   - name: n
     role: axis
 carrier: ParkingFunction
+signatures:
+  - call: NonDecreasingParkingFunctions(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+    library: enumeratio-collections
+    type: (integer) -> list<list<integer>>

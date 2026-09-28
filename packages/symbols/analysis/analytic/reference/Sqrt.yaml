@@ -5,6 +5,11 @@ summary: 'The principal square root of x: $\sqrt{x}$.'
 signatures:
   - call: Sqrt(x)
     description: the principal square root $\sqrt{x} = x^{1/2}$.
+  - call: Sqrt(x)
+    description: 'The principal square root of x: $\sqrt{x}$.'
+    library: enumeratio-analytic
+    type: (complex | infinity) -> complex | infinity
+    overrides: compute-engine
 details:
   - 'The principal square root: $\sqrt{x} = x^{1/2}$. See [[Root]] for other roots and [[Square]] for the inverse operation.'
   - Evaluates exactly only when the radicand is a perfect square (or a ratio of perfect squares); otherwise it stays in symbolic surd form, like $\sqrt{2}$.

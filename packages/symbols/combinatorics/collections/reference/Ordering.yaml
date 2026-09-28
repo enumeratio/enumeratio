@@ -8,6 +8,8 @@ signatures:
   - call: Ordering(collection, n)
     description: just the first `n` indices of the full ordering; a negative `n` takes the last `|n|` (the largest elements); `{m, n}` takes positions `m` through `n` of the full ordering; `UpTo(n)` caps at `n` without erroring on a shorter collection.
     library: enumeratio-collections
+    type: (indexed_collection<any>, any?, any?) -> list<integer>
+    overrides: compute-engine
   - call: Ordering(collection, All, Greater)
     description: every index, ordered descending rather than ascending.
     library: enumeratio-collections

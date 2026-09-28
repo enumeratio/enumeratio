@@ -6,6 +6,7 @@ signatures:
   - call: PartitionAlgebra(n)
     description: the partition algebra on $n$ strands
     library: enumeratio-diagram
+    type: (integer) -> value
   - call: PlanarPartitionAlgebra(n)
     description: only the planar diagrams — dimension $C(2n)$
     library: enumeratio-diagram

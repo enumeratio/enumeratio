@@ -6,6 +6,7 @@ signatures:
   - call: NSum(f, {n, a, b})
     description: the finite sum of f(n) for n from a to b (both integers).
     library: "@enumeratio/analytic"
+    type: (any, any) -> any
   - call: NSum(f, {n, a, Infinity})
     description: the numeric value of the infinite series, accelerated and error-checked against a strict ~1e-12 relative tolerance (tightened internally to 1e-14 -- see `details`); declines rather than guess when the check doesn't clear it.
     library: "@enumeratio/analytic"
@@ -19,3 +20,5 @@ seeAlso:
   - NMinimize
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

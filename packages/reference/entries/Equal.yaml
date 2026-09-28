@@ -5,6 +5,11 @@ summary: Equality comparison (equal to).
 signatures:
   - call: Equal(any, any) -> boolean
     description: as compute-engine declares it
+  - call: Equal(any, any) -> boolean
+    description: Equality comparison (equal to).
+    library: enumeratio-adeles
+    type: (any, any) -> boolean
+    overrides: compute-engine
 names:
   wolframIdentity: true
 stub: engine
@@ -49,3 +54,5 @@ bindings:
     template: equal($1, $2)
     arity: 2
     note: "The single most valuable row: a large share of documented examples are identities written as Equal."
+attributes:
+  - HoldAll

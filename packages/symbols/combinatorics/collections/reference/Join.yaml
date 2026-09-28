@@ -8,6 +8,8 @@ signatures:
   - call: Join(a, b, …, n)
     description: corresponding sublists n-1 levels down joined pairwise, instead of the top level.
     library: enumeratio-collections
+    type: "((T+) -> T where T: string) & ((collection<any>*) -> collection)"
+    overrides: compute-engine
 details:
   - $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]].
   - The argument collections don't need to be $List$, but must all share the same head.

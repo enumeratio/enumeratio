@@ -6,6 +6,7 @@ signatures:
   - call: RisingFactorial(a, n)
     description: the rising factorial $(a)_n = \Gamma(a+n)/\Gamma(a)$.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - Evaluates as [[Pochhammer]] wherever that head gives an answer, exact or numeric, so the two agree on every shared input. A symbolic order comes back as `Pochhammer(a, n)`.
   - Where the native head gives NaN, a complex $a$ with a non-integer order, the value is $\Gamma(a+n)/\Gamma(a)$ through [[LogGamma]]. At a pole of $\Gamma(a)$, $a = 0, -1, -2, \dots$, with $n$ off the integers, $1/\Gamma(a) = 0$ makes the value 0, as in Wolfram and mpmath.

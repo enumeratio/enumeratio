@@ -6,6 +6,7 @@ signatures:
   - call: AlgebraDimension(algebra)
     description: $2^n$ for $n$ generators
     library: enumeratio-hypercomplex
+    type: (value) -> integer
 details:
   - Every subset of the generators is one basis blade, so the dimension doubles per generator
   - A separate head from compute-engine's `Dimension`, which is defined for lists and matrices and is deliberately left alone

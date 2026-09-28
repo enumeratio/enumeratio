@@ -6,6 +6,7 @@ signatures:
   - call: GroupBasis(label)
     description: the basis element for that group element
     library: enumeratio-groupalgebra
+    type: (string) -> number
   - call: GroupProduct(group, a, b)
     description: multiply — the group is named, since a basis element does not carry it
     library: enumeratio-groupalgebra

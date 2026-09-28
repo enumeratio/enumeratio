@@ -6,6 +6,7 @@ signatures:
   - call: ReplacePart(expr, i -> new)
     description: expr with its ith operand replaced (1-based; i < 0 counts from the end)
     library: enumeratio-collections
+    type: (any, any) -> any
   - call: ReplacePart(expr, {i, j, …} -> new)
     description: like the scalar form, drilling into nested operands along the given path
     library: enumeratio-collections

@@ -6,6 +6,7 @@ signatures:
   - call: ProductDistribution(d1, ..., dn)
     description: the joint distribution of n independent d1, ..., dn.
     library: enumeratio-statistics
+    type: (any*) -> distribution
   - call: ProductDistribution({d, n})
     description: n independent copies of the same $d$ — rewritten to the n-ary form at construction.
     library: enumeratio-statistics

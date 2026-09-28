@@ -6,6 +6,7 @@ signatures:
   - call: OrbitDiagram(blocks)
     description: an orbit basis element
     library: enumeratio-diagram
+    type: (list) -> number
   - call: InDiagramBasis(x) / InOrbitBasis(x)
     description: change of basis, either direction
     library: enumeratio-diagram

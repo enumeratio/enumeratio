@@ -6,6 +6,7 @@ signatures:
   - call: MultinomialDistribution(n, {p1, ..., pk})
     description: n independent draws, each landing in category i with probability pi.
     library: enumeratio-statistics
+    type: (real<0..>, list<real>) -> distribution
 details:
   - $PDF(x) = \binom{n}{x_1,\ldots,x_k} \prod_i p_i^{x_i}$ when $\sum_i x_i = n$, $0$ otherwise — the multinomial coefficient is compute-engine's own native `Multinomial(x1,...,xk)`, which already computes $n!/(x_1!\cdots x_k!)$ for $n = \sum x_i$; the guard is what checks that sum against the DISTRIBUTION's own $n$.
   - "$Mean_i = n\\,p_i$; $Variance_i = n\\,p_i(1-p_i)$ — both length-$k$ lists (Wolfram's own `Variance` convention: componentwise, not the full covariance matrix)."

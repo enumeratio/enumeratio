@@ -5,6 +5,16 @@ summary: The double factorial $n!!$, the product of every second integer from n 
 signatures:
   - call: Factorial2(n)
     description: the double factorial $n!!$.
+  - call: Factorial2(n)
+    description: The double factorial $n!!$, the product of every second integer from n down to 1 or 2.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+  - call: Factorial2(n)
+    description: The double factorial $n!!$, the product of every second integer from n down to 1 or 2.
+    library: enumeratio-number-theory
+    type: (any) -> any
+    overrides: enumeratio-analytic
 details:
   - 'Skips every other factor: $n!! = n(n-2)(n-4)\cdots$, stopping at 1 (n odd) or 2 (n even).'
   - 'Recurrence: $n!! = n\,(n-2)!!$, with $0!! = 1$.'

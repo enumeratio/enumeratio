@@ -6,6 +6,7 @@ signatures:
   - call: CompleteKaryTree(levels)
     description: binary ($k = 2$); `levels` is a LEVEL count, not a vertex count.
     library: enumeratio-collections
+    type: (integer, integer?) -> value
   - call: CompleteKaryTree(levels, k)
     description: $n = (k^{\text{levels}} - 1) / (k - 1)$ vertices, 1-indexed heap layout — vertex $i$'s children are $k(i-1)+2, \dots, k(i-1)+k+1$.
     library: enumeratio-collections

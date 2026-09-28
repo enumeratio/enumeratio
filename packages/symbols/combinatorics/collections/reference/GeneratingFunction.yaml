@@ -6,6 +6,7 @@ signatures:
   - call: GeneratingFunction(expr, n, x)
     description: the ordinary generating function of expr(n) in x
     library: enumeratio-collections
+    type: (any, symbol, symbol) -> any
 details:
   - C-finite sequences (satisfying a constant-coefficient linear recurrence -- Fibonacci-like sequences, fixed-$k$ binomials, polynomials in $n$, geometric terms, and any combination of those) get a rational generating function, found from the recurrence by Berlekamp--Massey -- there is no family-specific code.
   - 'A handful of named, non-C-finite sequences are recognised directly by value, not by name: the Catalan numbers have the algebraic generating function $(1-\sqrt{1-4x})/(2x)$.'
@@ -17,3 +18,5 @@ seeAlso:
   - DiscreteRatio
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

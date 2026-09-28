@@ -6,6 +6,7 @@ signatures:
   - call: MoebiusFunction(poset, x, y)
     description: $\mu$ on the interval $[x,y]$, and 0 when $x \not\le y$
     library: enumeratio-incidence
+    type: (value, any, any) -> integer
 details:
   - Defined by $\mu(x,x) = 1$ and $\mu(x,y) = -\sum_{x \le z < y}\mu(x,z)$ — which is exactly the statement that $\mu$ inverts $\zeta$
   - On `DivisorLattice(n)`, $\mu([a,b])$ is the classical number-theoretic $\mu(b/a)$

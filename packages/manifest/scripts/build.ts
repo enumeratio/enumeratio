@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseYaml, type ReferenceEntry } from "@enumeratio/entry";
 import { isEntryFile, recordDirs } from "@enumeratio/entry/node";
+import { canonicalOrder } from "../src/canonical.ts";
 import type { DeclaredSymbol, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
@@ -109,13 +110,16 @@ for (const { package: pkg, record } of ranked) {
   }
 }
 
+// A head's overloads in canonical order (src/canonical.ts), typed against a bare engine.
+const typing = new ComputeEngine();
+
 const symbols: Record<string, SymbolInfo> = {};
 for (const name of [...byName.keys()].sort(cmp)) {
   const info = byName.get(name)!;
   symbols[name] = {
     name,
     documented: info.documented.sort(cmp),
-    overloads: info.overloads,
+    overloads: canonicalOrder(info.overloads, typing),
     ...(info.params !== undefined ? { params: info.params } : {}),
     ...(info.attributes.size > 0 ? { attributes: [...info.attributes].sort(cmp) } : {}),
   };

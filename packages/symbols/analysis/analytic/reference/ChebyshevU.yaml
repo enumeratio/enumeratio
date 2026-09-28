@@ -6,6 +6,7 @@ signatures:
   - call: ChebyshevU(n, x)
     description: the degree-$n$ Chebyshev polynomial of the second kind at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
+    type: (integer, number) -> number
 details:
   - '$U_0 = 1$, $U_1 = 2x$, and $U_{n+1} = 2x\,U_n - U_{n-1}$: the recurrence of [[ChebyshevT]] from a different start. The coefficients are integers and the leading one is $2^n$.'
   - $U_n(\cos\theta) = \dfrac{\sin((n+1)\theta)}{\sin\theta}$, so $U_n(1) = n + 1$ and $U_n(-1) = (-1)^n (n+1)$.

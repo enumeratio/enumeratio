@@ -12,3 +12,8 @@ catalog:
     on: SetPartition
 statOn:
   - SetPartition
+signatures:
+  - call: SingletonBlocks(partition)
+    description: Blocks containing exactly one element.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

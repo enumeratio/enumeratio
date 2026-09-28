@@ -10,3 +10,8 @@ references:
     identity: Robinson–Schensted correspondence
 mapOn:
   - Permutation
+signatures:
+  - call: RskShape(Permutation)
+    description: "The common shape of the RSK tableaux: the row lengths, as a partition of n."
+    library: enumeratio-domains
+    type: (permutation) -> integer_partition

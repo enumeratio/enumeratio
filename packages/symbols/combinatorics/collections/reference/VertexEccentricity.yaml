@@ -6,6 +6,7 @@ signatures:
   - call: VertexEccentricity(g)
     description: the eccentricity of every vertex, in VertexList(g) order.
     library: enumeratio-collections
+    type: (value, any?) -> value
   - call: VertexEccentricity(g, v)
     description: just v's eccentricity.
     library: enumeratio-collections

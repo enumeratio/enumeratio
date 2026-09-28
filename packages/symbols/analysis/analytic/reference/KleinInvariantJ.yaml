@@ -6,6 +6,7 @@ signatures:
   - call: KleinInvariantJ(tau)
     description: $J(\tau) = j(\tau)/1728$.
     library: "@enumeratio/analytic"
+    type: (number) -> number
 details:
   - All the analytic work — fundamental-domain reduction, the $\eta^{24}$ discriminant — is [[ModularJ]]'s; this only rescales.
   - '$\tau = i$ is returned exactly (1): $j(i) = 1728$ is a textbook identity, kept exact even under plain `evaluate()`, not just `N()`.'

@@ -274,7 +274,7 @@ function declareRandomComplex(ce: ComputeEngine): void {
   };
 
   ce.declare("RandomComplex", {
-    signature: "(any?) -> any",
+    signature: "(any?) random -> any",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const spec = ops[0];
       const corners =

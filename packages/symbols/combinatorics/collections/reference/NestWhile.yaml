@@ -6,6 +6,7 @@ signatures:
   - call: NestWhile(f, x, test)
     description: Applies $f$ to $x$ repeatedly while $test$ of the CURRENT value reads $True$, and returns the first value where it doesn't.
     library: enumeratio-collections
+    type: (any, any, any, integer?, integer?) -> any
   - call: NestWhile(f, x, test, m)
     description: $test$ is called on the last $m$ values as $m$ separate arguments, instead of the bare current value.
     library: enumeratio-collections
@@ -20,3 +21,5 @@ seeAlso:
   - FixedPointList
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

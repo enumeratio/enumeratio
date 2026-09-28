@@ -6,6 +6,7 @@ signatures:
   - call: JacobiAmplitude(u, m)
     description: the Jacobi amplitude, argument u, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
   - $\operatorname{sn}(u,m) = \sin(\operatorname{am}(u,m))$, $\operatorname{cn}(u,m) = \cos(\operatorname{am}(u,m))$ — the amplitude is what the descending Landen/AGM recursion behind [[JacobiSN]]/[[JacobiCN]]/[[JacobiDN]] computes directly (Abramowitz & Stegun 16.4), continuously (not just modulo $\pi$, unlike reconstructing it from $\arcsin$ of sn alone).

@@ -1,0 +1,11 @@
+name: ColoredPermutations
+domain: Collections
+signature: ColoredPermutations(n, k)
+summary: Permutations of $\{1, \dots, n\}$ with each position colored by one of $k$ colors — the wreath product $\mathbb{Z}_k \wr S_n$. Element is a $[\text{image}, \text{colors}]$ pair.
+signatures:
+  - call: ColoredPermutations(n, k)
+    description: the $k^n \cdot n!$ colored permutations of $\{1, \dots, n\}$
+    library: enumeratio-collections
+    type: (integer, integer) -> list<list<list<integer>>>
+seeAlso:
+  - SignedPermutations

@@ -6,6 +6,7 @@ signatures:
   - call: NSymR(composition)
     description: a ribbon basis element of NSym
     library: enumeratio-hopf
+    type: (list<integer>) -> number
   - call: QSymF(composition)
     description: a fundamental basis element of QSym
     library: enumeratio-hopf

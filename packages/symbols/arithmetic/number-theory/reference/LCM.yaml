@@ -5,6 +5,11 @@ summary: The least common multiple of the arguments.
 signatures:
   - call: LCM(a, b, …)
     description: least common multiple of two or more integers.
+  - call: LCM(a, b, …)
+    description: The least common multiple of the arguments.
+    library: enumeratio-number-theory
+    type: (any*) -> number
+    overrides: compute-engine
 details:
   - "Also called the smallest common multiple: the smallest positive integer that is a multiple of every argument."
   - Paired with [[GCD]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.

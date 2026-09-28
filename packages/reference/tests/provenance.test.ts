@@ -344,7 +344,12 @@ test("the committed provenance data is still what the engines say", () => {
   // means a head moved between compute-engine's and ours, which is worth noticing.
   // Coverage comes from an external kernel, so it is carried forward rather than re-derived
   // here — this check is about the offline columns, which CI can always compute.
-  expect(collect(bare, ours, entries, HEADS, provenance)).toEqual(provenance.map((record) => ({ ...record })));
+  // Fresh engines, as the collector uses: the ledger above has evaluated every example on
+  // `bare` and `ours`, and an example can leave engine state behind (a precision) that
+  // tips a head like `N` between compute-engine's and an override.
+  expect(collect(new ComputeEngine(), declaredEngine(), entries, HEADS, provenance)).toEqual(
+    provenance.map((record) => ({ ...record })),
+  );
 });
 
 test("the Wolfram rename column is reflected from the transpiler, not copied", () => {

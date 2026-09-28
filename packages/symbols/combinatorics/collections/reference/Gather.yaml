@@ -6,6 +6,7 @@ signatures:
   - call: Gather(list)
     description: elements grouped by equality, in first-appearance order.
     library: enumeratio-collections
+    type: (indexed_collection<any>, ((any, any) any -> boolean)?) -> list<list<any>>
   - call: Gather(list, test)
     description: elements grouped by a custom two-argument equivalence test.
     library: enumeratio-collections

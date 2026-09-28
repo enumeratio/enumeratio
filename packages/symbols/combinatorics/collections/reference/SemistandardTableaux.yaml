@@ -6,6 +6,7 @@ signatures:
   - call: SemistandardTableaux(size, max_entry)
     library: enumeratio-collections
     description: the SSYT of `size` cells over every partition shape, entries from 1 to `max_entry`.
+    type: (integer, integer) -> list<list<list<integer>>>
 details:
   - A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
   - "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau)."

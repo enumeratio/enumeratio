@@ -14,3 +14,8 @@ grades:
   - name: n
     role: axis
 carrier: SetComposition
+signatures:
+  - call: SetCompositions(n)
+    description: "Compositions of a set: an ordered sequence of blocks partitioning it."
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

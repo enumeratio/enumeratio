@@ -5,6 +5,11 @@ summary: The natural logarithm, the inverse of [[Exp]].
 signatures:
   - call: Ln(x)
     description: the natural logarithm of x, base $e$.
+  - call: Ln(x)
+    description: The natural logarithm, the inverse of [[Exp]].
+    library: enumeratio-analytic
+    type: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity"
+    overrides: compute-engine
 details:
   - 'Inverse of [[Exp]]: $\ln(e^x) = x$.'
   - "The natural logarithm. Note compute-engine's own [[Log]] is not a synonym: it defaults to base 10 (see that entry)."

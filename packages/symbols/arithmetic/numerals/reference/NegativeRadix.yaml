@@ -1,0 +1,11 @@
+name: NegativeRadix
+domain: Numeral systems
+signature: NegativeRadix(b)
+summary: "The old spelling of [[NegativeNumerals]], kept working: `NegativeRadix(b)` evaluates to its canonical form."
+signatures:
+  - call: NegativeRadix(b)
+    description: same as NegativeNumerals(b)
+    library: enumeratio-numerals
+    type: (integer) -> value
+seeAlso:
+  - NegativeNumerals

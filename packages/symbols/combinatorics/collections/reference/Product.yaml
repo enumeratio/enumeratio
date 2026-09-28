@@ -8,6 +8,8 @@ signatures:
   - call: Product(body, Tuple(index, lo, hi))
     description: a symbolic product over a range, closed-form whenever `body` is a power of the index (a factorial power) or a power WITH the index in the exponent (folds to a single power via a closed-form sum of the exponent); nested `Tuple` clauses reduce inner-first, so an inner limit depending on the outer index still closes. With `hi = PositiveInfinity` and `body` a ratio of polynomials in the index of equal degree and leading coefficient, closes via a Gamma-function product over the roots whenever those roots are exact (rational, Gaussian, or a quadratic surd) and the series converges; declines otherwise.
     library: enumeratio-collections
+    type: (any, tuple*) -> number
+    overrides: compute-engine
 details:
   - The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].
   - "The product of $1$ through $n$ is $n!$: $Product(Range(1, n)) = Factorial(n)$."
@@ -19,3 +21,5 @@ seeAlso:
   - Length
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

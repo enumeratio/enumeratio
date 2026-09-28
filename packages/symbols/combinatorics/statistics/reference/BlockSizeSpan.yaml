@@ -7,3 +7,8 @@ details:
   - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
 statOn:
   - SetPartition
+signatures:
+  - call: BlockSizeSpan(partition)
+    description: Largest block size minus smallest.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number

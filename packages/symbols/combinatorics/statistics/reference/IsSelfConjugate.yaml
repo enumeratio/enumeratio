@@ -7,3 +7,8 @@ details:
   - Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
 statOn:
   - IntegerPartition
+signatures:
+  - call: IsSelfConjugate(partition)
+    description: 1 when λ equals its conjugate, 0 otherwise.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number
