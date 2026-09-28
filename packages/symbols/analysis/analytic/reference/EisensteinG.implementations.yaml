@@ -7,8 +7,6 @@ eisensteing-4-0-1i:
     out: 3.151\,212\,002\,153\,897\,6
   fullform:
     in: N[EisensteinG[4, Complex[0, 1]]]
-  wolfram:
-    in: N[EisensteinG[4, Complex[0, 1]]]
 eisensteing-4-0-5-0-8660254037844386i:
   epsil:
     in: N(EisensteinG(4, -0.5 + 0.866_025_403_784_438_6i))
@@ -17,8 +15,6 @@ eisensteing-4-0-5-0-8660254037844386i:
     in: N(\mathrm{EisensteinG}(4, -0.5+0.866\,025\,403\,784\,438\,6i))
     out: -480\,648\,069\,661\,144\cdot10^{-30}
   fullform:
-    in: N[EisensteinG[4, Complex[-0.5, 0.8660254037844386]]]
-  wolfram:
     in: N[EisensteinG[4, Complex[-0.5, 0.8660254037844386]]]
 eisensteing-4-0-3-1-1i:
   epsil:
@@ -29,8 +25,6 @@ eisensteing-4-0-3-1-1i:
     out: 2.000\,965\,351\,966\,997+0.489\,503\,456\,789\,059\,54i
   fullform:
     in: N[EisensteinG[4, Complex[0.3, 1.1]]]
-  wolfram:
-    in: N[EisensteinG[4, Complex[0.3, 1.1]]]
 eisensteing-4-0-3-0-05i:
   epsil:
     in: N(EisensteinG(4, 0.3 + 0.05i))
@@ -39,8 +33,6 @@ eisensteing-4-0-3-0-05i:
     in: N(\mathrm{EisensteinG}(4, 0.3+0.05i))
     out: -1\,455.941\,164\,172\,926-1\,426.801\,386\,799\,578\,3i
   fullform:
-    in: N[EisensteinG[4, Complex[0.3, 0.05]]]
-  wolfram:
     in: N[EisensteinG[4, Complex[0.3, 0.05]]]
 eisensteing-4-1-3-0-05i:
   epsil:
@@ -51,8 +43,6 @@ eisensteing-4-1-3-0-05i:
     out: -1\,455.941\,164\,172\,925\,7-1\,426.801\,386\,799\,578i
   fullform:
     in: N[EisensteinG[4, Complex[1.3, 0.05]]]
-  wolfram:
-    in: N[EisensteinG[4, Complex[1.3, 0.05]]]
 eisensteing-4-2-7-1-4i:
   epsil:
     in: N(EisensteinG(4, 2.7 + 1.4i))
@@ -61,8 +51,6 @@ eisensteing-4-2-7-1-4i:
     in: N(\mathrm{EisensteinG}(4, 2.7+1.4i))
     out: 2.140\,275\,586\,184\,914-0.074\,676\,682\,030\,063\,65i
   fullform:
-    in: N[EisensteinG[4, Complex[2.7, 1.4]]]
-  wolfram:
     in: N[EisensteinG[4, Complex[2.7, 1.4]]]
 eisensteing-4-1-4-0-6i:
   epsil:
@@ -73,8 +61,6 @@ eisensteing-4-1-4-0-6i:
     out: -6.710\,168\,537\,759\,229\,5-4.839\,673\,427\,449\,075i
   fullform:
     in: N[EisensteinG[4, Complex[-1.4, 0.6]]]
-  wolfram:
-    in: N[EisensteinG[4, Complex[-1.4, 0.6]]]
 eisensteing-6-0-1i:
   epsil:
     in: N(EisensteinG(6, i))
@@ -83,8 +69,6 @@ eisensteing-6-0-1i:
     in: N(\mathrm{EisensteinG}(6, i))
     out: -4\,517\,910\,765\,431\,173\cdot10^{-31}
   fullform:
-    in: N[EisensteinG[6, Complex[0, 1]]]
-  wolfram:
     in: N[EisensteinG[6, Complex[0, 1]]]
 eisensteing-6-0-5-0-8660254037844386i:
   epsil:
@@ -95,8 +79,6 @@ eisensteing-6-0-5-0-8660254037844386i:
     out: 5.863\,031\,693\,425\,403
   fullform:
     in: N[EisensteinG[6, Complex[-0.5, 0.8660254037844386]]]
-  wolfram:
-    in: N[EisensteinG[6, Complex[-0.5, 0.8660254037844386]]]
 eisensteing-6-0-3-1-1i:
   epsil:
     in: N(EisensteinG(6, 0.3 + 1.1i))
@@ -105,8 +87,6 @@ eisensteing-6-0-3-1-1i:
     in: N(\mathrm{EisensteinG}(6, 0.3+1.1i))
     out: 2.377\,364\,649\,463\,547\,4-0.951\,755\,034\,960\,987\,9i
   fullform:
-    in: N[EisensteinG[6, Complex[0.3, 1.1]]]
-  wolfram:
     in: N[EisensteinG[6, Complex[0.3, 1.1]]]
 eisensteing-6-0-3-0-05i:
   epsil:
@@ -117,8 +97,6 @@ eisensteing-6-0-3-0-05i:
     out: 56\,191.910\,886\,204\,08-20\,955.086\,158\,426\,846i
   fullform:
     in: N[EisensteinG[6, Complex[0.3, 0.05]]]
-  wolfram:
-    in: N[EisensteinG[6, Complex[0.3, 0.05]]]
 eisensteing-6-1-3-0-05i:
   epsil:
     in: N(EisensteinG(6, 1.3 + 0.05i))
@@ -127,8 +105,6 @@ eisensteing-6-1-3-0-05i:
     in: N(\mathrm{EisensteinG}(6, 1.3+0.05i))
     out: 56\,191.910\,886\,204\,11-20\,955.086\,158\,426\,868i
   fullform:
-    in: N[EisensteinG[6, Complex[1.3, 0.05]]]
-  wolfram:
     in: N[EisensteinG[6, Complex[1.3, 0.05]]]
 eisensteing-6-2-7-1-4i:
   epsil:
@@ -139,8 +115,6 @@ eisensteing-6-2-7-1-4i:
     out: 2.083\,247\,300\,705\,014+0.147\,074\,394\,772\,113\,73i
   fullform:
     in: N[EisensteinG[6, Complex[2.7, 1.4]]]
-  wolfram:
-    in: N[EisensteinG[6, Complex[2.7, 1.4]]]
 eisensteing-6-1-4-0-6i:
   epsil:
     in: N(EisensteinG(6, -1.4 + 0.6i))
@@ -149,8 +123,6 @@ eisensteing-6-1-4-0-6i:
     in: N(\mathrm{EisensteinG}(6, -1.4+0.6i))
     out: 14.883\,484\,583\,242\,545-0.473\,120\,061\,901\,919\,85i
   fullform:
-    in: N[EisensteinG[6, Complex[-1.4, 0.6]]]
-  wolfram:
     in: N[EisensteinG[6, Complex[-1.4, 0.6]]]
 eisensteing-8-0-1i:
   epsil:
@@ -161,8 +133,6 @@ eisensteing-8-0-1i:
     out: 4.255\,773\,035\,365\,19
   fullform:
     in: N[EisensteinG[8, Complex[0, 1]]]
-  wolfram:
-    in: N[EisensteinG[8, Complex[0, 1]]]
 eisensteing-8-0-5-0-8660254037844386i:
   epsil:
     in: N(EisensteinG(8, -0.5 + 0.866_025_403_784_438_6i))
@@ -171,8 +141,6 @@ eisensteing-8-0-5-0-8660254037844386i:
     in: N(\mathrm{EisensteinG}(8, -0.5+0.866\,025\,403\,784\,438\,6i))
     out: 89\,179\,983\,948\,457\cdot10^{-29}
   fullform:
-    in: N[EisensteinG[8, Complex[-0.5, 0.8660254037844386]]]
-  wolfram:
     in: N[EisensteinG[8, Complex[-0.5, 0.8660254037844386]]]
 eisensteing-8-0-3-1-1i:
   epsil:
@@ -183,8 +151,6 @@ eisensteing-8-0-3-1-1i:
     out: 1.613\,249\,445\,241\,701\,7+0.839\,553\,820\,031\,127\,8i
   fullform:
     in: N[EisensteinG[8, Complex[0.3, 1.1]]]
-  wolfram:
-    in: N[EisensteinG[8, Complex[0.3, 1.1]]]
 eisensteing-8-0-3-0-05i:
   epsil:
     in: N(EisensteinG(8, 0.3 + 0.05i))
@@ -193,8 +159,6 @@ eisensteing-8-0-3-0-05i:
     in: N(\mathrm{EisensteinG}(8, 0.3+0.05i))
     out: 36\,001.061\,211\,434\,775+1\,780\,576.176\,120\,448\,2i
   fullform:
-    in: N[EisensteinG[8, Complex[0.3, 0.05]]]
-  wolfram:
     in: N[EisensteinG[8, Complex[0.3, 0.05]]]
 eisensteing-8-1-3-0-05i:
   epsil:
@@ -205,8 +169,6 @@ eisensteing-8-1-3-0-05i:
     out: 36\,001.061\,211\,435\,19+1\,780\,576.176\,120\,449i
   fullform:
     in: N[EisensteinG[8, Complex[1.3, 0.05]]]
-  wolfram:
-    in: N[EisensteinG[8, Complex[1.3, 0.05]]]
 eisensteing-8-2-7-1-4i:
   epsil:
     in: N(EisensteinG(8, 2.7 + 1.4i))
@@ -216,8 +178,6 @@ eisensteing-8-2-7-1-4i:
     out: 1.960\,801\,276\,277\,211-0.136\,996\,010\,919\,633\,3i
   fullform:
     in: N[EisensteinG[8, Complex[2.7, 1.4]]]
-  wolfram:
-    in: N[EisensteinG[8, Complex[2.7, 1.4]]]
 eisensteing-8-1-4-0-6i:
   epsil:
     in: N(EisensteinG(8, -1.4 + 0.6i))
@@ -226,6 +186,4 @@ eisensteing-8-1-4-0-6i:
     in: N(\mathrm{EisensteinG}(8, -1.4+0.6i))
     out: 9.258\,824\,108\,904\,506+27.835\,735\,170\,769\,86i
   fullform:
-    in: N[EisensteinG[8, Complex[-1.4, 0.6]]]
-  wolfram:
     in: N[EisensteinG[8, Complex[-1.4, 0.6]]]
