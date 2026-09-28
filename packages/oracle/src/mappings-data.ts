@@ -32,6 +32,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "AdicDigits",
+    arity: 2,
+    emit: {
+      sage: "list(($1).unit_part().expansion())[:$2]",
+    },
+    note: "A capped operand or x = 0 has no unit_part() in Sage; only exact non-zero x scans.",
+  },
+  {
     head: "AdicNorm",
     arity: 1,
     emit: {
@@ -43,14 +51,16 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     arity: 2,
     emit: {
       rust: "adic($1, $2)",
+      sage: "Qp($1, 60)(QQ($2))",
     },
-    note: "The adic crate is p-adic only: our composite bases (10-adic) have no counterpart there.",
+    note: "Sage's Qp is prime-p only too: composite bases have no counterpart there.",
   },
   {
     head: "AdicValuation",
     arity: 1,
     emit: {
       rust: "adic_valuation($1)",
+      sage: "($1).valuation()",
     },
   },
   {

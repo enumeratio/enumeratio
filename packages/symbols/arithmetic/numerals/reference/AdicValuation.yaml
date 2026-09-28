@@ -25,3 +25,10 @@ bindings:
     form: rust
     template: adic_valuation($1)
     arity: 1
+  - origin: mapped
+    form: sage
+    template: ($1).valuation()
+    arity: 1
+    checked:
+      version: "10.9"
+      on: 2026-09-28

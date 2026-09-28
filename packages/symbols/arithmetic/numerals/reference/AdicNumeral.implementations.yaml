@@ -7,6 +7,12 @@
     out: \mathrm{AdicNumeral}(10, 1)
   fullform:
     in: Times[AdicNumeral[10, Rational[1, 3]], 3]
+  sage:
+    in: (Qp(10, 60)(QQ((1/3))) * 3)
+    out: "ValueError: p must be prime"
+    verdict: error
+    kind: domain
+    note: Sage's Qp is p-adic only; our composite (10-adic) numerals have no counterpart there.
   rust:
     in: (adic(n(10), rational(n(1), n(3))) * n(3))
     out: "panic: the adic crate takes a prime base, not 10"
@@ -22,6 +28,12 @@
     out: \mathrm{AdicNumeral}(10, 0)
   fullform:
     in: Plus[AdicNumeral[10, -1], 1]
+  sage:
+    in: (Qp(10, 60)(QQ(-1)) + 1)
+    out: "ValueError: p must be prime"
+    verdict: error
+    kind: domain
+    note: Sage's Qp is p-adic only; our composite (10-adic) numerals have no counterpart there.
   rust:
     in: (adic(n(10), n(-1)) + n(1))
     out: "panic: the adic crate takes a prime base, not 10"
@@ -46,6 +58,12 @@ prime-base-q-5-is-a-field-so-the-point-moves:
     out: \mathrm{AdicNumeral}(5, \frac{3}{5})
   fullform:
     in: Divide[AdicNumeral[5, 3], 5]
+  sage:
+    in: (Qp(5, 60)(QQ(3)) / 5)
+    out: 3*5^-1 + O(5^59)
+    verdict: disagree
+    kind: shape
+    note: A textual mismatch, not a value one — our expected is the structured AdicNumeral(5, 3/5), printed differently than Sage's own Qp repr. AdicValuation(...) on both sides agrees (see AdicValuation.examples.yaml).
   rust:
     in: (adic(n(5), n(3)) / n(5))
     out: '["AdicNumeral",5,["Rational",3,5]]'
@@ -58,6 +76,12 @@ dividing-by-zero-stays-complexinfinity:
     out: \tilde\infty
   fullform:
     in: Divide[AdicNumeral[5, -1], 0]
+  sage:
+    in: (Qp(5, 60)(QQ(-1)) / 0)
+    out: "ZeroDivisionError: cannot divide by zero"
+    verdict: error
+    kind: convention
+    note: We decline gracefully to ComplexInfinity, same as anywhere else in the engine; Sage's Qp raises on division by the literal zero instead.
   rust:
     in: (adic(n(5), n(-1)) / n(0))
     out: "panic: Error during QAdic<EAdic> division: DivideByZero"
@@ -73,6 +97,12 @@ composite-base-2-is-not-a-unit-of-z-10-so-this:
     out: \frac{\mathrm{AdicNumeral}(10, 3)}{2}
   fullform:
     in: Divide[AdicNumeral[10, 3], 2]
+  sage:
+    in: (Qp(10, 60)(QQ(3)) / 2)
+    out: "ValueError: p must be prime"
+    verdict: error
+    kind: domain
+    note: Sage's Qp is p-adic only; our composite (10-adic) numerals have no counterpart there.
   rust:
     in: (adic(n(10), n(3)) / n(2))
     out: "panic: the adic crate takes a prime base, not 10"
@@ -106,6 +136,12 @@ a-negative-power-inverts-exactly-3-1-1-3-in-z-10:
     out: \mathrm{AdicNumeral}(10, \frac{1}{3})
   fullform:
     in: Power[AdicNumeral[10, 3], -1]
+  sage:
+    in: ((Qp(10, 60)(QQ(3)))^-1)
+    out: "ValueError: p must be prime"
+    verdict: error
+    kind: domain
+    note: Sage's Qp is p-adic only; our composite (10-adic) numerals have no counterpart there.
   rust:
     in: power(adic(n(10), n(3)), n(-1))
     out: "panic: the adic crate takes a prime base, not 10"
@@ -121,6 +157,12 @@ numerals-over-different-bases-never-combine-and:
     out: \mathrm{AdicNumeral}(7, 2)+\mathrm{AdicNumeral}(5, 2)
   fullform:
     in: Plus[AdicNumeral[7, 2], AdicNumeral[5, 2]]
+  sage:
+    in: (Qp(7, 60)(QQ(2)) + Qp(5, 60)(QQ(2)))
+    out: "TypeError: unsupported operand parent(s) for +: '7-adic Field with capped relative precision 60' and '5-adic Fi"
+    verdict: error
+    kind: domain
+    note: Different bases never combine on our side either (the call stays unevaluated); Sage's two Qp fields are separate parents and its + raises instead.
   rust:
     in: (adic(n(7), n(2)) + adic(n(5), n(2)))
     out: "panic: MixedCharacteristic"
@@ -139,6 +181,12 @@ the-exact-zero-has-infinite-valuation:
     out: \infty
   fullform:
     in: AdicValuation[AdicNumeral[10, 0]]
+  sage:
+    in: (Qp(10, 60)(QQ(0))).valuation()
+    out: "ValueError: p must be prime"
+    verdict: error
+    kind: domain
+    note: Sage's Qp is p-adic only; our composite (10-adic) numerals have no counterpart there.
   rust:
     in: adic_valuation(adic(n(10), n(0)))
     out: "panic: the adic crate takes a prime base, not 10"

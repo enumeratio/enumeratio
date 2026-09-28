@@ -379,6 +379,7 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  */
 const NOVEL = [
   "Adele",
+  "AdicDigits",
   "AdicExpansion",
   "AdicNumeral",
   "AdicValuation",
