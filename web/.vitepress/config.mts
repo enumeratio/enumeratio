@@ -258,11 +258,12 @@ const config = withMermaid(
   }),
 );
 
-// vitepress-plugin-mermaid pre-bundles mermaid's own dependencies by bare name, which
-// pnpm's strict layout doesn't let the site resolve; unbundled, dev serves dayjs's UMD
-// build and every page fails to load. Reach them through mermaid instead.
+// vitepress-plugin-mermaid pre-bundles some of mermaid's dependencies by bare name, which
+// pnpm's strict layout doesn't let the site resolve, and its list trails mermaid's (fastdom);
+// unbundled, dev serves their CommonJS builds and every page fails to load. Pre-bundle
+// mermaid itself, the site's own dependency, which takes all of them along.
 const MERMAID_DEPS = new Set(["@braintree/sanitize-url", "dayjs", "debug", "cytoscape-cose-bilkent", "cytoscape"]);
 const deps = config.vite?.optimizeDeps;
-if (deps?.include) deps.include = deps.include.map((dep) => (MERMAID_DEPS.has(dep) ? `mermaid > ${dep}` : dep));
+if (deps?.include) deps.include = [...deps.include.filter((dep) => !MERMAID_DEPS.has(dep)), "mermaid"];
 
 export default config;
