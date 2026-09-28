@@ -232,8 +232,9 @@ export function lerchPhi(z: Cx, s: Cx, a: Cx): Cx {
   // Past three digits lost (or no sum at all), see if the series about z = 1 does better. Its
   // own measure keeps it out where it can't: near a positive integer s, Γ(1−s) and a ζ(s−k, a)
   // pole cancel. Near arg z = ±π with a off the axis both routes can still lose digits, the
-  // series about z = 1 by about e^(π|Im a|).
-  if (!(lost <= 1e3)) {
+  // series about z = 1 by about e^(π|Im a|). An exact zero stays: terms that cancel to exactly
+  // 0 are a true zero (Φ(−1, −1, ½)), where the other series could only add its rounding.
+  if (!(lost <= 1e3) && !(value.re === 0 && value.im === 0)) {
     const about = lerchAboutOne(z, s, a);
     if (!(about.lost >= lost) && Number.isFinite(about.value.re) && Number.isFinite(about.value.im)) return about.value;
   }
