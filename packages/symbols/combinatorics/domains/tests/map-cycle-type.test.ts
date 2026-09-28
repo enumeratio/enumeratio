@@ -5,7 +5,7 @@ import { ALL, ce, perm, result } from "./map-helpers.ts";
 
 test("CycleType crosses carriers and partitions n", () => {
   const cycleLengths = (p: number[]): number[] => {
-    const seen = Array.from({ length: p.length }, () => false);
+    const seen = new Array(p.length).fill(false);
     const lengths: number[] = [];
     for (let start = 0; start < p.length; start++) {
       if (seen[start]) continue;
@@ -29,8 +29,8 @@ test("CyclePartition labels each position with its cycle's rank", () => {
   // A set partition IS a restricted growth string, so the block label is the rank of the
   // cycle's least element — not an arbitrary identifier.
   const rgs = (p: number[]): number[] => {
-    const seen = Array.from({ length: p.length }, () => false);
-    const labels = Array.from({ length: p.length }, () => 0);
+    const seen = new Array(p.length).fill(false);
+    const labels = new Array(p.length).fill(0);
     let block = 0;
     for (let start = 0; start < p.length; start++) {
       if (seen[start]) continue;

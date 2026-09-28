@@ -122,7 +122,7 @@ const permuteDimensions = (ce: ComputeEngine, list: BoxedExpression, perm: reado
   const outDims = perm.map((p) => dims[p - 1]);
   const build = (dimIndex: number, outIndex: readonly number[]): BoxedExpression => {
     if (dimIndex === perm.length) {
-      const inIndex: number[] = Array.from({ length: perm.length }, () => 0);
+      const inIndex: number[] = new Array(perm.length).fill(0);
       perm.forEach((p, k) => {
         inIndex[p - 1] = outIndex[k];
       });

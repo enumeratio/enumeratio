@@ -72,7 +72,7 @@ export function ParkingFunctionCount(n: number): number {
 export function ParkingFunctionUnrank(n: number, rank: number): number[] {
   const total = ParkingFunctionCount(n);
   let r = normRank(rank, total);
-  const M = Array.from({ length: n + 1 }, () => 0);
+  const M = new Array(n + 1).fill(0);
   const memo = new Map<string, number>();
   const out: number[] = [];
   for (let i = 0; i < n; i++) {
@@ -91,7 +91,7 @@ export function ParkingFunctionUnrank(n: number, rank: number): number[] {
   return out;
 }
 export function ParkingFunctionRank(e: number[], n: number): number {
-  const M = Array.from({ length: n + 1 }, () => 0);
+  const M = new Array(n + 1).fill(0);
   const memo = new Map<string, number>();
   let rank = 0;
   for (let i = 0; i < n; i++) {
@@ -245,7 +245,7 @@ export function TournamentUnrank(n: number, rank: number): number[][] {
 }
 export function TournamentRank(e: number[][], n: number): number {
   const edges = edgePairs(n);
-  const bits = Array.from({ length: edges.length }, () => 0);
+  const bits = new Array(edges.length).fill(0);
   for (const [u, v] of e) {
     const idx = edgeIndexOf(edges, u, v);
     const [i, j] = edges[idx - 1];
@@ -279,7 +279,7 @@ export function RecursiveTreeCount(n: number): number {
 export function RecursiveTreeUnrank(n: number, rank: number): number[] {
   const total = RecursiveTreeCount(n);
   let rem = normRank(rank, total);
-  const parent = Array.from({ length: n }, () => 0);
+  const parent = new Array(n).fill(0);
   for (let i = n; i >= 2; i--) {
     const base = i - 1;
     parent[i - 1] = (rem % base) + 1;
@@ -335,7 +335,7 @@ export function IncreasingBinaryTreeRank(t: LabTree): number {
   return PermutationRank(flattenLabTree(t));
 }
 export function IsIncreasingBinaryTree(t: unknown, n: number): boolean {
-  const seen = Array.from({ length: n + 1 }, () => false);
+  const seen = new Array(n + 1).fill(false);
   let count = 0;
   const rec = (x: unknown, parentLabel: number): boolean => {
     if (x === 0) return true;
@@ -418,7 +418,7 @@ function sytRankShape(rows: number[][]): number {
 function isStandardTableauOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e)) return false;
   const rows = e as number[][];
-  const seen = Array.from({ length: n + 1 }, () => false);
+  const seen = new Array(n + 1).fill(false);
   let total = 0;
   for (let r = 0; r < rows.length; r++) {
     const row = rows[r];
@@ -552,7 +552,7 @@ export function IsSytTwoRowOf(e: unknown, n: number): boolean {
   const [seq1, seq2] = e as [number[], number[]];
   if (!Array.isArray(seq1) || !Array.isArray(seq2)) return false;
   if (seq1.length + seq2.length !== n || seq1.length < seq2.length) return false;
-  const seen = Array.from({ length: n + 1 }, () => false);
+  const seen = new Array(n + 1).fill(false);
   for (let i = 0; i < seq1.length; i++) {
     const v = seq1[i];
     if (!Number.isInteger(v) || v < 1 || v > n || seen[v]) return false;
