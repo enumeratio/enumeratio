@@ -9,8 +9,14 @@ The forcing complaint: `Components` is not a real head (it is a `stub: carrier` 
 record, `statOn: Endofunction` — never declared, so it never actually collided with
 anything), but the naming instinct it exposed is real. A stat named for what it measures,
 promoted straight to the global namespace, runs out of good names before it runs out of
-statistics. This asks: what's the actual mechanism, how much does typing carriers cost, and
-what do we do about `skipDeclared`.
+statistics.
+
+**Dean's direction is explicit: no head per statistic or map.** A statistic is referenced
+_through_ its collection or its FindStat id, not minted as its own global symbol. §3.1 is
+that design, concretely. §3.2 gives "keep promoting bare heads" a fair hearing as the
+alternative it deserves — the survey's own numbers (§1.4, §1.6) support it in places — but
+it is not this document's recommendation, and a narrow exception criterion is what's left of
+it.
 
 ## 1. Survey
 
@@ -107,7 +113,7 @@ statistic _from_ the collection's own file, and nothing stops two different defi
 
 The carrier field is a bare string, checked only by convention against the CE type of the
 same spelling — collections and domains are two packages that agree by naming, not by a
-shared reference. Worth closing in the same pass as the record-layout move (§3.2).
+shared reference. Worth closing in the same pass as the record-layout move (§3.3).
 
 ### 1.4 The `skipDeclared` collision census
 
@@ -144,6 +150,24 @@ This is good news structurally: every collision found is "the fast kernel and th
 specification agree to compete for a name," never two unrelated things silently fighting.
 §3.5 turns that into the collision-error design.
 
+**A related, sharper finding: maps already have an audited extension mechanism that
+statistics never reaches for.** `packages/symbols/combinatorics/domains/src/extend.ts` exists
+precisely to add a permutation-specific clause to a compute-engine built-in without losing
+its original behaviour (`domains.md` §5.2-§5.3, "the shadowing audit"), and `declareMaps`
+uses it: checked directly (`MAPS` against an engine built up to the maps step), **3 of the 25
+implemented maps — `Reverse`, `Complement`, `Inverse` — are already compute-engine heads**,
+extended rather than replaced, with every original overload (list `Reverse`, set `Complement`,
+matrix `Inverse`) verified intact. `declareStatistics` never calls this mechanism for `Sign`;
+it does a bare `ce.declare` that fails and lets `skipDeclared` paper over it. Worth noting
+precisely because `extend.ts`'s own comment lists `Sign` by name as an example of an
+"evaluate-backed head" the mechanism can extend (alongside `Inverse`, `Sort`) — so the
+question for `Sign` was never "is this mechanically possible," it's "is a permutation's ±1
+parity the same _meaning_ as a complex number's sign, or a coincidental homonym like `Prime`
+the arithmetic prime versus a derivative." `Inverse`/`Reverse`/`Complement` passed that bar
+(a permutation genuinely IS a kind of list/set-like object being reversed/complemented/inverted
+in the same sense); `Sign` is the harder case, and §3.2's exception criterion and §4 Q4/Q5
+are where it's actually decided — not resolved by this survey.
+
 ### 1.5 What compute-engine's type system actually offers (recap + what's new here)
 
 `domains.md` §1 covers `mint`/`alias`, dispatch, and the missing subtype lattice in full —
@@ -155,7 +179,8 @@ the only way to get a type per `n` would be minting one type per size on demand 
 re-opens exactly the "242 names is too many to mint eagerly" problem one level down, for an
 unbounded population. **Base-domain types (today's 86 carriers) are the only scope compute-
 engine's type grammar actually supports**; "full types" (one per collection) isn't a
-trade-off to weigh, it's not offered. §3.4 recommends accordingly.
+trade-off to weigh, it's not offered. §3.1's dispatch design (nominal carrier types, not
+parametrized collection types) follows from this directly.
 
 ### 1.6 Cost measurement
 
@@ -203,61 +228,169 @@ runs the regen, since the coordinator's brief expected it might not be.
 implementation and known-value tables per statistic; neither is pulled in — `findstat-data.ts`
 stores `{head, on, findstat: string[], values: number}` and nothing else. Dean's "known data
 and Sage implementation logic can be lifted from FindStat" is not yet built; it's a
-mechanical follow-on once a statistic is matched (§3.6 phase 4), since the id linkage that
+mechanical follow-on once a statistic is matched (§3.6 phase 5), since the id linkage that
 would key it already exists for 58 of 84.
 
 ## 2. Decomposition (borrowing `namespaces.md`'s frame)
 
-Applied to what §1 measured:
+Applied to what §1 measured, and reframed around Dean's direction rather than around who
+currently has a kernel:
 
-- **The already-implemented 84 (+25 maps)** have real kernels and real users (CLI, docs
-  site, tests). They've earned global names. The question for them is dispatch and
-  collision (§3.5), not addressing.
-- **The catalogued-but-unimplemented remainder** (158 stat names, 60 map names) is exactly
-  `namespaces.md`'s "genuinely open tail" — individually low-notation, growing, mechanically
-  derived from the catalog. It wants the resolver (`namespaces.md` §3-§5, already built as
-  `@enumeratio/catalog`), not 158 more eager `ce.declare` calls.
+- **No population gets a head per name, on principle** — not the 84 implemented statistics,
+  not the 25 implemented maps, not the 158/60 unimplemented tail. Having a kernel is a
+  question of whether an _implementation_ exists, not of whether a _global symbol_ should.
+  §3.1 is one mechanism spanning all of it.
+- **The already-implemented 84 (+25 maps)** are the ones with something real to route to —
+  a fast kernel, an expression, or both. §3.1 covers how dispatch reaches the right one
+  through the mechanism, not through a bare name.
+- **The catalogued-but-unimplemented remainder** (158 stat names, 60 map names) resolves
+  through the exact same mechanism, just with no kernel behind it yet — there's no separate
+  "tail" design because the mechanism never eagerly declares a symbol per name to begin with.
 - **The 3 (soon more) multi-carrier heads** are the domain-keyed-signature case
-  `namespaces.md` flags as needing "the upstream question pile." §3.5 argues this is
-  **wrong** for the case actually in front of us: nothing upstream is required to dispatch
-  one head across several _nominally-typed_ carriers, only to declare it that way instead of
-  "first carrier wins."
+  `namespaces.md` flags as needing "the upstream question pile." §3.1 shows this is **not**
+  an upstream question for the mechanism proposed here: dispatch happens inside our own
+  `evaluate`, keyed on the nominally-typed subject's carrier, which compute-engine has
+  supported since `domains.md` shipped.
 
 ## 3. Design
 
-### 3.1 Mechanism options
+### 3.1 Primary design: statistics and maps are metadata on their collection
 
-| option                                                           | shape                                                                                         | for                                                                                                                                                                                                                                                        | against                                                                                                                                                                 |
-| ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **A. Resource call**                                             | `ƒ("Inversions", "Permutation", p)` or `Statistic(Permutations, "inversions")`                | Never touches the global namespace; directly reuses `@enumeratio/catalog`'s built `ResourceRegistry`/`prepare()`                                                                                                                                           | Two-hop indirection for the common case; loses the "the expression IS the definition, read it plainly" ergonomic the statistics package was built for                   |
-| **B. FindStat id as address**                                    | `St000018(p)`                                                                                 | Stable identity independent of our naming; exactly the provenance Dean asked to preserve                                                                                                                                                                   | Only 58/84 (and an unknown fraction of the 158 unimplemented) have one; opaque to read; still need a fallback scheme for the rest, so it can't be the _only_ mechanism  |
-| **C. Carrier-scoped context, promoted on demand**                | `Permutation~Inversions`, lazily resolved, promotable to bare `Inversions`                    | Reuses the landed namespaces.md §4 ladder (namespaced → blessed → promoted) and the built registry; scales to all 242/85 without pre-declaring; separator already has a candidate (`~`, semantically apt, currently only blocked by LaTeX)                 | Separator character genuinely unresolved (namespaces.md §3.3, still open); the "declared alongside the collection" filing is a real migration, not just a naming change |
-| **D. Bare typed head, multi-carrier dispatch in one `evaluate`** | `Inversions(AsPermutation(…))`, same head handles `Inversions` on any carrier that defines it | What §1.1/§1.4 shows we mostly already have; zero notation change for the 84 already-implemented; the CE union-signature machinery (`(A) & (B) -> …`) already used for domain constructors (`declareConstructor`) is provably sufficient — no upstream ask | Doesn't scale to 242 on its own — still need A/C for the unimplemented tail                                                                                             |
+No new global head per statistic or map. A statistic is data — `{ head, on, expr, catalog }`,
+already the shape in §1.1 — filed on its collection/carrier record (§3.3), and reached
+through a small, fixed set of **verbs**, not through a symbol minted per name.
 
-None of these is exclusive; the recommendation is a layering.
+**The call shapes, weighed:**
 
-### 3.2 Recommended mechanism
+| shape                                              | reads as                                                            | for                                                                                                                                                                                                                              | against                                                                                                                                                       |
+| -------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Statistic(Permutations, "Inversions")` then `(π)` | "the Inversions statistic, on Permutations, applied to π" — curried | Reads as a VALUE you can pass on: `Map(Statistic(Permutations, "Inversions"), Permutations(4))` computes it across a whole collection in one line — the common combinatorics workflow (a statistic's distribution over a family) | Two calls for the single-element case; the collection argument is redundant whenever the carrier alone disambiguates (189 of 242 names, `namespaces.md` §2.2) |
+| `Statistic(π, "Inversions")`                       | "the Inversions statistic of π" — direct                            | One call; the collection name is redundant anyway, since π's own nominal carrier type (§1.2) already says what it is — no generics needed, just a runtime type read (below)                                                      | Doesn't give the curried "statistic as a value" form for free unless `Statistic(Permutations, name)` is _also_ accepted as a 2-arg partial application        |
+| `Statistic("St000018")` then `(π)`                 | "whatever FindStat calls St000018" — id as key, same registry       | Costs nothing extra: a FindStat id is just an alternate key into the identical (carrier, name) → `Definition` table (§1.7); no separate mechanism                                                                                | Only 58/84 (and an unknown fraction of the tail) have an id, so it's a lookup key, never the _only_ way in                                                    |
 
-**D for anything with a kernel, C for the catalogued tail, id-metadata (not id-as-address)
-for FindStat provenance everywhere.**
+**Recommendation on the shape**: support both `Statistic(collection, name)` (curried, 2-arg,
+returns the callable — reach for it when the collection actually disambiguates, or when the
+statistic is wanted as a value) and `Statistic(subject, name)` (direct, dispatches on
+`subject`'s own nominal carrier type). Both are one head with an overloaded signature — the
+same union-arm pattern `declareConstructor` already proves out (`domains.md` §1.2), with
+`indexed_collection<T>` in one arm and each carrier `T` in the other. A FindStat id is
+accepted anywhere a name string is, since it's the same table under a different key. Maps get
+the parallel treatment under a distinct head (`Map` is already CE's list-mapping head, so it
+can't be reused) — name TBD (§4 Q2) — same shape otherwise: `Morphism("RskRecording", π)` or
+`Morphism(π, "RskRecording")`, `from`/`to` unchanged from `CombinatorialMap` (§3.4).
 
-- A statistic that's actually implemented gets a bare, promoted head
-  (`Inversions`, `MajorIndex`, …), typed over its carrier(s) via the union-signature pattern
-  `declareConstructor` already uses. When more than one carrier defines the name, **one**
-  `evaluate` dispatches on `ops[0].type` to the right `Definition` — replacing today's
-  "`claimed` set, first carrier silently wins, the rest reachable only through
-  `applyDefinition` in tests" behaviour (`declare.ts`). This needs no upstream change; §1.5's
-  measurement says the added dispatch is ~5 µs.
-- Everything in the catalogued-but-unimplemented tail (158 stats, 60 maps) is addressed
-  through the **already-built** `@enumeratio/catalog` resolver/context machinery
-  (`namespaces.md` §3-§5), namespaced under its collection until it has a kernel and earns
-  promotion. This is not new design — it's applying a decided mechanism to a population
-  (`ALL_STATISTICS`'s uncovered remainder) that wasn't its original target.
-- **FindStat id stays metadata, not an address.** It's the cross-reference and the source of
-  known values/Sage logic to lift (§3.6 phase 4), recorded on the record the way it already
-  is (`catalog: [{system: findstat, identity: …}]`). Making `St000018(...)` independently
-  callable is left as an open question (§4) rather than decided here — it's easy to add
-  later (a thin alias into the resolver) and costs nothing to defer.
+**Dispatch without generics.** Compute-engine's type grammar has no parametric types (§1.5) —
+that's why a collection itself can't be a type, but it is _not_ an obstacle here, because
+dispatch never needs a compile-time generic. It needs a runtime type read:
+
+```ts
+ce.declare("Statistic", {
+  signature: "(Permutation | IntegerPartition | DyckPath | SetPartition | …, string) -> any",
+  evaluate: (ops) => {
+    const [subject, name] = ops;
+    const def = lookup(subject.type, nameOrFindStatId(name)); // table lookup, our code
+    if (!def) throw new UnknownStatisticError(subject.type, name); // §3.5
+    return applyDefinition(ce, def, contentsOf(subject));
+  },
+});
+```
+
+This is the identical held-carrier-argument dispatch already measured in §1.6 — `ops[0].type`
+read, `ce.type` comparison against the union arms compute-engine already builds cheaply (86
+carriers mint in 1.42 ms; a union of them in one signature is the same cost, paid once at
+boot). The only addition over what §1.6 measured is a `Map` lookup by name string inside the
+matched carrier's small table (≤38 entries for Permutation) — negligible next to the ~5 µs/call
+already attributed to the typed-argument path. **No new cost measurement needed**: the
+mechanism is the same shape already benchmarked, just addressed through one shared head
+instead of many.
+
+**Retiring an existing global head — `Inversions` worked through.** `Inversions` is _already_
+one bare head today, not two: `@enumeratio/collections`' fast kernel declares it first in
+`PACKAGE_DECLARATIONS` order, and the statistics package's expression definition silently
+loses via `skipDeclared` (§1.4) — so `Inversions(p)` in the CLI and docs site today is always
+the fast kernel. Retiring it means retiring _that_ declaration, not a hypothetical second one:
+
+1. **Register, don't yet retire.** Add the `Statistic` head. For every (carrier, name) pair,
+   register the fast kernel as the table's preferred implementation (what `Statistic`
+   actually calls) and the expression as its differential/reference row (`namespaces.md`
+   §6.2's `bindings`) — the same resolution §3.5/§3.6 phase 2 already gives the collision.
+   `Inversions` the bare head keeps working, unchanged, for now.
+2. **Deprecate.** Mark the bare head's reference entry `deprecated`, pointing at
+   `Statistic(π, "Inversions")`. Update reference examples, docs-site prose, and any
+   generated component that reaches for the bare spelling (check `packages/frontend/src/generate.ts`'s
+   symbol scope before this step — unverified here whether these 84 heads currently get an
+   auto-generated Vue/React wrapper the way structural/graphics heads do; if they do, that
+   wrapper's generation source moves too). A currency test (in the shape of the repo's
+   existing provenance/currency tests) fails if a _new_ reference example or doc page adds the
+   bare spelling during the deprecation window, so the surface to migrate only shrinks.
+3. **Retire.** Once the currency test shows zero remaining bare-spelling usages, stop
+   declaring the bare head. `Inversions(p)` then errors — unknown symbol — for anyone who
+   still has it memorized or saved in an old notebook or bookmark link; that is the real,
+   acknowledged cost of this direction, not a hypothetical one. (`namespaces.md` §4's ladder,
+   run in reverse, offers a cheaper mercy — an optional permanent low-notation alias into the
+   resolver instead of a hard error — folded into the separator question, §4 Q2, since an
+   alias needs the same spelling decision a promoted namespaced name does.)
+
+This same three-step path applies to every one of the 84 statistic heads and 25 map heads
+live today (`@enumeratio/collections`' fast kernels included) — `Inversions` is the worked
+example, not a special case.
+
+### 3.2 Considered alternative: keep promoting bare heads
+
+The alternative this document's first draft recommended, kept here because the survey's own
+numbers cut both ways and Dean should see the case made honestly, not strawmanned.
+
+**For it:**
+
+- **Ergonomics.** `Inversions(p)` reads better than `Statistic(p, "Inversions")` for the
+  overwhelmingly common single-statistic, single-element case, and it's what the existing 84
+  reference pages, examples and tests already say.
+- **Zero migration cost for what's already implemented** — §3.1's retirement path (register →
+  deprecate → retire) is real work with a real breakage window; keeping bare heads skips all
+  three steps for the 84/25 that already have a kernel.
+- **Wolfram parity, where it's real.** Some of these names aren't ours alone — Combinatorica
+  (the legacy Wolfram combinatorics package) has documented `Inversions[p]` and `Descents[p]`
+  functions computing the identical statistics. Where an external system already uses the
+  exact word for the exact meaning, a bare head is arguably not namespace pollution but
+  convergence.
+
+**Against it — and why it loses:**
+
+- **It doesn't scale**, which is the entire forcing complaint: 242 stat names and 85 map
+  names is already too many to mint eagerly, and the catalog grows. A criterion that keeps
+  _some_ bare heads still needs the mechanism above for everything it doesn't cover, so this
+  alternative is additive complexity (two mechanisms) rather than a genuine substitute.
+- **`Sign` is the concrete counter-example.** Permutation `Sign` colliding with compute-engine's
+  native `(complex | signed_infinity) -> complex` `Sign` (§1.4) is not a coincidence a rename
+  fixes — it's the shape the project already forbids elsewhere: don't widen a compute-engine
+  notation head to an unrelated meaning (`Prime` stays the arithmetic prime, never a
+  derivative; "the nth prime" is `NthPrime`/`At(Primes, n)`, not a second `Prime`). §1.4's
+  finding sharpens this rather than settles it by fiat: the audited extension mechanism
+  (`extend.ts`) that already widens `Inverse`/`Reverse`/`Complement` for permutations _names
+  `Sign` as an example of the kind of head it can extend_ — so the reason not to widen it here
+  isn't "the mechanism can't," it's a judgment that a permutation's discrete ±1 parity isn't
+  the same _meaning_ as a complex number's continuous sign, unlike `Inverse` (a permutation
+  genuinely has a group-theoretic inverse) or `Reverse` (a permutation genuinely is a
+  sequence). That judgment is exactly what "keep some bare heads" needs a real answer to
+  before it can be applied consistently, and it's evidence _against_ keeping bare heads by
+  default rather than a special case to carve around.
+- **The project's own Wolfram crosswalk doesn't register the Combinatorica parity.**
+  `packages/reference/src/crosswalk-data.ts` and `crosswalk/curated-data.ts` have zero entries
+  for `Inversions`, `Descents`, `MajorIndex`, or `Ascents` — so today's tooling doesn't even
+  treat Combinatorica as the relevant "Wolfram" for parity purposes. Whether Combinatorica (a
+  bundled but legacy context, superseded for most purposes in current Mathematica) should
+  count is exactly the judgment call in the criterion below, and it's Dean's to make, not
+  this document's.
+
+**If Dean wants exceptions, the criterion:** promote a bare head _only_ where an external
+canonical system — compute-engine's own kernel, or Wolfram's current (non-legacy) language —
+already has a head of the identical spelling with the identical meaning, so promoting it is
+convergence with an existing standard rather than a name we're choosing to spend.
+Spot-checked against the current crosswalk data (above), **none of today's 84 statistics
+currently meet this bar** — the crosswalk records no Wolfram-core equivalent for any of the
+12 colliding names or the others checked. If Combinatorica counts as "Wolfram" for this
+purpose, `Inversions` and `Descents` would be the first (and so far only) candidates; that
+inclusion decision is Q2 in §4.
 
 ### 3.3 Record layout — where a statistic's definition and examples live
 
@@ -276,115 +409,161 @@ all `carrier: "Permutation"`) inherit the same statistic set by carrier, exactly
 `namespaces.md` §2.2 already argues (189 of 242 names are pure carrier inheritance — no
 per-collection duplication wanted). A statistic's **examples become real examples** on that
 record, following `design/examples-as-data.md`'s `role`/`#example/<id>` convention rather
-than a separate `.examples.yaml` sidecar — the FindStat known-value tables (§3.6 phase 4)
+than a separate `.examples.yaml` sidecar — the FindStat known-value tables (§3.6 phase 5)
 are a natural source once id-matched.
 
-The standalone `@enumeratio/statistics` package becomes the **home of the carrier-scoped
-dispatch wiring** (the multi-definition `evaluate` per head, §3.2) rather than the owner of
-every definition — definitions move to where their collection lives; the package that
-declares heads on the engine stays, collecting `Definition[]` from each collection package
-the way it collects `ALL_STATISTICS` today.
+The standalone `@enumeratio/statistics` package becomes the **home of the `Statistic`
+dispatch table** (§3.1) rather than the owner of every definition and the declarer of every
+bare head — definitions move to where their collection lives; the package that builds the
+lookup table stays, collecting `Definition[]` from each collection package the way it
+collects `ALL_STATISTICS` today, minus the per-name `ce.declare` calls.
 
 ### 3.4 Typed maps
 
-Largely already the target shape (§1.1, `domains.md`): `CombinatorialMap.from`/`to` name
-carrier types, `declareMaps` gives each a real `(from) -> to` signature, `composedOf` chains
-type-check step by step. Two things to state explicitly for the collection-scoped case
-Dean's brief adds ("maps are function types between INDEXED collections"):
+`CombinatorialMap.from`/`to` already name carrier types (§1.1, `domains.md`), and
+`composedOf` chains type-check step by step — that part of the shape carries over to the
+`Morphism` mechanism (§3.1) unchanged, just addressed through it instead of a bare name per
+map.
 
 - **Carrier-scoped maps** (96 of 113 catalogued map rows, `plausible.md` §4.2's
-  `base_map.scope: 'carrier'`) need nothing new — `from`/`to` already are carrier types.
+  `base_map.scope: 'carrier'`) need nothing new beyond the mechanism — `from`/`to` already
+  are carrier types, and dispatch is the same nominal-type read §3.1 describes.
 - **Collection-scoped maps** (17 rows — a map defined only on a _restricted_ collection,
   `KrewerasComplement` on non-crossing permutations being the shipped example) stay
   **guarded, not re-typed**, per `domains.md` §4's already-decided "restrictions are sets,
-  not subtypes." A collection-scoped map's `guard` checks membership at call time and
-  **declines** (stays symbolic) outside it, exactly as built. This is not a gap to close now
-  — it's the correct shape until the subtype-lattice upstream ask (`domains.md` §1.1) lands,
-  at which point a collection-scoped map's `from` could tighten to the real subtype without
-  changing its guard logic.
+  not subtypes." The `Morphism` mechanism's evaluate still runs the `guard` and declines
+  (stays symbolic) outside it, exactly as built today — this is the correct shape until the
+  subtype-lattice upstream ask (`domains.md` §1.1) lands, not a gap to close now.
+- **The 3 maps already extended onto compute-engine built-ins** (`Reverse`, `Complement`,
+  `Inverse` — §1.4's `extendBuiltin` finding) are the one real fork in the road for maps
+  specifically: under the primary design, does the permutation-specific arm stay spliced onto
+  CE's own `Reverse`/`Complement`/`Inverse` (today's behaviour — a bare `Reverse(π)` keeps
+  working because it _is_ CE's own head, widened), or does it retire into
+  `Morphism(π, "Reverse")` like every other map, leaving CE's built-ins untouched? Retiring is
+  more consistent with "no head per map," but it changes behaviour that works today and isn't
+  forced by anything else in this document — flagged as §4 Q4.
 
 ### 3.5 Replacing `skipDeclared`: collision is an error, named
 
-Drop `skipDeclared` from `declareStatistics` and `declareRestrictions`. Replace with:
+This is independent of §3.1's decision and needed either way: `declareRestrictions` still
+declares real, promoted **collections** (`Derangements`, `CyclicPermutations`, …), which is
+`namespaces.md`'s already-decided territory (a collection earns a bare name once it has a
+kernel), not the "no head per statistic" question. Drop `skipDeclared` from both
+`declareStatistics` and `declareRestrictions`. Under the primary design the shapes differ
+slightly by population:
 
 ```ts
-export function declareStatistics(ce: ComputeEngine, definitions: readonly Definition[]): Map<string, Definition> {
-  const byHead = groupByHead(definitions); // head -> Definition[] (one per carrier)
-  for (const [head, defs] of byHead) {
-    const existing = ce.lookupDefinition(head);
-    if (existing !== undefined && !isOurs(existing, head)) {
-      throw new StatisticCollisionError(head, defs, describeExisting(existing));
+// Restrictions/collections: still real ce.declare calls (namespaces.md's resolver territory),
+// so the error is at declare time.
+export function declareRestrictions(ce: ComputeEngine, restrictions: readonly Restriction[]): void {
+  for (const restriction of restrictions) {
+    const existing = ce.lookupDefinition(restriction.name);
+    if (existing !== undefined && !isOurs(existing, restriction.name)) {
+      throw new CollectionCollisionError(restriction.name, describeExisting(existing));
     }
-    ce.declare(head, { signature: unionSignature(defs), evaluate: dispatchByCarrierType(defs) });
+    ce.declare(restriction.name, { signature: "(integer) -> indexed_collection<…>", evaluate: … });
   }
-  // …
+}
+
+// Statistics: no per-name ce.declare at all (§3.1), so the collision the error guards against
+// moves from "compute-engine throws" to "two records claim the same table key."
+function registerStatistic(table: Map<string, Definition[]>, def: Definition): void {
+  const key = `${def.on}@${def.head}`; // or FindStat id, if that's the registered key
+  const existing = table.get(key);
+  if (existing !== undefined && !sameStatistic(existing, def)) {
+    throw new StatisticCollisionError(key, existing, def);
+  }
+  table.set(key, [...(existing ?? []), def]);
 }
 ```
 
-`StatisticCollisionError` names the head, every carrier that wanted it, and what already
-owns it (signature and, where resolvable, the declaring package) — the exact shape
-`.scratch/collisions.ts` printed for all 30 of today's collisions. No silent skip, ever.
+Either error names the key, every claimant, and what already owns it (signature and, where
+resolvable, the declaring package) — the exact shape `.scratch/collisions.ts` printed for all
+30 of today's collisions. No silent skip, ever.
 
-**What today's 30 collisions resolve to, concretely** (this is the migration §3.6 phase 1
-does immediately, before anything else in this document):
+**Which of today's 30 collisions remain, under the primary design:**
 
-- The 12 permutation statistics and 18 restrictions that duplicate an
-  `@enumeratio/collections` kernel **stop being declared as competing heads.** Their
-  expression becomes a `reference`-origin binding on the SAME entry the kernel already owns
-  (`design/namespaces.md` §6.2's `bindings` list — `native` row is the fast kernel, pointer
-  checked; `reference` row is this expression, used for the differential test and TreeForm
-  unfolding). Zero renames, zero user-visible change, and the differential test
-  (`applyDefinition` against the kernel) is what `namespaces.md` §6.3 already says a second
-  implementation needs to justify existing at all.
-- `Sign`'s collision is with compute-engine's own native `Sign` on a wider domain
-  (`complex | signed_infinity`) — same resolution: our permutation-sign expression becomes a
-  reference row on CE's own `Sign`, not a second declaration.
-- `SelfConjugatePartitions` (the one restriction that's actually new) declares normally.
+- **The 12 permutation-statistic collisions disappear by construction.** Once statistics stop
+  attempting `ce.declare` under names like `Inversions` (§3.1), there's nothing left to
+  collide with `@enumeratio/collections`' fast kernel at declare time. What remains is a
+  _table_-level merge: the fast kernel becomes the `Statistic` table's preferred
+  implementation for `(Permutation, "Inversions")`, the expression becomes its differential
+  reference row (`namespaces.md` §6.2's `bindings`) — one Definition entry, two implementations,
+  no competing declarations. `Sign` resolves the same way at the table level regardless of
+  where §3.2's exception question lands, since under the primary design `Sign` never reaches
+  `ce.declare` either.
+- **The 18 restriction collisions do NOT disappear** — they're a same-collection-twice
+  problem (`declareRestrictions`' generic spec vs. `@enumeratio/collections`' hand-tuned
+  family for names like `Derangements`), orthogonal to whether statistics get bare heads,
+  since restrictions stay promoted collections either way. These resolve exactly as the
+  first draft proposed: the generic restriction expression becomes a `reference` binding on
+  the collection's existing entry, not a second declared collection. `SelfConjugatePartitions`
+  (the one restriction that's genuinely new) declares normally.
 
-So the "which current collisions need renames" question has a real answer: **none of them
-do.** Every collision found is the specification-vs-kernel duplication `namespaces.md` §6
-already has a slot for; the fix is filing, not renaming.
+So "which current collisions need renames" still has the same answer as the first draft:
+**none of them do** — but for a stronger reason now. Twelve stop being collisions at all
+because the colliding declaration is retired, not merged; eighteen were always a
+collections-package filing problem, independent of this document's central question.
 
 ### 3.6 Migration, in phases
 
-1. **Close today's 30 collisions** (§3.5) — demote the 12+18 duplicate definitions to
-   reference bindings on the kernel's existing head; declare `SelfConjugatePartitions`
-   normally; land the collision-error replacement for `skipDeclared`. No naming change, no
-   new machinery beyond what `namespaces.md` §6 already specified.
-2. **Move the 84 implemented `Definition`s down to their collection files** (§3.3); wire the
-   3 existing multi-carrier heads (and any more the moves surface) through one
-   dispatch-by-type `evaluate` (§3.2/D) instead of "first carrier wins."
-3. **Point the catalog resolver at the unimplemented tail** (158 stats, 60 maps) — reuse
-   `@enumeratio/catalog`'s registry/`prepare()` as-is; no new resolver design needed, only
-   populating it from `statOn`/`mapOn` stub records that don't yet have a kernel.
-4. **Lift FindStat provenance past the id**: for the 58 matched statistics, add the known
+1. **Land the collision-error replacement for `skipDeclared`** (§3.5) for restrictions
+   immediately — it's needed regardless of §3.1/§3.2, and closes the 18 real collection
+   collisions today: fold the 18 duplicate restriction specs into `reference` bindings on
+   `@enumeratio/collections`' existing entries; declare `SelfConjugatePartitions` normally.
+2. **Build the `Statistic`/`Morphism` mechanism** (§3.1): the dispatch head(s), the table
+   registration with its own collision check, and the retirement path (register → deprecate →
+   retire) for the currently-live bare heads — the 84 statistics (both packages' kernels) and
+   the 25 maps. This is the phase that needs Dean's sign-off on §3.1 vs §3.2 before it starts,
+   since it's the one with a real breakage window.
+3. **Move the `Definition` records down to their collection files** (§3.3) as part of the
+   same phase — there's no reason to file them under the collection and then separately wire
+   dispatch; building the table IS filing them.
+4. **Point the same mechanism at the unimplemented tail** (158 stats, 60 maps) — this is
+   free once the table-based dispatch exists: an entry with no kernel just has no
+   implementation row yet, resolved from `statOn`/`mapOn` stub records the way the table
+   already would be populated for the implemented ones.
+5. **Lift FindStat provenance past the id**: for the 58 matched statistics, add the known
    FindStat values as examples (`design/examples-as-data.md`) and, where FindStat's Sage
    source translates cleanly, a `mapped`-origin binding pointing at it (`namespaces.md` §6.2
-   table). Mechanical per statistic; gated on someone reading the mapped Sage line, not on
-   any design decision here.
-5. **Deferred on upstream**: once compute-engine's subtype lattice (`domains.md` §1.1) is
+   table). Mechanical per statistic, independent of everything above.
+6. **Deferred on upstream**: once compute-engine's subtype lattice (`domains.md` §1.1) is
    real, collection-scoped maps (§3.4) can drop their runtime guard for a real `from` subtype
    — not required for anything else in this document to ship.
 
 ### 4. Open questions for Dean
 
-1. **Separator character** (`namespaces.md` §3.3) is still unresolved and phase 3 needs one
-   to actually spell a namespaced tail name. Ship phase 3 with the `_`-based fallback now and
-   migrate later, or block on deciding it first?
-2. **Is "same name, dispatch by type" always the right merge** for a multi-carrier head?
-   `find-findstat.ts`'s own header notes the catalog's sweep once caught a "peaks" that was
-   actually FindStat's _inner_ peaks — same name, different statistic. As FindStat-driven
-   merges grow past today's 3, should each proposed merge get a differential check before
-   it's allowed to share a head, or is agreement on the value-matching sweep (§1.7) itself
-   sufficient evidence?
-3. **Should a FindStat id ever be independently callable** (`St000018(p)`), or should it stay
-   pure provenance metadata indefinitely? Easy to add later either way; asking because it
-   changes whether phase 4 needs a resolver entry per id or just a record field.
-4. **Priority of the subtype-lattice upstream ask.** It's already logged (`domains.md`
-   §1.1) and nothing in this document's phases 1-4 depends on it — confirming it stays
-   low-priority background work rather than something to push on for the maps piece.
-5. **Combinatorial species as the organizing generic** (Dean's brief, §4 of the original
-   ask): compute-engine has no generic/parametric type machinery to hang a species
-   functor on (§1.5), so anything here would live at the `FamilyKernel`/`Declared` layer in
-   our own code, not in CE's type system. Worth a dedicated exploratory spike, or shelve
-   until a concrete need (beyond what `Declared` already expresses) shows up?
+1. **§3.1 vs §3.2 itself** — confirming the primary design (no head per statistic or map,
+   reached through `Statistic`/`Morphism`) over the considered alternative, and if any
+   exceptions survive the criterion in §3.2.
+2. **Separator/naming for the resolver's own spellings** (`namespaces.md` §3.3) is still
+   unresolved, and phase 2 needs _some_ answer to spell a deprecation-period alias or a
+   namespaced tail name. Ship with the `_`-based fallback now and migrate later, or block on
+   deciding it first?
+3. **Does Combinatorica count as "Wolfram" for the exception criterion** (§3.2)? It's the
+   one place today's spot-check found real prior art (`Inversions`, `Descents`), and the
+   criterion's answer to "which external systems count" decides whether either gets an
+   exception.
+4. **`Reverse`/`Complement`/`Inverse`: retire the extension, or keep it?** (§3.4) The one
+   place the primary design would change behaviour that works today for reasons not forced by
+   anything else here.
+5. **Is `Sign`'s parity actually a case for `extendBuiltin`**, the way `Inverse` was, or is it
+   correctly excluded as a coincidental-homonym case like `Prime`? (§1.4, §3.2) `extend.ts`
+   names `Sign` as a mechanically valid target; this document takes no position on whether it
+   _should_ be extended, only that the question is real and unresolved.
+6. **Is "same name, dispatch by type" always the right merge** for a multi-carrier statistic
+   (or a future multi-carrier entry in the `Statistic` table)? `find-findstat.ts`'s own header
+   notes the catalog's sweep once caught a "peaks" that was actually FindStat's _inner_ peaks
+   — same name, different statistic. Should a proposed merge get a differential check before
+   sharing a table entry, or is agreement on the value-matching sweep (§1.7) itself sufficient?
+7. **Should a FindStat id ever be independently callable** (`Statistic("St000018")` without
+   also knowing our own name for it), or should it stay a lookup key discovered only through
+   a record someone already found? Affects how much of phase 5 is "populate a field" versus
+   "build a second index."
+8. **Priority of the subtype-lattice upstream ask.** Already logged (`domains.md` §1.1) and
+   nothing in phases 1-5 depends on it — confirming it stays low-priority background work.
+9. **Combinatorial species as the organizing generic** (Dean's brief): compute-engine has no
+   generic/parametric type machinery to hang a species functor on (§1.5), so anything here
+   would live at the `FamilyKernel`/`Declared` layer in our own code, not in CE's type system.
+   Worth a dedicated exploratory spike, or shelve until a concrete need (beyond what `Declared`
+   already expresses) shows up?
