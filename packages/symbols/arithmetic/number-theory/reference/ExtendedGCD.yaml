@@ -23,3 +23,12 @@ references:
     identity: Modular inverse
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ExtendedGCD[$1, $2]
+    arity: 2
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+    note: "Shape difference, not a value one: Wolfram's ExtendedGCD returns {g, {s, t}}, nested; ours returns the flat Tuple(g, s, t) compute-engine's own Tuple head calls for. The Bezout coefficients also aren't unique, so an occasional case lands on another valid (s, t) pair than Wolfram's Euclid would pick; ours still satisfies s*a + t*b = g."

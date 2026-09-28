@@ -79,3 +79,27 @@
   expected: [Negate, [Ln, [Abs, [Add, [Csc, x], [Cot, x]]]]]
   category: Scope
   caption: 'Antiderivative: $-\ln|\csc x + \cot x|$'
+- id: a-huge-24-40-argument
+  expr: [N, [Csc, [Power, 24, 40]]]
+  expected: { num: "2.499480403516114245745403" }
+  role: test
+- id: a-huge-10-100-argument
+  expr: [N, [Csc, [Power, 10, 100]]]
+  expected: { num: "-2.685456817606348002023834" }
+  role: test
+- id: a-huge-3-200-argument
+  expr: [N, [Csc, [Power, 3, 200]]]
+  expected: { num: "-1.065267094773902176582317" }
+  role: test
+- id: a-huge-neg-7-60-argument
+  expr: [N, [Csc, [Negate, [Power, 7, 60]]]]
+  expected: { num: "2.738813586755818206167883" }
+  role: test
+- id: a-huge-10-80-plus-1-over-3-argument
+  expr: [N, [Csc, [Divide, [Add, [Power, 10, 80], 1], 3]]]
+  expected: { num: "1.014869562853670879001739" }
+  role: test
+- id: csc-5-under-n
+  expr: [N, [Csc, 5]]
+  expected: -1.0428352127714058
+  role: test

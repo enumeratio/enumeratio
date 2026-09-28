@@ -6,7 +6,7 @@ signatures:
   - call: MulticomplexAlgebra(n)
     description: $\mathbb{C}_n$, on $n$ commuting generators squaring to $-1$
     library: enumeratio-hypercomplex
-    type: (integer) -> value
+    type: (integer) -> clifford_algebra
 seeAlso:
   - Basis
   - SplitAlgebra

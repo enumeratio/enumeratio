@@ -26,3 +26,15 @@
   expected: [FunctionDomain, [Tan, x], x]
   category: Possible issues
   caption: Tan's excluded set isn't a finite union of intervals, so this stays unevaluated rather than guess
+- id: sqrt-of-a-bounded-quadratic
+  expr: [FunctionDomain, [Sqrt, [Add, [Negate, [Power, x, 2]], 4]], x]
+  expected: [LessEqual, -2, x, 2]
+  role: test
+- id: a-monomial-with-negative-integer-exponent
+  expr: [FunctionDomain, [Power, x, -3], x]
+  expected: [Or, [Less, x, 0], [Less, 0, x]]
+  role: test
+- id: a-multivariate-expression-declines
+  expr: [FunctionDomain, [Multiply, x, y], x]
+  expected: [FunctionDomain, [Multiply, x, y], x]
+  role: test

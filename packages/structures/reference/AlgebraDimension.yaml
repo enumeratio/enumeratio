@@ -1,12 +1,15 @@
 name: AlgebraDimension
-domain: Hypercomplex algebra
+domain: Structures
 signature: AlgebraDimension(algebra)
-summary: The dimension $2^n$ of an algebra on $n$ generators — the number of basis blades.
+summary: "The dimension of a finite-dimensional algebra: the length of its basis."
 signatures:
   - call: AlgebraDimension(algebra)
-    description: $2^n$ for $n$ generators
+    description: for a Clifford algebra, $2^n$ for $n$ generators
     library: enumeratio-hypercomplex
-    type: (value) -> integer
+  - call: AlgebraDimension(algebra)
+    description: "The `FiniteDimensionalAlgebra` protocol's member: the dimension of any algebra whose type conforms (Mathlib's `Module.finrank`)."
+    library: enumeratio-structures
+    type: (any) -> unknown
 details:
   - Every subset of the generators is one basis blade, so the dimension doubles per generator
   - A separate head from compute-engine's `Dimension`, which is defined for lists and matrices and is deliberately left alone

@@ -50,3 +50,123 @@
   expected: [Complex, -1, -1]
   category: Scope
   caption: A Gaussian base and a Gaussian modulus
+- id: inverse-mod-a-unit-is-always-0
+  expr: [ModularInverse, [Complex, 3, 4], 1]
+  expected: 0
+  caption: inverse mod a unit is always 0
+  category: Scope
+  role: test
+- id: inverse-mod-i-is-always-0
+  expr: [ModularInverse, [Complex, 3, 4], [Complex, 0, 1]]
+  expected: 0
+  caption: inverse mod $i$ is always 0
+  category: Scope
+  role: test
+- id: a-unit-is-its-own-inverse-mod-anything-it-s-a
+  expr: [ModularInverse, [Complex, 0, 1], [Complex, 2, 1]]
+  expected: [Complex, 0, -1]
+  caption: a unit is its own inverse mod anything it's a unit under
+  category: Scope
+  role: test
+- id: inverse-of-a-gaussian-prime-mod-a-coprime
+  expr: [ModularInverse, [Complex, 2, 1], [Complex, 2, -1]]
+  expected: -1
+  caption: inverse of a Gaussian prime mod a coprime Gaussian prime
+  category: Scope
+  role: test
+- id: inverse-mod-a-real-prime-3-mod-4
+  expr: [ModularInverse, [Complex, 2, 1], 3]
+  expected: [Complex, 1, 1]
+  caption: inverse mod a real prime, 3 mod 4
+  category: Scope
+  role: test
+- id: no-inverse-when-the-gcd-isn-t-a-unit-shared
+  expr: [ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]
+  expected: [ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]
+  caption: "no inverse when the gcd isn't a unit: shared factor"
+  category: Scope
+  role: test
+- id: inverse-mod-a-negative-real-prime
+  expr: [ModularInverse, [Complex, 2, 1], -7]
+  expected: [Complex, -1, -3]
+  caption: inverse mod a negative real prime
+  category: Scope
+  role: test
+- id: inverse-mod-a-composite-gaussian-modulus-norm-25
+  expr: [ModularInverse, [Complex, 1, 1], [Complex, 3, 4]]
+  expected: [Complex, 0, 3]
+  caption: inverse mod a composite Gaussian modulus, norm 25
+  category: Scope
+  role: test
+- id: inverse-mod-a-modulus-past-2-53
+  expr: [ModularInverse, [Complex, 4, 1], [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }]]
+  expected: [Complex, { num: "-47059883199912322470" }, { num: "11760467200350710121" }]
+  caption: inverse mod a modulus past $2^{53}$
+  category: Scope
+  role: test
+- id: inverse-mod-1-4i-the-other-prime-above-17
+  expr: [ModularInverse, [Complex, 8, 2], [Complex, 1, 4]]
+  expected: -1
+  caption: inverse mod $1+4i$, the other prime above 17
+  category: Scope
+  role: test
+- id: a-real-base-inverted-mod-a-gaussian-modulus
+  expr: [ModularInverse, 5, [Complex, 2, 1]]
+  expected: [ModularInverse, 5, [Complex, 2, 1]]
+  caption: a real base inverted mod a Gaussian modulus
+  category: Scope
+  role: test
+- id: inverse-mod-a-large-norm-gaussian
+  expr: [ModularInverse, [Complex, 1, 1], [Complex, 123, 456]]
+  expected: [Complex, -166, 289]
+  caption: inverse mod a large-norm Gaussian
+  category: Scope
+  role: test
+- id: inverse-mod-a-negative-real-composite-has-none
+  expr: [ModularInverse, [Complex, 5, 5], -15]
+  expected: [ModularInverse, [Complex, 5, 5], -15]
+  caption: "inverse mod a negative real composite has none: shared factor of 5"
+  category: Scope
+  role: test
+- id: inverse-of-a-prime-above-13-mod-the-other-prime
+  expr: [ModularInverse, [Complex, 3, 2], [Complex, 2, 3]]
+  expected: -2
+  caption: inverse of a prime above 13 mod the other prime above 13
+  category: Scope
+  role: test
+- id: inverse-mod-a-negative-associate
+  expr: [ModularInverse, [Complex, 2, 1], [Complex, -2, -3]]
+  expected: [Complex, -1, -1]
+  caption: inverse mod a negative associate
+  category: Scope
+  role: test
+- id: inverse-mod-a-real-composite-5-squared-has-none
+  expr: [ModularInverse, [Complex, 5, 5], 25]
+  expected: [ModularInverse, [Complex, 5, 5], 25]
+  caption: inverse mod a real composite, 5 squared, has none
+  category: Scope
+  role: test
+- id: inverse-of-a-real-prime-s-associate-by-i-mod-a
+  expr: [ModularInverse, [Complex, 0, 7], [Complex, 3, 2]]
+  expected: [Complex, 0, -2]
+  caption: inverse of a real prime's associate (by $i$) mod a Gaussian prime
+  category: Scope
+  role: test
+- id: inverse-mod-a-real-prime-19
+  expr: [ModularInverse, [Complex, 2, 1], 19]
+  expected: [Complex, 8, 15]
+  caption: inverse mod a real prime, 19
+  category: Scope
+  role: test
+- id: no-inverse-mod-0
+  expr: [ModularInverse, [Complex, 2, 1], 0]
+  expected: [ModularInverse, [Complex, 2, 1], 0]
+  caption: no inverse mod 0
+  category: Scope
+  role: test
+- id: a-real-base-with-no-inverse-mod-a-shared-factor
+  expr: [ModularInverse, 5, [Complex, 5, 5]]
+  expected: [ModularInverse, 5, [Complex, 5, 5]]
+  caption: a real base with no inverse mod a shared-factor composite
+  category: Scope
+  role: test

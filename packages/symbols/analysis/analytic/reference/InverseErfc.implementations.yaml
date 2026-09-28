@@ -105,3 +105,25 @@ erfc-erfc-1-x-x:
     tex:
       in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erfc}\left(\text{erfc}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+argument-1-7:
+  epsil:
+    in: InverseErfc(1.7)
+    out: -0.732_869_077_959_217
+  tex:
+    in: \mathrm{InverseErfc}(1.7)
+    out: -0.732\,869\,077\,959\,217
+  fullform:
+    in: InverseErfc[1.7]
+  wolfram:
+    in: InverseErfc[1.7]
+deep-tail-0-001:
+  epsil:
+    in: InverseErfc(0.001)
+    out: 2.326_753_765_513_524_6
+  tex:
+    in: \mathrm{InverseErfc}(0.001)
+    out: 2.326\,753\,765\,513\,524\,6
+  fullform:
+    in: InverseErfc[0.001]
+  wolfram:
+    in: InverseErfc[0.001]

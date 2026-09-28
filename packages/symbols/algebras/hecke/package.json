@@ -23,14 +23,14 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/algebra": "workspace:*",
-    "@enumeratio/engine": "workspace:*"
+    "@enumeratio/engine": "workspace:*",
+    "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
-    "@enumeratio/algebra": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/hypercomplex": "workspace:*",
+    "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

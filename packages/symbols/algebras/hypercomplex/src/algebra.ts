@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import { containsGenerator, generatorsOf, multiplyMultivectors, toExpression, toMultivector } from "./multivector.ts";
 import { FAMILIES, type Generator, generatorSymbol } from "./units.ts";
 
@@ -126,7 +126,7 @@ function isScalarLike(expr: BoxedExpression): boolean {
   return ARITHMETIC.has(expr.operator) && operandsOf(expr).every(isScalarLike);
 }
 
-/** Declare the algebra constructors and register this library on the shared seam. */
+/** Declare the algebra constructors, and make them finite-dimensional algebras. */
 export function declareAlgebras(ce: ComputeEngine): void {
   const blade = (generators: readonly Generator[]): BoxedExpression => {
     const units = generators.map((g) => ce.symbol(generatorSymbol(g)));
@@ -135,15 +135,14 @@ export function declareAlgebras(ce: ComputeEngine): void {
   };
 
   // The constructors themselves stay inert: an algebra is a NAME, and evaluating it to
-  // its own basis would conflate the algebra with the list of its blades. Return type
-  // stays `value`, not `expression<Head>`: @enumeratio/algebra's shared `Basis`/
-  // `AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …` for ANY
-  // registered algebra's carrier, and `expression<Head>` does not subtype `value`.
-  for (const head of Object.keys(SINGLE_FAMILY)) {
-    ce.declare(head, { signature: "(integer) -> value" });
-  }
+  // its own basis would conflate the algebra with the list of its blades. Every one of them,
+  // and every named algebra, is a `clifford_algebra`, which is what `Basis` dispatches on.
+  const heads = ["CliffordAlgebra", ...Object.keys(SINGLE_FAMILY)];
+  ce.declareType("clifford_algebra", heads.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  for (const head of Object.keys(SINGLE_FAMILY)) ce.declare(head, { signature: "(integer) -> clifford_algebra" });
   // Clifford takes p, and the optional q and r (default 0): Cl(p, q, r).
-  ce.declare("CliffordAlgebra", { signature: "(integer, integer?, integer?) -> value" });
+  ce.declare("CliffordAlgebra", { signature: "(integer, integer?, integer?) -> clifford_algebra" });
+  for (const name of NAMED_ALGEBRAS) ce.declare(name, { type: "clifford_algebra", isConstant: true });
 
   /** Whether every generator occurring in `expr` belongs to `algebra`. */
   const containsIn = (algebra: Algebra, expr: BoxedExpression): boolean | undefined => {
@@ -159,12 +158,8 @@ export function declareAlgebras(ce: ComputeEngine): void {
     );
   };
 
-  // Basis, AlgebraDimension, AlgebraSignature, the ordered product and Element are
-  // declared once by @enumeratio/algebra and dispatched over registered providers —
-  // compute-engine refuses a second `ce.declare` of the same extension head, so two
-  // algebra libraries on one engine have to share the heads rather than each claim them.
-  registerAlgebra(ce, {
-    name: "hypercomplex",
+  declareAlgebra(ce, {
+    type: "clifford_algebra",
     basis: (expr) => {
       const algebra = algebraOf(expr);
       return algebra === undefined ? undefined : ce.function("List", basisBlades(algebra).map(blade));
@@ -172,16 +167,6 @@ export function declareAlgebras(ce: ComputeEngine): void {
     dimension: (expr) => {
       const algebra = algebraOf(expr);
       return algebra === undefined ? undefined : ce.number(2 ** algebra.generators.length);
-    },
-    // The signature VECTOR — each generator's square, in order.
-    signature: (expr) => {
-      const algebra = algebraOf(expr);
-      return algebra === undefined
-        ? undefined
-        : ce.function(
-            "List",
-            algebra.generators.map((g) => ce.number(g.family.square)),
-          );
     },
     contains: (element, expr) => {
       const algebra = algebraOf(expr);
@@ -202,6 +187,21 @@ export function declareAlgebras(ce: ComputeEngine): void {
         ce,
         parts.reduce((a, b) => multiplyMultivectors(ce, a, b)),
       );
+    },
+  });
+
+  // The signature vector, each generator's square in order: a Clifford algebra's own, so not
+  // part of `FiniteDimensionalAlgebra`.
+  ce.declare("AlgebraSignature", {
+    signature: "(clifford_algebra) -> list",
+    evaluate: ([expr]) => {
+      const algebra = expr === undefined ? undefined : algebraOf(expr);
+      return algebra === undefined
+        ? undefined
+        : ce.function(
+            "List",
+            algebra.generators.map((g) => ce.number(g.family.square)),
+          );
     },
   });
 }

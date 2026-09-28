@@ -16,6 +16,19 @@ const DELIBERATE: Record<string, string> = {
   boxes: "the structural type of a box expression (design/boxes.md); a declared type shares the symbol table",
 };
 
+/** The types algebras' names carry, which `FiniteDimensionalAlgebra` dispatches on
+ *  (design/structures.md): types, lowercase like the carriers below. */
+for (const type of [
+  "clifford_algebra",
+  "diagram_algebra",
+  "graded_hopf_algebra",
+  "group_algebra",
+  "hecke_algebra",
+  "incidence_algebra",
+  "path_algebra",
+])
+  DELIBERATE[type] = "an algebra family's type, which the algebra protocol dispatches on";
+
 /** The carrier TYPES. compute-engine keeps types and symbols in one table, and the engine's
  *  own convention spells a type lowercase (`integer`, `indexed_collection`), so these are
  *  the one legitimate class of lowercase name — see domains/src/types.ts. */

@@ -9,3 +9,7 @@
   expr: [N, [RiemannZetaZero, 10]]
   expected: [Complex, 0.5, 49.7738324776723]
   category: Scope
+- id: n-riemannzetazero-50
+  expr: [N, [RiemannZetaZero, 50]]
+  expected: [Complex, 0.5, 143.11184580762063]
+  role: test

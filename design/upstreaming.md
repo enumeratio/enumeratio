@@ -39,10 +39,11 @@ to `Add` / `Multiply` / `Negate` / `Power` / `Divide` / `Conjugate` (the hyperco
 units). It works, but it is a replacement rather than an extension, and §3 is mostly about
 the consequences.
 
-**A provider registry of our own.** `@enumeratio/algebra` exists only because two of our
-packages both wanted to answer `Basis`, `AlgebraDimension` and `NonCommutativeMultiply`.
-It declares those heads once and lets packages register handlers. It is a workaround for
-§3.2, not a design we chose.
+**A provider registry of our own.** Two of our packages both wanted to answer `Basis`,
+`AlgebraDimension` and `NonCommutativeMultiply`. `Basis` and `AlgebraDimension` are now
+compute-engine protocol members (design/structures.md), which answers it properly; the
+ordered product is still a registry in `@enumeratio/structures`, a workaround for §3.2
+until an algebra's elements have types to dispatch on.
 
 ## 3. Concerns — what makes this hard today
 
@@ -70,7 +71,7 @@ Redeclaring a **built-in** head is fine. Redeclaring a head that another **exten
 already declared throws `already declared in this scope`. So two independent libraries can
 each extend `Element`, but they cannot both contribute to `Basis`.
 
-That asymmetry is the whole reason `@enumeratio/algebra` exists. What would fix it: a
+That asymmetry is why the ordered product is still a registry. What would fix it: a
 composable "contribute a handler to this head" API, where handlers are tried in turn and
 may decline — which is the shape our registry already has, so the design is not
 speculative.

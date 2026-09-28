@@ -94,3 +94,36 @@ tangent-s-domain-is-declined:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FunctionDomain}[\tan (x),x]-\text{FunctionDomain}[\tan (x),x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionDomain}\left[\tan \left(\frac{7}{3}\right),\frac{7}{3}\right]-\text{FunctionDomain}\left[\tan \left(\frac{7}{3}\right),\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FunctionDomain}\left[\tan \left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\text{FunctionDomain}\left[\tan \left(-\frac{11}{5}\right),-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{FunctionDomain}\left[\tan \left(\frac{13}{4}\right),\frac{13}{4}\right]-\text{FunctionDomain}\left[\tan \left(\frac{13}{4}\right),\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+sqrt-of-a-bounded-quadratic:
+  epsil:
+    in: FunctionDomain(Sqrt(-x ^ 2 + 4), x)
+    out: -2 <= x <= 2
+  tex:
+    in: \mathrm{FunctionDomain}(\sqrt{4-x^2}, x)
+    out: -2\le x\le2
+  fullform:
+    in: FunctionDomain[Sqrt[Plus[Minus[Power[x, 2]], 4]], x]
+  wolfram:
+    in: FunctionDomain[Sqrt[Plus[Minus[Power[x, 2]], 4]], x]
+a-monomial-with-negative-integer-exponent:
+  epsil:
+    in: FunctionDomain(x ^ -3, x)
+    out: x < 0 || 0 < x
+  tex:
+    in: \mathrm{FunctionDomain}(\frac{1}{x^3}, x)
+    out: x\lt0\lor0\lt x
+  fullform:
+    in: FunctionDomain[Power[x, -3], x]
+  wolfram:
+    in: FunctionDomain[Power[x, -3], x]
+a-multivariate-expression-declines:
+  epsil:
+    in: FunctionDomain(x * y, x)
+    out: FunctionDomain(x * y, x)
+  tex:
+    in: \mathrm{FunctionDomain}(xy, x)
+    out: \mathrm{FunctionDomain}(xy, x)
+  fullform:
+    in: FunctionDomain[Times[x, y], x]
+  wolfram:
+    in: FunctionDomain[Times[x, y], x]

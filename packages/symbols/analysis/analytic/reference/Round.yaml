@@ -7,18 +7,13 @@ signatures:
     description: rounds x to the nearest integer, ties away from 0.
   - call: Round(x, n)
     description: "rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten."
-  - call: Round(z)
-    description: for a complex $z$, the real and imaginary parts rounded separately.
-    library: enumeratio-structures
-    type: (any, any?) -> any
-    overrides: enumeratio-analytic
   - call: Round(x, n?)
     description: Rounds x to the nearest integer, or to n decimal places.
     library: enumeratio-analytic
     type: (real | signed_infinity, integer?) -> real | signed_infinity
     overrides: compute-engine
   - call: Round(x, n?)
-    description: for a type whose order has ticks and midpoints, the nearest tick; a tie goes to the even tick when the ticks have a parity, else up. A product order (the complex numbers) rounds coordinate by coordinate.
+    description: with midpoints between ticks, the nearest tick, a tie going to the even tick when the ticks have a parity, else up; in a floor ring without them, Mathlib's `round` (ties up). In a product order, coordinate by coordinate, so a complex number's parts are rounded separately.
     library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-analytic

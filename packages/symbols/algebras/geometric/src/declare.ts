@@ -129,13 +129,9 @@ export function declareGeometric(ce: ComputeEngine): void {
     },
   });
 
-  // A named algebra (`CliffordAlgebra(...)` and friends) or one of the bare-symbol
-  // names (`Quaternions`, `H_doublestruck`, …) `@enumeratio/hypercomplex`'s `algebraOf`
-  // reads. `@enumeratio/hypercomplex` declares every one of those constructors' return
-  // type as `value` — not `expression<Head>` — so an algebra carrier's own boxed type
-  // is `value`; the bare-symbol names are undeclared and box as `unknown`, which passes
-  // `value` too.
-  const algebraLike = "value";
+  // `CliffordAlgebra(...)`, its sibling constructors and the named algebras (`Quaternions`,
+  // …) are all `@enumeratio/hypercomplex`'s `clifford_algebra`.
+  const algebraLike = "clifford_algebra";
 
   ce.declare("Pseudoscalar", {
     signature: `(${algebraLike}) -> number`,

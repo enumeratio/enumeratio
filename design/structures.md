@@ -1,6 +1,6 @@
 # Design: structures
 
-Status: **first slice landed** (the order and tick protocols, below). A head requires structure; a type provides it. `Min` works on anything
+Status: **two slices landed**: orders and floors, then algebras (below). A head requires structure; a type provides it. `Min` works on anything
 with a total order, `Floor` on anything whose order has ticks, `Basis` on anything that is a
 finite-dimensional algebra -- including a type a user declares in a notebook, as long as it
 says (and satisfies) what it is.
@@ -69,27 +69,29 @@ parents' conformances too. (An upstream candidate.)
 ## The hierarchy
 
 Mathlib's concepts and axioms, with its abbreviations spelled out (`OrderedAdditiveCommutativeGroup`,
-not `OrderedAddCommGroup`); aliases later if wanted. A first cut:
+not `OrderedAddCommGroup`); aliases later if wanted. Where we go past Mathlib, the row says
+"extension": Mathlib is the spec we inherit proofs from, so every departure is marked.
 
-| protocol                          | refines        | members                                        | laws (checked by Plausible)                     | Mathlib               |
-| --------------------------------- | -------------- | ---------------------------------------------- | ----------------------------------------------- | --------------------- |
-| `PartialOrder`                    | --             | `Compare` (-1, 0, 1, or `NaN` if incomparable) | reflexive, antisymmetric, transitive            | `PartialOrder`        |
-| `LinearOrder`                     | `PartialOrder` | --                                             | total: never incomparable                       | `LinearOrder`         |
-| `Lattice`                         | `PartialOrder` | `GreatestLowerBound`, `LeastUpperBound`        | greatest lower / least upper bounds             | `Lattice`             |
-| `BoundedOrder`                    | `PartialOrder` | `Top`, `Bottom`                                | extremal                                        | `BoundedOrder`        |
-| `FloorOrder`                      | `PartialOrder` | `LowerTick`, `UpperTick`                       | the Galois connections above                    | `FloorSemiring`       |
-| `MidpointOrder`                   | `FloorOrder`   | `Midpoint`                                     | between, equidistant                            | --                    |
-| `TickParity`                      | `FloorOrder`   | `IsEvenTick`                                   | alternates along consecutive ticks              | --                    |
-| `ProductOrder`                    | `PartialOrder` | `Coordinates`, `WithCoordinates`               | the order and every operation are componentwise | `Prod` instances      |
-| `OrderedAdditiveCommutativeGroup` | `PartialOrder` | (compute-engine's `Add`, `Negate`, `0`)        | a group, order-compatible                       | `OrderedAddCommGroup` |
-| `FiniteDimensionalAlgebra`        | --             | `Basis`, `AlgebraDimension`, `Element`, …      | --                                              | `FiniteDimensional`   |
-| `Sampleable`                      | --             | `Sample`                                       | draws lie in the domain                         | --                    |
+| protocol                          | refines                             | members                                        | laws (checked by Plausible)                     | Mathlib                |
+| --------------------------------- | ----------------------------------- | ---------------------------------------------- | ----------------------------------------------- | ---------------------- |
+| `PartialOrder`                    | --                                  | `Compare` (-1, 0, 1, or `NaN` if incomparable) | reflexive, antisymmetric, transitive            | `PartialOrder`         |
+| `LinearOrder`                     | `PartialOrder`                      | --                                             | total: never incomparable                       | `LinearOrder`          |
+| `Lattice`                         | `PartialOrder`                      | `GreatestLowerBound`, `LeastUpperBound`        | greatest lower / least upper bounds             | `Lattice`              |
+| `BoundedOrder`                    | `PartialOrder`                      | `Top`, `Bottom`                                | extremal                                        | `BoundedOrder`         |
+| `FloorOrder`                      | `PartialOrder`                      | `LowerTick`, `UpperTick`                       | the Galois connections above                    | extension              |
+| `MidpointOrder`                   | `FloorOrder`                        | `Midpoint`                                     | between, equidistant                            | extension (`midpoint`) |
+| `TickParity`                      | `FloorOrder`                        | `IsEvenTick`                                   | alternates along consecutive ticks              | extension              |
+| `Ring`                            | --                                  | (compute-engine's `Add`, `Multiply`, `Negate`) | a ring                                          | `Ring`                 |
+| `FloorRing`                       | `LinearOrder`, `Ring`, `FloorOrder` | `IntegerFloor`, `IntegerCeil`                  | the Galois connections with ℤ                   | `FloorRing`            |
+| `ProductOrder`                    | `PartialOrder`                      | `Coordinates`, `WithCoordinates`               | the order and every operation are componentwise | extension (`Prod`)     |
+| `OrderedAdditiveCommutativeGroup` | `PartialOrder`                      | (compute-engine's `Add`, `Negate`, `0`)        | a group, order-compatible                       | `OrderedAddCommGroup`  |
+| `FiniteDimensionalAlgebra`        | --                                  | `Basis`, `AlgebraDimension`, `HasElement`      | --                                              | `FiniteDimensional`    |
+| `Sampleable`                      | --                                  | `Sample`                                       | draws lie in the domain                         | --                     |
 
 A member becomes a head of its own, so its name must be free: a member named like an existing
 head (`Floor`, `Join`, `Infimum`, `LessEqual`) is silently shadowed by it and never dispatches;
-one named like a head a later package declares takes that head from it (`Components` is an
-endofunction statistic, which statistics' `skipDeclared` would have dropped; hence
-`Coordinates`).
+one named like a record another package keeps collides with it in the manifest (`Components`
+is a FindStat endofunction statistic's stub record; hence `Coordinates`).
 So the public heads -- `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round`, `Sign` -- stay
 compute-engine's and take a plain number down the native path; anything else goes to the
 members of whichever protocols its type conforms to. A product order (the complex numbers, and
@@ -97,8 +99,13 @@ vectors later) is the case a single `Compare` can't round through -- one compone
 midpoint and the other below -- so it has its own protocol, and every generic head works
 componentwise over it.
 
-Names are open (`FloorOrder` has no exact Mathlib counterpart, since Mathlib's needs a ring);
-the table is the proposal to argue with.
+**Floors, after Mathlib and past it.** Mathlib's `FloorRing` needs a ring: its floor is an
+integer, and its `round` is the floor when `2 fract(x) < 1`, else the ceiling, so ties go up.
+We follow it exactly. Below it sits `FloorOrder`, our extension: ticks in any order, no ring,
+so whole days or multiples of a step can floor too; a floor ring is a floor order whose ticks
+are its integers. `MidpointOrder` and `TickParity` extend that, for rounding without a ring's
+arithmetic and for Wolfram's half-to-even ties. `Round` compares against the midpoint when there
+is one, and uses Mathlib's `round` otherwise.
 
 ## How heads use it
 
@@ -133,8 +140,7 @@ promise we can keep, including for a type declared in a notebook.
 
 - `@enumeratio/structures`, a new package: the protocols, their records, and the generic
   heads' handlers.
-- `algebra` becomes the `FiniteDimensionalAlgebra` protocol: its providers are conformances.
-  Most of the package is that registry, so structures subsumes it.
+- `algebra` became the `FiniteDimensionalAlgebra` protocol, and is gone (second slice, below).
 - `Random`'s sampler registry (`@enumeratio/engine`'s `random.ts`) becomes `Sampleable`.
 - The `Min`/`Round`/`Clamp` widenings in collections go away, replaced by conformances.
 
@@ -168,6 +174,31 @@ What it taught us:
   type conforms. We call the member and treat `protocol-implementation-missing` as no.
 
 `algebra` and `Sampleable` follow.
+
+## Second slice: algebras
+
+`@enumeratio/algebra` was a provider registry. It is gone. Each algebra family mints the type
+its algebras' names carry and conforms it to `FiniteDimensionalAlgebra`:
+
+| type                  | names                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------- |
+| `clifford_algebra`    | `CliffordAlgebra`, its sibling constructors, `Quaternions` and the other named algebras |
+| `diagram_algebra`     | `PartitionAlgebra`, `BrauerAlgebra`, `TemperleyLiebAlgebra`, …                          |
+| `group_algebra`       | `GroupAlgebra`                                                                          |
+| `hecke_algebra`       | `HeckeAlgebra`                                                                          |
+| `graded_hopf_algebra` | `NSymAlgebra`, `QSymAlgebra`                                                            |
+| `incidence_algebra`   | `IncidenceAlgebra`                                                                      |
+| `path_algebra`        | `PathAlgebra`                                                                           |
+
+`Basis` and `AlgebraDimension` dispatch on that type, and `Element(x, A)` asks `HasElement`
+when `A`'s type conforms. `AlgebraSignature` is a Clifford algebra's own, so it is
+hypercomplex's head over `clifford_algebra`.
+
+A type whose values _name_ an algebra is a Sage parent more than a Mathlib typeclass: in
+Mathlib the algebra is the type of its elements. The element-level structure -- the product as
+a `Ring` -- waits until an algebra's elements have types to dispatch on. Until then the ordered
+product (`NonCommutativeMultiply`, `GeometricProduct`, `CircleTimes`) stays a registry of
+products, each declining what isn't its own, in `@enumeratio/structures`.
 
 ## Upstream
 

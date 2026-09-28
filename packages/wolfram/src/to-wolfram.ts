@@ -87,8 +87,6 @@ export const FOREIGN: Record<string, string> = {
   Order: "the canonical-order comparison Order[a, b]",
   Composition: "a composition of functions, Composition[f, g]",
   Word: "the token specification used by Read and Find",
-  // Ours is the `MidpointOrder` member, two arguments of any such type (design/structures.md).
-  Midpoint: "the midpoint of a line segment, Midpoint[{p1, p2}]",
   Restricted: "an Interpreter form narrowed by a condition",
   // Ours is the carrier's plural type-space symbol (design/domains.md §2 — Element(x,
   // GaussianIntegers) checks x's carrier); Wolfram's is an option flag (IsPrime[n,

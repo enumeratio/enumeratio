@@ -89,3 +89,14 @@ inversebetaregularized-1-2-3:
     in: InverseBetaRegularized[1, 2, 3]
   wolfram:
     in: InverseBetaRegularized[1, 2, 3]
+iinv-0-7-4-2:
+  epsil:
+    in: InverseBetaRegularized(0.7, 4, 2)
+    out: 0.781_973_084_236_775_1
+  tex:
+    in: \mathrm{InverseBetaRegularized}(0.7, 4, 2)
+    out: 0.781\,973\,084\,236\,775\,1
+  fullform:
+    in: InverseBetaRegularized[0.7, 4, 2]
+  wolfram:
+    in: InverseBetaRegularized[0.7, 4, 2]

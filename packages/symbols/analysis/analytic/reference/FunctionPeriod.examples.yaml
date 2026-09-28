@@ -14,3 +14,7 @@
   expr: [FunctionPeriod, [Exp, x], x]
   expected: 0
   caption: Exp is monotonic, hence not periodic
+- id: a-polynomial-is-not-periodic
+  expr: [FunctionPeriod, [Power, x, 2], x]
+  expected: 0
+  role: test

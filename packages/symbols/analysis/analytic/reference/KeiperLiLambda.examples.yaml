@@ -35,3 +35,55 @@
   expected: 0
   category: Properties
   caption: $\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi)$, exactly
+- id: n-keiperlilambda-4
+  expr: [N, [KeiperLiLambda, 4]]
+  expected: 0.36879047949224164
+  role: test
+- id: n-keiperlilambda-5
+  expr: [N, [KeiperLiLambda, 5]]
+  expected: 0.5755427144611774
+  role: test
+- id: n-keiperlilambda-6
+  expr: [N, [KeiperLiLambda, 6]]
+  expected: 0.8275660122823792
+  role: test
+- id: n-keiperlilambda-7
+  expr: [N, [KeiperLiLambda, 7]]
+  expected: 1.1244601175709594
+  role: test
+- id: n-keiperlilambda-8
+  expr: [N, [KeiperLiLambda, 8]]
+  expected: 1.4657556771470606
+  role: test
+- id: n-keiperlilambda-9
+  expr: [N, [KeiperLiLambda, 9]]
+  expected: 1.8509160483825342
+  role: test
+- id: n-keiperlilambda-10
+  expr: [N, [KeiperLiLambda, 10]]
+  expected: 2.2793393631931576
+  role: test
+- id: n-keiperlilambda-11
+  expr: [N, [KeiperLiLambda, 11]]
+  expected: 2.750360838220196
+  role: test
+- id: n-keiperlilambda-12
+  expr: [N, [KeiperLiLambda, 12]]
+  expected: 3.2632553206246198
+  role: test
+- id: n-keiperlilambda-13
+  expr: [N, [KeiperLiLambda, 13]]
+  expected: 3.817240057847946
+  role: test
+- id: n-keiperlilambda-14
+  expr: [N, [KeiperLiLambda, 14]]
+  expected: 4.4114776786805985
+  role: test
+- id: n-keiperlilambda-15
+  expr: [N, [KeiperLiLambda, 15]]
+  expected: 5.045079372026794
+  role: test
+- id: n-keiperlilambda-16
+  expr: [N, [KeiperLiLambda, 16]]
+  expected: 5.717108248868793
+  role: test

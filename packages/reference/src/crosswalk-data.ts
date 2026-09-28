@@ -4534,6 +4534,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "MersennePrimeExponent",
   },
   {
+    name: "Midpoint",
+    wolfram: "Midpoint",
+  },
+  {
     name: "Min",
     fungrimEntries: ["27766c", "540931", "737f2b", "75231e", "805c7a", "da7fb1"],
     wolfram: "Min",

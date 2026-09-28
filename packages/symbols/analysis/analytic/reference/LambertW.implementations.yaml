@@ -94,3 +94,51 @@ the-real-branch-k-1-on-1-e-z-0:
     back: [N, [ProductLog, -1, -0.2]]
   wolfram:
     in: N[ProductLog[-1, -0.2]]
+branch-2-at-5:
+  epsil:
+    in: N(LambertW(5, 2))
+    out: -0.784_086_339_255_851_3 + 10.923_920_160_375_756i
+  tex:
+    in: N(\operatorname{W}_{2}(5))
+    out: -0.784\,086\,339\,255\,851\,3+10.923\,920\,160\,375\,756i
+  fullform:
+    in: N[ProductLog[2, 5]]
+    back: [N, [ProductLog, 2, 5]]
+  wolfram:
+    in: N[ProductLog[2, 5]]
+branch-1-at-neg-1:
+  epsil:
+    in: N(LambertW(-1, 1))
+    out: -2.062_277_729_598_284 + 7.588_631_178_472_513i
+  tex:
+    in: N(\operatorname{W}_{1}(-1))
+    out: -2.062\,277\,729\,598\,284+7.588\,631\,178\,472\,513i
+  fullform:
+    in: N[ProductLog[1, -1]]
+    back: [N, [ProductLog, 1, -1]]
+  wolfram:
+    in: N[ProductLog[1, -1]]
+branch-5-at-10:
+  epsil:
+    in: N(LambertW(10, 5))
+    out: -1.092_879_582_990_904_2 + 29.808_483_249_094_696i
+  tex:
+    in: N(\operatorname{W}_{5}(10))
+    out: -1.092\,879\,582\,990\,904\,2+29.808\,483\,249\,094\,696i
+  fullform:
+    in: N[ProductLog[5, 10]]
+    back: [N, [ProductLog, 5, 10]]
+  wolfram:
+    in: N[ProductLog[5, 10]]
+branch-3-at-a-complex-argument:
+  epsil:
+    in: N(LambertW(1 + 2i, 3))
+    out: -2.107_207_506_626_455_3 + 18.271_085_431_136_87i
+  tex:
+    in: N(\operatorname{W}_{3}(1+2i))
+    out: -2.107\,207\,506\,626\,455\,3+18.271\,085\,431\,136\,87i
+  fullform:
+    in: N[ProductLog[3, Complex[1, 2]]]
+    back: [N, [ProductLog, 3, [Complex, 1, 2]]]
+  wolfram:
+    in: N[ProductLog[3, Complex[1, 2]]]

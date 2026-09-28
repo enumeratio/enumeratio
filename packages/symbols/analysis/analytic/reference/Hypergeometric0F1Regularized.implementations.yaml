@@ -42,3 +42,113 @@ exact-arguments-stay-unevaluated-n-gives-the:
     in: Hypergeometric0F1Regularized[-1, 2]
   wolfram:
     in: Hypergeometric0F1Regularized[-1, 2]
+b-1-5-at-neg-0-7:
+  epsil:
+    in: Hypergeometric0F1Regularized(1.5, -0.7)
+    out: 0.670_794_625_574_135_2
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(1.5, -0.7)
+    out: 0.670\,794\,625\,574\,135\,2
+  fullform:
+    in: Hypergeometric0F1Regularized[1.5, -0.7]
+  wolfram:
+    in: Hypergeometric0F1Regularized[1.5, -0.7]
+rational-order-7-3-at-2-5:
+  epsil:
+    in: Hypergeometric0F1Regularized(7 / 3, 2.5)
+    out: 2.150_351_150_907_756
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(\frac{7}{3}, 2.5)
+    out: 2.150\,351\,150\,907\,756
+  fullform:
+    in: Hypergeometric0F1Regularized[Rational[7, 3], 2.5]
+  wolfram:
+    in: Hypergeometric0F1Regularized[Rational[7, 3], 2.5]
+complex-order-1-plus-i-at-0-5:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(1 + i, 0.5))
+    out: 2.476_270_194_944_867 + 0.188_853_295_620_278_78i
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(1+i, 0.5))
+    out: 2.476\,270\,194\,944\,867+0.188\,853\,295\,620\,278\,78i
+  fullform:
+    in: N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]
+order-2-at-a-complex-argument:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(2, 0.5 + 0.5i))
+    out: 1.248_175_636_885_929 + 0.293_401_296_264_334_1i
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(2, 0.5+0.5i))
+    out: 1.248\,175\,636\,885\,929+0.293\,401\,296\,264\,334\,1i
+  fullform:
+    in: N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]
+negative-order-neg-0-5-at-0-3:
+  epsil:
+    in: Hypergeometric0F1Regularized(-0.5, 0.3)
+    out: -0.058_572_402_140_824_23
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(-0.5, 0.3)
+    out: -0.058\,572\,402\,140\,824\,23
+  fullform:
+    in: Hypergeometric0F1Regularized[-0.5, 0.3]
+  wolfram:
+    in: Hypergeometric0F1Regularized[-0.5, 0.3]
+complex-order-and-argument:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(-2.5 + 1.5i, 1.2 - 0.8i))
+    out: 2.735_665_297_487_038_6 + 25.894_454_183_167_475i
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(-2.5+1.5i, 1.2-0.8i))
+    out: 2.735\,665\,297\,487\,038\,6+25.894\,454\,183\,167\,475i
+  fullform:
+    in: N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
+order-0:
+  epsil:
+    in: Hypergeometric0F1Regularized(0, 0.5)
+    out: 0.635_861_728_156_068_6
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(0, 0.5)
+    out: 0.635\,861\,728\,156\,068\,6
+  fullform:
+    in: Hypergeometric0F1Regularized[0, 0.5]
+  wolfram:
+    in: Hypergeometric0F1Regularized[0, 0.5]
+order-neg-2-at-0-7:
+  epsil:
+    in: Hypergeometric0F1Regularized(-2, 0.7)
+    out: 0.067_899_051_474_626_27
+  tex:
+    in: \mathrm{Hypergeometric0F1Regularized}(-2, 0.7)
+    out: 0.067\,899\,051\,474\,626\,27
+  fullform:
+    in: Hypergeometric0F1Regularized[-2, 0.7]
+  wolfram:
+    in: Hypergeometric0F1Regularized[-2, 0.7]
+order-0-at-a-complex-argument:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(0, 0.3 + 0.4i))
+    out: 0.254_883_343_005_815_44 + 0.523_422_395_184_101_5i
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(0, 0.3+0.4i))
+    out: 0.254\,883\,343\,005\,815\,44+0.523\,422\,395\,184\,101\,5i
+  fullform:
+    in: N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]
+order-neg-1-at-a-complex-argument:
+  epsil:
+    in: N(Hypergeometric0F1Regularized(-1, -0.5 + 0.2i))
+    out: 0.094_271_666_089_704_03 - 0.078_024_919_432_037_83i
+  tex:
+    in: N(\mathrm{Hypergeometric0F1Regularized}(-1, -0.5+0.2i))
+    out: 0.094\,271\,666\,089\,704\,03-0.078\,024\,919\,432\,037\,83i
+  fullform:
+    in: N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]
+  wolfram:
+    in: N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]

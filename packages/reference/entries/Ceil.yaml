@@ -10,16 +10,13 @@ signatures:
     library: enumeratio-collections
     type: (number, number?) -> number
     overrides: enumeratio-analytic
-  - call: Ceil(z)
-    description: for a complex $z$, the real and imaginary parts rounded up separately.
-    library: enumeratio-structures
   - call: Ceil(x)
     description: 'The least integer greater than or equal to x: $\lceil x \rceil$.'
     library: enumeratio-analytic
     type: (real | signed_infinity) -> integer | signed_infinity
     overrides: compute-engine
   - call: Ceil(x)
-    description: for a type whose order has ticks, the least tick at or above x; for a product order (the complex numbers), coordinate by coordinate.
+    description: in a floor ring (Mathlib's), the least integer at or above x; in a floor order, the least tick at or above x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are rounded up separately.
     library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-collections

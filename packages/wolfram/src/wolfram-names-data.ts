@@ -415,6 +415,7 @@ export const WOLFRAM_NAMES: Readonly<Record<string, string>> = {
   MellinTransform: "MellinTransform",
   MemoryConstrained: "MemoryConstrained",
   MersennePrimeExponent: "MersennePrimeExponent",
+  Midpoint: "Midpoint",
   Min: "Min",
   MinValue: "MinValue",
   Minimize: "Minimize",

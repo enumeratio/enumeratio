@@ -27,9 +27,9 @@ signatures:
       - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
       - Type names: integer, rational, real, number, positive_integer, etc.
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
-    library: enumeratio-hypercomplex
+    library: enumeratio-domains
     type: (any, any, boolean?) -> boolean
-    overrides: compute-engine
+    overrides: enumeratio-structures
   - call: Element(any, any, boolean?) -> boolean
     description: |-
       Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
@@ -42,9 +42,9 @@ signatures:
       - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
       - Type names: integer, rational, real, number, positive_integer, etc.
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
-    library: enumeratio-domains
+    library: enumeratio-structures
     type: (any, any, boolean?) -> boolean
-    overrides: enumeratio-hypercomplex
+    overrides: compute-engine
 bindings:
   - origin: mapped
     form: wolfram

@@ -194,3 +194,27 @@
   expected: ComplexInfinity
   category: Possible issues
   caption: 'Period $\pi$ reaches the same pole through an unreduced sum: $-\pi/2 + \pi$'
+- id: a-huge-24-40-argument
+  expr: [N, [Tan, [Power, 24, 40]]]
+  expected: { num: "0.43654379528724435808511" }
+  role: test
+- id: a-huge-10-100-argument
+  expr: [N, [Tan, [Power, 10, 100]]]
+  expected: { num: "0.40123196199081435418575" }
+  role: test
+- id: a-huge-3-200-argument
+  expr: [N, [Tan, [Power, 3, 200]]]
+  expected: { num: "2.723734341072774336434671" }
+  role: test
+- id: a-huge-neg-7-60-argument
+  expr: [N, [Tan, [Negate, [Power, 7, 60]]]]
+  expected: { num: "-0.39219908973632931274844" }
+  role: test
+- id: a-huge-10-80-plus-1-over-3-argument
+  expr: [N, [Tan, [Divide, [Add, [Power, 10, 80], 1], 3]]]
+  expected: { num: "5.777333408915218939564447" }
+  role: test
+- id: tan-100-under-n
+  expr: [N, [Tan, 100]]
+  expected: -0.5872139151569207
+  role: test

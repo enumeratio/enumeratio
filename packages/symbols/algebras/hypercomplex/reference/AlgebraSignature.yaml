@@ -6,7 +6,7 @@ signatures:
   - call: AlgebraSignature(algebra)
     description: each generator's square, as a list
     library: enumeratio-hypercomplex
-    type: (value) -> list
+    type: (clifford_algebra) -> list
 details:
   - Together with the commutation rule this is all that defines the algebra
   - $\mathrm{Cl}(p,q)$ reads as $p$ entries of $+1$ then $q$ of $-1$

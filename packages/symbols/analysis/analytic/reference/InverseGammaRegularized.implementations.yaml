@@ -85,3 +85,25 @@ order-1-inverts-e-z:
     verdict: inconclusive
     kind: unevaluated
     note: Same conservative auto-evaluation as the other InverseGammaRegularized examples — Wolfram leaves this symbolic without an explicit Limit[].
+qinv-5-0-1:
+  epsil:
+    in: InverseGammaRegularized(5, 0.1)
+    out: 7.993_589_586_052_63
+  tex:
+    in: \mathrm{InverseGammaRegularized}(5, 0.1)
+    out: 7.993\,589\,586\,052\,63
+  fullform:
+    in: InverseGammaRegularized[5, 0.1]
+  wolfram:
+    in: InverseGammaRegularized[5, 0.1]
+qinv-0-5-0-9:
+  epsil:
+    in: InverseGammaRegularized(0.5, 0.9)
+    out: 0.007_895_387_046_715_613
+  tex:
+    in: \mathrm{InverseGammaRegularized}(0.5, 0.9)
+    out: 0.007\,895\,387\,046\,715\,613
+  fullform:
+    in: InverseGammaRegularized[0.5, 0.9]
+  wolfram:
+    in: InverseGammaRegularized[0.5, 0.9]

@@ -21,3 +21,7 @@
   expected: [Power, [Add, [Negate, z], 1], [Negate, a]]
   category: Properties
   caption: ${}_1F_0(a;;z) = (1-z)^{-a}$
+- id: 2f-1-2-3-5-z-0-3
+  expr: [HypergeometricPFQ, [List, 2, 3], [List, 5], 0.3]
+  expected: 1.5109117821595697
+  role: test

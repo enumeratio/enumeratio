@@ -249,3 +249,436 @@ a-real-argument-past-two-also-declines:
     in: ExtendedGCD[2.5, 3, 4]
   wolfram:
     in: ExtendedGCD[2.5, 3, 4]
+one-argument-a-unit-the-identity-bezout-pair:
+  epsil:
+    in: ExtendedGCD(3 + 4i, 1)
+    out: (1, 0, 1)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, 1)
+    out: (1,0,1)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], 1]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], 1]
+    out: "{1, {0, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,1]
+      out: \{1,\{0,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+one-argument-i-a-unit:
+  epsil:
+    in: ExtendedGCD(3 + 4i, i)
+    out: (1, 0, -i)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, i)
+    out: (1,0,-i)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], Complex[0, 1]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], Complex[0, 1]]
+    out: "{1, {0, -I}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,i]
+      out: \{1,\{0,-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+a-zero-first-argument:
+  epsil:
+    in: ExtendedGCD(0, -4 + 3i)
+    out: (3 + 4i, 0, -i)
+  tex:
+    in: \mathrm{ExtendedGCD}(0, -4+3i)
+    out: (3+4i,0,-i)
+  fullform:
+    in: ExtendedGCD[0, Complex[-4, 3]]
+  wolfram:
+    in: ExtendedGCD[0, Complex[-4, 3]]
+    out: "{3 + 4*I, {0, -I}}"
+    tex:
+      in: \text{ExtendedGCD}[0,-4+3 i]
+      out: \{3+4 i,\{0,-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+a-zero-second-argument:
+  epsil:
+    in: ExtendedGCD(-4 + 3i, 0)
+    out: (3 + 4i, -i, 0)
+  tex:
+    in: \mathrm{ExtendedGCD}(-4+3i, 0)
+    out: (3+4i,-i,0)
+  fullform:
+    in: ExtendedGCD[Complex[-4, 3], 0]
+  wolfram:
+    in: ExtendedGCD[Complex[-4, 3], 0]
+    out: "{3 + 4*I, {-I, 0}}"
+    tex:
+      in: \text{ExtendedGCD}[-4+3 i,0]
+      out: \{3+4 i,\{-i,0\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+two-coprime-gaussian-primes-above-5:
+  epsil:
+    in: ExtendedGCD(2 + i, 2 - i)
+    out: (1, -1, 1 + i)
+  tex:
+    in: \mathrm{ExtendedGCD}(2+i, 2-i)
+    out: (1,-1,1+i)
+  fullform:
+    in: ExtendedGCD[Complex[2, 1], Complex[2, -1]]
+  wolfram:
+    in: ExtendedGCD[Complex[2, 1], Complex[2, -1]]
+    out: "{1, {-1, 1 + I}}"
+    tex:
+      in: \text{ExtendedGCD}[2+i,2-i]
+      out: \{1,\{-1,1+i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+a-gaussian-prime-and-a-real-prime-3-mod-4:
+  epsil:
+    in: ExtendedGCD(2 + i, 3)
+    out: (1, 1 + i, -i)
+  tex:
+    in: \mathrm{ExtendedGCD}(2+i, 3)
+    out: (1,1+i,-i)
+  fullform:
+    in: ExtendedGCD[Complex[2, 1], 3]
+  wolfram:
+    in: ExtendedGCD[Complex[2, 1], 3]
+    out: "{1, {1 + I, -I}}"
+    tex:
+      in: \text{ExtendedGCD}[2+i,3]
+      out: \{1,\{1+i,-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+an-associate-pair-by-i:
+  epsil:
+    in: ExtendedGCD(3 + 4i, -4 + 3i)
+    out: (3 + 4i, 0, -i)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, -4+3i)
+    out: (3+4i,0,-i)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], Complex[-4, 3]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], Complex[-4, 3]]
+    out: "{3 + 4*I, {0, -I}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,-4+3 i]
+      out: \{3+4 i,\{0,-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+an-associate-pair-by-1:
+  epsil:
+    in: ExtendedGCD(3 + 4i, -3 - 4i)
+    out: (3 + 4i, 0, -1)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, -3-4i)
+    out: (3+4i,0,-1)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], Complex[-3, -4]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], Complex[-3, -4]]
+    out: "{3 + 4*I, {0, -1}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,-3-4 i]
+      out: \{3+4 i,\{0,-1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+two-unrelated-composites-of-norm-25:
+  epsil:
+    in: ExtendedGCD(3 + 4i, 4 + 3i)
+    out: (1, -4, 4 + i)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, 4+3i)
+    out: (1,-4,4+i)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], Complex[4, 3]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], Complex[4, 3]]
+    out: "{1, {-4, 4 + I}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,4+3 i]
+      out: \{1,\{-4,4+i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-a-negative-real-prime:
+  epsil:
+    in: ExtendedGCD(3 + 4i, -7)
+    out: (1, -1 - i, -i)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, -7)
+    out: (1,-1-i,-i)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], -7]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], -7]
+    out: "{1, {-1 - I, -I}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,-7]
+      out: \{1,\{-1-i,-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+two-large-norm-gaussians:
+  epsil:
+    in: ExtendedGCD(123 + 456i, 1_000 + i)
+    out: (1, 203 - 296i, -160 - 56i)
+  tex:
+    in: \mathrm{ExtendedGCD}(123+456i, 1\,000+i)
+    out: (1,203-296i,-160-56i)
+  fullform:
+    in: ExtendedGCD[Complex[123, 456], Complex[1000, 1]]
+  wolfram:
+    in: ExtendedGCD[Complex[123, 456], Complex[1000, 1]]
+    out: "{1, {203 - 296*I, -160 - 56*I}}"
+    tex:
+      in: \text{ExtendedGCD}[123+456 i,1000+i]
+      out: \{1,\{203-296 i,-160-56 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+past-2-53-in-both-parts:
+  epsil:
+    in: ExtendedGCD(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)
+    out: (1, 2, -47_059_883_199_912_322_470 + 11_760_467_200_350_710_121i)
+  tex:
+    in: \mathrm{ExtendedGCD}(100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i, 4+i)
+    out: (1,2,-47\,059\,883\,199\,912\,322\,470+11\,760\,467\,200\,350\,710\,121i)
+  fullform:
+    in: ExtendedGCD[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    back: [ExtendedGCD, [Complex, 100000000000000000000, 9007199254740992], [Complex, 4, 1]]
+  wolfram:
+    in: ExtendedGCD[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    out: "{1, {2, -47059883199912322470 + 11760467200350710121*I}}"
+    tex:
+      in: \text{ExtendedGCD}[100000000000000000001+9007199254740993 i,4+i]
+      out: \{1,\{2,-47059883199912322470+11760467200350710121 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+a-real-split-prime-and-its-gaussian-factor:
+  epsil:
+    in: ExtendedGCD(5, 2 + i)
+    out: (2 + i, 0, 1)
+  tex:
+    in: \mathrm{ExtendedGCD}(5, 2+i)
+    out: (2+i,0,1)
+  fullform:
+    in: ExtendedGCD[5, Complex[2, 1]]
+  wolfram:
+    in: ExtendedGCD[5, Complex[2, 1]]
+    out: "{2 + I, {0, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[5,2+i]
+      out: \{2+i,\{0,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+two-real-composites-plain-integer-case:
+  epsil:
+    in: ExtendedGCD(4, 9)
+    out: (1, -2, 1)
+  tex:
+    in: \mathrm{ExtendedGCD}(4, 9)
+    out: (1,-2,1)
+  fullform:
+    in: ExtendedGCD[4, 9]
+  wolfram:
+    in: ExtendedGCD[4, 9]
+    out: "{1, {-2, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[4,9]
+      out: \{1,\{-2,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-a-negative-real-composite:
+  epsil:
+    in: ExtendedGCD(-15, 5 + 5i)
+    out: (5, 1, 2 - 2i)
+  tex:
+    in: \mathrm{ExtendedGCD}(-15, 5+5i)
+    out: (5,1,2-2i)
+  fullform:
+    in: ExtendedGCD[-15, Complex[5, 5]]
+  wolfram:
+    in: ExtendedGCD[-15, Complex[5, 5]]
+    out: "{5, {1, 2 - 2*I}}"
+    tex:
+      in: \text{ExtendedGCD}[-15,5+5 i]
+      out: \{5,\{1,2-2 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+the-larger-norm-argument-given-first:
+  epsil:
+    in: ExtendedGCD(2 + i, 123 + 456i)
+    out: (1, -140 - 158i, 1)
+  tex:
+    in: \mathrm{ExtendedGCD}(2+i, 123+456i)
+    out: (1,-140-158i,1)
+  fullform:
+    in: ExtendedGCD[Complex[2, 1], Complex[123, 456]]
+  wolfram:
+    in: ExtendedGCD[Complex[2, 1], Complex[123, 456]]
+    out: "{1, {-140 - 158*I, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[2+i,123+456 i]
+      out: \{1,\{-140-158 i,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-an-associate-times-1:
+  epsil:
+    in: ExtendedGCD(8 + 2i, -3 - 4i)
+    out: (1, 4, 5 - 4i)
+  tex:
+    in: \mathrm{ExtendedGCD}(8+2i, -3-4i)
+    out: (1,4,5-4i)
+  fullform:
+    in: ExtendedGCD[Complex[8, 2], Complex[-3, -4]]
+  wolfram:
+    in: ExtendedGCD[Complex[8, 2], Complex[-3, -4]]
+    out: "{1, {4, 5 - 4*I}}"
+    tex:
+      in: \text{ExtendedGCD}[8+2 i,-3-4 i]
+      out: \{1,\{4,5-4 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-an-associate-times-i:
+  epsil:
+    in: ExtendedGCD(8 + 2i, 4 - 3i)
+    out: (1, 4, -4 - 5i)
+  tex:
+    in: \mathrm{ExtendedGCD}(8+2i, 4-3i)
+    out: (1,4,-4-5i)
+  fullform:
+    in: ExtendedGCD[Complex[8, 2], Complex[4, -3]]
+  wolfram:
+    in: ExtendedGCD[Complex[8, 2], Complex[4, -3]]
+    out: "{1, {4, -4 - 5*I}}"
+    tex:
+      in: \text{ExtendedGCD}[8+2 i,4-3 i]
+      out: \{1,\{4,-4-5 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+two-coprime-primes-above-13:
+  epsil:
+    in: ExtendedGCD(3 + 2i, 2 + 3i)
+    out: (1, -2, 2 - i)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+2i, 2+3i)
+    out: (1,-2,2-i)
+  fullform:
+    in: ExtendedGCD[Complex[3, 2], Complex[2, 3]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 2], Complex[2, 3]]
+    out: "{1, {-2, 2 - I}}"
+    tex:
+      in: \text{ExtendedGCD}[3+2 i,2+3 i]
+      out: \{1,\{-2,2-i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+recovering-a-shared-prime-above-13:
+  epsil:
+    in: ExtendedGCD(6 + 8i, 3 + 2i)
+    out: (1, 2, -5 - 2i)
+  tex:
+    in: \mathrm{ExtendedGCD}(6+8i, 3+2i)
+    out: (1,2,-5-2i)
+  fullform:
+    in: ExtendedGCD[Complex[6, 8], Complex[3, 2]]
+  wolfram:
+    in: ExtendedGCD[Complex[6, 8], Complex[3, 2]]
+    out: "{1, {2, -5 - 2*I}}"
+    tex:
+      in: \text{ExtendedGCD}[6+8 i,3+2 i]
+      out: \{1,\{2,-5-2 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-a-real-prime-s-associate-by-the-unit-i:
+  epsil:
+    in: ExtendedGCD(3 + 4i, 7i)
+    out: (1, -1 - i, 1)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, 7i)
+    out: (1,-1-i,1)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], Complex[0, 7]]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], Complex[0, 7]]
+    out: "{1, {-1 - I, 1}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,7 i]
+      out: \{1,\{-1-i,1\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-a-real-composite-5-squared:
+  epsil:
+    in: ExtendedGCD(3 + 4i, 25)
+    out: (3 + 4i, 1, 0)
+  tex:
+    in: \mathrm{ExtendedGCD}(3+4i, 25)
+    out: (3+4i,1,0)
+  fullform:
+    in: ExtendedGCD[Complex[3, 4], 25]
+  wolfram:
+    in: ExtendedGCD[Complex[3, 4], 25]
+    out: "{3 + 4*I, {1, 0}}"
+    tex:
+      in: \text{ExtendedGCD}[3+4 i,25]
+      out: \{3+4 i,\{1,0\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+with-a-negative-associate:
+  epsil:
+    in: ExtendedGCD(6 + 8i, -2 - 3i)
+    out: (1, i, 3i)
+  tex:
+    in: \mathrm{ExtendedGCD}(6+8i, -2-3i)
+    out: (1,i,3i)
+  fullform:
+    in: ExtendedGCD[Complex[6, 8], Complex[-2, -3]]
+  wolfram:
+    in: ExtendedGCD[Complex[6, 8], Complex[-2, -3]]
+    out: "{1, {I, 3*I}}"
+    tex:
+      in: \text{ExtendedGCD}[6+8 i,-2-3 i]
+      out: \{1,\{i,3 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."
+a-large-norm-gaussian-and-a-real-prime-19:
+  epsil:
+    in: ExtendedGCD(123 + 456i, 19)
+    out: (1, -2, 13 + 48i)
+  tex:
+    in: \mathrm{ExtendedGCD}(123+456i, 19)
+    out: (1,-2,13+48i)
+  fullform:
+    in: ExtendedGCD[Complex[123, 456], 19]
+  wolfram:
+    in: ExtendedGCD[Complex[123, 456], 19]
+    out: "{1, {-2, 13 + 48*I}}"
+    tex:
+      in: \text{ExtendedGCD}[123+456 i,19]
+      out: \{1,\{-2,13+48 i\}\}
+    verdict: disagree
+    kind: shape
+    note: "Same values: ours is the flat Tuple (g, s, t), Wolfram's is {g, {s, t}}."

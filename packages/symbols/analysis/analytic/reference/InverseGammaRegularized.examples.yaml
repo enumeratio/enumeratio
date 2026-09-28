@@ -24,3 +24,11 @@
   expected: [Negate, [Ln, s]]
   category: Properties
   caption: Order 1 inverts $e^{-z}$
+- id: qinv-5-0-1
+  expr: [InverseGammaRegularized, 5, 0.1]
+  expected: 7.99358958605263
+  role: test
+- id: qinv-0-5-0-9
+  expr: [InverseGammaRegularized, 0.5, 0.9]
+  expected: 0.007895387046715613
+  role: test

@@ -68,31 +68,47 @@ function extremum(ce: ComputeEngine, values: readonly BoxedExpression[], side: -
   return best;
 }
 
-/** A tick next to `x`: the lower (`Floor`) or the upper (`Ceil`). */
-function tick(ce: ComputeEngine, x: BoxedExpression, head: "Floor" | "Ceil"): BoxedExpression | undefined {
+/**
+ * `Floor` or `Ceil` of `x`: coordinate by coordinate in a product order, an integer in a floor
+ * ring (Mathlib's), else the neighbouring tick of a floor order.
+ */
+function floorOrCeil(ce: ComputeEngine, x: BoxedExpression, head: "Floor" | "Ceil"): BoxedExpression | undefined {
   const parts = coordinatesOf(ce, [x]);
   if (parts !== undefined) return componentwise(ce, head, x, parts);
-  return member(ce, head === "Floor" ? "LowerTick" : "UpperTick", [x]);
+  return (
+    member(ce, head === "Floor" ? "IntegerFloor" : "IntegerCeil", [x]) ??
+    member(ce, head === "Floor" ? "LowerTick" : "UpperTick", [x])
+  );
 }
 
 /**
- * The nearest tick to `x`: the lower one below the midpoint between them, the upper one above.
- * A tie goes to the even tick when the ticks have a parity (Wolfram's rule), else up.
+ * The nearest tick to `x`. With a midpoint between ticks (our extension), compare against it:
+ * a tie goes to the even tick when the ticks have a parity, Wolfram's rule, else up. Without
+ * one, Mathlib's `round` in a floor ring: the floor when `2 fract(x) < 1`, else the ceiling,
+ * which is `x + x < 2 ⌊x⌋ + 1` in the ring's own arithmetic, so ties go up there too. A
+ * product order rounds coordinate by coordinate.
  */
-function nearest(ce: ComputeEngine, x: BoxedExpression): BoxedExpression | undefined {
+function round(ce: ComputeEngine, x: BoxedExpression): BoxedExpression | undefined {
   const parts = coordinatesOf(ce, [x]);
   if (parts !== undefined) return componentwise(ce, "Round", x, parts);
   const lo = member(ce, "LowerTick", [x]);
   const hi = member(ce, "UpperTick", [x]);
-  if (lo === undefined || hi === undefined) return undefined;
-  if (compare(ce, lo, hi) === 0) return lo;
-  const mid = member(ce, "Midpoint", [lo, hi]);
-  if (mid === undefined) return undefined;
-  const c = compare(ce, x, mid);
-  if (c === undefined) return undefined;
-  if (c !== 0) return c < 0 ? lo : hi;
-  const even = member(ce, "IsEvenTick", [lo]);
-  return even !== undefined && symbolNameOf(even) === "True" ? lo : hi;
+  const mid = lo === undefined || hi === undefined ? undefined : member(ce, "Midpoint", [lo, hi]);
+  if (lo !== undefined && hi !== undefined && mid !== undefined) {
+    if (compare(ce, lo, hi) === 0) return lo;
+    const c = compare(ce, x, mid);
+    if (c === undefined) return undefined;
+    if (c !== 0) return c < 0 ? lo : hi;
+    const even = member(ce, "IsEvenTick", [lo]);
+    return even !== undefined && symbolNameOf(even) === "True" ? lo : hi;
+  }
+  const floor = member(ce, "IntegerFloor", [x]);
+  if (floor === undefined) return undefined;
+  const twice = ce.function("Add", [x, x]).evaluate();
+  const bound = ce.function("Add", [ce.function("Multiply", [ce.number(2), floor]), ce.One]).evaluate();
+  const below = compare(ce, twice, bound);
+  if (below === undefined) return undefined;
+  return below < 0 ? floor : member(ce, "IntegerCeil", [x]);
 }
 
 export function declareGenericHeads(ce: ComputeEngine): void {
@@ -132,14 +148,14 @@ export function declareGenericHeads(ce: ComputeEngine): void {
       ce,
       [head, ["Complex", 2.5, 3.7]],
       (ops) => isStructured(ops[0]!),
-      (native) => (ops, options) => tick(ce, ops[0]!, head) ?? native?.(ops, options),
+      (native) => (ops, options) => floorOrCeil(ce, ops[0]!, head) ?? native?.(ops, options),
       1,
     );
   wrapOperator(
     ce,
     ["Round", ["Complex", 2.5, 3.7]],
     (ops) => isStructured(ops[0]!),
-    (native) => (ops, options) => nearest(ce, ops[0]!) ?? native?.(ops, options),
+    (native) => (ops, options) => round(ce, ops[0]!) ?? native?.(ops, options),
     1,
   );
 }

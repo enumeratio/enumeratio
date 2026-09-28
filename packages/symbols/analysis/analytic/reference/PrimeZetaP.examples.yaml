@@ -9,3 +9,7 @@
   expr: [PrimeZetaP, 2.5]
   expected: 0.273680737993234
   category: Scope
+- id: n-primezetap-4
+  expr: [N, [PrimeZetaP, 4]]
+  expected: 0.07699313976424685
+  role: test

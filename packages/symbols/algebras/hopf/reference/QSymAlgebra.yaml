@@ -6,7 +6,7 @@ signatures:
   - call: QSymAlgebra(n)
     description: the degree-$n$ piece of QSym
     library: enumeratio-hopf
-    type: (integer) -> value
+    type: (integer) -> graded_hopf_algebra
 seeAlso:
   - QSymM
   - NSymAlgebra

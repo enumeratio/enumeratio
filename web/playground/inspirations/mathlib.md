@@ -21,11 +21,11 @@ compute-engine's numeric head, widened to accept anything, with each package bol
 special case for its own values. It said nothing about what `Min` needs. Now it does:
 
 - **A head requires structure.** `Min` needs a linear order, or a lattice, where it is
-  the meet. `Floor` needs ticks. `Round` needs ticks, plus the midpoint between two of
-  them, plus a parity on the ticks to break a tie towards the even one.
+  the meet. `Floor` needs a floor ring, or at least ticks. `Round` needs the same, and
+  breaks a tie towards the even tick only when the ticks have a parity.
 - **A type provides it.** A type _conforms_ to a protocol by giving that protocol's
   operations: `Compare` for a partial order, `GreatestLowerBound` and `LeastUpperBound`
-  for a lattice, `LowerTick` and `UpperTick` for ticks. compute-engine has protocols in
+  for a lattice, `IntegerFloor` and `IntegerCeil` for a floor ring. compute-engine has protocols in
   its type system, so this is its machinery, not a layer beside it.
 - **The head is written once.** A package that adds a type declares its conformances and
   gets every head that needs them. A type a user declares gets them too.
@@ -75,11 +75,13 @@ makes you prove the claim. We sample it instead: every conforming type is drawn 
 the protocol's laws are checked on the draws. That is weaker, but it is also what makes
 "any type with enough structure" a promise we can keep for a type declared in a notebook.
 
-**Floor without a ring.** Mathlib's `FloorSemiring` and `FloorRing` are defined through a
-Galois connection, which is exactly right. They also require a ring, which isn't needed.
-Ticks only need an order: `Floor` is the right adjoint of the ticks' inclusion and `Ceil`
-the left one. That covers whole days in a timestamp and multiples of a step, as well as
-the integers.
+**Floors: Mathlib's, then more.** Mathlib's `FloorRing` defines floor and ceiling through a
+Galois connection with the integers, and its `round` sends ties up. We follow it exactly:
+where Mathlib has proved something about floors, we inherit it. Our extension sits below it.
+In a `FloorOrder` the ticks can be any discrete points of an order, with no ring, so whole
+days in a timestamp or multiples of a step can floor too. With a midpoint between ticks and a
+parity on them, `Round` can also break ties towards the even tick, which is Wolfram's rule.
+A floor ring is a floor order whose ticks are its integers.
 
 **Refinement is data.** A Lean typeclass `extends` its parents. compute-engine's
 protocols have no refinement yet, so the hierarchy states it separately, and a type that
@@ -87,9 +89,11 @@ claims a lattice has to have claimed a partial order first.
 
 ## What we would still like
 
-- **The algebraic half.** Monoids, groups, rings, modules and algebras, so that `Basis`
-  and the ordered product work on any finite-dimensional algebra, and the Clifford and
-  Hecke algebras are conformances rather than special cases.
+- **The algebraic half.** `Basis`, `AlgebraDimension` and `Element` already dispatch on a
+  finite-dimensional algebra's type, so the Clifford, diagram and Hecke algebras are
+  conformances rather than special cases. What's missing is the element level: monoids,
+  groups, rings and modules over an algebra's elements, so the ordered product is a ring's
+  multiplication rather than a registry.
 - **Bounded orders.** `Min` of nothing is the top element, when the type has one.
 - **Proof, where it's cheap.** Mathlib already runs as one of our oracles and checks our
   answers. It could also check our _laws_: a conformance whose law has a Mathlib theorem

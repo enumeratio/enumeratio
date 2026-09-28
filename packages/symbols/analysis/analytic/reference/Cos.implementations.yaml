@@ -851,3 +851,96 @@ a-huge-10-100-argument-reduces-exactly-mod-2-pi:
     verdict: disagree
     kind: precision
     note: Rust reduces the argument in f64, which can't hold 10^100 exactly; compute-engine reduces it exactly.
+a-huge-24-40-argument:
+  epsil:
+    in: N(Cos(24 ^ 40))
+    out: 0.916_478_843_678_244_630_461_41
+  tex:
+    in: N(\cos(24^{40}))
+    out: 0.916\,478\,843\,678\,244\,630\,461
+  fullform:
+    in: N[Cos[Power[24, 40]]]
+  wolfram:
+    in: N[Cos[Power[24, 40]]]
+  sympy:
+    in: N(cos((S(24)**40)), 30)
+  mpmath:
+    in: (cos(((24)**40)))
+  sage:
+    in: N(cos(((24)^40)))
+  rust:
+    in: nf(cos(power(n(24), n(40))))
+a-huge-3-200-argument:
+  epsil:
+    in: N(Cos(3 ^ 200))
+    out: -0.344_648_776_663_492_283_520_18
+  tex:
+    in: N(\cos(3^{200}))
+    out: -0.344\,648\,776\,663\,492\,283\,52
+  fullform:
+    in: N[Cos[Power[3, 200]]]
+  wolfram:
+    in: N[Cos[Power[3, 200]]]
+  sympy:
+    in: N(cos((S(3)**200)), 30)
+  mpmath:
+    in: (cos(((3)**200)))
+  sage:
+    in: N(cos(((3)^200)))
+  rust:
+    in: nf(cos(power(n(3), n(200))))
+a-huge-neg-7-60-argument:
+  epsil:
+    in: N(Cos(-7 ^ 60))
+    out: -0.930_959_836_362_247_474_702_87
+  tex:
+    in: N(\cos(-7^{60}))
+    out: -0.930\,959\,836\,362\,247\,474\,703
+  fullform:
+    in: N[Cos[Minus[Power[7, 60]]]]
+  wolfram:
+    in: N[Cos[Minus[Power[7, 60]]]]
+  sympy:
+    in: N(cos((-(S(7)**60))), 30)
+  mpmath:
+    in: (cos((-((7)**60))))
+  sage:
+    in: N(cos((-((7)^60))))
+  rust:
+    in: nf(cos((-(power(n(7), n(60))))))
+a-huge-10-80-plus-1-over-3-argument:
+  epsil:
+    in: N(Cos((10 ^ 80 + 1) / 3))
+    out: 0.170_554_169_502_765_438_391_13
+  tex:
+    in: N(\cos(\frac{10^{80}+1}{3}))
+    out: 0.170\,554\,169\,502\,765\,438\,391
+  fullform:
+    in: N[Cos[Divide[Plus[Power[10, 80], 1], 3]]]
+  wolfram:
+    in: N[Cos[Divide[Plus[Power[10, 80], 1], 3]]]
+  sympy:
+    in: N(cos((S(((S(10)**80) + 1)) / 3)), 30)
+  sage:
+    in: N(cos(((((10)^80) + 1) / 3)))
+  rust:
+    in: nf(cos(((power(n(10), n(80)) + n(1)) / n(3))))
+cos-2-5:
+  epsil:
+    in: Cos(2.5)
+    out: -0.801_143_615_546_933_7
+  tex:
+    in: \cos(2.5)
+    out: -0.801\,143\,615\,546\,933\,7
+  fullform:
+    in: Cos[2.5]
+  wolfram:
+    in: Cos[2.5]
+  sympy:
+    in: cos(2.5)
+  mpmath:
+    in: cos(2.5)
+  sage:
+    in: cos(2.5)
+  rust:
+    in: cos(x(2.5))
