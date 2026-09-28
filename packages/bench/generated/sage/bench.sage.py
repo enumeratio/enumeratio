@@ -104,6 +104,27 @@ def enumeratio_max(*args):
 def enumeratio_min(*args):
     return min(_enumeratio_flatten(list(args)))
 
+# Sage's own version of the SymPy helper above (run.ts, SYMPY_PREAMBLE): simplify_full() of
+# the difference proves agreement outright when it can, else the fixed-rational trials decide.
+def enumeratio_symbolic_agree(a, b, trials):
+    try:
+        d = (a - b).simplify_full()
+        if bool(d == 0):
+            return True
+    except (TypeError, ValueError, AttributeError):
+        pass
+    results = []
+    for trial in trials:
+        if trial is None:
+            continue
+        ta, tb = trial
+        try:
+            delta = CC(ta - tb)
+        except (TypeError, ValueError):
+            continue
+        results.append(abs(delta) < 1e-9)
+    return all(results) if results else None
+
 
 PROTOCOL = {
     "version": 1,
