@@ -6,6 +6,7 @@ signatures:
   - call: BinaryWordsByWeight(n, k)
     description: the binary strings of length $n$ with exactly $k$ ones
     library: enumeratio-collections
+    type: (integer, integer) -> list<list<integer>>
 details:
   - Count is $\binom{n}{k}$ (see [[Binomial]]).
 seeAlso:

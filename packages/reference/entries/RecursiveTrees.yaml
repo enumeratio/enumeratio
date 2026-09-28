@@ -7,3 +7,8 @@ grades:
     role: axis
 carrier: RootedLabeledTree
 stub: carrier
+signatures:
+  - call: RecursiveTrees(...)
+    description: Increasing trees on n labeled vertices — (n−1)! of them.
+    library: enumeratio-collections
+    type: (integer) -> list<list<integer>>

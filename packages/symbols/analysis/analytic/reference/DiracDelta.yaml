@@ -6,6 +6,7 @@ signatures:
   - call: DiracDelta(x)
     description: 0 if x is a nonzero real number; unevaluated (stays symbolic) at x = 0 or for a symbolic argument.
     library: "@enumeratio/analytic"
+    type: (real, real*) -> number
   - call: DiracDelta(x1, x2, …)
     description: the multidimensional delta -- 0 as soon as any argument is a nonzero real, unevaluated otherwise.
     library: "@enumeratio/analytic"

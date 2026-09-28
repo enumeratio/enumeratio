@@ -6,6 +6,7 @@ signatures:
   - call: StieltjesGamma(n)
     description: the $n$-th Stieltjes constant $\gamma_n$.
     library: enumeratio-analytic
+    type: (integer, number?) -> number
   - call: StieltjesGamma(n, a)
     description: the generalized Stieltjes constant $\gamma_n(a)$, from the expansion of $\zeta(s, a)$ at $s = 1$.
     library: enumeratio-analytic

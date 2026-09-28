@@ -6,6 +6,7 @@ signatures:
   - call: FromCharacterCode(n)
     description: the single character with code point n
     library: enumeratio-collections
+    type: (any) -> string
   - call: FromCharacterCode({n1, n2, …})
     description: the string built from each code point, in order
     library: enumeratio-collections

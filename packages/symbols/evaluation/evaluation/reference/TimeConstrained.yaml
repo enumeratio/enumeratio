@@ -6,6 +6,7 @@ signatures:
   - call: TimeConstrained(expr, t)
     description: aborts to $Aborted past $t$ seconds.
     library: enumeratio-evaluation
+    type: (any, number, any?) time -> any
   - call: TimeConstrained(expr, t, failexpr)
     description: aborts to $\mathit{failexpr}$ instead.
     library: enumeratio-evaluation
@@ -15,3 +16,5 @@ details:
   - "There is also an evaluateAsync route, used automatically inside an async evaluation (e.g. a notebook cell): the caller's own AbortSignal and the timeout race each other, and only the timeout converts to failexpr — the caller's own cancellation propagates."
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

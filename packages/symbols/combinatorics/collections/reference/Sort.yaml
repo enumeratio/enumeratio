@@ -10,6 +10,8 @@ signatures:
   - call: Sort(expr)
     description: the operands of any expression, sorted in place — not just a collection's.
     library: enumeratio-collections
+    type: "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)"
+    overrides: compute-engine
 details:
   - "Idempotent: sorting an already-sorted collection changes nothing."
   - $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].

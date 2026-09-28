@@ -7,3 +7,8 @@ grades:
     role: axis
 carrier: IncreasingBinaryTree
 stub: carrier
+signatures:
+  - call: IncreasingBinaryTrees(...)
+    description: Binary trees on n labeled nodes, heap-ordered by label — n! of them.
+    library: enumeratio-collections
+    type: (integer) -> collection

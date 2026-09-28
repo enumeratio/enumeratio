@@ -7,3 +7,8 @@ details:
   - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
 statOn:
   - Permutation
+signatures:
+  - call: LargestRunLength(p)
+    description: The length of the longest increasing run (the catalog's second spelling of LongestRun).
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

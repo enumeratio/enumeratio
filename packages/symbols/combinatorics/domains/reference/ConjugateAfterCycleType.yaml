@@ -7,3 +7,8 @@ details:
   - Entry j is the count of cycles of length at least j — non-increasing in j by construction, so it comes out sorted without needing one.
 mapOn:
   - Permutation
+signatures:
+  - call: ConjugateAfterCycleType(Permutation)
+    description: The conjugate partition of the cycle type.
+    library: enumeratio-domains
+    type: (permutation) -> integer_partition

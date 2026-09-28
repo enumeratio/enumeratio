@@ -6,6 +6,7 @@ signatures:
   - call: Idele(r, s, units)
     description: real $r$, principal value $s$ at every prime not named in `units`
     library: enumeratio-adeles
+    type: (any, any?, list?) -> value
   - call: Idele(q)
     description: "the principal idèle of a non-zero rational $q$: $q$ at every place"
     library: enumeratio-adeles

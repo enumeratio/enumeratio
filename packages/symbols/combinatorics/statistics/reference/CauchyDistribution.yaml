@@ -6,6 +6,7 @@ signatures:
   - call: CauchyDistribution(a, b)
     description: an inert distribution object — carries $a, b$, unevaluated.
     library: enumeratio-statistics
+    type: (real?, real<0..>?) -> distribution
   - call: CauchyDistribution()
     description: the standard Cauchy distribution, $a=0, b=1$.
     library: enumeratio-statistics

@@ -8,6 +8,8 @@ signatures:
   - call: PolyLog(s, z)
     description: extends the same call to non-integer and complex order $s$, for $|z| \leq 1$.
     library: enumeratio-analytic
+    type: (number, number, number?) -> number
+    overrides: compute-engine
 details:
   - $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
   - '$\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].'

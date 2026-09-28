@@ -10,6 +10,13 @@ signatures:
   - call: Min()
     description: the identity element $+\infty$, for a call with no arguments at all.
     library: enumeratio-collections
+    type: (any*) -> any
+    overrides: enumeratio-analytic
+  - call: Min(a, b, …)
+    description: The smallest of its arguments.
+    library: enumeratio-analytic
+    type: (value+) -> number
+    overrides: compute-engine
 details:
   - The smallest of its arguments, or of a single list argument.
   - Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Max]].

@@ -6,6 +6,7 @@ signatures:
   - call: Extract(expr, pos)
     description: the part at pos — a bare integer, or a {i, j, …} path drilling into nested operands
     library: enumeratio-collections
+    type: (any, any) -> any
   - call: Extract(expr, {{pos1}, {pos2}, …})
     description: the LIST of parts at each of several positions, one per element
     library: enumeratio-collections

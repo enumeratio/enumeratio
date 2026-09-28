@@ -12,3 +12,8 @@ references:
     identity: Permutations/Rank of a permutation
 mapOn:
   - Permutation
+signatures:
+  - call: ToLehmerCode(Permutation)
+    description: Entry i counts the later entries smaller than p(i).
+    library: enumeratio-domains
+    type: (permutation) -> subexcedant_seq

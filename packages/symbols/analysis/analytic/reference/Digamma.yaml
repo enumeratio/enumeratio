@@ -5,6 +5,11 @@ summary: The digamma function $\psi(z) = \dfrac{d}{dz}\ln\Gamma(z)$, the logarit
 signatures:
   - call: Digamma(z)
     description: the digamma function $\psi(z) = \Gamma'(z)/\Gamma(z)$.
+  - call: Digamma(z)
+    description: The digamma function $\psi(z) = \dfrac{d}{dz}\ln\Gamma(z)$, the logarithmic derivative of [[Gamma]].
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 details:
   - 'Digamma is the order-zero polygamma: $\psi(z) = \psi^{(0)}(z)$. The higher derivatives are [[PolyGamma]].'
   - $\psi(1) = -\gamma$, the negative Euler-Mascheroni constant.

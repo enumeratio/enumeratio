@@ -5,6 +5,11 @@ summary: The nth prime number (NthPrime(1) = 2).
 signatures:
   - call: NthPrime(n)
     description: the $n$th prime, with $\mathrm{NthPrime}(1)=2$.
+  - call: NthPrime(n)
+    description: The nth prime number (NthPrime(1) = 2).
+    library: enumeratio-number-theory
+    type: (integer) -> integer
+    overrides: compute-engine
 details:
   - 'Inverse of [[PrimePi]]: $\pi(p_n)=n$.'
   - Grows asymptotically like $n\ln n$, by the prime number theorem.

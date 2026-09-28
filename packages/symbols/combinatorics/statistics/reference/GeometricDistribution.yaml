@@ -6,6 +6,7 @@ signatures:
   - call: GeometricDistribution(p)
     description: an inert distribution object — carries $p$, unevaluated. [[PDF]], [[CDF]], [[Mean]], [[Variance]] and [[RandomVariate]] all read it.
     library: enumeratio-statistics
+    type: (real<0..1>) -> distribution
 details:
   - "Wolfram's own convention: support is the nonnegative integers $0, 1, 2, \\ldots$ (failures before the first success), not $1, 2, \\ldots$."
   - $PDF(k) = p(1-p)^k$ — no support check outside the nonnegative integers (a documented divergence, same policy as unclamped PDFs elsewhere in this package).

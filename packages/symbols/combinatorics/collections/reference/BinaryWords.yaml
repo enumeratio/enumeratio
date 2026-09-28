@@ -6,6 +6,7 @@ signatures:
   - call: BinaryWords(n)
     description: the binary strings of length $n$
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is $2^n$ (A000079).
 seeAlso:

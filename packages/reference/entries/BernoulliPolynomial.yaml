@@ -6,6 +6,7 @@ signatures:
   - call: BernoulliPolynomial(n, x)
     description: exact for a symbolic or exact x, numeric via BernoulliB's own kernel otherwise
     library: "@enumeratio/analytic"
+    type: (integer, number) -> number
 seeAlso:
   - BernoulliB
 names:

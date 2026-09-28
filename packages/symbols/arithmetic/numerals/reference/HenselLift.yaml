@@ -6,6 +6,7 @@ signatures:
   - call: HenselLift(f, seed, b, prec?)
     description: needs $f(seed) ≡ 0$ and $f'(seed)$ a unit mod $b$; $f$ in one free variable
     library: enumeratio-numerals
+    type: (any, integer, integer, integer?) -> value
   - call: AdicSqrt(x, prec?)
     description: a square root in $\mathbb{Z}_p$, prime $p$; declines when there is none
     library: enumeratio-numerals

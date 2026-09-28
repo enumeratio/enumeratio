@@ -6,6 +6,7 @@ signatures:
   - call: FunctionContinuous(f, x)
     description: True iff `f` has no singularity anywhere on the reals.
     library: "@enumeratio/analytic"
+    type: (any, symbol, any?) -> any
   - call: FunctionContinuous(f, x, domain)
     description: True iff `f`, restricted to `domain` (a one-sided or bounded inequality in `x`), is continuous throughout it.
     library: "@enumeratio/analytic"
@@ -25,3 +26,5 @@ seeAlso:
   - FunctionDiscontinuities
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

@@ -6,6 +6,7 @@ signatures:
   - call: Derangements(n)
     description: the fixed-point-free permutations of $n$ elements
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is the subfactorial $!n$ (see [[Subfactorial]])
   - A sub-family of [[SymmetricGroup]]

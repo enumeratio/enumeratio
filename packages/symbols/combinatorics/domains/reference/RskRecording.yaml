@@ -15,3 +15,8 @@ catalog:
     on: Permutation
 mapOn:
   - Permutation
+signatures:
+  - call: RskRecording(Permutation)
+    description: The recording tableau of the RSK correspondence, as a row word.
+    library: enumeratio-domains
+    type: (permutation) -> standard_tableau

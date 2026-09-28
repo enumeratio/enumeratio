@@ -9,3 +9,8 @@ bindings:
     arity: 1
     note: Sage has no rook algebra.
 stub: carrier
+signatures:
+  - call: RookAlgebra(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (integer) -> value

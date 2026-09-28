@@ -6,6 +6,7 @@ signatures:
   - call: DeleteCases(list, pattern)
     description: the elements of list that do NOT match pattern
     library: enumeratio-collections
+    type: (any, any) -> any
 details:
   - Top level only — Wolfram's optional levelspec/n (search below the top, cap how many to delete) aren't implemented.
   - Built on the same match primitive as [[MatchQ]] and [[FreeQ]], so it shares their wildcard grammar and their limits.
@@ -16,3 +17,5 @@ seeAlso:
   - Pick
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

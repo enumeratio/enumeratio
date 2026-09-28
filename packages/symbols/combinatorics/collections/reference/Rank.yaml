@@ -5,6 +5,11 @@ summary: "The number of dimensions of an array: 0 for a scalar, 1 for a vector, 
 signatures:
   - call: Rank(x)
     description: the length of the shape of `x`.
+  - call: Rank(x)
+    description: "The number of dimensions of an array: 0 for a scalar, 1 for a vector, 2 for a matrix."
+    library: enumeratio-collections
+    type: (value) -> integer
+    overrides: compute-engine
 details:
   - Tensor rank in the array sense — Wolfram's `ArrayDepth`, NumPy's `ndim`.
   - Not the rank of a matrix (its number of independent rows); that is [[MatrixRank]].

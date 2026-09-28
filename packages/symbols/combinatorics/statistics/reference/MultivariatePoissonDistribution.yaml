@@ -6,6 +6,7 @@ signatures:
   - call: MultivariatePoissonDistribution(mu0, {mu1, ..., muk})
     description: shared shock mu0 plus per-coordinate independent Poisson(mu_i).
     library: enumeratio-statistics
+    type: (real<0..>, list<real>) -> distribution
 details:
   - $PDF(x) = \sum_{j=0}^{\min_i x_i} PDF(Poisson(\mu_0), j) \prod_i PDF(Poisson(\mu_i), x_i-j)$ — a finite EXACT sum built from compute-engine's own native Poisson PDF, needing every $x_i$ to resolve to a concrete nonnegative integer (symbolic $x_i$ stays unevaluated).
   - $Mean_i = \mu_0 + \mu_i$; $Variance_i = \mu_0 + \mu_i$ (Poisson's own mean-equals-variance identity carries over, since each $X_i$ is a sum of independent Poissons).

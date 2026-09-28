@@ -17,3 +17,8 @@ catalog:
     on: Permutation
 mapOn:
   - Permutation
+signatures:
+  - call: CycleType(Permutation)
+    description: The multiset of cycle lengths, as a partition.
+    library: enumeratio-domains
+    type: (permutation) -> integer_partition

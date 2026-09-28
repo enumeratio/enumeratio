@@ -5,6 +5,11 @@ summary: Euler's beta function $B(a, b) = \Gamma(a)\Gamma(b)/\Gamma(a+b)$, a bri
 signatures:
   - call: Beta(a, b)
     description: the Euler beta function $B(a, b)$.
+  - call: Beta(a, b)
+    description: Euler's beta function $B(a, b) = \Gamma(a)\Gamma(b)/\Gamma(a+b)$, a bridge between [[Gamma]] and [[Binomial]] and the normalizing constant behind the beta distribution.
+    library: enumeratio-analytic
+    type: (number, number, number?, number?) -> number
+    overrides: compute-engine
 details:
   - 'Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.'
   - "Symmetric: $B(a, b) = B(b, a)$."

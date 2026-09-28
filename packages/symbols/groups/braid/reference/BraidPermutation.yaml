@@ -1,0 +1,12 @@
+name: BraidPermutation
+domain: Braids and knots
+signature: BraidPermutation(braid)
+summary: The image of a braid in the symmetric group — forget which strand went over, and keep only where each strand ends up.
+signatures:
+  - call: BraidPermutation(braid)
+    description: where each strand ends up, forgetting which went over
+    library: enumeratio-braid
+    type: (value) -> list
+seeAlso:
+  - BraidComponents
+  - PositivePermutationBraid

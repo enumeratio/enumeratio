@@ -6,6 +6,7 @@ signatures:
   - call: QSymM([1,2])
     description: $M_\alpha$ for the composition $\alpha$
     library: enumeratio-hopf
+    type: (list<integer>) -> number
   - call: NSymH([1,2])
     description: the complete basis $H_\alpha$ of NSym, whose product is concatenation
     library: enumeratio-hopf

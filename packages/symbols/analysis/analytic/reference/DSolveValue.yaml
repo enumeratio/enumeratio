@@ -6,6 +6,7 @@ signatures:
   - call: DSolveValue(eqn, Y(x), x)
     description: the general solution, with arbitrary constants C(1) (and C(2) for order 2).
     library: "@enumeratio/analytic"
+    type: (any, any, symbol) -> any
   - call: DSolveValue({eqn, ic1, ic2, ...}, Y(x), x)
     description: the particular solution satisfying the stated initial conditions.
     library: "@enumeratio/analytic"
@@ -27,3 +28,5 @@ seeAlso:
   - CaputoD
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

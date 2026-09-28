@@ -5,6 +5,16 @@ summary: The nth Catalan number $C_n$, counting balanced bracket sequences, bina
 signatures:
   - call: CatalanNumber(n)
     description: the nth Catalan number $C_n$.
+  - call: CatalanNumber(n)
+    description: The nth Catalan number $C_n$, counting balanced bracket sequences, binary trees, polygon triangulations, and many other structures of size n.
+    library: enumeratio-analytic
+    type: (number) -> number
+    overrides: compute-engine
+  - call: CatalanNumber(n)
+    description: The nth Catalan number $C_n$, counting balanced bracket sequences, binary trees, polygon triangulations, and many other structures of size n.
+    library: enumeratio-number-theory
+    type: (any) -> any
+    overrides: enumeratio-analytic
 details:
   - The Catalan numbers have the closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$.
   - They satisfy the recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$ with $C_0 = 1$.

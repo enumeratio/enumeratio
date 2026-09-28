@@ -1,0 +1,12 @@
+name: FormAction
+domain: The modular group
+signature: FormAction(form, matrix)
+summary: "The image of a [[QuadraticForm]] under the modular group's action: substituting $(x,y)\\mapsto(px+qy,rx+sy)$ for a matrix $\\begin{pmatrix}p&q\\\\r&s\\end{pmatrix}$. The discriminant is invariant, which is why classes live inside one discriminant."
+signatures:
+  - call: FormAction(form, matrix)
+    description: the form after the substitution
+    library: enumeratio-modular
+    type: (value, value) -> value
+seeAlso:
+  - QuadraticForm
+  - FormClassNumber

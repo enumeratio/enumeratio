@@ -6,6 +6,8 @@ signatures:
   - call: HurwitzZeta(s, a)
     description: the Hurwitz zeta function $\zeta(s, a)$.
     library: enumeratio-analytic
+    type: (number, number) -> number
+    overrides: compute-engine
 details:
   - 'Generalizes the Riemann zeta: $\zeta(s, 1) = \zeta(s)$, and $\zeta(s, m) = \zeta(s) - \sum_{k=1}^{m-1} k^{-s}$ for a positive integer $m$ (so $\zeta(2, 2) = \pi^2/6 - 1$).'
   - 'Nonpositive integer $s$: $\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\zeta(0, a) = \tfrac12 - a$ and $\zeta(-1, a) = -\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].'

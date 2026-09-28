@@ -6,6 +6,7 @@ signatures:
   - call: HarmonicMean(collection)
     description: $n \big/ \sum_{i} 1/x_i$ for the $n$ elements of $collection$.
     library: enumeratio-collections
+    type: (collection<any>) -> any
 details:
   - See [[GeometricMean]] and [[Mean]] for the other Pythagorean means.
 seeAlso:

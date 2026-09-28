@@ -1,0 +1,15 @@
+name: Counit
+domain: Hopf algebras
+signature: Counit(element)
+summary: 'The counit $\varepsilon$: picks out the coefficient of the empty composition, the degree-0 part of `element`.'
+signatures:
+  - call: Counit(element)
+    description: $\varepsilon(\text{element})$
+    library: enumeratio-hopf
+    type: (number) -> integer
+seeAlso:
+  - Coproduct
+  - Antipode
+references:
+  - system: wikipedia
+    identity: Hopf algebra

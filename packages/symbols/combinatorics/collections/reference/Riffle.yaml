@@ -6,6 +6,7 @@ signatures:
   - call: Riffle(list, x)
     description: $x$ between every consecutive pair of elements; if $x$ is itself a $List$, its elements are used in turn (and, once list and x run the same length, a trailing one too).
     library: enumeratio-collections
+    type: (collection<any>, any, integer?) -> collection
   - call: Riffle(list, x, n)
     description: a separator every $n$ elements, rather than between every pair.
     library: enumeratio-collections

@@ -5,6 +5,11 @@ summary: The set union of the argument collections, de-duplicated.
 signatures:
   - call: Union(a, b, …)
     description: the de-duplicated union of the collections, as a $Set$.
+  - call: Union(a, b, …)
+    description: The set union of the argument collections, de-duplicated.
+    library: enumeratio-collections
+    type: (any+) -> set
+    overrides: compute-engine
 details:
   - Duplicates within and across all the argument collections are removed; the result is returned as a $Set$.
   - "Commutative and idempotent: $A \\cup A = A$, and argument order doesn't affect the result."

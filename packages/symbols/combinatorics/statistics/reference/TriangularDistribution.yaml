@@ -6,6 +6,7 @@ signatures:
   - call: TriangularDistribution({a, b})
     description: mode defaults to the midpoint $(a+b)/2$.
     library: enumeratio-statistics
+    type: (list<real>, real?) -> distribution
   - call: TriangularDistribution({a, b}, c)
     description: mode given explicitly.
     library: enumeratio-statistics

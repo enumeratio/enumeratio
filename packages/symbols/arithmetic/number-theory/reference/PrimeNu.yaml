@@ -5,6 +5,11 @@ summary: The number of distinct prime factors of n.
 signatures:
   - call: PrimeNu(n)
     description: number of distinct prime factors of $n$.
+  - call: PrimeNu(n)
+    description: The number of distinct prime factors of n.
+    library: enumeratio-number-theory
+    type: (number, any*) -> integer
+    overrides: compute-engine
 details:
   - Counts distinct primes only -- $\nu(2^5)=1$, not 5.
   - Equal to the length of [[FactorInteger]]$(n)$.

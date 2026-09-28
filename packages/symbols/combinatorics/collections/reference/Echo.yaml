@@ -6,6 +6,7 @@ signatures:
   - call: Echo(expr)
     description: Prints $expr$'s value, and returns it unchanged.
     library: enumeratio-collections
+    type: (any, any?, ((any) -> any)?) console -> any
   - call: Echo(expr, label)
     description: Like $Echo(expr)$, prefixed by $label$.
     library: enumeratio-collections

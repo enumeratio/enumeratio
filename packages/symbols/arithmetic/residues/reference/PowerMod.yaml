@@ -8,9 +8,16 @@ signatures:
   - call: PowerMod(a, 1/r, m)
     description: the least $x \ge 0$ with $x^r \equiv a \pmod m$; more generally $s/r$ for $x^r \equiv a^s$
     library: enumeratio-residues
+    type: (number, number, number) -> number
+    overrides: compute-engine
   - call: PowerMod(u/v, b, m)
     description: a rational base, read in $\mathbb{Z}/m$ as $u \cdot v^{-1}$
     library: enumeratio-residues
+  - call: PowerMod(a, b, m)
+    description: "Modular exponentiation: a^b mod m, computed without forming a^b directly."
+    library: enumeratio-number-theory
+    type: (number, number, number) -> number
+    overrides: enumeratio-residues
 details:
   - Computed by repeated squaring, without ever forming $a^b$ directly -- efficient even for huge $b$.
   - A negative $b$ gives the modular inverse of $a$ raised to $|b|$, when it exists.

@@ -6,6 +6,7 @@ signatures:
   - call: VertexInDegree(g)
     description: every vertex's in-degree, in VertexList(g) order.
     library: enumeratio-collections
+    type: (value, any?) -> value
   - call: VertexInDegree(g, v)
     description: just v's in-degree.
     library: enumeratio-collections

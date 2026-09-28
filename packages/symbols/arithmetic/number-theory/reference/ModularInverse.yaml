@@ -8,6 +8,8 @@ signatures:
   - call: ModularInverse(z, m)
     description: over the Gaussian integers
     library: enumeratio-number-theory
+    type: (value, value) -> value
+    overrides: compute-engine
 details:
   - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.
   - Read off the Bézout coefficient of [[ExtendedGCD]].

@@ -6,6 +6,7 @@ signatures:
   - call: BinormalDistribution(rho)
     description: correlation $\rho$ only — mean $(0,0)$, unit variances.
     library: enumeratio-statistics
+    type: (any, any?, any?) -> distribution
   - call: BinormalDistribution({sigma1, sigma2}, rho)
     description: standard deviations and correlation — mean $(0,0)$.
     library: enumeratio-statistics

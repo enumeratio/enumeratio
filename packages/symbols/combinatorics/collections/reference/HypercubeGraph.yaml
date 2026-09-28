@@ -6,6 +6,7 @@ signatures:
   - call: HypercubeGraph(n)
     description: vertex $i$ (1-based) labels the bit pattern $i - 1$; edges join patterns at Hamming distance 1.
     library: enumeratio-collections
+    type: (integer) -> value
 seeAlso:
   - GridGraph
   - CompleteGraph

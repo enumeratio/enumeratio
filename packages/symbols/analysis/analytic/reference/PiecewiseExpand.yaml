@@ -6,6 +6,7 @@ signatures:
   - call: PiecewiseExpand(expr)
     description: rewrite using whatever is already assumed real (e.g. inside an enclosing [[Assuming]]).
     library: "@enumeratio/analytic"
+    type: (value, value?) -> unknown
   - call: PiecewiseExpand(expr, assumptions)
     description: assume $assumptions$ (scoped, as in [[Assuming]]) for the rewrite, then forget it.
     library: "@enumeratio/analytic"
@@ -15,3 +16,5 @@ details:
   - 2-argument `Max`/`Min` only — no general n-ary rewrite.
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

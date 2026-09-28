@@ -6,6 +6,7 @@ signatures:
   - call: NumberExpand(n)
     description: the base-10 place-value terms of $n$
     library: enumeratio-numerals
+    type: (integer, integer?, integer?) -> list
   - call: NumberExpand(n, base)
     description: place-value terms in the given base
   - call: NumberExpand(n, base, len)

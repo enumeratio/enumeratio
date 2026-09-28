@@ -6,6 +6,7 @@ signatures:
   - call: PrimePartitions(n)
     description: the partitions of $n$ into prime parts
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is A000607.
 seeAlso:

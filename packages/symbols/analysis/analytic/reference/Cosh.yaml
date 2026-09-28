@@ -5,6 +5,11 @@ summary: 'Hyperbolic cosine: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
 signatures:
   - call: Cosh(x)
     description: the hyperbolic cosine of x.
+  - call: Cosh(x)
+    description: 'Hyperbolic cosine: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
+    library: enumeratio-analytic
+    type: (complex | signed_infinity) -> number
+    overrides: compute-engine
 details:
   - 'Defined in terms of [[Exp]]: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
   - 'Even function: $\cosh(-x) = \cosh(x)$.'

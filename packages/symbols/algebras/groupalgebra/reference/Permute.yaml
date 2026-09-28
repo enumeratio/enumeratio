@@ -6,6 +6,7 @@ signatures:
   - call: Permute(list, perm)
     description: list with position $i$ moved to $\sigma(i)$
     library: enumeratio-groupalgebra
+    type: (list, value) -> value
   - call: Permute(list, group)
     description: one permuted copy of `list` per element of `group`
     library: enumeratio-groupalgebra

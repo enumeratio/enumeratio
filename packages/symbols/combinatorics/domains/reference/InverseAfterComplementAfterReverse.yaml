@@ -12,3 +12,8 @@ seeAlso:
   - Reverse
 mapOn:
   - Permutation
+signatures:
+  - call: InverseAfterComplementAfterReverse(Permutation)
+    description: Reverse, then complement, then invert.
+    library: enumeratio-domains
+    type: (permutation) -> permutation

@@ -6,6 +6,7 @@ signatures:
   - call: RandomInteger()
     description: $0$ or $1$, each with probability $1/2$.
     library: enumeratio-collections
+    type: (any?, any?) random -> any
   - call: RandomInteger(max)
     description: uniform in $\{0, \ldots, max\}$.
     library: enumeratio-collections

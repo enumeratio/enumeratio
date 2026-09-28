@@ -6,6 +6,7 @@ signatures:
   - call: FactorialPower(x, n)
     description: x(x-1)(x-2)…(x-n+1)
     library: enumeratio-collections
+    type: (any, any, any?) -> any
   - call: FactorialPower(x, n, h)
     description: x(x-h)(x-2h)…(x-(n-1)h), stepping by h instead of 1
     library: enumeratio-collections
@@ -15,3 +16,5 @@ details:
   - A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default.
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

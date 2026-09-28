@@ -865,9 +865,6 @@ zeta-complex-argument-stays-symbolic-until-n:
   mpmath:
     in: zeta(mpc(2, 1))
     out: (1.15035570325490267174284993474 - 0.437530865919607881117527898593j)
-    verdict: disagree
-    kind: unevaluated
-    note: compute-engine keeps ζ(2 + i) exact; mpmath only evaluates numerically.
   sage:
     in: zeta((2 + 1*I))
     out: zeta(I + 2)

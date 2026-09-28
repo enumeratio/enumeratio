@@ -6,6 +6,7 @@ signatures:
   - call: MatrixExp(A)
     description: the matrix exponential of the square matrix `A`.
     library: "@enumeratio/analytic"
+    type: (matrix, list<number>?) -> list<number> | matrix
   - call: MatrixExp(A, v)
     description: "$e^A v$: `A`'s matrix exponential applied to the vector `v`."
     library: "@enumeratio/analytic"

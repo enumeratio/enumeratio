@@ -7,6 +7,11 @@ signatures:
     description: the largest of two or more values.
   - call: Max(list)
     description: the largest value in a list.
+  - call: Max(a, b, …)
+    description: The largest of its arguments.
+    library: enumeratio-analytic
+    type: (value*) -> number
+    overrides: compute-engine
 details:
   - The largest of its arguments, or of a single list argument.
   - Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Min]].

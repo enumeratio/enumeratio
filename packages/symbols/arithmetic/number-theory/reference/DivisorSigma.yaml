@@ -5,6 +5,11 @@ summary: The sum of the kth powers of the divisors of n.
 signatures:
   - call: DivisorSigma(k, n)
     description: sum of the $k$th powers of the divisors of $n$.
+  - call: DivisorSigma(k, n)
+    description: The sum of the kth powers of the divisors of n.
+    library: enumeratio-number-theory
+    type: (number, number, any*) -> number
+    overrides: compute-engine
 details:
   - $k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.
   - 'Multiplicative: $\sigma_k(mn)=\sigma_k(m)\sigma_k(n)$ whenever $\gcd(m,n)=1$.'

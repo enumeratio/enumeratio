@@ -8,6 +8,8 @@ signatures:
   - call: Length(expr)
     description: the number of top-level operands of any expression, not just a collection.
     library: enumeratio-collections
+    type: (any) -> infinity | integer
+    overrides: compute-engine
 details:
   - Works on any collection head, not just $List$ — e.g. $Set$.
   - "Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]."

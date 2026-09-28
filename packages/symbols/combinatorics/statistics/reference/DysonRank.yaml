@@ -15,3 +15,8 @@ catalog:
     on: IntegerPartition
 statOn:
   - IntegerPartition
+signatures:
+  - call: DysonRank(partition)
+    description: Largest part minus number of parts.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

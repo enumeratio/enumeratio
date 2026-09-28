@@ -6,6 +6,7 @@ signatures:
   - call: Nest(f, x, n)
     description: $f$ applied to $x$, $n$ times in a row.
     library: enumeratio-collections
+    type: "(function: any, x: any, n: integer) -> any"
 details:
   - $f$ can be a [[Function]] literal or a plain symbol; an undeclared symbol stays an unevaluated call, the way $Nest(f, x, 3)$ shows below.
   - See [[NestList]] for every intermediate step, and [[FixedPoint]] for iterating until the value stops changing instead of a fixed count.

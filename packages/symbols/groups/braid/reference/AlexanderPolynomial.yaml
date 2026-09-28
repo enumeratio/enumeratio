@@ -6,6 +6,7 @@ signatures:
   - call: AlexanderPolynomial(knot)
     description: $\Delta(t)$, normalised to start at $t^0$
     library: enumeratio-braid
+    type: (value) -> expression
   - call: TorusKnot(p, q)
     description: $T(p,q)$ as a knot — the closed form, with no braid involved
     library: enumeratio-braid

@@ -6,6 +6,7 @@ signatures:
   - call: FormClassNumber(D)
     description: the number of classes
     library: enumeratio-modular
+    type: (integer) -> integer
   - call: FormCycle(form)
     description: the class the form lies in, listed
     library: enumeratio-modular

@@ -6,6 +6,7 @@ signatures:
   - call: IsInteger(x)
     description: True if x is an integer, False otherwise
     library: enumeratio-collections
+    type: (any) -> boolean
 details:
   - Returns False unless x is provably an integer -- there's no third "unknown" outcome, same convention as IsPrime.
   - A free symbol, or anything compute-engine can't classify, answers False.

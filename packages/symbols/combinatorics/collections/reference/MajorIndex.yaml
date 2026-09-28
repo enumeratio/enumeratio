@@ -29,6 +29,7 @@ signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$
     library: enumeratio-collections
+    type: (list) -> integer
 details:
   - Introduced by MacMahon, who proved it equidistributed with [[Inversions]] over $S_n$
   - Both are Mahonian, so their common generating function is the q-factorial $[n]_q!$

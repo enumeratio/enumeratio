@@ -6,6 +6,7 @@ signatures:
   - call: ParetoDistribution(k, alpha)
     description: an inert distribution object — carries $k, \alpha$, unevaluated.
     library: enumeratio-statistics
+    type: (real<0..>, real<0..>) -> distribution
 details:
   - $PDF(x) = \alpha k^\alpha / x^{\alpha+1}$ for $x \geq k$.
   - $CDF(x) = 1-(k/x)^\alpha$, clamped to $0$ below $x=k$.

@@ -6,6 +6,7 @@ signatures:
   - call: QuiverPath(v, [])
     description: the trivial path at vertex $v$ — a local identity
     library: enumeratio-quiver
+    type: (integer, list<integer>) -> number
   - call: QuiverPath(v, [i, j, …])
     description: the path from $v$ along arrows $i$, $j$, …
     library: enumeratio-quiver

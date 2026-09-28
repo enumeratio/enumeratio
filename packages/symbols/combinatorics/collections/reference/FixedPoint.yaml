@@ -6,6 +6,8 @@ signatures:
   - call: FixedPoint(f, x)
     description: iterates $f$ starting from $x$ until two successive values are equal.
     library: enumeratio-collections
+    type: "(function: any, x: any) -> any"
+    overrides: compute-engine
 details:
   - compute-engine declares $FixedPoint$ itself but ships no evaluator for it; this library extends that declaration rather than replacing it.
   - Capped at 10,000 iterations, so a sequence that never settles fails closed instead of looping forever — Wolfram's own (much larger, configurable) cap is $MaxIterations.
@@ -15,3 +17,5 @@ seeAlso:
   - NestList
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll

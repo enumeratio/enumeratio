@@ -5,6 +5,11 @@ summary: The complementary error function $\operatorname{erfc}(z) = 1 - \operato
 signatures:
   - call: Erfc(z)
     description: the complementary error function $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$.
+  - call: Erfc(z)
+    description: The complementary error function $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$, the Gaussian's tail-probability integral.
+    library: enumeratio-analytic
+    type: (complex | signed_infinity) -> complex
+    overrides: compute-engine
 details:
   - Defined as $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$. See [[Erf]].
   - $\operatorname{erfc}(0) = 1$, $\operatorname{erfc}(\infty) = 0$, $\operatorname{erfc}(-\infty) = 2$.

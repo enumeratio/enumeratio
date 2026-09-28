@@ -840,7 +840,7 @@ export function declareGraphs2(ce: ComputeEngine): void {
   });
 
   ce.declare("RandomGraph", {
-    signature: "(any) -> value",
+    signature: "(any) random -> value",
     evaluate: (ops) => {
       const spec = ops[0];
       if (spec === undefined || spec.operator !== "List") return undefined;

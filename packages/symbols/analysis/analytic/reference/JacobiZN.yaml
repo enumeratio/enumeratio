@@ -6,6 +6,7 @@ signatures:
   - call: JacobiZN(u, m)
     description: the Jacobi zeta function, argument u, parameter m.
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 details:
   - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
   - Composed from [[JacobiAmplitude]]'s amplitude and the already-declared [[IncompleteEllipticE]], [[EllipticE]], [[EllipticK]] (DLMF 22.16.31) — not a separate numeric method.

@@ -6,6 +6,7 @@ signatures:
   - call: ProfiniteDecomposition(m)
     description: $m$ a square matrix (list of lists) of [[ProfiniteNumber]] or rational entries
     library: enumeratio-adeles
+    type: (list, number?) -> list
   - call: ProfiniteDecomposition(m, d)
     description: with $d$ = $\det m$ supplied explicitly rather than computed from $m$'s entries
     library: enumeratio-adeles

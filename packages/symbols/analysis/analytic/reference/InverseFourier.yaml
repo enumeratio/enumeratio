@@ -6,6 +6,7 @@ signatures:
   - call: InverseFourier(list)
     description: the inverse discrete Fourier transform of a numeric list, or a rectangular numeric matrix.
     library: "@enumeratio/analytic"
+    type: (list, any?) -> list
   - call: InverseFourier(list, FourierParameters -> {a, b})
     description: equivalent to `Fourier(list, FourierParameters -> {-a, -b})`.
     library: "@enumeratio/analytic"

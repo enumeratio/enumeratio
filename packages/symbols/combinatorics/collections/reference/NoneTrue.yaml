@@ -6,6 +6,7 @@ signatures:
   - call: NoneTrue(xs, predicate)
     description: $True$ if $predicate$ holds for no element of $xs$, else $False$.
     library: enumeratio-collections
+    type: (indexed_collection<any>, (any) any -> boolean) -> boolean
 details:
   - "The negation of [[Any]]: $NoneTrue(xs, p) = Not(Any(xs, p))$."
 seeAlso:

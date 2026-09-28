@@ -6,6 +6,7 @@ signatures:
   - call: GammaDistribution(k, theta)
     description: an inert distribution object with shape $k$ and scale $\theta$.
     library: enumeratio-statistics
+    type: (real<0..>, real<0..>?) -> distribution
   - call: GammaDistribution(k)
     description: scale defaults to $1$. NOT a Wolfram call form — `GammaDistribution[alpha]` alone errors there (`GammaDistribution::argbu`, confirmed against wolframscript); this is our own convenience.
     library: enumeratio-statistics

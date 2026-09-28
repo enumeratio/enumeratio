@@ -67,6 +67,8 @@ signatures:
   - call: Zeta(s, a)
     description: the two-argument generalized (Hurwitz-type) zeta $\zeta(s, a)$; see [[HurwitzZeta]] for the difference.
     library: enumeratio-analytic
+    type: (number, number?) -> number
+    overrides: compute-engine
 details:
   - 'Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.'
   - 'Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.'

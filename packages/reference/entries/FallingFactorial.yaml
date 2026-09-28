@@ -6,6 +6,7 @@ signatures:
   - call: FallingFactorial(x, n)
     description: exact for an integer x and n, numeric otherwise
     library: "@enumeratio/analytic"
+    type: (number, number) -> number
 seeAlso:
   - RisingFactorial
 names:

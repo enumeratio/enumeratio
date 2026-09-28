@@ -13,3 +13,8 @@ references:
 statOn:
   - BinaryWord
   - Permutation
+signatures:
+  - call: Runs(p)
+    description: Maximal increasing runs — one more than the number of descents.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number

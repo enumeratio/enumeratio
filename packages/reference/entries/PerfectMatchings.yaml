@@ -19,3 +19,8 @@ grades:
   - name: n
     role: axis
 carrier: PerfectMatching
+signatures:
+  - call: PerfectMatchings(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage, wikipedia; not yet written up here.
+    library: enumeratio-collections
+    type: (integer) -> list<list<list<integer>>>

@@ -6,6 +6,7 @@ signatures:
   - call: SplitBy(list, f)
     description: runs on which $f(element)$ stays the same.
     library: enumeratio-collections
+    type: (indexed_collection<any>, (any) any -> any) -> list<list<any>>
 details:
   - '[[Split]] with the adjacency test "same $f$ value" instead of plain equality.'
 seeAlso:

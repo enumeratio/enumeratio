@@ -6,6 +6,7 @@ signatures:
   - call: GrayCodes(n)
     description: the binary words of length $n$ in binary-reflected Gray-code order
     library: enumeratio-collections
+    type: (integer) -> list<list<integer>>
 details:
   - Count is $2^n$; consecutive words differ in exactly one bit.
   - $g(r) = r \oplus \lfloor r/2 \rfloor$ (A003188).

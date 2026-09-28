@@ -6,6 +6,7 @@ signatures:
   - call: DirichletL(k, j, s)
     description: the L-function of [[DirichletCharacter]] $\chi_j \bmod k$.
     library: enumeratio-analytic
+    type: (integer, integer, number) -> number
 details:
   - "$L(s, \\chi_1 \\bmod 1) = \\zeta(s)$, and for the principal character mod $k$ the Euler factors at the primes dividing $k$ drop out: $L(s, \\chi_1) = \\zeta(s)\\prod_{p \\mid k}(1 - p^{-s})$ — so it inherits $\\zeta$'s pole at $s = 1$. Every non-principal $L$ is entire."
   - $L(s, \chi_2 \bmod 4) = \beta(s)$, the [[DirichletBeta]] function; $\eta(s)$ is not an L-function of this family (the alternating sign is not a character mod 2) but is $(1 - 2^{1-s})\zeta(s)$. See [[DirichletEta]].
