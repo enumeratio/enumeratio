@@ -3,6 +3,7 @@
 
 import { expect, test } from "vite-plus/test";
 import {
+  COMPONENT_STORIES_SCHEMA,
   HEAD_IMPLEMENTATIONS_SCHEMA,
   REFERENCE_ENTRY_SCHEMA,
   REFERENCE_EXAMPLES_SCHEMA,
@@ -80,5 +81,33 @@ test("rejects an unknown verdict", () => {
     }),
   ).toEqual([
     '$.zero-modulus.wolfram.verdict: expected one of ["agree","disagree","inconclusive","error"], got "maybe"',
+  ]);
+});
+
+const STORY = {
+  id: "a-3-3-matrix",
+  caption: "A 3×3 matrix",
+  expr: ["BarChart3D", ["List", ["List", 1, 2, 3], ["List", 2, 4, 3], ["List", 3, 1, 5]]],
+};
+
+test("a well-formed story passes, with and without category/notes", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [STORY, { ...STORY, id: "again", category: "Bars" }])).toEqual([]);
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, notes: "More prose." }])).toEqual([]);
+});
+
+test("rejects a story missing its required expr", () => {
+  const { expr: _expr, ...withoutExpr } = STORY;
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [withoutExpr])).toEqual(['$[0]: missing required property "expr"']);
+});
+
+test("rejects an unknown property on a story (typo guard)", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, caputre: "oops" }])).toEqual([
+    '$[0]: unexpected property "caputre"',
+  ]);
+});
+
+test("rejects a malformed story id", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, id: "Not_Valid" }])).toEqual([
+    "$[0].id: does not match /^[a-z0-9]+(-[a-z0-9]+)*$/",
   ]);
 });

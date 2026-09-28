@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
+    "@enumeratio/entry": "workspace:*",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
     "vite": "catalog:",

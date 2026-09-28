@@ -10,6 +10,7 @@
     "build": "vitepress build",
     "preview": "vitepress preview",
     "test": "vp test",
+    "test:stories": "playwright test -c tests/stories/playwright.config.ts",
     "check": "vp check"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/domains": "workspace:*",
+    "@playwright/test": "^1.55.0",
     "mermaid": "catalog:",
     "vitepress": "^1.6.4",
     "vitepress-plugin-mermaid": "catalog:",

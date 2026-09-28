@@ -23,7 +23,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Vector & Stream Plot](/playground/vector-plot) — `<notatio-vector-plot>`, a planar vector field as arrows, or as streamlines by fixed-step RK4
 - [Polar Plot](/playground/polar-plot) — `<notatio-polar-plot>`, r(θ) curves (and explicit point lists) on a polar grid
 - [List Plot 3D](/playground/list-plot-3d) — `<notatio-list-plot-3d>`, 3-D scatters and height-grid surfaces, orthographically projected
-- [Bar Chart 3D](/playground/bar-chart-3d) — `<notatio-bar-chart-3d>`, a matrix of heights as depth-sorted 3-D bars
+- [Bar Chart 3D](/reference/components/notatio-bar-chart-3d) — a matrix of heights as depth-sorted 3-D bars; stories moved to its component reference page
 - [Chart](/playground/chart) — `<notatio-chart>`, data-driven 2-D charts (bar, histogram, pie, box-whisker, array, discrete, list)
 - [GraphPlot](/playground/graph-plot) — `<notatio-graph-plot>`, graph & hierarchical layouts (tree, graph, layered graph, dendrogram)
 - [Complex Plot](/playground/complex-plot) — `<notatio-complex-plot>`, domain-colouring of a complex expression, one WebGPU invocation per pixel

@@ -8,4 +8,10 @@ export default defineConfig({
   lint: {
     options: { typeAware: true, typeCheck: true },
   },
+  test: {
+    // Vitest's default include also matches `*.spec.ts`, which is what tests/stories/*.spec.ts
+    // (Playwright, its own config and runner -- see tests/stories/playwright.config.ts) uses on
+    // purpose, so `vp test` / the CI gate never picks them up.
+    include: ["**/*.test.ts"],
+  },
 });

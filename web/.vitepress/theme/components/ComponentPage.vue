@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { data as components } from "../../data/components.data.ts";
+import { storiesFor } from "../../data/stories.ts";
 import { inline, paragraphs as split } from "./jsdoc.ts";
+import Stories from "./Stories.vue";
 
 const props = defineProps<{ tag: string }>();
 const component = computed(() => components.find((c) => c.tag === props.tag));
 
 const paragraphs = computed(() => split(component.value?.summary ?? ""));
 
-// The same rule data/wrappers.ts names the generated Vue component by.
+// The same rule @enumeratio/frontend/reflect's `wrapperName` names the generated Vue/React
+// component by -- reimplemented rather than imported: that module also reads the filesystem
+// (`collectComponents`), which a browser bundle can't pull in even for one function.
 const wrapper = computed(() =>
   props.tag
     .replace(/^notatio-/, "")
@@ -16,6 +20,7 @@ const wrapper = computed(() =>
     .map((part) => (/^\d/.test(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
     .join(""),
 );
+const stories = computed(() => storiesFor(wrapper.value));
 </script>
 
 <template>
@@ -29,6 +34,11 @@ const wrapper = computed(() =>
       <span class="sep">·</span>
       in Vue: <code>&lt;{{ wrapper }}&gt;</code>
     </p>
+
+    <template v-if="stories.length > 0">
+      <h2>Stories</h2>
+      <Stories :stories="stories" />
+    </template>
 
     <h2>Attributes</h2>
     <p v-if="component.attributes.length === 0">This component takes no attributes.</p>

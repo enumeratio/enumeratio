@@ -44,6 +44,23 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm -r --filter @enumeratio/analytic run test
 
+  # A real browser against a real dev server, checking every component story renders (the
+  # custom element upgrades, draws something, no console errors) -- see web/tests/stories.
+  # Slower and flakier than the PR gate's checks, so it lives here instead: advisory, never
+  # required, and a failure doesn't block anything.
+  component-stories:
+    name: component stories (Playwright)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @enumeratio/web exec playwright install --with-deps chromium
+        continue-on-error: true
+      - run: pnpm --filter @enumeratio/web run test:stories
+        continue-on-error: true
+
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
   # records, including the special-function grid kept as hidden examples in its heads' YAML. Each
   # ecosystem is its own nightly job: they share nothing to install. The heavier lanes run weekly below.

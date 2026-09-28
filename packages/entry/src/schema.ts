@@ -250,6 +250,30 @@ export const REFERENCE_EXAMPLES_SCHEMA: JsonSchema = {
   $defs: { MathJSON: MATHJSON, ReferenceExample: REFERENCE_EXAMPLE, Reference: REFERENCE },
 };
 
+const COMPONENT_STORY: JsonSchema = {
+  type: "object",
+  properties: {
+    id: { type: "string", pattern: "^[a-z0-9]+(-[a-z0-9]+)*$", maxLength: 48 },
+    caption: { type: "string" },
+    category: { type: "string" },
+    notes: { type: "string" },
+    expr: { $ref: "#/$defs/MathJSON" },
+  },
+  required: ["id", "caption", "expr"],
+  additionalProperties: false,
+};
+
+/** `packages/components/reference/<Name>.stories.yaml`: one component's stories, in page order. */
+export const COMPONENT_STORIES_SCHEMA: JsonSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "https://enumeratio.dev/schema/component-stories.schema.json",
+  title: "ComponentStories",
+  description: "One component's <Name>.stories.yaml: its stories, in page order.",
+  type: "array",
+  items: { $ref: "#/$defs/ComponentStory" },
+  $defs: { MathJSON: MATHJSON, ComponentStory: COMPONENT_STORY },
+};
+
 const RENDERED_FORM: JsonSchema = {
   type: "object",
   properties: { in: { type: "string" }, out: { type: "string" } },
