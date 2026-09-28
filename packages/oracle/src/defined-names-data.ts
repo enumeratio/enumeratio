@@ -142,7 +142,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "CograssmannianPermutations",
   "CombinatorialMap",
   "CombinatorialNumerals",
-  "CombinatorialStatistic",
+  "CombinatorialStat",
   "Commonest",
   "CompleteGraph",
   "CompleteKaryTree",

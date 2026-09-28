@@ -411,7 +411,7 @@ const NOVEL = [
   "ClausenCl",
   "CograssmannianPermutations",
   "CombinatorialMap",
-  "CombinatorialStatistic",
+  "CombinatorialStat",
   "CongruentMod",
   "ConnectedPermutations",
   "Csgn",
