@@ -1,0 +1,4 @@
+- id: the-permutations-of-4
+  expr: [Count, [Permutations, 4]]
+  expected: 24
+  caption: '`Permutations(n)` is the collection of permutations of $\{1, \ldots, n\}$, the same as [[SymmetricGroup]](n)'
