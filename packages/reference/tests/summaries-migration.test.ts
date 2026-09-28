@@ -67,7 +67,7 @@ test("every package's declared head set is unchanged", () => {
   }
 });
 
-test("every summaries-data.ts is current with its package's records", { timeout: 60_000 }, () => {
+test("every summaries-data.ts is current with its package's records", () => {
   const data = referenceData();
   for (const [pkg, summaries] of Object.entries(PACKAGES)) {
     const byName = new Map(packageEntries(pkg, data).map((e) => [e.name, e.summary]));

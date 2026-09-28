@@ -15,7 +15,7 @@ import { expect, test } from "vite-plus/test";
 import { CATALOG_REFERENCES, type CatalogCrosswalkRow } from "../src/crosswalk/catalog-references-data.ts";
 import { referenceData } from "../src/node.ts";
 
-test("catalog-references-data.ts is what the current records collect to", { timeout: 60_000 }, () => {
+test("catalog-references-data.ts is what the current records collect to", () => {
   const { entries } = referenceData();
 
   const rebuilt: CatalogCrosswalkRow[] = [];
