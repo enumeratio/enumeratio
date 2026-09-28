@@ -287,6 +287,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     threadArg: 1,
   },
   {
+    head: "ExtendedGCD",
+    arity: 2,
+    emit: {
+      wolfram: "ExtendedGCD[$1, $2]",
+    },
+    note: "Shape difference, not a value one: Wolfram's ExtendedGCD returns {g, {s, t}}, nested; ours returns the flat Tuple(g, s, t) compute-engine's own Tuple head calls for. The Bezout coefficients also aren't unique, so an occasional case lands on another valid (s, t) pair than Wolfram's Euclid would pick; ours still satisfies s*a + t*b = g.",
+  },
+  {
     head: "Factorial",
     arity: 1,
     emit: {
@@ -590,8 +598,10 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     head: "ModularInverse",
     arity: 2,
     emit: {
+      wolfram: "ModularInverse[$1, $2]",
       sage: "inverse_mod($1, $2)",
     },
+    note: "Wolfram's own ModularInverse (not PowerMod[a, -1, m]): PowerMod's negative-exponent path checks invertibility of a mod the NORM of a Gaussian m, not m itself, and wrongly declines some invertible cases ModularInverse gets right — e.g. ModularInverse(11 - 7i, 7 + 4i) = -1 + 2i, where PowerMod[11 - 7I, -1, 7 + 4I] errors because 11 - 7i shares a factor with N(7 + 4i) = 65.",
   },
   {
     head: "MoebiusMu",
@@ -751,6 +761,7 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     head: "PowerMod",
     arity: 3,
     emit: {
+      wolfram: "PowerMod[$1, $2, $3]",
       sage: "power_mod($1, $2, $3)",
       rust: "powermod($1, $2, $3)",
     },
@@ -795,6 +806,20 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       sage: "enumeratio_primitive_root_list($1)",
     },
     note: "Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).",
+  },
+  {
+    head: "Quotient",
+    arity: 2,
+    emit: {
+      wolfram: "Quotient[$1, $2]",
+    },
+  },
+  {
+    head: "Quotient",
+    arity: 3,
+    emit: {
+      wolfram: "Quotient[$1, $2, $3]",
+    },
   },
   {
     head: "Rational",

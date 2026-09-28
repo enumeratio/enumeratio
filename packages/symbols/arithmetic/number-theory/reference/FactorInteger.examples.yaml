@@ -111,3 +111,140 @@
   expected: [List, [Tuple, -1, 1], [Tuple, 2, -3], [Tuple, 3, 1]]
   category: Scope
   caption: FactorInteger of a negative rational
+- id: a-unit-factors-as-itself
+  expr: [FactorInteger, [Complex, 0, 1]]
+  expected: [List, [Tuple, [Complex, 0, 1], 1]]
+  caption: a unit factors as itself
+  category: Scope
+  role: test
+- id: the-ramified-prime-above-2-factors-as-itself
+  expr: [FactorInteger, [Complex, 1, 1]]
+  expected: [List, [Tuple, [Complex, 1, 1], 1]]
+  caption: the ramified prime above 2 factors as itself
+  category: Scope
+  role: test
+- id: a-prime-above-5-factors-as-itself
+  expr: [FactorInteger, [Complex, 2, 1]]
+  expected: [List, [Tuple, [Complex, 2, 1], 1]]
+  caption: a prime above 5 factors as itself
+  category: Scope
+  role: test
+- id: a-composite-of-norm-25-2-i-2
+  expr: [FactorInteger, [Complex, 3, 4]]
+  expected: [List, [Tuple, [Complex, 2, 1], 2]]
+  caption: a composite of norm 25, $(2+i)^2$
+  category: Scope
+  role: test
+- id: a-composite-of-norm-25-the-conjugate-family
+  expr: [FactorInteger, [Complex, 4, 3]]
+  expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 2]]
+  caption: a composite of norm 25, the conjugate family
+  category: Scope
+  role: test
+- id: an-associate-carries-its-normalising-unit-in
+  expr: [FactorInteger, [Complex, -3, -4]]
+  expected: [List, [Tuple, -1, 1], [Tuple, [Complex, 2, 1], 2]]
+  caption: an associate carries its normalising unit in front
+  category: Scope
+  role: test
+- id: a-composite-with-a-real-and-a-gaussian-factor
+  expr: [FactorInteger, [Complex, 6, 8]]
+  expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 1], 2], [Tuple, [Complex, 2, 1], 2]]
+  caption: a composite with a real and a Gaussian factor
+  category: Scope
+  role: test
+- id: a-large-norm-composite
+  expr: [FactorInteger, [Complex, 123, 456]]
+  expected: [List, [Tuple, [Complex, 1, 2], 1], [Tuple, 3, 1], [Tuple, [Complex, 69, 14], 1]]
+  caption: a large-norm composite
+  category: Scope
+  role: test
+- id: an-associate-carries-its-unit-times-i
+  expr: [FactorInteger, [Complex, 4, -3]]
+  expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 2, 1], 2]]
+  caption: an associate carries its unit, times $-i$
+  category: Scope
+  role: test
+- id: a-prime-above-13-factors-as-itself
+  expr: [FactorInteger, [Complex, 3, 2]]
+  expected: [List, [Tuple, [Complex, 3, 2], 1]]
+  caption: a prime above 13 factors as itself
+  category: Scope
+  role: test
+- id: a-real-prime-s-associate-by-the-unit-i-factors
+  expr: [FactorInteger, [Complex, 0, 7]]
+  expected: [List, [Tuple, [Complex, 0, 1], 1], [Tuple, 7, 1]]
+  caption: a real prime's associate by the unit $i$ factors as itself
+  category: Scope
+  role: test
+- id: a-negative-real-prime-complex-argument-form
+  expr: [FactorInteger, -7]
+  expected: [List, [Tuple, -1, 1], [Tuple, 7, 1]]
+  caption: a negative real prime, complex-argument form
+  category: Scope
+  role: test
+- id: a-composite-past-2-53-through-its-norm
+  expr: [FactorInteger, [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }]]
+  expected:
+    [
+      List,
+      [Tuple, [Complex, 0, 1], 1],
+      [Tuple, [Complex, 1, 1], 1],
+      [Tuple, [Complex, 2, 1], 2],
+      [Tuple, [Complex, 14, 1], 1],
+      [Tuple, [Complex, 2051, 260], 1],
+      [Tuple, [Complex, 3540, 4951], 1],
+      [Tuple, [Complex, 15605, 48328], 1],
+      [Tuple, [Complex, 1306794, 882271], 1],
+    ]
+  caption: a composite past $2^{53}$ through its norm
+  category: Scope
+  role: test
+- id: 7-3-mod-4-factors-as-itself-in-z-i
+  expr: [FactorInteger, 7, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, 7, 1]]
+  caption: 7, 3 mod 4, factors as itself in $\mathbb{Z}[i]$
+  category: Scope
+  role: test
+- id: a-negative-prime-3-mod-4
+  expr: [FactorInteger, -7, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, -1, 1], [Tuple, 7, 1]]
+  caption: a negative prime, 3 mod 4
+  category: Scope
+  role: test
+- id: 13-1-mod-4-splits-into-two-gaussian-primes
+  expr: [FactorInteger, 13, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 2, 3], 1], [Tuple, [Complex, 3, 2], 1]]
+  caption: 13, 1 mod 4, splits into two Gaussian primes
+  category: Scope
+  role: test
+- id: a-real-composite-5-squared-factors-through-its
+  expr: [FactorInteger, 25, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, -1, 1], [Tuple, [Complex, 1, 2], 2], [Tuple, [Complex, 2, 1], 2]]
+  caption: a real composite, 5 squared, factors through its Gaussian primes
+  category: Scope
+  role: test
+- id: a-negative-real-composite
+  expr: [FactorInteger, -15, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, [Complex, 0, 1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1], [Tuple, 3, 1]]
+  caption: a negative real composite
+  category: Scope
+  role: test
+- id: 19-3-mod-4-factors-as-itself
+  expr: [FactorInteger, 19, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, 19, 1]]
+  caption: 19, 3 mod 4, factors as itself
+  category: Scope
+  role: test
+- id: 2-ramifies-as-i-1-i-2
+  expr: [FactorInteger, 2, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 1], 2]]
+  caption: 2 ramifies as $-i(1+i)^2$
+  category: Scope
+  role: test
+- id: 4-factors-through-the-ramified-prime
+  expr: [FactorInteger, 4, [KeyValuePair, GaussianIntegers, True]]
+  expected: [List, [Tuple, -1, 1], [Tuple, [Complex, 1, 1], 4]]
+  caption: 4 factors through the ramified prime
+  category: Scope
+  role: test

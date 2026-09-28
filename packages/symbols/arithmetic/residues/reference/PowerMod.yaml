@@ -39,6 +39,14 @@ names:
   wolframIdentity: true
 bindings:
   - origin: mapped
+    form: wolfram
+    template: PowerMod[$1, $2, $3]
+    arity: 3
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+    note: For a negative exponent and a Gaussian modulus m, Wolfram checks invertibility of a mod N(m) (a rational integer) rather than mod m itself, so it occasionally declines a case ours answers — e.g. PowerMod[11 - 7I, -4, 7 + 4I] errors since 11 - 7i shares a factor with N(7 + 4i) = 65, though gcd(11 - 7i, 7 + 4i) = 1.
+  - origin: mapped
     form: sage
     template: power_mod($1, $2, $3)
     arity: 3

@@ -326,3 +326,264 @@ a-non-integer-stays-unevaluated:
     tex:
       in: \text{Divisors}[5,\text{GaussianIntegers}\to \text{True}]
       out: \{1,1+2 i,2+i,5\}
+a-unit-s-only-divisor-is-1-its-own-normalisation:
+  epsil:
+    in: Divisors(i)
+    out: "[1]"
+  tex:
+    in: \mathrm{Divisors}(i)
+    out: \bigl\lbrack1\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[0, 1]]
+  wolfram:
+    in: Divisors[Complex[0, 1]]
+    out: "{1}"
+    tex:
+      in: \text{Divisors}[i]
+      out: \{1\}
+  sage:
+    in: divisors((0 + 1*I))
+a-gaussian-prime-s-only-divisors-are-1-and:
+  epsil:
+    in: Divisors(1 + i)
+    out: "[1, 1 + i]"
+  tex:
+    in: \mathrm{Divisors}(1+i)
+    out: \bigl\lbrack1, 1+i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[1, 1]]
+  wolfram:
+    in: Divisors[Complex[1, 1]]
+    out: "{1, 1 + I}"
+    tex:
+      in: \text{Divisors}[1+i]
+      out: \{1,1+i\}
+  sage:
+    in: divisors((1 + 1*I))
+a-prime-above-5:
+  epsil:
+    in: Divisors(2 + i)
+    out: "[1, 2 + i]"
+  tex:
+    in: \mathrm{Divisors}(2+i)
+    out: \bigl\lbrack1, 2+i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[2, 1]]
+  wolfram:
+    in: Divisors[Complex[2, 1]]
+    out: "{1, 2 + I}"
+    tex:
+      in: \text{Divisors}[2+i]
+      out: \{1,2+i\}
+  sage:
+    in: divisors((2 + 1*I))
+a-composite-of-norm-25-2-i-2:
+  epsil:
+    in: Divisors(3 + 4i)
+    out: "[1, 2 + i, 3 + 4i]"
+  tex:
+    in: \mathrm{Divisors}(3+4i)
+    out: \bigl\lbrack1, 2+i, 3+4i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[3, 4]]
+  wolfram:
+    in: Divisors[Complex[3, 4]]
+    out: "{1, 2 + I, 3 + 4*I}"
+    tex:
+      in: \text{Divisors}[3+4 i]
+      out: \{1,2+i,3+4 i\}
+  sage:
+    in: divisors((3 + 4*I))
+a-composite-with-a-real-and-a-gaussian-factor:
+  epsil:
+    in: Divisors(6 + 8i)
+    out: "[1, 1 + i, 1 + 3i, 2, 2 + i, 3 + 4i, 4 + 2i, 6 + 8i, 7 + i]"
+  tex:
+    in: \mathrm{Divisors}(6+8i)
+    out: \bigl\lbrack1, 1+i, 1+3i, 2, 2+i, 3+4i, 4+2i, 6+8i, 7+i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[6, 8]]
+  wolfram:
+    in: Divisors[Complex[6, 8]]
+    out: "{1, 1 + I, 1 + 3*I, 2, 2 + I, 3 + 4*I, 4 + 2*I, 6 + 8*I, 7 + I}"
+    tex:
+      in: \text{Divisors}[6+8 i]
+      out: \{1,1+i,1+3 i,2,2+i,3+4 i,4+2 i,6+8 i,7+i\}
+  sage:
+    in: divisors((6 + 8*I))
+a-prime-above-13:
+  epsil:
+    in: Divisors(3 + 2i)
+    out: "[1, 3 + 2i]"
+  tex:
+    in: \mathrm{Divisors}(3+2i)
+    out: \bigl\lbrack1, 3+2i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[3, 2]]
+  wolfram:
+    in: Divisors[Complex[3, 2]]
+    out: "{1, 3 + 2*I}"
+    tex:
+      in: \text{Divisors}[3+2 i]
+      out: \{1,3+2 i\}
+  sage:
+    in: divisors((3 + 2*I))
+an-associate-has-the-same-divisors-up-to-that:
+  epsil:
+    in: Divisors(-3 - 4i)
+    out: "[1, 2 + i, 3 + 4i]"
+  tex:
+    in: \mathrm{Divisors}(-3-4i)
+    out: \bigl\lbrack1, 2+i, 3+4i\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[-3, -4]]
+  wolfram:
+    in: Divisors[Complex[-3, -4]]
+    out: "{1, 2 + I, 3 + 4*I}"
+    tex:
+      in: \text{Divisors}[-3-4 i]
+      out: \{1,2+i,3+4 i\}
+  sage:
+    in: divisors((-3 + -4*I))
+a-real-prime-s-associate-by-the-unit-i:
+  epsil:
+    in: Divisors(7i)
+    out: "[1, 7]"
+  tex:
+    in: \mathrm{Divisors}(7i)
+    out: \bigl\lbrack1, 7\bigr\rbrack
+  fullform:
+    in: Divisors[Complex[0, 7]]
+  wolfram:
+    in: Divisors[Complex[0, 7]]
+    out: "{1, 7}"
+    tex:
+      in: \text{Divisors}[7 i]
+      out: \{1,7\}
+  sage:
+    in: divisors((0 + 7*I))
+a-negative-real-prime-complex-argument-form:
+  epsil:
+    in: Divisors(-7)
+    out: "[1, 7]"
+  tex:
+    in: \mathrm{Divisors}(-7)
+    out: \bigl\lbrack1, 7\bigr\rbrack
+  fullform:
+    in: Divisors[-7]
+  wolfram:
+    in: Divisors[-7]
+    out: "{1, 7}"
+    tex:
+      in: \text{Divisors}[-7]
+      out: \{1,7\}
+  sage:
+    in: divisors(-7)
+7-3-mod-4-has-the-same-divisors-as-in-z:
+  epsil:
+    in: Divisors(7, GaussianIntegers -> True)
+    out: "[1, 7]"
+  tex:
+    in: \mathrm{Divisors}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 7\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 7\bigr\rbrack
+  fullform:
+    in: Divisors[7, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[7, Rule[GaussianIntegers, True]]
+    out: "{1, 7}"
+    tex:
+      in: \text{Divisors}[7,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,7\}
+13-1-mod-4-gains-gaussian-divisors:
+  epsil:
+    in: Divisors(13, GaussianIntegers -> True)
+    out: "[1, 2 + 3i, 3 + 2i, 13]"
+  tex:
+    in: \mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+  fullform:
+    in: Divisors[13, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[13, Rule[GaussianIntegers, True]]
+    out: "{1, 2 + 3*I, 3 + 2*I, 13}"
+    tex:
+      in: \text{Divisors}[13,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,2+3 i,3+2 i,13\}
+a-real-composite-5-squared:
+  epsil:
+    in: Divisors(25, GaussianIntegers -> True)
+    out: "[1, 1 + 2i, 2 + i, 3 + 4i, 4 + 3i, 5, 5 + 10i, 10 + 5i, 25]"
+  tex:
+    in: \mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 1+2i, 2+i, 3+4i, 4+3i, 5, 5+10i, 10+5i, 25\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 1+2i, 2+i, 3+4i, 4+3i, 5, 5+10i, 10+5i, 25\bigr\rbrack
+  fullform:
+    in: Divisors[25, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[25, Rule[GaussianIntegers, True]]
+    out: "{1, 1 + 2*I, 2 + I, 3 + 4*I, 4 + 3*I, 5, 5 + 10*I, 10 + 5*I, 25}"
+    tex:
+      in: \text{Divisors}[25,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,1+2 i,2+i,3+4 i,4+3 i,5,5+10 i,10+5 i,25\}
+2-ramifies-divisors-run-through-1-i:
+  epsil:
+    in: Divisors(2, GaussianIntegers -> True)
+    out: "[1, 1 + i, 2]"
+  tex:
+    in: \mathrm{Divisors}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 1+i, 2\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 1+i, 2\bigr\rbrack
+  fullform:
+    in: Divisors[2, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[2, Rule[GaussianIntegers, True]]
+    out: "{1, 1 + I, 2}"
+    tex:
+      in: \text{Divisors}[2,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,1+i,2\}
+19-3-mod-4-has-the-same-divisors-as-in-z:
+  epsil:
+    in: Divisors(19, GaussianIntegers -> True)
+    out: "[1, 19]"
+  tex:
+    in: \mathrm{Divisors}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 19\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 19\bigr\rbrack
+  fullform:
+    in: Divisors[19, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[19, Rule[GaussianIntegers, True]]
+    out: "{1, 19}"
+    tex:
+      in: \text{Divisors}[19,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,19\}
+a-negative-real-composite:
+  epsil:
+    in: Divisors(-15, GaussianIntegers -> True)
+    out: "[1, 1 + 2i, 2 + i, 3, 3 + 6i, 5, 6 + 3i, 15]"
+  tex:
+    in: \mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
+  fullform:
+    in: Divisors[-15, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[-15, Rule[GaussianIntegers, True]]
+    out: "{1, 1 + 2*I, 2 + I, 3, 3 + 6*I, 5, 6 + 3*I, 15}"
+    tex:
+      in: \text{Divisors}[-15,\text{GaussianIntegers}\to \text{True}]
+      out: \{1,1+2 i,2+i,3,3+6 i,5,6+3 i,15\}

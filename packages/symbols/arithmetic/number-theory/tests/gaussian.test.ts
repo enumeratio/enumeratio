@@ -1,48 +1,17 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 import { gaussianRoots } from "../src/gaussian-roots.ts";
-import { add, equal, extendedGcd, type Gaussian, mod, mul, norm, ONE, powerMod, powerModRaw } from "../src/gaussian.ts";
-import { type GoldenCase, ours } from "./gaussian-cases.ts";
+import { type Gaussian, norm, mul, powerModRaw } from "../src/gaussian.ts";
 
-// Pinned against a Wolfram kernel over a seeded random corpus. Regenerate with
-// `node scripts/collect-gaussian-golden.ts` (requires wolframscript on PATH).
-const golden: readonly GoldenCase[] = JSON.parse(
-  readFileSync(fileURLToPath(new URL("./gaussian.golden.json", import.meta.url)), "utf8"),
-);
-
-const read = (v: GoldenCase["args"][number]): Gaussian =>
-  typeof v === "object" ? [BigInt(v[0]), BigInt(v[1])] : [BigInt(v), 0n];
-
-/**
- * Where we deliberately differ. Bézout coefficients are not unique, and in a handful of runs
- * Wolfram picks another pair than its own Euclid would suggest; ours still satisfy s·a + t·b = g.
- * And Wolfram's PowerMod refuses a negative exponent unless a is a unit modulo the NORM of m,
- * not m itself, so it leaves some invertible cases unevaluated that we answer.
- */
-function divergence(c: GoldenCase): boolean {
-  if (c.op === "ExtendedGCD") {
-    const [a, b] = c.args.map(read) as [Gaussian, Gaussian];
-    const [g, s, t] = extendedGcd(a, b);
-    expect(equal(add(mul(s, a), mul(t, b)), g), JSON.stringify(c.args)).toBe(true);
-    return JSON.stringify(ours(c)).startsWith(`[${JSON.stringify((c.wolfram as unknown[])[0])},`);
-  }
-  if (c.op === "PowerMod" && c.wolfram === null && BigInt(c.args[1] as number) < 0n) {
-    const [z, , m] = c.args.map(read) as [Gaussian, Gaussian, Gaussian];
-    const e = BigInt(c.args[1] as number);
-    const x = powerMod(z, e, m);
-    return x !== undefined && equal(mod(mul(x, powerMod(z, -e, m)!), m)!, ONE);
-  }
-  return false;
-}
-
-test("the Gaussian kernels match the Wolfram kernel", () => {
-  const differing = golden.filter((c) => JSON.stringify(ours(c)) !== JSON.stringify(c.wolfram));
-  const unexplained = differing.filter((c) => !divergence(c));
-  expect(unexplained.map((c) => `${c.op}${JSON.stringify(c.args)}`)).toEqual([]);
-  // The corpus is large enough that the documented divergences stay a sliver of it.
-  expect(differing.length).toBeLessThan(golden.length / 200);
-});
+// The Wolfram-kernel golden this file used to check the arithmetic kernels against
+// (Mod/Quotient/GCD/LCM/ExtendedGCD/ModularInverse/PowerMod, plus IsPrime/FactorInteger/
+// Divisors with GaussianIntegers -> True) is gone: every one of those heads now carries a
+// verified `wolfram` binding, and the grid is sampled as `role: test` examples on each
+// head's own record (<Head>.examples.yaml), scanned the same way `oracle-scan.ts` scans
+// everything else. The handful of genuine conventions the golden's `divergence()` used to
+// carry by hand -- ExtendedGCD's non-unique Bezout coefficients and its shape (flat Tuple vs
+// Wolfram's nested pair), and PowerMod's negative-exponent invertibility check against
+// N(m) rather than m for a Gaussian modulus -- are now classified on the disagreeing rows in
+// each head's <Head>.implementations.yaml instead.
 
 test("Gaussian roots agree with a scan of ℤ[i]/(m)", () => {
   // x ≡ y (mod m) iff (x − y)·m̄ ≡ 0 componentwise mod N(m): a canonical key per class.

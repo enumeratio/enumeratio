@@ -587,3 +587,587 @@ symbolic-arguments-stay-unevaluated:
   sage:
     in: gcd(SR.var("x"), SR.var("y"))
     out: True
+gcd-with-a-unit-is-always-1:
+  epsil:
+    in: GCD(3 + 4i, 1)
+    out: "1"
+  tex:
+    in: \gcd(3+4i, 1)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 4], 1]
+  wolfram:
+    in: GCD[Complex[3, 4], 1]
+    out: "1"
+    tex:
+      in: \gcd (3+4 i,1)
+      out: "1"
+  sympy:
+    in: gcd((3 + 4*I), 1)
+  sage:
+    in: gcd((3 + 4*I), 1)
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(1))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(1))
+gcd-with-i-a-unit-is-1:
+  epsil:
+    in: GCD(3 + 4i, i)
+    out: "1"
+  tex:
+    in: \gcd(3+4i, i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 4], Complex[0, 1]]
+  wolfram:
+    in: GCD[Complex[3, 4], Complex[0, 1]]
+    out: "1"
+    tex:
+      in: \gcd (3+4 i,i)
+      out: "1"
+  sympy:
+    in: gcd((3 + 4*I), (0 + 1*I))
+  sage:
+    in: gcd((3 + 4*I), (0 + 1*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(0, 1)))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(0, 1)))
+gcd-with-0-is-the-other-argument-normalised:
+  epsil:
+    in: GCD(0, -4 + 3i)
+    out: 3 + 4i
+  tex:
+    in: \gcd(0, -4+3i)
+    out: 3+4i
+  fullform:
+    in: GCD[0, Complex[-4, 3]]
+  wolfram:
+    in: GCD[0, Complex[-4, 3]]
+    out: 3 + 4*I
+    tex:
+      in: \gcd (0,-4+3 i)
+      out: 3+4 i
+  sympy:
+    in: gcd(0, (-4 + 3*I))
+  sage:
+    in: gcd(0, (-4 + 3*I))
+  oscar:
+    in: gcd(ZZ(0), ZZ(complex(-4, 3)))
+  julia:
+    in: gcd(ZZ(0), ZZ(complex(-4, 3)))
+gcd-of-0-and-0-is-0:
+  epsil:
+    in: GCD(0, 0)
+    out: "0"
+  tex:
+    in: \gcd(0, 0)
+    out: "0"
+  fullform:
+    in: GCD[0, 0]
+  wolfram:
+    in: GCD[0, 0]
+    out: "0"
+    tex:
+      in: \gcd (0,0)
+      out: "0"
+  sympy:
+    in: gcd(0, 0)
+  sage:
+    in: gcd(0, 0)
+  oscar:
+    in: gcd(ZZ(0), ZZ(0))
+  julia:
+    in: gcd(ZZ(0), ZZ(0))
+  mathlib4:
+    in: (Int.gcd 0 0)
+  rust:
+    in: gcd(n(0), n(0))
+two-gaussian-primes-above-5-are-coprime:
+  epsil:
+    in: GCD(2 + i, 2 - i)
+    out: "1"
+  tex:
+    in: \gcd(2+i, 2-i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[2, 1], Complex[2, -1]]
+  wolfram:
+    in: GCD[Complex[2, 1], Complex[2, -1]]
+    out: "1"
+    tex:
+      in: \gcd (2+i,2-i)
+      out: "1"
+  sympy:
+    in: gcd((2 + 1*I), (2 + -1*I))
+  sage:
+    in: gcd((2 + 1*I), (2 + -1*I))
+  oscar:
+    in: gcd(ZZ(complex(2, 1)), ZZ(complex(2, -1)))
+  julia:
+    in: gcd(ZZ(complex(2, 1)), ZZ(complex(2, -1)))
+a-gaussian-prime-and-a-real-prime-3-mod-4-are:
+  epsil:
+    in: GCD(2 + i, 3)
+    out: "1"
+  tex:
+    in: \gcd(2+i, 3)
+    out: "1"
+  fullform:
+    in: GCD[Complex[2, 1], 3]
+  wolfram:
+    in: GCD[Complex[2, 1], 3]
+    out: "1"
+    tex:
+      in: \gcd (2+i,3)
+      out: "1"
+  sympy:
+    in: gcd((2 + 1*I), 3)
+  sage:
+    in: gcd((2 + 1*I), 3)
+  oscar:
+    in: gcd(ZZ(complex(2, 1)), ZZ(3))
+  julia:
+    in: gcd(ZZ(complex(2, 1)), ZZ(3))
+gcd-recovers-a-shared-prime-norm-5:
+  epsil:
+    in: GCD(4 + 2i, 3 + 4i)
+    out: 2 + i
+  tex:
+    in: \gcd(4+2i, 3+4i)
+    out: 2+i
+  fullform:
+    in: GCD[Complex[4, 2], Complex[3, 4]]
+  wolfram:
+    in: GCD[Complex[4, 2], Complex[3, 4]]
+    out: 2 + I
+    tex:
+      in: \gcd (4+2 i,3+4 i)
+      out: 2+i
+  sympy:
+    in: gcd((4 + 2*I), (3 + 4*I))
+  sage:
+    in: gcd((4 + 2*I), (3 + 4*I))
+  oscar:
+    in: gcd(ZZ(complex(4, 2)), ZZ(complex(3, 4)))
+  julia:
+    in: gcd(ZZ(complex(4, 2)), ZZ(complex(3, 4)))
+an-associate-pair-has-gcd-equal-to-their-common:
+  epsil:
+    in: GCD(3 + 4i, -4 + 3i)
+    out: 3 + 4i
+  tex:
+    in: \gcd(3+4i, -4+3i)
+    out: 3+4i
+  fullform:
+    in: GCD[Complex[3, 4], Complex[-4, 3]]
+  wolfram:
+    in: GCD[Complex[3, 4], Complex[-4, 3]]
+    out: 3 + 4*I
+    tex:
+      in: \gcd (3+4 i,-4+3 i)
+      out: 3+4 i
+  sympy:
+    in: gcd((3 + 4*I), (-4 + 3*I))
+  sage:
+    in: gcd((3 + 4*I), (-4 + 3*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(-4, 3)))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(-4, 3)))
+another-associate-pair-by-1:
+  epsil:
+    in: GCD(3 + 4i, -3 - 4i)
+    out: 3 + 4i
+  tex:
+    in: \gcd(3+4i, -3-4i)
+    out: 3+4i
+  fullform:
+    in: GCD[Complex[3, 4], Complex[-3, -4]]
+  wolfram:
+    in: GCD[Complex[3, 4], Complex[-3, -4]]
+    out: 3 + 4*I
+    tex:
+      in: \gcd (3+4 i,-3-4 i)
+      out: 3+4 i
+  sympy:
+    in: gcd((3 + 4*I), (-3 + -4*I))
+  sage:
+    in: gcd((3 + 4*I), (-3 + -4*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(-3, -4)))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(-3, -4)))
+two-unrelated-composites-of-norm-25-share-no:
+  epsil:
+    in: GCD(3 + 4i, 4 + 3i)
+    out: "1"
+  tex:
+    in: \gcd(3+4i, 4+3i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 4], Complex[4, 3]]
+  wolfram:
+    in: GCD[Complex[3, 4], Complex[4, 3]]
+    out: "1"
+    tex:
+      in: \gcd (3+4 i,4+3 i)
+      out: "1"
+  sympy:
+    in: gcd((3 + 4*I), (4 + 3*I))
+  sage:
+    in: gcd((3 + 4*I), (4 + 3*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(4, 3)))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(4, 3)))
+gcd-with-a-negative-real-prime:
+  epsil:
+    in: GCD(3 + 4i, -7)
+    out: "1"
+  tex:
+    in: \gcd(3+4i, -7)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 4], -7]
+  wolfram:
+    in: GCD[Complex[3, 4], -7]
+    out: "1"
+    tex:
+      in: \gcd (3+4 i,-7)
+      out: "1"
+  sympy:
+    in: gcd((3 + 4*I), -7)
+  sage:
+    in: gcd((3 + 4*I), -7)
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(-7))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(-7))
+gcd-of-two-large-norm-gaussians:
+  epsil:
+    in: GCD(123 + 456i, 1_000 + i)
+    out: "1"
+  tex:
+    in: \gcd(123+456i, 1\,000+i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[123, 456], Complex[1000, 1]]
+  wolfram:
+    in: GCD[Complex[123, 456], Complex[1000, 1]]
+    out: "1"
+    tex:
+      in: \gcd (123+456 i,1000+i)
+      out: "1"
+  sympy:
+    in: gcd((123 + 456*I), (1000 + 1*I))
+  sage:
+    in: gcd((123 + 456*I), (1000 + 1*I))
+  oscar:
+    in: gcd(ZZ(complex(123, 456)), ZZ(complex(1000, 1)))
+  julia:
+    in: gcd(ZZ(complex(123, 456)), ZZ(complex(1000, 1)))
+gcd-past-2-53-in-both-parts:
+  epsil:
+    in: GCD(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)
+    out: "1"
+  tex:
+    in: \gcd(100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i, 4+i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    back: [GCD, [Complex, 100000000000000000000, 9007199254740992], [Complex, 4, 1]]
+  wolfram:
+    in: GCD[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    out: "1"
+    tex:
+      in: \gcd (100000000000000000001+9007199254740993 i,4+i)
+      out: "1"
+  sympy:
+    in: gcd((100000000000000000001 + 9007199254740993*I), (4 + 1*I))
+  sage:
+    in: gcd((100000000000000000001 + 9007199254740993*I), (4 + 1*I))
+  oscar:
+    in: gcd(ZZ(complex(100000000000000000001, 9007199254740993)), ZZ(complex(4, 1)))
+  julia:
+    in: gcd(ZZ(complex(100000000000000000001, 9007199254740993)), ZZ(complex(4, 1)))
+a-real-split-prime-and-its-gaussian-factor:
+  epsil:
+    in: GCD(5, 2 + i)
+    out: 2 + i
+  tex:
+    in: \gcd(5, 2+i)
+    out: 2+i
+  fullform:
+    in: GCD[5, Complex[2, 1]]
+  wolfram:
+    in: GCD[5, Complex[2, 1]]
+    out: 2 + I
+    tex:
+      in: \gcd (5,2+i)
+      out: 2+i
+  sympy:
+    in: gcd(5, (2 + 1*I))
+  sage:
+    in: gcd(5, (2 + 1*I))
+  oscar:
+    in: gcd(ZZ(5), ZZ(complex(2, 1)))
+  julia:
+    in: gcd(ZZ(5), ZZ(complex(2, 1)))
+gcd-of-two-real-composites-plain-integer-case:
+  epsil:
+    in: GCD(4, 9)
+    out: "1"
+  tex:
+    in: \gcd(4, 9)
+    out: "1"
+  fullform:
+    in: GCD[4, 9]
+  wolfram:
+    in: GCD[4, 9]
+    out: "1"
+    tex:
+      in: \gcd (4,9)
+      out: "1"
+  sympy:
+    in: gcd(4, 9)
+  sage:
+    in: gcd(4, 9)
+  oscar:
+    in: gcd(ZZ(4), ZZ(9))
+  julia:
+    in: gcd(ZZ(4), ZZ(9))
+  mathlib4:
+    in: (Int.gcd 4 9)
+  rust:
+    in: gcd(n(4), n(9))
+gcd-with-a-negative-real-composite:
+  epsil:
+    in: GCD(-15, 5 + 5i)
+    out: "5"
+  tex:
+    in: \gcd(-15, 5+5i)
+    out: "5"
+  fullform:
+    in: GCD[-15, Complex[5, 5]]
+  wolfram:
+    in: GCD[-15, Complex[5, 5]]
+    out: "5"
+    tex:
+      in: \gcd (-15,5+5 i)
+      out: "5"
+  sympy:
+    in: gcd(-15, (5 + 5*I))
+  sage:
+    in: gcd(-15, (5 + 5*I))
+  oscar:
+    in: gcd(ZZ(-15), ZZ(complex(5, 5)))
+  julia:
+    in: gcd(ZZ(-15), ZZ(complex(5, 5)))
+gcd-with-an-associate-times-1:
+  epsil:
+    in: GCD(8 + 2i, -3 - 4i)
+    out: "1"
+  tex:
+    in: \gcd(8+2i, -3-4i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[8, 2], Complex[-3, -4]]
+  wolfram:
+    in: GCD[Complex[8, 2], Complex[-3, -4]]
+    out: "1"
+    tex:
+      in: \gcd (8+2 i,-3-4 i)
+      out: "1"
+  sympy:
+    in: gcd((8 + 2*I), (-3 + -4*I))
+  sage:
+    in: gcd((8 + 2*I), (-3 + -4*I))
+  oscar:
+    in: gcd(ZZ(complex(8, 2)), ZZ(complex(-3, -4)))
+  julia:
+    in: gcd(ZZ(complex(8, 2)), ZZ(complex(-3, -4)))
+gcd-with-an-associate-times-i:
+  epsil:
+    in: GCD(8 + 2i, 4 - 3i)
+    out: "1"
+  tex:
+    in: \gcd(8+2i, 4-3i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[8, 2], Complex[4, -3]]
+  wolfram:
+    in: GCD[Complex[8, 2], Complex[4, -3]]
+    out: "1"
+    tex:
+      in: \gcd (8+2 i,4-3 i)
+      out: "1"
+  sympy:
+    in: gcd((8 + 2*I), (4 + -3*I))
+  sage:
+    in: gcd((8 + 2*I), (4 + -3*I))
+  oscar:
+    in: gcd(ZZ(complex(8, 2)), ZZ(complex(4, -3)))
+  julia:
+    in: gcd(ZZ(complex(8, 2)), ZZ(complex(4, -3)))
+two-primes-above-13-are-coprime:
+  epsil:
+    in: GCD(3 + 2i, 2 + 3i)
+    out: "1"
+  tex:
+    in: \gcd(3+2i, 2+3i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 2], Complex[2, 3]]
+  wolfram:
+    in: GCD[Complex[3, 2], Complex[2, 3]]
+    out: "1"
+    tex:
+      in: \gcd (3+2 i,2+3 i)
+      out: "1"
+  sympy:
+    in: gcd((3 + 2*I), (2 + 3*I))
+  sage:
+    in: gcd((3 + 2*I), (2 + 3*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 2)), ZZ(complex(2, 3)))
+  julia:
+    in: gcd(ZZ(complex(3, 2)), ZZ(complex(2, 3)))
+gcd-recovers-a-shared-prime-above-13:
+  epsil:
+    in: GCD(6 + 8i, 3 + 2i)
+    out: "1"
+  tex:
+    in: \gcd(6+8i, 3+2i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[6, 8], Complex[3, 2]]
+  wolfram:
+    in: GCD[Complex[6, 8], Complex[3, 2]]
+    out: "1"
+    tex:
+      in: \gcd (6+8 i,3+2 i)
+      out: "1"
+  sympy:
+    in: gcd((6 + 8*I), (3 + 2*I))
+  sage:
+    in: gcd((6 + 8*I), (3 + 2*I))
+  oscar:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(3, 2)))
+  julia:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(3, 2)))
+gcd-with-a-real-prime-s-associate-by-the-unit-i:
+  epsil:
+    in: GCD(3 + 4i, 7i)
+    out: "1"
+  tex:
+    in: \gcd(3+4i, 7i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[3, 4], Complex[0, 7]]
+  wolfram:
+    in: GCD[Complex[3, 4], Complex[0, 7]]
+    out: "1"
+    tex:
+      in: \gcd (3+4 i,7 i)
+      out: "1"
+  sympy:
+    in: gcd((3 + 4*I), (0 + 7*I))
+  sage:
+    in: gcd((3 + 4*I), (0 + 7*I))
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(0, 7)))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(complex(0, 7)))
+gcd-with-a-real-composite-5-squared:
+  epsil:
+    in: GCD(3 + 4i, 25)
+    out: 3 + 4i
+  tex:
+    in: \gcd(3+4i, 25)
+    out: 3+4i
+  fullform:
+    in: GCD[Complex[3, 4], 25]
+  wolfram:
+    in: GCD[Complex[3, 4], 25]
+    out: 3 + 4*I
+    tex:
+      in: \gcd (3+4 i,25)
+      out: 3+4 i
+  sympy:
+    in: gcd((3 + 4*I), 25)
+  sage:
+    in: gcd((3 + 4*I), 25)
+  oscar:
+    in: gcd(ZZ(complex(3, 4)), ZZ(25))
+  julia:
+    in: gcd(ZZ(complex(3, 4)), ZZ(25))
+gcd-with-a-negative-associate:
+  epsil:
+    in: GCD(6 + 8i, -2 - 3i)
+    out: "1"
+  tex:
+    in: \gcd(6+8i, -2-3i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[6, 8], Complex[-2, -3]]
+  wolfram:
+    in: GCD[Complex[6, 8], Complex[-2, -3]]
+    out: "1"
+    tex:
+      in: \gcd (6+8 i,-2-3 i)
+      out: "1"
+  sympy:
+    in: gcd((6 + 8*I), (-2 + -3*I))
+  sage:
+    in: gcd((6 + 8*I), (-2 + -3*I))
+  oscar:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
+  julia:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
+gcd-of-a-large-norm-gaussian-and-a-real-prime-19:
+  epsil:
+    in: GCD(123 + 456i, 19)
+    out: "1"
+  tex:
+    in: \gcd(123+456i, 19)
+    out: "1"
+  fullform:
+    in: GCD[Complex[123, 456], 19]
+  wolfram:
+    in: GCD[Complex[123, 456], 19]
+    out: "1"
+    tex:
+      in: \gcd (123+456 i,19)
+      out: "1"
+  sympy:
+    in: gcd((123 + 456*I), 19)
+  sage:
+    in: gcd((123 + 456*I), 19)
+  oscar:
+    in: gcd(ZZ(complex(123, 456)), ZZ(19))
+  julia:
+    in: gcd(ZZ(complex(123, 456)), ZZ(19))
+gcd-of-two-composites-sharing-the-prime-above-13:
+  epsil:
+    in: GCD(6 + 8i, 9 + 6i)
+    out: "1"
+  tex:
+    in: \gcd(6+8i, 9+6i)
+    out: "1"
+  fullform:
+    in: GCD[Complex[6, 8], Complex[9, 6]]
+  wolfram:
+    in: GCD[Complex[6, 8], Complex[9, 6]]
+    out: "1"
+    tex:
+      in: \gcd (6+8 i,9+6 i)
+      out: "1"
+  sympy:
+    in: gcd((6 + 8*I), (9 + 6*I))
+  sage:
+    in: gcd((6 + 8*I), (9 + 6*I))
+  oscar:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(9, 6)))
+  julia:
+    in: gcd(ZZ(complex(6, 8)), ZZ(complex(9, 6)))

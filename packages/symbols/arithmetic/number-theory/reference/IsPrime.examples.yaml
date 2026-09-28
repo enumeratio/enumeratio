@@ -103,3 +103,135 @@
   expected: True
   category: Scope
   caption: "$-2$ is prime: its associate 2 is"
+- id: a-unit-is-not-prime
+  expr: [IsPrime, 1]
+  expected: False
+  caption: a unit is not prime
+  category: Scope
+  role: test
+- id: i-a-unit-is-not-prime
+  expr: [IsPrime, [Complex, 0, 1]]
+  expected: False
+  caption: $i$, a unit, is not prime
+  category: Scope
+  role: test
+- id: 0-is-not-prime
+  expr: [IsPrime, 0]
+  expected: False
+  caption: 0 is not prime
+  category: Scope
+  role: test
+- id: the-ramified-prime-above-2
+  expr: [IsPrime, [Complex, 1, 1]]
+  expected: True
+  caption: the ramified prime above 2
+  category: Scope
+  role: test
+- id: a-prime-above-5
+  expr: [IsPrime, [Complex, 2, 1]]
+  expected: True
+  caption: a prime above 5
+  category: Scope
+  role: test
+- id: the-other-prime-above-5
+  expr: [IsPrime, [Complex, 2, -1]]
+  expected: True
+  caption: the other prime above 5
+  category: Scope
+  role: test
+- id: a-prime-above-13
+  expr: [IsPrime, [Complex, 3, 2]]
+  expected: True
+  caption: a prime above 13
+  category: Scope
+  role: test
+- id: a-composite-of-norm-25
+  expr: [IsPrime, [Complex, 3, 4]]
+  expected: False
+  caption: a composite of norm 25
+  category: Scope
+  role: test
+- id: an-associate-of-a-composite-is-still-composite
+  expr: [IsPrime, [Complex, -3, -4]]
+  expected: False
+  caption: an associate of a composite is still composite
+  category: Scope
+  role: test
+- id: a-real-prime-s-associate-by-the-unit-i-is-still
+  expr: [IsPrime, [Complex, 0, 7]]
+  expected: True
+  caption: a real prime's associate by the unit $i$ is still prime
+  category: Scope
+  role: test
+- id: a-large-norm-composite
+  expr: [IsPrime, [Complex, 123, 456]]
+  expected: False
+  caption: a large-norm composite
+  category: Scope
+  role: test
+- id: 3-3-mod-4-stays-prime-in-z-i
+  expr: [IsPrime, 3, [KeyValuePair, GaussianIntegers, True]]
+  expected: True
+  caption: 3, 3 mod 4, stays prime in $\mathbb{Z}[i]$
+  category: Scope
+  role: test
+- id: 7-3-mod-4-stays-prime-in-z-i
+  expr: [IsPrime, 7, [KeyValuePair, GaussianIntegers, True]]
+  expected: True
+  caption: 7, 3 mod 4, stays prime in $\mathbb{Z}[i]$
+  category: Scope
+  role: test
+- id: 19-3-mod-4-stays-prime-in-z-i
+  expr: [IsPrime, 19, [KeyValuePair, GaussianIntegers, True]]
+  expected: True
+  caption: 19, 3 mod 4, stays prime in $\mathbb{Z}[i]$
+  category: Scope
+  role: test
+- id: a-negative-prime-3-mod-4-stays-prime
+  expr: [IsPrime, -7, [KeyValuePair, GaussianIntegers, True]]
+  expected: True
+  caption: a negative prime, 3 mod 4, stays prime
+  category: Scope
+  role: test
+- id: 5-1-mod-4-splits-and-is-no-longer-prime
+  expr: [IsPrime, 5, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 5, 1 mod 4, splits and is no longer prime
+  category: Scope
+  role: test
+- id: 13-1-mod-4-splits-and-is-no-longer-prime
+  expr: [IsPrime, 13, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 13, 1 mod 4, splits and is no longer prime
+  category: Scope
+  role: test
+- id: 2-ramifies-and-is-no-longer-prime
+  expr: [IsPrime, 2, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 2 ramifies and is no longer prime
+  category: Scope
+  role: test
+- id: 4-was-never-prime-and-still-isn-t
+  expr: [IsPrime, 4, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 4 was never prime, and still isn't
+  category: Scope
+  role: test
+- id: a-real-composite-5-squared-is-not-prime
+  expr: [IsPrime, 25, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: a real composite, 5 squared, is not prime
+  category: Scope
+  role: test
+- id: 1-is-not-prime-gaussian-or-not
+  expr: [IsPrime, 1, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 1 is not prime, Gaussian or not
+  category: Scope
+  role: test
+- id: 0-is-not-prime-gaussian-or-not
+  expr: [IsPrime, 0, [KeyValuePair, GaussianIntegers, True]]
+  expected: False
+  caption: 0 is not prime, Gaussian or not
+  category: Scope
+  role: test
