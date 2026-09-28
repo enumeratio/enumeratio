@@ -30,9 +30,19 @@ bindings:
     environment: engine
     source: upstream/compute-engine/src/compute-engine/numerics/clausen.ts
   - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: No Clausen head; it's spelled Im/Re PolyLog[n, E^(I θ)] with the branch chosen by n's parity (see this entry's own Which/IsEven reference row), which a single fixed template can't express.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+  - origin: mapped
     form: mpmath
     environment: external
     note: clsin(n, θ) for even n, clcos(n, θ) for odd n. Wolfram has no head; Im/Re PolyLog[n, E^(I θ)] instead.
+    checked:
+      version: 1.3.0
+      on: 2026-09-27
 seeAlso:
   - PolyLog
   - DirichletBeta

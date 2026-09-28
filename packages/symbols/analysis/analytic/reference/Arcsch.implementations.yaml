@@ -55,6 +55,8 @@ as-a-logarithm-arcsch-1-ln-1-sqrt-2:
     out: \ln(1+\sqrt{2})
   fullform:
     in: TrigToExp[ArcCsch[1]]
+  wolfram:
+    in: TrigToExp[ArcCsch[1]]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Arcsch(-x)

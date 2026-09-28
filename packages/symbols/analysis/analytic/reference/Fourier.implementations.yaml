@@ -42,7 +42,7 @@ a-custom-fourierparameters:
     in: \mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
     out: \bigl\lbrack10, -2+2i, -2, -2-2i\bigr\rbrack
   fullform:
-    in: Fourier[List[1, 2, 3, 4], KeyValuePair[FourierParameters, List[1, -1]]]
+    in: Fourier[List[1, 2, 3, 4], Rule[FourierParameters, List[1, -1]]]
   wolfram:
     in: Fourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]
     out: "{10. + 0.*I, -2. + 2.*I, -2. + 0.*I, -2. - 2.*I}"

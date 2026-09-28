@@ -173,7 +173,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "N",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "N",
     elsewhere: ["wolfram", "sympy"],
@@ -2184,7 +2184,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "Primes",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "Primes",
     elsewhere: ["wolfram"],
   },
   {
@@ -5975,6 +5975,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
+    name: "D",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: "D",
+    elsewhere: [],
+  },
+  {
     name: "DedekindEta",
     provenance: "unknown",
     declared: null,
@@ -6189,6 +6196,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "KeyValuePair",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: "Rule",
     elsewhere: [],
   },
   {
@@ -8873,6 +8887,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "ModularTrace",
+    provenance: "unknown",
+    declared: "enumeratio-modular",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "ModularWord",
     provenance: "extension",
     declared: "enumeratio-modular",
@@ -8927,6 +8948,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-analytic",
     wolframAlias: "TrigFactor",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "TrigToExp",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: "TrigToExp",
+    elsewhere: [],
   },
   {
     name: "Fourier",

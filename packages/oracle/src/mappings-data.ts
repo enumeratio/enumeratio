@@ -186,6 +186,22 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "D",
+    arity: 2,
+    emit: {
+      sympy: "diff($1, $2)",
+      sage: "diff($1, $2)",
+    },
+  },
+  {
+    head: "D",
+    arity: 3,
+    emit: {
+      sympy: "diff($1, $2, $3)",
+      sage: "diff($1, $2, $3)",
+    },
+  },
+  {
     head: "Diagram",
     arity: 1,
     emit: {
@@ -223,8 +239,10 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     head: "Element",
     arity: 2,
     emit: {
+      wolfram: "Element[$1, $2]",
       sage: "enumeratio_element($1, $2)",
     },
+    note: "Only a real match for a Wolfram domain symbol as the second operand (`Element[7, Primes]`, kernel-verified True); against a literal list or one of our own collections (a diagram algebra's basis, PolygonalNumbers(k), …) real Element stays unevaluated instead of erroring, so the scan will record those as disagreements rather than a wrong-but-silent answer.",
   },
   {
     head: "Equal",
@@ -400,6 +418,13 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     },
   },
   {
+    head: "IntegerMod",
+    arity: 2,
+    emit: {
+      sage: "Mod($1, $2)",
+    },
+  },
+  {
     head: "IsCentral",
     arity: 2,
     emit: {
@@ -418,6 +443,16 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       mathlib4: "(decide (Nat.Prime $1))",
       rust: "is_prime($1)",
     },
+  },
+  {
+    head: "KeyValuePair",
+    arity: 2,
+    emit: {
+      wolfram: "Rule[$1, $2]",
+      sympy: "($1, $2)",
+      sage: "($1, $2)",
+    },
+    note: "Wolfram's own option-rule head, `key -> value`.",
   },
   {
     head: "LCM",
@@ -566,6 +601,15 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       mathlib4: "($**)",
       rust: "($**)",
     },
+  },
+  {
+    head: "MultiZetaValue",
+    arity: 2,
+    emit: {
+      wolfram: "N[Sum[Sum[n1^(-$1) n2^(-$2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]",
+      mpmath: "nsum(lambda n1: n1**(-$1) * nsum(lambda n2: n2**(-$2), [1, n1 - 1]), [2, inf])",
+    },
+    note: "same defining double sum, nested nsum.",
   },
   {
     head: "N",

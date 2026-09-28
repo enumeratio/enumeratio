@@ -30,6 +30,7 @@ a-rule-inserted-at-the-front-of-an-association:
     out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
   fullform:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]
+    back: [Prepend, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]], [KeyValuePair, 3, d]]
 several-rules-prepended-at-once:
   epsil:
     in: Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])
@@ -39,6 +40,12 @@ several-rules-prepended-at-once:
     out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(4, e), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
   fullform:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
+    back:
+      [
+        Prepend,
+        [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]],
+        [List, [KeyValuePair, 3, d], [KeyValuePair, 4, e]],
+      ]
 prepend-front-of-list:
   epsil:
     in: Prepend([1, 2, 3], 0)

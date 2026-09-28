@@ -136,6 +136,7 @@ last-of-association-is-last-value:
     out: c
   fullform:
     in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+    back: [Last, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b], [KeyValuePair, 3, c]]]
 last-of-empty-association-falls-through:
   epsil:
     in: Last(Association(), 99)

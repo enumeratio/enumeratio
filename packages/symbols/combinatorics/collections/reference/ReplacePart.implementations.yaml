@@ -7,6 +7,7 @@ replaces-a-single-1-based-position:
     out: \bigl\lbrack a, z, c\bigr\rbrack
   fullform:
     in: ReplacePart[List[a, b, c], Rule[2, z]]
+    back: [ReplacePart, [List, a, b, c], [KeyValuePair, 2, z]]
 with-a-negative-position-counts-from-the-end:
   epsil:
     in: ReplacePart([a, b, c], Rule(-1, z))
@@ -16,6 +17,7 @@ with-a-negative-position-counts-from-the-end:
     out: \bigl\lbrack a, b, z\bigr\rbrack
   fullform:
     in: ReplacePart[List[a, b, c], Rule[-1, z]]
+    back: [ReplacePart, [List, a, b, c], [KeyValuePair, -1, z]]
 applies-a-list-of-rules:
   epsil:
     in: ReplacePart([a, b, c], [Rule(1, x), Rule(3, y)])
@@ -25,6 +27,7 @@ applies-a-list-of-rules:
     out: \bigl\lbrack x, b, y\bigr\rbrack
   fullform:
     in: ReplacePart[List[a, b, c], List[Rule[1, x], Rule[3, y]]]
+    back: [ReplacePart, [List, a, b, c], [List, [KeyValuePair, 1, x], [KeyValuePair, 3, y]]]
 with-a-nested-i-j-position-drills-into-a-sublist:
   epsil:
     in: ReplacePart([[a, b], c], Rule([1, 2], z))
@@ -34,3 +37,4 @@ with-a-nested-i-j-position-drills-into-a-sublist:
     out: \bigl\lbrack\bigl\lbrack a, z\bigr\rbrack, c\bigr\rbrack
   fullform:
     in: ReplacePart[List[List[a, b], c], Rule[List[1, 2], z]]
+    back: [ReplacePart, [List, [List, a, b], c], [KeyValuePair, [List, 1, 2], z]]

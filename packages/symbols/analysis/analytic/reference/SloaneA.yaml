@@ -15,6 +15,13 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/sloane-a.ts
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: "No general OEIS-by-id lookup in Wolfram (kernel-verified: SloaneA is an unknown symbol), and each aliased id targets a different head here -- no single fixed template covers A000045's Fibonacci and A000793's Landau's function alike."
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
 seeAlso:
   - Fibonacci
   - BellNumber

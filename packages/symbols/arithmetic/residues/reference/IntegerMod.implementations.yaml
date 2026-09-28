@@ -7,6 +7,8 @@ integermod-10-7:
     out: \mathrm{IntegerMod}(3, 7)
   fullform:
     in: IntegerMod[10, 7]
+  sage:
+    in: Mod(10, 7)
 1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1:
   epsil:
     in: IntegerMod(1 / 3, 7)
@@ -16,6 +18,8 @@ integermod-10-7:
     out: \mathrm{IntegerMod}(5, 7)
   fullform:
     in: IntegerMod[Rational[1, 3], 7]
+  sage:
+    in: Mod((1/3), 7)
 fermat-3-6-equiv-1-pmod-7:
   epsil:
     in: IntegerMod(3, 7) ^ 6
@@ -25,6 +29,8 @@ fermat-3-6-equiv-1-pmod-7:
     out: \mathrm{IntegerMod}(1, 7)
   fullform:
     in: Power[IntegerMod[3, 7], 6]
+  sage:
+    in: ((Mod(3, 7))^6)
 1-over-integermod-3-7:
   epsil:
     in: 1 / IntegerMod(3, 7)
@@ -34,6 +40,8 @@ fermat-3-6-equiv-1-pmod-7:
     out: \mathrm{IntegerMod}(5, 7)
   fullform:
     in: Divide[1, IntegerMod[3, 7]]
+  sage:
+    in: (1 / Mod(3, 7))
 different-moduli-meet-in-z-gcd-4-6:
   epsil:
     in: IntegerMod(2, 4) + IntegerMod(1, 6)
@@ -43,6 +51,8 @@ different-moduli-meet-in-z-gcd-4-6:
     out: \mathrm{IntegerMod}(1, 2)
   fullform:
     in: Plus[IntegerMod[2, 4], IntegerMod[1, 6]]
+  sage:
+    in: (Mod(2, 4) + Mod(1, 6))
 chineseremainder-integermod-2-3-integermod-3-5:
   epsil:
     in: ChineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5))
@@ -70,6 +80,8 @@ multiplicativeorder-integermod-2-7:
     out: \frac{1}{\mathrm{IntegerMod}(2, 4)}
   fullform:
     in: Divide[1, IntegerMod[2, 4]]
+  sage:
+    in: (1 / Mod(2, 4))
 odd-mod-4-and-even-mod-6-at-once-no-such-class:
   epsil:
     in: ChineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))
@@ -88,6 +100,8 @@ integermod-negative-1-7:
     out: \mathrm{IntegerMod}(6, 7)
   fullform:
     in: IntegerMod[-1, 7]
+  sage:
+    in: Mod(-1, 7)
 a-non-unit-denominator-mod-4-stays-unevaluated:
   epsil:
     in: IntegerMod(1 / 2, 4)
@@ -97,6 +111,8 @@ a-non-unit-denominator-mod-4-stays-unevaluated:
     out: \mathrm{IntegerMod}(\frac{1}{2}, 4)
   fullform:
     in: IntegerMod[Rational[1, 2], 4]
+  sage:
+    in: Mod((1/2), 4)
 adding-two-classes-mod-7:
   epsil:
     in: IntegerMod(5, 7) + IntegerMod(4, 7)
@@ -106,6 +122,8 @@ adding-two-classes-mod-7:
     out: \mathrm{IntegerMod}(2, 7)
   fullform:
     in: Plus[IntegerMod[5, 7], IntegerMod[4, 7]]
+  sage:
+    in: (Mod(5, 7) + Mod(4, 7))
 adding-a-plain-integer-to-a-class:
   epsil:
     in: IntegerMod(5, 7) + 3
@@ -115,6 +133,8 @@ adding-a-plain-integer-to-a-class:
     out: \mathrm{IntegerMod}(1, 7)
   fullform:
     in: Plus[IntegerMod[5, 7], 3]
+  sage:
+    in: (Mod(5, 7) + 3)
 subtracting-two-classes-mod-7:
   epsil:
     in: IntegerMod(2, 7) - IntegerMod(5, 7)
@@ -124,6 +144,8 @@ subtracting-two-classes-mod-7:
     out: \mathrm{IntegerMod}(4, 7)
   fullform:
     in: Subtract[IntegerMod[2, 7], IntegerMod[5, 7]]
+  sage:
+    in: (Mod(2, 7) - Mod(5, 7))
 multiplying-two-classes-mod-7:
   epsil:
     in: IntegerMod(3, 7) * IntegerMod(5, 7)
@@ -133,6 +155,8 @@ multiplying-two-classes-mod-7:
     out: \mathrm{IntegerMod}(1, 7)
   fullform:
     in: Times[IntegerMod[3, 7], IntegerMod[5, 7]]
+  sage:
+    in: (Mod(3, 7) * Mod(5, 7))
 power-with-exponent-negative-1-is-the-inverse:
   epsil:
     in: IntegerMod(3, 7) ^ -1
@@ -142,6 +166,8 @@ power-with-exponent-negative-1-is-the-inverse:
     out: \mathrm{IntegerMod}(5, 7)
   fullform:
     in: Power[IntegerMod[3, 7], -1]
+  sage:
+    in: ((Mod(3, 7))^-1)
 negating-a-class-mod-7:
   epsil:
     in: -IntegerMod(3, 7)
@@ -151,6 +177,8 @@ negating-a-class-mod-7:
     out: \mathrm{IntegerMod}(4, 7)
   fullform:
     in: Minus[IntegerMod[3, 7]]
+  sage:
+    in: (-Mod(3, 7))
 power-with-negative-exponent-of-a-non-unit:
   epsil:
     in: IntegerMod(2, 4) ^ -1
@@ -160,6 +188,8 @@ power-with-negative-exponent-of-a-non-unit:
     out: \frac{1}{\mathrm{IntegerMod}(2, 4)}
   fullform:
     in: Power[IntegerMod[2, 4], -1]
+  sage:
+    in: ((Mod(2, 4))^-1)
 chineseremainder-integermod-1-4-integermod-3-6:
   epsil:
     in: ChineseRemainder(IntegerMod(1, 4), IntegerMod(3, 6))

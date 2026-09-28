@@ -22,3 +22,11 @@ seeAlso:
   - Idele
   - AdicNumeral
   - ProfiniteDecomposition
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: No adele/idele or profinite-integer type in Wolfram -- no prior art to map against.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27

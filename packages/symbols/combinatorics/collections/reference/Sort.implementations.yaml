@@ -196,3 +196,4 @@ sort-association-orders-by-value:
     out: \mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))
   fullform:
     in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
+    back: [Sort, [Association, [KeyValuePair, a, 4], [KeyValuePair, b, 1], [KeyValuePair, c, 3]]]

@@ -190,3 +190,4 @@ join-associations-first-seen-order:
     out: \mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
   fullform:
     in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]
+    back: [Join, [Association, [KeyValuePair, a, b]], [Association, [KeyValuePair, c, d], [KeyValuePair, a, f]]]

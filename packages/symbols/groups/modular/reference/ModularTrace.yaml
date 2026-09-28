@@ -1,0 +1,23 @@
+name: ModularTrace
+domain: The modular group
+signature: ModularTrace(matrix)
+summary: The trace $a + d$ of a matrix in $\mathrm{PSL}(2,\mathbb{Z})$, or of the $LR$ word standing for one.
+signatures:
+  - call: ModularTrace(matrix)
+    description: the trace, $a + d$
+    library: enumeratio-modular
+details:
+  - Every head here also accepts a WORD in place of a matrix -- see [[ModularMatrix]]
+  - '`ModularKind` sorts by $|\mathrm{tr}|$ against $2$ off this same value -- elliptic, parabolic, hyperbolic'
+seeAlso:
+  - ModularMatrix
+  - ModularWord
+  - ModularKind
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: A plain matrix's trace is Wolfram's own Tr[{{a,b},{c,d}}], but this head also accepts an LR word directly and a chain of ModularMatrix/ModularSTWord calls -- the same word/matrix duality ModularMatrix's own entry notes Wolfram has no heads for, so the whole head is left unmapped rather than covering only the plain-matrix call shape.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27

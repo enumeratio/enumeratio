@@ -16,6 +16,7 @@ accepts-the-one-argument-rule-keys-values-form:
     out: \mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))
   fullform:
     in: AssociationThread[Rule[List[a, b], List[1, 2]]]
+    back: [AssociationThread, [KeyValuePair, [List, a, b], [List, 1, 2]]]
 length-on-the-result-agrees-with-association:
   epsil:
     in: Length(AssociationThread([a, b, c], [1, 2, 3]))

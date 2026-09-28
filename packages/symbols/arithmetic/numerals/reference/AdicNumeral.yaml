@@ -24,6 +24,13 @@ seeAlso:
   - IntegerDigits
 bindings:
   - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: No p-adic or b-adic numeral type in Wolfram -- no prior art to map against.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+  - origin: mapped
     form: rust
     template: adic($1, $2)
     arity: 2

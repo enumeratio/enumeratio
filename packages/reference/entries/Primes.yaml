@@ -18,3 +18,5 @@ seeAlso:
   - SquareNumbers
   - AbundantNumbers
   - SmoothNumbers
+names:
+  wolframIdentity: true

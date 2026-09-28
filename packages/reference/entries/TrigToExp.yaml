@@ -1,0 +1,19 @@
+name: TrigToExp
+domain: Transformations
+signature: TrigToExp(expr)
+summary: Rewrite every circular or hyperbolic function in `expr` as `Exp` via Euler's formula or its hyperbolic analogue -- the inverse of [[ExpToTrig]].
+signatures:
+  - call: TrigToExp(expr)
+    description: as compute-engine declares it
+seeAlso:
+  - ExpToTrig
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    note: identity rename (see names.wolframIdentity).
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+stub: engine

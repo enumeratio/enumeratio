@@ -42,7 +42,7 @@ a-custom-fourierparameters:
     in: \mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
     out: \bigl\lbrack2.5, -0.5-0.5i, -0.5, -0.5+0.5i\bigr\rbrack
   fullform:
-    in: InverseFourier[List[1, 2, 3, 4], KeyValuePair[FourierParameters, List[1, -1]]]
+    in: InverseFourier[List[1, 2, 3, 4], Rule[FourierParameters, List[1, -1]]]
   wolfram:
     in: InverseFourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]
     out: "{2.5 + 0.*I, -0.5 - 0.5*I, -0.5 + 0.*I, -0.5 + 0.5*I}"

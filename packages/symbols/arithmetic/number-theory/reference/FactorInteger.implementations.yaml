@@ -186,7 +186,7 @@ threads-element-wise-over-a-list-as-wolfram-s:
     in: \mathrm{FactorInteger}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack(-i,1), (1+2i,1), (2+i,1)\bigr\rbrack
   fullform:
-    in: FactorInteger[5, KeyValuePair[GaussianIntegers, True]]
+    in: FactorInteger[5, Rule[GaussianIntegers, True]]
 3-4i-2-i-2:
   epsil:
     in: FactorInteger(3 + 4i)
@@ -302,7 +302,7 @@ rationals-the-denominator-s-primes-get-negative:
     in: \mathrm{FactorInteger}(36, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack(-1,1), (1+i,4), (3,2)\bigr\rbrack
   fullform:
-    in: FactorInteger[36, KeyValuePair[GaussianIntegers, True]]
+    in: FactorInteger[36, Rule[GaussianIntegers, True]]
 listable-threads-over-a-list:
   epsil:
     in: FactorInteger([11, 101, 1_001])

@@ -22,3 +22,18 @@ seeAlso:
   - Mod
   - ChineseRemainder
   - AdicNumeral
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: Wolfram's Mod/PowerMod answer a plain Integer, not a persistent ring element -- the same distinction this head's own details draw against our own [[Mod]]. Nothing in the kernel stays typed the way IntegerMod does.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+  - origin: mapped
+    form: sage
+    template: Mod($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-09-27

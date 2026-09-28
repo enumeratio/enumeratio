@@ -10,7 +10,7 @@ two-weighted-edges:
     in: \mathrm{WeightedAdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack)))
     out: \bigl\lbrack\bigl\lbrack0, 5, 0\bigr\rbrack, \bigl\lbrack5, 0, 7\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack
   fullform:
-    in: WeightedAdjacencyMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], DirectedEdge[2, 3]], KeyValuePair[EdgeWeight, List[5, 7]]]]
+    in: WeightedAdjacencyMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], DirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]
 no-edgeweight-falls-back-to-adjacencymatrix:
   epsil:
     in: WeightedAdjacencyMatrix(Graph([1, 2], [UndirectedEdge(1, 2)]))

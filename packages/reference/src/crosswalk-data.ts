@@ -1483,6 +1483,32 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "D",
+    wolfram: "D",
+    oracle: [
+      {
+        system: "sympy",
+        call: "diff($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "sage",
+        call: "diff($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "sympy",
+        call: "diff($1, $2, $3)",
+        arity: 3,
+      },
+      {
+        system: "sage",
+        call: "diff($1, $2, $3)",
+        arity: 3,
+      },
+    ],
+  },
+  {
     name: "DSolveValue",
     wolfram: "DSolveValue",
   },
@@ -3403,6 +3429,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "IntegerLength",
   },
   {
+    name: "IntegerMod",
+    oracle: [
+      {
+        system: "sage",
+        call: "Mod($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
     name: "IntegerPart",
     wolfram: "IntegerPart",
   },
@@ -3929,6 +3965,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Key",
     wolfram: "Key",
+  },
+  {
+    name: "KeyValuePair",
+    wolfram: "Rule",
   },
   {
     name: "Khinchin",
@@ -4608,6 +4648,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MultiZetaValue",
     fungrimEntries: ["3a5167", "62de01", "856317", "a5e52e", "da71d3", "ef2c71", "ef8b17"],
+    oracle: [
+      {
+        system: "mpmath",
+        call: "nsum(lambda n1: n1**(-$1) * nsum(lambda n2: n2**(-$2), [1, n1 - 1]), [2, inf])",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "Multinomial",
@@ -5120,6 +5167,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Primes",
     fungrimEntries: ["04427b"],
+    wolfram: "Primes",
   },
   {
     name: "PrimitiveRootList",
@@ -6062,6 +6110,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "TrigFactor",
     wolfram: "TrigFactor",
+  },
+  {
+    name: "TrigToExp",
+    wolfram: "TrigToExp",
   },
   {
     name: "True",
