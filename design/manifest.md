@@ -137,7 +137,9 @@ the packages its handlers construct heads from (§5.2), and loading it loads the
 
 ## Components
 
-Generic elements are defined from the manifest's names and parameter names. The Vue and
+Generic elements are defined from the manifest's names and parameter names, on demand:
+`@enumeratio/components` defines the ones a page actually uses, as they appear
+(`defineOnDemand`), and a structural component defines its children's before reading them. The Vue and
 React wrappers stay generated from the element sources at build time (they are already a
 build artifact, not committed); a wrapper per manifest head, made at runtime, with the
 build emitting only its types, is where they go once the elements themselves are

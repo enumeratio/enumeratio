@@ -213,9 +213,17 @@ declare global {
 
 // Every other head the engine knows gets a generic element at its tag, now that the
 // hand-written ones are defined and can keep theirs.
-import { defineGenerics } from "./generic.ts";
-export { defineGeneric, defineGenerics, expressionOf, isExpressive, NotatioGeneric } from "./generic.ts";
-if (typeof customElements !== "undefined") defineGenerics();
+import { defineOnDemand } from "./generic.ts";
+export {
+  defineGeneric,
+  defineGenerics,
+  defineOnDemand,
+  defineUsed,
+  expressionOf,
+  isExpressive,
+  NotatioGeneric,
+} from "./generic.ts";
+if (typeof customElements !== "undefined" && typeof document !== "undefined") defineOnDemand();
 
 // A built component written structurally -- its arguments as children, its options as
 // Wolfram-named attributes -- is lowered into its own attributes as it arrives.
