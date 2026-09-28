@@ -85,18 +85,19 @@ test("stays symbolic under plain evaluate; a float argument evaluates numericall
 });
 
 test("IncompleteEllipticE reduces φ outside [-π/2, π/2] itself, rather than trusting native EllipticE there at complex m (Fungrim c28288)", () => {
-  // Pinned against mpmath's ellipe(0.57 + π, 0.57 + 0.23i) — native EllipticE gets this
-  // wrong (3.18823689387969 vs the correct 3.20276744106921), see elliptic.ts.
+  // Pinned against mpmath's ellipe(0.57 + π, 0.57 + 0.23i). Native EllipticE used to get
+  // this wrong (3.18823689387969 vs the correct 3.20276744106921, see elliptic.ts) --
+  // compute-engine 0.139's own hardening of its Carlson code (cortex-js/compute-engine
+  // #346, design/upstreaming.md §8) fixed this case natively too, so the "native
+  // disagrees" check below no longer holds. Keeping the explicit reduction in
+  // `declareIncompleteE` regardless: it is still correct, and a case where native regresses
+  // again is exactly what this test's own correctness assertions (not the removed one)
+  // would catch.
   const m = ["Complex", 0.57, 0.23] as const;
   const phi = 0.57 + Math.PI;
   const v = ce.box(["IncompleteEllipticE", phi, m]).N();
   expect(v.re).toBeCloseTo(3.20276744106921, 10);
   expect(v.im).toBeCloseTo(-0.246480254230982, 10);
-  // The native call this delegate would otherwise have made disagrees at the precision
-  // this test holds IncompleteEllipticE to — confirming the reduction is doing real work,
-  // not just reproducing what native already gets right.
-  const native = ce.box(["EllipticE", phi, m]).N();
-  expect(Math.abs(native.re - v.re)).toBeGreaterThan(1e-3);
 });
 
 test("quasi-periodicity: E(φ+2π, m) = 4·E(m) + E(φ, m), complex m included", () => {
@@ -139,8 +140,8 @@ test("IncompleteEllipticPi answers at Fungrim 5f84d9's quasi-periodicity, n = m 
   const nm = ["Complex", 1.17, 0.45] as const;
   const phi = ["Add", ["Complex", 1.17, 0.45], ["Multiply", 3, "Pi"]] as const;
   const v = ce.box(["IncompleteEllipticPi", nm, phi, nm]).N();
-  expect(v.re).toBeCloseTo(-0.103480823340677958646514658117, 9);
-  expect(v.im).toBeCloseTo(15.1133814653099445550739326363, 9);
+  expect(v.re).toBeCloseTo(-0.1034808233406779, 9);
+  expect(v.im).toBeCloseTo(15.11338146530994, 9);
 });
 
 test("IncompleteEllipticPi quasi-periodicity: Π(n; φ+2π, m) = 4·Π(n,m) + Π(n; φ, m)", () => {

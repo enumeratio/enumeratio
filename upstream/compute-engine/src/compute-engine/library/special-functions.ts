@@ -1,10 +1,16 @@
 // The special-function heads offered upstream (design/upstreaming.md §10): BarnesG,
 // LogBarnesG, LogGamma, ClausenCl, StieltjesGamma, LerchPhi, HurwitzZeta and the Zeta,
-// PolyGamma, PolyLog and EllipticE widenings. A pull request for a plain record below adds
-// it to compute-engine's own library/special-functions.ts; a widening function is an edit to
+// PolyGamma and PolyLog widenings. A pull request for a plain record below adds it to
+// compute-engine's own library/special-functions.ts; a widening function is an edit to
 // the native definition already there (or, for Zeta/PolyGamma, in library/arithmetic.ts).
+//
+// EllipticE's complex-modulus fix (#346) landed in compute-engine 0.139 and was retired
+// from here. HurwitzZeta/Zeta's own declarations (#340) have NOT been retired despite
+// compute-engine 0.139 shipping the API (`ce.lookupDefinition("HurwitzZeta")` exists, and
+// a concretely complex `Zeta(s)` evaluates): native HurwitzZeta/Zeta answer in doubles
+// only, with no `N(x, d)` arbitrary-precision path, which DirichletBeta/DirichletL and
+// this file's own N() precision tests need -- see zeta-hurwitz.ts's comment.
 import { BigDecimal, type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import type { EvaluateHandler, EvaluateOptions, NativeEvaluate } from "@enumeratio/boxed";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
 import {
@@ -445,9 +451,12 @@ export const hurwitzZetaLibrary: LibraryRecord = {
 export function zetaLibrary(ce: ComputeEngine): LibraryRecord {
   // Capture the native single-argument Riemann zeta before redeclaring, then defer to it
   // for the one-argument case; declaring `Zeta` replaces its whole definition. Native
-  // evaluates real s only, to the engine's precision; a concretely complex s it declines
-  // goes to ζ(s, 1). Real and symbolic s stay native: HurwitzZeta reduces ζ(s, 1) back to
-  // Zeta(s) for those, so routing them there would loop.
+  // evaluates real s to the engine's precision. A concretely complex s: compute-engine
+  // 0.139 (#340) now answers there too, but only in double precision -- ours (routed to
+  // ζ(s, 1)) still carries the engine's own precision under N(x, d), so a complex s
+  // stays ours unconditionally rather than only when native declines (which it no longer
+  // does). Real and symbolic s stay native: HurwitzZeta reduces ζ(s, 1) back to Zeta(s)
+  // for those, so routing them there would loop.
   const nativeZeta: NativeEval = ce.box(["Zeta", 2]).operatorDefinition?.evaluate;
   const zetaCompile = realCompile(2, { js: "__zg", wgsl: "zetaGen" });
   return {
@@ -457,10 +466,11 @@ export function zetaLibrary(ce: ComputeEngine): LibraryRecord {
       broadcastable: true, // preserve native threading over a list of s
       evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
         if (ops.length >= 2) return evaluateZeta(ce, ops, wantsNumber(ops, options));
-        const r = nativeZeta?.(ops, options);
         const s = ops[0];
-        if (!declined(r, "Zeta") || s === undefined || !isFiniteNum(s) || s.im === 0) return r;
-        return evaluateHurwitz(ce, [s, ce.One], wantsNumber(ops, options)) ?? r;
+        if (s !== undefined && isFiniteNum(s) && s.im !== 0) {
+          return evaluateHurwitz(ce, [s, ce.One], wantsNumber(ops, options)) ?? nativeZeta?.(ops, options);
+        }
+        return nativeZeta?.(ops, options);
       },
       compile: (
         args: readonly BoxedExpression[],
@@ -581,53 +591,6 @@ export function polylogOrderLibrary(ce: ComputeEngine): LibraryRecord {
       compile: realCompile(2, { js: "__pl", wgsl: "polyLog" }),
     },
   };
-}
-
-// --- EllipticE, complex modulus ------------------------------------------------------
-// cortex-js/compute-engine#346, offered as PR #348: the complete elliptic integral of the
-// second kind, EllipticE(m), loses precision at a complex modulus (design/upstreaming.md
-// §8). The two-argument incomplete form E(pi/2, m) is exact there, so the fix routes the
-// one-argument reduction through it: E(m) = E(pi/2, m) (DLMF 19.2.7). This wraps the
-// native evaluate rather than declaring a fresh one -- there is no record form for it, so
-// the mutation happens here rather than through a plain `SymbolDefinitions` object.
-
-/** mpmath's `ellipe(0.57 + 0.23j)`, to a few more digits than compute-engine gets right today. */
-const ELLIPTIC_E_REPRO_M: readonly [number, number] = [0.57, 0.23];
-const ELLIPTIC_E_REPRO_ANSWER: readonly [number, number] = [1.3248077726970517, -0.1197294454595116];
-
-export const ellipticEComplexRepro = { m: ELLIPTIC_E_REPRO_M, answer: ELLIPTIC_E_REPRO_ANSWER };
-
-/** A concrete (finite) numeric operand -- as opposed to a symbolic one (NaN re/im). */
-const ellipticEIsFiniteNum = (x: BoxedExpression): boolean => Number.isFinite(x.re) && Number.isFinite(x.im);
-
-/** Should this call produce a number? Either N() asked for one, or the operand is inexact. */
-const ellipticEWantsNumber = (op: BoxedExpression, options: EvaluateOptions): boolean =>
-  (options.numericApproximation ?? false) || (op as Partial<{ isExact: boolean }>).isExact === false;
-
-/** Wraps EllipticE's native evaluate in place; the returned record is bookkeeping only
- * (for `patchSymbols`) -- nothing declares from it. */
-export function ellipticEComplexLibrary(ce: ComputeEngine): LibraryRecord {
-  const definition = ce.lookupDefinition("EllipticE");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return { EllipticE: true }; // not declared at all -- nothing to patch
-
-  const native: NativeEvaluate = operator.evaluate;
-  const halfPi = ce.box(["Divide", "Pi", 2]);
-  const evaluate: EvaluateHandler = (ops, options) => {
-    const [m] = ops;
-    if (
-      ops.length === 1 &&
-      m !== undefined &&
-      ellipticEWantsNumber(m, options) &&
-      ellipticEIsFiniteNum(m) &&
-      m.im !== 0
-    ) {
-      return ce.box(["EllipticE", halfPi, m]).evaluate(options);
-    }
-    return native?.(ops, options);
-  };
-  operator.evaluate = evaluate as NonNullable<typeof operator.evaluate>;
-  return { EllipticE: true };
 }
 
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "../numerics/barnes-g.ts";

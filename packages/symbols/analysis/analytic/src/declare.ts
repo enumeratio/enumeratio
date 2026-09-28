@@ -145,6 +145,9 @@ import { declareNSum } from "./nsum.ts";
  * round to a machine double (or to `ce.precision`, under `N()`).
  */
 export function declareAnalytic(ce: ComputeEngine): void {
+  // HurwitzZeta/Zeta's API (cortex-js/compute-engine#340) landed natively in compute-
+  // engine 0.139; the arbitrary-precision N(x, d) path has not, so zeta-hurwitz still
+  // applies -- see its own comment.
   applyPatch(ce, zetaHurwitz);
   applyPatch(ce, lerchPhiPatch);
   applyPatch(ce, polylogOrder);

@@ -1,16 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
-import { applyPatch, hyperbolicZero } from "@enumeratio/for-compute-engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // Exact values compute-engine leaves symbolic for the hyperbolic functions, though it has
 // them for the circular ones: the values at 0 (and arcosh 1 = 0), as Wolfram gives them.
 //
-// The at-0 table for Sinh/Cosh/Tanh/Sech/Csch/Coth/Arsinh/Artanh moved to
-// @enumeratio/for-compute-engine's hyperbolic-zero patch, offered upstream as
-// cortex-js/compute-engine#341/#342 (design/upstreaming.md §10) -- applied below, in the
-// same spot it used to run in. Arcosh(1) = 0 is a different point and NOT part of that
-// issue, so it stays here, in SPECIAL.
+// The at-0 table for Sinh/Cosh/Tanh/Sech/Csch/Coth/Arsinh/Artanh (cortex-js/compute-engine
+// #341/#342, design/upstreaming.md §10) landed natively in compute-engine 0.139 -- the
+// @enumeratio/for-compute-engine hyperbolic-zero patch that used to apply it here was
+// retired. Arcosh(1) = 0 is a different point and NOT part of that issue, so it stays
+// here, in SPECIAL.
 //
 // The hyperbolic functions of ln q, q a positive rational, are rational in q:
 // sinh(ln q) = (q − 1/q)/2, cosh(ln q) = (q + 1/q)/2 and the rest by division. Wolfram
@@ -48,8 +47,6 @@ const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => 
 };
 
 export function declareHyperbolicExact(ce: ComputeEngine): void {
-  applyPatch(ce, hyperbolicZero);
-
   for (const [head, [at, value]] of Object.entries(SPECIAL)) {
     wrapOperator(
       ce,
