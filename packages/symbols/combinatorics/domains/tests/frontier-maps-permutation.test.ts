@@ -51,7 +51,7 @@ function catalan(n: number): number {
  *  descending by value comparison from the root (always p(1)) until an empty side is found. */
 function bstParentsRef(p: readonly number[]): number[] {
   const n = p.length;
-  const parent = Array.from({ length: n + 1 }, () => 0); // 1-indexed by value
+  const parent = new Array(n + 1).fill(0); // 1-indexed by value
   const root = p[0]!;
   for (let i = 1; i < n; i++) {
     const x = p[i]!;
@@ -153,7 +153,7 @@ const krewerasRef = (p: readonly number[]): number[] => p.map((_, i) => p.indexO
 
 /** w's cycles, as sets of 1-indexed points. */
 function cyclesOf(p: readonly number[]): number[][] {
-  const seen = Array.from({ length: p.length }, () => false);
+  const seen = new Array(p.length).fill(false);
   const cycles: number[][] = [];
   for (let start = 0; start < p.length; start++) {
     if (seen[start]) continue;
@@ -248,8 +248,8 @@ function fromPermutationRef(p: readonly number[]): {
   right: number[];
 } {
   const n = p.length;
-  const left = Array.from({ length: n + 1 }, () => 0);
-  const right = Array.from({ length: n + 1 }, () => 0);
+  const left = new Array(n + 1).fill(0);
+  const right = new Array(n + 1).fill(0);
   const build = (lo: number, hi: number): number => {
     if (lo > hi) return 0;
     let mi = lo;

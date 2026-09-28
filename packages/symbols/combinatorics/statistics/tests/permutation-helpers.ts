@@ -69,7 +69,7 @@ export function denert(p: number[]): number {
 /** Cycle lengths, read by walking orbits with a visited set — the ordinary algorithm, which
  *  is exactly what the expression definition deliberately does NOT do. */
 export function cycleLengths(p: number[]): number[] {
-  const seen = Array.from({ length: p.length }, () => false);
+  const seen = new Array(p.length).fill(false);
   const lengths: number[] = [];
   for (let start = 0; start < p.length; start++) {
     if (seen[start]) continue;
