@@ -25,6 +25,7 @@ import {
   REFERENCE_EXAMPLES_SCHEMA,
   validateSchema,
 } from "@enumeratio/entry/schema";
+import { recordDirs } from "@enumeratio/entry/node";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
@@ -58,37 +59,8 @@ function headName(fileName: string): string {
   return fileName.slice(0, -ENTRY_SUFFIX.length);
 }
 
-/** Where the YAML lives under `packages/`: `<package>/reference/`, a symbol package's
- * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (every head's
- * metadata, including compute-engine upstreaming candidates -- design/upstreaming.md §10
- * says metadata for those stays here, not under `upstream/`). */
-function dataDirs(packagesRoot: string): { package: string; dir: string }[] {
-  const subdirs = (dir: string): string[] =>
-    existsSync(dir)
-      ? readdirSync(dir, { withFileTypes: true })
-          .filter((e) => e.isDirectory())
-          .map((e) => e.name)
-          .sort()
-      : [];
-  const packages = [
-    ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
-    ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
-      subdirs(join(packagesRoot, "symbols", group)).map((pkg) => ({
-        pkg,
-        dir: join(packagesRoot, "symbols", group, pkg),
-      })),
-    ),
-  ];
-  return packages
-    .map(({ pkg, dir }) => ({
-      package: pkg,
-      dir: join(dir, pkg === "reference" ? "entries" : "reference"),
-    }))
-    .filter(({ dir }) => existsSync(dir));
-}
-
 /**
- * Scan every package's YAML directory (see `dataDirs`) for `<Head>.yaml` files, parse
+ * Scan every package's YAML directory (see `recordDirs` in `@enumeratio/entry/node`) for `<Head>.yaml` files, parse
  * and validate each one (and its `.implementations.yaml`, if present), and check that no two
  * packages assign the same id to the same head (design/examples-as-data.md §3, §9).
  *
@@ -101,7 +73,7 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
   // "<Head>/<id>" -> the file that first declared it, so a repeat can name where it collides.
   const seenIds = new Map<string, string>();
 
-  for (const { package: pkg, dir: referenceDir } of dataDirs(packagesRoot)) {
+  for (const { package: pkg, dir: referenceDir } of recordDirs(packagesRoot)) {
     const files = readdirSync(referenceDir).filter(
       (f) => f.endsWith(ENTRY_SUFFIX) && !f.endsWith(EXAMPLES_SUFFIX) && !f.endsWith(IMPLEMENTATIONS_SUFFIX),
     );

@@ -1,7 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
 import { factorInteger, gcd as gcdBig, isqrt } from "@enumeratio/residues";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // Heads new to compute-engine, from the Wolfram-sweep backlog (design/symbols.md §4, issue
 // #113). Every one stays unevaluated — never approximate — when it cannot answer: a

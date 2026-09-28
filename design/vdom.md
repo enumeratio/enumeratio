@@ -281,8 +281,8 @@ are heavy and DOM-only, and a Node consumer must not install them.
   `VisualSymbol.options` in the base's `symbols.ts`; `primitives.ts` for what `Epilog`
   carries.
 - Generic elements in `notatio-lit` (`generic.ts`): one class per head in the base's
-  `HEADS` (`heads-data.ts`, collected from the engine's symbols, the reference entries
-  and the drawing heads, with `PARAMS` for the fixed signatures), registered at its tag
+  `HEADS` (`head-names.ts`: every head in the symbol manifest, design/manifest.md, and
+  the drawing heads, with `PARAMS` for the fixed signatures), registered at its tag
   unless a hand-written element owns it; `expression` from `value`, the children or the
   named attributes; only the outermost typesets. `structure.ts` adopts the same
   spelling on the hand-written components.

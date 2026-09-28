@@ -1,66 +1,45 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { BOX_HEADS, type BoxHead } from "./box.ts";
+import type { DeclaredSymbol } from "@enumeratio/manifest";
+import { SYMBOLS } from "@enumeratio/manifest/package/boxes";
+import { BOX_HEADS } from "./box.ts";
 import { toMathJson } from "./json.ts";
 import { makeBoxes } from "./make.ts";
-import { SUMMARIES } from "./summaries-data.ts";
 
 // The box heads as compute-engine heads. `boxes` is a structural type -- a string (a
 // token) or an application of one of the box heads -- so a signature says exactly what it
 // takes and returns: `ToBoxes` is `(any) -> boxes`, a `RowBox` of anything else is an
 // `incompatible-type` error. The box heads are inert: an evaluated box is itself.
+//
+// Each head's signature, description and attributes are its record's, read back from the
+// manifest (design/manifest.md): written once, in `reference/<Head>.yaml`.
 
 export const BOXES_TYPE = "boxes";
 
-/** Each box head's arguments; a trailing `expression*` takes its options (rules). */
-const SIGNATURES: Readonly<Record<BoxHead, string>> = {
-  RowBox: "(list<boxes>) -> boxes",
-  TextBox: "(string, expression*) -> boxes",
-  SuperscriptBox: "(boxes, boxes, expression*) -> boxes",
-  SubscriptBox: "(boxes, boxes, expression*) -> boxes",
-  SubsuperscriptBox: "(boxes, boxes, boxes, expression*) -> boxes",
-  OverscriptBox: "(boxes, boxes, expression*) -> boxes",
-  UnderscriptBox: "(boxes, boxes, expression*) -> boxes",
-  UnderoverscriptBox: "(boxes, boxes, boxes, expression*) -> boxes",
-  FractionBox: "(boxes, boxes, expression*) -> boxes",
-  SqrtBox: "(boxes, expression*) -> boxes",
-  RadicalBox: "(boxes, boxes, expression*) -> boxes",
-  GridBox: "(list<list<boxes>>, expression*) -> boxes",
-  StyleBox: "(boxes, expression*) -> boxes",
-  FrameBox: "(boxes, expression*) -> boxes",
-  TagBox: "(boxes, symbol, expression*) -> boxes",
-  InterpretationBox: "(boxes, expression, expression*) -> boxes",
-  ErrorBox: "(boxes) -> boxes",
-};
+/** What the record says about `head`; a head this package declares must have a typed record. */
+function recorded(head: string): { signature: string; description: string; lazy?: true } {
+  const symbol: DeclaredSymbol | undefined = SYMBOLS[head];
+  if (symbol?.type === undefined) throw new Error(`boxes: reference/${head}.yaml gives no type`);
+  return {
+    signature: symbol.type,
+    description: symbol.summary,
+    // `HoldAll` is compute-engine's `lazy`: the arguments arrive unevaluated.
+    ...(symbol.attributes?.includes("HoldAll") ? { lazy: true } : {}),
+  };
+}
 
 export function declareBoxes(ce: ComputeEngine): void {
   ce.declareType(BOXES_TYPE, ["string", ...BOX_HEADS.map((h) => `expression<${h}>`)].join(" | "), { alias: true });
 
-  for (const head of BOX_HEADS) {
-    // `InterpretationBox` holds the expression it stands for, as Wolfram's does.
-    ce.declare(head, {
-      signature: SIGNATURES[head],
-      description: SUMMARIES[head],
-      ...(head === "InterpretationBox" ? { lazy: true } : {}),
-    });
-  }
+  for (const head of BOX_HEADS) ce.declare(head, recorded(head));
 
   const boxesOf = (expr: BoxedExpression): BoxedExpression =>
     ce.box(toMathJson(makeBoxes(expr.json as MathJsonExpression)) as never);
 
-  ce.declare("ToBoxes", {
-    signature: "(any) -> boxes",
-    description: SUMMARIES.ToBoxes,
-    evaluate: ([expr]) => boxesOf(expr),
-  });
-  // `MakeBoxes` holds its argument: the notation of what was written, not of its value.
-  ce.declare("MakeBoxes", {
-    signature: "(any) -> boxes",
-    description: SUMMARIES.MakeBoxes,
-    lazy: true,
-    evaluate: ([expr]) => boxesOf(expr),
-  });
+  // `ToBoxes` evaluates its argument first; `MakeBoxes` holds it (the notation of what was written).
+  ce.declare("ToBoxes", { ...recorded("ToBoxes"), evaluate: ([expr]) => boxesOf(expr) });
+  ce.declare("MakeBoxes", { ...recorded("MakeBoxes"), evaluate: ([expr]) => boxesOf(expr) });
   // Both stay as written: whoever draws them draws their boxes (`makeBoxes`, `BOXES_LATEX`).
-  ce.declare("DisplayForm", { signature: "(boxes) -> expression", description: SUMMARIES.DisplayForm });
-  ce.declare("RawBoxes", { signature: "(boxes) -> expression", description: SUMMARIES.RawBoxes });
+  ce.declare("DisplayForm", recorded("DisplayForm"));
+  ce.declare("RawBoxes", recorded("RawBoxes"));
 }

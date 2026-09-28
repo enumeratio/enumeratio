@@ -12,7 +12,7 @@ import {
 import { gcd, mod } from "./arith.ts";
 import * as Z from "./integer-mod.ts";
 import type { IntegerMod } from "./integer-mod.ts";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 
 // The value head for ℤ/m and the ring it lives in, after Sage's Mod(a, m) / Zmod(m):
 //

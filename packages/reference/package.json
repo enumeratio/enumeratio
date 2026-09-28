@@ -37,6 +37,7 @@
     "@enumeratio/hopf": "workspace:*",
     "@enumeratio/hypercomplex": "workspace:*",
     "@enumeratio/incidence": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/modular": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",

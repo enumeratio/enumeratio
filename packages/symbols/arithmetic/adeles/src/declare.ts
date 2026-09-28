@@ -18,7 +18,7 @@ import * as P from "./profinite.ts";
 import type { Profinite } from "./profinite.ts";
 import * as Q from "./rational.ts";
 import type { Q as Rational } from "./rational.ts";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/adeles";
 
 // Hertogh's adèles over Q as compute-engine values. Three value heads:
 //

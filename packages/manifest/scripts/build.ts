@@ -1,0 +1,175 @@
+// Assemble the manifest (design/manifest.md) into src/generated/, which `vp pack` then
+// builds into dist/. Reads every package's records and a bare compute-engine; loads no
+// package's code, so it sits at the bottom of the build graph.
+//
+//   node packages/manifest/scripts/build.ts
+
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { parseYaml, type ReferenceEntry } from "@enumeratio/entry";
+import { isEntryFile, recordDirs } from "@enumeratio/entry/node";
+import type { DeclaredSymbol, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
+
+const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
+const OUT = fileURLToPath(new URL("../src/generated/", import.meta.url));
+const ENGINE = "compute-engine";
+
+type Record_ = Omit<ReferenceEntry, "examples">;
+
+const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
+
+/** A signature row's `library`, as the package it names: `enumeratio-boxes` and
+ *  `@enumeratio/boxes` are both `boxes`; absent is the engine's own. */
+export const packageOf = (library: string | undefined): string =>
+  library === undefined ? ENGINE : library.replace(/^@enumeratio\//, "").replace(/^enumeratio-/, "");
+
+/** `SetMinus(a, b)` -> `["a", "b"]`, for a fixed arity spelled with plain names. */
+function paramsOf(signature: string): string[] | undefined {
+  const m = /^\w+\((.*)\)$/.exec(signature.trim());
+  if (!m || m[1].includes("…") || m[1].includes("...")) return undefined;
+  const list = m[1]
+    .split(",")
+    .map((p) => p.trim().replace(/\?$/, ""))
+    .filter((p) => p.length > 0);
+  return list.length > 0 && list.every((p) => /^[a-z][A-Za-z0-9]*$/.test(p)) ? list : undefined;
+}
+
+// --- the records ------------------------------------------------------------------------
+
+const records: { package: string; record: Record_ }[] = [];
+for (const { package: pkg, dir } of recordDirs(PACKAGES)) {
+  for (const file of readdirSync(dir).filter(isEntryFile).sort(cmp)) {
+    records.push({ package: pkg, record: parseYaml(readFileSync(join(dir, file), "utf8")) as Record_ });
+  }
+}
+
+// --- the engine's own heads -------------------------------------------------------------
+
+interface Scope {
+  readonly bindings: Map<string, unknown>;
+  readonly parent?: Scope;
+}
+
+function engineTypes(): Map<string, string> {
+  const ce = new ComputeEngine();
+  const names = new Set<string>();
+  let scope: Scope | undefined = (ce as unknown as { context: { lexicalScope: Scope } }).context.lexicalScope;
+  for (; scope !== undefined; scope = scope.parent) for (const name of scope.bindings.keys()) names.add(name);
+  const types = new Map<string, string>();
+  for (const name of names) {
+    if (!/^[A-Z]/.test(name)) continue;
+    const found = ce.lookupDefinition(name) as
+      | { operator?: { signature?: unknown }; value?: { type?: unknown } }
+      | undefined;
+    const type = found?.operator?.signature ?? found?.value?.type;
+    if (type !== undefined) types.set(name, `${type as string}`);
+  }
+  return types;
+}
+
+// --- assembling -------------------------------------------------------------------------
+
+const byName = new Map<
+  string,
+  { documented: string[]; overloads: Overload[]; params?: string[]; attributes: Set<SymbolAttribute> }
+>();
+const entry = (name: string) => {
+  let info = byName.get(name);
+  if (info === undefined) byName.set(name, (info = { documented: [], overloads: [], attributes: new Set() }));
+  return info;
+};
+
+for (const [name, type] of engineTypes()) entry(name).overloads.push({ package: ENGINE, type });
+
+// reference's own copy of a head is the canonical one (design/examples-as-data.md §9), so
+// its signature spells the parameter names when it has one.
+const ranked = [...records].sort((a, b) =>
+  cmp(a.package === "reference" ? "0" : "1", b.package === "reference" ? "0" : "1"),
+);
+for (const { package: pkg, record } of ranked) {
+  const info = entry(record.name);
+  info.documented.push(pkg);
+  info.params ??= paramsOf(record.signature);
+  for (const attribute of record.attributes ?? []) info.attributes.add(attribute);
+  for (const row of record.signatures ?? []) {
+    const from = packageOf(row.library);
+    if (from === ENGINE) continue; // the engine's overload already came from the engine
+    const same = info.overloads.find((o) => o.package === from && o.type === row.type);
+    const untyped = info.overloads.find((o) => o.package === from && o.type === undefined);
+    if (same !== undefined) continue;
+    if (untyped !== undefined && row.type !== undefined) info.overloads.splice(info.overloads.indexOf(untyped), 1);
+    else if (row.type === undefined && info.overloads.some((o) => o.package === from)) continue;
+    info.overloads.push({
+      package: from,
+      ...(row.type !== undefined ? { type: row.type } : {}),
+      ...(row.overrides !== undefined ? { overrides: packageOf(row.overrides) } : {}),
+    });
+  }
+}
+
+const symbols: Record<string, SymbolInfo> = {};
+for (const name of [...byName.keys()].sort(cmp)) {
+  const info = byName.get(name)!;
+  symbols[name] = {
+    name,
+    documented: info.documented.sort(cmp),
+    overloads: info.overloads,
+    ...(info.params !== undefined ? { params: info.params } : {}),
+    ...(info.attributes.size > 0 ? { attributes: [...info.attributes].sort(cmp) } : {}),
+  };
+}
+
+// What each package's `declare` reads: its records' summaries, and its own typed overload.
+const perPackage = new Map<string, Record<string, DeclaredSymbol>>();
+for (const { package: pkg, record } of records) {
+  const own = (record.signatures ?? []).filter((row) => packageOf(row.library) === pkg && row.type !== undefined);
+  const types = new Set(own.map((row) => row.type));
+  if (types.size > 1) {
+    // One declared signature per head until dispatch can combine overloads (design/manifest.md).
+    throw new Error(`manifest: ${pkg} gives ${record.name} ${types.size} types; one per package for now`);
+  }
+  const declared: DeclaredSymbol = {
+    summary: record.summary,
+    ...(own[0]?.type !== undefined ? { type: own[0].type } : {}),
+    ...(record.attributes !== undefined ? { attributes: record.attributes } : {}),
+  };
+  const table = perPackage.get(pkg) ?? {};
+  table[record.name] = declared;
+  perPackage.set(pkg, table);
+}
+
+// --- writing ----------------------------------------------------------------------------
+
+const HEADER = "// GENERATED by packages/manifest/scripts/build.ts at build time; never committed.\n\n";
+const sorted = <T>(table: Record<string, T>): Record<string, T> =>
+  Object.fromEntries(
+    Object.keys(table)
+      .sort(cmp)
+      .map((k) => [k, table[k]]),
+  );
+
+rmSync(OUT, { recursive: true, force: true });
+mkdirSync(join(OUT, "package"), { recursive: true });
+writeFileSync(
+  join(OUT, "symbols.ts"),
+  `${HEADER}import type { SymbolInfo } from "../types.ts";\n\nexport const SYMBOLS: Readonly<Record<string, SymbolInfo>> = ${JSON.stringify(symbols)};\n`,
+);
+for (const [pkg, table] of [...perPackage].sort(([a], [b]) => cmp(a, b))) {
+  const declared = sorted(table);
+  const summaries = Object.fromEntries(Object.entries(declared).map(([k, v]) => [k, v.summary]));
+  writeFileSync(
+    join(OUT, "package", `${pkg}.ts`),
+    `${HEADER}import type { DeclaredSymbol } from "../../types.ts";
+
+/** What \`${pkg}\`'s declare reads for each head it documents. */
+export const SYMBOLS: Readonly<Record<string, DeclaredSymbol>> = ${JSON.stringify(declared)};
+
+/** Each head's record \`summary\`, for its \`description\`. */
+export const SUMMARIES: Readonly<Record<string, string>> = ${JSON.stringify(summaries)};
+`,
+  );
+}
+
+console.log(`manifest: ${Object.keys(symbols).length} heads, ${perPackage.size} packages -> ${OUT}`);

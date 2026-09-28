@@ -6,6 +6,7 @@ signatures:
   - call: ErrorBox(box)
     description: Boxes marked as an error.
     library: enumeratio-boxes
+    type: (boxes) -> boxes
 details:
   - MathML's `merror`.
 seeAlso:

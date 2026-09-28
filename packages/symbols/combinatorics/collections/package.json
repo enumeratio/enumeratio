@@ -26,6 +26,7 @@
   "dependencies": {
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/formats": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/residues": "workspace:*"
   },
   "devDependencies": {

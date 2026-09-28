@@ -9,7 +9,7 @@ import {
   symbolNameOf,
   withDeadline,
 } from "@enumeratio/boxed";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/aestimatio";
 import type { Outcome, TestResult } from "./verification-test.ts";
 import { verificationTest } from "./verification-test.ts";
 

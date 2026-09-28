@@ -44,6 +44,33 @@ export function readEntries(dir: string | URL): ReferenceEntry[] {
     .map((f) => readEntry(path, f.slice(0, -".yaml".length)));
 }
 
+/** Where the records live under `packages/`: `<package>/reference/`, a symbol package's
+ * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (the engine's heads). */
+export function recordDirs(packagesRoot: string): { package: string; dir: string }[] {
+  const subdirs = (dir: string): string[] =>
+    existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true })
+          .filter((e) => e.isDirectory())
+          .map((e) => e.name)
+          .sort()
+      : [];
+  const packages = [
+    ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
+    ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
+      subdirs(join(packagesRoot, "symbols", group)).map((pkg) => ({
+        pkg,
+        dir: join(packagesRoot, "symbols", group, pkg),
+      })),
+    ),
+  ];
+  return packages
+    .map(({ pkg, dir }) => ({
+      package: pkg,
+      dir: join(dir, pkg === "reference" ? "entries" : "reference"),
+    }))
+    .filter(({ dir }) => existsSync(dir));
+}
+
 /** `value` as a record's text: the writer's structure, laid out by oxfmt. */
 export async function formatYaml(value: unknown, options?: StringifyOptions): Promise<string> {
   const { code, errors } = await format("record.yaml", stringifyYaml(value, options), FORMAT);

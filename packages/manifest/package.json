@@ -1,8 +1,8 @@
 {
-  "name": "@enumeratio/boxes",
+  "name": "@enumeratio/manifest",
   "version": "0.0.0",
   "private": true,
-  "description": "Wolfram-style box primitives: the presentation tree between an expression and its rendering, with MathML, LaTeX and text serialisers.",
+  "description": "Every symbol head we know -- its packages, overloads and their types, parameter names, attributes and summary -- assembled at build time from the reference records and a bare compute-engine.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -13,25 +13,23 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
+    "./package/*": {
+      "types": "./dist/package/*.d.mts",
+      "import": "./dist/package/*.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
-    "dev": "vp pack --watch",
+    "build": "node scripts/build.ts && vp pack",
     "test": "vp test",
     "check": "vp check"
   },
-  "dependencies": {
-    "@enumeratio/manifest": "workspace:*"
-  },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
+    "@enumeratio/entry": "workspace:*",
+    "@types/node": "^24",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
-  },
-  "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.139.0"
   }
 }

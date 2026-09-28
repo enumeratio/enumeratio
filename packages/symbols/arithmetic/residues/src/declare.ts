@@ -4,7 +4,7 @@ import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 
 // Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
 // never approximate — when it cannot answer: no such residue, an unfactorable modulus, or
