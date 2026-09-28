@@ -9,7 +9,7 @@ signatures:
     description: "rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten."
   - call: Round(z)
     description: for a complex $z$, the real and imaginary parts rounded separately.
-    library: enumeratio-collections
+    library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-analytic
   - call: Round(x, n?)
@@ -17,6 +17,11 @@ signatures:
     library: enumeratio-analytic
     type: (real | signed_infinity, integer?) -> real | signed_infinity
     overrides: compute-engine
+  - call: Round(x, n?)
+    description: for a type whose order has ticks and midpoints, the nearest tick; a tie goes to the even tick when the ticks have a parity, else up. A product order (the complex numbers) rounds coordinate by coordinate.
+    library: enumeratio-structures
+    type: (any, any?) -> any
+    overrides: enumeratio-analytic
 details:
   - 'Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.'
   - "A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten."

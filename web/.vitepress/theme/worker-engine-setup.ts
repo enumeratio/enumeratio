@@ -30,6 +30,7 @@ import { declareDiagrams } from "@enumeratio/diagram";
 import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
+import { declareStructures } from "@enumeratio/structures";
 import { declareGeometric } from "@enumeratio/geometric";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
 import { declareHecke } from "@enumeratio/hecke";
@@ -58,6 +59,7 @@ export function configure(ce: ComputeEngine): void {
     declareFractals,
     declareGraphics,
     declareBoxes,
+    declareStructures,
     declareHypercomplex,
     declareGeometric,
     declareDiagrams,

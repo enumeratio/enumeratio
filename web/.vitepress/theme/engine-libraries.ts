@@ -31,6 +31,7 @@ export interface EngineLibraries {
   readonly declareFractals: typeof import("@enumeratio/analytic").declareFractals;
   readonly declareGraphics: typeof import("@enumeratio/formats").declareGraphics;
   readonly declareBoxes: typeof import("@enumeratio/boxes").declareBoxes;
+  readonly declareStructures: typeof import("@enumeratio/structures").declareStructures;
   readonly declareHypercomplex: typeof import("@enumeratio/hypercomplex").declareHypercomplex;
   readonly declareGeometric: typeof import("@enumeratio/geometric").declareGeometric;
   readonly declareDiagrams: typeof import("@enumeratio/diagram").declareDiagrams;
@@ -81,6 +82,8 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);
+  // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
+  apply(libs.declareStructures);
   apply(libs.declareGraphics);
   apply(libs.declareBoxes);
   apply(libs.declareHypercomplex);

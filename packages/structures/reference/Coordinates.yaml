@@ -1,0 +1,15 @@
+name: Coordinates
+domain: Structures
+signature: Coordinates(x)
+summary: The coordinates of a value of a product order, as a list.
+signatures:
+  - call: Coordinates(x)
+    description: The coordinates of a value of a product order, as a list.
+    library: enumeratio-structures
+    type: (any) -> unknown
+details:
+  - "The `ProductOrder` protocol's member: the order and every generic head work coordinate by coordinate."
+  - A complex number's coordinates are its real and imaginary parts, so $\lfloor 2.5 + 3.7i \rfloor = 2 + 3i$.
+seeAlso:
+  - WithCoordinates
+  - Floor
