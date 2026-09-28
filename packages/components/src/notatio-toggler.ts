@@ -21,19 +21,19 @@ import { Sweep } from "./sweep.ts";
 import { defineControl, emitControl } from "./define.ts";
 
 /**
- * `<notatio-toggler name="size" values="a few|several|many">` -- a word in the prose
+ * `<Toggler name="size" values="a few|several|many">` -- a word in the prose
  * that **cycles when you click it**, Wolfram's `Toggler` and Tangle's toggle in one.
  *
  * With no `values` it is Wolfram's `Toggler[x]`: a switch between `False` and `True`.
  * Otherwise the entries are separated by `|`, since commas belong to the sentence, and
  * an entry may be written `value -> label` to show one thing and bind another. An
  * entry that looks like a value is typeset; a word is set as prose. Inside a
- * `<notatio-dynamic-module>` the binding `_name` is the entry's value when it is a number, a
+ * `<DynamicModule>` the binding `_name` is the entry's value when it is a number, a
  * quoted string (`"several" -> several`, what `Toggler(size, ["several", …])` lowers
  * to) or a named value, and otherwise its **index**, so a toggle over words in prose
- * still drives the rest of the document (`<notatio-when test="_size > 1">`).
+ * still drives the rest of the document (`<When test="_size > 1">`).
  *
- * A toggler is a `<notatio-knob>` **without an axis**, and that is the whole
+ * A toggler is a `<Knob>` **without an axis**, and that is the whole
  * difference: there is no direction to drag a word in, so a click steps it once, and a
  * **long press** (or right-click) opens a menu of every entry -- the way to reach the
  * fifth of twelve without passing four. Left/right step it from the keyboard and

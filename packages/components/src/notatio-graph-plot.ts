@@ -62,7 +62,7 @@ function toGraph(data: unknown): GraphData | undefined {
 }
 
 /**
- * `<notatio-graph-plot type="tree" data='{"label":"a","children":[...]}'>` -- graph
+ * `<GraphPlot type="tree" data='{"label":"a","children":[...]}'>` -- graph
  * and hierarchical layouts, one element covering several Wolfram forms via
  * `type` (Data Visualization guide):
  *

@@ -31,9 +31,9 @@ const H = 260;
 const log = debug("complex-plot-3d");
 
 /**
- * `<notatio-complex-plot-3d value="1/(z^2 + 1)">` -- Wolfram's `ComplexPlot3D`: |f(z)|
+ * `<ComplexPlot3D value="1/(z^2 + 1)">` -- Wolfram's `ComplexPlot3D`: |f(z)|
  * as a surface over the complex plane, each face coloured by arg f(z) on the same hue
- * wheel `<notatio-complex-plot>` paints. A pole is a spike that rises to `max-height`
+ * wheel `<ComplexPlot>` paints. A pole is a spike that rises to `max-height`
  * with every hue winding round it; a zero is a dimple the hues wind round the other way.
  *
  * `value` is **Epsil**; LaTeX is accepted inside a `$…$` island. Sampled in a WebGPU

@@ -13,10 +13,10 @@ const BADGE: Readonly<Record<Exclude<Outcome, "">, { symbol: string; label: stri
 };
 
 /**
- * `<notatio-test-result-object>` -- `VerificationTest`'s `TestResultObject`
+ * `<TestResultObject>` -- `VerificationTest`'s `TestResultObject`
  * (design/computation.md §5.4): the held input as an In row, the actual output as an Out
  * row, and a badge for the outcome (Success ✓ / Failure ≠, expected shown / Error ! /
- * Aborted ∅), plus the time used and, when set, the TestID. Reuses `<notatio-out>`
+ * Aborted ∅), plus the time used and, when set, the TestID. Reuses `<Out>`
  * (`label`/`label-menu`) for both rows rather than re-typesetting anything itself.
  */
 export class NotatioTestResultObject extends LitElement {

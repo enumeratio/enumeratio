@@ -5,7 +5,7 @@ import { ensureStyles } from "./styles.ts";
 import { type Clock, pageClock, torusSquareSvg } from "@enumeratio/frontend";
 
 /**
- * `<notatio-torus-square p="2" q="3">` -- the torus as a square with its opposite edges glued,
+ * `<TorusSquare p="2" q="3">` -- the torus as a square with its opposite edges glued,
  * and the torus knot T(p, q) on it as a straight line of slope q/p.
  *
  * By default a point travels along the line on the page's shared clock, so this figure and the

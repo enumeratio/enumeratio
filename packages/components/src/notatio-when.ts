@@ -4,10 +4,10 @@ import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 
 /**
- * `<notatio-when test="_n > 3">…</notatio-when>` -- a run of prose that appears only
+ * `<When test="_n > 3">…</When>` -- a run of prose that appears only
  * while its condition holds, Tangle's conditional sentence.
  *
- * `test` is an Epsil predicate over the surrounding `<notatio-dynamic-module>`'s knobs; the
+ * `test` is an Epsil predicate over the surrounding `<DynamicModule>`'s knobs; the
  * wrapper substitutes their values into it, and this element shows or hides its own
  * children on the result. `invert` shows the children when the test is *false*, which
  * is how the two halves of an either/or sentence are written.

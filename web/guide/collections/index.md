@@ -116,5 +116,5 @@ $n$-th k-subset. [Numeral systems](/guide/numerals/) makes that identification p
 
 Every family here is catalogued, with its order and its counting sequence, in the
 [symbol reference](/reference/symbol/). The glyphs are
-[`<notatio-figure>`](/reference/components/notatio-figure) and the slider is
-[`<notatio-manipulate>`](/reference/components/notatio-manipulate).
+[`<Figure>`](/reference/component/Figure) and the slider is
+[`<Manipulate>`](/reference/component/Manipulate).

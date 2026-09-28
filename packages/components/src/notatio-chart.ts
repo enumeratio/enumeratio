@@ -62,7 +62,7 @@ function toMatrix(data: unknown): number[][] {
 }
 
 /**
- * `<notatio-chart type="bar" data="[3,1,4,1,5]">` -- a data-driven 2-D chart,
+ * `<Chart type="bar" data="[3,1,4,1,5]">` -- a data-driven 2-D chart,
  * one element covering several Wolfram `*Chart`/`*Plot` forms via `type`:
  *
  * - `list` / `listline` -- ListPlot / ListLinePlot: a bare number list reads

@@ -48,7 +48,7 @@ function toPolarPoints(data: unknown, t0: number, t1: number): PolarPoint[] | un
 }
 
 /**
- * `<notatio-polar-plot expr="1 + \cos(\theta)" trange="0,6.283">` -- a curve
+ * `<PolarPlot expr="1 + \cos(\theta)" trange="0,6.283">` -- a curve
  * r(θ) on a polar grid (Wolfram's `PolarPlot`). `expr` is sampled at `n`
  * angles across `trange`; poles (non-finite r) break the curve rather than
  * joining branches. `data` gives `ListPolarPlot`: a JSON list of `[θ, r]`

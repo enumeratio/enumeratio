@@ -14,17 +14,17 @@ import {
 } from "@enumeratio/frontend";
 
 /**
- * `<notatio-complex-plot value="PolyLog(2, z)">` -- domain-colouring of a complex-valued
+ * `<ComplexPlot value="PolyLog(2, z)">` -- domain-colouring of a complex-valued
  * expression over the complex plane, one GPU invocation per pixel: hue is the
  * argument, brightness a compressed log-magnitude, poles white and zeros black.
  *
  * Any expression the complex emitter can lower works, so this replaces a hand-written
- * shader per function. Under `<notatio-manipulate>` every constant becomes an axis:
+ * shader per function. Under `<Manipulate>` every constant becomes an axis:
  *
  * ```html
- * <notatio-manipulate params="{s, 0.5, 6, 0.05}">
- *   <notatio-complex-plot value="PolyLog(_s, z)" mask="1" />
- * </notatio-manipulate>
+ * <Manipulate params="{s, 0.5, 6, 0.05}">
+ *   <ComplexPlot value="PolyLog(_s, z)" mask="1" />
+ * </Manipulate>
  * ```
  *
  * A slider moves a literal, not the expression's shape, so the compiled pipeline is

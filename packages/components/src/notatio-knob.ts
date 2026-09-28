@@ -34,7 +34,7 @@ import { defineControl, emitControl } from "./define.ts";
 const DOUBLE_TAP_MS = 400;
 
 /**
- * `<notatio-knob name="cookies" value="3">` -- a number you **drag inside a sentence**,
+ * `<Knob name="cookies" value="3">` -- a number you **drag inside a sentence**,
  * after Bret Victor's [Tangle](http://worrydream.com/Tangle/). It is not a slider and
  * not a field: it renders exactly what the value looks like when typeset, marked as
  * interactive with a dotted underline, and you change it by dragging across it.
@@ -60,7 +60,7 @@ const DOUBLE_TAP_MS = 400;
  *
  * A knob always has an **axis**, which is what makes it a knob: `choices` scrubs its
  * list along that axis rather than offering a menu of it. For a value with no axis to
- * scrub -- a word, an either/or -- reach for `<notatio-toggler>`, which is exactly
+ * scrub -- a word, an either/or -- reach for `<Toggler>`, which is exactly
  * that: the same binding, a click to cycle, and a menu on a long press.
  *
  * **Playback.** Space sweeps the knob through its range one step at a time, and again
@@ -81,19 +81,19 @@ const DOUBLE_TAP_MS = 400;
  * you brush through directly rather than through a number sitting next to it:
  *
  * ```html
- * <notatio-knob name="k" value="1" min="1" max="24">
- *   <notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
- * </notatio-knob>
+ * <Knob name="k" value="1" min="1" max="24">
+ *   <Figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
+ * </Knob>
  * ```
  *
- * Inside a `<notatio-dynamic-module>` the knob's `name` becomes the wildcard `_name`, and every
+ * Inside a `<DynamicModule>` the knob's `name` becomes the wildcard `_name`, and every
  * Epsil template in the surrounding prose re-derives as it moves.
  *
  * ```html
- * <notatio-dynamic-module>
- *   Eat <notatio-knob name="n" value="3" min="0" max="12" step="1" /> cookies and take on
- *   <notatio-dynamic value="_n * 50" /> calories.
- * </notatio-dynamic-module>
+ * <DynamicModule>
+ *   Eat <Knob name="n" value="3" min="0" max="12" step="1" /> cookies and take on
+ *   <Dynamic value="_n * 50" /> calories.
+ * </DynamicModule>
  * ```
  *
  * The name is descriptive, not a Wolfram symbol: Wolfram has no inline draggable value
@@ -670,7 +670,7 @@ export class NotatioKnob extends LitElement {
    * The number this knob binds. For a numeric knob that is the value itself; for a
    * `choices` knob it is the ENTRY when the entry is a number (`{p, {2,3,5,7}}` in
    * Manipulate's terms) and otherwise its index, which is the only thing a word can
-   * contribute to an expression. Same rule as `<notatio-toggler>`.
+   * contribute to an expression. Same rule as `<Toggler>`.
    */
   get bound(): number {
     return this.discrete ? boundEntry(this.entry, this._index) : this._re;

@@ -16,8 +16,8 @@ const blurb = (summary: string): string => {
 <template>
   <ul class="component-index">
     <li v-for="c in components" :key="c.tag">
-      <a :href="`/reference/components/${c.tag}`"
-        ><code>&lt;{{ c.tag }}&gt;</code></a
+      <a :href="`/reference/component/${c.name}`"
+        ><code>{{ c.name }}</code></a
       >
       — <span v-html="blurb(c.summary)" />
       <span class="count">{{ c.attributes.length }} attributes</span>

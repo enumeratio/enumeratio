@@ -5,7 +5,7 @@ import { openChoiceMenu } from "./choice-menu.ts";
 import { defineControl } from "./define.ts";
 
 /**
- * `<notatio-popup-menu name="k" values="2|3|5|7">` -- the selected entry, and a menu of
+ * `<PopupMenu name="k" values="2|3|5|7">` -- the selected entry, and a menu of
  * the rest when clicked: Wolfram's `PopupMenu`. Arrows step it without opening. Entries
  * are `|`-separated and may be `value -> label`. The binding is the entry's value.
  */

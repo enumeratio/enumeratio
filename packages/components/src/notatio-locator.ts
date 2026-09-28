@@ -17,7 +17,7 @@ interface Framed extends HTMLElement {
 }
 
 /**
- * `<notatio-locator name="p" value="1,0.5">` inside a `<notatio-plot>` -- a point ON the
+ * `<Locator name="p" value="1,0.5">` inside a `<Plot>` -- a point ON the
  * picture that you drag about it, Wolfram's `Locator`. It sits over the plot area in
  * the plot's own coordinates, so the binding `_p` is the `List` `[x, y]` where the dot
  * is (or the complex `x + y i`, with `complex`), and a template that reads `_p` gets a
@@ -25,15 +25,15 @@ interface Framed extends HTMLElement {
  * ten times that, Alt a tenth.
  *
  * ```html
- * <notatio-dynamic-module>
- *   <notatio-plot value="Sin(x)" domain="-6.283,6.283">
- *     <notatio-locator name="p" value="0,0" />
- *   </notatio-plot>
- *   The dot is at <notatio-dynamic value="_p" />.
- * </notatio-dynamic-module>
+ * <DynamicModule>
+ *   <Plot value="Sin(x)" domain="-6.283,6.283">
+ *     <Locator name="p" value="0,0" />
+ *   </Plot>
+ *   The dot is at <Dynamic value="_p" />.
+ * </DynamicModule>
  * ```
  *
- * A `<notatio-slider-2d>` is the same control on a square of its own, off the picture.
+ * A `<Slider2D>` is the same control on a square of its own, off the picture.
  */
 export class NotatioLocator extends LitElement {
   static properties = {
