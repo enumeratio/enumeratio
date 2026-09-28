@@ -24,13 +24,13 @@
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check",
-    "heads:collect": "node --experimental-strip-types scripts/collect-heads.ts",
     "generate": "node --experimental-strip-types src/generate.ts"
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/formats": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/polytope": "workspace:*"
   },
   "devDependencies": {

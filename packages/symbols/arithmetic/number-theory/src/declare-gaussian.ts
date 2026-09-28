@@ -30,7 +30,7 @@ import {
   primeOmegaGaussian,
   quotient,
 } from "./gaussian.ts";
-import { SUMMARIES } from "./summaries-data.ts";
+import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // compute-engine's integer heads, carried into ℤ[i] the way Wolfram carries them: a Gaussian
 // argument switches Mod, Quotient, GCD, LCM, ExtendedGCD and ModularInverse over on its own,

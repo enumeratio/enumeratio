@@ -43,7 +43,7 @@ export * from "./vectorplot.ts";
 export * from "./playback.ts";
 export * from "./controls.ts";
 export * from "./vdom.ts";
-export * from "./heads-data.ts";
+export * from "./head-names.ts";
 export * from "./primitives.ts";
 export * from "./engine.ts";
 export * from "./latex.ts";

@@ -25,6 +25,7 @@
   "dependencies": {
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/for-compute-engine": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/residues": "workspace:*"
   },
