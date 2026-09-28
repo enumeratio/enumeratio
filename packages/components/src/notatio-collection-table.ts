@@ -79,6 +79,17 @@ const GLYPH_KINDS = new Set<GlyphKind>([
  * the UI, and the match count is exact once the scan has covered the whole source.
  * Sorting by a column has to materialise that column, so it is bounded by `sort-limit`
  * and the table says when the order covers only a prefix of the rows.
+ *
+ * The three operations cost differently, and the table is honest about each: paging is
+ * `At` — closed-form unranking, constant per row, any page of any collection. Filtering
+ * is `Filter` — a scan of the source, linear in how far it has to look, reading "k
+ * matches in the first N of M" until the scan has covered the whole source, then "k of M
+ * match". Sorting by a statistic needs the statistic for every candidate row, which is
+ * the one thing a lazy collection cannot give for free. The compute-engine's own
+ * `Filter` has the same linear cost, plus an iteration cap (`ce.iterationLimit`, 1024 by
+ * default) past which `Count(Filter(...))` stays symbolic and `At(Filter(...), i)`
+ * answers `Missing` — so the table drives the scan itself, by index, which is also what
+ * lets it resume where it stopped.
  */
 export class NotatioCollectionTable extends LitElement {
   static properties = {

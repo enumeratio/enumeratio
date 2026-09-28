@@ -4204,6 +4204,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "ListContourPlot",
+    wolfram: "ListContourPlot",
+  },
+  {
+    name: "ListDensityPlot",
+    wolfram: "ListDensityPlot",
+  },
+  {
     name: "ListLinePlot",
     wolfram: "ListLinePlot",
   },
@@ -4218,6 +4226,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ListPlot3D",
     wolfram: "ListPlot3D",
+  },
+  {
+    name: "ListPolarPlot",
+    wolfram: "ListPolarPlot",
   },
   {
     name: "Ln",
