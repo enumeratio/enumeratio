@@ -1,0 +1,14 @@
+id	in	out
+the-cube-root-of-27		
+root-16-4		
+odd-roots-of-a-negative-number-stay-real		
+stays-symbolic-when-x-isn-t-a-perfect-power		
+a-negative-index-gives-the-reciprocal-root-x-1-n		
+the-real-cube-root-wolfram-s-surd-27-3		
+any-odd-root-of-a-negative-number-is-real		
+approximate-negative-radicands-stay-real-too		
+threads-element-wise-over-a-list		
+the-edge-length-of-a-cube-with-volume-1000		
+sqrt-n-x-n-x-for-a-perfect-nth-power	\sqrt[3]{8}^3=8	\mathrm{True}
+root-x-2-agrees-with-sqrt	\sqrt{16}=\sqrt{16}	\mathrm{True}
+an-even-root-of-a-negative-non-perfect-power		

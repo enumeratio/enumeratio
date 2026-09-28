@@ -1,0 +1,9 @@
+---
+name: NumberOfCyclesOfLength3
+domain: Combinatorics
+signature: NumberOfCyclesOfLength3(...)
+summary: Number of 3-cycles
+statOn:
+  - Permutation
+stub: carrier
+---

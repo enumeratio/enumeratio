@@ -1,0 +1,25 @@
+id	in	out
+n-forces-the-numeric-result-that-plain		
+n-sinh-1		
+stays-symbolic-even-at-0-compute-engine-doesn-t		
+a-float-argument-evaluates-directly-no-n-needed		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+sinh-i-pi-2-i-sin-pi-2-i		
+element-wise-over-a-matrix-of-imaginary		
+interval-arithmetic-sinh-is-increasing-so-sinh-0		
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1		
+sinh-positiveinfinity		
+sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic		
+a-real-symbolic-argument-is-untouched		
+oddness-pulls-the-sign-out-of-a-symbolic		
+sinh-arsinh-x-x-for-every-x		
+sinh-arsinh-2-2-for-every-x		
+derivative-cosh-x		
+antiderivative		
+taylor-series-about-0		
+to-30-significant-digits-not-yet-the-last-digit		
+n-decimalizes-sinh-i-pi-2-not-just-the-exact		
+odd-function-sinh-x-sinh-x	\sinh(-1)=-\sinh(1)	\mathrm{True}
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	\sinh(1)=\frac{e^{1}-e^{-1}}{2}	\mathrm{True}
+the-definition-sinh-x-frac-e-x-e-x-2		

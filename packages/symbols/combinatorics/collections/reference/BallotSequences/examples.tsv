@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-ballotsequences-4	Basic		[Count, [BallotSequences, 4]]	14	$Count(BallotSequences(4)) = 14$
+first-element-of-ballotsequences-4	Basic		[At, [BallotSequences, 4], 1]	[List, 1, 1, 1, 1, 0, 0, 0, 0]	The first element in enumeration order
+every-element-of-ballotsequences-4		test	[Take, [BallotSequences, 4], 5]	[List, [List, 1, 1, 1, 1, 0, 0, 0, 0], [List, 1, 1, 1, 0, 1, 0, 0, 0], [List, 1, 1, 1, 0, 0, 1, 0, 0], [List, 1, 1, 1, 0, 0, 0, 1, 0], [List, 1, 1, 0, 1, 1, 0, 0, 0]]	

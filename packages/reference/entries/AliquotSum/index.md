@@ -1,0 +1,9 @@
+---
+name: AliquotSum
+domain: Combinatorics
+signature: AliquotSum(...)
+summary: s(n) = σ(n) − n — the aliquot sum
+statOn:
+  - IntegerFactorization
+stub: carrier
+---

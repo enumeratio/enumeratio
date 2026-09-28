@@ -1,0 +1,8 @@
+id	in
+n-arcoth-2	N[ArcCoth[2]]
+a-logarithmic-singularity-at-1	ArcCoth[1]
+arcoth-positiveinfinity	ArcCoth[Infinity]
+a-float-argument-evaluates-directly	ArcCoth[3.5]
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	TrigToExp[ArcCoth[2]]
+oddness-pulls-the-sign-out-of-a-symbolic	ArcCoth[Minus[x]]
+derivative-frac-1-1-x-2	D[ArcCoth[x], x]

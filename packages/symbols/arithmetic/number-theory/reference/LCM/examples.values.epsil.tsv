@@ -1,0 +1,39 @@
+id	in	out
+lcm-4-6	LCM(4, 6)	12
+lcm-is-variadic-it-accepts-any-number-of	LCM(4, 6, 10)	60
+lcm-2-3-5	LCM(2, 3, 5)	30
+over-the-rationals-the-lcm-of-the-numerators	LCM(1 / 3, 2 / 5, 3 / 7)	6
+1-3i-i-3-i-associates-share-their-multiples	LCM(3 + i, -1 + 3i)	3 + i
+negative-integers	LCM(3, -5, 7)	105
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the	LCM(-4 + 5i, 2 + 3i)	23 + 2i
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	LCM(1 / 2 + 3 / 5 * i, 1 / 3 + i)	21 + 13i
+big-integers-the-exact-118-digit-lcm-past-where	LCM(20!, 10 ^ 100 + 3)	3_475_574_297_395_200_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_001_042_672_289_218_560_000
+listable-a-single-list-argument-threads-element	LCM(12, [3, 7, 40])	[12, 84, 120]
+a-large-integer-against-a-negative-rational	LCM(20!, 10 ^ -1 - 2)	2_432_902_008_176_640_000
+lcm-with-a-unit-is-the-other-argument-normalised	LCM(3 + 4i, 1)	3 + 4i
+lcm-with-i-a-unit-is-the-other-argument	LCM(3 + 4i, i)	3 + 4i
+lcm-with-0-is-0	LCM(0, -4 + 3i)	0
+two-gaussian-primes-above-5-multiply-straight	LCM(2 + i, 2 - i)	5
+a-gaussian-prime-and-a-real-prime-3-mod-4	LCM(2 + i, 3)	6 + 3i
+an-associate-pair-has-lcm-equal-to-their-common	LCM(3 + 4i, -4 + 3i)	3 + 4i
+another-associate-pair-by-1	LCM(3 + 4i, -3 - 4i)	3 + 4i
+two-unrelated-composites-of-norm-25	LCM(3 + 4i, 4 + 3i)	25
+lcm-with-a-negative-real-prime	LCM(3 + 4i, -7)	21 + 28i
+lcm-of-two-large-norm-gaussians	LCM(123 + 456i, 1_000 + i)	122_544 + 456_123i
+lcm-past-2-53-in-both-parts	LCM(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)	399_990_992_800_745_259_011 + 100_036_028_797_018_963_973i
+a-real-split-prime-and-its-gaussian-factor	LCM(5, 2 + i)	5
+lcm-of-two-real-composites-plain-integer-case	LCM(4, 9)	36
+lcm-with-a-negative-real-composite	LCM(-15, 5 + 5i)	15 + 15i
+lcm-with-an-associate-times-1	LCM(8 + 2i, -3 - 4i)	16 + 38i
+lcm-with-an-associate-times-i	LCM(8 + 2i, 4 - 3i)	16 + 38i
+two-primes-above-13-multiply-straight-through	LCM(3 + 2i, 2 + 3i)	13
+lcm-with-a-real-prime-s-associate-by-the-unit-i	LCM(3 + 4i, 7i)	21 + 28i
+lcm-with-a-real-composite-5-squared	LCM(3 + 4i, 25)	25
+lcm-with-a-negative-associate	LCM(6 + 8i, -2 - 3i)	34 + 12i
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19	LCM(123 + 456i, 19)	2_337 + 8_664i
+lcm-of-two-composites-sharing-the-prime-above-13	LCM(6 + 8i, 9 + 6i)	6 + 108i
+the-smallest-number-divisible-by-each-of-1	LCM(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)	2_520
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	GCD(27, 81) * LCM(27, 81) == 27 * 81	True
+a-single-argument-is-returned-unchanged	LCM(5)	5
+0-absorbs-the-lcm-with-0-is-0	LCM(0, 5)	0
+signs-are-discarded-before-computing-the-lcm	LCM(-3, 7)	21

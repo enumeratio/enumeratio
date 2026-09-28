@@ -1,0 +1,9 @@
+---
+name: Abundance
+domain: Combinatorics
+signature: Abundance(...)
+summary: σ(n) − 2n — perfect = 0, abundant > 0, deficient < 0
+statOn:
+  - IntegerFactorization
+stub: carrier
+---

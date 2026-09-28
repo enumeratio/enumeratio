@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+sqrt-of-x-squared-under-x-greater-than-0			[Refine, [Sqrt, [Power, x, 2]], [Greater, x, 0]]	x	$\sqrt{x^2} \to x$ under $x > 0$
+sqrt-of-x-squared-under-x-less-than-0			[Refine, [Sqrt, [Power, x, 2]], [Less, x, 0]]	[Negate, x]	$\sqrt{x^2} \to -x$ under $x < 0$
+abs-under-x-greater-than-0			[Refine, [Abs, x], [Greater, x, 0]]	x	$|x| \to x$ under $x > 0$
+sign-under-x-greater-than-0			[Refine, [Sign, x], [Greater, x, 0]]	1	$\operatorname{sign}(x) \to 1$ under $x > 0$
+log-of-exp-under-x-real			[Refine, [Ln, [Exp, x]], [Element, x, RealNumbers]]	x	$\ln(e^x) \to x$ once $x$ is known real
+an-undecidable-inequality-is-left-alone	Possible issues		[Refine, [Greater, [Power, x, 2], 0]]	[Less, 0, [Power, x, 2]]	$x^2 > 0$ is left alone with no assumption — it fails exactly at $x=0$

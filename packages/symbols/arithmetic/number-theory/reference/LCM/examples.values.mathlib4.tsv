@@ -1,0 +1,39 @@
+id	in	out	verdict
+lcm-4-6	(Int.lcm 4 6)	12	
+lcm-is-variadic-it-accepts-any-number-of			
+lcm-2-3-5			
+over-the-rationals-the-lcm-of-the-numerators			
+1-3i-i-3-i-associates-share-their-multiples			
+negative-integers			
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the			
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3			
+big-integers-the-exact-118-digit-lcm-past-where	(Int.lcm (Nat.factorial 20) ((10 ^ 100) + 3))	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	
+listable-a-single-list-argument-threads-element	(Int.lcm 12 [3, 7, 40])	Application type mismatch: The argument	error
+a-large-integer-against-a-negative-rational	(Int.lcm (Nat.factorial 20) ((10 ^ (-1)) + (-2)))	failed to synthesize instance of type class	error
+lcm-with-a-unit-is-the-other-argument-normalised			
+lcm-with-i-a-unit-is-the-other-argument			
+lcm-with-0-is-0			
+two-gaussian-primes-above-5-multiply-straight			
+a-gaussian-prime-and-a-real-prime-3-mod-4			
+an-associate-pair-has-lcm-equal-to-their-common			
+another-associate-pair-by-1			
+two-unrelated-composites-of-norm-25			
+lcm-with-a-negative-real-prime			
+lcm-of-two-large-norm-gaussians			
+lcm-past-2-53-in-both-parts			
+a-real-split-prime-and-its-gaussian-factor			
+lcm-of-two-real-composites-plain-integer-case	(Int.lcm 4 9)		
+lcm-with-a-negative-real-composite			
+lcm-with-an-associate-times-1			
+lcm-with-an-associate-times-i			
+two-primes-above-13-multiply-straight-through			
+lcm-with-a-real-prime-s-associate-by-the-unit-i			
+lcm-with-a-real-composite-5-squared			
+lcm-with-a-negative-associate			
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19			
+lcm-of-two-composites-sharing-the-prime-above-13			
+the-smallest-number-divisible-by-each-of-1			
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))	true	
+a-single-argument-is-returned-unchanged			
+0-absorbs-the-lcm-with-0-is-0	(Int.lcm 0 5)	0	
+signs-are-discarded-before-computing-the-lcm	(Int.lcm (-3) 7)	21	

@@ -1,0 +1,12 @@
+id	in	out	tex.in	tex.out
+five-six-seven	Pochhammer[5, 3]	210	(5)_3	210
+from-1-is-the-factorial	Pochhammer[1, 5]	120	(1)_5	120
+at-risingfactorial-2-5i	N[Pochhammer[Complex[2, 5], Complex[3, 2]]]	20.6474078947724 + 24.047356710232826*I	N\left[(2+5 i)_{3+2 i}\right]	20.6474\, +24.0474 i
+a-symbolic-base	Pochhammer[a, 3]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[(a)_3-a (a+1) (a+2)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)_3-\frac{7}{3} \left(\frac{7}{3}+1\right) \left(\frac{7}{3}+2\right)\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)_3--\frac{11}{5} \left(-\frac{11}{5}+1\right) \left(-\frac{11}{5}+2\right)\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)_3-\frac{13}{4} \left(\frac{13}{4}+1\right) \left(\frac{13}{4}+2\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+a-rational-base	Pochhammer[Rational[1, 2], 3]	15/8	\left(\frac{1}{2}\right)_3	\frac{15}{8}
+a-symbolic-order-is-pochhammer	Pochhammer[a, n]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[(a)_n-(a)_n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)_{-\frac{11}{5}}-\left(\frac{7}{3}\right)_{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)_{-\frac{17}{6}}-\left(\frac{13}{4}\right)_{-\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\left(\frac{19}{8}\right)_{-\frac{23}{9}}-\left(\frac{19}{8}\right)_{-\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+complex-base-and-order	N[Pochhammer[Complex[2, 5], Complex[3, 2]]]	20.6474078947724 + 24.047356710232826*I	N\left[(2+5 i)_{3+2 i}\right]	20.6474\, +24.0474 i
+agrees-with-pochhammer	(Pochhammer[4, 3] == Pochhammer[4, 3])	True	(4)_3=(4)_3	\text{True}
+negative-order	Pochhammer[5, -2]	1/12	(5)_{-2}	\frac{1}{12}
+a-zero-factor	Pochhammer[-3, 4]	0	(-3)_4	0
+a-pole-of-gamma-a	N[Pochhammer[-2, Complex[1, 1]]]	0.	N\left[(-2)_{1+i}\right]	0.

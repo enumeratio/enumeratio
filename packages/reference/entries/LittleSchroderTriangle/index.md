@@ -1,0 +1,17 @@
+---
+name: LittleSchroderTriangle
+domain: Combinatorics
+signature: LittleSchroderTriangle(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A114709
+    url: https://oeis.org/A114709
+stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: SchroederPath
+---

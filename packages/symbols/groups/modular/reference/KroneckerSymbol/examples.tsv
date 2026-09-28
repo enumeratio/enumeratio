@@ -1,0 +1,49 @@
+id	section	role	expr	expected	caption
+kroneckersymbol-17-6			[KroneckerSymbol, 17, 6]	-1	
+kroneckersymbol-10-13			[KroneckerSymbol, 10, 13]	1	
+0-whenever-a-1-and-n-0			[KroneckerSymbol, 5, 0]	0	0 whenever |a| ≠ 1 and n = 0
+a-1-is-the-sign-of-a-here-a-0			[KroneckerSymbol, -3, -1]	-1	(a/-1) is the sign of a — here a < 0
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues			[KroneckerSymbol, 3, 2]	-1	(a/2): odd a, and 3 mod 8 = 3, one of the two residues giving -1
+a-n-0		test	[KroneckerSymbol, 0, 0]	0	a = n = 0
+n-0-a-1		test	[KroneckerSymbol, 1, 0]	1	n = 0, a = 1
+n-0-even-a-not-a-unit		test	[KroneckerSymbol, 2, 0]	0	n = 0, even a (not a unit)
+n-0-odd-a-1		test	[KroneckerSymbol, 3, 0]	0	n = 0, odd a != +-1
+a-0-n-1		test	[KroneckerSymbol, 0, 1]	1	a = 0, n = 1
+n-1-is-always-1		test	[KroneckerSymbol, 5, 1]	1	n = 1 is always 1
+n-1-negative-a		test	[KroneckerSymbol, -7, 1]	1	n = 1, negative a
+a-0-n-1-2		test	[KroneckerSymbol, 0, -1]	1	a = 0, n = -1
+n-1-positive-a		test	[KroneckerSymbol, 3, -1]	1	n = -1, positive a
+n-1-negative-a-sign-of-a		test	[KroneckerSymbol, -5, -1]	-1	n = -1, negative a: sign of a
+a-0-odd-n-1		test	[KroneckerSymbol, 0, 5]	0	a = 0, odd n > 1
+a-0-even-n		test	[KroneckerSymbol, 0, 4]	0	a = 0, even n
+a-0-negative-odd-n		test	[KroneckerSymbol, 0, -5]	0	a = 0, negative odd n
+a-0-n-prime		test	[KroneckerSymbol, 0, 7]	0	a = 0, n prime
+a-1-is-always-1		test	[KroneckerSymbol, 1, 7]	1	a = 1 is always 1
+a-1-negative-n		test	[KroneckerSymbol, 1, -7]	1	a = 1, negative n
+1-p-p-7-3-mod-4		test	[KroneckerSymbol, -1, 7]	-1	(-1/p), p = 7 = 3 mod 4
+1-p-p-5-1-mod-4		test	[KroneckerSymbol, -1, 5]	1	(-1/p), p = 5 = 1 mod 4
+2-n-character-n-7-7-mod-8		test	[KroneckerSymbol, 2, 7]	1	(2/n) character, n = 7 = 7 mod 8
+2-n-character-n-3-3-mod-8		test	[KroneckerSymbol, 2, 3]	-1	(2/n) character, n = 3 = 3 mod 8
+2-n-character-n-5-5-mod-8		test	[KroneckerSymbol, 2, 5]	-1	(2/n) character, n = 5 = 5 mod 8
+2-n-character		test	[KroneckerSymbol, -2, 7]	-1	(-2/n) character
+a-2-odd-a-5-5-mod-8		test	[KroneckerSymbol, 5, 2]	-1	(a/2), odd a = 5 = 5 mod 8
+a-2-odd-a-9-1-mod-8		test	[KroneckerSymbol, 9, 2]	1	(a/2), odd a = 9 = 1 mod 8
+a-2-even-a-0		test	[KroneckerSymbol, 4, 2]	0	(a/2), even a = 0
+even-a-and-even-n		test	[KroneckerSymbol, 6, 4]	0	even a and even n
+odd-square-a-9-mod-2-3		test	[KroneckerSymbol, 9, 8]	1	odd square a = 9 mod 2^3
+even-composite-n-2-3-negative		test	[KroneckerSymbol, 7, -6]	1	even composite n = 2*3, negative
+even-a-negative-even-n		test	[KroneckerSymbol, 10, -6]	0	even a, negative even n
+negative-odd-n		test	[KroneckerSymbol, 5, -3]	-1	negative odd n
+negative-a-negative-odd-n		test	[KroneckerSymbol, -5, -9]	-1	negative a, negative odd n
+perfect-square-a-qr		test	[KroneckerSymbol, 4, 7]	1	perfect-square a: QR
+non-square-a-qnr-mod-7		test	[KroneckerSymbol, 3, 7]	-1	non-square a: QNR mod 7
+both-at-negative-grid-edge		test	[KroneckerSymbol, -10, -10]	0	both at negative grid edge
+mixed-sign-edge		test	[KroneckerSymbol, 10, -10]	0	mixed-sign edge
+composite-a-prime-n		test	[KroneckerSymbol, 10, 7]	-1	composite a, prime n
+negative-a-odd-square-n-9		test	[KroneckerSymbol, -10, 9]	1	negative a, odd square n = 9
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[KroneckerSymbol, [List, 2, 3, 5, 7, 11], 6]	[List, 0, 0, 1, 1, 1]	Threads element-wise over a list, as Wolfram's Listable heads do
+larger-arguments-10-11-1-against-the-2000th	Scope		[KroneckerSymbol, [Add, [Power, 10, 11], 1], [NthPrime, 2000]]	-1	Larger arguments: $10^{11}+1$ against the 2000th prime, 17389
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	Scope		[KroneckerSymbol, 7, 6]	1	Even $n$, where [[JacobiSymbol]] is undefined: $(7/2)(7/3)=1\cdot1$
+the-character-mod-4-4-p-1-for-primes-p-equiv-3	Applications		[KroneckerSymbol, -4, 7]	-1	The character mod 4: $(-4/p)=-1$ for primes $p\equiv3\pmod4$
+completely-multiplicative-in-n	Properties		[Equal, [KroneckerSymbol, 7, [Multiply, 3, 5]], [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]]]	True	Completely multiplicative in n
+a-0-1-for-a-pm-1	Possible issues		[KroneckerSymbol, -1, 0]	1	$(a/0)=1$ for $a=\pm1$

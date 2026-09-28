@@ -14,7 +14,7 @@ test("loads every head from every package's reference/ directory", () => {
   expect(result.heads.map((h) => `${h.package}/${h.head}`)).toEqual(["pkg-a/Mod", "pkg-b/FromDigits"]);
 });
 
-test("reads the optional .implementations.yaml alongside its entry", () => {
+test("reads the optional examples.values files alongside its entry", () => {
   const result = loadReferenceData(fixture("node-loader"));
   const mod = result.heads.find((h) => h.head === "Mod");
   expect(mod?.implementations).toEqual({
@@ -29,7 +29,7 @@ test("reads the optional .implementations.yaml alongside its entry", () => {
   });
 });
 
-test("a head with no .implementations.yaml loads with implementations undefined", () => {
+test("a head with no values files loads with implementations undefined", () => {
   const result = loadReferenceData(fixture("node-loader"));
   const fromDigits = result.heads.find((h) => h.head === "FromDigits");
   expect(fromDigits?.implementations).toBeUndefined();
@@ -42,7 +42,7 @@ test("flags an id collision on a head shared between two packages (§9)", () => 
   expect(result.issues).toHaveLength(1);
   expect(result.issues[0]?.message).toBe(
     'id collision: "FromDigits/base-ten" is also declared in ' +
-      fixture("node-loader-collision/pkg-a/reference/FromDigits.examples.yaml"),
+      fixture("node-loader-collision/pkg-a/reference/FromDigits/examples.tsv"),
   );
 });
 

@@ -1,0 +1,14 @@
+---
+name: CongruentMod
+domain: Number theory
+signature: CongruentMod(a, b, m)
+summary: Whether $a \equiv b \pmod m$ -- true exactly when $m \mid (a - b)$.
+signatures:
+  - call: CongruentMod(a, b, m) -> boolean
+    description: exact for arbitrary-precision integers, past double precision
+    library: "@enumeratio/analytic"
+    type: (integer, integer, integer) -> boolean
+seeAlso:
+  - Mod
+  - GCD
+---

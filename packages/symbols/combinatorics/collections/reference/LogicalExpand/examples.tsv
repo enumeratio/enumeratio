@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+implies-becomes-or-not			[LogicalExpand, [Implies, p, b]]	[Or, b, [Not, p]]
+distributes-and-over-or	Scope		[LogicalExpand, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]
+xor-eliminated-into-dnf	Scope		[LogicalExpand, [Xor, p, b]]	[Or, [And, b, [Not, p]], [And, p, [Not, b]]]
+a-contradictory-term-drops-out	Scope		[LogicalExpand, [And, p, [Not, p]]]	False

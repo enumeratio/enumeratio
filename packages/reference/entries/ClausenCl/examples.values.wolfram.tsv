@@ -1,0 +1,10 @@
+id	in	out	tex.in	tex.out	verdict
+cl-2-pi-2-g-catalan-s-constant	ResourceFunction["ClausenCl"][2, Divide[Pi, 2]]	Catalan	\text{ResourceFunction}[\text{ClausenCl}]\left[2,\frac{\pi }{2}\right]	C	
+odd-orders-are-cosine-series-cl-3-0-zeta-3	ResourceFunction["ClausenCl"][3, 0]	If[OddQ, Zeta[3], 0]	\text{ResourceFunction}[\text{ClausenCl}][3,0]	\text{If}[\text{OddQ},\zeta (3),0]	disagree
+cl-2-0-0	ResourceFunction["ClausenCl"][2, 0]	If[OddQ, Zeta[2], 0]	\text{ResourceFunction}[\text{ClausenCl}][2,0]	\text{If}[\text{OddQ},\zeta (2),0]	disagree
+cl-3-pi-2-frac-3-32-zeta-3	ResourceFunction["ClausenCl"][3, Divide[Pi, 2]]	(-3*Zeta[3])/32	\text{ResourceFunction}[\text{ClausenCl}]\left[3,\frac{\pi }{2}\right]	-\frac{3 \zeta (3)}{32}	
+cl-2-pi-3-1-01494-the-maximum-of-cl-2	ResourceFunction["ClausenCl"][2, 1.0471975511965976]	1.0149416064096535	\text{ResourceFunction}[\text{ClausenCl}][2,1.0472]	1.01494	
+cl-2-pi-0-the-sine-series-vanishes-at-multiples	ResourceFunction["ClausenCl"][2, Pi]	0	\text{ResourceFunction}[\text{ClausenCl}][2,\pi ]	0	
+cl-3-pi-eta-3-frac-34-zeta-3	ResourceFunction["ClausenCl"][3, Pi]	(-3*Zeta[3])/4	\text{ResourceFunction}[\text{ClausenCl}][3,\pi ]	-\frac{3 \zeta (3)}{4}	
+cl-4-pi-2-beta-4-which-has-no-closed-form-of-its	ResourceFunction["ClausenCl"][4, Divide[Pi, 2]]	(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16	\text{ResourceFunction}[\text{ClausenCl}]\left[4,\frac{\pi }{2}\right]	\frac{1}{16} \left(\frac{\zeta \left(4,\frac{1}{4}\right)}{16}-\frac{\zeta \left(4,\frac{3}{4}\right)}{16}\right)	disagree
+cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0	ResourceFunction["ClausenCl"][1, 0]	Infinity	\text{ResourceFunction}[\text{ClausenCl}][1,0]	\infty	

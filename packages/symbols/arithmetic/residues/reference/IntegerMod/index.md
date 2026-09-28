@@ -1,0 +1,42 @@
+---
+name: IntegerMod
+domain: Modular arithmetic
+signature: IntegerMod(a, m)
+summary: $a \bmod m$ as a VALUE — an element of $\mathbb{Z}/m$ that arithmetic stays inside, after Sage's `Mod(a, m)`.
+signatures:
+  - call: IntegerMod(a, m)
+    description: the residue class of $a$, normalised into $[0, m)$
+    library: enumeratio-residues
+    type: (rational | value, integer) -> value
+  - call: IntegerMod(u/v, m)
+    description: a rational reads as $u \cdot v^{-1}$, when $v$ is a unit mod $m$
+    library: enumeratio-residues
+details:
+  - '[[Mod]] answers an integer; `IntegerMod` IS the class, so `+`, `·`, `/` and powers of it are computed in $\mathbb{Z}/m$ — a negative power inverts, and dividing by a non-unit leaves the call standing'
+  - A bare integer or rational next to an `IntegerMod` is read in the same ring
+  - Two classes with different moduli meet in $\mathbb{Z}/\gcd(m, n)$, the largest ring both reduce to — Sage's coercion
+  - '[[ChineseRemainder]] of classes is the class mod $\operatorname{lcm}$ that reduces to each, and [[MultiplicativeOrder]] of a unit is its order'
+  - The elements of [[IntegerModRing]](m)
+  - Written $a \pmod{m}$, and typed that way too; `a \bmod m` is still [[Mod]], and `a \equiv b \pmod{m}` is still a congruence. TraditionalForm writes the coset, $a + m\mathbb{Z}$
+  - A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`
+seeAlso:
+  - IntegerModRing
+  - Mod
+  - ChineseRemainder
+  - AdicNumeral
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: "Wolfram's Mod/PowerMod answer a plain Integer, not a persistent ring element -- the same distinction this head's own details draw against our own [[Mod]]. FiniteField/FiniteFieldElement DOES keep a residue as a persistent value with +, ·, ^-1 (kernel-verified: FiniteField[7][3]+FiniteField[7][5] = FiniteFieldElement[.., {1}], FiniteField[7][3]^-1 = {5}, matching this head's own examples) -- but only for prime modulus; FiniteField[4] silently reinterprets 4 as GF(2^2), a different structure with no zero divisors, not the ring Z/4Z this head also supports (kernel-verified wrong for our composite-modulus examples), and FiniteField[6] errors outright. No single template is safe across this head's mixed prime/composite examples, so it stays unmapped for wolfram."
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: Mod($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-09-27
+---

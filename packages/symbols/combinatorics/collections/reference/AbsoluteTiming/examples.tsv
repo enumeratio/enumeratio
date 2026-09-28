@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-value-half-is-deterministic			[At, [AbsoluteTiming, [Add, 1, 2]], 2]	3	the value half of the result, extracted with At (seconds is not pinned)

@@ -1,0 +1,9 @@
+---
+name: BlockSizes
+domain: Combinatorics
+signature: BlockSizes(...)
+summary: Block sizes
+mapOn:
+  - SetPartition
+stub: carrier
+---

@@ -1,0 +1,35 @@
+---
+name: Pochhammer
+domain: Combinatorics
+signature: Pochhammer(a, n)
+summary: The rising factorial (a)_n = a(a+1)(a+2)…(a+n−1).
+signatures:
+  - call: Pochhammer(a, n)
+    description: the rising factorial $(a)_n$.
+  - call: Pochhammer(a, n)
+    description: The rising factorial (a)_n = a(a+1)(a+2)…(a+n−1).
+    library: enumeratio-number-theory
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
+details:
+  - 'Closed form via the Gamma function: $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$.'
+  - $(1)_n = n!$, since the rising factorial from 1 just counts up to n.
+  - 'Negative order gives the falling reciprocal: $(a)_{-n} = \frac{1}{(a-1)(a-2)\cdots(a-n)}$.'
+  - 'Dividing by $k!$ counts multisets: $\binom{n+k-1}{k} = \frac{(n)_k}{k!}$.'
+  - If a is a non-positive integer with $|a| < n$, the product picks up a zero factor and vanishes.
+  - A building block of hypergeometric series, where it appears in both numerator and denominator terms.
+seeAlso:
+  - Factorial
+  - Binomial
+references:
+  - system: wikipedia
+    identity: Falling and rising factorials
+  - system: mathworld
+    identity: PochhammerSymbol
+  - system: dlmf
+    identity: "5.2"
+names:
+  fungrim: RisingFactorial
+  wikidata: Q2339261
+  wolframIdentity: true
+---

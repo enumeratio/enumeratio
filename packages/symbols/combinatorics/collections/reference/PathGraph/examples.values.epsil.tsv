@@ -1,0 +1,3 @@
+id	in	out
+a-5-vertex-path	VertexDegree(PathGraph(5))	[1, 2, 2, 2, 1]
+a-path-along-named-vertices	PathGraph([a, b, c])	Graph([a, b, c], [UndirectedEdge(a, b), UndirectedEdge(b, c)])

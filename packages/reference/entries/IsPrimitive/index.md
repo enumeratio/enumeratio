@@ -1,0 +1,9 @@
+---
+name: IsPrimitive
+domain: Combinatorics
+signature: IsPrimitive(...)
+summary: Is primitive (gcd(a,b)=1)
+statOn:
+  - PythagoreanTriple
+stub: carrier
+---

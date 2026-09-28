@@ -1,0 +1,4 @@
+id	in	out
+quiverisacyclic-linearquiver-4	\mathrm{QuiverIsAcyclic}(\vec{A}_{4})	\mathrm{True}
+a-loop-is-a-cycle	\mathrm{QuiverIsAcyclic}(\mathrm{JordanQuiver})	\mathrm{False}
+binom-7-2-the-same-as-incidencealgebra-chain-6	\dim(k\vec{A}_{6})	21

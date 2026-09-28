@@ -1,0 +1,35 @@
+---
+name: GammaLn
+domain: Special functions
+signature: GammaLn(z)
+summary: The natural logarithm of $\Gamma(z)$, avoiding the overflow of computing [[Gamma]] directly for large z.
+signatures:
+  - call: GammaLn(z)
+    description: $\ln \Gamma(z)$, useful where $\Gamma(z)$ itself would overflow.
+  - call: GammaLn(z)
+    description: The natural logarithm of $\Gamma(z)$, avoiding the overflow of computing [[Gamma]] directly for large z.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+details:
+  - 'Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.'
+  - Called gammaln in MATLAB and SciPy, lgamma in C's math library.
+  - "Inherits Gamma's recurrence in log form: $\\operatorname{GammaLn}(z+1) = \\operatorname{GammaLn}(z) + \\ln z$."
+  - $\operatorname{GammaLn}(1/2) = \frac{1}{2}\ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$.
+  - Diverges to $+\infty$ at the nonpositive integers, the poles of Gamma -- the log of a diverging magnitude, rather than the ComplexInfinity that [[Gamma]] itself returns there.
+  - "It is $\\ln(\\Gamma(z))$ with a PRINCIPAL logarithm, which for complex $z$ is not the same function as Wolfram's $\\mathrm{LogGamma}$: the two differ by multiples of $2\\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters."
+seeAlso:
+  - Gamma
+  - LogGamma
+  - Digamma
+references:
+  - system: wikipedia
+    identity: Gamma function
+  - system: mathworld
+    identity: LogGammaFunction
+  - system: dlmf
+    identity: "5.2"
+names:
+  fungrim: LogGamma
+  wolfram: LogGamma
+---

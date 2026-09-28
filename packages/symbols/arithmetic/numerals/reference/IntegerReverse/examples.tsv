@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+the-base-10-digits-reversed			[IntegerReverse, 1234]	4321	the base-10 digits reversed
+1234-10011010010-2-reversed-is-1001011001-2-601	Scope		[IntegerReverse, 1234, 2]	601	$1234 = 10011010010_2$ reversed is $1001011001_2 = 601$
+padded-to-5-digits-first-00123-reversed	Scope		[IntegerReverse, 123, 10, 5]	32100	padded to 5 digits first: $00123$ reversed
+listable	Scope		[IntegerReverse, [List, 12, 345]]	[List, 21, 543]	Listable
+a-palindrome-is-its-own-reversal	Applications		[IntegerReverse, 12321]	12321	a palindrome is its own reversal
+trailing-zeros-become-leading-zeros-and-vanish	Possible issues		[IntegerReverse, 1200]	21	trailing zeros become leading zeros and vanish

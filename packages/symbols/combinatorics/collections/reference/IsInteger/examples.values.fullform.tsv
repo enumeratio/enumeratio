@@ -1,0 +1,5 @@
+id	in
+a-plain-integer	IntegerQ[4]
+a-rational-is-not-an-integer	IntegerQ[Rational[1, 2]]
+a-free-symbol-is-false	IntegerQ[x]
+a-negative-integer	IntegerQ[-3]

@@ -1,0 +1,15 @@
+id	in	out
+totient-12	\varphi(12)	4
+totient-36	\varphi(36)	12
+totient-1	\varphi(1)	1
+totient-10	\varphi(10)	4
+varphi-0-0-as-in-wolfram	\varphi(0)	0
+threads-element-wise-over-a-list-as-wolfram-s		
+large-integers-varphi-50	\varphi(50!)	4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+negative-n-varphi-n-varphi-n	\varphi(-10)	4
+rsa-key-setup-varphi-17-times-23-16-times-22-352	\varphi(391)	352
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	\left(7^{\varphi(10)}\bmod 10\right)	1
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	\varphi(1)+\varphi(2)+\varphi(3)+\varphi(4)+\varphi(6)+\varphi(12)	12
+multiplicative-varphi-mn-varphi-m-varphi-n-when	\varphi(12)=\varphi(4)\varphi(3)	\mathrm{True}
+varphi-p-p-1-for-a-prime-p	\varphi(17)	16
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	\varphi(81)	54

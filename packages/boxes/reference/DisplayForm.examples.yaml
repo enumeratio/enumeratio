@@ -1,3 +1,0 @@
-- id: superscript
-  expr: [DisplayForm, [SuperscriptBox, "'x'", "'2'"]]
-  expected: [DisplayForm, [SuperscriptBox, "'x'", "'2'"]]

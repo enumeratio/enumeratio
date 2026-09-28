@@ -1,0 +1,4 @@
+id	in	out
+accumulate-1-2-3-4	\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 3, 6, 10\bigr\rbrack
+accumulate-empty	\mathrm{Accumulate}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
+accumulate-last-is-total	\mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5	\top

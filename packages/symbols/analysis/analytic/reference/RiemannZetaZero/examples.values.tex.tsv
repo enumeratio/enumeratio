@@ -1,0 +1,5 @@
+id	in	out
+the-first-nontrivial-zero-frac-12-14-1347-i	N(\mathrm{RiemannZetaZero}(1))	0.5+14.134\,725\,141\,734\,693i
+n-riemannzetazero-2	N(\mathrm{RiemannZetaZero}(2))	0.5+21.022\,039\,638\,771\,556i
+n-riemannzetazero-50	N(\mathrm{RiemannZetaZero}(50))	0.5+143.111\,845\,807\,620\,63i
+n-riemannzetazero-10	N(\mathrm{RiemannZetaZero}(10))	0.5+49.773\,832\,477\,672\,3i

@@ -1,0 +1,5 @@
+id	in	out
+m-6		
+algebradimension-rookalgebra-3		
+5	(SymmetricGroupAlgebra(QQ, 5)).dimension()	120
+a-cup-cap-is-not-a-permutation	enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), SymmetricGroupAlgebra(QQ, 3))	False

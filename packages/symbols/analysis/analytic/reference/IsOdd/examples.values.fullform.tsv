@@ -1,0 +1,13 @@
+id	in
+isodd-3	OddQ[3]
+isodd-4	OddQ[4]
+negative-integers-count-too	OddQ[-7]
+isodd-0	OddQ[0]
+a-non-integer-is-not-odd	OddQ[3.5]
+isodd-1-over-3	OddQ[Rational[1, 3]]
+big-integers	OddQ[Plus[Power[2, 100], 1]]
+pi-is-known-not-to-be-an-integer-so-it-is	OddQ[Pi]
+threads-element-wise-over-a-list	OddQ[List[1, 2, 3]]
+select-the-odd-numbers-up-to-10	Select[Range[10], OddQ]
+an-integer-is-odd-exactly-when-it-is-not-even	Equal[OddQ[7], Not[EvenQ[7]]]
+a-symbol-stays-undecided-rather-than-false	OddQ[x]

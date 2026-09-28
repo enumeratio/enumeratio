@@ -1,0 +1,19 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+issquarefree-10			[IsSquareFree, 10]	True			
+issquarefree-4			[IsSquareFree, 4]	False			
+issquarefree-12			[IsSquareFree, 12]	False			
+every-prime-is-squarefree			[IsSquareFree, 17]	True	Every prime is squarefree		
+issquarefree-20			[IsSquareFree, 20]	False			
+threads-element-wise-over-a-list	Scope		[IsSquareFree, [List, 10, 4, 12]]	[List, True, False, False]	Threads element-wise over a list	domain	We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.
+gaussian-integers-3-2i-is-a-gaussian-prime	Scope		[IsSquareFree, [Complex, 3, 2]]	True	Gaussian integers: $3+2i$ is a Gaussian prime		
+gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, GaussianIntegers, True]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$		
+rationals-numerator-and-denominator-are-both	Scope		[IsSquareFree, [Rational, 2, 3]]	True	Rationals: numerator and denominator are both squarefree		
+polynomials-x-2-6x-6-has-no-repeated-factor	Scope		[IsSquareFree, [Add, [Power, x, 2], [Multiply, 6, x], 6]]	True	Polynomials: $x^2+6x+6$ has no repeated factor -- decided by $\gcd(f, f')$ via [[D]] and compute-engine's own PolynomialGCD		
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	Scope		[IsSquareFree, [Subtract, [Power, x, 3], [Multiply, [Power, x, 2], y]]]	False	Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$		
+squarefree-as-a-polynomial-in-x-alone-y-is-just	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], x]	True	Squarefree as a polynomial in $x$ alone -- $y$ is just a coefficient here		
+but-not-in-y-alone-y-appears-squared	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], y]	False	…but not in $y$ alone: $y$ appears squared		
+a-non-squarefree-rational	Scope	test	[IsSquareFree, [Rational, 4, 3]]	False	A non-squarefree rational		
+x-1-2-has-a-repeated-root	Scope	test	[IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1]]	False	$(x-1)^2$ has a repeated root		
+x-3-y-3-has-no-repeated-factor	Scope	test	[IsSquareFree, [Subtract, [Power, x, 3], [Power, y, 3]]]	True	$x^3-y^3$ has no repeated factor		
+n-is-squarefree-exactly-when-mu-n-neq-0-see	Properties		[Equal, [IsSquareFree, 10], [Not, [Equal, [MoebiusMu, 10], 0]]]	True	$n$ is squarefree exactly when $\mu(n)\neq0$. See [[MoebiusMu]]		
+1-is-vacuously-squarefree-it-has-no-repeated	Possible issues		[IsSquareFree, 1]	True	1 is vacuously squarefree: it has no repeated prime factors		

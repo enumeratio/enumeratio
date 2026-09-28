@@ -1,0 +1,4 @@
+id	in	out
+one-over-s-squared	InverseLaplaceTransform(s ^ -2, s, t)	t
+one-over-s-minus-a	InverseLaplaceTransform((s - a) ^ -1, s, t)	ExponentialE ^ (a * t)
+s-over-s-squared-plus-a-squared	InverseLaplaceTransform(s / (s ^ 2 + a ^ 2), s, t)	Cos(a * t)

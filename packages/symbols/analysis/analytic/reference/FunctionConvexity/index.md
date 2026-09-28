@@ -1,0 +1,19 @@
+---
+name: FunctionConvexity
+domain: Elementary functions
+signature: FunctionConvexity(f, x)
+summary: 1 if f is convex over its whole domain, -1 if concave, 0 if affine, Indeterminate otherwise.
+signatures:
+  - call: FunctionConvexity(f, x)
+    description: the convexity of f in the real variable x over the whole real line, from the sign of its second derivative.
+    library: "@enumeratio/analytic"
+    type: (expression, symbol) -> expression
+details:
+  - Same domain-first convention as [[FunctionMonotonicity]] -- a domain that isn't all of $\mathbb R$ answers `Indeterminate` (confirmed against `wolframscript`), it isn't a decline.
+  - For a polynomial, reads the sign of the second derivative in closed form; Exp of an affine argument is always convex ($a^2 e^{ax+b}>0$).
+  - Declines only where the classifier itself declines, or where a polynomial's second derivative is a genuine multi-term polynomial of degree > 2.
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

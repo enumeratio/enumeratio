@@ -1,0 +1,4 @@
+id	in	out
+count-binarywords-3	\mathrm{Count}(\mathrm{BinaryWords}(3))	8
+first-element-of-binarywords-3	\mathrm{BinaryWords}(3)[1]	\bigl\lbrack0, 0, 0\bigr\rbrack
+every-element-of-binarywords-3	\mathrm{Take}(\mathrm{BinaryWords}(3), 8)	\bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack

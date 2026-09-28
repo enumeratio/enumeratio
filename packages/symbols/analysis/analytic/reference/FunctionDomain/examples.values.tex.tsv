@@ -1,0 +1,10 @@
+id	in	out
+a-polynomial-is-defined-everywhere	\mathrm{FunctionDomain}(x^2, x)	\top
+division-by-zero-excludes-the-origin	\mathrm{FunctionDomain}(\frac{1}{x}, x)	x\lt0\lor0\lt x
+sqrt-of-a-bounded-quadratic	\mathrm{FunctionDomain}(\sqrt{4-x^2}, x)	-2\le x\le2
+a-monomial-with-negative-integer-exponent	\mathrm{FunctionDomain}(\frac{1}{x^3}, x)	x\lt0\lor0\lt x
+a-multivariate-expression-declines	\mathrm{FunctionDomain}(xy, x)	\mathrm{FunctionDomain}(xy, x)
+a-rational-function-with-two-real-poles	\mathrm{FunctionDomain}(\frac{1}{x^2-1}, x)	x\lt-1\lor-1\lt x\lt1\lor1\lt x
+an-even-root-needs-a-nonnegative-radicand	\mathrm{FunctionDomain}(\sqrt{x^2-1}, x)	x\le-1\lor1\le x
+a-natural-log-needs-a-positive-argument	\mathrm{FunctionDomain}(\ln(2-x), x)	x\lt2
+tangent-s-domain-is-declined	\mathrm{FunctionDomain}(\tan(x), x)	\mathrm{FunctionDomain}(\tan(x), x)

@@ -1,0 +1,21 @@
+id	in	out
+beta-2-3		
+the-unit-square-case-int-0-1-1-dt-1		
+beta-3-3		
+threads-element-wise-over-a-list-argument		
+b-5-4-frac-4-3-8-frac-1-280		
+machine-precision-arguments		
+four-arguments-at-floats		
+half-integer-arguments-evaluate-exactly-through		
+b-5-2-7-2-frac-3-pi-256-from-the-half-integer		
+complex-arguments-should-evaluate-numerically		
+three-arguments-the-incomplete-beta-b-z-a-b-int		
+four-arguments-the-generalized-incomplete-beta-b		
+to-30-significant-digits-every-one-correctly		
+b-1-2-1-2-pi-underlies-the-arcsine-distribution		
+symmetric-b-a-b-b-b-a	\mathrm{B}(2, 5)=\mathrm{B}(5, 2)	\mathrm{True}
+ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n	9\mathrm{B}(4, 6)\binom{8}{3}=1	\mathrm{True}
+b-a-1-1-a-for-symbolic-a		
+b-2-b-frac-1-b-b-1-not-yet		
+partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	\frac{\mathrm{d}\mathrm{B}(a, b)}{\mathrm{d}a}	(\psi(a)-\psi(a+b))\mathrm{B}(a, b)
+a-nonpositive-integer-argument-is-a-pole-of-the		

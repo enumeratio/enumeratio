@@ -1,0 +1,13 @@
+---
+name: Restricted
+domain: Combinatorial maps
+signature: Restricted(coll, predicate)
+summary: An anonymous restriction of `coll` to the elements satisfying `predicate`, delegating to [[Filter]] so the base collection stays lazy — the mechanism every named restriction (`Derangements`, `OddPartitions`, …) is built on, minus the name.
+signatures:
+  - call: Restricted(coll, predicate)
+    description: "`coll` filtered to the elements satisfying `predicate`, kept lazy through [[Filter]]."
+    library: enumeratio-domains
+    type: (collection, function) -> collection
+seeAlso:
+  - Filter
+---

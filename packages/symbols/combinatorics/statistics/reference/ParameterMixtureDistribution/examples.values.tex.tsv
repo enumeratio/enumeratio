@@ -1,0 +1,7 @@
+id	in	out
+parameter-mixture-poisson-gamma-pdf	\operatorname{PDF}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))), 4)	\frac{80}{729}
+parameter-mixture-poisson-gamma-mean	\mathrm{mean}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))))	6
+parameter-mixture-poisson-gamma-variance	\mathrm{Variance}(\mathrm{ParameterMixtureDistribution}(\operatorname{PoissonDistribution}(\theta), \mathrm{Distributed}(\theta, \mathrm{GammaDistribution}(3, 2))))	18
+parameter-mixture-binomial-beta-mean	\mathrm{mean}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(10, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 3))))	4
+parameter-mixture-binomial-beta-variance	\mathrm{Variance}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(10, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 3))))	6
+parameter-mixture-binomial-beta-pdf	\operatorname{PDF}(\mathrm{ParameterMixtureDistribution}(\operatorname{BinomialDistribution}(4, \theta), \mathrm{Distributed}(\theta, \mathrm{BetaDistribution}(2, 2))), 2)	\frac{9}{35}

@@ -1,0 +1,25 @@
+---
+name: Random
+domain: Compute engine
+signature: Random(domain, shape?)
+summary: "A random element of a domain: uniform over a finite collection or an interval, or drawn from a distribution; with a count or shape, that many draws."
+signatures:
+  - call: Random()
+    description: A real in $[0, 1)$.
+  - call: Random(domain, shape)
+    description: One draw from a finite collection, uniform by index, or an interval; with a count, that many draws, and with a list of dimensions, an array of that shape. Every draw comes from the engine's one seeded stream, restarted by [[SeedRandom]].
+    library: enumeratio-collections
+    type: (() random -> real) & ((collection<any> | set<real>) random -> any) & ((collection<any> | set<real>, integer<0..> | list<integer<0..>>) random -> list)
+    overrides: compute-engine
+  - call: Random(dist, shape)
+    description: Draws from a distribution, by its own sampler.
+    library: enumeratio-statistics
+    type: (() random -> real) & ((collection<any> | set<real>) random -> any) & ((collection<any> | set<real>, integer<0..> | list<integer<0..>>) random -> list) & ((distribution, (integer<0..> | list<integer<0..>>)?) random -> any)
+    overrides: enumeratio-collections
+names:
+  wolfram: RandomReal
+seeAlso:
+  - SeedRandom
+  - RandomInteger
+  - RandomVariate
+---

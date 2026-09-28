@@ -1,0 +1,9 @@
+id	in	out
+matches-hypergeometric2f1-1-1-2-0-5-gamma-2	\mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 0.5)	1.386\,294\,361\,119\,889\,5
+a-0-5-b-1-5-c-2-5-at-neg-0-6	\mathrm{Hypergeometric2F1Regularized}(0.5, 1.5, 2.5, -0.6)	0.648\,457\,661\,435\,742\,9
+c-0-at-0-5	\mathrm{Hypergeometric2F1Regularized}(1, 1, 0, 0.5)	1.999\,999\,999\,999\,999\,6
+b-2-c-neg-2-at-0-4	\mathrm{Hypergeometric2F1Regularized}(1, 2, -2, 0.4)	19.753\,086\,419\,753\,085
+a-complex-argument-at-c-2	N(\mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 0.3+0.3i))	1.128\,758\,956\,676\,532\,4+0.220\,880\,330\,940\,412\,34i
+a-complex-argument-at-a-nonpositive-integer-c	N(\mathrm{Hypergeometric2F1Regularized}(1, 1, -1, 0.2-0.1i))	0.050\,978\,607\,191\,624\,94-0.183\,887\,118\,798\,361\,4i
+stays-finite-at-a-nonpositive-integer-lower	N(\mathrm{Hypergeometric2F1Regularized}(1, 1, -1, 0.3))	0.524\,781\,341\,107\,871\,2
+z-ge-1-stays-symbolic-no-continuation-past-the	\mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 1.5)	\mathrm{Hypergeometric2F1Regularized}(1, 1, 2, 1.5)

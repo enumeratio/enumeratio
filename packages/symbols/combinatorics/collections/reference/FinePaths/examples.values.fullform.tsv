@@ -1,0 +1,4 @@
+id	in
+count-finepaths-5	Count[FinePaths[5]]
+first-element-of-finepaths-5	Part[FinePaths[5], 1]
+every-element-of-finepaths-5	Take[FinePaths[5], 5]

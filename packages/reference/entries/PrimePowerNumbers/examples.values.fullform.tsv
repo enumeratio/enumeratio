@@ -1,0 +1,2 @@
+id	in
+the-first-20-terms	Take[PrimePowerNumbers, 20]

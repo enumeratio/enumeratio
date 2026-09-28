@@ -1,0 +1,5 @@
+id	in	out
+implies-becomes-or-not	LogicalExpand(Implies(p, b))	b || !p
+distributes-and-over-or	LogicalExpand(p && (b || r))	b && p || p && r
+xor-eliminated-into-dnf	LogicalExpand(Xor(p, b))	b && !p || p && !b
+a-contradictory-term-drops-out	LogicalExpand(p && !p)	False

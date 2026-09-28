@@ -1,0 +1,5 @@
+id	in	out
+runs-not-groups-the-two-runs-of-1-stay-apart	\mathrm{Split}(\bigl\lbrack1, 1, 2, 2, 2, 3, 1, 1\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack
+symbolic-elements	\mathrm{Split}(\bigl\lbrack a, a, b, b, b, a\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, a\bigr\rbrack, \bigl\lbrack b, b, b\bigr\rbrack, \bigl\lbrack a\bigr\rbrack\bigr\rbrack
+a-test-between-neighbours-split-into-increasing	\mathrm{Split}(\bigl\lbrack1, 2, 3, 5, 4, 6\bigr\rbrack, \mathrm{Less})	\bigl\lbrack\bigl\lbrack1, 2, 3, 5\bigr\rbrack, \bigl\lbrack4, 6\bigr\rbrack\bigr\rbrack
+the-empty-list	\mathrm{Split}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack

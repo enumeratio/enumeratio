@@ -1,0 +1,12 @@
+id	in	out
+median-list-1-2-3-4-5		
+median-list-1-2-3-4		
+median-list-1-2-3-4-5-6-7		
+median-list-1-2-3-4-5-6-7-8		
+given-a-matrix-median-is-column-wise		
+unsorted-data-is-sorted-first-the-middle-pair-3		
+exact-rationals		
+exact-constants-are-ordered-by-value-putting-e		
+the-median-of-a-lazy-range-of-even-length-is-the		
+the-same-outlier-laden-data-as-in-mean-s-example		
+for-an-odd-length-list-the-median-is-the-middle	\mathrm{median}(\bigl\lbrack5, 3, 1, 4, 2\bigr\rbrack)=\mathrm{Sort}(\bigl\lbrack5, 3, 1, 4, 2\bigr\rbrack)[3]	\mathrm{True}

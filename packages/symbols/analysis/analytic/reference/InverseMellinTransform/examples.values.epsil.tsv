@@ -1,0 +1,5 @@
+id	in	out
+gamma-to-exp	InverseMellinTransform(Gamma(s), s, x)	ExponentialE ^ (-x)
+pi-csc-to-one-over-one-plus-x	InverseMellinTransform(Pi * Csc(Pi * s), s, x)	1 / (x + 1)
+pi-csc-over-s-to-log-reciprocal	InverseMellinTransform(Pi * Csc(Pi * s) / s, s, x)	Ln(1 / x + 1)
+shift-gamma-a-plus-s	InverseMellinTransform(Gamma(a + s), s, x)	ExponentialE ^ (-x) * x ^ a

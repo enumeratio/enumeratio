@@ -1,0 +1,14 @@
+id	section	role	expr	expected	caption
+the-shortest-geodesic			[ModularWord, [ModularMatrix, 1, 1, 1, 2]]	"'LR'"	the shortest geodesic
+a-word-evaluates-as-its-matrix			[ModularTrace, "'LRLR'"]	7	a word evaluates as its matrix
+the-s-t-exponents-are-a-continued-fraction	Scope		[ModularSTWord, [ModularMatrix, 1, 5, 0, 1]]	[List, 5]	the $S$/$T$ exponents are a continued fraction
+the-identity-matrix	Scope		[ModularKind, [ModularMatrix, 1, 0, 0, 1]]	"'Identity'"	the identity matrix
+s-is-elliptic	Scope		[ModularKind, [ModularMatrix, 0, -1, 1, 0]]	"'Elliptic'"	$S$ is elliptic
+t-is-parabolic	Scope		[ModularKind, [ModularMatrix, 1, 1, 0, 1]]	"'Parabolic'"	$T$ is parabolic
+lr-is-hyperbolic	Scope		[ModularKind, [ModularMatrix, 1, 1, 1, 2]]	"'Hyperbolic'"	$LR$ is hyperbolic
+the-trace-of-a-plain-matrix	Scope		[ModularTrace, [ModularMatrix, 1, 1, 1, 2]]	3	the trace of a plain matrix, not just a word
+the-trace-of-a-bare-word	Scope		[ModularTrace, "'LR'"]	3	the trace of a bare word
+a-word-wrapped-as-modularmatrix	Scope		[ModularTrace, [ModularMatrix, "'LRLR'"]]	7	a word wrapped as `ModularMatrix` reads the same
+a-nested-list-matrix-works-too	Scope		[ModularTrace, [List, [List, 1, 1], [List, 1, 2]]]	3	a nested `List` matrix works too
+t-5-fixes-a-cusp	Properties		[ModularKind, [ModularMatrix, 1, 5, 0, 1]]	"'Parabolic'"	$T^5$ fixes a cusp
+the-s-t-round-trip-can-negate	Properties		[ModularTrace, [ModularFromSTWord, [ModularSTWord, [ModularMatrix, 3, 2, 4, 3]]]]	-6	the $S$/$T$ round trip can return $-M$

@@ -1,0 +1,9 @@
+---
+name: MaxElement
+domain: Combinatorics
+signature: MaxElement(...)
+summary: Largest element
+statOn:
+  - Finset
+stub: carrier
+---

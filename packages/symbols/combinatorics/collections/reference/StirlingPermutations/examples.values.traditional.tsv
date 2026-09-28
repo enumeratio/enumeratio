@@ -1,0 +1,4 @@
+id	in	out
+count-stirlingpermutations-4-105-7-a001147		
+every-element-of-stirlingpermutations-4		
+count-stirlingpermutations-n-2n-1-see-factorial2	\mathrm{Count}(\mathrm{StirlingPermutations}(4))=7!!	\mathrm{True}

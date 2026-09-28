@@ -1,0 +1,8 @@
+id	in	out
+n-arcoth-2	N(\mathrm{arcoth}(2))	0.549\,306\,144\,334\,054\,845\,7
+a-logarithmic-singularity-at-1	\mathrm{arcoth}(1)	\infty
+arcoth-positiveinfinity	\mathrm{arcoth}(\infty)	0
+a-float-argument-evaluates-directly	\mathrm{arcoth}(3.5)	0.293\,893\,332\,451\,059\,504\,095
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	\mathrm{TrigToExp}(\mathrm{arcoth}(2))	\frac{\ln(3)}{2}
+oddness-pulls-the-sign-out-of-a-symbolic	\mathrm{arcoth}(-x)	-\mathrm{arcoth}(x)
+derivative-frac-1-1-x-2	\frac{\mathrm{d}\mathrm{arcoth}(x)}{\mathrm{d}x}	\frac{1}{1-x^2}

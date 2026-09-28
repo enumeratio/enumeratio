@@ -1,0 +1,4 @@
+id	in
+count-motzkinpathsbypeaks-5-1	Count[MotzkinPathsByPeaks[5, 1]]
+first-element-of-motzkinpathsbypeaks-5-1	Part[MotzkinPathsByPeaks[5, 1], 1]
+every-element-of-motzkinpathsbypeaks-5-1	Take[MotzkinPathsByPeaks[5, 1], 5]

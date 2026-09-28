@@ -1,0 +1,35 @@
+---
+name: StandardTableauPairs
+domain: Collections
+signature: StandardTableauPairs(size)
+summary: Pairs $(P, Q)$ of same-shape standard Young tableaux with $n$ cells — the RSK codomain — as a lazy indexed family of $n!$.
+signatures:
+  - call: StandardTableauPairs(size)
+    library: enumeratio-collections
+    description: the $(P, Q)$ pairs of size `size`, in bijection with the permutations of `size` via RSK.
+    type: (integer<0..>) -> indexed_collection<any>
+details:
+  - 'A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].'
+  - Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
+  - Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.
+enumerate:
+  expr: StandardTableauPairs(4)
+seeAlso:
+  - SymmetricGroup
+  - Factorial
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000142
+    url: https://oeis.org/A000142
+    note: "RSK: pairs of same-shape SYT of size n sum to n!"
+  - system: sage
+    identity: sage.combinat.rsk.RSK
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/rsk.html
+    note: RSK(σ, check_standard=True) maps a permutation to its (P,Q) SYT pair; our collection is that map's codomain at fixed n — every same-shape SYT pair, the image of RSK over Permutations(n)
+grades:
+  - name: size
+    role: axis
+carrier: StandardTableauPair
+---

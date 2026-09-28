@@ -1,0 +1,5 @@
+id	in	out
+geometric	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 2, 4, 8, 16\bigr\rbrack, n)	2^{n}
+polynomial	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack, n)	n^2+2n+1
+catalan-numbers	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)	\mathrm{CatalanNumber}(n)
+factorial	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 6, 24, 120\bigr\rbrack, n)	n!

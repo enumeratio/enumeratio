@@ -1,0 +1,4 @@
+id	in
+the-first-25-terms	Take[CarmichaelNumbers, 25]
+561-is-the-smallest-carmichael-number	Element[561, CarmichaelNumbers]
+560-is-not-carmichael	Element[560, CarmichaelNumbers]

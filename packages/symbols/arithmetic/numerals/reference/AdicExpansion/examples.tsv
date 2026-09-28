@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+adicexpansion-adicnumeral-10-1-over-3-8			[AdicExpansion, [AdicNumeral, 10, [Rational, 1, 3]], 8]	"'…66666667'"	
+the-same-1-3-2-adically			[AdicExpansion, [AdicNumeral, 2, [Rational, 1, 3]], 8]	"'…10101011'"	the same $1/3$, 2-adically
+as-a-list-least-significant-first			[AdicDigits, [AdicNumeral, 10, [Rational, 1, 3]], 6]	[List, 7, 6, 6, 6, 6, 6]	as a list, least significant first
+7-25-2-5-2-1-5-1	Scope		[AdicExpansion, [AdicNumeral, 5, [Rational, 7, 25]], 8]	"'0.12'"	$7/25 = 2·5^{-2} + 1·5^{-1}$
+a-plain-non-negative-integer-terminates-with-no	Scope		[AdicExpansion, [AdicNumeral, 10, 42]]	"'42'"	A plain non-negative integer terminates with no infinite tail
+1-is-the-all-9s-repeating-tail-since-1-999-in-z	Scope		[AdicExpansion, [AdicNumeral, 10, -1], 6]	"'…999999'"	$-1$ is the all-9s repeating tail, since $-1=\dots999$ in $\mathbf{Z}_{10}$
+digits-at-or-above-10-print-bracketed-as-in-15	Scope		[AdicExpansion, [AdicNumeral, 16, -1], 3]	"'…[15][15][15]'"	Digits at or above 10 print bracketed, as in $[15]$ for hexadecimal $-1$'s repeating digit
+digits-run-least-significant-first-1-s-first	Scope		[AdicDigits, [AdicNumeral, 10, -1], 4]	[List, 9, 9, 9, 9]	Digits run least-significant first: $-1$'s first four 10-adic digits are all 9

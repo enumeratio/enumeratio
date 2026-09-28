@@ -1,0 +1,32 @@
+---
+name: SloaneA
+domain: Special functions
+signature: SloaneA(id, n)
+summary: The $n$-th term of an OEIS sequence, `id` a quoted A-number — scoped to the specific sequences Fungrim's own `SloaneA` identities cite, each aliased to a head that already computes it. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: SloaneA(id, n)
+    description: the $n$-th term of OEIS sequence `id`.
+    library: "@enumeratio/analytic"
+    type: (string, integer) -> number
+details:
+  - "A general OEIS lookup is out of reach — most sequences have no closed form at all — so this aliases exactly the A-numbers Fungrim's identities use: A000045 ([[Fibonacci]]), A000040 (the primes, via `PrimeNumber`), A000720 (`PrimePi`), A000041 (`NPartition`), A000110 (`BellNumber`), A000142 (`Factorial`), A027641/A027642 (the numerator/denominator of [[BernoulliB]]), and A000793 (Landau's function $g(n)$, the largest order of an element of $S_n$ — computed directly, since compute-engine's `LandauG` is a symbolic stub with no numeric evaluator)."
+  - An id this package does not carry stays symbolic rather than guessing (e.g. A060691, which Fungrim cites only inside a derivative formula for AGM's Taylor coefficients, not as an equation for the sequence's value).
+primitive: numeric
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/sloane-a.ts
+  - origin: mapped
+    form: wolfram
+    template: With[{s = ResourceFunction["OEISSequenceData"][$1, "Offset"]}, ResourceFunction["OEISSequence"][$1][[$2 - s + 1]]]
+    arity: 2
+    note: No built-in OEIS-by-id lookup, but the Function Repository's OEISSequence/OEISSequenceData, read against each sequence's own OEIS offset, lands on the n-th term uniformly across every id this head aliases -- matches all seven (A000045/10 = 55, A000793/10 = 30, A000040/5 = 11, A000041/10 = 42, A000110/5 = 52, A000142/5 = 120, A000720/20 = 8). Needs network access to the Function Repository (and, transitively, oeis.org) to run. A060691, outside this head's alias table and left symbolic on our side, disagrees once the scan runs -- that is a scope difference (we don't claim that id), not a wrong answer.
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+seeAlso:
+  - Fibonacci
+  - BellNumber
+  - BernoulliB
+---

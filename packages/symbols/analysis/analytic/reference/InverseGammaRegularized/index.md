@@ -1,0 +1,28 @@
+---
+name: InverseGammaRegularized
+domain: Special functions
+signature: InverseGammaRegularized(a, s)
+summary: "The inverse of the regularized incomplete gamma $Q(a, z)$ in $z$: solves $s = Q(a, z)$. Solved numerically by a safeguarded Newton's method against compute-engine's own `GammaRegularized`, using the Gamma density (in log space) as the derivative."
+signatures:
+  - call: InverseGammaRegularized(a, s)
+    description: solves $s = Q(a, z)$ for $z$.
+    library: "@enumeratio/analytic"
+    type: (number, number) -> number
+details:
+  - $Q(a, 0) = 1$ and $Q(a, \infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \infty` are exact regardless.
+  - $Q(1, z) = e^{-z}$ inverts exactly to $-\ln s$, symbolic $s$ included.
+  - "Otherwise: a safeguarded Newton's method (falls back to bisection whenever a step would leave the bracket) against the forward function `GammaRegularized(a, z)`, whose own accuracy was checked directly against `wolframscript` to 20 digits."
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/inverse-regularized.ts
+    note: Safeguarded Newton/bisection against native GammaRegularized.
+seeAlso:
+  - GammaRegularized
+  - Gamma
+  - InverseBetaRegularized
+names:
+  wolframIdentity: true
+---

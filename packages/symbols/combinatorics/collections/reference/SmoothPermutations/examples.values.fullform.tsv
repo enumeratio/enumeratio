@@ -1,0 +1,3 @@
+id	in
+count-smoothpermutations-5-88-a032351	Count[SmoothPermutations[5]]
+every-element-of-smoothpermutations-4	Take[SmoothPermutations[4], 22]

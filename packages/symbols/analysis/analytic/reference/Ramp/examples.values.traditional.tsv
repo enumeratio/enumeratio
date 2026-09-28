@@ -1,0 +1,6 @@
+id	in	out
+ramp-negative		
+ramp-positive		
+ramp-zero		
+ramp-equals-x-times-unitstep	\mathrm{Ramp}(5)=5\mathrm{UnitStep}(5)	\mathrm{True}
+ramp-derivative		

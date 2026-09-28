@@ -1,0 +1,5 @@
+id	in	out
+padded-with-zeros-on-the-left	\mathrm{PadLeft}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)	\bigl\lbrack0, 0, 1, 2, 3\bigr\rbrack
+a-padding-element	\mathrm{PadLeft}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5, x)	\bigl\lbrack x, x, 1, 2, 3\bigr\rbrack
+a-shorter-length-drops-elements-from-the-left	\mathrm{PadLeft}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, 3)	\bigl\lbrack3, 4, 5\bigr\rbrack
+with-no-length-a-ragged-array-is-padded-to-a	\mathrm{PadLeft}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack

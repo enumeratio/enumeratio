@@ -1,0 +1,8 @@
+id	in	back
+indexof-list-1-2-3-2	First[FirstPosition[List[1, 2, 3], 2, List[0], List[1]]]	[First, [FirstPosition, [List, 1, 2, 3], 2, [List, 0], [List, 1]]]
+0-signals-that-the-value-isn-t-present-since-0	First[FirstPosition[List[1, 2, 3], 9, List[0], List[1]]]	[First, [FirstPosition, [List, 1, 2, 3], 9, [List, 0], [List, 1]]]
+only-the-first-of-several-occurrences-is	First[FirstPosition[List[a, b, a, a, b, c, b], b, List[0], List[1]]]	[First, [FirstPosition, [List, a, b, a, a, b, c, b], b, [List, 0], [List, 1]]]
+the-value-can-itself-be-a-list	First[FirstPosition[List[List[1, 2], List[3, 4]], List[3, 4], List[0], List[1]]]	[First, [FirstPosition, [List, [List, 1, 2], [List, 3, 4]], [List, 3, 4], [List, 0], [List, 1]]]
+at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	Equal[Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0], List[1]]]], 20]	[Equal, [At, [List, 10, 20, 30], [First, [FirstPosition, [List, 10, 20, 30], 20, [List, 0], [List, 1]]]], 20]
+indexof-reports-only-the-first-occurrence-see	First[FirstPosition[List[1, 2, 3, 2], 2, List[0], List[1]]]	[First, [FirstPosition, [List, 1, 2, 3, 2], 2, [List, 0], [List, 1]]]
+indexof-stays-at-the-top-level-where-this-value	First[FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b, List[0], List[1]]]	[First, [FirstPosition, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b, [List, 0], [List, 1]]]

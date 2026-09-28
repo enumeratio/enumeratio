@@ -1,0 +1,19 @@
+id	in	out
+a-pole-of-gamma-in-log-form	GammaLn(0)	PositiveInfinity
+a-floating-point-argument-evaluates-directly-to	GammaLn(2.5)	0.284_682_870_472_919_159_632
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	GammaLn(100.5)	361.435_540_467_777_621_555
+at-a-pole-of-gamma-compute-engine-gives-the-real	GammaLn(-1)	PositiveInfinity
+complex-arguments-here-the-principal-ln-gamma-z	GammaLn(2.5 + 3i)	-1.470_954_610_348_842_5 + 2.822_615_638_260_8i
+a-huge-inexact-argument-should-still-evaluate	GammaLn(10e999)	2_301_585_092_994_045_684_017_991_454_684_364_207_601e964
+threads-over-a-list-and-the-integer-points	GammaLn([1, 2, 3])	[0, 0, Ln(2)]
+uncertainty-propagation-through-ln-gamma-with	GammaLn(Around(1.2, 0.01))	Around(-0.085_374_090_003_315_83, 0.002_890_398_965_921_884)
+to-30-significant-digits-not-yet-the-last-digit	N(GammaLn(1 / 3), 30)	0.985_420_646_927_767_069_187_174_036_978
+used-to-get-ln-n-for-large-n-without-overflowing	GammaLn(11) == Ln(10!)	True
+defined-as-ln-gamma-z-here-at-z-5	GammaLn(5) == Ln(Gamma(5))	True
+gammaln-1-ln-gamma-1-ln-1-0	GammaLn(1) == 0	True
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	GammaLn(6) == GammaLn(5) + Ln(5)	True
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	GammaLn(1 / 2) == 1 / 2 * Ln(Pi)	True
+an-exact-positive-integer-now-reduces-too	GammaLn(5)	3 * Ln(2) + Ln(3)
+the-derivative-of-ln-gamma-is-the-digamma	D(GammaLn(x), x)	Digamma(x)
+off-the-positive-axis-gammaln-is-the-principal	GammaLn(-1.5)	0.860_047_015_376_481_014_511
+gammaln-101-is-exactly-ln-100-letting-us-reason	GammaLn(101) == Ln(100!)	True

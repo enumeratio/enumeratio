@@ -1,0 +1,5 @@
+id	in
+heavisidepi-inside	HeavisidePi[0]
+heavisidepi-boundary-unevaluated	HeavisidePi[Rational[1, 2]]
+heavisidepi-neg-boundary-unevaluated	HeavisidePi[Rational[-1, 2]]
+heavisidepi-outside	HeavisidePi[1]

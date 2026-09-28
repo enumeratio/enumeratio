@@ -1,0 +1,32 @@
+---
+name: SemiperfectNumbers
+domain: Collections
+signature: SemiperfectNumbers
+summary: The semiperfect numbers $6, 12, 18, 20, …$ -- integers equal to a sum of some subset of their proper divisors -- as a lazy indexed collection.
+signatures:
+  - call: SemiperfectNumbers
+    description: the $n$ with a proper-divisor subset summing to $n$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(SemiperfectNumbers) = +\infty$ (every perfect number is trivially semiperfect, taking the whole divisor set), and $At$ unranks the $k$-th by scanning forward, testing each candidate with a subset-sum search over its proper divisors.'
+  - OEIS A005835.
+  - "Membership goes through [[Element]]: $Element(12, SemiperfectNumbers)$ is true ($12 = 2 + 4 + 6$), $Element(70, SemiperfectNumbers)$ is false -- $70$ is abundant but [[WeirdNumbers|weird]]."
+enumerate:
+  expr: Take(SemiperfectNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - PerfectNumbers
+  - WeirdNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Pseudoperfect
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+    note: pseudoperfect is mathlib's name for the semiperfect concept — same predicate (some subset of proper divisors sums to n)
+  - system: oeis
+    identity: A005835
+    url: https://oeis.org/A005835
+grades: []
+carrier: Numeric
+unbounded: true
+---

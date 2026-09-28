@@ -1,4 +1,0 @@
-- id: held
-  expr: [MakeBoxes, [Add, 2, 3]]
-  expected: [RowBox, [List, "'2'", "'+'", "'3'"]]
-  caption: holds its argument, so the notation is of the sum as written

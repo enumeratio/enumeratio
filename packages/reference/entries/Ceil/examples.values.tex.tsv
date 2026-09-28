@@ -1,0 +1,23 @@
+id	in	out
+ceil-7-over-2	\lceil\frac{7}{2}\rceil	4
+ceil-3p2	\lceil3.2\rceil	4
+ceil-3p7	\lceil3.7\rceil	4
+integers-pass-through-unchanged	\lceil5\rceil	5
+threads-element-wise-over-a-list	\lceil\bigl\lbrack1.2, -1.2, 3.7\bigr\rbrack\rceil	\bigl\lbrack2, -1, 4\bigr\rbrack
+ceil-2p4	\lceil2.4\rceil	3
+ceil-2p6	\lceil2.6\rceil	3
+idempotent-lceil-lceil-x-rceil-rceil	\lceil\lceil x\rceil\rceil	\lceil x\rceil
+stays-symbolic	\lceil x\rceil	\lceil x\rceil
+exact-radicals-are-decided-numerically	\lceil\sqrt{50}\rceil	8
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	\lceil\pi\rceil	4
+a-second-argument-rounds-up-to-a-multiple-of-it	\lceil226\rceil	230
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	\lceil-10.3\rceil	-7
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	\lceil2\pi-e\rceil	\frac{15}{4}
+rounds-the-real-and-imaginary-parts-up	\lceil5.37-1.3i\rceil	6-i
+how-many-5-seat-vans-are-needed-to-carry-17	\lceil\frac{17}{5}\rceil	4
+ten-bits-are-enough-to-number-1000-items-lceil	\lceil\log_{2}(1\,000)\rceil	10
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\top
+floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\top
+a-zero-divisor-inside-ceil	\lceil\frac{16}{0}\rceil	\lceil\tilde\infty\rceil
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	\lceil-3.7\rceil	-3
+nan-propagates-rather-than-erroring	\lceil\operatorname{NaN}\rceil	\operatorname{NaN}

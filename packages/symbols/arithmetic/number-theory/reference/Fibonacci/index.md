@@ -1,0 +1,80 @@
+---
+name: Fibonacci
+domain: Sequences
+signature: Fibonacci(n)
+summary: The nth Fibonacci number, with $F_0 = 0$ and $F_1 = 1$, extended to negative n by the same recurrence.
+signatures:
+  - call: Fibonacci(n)
+    description: the nth Fibonacci number $F_n$.
+  - call: Fibonacci(nu)
+    description: a real (non-integer) index via Binet's formula, $F_\nu = \frac{\varphi^\nu - \cos(\pi\nu)\varphi^{-\nu}}{\sqrt5}$.
+    library: enumeratio-number-theory
+    type: (number | value, any?) -> any
+    overrides: enumeratio-adeles
+  - call: Fibonacci(n, x)
+    description: the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n and numeric via the two-variable Binet formula for a real order.
+    library: enumeratio-number-theory
+  - call: Fibonacci(n)
+    description: The nth Fibonacci number, with $F_0 = 0$ and $F_1 = 1$, extended to negative n by the same recurrence.
+    library: enumeratio-adeles
+    type: (integer | value) -> integer | value
+    overrides: compute-engine
+details:
+  - Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.
+  - "Closed form (Binet's formula): $F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5}$, where $\\varphi = \\frac{1+\\sqrt5}{2}$ and $\\psi = \\frac{1-\\sqrt5}{2}$."
+  - Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\varphi$. See [[LucasL]].
+  - 'GCD identity: $\gcd(F_m, F_n) = F_{\gcd(m,n)}$.'
+  - Extends to negative n via $F_{-n} = (-1)^{n+1} F_n$.
+  - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.
+seeAlso:
+  - LucasL
+references:
+  - system: wikipedia
+    identity: Fibonacci sequence
+  - system: mathworld
+    identity: FibonacciNumber
+  - system: oeis
+    identity: A000045
+  - system: rosettacode
+    identity: Fibonacci sequence
+names:
+  dlmf: Fibonacci number
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Fibonacci[$1]
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: sympy
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: sage
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: oscar
+    template: fibonacci($1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: julia
+    template: BigInt(fibonacci(ZZ($1)))
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.fib $1)
+    arity: 1
+    threadArg: 1
+    note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
+---

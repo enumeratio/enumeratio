@@ -1,0 +1,4 @@
+id	in	out	verdict
+algebradimension-quaternions	(SR.var("Quaternions")).dimension()	AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'dimension'	error
+algebradimension-cliffordalgebra-2-1			
+c-4			

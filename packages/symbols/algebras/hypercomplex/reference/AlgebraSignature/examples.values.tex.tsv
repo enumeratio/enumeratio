@@ -1,0 +1,4 @@
+id	in	out
+algebrasignature-quaternions	\mathrm{AlgebraSignature}(\mathrm{Quaternions})	\bigl\lbrack-1, -1\bigr\rbrack
+cl-2-1	\mathrm{AlgebraSignature}(\mathrm{CliffordAlgebra}(2, 1))	\bigl\lbrack1, 1, -1\bigr\rbrack
+nilpotent	\mathrm{AlgebraSignature}(\mathrm{DualNumbers})	\bigl\lbrack0\bigr\rbrack

@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption
+n-arcoth-2			[N, [Arcoth, 2]]	{num: "0.5493061443340548457"}	
+a-logarithmic-singularity-at-1	Scope		[Arcoth, 1]	PositiveInfinity	A logarithmic singularity at 1
+arcoth-positiveinfinity	Scope		[Arcoth, PositiveInfinity]	0	
+a-float-argument-evaluates-directly	Scope		[Arcoth, 3.5]	{num: "0.293893332451059504095"}	A float argument evaluates directly
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	Scope		[TrigToExp, [Arcoth, 2]]	[Multiply, [Rational, 1, 2], [Ln, 3]]	As a logarithm, $\operatorname{arcoth} 2 = \tfrac12\ln\frac{2+1}{2-1} = \tfrac12\ln 3$
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcoth, [Negate, x]]	[Negate, [Arcoth, x]]	Oddness pulls the sign out of a symbolic argument: $\operatorname{arcoth}(-x) = -\operatorname{arcoth} x$
+derivative-frac-1-1-x-2	Scope		[D, [Arcoth, x], x]	[Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]	Derivative: $\frac{1}{1 - x^2}$

@@ -1,0 +1,4 @@
+id	in	out
+falling-factorial-5-3-60	FallingFactorial(5, 3)	60
+falling-factorial-3-5-0	FallingFactorial(3, 5)	0
+falling-factorial-half-2-neg-1-4	FallingFactorial(1 / 2, 2)	-1 / 4

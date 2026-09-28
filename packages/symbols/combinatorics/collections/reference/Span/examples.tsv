@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+positions-2-through-4-2-4-in-wolfram			[At, [List, a, b, c, d, f], [Span, 2, 4]]	[List, b, c, d]	Positions 2 through 4 ($2;;4$ in Wolfram)
+every-other-element-through-the-last-1-1-2			[At, [List, a, b, c, d, f], [Span, 1, -1, 2]]	[List, a, c, f]	Every other element through the last ($1;;-1;;2$)
+a-negative-step-walks-backwards-1-1-1	Scope		[At, [List, a, b, c, d, f], [Span, -1, 1, -1]]	[List, f, d, c, b, a]	A negative step walks backwards ($-1;;1;;-1$)
+negative-bounds-the-last-two-elements	Scope		[At, [List, a, b, c, d, f], [Span, -2, -1]]	[List, d, f]	Negative bounds: the last two elements
+spans-at-two-levels-cut-out-a-submatrix	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]	[List, [List, 4, 5], [List, 7, 8]]	Spans at two levels cut out a submatrix

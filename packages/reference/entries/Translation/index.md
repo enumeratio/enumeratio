@@ -1,0 +1,9 @@
+---
+name: Translation
+domain: Combinatorics
+signature: Translation(...)
+summary: Translation norm (tile distance)
+statOn:
+  - AffinePermutation
+stub: carrier
+---

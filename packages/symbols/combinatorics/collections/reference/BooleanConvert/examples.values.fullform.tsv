@@ -1,0 +1,6 @@
+id	in
+default-form-is-dnf	BooleanConvert[And[p, Or[b, r]]]
+cnf-distributes-or-over-and	BooleanConvert[Or[p, And[b, r]], "CNF"]
+nnf-pushes-not-to-the-leaves-not-distributed	BooleanConvert[Implies[p, b], "NNF"]
+a-tautological-clause-drops-out-of-cnf	BooleanConvert[Or[p, Not[p]], "CNF"]
+an-unimplemented-form-stays-unevaluated	BooleanConvert[p, "ESOP"]

@@ -1,0 +1,2 @@
+id	in
+a-2-cycle-and-a-downstream-only-vertex	ConnectedComponents[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]

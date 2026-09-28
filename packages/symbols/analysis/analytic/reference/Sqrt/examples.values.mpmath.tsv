@@ -1,0 +1,37 @@
+id	in	out
+sqrt-16	sqrt(16)	4.0
+stays-symbolic-when-the-radicand-isn-t-a-perfect	sqrt(2)	1.41421356237309504880168872421
+sqrt-4-over-9	sqrt((mpf(4)/9))	0.666666666666666666666666666667
+sqrt-0	sqrt(0)	0.0
+a-perfect-square-radicand-evaluates-exactly-even	sqrt(-4)	(0.0 + 2.0j)
+an-approximate-number-gives-an-approximate-root	sqrt(3.5)	1.87082869338697069279187436616
+pulls-perfect-square-factors-out-of-the-radical	sqrt(200)	14.1421356237309504880168872421
+sqrt-neg-25	sqrt(-25)	(0.0 + 5.0j)
+sqrt-8	sqrt(8)	2.82842712474619009760337744842
+rationalizes-the-denominator	sqrt((mpf(1)/2))	0.707106781186547524400844362105
+sqrt-12-over-5	sqrt((mpf(12)/5))	1.54919333848296675407170615991
+sqrt-neg-2p5	sqrt(-2.5)	(0.0 + 1.58113883008418966599944677222j)
+an-exact-complex-square-2-i-2-3-4i	sqrt(mpc(3, 4))	(2.0 + 1.0j)
+sqrt-positiveinfinity	sqrt(inf)	
+threads-element-wise-over-a-list	[sqrt(1), sqrt(4), sqrt(9)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]
+threads-over-a-matrix-entry-by-entry-this-is-not	[[sqrt((mpf(1)/2)), sqrt(-1)], [sqrt(0), sqrt((mpf(1)/2))]]	[[mpf('0.707106781186547524400844362104884'), mpc(real='0.0', imag='1.0')], [mpf('0.0'), mpf('0.707106781186547524400844362104884')]]
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1		
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1		
+to-45-significant-digits-every-one-correctly	(sqrt(2))	1.41421356237309504880168872421
+an-approximate-negative-radicand-stays-complex	sqrt(-2.875)	(0.0 + 1.69558249578131703476613908166j)
+sqrt-neg-4-over-9	sqrt((mpf(-4)/9))	(0.0 + 0.666666666666666666666666666667j)
+sqrt-neg-1-half	sqrt((mpf(-1)/2))	(0.0 + 0.707106781186547524400844362105j)
+sqrt-neg-1	sqrt(-1)	(0.0 + 1.0j)
+sqrt-neg-12-over-5	sqrt((mpf(-12)/5))	(0.0 + 1.54919333848296675407170615991j)
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle	sqrt(((3)**2 + (4)**2))	5.0
+sqrt-x-2-x-for-a-perfect-square-see-square	almosteq((sqrt(16))**2, 16, 1e-20)	True
+sqrt-x-x-1-2	almosteq(sqrt(16), ((16)**(mpf(1)/2)), 1e-20)	True
+sqrt-x-2-x-for-every-x		
+negative-but-not-a-perfect-square-stays-symbolic	sqrt(-2)	(0.0 + 1.41421356237309504880168872421j)
+a-negative-rational-still-evaluates-exactly-when	sqrt((mpf(-4)/9))	(0.0 + 0.666666666666666666666666666667j)
+sqrt-x-2-is-not-simplified-to-x-which-would-be		
+at-x-1-sqrt-x-2-1-not-1	sqrt(((-1)**2))	1.0
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	(sqrt(-1) * sqrt(-1))	(-1.0 + 0.0j)
+while-sqrt-1-1-1	sqrt((-1 * -1))	1.0
+sqrt-36-negative	sqrt(-36)	(0.0 + 6.0j)
+sqrt-2-times-sqrt-neg-1	(sqrt(1) * sqrt(-1))	(0.0 + 1.0j)

@@ -1,0 +1,9 @@
+id	in	out
+2-cdot-6-12-equiv-1-pmod-11	RationalReconstruction(6, 11)	1 / 2
+a-round-trip-through-z-1000003	RationalReconstruction(PowerMod(22 / 7, 1, 1_000_003), 1_000_003)	22 / 7
+explicit-bounds-denominators-of-1-only	RationalReconstruction(5, 11, 5, 1)	5
+rationalreconstruction-list-6-9-10-11	RationalReconstruction([6, 9, 10], 11)	[1 / 2, -2, -1]
+the-harmonic-number-h-20-back-from-its-image-mod	"RationalReconstruction(\n                        PowerMod(55_835_135 / 15_519_504, 1, 2 ^ 61 - 1),\n                        2 ^ 61 - 1,\n                      )"	55_835_135 / 15_519_504
+one-word-size-prime-is-not-enough-for-h-20-2nd-m	"RationalReconstruction(\n                        PowerMod(55_835_135 / 15_519_504, 1, 1_000_000_007),\n                        1_000_000_007,\n                      )"	RationalReconstruction(301_316_272, 1_000_000_007)
+multi-modular-arithmetic-glue-two-images-with	"RationalReconstruction(\n                        ChineseRemainder([\n                                           PowerMod(\n                                                     55_835_135 / 15_519_504,\n                                                     1,\n                                                     1_000_000_007,\n                                                   ),\n                                           PowerMod(\n                                                     55_835_135 / 15_519_504,\n                                                     1,\n                                                     1_000_000_009,\n                                                   ),\n                                         ], [1_000_000_007, 1_000_000_009]),\n                        1_000_000_007 * 1_000_000_009,\n                      )"	55_835_135 / 15_519_504
+mod-11-the-bounds-are-n-d-le-2-and-no-such	RationalReconstruction(3, 11)	RationalReconstruction(3, 11)

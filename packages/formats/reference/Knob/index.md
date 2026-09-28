@@ -1,0 +1,11 @@
+---
+name: Knob
+domain: Graphics
+signature: Knob(var, range)
+summary: Held inert and drawn as a rotary control bound to `var` over `range`, a $(\mathrm{min}, \mathrm{max})$ or $(\mathrm{min}, \mathrm{max}, \mathrm{step})$ tuple.
+signatures:
+  - call: Knob(var, range)
+    description: held inert; drawn as a rotary control bound to `var` over the $(\mathrm{min}, \mathrm{max})$ or $(\mathrm{min}, \mathrm{max}, \mathrm{step})$ range
+    library: enumeratio-formats
+    type: (any*) -> any
+---

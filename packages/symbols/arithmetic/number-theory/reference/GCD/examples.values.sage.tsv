@@ -1,0 +1,47 @@
+id	in	out	verdict
+gcd-12-18	gcd(12, 18)	6	
+gcd-24-36	gcd(24, 36)	12	
+gcd-is-variadic-it-accepts-any-number-of			
+gcd-2-6-10			
+over-the-rationals-the-gcd-of-the-numerators			
+gaussian-integers-the-associate-in-the-first	gcd((3 + 1*I), (1 + 3*I))	1	inconclusive
+gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	gcd((-3 + 2*I), (10 + 15*I))	1	inconclusive
+gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	gcd((5 + (10/3)*I), ((3/2) + 1*I))	1	inconclusive
+big-integers-gcd-20-10-100-3-7-exact-past-where	gcd(factorial(20), (((10)^100) + 3))	7	
+listable-a-single-list-argument-threads-element	[gcd(12, 3), gcd(12, 7), gcd(12, 40)]	[3, 1, 4]	
+gcd-with-a-unit-is-always-1	gcd((3 + 4*I), 1)		
+gcd-with-i-a-unit-is-1	gcd((3 + 4*I), (0 + 1*I))		
+gcd-with-0-is-the-other-argument-normalised	gcd(0, (-4 + 3*I))		
+gcd-of-0-and-0-is-0	gcd(0, 0)		
+two-gaussian-primes-above-5-are-coprime	gcd((2 + 1*I), (2 + -1*I))		
+a-gaussian-prime-and-a-real-prime-3-mod-4-are	gcd((2 + 1*I), 3)		
+gcd-recovers-a-shared-prime-norm-5	gcd((4 + 2*I), (3 + 4*I))		
+an-associate-pair-has-gcd-equal-to-their-common	gcd((3 + 4*I), (-4 + 3*I))		
+another-associate-pair-by-1	gcd((3 + 4*I), (-3 + -4*I))		
+two-unrelated-composites-of-norm-25-share-no	gcd((3 + 4*I), (4 + 3*I))		
+gcd-with-a-negative-real-prime	gcd((3 + 4*I), -7)		
+gcd-of-two-large-norm-gaussians	gcd((123 + 456*I), (1000 + 1*I))		
+gcd-past-2-53-in-both-parts	gcd((100000000000000000001 + 9007199254740993*I), (4 + 1*I))		
+a-real-split-prime-and-its-gaussian-factor	gcd(5, (2 + 1*I))		
+gcd-of-two-real-composites-plain-integer-case	gcd(4, 9)		
+gcd-with-a-negative-real-composite	gcd(-15, (5 + 5*I))		
+gcd-with-an-associate-times-1	gcd((8 + 2*I), (-3 + -4*I))		
+gcd-with-an-associate-times-i	gcd((8 + 2*I), (4 + -3*I))		
+two-primes-above-13-are-coprime	gcd((3 + 2*I), (2 + 3*I))		
+gcd-recovers-a-shared-prime-above-13	gcd((6 + 8*I), (3 + 2*I))		
+gcd-with-a-real-prime-s-associate-by-the-unit-i	gcd((3 + 4*I), (0 + 7*I))		
+gcd-with-a-real-composite-5-squared	gcd((3 + 4*I), 25)		
+gcd-with-a-negative-associate	gcd((6 + 8*I), (-2 + -3*I))		
+gcd-of-a-large-norm-gaussian-and-a-real-prime-19	gcd((123 + 456*I), 19)		
+gcd-of-two-composites-sharing-the-prime-above-13	gcd((6 + 8*I), (9 + 6*I))		
+reduce-12-18-to-lowest-terms-by-dividing-out-the	(12 / gcd(12, 18))	2	
+commutative-gcd-a-b-gcd-b-a	bool(gcd(12, 18) == gcd(18, 12))	True	
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm	bool((gcd(12, 18) * lcm(12, 18)) == (12 * 18))	True	
+gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	gcd(fibonacci(12), fibonacci(18))	8	
+a-single-argument-is-returned-unchanged			
+with-no-arguments-compute-engine-returns-0-the			
+0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(0, 5)	5	
+signs-are-discarded-before-computing-the-gcd			
+lists-aren-t-threaded-element-wise-they-re	[gcd([2, 4], 6), gcd([2, 4], 8)]	TypeError: unable to call gcd with [2, 4]	error
+gcd-0-0-0-by-convention	gcd(0, 0)	0	
+symbolic-arguments-stay-unevaluated	gcd(SR.var("x"), SR.var("y"))	True	

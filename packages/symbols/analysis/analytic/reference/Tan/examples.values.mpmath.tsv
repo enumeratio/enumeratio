@@ -1,0 +1,43 @@
+id	in	out
+tan-0	tan(0)	0.0
+tan-pi-over-6		
+tan-pi-over-4		
+tan-pi-over-3		
+tan-30-circ-frac-sqrt-3-3-exactly		
+a-machine-precision-argument-evaluates	tan(1.2)	2.57215162212631859719325219168
+a-huge-24-40-argument	(tan(((24)**40)))	
+a-huge-10-100-argument	(tan(((10)**100)))	
+a-huge-3-200-argument	(tan(((3)**200)))	
+a-huge-neg-7-60-argument	(tan((-((7)**60))))	
+a-huge-10-80-plus-1-over-3-argument		
+tan-100-under-n	(tan(100))	
+n-of-an-exact-argument-gives-an-arbitrary	(tan((mpf(6)/5)))	2.57215162212631893540999423603
+evaluates-at-a-complex-argument	tan(mpc(2.5, 1))	(-0.237013830916270580522716158056 + 0.896437917127861752050952735755j)
+threads-element-wise-over-a-matrix		
+tan-pi-8-sqrt-2-1		
+tan-pi-12-2-sqrt-3		
+tan-pi-5-sqrt-5-2-sqrt-5		
+tan-pi-10-sqrt-1-2-sqrt-5		
+tan-5-pi-12-2-sqrt-3	tan(((mpf(5)/12) * pi))	3.73205080756887729352744634151
+tan-3-over-4-times-pi	tan(((mpf(3)/4) * pi))	-1.0
+interval-arithmetic-the-image-of-0-pi-3-is-0		
+uncertainty-propagation-tan-2-pm-0-02-approx-2		
+tan-ix-i-tanh-x		
+oddness-pulls-the-sign-out-of-a-symbolic		
+tan-arctan-x-x-for-every-x		
+tan-arctan-2-2-for-every-x		
+tan-arcsin-x-frac-x-sqrt-1-x-2		
+derivative-sec-2-x		
+antiderivative-ln-sec-x		
+taylor-series-about-0		
+to-30-significant-digits-every-one-correctly	(tan(1))	1.55740772465490223050697480746
+threads-element-wise-over-a-list		
+tan-x-frac-sin-x-cos-x		
+odd-function-tan-x-tan-x		
+period-pi-not-2-pi-adding-a-half-turn-doesn-t		
+sin-x-cos-x-should-simplify-to-tan-x-simplify		
+rewritten-in-exponentials		
+a-pole-cos-pi-2-0-so-the-ratio-blows-up		
+same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	1.55740772465490223050697480746
+a-pole-at-negative-pi-over-2-too		
+a-pole-reached-through-periodicity-unreduced		

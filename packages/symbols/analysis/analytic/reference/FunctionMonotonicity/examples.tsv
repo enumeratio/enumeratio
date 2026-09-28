@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+a-cubic-is-increasing-everywhere			[FunctionMonotonicity, [Power, x, 3], x]	1	A cubic is increasing everywhere -- its derivative $3x^2$ never goes negative		
+a-parabola-is-not-globally-monotonic			[FunctionMonotonicity, [Power, x, 2], x]	Indeterminate	A parabola turns around at its vertex	undefined-form	Same Indeterminate-vs-NaN spelling gap as FunctionConvexity — Wolfram's own FunctionMonotonicity also answers Indeterminate, but fromWolfram reads that back as NaN.
+exp-of-an-affine-argument-is-always-monotonic			[FunctionMonotonicity, [Exp, x], x]	1	Exp of an affine argument is always monotonic		
+a-restricted-domain-answers-indeterminate	Properties		[FunctionMonotonicity, [Sqrt, x], x]	Indeterminate	Sqrt's domain isn't all of R, so Wolfram's own convention is Indeterminate here -- confirmed against wolframscript	undefined-form	Same Indeterminate-vs-NaN spelling gap as the other FunctionMonotonicity example.

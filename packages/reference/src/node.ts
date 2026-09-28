@@ -1,6 +1,5 @@
-// The fs-based loader for the YAML records (design/examples-as-data.md §8 step 1). Reads
-// `<package>/reference/<Head>.yaml` with its optional `<Head>.examples.yaml` and
-// `<Head>.implementations.yaml`, through
+// The fs-based loader for the records (design/examples-as-data.md §8 step 1). Reads each
+// `<package>/reference/<Head>/` folder (see @enumeratio/entry's record.ts), through
 // `@enumeratio/entry`'s strict reader, validated against its JSON Schema, and checks for `id`
 // collisions on a head shared between two packages (§9 "Shared heads").
 //
@@ -8,13 +7,13 @@
 // `ExampleAlternatives.vue` imports `@enumeratio/reference` in the browser, and a filesystem
 // loader on the main export would break the site build.
 
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  bySection,
   type HeadImplementations,
   type OtherSystemRun,
-  parseYaml,
   type ReferenceEntry,
   type ReferenceExample,
   type SystemImplementation,
@@ -25,19 +24,25 @@ import {
   REFERENCE_EXAMPLES_SCHEMA,
   validateSchema,
 } from "@enumeratio/entry/schema";
-import { recordDirs, STORIES_SUFFIX } from "@enumeratio/entry/node";
+import { EXAMPLES_FILE, headNames, type HeadRecord, INDEX_FILE, readHead, recordDirs } from "@enumeratio/entry/node";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
   /** The workspace package's directory name (`analytic`, `collections`, …). */
   readonly package: string;
-  /** The head name, from the file's basename. */
+  /** The head name, from its folder's name. */
   readonly head: string;
+  /** The package's record directory, which holds the head's folder. */
+  readonly dir: string;
+  /** The head's folder, `<dir>/<head>/`. */
+  readonly folder: string;
+  /** Its `index.md`. */
   readonly entryPath: string;
   readonly entry: ReferenceEntry;
-  /** Absent when the head has no examples. */
+  /** `index.md`'s markdown body, "" when there is none. */
+  readonly body: string;
+  /** Its `examples.tsv`; absent when the head has no examples. */
   readonly examplesPath?: string;
-  readonly implementationsPath?: string;
   readonly implementations?: HeadImplementations;
 }
 
@@ -51,18 +56,15 @@ export interface LoadResult {
   readonly issues: readonly LoadIssue[];
 }
 
-const ENTRY_SUFFIX = ".yaml";
-const EXAMPLES_SUFFIX = ".examples.yaml";
-const IMPLEMENTATIONS_SUFFIX = ".implementations.yaml";
-
-function headName(fileName: string): string {
-  return fileName.slice(0, -ENTRY_SUFFIX.length);
-}
+/** True when the rows are in page order: each section's together, the sections in order. */
+const inPageOrder = (examples: readonly ReferenceExample[]): boolean =>
+  JSON.stringify(bySection(examples).map((e) => e.id)) === JSON.stringify(examples.map((e) => e.id));
 
 /**
- * Scan every package's YAML directory (see `recordDirs` in `@enumeratio/entry/node`) for `<Head>.yaml` files, parse
- * and validate each one (and its `.implementations.yaml`, if present), and check that no two
- * packages assign the same id to the same head (design/examples-as-data.md §3, §9).
+ * Scan every package's record directory (see `recordDirs` in `@enumeratio/entry/node`) for head
+ * folders (`<Head>/index.md`, `examples.tsv`, `examples.values.<system>.tsv`), parse and validate
+ * each, and check that no two packages assign the same id to the same head
+ * (design/examples-as-data.md §3, §9).
  *
  * `packagesRoot` is normally the repo's `packages/` directory; a caller passes a fixture
  * directory in tests instead of scanning real data.
@@ -74,58 +76,33 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
   const seenIds = new Map<string, string>();
 
   for (const { package: pkg, dir: referenceDir } of recordDirs(packagesRoot)) {
-    const files = readdirSync(referenceDir).filter(
-      (f) =>
-        f.endsWith(ENTRY_SUFFIX) &&
-        !f.endsWith(EXAMPLES_SUFFIX) &&
-        !f.endsWith(IMPLEMENTATIONS_SUFFIX) &&
-        // A component's stories (packages/components/reference/<Name>.stories.yaml) share the
-        // directory name but not the shape -- not a head's entry.
-        !f.endsWith(STORIES_SUFFIX),
-    );
-
-    for (const file of files.sort()) {
-      const head = headName(file);
-      const entryPath = join(referenceDir, file);
-      let fields: Omit<ReferenceEntry, "examples">;
+    for (const head of headNames(referenceDir)) {
+      const folder = join(referenceDir, head);
+      const entryPath = join(folder, INDEX_FILE);
+      const examplesPath = join(folder, EXAMPLES_FILE);
+      let record: HeadRecord;
       try {
-        fields = parseYaml(readFileSync(entryPath, "utf8")) as Omit<ReferenceEntry, "examples">;
+        record = readHead(referenceDir, head);
       } catch (error) {
-        issues.push({ file: entryPath, message: `failed to parse: ${(error as Error).message}` });
+        issues.push({ file: folder, message: `failed to parse: ${(error as Error).message}` });
         continue;
       }
+      const { examples, ...fields } = record.entry;
       for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, fields)) issues.push({ file: entryPath, message });
-
-      const examplesPath = join(referenceDir, `${head}${EXAMPLES_SUFFIX}`);
-      let examples: ReferenceExample[] = [];
-      if (existsSync(examplesPath)) {
-        try {
-          examples = parseYaml(readFileSync(examplesPath, "utf8")) as ReferenceExample[];
-        } catch (error) {
-          issues.push({ file: examplesPath, message: `failed to parse: ${(error as Error).message}` });
-        }
+      if (examples.length > 0)
         for (const message of validateSchema(REFERENCE_EXAMPLES_SCHEMA, examples))
           issues.push({ file: examplesPath, message });
-      }
-      const entry: ReferenceEntry = { ...fields, examples };
+      if (!inPageOrder(examples))
+        issues.push({
+          file: examplesPath,
+          message: "rows aren't in page order (each section's together, in SECTIONS order): run format-records",
+        });
+      const implementations = record.implementations;
+      if (implementations !== undefined)
+        for (const message of validateSchema(HEAD_IMPLEMENTATIONS_SCHEMA, implementations))
+          issues.push({ file: folder, message });
 
-      const implementationsPath = join(referenceDir, `${head}${IMPLEMENTATIONS_SUFFIX}`);
-      let implementations: HeadImplementations | undefined;
-      if (existsSync(implementationsPath)) {
-        try {
-          implementations = parseYaml(readFileSync(implementationsPath, "utf8")) as HeadImplementations;
-        } catch (error) {
-          issues.push({
-            file: implementationsPath,
-            message: `failed to parse: ${(error as Error).message}`,
-          });
-        }
-        if (implementations !== undefined)
-          for (const message of validateSchema(HEAD_IMPLEMENTATIONS_SCHEMA, implementations))
-            issues.push({ file: implementationsPath, message });
-      }
-
-      for (const example of entry.examples ?? []) {
+      for (const example of examples) {
         if (example.id === undefined) continue;
         const globalId = `${head}/${example.id}`;
         const seenIn = seenIds.get(globalId);
@@ -140,10 +117,12 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
       heads.push({
         package: pkg,
         head,
+        dir: referenceDir,
+        folder,
         entryPath,
-        entry,
+        entry: record.entry,
+        body: record.body,
         examplesPath: examples.length > 0 ? examplesPath : undefined,
-        implementationsPath: implementations !== undefined ? implementationsPath : undefined,
         implementations,
       });
     }

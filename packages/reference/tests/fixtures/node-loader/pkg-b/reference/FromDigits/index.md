@@ -1,0 +1,6 @@
+---
+name: FromDigits
+domain: Numbers
+signature: FromDigits(digits)
+summary: Reconstructs a number from a list of digits.
+---

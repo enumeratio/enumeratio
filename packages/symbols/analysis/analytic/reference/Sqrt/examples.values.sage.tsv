@@ -1,0 +1,37 @@
+id	in	out
+sqrt-16	sqrt(16)	4
+stays-symbolic-when-the-radicand-isn-t-a-perfect	sqrt(2)	sqrt(2)
+sqrt-4-over-9	sqrt((4/9))	2/3
+sqrt-0	sqrt(0)	0
+a-perfect-square-radicand-evaluates-exactly-even	sqrt(-4)	2*I
+an-approximate-number-gives-an-approximate-root	sqrt(3.5)	1.87082869338697
+pulls-perfect-square-factors-out-of-the-radical	sqrt(200)	10*sqrt(2)
+sqrt-neg-25	sqrt(-25)	5*I
+sqrt-8	sqrt(8)	2*sqrt(2)
+rationalizes-the-denominator	sqrt((1/2))	sqrt(1/2)
+sqrt-12-over-5	sqrt((12/5))	2*sqrt(3/5)
+sqrt-neg-2p5	sqrt(-2.5)	1.58113883008419*I
+an-exact-complex-square-2-i-2-3-4i	sqrt((3 + 4*I))	I + 2
+sqrt-positiveinfinity	sqrt(oo)	
+threads-element-wise-over-a-list	[sqrt(1), sqrt(4), sqrt(9)]	[1, 2, 3]
+threads-over-a-matrix-entry-by-entry-this-is-not	[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]	[[sqrt(1/2), I], [0, sqrt(1/2)]]
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1		
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1		
+to-45-significant-digits-every-one-correctly	N(sqrt(2))	1.41421356237310
+an-approximate-negative-radicand-stays-complex	sqrt(-2.875)	1.69558249578132*I
+sqrt-neg-4-over-9	sqrt((-4/9))	2/3*I
+sqrt-neg-1-half	sqrt((-1/2))	sqrt(-1/2)
+sqrt-neg-1	sqrt(-1)	I
+sqrt-neg-12-over-5	sqrt((-12/5))	2*sqrt(-3/5)
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle	sqrt(((3)^2 + (4)^2))	5
+sqrt-x-2-x-for-a-perfect-square-see-square	bool((sqrt(16))^2 == 16)	True
+sqrt-x-x-1-2	bool(sqrt(16) == ((16)^(1/2)))	True
+sqrt-x-2-x-for-every-x	((sqrt(SR.var("x")))^2)	True
+negative-but-not-a-perfect-square-stays-symbolic	sqrt(-2)	sqrt(-2)
+a-negative-rational-still-evaluates-exactly-when	sqrt((-4/9))	2/3*I
+sqrt-x-2-is-not-simplified-to-x-which-would-be	sqrt(((SR.var("x"))^2))	True
+at-x-1-sqrt-x-2-1-not-1	sqrt(((-1)^2))	1
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	(sqrt(-1) * sqrt(-1))	-1
+while-sqrt-1-1-1	sqrt((-1 * -1))	1
+sqrt-36-negative	sqrt(-36)	6*I
+sqrt-2-times-sqrt-neg-1	(sqrt(1) * sqrt(-1))	I

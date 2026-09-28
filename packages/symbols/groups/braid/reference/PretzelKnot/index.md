@@ -1,0 +1,15 @@
+---
+name: PretzelKnot
+domain: Braids and knots
+signature: PretzelKnot(p, q, r)
+summary: The pretzel knot $P(p,q,r)$, for odd $p,q,r$ — three twisted bands side by side, named by its closed form since no general braid word is known for the family.
+signatures:
+  - call: PretzelKnot(p, q, r)
+    description: $P(p,q,r)$ as a knot, for odd $p,q,r$
+    library: enumeratio-braid
+    type: (integer, integer, integer) -> expression<PretzelKnot>
+seeAlso:
+  - TwistKnot
+  - TorusKnot
+  - AlexanderPolynomial
+---

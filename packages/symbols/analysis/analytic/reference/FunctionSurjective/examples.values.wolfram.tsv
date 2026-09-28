@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+an-odd-degree-polynomial-is-onto	FunctionSurjective[Power[x, 3], x, Reals]	True	\text{FunctionSurjective}\left[x^3,x,\mathbb{R}\right]	\text{True}
+exp-misses-the-non-positive-reals	FunctionSurjective[Exp[x], x, Reals]	False	\text{FunctionSurjective}[\exp (x),x,\mathbb{R}]	\text{False}
+log-is-onto-the-reals	FunctionSurjective[Log[x], x, Reals]	True	\text{FunctionSurjective}[\log (x),x,\mathbb{R}]	\text{True}
+a-reciprocal-never-hits-zero	FunctionSurjective[Divide[1, x], x, Reals]	False	\text{FunctionSurjective}\left[\frac{1}{x},x,\mathbb{R}\right]	\text{False}
+an-unsupported-codomain-declines				

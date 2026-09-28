@@ -1,0 +1,9 @@
+---
+name: OuterShape
+domain: Combinatorics
+signature: OuterShape(...)
+summary: Outer shape
+mapOn:
+  - SkewPartition
+stub: carrier
+---

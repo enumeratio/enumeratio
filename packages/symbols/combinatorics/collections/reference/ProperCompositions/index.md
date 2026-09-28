@@ -1,0 +1,25 @@
+---
+name: ProperCompositions
+domain: Collections
+signature: ProperCompositions(n)
+summary: The compositions of $n$ into parts $\ge 2$.
+signatures:
+  - call: ProperCompositions(n)
+    description: the compositions of $n$ into parts $\ge 2$
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - "Count follows a shifted Fibonacci recurrence: $1, 0, 1, 1, 2, 3, 5, 8, …$."
+seeAlso:
+  - IntegerCompositions
+  - OddCompositions
+catalog:
+  - system: oeis
+    identity: A000045
+    url: https://oeis.org/A000045
+    note: F(n−1)
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---

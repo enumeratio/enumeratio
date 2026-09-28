@@ -1,0 +1,35 @@
+---
+name: Multinomial
+domain: Combinatorics
+signature: Multinomial(k_1, k_2, …)
+summary: The multinomial coefficient $\frac{(k_1 + k_2 + \cdots)!}{k_1!\,k_2!\cdots}$ generalises [[Binomial]] to more than two parts.
+signatures:
+  - call: Multinomial(k_1, k_2, ...)
+    description: the multinomial coefficient for parts $k_1, k_2, \ldots$
+  - call: Multinomial(k_1, k_2, …)
+    description: The multinomial coefficient $\frac{(k_1 + k_2 + \cdots)!}{k_1!\,k_2!\cdots}$ generalises [[Binomial]] to more than two parts.
+    library: enumeratio-analytic
+    type: (integer+) -> integer
+    overrides: compute-engine
+  - call: Multinomial(k_1, k_2, …)
+    description: The multinomial coefficient $\frac{(k_1 + k_2 + \cdots)!}{k_1!\,k_2!\cdots}$ generalises [[Binomial]] to more than two parts.
+    library: enumeratio-number-theory
+    type: (any*) -> any
+    overrides: enumeratio-analytic
+details:
+  - Counts the ways to split $k_1 + k_2 + \cdots$ labeled items into groups of the given sizes.
+  - 'With two arguments it reduces to [[Binomial]]: $\binom{k_1+k_2}{k_1}$.'
+  - "Orderless: permuting the arguments doesn't change the value."
+  - All-zero arguments and a single argument both reduce to the empty product, 1.
+  - compute-engine requires all-integer arguments; a list argument is threaded over element-wise, as Wolfram's Listable heads do.
+seeAlso:
+  - Binomial
+  - Factorial
+references:
+  - system: wikipedia
+    identity: Multinomial theorem
+  - system: mathworld
+    identity: MultinomialCoefficient
+names:
+  wolframIdentity: true
+---

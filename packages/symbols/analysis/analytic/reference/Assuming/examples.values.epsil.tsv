@@ -1,0 +1,4 @@
+id	in	out
+abs-resolves-once-the-sign-is-known	Assuming(x > 0, Abs(x))	x
+sign-of-x-plus-sign-of-y-under-opposite-signs	Assuming([x > 0, y < 0], Sign(x) + Sign(y))	0
+the-assumption-does-not-leak	[Assuming(z > 0, Sign(z)), Sign(z)]	[1, Sign(z)]

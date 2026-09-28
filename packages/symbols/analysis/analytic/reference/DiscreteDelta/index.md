@@ -1,0 +1,13 @@
+---
+name: DiscreteDelta
+domain: Elementary functions
+signature: DiscreteDelta(x1, x2, …)
+summary: "The Kronecker-delta-like discrete delta: 1 when every argument is exactly 0, 0 otherwise."
+signatures:
+  - call: DiscreteDelta(x1, x2, …)
+    description: 1 if every argument is exactly 0; 0 if any argument is a nonzero real; unevaluated if any argument is undecided and none is a nonzero real.
+    library: "@enumeratio/analytic"
+    type: (real, real*) -> number
+names:
+  wolframIdentity: true
+---

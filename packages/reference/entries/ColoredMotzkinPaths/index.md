@@ -1,0 +1,18 @@
+---
+name: ColoredMotzkinPaths
+domain: Combinatorics
+signature: ColoredMotzkinPaths(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+    note: header names it only as the r=2 special case, not a general pointer
+stub: carrier
+grades:
+  - name: n
+    role: axis
+  - name: r
+    role: axis
+carrier: ColoredMotzkinPath
+---

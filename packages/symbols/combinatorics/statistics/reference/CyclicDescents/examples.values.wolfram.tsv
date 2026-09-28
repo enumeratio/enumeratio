@@ -1,0 +1,4 @@
+id	in
+the-one-line-word-312	CyclicDescents[Permutation[List[3, 1, 2]]]
+the-one-line-word-312-as-a-plain-list	CyclicDescents[List[3, 1, 2]]
+the-one-line-word-2413	CyclicDescents[Permutation[List[2, 4, 1, 3]]]

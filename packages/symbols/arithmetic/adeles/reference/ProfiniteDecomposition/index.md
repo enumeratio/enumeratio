@@ -1,0 +1,20 @@
+---
+name: ProfiniteDecomposition
+domain: Adèles and idèles
+signature: ProfiniteDecomposition(m, d?)
+summary: $\{b, a\}$ with $m = b \cdot a$, $b \in GL_n(\hat{\mathbb{Z}})$ and $a \in GL_n^+(\mathbb{Q})$ upper triangular — strong approximation for a matrix over $\hat{\mathbb{Q}}$.
+signatures:
+  - call: ProfiniteDecomposition(m)
+    description: $m$ a square matrix (list of lists) of [[ProfiniteNumber]] or rational entries
+    library: enumeratio-adeles
+    type: (list, number?) -> list
+  - call: ProfiniteDecomposition(m, d)
+    description: with $d$ = $\det m$ supplied explicitly rather than computed from $m$'s entries
+    library: enumeratio-adeles
+details:
+  - "Hertogh's Algorithm 8.4: $GL_n(\\hat{\\mathbb{Q}}) = GL_n(\\hat{\\mathbb{Z}}) \\cdot GL_n^+(\\mathbb{Q})$, strong approximation for $GL_n$ over $\\mathbb{Q}$."
+  - $b$'s entries are profinite numbers; $a$'s are rationals. Built on [[HermiteDecomposition]] of the denominators.
+seeAlso:
+  - HermiteDecomposition
+  - ProfiniteNumber
+---

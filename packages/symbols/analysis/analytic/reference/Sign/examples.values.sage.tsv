@@ -1,0 +1,24 @@
+id	in	out	verdict
+sign-neg-3	sign(-3)	-1	
+sign-3	sign(3)	1	
+zero-is-its-own-sign	sign(0)	0	
+sign-neg-1-over-2	sign((-1/2))	-1	
+the-unit-complex-number-pointing-the-same	sign((3 + 4*I))	sgn(4*I + 3)	disagree
+threads-element-wise-over-a-list	[sign(-3), sign(0), sign(7)]	[-1, 0, 1]	
+sign-neg-2p5	sign(-2.5)	-1	
+sign-3p14	sign(3.14)	1	
+a-complex-number-with-approximate-parts	sign((1.4 + 2.3*I))	sgn(1.40000000000000 + 2.30000000000000*I)	disagree
+an-exact-complex-argument-comes-back-exact-sign	sign((1 + 1*I))	sgn(I + 1)	disagree
+threads-over-a-matrix-entry-by-entry	[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]	[[1, -1], [-1, 1]]	
+exact-numeric-constants	sign(pi)	1	
+sign-neg-exponentiale	sign((-e))	-1	
+sign-imaginaryunit	sign(I)	sgn(I)	disagree
+sign-positiveinfinity	sign(oo)		
+an-interval-entirely-above-0-has-sign-1			
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	sign((sqrt(2) - 2))	-1	
+2-sqrt-2-is-the-same-certified-decision-the	sign((2 - sqrt(2)))	1	
+tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1	
+sign-z-z-z-see-abs	bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))	True	
+x-cdot-sign-x-x-here-at-x-5	bool((-5 * sign(-5)) == abs(-5))	True	
+the-sign-of-a-nonzero-complex-number-lies-on-the	bool(abs(sign((3 + 4*I))) == 1)	True	
+nan-propagates-rather-than-being-treated-as-0	sign(NaN)		

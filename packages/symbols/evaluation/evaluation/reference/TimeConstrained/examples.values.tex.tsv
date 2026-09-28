@@ -1,0 +1,6 @@
+id	in	out
+finishes-well-inside-the-deadline-so-the-value	\mathrm{TimeConstrained}(\sum_{k=1}^{10}k, 1)	55
+factoring-a-30-digit-semiprime-outruns-a-50-ms	\mathrm{TimeConstrained}(\mathrm{FactorInteger}(1\,001\,000\,000\,000\,040\,037\,000\,000\,000\,111), 0.05)	\mathrm{Aborted}
+a-custom-failexpr-replaces-the-default-aborted	\mathrm{TimeConstrained}(\mathrm{FactorInteger}(1\,001\,000\,000\,000\,040\,037\,000\,000\,000\,111), 0.05, -1)	-1
+an-infinite-time-limit-imposes-no-constraint	\mathrm{TimeConstrained}(1+2, \infty)	3
+failexpr-is-held-it-is-never-evaluated-when-expr	\mathrm{TimeConstrained}(2+3, 1, \frac{1}{0})	5

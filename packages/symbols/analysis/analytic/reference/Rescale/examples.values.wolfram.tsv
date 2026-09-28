@@ -1,0 +1,4 @@
+id	in
+rescale-list	Rescale[List[1, 2, 3, 4]]
+rescale-with-range	Rescale[5, List[0, 10]]
+rescale-with-target	Rescale[5, List[0, 10], List[100, 200]]

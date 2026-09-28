@@ -1,0 +1,17 @@
+id	in	out	verdict
+bellnumber-0	bell(ZZ(0))	1	
+bellnumber-1	bell(ZZ(1))	1	
+bellnumber-3	bell(ZZ(3))	5	
+bellnumber-5	bell(ZZ(5))	52	
+bellnumber-10	bell(ZZ(10))	115975	
+threads-element-wise-over-a-list-as-wolfram-s	[bell(ZZ(1)), bell(ZZ(2)), bell(ZZ(3)), bell(ZZ(4))]	[1, 2, 5, 15]	
+exact-for-large-n	bell(ZZ(30))	846749014511809332450147	
+the-two-argument-form-gives-the-bell-touchard			
+the-bell-polynomial-at-a-real-point-b-20-0-5			
+the-number-of-ways-to-partition-a-4-element-set	bell(ZZ(4))	15	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(bell(ZZ(5)) == ((binomial(ZZ(4), ZZ(0)) * bell(ZZ(0))) + (binomial(ZZ(4), ZZ(1)) * bell(ZZ(1))) + (binomial(ZZ(4), ZZ(2)) * bell(ZZ(2))) + (binomial(ZZ(4), ZZ(3)) * bell(ZZ(3))) + (binomial(ZZ(4), ZZ(4)) * bell(ZZ(4)))))	true	
+the-bell-polynomial-at-1-is-the-bell-number-b-n			
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac			
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(mod(bell(ZZ(9)), 7) == mod((bell(ZZ(2)) + bell(ZZ(3))), 7))	true	
+a-negative-argument-is-left-unevaluated	bell(ZZ(-1))	DomainError with -1: Argument must be non-negative	error
+a-zero-modulus-inside-a-congruence-check-is-nan	(mod(bell(ZZ(9)), 23) == mod((bell(ZZ(4)) + bell(ZZ(5))), 0))	DivideError: integer division error	error

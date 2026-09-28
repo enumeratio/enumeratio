@@ -1,0 +1,15 @@
+---
+name: HeckeAlgebra
+domain: Hecke algebras
+signature: HeckeAlgebra(n)
+summary: The Iwahori–Hecke algebra $H_n(q)$, the $q$-deformation of the group algebra of $S_n$, with basis [[HeckeT]].
+signatures:
+  - call: HeckeAlgebra(n)
+    description: $H_n(q)$, the deformed group algebra of $S_n$
+    library: enumeratio-hecke
+    type: (integer) -> hecke_algebra
+seeAlso:
+  - HeckeT
+  - HeckeIdentity
+  - HeckeSpecialize
+---

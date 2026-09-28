@@ -1,0 +1,5 @@
+id	in	out
+transformed-affine-mean	Mean(TransformedDistribution(2x + 3, Distributed(x, NormalDistribution(0, 1))))	3
+transformed-affine-variance	"Variance(TransformedDistribution(\n                                  2x + 3,\n                                  Distributed(x, NormalDistribution(0, 1)),\n                                ))"	4
+transformed-negative-affine-cdf	CDF(TransformedDistribution(-x, Distributed(x, NormalDistribution(0, 1))), 0)	1 / 2
+transformed-chisquare-mean	Mean(TransformedDistribution(x ^ 2, Distributed(x, NormalDistribution(0, 1))))	1

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+const-glaisher-numeric-value			[N, ConstGlaisher]	1.2824271291006226	$A \approx 1.2824271291006226\ldots$

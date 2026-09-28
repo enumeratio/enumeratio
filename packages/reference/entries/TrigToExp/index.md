@@ -1,0 +1,23 @@
+---
+name: TrigToExp
+domain: Compute engine
+signature: TrigToExp(expr)
+summary: Trigonometric and hyperbolic functions rewritten exactly in terms of the complex exponential.
+signatures:
+  - call: TrigToExp(expr)
+    description: Extends compute-engine's `TrigToExp` with the logarithmic closed forms for Arcsin, Arctan, Arcoth, and Arcsch when one of these is the top-level operator; everything else is left to the native rewriter.
+    library: enumeratio-analytic
+    type: (value) -> value
+    overrides: compute-engine
+attributes:
+  - HoldAll
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    note: identity rename (see names.wolframIdentity); kernel-verified on the Arcsin/Arccoth closed forms this override adds too.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+---

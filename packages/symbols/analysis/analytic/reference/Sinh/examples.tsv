@@ -1,0 +1,25 @@
+id	section	role	expr	expected	caption	wolfram.note
+n-forces-the-numeric-result-that-plain			[N, [Sinh, 0]]	0	N(...) forces the numeric result that plain evaluation withholds	
+n-sinh-1			[N, [Sinh, 1]]	{num: "1.17520119364380145688"}		
+stays-symbolic-even-at-0-compute-engine-doesn-t			[Sinh, 0]	0	Exact at 0, as [[Sin]] is -- compute-engine alone leaves the hyperbolic functions symbolic there	
+a-float-argument-evaluates-directly-no-n-needed			[Sinh, 1.4]	{num: "1.90430150145153405514"}	A float argument evaluates directly, no N(...) needed	
+arbitrary-precision-via-n	Scope		[N, [Sinh, [Rational, 7, 5]]]	{num: "1.90430150145153405514"}	Arbitrary precision via N(...)	
+evaluates-at-a-complex-argument	Scope		[Sinh, [Complex, 2.5, 1]]	[Complex, 3.268939432079549, 5.160143667579705]	Evaluates at a complex argument	
+sinh-i-pi-2-i-sin-pi-2-i	Scope		[Sinh, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]	[Complex, 0, 1]	$\sinh(i\pi/2) = i\sin(\pi/2) = i$	
+element-wise-over-a-matrix-of-imaginary	Scope		[Sinh, [List, [List, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]], [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]]], [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]]]]	[List, [List, [Complex, 0, [Divide, [Sqrt, 3], 2]], [Complex, 0, [Negate, [Divide, [Sqrt, 3], 2]]]], [List, 0, [Complex, 0, [Rational, -1, 2]]]]	Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\sinh(ix) = i\sin x$	
+interval-arithmetic-sinh-is-increasing-so-sinh-0	Scope		[Sinh, [Interval, 0, [Ln, 3]]]	[Interval, 0, [Rational, 4, 3]]	Interval arithmetic: $\sinh$ is increasing, so $\sinh[0, \ln 3] = [0, \tfrac43]$, the interval of the endpoint values	
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1	Scope		[Sinh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 1.4289605814815758, 0.1744112480153778]	Uncertainty propagation: $\sinh(2/\sqrt3 \pm 0.1) \approx 1.429 \pm 0.174$	
+sinh-positiveinfinity	Scope		[Sinh, PositiveInfinity]	PositiveInfinity		
+sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic	Scope		[Sinh, [Ln, 2]]	[Rational, 3, 4]	$\sinh(\ln 2) = \frac{2 - 1/2}{2} = \tfrac34$	
+a-real-symbolic-argument-is-untouched	Scope		[Sinh, x]	[Sinh, x]	A real symbolic argument is untouched	
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Sinh, [Negate, x]]	[Negate, [Sinh, x]]	Oddness pulls the sign out of a symbolic argument: $\sinh(-x) = -\sinh x$	
+sinh-arsinh-x-x-for-every-x	Scope		[Sinh, [Arsinh, x]]	x	$\sinh(\operatorname{arsinh} x) = x$ for every $x$	
+sinh-arsinh-2-2-for-every-x	Scope		[Sinh, [Arsinh, 2]]	2	$\sinh(\operatorname{arsinh}(2)) = 2$	
+derivative-cosh-x	Scope		[D, [Sinh, x], x]	[Cosh, x]	Derivative: $\cosh x$	
+antiderivative	Scope		[Integrate, [Sinh, x], x]	[Cosh, x]	Antiderivative	
+taylor-series-about-0	Scope		[Series, [Sinh, x], x, 0, 5]	[Add, [Multiply, [Rational, 1, 120], [Power, x, 5]], [Multiply, [Rational, 1, 6], [Power, x, 3]], x, [BigO, [Power, x, 7]]]	Taylor series about 0	Wolfram's Series[Sinh[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
+to-30-significant-digits-not-yet-the-last-digit	Scope		[N, [Sinh, 1], 30]	{num: "1.17520119364380145688238185060"}	To 30 significant digits, the last one correctly rounded	
+n-decimalizes-sinh-i-pi-2-not-just-the-exact	Scope		[N, [Sinh, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]]	[Complex, 0, 1]	N(...) decimalizes $\sinh(i\pi/2)$, not just the exact $i$ form	
+odd-function-sinh-x-sinh-x	Properties		[Equal, [Sinh, [Negate, 1]], [Negate, [Sinh, 1]]]	True	Odd function: $\sinh(-x) = -\sinh(x)$	
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	Properties		[Equal, [Sinh, 1], [Divide, [Subtract, [Exp, 1], [Exp, [Negate, 1]]], 2]]	True	Definition in terms of [[Exp]]: $\sinh(x) = \frac{e^x - e^{-x}}{2}$	
+the-definition-sinh-x-frac-e-x-e-x-2	Properties		[TrigToExp, [Sinh, x]]	[Multiply, [Rational, 1, 2], [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]]]	The definition $\sinh x = \frac{e^x - e^{-x}}{2}$	

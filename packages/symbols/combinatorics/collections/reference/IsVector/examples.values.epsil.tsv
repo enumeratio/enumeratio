@@ -1,0 +1,6 @@
+id	in	out
+a-flat-list-is-a-vector	IsVector([1, 2, 3])	True
+a-list-of-lists-is-not-a-vector	IsVector([[1, 2], [3, 4]])	False
+a-non-list-is-not-a-vector	IsVector(3)	False
+a-test-function-must-hold-of-every-element	IsVector([2, 4, 6], IsEven)	True
+a-test-function-failing-on-one-element	IsVector([2, 3, 6], IsEven)	False

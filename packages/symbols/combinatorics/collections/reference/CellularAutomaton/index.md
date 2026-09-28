@@ -1,0 +1,18 @@
+---
+name: CellularAutomaton
+domain: Collections
+signature: CellularAutomaton(rule, init, t)
+summary: t+1 fixed-width generations of an elementary 1-D cellular automaton, from init.
+signatures:
+  - call: CellularAutomaton(rule, init, t)
+    description: t+1 generations of Wolfram's elementary (k = 2 colors, radius 1) rule number rule, from initial condition init
+    library: enumeratio-collections
+    type: (integer<0..255>, integer | list<integer> | tuple<list<integer>, integer>, integer<0..>) -> list<list<integer>>
+details:
+  - init is an explicit {list, background} (or {list}, background 0) -- a bare integer like 1 is not valid init (Wolfram raises initn).
+  - "Every generation has the same width: init's non-background cells span [minPos, maxPos], and the displayed window is [minPos - t, maxPos + t] -- the widest region t steps could possibly reach."
+  - A cell of init that already equals background doesn't widen that span -- {{1, 0, 0}, 0} behaves like a single seed at position 0, not like a 3-wide active region.
+  - Only the elementary (k = 2, radius 1) rule form is answered; totalistic and multi-color rule specs are left unevaluated.
+names:
+  wolframIdentity: true
+---

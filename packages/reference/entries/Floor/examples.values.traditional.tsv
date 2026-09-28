@@ -1,0 +1,28 @@
+id	in	out
+floor-7-over-2		
+floor-3p7		
+integers-pass-through-unchanged		
+threads-element-wise-over-a-list		
+floor-2p4		
+floor-2p6		
+floor-2p7		
+floor-add-x-1-a-free-variable-is-untouched		
+stays-symbolic		
+exact-radicals-are-decided-numerically		
+a-negative-radicand-inside-floor		
+evaluates-at-an-exact-constant-lfloor-pi-rfloor		
+and-at-its-negative-lfloor-pi-rfloor-4		
+a-second-argument-floors-to-a-multiple-of-it-the		
+the-step-needn-t-be-an-integer-3-5-cdot-lfloor		
+nor-rational-2-pi-e-approx-3-57-floors-to-the		
+floors-the-real-and-imaginary-parts-separately		
+how-many-full-5-item-packs-fit-in-17-items		
+legendre-s-formula-100-ends-in-lfloor-100-5		
+the-number-of-decimal-digits-of-n-is-lfloor-log		
+the-first-four-digits-of-e		
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\mathrm{True}
+lfloor-x-rfloor-lceil-x-rceil	\lfloor-\frac{7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\mathrm{True}
+idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor		
+a-zero-divisor-inside-floor		
+rounds-toward-infty-not-toward-0-floor-3-2-is-4		
+infinities-pass-through-unchanged		

@@ -1,0 +1,4 @@
+id	in
+the-first-occurrence-of-b-nested-inside-the	FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
+the-empty-list-when-the-value-isn-t-found	FirstPosition[List[a, List[a, c]], b]
+a-match-nested-inside-an-earlier-sublist-beats-a	FirstPosition[List[a, List[a, b], b], b]

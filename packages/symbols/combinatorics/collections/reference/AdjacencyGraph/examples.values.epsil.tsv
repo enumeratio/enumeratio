@@ -1,0 +1,3 @@
+id	in	out
+symmetric-matrix-is-undirected	EdgeList(AdjacencyGraph([[0, 1, 1], [1, 0, 0], [1, 0, 0]]))	[UndirectedEdge(1, 2), UndirectedEdge(1, 3)]
+asymmetric-matrix-is-directed	EdgeList(AdjacencyGraph([[0, 1], [0, 0]]))	[DirectedEdge(1, 2)]

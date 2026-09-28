@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+three-by-three			[HilbertMatrix, 3]	[List, [List, 1, [Rational, 1, 2], [Rational, 1, 3]], [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 4]], [List, [Rational, 1, 3], [Rational, 1, 4], [Rational, 1, 5]]]
+rectangular	Scope		[HilbertMatrix, [List, 2, 3]]	[List, [List, 1, [Rational, 1, 2], [Rational, 1, 3]], [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 4]]]

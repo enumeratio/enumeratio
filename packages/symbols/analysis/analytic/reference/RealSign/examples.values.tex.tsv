@@ -1,0 +1,6 @@
+id	in	out
+realsign-neg-3	\mathrm{RealSign}(-3)	-1
+realsign-0	\mathrm{RealSign}(0)	0
+realsign-2p5	\mathrm{RealSign}(2.5)	1
+threads-element-wise-over-a-list	\mathrm{RealSign}(\bigl\lbrack-2, 0, 5\bigr\rbrack)	\bigl\lbrack-1, 0, 1\bigr\rbrack
+decides-the-sign-of-an-exact-numeric-expression	\mathrm{RealSign}(\sqrt{2}-2)	-1

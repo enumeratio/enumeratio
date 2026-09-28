@@ -1,0 +1,7 @@
+id	in	out	verdict
+n-pi-30	N(pi)	3.14159265358979	
+the-last-digit-correctly-rounded-computing-at-30			
+a-list-number-by-number	N([pi, e, sqrt(2)])	ValueError: too many values to unpack (expected 2)	error
+an-exact-tie-rounds-to-the-even-digit-0-125	N((1/8))	0.125000000000000	disagree
+and-0-375-to-0-38	N((3/8))	0.375000000000000	disagree
+n-pi-1-digit	N(pi)	3.14159265358979	disagree

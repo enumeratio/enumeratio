@@ -1,4 +1,0 @@
-- id: the-first-five-squares
-  expr: [Take, SquareNumbers, 5]
-  expected: [List, 1, 4, 9, 16, 25]
-  caption: The first five squares

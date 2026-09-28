@@ -1,0 +1,4 @@
+id	in	out	tex.in	tex.out
+rewrites-the-whole-expr-matches-top-level				
+tries-a-list-of-rules-in-order	Replace[b, List[Rule[a, 1], Rule[b, 2]]]	2	\text{Replace}[b,\{a\to 1,b\to 2\}]	2
+leaves-expr-untouched-when-only-subexpr-matches				

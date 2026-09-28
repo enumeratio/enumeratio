@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+hazardfunction-rayleigh			[HazardFunction, [RayleighDistribution, 3], 2]	[Rational, 2, 9]

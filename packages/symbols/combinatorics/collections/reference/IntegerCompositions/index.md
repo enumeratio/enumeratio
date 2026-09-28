@@ -1,0 +1,41 @@
+---
+name: IntegerCompositions
+domain: Combinatorial collections
+signature: IntegerCompositions(n)
+summary: "The compositions of $n$: ordered sequences of positive parts summing to $n$."
+signatures:
+  - call: IntegerCompositions(n)
+    description: the ordered compositions of $n$
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is $2^{n-1}$ for $n \ge 1$
+  - Unlike [[IntegerPartitions]], order matters
+seeAlso:
+  - IntegerPartitions
+references:
+  - system: wikipedia
+    identity: Composition (combinatorics)
+  - system: mathworld
+    identity: Composition
+  - system: oeis
+    identity: A011782
+catalog:
+  - system: mathlib4
+    identity: Composition n
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Composition.html
+  - system: oeis
+    identity: A011782
+    url: https://oeis.org/A011782
+  - system: sage
+    identity: Compositions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/composition.html
+  - system: wikipedia
+    identity: Composition (combinatorics)
+    url: https://en.wikipedia.org/wiki/Composition_(combinatorics)
+    relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---

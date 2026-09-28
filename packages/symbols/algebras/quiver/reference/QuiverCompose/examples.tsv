@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+1-to-2-then-2-to-3			[QuiverCompose, [LinearQuiver, 4], [QuiverPath, 1, [List, 0]], [QuiverPath, 2, [List, 1]]]	[QuiverPath, 1, [List, 0, 1]]	$1\to2$ then $2\to3$
+the-ends-do-not-meet	Properties		[QuiverCompose, [LinearQuiver, 4], [QuiverPath, 2, [List, 1]], [QuiverPath, 1, [List, 0]]]	0	the ends do not meet
+a-trivial-path-is-a-local-identity	Properties		[QuiverCompose, [LinearQuiver, 4], [QuiverPath, 1, [List]], [QuiverPath, 1, [List, 0]]]	[QuiverPath, 1, [List, 0]]	a trivial path is a local identity

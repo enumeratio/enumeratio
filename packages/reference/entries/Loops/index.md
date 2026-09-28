@@ -1,0 +1,9 @@
+---
+name: Loops
+domain: Combinatorics
+signature: Loops(...)
+summary: Loops
+statOn:
+  - DecoratedPermutation
+stub: carrier
+---

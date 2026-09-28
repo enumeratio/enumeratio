@@ -1,0 +1,32 @@
+---
+name: Cosh
+domain: Elementary functions
+signature: Cosh(x)
+summary: 'Hyperbolic cosine: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
+signatures:
+  - call: Cosh(x)
+    description: the hyperbolic cosine of x.
+  - call: Cosh(x)
+    description: 'Hyperbolic cosine: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
+    library: enumeratio-analytic
+    type: (complex | signed_infinity) -> number
+    overrides: compute-engine
+details:
+  - 'Defined in terms of [[Exp]]: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.'
+  - 'Even function: $\cosh(-x) = \cosh(x)$.'
+  - "Same fold-only-with-N(...) behavior as [[Sinh]]: plain evaluation leaves Cosh symbolic even at $x = 0$."
+seeAlso:
+  - Sinh
+  - Tanh
+  - Exp
+references:
+  - system: wikipedia
+    identity: Hyperbolic functions
+  - system: mathworld
+    identity: HyperbolicCosine
+  - system: dlmf
+    identity: "4.28"
+names:
+  dlmf: hyperbolic cosine function
+  wolframIdentity: true
+---

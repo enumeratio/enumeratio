@@ -11,10 +11,9 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
-import { dirname, join } from "node:path";
 import { dedupeId, type ReferenceExample, type SystemImplementation } from "@enumeratio/entry";
 import { emit } from "@enumeratio/oracle/src";
-import { writeEntry, writeYaml } from "@enumeratio/entry/node";
+import { writeHead } from "@enumeratio/entry/node";
 import { baseId } from "./example-id.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
@@ -107,7 +106,7 @@ const isGridPoint = (head: string, e: ReferenceExample): boolean =>
   e.role === "test" && Array.isArray(e.expr) && e.expr[0] === "N" && Array.isArray(e.expr[1]) && e.expr[1][0] === head;
 const { heads } = loadReferenceData(PACKAGES);
 for (const [head, grid] of Object.entries(byHead)) {
-  const { entry, entryPath, implementations } = heads.find((h) => h.head === head)!;
+  const { entry, dir, body, implementations } = heads.find((h) => h.head === head)!;
   const kept = entry.examples.filter((e) => !isGridPoint(head, e));
   const idOf = new Map(entry.examples.filter((e) => isGridPoint(head, e)).map((e) => [JSON.stringify(e.expr), e.id]));
   const taken = new Set(kept.map((e) => e.id));
@@ -118,7 +117,6 @@ for (const [head, grid] of Object.entries(byHead)) {
     const { wolframNote: _note, ...example } = e;
     return { id, ...example } as ReferenceExample;
   });
-  await writeEntry(dirname(entryPath), { ...entry, examples: [...kept, ...points] });
   // A grid point's Wolfram note lives on its implementations row, beside the scan's answer.
   const record: Record<string, Record<string, SystemImplementation>> = structuredClone(implementations ?? {});
   grid.forEach((e, i) => {
@@ -137,7 +135,11 @@ for (const [head, grid] of Object.entries(byHead)) {
       wolfram: { ...(prior ?? { in: emitted.ok ? emitted.source : "" }), note: e.wolframNote },
     };
   });
-  if (Object.keys(record).length > 0) await writeYaml(join(dirname(entryPath), `${head}.implementations.yaml`), record);
+  await writeHead(dir, head, {
+    entry: { ...entry, examples: [...kept, ...points] },
+    implementations: Object.keys(record).length > 0 ? record : undefined,
+    body,
+  });
 }
 process.stderr.write(
   `${Object.entries(byHead)

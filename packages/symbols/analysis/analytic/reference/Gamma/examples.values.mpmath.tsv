@@ -1,0 +1,48 @@
+id	in	out	verdict
+a-pole-of-gamma	gamma(0)	ValueError: gamma function pole	error
+a-pole-of-gamma-at-negative-1	gamma(-1)	ValueError: gamma function pole	error
+a-pole-of-gamma-at-negative-2	gamma(-2)	ValueError: gamma function pole	error
+a-floating-point-argument-evaluates-directly-to	gamma(2.5)	1.32934038817913702047362561251	
+threads-over-a-list-so-poles-evaluate-concretely	[gamma(0), gamma(-1)]	ValueError: gamma function pole	error
+three-arguments-the-integral-between-two-limits			
+int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3			
+a-machine-precision-argument-gamma-4-5-11-6317	gamma(4.5)	11.6317283965674489291442241094	
+gamma-5-4-24	gamma(5)	24.0	
+two-arguments-with-a-complex-second-argument			
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z			
+three-arguments-fully-symbolic-in-both-order-and			
+gamma-0-5-0-0-25			
+gamma-neg1-5-0-1-5			
+gamma-3-1-7-all-integers			
+gamma-2-5-0-complex-1-5-plus-i			
+gamma-complex-2-plus-i-0-1-5			
+gamma-three-complex-arguments			
+gamma-0-1-4-all-integers			
+threads-over-a-list-and-reduces-each-integer	[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]	[mpf('1.0'), mpf('1.0'), mpf('2.0'), mpf('6.0'), mpf('24.0')]	
+gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	gamma((mpf(5)/2))	1.32934038817913702047362561251	
+complex-arguments-evaluate-directly	gamma(mpc(2.3, 1))	(0.719140936537281734129165979401 + 0.540614467909849141745661620038j)	
+half-integers-have-closed-forms-gamma-7-2-frac	gamma((mpf(7)/2))	3.32335097044784255118406403126	
+including-negative-half-integers-gamma-3-2-frac	gamma((mpf(-3)/2))	2.36327180120735470306422331112	
+gamma-infty-infty	gamma(inf)		
+values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5.57316894480137913364320296291e+373	
+two-arguments-the-upper-incomplete-gamma-gamma-5			
+an-integer-order-reduces-to-a-closed-form-gamma			
+gamma-2-1-2-e-the-same-closed-form-at-an-exact			
+listable-threads-elementwise-over-a-matrix-and			
+interval-arithmetic-the-image-of-1-4-1-5-whose			
+uncertainty-propagation-gamma-2-5-pm-0-01-1-3293			
+to-40-significant-digits-every-one-correctly	(gamma((mpf(1)/3)))	2.67893853470774763365569294097	
+the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2			
+extends-the-factorial-gamma-n-1-n-so-gamma-6-5			
+functional-equation-gamma-z-1-z-gamma-z-here-at	almosteq(gamma(6), (5 * gamma(5)), 1e-20)	True	
+reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z			
+gamma-1-2-sqrt-pi	almosteq(gamma((mpf(1)/2)), sqrt(pi), 1e-20)	True	
+gamma-1-z-e-z-exact-and-symbolic-in-z			
+so-gamma-1-z-1-e-z-the-exponential-distribution			
+now-that-gamma-2-z-has-a-closed-form-the-three			
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero			
+gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2			
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
+gamma-x-gamma-x-psi-x-so-the-logarithmic			
+squaring-the-reflection-formula-at-z-1-2	almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)	True	
+gamma-i-2-pi-sinh-pi-0-27203	(((fabs(gamma(mpc(0,1))))**2))	0.272029054982133162950236583672	

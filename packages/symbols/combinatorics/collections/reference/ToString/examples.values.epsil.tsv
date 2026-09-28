@@ -1,0 +1,3 @@
+id	in	out
+prints-a-list-as-notatio-source	ToString([1, 2, 3])	"\"[1, 2, 3]\""
+prints-an-arithmetic-expression	ToString(x + 1)	"\"x + 1\""

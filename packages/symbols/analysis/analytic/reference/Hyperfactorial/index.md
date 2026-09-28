@@ -1,0 +1,26 @@
+---
+name: Hyperfactorial
+domain: Special functions
+signature: Hyperfactorial(n)
+summary: 'The hyperfactorial $H(n) = \prod_{k=1}^n k^k$, continued to complex arguments: $H(z) = \Gamma(z+1)^z / G(z+1)$.'
+signatures:
+  - call: Hyperfactorial(n)
+    description: the hyperfactorial of n.
+    library: "@enumeratio/analytic"
+    type: (number) -> number
+details:
+  - $H(0) = 1$, the empty product.
+  - Continued off the nonnegative integers by $H(z) = \Gamma(z+1)^z / G(z+1)$ (G = [[BarnesG]]); numeric there, checked against a Wolfram kernel to double precision.
+  - Exact at a nonnegative integer -- an arbitrarily large exact product, not a decimal.
+  - "Real, nonnegative domain only: BarnesG's zeros at the nonpositive integers give the continuation poles there, and no reference example calls for a negative or complex argument."
+primitive: numeric
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/hyperfactorial.ts
+seeAlso:
+  - BarnesG
+names:
+  wolframIdentity: true
+---

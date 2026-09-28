@@ -1,0 +1,6 @@
+id	section	role	expr	expected
+a-2x2-is-a-matrix			[IsMatrix, [List, [List, 1, 2], [List, 3, 4]]]	True
+a-flat-list-is-not-a-matrix	Scope		[IsMatrix, [List, 1, 2, 3]]	False
+a-ragged-list-of-lists-is-not-a-matrix	Scope		[IsMatrix, [List, [List, 1, 2], [List, 3]]]	False
+an-empty-list-is-not-a-matrix	Scope		[IsMatrix, [List]]	False
+a-test-function-must-hold-of-every-entry	Scope		[IsMatrix, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True

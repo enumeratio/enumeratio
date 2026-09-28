@@ -1,0 +1,8 @@
+id	in	back
+2-is-a-quadratic-residue-mod-7-32-2-mod-7	JacobiSymbol[2, 7]	[JacobiSymbol, 2, 7]
+3-is-not-a-quadratic-residue-mod-7	JacobiSymbol[3, 7]	[JacobiSymbol, 3, 7]
+0-when-p-divides-n	JacobiSymbol[14, 7]	[JacobiSymbol, 14, 7]
+listable-in-n-the-residues-mod-7-are-1-2-4	JacobiSymbol[List[1, 2, 3, 4, 5, 6], 7]	[JacobiSymbol, [List, 1, 2, 3, 4, 5, 6], 7]
+1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod	JacobiSymbol[-1, 13]	[JacobiSymbol, -1, 13]
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	Equal[JacobiSymbol[3, 7], Subtract[PowerMod[3, 3, 7], 7]]	[Equal, [JacobiSymbol, 3, 7], [Subtract, [PowerMod, 3, 3, 7], 7]]
+9-is-not-prime-so-the-call-stays-symbolic-see	JacobiSymbol[2, 9]	[JacobiSymbol, 2, 9]

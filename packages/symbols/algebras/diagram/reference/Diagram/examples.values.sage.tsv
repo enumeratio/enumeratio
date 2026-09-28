@@ -1,0 +1,5 @@
+id	in	out	verdict
+the-cup-cap-squared-closes-one-loop-e-1-2-delta	(enumeratio_diagram([[1, 2], [-1, -2]]) * enumeratio_diagram([[1, 2], [-1, -2]]))	delta*P{{-2, -1}, {1, 2}}	
+e-1e-2e-1-e-1-with-no-loop-closed	(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]) * enumeratio_diagram([[2, 3], [-2, -3], [1, -1]]) * enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]))	P{{-3, 3}, {-2, -1}, {1, 2}}	
+blocks-come-back-in-canonical-order	enumeratio_diagram([[-1, -2], [3, -3], [1, 2]])	P{{-3, 3}, {-2, -1}, {1, 2}}	
+malformed-the-point-2-is-missing-so-it-is-left	enumeratio_diagram([[1, -1], [2]])	P{{-2}, {-1, 1}, {2}}	disagree

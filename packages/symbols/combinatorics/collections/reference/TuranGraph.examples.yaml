@@ -1,3 +1,0 @@
-- id: turan-6-3-is-k222
-  expr: [EdgeCount, [TuranGraph, 6, 3]]
-  expected: 12

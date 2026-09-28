@@ -1,0 +1,18 @@
+---
+name: ToCharacterCode
+domain: Collections
+signature: ToCharacterCode(s)
+summary: The Unicode code point of each character of s, as a list of integers.
+signatures:
+  - call: ToCharacterCode(s)
+    description: "{code1, code2, …}, one per Unicode CODE POINT of s"
+    library: enumeratio-collections
+    type: (string) -> list<integer>
+details:
+  - Counts Unicode CODE POINTS, not UTF-16 units — the same convention compute-engine's own `Characters` already uses, so an astral character (outside the Basic Multilingual Plane, such as most emoji) counts as one.
+seeAlso:
+  - FromCharacterCode
+  - StringLength
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,25 @@
+id	in	out
+csc-pi-over-6		
+csc-pi-over-4		
+csc-pi-over-2		
+csc-60-circ-frac-2-sqrt-3-3-exactly		
+a-machine-precision-argument-evaluates		
+a-huge-24-40-argument		
+a-huge-10-100-argument		
+a-huge-3-200-argument		
+a-huge-neg-7-60-argument		
+a-huge-10-80-plus-1-over-3-argument		
+csc-5-under-n		
+n-of-an-exact-argument-gives-an-arbitrary		
+evaluates-at-a-complex-argument		
+threads-element-wise-over-a-matrix-with		
+csc-pi-12-sqrt-6-sqrt-2		
+csc-pi-10-1-sqrt-5		
+csc-pi-over-5		
+interval-arithmetic-the-image-of-pi-6-pi-3-is		
+uncertainty-propagation-csc-2-pm-0-01-approx-1		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-csc-x-cot-x		
+antiderivative-ln-csc-x-cot-x		
+reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\mathrm{True}
+a-pole-sin-0-0		

@@ -1,6 +1,6 @@
 // The interim catalogue (design/benchmarking.md §3): `catalogue/*.yaml`, each a map from head
 // to its cases, in the example shape plus `bench`. They move into each head's own
-// `reference/<Head>.yaml` as `role: bench` examples once the reference loader lands.
+// `reference/<Head>/index.md` as `role: bench` examples once the reference loader lands.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";

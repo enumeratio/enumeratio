@@ -1,0 +1,4 @@
+id	in
+numberexpand-1-234	NumberExpand[1234]
+base-2-zero-terms-kept	NumberExpand[10, 2]
+every-term-carries-the-sign	NumberExpand[-123]

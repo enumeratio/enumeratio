@@ -1,0 +1,11 @@
+id	in	out	verdict
+moebiusmu-1	(ArithmeticFunction.moebius 1)	1	
+moebiusmu-11	(ArithmeticFunction.moebius 11)	-1	
+12-22-3-is-not-squarefree	(ArithmeticFunction.moebius 12)	0	
+10-2-5-a-product-of-an-even-number-of-distinct	(ArithmeticFunction.moebius 10)	1	
+threads-element-wise-over-a-list-as-wolfram-s	(ArithmeticFunction.moebius [1, 2, 3, 4])		
+gaussian-integers-5-6i-is-a-gaussian-prime-norm			
+listable-threads-over-a-list	(ArithmeticFunction.moebius [4, 10, 17, 20])		
+listable-over-a-range			
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))	0	
+mu-is-only-defined-for-positive-integers-compute	(ArithmeticFunction.moebius 0)	0	inconclusive

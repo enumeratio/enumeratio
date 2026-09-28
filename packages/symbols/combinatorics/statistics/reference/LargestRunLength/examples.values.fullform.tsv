@@ -1,0 +1,4 @@
+id	in
+the-one-line-word-312	LargestRunLength[Permutation[List[3, 1, 2]]]
+the-one-line-word-312-as-a-plain-list	LargestRunLength[List[3, 1, 2]]
+the-one-line-word-2413	LargestRunLength[Permutation[List[2, 4, 1, 3]]]

@@ -1,0 +1,6 @@
+id	in	out
+the-absolute-value-of-a-real-number		
+realabs-neg-7-over-2		
+threads-element-wise-over-a-list		
+exact-numeric-arguments		
+agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\mathrm{True}

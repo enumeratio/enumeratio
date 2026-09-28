@@ -5,7 +5,7 @@
 // and a good deal of it is wrong: `PlanckConstant` points at Mount Vesuvius, `AiryAi` at an
 // Egyptian prime minister. Those are not typos to shrug at -- they are the crosswalk's most
 // authoritative-looking pointer, so they get checked like everything else, and the
-// corrections live in each head's `names.wikidata` (`<Head>.yaml`), rebuilt into
+// corrections live in each head's `names.wikidata` (`<Head>/index.md`), rebuilt into
 // `WIKIDATA_FIXES` by `scripts/collect-curated.ts`.
 //
 // The check: fetch the item, and ask whether its English label has anything to do with the

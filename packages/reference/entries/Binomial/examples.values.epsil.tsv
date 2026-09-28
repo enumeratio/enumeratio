@@ -1,0 +1,47 @@
+id	in	out
+binomial-5-2	Binomial(5, 2)	10
+binomial-10-3	Binomial(10, 3)	120
+binomial-4-2	Binomial(4, 2)	6
+choosing-none-of-n-is-always-1-way	Binomial(5, 0)	1
+choosing-all-of-n-is-always-1-way	Binomial(5, 5)	1
+binomial-8-4	Binomial(8, 4)	70
+symbolic-n-binom-n-0-1-for-any-n	Binomial(n, 0)	1
+symbolic-n-binom-n-1-n	Binomial(n, 1)	n
+binom-n-n-1-n-for-symbolic-n	Binomial(n, n - 1)	n
+binom-m-m-1-m-for-symbolic-m	Binomial(m, m - 1)	m
+threads-element-wise-over-a-list-as-wolfram-s	Binomial([2, 3, 5, 7, 11], 3)	[0, 1, 10, 35, 165]
+half-integer-arguments-evaluate-exactly-through	Binomial(9 / 2, 7 / 2)	9 / 2
+real-arguments-evaluate-through-the-gamma	Binomial(8.5, -4.2)	0.000_060_499_248_402_283_480_067_6
+a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0	Binomial(0.5, 3)	0.062_500_000_000_000_000_000_1
+a-rational-n-with-integer-k-gives-the-exact	Binomial(1 / 2, 2)	-1 / 8
+binom-1-2-3-frac-5-16-the-central-binomial	Binomial(-1 / 2, 3)	-5 / 16
+binom-n-n-1-for-symbolic-n	Binomial(n, n)	1
+binom-m-m-1-for-symbolic-m	Binomial(m, m)	1
+a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	Binomial(1 + i, 5)	-1 / 12 + -1 / 12 * i
+complex-n-and-k-evaluate-through-the-gamma	Binomial(2 + i, 7 - 3i)	-75.468_347_382_223_04 + 106.815_265_970_790_55i
+interval-arithmetic-in-k-binom-1-2-k-is	Binomial(1 / 2, Interval(0.5, 0.6))	Interval(0.928_145_553_850_705_4, 1)
+the-number-of-distinct-5-card-hands-dealt-from-a	Binomial(52, 5)	2_598_960
+the-probability-of-exactly-3-heads-in-10-fair	Binomial(10, 3) / 2 ^ 10	15 / 128
+symmetry-binom-n-k-binom-n-n-k	Binomial(10, 3) == Binomial(10, 7)	True
+pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	Binomial(9, 2) + Binomial(9, 3) == Binomial(10, 3)	True
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	"Binomial(4, 0) + Binomial(4, 1) + Binomial(4, 2) + Binomial(4, 3) +\nBinomial(4, 4) == 2 ^ 4"	True
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	Sum(Binomial(6, k) ^ 2, (k, 0, 6)) == Binomial(12, 6)	True
+vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	Sum(Binomial(5, k) * Binomial(4, 3 - k), (k, 0, 3)) == Binomial(9, 3)	True
+the-alternating-row-sum-vanishes-sum-k-1-k-binom	Sum((-1) ^ k * Binomial(6, k), (k, 0, 6))	0
+the-factorial-form-binom-n-k-frac-n-k-n-k-see	Binomial(7, 3) == 7! / (3! * 4!)	True
+choosing-more-elements-than-available-k-n-gives	Binomial(5, 7)	0
+a-negative-k-also-gives-0	Binomial(5, -1)	0
+a-negative-n-uses-the-generalized-formula-binom	Binomial(-5, 2)	15
+both-arguments-negative-integers-the-limiting	Binomial(-3, -5)	6
+equal-negative-arguments-binom-2-2-1	Binomial(-2, -2)	1
+a-negative-n-with-a-positive-k-binom-9-1	Binomial(-9, 1)	-9
+a-negative-n-with-k-0-binom-1-4	Binomial(-1, 4)	1
+a-negative-k-with-n-10-binom-10-neg-10	Binomial(10, -10)	0
+a-negative-k-past-n-binom-4-neg-13	Binomial(4, -13)	0
+a-negative-n-again-binom-neg-4-1	Binomial(-4, 1)	-4
+a-negative-k-with-n-2-binom-2-neg-2	Binomial(-2, 2)	3
+a-negative-n-zero-k-binom-neg-1-0	Binomial(-1, 0)	1
+a-negative-k-past-n-binom-100-neg-50	Binomial(100, -50)	0
+symmetry-doesn-t-hold-across-mismatched-n	Binomial(2, 6) == Binomial(-18, 2)	False
+not-pascal-s-rule-across-mismatched-n	Binomial(-23, 2) + Binomial(-2, 3) == Binomial(-20, 6)	False
+the-central-binomial-coefficient-binom-100-50	Binomial(100, 50)	100_891_344_545_564_193_334_812_497_256

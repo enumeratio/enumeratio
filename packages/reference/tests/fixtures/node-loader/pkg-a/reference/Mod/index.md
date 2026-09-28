@@ -1,0 +1,6 @@
+---
+name: Mod
+domain: Numbers
+signature: Mod(a, b)
+summary: Remainder of a divided by b.
+---

@@ -1,0 +1,4 @@
+id	in
+count-dyckpathsbyheight-4-2	Count[DyckPathsByHeight[4, 2]]
+first-element-of-dyckpathsbyheight-4-2	Part[DyckPathsByHeight[4, 2], 1]
+every-element-of-dyckpathsbyheight-4-2	Take[DyckPathsByHeight[4, 2], 5]

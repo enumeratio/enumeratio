@@ -1,0 +1,41 @@
+id	in	out
+exp-0		
+stays-the-exact-constant-rather-than		
+compute-engine-represents-exp-x-as-e-x-once-the		
+a-machine-precision-argument-evaluates		
+broadcasts-element-wise-giving-begin-pmatrix-1-e		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+euler-s-identity-e-i-pi-1		
+exp-imaginaryunit-times-pi-over-2		
+a-special-imaginary-argument-folds-through-e-i		
+exp-ln-2		
+exp-ln-neg-1		
+inverse-of-ln-symbolically		
+exp-ln-of-a-complex-argument-is-that-argument		
+exp-negativeinfinity		
+exp-positiveinfinity		
+element-wise-over-a-matrix-not-the-matrix		
+interval-arithmetic-exp-1-ln-2-e-1-2		
+uncertainty-propagation-e-2-pm-0-01-approx-7-389		
+around-0-still-fires-the-e-base-power-rule		
+its-own-derivative		
+its-own-antiderivative		
+taylor-series-about-0		
+n-decimalizes-a-combined-product		
+agrees-numerically-at-a-complex-point		
+to-50-significant-digits-every-one-correctly		
+to-1-significant-digit		
+threads-element-wise-over-a-list		
+inverse-of-ln-e-ln-x-x	\exp(\ln(5))=5	\mathrm{True}
+e-a-e-b-e-a-b	e^{2}e^{3}=e^{5}	\mathrm{True}
+e-as-the-limit-lim-x-to-infty-1-1-x-x		
+lim-x-to-0-frac-e-x-1-x-1		
+a-product-of-exponentials-should-combine-e-x-e-y		
+combines-past-two-factors		
+combines-past-extra-non-exponential-factors		
+e-x-e-x-cancels-to-1		
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig		
+exp-ln-of-a-negative-real-is-left-unevaluated		
+a-lone-exp-factor-is-untouched		
+same-base-non-e-powers-are-left-alone		

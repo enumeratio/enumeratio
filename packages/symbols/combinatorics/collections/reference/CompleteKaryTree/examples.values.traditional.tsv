@@ -1,0 +1,8 @@
+id	in	out
+a-3-level-binary-tree-has-7-vertices		
+a-single-level-tree-is-one-vertex		
+a-3-level-binary-tree-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteKaryTree}(3, 2))	\mathrm{True}
+root-degree-of-a-ternary-tree		
+a-3-level-ternary-tree-has-13-vertices		
+the-1-arg-form-defaults-to-binary		
+edge-list-of-a-3-level-binary-tree		

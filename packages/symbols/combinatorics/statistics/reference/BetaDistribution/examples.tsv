@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+beta-pdf-exact			[PDF, [BetaDistribution, 2, 3], [Rational, 1, 2]]	[Rational, 3, 2]	
+beta-cdf-exact			[CDF, [BetaDistribution, 2, 3], [Rational, 1, 2]]	[BetaRegularized, [Rational, 1, 2], 2, 3]	$= 0.6875$, cross-checked against wolframscript's `N[CDF[BetaDistribution[2,3],1/2]]`
+beta-mean-exact			[Mean, [BetaDistribution, 2, 3]]	[Rational, 2, 5]	
+beta-variance-exact			[Variance, [BetaDistribution, 2, 3]]	[Rational, 1, 25]	Cross-checked against wolframscript's `N[Variance[BetaDistribution[2,3]]] = 0.04`
+beta-cdf-clamps-below-support	Possible issues		[N, [CDF, [BetaDistribution, 2, 3], -1]]	0	

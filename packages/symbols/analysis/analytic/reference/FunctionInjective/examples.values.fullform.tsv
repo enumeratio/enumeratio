@@ -1,0 +1,5 @@
+id	in
+a-reciprocal-is-injective-on-its-own-domain	FunctionInjective[Divide[1, x], x]
+a-cubic-is-injective	FunctionInjective[Power[x, 3], x]
+a-parabola-is-not-injective	FunctionInjective[Power[x, 2], x]
+an-affine-function-is-injective	FunctionInjective[Plus[Times[2, x], 1], x]

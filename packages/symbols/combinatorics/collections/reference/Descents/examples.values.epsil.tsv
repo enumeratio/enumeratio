@@ -1,0 +1,4 @@
+id	in	out
+only-3-1	Descents([3, 1, 2])	1
+every-step-falls	Descents([3, 2, 1])	2
+descents-and-ascents-partition-the-n-1-steps	Descents([3, 1, 2]) + Ascents([3, 1, 2]) == 2	True

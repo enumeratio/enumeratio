@@ -1,0 +1,7 @@
+id	in	out
+the-outer-product-of-two-vectors-a-3-times-2	\mathrm{Outer}(\mathrm{Multiply}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack3, 6\bigr\rbrack\bigr\rbrack
+symbolic-entries	\mathrm{Outer}(\mathrm{Multiply}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack2x, 2y\bigr\rbrack, \bigl\lbrack3x, 3y\bigr\rbrack\bigr\rbrack
+outer-matrix-of-right-shape	\mathrm{Outer}(\mathrm{Add}, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack10, 20, 30\bigr\rbrack)	\bigl\lbrack\bigl\lbrack11, 21, 31\bigr\rbrack, \bigl\lbrack12, 22, 32\bigr\rbrack\bigr\rbrack
+any-binary-function-an-addition-table	\mathrm{Outer}(\mathrm{Add}, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack10, 20\bigr\rbrack)	\bigl\lbrack\bigl\lbrack11, 21\bigr\rbrack, \bigl\lbrack12, 22\bigr\rbrack\bigr\rbrack
+a-table-of-powers	\mathrm{Outer}(\mathrm{Power}, \bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 4, 8\bigr\rbrack, \bigl\lbrack3, 9, 27\bigr\rbrack\bigr\rbrack
+list-gives-every-pair-like-a-cartesian-product	\mathrm{Outer}(\mathrm{List}, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack a, y\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack\bigr\rbrack\bigr\rbrack

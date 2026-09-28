@@ -1,0 +1,3 @@
+id	in
+p-6	Count[IntegerPartitions[6]]
+the-single-part-6	Part[IntegerPartitions[6], 1]

@@ -1,0 +1,7 @@
+id	in	back
+5-congruent-2-mod-3	CongruentMod[5, 2, 3]	
+5-not-congruent-1-mod-3	CongruentMod[5, 1, 3]	
+7-congruent-7-mod-any	CongruentMod[7, 7, 5]	
+7-congruent-1-mod-3	CongruentMod[7, 1, 3]	
+exact-past-double-precision	CongruentMod[12345678901234567891, 2, 7]	[CongruentMod, 12345678901234567000, 2, 7]
+exact-past-double-precision-false	CongruentMod[12345678901234567891, 3, 7]	[CongruentMod, 12345678901234567000, 3, 7]

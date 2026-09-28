@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+3-alone-nothing-after-tops-it			[Records, [List, 3, 1, 2]]	1	$3$ alone; nothing after tops it
+the-identity-sets-a-new-record-everywhere			[Records, [List, 1, 2, 3]]	3	the identity sets a new record everywhere
+2-then-3			[Records, [List, 2, 3, 1]]	2	$2$, then $3$
+the-reversal-attains-the-minimum-1	Properties		[Records, [List, 4, 3, 2, 1]]	1	the reversal attains the minimum, $1$

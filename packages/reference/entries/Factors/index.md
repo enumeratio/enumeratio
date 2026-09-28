@@ -1,0 +1,10 @@
+---
+name: Factors
+domain: Combinatorics
+signature: Factors(...)
+summary: Number of factors
+statOn:
+  - MultiplicativePartition
+  - OrderedFactorization
+stub: carrier
+---

@@ -1,0 +1,9 @@
+---
+name: Gap
+domain: Combinatorics
+signature: Gap(...)
+summary: Gap between the two primes (q−p)
+statOn:
+  - GoldbachPartition
+stub: carrier
+---

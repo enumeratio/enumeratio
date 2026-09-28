@@ -1,0 +1,4 @@
+id	in	out
+a-tree-is-acyclic	\mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\top
+a-cycle-is-not-acyclic	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(4))	\bot
+a-directed-2-cycle-is-a-cycle	\mathrm{IsAcyclicGraph}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1)\bigr\rbrack))	\bot

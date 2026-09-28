@@ -1,0 +1,27 @@
+---
+name: ConjugacyClasses
+domain: Group algebras
+signature: ConjugacyClasses(group)
+summary: The conjugacy classes of a finite group — the orbits of $g \mapsto xgx^{-1}$. Their number is the dimension of the centre of $k[G]$.
+signatures:
+  - call: ConjugacyClasses(group)
+    description: the classes, as a list of lists
+    library: enumeratio-groupalgebra
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>) -> list<list<expression<GroupBasis>>>
+  - call: GroupCentreDimension(group)
+    description: how many there are
+    library: enumeratio-groupalgebra
+details:
+  - An abelian group has one class per element, so $\dim Z(k[G]) = |G|$
+  - $D_n$ has $(n+3)/2$ classes for odd $n$ and $(n+6)/2$ for even $n$
+  - '$D_3 \cong S_3$ has three: the identity, the transpositions, and the 3-cycles'
+  - The classes partition the group, and the identity is always alone in its own
+seeAlso:
+  - ClassSum
+  - GroupBasis
+references:
+  - system: wikipedia
+    identity: Conjugacy class
+  - system: mathworld
+    identity: ConjugacyClass
+---

@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+true-is-true			[IsTrue, True]	True
+false-is-not-true	Scope		[IsTrue, False]	False
+an-evaluating-comparison	Scope		[IsTrue, [Equal, 1, 1]]	True
+an-unevaluated-symbol-is-false	Scope		[IsTrue, x]	False

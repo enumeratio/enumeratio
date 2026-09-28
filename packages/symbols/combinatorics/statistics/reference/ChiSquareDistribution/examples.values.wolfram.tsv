@@ -1,0 +1,5 @@
+id	in
+chisquare-pdf-exact	PDF[ChiSquareDistribution[3], 2]
+chisquare-cdf-exact	CDF[ChiSquareDistribution[3], 2]
+chisquare-mean-exact	Mean[ChiSquareDistribution[3]]
+chisquare-variance-exact	Variance[ChiSquareDistribution[3]]

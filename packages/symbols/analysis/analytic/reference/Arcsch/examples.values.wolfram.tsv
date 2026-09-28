@@ -1,0 +1,8 @@
+id	in	out	tex.in	tex.out
+n-arcsch-2	N[ArcCsch[2]]	0.48121182505960347	N\left[\text{csch}^{-1}(2)\right]	0.481212
+a-pole-at-0	ArcCsch[0]			
+arcsch-positiveinfinity	ArcCsch[Infinity]			
+a-float-argument-evaluates-directly	ArcCsch[1.5]			
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	TrigToExp[ArcCsch[1]]	Log[1 + Sqrt[2]]	\text{TrigToExp}\left[\text{csch}^{-1}(1)\right]	\log \left(1+\sqrt{2}\right)
+oddness-pulls-the-sign-out-of-a-symbolic	ArcCsch[Minus[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{csch}^{-1}(-x)--\text{csch}^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{csch}^{-1}\left(-\frac{7}{3}\right)--\text{csch}^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{csch}^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\text{csch}^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{csch}^{-1}\left(-\frac{13}{4}\right)--\text{csch}^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+derivative-for-real-x-ne-0	D[ArcCsch[x], x]			

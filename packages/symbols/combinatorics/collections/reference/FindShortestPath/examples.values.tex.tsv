@@ -1,0 +1,5 @@
+id	in	out
+shortest-path-along-a-path-graph	\mathrm{FindShortestPath}(\mathrm{PathGraph}(5), 1, 5)	\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
+no-path-back-against-directed-edges	\mathrm{FindShortestPath}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack), 4, 1)	\bigl\lbrack\bigr\rbrack
+a-path-crossing-both-directed-and-undirected	\mathrm{FindShortestPath}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack), 1, 4)	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
+a-weighted-shortcut-loses-to-three-cheaper-hops	\mathrm{FindShortestPath}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(1, 4)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack1, 1, 1, 10\bigr\rbrack)), 1, 4)	\bigl\lbrack1, 2, 3, 4\bigr\rbrack

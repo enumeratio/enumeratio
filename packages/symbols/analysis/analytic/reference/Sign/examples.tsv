@@ -1,0 +1,24 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note
+sign-neg-3			[Sign, -3]	-1			
+sign-3			[Sign, 3]	1			
+zero-is-its-own-sign			[Sign, 0]	0	Zero is its own sign		
+sign-neg-1-over-2			[Sign, [Rational, -1, 2]]	-1			
+the-unit-complex-number-pointing-the-same			[Sign, [Complex, 3, 4]]	[Complex, [Rational, 3, 5], [Rational, 4, 5]]	The unit complex number pointing the same direction as $3+4i$	domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+threads-element-wise-over-a-list			[Sign, [List, -3, 0, 7]]	[List, -1, 0, 1]	Threads element-wise over a list		
+sign-neg-2p5			[Sign, -2.5]	-1			
+sign-3p14			[Sign, 3.14]	1			
+a-complex-number-with-approximate-parts			[Sign, [Complex, 1.4, 2.3]]	[Complex, {num: "0.5199469468957452168102"}, 0.8541985556144385]	A complex number with approximate parts	unevaluated	compute-engine evaluates Sign on a complex float; Sage's sign() leaves the complex argument unevaluated, printing sgn(...) back symbolically.
+an-exact-complex-argument-comes-back-exact-sign	Scope		[Sign, [Complex, 1, 1]]	[Complex, [Divide, [Sqrt, 2], 2], [Divide, [Sqrt, 2], 2]]	An exact complex argument comes back exact: $\mathrm{sign}(1+i) = (1+i)/\sqrt{2}$	unevaluated	compute-engine evaluates Sign on an exact complex argument to its exact normalized form; Sage's sign() leaves it unevaluated, printing sgn(I + 1) back symbolically.
+threads-over-a-matrix-entry-by-entry	Scope		[Sign, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, 1, -1], [List, -1, 1]]	Threads over a matrix, entry by entry		
+exact-numeric-constants	Scope		[Sign, Pi]	1	Exact numeric constants		
+sign-neg-exponentiale	Scope		[Sign, [Negate, ExponentialE]]	-1			
+sign-imaginaryunit	Scope		[Sign, ImaginaryUnit]	[Complex, 0, 1]		unevaluated	compute-engine evaluates Sign(i) to the exact value i; Sage's sign() leaves it unevaluated, printing sgn(I) back symbolically.
+sign-positiveinfinity	Scope		[Sign, PositiveInfinity]	1			
+an-interval-entirely-above-0-has-sign-1	Scope		[Sign, [Interval, 1, 3]]	1	An [[Interval]] entirely above 0 has sign 1		
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	Scope		[Sign, [Subtract, [Sqrt, 2], 2]]	-1	Decides the sign of the exact number $\sqrt{2}-2$ by certified bignum evaluation at increasing precision		
+2-sqrt-2-is-the-same-certified-decision-the	Scope		[Sign, [Subtract, 2, [Sqrt, 2]]]	1	$2-\sqrt{2}$ is the same certified decision, the other way		
+tells-you-the-temperature-dropped-but-not-by-how	Applications		[Sign, [Subtract, 70, 95]]	-1	Tells you the temperature dropped, but not by how much -- for that, see [[Abs]]		
+sign-z-z-z-see-abs	Properties		[Equal, [Sign, [Complex, 3, 4]], [Divide, [Complex, 3, 4], [Abs, [Complex, 3, 4]]]]	True	$\operatorname{sign}(z) = z/|z|$. See [[Abs]]		
+x-cdot-sign-x-x-here-at-x-5	Properties		[Equal, [Multiply, -5, [Sign, -5]], [Abs, -5]]	True	$x \cdot \operatorname{sign}(x) = |x|$, here at $x = -5$		
+the-sign-of-a-nonzero-complex-number-lies-on-the	Properties		[Equal, [Abs, [Sign, [Complex, 3, 4]]], 1]	True	The sign of a nonzero complex number lies on the unit circle		
+nan-propagates-rather-than-being-treated-as-0	Possible issues		[Sign, NaN]	NaN	NaN propagates rather than being treated as 0		

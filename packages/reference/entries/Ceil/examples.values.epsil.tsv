@@ -1,0 +1,23 @@
+id	in	out
+ceil-7-over-2	Ceil(7 / 2)	4
+ceil-3p2	Ceil(3.2)	4
+ceil-3p7	Ceil(3.7)	4
+integers-pass-through-unchanged	Ceil(5)	5
+threads-element-wise-over-a-list	Ceil([1.2, -1.2, 3.7])	[2, -1, 4]
+ceil-2p4	Ceil(2.4)	3
+ceil-2p6	Ceil(2.6)	3
+idempotent-lceil-lceil-x-rceil-rceil	Ceil(Ceil(x))	Ceil(x)
+stays-symbolic	Ceil(x)	Ceil(x)
+exact-radicals-are-decided-numerically	Ceil(Sqrt(50))	8
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	Ceil(Pi)	4
+a-second-argument-rounds-up-to-a-multiple-of-it	Ceil(226, 10)	230
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Ceil(-10.3, 3.5)	-7
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Ceil(2Pi - ExponentialE, 5 / 4)	15 / 4
+rounds-the-real-and-imaginary-parts-up	Ceil(5.37 - 1.3i)	6 - i
+how-many-5-seat-vans-are-needed-to-carry-17	Ceil(17 / 5)	4
+ten-bits-are-enough-to-number-1000-items-lceil	Ceil(Log(1_000, 2))	10
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	Ceil(7 / 2) == Floor(7 / 2) + 1	True
+floor-and-ceil-agree-exactly-on-integers	Ceil(5) == Floor(5)	True
+a-zero-divisor-inside-ceil	Ceil(16 / 0)	Ceil(ComplexInfinity)
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceil(-3.7)	-3
+nan-propagates-rather-than-erroring	Ceil(`NaN`)	`NaN`

@@ -1,0 +1,39 @@
+---
+name: MotzkinAlgebra
+domain: Diagram algebras
+signature: MotzkinAlgebra(n)
+summary: '$M_n(\delta)$: the planar diagrams whose blocks have size at most two — so points may also be left unpaired. Dimension $M(2n)$, the Motzkin numbers.'
+signatures:
+  - call: MotzkinAlgebra(n)
+    description: the Motzkin algebra on $n$ strands
+    library: enumeratio-diagram
+    type: (integer) -> diagram_algebra
+  - call: RookAlgebra(n)
+    description: partial permutations — blocks of size ≤ 2, each pairing a top with a bottom
+    library: enumeratio-diagram
+  - call: SymmetricGroupAlgebra(n)
+    description: permutation diagrams only — dimension $n!$
+    library: enumeratio-diagram
+details:
+  - Dimension $M(2n)$ = 2, 9, 51, 323 — the Motzkin numbers, which count the same paths with a flat step that Catalan counts without
+  - "Contains [[TemperleyLiebAlgebra]]: dropping the requirement that every point be paired is exactly what turns Catalan into Motzkin"
+  - '`RookAlgebra(n)` counts $\sum_k \binom{n}{k}^2 k!$ — the partial permutations, i.e. the placements of non-attacking rooks'
+  - "`SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections"
+seeAlso:
+  - TemperleyLiebAlgebra
+  - PartitionAlgebra
+  - Diagram
+references:
+  - system: wikipedia
+    identity: Motzkin number
+  - system: mathworld
+    identity: MotzkinNumber
+  - system: oeis
+    identity: A001006
+bindings:
+  - origin: mapped
+    form: oscar
+    template: EnumeratioDiagramAlgebra(:motzkin, $1)
+    arity: 1
+    note: Sage has no Motzkin algebra.
+---

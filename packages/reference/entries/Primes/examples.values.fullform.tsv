@@ -1,0 +1,4 @@
+id	in
+the-first-five-primes	Take[Primes, 5]
+11-is-prime	Element[11, Primes]
+9-is-not-prime	Element[9, Primes]

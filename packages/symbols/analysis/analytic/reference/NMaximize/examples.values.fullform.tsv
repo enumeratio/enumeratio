@@ -1,0 +1,3 @@
+id	in
+two-trig-terms-on-a-bounded-interval	NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
+declines-without-a-bounded-constraint	NMaximize[Minus[Power[x, 2]], x]

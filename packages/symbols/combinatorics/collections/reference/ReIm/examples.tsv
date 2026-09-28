@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+real-and-imaginary-parts			[ReIm, [Complex, 3, 4]]	[List, 3, 4]
+threads-over-a-list	Scope		[ReIm, [List, [Complex, 1, 2], [Complex, 3, 4]]]	[List, [List, 1, 2], [List, 3, 4]]

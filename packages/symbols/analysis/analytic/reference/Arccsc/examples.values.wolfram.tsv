@@ -1,0 +1,10 @@
+id	in	out	tex.in	tex.out
+arccsc-1	ArcCsc[1]	Pi/2	\csc ^{-1}(1)	\frac{\pi }{2}
+arccsc-2	ArcCsc[2]	Pi/6	\csc ^{-1}(2)	\frac{\pi }{6}
+arccsc-sqrt-2-pi-4	ArcCsc[Sqrt[2]]			
+an-odd-function	ArcCsc[-2]			
+inside-1-1-the-value-is-complex	ArcCsc[0.5]			
+arccsc-positiveinfinity	ArcCsc[Infinity]			
+a-pole-arccsc-0-is-complex-infinity	ArcCsc[0]			
+derivative-for-real-x-1	D[ArcCsc[x], x]			
+undoes-csc-csc-arccsc-x-x	(Csc[ArcCsc[2]] == 2)	True	\csc \left(\csc ^{-1}(2)\right)=2	\text{True}

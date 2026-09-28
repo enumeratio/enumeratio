@@ -1,0 +1,9 @@
+---
+name: LargestRow
+domain: Combinatorics
+signature: LargestRow(...)
+summary: Largest number of cells in a row
+statOn:
+  - SkewPartition
+stub: carrier
+---

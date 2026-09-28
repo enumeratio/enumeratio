@@ -1,0 +1,4 @@
+id	in	out
+algebradimension-quaternions	\mathrm{AlgebraDimension}(\mathrm{Quaternions})	4
+algebradimension-cliffordalgebra-2-1	\mathrm{AlgebraDimension}(\mathrm{CliffordAlgebra}(2, 1))	8
+c-4	\mathrm{AlgebraDimension}(\mathrm{MulticomplexAlgebra}(4))	16

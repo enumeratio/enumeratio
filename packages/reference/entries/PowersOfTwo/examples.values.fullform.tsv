@@ -1,0 +1,4 @@
+id	in
+the-first-25-terms	Take[PowersOfTwo, 25]
+64-is-a-power-of-two	Element[64, PowersOfTwo]
+48-is-not-a-power-of-two	Element[48, PowersOfTwo]

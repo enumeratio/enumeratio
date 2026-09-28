@@ -1,0 +1,4 @@
+id	in	out
+one-descent-at-position-1	\mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)	1
+descents-at-positions-1-and-2	\mathrm{MajorIndex}(\bigl\lbrack3, 2, 1\bigr\rbrack)	3
+no-descents	\mathrm{MajorIndex}(\bigl\lbrack1, 2, 3\bigr\rbrack)	0

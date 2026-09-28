@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+the-right-handed-trefoil			[JonesPolynomial, [Braid, 2, [List, 1, 1, 1]]]	[Add, [Negate, [Power, t, -4]], [Divide, 1, t], [Power, t, -3]]	the right-handed trefoil
+the-shortest-knotted-modular-geodesic-by-yet	Applications		[JonesPolynomial, "'LLRLR'"]	[Add, [Negate, [Power, t, -4]], [Divide, 1, t], [Power, t, -3]]	the shortest knotted modular geodesic, by yet another route
+the-figure-eight-through-the-braid-it-carries-as	Applications		[JonesPolynomial, [FigureEightKnot]]	[Add, [Power, t, 2], [Negate, t], [Divide, -1, t], [Power, t, -2], 1]	the figure-eight, through the braid it carries as TwistKnot(1)
+not-yet-an-invariant	Properties		[KauffmanBracket, [Braid, 2, [List, 1]]]	[Negate, [Power, A, 3]]	not yet an invariant
+and-the-writhe-correction-fixes-it	Properties		[BracketInvariant, [Braid, 2, [List, 1]]]	1	…and the writhe correction fixes it

@@ -1,0 +1,2 @@
+id	in
+halve-while-even	NestWhile[Function[Divide[Slot[1], 2]], 96, Function[Equal[Mod[Slot[1], 2], 0]]]

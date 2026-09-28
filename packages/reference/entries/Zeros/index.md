@@ -1,0 +1,9 @@
+---
+name: Zeros
+domain: Combinatorics
+signature: Zeros(...)
+summary: Number of zeros
+statOn:
+  - AscentSequence
+stub: carrier
+---

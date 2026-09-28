@@ -1,0 +1,4 @@
+id	in	out
+count-binarypalindromes-4	\mathrm{Count}(\mathrm{BinaryPalindromes}(4))	4
+first-element-of-binarypalindromes-4	\mathrm{BinaryPalindromes}(4)[1]	\bigl\lbrack0, 0, 0, 0\bigr\rbrack
+every-element-of-binarypalindromes-4	\mathrm{Take}(\mathrm{BinaryPalindromes}(4), 4)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 1, 1\bigr\rbrack\bigr\rbrack

@@ -1,0 +1,18 @@
+---
+name: RookAlgebra
+domain: Oracle
+signature: RookAlgebra(...)
+summary: Mapped through to oscar for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: oscar
+    template: EnumeratioDiagramAlgebra(:rook, $1)
+    arity: 1
+    note: Sage has no rook algebra.
+stub: carrier
+signatures:
+  - call: RookAlgebra(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-diagram
+    type: (integer) -> diagram_algebra
+---

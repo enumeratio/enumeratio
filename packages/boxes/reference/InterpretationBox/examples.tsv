@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+held			[InterpretationBox, "'F'", [Add, 2, 3]]	[InterpretationBox, "'F'", [Add, 2, 3]]	the expression it stands for is held

@@ -1,0 +1,9 @@
+---
+name: ToOdd
+domain: Combinatorics
+signature: ToOdd(...)
+summary: "Euler (Glaisher): distinct → odd"
+mapOn:
+  - IntegerPartition
+stub: carrier
+---

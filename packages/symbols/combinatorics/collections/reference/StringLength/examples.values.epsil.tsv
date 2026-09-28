@@ -1,0 +1,2 @@
+id	in	out	back
+counts-code-points-not-utf-16-units	StringLength("a😀b")	3	[StringLength, "'a😀b'"]

@@ -1,0 +1,19 @@
+---
+name: PadRight
+domain: Collections
+signature: PadRight(list, n, x)
+summary: Pad a list on the right to length n, or truncate it from the right.
+signatures:
+  - call: PadRight(list)
+    description: a ragged array (a list of lists) padded with 0s to a full matrix.
+    library: enumeratio-collections
+    type: (list<any>, integer?, any?) -> collection
+  - call: PadRight(list, n, x?)
+    description: padded on the right with $x$ (default 0) to length $n$; a shorter $n$ drops elements from the right instead.
+    library: enumeratio-collections
+seeAlso:
+  - PadLeft
+  - Take
+names:
+  wolframIdentity: true
+---

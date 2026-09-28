@@ -1,0 +1,13 @@
+---
+name: Surjection
+domain: Combinatorics
+signature: Surjection(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: Surjection(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> surjection
+---

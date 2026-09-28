@@ -1,0 +1,9 @@
+id	in	out
+the-median-of-beta-2-3	InverseBetaRegularized(0.5, 2, 3)	0.385_727_568_132_389_5
+inversebetaregularized-0p3-2p5-1p5	InverseBetaRegularized(0.3, 2.5, 1.5)	0.509_497_412_428_341_3
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	InverseBetaRegularized(0.25, 2, 1)	0.5
+iinv-0-7-4-2	InverseBetaRegularized(0.7, 4, 2)	0.781_973_084_236_775_1
+i-x-1-1-x-is-its-own-inverse	InverseBetaRegularized(s, 1, 1)	s
+i-x-a-1-x-a-inverts-to-s-1-a	InverseBetaRegularized(s, a, 1)	s ^ (1 / a)
+inversebetaregularized-0-2-3	InverseBetaRegularized(0, 2, 3)	0
+inversebetaregularized-1-2-3	InverseBetaRegularized(1, 2, 3)	1

@@ -1,0 +1,8 @@
+id	in	out
+mode-list-1-2-2-3		
+mode-list-1-2-3-3-2-3		
+exact-rationals		
+symbols-and-numbers-mixed-three-way-tie-wolfram		
+the-mode-occurs-exactly-as-many-times-as-the	\mathrm{Count}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack, \mathrm{Mode}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))=2	\mathrm{True}
+with-a-tie-for-most-frequent-mode-returns-just		
+empty-data-has-no-mode-compute-engine-returns		

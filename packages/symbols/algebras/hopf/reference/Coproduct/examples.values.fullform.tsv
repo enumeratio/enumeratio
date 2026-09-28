@@ -1,0 +1,4 @@
+id	in
+deconcatenation-cut-at-each-gap	Coproduct[QSymM[List[1, 2]]]
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	Coproduct[NSymH[List[2]]]
+the-counit-picks-out-the-constant-term	Counit[NSymH[List[]]]

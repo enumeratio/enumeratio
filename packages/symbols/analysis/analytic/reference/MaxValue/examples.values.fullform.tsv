@@ -1,0 +1,4 @@
+id	in
+a-downward-parabola-s-maximum-value	MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+the-amplitude-of-sine-alone-is-exact	MaxValue[Sin[x], x]
+an-unbounded-cubic	MaxValue[Power[x, 3], x]

@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+power			[ToBoxes, [Power, x, 2]]	[SuperscriptBox, "'x'", "'2'"]			
+evaluates-first			[ToBoxes, [Add, 2, 3]]	"'5'"	evaluates its argument first; see [[MakeBoxes]]		
+binomial			[ToBoxes, [Binomial, n, k]]	[RowBox, [List, "'('", [FractionBox, "'n'", "'k'", [Tuple, FractionLine, False]], "')'"]]	a binomial coefficient: a fraction without its bar, in parentheses	convention	Wolfram's default ToBoxes[Binomial[n,k]] boxes the unevaluated function call as text; ours renders the traditional stacked fraction without a bar. A rendering choice, not a value.
+square-root-over-y			[ToBoxes, [Divide, [Sqrt, x], y]]	[FractionBox, [SqrtBox, "'x'"], "'y'"]			

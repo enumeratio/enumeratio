@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+turan-6-3-is-k222			[EdgeCount, [TuranGraph, 6, 3]]	12

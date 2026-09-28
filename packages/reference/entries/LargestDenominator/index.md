@@ -1,0 +1,9 @@
+---
+name: LargestDenominator
+domain: Combinatorics
+signature: LargestDenominator(...)
+summary: Largest denominator
+statOn:
+  - EgyptianFraction
+stub: carrier
+---

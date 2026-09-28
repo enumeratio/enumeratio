@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+algebrasignature-quaternions			[AlgebraSignature, Quaternions]	[List, -1, -1]	
+cl-2-1			[AlgebraSignature, [CliffordAlgebra, 2, 1]]	[List, 1, 1, -1]	$\mathrm{Cl}(2,1)$
+nilpotent	Scope		[AlgebraSignature, DualNumbers]	[List, 0]	nilpotent

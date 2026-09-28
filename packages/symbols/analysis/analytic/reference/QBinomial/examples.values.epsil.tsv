@@ -1,0 +1,9 @@
+id	in	out
+frac-2-4-1-2-3-1-2-2-1-2-1-35	QBinomial(4, 2, 2)	35
+qbinomial-4-2-2	N(QBinomial(4, 2, 2))	35
+qbinomial-6-3-1	N(QBinomial(6, 3, 1))	20
+qbinomial-5-2-3	N(QBinomial(5, 2, 3))	1_210
+qbinomial-8-3-2	N(QBinomial(8, 3, 2))	97_155
+a-polynomial-in-q-whose-coefficients-count	Expand(QBinomial(4, 2, q))	q ^ 4 + q ^ 3 + 2 * q ^ 2 + q + 1
+the-number-of-2-dimensional-subspaces-of-f-3-5	QBinomial(5, 2, 3)	1_210
+at-q-1-it-is-binomial-6-3	QBinomial(6, 3, 1)	20

@@ -1,0 +1,34 @@
+id	in	out
+ln-1	log(1)	0.0
+ln-exponentiale	log(e)	1.0
+ln-0	log(0)	-inf
+a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164381978013115464
+a-machine-precision-negative-argument	log(-4.705)	(1.54862577303734297246018360519 + 3.14159265358979323846264338328j)
+ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	(0.0 + 3.14159265358979323846264338328j)
+n-for-a-decimal-value	(log(1000))	6.90775527898213705205397436405
+arbitrary-precision-via-n	(log((mpf(5)/2)))	0.916290731874155065183527211768
+evaluates-at-a-complex-argument	log(mpc(2.5, 1))	(0.990500734433291704174403894723 + 0.38050637711236488630358791681j)
+a-negative-float-gives-the-principal-complex	log(-2.5)	(0.916290731874155065183527211768 + 3.14159265358979323846264338328j)
+threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[mpf('0.0'), mpf('0.741937344729377354776816987592111'), mpf('1.13140211149110059056208963437813'), mpf('1.41098697371026203319721877687743')]
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	6.90775527898213705205397436405
+ln-exponentiale-pow-3	log(((e)**3))	3.0
+ln-positiveinfinity	log(inf)	
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln		
+ln-i-i-pi-2-exactly	log(mpc(0,1))	(0.0 + 1.57079632679489661923132169164j)
+a-unit-fraction-becomes-a-negated-logarithm-ln	log((mpf(1)/2))	-0.693147180559945309417232121458
+interval-arithmetic-ln-is-increasing-so-ln-frac		
+uncertainty-propagation-ln-2-pm-0-01-approx-0		
+ln-exp-x		
+derivative-1-x		
+antiderivative-x-ln-x-x		
+mercator-series-for-ln-1-x		
+to-40-significant-digits-every-one-correctly	(log(2))	0.693147180559945309417232121458
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	log((mpf(-1)/2))	(-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
+n-decimalizes-ln-i-not-just-the-exact-form	(log(mpc(0,1)))	(0.0 + 1.57079632679489661923132169164j)
+an-integer-power-negative-argument	log(-2)	(0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
+n-of-a-negative-integer-argument	(log(-2))	(0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
+ln-neg-6	log(-6)	(1.79175946922805500081247735838 + 3.14159265358979323846264338328j)
+n-of-a-negative-rational-argument	(log((mpf(-1)/2)))	(-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
+inverse-of-exp-ln-e-x-x	almosteq(log(exp(5)), 5, 1e-20)	True
+product-rule-ln-ab-ln-a-ln-b	almosteq((log(2) + log(3)), log(6), 1e-20)	True
+powerexpand-splits-a-logarithm-of-a-product		

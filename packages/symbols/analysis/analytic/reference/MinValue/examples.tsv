@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+a-quadratic-s-minimum-value			[MinValue, [Add, [Power, x, 2], [Multiply, -4, x], 3], x]	-1	A quadratic's vertex value
+a-simple-interval-constraint			[MinValue, [List, [Power, x, 2], [GreaterEqual, x, 1]], x]	1	With x >= 1, the boundary value
+the-amplitude-of-cosine-alone-is-exact	Scope		[MinValue, [Cos, [Subtract, [Multiply, 3, x], 1]], x]	-1	Cos's exact minimum value, -1 -- Minimize itself would decline this (no reproducible point)
+exp-s-infimum	Scope		[MinValue, [Exp, x], x]	0	Exp's infimum, even though it is never attained

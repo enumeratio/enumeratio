@@ -1,0 +1,5 @@
+id	in
+product-pdf	PDF[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2]], List[0, 5]]
+product-mean	Mean[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2]]]
+product-variance	Variance[ProductDistribution[NormalDistribution[0, 1], NormalDistribution[5, 2]]]
+product-repeated-form-mean	Mean[ProductDistribution[List[NormalDistribution[0, 1], 3]]]

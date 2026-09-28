@@ -1,0 +1,27 @@
+---
+name: DivisorSum
+domain: Number theory
+signature: DivisorSum(n, f, cond?)
+summary: The sum of $f(d)$ over the positive divisors $d$ of $n$, optionally only those where $\mathrm{cond}(d)$ holds.
+signatures:
+  - call: DivisorSum(n, f)
+    description: $\sum_{d\mid n} f(d)$
+    library: enumeratio-number-theory
+    type: (integer, function, function?) -> number
+  - call: DivisorSum(n, f, cond)
+    description: $\sum_{d\mid n,\ \mathrm{cond}(d)} f(d)$
+    library: enumeratio-number-theory
+details:
+  - $f$ and $\mathrm{cond}$ are `Function` literals over the divisor.
+  - "DivisorSigma, MoebiusMu's divisor-sum identity and Totient's are all instances: see [[DivisorSigma]], [[MoebiusMu]], [[Totient]]."
+seeAlso:
+  - Divisors
+  - DivisorSigma
+  - MoebiusMu
+  - Totient
+names:
+  wolframIdentity: true
+statOn:
+  - IntegerFactorization
+  - Numeric
+---

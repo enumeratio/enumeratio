@@ -1,0 +1,17 @@
+---
+name: GraphDiameter
+domain: Collections
+signature: GraphDiameter(g)
+summary: The greatest eccentricity among all vertices of a [[Graph]].
+signatures:
+  - call: GraphDiameter(g)
+    description: max over v of VertexEccentricity(g, v); PositiveInfinity if g is disconnected.
+    library: enumeratio-collections
+    type: (value) -> real | signed_infinity
+seeAlso:
+  - GraphRadius
+  - GraphPeriphery
+  - VertexEccentricity
+names:
+  wolframIdentity: true
+---

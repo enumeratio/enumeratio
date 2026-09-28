@@ -1,0 +1,25 @@
+id	in	out
+g-5-0-1-2-3-12	G(5)	12
+g-7-34560	G(7)	34\,560
+the-superfactorials-threaded-over-a-list		
+a-floating-point-argument-evaluates-numerically	G(2.5)	0.947\,573\,901\,084\,062\,7
+g-10-prod-k-0-8-k-exact	G(10)	5\,056\,584\,744\,960\,000
+g-3-0-1-1	G(3)	1
+g-frac-12-to-machine-precision	G(0.5)	0.603\,244\,281\,209\,589\,3
+g-1-1	G(1)	1
+g-2-1	G(2)	1
+g-4-2	G(4)	2
+g-6-288	G(6)	288
+barnesg-of-a-symbol-stays-symbolic	G(z)	G(z)
+n-barnesg-5-over-2	N(G(\frac{5}{2}))	0.947\,573\,901\,083\,825\,776\,884
+complex-arguments	G(1.3+i)	1.444\,613\,935\,050\,315\,3-0.298\,548\,825\,211\,568\,7i
+negative-non-integer-arguments-between-the-zeros	G(-2.5)	0.076\,172\,979\,656\,884\,05
+threads-elementwise-over-an-array	\mathrm{BarnesG}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack1, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack G(\frac{1}{2}), 1\bigr\rbrack, \bigl\lbrack1, G(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+g-infty-infty	G(\infty)	\infty
+interval-arithmetic-g-is-increasing-on-1-17-1-18	G(\mathrm{Interval}(1.17, 1.18))	\mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	G(\mathrm{Around}(2.1, 0.01))	\mathrm{Around}(0.984\,772\,724\,354\,046\,5, 0.001\,449\,505\,695\,943\,639)
+to-30-significant-digits-not-yet-the-requested	N(G(\frac{1}{2}), 30)	0.603\,244\,281\,209\,446\,206\,191
+g-vanishes-at-the-nonpositive-integers	G(0)	0
+all-of-them	G(-3)	0
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	\frac{\Gamma(6)^5}{G(6)}	86\,400\,000
+an-exact-non-integer-argument-stays-symbolic	G(\frac{5}{2})	G(\frac{5}{2})

@@ -1,0 +1,15 @@
+id	in	out	tex.in	tex.out
+default-base-is-10	Log[10, 100]	2	\log _{10}(100)	2
+same-result-written-with-an-explicit-base	Log[10, 100]	2	\log _{10}(100)	2
+base-2-via-the-explicit-second-argument	Log[2, 8]	3	\log _2(8)	3
+log-3-1-5-at-machine-precision	Log[3, 1.5]			
+log-9-3	Log[3, 9]			
+threads-over-a-list-of-values	Log[2, List[2, 4, 8]]			
+threads-over-a-list-of-bases	Log[List[2, E, 10], 2.5]			
+derivative-in-base-3-frac-1-x-ln-3	D[Log[3, x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \log _3(x)}{\partial x}-\frac{1}{x \log (3)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\log _3\left(\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \log (3)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\log _3\left(-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \log (3)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\log _3\left(\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \log (3)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+log-2-frac-18-3-an-exact-negative-power-of-the	Log[2, Rational[1, 8]]			
+confirms-the-default-base-is-10	(Log[10, 100] == Log[10, 100])	True	\log _{10}(100)=\log _{10}(100)	\text{True}
+product-rule-log-b-xy-log-b-x-log-b-y	(Log[2, Times[8, 4]] == Plus[Log[2, 8], Log[2, 4]])	True	\log _2(8\ 4)=\log _2(8)+\log _2(4)	\text{True}
+power-rule-log-b-x-k-k-log-b-x	(Log[2, Power[2, 5]] == Times[5, Log[2, 2]])	True	\log _2\left(2^5\right)=5 \log _2(2)	\text{True}
+log-10-0-infty	Log[10, 0]	-Infinity	\log _{10}(0)	-\infty
+a-negative-argument-stays-symbolic-with-the	Log[10, -5]	(I*Pi + Log[5])/Log[10]	\log _{10}(-5)	\frac{\log (5)+i \pi }{\log (10)}

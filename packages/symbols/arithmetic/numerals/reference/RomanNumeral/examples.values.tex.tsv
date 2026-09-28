@@ -1,0 +1,6 @@
+id	in	out
+romannumeral-1-988	\mathrm{RomanNumeral}(1\,988)	\text{MCMLXXXVIII}
+romannumeral-2-024	\mathrm{RomanNumeral}(2\,024)	\text{MMXXIV}
+the-largest-with-standard-symbols	\mathrm{RomanNumeral}(3\,999)	\text{MMMCMXCIX}
+listable-4-is-written-subtractively	\mathrm{RomanNumeral}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack\text{I}, \text{II}, \text{III}, \text{IV}\bigr\rbrack
+zero-is-written-n-for-nulla	\mathrm{RomanNumeral}(0)	\text{N}

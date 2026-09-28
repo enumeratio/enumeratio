@@ -1,0 +1,11 @@
+id	in
+a-quadratic-with-two-real-roots	FindInstance[Equal[Power[x, 2], 4], x, Reals]
+both-roots-with-an-explicit-count	FindInstance[Equal[Power[x, 2], 4], x, Reals, 2]
+an-irrational-root-is-exact	FindInstance[Equal[Power[x, 2], 2], x, Reals]
+a-linear-equation	FindInstance[Equal[Plus[Times[2, x], 3], 7], x, Reals]
+no-real-root-is-a-proven-empty-result	FindInstance[Equal[Power[x, 2], -1], x, Reals]
+a-non-integer-root-is-also-proven-empty	FindInstance[Equal[Power[x, 2], 2], x, Integers]
+a-bounded-integer-search	FindInstance[And[Greater[x, 0], Less[x, 10]], x, Integers, 3]
+a-multivariate-bounded-integer-search	FindInstance[And[Equal[Plus[x, y], 5], Greater[x, 0], Less[x, 10], Greater[y, 0], Less[y, 10]], List[x, y], Integers, 3]
+declines-without-an-explicit-domain	FindInstance[Greater[x, 0], x]
+declines-on-a-pure-inequality-over-reals	FindInstance[Greater[x, 0], x, Reals]

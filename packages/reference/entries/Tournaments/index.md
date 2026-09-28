@@ -1,0 +1,16 @@
+---
+name: Tournaments
+domain: Combinatorics
+signature: Tournaments(...)
+summary: Orientations of the complete graph on [n].
+grades:
+  - name: n
+    role: axis
+carrier: Tournament
+stub: carrier
+signatures:
+  - call: Tournaments(...)
+    description: Orientations of the complete graph on [n].
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+---

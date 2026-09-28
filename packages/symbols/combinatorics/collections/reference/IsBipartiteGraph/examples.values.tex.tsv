@@ -1,0 +1,6 @@
+id	in	out
+even-cycle-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))	\top
+odd-cycle-is-not	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))	\bot
+a-self-loop-is-never-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))	\bot
+a-4-cycle-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(4))	\top
+a-path-is-always-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{PathGraph}(7))	\top

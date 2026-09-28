@@ -1,0 +1,5 @@
+id	in	out
+m-6	dim(EnumeratioDiagramAlgebra(:motzkin, 3))	51
+algebradimension-rookalgebra-3	dim(EnumeratioDiagramAlgebra(:rook, 3))	34
+5	dim(group_algebra(QQ, symmetric_group(5)))	120
+a-cup-cap-is-not-a-permutation		

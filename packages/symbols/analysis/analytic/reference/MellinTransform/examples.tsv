@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+exp-neg-x-gamma			[MellinTransform, [Exp, [Negate, x]], x, s]	[Gamma, s]	$\mathcal{M}\{e^{-x}\}(s) = \Gamma(s)$, $\mathrm{Re}(s)>0$
+one-over-one-plus-x			[MellinTransform, [Divide, 1, [Add, 1, x]], x, s]	[Multiply, Pi, [Csc, [Multiply, Pi, s]]]	$\mathcal{M}\{1/(1+x)\}(s) = \pi\csc(\pi s)$, $0<\mathrm{Re}(s)<1$
+gaussian			[MellinTransform, [Exp, [Negate, [Power, x, 2]]], x, s]	[Multiply, [Rational, 1, 2], [Gamma, [Multiply, [Rational, 1, 2], s]]]	$\mathcal{M}\{e^{-x^2}\}(s) = \Gamma(s/2)/2$
+log-one-plus-x			[MellinTransform, [Ln, [Add, 1, x]], x, s]	[Divide, [Multiply, Pi, [Csc, [Multiply, Pi, s]]], s]	$\mathcal{M}\{\log(1+x)\}(s) = \pi\csc(\pi s)/s$, $-1<\mathrm{Re}(s)<0$
+power-shift-x-c-exp	Scope		[MellinTransform, [Multiply, [Power, x, a], [Exp, [Negate, x]]], x, s]	[Gamma, [Add, a, s]]	power shift — $\mathcal{M}\{x^a e^{-x}\}(s) = \Gamma(a+s)$

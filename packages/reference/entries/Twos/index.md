@@ -1,0 +1,9 @@
+---
+name: Twos
+domain: Combinatorics
+signature: Twos(...)
+summary: Twos
+statOn:
+  - HyperbinaryWord
+stub: carrier
+---

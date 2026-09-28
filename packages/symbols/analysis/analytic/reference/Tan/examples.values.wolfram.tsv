@@ -1,0 +1,43 @@
+id	in	out	tex.in	tex.out	verdict
+tan-0	Tan[0]	0	\tan (0)	0	
+tan-pi-over-6	Tan[Divide[Pi, 6]]	1/Sqrt[3]	\tan \left(\frac{\pi }{6}\right)	\frac{1}{\sqrt{3}}	
+tan-pi-over-4	Tan[Divide[Pi, 4]]	1	\tan \left(\frac{\pi }{4}\right)	1	
+tan-pi-over-3	Tan[Divide[Pi, 3]]	Sqrt[3]	\tan \left(\frac{\pi }{3}\right)	\sqrt{3}	
+tan-30-circ-frac-sqrt-3-3-exactly	Tan[Times[30, Degree]]				
+a-machine-precision-argument-evaluates	Tan[1.2]				
+a-huge-24-40-argument	N[Tan[Power[24, 40]]]				
+a-huge-10-100-argument	N[Tan[Power[10, 100]]]				
+a-huge-3-200-argument	N[Tan[Power[3, 200]]]				
+a-huge-neg-7-60-argument	N[Tan[Minus[Power[7, 60]]]]				
+a-huge-10-80-plus-1-over-3-argument	N[Tan[Divide[Plus[Power[10, 80], 1], 3]]]				
+tan-100-under-n	N[Tan[100]]				
+n-of-an-exact-argument-gives-an-arbitrary	N[Tan[Rational[6, 5]]]				
+evaluates-at-a-complex-argument	Tan[Complex[2.5, 1]]				
+threads-element-wise-over-a-matrix	Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]				
+tan-pi-8-sqrt-2-1	Tan[Divide[Pi, 8]]				
+tan-pi-12-2-sqrt-3	Tan[Divide[Pi, 12]]				
+tan-pi-5-sqrt-5-2-sqrt-5	Tan[Divide[Pi, 5]]				
+tan-pi-10-sqrt-1-2-sqrt-5	Tan[Divide[Pi, 10]]				
+tan-5-pi-12-2-sqrt-3	Tan[Times[Rational[5, 12], Pi]]				
+tan-3-over-4-times-pi	Tan[Times[Rational[3, 4], Pi]]				
+interval-arithmetic-the-image-of-0-pi-3-is-0	Tan[Interval[List[0, Divide[Pi, 3]]]]				
+uncertainty-propagation-tan-2-pm-0-02-approx-2	Tan[Around[2, 0.02]]				
+tan-ix-i-tanh-x	Tan[Times[I, x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\tan (i x)-i \tanh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(i \frac{7}{3}\right)-i \tanh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(i \left(-\frac{11}{5}\right)\right)-i \tanh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(i \frac{13}{4}\right)-i \tanh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+oddness-pulls-the-sign-out-of-a-symbolic	Tan[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\tan (-x)--\tan (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(-\frac{7}{3}\right)--\tan \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(-\left(-\frac{11}{5}\right)\right)--\tan \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan \left(-\frac{13}{4}\right)--\tan \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+tan-arctan-x-x-for-every-x	Tan[ArcTan[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan \left(\tan ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\tan \left(\tan ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+tan-arctan-2-2-for-every-x	Tan[ArcTan[2]]				
+tan-arcsin-x-frac-x-sqrt-1-x-2	Tan[ArcSin[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan \left(\sin ^{-1}(x)\right)-\frac{x}{\sqrt{-x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(\frac{7}{3}\right)\right)-\frac{\frac{7}{3}}{\sqrt{-\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{\frac{11}{5}}{\sqrt{-\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\tan \left(\sin ^{-1}\left(\frac{13}{4}\right)\right)-\frac{\frac{13}{4}}{\sqrt{-\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+derivative-sec-2-x	D[Tan[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \tan (x)}{\partial x}-\sec ^2(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\tan \left(\frac{7}{3}\right)-\sec ^2\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\tan \left(-\frac{11}{5}\right)-\sec ^2\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\tan \left(\frac{13}{4}\right)-\sec ^2\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+antiderivative-ln-sec-x	Integrate[Tan[x], x]	Indeterminate	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \tan (x) \, dx-\log (| \sec (x)| )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \tan \left(\frac{7}{3}\right) \, d\frac{7}{3}-\log \left(\left| \sec \left(\frac{7}{3}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \tan \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\log \left(\left| \sec \left(-\frac{11}{5}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \tan \left(\frac{13}{4}\right) \, d\frac{13}{4}-\log \left(\left| \sec \left(\frac{13}{4}\right)\right| \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
+taylor-series-about-0	""				
+to-30-significant-digits-every-one-correctly	N[Tan[1], 30]				
+threads-element-wise-over-a-list	Tan[List[0, Divide[Pi, 4]]]	{0, 1}	\tan \left(\left\{0,\frac{\pi }{4}\right\}\right)	\{0,1\}	
+tan-x-frac-sin-x-cos-x	(Tan[Divide[Pi, 4]] == Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]])	True	\tan \left(\frac{\pi }{4}\right)=\frac{\sin \left(\frac{\pi }{4}\right)}{\cos \left(\frac{\pi }{4}\right)}	\text{True}	
+odd-function-tan-x-tan-x	Tan[Minus[Divide[Pi, 4]]]	-1	\tan \left(-\frac{\pi }{4}\right)	-1	
+period-pi-not-2-pi-adding-a-half-turn-doesn-t	Tan[Plus[Divide[Pi, 4], Pi]]	1	\tan \left(\frac{\pi }{4}+\pi \right)	1	
+sin-x-cos-x-should-simplify-to-tan-x-simplify					
+rewritten-in-exponentials	TrigToExp[Tan[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}[\tan (x)]--i \frac{-e^{-i x}+e^{i x}}{e^{i x}+e^{-i x}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan \left(\frac{7}{3}\right)\right]--i \frac{-e^{-i \frac{7}{3}}+e^{i \frac{7}{3}}}{e^{i \frac{7}{3}}+e^{-i \frac{7}{3}}}\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan \left(-\frac{11}{5}\right)\right]--i \frac{-e^{-i \left(-\frac{11}{5}\right)}+e^{i \left(-\frac{11}{5}\right)}}{e^{i \left(-\frac{11}{5}\right)}+e^{-i \left(-\frac{11}{5}\right)}}\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan \left(\frac{13}{4}\right)\right]--i \frac{-e^{-i \frac{13}{4}}+e^{i \frac{13}{4}}}{e^{i \frac{13}{4}}+e^{-i \frac{13}{4}}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+a-pole-cos-pi-2-0-so-the-ratio-blows-up	Tan[Divide[Pi, 2]]	ComplexInfinity	\tan \left(\frac{\pi }{2}\right)	\text{ComplexInfinity}	
+same-rule-as-sin-and-cos-a-non-special-numeric	Tan[1]	Tan[1]	\tan (1)	\tan (1)	
+a-pole-at-negative-pi-over-2-too	Tan[Divide[Pi, -2]]				
+a-pole-reached-through-periodicity-unreduced	Tan[Plus[Divide[Pi, -2], Pi]]				

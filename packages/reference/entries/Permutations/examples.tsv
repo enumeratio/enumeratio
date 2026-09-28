@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-permutations-of-4			[Count, [Permutations, 4]]	24	`Permutations(n)` is the collection of permutations of $\{1, \ldots, n\}$, the same as [[SymmetricGroup]](n)

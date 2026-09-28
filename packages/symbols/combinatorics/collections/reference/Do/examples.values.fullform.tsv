@@ -1,0 +1,3 @@
+id	in
+sum-one-to-five	List[Assign[total, 0], Do[Assign[total, Plus[total, i]], List[i, 1, 5]], total]
+repeat-with-no-loop-variable	List[Assign[count, 0], Do[Assign[count, Plus[count, 1]], 4], count]

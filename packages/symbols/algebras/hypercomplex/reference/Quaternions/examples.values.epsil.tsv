@@ -1,0 +1,4 @@
+id	in	out
+ijk-1	NonCommutativeMultiply(f_1, f_2, f_1 * f_2)	-1
+k-in-h	f_1 * f_2 in Quaternions	True
+a-multicomplex-unit-is-not-a-quaternion	i_1 in Quaternions	False

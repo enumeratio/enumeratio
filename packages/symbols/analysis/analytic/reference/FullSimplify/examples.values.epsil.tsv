@@ -1,0 +1,7 @@
+id	in	out
+the-pythagorean-identity	FullSimplify(Sin(x) ^ 2 + Cos(x) ^ 2)	1
+recognizes-the-definition-of-sinh	FullSimplify((Exp(x) - Exp(-x)) / 2)	Sinh(x)
+folds-the-double-angle-product	FullSimplify(2 * Sin(x) * Cos(x))	Sin(2x)
+the-functional-equation-of-gamma	FullSimplify(Gamma(x + 1) / Gamma(x))	x
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	FullSimplify(Sqrt(2) + Sqrt(3) - Sqrt(5 + 2 * Sqrt(6)))	0
+the-hyperbolic-pythagorean-identity	FullSimplify(Cosh(x) ^ 2 - Sinh(x) ^ 2)	1

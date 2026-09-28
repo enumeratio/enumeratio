@@ -1,0 +1,4 @@
+id	in
+count-kcyclepermutations-4-2	Count[KCyclePermutations[4, 2]]
+first-element-of-kcyclepermutations-4-2	Part[KCyclePermutations[4, 2], 1]
+every-element-of-kcyclepermutations-4-2	Take[KCyclePermutations[4, 2], 11]

@@ -1,0 +1,34 @@
+id	in	out	tex.in	tex.out	verdict
+q-a-0-1-for-any-a	GammaRegularized[1, 0]	1	Q(1,0)	1	
+q-1-z-e-z-here-at-z-1	GammaRegularized[1, 1]	E^(-1)	Q(1,1)	\frac{1}{e}	
+floating-point-arguments-evaluate-directly-to-a	GammaRegularized[2.5, 1.5]	0.6999858358786275	Q(2.5,1.5)	0.699986	
+q-1-z-e-z-at-z-1-5	GammaRegularized[1, 1.5]				
+q-2-3-3-4-3-e-3-3	GammaRegularized[2, 3.3]				
+q-1-0-2-all-integers	N[GammaRegularized[1, 0, 2]]				
+q-2-5-1-5-3	GammaRegularized[2.5, 1.5, 3]				
+q-0-5-0-0-25	GammaRegularized[0.5, 0, 0.25]				
+q-3-1-7-all-integers	N[GammaRegularized[3, 1, 7]]				
+q-2-5-0-complex-1-5-plus-i	GammaRegularized[2.5, 0, Complex[1.5, 1]]				
+q-complex-2-plus-i-0-1-5	N[GammaRegularized[Complex[2, 1], 0, 1.5]]				
+q-three-complex-arguments	N[GammaRegularized[Complex[2, 1], Complex[0.5, -1], Complex[1.5, 1]]]				
+q-0-1-4-all-integers	N[GammaRegularized[0, 1, 4]]				
+threads-element-wise-over-a-list-as-wolfram-s	GammaRegularized[List[1, 2], 1]	{E^(-1), 2/E}	Q(\{1,2\},1)	\left\{\frac{1}{e},\frac{2}{e}\right\}	
+complex-order-under-n	N[GammaRegularized[Complex[1, 1], 2.5]]				
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	GammaRegularized[2.5, 0.5, 1.5]				
+which-at-an-integer-order-equally-evaluates-to	GammaRegularized[2, 0.5, 1.5]				
+listable-over-its-limits-q-1-infty-infty-q-1	GammaRegularized[1, List[-Infinity, Infinity]]				
+listable-threads-elementwise-over-a-matrix	GammaRegularized[2, List[List[3.5, 0], List[0, 6.5]]]				
+interval-arithmetic-q-is-decreasing-in-z	GammaRegularized[Rational[2, 5], Interval[List[0.21, 0.22]]]				
+to-30-significant-digits-not-yet-the-last-digit	N[GammaRegularized[2, 1], 30]				
+q-s-z-at-a-complex-order-s-beyond-what-the	N[GammaRegularized[Complex[2, 1], 1.5]]				
+the-cdf-of-a-poisson-lambda-2-random-variable-at	GammaRegularized[3, 2]	5/E^2	Q(3,2)	\frac{5}{e^2}	
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma	GammaRegularized[2.5, 0, 1.5]	0.30001416412137244	Q(2.5,0,1.5)	0.300014	
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	Subtract[1, GammaRegularized[0.5, 1.9207294103470425]]				
+the-polynomial-closed-form-for-an-integer-order	GammaRegularized[5, -1]	(3*E)/8	Q(5,-1)	\frac{3 e}{8}	
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma	GammaRegularized[-1.5, 0, 1.5]	0.985260074360347	Q(-1.5,0,1.5)	0.98526	
+q-a-0-1-for-symbolic-a	GammaRegularized[a, 0]	GammaRegularized[a, 0]	Q(a,0)	Q(a,0)	disagree
+q-a-infty-0	GammaRegularized[a, Infinity]	0	Q(a,\infty )	0	
+q-1-x-e-x-symbolically	GammaRegularized[1, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q(1,x)-e^{-x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(1,\frac{7}{3}\right)-e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[Q\left(1,-\frac{11}{5}\right)-e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[Q\left(1,\frac{13}{4}\right)-e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	GammaRegularized[2, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q(2,x)-(x+1) e^{-x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(2,\frac{7}{3}\right)-\left(\frac{7}{3}+1\right) e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[Q\left(2,-\frac{11}{5}\right)-\left(-\frac{11}{5}+1\right) e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[Q\left(2,\frac{13}{4}\right)-\left(\frac{13}{4}+1\right) e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+q-1-2-x-erfc-sqrt-x-see-erfc	GammaRegularized[Rational[1, 2], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[Q\left(\frac{1}{2},x\right)-\text{erfc}\left(\sqrt{x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q\left(\frac{1}{2},\frac{7}{3}\right)-\text{erfc}\left(\sqrt{\frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[Q\left(\frac{1}{2},-\frac{11}{5}\right)-\text{erfc}\left(\sqrt{-\frac{11}{5}}\right)\right]\right],\text{Chop}\left[N\left[Q\left(\frac{1}{2},\frac{13}{4}\right)-\text{erfc}\left(\sqrt{\frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+a-non-integer-order-combined-with-negative-z	GammaRegularized[2.5, -1]	0.9999999999999998 - 0.6280082302883814*I	Q(2.5,-1)	1.\, -0.628008 i	disagree

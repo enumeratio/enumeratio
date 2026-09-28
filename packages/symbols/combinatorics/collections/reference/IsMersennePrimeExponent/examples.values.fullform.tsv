@@ -1,0 +1,5 @@
+id	in
+7-is-a-mersenne-prime-exponent	MersennePrimeExponentQ[7]
+11-is-prime-but-not-a-mersenne-prime-exponent	MersennePrimeExponentQ[11]
+9-is-not-even-prime	MersennePrimeExponentQ[9]
+2-31-1-is-the-8th-mersenne-prime	MersennePrimeExponentQ[31]

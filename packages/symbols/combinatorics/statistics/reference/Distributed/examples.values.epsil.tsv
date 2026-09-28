@@ -1,0 +1,3 @@
+id	in	out
+distributed-stays-itself	Distributed(x, NormalDistribution(0, 1))	Distributed(x, NormalDistribution(0, 1))
+distributed-reached-through-expectation	Expectation(x, Distributed(x, NormalDistribution(2, 3)))	2

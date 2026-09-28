@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+probability-distribution-pdf-in-range			[PDF, [ProbabilityDistribution, [Multiply, 2, x], [List, x, 0, 1]], [Rational, 1, 2]]	1	pdf(x) = 2x, a triangular density on [0,1].
+probability-distribution-pdf-outside			[PDF, [ProbabilityDistribution, [Multiply, 2, x], [List, x, 0, 1]], 2]	0	
+probability-distribution-mean			[Mean, [ProbabilityDistribution, [Multiply, 2, x], [List, x, 0, 1]]]	[Rational, 2, 3]	
+probability-distribution-variance			[Variance, [ProbabilityDistribution, [Multiply, 2, x], [List, x, 0, 1]]]	[Rational, 1, 18]	
+probability-distribution-cdf			[CDF, [ProbabilityDistribution, [Multiply, 2, x], [List, x, 0, 1]], [Rational, 1, 2]]	[Rational, 1, 4]	
+probability-distribution-discrete-pdf			[PDF, [ProbabilityDistribution, [Rational, 1, 4], [List, x, 1, 4, 1]], 2]	[Rational, 1, 4]	a discrete uniform on {1,2,3,4} written by hand.
+probability-distribution-discrete-mean			[Mean, [ProbabilityDistribution, [Rational, 1, 4], [List, x, 1, 4, 1]]]	[Rational, 5, 2]	
+probability-distribution-stays-unevaluated			[Mean, [ProbabilityDistribution, [Sin, [Power, x, x]], [List, x, 0, 1]]]	[Mean, [ProbabilityDistribution, [Sin, [Power, x, x]], [List, x, 0, 1]]]	Integrate has no closed form here, so Mean stays unevaluated rather than approximate.

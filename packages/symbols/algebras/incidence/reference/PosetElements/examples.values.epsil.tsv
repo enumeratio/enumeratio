@@ -1,0 +1,4 @@
+id	in	out
+posetelements-divisorlattice-12	PosetElements(DivisorLattice(12))	[1, 2, 3, 4, 6, 12]
+posetelements-chain-4	PosetElements(Chain(4))	[1, 2, 3, 4]
+3-3-intervals	AlgebraDimension(IncidenceAlgebra(BooleanLattice(3)))	27

@@ -1,0 +1,5 @@
+id	in
+a-pole-at-the-origin	FunctionSingularities[Divide[1, x], x]
+sqrt-is-singular-at-its-own-boundary	FunctionSingularities[Sqrt[x], x]
+a-polynomial-has-no-singularities	FunctionSingularities[Power[x, 2], x]
+log-s-branch-cut	FunctionSingularities[Log[x], x]

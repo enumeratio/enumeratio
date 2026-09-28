@@ -1,0 +1,14 @@
+---
+name: Rasterize
+domain: Wolfram
+signature: Rasterize(...)
+summary: Wolfram's own Rasterize, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: Rasterize(...)
+    description: Wolfram's own Rasterize, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-formats
+    type: (any, number?) -> expression
+---

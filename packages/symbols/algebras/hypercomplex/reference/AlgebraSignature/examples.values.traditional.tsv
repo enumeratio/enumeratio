@@ -1,0 +1,4 @@
+id	in	out
+algebrasignature-quaternions		
+cl-2-1	\mathrm{AlgebraSignature}(\operatorname{Cl}_{2,1}(\mathbb{R}))	\bigl\lbrack1, 1, -1\bigr\rbrack
+nilpotent		

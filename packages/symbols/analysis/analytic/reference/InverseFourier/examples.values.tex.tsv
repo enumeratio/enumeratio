@@ -1,0 +1,6 @@
+id	in	out
+inverse-dft-of-1-2-3-4	\mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack5, -1+i, -1, -1-i\bigr\rbrack
+round-trips-through-fourier	\mathrm{Fourier}(\mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack))	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
+a-2x2-matrix	\mathrm{InverseFourier}(\bigl\lbrack\bigl\lbrack5, -1\bigr\rbrack, \bigl\lbrack-2, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+a-custom-fourierparameters	\mathrm{InverseFourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))	\bigl\lbrack2.5, -0.5-0.5i, -0.5, -0.5+0.5i\bigr\rbrack
+declines-a-symbolic-list	\mathrm{InverseFourier}(\bigl\lbrack a, b\bigr\rbrack)	\mathrm{InverseFourier}(\bigl\lbrack a, b\bigr\rbrack)

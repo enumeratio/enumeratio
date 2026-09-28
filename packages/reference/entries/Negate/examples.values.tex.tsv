@@ -1,0 +1,16 @@
+id	in	out
+neg-5	-5	-5
+5	5	5
+its-own-negation	0	0
+neg-3-over-4	-\frac{3}{4}	-\frac{3}{4}
+threads-element-wise-over-a-list	-\bigl\lbrack1, -2, 3\bigr\rbrack	\bigl\lbrack-1, 2, -3\bigr\rbrack
+stays-symbolic	-x	-x
+neg-1-plus-2i	-(1+2i)	-1-2i
+threads-over-a-matrix-entry-by-entry	-\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack	\bigl\lbrack\bigl\lbrack-1, 2\bigr\rbrack, \bigl\lbrack-3, -4\bigr\rbrack\bigr\rbrack
+folds-into-a-numeric-coefficient	-(2x)	-2x
+recording-a-42-50-charge-as-a-negative-balance	-42.5	-42.5
+double-negation-cancels-x-x	--x	x
+distributes-over-a-sum-a-b-a-b	-(a+b)=-a-b	\top
+a-b-b-a	-(a-b)	b-a
+the-additive-inverse-x-x-0	x-x	0
+flips-signed-infinities-too	-\infty	-\infty

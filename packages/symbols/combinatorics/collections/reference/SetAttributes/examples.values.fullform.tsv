@@ -1,0 +1,2 @@
+id	in
+turn-on-orderless	List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]

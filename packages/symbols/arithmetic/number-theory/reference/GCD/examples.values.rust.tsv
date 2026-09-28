@@ -1,0 +1,47 @@
+id	in	out	verdict
+gcd-12-18	gcd(n(12), n(18))	6	
+gcd-24-36	gcd(n(24), n(36))	12	
+gcd-is-variadic-it-accepts-any-number-of			
+gcd-2-6-10			
+over-the-rationals-the-gcd-of-the-numerators			
+gaussian-integers-the-associate-in-the-first			
+gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i			
+gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2			
+big-integers-gcd-20-10-100-3-7-exact-past-where	gcd(factorial(n(20)), (power(n(10), n(100)) + n(3)))	panic: an integer, not 2.43290200817664e18	error
+listable-a-single-list-argument-threads-element	gcd(n(12), list(vec![n(3), n(7), n(40)]))	panic: threading: a list where the crate takes a scalar	error
+gcd-with-a-unit-is-always-1			
+gcd-with-i-a-unit-is-1			
+gcd-with-0-is-the-other-argument-normalised			
+gcd-of-0-and-0-is-0	gcd(n(0), n(0))		
+two-gaussian-primes-above-5-are-coprime			
+a-gaussian-prime-and-a-real-prime-3-mod-4-are			
+gcd-recovers-a-shared-prime-norm-5			
+an-associate-pair-has-gcd-equal-to-their-common			
+another-associate-pair-by-1			
+two-unrelated-composites-of-norm-25-share-no			
+gcd-with-a-negative-real-prime			
+gcd-of-two-large-norm-gaussians			
+gcd-past-2-53-in-both-parts			
+a-real-split-prime-and-its-gaussian-factor			
+gcd-of-two-real-composites-plain-integer-case	gcd(n(4), n(9))		
+gcd-with-a-negative-real-composite			
+gcd-with-an-associate-times-1			
+gcd-with-an-associate-times-i			
+two-primes-above-13-are-coprime			
+gcd-recovers-a-shared-prime-above-13			
+gcd-with-a-real-prime-s-associate-by-the-unit-i			
+gcd-with-a-real-composite-5-squared			
+gcd-with-a-negative-associate			
+gcd-of-a-large-norm-gaussian-and-a-real-prime-19			
+gcd-of-two-composites-sharing-the-prime-above-13			
+reduce-12-18-to-lowest-terms-by-dividing-out-the	(n(12) / gcd(n(12), n(18)))	2	
+commutative-gcd-a-b-gcd-b-a	equal(gcd(n(12), n(18)), gcd(n(18), n(12)))	true	
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm	equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))	true	
+gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci			
+a-single-argument-is-returned-unchanged			
+with-no-arguments-compute-engine-returns-0-the			
+0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(n(0), n(5))	5	
+signs-are-discarded-before-computing-the-gcd			
+lists-aren-t-threaded-element-wise-they-re	gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))	panic: threading: a list where the crate takes a scalar	error
+gcd-0-0-0-by-convention	gcd(n(0), n(0))	0	
+symbolic-arguments-stay-unevaluated			

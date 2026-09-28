@@ -1,0 +1,11 @@
+id	in	out
+chineseremainder-list-3-4-list-4-5		
+chineseremainder-list-2-3-5-list-3-5-7		
+five-congruences-unique-modulo-7-cdot-11-cdot-13		
+moduli-sharing-a-factor-with-remainders-that		
+the-least-solution-ge-200-52-2-cdot-105		
+over-classes-the-answer-is-a-class-and-reading		
+a-third-argument-asks-for-the-smallest-solution		
+recover-123456-bmod-1001-from-its-residues-mod-7		
+verifies-the-solution-satisfies-both-congruences	\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod4=3\land\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod5=4	\mathrm{True}
+no-solution-exists-when-the-remainders-are		

@@ -1,0 +1,14 @@
+---
+name: NSymAlgebra
+domain: Hopf algebras
+signature: NSymAlgebra(n)
+summary: The degree-$n$ graded piece of NSym — one basis element per composition of $n$, $2^{n-1}$ of them for $n \geq 1$.
+signatures:
+  - call: NSymAlgebra(n)
+    description: the degree-$n$ piece of NSym
+    library: enumeratio-hopf
+    type: (integer) -> graded_hopf_algebra
+seeAlso:
+  - NSymH
+  - QSymAlgebra
+---

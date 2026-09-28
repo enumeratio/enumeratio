@@ -1,0 +1,4 @@
+id	in
+count-permutationsavoiding213-4	Count[PermutationsAvoiding213[4]]
+first-element-of-permutationsavoiding213-4	Part[PermutationsAvoiding213[4], 1]
+every-element-of-permutationsavoiding213-4	Take[PermutationsAvoiding213[4], 14]

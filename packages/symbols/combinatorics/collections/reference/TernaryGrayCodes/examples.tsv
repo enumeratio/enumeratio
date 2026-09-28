@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-ternarygraycodes-4-3-4-81	Basic		[Count, [TernaryGrayCodes, 4]]	81	$Count(TernaryGrayCodes(4)) = 3^4 = 81$
+every-element-of-ternarygraycodes-3		test	[Take, [TernaryGrayCodes, 3], 27]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 0, 2], [List, 0, 1, 2], [List, 0, 1, 1], [List, 0, 1, 0], [List, 0, 2, 0], [List, 0, 2, 1], [List, 0, 2, 2], [List, 1, 2, 2], [List, 1, 2, 1], [List, 1, 2, 0], [List, 1, 1, 0], [List, 1, 1, 1], [List, 1, 1, 2], [List, 1, 0, 2], [List, 1, 0, 1], [List, 1, 0, 0], [List, 2, 0, 0], [List, 2, 0, 1], [List, 2, 0, 2], [List, 2, 1, 2], [List, 2, 1, 1], [List, 2, 1, 0], [List, 2, 2, 0], [List, 2, 2, 1], [List, 2, 2, 2]]	

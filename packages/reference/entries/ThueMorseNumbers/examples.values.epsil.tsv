@@ -1,0 +1,3 @@
+id	in	out
+the-first-20-terms-oeis-a010060	Take(ThueMorseNumbers, 20)	[0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1]
+the-first-40-terms	Take(ThueMorseNumbers, 40)	"[\n  0,\n  1,\n  1,\n  0,\n  1,\n  0,\n  0,\n  1,\n  1,\n  0,\n  0,\n  1,\n  0,\n  1,\n  1,\n  0,\n  1,\n  0,\n  0,\n  1,\n  0,\n  1,\n  1,\n  0,\n  0,\n  1,\n  1,\n  0,\n  1,\n  0,\n  0,\n  1,\n  1,\n  0,\n  0,\n  1,\n  0,\n  1,\n  1,\n  0,\n]"

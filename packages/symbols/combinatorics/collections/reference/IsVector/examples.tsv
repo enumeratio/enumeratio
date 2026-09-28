@@ -1,0 +1,6 @@
+id	section	role	expr	expected
+a-flat-list-is-a-vector			[IsVector, [List, 1, 2, 3]]	True
+a-list-of-lists-is-not-a-vector	Scope		[IsVector, [List, [List, 1, 2], [List, 3, 4]]]	False
+a-non-list-is-not-a-vector	Scope		[IsVector, 3]	False
+a-test-function-must-hold-of-every-element	Scope		[IsVector, [List, 2, 4, 6], IsEven]	True
+a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven]	False

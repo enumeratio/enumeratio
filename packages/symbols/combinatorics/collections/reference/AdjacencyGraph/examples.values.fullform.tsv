@@ -1,0 +1,3 @@
+id	in
+symmetric-matrix-is-undirected	EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]
+asymmetric-matrix-is-directed	EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]

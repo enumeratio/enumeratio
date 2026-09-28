@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+quiverisacyclic-linearquiver-4			[QuiverIsAcyclic, [LinearQuiver, 4]]	True	
+a-loop-is-a-cycle	Properties		[QuiverIsAcyclic, JordanQuiver]	False	a loop is a cycle
+binom-7-2-the-same-as-incidencealgebra-chain-6	Properties		[AlgebraDimension, [PathAlgebra, [LinearQuiver, 6]]]	21	$\binom{7}{2}$ — the same as `IncidenceAlgebra(Chain(6))`

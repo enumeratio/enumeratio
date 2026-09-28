@@ -1,0 +1,4 @@
+id	in
+a-3-cycle	GraphDistanceMatrix[CycleGraph[3]]
+unreachable-pair-is-infinite	GraphDistanceMatrix[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
+weighted-matrix-summed-weight	GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]

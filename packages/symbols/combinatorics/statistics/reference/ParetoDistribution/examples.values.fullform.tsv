@@ -1,0 +1,5 @@
+id	in
+pareto-pdf-exact	PDF[ParetoDistribution[1, 3], 2]
+pareto-cdf-exact	CDF[ParetoDistribution[1, 3], 2]
+pareto-mean-exact	Mean[ParetoDistribution[1, 3]]
+pareto-variance-exact	Variance[ParetoDistribution[1, 3]]

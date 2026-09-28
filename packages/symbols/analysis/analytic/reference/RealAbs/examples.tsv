@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+the-absolute-value-of-a-real-number			[RealAbs, -2.5]	2.5	The absolute value of a real number
+realabs-neg-7-over-2			[RealAbs, [Rational, -7, 2]]	[Rational, 7, 2]	
+threads-element-wise-over-a-list	Scope		[RealAbs, [List, -1, 2, -3]]	[List, 1, 2, 3]	Threads element-wise over a list
+exact-numeric-arguments	Scope		[RealAbs, [Negate, Pi]]	Pi	Exact numeric arguments
+agrees-with-abs-on-the-reals	Properties		[Equal, [RealAbs, -5], [Abs, -5]]	True	Agrees with [[Abs]] on the reals

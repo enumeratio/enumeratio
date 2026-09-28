@@ -1,0 +1,3 @@
+id	in	out
+three-by-three	\mathrm{HilbertMatrix}(3)	\bigl\lbrack\bigl\lbrack1, \frac{1}{2}, \frac{1}{3}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \frac{1}{3}, \frac{1}{4}\bigr\rbrack, \bigl\lbrack\frac{1}{3}, \frac{1}{4}, \frac{1}{5}\bigr\rbrack\bigr\rbrack
+rectangular	\mathrm{HilbertMatrix}(\bigl\lbrack2, 3\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, \frac{1}{2}, \frac{1}{3}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \frac{1}{3}, \frac{1}{4}\bigr\rbrack\bigr\rbrack

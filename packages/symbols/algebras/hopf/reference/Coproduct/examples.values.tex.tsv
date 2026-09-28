@@ -1,0 +1,4 @@
+id	in	out
+deconcatenation-cut-at-each-gap	\mathrm{Coproduct}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack))	\mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack))
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	\mathrm{Coproduct}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack))	\mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack\bigr\rbrack))+\mathrm{HopfTensor}(\mathrm{NSymH}(\bigl\lbrack1\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack1\bigr\rbrack))
+the-counit-picks-out-the-constant-term	\mathrm{Counit}(\mathrm{NSymH}(\bigl\lbrack\bigr\rbrack))	1

@@ -1,0 +1,13 @@
+id	in	out
+integerstring-42	\mathrm{IntegerString}(42)	\text{42}
+integerstring-17-651-2	\mathrm{IntegerString}(17\,651, 2)	\text{100010011110011}
+bases-above-10-use-letters-a-z	\mathrm{IntegerString}(255, 16)	\text{ff}
+base-36-is-the-largest-with-digit-values-up-to-z	\mathrm{IntegerString}(35, 36)	\text{z}
+threads-over-a-list	\mathrm{IntegerString}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack\text{1}, \text{2}, \text{3}\bigr\rbrack
+50-in-hexadecimal-exact-past-double-precision	\mathrm{IntegerString}(50!, 16)	49eebc961ed279b02b1ef4f28d19a84f5\,973a1d2c7\,800\,000\,000\,000
+roman-numerals-with-the-base-roman	\mathrm{IntegerString}(1\,988, \text{Roman})	\text{MCMLXXXVIII}
+a-width-pads-with-leading-zeros	\mathrm{IntegerString}(255, 16, 4)	ff
+a-width-shorter-than-the-numeral-keeps-the-least	\mathrm{IntegerString}(1\,234\,567, 10, 3)	\text{567}
+a-third-argument-pads-with-leading-zeros-to-that	\mathrm{IntegerString}(5, 2, 8)	101
+integerstring-0	\mathrm{IntegerString}(0)	\text{0}
+compute-engine-keeps-the-sign	\mathrm{IntegerString}(-42)	\text{-42}

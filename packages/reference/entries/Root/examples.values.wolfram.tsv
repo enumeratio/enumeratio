@@ -1,0 +1,14 @@
+id	in	out	tex.in	tex.out	verdict
+the-cube-root-of-27	Power[27, Divide[1, 3]]	3	27^{\frac{1}{3}}	3	
+root-16-4	Power[16, Divide[1, 4]]	2	16^{\frac{1}{4}}	2	
+odd-roots-of-a-negative-number-stay-real	Power[-8, Divide[1, 3]]	2*(-1)^(1/3)	(-8)^{\frac{1}{3}}	2 \sqrt[3]{-1}	disagree
+stays-symbolic-when-x-isn-t-a-perfect-power	Power[2, Divide[1, 3]]	2^(1/3)	2^{\frac{1}{3}}	\sqrt[3]{2}	
+a-negative-index-gives-the-reciprocal-root-x-1-n	Power[16, Divide[1, -2]]	1/4	16^{-\frac{1}{2}}	\frac{1}{4}	
+the-real-cube-root-wolfram-s-surd-27-3	Power[-27, Divide[1, 3]]				
+any-odd-root-of-a-negative-number-is-real	Power[-32, Divide[1, 5]]				
+approximate-negative-radicands-stay-real-too	Power[-3.5, Divide[1, 5]]				
+threads-element-wise-over-a-list	Power[List[-8, 27], Divide[1, 3]]				
+the-edge-length-of-a-cube-with-volume-1000	Power[1000, Divide[1, 3]]	10	1000^{\frac{1}{3}}	10	
+sqrt-n-x-n-x-for-a-perfect-nth-power	(Power[Power[8, Divide[1, 3]], 3] == 8)	True	\left(8^{\frac{1}{3}}\right)^3=8	\text{True}	
+root-x-2-agrees-with-sqrt	(Power[16, Divide[1, 2]] == Sqrt[16])	True	16^{\frac{1}{2}}=\sqrt{16}	\text{True}	
+an-even-root-of-a-negative-non-perfect-power	Power[-8, Divide[1, 2]]	(2*I)*Sqrt[2]	(-8)^{\frac{1}{2}}	2 i \sqrt{2}	

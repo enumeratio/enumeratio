@@ -1,0 +1,19 @@
+---
+name: IsSimpleGraph
+domain: Collections
+signature: IsSimpleGraph(g)
+summary: Whether a [[Graph]] has no self-loop and no parallel (repeated) edge.
+signatures:
+  - call: IsSimpleGraph(g)
+    description: true iff g has no self-loop and no two edges with the same endpoints and the same direction-ness.
+    library: enumeratio-collections
+    type: (value) -> boolean
+details:
+  - Wolfram calls this `SimpleGraphQ`; this library uses the `Is…` spelling everywhere.
+  - A directed edge and its own reverse (a->b and b->a) are DIFFERENT edges, not a parallel pair -- both can be present in a simple directed graph. Two copies of the SAME undirected edge, or the same directed edge twice, are parallel.
+seeAlso:
+  - IsLoopFreeGraph
+  - IsCompleteGraph
+names:
+  wolfram: SimpleGraphQ
+---

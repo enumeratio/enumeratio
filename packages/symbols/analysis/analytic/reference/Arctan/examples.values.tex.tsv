@@ -1,0 +1,29 @@
+id	in	out
+arctan-0	\arctan(0)	0
+arctan-1	\arctan(1)	\frac{\pi}{4}
+arctan-sqrt-3	\arctan(\sqrt{3})	\frac{\pi}{3}
+a-machine-precision-argument-evaluates	\arctan(0.5)	0.463\,647\,609\,000\,806\,116\,214
+arbitrary-precision-via-n	N(\arctan(\frac{1}{2}))	0.463\,647\,609\,000\,806\,116\,214
+evaluates-at-a-complex-argument	\arctan(2.5+i)	1.233\,425\,855\,683\,120\,4+0.123\,674\,060\,459\,026\,79i
+wolfram-s-two-argument-arctan-x-y-is-compute	\arctan(-1, -1)	-\frac{3\pi}{4}
+arctan2-takes-y-first-the-angle-of-the-point-0-5	\arctan(2, 0.5)	1.325\,817\,663\,668\,032\,465\,06
+arctan-2-sqrt-3-5-pi-12	\arctan(2+\sqrt{3})	\frac{5\pi}{12}
+arctan-2-sqrt-3-pi-12	\arctan(2-\sqrt{3})	\frac{\pi}{12}
+arctan-sqrt-2-1-pi-8	\arctan(\sqrt{2}-1)	\frac{\pi}{8}
+arctan-1-over-sqrt-3	\arctan(\frac{1}{\sqrt{3}})	\frac{\pi}{6}
+arctan-neg-1	\arctan(-1)	-\frac{\pi}{4}
+threads-element-wise-over-a-matrix	\arctan(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack-1, \sqrt{3}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, \frac{\pi}{4}\bigr\rbrack, \bigl\lbrack-\frac{\pi}{4}, \frac{\pi}{3}\bigr\rbrack\bigr\rbrack
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan	\arctan(\mathrm{Interval}(-1, 3))	\mathrm{Interval}(-\frac{\pi}{4}, \arctan(3))
+oddness-pulls-the-sign-out-of-a-symbolic	\arctan(-x)	-\arctan(x)
+derivative-frac-1-1-x-2	\frac{\mathrm{d}\arctan(x)}{\mathrm{d}x}	\frac{1}{x^2+1}
+antiderivative	\int\!\arctan(x)\, \mathrm{d}x	x\arctan(x)-\frac{1}{2}(\ln(x^2+1))
+gregory-s-series-about-0	\operatorname{Series}(\arctan(x), x, 0, 7)	x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+O\left(x^9\right)
+the-limit-at-infty	\lim_{x\to\infty}\arctan(x)	\frac{\pi}{2}
+to-30-significant-digits-every-one-correctly	N(\arctan(\frac{1}{2}), 30)	0.463\,647\,609\,000\,806\,116\,214
+tan-arctan-x-x	\tan(\arctan(1))=1	\top
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	\mathrm{TrigToExp}(\arctan(x))	(-\frac{1}{2}i)\ln(i x+1)+(\frac{1}{2}i)\ln(1-i x)
+compute-engine-s-arctan-takes-only-one-argument	\arctan(1, 1)	{\text{1}}
+the-horizontal-asymptote-as-x-to-infty	\arctan(\infty)	\frac{\pi}{2}
+and-as-x-to-infty	\arctan(-\infty)	-\frac{\pi}{2}
+euler-s-machin-like-identity-arctan-frac-12	\mathrm{FullSimplify}(\arctan(\frac{1}{2})+\arctan(\frac{1}{3}))	\frac{\pi}{4}
+machin-s-formula-4-arctan-frac-15-arctan-frac-1	\mathrm{FullSimplify}(4\arctan(\frac{1}{5})-\arctan(\frac{1}{239}))	\frac{\pi}{4}

@@ -1,0 +1,6 @@
+id	in	out
+length-counts-the-key-value-pairs	Length(Association(Rule(1, 2), Rule(3, 4)))	2
+first-is-the-first-value-not-the-first-rule	First(Association(Rule(1, a), Rule(2, b)))	a
+last-is-the-last-value	Last(Association(Rule(1, a), Rule(2, b)))	b
+join-merges-keys-a-later-value-for-a-repeated	Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))	Association(Rule(a, f), Rule(c, d))
+sort-orders-the-entries-by-value	Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))	Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))

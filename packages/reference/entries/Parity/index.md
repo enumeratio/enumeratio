@@ -1,0 +1,9 @@
+---
+name: Parity
+domain: Combinatorics
+signature: Parity(...)
+summary: Parity (0 = even, 1 = odd)
+statOn:
+  - Numeric
+stub: carrier
+---

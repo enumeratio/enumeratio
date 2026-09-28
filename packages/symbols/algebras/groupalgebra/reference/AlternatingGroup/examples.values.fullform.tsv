@@ -1,0 +1,8 @@
+id	in
+order-is-n-factorial-over-two	GroupOrder[AlternatingGroup[5]]
+generators-odd-n	GroupGenerators[AlternatingGroup[5]]
+generators-even-n	GroupGenerators[AlternatingGroup[4]]
+generators-collapse-at-three	GroupGenerators[AlternatingGroup[3]]
+elements-of-a3	GroupElements[AlternatingGroup[3]]
+trivial-for-n-equals-one	GroupOrder[AlternatingGroup[1]]
+trivial-for-n-equals-two	GroupOrder[AlternatingGroup[2]]

@@ -1,0 +1,20 @@
+id	in	out
+erfc-0	\operatorname{erfc}(0)	1
+erfc-infinity	\operatorname{erfc}(\infty)	0
+erfc-negativeinfinity	\operatorname{erfc}(-\infty)	2
+a-floating-point-argument-evaluates-directly-to	\operatorname{erfc}(0.5)	0.479\,500\,122\,186\,953\,462\,317
+a-machine-precision-argument	\operatorname{erfc}(1.5)	0.033\,894\,853\,524\,689\,272\,933
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Erfc}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack1, \operatorname{erfc}(1)\bigr\rbrack
+complex-arguments-should-evaluate-as-they-do-for	\operatorname{erfc}(1.5-i)	-0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i
+listable-threads-over-its-limits-at-pm-infty		
+interval-arithmetic-erfc-is-decreasing-so-the	\operatorname{erfc}(\mathrm{Interval}(0.2, 0.3))	\mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)
+uncertainty-propagation	\operatorname{erfc}(\mathrm{Around}(2, 0.01))	\mathrm{Around}(0.004\,677\,734\,981\,047\,266, 0.000\,206\,669\,853\,540\,920\,54)
+to-30-significant-digits-every-one-correctly	N(\operatorname{erfc}(2), 30)	0.004\,677\,734\,981\,047\,265\,837\,93
+erfc-z-2-erfc-z-here-at-z-1	\operatorname{erfc}(-1)+\operatorname{erfc}(1)=2	\mathrm{True}
+definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\operatorname{erfc}(2)=1	\mathrm{True}
+erfc-x-2-erfc-x-applied-symbolically	\operatorname{erfc}(-x)	2-\operatorname{erfc}(x)
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{\mathrm{d}\operatorname{erfc}(x)}{\mathrm{d}x}	(-\frac{2}{e^{x^2}})/\sqrt{\pi}
+an-exact-integer-argument-is-left-unevaluated	\operatorname{erfc}(1)	\operatorname{erfc}(1)
+far-in-the-tail-erfc-keeps-full-relative	\operatorname{erfc}(9.5)	376\,921\,448\,565\,487\,994\,168\cdot10^{-61}
+whereas-1-erf-9-5-cancels-to-exactly-0-in		
+the-gaussian-tail-shrinks-fast-only-about-7	\operatorname{erfc}(3.5)	0.000\,000\,743\,098\,372\,341\,412\,745\,524

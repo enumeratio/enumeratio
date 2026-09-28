@@ -1,0 +1,17 @@
+---
+name: Any
+domain: Collections
+signature: Any(xs, predicate)
+summary: Whether some element of a collection satisfies a predicate.
+signatures:
+  - call: Any(xs, predicate)
+    description: $True$ if $predicate$ holds for at least one element of $xs$, else $False$.
+  - call: Any(xs, predicate, level)
+    description: the elements at exactly `level` tested instead of the top-level ones.
+    library: enumeratio-collections
+seeAlso:
+  - All
+  - NoneTrue
+names:
+  wolfram: AnyTrue
+---

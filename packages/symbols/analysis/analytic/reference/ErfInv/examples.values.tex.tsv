@@ -1,0 +1,17 @@
+id	in	out
+erfinv-0	\mathrm{ErfInv}(0)	0
+erfinv-1	\mathrm{ErfInv}(1)	\infty
+erfinv-neg-1	\mathrm{ErfInv}(-1)	-\infty
+a-floating-point-argument-evaluates-directly-to	\mathrm{ErfInv}(0.5)	0.476\,936\,276\,204\,469\,873\,381
+a-machine-precision-argument	\mathrm{ErfInv}(0.6)	0.595\,116\,081\,449\,994\,850\,019
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{ErfInv}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack0, \infty\bigr\rbrack
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	\mathrm{ErfInv}(0.4, 0.2)	0.631\,775\,903\,055\,006\,3
+interval-arithmetic-the-inverse-is-increasing-so	\mathrm{ErfInv}(\mathrm{Interval}(0.5, 0.6))	\mathrm{Interval}(0.476\,936\,276\,204\,469\,9, 0.595\,116\,081\,449\,994\,8)
+uncertainty-propagation	\mathrm{ErfInv}(\mathrm{Around}(0.5, 0.01))	\mathrm{Around}(0.476\,936\,276\,204\,469\,9, 0.011\,125\,848\,189\,719\,498)
+to-30-significant-digits-every-one-correctly	N(\mathrm{ErfInv}(\frac{1}{2}), 30)	0.476\,936\,276\,204\,469\,873\,381
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	\sqrt{2}\mathrm{ErfInv}(0.95)	1.959\,963\,984\,540\,054\,235\,53
+inverse-of-erf-erf-erfinv-x-x-see-erf	\operatorname{erf}(\mathrm{ErfInv}(0.5))=0.5	\top
+odd-erfinv-x-erfinv-x-applied-symbolically	\mathrm{ErfInv}(-x)	-\mathrm{ErfInv}(x)
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	\frac{\mathrm{d}\mathrm{ErfInv}(x)}{\mathrm{d}x}	\frac{1}{2}(\exp(\mathrm{ErfInv}(x)^2)\sqrt{\pi})
+outside-its-real-domain-1-1-compute-engine	\mathrm{ErfInv}(2)	\mathrm{ErfInv}(2)
+blows-up-near-the-boundary-erfinv-0-9999-is	\mathrm{ErfInv}(0.999\,9)	2.751\,063\,905\,712\,060\,796\,15

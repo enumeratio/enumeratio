@@ -1,0 +1,5 @@
+id	in
+studentt-pdf-exact	PDF[StudentTDistribution[5], 0]
+studentt-cdf-symmetric	CDF[StudentTDistribution[5], 0]
+studentt-mean-exact	Mean[StudentTDistribution[5]]
+studentt-variance-exact	Variance[StudentTDistribution[5]]

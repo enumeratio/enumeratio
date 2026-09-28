@@ -1,0 +1,23 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note	mathlib4.kind	mathlib4.note	oscar.kind	oscar.note	julia.kind	julia.note
+fibonacci-0			[Fibonacci, 0]	0									
+fibonacci-1			[Fibonacci, 1]	1									
+fibonacci-10			[Fibonacci, 10]	55									
+fibonacci-20			[Fibonacci, 20]	6765									
+fibonacci-8			[Fibonacci, 8]	21									
+exact-at-any-size-f-100-has-21-digits	Scope		[Fibonacci, 100]	{num: "354224848179261915075"}	Exact at any size: $F_{100}$ has 21 digits					domain	The oracle mapping calls Oscar's bare fibonacci(::Int), which overflows past F(92); compute-engine computes Fibonacci(100) exactly, matching Julia's own ZZ-wrapped fibonacci.		
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Scope		[Fibonacci, 1.5]	0.920442065259926	A real index uses $F_\nu = \frac{\varphi^\nu - \cos(\pi\nu)\,\varphi^{-\nu}}{\sqrt5}$	domain	compute-engine extends Fibonacci to a real index through phi^nu and cos(pi*nu); Sage's fibonacci() requires an integer and raises a TypeError coercing the real.			domain	Oscar's fibonacci is Int-only, like Julia's bare fibonacci; compute-engine extends Fibonacci to a real index ν through φ^ν and cos(πν).	domain	Nemo's fibonacci is Int/ZZRingElem-only; ours extends Fibonacci to a real index ν through φ^ν and cos(πν).
+the-two-argument-fibonacci-polynomial-f-7-x-from	Scope		[Fibonacci, 7, x]	[Add, [Power, x, 6], [Multiply, 5, [Power, x, 4]], [Multiply, 6, [Power, x, 2]], 1]	The two-argument Fibonacci polynomial $F_7(x)$, from $F_n(x) = x F_{n-1}(x) + F_{n-2}(x)$								
+the-fibonacci-polynomial-at-a-real-order-and	Scope		[Fibonacci, 5.8, 3]	283.4827308329499	The Fibonacci polynomial at a real order and argument, via the two-variable Binet formula								
+special-value-of-the-fibonacci-polynomial-f-1-0	Scope		[Fibonacci, 1, 0]	1	Special value of the Fibonacci polynomial: $F_1(0) = 1$								
+special-value-of-the-fibonacci-polynomial-f-0-0	Scope		[Fibonacci, 0, 0]	0	Special value of the Fibonacci polynomial: $F_0(0) = 0$								
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	Scope		[Fibonacci, 3, [List, [List, -1, 0], [List, 0, 5]]]	[List, [List, 2, 1], [List, 1, 26]]	$F_3(x) = x^2 + 1$ threads element-wise over a matrix argument								
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Fibonacci, [List, 1, 2, 3, 4]]	[List, 1, 1, 2, 3]	Threads element-wise over a list, as Wolfram's Listable heads do			threading	compute-engine's Fibonacci is Listable and threads over the list; Mathlib's Nat.fib takes scalars only.	threading	compute-engine's Fibonacci is Listable and threads over the list; Oscar's fibonacci takes scalars only.		
+consecutive-ratios-f-n-1-f-n-converge-to-the	Applications		[Divide, [Fibonacci, 20], [Fibonacci, 19]]	[Rational, 6765, 4181]	Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\varphi \approx 1.618$. See [[LucasL]]								
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Properties		[Sum, [Fibonacci, k], [Tuple, k, 1, 10]]	143	$\sum_{k=1}^{n} F_k = F_{n+2} - 1$, here $F_{12} - 1 = 143$								
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	Properties		[Equal, [Fibonacci, 20], [Multiply, [Fibonacci, 10], [LucasL, 10]]]	True	The doubling identity $F_{2n} = F_n L_n$. See [[LucasL]]								
+the-defining-recurrence-f-10-f-9-f-8	Properties		[Equal, [Fibonacci, 10], [Add, [Fibonacci, 9], [Fibonacci, 8]]]	True	The defining recurrence $F_{10} = F_9 + F_8$								
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	Properties		[Subtract, [Multiply, [Fibonacci, 5], [Fibonacci, 7]], [Power, [Fibonacci, 6], 2]]	1	Cassini's identity $F_{n-1}F_{n+1} - F_n^2 = (-1)^n$, here at $n = 6$								
+gcd-f-12-f-18-f-gcd-12-18	Properties		[Equal, [GCD, [Fibonacci, 12], [Fibonacci, 18]], [Fibonacci, [GCD, 12, 18]]]	True	$\gcd(F_{12}, F_{18}) = F_{\gcd(12, 18)}$								
+negative-indices-are-supported-via-f-n-1-n-1-f-n	Properties		[Fibonacci, -5]	5	Negative indices are supported via $F_{-n} = (-1)^{n+1} F_n$			domain	The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Fibonacci to this argument.				
+f-1000-has-209-digits-see-integerdigits	Neat examples		[Length, [IntegerDigits, [Fibonacci, 1000]]]	209	$F_{1000}$ has 209 digits. See [[IntegerDigits]]								
+they-grow-fast-f-50-already-exceeds-twelve	Neat examples		[Fibonacci, 50]	12586269025	They grow fast: $F_{50}$ already exceeds twelve billion								

@@ -1,0 +1,2 @@
+id	in	out
+the-one-line-word-231	\mathrm{PeakSet}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))	\mathrm{Finset}(\operatorname{Tuple}(\bigl\lbrack2\bigr\rbrack,3))

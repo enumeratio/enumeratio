@@ -1,0 +1,7 @@
+id	in
+trianglewave-zero	TriangleWave[0]
+trianglewave-quarter-peak	TriangleWave[Rational[1, 4]]
+trianglewave-half	TriangleWave[Rational[1, 2]]
+trianglewave-three-quarters-trough	TriangleWave[Rational[3, 4]]
+trianglewave-ranged	TriangleWave[List[0, 10], Rational[1, 2]]
+trianglewave-periodic	(TriangleWave[Rational[1, 4]] == TriangleWave[Plus[Rational[1, 4], 3]])

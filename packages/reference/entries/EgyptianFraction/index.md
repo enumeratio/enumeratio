@@ -1,0 +1,13 @@
+---
+name: EgyptianFraction
+domain: Combinatorics
+signature: EgyptianFraction(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: EgyptianFraction(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> egyptian_fraction
+---

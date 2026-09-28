@@ -1,0 +1,4 @@
+id	in
+the-first-five-abundant-numbers	Take[AbundantNumbers, 5]
+12-is-abundant	Element[12, AbundantNumbers]
+28-is-perfect-not-abundant	Element[28, AbundantNumbers]

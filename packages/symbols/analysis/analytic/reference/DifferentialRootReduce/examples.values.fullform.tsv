@@ -1,0 +1,10 @@
+id	in	back
+exponential-order-1	DifferentialRootReduce[Exp[Times[a, x]], x]	
+sine-order-2	DifferentialRootReduce[Sin[x], x]	
+cosine-order-2	DifferentialRootReduce[Cos[x], x]	
+polynomial-terminates-the-ode	DifferentialRootReduce[Plus[Power[x, 2], Times[3, x], 1], x]	
+evaluated-at-a-concrete-x-runs-the-taylor-series	N[DifferentialRootReduce[Exp[Times[2, x]], x][1]]	Unreadable
+a-two-term-sum-declines	DifferentialRootReduce[Plus[Exp[x], Sin[x]], x]	
+log-one-plus-x-order-2	DifferentialRootReduce[Log[Plus[1, x]], x]	
+single-pole-rational-function	DifferentialRootReduce[Divide[1, Subtract[x, 2]], x]	
+besselj-anchored-off-the-singular-point	DifferentialRootReduce[BesselJ[2, x], x]	

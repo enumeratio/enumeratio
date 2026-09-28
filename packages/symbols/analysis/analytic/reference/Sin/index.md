@@ -1,0 +1,61 @@
+---
+name: Sin
+domain: Elementary functions
+signature: Sin(x)
+summary: The sine of x, in radians.
+signatures:
+  - call: Sin(x)
+    description: the sine of x, in radians.
+  - call: Sin(x)
+    description: The sine of x, in radians.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+details:
+  - 'Odd function: $\sin(-x) = -\sin(x)$.'
+  - 'Period $2\pi$: $\sin(x + 2\pi) = \sin(x)$.'
+  - 'Reciprocal of [[Csc]]: $\sin(x) = \frac{1}{\csc(x)}$.'
+  - compute-engine evaluates exactly at rational multiples of $\pi$ that have a closed radical form -- well past the usual $\pi/6, \pi/4, \pi/3$ set, e.g. $\pi/5$.
+  - A numeric argument that isn't a recognized special angle, and isn't already floating-point, is left symbolic; pass a float or wrap in N(...) for a numeric approximation.
+seeAlso:
+  - Cos
+  - Tan
+  - Csc
+  - Arcsin
+references:
+  - system: wikipedia
+    identity: Sine and cosine
+  - system: mathworld
+    identity: Sine
+  - system: dlmf
+    identity: "4.14"
+names:
+  dlmf: sine function
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Sin[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: sin($1)
+    arity: 1
+    threadArg: 1
+---

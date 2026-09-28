@@ -1,0 +1,2 @@
+id	in	out
+append-to-a-bound-list	[appendToDemoList := [1, 2, 3], AppendTo(appendToDemoList, 4)]	[[1, 2, 3], [1, 2, 3, 4]]

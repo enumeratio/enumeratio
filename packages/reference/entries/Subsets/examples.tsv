@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+the-documented-subsets-collection-form-listed-in			[Subsets, [List, a, b, c]]	[List, [List], [List, a], [List, b], [List, a, b], [List, c], [List, a, c], [List, b, c], [List, a, b, c]]	The documented $Subsets(collection)$ form, listed in the family's binary-mask order	convention	Both sides give the same 8 subsets of {a,b,c}; ours lists them in the documented binary-mask order, Wolfram's own Subsets lists them by increasing size. A documented, deliberate ordering choice on our side.
+a-size-bound-the-subsets-with-at-most-2-elements	Scope		[Count, [Subsets, 4, 2]]	11	A size bound: the subsets with at most 2 elements, $1 + 4 + 6$		
+an-exact-size-2-binom-4-2-subsets	Scope		[Count, [Subsets, 4, [List, 2]]]	6	An exact size $\{2\}$: $\binom{4}{2}$ subsets		
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	Scope		[Count, [Subsets, 5, [List, 0, 5, 2]]]	16	A size range $\{0, 5, 2\}$, the even-size subsets, $2^{4}$ of them		
+a-set-of-n-elements-has-2-n-subsets-count	Properties		[Length, [Subsets, [Range, 1, 10]]]	1024	A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$		
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Properties		[Sum, [Binomial, 5, k], [Tuple, k, 0, 5]]	32	Counting by size: $\sum_k \binom{n}{k} = 2^n$ subsets of a 5-set. See [[Binomial]]		

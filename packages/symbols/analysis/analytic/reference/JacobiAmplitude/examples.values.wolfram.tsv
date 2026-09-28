@@ -1,0 +1,11 @@
+id	in	out	tex.in	tex.out
+a-floating-point-argument-evaluates-directly-to	N[JacobiAmplitude[0.3, 0.5]]			
+am-1-1-0-9	N[JacobiAmplitude[1.1, 0.9]]			
+am-0-7-0-2	N[JacobiAmplitude[-0.7, 0.2]]			
+am-1-1i-0-3	N[JacobiAmplitude[Complex[1, 1], 0.3]]			
+am-0-1-5i-0-4	N[JacobiAmplitude[Complex[0.1, 5], 0.4]]			
+a-wider-argument-u-past-the-first-quarter	N[JacobiAmplitude[2.5, 0.3]]			
+u-0-is-0-for-any-m	JacobiAmplitude[0, m]	0	\text{am}(0|m)	0
+m-0-reduces-to-u	JacobiAmplitude[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{am}(u|0)-u],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{am}\left(\left.\frac{7}{3}\right|0\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{am}\left(\left.-\frac{11}{5}\right|0\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{am}\left(\left.\frac{13}{4}\right|0\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+m-outside-0-1-is-declined	N[JacobiAmplitude[0.3, 1.5]]			
+symbolic-arguments-are-left-unevaluated-rather	JacobiAmplitude[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{am}(u|m)-\text{am}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{am}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{am}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{am}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{am}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{am}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{am}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

@@ -1,0 +1,9 @@
+---
+name: LeftmostPath
+domain: Combinatorics
+signature: LeftmostPath(...)
+summary: Leftmost path length
+statOn:
+  - OrderedTree
+stub: carrier
+---

@@ -1,0 +1,17 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15			[DirichletBeta, 1]	[Multiply, [Rational, 1, 4], Pi]	$\beta(1) = \pi/4$: Leibniz's series $1 - \tfrac13 + \tfrac15 - \cdots$		
+beta-2-g-catalan-s-constant			[DirichletBeta, 2]	Catalan	$\beta(2) = G$, Catalan's constant		
+beta-3-pi-3-32			[DirichletBeta, 3]	[Multiply, [Rational, 1, 32], [Power, Pi, 3]]	$\beta(3) = \pi^3/32$		
+numeric-for-a-floating-point-argument-through-4			[DirichletBeta, 2.5]	{num: "0.948622174037054707445"}	Numeric for a floating-point argument — through $4^{-s}(\zeta(s,\tfrac14) - \zeta(s,\tfrac34))$, so it answers to the engine's working precision rather than a double's		
+a-symbolic-argument-stays-symbolic			[DirichletBeta, s]	[DirichletBeta, s]	A symbolic argument stays symbolic		
+beta-neg-6-e-6-2		test	[DirichletBeta, -6]	[Rational, -61, 2]	$\beta(-6) = E_6/2 = -61/2$		
+n-dirichletbeta-4		test	[N, [DirichletBeta, 4]]	{num: "0.988944551741105336109"}			
+complex-arguments-here-on-the-critical-line	Scope		[DirichletBeta, [Complex, 0.5, 14]]	[Complex, 1.537115438440316, 1.3434514268677573]	Complex arguments, here on the critical line		
+threads-elementwise-over-an-array	Scope		[DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]	Threads elementwise over an array		
+beta-s-to-1-as-s-to-infty	Scope		[DirichletBeta, PositiveInfinity]	1	$\beta(s) \to 1$ as $s \to \infty$		
+uncertainty-propagation-beta-2-pm-0-01-g-pm-0	Scope		[DirichletBeta, [Around, 2, 0.01]]	[Around, 0.915965594177219, 0.000815807361165928]	Uncertainty propagation: $\beta(2 \pm 0.01) = G \pm 0.00082$		
+to-exactly-40-significant-digits-not-yet-85-come	Scope		[N, [DirichletBeta, 2], 40]	{num: "0.9159655941772190150546035149323841107741"}	To exactly 40 significant digits, as many as asked for		
+beta-7-61-pi-7-184320-the-61-is-the-euler-number	Properties		[DirichletBeta, 7]	[Multiply, [Rational, 61, 184320], [Power, Pi, 7]]	$\beta(7) = 61\pi^7/184320$ — the $61$ is the Euler number $|E_6|$		
+beta-2k-e-2k-2-and-beta-2k-1-0	Properties		[DirichletBeta, [List, 0, -1, -2, -3, -4]]	[List, [Rational, 1, 2], 0, [Rational, -1, 2], 0, [Rational, 5, 2]]	$\beta(-2k) = E_{2k}/2$ and $\beta(-(2k+1)) = 0$		
+beta-5-5-pi-5-1536	Properties		[DirichletBeta, 5]	[Multiply, [Rational, 5, 1536], [Power, Pi, 5]]	$\beta(5) = 5\pi^5/1536$		
+even-s-ge-4-has-no-closed-form-and-stays	Possible issues		[DirichletBeta, 4]	[DirichletBeta, 4]	Even $s \ge 4$ has no closed form and stays symbolic; N() gives $0.98894\ldots$	unevaluated	Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.

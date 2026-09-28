@@ -1,0 +1,9 @@
+---
+name: FlipPosition
+domain: Combinatorics
+signature: FlipPosition(...)
+summary: Flip position
+statOn:
+  - BinaryWord
+stub: carrier
+---

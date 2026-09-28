@@ -1,0 +1,2 @@
+id	in	out	back
+halve-while-even	NestWhile(Function(_1 / 2), 96, Function(_1 % 2 == 0))	3	Unreadable

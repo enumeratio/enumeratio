@@ -1,0 +1,9 @@
+---
+name: Transitions
+domain: Combinatorics
+signature: Transitions(...)
+summary: Transitions
+statOn:
+  - BinaryWord
+stub: carrier
+---

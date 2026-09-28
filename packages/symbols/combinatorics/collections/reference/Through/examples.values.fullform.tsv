@@ -1,0 +1,3 @@
+id	in	back
+distributes-a-list-of-functions-over-argument	Through[List[f, g][x]]	Unreadable
+distributes-an-add-of-functions-evaluates-sum	Through[Plus[f, g][x]]	Unreadable

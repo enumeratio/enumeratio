@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+a-downward-parabola-s-maximum-value			[MaxValue, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], x]	3	A downward parabola's vertex value
+the-amplitude-of-sine-alone-is-exact	Scope		[MaxValue, [Sin, x], x]	1	Sin's exact maximum value, 1 -- Maximize itself would decline this (no reproducible point)
+an-unbounded-cubic	Scope		[MaxValue, [Power, x, 3], x]	PositiveInfinity	An odd-degree polynomial is unbounded above

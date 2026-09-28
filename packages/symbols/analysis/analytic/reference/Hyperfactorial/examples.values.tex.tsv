@@ -1,0 +1,9 @@
+id	in	out
+1-1-2-2-3-3-4-4	\mathrm{Hyperfactorial}(4)	27\,648
+the-empty-product	\mathrm{Hyperfactorial}(0)	1
+hyperfactorial-1-5	\mathrm{Hyperfactorial}(1.5)	1.617\,488\,527\,948\,912\,6
+hyperfactorial-2-5	\mathrm{Hyperfactorial}(2.5)	15.984\,211\,992\,223\,353
+hyperfactorial-6-25	\mathrm{Hyperfactorial}(6.25)	92\,229\,745\,540\,487.84
+listable	\mathrm{Hyperfactorial}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack1, 4, 108, 27\,648, 86\,400\,000, 4\,031\,078\,400\,000\bigr\rbrack
+continued-off-the-integers	\mathrm{Hyperfactorial}(0.5)	0.880\,449\,235\,173\,423\,4
+h-10-well-past-double-range-exact-bigint	\mathrm{Hyperfactorial}(10)	215\,779\,412\,229\,418\,562\,091\,680\,268\,288\,000\,000\,000\,000\,000

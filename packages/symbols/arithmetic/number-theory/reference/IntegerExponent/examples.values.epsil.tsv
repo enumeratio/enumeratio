@@ -1,0 +1,16 @@
+id	in	out
+2000-5-3-cdot-16	IntegerExponent(2_000, 5)	3
+base-10-by-default	IntegerExponent(2_000)	3
+trailing-zeros-in-base-10	IntegerExponent(1_230_000)	4
+integerexponent-2-pow-10-times-3-pow-4-2	IntegerExponent(2 ^ 10 * 3 ^ 4, 2)	10
+integerexponent-1000-base-10	IntegerExponent(1_000)	3
+integerexponent-1024-base-4	IntegerExponent(1_024, 4)	5
+composite-base-1728-2-6-3-3-so-6-3-divides-it	IntegerExponent(1_728, 6)	3
+negative-integers	IntegerExponent(-1_000)	3
+threads-over-a-list	IntegerExponent([10, 100, 1_000])	[1, 2, 3]
+gaussian-integers-8i-i-cdot-i-3-1-i-6	IntegerExponent(8i, 1 + i)	6
+negative-integers-base-2	IntegerExponent(-24, 2)	3
+the-trailing-zeros-of-100	IntegerExponent(100!)	24
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	IntegerExponent(100!, 7)	16
+integerexponent-0-5	IntegerExponent(0, 5)	PositiveInfinity
+base-1-has-no-well-defined-p-adic-valuation-so	IntegerExponent(10, 1)	IntegerExponent(10, 1)

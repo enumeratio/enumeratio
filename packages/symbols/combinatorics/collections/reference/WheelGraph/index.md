@@ -1,0 +1,18 @@
+---
+name: WheelGraph
+domain: Collections
+signature: WheelGraph(n)
+summary: The wheel graph on n vertices — a hub joined to every vertex of an (n-1)-cycle rim.
+signatures:
+  - call: WheelGraph(n)
+    description: vertex 1 is the hub; vertices 2..n form the rim cycle. Needs n >= 4.
+    library: enumeratio-collections
+    type: (integer) -> value
+details:
+  - "EdgeCount = 2(n - 1): n - 1 spokes plus the n - 1 rim edges. Vertex numbering (which vertex is the hub) is kernel-unverified against a live Wolfram session."
+seeAlso:
+  - CycleGraph
+  - StarGraph
+names:
+  wolframIdentity: true
+---

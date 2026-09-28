@@ -1,0 +1,4 @@
+id	in	out
+the-first-five-abundant-numbers	\mathrm{Take}(\mathrm{AbundantNumbers}, 5)	\bigl\lbrack12, 18, 20, 24, 30\bigr\rbrack
+12-is-abundant	12\in\mathrm{AbundantNumbers}	\top
+28-is-perfect-not-abundant	28\in\mathrm{AbundantNumbers}	\bot

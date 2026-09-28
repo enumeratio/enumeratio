@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiND, 0.3, -2]]	0.9186845256345044	A floating-point argument evaluates directly to a decimal
+m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiND, 0.3, 1.5]]	1.0693335357371407	m greater than 1, via the reciprocal-modulus transformation
+u-0-is-1-for-any-m	Properties		[JacobiND, 0, m]	1	u = 0 is 1, for any m
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiND, u, m]	[JacobiND, u, m]	Symbolic arguments are left unevaluated rather than guessed at

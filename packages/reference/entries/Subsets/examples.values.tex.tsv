@@ -1,0 +1,7 @@
+id	in	out
+the-documented-subsets-collection-form-listed-in	\mathrm{Subsets}(\bigl\lbrack a, b, c\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack, \bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack
+a-size-bound-the-subsets-with-at-most-2-elements	\mathrm{Count}(\mathrm{Subsets}(4, 2))	11
+an-exact-size-2-binom-4-2-subsets	\mathrm{Count}(\mathrm{Subsets}(4, \bigl\lbrack2\bigr\rbrack))	6
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	\mathrm{Count}(\mathrm{Subsets}(5, \bigl\lbrack0, 5, 2\bigr\rbrack))	16
+a-set-of-n-elements-has-2-n-subsets-count	\mathrm{Length}(\mathrm{Subsets}(1..10))	1\,024
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	\sum_{k=0}^5\binom{5}{k}	32

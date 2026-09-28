@@ -1,0 +1,4 @@
+id	in
+dirichlet-mean	Mean[DirichletDistribution[List[1, 4, 5]]]
+dirichlet-variance	Variance[DirichletDistribution[List[1, 4, 5]]]
+dirichlet-pdf	PDF[DirichletDistribution[List[1, 4, 5]], List[Rational[1, 10], Rational[2, 5]]]

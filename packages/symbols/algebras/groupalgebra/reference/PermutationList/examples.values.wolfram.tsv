@@ -1,0 +1,4 @@
+id	in
+cycle-to-image-list	PermutationList[Cycles[List[List[1, 3, 2]]]]
+padded-to-length	PermutationList[Cycles[List[List[2, 3]]], 5]
+round-trips-with-permutation-cycles	PermutationCycles[PermutationList[Cycles[List[List[1, 2, 5], List[4, 6, 8, 9]]]]]

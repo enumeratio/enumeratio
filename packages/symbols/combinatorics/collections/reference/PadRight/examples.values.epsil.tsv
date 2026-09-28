@@ -1,0 +1,5 @@
+id	in	out
+padded-with-zeros-on-the-right	PadRight([1, 2, 3], 5)	[1, 2, 3, 0, 0]
+a-padding-element	PadRight([1, 2, 3], 5, x)	[1, 2, 3, x, x]
+a-shorter-length-drops-elements-from-the-right	PadRight([1, 2, 3, 4, 5], 3)	[1, 2, 3]
+with-no-length-a-ragged-array-is-padded-to-a	PadRight([[1], [2, 3]])	[[1, 0], [2, 3]]

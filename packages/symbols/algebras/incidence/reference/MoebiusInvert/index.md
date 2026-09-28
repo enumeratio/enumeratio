@@ -1,0 +1,26 @@
+---
+name: MoebiusInvert
+domain: Incidence algebras
+signature: MoebiusInvert(poset, values)
+summary: 'Möbius inversion: given $g(y) = \sum_{x \le y} f(x)$, recover $f$. The inverse of [[PosetSumDown]], and the reason the incidence algebra is worth having.'
+signatures:
+  - call: MoebiusInvert(poset, values)
+    description: $f(y) = \sum_{x \le y} \mu(x,y)\,g(x)$
+    library: enumeratio-incidence
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, list<number>) -> list<number>
+  - call: PosetSumDown(poset, values)
+    description: the map it undoes, $g(y) = \sum_{x \le y} f(x)$
+    library: enumeratio-incidence
+details:
+  - Values are given in the poset's own order — see [[PosetElements]] for that listing
+  - On a chain this is first differences; on the Boolean lattice it is inclusion–exclusion; on the divisor lattice it is classical Möbius inversion
+  - The two directions are inverse on every poset, which is the theorem
+seeAlso:
+  - MoebiusFunction
+  - PosetElements
+references:
+  - system: wikipedia
+    identity: Möbius inversion formula
+  - system: mathworld
+    identity: MoebiusInversionFormula
+---

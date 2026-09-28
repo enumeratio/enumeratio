@@ -1,0 +1,14 @@
+id	in	out
+union-list-1-2-3-list-3-4		
+union-list-1-2-list-2-3-list-3-4		
+union-list-a-b-c-list-b-c-d		
+a-single-list-is-de-duplicated		
+symbolic-elements-merged-across-three-lists		
+elements-can-themselves-be-lists-1-2-and-2-1		
+with-no-arguments-the-union-is-empty		
+combining-the-divisors-of-10-and-15-into-one-set		
+combining-the-divisors-of-10-12-and-20-into-one		
+counting-the-distinct-values-in-a-list-see		
+union-is-commutative-argument-order-doesn-t	\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack=\bigl\lbrack2, 3, 4\bigr\rbrack\cup\bigl\lbrack1, 2, 3\bigr\rbrack	\mathrm{True}
+inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)=(\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack))-\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\mathrm{True}
+the-empty-set-is-the-identity-for-union-a-cup		

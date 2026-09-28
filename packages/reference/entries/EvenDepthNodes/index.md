@@ -1,0 +1,9 @@
+---
+name: EvenDepthNodes
+domain: Combinatorics
+signature: EvenDepthNodes(...)
+summary: Nodes at even depth
+statOn:
+  - OrderedTree
+stub: carrier
+---

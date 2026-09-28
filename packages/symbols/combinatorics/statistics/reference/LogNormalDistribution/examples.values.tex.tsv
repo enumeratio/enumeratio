@@ -1,0 +1,5 @@
+id	in	out
+lognormal-pdf-exact	\operatorname{PDF}(\mathrm{LogNormalDistribution}(0, 1), 1)	\sqrt{\frac{1}{2\pi}}
+lognormal-cdf-exact	\operatorname{CDF}(\mathrm{LogNormalDistribution}(0, 1), 1)	\frac{1}{2}
+lognormal-mean-exact	\mathrm{mean}(\mathrm{LogNormalDistribution}(0, 1))	\sqrt{e}
+lognormal-variance-exact	\mathrm{Variance}(\mathrm{LogNormalDistribution}(0, 1))	e(e-1)

@@ -1,0 +1,4 @@
+id	in
+count-primecompositions-7	Count[PrimeCompositions[7]]
+first-element-of-primecompositions-7	Part[PrimeCompositions[7], 1]
+every-element-of-primecompositions-7	Take[PrimeCompositions[7], 6]

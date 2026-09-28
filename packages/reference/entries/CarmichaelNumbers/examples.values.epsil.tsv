@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms	Take(CarmichaelNumbers, 25)	"[\n  561,\n  1_105,\n  1_729,\n  2_465,\n  2_821,\n  6_601,\n  8_911,\n  10_585,\n  15_841,\n  29_341,\n  41_041,\n  46_657,\n  52_633,\n  62_745,\n  63_973,\n  75_361,\n  101_101,\n  115_921,\n  126_217,\n  162_401,\n  172_081,\n  188_461,\n  252_601,\n  278_545,\n  294_409,\n]"
+561-is-the-smallest-carmichael-number	561 in CarmichaelNumbers	True
+560-is-not-carmichael	560 in CarmichaelNumbers	False

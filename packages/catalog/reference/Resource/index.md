@@ -1,0 +1,11 @@
+---
+name: Resource
+domain: Catalog
+signature: Resource(name, args*)
+summary: Looks up a catalog entry by name and, given further arguments, calls its head with them; a name alone resolves to the head itself.
+signatures:
+  - call: Resource(name, args*)
+    description: looks up a catalog entry by name and calls its head with any further arguments, or resolves to the head alone if none are given
+    library: enumeratio-catalog
+    type: (string, number*) -> any
+---

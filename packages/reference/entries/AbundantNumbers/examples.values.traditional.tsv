@@ -1,0 +1,4 @@
+id	in	out
+the-first-five-abundant-numbers		
+12-is-abundant	12\in\mathrm{AbundantNumbers}	\mathrm{True}
+28-is-perfect-not-abundant	28\in\mathrm{AbundantNumbers}	\mathrm{False}

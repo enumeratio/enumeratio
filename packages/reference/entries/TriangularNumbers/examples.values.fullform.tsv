@@ -1,0 +1,4 @@
+id	in
+the-first-25-terms	Take[TriangularNumbers, 25]
+15-is-triangular	Element[15, TriangularNumbers]
+14-is-not-triangular	Element[14, TriangularNumbers]

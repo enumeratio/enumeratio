@@ -1,0 +1,2 @@
+id	in	out
+held	\mathrm{MakeBoxes}(2+3)	\mathrm{RowBox}(\bigl\lbrack\text{2}, \text{+}, \text{3}\bigr\rbrack)

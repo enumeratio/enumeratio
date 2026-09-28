@@ -1,0 +1,7 @@
+id	in	out
+heavisidetheta-negative	HeavisideTheta(-1)	0
+heavisidetheta-positive	HeavisideTheta(1)	1
+heavisidetheta-zero-unevaluated	HeavisideTheta(0)	HeavisideTheta(0)
+heavisidetheta-product-both-positive	HeavisideTheta(1, 2)	1
+heavisidetheta-product-one-negative	HeavisideTheta(1, -1)	0
+heavisidetheta-derivative	D(HeavisideTheta(x), x)	DiracDelta(x)

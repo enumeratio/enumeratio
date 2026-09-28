@@ -326,7 +326,7 @@ export type SymbolAttribute = "HoldAll";
 
 // --- the implementations record (design/examples-as-data.md §2, §6) -----------------------
 //
-// `reference/<Head>.implementations.yaml` holds, per example id, every implementation's
+// `reference/<Head>/examples.values.*.tsv` holds, per example id, every implementation's
 // rendering of it and, for other systems, their answer. Own forms ("epsil", "tex",
 // "traditional", "notatio") and external systems share this shape -- an own form simply has
 // no `verdict`, `messages`, or claim to answer with.
@@ -384,12 +384,12 @@ export interface SystemImplementation {
 /**
  * All implementations of one example, keyed by our own forms ("epsil", "tex", "traditional",
  * "notatio") or an external system name (`CrosswalkSystem`) -- one value in
- * `<Head>.implementations.yaml`, itself keyed by example id (see `HeadImplementations`).
+ * `<Head>/examples.values.*.tsv`, itself keyed by example id (see `HeadImplementations`).
  */
 export type ExampleImplementations = Readonly<Record<string, SystemImplementation>>;
 
 /**
- * The whole `<Head>.implementations.yaml` file: every example's implementations, keyed by
+ * The whole `<Head>/examples.values.*.tsv` file: every example's implementations, keyed by
  * the example's `id`. Nothing in it is keyed by expression text or array position.
  */
 export type HeadImplementations = Readonly<Record<string, ExampleImplementations>>;

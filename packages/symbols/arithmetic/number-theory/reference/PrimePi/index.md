@@ -1,0 +1,60 @@
+---
+name: PrimePi
+domain: Number theory
+signature: PrimePi(n)
+summary: "The prime-counting function: how many primes are ≤ n."
+signatures:
+  - call: PrimePi(n)
+    description: count of primes $\le n$.
+  - call: PrimePi(n)
+    description: "The prime-counting function: how many primes are ≤ n."
+    library: enumeratio-number-theory
+    type: (real) -> integer
+    overrides: compute-engine
+details:
+  - 'Inverse of [[NthPrime]]: $\pi(p_n)=n$.'
+  - Asymptotically $\pi(x)\sim x/\ln x$, the prime number theorem.
+  - n need not be an integer or prime itself -- PrimePi(n) counts primes up to whatever real value is given.
+  - Threads element-wise over a list, as Wolfram's Listable heads do.
+seeAlso:
+  - NthPrime
+  - NextPrime
+references:
+  - system: wikipedia
+    identity: Prime-counting function
+  - system: mathworld
+    identity: PrimeCountingFunction
+  - system: dlmf
+    identity: "27.12"
+  - system: oeis
+    identity: A000720
+names:
+  dlmf: number of primes not exceeding a number
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PrimePi[$1]
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sympy
+    template: primepi($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: prime_pi($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.primeCounting $1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: prime_pi($1)
+    arity: 1
+    threadArg: 1
+---

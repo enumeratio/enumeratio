@@ -1,0 +1,3 @@
+id	in	out
+no-self-loop	IsLoopFreeGraph(Graph([UndirectedEdge(1, 2)]))	True
+a-self-loop	IsLoopFreeGraph(Graph([UndirectedEdge(1, 1)]))	False

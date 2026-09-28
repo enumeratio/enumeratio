@@ -1,0 +1,18 @@
+id	in	out
+count-list-1-2-2-3-2-2		
+count-list-1-2-2-3-2-4-2		
+a-value-absent-from-the-collection-counts-as-0		
+count-list-a-b-a-a-b-c-b-b		
+count-of-twinprimes-is-nan		
+count-of-narcissisticnumbers-is-the-exact-88		
+count-of-squarefreenumbers-is-infinite		
+count-of-perfectnumbers-is-nan		
+the-value-can-itself-be-a-list		
+a-predicate-counts-the-elements-satisfying-it		
+only-top-level-elements-are-compared-by-default		
+a-bare-level-spec-counts-matches-down-through		
+2-counts-matches-at-level-2-only		
+count-of-an-infinite-collection		
+the-counts-of-the-distinct-values-add-up-to-the	\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 1)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 2)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 3)=\mathrm{Length}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack)	\mathrm{True}
+count-tests-exact-equality-a-typed-pattern-like		
+count-tests-exact-equality-so-a-pattern-like		

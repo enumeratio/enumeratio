@@ -1,0 +1,5 @@
+id	in	out
+chisquare-pdf-exact	\operatorname{PDF}(\mathrm{ChiSquareDistribution}(3), 2)	(2e\Gamma(\frac{3}{2}))^{-1}
+chisquare-cdf-exact	\operatorname{CDF}(\mathrm{ChiSquareDistribution}(3), 2)	1-\operatorname{GammaRegularized}(\frac{3}{2}, 1)
+chisquare-mean-exact	\mathrm{mean}(\mathrm{ChiSquareDistribution}(3))	3
+chisquare-variance-exact	\mathrm{Variance}(\mathrm{ChiSquareDistribution}(3))	6

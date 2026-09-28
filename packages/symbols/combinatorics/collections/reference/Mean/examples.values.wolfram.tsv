@@ -1,0 +1,13 @@
+id	in	out	tex.in	tex.out
+mean-list-1-2-3-4	Mean[List[1, 2, 3, 4]]	5/2	\text{Mean}[\{1,2,3,4\}]	\frac{5}{2}
+mean-list-2-4-4-4-5-5-7-9	Mean[List[2, 4, 4, 4, 5, 5, 7, 9]]	5	\text{Mean}[\{2,4,4,4,5,5,7,9\}]	5
+mean-list-1p21-3p4-2p15-4-1p55	Mean[List[1.21, 3.4, 2.15, 4, 1.55]]			
+given-a-matrix-mean-is-column-wise	Mean[List[List[1, 10], List[2, 20], List[3, 30]]]			
+exact-rationals-give-an-exact-mean	Mean[List[Rational[1, 2], Rational[1, 3], Rational[1, 6]]]			
+symbolic-data-gives-an-exact-symbolic-mean-frac	Mean[List[a, b, c, d]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Mean}[\{a,b,c,d\}]-\frac{1}{4} (a+b+c+d)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4},-\frac{17}{6}\right\}\right]-\frac{1}{4} \left(\frac{7}{3}-\frac{11}{5}+\frac{13}{4}-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{19}{8},-\frac{23}{9},\frac{7}{3},-\frac{11}{5}\right\}\right]-\frac{1}{4} \left(\frac{19}{8}-\frac{23}{9}+\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{13}{4},-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}\right]-\frac{1}{4} \left(\frac{13}{4}-\frac{17}{6}+\frac{19}{8}-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+exact-constants-give-an-exact-mean-frac-2-e-pi-3	Mean[List[Pi, E, 2]]			
+of-a-matrix-of-symbols-the-exact-mean-of-each	Mean[List[List[a, u], List[b, v], List[c, w]]]	{(a + b + c)/3, (u + v + w)/3}	\text{Mean}\left[\left( \begin{array}{cc}  a & u \\  b & v \\  c & w \\ \end{array} \right)\right]	\left\{\frac{1}{3} (a+b+c),\frac{1}{3} (u+v+w)\right\}
+the-mean-of-a-lazy-range-exactly	Mean[Range[1, 100]]			
+mean-is-total-divided-by-count-mean-c-frac-sum-c	(Mean[List[1, 2, 3, 4]] == Divide[Plus[1, 2, 3, 4], Length[List[1, 2, 3, 4]]])	True	\text{Mean}[\{1,2,3,4\}]=\frac{1+2+3+4}{\text{Length}[\{1,2,3,4\}]}	\text{True}
+a-single-outlier-drags-the-mean-far-from-the	Mean[List[-100, 1, 1, 1, 1, 20]]	-38/3	\text{Mean}[\{-100,1,1,1,1,20\}]	-\frac{38}{3}
+the-mean-of-no-data-is-nan	Mean[List[]]			

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-one-line-word-231			[InverseAfterComplementAfterReverse, [Permutation, [List, 2, 3, 1]]]	[Permutation, [List, 2, 3, 1]]	the one-line word $231$

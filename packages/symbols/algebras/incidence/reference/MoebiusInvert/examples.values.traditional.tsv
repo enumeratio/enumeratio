@@ -1,0 +1,4 @@
+id	in	out
+partial-sums-along-the-chain	\mathrm{PosetSumDown}(C_{4}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 3, 6, 10\bigr\rbrack
+and-back-again	\mathrm{MoebiusInvert}(C_{4}, \bigl\lbrack1, 3, 6, 10\bigr\rbrack)	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
+inclusion-exclusion-round-tripped	\mathrm{MoebiusInvert}(B_{2}, \mathrm{PosetSumDown}(B_{2}, \bigl\lbrack5, 1, 2, 7\bigr\rbrack))	\bigl\lbrack5, 1, 2, 7\bigr\rbrack

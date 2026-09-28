@@ -1,0 +1,3 @@
+id	in	out
+2-4-subsets	Count(Subsets(4))	16
+the-empty-subset	Subsets(3)[1]	[]

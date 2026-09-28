@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-kcyclepermutations-4-2	Basic		[Count, [KCyclePermutations, 4, 2]]	11	$Count(KCyclePermutations(4, 2)) = 11$
+first-element-of-kcyclepermutations-4-2	Basic		[At, [KCyclePermutations, 4, 2], 1]	[List, 3, 1, 2, 4]	The first element in enumeration order
+every-element-of-kcyclepermutations-4-2		test	[Take, [KCyclePermutations, 4, 2], 11]	[List, [List, 3, 1, 2, 4], [List, 2, 3, 1, 4], [List, 4, 1, 3, 2], [List, 2, 4, 3, 1], [List, 2, 1, 4, 3], [List, 4, 2, 1, 3], [List, 3, 4, 1, 2], [List, 3, 2, 4, 1], [List, 4, 3, 2, 1], [List, 1, 4, 2, 3], [List, 1, 3, 4, 2]]	

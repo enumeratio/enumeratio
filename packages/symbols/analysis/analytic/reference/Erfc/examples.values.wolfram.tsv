@@ -1,0 +1,20 @@
+id	in	out	tex.in	tex.out
+erfc-0	Erfc[0]	1	\text{erfc}(0)	1
+erfc-infinity	Erfc[Infinity]	0	\text{erfc}(\infty )	0
+erfc-negativeinfinity	Erfc[-Infinity]	2	\text{erfc}(-\infty )	2
+a-floating-point-argument-evaluates-directly-to	Erfc[0.5]	0.4795001221869535	\text{erfc}(0.5)	0.4795
+a-machine-precision-argument	Erfc[1.5]			
+threads-element-wise-over-a-list-as-wolfram-s	Erfc[List[0, 1]]	{1, Erfc[1]}	\text{erfc}(\{0,1\})	\{1,\text{erfc}(1)\}
+complex-arguments-should-evaluate-as-they-do-for	Erfc[Complex[1.5, -1]]			
+listable-threads-over-its-limits-at-pm-infty	Erfc[List[Infinity, -Infinity]]			
+interval-arithmetic-erfc-is-decreasing-so-the	Erfc[Interval[List[0.2, 0.3]]]			
+uncertainty-propagation	Erfc[Around[2, 0.01]]			
+to-30-significant-digits-every-one-correctly	N[Erfc[2], 30]			
+erfc-z-2-erfc-z-here-at-z-1	(Plus[Erfc[-1], Erfc[1]] == 2)	Erfc[-1] + Erfc[1] == 2	\text{erfc}(-1)+\text{erfc}(1)=2	\text{erfc}(-1)+\text{erfc}(1)=2
+definition-erf-z-erfc-z-1-see-erf	(Plus[Erf[2], Erfc[2]] == 1)	Erf[2] + Erfc[2] == 1	\text{erf}(2)+\text{erfc}(2)=1	\text{erf}(2)+\text{erfc}(2)=1
+erfc-x-2-erfc-x-applied-symbolically	Erfc[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{erfc}(-x)-(-\text{erfc}(x)+2)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(-\frac{7}{3}\right)-\left(-\text{erfc}\left(\frac{7}{3}\right)+2\right)\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(-\left(-\frac{11}{5}\right)\right)-\left(-\text{erfc}\left(-\frac{11}{5}\right)+2\right)\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(-\frac{13}{4}\right)-\left(-\text{erfc}\left(\frac{13}{4}\right)+2\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D[Erfc[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{erfc}(x)}{\partial x}--\frac{2 e^{-x^2}}{\sqrt{\pi }}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{erfc}\left(\frac{7}{3}\right)--\frac{2 e^{-\left(\frac{7}{3}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{erfc}\left(-\frac{11}{5}\right)--\frac{2 e^{-\left(-\frac{11}{5}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{erfc}\left(\frac{13}{4}\right)--\frac{2 e^{-\left(\frac{13}{4}\right)^2}}{\sqrt{\pi }}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+an-exact-integer-argument-is-left-unevaluated	Erfc[1]	Erfc[1]	\text{erfc}(1)	\text{erfc}(1)
+far-in-the-tail-erfc-keeps-full-relative	Erfc[9.5]			
+whereas-1-erf-9-5-cancels-to-exactly-0-in	Subtract[1, Erf[9.5]]			
+the-gaussian-tail-shrinks-fast-only-about-7	Erfc[3.5]	7.43098372341413*^-7	\text{erfc}(3.5)	\text{7.43098372341413$\grave{ }$*${}^{\wedge}$-7}

@@ -1,0 +1,31 @@
+---
+name: TriStrings
+domain: Collections
+signature: TriStrings(n)
+summary: Binary strings of length $n$ with no run of 3 consecutive 1s, a lazy indexed family counted by the tribonacci recurrence.
+signatures:
+  - call: TriStrings(n)
+    library: enumeratio-collections
+    description: the length-$n$ binary strings avoiding three 1s in a row.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - A lazy indexed collection; the count $T(n)$ satisfies $T(n)=T(n-1)+T(n-2)+T(n-3)$ with $T(0)=1$, $T(1)=2$, $T(2)=4$ — a tribonacci-style recurrence (OEIS A000073, shifted).
+  - Each element is the bit string itself, as a list of 0s and 1s.
+  - "$At$ unranks via the same combinatorial-number-system walk as the other binary-word families: at each position, the number of valid completions with a leading 0 sizes the block that sorts first."
+enumerate:
+  expr: TriStrings(6)
+  columns: Descents, Ascents
+seeAlso:
+  - PrimitiveBinaryStrings
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000073
+    url: https://oeis.org/A000073
+    note: "A000073(n+3): length-n binary strings avoiding 111 (tribonacci)"
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord
+---

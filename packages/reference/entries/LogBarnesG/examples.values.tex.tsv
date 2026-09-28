@@ -1,0 +1,15 @@
+id	in	out
+ln-g-4-ln-2	\mathrm{LogBarnesG}(4)	\ln(2)
+ln-g-3-ln-1-0	\mathrm{LogBarnesG}(3)	0
+numeric-for-a-floating-point-argument	\mathrm{LogBarnesG}(10.5)	42.278\,883\,636\,795\,2
+ln-g-frac-12	\mathrm{LogBarnesG}(0.5)	-0.505\,433\,054\,489\,458\,3
+ln-g-0-7-negative-since-g-1-on-0-1	\mathrm{LogBarnesG}(0.7)	-0.214\,589\,897\,075\,086\,36
+complex-arguments	\mathrm{LogBarnesG}(1.7+i)	0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
+threads-elementwise-over-an-array-infty-at-the	\mathrm{LogBarnesG}(\bigl\lbrack\bigl\lbrack4, -1\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\ln(2), -\infty\bigr\rbrack, \bigl\lbrack-\infty, 0\bigr\rbrack\bigr\rbrack
+huge-arguments-straight-from-the-asymptotic	N(\mathrm{LogBarnesG}(10^{1\,000}))	1\,150\,542\,546\,497\,022\,842\,008\,995\,727\,342\,182\,103\,801\cdot10^{1964}
+interval-arithmetic-over-an-increasing-stretch	\mathrm{LogBarnesG}(\mathrm{Interval}(0.111, 0.112))	\mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
+uncertainty-propagation-through-ln-g	\mathrm{LogBarnesG}(\mathrm{Around}(1.2, 0.01))	\mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
+ln-g-infty-infty	\mathrm{LogBarnesG}(\infty)	\infty
+g-0-0-so-its-logarithm-is-infty	\mathrm{LogBarnesG}(0)	-\infty
+exact-at-the-integers-ln-g-10-ln	\mathrm{LogBarnesG}(10)	2\ln(14)+3\ln(10)+9\ln(3)+18\ln(2)+\ln(5)
+the-continuation-not-ln-of-the-value-g-2-5-0-yet	\mathrm{LogBarnesG}(-2.5)	-2.574\,748\,476\,853\,131+18.849\,555\,921\,538\,76i

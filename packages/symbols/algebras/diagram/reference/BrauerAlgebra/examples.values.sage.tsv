@@ -1,0 +1,5 @@
+id	in	out
+5	(BrauerAlgebra(3, enumeratio_delta, enumeratio_ring)).dimension()	15
+algebradimension-braueralgebra-4	(BrauerAlgebra(4, enumeratio_delta, enumeratio_ring)).dimension()	105
+a-crossing-is-a-brauer-diagram	enumeratio_element(enumeratio_diagram([[1, -2], [2, -1], [3, -3]]), BrauerAlgebra(3, enumeratio_delta, enumeratio_ring))	True
+but-not-a-planar-one	enumeratio_element(enumeratio_diagram([[1, -2], [2, -1], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))	False

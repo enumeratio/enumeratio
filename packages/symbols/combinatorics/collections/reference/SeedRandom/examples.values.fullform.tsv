@@ -1,0 +1,3 @@
+id	in
+seedrandom-returns-nothing	SeedRandom[7]
+seedrandom-pins-the-next-draw	Last[List[SeedRandom[7], RandomInteger[100]]]

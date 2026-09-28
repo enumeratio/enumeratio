@@ -1,0 +1,10 @@
+---
+name: RootDegree
+domain: Combinatorics
+signature: RootDegree(...)
+summary: Root degree
+statOn:
+  - OrderedTree
+  - PlaneTree
+stub: carrier
+---

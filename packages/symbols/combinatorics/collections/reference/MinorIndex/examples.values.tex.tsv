@@ -1,0 +1,5 @@
+id	in	out
+the-lone-ascent-at-position-2	\mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)	2
+ascents-at-both-positions-1-2	\mathrm{MinorIndex}(\bigl\lbrack1, 2, 3\bigr\rbrack)	3
+no-ascents	\mathrm{MinorIndex}(\bigl\lbrack3, 2, 1\bigr\rbrack)	0
+major-and-minor-index-split-binom-n-2	\mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\binom{3}{2}	\top

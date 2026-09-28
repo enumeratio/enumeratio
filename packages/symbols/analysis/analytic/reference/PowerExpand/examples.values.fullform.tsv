@@ -1,0 +1,6 @@
+id	in
+sqrt-x-2-x-for-positive-x	PowerExpand[Sqrt[Power[x, 2]]]
+splits-a-logarithm-of-a-product	PowerExpand[Log[Times[x, y]]]
+pulls-out-an-exponent	PowerExpand[Log[Power[x, n]]]
+distributes-a-power-over-a-product	PowerExpand[Power[Times[a, b], c]]
+powerexpand-sqrt-a-times-b	PowerExpand[Sqrt[Times[a, b]]]

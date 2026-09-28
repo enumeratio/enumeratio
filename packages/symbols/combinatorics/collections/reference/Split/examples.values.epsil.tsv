@@ -1,0 +1,5 @@
+id	in	out
+runs-not-groups-the-two-runs-of-1-stay-apart	Split([1, 1, 2, 2, 2, 3, 1, 1])	[[1, 1], [2, 2, 2], [3], [1, 1]]
+symbolic-elements	Split([a, a, b, b, b, a])	[[a, a], [b, b, b], [a]]
+a-test-between-neighbours-split-into-increasing	Split([1, 2, 3, 5, 4, 6], Less)	[[1, 2, 3, 5], [4, 6]]
+the-empty-list	Split([])	[]

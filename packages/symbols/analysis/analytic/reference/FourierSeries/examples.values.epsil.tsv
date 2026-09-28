@@ -1,0 +1,6 @@
+id	in	out
+order-2-series-of-x	FourierSeries(x, x, 2)	"-i * ExponentialE ^ (i * x) + -1 / 2 * i * ExponentialE ^ (-2 * i * x) + 1 / 2 *\n                                                                         i * ExponentialE ^\n                                                                            (2i *\n                                                                             x) + i *\n                                                                               ExponentialE ^\n                                                                               (-i * x)"
+order-3-series-of-sin-is-itself	FourierSeries(Sin(x), x, 3)	-1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-i * x)
+cos-squared-a-sin-cos-polynomial	FourierSeries(Cos(x) ^ 2, x, 2)	1 / 4 * ExponentialE ^ (-2 * i * x) + 1 / 4 * ExponentialE ^ (2i * x) + 1 / 2
+order-0-series-of-x-squared-is-its-average	FourierSeries(x ^ 2, x, 0)	1 / 3 * Pi ^ 2
+declines-a-mixed-polynomial-trig-product	FourierSeries(x * Cos(x), x, 1)	FourierSeries(x * Cos(x), x, 1)

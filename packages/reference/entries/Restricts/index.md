@@ -1,0 +1,9 @@
+---
+name: Restricts
+domain: Combinatorics
+signature: Restricts(...)
+summary: Restricts
+statOn:
+  - Text
+stub: carrier
+---

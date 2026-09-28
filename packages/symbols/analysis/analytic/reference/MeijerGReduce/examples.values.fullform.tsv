@@ -1,0 +1,5 @@
+id	in
+exp	MeijerGReduce[Power[E, x], x]
+sin	MeijerGReduce[Sin[x], x]
+log1p	MeijerGReduce[Log[Plus[1, x]], x]
+bessel-j	MeijerGReduce[BesselJ[n, x], x]

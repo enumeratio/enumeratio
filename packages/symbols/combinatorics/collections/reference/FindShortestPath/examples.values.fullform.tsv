@@ -1,0 +1,5 @@
+id	in
+shortest-path-along-a-path-graph	FindShortestPath[enumeratio`PathGraph[5], 1, 5]
+no-path-back-against-directed-edges	FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
+a-path-crossing-both-directed-and-undirected	FindShortestPath[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 1, 4]
+a-weighted-shortcut-loses-to-three-cheaper-hops	FindShortestPath[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[1, 4]], Rule[EdgeWeight, List[1, 1, 1, 10]]], 1, 4]

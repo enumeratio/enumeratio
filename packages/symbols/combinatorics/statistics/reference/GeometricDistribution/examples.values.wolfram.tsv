@@ -1,0 +1,5 @@
+id	in
+geometric-pdf-exact	PDF[GeometricDistribution[Rational[1, 4]], 2]
+geometric-cdf-exact	CDF[GeometricDistribution[Rational[1, 4]], 2]
+geometric-mean-exact	Mean[GeometricDistribution[Rational[1, 4]]]
+geometric-variance-exact	Variance[GeometricDistribution[Rational[1, 4]]]

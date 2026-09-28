@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+only-position-1-3-1			[Excedances, [List, 3, 1, 2]]	1	only position 1: $3 > 1$
+the-identity-has-none			[Excedances, [List, 1, 2, 3]]	0	the identity has none
+excedances-antiexcedances-and-fixed-points	Properties		[Equal, [Add, [Excedances, [List, 2, 3, 1]], [Antiexcedances, [List, 2, 3, 1]], [FixedPoints, [List, 2, 3, 1]]], 3]	True	excedances, antiexcedances and fixed points partition the $n$ positions

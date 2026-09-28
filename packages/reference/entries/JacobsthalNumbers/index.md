@@ -1,0 +1,27 @@
+---
+name: JacobsthalNumbers
+domain: Collections
+signature: JacobsthalNumbers
+summary: The Jacobsthal numbers $0, 1, 1, 3, 5, 11, …$ as a lazy indexed collection.
+signatures:
+  - call: JacobsthalNumbers
+    description: $J_n = J_{n-1} + 2J_{n-2}$, $J_0 = 0$, $J_1 = 1$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(JacobsthalNumbers) = +\infty$, and $At(JacobsthalNumbers, 1) = J_0 = 0$.'
+  - "OEIS A001045, starting exactly at its offset-0 term: $0, 1, 1, 3, 5, 11, 21, …$."
+  - "Membership goes through [[Element]]: $Element(21, JacobsthalNumbers)$ is true, $Element(4, JacobsthalNumbers)$ is false."
+enumerate:
+  expr: Take(JacobsthalNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - PellNumbers
+catalog:
+  - system: oeis
+    identity: A001045
+    url: https://oeis.org/A001045
+grades: []
+carrier: Numeric
+unbounded: true
+---

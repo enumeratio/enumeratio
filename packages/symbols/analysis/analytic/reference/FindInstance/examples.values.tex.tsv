@@ -1,0 +1,11 @@
+id	in	out
+a-quadratic-with-two-real-roots	\mathrm{FindInstance}(x^2=4, x, \mathrm{Reals})	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
+both-roots-with-an-explicit-count	\mathrm{FindInstance}(x^2=4, x, \mathrm{Reals}, 2)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, -2)\bigr\rbrack\bigr\rbrack
+an-irrational-root-is-exact	\mathrm{FindInstance}(x^2=2, x, \mathrm{Reals})	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, \sqrt{2})\bigr\rbrack\bigr\rbrack
+a-linear-equation	\mathrm{FindInstance}(2x+3=7, x, \mathrm{Reals})	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
+no-real-root-is-a-proven-empty-result	\mathrm{FindInstance}(x^2=-1, x, \mathrm{Reals})	\bigl\lbrack\bigr\rbrack
+a-non-integer-root-is-also-proven-empty	\mathrm{FindInstance}(x^2=2, x, \mathbb{Z})	\bigl\lbrack\bigr\rbrack
+a-bounded-integer-search	\mathrm{FindInstance}(x\gt0\land x\lt10, x, \mathbb{Z}, 3)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 3)\bigr\rbrack\bigr\rbrack
+a-multivariate-bounded-integer-search	\mathrm{FindInstance}(x+y=5\land x\gt0\land x\lt10\land y\gt0\land y\lt10, \bigl\lbrack x, y\bigr\rbrack, \mathbb{Z}, 3)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 1), \mathrm{Rule}(y, 4)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 2), \mathrm{Rule}(y, 3)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 3), \mathrm{Rule}(y, 2)\bigr\rbrack\bigr\rbrack
+declines-without-an-explicit-domain	\mathrm{FindInstance}(x\gt0, x)	\mathrm{FindInstance}(x\gt0, x)
+declines-on-a-pure-inequality-over-reals	\mathrm{FindInstance}(x\gt0, x, \mathrm{Reals})	\mathrm{FindInstance}(x\gt0, x, \mathrm{Reals})

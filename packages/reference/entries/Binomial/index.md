@@ -1,0 +1,86 @@
+---
+name: Binomial
+domain: Combinatorics
+signature: Binomial(n, k)
+summary: The binomial coefficient $\binom{n}{k}$, the number of k-element subsets of an n-element set.
+signatures:
+  - call: Binomial(n, k)
+    description: the binomial coefficient $\binom{n}{k}$.
+  - call: Binomial(n, k)
+    description: The binomial coefficient $\binom{n}{k}$, the number of k-element subsets of an n-element set.
+    library: enumeratio-analytic
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: compute-engine
+  - call: Binomial(n, k)
+    description: The binomial coefficient $\binom{n}{k}$, the number of k-element subsets of an n-element set.
+    library: enumeratio-number-theory
+    type: (complex | infinity, complex | infinity) -> number
+    overrides: enumeratio-analytic
+details:
+  - 'The general definition runs through the Gamma function: $\binom{n}{k} = \frac{\Gamma(n+1)}{\Gamma(k+1)\,\Gamma(n-k+1)}$.'
+  - 'Symmetric in its arguments: $\binom{n}{k} = \binom{n}{n-k}$.'
+  - "Pascal's rule builds each row from the last: $\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}$."
+  - Row sums give $\sum_{k=0}^{n} \binom{n}{k} = 2^n$.
+  - "compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form."
+  - "A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise."
+seeAlso:
+  - Factorial
+  - Multinomial
+  - Pochhammer
+references:
+  - system: wikipedia
+    identity: Binomial coefficient
+  - system: mathworld
+    identity: BinomialCoefficient
+  - system: dlmf
+    identity: "26.3"
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Binomial[$1, $2]
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: sympy
+    template: binomial($1, $2)
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: sage
+    template: binomial($1, $2)
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: oscar
+    template: binomial(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: julia
+    template: binomial(ZZ($1), ZZ($2))
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.choose $1 $2)
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+  - origin: mapped
+    form: rust
+    template: binomial($1, $2)
+    arity: 2
+    threadArg: 1
+    note: Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.
+catalog:
+  - system: wolfram
+    identity: Binomial
+    url: https://reference.wolfram.com/language/ref/Binomial.html
+---

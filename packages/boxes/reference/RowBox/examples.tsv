@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert			[RowBox, [List, "'a'", "'+'", "'b'"]]	[RowBox, [List, "'a'", "'+'", "'b'"]]	a box is inert: it evaluates to itself

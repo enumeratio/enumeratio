@@ -1,0 +1,6 @@
+id	in	out
+abs-of-a-real-variable	\mathrm{PiecewiseExpand}(\vert x\vert, x\in\mathbb{R})	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-x, x\lt0\bigr\rbrack\bigr\rbrack, x)
+sign-of-a-real-variable	\mathrm{PiecewiseExpand}(\mathrm{sgn}(x), x\in\mathbb{R})	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, 0)
+clip-of-a-real-variable	\mathrm{PiecewiseExpand}(\mathrm{Clip}(x, \bigl\lbrack-1, 1\bigr\rbrack), x\in\mathbb{R})	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt-1\bigr\rbrack, \bigl\lbrack1, 1\lt x\bigr\rbrack\bigr\rbrack, x)
+max-of-two-real-variables	\mathrm{PiecewiseExpand}(\max(x, y), x\in\mathbb{R}\land y\in\mathbb{R})	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x, y\le x\bigr\rbrack\bigr\rbrack, y)
+without-a-realness-assumption-it-declines	\mathrm{PiecewiseExpand}(\vert x\vert)	\vert x\vert

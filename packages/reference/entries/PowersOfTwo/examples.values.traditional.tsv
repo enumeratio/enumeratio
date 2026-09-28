@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms		
+64-is-a-power-of-two	64\in\mathrm{PowersOfTwo}	\mathrm{True}
+48-is-not-a-power-of-two	48\in\mathrm{PowersOfTwo}	\mathrm{False}

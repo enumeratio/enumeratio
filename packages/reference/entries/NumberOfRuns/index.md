@@ -1,0 +1,9 @@
+---
+name: NumberOfRuns
+domain: Combinatorics
+signature: NumberOfRuns(...)
+summary: Number of runs
+statOn:
+  - BinaryWord
+stub: carrier
+---

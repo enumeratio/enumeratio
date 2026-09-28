@@ -1,0 +1,19 @@
+---
+name: MulticomplexAlgebra
+domain: Hypercomplex algebra
+signature: MulticomplexAlgebra(n)
+summary: The multicomplex algebra $\mathbb{C}_n = \mathbb{R}[i_1,\ldots,i_n]/(i_k^2+1)$ on $n$ commuting generators, each squaring to $-1$.
+signatures:
+  - call: MulticomplexAlgebra(n)
+    description: $\mathbb{C}_n$, on $n$ commuting generators squaring to $-1$
+    library: enumeratio-hypercomplex
+    type: (integer) -> clifford_algebra
+seeAlso:
+  - Basis
+  - SplitAlgebra
+  - DualAlgebra
+  - Quaternions
+references:
+  - system: wikipedia
+    identity: Multicomplex number
+---

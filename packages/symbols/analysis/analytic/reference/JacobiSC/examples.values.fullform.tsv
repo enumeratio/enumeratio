@@ -1,0 +1,5 @@
+id	in
+a-floating-point-argument-evaluates-directly-to	N[JacobiSC[0.6, 0.4]]
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiSC[1.2, 3]]
+u-0-is-0-for-any-m	JacobiSC[0, m]
+symbolic-arguments-are-left-unevaluated-rather	JacobiSC[u, m]

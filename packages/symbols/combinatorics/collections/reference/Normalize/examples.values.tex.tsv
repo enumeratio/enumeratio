@@ -1,0 +1,3 @@
+id	in	out
+3-4-5	\mathrm{Normalize}(\bigl\lbrack3, 4\bigr\rbrack)	\bigl\lbrack\frac{3}{5}, \frac{4}{5}\bigr\rbrack
+zero-vector	\mathrm{Normalize}(\bigl\lbrack0, 0\bigr\rbrack)	\bigl\lbrack0, 0\bigr\rbrack

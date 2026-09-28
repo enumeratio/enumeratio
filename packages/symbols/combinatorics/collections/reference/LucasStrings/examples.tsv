@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-lucasstrings-4	Basic		[Count, [LucasStrings, 4]]	7	$Count(LucasStrings(4)) = 7$
+first-element-of-lucasstrings-4	Basic		[At, [LucasStrings, 4], 1]	[List, 0, 0, 0, 0]	The first element in enumeration order
+every-element-of-lucasstrings-4		test	[Take, [LucasStrings, 4], 7]	[List, [List, 0, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 0, 1, 0, 1], [List, 1, 0, 0, 0], [List, 1, 0, 1, 0]]	

@@ -1,0 +1,9 @@
+---
+name: GreaterPrime
+domain: Combinatorics
+signature: GreaterPrime(...)
+summary: Greater prime
+mapOn:
+  - GoldbachPartition
+stub: carrier
+---

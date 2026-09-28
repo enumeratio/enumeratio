@@ -3,7 +3,7 @@
 //
 //   entry      what the entry's author wrote down, on the entry or on one signature
 //   curated    the hand-kept encyclopaedia rows on the head's own record (`references:`/
-//              `names:` in `<Head>.yaml`; rebuilt into `curated-data.ts`)
+//              `names:` in `<Head>/index.md`; rebuilt into `curated-data.ts`)
 //   catalog    the enumeratio database's own crosswalk, rekeyed to our names
 //   engine     the Wikidata id compute-engine's definition carries
 //   wikidata   what that item (or the item behind a Wikipedia title we name) points at:

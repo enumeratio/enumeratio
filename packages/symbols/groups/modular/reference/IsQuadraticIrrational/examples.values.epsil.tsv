@@ -1,0 +1,10 @@
+id	in	out
+isquadraticirrational-sqrt-2	IsQuadraticIrrational(Sqrt(2))	True
+the-golden-ratio	IsQuadraticIrrational((1 + Sqrt(5)) / 2)	True
+a-cube-root-is-algebraic-of-degree-3	IsQuadraticIrrational(2 ^ (1 / 3))	False
+transcendental	IsQuadraticIrrational(Pi)	False
+sqrt-4-is-rational-once-simplified	IsQuadraticIrrational(Sqrt(4))	False
+a-plain-integer	IsQuadraticIrrational(5)	False
+a-rational-multiple-of-a-surd	IsQuadraticIrrational(3 * Sqrt(2))	True
+a-surd-subtracted-from-a-rational	IsQuadraticIrrational(1 - Sqrt(3))	True
+a-rational-is-not-irrational	IsQuadraticIrrational(3 / 4)	False

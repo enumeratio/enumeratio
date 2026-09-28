@@ -1,9 +1,0 @@
-the-first-five-squares:
-  epsil:
-    in: Take(SquareNumbers, 5)
-    out: "[1, 4, 9, 16, 25]"
-  tex:
-    in: \mathrm{Take}(\mathrm{SquareNumbers}, 5)
-    out: \bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack
-  fullform:
-    in: Take[SquareNumbers, 5]
