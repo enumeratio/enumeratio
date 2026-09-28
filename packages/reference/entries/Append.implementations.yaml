@@ -114,6 +114,10 @@ any-head-not-just-a-list:
     in: Append[f[a, b], c]
   wolfram:
     in: Append[f[a, b], c]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Append}[f(a,b),c]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Append}\left[f\left(\frac{7}{3},-\frac{11}{5}\right),\frac{13}{4}\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Append}\left[f\left(\frac{19}{8},-\frac{23}{9}\right),\frac{7}{3}\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Append}\left[f\left(\frac{13}{4},-\frac{17}{6}\right),\frac{19}{8}\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 adding-a-row-to-a-matrix:
   epsil:
     in: Append([[1, 2], [3, 4]], [5, 6])

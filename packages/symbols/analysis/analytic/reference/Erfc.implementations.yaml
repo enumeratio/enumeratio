@@ -31,6 +31,10 @@ erfc-infinity:
     back: [Erfc, PositiveInfinity]
   wolfram:
     in: Erfc[Infinity]
+    out: "0"
+    tex:
+      in: \text{erfc}(\infty )
+      out: "0"
 erfc-negativeinfinity:
   epsil:
     in: Erfc(NegativeInfinity)

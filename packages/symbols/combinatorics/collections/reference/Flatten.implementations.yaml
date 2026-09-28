@@ -168,6 +168,10 @@ nested-calls-of-any-one-head-flatten-not-just:
     in: Flatten[f[a, f[b, f[c]]]]
   wolfram:
     in: Flatten[f[a, f[b, f[c]]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Flatten}[f(a,f(b,f(c)))]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Flatten}\left[f\left(\frac{7}{3},f\left(-\frac{11}{5},f\left(\frac{13}{4}\right)\right)\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Flatten}\left[f\left(\frac{19}{8},f\left(-\frac{23}{9},f\left(\frac{7}{3}\right)\right)\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Flatten}\left[f\left(\frac{13}{4},f\left(-\frac{17}{6},f\left(\frac{19}{8}\right)\right)\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-list-with-no-nesting-is-unchanged:
   epsil:
     in: Flatten([1, 2, 3])
@@ -201,3 +205,7 @@ flatten-single-level-non-list-unaffected:
     in: Flatten[f[a, b]]
   wolfram:
     in: Flatten[f[a, b]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Flatten}[f(a,b)]-f(a,b)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Flatten}\left[f\left(\frac{7}{3},-\frac{11}{5}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Flatten}\left[f\left(-\frac{17}{6},\frac{19}{8}\right)\right]-f\left(-\frac{17}{6},\frac{19}{8}\right)\right]\right],\text{Chop}\left[N\left[\text{Flatten}\left[f\left(\frac{7}{3},-\frac{11}{5}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

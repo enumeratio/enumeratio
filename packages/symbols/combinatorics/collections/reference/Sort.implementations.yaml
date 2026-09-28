@@ -182,6 +182,10 @@ sorts-the-arguments-of-any-head-not-just-a-list:
     in: Sort[f[b, a, c]]
   wolfram:
     in: Sort[f[b, a, c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sort}[f(b,a,c)]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{23}{9},\frac{19}{8},\frac{7}{3}\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{17}{6},\frac{13}{4},\frac{19}{8}\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-result-doesn-t-depend-on-the-input-order:
   epsil:
     in: Sort(Reverse([3, 1, 2])) == Sort([3, 1, 2])

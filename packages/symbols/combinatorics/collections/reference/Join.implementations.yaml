@@ -173,6 +173,10 @@ any-head-as-long-as-all-the-arguments-share-it:
     in: Join[f[a], f[b]]
   wolfram:
     in: Join[f[a], f[b]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Join}[f(a),f(b)]-f(a,b)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Join}\left[f\left(\frac{7}{3}\right),f\left(-\frac{11}{5}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Join}\left[f\left(-\frac{17}{6}\right),f\left(\frac{19}{8}\right)\right]-f\left(-\frac{17}{6},\frac{19}{8}\right)\right]\right],\text{Chop}\left[N\left[\text{Join}\left[f\left(\frac{7}{3}\right),f\left(-\frac{11}{5}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 join-is-associative:
   epsil:
     in: |-
@@ -221,6 +225,10 @@ join-splices-any-shared-head:
     in: Join[f[a], f[b], f[c]]
   wolfram:
     in: Join[f[a], f[b], f[c]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Join}[f(a),f(b),f(c)]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Join}\left[f\left(\frac{7}{3}\right),f\left(-\frac{11}{5}\right),f\left(\frac{13}{4}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Join}\left[f\left(\frac{19}{8}\right),f\left(-\frac{23}{9}\right),f\left(\frac{7}{3}\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Join}\left[f\left(\frac{13}{4}\right),f\left(-\frac{17}{6}\right),f\left(\frac{19}{8}\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 join-associations-first-seen-order:
   epsil:
     in: Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))

@@ -434,6 +434,10 @@ an-unrecognized-system-symbol-leaves-the-call:
     in: IntegerDigits[10, NotASystem]
   wolfram:
     in: IntegerDigits[10, NotASystem]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{IntegerDigits}[10,\text{NotASystem}]-\text{IntegerDigits}[10,\text{NotASystem}]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,\frac{7}{3}\right]-\text{IntegerDigits}\left[10,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,-\frac{11}{5}\right]-\text{IntegerDigits}\left[10,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,\frac{13}{4}\right]-\text{IntegerDigits}\left[10,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 ostrowski-12-over-all-ones-convergents:
   epsil:
     in: IntegerDigits(12, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))

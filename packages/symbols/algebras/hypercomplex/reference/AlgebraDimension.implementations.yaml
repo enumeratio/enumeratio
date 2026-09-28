@@ -12,6 +12,10 @@ algebradimension-quaternions:
     in: AlgebraDimension[Quaternions]
   sage:
     in: (SR.var("Quaternions")).dimension()
+    out: "AttributeError: 'sage.symbolic.expression.Expression' object has no attribute 'dimension'"
+    verdict: error
+    kind: domain
+    note: compute-engine has no definition for the symbol Quaternions itself (unlike Primes, which is defined), so the free-symbol rule (DEFINED_NAMES) emits it as SR.var("Quaternions") instead of recognizing it as a domain — Sage's plain symbolic variable has no .dimension(). A gap in how the domain is declared, not a value disagreement.
 algebradimension-cliffordalgebra-2-1:
   epsil:
     in: AlgebraDimension(CliffordAlgebra(2, 1))

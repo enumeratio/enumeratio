@@ -25,6 +25,10 @@ erf-infinity:
     back: [Erf, PositiveInfinity]
   wolfram:
     in: Erf[Infinity]
+    out: "1"
+    tex:
+      in: \text{erf}(\infty )
+      out: "1"
 erf-negativeinfinity:
   epsil:
     in: Erf(NegativeInfinity)

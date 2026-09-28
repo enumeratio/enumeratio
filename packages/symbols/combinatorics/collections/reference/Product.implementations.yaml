@@ -143,6 +143,10 @@ an-undefined-function-expanded-term-by-term:
     in: Product[f[i], List[i, 1, 4]]
   wolfram:
     in: Product[f[i], List[i, 1, 4]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right],\text{Chop}\left[N\left[\prod _{i=1}^4 f(i)-f(1) f(2) f(3) f(4)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-step-of-2-takes-every-other-index:
   epsil:
     in: Product(f(i), (i, 1, 4, 2))
@@ -154,6 +158,10 @@ a-step-of-2-takes-every-other-index:
     in: Product[f[i], List[i, 1, 4, 2]]
   wolfram:
     in: Product[f[i], List[i, 1, 4, 2]]
+    out: True
+    tex:
+      in: \text{Module}[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)],10,\text{$\$$Aborted}]]\},\text{If}[d\text{===}0,\text{True},\text{Module}[\{s=\{\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]],\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]],\text{Chop}[N[\text{Product}[f(i),\{i,1,4,2\}]-f(1) f(3)]]\}\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]]]]
+      out: \text{True}
 over-an-explicit-list-of-values:
   epsil:
     in: Product(f(i), i in [a, b, c])

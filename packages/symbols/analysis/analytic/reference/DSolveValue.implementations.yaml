@@ -10,6 +10,10 @@ harmonic-oscillator:
     back: Unreadable
   wolfram:
     in: DSolveValue[(Plus[Derivative[2][Y][x], Y[x]] == 0), Y[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{DSolveValue}\left[Y''(x)+Y(x)=0,Y(x),x\right]-(\sin (x) c_2+\cos (x) c_1)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{7}{3}\right)''\left(-\frac{11}{5}\right)+Y\left(-\frac{11}{5}\right)=0,Y\left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(\sin \left(-\frac{11}{5}\right) c_2+\cos \left(-\frac{11}{5}\right) c_1\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{13}{4}\right)''\left(-\frac{17}{6}\right)+Y\left(-\frac{17}{6}\right)=0,Y\left(-\frac{17}{6}\right),-\frac{17}{6}\right]-\left(\sin \left(-\frac{17}{6}\right) c_2+\cos \left(-\frac{17}{6}\right) c_1\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{19}{8}\right)''\left(-\frac{23}{9}\right)+Y\left(-\frac{23}{9}\right)=0,Y\left(-\frac{23}{9}\right),-\frac{23}{9}\right]-\left(\sin \left(-\frac{23}{9}\right) c_2+\cos \left(-\frac{23}{9}\right) c_1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 distinct-real-roots:
   epsil:
     in: |-
@@ -43,6 +47,13 @@ distinct-real-roots:
     back: Unreadable
   wolfram:
     in: DSolveValue[(Plus[Derivative[2][Y][x], Minus[Times[3, Derivative[1][Y][x]]], Times[2, Y[x]]] == 0), Y[x], x]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{DSolveValue}\left[Y''(x)-3 Y'(x)+2 Y(x)=0,Y(x),x\right]-\left(c_1 e^{2 x}+c_2 e^x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{7}{3}\right)''\left(-\frac{11}{5}\right)-3 \left(\frac{7}{3}\right)'\left(-\frac{11}{5}\right)+2 Y\left(-\frac{11}{5}\right)=0,Y\left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(c_1 e^{2 \left(-\frac{11}{5}\right)}+c_2 e^{-\frac{11}{5}}\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{13}{4}\right)''\left(-\frac{17}{6}\right)-3 \left(\frac{13}{4}\right)'\left(-\frac{17}{6}\right)+2 Y\left(-\frac{17}{6}\right)=0,Y\left(-\frac{17}{6}\right),-\frac{17}{6}\right]-\left(c_1 e^{2 \left(-\frac{17}{6}\right)}+c_2 e^{-\frac{17}{6}}\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{19}{8}\right)''\left(-\frac{23}{9}\right)-3 \left(\frac{19}{8}\right)'\left(-\frac{23}{9}\right)+2 Y\left(-\frac{23}{9}\right)=0,Y\left(-\frac{23}{9}\right),-\frac{23}{9}\right]-\left(c_1 e^{2 \left(-\frac{23}{9}\right)}+c_2 e^{-\frac{23}{9}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: FullSimplify can't decide whether Wolfram's solution and ours (both using arbitrary-constant symbols C(1)/C(2)) are the same family without treating those constants specially, and the fixed-rational fallback substitutes independent values for them instead of recognizing they're paired. A mechanism limitation, not a wrong solution.
 repeated-root:
   epsil:
     in: |-
@@ -76,6 +87,10 @@ repeated-root:
     back: Unreadable
   wolfram:
     in: DSolveValue[(Plus[Derivative[2][Y][x], Minus[Times[4, Derivative[1][Y][x]]], Times[4, Y[x]]] == 0), Y[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{DSolveValue}\left[Y''(x)-4 Y'(x)+4 Y(x)=0,Y(x),x\right]-(x c_2+c_1) e^{2 x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{7}{3}\right)''\left(-\frac{11}{5}\right)-4 \left(\frac{7}{3}\right)'\left(-\frac{11}{5}\right)+4 Y\left(-\frac{11}{5}\right)=0,Y\left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(-\frac{11}{5} c_2+c_1\right) e^{2 \left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{13}{4}\right)''\left(-\frac{17}{6}\right)-4 \left(\frac{13}{4}\right)'\left(-\frac{17}{6}\right)+4 Y\left(-\frac{17}{6}\right)=0,Y\left(-\frac{17}{6}\right),-\frac{17}{6}\right]-\left(-\frac{17}{6} c_2+c_1\right) e^{2 \left(-\frac{17}{6}\right)}\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{19}{8}\right)''\left(-\frac{23}{9}\right)-4 \left(\frac{19}{8}\right)'\left(-\frac{23}{9}\right)+4 Y\left(-\frac{23}{9}\right)=0,Y\left(-\frac{23}{9}\right),-\frac{23}{9}\right]-\left(-\frac{23}{9} c_2+c_1\right) e^{2 \left(-\frac{23}{9}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 resonance-sine-forcing:
   epsil:
     in: DSolveValue(Apply(Derivative(Y, 2), x) + Y(x) == Sin(x), Y(x), x)
@@ -88,6 +103,10 @@ resonance-sine-forcing:
     back: Unreadable
   wolfram:
     in: DSolveValue[(Plus[Derivative[2][Y][x], Y[x]] == Sin[x]), Y[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{DSolveValue}\left[Y''(x)+Y(x)=\sin (x),Y(x),x\right]-\left(-\frac{1}{2} x \cos (x)+\sin (x) c_2+\cos (x) c_1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{7}{3}\right)''\left(-\frac{11}{5}\right)+Y\left(-\frac{11}{5}\right)=\sin \left(-\frac{11}{5}\right),Y\left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(-\frac{1}{2} \left(-\frac{11}{5}\right) \cos \left(-\frac{11}{5}\right)+\sin \left(-\frac{11}{5}\right) c_2+\cos \left(-\frac{11}{5}\right) c_1\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{13}{4}\right)''\left(-\frac{17}{6}\right)+Y\left(-\frac{17}{6}\right)=\sin \left(-\frac{17}{6}\right),Y\left(-\frac{17}{6}\right),-\frac{17}{6}\right]-\left(-\frac{1}{2} \left(-\frac{17}{6}\right) \cos \left(-\frac{17}{6}\right)+\sin \left(-\frac{17}{6}\right) c_2+\cos \left(-\frac{17}{6}\right) c_1\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left(\frac{19}{8}\right)''\left(-\frac{23}{9}\right)+Y\left(-\frac{23}{9}\right)=\sin \left(-\frac{23}{9}\right),Y\left(-\frac{23}{9}\right),-\frac{23}{9}\right]-\left(-\frac{1}{2} \left(-\frac{23}{9}\right) \cos \left(-\frac{23}{9}\right)+\sin \left(-\frac{23}{9}\right) c_2+\cos \left(-\frac{23}{9}\right) c_1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 with-initial-conditions:
   epsil:
     in: |-
@@ -105,3 +124,7 @@ with-initial-conditions:
     back: Unreadable
   wolfram:
     in: DSolveValue[List[(Plus[Derivative[2][Y][x], Y[x]] == 0), (Y[0] == 1), (Derivative[1][Y][0] == 0)], Y[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{DSolveValue}\left[\left\{Y''(x)+Y(x)=0,Y(0)=1,Y'(0)=0\right\},Y(x),x\right]-\cos (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{DSolveValue}\left[\left\{\left(\frac{7}{3}\right)''\left(-\frac{11}{5}\right)+Y\left(-\frac{11}{5}\right)=0,Y(0)=1,\left(\frac{7}{3}\right)'(0)=0\right\},Y\left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left\{\left(\frac{13}{4}\right)''\left(-\frac{17}{6}\right)+Y\left(-\frac{17}{6}\right)=0,Y(0)=1,\left(\frac{13}{4}\right)'(0)=0\right\},Y\left(-\frac{17}{6}\right),-\frac{17}{6}\right]-\cos \left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\text{DSolveValue}\left[\left\{\left(\frac{19}{8}\right)''\left(-\frac{23}{9}\right)+Y\left(-\frac{23}{9}\right)=0,Y(0)=1,\left(\frac{19}{8}\right)'(0)=0\right\},Y\left(-\frac{23}{9}\right),-\frac{23}{9}\right]-\cos \left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
