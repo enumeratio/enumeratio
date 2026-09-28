@@ -108,10 +108,7 @@ export function declareGenericHeads(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, "'b'", "'a'"],
-      (ops) => {
-        const values = pool(ops);
-        return values.length > 0 && values.some(isStructured);
-      },
+      (ops) => pool(ops).some(isStructured),
       (native) => (ops, options) => extremum(ce, pool(ops), side) ?? native?.(ops, options),
       { min: 1 },
     );

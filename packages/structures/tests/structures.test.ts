@@ -1,4 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { executeEpsil } from "@cortex-js/compute-engine/epsil";
 import { operandsOf } from "@enumeratio/engine";
 import { describe, expect, it } from "vite-plus/test";
 import { ancestry, conform, declareStructures } from "../src/index.ts";
@@ -83,6 +84,24 @@ describe("a type the engine has never seen", () => {
     [["Round", M(4)], M(4)],
   ];
   for (const [input, expected] of cases) it(JSON.stringify(input), () => expect(evaluate(ce, input)).toEqual(expected));
+});
+
+describe("a conformance declared in Epsil", () => {
+  const ce = engine();
+  executeEpsil(
+    ce,
+    `type boolean is PartialOrder {
+  function Compare(self, other: Self) -> number { If(self == other, 0, If(self, 1, -1)) }
+}
+type boolean is LinearOrder`,
+  );
+  const cases: [string, unknown][] = [
+    ["Min(True, False)", "False"],
+    ["Max(True, False, True)", "True"],
+    ["Clamp(False, True, True)", "True"],
+  ];
+  for (const [source, expected] of cases)
+    it(source, () => expect(executeEpsil(ce, source).value?.json).toEqual(expected));
 });
 
 describe("refinement", () => {
