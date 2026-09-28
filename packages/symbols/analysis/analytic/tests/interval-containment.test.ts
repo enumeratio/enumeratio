@@ -232,16 +232,27 @@ test("Interval containment: Abs, Sign, Max, Min", () => {
   );
 });
 
-// The special functions get a test each, seeded apart: a sampled image costs a golden-section
-// search or a branch and bound per trial, seconds per head here and several times that on a CI
-// runner -- together they outran one test's timeout. The priciest two take half the trials.
-const SPECIAL_FUNCTIONS: readonly (readonly [head: string, domain: readonly [number, number], trials?: number])[] = [
-  // A domain deliberately wide enough to sometimes straddle Γ's minimum at x₀ ≈ 1.4616 --
-  // this is the case the coordinator's own bug report is about getting right.
+// The special functions get a test each, seeded apart. A sampled image costs a golden-section
+// search or a branch and bound per trial, so the standard run takes a few trials per head and
+// the nightly deep run (`DEEP_TESTS=1`, nightly.yml) the full count, same seeds.
+const SPECIAL_TRIALS = process.env["DEEP_TESTS"] === "1" ? 40 : 4;
+
+test("Interval containment: Γ's interior extremum", () => {
+  // Γ's minimum at x₀ ≈ 1.4616 lies inside, so neither endpoint gives the image's lower bound.
+  const result = ce.box(["Gamma", ["Interval", 1, 2]]).evaluate();
+  expect(result.operator).toBe("Interval");
+  const [lower, upper] = operandsOf(result).map((e) => e.N().re);
+  expect(lower).toBeLessThanOrEqual(0.8856031944108887);
+  expect(lower).toBeGreaterThan(0.885);
+  expect(upper).toBeGreaterThanOrEqual(1);
+});
+
+const SPECIAL_FUNCTIONS: readonly (readonly [head: string, domain: readonly [number, number]])[] = [
+  // A domain deliberately wide enough to sometimes straddle Γ's minimum at x₀ ≈ 1.4616.
   ["Gamma", [0.5, 3]],
   ["GammaLn", [0.5, 5]],
   ["Digamma", [0.5, 5]],
-  ["BarnesG", [1, 3], 20],
+  ["BarnesG", [1, 3]],
   ["DirichletEta", [1.1, 5]],
   ["DirichletBeta", [0.5, 5]],
   ["Erf", [-3, 3]],
@@ -250,7 +261,7 @@ const SPECIAL_FUNCTIONS: readonly (readonly [head: string, domain: readonly [num
   ["Zeta", [1.1, 5]],
 ];
 
-for (const [i, [head, domain, trials = 40]] of SPECIAL_FUNCTIONS.entries()) {
+for (const [i, [head, domain]] of SPECIAL_FUNCTIONS.entries()) {
   test(`Interval containment: special function ${head}`, () => {
     checkContainment(
       head,
@@ -258,7 +269,7 @@ for (const [i, [head, domain, trials = 40]] of SPECIAL_FUNCTIONS.entries()) {
       domain,
       (l, h) => [head, ["Interval", l, h]],
       (x) => [head, x],
-      trials,
+      SPECIAL_TRIALS,
     );
   });
 }
@@ -268,9 +279,8 @@ const MULTI_ARGUMENT: readonly (readonly [
   label: string,
   domain: readonly [number, number],
   call: (x: unknown) => unknown,
-  trials?: number,
 ])[] = [
-  ["StieltjesGamma (order 2, interval in a)", [1, 4], (x) => ["StieltjesGamma", 2, x], 20],
+  ["StieltjesGamma (order 2, interval in a)", [1, 4], (x) => ["StieltjesGamma", 2, x]],
   ["HarmonicNumber (order 0.2, interval in r)", [1.5, 4], (x) => ["HarmonicNumber", 0.2, x]],
   ["DirichletL (5, 1, interval in s)", [1.1, 3], (x) => ["DirichletL", 5, 1, x]],
   ["PolyGamma (order 1, interval in z)", [1, 5], (x) => ["PolyGamma", 1, x]],
@@ -280,9 +290,9 @@ const MULTI_ARGUMENT: readonly (readonly [
   ["Binomial (n=1/2, interval in k)", [0.1, 3], (x) => ["Binomial", ["Rational", 1, 2], x]],
 ];
 
-for (const [i, [label, domain, call, trials = 40]] of MULTI_ARGUMENT.entries()) {
+for (const [i, [label, domain, call]] of MULTI_ARGUMENT.entries()) {
   test(`Interval containment: ${label}`, () => {
-    checkContainment(label, mulberry32(500 + i), domain, (l, h) => call(["Interval", l, h]), call, trials);
+    checkContainment(label, mulberry32(500 + i), domain, (l, h) => call(["Interval", l, h]), call, SPECIAL_TRIALS);
   });
 }
 
