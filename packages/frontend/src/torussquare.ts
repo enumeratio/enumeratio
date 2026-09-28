@@ -43,7 +43,7 @@ export function strands(p: number, q: number): Strand[] {
   const cuts = new Set<number>([0, 1]);
   for (let k = 1; k < p; k++) cuts.add(k / p);
   for (let k = 1; k < q; k++) cuts.add(k / q);
-  const ordered = [...cuts].sort((a, b) => a - b);
+  const ordered = [...cuts].toSorted((a, b) => a - b);
   const out: Strand[] = [];
   for (let i = 0; i + 1 < ordered.length; i++) {
     const a = ordered[i]!;

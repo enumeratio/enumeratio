@@ -43,7 +43,7 @@ function trailing(runDir: string, top: number): string[] {
     if (others.length > 0) ratios.push([r.name, r.median / Math.min(...others)]);
   }
   return ratios
-    .sort((a, b) => b[1] - a[1])
+    .toSorted((a, b) => b[1] - a[1])
     .slice(0, top)
     .map(([name]) => name);
 }

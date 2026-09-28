@@ -128,9 +128,18 @@ export function operationOf(
 }
 
 /** The carrier `subject` is a value of: its type matched as protocol dispatch matches it. */
+const parsedTypes = new WeakMap<Carrier, ReturnType<ComputeEngine["type"]>>();
+
 function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpression): Carrier | undefined {
-  for (const carrier of registry.carriers.values())
-    if (carrier.type !== undefined && subject.type.matches(ce.type(carrier.type))) return carrier;
+  // A carrier's own constructor names it outright: `Permutation([…])` is a permutation.
+  const named = subject.operator === undefined ? undefined : registry.carriers.get(subject.operator);
+  if (named?.type !== undefined) return named;
+  for (const carrier of registry.carriers.values()) {
+    if (carrier.type === undefined) continue;
+    let type = parsedTypes.get(carrier);
+    if (type === undefined) parsedTypes.set(carrier, (type = ce.type(carrier.type)));
+    if (subject.type.matches(type)) return carrier;
+  }
   return undefined;
 }
 

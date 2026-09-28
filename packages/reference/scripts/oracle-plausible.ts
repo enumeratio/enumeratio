@@ -364,6 +364,7 @@ for (const system of systems) {
       template: row.sample.template.id,
       was: baseline === undefined ? "unscanned" : `${baseline.verdict}${baseline.kind ? ` (${baseline.kind})` : ""}`,
     });
+    return undefined;
   });
   const autoText = [...autos].map(([kind, n]) => `${kind} ${n}`).join(", ") || "0";
   lines.push(`| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
@@ -381,7 +382,7 @@ if (findings.length > 0) {
     const head = `${f.system} · ${f.template.replace(/#\d+$/, "")}`;
     byHead.set(head, [...(byHead.get(head) ?? []), f]);
   }
-  for (const [head, group] of [...byHead].sort((a, b) => b[1].length - a[1].length)) {
+  for (const [head, group] of [...byHead].toSorted((a, b) => b[1].length - a[1].length)) {
     lines.push(`<details><summary>${head} — ${group.length}</summary>`, "");
     lines.push("| sample | ours | theirs | verdict | template (its row) |", "| --- | --- | --- | --- | --- |");
     for (const f of group.slice(0, 8)) {

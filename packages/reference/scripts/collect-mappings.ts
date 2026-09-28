@@ -41,7 +41,7 @@ for (const entry of entries) {
   }
 }
 
-const rows = [...byKey.values()].sort((a, b) => a.head.localeCompare(b.head) || (a.arity ?? -1) - (b.arity ?? -1));
+const rows = [...byKey.values()].toSorted((a, b) => a.head.localeCompare(b.head) || (a.arity ?? -1) - (b.arity ?? -1));
 
 await writeFormatted(
   new URL("../../oracle/src/mappings-data.ts", import.meta.url),

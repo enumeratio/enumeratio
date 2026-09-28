@@ -27,7 +27,7 @@ const labelOf = (index: number, n: number): number => (index < n ? index + 1 : -
 function canonicalise(strands: number, blocks: readonly (readonly number[])[]): Diagram {
   const sorted = blocks
     .filter((b) => b.length > 0)
-    .map((b) => [...b].sort((x, y) => indexOf(x, strands) - indexOf(y, strands)));
+    .map((b) => [...b].toSorted((x, y) => indexOf(x, strands) - indexOf(y, strands)));
   sorted.sort((a, b) => indexOf(a[0]!, strands) - indexOf(b[0]!, strands));
   return { strands, blocks: sorted };
 }
@@ -149,7 +149,7 @@ export function isPlanar(d: Diagram): boolean {
   for (let k = 0; k < n; k++) position.set(k + 1, k);
   for (let k = 0; k < n; k++) position.set(-(n - k), n + k);
 
-  const spans = d.blocks.map((block) => block.map((label) => position.get(label) ?? 0).sort((x, y) => x - y));
+  const spans = d.blocks.map((block) => block.map((label) => position.get(label) ?? 0).toSorted((x, y) => x - y));
   for (let i = 0; i < spans.length; i++) {
     for (let j = i + 1; j < spans.length; j++) {
       // Two blocks cross when their positions interleave as a < c < b < d.

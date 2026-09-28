@@ -210,7 +210,7 @@ const grouped = computed(() => {
     return i === -1 ? CATEGORY_ORDER.length : i;
   };
   return [...byCategory.entries()]
-    .sort(([a], [b]) => rank(a) - rank(b))
+    .toSorted(([a], [b]) => rank(a) - rank(b))
     .map(([category, items]) => ({ category, items }));
 });
 // Examples kept as data (grid points, edge cases) that the page leaves out.

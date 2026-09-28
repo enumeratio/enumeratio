@@ -48,8 +48,17 @@ test(`logGamma matches mpmath.loggamma to ${BOUND.toExponential(0)} on the 67-po
 
 test("the golden covers every category, including the reflection crossings", () => {
   const categories = new Set(goldens.map((g) => g.category));
-  expect([...categories].sort()).toEqual(
-    ["complex", "crossing", "large-im", "large-re", "near-axis", "near-integer", "negative", "small-positive"].sort(),
+  expect([...categories].toSorted()).toEqual(
+    [
+      "complex",
+      "crossing",
+      "large-im",
+      "large-re",
+      "near-axis",
+      "near-integer",
+      "negative",
+      "small-positive",
+    ].toSorted(),
   );
 });
 

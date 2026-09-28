@@ -23,7 +23,7 @@ for (const entry of entries) {
   else if (names.wolframIdentity) WOLFRAM_NAMES[entry.name] = entry.name;
 }
 
-const sorted = Object.fromEntries(Object.entries(WOLFRAM_NAMES).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
+const sorted = Object.fromEntries(Object.entries(WOLFRAM_NAMES).toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
 
 await writeFormatted(
   new URL("../../wolfram/src/wolfram-names-data.ts", import.meta.url),

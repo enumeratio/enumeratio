@@ -183,7 +183,7 @@ export function mirrorJones(p: Laurent): Laurent {
   const trimmed = trim(p);
   return {
     offset: -(trimmed.offset + trimmed.coefficients.length - 1),
-    coefficients: [...trimmed.coefficients].reverse(),
+    coefficients: [...trimmed.coefficients].toReversed(),
   };
 }
 

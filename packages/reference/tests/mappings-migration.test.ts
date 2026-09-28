@@ -40,8 +40,8 @@ const original = new Map<string, Mapping>();
 for (const m of MAPPINGS) original.set(key(m.head, m.arity), m);
 
 test("mappings-data.ts is what the current records collect to", () => {
-  const rebuiltNames = [...rebuilt.keys()].sort();
-  const originalNames = [...original.keys()].sort();
+  const rebuiltNames = [...rebuilt.keys()].toSorted();
+  const originalNames = [...original.keys()].toSorted();
   expect(rebuiltNames).toEqual(originalNames);
   for (const k of originalNames) {
     // arity/emit/threadArg/note only -- omit `head` (Mapping's own; every binding's is implied

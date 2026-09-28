@@ -105,8 +105,35 @@ test("MinValue/MaxValue give Sin/Cos's exact amplitude even though Minimize/Maxi
   expect(evalJson(["MaxValue", ["Cos", ["Add", ["Multiply", 2, "x"], 1]], "x"])).toBe(1);
 });
 
-test("declines a quartic whose critical points Solve can't produce exactly", () => {
+test("a quartic whose derivative factors into an exact quadratic (wolframscript: {-4, {x -> -Sqrt[2]}})", () => {
   const expr = ["Minimize", ["Subtract", ["Power", "x", 4], ["Multiply", 4, ["Power", "x", 2]]], "x"];
+  expect(evalJson(expr)).toEqual(["List", -4, ["List", ["Rule", "x", ["Negate", ["Sqrt", 2]]]]]);
+});
+
+test("a quartic with a doubled root, tied minimizers broken leftmost (wolframscript: {0, {x -> -1}})", () => {
+  const expr = ["Minimize", ["Add", ["Power", "x", 4], ["Multiply", -2, ["Power", "x", 2]], 1], "x"];
+  expect(evalJson(expr)).toEqual(["List", 0, ["List", ["Rule", "x", -1]]]);
+});
+
+test("a product of two quadratics, tied minimizers broken leftmost (wolframscript: {-1, {x -> -2}})", () => {
+  const expr = ["Minimize", ["Multiply", ["Add", ["Power", "x", 2], -3], ["Add", ["Power", "x", 2], -5]], "x"];
+  expect(evalJson(expr)).toEqual(["List", -1, ["List", ["Rule", "x", -2]]]);
+});
+
+test("still declines when the derivative's cubic factor is irreducible (wolframscript needs a Root object)", () => {
+  const expr = [
+    "Minimize",
+    [
+      "Subtract",
+      [
+        "Subtract",
+        ["Multiply", ["Rational", 1, 4], ["Power", "x", 4]],
+        ["Multiply", ["Rational", 1, 2], ["Power", "x", 2]],
+      ],
+      "x",
+    ],
+    "x",
+  ];
   expect(evalJson(expr)).toEqual(expr);
 });
 

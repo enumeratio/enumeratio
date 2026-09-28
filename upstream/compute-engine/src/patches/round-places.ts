@@ -8,7 +8,7 @@ export const roundPlaces: Patch = {
   library: roundPlacesLibrary,
   heads: ["Round"],
 
-  fixed: (ce) => JSON.stringify(ce.box(["Round", 3.14159, 2]).evaluate().json) === '["Rational",157,50]',
+  fixed: (ce) => JSON.stringify(ce.box(["Round", Math.PI, 2]).evaluate().json) === '["Rational",157,50]',
 
   apply: (ce) => void roundPlacesLibrary(ce),
 };

@@ -166,7 +166,7 @@ export function permutationGroupClosure(
   // `GroupElements[PermutationGroup[...]]` output sorts by (identity first, then by
   // ascending support). Sorting the one-line words lexicographically reaches the same
   // order in every case that matters here — a plain array is easiest to compare.
-  return [...seen.values()].sort((a, b) => {
+  return [...seen.values()].toSorted((a, b) => {
     for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i]! - b[i]!;
     return 0;
   });

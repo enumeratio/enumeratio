@@ -137,7 +137,7 @@ test("the associahedron's facets draw as three squares and six pentagons", () =>
   const svg = polytope3dSvg(ASSOCIAHEDRON, 4);
   const sizes = [...svg.matchAll(/<polygon [^>]*points="([^"]*)"/g)]
     .map((m) => m[1]!.split(" ").length)
-    .sort((a, b) => a - b);
+    .toSorted((a, b) => a - b);
   expect(sizes).toEqual([4, 4, 4, 5, 5, 5, 5, 5, 5]);
 });
 

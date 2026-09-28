@@ -68,7 +68,7 @@ export function workspacePackages(): WorkspacePackage[] {
       readme: existsSync(readme) ? readme : undefined,
     });
   }
-  return found.sort((a, b) => a.slug.localeCompare(b.slug));
+  return found.toSorted((a, b) => a.slug.localeCompare(b.slug));
 }
 
 export const designDir = join(repoRoot, "design");
@@ -77,7 +77,7 @@ export const designDir = join(repoRoot, "design");
 export function designDocs(): { slug: string; file: string }[] {
   return readdirSync(designDir)
     .filter((f) => f.endsWith(".md"))
-    .sort()
+    .toSorted()
     .map((f) => ({ slug: f.replace(/\.md$/, ""), file: join(designDir, f) }));
 }
 

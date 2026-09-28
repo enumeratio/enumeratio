@@ -256,7 +256,7 @@ export function fiveNumberSummary(values: readonly number[]): FiveNumberSummary 
   const sorted = values
     .filter(Number.isFinite)
     .slice()
-    .sort((a, b) => a - b);
+    .toSorted((a, b) => a - b);
   if (sorted.length === 0) return undefined;
   const quantile = (p: number): number => {
     const idx = p * (sorted.length - 1);

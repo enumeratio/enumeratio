@@ -17,6 +17,9 @@ export default defineConfig({
       // and the collection kernels allocate in hot loops; its one-argument ambiguity is moot
       // with `.fill`.
       "unicorn/no-new-array": "off",
+      "typescript/consistent-return": "error",
+      "unicorn/no-array-sort": "error",
+      "unicorn/no-array-reverse": "error",
     },
     options: { typeAware: true, typeCheck: true },
   },

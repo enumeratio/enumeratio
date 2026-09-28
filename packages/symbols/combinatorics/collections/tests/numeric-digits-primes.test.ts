@@ -112,7 +112,7 @@ const INDEPENDENT_PREDICATES: Record<string, (n: number) => boolean> = {
   SexyPrimes: (n) => isPrimeIndep(n) && isPrimeIndep(n + 6),
   SophieGermainPrimes: (n) => isPrimeIndep(n) && isPrimeIndep(2 * n + 1),
   SafePrimes: (n) => isPrimeIndep(n) && (n - 1) % 2 === 0 && isPrimeIndep((n - 1) / 2),
-  PalindromicPrimes: (n) => isPrimeIndep(n) && String(n) === String(n).split("").reverse().join(""),
+  PalindromicPrimes: (n) => isPrimeIndep(n) && String(n) === String(n).split("").toReversed().join(""),
   CircularPrimes: (n) => {
     if (!isPrimeIndep(n)) return false;
     const s = String(n);
@@ -124,7 +124,7 @@ const INDEPENDENT_PREDICATES: Record<string, (n: number) => boolean> = {
   },
   EmirpPrimes: (n) => {
     if (!isPrimeIndep(n)) return false;
-    const r = Number(String(n).split("").reverse().join(""));
+    const r = Number(String(n).split("").toReversed().join(""));
     return r !== n && isPrimeIndep(r);
   },
 };

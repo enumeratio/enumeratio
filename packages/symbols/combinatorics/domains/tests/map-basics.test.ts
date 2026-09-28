@@ -35,7 +35,7 @@ test("extending a built-in keeps everything the built-in did", () => {
 test("Reverse, Complement and Inverse agree with plain readings", () => {
   for (const p of ALL) {
     const n = p.length;
-    expect(result(["Reverse", perm(...p)]), `rev [${p.join(", ")}]`).toEqual(["List", ...[...p].reverse()]);
+    expect(result(["Reverse", perm(...p)]), `rev [${p.join(", ")}]`).toEqual(["List", ...[...p].toReversed()]);
     expect(result(["Complement", perm(...p)]), `comp [${p.join(", ")}]`).toEqual(["List", ...p.map((v) => n + 1 - v)]);
     const inverse = Array.from({ length: n }, (_, i) => p.indexOf(i + 1) + 1);
     expect(result(["Inverse", perm(...p)]), `inv [${p.join(", ")}]`).toEqual(["List", ...inverse]);
@@ -114,7 +114,7 @@ test("a composed map really composes its steps", () => {
   // properly constructed carrier, so the composition is type-checked at every step.
   for (const p of ALL) {
     const n = p.length;
-    const reversed = [...p].reverse();
+    const reversed = [...p].toReversed();
     expect(result(["ReverseComplement", perm(...p)]), `[${p.join(", ")}]`).toEqual([
       "List",
       ...reversed.map((v) => n + 1 - v),

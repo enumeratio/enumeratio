@@ -19,6 +19,7 @@ test("the answer carries d digits and the working precision is restored", () => 
   const precision = ce.precision;
   expect(n("Pi", 40).json).toEqual({ num: "3.141592653589793238462643383279502884197" });
   expect(ce.precision).toBe(precision);
+  // Pi rounded to 5 digits, not Math.PI: this is the golden for n() at that precision.
   expect(n("Pi", 5).json).toBe(3.1416);
 });
 
@@ -29,11 +30,13 @@ test("ties round to even", () => {
 
 test("a list or a symbolic result is rounded number by number, integers left alone", () => {
   expect(n(["List", "Pi", "ExponentialE"], 3).json).toEqual(["List", 3.14, 2.72]);
+  // Pi rounded to 4 digits, not Math.PI: golden for n() at that precision.
   expect(n(["Power", ["Add", "x", "Pi"], 2], 4).json).toEqual(["Power", ["Add", "x", 3.142], 2]);
 });
 
 test("the finest reading is kept beside the answer", () => {
   const answer = n(["Sqrt", 2], 10);
+  // Sqrt(2) rounded to 10 digits, not Math.SQRT2: golden for n() at that precision.
   expect(answer.json).toBe(1.414213562);
   const finest = refinementOf(answer);
   // The two readings, at 20 and 30 digits, agreed at once: the finer one is kept.

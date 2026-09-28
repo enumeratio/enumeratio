@@ -149,7 +149,7 @@ function bivariatePolynomial(words: number[][], xOf: (w: number[]) => number, yO
   }
   return counts;
 }
-const sortedEntries = (m: Map<string, number>) => [...m.entries()].sort(([a], [b]) => (a < b ? -1 : 1));
+const sortedEntries = (m: Map<string, number>) => [...m.entries()].toSorted(([a], [b]) => (a < b ? -1 : 1));
 
 test("(Area, Dinv) and (Bounce, Area) share the same bivariate distribution for semilength 0..6", () => {
   // The "area" the (area, dinv)/(bounce, area) theorem is about is the DIAGONAL reading —

@@ -40,13 +40,15 @@ export function drawOne(next: () => number, draw: Draw): MathJSON {
       return draw[1] + next() * (draw[2] - draw[1]);
     case "log":
       return 10 ** (draw[1] + next() * (draw[2] - draw[1]));
+    default:
+      throw new Error("unreachable: Draw's tags are exhaustive above");
   }
 }
 
 /** `count` bindings, one per input; variables are drawn in key order, so adding one is a new case. */
 export function drawSample(sample: Sample): Record<string, MathJSON>[] {
   const next = mulberry32(sample.seed);
-  const names = Object.keys(sample.draw).sort();
+  const names = Object.keys(sample.draw).toSorted();
   return Array.from({ length: sample.count }, () =>
     Object.fromEntries(names.map((name) => [name, drawOne(next, sample.draw[name] as Draw)])),
   );

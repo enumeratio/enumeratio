@@ -153,6 +153,8 @@ function pinned(d: Declaration): Json | undefined {
       return parts?.[0];
     case "locator":
       return ["Tuple", 0, 0] as unknown as Json;
+    default:
+      return undefined; // Declaration.kind is exhaustive above; unreachable
   }
 }
 

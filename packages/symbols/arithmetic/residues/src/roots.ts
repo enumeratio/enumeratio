@@ -44,7 +44,7 @@ function* from2(p: bigint): Iterable<bigint> {
 
 /** Every x in [0, p) with xʳ ≡ b (mod p), p prime and b ≢ 0, ascending; undefined past the cap. */
 function rootsModPrimeUnit(b: bigint, r: bigint, p: bigint): bigint[] | undefined {
-  return rootsInCyclicGroup(unitsMod(p), p - 1n, b, r, () => from2(p), MAX_ROOTS)?.sort((x, y) =>
+  return rootsInCyclicGroup(unitsMod(p), p - 1n, b, r, () => from2(p), MAX_ROOTS)?.toSorted((x, y) =>
     x < y ? -1 : x > y ? 1 : 0,
   );
 }
@@ -79,7 +79,7 @@ function rootsModPrimePower(b: bigint, r: bigint, p: bigint, e: number): bigint[
     roots = lifted;
     modulus = next;
   }
-  return roots.sort((x, y) => (x < y ? -1 : x > y ? 1 : 0));
+  return roots.toSorted((x, y) => (x < y ? -1 : x > y ? 1 : 0));
 }
 
 /**
@@ -110,7 +110,7 @@ export function powerModRoots(b: bigint, r: bigint, m: bigint): bigint[] | undef
     glued = glued.flatMap((x) => roots.map((c) => x + combined * mod((c - x) * inverse, modulus)));
     combined *= modulus;
   }
-  return glued.sort((x, y) => (x < y ? -1 : x > y ? 1 : 0));
+  return glued.toSorted((x, y) => (x < y ? -1 : x > y ? 1 : 0));
 }
 
 /**

@@ -117,7 +117,7 @@ export function conjugacyClasses(g: Group): number[][] {
       orbit.add(g.multiply(g.multiply(x, i), xInverse));
     }
     for (const member of orbit) seen.add(member);
-    classes.push([...orbit].sort((a, b) => a - b));
+    classes.push([...orbit].toSorted((a, b) => a - b));
   }
   return classes;
 }

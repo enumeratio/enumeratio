@@ -181,6 +181,8 @@ test("known-lossy cases are documented, not inverted, by fromWolfram", () => {
   expect(fromWolfram("Power[x, Divide[1, 3]]")).toEqual(["Power", "x", ["Divide", 1, 3]]);
 
   // A digits count becomes a step; a Set becomes a Union of one list.
+  // 3.14159 is an arbitrary round-trip value here, not Math.PI: it must survive
+  // toWolfram/fromWolfram with its typed digits intact, not a full-precision constant.
   expect(fromWolfram(toWolfram(["Round", 3.14159, 2]))).toEqual(["Round", 3.14159, ["Power", 10, -2]]);
   expect(fromWolfram(toWolfram(["Set", 1, 2]))).toEqual(["Union", ["List", 1, 2]]);
 });

@@ -147,7 +147,7 @@ const timePoints = ref<TimePoint[]>([]);
 const timeLoading = ref(false);
 // A tag averages its cases instead of showing one (design/benchmarking.md §8).
 const timeTag = ref("");
-const allTags = computed(() => [...new Set(plan.value?.cases.flatMap((c) => c.tags ?? []))].sort());
+const allTags = computed(() => [...new Set(plan.value?.cases.flatMap((c) => c.tags ?? []))].toSorted());
 const tagCases = computed(
   () => new Set(plan.value?.cases.filter((c) => c.tags?.includes(timeTag.value)).map((c) => c.name)),
 );

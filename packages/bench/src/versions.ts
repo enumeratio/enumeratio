@@ -74,5 +74,7 @@ export function versionOf(system: BenchSystem): Version {
     case "wolfram":
       // Starting a kernel just to ask costs a license seat; the harness reports $Version.
       return { version: "unknown" };
+    default:
+      throw new Error("unreachable: BenchSystem is exhaustive above");
   }
 }

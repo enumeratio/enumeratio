@@ -222,7 +222,7 @@ export function factoradic(): NumeralSystem {
     },
     fromDigits: (digits) => {
       // Read least-significant-first: place 0 has weight 0! and must hold 0.
-      const reversed = [...digits].reverse();
+      const reversed = [...digits].toReversed();
       let factorial = 1;
       let total = 0;
       for (const [place, digit] of reversed.entries()) {
@@ -263,7 +263,7 @@ export function primorialRadix(): NumeralSystem {
       return digits;
     },
     fromDigits: (digits) => {
-      const reversed = [...digits].reverse();
+      const reversed = [...digits].toReversed();
       let weight = 1;
       let total = 0;
       for (const [place, digit] of reversed.entries()) {
@@ -447,7 +447,7 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
   /** Whether [b_m … b_1] obeys the ceilings and the no-carry rule. */
   const admits = (digits: readonly number[]): boolean => {
     // digits[i] is b_{m−i}; read it back in ascending order as b_1 … b_m.
-    const ascending = [...digits].reverse();
+    const ascending = [...digits].toReversed();
     if (ascending[0]! >= ceiling(0)) return false; // b_1 < a_1, strictly
     for (let k = 1; k < m; k++) {
       if (ascending[k]! > ceiling(k)) return false;
@@ -460,7 +460,7 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
     shape: {
       bijective: true,
       range: [0n, BigInt(places[m]! - 1)],
-      digits: quotients.map((a, i): DigitBound => [0, i === 0 ? a - 1 : a]).reverse(),
+      digits: quotients.map((a, i): DigitBound => [0, i === 0 ? a - 1 : a]).toReversed(),
       width: m,
       rule: "no digit at its ceiling above a non-zero one",
     },

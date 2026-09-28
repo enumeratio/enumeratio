@@ -55,7 +55,7 @@ export function recordDirs(packagesRoot: string): { package: string; dir: string
       ? readdirSync(dir, { withFileTypes: true })
           .filter((e) => e.isDirectory())
           .map((e) => e.name)
-          .sort()
+          .toSorted()
       : [];
   const packages = [
     ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),

@@ -215,7 +215,8 @@ export function bfsPath(adj: ReadonlyMap<string, readonly string[]>, source: str
           cur = prev.get(cur)!;
           path.push(cur);
         }
-        return path.reverse();
+        path.reverse();
+        return path;
       }
       queue.push(v);
     }
@@ -284,7 +285,8 @@ function connectedComponents(model: GraphModel): string[][] {
     }
     components.push(component);
   }
-  return components.sort((x, y) => y.length - x.length);
+  components.sort((x, y) => y.length - x.length);
+  return components;
 }
 
 /** Two-colouring of the underlying graph via BFS; `undefined` if no valid colouring exists

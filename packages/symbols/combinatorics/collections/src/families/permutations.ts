@@ -167,19 +167,13 @@ function alternatingRank(perm: readonly number[]): number {
   const perBlock = alternatingCount(i) * rightCount;
   let rank = 0;
   for (let ii = 1; ii < i; ii += 2) rank += binomial(n - 1, ii) * alternatingCount(ii) * alternatingCount(n - 1 - ii);
-  const subsetIndex = KSubsetRank(leftValues.slice().sort((a, b) => a - b));
-  const leftRankOf = new Map(
-    leftValues
-      .slice()
-      .sort((a, b) => a - b)
-      .map((v, idx) => [v, idx + 1]),
-  );
-  const rightRankOf = new Map(
-    rightValues
-      .slice()
-      .sort((a, b) => a - b)
-      .map((v, idx) => [v, idx + 1]),
-  );
+  const leftSorted = leftValues.slice();
+  leftSorted.sort((a, b) => a - b);
+  const subsetIndex = KSubsetRank(leftSorted);
+  const leftRankOf = new Map(leftSorted.map((v, idx) => [v, idx + 1]));
+  const rightSorted = rightValues.slice();
+  rightSorted.sort((a, b) => a - b);
+  const rightRankOf = new Map(rightSorted.map((v, idx) => [v, idx + 1]));
   const li = alternatingRank(leftValues.map((v) => leftRankOf.get(v) as number));
   const ri = alternatingRank(rightValues.map((v) => rightRankOf.get(v) as number));
   return rank + subsetIndex * perBlock + li * rightCount + ri;
@@ -321,7 +315,8 @@ const PATTERNS: Record<string, readonly [number, number, number]> = {
 };
 
 function patternOf(a: number, b: number, c: number): readonly [number, number, number] {
-  const sorted = [a, b, c].slice().sort((x, y) => x - y);
+  const sorted = [a, b, c];
+  sorted.sort((x, y) => x - y);
   return [sorted.indexOf(a) + 1, sorted.indexOf(b) + 1, sorted.indexOf(c) + 1];
 }
 function containsPattern(perm: readonly number[], pattern: readonly [number, number, number]): boolean {
@@ -447,8 +442,16 @@ const AVOIDERS: Record<
 > = {
   PermutationsAvoiding231: { unrank: av231Unrank, rank: av231Rank },
   PermutationsAvoiding132: {
-    unrank: (n, r) => av231Unrank(n, r).slice().reverse(),
-    rank: (perm) => av231Rank(perm.slice().reverse()),
+    unrank: (n, r) => {
+      const p = av231Unrank(n, r);
+      p.reverse();
+      return p;
+    },
+    rank: (perm) => {
+      const p = perm.slice();
+      p.reverse();
+      return av231Rank(p);
+    },
   },
   PermutationsAvoiding213: {
     unrank: (n, r) => permutationComplement(av231Unrank(n, r)),

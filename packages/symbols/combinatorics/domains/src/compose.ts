@@ -28,7 +28,9 @@ export function applyComposition(
   steps: readonly string[],
   subject: BoxedExpression,
 ): BoxedExpression {
-  return [...steps].reverse().reduce<BoxedExpression>((value, step) => ce.function(step, [value]).evaluate(), subject);
+  const reversed = [...steps];
+  reversed.reverse();
+  return reversed.reduce<BoxedExpression>((value, step) => ce.function(step, [value]).evaluate(), subject);
 }
 
 /**

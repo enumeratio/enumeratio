@@ -95,7 +95,7 @@ const verdicts: FungrimVerdict[] = [];
 // inconclusive rule is one our engine would not evaluate at a sample; every head it
 // mentions gets the count, since any of them may be the reason.
 const frontier = new Map<string, number>();
-for (const [i, outcome] of [...results].sort((a, b) => a[0] - b[0])) {
+for (const [i, outcome] of [...results].toSorted((a, b) => a[0] - b[0])) {
   const rule = rules[i]!;
   tally[outcome.verdict] = (tally[outcome.verdict] ?? 0) + 1;
   if (outcome.verdict === "inconclusive") {
@@ -105,7 +105,7 @@ for (const [i, outcome] of [...results].sort((a, b) => a[0] - b[0])) {
   if (outcome.verdict === "agree" || outcome.verdict === "disagree") {
     verdicts.push({
       entry: rule.id.replace(/^fungrim:/, ""),
-      heads: [...rule.heads].sort(),
+      heads: [...rule.heads].toSorted(),
       verdict: outcome.verdict,
       ...(outcome.verdict === "agree" ? { samples: outcome.samples } : { detail: outcome.detail }),
     });
@@ -152,7 +152,7 @@ export const fungrimFrontier: readonly {
 }[] = ${JSON.stringify(
     [...frontier]
       .map(([head, identities]) => ({ head, identities, declared: declared.has(head) }))
-      .sort(
+      .toSorted(
         (a, b) =>
           Number(a.declared) - Number(b.declared) || b.identities - a.identities || a.head.localeCompare(b.head),
       ),

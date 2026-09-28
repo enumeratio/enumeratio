@@ -574,6 +574,8 @@ const readAttribute = (op: FlaggedOperator, attr: AttributeName): boolean => {
       return op.broadcastable === true;
     case "Orderless":
       return op.commutative === true;
+    default:
+      throw new Error("unreachable: AttributeName is exhaustive above");
   }
 };
 

@@ -310,7 +310,8 @@ const nonCrossingClass = makeBruteForceClass((p) => isNonCrossingCycles(p), nonC
 
 // ─── length-4 vincular-free (classical) pattern helpers shared by Separable/Smooth/Vexillary. ────────
 function patternOf4(a: number, b: number, c: number, d: number): string {
-  const sorted = [a, b, c, d].slice().sort((x, y) => x - y);
+  const sorted = [a, b, c, d];
+  sorted.sort((x, y) => x - y);
   return [a, b, c, d].map((v) => sorted.indexOf(v) + 1).join("");
 }
 function containsAnyPattern4(perm: readonly number[], patterns: readonly string[]): boolean {

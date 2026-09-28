@@ -291,7 +291,8 @@ function automorphicNumbersTable(): number[] {
       }
       branches = next;
     }
-    automorphicNumbersCache = table.sort((a, b) => a - b);
+    table.sort((a, b) => a - b);
+    automorphicNumbersCache = table;
   }
   return automorphicNumbersCache;
 }
@@ -413,8 +414,11 @@ const safePrimeCache = nthMatchCache(isSafePrime);
 
 const primePairCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
 /** The lesser primes p with p + gap prime, for an odd gap: p = 2 or p + gap = 2. */
-const oddGapPairs = (gap: number): number[] =>
-  [...new Set([2, 2 - gap])].filter((p) => isPrime(p) && isPrime(p + gap)).sort((a, b) => a - b);
+const oddGapPairs = (gap: number): number[] => {
+  const pairs = [...new Set([2, 2 - gap])].filter((p) => isPrime(p) && isPrime(p + gap));
+  pairs.sort((a, b) => a - b);
+  return pairs;
+};
 
 function primePairCacheFor(gap: number): ReturnType<typeof nthMatchCache> {
   let cache = primePairCaches.get(gap);
@@ -429,9 +433,15 @@ function primePairCacheFor(gap: number): ReturnType<typeof nthMatchCache> {
 
 const isPalindromeNum = (n: number): boolean => {
   const s = String(n);
-  return s === s.split("").reverse().join("");
+  const chars = s.split("");
+  chars.reverse();
+  return s === chars.join("");
 };
-const reverseNum = (n: number): number => Number(String(n).split("").reverse().join(""));
+const reverseNum = (n: number): number => {
+  const chars = String(n).split("");
+  chars.reverse();
+  return Number(chars.join(""));
+};
 
 const isPalindromicPrime = (n: number): boolean => isPrime(n) && isPalindromeNum(n);
 const palindromicPrimeCache = nthMatchCache(isPalindromicPrime);

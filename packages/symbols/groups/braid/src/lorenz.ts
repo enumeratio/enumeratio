@@ -43,7 +43,7 @@ export function lorenzPermutation(word: string): number[] | undefined {
   // Comparing one period is enough for distinct rotations of a primitive word, but two
   // periods costs nothing and removes the need to argue about it.
   const key = (i: number): string => rotate(word, i).repeat(2);
-  const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => (key(a) < key(b) ? -1 : 1));
+  const order = Array.from({ length: n }, (_, i) => i).toSorted((a, b) => (key(a) < key(b) ? -1 : 1));
   const rank: number[] = new Array(n).fill(0);
   order.forEach((index, position) => {
     rank[index] = position;

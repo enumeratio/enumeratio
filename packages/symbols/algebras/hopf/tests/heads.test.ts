@@ -37,7 +37,7 @@ test("the coproduct returns tensor pairs", () => {
     return json
       .slice(1)
       .map((t) => JSON.stringify(t))
-      .sort();
+      .toSorted();
   };
   expect(terms(["Coproduct", H(2)])).toEqual(terms(["Add", T(H(), H(2)), T(H(1), H(1)), T(H(2), H())]));
   // Δ(M_{1,2}) is deconcatenation: three terms, splitting the composition each way.

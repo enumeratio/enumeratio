@@ -30,9 +30,11 @@ test("fibonacciPair satisfies Lenstra's Lucas identity mod π(11)", () => {
 
 test("visualPosition lays residues out by factorial digits", () => {
   // φ(1 + 2Ẑ) = [1/2, 1]: at level 3, the odd residues fill the right half.
-  const odd = [1n, 3n, 5n].map((a) => visualPosition(a, 3)).sort((x, y) => x - y);
+  const odd = [1n, 3n, 5n].map((a) => visualPosition(a, 3)).toSorted((x, y) => x - y);
   expect(odd).toEqual([3, 4, 5]);
-  expect([0n, 1n, 2n, 3n, 4n, 5n].map((a) => visualPosition(a, 3)).sort((x, y) => x - y)).toEqual([0, 1, 2, 3, 4, 5]);
+  expect([0n, 1n, 2n, 3n, 4n, 5n].map((a) => visualPosition(a, 3)).toSorted((x, y) => x - y)).toEqual([
+    0, 1, 2, 3, 4, 5,
+  ]);
 });
 
 test("a real (non-integer) Fibonacci index is refused when adeles loads after number-theory", () => {
