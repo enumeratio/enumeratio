@@ -166,7 +166,9 @@ gaussianintegers-true-2-i-1-i-2:
     in: \mathrm{IsSquareFree}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \mathrm{False}
   fullform:
-    in: SquareFreeQ[2, KeyValuePair[GaussianIntegers, True]]
+    in: SquareFreeQ[2, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: SquareFreeQ[2, Rule[GaussianIntegers, True]]
 rationals-numerator-and-denominator-are-both:
   epsil:
     in: IsSquareFree(2 / 3)

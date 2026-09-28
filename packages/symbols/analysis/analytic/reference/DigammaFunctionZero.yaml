@@ -17,6 +17,13 @@ bindings:
     environment: engine
     source: packages/symbols/analysis/analytic/src/digamma-zero.ts
   - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: No direct equivalent head or built-in; N[x /. FindRoot[PolyGamma[0, x] == 0, {x, x0}]] would need a per-n bracket this row's fixed template can't supply. Wolfram Function Repository searched for a digamma-zero/root-finder resource specific to this; nothing found (only generic root-finding and PolyGamma-simplification resources turned up).
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+  - origin: mapped
     form: mpmath
     environment: external
     note: findroot(digamma, ...) at the appropriate bracket — Wolfram has no direct equivalent head.

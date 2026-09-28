@@ -747,6 +747,12 @@ gamma-x-gamma-x-psi-x-so-the-logarithmic:
     out: \psi(x)
   fullform:
     in: Divide[D[Gamma[x], x], Gamma[x]]
+  wolfram:
+    in: Divide[D[Gamma[x], x], Gamma[x]]
+  sympy:
+    in: (S(diff(gamma(Symbol("x")), Symbol("x"))) / gamma(Symbol("x")))
+  sage:
+    in: (diff(gamma(SR.var("x")), SR.var("x")) / gamma(SR.var("x")))
 gamma-i-2-pi-sinh-pi-0-27203:
   epsil:
     in: N(Abs(Gamma(ImaginaryUnit)) ^ 2)

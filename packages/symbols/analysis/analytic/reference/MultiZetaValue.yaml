@@ -17,6 +17,22 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/multizeta.ts
+  - origin: mapped
+    form: wolfram
+    template: N[Sum[Sum[n1^(-$1) n2^(-$2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]
+    arity: 2
+    note: Wolfram has no MultiZetaValue/MZV head; this is the defining double sum, N[]'d since our own evaluator is numeric-only here.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+  - origin: mapped
+    form: mpmath
+    template: "nsum(lambda n1: n1**(-$1) * nsum(lambda n2: n2**(-$2), [1, n1 - 1]), [2, inf])"
+    arity: 2
+    note: same defining double sum, nested nsum.
+    checked:
+      version: 1.3.0
+      on: 2026-09-27
 seeAlso:
   - Zeta
   - HurwitzZeta

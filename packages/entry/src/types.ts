@@ -174,6 +174,16 @@ export interface ReferenceBinding {
    * call doesn't auto-thread a list the way compute-engine and Wolfram do (`THREADS_MANUALLY`). */
   readonly threadArg?: number;
   readonly note?: string;
+  /** Present (`false`) only on a row documenting that this row's `form` genuinely has no
+   * counterpart for the head -- checked, not merely unmapped yet. A real mapping omits it. */
+  readonly counterpart?: false;
+  /** When this row was last checked against `form`, and against what version -- for both a
+   * mapping and a documented "no counterpart" (`$VersionNumber` for Wolfram,
+   * `sympy.__version__` / `mpmath.__version__` / Sage's `version()`, …). */
+  readonly checked?: {
+    readonly version: string;
+    readonly on: string;
+  };
 }
 
 /**

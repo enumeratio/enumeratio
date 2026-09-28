@@ -521,6 +521,12 @@ its-own-derivative:
     out: e^{x}
   fullform:
     in: D[Exp[x], x]
+  wolfram:
+    in: D[Exp[x], x]
+  sympy:
+    in: diff(exp(Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(exp(SR.var("x")), SR.var("x"))
 its-own-antiderivative:
   epsil:
     in: Integrate(Exp(x), x)

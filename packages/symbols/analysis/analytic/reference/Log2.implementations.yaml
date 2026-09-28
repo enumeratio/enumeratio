@@ -216,6 +216,8 @@ derivative-frac-1-x-ln-2:
     out: \frac{1}{x\ln(2)}
   fullform:
     in: D[Log2[x], x]
+  wolfram:
+    in: D[Log2[x], x]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(Log2(3), 30)

@@ -256,6 +256,8 @@ derivative-frac-1-sqrt-1-x-2:
     out: \frac{1}{\sqrt{1-x^2}}
   fullform:
     in: D[ArcSin[x], x]
+  wolfram:
+    in: D[ArcSin[x], x]
 antiderivative:
   epsil:
     in: Integrate(Arcsin(x), x)
@@ -291,6 +293,8 @@ as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2:
     in: \mathrm{TrigToExp}(\arcsin(x))
     out: -i\ln(i x+\sqrt{1-x^2})
   fullform:
+    in: TrigToExp[ArcSin[x]]
+  wolfram:
     in: TrigToExp[ArcSin[x]]
 not-simply-2-2-is-outside-the-principal-range-pi:
   epsil:

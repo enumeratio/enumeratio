@@ -53,4 +53,6 @@ a-weighted-shortcut-loses-to-three-cheaper-hops:
     in: \mathrm{FindShortestPath}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(1, 4)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack1, 1, 1, 10\bigr\rbrack)), 1, 4)
     out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
   fullform:
-    in: FindShortestPath[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[1, 4]], KeyValuePair[EdgeWeight, List[1, 1, 1, 10]]], 1, 4]
+    in: FindShortestPath[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[1, 4]], Rule[EdgeWeight, List[1, 1, 1, 10]]], 1, 4]
+  wolfram:
+    in: FindShortestPath[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[1, 4]], Rule[EdgeWeight, List[1, 1, 1, 10]]], 1, 4]

@@ -127,6 +127,16 @@ const REFERENCE_IMPLEMENTATION: JsonSchema = {
     template: { type: "string" },
     threadArg: { type: "integer" },
     note: { type: "string" },
+    counterpart: { const: false },
+    checked: {
+      type: "object",
+      properties: {
+        version: { type: "string" },
+        on: { type: "string" },
+      },
+      required: ["version", "on"],
+      additionalProperties: false,
+    },
   },
   required: ["origin", "form"],
   additionalProperties: false,

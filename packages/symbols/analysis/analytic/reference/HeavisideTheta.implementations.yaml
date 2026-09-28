@@ -62,3 +62,5 @@ heavisidetheta-derivative:
     out: \mathrm{DiracDelta}(x)
   fullform:
     in: D[HeavisideTheta[x], x]
+  wolfram:
+    in: D[HeavisideTheta[x], x]

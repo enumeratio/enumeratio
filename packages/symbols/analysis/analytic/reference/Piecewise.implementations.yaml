@@ -22,6 +22,8 @@ evaluated-at-a-concrete-point-below-zero:
     out: "1"
   fullform:
     in: ReplaceAll[Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]], Rule[x, -5]]
+    back:
+      [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [KeyValuePair, x, -5]]
 evaluated-at-a-concrete-point-at-or-above-zero:
   epsil:
     in: ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, 5))
@@ -31,6 +33,8 @@ evaluated-at-a-concrete-point-at-or-above-zero:
     out: "2"
   fullform:
     in: ReplaceAll[Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]], Rule[x, 5]]
+    back:
+      [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [KeyValuePair, x, 5]]
 falls-through-to-the-explicit-default:
   epsil:
     in: Piecewise([[x ^ 2, x < 0]], 99)

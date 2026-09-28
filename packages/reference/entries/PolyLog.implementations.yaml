@@ -557,6 +557,12 @@ frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
     out: \frac{\operatorname{Li}_{n-1}(x)}{x}
   fullform:
     in: D[PolyLog[n, x], x]
+  wolfram:
+    in: D[PolyLog[n, x], x]
+  sympy:
+    in: diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(polylog(SR.var("n"), SR.var("x")), SR.var("x"))
 to-30-significant-digits-not-yet-the-requested:
   epsil:
     in: N(PolyLog(2, 1 / 2), 30)

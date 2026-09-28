@@ -261,6 +261,8 @@ derivative-frac-1-1-x-2:
     out: \frac{1}{x^2+1}
   fullform:
     in: D[ArcTan[x], x]
+  wolfram:
+    in: D[ArcTan[x], x]
 antiderivative:
   epsil:
     in: Integrate(Arctan(x), x)
@@ -306,6 +308,8 @@ as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2:
     in: \mathrm{TrigToExp}(\arctan(x))
     out: (-\frac{1}{2}i)\ln(i x+1)+(\frac{1}{2}i)\ln(1-i x)
   fullform:
+    in: TrigToExp[ArcTan[x]]
+  wolfram:
     in: TrigToExp[ArcTan[x]]
 euler-s-machin-like-identity-arctan-frac-12:
   epsil:

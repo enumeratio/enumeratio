@@ -157,7 +157,9 @@ test("GaussianIntegers stays genuinely ambiguous: bare passes through, called is
   // comment). Our carrier's plural type-space symbol is never itself CALLED, so this loses
   // nothing: `GaussianIntegers([2, 3])` is not a thing we declare.
   expect(toWolfram("GaussianIntegers")).toBe("GaussianIntegers");
-  expect(toWolfram(["KeyValuePair", "GaussianIntegers", true])).toBe("KeyValuePair[GaussianIntegers, True]");
+  // KeyValuePair is now vouched for (Wolfram's own option-rule head, Rule); GaussianIntegers
+  // itself is still the point of this test -- it stays bare either way.
+  expect(toWolfram(["KeyValuePair", "GaussianIntegers", true])).toBe("Rule[GaussianIntegers, True]");
 });
 
 test("extension heads Wolfram shares are vouched for, not passed through", () => {

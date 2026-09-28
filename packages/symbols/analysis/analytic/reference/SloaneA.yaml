@@ -16,6 +16,14 @@ bindings:
     form: typescript
     environment: engine
     source: packages/symbols/analysis/analytic/src/sloane-a.ts
+  - origin: mapped
+    form: wolfram
+    template: With[{s = ResourceFunction["OEISSequenceData"][$1, "Offset"]}, ResourceFunction["OEISSequence"][$1][[$2 - s + 1]]]
+    arity: 2
+    note: No built-in OEIS-by-id lookup, but the Function Repository's OEISSequence/OEISSequenceData, read against each sequence's own OEIS offset, lands on the n-th term uniformly across every id this head aliases -- matches all seven (A000045/10 = 55, A000793/10 = 30, A000040/5 = 11, A000041/10 = 42, A000110/5 = 52, A000142/5 = 120, A000720/20 = 8). Needs network access to the Function Repository (and, transitively, oeis.org) to run. A060691, outside this head's alias table and left symbolic on our side, disagrees once the scan runs -- that is a scope difference (we don't claim that id), not a wrong answer.
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
 seeAlso:
   - Fibonacci
   - BellNumber

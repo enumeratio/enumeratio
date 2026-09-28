@@ -73,6 +73,8 @@ gd-x-sech-x:
     out: \mathrm{sech}(x)
   fullform:
     in: D[Gudermannian[x], x]
+  wolfram:
+    in: D[Gudermannian[x], x]
 an-odd-function:
   epsil:
     in: Gudermannian(-x)

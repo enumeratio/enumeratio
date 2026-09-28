@@ -499,6 +499,12 @@ derivative-1-x:
     out: \frac{1}{x}
   fullform:
     in: D[Log[x], x]
+  wolfram:
+    in: D[Log[x], x]
+  sympy:
+    in: diff(log(Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(log(SR.var("x")), SR.var("x"))
 antiderivative-x-ln-x-x:
   epsil:
     in: Integrate(Ln(x), x)

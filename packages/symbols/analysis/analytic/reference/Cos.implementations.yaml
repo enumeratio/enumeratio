@@ -662,6 +662,12 @@ derivative-sin-x:
     out: -\sin(x)
   fullform:
     in: D[Cos[x], x]
+  wolfram:
+    in: D[Cos[x], x]
+  sympy:
+    in: diff(cos(Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(cos(SR.var("x")), SR.var("x"))
 antiderivative:
   epsil:
     in: Integrate(Cos(x), x)
@@ -724,6 +730,8 @@ euler-s-formula-cos-x-frac-e-ix-e-ix-2:
     in: \mathrm{TrigToExp}(\cos(x))
     out: \frac{1}{2}(\exp(i x)+\exp(-i x))
   fullform:
+    in: TrigToExp[Cos[x]]
+  wolfram:
     in: TrigToExp[Cos[x]]
 pi-24-is-past-the-automatic-special-angle-table:
   epsil:

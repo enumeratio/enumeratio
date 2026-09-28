@@ -116,6 +116,8 @@ derivative-frac-1-1-x-2:
   fullform:
     in: D[Subtract[Divide[Pi, 2], ArcTan[x]], x]
     back: [D, [Subtract, [Divide, Pi, 2], [Arctan, x]], x]
+  wolfram:
+    in: D[Subtract[Divide[Pi, 2], ArcTan[x]], x]
 arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored:
   epsil:
     in: Arccot(-Sqrt(3))

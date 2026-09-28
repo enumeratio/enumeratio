@@ -210,6 +210,8 @@ derivative-frac-1-sqrt-1-x-2:
     out: -\frac{1}{\sqrt{1-x^2}}
   fullform:
     in: D[ArcCos[x], x]
+  wolfram:
+    in: D[ArcCos[x], x]
 antiderivative:
   epsil:
     in: Integrate(Arccos(x), x)

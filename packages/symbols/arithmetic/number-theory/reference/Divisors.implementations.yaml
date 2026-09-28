@@ -191,7 +191,9 @@ divisors-3-plus-4i:
     in: \mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
   fullform:
-    in: Divisors[13, KeyValuePair[GaussianIntegers, True]]
+    in: Divisors[13, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[13, Rule[GaussianIntegers, True]]
 divisors-6:
   epsil:
     in: Divisors(6)
@@ -313,4 +315,6 @@ a-non-integer-stays-unevaluated:
     in: \mathrm{Divisors}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack1, 1+2i, 2+i, 5\bigr\rbrack
   fullform:
-    in: Divisors[5, KeyValuePair[GaussianIntegers, True]]
+    in: Divisors[5, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: Divisors[5, Rule[GaussianIntegers, True]]

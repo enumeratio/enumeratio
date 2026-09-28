@@ -239,6 +239,8 @@ frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2:
     out: \frac{1}{2}(\exp({\operatorname{erf}^{-1}(x)}^2)\sqrt{\pi})
   fullform:
     in: D[InverseErf[x], x]
+  wolfram:
+    in: D[InverseErf[x], x]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(ErfInv(1 / 2), 30)

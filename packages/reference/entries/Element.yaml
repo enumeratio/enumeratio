@@ -47,6 +47,14 @@ signatures:
     overrides: enumeratio-hypercomplex
 bindings:
   - origin: mapped
+    form: wolfram
+    template: Element[$1, $2]
+    arity: 2
+    note: Only a real match for a Wolfram domain symbol as the second operand (`Element[7, Primes]`, kernel-verified True); against a literal list or one of our own collections (a diagram algebra's basis, PolygonalNumbers(k), …) real Element stays unevaluated instead of erroring, so the scan will record those as disagreements rather than a wrong-but-silent answer.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
+  - origin: mapped
     form: sage
     template: enumeratio_element($1, $2)
     arity: 2

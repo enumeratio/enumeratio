@@ -205,6 +205,8 @@ derivative-frac-1-x-ln-10:
     out: \frac{1}{x\ln(10)}
   fullform:
     in: D[Log10[x], x]
+  wolfram:
+    in: D[Log10[x], x]
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(Log10(7), 30)

@@ -18,6 +18,13 @@ references:
     identity: Dimension (vector space)
 bindings:
   - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: "No built-in algebra-object type to take a dimension of: `Quaternions` is a domain symbol with no generic dimension function, and `CliffordAlgebra`/`MulticomplexAlgebra` aren't Wolfram heads at all. There is a Wolfram/GeometricAlgebra paclet (resources.wolframcloud.com/PacletRepository) but it's a separate installable paclet, not a ResourceFunction, and this environment has no Wolfram Cloud connection to install or check it against our examples -- also its generator-count convention is unconfirmed against ours. Left unmapped."
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+  - origin: mapped
     form: sage
     template: ($1).dimension()
     arity: 1

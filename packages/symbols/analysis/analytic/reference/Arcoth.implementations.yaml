@@ -55,6 +55,8 @@ as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1:
     out: \frac{\ln(3)}{2}
   fullform:
     in: TrigToExp[ArcCoth[2]]
+  wolfram:
+    in: TrigToExp[ArcCoth[2]]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Arcoth(-x)
@@ -78,4 +80,6 @@ derivative-frac-1-1-x-2:
     in: \frac{\mathrm{d}\mathrm{arcoth}(x)}{\mathrm{d}x}
     out: \frac{1}{1-x^2}
   fullform:
+    in: D[ArcCoth[x], x]
+  wolfram:
     in: D[ArcCoth[x], x]

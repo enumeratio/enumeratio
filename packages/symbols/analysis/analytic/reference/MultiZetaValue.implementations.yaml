@@ -7,6 +7,10 @@ zeta-2-2-frac-34-zeta-4:
     out: 0.811\,742\,425\,283\,353\,6
   fullform:
     in: N[MultiZetaValue[2, 2]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-2) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-3-3-frac-12-zeta-3-2-zeta-6:
   epsil:
     in: N(MultiZetaValue(3, 3))
@@ -16,6 +20,10 @@ zeta-3-3-frac-12-zeta-3-2-zeta-6:
     out: 0.213\,798\,868\,224\,592\,5
   fullform:
     in: N[MultiZetaValue[3, 3]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-3) n2^(-3), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-3), [1, n1 - 1]), [2, inf]))"
 zeta-2-3:
   epsil:
     in: N(MultiZetaValue(2, 3))
@@ -25,6 +33,10 @@ zeta-2-3:
     out: 0.711\,566\,197\,550\,413
   fullform:
     in: N[MultiZetaValue[2, 3]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-2) n2^(-3), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-3), [1, n1 - 1]), [2, inf]))"
 zeta-3-2:
   epsil:
     in: N(MultiZetaValue(3, 2))
@@ -34,6 +46,10 @@ zeta-3-2:
     out: 0.228\,810\,397\,602\,849\,7
   fullform:
     in: N[MultiZetaValue[3, 2]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-3) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-4-2:
   epsil:
     in: N(MultiZetaValue(4, 2))
@@ -43,6 +59,10 @@ zeta-4-2:
     out: 0.088\,483\,382\,454\,752\,96
   fullform:
     in: N[MultiZetaValue[4, 2]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-4) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-4) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-2-4:
   epsil:
     in: N(MultiZetaValue(2, 4))
@@ -52,6 +72,10 @@ zeta-2-4:
     out: 0.674\,523\,914\,033\,936
   fullform:
     in: N[MultiZetaValue[2, 4]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-2) n2^(-4), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-2) * nsum(lambda n2: n2**(-4), [1, n1 - 1]), [2, inf]))"
 zeta-5-2:
   epsil:
     in: N(MultiZetaValue(5, 2))
@@ -61,6 +85,10 @@ zeta-5-2:
     out: 0.038\,575\,124\,342\,795\,405
   fullform:
     in: N[MultiZetaValue[5, 2]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-5) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-5) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf]))"
 zeta-3-4:
   epsil:
     in: N(MultiZetaValue(3, 4))
@@ -70,6 +98,10 @@ zeta-3-4:
     out: 0.207\,505\,014\,615\,580\,57
   fullform:
     in: N[MultiZetaValue[3, 4]]
+  wolfram:
+    in: N[N[Sum[Sum[n1^(-3) n2^(-4), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]]
+  mpmath:
+    in: "(nsum(lambda n1: n1**(-3) * nsum(lambda n2: n2**(-4), [1, n1 - 1]), [2, inf]))"
 s-1-2-stays-symbolic-outside-the-depth-2-both:
   epsil:
     in: MultiZetaValue(1, 2)
@@ -79,6 +111,10 @@ s-1-2-stays-symbolic-outside-the-depth-2-both:
     out: \mathrm{MultiZetaValue}(1, 2)
   fullform:
     in: MultiZetaValue[1, 2]
+  wolfram:
+    in: N[Sum[Sum[n1^(-1) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]
+  mpmath:
+    in: "nsum(lambda n1: n1**(-1) * nsum(lambda n2: n2**(-2), [1, n1 - 1]), [2, inf])"
 zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
   epsil:
     in: Chop(N(MultiZetaValue(2, 2)) - 0.75 * N(Zeta(4)))
@@ -88,3 +124,5 @@ zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
     out: "0"
   fullform:
     in: Chop[Subtract[N[MultiZetaValue[2, 2]], Times[0.75, N[Zeta[4]]]]]
+  wolfram:
+    in: Chop[Subtract[N[N[Sum[Sum[n1^(-2) n2^(-2), {n2, 1, n1 - 1}], {n1, 2, Infinity}]]], Times[0.75, N[Zeta[4]]]]]

@@ -23,3 +23,18 @@ seeAlso:
   - Mod
   - ChineseRemainder
   - AdicNumeral
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: "Wolfram's Mod/PowerMod answer a plain Integer, not a persistent ring element -- the same distinction this head's own details draw against our own [[Mod]]. FiniteField/FiniteFieldElement DOES keep a residue as a persistent value with +, ·, ^-1 (kernel-verified: FiniteField[7][3]+FiniteField[7][5] = FiniteFieldElement[.., {1}], FiniteField[7][3]^-1 = {5}, matching this head's own examples) -- but only for prime modulus; FiniteField[4] silently reinterprets 4 as GF(2^2), a different structure with no zero divisors, not the ring Z/4Z this head also supports (kernel-verified wrong for our composite-modulus examples), and FiniteField[6] errors outright. No single template is safe across this head's mixed prime/composite examples, so it stays unmapped for wolfram."
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: Mod($1, $2)
+    arity: 2
+    checked:
+      version: "10.9"
+      on: 2026-09-27

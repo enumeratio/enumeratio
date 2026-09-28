@@ -21,6 +21,14 @@ seeAlso:
   - Count
   - At
   - Element
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: "Wolfram's own PolygonalNumber[r, n] gives one term (kernel-verified: matches ours termwise) but there's no lazy collection to Take from -- only Table[PolygonalNumber[r, n], {n, 1, count}], which a per-head template on PolygonalNumbers alone can't compose with the outer Take call. Wolfram Function Repository searched; PolygonalDiagram found but it's a visualization (draws the dot array), not a term source."
+    checked:
+      version: 15.0.0
+      on: 2026-09-28
 grades:
   - name: k
     role: param

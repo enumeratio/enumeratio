@@ -10,3 +10,12 @@ signatures:
     overrides: compute-engine
 attributes:
   - HoldAll
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    note: identity rename (see names.wolframIdentity); kernel-verified on the Arcsin/Arccoth closed forms this override adds too.
+    checked:
+      version: 15.0.0
+      on: 2026-09-27
