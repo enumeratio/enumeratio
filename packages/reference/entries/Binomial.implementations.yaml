@@ -542,6 +542,18 @@ symbolic-n-binom-n-0-1-for-any-n:
     out: "1"
   fullform:
     in: Binomial[n, 0]
+  wolfram:
+    in: Binomial[n, 0]
+    out: "1"
+    tex:
+      in: \binom{n}{0}
+      out: "1"
+  sympy:
+    in: binomial(Symbol("n"), 0)
+    out: "1"
+  sage:
+    in: binomial(SR.var("n"), 0)
+    out: "1"
 symbolic-n-binom-n-1-n:
   epsil:
     in: Binomial(n, 1)
@@ -551,6 +563,18 @@ symbolic-n-binom-n-1-n:
     out: n
   fullform:
     in: Binomial[n, 1]
+  wolfram:
+    in: Binomial[n, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\binom{n}{1}-n],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\binom{\frac{7}{3}}{1}-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\binom{-\frac{11}{5}}{1}--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\binom{\frac{13}{4}}{1}-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: binomial(Symbol("n"), 1)
+    out: True
+  sage:
+    in: binomial(SR.var("n"), 1)
+    out: True
 binom-n-n-1-n-for-symbolic-n:
   epsil:
     in: Binomial(n, n - 1)
@@ -560,6 +584,18 @@ binom-n-n-1-n-for-symbolic-n:
     out: n
   fullform:
     in: Binomial[n, Subtract[n, 1]]
+  wolfram:
+    in: Binomial[n, Subtract[n, 1]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\binom{n}{n-1}-n],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\binom{\frac{7}{3}}{\frac{7}{3}-1}-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\binom{-\frac{11}{5}}{-\frac{11}{5}-1}--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\binom{\frac{13}{4}}{\frac{13}{4}-1}-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: binomial(Symbol("n"), (Symbol("n") - 1))
+    out: True
+  sage:
+    in: binomial(SR.var("n"), (SR.var("n") - 1))
+    out: True
 binom-m-m-1-m-for-symbolic-m:
   epsil:
     in: Binomial(m, m - 1)
@@ -569,6 +605,18 @@ binom-m-m-1-m-for-symbolic-m:
     out: m
   fullform:
     in: Binomial[m, Plus[m, -1]]
+  wolfram:
+    in: Binomial[m, Plus[m, -1]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\binom{m}{m-1}-m],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\binom{\frac{7}{3}}{\frac{7}{3}-1}-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\binom{-\frac{11}{5}}{-\frac{11}{5}-1}--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\binom{\frac{13}{4}}{\frac{13}{4}-1}-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: binomial(Symbol("m"), (Symbol("m") + -1))
+    out: True
+  sage:
+    in: binomial(SR.var("m"), (SR.var("m") + -1))
+    out: True
 real-arguments-evaluate-through-the-gamma:
   epsil:
     in: Binomial(8.5, -4.2)
@@ -745,6 +793,21 @@ binom-n-n-1-for-symbolic-n:
     out: "1"
   fullform:
     in: Binomial[n, n]
+  wolfram:
+    in: Binomial[n, n]
+    out: "1"
+    tex:
+      in: \binom{n}{n}
+      out: "1"
+  sympy:
+    in: binomial(Symbol("n"), Symbol("n"))
+    out: binomial(n, n)
+    verdict: inconclusive
+    kind: unevaluated
+    note: sympy leaves binomial(n,n) symbolic without assuming n is a non-negative integer; ours applies the identity C(n,n)=1 unconditionally.
+  sage:
+    in: binomial(SR.var("n"), SR.var("n"))
+    out: "1"
 binom-m-m-1-for-symbolic-m:
   epsil:
     in: Binomial(m, m)
@@ -754,6 +817,21 @@ binom-m-m-1-for-symbolic-m:
     out: "1"
   fullform:
     in: Binomial[m, m]
+  wolfram:
+    in: Binomial[m, m]
+    out: "1"
+    tex:
+      in: \binom{m}{m}
+      out: "1"
+  sympy:
+    in: binomial(Symbol("m"), Symbol("m"))
+    out: binomial(m, m)
+    verdict: inconclusive
+    kind: unevaluated
+    note: Same as the other symbolic-binomial example — sympy needs an assumption on m to reduce binomial(m,m) to 1.
+  sage:
+    in: binomial(SR.var("m"), SR.var("m"))
+    out: "1"
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
   epsil:
     in: Binomial(1 + i, 5)
@@ -989,7 +1067,7 @@ equal-negative-arguments-binom-2-2-1:
     out: "0"
     verdict: disagree
     kind: convention
-    note: "compute-engine and Wolfram take binom(-2, -2) = 1 by the limit through Γ; SymPy gives 0."
+    note: compute-engine and Wolfram take binom(-2, -2) = 1 by the limit through Γ; SymPy gives 0.
   sage:
     in: binomial(-2, -2)
     out: "0"

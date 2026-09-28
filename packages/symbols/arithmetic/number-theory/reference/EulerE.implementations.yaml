@@ -40,6 +40,12 @@ the-euler-polynomial-e-2-x-x-2-x:
     out: x^2-x
   fullform:
     in: EulerE[2, x]
+  wolfram:
+    in: EulerE[2, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[E_2(x)-\left(x^2-x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[E_2\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^2-\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[E_2\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^2--\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[E_2\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^2-\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 e-4-x-x-4-2x-3-x:
   epsil:
     in: EulerE(4, x)
@@ -49,6 +55,12 @@ e-4-x-x-4-2x-3-x:
     out: x^4-2x^3+x
   fullform:
     in: EulerE[4, x]
+  wolfram:
+    in: EulerE[4, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[E_4(x)-\left(x^4-2 x^3+x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[E_4\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^4-2 \left(\frac{7}{3}\right)^3+\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[E_4\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^4-2 \left(-\frac{11}{5}\right)^3-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[E_4\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^4-2 \left(\frac{13}{4}\right)^3+\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 e-n-2-n-e-n-frac-12-and-e-3-0:
   epsil:
     in: EulerE(3, 1 / 2)

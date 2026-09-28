@@ -218,7 +218,7 @@ a-zero-divisor-inside-floor:
     out: zoo
     verdict: disagree
     kind: ours
-    note: "compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity."
+    note: compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity.
     issue: 292
   sage:
     in: floor((17 / 0))
@@ -274,6 +274,12 @@ infinities-pass-through-unchanged:
     tex:
       in: \lfloor -\infty \rfloor
       out: -\infty
+  sympy:
+    in: floor(-oo)
+  mpmath:
+    in: floor(-inf)
+  sage:
+    in: floor(-oo)
 floor-2p4:
   epsil:
     in: Floor(2.4)
@@ -329,6 +335,18 @@ stays-symbolic:
     out: \lfloor x\rfloor
   fullform:
     in: Floor[x]
+  wolfram:
+    in: Floor[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x\rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}\right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}\right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}\right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: floor(Symbol("x"))
+    out: True
+  sage:
+    in: floor(SR.var("x"))
+    out: True
 exact-radicals-are-decided-numerically:
   epsil:
     in: Floor(Sqrt(50))
@@ -492,6 +510,18 @@ idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
     out: \lfloor x\rfloor
   fullform:
     in: Floor[Floor[x]]
+  wolfram:
+    in: Floor[Floor[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor \lfloor x\rfloor \rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{7}{3}\right\rfloor \right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor -\frac{11}{5}\right\rfloor \right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{13}{4}\right\rfloor \right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: floor(floor(Symbol("x")))
+    out: True
+  sage:
+    in: floor(floor(SR.var("x")))
+    out: True
 legendre-s-formula-100-ends-in-lfloor-100-5:
   epsil:
     in: Floor(100 / 5) + Floor(100 / 25)
@@ -579,3 +609,15 @@ floor-add-x-1-a-free-variable-is-untouched:
     out: \lfloor x+1\rfloor
   fullform:
     in: Floor[Plus[x, 1]]
+  wolfram:
+    in: Floor[Plus[x, 1]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x+1\rfloor -\lfloor x+1\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}+1\right\rfloor -\left\lfloor \frac{7}{3}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}+1\right\rfloor -\left\lfloor -\frac{11}{5}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}+1\right\rfloor -\left\lfloor \frac{13}{4}+1\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: floor((Symbol("x") + 1))
+    out: True
+  sage:
+    in: floor((SR.var("x") + 1))
+    out: True

@@ -247,3 +247,9 @@ symbolic-k-expands-over-the-divisors:
     out: 2^{k}+3^{k}+5^{k}+6^{k}+10^{k}+15^{k}+30^{k}+1
   fullform:
     in: DivisorSigma[k, 30]
+  wolfram:
+    in: DivisorSigma[k, 30]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sigma _k(30)-\left(2^k+3^k+5^k+6^k+10^k+15^k+30^k+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sigma _{\frac{7}{3}}(30)-\left(2^{\frac{7}{3}}+3^{\frac{7}{3}}+5^{\frac{7}{3}}+6^{\frac{7}{3}}+10^{\frac{7}{3}}+15^{\frac{7}{3}}+30^{\frac{7}{3}}+1\right)\right]\right],\text{Chop}\left[N\left[\sigma _{-\frac{11}{5}}(30)-\left(2^{-\frac{11}{5}}+3^{-\frac{11}{5}}+5^{-\frac{11}{5}}+6^{-\frac{11}{5}}+10^{-\frac{11}{5}}+15^{-\frac{11}{5}}+30^{-\frac{11}{5}}+1\right)\right]\right],\text{Chop}\left[N\left[\sigma _{\frac{13}{4}}(30)-\left(2^{\frac{13}{4}}+3^{\frac{13}{4}}+5^{\frac{13}{4}}+6^{\frac{13}{4}}+10^{\frac{13}{4}}+15^{\frac{13}{4}}+30^{\frac{13}{4}}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

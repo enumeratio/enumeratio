@@ -7,6 +7,12 @@ a-pole-at-the-origin:
     out: x=0
   fullform:
     in: FunctionSingularities[Divide[1, x], x]
+  wolfram:
+    in: FunctionSingularities[Divide[1, x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionSingularities}\left[\frac{1}{x},x\right]-(x=0)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\frac{1}{\frac{7}{3}},\frac{7}{3}\right]-\left(\frac{7}{3}=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[-\frac{1}{\frac{11}{5}},-\frac{11}{5}\right]-\left(-\frac{11}{5}=0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\frac{1}{\frac{13}{4}},\frac{13}{4}\right]-\left(\frac{13}{4}=0\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 sqrt-is-singular-at-its-own-boundary:
   epsil:
     in: FunctionSingularities(Sqrt(x), x)
@@ -16,6 +22,12 @@ sqrt-is-singular-at-its-own-boundary:
     out: x\le0
   fullform:
     in: FunctionSingularities[Sqrt[x], x]
+  wolfram:
+    in: FunctionSingularities[Sqrt[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionSingularities}\left[\sqrt{x},x\right]-(x\leq 0)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\sqrt{\frac{7}{3}},\frac{7}{3}\right]-\left(\frac{7}{3}\leq 0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\sqrt{-\frac{11}{5}},-\frac{11}{5}\right]-\left(-\frac{11}{5}\leq 0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\sqrt{\frac{13}{4}},\frac{13}{4}\right]-\left(\frac{13}{4}\leq 0\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-polynomial-has-no-singularities:
   epsil:
     in: FunctionSingularities(x ^ 2, x)
@@ -28,6 +40,12 @@ a-polynomial-has-no-singularities:
     out: \mathrm{False}
   fullform:
     in: FunctionSingularities[Power[x, 2], x]
+  wolfram:
+    in: FunctionSingularities[Power[x, 2], x]
+    out: False
+    tex:
+      in: \text{FunctionSingularities}\left[x^2,x\right]
+      out: \text{False}
 log-s-branch-cut:
   epsil:
     in: FunctionSingularities(Ln(x), x)
@@ -37,3 +55,9 @@ log-s-branch-cut:
     out: x\le0
   fullform:
     in: FunctionSingularities[Log[x], x]
+  wolfram:
+    in: FunctionSingularities[Log[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FunctionSingularities}[\log (x),x]-(x\leq 0)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\log \left(\frac{7}{3}\right),\frac{7}{3}\right]-\left(\frac{7}{3}\leq 0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\log \left(-\frac{11}{5}\right),-\frac{11}{5}\right]-\left(-\frac{11}{5}\leq 0\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionSingularities}\left[\log \left(\frac{13}{4}\right),\frac{13}{4}\right]-\left(\frac{13}{4}\leq 0\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

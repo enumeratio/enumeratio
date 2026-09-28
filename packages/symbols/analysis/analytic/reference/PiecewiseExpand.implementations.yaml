@@ -35,6 +35,12 @@ without-a-realness-assumption-it-declines:
     out: \vert x\vert
   fullform:
     in: PiecewiseExpand[Abs[x]]
+  wolfram:
+    in: PiecewiseExpand[Abs[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PiecewiseExpand}[| x| ]-| x| ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| \frac{7}{3}\right| \right]-\left| \frac{7}{3}\right| \right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| -\frac{11}{5}\right| \right]-\left| -\frac{11}{5}\right| \right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| \frac{13}{4}\right| \right]-\left| \frac{13}{4}\right| \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 max-of-two-real-variables:
   epsil:
     in: PiecewiseExpand(Max(x, y), x in RealNumbers && y in RealNumbers)

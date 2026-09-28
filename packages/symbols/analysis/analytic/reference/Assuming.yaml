@@ -13,5 +13,11 @@ details:
   - What resolves under the assumption is whatever compute-engine's own `evaluate()` already consults assumptions for — [[Abs]], [[Sign]], and $\ln \circ \exp$ among them. This is more eager than bare Wolfram evaluation for those heads (Wolfram leaves `Abs(x)` alone until `Refine`/`Simplify` names it explicitly); it is not a general Simplify.
 names:
   wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Assuming[$1, FullSimplify[$2]]
+    arity: 2
+    note: Wolfram's own Assuming only affects functions that consult $Assumptions (Simplify, FullSimplify, Refine) — a bare Abs(x) inside it stays symbolic, unlike compute-engine's own eager assumption-aware evaluate(). Wrapping the body in FullSimplify is what makes the oracle check the same claim we do.
 attributes:
   - HoldAll

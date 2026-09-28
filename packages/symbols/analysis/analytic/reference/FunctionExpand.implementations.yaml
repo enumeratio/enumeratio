@@ -10,6 +10,12 @@ eta-s-1-2-1-s-zeta-s:
     out: (1-2^{1-s})\zeta(s)
   fullform:
     in: FunctionExpand[DirichletEta[s]]
+  wolfram:
+    in: FunctionExpand[DirichletEta[s]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionExpand}[\eta (s)]-\left(-2^{-s+1}+1\right) \zeta (s)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionExpand}\left[\eta \left(\frac{7}{3}\right)\right]-\left(-2^{-\frac{7}{3}+1}+1\right) \zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\eta \left(-\frac{11}{5}\right)\right]-\left(-2^{-\left(-\frac{11}{5}\right)+1}+1\right) \zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\eta \left(\frac{13}{4}\right)\right]-\left(-2^{-\frac{13}{4}+1}+1\right) \zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
   epsil:
     in: FunctionExpand(DirichletBeta(s))
@@ -22,6 +28,12 @@ beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
     out: \frac{\zeta(s, \frac{1}{4})-\zeta(s, \frac{3}{4})}{4^{s}}
   fullform:
     in: FunctionExpand[DirichletBeta[s]]
+  wolfram:
+    in: FunctionExpand[DirichletBeta[s]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionExpand}[\beta (s)]-\left(-\zeta \left(s,\frac{3}{4}\right)+\zeta \left(s,\frac{1}{4}\right)\right) 4^{-s}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionExpand}\left[\beta \left(\frac{7}{3}\right)\right]-\left(-\zeta \left(\frac{7}{3},\frac{3}{4}\right)+\zeta \left(\frac{7}{3},\frac{1}{4}\right)\right) 4^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\beta \left(-\frac{11}{5}\right)\right]-\left(-\zeta \left(-\frac{11}{5},\frac{3}{4}\right)+\zeta \left(-\frac{11}{5},\frac{1}{4}\right)\right) 4^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\beta \left(\frac{13}{4}\right)\right]-\left(-\zeta \left(\frac{13}{4},\frac{3}{4}\right)+\zeta \left(\frac{13}{4},\frac{1}{4}\right)\right) 4^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 g-frac-12-in-glaisher-s-constant:
   epsil:
     in: FunctionExpand(BarnesG(1 / 2))
@@ -70,6 +82,12 @@ a-rising-factorial-with-an-integer-length:
     out: x\times(x+1)(x+2)
   fullform:
     in: FunctionExpand[Pochhammer[x, 3]]
+  wolfram:
+    in: FunctionExpand[Pochhammer[x, 3]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionExpand}\left[(x)_3\right]-x (x+1) (x+2)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionExpand}\left[\left(\frac{7}{3}\right)_3\right]-\frac{7}{3} \left(\frac{7}{3}+1\right) \left(\frac{7}{3}+2\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\left(-\frac{11}{5}\right)_3\right]--\frac{11}{5} \left(-\frac{11}{5}+1\right) \left(-\frac{11}{5}+2\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\left(\frac{13}{4}\right)_3\right]-\frac{13}{4} \left(\frac{13}{4}+1\right) \left(\frac{13}{4}+2\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 binom-n2-frac-n-n-1-2:
   epsil:
     in: FunctionExpand(Binomial(n, 2))
@@ -79,6 +97,12 @@ binom-n2-frac-n-n-1-2:
     out: \frac{n\times(n-1)}{2}
   fullform:
     in: FunctionExpand[Binomial[n, 2]]
+  wolfram:
+    in: FunctionExpand[Binomial[n, 2]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionExpand}[\binom{n}{2}]-\frac{n (n-1)}{2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionExpand}\left[\binom{\frac{7}{3}}{2}\right]-\frac{\frac{7}{3} \left(\frac{7}{3}-1\right)}{2}\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\binom{-\frac{11}{5}}{2}\right]--\frac{\frac{11}{5} \left(-\frac{11}{5}-1\right)}{2}\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\binom{\frac{13}{4}}{2}\right]-\frac{\frac{13}{4} \left(\frac{13}{4}-1\right)}{2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-generic-cos-argument-passes-through-unchanged:
   epsil:
     in: FunctionExpand(Cos(theta))
@@ -88,3 +112,9 @@ a-generic-cos-argument-passes-through-unchanged:
     out: \cos(\theta)
   fullform:
     in: FunctionExpand[Cos[theta]]
+  wolfram:
+    in: FunctionExpand[Cos[theta]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FunctionExpand}[\cos (\theta )]-\cos (\theta )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionExpand}\left[\cos \left(\frac{7}{3}\right)\right]-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\cos \left(-\frac{11}{5}\right)\right]-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{FunctionExpand}\left[\cos \left(\frac{13}{4}\right)\right]-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

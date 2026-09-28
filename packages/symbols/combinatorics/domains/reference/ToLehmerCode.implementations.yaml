@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{SubexcedantSeq}(\bigl\lbrack1, 1, 0\bigr\rbrack)
   fullform:
     in: ToLehmerCode[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: ToLehmerCode[Permutation[List[2, 3, 1]]]

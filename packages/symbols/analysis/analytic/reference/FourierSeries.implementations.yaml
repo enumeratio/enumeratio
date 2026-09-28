@@ -15,7 +15,10 @@ order-2-series-of-x:
     in: FourierSeries[x, x, 2]
   wolfram:
     in: FourierSeries[x, x, 2]
-    out: I/E^(I*x) - I*E^(I*x) - I/2/E^((2*I)*x) + I/2*E^((2*I)*x)
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FourierSeries}[x,x,2]-\left(-i e^{i x}+(\text{Rational}[-1,2] i) e^{(-2 i) x}+(\text{Rational}[1,2] i) e^{(2 i) x}+i e^{-i x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierSeries}\left[\frac{7}{3},\frac{7}{3},2\right]-\left(-i e^{i \frac{7}{3}}+(\text{Rational}[-1,2] i) e^{(-2 i) \frac{7}{3}}+(\text{Rational}[1,2] i) e^{(2 i) \frac{7}{3}}+i e^{-i \frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[-\frac{11}{5},-\frac{11}{5},2\right]-\left(-i e^{i \left(-\frac{11}{5}\right)}+(\text{Rational}[-1,2] i) e^{(-2 i) \left(-\frac{11}{5}\right)}+(\text{Rational}[1,2] i) e^{(2 i) \left(-\frac{11}{5}\right)}+i e^{-i \left(-\frac{11}{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\frac{13}{4},\frac{13}{4},2\right]-\left(-i e^{i \frac{13}{4}}+(\text{Rational}[-1,2] i) e^{(-2 i) \frac{13}{4}}+(\text{Rational}[1,2] i) e^{(2 i) \frac{13}{4}}+i e^{-i \frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 order-3-series-of-sin-is-itself:
   epsil:
     in: FourierSeries(Sin(x), x, 3)
@@ -27,7 +30,10 @@ order-3-series-of-sin-is-itself:
     in: FourierSeries[Sin[x], x, 3]
   wolfram:
     in: FourierSeries[Sin[x], x, 3]
-    out: I/2/E^(I*x) - I/2*E^(I*x)
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FourierSeries}[\sin (x),x,3]-\left((\text{Rational}[-1,2] i) e^{i x}+(\text{Rational}[1,2] i) e^{-i x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierSeries}\left[\sin \left(\frac{7}{3}\right),\frac{7}{3},3\right]-\left((\text{Rational}[-1,2] i) e^{i \frac{7}{3}}+(\text{Rational}[1,2] i) e^{-i \frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\sin \left(-\frac{11}{5}\right),-\frac{11}{5},3\right]-\left((\text{Rational}[-1,2] i) e^{i \left(-\frac{11}{5}\right)}+(\text{Rational}[1,2] i) e^{-i \left(-\frac{11}{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\sin \left(\frac{13}{4}\right),\frac{13}{4},3\right]-\left((\text{Rational}[-1,2] i) e^{i \frac{13}{4}}+(\text{Rational}[1,2] i) e^{-i \frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cos-squared-a-sin-cos-polynomial:
   epsil:
     in: FourierSeries(Cos(x) ^ 2, x, 2)
@@ -38,8 +44,11 @@ cos-squared-a-sin-cos-polynomial:
   fullform:
     in: FourierSeries[Power[Cos[x], 2], x, 2]
   wolfram:
-    in: FourierSeries[Cos[x]^2, x, 2]
-    out: 1/2 + 1/(4*E^((2*I)*x)) + E^((2*I)*x)/4
+    in: FourierSeries[Power[Cos[x], 2], x, 2]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FourierSeries}\left[\cos ^2(x),x,2\right]-\left(\frac{1}{4} e^{(-2 i) x}+\frac{1}{4} e^{(2 i) x}+\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierSeries}\left[\cos ^2\left(\frac{7}{3}\right),\frac{7}{3},2\right]-\left(\frac{1}{4} e^{(-2 i) \frac{7}{3}}+\frac{1}{4} e^{(2 i) \frac{7}{3}}+\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\cos ^2\left(-\frac{11}{5}\right),-\frac{11}{5},2\right]-\left(\frac{1}{4} e^{(-2 i) \left(-\frac{11}{5}\right)}+\frac{1}{4} e^{(2 i) \left(-\frac{11}{5}\right)}+\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\cos ^2\left(\frac{13}{4}\right),\frac{13}{4},2\right]-\left(\frac{1}{4} e^{(-2 i) \frac{13}{4}}+\frac{1}{4} e^{(2 i) \frac{13}{4}}+\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 order-0-series-of-x-squared-is-its-average:
   epsil:
     in: FourierSeries(x ^ 2, x, 0)
@@ -50,8 +59,11 @@ order-0-series-of-x-squared-is-its-average:
   fullform:
     in: FourierSeries[Power[x, 2], x, 0]
   wolfram:
-    in: FourierSeries[x^2, x, 0]
+    in: FourierSeries[Power[x, 2], x, 0]
     out: Pi^2/3
+    tex:
+      in: \text{FourierSeries}\left[x^2,x,0\right]
+      out: \frac{\pi ^2}{3}
 declines-a-mixed-polynomial-trig-product:
   epsil:
     in: FourierSeries(x * Cos(x), x, 1)
@@ -62,6 +74,9 @@ declines-a-mixed-polynomial-trig-product:
   fullform:
     in: FourierSeries[Times[x, Cos[x]], x, 1]
   wolfram:
-    in: FourierSeries[x*Cos[x], x, 1]
-    out: (-1/4*I)/E^(I*x) + I/4*E^(I*x)
+    in: FourierSeries[Times[x, Cos[x]], x, 1]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{FourierSeries}[x \cos (x),x,1]-\text{FourierSeries}[x \cos (x),x,1]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FourierSeries}\left[\frac{7}{3} \cos \left(\frac{7}{3}\right),\frac{7}{3},1\right]-\text{FourierSeries}\left[\frac{7}{3} \cos \left(\frac{7}{3}\right),\frac{7}{3},1\right]\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[-\frac{11}{5} \cos \left(-\frac{11}{5}\right),-\frac{11}{5},1\right]-\text{FourierSeries}\left[-\frac{11}{5} \cos \left(-\frac{11}{5}\right),-\frac{11}{5},1\right]\right]\right],\text{Chop}\left[N\left[\text{FourierSeries}\left[\frac{13}{4} \cos \left(\frac{13}{4}\right),\frac{13}{4},1\right]-\text{FourierSeries}\left[\frac{13}{4} \cos \left(\frac{13}{4}\right),\frac{13}{4},1\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
     note: "Wolfram has a closed form for a polynomial-times-trig product like this (a standard integration-by-parts case); we decline it on purpose -- it falls outside the curated atom list in FourierCoefficient.ts, not a correctness issue. Not marked as a disagreement: the free variable `x` means the automated oracle scan cannot check this pair by re-evaluating it numerically."

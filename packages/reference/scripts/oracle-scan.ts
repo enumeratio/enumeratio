@@ -22,6 +22,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --accept           # everything wired, written
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
+//   vp node packages/reference/scripts/oracle-scan.ts --head Foo,Bar,Baz     # several heads, one kernel process
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
@@ -31,9 +32,12 @@ import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import {
   emit,
+  interpretSymbolicAgreement,
+  isSymbolicSystem,
   type MathJSON,
   runIn,
   runKernel,
+  symbolicAgreementSource,
   SYSTEMS,
   type System,
   type Verdict,
@@ -59,8 +63,17 @@ const trim = (text: string): string => text.replace(/`/g, "'").replace(/\|/g, "/
 
 const args = process.argv.slice(2);
 const headIndex = args.indexOf("--head");
-const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
-const requested = args.filter((argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head");
+// Comma-separated: `--head Foo,Bar` scans several heads in one kernel process, cheaper than
+// one invocation per head when a fix (or this free-symbol pass) touches many heads at once.
+const headFilter = headIndex >= 0 ? new Set((args[headIndex + 1] ?? "").split(",")) : undefined;
+const idsIndex = args.indexOf("--ids");
+// Comma-separated full example ids (`Head/key`), for a run that only touches SOME examples of
+// a head — the free-symbol pass is the reason this exists: touching every mapped head's
+// examples would drag in disagreements this lane has nothing to do with.
+const idFilter = idsIndex >= 0 ? new Set((args[idsIndex + 1] ?? "").split(",")) : undefined;
+const requested = args.filter(
+  (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head" && args[index - 1] !== "--ids",
+);
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
 const digestOnly = args.includes("--digest");
 // Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
@@ -68,7 +81,10 @@ const digestOnly = args.includes("--digest");
 const accept = args.includes("--accept");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
-const cases: Case[] = referenceEntries(data).flatMap((entry) =>
+// Every non-aspirational example, UNFILTERED — the authority for "does this example still
+// exist" (the write-out loop's deletion guard, below), so a partial `--head`/`--ids` run
+// can't be misread as "every other example of this head is gone."
+const allCases: Case[] = referenceEntries(data).flatMap((entry) =>
   entry.examples
     .filter((example) => example.aspirational !== true)
     .map((example) => ({
@@ -77,8 +93,11 @@ const cases: Case[] = referenceEntries(data).flatMap((entry) =>
       key: example.id,
       expr: example.expr as MathJSON,
       expected: example.expected as MathJSON,
-    }))
-    .filter((item) => headFilter === undefined || item.head === headFilter),
+    })),
+);
+const cases: Case[] = allCases.filter(
+  (item) =>
+    (headFilter === undefined || headFilter.has(item.head)) && (idFilter === undefined || idFilter.has(item.id)),
 );
 
 type Outcome = {
@@ -124,7 +143,27 @@ const loaded = new Map([...records].map(([head, record]) => [head, structuredClo
 for (const system of systems) {
   const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
   const runnable = emitted.filter((row) => row.out.ok);
-  const sources = runnable.map((row) => (row.out as { source: string }).source);
+  // A free symbol on a symbolic system (wolfram, sympy, sage) is checked as an identity —
+  // does the difference vanish? — rather than compared value-for-value, since two closed
+  // forms that are equal can still be spelled differently (design/free-symbol-oracle
+  // question below). `symbolicAgreementSource` returns undefined when `expected` itself
+  // doesn't emit for `system`, and the case falls back to the ordinary verdict.
+  // `plainSources` is what forms.ts (collect-forms.ts) also emits and pins as `in:` — the
+  // record has to keep showing that, currency-tested by forms.test.ts, regardless of what a
+  // free-symbol case actually asks the kernel. `sources` is what's actually run: the plain
+  // source, unless it carries a free symbol on a symbolic system, in which case it's the
+  // agreement check (symbolic-mode) — `undefined` back means `expected` itself doesn't emit
+  // for `system`, so this case just falls back to the ordinary evaluate-and-compare verdict.
+  const plainSources = runnable.map((row) => (row.out as { source: string }).source);
+  const sources = runnable.map((row, index) => {
+    const freeSymbols = row.out.ok ? row.out.freeSymbols : undefined;
+    if (freeSymbols !== undefined && freeSymbols.length > 0 && isSymbolicSystem(system)) {
+      const agreement = symbolicAgreementSource(system, row.item.expr, row.item.expected, freeSymbols);
+      if (agreement !== undefined) return agreement;
+    }
+    return plainSources[index] as string;
+  });
+  const symbolicMode = runnable.map((_row, index) => sources[index] !== plainSources[index]);
   process.stderr.write(`${system}: ${runnable.length}/${cases.length} emit — running…\n`);
   const results = await runIn(system, sources);
 
@@ -137,7 +176,7 @@ for (const system of systems) {
     }
   }
   runnable.forEach((row, index) => {
-    const source = sources[index] as string;
+    const source = plainSources[index] as string;
     const result = results[index] as {
       value?: string;
       display?: string;
@@ -157,8 +196,13 @@ for (const system of systems) {
       return;
     }
     const theirs = result.value ?? "";
-    const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
-    const verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
+    let verdict: Verdict;
+    if (symbolicMode[index]) {
+      verdict = interpretSymbolicAgreement(theirs);
+    } else {
+      const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
+      verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
+    }
     outcomes.push({
       id: row.item.id,
       source,
@@ -210,7 +254,9 @@ for (const system of systems) {
   for (const head of headsThisRun) {
     const record = records.get(head) ?? {};
     const ofHead = cases.filter((c) => c.head === head);
-    const current = new Set(ofHead.map((c) => c.key));
+    // From `allCases`, not `ofHead`: a `--head`/`--ids`-scoped run still has to see every
+    // OTHER example of this head as present, or it would delete their rows as "gone".
+    const current = new Set(allCases.filter((c) => c.head === head).map((c) => c.key));
     const put = (id: string, row: SystemImplementation | undefined): void => {
       const { [system]: _old, ...rest } = record[id] ?? {};
       const next = row === undefined ? rest : { ...rest, [system]: row };

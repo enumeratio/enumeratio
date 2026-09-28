@@ -83,6 +83,18 @@ canonicalizes-to-x-2:
   fullform:
     in: Power[x, 2]
     back: [Power, x, 2]
+  wolfram:
+    in: (x)^2
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[x^2-x^2\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)^2-\left(\frac{7}{3}\right)^2\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)^2-\left(-\frac{11}{5}\right)^2\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)^2-\left(\frac{13}{4}\right)^2\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: (Symbol("x"))**2
+    out: True
+  sage:
+    in: (SR.var("x"))^2
+    out: True
 threads-element-wise-over-a-list:
   epsil:
     in: Square([2, 3, -4])
@@ -214,3 +226,9 @@ infinity-squared-stays-infinite-rather-than:
     tex:
       in: \infty ^2
       out: \infty
+  sympy:
+    in: (oo)**2
+  mpmath:
+    in: (inf)**2
+  sage:
+    in: (oo)^2

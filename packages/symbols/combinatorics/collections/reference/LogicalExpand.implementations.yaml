@@ -16,6 +16,12 @@ distributes-and-over-or:
     out: b\land p\lor p\land r
   fullform:
     in: LogicalExpand[And[p, Or[b, r]]]
+  wolfram:
+    in: LogicalExpand[And[p, Or[b, r]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{LogicalExpand}[p\land (b\lor r)]-((b\land p)\lor (p\land r))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{LogicalExpand}\left[-\frac{11}{5}\land \left(\frac{7}{3}\lor \frac{13}{4}\right)\right]-\left(\left(\frac{7}{3}\land -\frac{11}{5}\right)\lor \left(-\frac{11}{5}\land \frac{13}{4}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{LogicalExpand}\left[\frac{19}{8}\land \left(-\frac{17}{6}\lor -\frac{23}{9}\right)\right]-\left(\left(-\frac{17}{6}\land \frac{19}{8}\right)\lor \left(\frac{19}{8}\land -\frac{23}{9}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{LogicalExpand}\left[-\frac{11}{5}\land \left(\frac{7}{3}\lor \frac{13}{4}\right)\right]-\left(\left(\frac{7}{3}\land -\frac{11}{5}\right)\lor \left(-\frac{11}{5}\land \frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 xor-eliminated-into-dnf:
   epsil:
     in: LogicalExpand(Xor(p, b))
@@ -37,3 +43,9 @@ a-contradictory-term-drops-out:
     out: \mathrm{False}
   fullform:
     in: LogicalExpand[And[p, Not[p]]]
+  wolfram:
+    in: LogicalExpand[And[p, Not[p]]]
+    out: False
+    tex:
+      in: \text{LogicalExpand}[p\land \neg p]
+      out: \text{False}

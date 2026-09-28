@@ -219,6 +219,12 @@ antiderivative:
     out: x\arccos(x)-\sqrt{1-x^2}
   fullform:
     in: Integrate[ArcCos[x], x]
+  wolfram:
+    in: Integrate[ArcCos[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \cos ^{-1}(x) \, dx-\left(x \cos ^{-1}(x)-\sqrt{-x^2+1}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \cos ^{-1}\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{7}{3} \cos ^{-1}\left(\frac{7}{3}\right)-\sqrt{-\left(\frac{7}{3}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \cos ^{-1}\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\frac{11}{5} \cos ^{-1}\left(-\frac{11}{5}\right)-\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\int \cos ^{-1}\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{13}{4} \cos ^{-1}\left(\frac{13}{4}\right)-\sqrt{-\left(\frac{13}{4}\right)^2+1}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 reflection-arccos-x-pi-arccos-x:
   epsil:
     in: Arccos(-x)
@@ -228,6 +234,12 @@ reflection-arccos-x-pi-arccos-x:
     out: \pi-\arccos(x)
   fullform:
     in: ArcCos[Minus[x]]
+  wolfram:
+    in: ArcCos[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos ^{-1}(-x)-\left(-\cos ^{-1}(x)+\pi \right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos ^{-1}\left(-\frac{7}{3}\right)-\left(-\cos ^{-1}\left(\frac{7}{3}\right)+\pi \right)\right]\right],\text{Chop}\left[N\left[\cos ^{-1}\left(-\left(-\frac{11}{5}\right)\right)-\left(-\cos ^{-1}\left(-\frac{11}{5}\right)+\pi \right)\right]\right],\text{Chop}\left[N\left[\cos ^{-1}\left(-\frac{13}{4}\right)-\left(-\cos ^{-1}\left(\frac{13}{4}\right)+\pi \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 not-simply-4-4-is-outside-the-principal-range-0:
   epsil:
     in: Arccos(Cos(4))

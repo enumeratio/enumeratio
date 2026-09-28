@@ -68,3 +68,12 @@ export const SYSTEMS: readonly SystemSpec[] = [
 ];
 
 export const wiredSystems = (): System[] => SYSTEMS.filter((system) => system.wired).map((system) => system.name);
+
+/** Systems with a real symbolic algebra behind them — a free variable is a value to them,
+ * not just a name, so they can carry one through an expression rather than only evaluate a
+ * closed one. mpmath, Oscar, Julia's numerics, Mathlib's definitions and the Rust crates
+ * cannot: a free symbol there is still `missing`. */
+export type SymbolicSystem = "wolfram" | "sympy" | "sage";
+export const SYMBOLIC_SYSTEMS: readonly SymbolicSystem[] = ["wolfram", "sympy", "sage"];
+export const isSymbolicSystem = (system: System): system is SymbolicSystem =>
+  (SYMBOLIC_SYSTEMS as readonly System[]).includes(system);

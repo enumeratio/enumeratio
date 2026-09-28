@@ -238,6 +238,12 @@ the-two-argument-fibonacci-polynomial-f-7-x-from:
     out: x^6+5x^4+6x^2+1
   fullform:
     in: Fibonacci[7, x]
+  wolfram:
+    in: Fibonacci[7, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[F_7(x)-\left(x^6+5 x^4+6 x^2+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[F_7\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^6+5 \left(\frac{7}{3}\right)^4+6 \left(\frac{7}{3}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[F_7\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^6+5 \left(-\frac{11}{5}\right)^4+6 \left(-\frac{11}{5}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[F_7\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^6+5 \left(\frac{13}{4}\right)^4+6 \left(\frac{13}{4}\right)^2+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-fibonacci-polynomial-at-a-real-order-and:
   epsil:
     in: Fibonacci(5.8, 3)

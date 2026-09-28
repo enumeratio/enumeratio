@@ -40,3 +40,5 @@ randomvariate-empirical-resamples-the-data:
     out: c
   fullform:
     in: Last[List[SeedRandom[2], RandomVariate[EmpiricalDistribution[List[a, b, c]]]]]
+  wolfram:
+    in: Last[List[SeedRandom[2], RandomVariate[EmpiricalDistribution[List[a, b, c]]]]]

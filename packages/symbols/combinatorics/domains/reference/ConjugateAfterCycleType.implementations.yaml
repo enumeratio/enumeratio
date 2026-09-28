@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1\bigr\rbrack)
   fullform:
     in: ConjugateAfterCycleType[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: ConjugateAfterCycleType[Permutation[List[2, 3, 1]]]

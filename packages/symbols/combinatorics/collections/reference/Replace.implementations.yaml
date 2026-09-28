@@ -25,3 +25,9 @@ tries-a-list-of-rules-in-order:
     out: "2"
   fullform:
     in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
+  wolfram:
+    in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
+    out: "2"
+    tex:
+      in: \text{Replace}[b,\{a\to 1,b\to 2\}]
+      out: "2"

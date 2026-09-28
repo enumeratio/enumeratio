@@ -10,6 +10,12 @@ polynomials-are-entire:
     out: \mathrm{True}
   fullform:
     in: FunctionAnalytic[Power[x, 2], x]
+  wolfram:
+    in: FunctionAnalytic[Power[x, 2], x]
+    out: True
+    tex:
+      in: \text{FunctionAnalytic}\left[x^2,x\right]
+      out: \text{True}
 a-pole-anywhere-in-the-plane-disqualifies-it:
   epsil:
     in: FunctionAnalytic(1 / x, x)
@@ -22,6 +28,12 @@ a-pole-anywhere-in-the-plane-disqualifies-it:
     out: \mathrm{False}
   fullform:
     in: FunctionAnalytic[Divide[1, x], x]
+  wolfram:
+    in: FunctionAnalytic[Divide[1, x], x]
+    out: False
+    tex:
+      in: \text{FunctionAnalytic}\left[\frac{1}{x},x\right]
+      out: \text{False}
 sqrt-has-a-branch-point:
   epsil:
     in: FunctionAnalytic(Sqrt(x), x)
@@ -34,6 +46,12 @@ sqrt-has-a-branch-point:
     out: \mathrm{False}
   fullform:
     in: FunctionAnalytic[Sqrt[x], x]
+  wolfram:
+    in: FunctionAnalytic[Sqrt[x], x]
+    out: False
+    tex:
+      in: \text{FunctionAnalytic}\left[\sqrt{x},x\right]
+      out: \text{False}
 sine-is-entire:
   epsil:
     in: FunctionAnalytic(Sin(x), x)
@@ -46,3 +64,9 @@ sine-is-entire:
     out: \mathrm{True}
   fullform:
     in: FunctionAnalytic[Sin[x], x]
+  wolfram:
+    in: FunctionAnalytic[Sin[x], x]
+    out: True
+    tex:
+      in: \text{FunctionAnalytic}[\sin (x),x]
+      out: \text{True}

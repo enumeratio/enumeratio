@@ -29,3 +29,9 @@ custom-head:
     out: g(f(1, 3), f(2, 4))
   fullform:
     in: Thread[f[g[1, 2], g[3, 4]], g]
+  wolfram:
+    in: Thread[f[g[1, 2], g[3, 4]], g]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Thread}[f(g(1,2),g(3,4)),g]-g(f(1,3),f(2,4))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Thread}\left[f(g(1,2),g(3,4)),-\frac{11}{5}\right]-g(f(1,3),f(2,4))\right]\right],\text{Chop}\left[N\left[\text{Thread}\left[f(g(1,2),g(3,4)),-\frac{17}{6}\right]-g(f(1,3),f(2,4))\right]\right],\text{Chop}\left[N\left[\text{Thread}\left[f(g(1,2),g(3,4)),-\frac{23}{9}\right]-g(f(1,3),f(2,4))\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

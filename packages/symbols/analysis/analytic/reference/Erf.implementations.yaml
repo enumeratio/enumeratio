@@ -23,6 +23,12 @@ erf-infinity:
   fullform:
     in: Erf[Infinity]
     back: [Erf, PositiveInfinity]
+  wolfram:
+    in: Erf[Infinity]
+    out: "1"
+    tex:
+      in: \text{erf}(\infty )
+      out: "1"
 erf-negativeinfinity:
   epsil:
     in: Erf(NegativeInfinity)
@@ -235,6 +241,12 @@ oddness-applied-symbolically-erf-x-erf-x:
     out: -\operatorname{erf}(x)
   fullform:
     in: Erf[Minus[x]]
+  wolfram:
+    in: Erf[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{erf}(-x)--\text{erf}(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(-\frac{7}{3}\right)--\text{erf}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\left(-\frac{11}{5}\right)\right)--\text{erf}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\frac{13}{4}\right)--\text{erf}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 erf-erfinv-x-x-symbolically-see-erfinv:
   epsil:
     in: Erf(ErfInv(x))
@@ -247,6 +259,12 @@ erf-erfinv-x-x-symbolically-see-erfinv:
     out: x
   fullform:
     in: Erf[InverseErf[x]]
+  wolfram:
+    in: Erf[InverseErf[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erf}\left(\text{erf}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 on-the-imaginary-axis-erf-i-i-erfi-1:
   epsil:
     in: Erf(ImaginaryUnit)

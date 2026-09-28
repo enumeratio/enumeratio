@@ -29,6 +29,12 @@ with-a-custom-head:
     out: \mathrm{head}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack, \bigl\lbrack7\bigr\rbrack, \bigl\lbrack10\bigr\rbrack\bigr\rbrack)
   fullform:
     in: PermutationCycles[List[2, 5, 3, 6, 1, 8, 7, 9, 4, 10], head]
+  wolfram:
+    in: PermutationCycles[List[2, 5, 3, 6, 1, 8, 7, 9, 4, 10], head]
+    out: head[{{1, 2, 5}, {3}, {4, 6, 8, 9}, {7}, {10}}]
+    tex:
+      in: \text{PermutationCycles}[\{2,5,3,6,1,8,7,9,4,10\},\text{head}]
+      out: \text{head}(\{\{1,2,5\},\{3\},\{4,6,8,9\},\{7\},\{10\}\})
 idempotent-on-cycles:
   epsil:
     in: PermutationCycles(Cycles([[1, 3, 5], [2, 4, 6]]))

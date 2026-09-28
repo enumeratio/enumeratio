@@ -123,8 +123,11 @@ a-symbolic-argument-becomes-the-two-argument-log:
   fullform:
     in: Log2[x]
   wolfram:
-    in:
-    note: Wolfram rewrites Log2[x] to Log[x]/Log[2].
+    in: Log2[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\log _2(x)-\log _2(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\log _2\left(\frac{7}{3}\right)-\log _2\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\log _2\left(-\frac{11}{5}\right)-\log _2\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\log _2\left(\frac{13}{4}\right)-\log _2\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 an-integer-power-is-pulled-out-2-log-2-3:
   epsil:
     in: Log2(9)

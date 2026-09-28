@@ -246,6 +246,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\arctan(x)
   fullform:
     in: ArcTan[Minus[x]]
+  wolfram:
+    in: ArcTan[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan ^{-1}(-x)--\tan ^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan ^{-1}\left(-\frac{7}{3}\right)--\tan ^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan ^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\tan ^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan ^{-1}\left(-\frac{13}{4}\right)--\tan ^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 derivative-frac-1-1-x-2:
   epsil:
     in: D(Arctan(x), x)
@@ -264,6 +270,12 @@ antiderivative:
     out: x\arctan(x)-\frac{1}{2}(\ln(x^2+1))
   fullform:
     in: Integrate[ArcTan[x], x]
+  wolfram:
+    in: Integrate[ArcTan[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \tan ^{-1}(x) \, dx-\left(x \tan ^{-1}(x)-\frac{1}{2} \log \left(x^2+1\right)\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \tan ^{-1}\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{7}{3} \tan ^{-1}\left(\frac{7}{3}\right)-\frac{1}{2} \log \left(\left(\frac{7}{3}\right)^2+1\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tan ^{-1}\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\frac{11}{5} \tan ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{2} \log \left(\left(-\frac{11}{5}\right)^2+1\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tan ^{-1}\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{13}{4} \tan ^{-1}\left(\frac{13}{4}\right)-\frac{1}{2} \log \left(\left(\frac{13}{4}\right)^2+1\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 gregory-s-series-about-0:
   epsil:
     in: Series(Arctan(x), x, 0, 7)

@@ -7,6 +7,8 @@ expectation-of-the-bound-variable-is-the-mean:
     out: "2"
   fullform:
     in: Expectation[x, Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
+    in: Expectation[x, Distributed[x, NormalDistribution[2, 3]]]
 expectation-of-x-squared:
   epsil:
     in: Expectation(x ^ 2, Distributed(x, NormalDistribution(2, 3)))
@@ -15,6 +17,8 @@ expectation-of-x-squared:
     in: \mathrm{Expectation}(x^2, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
     out: "13"
   fullform:
+    in: Expectation[Power[x, 2], Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
     in: Expectation[Power[x, 2], Distributed[x, NormalDistribution[2, 3]]]
 expectation-is-linear:
   epsil:
@@ -25,6 +29,8 @@ expectation-is-linear:
     out: "5"
   fullform:
     in: Expectation[Plus[Times[2, x], 1], Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
+    in: Expectation[Plus[Times[2, x], 1], Distributed[x, NormalDistribution[2, 3]]]
 a-shape-with-no-closed-form-stays-unevaluated:
   epsil:
     in: Expectation(Sin(x), Distributed(x, NormalDistribution(2, 3)))
@@ -33,4 +39,6 @@ a-shape-with-no-closed-form-stays-unevaluated:
     in: \mathrm{Expectation}(\sin(x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
     out: \mathrm{Expectation}(\sin(x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
   fullform:
+    in: Expectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
     in: Expectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]

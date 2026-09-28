@@ -55,7 +55,9 @@ test("a Wolfram disagree row has a note, and a live input", () => {
       if (row === undefined || row.verdict !== "disagree") continue;
       const label = `${entry.name} example/${example.id}`;
       expect(row.note, label).toBeTruthy();
-      expect(emit(example.expr, "wolfram"), label).toEqual({ ok: true, source: row.input });
+      // `freeSymbols` (emit.ts) is present whenever the expression carries a free variable —
+      // an extra, informational field alongside `ok`/`source`, not a live-input mismatch.
+      expect(emit(example.expr, "wolfram"), label).toMatchObject({ ok: true, source: row.input });
     }
   }
 });

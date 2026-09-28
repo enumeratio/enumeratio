@@ -7,6 +7,8 @@ probability-equal-is-pdf-for-discrete:
     out: \frac{9}{2e^{3}}
   fullform:
     in: Probability[Equal[x, 2], Distributed[x, PoissonDistribution[3]]]
+  wolfram:
+    in: Probability[(x == 2), Distributed[x, PoissonDistribution[3]]]
 probability-equal-is-zero-for-continuous:
   epsil:
     in: Probability(x == 2, Distributed(x, NormalDistribution(0, 1)))
@@ -16,6 +18,8 @@ probability-equal-is-zero-for-continuous:
     out: "0"
   fullform:
     in: Probability[Equal[x, 2], Distributed[x, NormalDistribution[0, 1]]]
+  wolfram:
+    in: Probability[(x == 2), Distributed[x, NormalDistribution[0, 1]]]
 probability-lessequal-is-cdf:
   epsil:
     in: Probability(x <= 5, Distributed(x, PoissonDistribution(3)))
@@ -24,6 +28,8 @@ probability-lessequal-is-cdf:
     in: \mathrm{Probability}(x\le5, \mathrm{Distributed}(x, \operatorname{PoissonDistribution}(3)))
     out: \frac{92}{5e^{3}}
   fullform:
+    in: Probability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]
+  wolfram:
     in: Probability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]
 probability-of-a-chained-range:
   epsil:
@@ -34,6 +40,8 @@ probability-of-a-chained-range:
     out: \frac{87}{5e^{3}}
   fullform:
     in: Probability[And[LessEqual[1, x], LessEqual[x, 5]], Distributed[x, PoissonDistribution[3]]]
+  wolfram:
+    in: Probability[And[LessEqual[1, x], LessEqual[x, 5]], Distributed[x, PoissonDistribution[3]]]
 probability-greater-is-canonicalized-first:
   epsil:
     in: N(Probability(x > 0, Distributed(x, NormalDistribution(0, 1))))
@@ -42,4 +50,6 @@ probability-greater-is-canonicalized-first:
     in: N(\mathrm{Probability}(x\gt0, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))))
     out: "0.5"
   fullform:
+    in: N[Probability[Greater[x, 0], Distributed[x, NormalDistribution[0, 1]]]]
+  wolfram:
     in: N[Probability[Greater[x, 0], Distributed[x, NormalDistribution[0, 1]]]]

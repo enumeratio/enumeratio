@@ -191,6 +191,12 @@ a-real-symbolic-argument-is-untouched:
     out: \sinh(x)
   fullform:
     in: Sinh[x]
+  wolfram:
+    in: Sinh[x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sinh (x)-\sinh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sinh \left(\frac{7}{3}\right)-\sinh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sinh \left(-\frac{11}{5}\right)-\sinh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sinh \left(\frac{13}{4}\right)-\sinh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sinh(-x)
@@ -200,6 +206,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\sinh(x)
   fullform:
     in: Sinh[Minus[x]]
+  wolfram:
+    in: Sinh[Minus[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sinh (-x)--\sinh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sinh \left(-\frac{7}{3}\right)--\sinh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sinh \left(-\left(-\frac{11}{5}\right)\right)--\sinh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sinh \left(-\frac{13}{4}\right)--\sinh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 sinh-arsinh-x-x-for-every-x:
   epsil:
     in: Sinh(Arsinh(x))
@@ -209,6 +221,12 @@ sinh-arsinh-x-x-for-every-x:
     out: x
   fullform:
     in: Sinh[ArcSinh[x]]
+  wolfram:
+    in: Sinh[ArcSinh[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sinh \left(\sinh ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sinh \left(\sinh ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\sinh \left(\sinh ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\sinh \left(\sinh ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 sinh-arsinh-2-2-for-every-x:
   epsil:
     in: Sinh(Arsinh(2))
@@ -238,6 +256,12 @@ antiderivative:
     out: \cosh(x)
   fullform:
     in: Integrate[Sinh[x], x]
+  wolfram:
+    in: Integrate[Sinh[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \sinh (x) \, dx-\cosh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sinh \left(\frac{7}{3}\right) \, d\frac{7}{3}-\cosh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\int \sinh \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\cosh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\int \sinh \left(\frac{13}{4}\right) \, d\frac{13}{4}-\cosh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 taylor-series-about-0:
   epsil:
     in: Series(Sinh(x), x, 0, 5)

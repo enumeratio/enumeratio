@@ -7,6 +7,12 @@ exp-neg-x-gamma:
     out: \Gamma(s)
   fullform:
     in: MellinTransform[Exp[Minus[x]], x, s]
+  wolfram:
+    in: MellinTransform[Exp[Minus[x]], x, s]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\mathcal{M}_x[\exp (-x)](s)-\Gamma (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{M}_{-\frac{11}{5}}\left[\exp \left(-\left(-\frac{11}{5}\right)\right)\right]\left(\frac{7}{3}\right)-\Gamma \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{17}{6}}\left[\exp \left(-\left(-\frac{17}{6}\right)\right)\right]\left(\frac{13}{4}\right)-\Gamma \left(\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{23}{9}}\left[\exp \left(-\left(-\frac{23}{9}\right)\right)\right]\left(\frac{19}{8}\right)-\Gamma \left(\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 one-over-one-plus-x:
   epsil:
     in: MellinTransform(1 / (1 + x), x, s)
@@ -16,6 +22,12 @@ one-over-one-plus-x:
     out: \pi\csc(\pi s)
   fullform:
     in: MellinTransform[Divide[1, Plus[1, x]], x, s]
+  wolfram:
+    in: MellinTransform[Divide[1, Plus[1, x]], x, s]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{M}_x\left[\frac{1}{1+x}\right](s)-\pi  \csc (\pi  s)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{M}_{-\frac{11}{5}}\left[\frac{1}{1-\frac{11}{5}}\right]\left(\frac{7}{3}\right)-\pi  \csc \left(\pi  \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{17}{6}}\left[\frac{1}{1-\frac{17}{6}}\right]\left(\frac{13}{4}\right)-\pi  \csc \left(\pi  \frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{23}{9}}\left[\frac{1}{1-\frac{23}{9}}\right]\left(\frac{19}{8}\right)-\pi  \csc \left(\pi  \frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 gaussian:
   epsil:
     in: MellinTransform(Exp(-x ^ 2), x, s)
@@ -25,6 +37,12 @@ gaussian:
     out: \frac{\Gamma(\frac{s}{2})}{2}
   fullform:
     in: MellinTransform[Exp[Minus[Power[x, 2]]], x, s]
+  wolfram:
+    in: MellinTransform[Exp[Minus[Power[x, 2]]], x, s]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{M}_x\left[\exp \left(-x^2\right)\right](s)-\frac{1}{2} \Gamma \left(\frac{1}{2} s\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{M}_{-\frac{11}{5}}\left[\exp \left(-\left(-\frac{11}{5}\right)^2\right)\right]\left(\frac{7}{3}\right)-\frac{1}{2} \Gamma \left(\frac{1}{2} \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{17}{6}}\left[\exp \left(-\left(-\frac{17}{6}\right)^2\right)\right]\left(\frac{13}{4}\right)-\frac{1}{2} \Gamma \left(\frac{1}{2} \frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{23}{9}}\left[\exp \left(-\left(-\frac{23}{9}\right)^2\right)\right]\left(\frac{19}{8}\right)-\frac{1}{2} \Gamma \left(\frac{1}{2} \frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 log-one-plus-x:
   epsil:
     in: MellinTransform(Ln(1 + x), x, s)
@@ -34,6 +52,12 @@ log-one-plus-x:
     out: \frac{1}{s}(\pi\csc(\pi s))
   fullform:
     in: MellinTransform[Log[Plus[1, x]], x, s]
+  wolfram:
+    in: MellinTransform[Log[Plus[1, x]], x, s]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{M}_x[\log (1+x)](s)-\frac{\pi  \csc (\pi  s)}{s}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{M}_{-\frac{11}{5}}\left[\log \left(1-\frac{11}{5}\right)\right]\left(\frac{7}{3}\right)-\frac{\pi  \csc \left(\pi  \frac{7}{3}\right)}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{17}{6}}\left[\log \left(1-\frac{17}{6}\right)\right]\left(\frac{13}{4}\right)-\frac{\pi  \csc \left(\pi  \frac{13}{4}\right)}{\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{23}{9}}\left[\log \left(1-\frac{23}{9}\right)\right]\left(\frac{19}{8}\right)-\frac{\pi  \csc \left(\pi  \frac{19}{8}\right)}{\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 power-shift-x-c-exp:
   epsil:
     in: MellinTransform(x ^ a * Exp(-x), x, s)
@@ -43,3 +67,9 @@ power-shift-x-c-exp:
     out: \Gamma(a+s)
   fullform:
     in: MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]
+  wolfram:
+    in: MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{M}_x\left[x^a \exp (-x)\right](s)-\Gamma (a+s)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{M}_{\frac{13}{4}}\left[\left(\frac{13}{4}\right)^{\frac{7}{3}} \exp \left(-\frac{13}{4}\right)\right]\left(-\frac{11}{5}\right)-\Gamma \left(\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{-\frac{23}{9}}\left[\left(-\frac{23}{9}\right)^{-\frac{17}{6}} \exp \left(-\left(-\frac{23}{9}\right)\right)\right]\left(\frac{19}{8}\right)-\Gamma \left(-\frac{17}{6}+\frac{19}{8}\right)\right]\right],\text{Chop}\left[N\left[\mathcal{M}_{\frac{13}{4}}\left[\left(\frac{13}{4}\right)^{\frac{7}{3}} \exp \left(-\frac{13}{4}\right)\right]\left(-\frac{11}{5}\right)-\Gamma \left(\frac{7}{3}-\frac{11}{5}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

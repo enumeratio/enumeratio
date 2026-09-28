@@ -383,6 +383,12 @@ ln-positiveinfinity:
     in: Log[Infinity]
   wolfram:
     in: Log[Infinity]
+  sympy:
+    in: log(oo)
+  mpmath:
+    in: log(inf)
+  sage:
+    in: log(oo)
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln:
   epsil:
     in: Ln(ComplexInfinity)
@@ -394,6 +400,10 @@ ln-z-to-infty-and-its-real-part-goes-to-infty-ln:
     in: Log[ComplexInfinity]
   wolfram:
     in: Log[ComplexInfinity]
+  sympy:
+    in: log(zoo)
+  sage:
+    in: log(unsigned_infinity)
 ln-i-i-pi-2-exactly:
   epsil:
     in: Ln(ImaginaryUnit)
@@ -468,6 +478,18 @@ ln-exp-x:
     out: x
   fullform:
     in: Log[Exp[x]]
+  wolfram:
+    in: Log[Exp[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\log (\exp (x))-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\log \left(\exp \left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\log \left(\exp \left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\log \left(\exp \left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sympy:
+    in: log(exp(Symbol("x")))
+    out: True
+  sage:
+    in: log(exp(SR.var("x")))
+    out: True
 derivative-1-x:
   epsil:
     in: D(Ln(x), x)
@@ -486,6 +508,12 @@ antiderivative-x-ln-x-x:
     out: x\ln(x)-x
   fullform:
     in: Integrate[Log[x], x]
+  wolfram:
+    in: Integrate[Log[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \log (x) \, dx-(-x+x \log (x))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \log \left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(-\frac{7}{3}+\frac{7}{3} \log \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \log \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\left(-\frac{11}{5}\right)-\frac{11}{5} \log \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \log \left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(-\frac{13}{4}+\frac{13}{4} \log \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 mercator-series-for-ln-1-x:
   epsil:
     in: Series(Ln(1 + x), x, 0, 4)
@@ -504,6 +532,12 @@ powerexpand-splits-a-logarithm-of-a-product:
     out: \ln(x)+\ln(y)
   fullform:
     in: PowerExpand[Log[Times[x, y]]]
+  wolfram:
+    in: PowerExpand[Log[Times[x, y]]]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PowerExpand}[\log (x y)]-(\log (x)+\log (y))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)\right]-\left(\log \left(\frac{7}{3}\right)+\log \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{13}{4} \left(-\frac{17}{6}\right)\right)\right]-\left(\log \left(\frac{13}{4}\right)+\log \left(-\frac{17}{6}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PowerExpand}\left[\log \left(\frac{19}{8} \left(-\frac{23}{9}\right)\right)\right]-\left(\log \left(\frac{19}{8}\right)+\log \left(-\frac{23}{9}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Ln(2), 40)

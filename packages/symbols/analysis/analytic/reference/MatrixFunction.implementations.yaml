@@ -18,6 +18,12 @@ on-a-diagonal-matrix-f-acts-on-the-diagonal:
     out: \bigl\lbrack\bigl\lbrack f(a), 0\bigr\rbrack, \bigl\lbrack0, f(b)\bigr\rbrack\bigr\rbrack
   fullform:
     in: MatrixFunction[f, List[List[a, 0], List[0, b]]]
+  wolfram:
+    in: MatrixFunction[f, List[List[a, 0], List[0, b]]]
+    out: "{{f[a], 0}, {0, f[b]}}"
+    tex:
+      in: \text{MatrixFunction}\left[f,\left( \begin{array}{cc}  a & 0 \\  0 & b \\ \end{array} \right)\right]
+      out: \left( \begin{array}{cc}  f(a) & 0 \\  0 & f(b) \\ \end{array} \right)
 with-exp-it-is-matrixexp:
   epsil:
     in: MatrixFunction(Exp, [[0, 0], [0, 0]])

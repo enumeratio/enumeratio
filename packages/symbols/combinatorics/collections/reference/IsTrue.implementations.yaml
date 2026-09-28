@@ -52,3 +52,9 @@ an-unevaluated-symbol-is-false:
     out: \mathrm{False}
   fullform:
     in: TrueQ[x]
+  wolfram:
+    in: TrueQ[x]
+    out: False
+    tex:
+      in: \text{TrueQ}[x]
+      out: \text{False}

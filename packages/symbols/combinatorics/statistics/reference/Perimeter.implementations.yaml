@@ -7,6 +7,8 @@ the-partition-4-2-1-of-7:
     out: "7"
   fullform:
     in: enumeratio`Perimeter[IntegerPartition[List[4, 2, 1]]]
+  wolfram:
+    in: enumeratio`Perimeter[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
     in: Perimeter(IntegerPartition([3, 3, 1]))
@@ -15,4 +17,6 @@ the-partition-3-3-1-of-7:
     in: \mathrm{Perimeter}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "6"
   fullform:
+    in: enumeratio`Perimeter[IntegerPartition[List[3, 3, 1]]]
+  wolfram:
     in: enumeratio`Perimeter[IntegerPartition[List[3, 3, 1]]]

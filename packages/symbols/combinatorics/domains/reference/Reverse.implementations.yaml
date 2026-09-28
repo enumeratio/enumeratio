@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{Permutation}(\bigl\lbrack1, 3, 2\bigr\rbrack)
   fullform:
     in: Reverse[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: Reverse[Permutation[List[2, 3, 1]]]

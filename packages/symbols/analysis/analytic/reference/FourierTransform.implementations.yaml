@@ -7,6 +7,12 @@ dirac-delta-at-origin:
     out: \sqrt{\frac{1}{2\pi}}
   fullform:
     in: FourierTransform[DiracDelta[t], t, w]
+  wolfram:
+    in: FourierTransform[DiracDelta[t], t, w]
+    out: 1/Sqrt[2*Pi]
+    tex:
+      in: \mathcal{F}_t[\delta (t)](w)
+      out: \frac{1}{\sqrt{2 \pi }}
 gaussian:
   epsil:
     in: FourierTransform(ExponentialE ^ (-t ^ 2), t, w)
@@ -16,6 +22,12 @@ gaussian:
     out: \frac{1}{2}(\sqrt{2}\exp(-\frac{w^2}{4}))
   fullform:
     in: FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
+  wolfram:
+    in: FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{F}_t\left[e^{-t^2}\right](w)-\frac{\sqrt{2}}{2} e^{-\frac{1}{4} w^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{F}_{\frac{7}{3}}\left[e^{-\left(\frac{7}{3}\right)^2}\right]\left(-\frac{11}{5}\right)-\frac{\sqrt{2}}{2} e^{-\frac{1}{4} \left(-\frac{11}{5}\right)^2}\right]\right],\text{Chop}\left[N\left[\mathcal{F}_{\frac{13}{4}}\left[e^{-\left(\frac{13}{4}\right)^2}\right]\left(-\frac{17}{6}\right)-\frac{\sqrt{2}}{2} e^{-\frac{1}{4} \left(-\frac{17}{6}\right)^2}\right]\right],\text{Chop}\left[N\left[\mathcal{F}_{\frac{19}{8}}\left[e^{-\left(\frac{19}{8}\right)^2}\right]\left(-\frac{23}{9}\right)-\frac{\sqrt{2}}{2} e^{-\frac{1}{4} \left(-\frac{23}{9}\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 cosine:
   epsil:
     in: FourierTransform(Cos(a * t), t, w)
@@ -25,3 +37,12 @@ cosine:
     out: \frac{1}{2}(\sqrt{2}(\mathrm{DiracDelta}(a+w)+\mathrm{DiracDelta}(w-a))\sqrt{\pi})
   fullform:
     in: FourierTransform[Cos[Times[a, t]], t, w]
+  wolfram:
+    in: FourierTransform[Cos[Times[a, t]], t, w]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{F}_t[\cos (a t)](w)-\frac{\sqrt{2}}{2} (\delta (a+w)+\delta (-a+w)) \sqrt{\pi }\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{F}_{-\frac{11}{5}}\left[\cos \left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)\right]\left(\frac{13}{4}\right)-\frac{\sqrt{2}}{2} \left(\delta \left(\frac{7}{3}+\frac{13}{4}\right)+\delta \left(-\frac{7}{3}+\frac{13}{4}\right)\right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\mathcal{F}_{\frac{19}{8}}\left[\cos \left(-\frac{17}{6} \frac{19}{8}\right)\right]\left(-\frac{23}{9}\right)-\frac{\sqrt{2}}{2} \left(\delta \left(-\frac{17}{6}-\frac{23}{9}\right)+\delta \left(-\left(-\frac{17}{6}\right)-\frac{23}{9}\right)\right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\mathcal{F}_{-\frac{11}{5}}\left[\cos \left(\frac{7}{3} \left(-\frac{11}{5}\right)\right)\right]\left(\frac{13}{4}\right)-\frac{\sqrt{2}}{2} \left(\delta \left(\frac{7}{3}+\frac{13}{4}\right)+\delta \left(-\frac{7}{3}+\frac{13}{4}\right)\right) \sqrt{\pi }\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: A Fourier-transform closed form that FullSimplify doesn't confirm automatically for a symbolic argument.

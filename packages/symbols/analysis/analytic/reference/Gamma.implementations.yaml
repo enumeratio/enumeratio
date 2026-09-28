@@ -427,6 +427,12 @@ gamma-1-z-e-z-exact-and-symbolic-in-z:
     out: e^{-z}
   fullform:
     in: Gamma[1, z]
+  wolfram:
+    in: Gamma[1, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Gamma (1,z)-e^{-z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(1,\frac{7}{3}\right)-e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\Gamma \left(1,-\frac{11}{5}\right)-e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\Gamma \left(1,\frac{13}{4}\right)-e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 so-gamma-1-z-1-e-z-the-exponential-distribution:
   epsil:
     in: Gamma(1, 0, z)
@@ -436,6 +442,12 @@ so-gamma-1-z-1-e-z-the-exponential-distribution:
     out: 1-\exp(-z)
   fullform:
     in: Gamma[1, 0, z]
+  wolfram:
+    in: Gamma[1, 0, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Gamma (1,0,z)-\left(-e^{-z}+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(1,0,\frac{7}{3}\right)-\left(-e^{-\frac{7}{3}}+1\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(1,0,-\frac{11}{5}\right)-\left(-e^{-\left(-\frac{11}{5}\right)}+1\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(1,0,\frac{13}{4}\right)-\left(-e^{-\frac{13}{4}}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 now-that-gamma-2-z-has-a-closed-form-the-three:
   epsil:
     in: Gamma(2, 0, z)
@@ -445,6 +457,12 @@ now-that-gamma-2-z-has-a-closed-form-the-three:
     out: 1-\frac{z+1}{e^{z}}
   fullform:
     in: Gamma[2, 0, z]
+  wolfram:
+    in: Gamma[2, 0, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Gamma (2,0,z)-\left(-\left((z+1) e^{-z}\right)+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(2,0,\frac{7}{3}\right)-\left(-\left(\left(\frac{7}{3}+1\right) e^{-\frac{7}{3}}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(2,0,-\frac{11}{5}\right)-\left(-\left(\left(-\frac{11}{5}+1\right) e^{-\left(-\frac{11}{5}\right)}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(2,0,\frac{13}{4}\right)-\left(-\left(\left(\frac{13}{4}+1\right) e^{-\frac{13}{4}}\right)+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 a-machine-precision-argument-gamma-4-5-11-6317:
   epsil:
     in: Gamma(4.5)
@@ -568,6 +586,12 @@ gamma-infty-infty:
     in: Gamma[Infinity]
   wolfram:
     in: Gamma[Infinity]
+  sympy:
+    in: gamma(oo)
+  mpmath:
+    in: gamma(inf)
+  sage:
+    in: gamma(oo)
 values-far-past-the-double-range-gamma-200-5:
   epsil:
     in: Gamma(200.5)
@@ -614,6 +638,12 @@ an-integer-order-reduces-to-a-closed-form-gamma:
     out: (x+1)\exp(-x)
   fullform:
     in: Gamma[2, x]
+  wolfram:
+    in: Gamma[2, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Gamma (2,x)-(x+1) e^{-x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(2,\frac{7}{3}\right)-\left(\frac{7}{3}+1\right) e^{-\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\Gamma \left(2,-\frac{11}{5}\right)-\left(-\frac{11}{5}+1\right) e^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\Gamma \left(2,\frac{13}{4}\right)-\left(\frac{13}{4}+1\right) e^{-\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 gamma-2-1-2-e-the-same-closed-form-at-an-exact:
   epsil:
     in: Gamma(2, 1)
@@ -667,6 +697,15 @@ gamma-a-0-gamma-a-the-incomplete-gamma-from-zero:
     out: \Gamma(a)
   fullform:
     in: Gamma[a, 0]
+  wolfram:
+    in: Gamma[a, 0]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Gamma (a,0)-\Gamma (a)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(\frac{7}{3},0\right)-\Gamma \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(-\frac{11}{5},0\right)-\Gamma \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{13}{4},0\right)-\Gamma \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: unevaluated
+    note: Wolfram's automatic evaluator leaves this incomplete-Gamma identity symbolic for a free parameter rather than resolving it the way our own engine does.
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2:
   epsil:
     in: Gamma(0, 1.5)
@@ -690,6 +729,12 @@ gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc:
     out: \operatorname{erfc}(\sqrt{x})\sqrt{\pi}
   fullform:
     in: Gamma[Rational[1, 2], x]
+  wolfram:
+    in: Gamma[Rational[1, 2], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Gamma \left(\frac{1}{2},x\right)-\text{erfc}\left(\sqrt{x}\right) \sqrt{\pi }\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(\frac{1}{2},\frac{7}{3}\right)-\text{erfc}\left(\sqrt{\frac{7}{3}}\right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{1}{2},-\frac{11}{5}\right)-\text{erfc}\left(\sqrt{-\frac{11}{5}}\right) \sqrt{\pi }\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{1}{2},\frac{13}{4}\right)-\text{erfc}\left(\sqrt{\frac{13}{4}}\right) \sqrt{\pi }\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 gamma-x-gamma-x-psi-x-so-the-logarithmic:
   epsil:
     in: D(Gamma(x), x) / Gamma(x)
@@ -776,3 +821,9 @@ three-arguments-fully-symbolic-in-both-order-and:
     out: \Gamma(s, 0, z)
   fullform:
     in: Gamma[s, 0, z]
+  wolfram:
+    in: Gamma[s, 0, z]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Gamma (s,0,z)-\Gamma (s,0,z)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Gamma \left(\frac{7}{3},0,-\frac{11}{5}\right)-\Gamma \left(\frac{7}{3},0,-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{13}{4},0,-\frac{17}{6}\right)-\Gamma \left(\frac{13}{4},0,-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\Gamma \left(\frac{19}{8},0,-\frac{23}{9}\right)-\Gamma \left(\frac{19}{8},0,-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

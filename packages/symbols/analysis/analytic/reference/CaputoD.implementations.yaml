@@ -7,6 +7,15 @@ power-x2-alpha-half:
     out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}
   fullform:
     in: CaputoD[Power[x, 2], List[x, 0.5]]
+  wolfram:
+    in: CaputoD[Power[x, 2], List[x, 0.5]]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{CaputoD}\left[x^2,\{x,0.5\}\right]-1.50450555612735009853 x^{1.5}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{CaputoD}\left[\left(\frac{7}{3}\right)^2,\left\{\frac{7}{3},0.5\right\}\right]-1.50450555612735009853 \left(\frac{7}{3}\right)^{1.5}\right]\right],\text{Chop}\left[N\left[\text{CaputoD}\left[\left(-\frac{11}{5}\right)^2,\left\{-\frac{11}{5},0.5\right\}\right]-1.50450555612735009853 \left(-\frac{11}{5}\right)^{1.5}\right]\right],\text{Chop}\left[N\left[\text{CaputoD}\left[\left(\frac{13}{4}\right)^2,\left\{\frac{13}{4},0.5\right\}\right]-1.50450555612735009853 \left(\frac{13}{4}\right)^{1.5}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: domain
+    note: Same as the other CaputoD example — Wolfram has no native fractional Caputo derivative, so FullSimplify can't reduce the difference and a numeric substitution still leaves CaputoD[...] symbolic.
 constant-vanishes:
   epsil:
     in: CaputoD(5, [x, 0.5])
@@ -16,6 +25,12 @@ constant-vanishes:
     out: "0"
   fullform:
     in: CaputoD[5, List[x, 0.5]]
+  wolfram:
+    in: CaputoD[5, List[x, 0.5]]
+    out: "0"
+    tex:
+      in: \text{CaputoD}[5,\{x,0.5\}]
+      out: "0"
 integer-edge-case-vanishes:
   epsil:
     in: CaputoD(x, [x, 1.5])
@@ -25,6 +40,15 @@ integer-edge-case-vanishes:
     out: "0"
   fullform:
     in: CaputoD[x, List[x, 1.5]]
+  wolfram:
+    in: CaputoD[x, List[x, 1.5]]
+    out: CaputoD[x, {x, 1.5}]
+    tex:
+      in: \text{CaputoD}[x,\{x,1.5\}]
+      out: \text{CaputoD}[x,\{x,1.5\}]
+    verdict: disagree
+    kind: domain
+    note: Wolfram has no native CaputoD (fractional Caputo derivative); the call stays completely unevaluated regardless of the arguments, so nothing about this call can be checked against Wolfram.
 polynomial-linearity:
   epsil:
     in: CaputoD(x ^ 2 + 3x + 1, [x, 0.5])
@@ -34,3 +58,12 @@ polynomial-linearity:
     out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}
   fullform:
     in: CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]
+  wolfram:
+    in: CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{CaputoD}\left[x^2+3 x+1,\{x,0.5\}\right]-\left(1.50450555612735009853 x^{1.5}+3.385137501286537722 \sqrt{x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{CaputoD}\left[\left(\frac{7}{3}\right)^2+3 \frac{7}{3}+1,\left\{\frac{7}{3},0.5\right\}\right]-\left(1.50450555612735009853 \left(\frac{7}{3}\right)^{1.5}+3.385137501286537722 \sqrt{\frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{CaputoD}\left[\left(-\frac{11}{5}\right)^2+3 \left(-\frac{11}{5}\right)+1,\left\{-\frac{11}{5},0.5\right\}\right]-\left(1.50450555612735009853 \left(-\frac{11}{5}\right)^{1.5}+3.385137501286537722 \sqrt{-\frac{11}{5}}\right)\right]\right],\text{Chop}\left[N\left[\text{CaputoD}\left[\left(\frac{13}{4}\right)^2+3 \frac{13}{4}+1,\left\{\frac{13}{4},0.5\right\}\right]-\left(1.50450555612735009853 \left(\frac{13}{4}\right)^{1.5}+3.385137501286537722 \sqrt{\frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: domain
+    note: Same as the other CaputoD examples — no native Wolfram equivalent to check against.

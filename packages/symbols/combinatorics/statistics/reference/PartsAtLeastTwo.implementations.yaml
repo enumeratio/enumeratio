@@ -7,6 +7,8 @@ the-partition-4-2-1-of-7:
     out: "2"
   fullform:
     in: PartsAtLeastTwo[IntegerPartition[List[4, 2, 1]]]
+  wolfram:
+    in: PartsAtLeastTwo[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
     in: PartsAtLeastTwo(IntegerPartition([3, 3, 1]))
@@ -15,4 +17,6 @@ the-partition-3-3-1-of-7:
     in: \mathrm{PartsAtLeastTwo}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "2"
   fullform:
+    in: PartsAtLeastTwo[IntegerPartition[List[3, 3, 1]]]
+  wolfram:
     in: PartsAtLeastTwo[IntegerPartition[List[3, 3, 1]]]

@@ -153,6 +153,15 @@ the-default-comparison-is-structural:
     out: \mathrm{TestResultObject}((\text{Outcome},\text{Failure}), (\text{Input},x^2+2x+1), (\text{ExpectedOutput},(x+1)^2), (\text{ActualOutput},x^2+2x+1), (\text{AbsoluteTimeUsed},0))
   fullform:
     in: VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]
+  wolfram:
+    in: VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]
+    out: Indeterminate
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{VerificationTest}\left[x^2+2 x+1,(x+1)^2\right]-\text{TestResultObject}\left[\{\text{Outcome},\text{Failure}\},\left\{\text{Input},x^2+2 x+1\right\},\left\{\text{ExpectedOutput},(x+1)^2\right\},\left\{\text{ActualOutput},x^2+2 x+1\right\},\{\text{AbsoluteTimeUsed},0\}\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{VerificationTest}\left[\left(\frac{7}{3}\right)^2+2 \frac{7}{3}+1,\left(\frac{7}{3}+1\right)^2\right]-\text{TestResultObject}\left[\{\text{Outcome},\text{Failure}\},\left\{\text{Input},\left(\frac{7}{3}\right)^2+2 \frac{7}{3}+1\right\},\left\{\text{ExpectedOutput},\left(\frac{7}{3}+1\right)^2\right\},\left\{\text{ActualOutput},\left(\frac{7}{3}\right)^2+2 \frac{7}{3}+1\right\},\{\text{AbsoluteTimeUsed},0\}\right]\right]\right],\text{Chop}\left[N\left[\text{VerificationTest}\left[\left(-\frac{11}{5}\right)^2+2 \left(-\frac{11}{5}\right)+1,\left(-\frac{11}{5}+1\right)^2\right]-\text{TestResultObject}\left[\{\text{Outcome},\text{Failure}\},\left\{\text{Input},\left(-\frac{11}{5}\right)^2+2 \left(-\frac{11}{5}\right)+1\right\},\left\{\text{ExpectedOutput},\left(-\frac{11}{5}+1\right)^2\right\},\left\{\text{ActualOutput},\left(-\frac{11}{5}\right)^2+2 \left(-\frac{11}{5}\right)+1\right\},\{\text{AbsoluteTimeUsed},0\}\right]\right]\right],\text{Chop}\left[N\left[\text{VerificationTest}\left[\left(\frac{13}{4}\right)^2+2 \frac{13}{4}+1,\left(\frac{13}{4}+1\right)^2\right]-\text{TestResultObject}\left[\{\text{Outcome},\text{Failure}\},\left\{\text{Input},\left(\frac{13}{4}\right)^2+2 \frac{13}{4}+1\right\},\left\{\text{ExpectedOutput},\left(\frac{13}{4}+1\right)^2\right\},\left\{\text{ActualOutput},\left(\frac{13}{4}\right)^2+2 \frac{13}{4}+1\right\},\{\text{AbsoluteTimeUsed},0\}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{Indeterminate}
+    verdict: inconclusive
+    kind: convention
+    note: This example specifically tests that VerificationTest's default comparison is STRUCTURAL, not mathematical — x^2+2x+1 and (x+1)^2 are algebraically equal, which is exactly why the test is pinned to fail structurally. The free-symbol identity check (symbolic.ts) tests mathematical equality instead, the wrong question for this head.
 a-sametest-with-a-tolerance-22-7-3-14-0-01:
   epsil:
     in: VerificationTest(22 / 7, 3.14, SameTest -> Function(Abs(a - b) < 0.01, a, b))

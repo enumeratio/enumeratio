@@ -41,6 +41,32 @@ def enumeratio_max(*args):
 def enumeratio_min(*args):
     return Min(*_enumeratio_flatten(list(args)))
 
+# Whether a and b, both possibly carrying a free symbol, are the same value — for
+# symbolic.ts's symbolicAgreementSource. simplify(a - b) proves agreement outright when it
+# can; failing that, trials is 3 (theirs, ours) pairs at fixed rational substitutions
+# (already-evaluated, since symbolic.ts substitutes and re-emits before this call), skipped
+# (None) where a trial's substitution didn't emit. None back means neither route decided.
+def enumeratio_symbolic_agree(a, b, trials):
+    try:
+        d = simplify(a - b)
+        if d == 0:
+            return True
+        if getattr(d, "free_symbols", None) == set() and getattr(d, "is_number", False):
+            return bool(abs(N(d, 30)) < 1e-20)
+    except (TypeError, ValueError, AttributeError):
+        pass
+    results = []
+    for trial in trials:
+        if trial is None:
+            continue
+        ta, tb = trial
+        try:
+            delta = complex(N(ta - tb, 30))
+        except (TypeError, ValueError):
+            continue
+        results.append(abs(delta) < 1e-9)
+    return all(results) if results else None
+
 
 def enumeratio_value(x):
     if isinstance(x, list):

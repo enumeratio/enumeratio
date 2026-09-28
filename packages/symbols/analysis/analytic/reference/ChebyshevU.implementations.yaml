@@ -7,6 +7,12 @@ the-quadratic:
     out: 4x^2-1
   fullform:
     in: ChebyshevU[2, x]
+  wolfram:
+    in: ChebyshevU[2, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[U_2(x)-\left(4 x^2-1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[U_2\left(\frac{7}{3}\right)-\left(4 \left(\frac{7}{3}\right)^2-1\right)\right]\right],\text{Chop}\left[N\left[U_2\left(-\frac{11}{5}\right)-\left(4 \left(-\frac{11}{5}\right)^2-1\right)\right]\right],\text{Chop}\left[N\left[U_2\left(\frac{13}{4}\right)-\left(4 \left(\frac{13}{4}\right)^2-1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 the-cubic:
   epsil:
     in: ChebyshevU(3, x)
@@ -16,6 +22,12 @@ the-cubic:
     out: 8x^3-4x
   fullform:
     in: ChebyshevU[3, x]
+  wolfram:
+    in: ChebyshevU[3, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[U_3(x)-\left(8 x^3-4 x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[U_3\left(\frac{7}{3}\right)-\left(8 \left(\frac{7}{3}\right)^3-4 \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[U_3\left(-\frac{11}{5}\right)-\left(8 \left(-\frac{11}{5}\right)^3-4 \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[U_3\left(\frac{13}{4}\right)-\left(8 \left(\frac{13}{4}\right)^3-4 \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 at-a-real:
   epsil:
     in: ChebyshevU(5, 0.7)
@@ -70,6 +82,12 @@ a-symbolic-order-stays-unevaluated:
     out: \mathrm{ChebyshevU}(n, x)
   fullform:
     in: ChebyshevU[n, x]
+  wolfram:
+    in: ChebyshevU[n, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[U_n(x)-U_n(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[U_{\frac{7}{3}}\left(-\frac{11}{5}\right)-U_{\frac{7}{3}}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[U_{\frac{13}{4}}\left(-\frac{17}{6}\right)-U_{\frac{13}{4}}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[U_{\frac{19}{8}}\left(-\frac{23}{9}\right)-U_{\frac{19}{8}}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 at-1:
   epsil:
     in: ChebyshevU(5, 1)
@@ -124,6 +142,12 @@ order-minus-1:
     out: "0"
   fullform:
     in: ChebyshevU[-1, x]
+  wolfram:
+    in: ChebyshevU[-1, x]
+    out: "0"
+    tex:
+      in: U_{-1}(x)
+      out: "0"
 negative-order:
   epsil:
     in: ChebyshevU(-5, x)
@@ -133,6 +157,12 @@ negative-order:
     out: 4x-8x^3
   fullform:
     in: ChebyshevU[-5, x]
+  wolfram:
+    in: ChebyshevU[-5, x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[U_{-5}(x)-\left(-8 x^3+4 x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[U_{-5}\left(\frac{7}{3}\right)-\left(-8 \left(\frac{7}{3}\right)^3+4 \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[U_{-5}\left(-\frac{11}{5}\right)-\left(-8 \left(-\frac{11}{5}\right)^3+4 \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[U_{-5}\left(\frac{13}{4}\right)-\left(-8 \left(\frac{13}{4}\right)^3+4 \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 at-u0-0-7:
   epsil:
     in: N(ChebyshevU(0, 0.7))

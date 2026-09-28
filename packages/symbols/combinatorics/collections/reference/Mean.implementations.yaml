@@ -103,6 +103,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac:
     out: \frac{a+b+c+d}{4}
   fullform:
     in: Mean[List[a, b, c, d]]
+  wolfram:
+    in: Mean[List[a, b, c, d]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Mean}[\{a,b,c,d\}]-\frac{1}{4} (a+b+c+d)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4},-\frac{17}{6}\right\}\right]-\frac{1}{4} \left(\frac{7}{3}-\frac{11}{5}+\frac{13}{4}-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{19}{8},-\frac{23}{9},\frac{7}{3},-\frac{11}{5}\right\}\right]-\frac{1}{4} \left(\frac{19}{8}-\frac{23}{9}+\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Mean}\left[\left\{\frac{13}{4},-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}\right]-\frac{1}{4} \left(\frac{13}{4}-\frac{17}{6}+\frac{19}{8}-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 exact-constants-give-an-exact-mean-frac-2-e-pi-3:
   epsil:
     in: Mean([Pi, ExponentialE, 2])
@@ -123,6 +129,12 @@ of-a-matrix-of-symbols-the-exact-mean-of-each:
     out: \bigl\lbrack\frac{a+b+c}{3}, \frac{u+v+w}{3}\bigr\rbrack
   fullform:
     in: Mean[List[List[a, u], List[b, v], List[c, w]]]
+  wolfram:
+    in: Mean[List[List[a, u], List[b, v], List[c, w]]]
+    out: "{(a + b + c)/3, (u + v + w)/3}"
+    tex:
+      in: \text{Mean}\left[\left( \begin{array}{cc}  a & u \\  b & v \\  c & w \\ \end{array} \right)\right]
+      out: \left\{\frac{1}{3} (a+b+c),\frac{1}{3} (u+v+w)\right\}
 the-mean-of-a-lazy-range-exactly:
   epsil:
     in: Mean(Range(1, 100))

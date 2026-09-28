@@ -418,6 +418,12 @@ psi-infty-0:
     in: PolyGamma[1, Infinity]
   wolfram:
     in: PolyGamma[1, Infinity]
+  sympy:
+    in: polygamma(1, oo)
+  mpmath:
+    in: psi(1, inf)
+  sage:
+    in: psi(1, oo)
 interval-arithmetic-the-trigamma-is-decreasing:
   epsil:
     in: PolyGamma(1, Interval(3.45, 3.46))

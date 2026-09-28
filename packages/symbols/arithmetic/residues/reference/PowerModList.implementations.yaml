@@ -260,7 +260,7 @@ the-square-roots-of-1-modulo-the-product-of-the:
       in: \text{Length}\left[\text{PowerModList}\left[1,\frac{1}{2},2\ 3\ 5\ 7\ 11\ 13\ 17\ 19\ 23\ 29\ 31\ 37\ 41\ 43\ 47\ 53\right]\right]
       out: "32768"
   sage:
-    in: (len(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))) if hasattr(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53)), '__len__') else 0)
+    in: (len(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53))) if hasattr(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53)), '__len__') else (len(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53)).operands()) if hasattr(enumeratio_power_mod_list(1, (1/2), (2 * 3 * 5 * 7 * 11 * 13 * 17 * 19 * 23 * 29 * 31 * 37 * 41 * 43 * 47 * 53)), 'operands') else 0))
     out: "32768"
 the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2:
   epsil:
@@ -278,7 +278,7 @@ the-1000th-roots-of-unity-mod-2-61-1-gcd-1000-2:
       in: \text{Length}\left[\text{PowerModList}\left[1,\frac{1}{1000},2^{61}-1\right]\right]
       out: "50"
   sage:
-    in: (len(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1))) if hasattr(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1)), '__len__') else 0)
+    in: (len(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1))) if hasattr(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1)), '__len__') else (len(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1)).operands()) if hasattr(enumeratio_power_mod_list(1, (1/1000), (((2)^61) - 1)), 'operands') else 0))
     out: "50"
 mod-a-prime-there-are-exactly-gcd-r-p-1-r-th:
   epsil:
@@ -299,7 +299,7 @@ mod-a-prime-there-are-exactly-gcd-r-p-1-r-th:
       in: \text{Length}\left[\text{PowerModList}\left[1,\frac{1}{12},1009\right]\right]=\gcd (12,1008)
       out: \text{True}
   sage:
-    in: bool((len(enumeratio_power_mod_list(1, (1/12), 1009)) if hasattr(enumeratio_power_mod_list(1, (1/12), 1009), '__len__') else 0) == gcd(12, 1008))
+    in: bool((len(enumeratio_power_mod_list(1, (1/12), 1009)) if hasattr(enumeratio_power_mod_list(1, (1/12), 1009), '__len__') else (len(enumeratio_power_mod_list(1, (1/12), 1009).operands()) if hasattr(enumeratio_power_mod_list(1, (1/12), 1009), 'operands') else 0)) == gcd(12, 1008))
     out: True
 for-odd-m-the-square-roots-of-1-are-the-2-omega:
   epsil:
@@ -708,3 +708,15 @@ a-symbolic-modulus-stays-unevaluated:
     out: \mathrm{PowerModList}(1, \frac{1}{2}, m)
   fullform:
     in: PowerModList[1, Rational[1, 2], m]
+  wolfram:
+    in: PowerModList[1, Rational[1, 2], m]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{PowerModList}\left[1,\frac{1}{2},m\right]-\text{PowerModList}\left[1,\frac{1}{2},m\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PowerModList}\left[1,\frac{1}{2},\frac{7}{3}\right]-\text{PowerModList}\left[1,\frac{1}{2},\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{PowerModList}\left[1,\frac{1}{2},-\frac{11}{5}\right]-\text{PowerModList}\left[1,\frac{1}{2},-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{PowerModList}\left[1,\frac{1}{2},\frac{13}{4}\right]-\text{PowerModList}\left[1,\frac{1}{2},\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
+  sage:
+    in: enumeratio_power_mod_list(1, (1/2), SR.var("m"))
+    out: "TypeError: unable to convert m to an integer"
+    verdict: error
+    kind: domain
+    note: Sages Zmod(m) requires a concrete integer modulus and errors on a free symbol; our own PowerModList leaves it symbolic instead.

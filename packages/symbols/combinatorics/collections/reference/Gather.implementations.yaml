@@ -18,6 +18,12 @@ symbolic-elements:
     out: \bigl\lbrack\bigl\lbrack a, a, a\bigr\rbrack, \bigl\lbrack b, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack
   fullform:
     in: Gather[List[a, b, a, a, c, b]]
+  wolfram:
+    in: Gather[List[a, b, a, a, c, b]]
+    out: "{{a, a, a}, {b, b}, {c}}"
+    tex:
+      in: \text{Gather}[\{a,b,a,a,c,b\}]
+      out: \{\{a,a,a\},\{b,b\},\{c\}\}
 a-test-decides-which-elements-belong-together:
   epsil:
     in: Gather([1, 2, 3, 4, 5, 6], Function(_1 % 2 == _2 % 2))
