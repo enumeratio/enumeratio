@@ -1,0 +1,18 @@
+---
+name: OverscriptBox
+domain: Boxes
+signature: OverscriptBox(base, over)
+summary: 'A box set above a base: $\overline{3}$, $\hat{x}$.'
+signatures:
+  - call: OverscriptBox(base, over)
+    description: 'A box set above a base: $\overline{3}$, $\hat{x}$.'
+    library: enumeratio-boxes
+    type: (boxes, boxes, expression*) -> boxes
+details:
+  - MathML's `mover`.
+seeAlso:
+  - UnderscriptBox
+  - UnderoverscriptBox
+names:
+  wolframIdentity: true
+---

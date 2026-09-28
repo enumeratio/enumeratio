@@ -1,0 +1,20 @@
+id	section	role	expr	expected	caption
+erfc-0			[Erfc, 0]	1	
+erfc-infinity			[Erfc, Infinity]	0	
+erfc-negativeinfinity			[Erfc, NegativeInfinity]	2	
+a-floating-point-argument-evaluates-directly-to			[Erfc, 0.5]	{num: "0.479500122186953462317"}	A floating-point argument evaluates directly to a high-precision decimal
+a-machine-precision-argument			[Erfc, 1.5]	{num: "0.033894853524689272933"}	A machine-precision argument
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Erfc, [List, 0, 1]]	[List, 1, [Erfc, 1]]	Threads element-wise over a list, as Wolfram's Listable heads do
+complex-arguments-should-evaluate-as-they-do-for	Scope		[Erfc, [Complex, 1.5, -1]]	[Complex, -0.07839920749893345, -0.027963711238655847]	Complex arguments evaluate, as they do for [[Erf]]: $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$
+listable-threads-over-its-limits-at-pm-infty	Scope		[Erfc, [List, PositiveInfinity, NegativeInfinity]]	[List, 0, 2]	Listable: threads over its limits at $\pm\infty$
+interval-arithmetic-erfc-is-decreasing-so-the	Scope		[Erfc, [Interval, 0.2, 0.3]]	[Interval, 0.6713732405408726, 0.7772974107895215]	Interval arithmetic: Erfc is decreasing, so the endpoints swap
+uncertainty-propagation	Scope		[Erfc, [Around, 2, 0.01]]	[Around, 0.004677734981047266, 0.00020666985354092054]	Uncertainty propagation
+to-30-significant-digits-every-one-correctly	Scope		[N, [Erfc, 2], 30]	{num: "0.00467773498104726583793074363275"}	To 30 significant digits, every one correctly rounded
+erfc-z-2-erfc-z-here-at-z-1	Properties		[Equal, [Add, [Erfc, -1], [Erfc, 1]], 2]	True	$\operatorname{erfc}(-z) = 2 - \operatorname{erfc}(z)$, here at $z = 1$
+definition-erf-z-erfc-z-1-see-erf	Properties		[Equal, [Add, [Erf, 2], [Erfc, 2]], 1]	True	Definition: $\operatorname{erf}(z) + \operatorname{erfc}(z) = 1$. See [[Erf]]
+erfc-x-2-erfc-x-applied-symbolically	Properties		[Erfc, [Negate, x]]	[Add, [Negate, [Erfc, x]], 2]	$\operatorname{erfc}(-x) = 2 - \operatorname{erfc}(x)$ applied symbolically
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	Properties		[D, [Erfc, x], x]	[Divide, [Multiply, -2, [Power, ExponentialE, [Negate, [Power, x, 2]]]], [Sqrt, Pi]]	$\frac{d}{dx}\operatorname{erfc}(x) = -\frac{2}{\sqrt\pi}e^{-x^2}$
+an-exact-integer-argument-is-left-unevaluated	Possible issues		[Erfc, 1]	[Erfc, 1]	An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 0.5 for a decimal
+far-in-the-tail-erfc-keeps-full-relative	Possible issues		[Erfc, 9.5]	{num: "3.76921448565487994168e-41"}	Far in the tail Erfc keeps full relative precision: $\operatorname{erfc}(9.5) \approx 3.8\times10^{-41}$...
+whereas-1-erf-9-5-cancels-to-exactly-0-in	Possible issues		[Subtract, 1, [Erf, 9.5]]	0	...whereas $1 - \operatorname{erf}(9.5)$ cancels to exactly 0 in floating point
+the-gaussian-tail-shrinks-fast-only-about-7	Neat examples		[Erfc, 3.5]	{num: "7.43098372341412745524e-7"}	The Gaussian tail shrinks fast: only about $7\times10^{-7}$ of the area lies beyond $3.5$ standard deviations

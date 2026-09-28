@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-delannoypaths-3	Basic		[Count, [DelannoyPaths, 3]]	63	$Count(DelannoyPaths(3)) = 63$
+first-element-of-delannoypaths-3	Basic		[At, [DelannoyPaths, 3], 1]	[List, 0, 0, 0, 1, 1, 1]	The first element in enumeration order
+every-element-of-delannoypaths-3		test	[Take, [DelannoyPaths, 3], 5]	[List, [List, 0, 0, 0, 1, 1, 1], [List, 0, 0, 1, 0, 1, 1], [List, 0, 0, 1, 1, 0, 1], [List, 0, 0, 1, 1, 1, 0], [List, 0, 0, 1, 1, 2]]	

@@ -1,0 +1,51 @@
+id	section	role	expr	expected	caption
+12-hat-z-8-hat-z-4-hat-z			[Add, [ProfiniteNumber, 3, 12], [ProfiniteNumber, 5, 8]]	[ProfiniteNumber, 0, 4]	$12\hat{\mathbb{Z}} + 8\hat{\mathbb{Z}} = 4\hat{\mathbb{Z}}$
+profinitenumber-3-12-times-profinitenumber-5-8			[Multiply, [ProfiniteNumber, 3, 12], [ProfiniteNumber, 5, 8]]	[ProfiniteNumber, 3, 12]	
+equal-cosets-need-not-share-a-modulus			[Equal, [ProfiniteNumber, 6, 20], [ProfiniteNumber, 6, 40]]	True	equal cosets need not share a modulus
+numerator-profinitenumber-2-over-3-5			[Numerator, [ProfiniteNumber, [Rational, 2, 3], 5]]	[ProfiniteNumber, 2, 15]	
+denominator-profinitenumber-2-over-3-5			[Denominator, [ProfiniteNumber, [Rational, 2, 3], 5]]	3	
+projecting-to-q-2			[AdicNumeral, 2, [ProfiniteNumber, 100, 24]]	[AdicNumeral, 2, 4, 3]	projecting to $\mathbb{Q}_2$
+projecting-to-q-3			[AdicNumeral, 3, [ProfiniteNumber, 100, 24]]	[AdicNumeral, 3, 1, 1]	projecting to $\mathbb{Q}_3$
+profinitenumber-26-20-normalises-to-6-20			[ProfiniteNumber, 26, 20]	[ProfiniteNumber, 6, 20]	
+a-negative-value-normalises-into-the-coset			[ProfiniteNumber, -1, 12]	[ProfiniteNumber, 11, 12]	
+a-negative-modulus-normalises-to-positive			[ProfiniteNumber, 5, -12]	[ProfiniteNumber, 5, 12]	
+a-rational-value-reduces-mod-a-rational-modulus			[ProfiniteNumber, [Rational, 7, 2], [Rational, 3, 2]]	[ProfiniteNumber, [Rational, 1, 2], [Rational, 3, 2]]	
+modulus-zero-collapses-to-the-rational-itself			[ProfiniteNumber, [Rational, 1, 3], 0]	[Rational, 1, 3]	
+subtracting-an-integer-from-a-profinite-number			[Subtract, [ProfiniteNumber, 7, 30], 2]	[ProfiniteNumber, 5, 30]	
+squaring-a-profinite-number			[Power, [ProfiniteNumber, 3, 12], 2]	[ProfiniteNumber, 9, 36]	
+dividing-by-an-exact-integer-divisor			[Divide, [ProfiniteNumber, 4, 12], 2]	[ProfiniteNumber, 2, 6]	
+crt-glued-from-its-2-adic-and-3-adic-images	Scope		[ProfiniteNumber, [List, [AdicNumeral, 2, 20, 5], [AdicNumeral, 3, 7, 2]]]	[ProfiniteNumber, 52, 288]	CRT: glued from its 2-adic and 3-adic images
+a-rational-value-and-a-rational-modulus	Scope		[Add, [ProfiniteNumber, [Rational, 1, 2], [Rational, 97, 5]], [ProfiniteNumber, [Rational, 1, 3], 10]]	[ProfiniteNumber, [Rational, 1, 30], [Rational, 1, 5]]	a rational value and a rational modulus
+lenstra-s-profinite-fibonacci-numbers	Applications		[Fibonacci, [ProfiniteNumber, 3, 10]]	[ProfiniteNumber, 2, 11]	Lenstra's profinite Fibonacci numbers
+lenstra-s-profinite-lucas-numbers	Applications		[LucasL, [ProfiniteNumber, 3, 10]]	[ProfiniteNumber, 4, 11]	Lenstra's profinite Lucas numbers
+gluing-projections-back-by-crt-is-the-identity	Properties		[ProfiniteNumber, [List, [AdicNumeral, 2, [ProfiniteNumber, 100, 24]], [AdicNumeral, 3, [ProfiniteNumber, 100, 24]]]]	[ProfiniteNumber, 4, 24]	gluing the projections at every prime of the modulus is the identity
+golden-add-2-4-3-mod-37-6	Properties	test	[Add, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]	[ProfiniteNumber, [Rational, 11, 2], [Rational, 37, 6]]	-2 + 4/3 mod 37/6 = 11/2 mod 37/6
+golden-add-11-mod-18-2-mod-35	Properties	test	[Add, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]	[ProfiniteNumber, 0, 1]	11 mod 18 + 2 mod 35 = 0 mod 1
+golden-add-187-4-mod-47-1-mod-3	Properties	test	[Add, [ProfiniteNumber, [Rational, 187, 4], 47], [ProfiniteNumber, 1, 3]]	[ProfiniteNumber, [Rational, 3, 4], 1]	187/4 mod 47 + 1 mod 3 = 3/4 mod 1
+golden-add-7-4-mod-57-2-1-4	Properties	test	[Add, [ProfiniteNumber, [Rational, 7, 4], [Rational, 57, 2]], [Rational, 1, 4]]	[ProfiniteNumber, 2, [Rational, 57, 2]]	7/4 mod 57/2 + 1/4 = 2 mod 57/2
+golden-add-2-mod-48-12	Properties	test	[Add, [ProfiniteNumber, 2, 48], 12]	[ProfiniteNumber, 14, 48]	2 mod 48 + 12 = 14 mod 48
+golden-add-2-27-mod-31	Properties	test	[Add, 2, [ProfiniteNumber, 27, 31]]	[ProfiniteNumber, 29, 31]	2 + 27 mod 31 = 29 mod 31
+golden-multiply-2-4-3-mod-37-6	Properties	test	[Multiply, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]	[ProfiniteNumber, [Rational, 29, 3], [Rational, 37, 3]]	-2 times 4/3 mod 37/6 = 29/3 mod 37/3
+golden-multiply-11-mod-18-2-mod-35	Properties	test	[Multiply, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]	[ProfiniteNumber, 0, 1]	11 mod 18 times 2 mod 35 = 0 mod 1
+golden-multiply-187-4-mod-47-1-mod-3	Properties	test	[Multiply, [ProfiniteNumber, [Rational, 187, 4], 47], [ProfiniteNumber, 1, 3]]	[ProfiniteNumber, 0, [Rational, 1, 4]]	187/4 mod 47 times 1 mod 3 = 0 mod 1/4
+golden-multiply-7-4-mod-57-2-1-4	Properties	test	[Multiply, [ProfiniteNumber, [Rational, 7, 4], [Rational, 57, 2]], [Rational, 1, 4]]	[ProfiniteNumber, [Rational, 7, 16], [Rational, 57, 8]]	7/4 mod 57/2 times 1/4 = 7/16 mod 57/8
+golden-multiply-2-mod-48-12	Properties	test	[Multiply, [ProfiniteNumber, 2, 48], 12]	[ProfiniteNumber, 24, 576]	2 mod 48 times 12 = 24 mod 576
+golden-multiply-2-27-mod-31	Properties	test	[Multiply, 2, [ProfiniteNumber, 27, 31]]	[ProfiniteNumber, 54, 62]	2 times 27 mod 31 = 54 mod 62
+golden-equal-2-4-3-mod-37-6	Properties	test	[Equal, -2, [ProfiniteNumber, [Rational, 4, 3], [Rational, 37, 6]]]	False	-2 and 4/3 mod 37/6 are not equal
+golden-equal-11-mod-18-2-mod-35	Properties	test	[Equal, [ProfiniteNumber, 11, 18], [ProfiniteNumber, 2, 35]]	True	11 mod 18 and 2 mod 35 are equal
+golden-equal-2-mod-29-3-3-mod-5	Properties	test	[Equal, [ProfiniteNumber, 2, [Rational, 29, 3]], [ProfiniteNumber, 3, 5]]	True	2 mod 29/3 and 3 mod 5 are equal
+golden-equal-2-mod-48-12	Properties	test	[Equal, [ProfiniteNumber, 2, 48], 12]	False	2 mod 48 and 12 are not equal
+golden-numerator-2	Properties	test	[Numerator, -2]	-2	numerator of -2 is -2
+golden-numerator-11-mod-18	Properties	test	[Numerator, [ProfiniteNumber, 11, 18]]	[ProfiniteNumber, 11, 18]	numerator of 11 mod 18 is 11 mod 18
+golden-numerator-187-4-mod-47	Properties	test	[Numerator, [ProfiniteNumber, [Rational, 187, 4], 47]]	[ProfiniteNumber, 187, 188]	numerator of 187/4 mod 47 is 187 mod 188
+golden-numerator-4-3	Properties	test	[Numerator, [Rational, -4, 3]]	-4	numerator of -4/3 is -4
+golden-denominator-2	Properties	test	[Denominator, -2]	1	denominator of -2 is 1
+golden-denominator-11-mod-18	Properties	test	[Denominator, [ProfiniteNumber, 11, 18]]	1	denominator of 11 mod 18 is 1
+golden-denominator-187-4-mod-47	Properties	test	[Denominator, [ProfiniteNumber, [Rational, 187, 4], 47]]	4	denominator of 187/4 mod 47 is 4
+golden-denominator-4-3	Properties	test	[Denominator, [Rational, -4, 3]]	3	denominator of -4/3 is 3
+5-doesn-t-divide-the-modulus-so-nothing-is-known	Possible issues		[AdicNumeral, 5, [ProfiniteNumber, 100, 24]]	[AdicNumeral, 5, [ProfiniteNumber, 4, 24]]	5 does not divide the modulus, so nothing is known at 5
+dividing-by-a-profinite-number-stays-unevaluated	Possible issues		[Divide, 1, [ProfiniteNumber, 5, 12]]	[Divide, 1, [ProfiniteNumber, 5, 12]]	only an exact divisor works; a profinite divisor leaves the call standing
+a-non-integer-numerator-refuses-fibonacci	Possible issues		[Fibonacci, [ProfiniteNumber, [Rational, 1, 2], 3]]	[Fibonacci, [ProfiniteNumber, [Rational, 1, 2], 3]]	a non-integer profinite numerator leaves Fibonacci standing
+numerator-of-a-plain-rational-is-untouched	Possible issues		[Numerator, [Rational, 3, 4]]	3	native behavior on a plain rational is untouched
+denominator-of-a-plain-rational-is-untouched	Possible issues		[Denominator, [Rational, 3, 4]]	4	native behavior on a plain rational is untouched
+only-profinitenumber-gets-numerator-not-adele	Possible issues		[Numerator, [Adele, 5]]	[Numerator, [Adele, 5]]	only ProfiniteNumber gets Numerator; Adele does not

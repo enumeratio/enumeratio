@@ -1,0 +1,5 @@
+id	in	out
+m-6	\dim(M_{3})	51
+algebradimension-rookalgebra-3	\dim(R_{3})	34
+5	\dim(k[S_{5}])	120
+a-cup-cap-is-not-a-permutation	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in k[S_{3}]	\mathrm{False}

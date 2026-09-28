@@ -1,0 +1,23 @@
+---
+name: CenteredInterval
+domain: Interval arithmetic
+signature: CenteredInterval(c, r)
+summary: A ball c ± r with center-radius arithmetic -- the complex-capable sibling of [[Interval]]. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: CenteredInterval(c, r)
+    description: the ball of radius r centered at c.
+    library: "@enumeratio/analytic"
+    type: (number | set<real>, real?) -> number
+  - call: CenteredInterval(interval)
+    description: an [[Interval]] converted to center-radius form.
+    library: "@enumeratio/analytic"
+details:
+  - Covers Add (centers add, radii add) and a scalar Multiply (the center scales by the factor, the radius by its absolute value). Subtraction runs through Add and Negate the same way Interval's does, which is why radii add under subtraction too, not cancel.
+  - Does NOT round outward the way Wolfram's rigorous interval arithmetic does -- that needs a kernel to pin the rounding direction (see enumeratio/enumeratio#113 §2), so every example here uses exact endpoints, where there is nothing to round.
+  - Two CenteredInterval operands multiplied together has no example and no simple exact rule here, so it is not handled.
+seeAlso:
+  - Interval
+  - Around
+names:
+  wolframIdentity: true
+---

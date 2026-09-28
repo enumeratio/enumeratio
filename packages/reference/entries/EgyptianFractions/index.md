@@ -1,0 +1,11 @@
+---
+name: EgyptianFractions
+domain: Combinatorics
+signature: EgyptianFractions(...)
+summary: Sets of k distinct unit-fraction denominators summing to 1.
+grades:
+  - name: k
+    role: axis
+carrier: EgyptianFraction
+stub: carrier
+---

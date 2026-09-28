@@ -1,0 +1,5 @@
+id	in
+lognormal-pdf-exact	PDF[LogNormalDistribution[0, 1], 1]
+lognormal-cdf-exact	CDF[LogNormalDistribution[0, 1], 1]
+lognormal-mean-exact	Mean[LogNormalDistribution[0, 1]]
+lognormal-variance-exact	Variance[LogNormalDistribution[0, 1]]

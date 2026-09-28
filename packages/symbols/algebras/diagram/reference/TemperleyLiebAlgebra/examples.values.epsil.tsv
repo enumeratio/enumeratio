@@ -1,0 +1,5 @@
+id	in	out
+c-4	AlgebraDimension(TemperleyLiebAlgebra(4))	14
+the-cup-cap-and-the-identity-all-of-tl-2	Basis(TemperleyLiebAlgebra(2))	[Diagram([[1, 2], [-1, -2]]), Diagram([[1, -1], [2, -2]])]
+the-cup-cap-is-planar-so-it-belongs	Diagram([[1, 2], [-1, -2], [3, -3]]) in TemperleyLiebAlgebra(3)	True
+e-1-2-delta-e-1	NonCommutativeMultiply(Diagram([[1, 2], [-1, -2]]), Diagram([[1, 2], [-1, -2]]))	delta * Diagram([[1, 2], [-1, -2]])

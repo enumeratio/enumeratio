@@ -1,0 +1,24 @@
+---
+name: CyclicPermutations
+domain: Combinatorics
+signature: CyclicPermutations(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Equiv.Perm (Fin n)
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Logic/Equiv/Defs.html#Equiv.Perm
+  - system: sage
+    identity: sage.combinat.permutation.CyclicPermutations(mset)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
+    note: sage returns linear arrangements of mset up to rotation ("the same as necklaces"), one representative per class; ours is the single-n-cycle PERMUTATION itself (a bijection [n]→[n] whose functional graph is one n-cycle) — same count (n−1)!, different representation
+stub: carrier
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+signatures:
+  - call: CyclicPermutations(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+---

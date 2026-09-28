@@ -1,0 +1,14 @@
+---
+name: ToPermutation
+domain: Combinatorics
+signature: ToPermutation(...)
+summary: Finite part (S_n)
+mapOn:
+  - AffinePermutation
+  - IncreasingBinaryTree
+  - PermutationCycles
+  - PermutationInversion
+  - SignedPermutation
+  - StandardTableauPair
+stub: carrier
+---

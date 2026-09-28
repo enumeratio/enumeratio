@@ -1,0 +1,10 @@
+---
+name: Weight
+domain: Combinatorics
+signature: Weight(...)
+summary: Weight
+statOn:
+  - BinaryWord
+  - TernaryGrayCode
+stub: carrier
+---

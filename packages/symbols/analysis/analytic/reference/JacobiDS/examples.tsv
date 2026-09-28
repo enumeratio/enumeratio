@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiDS, 1.1, 0.9]]	0.7887544023075437	A floating-point argument evaluates directly to a decimal
+m-less-than-0-via-the-imaginary-modulus	Scope		[N, [JacobiDS, 0.3, -0.7]]	3.453163713618813	m less than 0, via the imaginary-modulus transformation
+u-0-is-a-pole-for-any-m	Properties		[JacobiDS, 0, m]	ComplexInfinity	u = 0 is a pole, for any m
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiDS, u, m]	[JacobiDS, u, m]	Symbolic arguments are left unevaluated rather than guessed at

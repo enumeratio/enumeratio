@@ -1,0 +1,19 @@
+---
+name: SquaresR
+domain: Number theory
+signature: SquaresR(d, n)
+summary: The number of ways to write $n$ as a sum of $d$ squares, counting signs and order.
+signatures:
+  - call: SquaresR(d, n)
+    description: "$r_d(n)$: ordered, signed $d$-tuples summing to $n$"
+    library: enumeratio-number-theory
+    type: (integer, integer) -> integer
+details:
+  - By brute-force lattice-point enumeration, so signs and order are counted directly rather than adjusted for after the fact.
+  - "Jacobi's four-square theorem: $r_4(n)=8\\sigma_1(n)$ when $4 \\nmid n$. See [[DivisorSigma]]."
+seeAlso:
+  - PowersRepresentations
+  - DivisorSigma
+names:
+  wolframIdentity: true
+---

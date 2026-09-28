@@ -1,0 +1,32 @@
+id	in	out
+3-cdot-5-15-equiv-1	\left(3^{-1}\bmod 7\right)	5
+modularinverse-2-11	\left(2^{-1}\bmod 11\right)	6
+a-negative-argument-3-cdot-2-6-equiv-1	\left((-3)^{-1}\bmod 7\right)	2
+a-21-digit-modulus	\left(3^{-1}\bmod 10^{20}+1\right)	33\,333\,333\,333\,333\,333\,334
+listable-threads-over-a-list		
+2-i-6-4i-8-14i-equiv-1-pmod-7	\left((2+i)^{-1}\bmod 7\right)	6+4i
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	\left((11-7i)^{-1}\bmod 7+4i\right)	-1+2i
+a-gaussian-base-and-a-gaussian-modulus	\left((3-i)^{-1}\bmod 5+2i\right)	-1-i
+inverse-mod-a-unit-is-always-0	\left((3+4i)^{-1}\bmod 1\right)	0
+inverse-mod-i-is-always-0	\left((3+4i)^{-1}\bmod i\right)	0
+a-unit-is-its-own-inverse-mod-anything-it-s-a	\left((i)^{-1}\bmod 2+i\right)	-i
+inverse-of-a-gaussian-prime-mod-a-coprime	\left((2+i)^{-1}\bmod 2-i\right)	-1
+inverse-mod-a-real-prime-3-mod-4	\left((2+i)^{-1}\bmod 3\right)	1+i
+no-inverse-when-the-gcd-isn-t-a-unit-shared	\left((3+4i)^{-1}\bmod 2+i\right)	\left((3+4i)^{-1}\bmod 2+i\right)
+inverse-mod-a-negative-real-prime	\left((2+i)^{-1}\bmod -7\right)	-1-3i
+inverse-mod-a-composite-gaussian-modulus-norm-25	\left((1+i)^{-1}\bmod 3+4i\right)	3i
+inverse-mod-a-modulus-past-2-53	\left((4+i)^{-1}\bmod 100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i\right)	-47\,059\,883\,199\,912\,322\,470+11\,760\,467\,200\,350\,710\,121i
+inverse-mod-1-4i-the-other-prime-above-17	\left((8+2i)^{-1}\bmod 1+4i\right)	-1
+a-real-base-inverted-mod-a-gaussian-modulus	\left(5^{-1}\bmod 2+i\right)	\left(5^{-1}\bmod 2+i\right)
+inverse-mod-a-large-norm-gaussian	\left((1+i)^{-1}\bmod 123+456i\right)	-166+289i
+inverse-mod-a-negative-real-composite-has-none	\left((5+5i)^{-1}\bmod -15\right)	\left((5+5i)^{-1}\bmod -15\right)
+inverse-of-a-prime-above-13-mod-the-other-prime	\left((3+2i)^{-1}\bmod 2+3i\right)	-2
+inverse-mod-a-negative-associate	\left((2+i)^{-1}\bmod -2-3i\right)	-1-i
+inverse-mod-a-real-composite-5-squared-has-none	\left((5+5i)^{-1}\bmod 25\right)	\left((5+5i)^{-1}\bmod 25\right)
+inverse-of-a-real-prime-s-associate-by-i-mod-a	\left((7i)^{-1}\bmod 3+2i\right)	-2i
+inverse-mod-a-real-prime-19	\left((2+i)^{-1}\bmod 19\right)	8+15i
+no-inverse-mod-0	\left((2+i)^{-1}\bmod 0\right)	\left((2+i)^{-1}\bmod 0\right)
+a-real-base-with-no-inverse-mod-a-shared-factor	\left(5^{-1}\bmod 5+5i\right)	\left(5^{-1}\bmod 5+5i\right)
+the-same-as-powermod-with-exponent-1	\left(3^{-1}\bmod 7\right)=\left(\frac{1}{3}\bmod 7\right)	\mathrm{True}
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	12\,345\left(12\,345^{-1}\bmod 2^{61}-1\right)\bmod(2^{61}-1)	1
+gcd-2-4-2-no-inverse	\left(2^{-1}\bmod 4\right)	\left(2^{-1}\bmod 4\right)

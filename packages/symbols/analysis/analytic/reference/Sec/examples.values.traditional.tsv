@@ -1,0 +1,27 @@
+id	in	out
+sec-0		
+sec-pi-over-4		
+sec-pi-over-3		
+sec-pi		
+sec-30-circ-frac-2-sqrt-3-3-exactly		
+a-machine-precision-argument-evaluates		
+a-huge-24-40-argument		
+a-huge-10-100-argument		
+a-huge-3-200-argument		
+a-huge-neg-7-60-argument		
+a-huge-10-80-plus-1-over-3-argument		
+sec-3-under-n		
+n-of-an-exact-argument-gives-an-arbitrary		
+evaluates-at-a-complex-argument		
+threads-element-wise-over-a-matrix		
+sec-pi-12-sqrt-6-sqrt-2		
+sec-pi-5-sqrt-5-1		
+sec-pi-8-sqrt-4-2-sqrt-2		
+interval-arithmetic-the-image-of-pi-6-pi-3-is		
+uncertainty-propagation-sec-2-pm-0-01-approx-2		
+evenness-drops-the-sign-of-a-symbolic-argument		
+derivative-sec-x-tan-x		
+antiderivative-ln-sec-x-tan-x		
+reciprocal-of-cos-sec-x-frac-1-cos-x	\sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}	\mathrm{True}
+pythagorean-identity-1-tan-2-x-sec-2-x	1+\tan(\pi/6)^2=\sec(\pi/6)^2	\mathrm{True}
+a-pole-cos-pi-2-0		

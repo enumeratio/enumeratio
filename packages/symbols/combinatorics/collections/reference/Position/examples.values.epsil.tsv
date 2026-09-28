@@ -1,0 +1,4 @@
+id	in	out
+position-list-1-2-3-2-2	Position([1, 2, 3, 2], 2)	[[2], [4]]
+a-value-absent-from-the-collection-has-no	Position([1, 2, 3], 9)	[]
+position-s-first-entry-agrees-with-indexof	Position([1, 2, 3, 2], 2)[1]	[2]

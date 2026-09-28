@@ -1,0 +1,4 @@
+id	in
+ismachinenumber-ordinary-float	MachineNumberQ[2.5]
+ismachinenumber-exact-integer	MachineNumberQ[2]
+ismachinenumber-extended-precision	MachineNumberQ[3.141592653589793]

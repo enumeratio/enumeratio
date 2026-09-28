@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+the-step-word-uuddud			[Coarea, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1	the step word $UUDDUD$
+the-step-word-uduudd			[Coarea, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1	the step word $UDUUDD$

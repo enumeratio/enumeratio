@@ -1,0 +1,3 @@
+id	in	out
+the-first-20-terms-oeis-a010060	\mathrm{Take}(\mathrm{ThueMorseNumbers}, 20)	\bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1\bigr\rbrack
+the-first-40-terms	\mathrm{Take}(\mathrm{ThueMorseNumbers}, 40)	\bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0\bigr\rbrack

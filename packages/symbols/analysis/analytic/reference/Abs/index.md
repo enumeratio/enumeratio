@@ -1,0 +1,51 @@
+---
+name: Abs
+domain: Arithmetic
+signature: Abs(x)
+summary: "The absolute value or magnitude of x: $|x|$, its distance from 0."
+signatures:
+  - call: Abs(x)
+    description: the absolute value $|x|$ of a real x, or the modulus of a complex number.
+  - call: Abs(x)
+    description: "The absolute value or magnitude of x: $|x|$, its distance from 0."
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
+details:
+  - For a real number, $|x| = x$ if $x \ge 0$ and $|x| = -x$ if $x < 0$.
+  - For a complex number $a+bi$, $|a+bi| = \sqrt{a^2+b^2}$, its distance from the origin.
+  - Always non-negative, with $|x| = 0$ exactly at $x = 0$.
+  - Satisfies the triangle inequality $|a+b| \le |a| + |b|$.
+  - compute-engine doesn't factor constants out of a symbolic argument -- $|-3x|$ stays as written rather than simplifying to $3|x|$.
+seeAlso:
+  - Sign
+  - Chop
+references:
+  - system: wikipedia
+    identity: Absolute value
+  - system: mathworld
+    identity: AbsoluteValue
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sympy
+    template: Abs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: mpmath
+    template: fabs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: sage
+    template: abs($1)
+    arity: 1
+    threadArg: 1
+  - origin: mapped
+    form: rust
+    template: abs($1)
+    arity: 1
+    threadArg: 1
+---

@@ -1,0 +1,9 @@
+---
+name: MaxPreference
+domain: Combinatorics
+signature: MaxPreference(...)
+summary: Max preference
+statOn:
+  - ParkingFunction
+stub: carrier
+---

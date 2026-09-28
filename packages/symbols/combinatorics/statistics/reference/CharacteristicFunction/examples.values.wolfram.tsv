@@ -1,0 +1,4 @@
+id	in
+characteristicfunction-normal	CharacteristicFunction[NormalDistribution[2, 3], t]
+characteristicfunction-poisson	CharacteristicFunction[PoissonDistribution[2], 0]
+characteristicfunction-cauchy-standard	CharacteristicFunction[CauchyDistribution[0, 1], t]

@@ -1,0 +1,8 @@
+id	in	out
+indexof-list-1-2-3-2		
+0-signals-that-the-value-isn-t-present-since-0		
+only-the-first-of-several-occurrences-is		
+the-value-can-itself-be-a-list		
+at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	\bigl\lbrack10, 20, 30\bigr\rbrack[\mathrm{IndexOf}(\bigl\lbrack10, 20, 30\bigr\rbrack, 20)]=20	\mathrm{True}
+indexof-reports-only-the-first-occurrence-see		
+indexof-stays-at-the-top-level-where-this-value		

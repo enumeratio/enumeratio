@@ -1,0 +1,4 @@
+id	in
+count-riordanpaths-6	Count[RiordanPaths[6]]
+first-element-of-riordanpaths-6	Part[RiordanPaths[6], 1]
+every-element-of-riordanpaths-6	Take[RiordanPaths[6], 5]

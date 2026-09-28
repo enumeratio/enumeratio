@@ -1,0 +1,9 @@
+---
+name: LeftSpine
+domain: Combinatorics
+signature: LeftSpine(...)
+summary: Left spine length
+statOn:
+  - BinaryTree
+stub: carrier
+---

@@ -1,0 +1,9 @@
+---
+name: LastEntry
+domain: Combinatorics
+signature: LastEntry(...)
+summary: Last entry
+statOn:
+  - AscentSequence
+stub: carrier
+---

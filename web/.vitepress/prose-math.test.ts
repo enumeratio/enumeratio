@@ -4,7 +4,7 @@ import { escapeHtml, matchInlineMath, renderProseMath } from "./prose-math.ts";
 // Cases below are taken from real reference records (see git blame on the same commit):
 // TimeConstrained.yaml's `$Aborted` was a genuine bug -- a lone Wolfram-style system
 // symbol sitting next to real inline math confused the old regex into pairing across
-// both, leaving a mis-typeset span and a stray `$`. LambertW.examples.yaml and
+// both, leaving a mis-typeset span and a stray `$`. LambertW/examples.tsv and
 // HeavisideTheta.yaml exercise prose that must NOT be mistaken for math or markup.
 
 test("plain text with no `$` passes through HTML-escaped, unchanged otherwise", () => {
@@ -36,7 +36,7 @@ test("an un-escaped lone `$` next to real math mis-pairs (the TimeConstrained bu
 });
 
 test("a lone `$` with no partner (a Wolfram system symbol, or a dollar amount) stays literal", () => {
-  // Assuming.yaml's `$Assumptions`, and Negate.examples.yaml's "$42.50" -- both correct
+  // Assuming/index.md's `$Assumptions`, and Negate/examples.tsv's "$42.50" -- both correct
   // as plain text today, and must stay that way.
   expect(renderProseMath("consult $Assumptions (Simplify, FullSimplify, Refine)")).toEqual(
     "consult $Assumptions (Simplify, FullSimplify, Refine)",

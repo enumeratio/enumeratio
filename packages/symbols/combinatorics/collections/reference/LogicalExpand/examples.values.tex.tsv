@@ -1,0 +1,5 @@
+id	in	out
+implies-becomes-or-not	\mathrm{LogicalExpand}(p\implies b)	b\lor\lnot p
+distributes-and-over-or	\mathrm{LogicalExpand}(p\land(b\lor r))	b\land p\lor p\land r
+xor-eliminated-into-dnf	\mathrm{LogicalExpand}(p\veebar b)	b\land\lnot p\lor p\land\lnot b
+a-contradictory-term-drops-out	\mathrm{LogicalExpand}(p\land\lnot p)	\bot

@@ -1,3 +1,0 @@
-- id: counts-code-points-not-utf-16-units
-  expr: [StringLength, [String, a😀b]]
-  expected: 3

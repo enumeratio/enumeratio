@@ -1,0 +1,7 @@
+id	in
+a-generic-point-checked-against-mpmath-s-hyperu	HypergeometricU[1, 2.5, 3]
+a-0-5-b-1-5-at-2	HypergeometricU[0.5, 1.5, 2]
+a-complex-argument	N[HypergeometricU[1, 2.5, Complex[0.5, 0.5]]]
+complex-a-at-1-5	N[HypergeometricU[Complex[1, 0.5], 2.5, 1.5]]
+b-negative-1-5-at-0-8	HypergeometricU[2, -1.5, 0.8]
+integer-b-stays-symbolic-the-connection-formula	HypergeometricU[1, 2, 3]

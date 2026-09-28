@@ -1,0 +1,4 @@
+id	in
+count-oddpartitions-10	Count[OddPartitions[10]]
+first-element-of-oddpartitions-10	Part[OddPartitions[10], 1]
+every-element-of-oddpartitions-10	Take[OddPartitions[10], 10]

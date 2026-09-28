@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+falling-factorial-5-3-60			[FallingFactorial, 5, 3]	60	$5 \cdot 4 \cdot 3 = 60$
+falling-factorial-3-5-0	Scope		[FallingFactorial, 3, 5]	0	A factor of $0$ appears once $n$ exceeds $x$
+falling-factorial-half-2-neg-1-4	Scope		[FallingFactorial, [Rational, 1, 2], 2]	[Rational, -1, 4]	$\tfrac12 \cdot (-\tfrac12) = -\tfrac14$

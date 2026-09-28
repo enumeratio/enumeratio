@@ -1,0 +1,21 @@
+id	in	out	verdict
+bernoullib-0	bernoulli(0)	1	
+bernoullib-1	bernoulli(1)	-1/2	
+bernoullib-2	bernoulli(2)	1/6	
+bernoullib-4	bernoulli(4)	-1/30	
+bernoullib-12	bernoulli(12)	-691/2730	
+bernoullib-10	bernoulli(10)	5/66	
+exact-rationals-at-any-index	bernoulli(60)	-1215233140483755572040304994079820246041491/56786730	
+listable-b-n-threads-over-a-list-of-indices	[bernoulli(2), bernoulli(4), bernoulli(6)]	[1/6, -1/30, 1/42]	
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac			
+the-bernoulli-polynomial-at-a-rational-point-b-2			
+with-a-second-argument-the-bernoulli-polynomial			
+threads-element-wise-over-a-list-as-wolfram-s	[bernoulli(1), bernoulli(2), bernoulli(3)]	[-1/2, 1/6, 0]	
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	(((binomial(3, 0) * bernoulli(0) * ((5)^3)) + (binomial(3, 1) * bernoulli(1) * ((5)^2)) + (binomial(3, 2) * bernoulli(2) * ((5)^1))) / 3)	30	
+von-staudt-clausen-the-denominator-of-b-2n-is	(bernoulli(12)).denominator()		
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	bool(zeta(-3) == (-(bernoulli(4) / 4)))	True	
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))	0	
+b-n-0-for-every-odd-n-1	bool(bernoulli(5) == 0)	True	
+b-1-1-frac-12-is-the-other-convention-for-b-1			
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	bernoulli(-1)	OverflowError: can't convert negative value to unsigned long	error
+numerators-and-denominators-grow-quickly-b-20	bernoulli(20)	-174611/330	

@@ -1,0 +1,5 @@
+id	in	back
+replaces-a-single-1-based-position	ReplacePart[List[a, b, c], Rule[2, z]]	[ReplacePart, [List, a, b, c], [KeyValuePair, 2, z]]
+with-a-negative-position-counts-from-the-end	ReplacePart[List[a, b, c], Rule[-1, z]]	[ReplacePart, [List, a, b, c], [KeyValuePair, -1, z]]
+applies-a-list-of-rules	ReplacePart[List[a, b, c], List[Rule[1, x], Rule[3, y]]]	[ReplacePart, [List, a, b, c], [List, [KeyValuePair, 1, x], [KeyValuePair, 3, y]]]
+with-a-nested-i-j-position-drills-into-a-sublist	ReplacePart[List[List[a, b], c], Rule[List[1, 2], z]]	[ReplacePart, [List, [List, a, b], c], [KeyValuePair, [List, 1, 2], z]]

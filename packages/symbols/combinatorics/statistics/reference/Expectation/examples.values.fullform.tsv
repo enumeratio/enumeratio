@@ -1,0 +1,5 @@
+id	in
+expectation-of-the-bound-variable-is-the-mean	Expectation[x, Distributed[x, NormalDistribution[2, 3]]]
+expectation-of-x-squared	Expectation[Power[x, 2], Distributed[x, NormalDistribution[2, 3]]]
+expectation-is-linear	Expectation[Plus[Times[2, x], 1], Distributed[x, NormalDistribution[2, 3]]]
+a-shape-with-no-closed-form-stays-unevaluated	Expectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]

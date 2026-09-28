@@ -1,0 +1,8 @@
+id	in	out
+prepend-list-a-b-c-d-x	\mathrm{Prepend}(\bigl\lbrack a, b, c, d\bigr\rbrack, x)	\bigl\lbrack x, a, b, c, d\bigr\rbrack
+prepend-front-of-list	\mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)	\bigl\lbrack0, 1, 2, 3\bigr\rbrack
+prepend-single-element-list	\mathrm{Prepend}(\bigl\lbrack5\bigr\rbrack, 10)	\bigl\lbrack10, 5\bigr\rbrack
+prepend-empty-list	\mathrm{Prepend}(\bigl\lbrack\bigr\rbrack, 42)	\bigl\lbrack42\bigr\rbrack
+a-rule-inserted-at-the-front-of-an-association	\mathrm{Prepend}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), \mathrm{Rule}(3, d))	\mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
+several-rules-prepended-at-once	\mathrm{Prepend}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), \bigl\lbrack\mathrm{Rule}(3, d), \mathrm{Rule}(4, e)\bigr\rbrack)	\mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(4, e), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
+prepend-c-x-join-x-c-see-join	\mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)=\mathrm{Join}(\bigl\lbrack0\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)	\top

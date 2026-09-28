@@ -1,0 +1,4 @@
+id	in
+unit-square-default-seed	Last[List[SeedRandom[42], RandomComplex[]]]
+rectangle-from-0-to-zmax	Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]
+rectangle-from-zmin-to-zmax	Last[List[SeedRandom[9], RandomComplex[List[Complex[-1, -1], Complex[1, 1]]]]]

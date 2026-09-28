@@ -1,0 +1,5 @@
+id	in
+randomfunction-poisson-counts-nondecreasing	Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]]
+randomfunction-default-grid-length	Last[List[Length[RandomFunction[WienerProcess[0, 1], List[0, 1]]], SeedRandom[42]]]
+randomfunction-wiener-path-starts-at-zero	First[Last[List[SeedRandom[3], RandomFunction[WienerProcess[0, 1], List[0, 1, 0.5]], SeedRandom[42]]]]
+randomfunction-reproducible-for-a-fixed-seed	(Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]] == Last[List[SeedRandom[7], RandomFunction[PoissonProcess[4], List[0, 2, 0.5]], SeedRandom[42]]])

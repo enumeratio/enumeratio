@@ -1,0 +1,3 @@
+id	in	out
+p-6	\mathrm{Count}(\mathrm{IntegerPartitions}(6))	11
+the-single-part-6	\mathrm{IntegerPartitions}(6)[1]	\bigl\lbrack6\bigr\rbrack

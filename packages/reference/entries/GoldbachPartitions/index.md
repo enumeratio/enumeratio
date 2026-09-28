@@ -1,0 +1,15 @@
+---
+name: GoldbachPartitions
+domain: Combinatorics
+signature: GoldbachPartitions(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
+catalog:
+  - system: oeis
+    identity: A045917
+    url: https://oeis.org/A045917
+stub: carrier
+grades:
+  - name: n
+    role: axis
+carrier: GoldbachPartition
+---

@@ -1,0 +1,12 @@
+id	in	out	tex.in	tex.out
+no-primes-are-1	PrimePi[1]	0	\pi (1)	0
+primepi-2	PrimePi[2]	1	\pi (2)	1
+primepi-15	PrimePi[15]	6	\pi (15)	6
+primepi-100	PrimePi[100]	25	\pi (100)	25
+threads-element-wise-over-a-list-as-wolfram-s	PrimePi[List[10, 100]]	{4, 25}	\pi (\{10,100\})	\{4,25\}
+rational-arguments-the-primes-up-to-7-2-are-2	PrimePi[Rational[7, 2]]			
+real-arguments	PrimePi[15.25]			
+the-primes-below-a-million	PrimePi[1000000]			
+listable-threads-over-a-list	PrimePi[List[3, 5, 17, 25]]			
+same-inverse-relation-viewed-from-primepi-s-side	(PrimePi[Prime[50]] == 50)	True	\pi \left(p_{50}\right)=50	\text{True}
+no-primes-are-a-negative-number	PrimePi[-1]			

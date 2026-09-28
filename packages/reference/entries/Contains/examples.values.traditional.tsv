@@ -1,0 +1,11 @@
+id	in	out
+contains-list-1-2-3-2	\mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 2)	\mathrm{True}
+contains-list-1-2-3-5	\mathrm{Contains}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)	\mathrm{False}
+contains-list-1-3-4-1-2-2	\mathrm{Contains}(\bigl\lbrack1, 3, 4, 1, 2\bigr\rbrack, 2)	\mathrm{True}
+nothing-is-in-the-empty-list	\mathrm{Contains}(\bigl\lbrack\bigr\rbrack, x)	\mathrm{False}
+symbolic-elements	\mathrm{Contains}(\bigl\lbrack x^2, y^2\bigr\rbrack, x^2)	\mathrm{True}
+elements-can-themselves-be-lists	\mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)	\mathrm{True}
+only-the-top-level-elements-are-searched	\mathrm{Contains}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)	\mathrm{False}
+a-lazy-range-is-searched-without-being	\mathrm{Contains}(1..100, 50)	\mathrm{True}
+compared-after-canonical-ordering-so-b-a-matches	\mathrm{Contains}(\bigl\lbrack a+b\bigr\rbrack, b+a)	\mathrm{True}
+an-exact-and-an-approximate-number-with-the-same	\mathrm{Contains}(\bigl\lbrack\frac{1}{2}\bigr\rbrack, 0.5)	\mathrm{True}

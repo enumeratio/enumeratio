@@ -1,0 +1,11 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiAmplitude}(0.3, 0.5))	0.297\,794\,749\,129\,830\,3
+am-1-1-0-9	N(\mathrm{JacobiAmplitude}(1.1, 0.9))	0.945\,070\,898\,187\,811\,8
+am-0-7-0-2	N(\mathrm{JacobiAmplitude}(-0.7, 0.2))	-0.689\,667\,393\,573\,298\,3
+am-1-1i-0-3	N(\mathrm{JacobiAmplitude}(1+i, 0.3))	1.049\,001\,435\,160\,329+0.873\,624\,143\,040\,91i
+am-0-1-5i-0-4	N(\mathrm{JacobiAmplitude}(0.1+5i, 0.4))	3.002\,226\,882\,438\,044-1.214\,878\,218\,096\,030\,5i
+a-wider-argument-u-past-the-first-quarter	N(\mathrm{JacobiAmplitude}(2.5, 0.3))	2.247\,250\,550\,954\,094\,5
+u-0-is-0-for-any-m	\mathrm{JacobiAmplitude}(0, m)	0
+m-0-reduces-to-u	\mathrm{JacobiAmplitude}(u, 0)	u
+m-outside-0-1-is-declined	N(\mathrm{JacobiAmplitude}(0.3, 1.5))	\mathrm{JacobiAmplitude}(0.3, 1.5)
+symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiAmplitude}(u, m)	\mathrm{JacobiAmplitude}(u, m)

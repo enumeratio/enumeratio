@@ -1,0 +1,21 @@
+---
+name: AdicExpansion
+domain: Numeral systems
+signature: AdicExpansion(x, count?)
+summary: 'The digits of a $b$-adic number, written with the infinite end on the left: $\ldots 6667$ for $1/3$ in $\mathbb{Z}_{10}$, $0.12$ for $7/25$ in $\mathbb{Q}_5$, $+ O(b^n)$ when capped.'
+signatures:
+  - call: AdicExpansion(x, count?)
+    description: the first `count` digits (default 20) as a string
+    library: enumeratio-numerals
+    type: (value, integer?) -> string
+  - call: AdicDigits(x, count?)
+    description: the same digits as a list, LEAST significant first — the only order that lists something with no left end
+    library: enumeratio-numerals
+details:
+  - "The ellipsis marks the infinite left end and is dropped only when nothing hides there: an exact non-negative integer (times $b^v$)"
+  - Digits past the point are the negative-valuation places, prime bases only
+  - Digits $\ge 10$ are bracketed, so base 16 reads `…[15][15][15]`
+seeAlso:
+  - AdicNumeral
+  - IntegerDigits
+---

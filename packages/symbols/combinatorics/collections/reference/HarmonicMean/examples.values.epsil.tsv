@@ -1,0 +1,5 @@
+id	in	out
+3-1-frac-12-frac-14-frac-12-7	HarmonicMean([1, 2, 4])	12 / 7
+frac-12-5	HarmonicMean([2, 3])	12 / 5
+driving-equal-distances-at-40-and-60-averages-48	HarmonicMean([40, 60])	48
+equal-values-are-their-own-harmonic-mean	HarmonicMean([5, 5, 5])	5

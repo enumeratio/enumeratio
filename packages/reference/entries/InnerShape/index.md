@@ -1,0 +1,9 @@
+---
+name: InnerShape
+domain: Combinatorics
+signature: InnerShape(...)
+summary: Inner shape
+mapOn:
+  - SkewPartition
+stub: carrier
+---

@@ -1,0 +1,15 @@
+id	in	out
+totient-12	\mathrm{Totient}(12)	4
+totient-36	\mathrm{Totient}(36)	12
+totient-1	\mathrm{Totient}(1)	1
+totient-10	\mathrm{Totient}(10)	4
+varphi-0-0-as-in-wolfram	\mathrm{Totient}(0)	0
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Totient}(\bigl\lbrack2, 4, 6\bigr\rbrack)	\bigl\lbrack1, 2, 2\bigr\rbrack
+large-integers-varphi-50	\mathrm{Totient}(50!)	4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+negative-n-varphi-n-varphi-n	\mathrm{Totient}(-10)	4
+rsa-key-setup-varphi-17-times-23-16-times-22-352	\mathrm{Totient}(391)	352
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	\mathrm{PowerMod}(7, \mathrm{Totient}(10), 10)	1
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	\mathrm{Totient}(1)+\mathrm{Totient}(2)+\mathrm{Totient}(3)+\mathrm{Totient}(4)+\mathrm{Totient}(6)+\mathrm{Totient}(12)	12
+multiplicative-varphi-mn-varphi-m-varphi-n-when	\mathrm{Totient}(12)=\mathrm{Totient}(4)\mathrm{Totient}(3)	\top
+varphi-p-p-1-for-a-prime-p	\mathrm{Totient}(17)	16
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	\mathrm{Totient}(81)	54

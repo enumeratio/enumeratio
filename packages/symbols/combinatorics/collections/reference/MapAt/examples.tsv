@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+single-position			[MapAt, f, [List, a, b, c], 2]	[List, a, [f, b], c]	
+negative-position	Scope		[MapAt, f, [List, a, b, c], -1]	[List, a, b, [f, c]]	A negative position counts from the end
+several-positions	Scope		[MapAt, f, [List, a, b, c], [List, [List, 1], [List, 3]]]	[List, [f, a], b, [f, c]]	A list of positions applies f at each independently

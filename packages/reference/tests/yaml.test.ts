@@ -3,7 +3,7 @@
 // the crosswalk read stays in step with the records.
 
 import { DEFINITIONS } from "@enumeratio/analytic/definitions";
-import { isWrittenYaml } from "@enumeratio/entry/node";
+import { isWrittenHead } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
 import AGREEMENTS from "../src/crosswalk/oracle-agreements.json" with { type: "json" };
 import { loadReferenceData, oracleAgreementsOf, PACKAGES, referenceData } from "../src/node.ts";
@@ -25,9 +25,8 @@ test("every example has an implementations entry", () => {
 
 test("every record is what the writer would write", async () => {
   const drift: string[] = [];
-  for (const { entryPath, examplesPath } of loaded.heads)
-    for (const path of examplesPath ? [entryPath, examplesPath] : [entryPath])
-      if (!(await isWrittenYaml(path))) drift.push(path.slice(PACKAGES.length));
+  for (const { dir, head, folder } of loaded.heads)
+    for (const file of await isWrittenHead(dir, head)) drift.push(`${folder.slice(PACKAGES.length)}/${file}`);
   expect(drift, "run `node packages/reference/scripts/format-records.ts`").toEqual([]);
 });
 

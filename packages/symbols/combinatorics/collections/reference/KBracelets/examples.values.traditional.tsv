@@ -1,0 +1,4 @@
+id	in	out
+count-kbracelets-4-3-21-bracelets-of-length-4		
+every-element-of-kbracelets-4-3		
+kbracelets-n-2-agrees-with-binarybracelets-n	\mathrm{Count}(\mathrm{KBracelets}(5, 2))=\mathrm{Count}(\mathrm{BinaryBracelets}(5))	\mathrm{True}

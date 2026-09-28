@@ -1,0 +1,9 @@
+---
+name: DegreeSequence
+domain: Combinatorics
+signature: DegreeSequence(...)
+summary: Degree sequence (isolated vertices dropped)
+mapOn:
+  - LabeledGraph
+stub: carrier
+---

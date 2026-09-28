@@ -1,0 +1,3 @@
+id	in	out
+edge-count-of-k4	EdgeCount(CompleteGraph(4))	6
+edge-count-of-a-triangle	"EdgeCount(Graph([\n                  UndirectedEdge(1, 2),\n                  UndirectedEdge(2, 3),\n                  UndirectedEdge(3, 1),\n                ]))"	3

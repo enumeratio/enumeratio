@@ -1,0 +1,11 @@
+id	in	out	tex.in	tex.out
+arcsec-1	ArcSec[1]	0	\sec ^{-1}(1)	0
+arcsec-2	ArcSec[2]	Pi/3	\sec ^{-1}(2)	\frac{\pi }{3}
+arcsec-sqrt-2-pi-4	ArcSec[Sqrt[2]]			
+arcsec-neg-1	ArcSec[-1]			
+arcsec-2-2-pi-3	ArcSec[-2]			
+inside-1-1-the-value-is-purely-imaginary	ArcSec[0.5]			
+arcsec-positiveinfinity	ArcSec[Infinity]			
+a-pole-arcsec-0-is-complex-infinity	ArcSec[0]			
+derivative-for-real-x-1	D[ArcSec[x], x]			
+undoes-sec-sec-arcsec-x-x	(Sec[ArcSec[2]] == 2)	True	\sec \left(\sec ^{-1}(2)\right)=2	\text{True}

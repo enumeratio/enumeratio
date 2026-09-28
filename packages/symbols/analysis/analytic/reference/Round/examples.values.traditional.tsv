@@ -1,0 +1,24 @@
+id	in	out
+round-7-over-2		
+round-3p5		
+round-3p7		
+integers-pass-through-unchanged		
+a-second-argument-rounds-to-that-many-decimal		
+threads-element-wise-over-a-list		
+round-2p4		
+round-2p6		
+round-5p37		
+round-neg-3p7		
+idempotent-round-round-x-round-x		
+stays-symbolic		
+to-the-nearest-ten		
+an-exact-argument-rounds-to-an-exact-rational		
+evaluates-at-an-exact-constant-round-pi-3		
+100e-approx-271-83-rounds-to-272		
+rounds-the-real-and-imaginary-parts-separately		
+rounding-a-price-to-the-nearest-cent-19-995		
+a-negative-second-argument-rounds-to-the-nearest	\mathrm{round}(1\,234, -2)=1\,200	\mathrm{True}
+rounding-to-0-decimal-places-matches-the-1	\mathrm{round}(3.141\,59, 0)=\mathrm{round}(3.141\,59)	\mathrm{True}
+rounds-half-away-from-zero-not-banker-s-rounding		
+and-by-the-same-convention-2-5-rounds-to-3-not-2		
+an-exact-half-rounds-away-from-zero-as-well		

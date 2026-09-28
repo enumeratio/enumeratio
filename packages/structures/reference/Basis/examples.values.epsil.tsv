@@ -1,0 +1,4 @@
+id	in	out
+1-i-j-k	Basis(Quaternions)	[1, f_1, f_2, f_1 * f_2]
+the-bicomplex-basis	Basis(MulticomplexAlgebra(2))	[1, i_1, i_2, i_1 * i_2]
+an-element-from-a-coefficient-tuple	Dot([1, 2, 3, 4], Basis(Quaternions))	4 * f_1 * f_2 + 2f_1 + 3f_2 + 1

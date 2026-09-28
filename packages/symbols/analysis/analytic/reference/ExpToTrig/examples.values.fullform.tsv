@@ -1,0 +1,5 @@
+id	in
+euler-s-formula	ExpToTrig[Exp[Times[I, x]]]
+a-real-exponential-splits-into-hyperbolic-parts	ExpToTrig[Exp[x]]
+recognizes-cosh	ExpToTrig[Divide[Plus[Exp[x], Exp[Minus[x]]], 2]]
+recognizes-sin	ExpToTrig[Divide[Subtract[Exp[Times[I, x]], Exp[Minus[Times[I, x]]]], Times[2, I]]]

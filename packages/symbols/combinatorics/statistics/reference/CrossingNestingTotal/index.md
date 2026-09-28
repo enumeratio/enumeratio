@@ -1,0 +1,16 @@
+---
+name: CrossingNestingTotal
+domain: Set partition statistics
+signature: CrossingNestingTotal(partition)
+summary: Crossings plus nestings.
+details:
+  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
+statOn:
+  - SetPartition
+signatures:
+  - call: CrossingNestingTotal(partition)
+    description: Crossings plus nestings.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number
+---

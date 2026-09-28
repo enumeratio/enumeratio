@@ -1,0 +1,5 @@
+id	in	out
+an-interior-point	\mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 3)	\top
+a-closed-endpoint-is-a-member	\mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 5)	\top
+an-open-endpoint-is-not-a-member	\mathrm{IsIntervalMember}((1, 5\rbrack, 1)	\bot
+outside-the-interval	\mathrm{IsIntervalMember}(\mathrm{Interval}(1, 5), 6)	\bot

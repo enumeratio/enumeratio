@@ -1,0 +1,5 @@
+id	in	out
+symbolic-falling	FactorialPower(x, 3)	FactorialPower(x, 3)
+numeric	FactorialPower(5, 3)	60
+step	FactorialPower(x, 2, h)	FactorialPower(x, 2, h)
+zero	FactorialPower(x, 0)	1

@@ -1,0 +1,3 @@
+id	in	out
+factorial-ratio	\mathrm{DiscreteRatio}(n!, n)	n+1
+geometric-ratio	\mathrm{DiscreteRatio}(2^{n}, n)	2

@@ -1,0 +1,15 @@
+id	in	out
+default-base-is-10		
+same-result-written-with-an-explicit-base		
+base-2-via-the-explicit-second-argument		
+log-3-1-5-at-machine-precision		
+log-9-3		
+threads-over-a-list-of-values		
+threads-over-a-list-of-bases		
+derivative-in-base-3-frac-1-x-ln-3		
+log-2-frac-18-3-an-exact-negative-power-of-the		
+confirms-the-default-base-is-10	\log_{10}(100)=\log_{10}(100)	\mathrm{True}
+product-rule-log-b-xy-log-b-x-log-b-y	\log_{2}(8\times4)=\log_{2}(8)+\log_{2}(4)	\mathrm{True}
+power-rule-log-b-x-k-k-log-b-x	\log_{2}(2^5)=5\log_{2}(2)	\mathrm{True}
+log-10-0-infty		
+a-negative-argument-stays-symbolic-with-the		

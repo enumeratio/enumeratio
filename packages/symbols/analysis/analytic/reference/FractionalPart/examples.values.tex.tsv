@@ -1,0 +1,7 @@
+id	in	out
+fractionalpart-2p5	\mathrm{FractionalPart}(2.5)	0.5
+fractionalpart-7-over-2	\mathrm{FractionalPart}(\frac{7}{2})	\frac{1}{2}
+keeps-the-sign-of-x-unlike-compute-engine-s	\mathrm{FractionalPart}(-\frac{7}{2})	-\frac{1}{2}
+exact-numeric-arguments-stay-exact	\mathrm{FractionalPart}(\pi)	\pi-3
+threads-element-wise-over-a-list	\mathrm{FractionalPart}(\bigl\lbrack\frac{7}{2}, -\frac{1}{3}\bigr\rbrack)	\bigl\lbrack\frac{1}{2}, -\frac{1}{3}\bigr\rbrack
+zero-exactly-on-the-integers	\mathrm{FractionalPart}(5)	0

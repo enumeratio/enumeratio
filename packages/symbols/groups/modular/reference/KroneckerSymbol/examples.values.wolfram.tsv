@@ -1,0 +1,49 @@
+id	in	out	tex.in	tex.out
+kroneckersymbol-17-6	KroneckerSymbol[17, 6]	-1	\left(\frac{17}{6}\right)	-1
+kroneckersymbol-10-13	KroneckerSymbol[10, 13]	1	\left(\frac{10}{13}\right)	1
+0-whenever-a-1-and-n-0	KroneckerSymbol[5, 0]	0	\left(\frac{5}{0}\right)	0
+a-1-is-the-sign-of-a-here-a-0	KroneckerSymbol[-3, -1]	-1	\left(\frac{-3}{-1}\right)	-1
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues	KroneckerSymbol[3, 2]	-1	\left(\frac{3}{2}\right)	-1
+a-n-0	KroneckerSymbol[0, 0]	0	\left(\frac{0}{0}\right)	0
+n-0-a-1	KroneckerSymbol[1, 0]	1	\left(\frac{1}{0}\right)	1
+n-0-even-a-not-a-unit	KroneckerSymbol[2, 0]	0	\left(\frac{2}{0}\right)	0
+n-0-odd-a-1	KroneckerSymbol[3, 0]	0	\left(\frac{3}{0}\right)	0
+a-0-n-1	KroneckerSymbol[0, 1]	1	\left(\frac{0}{1}\right)	1
+n-1-is-always-1	KroneckerSymbol[5, 1]	1	\left(\frac{5}{1}\right)	1
+n-1-negative-a	KroneckerSymbol[-7, 1]	1	\left(\frac{-7}{1}\right)	1
+a-0-n-1-2	KroneckerSymbol[0, -1]	1	\left(\frac{0}{-1}\right)	1
+n-1-positive-a	KroneckerSymbol[3, -1]	1	\left(\frac{3}{-1}\right)	1
+n-1-negative-a-sign-of-a	KroneckerSymbol[-5, -1]	-1	\left(\frac{-5}{-1}\right)	-1
+a-0-odd-n-1	KroneckerSymbol[0, 5]	0	\left(\frac{0}{5}\right)	0
+a-0-even-n	KroneckerSymbol[0, 4]	0	\left(\frac{0}{4}\right)	0
+a-0-negative-odd-n	KroneckerSymbol[0, -5]	0	\left(\frac{0}{-5}\right)	0
+a-0-n-prime	KroneckerSymbol[0, 7]	0	\left(\frac{0}{7}\right)	0
+a-1-is-always-1	KroneckerSymbol[1, 7]	1	\left(\frac{1}{7}\right)	1
+a-1-negative-n	KroneckerSymbol[1, -7]	1	\left(\frac{1}{-7}\right)	1
+1-p-p-7-3-mod-4	KroneckerSymbol[-1, 7]	-1	\left(\frac{-1}{7}\right)	-1
+1-p-p-5-1-mod-4	KroneckerSymbol[-1, 5]	1	\left(\frac{-1}{5}\right)	1
+2-n-character-n-7-7-mod-8	KroneckerSymbol[2, 7]	1	\left(\frac{2}{7}\right)	1
+2-n-character-n-3-3-mod-8	KroneckerSymbol[2, 3]	-1	\left(\frac{2}{3}\right)	-1
+2-n-character-n-5-5-mod-8	KroneckerSymbol[2, 5]	-1	\left(\frac{2}{5}\right)	-1
+2-n-character	KroneckerSymbol[-2, 7]	-1	\left(\frac{-2}{7}\right)	-1
+a-2-odd-a-5-5-mod-8	KroneckerSymbol[5, 2]	-1	\left(\frac{5}{2}\right)	-1
+a-2-odd-a-9-1-mod-8	KroneckerSymbol[9, 2]	1	\left(\frac{9}{2}\right)	1
+a-2-even-a-0	KroneckerSymbol[4, 2]	0	\left(\frac{4}{2}\right)	0
+even-a-and-even-n	KroneckerSymbol[6, 4]	0	\left(\frac{6}{4}\right)	0
+odd-square-a-9-mod-2-3	KroneckerSymbol[9, 8]	1	\left(\frac{9}{8}\right)	1
+even-composite-n-2-3-negative	KroneckerSymbol[7, -6]	1	\left(\frac{7}{-6}\right)	1
+even-a-negative-even-n	KroneckerSymbol[10, -6]	0	\left(\frac{10}{-6}\right)	0
+negative-odd-n	KroneckerSymbol[5, -3]	-1	\left(\frac{5}{-3}\right)	-1
+negative-a-negative-odd-n	KroneckerSymbol[-5, -9]	-1	\left(\frac{-5}{-9}\right)	-1
+perfect-square-a-qr	KroneckerSymbol[4, 7]	1	\left(\frac{4}{7}\right)	1
+non-square-a-qnr-mod-7	KroneckerSymbol[3, 7]	-1	\left(\frac{3}{7}\right)	-1
+both-at-negative-grid-edge	KroneckerSymbol[-10, -10]	0	\left(\frac{-10}{-10}\right)	0
+mixed-sign-edge	KroneckerSymbol[10, -10]	0	\left(\frac{10}{-10}\right)	0
+composite-a-prime-n	KroneckerSymbol[10, 7]	-1	\left(\frac{10}{7}\right)	-1
+negative-a-odd-square-n-9	KroneckerSymbol[-10, 9]	1	\left(\frac{-10}{9}\right)	1
+threads-element-wise-over-a-list-as-wolfram-s	KroneckerSymbol[List[2, 3, 5, 7, 11], 6]	{0, 0, 1, 1, 1}	\left(\frac{\{2,3,5,7,11\}}{6}\right)	\{0,0,1,1,1\}
+larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]			
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol[7, 6]			
+the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol[-4, 7]			
+completely-multiplicative-in-n	(KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])	True	\left(\frac{7}{3\ 5}\right)=\left(\frac{7}{3}\right) \left(\frac{7}{5}\right)	\text{True}
+a-0-1-for-a-pm-1	KroneckerSymbol[-1, 0]			

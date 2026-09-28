@@ -1,0 +1,2 @@
+id	in	out
+star-hub-is-maximally-close	\mathrm{ClosenessCentrality}(\mathrm{StarGraph}(5), 1)	1

@@ -1,0 +1,3 @@
+id	in	out
+looks-up-an-existing-key	Association(Rule(a, 1), Rule(b, 2))[Key(b)]	2
+missing-key-answers-missing	Association(Rule(a, 1))[Key(z)]	Missing

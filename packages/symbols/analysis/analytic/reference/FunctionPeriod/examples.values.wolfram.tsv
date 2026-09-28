@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+sine-s-period-is-2-pi	FunctionPeriod[Sin[x], x]	2*Pi	\text{FunctionPeriod}[\sin (x),x]	2 \pi
+tangent-s-period-is-pi	FunctionPeriod[Tan[x], x]	Pi	\text{FunctionPeriod}[\tan (x),x]	\pi
+scaling-the-argument-scales-the-period	FunctionPeriod[Sin[Times[2, x]], x]	Pi	\text{FunctionPeriod}[\sin (2 x),x]	\pi
+exp-is-not-periodic	FunctionPeriod[Exp[x], x]	0	\text{FunctionPeriod}[\exp (x),x]	0
+a-polynomial-is-not-periodic	FunctionPeriod[Power[x, 2], x]			

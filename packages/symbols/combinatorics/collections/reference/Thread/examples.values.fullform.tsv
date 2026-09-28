@@ -1,0 +1,4 @@
+id	in
+equal-over-lists	Thread[Equal[List[1, 2, 3], List[1, 5, 3]]]
+scalar-broadcast	Thread[Equal[List[1, 2, 3], 1]]
+custom-head	Thread[f[g[1, 2], g[3, 4]], g]

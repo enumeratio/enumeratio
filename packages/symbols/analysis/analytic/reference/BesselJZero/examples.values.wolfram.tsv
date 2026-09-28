@@ -1,0 +1,8 @@
+id	in
+j-3-2-1-4-4934-also-the-first-positive-root-of	N[BesselJZero[Rational[3, 2], 1]]
+j-0-1-2-4048	N[BesselJZero[0, 1]]
+the-third-zero-of-j-0	N[BesselJZero[0, 3]]
+j-3-2-2	N[BesselJZero[Rational[3, 2], 2]]
+j-1-2	N[BesselJZero[1, 2]]
+j-5-2-1	N[BesselJZero[Rational[5, 2], 1]]
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Chop[Subtract[Tan[N[BesselJZero[Rational[3, 2], 1]]], N[BesselJZero[Rational[3, 2], 1]]]]

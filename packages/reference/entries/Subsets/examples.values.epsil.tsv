@@ -1,0 +1,7 @@
+id	in	out
+the-documented-subsets-collection-form-listed-in	Subsets([a, b, c])	[[], [a], [b], [a, b], [c], [a, c], [b, c], [a, b, c]]
+a-size-bound-the-subsets-with-at-most-2-elements	Count(Subsets(4, 2))	11
+an-exact-size-2-binom-4-2-subsets	Count(Subsets(4, [2]))	6
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	Count(Subsets(5, [0, 5, 2]))	16
+a-set-of-n-elements-has-2-n-subsets-count	Length(Subsets(Range(1, 10)))	1_024
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum(Binomial(5, k), (k, 0, 5))	32

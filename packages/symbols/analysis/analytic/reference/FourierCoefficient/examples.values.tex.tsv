@@ -1,0 +1,9 @@
+id	in	out
+c-2-of-x	\mathrm{FourierCoefficient}(x, x, 2)	\frac{1}{2}i
+c-2-of-cos-squared	\mathrm{FourierCoefficient}(\cos(x)^2, x, 2)	\frac{1}{4}
+c-0-of-x-squared-is-the-average	\mathrm{FourierCoefficient}(x^2, x, 0)	\frac{\pi^2}{3}
+c-0-of-abs-x	\mathrm{FourierCoefficient}(\vert x\vert, x, 0)	\frac{\pi}{2}
+c-1-of-abs-x	\mathrm{FourierCoefficient}(\vert x\vert, x, 1)	-\frac{2}{\pi}
+c-1-of-exp-x	\mathrm{FourierCoefficient}(e^{x}, x, 1)	\frac{1}{\pi}((-\frac{1}{2}-\frac{1}{2}i)\sinh(\pi))
+declines-a-symbolic-order	\mathrm{FourierCoefficient}(x, x, n)	\mathrm{FourierCoefficient}(x, x, n)
+declines-tan-x-no-closed-form-here	\mathrm{FourierCoefficient}(\tan(x), x, 1)	\mathrm{FourierCoefficient}(\tan(x), x, 1)

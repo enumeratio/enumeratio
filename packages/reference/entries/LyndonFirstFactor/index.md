@@ -1,0 +1,9 @@
+---
+name: LyndonFirstFactor
+domain: Combinatorics
+signature: LyndonFirstFactor(...)
+summary: Lyndon factorization (first factor)
+mapOn:
+  - Word
+stub: carrier
+---

@@ -1,0 +1,5 @@
+id	in	out
+asking-for-up-to-5-of-3-elements-takes-all-3	Take([1, 2, 3], UpTo(5))	[1, 2, 3]
+when-enough-elements-are-available-exactly-n-is	Take([1, 2, 3, 4, 5, 6], UpTo(2))	[1, 2]
+in-partition-a-shorter-final-chunk-is-allowed	Partition([1, 2, 3, 4, 5, 6], UpTo(4))	[[1, 2, 3, 4], [5, 6]]
+in-ordering-at-most-6-positions-of-a-5-element	Ordering([2, 6, 1, 9, 2], UpTo(6))	[3, 1, 5, 2, 4]

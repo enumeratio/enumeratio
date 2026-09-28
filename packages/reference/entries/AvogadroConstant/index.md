@@ -1,0 +1,12 @@
+---
+name: AvogadroConstant
+domain: Compute engine
+signature: AvogadroConstant
+summary: Avogadro constant
+signatures:
+  - call: "AvogadroConstant: value"
+    description: a constant, as compute-engine declares it
+names:
+  wikidata: Q6203
+stub: engine
+---

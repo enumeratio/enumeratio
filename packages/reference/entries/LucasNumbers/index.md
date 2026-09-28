@@ -1,0 +1,34 @@
+---
+name: LucasNumbers
+domain: Collections
+signature: LucasNumbers
+summary: The Lucas numbers $2, 1, 3, 4, 7, 11, …$ as a lazy indexed collection.
+signatures:
+  - call: LucasNumbers
+    description: $L_n = L_{n-1} + L_{n-2}$, $L_0 = 2$, $L_1 = 1$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(LucasNumbers) = +\infty$, and $At(LucasNumbers, 1) = L_0 = 2$.'
+  - "OEIS A000032, starting exactly at its offset-0 term: $2, 1, 3, 4, 7, 11, 18, …$. The sequence dips once ($L_0 = 2 > L_1 = 1$) before climbing forever from $L_1$ on."
+  - "Membership goes through [[Element]]: $Element(1, LucasNumbers)$ is true, $Element(5, LucasNumbers)$ is false."
+enumerate:
+  expr: Take(LucasNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - FibonacciNumbers
+catalog:
+  - system: oeis
+    identity: A000032
+    url: https://oeis.org/A000032
+  - system: sage
+    identity: sage.combinat.combinat.lucas_number2(n, 1, -1)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: L(n) via lucas_number2 with (P, Q) = (1, −1); sage has no bare Lucas function, this is the parameterized Lucas-of-the-second-kind
+  - system: wolfram
+    identity: LucasL
+    url: https://reference.wolfram.com/language/ref/LucasL.html
+grades: []
+carrier: Numeric
+unbounded: true
+---

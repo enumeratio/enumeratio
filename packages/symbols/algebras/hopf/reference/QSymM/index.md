@@ -1,0 +1,27 @@
+---
+name: QSymM
+domain: Hopf algebras
+signature: QSymM(composition)
+summary: The monomial basis $M_\alpha$ of the quasi-symmetric functions, indexed by a composition. The product is the quasi-shuffle, which may ADD two leading parts as well as interleave them.
+signatures:
+  - call: QSymM([1,2])
+    description: $M_\alpha$ for the composition $\alpha$
+    library: enumeratio-hopf
+    type: (list<integer>) -> number
+  - call: NSymH([1,2])
+    description: the complete basis $H_\alpha$ of NSym, whose product is concatenation
+    library: enumeratio-hopf
+details:
+  - $M_1 \cdot M_1 = 2M_{1,1} + M_2$ — the $M_2$ term is the overlap, and it is what makes this a QUASI-shuffle rather than an ordinary shuffle
+  - QSym is commutative; NSym is not, which is what its name records
+  - Both are graded with $2^{n-1}$ basis elements in degree $n$ — one per composition of $n$
+  - 'The two share an index set but are different algebras: mixing $H_\alpha$ and $M_\alpha$ in one product is refused'
+  - Use the ordered product ([[NonCommutativeMultiply]] or $\otimes$); see [[Coproduct]] for the other half of the structure
+seeAlso:
+  - Coproduct
+  - Antipode
+  - Basis
+references:
+  - system: wikipedia
+    identity: Quasisymmetric function
+---

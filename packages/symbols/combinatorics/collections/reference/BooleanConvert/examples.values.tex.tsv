@@ -1,0 +1,6 @@
+id	in	out
+default-form-is-dnf	\mathrm{BooleanConvert}(p\land(b\lor r))	b\land p\lor p\land r
+cnf-distributes-or-over-and	\mathrm{BooleanConvert}(p\lor b\land r, \text{CNF})	(b\lor p)\land(p\lor r)
+nnf-pushes-not-to-the-leaves-not-distributed	\mathrm{BooleanConvert}(p\implies b, \text{NNF})	b\lor\lnot p
+a-tautological-clause-drops-out-of-cnf	\mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})	\top
+an-unimplemented-form-stays-unevaluated	\mathrm{BooleanConvert}(p, \text{ESOP})	\mathrm{BooleanConvert}(p, \text{ESOP})

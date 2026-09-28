@@ -1,0 +1,9 @@
+---
+name: MinimumDegree
+domain: Combinatorics
+signature: MinimumDegree(...)
+summary: Minimum degree
+statOn:
+  - LabeledGraph
+stub: carrier
+---

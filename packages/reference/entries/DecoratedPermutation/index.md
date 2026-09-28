@@ -1,0 +1,13 @@
+---
+name: DecoratedPermutation
+domain: Combinatorics
+signature: DecoratedPermutation(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: DecoratedPermutation(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> decorated_permutation
+---

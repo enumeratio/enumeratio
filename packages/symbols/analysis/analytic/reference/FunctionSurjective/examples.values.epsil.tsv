@@ -1,0 +1,6 @@
+id	in	out
+an-odd-degree-polynomial-is-onto	FunctionSurjective(x ^ 3, x, Reals)	True
+exp-misses-the-non-positive-reals	FunctionSurjective(Exp(x), x, Reals)	False
+log-is-onto-the-reals	FunctionSurjective(Ln(x), x, Reals)	True
+a-reciprocal-never-hits-zero	FunctionSurjective(1 / x, x, Reals)	False
+an-unsupported-codomain-declines	FunctionSurjective(x ^ 3, x, Integers)	FunctionSurjective(x ^ 3, x, Integers)

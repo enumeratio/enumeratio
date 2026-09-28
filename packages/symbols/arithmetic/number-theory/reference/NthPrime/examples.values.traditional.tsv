@@ -1,0 +1,10 @@
+id	in	out
+the-first-prime-is-2	p_{1}	2
+nthprime-10	p_{10}	29
+nthprime-100	p_{100}	541
+threads-element-wise-over-a-list-as-wolfram-s		
+the-millionth-prime	p_{1\,000\,000}	15\,485\,863
+a-prime-gap-p-31-p-30-127-113	p_{31}-p_{30}	14
+primepi-and-nthprime-are-inverses-pi-p-n-n	\pi(p_{100})=100	\mathrm{True}
+n-must-be-a-positive-integer-compute-engine	p_{0}	p_{0}
+the-1000th-prime	p_{1\,000}	7\,919

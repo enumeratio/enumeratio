@@ -1,0 +1,9 @@
+id	in	out
+1-1-2-2-3-3-4-4	Hyperfactorial(4)	27_648
+the-empty-product	Hyperfactorial(0)	1
+hyperfactorial-1-5	Hyperfactorial(1.5)	1.617_488_527_948_912_6
+hyperfactorial-2-5	Hyperfactorial(2.5)	15.984_211_992_223_353
+hyperfactorial-6-25	Hyperfactorial(6.25)	92_229_745_540_487.84
+listable	Hyperfactorial([1, 2, 3, 4, 5, 6])	[1, 4, 108, 27_648, 86_400_000, 4_031_078_400_000]
+continued-off-the-integers	Hyperfactorial(0.5)	0.880_449_235_173_423_4
+h-10-well-past-double-range-exact-bigint	Hyperfactorial(10)	215_779_412_229_418_562_091_680_268_288_000_000_000_000_000

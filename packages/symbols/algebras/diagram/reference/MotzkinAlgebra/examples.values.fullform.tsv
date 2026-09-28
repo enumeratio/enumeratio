@@ -1,0 +1,5 @@
+id	in
+m-6	AlgebraDimension[MotzkinAlgebra[3]]
+algebradimension-rookalgebra-3	AlgebraDimension[RookAlgebra[3]]
+5	AlgebraDimension[SymmetricGroupAlgebra[5]]
+a-cup-cap-is-not-a-permutation	Element[Diagram[List[List[1, 2], List[-1, -2], List[3, -3]]], SymmetricGroupAlgebra[3]]

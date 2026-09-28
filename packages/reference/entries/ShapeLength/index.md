@@ -1,0 +1,9 @@
+---
+name: ShapeLength
+domain: Combinatorics
+signature: ShapeLength(...)
+summary: Shape length
+statOn:
+  - StandardTableauPair
+stub: carrier
+---

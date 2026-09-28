@@ -1,0 +1,23 @@
+id	in	out	tex.in	tex.out
+a-pole-of-gamma-shared-by-its-log-derivative	PolyGamma[0]	ComplexInfinity	\psi (0)	\text{ComplexInfinity}
+digamma-neg-1	PolyGamma[-1]	ComplexInfinity	\psi (-1)	\text{ComplexInfinity}
+a-floating-point-argument-evaluates-directly-to	PolyGamma[0.5]	-1.9635100260214235	\psi (0.5)	-1.96351
+a-machine-precision-argument	PolyGamma[100.5]			
+psi-5-h-4-gamma-frac-25-12-gamma	PolyGamma[5]			
+threads-over-a-list-reducing-each-positive	PolyGamma[List[1, 2, 3]]			
+complex-arguments-should-evaluate-as-psi-m-does	PolyGamma[Complex[2.5, 3]]			
+psi-infty-infty-growing-like-ln-z	PolyGamma[Infinity]			
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	PolyGamma[Rational[1, 4]]			
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	PolyGamma[Rational[1, 3]]			
+interval-arithmetic-psi-is-increasing-on-0-infty	PolyGamma[Interval[List[1.23, 1.24]]]			
+to-30-significant-digits-every-one-correctly	N[PolyGamma[Rational[1, 3]], 30]			
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	(Plus[PolyGamma[6], EulerGamma] == Plus[1, Rational[1, 2], Rational[1, 3], Rational[1, 4], Rational[1, 5]])	True	\psi (6)+\gamma =1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}	\text{True}
+psi-1-gamma	(Plus[PolyGamma[1], EulerGamma] == 0)	True	\psi (1)+\gamma =0	\text{True}
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	(PolyGamma[2] == Plus[PolyGamma[1], 1])	True	\psi (2)=\psi (1)+1	\text{True}
+psi-1-2-gamma-2-ln-2	(Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]] == 0)	EulerGamma + 2*Log[2] + PolyGamma[0, 1/2] == 0	\psi \left(\frac{1}{2}\right)+\gamma +2 \log (2)=0	\gamma +2 \log (2)+\psi ^{(0)}\left(\frac{1}{2}\right)=0
+psi-x-is-the-trigamma-psi-1-x	D[PolyGamma[x], x]			
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	Subtract[PolyGamma[0.7], PolyGamma[0.3]]			
+psi-1-gamma-2	PolyGamma[1]			
+psi-2-1-gamma-from-psi-n-1-psi-n-1-n	PolyGamma[2]			
+psi-3-frac-3-2-gamma	PolyGamma[3]			
+between-the-poles-at-0-and-1-psi-is-still-finite	PolyGamma[-0.5]	0.03648997397857645	\psi (-0.5)	0.03649

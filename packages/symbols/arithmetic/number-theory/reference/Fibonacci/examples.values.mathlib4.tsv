@@ -1,0 +1,23 @@
+id	in	out	verdict
+fibonacci-0	(Nat.fib 0)	0	
+fibonacci-1	(Nat.fib 1)	1	
+fibonacci-10	(Nat.fib 10)	55	
+fibonacci-20	(Nat.fib 20)	6765	
+fibonacci-8	(Nat.fib 8)		
+exact-at-any-size-f-100-has-21-digits	(Nat.fib 100)		
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	(Nat.fib 1.5)		
+the-two-argument-fibonacci-polynomial-f-7-x-from			
+the-fibonacci-polynomial-at-a-real-order-and			
+special-value-of-the-fibonacci-polynomial-f-1-0			
+special-value-of-the-fibonacci-polynomial-f-0-0			
+f-3-x-x-2-1-threads-element-wise-over-a-matrix			
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.fib [1, 2, 3, 4])	Application type mismatch: The argument	error
+consecutive-ratios-f-n-1-f-n-converge-to-the	(((Nat.fib 20) : ℚ) / (Nat.fib 19))	6765/4181	
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl			
+the-defining-recurrence-f-10-f-9-f-8	(decide ((Nat.fib 10) = ((Nat.fib 9) + (Nat.fib 8))))	true	
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	(((Nat.fib 5) * (Nat.fib 7)) - ((Nat.fib 6) ^ 2))	1	
+gcd-f-12-f-18-f-gcd-12-18	(decide ((Int.gcd (Nat.fib 12) (Nat.fib 18)) = (Nat.fib (Int.gcd 12 18))))	true	
+negative-indices-are-supported-via-f-n-1-n-1-f-n	(Nat.fib (-5))	failed to synthesize instance of type class	error
+f-1000-has-209-digits-see-integerdigits			
+they-grow-fast-f-50-already-exceeds-twelve	(Nat.fib 50)	12586269025	

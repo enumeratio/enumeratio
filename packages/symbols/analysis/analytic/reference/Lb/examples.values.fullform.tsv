@@ -1,0 +1,11 @@
+id	in	back
+lb-8	Log2[8]	[Log2, 8]
+lb-1	Log2[1]	[Log2, 1]
+lb-1-024	Log2[1024]	[Log2, 1024]
+a-machine-precision-argument-evaluates	Log2[1.4142]	[Log2, 1.4142]
+lb-2-pow-10	Log2[Power[2, 10]]	[Log2, [Power, 2, 10]]
+same-exact-negative-power-fold-as-log2-lb-frac	Log2[Rational[1, 8]]	[Log2, [Rational, 1, 8]]
+lb-0	Log2[0]	[Log2, 0]
+threads-element-wise-over-a-list	Log2[List[1, 2, 4, 8]]	[Log2, [List, 1, 2, 4, 8]]
+same-as-log2-the-logarithm-of-complex-infinity	Log2[ComplexInfinity]	[Log2, ComplexInfinity]
+identical-to-log2	Equal[Log2[64], Log2[64]]	[Equal, [Log2, 64], [Log2, 64]]

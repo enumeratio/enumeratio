@@ -1,0 +1,7 @@
+id	in	out
+sqrt-2-cdot-8-4	\mathrm{GeometricMean}(\bigl\lbrack2, 8\bigr\rbrack)	4
+sqrt-3-1-cdot-2-cdot-4-2	\mathrm{GeometricMean}(\bigl\lbrack1, 2, 4\bigr\rbrack)	2
+geometricmean-of-equal-values	\mathrm{GeometricMean}(\bigl\lbrack7, 7, 7\bigr\rbrack)	7
+an-exact-irrational-result	\mathrm{GeometricMean}(\bigl\lbrack2, 3\bigr\rbrack)	\sqrt{6}
+sqrt-3-6	\mathrm{GeometricMean}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\sqrt[3]{6}
+symbolic-data	\mathrm{GeometricMean}(\bigl\lbrack a, b\bigr\rbrack)	\sqrt{ab}

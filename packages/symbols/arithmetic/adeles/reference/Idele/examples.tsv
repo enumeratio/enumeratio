@@ -1,0 +1,17 @@
+id	section	role	expr	expected	caption
+the-principal-idele-7-at-every-place			[Idele, 7]	[Idele, 7, 7]	the principal idèle: 7 at every place
+7-and-its-inverse-cancel-everywhere			[Multiply, [Idele, 7], [Idele, [Rational, 1, 7]]]	[Idele, 1, 1]	7 and its inverse cancel everywhere
+idele-with-a-zero-real-part			[Idele, 0, 1]	[Idele, 0, 1]	
+golden-multiply-rational-real-parts		test	[Multiply, [Idele, -1, [Rational, 1, 4]], [Idele, 1, [Rational, 7, 3]]]	[Idele, -1, [Rational, 7, 12]]	-1 at infinity times 1 at infinity: the reals multiply too
+golden-multiply-integer-idele		test	[Multiply, [Idele, -1, 6], [Idele, 1, 2]]	[Idele, -1, 12]	two principal ideles multiply componentwise
+golden-divide-rational-real-parts		test	[Divide, [Idele, -1, [Rational, 1, 4]], [Idele, 1, [Rational, 7, 3]]]	[Idele, -1, [Rational, 3, 28]]	dividing two principal ideles with rational finite values
+golden-divide-integer-idele		test	[Divide, [Idele, -1, 6], [Idele, 1, 2]]	[Idele, -1, 3]	dividing two principal ideles with integer finite values
+principal-idele-of-negative-rational		test	[Idele, [Rational, -5, 2]]	[Idele, [Rational, -5, 2], [Rational, -5, 2]]	the principal idele of a negative rational
+real-and-finite-parts-can-differ-in-sign		test	[Idele, -1, 3]	[Idele, -1, 3]	real and finite principal parts can carry different signs
+multiplying-by-the-identity-idele		test	[Multiply, [Idele, 5, 2], [Idele, 1, 1]]	[Idele, 5, 2]	the identity idele leaves any idele unchanged
+squaring-an-idele		test	[Power, [Idele, 2, 3], 2]	[Idele, 4, 9]	squaring multiplies both the real and finite parts by themselves
+equal-ideles		test	[Equal, [Idele, 2, 3], [Idele, 2, 3]]	True	two ideles built the same way are equal
+unequal-ideles-differ-in-finite-part		test	[Equal, [Idele, 2, 3], [Idele, 2, 5]]	False	same real part, different finite part: not equal
+inverting-an-idele		test	[Divide, [Idele, 1, 1], [Idele, -2, [Rational, 3, 5]]]	[Idele, [Rational, -1, 2], [Rational, 5, 3]]	dividing the identity by an idele inverts it
+a-listed-component-carries-its-valuation-into	Scope		[Idele, 1, 1, [List, [AdicNumeral, 5, [Rational, 15, 7], 4]]]	[Idele, 1, 5, [List, [AdicNumeral, 5, 54, 3]]]	a listed component carries its valuation into the scale
+a-unit-known-mod-2-says-nothing-at-2	Possible issues		[Idele, 1, 1, [List, [AdicNumeral, 2, 3, 1]]]	[Idele, 1, 1, [List]]	at 2 a unit known mod 2 says nothing

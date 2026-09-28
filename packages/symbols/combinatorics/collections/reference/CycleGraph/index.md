@@ -1,0 +1,16 @@
+---
+name: CycleGraph
+domain: Collections
+signature: CycleGraph(n)
+summary: The cycle graph $C_n$ — $n$ vertices joined in a ring.
+signatures:
+  - call: CycleGraph(n)
+    description: $C_n$ ($n \geq 3$), vertices $1, \dots, n$, each joined to its neighbours around the ring.
+    library: enumeratio-collections
+    type: (integer) -> value
+seeAlso:
+  - PathGraph
+  - IsBipartiteGraph
+names:
+  wolframIdentity: true
+---

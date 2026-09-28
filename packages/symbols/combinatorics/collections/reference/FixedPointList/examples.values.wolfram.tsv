@@ -1,0 +1,2 @@
+id	in
+halve-and-floor-down-to-the-fixed-point	FixedPointList[Function[Floor[Divide[Slot[1], 2]]], 10]

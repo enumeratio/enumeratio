@@ -1,0 +1,71 @@
+id	in	out
+psi-1-zeta-2-pi-2-6	PolyGamma(1, 1) == Zeta(2)	True
+psi-1-2-zeta-3-apery-s-constant-doubled-and	PolyGamma(2, 1) == -2 * Zeta(3)	True
+an-inexact-argument-evaluates-to-a-decimal-psi-1	PolyGamma(1, 0.5)	4.934_802_200_544_679_309_42
+a-pole-of-gamma-still-a-pole-after	PolyGamma(1, 0)	ComplexInfinity
+one-argument-is-the-digamma-psi-5-h-4-gamma-frac	PolyGamma(5)	25 / 12 - EulerGamma
+psi-3-5-pi-4-15-22369-3456	PolyGamma(3, 5)	1 / 17_280 * (-111_845 + 1_152 * Pi ^ 4)
+numerically	N(PolyGamma(3, 5))	0.021_427_828_192_755_075_021_9
+psi-1-2-14-zeta-3	PolyGamma(2, 0.5)	-16.828_796_644_234_319_995_6
+n-polygamma-1-1	N(PolyGamma(1, 1))	1.644_934_066_848_226_436_47
+n-polygamma-1-2	N(PolyGamma(1, 2))	0.644_934_066_848_226_436_472
+n-polygamma-1-0p5	N(PolyGamma(1, 0.5))	4.934_802_200_544_679_309_42
+n-polygamma-1-1p3	N(PolyGamma(1, 1.3))	1.134_253_434_996_619_354_36
+n-polygamma-1-7-over-3	N(PolyGamma(1, 7 / 3))	0.533_097_125_427_094_081_793
+n-polygamma-1-1-plus-i	N(PolyGamma(1, 1 + i))	0.463_000_096_622_763_76 - 0.794_233_542_759_319i
+n-polygamma-1-0p5-plus-0p3i	N(PolyGamma(1, 0.5 + 0.3i))	2.259_034_075_905_333_3 - 2.828_996_786_115_696_6i
+n-polygamma-1-2-plus-neg-0p5-times-i	N(PolyGamma(1, 2 - 0.5i))	0.588_197_890_950_061_5 + 0.185_041_972_433_790_86i
+n-polygamma-2-1	N(PolyGamma(2, 1))	-2.404_113_806_319_188_570_8
+n-polygamma-2-2	N(PolyGamma(2, 2))	-0.404_113_806_319_188_570_799
+n-polygamma-2-0p5	N(PolyGamma(2, 0.5))	-16.828_796_644_234_319_995_6
+n-polygamma-2-1p3	N(PolyGamma(2, 1.3))	-1.198_462_514_651_956_592_7
+n-polygamma-2-7-over-3	N(PolyGamma(2, 7 / 3))	-0.278_372_399_401_607_552_457
+n-polygamma-2-1-plus-i	N(PolyGamma(2, 1 + i))	0.368_552_931_587_935_23 + 0.766_652_850_345_066_6i
+n-polygamma-2-0p5-plus-0p3i	N(PolyGamma(2, 0.5 + 0.3i))	-0.177_259_899_890_065_55 + 10.451_822_205_943_445i
+n-polygamma-2-2-plus-neg-0p5-times-i	N(PolyGamma(2, 2 - 0.5i))	-0.307_387_267_460_616_5 - 0.208_452_694_827_465_28i
+n-polygamma-3-1	N(PolyGamma(3, 1))	6.493_939_402_266_829_149_1
+n-polygamma-3-2	N(PolyGamma(3, 2))	0.493_939_402_266_829_149_096
+n-polygamma-3-0p5	N(PolyGamma(3, 0.5))	97.409_091_034_002_437_236_4
+n-polygamma-3-1p3	N(PolyGamma(3, 1.3))	2.401_023_914_308_926_618_56
+n-polygamma-3-7-over-3	N(PolyGamma(3, 7 / 3))	0.285_379_043_814_241_755_772
+n-polygamma-3-1-plus-i	N(PolyGamma(3, 1 + i))	-1.522_874_448_953_496_4 - 0.317_286_578_661_960_86i
+n-polygamma-3-0p5-plus-0p3i	N(PolyGamma(3, 0.5 + 0.3i))	-27.944_271_157_846_87 - 43.969_408_839_814_47i
+n-polygamma-3-2-plus-neg-0p5-times-i	N(PolyGamma(3, 2 - 0.5i))	0.280_334_830_853_447_74 + 0.336_488_835_908_065_05i
+n-polygamma-5-1	N(PolyGamma(5, 1))	122.081_167_438_133_896_766
+n-polygamma-5-2	N(PolyGamma(5, 2))	2.081_167_438_133_896_765_74
+n-polygamma-5-0p5	N(PolyGamma(5, 0.5))	7_691.113_548_602_435_496_24
+n-polygamma-5-1p3	N(PolyGamma(5, 1.3))	25.792_601_280_613_050_537_9
+n-polygamma-5-7-over-3	N(PolyGamma(5, 7 / 3))	0.857_814_321_602_379_528_571
+n-polygamma-5-1-plus-i	N(PolyGamma(5, 1 + i))	-0.933_084_836_284_871_8 + 14.515_852_291_904_068i
+n-polygamma-5-0p5-plus-0p3i	N(PolyGamma(5, 0.5 + 0.3i))	-3_033.627_950_298_733 + 298.588_513_636_672_4i
+n-polygamma-5-2-plus-neg-0p5-times-i	N(PolyGamma(5, 2 - 0.5i))	0.271_324_699_533_158_96 + 1.707_196_409_284_704_3i
+n-polygamma-1-1-over-2	N(PolyGamma(1, 1 / 2))	4.934_802_200_544_679_309_42
+n-polygamma-0-1	N(PolyGamma(0, 1))	-0.577_215_664_901_532_860_607
+n-polygamma-0-1-plus-i	N(PolyGamma(0, 1 + i))	0.094_650_320_622_475_8 + 1.076_674_047_468_580_8i
+n-polygamma-0-0p5-plus-0p3i	N(PolyGamma(0, 0.5 + 0.3i))	-1.397_932_629_405_807_4 + 1.156_669_383_324_238_3i
+n-polygamma-neg1-2-is-loggamma-2-is-0	N(PolyGamma(-1, 2))	0
+n-polygamma-neg1-1-over-2	N(PolyGamma(-1, 1 / 2))	0.572_364_942_924_699_5
+n-polygamma-neg1-1-plus-i	N(PolyGamma(-1, 1 + i))	-0.650_923_199_301_855_6 - 0.301_640_320_467_532_64i
+n-polygamma-neg1-neg0p5	N(PolyGamma(-1, -0.5))	1.265_512_123_484_645_1 - 3.141_592_653_589_793i
+n-polygamma-neg2-stays-unevaluated	N(PolyGamma(-2, 2))	PolyGamma(-2, 2)
+n-polygamma-8-cancellation-region	N(PolyGamma(8, -48.445_348_956_457_586 + 7.047_151_294_800_014i))	-5_802_709_982_602_873e-26 - 12_898_930_277_153_784e-26 * i
+n-polygamma-8-cancellation-region-nearby-im	N(PolyGamma(8, -48.445_348_956_457_586 + 10i))	53_221_571_369_366_035e-28 - 12_967_382_759_551_942e-26 * i
+n-polygamma-5-cancellation-region	N(PolyGamma(5, -48.987_654_321_098_766 + 9.5i))	-43_059_101_024_050_936e-24 - 5_997_407_236_454_179e-23 * i
+threads-over-a-list-each-element-exact-so-each	PolyGamma(1, [1, 2])	[PolyGamma(1, 1), PolyGamma(1, 2)]
+one-argument-digamma-at-a-machine-precision	PolyGamma(100.5)	4.605_174_352_581_845
+one-argument-digamma-at-a-complex-point	PolyGamma(2.5 + 3i)	1.281_273_919_066_231_4 + 0.979_805_315_344_559_6i
+complex-argument-integer-order	PolyGamma(1, 2.5 + 3i)	0.155_597_888_471_945_53 - 0.230_379_553_082_323_5i
+between-poles-psi-1-2-pi-2-2-4	PolyGamma(1, -0.5)	8.934_802_200_544_679_309_42
+psi-infty-0	PolyGamma(1, PositiveInfinity)	0
+interval-arithmetic-the-trigamma-is-decreasing	PolyGamma(1, Interval(3.45, 3.46))	Interval(0.334_742_897_540_441_2, 0.335_857_280_611_811_7)
+to-30-significant-digits-every-one-correctly	N(PolyGamma(1, 1 / 3), 30)	10.095_597_125_427_094_081_792_004_099_9
+to-25-significant-digits-not-yet-only-the-first	N(PolyGamma(3, 5), 25)	0.021_427_828_192_755_075_021_948_11
+psi-1-i-0-46300-0-79423-i-complex-argument-from	N(PolyGamma(1, 1 + i))	0.463_000_096_622_763_76 - 0.794_233_542_759_319i
+psi-1-2-pi-2-2	PolyGamma(1, 1 / 2) == Pi ^ 2 / 2	True
+recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	PolyGamma(1, 1) - PolyGamma(1, 2) == 1	True
+psi-0-1-gamma-polygamma-0-z-routes-through	PolyGamma(0, 1)	-EulerGamma
+psi-1-2-gamma-2-ln-2	PolyGamma(0, 1 / 2)	-2 * Ln(2) - EulerGamma
+psi-1-2-pi-2-2-in-closed-form	PolyGamma(1, 1 / 2)	1 / 2 * Pi ^ 2
+psi-1-4-pi-2-8g	PolyGamma(1, 1 / 4)	8Catalan + Pi ^ 2
+frac-d-dx-psi-n-x-psi-n-1-x	D(PolyGamma(n, x), x)	PolyGamma(n + 1, x)
+an-exact-integer-argument-is-left-unevaluated	PolyGamma(1, 1)	PolyGamma(1, 1)

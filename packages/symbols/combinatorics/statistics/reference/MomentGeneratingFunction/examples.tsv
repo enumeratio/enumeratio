@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+momentgeneratingfunction-gamma			[MomentGeneratingFunction, [GammaDistribution, 2, 1], t]	[Power, [Add, [Negate, t], 1], -2]
+momentgeneratingfunction-poisson-at-zero			[MomentGeneratingFunction, [PoissonDistribution, 2], 0]	1
+momentgeneratingfunction-cauchy-undeclared	Possible issues		[MomentGeneratingFunction, [CauchyDistribution, 0, 1], 1]	[MomentGeneratingFunction, [CauchyDistribution, 0, 1], 1]

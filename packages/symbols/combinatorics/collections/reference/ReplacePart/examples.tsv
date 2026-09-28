@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+replaces-a-single-1-based-position			[ReplacePart, [List, a, b, c], [Rule, 2, z]]	[List, a, z, c]
+with-a-negative-position-counts-from-the-end	Scope		[ReplacePart, [List, a, b, c], [Rule, -1, z]]	[List, a, b, z]
+applies-a-list-of-rules	Scope		[ReplacePart, [List, a, b, c], [List, [Rule, 1, x], [Rule, 3, y]]]	[List, x, b, y]
+with-a-nested-i-j-position-drills-into-a-sublist	Scope		[ReplacePart, [List, [List, a, b], c], [Rule, [List, 1, 2], z]]	[List, [List, a, z], c]

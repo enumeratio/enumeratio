@@ -1,0 +1,48 @@
+id	in	out	verdict
+cos-0	cos(0)	1.0	
+cos-pi-over-6			
+cos-pi-over-4			
+cos-pi-over-3			
+cos-pi-over-2			
+cos-pi	cos(pi)	-1.0	
+cos-30-circ-exactly			
+a-machine-precision-argument-evaluates	cos(1.2)	0.362357754476673619029223479279	
+a-huge-24-40-argument	(cos(((24)**40)))		
+a-huge-3-200-argument	(cos(((3)**200)))		
+a-huge-neg-7-60-argument	(cos((-((7)**60))))		
+a-huge-10-80-plus-1-over-3-argument			
+cos-2-5	cos(2.5)		
+n-of-an-exact-argument-gives-an-arbitrary	(cos((mpf(6)/5)))	0.362357754476673577638373355623	
+evaluates-at-a-complex-argument	cos(mpc(2.5, 1))	(-1.23622919885634208168318950526 - 0.703325178113534826107487014147j)	
+threads-element-wise-over-a-matrix			
+cos-pi-12-frac-sqrt-6-sqrt-2-4			
+cos-pi-8-frac-sqrt-2-sqrt-2-2			
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4			
+cos-2-pi-5-frac-sqrt-5-1-4	cos(((mpf(2)/5) * pi))	0.309016994374947424102293417183	
+cos-3-pi-5-frac-1-sqrt-5-4	cos(((mpf(3)/5) * pi))	-0.309016994374947424102293417183	
+reduced-into-the-first-quadrant-by-symmetry	cos(((mpf(11)/6) * pi))	0.866025403784438646763723170753	
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
+uncertainty-propagation-cos-2-pm-0-01-approx-0			
+cos-infty-should-be-the-oscillation-range-1-1	cos(inf)		
+an-imaginary-argument-rewrites-to-cosh-cos-ix			
+evenness-drops-the-sign-of-a-symbolic-argument			
+cos-arccos-x-x-for-every-x			
+cos-arccos-2-2-past-the-real-domain			
+cos-arcsin-x-sqrt-1-x-2			
+cos-arctan-x-frac-1-sqrt-1-x-2			
+derivative-sin-x			
+antiderivative			
+taylor-series-about-0-only-even-powers-appear			
+to-30-significant-digits-every-one-correctly	(cos(1))	0.540302305868139717400936607443	
+to-1-significant-digit	(cos(1))	0.540302305868139717400936607443	disagree
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	(cos(((10)**100)))	-0.928081905074655343456194643777	
+threads-element-wise-over-a-list			
+even-function-cos-x-cos-x			
+co-function-identity-cos-x-sin-pi-2-x			
+double-angle-formula-cos-2x-cos-2-x-sin-2-x			
+angle-addition-formula			
+power-reduction-cos-2-x-frac-1-cos-2x-2			
+euler-s-formula-cos-x-frac-e-ix-e-ix-2			
+as-with-sin-a-non-special-numeric-argument-stays	cos(2)	-0.416146836547142386997568229501	
+pi-24-is-past-the-automatic-special-angle-table	cos(((mpf(1)/24) * pi))	0.991444861373810411144557526929	
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden			

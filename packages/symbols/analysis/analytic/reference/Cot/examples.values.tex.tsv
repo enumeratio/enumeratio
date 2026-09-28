@@ -1,0 +1,27 @@
+id	in	out
+cot-pi-over-6	\cot(\frac{\pi}{6})	\sqrt{3}
+cot-pi-over-4	\cot(\frac{\pi}{4})	1
+cot-pi-over-3	\cot(\frac{\pi}{3})	\frac{\sqrt{3}}{3}
+cot-60-circ-frac-sqrt-3-3-exactly	\cot(60^{\circ})	\frac{\sqrt{3}}{3}
+a-machine-precision-argument-evaluates	\cot(1.2)	0.388\,779\,569\,368\,204\,911\,634
+a-huge-24-40-argument	N(\cot(24^{40}))	2.290\,720\,910\,010\,880\,678\,42
+a-huge-10-100-argument	N(\cot(10^{100}))	2.492\,323\,879\,279\,820\,694\,87
+a-huge-3-200-argument	N(\cot(3^{200}))	0.367\,143\,001\,033\,697\,879\,173
+a-huge-neg-7-60-argument	N(\cot(-7^{60}))	-2.549\,725\,448\,552\,896\,594\,74
+a-huge-10-80-plus-1-over-3-argument	N(\cot(\frac{10^{80}+1}{3}))	0.173\,090\,235\,446\,142\,446\,046
+cot-7-under-n	N(\cot(7))	1.147\,515\,422\,405\,135\,6
+n-of-an-exact-argument-gives-an-arbitrary	N(\cot(\frac{6}{5}))	0.388\,779\,569\,368\,204\,911\,634
+evaluates-at-a-complex-argument	\cot(2.5+i)	-0.275\,669\,121\,229\,899\,45-1.042\,640\,642\,094\,421\,6i
+threads-element-wise-over-a-matrix	\cot(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \frac{\pi}{2}\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\pi/6\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\sqrt{3}, 0\bigr\rbrack, \bigl\lbrack0, -\sqrt{3}\bigr\rbrack\bigr\rbrack
+cot-pi-8-1-sqrt-2	\cot(\frac{\pi}{8})	1+\sqrt{2}
+cot-pi-12-2-sqrt-3	\cot(\frac{\pi}{12})	2+\sqrt{3}
+cot-pi-over-5	\cot(\frac{\pi}{5})	\frac{1}{5}(\sqrt{5}\sqrt{5+2\sqrt{5}})
+an-interval-straddling-the-pole-at-0-maps-to-two	\cot(\mathrm{Interval}(-\frac{\pi}{4}, \frac{\pi}{4}))	\lbrack-\infty, -1\rbrack\cup\lbrack1, \infty\rbrack
+uncertainty-propagation-near-a-pole-grows-fast	\cot(\mathrm{Around}(3, 0.01))	\mathrm{Around}(-7.015\,252\,551\,434\,534, 0.502\,137\,683\,604\,087\,3)
+oddness-pulls-the-sign-out-of-a-symbolic	\cot(-x)	-\cot(x)
+derivative-csc-2-x	\frac{\mathrm{d}\cot(x)}{\mathrm{d}x}	-\csc(x)^2
+antiderivative-ln-sin-x	\int\!\cot(x)\, \mathrm{d}x	\ln(\vert\sin(x)\vert)
+reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\top
+pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\top
+a-pole-sin-0-0	\cot(0)	\tilde\infty
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	\cot(\frac{\pi}{2})	0

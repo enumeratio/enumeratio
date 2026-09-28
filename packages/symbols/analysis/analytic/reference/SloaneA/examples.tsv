@@ -1,0 +1,12 @@
+id	section	role	group	expr	expected	caption	wolfram.kind	wolfram.note
+a000045-is-the-fibonacci-numbers-the-10th-is-55				[SloaneA, "'A000045'", 10]	55	A000045 is the Fibonacci numbers: the 10th is 55		
+a000793-landau-s-function-g-10-30				[SloaneA, "'A000793'", 10]	30	A000793, Landau's function: $g(10) = 30$		
+a000040-5-11-the-5th-prime	Scope		oeis-lookup	[SloaneA, "'A000040'", 5]	11	A000040(5) = 11, the 5th prime.		
+a000041-10-42-the-number-of-partitions-of-10	Scope		oeis-lookup	[SloaneA, "'A000041'", 10]	42	A000041(10) = 42, the number of partitions of 10.		
+a000110-5-52-the-5th-bell-number	Scope		oeis-lookup	[SloaneA, "'A000110'", 5]	52	A000110(5) = 52, the 5th Bell number.		
+a000142-5-120-5	Scope		oeis-lookup	[SloaneA, "'A000142'", 5]	120	A000142(5) = 120 = 5!.		
+a000720-20-8-pi-20-the-prime-counting-function	Scope		oeis-lookup	[SloaneA, "'A000720'", 20]	8	A000720(20) = 8: $\pi(20)$, the prime-counting function.		
+a027641-12-691-b-12-s-numerator	Scope		bernoulli-fraction	[SloaneA, "'A027641'", 12]	-691	A027641(12) = −691, $B_{12}$'s numerator.		
+a027642-12-2730-b-12-s-denominator	Scope		bernoulli-fraction	[SloaneA, "'A027642'", 12]	2730	A027642(12) = 2730, $B_{12}$'s denominator.		
+a000793-15-105-landau-s-function-g-15	Scope		oeis-lookup	[SloaneA, "'A000793'", 15]	105	A000793(15) = 105, Landau's function $g(15)$.		
+an-oeis-id-outside-the-declared-alias-table	Possible issues			[SloaneA, "'A060691'", 5]	[SloaneA, "'A060691'", 5]	An OEIS id outside the declared alias table stays symbolic	domain	Outside our alias table, so ours stays unevaluated by design; the OEIS lookup has every sequence.

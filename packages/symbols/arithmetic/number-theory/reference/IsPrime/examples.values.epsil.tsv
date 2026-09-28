@@ -1,0 +1,46 @@
+id	in	out
+1-is-not-prime-by-definition	IsPrime(1)	False
+2-is-the-only-even-prime	IsPrime(2)	True
+isprime-13	IsPrime(13)	True
+isprime-4	IsPrime(4)	False
+isprime-97	IsPrime(97)	True
+threads-element-wise-over-a-list	IsPrime([1, 2, 3, 4, 5, 6])	[False, True, True, False, True, False]
+isprime-5	IsPrime(5)	True
+isprime-7	IsPrime(7)	True
+threads-element-wise-over-a-short-list	IsPrime([2, 3, 4])	[True, True, False]
+7-is-prime-its-associate-7-is-matching-wolfram-s	IsPrime(-7)	True
+a-gaussian-prime-its-norm-5-is-prime	IsPrime(2 + i)	True
+5-2-i-2-i-splits-in-z-i	IsPrime(5, GaussianIntegers -> True)	False
+large-integers-10-3000-1-is-divisible-by-10-8-1	IsPrime(10 ^ 3_000 + 1)	False
+isprime-neg-1-is-false	IsPrime(-1)	False
+isprime-neg-4-is-false	IsPrime(-4)	False
+isprime-neg-2-is-true	IsPrime(-2)	True
+a-unit-is-not-prime	IsPrime(1)	False
+i-a-unit-is-not-prime	IsPrime(i)	False
+0-is-not-prime	IsPrime(0)	False
+the-ramified-prime-above-2	IsPrime(1 + i)	True
+a-prime-above-5	IsPrime(2 + i)	True
+the-other-prime-above-5	IsPrime(2 - i)	True
+a-prime-above-13	IsPrime(3 + 2i)	True
+a-composite-of-norm-25	IsPrime(3 + 4i)	False
+an-associate-of-a-composite-is-still-composite	IsPrime(-3 - 4i)	False
+a-real-prime-s-associate-by-the-unit-i-is-still	IsPrime(7i)	True
+a-large-norm-composite	IsPrime(123 + 456i)	False
+3-3-mod-4-stays-prime-in-z-i	IsPrime(3, GaussianIntegers -> True)	True
+7-3-mod-4-stays-prime-in-z-i	IsPrime(7, GaussianIntegers -> True)	True
+19-3-mod-4-stays-prime-in-z-i	IsPrime(19, GaussianIntegers -> True)	True
+a-negative-prime-3-mod-4-stays-prime	IsPrime(-7, GaussianIntegers -> True)	True
+5-1-mod-4-splits-and-is-no-longer-prime	IsPrime(5, GaussianIntegers -> True)	False
+13-1-mod-4-splits-and-is-no-longer-prime	IsPrime(13, GaussianIntegers -> True)	False
+2-ramifies-and-is-no-longer-prime	IsPrime(2, GaussianIntegers -> True)	False
+4-was-never-prime-and-still-isn-t	IsPrime(4, GaussianIntegers -> True)	False
+a-real-composite-5-squared-is-not-prime	IsPrime(25, GaussianIntegers -> True)	False
+1-is-not-prime-gaussian-or-not	IsPrime(1, GaussianIntegers -> True)	False
+0-is-not-prime-gaussian-or-not	IsPrime(0, GaussianIntegers -> True)	False
+a-common-choice-of-prime-modulus-for-hashing	IsPrime(1_000_000_007)	True
+an-odd-prime-stays-prime-in-z-i-exactly-when-p	IsPrime([2, 3, 5, 7, 11, 13], GaussianIntegers -> True)	[False, True, False, True, True, False]
+non-integers-are-not-prime	IsPrime(1 / 2)	False
+another-non-integer-3-halves	IsPrime(3 / 2)	False
+a-symbol-stays-unevaluated	IsPrime(x)	IsPrime(x)
+the-mersenne-prime-2-31-1	IsPrime(2 ^ 31 - 1)	True
+the-fermat-number-f-5-2-32-1-is-composite-641	IsPrime(2 ^ 32 + 1)	False

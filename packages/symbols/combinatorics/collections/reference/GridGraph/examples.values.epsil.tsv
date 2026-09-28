@@ -1,0 +1,3 @@
+id	in	out
+a-3-by-4-grid	VertexCount(GridGraph([3, 4]))	12
+edge-count-of-a-3-by-4-grid	EdgeCount(GridGraph([3, 4]))	17

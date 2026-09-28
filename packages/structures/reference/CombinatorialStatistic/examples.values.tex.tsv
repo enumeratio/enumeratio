@@ -1,0 +1,7 @@
+id	in	out
+inversions-of-a-permutation	\mathrm{CombinatorialStatistic}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack), \text{Inversions})	2
+by-findstat-id	\mathrm{CombinatorialStatistic}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack), \text{St000018})	2
+sign-of-a-three-cycle	\mathrm{CombinatorialStatistic}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack), \text{Sign})	1
+distinct-parts-of-a-partition	\mathrm{CombinatorialStatistic}(\mathrm{IntegerPartition}(\bigl\lbrack3, 1, 1\bigr\rbrack), \text{DistinctParts})	2
+count-of-a-collection	\mathrm{CombinatorialStatistic}(\mathrm{SymmetricGroup}(4), \text{Count})	24
+the-mahonian-distribution	\mathrm{Tally}(\mathrm{CombinatorialStatistic}(\mathrm{SymmetricGroup}(4), \text{Inversions}))	\operatorname{Tuple}(\bigl\lbrack0, 1, 2, 3, 4, 5, 6\bigr\rbrack,\bigl\lbrack1, 3, 5, 6, 5, 3, 1\bigr\rbrack)

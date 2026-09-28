@@ -1,0 +1,32 @@
+---
+name: LargestPartPartitions
+domain: Collections
+signature: LargestPartPartitions(n, m)
+summary: The partitions of $n$ whose largest part is exactly $m$.
+signatures:
+  - call: LargestPartPartitions(n, m)
+    description: the partitions of $n$ whose largest part is exactly $m$
+    library: enumeratio-collections
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is row $n$ of the triangle of partitions by largest part (A008284); $m = 0$ only admits the empty partition of $n = 0$.
+  - 'Each element is $[m, …]$: $m$ followed by a partition of $n-m$ with every part $\le m$.'
+seeAlso:
+  - IntegerPartitions
+references:
+  - system: oeis
+    identity: A008284
+catalog:
+  - system: oeis
+    identity: A008284
+    url: https://oeis.org/A008284
+  - system: sage
+    identity: PartitionsGreatestEQ(n, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/partition.html
+grades:
+  - name: n
+    role: axis
+  - name: m
+    role: axis
+carrier: IntegerPartition
+---

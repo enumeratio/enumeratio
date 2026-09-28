@@ -1,0 +1,4 @@
+id	in	out
+collect-everything-sown	Reap(Last([Sow(1), Sow(2), 3]))	[3, [[1, 2]]]
+nothing-sown-gives-an-empty-group-list	Reap(5)	[5, []]
+reap-only-a-matching-tag	Reap(Last([Sow(1, a), Sow(2, b), Sow(3, a), 0]), a)	[0, [[1, 3]]]

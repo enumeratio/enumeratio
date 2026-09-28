@@ -1,0 +1,8 @@
+id	in	back
+a-generic-point-inside-the-unit-disc	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 0.5]	[HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, 3], 0.5]
+a-0-5-1-1-5-2-2-5-at-neg-0-4	HypergeometricPFQRegularized[List[0.5, 1, 1.5], List[2, 2.5], -0.4]	[HypergeometricPFQRegularized, [List, 0.5, 1, 1.5], [List, 2, 2.5], -0.4]
+a-lower-parameter-0-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[0, 2], 0.3]	[HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 0, 2], 0.3]
+a-lower-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[-1, 2], 0.3]	[HypergeometricPFQRegularized, [List, 1, 1, 1], [List, -1, 2], 0.3]
+an-upper-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[2, -1], 0.3]	[HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, -1], 0.3]
+a-complex-argument	N[HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], Complex[0.3, 0.2]]]	[N, [HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, 3], [Complex, 0.3, 0.2]]]
+z-ge-1-stays-symbolic-no-continuation-past-the	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 1.2]	[HypergeometricPFQRegularized, [List, 1, 1, 1], [List, 2, 3], 1.2]

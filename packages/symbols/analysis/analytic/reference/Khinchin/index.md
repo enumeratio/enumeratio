@@ -1,0 +1,21 @@
+---
+name: Khinchin
+domain: Special functions
+signature: Khinchin
+summary: Khinchin's constant $K_0 = 2.68545\ldots$, the almost-sure geometric mean of continued-fraction terms.
+signatures:
+  - call: Khinchin
+    description: Khinchin's constant, a new mathematical-constant symbol.
+    library: "@enumeratio/analytic"
+details:
+  - For Lebesgue-almost every real number, the geometric mean of the terms $a_1, a_2, \dots$ in its continued-fraction expansion $x = [a_0; a_1, a_2, \dots]$ converges to $K_0$, independent of $x$ -- a fact with no known elementary proof.
+  - "A symbol, like [[ConstGlaisher]]: prints as itself under plain evaluation, and resolves to a decimal only under N()."
+primitive: numeric
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/khinchin.ts
+names:
+  wolframIdentity: true
+---

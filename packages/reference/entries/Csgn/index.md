@@ -1,0 +1,14 @@
+---
+name: Csgn
+domain: Elementary functions
+signature: Csgn(z)
+summary: The complex sign function -- $1$ in the right half-plane, $-1$ in the left, and on the imaginary axis the sign of the imaginary part; $0$ at the origin.
+signatures:
+  - call: Csgn(z)
+    description: broadcasts element-wise over a list, like compute-engine's other numeric heads
+    library: "@enumeratio/analytic"
+    type: (number) -> number
+seeAlso:
+  - RealSign
+  - Sign
+---

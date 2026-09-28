@@ -1,0 +1,5 @@
+id	in	out
+maxwell-pdf-exact		
+maxwell-cdf-exact	\operatorname{CDF}(\mathrm{MaxwellDistribution}(1), 2)	1-Q(\frac{3}{2}, 2)
+maxwell-mean-exact		
+maxwell-variance-exact		

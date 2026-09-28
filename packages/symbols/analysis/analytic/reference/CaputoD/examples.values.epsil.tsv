@@ -1,0 +1,5 @@
+id	in	out
+power-x2-alpha-half	CaputoD(x ^ 2, [x, 0.5])	1.504_505_556_127_350_098_532 * x ^ 1.5
+constant-vanishes	CaputoD(5, [x, 0.5])	0
+integer-edge-case-vanishes	CaputoD(x, [x, 1.5])	0
+polynomial-linearity	CaputoD(x ^ 2 + 3x + 1, [x, 0.5])	1.504_505_556_127_350_098_532 * x ^ 1.5 + 3.385_137_501_286_537_721_7 * Sqrt(x)

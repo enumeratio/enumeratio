@@ -1,0 +1,5 @@
+id	in	out
+c-4	\mathrm{AlgebraDimension}(\mathrm{TemperleyLiebAlgebra}(4))	14
+the-cup-cap-and-the-identity-all-of-tl-2	\mathrm{Basis}(\mathrm{TemperleyLiebAlgebra}(2))	\bigl\lbrack\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+the-cup-cap-is-planar-so-it-belongs	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TemperleyLiebAlgebra}(3)	\top
+e-1-2-delta-e-1	\mathrm{NonCommutativeMultiply}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack))	\delta\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack)

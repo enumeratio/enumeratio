@@ -1,0 +1,9 @@
+---
+name: CanonicalDihedral
+domain: Combinatorics
+signature: CanonicalDihedral(...)
+summary: Canonical rotation+reflection (bracelet representative)
+mapOn:
+  - Word
+stub: carrier
+---

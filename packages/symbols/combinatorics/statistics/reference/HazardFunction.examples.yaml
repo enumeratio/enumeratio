@@ -1,3 +1,0 @@
-- id: hazardfunction-rayleigh
-  expr: [HazardFunction, [RayleighDistribution, 3], 2]
-  expected: [Rational, 2, 9]

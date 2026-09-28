@@ -1,0 +1,22 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+betaregularized-0-2-3			[BetaRegularized, 0, 2, 3]	0			
+betaregularized-1-2-3			[BetaRegularized, 1, 2, 3]	1			
+a-floating-point-x-evaluates-directly-to-a			[BetaRegularized, 0.5, 2, 3]	0.6875	A floating-point x evaluates directly to a decimal		
+i-x-1-1-x-the-uniform-distribution-s-own-cdf			[BetaRegularized, 0.5, 1, 1]	0.5	$I_x(1, 1) = x$, the uniform distribution's own CDF		
+non-integer-parameters			[BetaRegularized, 0.4, 2.5, 3.5]	{num: "0.486904191526117355254"}	Non-integer parameters		
+i-1-2-2-3-11-16-exactly			[BetaRegularized, [Rational, 1, 2], 2, 3]	[Rational, 11, 16]	$I_{1/2}(2, 3) = 11/16$ exactly		
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[BetaRegularized, 0.5, [List, 1, 2], 1]	[List, 0.5, 0.25]	Threads element-wise over a list, as Wolfram's Listable heads do		
+x-outside-0-1-by-continuation-real-here-as-b-5	Scope		[BetaRegularized, 2, 0.5, 5]	1.1821941497962591	$x$ outside $[0, 1]$ by continuation: real here, as $b = 5$ makes the integrand a polynomial times $t^{-1/2}$		
+four-arguments-the-generalized-i-z-1-a-b-i-z-0-a	Scope		[BetaRegularized, 0.2, 0.5, 2, 3]	0.5067	Four arguments: the generalized $I_{z_1}(a, b) - I_{z_0}(a, b)$		
+interval-arithmetic-i-x-2-1-x-2	Scope		[BetaRegularized, [Interval, 0.2, 0.3], 2, 1]	[Interval, 0.04, 0.09]	Interval arithmetic: $I_x(2, 1) = x^2$		
+uncertainty-propagation	Scope		[BetaRegularized, [Around, 0.3, 0.01], 1, 2]	[Around, 0.51, 0.014]	Uncertainty propagation		
+to-30-significant-digits-every-one-correctly	Scope		[N, [BetaRegularized, [Rational, 1, 3], 2, 3], 30]	{num: "0.407407407407407407407407407407"}	To 30 significant digits, every one correctly rounded		
+binomial-cdf-via-the-regularized-beta-for-x-sim	Applications		[Equal, [BetaRegularized, 0.7, 3, 2], [Add, [Power, 0.7, 4], [Multiply, 4, 0.3, [Power, 0.7, 3]]]]	True	Binomial CDF via the regularized beta: for $X \sim \text{Binomial}(4, 0.3)$, $P(X \leq 1) = I_{0.7}(3, 2)$		
+symmetry-i-x-a-b-i-1-x-b-a-1	Properties		[Equal, [Add, [BetaRegularized, 0.3, 2, 3], [BetaRegularized, 0.7, 3, 2]], 1]	True	Symmetry: $I_x(a, b) + I_{1-x}(b, a) = 1$		
+i-1-2-a-a-1-2-for-any-a-here-at-a-10	Properties		[BetaRegularized, 0.5, 10, 10]	0.5	$I_{1/2}(a, a) = 1/2$ for any a, here at $a = 10$		
+i-x-a-1-x-a-here-0-2111-5	Properties		[BetaRegularized, 0.2111111111111111, 5, 1]	{num: "0.000419329539873664134599"}	$I_x(a, 1) = x^a$, here $0.2111\ldots^5$		
+the-arcsine-distribution-s-median-i-1-2-1-2-1-2	Properties		[BetaRegularized, 0.5, [Rational, 1, 2], [Rational, 1, 2]]	0.5	The arcsine distribution's median: $I_{1/2}(1/2, 1/2) = 1/2$		
+i-x-1-1-x-symbolically	Properties		[BetaRegularized, x, 1, 1]	x	$I_x(1, 1) = x$ symbolically		
+i-x-a-1-x-a-symbolically	Properties		[BetaRegularized, x, a, 1]	[Power, x, a]	$I_x(a, 1) = x^a$ symbolically		
+i-x-1-b-1-1-x-b	Properties		[BetaRegularized, x, 1, b]	[Add, [Negate, [Power, [Add, [Negate, x], 1], b]], 1]	$I_x(1, b) = 1 - (1-x)^b$		
+an-x-outside-0-1-is-left-unevaluated-rather-than	Possible issues		[BetaRegularized, 2, 2, 3]	[BetaRegularized, 2, 2, 3]	An x outside $[0, 1]$ is left unevaluated rather than erroring or returning NaN	domain	x outside [0, 1] is left unevaluated here; Wolfram continues the regularised incomplete beta function and gets 8.

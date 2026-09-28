@@ -1,0 +1,10 @@
+id	in	out
+a-polynomial-is-defined-everywhere	\mathrm{FunctionDomain}(x^2, x)	\mathrm{True}
+division-by-zero-excludes-the-origin		
+sqrt-of-a-bounded-quadratic		
+a-monomial-with-negative-integer-exponent		
+a-multivariate-expression-declines		
+a-rational-function-with-two-real-poles		
+an-even-root-needs-a-nonnegative-radicand		
+a-natural-log-needs-a-positive-argument		
+tangent-s-domain-is-declined		

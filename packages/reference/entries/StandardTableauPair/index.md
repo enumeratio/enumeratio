@@ -1,0 +1,13 @@
+---
+name: StandardTableauPair
+domain: Combinatorics
+signature: StandardTableauPair(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: StandardTableauPair(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (tuple<standard_tableau, standard_tableau>) -> standard_tableau_pair
+---

@@ -1,0 +1,9 @@
+---
+name: Balance
+domain: Combinatorics
+signature: Balance(...)
+summary: Root balance
+statOn:
+  - BinaryTree
+stub: carrier
+---

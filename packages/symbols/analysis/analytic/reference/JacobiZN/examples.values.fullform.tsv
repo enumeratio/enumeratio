@@ -1,0 +1,9 @@
+id	in
+a-floating-point-argument-evaluates-directly-to	N[JacobiZN[0.3, 0.5]]
+zn-0-7-0-2	N[JacobiZN[-0.7, 0.2]]
+zn-2-5-0-3	N[JacobiZN[2.5, 0.3]]
+a-parameter-close-to-its-m-1-boundary	N[JacobiZN[1.1, 0.9]]
+u-0-is-0-for-any-m	JacobiZN[0, m]
+m-0-is-0-for-any-u	JacobiZN[u, 0]
+m-outside-0-1-is-declined	N[JacobiZN[0.3, -0.5]]
+symbolic-arguments-are-left-unevaluated-rather	JacobiZN[u, m]

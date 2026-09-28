@@ -1,0 +1,17 @@
+---
+name: Multiset
+domain: Combinatorics
+signature: Multiset(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+catalog:
+  - system: mathlib4
+    identity: Multiset
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Multiset/Defs.html
+stub: carrier
+catalogCarrier: true
+signatures:
+  - call: Multiset(...)
+    description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
+    library: enumeratio-domains
+    type: (tuple<list<integer>, integer>) -> multiset
+---

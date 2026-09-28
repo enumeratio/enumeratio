@@ -1,0 +1,5 @@
+id	in
+petersen-is-3-regular	VertexDegree[PetersenGraph[]]
+petersen-is-not-bipartite	BipartiteGraphQ[PetersenGraph[]]
+petersen-has-10-vertices	VertexCount[PetersenGraph[]]
+petersen-has-15-edges	EdgeCount[PetersenGraph[]]

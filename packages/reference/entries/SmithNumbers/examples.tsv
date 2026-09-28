@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+the-first-20-terms		test	[Take, SmithNumbers, 20]	[List, 4, 22, 27, 58, 85, 94, 121, 166, 202, 265, 274, 319, 346, 355, 378, 382, 391, 438, 454, 483]
+4-is-a-smith-number	Properties		[Element, 4, SmithNumbers]	True
+6-is-not-a-smith-number	Properties		[Element, 6, SmithNumbers]	False

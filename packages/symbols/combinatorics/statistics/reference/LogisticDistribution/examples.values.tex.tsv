@@ -1,0 +1,5 @@
+id	in	out
+logistic-pdf-exact	\operatorname{PDF}(\mathrm{LogisticDistribution}(0, 1), 0)	\frac{1}{4}
+logistic-cdf-exact	\operatorname{CDF}(\mathrm{LogisticDistribution}(0, 1), 0)	\frac{1}{2}
+logistic-mean-exact	\mathrm{mean}(\mathrm{LogisticDistribution}(0, 1))	0
+logistic-variance-exact	\mathrm{Variance}(\mathrm{LogisticDistribution}(0, 1))	\frac{\pi^2}{3}

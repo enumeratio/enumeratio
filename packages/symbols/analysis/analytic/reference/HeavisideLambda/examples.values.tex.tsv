@@ -1,0 +1,7 @@
+id	in	out
+heavisidelambda-peak	\mathrm{HeavisideLambda}(0)	1
+heavisidelambda-endpoint	\mathrm{HeavisideLambda}(1)	0
+heavisidelambda-neg-endpoint	\mathrm{HeavisideLambda}(-1)	0
+heavisidelambda-outside	\mathrm{HeavisideLambda}(2)	0
+heavisidelambda-1-4	\mathrm{HeavisideLambda}(\frac{1}{4})	\frac{3}{4}
+heavisidelambda-1-2	\mathrm{HeavisideLambda}(\frac{1}{2})	\frac{1}{2}

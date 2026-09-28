@@ -1,0 +1,31 @@
+---
+name: LyndonWords
+domain: Collections
+signature: LyndonWords(n)
+summary: "The binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations."
+signatures:
+  - call: LyndonWords(n)
+    description: "the binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations"
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is A001037, via Möbius inversion over the divisors of $n$.
+seeAlso:
+  - BinaryNecklaces
+  - KLyndonWords
+references:
+  - system: oeis
+    identity: A001037
+catalog:
+  - system: oeis
+    identity: A001037
+    url: https://oeis.org/A001037
+  - system: sage
+    identity: LyndonWords(2, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/lyndon_word.html
+    note: fixed binary alphabet — k_lyndon_words(base,size) already anchors the general (alphabet,length) LyndonWords(e,k) signature; here e=2 is pinned
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord
+---

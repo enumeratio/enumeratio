@@ -1,0 +1,29 @@
+---
+name: RationalReconstruction
+domain: Number theory
+signature: RationalReconstruction(a, m)
+summary: The small fraction $n/d$ whose image in $\mathbb{Z}/m$ is $a$ — the inverse of reading $n/d$ as $n \cdot d^{-1} \bmod m$.
+signatures:
+  - call: RationalReconstruction(a, m)
+    description: the $n/d$ with $n \equiv a d \pmod m$ and $|n|, d \le \sqrt{(m-1)/2}$, when there is one
+    library: enumeratio-number-theory
+    type: (integer, integer, integer?, integer?) -> rational
+  - call: RationalReconstruction(a, m, N, D)
+    description: with explicit bounds $|n| \le N$, $0 < d \le D$
+    library: enumeratio-number-theory
+details:
+  - Every residue is the image of infinitely many fractions, but at most one with $2ND < m$ — so under the default balanced bounds the answer, when it exists, is unique.
+  - "Wang's algorithm: the extended Euclidean algorithm on $(m, a)$, stopped at the first remainder $\\le N$; the remainder and its cofactor are $n$ and $d$."
+  - "Not a Wolfram built-in; the name follows SageMath's `rational_reconstruction` (Maple: `iratrecon`)."
+  - Unevaluated when no fraction within the bounds maps to $a$. Threads over lists.
+seeAlso:
+  - PowerModList
+  - ChineseRemainder
+  - Rationalize
+  - ContinuedFraction
+bindings:
+  - origin: mapped
+    form: sage
+    template: rational_reconstruction($1, $2)
+    arity: 2
+---

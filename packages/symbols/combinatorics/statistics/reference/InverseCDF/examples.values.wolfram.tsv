@@ -1,0 +1,2 @@
+id	in
+inversecdf-normal-median	InverseCDF[NormalDistribution[0, 1], Rational[1, 2]]

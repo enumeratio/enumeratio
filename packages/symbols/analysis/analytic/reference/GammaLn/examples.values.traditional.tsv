@@ -1,0 +1,19 @@
+id	in	out
+a-pole-of-gamma-in-log-form	\log\Gamma(0)	\infty
+a-floating-point-argument-evaluates-directly-to	\log\Gamma(2.5)	0.284\,682\,870\,472\,919\,159\,632
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	\log\Gamma(100.5)	361.435\,540\,467\,777\,621\,555
+at-a-pole-of-gamma-compute-engine-gives-the-real	\log\Gamma(-1)	\infty
+complex-arguments-here-the-principal-ln-gamma-z	\log\Gamma(2.5+3i)	-1.470\,954\,610\,348\,842\,5+2.822\,615\,638\,260\,8i
+a-huge-inexact-argument-should-still-evaluate	\log\Gamma(10^{1000})	2\,301\,585\,092\,994\,045\,684\,017\,991\,454\,684\,364\,207\,601\cdot10^{964}
+threads-over-a-list-and-the-integer-points		
+uncertainty-propagation-through-ln-gamma-with	\log\Gamma(\mathrm{Around}(1.2, 0.01))	\mathrm{Around}(-0.085\,374\,090\,003\,315\,83, 0.002\,890\,398\,965\,921\,884)
+to-30-significant-digits-not-yet-the-last-digit	N(\log\Gamma(\frac{1}{3}), 30)	0.985\,420\,646\,927\,767\,069\,187
+used-to-get-ln-n-for-large-n-without-overflowing	\log\Gamma(11)=\ln(10!)	\mathrm{True}
+defined-as-ln-gamma-z-here-at-z-5	\log\Gamma(5)=\ln(\Gamma(5))	\mathrm{True}
+gammaln-1-ln-gamma-1-ln-1-0	\log\Gamma(1)=0	\mathrm{True}
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	\log\Gamma(6)=\log\Gamma(5)+\ln(5)	\mathrm{True}
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	\log\Gamma(\frac{1}{2})=\frac{\ln(\pi)}{2}	\mathrm{True}
+an-exact-positive-integer-now-reduces-too	\log\Gamma(5)	3\ln(2)+\ln(3)
+the-derivative-of-ln-gamma-is-the-digamma	\frac{\mathrm{d}\log\Gamma(x)}{\mathrm{d}x}	\psi(x)
+off-the-positive-axis-gammaln-is-the-principal	\log\Gamma(-1.5)	0.860\,047\,015\,376\,481\,014\,511
+gammaln-101-is-exactly-ln-100-letting-us-reason	\log\Gamma(101)=\ln(100!)	\mathrm{True}

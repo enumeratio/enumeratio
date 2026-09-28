@@ -1,0 +1,5 @@
+id	in
+the-lone-ascent-at-position-2	MinorIndex[List[3, 1, 2]]
+ascents-at-both-positions-1-2	MinorIndex[List[1, 2, 3]]
+no-ascents	MinorIndex[List[3, 2, 1]]
+major-and-minor-index-split-binom-n-2	Equal[Plus[MajorIndex[List[3, 1, 2]], MinorIndex[List[3, 1, 2]]], Binomial[3, 2]]

@@ -1,0 +1,15 @@
+---
+name: PosetZeta
+domain: Incidence algebras
+signature: PosetZeta(poset, x, y)
+summary: The zeta function $\zeta(x,y)$ of a finite poset — $1$ when $x \le y$ and $0$ otherwise — whose inverse in the incidence algebra is [[MoebiusFunction]].
+signatures:
+  - call: PosetZeta(poset, x, y)
+    description: $1$ when $x \le y$, else $0$
+    library: enumeratio-incidence
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, value, value) -> integer
+seeAlso:
+  - MoebiusFunction
+  - IncidenceAlgebra
+  - PosetInterval
+---

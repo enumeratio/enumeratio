@@ -1,0 +1,53 @@
+id	in	out	verdict
+17-mod-5	(17 % 5)	2	
+100-mod-7	(100 % 7)	2	
+the-result-takes-the-sign-of-the-modulus	(-7 % 3)	2	
+threads-element-wise-over-a-list	([1, 2, 3, 4, 5] % 3)	TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'	error
+mod-7-3	(7 % 3)	1	
+a-third-argument-offsets-the-range-the-result			
+with-offset-1-the-residues-run-1-2-3-rather-than			
+rationals-are-reduced-exactly	((5/2) % 2)	ZeroDivisionError: inverse of Mod(0, 2) does not exist	error
+3p14-mod-2	(3.14 % 2)	-0.860000000000000	disagree
+an-exact-irrational-reduces-exactly-to-2-sqrt-7	(sqrt(28) % 3)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
+a-symbolic-constant-reduces-exactly-to-pi-2	(pi % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
+a-10-001-digit-dividend	(((10)^10000) % 10007)	6333	
+threads-over-a-list-of-moduli	[(10 % 3), (10 % 4), (10 % 7)]	[1, 2, 3]	
+a-gaussian-integer-5-3i-2-2-2i	((5 + 3*I) % 2)	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+1-i-divides-5-3i-1-i-4-i	((5 + 3*I) % (1 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+gaussian-integers-the-quotient-rounds-so-each	((7 + 5*I) % 3)	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+a-gaussian-modulus-7-5i-2-i-4-i-i	((7 + 5*I) % (2 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+exact-in-both-parts-past-2-53	((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+eulers-number-mod-2-reduces-exactly	(e % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
+gaussian-reduced-by-a-unit-modulus-is-always-0	((3 + 4*I) % 1)		
+gaussian-reduced-by-i-is-always-0	((3 + 4*I) % (0 + 1*I))		
+a-zero-dividend-reduces-to-0	(0 % (2 + 1*I))		
+reducing-by-a-gaussian-prime-norm-5	((3 + 4*I) % (2 + 1*I))		
+reducing-by-the-other-prime-above-5	((3 + 4*I) % (2 + -1*I))		
+reducing-by-a-real-prime-3-mod-4	((3 + 4*I) % 3)		
+reducing-a-real-dividend-by-a-gaussian-modulus	(5 % (2 + 1*I))		
+reducing-by-an-associate-gives-a-remainder	((8 + 2*I) % (-4 + 3*I))		
+reducing-by-a-negative-real-modulus	((3 + 4*I) % -7)		
+reducing-by-a-composite-gaussian-modulus-norm-25	((123 + 456*I) % (3 + 4*I))		
+a-gaussian-modulus-past-2-53-in-both-parts	((100000000000000000001 + 9007199254740993*I) % (4 + 1*I))		
+reducing-by-1-4i-the-other-prime-above-17	((8 + 2*I) % (1 + 4*I))		
+a-real-dividend-mod-a-real-modulus-stays-plain	(9 % 3)		
+reducing-a-large-norm-gaussian-by-a-small-unit	((1000 + 1*I) % (1 + 1*I))		
+reducing-by-1-a-unit-is-always-0	((2 + 1*I) % -1)		
+reducing-by-i-a-unit-is-always-0	((5 + 5*I) % (0 + -1*I))		
+a-negative-real-dividend-gaussian-modulus	((-5 + -5*I) % (2 + 1*I))		
+reducing-0-by-0-is-undefined-like-the-rational	(0 % 0)		
+reducing-by-an-associate-times-1	((8 + 2*I) % (-3 + -4*I))		
+reducing-by-an-associate-times-i	((8 + 2*I) % (4 + -3*I))		
+reducing-by-the-other-prime-above-13	((6 + 8*I) % (2 + 3*I))		
+reducing-by-a-prime-above-13	((6 + 8*I) % (3 + 2*I))		
+reducing-a-real-prime-s-associate-by-the-unit-i	((3 + 4*I) % (0 + 7*I))		
+reducing-by-a-real-composite-5-squared	((3 + 4*I) % 25)		
+a-negative-associate-as-the-modulus	((6 + 8*I) % (-2 + -3*I))		
+reducing-by-a-real-prime-19	((123 + 456*I) % 19)		
+periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	bool((17 % 5) == ((17 + (3 * 5)) % 5))	True	
+a-negative-modulus-gives-a-result-in-n-0	(-5 % -3)	-2	
+the-remainder-of-quotient			
+division-by-a-0-modulus-yields-nan-rather-than	(5 % 0)	ZeroDivisionError: Integer modulo by zero	error
+periodicity-with-a-zero-modulus-on-one-side	bool((35 % 13) == ((17 + (3 * 5)) % 0))	ZeroDivisionError: Integer modulo by zero	error
+rounding-ties-to-even-means-1-and-1-both-appear	[((1 + 2*I) % 2), ((3 + 2*I) % 2)]	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
+a-free-symbol-is-untouched	(SR.var("x") % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error

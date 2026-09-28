@@ -1,0 +1,9 @@
+id	in
+the-median-of-beta-2-3	InverseBetaRegularized[0.5, 2, 3]
+inversebetaregularized-0p3-2p5-1p5	InverseBetaRegularized[0.3, 2.5, 1.5]
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	InverseBetaRegularized[0.25, 2, 1]
+iinv-0-7-4-2	InverseBetaRegularized[0.7, 4, 2]
+i-x-1-1-x-is-its-own-inverse	InverseBetaRegularized[s, 1, 1]
+i-x-a-1-x-a-inverts-to-s-1-a	InverseBetaRegularized[s, a, 1]
+inversebetaregularized-0-2-3	InverseBetaRegularized[0, 2, 3]
+inversebetaregularized-1-2-3	InverseBetaRegularized[1, 2, 3]

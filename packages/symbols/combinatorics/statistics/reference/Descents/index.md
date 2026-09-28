@@ -1,0 +1,9 @@
+---
+name: Descents
+domain: Permutation statistics
+signature: Descents(p)
+summary: Positions i with p(i) > p(i+1).
+details:
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
+---

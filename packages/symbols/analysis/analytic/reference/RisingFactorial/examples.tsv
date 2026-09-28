@@ -1,0 +1,12 @@
+id	section	role	expr	expected	caption
+five-six-seven			[RisingFactorial, 5, 3]	210	5 × 6 × 7
+from-1-is-the-factorial			[RisingFactorial, 1, 5]	120	$(1)_5 = 5!$
+at-risingfactorial-2-5i		test	[N, [RisingFactorial, [Complex, 2, 5], [Complex, 3, 2]]]	[Complex, 20.647407894772527, 24.04735671023272]	
+a-symbolic-base	Scope		[RisingFactorial, a, 3]	[Multiply, a, [Add, a, 1], [Add, a, 2]]	A symbolic base with an integer order expands to the product
+a-rational-base	Scope		[RisingFactorial, [Rational, 1, 2], 3]	[Rational, 15, 8]	A rational base: $\tfrac12 \cdot \tfrac32 \cdot \tfrac52$
+a-symbolic-order-is-pochhammer	Scope		[RisingFactorial, a, n]	[Pochhammer, a, n]	A symbolic order comes back as [[Pochhammer]]
+complex-base-and-order	Scope		[N, [RisingFactorial, [Complex, 2, 5], [Complex, 3, 2]]]	[Complex, 20.647407894772527, 24.04735671023272]	A complex base and order, through $\Gamma(a+n)/\Gamma(a)$, where native [[Pochhammer]] gives NaN
+agrees-with-pochhammer	Properties		[Equal, [RisingFactorial, 4, 3], [Pochhammer, 4, 3]]	True	The same function as [[Pochhammer]]
+negative-order	Properties		[RisingFactorial, 5, -2]	[Rational, 1, 12]	A negative order gives the reciprocal: $(5)_{-2} = \frac{1}{4 \cdot 3}$
+a-zero-factor	Possible issues		[RisingFactorial, -3, 4]	0	A non-positive integer base with $|a| < n$ picks up a zero factor: $(-3)(-2)(-1)(0)$
+a-pole-of-gamma-a	Possible issues		[N, [RisingFactorial, -2, [Complex, 1, 1]]]	0	At a pole of $\Gamma(a)$ with a non-integer order, $1/\Gamma(a) = 0$ makes the value 0

@@ -1,0 +1,9 @@
+---
+name: FlatSteps
+domain: Combinatorics
+signature: FlatSteps(...)
+summary: Flat steps
+statOn:
+  - SchroederPath
+stub: carrier
+---

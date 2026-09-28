@@ -1,0 +1,19 @@
+id	in	out
+issquarefree-10	IsSquareFree(10)	True
+issquarefree-4	IsSquareFree(4)	False
+issquarefree-12	IsSquareFree(12)	False
+every-prime-is-squarefree	IsSquareFree(17)	True
+issquarefree-20	IsSquareFree(20)	False
+threads-element-wise-over-a-list	IsSquareFree([10, 4, 12])	[True, False, False]
+gaussian-integers-3-2i-is-a-gaussian-prime	IsSquareFree(3 + 2i)	True
+gaussianintegers-true-2-i-1-i-2	IsSquareFree(2, GaussianIntegers -> True)	False
+rationals-numerator-and-denominator-are-both	IsSquareFree(2 / 3)	True
+polynomials-x-2-6x-6-has-no-repeated-factor	IsSquareFree(x ^ 2 + 6x + 6)	True
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	IsSquareFree(x ^ 3 - x ^ 2 * y)	False
+squarefree-as-a-polynomial-in-x-alone-y-is-just	IsSquareFree(x * y ^ 2, x)	True
+but-not-in-y-alone-y-appears-squared	IsSquareFree(x * y ^ 2, y)	False
+a-non-squarefree-rational	IsSquareFree(4 / 3)	False
+x-1-2-has-a-repeated-root	IsSquareFree(x ^ 2 - 2x + 1)	False
+x-3-y-3-has-no-repeated-factor	IsSquareFree(x ^ 3 - y ^ 3)	True
+n-is-squarefree-exactly-when-mu-n-neq-0-see	IsSquareFree(10) == !(MoebiusMu(10) == 0)	True
+1-is-vacuously-squarefree-it-has-no-repeated	IsSquareFree(1)	True

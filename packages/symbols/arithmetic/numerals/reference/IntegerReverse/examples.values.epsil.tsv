@@ -1,0 +1,7 @@
+id	in	out
+the-base-10-digits-reversed	IntegerReverse(1_234)	4_321
+1234-10011010010-2-reversed-is-1001011001-2-601	IntegerReverse(1_234, 2)	601
+padded-to-5-digits-first-00123-reversed	IntegerReverse(123, 10, 5)	32_100
+listable	IntegerReverse([12, 345])	[21, 543]
+a-palindrome-is-its-own-reversal	IntegerReverse(12_321)	12_321
+trailing-zeros-become-leading-zeros-and-vanish	IntegerReverse(1_200)	21

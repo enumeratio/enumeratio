@@ -1,0 +1,9 @@
+---
+name: Turns
+domain: Combinatorics
+signature: Turns(...)
+summary: Number of turns
+statOn:
+  - DelannoyPath
+stub: carrier
+---

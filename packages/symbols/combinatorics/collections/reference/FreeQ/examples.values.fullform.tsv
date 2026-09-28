@@ -1,0 +1,4 @@
+id	in
+x-occurs-in-x-2-plus-1	FreeQ[Plus[Power[x, 2], 1], x]
+y-never-occurs	FreeQ[Plus[Power[x, 2], 1], y]
+looks-inside-subexpressions-not-just-top-level	FreeQ[List[List[a, b]], b]

@@ -1,0 +1,9 @@
+---
+name: LongestRunOfOnes
+domain: Combinatorics
+signature: LongestRunOfOnes(...)
+summary: Longest run of ones
+statOn:
+  - BinaryWord
+stub: carrier
+---

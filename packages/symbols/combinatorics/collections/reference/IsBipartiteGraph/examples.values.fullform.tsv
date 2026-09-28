@@ -1,0 +1,6 @@
+id	in
+even-cycle-is-bipartite	BipartiteGraphQ[CycleGraph[6]]
+odd-cycle-is-not	BipartiteGraphQ[CycleGraph[5]]
+a-self-loop-is-never-bipartite	BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
+a-4-cycle-is-bipartite	BipartiteGraphQ[CycleGraph[4]]
+a-path-is-always-bipartite	BipartiteGraphQ[enumeratio`PathGraph[7]]

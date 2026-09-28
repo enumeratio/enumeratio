@@ -1,0 +1,27 @@
+id	in	out	tex.in	tex.out
+abs-neg-5	Abs[-5]	5	| -5|	5
+abs-5	Abs[5]	5	| 5|	5
+0-is-the-only-value-with-x-0	Abs[0]	0	| 0|	0
+abs-neg-7-over-2	Abs[Rational[-7, 2]]	7/2	\left| -\frac{7}{2}\right|	\frac{7}{2}
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	Abs[Complex[3, 4]]	5	| 3+4 i|	5
+threads-element-wise-over-a-list	Abs[List[-1, 2, -3]]	{1, 2, 3}	| \{-1,2,-3\}|	\{1,2,3\}
+abs-neg-2p5	Abs[-2.5]			
+the-modulus-of-a-complex-number-with-approximate	Abs[Complex[1.4, 2.3]]			
+threads-over-a-matrix-entry-by-entry	Abs[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]			
+exact-numeric-constants	Abs[Minus[Pi]]			
+an-exact-complex-number-gives-an-exact-radical	Abs[Complex[1, 1]]			
+abs-imaginaryunit	Abs[I]			
+e-i-pi-3-lies-on-the-unit-circle	Abs[Exp[Times[I, Divide[Pi, 3]]]]			
+abs-negativeinfinity	Abs[-Infinity]			
+complex-infinity-has-infinite-magnitude-in-every	Abs[ComplexInfinity]			
+an-interval-maps-to-the-interval-of-absolute	Abs[Interval[List[-3, 5]]]			
+an-interval-straddling-0-maps-to-0-the-larger	Abs[Interval[List[-3, 2]]]			
+decides-the-sign-of-an-exact-numeric-expression	Abs[Subtract[Sqrt[2], 2]]			
+a-complex-radicand-inside-the-subtraction	Abs[Subtract[Sqrt[-10], 2]]			
+the-gap-between-two-temperatures-70-and-95	Abs[Subtract[70, 95]]	25	| 70-95|	25
+the-distance-between-the-points-1-i-and-4-5i-of	Abs[Subtract[Complex[1, 1], Complex[4, 5]]]			
+even-function-x-x	(Abs[-8] == Abs[8])	True	| -8| =| 8|	\text{True}
+triangle-inequality-a-b-le-a-b	LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]	True	| 3-8| \leq | 3| +| -8|	\text{True}
+z-2-z-bar-z				
+multiplicative-ab-a-b	(Abs[Times[Complex[1, 2], Complex[3, -1]]] == Times[Abs[Complex[1, 2]], Abs[Complex[3, -1]]])			
+doesn-t-factor-constants-out-of-a-symbolic	Abs[Times[-3, x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[| -3 x| -| -3 x| ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left| -3 \frac{7}{3}\right| -\left| -3 \frac{7}{3}\right| \right]\right],\text{Chop}\left[N\left[\left| -3 \left(-\frac{11}{5}\right)\right| -\left| -3 \left(-\frac{11}{5}\right)\right| \right]\right],\text{Chop}\left[N\left[\left| -3 \frac{13}{4}\right| -\left| -3 \frac{13}{4}\right| \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

@@ -1,0 +1,5 @@
+id	in
+diracdelta-zero-unevaluated	DiracDelta[0]
+diracdelta-nonzero	DiracDelta[2]
+diracdelta-negative	DiracDelta[-3]
+diracdelta-multivariate-one-nonzero	DiracDelta[0, 1]

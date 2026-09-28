@@ -1,0 +1,48 @@
+id	in	out	tex.in	tex.out
+cos-0	Cos[0]	1	\cos (0)	1
+cos-pi-over-6	Cos[Divide[Pi, 6]]	Sqrt[3]/2	\cos \left(\frac{\pi }{6}\right)	\frac{\sqrt{3}}{2}
+cos-pi-over-4	Cos[Divide[Pi, 4]]	1/Sqrt[2]	\cos \left(\frac{\pi }{4}\right)	\frac{1}{\sqrt{2}}
+cos-pi-over-3	Cos[Divide[Pi, 3]]	1/2	\cos \left(\frac{\pi }{3}\right)	\frac{1}{2}
+cos-pi-over-2	Cos[Divide[Pi, 2]]	0	\cos \left(\frac{\pi }{2}\right)	0
+cos-pi	Cos[Pi]	-1	\cos (\pi )	-1
+cos-30-circ-exactly	Cos[Times[30, Degree]]			
+a-machine-precision-argument-evaluates	Cos[1.2]			
+a-huge-24-40-argument	N[Cos[Power[24, 40]]]			
+a-huge-3-200-argument	N[Cos[Power[3, 200]]]			
+a-huge-neg-7-60-argument	N[Cos[Minus[Power[7, 60]]]]			
+a-huge-10-80-plus-1-over-3-argument	N[Cos[Divide[Plus[Power[10, 80], 1], 3]]]			
+cos-2-5	Cos[2.5]			
+n-of-an-exact-argument-gives-an-arbitrary	N[Cos[Rational[6, 5]]]			
+evaluates-at-a-complex-argument	Cos[Complex[2.5, 1]]			
+threads-element-wise-over-a-matrix	Cos[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]			
+cos-pi-12-frac-sqrt-6-sqrt-2-4	Cos[Divide[Pi, 12]]			
+cos-pi-8-frac-sqrt-2-sqrt-2-2	Cos[Divide[Pi, 8]]			
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4	Cos[Divide[Pi, 10]]			
+cos-2-pi-5-frac-sqrt-5-1-4	Cos[Times[Rational[2, 5], Pi]]			
+cos-3-pi-5-frac-1-sqrt-5-4	Cos[Times[Rational[3, 5], Pi]]			
+reduced-into-the-first-quadrant-by-symmetry	Cos[Times[Rational[11, 6], Pi]]			
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0	Cos[Interval[List[Divide[Pi, 3], Divide[Pi, 2]]]]			
+uncertainty-propagation-cos-2-pm-0-01-approx-0	Cos[Around[2, 0.01]]			
+cos-infty-should-be-the-oscillation-range-1-1	Cos[Infinity]			
+an-imaginary-argument-rewrites-to-cosh-cos-ix	Cos[Times[I, x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cos (i x)-\cosh (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(i \frac{7}{3}\right)-\cosh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(i \left(-\frac{11}{5}\right)\right)-\cosh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(i \frac{13}{4}\right)-\cosh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+evenness-drops-the-sign-of-a-symbolic-argument	Cos[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\cos (-x)-\cos (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(-\frac{7}{3}\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(-\left(-\frac{11}{5}\right)\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\cos \left(-\frac{13}{4}\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+cos-arccos-x-x-for-every-x	Cos[ArcCos[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\cos ^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\cos \left(\cos ^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+cos-arccos-2-2-past-the-real-domain	Cos[ArcCos[2]]			
+cos-arcsin-x-sqrt-1-x-2	Cos[ArcSin[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\sin ^{-1}(x)\right)-\sqrt{-x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(\frac{7}{3}\right)\right)-\sqrt{-\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(-\frac{11}{5}\right)\right)-\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\cos \left(\sin ^{-1}\left(\frac{13}{4}\right)\right)-\sqrt{-\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+cos-arctan-x-frac-1-sqrt-1-x-2	Cos[ArcTan[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos \left(\tan ^{-1}(x)\right)-\frac{1}{\sqrt{x^2+1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(\frac{7}{3}\right)\right)-\frac{1}{\sqrt{\left(\frac{7}{3}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(-\frac{11}{5}\right)\right)-\frac{1}{\sqrt{\left(-\frac{11}{5}\right)^2+1}}\right]\right],\text{Chop}\left[N\left[\cos \left(\tan ^{-1}\left(\frac{13}{4}\right)\right)-\frac{1}{\sqrt{\left(\frac{13}{4}\right)^2+1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+derivative-sin-x	D[Cos[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \cos (x)}{\partial x}--\sin (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\cos \left(\frac{7}{3}\right)--\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\cos \left(-\frac{11}{5}\right)--\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\cos \left(\frac{13}{4}\right)--\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+antiderivative	Integrate[Cos[x], x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \cos (x) \, dx-\sin (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \cos \left(\frac{7}{3}\right) \, d\frac{7}{3}-\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\int \cos \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\int \cos \left(\frac{13}{4}\right) \, d\frac{13}{4}-\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+taylor-series-about-0-only-even-powers-appear	""			
+to-30-significant-digits-every-one-correctly	N[Cos[1], 30]			
+to-1-significant-digit	N[Cos[1], 1]			
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	N[Cos[Power[10, 100]]]			
+threads-element-wise-over-a-list	Cos[List[0, Divide[Pi, 2], Pi]]	{1, 0, -1}	\cos \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)	\{1,0,-1\}
+even-function-cos-x-cos-x	(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])	True	\cos \left(-\frac{\pi }{3}\right)=\cos \left(\frac{\pi }{3}\right)	\text{True}
+co-function-identity-cos-x-sin-pi-2-x	(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])	True	\cos \left(\frac{\pi }{6}\right)=\sin \left(\frac{\pi }{2}-\frac{\pi }{6}\right)	\text{True}
+double-angle-formula-cos-2x-cos-2-x-sin-2-x				
+angle-addition-formula				
+power-reduction-cos-2-x-frac-1-cos-2x-2				
+euler-s-formula-cos-x-frac-e-ix-e-ix-2	TrigToExp[Cos[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}[\cos (x)]-\frac{1}{2} \left(e^{i x}+e^{-i x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(\frac{7}{3}\right)\right]-\frac{1}{2} \left(e^{i \frac{7}{3}}+e^{-i \frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(-\frac{11}{5}\right)\right]-\frac{1}{2} \left(e^{i \left(-\frac{11}{5}\right)}+e^{-i \left(-\frac{11}{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(\frac{13}{4}\right)\right]-\frac{1}{2} \left(e^{i \frac{13}{4}}+e^{-i \frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+as-with-sin-a-non-special-numeric-argument-stays	Cos[2]	Cos[2]	\cos (2)	\cos (2)
+pi-24-is-past-the-automatic-special-angle-table	Cos[Times[Rational[1, 24], Pi]]			
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	Cos[Divide[Pi, 5]]	(1 + Sqrt[5])/4	\cos \left(\frac{\pi }{5}\right)	\frac{1}{4} \left(1+\sqrt{5}\right)

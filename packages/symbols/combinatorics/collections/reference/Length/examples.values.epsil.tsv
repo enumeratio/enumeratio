@@ -1,0 +1,15 @@
+id	in	out
+length-list-1-2-3-4	Length([1, 2, 3, 4])	4
+length-list-1-2-3-4-5	Length([1, 2, 3, 4, 5])	5
+works-on-any-collection-not-just-list	Length({1, 2, 3})	3
+length-list-a-b-c-d	Length([a, b, c, d])	4
+length-of-association-counts-values	Length(Association(Rule(1, a), Rule(2, b), Rule(3, c)))	3
+an-atom-has-no-parts-so-its-length-is-0	Length(5)	0
+the-empty-list-has-length-0	Length([])	0
+of-a-matrix-the-number-of-rows	Length([[1, 2], [3, 4], [5, 6]])	3
+a-set-holds-each-element-once-so-a-repeated	Length({1, 1, 2})	2
+any-expression-the-number-of-terms-in-a-sum	Length(a + b + c + d)	4
+the-number-of-arguments-of-a-call-counting-only	Length(f(g(x, y), z))	2
+a-symbol-such-as-pi-is-an-atom-of-length-0	Length(Pi)	0
+a-lazy-range-is-counted-without-being	Length(Range(1, 20))	20
+length-join-a-b-length-a-length-b-see-join	Length(Join([1, 2, 3], [4, 5])) == Length([1, 2, 3]) + Length([4, 5])	True

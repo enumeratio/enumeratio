@@ -1,0 +1,7 @@
+id	in
+the-partitions-of-8-into-at-most-3-parts	IntegerPartitions[8, 3]
+exactly-3-parts	IntegerPartitions[8, List[3]]
+parts-restricted-to-1-2-5	IntegerPartitions[8, AllTrue, List[1, 2, 5]]
+the-ways-to-make-change-for-a-dollar-from-1-5-10	Count[IntegerPartitions[100, AllTrue, List[1, 5, 10, 25, 50]]]
+the-family-has-p-8-22-members-compute-engine-s	NPartition[8]
+euler-partitions-into-odd-parts-are-as-many-as	Count[IntegerPartitions[10, AllTrue, List[1, 3, 5, 7, 9]]]

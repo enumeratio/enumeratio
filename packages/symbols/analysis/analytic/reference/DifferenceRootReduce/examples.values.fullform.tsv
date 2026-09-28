@@ -1,0 +1,10 @@
+id	in	back
+fibonacci-order-2	DifferenceRootReduce[Fibonacci[n], n]	
+factorial-order-1	DifferenceRootReduce[Factorial[n], n]	
+binomial-anchors-either-side-of-the-pole	DifferenceRootReduce[Binomial[n, 3], n]	
+catalannumber-order-1	DifferenceRootReduce[CatalanNumber[n], n]	
+lucasl-order-2	DifferenceRootReduce[LucasL[n], n]	
+evaluated-at-a-concrete-n-runs-the-recurrence	N[DifferenceRootReduce[Fibonacci[n], n][20]]	Unreadable
+a-symbolic-order-declines	DifferenceRootReduce[Binomial[n, k], n]	
+harmonicnumber-order-1-inhomogeneous	DifferenceRootReduce[HarmonicNumber[n], n]	
+sum-of-two-hypergeometric-terms	DifferenceRootReduce[Plus[Power[2, n], Power[3, n]], n]	

@@ -1,0 +1,8 @@
+id	in
+n-arcsch-2	N[ArcCsch[2]]
+a-pole-at-0	ArcCsch[0]
+arcsch-positiveinfinity	ArcCsch[Infinity]
+a-float-argument-evaluates-directly	ArcCsch[1.5]
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	TrigToExp[ArcCsch[1]]
+oddness-pulls-the-sign-out-of-a-symbolic	ArcCsch[Minus[x]]
+derivative-for-real-x-ne-0	D[ArcCsch[x], x]

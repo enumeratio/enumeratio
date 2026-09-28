@@ -1,0 +1,51 @@
+id	in	out
+12-hat-z-8-hat-z-4-hat-z	\mathrm{ProfiniteNumber}(3, 12)+\mathrm{ProfiniteNumber}(5, 8)	\mathrm{ProfiniteNumber}(0, 4)
+profinitenumber-3-12-times-profinitenumber-5-8	\mathrm{ProfiniteNumber}(3, 12)\mathrm{ProfiniteNumber}(5, 8)	\mathrm{ProfiniteNumber}(3, 12)
+equal-cosets-need-not-share-a-modulus	\mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)	\top
+numerator-profinitenumber-2-over-3-5	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))	\mathrm{ProfiniteNumber}(2, 15)
+denominator-profinitenumber-2-over-3-5	\mathrm{Denominator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))	3
+projecting-to-q-2	\mathrm{AdicNumeral}(2, \mathrm{ProfiniteNumber}(100, 24))	\mathrm{AdicNumeral}(2, 4, 3)
+projecting-to-q-3	\mathrm{AdicNumeral}(3, \mathrm{ProfiniteNumber}(100, 24))	\mathrm{AdicNumeral}(3, 1, 1)
+profinitenumber-26-20-normalises-to-6-20	\mathrm{ProfiniteNumber}(26, 20)	\mathrm{ProfiniteNumber}(6, 20)
+a-negative-value-normalises-into-the-coset	\mathrm{ProfiniteNumber}(-1, 12)	\mathrm{ProfiniteNumber}(11, 12)
+a-negative-modulus-normalises-to-positive	\mathrm{ProfiniteNumber}(5, -12)	\mathrm{ProfiniteNumber}(5, 12)
+a-rational-value-reduces-mod-a-rational-modulus	\mathrm{ProfiniteNumber}(\frac{7}{2}, \frac{3}{2})	\mathrm{ProfiniteNumber}(\frac{1}{2}, \frac{3}{2})
+modulus-zero-collapses-to-the-rational-itself	\mathrm{ProfiniteNumber}(\frac{1}{3}, 0)	\frac{1}{3}
+subtracting-an-integer-from-a-profinite-number	\mathrm{ProfiniteNumber}(7, 30)-2	\mathrm{ProfiniteNumber}(5, 30)
+squaring-a-profinite-number	\mathrm{ProfiniteNumber}(3, 12)^2	\mathrm{ProfiniteNumber}(9, 36)
+dividing-by-an-exact-integer-divisor	\frac{\mathrm{ProfiniteNumber}(4, 12)}{2}	\mathrm{ProfiniteNumber}(2, 6)
+crt-glued-from-its-2-adic-and-3-adic-images	\mathrm{ProfiniteNumber}(\bigl\lbrack\mathrm{AdicNumeral}(2, 20, 5), \mathrm{AdicNumeral}(3, 7, 2)\bigr\rbrack)	\mathrm{ProfiniteNumber}(52, 288)
+a-rational-value-and-a-rational-modulus	\mathrm{ProfiniteNumber}(\frac{1}{2}, \frac{97}{5})+\mathrm{ProfiniteNumber}(\frac{1}{3}, 10)	\mathrm{ProfiniteNumber}(\frac{1}{30}, \frac{1}{5})
+lenstra-s-profinite-fibonacci-numbers	\mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(3, 10))	\mathrm{ProfiniteNumber}(2, 11)
+lenstra-s-profinite-lucas-numbers	\mathrm{LucasL}(\mathrm{ProfiniteNumber}(3, 10))	\mathrm{ProfiniteNumber}(4, 11)
+gluing-projections-back-by-crt-is-the-identity	\mathrm{ProfiniteNumber}(\bigl\lbrack\mathrm{AdicNumeral}(2, \mathrm{ProfiniteNumber}(100, 24)), \mathrm{AdicNumeral}(3, \mathrm{ProfiniteNumber}(100, 24))\bigr\rbrack)	\mathrm{ProfiniteNumber}(4, 24)
+golden-add-2-4-3-mod-37-6	\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})-2	\mathrm{ProfiniteNumber}(\frac{11}{2}, \frac{37}{6})
+golden-add-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)+\mathrm{ProfiniteNumber}(2, 35)	\mathrm{ProfiniteNumber}(0, 1)
+golden-add-187-4-mod-47-1-mod-3	\mathrm{ProfiniteNumber}(\frac{187}{4}, 47)+\mathrm{ProfiniteNumber}(1, 3)	\mathrm{ProfiniteNumber}(\frac{3}{4}, 1)
+golden-add-7-4-mod-57-2-1-4	\mathrm{ProfiniteNumber}(\frac{7}{4}, \frac{57}{2})+\frac{1}{4}	\mathrm{ProfiniteNumber}(2, \frac{57}{2})
+golden-add-2-mod-48-12	\mathrm{ProfiniteNumber}(2, 48)+12	\mathrm{ProfiniteNumber}(14, 48)
+golden-add-2-27-mod-31	2+\mathrm{ProfiniteNumber}(27, 31)	\mathrm{ProfiniteNumber}(29, 31)
+golden-multiply-2-4-3-mod-37-6	-2\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})	\mathrm{ProfiniteNumber}(\frac{29}{3}, \frac{37}{3})
+golden-multiply-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)\mathrm{ProfiniteNumber}(2, 35)	\mathrm{ProfiniteNumber}(0, 1)
+golden-multiply-187-4-mod-47-1-mod-3	\mathrm{ProfiniteNumber}(\frac{187}{4}, 47)\mathrm{ProfiniteNumber}(1, 3)	\mathrm{ProfiniteNumber}(0, \frac{1}{4})
+golden-multiply-7-4-mod-57-2-1-4	\frac{1}{4}(\mathrm{ProfiniteNumber}(\frac{7}{4}, \frac{57}{2}))	\mathrm{ProfiniteNumber}(\frac{7}{16}, \frac{57}{8})
+golden-multiply-2-mod-48-12	12\mathrm{ProfiniteNumber}(2, 48)	\mathrm{ProfiniteNumber}(24, 576)
+golden-multiply-2-27-mod-31	2\mathrm{ProfiniteNumber}(27, 31)	\mathrm{ProfiniteNumber}(54, 62)
+golden-equal-2-4-3-mod-37-6	-2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})	\bot
+golden-equal-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)	\top
+golden-equal-2-mod-29-3-3-mod-5	\mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)	\top
+golden-equal-2-mod-48-12	\mathrm{ProfiniteNumber}(2, 48)=12	\bot
+golden-numerator-2	\mathrm{Numerator}(-2)	-2
+golden-numerator-11-mod-18	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(11, 18))	\mathrm{ProfiniteNumber}(11, 18)
+golden-numerator-187-4-mod-47	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{187}{4}, 47))	\mathrm{ProfiniteNumber}(187, 188)
+golden-numerator-4-3	\mathrm{Numerator}(-\frac{4}{3})	-4
+golden-denominator-2	\mathrm{Denominator}(-2)	1
+golden-denominator-11-mod-18	\mathrm{Denominator}(\mathrm{ProfiniteNumber}(11, 18))	1
+golden-denominator-187-4-mod-47	\mathrm{Denominator}(\mathrm{ProfiniteNumber}(\frac{187}{4}, 47))	4
+golden-denominator-4-3	\mathrm{Denominator}(-\frac{4}{3})	3
+5-doesn-t-divide-the-modulus-so-nothing-is-known	\mathrm{AdicNumeral}(5, \mathrm{ProfiniteNumber}(100, 24))	\mathrm{AdicNumeral}(5, \mathrm{ProfiniteNumber}(4, 24))
+dividing-by-a-profinite-number-stays-unevaluated	\frac{1}{\mathrm{ProfiniteNumber}(5, 12)}	\frac{1}{\mathrm{ProfiniteNumber}(5, 12)}
+a-non-integer-numerator-refuses-fibonacci	\mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(\frac{1}{2}, 3))	\mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(\frac{1}{2}, 3))
+numerator-of-a-plain-rational-is-untouched	\mathrm{Numerator}(\frac{3}{4})	3
+denominator-of-a-plain-rational-is-untouched	\mathrm{Denominator}(\frac{3}{4})	4
+only-profinitenumber-gets-numerator-not-adele	\mathrm{Numerator}(\mathrm{Adele}(5))	\mathrm{Numerator}(\mathrm{Adele}(5))

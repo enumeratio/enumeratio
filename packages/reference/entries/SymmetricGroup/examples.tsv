@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+the-order-of-s-5-is-5			[GroupOrder, [SymmetricGroup, 5]]	120	The order of $S_5$ is $5!$
+s-10-10	Scope		[GroupOrder, [SymmetricGroup, 10]]	3628800	$|S_{10}| = 10!$
+the-one-line-words-are-compute-engine-s	Properties		[Length, [Permutations, [List, 1, 2, 3]]]	6	The one-line words are compute-engine's Permutations of $1, …, n$, $n!$ of them. See [[Factorial]]

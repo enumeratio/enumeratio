@@ -1,0 +1,6 @@
+id	in	out
+sawtoothwave-zero	\mathrm{SawtoothWave}(0)	0
+sawtoothwave-1-3	\mathrm{SawtoothWave}(\frac{1}{3})	\frac{1}{3}
+sawtoothwave-negative	\mathrm{SawtoothWave}(-\frac{1}{4})	\frac{3}{4}
+sawtoothwave-ranged	\mathrm{SawtoothWave}(\bigl\lbrack0, 10\bigr\rbrack, \frac{1}{2})	5
+sawtoothwave-periodic	\mathrm{SawtoothWave}(\frac{1}{3})=\mathrm{SawtoothWave}(5\frac{1}{3})	\top

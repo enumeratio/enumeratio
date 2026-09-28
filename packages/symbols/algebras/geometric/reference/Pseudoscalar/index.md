@@ -1,0 +1,13 @@
+---
+name: Pseudoscalar
+domain: Geometric algebra
+signature: Pseudoscalar(algebra)
+summary: The top blade of an algebra — every generator, in canonical order, with coefficient one.
+signatures:
+  - call: Pseudoscalar(algebra)
+    description: the top blade of `algebra`
+    library: enumeratio-geometric
+    type: (clifford_algebra) -> number
+seeAlso:
+  - Dual
+---

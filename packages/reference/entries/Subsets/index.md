@@ -1,0 +1,67 @@
+---
+name: Subsets
+domain: Collections
+signature: Subsets(n)
+summary: The power set of $\{1, …, n\}$ — every subset, as a lazy indexed family of $2^n$.
+signatures:
+  - call: Subsets(n)
+    description: the $2^n$ subsets of $\{1, …, n\}$.
+    library: enumeratio-collections
+    type: (collection<any> | integer, (integer | list<integer>)?) -> list<list<any>>
+  - call: Subsets(collection)
+    description: the subsets of any finite collection.
+    library: enumeratio-collections
+  - call: Subsets(n, k)
+    description: the subsets of $\{1, …, n\}$ of size at most $k$.
+    library: enumeratio-collections
+  - call: Subsets(n, {k})
+    description: the subsets of $\{1, …, n\}$ of size exactly $k$.
+    library: enumeratio-collections
+  - call: Subsets(n, {kmin, kmax, dn})
+    description: the subsets of $\{1, …, n\}$ with size in $kmin, kmin+dn, …$ up to $kmax$; $dn$ defaults to $1$.
+    library: enumeratio-collections
+details:
+  - "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built."
+  - The subsets carrying a fixed size $k$ number $\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].
+  - Each element is the subset's list of members; [[Length]] is its size.
+enumerate:
+  expr: Subsets(4)
+  columns: Length, Sum
+  glyph: subset
+seeAlso:
+  - Binomial
+  - Length
+  - Count
+  - At
+references:
+  - system: wikipedia
+    identity: Power set
+  - system: mathworld
+    identity: Subset
+  - system: rosettacode
+    identity: Power set
+names:
+  wolframIdentity: true
+catalog:
+  - system: mathlib4
+    identity: Finset (Fin n)
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Finset/Defs.html
+  - system: oeis
+    identity: A000079
+    url: https://oeis.org/A000079
+  - system: sage
+    identity: Subsets(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/subset.html
+  - system: sympy
+    identity: subsets
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.subsets
+    note: subsets(seq) with k=None (the default) — all 2^n subsets, shortest to longest
+  - system: wikipedia
+    identity: Power set
+    url: https://en.wikipedia.org/wiki/Power_set
+    relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: Finset
+---

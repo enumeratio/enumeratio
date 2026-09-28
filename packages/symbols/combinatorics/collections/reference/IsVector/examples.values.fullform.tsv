@@ -1,0 +1,6 @@
+id	in
+a-flat-list-is-a-vector	VectorQ[List[1, 2, 3]]
+a-list-of-lists-is-not-a-vector	VectorQ[List[List[1, 2], List[3, 4]]]
+a-non-list-is-not-a-vector	VectorQ[3]
+a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]
+a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]

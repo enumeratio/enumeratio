@@ -1,0 +1,98 @@
+id	in	out	verdict
+li-2-1-zeta-2-pi-2-6	polylog(2, 1)	pi**2/6	
+li-2-1-eta-2-pi-2-12	polylog(2, -1)	-pi**2/12	
+li-4-1-zeta-4-pi-4-90	polylog(4, 1)	pi**4/90	
+a-machine-precision-argument	polylog(2, 0.9)	polylog(2, 0.9)	
+li-0-z-z-1-z-past-the-unit-disk	polylog(0, 5.5)	-1.22222222222222	
+li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac	polylog(3, Rational(1, 2))	polylog(3, 1/2)	
+n-polylog-2-0p5	N(polylog(2, 0.5), 30)	0.582240526465012505902656320160	
+n-polylog-2-neg-0p5	N(polylog(2, -0.5), 30)	-0.448414206923646202443064405916	
+n-polylog-2-0p25	N(polylog(2, 0.25), 30)	0.267652639082732606919183828488	
+n-polylog-2-0p9	N(polylog(2, 0.9), 30)	1.29971472300495878197957130310	
+n-polylog-2-1-over-3	N(polylog(2, Rational(1, 3)), 30)	0.366213229977063487616746297664	
+n-polylog-2-0p4-plus-0p3i	N(polylog(2, (0.4 + 0.3*I)), 30)	0.407770499295096585080801659233 + 0.374503158223904916522000932644*I	
+n-polylog-3-0p5	N(polylog(3, 0.5), 30)	0.537213193608040200940623225595	
+n-polylog-3-neg-0p5	N(polylog(3, -0.5), 30)	-0.472597844658896874618623193127	
+n-polylog-3-0p25	N(polylog(3, 0.25), 30)	0.258461395796573305288000129874	
+n-polylog-3-0p9	N(polylog(3, 0.9), 30)	1.04965895018643990171190384709	
+n-polylog-3-1-over-3	N(polylog(3, Rational(1, 3)), 30)	0.348827861154840084214251935387	
+n-polylog-3-0p4-plus-0p3i	N(polylog(3, (0.4 + 0.3*I)), 30)	0.405995303819877718395858917691 + 0.334761838533880349109944858246*I	
+n-polylog-0p5-0p5	N(polylog(0.5, 0.5), 30)	0.806126723042852266765123658843	
+n-polylog-0p5-neg-0p5	N(polylog(0.5, -0.5), 30)	-0.373752237980973067710266377617	
+n-polylog-0p5-0p25	N(polylog(0.5, 0.25), 30)	0.305734930399296389591512479456	
+n-polylog-0p5-0p9	N(polylog(0.5, 0.9), 30)	4.02195042747336106714328707312	
+n-polylog-0p5-1-over-3	N(polylog(0.5, Rational(1, 3)), 30)	0.442108835280675441655027702275	
+n-polylog-0p5-0p4-plus-0p3i	N(polylog(0.5, (0.4 + 0.3*I)), 30)	0.379935019202769619361959030357 + 0.544594255219853051741552008025*I	
+n-polylog-1p5-0p5	N(polylog(1.5, 0.5), 30)	0.624837020819913879776663634402	
+n-polylog-1p5-neg-0p5	N(polylog(1.5, -0.5), 30)	-0.429887321580579295776658454997	
+n-polylog-1p5-0p25	N(polylog(1.5, 0.25), 30)	0.275700508644822817050368257696	
+n-polylog-1p5-0p9	N(polylog(1.5, 0.9), 30)	1.61443852856633962566945683648	
+n-polylog-1p5-1-over-3	N(polylog(1.5, Rational(1, 3)), 30)	0.381783507869016176661783238149	
+n-polylog-1p5-0p4-plus-0p3i	N(polylog(1.5, (0.4 + 0.3*I)), 30)	0.40619397959402647746429693143 + 0.410075868348375061067656588421*I	
+n-polylog-2p5-0p5	N(polylog(2.5, 0.5), 30)	0.554997278717512254608834609826	
+n-polylog-2p5-neg-0p5	N(polylog(2.5, -0.5), 30)	-0.462297782190063455409756443260	
+n-polylog-2p5-0p25	N(polylog(2.5, 0.25), 30)	0.262193770428551575779607674122	
+n-polylog-2p5-0p9	N(polylog(2.5, 0.9), 30)	1.13900302520215679358273064281	
+n-polylog-2p5-1-over-3	N(polylog(2.5, Rational(1, 3)), 30)	0.355830740032320830366943172521	
+n-polylog-2p5-0p4-plus-0p3i	N(polylog(2.5, (0.4 + 0.3*I)), 30)	0.407221711324621649108479459755 + 0.350742483763195722623606798152*I	
+n-polylog-neg-1-0p5	N(polylog(-1, 0.5), 30)	2.00000000000000000000000000000	
+n-polylog-neg-1-neg-0p5	N(polylog(-1, -0.5), 30)	-0.222222222222222209886410837498	
+n-polylog-neg-1-0p25	N(polylog(-1, 0.25), 30)	0.444444444444444419772821674997	
+n-polylog-neg-1-0p9	N(polylog(-1, 0.9), 30)	90.0000000000000426325641456060	
+n-polylog-neg-1-1-over-3	N(polylog(-1, Rational(1, 3)), 30)	0.750000000000000000000000000000	
+n-polylog-neg-1-0p4-plus-0p3i	N(polylog(-1, (0.4 + 0.3*I)), 30)	4.93432455388958498931841168272e-17 + 1.11111111111111121802147644539*I	
+n-polylog-2-plus-i-0p5	N(polylog((2 + 1*I), 0.5), 30)	0.5548535453533203232571269189 - 0.0580495617916971549874337516901*I	
+n-polylog-2-plus-i-neg-0p5	N(polylog((2 + 1*I), -0.5), 30)	-0.457531546075585227813811465511 - 0.0304710196698071139523110739928*I	
+n-polylog-2-plus-i-0p25	N(polylog((2 + 1*I), 0.25), 30)	0.262850183027236162306937455167 - 0.0118169719193025621221460542183*I	
+n-polylog-2-plus-i-0p9	N(polylog((2 + 1*I), 0.9), 30)	1.07363589827916898975994814402 - 0.306500621704929818221010117699*I	
+n-polylog-2-plus-i-1-over-3	N(polylog((2 + 1*I), Rational(1, 3)), 30)	0.356694556200713529780183576164 - 0.0223854623179620616862878521231*I	
+n-polylog-2-plus-i-0p4-plus-0p3i	N(polylog((2 + 1*I), (0.4 + 0.3*I)), 30)	0.462140023057769740979597365209 + 0.350560597101058171033343086356*I	
+n-polylog-0p5-plus-neg-1-times-i-0p5	N(polylog((0.5 + -1*I), 0.5), 30)	0.670039797076198540004554615734 + 0.233019269757713198831794443322*I	
+n-polylog-0p5-plus-neg-1-times-i-neg-0p5	N(polylog((0.5 + -1*I), -0.5), 30)	-0.391310316111742884093160910197 + 0.069751466633279121665189848045*I	
+n-polylog-0p5-plus-neg-1-times-i-0p25	N(polylog((0.5 + -1*I), 0.25), 30)	0.2884064661247057737014642953 + 0.038753470608298049016049446891*I	
+n-polylog-0p5-plus-neg-1-times-i-0p9	N(polylog((0.5 + -1*I), 0.9), 30)	0.580361076526938801656285704667 + 2.24226374800079719662448951567*I	
+n-polylog-0p5-plus-neg-1-times-i-1-over-3	N(polylog((0.5 + -1*I), Rational(1, 3)), 30)	0.404329932237944807577845015681 + 0.0779257245606425737341079708118*I	
+n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i	N(polylog((0.5 + -1*I), (0.4 + 0.3*I)), 30)	0.246545234792888673380772956989 + 0.432156736424443022048791362977*I	
+li-0-1-a-pole-of-the-rational-form	polylog(0, 1)	-1/2	inconclusive
+li-neg-1-1-a-pole-of-the-rational-form	polylog(-1, 1)	-1/12	inconclusive
+li-neg-2-1-a-pole-of-the-rational-form	polylog(-2, 1)	0	inconclusive
+li-3-over-2-1-zeta-3-2-non-integer-order	N(polylog(Rational(3, 2), 1), 30)	2.61237534868548834334856756792	
+li-1-1-2-ln-2	N(polylog(1, Rational(1, 2)), 30)	0.693147180559945309417232121458	
+n-polylog-rim-theta-0p5-s-neg-0p5-z	N(polylog(-0.5, (0.8775825618903728 + 0.479425538604203*I)), 30)	-1.98141280324163027160011552041 + 1.75961802809541900671774783405*I	
+polylog-rim-theta-0p5-s-0-z	N(polylog(0, (0.8775825618903728 + 0.479425538604203*I)), 30)	-0.500000000000000162772180044563 + 1.95815868232297011768855635329*I	
+polylog-rim-theta-0p5-s-0p5-z	N(polylog(0.5, (0.8775825618903728 + 0.479425538604203*I)), 30)	0.31529661575870832068702043216 + 1.66833249299676555921223553014*I	
+polylog-rim-theta-0p5-s-1-z	N(polylog(1, (0.8775825618903728 + 0.479425538604203*I)), 30)	0.703585635137844674746273612566 + 1.32079632679489670524619759661*I	
+polylog-rim-theta-0p5-s-1p5-z	N(polylog(1.5, (0.8775825618903728 + 0.479425538604203*I)), 30)	0.865929522764988246485984291212 + 1.04280869887883143043438849418*I	
+polylog-rim-theta-1p7-s-0-z	N(polylog(0, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.499999999999999977487794537038 + 0.439238892276005904440122695821*I	
+polylog-rim-theta-1p7-s-0p5-z	N(polylog(0.5, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.460639226197527840156453748932 + 0.600477816055078328361105377553*I	
+polylog-rim-theta-1p7-s-1-z	N(polylog(1, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.407170859340729374328160080788 + 0.720796326794896617651288524145*I	
+polylog-rim-theta-1p7-s-1p5-z	N(polylog(1.5, (-0.12884449429552464 + 0.9916648104524686*I)), 30)	-0.352399886639668535881497746232 + 0.807057229069461645742933342262*I	
+polylog-rim-theta-2p4-s-0-z	N(polylog(0, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.499999999999999993326488594745 + 0.194389784684102472862670134434*I	
+polylog-rim-theta-2p4-s-0p5-z	N(polylog(0.5, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.570995313100137624751084786112 + 0.288122350544688710094476391532*I	
+polylog-rim-theta-2p4-s-1-z	N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.622766653117112758665859429544 + 0.37079632679489664433848426139*I	
+polylog-rim-theta-2p4-s-1p5-z	N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)), 30)	-0.659486088090073474532459840702 + 0.440335525424699725238752989753*I	
+order-one-half-at-1-is-zeta-one-half	N(polylog(Rational(1, 2), 1), 30)	-1.46035450880958681288949915252	
+threads-over-a-list-of-arguments	polylog(2, [0.5, 0.25])	AttributeError: 'list' object has no attribute 'is_number'	error
+a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
+complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
+past-z-1-the-continuation-is-complex	polylog(2, 2.5)	polylog(2, 2.5)	
+li-3-1-eta-3-frac-34-zeta-3	polylog(3, -1)	-dirichlet_eta(3)	
+li-2-2-pi-2-4-i-pi-ln-2-exactly	polylog(2, 2)	pi**2/4 - I*pi*log(2)	
+li-n-1-1-2-1-n-zeta-n-for-symbolic-n	polylog(Symbol("n"), -1)	True	
+li-2-z-z-1-z-1-z-3	polylog(-2, Symbol("z"))	True	
+interval-arithmetic			
+three-arguments-the-nielsen-generalized			
+s-2-2-1-pi-4-360			
+s-1-2-1-2-zeta-3-8-ln-3-2-6			
+to-30-significant-digits-not-yet-the-requested	N(polylog(2, Rational(1, 2)), 30)	0.582240526465012505902656320160	
+li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
+li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
+li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	
+certified-digits-li-2-1-3	N(polylog(2, Rational(1, 3)), 30)	0.366213229977063487616746297664	
+certified-digits-li-5-2-minus-1-2	N(polylog(Rational(5, 2), Rational(-1, 2)), 30)	-0.462297782190063438189164323275	
+li-1-z-ln-1-z-symbolically	polylog(1, Symbol("z"))	True	
+li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, Symbol("z"))	True	
+li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * (S(log(2))**2))), (S((S(pi)**2)) / 12))	True	
+li-s-1-zeta-s-for-symbolic-s	polylog(Symbol("s"), 1)	True	
+frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))		
+an-exact-argument-stays-symbolic-under-plain	polylog(2, Rational(1, 2))	-log(2)**2/2 + pi**2/12	

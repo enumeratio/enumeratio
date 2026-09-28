@@ -1,4 +1,0 @@
-- id: inert
-  expr: [RowBox, [List, "'a'", "'+'", "'b'"]]
-  expected: [RowBox, [List, "'a'", "'+'", "'b'"]]
-  caption: "a box is inert: it evaluates to itself"

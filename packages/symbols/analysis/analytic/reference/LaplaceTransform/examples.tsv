@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+t-cubed			[LaplaceTransform, [Power, t, 3], t, s]	[Divide, 6, [Power, s, 4]]	$\mathcal{L}\{t^3\} = 6/s^4$
+exp-at			[LaplaceTransform, [Power, ExponentialE, [Multiply, 2, t]], t, s]	[Divide, 1, [Add, s, -2]]	$\mathcal{L}\{e^{2t}\} = 1/(s-2)$
+sin-at			[LaplaceTransform, [Sin, [Multiply, 3, t]], t, s]	[Divide, 3, [Add, [Power, s, 2], 9]]	$\mathcal{L}\{\sin(3t)\} = 3/(s^2+9)$
+t-cubed-exp-shift	Scope		[LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Power, t, 3]], t, s]	[Divide, 6, [Power, [Add, s, -2], 4]]	first shifting theorem — $\mathcal{L}\{t^3 e^{2t}\} = 6/(s-2)^4$
+exp-sin-shift	Scope		[LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Sin, [Multiply, 3, t]]], t, s]	[Divide, 3, [Add, [Power, [Add, s, -2], 2], 9]]	$\mathcal{L}\{e^{2t}\sin(3t)\} = 3/((s-2)^2+9)$

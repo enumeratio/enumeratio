@@ -1,0 +1,23 @@
+id	in	out	verdict
+fibonacci-0	BigInt(fibonacci(ZZ(0)))	0	
+fibonacci-1	BigInt(fibonacci(ZZ(1)))	1	
+fibonacci-10	BigInt(fibonacci(ZZ(10)))	55	
+fibonacci-20	BigInt(fibonacci(ZZ(20)))	6765	
+fibonacci-8	BigInt(fibonacci(ZZ(8)))	21	
+exact-at-any-size-f-100-has-21-digits	BigInt(fibonacci(ZZ(100)))	354224848179261915075	
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	BigInt(fibonacci(ZZ(1.5)))	InexactError: convert(ZZRingElem, 1.5)	error
+the-two-argument-fibonacci-polynomial-f-7-x-from			
+the-fibonacci-polynomial-at-a-real-order-and			
+special-value-of-the-fibonacci-polynomial-f-1-0			
+special-value-of-the-fibonacci-polynomial-f-0-0			
+f-3-x-x-2-1-threads-element-wise-over-a-matrix			
+threads-element-wise-over-a-list-as-wolfram-s	[BigInt(fibonacci(ZZ(1))), BigInt(fibonacci(ZZ(2))), BigInt(fibonacci(ZZ(3))), BigInt(fibonacci(ZZ(4)))]	[1, 1, 2, 3]	
+consecutive-ratios-f-n-1-f-n-converge-to-the	(BigInt(fibonacci(ZZ(20))) // BigInt(fibonacci(ZZ(19))))	1.6180339631667064	
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	(BigInt(fibonacci(ZZ(20))) == (BigInt(fibonacci(ZZ(10))) * Combinatorics.lucasnum(10)))	true	
+the-defining-recurrence-f-10-f-9-f-8	(BigInt(fibonacci(ZZ(10))) == (BigInt(fibonacci(ZZ(9))) + BigInt(fibonacci(ZZ(8)))))	true	
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	((BigInt(fibonacci(ZZ(5))) * BigInt(fibonacci(ZZ(7)))) - (big(BigInt(fibonacci(ZZ(6))))^2))	1	
+gcd-f-12-f-18-f-gcd-12-18	(gcd(ZZ(BigInt(fibonacci(ZZ(12)))), ZZ(BigInt(fibonacci(ZZ(18))))) == BigInt(fibonacci(ZZ(gcd(ZZ(12), ZZ(18))))))	true	
+negative-indices-are-supported-via-f-n-1-n-1-f-n	BigInt(fibonacci(ZZ(-5)))	5	
+f-1000-has-209-digits-see-integerdigits			
+they-grow-fast-f-50-already-exceeds-twelve	BigInt(fibonacci(ZZ(50)))	12586269025	

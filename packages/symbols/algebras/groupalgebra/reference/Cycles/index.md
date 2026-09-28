@@ -1,0 +1,34 @@
+---
+name: Cycles
+domain: Permutations
+signature: Cycles({{i1, i2, ...}, ...})
+summary: 'A permutation written in disjoint-cycle notation: $(i_1\,i_2\,\dots\,i_k)$ sends $i_1 \to i_2 \to \dots \to i_k \to i_1$ and fixes everything else. A carrier, like [[PermutationGroup]] — it holds the cycles rather than computing anything from them.'
+signatures:
+  - call: Cycles({{i1, ..., ik}, ...})
+    description: the permutation that cycles each listed tuple and fixes every other point
+    library: enumeratio-groupalgebra
+    type: (list<list<integer>>) -> expression<Cycles>
+details:
+  - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
+  - The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
+  - "[[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one"
+seeAlso:
+  - PermutationCycles
+  - Permute
+  - PermutationGroup
+  - InversePermutation
+references:
+  - system: wikipedia
+    identity: Cyclic permutation
+  - system: mathworld
+    identity: PermutationCycle
+names:
+  wolframIdentity: true
+catalog:
+  - system: findstat
+    identity: St000031
+    url: https://www.findstat.org/St000031
+    on: Permutation
+statOn:
+  - Permutation
+---

@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption
+four-rights-one-left			[RademacherSymbol, "'LRRRR'"]	3	four rights, one left
+the-arithmetic-side	Scope		[DedekindSum, 4, 3]	[Rational, 1, 18]	the arithmetic side
+phi-on-t-n-just-counts	Scope		[RademacherPhi, [ModularMatrix, 1, 7, 0, 1]]	7	$\Phi$ on $T^n$ just counts
+the-same-number-by-counting-letters	Scope		[WordSymbol, "'LRRRR'"]	3	the same number, by counting letters
+and-again-by-the-linking-number	Scope		[LinkingWithTrefoil, "'LRRRR'"]	3	and again, by the linking number
+s-1-5	Scope		[DedekindSum, 1, 5]	[Rational, 1, 5]	$s(1,5)$
+turning-equally-both-ways-gives-linking-number	Properties		[LinkingWithTrefoil, "'LLRR'"]	0	turning equally both ways gives linking number zero

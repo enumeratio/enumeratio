@@ -1,0 +1,3 @@
+id	in	out	back
+sum-one-to-five	[total := 0, Do(total := total + i, [i, 1, 5]), total]	[0, 15]	Unreadable
+repeat-with-no-loop-variable	[count := 0, Do(count := count + 1, 4), count]	[0, 4]	Unreadable

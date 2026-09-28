@@ -1,0 +1,21 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
+lucasl-0			[LucasL, 0]	2							
+lucasl-1			[LucasL, 1]	1							
+lucasl-5			[LucasL, 5]	11							
+lucasl-10			[LucasL, 10]	123							
+exact-at-any-size	Scope		[LucasL, 100]	{num: "792070839848372253127"}	Exact at any size						
+an-odd-negative-index-flips-the-sign-l-11-l-11	Scope		[LucasL, -11]	-199	An odd negative index flips the sign: $L_{-11} = -L_{11}$					domain	Combinatorics.jl's lucasnum declines a negative index; ours extends via LucasL(-n) = (-1)^n LucasL(n).
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Scope		[LucasL, 2.3333333333333335]	3.2362118794916213	A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$	domain	compute-engine extends LucasL to a real index through phi^nu and cos(pi*nu), as with Fibonacci; Sage's lucas_number2() requires an integer and raises a TypeError coercing the real.	domain	SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.	domain	Combinatorics.jl's lucasnum is Int-only; ours extends LucasL to a real index ν through φ^ν and cos(πν), as with Fibonacci.
+the-two-argument-lucas-polynomial-l-7-x-from-l-n	Scope		[LucasL, 7, x]	[Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]	The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$						
+the-lucas-polynomial-at-x-1-is-the-lucas-number	Scope		[LucasL, 143, 1]	{num: "767772505664398093937756525279"}	The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$						
+special-value-of-the-lucas-polynomial-l-1-0-0	Scope		[LucasL, 1, 0]	0	Special value of the Lucas polynomial: $L_1(0) = 0$						
+special-value-of-the-lucas-polynomial-l-0-0-2	Scope		[LucasL, 0, 0]	2	Special value of the Lucas polynomial: $L_0(0) = 2$						
+l-2-x-x-2-2-threads-element-wise-over-a-matrix	Scope		[LucasL, 2, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Rational, 9, 4], 3], [List, 2, [Rational, 9, 4]]]	$L_2(x) = x^2 + 2$ threads element-wise over a matrix argument						
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[LucasL, [List, 1, 2, 3, 4]]	[List, 1, 3, 4, 7]	Threads element-wise over a list, as Wolfram's Listable heads do						
+consecutive-ratios-l-n-1-l-n-converge-to-the	Applications		[Divide, [LucasL, 15], [LucasL, 14]]	[Rational, 1364, 843]	Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio too. See [[Fibonacci]]						
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	Properties		[Subtract, [Power, [LucasL, 10], 2], [Multiply, 5, [Power, [Fibonacci, 10], 2]]]	4	$L_n^2 - 5F_n^2 = 4(-1)^n$, here at $n = 10$. See [[Fibonacci]]						
+l-n-f-n-1-f-n-1-here-at-n-6	Properties		[Equal, [LucasL, 6], [Add, [Fibonacci, 5], [Fibonacci, 7]]]	True	$L_n = F_{n-1} + F_{n+1}$, here at $n = 6$						
+conversely-f-n-frac-l-n-1-l-n-1-5	Properties		[Equal, [Fibonacci, 6], [Divide, [Add, [LucasL, 5], [LucasL, 7]], 5]]	True	Conversely $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$						
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	Properties		[Subtract, [Multiply, [LucasL, 4], [LucasL, 6]], [Power, [LucasL, 5], 2]]	5	A Cassini-style identity $L_{n-1}L_{n+1} - L_n^2 = 5(-1)^{n+1}$, here at $n = 5$						
+negative-indices-are-supported-via-l-n-1-n-l-n	Properties		[LucasL, -1]	-1	Negative indices are supported via $L_{-n} = (-1)^n L_n$					domain	compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
+l-30-already-tops-1-8-million-growing-at-the	Neat examples		[LucasL, 30]	1860498	$L_{30}$ already tops 1.8 million, growing at the same rate as [[Fibonacci]]						

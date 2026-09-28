@@ -1,0 +1,9 @@
+---
+name: ThreeCore
+domain: Combinatorics
+signature: ThreeCore(...)
+summary: 3-core
+mapOn:
+  - IntegerPartition
+stub: carrier
+---

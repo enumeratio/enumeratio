@@ -1,0 +1,5 @@
+id	in	out
+exp-neg-ar-order0	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s))	(a)(\sqrt{a^2+s^2}^{3})^{-1}
+one-over-r	\mathrm{HankelTransform}(\frac{1}{r}, r, s)	\frac{1}{s}
+one-over-sqrt-r2-a2	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\frac{1}{\sqrt{r^2+a^2}}, r, s))	\frac{\exp(-(as))}{s}
+exp-neg-ar-order1	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s, 1))	(s)(\sqrt{a^2+s^2}^{3})^{-1}

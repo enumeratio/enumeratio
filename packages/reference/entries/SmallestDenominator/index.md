@@ -1,0 +1,9 @@
+---
+name: SmallestDenominator
+domain: Combinatorics
+signature: SmallestDenominator(...)
+summary: Smallest denominator
+statOn:
+  - EgyptianFraction
+stub: carrier
+---

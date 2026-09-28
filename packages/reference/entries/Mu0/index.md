@@ -1,0 +1,12 @@
+---
+name: Mu0
+domain: Compute engine
+signature: Mu0
+summary: Vacuum permeability
+signatures:
+  - call: "Mu0: value"
+    description: a constant, as compute-engine declares it
+names:
+  wikidataConfirmed: true
+stub: engine
+---

@@ -1,0 +1,3 @@
+id	in	out
+listable	\mathrm{IsPerfect}(\bigl\lbrack6, 28, 12\bigr\rbrack)	\bigl\lbrack\top, \top, \bot\bigr\rbrack
+negative-numbers-are-not-perfect	\mathrm{IsPerfect}(-6)	\bot

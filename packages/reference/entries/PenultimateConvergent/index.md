@@ -1,0 +1,9 @@
+---
+name: PenultimateConvergent
+domain: Combinatorics
+signature: PenultimateConvergent(...)
+summary: Penultimate convergent
+mapOn:
+  - ContinuedFraction
+stub: carrier
+---

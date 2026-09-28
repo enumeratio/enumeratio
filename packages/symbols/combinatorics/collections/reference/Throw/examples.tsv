@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+throw-aborts-to-the-nearest-catch			[Catch, [Throw, abandoned]]	abandoned	Throw aborts evaluation, Catch recovers the value
+a-tag-mismatch-propagates-past-a-catch	Scope		[Catch, [Catch, [Throw, deep, x], y], x]	deep	a tag mismatch propagates past a non-matching Catch to one that matches

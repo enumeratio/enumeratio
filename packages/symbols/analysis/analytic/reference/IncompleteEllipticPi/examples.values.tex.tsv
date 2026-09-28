@@ -1,0 +1,19 @@
+id	in	out
+pi-n-0-m-0	\mathrm{IncompleteEllipticPi}(0.5, 0, 0.3)	0
+a-floating-point-argument-evaluates-directly-to	N(\mathrm{IncompleteEllipticPi}(0.5, 0.4, 0.3))	0.414\,151\,736\,824\,476\,76
+pi-0-5-0-4-0-3	N(\mathrm{IncompleteEllipticPi}(0.5, -0.4, 0.3))	-0.414\,151\,736\,824\,476\,76
+pi-0-5-1-9-0-3	N(\mathrm{IncompleteEllipticPi}(0.5, 1.9, 0.3))	3.216\,516\,537\,015\,119
+pi-2-0-4-0-3	N(\mathrm{IncompleteEllipticPi}(2, 0.4, 0.3))	0.455\,004\,749\,092\,808\,14
+pi-0-5-3-5-0-3	N(\mathrm{IncompleteEllipticPi}(0.5, 3.5, 0.3))	5.291\,058\,653\,963\,574
+pi-0-2-2-0-5	N(\mathrm{IncompleteEllipticPi}(0.2, 2, 0.5))	2.820\,425\,540\,921\,485\,6
+pi-0-5-0-4-0-7-0-2i	N(\mathrm{IncompleteEllipticPi}(0.5, 0.4, 0.7+0.2i))	0.418\,772\,472\,659\,035\,67+0.002\,398\,866\,657\,940\,282\,5i
+pi-0-5-0-2i-0-4-0-3	N(\mathrm{IncompleteEllipticPi}(0.5+0.2i, 0.4, 0.3))	0.414\,060\,319\,808\,096+0.004\,608\,575\,942\,138\,294i
+pi-0-5-0-4-0-3i-0-6-0-1i	N(\mathrm{IncompleteEllipticPi}(0.5, 0.4+0.3i, 0.6+0.1i))	0.384\,711\,358\,107\,325\,65+0.329\,996\,740\,971\,807i
+pi-0-2-2-0-5i-0-3	N(\mathrm{IncompleteEllipticPi}(0.2, 2+0.5i, 0.3))	2.615\,928\,301\,488\,492\,6+0.701\,563\,176\,993\,066\,6i
+pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	N(\mathrm{IncompleteEllipticPi}(1.17+0.45i, 10.594\,777\,960\,769\,38+0.45i, 1.17+0.45i))	-0.103\,480\,823\,340\,681\,65+15.113\,381\,465\,309\,939i
+pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	N(\mathrm{IncompleteEllipticPi}(1.17+0.45i, -5.113\,185\,307\,179\,586+0.45i, 1.17+0.45i))	0.640\,677\,318\,606\,682\,5-8.277\,778\,194\,614\,966i
+a-complex-amplitude-phi-where-native-ellipticpi	N(\mathrm{IncompleteEllipticPi}(0.2, 1.2+0.5i, 0.3))	1.321\,415\,376\,117\,118+0.718\,665\,718\,875\,180\,6i
+all-three-arguments-complex-matches-mpmath-s	N(\mathrm{IncompleteEllipticPi}(1.17+0.45i, 1.17+0.45i, 1.17+0.45i))	0.343\,014\,061\,827\,736\,86+1.078\,685\,669\,354\,995\,8i
+characteristic-n-1	N(\mathrm{IncompleteEllipticPi}(0.3, 1.1, 0.4))	1.323\,800\,815\,047\,493\,6
+n-0-reduces-to-the-incomplete-elliptic-integral	N(\mathrm{IncompleteEllipticPi}(0, 0.4, 0.3))	0.403\,164\,991\,947\,139\,34
+symbolic-arguments-are-left-unevaluated-rather	\mathrm{IncompleteEllipticPi}(n, \phi, m)	\mathrm{IncompleteEllipticPi}(n, \phi, m)

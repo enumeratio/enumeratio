@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+isnumeric-pi	NumericQ[Pi]			
+isnumeric-literal	NumericQ[5]			
+isnumeric-plain-symbol	NumericQ[x]	False	\text{NumericQ}[x]	\text{False}
+isnumeric-sqrt-2	NumericQ[Sqrt[2]]			

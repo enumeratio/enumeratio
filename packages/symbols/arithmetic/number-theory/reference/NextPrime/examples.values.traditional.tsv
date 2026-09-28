@@ -1,0 +1,15 @@
+id	in	out
+nextprime-10		
+nextprime-100		
+the-second-prime-after-10		
+nextprime-6		
+the-second-prime-after-50		
+the-largest-prime-below-50		
+threads-element-wise-over-a-list-as-wolfram-s		
+large-integers-the-first-prime-past-a-googol-is		
+rational-n-the-next-prime-above-7-2		
+real-n-the-next-prime-above-100-5		
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	\mathrm{NextPrime}(p_{20})=p_{21}	\mathrm{True}
+a-negative-k-walks-backward-giving-the-prime		
+negative-n-wolfram-counts-7-as-prime-and-returns		
+nextprime-neg-2		

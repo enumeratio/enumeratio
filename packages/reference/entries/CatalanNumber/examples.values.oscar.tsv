@@ -1,0 +1,23 @@
+id	in	out
+catalannumber-0		
+catalannumber-1		
+catalannumber-5		
+catalannumber-10		
+catalannumber-30		
+catalannumber-neg-1-is-neg-1		
+catalannumber-0-past-neg-1		
+catalannumber-neg-5-is-also-0		
+threads-element-wise-over-a-list-as-wolfram-s		
+half-integer-arguments-evaluate-exactly-through		
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma		
+complex-arguments-evaluate-through-the-same		
+c-1-2-frac-8-3-pi-by-analytic-continuation		
+an-interval-argument-should-give-an-enclosing		
+the-5-ways-to-balance-3-pairs-of-parentheses		
+the-14-triangulations-of-a-hexagon-and-the-14		
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))	42.0
+the-closed-form-through-a-negative-n-in-binomial	(binomial(ZZ((2 * -13)), ZZ(5)) // (4 + 1))	-28501.2
+equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))	42
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2		
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i		
+they-grow-fast-c-15-already-passes-nine-million		

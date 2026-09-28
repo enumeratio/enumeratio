@@ -1,0 +1,26 @@
+---
+name: KleinInvariantJ
+domain: Special functions
+signature: KleinInvariantJ(tau)
+summary: Klein's absolute invariant $J(\tau) = j(\tau)/1728$, normalised so $J(i) = 1$ and $J(\rho) = 0$ at the elliptic points. A thin wrapper over this package's own [[ModularJ]] (the un-normalised $j$).
+signatures:
+  - call: KleinInvariantJ(tau)
+    description: $J(\tau) = j(\tau)/1728$.
+    library: "@enumeratio/analytic"
+    type: (number) -> number
+details:
+  - All the analytic work — fundamental-domain reduction, the $\eta^{24}$ discriminant — is [[ModularJ]]'s; this only rescales.
+  - '$\tau = i$ is returned exactly (1): $j(i) = 1728$ is a textbook identity, kept exact even under plain `evaluate()`, not just `N()`.'
+primitive: kernel
+bindings:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/modular.ts
+    note: j(τ)/1728, delegating entirely to ModularJ.
+seeAlso:
+  - ModularJ
+  - ModularLambda
+names:
+  wolframIdentity: true
+---

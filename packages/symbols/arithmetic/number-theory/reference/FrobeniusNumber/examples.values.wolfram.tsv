@@ -1,0 +1,6 @@
+id	in
+the-mcnugget-number	FrobeniusNumber[List[6, 9, 20]]
+frobeniusnumber-list-3-5	FrobeniusNumber[List[3, 5]]
+frobeniusnumber-list-12-16-20-27	FrobeniusNumber[List[12, 16, 20, 27]]
+two-generators-ab-a-b	FrobeniusNumber[List[4, 7]]
+not-coprime-infinitely-many-numbers-are	FrobeniusNumber[List[2, 4]]

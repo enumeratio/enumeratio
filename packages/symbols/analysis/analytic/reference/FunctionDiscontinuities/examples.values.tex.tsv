@@ -1,0 +1,4 @@
+id	in	out
+a-pole-is-a-discontinuity	\mathrm{FunctionDiscontinuities}(\frac{1}{x}, x)	x=0
+tangent-s-poles	\mathrm{FunctionDiscontinuities}(\tan(x), x)	\cos(x)=0
+a-polynomial-is-continuous-everywhere	\mathrm{FunctionDiscontinuities}(x^2, x)	\bot

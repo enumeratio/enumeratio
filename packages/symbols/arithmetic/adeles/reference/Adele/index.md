@@ -1,0 +1,41 @@
+---
+name: Adele
+domain: Adèles and idèles
+signature: Adele(r, z?)
+summary: 'An adèle: a real number $r$ beside a profinite number $z \in \hat{\mathbb{Q}}$. `Adele(q)` for rational $q$ is the principal adèle, $q$ at every place.'
+signatures:
+  - call: Adele(r, z)
+    description: the real $r$ beside the finite part $z$ (a [[ProfiniteNumber]])
+    library: enumeratio-adeles
+    type: (value, value?) -> value
+  - call: Adele(q)
+    description: "the principal adèle of a rational $q$: $q$ at the real place and every finite one"
+    library: enumeratio-adeles
+  - call: Adele(idele)
+    description: the underlying adèle of an [[Idele]]
+    library: enumeratio-adeles
+details:
+  - The real part is any closed-form real constant compute-engine can evaluate numerically, not only a rational.
+  - "`Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` thread over an adèle, real part and finite part separately."
+  - An [[Idele]] is an adèle together with the extra data an idèle carries (a finite set of distinguished units); `Adele(idele)` forgets that and keeps only the value.
+seeAlso:
+  - ProfiniteNumber
+  - Idele
+bindings:
+  - origin: mapped
+    form: sage
+    template: Adeles(QQ)($1)
+    arity: 1
+    note: Hertogh's adeles package; coerces a rational (the principal adele) or an idele (forgetting its idele structure) -- Sage's own coercion dispatches on the argument's type, like ours.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: Adeles(QQ)([$1], $2)
+    arity: 2
+    note: Hertogh's adeles package; real $1 beside the finite part $2 (a ProfiniteNumber).
+    checked:
+      version: "10.9"
+      on: 2026-09-28
+---

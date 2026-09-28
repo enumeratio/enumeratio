@@ -1,0 +1,7 @@
+id	in
+eulere-10	EulerE[10]
+eulere-8	EulerE[8]
+listable-odd-indices-vanish	EulerE[List[0, 1, 2, 3, 4]]
+the-euler-polynomial-e-2-x-x-2-x	EulerE[2, x]
+e-4-x-x-4-2x-3-x	EulerE[4, x]
+e-n-2-n-e-n-frac-12-and-e-3-0	EulerE[3, Rational[1, 2]]

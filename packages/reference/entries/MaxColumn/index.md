@@ -1,0 +1,9 @@
+---
+name: MaxColumn
+domain: Combinatorics
+signature: MaxColumn(...)
+summary: Maximum column
+statOn:
+  - RookPlacement
+stub: carrier
+---

@@ -1,0 +1,8 @@
+id	in	out
+n-arcsch-2	N(\mathrm{arcsch}(2))	0.481\,211\,825\,059\,603\,447\,495
+a-pole-at-0	\mathrm{arcsch}(0)	\tilde\infty
+arcsch-positiveinfinity	\mathrm{arcsch}(\infty)	0
+a-float-argument-evaluates-directly	\mathrm{arcsch}(1.5)	0.625\,145\,117\,250\,416\,687\,636
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	\mathrm{TrigToExp}(\mathrm{arcsch}(1))	\ln(1+\sqrt{2})
+oddness-pulls-the-sign-out-of-a-symbolic	\mathrm{arcsch}(-x)	-\mathrm{arcsch}(x)
+derivative-for-real-x-ne-0	\frac{\mathrm{d}\mathrm{arcsch}(x)}{\mathrm{d}x}	-(\vert x\vert\sqrt{x^2+1})^{-1}

@@ -1,0 +1,22 @@
+---
+name: SmallestBlock
+domain: Set partition statistics
+signature: SmallestBlock(partition)
+summary: The size of the smallest block.
+details:
+  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
+catalog:
+  - system: findstat
+    identity: St001075
+    url: https://www.findstat.org/St001075
+    on: SetPartition
+statOn:
+  - SetComposition
+  - SetPartition
+signatures:
+  - call: SmallestBlock(partition)
+    description: The size of the smallest block.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number
+---

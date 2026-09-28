@@ -1,0 +1,5 @@
+id	in	out
+the-identity-s-class-is-a-singleton	\mathrm{ClassSum}(D_{3}, 1)	\mathrm{GroupBasis}(\text{0})
+in-an-abelian-group-everything-is-central	\mathrm{IsCentral}(C_{6}, \mathrm{GroupBasis}(\text{3}))	\mathrm{True}
+class-sums-are-central	\mathrm{IsCentral}(D_{3}, \mathrm{ClassSum}(D_{3}, 2))	\mathrm{True}
+a-lone-reflection-is-not	\mathrm{IsCentral}(D_{3}, \mathrm{GroupBasis}(\text{\mathrm{s0}}))	\mathrm{False}

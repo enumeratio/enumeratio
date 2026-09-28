@@ -1,0 +1,3 @@
+id	in	out
+3-4-5	Normalize([3, 4])	[3 / 5, 4 / 5]
+zero-vector	Normalize([0, 0])	[0, 0]

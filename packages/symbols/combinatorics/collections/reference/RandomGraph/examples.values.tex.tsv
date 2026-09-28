@@ -1,0 +1,2 @@
+id	in	out
+vertex-and-edge-count	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(9), \mathrm{VertexCount}(\mathrm{RandomGraph}(\bigl\lbrack6, 8\bigr\rbrack))\bigr\rbrack)	6

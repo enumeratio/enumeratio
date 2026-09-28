@@ -1,0 +1,26 @@
+---
+name: PalindromicCompositions
+domain: Collections
+signature: PalindromicCompositions(n)
+summary: The compositions of $n$ that read the same forwards and backwards.
+signatures:
+  - call: PalindromicCompositions(n)
+    description: the compositions of $n$ that read the same forwards and backwards
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - Count is $2^{\lfloor n/2 \rfloor}$ (A016116).
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A016116
+catalog:
+  - system: oeis
+    identity: A016116
+    url: https://oeis.org/A016116
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---

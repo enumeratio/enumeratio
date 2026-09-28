@@ -1,0 +1,9 @@
+---
+name: NegativeFixedPoints
+domain: Combinatorics
+signature: NegativeFixedPoints(...)
+summary: Number of negative fixed points
+statOn:
+  - SignedPermutation
+stub: carrier
+---

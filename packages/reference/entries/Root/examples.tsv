@@ -1,0 +1,14 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+the-cube-root-of-27			[Root, 27, 3]	3	The cube root of 27		
+root-16-4			[Root, 16, 4]	2			
+odd-roots-of-a-negative-number-stay-real			[Root, -8, 3]	-2	Odd roots of a negative number stay real	convention	Wolfram's $(-8)^{1/3}$ is the principal complex root, $1 + \sqrt{3}\,i$; its real root is $\mathrm{Surd}[-8, 3] = -2$.
+stays-symbolic-when-x-isn-t-a-perfect-power			[Root, 2, 3]	[Root, 2, 3]	Stays symbolic when x isn't a perfect power		
+a-negative-index-gives-the-reciprocal-root-x-1-n			[Root, 16, -2]	[Rational, 1, 4]	A negative index gives the reciprocal root: $x^{-1/n}$		
+the-real-cube-root-wolfram-s-surd-27-3	Scope		[Root, -27, 3]	-3	The real cube root, Wolfram's $\mathrm{Surd}[-27, 3]$		
+any-odd-root-of-a-negative-number-is-real	Scope		[Root, -32, 5]	-2	Any odd root of a negative number is real		
+approximate-negative-radicands-stay-real-too	Scope		[Root, -3.5, 5]	{num: "-1.28473515712343933868"}	Approximate negative radicands stay real too		
+threads-element-wise-over-a-list	Scope		[Root, [List, -8, 27], 3]	[List, -2, 3]	Threads element-wise over a list		
+the-edge-length-of-a-cube-with-volume-1000	Applications		[Root, 1000, 3]	10	The edge length of a cube with volume 1000		
+sqrt-n-x-n-x-for-a-perfect-nth-power	Properties		[Equal, [Power, [Root, 8, 3], 3], 8]	True	$(\sqrt[n]{x})^n = x$ for a perfect nth power		
+root-x-2-agrees-with-sqrt	Properties		[Equal, [Root, 16, 2], [Sqrt, 16]]	True	Root(x, 2) agrees with [[Sqrt]]		
+an-even-root-of-a-negative-non-perfect-power	Possible issues		[Root, -8, 2]	[Sqrt, -8]	An even root of a negative, non-perfect-power number canonicalizes to [[Sqrt]] and stays symbolic; numerically it's $2\sqrt{2}\,i$		

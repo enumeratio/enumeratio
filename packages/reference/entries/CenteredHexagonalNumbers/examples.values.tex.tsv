@@ -1,0 +1,2 @@
+id	in	out
+the-first-25-terms	\mathrm{Take}(\mathrm{CenteredHexagonalNumbers}, 25)	\bigl\lbrack1, 7, 19, 37, 61, 91, 127, 169, 217, 271, 331, 397, 469, 547, 631, 721, 817, 919, 1\,027, 1\,141, 1\,261, 1\,387, 1\,519, 1\,657, 1\,801\bigr\rbrack

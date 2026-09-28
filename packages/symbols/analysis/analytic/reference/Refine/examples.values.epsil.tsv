@@ -1,0 +1,7 @@
+id	in	out
+sqrt-of-x-squared-under-x-greater-than-0	Refine(Sqrt(x ^ 2), x > 0)	x
+sqrt-of-x-squared-under-x-less-than-0	Refine(Sqrt(x ^ 2), x < 0)	-x
+abs-under-x-greater-than-0	Refine(Abs(x), x > 0)	x
+sign-under-x-greater-than-0	Refine(Sign(x), x > 0)	1
+log-of-exp-under-x-real	Refine(Ln(Exp(x)), x in RealNumbers)	x
+an-undecidable-inequality-is-left-alone	Refine(x ^ 2 > 0)	0 < x ^ 2

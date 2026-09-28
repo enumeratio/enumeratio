@@ -1,0 +1,13 @@
+id	in	out
+mean-list-1-2-3-4		
+mean-list-2-4-4-4-5-5-7-9		
+mean-list-1p21-3p4-2p15-4-1p55		
+given-a-matrix-mean-is-column-wise		
+exact-rationals-give-an-exact-mean		
+symbolic-data-gives-an-exact-symbolic-mean-frac		
+exact-constants-give-an-exact-mean-frac-2-e-pi-3		
+of-a-matrix-of-symbols-the-exact-mean-of-each		
+the-mean-of-a-lazy-range-exactly		
+mean-is-total-divided-by-count-mean-c-frac-sum-c	\mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}	\mathrm{True}
+a-single-outlier-drags-the-mean-far-from-the		
+the-mean-of-no-data-is-nan		

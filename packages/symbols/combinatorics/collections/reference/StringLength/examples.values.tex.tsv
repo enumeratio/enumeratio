@@ -1,0 +1,2 @@
+id	in	out
+counts-code-points-not-utf-16-units	\mathrm{StringLength}(\text{\text{a😀b}})	3

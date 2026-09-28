@@ -1,0 +1,6 @@
+id	in	out
+length-goes-up-so-no-q-appears	\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack))	\mathrm{HeckeT}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+n-the-same-basis-as-z-s-n	\mathrm{AlgebraDimension}(\mathrm{HeckeAlgebra}(4))	24
+the-quadratic-relation-t-s-2-q-q-1-t-s	\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack))	q\mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)+(q-1)\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+t-st-tt-s-the-longest-element-of-s-3	\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack))	\mathrm{HeckeT}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+and-t-tt-st-t-gives-the-same-which-is-the-braid	\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack))	\mathrm{HeckeT}(\bigl\lbrack3, 2, 1\bigr\rbrack)

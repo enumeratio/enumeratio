@@ -1,0 +1,62 @@
+---
+name: Ceil
+domain: Arithmetic
+signature: Ceil(x)
+summary: 'The least integer greater than or equal to x: $\lceil x \rceil$.'
+signatures:
+  - call: Ceil(x)
+    description: the least integer $\ge x$, $\lceil x \rceil$.
+  - call: Ceil(x, step)
+    description: the least multiple of `step` at or above x, $\mathrm{step}\cdot\lceil x/\mathrm{step}\rceil$.
+    library: enumeratio-collections
+    type: (number, number?) -> number
+    overrides: enumeratio-analytic
+  - call: Ceil(x)
+    description: 'The least integer greater than or equal to x: $\lceil x \rceil$.'
+    library: enumeratio-analytic
+    type: (real | signed_infinity) -> integer | signed_infinity
+    overrides: compute-engine
+  - call: Ceil(x)
+    description: in a floor ring (Mathlib's), the least integer at or above x; in a floor order, the least tick at or above x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are rounded up separately.
+    library: enumeratio-structures
+    type: (any, any?) -> any
+    overrides: enumeratio-collections
+details:
+  - 'The least integer $\ge x$: $\lceil x \rceil$.'
+  - Rounds toward $+\infty$, not toward 0 -- so $\lceil -3.7 \rceil = -3$, not $-4$.
+  - For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Floor]].
+  - Agrees with [[Floor]] exactly on integers.
+  - Threads element-wise over a list.
+  - A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.
+seeAlso:
+  - Floor
+  - Round
+references:
+  - system: wikipedia
+    identity: Floor and ceiling functions
+  - system: mathworld
+    identity: CeilingFunction
+names:
+  wolfram: Ceiling
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Ceiling[$1]
+    arity: 1
+  - origin: mapped
+    form: sympy
+    template: ceiling($1)
+    arity: 1
+  - origin: mapped
+    form: mpmath
+    template: ceil($1)
+    arity: 1
+  - origin: mapped
+    form: sage
+    template: ceil($1)
+    arity: 1
+  - origin: mapped
+    form: rust
+    template: ceil($1)
+    arity: 1
+---

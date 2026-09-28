@@ -1,0 +1,9 @@
+---
+name: UnaryNodes
+domain: Combinatorics
+signature: UnaryNodes(...)
+summary: Number of unary nodes
+statOn:
+  - OrderedTree
+stub: carrier
+---

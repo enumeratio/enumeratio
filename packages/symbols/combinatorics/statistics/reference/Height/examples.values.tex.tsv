@@ -1,0 +1,3 @@
+id	in	out
+the-step-word-uuddud	\mathrm{Height}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))	2
+the-step-word-uduudd	\mathrm{Height}(\mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack))	2

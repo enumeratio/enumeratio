@@ -1,0 +1,18 @@
+---
+name: QSymF
+domain: Hopf algebras
+signature: QSymF(composition)
+summary: The fundamental basis $F_\alpha$ of QSym, dual to the ribbon basis `NSymR`.
+signatures:
+  - call: QSymF(composition)
+    description: $F_\alpha$ for the composition $\alpha$
+    library: enumeratio-hopf
+    type: (list<integer>) -> number
+seeAlso:
+  - QSymM
+  - InFundamentalBasis
+  - Coproduct
+references:
+  - system: wikipedia
+    identity: Quasisymmetric function#Related algebras
+---

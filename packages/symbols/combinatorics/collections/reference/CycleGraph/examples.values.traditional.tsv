@@ -1,0 +1,3 @@
+id	in	out
+c5-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
+c6-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))	\mathrm{True}

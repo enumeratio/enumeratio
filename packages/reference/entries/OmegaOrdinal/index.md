@@ -1,0 +1,8 @@
+---
+name: OmegaOrdinal
+domain: Combinatorics
+signature: OmegaOrdinal(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+---

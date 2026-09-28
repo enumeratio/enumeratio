@@ -1,0 +1,19 @@
+---
+name: CyclicGroup
+domain: Wolfram
+signature: CyclicGroup(...)
+summary: Wolfram's own CyclicGroup, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier
+bindings:
+  - origin: mapped
+    form: oscar
+    template: enumeratio_cyclic(cyclic_group(PermGroup, $1), $1)
+    arity: 1
+signatures:
+  - call: CyclicGroup(...)
+    description: Wolfram's own CyclicGroup, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-groupalgebra
+    type: (integer) -> expression<CyclicGroup>
+---

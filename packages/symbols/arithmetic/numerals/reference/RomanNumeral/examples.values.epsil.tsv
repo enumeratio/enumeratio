@@ -1,0 +1,6 @@
+id	in	out
+romannumeral-1-988	RomanNumeral(1_988)	"\"MCMLXXXVIII\""
+romannumeral-2-024	RomanNumeral(2_024)	"\"MMXXIV\""
+the-largest-with-standard-symbols	RomanNumeral(3_999)	"\"MMMCMXCIX\""
+listable-4-is-written-subtractively	RomanNumeral([1, 2, 3, 4])	["I", "II", "III", "IV"]
+zero-is-written-n-for-nulla	RomanNumeral(0)	"\"N\""

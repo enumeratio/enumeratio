@@ -1,0 +1,11 @@
+---
+name: Carrier
+domain: Combinatorics
+signature: Carrier(...)
+summary: Carrier
+statOn:
+  - Text
+mapOn:
+  - Text
+stub: carrier
+---

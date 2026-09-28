@@ -1,0 +1,9 @@
+---
+name: LeadingZeros
+domain: Combinatorics
+signature: LeadingZeros(...)
+summary: Leading zeros
+statOn:
+  - BinaryWord
+stub: carrier
+---

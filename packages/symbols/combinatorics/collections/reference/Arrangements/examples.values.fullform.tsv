@@ -1,0 +1,4 @@
+id	in
+count-arrangements-4-2	Count[Arrangements[4, 2]]
+first-element-of-arrangements-4-2	Part[Arrangements[4, 2], 1]
+every-element-of-arrangements-4-2	Take[Arrangements[4, 2], 12]

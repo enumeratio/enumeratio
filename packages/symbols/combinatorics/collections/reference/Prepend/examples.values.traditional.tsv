@@ -1,0 +1,8 @@
+id	in	out
+prepend-list-a-b-c-d-x		
+prepend-front-of-list		
+prepend-single-element-list		
+prepend-empty-list		
+a-rule-inserted-at-the-front-of-an-association		
+several-rules-prepended-at-once		
+prepend-c-x-join-x-c-see-join	\mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)=\mathrm{Join}(\bigl\lbrack0\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}

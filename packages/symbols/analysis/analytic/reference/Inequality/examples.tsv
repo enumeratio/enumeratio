@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption
+a-numeric-chain-that-holds			[Inequality, 0, LessEqual, 2, Less, 5]	True	A numeric chain that holds -- 0 <= 2 and 2 < 5
+a-numeric-chain-that-fails			[Inequality, 0, LessEqual, 5, Less, 5]	False	A numeric chain that fails -- 0 <= 5 but not 5 < 5
+a-symbolic-mixed-chain-partially-simplifies			[Inequality, 0, LessEqual, x, Less, 5]	[And, [LessEqual, 0, x], [Less, x, 5]]	A symbolic mixed chain simplifies to the And of its links
+a-three-link-chain	Scope		[Inequality, 1, Less, 2, LessEqual, 2, Less, 10]	True	A three-link chain -- 1 < 2, 2 <= 2, and 2 < 10
+equal-and-notequal-are-valid-links-too	Scope		[Inequality, 0, Less, x, NotEqual, 3]	[And, [Less, 0, x], [NotEqual, x, 3]]	Equal and NotEqual are valid links too
+a-homogeneous-chain-still-goes-through-and	Scope		[Inequality, 0, Less, x, Less, 5]	[And, [Less, 0, x], [Less, x, 5]]	A homogeneous chain (same relation throughout) still goes through And here -- write it as Less(0, x, 5) directly for the native n-ary form
+declines-on-a-non-relation-link	Possible issues		[Inequality, 0, Add, 5]	[Inequality, 0, Add, 5]	Declines when a link isn't one of the six relations, rather than guess

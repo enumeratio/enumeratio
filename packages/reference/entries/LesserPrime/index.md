@@ -1,0 +1,9 @@
+---
+name: LesserPrime
+domain: Combinatorics
+signature: LesserPrime(...)
+summary: Lesser prime
+mapOn:
+  - GoldbachPartition
+stub: carrier
+---

@@ -1,0 +1,6 @@
+id	in
+the-right-handed-trefoil	JonesPolynomial[Braid[2, List[1, 1, 1]]]
+the-shortest-knotted-modular-geodesic-by-yet	JonesPolynomial["LLRLR"]
+the-figure-eight-through-the-braid-it-carries-as	JonesPolynomial[FigureEightKnot[]]
+not-yet-an-invariant	KauffmanBracket[Braid[2, List[1]]]
+and-the-writhe-correction-fixes-it	BracketInvariant[Braid[2, List[1]]]

@@ -1,0 +1,24 @@
+id	in	out
+sign-neg-3		
+sign-3		
+zero-is-its-own-sign		
+sign-neg-1-over-2		
+the-unit-complex-number-pointing-the-same		
+threads-element-wise-over-a-list		
+sign-neg-2p5		
+sign-3p14		
+a-complex-number-with-approximate-parts		
+an-exact-complex-argument-comes-back-exact-sign		
+threads-over-a-matrix-entry-by-entry		
+exact-numeric-constants		
+sign-neg-exponentiale		
+sign-imaginaryunit		
+sign-positiveinfinity		
+an-interval-entirely-above-0-has-sign-1		
+decides-the-sign-of-the-exact-number-sqrt-2-2-by		
+2-sqrt-2-is-the-same-certified-decision-the		
+tells-you-the-temperature-dropped-but-not-by-how		
+sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\mathrm{True}
+x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\mathrm{True}
+the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\mathrm{True}
+nan-propagates-rather-than-being-treated-as-0		

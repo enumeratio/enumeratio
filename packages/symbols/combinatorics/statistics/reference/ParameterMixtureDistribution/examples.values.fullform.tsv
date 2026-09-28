@@ -1,0 +1,7 @@
+id	in
+parameter-mixture-poisson-gamma-pdf	PDF[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]], 4]
+parameter-mixture-poisson-gamma-mean	Mean[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]]]
+parameter-mixture-poisson-gamma-variance	Variance[ParameterMixtureDistribution[PoissonDistribution[theta], Distributed[theta, GammaDistribution[3, 2]]]]
+parameter-mixture-binomial-beta-mean	Mean[ParameterMixtureDistribution[BinomialDistribution[10, theta], Distributed[theta, BetaDistribution[2, 3]]]]
+parameter-mixture-binomial-beta-variance	Variance[ParameterMixtureDistribution[BinomialDistribution[10, theta], Distributed[theta, BetaDistribution[2, 3]]]]
+parameter-mixture-binomial-beta-pdf	PDF[ParameterMixtureDistribution[BinomialDistribution[4, theta], Distributed[theta, BetaDistribution[2, 2]]], 2]

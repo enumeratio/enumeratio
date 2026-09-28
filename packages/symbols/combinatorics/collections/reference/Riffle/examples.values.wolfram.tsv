@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+x-between-consecutive-elements	Riffle[List[a, b, c], x]	{a, x, b, x, c}	\text{Riffle}[\{a,b,c\},x]	\{a,x,b,x,c\}
+interleave-two-lists-of-the-same-length	Riffle[List[a, b, c], List[x, y, z]]	{a, x, b, y, c, z}	\text{Riffle}[\{a,b,c\},\{x,y,z\}]	\{a,x,b,y,c,z\}
+a-list-one-shorter-goes-strictly-between-the	Riffle[List[a, b, c], List[x, y]]	{a, x, b, y, c}	\text{Riffle}[\{a,b,c\},\{x,y\}]	\{a,x,b,y,c\}
+every-3rd-element-of-the-result-is-x	Riffle[List[1, 2, 3, 4, 5, 6, 7], x, 3]	{1, 2, x, 3, 4, x, 5, 6, x, 7}	\text{Riffle}[\{1,2,3,4,5,6,7\},x,3]	\{1,2,x,3,4,x,5,6,x,7\}
+a-single-element-has-nothing-to-separate	Riffle[List[a], x]	{a}	\text{Riffle}[\{a\},x]	\{a\}

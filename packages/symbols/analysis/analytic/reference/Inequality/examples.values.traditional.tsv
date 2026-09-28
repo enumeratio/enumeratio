@@ -1,0 +1,8 @@
+id	in	out
+a-numeric-chain-that-holds	\mathrm{Inequality}(0, \mathrm{LessEqual}, 2, \mathrm{Less}, 5)	\mathrm{True}
+a-numeric-chain-that-fails	\mathrm{Inequality}(0, \mathrm{LessEqual}, 5, \mathrm{Less}, 5)	\mathrm{False}
+a-symbolic-mixed-chain-partially-simplifies		
+a-three-link-chain	\mathrm{Inequality}(1, \mathrm{Less}, 2, \mathrm{LessEqual}, 2, \mathrm{Less}, 10)	\mathrm{True}
+equal-and-notequal-are-valid-links-too		
+a-homogeneous-chain-still-goes-through-and		
+declines-on-a-non-relation-link		

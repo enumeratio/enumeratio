@@ -1,0 +1,38 @@
+---
+name: Idele
+domain: Adèles and idèles
+signature: Idele(r, s?, units?)
+summary: 'An idèle: a unit of the adèle ring — a real $r$ together with $s \in \mathbb{Q}^\times$ principal everywhere except at a listed finite set of primes, where distinguished units override it.'
+signatures:
+  - call: Idele(r, s, units)
+    description: real $r$, principal value $s$ at every prime not named in `units`
+    library: enumeratio-adeles
+    type: (value, value?, list<value>?) -> value
+  - call: Idele(q)
+    description: "the principal idèle of a non-zero rational $q$: $q$ at every place"
+    library: enumeratio-adeles
+details:
+  - '`Multiply` on idèles multiplies real parts, principal values and any shared or distinguished unit parts; an idèle is invertible whenever $r \ne 0$ and $s \ne 0$.'
+  - "`units` is a list of [[AdicNumeral]] values at distinct primes, each overriding the principal value $s$ there."
+  - "[[Adele]]`(idele)` forgets the idèle structure and keeps only its value as an adèle."
+seeAlso:
+  - Adele
+  - ProfiniteNumber
+bindings:
+  - origin: mapped
+    form: sage
+    template: Ideles(QQ)([$1], $1)
+    arity: 1
+    note: Hertogh's adeles package; the principal idele of a rational, $1 at every place.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
+  - origin: mapped
+    form: sage
+    template: Ideles(QQ)([$1], $2)
+    arity: 2
+    note: Hertogh's adeles package; real $1 beside a principal finite value $2. The units-list call form (arity 3) has no row -- it needs AdicNumeral, which is unmapped for sage.
+    checked:
+      version: "10.9"
+      on: 2026-09-28
+---

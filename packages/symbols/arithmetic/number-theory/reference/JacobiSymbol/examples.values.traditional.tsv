@@ -1,0 +1,11 @@
+id	in	out
+0-whenever-n-and-m-share-a-factor	\left(\frac{10}{5}\right)	0
+3-is-not-a-quadratic-residue-mod-5-the-residues	\left(\frac{3}{5}\right)	-1
+jacobisymbol-1-001-9-907	\left(\frac{1\,001}{9\,907}\right)	-1
+threads-element-wise-over-a-list-as-wolfram-s		
+larger-arguments-10-10-1-against-the-1000th	\left(\frac{10^{10}+1}{p_{1\,000}}\right)	1
+completely-multiplicative-in-the-top-argument-a	\left(\frac{3}{7}\right)\left(\frac{5}{7}\right)=\left(\frac{3\times5}{7}\right)	\mathrm{True}
+quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	\left(\frac{3}{7}\right)\left(\frac{7}{3}\right)	-1
+1-m-1-m-1-2	\left(\frac{-1}{7}\right)	-1
+by-convention-the-symbol-is-1-whenever-m-1	\left(\frac{0}{1}\right)	1
+2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	\left(\frac{2}{15}\right)	1

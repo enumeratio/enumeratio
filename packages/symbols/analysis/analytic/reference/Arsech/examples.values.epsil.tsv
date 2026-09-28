@@ -1,0 +1,7 @@
+id	in	out
+n-arsech-1-over-2	N(Arsech(1 / 2))	1.316_957_896_924_816_708_63
+arsech-1-0-exactly	Arsech(1)	0
+a-logarithmic-singularity-at-0	Arsech(0)	PositiveInfinity
+a-float-argument-evaluates-directly	Arsech(0.25)	2.063_437_068_895_560_546_73
+past-1-the-value-is-imaginary-arsech-2-arcosh	Arsech(2)	1 / 3 * i * Pi
+derivative-frac-1-x-sqrt-1-x-2	D(Arsech(x), x)	-1 / (x * Sqrt(-x ^ 2 + 1))

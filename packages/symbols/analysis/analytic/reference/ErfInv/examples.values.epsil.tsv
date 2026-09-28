@@ -1,0 +1,17 @@
+id	in	out
+erfinv-0	ErfInv(0)	0
+erfinv-1	ErfInv(1)	PositiveInfinity
+erfinv-neg-1	ErfInv(-1)	NegativeInfinity
+a-floating-point-argument-evaluates-directly-to	ErfInv(0.5)	0.476_936_276_204_469_873_381
+a-machine-precision-argument	ErfInv(0.6)	0.595_116_081_449_994_850_019
+threads-element-wise-over-a-list-as-wolfram-s	ErfInv([0, 1])	[0, PositiveInfinity]
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	ErfInv(0.4, 0.2)	0.631_775_903_055_006_3
+interval-arithmetic-the-inverse-is-increasing-so	ErfInv(Interval(0.5, 0.6))	Interval(0.476_936_276_204_469_9, 0.595_116_081_449_994_8)
+uncertainty-propagation	ErfInv(Around(0.5, 0.01))	Around(0.476_936_276_204_469_9, 0.011_125_848_189_719_498)
+to-30-significant-digits-every-one-correctly	N(ErfInv(1 / 2), 30)	0.476_936_276_204_469_873_381_418_353_643
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	Sqrt(2) * ErfInv(0.95)	1.959_963_984_540_054_235_527_460_400_177_851_935_713_577_92
+inverse-of-erf-erf-erfinv-x-x-see-erf	Erf(ErfInv(0.5)) == 0.5	True
+odd-erfinv-x-erfinv-x-applied-symbolically	ErfInv(-x)	-ErfInv(x)
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	D(ErfInv(x), x)	1 / 2 * ExponentialE ^ ErfInv(x) ^ 2 * Sqrt(Pi)
+outside-its-real-domain-1-1-compute-engine	ErfInv(2)	ErfInv(2)
+blows-up-near-the-boundary-erfinv-0-9999-is	ErfInv(0.999_9)	2.751_063_905_712_060_796_15

@@ -1,0 +1,23 @@
+id	in	out	verdict
+fibonacci-0	fibonacci(0)	0	
+fibonacci-1	fibonacci(1)	1	
+fibonacci-10	fibonacci(10)	55	
+fibonacci-20	fibonacci(20)	6765	
+fibonacci-8	fibonacci(8)	21	
+exact-at-any-size-f-100-has-21-digits	fibonacci(100)	OverflowError: fibonacci(::Int)	error
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	fibonacci(1.5)	MethodError: no method matching fibonacci(::Float64) The function `fibonacci` exists, but no method 	error
+the-two-argument-fibonacci-polynomial-f-7-x-from			
+the-fibonacci-polynomial-at-a-real-order-and			
+special-value-of-the-fibonacci-polynomial-f-1-0			
+special-value-of-the-fibonacci-polynomial-f-0-0			
+f-3-x-x-2-1-threads-element-wise-over-a-matrix			
+threads-element-wise-over-a-list-as-wolfram-s	fibonacci([1, 2, 3, 4])	MethodError: no method matching fibonacci(::Vector{Int64}) The function `fibonacci` exists, but no m	error
+consecutive-ratios-f-n-1-f-n-converge-to-the	(fibonacci(20) // fibonacci(19))	1.6180339631667064	
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl			
+the-defining-recurrence-f-10-f-9-f-8	(fibonacci(10) == (fibonacci(9) + fibonacci(8)))	true	
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))	1	
+gcd-f-12-f-18-f-gcd-12-18	(gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))	true	
+negative-indices-are-supported-via-f-n-1-n-1-f-n	fibonacci(-5)	5	
+f-1000-has-209-digits-see-integerdigits			
+they-grow-fast-f-50-already-exceeds-twelve	fibonacci(50)	12586269025	

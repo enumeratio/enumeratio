@@ -1,0 +1,21 @@
+id	in	out	tex.in	tex.out	verdict
+max-3-1-4-1-5	Max[3, 1, 4, 1, 5]	5	\max (3,1,4,1,5)	5	
+also-accepts-a-single-list-argument	Max[List[3, 1, 4]]	4	\max (\{3,1,4\})	4	
+max-neg-1-neg-5	Max[-1, -5]	-1	\max (-1,-5)	-1	
+a-single-argument-is-returned-unchanged	Max[3]	3	\max (3)	3	
+max-9-2	Max[9, 2]				
+max-list-4-1-7-2	Max[List[4, 1, 7, 2]]				
+max-5p56-neg-4p8-7p3	Max[5.56, -4.8, 7.3]				
+nested-lists-are-flattened-into-the-pool	Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]				
+exact-numbers-are-compared-numerically	Max[Sqrt[2], Rational[3, 2]]				
+max-1-positiveinfinity	Max[1, Infinity]				
+the-numeric-arguments-collapse-to-their-maximum	Max[3, x, 5]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\max (3,x,5)-\max (5,x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\max \left(3,\frac{7}{3},5\right)-\max \left(5,\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\max \left(3,-\frac{11}{5},5\right)-\max \left(5,-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\max \left(3,\frac{13}{4},5\right)-\max \left(5,\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+compares-exact-constants-numerically-max-e-pi-2	Max[List[E, Pi, 2]]				
+the-max-of-two-intervals-is-the-interval-of	Max[Interval[List[1, 3]], Interval[List[-3, 5]]]				
+the-day-s-high-from-a-handful-of-hourly-readings	Max[68, 72, 65, 80, 74]	80	\max (68,72,65,80,74)	80	
+commutative-order-doesn-t-matter	(Max[3, 7] == Max[7, 3])	True	\max (3,7)=\max (7,3)	\text{True}	
+multiple-list-arguments-are-flattened-into-one	(Max[List[3, 1, 4], List[9, 2]] == 9)	True	\max (\{3,1,4\},\{9,2\})=9	\text{True}	
+idempotent-max-x-x-x	Max[x, x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\max (x,x)-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\max \left(\frac{7}{3},\frac{7}{3}\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\max \left(-\frac{11}{5},-\frac{11}{5}\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\max \left(\frac{13}{4},\frac{13}{4}\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+with-no-arguments-compute-engine-returns-nan	Max[]	-Infinity	\max ()	-\infty	disagree
+nan-poisons-the-result-overriding-every-other	Max[Indeterminate, 3]	Indeterminate	\max (\text{Indeterminate},3)	\text{Indeterminate}	
+the-max-of-an-empty-list-is-nan-too	Max[List[]]				

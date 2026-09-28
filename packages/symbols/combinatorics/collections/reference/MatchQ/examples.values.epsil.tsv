@@ -1,0 +1,4 @@
+id	in	out
+add-of-two-wildcards-matches-an-add	MatchQ(x + 1, _a + _b)	True
+a-product-does-not-match-an-add-pattern	MatchQ(x * y, _a + _b)	False
+a-sequence-wildcard-matches-the-rest-of-a-list	MatchQ([1, 2, 3], [_a, __rest])	True

@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+euler-s-formula			[ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]	[Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]	Euler's formula
+a-real-exponential-splits-into-hyperbolic-parts			[ExpToTrig, [Exp, x]]	[Add, [Sinh, x], [Cosh, x]]	A real exponential splits into hyperbolic parts
+recognizes-cosh	Scope		[ExpToTrig, [Divide, [Add, [Exp, x], [Exp, [Negate, x]]], 2]]	[Cosh, x]	Recognizes [[Cosh]]
+recognizes-sin	Scope		[ExpToTrig, [Divide, [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]], [Multiply, 2, ImaginaryUnit]]]	[Sin, x]	Recognizes [[Sin]]

@@ -1,0 +1,5 @@
+id	in	out
+power	\mathrm{ToBoxes}(x^2)	\mathrm{SuperscriptBox}(\text{x}, \text{2})
+evaluates-first	\mathrm{ToBoxes}(2+3)	\text{5}
+binomial	\mathrm{ToBoxes}(\binom{n}{k})	\mathrm{RowBox}(\bigl\lbrack\text{(}, \mathrm{FractionBox}(\text{n}, \text{k}, (\mathrm{FractionLine},\bot)), \text{)}\bigr\rbrack)
+square-root-over-y	\mathrm{ToBoxes}(\frac{\sqrt{x}}{y})	\mathrm{FractionBox}(\mathrm{SqrtBox}(\text{x}), \text{y})

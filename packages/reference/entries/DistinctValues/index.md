@@ -1,0 +1,9 @@
+---
+name: DistinctValues
+domain: Combinatorics
+signature: DistinctValues(...)
+summary: Number of distinct values
+statOn:
+  - AscentSequence
+stub: carrier
+---

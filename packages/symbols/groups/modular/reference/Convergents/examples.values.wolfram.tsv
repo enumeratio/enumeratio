@@ -1,0 +1,5 @@
+id	in
+from-a-list-of-terms	Convergents[List[3, 7, 15, 1]]
+the-first-five-convergents-of-pi	Convergents[Pi, 5]
+a-rational-the-last-convergent-is-the-number	Convergents[Rational[47, 17]]
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents[Sqrt[2], 5]

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+binom-4-2			[Count, [Multisets, 3, 2]]	6	$\binom{4}{2}$

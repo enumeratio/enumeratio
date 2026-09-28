@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-finepaths-5	Basic		[Count, [FinePaths, 5]]	18	$Count(FinePaths(5)) = 18$
+first-element-of-finepaths-5	Basic		[At, [FinePaths, 5], 1]	[List, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0]	The first element in enumeration order
+every-element-of-finepaths-5		test	[Take, [FinePaths, 5], 5]	[List, [List, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0], [List, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0], [List, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0], [List, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0], [List, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]]	

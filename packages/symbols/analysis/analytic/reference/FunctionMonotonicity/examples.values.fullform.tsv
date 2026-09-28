@@ -1,0 +1,5 @@
+id	in
+a-cubic-is-increasing-everywhere	FunctionMonotonicity[Power[x, 3], x]
+a-parabola-is-not-globally-monotonic	FunctionMonotonicity[Power[x, 2], x]
+exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity[Exp[x], x]
+a-restricted-domain-answers-indeterminate	FunctionMonotonicity[Sqrt[x], x]

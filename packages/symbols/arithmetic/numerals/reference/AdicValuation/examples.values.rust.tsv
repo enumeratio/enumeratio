@@ -1,0 +1,17 @@
+id	in	out
+adicvaluation-adicnumeral-5-75	adic_valuation(adic(n(5), n(75)))	2
+the-valuation-of-zero-is-positive-infinity	adic_valuation(adic(n(5), n(0)))	PositiveInfinity
+adicnorm-adicnumeral-5-75	adic_norm(adic(n(5), n(75)))	1/25
+adicunitpart-adicnumeral-5-75		
+adicvaluation-adicnumeral-2-minus1	adic_valuation(adic(n(2), n(-1)))	
+adicvaluation-adicnumeral-2-100	adic_valuation(adic(n(2), n(100)))	
+adicvaluation-adicnumeral-3-third-negative	adic_valuation(adic(n(3), rational(n(1), n(3))))	
+adicvaluation-adicnumeral-3-minus4-9	adic_valuation(adic(n(3), rational(n(-4), n(9))))	
+adicvaluation-adicnumeral-5-7-25	adic_valuation(adic(n(5), rational(n(7), n(25))))	
+adicvaluation-adicnumeral-5-100	adic_valuation(adic(n(5), n(100)))	
+adicvaluation-adicnumeral-7-2-7	adic_valuation(adic(n(7), rational(n(2), n(7))))	
+adicvaluation-adicnumeral-11-minus1	adic_valuation(adic(n(11), n(-1)))	
+adicvaluation-adicnumeral-11-100	adic_valuation(adic(n(11), n(100)))	
+adicvaluation-adicnumeral-2-minus4-9	adic_valuation(adic(n(2), rational(n(-4), n(9))))	
+adicvaluation-adicnumeral-7-minus1-3	adic_valuation(adic(n(7), rational(n(-1), n(3))))	
+negative-in-q-5	adic_valuation(adic(n(5), rational(n(3), n(25))))	-2

@@ -1,0 +1,17 @@
+---
+name: IsCentral
+domain: Oracle
+signature: IsCentral(...)
+summary: Mapped through to oscar for the oracle; not yet written up here.
+bindings:
+  - origin: mapped
+    form: oscar
+    template: enumeratio_is_central($1, $2)
+    arity: 2
+stub: carrier
+signatures:
+  - call: IsCentral(...)
+    description: Mapped through to oscar for the oracle; not yet written up here.
+    library: enumeratio-groupalgebra
+    type: (expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>, expression) -> boolean
+---

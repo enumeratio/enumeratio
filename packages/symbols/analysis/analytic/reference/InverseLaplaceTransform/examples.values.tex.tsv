@@ -1,0 +1,4 @@
+id	in	out
+one-over-s-squared	\mathrm{InverseLaplaceTransform}(\frac{1}{s^2}, s, t)	t
+one-over-s-minus-a	\mathrm{InverseLaplaceTransform}(\frac{1}{s-a}, s, t)	e^{at}
+s-over-s-squared-plus-a-squared	\mathrm{InverseLaplaceTransform}((s)(s^2+a^2)^{-1}, s, t)	\cos(at)

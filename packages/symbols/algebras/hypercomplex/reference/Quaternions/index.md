@@ -1,0 +1,27 @@
+---
+name: Quaternions
+domain: Hypercomplex algebra
+signature: Quaternions
+summary: '$\mathbb{H}$, the quaternions — which IS $\mathrm{Cl}(0,2)$: two anticommuting generators squaring to $-1$, with $k = f_1f_2$ as the third unit.'
+signatures:
+  - call: Quaternions
+    description: $\mathbb{H}$
+    library: enumeratio-hypercomplex
+  - call: \mathbb{H}
+    description: the same algebra, written as a set
+    library: enumeratio-hypercomplex
+details:
+  - $i = f_1$, $j = f_2$, $k = f_1f_2$, and $i^2 = j^2 = k^2 = ijk = -1$
+  - 'Multiplication is NOT commutative: juxtaposition keeps the order, but an explicit $\times$ does not -- use [[NonCommutativeMultiply]] (or $\otimes$) there'
+  - 'Usable as a set: $f_1f_2 \in \mathbb{H}$ is true, $f_3 \in \mathbb{H}$ is false'
+  - The other named algebras are `BicomplexNumbers`, `TricomplexNumbers`, `SplitComplexNumbers` and `DualNumbers`
+seeAlso:
+  - Basis
+  - NonCommutativeMultiply
+  - AlgebraSignature
+references:
+  - system: wikipedia
+    identity: Quaternion
+  - system: mathworld
+    identity: Quaternion
+---

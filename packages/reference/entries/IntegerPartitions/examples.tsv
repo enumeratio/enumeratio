@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+the-partitions-of-8-into-at-most-3-parts			[IntegerPartitions, 8, 3]	[List, [List, 8], [List, 7, 1], [List, 6, 2], [List, 6, 1, 1], [List, 5, 3], [List, 5, 2, 1], [List, 4, 4], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]	The partitions of 8 into at most 3 parts
+exactly-3-parts	Scope		[IntegerPartitions, 8, [List, 3]]	[List, [List, 6, 1, 1], [List, 5, 2, 1], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]	Exactly 3 parts
+parts-restricted-to-1-2-5	Scope		[IntegerPartitions, 8, All, [List, 1, 2, 5]]	[List, [List, 5, 2, 1], [List, 5, 1, 1, 1], [List, 2, 2, 2, 2], [List, 2, 2, 2, 1, 1], [List, 2, 2, 1, 1, 1, 1], [List, 2, 1, 1, 1, 1, 1, 1], [List, 1, 1, 1, 1, 1, 1, 1, 1]]	Parts restricted to $\{1, 2, 5\}$
+the-ways-to-make-change-for-a-dollar-from-1-5-10	Applications		[Count, [IntegerPartitions, 100, All, [List, 1, 5, 10, 25, 50]]]	292	The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins
+the-family-has-p-8-22-members-compute-engine-s	Properties		[NPartition, 8]	22	The family has $p(8) = 22$ members, compute-engine's NPartition
+euler-partitions-into-odd-parts-are-as-many-as	Neat examples		[Count, [IntegerPartitions, 10, All, [List, 1, 3, 5, 7, 9]]]	10	Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$. See [[DistinctPartitions]]

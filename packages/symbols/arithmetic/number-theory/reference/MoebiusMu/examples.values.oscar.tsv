@@ -1,0 +1,11 @@
+id	in	out	verdict
+moebiusmu-1	moebius_mu(1)	1	
+moebiusmu-11	moebius_mu(11)	-1	
+12-22-3-is-not-squarefree	moebius_mu(12)	0	
+10-2-5-a-product-of-an-even-number-of-distinct	moebius_mu(10)	1	
+threads-element-wise-over-a-list-as-wolfram-s	moebius_mu([1, 2, 3, 4])	MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no	error
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	moebius_mu(complex(5, 6))	MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n	error
+listable-threads-over-a-list	moebius_mu([4, 10, 17, 20])	MethodError: no method matching moebius_mu(::Vector{Int64}) The function `moebius_mu` exists, but no	error
+listable-over-a-range			
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))	0	
+mu-is-only-defined-for-positive-integers-compute	moebius_mu(0)	DomainError with 0: Argument must be positive	error

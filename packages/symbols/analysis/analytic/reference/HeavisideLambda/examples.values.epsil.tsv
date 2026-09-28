@@ -1,0 +1,7 @@
+id	in	out
+heavisidelambda-peak	HeavisideLambda(0)	1
+heavisidelambda-endpoint	HeavisideLambda(1)	0
+heavisidelambda-neg-endpoint	HeavisideLambda(-1)	0
+heavisidelambda-outside	HeavisideLambda(2)	0
+heavisidelambda-1-4	HeavisideLambda(1 / 4)	3 / 4
+heavisidelambda-1-2	HeavisideLambda(1 / 2)	1 / 2

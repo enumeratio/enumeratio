@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+halve-while-even			[NestWhile, [Function, [Divide, _1, 2]], 96, [Function, [Equal, [Mod, _1, 2], 0]]]	3	halve while even, stopping at the first odd value

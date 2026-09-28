@@ -1,0 +1,9 @@
+id	in	out
+c-2-of-x	FourierCoefficient(x, x, 2)	1 / 2 * i
+c-2-of-cos-squared	FourierCoefficient(Cos(x) ^ 2, x, 2)	1 / 4
+c-0-of-x-squared-is-the-average	FourierCoefficient(x ^ 2, x, 0)	1 / 3 * Pi ^ 2
+c-0-of-abs-x	FourierCoefficient(Abs(x), x, 0)	1 / 2 * Pi
+c-1-of-abs-x	FourierCoefficient(Abs(x), x, 1)	-2 / Pi
+c-1-of-exp-x	FourierCoefficient(Exp(x), x, 1)	(-1 / 2 + -1 / 2 * i) * Sinh(Pi) / Pi
+declines-a-symbolic-order	FourierCoefficient(x, x, n)	FourierCoefficient(x, x, n)
+declines-tan-x-no-closed-form-here	FourierCoefficient(Tan(x), x, 1)	FourierCoefficient(Tan(x), x, 1)

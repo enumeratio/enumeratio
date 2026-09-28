@@ -1,0 +1,7 @@
+id	in	out	verdict
+n-pi-30			
+the-last-digit-correctly-rounded-computing-at-30			
+a-list-number-by-number			
+an-exact-tie-rounds-to-the-even-digit-0-125	((1 // 8))	0.125	disagree
+and-0-375-to-0-38	((3 // 8))	0.375	disagree
+n-pi-1-digit			

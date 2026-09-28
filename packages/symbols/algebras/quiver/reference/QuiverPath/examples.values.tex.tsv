@@ -1,0 +1,4 @@
+id	in	out
+from-vertex-1-along-two-arrows	\mathrm{QuiverPathEnd}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(1, \bigl\lbrack0, 1\bigr\rbrack))	3
+the-kronecker-quiver-two-trivial-paths-and-two	\mathrm{AlgebraDimension}(\mathrm{PathAlgebra}(\mathrm{Quiver}(2, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)))	4
+arrow-1-starts-at-vertex-2-so-this-is-not-a-path	\mathrm{QuiverPath}(1, \bigl\lbrack1\bigr\rbrack)\in\mathrm{PathAlgebra}(\mathrm{LinearQuiver}(4))	\bot

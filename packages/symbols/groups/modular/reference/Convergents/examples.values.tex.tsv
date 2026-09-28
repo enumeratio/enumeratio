@@ -1,0 +1,5 @@
+id	in	out
+from-a-list-of-terms	\mathrm{Convergents}(\bigl\lbrack3, 7, 15, 1\bigr\rbrack)	\bigl\lbrack3, \frac{22}{7}, \frac{333}{106}, \frac{355}{113}\bigr\rbrack
+the-first-five-convergents-of-pi	\mathrm{Convergents}(\pi, 5)	\bigl\lbrack3, \frac{22}{7}, \frac{333}{106}, \frac{355}{113}, \frac{103\,993}{33\,102}\bigr\rbrack
+a-rational-the-last-convergent-is-the-number	\mathrm{Convergents}(\frac{47}{17})	\bigl\lbrack2, 3, \frac{11}{4}, \frac{47}{17}\bigr\rbrack
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	\mathrm{Convergents}(\sqrt{2}, 5)	\bigl\lbrack1, \frac{3}{2}, \frac{7}{5}, \frac{17}{12}, \frac{41}{29}\bigr\rbrack

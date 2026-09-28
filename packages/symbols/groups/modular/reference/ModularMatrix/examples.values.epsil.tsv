@@ -1,0 +1,10 @@
+id	in	out
+the-group-product	Dot(ModularMatrix(1, 1, 0, 1), ModularMatrix(1, 0, 1, 1))	ModularMatrix(2, 1, 1, 1)
+no-division-needed-at-determinant-1	Inverse(ModularMatrix(1, 1, 0, 1))	ModularMatrix(1, -1, 0, 1)
+t-5	MatrixPower(ModularMatrix(1, 1, 0, 1), 5)	ModularMatrix(1, 5, 0, 1)
+words-multiply-their-matrices	Dot("L", "R")	ModularMatrix(1, 1, 1, 2)
+the-inverse-of-a-word	Inverse("L")	ModularMatrix(1, 0, -1, 1)
+r-3	MatrixPower("R", 3)	ModularMatrix(1, 3, 0, 1)
+negative-powers-are-powers-of-the-inverse	MatrixPower(ModularMatrix(1, 1, 1, 2), -2)	ModularMatrix(5, -3, -3, 2)
+a-plain-integer-matrix-goes-to-compute-engine-s	MatrixPower([[1, 1], [1, 0]], 10)	[[89, 55], [55, 34]]
+the-zeroth-power-is-the-identity	MatrixPower(ModularMatrix(1, 1, 0, 1), 0)	ModularMatrix(1, 0, 0, 1)

@@ -1,0 +1,6 @@
+id	in
+an-odd-degree-polynomial-is-onto	FunctionSurjective[Power[x, 3], x, Reals]
+exp-misses-the-non-positive-reals	FunctionSurjective[Exp[x], x, Reals]
+log-is-onto-the-reals	FunctionSurjective[Log[x], x, Reals]
+a-reciprocal-never-hits-zero	FunctionSurjective[Divide[1, x], x, Reals]
+an-unsupported-codomain-declines	FunctionSurjective[Power[x, 3], x, Integers]

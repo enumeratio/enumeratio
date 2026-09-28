@@ -1,0 +1,33 @@
+id	in	out	tex.in	tex.out
+divisors-1-729	Divisors[1729]	{1, 7, 13, 19, 91, 133, 247, 1729}	\text{Divisors}[1729]	\{1,7,13,19,91,133,247,1729\}
+divisors-20	Divisors[20]	{1, 2, 4, 5, 10, 20}	\text{Divisors}[20]	\{1,2,4,5,10,20\}
+a-prime-s-only-divisors-are-1-and-itself	Divisors[13]	{1, 13}	\text{Divisors}[13]	\{1,13\}
+divisors-6	Divisors[6]			
+threads-element-wise-over-a-list-as-wolfram-s	Divisors[List[4, 6]]	{{1, 2, 4}, {1, 2, 3, 6}}	\text{Divisors}[\{4,6\}]	\{\{1,2,4\},\{1,2,3,6\}\}
+divisors-3-plus-4i	Divisors[Complex[3, 4]]	{1, 2 + I, 3 + 4*I}	\text{Divisors}[3+4 i]	\{1,2+i,3+4 i\}
+13-2-3i-3-2i-splits-so-it-gains-two-divisors	Divisors[13, Rule[GaussianIntegers, True]]	{1, 2 + 3*I, 3 + 2*I, 13}	\text{Divisors}[13,\text{GaussianIntegers}\to \text{True}]	\{1,2+3 i,3+2 i,13\}
+6-4i-i-1-i-2-3-2i	Divisors[Complex[6, 4]]			
+listable-threads-over-a-list	Divisors[List[605, 871, 824]]			
+5-in-the-gaussian-integers	Divisors[5, Rule[GaussianIntegers, True]]	{1, 1 + 2*I, 2 + I, 5}	\text{Divisors}[5,\text{GaussianIntegers}\to \text{True}]	\{1,1+2 i,2+i,5\}
+a-unit-s-only-divisor-is-1-its-own-normalisation	Divisors[Complex[0, 1]]	{1}	\text{Divisors}[i]	\{1\}
+a-gaussian-prime-s-only-divisors-are-1-and	Divisors[Complex[1, 1]]	{1, 1 + I}	\text{Divisors}[1+i]	\{1,1+i\}
+a-prime-above-5	Divisors[Complex[2, 1]]	{1, 2 + I}	\text{Divisors}[2+i]	\{1,2+i\}
+a-composite-of-norm-25-2-i-2	Divisors[Complex[3, 4]]	{1, 2 + I, 3 + 4*I}	\text{Divisors}[3+4 i]	\{1,2+i,3+4 i\}
+a-composite-with-a-real-and-a-gaussian-factor	Divisors[Complex[6, 8]]	{1, 1 + I, 1 + 3*I, 2, 2 + I, 3 + 4*I, 4 + 2*I, 6 + 8*I, 7 + I}	\text{Divisors}[6+8 i]	\{1,1+i,1+3 i,2,2+i,3+4 i,4+2 i,6+8 i,7+i\}
+a-prime-above-13	Divisors[Complex[3, 2]]	{1, 3 + 2*I}	\text{Divisors}[3+2 i]	\{1,3+2 i\}
+an-associate-has-the-same-divisors-up-to-that	Divisors[Complex[-3, -4]]	{1, 2 + I, 3 + 4*I}	\text{Divisors}[-3-4 i]	\{1,2+i,3+4 i\}
+a-real-prime-s-associate-by-the-unit-i	Divisors[Complex[0, 7]]	{1, 7}	\text{Divisors}[7 i]	\{1,7\}
+a-negative-real-prime-complex-argument-form	Divisors[-7]	{1, 7}	\text{Divisors}[-7]	\{1,7\}
+7-3-mod-4-has-the-same-divisors-as-in-z	Divisors[7, Rule[GaussianIntegers, True]]	{1, 7}	\text{Divisors}[7,\text{GaussianIntegers}\to \text{True}]	\{1,7\}
+13-1-mod-4-gains-gaussian-divisors	Divisors[13, Rule[GaussianIntegers, True]]	{1, 2 + 3*I, 3 + 2*I, 13}	\text{Divisors}[13,\text{GaussianIntegers}\to \text{True}]	\{1,2+3 i,3+2 i,13\}
+a-real-composite-5-squared	Divisors[25, Rule[GaussianIntegers, True]]	{1, 1 + 2*I, 2 + I, 3 + 4*I, 4 + 3*I, 5, 5 + 10*I, 10 + 5*I, 25}	\text{Divisors}[25,\text{GaussianIntegers}\to \text{True}]	\{1,1+2 i,2+i,3+4 i,4+3 i,5,5+10 i,10+5 i,25\}
+2-ramifies-divisors-run-through-1-i	Divisors[2, Rule[GaussianIntegers, True]]	{1, 1 + I, 2}	\text{Divisors}[2,\text{GaussianIntegers}\to \text{True}]	\{1,1+i,2\}
+19-3-mod-4-has-the-same-divisors-as-in-z	Divisors[19, Rule[GaussianIntegers, True]]	{1, 19}	\text{Divisors}[19,\text{GaussianIntegers}\to \text{True}]	\{1,19\}
+a-negative-real-composite	Divisors[-15, Rule[GaussianIntegers, True]]	{1, 1 + 2*I, 2 + I, 3, 3 + 6*I, 5, 6 + 3*I, 15}	\text{Divisors}[-15,\text{GaussianIntegers}\to \text{True}]	\{1,1+2 i,2+i,3,3+6 i,5,6+3 i,15\}
+the-divisor-count-d-n-equals-sigma-0-n-see	(Length[Divisors[20]] == DivisorSigma[0, 20])	True	\text{Length}[\text{Divisors}[20]]=\sigma _0(20)	\text{True}
+1-has-exactly-one-divisor-itself	Divisors[1]	{1}	\text{Divisors}[1]	\{1\}
+only-positive-divisors-even-for-negative-n	Divisors[-6]			
+divisors-neg-12	Divisors[-12]			
+divisors-0-stays-unevaluated	Divisors[0]			
+a-non-integer-stays-unevaluated	Divisors[Rational[5, 2]]			
+720-is-highly-composite-30-divisors-more-than	Divisors[720]	{1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720}	\text{Divisors}[720]	\{1,2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,36,40,45,48,60,72,80,90,120,144,180,240,360,720\}

@@ -1,0 +1,21 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note
+max-3-1-4-1-5			[Max, 3, 1, 4, 1, 5]	5							
+also-accepts-a-single-list-argument			[Max, [List, 3, 1, 4]]	4	Also accepts a single list argument						
+max-neg-1-neg-5			[Max, -1, -5]	-1							
+a-single-argument-is-returned-unchanged			[Max, 3]	3	A single argument is returned unchanged						
+max-9-2			[Max, 9, 2]	9							
+max-list-4-1-7-2			[Max, [List, 4, 1, 7, 2]]	7							
+max-5p56-neg-4p8-7p3			[Max, 5.56, -4.8, 7.3]	7.3							
+nested-lists-are-flattened-into-the-pool	Scope		[Max, 2, 3, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	3	Nested lists are flattened into the pool						
+exact-numbers-are-compared-numerically	Scope		[Max, [Sqrt, 2], [Rational, 3, 2]]	[Rational, 3, 2]	Exact numbers are compared numerically						
+max-1-positiveinfinity	Scope		[Max, 1, PositiveInfinity]	PositiveInfinity							
+the-numeric-arguments-collapse-to-their-maximum	Scope		[Max, 3, x, 5]	[Max, 5, x]	The numeric arguments collapse to their maximum; symbolic ones stay						
+compares-exact-constants-numerically-max-e-pi-2	Scope		[Max, [List, ExponentialE, Pi, 2]]	Pi	Compares exact constants numerically: $\max(e, \pi, 2) = \pi$						
+the-max-of-two-intervals-is-the-interval-of	Scope		[Max, [Interval, 1, 3], [Interval, -3, 5]]	[Interval, 1, 5]	The max of two [[Interval]]s is the interval of possible maxima, $[1, 5]$						
+the-day-s-high-from-a-handful-of-hourly-readings	Applications		[Max, 68, 72, 65, 80, 74]	80	The day's high from a handful of hourly readings. See [[Min]]						
+commutative-order-doesn-t-matter	Properties		[Equal, [Max, 3, 7], [Max, 7, 3]]	True	Commutative: order doesn't matter						
+multiple-list-arguments-are-flattened-into-one	Properties		[Equal, [Max, [List, 3, 1, 4], [List, 9, 2]], 9]	True	Multiple list arguments are flattened into one pool rather than compared pairwise						
+idempotent-max-x-x-x	Properties		[Max, x, x]	x	Idempotent: $\max(x, x) = x$						
+with-no-arguments-compute-engine-returns-nan	Possible issues		[Max]	NaN	With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element	convention	Max of nothing is NaN here; Wolfram returns the identity element -Infinity.	undefined-form	Both decline: compute-engine answers "NaN" and Sage raises an error.	convention	The maximum of nothing: SymPy answers −∞, compute-engine NaN.
+nan-poisons-the-result-overriding-every-other	Possible issues		[Max, NaN, 3]	NaN	NaN poisons the result, overriding every other argument						
+the-max-of-an-empty-list-is-nan-too	Possible issues		[Max, [List]]	NaN	The max of an empty list is NaN too		Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.	undefined-form	Both decline on an empty collection: compute-engine answers NaN for Max([]), and Sage's max() raises ValueError: max() iterable argument is empty.	convention	compute-engine gives NaN for the max of an empty list; SymPy's Max() is the identity -∞.

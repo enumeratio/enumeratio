@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+a-generic-point-checked-against-mpmath-s-hyperu			[HypergeometricU, 1, 2.5, 3]	0.3823406624903156	a generic point, checked against mpmath's `hyperu`
+a-0-5-b-1-5-at-2		test	[HypergeometricU, 0.5, 1.5, 2]	0.7071067811865476	
+a-complex-argument		test	[N, [HypergeometricU, 1, 2.5, [Complex, 0.5, 0.5]]]	[Complex, 1.1187557119467137, -1.7171115370895238]	
+complex-a-at-1-5		test	[N, [HypergeometricU, [Complex, 1, 0.5], 2.5, 1.5]]	[Complex, 0.8629494293536286, -0.33701732173686794]	
+b-negative-1-5-at-0-8		test	[HypergeometricU, 2, -1.5, 0.8]	0.05832383825616377	
+integer-b-stays-symbolic-the-connection-formula	Possible issues		[HypergeometricU, 1, 2, 3]	[HypergeometricU, 1, 2, 3]	integer $b$ stays symbolic — the connection formula's log-case limit is not implemented

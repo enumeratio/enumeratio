@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+factorialmoment-order-2			[FactorialMoment, [GeometricDistribution, [Rational, 1, 4]], 2]	18

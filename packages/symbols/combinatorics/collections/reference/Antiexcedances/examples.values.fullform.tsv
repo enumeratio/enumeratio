@@ -1,0 +1,4 @@
+id	in
+positions-2-and-3-1-2-and-2-3	Antiexcedances[List[3, 1, 2]]
+the-identity-has-none	Antiexcedances[List[1, 2, 3]]
+positions-3-and-4-2-3-and-1-4	Antiexcedances[List[4, 3, 2, 1]]

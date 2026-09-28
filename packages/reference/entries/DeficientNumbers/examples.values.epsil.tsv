@@ -1,0 +1,2 @@
+id	in	out
+the-first-25-terms	Take(DeficientNumbers, 25)	"[\n  1,\n  2,\n  3,\n  4,\n  5,\n  7,\n  8,\n  9,\n  10,\n  11,\n  13,\n  14,\n  15,\n  16,\n  17,\n  19,\n  21,\n  22,\n  23,\n  25,\n  26,\n  27,\n  29,\n  31,\n  32,\n]"

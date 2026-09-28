@@ -1,0 +1,6 @@
+id	in
+t-cubed	LaplaceTransform[Power[t, 3], t, s]
+exp-at	LaplaceTransform[Power[E, Times[2, t]], t, s]
+sin-at	LaplaceTransform[Sin[Times[3, t]], t, s]
+t-cubed-exp-shift	LaplaceTransform[Times[Power[E, Times[2, t]], Power[t, 3]], t, s]
+exp-sin-shift	LaplaceTransform[Times[Power[E, Times[2, t]], Sin[Times[3, t]]], t, s]

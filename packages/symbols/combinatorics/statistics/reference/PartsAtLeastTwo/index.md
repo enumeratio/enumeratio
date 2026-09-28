@@ -1,0 +1,16 @@
+---
+name: PartsAtLeastTwo
+domain: Partition statistics
+signature: PartsAtLeastTwo(partition)
+summary: Parts of size at least 2.
+details:
+  - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+statOn:
+  - IntegerPartition
+signatures:
+  - call: PartsAtLeastTwo(partition)
+    description: Parts of size at least 2.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number
+---

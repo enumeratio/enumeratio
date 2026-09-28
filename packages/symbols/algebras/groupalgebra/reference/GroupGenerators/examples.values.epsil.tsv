@@ -1,0 +1,2 @@
+id	in	out
+the-given-generators-come-back	GroupGenerators(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))	[Cycles([[1, 9, 6], [3, 7]])]

@@ -1,0 +1,9 @@
+---
+name: Humps
+domain: Combinatorics
+signature: Humps(...)
+summary: Number of humps
+statOn:
+  - MotzkinPath
+stub: carrier
+---

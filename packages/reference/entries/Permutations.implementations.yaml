@@ -1,9 +1,0 @@
-the-permutations-of-4:
-  epsil:
-    in: Count(Permutations(4))
-    out: "24"
-  tex:
-    in: \mathrm{Count}(\mathrm{Permutations}(4))
-    out: "24"
-  fullform:
-    in: Count[Permutations[4]]

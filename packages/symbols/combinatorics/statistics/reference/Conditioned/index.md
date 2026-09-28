@@ -1,0 +1,27 @@
+---
+name: Conditioned
+domain: Statistics
+signature: Conditioned(a, b)
+summary: $a$ conditioned on $b$ — meaningful only as `Probability`'s or `Expectation`'s first argument.
+signatures:
+  - call: Probability(Conditioned(pred, cond), Distributed(x, dist))
+    description: P(pred | cond) = P(pred, cond) / P(cond), for the discrete and closed-form-CDF cases Probability itself handles; otherwise stays unevaluated.
+    library: enumeratio-statistics
+    type: (any, any) -> expression<Conditioned>
+  - call: Expectation(Conditioned(f, cond), Distributed(x, dist))
+    description: "E[f | cond]: exact for cond pinning x to a point (any distribution), or cond bounding x to a finite interval on a discrete distribution; otherwise stays unevaluated."
+    library: enumeratio-statistics
+details:
+  - "`Conditioned` is a bare inert constructor (like [[Distributed]]) — it does nothing on its own; both evaluations above happen inside `Probability`/`Expectation`, triggered by seeing `Conditioned` as their first argument."
+  - "`Probability`'s case is built entirely by calling back into `Probability` itself: the numerator is `Probability(And(pred, cond), binding)`, the denominator `Probability(cond, binding)` — so it inherits every discrete-PDF and closed-form-CDF case any wave of this package has added, with no new distribution-shape knowledge needed here. One extra case past the plain `And` machinery: `pred = Equal(x, k)` is evaluated directly as `PDF(k)/P(cond)` (or `0`, if `cond` fails at `k`), since `Probability`'s own `And` case only recognizes a conjunction of two `Less`/`LessEqual` relations, not `Equal` combined with anything."
+  - "`Expectation`'s case: `cond = Equal(x, k)` collapses `f` to its value at `k`, for any distribution. A finite interval condition on a DISCRETE distribution sums exactly over the (necessarily finite) support the interval implies. A continuous distribution with an interval condition — which the exact machinery for a truncated *continuous* mean already exists for, in [[TruncatedDistribution]] — is NOT composed through here; out of scope for this batch, so it stays unevaluated."
+  - Neither case falls back to numeric approximation — see [[NProbability]]/[[NExpectation]] for that.
+seeAlso:
+  - Probability
+  - Expectation
+  - NProbability
+  - NExpectation
+  - TruncatedDistribution
+names:
+  wolframIdentity: true
+---

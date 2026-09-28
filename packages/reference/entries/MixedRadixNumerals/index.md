@@ -1,0 +1,14 @@
+---
+name: MixedRadixNumerals
+domain: Wolfram
+signature: MixedRadixNumerals(...)
+summary: Wolfram's own MixedRadix, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: MixedRadix
+stub: carrier
+signatures:
+  - call: MixedRadixNumerals(...)
+    description: Wolfram's own MixedRadix, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-numerals
+    type: (list<integer>) -> value
+---

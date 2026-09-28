@@ -1,0 +1,11 @@
+---
+name: ConnectedLabeledGraphs
+domain: Combinatorics
+signature: ConnectedLabeledGraphs(...)
+summary: Connected simple graphs on [n] (A001187).
+grades:
+  - name: n
+    role: axis
+carrier: LabeledGraph
+stub: carrier
+---

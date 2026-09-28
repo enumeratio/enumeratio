@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+hypergeometric-pdf-exact			[PDF, [HypergeometricDistribution, 20, 50, 100], 10]	[Rational, 10272278170, 52177653441]	Cross-checked against wolframscript's N[PDF[HypergeometricDistribution[20, 50, 100], 10]]
+hypergeometric-cdf-exact-sum			[CDF, [HypergeometricDistribution, 3, 5, 10], 2]	[Rational, 11, 12]	
+hypergeometric-mean-exact			[Mean, [HypergeometricDistribution, 20, 50, 100]]	10	
+hypergeometric-variance-exact			[Variance, [HypergeometricDistribution, 20, 50, 100]]	[Rational, 400, 99]	

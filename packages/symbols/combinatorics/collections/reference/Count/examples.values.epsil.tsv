@@ -1,0 +1,18 @@
+id	in	out	back
+count-list-1-2-2-3-2-2	Count([1, 2, 2, 3, 2], 2)	3	
+count-list-1-2-2-3-2-4-2	Count([1, 2, 2, 3, 2, 4], 2)	3	
+a-value-absent-from-the-collection-counts-as-0	Count([1, 2, 3], 9)	0	
+count-list-a-b-a-a-b-c-b-b	Count([a, b, a, a, b, c, b], b)	3	
+count-of-twinprimes-is-nan	Count(TwinPrimes)	`NaN`	
+count-of-narcissisticnumbers-is-the-exact-88	Count(NarcissisticNumbers)	88	
+count-of-squarefreenumbers-is-infinite	Count(SquareFreeNumbers)	PositiveInfinity	
+count-of-perfectnumbers-is-nan	Count(PerfectNumbers)	`NaN`	
+the-value-can-itself-be-a-list	Count([[1, 2], [1, 2], 3], [1, 2])	2	
+a-predicate-counts-the-elements-satisfying-it	Count([1, 2, 3, 4], Function(_1 > 2))	2	Unreadable
+only-top-level-elements-are-compared-by-default	Count([[a, a, b], b, [a, b, a]], b)	1	
+a-bare-level-spec-counts-matches-down-through	Count([[a, a, b], b, [a, b, a]], b, 2)	3	
+2-counts-matches-at-level-2-only	Count([[a, a, b], b, [a, b, a]], b, [2])	2	
+count-of-an-infinite-collection	Count(FactorialNumbers)	PositiveInfinity	
+the-counts-of-the-distinct-values-add-up-to-the	"Count([1, 2, 2, 3, 3, 3], 1) + Count([1, 2, 2, 3, 3, 3], 2) + Count([\n                                                                      1,\n                                                                      2,\n                                                                      2,\n                                                                      3,\n                                                                      3,\n                                                                      3,\n                                                                    ], 3) ==\nLength([1, 2, 2, 3, 3, 3])"	True	
+count-tests-exact-equality-a-typed-pattern-like	Count([1, a, 2, b], _Integer)	0	
+count-tests-exact-equality-so-a-pattern-like	Count([a, 2, a, a, 1, c, b, 3, 3], _Integer)	0	

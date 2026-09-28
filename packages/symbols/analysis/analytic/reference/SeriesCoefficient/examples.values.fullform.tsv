@@ -1,0 +1,8 @@
+id	in
+exp-about-a-nonzero-point	SeriesCoefficient[Exp[x], List[x, 1, 2]]
+sin-about-zero	SeriesCoefficient[Sin[x], List[x, 0, 5]]
+geometric-series	SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
+log-series	SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
+a-puiseux-half-integer-order-declines	SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
+a-negative-order-laurent-coefficient-declines	SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
+a-removable-singularity-declines	SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]

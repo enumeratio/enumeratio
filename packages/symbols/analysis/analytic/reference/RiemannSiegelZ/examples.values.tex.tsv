@@ -1,0 +1,5 @@
+id	in	out
+riemannsiegelz-1p5	\mathrm{RiemannSiegelZ}(1.5)	-0.595\,568\,336\,782\,887
+riemannsiegelz-20p5	\mathrm{RiemannSiegelZ}(20.5)	0.599\,328\,702\,514\,751\,3
+riemannsiegelz-100	N(\mathrm{RiemannSiegelZ}(100))	2.692\,697\,056\,664\,463\,7
+z-0-zeta-1-2	N(\mathrm{RiemannSiegelZ}(0))	-1.460\,354\,508\,809\,586\,8

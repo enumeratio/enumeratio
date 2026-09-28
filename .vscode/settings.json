@@ -38,22 +38,5 @@
   "[css]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
-  "yaml.format.enable": false,
-  "yaml.schemas": {
-    "./packages/entry/schema/reference-entry.schema.json": [
-      "packages/reference/entries/*.yaml",
-      "packages/**/reference/*.yaml",
-      "!packages/**/*.examples.yaml",
-      "!packages/**/*.implementations.yaml",
-      "!packages/**/tests/fixtures/**"
-    ],
-    "./packages/entry/schema/reference-examples.schema.json": [
-      "packages/**/*.examples.yaml",
-      "!packages/**/tests/fixtures/**"
-    ],
-    "./packages/entry/schema/head-implementations.schema.json": [
-      "packages/**/*.implementations.yaml",
-      "!packages/**/tests/fixtures/**"
-    ]
-  }
+  "yaml.format.enable": false
 }

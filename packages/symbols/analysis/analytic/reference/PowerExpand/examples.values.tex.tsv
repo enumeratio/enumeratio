@@ -1,0 +1,6 @@
+id	in	out
+sqrt-x-2-x-for-positive-x	\mathrm{PowerExpand}(\sqrt{x^2})	x
+splits-a-logarithm-of-a-product	\mathrm{PowerExpand}(\ln(xy))	\ln(x)+\ln(y)
+pulls-out-an-exponent	\mathrm{PowerExpand}(\ln(x^{n}))	n\ln(x)
+distributes-a-power-over-a-product	\mathrm{PowerExpand}((ab)^{c})	a^{c}b^{c}
+powerexpand-sqrt-a-times-b	\mathrm{PowerExpand}(\sqrt{ab})	\sqrt{a}\sqrt{b}

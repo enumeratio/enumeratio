@@ -1,0 +1,11 @@
+id	in	out
+moebiusmu-1	\mathrm{MoebiusMu}(1)	1
+moebiusmu-11	\mathrm{MoebiusMu}(11)	-1
+12-22-3-is-not-squarefree	\mathrm{MoebiusMu}(12)	0
+10-2-5-a-product-of-an-even-number-of-distinct	\mathrm{MoebiusMu}(10)	1
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{MoebiusMu}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, -1, -1, 0\bigr\rbrack
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	\mathrm{MoebiusMu}(5+6i)	-1
+listable-threads-over-a-list	\mathrm{MoebiusMu}(\bigl\lbrack4, 10, 17, 20\bigr\rbrack)	\bigl\lbrack0, 1, -1, 0\bigr\rbrack
+listable-over-a-range	\mathrm{MoebiusMu}(1..20)	\bigl\lbrack1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0\bigr\rbrack
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	\mathrm{MoebiusMu}(1)+\mathrm{MoebiusMu}(2)+\mathrm{MoebiusMu}(3)+\mathrm{MoebiusMu}(4)+\mathrm{MoebiusMu}(6)+\mathrm{MoebiusMu}(12)	0
+mu-is-only-defined-for-positive-integers-compute	\mathrm{MoebiusMu}(0)	\mathrm{MoebiusMu}(0)

@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+the-identity-s-class-is-a-singleton			[ClassSum, [DihedralGroup, 3], 1]	[GroupBasis, "'0'"]	the identity's class is a singleton
+in-an-abelian-group-everything-is-central	Scope		[IsCentral, [CyclicGroup, 6], [GroupBasis, [String, "3"]]]	True	in an abelian group everything is central
+class-sums-are-central	Properties		[IsCentral, [DihedralGroup, 3], [ClassSum, [DihedralGroup, 3], 2]]	True	class sums are central
+a-lone-reflection-is-not	Properties		[IsCentral, [DihedralGroup, 3], [GroupBasis, [String, s0]]]	False	a lone reflection is not

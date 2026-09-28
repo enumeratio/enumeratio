@@ -1,0 +1,23 @@
+---
+name: AlgebraSignature
+domain: Hypercomplex algebra
+signature: AlgebraSignature(algebra)
+summary: "The signature vector: what each of the algebra's generators squares to, in order — $-1$, $+1$ or $0$."
+signatures:
+  - call: AlgebraSignature(algebra)
+    description: each generator's square, as a list
+    library: enumeratio-hypercomplex
+    type: (clifford_algebra) -> list
+details:
+  - Together with the commutation rule this is all that defines the algebra
+  - $\mathrm{Cl}(p,q)$ reads as $p$ entries of $+1$ then $q$ of $-1$
+  - A $0$ entry marks a nilpotent generator — the dual and Grassmann families
+seeAlso:
+  - Basis
+  - AlgebraDimension
+  - Quaternions
+  - PowerModList
+references:
+  - system: wikipedia
+    identity: Metric signature
+---

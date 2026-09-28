@@ -1,0 +1,9 @@
+---
+name: RightSpine
+domain: Combinatorics
+signature: RightSpine(...)
+summary: Right spine length
+statOn:
+  - BinaryTree
+stub: carrier
+---

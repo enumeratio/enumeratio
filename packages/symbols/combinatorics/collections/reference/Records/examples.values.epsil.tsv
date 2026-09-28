@@ -1,0 +1,5 @@
+id	in	out
+3-alone-nothing-after-tops-it	Records([3, 1, 2])	1
+the-identity-sets-a-new-record-everywhere	Records([1, 2, 3])	3
+2-then-3	Records([2, 3, 1])	2
+the-reversal-attains-the-minimum-1	Records([4, 3, 2, 1])	1

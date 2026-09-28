@@ -1,0 +1,22 @@
+---
+name: WeibullDistribution
+domain: Statistics
+signature: WeibullDistribution(alpha, beta)
+summary: The Weibull distribution with shape $\alpha$ and scale $\beta$.
+signatures:
+  - call: WeibullDistribution(alpha, beta)
+    description: an inert distribution object — carries $\alpha, \beta$, unevaluated.
+    library: enumeratio-statistics
+    type: (real<0..>, real<0..>) -> distribution
+details:
+  - $PDF(x) = (\alpha/\beta)(x/\beta)^{\alpha-1}e^{-(x/\beta)^\alpha}$ for $x \geq 0$.
+  - $CDF(x) = 1-e^{-(x/\beta)^\alpha}$, clamped to $0$ below $x=0$.
+  - $Mean = \beta\Gamma(1+1/\alpha)$, $Variance = \beta^2(\Gamma(1+2/\alpha)-\Gamma(1+1/\alpha)^2)$, both exact.
+  - '[[RandomVariate]] samples via inverse transform: $\beta(-\log(1-U))^{1/\alpha}$.'
+seeAlso:
+  - ChiSquareDistribution
+  - PDF
+  - CDF
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,5 @@
+id	in
+count-largestpartpartitions-10-4	Count[LargestPartPartitions[10, 4]]
+first-element-of-largestpartpartitions-10-4	Part[LargestPartPartitions[10, 4], 1]
+every-element-of-largestpartpartitions-10-4	Take[LargestPartPartitions[10, 4], 9]
+every-element-of-largestpartpartitions-10-1	Take[LargestPartPartitions[10, 1], 1]

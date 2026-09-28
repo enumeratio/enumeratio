@@ -1,0 +1,23 @@
+---
+name: IncompleteEllipticPi
+domain: Special functions
+signature: IncompleteEllipticPi(n, phi, m)
+summary: The incomplete Legendre elliptic integral of the third kind, $\Pi(n;\varphi,m) = \int_0^\varphi \dfrac{d\theta}{(1-n\sin^2\theta)\sqrt{1-m\sin^2\theta}}$, in Wolfram/mpmath's $(n,\varphi,m)$ order with $m=k^2$.
+signatures:
+  - call: IncompleteEllipticPi(n, phi, m)
+    description: the incomplete elliptic integral of the third kind, characteristic n, amplitude φ, parameter m.
+    library: "@enumeratio/analytic"
+    type: (number, number, number) -> number
+details:
+  - $m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.
+  - '$\varphi = \pi/2$ is the complete integral: $\Pi(n;\pi/2,m) = $ [[EllipticPi]]$(n,m)$.'
+  - Built from Carlson's symmetric $R_F$/$R_J$ (DLMF 19.25.14) rather than delegating to compute-engine's native three-argument EllipticPi, which returns NaN for some complex φ inside its own stated domain.
+  - 'Quasi-periodic: $\Pi(n;\varphi+k\pi,m) = 2k\,\Pi(n,m) + \Pi(n;\varphi,m)$ for integer k, so any φ reduces to $[-\pi/2,\pi/2]$ before the Carlson evaluation.'
+  - Numeric only — a symbolic or exact argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly, same as [[EllipticE]] and [[EllipticF]].
+seeAlso:
+  - EllipticPi
+  - EllipticE
+  - EllipticF
+names:
+  wolfram: EllipticPi
+---

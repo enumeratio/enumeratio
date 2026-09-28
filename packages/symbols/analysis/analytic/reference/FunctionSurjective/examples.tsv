@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+an-odd-degree-polynomial-is-onto			[FunctionSurjective, [Power, x, 3], x, Reals]	True	An odd-degree polynomial hits every real value, by the intermediate value theorem
+exp-misses-the-non-positive-reals			[FunctionSurjective, [Exp, x], x, Reals]	False	Exp's range is the positive reals only
+log-is-onto-the-reals			[FunctionSurjective, [Ln, x], x, Reals]	True	Log is onto R even though its domain is only the positive reals
+a-reciprocal-never-hits-zero			[FunctionSurjective, [Divide, 1, x], x, Reals]	False	A reciprocal never takes the value 0
+an-unsupported-codomain-declines		test	[FunctionSurjective, [Power, x, 3], x, Integers]	[FunctionSurjective, [Power, x, 3], x, Integers]	

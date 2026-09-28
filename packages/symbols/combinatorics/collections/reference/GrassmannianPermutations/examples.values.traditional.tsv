@@ -1,0 +1,4 @@
+id	in	out
+count-grassmannianpermutations-5-2-5-5-27		
+every-element-of-grassmannianpermutations-4		
+grassmannian-and-cograssmannian-permutations	\mathrm{Count}(\mathrm{GrassmannianPermutations}(5))=\mathrm{Count}(\mathrm{CograssmannianPermutations}(5))	\mathrm{True}

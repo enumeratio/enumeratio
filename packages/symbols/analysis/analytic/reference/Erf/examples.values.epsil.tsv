@@ -1,0 +1,23 @@
+id	in	out
+erf-0	Erf(0)	0
+erf-infinity	Erf(`Infinity`)	1
+erf-negativeinfinity	Erf(NegativeInfinity)	-1
+a-floating-point-argument-evaluates-directly-to	Erf(0.5)	0.520_499_877_813_046_537_683
+a-machine-precision-argument	Erf(0.95)	0.820_890_807_273_277_941_908
+threads-element-wise-over-a-list-as-wolfram-s	Erf([0, 1])	[0, Erf(1)]
+complex-arguments-evaluate-directly	Erf(1.5 - i)	1.078_399_207_498_933_5 + 0.027_963_711_238_655_833i
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	Erf(0.5, 1.5)	0.445_605_268_662_264_2
+which-with-exact-arguments-is-the-difference-erf	Erf(1, 2)	-Erf(1) + Erf(2)
+interval-arithmetic-erf-is-increasing-so-the	Erf(Interval(-2.1, -1.9))	Interval(-0.997_020_533_343_667, -0.992_790_429_235_257_5)
+uncertainty-propagation-with-slope-frac-2-sqrt	Erf(Around(2, 0.01))	Around(0.995_322_265_018_952_7, 0.000_206_669_853_540_920_54)
+to-40-significant-digits-every-one-correctly	N(Erf(1), 40)	0.842_700_792_949_714_869_341_220_635_082_609_259_296_1
+erf-1-sqrt-2-approx-0-6827-the-68-in-the	Erf(0.707_106_781_186_547_6)	0.682_689_492_137_085_948_91
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x	0.5 * (1 + Erf(1.96 / Sqrt(2)))	0.975_002_104_851_779_565_863_5
+odd-function-erf-z-erf-z-here-at-z-2	Erf(2) + Erf(-2) == 0	True
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	Erf(2) + Erfc(2) == 1	True
+oddness-applied-symbolically-erf-x-erf-x	Erf(-x)	-Erf(x)
+erf-erfinv-x-x-symbolically-see-erfinv	Erf(ErfInv(x))	x
+on-the-imaginary-axis-erf-i-i-erfi-1	Erf(ImaginaryUnit)	i * Erfi(1)
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	D(Erf(x), x)	2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
+an-exact-integer-argument-is-left-unevaluated	Erf(1)	Erf(1)
+by-z-3-5-erf-is-already-within-10-6-of-its-limit	Erf(3.5)	0.999_999_256_901_627_658_587

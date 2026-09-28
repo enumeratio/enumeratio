@@ -1,0 +1,43 @@
+id	in	out
+tan-0	Tan(0)	0
+tan-pi-over-6	Tan(Pi / 6)	Sqrt(3) / 3
+tan-pi-over-4	Tan(Pi / 4)	1
+tan-pi-over-3	Tan(Pi / 3)	Sqrt(3)
+tan-30-circ-frac-sqrt-3-3-exactly	Tan(Degrees(30))	Sqrt(3) / 3
+a-machine-precision-argument-evaluates	Tan(1.2)	2.572_151_622_126_318_935_41
+a-huge-24-40-argument	N(Tan(24 ^ 40))	0.436_543_795_287_244_358_085_11
+a-huge-10-100-argument	N(Tan(10 ^ 100))	0.401_231_961_990_814_354_185_75
+a-huge-3-200-argument	N(Tan(3 ^ 200))	2.723_734_341_072_774_336_434_671
+a-huge-neg-7-60-argument	N(Tan(-7 ^ 60))	-0.392_199_089_736_329_312_748_44
+a-huge-10-80-plus-1-over-3-argument	N(Tan((10 ^ 80 + 1) / 3))	5.777_333_408_915_218_939_564_447
+tan-100-under-n	N(Tan(100))	-0.587_213_915_156_920_7
+n-of-an-exact-argument-gives-an-arbitrary	N(Tan(6 / 5))	2.572_151_622_126_318_935_41
+evaluates-at-a-complex-argument	Tan(2.5 + i)	-0.237_013_830_916_270_57 + 0.896_437_917_127_861_7i
+threads-element-wise-over-a-matrix	Tan([[5 * (Pi / 6), Pi], [Pi / 3, -Pi]])	[[-(Sqrt(3) / 3), 0], [Sqrt(3), 0]]
+tan-pi-8-sqrt-2-1	Tan(Pi / 8)	-1 + Sqrt(2)
+tan-pi-12-2-sqrt-3	Tan(Pi / 12)	2 - Sqrt(3)
+tan-pi-5-sqrt-5-2-sqrt-5	Tan(Pi / 5)	Sqrt(5 - 2 * Sqrt(5))
+tan-pi-10-sqrt-1-2-sqrt-5	Tan(Pi / 10)	Sqrt(5) / 5 * Sqrt(5 - 2 * Sqrt(5))
+tan-5-pi-12-2-sqrt-3	Tan(5 / 12 * Pi)	2 + Sqrt(3)
+tan-3-over-4-times-pi	Tan(3 / 4 * Pi)	-1
+interval-arithmetic-the-image-of-0-pi-3-is-0	Tan(Interval(0, Pi / 3))	Interval(0, Sqrt(3))
+uncertainty-propagation-tan-2-pm-0-02-approx-2	Tan(Around(2, 0.02))	Around(-2.185_039_863_261_519, 0.115_487_984_080_838_35)
+tan-ix-i-tanh-x	Tan(ImaginaryUnit * x)	i * Tanh(x)
+oddness-pulls-the-sign-out-of-a-symbolic	Tan(-x)	-Tan(x)
+tan-arctan-x-x-for-every-x	Tan(Arctan(x))	x
+tan-arctan-2-2-for-every-x	Tan(Arctan(2))	2
+tan-arcsin-x-frac-x-sqrt-1-x-2	Tan(Arcsin(x))	x / Sqrt(-x ^ 2 + 1)
+derivative-sec-2-x	D(Tan(x), x)	Sec(x) ^ 2
+antiderivative-ln-sec-x	Integrate(Tan(x), x)	Ln(Abs(Sec(x)))
+taylor-series-about-0	Series(Tan(x), x, 0, 7)	17 / 315 * x ^ 7 + 2 / 15 * x ^ 5 + 1 / 3 * x ^ 3 + x + BigO(x ^ 9)
+to-30-significant-digits-every-one-correctly	N(Tan(1), 30)	1.557_407_724_654_902_230_506_974_807_46
+threads-element-wise-over-a-list	Tan([0, Pi / 4])	[0, 1]
+tan-x-frac-sin-x-cos-x	Tan(Pi / 4) == Sin(Pi / 4) / Cos(Pi / 4)	True
+odd-function-tan-x-tan-x	Tan(-(Pi / 4))	-1
+period-pi-not-2-pi-adding-a-half-turn-doesn-t	Tan(Pi / 4 + Pi)	1
+sin-x-cos-x-should-simplify-to-tan-x-simplify	Simplify(Sin(x) / Cos(x))	Tan(x)
+rewritten-in-exponentials	TrigToExp(Tan(x))	"-i * ((-ExponentialE ^ (-i * x) + ExponentialE ^ (i * x)) / (ExponentialE ^ (i *\n                                                                             x) +\n                                                             ExponentialE ^ (-i *\n                                                                             x)))"
+a-pole-cos-pi-2-0-so-the-ratio-blows-up	Tan(Pi / 2)	ComplexInfinity
+same-rule-as-sin-and-cos-a-non-special-numeric	Tan(1)	Tan(1)
+a-pole-at-negative-pi-over-2-too	Tan(Pi / -2)	ComplexInfinity
+a-pole-reached-through-periodicity-unreduced	Tan(Pi / -2 + Pi)	ComplexInfinity

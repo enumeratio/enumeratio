@@ -1,0 +1,22 @@
+---
+name: LongestIncreasingSubsequence
+domain: Permutation statistics
+signature: LongestIncreasingSubsequence(p)
+summary: The length of a longest increasing subsequence.
+details:
+  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
+  - "By patience sorting: the number of piles. Checked against the piles algorithm over every permutation of 1..6."
+references:
+  - system: wikipedia
+    identity: Longest increasing subsequence
+  - system: rosettacode
+    identity: Longest increasing subsequence
+statOn:
+  - Permutation
+signatures:
+  - call: LongestIncreasingSubsequence(p)
+    description: The length of a longest increasing subsequence.
+    library: enumeratio-statistics
+    type: (list<integer>) -> number
+---

@@ -1,0 +1,5 @@
+id	in
+by-a-cycle	Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]
+by-disjoint-cycles	Permute[List[a, b, c, d], Cycles[List[List[1, 3], List[2, 4]]]]
+by-a-one-line-word	Permute[List[a, b, c, d], List[2, 3, 4, 1]]
+by-a-permutation-group	Permute[List[a, b, c], PermutationGroup[List[Cycles[List[List[1, 2, 3]]]]]]

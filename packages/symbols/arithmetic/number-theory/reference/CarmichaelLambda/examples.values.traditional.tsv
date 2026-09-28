@@ -1,0 +1,4 @@
+id	in	out
+listable		
+negative-n-lambda-n-lambda-n	\lambda(-100)	20
+listable-over-a-range	\lambda(1..10)	\bigl\lbrack1, 1, 2, 2, 4, 2, 6, 2, 6, 4\bigr\rbrack

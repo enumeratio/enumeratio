@@ -1,0 +1,22 @@
+id	in	out	tex.in	tex.out
+ln-gamma-3-ln-2-ln-2	LogGamma[3]	Log[2]	\text{log$\Gamma $}(3)	\log (2)
+ln-gamma-1-0	LogGamma[1]	0	\text{log$\Gamma $}(1)	0
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working	LogGamma[2.5]	0.2846828704729192	\text{log$\Gamma $}(2.5)	0.284683
+ln-gamma-5-ln-4-ln-24-split-into-prime	LogGamma[5]			
+log-gamma-neg-2-is-a-pole	LogGamma[-2]			
+log-gamma-neg-3-is-a-pole	LogGamma[-3]			
+n-log-gamma-5-over-2-to-40-digits	N[LogGamma[Rational[5, 2]], 40]			
+to-the-engine-s-working-precision	LogGamma[2.2]			
+complex-arguments	LogGamma[Complex[2.5, 3]]			
+threads-elementwise-over-an-array	LogGamma[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]			
+exact-negative-half-integers-ln-gamma-frac-32-ln	LogGamma[Rational[-3, 2]]			
+ln-gamma-infty-infty	LogGamma[Infinity]			
+huge-arguments-ln-gamma-10-300-approx-6-898	N[LogGamma[Power[10, 300]]]			
+interval-arithmetic-decreasing-here-so-the	LogGamma[Interval[List[0.41, 0.42]]]			
+uncertainty-propagation-with-psi-1-2-as-the	LogGamma[Around[1.2, 0.01]]			
+to-30-significant-digits-not-yet-the-last-digit	N[LogGamma[Rational[1, 3]], 30]			
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	LogGamma[Rational[1, 2]]	Log[Pi]/2	\text{log$\Gamma $}\left(\frac{1}{2}\right)	\frac{\log (\pi )}{2}
+a-pole-of-gamma	LogGamma[0]	Infinity	\text{log$\Gamma $}(0)	\infty
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt	LogGamma[-1.5]			
+half-integers-past-frac-12-ln-gamma-frac-32-ln	LogGamma[Rational[3, 2]]			
+off-the-positive-axis-this-is-the-continuation	LogGamma[Complex[-2.5, 1.5]]	-3.7175134511917927 - 7.7130655258341925*I	\text{log$\Gamma $}(-2.5+1.5 i)	-3.71751-7.71307 i

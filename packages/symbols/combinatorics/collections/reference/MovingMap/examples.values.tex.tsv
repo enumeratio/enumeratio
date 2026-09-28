@@ -1,0 +1,2 @@
+id	in	out
+length-of-window	\mathrm{MovingMap}(\mathrm{Length}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack, 1)	\bigl\lbrack2, 2, 2\bigr\rbrack

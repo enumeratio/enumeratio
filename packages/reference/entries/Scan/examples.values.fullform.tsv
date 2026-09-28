@@ -1,0 +1,10 @@
+id	in	back
+scan-list-1-2-3-4-add	FoldList[Plus, List[1, 2, 3, 4]]	[FoldList, Add, [List, 1, 2, 3, 4]]
+the-shape-of-a-running-fold	FoldList[f, List[a, b, c]]	[FoldList, f, [List, a, b, c]]
+the-running-maximum	FoldList[Max, List[1, 2, 3, 4]]	[FoldList, Max, [List, 1, 2, 3, 4]]
+running-products-the-factorials	FoldList[Times, List[1, 2, 3, 4, 5]]	[FoldList, Multiply, [List, 1, 2, 3, 4, 5]]
+running-sums-of-symbolic-elements-wolfram-s	FoldList[Plus, List[a, b, c]]	[FoldList, Add, [List, a, b, c]]
+the-running-minimum	FoldList[Min, List[3, 1, 4, 1, 5]]	[FoldList, Min, [List, 3, 1, 4, 1, 5]]
+an-empty-list-scans-to-an-empty-list	FoldList[Plus, List[]]	[FoldList, Add, [List]]
+the-values-of-every-prefix-of-the-binary-digits	FoldList[Function[Plus[Times[2, Slot[1]], Slot[2]]], List[1, 0, 1, 1]]	[FoldList, [Function, [Add, [Multiply, 2, _1], _2]], [List, 1, 0, 1, 1]]
+the-seeded-form-is-still-the-same-length-as-xs	enumeratio`Scan[List[1, 2, 3], Plus, 10]	

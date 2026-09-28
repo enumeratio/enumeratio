@@ -1,0 +1,20 @@
+---
+name: InversePermutation
+domain: Permutations
+signature: InversePermutation(perm)
+summary: 'The inverse $\sigma^{-1}$ of a permutation, in whichever notation it was given: a one-line word back to a one-line word, [[Cycles]] back to [[Cycles]].'
+signatures:
+  - call: InversePermutation(perm)
+    description: $\sigma^{-1}$, in the same notation as `perm`
+    library: enumeratio-groupalgebra
+    type: (expression<Cycles> | list<integer>) -> expression<Cycles> | list<integer>
+details:
+  - For a one-line word, $\sigma^{-1}(\sigma(i)) = i$ for every $i$
+  - For [[Cycles]], each cycle $(i_1\,i_2\,\dots\,i_k)$ inverts to $(i_1\,i_k\,\dots\,i_2)$ — reversed but still starting at $i_1$
+seeAlso:
+  - Cycles
+  - PermutationCycles
+  - Permute
+names:
+  wolframIdentity: true
+---

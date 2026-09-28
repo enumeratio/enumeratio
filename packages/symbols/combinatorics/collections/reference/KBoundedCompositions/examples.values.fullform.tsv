@@ -1,0 +1,5 @@
+id	in
+count-kboundedcompositions-6-2	Count[KBoundedCompositions[6, 2]]
+first-element-of-kboundedcompositions-6-2	Part[KBoundedCompositions[6, 2], 1]
+every-element-of-kboundedcompositions-6-2	Take[KBoundedCompositions[6, 2], 13]
+every-element-of-kboundedcompositions-6-3	Take[KBoundedCompositions[6, 3], 24]

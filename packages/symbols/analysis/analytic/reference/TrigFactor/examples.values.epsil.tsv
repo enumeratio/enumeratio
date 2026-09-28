@@ -1,0 +1,5 @@
+id	in	out
+sin-a-plus-sin-b	TrigFactor(Sin(a) + Sin(b))	2 * Sin(1 / 2 * (a + b)) * Cos(1 / 2 * (a - b))
+cos-a-minus-cos-b	TrigFactor(Cos(a) - Cos(b))	-2 * Sin(1 / 2 * (a + b)) * Sin(1 / 2 * (a - b))
+one-minus-cos-x	TrigFactor(1 - Cos(x))	2 * Sin(1 / 2 * x) ^ 2
+poly-in-sin-cos	TrigFactor(Sin(x) ^ 2 + 2 * Sin(x) * Cos(x) + Cos(x) ^ 2)	(Sin(x) + Cos(x)) ^ 2

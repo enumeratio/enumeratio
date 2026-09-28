@@ -1,0 +1,9 @@
+---
+name: Dyck
+domain: Combinatorics
+signature: Dyck(...)
+summary: The DFS Dyck word of the tree
+mapOn:
+  - PlaneTree
+stub: carrier
+---

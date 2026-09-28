@@ -1,0 +1,3 @@
+id	in	out
+a-5-vertex-path	\mathrm{VertexDegree}(\mathrm{PathGraph}(5))	\bigl\lbrack1, 2, 2, 2, 1\bigr\rbrack
+a-path-along-named-vertices	\mathrm{PathGraph}(\bigl\lbrack a, b, c\bigr\rbrack)	\mathrm{Graph}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(a, b), \mathrm{UndirectedEdge}(b, c)\bigr\rbrack)

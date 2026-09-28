@@ -1,0 +1,9 @@
+id	in
+8-2-3	MangoldtLambda[8]
+6-is-not-a-prime-power	MangoldtLambda[6]
+mangoldtlambda-7	MangoldtLambda[7]
+mangoldtlambda-9	MangoldtLambda[9]
+numerically-ln-3	N[MangoldtLambda[9]]
+listable	MangoldtLambda[List[2, 4, 6, 25]]
+n-of-a-zero-result-is-still-0	N[MangoldtLambda[6]]
+lambda-1-0	MangoldtLambda[1]

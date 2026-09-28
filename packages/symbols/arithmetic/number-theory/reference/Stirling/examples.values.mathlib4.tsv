@@ -1,0 +1,19 @@
+id	in	out
+stirling-5-2	(Nat.stirlingSecond 5 2)	15
+stirling-6-3	(Nat.stirlingSecond 6 3)	90
+stirling-20-10	(Nat.stirlingSecond 20 10)	
+exact-for-large-n	(Nat.stirlingSecond 50 2)	
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingSecond [2, 4, 6] 2)	
+the-ways-to-split-10-distinct-items-among-3	(Nat.stirlingSecond 10 3)	
+one-block-means-one-partition-s-n-1-1	(Nat.stirlingSecond 5 1)	1
+singletons-only-s-n-n-1	(Nat.stirlingSecond 5 5)	1
+row-sums-give-the-bell-numbers		
+two-blocks-s-n-2-2-n-1-1	(decide ((Nat.stirlingSecond 10 2) = ((2 ^ 9) - 1)))	
+s-n-n-1-binom-n-2-one-block-is-a-pair	(decide ((Nat.stirlingSecond 6 5) = (Nat.choose 6 2)))	
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j		
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m		
+the-empty-set-has-one-partition-into-no-blocks	(Nat.stirlingSecond 0 0)	1
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	(Nat.stirlingSecond 5 0)	
+k-n-is-0	(Nat.stirlingSecond 3 5)	
+stirling-0-1-is-also-0	(Nat.stirlingSecond 0 1)	
+a-negative-k-stays-symbolic	(Nat.stirlingSecond 10 (-5))	

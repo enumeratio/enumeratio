@@ -1,0 +1,4 @@
+id	in	out
+a-dihedral-group	order((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 100), 100)).G)	200
+a-permutation-group		
+the-symmetric-group		

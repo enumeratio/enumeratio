@@ -1,0 +1,8 @@
+id	in	out
+order-is-n-factorial-over-two	\left|\mathrm{AlternatingGroup}(5)\right|	60
+generators-odd-n		
+generators-even-n		
+generators-collapse-at-three		
+elements-of-a3		
+trivial-for-n-equals-one	\left|\mathrm{AlternatingGroup}(1)\right|	1
+trivial-for-n-equals-two	\left|\mathrm{AlternatingGroup}(2)\right|	1

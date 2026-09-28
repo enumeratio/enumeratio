@@ -1,0 +1,14 @@
+---
+name: BraidIsPositive
+domain: Braids and knots
+signature: BraidIsPositive(braid)
+summary: Whether every letter in a braid's word is positive — no generator appears inverted.
+signatures:
+  - call: BraidIsPositive(braid)
+    description: whether every letter of the word is positive
+    library: enumeratio-braid
+    type: (expression<Braid> | string) -> boolean
+seeAlso:
+  - SeifertGenus
+  - TorusBraid
+---

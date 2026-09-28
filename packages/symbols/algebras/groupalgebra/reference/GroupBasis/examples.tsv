@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+2-5-7-equiv-1			[GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, "2"]], [GroupBasis, [String, "5"]]]	[GroupBasis, "'1'"]	$2 + 5 = 7 \equiv 1$
+d-4-8			[AlgebraDimension, [GroupAlgebra, [DihedralGroup, 4]]]	8	$|D_4| = 8$
+s-2-1	Properties		[GroupProduct, [DihedralGroup, 4], [GroupBasis, [String, s0]], [GroupBasis, [String, s0]]]	[GroupBasis, "'0'"]	$s^2 = 1$
+so-k-d-4-is-not-commutative-either	Properties		[GroupIsAbelian, [DihedralGroup, 4]]	False	so $k[D_4]$ is not commutative either

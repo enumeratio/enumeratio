@@ -1,0 +1,13 @@
+id	in	out
+integerstring-42	IntegerString(42)	"\"42\""
+integerstring-17-651-2	IntegerString(17_651, 2)	"\"100010011110011\""
+bases-above-10-use-letters-a-z	IntegerString(255, 16)	"\"ff\""
+base-36-is-the-largest-with-digit-values-up-to-z	IntegerString(35, 36)	"\"z\""
+threads-over-a-list	IntegerString([1, 2, 3])	["1", "2", "3"]
+50-in-hexadecimal-exact-past-double-precision	IntegerString(50!, 16)	"\"49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000\""
+roman-numerals-with-the-base-roman	IntegerString(1_988, "Roman")	"\"MCMLXXXVIII\""
+a-width-pads-with-leading-zeros	IntegerString(255, 16, 4)	"\"00ff\""
+a-width-shorter-than-the-numeral-keeps-the-least	IntegerString(1_234_567, 10, 3)	"\"567\""
+a-third-argument-pads-with-leading-zeros-to-that	IntegerString(5, 2, 8)	"\"00000101\""
+integerstring-0	IntegerString(0)	"\"0\""
+compute-engine-keeps-the-sign	IntegerString(-42)	"\"-42\""

@@ -1,0 +1,4 @@
+id	in	out
+s-m-1-m-1	S(M_{(1)})	-M_{(1)}
+s-2-id-since-qsym-is-commutative	S(S(M_{(1,2)}))	M_{(1,2)}
+the-product-is-homogeneous-so-degrees-add	\mathrm{HopfDegree}(\mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(2)}))	3

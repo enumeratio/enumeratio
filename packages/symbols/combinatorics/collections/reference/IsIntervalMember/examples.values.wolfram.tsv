@@ -1,0 +1,5 @@
+id	in
+an-interior-point	IntervalMemberQ[Interval[List[1, 5]], 3]
+a-closed-endpoint-is-a-member	IntervalMemberQ[Interval[List[1, 5]], 5]
+an-open-endpoint-is-not-a-member	
+outside-the-interval	IntervalMemberQ[Interval[List[1, 5]], 6]

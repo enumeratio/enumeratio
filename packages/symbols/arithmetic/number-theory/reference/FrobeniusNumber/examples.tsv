@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+the-mcnugget-number			[FrobeniusNumber, [List, 6, 9, 20]]	43	The McNugget number
+frobeniusnumber-list-3-5			[FrobeniusNumber, [List, 3, 5]]	7	
+frobeniusnumber-list-12-16-20-27	Scope		[FrobeniusNumber, [List, 12, 16, 20, 27]]	89	
+two-generators-ab-a-b	Properties		[FrobeniusNumber, [List, 4, 7]]	17	Two generators: $ab-a-b$
+not-coprime-infinitely-many-numbers-are	Possible issues		[FrobeniusNumber, [List, 2, 4]]	PositiveInfinity	Not coprime: infinitely many numbers are unreachable

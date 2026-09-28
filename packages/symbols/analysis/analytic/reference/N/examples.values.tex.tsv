@@ -1,0 +1,7 @@
+id	in	out
+n-pi-30	N(\pi, 30)	3.141\,592\,653\,589\,793\,238\,46
+the-last-digit-correctly-rounded-computing-at-30	N(\sinh(1), 30)	1.175\,201\,193\,643\,801\,456\,88
+a-list-number-by-number	N(\bigl\lbrack\pi, e, \sqrt{2}\bigr\rbrack, 5)	\bigl\lbrack3.141\,6, 2.718\,3, 1.414\,2\bigr\rbrack
+an-exact-tie-rounds-to-the-even-digit-0-125	N(\frac{1}{8}, 2)	0.12
+and-0-375-to-0-38	N(\frac{3}{8}, 2)	0.38
+n-pi-1-digit	N(\pi, 1)	3

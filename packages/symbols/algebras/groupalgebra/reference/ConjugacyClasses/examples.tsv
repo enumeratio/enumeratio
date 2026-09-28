@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+abelian-one-class-per-element			[GroupCentreDimension, [CyclicGroup, 6]]	6	abelian: one class per element
+d-3-cong-s-3			[GroupCentreDimension, [DihedralGroup, 3]]	3	$D_3 \cong S_3$
+direct-products-work-too	Scope		[GroupOrder, [GroupDirectProduct, [CyclicGroup, 2], [CyclicGroup, 3]]]	6	direct products work too
+4-6-2	Properties		[GroupCentreDimension, [DihedralGroup, 4]]	5	$(4+6)/2$

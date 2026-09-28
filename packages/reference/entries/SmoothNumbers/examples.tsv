@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-first-ten-7-smooth-numbers	Scope		[Take, [SmoothNumbers, 7], 10]	[List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	The first ten 7-smooth numbers

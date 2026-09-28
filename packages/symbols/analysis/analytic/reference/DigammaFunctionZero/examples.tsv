@@ -1,0 +1,11 @@
+id	section	role	group	expr	expected	caption
+the-digamma-function-s-positive-real-zero				[N, [DigammaFunctionZero, 0]]	1.4616321449683622	the digamma function's positive real zero
+the-zero-in-1-0				[N, [DigammaFunctionZero, 1]]	-0.5040830082644554	the zero in $(-1, 0)$
+the-zero-in-2-1		test		[N, [DigammaFunctionZero, 2]]	-1.5734984731623904	
+the-zero-in-3-2		test		[N, [DigammaFunctionZero, 3]]	-2.6107208684441447	
+the-zero-in-4-3		test		[N, [DigammaFunctionZero, 4]]	-3.635293366436901	
+psi-vanishes-exactly-there-by-construction	Properties			[Chop, [N, [Digamma, [DigammaFunctionZero, 2]]]]	0	$\psi$ vanishes exactly there, by construction
+psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	Properties		digamma-vanishes	[Chop, [N, [Digamma, [DigammaFunctionZero, 0]]]]	0	$\psi(x_n) = 0$ exactly at digamma's own claimed zero, $n = 0$
+psi-x-n-0-at-n-1	Properties		digamma-vanishes	[Chop, [N, [Digamma, [DigammaFunctionZero, 1]]]]	0	$\psi(x_n) = 0$ at $n = 1$
+psi-x-n-0-at-n-3	Properties		digamma-vanishes	[Chop, [N, [Digamma, [DigammaFunctionZero, 3]]]]	0	$\psi(x_n) = 0$ at $n = 3$
+psi-x-n-0-at-n-4	Properties		digamma-vanishes	[Chop, [N, [Digamma, [DigammaFunctionZero, 4]]]]	0	$\psi(x_n) = 0$ at $n = 4$

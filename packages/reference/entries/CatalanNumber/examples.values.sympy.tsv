@@ -1,0 +1,23 @@
+id	in	out	verdict
+catalannumber-0	catalan(0)	1	
+catalannumber-1	catalan(1)	1	
+catalannumber-5	catalan(5)	42	
+catalannumber-10	catalan(10)	16796	
+catalannumber-30	catalan(30)	3814986502092304	
+catalannumber-neg-1-is-neg-1	catalan(-1)	-1/2	disagree
+catalannumber-0-past-neg-1	catalan(-2)	0	
+catalannumber-neg-5-is-also-0	catalan(-5)	0	
+threads-element-wise-over-a-list-as-wolfram-s	[catalan(1), catalan(2), catalan(3), catalan(4)]	[1, 2, 5, 14]	
+half-integer-arguments-evaluate-exactly-through	catalan(Rational(5, 2))	catalan(5/2)	
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	catalan(2.3)	2.59035215401932	
+complex-arguments-evaluate-through-the-same	catalan((1.2 + 1*I))	0.730728624207284 + 0.569846406969343*I	
+c-1-2-frac-8-3-pi-by-analytic-continuation	catalan(Rational(1, 2))	catalan(1/2)	
+an-interval-argument-should-give-an-enclosing			
+the-5-ways-to-balance-3-pairs-of-parentheses	catalan(3)	5	
+the-14-triangulations-of-a-hexagon-and-the-14	catalan(4)	14	
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(S(binomial((2 * 5), 5)) / (5 + 1))	42	
+the-closed-form-through-a-negative-n-in-binomial	(S(binomial((2 * -13), 5)) / (4 + 1))	-142506/5	
+equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42	
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(S(catalan(6)) / catalan(5))	22/7	
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
+they-grow-fast-c-15-already-passes-nine-million	catalan(15)	9694845	

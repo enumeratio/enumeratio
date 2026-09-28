@@ -1,0 +1,10 @@
+id	in
+arccsc-1	ArcCsc[1]
+arccsc-2	ArcCsc[2]
+arccsc-sqrt-2-pi-4	ArcCsc[Sqrt[2]]
+an-odd-function	ArcCsc[-2]
+inside-1-1-the-value-is-complex	ArcCsc[0.5]
+arccsc-positiveinfinity	ArcCsc[Infinity]
+a-pole-arccsc-0-is-complex-infinity	ArcCsc[0]
+derivative-for-real-x-1	D[ArcCsc[x], x]
+undoes-csc-csc-arccsc-x-x	Equal[Csc[ArcCsc[2]], 2]

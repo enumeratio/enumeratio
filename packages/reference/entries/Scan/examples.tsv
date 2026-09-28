@@ -1,0 +1,10 @@
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+scan-list-1-2-3-4-add			[Scan, [List, 1, 2, 3, 4], Add]	[List, 1, 3, 6, 10]			
+the-shape-of-a-running-fold			[Scan, [List, a, b, c], f]	[List, a, [f, a, b], [f, [f, a, b], c]]	The shape of a running fold		
+the-running-maximum	Scope		[Scan, [List, 1, 2, 3, 4], Max]	[List, 1, 2, 3, 4]	The running maximum		
+running-products-the-factorials	Scope		[Scan, [List, 1, 2, 3, 4, 5], Multiply]	[List, 1, 2, 6, 24, 120]	Running products: the factorials		
+running-sums-of-symbolic-elements-wolfram-s	Scope		[Scan, [List, a, b, c], Add]	[List, a, [Add, a, b], [Add, a, b, c]]	Running sums of symbolic elements -- Wolfram's Accumulate		
+the-running-minimum	Scope		[Scan, [List, 3, 1, 4, 1, 5], Min]	[List, 3, 1, 1, 1, 1]	The running minimum		
+an-empty-list-scans-to-an-empty-list	Scope		[Scan, [List], Add]	[List]	An empty list scans to an empty list		
+the-values-of-every-prefix-of-the-binary-digits	Applications		[Scan, [List, 1, 0, 1, 1], [Function, [Add, [Multiply, 2, _1], _2]]]	[List, 1, 2, 5, 11]	The values of every prefix of the binary digits 1011		
+the-seeded-form-is-still-the-same-length-as-xs	Possible issues		[Scan, [List, 1, 2, 3], Add, 10]	[List, 11, 13, 16]	The seeded form is still the same length as $xs$ — the seed isn't an output element	convention	Wolfram's seeded FoldList[f, x, list] is length+1: it prepends the seed itself.

@@ -1,0 +1,38 @@
+---
+name: TriangularNumbers
+domain: Collections
+signature: TriangularNumbers
+summary: The triangular numbers $1, 3, 6, 10, …$ — $T(n) = n(n+1)/2$ — dots in a triangle.
+signatures:
+  - call: TriangularNumbers
+    description: $T(n) = n(n+1)/2$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(TriangularNumbers) = +\infty$, and $At(TriangularNumbers, k) = k(k+1)/2$ unranks in closed form -- $At(TriangularNumbers, 5) = 15$.'
+  - OEIS A000217.
+  - "Membership goes through [[Element]] by inverting the closed form exactly: $x$ is triangular iff $8x+1$ is a perfect square -- $Element(15, TriangularNumbers)$ is true, $Element(14, TriangularNumbers)$ is false."
+  - The $k$-gonal case $k=3$ of [[PolygonalNumbers]].
+enumerate:
+  expr: Take(TriangularNumbers, 20)
+seeAlso:
+  - PolygonalNumbers
+  - SquareNumbers
+  - PentagonalNumbers
+  - Count
+  - At
+  - Element
+catalog:
+  - system: oeis
+    identity: A000217
+    url: https://oeis.org/A000217
+  - system: sage
+    identity: sage.combinat.combinat.polygonal_number(3, n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: s=3 fixed for the triangular case; their n = our r
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=3 fixed for the triangular case; PolygonalNumber(3,r) — their n = our r
+grades: []
+carrier: Numeric
+unbounded: true
+---

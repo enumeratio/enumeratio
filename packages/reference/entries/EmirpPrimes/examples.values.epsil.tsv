@@ -1,0 +1,2 @@
+id	in	out
+the-first-20-terms	Take(EmirpPrimes, 20)	"[\n  13,\n  17,\n  31,\n  37,\n  71,\n  73,\n  79,\n  97,\n  107,\n  113,\n  149,\n  157,\n  167,\n  179,\n  199,\n  311,\n  337,\n  347,\n  359,\n  389,\n]"

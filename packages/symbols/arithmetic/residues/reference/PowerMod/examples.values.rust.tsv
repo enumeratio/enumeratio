@@ -1,0 +1,57 @@
+id	in	out	verdict
+powermod-2-10-3	powermod(n(2), n(10), n(3))	1	
+powermod-3-50-11	powermod(n(3), n(50), n(11))	1	
+powermod-3-2-7	powermod(n(3), n(2), n(7))	2	
+a-negative-exponent-gives-the-modular-inverse	powermod(n(2), n(-1), n(7))	4	
+3-1-equiv-5-and-5-2-25-equiv-4	powermod(n(3), n(-2), n(7))	4	
+a-square-root-of-3-equiv-1-pmod-2	powermod(n(3), rational(n(1), n(2)), n(2))	panic: an integer, not 1/2	error
+threads-over-a-list-of-bases	powermod(list(vec![n(2), n(3), n(4)]), n(2), n(5))	panic: threading: a list where the crate takes a scalar	error
+exponent-0-evaluates-even-at-a-negative-modulus	powermod(n(-2), n(0), n(-14))	-13	
+a-rational-exponent-is-a-modular-root-the-least	powermod(n(4), rational(n(1), n(2)), n(7))	panic: an integer, not 1/2	error
+threads-over-lists-the-period-is-the-order-of-2	powermod(n(2), list(vec![n(10), n(11), n(12), n(13), n(14)]), n(5))	panic: threading: a list where the crate takes a scalar	error
+a-301-digit-base	powermod((power(n(10), n(300)) + n(1)), n(7), n(5))	1	
+a-square-root-of-3-modulo-the-prime-10-30-57	powermod(n(3), rational(n(1), n(2)), (power(n(10), n(30)) + n(57)))	panic: an integer, not 1/2	error
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	powermod(rational(n(2), n(3)), n(1), n(7))	panic: an integer, not 2/3	error
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3			
+a-gaussian-modulus-and-an-exponent-of-10-30			
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative			
+a-square-root-of-3-mod-2-is-1-trivially	powermod(n(3), rational(n(1), n(2)), n(2))	panic: an integer, not 1/2	error
+exponent-0-base-minus-4-modulus-minus-2	powermod(n(-4), n(0), n(-2))	-1	
+exponent-0-base-5-modulus-minus-7	powermod(n(5), n(0), n(-7))	-6	
+exponent-0-with-a-positive-modulus	powermod(n(2), n(0), n(14))	1	
+base-a-unit-any-exponent			
+exponent-0-is-always-1			
+a-negative-exponent-inverts-first			
+a-negative-exponent-past-the-first-power			
+modulus-a-real-prime-3-mod-4			
+modulus-a-negative-real-prime			
+modulus-a-composite-gaussian-norm-25			
+no-inverse-for-a-negative-exponent-when-the-base			
+a-bignum-exponent-base-and-modulus-small			
+a-negative-bignum-exponent			
+modulus-past-2-53			
+a-real-base-and-modulus-need-no-gaussian	powermod(n(5), n(5), n(7))		
+result-comes-out-real-reduced-into-0-m-like-an			
+modulus-1-4i-the-other-prime-above-17			
+large-norm-base-and-modulus			
+base-an-associate-times-1			
+base-an-associate-times-i			
+modulus-a-prime-above-13			
+modulus-the-other-prime-above-13			
+base-a-real-prime-s-associate-by-the-unit-i			
+modulus-a-real-composite-5-squared			
+a-negative-unit-exponent-is-its-own-inverse			
+modulus-a-negative-associate			
+one-step-of-rsa-style-modular-exponentiation-7	powermod(n(7), n(13), n(33))	13	
+341-11-cdot-31-passes-fermat-s-test-to-base-2	powermod(n(2), n(340), n(341))	1	
+diffie-hellman-both-parties-reach-the-shared-key	equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))	true	
+by-definition-a-b-bmod-m-computed-without-ever	equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))	true	
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime			
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	powermod(n(2), n(-1), n(4))	panic: no modular inverse: base and modulus share a factor	error
+a-nonzero-exponent-at-the-same-negative-modulus	powermod(n(-2), n(3), n(-14))	-8	inconclusive
+2-is-not-a-square-mod-5-so-there-is-no-root	powermod(n(2), rational(n(1), n(2)), n(5))	panic: an integer, not 1/2	error
+a-positive-exponent-at-a-negative-modulus-1-2	powermod(n(1), n(2), n(-2))	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-3-2-7	powermod(n(3), n(2), n(-7))	-5	inconclusive
+a-positive-exponent-at-a-negative-modulus-341	powermod(n(-1), n(340), n(-2))	-1	inconclusive
+a-positive-exponent-at-a-negative-modulus-5-1-7	powermod(n(5), n(1), n(-7))	-2	inconclusive
+a-negative-exponent-at-a-negative-modulus-2-1-5	powermod(n(2), n(-1), n(-5))	-2	inconclusive

@@ -1,0 +1,14 @@
+---
+name: QuadraticForm
+domain: The modular group
+signature: QuadraticForm(a, b, c)
+summary: An indefinite binary quadratic form $ax^2+bxy+cy^2$, carried by its coefficient triple.
+signatures:
+  - call: QuadraticForm(a, b, c)
+    description: the form $ax^2+bxy+cy^2$
+    library: enumeratio-modular
+    type: (integer, integer, integer) -> expression<QuadraticForm>
+seeAlso:
+  - FormClassNumber
+  - FormDiscriminant
+---

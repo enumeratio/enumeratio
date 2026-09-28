@@ -1,0 +1,71 @@
+id	in	out	verdict
+psi-1-zeta-2-pi-2-6	bool(psi(1, 1) == zeta(2))	True	
+psi-1-2-zeta-3-apery-s-constant-doubled-and	bool(psi(2, 1) == (-2 * zeta(3)))	True	
+an-inexact-argument-evaluates-to-a-decimal-psi-1	psi(1, 0.5)	psi(1, 0.500000000000000)	
+a-pole-of-gamma-still-a-pole-after	psi(1, 0)	ValueError: psi2_eval(): pole	error
+one-argument-is-the-digamma-psi-5-h-4-gamma-frac			
+psi-3-5-pi-4-15-22369-3456	psi(3, 5)	1/15*pi^4 - 22369/3456	
+numerically	N(psi(3, 5))	0.0214278281927536	
+psi-1-2-14-zeta-3	psi(2, 0.5)	psi(2, 0.500000000000000)	
+n-polygamma-1-1	N(psi(1, 1))	1.64493406684823	
+n-polygamma-1-2	N(psi(1, 2))	0.644934066848226	
+n-polygamma-1-0p5	N(psi(1, 0.5))	4.93480220054468	
+n-polygamma-1-1p3	N(psi(1, 1.3))	1.13425343499662	
+n-polygamma-1-7-over-3	N(psi(1, (7/3)))	0.533097125427094	
+n-polygamma-1-1-plus-i	N(psi(1, (1 + 1*I)))	0.463000096622764 - 0.794233542759319*I	
+n-polygamma-1-0p5-plus-0p3i	N(psi(1, (0.5 + 0.3*I)))	2.25903407590533 - 2.82899678611570*I	
+n-polygamma-1-2-plus-neg-0p5-times-i	N(psi(1, (2 + -0.5*I)))	0.588197890950061 + 0.185041972433791*I	
+n-polygamma-2-1	N(psi(2, 1))	-2.40411380631919	
+n-polygamma-2-2	N(psi(2, 2))	-0.404113806319188	
+n-polygamma-2-0p5	N(psi(2, 0.5))	-16.8287966442343	
+n-polygamma-2-1p3	N(psi(2, 1.3))	-1.19846251465196	
+n-polygamma-2-7-over-3	N(psi(2, (7/3)))	-0.278372399401608	
+n-polygamma-2-1-plus-i	N(psi(2, (1 + 1*I)))	0.368552931587935 + 0.766652850345066*I	
+n-polygamma-2-0p5-plus-0p3i	N(psi(2, (0.5 + 0.3*I)))	-0.177259899890067 + 10.4518222059434*I	
+n-polygamma-2-2-plus-neg-0p5-times-i	N(psi(2, (2 + -0.5*I)))	-0.307387267460617 - 0.208452694827465*I	
+n-polygamma-3-1	N(psi(3, 1))	6.49393940226683	
+n-polygamma-3-2	N(psi(3, 2))	0.493939402266828	
+n-polygamma-3-0p5	N(psi(3, 0.5))	97.4090910340024	
+n-polygamma-3-1p3	N(psi(3, 1.3))	2.40102391430893	
+n-polygamma-3-7-over-3	N(psi(3, (7/3)))	0.285379043814242	
+n-polygamma-3-1-plus-i	N(psi(3, (1 + 1*I)))	-1.52287444895350 - 0.317286578661961*I	
+n-polygamma-3-0p5-plus-0p3i	N(psi(3, (0.5 + 0.3*I)))	-27.9442711578469 - 43.9694088398145*I	
+n-polygamma-3-2-plus-neg-0p5-times-i	N(psi(3, (2 + -0.5*I)))	0.280334830853448 + 0.336488835908065*I	
+n-polygamma-5-1	N(psi(5, 1))	122.081167438134	
+n-polygamma-5-2	N(psi(5, 2))	2.08116743813387	
+n-polygamma-5-0p5	N(psi(5, 0.5))	7691.11354860244	
+n-polygamma-5-1p3	N(psi(5, 1.3))	25.7926012806130	
+n-polygamma-5-7-over-3	N(psi(5, (7/3)))	0.857814321602379	
+n-polygamma-5-1-plus-i	N(psi(5, (1 + 1*I)))	-0.933084836284869 + 14.5158522919041*I	
+n-polygamma-5-0p5-plus-0p3i	N(psi(5, (0.5 + 0.3*I)))	-3033.62795029873 + 298.588513636671*I	
+n-polygamma-5-2-plus-neg-0p5-times-i	N(psi(5, (2 + -0.5*I)))	0.271324699533159 + 1.70719640928470*I	
+n-polygamma-1-1-over-2	N(psi(1, (1/2)))	4.93480220054468	
+n-polygamma-0-1	N(psi(0, 1))	-0.577215664901533	
+n-polygamma-0-1-plus-i	N(psi(0, (1 + 1*I)))	0.0946503206224770 + 1.07667404746858*I	
+n-polygamma-0-0p5-plus-0p3i	N(psi(0, (0.5 + 0.3*I)))	-1.39793262940581 + 1.15666938332424*I	
+n-polygamma-neg1-2-is-loggamma-2-is-0	N(psi(-1, 2))	0.000000000000000	
+n-polygamma-neg1-1-over-2	N(psi(-1, (1/2)))	0.572364942924700	
+n-polygamma-neg1-1-plus-i	N(psi(-1, (1 + 1*I)))	-0.650923199301856 - 0.301640320467533*I	
+n-polygamma-neg1-neg0p5	N(psi(-1, -0.5))	1.26551212348465 + 3.14159265358979*I	disagree
+n-polygamma-neg2-stays-unevaluated	N(psi(-2, 2))	ValueError: gamma function pole	error
+n-polygamma-8-cancellation-region	N(psi(8, (-48.445348956457586 + 7.047151294800014*I)))		
+n-polygamma-8-cancellation-region-nearby-im	N(psi(8, (-48.445348956457586 + 10*I)))		
+n-polygamma-5-cancellation-region	N(psi(5, (-48.987654321098766 + 9.5*I)))		
+threads-over-a-list-each-element-exact-so-each	psi(1, [1, 2])	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
+one-argument-digamma-at-a-machine-precision			
+one-argument-digamma-at-a-complex-point			
+complex-argument-integer-order	psi(1, (2.5 + 3*I))	psi(1, 2.50000000000000 + 3.00000000000000*I)	
+between-poles-psi-1-2-pi-2-2-4	psi(1, -0.5)	psi(1, -0.500000000000000)	
+psi-infty-0	psi(1, oo)		
+interval-arithmetic-the-trigamma-is-decreasing			
+to-30-significant-digits-every-one-correctly	N(psi(1, (1/3)))	10.0955971254271	
+to-25-significant-digits-not-yet-only-the-first	N(psi(3, 5))	0.0214278281927536	
+psi-1-i-0-46300-0-79423-i-complex-argument-from	N(psi(1, (1 + 1*I)))	0.463000096622764 - 0.794233542759319*I	
+psi-1-2-pi-2-2	bool(psi(1, (1/2)) == (((pi)^2) / 2))	True	
+recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	bool((psi(1, 1) - psi(1, 2)) == 1)	True	
+psi-0-1-gamma-polygamma-0-z-routes-through	psi(0, 1)	-euler_gamma	
+psi-1-2-gamma-2-ln-2	psi(0, (1/2))	-euler_gamma - 2*log(2)	
+psi-1-2-pi-2-2-in-closed-form	psi(1, (1/2))	1/2*pi^2	
+psi-1-4-pi-2-8g	psi(1, (1/4))	psi(1, 1/4)	inconclusive
+frac-d-dx-psi-n-x-psi-n-1-x	diff(psi(SR.var("n"), SR.var("x")), SR.var("x"))		
+an-exact-integer-argument-is-left-unevaluated	psi(1, 1)	1/6*pi^2	

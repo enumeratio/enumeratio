@@ -1,0 +1,15 @@
+---
+name: DivisorLattice
+domain: Incidence algebras
+signature: DivisorLattice(n)
+summary: The poset of divisors of $n$ ordered by divisibility, on which [[MoebiusFunction]] recovers the classical number-theoretic $\mu$.
+signatures:
+  - call: DivisorLattice(n)
+    description: the divisors of $n$ ordered by divisibility
+    library: enumeratio-incidence
+    type: (integer) -> expression<DivisorLattice>
+seeAlso:
+  - IncidenceAlgebra
+  - PosetElements
+  - MoebiusFunction
+---

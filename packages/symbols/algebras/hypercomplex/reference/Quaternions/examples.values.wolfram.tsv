@@ -1,0 +1,4 @@
+id	in	out	tex.in	tex.out	verdict
+ijk-1	NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]	Subscript[f, 1]**Subscript[f, 2]**(Subscript[f, 1]*Subscript[f, 2])	f_1\text{**}f_2\text{**}\left(f_1 f_2\right)	f_1\text{**}f_2\text{**}\left(f_1 f_2\right)	disagree
+k-in-h					
+a-multicomplex-unit-is-not-a-quaternion					

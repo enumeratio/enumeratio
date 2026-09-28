@@ -1,0 +1,12 @@
+id	in	out
+no-primes-are-1	(Nat.primeCounting 1)	0
+primepi-2	(Nat.primeCounting 2)	1
+primepi-15	(Nat.primeCounting 15)	6
+primepi-100	(Nat.primeCounting 100)	25
+threads-element-wise-over-a-list-as-wolfram-s	(Nat.primeCounting [10, 100])	
+rational-arguments-the-primes-up-to-7-2-are-2	(Nat.primeCounting ((7 : ℚ) / 2))	
+real-arguments	(Nat.primeCounting 15.25)	
+the-primes-below-a-million	(Nat.primeCounting 1000000)	
+listable-threads-over-a-list	(Nat.primeCounting [3, 5, 17, 25])	
+same-inverse-relation-viewed-from-primepi-s-side		
+no-primes-are-a-negative-number	(Nat.primeCounting (-1))	

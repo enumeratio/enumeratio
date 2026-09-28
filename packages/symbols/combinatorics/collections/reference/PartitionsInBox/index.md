@@ -1,0 +1,15 @@
+---
+name: PartitionsInBox
+domain: Collections
+signature: PartitionsInBox(a, b)
+summary: 'The integer partitions fitting in an $a \times b$ box: at most $a$ parts, each at most $b$. Count $\binom{a+b}{a}$.'
+signatures:
+  - call: PartitionsInBox(a, b)
+    description: partitions with at most $a$ parts, each at most $b$
+    library: enumeratio-collections
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - IntegerPartitions
+  - PartitionsMaxPart
+  - PartitionsIntoKParts
+---

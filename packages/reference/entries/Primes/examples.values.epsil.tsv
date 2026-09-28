@@ -1,0 +1,4 @@
+id	in	out
+the-first-five-primes	Take(Primes, 5)	[2, 3, 5, 7, 11]
+11-is-prime	11 in Primes	True
+9-is-not-prime	9 in Primes	False

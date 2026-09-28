@@ -1,0 +1,9 @@
+---
+name: DistinctPreferences
+domain: Combinatorics
+signature: DistinctPreferences(...)
+summary: Distinct preferences
+statOn:
+  - ParkingFunction
+stub: carrier
+---
