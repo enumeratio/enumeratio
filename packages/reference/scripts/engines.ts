@@ -23,6 +23,7 @@ import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
+import { declareStructures } from "@enumeratio/structures/src";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
@@ -36,6 +37,8 @@ const LIBRARY_DECLARATIONS = [
   declareHypercomplex,
   declareDiagrams,
   declareCollections,
+  // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
+  declareStructures,
   declareResidues,
   declareNumerals,
   declareHecke,

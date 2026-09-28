@@ -1,0 +1,15 @@
+name: Midpoint
+domain: Structures
+signature: Midpoint(a, b)
+summary: The point halfway between two values.
+signatures:
+  - call: Midpoint(a, b)
+    description: The point halfway between two values.
+    library: enumeratio-structures
+    type: (any, any) -> unknown
+details:
+  - "The `MidpointOrder` protocol's member: `Round` compares a value against the midpoint between the ticks either side of it."
+seeAlso:
+  - LowerTick
+  - UpperTick
+  - Round

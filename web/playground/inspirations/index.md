@@ -19,6 +19,9 @@ a survey until the design is clear, and some is a debt we are simply naming.
 - [SageMath](/playground/inspirations/sage) — the least borrowed from and the most
   to learn from: parents, categories and coercion, which answer a question our
   domains work is still circling.
+- [Mathlib](/playground/inspirations/mathlib) — Lean's formalised mathematics: one of
+  our oracles, and the hierarchy of structures our generic heads are built on. A head
+  requires structure and a type provides it.
 
 ## What we built from
 
