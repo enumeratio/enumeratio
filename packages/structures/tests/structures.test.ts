@@ -44,6 +44,9 @@ describe("the generic heads", () => {
       ["Min", ["Complex", 1, 2], ["Complex", 2, 1]],
       ["Complex", 1, 1],
     ],
+    // A lazy collection is a pool, as it is natively.
+    [["Max", ["Map", ["Function", ["Multiply", "_k", 2], "_k"], ["Range", 1, 3]]], 6],
+    [["Min", ["Range", 4, 7]], 4],
     // Unknowns stay put.
     [
       ["Floor", "x"],
