@@ -61,6 +61,13 @@ function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
 }
 
 /**
+ * Largest single term magnitude from the most recent `hurwitzEM` call — read via
+ * `hurwitzEMWithLargest` immediately after, before any other call into this module
+ * reuses it (synchronous, single-threaded, same allocation-free pattern as `_pr`/`_pi`).
+ */
+let _emLargest = 0;
+
+/**
  * Euler–Maclaurin for ζ(s, a); see `hurwitzZeta`, which calls it.
  *
  * Hot path: all complex arithmetic is inlined on primitive locals (no per-term
@@ -80,12 +87,15 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
 
   let sumR = 0;
   let sumI = 0;
+  let largest = 0;
   for (let k = 0; k < n; k++) {
     const br = aRe + k;
     if (br === 0 && aIm === 0) continue; // Wolfram HurwitzZeta drops (n+a)=0
     cpowInto(br, aIm, negSr, negSi);
     sumR += _pr;
     sumI += _pi;
+    const m = Math.hypot(_pr, _pi);
+    if (m > largest) largest = m;
   }
 
   const zr = aRe + n; // Re(z) large
@@ -97,11 +107,23 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
   cpowInto(zr, zi, 1 - sRe, -sIm); // z^{1-s}
   const dr = sRe - 1;
   const dd = dr * dr + sIm * sIm; // divide by (s-1)
-  sumR += (_pr * dr + _pi * sIm) / dd;
-  sumI += (_pi * dr - _pr * sIm) / dd;
+  const t1r = (_pr * dr + _pi * sIm) / dd;
+  const t1i = (_pi * dr - _pr * sIm) / dd;
+  sumR += t1r;
+  sumI += t1i;
+  {
+    const m = Math.hypot(t1r, t1i);
+    if (m > largest) largest = m;
+  }
 
-  sumR += 0.5 * zNegSr; // ½ z^{-s}
-  sumI += 0.5 * zNegSi;
+  const t2r = 0.5 * zNegSr; // ½ z^{-s}
+  const t2i = 0.5 * zNegSi;
+  sumR += t2r;
+  sumI += t2i;
+  {
+    const m = Math.hypot(t2r, t2i);
+    if (m > largest) largest = m;
+  }
 
   // Σ_{k≥1} cₖ · (s)_{2k-1} · z^{-(s+2k-1)}, rolling the Pochhammer and z-power forward.
   cpowInto(zr, zi, -2, 0); // z^{-2}
@@ -113,8 +135,12 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
   let pochR = sRe; // (s)_1
   let pochI = sIm;
   for (let k = 1; k <= EM_PAIRS; k++) {
-    sumR += EM_COEFF[k] * (pochR * zpr - pochI * zpi);
-    sumI += EM_COEFF[k] * (pochR * zpi + pochI * zpr);
+    const cr = EM_COEFF[k] * (pochR * zpr - pochI * zpi);
+    const ci = EM_COEFF[k] * (pochR * zpi + pochI * zpr);
+    sumR += cr;
+    sumI += ci;
+    const m = Math.hypot(cr, ci);
+    if (m > largest) largest = m;
     // poch *= (s+2k-1)(s+2k)
     const gr = (sRe + 2 * k - 1) * (sRe + 2 * k) - sIm * sIm;
     const gi = (sRe + 2 * k - 1) * sIm + sIm * (sRe + 2 * k);
@@ -126,7 +152,19 @@ function hurwitzEM(s: Cx, a: Cx): Cx {
     zpi = zpr * zi2i + zpi * zi2r;
     zpr = nzr;
   }
+  _emLargest = largest;
   return { re: sumR, im: sumI };
+}
+
+/**
+ * `hurwitzEM`, plus the largest single term magnitude summed along the way. Left of the
+ * strip the direct terms grow like N^(−Re s) before cancelling down to an O(1) result —
+ * a `largest` many times `|value|` means most of a double's ~16 digits cancelled away, and
+ * `polygamma` is the caller that checks the ratio to decide whether to trust what's left.
+ */
+export function hurwitzEMWithLargest(s: Cx, a: Cx): { value: Cx; largest: number } {
+  const value = hurwitzEM(s, a);
+  return { value, largest: _emLargest };
 }
 
 /** How far from 1 (once shifted by an integer) a may sit for the Taylor series in a. */

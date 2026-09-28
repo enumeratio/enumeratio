@@ -3,7 +3,7 @@
 // digamma/polygamma below.
 import { add, type Cx, div, mul, sub } from "./complex-arithmetic.ts";
 import { bernoulliNumber } from "./bernoulli-rational.ts";
-import { hurwitzZeta } from "./hurwitz-zeta.ts";
+import { hurwitzEMWithLargest } from "./hurwitz-zeta.ts";
 
 // ψ⁽ᵐ⁾(z) = (−1)^(m+1) · m! · ζ(m+1, z) for integer m ≥ 1. compute-engine has a
 // native PolyGamma(m, z) covering real z (and m = 0, the digamma); the complex z
@@ -51,10 +51,33 @@ export function digamma(z: Cx): Cx {
   return sub(r, shift);
 }
 
-/** ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z), integer m ≥ 1, complex z. */
+/** (−1)^(m+1) m!, the sign and scale between ζ(m+1, z) and ψ⁽ᵐ⁾(z). */
+export const polygammaCoefficient = (m: number): number => (m % 2 === 0 ? -1 : 1) * factorial(m);
+
+/**
+ * Past this ratio of the largest Euler–Maclaurin term summed to the final result's own
+ * magnitude, `polygamma` declines rather than report a value: most of a double's ~16
+ * digits cancelled away summing to get there, and what's left can't be trusted. Matches
+ * cortex-js/compute-engine#359's own threshold for the same guard on its complex kernel.
+ * An 850-point random oracle sweep against mpmath (m ∈ {0,1,2,3,5,8}, |z| ≤ 50, including
+ * near and between poles) found no answer past this guard off by more than 1e-12 relative,
+ * at the cost of declining some (~3%) that would in fact have been fine.
+ */
+const POLYGAMMA_CANCELLATION_LIMIT = 100;
+
+/**
+ * ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z), integer m ≥ 1, complex z. s = m+1 ≥ 2 always takes
+ * `hurwitzEM`'s direct branch (never the Taylor-near-1 branch `hurwitzZeta` uses left of
+ * the strip), so this calls it directly to get the cancellation ratio along with the sum.
+ * NaN where that ratio exceeds `POLYGAMMA_CANCELLATION_LIMIT` — the caller
+ * (`evaluatePolygamma`) keeps the head unevaluated there rather than reporting digits that
+ * cancellation left behind.
+ */
 export function polygamma(m: number, z: Cx): Cx {
-  const k = (m % 2 === 0 ? -1 : 1) * factorial(m); // (−1)^(m+1) m!
-  const h = hurwitzZeta({ re: m + 1, im: 0 }, z);
+  const k = polygammaCoefficient(m);
+  const { value: h, largest } = hurwitzEMWithLargest({ re: m + 1, im: 0 }, z);
+  const size = Math.hypot(h.re, h.im);
+  if (size > 0 && largest / size > POLYGAMMA_CANCELLATION_LIMIT) return { re: Number.NaN, im: Number.NaN };
   return { re: k * h.re, im: k * h.im };
 }
 

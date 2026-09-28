@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { describe, expect, test } from "vite-plus/test";
-import { applyAllPatches, polygammaReal, polyLog, polyLogReal } from "../src/index.ts";
+import { applyAllPatches, polygammaReal, polyLog, polyLogReal, polygamma, setZetaKernel } from "../src/index.ts";
 
 // PolyLog and PolyGamma are native compute-engine heads. applyAllPatches extends
 // rather than replaces them, so these tests cover both halves: the native cases must
@@ -43,6 +43,34 @@ describe("POLYGAMMA ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z)", () => {
     const threaded = ce.box(["PolyGamma", 1, ["List", 1, 2]]).N();
     const elementwise = ce.box(["List", ["PolyGamma", 1, 1], ["PolyGamma", 1, 2]]).N();
     expect(threaded.toString()).toBe(elementwise.toString());
+  });
+
+  // High order, large negative Re(z): the double kernel's Euler–Maclaurin sum cancels
+  // away most of its own digits there (mpmath: −5.8027099826028732e-11 − 1.2898930277153784e-10i).
+  const CANCELLING_Z = { re: -48.445348956457586, im: 7.047151294800014 };
+
+  test("cancellation region: N() (bignum kernel by default) matches mpmath", () => {
+    const r = ce.box(["PolyGamma", 8, ce.complex(CANCELLING_Z.re, CANCELLING_Z.im)]).N();
+    const expected = { re: -5.802709982602873e-11, im: -1.2898930277153784e-10 };
+    const rel = Math.hypot(r.re - expected.re, r.im - expected.im) / Math.hypot(expected.re, expected.im);
+    expect(rel).toBeLessThan(1e-12);
+  });
+
+  test("cancellation region: the double kernel declines rather than report cancelled digits", () => {
+    // `polygamma` (numerics/polygamma.ts) is the double kernel directly -- no bignum route.
+    const v = polygamma(8, CANCELLING_Z);
+    expect(Number.isNaN(v.re)).toBe(true);
+    expect(Number.isNaN(v.im)).toBe(true);
+  });
+
+  test("cancellation region: PolyGamma stays unevaluated (not ComplexInfinity) with the double kernel forced", () => {
+    try {
+      setZetaKernel("double");
+      const r = ce.box(["PolyGamma", 8, ce.complex(CANCELLING_Z.re, CANCELLING_Z.im)]).N();
+      expect(r.operator).toBe("PolyGamma"); // declined, not ComplexInfinity
+    } finally {
+      setZetaKernel("bignum");
+    }
   });
 });
 
