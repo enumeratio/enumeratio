@@ -13,7 +13,7 @@ import {
 import { defineControl, emitControl } from "./define.ts";
 
 /**
- * `<notatio-interval-slider name="r" value="1,3" min="0" max="5" step="0.5">` -- a
+ * `<IntervalSlider name="r" value="1,3" min="0" max="5" step="0.5">` -- a
  * track with two thumbs, Wolfram's `IntervalSlider`. The binding `_r` is the `List`
  * `[lo, hi]`; the thumbs cannot cross. Each thumb takes the arrows in a knob's gears;
  * `readout` shows the interval beside the track.

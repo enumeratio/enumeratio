@@ -7,7 +7,7 @@ import { ensureStyles } from "./styles.ts";
 import { type Clock, type Loop, pageClock, type Tick } from "@enumeratio/frontend";
 
 /**
- * `<notatio-clock>` -- play, pause and scrub the page's shared clock.
+ * `<Clock>` -- play, pause and scrub the page's shared clock.
  *
  * There is one clock per page, so this control is not tied to any particular figure: put it
  * anywhere and it governs every animated figure on the page at once. That is the point. A

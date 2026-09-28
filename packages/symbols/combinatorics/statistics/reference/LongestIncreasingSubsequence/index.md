@@ -18,5 +18,5 @@ signatures:
   - call: LongestIncreasingSubsequence(p)
     description: The length of a longest increasing subsequence.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

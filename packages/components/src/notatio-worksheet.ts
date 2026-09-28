@@ -37,10 +37,10 @@ import {
 import { SliderPlayback } from "./sweep.ts";
 
 /**
- * `<notatio-worksheet>` -- a set of named expressions and a shared view of what they draw.
+ * `<Worksheet>` -- a set of named expressions and a shared view of what they draw.
  *
- * Built on the same unified pieces `<notatio-notebook>` is: a reactive
- * `<notatio-dynamic-module tracked-symbols="all">` of `<notatio-cell>`s owns editing and
+ * Built on the same unified pieces `<Notebook>` is: a reactive
+ * `<DynamicModule tracked-symbols="all">` of `<Cell>`s owns editing and
  * evaluation; this element owns the worksheet-specific chrome (add/remove, drag to
  * reorder, the gutter's marks) and the two things a worksheet adds on top:
  *
@@ -56,14 +56,14 @@ import { SliderPlayback } from "./sweep.ts";
  * toggle, Desmos-style, and may override the projection its variables imply.
  *
  * The knob/projection inference is read off every cell's own `notatio-result` event --
- * `<notatio-cell>`'s `plot` option (`notatio-out.ts`) reports the input substituted but
+ * `<Cell>`'s `plot` option (`notatio-out.ts`) reports the input substituted but
  * not evaluated, and `elide-above` keeps a long curve from being typeset every frame.
- * A slider drives a cell through `<notatio-cell>`'s `liveValue` (a property, not
+ * A slider drives a cell through `<Cell>`'s `liveValue` (a property, not
  * `value`): the Out re-evaluates on every frame, the editor field does not, which is
  * what keeps a drag from re-typesetting the very field being dragged.
  *
  * There is no cell history and no ordinals: every cell is defined by its name and
- * recomputed from its dependencies, the same reactive schedule `<notatio-notebook>`
+ * recomputed from its dependencies, the same reactive schedule `<Notebook>`
  * uses -- which is what separates a worksheet from a plain transcript, whose sequential
  * mode is exactly the history this lacks.
  */
@@ -130,7 +130,7 @@ export class NotatioWorksheet extends LitElement {
   #nextId = 1;
   /**
    * Cell sources a slider is driving right now, in Epsil -- handed to the cell's own
-   * `liveValue`, not `value`. `<notatio-cell>`'s own doc comment has the reason: `value`
+   * `liveValue`, not `value`. `<Cell>`'s own doc comment has the reason: `value`
    * feeds the editor field, and rewriting it on every drag frame is what measured
    * 11-31ms of synchronous MathLive relayout each, freezing the renderer outright. The
    * override is evaluated in the cell's place and written into `value` once, on release.
@@ -248,7 +248,7 @@ export class NotatioWorksheet extends LitElement {
 
   /**
    * Read the seed into cells, kept in Epsil (`#format`'s syntax) -- the syntax every
-   * `<notatio-cell>` below reads directly, so this is synchronous unless the seed itself
+   * `<Cell>` below reads directly, so this is synchronous unless the seed itself
    * asked for `in-form="latex"`, which needs the engine to convert it once.
    */
   async #seedCells(): Promise<void> {
@@ -354,10 +354,10 @@ export class NotatioWorksheet extends LitElement {
 
   /**
    * Tell the reactive module a slider just committed `source` into cell `id`, the same
-   * way a reader's own edit would: `<notatio-cell>`'s `value` PROPERTY changing (which
+   * way a reader's own edit would: `<Cell>`'s `value` PROPERTY changing (which
    * `#patch`, above, already did) only reloads that one cell's own display
    * (`notatio-cell.ts`'s `#load`) -- it does not fire `notatio-change`, which is the
-   * only thing `<notatio-dynamic-module>`'s reactive graph listens for
+   * only thing `<DynamicModule>`'s reactive graph listens for
    * (`reactive-module.ts`'s `commit`). Without this, a downstream cell reading the
    * slider's binding would keep showing what it read before the slider moved.
    */
@@ -462,8 +462,8 @@ export class NotatioWorksheet extends LitElement {
   // --- reading the module's cells ----------------------------------------------------
 
   /**
-   * A descendant `<notatio-cell>`'s Out reported a result -- the trigger this element
-   * reacts to, the way `<notatio-notebook>`'s module reacts to `notatio-change`. Kept
+   * A descendant `<Cell>`'s Out reported a result -- the trigger this element
+   * reacts to, the way `<Notebook>`'s module reacts to `notatio-change`. Kept
    * per cell (`#cellData`), then folded into the controls/drawables every cell's facts
    * are worked out from together (`#deriveState`), throttled the same way a dragged
    * slider's own re-renders are.
@@ -516,7 +516,7 @@ export class NotatioWorksheet extends LitElement {
    * Fold every cell's own facts (`#cellData`) into the shared state: which bindings get
    * a slider, which cells draw, and what view each projection resolves to. The
    * per-cell work (evaluating, typesetting) already happened inside that cell's own
-   * `<notatio-out>`; this only reads it back.
+   * `<Out>`; this only reads it back.
    */
   #deriveState(): void {
     if (!this.#engine) return;

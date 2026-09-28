@@ -12,5 +12,5 @@ signatures:
   - call: Order(p)
     description: The order of p in the symmetric group — the lcm of its cycle lengths.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

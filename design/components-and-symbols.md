@@ -20,7 +20,7 @@ the part component-naming already owns.
   for the MathLive field through one seam, `source.ts`. `in-form="latex"` is the escape
   hatch. `notatio-in` _is_ the field and keeps LaTeX; `notatio-out` renders a given
   encoding and keeps `format`.
-- **`/reference/components`** is generated at build time from the element sources
+- **`/reference/component/<Name>`** is generated at build time from the element sources
   (`web/.vitepress/data/components.ts`): `static properties` is the attribute surface,
   the JSDoc above an entry is its prose. Nothing is written into the repo.
 - **Markdown authors write the elements directly.** VitePress compiles the page to a Vue

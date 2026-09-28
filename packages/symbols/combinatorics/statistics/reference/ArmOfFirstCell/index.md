@@ -12,5 +12,5 @@ signatures:
   - call: ArmOfFirstCell(partition)
     description: "The arm of cell (1,1): the first part minus one."
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

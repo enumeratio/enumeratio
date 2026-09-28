@@ -26,7 +26,7 @@ function pair(raw: string | number | undefined): [number, number] | undefined {
 }
 
 /**
- * `<notatio-slider-2d name="p" value="0.5,0.5" min="0,0" max="1,1">` -- a square with a
+ * `<Slider2D name="p" value="0.5,0.5" min="0,0" max="1,1">` -- a square with a
  * dot you drag about it, Wolfram's `Slider2D`. `min`/`max` are `x,y` pairs (default the
  * unit square), `step` one step for both axes or `dx,dy`. The arrows nudge the dot in
  * the same gears as a knob (Shift coarse, Alt fine, held arrows accelerate).

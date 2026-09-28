@@ -23,5 +23,5 @@ signatures:
   - call: DistinctParts(partition)
     description: How many distinct part sizes occur.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

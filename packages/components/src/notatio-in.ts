@@ -66,7 +66,7 @@ function valuePart(latex: string): string {
 const PROMPT = "value";
 
 /**
- * `<notatio-in>` -- a LaTeX math field wrapping MathLive's `<math-field>`.
+ * `<In>` -- a LaTeX math field wrapping MathLive's `<math-field>`.
  * Emits `notatio-change` with `{ latex }` on each edit, live as the reader types, and
  * `notatio-commit` with the same shape when MathLive itself considers the edit
  * committed -- its native `change` event, which it fires on Enter and on blur (only if

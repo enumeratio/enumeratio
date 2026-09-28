@@ -3,11 +3,11 @@
 // (packages/components/reference/<Name>.stories.yaml, via stories-data.ts) as a live render
 // plus its source. `expr` is the source of truth (design/vdom.md); the live render is
 // `vdomOf(expr)` handed to Vue's `h` through `toVNode`, computed here at runtime -- that
-// lowering is cheap and pure. The source panel shows `story.forms`, a tab per written form
-// (today: `head`, the STRUCTURAL tree with PascalCase heads; `html`, the lit-tag markup a
-// plain-HTML host would write), each derived once at generation time and pinned in the
-// generated data -- never re-derived here, so a tab cannot show something that doesn't match
-// what was reviewed. More forms land as more tabs, not a wider switch statement.
+// lowering is cheap and pure. The source panel shows `story.forms`, a tab per written form --
+// `epsil` (the default), `vue`, `react`, `html`, and `vdom` -- each with a caption saying
+// where it's actually written, derived once at generation time and pinned in the generated
+// data -- never re-derived here, so a tab cannot show something that doesn't match what was
+// reviewed. More forms land as more tabs, not a wider switch statement.
 import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
 import { h, reactive } from "vue";
 import { renderProseMath } from "../../prose-math.ts";
@@ -75,11 +75,10 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
               {{ form.label }}
             </button>
           </div>
-          <pre
-            v-for="form in story.forms.filter((f) => f.id === formFor(story))"
-            :key="form.id"
-            role="tabpanel"
-          ><code>{{ form.text }}</code></pre>
+          <template v-for="form in story.forms.filter((f) => f.id === formFor(story))" :key="form.id">
+            <pre role="tabpanel"><code>{{ form.text }}</code></pre>
+            <p class="story-form-caption">{{ form.caption }}</p>
+          </template>
         </details>
       </div>
     </template>
@@ -154,11 +153,17 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
 }
 .story-code pre {
   margin: 0;
-  padding: 0.5rem 1rem 0.9rem;
+  padding: 0.5rem 1rem 0;
   overflow-x: auto;
   font-family: var(--vp-font-family-mono);
   font-size: 0.8rem;
   color: var(--vp-c-text-1);
+}
+.story-form-caption {
+  margin: 0.2rem 0 0.7rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
 }
 .story-tabs {
   display: flex;

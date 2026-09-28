@@ -13,7 +13,7 @@ typed; hand it a result and it prints the result.
 
 ## It is Epsil, not LaTeX
 
-The rule is the one the [components](/reference/components/) already follow:
+The rule is the one the [components](/reference/component/) already follow:
 the syntax is Epsil, and LaTeX appears only inside a `$…$` island. InputForm never
 emits an island — a test asserts it — so what comes out is always something the Epsil
 parser reads on its own.

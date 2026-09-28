@@ -22,5 +22,5 @@ signatures:
   - call: HookProduct(partition)
     description: The product of all hook lengths — the denominator in the hook-length formula.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

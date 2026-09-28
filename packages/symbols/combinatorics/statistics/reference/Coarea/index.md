@@ -13,5 +13,5 @@ signatures:
   - call: Coarea(path)
     description: The complement of the area within the enclosing triangle.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

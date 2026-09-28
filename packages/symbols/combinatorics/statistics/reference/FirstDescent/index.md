@@ -12,5 +12,5 @@ signatures:
   - call: FirstDescent(p)
     description: The smallest descent position, or 0 when p is increasing.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

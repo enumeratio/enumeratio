@@ -8,8 +8,8 @@ explain them.
   and enumeratio collection, with live, test-pinned examples.
 - [Formats](/reference/formats/) — the input syntaxes an expression can arrive in
   (MathJSON, LaTeX, AsciiMath) and the forms it comes back out as, code forms included.
-- [Components](/reference/components/) — notatio's `<notatio-*>` elements:
-  every attribute, its type and default, generated from the source.
+- [Components](/reference/component/) — notatio's `<Plot>`, `<BarChart3D>`, `<Manipulate>`, …:
+  every prop, its type and default, generated from the source.
 
 The symbol and component pages are generated from the packages themselves — heads from
 their reference entries, attributes from the element sources — so they cannot drift from

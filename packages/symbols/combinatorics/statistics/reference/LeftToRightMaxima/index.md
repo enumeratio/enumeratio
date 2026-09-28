@@ -19,5 +19,5 @@ signatures:
   - call: LeftToRightMaxima(p)
     description: Positions larger than everything before them.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

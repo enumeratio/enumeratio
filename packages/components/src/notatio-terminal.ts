@@ -104,7 +104,7 @@ function ensureTerminalStyles(): void {
 }
 
 /**
- * `<notatio-terminal>` — an in-browser terminal. `mode` is `repl` (default), `cli`
+ * `<Terminal>` — an in-browser terminal. `mode` is `repl` (default), `cli`
  * or `show`. `seed` is a JSON array of lines to run on mount; `examples` (default on)
  * shows the dropdown + Play/Clear toolbar. In `show` mode, `value` is the expression
  * and `env` the environment it is shown for (`tty` by default).

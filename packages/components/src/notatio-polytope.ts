@@ -15,7 +15,7 @@ import {
 } from "@enumeratio/frontend";
 
 /**
- * `<notatio-polytope which="permutahedron" n="4">` -- a polytope's face poset, drawn,
+ * `<Polytope which="permutahedron" n="4">` -- a polytope's face poset, drawn,
  * draggable and clickable.
  *
  * Every mark on the picture IS a face: clicking a polygon selects a 2-face, a line a 1-face, a

@@ -21,5 +21,5 @@ signatures:
   - call: Returns(path)
     description: Points where the path comes back to height 0.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

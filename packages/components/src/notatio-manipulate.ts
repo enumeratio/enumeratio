@@ -23,7 +23,7 @@ import {
 import { SliderPlayback } from "./sweep.ts";
 
 /**
- * `<notatio-manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
+ * `<Manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
  * `Manipulate`: it renders a slider (or setter) per parameter and re-binds those
  * parameters into its slotted content live. Any descendant attribute that is a
  * **Epsil** expression containing a **named wildcard** (`_a`) is treated as a
@@ -32,10 +32,10 @@ import { SliderPlayback } from "./sweep.ts";
  * plot, a glyph, several elements at once, or plain markup:
  *
  * ```html
- * <notatio-manipulate params="{n, 1, 8, 1}">
- *   <notatio-plot value="Sin(_n * x)" />
- *   <notatio-figure kind="subset" value="[1]" n="_n" />
- * </notatio-manipulate>
+ * <Manipulate params="{n, 1, 8, 1}">
+ *   <Plot value="Sin(_n * x)" />
+ *   <Figure kind="subset" value="[1]" n="_n" />
+ * </Manipulate>
  * ```
  *
  * A slot body is any Epsil expression over the parameter wildcards (`_n * 20`),
@@ -64,14 +64,14 @@ import { SliderPlayback } from "./sweep.ts";
  * the value is shown.
  *
  * ```html
- * <notatio-manipulate
+ * <Manipulate
  *   params="{k, 1, 8, 1}; {a, 0, 2, 0.1}"
  *   prose="The curve $\sin(kx)$ with frequency {k}, scaled by {a}, crosses zero {2 * _k + 1} times.">
- *   <notatio-plot value="_a Sin(_k x)" />
- * </notatio-manipulate>
+ *   <Plot value="_a Sin(_k x)" />
+ * </Manipulate>
  * ```
  *
- * The knobs are ordinary `<notatio-knob>`s with every gesture that implies -- gears,
+ * The knobs are ordinary `<Knob>`s with every gesture that implies -- gears,
  * keyboard, typing, Space to play -- and the content below re-derives as they move.
  */
 export class NotatioManipulate extends LitElement {

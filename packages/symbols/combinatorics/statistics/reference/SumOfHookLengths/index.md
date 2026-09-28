@@ -18,5 +18,5 @@ signatures:
   - call: SumOfHookLengths(partition)
     description: The total of all hook lengths.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---
