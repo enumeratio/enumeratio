@@ -146,6 +146,14 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     note: "Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.",
   },
   {
+    head: "ClausenCl",
+    arity: 2,
+    emit: {
+      wolfram: 'ResourceFunction["ClausenCl"][$1, $2]',
+    },
+    note: "No built-in Clausen head; the Wolfram Function Repository's own ResourceFunction[\"ClausenCl\"] matches ours -- Catalan at (2, π/2), 0 at (2, π), -3/4 ζ(3) at (3, π), DirichletBeta[4] at (4, π/2), 1.0149416064096535 at (2, 1.047…). Needs network access to the Function Repository to run. Known quirk: at (3, 0) it returns an unevaluated If[OddQ, Zeta[3], 0] -- a bug in the repository function, not ours -- so that example's oracle verdict should read as inconclusive, not disagree.",
+  },
+  {
     head: "Complex",
     arity: 2,
     emit: {
@@ -815,6 +823,15 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
       rust: "sin($1)",
     },
     threadArg: 1,
+  },
+  {
+    head: "SloaneA",
+    arity: 2,
+    emit: {
+      wolfram:
+        'With[{s = ResourceFunction["OEISSequenceData"][$1, "Offset"]}, ResourceFunction["OEISSequence"][$1][[$2 - s + 1]]]',
+    },
+    note: "No built-in OEIS-by-id lookup, but the Function Repository's OEISSequence/OEISSequenceData, read against each sequence's own OEIS offset, lands on the n-th term uniformly across every id this head aliases -- matches all seven (A000045/10 = 55, A000793/10 = 30, A000040/5 = 11, A000041/10 = 42, A000110/5 = 52, A000142/5 = 120, A000720/20 = 8). Needs network access to the Function Repository (and, transitively, oeis.org) to run. A060691, outside this head's alias table and left symbolic on our side, disagrees once the scan runs -- that is a scope difference (we don't claim that id), not a wrong answer.",
   },
   {
     head: "Sqrt",

@@ -32,8 +32,9 @@ bindings:
     source: upstream/compute-engine/src/compute-engine/numerics/clausen.ts
   - origin: mapped
     form: wolfram
-    counterpart: false
-    note: No built-in Clausen head; it's spelled Im/Re PolyLog[n, E^(I θ)] with the branch chosen by n's parity (see this entry's own Which/IsEven reference row), which a single fixed template can't express. The Wolfram Function Repository has ResourceFunction["ClausenCl"][n, θ] under this same name and arity, but this environment has no Wolfram Cloud connection to call or verify it, so it stays unmapped rather than templated blind.
+    template: ResourceFunction["ClausenCl"][$1, $2]
+    arity: 2
+    note: 'No built-in Clausen head; the Wolfram Function Repository''s own ResourceFunction["ClausenCl"] matches ours -- Catalan at (2, π/2), 0 at (2, π), -3/4 ζ(3) at (3, π), DirichletBeta[4] at (4, π/2), 1.0149416064096535 at (2, 1.047…). Needs network access to the Function Repository to run. Known quirk: at (3, 0) it returns an unevaluated If[OddQ, Zeta[3], 0] -- a bug in the repository function, not ours -- so that example''s oracle verdict should read as inconclusive, not disagree.'
     checked:
       version: 15.0.0
       on: 2026-09-28

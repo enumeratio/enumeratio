@@ -18,8 +18,9 @@ bindings:
     source: packages/symbols/analysis/analytic/src/sloane-a.ts
   - origin: mapped
     form: wolfram
-    counterpart: false
-    note: 'No built-in OEIS-by-id lookup (kernel-verified: SloaneA is an unknown symbol). The Wolfram Function Repository has ResourceFunction["OEISSequence"]/["OEISSequenceData"]/["OEISLookup"], general enough by id that a single template could plausibly cover every alias here -- but each needs an internet round trip to oeis.org and per-sequence offset arithmetic (A000045''s a(0)=0 vs A000040''s a(1)=2) to land on the n-th term our signature promises, and this environment has no Wolfram Cloud connection to call or verify either. Left unmapped rather than templated blind.'
+    template: With[{s = ResourceFunction["OEISSequenceData"][$1, "Offset"]}, ResourceFunction["OEISSequence"][$1][[$2 - s + 1]]]
+    arity: 2
+    note: No built-in OEIS-by-id lookup, but the Function Repository's OEISSequence/OEISSequenceData, read against each sequence's own OEIS offset, lands on the n-th term uniformly across every id this head aliases -- matches all seven (A000045/10 = 55, A000793/10 = 30, A000040/5 = 11, A000041/10 = 42, A000110/5 = 52, A000142/5 = 120, A000720/20 = 8). Needs network access to the Function Repository (and, transitively, oeis.org) to run. A060691, outside this head's alias table and left symbolic on our side, disagrees once the scan runs -- that is a scope difference (we don't claim that id), not a wrong answer.
     checked:
       version: 15.0.0
       on: 2026-09-28
