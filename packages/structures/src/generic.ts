@@ -11,7 +11,10 @@ import { compare, member } from "./conform.ts";
 const isReal = (op: BoxedExpression): boolean => op.type.matches("real") || op.type.matches("signed_infinity");
 
 /** A value the generic path can look at: not a real number, and nothing left unknown. */
-const isStructured = (op: BoxedExpression): boolean => !isReal(op) && op.unknowns.length === 0;
+const isStructured = (op: BoxedExpression): boolean =>
+  // A collection other than a literal list or a string (a lazy `Map`, a `Range`) is a pool the
+  // native head reads itself, not one value to compare.
+  !isReal(op) && op.unknowns.length === 0 && (op.type.matches("string") || !op.type.matches("collection"));
 
 /** The pool `Min`/`Max` compare: lists flattened, as compute-engine's do. */
 const pool = (ops: readonly BoxedExpression[]): BoxedExpression[] =>
