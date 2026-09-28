@@ -24,14 +24,14 @@
   },
   "dependencies": {
     "@enumeratio/algebra": "workspace:*",
-    "@enumeratio/boxed": "workspace:*",
-    "@enumeratio/diagram": "workspace:*"
+    "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/algebra": "workspace:*",
-    "@enumeratio/boxed": "workspace:*",
     "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/modular": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",

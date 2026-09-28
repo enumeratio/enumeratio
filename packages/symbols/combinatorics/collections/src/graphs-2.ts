@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf } from "@enumeratio/engine";
 import { allPairsWeightedDistances, weightedAdjacencyMatrixExpr } from "./graph-weights.ts";
 import { degrees, directedAdjacency, type GraphModel, graphOf, integerGraph, listOf, vertexKey } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";

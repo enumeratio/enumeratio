@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
 
 // DifferentialRootReduce(f(x), x) / DifferentialRoot(...)[x]: Wolfram's holonomic (D-finite)

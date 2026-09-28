@@ -1,12 +1,12 @@
-// The component reference: the attribute tables `@enumeratio/notatio/reflect` reads out
+// The component reference: the attribute tables `@enumeratio/frontend/reflect` reads out
 // of the element sources, plus which playground page exercises each component.
 
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type ComponentDoc as Reflected, collectComponents as reflect } from "@enumeratio/notatio/reflect";
+import { type ComponentDoc as Reflected, collectComponents as reflect } from "@enumeratio/frontend/reflect";
 
-export type { AttributeDoc } from "@enumeratio/notatio/reflect";
+export type { AttributeDoc } from "@enumeratio/frontend/reflect";
 
 export interface ComponentDoc extends Reflected {
   /** The playground page that exercises this component, when there is one. */
@@ -14,7 +14,7 @@ export interface ComponentDoc extends Reflected {
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const srcDir = resolve(here, "../../../packages/notatio-lit/src");
+export const srcDir = resolve(here, "../../../packages/components/src");
 const playgroundDir = resolve(here, "../../playground");
 
 /** Every markdown page under the playground, as a path relative to it. */

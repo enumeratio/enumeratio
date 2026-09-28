@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // HankelTransform(f, r, s[, n]) = ∫_0^∞ f(r) J_n(s r) r dr, matching Wolfram's own
 // normalisation exactly (no extra prefactor — confirmed directly against

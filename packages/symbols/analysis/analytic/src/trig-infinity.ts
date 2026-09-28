@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
-import { widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // sin(±∞) and cos(±∞): no limit, but every value in [−1, 1] is approached, and Wolfram
 // answers with that range, Interval[{-1, 1}]. compute-engine rejects a signed infinity

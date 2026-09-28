@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/engine";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";

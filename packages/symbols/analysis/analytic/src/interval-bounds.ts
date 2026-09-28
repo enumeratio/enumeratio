@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 // Rigorous endpoints for an interval image: the promise an `Interval` result makes is that
 // it CONTAINS every value the function takes on the input (enumeratio/enumeratio#113 §2 --

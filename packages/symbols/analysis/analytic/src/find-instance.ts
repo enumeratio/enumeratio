@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // FindInstance(expr, vars, [domain], [n]) — Wolfram finds `n` instances of `vars` that
 // make `expr` true, over `domain` (default Complexes). We scope down hard, to a core

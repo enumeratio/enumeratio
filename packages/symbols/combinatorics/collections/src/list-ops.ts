@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 /** Declare simple list manipulation heads: Prepend. */
 export function declareListOps(ce: ComputeEngine): void {

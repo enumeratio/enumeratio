@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import {
   add,
   cexp,

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // Issue #113's remaining elementary backlog (excluding every Interval/CenteredInterval/Around

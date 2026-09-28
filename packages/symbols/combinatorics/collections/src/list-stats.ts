@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import { isMatrixLike } from "./list-heads.ts";
 
 // The remaining #113 list/statistics gaps: Mean/Median on data compute-engine's own

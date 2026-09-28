@@ -16,7 +16,7 @@
 // left as we do, which is a transpiler mapping rather than a reason to rename.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 /** Apply `steps` to `subject` right to left — `compose(f, g)(x)` is `f(g(x))`.
  *

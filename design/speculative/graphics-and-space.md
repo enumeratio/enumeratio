@@ -99,7 +99,7 @@ exist, and document formats are expensive to change later.
 
 Current homes, and what is wrong with them:
 
-- `@enumeratio/notatio` holds the web components **and** the reactive core
+- `@enumeratio/frontend` holds the web components **and** the reactive core
   (`reactive.ts`), the space model (`space.ts`), the layer stacking, and the projection
   inference. Those last three are not about the DOM at all — they are the model a
   worksheet is a _view_ of. They are in elements because elements is where the worksheet
@@ -114,7 +114,7 @@ A plausible split — **not a decision, a starting point for one**:
 | ---------------------- | ---------------------------------------------------------- |
 | `@enumeratio/graphics` | graphics objects, frames, `Image`, `Rasterize`, projection |
 | `@enumeratio/document` | `Cell`, `In`, `Out`, the reactive core, worksheet model    |
-| `@enumeratio/notatio`  | web components only — views over the two above             |
+| `@enumeratio/frontend` | web components only — views over the two above             |
 | `@enumeratio/raster`   | unchanged: the native rasterizer                           |
 
 The test for whether that split is right is whether the CLI can use `graphics` and

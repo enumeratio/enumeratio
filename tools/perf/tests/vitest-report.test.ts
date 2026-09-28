@@ -5,8 +5,8 @@ import { expect, test } from "vite-plus/test";
 import { toPackageRun } from "../src/vitest-report.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
-// A trimmed, real capture: `pnpm --filter @enumeratio/boxed exec vp test --reporter=json
-// --outputFile=…` against packages/boxed, with paths rewritten under a fake package root.
+// A trimmed, real capture: `pnpm --filter @enumeratio/engine exec vp test --reporter=json
+// --outputFile=…` against packages/engine, with paths rewritten under a fake package root.
 const golden = JSON.parse(readFileSync(join(here, "fixtures/boxed-report.golden.json"), "utf8"));
 
 test("toPackageRun reads a real vitest --reporter=json capture", () => {

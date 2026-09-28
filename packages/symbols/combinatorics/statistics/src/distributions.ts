@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // The Wolfram-frontier distribution heads: Distributed, RandomVariate, EmpiricalDistribution,
 // BetaDistribution, GammaDistribution, BinormalDistribution, Expectation, Probability — plus

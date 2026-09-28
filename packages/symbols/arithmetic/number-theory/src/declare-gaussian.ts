@@ -7,7 +7,7 @@ import {
   optionsOf,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { factorInteger, gcd as bigGcd, isPrime } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, symbolNameOf } from "@enumeratio/boxed";
+import { bigRationalAt, symbolNameOf } from "@enumeratio/engine";
 import { SUMMARIES } from "@enumeratio/manifest/package/collections";
 
 // GeneratingFunction / ExponentialGeneratingFunction / FindSequenceFunction / DiscreteRatio

@@ -8,7 +8,7 @@ import {
   symbolNameOf,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { ADIC, adicOf, adic } from "@enumeratio/numerals";
 import { isPrime, mod } from "@enumeratio/residues";
 import * as I from "./idele.ts";

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { compareGenerators, type Generator, generatorOf, generatorSymbol, sameGenerator } from "./units.ts";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // A hypercomplex element in normal form: a coefficient per BLADE, where a blade is
 // an ordered product of distinct generators (the empty blade is the scalar). Every

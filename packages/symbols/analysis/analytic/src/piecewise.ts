@@ -1,5 +1,5 @@
 import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 // Piecewise({{v1, c1}, {v2, c2}, ...}, default) — Wolfram's conditional-value head. The
 // conditions are tried in order; the value returned is the first one that's `True`,

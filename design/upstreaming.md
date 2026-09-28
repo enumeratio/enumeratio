@@ -204,7 +204,7 @@ entries before the shared engine exists, and `loadEngine` builds the dictionary 
 for an existing name replacing the default one. `@enumeratio/residues` contributes `\pmod`
 that way. It is still assembly by the host, not contribution by the library.
 
-That is why `packages/notatio/src/traditional.ts` exists at all: an output-only side table
+That is why `packages/frontend/src/traditional.ts` exists at all: an output-only side table
 of fifteen heads, walked by hand, because the input direction is closed off by the
 architecture rather than absent from the API. It is also the same wound as §3.2 and §3.6 —
 extensions cannot share a head, cannot name themselves, and cannot contribute notation.
@@ -545,7 +545,7 @@ digits. It is §3.9's ambient precision leaking: `N` implements its precision ar
 setting the engine's, and never restores it. Wolfram's `N[x, d]` leaves `$MachinePrecision`
 alone. The fix is a save and restore around the `N` handler, which
 `packages/symbols/analysis/analytic/src/correctly-rounded.ts` now does for every engine that
-declares `@enumeratio/analytic`; `packages/symbols/evaluation/aestimatio/src/cooperative-evaluate.ts`
+declares `@enumeratio/analytic`; `packages/symbols/evaluation/evaluation/src/cooperative-evaluate.ts`
 still restores it after each evaluation, as a backstop (seen in 0.134). The same handler
 evaluates at exactly `d` digits and returns them as they come, so the last digit can be off by
 one and some heads return more digits than asked for; the correctly-rounded replacement
@@ -582,8 +582,8 @@ capital zeta is a Z). MathLive renders it as a roman **Z**, so a cell whose Epsi
 `Zeta(s)` shows `Z(s)` in its field. The parser accepts both `\zeta(3)` and `\Zeta(3)` as
 `["Zeta", 3]`, so the fix is one character in the serializer's LaTeX dictionary entry, and
 round-trips. Seen once the editable components started handing the engine's own LaTeX to
-the field (`packages/notatio/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
-not. Patched locally for every engine we build (`packages/notatio/src/latex.ts`), alongside
+the field (`packages/frontend/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
+not. Patched locally for every engine we build (`packages/frontend/src/latex.ts`), alongside
 the same fix for `LCM`, `Rank` and `Erf`, pending upstreaming.
 
 ## 9. Certified digits: what we would ask for
@@ -619,7 +619,7 @@ landing upstream is a deletion, not an excavation. The model is Mathlib's `ForMa
 code written in our repo, shaped for theirs.
 
 - **`upstream/compute-engine/`** is a workspace package, `@enumeratio/for-compute-engine`.
-  It is a leaf: it depends on compute-engine and `@enumeratio/boxed`, nothing else of ours.
+  It is a leaf: it depends on compute-engine and `@enumeratio/engine`, nothing else of ours.
 - **Candidates, not just offers.** Anything compute-engine would plausibly take (a head
   Wolfram or mpmath already has, a fix or widening of a native head: Tiers 1 and 2 of §4)
   is written here from the start, whether or not an issue exists yet. What is only ours

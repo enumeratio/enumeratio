@@ -1,5 +1,5 @@
 // Adapts vitest's `--reporter=json` output (Jest-compatible shape) into a PackageRun.
-// Confirmed against a real run: `pnpm --filter @enumeratio/boxed exec vp test --reporter=json
+// Confirmed against a real run: `pnpm --filter @enumeratio/engine exec vp test --reporter=json
 // --outputFile=out.json` — testResults[].{name,startTime,endTime}, assertionResults[].{fullName,duration}.
 
 import type { PackageRun, TestDuration } from "./history.ts";

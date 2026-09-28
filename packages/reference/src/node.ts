@@ -167,7 +167,7 @@ export function canonicalHeads(heads: readonly LoadedHead[]): ReadonlyMap<string
 /** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
 const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
-/** Our own forms of an example (notatio/scripts/forms.ts): rows a record keeps beside the
+/** Our own forms of an example (frontend/scripts/forms.ts): rows a record keeps beside the
  * systems', with no kernel behind them. */
 const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
 

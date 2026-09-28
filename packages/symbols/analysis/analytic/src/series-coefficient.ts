@@ -1,5 +1,5 @@
 import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { isRealInt } from "@enumeratio/for-compute-engine";
 
 // SeriesCoefficient(f, {x, x0, n}) — the coefficient of (x − x0)^n in the Taylor series of

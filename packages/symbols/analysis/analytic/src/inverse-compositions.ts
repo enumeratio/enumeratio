@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 // Sin(Arcsin z) = z, Cosh(Arcosh z) = z and Tanh(Artanh z) = z hold for every complex z --
 // Wolfram folds all three, unconditionally. Cos/Arccos, Tan/Arctan and Sinh/Arsinh already

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // Wolfram folds Floor/Ceil/Round of an exact numeric constant expression -- Pi, E, a
 // sum/product/logarithm of them -- by evaluating it to enough precision and rounding;

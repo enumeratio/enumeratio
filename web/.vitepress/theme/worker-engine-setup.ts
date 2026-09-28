@@ -1,9 +1,9 @@
 // `configure(ce)` for an `Evaluator -> "Worker"` `<notatio-dynamic-module>`'s
-// `@enumeratio/aestimatio/browser` session (`notatio-dynamic-module.ts`'s
+// `@enumeratio/evaluation/browser` session (`notatio-dynamic-module.ts`'s
 // `evaluateRemote`): declares the same libraries `./index.mts`'s `startEngine`
-// declares into the PAGE's own engine, minus `@enumeratio/aestimatio` itself -- the
+// declares into the PAGE's own engine, minus `@enumeratio/evaluation` itself -- the
 // session's engine already has it (`browser-session-worker.ts` calls
-// `declareAestimatio` before importing `setup`, same as `packages/reference/scripts/
+// `declareEvaluation` before importing `setup`, same as `packages/reference/scripts/
 // engines.ts`'s own `configure` does for the Node isolated evaluator). The declare
 // ORDER and OPTIONS themselves live in `./engine-libraries.ts`, shared with
 // `./index.mts`, so the two library sets can't drift apart.

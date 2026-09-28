@@ -8,7 +8,7 @@ import {
   symbolNameOf,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { gcd, mod } from "./arith.ts";
 import * as Z from "./integer-mod.ts";
 import type { IntegerMod } from "./integer-mod.ts";

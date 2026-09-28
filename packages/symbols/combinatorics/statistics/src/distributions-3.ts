@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { type EvaluateOptions, integerAt, operandsOf, wrapOperator } from "@enumeratio/engine";
 import { finish, gammaParams } from "./distributions.ts";
 import { add, div, exp, If, lt, mul, neg, one, pdfOf2, pow, sub, three, two } from "./distributions-2.ts";
 

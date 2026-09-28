@@ -22,7 +22,6 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
     "@enumeratio/adeles": "workspace:*",
-    "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxes": "workspace:*",
     "@enumeratio/braid": "workspace:*",
@@ -31,6 +30,7 @@
     "@enumeratio/diagram": "workspace:*",
     "@enumeratio/domains": "workspace:*",
     "@enumeratio/entry": "workspace:*",
+    "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/groupalgebra": "workspace:*",
     "@enumeratio/hecke": "workspace:*",

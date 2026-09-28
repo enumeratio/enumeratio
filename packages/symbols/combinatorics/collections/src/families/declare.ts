@@ -1,5 +1,5 @@
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineMessages, emit } from "@enumeratio/boxed";
+import { defineMessages, emit } from "@enumeratio/engine";
 import { allEntries } from "./index.ts";
 import {
   asBlockList,

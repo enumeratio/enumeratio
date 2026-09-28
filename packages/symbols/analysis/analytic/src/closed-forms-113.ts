@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, characterExponent } from "@enumeratio/for-compute-engine";
 import { gammaExactValue, type Rational } from "./widened.ts";
 

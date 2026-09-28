@@ -1,6 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 

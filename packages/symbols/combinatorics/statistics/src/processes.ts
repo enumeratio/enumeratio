@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { normal01, numAt, poissonSample } from "./distributions.ts";
 
 // The Wolfram-frontier random-process heads: `WienerProcess`/`PoissonProcess` (inert process

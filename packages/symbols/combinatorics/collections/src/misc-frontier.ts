@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/engine";
 import { matches } from "./expression-ops.ts";
 import { integerGraph } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
