@@ -91,6 +91,11 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   waits for a quiet moment, and [component-naming.md](./component-naming.md) is how the
   last one went.
 
+- **A canonical form for the `<Head>` syntax**: which arguments lift to named attributes,
+  how attributes are ordered, and when atoms take the short spelling, so markup and
+  MathJSON map one to one (see design/speculative/vdom-canonical-form.md). Writing more of
+  the docs in enumeratio's own terms builds on it (design/speculative/docs-in-enumeratio.md).
+
 - **Run our own test suites under controlled evaluation** — an isolated evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
   today (see design/speculative/evaluation.md).
