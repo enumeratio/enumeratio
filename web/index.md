@@ -17,6 +17,8 @@ hero:
 features:
   - title: Collections, ranked and unranked
     details: Subsets, permutations, partitions, Dyck paths, tableaux, trees — lazy indexed families with closed-form counts, so <code>Count</code> and <code>At</code> never build the list. Browse the <a href="/reference/collections/">collections</a>.
+  - title: Structure, not special cases
+    details: <code>Min</code> works on anything with an order, <code>Floor</code> on anything with ticks, whether it's a number, a string, a partition under dominance or a type you declare yourself. Heads require structure and types provide it, after <a href="/playground/inspirations/mathlib">Mathlib</a>.
   - title: Numbers and functions, exactly
     details: Residues, numerals and adèles over bigints; special functions to arbitrary precision; algebras from Clifford to Hecke. Every head is in the <a href="/reference/symbol/">symbol reference</a>.
   - title: Checked, not claimed

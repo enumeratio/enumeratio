@@ -1,6 +1,6 @@
 # Design: structures
 
-Status: **proposed**. A head requires structure; a type provides it. `Min` works on anything
+Status: **first slice landed** (the order and tick protocols, below). A head requires structure; a type provides it. `Min` works on anything
 with a total order, `Floor` on anything whose order has ticks, `Basis` on anything that is a
 finite-dimensional algebra -- including a type a user declares in a notebook, as long as it
 says (and satisfies) what it is.
@@ -86,7 +86,10 @@ not `OrderedAddCommGroup`); aliases later if wanted. A first cut:
 | `Sampleable`                      | --             | `Sample`                                       | draws lie in the domain                         | --                    |
 
 A member becomes a head of its own, so its name must be free: a member named like an existing
-head (`Floor`, `Join`, `Infimum`, `LessEqual`) is silently shadowed by it and never dispatches.
+head (`Floor`, `Join`, `Infimum`, `LessEqual`) is silently shadowed by it and never dispatches;
+one named like a head a later package declares takes that head from it (`Components` is an
+endofunction statistic, which statistics' `skipDeclared` would have dropped; hence
+`Coordinates`).
 So the public heads -- `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round`, `Sign` -- stay
 compute-engine's and take a plain number down the native path; anything else goes to the
 members of whichever protocols its type conforms to. A product order (the complex numbers, and
@@ -137,7 +140,38 @@ promise we can keep, including for a type declared in a notebook.
 
 ## First slice
 
-The order and tick families -- `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round` with its
-modes -- generic, proved on three kinds of type: `real` (native), the complex numbers (ticks in
-the product order, matching Wolfram's componentwise `Floor`), and partitions under dominance (a
-lattice that is not a total order: `Min` is the meet). `algebra` and `Sampleable` follow.
+The order and tick families -- `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round` -- generic,
+over four kinds of type: `real` (native), strings (a linear order), the complex numbers (the
+product order, so ticks are the Gaussian integers and `Floor(2.5 + 3.7i)` is `2 + 3i`), and
+integer partitions under dominance (a lattice that is not a total order: `Min` is the meet,
+`Max` the join). The package's tests add a type declared in the test itself, with ticks and
+a tick parity, and it gets `Floor`, `Min` and half-even `Round` with no other code.
+
+How it runs:
+
+- A generic head takes a real number, or anything with an unknown in it, down the native path.
+  Anything else goes to the protocol members, called through compute-engine's own dispatch, so
+  a conformance declared in Epsil (`DeclareConformance`) answers the same as one declared in
+  TypeScript. When no member answers, the native handler has the call as before.
+- `Round` ties go to the even tick when the ticks have a parity, else up. Numbers keep
+  compute-engine's half-away-from-zero; the other modes (and `Round(x, a)`) are still to come.
+- Collections' complex-rounding special case is gone: the complex numbers' `ProductOrder`
+  conformance covers it.
+
+What it taught us:
+
+- **`Self` binds to the first argument's exact type.** `Compare(5, 1/2)` is an
+  `incompatible-type` error: `Self` becomes `integer`, and `1/2` isn't one. The generic heads
+  never send numbers through members, so they don't hit it, but a member called by name
+  does. The fix belongs upstream: `Self` should widen to the conforming type.
+- **No "does T conform to P" query.** compute-engine dispatches, but doesn't expose whether a
+  type conforms. We call the member and treat `protocol-implementation-missing` as no.
+
+`algebra` and `Sampleable` follow.
+
+## Upstream
+
+This is the layer compute-engine's protocols were built to carry, and they have no hierarchy
+yet. Once the order, tick and algebraic protocols have settled here and we're happy with them,
+they go to compute-engine as an issue (design/upstreaming.md): the hierarchy, refinement as a
+protocol feature, the `Self` widening and a conformance query. Nothing is proposed until then.
