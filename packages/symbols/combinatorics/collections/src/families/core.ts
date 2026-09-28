@@ -1,7 +1,7 @@
 // The originally hand-authored collections, expressed as NumberKernel[] over the certified kernel library
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
-import type { NumberKernel } from "./types.ts";
-import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "./kernels.ts";
+import type { FamilyKernel, NumberKernel } from "./types.ts";
+import { IsPermutationOf } from "./kernels.ts";
 import {
   CompositionCount,
   CompositionFromMask,
@@ -168,16 +168,50 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
+const factorialBig = (n: number): bigint => {
+  let f = 1n;
+  for (let i = 2n; i <= BigInt(n); i++) f *= i;
+  return f;
+};
+
+// SymmetricGroup(n) in bigint: n! passes 2^53 at n = 19, well inside what a table pages.
+// Lex order by Lehmer code, the same order as PermutationUnrank / PermutationRank.
+export const bigintEntries: FamilyKernel[] = [
+  {
+    head: "SymmetricGroup",
+    paramCount: 1,
+    kind: "ints",
+    count: ([n]) => factorialBig(n),
+    unrank: ([n], r) => {
+      const avail = Array.from({ length: n }, (_, i) => i + 1);
+      let rem = r % factorialBig(n);
+      const res: number[] = [];
+      for (let k = n - 1; k >= 0; k--) {
+        const f = factorialBig(k);
+        const idx = Number(rem / f);
+        rem %= f;
+        res.push(avail.splice(idx, 1)[0]);
+      }
+      return res;
+    },
+    rank: (element, [n]) => {
+      const a = element as number[];
+      if (!IsPermutationOf(a, n)) return -1n;
+      const avail = Array.from({ length: n }, (_, i) => i + 1);
+      let rank = 0n;
+      for (let i = 0; i < n; i++) {
+        const idx = avail.indexOf(a[i]);
+        rank += BigInt(idx) * factorialBig(n - 1 - i);
+        avail.splice(idx, 1);
+      }
+      return rank;
+    },
+    valid: (a, [n]) => IsPermutationOf(a as number[], n),
+  },
+];
+
 export const entries: NumberKernel[] = [
   // ── permutations (one-line words) ──
-  ints(
-    "SymmetricGroup",
-    1,
-    ([n]) => Factorial(n),
-    ([n], r) => PermutationUnrank(n, r),
-    (a, [n]) => IsPermutationOf(a, n),
-    (a) => PermutationRank(a),
-  ),
   ints(
     "KPermutations",
     2,
