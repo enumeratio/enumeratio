@@ -191,9 +191,31 @@ where T is CombinatorialCarrier` signature rejects `SymmetricGroup(3)` with
 - **Parameterized kinds** it ships: `list<T>`, `collection<E>`, `indexed_collection<E>`,
   `broadcastable<T>`.
 
-What it does not have: **a parameter indexed by a value**. A type parameter has to appear in
-the type's body (`generic-alias-unused-parameter` otherwise), so `permutation<4>` -- one type
-per size -- is not expressible. Collections per size stay values, not types.
+What it does not have, yet: **a type variable in a length**. Compute-engine does carry lengths
+in types (`[1, 2, 3, 4]` is `vector<integer^4>`, and matches `list<integer^4>` but not
+`list<integer^3>`), and a literal value is a type (`4`), usable as a type argument
+(`declareType("tagged_size", "tuple<N, list<integer>>", { typeParams: "N: integer" })` gives
+`tagged_size<4>`). But the length slot takes only a literal: `list<integer^N>` does not parse. A
+parameter also has to appear in the body (`generic-alias-unused-parameter`), so there is no
+phantom `permutation<4>` either.
+
+That is exactly what `permutation<N>` needs, and it is how Julia does it. Julia's type
+parameters can be values as well as types (any "bits" value: an `Int`, a `Symbol`, a tuple of
+them). `Array{T, N}` carries its dimension count, `NTuple{N, T}` is `Tuple{Vararg{T, N}}`,
+StaticArrays' `SVector{N, T}` carries its length, and `Val{N}` lifts any such value into a type
+for dispatch. So the missing piece in compute-engine is small: a type variable, bounded by
+`integer`, in the length position (`list<T^N> where N: integer`). With it:
+
+- `permutation<N>` is a nominal type over `list<integer^N>`, and the constructor
+  `(list<integer^N>) -> permutation<N>` infers `N` from the value;
+- a family's spec says what it yields at each size: `SymmetricGroup: (N: integer) ->
+indexed_collection<permutation<N>>`, with `N` bound from the argument's literal type, the way
+  a Julia method binds `N` from `Val{N}`;
+- a statistic or map says which sizes it takes, and a map that preserves size says so in its
+  type (`(permutation<N>) -> permutation<N>`).
+
+This is an upstream candidate (design/upstreaming.md): the grammar change, and the solver
+binding `N` from a literal-typed argument.
 
 So the real options are:
 
@@ -212,14 +234,17 @@ So the real options are:
    `StatisticOf(Self, string)`) that every carrier conforms to. It works, but it is slow: see
    §1.6.
 
-**Recommendation.** Keep `CombinatorialStat`/`CombinatorialMap`'s own table for dispatch
-(option 3 costs about 8× the table per call), and use compute-engine's generics for
-_checking_ instead:
+**Recommendation** (revised with Dean, 2026-09-28):
 
-- Type collections by their element carrier (option 2), a family at a time, starting with
-  the permutations.
-- Give `CombinatorialStat` a constrained arm over `collection<T>`.
-- Parameterize the carriers that are naturally "of" something (option 1) as they come up.
+1. **Dispatch stays in our table**, and compute-engine's slowness goes upstream: a profile puts
+   about half of a protocol member's call in re-parsing a type string, and its first attempt
+   throws. Cache the parse, then measure again (§1.6).
+2. **Type collections by their element carrier**, a family at a time, starting with the
+   permutations (`indexed_collection<permutation>`), and give `CombinatorialStat` a constrained
+   arm over `collection<T>`.
+3. **Size in the type:** propose the length type variable upstream, prototype `permutation<N>`
+   against a patched compute-engine, and write family specs with it once it lands.
+4. **Carriers parameterized by what they are made of** (the species picture) as they come up.
 
 ### 1.6 Cost measurement
 
