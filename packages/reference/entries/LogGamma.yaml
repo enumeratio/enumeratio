@@ -1,0 +1,41 @@
+name: LogGamma
+domain: Special functions
+signature: LogGamma(z)
+summary: The log-gamma function $\ln\Gamma(z)$ as an analytic continuation (branch cut on $(-\infty, 0]$), which differs from $\ln(\Gamma(z))$ by multiples of $2\pi i$ off the positive axis. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: LogGamma(z)
+    description: the log-gamma function $\ln\Gamma(z)$, analytically continued.
+    library: enumeratio-analytic
+details:
+  - "For real $z > 0$ it is simply $\\ln\\Gamma(z)$: $\\ln\\Gamma(n) = \\ln (n-1)!$, $\\ln\\Gamma(\\tfrac12) = \\tfrac12\\ln\\pi$ -- where it agrees with compute-engine's own [[GammaLn]]."
+  - "Elsewhere it is the continuation across the upper and lower half-planes, continuous off $(-\\infty, 0]$ — the convention Wolfram's $\\mathrm{LogGamma}$ and mpmath's `loggamma` share. $\\ln(\\Gamma(z))$ with a principal logarithm jumps by $2\\pi i$ wherever $\\Gamma$ crosses the negative axis; this does not. [[GammaLn]] is that principal version, so the two genuinely differ: at $z = -5/2$, GammaLn is $-0.0562$ while LogGamma is $-0.0562 - 3\\pi i$."
+  - $+\infty$ at the poles of $\Gamma$, the nonpositive integers.
+  - Numerically, Stirling's series for large $\operatorname{Re}(z)$ with the recurrence $\ln\Gamma(z) = \ln\Gamma(z+n) - \sum_{k<n}\ln(z+k)$ — in principal logarithms, which for $\operatorname{Im}(z) \ne 0$ is exactly the continuation. compute-engine has a complex [[Gamma]] but no LogGamma of its own.
+bindings:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Integrate, [PolyGamma, 0, t], [Triple, t, 1, _z]]
+    note: The continuation pinned by lnΓ(1) = 0 and (lnΓ)′ = ψ — which is what makes it the continuation and not Ln(Gamma(z)), whose branch differs off the positive axis.
+  - origin: native
+    form: typescript
+    environment: engine
+    source: upstream/compute-engine/src/compute-engine/numerics/log-gamma.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: LogGamma[z] and mpmath.loggamma(z) — both the continuation, not Log[Gamma[z]].
+seeAlso:
+  - Gamma
+  - GammaLn
+  - LogBarnesG
+  - Digamma
+references:
+  - system: wikipedia
+    identity: Gamma function
+  - system: mathworld
+    identity: LogGammaFunction
+  - system: dlmf
+    identity: "5.2"
+names:
+  wolframIdentity: true

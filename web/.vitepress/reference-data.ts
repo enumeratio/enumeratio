@@ -8,7 +8,7 @@ import type { Plugin, ViteDevServer } from "vite";
 
 const ID = "virtual:reference-entries";
 const RESOLVED = `\0${ID}`;
-const WATCHED = /\/(packages|upstream)\/.*(\/reference\/[^/]+\.yaml|\/reference\/entries\/[^/]+\.yaml)$/;
+const WATCHED = /\/packages\/.*(\/reference\/[^/]+\.yaml|\/reference\/entries\/[^/]+\.yaml)$/;
 
 export function referenceDataPlugin(): Plugin {
   return {

@@ -7,7 +7,7 @@ import { PATCHES } from "../src/index.ts";
 // landing becomes a to-do, naming the folder to delete and the PR it was offered as.
 
 for (const patch of PATCHES) {
-  test(`${patch.id} is still unfixed on a fresh engine (delete src/${patch.id}/ and close ${patch.pr ?? patch.issue} if this fails)`, () => {
+  test(`${patch.id} is still unfixed on a fresh engine (delete src/patches/${patch.id}.ts and its files, and close ${patch.pr ?? patch.issue}, if this fails)`, () => {
     const ce = new ComputeEngine();
     expect(patch.fixed(ce)).toBe(false);
   });
