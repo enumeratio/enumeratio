@@ -287,3 +287,18 @@
   expr: [N, [PolyGamma, -2, 2]]
   expected: [PolyGamma, -2, 2]
   caption: $m \le -2$ is past what the engine covers, so it stays unevaluated
+- role: test
+  id: n-polygamma-8-cancellation-region
+  expr: [N, [PolyGamma, 8, [Complex, -48.445348956457586, 7.047151294800014]]]
+  expected: [Complex, -5.802709982602873e-11, -1.2898930277153784e-10]
+  caption: "High order, large negative Re(z): the double Euler–Maclaurin kernel cancels away most of its own digits here, so this routes through the bignum kernel instead"
+- role: test
+  id: n-polygamma-8-cancellation-region-nearby-im
+  expr: [N, [PolyGamma, 8, [Complex, -48.445348956457586, 10]]]
+  expected: [Complex, 5.3221571369366035e-12, -1.2967382759551942e-10]
+  caption: Same cancellation region, a different Im(z)
+- role: test
+  id: n-polygamma-5-cancellation-region
+  expr: [N, [PolyGamma, 5, [Complex, -48.987654321098766, 9.5]]]
+  expected: [Complex, -4.3059101024050936e-8, -5.997407236454179e-8]
+  caption: The cancellation region isn't specific to one order

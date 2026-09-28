@@ -35,7 +35,7 @@ import { stieltjesGamma, STIELTJES_MAX_ORDER } from "../numerics/stieltjes.ts";
 import { stieltjesGammaBig } from "../numerics/stieltjes-big.ts";
 import { hurwitzZeta, zetaGeneralized } from "../numerics/hurwitz-zeta.ts";
 import { hurwitzZetaBig, zetaGeneralizedBig, type BigCx, bigCx } from "../numerics/hurwitz-zeta-big.ts";
-import { digamma, polygamma } from "../numerics/polygamma.ts";
+import { digamma, polygamma, polygammaCoefficient } from "../numerics/polygamma.ts";
 import { polyLog } from "../numerics/polylog.ts";
 import { bernoulliPolyExpr } from "../numerics/bernoulli-rational.ts";
 
@@ -485,6 +485,22 @@ export function zetaLibrary(ce: ComputeEngine): LibraryRecord {
 // cortex-js/compute-engine#340: PolyGamma(m, z) at a complex z. Native compute-engine
 // already declares PolyGamma, but only evaluates it at a real z.
 
+/**
+ * ψ⁽ᵐ⁾(z) via the BigDecimal Hurwitz kernel (m ≥ 1), at enough working precision to clear
+ * the Euler–Maclaurin cancellation `polygamma` (the double kernel) can decline on --
+ * `hurwitzZetaBig`'s own `plan` sizes that precision from the cancellation itself, the
+ * same way `bigZetaResult` gets HurwitzZeta/Zeta their precision. Undefined past
+ * `MAX_WORKING_DIGITS`, or when the bignum route is switched off (`setZetaKernel`); the
+ * caller falls back to `polygamma` and its cancellation guard.
+ */
+function bigPolygamma(ce: ComputeEngine, m: number, z: BoxedExpression): Cx | undefined {
+  if (zetaKernel !== "bignum") return undefined;
+  const r = hurwitzZetaBig(bigCx(m + 1), bigOperand(ce, z), Math.max(ce.precision, 17));
+  if (r === undefined) return undefined;
+  const k = polygammaCoefficient(m);
+  return { re: k * r.re.toNumber(), im: k * r.im.toNumber() };
+}
+
 export function evaluatePolygamma(
   ce: ComputeEngine,
   native: NativeEval,
@@ -506,7 +522,12 @@ export function evaluatePolygamma(
       ? logGamma({ re: z.re, im: z.im })
       : m.re === 0
         ? digamma({ re: z.re, im: z.im })
-        : polygamma(m.re, { re: z.re, im: z.im });
+        : (bigPolygamma(ce, m.re, z) ?? polygamma(m.re, { re: z.re, im: z.im }));
+  // A NaN here off the real axis is the cancellation guard declining (`polygamma`'s
+  // comment), not a pole -- poles sit on the real axis, where `native` already answered
+  // before this ran. Stay symbolic there instead of reporting `ComplexInfinity` for what
+  // is just a lost digit budget.
+  if (Number.isNaN(v.re) && z.im !== 0) return r;
   return numberResult(ce, v);
 }
 

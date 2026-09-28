@@ -1710,3 +1710,63 @@ n-polygamma-neg2-stays-unevaluated:
     verdict: error
     kind: undefined-form
     note: "Both decline: compute-engine leaves PolyGamma(-2, 2) unevaluated, and Sage's psi raises ValueError: gamma function pole."
+n-polygamma-8-cancellation-region:
+  epsil:
+    in: N(PolyGamma(8, -48.445_348_956_457_586 + 7.047_151_294_800_014i))
+    out: -5_802_709_982_602_873e-26 - 12_898_930_277_153_784e-26 * i
+  tex:
+    in: N(\mathrm{PolyGamma}(8, -48.445\,348\,956\,457\,586+7.047\,151\,294\,800\,014i))
+    out: -5\,802\,709\,982\,602\,873\cdot10^{-26}-12\,898\,930\,277\,153\,784\cdot10^{-26}i
+  traditional:
+    in: N(\psi^{(8)}(-48.445\,348\,956\,457\,586+7.047\,151\,294\,800\,014i))
+    out: -5\,802\,709\,982\,602\,873\cdot10^{-26}-12\,898\,930\,277\,153\,784\cdot10^{-26}i
+  fullform:
+    in: N[PolyGamma[8, Complex[-48.445348956457586, 7.047151294800014]]]
+  wolfram:
+    in: N[PolyGamma[8, Complex[-48.445348956457586, 7.047151294800014]]]
+  sympy:
+    in: N(polygamma(8, (-48.445348956457586 + 7.047151294800014*I)), 30)
+  mpmath:
+    in: (psi(8, mpc(-48.445348956457586, 7.047151294800014)))
+  sage:
+    in: N(psi(8, (-48.445348956457586 + 7.047151294800014*I)))
+n-polygamma-8-cancellation-region-nearby-im:
+  epsil:
+    in: N(PolyGamma(8, -48.445_348_956_457_586 + 10i))
+    out: 53_221_571_369_366_035e-28 - 12_967_382_759_551_942e-26 * i
+  tex:
+    in: N(\mathrm{PolyGamma}(8, -48.445\,348\,956\,457\,586+10i))
+    out: 53\,221\,571\,369\,366\,035\cdot10^{-28}-12\,967\,382\,759\,551\,942\cdot10^{-26}i
+  traditional:
+    in: N(\psi^{(8)}(-48.445\,348\,956\,457\,586+10i))
+    out: 53\,221\,571\,369\,366\,035\cdot10^{-28}-12\,967\,382\,759\,551\,942\cdot10^{-26}i
+  fullform:
+    in: N[PolyGamma[8, Complex[-48.445348956457586, 10]]]
+  wolfram:
+    in: N[PolyGamma[8, Complex[-48.445348956457586, 10]]]
+  sympy:
+    in: N(polygamma(8, (-48.445348956457586 + 10*I)), 30)
+  mpmath:
+    in: (psi(8, mpc(-48.445348956457586, 10)))
+  sage:
+    in: N(psi(8, (-48.445348956457586 + 10*I)))
+n-polygamma-5-cancellation-region:
+  epsil:
+    in: N(PolyGamma(5, -48.987_654_321_098_766 + 9.5i))
+    out: -43_059_101_024_050_936e-24 - 5_997_407_236_454_179e-23 * i
+  tex:
+    in: N(\mathrm{PolyGamma}(5, -48.987\,654\,321\,098\,766+9.5i))
+    out: -43\,059\,101\,024\,050\,936\cdot10^{-24}-5\,997\,407\,236\,454\,179\cdot10^{-23}i
+  traditional:
+    in: N(\psi^{(5)}(-48.987\,654\,321\,098\,766+9.5i))
+    out: -43\,059\,101\,024\,050\,936\cdot10^{-24}-5\,997\,407\,236\,454\,179\cdot10^{-23}i
+  fullform:
+    in: N[PolyGamma[5, Complex[-48.987654321098766, 9.5]]]
+  wolfram:
+    in: N[PolyGamma[5, Complex[-48.987654321098766, 9.5]]]
+  sympy:
+    in: N(polygamma(5, (-48.987654321098766 + 9.5*I)), 30)
+  mpmath:
+    in: (psi(5, mpc(-48.987654321098766, 9.5)))
+  sage:
+    in: N(psi(5, (-48.987654321098766 + 9.5*I)))
