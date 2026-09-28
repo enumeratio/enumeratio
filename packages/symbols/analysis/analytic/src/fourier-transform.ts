@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, ruleOf } from "@enumeratio/boxed";
+import { operandsOf, ruleOf } from "@enumeratio/engine";
 import {
   add,
   cosPi,

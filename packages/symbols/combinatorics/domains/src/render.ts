@@ -5,7 +5,7 @@
 // rather than a bare list.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { ALL_REPRESENTATIONS, canonicalFor, type Medium, type Representation } from "./representation.ts";
 
 const intsOf = (expr: BoxedExpression | undefined): number[] =>

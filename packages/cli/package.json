@@ -29,7 +29,7 @@
     "@enumeratio/collections": "workspace:*",
     "@enumeratio/domains": "workspace:*",
     "@enumeratio/formats": "workspace:*",
-    "@enumeratio/notatio": "workspace:*",
+    "@enumeratio/frontend": "workspace:*",
     "@enumeratio/raster": "workspace:*",
     "@enumeratio/statistics": "workspace:*"
   },

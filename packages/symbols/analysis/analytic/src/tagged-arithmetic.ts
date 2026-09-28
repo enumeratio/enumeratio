@@ -1,11 +1,11 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 
 // A shared, low-overhead registration for the arithmetic heads Interval, CenteredInterval
 // and Around all extend (Add, Negate, Multiply, Divide, Power, Abs, Sin, plus Sqrt/Erf for
 // Around alone) — see interval.ts, centered-interval.ts and around.ts for the actual math.
 //
-// Deliberately NOT `wrapOperator` (@enumeratio/boxed): that helper re-evaluates every lazy
+// Deliberately NOT `wrapOperator` (@enumeratio/engine): that helper re-evaluates every lazy
 // operand just to run its predicate, and a separate `wrapOperator` call per tagged type per
 // head (three, for Add) means three redundant evaluate passes over every operand stacked on
 // top of the real one — a measured ~4x slowdown on Add/Multiply-heavy code (large sums,
@@ -84,7 +84,7 @@ export function registerTaggedHead(
     const values = ops.map((op) => op.evaluate());
     // `operandsOf`, not `.expression.ops` directly: `.ops` lives on compute-engine's narrowed
     // FunctionInterface, which the `Expression` union type doesn't expose a typed route to
-    // (see @enumeratio/boxed's own note on `operandsOf`).
+    // (see @enumeratio/engine's own note on `operandsOf`).
     const rawOps = operandsOf(options.expression);
     const raw = rawOps.length === values.length ? rawOps : values;
     for (const resolve of resolvers) {

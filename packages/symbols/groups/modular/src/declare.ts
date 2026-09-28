@@ -7,7 +7,7 @@ import {
   stringAt,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { continuedFractionKOf, convergentsOf } from "./convergents.ts";
 import { pqaExpansion } from "./continued-fraction.ts";
 import { kroneckerSymbol } from "./kronecker.ts";

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt } from "@enumeratio/boxed";
+import { bigRationalAt } from "@enumeratio/engine";
 import { isFiniteNum } from "@enumeratio/for-compute-engine";
 
 // IntegerPart(x) and FractionalPart(x) — truncation toward 0, split into its two halves.

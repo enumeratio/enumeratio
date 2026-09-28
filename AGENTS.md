@@ -71,7 +71,7 @@ release. Add a tool name to select part of the graph. For example, run
 - Beside each entry, `<Head>.implementations.yaml` holds every example's forms (`epsil`, `tex`,
   `traditional`, each system's `in`) and what the oracle kernels answered. After adding or
   changing an example (or a printer or transpiler), run
-  `UPDATE_FORMS=1 node packages/notatio/scripts/collect-forms.ts`; notatio's forms test says so
+  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`; notatio's forms test says so
   when it's needed. Kernel answers come from `oracle-scan.ts --accept`; notes and
   classifications on a row are written by hand.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
@@ -94,14 +94,17 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## Testing
 
-- **Golden-example data, not snapshots.** Assert against a committed golden JSON file
-  (`expect(actual).toEqual(golden[id])`), regenerated behind an `UPDATE_*` env flag —
-  never `toMatchSnapshot` / `toMatchInlineSnapshot`. Their snapshot client isn't set up
-  when the `test` task runs through `vp run` (the path `vp run -r test` / CI use), so a
-  snapshot test passes under a bare `vp test` but fails the sweep; and golden JSON is
-  plain data that's reviewable and reusable elsewhere. A guard test enforces this repo-wide
-  (`packages/utils/tests/no-snapshots.test.ts`). See `packages/cli/tests/demos.test.ts` for
-  the pattern.
+- **Golden-example data, not snapshots**, in `packages/`. Assert against a committed golden
+  JSON file (`expect(actual).toEqual(golden[id])`), regenerated behind an `UPDATE_*` env
+  flag: it is plain data, reviewable and reusable elsewhere, which a `.snap` file is not. A
+  guard test enforces this for `packages/` (`packages/utils/tests/no-snapshots.test.ts`). See
+  `packages/cli/tests/demos.test.ts` for the pattern.
+- **Patches in `upstream/` test the way their upstream does**, snapshots included, so a test
+  can go upstream with its code.
+- **Long sweeps run nightly; the standard run stays fast.** A test that samples or enumerates
+  takes a small budget by default and its full one under `DEEP_TESTS=1`, which `nightly.yml`'s
+  `deep-tests` job sets (give the package a filter there). Keep the important cases in the
+  standard run as fixed examples, not left to the sample.
 
 ## CI and deployment
 

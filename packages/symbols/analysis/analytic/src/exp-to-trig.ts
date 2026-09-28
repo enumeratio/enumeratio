@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // ExpToTrig(expr) — rewrite every exponential in `expr` as circular or hyperbolic functions,

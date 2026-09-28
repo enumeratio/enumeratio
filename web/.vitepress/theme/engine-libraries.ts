@@ -1,7 +1,7 @@
 // The declare ORDER and OPTIONS shared by two engines that must mean the same thing:
-// `./index.mts`'s page engine (`@enumeratio/notatio`'s `configureEngine`, dynamic
+// `./index.mts`'s page engine (`@enumeratio/frontend`'s `configureEngine`, dynamic
 // imports for bundle-splitting) and `./worker-engine-setup.ts`'s
-// `@enumeratio/aestimatio/browser` session engine (a plain `ComputeEngine`, static
+// `@enumeratio/evaluation/browser` session engine (a plain `ComputeEngine`, static
 // imports since `openSession`'s `configure(ce)` runs synchronously). Each side does its
 // own importing -- this only owns the sequence and the options each `declare*` call
 // takes, so the two library sets can't quietly drift apart the way they had (the
@@ -50,9 +50,9 @@ export interface EngineLibraries {
 /**
  * Declares every library the page ships, in dependency order, via `apply` -- either
  * `configureEngine` (deferred until the engine exists) or a direct `(fn) => fn(ce)`.
- * Does NOT include `@enumeratio/aestimatio` itself or the LaTeX dictionary
+ * Does NOT include `@enumeratio/evaluation` itself or the LaTeX dictionary
  * (`configureLatex(RESIDUES_LATEX)`): the page engine needs both, but a session's
- * engine already has aestimatio declared before `configure` runs (see
+ * engine already has evaluation declared before `configure` runs (see
  * `browser-session-worker.ts`) and never parses LaTeX at all (see
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */

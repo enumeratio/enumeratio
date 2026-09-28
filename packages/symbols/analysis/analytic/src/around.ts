@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { derivativeAt } from "./tagged-calculus.ts";
 import type { Resolver } from "./tagged-arithmetic.ts";
 

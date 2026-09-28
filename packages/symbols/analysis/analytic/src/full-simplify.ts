@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, operandsOf } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 import { evaluateExpToTrig } from "./exp-to-trig.ts";
 

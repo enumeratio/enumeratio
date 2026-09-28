@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";

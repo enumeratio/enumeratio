@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, stringAt, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // A fourth wave of Wolfram-frontier heads: boolean normal forms (LogicalExpand,
 // BooleanConvert) and a batch of `Is…` predicates (our naming for Wolfram's `…Q` — see

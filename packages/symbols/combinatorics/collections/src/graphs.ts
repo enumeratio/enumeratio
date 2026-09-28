@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, optionsOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, optionsOf } from "@enumeratio/engine";
 import { dijkstraDistances, dijkstraPath } from "./graph-weights.ts";
 
 // Graphs (Wolfram frontier: UndirectedEdge/DirectedEdge top the gap list at 756/69 doc
@@ -84,7 +84,7 @@ function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression;
  *
  *  Takes `ce` (every caller already has one, being a `declare(…)` callback) so the option's
  *  value — read off as MathJSON by `optionsOf`, the same `OptionsPattern`-style splitter
- *  `VerificationTest` uses (`@enumeratio/boxed`) — can be reboxed into `BoxedExpression`s. */
+ *  `VerificationTest` uses (`@enumeratio/engine`) — can be reboxed into `BoxedExpression`s. */
 export function graphOf(ce: ComputeEngine, expr: BoxedExpression): GraphModel | undefined {
   if (expr.operator !== "Graph") return undefined;
   const rawOps = operandsOf(expr);

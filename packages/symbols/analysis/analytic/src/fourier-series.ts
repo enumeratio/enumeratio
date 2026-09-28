@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // FourierSeries(f, x, n) / FourierCoefficient(f, x, n): the order-n complex exponential
 // Fourier series of `f` on [-pi, pi], `Sum_{k=-n}^{n} c_k Exp(i k x)`, and its individual

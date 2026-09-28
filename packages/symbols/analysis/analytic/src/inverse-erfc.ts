@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // InverseErfc(s): compute-engine has no such head. Wolfram's InverseErf is native here as

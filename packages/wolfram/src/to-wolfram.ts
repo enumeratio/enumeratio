@@ -37,8 +37,8 @@ export const SYMBOLS: Record<string, string> = {
   NegativeInfinity: "-Infinity",
   ComplexInfinity: "ComplexInfinity",
   Nothing: "Null",
-  // @enumeratio/aestimatio's own marker, under Wolfram's `$`-prefixed spelling — compute-engine's
-  // symbol grammar rejects a leading `$` (see aestimatio/src/declare.ts).
+  // @enumeratio/evaluation's own marker, under Wolfram's `$`-prefixed spelling — compute-engine's
+  // symbol grammar rejects a leading `$` (see evaluation/src/declare.ts).
   Aborted: "$Aborted",
 };
 

@@ -7,7 +7,7 @@ import {
   symbolNameOf,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { extendedGcd, factorInteger, isPrime } from "@enumeratio/residues";
 
 // compute-engine's integer functions, widened to the arguments Wolfram also answers and the

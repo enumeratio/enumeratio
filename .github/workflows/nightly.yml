@@ -30,6 +30,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Test suites' long sweeps, gated on DEEP_TESTS so the PR gate stays fast. A package whose tests read
+  # DEEP_TESTS gets a filter here.
+  deep-tests:
+    name: deep test sweeps
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      DEEP_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm -r --filter @enumeratio/analytic run test
+
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
   # records, including the special-function grid kept as hidden examples in its heads' YAML. Each
   # ecosystem is its own nightly job: they share nothing to install. The heavier lanes run weekly below.

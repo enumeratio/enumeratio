@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import {
   optimizeRecognized,
   parseInterval,
@@ -20,7 +20,7 @@ import {
 // ALREADY compute-engine heads -- the index of a collection's extremal element
 // (`ArgMax([3, 1, 4], key)` is `3`, not `4`) -- an entirely different question from
 // Wolfram's `ArgMin(f, x)`. The obvious route (`wrapOperator`/`widenSignature`, extending
-// the head in place -- see `@enumeratio/boxed`) does not work here: verified empirically
+// the head in place -- see `@enumeratio/engine`) does not work here: verified empirically
 // (a throwaway script mutating `ce.lookupDefinition("ArgMin").operator` every way that
 // utility exposes -- `evaluate`, `signature`, `canEnumerate`, and the fully-spread
 // `ce.declare` override CE's own tests use for this exact idiom) that a call whose first

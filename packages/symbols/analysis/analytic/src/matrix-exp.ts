@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // MatrixExp(m) — the matrix exponential e^M = Σ_{k≥0} M^k / k!, for a square matrix m.

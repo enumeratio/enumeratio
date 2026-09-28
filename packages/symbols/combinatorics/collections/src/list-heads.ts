@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // The core list/statistics heads compute-engine ships but doesn't fully answer yet —
 // widened arities (First/Last's empty-collection default, Ordering's take-n, Clamp's

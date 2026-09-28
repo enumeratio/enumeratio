@@ -12,7 +12,7 @@ import {
   threadOverLists,
   widenSignature,
   wrapOperator,
-} from "@enumeratio/boxed";
+} from "@enumeratio/engine";
 import { gcd } from "@enumeratio/residues";
 import { declareAdic } from "./adic-declare.ts";
 import {

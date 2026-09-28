@@ -117,7 +117,7 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `GammaRegularized` are here for the third argument (Wolfram's generalized incomplete
  * gamma, which a bare engine rejects as an unexpected argument), plus Γ(1, z) = e^{−z}.
  * Most of the integer and special functions are here for threading over a list, which a
- * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed).
+ * bare engine rejects as a type error (`threadOverLists` in @enumeratio/engine).
  * `ModularInverse` is widened to Gaussian integers (number-theory) and `PolyGamma` is
  * redeclared for complex z (analytic); a wrong-typed argument now fails in the widened
  * signature rather than the native one, so even the error differs. `LambertW` is here for
@@ -332,12 +332,12 @@ const OVERRIDDEN = [
 ];
 
 // Evaluates the whole corpus in both engines: seconds, not the default 5s budget on a busy box.
-test("we change exactly the compute-engine heads we mean to, and no others", { timeout: 60_000 }, () => {
+test("we change exactly the compute-engine heads we mean to, and no others", () => {
   const corpus = entries.flatMap((entry) => entry.examples.map((example) => example.expr));
   expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
 });
 
-test("the committed provenance data is still what the engines say", { timeout: 60_000 }, () => {
+test("the committed provenance data is still what the engines say", () => {
   // `src/provenance-data.ts` is generated, and generated data goes stale silently. This is
   // the only thing stopping that: re-derive it here and compare. If it fails, run
   // `vp node packages/reference/scripts/collect-provenance.ts` and read the diff — a change

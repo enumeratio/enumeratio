@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { wrapOperator } from "@enumeratio/boxed";
+import { wrapOperator } from "@enumeratio/engine";
 import { isFiniteNum, isRealInt, wantsNumber, logGammaReal } from "@enumeratio/for-compute-engine";
 
 // I_x(a, b) past x = 1 at a positive integer b: (1 − t)^(b−1) is a polynomial, so the

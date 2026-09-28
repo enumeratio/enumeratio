@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { registerAlgebra } from "@enumeratio/algebra";
 import { containsGenerator, generatorsOf, multiplyMultivectors, toExpression, toMultivector } from "./multivector.ts";
 import { FAMILIES, type Generator, generatorSymbol } from "./units.ts";

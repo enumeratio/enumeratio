@@ -26,7 +26,7 @@ which works per cell, not per column or per policy.
 - **Several glyph kinds per carrier** — `packages/data/sqlsrc/glyph_kinds.sql`:
   `glyph_svg(carrier, kind)` with an `is_default` registry. Permutations drew as matrix, arc
   diagram, cycle diagram or Rothe diagram; partitions as Ferrers, Young (English/French) or
-  abacus. `notatio/src/glyphs.ts` has one glyph per carrier and no kind parameter.
+  abacus. `frontend/src/glyphs.ts` has one glyph per carrier and no kind parameter.
 - **Glyph families not yet drawn** — from `docs/develop/packages/components/kitchen-sink.md`:
   functional graph (endofunctions), bipartite diagram (surjections), permutation arc diagram
   (decorated/affine permutations, arrangements), signed bar row, bars with gaps (weak

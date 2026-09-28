@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { collectMessages, messageLine } from "@enumeratio/boxed";
+import { collectMessages, messageLine } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 

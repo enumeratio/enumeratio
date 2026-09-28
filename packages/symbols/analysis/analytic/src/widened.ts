@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // compute-engine's Gamma-built combinatorial heads, widened to the exact values Wolfram gives
 // and the native handler leaves unevaluated or rejects: Binomial, Beta and CatalanNumber at

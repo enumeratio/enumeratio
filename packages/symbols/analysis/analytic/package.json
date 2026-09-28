@@ -24,12 +24,12 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/for-compute-engine": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
-    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "typescript": "^7.0.2",

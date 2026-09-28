@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineMessages, emit, integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import { defineMessages, emit, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // Wolfram-frontier scoping/control heads: With, Module, Reap/Sow, Do, Switch, NestWhile(List),
 // While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes, AppendTo.
@@ -10,7 +10,7 @@ import { defineMessages, emit, integerAt, operandsOf, symbolNameOf } from "@enum
 // `Break` and `Continue`, none of which are reused here: `Block`'s own scoping semantics
 // aren't documented enough to trust for Module's "fresh local, no leak, no clobber"
 // contract, and building directly on `ce.createScope`/`pushScope`/`popScope` (the same
-// public API `Transcript` uses, in @enumeratio/notatio's `transcript.ts`) is both simpler
+// public API `Transcript` uses, in @enumeratio/frontend's `transcript.ts`) is both simpler
 // and verified below to do exactly what's needed: a pre-boxed body expression's symbol
 // references re-resolve against whatever scope is CURRENT at `.evaluate()` time, not at
 // box time, so pushing a scope, declaring locals into it, evaluating the (already-boxed,
@@ -479,7 +479,7 @@ function declareFixedPointList(ce: ComputeEngine): void {
 
 // --- Echo / AbsoluteTiming -----------------------------------------------------------------
 
-/** `Echo::printed` / `Echo::labeled` templates are per-engine (see `@enumeratio/boxed`'s
+/** `Echo::printed` / `Echo::labeled` templates are per-engine (see `@enumeratio/engine`'s
  *  `messages.ts`); this set tracks which engines already have them, so re-declaring the
  *  control heads on the same engine doesn't redefine the templates twice. */
 const echoMessagesDefined = new WeakSet<ComputeEngine>();
@@ -495,7 +495,7 @@ function defineEchoMessagesOnce(ce: ComputeEngine): void {
 /** `Echo(expr)` / `Echo(expr, label)` / `Echo(expr, label, f)`: prints `f(expr)` (or
  *  `expr` itself, with no `f`) -- prefixed by `label` when given -- and returns `expr`
  *  UNCHANGED. Printing is a side-effect this engine has no console for, so it's routed
- *  through `@enumeratio/boxed`'s message channel instead (`Echo::printed` / `Echo::labeled`,
+ *  through `@enumeratio/engine`'s message channel instead (`Echo::printed` / `Echo::labeled`,
  *  collectible with `collectMessages`) rather than skipped outright -- a caller that wants
  *  the printed text can `collectMessages(ce, () => expr.evaluate())` and read it from
  *  there, same as any other head's declined-call message. */

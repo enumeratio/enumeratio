@@ -20,13 +20,13 @@ not by teaching each renderer to degrade.** Everything below is that sentence un
 Today's path from a value to pixels has five stages, and they are already separable --
 that is the finding this note is built on:
 
-| stage         | where                                                                                               | in                 | out                                       |
-| ------------- | --------------------------------------------------------------------------------------------------- | ------------------ | ----------------------------------------- |
-| **evaluate**  | compute-engine                                                                                      | notatio / MathJSON | MathJSON                                  |
-| **structure** | `notatio/src/vdom.ts` `structuralOf`                                                                | MathJSON           | `Rendering` (`tag, attributes, children`) |
-| **lower**     | `symbols.ts` (`renderingOf`, `lowerOptions`) or the element itself (`notatio-lit/src/structure.ts`) | `Rendering`        | a component's own attributes              |
-| **mount**     | `notatio-lit`, `notatio/vue`, `notatio/react`, `markupOf`                                           | `Rendering`        | DOM / vnodes / HTML string                |
-| **draw**      | `plot.ts`, `glyphs.ts`, … (pure), `@enumeratio/raster`                                              | geometry           | SVG, PNG                                  |
+| stage         | where                                                                                              | in                 | out                                       |
+| ------------- | -------------------------------------------------------------------------------------------------- | ------------------ | ----------------------------------------- |
+| **evaluate**  | compute-engine                                                                                     | notatio / MathJSON | MathJSON                                  |
+| **structure** | `frontend/src/vdom.ts` `structuralOf`                                                              | MathJSON           | `Rendering` (`tag, attributes, children`) |
+| **lower**     | `symbols.ts` (`renderingOf`, `lowerOptions`) or the element itself (`components/src/structure.ts`) | `Rendering`        | a component's own attributes              |
+| **mount**     | `components`, `frontend/vue`, `frontend/react`, `markupOf`                                         | `Rendering`        | DOM / vnodes / HTML string                |
+| **draw**      | `plot.ts`, `glyphs.ts`, … (pure), `@enumeratio/raster`                                             | geometry           | SVG, PNG                                  |
 
 Lowering happens in two places by design (vdom.md, "Where the lowering lives"): a
 framework mounts the structural tree and the _element_ lowers when it adopts its
@@ -279,7 +279,7 @@ a sample, and those two operations are all the no-engine world ever needs.
 - **Terminal typesetting.** `OutputForm` (2-D layout in cells) is a real piece of work
   -- fraction bars, radicals, matrices -- and the only part of the terminal column with
   no existing code behind it. The REPL prints notatio (InputForm) meanwhile.
-- **Where the terminal mount lives.** `notatio-lit` is the DOM mount (Lit elements,
+- **Where the terminal mount lives.** `components` is the DOM mount (Lit elements,
   MathLive for the field, xterm for the browser REPL surface); a TUI is not lit and not
   the DOM -- it is a third mount over the same base, and today it lives in `cli` because
   that is where the Node host is. If it grows past a strip, it wants a package of its own

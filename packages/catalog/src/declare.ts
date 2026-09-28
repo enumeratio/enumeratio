@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { stringAt } from "@enumeratio/boxed";
+import { stringAt } from "@enumeratio/engine";
 import { catalogRegistry, ENUMERATIO } from "./resources.ts";
 import type { ResourceRegistry } from "./registry.ts";
 import type { Resource } from "./types.ts";

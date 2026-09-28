@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/for-compute-engine";
 
 // A few elementary special values Wolfram folds and compute-engine's native handlers

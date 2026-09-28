@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/engine";
 import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/for-compute-engine";
 
 // Gudermannian(x) = 2 arctan(tanh(x/2)) = arctan(sinh(x)) — links the circular and

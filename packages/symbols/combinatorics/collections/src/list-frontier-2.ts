@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // A second wave of Wolfram-frontier heads compute-engine has no answer for: list/array
 // utilities (Thread, MapAt, MovingMap, HankelMatrix), the discrete-math pair

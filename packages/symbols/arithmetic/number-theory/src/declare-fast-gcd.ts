@@ -8,7 +8,7 @@
 // above it, Lehmer's algorithm (leading-digit simulation, HAC 14.4) wins by turning most of
 // Euclid's O(log n) full-width divisions into a handful of them.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/boxed";
+import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
 import { gcd, lehmerGcd } from "@enumeratio/residues";
 
 // Chosen well above Lehmer's own internal small-number cutoff (2^32) so the hybrid only

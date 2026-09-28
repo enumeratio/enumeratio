@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
-import { wrapOperator } from "@enumeratio/boxed";
+import { wrapOperator } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/for-compute-engine";
 import { type BoxInput, wantsNumber, withGuardDigits } from "@enumeratio/for-compute-engine";
 

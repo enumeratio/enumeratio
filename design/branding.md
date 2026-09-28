@@ -36,9 +36,10 @@ recorded so the guesses can be compared, not a plan.
 
 ## What exists today, and what it does not commit us to
 
-- `@enumeratio/aestimatio` is a package (`packages/symbols/evaluation/aestimatio`): time and
-  memory constraints, isolated evaluators, sessions, `VerificationTest`. Its name predates
-  this note and is not a decision about what "aestimatio" means. Packages are where code
+- The package that was `@enumeratio/aestimatio` is now `@enumeratio/evaluation`
+  (`packages/symbols/evaluation/evaluation`): time and memory constraints, isolated
+  evaluators, sessions, `VerificationTest`. Packages are named for what they do (2026-09-27,
+  with `frontend`, `components` and `engine`), so no package settles what "aestimatio" means. Packages are where code
   happens to be split, not a branding statement; if a subproject is ever cut, it may gather
   several packages or split one. Renames follow `component-naming.md`: folded into work that
   already touches the code, never done in passing.
