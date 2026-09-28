@@ -24,62 +24,41 @@ naming split; renames wait ([component-naming.md](./component-naming.md)).
 
 ## 2. The graph
 
-Runtime dependencies only (`dependencies`). `boxed` is left out: nearly every package that
-touches the engine uses it. Dev-only edges are in §4.
+`boxed` is left out of both pictures: nearly every package that touches the engine uses it.
+Solid edges are `dependencies`; dotted ones are devDependencies (the rest are in §4).
+
+The symbol packages among themselves. `domains`, `statistics`, `polytope` and
+`aestimatio` stand alone.
 
 ```mermaid
 flowchart BT
-  subgraph foundation
-    boxed
-    entry
-    plausible
-    wolfram
-    raster
-    fce[for-compute-engine]
-  end
-
-  subgraph symbols [symbol packages]
-    algebra
-    hypercomplex --> algebra
-    geometric --> hypercomplex
-    diagram & groupalgebra & hecke & hopf & incidence & quiver --> algebra
-    braid --> algebra & diagram
-    modular --> algebra & residues
-    residues
-    numerals --> residues
-    number-theory --> numerals & residues & fce
-    adeles --> number-theory & numerals & residues
-    analytic --> fce
-    collections --> residues
-    domains
-    statistics
-    polytope
-    aestimatio
-  end
-
-  subgraph tooling
-    oracle --> wolfram
-    bench --> oracle & entry
-    catalog
-    reference
-    census
-  end
-
-  subgraph interface
-    formats --> wolfram & raster
-    notatio --> formats & analytic & polytope
-    cli --> notatio & formats & raster & collections & domains & statistics
-    notatio-lit --> notatio & cli & formats & wolfram & analytic & polytope & domains & aestimatio
-    web
-  end
-
-  collections --> formats
-  web --> notatio-lit
+  hypercomplex & diagram & groupalgebra & hecke & hopf & incidence & quiver --> algebra
+  geometric --> hypercomplex
+  braid --> algebra & diagram
+  modular --> algebra & residues
+  numerals --> residues
+  number-theory --> numerals & residues
+  adeles --> number-theory & numerals & residues
+  collections --> residues
+  analytic & number-theory --> fce[for-compute-engine]
 ```
 
-`web` depends on the interface packages and every symbol package it documents;
-`reference` and `census` reach every symbol package through devDependencies. Both are
-drawn bare to keep the picture legible.
+Everything else, with the symbol packages as one box:
+
+```mermaid
+flowchart BT
+  sym[symbol packages] --> fce[for-compute-engine]
+  sym -- collections --> formats
+  formats --> wolfram & raster
+  oracle --> wolfram
+  bench --> oracle & entry
+  notatio --> formats & sym
+  cli --> notatio & formats & raster & sym
+  notatio-lit --> notatio & cli & formats & wolfram & sym
+  web --> notatio-lit & sym
+  reference -.-> sym & entry & oracle & plausible
+  census -.-> sym & reference
+```
 
 ## 3. The packages
 

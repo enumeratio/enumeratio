@@ -41,7 +41,9 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.134.0",
     "@enumeratio/domains": "workspace:*",
+    "mermaid": "catalog:",
     "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "catalog:",
     "vue": "^3.5.42"
   }
 }
