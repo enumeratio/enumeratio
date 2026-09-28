@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@enumeratio/engine": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "@enumeratio/collections": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",

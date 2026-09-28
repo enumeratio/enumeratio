@@ -4,13 +4,13 @@ import { stringAt, symbolNameOf } from "@enumeratio/engine";
 // Named operations on a carrier: the combinatorial statistics and maps
 // (design/speculative/statistics-and-maps.md). A carrier like `Permutation` has dozens of
 // statistics, too many and too generically named for a global head each, so they are reached
-// through one head per kind -- `CombinatorialStatistic(π, "Inversions")` -- that finds the
+// through one head per kind -- `CombinatorialStat(π, "Inversions")` -- that finds the
 // carrier from its argument's type, as a protocol member does, and the operation by name or by
 // FindStat id. Several packages add to one carrier's table: a fast kernel from one, the
 // defining expression from another. Two of the same thing is an error, never a silent skip.
 
 /** The heads that read an operations table. */
-export type OperationHead = "CombinatorialStatistic" | "CombinatorialMap";
+export type OperationHead = "CombinatorialStat" | "CombinatorialMap";
 
 export interface Operation {
   readonly name: string;
@@ -71,7 +71,7 @@ function registryOf(ce: ComputeEngine): Registry {
   const registry: Registry = {
     carriers: new Map(),
     collections: new Map(),
-    tables: { CombinatorialStatistic: table(), CombinatorialMap: table() },
+    tables: { CombinatorialStat: table(), CombinatorialMap: table() },
   };
   held[REGISTRY] = registry;
   declareHeads(ce, registry);
@@ -139,7 +139,7 @@ function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpressi
 const COLLECTION_STATISTICS: Readonly<Record<string, string>> = { Count: "Count" };
 
 function declareHeads(ce: ComputeEngine, registry: Registry): void {
-  for (const head of ["CombinatorialStatistic", "CombinatorialMap"] as const) {
+  for (const head of ["CombinatorialStat", "CombinatorialMap"] as const) {
     ce.declare(head, {
       signature: "(any, string) -> any",
       // Over a collection, the operation mapped over it; on a value, the answer.
@@ -155,19 +155,19 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
         const name = stringAt(key);
         if (subject === undefined || key === undefined || name === undefined) return undefined;
 
-        // `CombinatorialStatistic(π, "Inversions")`: the value's carrier, then the operation.
+        // `CombinatorialStat(π, "Inversions")`: the value's carrier, then the operation.
         const carrier = carrierOf(ce, registry, subject);
         if (carrier !== undefined) {
           const entry = operationOf(ce, head, carrier.name, name);
           return entry === undefined ? undefined : (entry.kernel ?? entry.definition)?.(subject);
         }
 
-        // A statistic of the collection itself: `CombinatorialStatistic(Permutations(4), "Count")`.
-        const whole = head === "CombinatorialStatistic" ? COLLECTION_STATISTICS[name] : undefined;
+        // A statistic of the collection itself: `CombinatorialStat(Permutations(4), "Count")`.
+        const whole = head === "CombinatorialStat" ? COLLECTION_STATISTICS[name] : undefined;
         if (whole !== undefined && subject.type.matches("collection"))
           return ce.function(whole, [subject]).evaluate(options);
 
-        // `CombinatorialStatistic(Permutations(4), "Inversions")`: the operation over the whole
+        // `CombinatorialStat(Permutations(4), "Inversions")`: the operation over the whole
         // collection, lazily -- its distribution. Elements are bare contents, so each is
         // constructed as the carrier first.
         const collection = symbolNameOf(subject) ?? subject.operator;

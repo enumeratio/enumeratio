@@ -1,0 +1,7 @@
+id	in
+inversions-of-a-permutation	CombinatorialStat[Permutation[List[3, 1, 2]], "Inversions"]
+by-findstat-id	CombinatorialStat[Permutation[List[3, 1, 2]], "St000018"]
+sign-of-a-three-cycle	CombinatorialStat[Permutation[List[3, 1, 2]], "Sign"]
+distinct-parts-of-a-partition	CombinatorialStat[IntegerPartition[List[3, 1, 1]], "DistinctParts"]
+count-of-a-collection	CombinatorialStat[SymmetricGroup[4], "Count"]
+the-mahonian-distribution	Tally[CombinatorialStat[SymmetricGroup[4], "Inversions"]]

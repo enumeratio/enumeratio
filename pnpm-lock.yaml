@@ -1121,6 +1121,9 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../../../structures
@@ -1177,6 +1180,9 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../../../structures

@@ -1,10 +1,10 @@
 # Design: statistics and maps live on their collection, not the global namespace
 
 Status: **signed off; phases 1 and 2 built** (below, "What is built"). Dean's names:
-`CombinatorialStatistic` and `CombinatorialMap` for what the text calls `Statistic` and
+`CombinatorialStat` and `CombinatorialMap` for what the text calls `Statistic` and
 `Morphism` (a morphism preserves structure, and most combinatorial maps preserve none). Very
 general statistics (`Count`, `Rank`) stay heads of their own and are reachable through
-`CombinatorialStatistic` too; a statistic compute-engine or Wolfram already names may keep a
+`CombinatorialStat` too; a statistic compute-engine or Wolfram already names may keep a
 global head. Companion to
 [namespaces.md](../namespaces.md) (the resolver and context ladder this borrows) and
 [domains.md](../domains.md) (carriers as nominal types, held constructors, why restrictions
@@ -540,12 +540,12 @@ collections-package filing problem, independent of this document's central quest
 
 - **The tables** are `@enumeratio/structures`' (`registerCarrier`, `registerOperation`,
   `registerCollectionCarrier`), the leaf collections, statistics and domains can all reach.
-  `CombinatorialStatistic(x, name)` and `CombinatorialMap(x, name)` find `x`'s carrier by
+  `CombinatorialStat(x, name)` and `CombinatorialMap(x, name)` find `x`'s carrier by
   matching its type, as protocol dispatch does, then the operation by name or FindStat id.
   Over a collection (`SymmetricGroup(4)`, `Derangements(4)`, a plural) they map over its
-  elements lazily, so `Tally(CombinatorialStatistic(SymmetricGroup(4), "Inversions"))` is the
+  elements lazily, so `Tally(CombinatorialStat(SymmetricGroup(4), "Inversions"))` is the
   Mahonian numbers. The result is a collection, not a function: compute-engine's `Map` takes
-  only a literal `Function` as its mapping. `CombinatorialStatistic(C, "Count")` is `Count(C)`.
+  only a literal `Function` as its mapping. `CombinatorialStat(C, "Count")` is `Count(C)`.
 - **Kernel beside definition.** collections files its permutation kernels as each
   statistic's preferred implementation; statistics files the defining expression beside them.
   The same part twice is an `OperationCollisionError`.
@@ -563,7 +563,7 @@ collections-package filing problem, independent of this document's central quest
   still to do.
 
 Still to do: deprecate and retire the bare heads (phase 2's second half), move each
-definition down to its collection (phase 3), `Rank` through `CombinatorialStatistic`, and the
+definition down to its collection (phase 3), `Rank` through `CombinatorialStat`, and the
 unimplemented tail (phase 4).
 
 ### 4. Open questions for Dean
