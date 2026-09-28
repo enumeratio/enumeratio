@@ -1,5 +1,14 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import {
+  addRandomArm,
+  uniform01 as engineUniform01,
+  type EvaluateOptions,
+  integerAt,
+  operandsOf,
+  registerSampler,
+  seedRandom,
+  symbolNameOf,
+} from "@enumeratio/engine";
 
 // The Wolfram-frontier distribution heads: Distributed, RandomVariate, EmpiricalDistribution,
 // BetaDistribution, GammaDistribution, BinormalDistribution, Expectation, Probability — plus
@@ -594,62 +603,26 @@ function declareRelations(ce: ComputeEngine): void {
   });
 }
 
-// --- RandomVariate: a small deterministic PRNG, seeded via SeedRandom -------------------------
+// --- RandomVariate: Random over a distribution -------------------------------------------
+//
+// Every draw comes from the engine's one seeded stream (@enumeratio/engine, design/random.md),
+// the same one `RandomInteger` and `Random` over a collection use, so `SeedRandom(n)` fixes
+// them all. A distribution is one more domain `Random` samples: this file registers the
+// sampler and the overload, and `RandomVariate` is its Wolfram spelling.
 
-/** mulberry32 — the same generator `@enumeratio/collections`' (unlanded, #185) seeded
- *  `RandomInteger` uses, so the two agree on algorithm even though each keeps its own stream
- *  (this file's `RandomVariate` draws are independent of `RandomInteger`'s, even after the
- *  same `SeedRandom(n)` call — a documented divergence, and a follow-up once #185 lands: unify
- *  both under one engine-level RNG registry rather than two separate `WeakMap`s). NOT
- *  Wolfram's own generator either way — only the declared distribution's shape is guaranteed
- *  to match, never the exact sequence of numbers. */
-const mulberry32 = (seed: number): (() => number) => {
-  let state = seed | 0;
-  return () => {
-    state = (state + 0x6d2b79f5) | 0;
-    let t = Math.imul(state ^ (state >>> 15), 1 | state);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-};
+export const uniform01 = (ce: ComputeEngine): number => engineUniform01(ce);
 
-const DEFAULT_SEED = 42;
-const rngState = new WeakMap<ComputeEngine, { next: () => number }>();
-
-const rngFor = (ce: ComputeEngine): (() => number) => {
-  let entry = rngState.get(ce);
-  if (entry === undefined) {
-    entry = { next: mulberry32(DEFAULT_SEED) };
-    rngState.set(ce, entry);
-  }
-  return entry.next;
-};
-
-export const uniform01 = (ce: ComputeEngine): number => rngFor(ce)();
-
-/** Reseed this file's own RNG stream. Wired into `SeedRandom` — declaring it fresh if nothing
- *  else has (the common case today), or, once collections' own seeded `RandomInteger` lands,
- *  reseeding alongside whatever that already does (attached in place, same idiom
- *  `wrapOperator` uses) rather than a second, colliding declaration. */
+/** `SeedRandom`, declared here only when nothing else (collections) already has. */
 function wireSeedRandom(ce: ComputeEngine): void {
-  const reseed = (seed: number) => rngState.set(ce, { next: mulberry32(seed) });
   const definition = ce.lookupDefinition("SeedRandom");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) {
-    ce.declare("SeedRandom", {
-      signature: "(integer?) state -> any",
-      evaluate: (ops: readonly BoxedExpression[]) => {
-        reseed(ops[0] !== undefined ? (integerAt(ops[0]) ?? DEFAULT_SEED) : DEFAULT_SEED);
-        return ce.symbol("Nothing");
-      },
-    });
-    return;
-  }
-  const native = operator.evaluate;
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-    reseed(ops[0] !== undefined ? (integerAt(ops[0]) ?? DEFAULT_SEED) : DEFAULT_SEED);
-    return native?.(ops, options);
-  };
+  if (definition !== undefined && "operator" in definition) return;
+  ce.declare("SeedRandom", {
+    signature: "(integer?) state -> any",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      seedRandom(ce, ops[0] === undefined ? undefined : (integerAt(ops[0]) ?? undefined));
+      return ce.symbol("Nothing");
+    },
+  });
 }
 
 export const normal01 = (ce: ComputeEngine): number => {
@@ -786,21 +759,16 @@ const drawOne = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | un
 function declareRandomVariate(ce: ComputeEngine): void {
   wireSeedRandom(ce);
 
+  registerSampler(ce, (domain) => (isDistribution(domain) ? drawOne(ce, domain) : undefined));
+  addRandomArm(ce, "(distribution, (integer<0..> | list<integer<0..>>)?) random -> any");
+
+  // `RandomVariate(dist, n)` is `Random(dist, n)`.
   ce.declare("RandomVariate", {
-    signature: "(any, integer?) random -> any",
+    signature: "(any, integer<0..>?) random -> any",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const dist = ops[0];
       if (dist === undefined || !isDistribution(dist)) return undefined;
-      if (ops[1] === undefined) return drawOne(ce, dist);
-      const n = integerAt(ops[1]);
-      if (n === undefined || n < 0) return undefined;
-      const draws: BoxedExpression[] = [];
-      for (let i = 0; i < n; i++) {
-        const d = drawOne(ce, dist);
-        if (d === undefined) return undefined;
-        draws.push(d);
-      }
-      return ce.function("List", draws);
+      return ce.function("Random", [...ops]).evaluate();
     },
   });
 }

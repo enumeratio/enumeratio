@@ -42,3 +42,21 @@ randomvariate-empirical-resamples-the-data:
     in: Last[List[SeedRandom[2], RandomVariate[EmpiricalDistribution[List[a, b, c]]]]]
   wolfram:
     in: Last[List[SeedRandom[2], RandomVariate[EmpiricalDistribution[List[a, b, c]]]]]
+randomvariate-is-random-over-a-distribution:
+  epsil:
+    in: |-
+      Last([SeedRandom(5), RandomVariate(NormalDistribution(0, 1))]) == Last([
+                                                                               SeedRandom(5),
+                                                                               Random(NormalDistribution(0, 1)),
+                                                                             ])
+    out: True
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Last[List[SeedRandom[5], RandomVariate[NormalDistribution[0, 1]]]], Last[List[SeedRandom[5], RandomReal[NormalDistribution[0, 1]]]]]
+  wolfram:
+    in: (Last[List[SeedRandom[5], RandomVariate[NormalDistribution[0, 1]]]] == Last[List[SeedRandom[5], RandomReal[NormalDistribution[0, 1]]]])

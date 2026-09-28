@@ -6641,7 +6641,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Permutations",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: ["wolfram"],
@@ -6704,7 +6704,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Random",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: "RandomReal",
     elsewhere: ["wolfram"],

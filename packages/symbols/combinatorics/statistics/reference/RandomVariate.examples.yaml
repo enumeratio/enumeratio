@@ -14,3 +14,13 @@
   expr: [Last, [List, [SeedRandom, 2], [RandomVariate, [EmpiricalDistribution, [List, a, b, c]]]]]
   expected: c
   category: Scope
+- id: randomvariate-is-random-over-a-distribution
+  expr:
+    [
+      Equal,
+      [Last, [List, [SeedRandom, 5], [RandomVariate, [NormalDistribution, 0, 1]]]],
+      [Last, [List, [SeedRandom, 5], [Random, [NormalDistribution, 0, 1]]]],
+    ]
+  expected: True
+  category: Properties & Relations
+  caption: "`RandomVariate` is [[Random]] over the distribution: the same draw from the same stream"

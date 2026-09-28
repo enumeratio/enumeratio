@@ -1,12 +1,12 @@
 name: RandomInteger
 domain: Collections
 signature: RandomInteger(range, n)
-summary: A uniform random integer, or a list (or array) of them.
+summary: A uniform random integer, or a list (or array) of them -- [[Random]] over a [[Range]], by its Wolfram name.
 signatures:
   - call: RandomInteger()
     description: $0$ or $1$, each with probability $1/2$.
     library: enumeratio-collections
-    type: (any?, any?) random -> any
+    type: ((integer | list<integer>)?, (integer<0..> | list<integer<0..>>)?) random -> integer | list
   - call: RandomInteger(max)
     description: uniform in $\{0, \ldots, max\}$.
     library: enumeratio-collections

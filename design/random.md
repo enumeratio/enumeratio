@@ -1,7 +1,12 @@
 # Design: one `Random`
 
-Status: **proposed**. Replaces the eleven `Random*` heads with compute-engine's own `Random`
-over a sampling protocol; the Wolfram spellings stay, as aliases.
+Status: **first slice landed**. compute-engine's own `Random` draws from one seeded stream per
+engine (`@enumeratio/engine`'s `random.ts`) over finite collections, intervals and
+distributions, with a count or shape; `RandomInteger` and `RandomVariate` rewrite to it;
+`Permutations(n)` is a collection it can sample. Still their own heads: `RandomComplex`,
+`RandomGraph` and `RandomFunction`, which build a random object with no domain to draw from yet
+(below), and compute-engine's `RandomChoice`, `RandomSample`, `RandomPrime`, which are not ours
+to fold.
 
 ## Why one head
 
@@ -49,7 +54,25 @@ sampled, counted, ranked?" is then answerable from the manifest without loading 
 the same record field serves `Count`, `Rank`, `Unrank` and `Length`, which have the same
 shape (one verb, the capability on the type).
 
-## Known gaps to fix on the way
+## How it is built
 
-`Random(Permutations(4))` is an `incompatible-type` error today, which looks like the carrier
-name shadowing the collection family; `Random(Partitions(10))` stays unevaluated.
+- **One stream.** `seedRandom` / `uniform01` in `@enumeratio/engine`: `SeedRandom(n)` restarts
+  it, and `Random`, `RandomInteger`, `RandomVariate`, `RandomGraph`, `RandomComplex` and the
+  process paths all draw from it -- two `mulberry32` streams (collections', statistics') were
+  one too many. `RandomInteger(a, b)` and `Random(Range(a, b))` are the same draw.
+- **Samplers.** A finite collection is sampled by `count` and `at`, uniformly; past the
+  safe-integer range the engine has no count and `Random` declines rather than draw unevenly
+  (bigint indices are a follow-up). A package registers a sampler for its own domain
+  (`registerSampler`) and adds its overload (`addRandomArm`): statistics does distributions.
+  That registry is the sampling protocol in all but name; making it a compute-engine protocol,
+  recorded on each type's record, is the next step, and the same shape serves `Count`, `Rank`
+  and `Unrank`.
+- **`Permutations(n)`** was missing: compute-engine's `Permutations` takes a collection, so an
+  integer was a type error. It is now one more arm, `(integer<0..>) -> indexed_collection`,
+  meaning `SymmetricGroup(n)`.
+
+## Still to fold
+
+`RandomGraph(n, m)` becomes `Random(Graphs(n, m))` once a graph family is a collection (or a
+sampled model); `RandomComplex` becomes `Random` over a complex region once there is one;
+`RandomFunction` over a process is `Random` of a path.
