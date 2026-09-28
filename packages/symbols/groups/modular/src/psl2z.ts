@@ -209,7 +209,7 @@ export function fromContinuedFraction(quotients: readonly number[]): readonly [n
   if (quotients.length === 0 || !quotients.every(isInt)) return undefined;
   if (quotients.slice(1).some((a) => a <= 0)) return undefined;
   let [numerator, denominator] = [1, 0];
-  for (const a of [...quotients].reverse()) {
+  for (const a of [...quotients].toReversed()) {
     [numerator, denominator] = [a * numerator + denominator, numerator];
   }
   return denominator < 0 ? [-numerator, -denominator] : [numerator, denominator];
@@ -315,5 +315,5 @@ export function hyperbolicClasses(length: number, primitiveOnly = false): Word[]
     if (primitiveOnly && !isPrimitiveWord(word)) continue;
     seen.add(leastRotation(word));
   }
-  return [...seen].sort();
+  return [...seen].toSorted();
 }

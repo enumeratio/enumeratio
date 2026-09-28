@@ -42,7 +42,7 @@ const names = head
         ...STATS.map((s) => s.name),
         ...MAPS.map((m) => m.name),
       ]),
-    ].sort();
+    ].toSorted();
 
 // One request per distinct URL, remembering who asked. A Python reference with no link is
 // a name the system's documentation index does not carry -- worth a line, not a failure.
@@ -101,7 +101,7 @@ for (let i = 0; i < urls.length; i += BATCH) {
   slice.forEach((url, j) => {
     const status = statuses[j]!;
     if (typeof status === "number" && status >= 200 && status < 300) return;
-    bad.push({ url, status, who: [...targets.get(url)!].sort() });
+    bad.push({ url, status, who: [...targets.get(url)!].toSorted() });
   });
   process.stderr.write(`\r${Math.min(i + BATCH, urls.length)}/${urls.length}`);
 }

@@ -265,7 +265,7 @@ export function declareWidened(ce: ComputeEngine): void {
       const denFactors = factorInteger(den);
       if (numFactors === undefined || denFactors === undefined) return undefined;
       const sign: [bigint, number][] = num < 0n ? [[-1n, 1]] : [];
-      const merged = [...sign, ...numFactors, ...denFactors.map(([p, e]) => [p, -e] as [bigint, number])].sort(
+      const merged = [...sign, ...numFactors, ...denFactors.map(([p, e]) => [p, -e] as [bigint, number])].toSorted(
         ([a], [b]) => (a < b ? -1 : a > b ? 1 : 0),
       );
       return ce.function(

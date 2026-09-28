@@ -318,7 +318,7 @@ function buildFunction(ce: ComputeEngine, rec: LinearRec, yName: string): BoxedE
   if (!isZeroExpr(rec.rhsConst)) terms.push(j(rec.rhsConst));
   const recurrenceEq: Json = ["Equal", ["Add", ...terms], 0];
   const icEqs: Json[] = [...rec.anchors.entries()]
-    .sort(([a], [b]) => a - b)
+    .toSorted(([a], [b]) => a - b)
     .map(([index, value]) => ["Equal", [yName, index], j(value)]);
   return ce.box(["Function", ["List", recurrenceEq, ...icEqs], yName, rec.varName] as never);
 }
@@ -450,7 +450,7 @@ function evaluateAt(
 ): BoxedExpression | undefined {
   if (anchors.has(target)) return anchors.get(target);
   const known = new Map(anchors);
-  const below = [...known.keys()].filter((i) => i <= target).sort((a, b) => a - b);
+  const below = [...known.keys()].filter((i) => i <= target).toSorted((a, b) => a - b);
   if (below.length === 0) return undefined;
   const base = below[below.length - 1]!;
   for (let m = base + 1; m <= target; m++) {

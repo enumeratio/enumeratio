@@ -116,7 +116,7 @@ function rootsOf(target: 1 | -1, m: number): number[] {
       channel.roots.map((residue) => [...prefix, { residue, modulus: channel.modulus }]),
     );
   }
-  return combinations.map(crt).sort((a, b) => a - b);
+  return combinations.map(crt).toSorted((a, b) => a - b);
 }
 
 /**

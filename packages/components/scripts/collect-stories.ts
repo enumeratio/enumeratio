@@ -45,7 +45,7 @@ const referencePath = fileURLToPath(referenceDir);
 const names = readdirSync(referencePath)
   .filter((f) => f.endsWith(STORIES_SUFFIX))
   .map((f) => f.slice(0, -STORIES_SUFFIX.length))
-  .sort();
+  .toSorted();
 
 /** One written form of a story's source, shown as a tab in the source panel. */
 export interface StoryForm {

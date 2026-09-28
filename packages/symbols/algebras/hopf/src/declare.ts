@@ -85,7 +85,7 @@ export function declareHopf(ce: ComputeEngine): void {
 
   const toExpression = (head: string, element: Element): BoxedExpression => {
     const shown = (BASIS_HEADS[head] as BasisSpec).fromNative(element);
-    const terms = [...shown].sort(([a], [b]) => a.localeCompare(b));
+    const terms = [...shown].toSorted(([a], [b]) => a.localeCompare(b));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(([key, coefficient]) => {
       const b = basisExpression(head, fromKey(key));
@@ -209,7 +209,7 @@ export function declareHopf(ce: ComputeEngine): void {
       const read = ops[0] === undefined ? undefined : toElement(ops[0]);
       if (read === undefined) return undefined;
       const spec = BASIS_HEADS[read.head] as BasisSpec;
-      const terms = [...inBasis(read.algebra.coproduct(read.element), spec.fromNative)].sort(([a], [b]) =>
+      const terms = [...inBasis(read.algebra.coproduct(read.element), spec.fromNative)].toSorted(([a], [b]) =>
         a.localeCompare(b),
       );
       if (terms.length === 0) return ce.number(0);

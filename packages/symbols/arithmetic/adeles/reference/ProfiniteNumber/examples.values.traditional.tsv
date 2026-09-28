@@ -19,6 +19,30 @@ a-rational-value-and-a-rational-modulus
 lenstra-s-profinite-fibonacci-numbers	F_{\mathrm{ProfiniteNumber}(3, 10)}	\mathrm{ProfiniteNumber}(2, 11)
 lenstra-s-profinite-lucas-numbers	L_{\mathrm{ProfiniteNumber}(3, 10)}	\mathrm{ProfiniteNumber}(4, 11)
 gluing-projections-back-by-crt-is-the-identity		
+golden-add-2-4-3-mod-37-6		
+golden-add-11-mod-18-2-mod-35		
+golden-add-187-4-mod-47-1-mod-3		
+golden-add-7-4-mod-57-2-1-4		
+golden-add-2-mod-48-12		
+golden-add-2-27-mod-31		
+golden-multiply-2-4-3-mod-37-6		
+golden-multiply-11-mod-18-2-mod-35		
+golden-multiply-187-4-mod-47-1-mod-3		
+golden-multiply-7-4-mod-57-2-1-4		
+golden-multiply-2-mod-48-12		
+golden-multiply-2-27-mod-31		
+golden-equal-2-4-3-mod-37-6	-2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})	\mathrm{False}
+golden-equal-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)	\mathrm{True}
+golden-equal-2-mod-29-3-3-mod-5	\mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)	\mathrm{True}
+golden-equal-2-mod-48-12	\mathrm{ProfiniteNumber}(2, 48)=12	\mathrm{False}
+golden-numerator-2		
+golden-numerator-11-mod-18		
+golden-numerator-187-4-mod-47		
+golden-numerator-4-3		
+golden-denominator-2		
+golden-denominator-11-mod-18		
+golden-denominator-187-4-mod-47		
+golden-denominator-4-3		
 5-doesn-t-divide-the-modulus-so-nothing-is-known		
 dividing-by-a-profinite-number-stays-unevaluated		
 a-non-integer-numerator-refuses-fibonacci	F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}	F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}

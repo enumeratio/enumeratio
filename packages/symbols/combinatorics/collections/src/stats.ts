@@ -178,7 +178,7 @@ export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): voi
   registerCarrier(ce, { name: carrier, ...(type === undefined ? {} : { type }) });
   registerCollectionCarrier(ce, "SymmetricGroup", carrier);
   for (const [name, fn] of Object.entries({ ...WORD_STATS, ...PERM_STATS })) {
-    registerOperation(ce, "CombinatorialStatistic", carrier, {
+    registerOperation(ce, "CombinatorialStat", carrier, {
       name,
       type: "integer",
       kernel: (subject) =>

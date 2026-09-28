@@ -68,7 +68,7 @@ const speculative =
   dev && existsSync(speculativeLink)
     ? readdirSync(speculativeLink)
         .filter((f) => f.endsWith(".md"))
-        .sort()
+        .toSorted()
         .map((f) => ({
           text: f.replace(/\.md$/, ""),
           link: `/speculative/${f.replace(/\.md$/, "")}`,

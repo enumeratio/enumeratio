@@ -101,7 +101,7 @@ export function basisBlades(algebra: Algebra): Generator[][] {
     blades.push(algebra.generators.filter((_, k) => (mask >> k) & 1));
   }
   const order = (blade: readonly Generator[]) => blade.map((g) => algebra.generators.indexOf(g)).join(",");
-  return blades.sort((a, b) => a.length - b.length || order(a).localeCompare(order(b)));
+  return blades.toSorted((a, b) => a.length - b.length || order(a).localeCompare(order(b)));
 }
 
 /** The heads a coefficient may be built from — anything else belongs to another library. */

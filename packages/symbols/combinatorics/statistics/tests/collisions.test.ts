@@ -17,7 +17,7 @@ test("compute-engine's own name is left to it, and the statistic is reached by t
   declareCarriers(ce);
   declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
   expect(ce.box(["Sign", -3] as never).evaluate().json).toEqual(-1);
-  const sign = ["CombinatorialStatistic", ["Permutation", ["List", 2, 1]], "'Sign'"];
+  const sign = ["CombinatorialStat", ["Permutation", ["List", 2, 1]], "'Sign'"];
   expect(ce.box(sign as never).evaluate().json).toEqual(-1);
 });
 

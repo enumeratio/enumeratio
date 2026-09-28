@@ -76,7 +76,7 @@ export const valuesOnly =
 export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
   if (Array.isArray(expr) && typeof expr[0] === "string" && SEQUENCE_HEADS.has(expr[0])) {
     const items = expr.slice(1).map((item) => reduce(item, evaluate));
-    return expr[0] === "Set" ? [...items].sort(byValue) : items;
+    return expr[0] === "Set" ? [...items].toSorted(byValue) : items;
   }
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an

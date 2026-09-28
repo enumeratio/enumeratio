@@ -59,7 +59,7 @@ export const compose = (a: Braid, b: Braid): Braid | undefined =>
 
 export const invert = (b: Braid): Braid => ({
   strands: b.strands,
-  word: [...b.word].reverse().map((k) => -k),
+  word: [...b.word].toReversed().map((k) => -k),
 });
 
 export function braidPower(b: Braid, k: number): Braid | undefined {
@@ -139,7 +139,7 @@ export function inversions(permutation: readonly number[]): number {
  */
 export function positivePermutationBraid(permutation: readonly number[]): Braid | undefined {
   const n = permutation.length;
-  const sorted = [...permutation].sort((a, b) => a - b);
+  const sorted = [...permutation].toSorted((a, b) => a - b);
   if (!sorted.every((x, i) => x === i)) return undefined;
   const working = [...permutation];
   const word: number[] = [];
@@ -153,7 +153,7 @@ export function positivePermutationBraid(permutation: readonly number[]): Braid 
       }
     }
   }
-  return braid(n, word.reverse());
+  return braid(n, word.toReversed());
 }
 
 /** The torus braid (σ₁ ⋯ σ_{p−1})^q in B_p, whose closure is the torus link T(p, q). */

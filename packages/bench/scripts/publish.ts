@@ -42,7 +42,7 @@ const meta: RunMeta = {
   ...(first.run.url === undefined ? {} : { url: first.run.url }),
   job: values.job,
   ...(first.run.suite === undefined ? {} : { suite: first.run.suite }),
-  systems: reports.map((r) => r.system.name as BenchSystem).sort(),
+  systems: reports.map((r) => r.system.name as BenchSystem).toSorted(),
   machine: first.machine.fingerprint,
 };
 writeFileSync(join(dest, "run.json"), `${JSON.stringify(meta, null, 2)}\n`);

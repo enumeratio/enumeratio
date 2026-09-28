@@ -190,7 +190,7 @@ export function polytope3dSvg(polytope: Polytope, n: number, options: Polytope3d
       return { ...mark, index };
     })
     .filter((mark) => labelled(which, mark.dimension, mark.selected))
-    .sort((a, b) => Number(a.selected) - Number(b.selected))
+    .toSorted((a, b) => Number(a.selected) - Number(b.selected))
     .map((mark) => {
       // A vertex's label is nudged away from the middle so the dot it names stays visible;
       // an edge's or a facet's sits on the mark, which is already open space.

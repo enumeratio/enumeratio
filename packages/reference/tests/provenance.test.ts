@@ -411,7 +411,7 @@ const NOVEL = [
   "ClausenCl",
   "CograssmannianPermutations",
   "CombinatorialMap",
-  "CombinatorialStatistic",
+  "CombinatorialStat",
   "CongruentMod",
   "ConnectedPermutations",
   "Csgn",
@@ -577,11 +577,11 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   const ours = provenance.filter((record) => record.provenance === "extension");
   const novel = ours.filter((record) => record.elsewhere.length === 0).map((r) => r.name);
   // The entries come in the loader's order (domain, then name); what matters is the set.
-  expect([...novel].sort()).toEqual([...NOVEL].sort());
+  expect([...novel].toSorted()).toEqual([...NOVEL].toSorted());
   // …and the rest exist elsewhere, which is the upstreaming shortlist: a function a
   // general system already carries, that we implemented again.
   const known = ours.filter((record) => record.elsewhere.length > 0);
-  expect(known.map((record) => record.name).sort()).toEqual([
+  expect(known.map((record) => record.name).toSorted()).toEqual([
     "AbsoluteTiming",
     "Accumulate",
     "AdjacencyGraph",

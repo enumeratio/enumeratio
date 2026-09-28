@@ -62,7 +62,7 @@ const listOf = (value: number | number[] | number[][]): unknown =>
 // heads), then the definitions, which leave those heads to collections. A pinned value is
 // therefore the one a cell or a REPL line actually produces, not the definition's in isolation.
 // Heads compute-engine itself owns (`Sign`) are never declared from a definition -- they are
-// reached through `CombinatorialStatistic` -- so they are documented by the core reference, not
+// reached through `CombinatorialStat` -- so they are documented by the core reference, not
 // by this package. Probe a bare engine to find them.
 const bare = new ComputeEngine();
 const CORE_OWNED = new Set(

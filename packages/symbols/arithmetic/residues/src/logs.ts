@@ -157,5 +157,5 @@ export function primitiveRootList(n: bigint): bigint[] | undefined {
     power = (power * g) % n;
     if (gcd(k, units.phi) === 1n) roots.push(power);
   }
-  return roots.sort((x, y) => (x < y ? -1 : x > y ? 1 : 0));
+  return roots.toSorted((x, y) => (x < y ? -1 : x > y ? 1 : 0));
 }

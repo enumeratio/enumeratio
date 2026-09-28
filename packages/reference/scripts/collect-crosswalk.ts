@@ -27,7 +27,7 @@ const entries = referenceEntries();
 
 const symbols = engineSymbols(new ComputeEngine());
 const records = crosswalk(
-  [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].sort(),
+  [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].toSorted(),
   FUNGRIM_CORE.rules,
   { ...SYMBOLS, ...HEADS },
   MAPPINGS,

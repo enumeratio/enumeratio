@@ -77,7 +77,7 @@ function discoverPackages(root: string): Array<{ name: string; dir: string }> {
     const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
     if (pkgJson.scripts?.test) out.push({ name: pkgJson.name, dir });
   }
-  return out.sort((a, b) => a.name.localeCompare(b.name));
+  return out.toSorted((a, b) => a.name.localeCompare(b.name));
 }
 
 function runPackageSuite(pkgName: string, outputFile: string): VitestJsonReport | undefined {

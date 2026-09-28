@@ -104,7 +104,7 @@ test("descending ys still render bottom-up", () => {
     [0, 0],
     [1, 1],
   ];
-  const rects = (svg: string): string[] => (svg.match(/<rect[^/]*\/>/g) ?? []).sort();
+  const rects = (svg: string): string[] => (svg.match(/<rect[^/]*\/>/g) ?? []).toSorted();
   const asc = densitySvg(grid, [0, 1], [0, 1], { axes: false });
   // The same field with its rows and `ys` both reversed must paint the same
   // cells (only the emission order changes).

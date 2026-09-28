@@ -70,6 +70,6 @@ export function canonicalOrder(overloads: readonly Overload[], typing: ComputeEn
   };
   const scored = overloads.map((o) => ({ o, score: specificity(o) }));
   return scored
-    .sort((x, y) => y.score - x.score || cmp(x.o.type ?? "", y.o.type ?? "") || cmp(x.o.package, y.o.package))
+    .toSorted((x, y) => y.score - x.score || cmp(x.o.type ?? "", y.o.type ?? "") || cmp(x.o.package, y.o.package))
     .map(({ o }) => o);
 }

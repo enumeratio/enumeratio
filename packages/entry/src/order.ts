@@ -13,7 +13,7 @@ function ordered(keys: readonly string[], first: readonly string[]): string[] {
     const i = first.indexOf(key);
     return i === -1 ? first.length : i;
   };
-  return [...keys].sort((a, b) => rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0));
+  return [...keys].toSorted((a, b) => rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0));
 }
 
 const reorder = <T extends object>(record: T, first: readonly string[]): T =>

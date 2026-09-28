@@ -37,7 +37,7 @@ export function descentSet(a: Composition): number[] {
 
 /** The composition of n whose partial sums are the given subset. */
 export function fromDescentSet(set: readonly number[], n: number): Composition | undefined {
-  const sorted = [...new Set(set)].sort((x, y) => x - y);
+  const sorted = [...new Set(set)].toSorted((x, y) => x - y);
   if (sorted.some((x) => !Number.isSafeInteger(x) || x < 1 || x >= n)) return undefined;
   if (n === 0) return sorted.length === 0 ? [] : undefined;
   const out: number[] = [];
@@ -155,7 +155,7 @@ export function conjugateComposition(a: Composition): Composition {
   const complement = Array.from({ length: total - 1 }, (_, i) => i + 1)
     .filter((x) => !held.has(x))
     .map((x) => total - x)
-    .sort((x, y) => x - y);
+    .toSorted((x, y) => x - y);
   return fromDescentSet(complement, total) as Composition;
 }
 

@@ -186,7 +186,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
   };
 
   const writeAlgebra = (head: "Diagram" | "OrbitDiagram", value: AlgebraElement): BoxedExpression => {
-    const terms = [...value.values()].sort((a, b) => (diagramKey(a.diagram) < diagramKey(b.diagram) ? -1 : 1));
+    const terms = [...value.values()].toSorted((a, b) => (diagramKey(a.diagram) < diagramKey(b.diagram) ? -1 : 1));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(({ diagram: d, coefficient }) => {
       const b = head === "Diagram" ? toExpression(d) : orbitExpression(d);

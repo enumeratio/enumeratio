@@ -127,7 +127,8 @@ export function dijkstraPath(model: GraphModel, source: string, target: string):
     cur = prev.get(cur)!;
     path.push(cur);
   }
-  return path.reverse();
+  path.reverse();
+  return path;
 }
 
 // ─── WeightedAdjacencyMatrix (declared in graphs-2.ts, alongside AdjacencyMatrix's own

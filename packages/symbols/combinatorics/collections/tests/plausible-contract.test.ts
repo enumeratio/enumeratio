@@ -21,7 +21,7 @@ if (process.env["UPDATE_PLAUSIBLE_RATCHET"]) {
   const still = listed.filter(
     (head) => heads.has(head) && allEntries.find((f) => f.head === head)?.declared === undefined,
   );
-  writeFileSync(RATCHET, `${JSON.stringify(still.sort(), null, 2)}\n`);
+  writeFileSync(RATCHET, `${JSON.stringify(still.toSorted(), null, 2)}\n`);
 }
 const undeclared = new Set<string>(JSON.parse(readFileSync(RATCHET, "utf8")) as string[]);
 

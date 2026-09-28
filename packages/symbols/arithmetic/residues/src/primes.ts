@@ -179,7 +179,7 @@ export function factorInteger(n: bigint): [bigint, number][] | undefined {
     if (factor === undefined) return undefined;
     pending.push([factor, multiplicity], [m / factor, multiplicity]);
   }
-  return [...counts].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  return [...counts].toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
 }
 
 /** Euler's φ from a factorisation. */

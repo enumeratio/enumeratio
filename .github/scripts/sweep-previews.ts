@@ -104,7 +104,7 @@ function select(deployments: Deployment[]): Deployment[] {
     const cutoff = Date.now() - days * 86_400_000;
     const latestMain = previews
       .filter((d) => d.deployment_trigger.metadata.commit_message.includes("[preview-main]"))
-      .sort((a, b) => b.created_on.localeCompare(a.created_on))[0];
+      .toSorted((a, b) => b.created_on.localeCompare(a.created_on))[0];
     return previews.filter(
       (d) =>
         d.id !== latestMain?.id &&

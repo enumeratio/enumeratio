@@ -98,7 +98,7 @@ export function adaptiveSample(
   };
   for (let i = 0; i < x0.length - 1; i++) rec(x0[i], x0[i + 1], at(x0[i]), at(x0[i + 1]), 0);
 
-  return [...ys.entries()].sort((p, q) => p[0] - q[0]).map(([x, y]) => ({ x, y }));
+  return [...ys.entries()].toSorted((p, q) => p[0] - q[0]).map(([x, y]) => ({ x, y }));
 }
 
 /**
@@ -158,7 +158,7 @@ export function adaptiveParam(
   };
   for (let i = 0; i < t0.length - 1; i++) rec(t0[i], t0[i + 1], 0);
 
-  return [...pts.entries()].sort((p, q) => p[0] - q[0]).map(([, [x, y]]) => ({ x, y }));
+  return [...pts.entries()].toSorted((p, q) => p[0] - q[0]).map(([, [x, y]]) => ({ x, y }));
 }
 
 export interface PlotSeries {
@@ -308,7 +308,7 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
   } else {
     // Robust y-window from the 2nd/98th percentiles, so a pole's spike doesn't
     // dominate the range and flatten the rest of the curve.
-    const sorted = [...tys].sort((a, b) => a - b);
+    const sorted = [...tys].toSorted((a, b) => a - b);
     const quantile = (p: number): number => {
       const idx = p * (sorted.length - 1);
       const lo = Math.floor(idx);

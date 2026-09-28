@@ -12,6 +12,7 @@
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { symbolInfo } from "@enumeratio/manifest";
 import { registerOperation } from "@enumeratio/structures";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
@@ -577,8 +578,13 @@ export function declareMaps(
     };
 
     const from = constructorFor[map.from];
-    if (from !== undefined)
-      registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, definition: handle });
+    if (from !== undefined) {
+      // FindStat's map ids (`Mp00066`), as the map's record states them.
+      const findstat = (symbolInfo(map.name)?.findstat ?? [])
+        .filter((ref) => ref.on === undefined || ref.on === from)
+        .map((ref) => ref.id);
+      registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, findstat, definition: handle });
+    }
 
     // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending
     // rather than replacing keeps every overload they had — see extend.ts for why that is

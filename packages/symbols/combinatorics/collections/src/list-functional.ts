@@ -374,7 +374,8 @@ export function declareListFunctional(ce: ComputeEngine): void {
     ["Sort", 1],
     (ops) => isAssociation(ops),
     () => (ops) => {
-      const sorted = [...operandsOf(ops[0])].sort((ruleA, ruleB) => {
+      const sorted = [...operandsOf(ops[0])];
+      sorted.sort((ruleA, ruleB) => {
         const valueA = operandsOf(ruleA)[1];
         const valueB = operandsOf(ruleB)[1];
         if (valueA === undefined || valueB === undefined) return 0;

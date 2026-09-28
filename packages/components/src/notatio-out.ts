@@ -88,7 +88,7 @@ function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefin
     const substituted = substitutedForm(engine, raw);
     return {
       source: toInputForm(substituted.json as MathJsonExpression),
-      free: [...substituted.unknowns].sort(),
+      free: [...substituted.unknowns].toSorted(),
     };
   } catch {
     return undefined;
@@ -699,7 +699,7 @@ export class NotatioOut extends LitElement {
   // portrait's fragment shader (<notatio-complex-plot>); one or two reals, the plot grid's
   // compute shader (gpu-eval). Anything neither path takes has no shader form.
   async #gpuShader(expr: { unknowns: ReadonlyArray<string> }): Promise<string | undefined> {
-    const unknowns = [...expr.unknowns].sort();
+    const unknowns = [...expr.unknowns].toSorted();
     if (unknowns.length === 0 || unknowns.length > 2) return undefined;
     try {
       if (unknowns.length === 1) {

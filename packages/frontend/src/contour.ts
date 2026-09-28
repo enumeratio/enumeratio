@@ -233,7 +233,7 @@ export function contourSvg(
   const zmax = Math.max(...flat);
   const levels =
     opts.levels && opts.levels.length > 0
-      ? [...opts.levels].sort((a, b) => a - b)
+      ? [...opts.levels].toSorted((a, b) => a - b)
       : autoLevels(zmin, zmax, opts.count ?? 8);
 
   const xlo = Math.min(...xs.slice(0, nx));

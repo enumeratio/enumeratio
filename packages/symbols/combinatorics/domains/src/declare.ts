@@ -104,7 +104,7 @@ export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression 
 export function declareDomainPlurals(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
   for (const domain of domains) {
     if (domain.plural === undefined) continue;
-    // `CombinatorialStatistic(IntegerPartitions, name)` reaches the carrier through its plural.
+    // `CombinatorialStat(IntegerPartitions, name)` reaches the carrier through its plural.
     registerCollectionCarrier(ce, domain.plural, domain.name);
     if (ce.lookupDefinition(domain.plural) !== undefined) continue;
     ce.declare(domain.plural, `set<${domain.type}>`);

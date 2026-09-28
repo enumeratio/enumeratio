@@ -169,7 +169,9 @@ function palindromicUnrank(n: number, r: number): number[] {
     const c = anyComp.count(h);
     if (rr < c) {
       const left = anyComp.unrank(h, rr);
-      return [...left, m, ...left.slice().reverse()];
+      const leftRev = left.slice();
+      leftRev.reverse();
+      return [...left, m, ...leftRev];
     }
     rr -= c;
   }
@@ -178,7 +180,9 @@ function palindromicUnrank(n: number, r: number): number[] {
     const c = anyComp.count(h);
     if (rr < c) {
       const left = anyComp.unrank(h, rr);
-      return [...left, ...left.slice().reverse()];
+      const leftRev = left.slice();
+      leftRev.reverse();
+      return [...left, ...leftRev];
     }
   }
   throw new Error("PalindromicCompositions: rank out of range");

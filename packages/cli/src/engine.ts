@@ -348,6 +348,8 @@ export class Session {
         return this.ce.box(importFrom(body, "MathJSON") as Parameters<ComputeEngine["box"]>[0]);
       case "epsil":
         return this.ce.box(importFrom(body, "Epsil", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0]);
+      default:
+        throw new Error("unreachable: Syntax is exhaustive above");
     }
   }
 
@@ -375,6 +377,8 @@ export class Session {
         return String(exportTo(expr, "MathJSON"));
       case "epsil":
         return `(${String(exportTo(expr, "Epsil"))})`;
+      default:
+        throw new Error("unreachable: Syntax is exhaustive above");
     }
   }
 }

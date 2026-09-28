@@ -64,7 +64,8 @@ export function declareListStats(ce: ComputeEngine): void {
       !operandsOf(ops[0]).every(isNumberLiteral) &&
       operandsOf(ops[0]).every((x) => x.isNumber === true),
     () => (ops) => {
-      const sorted = [...operandsOf(ops[0])].sort(compareByValue);
+      const sorted = [...operandsOf(ops[0])];
+      sorted.sort(compareByValue);
       const mid = Math.floor(sorted.length / 2);
       return sorted.length % 2 === 1 ? sorted[mid] : symbolicMean(ce, [sorted[mid - 1], sorted[mid]]);
     },
@@ -88,7 +89,8 @@ export function declareListStats(ce: ComputeEngine): void {
         if (existing !== undefined) existing.count++;
         else tally.push({ value: item, count: 1 });
       }
-      const ranked = [...tally].sort((a, b) => b.count - a.count);
+      const ranked = [...tally];
+      ranked.sort((a, b) => b.count - a.count);
       return ce.box(["List", ...ranked.slice(0, n).map((entry) => entry.value)]);
     },
   );

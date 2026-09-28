@@ -37,7 +37,7 @@ for (const entry of referenceEntries(data)) {
 }
 
 const ce = declaredEngine();
-const defined = [...names].filter((name) => ce.lookupDefinition(name) !== undefined).sort();
+const defined = [...names].filter((name) => ce.lookupDefinition(name) !== undefined).toSorted();
 
 await writeFormatted(
   new URL("../../oracle/src/defined-names-data.ts", import.meta.url),

@@ -65,7 +65,7 @@ export abstract class ChoiceControl extends LitElement {
   get binding(): MathJsonExpression {
     const of = (i: number): MathJsonExpression => choiceBinding(this.#choices[i], i);
     if (!this.multiple) return this.index < 0 ? "Null" : of(this.index);
-    return ["List", ...[...this._selected].sort((a, b) => a - b).map(of)] as MathJsonExpression;
+    return ["List", ...[...this._selected].toSorted((a, b) => a - b).map(of)] as MathJsonExpression;
   }
 
   protected override willUpdate(changed: PropertyValues): void {

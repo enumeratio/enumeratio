@@ -89,6 +89,6 @@ const live = new Set(
 const sorted = Object.fromEntries(
   Object.entries(pins)
     .filter(([name]) => live.has(name))
-    .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+    .toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
 );
 writeFileSync(PINS_FILE, `${JSON.stringify(sorted, null, 2)}\n`);

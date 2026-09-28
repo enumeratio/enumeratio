@@ -1,0 +1,51 @@
+id	in	out
+12-hat-z-8-hat-z-4-hat-z	(Qhat(3, 12) + Qhat(5, 8))	
+profinitenumber-3-12-times-profinitenumber-5-8	(Qhat(3, 12) * Qhat(5, 8))	
+equal-cosets-need-not-share-a-modulus	bool(Qhat(6, 20) == Qhat(6, 40))	
+numerator-profinitenumber-2-over-3-5	(Qhat((2/3), 5)).numerator()	
+denominator-profinitenumber-2-over-3-5	(Qhat((2/3), 5)).denominator()	
+projecting-to-q-2	Qp(2, 60)(QQ(Qhat(100, 24)))	
+projecting-to-q-3	Qp(3, 60)(QQ(Qhat(100, 24)))	
+profinitenumber-26-20-normalises-to-6-20	Qhat(26, 20)	
+a-negative-value-normalises-into-the-coset	Qhat(-1, 12)	
+a-negative-modulus-normalises-to-positive	Qhat(5, -12)	
+a-rational-value-reduces-mod-a-rational-modulus	Qhat((7/2), (3/2))	
+modulus-zero-collapses-to-the-rational-itself	Qhat((1/3), 0)	
+subtracting-an-integer-from-a-profinite-number	(Qhat(7, 30) - 2)	
+squaring-a-profinite-number	((Qhat(3, 12))^2)	
+dividing-by-an-exact-integer-divisor	(Qhat(4, 12) / 2)	
+crt-glued-from-its-2-adic-and-3-adic-images		
+a-rational-value-and-a-rational-modulus	(Qhat((1/2), (97/5)) + Qhat((1/3), 10))	
+lenstra-s-profinite-fibonacci-numbers	fibonacci(Qhat(3, 10))	
+lenstra-s-profinite-lucas-numbers	lucas_number2(Qhat(3, 10), 1, -1)	
+gluing-projections-back-by-crt-is-the-identity	Qhat([Qp(2, 60)(QQ(Qhat(100, 24))), Qp(3, 60)(QQ(Qhat(100, 24)))])	
+golden-add-2-4-3-mod-37-6	(-2 + Qhat((4/3), (37/6)))	11/2 mod 37/6
+golden-add-11-mod-18-2-mod-35	(Qhat(11, 18) + Qhat(2, 35))	0 mod 1
+golden-add-187-4-mod-47-1-mod-3	(Qhat((187/4), 47) + Qhat(1, 3))	3/4 mod 1
+golden-add-7-4-mod-57-2-1-4	(Qhat((7/4), (57/2)) + (1/4))	2 mod 57/2
+golden-add-2-mod-48-12	(Qhat(2, 48) + 12)	14 mod 48
+golden-add-2-27-mod-31	(2 + Qhat(27, 31))	29 mod 31
+golden-multiply-2-4-3-mod-37-6	(-2 * Qhat((4/3), (37/6)))	29/3 mod 37/3
+golden-multiply-11-mod-18-2-mod-35	(Qhat(11, 18) * Qhat(2, 35))	0 mod 1
+golden-multiply-187-4-mod-47-1-mod-3	(Qhat((187/4), 47) * Qhat(1, 3))	0 mod 1/4
+golden-multiply-7-4-mod-57-2-1-4	(Qhat((7/4), (57/2)) * (1/4))	7/16 mod 57/8
+golden-multiply-2-mod-48-12	(Qhat(2, 48) * 12)	24 mod 576
+golden-multiply-2-27-mod-31	(2 * Qhat(27, 31))	54 mod 62
+golden-equal-2-4-3-mod-37-6	bool(-2 == Qhat((4/3), (37/6)))	False
+golden-equal-11-mod-18-2-mod-35	bool(Qhat(11, 18) == Qhat(2, 35))	True
+golden-equal-2-mod-29-3-3-mod-5	bool(Qhat(2, (29/3)) == Qhat(3, 5))	True
+golden-equal-2-mod-48-12	bool(Qhat(2, 48) == 12)	False
+golden-numerator-2	(-2).numerator()	-2
+golden-numerator-11-mod-18	(Qhat(11, 18)).numerator()	11 mod 18
+golden-numerator-187-4-mod-47	(Qhat((187/4), 47)).numerator()	187 mod 188
+golden-numerator-4-3	((-4/3)).numerator()	-4
+golden-denominator-2	(-2).denominator()	1
+golden-denominator-11-mod-18	(Qhat(11, 18)).denominator()	1
+golden-denominator-187-4-mod-47	(Qhat((187/4), 47)).denominator()	4
+golden-denominator-4-3	((-4/3)).denominator()	3
+5-doesn-t-divide-the-modulus-so-nothing-is-known	Qp(5, 60)(QQ(Qhat(100, 24)))	
+dividing-by-a-profinite-number-stays-unevaluated	(1 / Qhat(5, 12))	
+a-non-integer-numerator-refuses-fibonacci	fibonacci(Qhat((1/2), 3))	
+numerator-of-a-plain-rational-is-untouched	((3/4)).numerator()	
+denominator-of-a-plain-rational-is-untouched	((3/4)).denominator()	
+only-profinitenumber-gets-numerator-not-adele	(Adeles(QQ)(5)).numerator()	

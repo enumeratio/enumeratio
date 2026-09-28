@@ -22,7 +22,7 @@ test("candidates are found in either tree", () => {
   const src = "\\operatorname{Foo}(3) + \\operatorname{Bar}(2) + a(b+c)";
   for (const parse of [canonicalParse, rawParse]) {
     const ce = new ComputeEngine();
-    expect(applicationCandidates(parse(ce, src), ce).sort()).toEqual(["Bar", "Foo", "a"]);
+    expect(applicationCandidates(parse(ce, src), ce).toSorted()).toEqual(["Bar", "Foo", "a"]);
   }
 });
 

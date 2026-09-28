@@ -175,7 +175,7 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
     return mul(cx(0, 1), carlsonRJ(cx(-x0.re), cx(-y0.re), cx(-z0.re), cx(-p0.re)));
   }
   if (p0.im === 0 && p0.re < 0 && x0.im === 0 && x0.re >= 0 && y0.im === 0 && y0.re >= 0 && z0.im === 0 && z0.re >= 0) {
-    const [x, y, z] = [x0.re, y0.re, z0.re].sort((a, b) => a - b);
+    const [x, y, z] = [x0.re, y0.re, z0.re].toSorted((a, b) => a - b);
     if ([x, y, z].filter((v) => v === 0).length <= 1) {
       const q = -p0.re;
       const p = y + ((z - y) * (y - x)) / (y + q);
@@ -291,7 +291,7 @@ export function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
   if (args.every((v) => v.im === 0)) {
     if (args.every((v) => v.re >= 0)) return false; // no cut in reach
     if (args.every((v) => v.re <= 0) && args.some((v) => v.re !== 0)) return false; // reflection
-    const [xr, yr, zr] = [x.re, y.re, z.re].sort((a, b) => a - b);
+    const [xr, yr, zr] = [x.re, y.re, z.re].toSorted((a, b) => a - b);
     const cpv = p.re < 0 && xr >= 0 && yr >= 0 && zr >= 0 && [xr, yr, zr].filter((v) => v === 0).length <= 1;
     return !cpv;
   }

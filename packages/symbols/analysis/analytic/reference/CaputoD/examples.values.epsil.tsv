@@ -2,4 +2,11 @@ id	in	out
 power-x2-alpha-half	CaputoD(x ^ 2, [x, 0.5])	1.504_505_556_127_350_098_532 * x ^ 1.5
 constant-vanishes	CaputoD(5, [x, 0.5])	0
 integer-edge-case-vanishes	CaputoD(x, [x, 1.5])	0
+exact-order-constant-half	CaputoD(5, [x, 1 / 2])	0
+exact-order-x-half	CaputoD(x, [x, 1 / 2])	2 * Sqrt(x) / Sqrt(Pi)
+exact-order-x-vanishes	CaputoD(x, [x, 3 / 2])	0
+exact-order-power-x2-half	CaputoD(x ^ 2, [x, 1 / 2])	8 * x ^ (3 / 2) / (3 * Sqrt(Pi))
+exact-order-power-x2-three-half	CaputoD(x ^ 2, [x, 3 / 2])	4 * Sqrt(x) / Sqrt(Pi)
+exact-order-power-x2-third	CaputoD(x ^ 2, [x, 1 / 3])	2 * x ^ (5 / 3) / Gamma(8 / 3)
 polynomial-linearity	CaputoD(x ^ 2 + 3x + 1, [x, 0.5])	1.504_505_556_127_350_098_532 * x ^ 1.5 + 3.385_137_501_286_537_721_7 * Sqrt(x)
+exact-order-polynomial-half	CaputoD(x ^ 2 + 3x + 1, [x, 1 / 2])	6 * Sqrt(x) / Sqrt(Pi) + 8 * x ^ (3 / 2) / (3 * Sqrt(Pi))

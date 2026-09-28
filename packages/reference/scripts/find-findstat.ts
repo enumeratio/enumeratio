@@ -168,7 +168,7 @@ async function find(domain: string, data: string): Promise<string[]> {
         m.Quality[1] === 100,
     )
     .map((m) => m.MatchingStatistic)
-    .sort();
+    .toSorted();
 }
 
 const ce = new ComputeEngine();

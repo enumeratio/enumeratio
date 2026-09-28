@@ -17,7 +17,7 @@ import {
 const show = (e: AlgebraElement) =>
   [...e.values()]
     .map(({ diagram: d, coefficient }) => [diagramKey(d), coefficient] as const)
-    .sort(([a], [b]) => (a < b ? -1 : 1));
+    .toSorted(([a], [b]) => (a < b ? -1 : 1));
 const same = (a: AlgebraElement, b: AlgebraElement) => expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
 
 const partitions = (n: number): Diagram[] => enumerateDiagrams("partition", n);
@@ -126,7 +126,7 @@ test("the product is a polynomial in the loop parameter, and it is bilinear", ()
     );
   }
   const byDegree = (a: number, b: number): number => a - b;
-  expect([...combined.keys()].sort(byDegree)).toEqual([...separate.keys()].sort(byDegree));
+  expect([...combined.keys()].toSorted(byDegree)).toEqual([...separate.keys()].toSorted(byDegree));
   for (const [degree, part] of combined) same(part, separate.get(degree) as AlgebraElement);
 });
 

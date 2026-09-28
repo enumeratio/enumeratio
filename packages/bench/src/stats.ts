@@ -15,7 +15,7 @@ export function quantile(sorted: readonly number[], q: number): number {
 }
 
 export function summarise(samples: readonly number[]): Summary {
-  const sorted = [...samples].sort((a, b) => a - b);
+  const sorted = [...samples].toSorted((a, b) => a - b);
   const q1 = quantile(sorted, 0.25);
   const q3 = quantile(sorted, 0.75);
   const fence = 1.5 * (q3 - q1);

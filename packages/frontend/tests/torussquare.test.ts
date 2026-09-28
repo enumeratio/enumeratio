@@ -76,7 +76,7 @@ test("T(p,q) and T(q,p) are the same line, reflected in the diagonal", () => {
   const key = (s: { from: readonly number[]; to: readonly number[] }): string =>
     [...s.from, ...s.to]
       .map((v) => v.toFixed(6))
-      .sort()
+      .toSorted()
       .join(" ");
   expect(new Set(flipped.map(key))).toEqual(new Set(strands(3, 7).map(key)));
 });

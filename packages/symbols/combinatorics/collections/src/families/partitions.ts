@@ -82,7 +82,8 @@ export function partsInSet(inSet: (s: number) => boolean) {
     return out;
   }
   function rank(parts: readonly number[]): number {
-    const sorted = [...parts].sort((a, b) => b - a);
+    const sorted = [...parts];
+    sorted.sort((a, b) => b - a);
     let r = 0;
     let rem = sum(sorted);
     let cap = rem;
