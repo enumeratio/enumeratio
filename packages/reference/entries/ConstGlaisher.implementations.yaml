@@ -1,0 +1,11 @@
+const-glaisher-numeric-value:
+  epsil:
+    in: N(ConstGlaisher)
+    out: 1.282_427_129_100_622_6
+  tex:
+    in: N(\mathrm{ConstGlaisher})
+    out: 1.282\,427\,129\,100\,622\,6
+  fullform:
+    in: N[Glaisher]
+  wolfram:
+    in: N[Glaisher]

@@ -1,0 +1,44 @@
+b-0-x-1:
+  epsil:
+    in: BernoulliPolynomial(0, x)
+    out: "1"
+  tex:
+    in: \mathrm{BernoulliPolynomial}(0, x)
+    out: "1"
+  fullform:
+    in: BernoulliB[0, x]
+    back: [BernoulliB, 0, x]
+b-1-x-x-1-2:
+  epsil:
+    in: BernoulliPolynomial(1, x)
+    out: x + -1 / 2
+  tex:
+    in: \mathrm{BernoulliPolynomial}(1, x)
+    out: x-\frac{1}{2}
+  fullform:
+    in: BernoulliB[1, x]
+    back: [BernoulliB, 1, x]
+b-2-0-1-6:
+  epsil:
+    in: N(BernoulliPolynomial(2, 0))
+    out: 0.166_666_666_666_666_66
+  tex:
+    in: N(\mathrm{BernoulliPolynomial}(2, 0))
+    out: 0.166\,666\,666\,666\,666\,66
+  fullform:
+    in: N[BernoulliB[2, 0]]
+    back: [N, [BernoulliB, 2, 0]]
+  wolfram:
+    in: N[BernoulliB[2, 0]]
+b-2-1-1-6:
+  epsil:
+    in: N(BernoulliPolynomial(2, 1))
+    out: 0.166_666_666_666_666_66
+  tex:
+    in: N(\mathrm{BernoulliPolynomial}(2, 1))
+    out: 0.166\,666\,666\,666\,666\,66
+  fullform:
+    in: N[BernoulliB[2, 1]]
+    back: [N, [BernoulliB, 2, 1]]
+  wolfram:
+    in: N[BernoulliB[2, 1]]

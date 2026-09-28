@@ -84,43 +84,16 @@ test("At(Primes, n) gives the n-th prime, 1-indexed", () => {
   expect(ce.box(["At", "Primes", 5]).evaluate().re).toBe(11);
 });
 
-// Take against a lazy collection stays a symbolic `Take(...)` node under `.evaluate().json`
-// (only the string serializer materializes it) -- true for every family in this package, not
-// just these, so assertions below read the rendered string rather than `.json`.
-test("Take(Primes, 5) gives the first five primes", () => {
-  expect(ce.box(["Take", "Primes", 5]).evaluate().toString()).toBe("[2,3,5,7,11]");
-});
+// Take/Element on Primes, SquareNumbers, AbundantNumbers and SmoothNumbers are now examples
+// (Primes, SquareNumbers, AbundantNumbers, SmoothNumbers). At/Count have no record of their
+// own to pin an example on, so they stay here.
 
 test("Count(Primes) is +oo", () => {
   expect(ce.box(["Count", "Primes"]).evaluate().toString()).toBe("+oo");
 });
 
-test("Element membership on Primes", () => {
-  expect(ce.box(["Element", 11, "Primes"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 9, "Primes"]).evaluate().toString()).toBe('"False"');
-});
-
-test("Take(SquareNumbers, 5) gives the first five squares", () => {
-  expect(ce.box(["Take", "SquareNumbers", 5]).evaluate().toString()).toBe("[1,4,9,16,25]");
-});
-
-test("Take(AbundantNumbers, 5) gives the first five abundant numbers", () => {
-  expect(ce.box(["Take", "AbundantNumbers", 5]).evaluate().toString()).toBe("[12,18,20,24,30]");
-});
-
-test("Element membership on AbundantNumbers", () => {
-  expect(ce.box(["Element", 12, "AbundantNumbers"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 28, "AbundantNumbers"]).evaluate().toString()).toBe('"False"'); // perfect, not abundant
-});
-
 test("SmoothNumbers(k) is a one-parameter operator", () => {
   expect(ce.box(["At", ["SmoothNumbers", 7], 1]).evaluate().re).toBe(1);
-  expect(
-    ce
-      .box(["Take", ["SmoothNumbers", 7], 10])
-      .evaluate()
-      .toString(),
-  ).toBe(`[${SMOOTH_7.slice(0, 10).join(",")}]`);
 });
 
 // --- Primes at bench scale (issue #205/#276): the segmented sieve/BPSW primality of

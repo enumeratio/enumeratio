@@ -1,0 +1,42 @@
+falling-factorial-5-3-60:
+  epsil:
+    in: FallingFactorial(5, 3)
+    out: "60"
+  tex:
+    in: \mathrm{FallingFactorial}(5, 3)
+    out: "60"
+  traditional:
+    in: 5^{\underline{3}}
+    out: "60"
+  fullform:
+    in: FactorialPower[5, 3]
+  wolfram:
+    in: FactorialPower[5, 3]
+falling-factorial-3-5-0:
+  epsil:
+    in: FallingFactorial(3, 5)
+    out: "0"
+  tex:
+    in: \mathrm{FallingFactorial}(3, 5)
+    out: "0"
+  traditional:
+    in: 3^{\underline{5}}
+    out: "0"
+  fullform:
+    in: FactorialPower[3, 5]
+  wolfram:
+    in: FactorialPower[3, 5]
+falling-factorial-half-2-neg-1-4:
+  epsil:
+    in: FallingFactorial(1 / 2, 2)
+    out: -1 / 4
+  tex:
+    in: \mathrm{FallingFactorial}(\frac{1}{2}, 2)
+    out: -\frac{1}{4}
+  traditional:
+    in: (\frac{1}{2})^{\underline{2}}
+    out: -\frac{1}{4}
+  fullform:
+    in: FactorialPower[Rational[1, 2], 2]
+  wolfram:
+    in: FactorialPower[Rational[1, 2], 2]

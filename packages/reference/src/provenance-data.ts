@@ -2315,8 +2315,8 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "SmoothNumbers",
-    provenance: "unknown",
-    declared: null,
+    provenance: "extension",
+    declared: "enumeratio-collections",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -6528,6 +6528,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
+    name: "Csgn",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "CubeRoot",
     provenance: "extension",
     declared: "enumeratio-analytic",
@@ -6729,6 +6736,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: "Log2",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "Mandelbrot",
+    provenance: "override",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
   },
   {
     name: "Ramp",
@@ -7431,6 +7445,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "CongruentMod",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "DivisorSigma",
     provenance: "override",
     declared: null,
@@ -7688,6 +7709,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: "EulerPhi",
     elsewhere: ["sympy"],
+  },
+  {
+    name: "XGCD",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
   },
   {
     name: "AdicExpansion",
@@ -8832,8 +8860,8 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "BernoulliPolynomial",
-    provenance: "unknown",
-    declared: null,
+    provenance: "extension",
+    declared: "enumeratio-analytic",
     wolframAlias: "BernoulliB",
     elsewhere: [],
   },
@@ -8923,8 +8951,8 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "FallingFactorial",
-    provenance: "unknown",
-    declared: null,
+    provenance: "extension",
+    declared: "enumeratio-analytic",
     wolframAlias: "FactorialPower",
     elsewhere: ["sympy"],
   },

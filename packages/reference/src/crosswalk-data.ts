@@ -1244,6 +1244,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Composition",
   },
   {
+    name: "CongruentMod",
+    fungrimEntries: ["2f3ed3", "3fb309", "8c4ab4", "c12a41", "dd5f43", "ed65c8", "fc4f6a"],
+  },
+  {
     name: "Conjugate",
     fungrimEntries: [
       "12b1d0",
@@ -1451,6 +1455,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Csch",
     wolfram: "Csch",
+  },
+  {
+    name: "Csgn",
+    fungrimEntries: ["59a5d6", "bfc13f", "e9465d", "ec7f2d"],
   },
   {
     name: "CubeRoot",
@@ -6099,6 +6107,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "With",
     wolfram: "With",
+  },
+  {
+    name: "XGCD",
+    fungrimEntries: ["0bb73e", "13ed5e", "1b47db", "6fd925", "945be9", "b66d1e", "bf877e", "e352ca"],
   },
   {
     name: "Zeros",

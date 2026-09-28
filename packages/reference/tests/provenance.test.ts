@@ -256,6 +256,7 @@ const OVERRIDDEN = [
   "Log10",
   "Log2",
   "LucasL",
+  "Mandelbrot",
   "MatrixPower",
   "MatrixRank",
   "Max",
@@ -306,6 +307,10 @@ const OVERRIDDEN = [
   // expression's own outer head, the same reason Add is here.
   "Sum",
   "Tabulate",
+  // Not itself overridden -- the new Primes/SquareNumbers/AbundantNumbers/etc. examples
+  // wrap Take around a collection undeclared in the bare engine, the same reason Add is
+  // here for Floor.
+  "Take",
   "Tan",
   "Tanh",
   "Totient",
@@ -372,6 +377,7 @@ const NOVEL = [
   "BallotSequences",
   "Basis",
   "BaxterPermutations",
+  "BernoulliPolynomial",
   "BinaryBracelets",
   "BinaryNecklaces",
   "BinaryPalindromes",
@@ -386,7 +392,9 @@ const NOVEL = [
   "ClassSum",
   "ClausenCl",
   "CograssmannianPermutations",
+  "CongruentMod",
   "ConnectedPermutations",
+  "Csgn",
   "CycleCount",
   "DelannoyPaths",
   "Derangements",
@@ -520,6 +528,7 @@ const NOVEL = [
   "SkewPartitions",
   "SkewStandardTableaux",
   "SloaneA",
+  "SmoothNumbers",
   "SmoothPermutations",
   "SquarePartitions",
   "StandardTableauPairs",
@@ -536,6 +545,7 @@ const NOVEL = [
   "Valleys",
   "VexillaryPermutations",
   "Words",
+  "XGCD",
   "ZigzagCompositions",
 ];
 
@@ -614,6 +624,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "ExponentialGeneratingFunction",
     "Extract",
     "FactorialPower",
+    "FallingFactorial",
     "FindInstance",
     "FindSequenceFunction",
     "FindShortestPath",

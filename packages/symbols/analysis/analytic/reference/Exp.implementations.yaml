@@ -532,6 +532,87 @@ a-product-of-exponentials-should-combine-e-x-e-y:
     out: e^{x+y}
   fullform:
     in: Times[Exp[x], Exp[y]]
+combines-past-two-factors:
+  epsil:
+    in: Exp(a) * Exp(b) * Exp(c)
+    out: ExponentialE ^ (a + b + c)
+  tex:
+    in: e^{a}e^{b}e^{c}
+    out: e^{a+b+c}
+  fullform:
+    in: Times[Exp[a], Exp[b], Exp[c]]
+combines-past-extra-non-exponential-factors:
+  epsil:
+    in: 2 * Exp(x) * Exp(y) * z
+    out: 2 * z * ExponentialE ^ (x + y)
+  tex:
+    in: 2e^{x}e^{y}z
+    out: 2z\exp(x+y)
+  fullform:
+    in: Times[2, Exp[x], Exp[y], z]
+e-x-e-x-cancels-to-1:
+  epsil:
+    in: Exp(x) * Exp(-x)
+    out: "1"
+  tex:
+    in: e^{x}\exp(-x)
+    out: "1"
+  fullform:
+    in: Times[Exp[x], Exp[Minus[x]]]
+a-lone-exp-factor-is-untouched:
+  epsil:
+    in: Exp(x) * y
+    out: y * ExponentialE ^ x
+  tex:
+    in: e^{x}y
+    out: ye^{x}
+  fullform:
+    in: Times[Exp[x], y]
+n-decimalizes-a-combined-product:
+  epsil:
+    in: N(Exp(1) * Exp(2))
+    out: 20.085_536_923_187_668
+  tex:
+    in: N(e^{1}e^{2})
+    out: 20.085\,536\,923\,187\,668
+  fullform:
+    in: N[Times[Exp[1], Exp[2]]]
+  wolfram:
+    in: N[Times[Exp[1], Exp[2]]]
+  sympy:
+    in: N((exp(1) * exp(2)), 30)
+  mpmath:
+    in: ((exp(1) * exp(2)))
+  sage:
+    in: N((exp(1) * exp(2)))
+  rust:
+    in: nf((exp(n(1)) * exp(n(2))))
+agrees-numerically-at-a-complex-point:
+  epsil:
+    in: N(Exp(1.3 + 0.7i) * Exp(-0.4 + 2.1i))
+    out: -2.317_493_000_510_215 + 0.823_937_896_324_175_7i
+  tex:
+    in: N(\exp(1.3+0.7i)\exp(-0.4+2.1i))
+    out: -2.317\,493\,000\,510\,215+0.823\,937\,896\,324\,175\,7i
+  fullform:
+    in: N[Times[Exp[Complex[1.3, 0.7]], Exp[Complex[-0.4, 2.1]]]]
+  wolfram:
+    in: N[Times[Exp[Complex[1.3, 0.7]], Exp[Complex[-0.4, 2.1]]]]
+  sympy:
+    in: N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))), 30)
+  mpmath:
+    in: ((exp(mpc(1.3, 0.7)) * exp(mpc(-0.4, 2.1))))
+  sage:
+    in: N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))))
+same-base-non-e-powers-are-left-alone:
+  epsil:
+    in: 2 ^ x * 2 ^ y
+    out: 2 ^ x * 2 ^ y
+  tex:
+    in: 2^{x}\times2^{y}
+    out: 2^{x}\times2^{y}
+  fullform:
+    in: Times[Power[2, x], Power[2, y]]
 euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
   epsil:
     in: ExpToTrig(Exp(ImaginaryUnit * x))
@@ -580,7 +661,7 @@ to-1-significant-digit:
     out: "2.71828182845904523536028747135"
     verdict: disagree
     kind: precision
-    note: "The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit."
+    note: The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.
   mpmath:
     in: (exp(1))
     out: "2.71828182845904523536028747135"

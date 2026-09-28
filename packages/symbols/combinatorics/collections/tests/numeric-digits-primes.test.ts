@@ -380,9 +380,8 @@ test("Count is +oo for every known-infinite family here", () => {
 const ce = new ComputeEngine();
 declareCollections(ce);
 
-test("Take(TwinPrimes, 5) gives the first five lesser twin primes (Count NaN doesn't block Take)", () => {
-  expect(ce.box(["Take", "TwinPrimes", 5]).evaluate().toString()).toBe("[3,5,11,17,29]");
-});
+// Take/Element cases now live as examples (TwinPrimes, SmithNumbers, NarcissisticNumbers,
+// MersennePrimes, FibonacciPrimes).
 
 test("TwinPrimes has no element at a negative index: there is no last one to count back from", () => {
   // compute-engine resolves `At(TwinPrimes, -1)` itself; the handler is reached directly.
@@ -390,22 +389,6 @@ test("TwinPrimes has no element at a negative index: there is no last one to cou
     value: { collection: { at: (c: unknown, index: number) => unknown } };
   };
   expect(definition.value.collection.at(ce.box("TwinPrimes"), -1)).toBeUndefined();
-});
-
-test("Element membership on TwinPrimes and SmithNumbers", () => {
-  expect(ce.box(["Element", 11, "TwinPrimes"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 13, "TwinPrimes"]).evaluate().toString()).toBe('"False"'); // 13+2=15 not prime
-  expect(ce.box(["Element", 4, "SmithNumbers"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 6, "SmithNumbers"]).evaluate().toString()).toBe('"False"');
-});
-
-test("Take(NarcissisticNumbers, 10) gives the first ten Armstrong numbers", () => {
-  expect(ce.box(["Take", "NarcissisticNumbers", 10]).evaluate().toString()).toBe("[1,2,3,4,5,6,7,8,9,153]");
-});
-
-test("Take(MersennePrimes, 5) and Take(FibonacciPrimes, 5) don't hang and give the known terms", () => {
-  expect(ce.box(["Take", "MersennePrimes", 5]).evaluate().toString()).toBe("[3,7,31,127,8191]");
-  expect(ce.box(["Take", "FibonacciPrimes", 5]).evaluate().toString()).toBe("[2,3,5,13,89]");
 });
 
 test("KAlmostPrimes(0) is {1} and below that empty, both finite", () => {

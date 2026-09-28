@@ -1,0 +1,20 @@
+- id: csgn-1-1
+  expr: [Csgn, 1]
+  expected: 1
+- id: csgn-neg-3-neg-1
+  expr: [Csgn, -3]
+  expected: -1
+  caption: Exact for a negative integer, no N() needed
+- id: csgn-0-0
+  expr: [Csgn, 0]
+  expected: 0
+- id: csgn-i-1
+  expr: [N, [Csgn, [Complex, 0, 1]]]
+  expected: 1
+  category: Scope
+  caption: $\mathrm{Csgn}(i) = 1$ -- $\mathrm{Re}(i) = 0$ and $\mathrm{Im}(i) > 0$
+- id: csgn-neg-i-neg-1
+  expr: [N, [Csgn, [Complex, 0, -1]]]
+  expected: -1
+  category: Scope
+  caption: $\mathrm{Csgn}(-i) = -1$ -- $\mathrm{Re}(-i) = 0$ and $\mathrm{Im}(-i) < 0$

@@ -259,13 +259,7 @@ test("FibonacciNumbers is declared as an indexed_collection<integer>", () => {
   expect(ce.box("FibonacciNumbers").type.toString()).toBe("indexed_collection<integer>");
 });
 
-test("Take(CatalanNumbers, 10) gives the first ten Catalan numbers", () => {
-  expect(ce.box(["Take", "CatalanNumbers", 10]).evaluate().toString()).toBe("[1,1,2,5,14,42,132,429,1430,4862]");
-});
-
-test("Take(PadovanSequence, 10) gives the first ten Padovan terms", () => {
-  expect(ce.box(["Take", "PadovanSequence", 10]).evaluate().toString()).toBe("[1,0,0,1,0,1,1,1,2,2]");
-});
+// Take cases now live as examples (CatalanNumbers, PadovanSequence).
 
 for (const head of Object.keys(OEIS)) {
   test(`Count(${head}) is +oo`, () => {

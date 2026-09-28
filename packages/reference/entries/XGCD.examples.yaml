@@ -1,0 +1,4 @@
+- id: xgcd-240-46
+  expr: [XGCD, 240, 46]
+  expected: [Tuple, 2, -9, 47]
+  caption: $\gcd(240, 46) = 2 = 240\cdot(-9) + 46\cdot47$

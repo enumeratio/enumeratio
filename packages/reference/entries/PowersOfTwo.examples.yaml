@@ -30,3 +30,11 @@
       8388608,
       16777216,
     ]
+- id: 64-is-a-power-of-two
+  expr: [Element, 64, PowersOfTwo]
+  expected: True
+  category: Properties
+- id: 48-is-not-a-power-of-two
+  expr: [Element, 48, PowersOfTwo]
+  expected: False
+  category: Properties

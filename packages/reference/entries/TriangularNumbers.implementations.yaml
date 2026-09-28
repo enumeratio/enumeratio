@@ -34,3 +34,27 @@ the-first-25-terms:
     out: \bigl\lbrack1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78, 91, 105, 120, 136, 153, 171, 190, 210, 231, 253, 276, 300, 325\bigr\rbrack
   fullform:
     in: Take[TriangularNumbers, 25]
+15-is-triangular:
+  epsil:
+    in: 15 in TriangularNumbers
+    out: True
+  tex:
+    in: 15\in\mathrm{TriangularNumbers}
+    out: \top
+  traditional:
+    in: 15\in\mathrm{TriangularNumbers}
+    out: \mathrm{True}
+  fullform:
+    in: Element[15, TriangularNumbers]
+14-is-not-triangular:
+  epsil:
+    in: 14 in TriangularNumbers
+    out: False
+  tex:
+    in: 14\in\mathrm{TriangularNumbers}
+    out: \bot
+  traditional:
+    in: 14\in\mathrm{TriangularNumbers}
+    out: \mathrm{False}
+  fullform:
+    in: Element[14, TriangularNumbers]

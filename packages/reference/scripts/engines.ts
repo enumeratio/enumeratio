@@ -8,7 +8,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAestimatio } from "@enumeratio/aestimatio/src";
-import { declareAnalytic } from "@enumeratio/analytic/src";
+import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCollections } from "@enumeratio/collections/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
@@ -30,6 +30,7 @@ import { declareResidues } from "@enumeratio/residues/src";
  * (redeclaring throws: "already declared in this scope"). */
 const LIBRARY_DECLARATIONS = [
   declareAnalytic,
+  declareFractals,
   declareHypercomplex,
   declareDiagrams,
   declareCollections,
