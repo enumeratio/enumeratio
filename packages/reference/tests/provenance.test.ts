@@ -332,12 +332,12 @@ const OVERRIDDEN = [
 ];
 
 // Evaluates the whole corpus in both engines: seconds, not the default 5s budget on a busy box.
-test("we change exactly the compute-engine heads we mean to, and no others", { timeout: 60_000 }, () => {
+test("we change exactly the compute-engine heads we mean to, and no others", () => {
   const corpus = entries.flatMap((entry) => entry.examples.map((example) => example.expr));
   expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
 });
 
-test("the committed provenance data is still what the engines say", { timeout: 60_000 }, () => {
+test("the committed provenance data is still what the engines say", () => {
   // `src/provenance-data.ts` is generated, and generated data goes stale silently. This is
   // the only thing stopping that: re-derive it here and compare. If it fails, run
   // `vp node packages/reference/scripts/collect-provenance.ts` and read the diff — a change

@@ -232,159 +232,69 @@ test("Interval containment: Abs, Sign, Max, Min", () => {
   );
 });
 
-test("Interval containment: the special-function family, including Γ's interior extremum", () => {
-  const rng = mulberry32(4);
-  // A domain deliberately wide enough to sometimes straddle Γ's minimum at x₀ ≈ 1.4616 --
-  // this is the case the coordinator's own bug report is about getting right.
-  checkContainment(
-    "Gamma",
-    rng,
-    [0.5, 3],
-    (l, h) => ["Gamma", ["Interval", l, h]],
-    (x) => ["Gamma", x],
-    40,
-  );
-  checkContainment(
-    "GammaLn",
-    rng,
-    [0.5, 5],
-    (l, h) => ["GammaLn", ["Interval", l, h]],
-    (x) => ["GammaLn", x],
-    40,
-  );
-  checkContainment(
-    "Digamma",
-    rng,
-    [0.5, 5],
-    (l, h) => ["Digamma", ["Interval", l, h]],
-    (x) => ["Digamma", x],
-    40,
-  );
-  checkContainment(
-    "BarnesG",
-    rng,
-    [1, 3],
-    (l, h) => ["BarnesG", ["Interval", l, h]],
-    (x) => ["BarnesG", x],
-    40,
-  );
-  checkContainment(
-    "DirichletEta",
-    rng,
-    [1.1, 5],
-    (l, h) => ["DirichletEta", ["Interval", l, h]],
-    (x) => ["DirichletEta", x],
-    40,
-  );
-  checkContainment(
-    "DirichletBeta",
-    rng,
-    [0.5, 5],
-    (l, h) => ["DirichletBeta", ["Interval", l, h]],
-    (x) => ["DirichletBeta", x],
-    40,
-  );
-  checkContainment(
-    "Erf",
-    rng,
-    [-3, 3],
-    (l, h) => ["Erf", ["Interval", l, h]],
-    (x) => ["Erf", x],
-    40,
-  );
-  checkContainment(
-    "Erfc",
-    rng,
-    [-3, 3],
-    (l, h) => ["Erfc", ["Interval", l, h]],
-    (x) => ["Erfc", x],
-    40,
-  );
-  checkContainment(
-    "ErfInv",
-    rng,
-    [-0.9, 0.9],
-    (l, h) => ["ErfInv", ["Interval", l, h]],
-    (x) => ["ErfInv", x],
-    40,
-  );
-  checkContainment(
-    "Zeta",
-    rng,
-    [1.1, 5],
-    (l, h) => ["Zeta", ["Interval", l, h]],
-    (x) => ["Zeta", x],
-    40,
-  );
+// The special functions get a test each, seeded apart. A sampled image costs a golden-section
+// search or a branch and bound per trial, so the standard run takes a few trials per head and
+// the nightly deep run (`DEEP_TESTS=1`, nightly.yml) the full count, same seeds.
+const SPECIAL_TRIALS = process.env["DEEP_TESTS"] === "1" ? 40 : 4;
+
+test("Interval containment: Γ's interior extremum", () => {
+  // Γ's minimum at x₀ ≈ 1.4616 lies inside, so neither endpoint gives the image's lower bound.
+  const result = ce.box(["Gamma", ["Interval", 1, 2]]).evaluate();
+  expect(result.operator).toBe("Interval");
+  const [lower, upper] = operandsOf(result).map((e) => e.N().re);
+  expect(lower).toBeLessThanOrEqual(0.8856031944108887);
+  expect(lower).toBeGreaterThan(0.885);
+  expect(upper).toBeGreaterThanOrEqual(1);
 });
 
-test("Interval containment: multi-argument special functions at a fixed argument position", () => {
-  const rng = mulberry32(5);
-  checkContainment(
-    "StieltjesGamma (order 2, interval in a)",
-    rng,
-    [1, 4],
-    (l, h) => ["StieltjesGamma", 2, ["Interval", l, h]],
-    (x) => ["StieltjesGamma", 2, x],
-    40,
-  );
-  checkContainment(
-    "HarmonicNumber (order 0.2, interval in r)",
-    rng,
-    [1.5, 4],
-    (l, h) => ["HarmonicNumber", 0.2, ["Interval", l, h]],
-    (x) => ["HarmonicNumber", 0.2, x],
-    40,
-  );
-  checkContainment(
-    "DirichletL (5, 1, interval in s)",
-    rng,
-    [1.1, 3],
-    (l, h) => ["DirichletL", 5, 1, ["Interval", l, h]],
-    (x) => ["DirichletL", 5, 1, x],
-    40,
-  );
-  checkContainment(
-    "PolyGamma (order 1, interval in z)",
-    rng,
-    [1, 5],
-    (l, h) => ["PolyGamma", 1, ["Interval", l, h]],
-    (x) => ["PolyGamma", 1, x],
-    40,
-  );
-  checkContainment(
-    "PolyLog (order 2, interval in z)",
-    rng,
-    [0.1, 0.9],
-    (l, h) => ["PolyLog", 2, ["Interval", l, h]],
-    (x) => ["PolyLog", 2, x],
-    40,
-  );
-  checkContainment(
-    "GammaRegularized (a = 2/5, interval in z)",
-    rng,
-    [0.05, 2],
-    (l, h) => ["GammaRegularized", ["Rational", 2, 5], ["Interval", l, h]],
-    (x) => ["GammaRegularized", ["Rational", 2, 5], x],
-    40,
-  );
-  checkContainment(
-    "BetaRegularized (interval in x, a=2, b=1)",
-    rng,
-    [0.05, 0.95],
-    (l, h) => ["BetaRegularized", ["Interval", l, h], 2, 1],
-    (x) => ["BetaRegularized", x, 2, 1],
-    40,
-  );
-  checkContainment(
-    "Binomial (n=1/2, interval in k)",
-    rng,
-    [0.1, 3],
-    (l, h) => ["Binomial", ["Rational", 1, 2], ["Interval", l, h]],
-    (x) => ["Binomial", ["Rational", 1, 2], x],
-    40,
-  );
-});
+const SPECIAL_FUNCTIONS: readonly (readonly [head: string, domain: readonly [number, number]])[] = [
+  // A domain deliberately wide enough to sometimes straddle Γ's minimum at x₀ ≈ 1.4616.
+  ["Gamma", [0.5, 3]],
+  ["GammaLn", [0.5, 5]],
+  ["Digamma", [0.5, 5]],
+  ["BarnesG", [1, 3]],
+  ["DirichletEta", [1.1, 5]],
+  ["DirichletBeta", [0.5, 5]],
+  ["Erf", [-3, 3]],
+  ["Erfc", [-3, 3]],
+  ["ErfInv", [-0.9, 0.9]],
+  ["Zeta", [1.1, 5]],
+];
+
+for (const [i, [head, domain]] of SPECIAL_FUNCTIONS.entries()) {
+  test(`Interval containment: special function ${head}`, () => {
+    checkContainment(
+      head,
+      mulberry32(400 + i),
+      domain,
+      (l, h) => [head, ["Interval", l, h]],
+      (x) => [head, x],
+      SPECIAL_TRIALS,
+    );
+  });
+}
+
+// Multi-argument special functions, the interval at a fixed argument position.
+const MULTI_ARGUMENT: readonly (readonly [
+  label: string,
+  domain: readonly [number, number],
+  call: (x: unknown) => unknown,
+])[] = [
+  ["StieltjesGamma (order 2, interval in a)", [1, 4], (x) => ["StieltjesGamma", 2, x]],
+  ["HarmonicNumber (order 0.2, interval in r)", [1.5, 4], (x) => ["HarmonicNumber", 0.2, x]],
+  ["DirichletL (5, 1, interval in s)", [1.1, 3], (x) => ["DirichletL", 5, 1, x]],
+  ["PolyGamma (order 1, interval in z)", [1, 5], (x) => ["PolyGamma", 1, x]],
+  ["PolyLog (order 2, interval in z)", [0.1, 0.9], (x) => ["PolyLog", 2, x]],
+  ["GammaRegularized (a = 2/5, interval in z)", [0.05, 2], (x) => ["GammaRegularized", ["Rational", 2, 5], x]],
+  ["BetaRegularized (interval in x, a=2, b=1)", [0.05, 0.95], (x) => ["BetaRegularized", x, 2, 1]],
+  ["Binomial (n=1/2, interval in k)", [0.1, 3], (x) => ["Binomial", ["Rational", 1, 2], x]],
+];
+
+for (const [i, [label, domain, call]] of MULTI_ARGUMENT.entries()) {
+  test(`Interval containment: ${label}`, () => {
+    checkContainment(label, mulberry32(500 + i), domain, (l, h) => call(["Interval", l, h]), call, SPECIAL_TRIALS);
+  });
+}
 
 test("Interval containment: Cosh's valley, Log in any base, and ln Γ through the kernel", () => {
   const rng = mulberry32(6);
