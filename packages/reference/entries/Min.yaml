@@ -17,6 +17,11 @@ signatures:
     library: enumeratio-analytic
     type: (value+) -> number
     overrides: compute-engine
+  - call: Min(a, b, …)
+    description: for values of any ordered type, not just numbers -- the meet, in a lattice that is not a total order.
+    library: enumeratio-structures
+    type: (any*) -> any
+    overrides: enumeratio-collections
 details:
   - The smallest of its arguments, or of a single list argument.
   - Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Max]].

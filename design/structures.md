@@ -80,7 +80,7 @@ not `OrderedAddCommGroup`); aliases later if wanted. A first cut:
 | `FloorOrder`                      | `PartialOrder` | `LowerTick`, `UpperTick`                       | the Galois connections above                    | `FloorSemiring`       |
 | `MidpointOrder`                   | `FloorOrder`   | `Midpoint`                                     | between, equidistant                            | --                    |
 | `TickParity`                      | `FloorOrder`   | `IsEvenTick`                                   | alternates along consecutive ticks              | --                    |
-| `ProductOrder`                    | `PartialOrder` | `Components`, `FromComponents`                 | the order and every operation are componentwise | `Prod` instances      |
+| `ProductOrder`                    | `PartialOrder` | `Coordinates`, `WithCoordinates`               | the order and every operation are componentwise | `Prod` instances      |
 | `OrderedAdditiveCommutativeGroup` | `PartialOrder` | (compute-engine's `Add`, `Negate`, `0`)        | a group, order-compatible                       | `OrderedAddCommGroup` |
 | `FiniteDimensionalAlgebra`        | --             | `Basis`, `AlgebraDimension`, `Element`, …      | --                                              | `FiniteDimensional`   |
 | `Sampleable`                      | --             | `Sample`                                       | draws lie in the domain                         | --                    |

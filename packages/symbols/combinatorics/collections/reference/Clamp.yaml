@@ -13,6 +13,11 @@ signatures:
   - call: Clamp(x, lower, upper, vLower, vUpper)
     description: "Wolfram's Clip[x, {lower, upper}, {vLower, vUpper}]: a replacement value outside the range, rather than the nearer bound."
     library: enumeratio-collections
+  - call: Clamp(x, lower, upper)
+    description: in any lattice, $\mathrm{Max}(\mathrm{lower}, \mathrm{Min}(x, \mathrm{upper}))$.
+    library: enumeratio-structures
+    type: (any, any?, any?, any?, any?) -> any
+    overrides: enumeratio-collections
 details:
   - 'Constrains a value to $[\mathrm{lower}, \mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.'
   - A 1-argument $\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].

@@ -45,6 +45,7 @@ import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
+import { declareStructures } from "@enumeratio/structures/src";
 import {
   ALL_STATISTICS,
   declareDistributions,
@@ -89,6 +90,8 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
   ["number-theory", declareNumberTheory],
   ["collections", declareCollections],
+  // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
+  ["structures", declareStructures],
   ["formats", declareGraphics],
   ["boxes", declareBoxes],
   ["domains", declareDomains],

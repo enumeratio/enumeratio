@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/engine";
+import { bigRationalAt, wrapOperator } from "@enumeratio/engine";
 
 // #113 arithmetic-head extensions that don't belong to any single family, and are kept
 // OUT of packages/symbols/analysis/analytic on purpose:
@@ -12,12 +12,6 @@ import { bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/engine"
 //    whichever of this file and precision-113.ts attaches second sees the other as its
 //    `native` fallback -- and since their `applies` gates are disjoint (dx > 0 vs dx ===
 //    0), which one is declared first doesn't matter; each only ever answers its own case.
-//
-//  - Floor/Ceil/Round of a Complex number: round the real and imaginary parts
-//    separately. Disjoint from packages/symbols/analysis/analytic/src/constant-rounding.ts' wrappers on
-//    the same three heads, which are guarded on `ops.length === 1` with a REAL exact
-//    constant (Pi, a Sqrt, …) -- `looksConstant` there never matches a `Complex` node, so
-//    the two never compete for the same call.
 //
 //  - Sign of an exact real numeric expression (a Sqrt/rational tree with no free
 //    variable) that compute-engine's native Sign leaves unevaluated: certified by
@@ -75,33 +69,6 @@ function declareExactRationalize(ce: ComputeEngine): void {
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
   );
-}
-
-// ─── Floor/Ceil/Round of a Complex number ──────────────────────────────────────────────
-
-function declareComplexRounding(ce: ComputeEngine): void {
-  // Floor/Ceil already accept `any` (packages/symbols/combinatorics/collections/src/rounding-heads.ts widens
-  // them for the (x, step) call form); Round's native signature stays real-only until
-  // widened here too, or boxing a Complex operand fails before `evaluate` ever runs.
-  widenSignature(ce, "Round", "(any, any?) -> any");
-  for (const [name, round] of [
-    ["Floor", Math.floor],
-    ["Ceil", Math.ceil],
-    ["Round", (v: number) => (v >= 0 ? Math.floor(v + 0.5) : Math.ceil(v - 0.5))],
-  ] as const) {
-    wrapOperator(
-      ce,
-      [name, 1],
-      (ops) => ops.length === 1 && ops[0]?.operator === "Complex",
-      () => (ops) => {
-        const z = ops[0]!.N();
-        if (!Number.isFinite(z.re) || !Number.isFinite(z.im)) return undefined;
-        const re = round(z.re);
-        const im = round(z.im ?? 0);
-        return im === 0 ? ce.number(re) : ce.function("Complex", [re, im]).evaluate();
-      },
-    );
-  }
 }
 
 // ─── Sign of an exact numeric expression ───────────────────────────────────────────────
@@ -170,6 +137,5 @@ function declareExactSign(ce: ComputeEngine): void {
 
 export function declareArithHeads(ce: ComputeEngine): void {
   declareExactRationalize(ce);
-  declareComplexRounding(ce);
   declareExactSign(ce);
 }

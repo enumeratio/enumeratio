@@ -9,6 +9,7 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { DOMAINS } from "./domain-data.ts";
+import { declareDomainOrders } from "./orders.ts";
 import type { Domain } from "./types.ts";
 
 /**
@@ -32,6 +33,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
 
   for (const domain of ordered) ce.declareType(domain.type, domain.shape, { mint: true });
   for (const domain of ordered) declareConstructor(ce, domain);
+  if (named.has("integer_partition")) declareDomainOrders(ce);
 }
 
 /**

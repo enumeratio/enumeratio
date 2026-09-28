@@ -1,8 +1,8 @@
 {
-  "name": "@enumeratio/domains",
+  "name": "@enumeratio/structures",
   "version": "0.0.0",
   "private": true,
-  "description": "Carrier domains as nominal compute-engine types, with held constructors so a value carries the domain it belongs to.",
+  "description": "Mathematical structure as compute-engine protocols: orders, lattices, ticks, products. A generic head requires structure; a type conforms to it (design/structures.md).",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -23,18 +23,10 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/engine": "workspace:*",
-    "@enumeratio/structures": "workspace:*"
+    "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
-    "@enumeratio/catalog": "workspace:*",
-    "@enumeratio/collections": "workspace:*",
-    "@enumeratio/engine": "workspace:*",
-    "@enumeratio/entry": "workspace:*",
-    "@enumeratio/plausible": "workspace:*",
-    "@enumeratio/statistics": "workspace:*",
-    "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
