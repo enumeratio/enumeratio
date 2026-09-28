@@ -481,7 +481,7 @@ its-own-derivative:
     in: D(Exp(x), x)
     out: ExponentialE ^ x
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}e^{x}
+    in: \frac{\mathrm{d}e^{x}}{\mathrm{d}x}
     out: e^{x}
   fullform:
     in: D[Exp[x], x]

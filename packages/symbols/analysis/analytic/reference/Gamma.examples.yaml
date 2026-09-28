@@ -112,7 +112,7 @@
   caption: $\Gamma(\infty) = \infty$
 - id: values-far-past-the-double-range-gamma-200-5
   expr: [Gamma, 200.5]
-  expected: { num: "5.57316894480137913364e+373" }
+  expected: { num: "5.573168944801379133643202962906591494178e+373" }
   category: Scope
   caption: 'Values far past the double range: $\Gamma(200.5) \approx 5.57 \times 10^{373}$'
 - id: two-arguments-the-upper-incomplete-gamma-gamma-5

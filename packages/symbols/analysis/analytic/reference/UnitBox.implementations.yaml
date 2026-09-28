@@ -69,7 +69,7 @@ unitbox-derivative-away-from-the-jump:
     in: D(UnitBox(x), x)
     out: Piecewise([[Indeterminate, x == 1 / 2 || x == -1 / 2]], 0)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{UnitBox}(x)
+    in: \frac{\mathrm{d}\mathrm{UnitBox}(x)}{\mathrm{d}x}
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{Indeterminate}, x=1/2\lor x=-1/2\bigr\rbrack\bigr\rbrack, 0)
   fullform:
     in: D[UnitBox[x], x]

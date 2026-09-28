@@ -84,7 +84,7 @@ length-0-gives-the-empty-list:
     out: "[]"
   tex:
     in: \mathrm{Tabulate}(f, 0)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Array[f, 0]
     back: [Array, f, 0]

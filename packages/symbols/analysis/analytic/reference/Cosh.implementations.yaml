@@ -216,7 +216,7 @@ derivative-sinh-x:
     in: D(Cosh(x), x)
     out: Sinh(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\cosh(x)
+    in: \frac{\mathrm{d}\cosh(x)}{\mathrm{d}x}
     out: \sinh(x)
   fullform:
     in: D[Cosh[x], x]

@@ -15,7 +15,7 @@ a-value-absent-from-the-collection-has-no:
     out: "[]"
   tex:
     in: \mathrm{Position}(\bigl\lbrack1, 2, 3\bigr\rbrack, 9)
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Position[List[1, 2, 3], 9]
   wolfram:

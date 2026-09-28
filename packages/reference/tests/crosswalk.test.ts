@@ -299,12 +299,13 @@ test("a head's Fungrim chip carries how its identities came out", () => {
   ).find((r) => r.system === "fungrim");
   expect(sin?.verified?.by).toBe("identities");
   expect(sin?.verified?.count).toBeGreaterThan(10);
-  // EllipticE's disagreements are on the chip, and the entry says why.
+  // EllipticE's disagreement is on the chip, and the entry says why. (48333c, the other
+  // EllipticE disagreement, was fixed by cortex-js/compute-engine#346 landing in 0.139.)
   const elliptic = crosswalkFor("EllipticE");
   const chip = elliptic.find((r) => r.system === "fungrim");
-  expect(chip?.verified?.disagree).toBe(2);
+  expect(chip?.verified?.disagree).toBe(1);
   const entry = elliptic.find((r) => r.identity === "16d2e1");
-  expect(entry?.note).toContain("EllipticE is imprecise at complex modulus");
+  expect(entry?.note).toContain("Hypergeometric2F1 wasn't");
 });
 
 test("a head's examples run in another kernel score its chip there", () => {

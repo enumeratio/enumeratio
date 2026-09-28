@@ -45,10 +45,10 @@ an-empty-list-is-not-a-matrix:
     in: IsMatrix([])
     out: False
   tex:
-    in: \mathrm{IsMatrix}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigr\rbrack)
     out: \bot
   traditional:
-    in: \mathrm{IsMatrix}(\bigl\lbrack \bigr\rbrack)
+    in: \mathrm{IsMatrix}(\bigl\lbrack\bigr\rbrack)
     out: \mathrm{False}
   fullform:
     in: MatrixQ[List[]]

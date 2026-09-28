@@ -111,7 +111,7 @@ derivative-frac-1-1-x-2:
     in: D(Arccot(x), x)
     out: -1 / (x ^ 2 + 1)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arcctg}(x)
+    in: \frac{\mathrm{d}\mathrm{arcctg}(x)}{\mathrm{d}x}
     out: -\frac{1}{x^2+1}
   fullform:
     in: D[Subtract[Divide[Pi, 2], ArcTan[x]], x]

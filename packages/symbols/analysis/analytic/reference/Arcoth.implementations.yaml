@@ -69,7 +69,7 @@ derivative-frac-1-1-x-2:
     in: D(Arcoth(x), x)
     out: 1 / (-x ^ 2 + 1)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arcoth}(x)
+    in: \frac{\mathrm{d}\mathrm{arcoth}(x)}{\mathrm{d}x}
     out: \frac{1}{1-x^2}
   fullform:
     in: D[ArcCoth[x], x]

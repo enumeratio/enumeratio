@@ -15,7 +15,7 @@ the-empty-subset:
     out: "[]"
   tex:
     in: \mathrm{Subsets}(3)[1]
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Part[Subsets[3], 1]
   wolfram:

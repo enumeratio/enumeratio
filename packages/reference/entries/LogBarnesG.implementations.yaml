@@ -155,13 +155,13 @@ the-continuation-not-ln-of-the-value-g-2-5-0-yet:
 huge-arguments-straight-from-the-asymptotic:
   epsil:
     in: N(LogBarnesG(10 ^ 1_000))
-    out: 115_054_254_649_702_284_201e1983
+    out: 1_150_542_546_497_022_842_008_995_727_342_182_103_801e1964
   tex:
     in: N(\mathrm{LogBarnesG}(10^{1\,000}))
-    out: 115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
+    out: 1\,150\,542\,546\,497\,022\,842\,008\,995\,727\,342\,182\,103\,801\cdot10^{1964}
   traditional:
     in: N(\log G(10^{1\,000}))
-    out: 115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
+    out: 1\,150\,542\,546\,497\,022\,842\,008\,995\,727\,342\,182\,103\,801\cdot10^{1964}
   fullform:
     in: N[LogBarnesG[Power[10, 1000]]]
   wolfram:

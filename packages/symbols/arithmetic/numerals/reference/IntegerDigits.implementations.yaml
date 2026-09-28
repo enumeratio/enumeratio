@@ -501,6 +501,6 @@ bijective-base-26-zero-is-the-empty-numeral:
     out: "[]"
   tex:
     in: \mathrm{IntegerDigits}(0, \mathrm{BijectiveNumerals}(26))
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: IntegerDigits[0, BijectiveNumerals[26]]

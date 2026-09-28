@@ -209,7 +209,7 @@ derivative-frac-1-x-ln-2:
     in: D(Log2(x), x)
     out: 1 / (x * Ln(2))
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\log_{2}(x)
+    in: \frac{\mathrm{d}\log_{2}(x)}{\mathrm{d}x}
     out: \frac{1}{x\ln(2)}
   fullform:
     in: D[Log2[x], x]

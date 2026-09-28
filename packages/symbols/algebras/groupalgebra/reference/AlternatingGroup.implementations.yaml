@@ -79,7 +79,7 @@ elements-of-a3:
     out: "[Cycles([]), Cycles([[1, 2, 3]]), Cycles([[1, 3, 2]])]"
   tex:
     in: \mathrm{GroupElements}(\mathrm{AlternatingGroup}(3))
-    out: \bigl\lbrack\mathrm{Cycles}(\bigl\lbrack \bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+    out: \bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
   fullform:
     in: GroupElements[AlternatingGroup[3]]
   wolfram:

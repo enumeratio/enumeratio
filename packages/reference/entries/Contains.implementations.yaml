@@ -53,10 +53,10 @@ nothing-is-in-the-empty-list:
     in: Contains([], x)
     out: False
   tex:
-    in: \mathrm{Contains}(\bigl\lbrack \bigr\rbrack, x)
+    in: \mathrm{Contains}(\bigl\lbrack\bigr\rbrack, x)
     out: \bot
   traditional:
-    in: \mathrm{Contains}(\bigl\lbrack \bigr\rbrack, x)
+    in: \mathrm{Contains}(\bigl\lbrack\bigr\rbrack, x)
     out: \mathrm{False}
   fullform:
     in: MemberQ[List[], x]

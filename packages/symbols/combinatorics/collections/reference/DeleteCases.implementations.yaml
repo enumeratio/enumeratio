@@ -15,6 +15,6 @@ wildcard-pattern-removes-everything:
     out: "[]"
   tex:
     in: \mathrm{DeleteCases}(\bigl\lbrack x, y, z\bigr\rbrack, \operatorname{\_a})
-    out: \bigl\lbrack \bigr\rbrack
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: DeleteCases[List[x, y, z], _a]

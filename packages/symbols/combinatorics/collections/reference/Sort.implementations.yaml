@@ -181,8 +181,8 @@ the-empty-list-sorts-to-itself:
     in: Sort([])
     out: "[]"
   tex:
-    in: \mathrm{Sort}(\bigl\lbrack \bigr\rbrack)
-    out: \bigl\lbrack \bigr\rbrack
+    in: \mathrm{Sort}(\bigl\lbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Sort[List[]]
   wolfram:

@@ -31,7 +31,7 @@ a-unit-known-mod-2-says-nothing-at-2:
     out: Idele(1, 1, [])
   tex:
     in: \mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(2, 3, 1)\bigr\rbrack)
-    out: \mathrm{Idele}(1, 1, \bigl\lbrack \bigr\rbrack)
+    out: \mathrm{Idele}(1, 1, \bigl\lbrack\bigr\rbrack)
   fullform:
     in: Idele[1, 1, List[AdicNumeral[2, 3, 1]]]
 idele-with-a-zero-real-part:

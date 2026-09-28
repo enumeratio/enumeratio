@@ -50,7 +50,7 @@ ramp-derivative:
     in: D(Ramp(x), x)
     out: Piecewise([[0, x < 0], [1, 0 < x]], Indeterminate)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Ramp}(x)
+    in: \frac{\mathrm{d}\mathrm{Ramp}(x)}{\mathrm{d}x}
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack0, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, \mathrm{Indeterminate})
   fullform:
     in: D[Ramp[x], x]

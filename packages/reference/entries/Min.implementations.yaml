@@ -343,7 +343,7 @@ the-min-of-an-empty-list-is-nan:
     in: Min([])
     out: "`NaN`"
   tex:
-    in: \min(\bigl\lbrack \bigr\rbrack)
+    in: \min(\bigl\lbrack\bigr\rbrack)
     out: \operatorname{NaN}
   fullform:
     in: Min[List[]]

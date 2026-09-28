@@ -18,7 +18,7 @@ a-round-trip-through-z-1000003:
     in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{22}{7}, 1, 1\,000\,003), 1\,000\,003)
     out: \frac{22}{7}
   traditional:
-    in: \mathrm{RationalReconstruction}(\left(\left(\frac{22}{7}\right)^1\bmod 1\,000\,003\right), 1\,000\,003)
+    in: \mathrm{RationalReconstruction}(\left((\frac{22}{7})^1\bmod 1\,000\,003\right), 1\,000\,003)
     out: \frac{22}{7}
   fullform:
     in: RationalReconstruction[PowerMod[Rational[22, 7], 1, 1000003], 1000003]
@@ -61,7 +61,7 @@ the-harmonic-number-h-20-back-from-its-image-mod:
     in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 2^{61}-1), 2^{61}-1)
     out: \frac{55\,835\,135}{15\,519\,504}
   traditional:
-    in: \mathrm{RationalReconstruction}(\left(\left(\frac{55\,835\,135}{15\,519\,504}\right)^1\bmod 2^{61}-1\right), 2^{61}-1)
+    in: \mathrm{RationalReconstruction}(\left((\frac{55\,835\,135}{15\,519\,504})^1\bmod 2^{61}-1\right), 2^{61}-1)
     out: \frac{55\,835\,135}{15\,519\,504}
   fullform:
     in: RationalReconstruction[PowerMod[Rational[55835135, 15519504], 1, Subtract[Power[2, 61], 1]], Subtract[Power[2, 61], 1]]
@@ -80,7 +80,7 @@ one-word-size-prime-is-not-enough-for-h-20-2nd-m:
     in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 1\,000\,000\,007), 1\,000\,000\,007)
     out: \mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
   traditional:
-    in: \mathrm{RationalReconstruction}(\left(\left(\frac{55\,835\,135}{15\,519\,504}\right)^1\bmod 1\,000\,000\,007\right), 1\,000\,000\,007)
+    in: \mathrm{RationalReconstruction}(\left((\frac{55\,835\,135}{15\,519\,504})^1\bmod 1\,000\,000\,007\right), 1\,000\,000\,007)
     out: \mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
   fullform:
     in: RationalReconstruction[PowerMod[Rational[55835135, 15519504], 1, 1000000007], 1000000007]
@@ -113,7 +113,7 @@ multi-modular-arithmetic-glue-two-images-with:
     in: \mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,007), \mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,009)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)
     out: \frac{55\,835\,135}{15\,519\,504}
   traditional:
-    in: \mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\left(\left(55\,835\,135/15\,519\,504\right)^1\bmod 1\,000\,000\,007\right), \left(\left(55\,835\,135/15\,519\,504\right)^1\bmod 1\,000\,000\,009\right)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)
+    in: \mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\left((55\,835\,135/15\,519\,504)^1\bmod 1\,000\,000\,007\right), \left((55\,835\,135/15\,519\,504)^1\bmod 1\,000\,000\,009\right)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)
     out: \frac{55\,835\,135}{15\,519\,504}
   fullform:
     in: RationalReconstruction[ChineseRemainder[List[PowerMod[Rational[55835135, 15519504], 1, 1000000007], PowerMod[Rational[55835135, 15519504], 1, 1000000009]], List[1000000007, 1000000009]], Times[1000000007, 1000000009]]

@@ -100,10 +100,10 @@ always-false-on-an-empty-list:
     in: Any([], IsEven)
     out: False
   tex:
-    in: \mathrm{Any}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{Any}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \bot
   traditional:
-    in: \mathrm{Any}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{Any}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \mathrm{False}
   fullform:
     in: AnyTrue[List[], EvenQ]

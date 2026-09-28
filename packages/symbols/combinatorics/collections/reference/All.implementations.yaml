@@ -112,10 +112,10 @@ vacuously-true-on-an-empty-list:
     in: All([], IsEven)
     out: True
   tex:
-    in: \mathrm{All}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{All}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \top
   traditional:
-    in: \mathrm{All}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    in: \mathrm{All}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})
     out: \mathrm{True}
   fullform:
     in: AllTrue[List[], EvenQ]

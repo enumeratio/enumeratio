@@ -351,7 +351,7 @@ a-301-digit-base:
     in: \mathrm{PowerMod}(10^{300}+1, 7, 5)
     out: "1"
   traditional:
-    in: \left({(10^{300}+1)}^7\bmod 5\right)
+    in: \left((10^{300}+1)^7\bmod 5\right)
     out: "1"
   fullform:
     in: PowerMod[Plus[Power[10, 300], 1], 7, 5]
@@ -405,7 +405,7 @@ a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod:
     in: \mathrm{PowerMod}(\frac{2}{3}, 1, 7)
     out: "3"
   traditional:
-    in: \left(\left(\frac{2}{3}\right)^1\bmod 7\right)
+    in: \left((\frac{2}{3})^1\bmod 7\right)
     out: "3"
   fullform:
     in: PowerMod[Rational[2, 3], 1, 7]
@@ -435,7 +435,7 @@ gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3:
     in: \mathrm{PowerMod}(2+i, 2, 3)
     out: i
   traditional:
-    in: \left(\left(2+i\right)^2\bmod 3\right)
+    in: \left((2+i)^2\bmod 3\right)
     out: i
   fullform:
     in: PowerMod[Complex[2, 1], 2, 3]
@@ -459,7 +459,7 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
     in: \mathrm{PowerMod}(1+2i, 10^{30}, 7+2i)
     out: 1+2i
   traditional:
-    in: \left(\left(1+2i\right)^{10^{30}}\bmod 7+2i\right)
+    in: \left((1+2i)^{10^{30}}\bmod 7+2i\right)
     out: 1+2i
   fullform:
     in: PowerMod[Complex[1, 2], Power[10, 30], Complex[7, 2]]
@@ -483,7 +483,7 @@ a-gaussian-modulus-and-an-exponent-of-10-30:
     in: \mathrm{PowerMod}(11-7i, -4, 7+4i)
     out: -2-i
   traditional:
-    in: \left(\frac{1}{\left(11-7i\right)^4}\bmod 7+4i\right)
+    in: \left(\frac{1}{(11-7i)^4}\bmod 7+4i\right)
     out: -2-i
   fullform:
     in: PowerMod[Complex[11, -7], -4, Complex[7, 4]]
@@ -555,7 +555,7 @@ diffie-hellman-both-parties-reach-the-shared-key:
     in: \mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)
     out: \top
   traditional:
-    in: \left({\left(5^6\bmod 23\right)}^{15}\bmod 23\right)=\left({\left(5^{15}\bmod 23\right)}^6\bmod 23\right)
+    in: \left(\left(5^6\bmod 23\right)^{15}\bmod 23\right)=\left(\left(5^{15}\bmod 23\right)^6\bmod 23\right)
     out: \mathrm{True}
   fullform:
     in: Equal[PowerMod[PowerMod[5, 6, 23], 15, 23], PowerMod[PowerMod[5, 15, 23], 6, 23]]

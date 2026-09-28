@@ -58,7 +58,7 @@ heavisidetheta-derivative:
     in: D(HeavisideTheta(x), x)
     out: DiracDelta(x)
   tex:
-    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{HeavisideTheta}(x)
+    in: \frac{\mathrm{d}\mathrm{HeavisideTheta}(x)}{\mathrm{d}x}
     out: \mathrm{DiracDelta}(x)
   fullform:
     in: D[HeavisideTheta[x], x]

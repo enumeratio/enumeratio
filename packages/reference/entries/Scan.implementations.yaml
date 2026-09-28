@@ -97,8 +97,8 @@ an-empty-list-scans-to-an-empty-list:
     in: Scan([], Add)
     out: "[]"
   tex:
-    in: \mathrm{Scan}(\bigl\lbrack \bigr\rbrack, \mathrm{Add})
-    out: \bigl\lbrack \bigr\rbrack
+    in: \mathrm{Scan}(\bigl\lbrack\bigr\rbrack, \mathrm{Add})
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: FoldList[Plus, List[]]
     back: [FoldList, Add, [List]]

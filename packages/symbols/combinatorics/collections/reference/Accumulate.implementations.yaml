@@ -14,8 +14,8 @@ accumulate-empty:
     in: Accumulate([])
     out: "[]"
   tex:
-    in: \mathrm{Accumulate}(\bigl\lbrack \bigr\rbrack)
-    out: \bigl\lbrack \bigr\rbrack
+    in: \mathrm{Accumulate}(\bigl\lbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: Accumulate[List[]]
   wolfram:
