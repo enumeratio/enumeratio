@@ -121,14 +121,29 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * item instead of aborting the batch, which used to silently zero every item after the
  * first bad one. A `TestObject` keeps only its outcome fields: the rest (timestamps, IDs,
  * timings, memory) change every run and would rewrite its implementations row on every scan. */
-async function runWolfram(sources: readonly string[]): Promise<Result[]> {
+/** The Wolfram source for one batch scan, as a pure string build — split out from `runWolfram`
+ * so its shape (the `Module`-scoped loop counter, below) can be asserted on without a kernel.
+ *
+ * `Do`'s iterator is NOT lexically scoped the way `Module`'s locals are: it is a plain global
+ * symbol (`Global\`i`, say) that the loop temporarily assigns 1..n to, visible to anything
+ * that reads that same symbol — including a batched item's own `ToExpression`'d source, if it
+ * happens to reference a bare symbol under the same name. Found the hard way: a compute-engine
+ * symbol literally named `i_1` (ours, not the imaginary unit) transpiles to `Subscript[i, 1]`,
+ * and when that item landed at loop position 5, `i` read back as `5` instead of the free
+ * symbol — corrupting that one item's output. `Module[{k}, Do[..., {k, 1, n}]]` renames the
+ * counter to a Module-local `k$nnn` gensym, a name no transpiled source can ever spell, so no
+ * batched item's own bare symbol — `i`, `k`, or anything else — can collide with it again. */
+export function wolframBatchCode(sources: readonly string[]): string {
   const list = sources.map((source) => JSON.stringify(source)).join(", ");
   const stable = `/. TestObject[a_Association] :> TestObject[KeyTake[a, {"Outcome", "Input", "ExpectedOutput", "ActualOutput"}]]`;
   // Held, `Rational[7, 2]` is a call, not the number, and prints as `\text{Rational}[7,2]`;
   // rewritten as the division and sum it stands for, it prints as written.
   const tex = `tex[x_] := StringReplace[ToString[Quiet[TeXForm[x]]], "\\n" -> " "]; atoms = {Rational -> Divide, Complex[0, 1] :> I, Complex[a_, 1] :> a + I, Complex[0, b_] :> b I, Complex[a_, b_] :> a + b I};`;
-  const code = `${tex} Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", i, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", i, "^>>", tex[ToExpression[{${list}}[[i]], InputForm, HoldForm] /. atoms]]; Print["<<", i, "$>>", tex[v]]], {i, 1, ${sources.length}}]`;
-  const run = await transcript("wolframscript", ["-code", code], { timeoutMs: 600_000 });
+  return `${tex} Module[{k}, Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[k]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", k, ">>", ToString[FullForm[v]]]; Print["<<", k, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", k, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", k, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", k, "^>>", tex[ToExpression[{${list}}[[k]], InputForm, HoldForm] /. atoms]]; Print["<<", k, "$>>", tex[v]]], {k, 1, ${sources.length}}]]`;
+}
+
+async function runWolfram(sources: readonly string[]): Promise<Result[]> {
+  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources)], { timeoutMs: 600_000 });
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 

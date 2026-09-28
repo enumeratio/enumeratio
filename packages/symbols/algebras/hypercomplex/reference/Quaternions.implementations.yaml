@@ -63,13 +63,13 @@ a-multicomplex-unit-is-not-a-quaternion:
     in: Element[Subscript[i, 1], Quaternions]
   wolfram:
     in: Element[Subscript[i, 1], Quaternions]
-    out: Element[Subscript[5, 1], Quaternions]
+    out: Element[Subscript[i, 1], Quaternions]
     tex:
       in: i_1\in \text{Quaternions}
-      out: 5_1\in \text{Quaternions}
+      out: i_1\in \text{Quaternions}
     verdict: disagree
-    kind: harness
-    note: "run.ts's runWolfram drives every item through Do[..., {i, 1, n}], and this item landed at loop position 5, so our bare symbol i (Subscript[i, 1], our own name, not the imaginary unit) collided with the Do loop's own iterator, bound to 5 at that point. Isolated (wolframscript -code 'Element[Subscript[i, 1], Quaternions]' outside the batch stays unevaluated, matching ours). Needs the harness to avoid i as its loop variable or scope it -- out of this lane's scope to fix (packages/oracle/src/run.ts)."
+    kind: domain
+    note: "Same root cause as the other Quaternions/Basis/AlgebraDimension rows: Quaternions isn't compute-engine-defined, and Wolfram has no way to test membership of our own basis symbols against it, so Element stays unevaluated instead of resolving to False. (Previously misreported as 5_1 by a scan-harness bug -- run.ts's batch loop collided its own Do iterator with this item's bare i -- now fixed; rescanned clean.)"
   sage:
     in: enumeratio_element(SR.var("i_1"), SR.var("Quaternions"))
     out: "TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable"
