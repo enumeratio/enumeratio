@@ -7,7 +7,7 @@ signatures:
   - call: BaxterPermutations(n)
     library: enumeratio-collections
     description: the Baxter permutations of $\{1, …, n\}$.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 details:
   - 'A lazy indexed collection; the count follows the Chung–Graham–Hoggatt–Kleiman rational formula $\sum_k \binom{n+1}{k}\binom{n+1}{k+1}\binom{n+1}{k+2} \big/ \binom{n+1}{1}\binom{n+1}{2}$ — A001181: $1, 1, 2, 6, 22, 92, …$'
   - Each element is the one-line word $[\pi(1), …, \pi(n)]$, as in [[SymmetricGroup]].

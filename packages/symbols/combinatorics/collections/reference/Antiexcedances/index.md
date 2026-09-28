@@ -7,7 +7,7 @@ signatures:
   - call: Antiexcedances(p)
     description: the antiexcedance count of a one-line permutation $p$
     library: enumeratio-collections
-    type: (list) -> integer
+    type: (permutation) -> integer
 details:
   - "Equidistributed with [[Excedances]] over $S_n$: inverting a permutation swaps its excedance and antiexcedance counts"
   - Never counts a fixed point, same as [[Excedances]]

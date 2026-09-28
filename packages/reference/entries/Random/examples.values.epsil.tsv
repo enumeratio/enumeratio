@@ -1,4 +1,4 @@
 id	in	out
-a-permutation-of-4-seeded	Last([SeedRandom(7), Random(Permutations(4))])	[1, 2, 3, 4]
+a-permutation-of-4-seeded	Last([SeedRandom(7), Random(Permutations(4))])	Permutation([1, 2, 3, 4])
 a-count-draws-that-many	Length(Last([SeedRandom(1), Random(IntegerPartitions(10), 3)]))	3
 randominteger-is-random-over-a-range	"Last([SeedRandom(5), RandomInteger([10, 20])]) == Last([\n                                                         SeedRandom(5),\n                                                         Random(Range(10, 20)),\n                                                       ])"	True

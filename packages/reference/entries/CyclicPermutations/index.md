@@ -20,5 +20,5 @@ signatures:
   - call: CyclicPermutations(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 ---

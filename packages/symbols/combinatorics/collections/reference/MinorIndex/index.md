@@ -7,7 +7,7 @@ signatures:
   - call: MinorIndex(p)
     description: the minor index of a one-line permutation $p$
     library: enumeratio-collections
-    type: (list) -> integer
+    type: (list | permutation) -> integer
 details:
   - 'Complementary to [[MajorIndex]]: every position is a descent or an ascent, so $\mathrm{MajorIndex}(p) + \mathrm{MinorIndex}(p) = \binom{n}{2}$'
 seeAlso:

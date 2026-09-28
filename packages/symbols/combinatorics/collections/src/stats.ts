@@ -142,6 +142,9 @@ export interface StatsOptions {
    * `Cycles([2,3,1])` is a type error. A word statistic additionally accepts a bare list,
    * because that reading stands on its own.
    *
+   * The families whose elements are permutations (`SymmetricGroup`, `Derangements`, …) then
+   * yield carrier values, `Permutation([2, 1])`, and are typed `indexed_collection<permutation>`.
+   *
    * This package cannot import the domains (they depend on it), so the caller supplies the
    * name. Without it every head takes a bare list, as before.
    */

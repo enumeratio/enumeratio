@@ -7,7 +7,7 @@ signatures:
   - call: NonCrossingPermutations(n)
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose cycles are a non-crossing set partition.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 details:
   - A lazy indexed collection; the count follows a verified recurrence on the block containing $1$ — $1, 2, 6, 23, 105, …$ — with no OEIS match confirmed for this reading, so none is cited.
   - As implemented, cyclic order within a block is unconstrained; requiring each cycle's elements to increase (the interval $[e, (1\,2\,…\,n)]$ in absolute order) instead gives the Catalan reading $1, 2, 5, 14, …$
