@@ -1,0 +1,17 @@
+id	in	out
+multiplicativeorder-5-8	MultiplicativeOrder(5, 8)	2
+multiplicativeorder-3-7	MultiplicativeOrder(3, 7)	6
+multiplicativeorder-5-7	MultiplicativeOrder(5, 7)	6
+2-3-8-equiv-1-pmod-7-and-no-smaller-power-works	MultiplicativeOrder(2, 7)	3
+a-negative-base-5-equiv-2-pmod-7	MultiplicativeOrder(-5, 7)	3
+the-first-power-of-5-to-reach-3-or-11-equiv-4-5	MultiplicativeOrder(5, 7, [3, 11])	2
+a-10-001-digit-base-modulo-the-prime-7919	MultiplicativeOrder(10 ^ 10_000, 7_919)	3_959
+the-first-power-of-3-to-reach-pm-1-3-3-27-equiv	MultiplicativeOrder(3, 7, [-1, 1])	3
+5-2-25-equiv-4	MultiplicativeOrder(5, 7, [2, 3, 4])	2
+a-discrete-log-mod-the-mersenne-prime-2-61-1	MultiplicativeOrder(3, 2 ^ 61 - 1, [2])	159_602_976_958_324_900
+3-has-order-p-1-3-modulo-2-127-1	MultiplicativeOrder(3, 2 ^ 127 - 1)	56_713_727_820_156_410_577_229_101_238_628_035_242
+1-is-the-only-element-of-order-1	MultiplicativeOrder(1, 7)	1
+the-multiplicative-order-always-divides-varphi-n	Totient(7) % MultiplicativeOrder(3, 7) == 0	True
+the-discrete-log-inverts-powermod	PowerMod(3, MultiplicativeOrder(3, 2 ^ 61 - 1, [2]), 2 ^ 61 - 1)	2
+no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	MultiplicativeOrder(10, 22)	MultiplicativeOrder(10, 22)
+3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	MultiplicativeOrder(2, 7, [3])	MultiplicativeOrder(2, 7, [3])

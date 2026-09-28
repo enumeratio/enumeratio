@@ -1,0 +1,4 @@
+id	in	out
+unit-square-default-seed	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomComplex}()\bigr\rbrack)	0.601\,103\,751\,920\,163\,6+0.448\,290\,558\,997\,541\,67i
+rectangle-from-0-to-zmax	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomComplex}(2+3i)\bigr\rbrack)	0.023\,409\,506\,306\,052\,208+0.185\,874\,772\,723\,764\,18i
+rectangle-from-zmin-to-zmax	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(9), \mathrm{RandomComplex}(\bigl\lbrack-1-i, 1+i\bigr\rbrack)\bigr\rbrack)	-0.602\,542\,163\,804\,173\,5+0.702\,421\,592\,548\,489\,6i

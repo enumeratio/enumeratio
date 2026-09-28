@@ -1,0 +1,7 @@
+id	in
+fractionalpart-2p5	FractionalPart[2.5]
+fractionalpart-7-over-2	FractionalPart[Rational[7, 2]]
+keeps-the-sign-of-x-unlike-compute-engine-s	FractionalPart[Rational[-7, 2]]
+exact-numeric-arguments-stay-exact	FractionalPart[Pi]
+threads-element-wise-over-a-list	FractionalPart[List[Rational[7, 2], Rational[-1, 3]]]
+zero-exactly-on-the-integers	FractionalPart[5]

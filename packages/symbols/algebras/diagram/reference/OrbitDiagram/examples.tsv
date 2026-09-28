@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+merging-four-points-into-one-block-1-3-3			[PartitionMobius, [Diagram, [List, [List, 1], [List, 2], [List, -1], [List, -2]]], [Diagram, [List, [List, 1, 2, -1, -2]]]]	-6	merging four points into one block: $(-1)^3 3! $
+the-coarsest-partition-has-nothing-above-it	Properties		[InOrbitBasis, [Diagram, [List, [List, 1, -1]]]]	[OrbitDiagram, [List, [List, 1, -1]]]	the coarsest partition has nothing above it
+the-interval-of-length-zero	Properties		[PartitionMobius, [Diagram, [List, [List, 1, -1]]], [Diagram, [List, [List, 1, -1]]]]	1	the interval of length zero

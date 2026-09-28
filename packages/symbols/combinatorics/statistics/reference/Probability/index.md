@@ -1,0 +1,22 @@
+---
+name: Probability
+domain: Statistics
+signature: Probability(cond, x \[Distributed] dist)
+summary: $P(cond)$ under `x`'s distribution.
+signatures:
+  - call: Probability(cond, Distributed(x, dist))
+    description: exact for `Equal`/`Less`/`LessEqual` conditions on `x` (a chained range too); otherwise stays unevaluated.
+    library: enumeratio-statistics
+    type: (any, expression<Distributed>) -> real
+details:
+  - "`Equal(x, k)`: [[PDF]]$(k)$ for a discrete distribution, $0$ for a continuous one."
+  - '`LessEqual(x, k)`: [[CDF]]$(k)$. `Less(x, k)`: $CDF(k) - PDF(k)$ for discrete (subtracting $P(X{=}k)$), just $CDF(k)$ for continuous (where a point has probability $0$). A constant on the LEFT (`k \[LessEqual] x`) is the complement of the opposite strict relation.'
+  - 'A chained range, `a \[LessEqual] x \[LessEqual] b` (and the `Less`/mixed forms), and `And` of two simple relations on `x`: composed from the primitives above by inclusion–exclusion.'
+  - "`Greater`/`GreaterEqual` need no separate handling — compute-engine's own canonicalization rewrites `x > k` to `Less(k, x)` before this ever sees it."
+seeAlso:
+  - Distributed
+  - Expectation
+  - CDF
+names:
+  wolframIdentity: true
+---

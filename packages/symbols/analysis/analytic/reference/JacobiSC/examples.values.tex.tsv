@@ -1,0 +1,5 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiSC}(0.6, 0.4))	0.664\,744\,322\,732\,858\,7
+m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiSC}(1.2, 3))	0.666\,077\,181\,942\,274\,2
+u-0-is-0-for-any-m	\mathrm{JacobiSC}(0, m)	0
+symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiSC}(u, m)	\mathrm{JacobiSC}(u, m)

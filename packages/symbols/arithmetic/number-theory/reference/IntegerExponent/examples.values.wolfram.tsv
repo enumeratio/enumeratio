@@ -1,0 +1,16 @@
+id	in	out	tex.in	tex.out
+2000-5-3-cdot-16	IntegerExponent[2000, 5]	3	\text{IntegerExponent}[2000,5]	3
+base-10-by-default	IntegerExponent[2000]	3	\text{IntegerExponent}[2000]	3
+trailing-zeros-in-base-10	IntegerExponent[1230000]			
+integerexponent-2-pow-10-times-3-pow-4-2	IntegerExponent[Times[Power[2, 10], Power[3, 4]], 2]			
+integerexponent-1000-base-10	IntegerExponent[1000]			
+integerexponent-1024-base-4	IntegerExponent[1024, 4]			
+composite-base-1728-2-6-3-3-so-6-3-divides-it	IntegerExponent[1728, 6]			
+negative-integers	IntegerExponent[-1000]			
+threads-over-a-list	IntegerExponent[List[10, 100, 1000]]			
+gaussian-integers-8i-i-cdot-i-3-1-i-6	IntegerExponent[Complex[0, 8], Complex[1, 1]]			
+negative-integers-base-2	IntegerExponent[-24, 2]			
+the-trailing-zeros-of-100	IntegerExponent[Factorial[100]]			
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	IntegerExponent[Factorial[100], 7]			
+integerexponent-0-5	IntegerExponent[0, 5]	Infinity	\text{IntegerExponent}[0,5]	\infty
+base-1-has-no-well-defined-p-adic-valuation-so	IntegerExponent[10, 1]			

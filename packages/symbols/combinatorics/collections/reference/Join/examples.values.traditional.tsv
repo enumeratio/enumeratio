@@ -1,0 +1,18 @@
+id	in	out
+join-list-1-2-list-3-4		
+join-list-1-2-list-3-4-list-5		
+join-list-a-b-c-list-x-y-list-u-v-w		
+join-tolerates-shorter-array-second		
+join-splices-any-shared-head		
+join-associations-first-seen-order		
+a-trailing-integer-argument-joins-at-that-level		
+joining-matrices-stacks-their-rows		
+sets-as-well-as-lists-as-long-as-all-arguments		
+a-lazy-range-is-spliced-in		
+with-no-arguments-the-empty-list		
+at-level-2-matrices-are-joined-side-by-side		
+ragged-rows-join-at-level-2-too		
+a-row-missing-from-the-shorter-array-simply-isn		
+any-head-as-long-as-all-the-arguments-share-it		
+join-a-b-flatten-a-b-1-see-flatten	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)=\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)	\mathrm{True}
+join-is-associative	\mathrm{Join}(\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack), \bigl\lbrack u, v, w\bigr\rbrack)=\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Join}(\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack))	\mathrm{True}

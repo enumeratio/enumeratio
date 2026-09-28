@@ -1,0 +1,10 @@
+---
+name: DivisorCount
+domain: Combinatorics
+signature: DivisorCount(...)
+summary: τ = σ₀ — number of divisors
+statOn:
+  - IntegerFactorization
+  - Numeric
+stub: carrier
+---

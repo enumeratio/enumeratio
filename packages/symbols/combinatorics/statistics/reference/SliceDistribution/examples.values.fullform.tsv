@@ -1,0 +1,4 @@
+id	in
+slice-distribution-wiener	SliceDistribution[WienerProcess[1, 2], 3]
+slice-distribution-poisson	SliceDistribution[PoissonProcess[5], 2]
+slice-distribution-feeds-pdf-unchanged	Mean[SliceDistribution[PoissonProcess[5], 2]]

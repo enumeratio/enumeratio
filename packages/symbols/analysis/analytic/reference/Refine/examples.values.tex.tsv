@@ -1,0 +1,7 @@
+id	in	out
+sqrt-of-x-squared-under-x-greater-than-0	\mathrm{Refine}(\sqrt{x^2}, x\gt0)	x
+sqrt-of-x-squared-under-x-less-than-0	\mathrm{Refine}(\sqrt{x^2}, x\lt0)	-x
+abs-under-x-greater-than-0	\mathrm{Refine}(\vert x\vert, x\gt0)	x
+sign-under-x-greater-than-0	\mathrm{Refine}(\mathrm{sgn}(x), x\gt0)	1
+log-of-exp-under-x-real	\mathrm{Refine}(\ln(e^{x}), x\in\mathbb{R})	x
+an-undecidable-inequality-is-left-alone	\mathrm{Refine}(x^2\gt0)	0\lt x^2

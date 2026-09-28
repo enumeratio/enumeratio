@@ -1,0 +1,9 @@
+---
+name: Demotion
+domain: Combinatorics
+signature: Demotion(...)
+summary: Demotion (inverse promotion)
+mapOn:
+  - StandardTableau
+stub: carrier
+---

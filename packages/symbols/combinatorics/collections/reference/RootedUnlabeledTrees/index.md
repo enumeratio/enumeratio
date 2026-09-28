@@ -1,0 +1,30 @@
+---
+name: RootedUnlabeledTrees
+domain: Collections
+signature: RootedUnlabeledTrees(n)
+summary: The rooted trees on $n$ unlabelled nodes, up to isomorphism, as a lazy indexed family.
+signatures:
+  - call: RootedUnlabeledTrees(n)
+    library: enumeratio-collections
+    description: every rooted tree on $n$ nodes with unordered children, one per isomorphism class.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+details:
+  - A lazy indexed collection; the count is $A000081(n)$ — $A000081(6) = 20$ — with no elementary closed form, computed via the Euler transform over smaller rooted-tree counts (a multiset of subtrees hangs off the root).
+  - "Each element is the level sequence: node depths in canonical preorder, root first at depth 0. Canonical means a node's children are generated weight-descending, ties broken by ascending own rank — the order `At` unranks in, so isomorphic labellings collapse to one entry."
+  - "$UnlabeledFreeTrees(n)$ is the unrooted counterpart: a free tree canonically rooted at its centroid uses the same level-sequence encoding."
+enumerate:
+  expr: RootedUnlabeledTrees(6)
+  columns: Max
+seeAlso:
+  - UnlabeledFreeTrees
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000081
+    url: https://oeis.org/A000081
+grades:
+  - name: n
+    role: axis
+carrier: RootedUnlabeledTree
+---

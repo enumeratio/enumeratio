@@ -1,0 +1,15 @@
+id	section	role	expr	expected	caption
+nextprime-10			[NextPrime, 10]	11	
+nextprime-100			[NextPrime, 100]	101	
+the-second-prime-after-10			[NextPrime, 10, 2]	13	The second prime after 10
+nextprime-6			[NextPrime, 6]	7	
+the-second-prime-after-50			[NextPrime, 50, 2]	59	The second prime after 50
+the-largest-prime-below-50			[NextPrime, 50, -1]	47	The largest prime below 50
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[NextPrime, [List, 1, 5, 10, 15]]	[List, 2, 7, 11, 17]	Threads element-wise over a list, as Wolfram's Listable heads do
+large-integers-the-first-prime-past-a-googol-is	Scope		[NextPrime, [Power, 10, 100]]	{num: "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267"}	Large integers: the first prime past a googol is $10^{100}+267$
+rational-n-the-next-prime-above-7-2	Scope		[NextPrime, [Rational, 7, 2]]	5	Rational $n$: the next prime above $7/2$
+real-n-the-next-prime-above-100-5	Scope		[NextPrime, 100.5]	101	Real $n$: the next prime above $100.5$
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	Properties		[Equal, [NextPrime, [NthPrime, 20]], [NthPrime, 21]]	True	NextPrime steps from $p_n$ to $p_{n+1}$. See [[NthPrime]]
+a-negative-k-walks-backward-giving-the-prime	Possible issues		[NextPrime, 10, -1]	7	A negative $k$ walks backward, giving the prime immediately before 10
+negative-n-wolfram-counts-7-as-prime-and-returns	Possible issues		[NextPrime, -10]	-7	Negative $n$: Wolfram counts $-7$ as prime and returns it
+nextprime-neg-2	Possible issues	test	[NextPrime, -2]	2	

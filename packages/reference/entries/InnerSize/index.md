@@ -1,0 +1,9 @@
+---
+name: InnerSize
+domain: Combinatorics
+signature: InnerSize(...)
+summary: Size of the inner shape
+statOn:
+  - SkewPartition
+stub: carrier
+---

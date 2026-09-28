@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+superscript			[DisplayForm, [SuperscriptBox, "'x'", "'2'"]]	[DisplayForm, [SuperscriptBox, "'x'", "'2'"]]

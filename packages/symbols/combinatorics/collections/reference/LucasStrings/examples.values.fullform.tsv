@@ -1,0 +1,4 @@
+id	in
+count-lucasstrings-4	Count[LucasStrings[4]]
+first-element-of-lucasstrings-4	Part[LucasStrings[4], 1]
+every-element-of-lucasstrings-4	Take[LucasStrings[4], 7]

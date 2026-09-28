@@ -1,0 +1,7 @@
+id	in	out
+iscoprime-4-9	IsCoprime(4, 9)	True
+both-are-divisible-by-3	IsCoprime(6, 9)	False
+several-arguments-every-pair-must-be-coprime	IsCoprime(2, 3, 5)	True
+gaussian-integers-2-i-and-2-i-are-non-associate	IsCoprime(2 + i, 2 - i)	True
+listable	IsCoprime(3, [4, 6])	[True, False]
+pairwise-not-collectively-gcd-6-10-15-1-yet-no	IsCoprime(6, 10, 15)	False

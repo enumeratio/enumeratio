@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+deconcatenation-cut-at-each-gap			[Coproduct, [QSymM, [List, 1, 2]]]	[Add, [HopfTensor, [QSymM, [List]], [QSymM, [List, 1, 2]]], [HopfTensor, [QSymM, [List, 1, 2]], [QSymM, [List]]], [HopfTensor, [QSymM, [List, 1]], [QSymM, [List, 2]]]]	deconcatenation: cut at each gap
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes			[Coproduct, [NSymH, [List, 2]]]	[Add, [HopfTensor, [NSymH, [List]], [NSymH, [List, 2]]], [HopfTensor, [NSymH, [List, 2]], [NSymH, [List]]], [HopfTensor, [NSymH, [List, 1]], [NSymH, [List, 1]]]]	$\Delta(H_2) = 1\otimes H_2 + H_1\otimes H_1 + H_2\otimes 1$
+the-counit-picks-out-the-constant-term	Properties		[Counit, [NSymH, [List]]]	1	the counit picks out the constant term

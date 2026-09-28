@@ -1,0 +1,7 @@
+id	in	out
+trianglewave-zero	TriangleWave(0)	0
+trianglewave-quarter-peak	TriangleWave(1 / 4)	1
+trianglewave-half	TriangleWave(1 / 2)	0
+trianglewave-three-quarters-trough	TriangleWave(3 / 4)	-1
+trianglewave-ranged	TriangleWave([0, 10], 1 / 2)	5
+trianglewave-periodic	TriangleWave(1 / 4) == TriangleWave(1 / 4 + 3)	True

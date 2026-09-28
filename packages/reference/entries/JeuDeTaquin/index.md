@@ -1,0 +1,9 @@
+---
+name: JeuDeTaquin
+domain: Combinatorics
+signature: JeuDeTaquin(...)
+summary: Jeu de taquin rectification
+mapOn:
+  - SkewTableau
+stub: carrier
+---

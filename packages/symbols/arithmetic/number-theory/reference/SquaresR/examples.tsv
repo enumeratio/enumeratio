@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+pm-1-2-pm-2-2-in-either-order			[SquaresR, 2, 5]	8	$(\pm1)^2+(\pm2)^2$ in either order
+squaresr-2-25			[SquaresR, 2, 25]	12	
+no-n-equiv-3-pmod-4-is-a-sum-of-two-squares			[SquaresR, 2, 3]	0	No $n\equiv3\pmod4$ is a sum of two squares
+squaresr-3-6	Scope		[SquaresR, 3, 6]	24	
+squaresr-8-3	Scope		[SquaresR, 8, 3]	448	
+jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n	Properties		[SquaresR, 4, 10]	144	Jacobi: $r_4(n)=8\sigma_1(n)$ for $4\nmid n$

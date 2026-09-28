@@ -1,0 +1,5 @@
+id	in	out
+a-triangle-vertices-inferred	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)])	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)])
+an-isolated-vertex-needs-the-explicit-form	VertexList(Graph([1, 2, 3], [UndirectedEdge(1, 2)]))	[1, 2, 3]
+the-1-arg-form-is-not-normalized-to-2-arg	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)])	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)])
+edgeweight-option-is-held-exactly	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)], EdgeWeight -> [5, 7])	Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3)], (EdgeWeight, [5, 7]))

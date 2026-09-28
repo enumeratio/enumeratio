@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+dirichlet-mean			[Mean, [DirichletDistribution, [List, 1, 4, 5]]]	[List, [Rational, 1, 10], [Rational, 2, 5]]	
+dirichlet-variance			[Variance, [DirichletDistribution, [List, 1, 4, 5]]]	[List, [Rational, 9, 1100], [Rational, 6, 275]]	
+dirichlet-pdf			[PDF, [DirichletDistribution, [List, 1, 4, 5]], [List, [Rational, 1, 10], [Rational, 2, 5]]]	[Divide, [Gamma, 10], [Multiply, 250, [Gamma, 1], [Gamma, 4], [Gamma, 5]]]	$= 10.08$ — Gamma(1)/Gamma(4)/Gamma(5)/Gamma(10) do not auto-reduce to factorials.

@@ -1,0 +1,67 @@
+---
+name: StirlingS1
+domain: Combinatorics
+signature: StirlingS1(n, k)
+summary: The signed Stirling number of the first kind, relating falling factorials to powers of n.
+signatures:
+  - call: StirlingS1(n, k)
+    description: the signed Stirling number of the first kind $s(n, k)$.
+  - call: StirlingS1(n, k)
+    description: The signed Stirling number of the first kind, relating falling factorials to powers of n.
+    library: enumeratio-number-theory
+    type: (integer, integer) -> integer
+    overrides: compute-engine
+details:
+  - 'Coefficients relating falling factorials to ordinary powers: $(x)_n = \sum_{k} s(n, k)\, x^k$.'
+  - $|s(n, k)|$ counts the permutations of n elements with exactly k cycles.
+  - $s(n, n) = 1$ and $s(n, 0) = 0$ for $n > 0$, with the boundary case $s(0, 0) = 1$.
+  - 'The unsigned values in each row sum to $n!$: $\sum_k |s(n, k)| = n!$'
+  - $s(n, 1) = (-1)^{n-1}(n-1)!$.
+  - Threads element-wise over a list of $n$, as Wolfram's Listable heads do.
+seeAlso:
+  - Binomial
+  - Stirling
+references:
+  - system: wikipedia
+    identity: Stirling numbers of the first kind
+  - system: mathworld
+    identity: StirlingNumberoftheFirstKind
+  - system: dlmf
+    identity: "26.8"
+  - system: oeis
+    identity: A008275
+names:
+  dlmf: Stirling number of the first kind
+  catalog: Stirling1
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: StirlingS1[$1, $2]
+    arity: 2
+    threadArg: 1
+    note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: sage
+    template: stirling_number1($1, $2)
+    arity: 2
+    threadArg: 1
+    note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: julia
+    template: Combinatorics.stirlings1(big($1), $2)
+    arity: 2
+    threadArg: 1
+    note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+  - origin: mapped
+    form: mathlib4
+    template: (Nat.stirlingFirst $1 $2)
+    arity: 2
+    threadArg: 1
+    note: Signed in Wolfram and compute-engine; Sage's stirling_number1, Combinatorics.jl's stirlings1 and Mathlib's Nat.stirlingFirst are UNSIGNED, so a sign difference here is expected, not a bug. Combinatorics.jl's stirlings1 also needs n as a BigInt past its Int64 lookup table (n > 20).
+catalog:
+  - system: wolfram
+    identity: StirlingS1
+    url: https://reference.wolfram.com/language/ref/StirlingS1.html
+    note: WL StirlingS1 is SIGNED; stirling1 here is the UNSIGNED cycle-count c(n,k) = |StirlingS1(n,k)|
+---

@@ -1,0 +1,25 @@
+---
+name: HeckeT
+domain: Hecke algebras
+signature: HeckeT(permutation)
+summary: The basis element $T_w$ of the Iwahori–Hecke algebra $H_n(q)$, indexed by a permutation in one-line notation. Multiplication is the $q$-deformation of the symmetric group's.
+signatures:
+  - call: HeckeT([2,1,3])
+    description: $T_w$ for the permutation $w$
+    library: enumeratio-hecke
+    type: (list<integer>) -> number
+details:
+  - $T_s \cdot T_w = T_{sw}$ when the length goes up, and $q\,T_{sw} + (q-1)\,T_w$ when it goes down — the second case is the entire deformation
+  - So a product of two basis elements is a LINEAR COMBINATION, unlike the other algebra families here; sums read back in, so products compose
+  - The quadratic relation is $T_s^2 = q + (q-1)T_s$, i.e. $(T_s-q)(T_s+1) = 0$, replacing $s^2 = 1$
+  - The braid relations survive the deformation, which is why $T_w$ is the product over ANY reduced word for $w$
+  - Coefficients stay exact polynomials in $q$; use [[HeckeSpecialize]] to pick a value
+  - Use the ordered product ([[NonCommutativeMultiply]] or $\otimes$) — $H_n(q)$ is not commutative
+seeAlso:
+  - HeckeSpecialize
+  - NonCommutativeMultiply
+  - Basis
+references:
+  - system: wikipedia
+    identity: Iwahori–Hecke algebra
+---

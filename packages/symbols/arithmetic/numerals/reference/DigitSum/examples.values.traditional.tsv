@@ -1,0 +1,14 @@
+id	in	out
+digitsum-58-127		
+in-base-2-this-is-the-number-of-set-bits		
+255-ff-16-15-15		
+threads-element-wise-over-a-list-as-wolfram-s		
+just-the-first-4-digits-6-3-4-5-18-not-the-full		
+a-negative-k-sums-the-last-3-digits-instead		
+k-at-least-the-digit-count-is-the-plain-sum		
+digit-sum-n-mod-9-the-basis-of-the-classic	\mathrm{DigitSum}(58\,127)\bmod9=58\,127\bmod9	\mathrm{True}
+digitsum-0		
+the-sign-is-discarded		
+sign-is-discarded-in-the-3-argument-form-too		
+digitsum-100-factorial		
+the-digit-sum-of-2-1000		

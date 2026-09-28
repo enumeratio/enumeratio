@@ -1,0 +1,14 @@
+---
+name: Compose
+domain: Wolfram
+signature: Compose(...)
+summary: Wolfram's own Composition, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: Composition
+stub: carrier
+signatures:
+  - call: Compose(...)
+    description: Wolfram's own Composition, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-domains
+    type: (any+) -> function
+---

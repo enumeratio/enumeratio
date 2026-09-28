@@ -1,0 +1,9 @@
+---
+name: MaxLetter
+domain: Combinatorics
+signature: MaxLetter(...)
+summary: Largest letter
+statOn:
+  - Word
+stub: carrier
+---

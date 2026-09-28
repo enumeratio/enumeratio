@@ -1,0 +1,10 @@
+id	in	back
+input-matches-expected	VerificationTest[Plus[2, 3], 5]	
+input-evaluates-but-does-not-match-expected	VerificationTest[Plus[2, 3], 6]	
+one-argument-a-predicate-that-evaluates-to-true	VerificationTest[Greater[2, 1]]	
+a-symbolic-computation-checked-against-its	VerificationTest[Expand[Power[Plus[x, 1], 2]], Plus[Power[x, 2], Times[2, x], 1]]	
+a-testid-is-carried-into-the-result	VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]	
+a-sametest-with-a-tolerance-22-7-3-14-0-01	VerificationTest[Divide[22, 7], 3.14, Rule[SameTest, Function[List[a, b], Less[Abs[Subtract[a, b]], 0.01]]]]	[VerificationTest, [Divide, 22, 7], 3.14, [KeyValuePair, SameTest, [Function, [List, a, b], [Less, [Abs, [Subtract, a, b]], 0.01]]]]
+memoryconstraint-in-process-is-an-error-not-a	VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]	
+one-argument-succeeds-whenever-input-evaluates	VerificationTest[Plus[1, 1]]	
+the-default-comparison-is-structural	VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]	

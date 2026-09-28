@@ -1,0 +1,6 @@
+id	in	out
+ramanujantau-2	RamanujanTau(2)	-24
+ramanujantau-5	RamanujanTau(5)	4_830
+listable	RamanujanTau([1, 2, 3, 4, 5, 6])	[1, -24, 252, -1_472, 4_830, -6_048]
+ramanujantau-12	RamanujanTau(12)	-370_944
+multiplicative-tau-6-tau-2-tau-3	RamanujanTau(2) * RamanujanTau(3)	-6_048

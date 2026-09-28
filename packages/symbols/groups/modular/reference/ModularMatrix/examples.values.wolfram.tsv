@@ -1,0 +1,10 @@
+id	in	out	tex.in	tex.out	verdict
+the-group-product					
+no-division-needed-at-determinant-1					
+t-5					
+words-multiply-their-matrices	Dot["L", "R"]	"\"L\" . \"R\""	\text{L}.\text{R}	\text{L}.\text{R}	disagree
+the-inverse-of-a-word					
+r-3					
+negative-powers-are-powers-of-the-inverse					
+a-plain-integer-matrix-goes-to-compute-engine-s					
+the-zeroth-power-is-the-identity					

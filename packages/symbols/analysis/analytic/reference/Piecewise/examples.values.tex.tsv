@@ -1,0 +1,6 @@
+id	in	out
+selects-the-second-branch	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, 0\le x\bigr\rbrack\bigr\rbrack)
+evaluated-at-a-concrete-point-below-zero	\mathrm{ReplaceAll}(\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack), \mathrm{Rule}(x, -5))	1
+evaluated-at-a-concrete-point-at-or-above-zero	\mathrm{ReplaceAll}(\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack), \mathrm{Rule}(x, 5))	2
+falls-through-to-the-explicit-default	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
+every-clause-eliminated-falls-through-to-default	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, 2\gt3\bigr\rbrack\bigr\rbrack, 99)	99

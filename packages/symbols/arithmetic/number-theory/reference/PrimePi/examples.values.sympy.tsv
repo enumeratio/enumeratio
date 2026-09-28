@@ -1,0 +1,12 @@
+id	in	out
+no-primes-are-1	primepi(1)	0
+primepi-2	primepi(2)	1
+primepi-15	primepi(15)	6
+primepi-100	primepi(100)	25
+threads-element-wise-over-a-list-as-wolfram-s	[primepi(10), primepi(100)]	[4, 25]
+rational-arguments-the-primes-up-to-7-2-are-2	primepi(Rational(7, 2))	2
+real-arguments	primepi(15.25)	6
+the-primes-below-a-million	primepi(1000000)	78498
+listable-threads-over-a-list	[primepi(3), primepi(5), primepi(17), primepi(25)]	[2, 3, 7, 9]
+same-inverse-relation-viewed-from-primepi-s-side		
+no-primes-are-a-negative-number	primepi(-1)	0

@@ -1,0 +1,9 @@
+---
+name: OddDepthNodes
+domain: Combinatorics
+signature: OddDepthNodes(...)
+summary: Nodes at odd depth
+statOn:
+  - OrderedTree
+stub: carrier
+---

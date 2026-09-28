@@ -1,23 +1,19 @@
-// Rewrite every reference record through the one writer (@enumeratio/entry/node's writeYaml),
-// leaving the data as it is: after a merge that took a hand-edited or older-style file.
+// Rewrite every head's record through the one writer (@enumeratio/entry/node's writeHead),
+// leaving the data as it is: after a merge, or a hand edit that left a file in another style
+// or its rows out of page order.
 //
 //   node packages/reference/scripts/format-records.ts
 
-import { readFileSync } from "node:fs";
-import { isDeepStrictEqual } from "node:util";
-import { parseYaml } from "@enumeratio/entry";
-import { isWrittenYaml, writeYaml } from "@enumeratio/entry/node";
-import { loadReferenceData, PACKAGES } from "../src/node.ts";
+import { headNames, isWrittenHead, readHead, recordDirs, writeHead } from "@enumeratio/entry/node";
+import { PACKAGES } from "../src/node.ts";
 
-const { heads, issues } = loadReferenceData(PACKAGES);
-for (const { file, message } of issues) console.error(`${file}: ${message}`);
 let rewritten = 0;
-for (const path of heads.flatMap((h) => (h.examplesPath ? [h.entryPath, h.examplesPath] : [h.entryPath]))) {
-  if (await isWrittenYaml(path)) continue;
-  const data = parseYaml(readFileSync(path, "utf8"));
-  await writeYaml(path, data);
-  if (!isDeepStrictEqual(parseYaml(readFileSync(path, "utf8")), data))
-    throw new Error(`${path}: the rewrite changed the data`);
-  rewritten++;
-}
-console.log(`${rewritten} files rewritten`);
+let heads = 0;
+for (const { dir } of recordDirs(PACKAGES))
+  for (const head of headNames(dir)) {
+    heads++;
+    if ((await isWrittenHead(dir, head)).length === 0) continue;
+    await writeHead(dir, head, readHead(dir, head));
+    rewritten++;
+  }
+console.log(`${rewritten} of ${heads} records rewritten`);

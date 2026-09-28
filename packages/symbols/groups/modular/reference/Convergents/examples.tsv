@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+from-a-list-of-terms			[Convergents, [List, 3, 7, 15, 1]]	[List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113]]	from a list of terms
+the-first-five-convergents-of-pi			[Convergents, Pi, 5]	[List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113], [Rational, 103993, 33102]]	the first five convergents of $\pi$
+a-rational-the-last-convergent-is-the-number	Scope		[Convergents, [Rational, 47, 17]]	[List, 2, 3, [Rational, 11, 4], [Rational, 47, 17]]	a rational: the last convergent is the number itself
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	Applications		[Convergents, [Sqrt, 2], 5]	[List, 1, [Rational, 3, 2], [Rational, 7, 5], [Rational, 17, 12], [Rational, 41, 29]]	convergents of $\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \pm1$

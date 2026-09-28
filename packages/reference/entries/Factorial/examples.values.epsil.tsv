@@ -1,0 +1,20 @@
+id	in	out
+5-factorial	5!	120
+6-factorial	6!	720
+the-empty-product-is-1-by-convention	0!	1
+10-factorial	10!	3_628_800
+threads-element-wise-over-a-list	[1, 2, 3, 4]!	[1, 2, 6, 24]
+frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify(n! / (n - 1)!)	n
+real-arguments-evaluate-as-gamma-n-1	3.5!	11.631_728_396_567_457
+negative-non-integers-are-defined-too-2-5-gamma	(-2.5)!	2.363_271_801_207_353
+complex-arguments-1-i-gamma-2-i	(1 + i)!	0.652_965_496_420_167_4 + 0.343_065_839_816_546_3i
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	(-1 / 2)!	1.772_453_850_905_515_9
+infty-infty	PositiveInfinity!	PositiveInfinity
+the-number-of-ways-to-arrange-8-distinct-books	8!	40_320
+recurrence-n-n-n-1	5! == 5 * 4!	True
+extends-to-non-integers-via-the-gamma-function	(1 / 2)!	0.886_226_925_452_758_6
+n-gamma-n-1-see-gamma	5! == Gamma(6)	True
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum(1 / k!, (k, 0, PositiveInfinity))	ExponentialE
+negative-integers-are-poles-of-the-gamma	(-1)!	ComplexInfinity
+factorials-grow-fast-20-already-exceeds-2-times	20!	2_432_902_008_176_640_000
+30-has-33-digits-and-ends-in-seven-zeros	30!	265_252_859_812_191_058_636_308_480_000_000

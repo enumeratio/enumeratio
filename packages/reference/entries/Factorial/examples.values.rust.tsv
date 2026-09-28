@@ -1,0 +1,20 @@
+id	in	out	verdict
+5-factorial	factorial(n(5))	120.0	
+6-factorial	factorial(n(6))	720.0	
+the-empty-product-is-1-by-convention	factorial(n(0))	1.0	
+10-factorial	factorial(n(10))	3628800.0	
+threads-element-wise-over-a-list	factorial(list(vec![n(1), n(2), n(3), n(4)]))	panic: threading: a list where the crate takes a scalar	error
+frac-n-n-1-simplifies-to-n-under-simplify-plain			
+real-arguments-evaluate-as-gamma-n-1	factorial(x(3.5))	panic: an integer, not 3.5	error
+negative-non-integers-are-defined-too-2-5-gamma	factorial(x(-2.5))	panic: an integer, not -2.5	error
+complex-arguments-1-i-gamma-2-i			
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	factorial(rational(n(-1), n(2)))	panic: an integer, not -1/2	error
+infty-infty			
+the-number-of-ways-to-arrange-8-distinct-books	factorial(n(8))	40320.0	
+recurrence-n-n-n-1	equal(factorial(n(5)), (n(5) * factorial(n(4))))	true	
+extends-to-non-integers-via-the-gamma-function	factorial(rational(n(1), n(2)))	panic: an integer, not 1/2	error
+n-gamma-n-1-see-gamma	equal(factorial(n(5)), gamma(n(6)))	true	
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+negative-integers-are-poles-of-the-gamma	factorial(n(-1))	panic: a non-negative integer	error
+factorials-grow-fast-20-already-exceeds-2-times	factorial(n(20))	2.43290200817664e18	
+30-has-33-digits-and-ends-in-seven-zeros	factorial(n(30))	2.6525285981219103e32	

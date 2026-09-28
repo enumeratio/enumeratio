@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+accumulate-1-2-3-4			[Accumulate, [List, 1, 2, 3, 4]]	[List, 1, 3, 6, 10]	
+accumulate-empty	Scope		[Accumulate, [List]]	[List]	The running sum of the empty list is empty
+accumulate-last-is-total	Properties		[Equal, [Last, [Accumulate, [List, 1, 2, 3, 4, 5]]], [Add, 1, 2, 3, 4, 5]]	True	The last element is the sum of the whole list

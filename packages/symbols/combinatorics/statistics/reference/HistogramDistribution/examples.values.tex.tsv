@@ -1,0 +1,6 @@
+id	in	out
+histogram-distribution-pdf	\operatorname{PDF}(\mathrm{HistogramDistribution}(\bigl\lbrack1, 1, 2, 2, 2, 3, 3, 4\bigr\rbrack, \bigl\lbrack0, 5, 1\bigr\rbrack), \frac{3}{2})	\frac{1}{4}
+histogram-distribution-pdf-outside	\operatorname{PDF}(\mathrm{HistogramDistribution}(\bigl\lbrack1, 1, 2, 2, 2, 3, 3, 4\bigr\rbrack, \bigl\lbrack0, 5, 1\bigr\rbrack), 10)	0
+histogram-distribution-cdf	\operatorname{CDF}(\mathrm{HistogramDistribution}(\bigl\lbrack1, 1, 2, 2, 2, 3, 3, 4\bigr\rbrack, \bigl\lbrack0, 5, 1\bigr\rbrack), 2)	\frac{1}{4}
+histogram-distribution-mean	\mathrm{mean}(\mathrm{HistogramDistribution}(\bigl\lbrack1, 1, 2, 2, 2, 3, 3, 4\bigr\rbrack, \bigl\lbrack0, 5, 1\bigr\rbrack))	\frac{11}{4}
+histogram-distribution-dx-only-form	\operatorname{PDF}(\mathrm{HistogramDistribution}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack, \bigl\lbrack1\bigr\rbrack), \frac{3}{2})	\frac{1}{4}

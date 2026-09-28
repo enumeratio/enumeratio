@@ -1,0 +1,18 @@
+id	in	out	verdict
+stirlings1-5-2	Combinatorics.stirlings1(big(5), 2)	50	disagree
+stirlings1-4-2	Combinatorics.stirlings1(big(4), 2)	11	
+s-n-n-is-always-1	Combinatorics.stirlings1(big(3), 3)	1	
+s-n-0-is-0-for-n-0	Combinatorics.stirlings1(big(5), 0)	0	
+stirlings1-20-10	Combinatorics.stirlings1(big(20), 10)	381922055502195	
+threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.stirlings1(big(2), 2), Combinatorics.stirlings1(big(4), 2), Combinatorics.stirlings1(big(6), 2)]	[1, 11, 274]	
+exact-for-large-n	Combinatorics.stirlings1(big(50), 2)	2724619372591264761651711494187624530726005154239846809600000000	
+a-mid-sized-n-and-k-past-the-fast-paths	Combinatorics.stirlings1(big(40), 14)	julia: killed (memory, peak 3088 MB)	error
+the-number-of-permutations-of-5-elements-with	Combinatorics.stirlings1(big(5), 3)	35	
+the-unsigned-values-in-a-row-sum-to-n			
+the-signed-row-sum-vanishes-for-n-ge-2			
+s-n-n-1-binom-n-2	(Combinatorics.stirlings1(big(6), 5) == (-(binomial(ZZ(6), ZZ(2)))))	false	disagree
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+the-empty-case-s-0-0-1-by-convention-distinct	Combinatorics.stirlings1(big(0), 0)	1	
+k-n-is-0	Combinatorics.stirlings1(big(5), 6)	0	
+a-negative-k-stays-symbolic	Combinatorics.stirlings1(big(4), -1)	0	inconclusive
+s-n-1-1-n-1-n-1-so-s-10-1-9	Combinatorics.stirlings1(big(10), 1)	362880	disagree

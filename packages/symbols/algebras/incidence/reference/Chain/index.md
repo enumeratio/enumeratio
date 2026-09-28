@@ -1,0 +1,15 @@
+---
+name: Chain
+domain: Incidence algebras
+signature: Chain(n)
+summary: The poset $1 < 2 < \cdots < n$, on which [[MoebiusFunction]] is $1$ on a point, $-1$ on a cover, and $0$ on anything longer.
+signatures:
+  - call: Chain(n)
+    description: the chain $1 < 2 < \cdots < n$
+    library: enumeratio-incidence
+    type: (integer) -> expression<Chain>
+seeAlso:
+  - IncidenceAlgebra
+  - PosetElements
+  - MoebiusFunction
+---

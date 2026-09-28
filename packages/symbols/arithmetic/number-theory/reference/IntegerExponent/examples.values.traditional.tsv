@@ -1,0 +1,16 @@
+id	in	out
+2000-5-3-cdot-16	v_{5}(2\,000)	3
+base-10-by-default	v_{10}(2\,000)	3
+trailing-zeros-in-base-10	v_{10}(1\,230\,000)	4
+integerexponent-2-pow-10-times-3-pow-4-2	v_{2}(2^{10}\times3^4)	10
+integerexponent-1000-base-10	v_{10}(1\,000)	3
+integerexponent-1024-base-4	v_{4}(1\,024)	5
+composite-base-1728-2-6-3-3-so-6-3-divides-it	v_{6}(1\,728)	3
+negative-integers	v_{10}(-1\,000)	3
+threads-over-a-list		
+gaussian-integers-8i-i-cdot-i-3-1-i-6	v_{1+i}(8i)	6
+negative-integers-base-2	v_{2}(-24)	3
+the-trailing-zeros-of-100	v_{10}(100!)	24
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	v_{7}(100!)	16
+integerexponent-0-5	v_{5}(0)	\infty
+base-1-has-no-well-defined-p-adic-valuation-so	v_{1}(10)	v_{1}(10)

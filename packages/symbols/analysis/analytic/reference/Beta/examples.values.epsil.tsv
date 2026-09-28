@@ -1,0 +1,21 @@
+id	in	out
+beta-2-3	Beta(2, 3)	1 / 12
+the-unit-square-case-int-0-1-1-dt-1	Beta(1, 1)	1
+beta-3-3	Beta(3, 3)	1 / 30
+threads-element-wise-over-a-list-argument	Beta([1, 2], 2)	[1 / 2, 1 / 6]
+b-5-4-frac-4-3-8-frac-1-280	Beta(5, 4)	1 / 280
+machine-precision-arguments	Beta(2.3, 3.2)	0.054_029_791_748_357_237_815_4
+four-arguments-at-floats	Beta(0.2, 0.5, 2, 3)	0.042_224_999_999_999_999_999_983_11
+half-integer-arguments-evaluate-exactly-through	Beta(9 / 2, 7 / 2)	5 / 2_048 * Pi
+b-5-2-7-2-frac-3-pi-256-from-the-half-integer	Beta(5 / 2, 7 / 2)	3 / 256 * Pi
+complex-arguments-should-evaluate-numerically	Beta(2.5 + i, 1 - i)	0.083_107_783_669_911_63 + 0.142_163_944_255_870_34i
+three-arguments-the-incomplete-beta-b-z-a-b-int	Beta(1 / 2, 2, 3)	11 / 192
+four-arguments-the-generalized-incomplete-beta-b	Beta(1 / 4, 1 / 2, 2, 3)	109 / 3_072
+to-30-significant-digits-every-one-correctly	N(Beta(1 / 3, 1 / 4), 30)	6.353_586_485_553_421_530_528_788_972_02
+b-1-2-1-2-pi-underlies-the-arcsine-distribution	Beta(0.5, 0.5)	3.141_592_653_589_793_238_46
+symmetric-b-a-b-b-b-a	Beta(2, 5) == Beta(5, 2)	True
+ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n	9 * Beta(4, 6) * Binomial(8, 3) == 1	True
+b-a-1-1-a-for-symbolic-a	Beta(a, 1)	1 / a
+b-2-b-frac-1-b-b-1-not-yet	Beta(2, b)	1 / (b * (b + 1))
+partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	D(Beta(a, b), a)	(Digamma(a) - Digamma(a + b)) * Beta(a, b)
+a-nonpositive-integer-argument-is-a-pole-of-the	Beta(-1, 2)	ComplexInfinity

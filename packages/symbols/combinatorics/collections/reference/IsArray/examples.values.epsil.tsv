@@ -1,0 +1,6 @@
+id	in	out
+a-rectangular-nesting-is-an-array	IsArray([[1, 2], [3, 4]])	True
+a-ragged-nesting-is-not-an-array	IsArray([[1, 2], [3]])	False
+a-flat-list-is-a-rank-1-array	IsArray([1, 2, 3])	True
+a-non-list-is-not-an-array	IsArray(3)	False
+a-test-function-must-hold-of-every-leaf	IsArray([[2, 4], [6, 8]], IsEven)	True

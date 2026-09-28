@@ -1,6 +1,6 @@
 // JSON Schema for the two YAML records (design/examples-as-data.md §2, §4), generated from
 // the types in `types.ts` -- so an editor with a YAML language server gets completion and
-// validation on `reference/<Head>.yaml` and `reference/<Head>.implementations.yaml`. This
+// validation on `reference/<Head>/index.md` and `reference/<Head>/examples.values.*.tsv`. This
 // module is the generator; `scripts/generate-schema.ts` writes its output to `schema/`, and
 // `tests/schema.test.ts` fails if the committed files drift from it.
 //
@@ -181,15 +181,15 @@ const REFERENCE_NAMES: JsonSchema = {
   additionalProperties: false,
 };
 
-/** `reference/<Head>.yaml`: the hand-written entry, all but its examples (design/examples-as-data.md §2). */
+/** `reference/<Head>/index.md`: the hand-written entry, all but its examples (design/examples-as-data.md §2). */
 export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://enumeratio.dev/schema/reference-entry.schema.json",
   title: "ReferenceEntry",
   description:
-    "One compute-engine head's reference/<Head>.yaml: summary, signatures, details, " +
+    "One compute-engine head's reference/<Head>/index.md: summary, signatures, details, " +
     "references, the catalog's own crosswalk rows and head-level bindings. Its examples " +
-    "are in <Head>.examples.yaml.",
+    "are in <Head>/examples.tsv.",
   type: "object",
   properties: {
     name: { type: "string" },
@@ -239,12 +239,12 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   },
 };
 
-/** `reference/<Head>.examples.yaml`: the head's examples, in page order. */
+/** `reference/<Head>/examples.tsv`: the head's examples, in page order. */
 export const REFERENCE_EXAMPLES_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://enumeratio.dev/schema/reference-examples.schema.json",
   title: "ReferenceExamples",
-  description: "One compute-engine head's reference/<Head>.examples.yaml: its examples, in page order.",
+  description: "One compute-engine head's reference/<Head>/examples.tsv: its examples, in page order.",
   type: "array",
   items: { $ref: "#/$defs/ReferenceExample" },
   $defs: { MathJSON: MATHJSON, ReferenceExample: REFERENCE_EXAMPLE, Reference: REFERENCE },
@@ -312,7 +312,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
 };
 
 /**
- * `reference/<Head>.implementations.yaml`: every example's implementations, keyed by id
+ * `reference/<Head>/examples.values.*.tsv`: every example's implementations, keyed by id
  * (design/examples-as-data.md §2, §6).
  */
 export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
@@ -320,7 +320,7 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
   $id: "https://enumeratio.dev/schema/head-implementations.schema.json",
   title: "HeadImplementations",
   description:
-    "One compute-engine head's reference/<Head>.implementations.yaml: every example's " +
+    "One compute-engine head's reference/<Head>/examples.values.*.tsv: every example's " +
     "own forms and each external system's rendering and answer, keyed by example id.",
   type: "object",
   additionalProperties: {

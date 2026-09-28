@@ -1,0 +1,11 @@
+id	in	out	verdict
+moebiusmu-1	mobius(1)	1	
+moebiusmu-11	mobius(11)	-1	
+12-22-3-is-not-squarefree	mobius(12)	0	
+10-2-5-a-product-of-an-even-number-of-distinct	mobius(10)	1	
+threads-element-wise-over-a-list-as-wolfram-s	[mobius(1), mobius(2), mobius(3), mobius(4)]	[1, -1, -1, 0]	
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	mobius((5 + 6*I))	TypeError: n should be an integer	error
+listable-threads-over-a-list	[mobius(4), mobius(10), mobius(17), mobius(20)]	[0, 1, -1, 0]	
+listable-over-a-range			
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(mobius(1) + mobius(2) + mobius(3) + mobius(4) + mobius(6) + mobius(12))	0	
+mu-is-only-defined-for-positive-integers-compute	mobius(0)	ValueError: n should be a positive integer	error

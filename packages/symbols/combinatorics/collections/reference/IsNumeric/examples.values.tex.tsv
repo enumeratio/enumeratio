@@ -1,0 +1,5 @@
+id	in	out
+isnumeric-pi	\mathrm{IsNumeric}(\pi)	\top
+isnumeric-literal	\mathrm{IsNumeric}(5)	\top
+isnumeric-plain-symbol	\mathrm{IsNumeric}(x)	\bot
+isnumeric-sqrt-2	\mathrm{IsNumeric}(\sqrt{2})	\top

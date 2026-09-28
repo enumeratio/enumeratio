@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+reads-ascii-code-points			[ToCharacterCode, [String, ABC]]	[List, 65, 66, 67]

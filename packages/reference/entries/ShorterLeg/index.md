@@ -1,0 +1,9 @@
+---
+name: ShorterLeg
+domain: Combinatorics
+signature: ShorterLeg(...)
+summary: Shorter leg
+statOn:
+  - PythagoreanTriple
+stub: carrier
+---

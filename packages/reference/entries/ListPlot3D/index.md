@@ -1,0 +1,14 @@
+---
+name: ListPlot3D
+domain: Graphics
+signature: ListPlot3D(...)
+summary: Wolfram's own ListPlot3D, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: ListPlot3D(...)
+    description: Wolfram's own ListPlot3D, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+    library: enumeratio-formats
+    type: (any*) -> any
+---

@@ -1,0 +1,4 @@
+id	in
+count-ballotsequences-4	Count[BallotSequences[4]]
+first-element-of-ballotsequences-4	Part[BallotSequences[4], 1]
+every-element-of-ballotsequences-4	Take[BallotSequences[4], 5]

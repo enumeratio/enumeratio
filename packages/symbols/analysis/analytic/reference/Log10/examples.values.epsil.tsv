@@ -1,0 +1,18 @@
+id	in	out
+log10-1-000	Log10(1_000)	3
+log10-1	Log10(1)	0
+log10-100-000	Log10(100_000)	5
+log10-1-000-000	Log10(1_000_000)	6
+n-for-a-decimal-value	N(Log10(2))	0.301_029_995_663_981_195_214
+an-exact-negative-power-of-10-folds-too-log-10	Log10(1 / 100)	-2
+a-symbolic-argument-becomes-compute-engine-s	Log10(x)	Log(x)
+log10-5p5	Log10(5.5)	0.740_362_689_494_243_845_536
+threads-element-wise-over-a-list	Log10([1, 10, 100, 1_000])	[0, 1, 2, 3]
+element-wise-over-a-matrix-including-the-exact	Log10([[1, 100], [0, 1 / 100]])	[[0, 2], [NegativeInfinity, -2]]
+as-with-ln-the-logarithm-of-complex-infinity-is	Log10(ComplexInfinity)	PositiveInfinity
+interval-arithmetic-log-10-frac-13-2-log-10-3	Log10(Interval(1 / 3, 2))	Interval(Log(1 / 3, 10), Log(2, 10))
+uncertainty-propagation-log-10-frac-1-101-pm-0	Log10(Around(1 / 101, 0.01))	Around(-2.004_321_373_782_642_6, 0.438_637_426_722_284_34)
+derivative-frac-1-x-ln-10	D(Log10(x), x)	1 / (x * Ln(10))
+to-30-significant-digits-every-one-correctly	N(Log10(7), 30)	0.845_098_040_014_256_830_712_216_258_593
+a-float-argument-folds-even-for-a-fractional	Log10(0.001)	-3
+same-as-compute-engine-s-default-base-log	Log10(1_000) == Log(1_000)	True

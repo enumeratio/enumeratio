@@ -1,0 +1,6 @@
+id	in
+length-goes-up-so-no-q-appears	NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]]
+n-the-same-basis-as-z-s-n	AlgebraDimension[HeckeAlgebra[4]]
+the-quadratic-relation-t-s-2-q-q-1-t-s	NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[2, 1, 3]]]
+t-st-tt-s-the-longest-element-of-s-3	NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]], HeckeT[List[2, 1, 3]]]
+and-t-tt-st-t-gives-the-same-which-is-the-braid	NonCommutativeMultiply[HeckeT[List[1, 3, 2]], HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]]

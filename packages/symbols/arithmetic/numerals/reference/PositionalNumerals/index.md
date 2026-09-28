@@ -1,0 +1,16 @@
+---
+name: PositionalNumerals
+domain: Numeral systems
+signature: PositionalNumerals(b)
+summary: Ordinary base $b$ notation, non-negative integers only — the same digits [[IntegerDigits]] already gives for an integer base, wrapped as a numeral-system value so it can stand wherever the others do.
+signatures:
+  - call: PositionalNumerals(b)
+    description: the system, digits $0,\dots,b-1$
+    library: enumeratio-numerals
+    type: (integer) -> value
+seeAlso:
+  - IntegerDigits
+  - FromDigits
+  - NumeralSystemShape
+  - Radix
+---

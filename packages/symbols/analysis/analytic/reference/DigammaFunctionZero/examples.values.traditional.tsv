@@ -1,0 +1,11 @@
+id	in	out
+the-digamma-function-s-positive-real-zero		
+the-zero-in-1-0		
+the-zero-in-2-1		
+the-zero-in-3-2		
+the-zero-in-4-3		
+psi-vanishes-exactly-there-by-construction	\mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(2))))	0
+psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	\mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(0))))	0
+psi-x-n-0-at-n-1	\mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(1))))	0
+psi-x-n-0-at-n-3	\mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(3))))	0
+psi-x-n-0-at-n-4	\mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(4))))	0

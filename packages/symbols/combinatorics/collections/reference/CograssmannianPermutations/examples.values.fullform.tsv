@@ -1,0 +1,3 @@
+id	in
+count-cograssmannianpermutations-5-2-5-5-27	Count[CograssmannianPermutations[5]]
+every-element-of-cograssmannianpermutations-4	Take[CograssmannianPermutations[4], 12]

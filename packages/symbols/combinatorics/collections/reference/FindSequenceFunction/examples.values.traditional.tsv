@@ -1,0 +1,5 @@
+id	in	out
+geometric		
+polynomial		
+catalan-numbers	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)	C_{n}
+factorial		

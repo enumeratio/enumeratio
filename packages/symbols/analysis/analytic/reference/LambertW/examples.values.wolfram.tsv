@@ -1,0 +1,13 @@
+id	in
+lambertw-0	ProductLog[0]
+1-cdot-e-1-e	ProductLog[E]
+branch-2-at-5	N[ProductLog[2, 5]]
+branch-1-at-neg-1	N[ProductLog[1, -1]]
+branch-5-at-10	N[ProductLog[5, 10]]
+branch-3-at-a-complex-argument	N[ProductLog[3, Complex[1, 2]]]
+the-branch-point-1-e	ProductLog[Minus[Divide[1, E]]]
+2e-2-w-e-w-at-w-2	ProductLog[Times[2, Power[E, 2]]]
+ln-2-cdot-e-ln-2-frac-ln-2-2	ProductLog[Minus[Divide[Log[2], 2]]]
+a-branch-other-than-0-or-1-checked-against-n	N[ProductLog[-3, -0.14]]
+the-branch-k-1-written-in-compute-engine-s-z-k	N[ProductLog[1, 1]]
+the-real-branch-k-1-on-1-e-z-0	N[ProductLog[-1, -0.2]]

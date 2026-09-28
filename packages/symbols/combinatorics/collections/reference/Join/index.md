@@ -1,0 +1,24 @@
+---
+name: Join
+domain: Collections
+signature: Join(a, b, …)
+summary: The concatenation of the argument collections, in order.
+signatures:
+  - call: Join(a, b, …)
+    description: the concatenation of the collections, in order.
+  - call: Join(a, b, …, n)
+    description: corresponding sublists n-1 levels down joined pairwise, instead of the top level.
+    library: enumeratio-collections
+    type: "((T+) -> T where T: string) & ((collection<any>*) -> collection)"
+    overrides: compute-engine
+details:
+  - $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]].
+  - The argument collections don't need to be $List$, but must all share the same head.
+  - A trailing integer argument joins at that level instead of the top level.
+  - See [[Append]] for adding a single element rather than concatenating collections.
+seeAlso:
+  - Flatten
+  - Append
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,34 @@
+id	in	out	verdict
+ln-1	ln(n(1))	0.0	
+ln-exponentiale	ln(x(std::f64::consts::E))	1.0	
+ln-0	ln(n(0))	NegativeInfinity	
+a-machine-precision-argument-evaluates	ln(x(1.5))	0.4054651081081644	
+a-machine-precision-negative-argument	ln(x(-4.705))	NaN	disagree
+ln-1-i-pi-the-principal-value-past-the-branch	ln(n(-1))	NaN	disagree
+n-for-a-decimal-value	nf(ln(n(1000)))	6.907755278982137	
+arbitrary-precision-via-n	nf(ln(rational(n(5), n(2))))	0.9162907318741551	
+evaluates-at-a-complex-argument			
+a-negative-float-gives-the-principal-complex	ln(x(-2.5))	NaN	disagree
+threads-element-wise-over-a-list	ln(list(vec![n(1), x(2.1), x(3.1), x(4.1)]))	panic: threading: a list where the crate takes a scalar	error
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	ln(n(1000))	6.907755278982137	
+ln-exponentiale-pow-3	ln(power(x(std::f64::consts::E), n(3)))	3.0	
+ln-positiveinfinity			
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln			
+ln-i-i-pi-2-exactly			
+a-unit-fraction-becomes-a-negated-logarithm-ln	ln(rational(n(1), n(2)))	-0.6931471805599453	
+interval-arithmetic-ln-is-increasing-so-ln-frac			
+uncertainty-propagation-ln-2-pm-0-01-approx-0			
+ln-exp-x			
+derivative-1-x			
+antiderivative-x-ln-x-x			
+mercator-series-for-ln-1-x			
+to-40-significant-digits-every-one-correctly	nf(ln(n(2)))	0.6931471805599453	
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	ln(rational(n(-1), n(2)))	NaN	disagree
+n-decimalizes-ln-i-not-just-the-exact-form			
+an-integer-power-negative-argument	ln(n(-2))	NaN	disagree
+n-of-a-negative-integer-argument	nf(ln(n(-2)))	NaN	disagree
+ln-neg-6	ln(n(-6))	NaN	disagree
+n-of-a-negative-rational-argument	nf(ln(rational(n(-1), n(2))))	NaN	disagree
+inverse-of-exp-ln-e-x-x	equal(ln(exp(n(5))), n(5))	true	
+product-rule-ln-ab-ln-a-ln-b	equal((ln(n(2)) + ln(n(3))), ln(n(6)))	true	
+powerexpand-splits-a-logarithm-of-a-product			

@@ -1,0 +1,13 @@
+id	in	out
+intersection-list-1-2-3-list-2-3-4	\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack	\lbrace2, 3\rbrace
+intersection-list-1-2-3-4-list-2-3-4-5	\bigl\lbrack1, 2, 3, 4\bigr\rbrack\cap\bigl\lbrack2, 3, 4, 5\bigr\rbrack	\lbrace2, 3, 4\rbrace
+with-three-or-more-collections-only-elements	\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack\cap\bigl\lbrack2, 3, 5\bigr\rbrack	\lbrace2, 3\rbrace
+duplicates-are-dropped-as-well	\bigl\lbrack1, 1, 2, 3\bigr\rbrack\cap\bigl\lbrack3, 1, 4\bigr\rbrack\cap\bigl\lbrack4, 1, 3, 3\bigr\rbrack	\lbrace1, 3\rbrace
+symbolic-elements	\bigl\lbrack a, b, c\bigr\rbrack\cap\bigl\lbrack b, c, d\bigr\rbrack	\lbrace b, c\rbrace
+a-single-collection-comes-back-as-a-set	\mathrm{Intersection}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\lbrace1, 2, 3\rbrace
+the-divisors-common-to-45-and-78	\mathrm{Divisors}(45)\cap\mathrm{Divisors}(78)	\lbrace1, 3\rbrace
+intersection-is-idempotent-a-cap-a-a	\lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace	\top
+the-same-inclusion-exclusion-count-rearranged-a	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\top
+intersecting-with-the-empty-set-gives-the-empty	\bigl\lbrack1, 2, 3\bigr\rbrack\cap\emptyset	\emptyset
+disjoint-collections-intersect-to-the-special	\operatorname{List}(1, 2)\cap\operatorname{List}(3, 4)	\emptyset
+the-result-keeps-the-order-elements-were-met-in	\bigl\lbrack c, b, a\bigr\rbrack\cap\operatorname{List}(a, b)	\lbrace b, a\rbrace

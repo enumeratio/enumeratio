@@ -1,0 +1,9 @@
+---
+name: ForgetGround
+domain: Combinatorics
+signature: ForgetGround(...)
+summary: Forget the ground
+mapOn:
+  - Finset
+stub: carrier
+---

@@ -1,0 +1,13 @@
+---
+name: HypernumeraryWord
+domain: Combinatorics
+signature: HypernumeraryWord(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: HypernumeraryWord(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> hypernumerary_word
+---

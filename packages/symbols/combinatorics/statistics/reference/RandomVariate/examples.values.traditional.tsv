@@ -1,0 +1,6 @@
+id	in	out
+randomvariate-default-seed-is-reproducible		
+randomvariate-n-draws		
+randomvariate-discrete-draw		
+randomvariate-empirical-resamples-the-data		
+randomvariate-is-random-over-a-distribution	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)	\mathrm{True}

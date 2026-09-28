@@ -1,0 +1,9 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(JacobiZN(0.3, 0.5))	0.077_076_468_477_655_76
+zn-0-7-0-2	N(JacobiZN(-0.7, 0.2))	-0.051_550_286_367_310_294
+zn-2-5-0-3	N(JacobiZN(2.5, 0.3))	-0.080_518_503_671_937_58
+a-parameter-close-to-its-m-1-boundary	N(JacobiZN(1.1, 0.9))	0.354_712_200_199_871_26
+u-0-is-0-for-any-m	JacobiZN(0, m)	0
+m-0-is-0-for-any-u	JacobiZN(u, 0)	0
+m-outside-0-1-is-declined	N(JacobiZN(0.3, -0.5))	JacobiZN(0.3, -0.5)
+symbolic-arguments-are-left-unevaluated-rather	JacobiZN(u, m)	JacobiZN(u, m)

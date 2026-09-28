@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+a-quadratic-s-minimum-value	MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]	-1	\text{MinValue}\left[x^2-4 x+3,x\right]	-1
+a-simple-interval-constraint	MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]	1	\text{MinValue}\left[\left\{x^2,x\geq 1\right\},x\right]	1
+the-amplitude-of-cosine-alone-is-exact	MinValue[Cos[Subtract[Times[3, x], 1]], x]	-1	\text{MinValue}[\cos (3 x-1),x]	-1
+exp-s-infimum	MinValue[Exp[x], x]	0	\text{MinValue}[\exp (x),x]	0

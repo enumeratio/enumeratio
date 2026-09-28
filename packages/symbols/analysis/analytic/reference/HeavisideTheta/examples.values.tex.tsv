@@ -1,0 +1,7 @@
+id	in	out
+heavisidetheta-negative	\mathrm{HeavisideTheta}(-1)	0
+heavisidetheta-positive	\mathrm{HeavisideTheta}(1)	1
+heavisidetheta-zero-unevaluated	\mathrm{HeavisideTheta}(0)	\mathrm{HeavisideTheta}(0)
+heavisidetheta-product-both-positive	\mathrm{HeavisideTheta}(1, 2)	1
+heavisidetheta-product-one-negative	\mathrm{HeavisideTheta}(1, -1)	0
+heavisidetheta-derivative	\frac{\mathrm{d}\mathrm{HeavisideTheta}(x)}{\mathrm{d}x}	\mathrm{DiracDelta}(x)

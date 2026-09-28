@@ -1,0 +1,9 @@
+---
+name: MaxPreimage
+domain: Combinatorics
+signature: MaxPreimage(...)
+summary: Max preimage size
+statOn:
+  - Endofunction
+stub: carrier
+---

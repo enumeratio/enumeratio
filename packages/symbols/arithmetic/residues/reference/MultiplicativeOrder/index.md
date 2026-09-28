@@ -1,0 +1,34 @@
+---
+name: MultiplicativeOrder
+domain: Modular arithmetic
+signature: MultiplicativeOrder(a, n)
+summary: The smallest positive k such that a^k ≡ 1 (mod n).
+signatures:
+  - call: MultiplicativeOrder(a, n)
+    description: smallest positive $k$ with $a^k\equiv1\pmod n$.
+  - call: MultiplicativeOrder(a, n, {r1, r2, …})
+    description: smallest positive $k$ with $a^k \equiv r_i \pmod n$ for some $i$ — a discrete logarithm
+    library: enumeratio-residues
+    type: (integer | value, integer?, list<integer>?) -> integer
+    overrides: compute-engine
+details:
+  - Also called the modulo order; defined only when $\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.
+  - Always divides $\varphi(n)$, by Lagrange's theorem applied to the group of units mod $n$. See [[Totient]].
+  - Unevaluated when no order exists.
+  - Computed from Carmichael's $\lambda(n)$ by stripping primes off it, so $n$ and each $p - 1$ must be factored.
+  - 'The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.'
+seeAlso:
+  - PowerMod
+references:
+  - system: wikipedia
+    identity: Multiplicative order
+  - system: mathworld
+    identity: MultiplicativeOrder
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: sage
+    template: Mod($1, $2).multiplicative_order()
+    arity: 2
+---

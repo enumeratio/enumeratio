@@ -1,0 +1,5 @@
+id	in
+3-1-frac-12-frac-14-frac-12-7	HarmonicMean[List[1, 2, 4]]
+frac-12-5	HarmonicMean[List[2, 3]]
+driving-equal-distances-at-40-and-60-averages-48	HarmonicMean[List[40, 60]]
+equal-values-are-their-own-harmonic-mean	HarmonicMean[List[5, 5, 5]]

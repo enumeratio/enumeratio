@@ -1,0 +1,9 @@
+id	in
+a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1[2, 0.5]
+b-1-5-at-neg-0-7	Hypergeometric0F1[1.5, -0.7]
+rational-order-7-3-at-2-5	Hypergeometric0F1[Rational[7, 3], 2.5]
+complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]
+order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]
+complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
+b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]

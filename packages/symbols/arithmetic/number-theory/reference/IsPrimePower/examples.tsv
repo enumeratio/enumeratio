@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+8-2-3			[IsPrimePower, 8]	True	$8=2^3$
+12-2-2-cdot-3-has-two-distinct-primes			[IsPrimePower, 12]	False	$12=2^2\cdot3$ has two distinct primes
+a-prime-is-its-own-first-power			[IsPrimePower, 7]	True	A prime is its own first power
+listable	Scope		[IsPrimePower, [List, 2, 4, 6, 9, 10, 16]]	[List, True, True, False, True, False, True]	Listable
+large-integers	Scope		[IsPrimePower, [Power, 3, 40]]	True	Large integers
+1-is-p-0-which-does-not-count	Possible issues		[IsPrimePower, 1]	False	1 is $p^0$, which does not count

@@ -1,0 +1,6 @@
+id	in	out
+positions-2-through-4-2-4-in-wolfram	\bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(2, 4)]	\bigl\lbrack b, c, d\bigr\rbrack
+every-other-element-through-the-last-1-1-2	\bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(1, -1, 2)]	\bigl\lbrack a, c, f\bigr\rbrack
+a-negative-step-walks-backwards-1-1-1	\bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(-1, 1, -1)]	\bigl\lbrack f, d, c, b, a\bigr\rbrack
+negative-bounds-the-last-two-elements	\bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(-2, -1)]	\bigl\lbrack d, f\bigr\rbrack
+spans-at-two-levels-cut-out-a-submatrix	\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack[\mathrm{Span}(2, 3), \mathrm{Span}(1, 2)]	\bigl\lbrack\bigl\lbrack4, 5\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack

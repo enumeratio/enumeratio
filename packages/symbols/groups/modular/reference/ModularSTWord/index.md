@@ -1,0 +1,14 @@
+---
+name: ModularSTWord
+domain: The modular group
+signature: ModularSTWord(matrix)
+summary: The alternating $S/T$ factorisation of a matrix, $T^{e_0}ST^{e_1}S\cdots$, as its list of $T$-exponents — the continued fraction of the matrix, up to sign.
+signatures:
+  - call: ModularSTWord(matrix)
+    description: the list of $T$-exponents
+    library: enumeratio-modular
+    type: (expression<ModularMatrix> | list | string) -> list<integer>
+seeAlso:
+  - ModularFromSTWord
+  - ModularWord
+---

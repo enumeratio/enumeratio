@@ -1,0 +1,9 @@
+---
+name: TransientPoints
+domain: Combinatorics
+signature: TransientPoints(...)
+summary: Transient points
+statOn:
+  - Endofunction
+stub: carrier
+---

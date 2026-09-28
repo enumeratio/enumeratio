@@ -1,0 +1,39 @@
+id	in	out
+lcm-4-6	\operatorname{lcm}(4, 6)	12
+lcm-is-variadic-it-accepts-any-number-of	\operatorname{lcm}(4, 6, 10)	60
+lcm-2-3-5	\operatorname{lcm}(2, 3, 5)	30
+over-the-rationals-the-lcm-of-the-numerators	\operatorname{lcm}(\frac{1}{3}, \frac{2}{5}, \frac{3}{7})	6
+1-3i-i-3-i-associates-share-their-multiples	\operatorname{lcm}(3+i, -1+3i)	3+i
+negative-integers	\operatorname{lcm}(3, -5, 7)	105
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the	\operatorname{lcm}(-4+5i, 2+3i)	23+2i
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	\operatorname{lcm}(\frac{1}{2}+\frac{3}{5}i, \frac{1}{3}+i)	21+13i
+big-integers-the-exact-118-digit-lcm-past-where	\operatorname{lcm}(20!, 10^{100}+3)	3\,475\,574\,297\,395\,200\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,001\,042\,672\,289\,218\,560\,000
+listable-a-single-list-argument-threads-element	\operatorname{lcm}(12, \bigl\lbrack3, 7, 40\bigr\rbrack)	\bigl\lbrack12, 84, 120\bigr\rbrack
+a-large-integer-against-a-negative-rational	\operatorname{lcm}(20!, \frac{1}{10}-2)	2\,432\,902\,008\,176\,640\,000
+lcm-with-a-unit-is-the-other-argument-normalised	\operatorname{lcm}(3+4i, 1)	3+4i
+lcm-with-i-a-unit-is-the-other-argument	\operatorname{lcm}(3+4i, i)	3+4i
+lcm-with-0-is-0	\operatorname{lcm}(0, -4+3i)	0
+two-gaussian-primes-above-5-multiply-straight	\operatorname{lcm}(2+i, 2-i)	5
+a-gaussian-prime-and-a-real-prime-3-mod-4	\operatorname{lcm}(2+i, 3)	6+3i
+an-associate-pair-has-lcm-equal-to-their-common	\operatorname{lcm}(3+4i, -4+3i)	3+4i
+another-associate-pair-by-1	\operatorname{lcm}(3+4i, -3-4i)	3+4i
+two-unrelated-composites-of-norm-25	\operatorname{lcm}(3+4i, 4+3i)	25
+lcm-with-a-negative-real-prime	\operatorname{lcm}(3+4i, -7)	21+28i
+lcm-of-two-large-norm-gaussians	\operatorname{lcm}(123+456i, 1\,000+i)	122\,544+456\,123i
+lcm-past-2-53-in-both-parts	\operatorname{lcm}(100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i, 4+i)	399\,990\,992\,800\,745\,259\,011+100\,036\,028\,797\,018\,963\,973i
+a-real-split-prime-and-its-gaussian-factor	\operatorname{lcm}(5, 2+i)	5
+lcm-of-two-real-composites-plain-integer-case	\operatorname{lcm}(4, 9)	36
+lcm-with-a-negative-real-composite	\operatorname{lcm}(-15, 5+5i)	15+15i
+lcm-with-an-associate-times-1	\operatorname{lcm}(8+2i, -3-4i)	16+38i
+lcm-with-an-associate-times-i	\operatorname{lcm}(8+2i, 4-3i)	16+38i
+two-primes-above-13-multiply-straight-through	\operatorname{lcm}(3+2i, 2+3i)	13
+lcm-with-a-real-prime-s-associate-by-the-unit-i	\operatorname{lcm}(3+4i, 7i)	21+28i
+lcm-with-a-real-composite-5-squared	\operatorname{lcm}(3+4i, 25)	25
+lcm-with-a-negative-associate	\operatorname{lcm}(6+8i, -2-3i)	34+12i
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19	\operatorname{lcm}(123+456i, 19)	2\,337+8\,664i
+lcm-of-two-composites-sharing-the-prime-above-13	\operatorname{lcm}(6+8i, 9+6i)	6+108i
+the-smallest-number-divisible-by-each-of-1	\operatorname{lcm}(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)	2\,520
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	\gcd(27, 81)\operatorname{lcm}(27, 81)=27\times81	\top
+a-single-argument-is-returned-unchanged	\operatorname{lcm}(5)	5
+0-absorbs-the-lcm-with-0-is-0	\operatorname{lcm}(0, 5)	0
+signs-are-discarded-before-computing-the-lcm	\operatorname{lcm}(-3, 7)	21

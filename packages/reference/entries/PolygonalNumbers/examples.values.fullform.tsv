@@ -1,0 +1,8 @@
+id	in
+the-first-25-terms-at-k-3	Take[PolygonalNumbers[3], 25]
+the-first-25-terms-at-k-4	Take[PolygonalNumbers[4], 25]
+the-first-25-terms-at-k-5	Take[PolygonalNumbers[5], 25]
+the-first-25-terms-at-k-6	Take[PolygonalNumbers[6], 25]
+the-first-25-terms-at-k-7	Take[PolygonalNumbers[7], 25]
+the-first-25-terms-at-k-8	Take[PolygonalNumbers[8], 25]
+the-first-25-terms-at-k-12	Take[PolygonalNumbers[12], 25]

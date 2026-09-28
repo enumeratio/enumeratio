@@ -1,0 +1,23 @@
+id	in	out
+catalannumber-0	C_{0}	1
+catalannumber-1	C_{1}	1
+catalannumber-5	C_{5}	42
+catalannumber-10	C_{10}	16\,796
+catalannumber-30	C_{30}	3\,814\,986\,502\,092\,304
+catalannumber-neg-1-is-neg-1	C_{-1}	-1
+catalannumber-0-past-neg-1	C_{-2}	0
+catalannumber-neg-5-is-also-0	C_{-5}	0
+threads-element-wise-over-a-list-as-wolfram-s		
+half-integer-arguments-evaluate-exactly-through	C_{\frac{5}{2}}	\frac{1\,024}{105\pi}
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma	C_{2.3}	2.590\,352\,154\,019\,323\,3
+complex-arguments-evaluate-through-the-same	C_{1.2+i}	0.730\,728\,624\,207\,283\,9+0.569\,846\,406\,969\,342\,5i
+c-1-2-frac-8-3-pi-by-analytic-continuation	C_{\frac{1}{2}}	\frac{8}{3\pi}
+an-interval-argument-should-give-an-enclosing	C_{\mathrm{Interval}(0.5, 0.6)}	\mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)
+the-5-ways-to-balance-3-pairs-of-parentheses	C_{3}	5
+the-14-triangulations-of-a-hexagon-and-the-14	C_{4}	14
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n		
+the-closed-form-through-a-negative-n-in-binomial		
+equivalently-c-n-binom-2n-n-binom-2n-n-1		
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	\frac{C_{6}}{C_{5}}	\frac{22}{7}
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	C_{4}=\sum_{i=0}^3C_{i}C_{3-i}	\mathrm{True}
+they-grow-fast-c-15-already-passes-nine-million	C_{15}	9\,694\,845

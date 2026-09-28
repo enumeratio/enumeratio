@@ -1,0 +1,34 @@
+---
+name: KAlmostPrimes
+domain: Collections
+signature: KAlmostPrimes(k)
+summary: The $k$-almost primes -- integers with exactly $k$ prime factors, counted with multiplicity ($\Omega(n)=k$) -- as a lazy indexed family, one collection per $k$.
+signatures:
+  - call: KAlmostPrimes(k)
+    description: the $n$ with $\Omega(n) = k$, an infinite indexed collection for every $k \geq 1$.
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<integer>
+details:
+  - 'A lazy indexed collection for each $k$: $Count(KAlmostPrimes(k)) = +\infty$ -- $2^{k-1}p$ has $\Omega = k$ for every prime $p$. $KAlmostPrimes(1)$ is [[Primes]] verbatim; $KAlmostPrimes(2)$ is [[SemiprimeNumbers]] verbatim.'
+  - $At(KAlmostPrimes(k), i)$ unranks the $i$-th match by scanning forward, factoring each candidate -- $At(KAlmostPrimes(3), 1) = 8$ ($2^3$).
+  - 'Membership goes through [[Element]]: $Element(30, KAlmostPrimes(3))$ is true ($2\times3\times5$), $Element(30, KAlmostPrimes(2))$ is false.'
+enumerate:
+  expr: Take(KAlmostPrimes(3), 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - Primes
+  - SemiprimeNumbers
+  - RoughNumbers
+catalog:
+  - system: oeis
+    identity: A078840
+    url: https://oeis.org/A078840
+    note: their k is 1-indexed within Ω=n row; our unrank is 0-indexed
+grades:
+  - name: k
+    role: axis
+carrier: Numeric
+unbounded: true
+---

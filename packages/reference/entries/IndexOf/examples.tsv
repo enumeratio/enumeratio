@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption	wolfram.note
+indexof-list-1-2-3-2			[IndexOf, [List, 1, 2, 3], 2]	2		
+0-signals-that-the-value-isn-t-present-since-0			[IndexOf, [List, 1, 2, 3], 9]	0	0 signals that the value isn't present, since 0 is never a valid position	
+only-the-first-of-several-occurrences-is			[IndexOf, [List, a, b, a, a, b, c, b], b]	2	Only the first of several occurrences is reported	
+the-value-can-itself-be-a-list	Scope		[IndexOf, [List, [List, 1, 2], [List, 3, 4]], [List, 3, 4]]	2	The value can itself be a list	
+at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	Properties		[Equal, [At, [List, 10, 20, 30], [IndexOf, [List, 10, 20, 30], 20]], 20]	True	$At(c, IndexOf(c, v)) = v$ whenever v occurs in c. See [[At]]	
+indexof-reports-only-the-first-occurrence-see	Possible issues		[IndexOf, [List, 1, 2, 3, 2], 2]	2	IndexOf reports only the first occurrence; see [[Position]] for every one	Wolfram's Position gives every occurrence, [[2], [4]]; IndexOf keeps only the first.
+indexof-stays-at-the-top-level-where-this-value	Possible issues		[IndexOf, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b]	0	IndexOf stays at the top level, where this value doesn't occur at all	

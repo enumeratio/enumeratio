@@ -1,0 +1,9 @@
+---
+name: TrailingZeros
+domain: Combinatorics
+signature: TrailingZeros(...)
+summary: Trailing zeros
+statOn:
+  - BinaryWord
+stub: carrier
+---

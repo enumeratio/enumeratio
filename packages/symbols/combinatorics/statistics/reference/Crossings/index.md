@@ -1,0 +1,27 @@
+---
+name: Crossings
+domain: Set partition statistics
+signature: Crossings(partition)
+summary: Pairs of arcs a < b < c < d with a~c and b~d.
+details:
+  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
+  - "Read off the standard arc representation: within each block, consecutive elements are linked, and a crossing is two arcs whose spans interleave rather than nest or sit apart."
+catalog:
+  - system: findstat
+    identity: St000042
+    url: https://www.findstat.org/St000042
+    on: PerfectMatching
+  - system: findstat
+    identity: St000232
+    url: https://www.findstat.org/St000232
+    on: SetPartition
+statOn:
+  - PerfectMatching
+  - SetPartition
+signatures:
+  - call: Crossings(partition)
+    description: Pairs of arcs a < b < c < d with a~c and b~d.
+    library: enumeratio-statistics
+    type: (list<list<integer>>) -> number
+---

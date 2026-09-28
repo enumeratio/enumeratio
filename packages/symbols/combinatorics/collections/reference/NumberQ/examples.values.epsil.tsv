@@ -1,0 +1,4 @@
+id	in	out
+an-integer-literal	NumberQ(2)	True
+a-symbolic-constant-is-not-numberq	NumberQ(Pi)	False
+a-plain-symbol-is-not-numberq	NumberQ(x)	False

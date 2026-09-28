@@ -1,0 +1,5 @@
+id	in	out
+from-a-list-of-terms	Convergents([3, 7, 15, 1])	[3, 22 / 7, 333 / 106, 355 / 113]
+the-first-five-convergents-of-pi	Convergents(Pi, 5)	[3, 22 / 7, 333 / 106, 355 / 113, 103_993 / 33_102]
+a-rational-the-last-convergent-is-the-number	Convergents(47 / 17)	[2, 3, 11 / 4, 47 / 17]
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents(Sqrt(2), 5)	[1, 3 / 2, 7 / 5, 17 / 12, 41 / 29]

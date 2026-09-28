@@ -1,4 +1,0 @@
-- id: "4"
-  expr: [Count, [Derangements, 4]]
-  expected: 9
-  caption: $!4$

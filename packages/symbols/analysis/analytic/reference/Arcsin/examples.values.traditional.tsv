@@ -1,0 +1,29 @@
+id	in	out
+arcsin-0		
+arcsin-1-over-2		
+the-top-of-the-principal-range		
+arcsin-neg-1		
+a-machine-precision-argument-evaluates		
+outside-1-1-a-float-argument-gives-the-complex		
+outside-1-1-reduces-to-the-exact-closed-form		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+threads-element-wise-over-a-matrix		
+exact-inverse-of-a-special-value		
+arcsin-sqrt-3-over-2		
+recognizes-the-radical-value-sin-pi-12		
+recognizes-sin-pi-10-frac-sqrt-5-1-4		
+interval-arithmetic-arcsin-frac-13-frac-12		
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx		
+oddness-pulls-the-sign-out-of-a-symbolic		
+derivative-frac-1-sqrt-1-x-2		
+antiderivative		
+taylor-series-about-0		
+arcsin-sin-1-2-is-already-principal		
+to-30-significant-digits-not-yet-the-last-digit		
+arcsin-2-past-1-1-the-odd-function-mirror-of		
+sin-arcsin-x-x-on-the-principal-branch	\sin(\arcsin(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
+co-function-identity-arcsin-x-arccos-x-pi-2	\arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}	\mathrm{True}
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2		
+not-simply-2-2-is-outside-the-principal-range-pi		
+arcsin-sin-neg-2-mirrors-through-0		

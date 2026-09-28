@@ -1,0 +1,2 @@
+id	in	out
+survivalfunction-chisquare	\mathrm{SurvivalFunction}(\mathrm{ChiSquareDistribution}(3), 2)	Q(\frac{3}{2}, 1)

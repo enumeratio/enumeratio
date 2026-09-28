@@ -1,0 +1,9 @@
+---
+name: NumberOfSingletons
+domain: Combinatorics
+signature: NumberOfSingletons(...)
+summary: Number of singleton blocks
+statOn:
+  - SetComposition
+stub: carrier
+---

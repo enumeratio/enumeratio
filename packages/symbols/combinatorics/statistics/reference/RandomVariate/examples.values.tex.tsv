@@ -1,0 +1,6 @@
+id	in	out
+randomvariate-default-seed-is-reproducible	\mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))	-0.956\,162\,229\,384\,149
+randomvariate-n-draws	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomVariate}(\operatorname{UniformDistribution}(\bigl\lbrack0, 1\bigr\rbrack), 3)\bigr\rbrack)	\bigl\lbrack0.627\,073\,940\,588\,161\,3, 0.002\,735\,721\,180\,215\,478, 0.527\,447\,039\,959\,952\,2\bigr\rbrack
+randomvariate-discrete-draw	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomVariate}(\operatorname{PoissonDistribution}(4))\bigr\rbrack)	1
+randomvariate-empirical-resamples-the-data	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(2), \mathrm{RandomVariate}(\mathrm{EmpiricalDistribution}(\bigl\lbrack a, b, c\bigr\rbrack))\bigr\rbrack)	c
+randomvariate-is-random-over-a-distribution	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)	\top

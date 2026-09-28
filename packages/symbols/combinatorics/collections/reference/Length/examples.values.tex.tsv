@@ -1,0 +1,15 @@
+id	in	out
+length-list-1-2-3-4	\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	4
+length-list-1-2-3-4-5	\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)	5
+works-on-any-collection-not-just-list	\mathrm{Length}(\lbrace1, 2, 3\rbrace)	3
+length-list-a-b-c-d	\mathrm{Length}(\bigl\lbrack a, b, c, d\bigr\rbrack)	4
+length-of-association-counts-values	\mathrm{Length}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))	3
+an-atom-has-no-parts-so-its-length-is-0	\mathrm{Length}(5)	0
+the-empty-list-has-length-0	\mathrm{Length}(\bigl\lbrack\bigr\rbrack)	0
+of-a-matrix-the-number-of-rows	\mathrm{Length}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack)	3
+a-set-holds-each-element-once-so-a-repeated	\mathrm{Length}(\lbrace1, 1, 2\rbrace)	2
+any-expression-the-number-of-terms-in-a-sum	\mathrm{Length}(a+b+c+d)	4
+the-number-of-arguments-of-a-call-counting-only	\mathrm{Length}(f(g(x, y), z))	2
+a-symbol-such-as-pi-is-an-atom-of-length-0	\mathrm{Length}(\pi)	0
+a-lazy-range-is-counted-without-being	\mathrm{Length}(1..20)	20
+length-join-a-b-length-a-length-b-see-join	\mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)	\top

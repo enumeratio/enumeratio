@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+count-largestpartpartitions-10-4	Basic		[Count, [LargestPartPartitions, 10, 4]]	9	$Count(LargestPartPartitions(10, 4)) = 9$
+first-element-of-largestpartpartitions-10-4	Basic		[At, [LargestPartPartitions, 10, 4], 1]	[List, 4, 4, 2]	The first element in enumeration order
+every-element-of-largestpartpartitions-10-4		test	[Take, [LargestPartPartitions, 10, 4], 9]	[List, [List, 4, 4, 2], [List, 4, 4, 1, 1], [List, 4, 3, 3], [List, 4, 3, 2, 1], [List, 4, 3, 1, 1, 1], [List, 4, 2, 2, 2], [List, 4, 2, 2, 1, 1], [List, 4, 2, 1, 1, 1, 1], [List, 4, 1, 1, 1, 1, 1, 1]]	
+every-element-of-largestpartpartitions-10-1		test	[Take, [LargestPartPartitions, 10, 1], 1]	[List, [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]	

@@ -1,0 +1,16 @@
+id	in	out
+2000-5-3-cdot-16	\mathrm{IntegerExponent}(2\,000, 5)	3
+base-10-by-default	\mathrm{IntegerExponent}(2\,000)	3
+trailing-zeros-in-base-10	\mathrm{IntegerExponent}(1\,230\,000)	4
+integerexponent-2-pow-10-times-3-pow-4-2	\mathrm{IntegerExponent}(2^{10}\times3^4, 2)	10
+integerexponent-1000-base-10	\mathrm{IntegerExponent}(1\,000)	3
+integerexponent-1024-base-4	\mathrm{IntegerExponent}(1\,024, 4)	5
+composite-base-1728-2-6-3-3-so-6-3-divides-it	\mathrm{IntegerExponent}(1\,728, 6)	3
+negative-integers	\mathrm{IntegerExponent}(-1\,000)	3
+threads-over-a-list	\mathrm{IntegerExponent}(\bigl\lbrack10, 100, 1\,000\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
+gaussian-integers-8i-i-cdot-i-3-1-i-6	\mathrm{IntegerExponent}(8i, 1+i)	6
+negative-integers-base-2	\mathrm{IntegerExponent}(-24, 2)	3
+the-trailing-zeros-of-100	\mathrm{IntegerExponent}(100!)	24
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	\mathrm{IntegerExponent}(100!, 7)	16
+integerexponent-0-5	\mathrm{IntegerExponent}(0, 5)	\infty
+base-1-has-no-well-defined-p-adic-valuation-so	\mathrm{IntegerExponent}(10, 1)	\mathrm{IntegerExponent}(10, 1)

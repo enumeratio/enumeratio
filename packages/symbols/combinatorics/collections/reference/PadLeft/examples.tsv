@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+padded-with-zeros-on-the-left			[PadLeft, [List, 1, 2, 3], 5]	[List, 0, 0, 1, 2, 3]	Padded with zeros on the left
+a-padding-element			[PadLeft, [List, 1, 2, 3], 5, x]	[List, x, x, 1, 2, 3]	A padding element
+a-shorter-length-drops-elements-from-the-left	Scope		[PadLeft, [List, 1, 2, 3, 4, 5], 3]	[List, 3, 4, 5]	A shorter length drops elements from the left
+with-no-length-a-ragged-array-is-padded-to-a	Scope		[PadLeft, [List, [List, 1], [List, 2, 3]]]	[List, [List, 0, 1], [List, 2, 3]]	With no length, a ragged array is padded to a full matrix

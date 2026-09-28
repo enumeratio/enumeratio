@@ -1,0 +1,9 @@
+id	in	out
+1-2-1-6-1-18-85	\mathrm{QPochhammer}(2, 3, 3)	-85
+exact-rational-arithmetic-no-n-needed	\mathrm{QPochhammer}(\frac{1}{2}, \frac{1}{2}, 3)	\frac{21}{64}
+qpochhammer-2-3-3	N(\mathrm{QPochhammer}(2, 3, 3))	-85
+qpochhammer-1-2-1-2-3	N(\mathrm{QPochhammer}(\frac{1}{2}, \frac{1}{2}, 3))	0.328\,125
+qpochhammer-3-2-4	N(\mathrm{QPochhammer}(3, 2, 4))	2\,530
+qpochhammer-1-3-2	N(\mathrm{QPochhammer}(-1, 3, 2))	8
+the-infinite-product-euler-s-function-at-q-frac	\mathrm{QPochhammer}(0.5, 0.5, \infty)	0.288\,788\,095\,086\,602\,4
+the-empty-product	\mathrm{QPochhammer}(a, q, 0)	1

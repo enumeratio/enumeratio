@@ -1,0 +1,7 @@
+id	in
+the-base-10-digits-reversed	IntegerReverse[1234]
+1234-10011010010-2-reversed-is-1001011001-2-601	IntegerReverse[1234, 2]
+padded-to-5-digits-first-00123-reversed	IntegerReverse[123, 10, 5]
+listable	IntegerReverse[List[12, 345]]
+a-palindrome-is-its-own-reversal	IntegerReverse[12321]
+trailing-zeros-become-leading-zeros-and-vanish	IntegerReverse[1200]

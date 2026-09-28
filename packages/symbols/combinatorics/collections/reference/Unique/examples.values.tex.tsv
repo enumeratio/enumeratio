@@ -1,0 +1,10 @@
+id	in	out
+unique-list-1-2-2-3-1	\mathrm{Unique}(\bigl\lbrack1, 2, 2, 3, 1\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
+unique-list-a-b-a-c-b	\mathrm{Unique}(\bigl\lbrack a, b, a, c, b\bigr\rbrack)	\bigl\lbrack a, b, c\bigr\rbrack
+keeps-first-occurrence-order-without-sorting	\mathrm{Unique}(\bigl\lbrack1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1\bigr\rbrack)	\bigl\lbrack1, 7, 8, 4, 3, 9, 2\bigr\rbrack
+elements-can-themselves-be-lists	\mathrm{Unique}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
+unique-list	\mathrm{Unique}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
+a-second-argument-says-when-two-elements-count	\mathrm{Unique}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, ()\mapsto\vert\operatorname{\_1}-\operatorname{\_2}\vert\lt2)	\bigl\lbrack1, 3, 5\bigr\rbrack
+count-the-distinct-elements	\mathrm{Length}(\mathrm{Unique}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack))	3
+the-residues-mod-3-that-occur-in-order-of-first	\mathrm{Unique}((1..10)\bmod3)	\bigl\lbrack1, 2, 0\bigr\rbrack
+idempotent	\mathrm{Unique}(\mathrm{Unique}(\bigl\lbrack1, 1, 2\bigr\rbrack))	\bigl\lbrack1, 2\bigr\rbrack

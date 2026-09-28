@@ -1,0 +1,23 @@
+---
+name: Throw
+domain: Collections
+signature: Throw(value)
+summary: Aborts evaluation up to the nearest enclosing Catch, carrying a value.
+signatures:
+  - call: Throw(value)
+    description: Unwinds evaluation up to the nearest enclosing [[Catch]], which returns $value$.
+    library: enumeratio-collections
+    type: (any, any?) -> any
+  - call: Throw(value, tag)
+    description: Like $Throw(value)$, but only a $Catch(expr, tag)$ matching $tag$ exactly stops it — an untagged or non-matching $Catch$ lets it propagate further out.
+    library: enumeratio-collections
+details:
+  - Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
+  - A $Throw$ that reaches no matching $Catch$ propagates out of the whole evaluation.
+seeAlso:
+  - Catch
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---

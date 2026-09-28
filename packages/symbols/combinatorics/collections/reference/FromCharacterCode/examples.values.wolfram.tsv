@@ -1,0 +1,4 @@
+id	in
+from-character-code-of-a-single-code-point	FromCharacterCode[65]
+inverts-tocharactercode	FromCharacterCode[ToCharacterCode["hello"]]
+round-trips-a-non-ascii-string-emoji-astral	FromCharacterCode[ToCharacterCode["a😀b→c"]]

@@ -1,0 +1,28 @@
+---
+name: PellNumbers
+domain: Collections
+signature: PellNumbers
+summary: The Pell numbers $0, 1, 2, 5, 12, 29, …$ as a lazy indexed collection.
+signatures:
+  - call: PellNumbers
+    description: $P_n = 2P_{n-1} + P_{n-2}$, $P_0 = 0$, $P_1 = 1$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(PellNumbers) = +\infty$, and $At(PellNumbers, 1) = P_0 = 0$.'
+  - "OEIS A000129, starting exactly at its offset-0 term: $0, 1, 2, 5, 12, 29, 70, …$; strictly increasing from the start."
+  - "Membership goes through [[Element]]: $Element(12, PellNumbers)$ is true, $Element(7, PellNumbers)$ is false."
+enumerate:
+  expr: Take(PellNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - JacobsthalNumbers
+  - CentralDelannoyNumbers
+catalog:
+  - system: oeis
+    identity: A000129
+    url: https://oeis.org/A000129
+grades: []
+carrier: Numeric
+unbounded: true
+---

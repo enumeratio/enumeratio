@@ -1,0 +1,3 @@
+id	in
+listable	PerfectNumberQ[List[6, 28, 12]]
+negative-numbers-are-not-perfect	PerfectNumberQ[-6]

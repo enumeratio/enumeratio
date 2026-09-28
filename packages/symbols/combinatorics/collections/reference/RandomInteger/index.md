@@ -1,0 +1,31 @@
+---
+name: RandomInteger
+domain: Collections
+signature: RandomInteger(range, n)
+summary: A uniform random integer, or a list (or array) of them -- [[Random]] over a [[Range]], by its Wolfram name.
+signatures:
+  - call: RandomInteger()
+    description: $0$ or $1$, each with probability $1/2$.
+    library: enumeratio-collections
+    type: ((integer | list<integer>)?, (integer<0..> | list<integer<0..>>)?) random -> integer | list
+  - call: RandomInteger(max)
+    description: uniform in $\{0, \ldots, max\}$.
+    library: enumeratio-collections
+  - call: RandomInteger({min, max})
+    description: uniform in $\{min, \ldots, max\}$.
+    library: enumeratio-collections
+  - call: RandomInteger(range, n)
+    description: a list of $n$ draws from `range` (either form above).
+    library: enumeratio-collections
+  - call: RandomInteger(range, {n1, …, nk})
+    description: an $n_1 \times \cdots \times n_k$ array of draws.
+    library: enumeratio-collections
+details:
+  - "Seeded, not free-running: call [[SeedRandom]](seed) first for a reproducible sequence. Without it, a fixed default seed is used, so even a bare `RandomInteger` call is reproducible run to run — two fresh evaluations draw the same value."
+  - The generator is our own (a small deterministic PRNG), not Wolfram's — the same seed draws a different sequence from Wolfram's. Only the shape and range of the answer are guaranteed to match.
+  - A worked example that both seeds and draws needs the two calls in one expression; `Last(List(SeedRandom(n), RandomInteger(…)))` runs `SeedRandom` for its effect and keeps the draw.
+seeAlso:
+  - SeedRandom
+names:
+  wolframIdentity: true
+---

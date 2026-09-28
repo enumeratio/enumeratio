@@ -1,0 +1,20 @@
+---
+name: Piecewise
+domain: Analytic
+signature: Piecewise(pairs, default)
+summary: "A conditional value: `List` of `{value, condition}` pairs, tried in order, plus a $default$ (0 when omitted) for when none holds. Provided by `@enumeratio/analytic`."
+signatures:
+  - call: Piecewise(pairs)
+    description: pairs is a `List` of two-element `List`s `{value, condition}`; the default is 0.
+    library: "@enumeratio/analytic"
+    type: (list, expression?) -> expression
+  - call: Piecewise(pairs, default)
+    description: same, with an explicit fallback value.
+    library: "@enumeratio/analytic"
+details:
+  - Conditions are tried in list order via `ce.verify` (a three-valued check against the current assumptions). The first one known `True` wins, PROVIDED every condition before it is known `False` — a `Piecewise` with an undecided earlier condition stays symbolic rather than guessing which branch is really first.
+  - A condition known `False` is dropped; if every condition is eliminated this way, the result is $default$.
+  - "[[PiecewiseExpand]] produces this head from [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max]]/[[Min]]."
+names:
+  wolframIdentity: true
+---

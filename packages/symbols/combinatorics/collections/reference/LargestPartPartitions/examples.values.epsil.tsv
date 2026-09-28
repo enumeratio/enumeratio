@@ -1,0 +1,5 @@
+id	in	out
+count-largestpartpartitions-10-4	Count(LargestPartPartitions(10, 4))	9
+first-element-of-largestpartpartitions-10-4	LargestPartPartitions(10, 4)[1]	[4, 4, 2]
+every-element-of-largestpartpartitions-10-4	Take(LargestPartPartitions(10, 4), 9)	"[\n  [4, 4, 2],\n  [4, 4, 1, 1],\n  [4, 3, 3],\n  [4, 3, 2, 1],\n  [4, 3, 1, 1, 1],\n  [4, 2, 2, 2],\n  [4, 2, 2, 1, 1],\n  [4, 2, 1, 1, 1, 1],\n  [4, 1, 1, 1, 1, 1, 1],\n]"
+every-element-of-largestpartpartitions-10-1	Take(LargestPartPartitions(10, 1), 1)	[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]

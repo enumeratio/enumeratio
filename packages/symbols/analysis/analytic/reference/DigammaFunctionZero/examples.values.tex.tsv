@@ -1,0 +1,11 @@
+id	in	out
+the-digamma-function-s-positive-real-zero	N(\mathrm{DigammaFunctionZero}(0))	1.461\,632\,144\,968\,362\,2
+the-zero-in-1-0	N(\mathrm{DigammaFunctionZero}(1))	-0.504\,083\,008\,264\,455\,4
+the-zero-in-2-1	N(\mathrm{DigammaFunctionZero}(2))	-1.573\,498\,473\,162\,390\,4
+the-zero-in-3-2	N(\mathrm{DigammaFunctionZero}(3))	-2.610\,720\,868\,444\,144\,7
+the-zero-in-4-3	N(\mathrm{DigammaFunctionZero}(4))	-3.635\,293\,366\,436\,901
+psi-vanishes-exactly-there-by-construction	\mathrm{chop}(N(\mathrm{Digamma}(\mathrm{DigammaFunctionZero}(2))))	0
+psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	\mathrm{chop}(N(\mathrm{Digamma}(\mathrm{DigammaFunctionZero}(0))))	0
+psi-x-n-0-at-n-1	\mathrm{chop}(N(\mathrm{Digamma}(\mathrm{DigammaFunctionZero}(1))))	0
+psi-x-n-0-at-n-3	\mathrm{chop}(N(\mathrm{Digamma}(\mathrm{DigammaFunctionZero}(3))))	0
+psi-x-n-0-at-n-4	\mathrm{chop}(N(\mathrm{Digamma}(\mathrm{DigammaFunctionZero}(4))))	0

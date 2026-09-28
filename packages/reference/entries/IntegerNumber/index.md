@@ -1,0 +1,8 @@
+---
+name: IntegerNumber
+domain: Combinatorics
+signature: IntegerNumber(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+---

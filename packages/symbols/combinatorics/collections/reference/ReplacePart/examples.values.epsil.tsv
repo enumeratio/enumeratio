@@ -1,0 +1,5 @@
+id	in	out
+replaces-a-single-1-based-position	ReplacePart([a, b, c], Rule(2, z))	[a, z, c]
+with-a-negative-position-counts-from-the-end	ReplacePart([a, b, c], Rule(-1, z))	[a, b, z]
+applies-a-list-of-rules	ReplacePart([a, b, c], [Rule(1, x), Rule(3, y)])	[x, b, y]
+with-a-nested-i-j-position-drills-into-a-sublist	ReplacePart([[a, b], c], Rule([1, 2], z))	[[a, z], c]

@@ -1,0 +1,14 @@
+---
+name: Labeled
+domain: Graphics
+signature: Labeled(...)
+summary: Wolfram's own Labeled, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: Labeled(...)
+    description: Wolfram's own Labeled, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
+    library: enumeratio-formats
+    type: (any*) -> any
+---

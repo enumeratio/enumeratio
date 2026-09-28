@@ -1,0 +1,6 @@
+id	in	out
+moment-order-0	\mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 0)	1
+moment-order-1-is-mean	\mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 1)	3
+moment-order-2	\mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)	21
+moment-bernoulli-order-5	\mathrm{Moment}(\mathrm{BernoulliDistribution}(\frac{2}{5}), 5)	\frac{2}{5}
+moment-order-3-unevaluated	\mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 3)	\mathrm{Moment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 3)

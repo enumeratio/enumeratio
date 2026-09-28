@@ -1,0 +1,9 @@
+---
+name: GeneratingPair
+domain: Combinatorics
+signature: GeneratingPair(...)
+summary: Euclid generating pair (m,n)
+mapOn:
+  - PythagoreanTriple
+stub: carrier
+---

@@ -1,0 +1,25 @@
+id	in	out
+rationalize-0p1		
+an-exact-integer-is-returned-unchanged		
+rationalize-2p5		
+recognizes-a-float-that-is-to-machine-precision		
+rationalize-6p75		
+a-second-argument-sets-the-tolerance		
+a-zero-tolerance-still-returns-an-exact-integer		
+a-tolerance-still-routes-to-search-not-the-exact		
+an-already-exact-value-unchanged-with-tolerance		
+any-exact-numeric-expression-to-any-tolerance		
+rationalize-sqrt-2-0p001		
+rationalize-neg-0p125		
+the-rational-with-the-smallest-denominator		
+a-tolerance-finer-than-a-double		
+rationalizes-every-approximate-number-inside-an		
+threads-element-wise-over-a-list-compute-engine		
+a-zero-tolerance-gives-the-exact-rational-the		
+recovers-a-simple-fraction-from-a-decimal		
+recognizes-a-ratio-of-consecutive-fibonacci		
+with-an-explicit-tolerance-recovers-a-classic	\mathrm{Rationalize}(\pi, 0.01)=\frac{22}{7}	\mathrm{True}
+without-enough-repeating-digits-to-reach-machine		
+a-loose-tolerance-can-snap-to-something-far		
+without-a-tolerance-a-float-with-no-simple		
+milu-zu-chongzhi-s-5th-century-approximation-of		

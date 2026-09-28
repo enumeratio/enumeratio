@@ -1,0 +1,3 @@
+id	in
+count-noncrossingpermutations-5-105	Count[NonCrossingPermutations[5]]
+every-element-of-noncrossingpermutations-4	Take[NonCrossingPermutations[4], 23]

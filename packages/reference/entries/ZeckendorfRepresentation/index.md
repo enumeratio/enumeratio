@@ -1,0 +1,9 @@
+---
+name: ZeckendorfRepresentation
+domain: Combinatorics
+signature: ZeckendorfRepresentation(...)
+summary: Zeckendorf representation
+mapOn:
+  - Numeric
+stub: carrier
+---

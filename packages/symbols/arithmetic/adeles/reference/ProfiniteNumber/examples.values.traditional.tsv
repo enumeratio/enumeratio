@@ -1,0 +1,27 @@
+id	in	out
+12-hat-z-8-hat-z-4-hat-z		
+profinitenumber-3-12-times-profinitenumber-5-8		
+equal-cosets-need-not-share-a-modulus	\mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)	\mathrm{True}
+numerator-profinitenumber-2-over-3-5		
+denominator-profinitenumber-2-over-3-5		
+projecting-to-q-2		
+projecting-to-q-3		
+profinitenumber-26-20-normalises-to-6-20		
+a-negative-value-normalises-into-the-coset		
+a-negative-modulus-normalises-to-positive		
+a-rational-value-reduces-mod-a-rational-modulus		
+modulus-zero-collapses-to-the-rational-itself		
+subtracting-an-integer-from-a-profinite-number		
+squaring-a-profinite-number		
+dividing-by-an-exact-integer-divisor		
+crt-glued-from-its-2-adic-and-3-adic-images		
+a-rational-value-and-a-rational-modulus		
+lenstra-s-profinite-fibonacci-numbers	F_{\mathrm{ProfiniteNumber}(3, 10)}	\mathrm{ProfiniteNumber}(2, 11)
+lenstra-s-profinite-lucas-numbers	L_{\mathrm{ProfiniteNumber}(3, 10)}	\mathrm{ProfiniteNumber}(4, 11)
+gluing-projections-back-by-crt-is-the-identity		
+5-doesn-t-divide-the-modulus-so-nothing-is-known		
+dividing-by-a-profinite-number-stays-unevaluated		
+a-non-integer-numerator-refuses-fibonacci	F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}	F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}
+numerator-of-a-plain-rational-is-untouched		
+denominator-of-a-plain-rational-is-untouched		
+only-profinitenumber-gets-numerator-not-adele		

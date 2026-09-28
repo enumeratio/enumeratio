@@ -1,0 +1,5 @@
+id	in	out
+a-cubic-is-increasing-everywhere	FunctionMonotonicity(x ^ 3, x)	1
+a-parabola-is-not-globally-monotonic	FunctionMonotonicity(x ^ 2, x)	Indeterminate
+exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity(Exp(x), x)	1
+a-restricted-domain-answers-indeterminate	FunctionMonotonicity(Sqrt(x), x)	Indeterminate

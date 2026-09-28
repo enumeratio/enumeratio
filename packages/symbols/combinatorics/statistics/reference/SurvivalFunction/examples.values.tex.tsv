@@ -1,0 +1,2 @@
+id	in	out
+survivalfunction-chisquare	\mathrm{SurvivalFunction}(\mathrm{ChiSquareDistribution}(3), 2)	\operatorname{GammaRegularized}(\frac{3}{2}, 1)

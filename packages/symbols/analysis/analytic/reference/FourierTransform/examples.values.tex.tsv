@@ -1,0 +1,4 @@
+id	in	out
+dirac-delta-at-origin	\mathrm{FourierTransform}(\mathrm{DiracDelta}(t), t, w)	\sqrt{\frac{1}{2\pi}}
+gaussian	\mathrm{FourierTransform}(\exp(-t^2), t, w)	\frac{1}{2}(\sqrt{2}\exp(-\frac{w^2}{4}))
+cosine	\mathrm{FourierTransform}(\cos(at), t, w)	\frac{1}{2}(\sqrt{2}(\mathrm{DiracDelta}(a+w)+\mathrm{DiracDelta}(w-a))\sqrt{\pi})

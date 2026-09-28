@@ -1,9 +1,0 @@
-mandelbrot-neg-1-2-iterations-returns-to-0:
-  epsil:
-    in: N(Mandelbrot(-1, 2))
-    out: "0"
-  tex:
-    in: N(\mathrm{Mandelbrot}(-1, 2))
-    out: "0"
-  fullform:
-    in: N[Mandelbrot[-1, 2]]

@@ -1,0 +1,17 @@
+id	in	out
+beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15	\beta(1)	\frac{\pi}{4}
+beta-2-g-catalan-s-constant	\beta(2)	\mathrm{Catalan}
+beta-3-pi-3-32	\beta(3)	\frac{\pi^3}{32}
+numeric-for-a-floating-point-argument-through-4	\beta(2.5)	0.948\,622\,174\,037\,054\,707\,445
+a-symbolic-argument-stays-symbolic	\beta(s)	\beta(s)
+beta-neg-6-e-6-2	\beta(-6)	-\frac{61}{2}
+n-dirichletbeta-4	N(\beta(4))	0.988\,944\,551\,741\,105\,336\,109
+complex-arguments-here-on-the-critical-line	\beta(0.5+14i)	1.537\,115\,438\,440\,316+1.343\,451\,426\,867\,757\,3i
+threads-elementwise-over-an-array		
+beta-s-to-1-as-s-to-infty	\beta(\infty)	1
+uncertainty-propagation-beta-2-pm-0-01-g-pm-0	\beta(\mathrm{Around}(2, 0.01))	\mathrm{Around}(0.915\,965\,594\,177\,219, 0.000\,815\,807\,361\,165\,928)
+to-exactly-40-significant-digits-not-yet-85-come	N(\beta(2), 40)	0.915\,965\,594\,177\,219\,015\,055
+beta-7-61-pi-7-184320-the-61-is-the-euler-number	\beta(7)	\frac{61\pi^7}{184\,320}
+beta-2k-e-2k-2-and-beta-2k-1-0		
+beta-5-5-pi-5-1536	\beta(5)	\frac{5\pi^5}{1\,536}
+even-s-ge-4-has-no-closed-form-and-stays	\beta(4)	\beta(4)

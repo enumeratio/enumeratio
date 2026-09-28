@@ -1,0 +1,3 @@
+id	in	out
+the-identity-function-an-anti-diagonal-of-filled	\mathrm{ProfinitePlot}(x, x, 3)	\mathrm{ArrayPlot}(\bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack)
+k-capped-at-6-a-larger-precision-refuses	\mathrm{ProfinitePlot}(x, x, 9)	\mathrm{ProfinitePlot}(x, x, 9)

@@ -1,0 +1,7 @@
+id	in
+the-pythagorean-identity	FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+recognizes-the-definition-of-sinh	FullSimplify[Divide[Subtract[Exp[x], Exp[Minus[x]]], 2]]
+folds-the-double-angle-product	FullSimplify[Times[2, Sin[x], Cos[x]]]
+the-functional-equation-of-gamma	FullSimplify[Divide[Gamma[Plus[x, 1]], Gamma[x]]]
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	FullSimplify[Subtract[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]]
+the-hyperbolic-pythagorean-identity	FullSimplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]

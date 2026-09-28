@@ -1,0 +1,28 @@
+---
+name: FibonacciPrimes
+domain: Collections
+signature: FibonacciPrimes
+summary: "The Fibonacci primes $2, 3, 5, 13, 89, 233, …$: Fibonacci numbers that are themselves prime."
+signatures:
+  - call: FibonacciPrimes
+    description: the Fibonacci number $F(n)$ that is prime, an indexed collection of open infinitude -- only finitely many are known at any time.
+details:
+  - A lazy indexed collection; whether there are infinitely many is open, so $Count(FibonacciPrimes) = NaN$. OEIS A005478.
+  - "$At(FibonacciPrimes, k)$ unranks from a table of Fibonacci indices verified prime by exact bigint primality testing, not a search -- past the point a term exceeds what a numeric collection element can represent exactly ($2^{53}-1$), $At$ answers $NaN$ rather than hang: $At(FibonacciPrimes, 4) = 13$ ($F(7)$), $At(FibonacciPrimes, 12)$ is $NaN$."
+  - 'Membership goes through [[Element]]: $Element(89, FibonacciPrimes)$ is true ($F(11)$, prime), $Element(21, FibonacciPrimes)$ is false ($F(8)=21=3\times7$).'
+enumerate:
+  expr: Take(FibonacciPrimes, 11)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - MersennePrimes
+  - Primes
+catalog:
+  - system: oeis
+    identity: A005478
+    url: https://oeis.org/A005478
+    note: Fibonacci VALUES that are prime, not their indices (cf. A001605)
+grades: []
+carrier: Numeric
+---

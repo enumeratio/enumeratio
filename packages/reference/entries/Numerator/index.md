@@ -1,0 +1,20 @@
+---
+name: Numerator
+domain: Compute engine
+signature: Numerator(number) -> nothing | number
+summary: Numerator of an expression
+signatures:
+  - call: Numerator(number) -> nothing | number
+    description: as compute-engine declares it
+  - call: Numerator(number) -> nothing | number
+    description: Numerator of an expression
+    library: enumeratio-adeles
+    type: (number | value) -> nothing | number | value
+    overrides: compute-engine
+statOn:
+  - BinaryWord
+  - RationalNumber
+stub: engine
+attributes:
+  - HoldAll
+---

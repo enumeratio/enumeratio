@@ -1,0 +1,9 @@
+---
+name: NumberOfOnes
+domain: Combinatorics
+signature: NumberOfOnes(...)
+summary: Number of ones
+statOn:
+  - BinaryWord
+stub: carrier
+---

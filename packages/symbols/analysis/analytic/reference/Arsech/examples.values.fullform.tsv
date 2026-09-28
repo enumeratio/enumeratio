@@ -1,0 +1,7 @@
+id	in
+n-arsech-1-over-2	N[ArcSech[Rational[1, 2]]]
+arsech-1-0-exactly	ArcSech[1]
+a-logarithmic-singularity-at-0	ArcSech[0]
+a-float-argument-evaluates-directly	ArcSech[0.25]
+past-1-the-value-is-imaginary-arsech-2-arcosh	ArcSech[2]
+derivative-frac-1-x-sqrt-1-x-2	D[ArcSech[x], x]

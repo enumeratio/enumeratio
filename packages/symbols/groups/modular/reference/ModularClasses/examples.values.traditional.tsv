@@ -1,0 +1,7 @@
+id	in	out
+four-closed-geodesics-of-symbolic-length-4		
+same-word-length-as-lllr-different-geodesic		
+the-same-geodesic-entered-elsewhere		
+lrlr-is-lr-traversed-twice	\mathrm{IsPrimitiveClass}(\text{LRLR})	\mathrm{False}
+the-same-geodesic-yet-again		
+lrr-is-primitive	\mathrm{IsPrimitiveClass}(\text{LRR})	\mathrm{True}

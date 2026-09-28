@@ -1,0 +1,9 @@
+id	in	out
+integerpart-2p4	\mathrm{IntegerPart}(2.4)	2
+truncates-toward-0-unlike-floor	\mathrm{IntegerPart}(-2.4)	-2
+integerpart-7-over-2	\mathrm{IntegerPart}(\frac{7}{2})	3
+integerpart-neg-7-over-2	\mathrm{IntegerPart}(-\frac{7}{2})	-3
+exact-numeric-arguments-stay-exact	\mathrm{IntegerPart}(\pi)	3
+threads-element-wise-over-a-list	\mathrm{IntegerPart}(\bigl\lbrack2.5, -2.5\bigr\rbrack)	\bigl\lbrack2, -2\bigr\rbrack
+complex-numbers-real-and-imaginary-parts	\mathrm{IntegerPart}(2.5+3.7i)	2+3i
+x-integerpart-x-fractionalpart-x	\mathrm{IntegerPart}(-\frac{7}{2})+\mathrm{FractionalPart}(-\frac{7}{2})=-\frac{7}{2}	\top

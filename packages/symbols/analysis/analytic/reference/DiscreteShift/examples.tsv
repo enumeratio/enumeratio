@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+discreteshift-one-step			[DiscreteShift, [a, n], n]	[a, [Add, n, 1]]	One-step forward shift
+discreteshift-h-step	Scope		[DiscreteShift, [a, n], [List, n, 2]]	[a, [Add, n, 2]]	The h-step form -- {n, h}, not a third argument

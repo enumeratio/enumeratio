@@ -1,0 +1,11 @@
+---
+name: Chart
+domain: Graphics
+signature: Chart(…)
+summary: The family chart head, held inert and drawn as whichever chart the data (or an explicit second argument naming the kind, e.g. `"pie"`) calls for.
+signatures:
+  - call: Chart(…)
+    description: held inert; drawn as whichever chart the data, or an explicit second argument naming the kind, calls for
+    library: enumeratio-formats
+    type: (any*) -> any
+---

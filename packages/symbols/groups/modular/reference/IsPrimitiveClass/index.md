@@ -1,0 +1,14 @@
+---
+name: IsPrimitiveClass
+domain: The modular group
+signature: IsPrimitiveClass(word)
+summary: "Whether an $LR$ word is primitive: not a proper power of a shorter word, so its conjugacy class is not a repeat of a shorter geodesic."
+signatures:
+  - call: IsPrimitiveClass(word)
+    description: not a repeat of a shorter word
+    library: enumeratio-modular
+    type: (expression<ModularMatrix> | list | string) -> boolean
+seeAlso:
+  - ModularClasses
+  - ModularWord
+---

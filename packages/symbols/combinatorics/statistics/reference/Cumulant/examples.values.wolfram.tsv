@@ -1,0 +1,4 @@
+id	in
+cumulant-order-1-is-mean	Cumulant[ChiSquareDistribution[3], 1]
+cumulant-order-2-is-variance	Cumulant[ChiSquareDistribution[3], 2]
+cumulant-poisson-order-5	Cumulant[PoissonDistribution[3], 5]

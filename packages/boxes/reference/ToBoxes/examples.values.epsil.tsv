@@ -1,0 +1,5 @@
+id	in	out
+power	ToBoxes(x ^ 2)	SuperscriptBox("x", "2")
+evaluates-first	ToBoxes(2 + 3)	"\"5\""
+binomial	ToBoxes(Binomial(n, k))	RowBox(["(", FractionBox("n", "k", (FractionLine, False)), ")"])
+square-root-over-y	ToBoxes(Sqrt(x) / y)	FractionBox(SqrtBox("x"), "y")

@@ -1,0 +1,6 @@
+id	in
+nest-f-x-3	Nest[f, x, 3]
+repeated-squaring-2-2-2-2	Nest[Function[Power[Slot[1], 2]], 2, 3]
+zero-applications-leave-x-alone	Nest[f, x, 0]
+nest-function-2-times-1-1-10	Nest[Function[Times[2, Slot[1]]], 1, 10]
+three-newton-steps-toward-sqrt-2	Nest[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1, 3]

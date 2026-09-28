@@ -1,0 +1,6 @@
+id	in	out
+the-principal-idele-7-at-every-place	\mathrm{Idele}(7)	\mathrm{Idele}(7, 7)
+7-and-its-inverse-cancel-everywhere	\mathrm{Idele}(7)\mathrm{Idele}(\frac{1}{7})	\mathrm{Idele}(1, 1)
+idele-with-a-zero-real-part	\mathrm{Idele}(0, 1)	\mathrm{Idele}(0, 1)
+a-listed-component-carries-its-valuation-into	\mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(5, \frac{15}{7}, 4)\bigr\rbrack)	\mathrm{Idele}(1, 5, \bigl\lbrack\mathrm{AdicNumeral}(5, 54, 3)\bigr\rbrack)
+a-unit-known-mod-2-says-nothing-at-2	\mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(2, 3, 1)\bigr\rbrack)	\mathrm{Idele}(1, 1, \bigl\lbrack\bigr\rbrack)

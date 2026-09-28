@@ -1,0 +1,4 @@
+id	in
+poisson-process-slice-mean	Mean[SliceDistribution[PoissonProcess[3], 5]]
+poisson-process-slice-distribution	SliceDistribution[PoissonProcess[2], 3]
+poisson-process-slice-variance	Variance[SliceDistribution[PoissonProcess[2], 3]]

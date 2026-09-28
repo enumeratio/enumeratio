@@ -1,0 +1,5 @@
+id	in	out
+a-pole-at-the-origin	FunctionSingularities(1 / x, x)	x == 0
+sqrt-is-singular-at-its-own-boundary	FunctionSingularities(Sqrt(x), x)	x <= 0
+a-polynomial-has-no-singularities	FunctionSingularities(x ^ 2, x)	False
+log-s-branch-cut	FunctionSingularities(Ln(x), x)	x <= 0

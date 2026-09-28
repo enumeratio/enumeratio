@@ -1,0 +1,22 @@
+---
+name: CharacteristicFunction
+domain: Statistics
+signature: CharacteristicFunction(dist, t)
+summary: The characteristic function $\varphi(t) = E[e^{itX}]$ of $dist$.
+signatures:
+  - call: CharacteristicFunction(dist, t)
+    description: a per-distribution closed form for a scoped subset of the distributions this package declares — see details. Every other distribution stays unevaluated.
+    library: enumeratio-statistics
+    type: (distribution, real) -> complex
+details:
+  - "Declared for: [[NormalDistribution]], [[UniformDistribution]], [[DiscreteUniformDistribution]], [[BernoulliDistribution]], [[BinomialDistribution]], [[GeometricDistribution]], [[NegativeBinomialDistribution]], [[PoissonDistribution]], [[GammaDistribution]], [[ChiSquareDistribution]], [[ErlangDistribution]], [[LaplaceDistribution]], [[CauchyDistribution]] (CF only — its [[MomentGeneratingFunction]] does not exist), and [[LogisticDistribution]]."
+  - Every distribution NOT in that list (Beta, StudentT, Weibull, LogNormal, Rayleigh, Pareto, Chi, HalfNormal, Maxwell, Triangular, Hypergeometric, Binormal, Empirical) is left undeclared here rather than faked — most need a special function (confluent hypergeometric, Bessel K) this package doesn't carry.
+  - $\varphi(0) = 1$ always; the uniform/discrete-uniform/logistic formulas special-case $t=0$ to avoid a removable $0/0$.
+seeAlso:
+  - MomentGeneratingFunction
+  - PDF
+  - Moment
+  - Cumulant
+names:
+  wolframIdentity: true
+---

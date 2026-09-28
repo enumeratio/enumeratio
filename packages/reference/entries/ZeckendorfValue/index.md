@@ -1,0 +1,9 @@
+---
+name: ZeckendorfValue
+domain: Combinatorics
+signature: ZeckendorfValue(...)
+summary: Zeckendorf evaluation
+mapOn:
+  - BinaryWord
+stub: carrier
+---

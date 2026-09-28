@@ -1,0 +1,34 @@
+id	in	out
+ln-1		
+ln-exponentiale		
+ln-0		
+a-machine-precision-argument-evaluates		
+a-machine-precision-negative-argument		
+ln-1-i-pi-the-principal-value-past-the-branch		
+n-for-a-decimal-value		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+a-negative-float-gives-the-principal-complex		
+threads-element-wise-over-a-list		
+an-integer-power-is-pulled-out-ln-1000-3-ln-10		
+ln-exponentiale-pow-3		
+ln-positiveinfinity		
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln		
+ln-i-i-pi-2-exactly		
+a-unit-fraction-becomes-a-negated-logarithm-ln		
+interval-arithmetic-ln-is-increasing-so-ln-frac		
+uncertainty-propagation-ln-2-pm-0-01-approx-0		
+ln-exp-x		
+derivative-1-x		
+antiderivative-x-ln-x-x		
+mercator-series-for-ln-1-x		
+to-40-significant-digits-every-one-correctly		
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded		
+n-decimalizes-ln-i-not-just-the-exact-form		
+an-integer-power-negative-argument		
+n-of-a-negative-integer-argument		
+ln-neg-6		
+n-of-a-negative-rational-argument		
+inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\mathrm{True}
+product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\mathrm{True}
+powerexpand-splits-a-logarithm-of-a-product		

@@ -1,0 +1,16 @@
+---
+name: SeriesCoefficient
+domain: Analytic
+signature: SeriesCoefficient(f, {x, x0, n})
+summary: The coefficient of $(x-x_0)^n$ in the Taylor series of $f$ about $x_0$, via $\frac{f^{(n)}(x_0)}{n!}$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: SeriesCoefficient(f, {x, x0, n})
+    description: the coefficient of $(x-x_0)^n$, for $n$ a nonnegative integer and $f$ analytic at $x_0$ (an ordinary point).
+    library: "@enumeratio/analytic"
+    type: (expression, list<any^3>) -> number
+details:
+  - "Exact for the ordinary-point Taylor case: $n$ nonnegative integer, $f$ with no pole or branch point at $x_0$. Computed as $D^n(f)$ evaluated at $x_0$, divided by $n!$ — no series expansion is built, just repeated differentiation."
+  - "Declined on purpose: $n$ negative or non-integer (a Laurent or Puiseux coefficient — the derivative formula doesn't apply past an ordinary point) and $f$ singular exactly at $x_0$ even where the singularity is removable (e.g. $\\sin(x)/x$ at $0$) — the result is checked for a leftover free occurrence of the expansion variable or a non-finite value, and declined rather than trusted, whenever either shows up."
+names:
+  wolframIdentity: true
+---

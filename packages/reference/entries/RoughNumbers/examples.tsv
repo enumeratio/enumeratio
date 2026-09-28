@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+the-first-20-terms-at-7		test	[Take, [RoughNumbers, 7], 20]	[List, 1, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 49, 53, 59, 61, 67, 71, 73]

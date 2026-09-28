@@ -1,0 +1,28 @@
+id	in	out	verdict
+pi-s-famous-convergent	list(continued_fraction(Rational(355, 113)))	[3, 7, 16]	
+5-3-1-1-2			
+47-17-2-1-1-1-3-1-4	list(continued_fraction(Rational(47, 17)))	[2, 1, 3, 4]	
+the-first-20-terms-of-a-quadratic-irrational			
+20-terms-of-pi-past-the-13-term-double-precision			
+a-quadratic-irrational-s-exact-expansion-is	list(continued_fraction(sqrt(13)))	[3, [1, 1, 1, 1, 6]]	
+sqrt-2-is-1-overline-2	list(continued_fraction(sqrt(2)))	[1, [2]]	
+e-s-pattern-1-2k-1			
+any-constant-compute-engine-can-evaluate			
+a-floating-point-number-read-as-the-rational-it	list(continued_fraction(3.245))	ValueError: expecting a rational or quadratic irrational, not 3.24500000000000	error
+varphi-1-overline-1-purely-periodic-so-the	list(continued_fraction((S((1 + sqrt(5))) / 2)))	[[1]]	disagree
+the-named-constant-unfolded-to-1-sqrt-5-2-first			
+a-sum-of-surds-still-a-quadratic-irrational			
+a-cube-root-algebraic-degree-3-not-periodic-so-a			
+symbolic-terms-build-the-nested-fraction-left			
+25-terms-past-the-double-precision-wall			
+and-back-again			
+1-cdot-2-3-cdot-1-1			
+fromcontinuedfraction-inverts-it			
+a-periodic-tail-rebuilds-the-quadratic			
+1-overline-2-sqrt-2			
+a-plain-finite-list-inverts-continuedfraction			
+the-golden-ratio-s-convergents-alternate			
+not-farey-neighbours			
+a-multi-term-pre-period-folds-too			
+negative-a-floor-for-a-0-then-positive-terms-3-1	list(continued_fraction(Rational(-47, 17)))	[-3, 4, 4]	
+the-two-arg-native-form-means-n-terms			

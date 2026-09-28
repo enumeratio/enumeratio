@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+gudermannian-0			[Gudermannian, 0]	0	
+at-a-machine-precision-argument			[Gudermannian, 1.5]	1.1317283452505091	At a machine-precision argument
+gudermannian-0-5		test	[Gudermannian, 0.5]	0.48038107913372946	
+gudermannian-3		test	[N, [Gudermannian, 3]]	1.4713043411171927	
+gudermannian-neg-2-25		test	[Gudermannian, -2.25]	-1.3607733020976118	
+horizontal-asymptote-pi-2	Scope		[Gudermannian, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]	Horizontal asymptote $\pi/2$
+gd-x-sech-x	Scope		[D, [Gudermannian, x], x]	[Sech, x]	$\operatorname{gd}'(x) = \operatorname{sech} x$
+an-odd-function	Properties		[Gudermannian, [Negate, x]]	[Negate, [Gudermannian, x]]	An odd function

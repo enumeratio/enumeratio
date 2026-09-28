@@ -1,0 +1,9 @@
+---
+name: DistinctElements
+domain: Combinatorics
+signature: DistinctElements(...)
+summary: Distinct elements
+statOn:
+  - Multiset
+stub: carrier
+---

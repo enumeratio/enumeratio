@@ -1,0 +1,32 @@
+---
+name: WeirdNumbers
+domain: Collections
+signature: WeirdNumbers
+summary: The weird numbers $70, 836, 4030, …$ -- abundant but not semiperfect -- as a lazy indexed collection.
+signatures:
+  - call: WeirdNumbers
+    description: the abundant $n$ with no proper-divisor subset summing to $n$, an infinite indexed collection.
+details:
+  - "A lazy indexed collection: $Count(WeirdNumbers) = +\\infty$ (infinitely many are known to exist), and $At$ unranks the $k$-th by scanning forward, testing $\\sigma(n) - n > n$ and then a subset-sum search over $n$'s proper divisors."
+  - "OEIS A006037. $70$ is the smallest: its proper divisors $1, 2, 5, 7, 10, 14, 35$ sum past $70$ but no subset of them sums to exactly $70$."
+  - "Membership goes through [[Element]]: $Element(70, WeirdNumbers)$ is true, $Element(12, WeirdNumbers)$ is false (abundant, but semiperfect)."
+enumerate:
+  expr: Take(WeirdNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - AbundantNumbers
+  - SemiperfectNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.Weird
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/NumberTheory/FactorisationProperties.html
+    note: "exact: abundant and not pseudoperfect"
+  - system: oeis
+    identity: A006037
+    url: https://oeis.org/A006037
+grades: []
+carrier: Numeric
+unbounded: true
+---

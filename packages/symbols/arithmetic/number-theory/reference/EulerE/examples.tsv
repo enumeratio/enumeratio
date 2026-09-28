@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+eulere-10			[EulerE, 10]	-50521	
+eulere-8			[EulerE, 8]	1385	
+listable-odd-indices-vanish	Scope		[EulerE, [List, 0, 1, 2, 3, 4]]	[List, 1, 0, -1, 0, 5]	Listable; odd indices vanish
+the-euler-polynomial-e-2-x-x-2-x	Scope		[EulerE, 2, x]	[Add, [Power, x, 2], [Negate, x]]	the Euler polynomial $E_2(x) = x^2 - x$
+e-4-x-x-4-2x-3-x	Scope		[EulerE, 4, x]	[Add, [Power, x, 4], [Multiply, -2, [Power, x, 3]], x]	$E_4(x) = x^4 - 2x^3 + x$
+e-n-2-n-e-n-frac-12-and-e-3-0	Properties		[EulerE, 3, [Rational, 1, 2]]	0	$E_n = 2^n E_n(\frac12)$, and $E_3 = 0$

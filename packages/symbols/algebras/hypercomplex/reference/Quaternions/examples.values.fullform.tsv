@@ -1,0 +1,4 @@
+id	in
+ijk-1	NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
+k-in-h	Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
+a-multicomplex-unit-is-not-a-quaternion	Element[Subscript[i, 1], Quaternions]

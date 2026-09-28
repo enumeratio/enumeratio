@@ -1,0 +1,5 @@
+id	in	out
+halfnormal-pdf-exact	PDF(HalfNormalDistribution(1), 1)	Sqrt(2) / Sqrt(ExponentialE * Pi)
+halfnormal-cdf-exact	CDF(HalfNormalDistribution(1), 1)	Erf(Sqrt(2) / 2)
+halfnormal-mean-exact	Mean(HalfNormalDistribution(1))	Sqrt(2 / Pi)
+halfnormal-variance-exact	Variance(HalfNormalDistribution(1))	(-2 + Pi) / Pi

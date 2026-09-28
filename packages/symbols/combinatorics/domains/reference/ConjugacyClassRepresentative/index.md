@@ -1,0 +1,16 @@
+---
+name: ConjugacyClassRepresentative
+domain: Combinatorial maps
+signature: ConjugacyClassRepresentative(Permutation)
+summary: The canonical permutation with the same cycle type.
+details:
+  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - "FindStat does not fix an ordering for this map. Convention used here: cycles in decreasing length, filled with consecutive integers, each cycle (a a+1 … a+len-1) written as the one-line word a+1, …, a+len-1, a."
+mapOn:
+  - Permutation
+signatures:
+  - call: ConjugacyClassRepresentative(Permutation)
+    description: The canonical permutation with the same cycle type.
+    library: enumeratio-domains
+    type: (permutation) -> permutation
+---

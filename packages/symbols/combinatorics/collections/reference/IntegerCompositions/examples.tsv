@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+2-4			[Count, [IntegerCompositions, 5]]	16	$2^{4}$

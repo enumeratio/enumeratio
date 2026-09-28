@@ -1,0 +1,4 @@
+id	in	out
+nested-path-drills-in	\mathrm{Extract}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack)	c
+negative-position-counts-from-the-end	\mathrm{Extract}(\bigl\lbrack a, b, c\bigr\rbrack, -1)	c
+list-of-paths-extracts-several-parts	\mathrm{Extract}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 2\bigr\rbrack\bigr\rbrack)	\bigl\lbrack a, d\bigr\rbrack

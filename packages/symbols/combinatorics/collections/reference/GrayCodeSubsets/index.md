@@ -1,0 +1,14 @@
+---
+name: GrayCodeSubsets
+domain: Collections
+signature: GrayCodeSubsets(n)
+summary: 'The subsets of $\{1, \dots, n\}$ in binary-reflected Gray-code order: consecutive subsets differ by exactly one element.'
+signatures:
+  - call: GrayCodeSubsets(n)
+    description: the subsets of $\{1, \dots, n\}$ in binary-reflected Gray-code order
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - Subsets
+  - GrayCodes
+---

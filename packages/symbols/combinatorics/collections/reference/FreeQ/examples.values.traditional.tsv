@@ -1,0 +1,4 @@
+id	in	out
+x-occurs-in-x-2-plus-1	\mathrm{FreeQ}(x^2+1, x)	\mathrm{False}
+y-never-occurs	\mathrm{FreeQ}(x^2+1, y)	\mathrm{True}
+looks-inside-subexpressions-not-just-top-level	\mathrm{FreeQ}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack\bigr\rbrack, b)	\mathrm{False}

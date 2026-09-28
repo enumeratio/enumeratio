@@ -1,0 +1,26 @@
+---
+name: Sort
+domain: Collections
+signature: Sort(collection)
+summary: The elements of the collection in increasing order.
+signatures:
+  - call: Sort(collection)
+    description: the elements in increasing numeric order.
+  - call: Sort(collection, comparator)
+    description: sorted by a custom [[Function]] comparator, e.g. descending order.
+  - call: Sort(expr)
+    description: the operands of any expression, sorted in place — not just a collection's.
+    library: enumeratio-collections
+    type: "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)"
+    overrides: compute-engine
+details:
+  - "Idempotent: sorting an already-sorted collection changes nothing."
+  - $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].
+  - Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.
+  - The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.
+  - Works on the operands of any expression, not just a collection's elements.
+seeAlso:
+  - Ordering
+names:
+  wolframIdentity: true
+---

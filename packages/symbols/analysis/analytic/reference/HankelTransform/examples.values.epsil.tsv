@@ -1,0 +1,5 @@
+id	in	out
+exp-neg-ar-order0	Assuming(a > 0, HankelTransform(Exp(-(a * r)), r, s))	a / (a ^ 2 + s ^ 2) ^ (3 / 2)
+one-over-r	HankelTransform(1 / r, r, s)	1 / s
+one-over-sqrt-r2-a2	Assuming(a > 0, HankelTransform(1 / Sqrt(r ^ 2 + a ^ 2), r, s))	ExponentialE ^ (-(a * s)) / s
+exp-neg-ar-order1	Assuming(a > 0, HankelTransform(Exp(-(a * r)), r, s, 1))	s / (a ^ 2 + s ^ 2) ^ (3 / 2)

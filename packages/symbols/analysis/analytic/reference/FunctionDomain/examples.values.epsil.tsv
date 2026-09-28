@@ -1,0 +1,10 @@
+id	in	out
+a-polynomial-is-defined-everywhere	FunctionDomain(x ^ 2, x)	True
+division-by-zero-excludes-the-origin	FunctionDomain(1 / x, x)	x < 0 || 0 < x
+sqrt-of-a-bounded-quadratic	FunctionDomain(Sqrt(-x ^ 2 + 4), x)	-2 <= x <= 2
+a-monomial-with-negative-integer-exponent	FunctionDomain(x ^ -3, x)	x < 0 || 0 < x
+a-multivariate-expression-declines	FunctionDomain(x * y, x)	FunctionDomain(x * y, x)
+a-rational-function-with-two-real-poles	FunctionDomain(1 / (x ^ 2 - 1), x)	x < -1 || -1 < x < 1 || 1 < x
+an-even-root-needs-a-nonnegative-radicand	FunctionDomain(Sqrt(x ^ 2 - 1), x)	x <= -1 || 1 <= x
+a-natural-log-needs-a-positive-argument	FunctionDomain(Ln(2 - x), x)	x < 2
+tangent-s-domain-is-declined	FunctionDomain(Tan(x), x)	FunctionDomain(Tan(x), x)

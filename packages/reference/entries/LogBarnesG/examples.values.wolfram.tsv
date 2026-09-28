@@ -1,0 +1,15 @@
+id	in	out	tex.in	tex.out
+ln-g-4-ln-2	LogBarnesG[4]	Log[2]	\text{logG}(4)	\log (2)
+ln-g-3-ln-1-0	LogBarnesG[3]	0	\text{logG}(3)	0
+numeric-for-a-floating-point-argument	LogBarnesG[10.5]	42.278883636795044	\text{logG}(10.5)	42.2789
+ln-g-frac-12	LogBarnesG[0.5]			
+ln-g-0-7-negative-since-g-1-on-0-1	LogBarnesG[0.7]			
+complex-arguments	LogBarnesG[Complex[1.7, 1]]			
+threads-elementwise-over-an-array-infty-at-the	LogBarnesG[List[List[4, -1], List[0, 3]]]			
+huge-arguments-straight-from-the-asymptotic	N[LogBarnesG[Power[10, 1000]]]			
+interval-arithmetic-over-an-increasing-stretch	LogBarnesG[Interval[List[0.111, 0.112]]]			
+uncertainty-propagation-through-ln-g	LogBarnesG[Around[1.2, 0.01]]			
+ln-g-infty-infty	LogBarnesG[Infinity]			
+g-0-0-so-its-logarithm-is-infty	LogBarnesG[0]	-Infinity	\text{logG}(0)	-\infty
+exact-at-the-integers-ln-g-10-ln	LogBarnesG[10]			
+the-continuation-not-ln-of-the-value-g-2-5-0-yet	LogBarnesG[-2.5]			

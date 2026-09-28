@@ -1,0 +1,3 @@
+id	in
+4	Count[SymmetricGroup[4]]
+the-identity	Part[SymmetricGroup[3], 1]

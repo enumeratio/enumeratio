@@ -1,0 +1,9 @@
+---
+name: AntiLoops
+domain: Combinatorics
+signature: AntiLoops(...)
+summary: Anti-loops
+statOn:
+  - DecoratedPermutation
+stub: carrier
+---

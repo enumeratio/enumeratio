@@ -1,0 +1,11 @@
+id	in
+the-digamma-function-s-positive-real-zero	N[DigammaFunctionZero[0]]
+the-zero-in-1-0	N[DigammaFunctionZero[1]]
+the-zero-in-2-1	N[DigammaFunctionZero[2]]
+the-zero-in-3-2	N[DigammaFunctionZero[3]]
+the-zero-in-4-3	N[DigammaFunctionZero[4]]
+psi-vanishes-exactly-there-by-construction	Chop[N[PolyGamma[DigammaFunctionZero[2]]]]
+psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	Chop[N[PolyGamma[DigammaFunctionZero[0]]]]
+psi-x-n-0-at-n-1	Chop[N[PolyGamma[DigammaFunctionZero[1]]]]
+psi-x-n-0-at-n-3	Chop[N[PolyGamma[DigammaFunctionZero[3]]]]
+psi-x-n-0-at-n-4	Chop[N[PolyGamma[DigammaFunctionZero[4]]]]

@@ -1,0 +1,14 @@
+---
+name: Size
+domain: Combinatorics
+signature: Size(...)
+summary: Catalogued in the enumeratio database, with crosswalk rows in findstat; not yet written up here.
+catalog:
+  - system: findstat
+    identity: St000190
+    url: https://www.findstat.org/St000190
+    on: CorePartition
+stub: carrier
+statOn:
+  - CorePartition
+---

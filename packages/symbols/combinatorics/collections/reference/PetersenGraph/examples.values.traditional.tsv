@@ -1,0 +1,5 @@
+id	in	out
+petersen-is-3-regular		
+petersen-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())	\mathrm{False}
+petersen-has-10-vertices		
+petersen-has-15-edges		

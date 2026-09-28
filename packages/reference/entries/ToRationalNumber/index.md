@@ -1,0 +1,9 @@
+---
+name: ToRationalNumber
+domain: Combinatorics
+signature: ToRationalNumber(...)
+summary: The rational it expands
+mapOn:
+  - ContinuedFraction
+stub: carrier
+---

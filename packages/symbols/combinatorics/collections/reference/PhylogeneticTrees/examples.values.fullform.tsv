@@ -1,0 +1,3 @@
+id	in
+count-phylogenetictrees-5-105-2-cdot-5-3-a001147	Count[PhylogeneticTrees[5]]
+every-element-of-phylogenetictrees-5	Take[PhylogeneticTrees[5], 105]

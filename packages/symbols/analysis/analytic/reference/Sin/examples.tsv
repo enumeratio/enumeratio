@@ -1,0 +1,70 @@
+id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	rust.kind	rust.note
+sin-0			[Sin, 0]	0							
+exact-value-at-a-special-angle			[Sin, [Divide, Pi, 6]]	[Rational, 1, 2]	Exact value at a special angle						
+sin-pi-over-4			[Sin, [Divide, Pi, 4]]	[Divide, [Sqrt, 2], 2]							
+sin-pi-over-3			[Sin, [Divide, Pi, 3]]	[Divide, [Sqrt, 3], 2]							
+sin-pi-over-2			[Sin, [Divide, Pi, 2]]	1							
+sin-pi			[Sin, Pi]	0							
+degrees-d-converts-to-radians-so-sin-60-circ-is			[Sin, [Degrees, 60]]	[Divide, [Sqrt, 3], 2]	Degrees(d) converts to radians, so $\sin 60^\circ$ is exact						
+a-machine-precision-argument-evaluates			[Sin, 1.2]	{num: "0.93203908596722634967"}	A machine-precision argument evaluates numerically						
+a-huge-10-100-argument		test	[N, [Sin, [Power, 10, 100]]]	{num: "-0.37237612366127668826208"}							
+a-huge-3-200-argument		test	[N, [Sin, [Power, 3, 200]]]	{num: "-0.93873170860707491963714"}							
+a-huge-neg-7-60-argument		test	[N, [Sin, [Negate, [Power, 7, 60]]]]	{num: "0.36512160040235555007603"}							
+a-huge-10-80-plus-1-over-3-argument		test	[N, [Sin, [Divide, [Add, [Power, 10, 80], 1], 3]]]	{num: "0.98534830149811592175550"}							
+sin-1-under-n		test	[N, [Sin, 1]]	0.8414709848078965							
+n-of-an-exact-argument-gives-an-arbitrary	Scope		[N, [Sin, [Rational, 6, 5]]]	{num: "0.93203908596722634967"}	N(...) of an exact argument gives an arbitrary-precision value						
+evaluates-at-a-complex-argument	Scope		[Sin, [Complex, 2.5, 1]]	[Complex, 0.9234907760431731, -0.9415049332708672]	Evaluates at a complex argument						
+threads-element-wise-over-a-matrix	Scope		[Sin, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]]]]	[List, [List, [Rational, 1, 2], 0], [List, -1, -1]]	Threads element-wise over a matrix					threading	compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars only.
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	Scope		[Sin, [Divide, Pi, 12]]	[Add, [Negate, [Divide, [Sqrt, 2], 4]], [Divide, [Sqrt, 6], 4]]	Exact value at $\pi/12$: $\frac{\sqrt6 - \sqrt2}{4}$						
+sin-pi-8-frac-sqrt-2-sqrt-2-2	Scope		[Sin, [Divide, Pi, 8]]	[Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Negate, [Sqrt, 2]]]]]	$\sin(\pi/8) = \frac{\sqrt{2-\sqrt2}}{2}$						
+sin-pi-10-frac-sqrt-5-1-4	Scope		[Sin, [Divide, Pi, 10]]	[Add, [Rational, -1, 4], [Divide, [Sqrt, 5], 4]]	$\sin(\pi/10) = \frac{\sqrt5 - 1}{4}$						
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	Scope		[Sin, [Multiply, [Rational, 5, 12], Pi]]	[Add, [Divide, [Sqrt, 2], 4], [Divide, [Sqrt, 6], 4]]	$\sin(5\pi/12) = \frac{\sqrt6 + \sqrt2}{4}$						
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	Scope		[Sin, [Multiply, [Rational, 3, 8], Pi]]	[Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Sqrt, 2]]]]	$\sin(3\pi/8) = \frac{\sqrt{2+\sqrt2}}{2}$						
+large-rational-multiples-of-pi-are-reduced	Scope		[Sin, [Multiply, [Rational, 100, 3], Pi]]	[Negate, [Divide, [Sqrt, 3], 2]]	Large rational multiples of $\pi$ are reduced modulo the period first						
+any-integer-multiple-of-pi-is-a-zero-of-sine	Scope		[Sin, [Multiply, 1000001, Pi]]	0	Any integer multiple of $\pi$ is a zero of sine, however large						
+sin-negate-pi-is-also-zero	Scope		[Sin, [Negate, Pi]]	0	$\sin(-\pi) = 0$						
+sin-4-pi-is-zero	Scope		[Sin, [Multiply, 4, Pi]]	0	$\sin(4\pi) = 0$						
+a-full-turn-shift-of-a-symbolic-argument-doesn-t	Scope		[Sin, [Add, x, [Multiply, 2, Pi]]]	[Sin, x]	A full-turn shift of a symbolic argument doesn't change the value: $\sin(x + 2\pi) = \sin x$						
+sin-i-pi-2-i-sinh-pi-2-exactly	Scope		[Sin, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]	[Multiply, [Complex, 0, 1], [Sinh, [Multiply, [Rational, 1, 2], Pi]]]	$\sin(i\pi/2) = i\sinh(\pi/2)$ exactly -- [[Sinh]] has no special value at $\pi/2$, so this stays symbolic there						
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form	Scope		[N, [Sin, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]]	[Complex, 0, 2.3012989023072947]	N(...) decimalizes $\sin(i\pi/2)$, not just the exact $i\sinh(\pi/2)$ form						
+interval-arithmetic-the-image-of-pi-6-pi-6-is	Scope		[Sin, [Interval, [Negate, [Divide, Pi, 6]], [Divide, Pi, 6]]]	[Interval, [Rational, -1, 2], [Rational, 1, 2]]	Interval arithmetic: the image of $[-\pi/6, \pi/6]$ is $[-\tfrac12, \tfrac12]$						
+the-image-of-the-whole-real-line-is-1-1	Scope		[Sin, [Interval, NegativeInfinity, PositiveInfinity]]	[Interval, -1, 1]	The image of the whole real line is $[-1, 1]$						
+wolfram-answers-sin-infty-with-the-range-of-its	Scope		[Sin, PositiveInfinity]	[Interval, -1, 1]	As Wolfram does, $\sin(\infty)$ is the range of its oscillation, $[-1, 1]$						
+uncertainty-propagation-sin-2-pm-0-01-approx-0	Scope		[Sin, [Around, 2, 0.01]]	[Around, 0.9092974268256817, 0.004161468365471424]	Uncertainty propagation: $\sin(2 \pm 0.01) \approx 0.9093 \pm 0.0042$ to first order						
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i	Scope		[Sin, [Multiply, ImaginaryUnit, x]]	[Multiply, [Complex, 0, 1], [Sinh, x]]	An imaginary argument rewrites to [[Sinh]]: $\sin(ix) = i\sinh x$	convention	Same root cause as Cos: sinh has no sage mapping row yet, so the comparison falls back to text instead of the free-symbol identity check that would confirm sin(I*x) = i*sinh(x).	convention	Same root cause as Cos: sinh has no sympy mapping row yet, so the comparison falls back to text instead of the free-symbol identity check that would confirm sin(I*x) = i*sinh(x).		
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Sin, [Negate, x]]	[Negate, [Sin, x]]	Oddness pulls the sign out of a symbolic argument: $\sin(-x) = -\sin x$						
+a-half-period-shift-reduces-sin-x-pi-sin-x	Scope		[Sin, [Add, x, Pi]]	[Negate, [Sin, x]]	A half-period shift reduces: $\sin(x + \pi) = -\sin x$						
+sin-arcsin-x-x-for-every-x	Scope		[Sin, [Arcsin, x]]	x	$\sin(\arcsin x) = x$ for every $x$						
+sin-arcsin-2-2-past-the-real-domain	Scope		[Sin, [Arcsin, 2]]	2	$\sin(\arcsin(2)) = 2$, even past $[-1, 1]$ where Arcsin's own closed form would otherwise hide the identity from a plain evaluate()						
+sin-arcsin-of-a-complex-argument	Scope		[Sin, [Arcsin, [Complex, 1, 2]]]	[Complex, 1, 2]	$\sin(\arcsin(1+2i)) = 1+2i$						
+sin-arccos-x-sqrt-1-x-2	Scope		[Sin, [Arccos, x]]	[Sqrt, [Add, [Negate, [Power, x, 2]], 1]]	$\sin(\arccos x) = \sqrt{1 - x^2}$						
+sin-arctan-x-frac-x-sqrt-1-x-2	Scope		[Sin, [Arctan, x]]	[Divide, x, [Sqrt, [Add, [Power, x, 2], 1]]]	$\sin(\arctan x) = \frac{x}{\sqrt{1 + x^2}}$						
+derivative-frac-d-dx-sin-x-cos-x	Scope		[D, [Sin, x], x]	[Cos, x]	Derivative: $\frac{d}{dx}\sin x = \cos x$						
+second-derivative	Scope		[D, [Sin, x], x, x]	[Negate, [Sin, x]]	Second derivative						
+antiderivative	Scope		[Integrate, [Sin, x], x]	[Negate, [Cos, x]]	Antiderivative						
+area-under-one-arch-int-0-pi-sin-x-dx-2	Scope		[Integrate, [Sin, x], [Limits, x, 0, Pi]]	2	Area under one arch: $\int_0^\pi \sin x\,dx = 2$						
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Scope		[Integrate, [Power, [Sin, x], 3], x]	[Add, [Multiply, [Rational, 1, 3], [Power, [Cos, x], 3]], [Negate, [Cos, x]]]	$\int \sin^3 x\,dx = -\cos x + \tfrac13\cos^3 x$, by $u = \cos x$ -- any odd power of $\sin$ or $\cos$, times any power of the other						
+taylor-series-about-0-only-odd-powers-appear	Scope		[Series, [Sin, x], x, 0, 10]	[Add, [Multiply, [Rational, 1, 362880], [Power, x, 9]], [Multiply, [Rational, -1, 5040], [Power, x, 7]], [Multiply, [Rational, 1, 120], [Power, x, 5]], [Multiply, [Rational, -1, 6], [Power, x, 3]], x, [BigO, [Power, x, 11]]]	Taylor series about 0 -- only odd powers appear						
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Scope		[Limit, [Function, [Divide, [Sin, x], x], x], 0]	1	The fundamental limit $\lim_{x\to0} \frac{\sin x}{x} = 1$						
+to-30-significant-digits-every-one-correctly	Scope		[N, [Sin, 1], 30]	{num: "0.841470984807896506652502321630"}	To 30 significant digits, every one correctly rounded						
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	Scope		[N, [Sin, [Power, 24, 40]]]	{num: "0.400083152719766047071"}	$24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\pi$ before Sin sees it, not rounded to working precision first	precision	Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 24^40 exactly; compute-engine reduces it exactly.			precision	Rust reduces the argument in f64, which can't hold 24^40 exactly; compute-engine reduces it exactly.
+threads-element-wise-over-a-list	Applications		[Sin, [List, 0, [Divide, Pi, 2], Pi]]	[List, 0, 1, 0]	Threads element-wise over a list					threading	compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars.
+degrees-d-converts-a-degree-measure-to-radians	Applications		[Sin, [Degrees, 30]]	[Rational, 1, 2]	Degrees(d) converts a degree measure to radians, so familiar degree angles still evaluate exactly						
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Properties		[Add, [Power, [Sin, [Divide, Pi, 6]], 2], [Power, [Cos, [Divide, Pi, 6]], 2]]	1	Pythagorean identity $\sin^2 x + \cos^2 x = 1$, here at $x = \pi/6$						
+odd-function-sin-x-sin-x	Properties		[Equal, [Sin, [Negate, [Divide, Pi, 6]]], [Negate, [Sin, [Divide, Pi, 6]]]]	True	Odd function: $\sin(-x) = -\sin(x)$						
+period-2-pi-adding-a-full-turn-doesn-t-change	Properties		[Sin, [Add, [Divide, Pi, 6], [Multiply, 2, Pi]]]	[Rational, 1, 2]	Period $2\pi$: adding a full turn doesn't change the value						
+double-angle-formula-via-trigexpand	Properties		[TrigExpand, [Sin, [Multiply, 2, x]]]	[Multiply, 2, [Sin, x], [Cos, x]]	Double-angle formula via TrigExpand						
+angle-addition-formula-via-trigexpand	Properties		[TrigExpand, [Sin, [Add, x, y]]]	[Add, [Multiply, [Sin, y], [Cos, x]], [Multiply, [Sin, x], [Cos, y]]]	Angle-addition formula via TrigExpand						
+triple-angle-formula	Properties		[TrigExpand, [Sin, [Multiply, 3, x]]]	[Add, [Negate, [Power, [Sin, x], 3]], [Multiply, 3, [Sin, x], [Power, [Cos, x], 2]]]	Triple-angle formula						
+power-reduction-sin-2-x-frac-1-cos-2x-2	Properties		[TrigReduce, [Power, [Sin, x], 2]]	[Add, [Multiply, [Rational, -1, 2], [Cos, [Multiply, 2, x]]], [Rational, 1, 2]]	Power reduction: $\sin^2 x = \frac{1 - \cos 2x}{2}$						
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	Properties		[TrigToExp, [Sin, x]]	[Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]	Euler's formula: $\sin x = \frac{e^{ix} - e^{-ix}}{2i}$						
+simplify-knows-the-pythagorean-identity	Properties		[Simplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]	1	Simplify knows the Pythagorean identity symbolically						
+the-same-through-fullsimplify	Properties		[FullSimplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]	1	The same through [[FullSimplify]]						
+1-radian-isn-t-a-recognized-special-angle-so	Possible issues		[Sin, 1]	[Sin, 1]	1 radian isn't a recognized special angle, so this stays symbolic; wrap in N(...) or pass 1.0 for ≈ 0.841						
+sin-2-a-generic-argument-stays-symbolic	Possible issues		[Sin, 2]	[Sin, 2]	$\sin(2)$, a generic argument, stays symbolic -- not a recognized special angle						
+sin-x-plus-y-stays-symbolic	Possible issues		[Sin, [Add, x, y]]	[Sin, [Add, x, y]]	A generic symbolic sum stays symbolic						
+pi-15-has-a-radical-form-but-like-wolfram-s	Possible issues		[Sin, [Divide, Pi, 15]]	[Sin, [Multiply, [Rational, 1, 15], Pi]]	$\pi/15$ has a radical form, but like Wolfram's automatic evaluation the table stops short of it -- see FunctionExpand below						
+a-huge-exact-argument-is-reduced-modulo-2-pi	Possible issues		[N, [Sin, [Power, 10, 20]]]	{num: "-0.645251285265780844206"}	A huge exact argument is reduced modulo $2\pi$ with enough working precision to get the digits right						
+an-even-huger-argument-11-38	Possible issues	test	[N, [Sin, [Power, 11, 38]]]	{num: "0.867534193184863032082"}	An even huger argument -- f64's range reduction has long since lost the plot by here	precision	Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 11^38 exactly; compute-engine's BigDecimal kernel reduces modulo 2*Pi with enough digits to keep the answer meaningful.			precision	f64's range reduction has no working precision left at 11^38; compute-engine's BigDecimal kernel reduces modulo 2pi with enough digits to keep the answer meaningful.
+the-special-angle-table-reaches-past-30-45-60	Neat examples		[Sin, [Divide, Pi, 5]]	[Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]	The special-angle table reaches past 30-45-60: $\sin(\pi/5)$ comes out as a nested radical						
+functionexpand-gives-the-nested-radical-form	Neat examples		[FunctionExpand, [Sin, [Divide, Pi, 15]]]	[Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]	[[FunctionExpand]] gives the nested-radical form $\frac{\sqrt{10+2\sqrt5} - \sqrt{15} + \sqrt3}{8}$						

@@ -1,0 +1,19 @@
+id	in	out
+issquarefree-10	\mathrm{IsSquareFree}(10)	\mathrm{True}
+issquarefree-4	\mathrm{IsSquareFree}(4)	\mathrm{False}
+issquarefree-12	\mathrm{IsSquareFree}(12)	\mathrm{False}
+every-prime-is-squarefree	\mathrm{IsSquareFree}(17)	\mathrm{True}
+issquarefree-20	\mathrm{IsSquareFree}(20)	\mathrm{False}
+threads-element-wise-over-a-list	\mathrm{IsSquareFree}(\bigl\lbrack10, 4, 12\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{False}\bigr\rbrack
+gaussian-integers-3-2i-is-a-gaussian-prime	\mathrm{IsSquareFree}(3+2i)	\mathrm{True}
+gaussianintegers-true-2-i-1-i-2	\mathrm{IsSquareFree}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))	\mathrm{False}
+rationals-numerator-and-denominator-are-both	\mathrm{IsSquareFree}(\frac{2}{3})	\mathrm{True}
+polynomials-x-2-6x-6-has-no-repeated-factor	\mathrm{IsSquareFree}(x^2+6x+6)	\mathrm{True}
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	\mathrm{IsSquareFree}(x^3-x^2y)	\mathrm{False}
+squarefree-as-a-polynomial-in-x-alone-y-is-just	\mathrm{IsSquareFree}(xy^2, x)	\mathrm{True}
+but-not-in-y-alone-y-appears-squared	\mathrm{IsSquareFree}(xy^2, y)	\mathrm{False}
+a-non-squarefree-rational	\mathrm{IsSquareFree}(\frac{4}{3})	\mathrm{False}
+x-1-2-has-a-repeated-root	\mathrm{IsSquareFree}(x^2-2x+1)	\mathrm{False}
+x-3-y-3-has-no-repeated-factor	\mathrm{IsSquareFree}(x^3-y^3)	\mathrm{True}
+n-is-squarefree-exactly-when-mu-n-neq-0-see	\mathrm{IsSquareFree}(10)=\lnot(\mu(10)=0)	\mathrm{True}
+1-is-vacuously-squarefree-it-has-no-repeated	\mathrm{IsSquareFree}(1)	\mathrm{True}

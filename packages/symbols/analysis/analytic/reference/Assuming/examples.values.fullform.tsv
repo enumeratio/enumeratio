@@ -1,0 +1,4 @@
+id	in
+abs-resolves-once-the-sign-is-known	Assuming[Greater[x, 0], Abs[x]]
+sign-of-x-plus-sign-of-y-under-opposite-signs	Assuming[List[Greater[x, 0], Less[y, 0]], Plus[Sign[x], Sign[y]]]
+the-assumption-does-not-leak	List[Assuming[Greater[z, 0], Sign[z]], Sign[z]]

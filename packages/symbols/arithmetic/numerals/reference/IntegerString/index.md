@@ -1,0 +1,28 @@
+---
+name: IntegerString
+domain: Numeral systems
+signature: IntegerString(n, base?, length?)
+summary: The string representation of n in the given base (default 10).
+signatures:
+  - call: IntegerString(n)
+    description: string form of $n$ in base 10.
+  - call: IntegerString(n, base)
+    description: string form of $n$ in the given base, up to base 36.
+  - call: IntegerString(n, base, length)
+    description: padded with leading zeros to exactly `length` digits, or cut to the last `length`.
+    library: enumeratio-numerals
+    type: (integer, (integer | string)?, integer?) -> string
+    overrides: compute-engine
+  - call: IntegerString(n, "Roman")
+    description: the Roman numeral for n, same as [[RomanNumeral]].
+    library: enumeratio-numerals
+details:
+  - Bases above 10 use letters a-z for digit values beyond 9, up to base 36.
+  - compute-engine keeps a leading minus sign for negative n
+  - A third argument pads with leading zeros to that length, or keeps only the last that many digits; with it, a negative n is left unevaluated (Wolfram drops the sign, compute-engine keeps it).
+  - compute-engine's second argument is always a numeric base.
+seeAlso:
+  - IntegerDigits
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,18 @@
+---
+name: GroupGenerators
+domain: Permutations
+signature: GroupGenerators(group)
+summary: The generating permutations a [[PermutationGroup]] was built from, in [[Cycles]] notation — or, for [[AlternatingGroup]], the fixed pair Wolfram itself uses.
+signatures:
+  - call: GroupGenerators(group)
+    description: the generators passed to `PermutationGroup`, unchanged; or `AlternatingGroup(n)`'s canonical pair
+    library: enumeratio-groupalgebra
+    type: (expression<AlternatingGroup> | expression<PermutationGroup>) -> list<expression<Cycles>>
+seeAlso:
+  - PermutationGroup
+  - AlternatingGroup
+  - GroupOrder
+  - GroupElements
+names:
+  wolframIdentity: true
+---

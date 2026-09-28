@@ -1,0 +1,23 @@
+id	in	out
+ceil-7-over-2		
+ceil-3p2		
+ceil-3p7		
+integers-pass-through-unchanged		
+threads-element-wise-over-a-list		
+ceil-2p4		
+ceil-2p6		
+idempotent-lceil-lceil-x-rceil-rceil		
+stays-symbolic		
+exact-radicals-are-decided-numerically		
+evaluates-at-an-exact-constant-lceil-pi-rceil-4		
+a-second-argument-rounds-up-to-a-multiple-of-it		
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10		
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the		
+rounds-the-real-and-imaginary-parts-up		
+how-many-5-seat-vans-are-needed-to-carry-17		
+ten-bits-are-enough-to-number-1000-items-lceil		
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\mathrm{True}
+floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\mathrm{True}
+a-zero-divisor-inside-ceil		
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3		
+nan-propagates-rather-than-erroring		

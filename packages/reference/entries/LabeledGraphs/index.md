@@ -1,0 +1,16 @@
+---
+name: LabeledGraphs
+domain: Combinatorics
+signature: LabeledGraphs(...)
+summary: Simple undirected graphs on the labeled vertex set [n].
+grades:
+  - name: n
+    role: axis
+carrier: LabeledGraph
+stub: carrier
+signatures:
+  - call: LabeledGraphs(...)
+    description: Simple undirected graphs on the labeled vertex set [n].
+    library: enumeratio-collections
+    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+---

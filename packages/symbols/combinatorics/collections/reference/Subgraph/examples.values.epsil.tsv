@@ -1,0 +1,2 @@
+id	in	out
+three-of-k4s-vertices	Subgraph(CompleteGraph(4), [1, 2, 3])	"Graph([1, 2, 3], [\n                   UndirectedEdge(1, 2),\n                   UndirectedEdge(1, 3),\n                   UndirectedEdge(2, 3),\n                 ])"

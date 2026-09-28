@@ -1,0 +1,78 @@
+---
+name: Mod
+domain: Modular arithmetic
+signature: Mod(a, b, d?)
+summary: The remainder of a on division by b.
+signatures:
+  - call: Mod(a, b)
+    description: remainder of $a$ on division by $b$, with the sign of $b$.
+  - call: Mod(a, b, d)
+    description: the $x \equiv a \pmod b$ with $d \le x < d + b$.
+    library: enumeratio-number-theory
+    type: (number, number, number?) -> number
+    overrides: enumeratio-residues
+  - call: Mod(z, m)
+    description: 'for Gaussian integers, $z - m\,\mathrm{Quotient}(z, m)$: the remainder in the box around 0'
+    library: enumeratio-number-theory
+  - call: Mod(a, b, d?)
+    description: The remainder of a on division by b.
+    library: enumeratio-analytic
+    type: (real, real) -> real
+    overrides: compute-engine
+  - call: Mod(a, b, d?)
+    description: The remainder of a on division by b.
+    library: enumeratio-residues
+    type: (real, real) -> real
+    overrides: enumeratio-analytic
+details:
+  - Equivalent to $a-b\,\mathrm{Quotient}(a,b)$, i.e. $a-b\lfloor a/b\rfloor$.
+  - When $b>0$ the result lies in $[0,b)$; the sign of the result always matches the sign of $b$.
+  - 'Periodic: $a\bmod n=(a+kn)\bmod n$ for any integer $k$.'
+  - compute-engine returns NaN for a zero modulus rather than leaving the call unevaluated.
+  - A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.
+seeAlso:
+  - PowerMod
+references:
+  - system: wikipedia
+    identity: Modulo
+  - system: mathworld
+    identity: Mod
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Mod[$1, $2]
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sympy
+    template: ($1 % $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: sage
+    template: ($1 % $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: oscar
+    template: mod($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: julia
+    template: mod($1, $2)
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: mathlib4
+    template: "(($1 : ℤ) % $2)"
+    arity: 2
+    threadArg: 2
+  - origin: mapped
+    form: rust
+    template: mod_floor($1, $2)
+    arity: 2
+    threadArg: 2
+---

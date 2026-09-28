@@ -1,0 +1,10 @@
+---
+name: Rows
+domain: Combinatorics
+signature: Rows(...)
+summary: Number of rows
+statOn:
+  - SemistandardTableau
+  - StandardTableau
+stub: carrier
+---

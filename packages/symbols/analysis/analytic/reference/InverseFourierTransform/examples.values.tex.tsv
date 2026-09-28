@@ -1,0 +1,3 @@
+id	in	out
+dirac-delta	\mathrm{InverseFourierTransform}(\mathrm{DiracDelta}(w), w, t)	\sqrt{\frac{1}{2\pi}}
+constant	\mathrm{InverseFourierTransform}(1, w, t)	\sqrt{2\pi}

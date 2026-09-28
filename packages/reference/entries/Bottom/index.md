@@ -1,0 +1,9 @@
+---
+name: Bottom
+domain: Combinatorics
+signature: Bottom(...)
+summary: Bottom (whole collection)
+mapOn:
+  - Text
+stub: carrier
+---

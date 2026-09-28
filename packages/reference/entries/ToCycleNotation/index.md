@@ -1,0 +1,9 @@
+---
+name: ToCycleNotation
+domain: Combinatorics
+signature: ToCycleNotation(...)
+summary: To cycle notation
+mapOn:
+  - Permutation
+stub: carrier
+---

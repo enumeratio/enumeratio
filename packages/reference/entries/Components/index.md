@@ -1,0 +1,9 @@
+---
+name: Components
+domain: Combinatorics
+signature: Components(...)
+summary: Components
+statOn:
+  - Endofunction
+stub: carrier
+---

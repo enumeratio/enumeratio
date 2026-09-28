@@ -1,0 +1,8 @@
+id	in
+unitbox-inside-the-box	UnitBox[0]
+unitbox-boundary-1-2	UnitBox[Rational[1, 2]]
+unitbox-boundary-neg-1-2	UnitBox[Rational[-1, 2]]
+unitbox-outside-the-box	UnitBox[1]
+unitbox-product-of-two-boxes	UnitBox[0, 0]
+unitbox-product-second-at-its-boundary	UnitBox[0, Rational[1, 2]]
+unitbox-derivative-away-from-the-jump	D[UnitBox[x], x]

@@ -1,0 +1,13 @@
+---
+name: UnlabeledFreeTree
+domain: Combinatorics
+signature: UnlabeledFreeTree(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: UnlabeledFreeTree(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> unlabeled_free_tree
+---

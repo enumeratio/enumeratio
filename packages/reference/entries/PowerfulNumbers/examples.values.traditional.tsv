@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms		
+36-is-powerful	36\in\mathrm{PowerfulNumbers}	\mathrm{True}
+12-is-not-powerful	12\in\mathrm{PowerfulNumbers}	\mathrm{False}

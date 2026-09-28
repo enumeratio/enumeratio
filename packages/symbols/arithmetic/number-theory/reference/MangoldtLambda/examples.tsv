@@ -1,0 +1,9 @@
+id	section	role	expr	expected	caption
+8-2-3			[MangoldtLambda, 8]	[Ln, 2]	$8=2^3$
+6-is-not-a-prime-power			[MangoldtLambda, 6]	0	6 is not a prime power
+mangoldtlambda-7			[MangoldtLambda, 7]	[Ln, 7]	
+mangoldtlambda-9		test	[MangoldtLambda, 9]	[Ln, 3]	
+numerically-ln-3	Scope		[N, [MangoldtLambda, 9]]	1.0986122886681098	Numerically, $\ln3$
+listable	Scope		[MangoldtLambda, [List, 2, 4, 6, 25]]	[List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]	Listable
+n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	0	N of a zero result is still 0
+lambda-1-0	Possible issues		[MangoldtLambda, 1]	0	$\Lambda(1)=0$

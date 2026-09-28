@@ -1,0 +1,3 @@
+id	in
+count-noncrossingtrees-5-273-binom-15-5-11	Count[NonCrossingTrees[5]]
+every-element-of-noncrossingtrees-3	Take[NonCrossingTrees[3], 12]

@@ -1,0 +1,32 @@
+---
+name: OrbitDiagram
+domain: Diagram algebras
+signature: OrbitDiagram(blocks)
+summary: The orbit basis of the partition algebra. A diagram $d_\lambda$ asks for points to be connected; an orbit element $x_\lambda$ asks for them to be connected AND NOTHING ELSE — so the two bases differ by Möbius inversion over the partition lattice.
+signatures:
+  - call: OrbitDiagram(blocks)
+    description: an orbit basis element
+    library: enumeratio-diagram
+    type: (list) -> number
+  - call: InDiagramBasis(x) / InOrbitBasis(x)
+    description: change of basis, either direction
+    library: enumeratio-diagram
+  - call: PartitionMobius(finer, coarser)
+    description: the partition lattice's Möbius function on that interval
+    library: enumeratio-diagram
+  - call: DiagramCoarsenings(d)
+    description: every partition coarser than this one
+    library: enumeratio-diagram
+details:
+  - $d_\lambda = \sum_{\mu \succeq \lambda} x_\mu$, and the inverse carries $\mu_\Pi(\lambda,\mu) = \prod_{B}(-1)^{k_B-1}(k_B-1)!$
+  - Coarsening is partitioning the blocks, so a diagram with $k$ blocks has $\mathrm{Bell}(k)$ coarsenings
+  - The change of basis is unitriangular in the number of blocks, which is what makes the two maps inverse
+  - Contrast the Hopf-algebra bases, which invert over the BOOLEAN lattice where the Möbius function is only a sign — the factorials here are the cost of merging any blocks rather than adjacent ones
+  - The map onto the symmetric group's centraliser algebra kills $x_\lambda$ exactly when $\lambda$ has more blocks than $\delta$ — a statement with no clean form in the diagram basis
+seeAlso:
+  - Diagram
+  - PartitionAlgebra
+references:
+  - system: wikipedia
+    identity: Group action#Orbits and stabilizers
+---

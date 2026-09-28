@@ -1,0 +1,6 @@
+id	in	out
+sqrt-x-2-x-for-positive-x	PowerExpand(Sqrt(x ^ 2))	x
+splits-a-logarithm-of-a-product	PowerExpand(Ln(x * y))	Ln(x) + Ln(y)
+pulls-out-an-exponent	PowerExpand(Ln(x ^ n))	n * Ln(x)
+distributes-a-power-over-a-product	PowerExpand((a * b) ^ c)	a ^ c * b ^ c
+powerexpand-sqrt-a-times-b	PowerExpand(Sqrt(a * b))	Sqrt(a) * Sqrt(b)

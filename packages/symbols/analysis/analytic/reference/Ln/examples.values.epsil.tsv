@@ -1,0 +1,34 @@
+id	in	out
+ln-1	Ln(1)	0
+ln-exponentiale	Ln(ExponentialE)	1
+ln-0	Ln(0)	NegativeInfinity
+a-machine-precision-argument-evaluates	Ln(1.5)	0.405_465_108_108_164_381_978
+a-machine-precision-negative-argument	Ln(-4.705)	1.548_625_773_037_342_957_36 + 3.141_592_653_589_793i
+ln-1-i-pi-the-principal-value-past-the-branch	Ln(-1)	i * Pi
+n-for-a-decimal-value	N(Ln(1_000))	6.907_755_278_982_137_052_05
+arbitrary-precision-via-n	N(Ln(5 / 2))	0.916_290_731_874_155_065_184
+evaluates-at-a-complex-argument	Ln(2.5 + i)	0.990_500_734_433_291_704_176 + 0.380_506_377_112_364_9i
+a-negative-float-gives-the-principal-complex	Ln(-2.5)	0.916_290_731_874_155_065_184 + 3.141_592_653_589_793i
+threads-element-wise-over-a-list	Ln([1, 2.1, 3.1, 4.1])	"[\n  0,\n  0.741_937_344_729_377_312_483,\n  1.131_402_111_491_100_561_91,\n  1.410_986_973_710_262_119_85,\n]"
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	Ln(1_000)	3 * Ln(10)
+ln-exponentiale-pow-3	Ln(ExponentialE ^ 3)	3
+ln-positiveinfinity	Ln(PositiveInfinity)	PositiveInfinity
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln	Ln(ComplexInfinity)	PositiveInfinity
+ln-i-i-pi-2-exactly	Ln(ImaginaryUnit)	1 / 2 * i * Pi
+a-unit-fraction-becomes-a-negated-logarithm-ln	Ln(1 / 2)	-Ln(2)
+interval-arithmetic-ln-is-increasing-so-ln-frac	Ln(Interval(1 / 3, ExponentialE))	Interval(-Ln(3), 1)
+uncertainty-propagation-ln-2-pm-0-01-approx-0	Ln(Around(2, 0.01))	Around(0.693_147_180_559_945_3, 0.005)
+ln-exp-x	Ln(Exp(x))	x
+derivative-1-x	D(Ln(x), x)	1 / x
+antiderivative-x-ln-x-x	Integrate(Ln(x), x)	-x + x * Ln(x)
+mercator-series-for-ln-1-x	Series(Ln(1 + x), x, 0, 4)	-1 / 4 * x ^ 4 + 1 / 3 * x ^ 3 + -1 / 2 * x ^ 2 + x + BigO(x ^ 5)
+to-40-significant-digits-every-one-correctly	N(Ln(2), 40)	0.693_147_180_559_945_309_417_232_121_458_176_568_075_5
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	Ln(-1 / 2)	i * Pi - Ln(2)
+n-decimalizes-ln-i-not-just-the-exact-form	N(Ln(ImaginaryUnit))	1.570_796_326_794_896_6i
+an-integer-power-negative-argument	Ln(-2)	i * Pi + Ln(2)
+n-of-a-negative-integer-argument	N(Ln(-2), 10)	0.693_147_180_6 + 3.141_592_654i
+ln-neg-6	Ln(-6)	i * Pi + Ln(6)
+n-of-a-negative-rational-argument	N(Ln(-1 / 2))	-0.693_147_180_559_945_3 + 3.141_592_653_589_793i
+inverse-of-exp-ln-e-x-x	Ln(Exp(5)) == 5	True
+product-rule-ln-ab-ln-a-ln-b	Ln(2) + Ln(3) == Ln(6)	True
+powerexpand-splits-a-logarithm-of-a-product	PowerExpand(Ln(x * y))	Ln(x) + Ln(y)

@@ -1,0 +1,9 @@
+---
+name: OuterSize
+domain: Combinatorics
+signature: OuterSize(...)
+summary: Size of the outer shape
+statOn:
+  - SkewPartition
+stub: carrier
+---

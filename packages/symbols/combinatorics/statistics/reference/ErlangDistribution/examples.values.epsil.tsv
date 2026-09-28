@@ -1,0 +1,5 @@
+id	in	out
+erlang-pdf-exact	PDF(ErlangDistribution(3, 2), 1)	8 / (Gamma(3) * ExponentialE ^ 2)
+erlang-cdf-exact	CDF(ErlangDistribution(3, 2), 1)	1 + -5 / ExponentialE ^ 2
+erlang-mean-exact	Mean(ErlangDistribution(3, 2))	3 / 2
+erlang-variance-exact	Variance(ErlangDistribution(3, 2))	3 / 4

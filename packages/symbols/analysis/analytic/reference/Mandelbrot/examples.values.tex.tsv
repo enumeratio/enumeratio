@@ -1,0 +1,2 @@
+id	in	out
+mandelbrot-neg-1-2-iterations-returns-to-0	N(\mathrm{Mandelbrot}(-1, 2))	0

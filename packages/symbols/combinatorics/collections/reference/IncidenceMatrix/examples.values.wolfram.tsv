@@ -1,0 +1,2 @@
+id	in
+incidence-matrix-of-a-mixed-graph	IncidenceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], DirectedEdge[2, 3]]]]

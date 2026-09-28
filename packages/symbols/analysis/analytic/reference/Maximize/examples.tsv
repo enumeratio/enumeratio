@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+a-downward-parabola-s-vertex			[Maximize, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], x]	[List, 3, [List, [Rule, x, 2]]]	A downward parabola's vertex is its global maximum
+unbounded-above-reports-positive-infinity			[Maximize, [Power, x, 3], x]	[List, PositiveInfinity, [List, [Rule, x, PositiveInfinity]]]	An odd-degree polynomial is unbounded above
+a-bounded-interval-constraint			[Maximize, [List, [Add, [Negate, [Power, x, 2]], [Multiply, 4, x], -1], [And, [GreaterEqual, x, 0], [LessEqual, x, 1]]], x]	[List, 2, [List, [Rule, x, 1]]]	With 0 <= x <= 1, the unconstrained vertex (x = 2) is out of range -- the boundary wins
+exp-of-a-negated-argument-is-unbounded-above	Scope		[Maximize, [Exp, [Negate, x]], x]	[List, PositiveInfinity, [List, [Rule, x, NegativeInfinity]]]	Exp(-x) grows without bound as x -> -Infinity
+a-downward-quadratic-radicand	Scope		[Maximize, [Sqrt, [Subtract, 4, [Power, x, 2]]], x]	[List, 2, [List, [Rule, x, 0]]]	Sqrt(4 - x^2)'s domain is exactly [-2, 2] -- its vertex (x = 0) is the max
+declines-more-than-one-variable	Possible issues		[Maximize, [Negate, [Add, [Power, x, 2], [Power, y, 2]]], [List, x, y]]	[Maximize, [Negate, [Add, [Power, x, 2], [Power, y, 2]]], [List, x, y]]	Declines -- multivariate optimization is out of scope

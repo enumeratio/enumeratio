@@ -1,0 +1,23 @@
+id	in	out
+n-forces-the-numeric-result-that-plain		
+n-cosh-1		
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n		
+a-float-argument-evaluates-directly-no-n-needed		
+arbitrary-precision-via-n		
+evaluates-at-a-complex-argument		
+cosh-i-pi-cos-pi-1		
+element-wise-over-a-matrix-of-imaginary		
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not		
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1		
+cosh-positiveinfinity		
+evenness-drops-the-sign-of-a-symbolic-argument		
+cosh-arcosh-x-x-for-every-x		
+cosh-arcosh-2-2		
+cosh-arcosh-of-a-complex-argument		
+derivative-sinh-x		
+antiderivative		
+to-30-significant-digits-every-one-correctly		
+even-function-cosh-x-cosh-x	\cosh(-1)=\cosh(1)	\mathrm{True}
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	\cosh(1)^2-\sinh(1)^2=1	\mathrm{True}
+the-definition-cosh-x-frac-e-x-e-x-2		
+cosh-2-x-sinh-2-x-should-simplify-to-1		

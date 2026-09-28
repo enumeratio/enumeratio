@@ -1,0 +1,29 @@
+id	in	out	tex.in	tex.out	verdict
+arctan-0	ArcTan[0]	0	\tan ^{-1}(0)	0	
+arctan-1	ArcTan[1]	Pi/4	\tan ^{-1}(1)	\frac{\pi }{4}	
+arctan-sqrt-3	ArcTan[Sqrt[3]]	Pi/3	\tan ^{-1}\left(\sqrt{3}\right)	\frac{\pi }{3}	
+a-machine-precision-argument-evaluates	ArcTan[0.5]				
+arbitrary-precision-via-n	N[ArcTan[Rational[1, 2]]]				
+evaluates-at-a-complex-argument	ArcTan[Complex[2.5, 1]]				
+wolfram-s-two-argument-arctan-x-y-is-compute					
+arctan2-takes-y-first-the-angle-of-the-point-0-5					
+arctan-2-sqrt-3-5-pi-12	ArcTan[Plus[2, Sqrt[3]]]				
+arctan-2-sqrt-3-pi-12	ArcTan[Subtract[2, Sqrt[3]]]				
+arctan-sqrt-2-1-pi-8	ArcTan[Subtract[Sqrt[2], 1]]				
+arctan-1-over-sqrt-3	ArcTan[Divide[1, Sqrt[3]]]				
+arctan-neg-1	ArcTan[-1]				
+threads-element-wise-over-a-matrix	ArcTan[List[List[0, 1], List[-1, Sqrt[3]]]]				
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan	ArcTan[Interval[List[-1, 3]]]				
+oddness-pulls-the-sign-out-of-a-symbolic	ArcTan[Minus[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\tan ^{-1}(-x)--\tan ^{-1}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\tan ^{-1}\left(-\frac{7}{3}\right)--\tan ^{-1}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\tan ^{-1}\left(-\left(-\frac{11}{5}\right)\right)--\tan ^{-1}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\tan ^{-1}\left(-\frac{13}{4}\right)--\tan ^{-1}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+derivative-frac-1-1-x-2	D[ArcTan[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \tan ^{-1}(x)}{\partial x}-\frac{1}{x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\tan ^{-1}\left(\frac{7}{3}\right)-\frac{1}{\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\tan ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\tan ^{-1}\left(\frac{13}{4}\right)-\frac{1}{\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+antiderivative	Integrate[ArcTan[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \tan ^{-1}(x) \, dx-\left(x \tan ^{-1}(x)-\frac{1}{2} \log \left(x^2+1\right)\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \tan ^{-1}\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{7}{3} \tan ^{-1}\left(\frac{7}{3}\right)-\frac{1}{2} \log \left(\left(\frac{7}{3}\right)^2+1\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tan ^{-1}\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(-\frac{11}{5} \tan ^{-1}\left(-\frac{11}{5}\right)-\frac{1}{2} \log \left(\left(-\frac{11}{5}\right)^2+1\right)\right)\right]\right],\text{Chop}\left[N\left[\int \tan ^{-1}\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{13}{4} \tan ^{-1}\left(\frac{13}{4}\right)-\frac{1}{2} \log \left(\left(\frac{13}{4}\right)^2+1\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+gregory-s-series-about-0	""				
+the-limit-at-infty					
+to-30-significant-digits-every-one-correctly	N[ArcTan[Rational[1, 2]], 30]				
+tan-arctan-x-x	(Tan[ArcTan[1]] == 1)	True	\tan \left(\tan ^{-1}(1)\right)=1	\text{True}	
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	TrigToExp[ArcTan[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}\left[\tan ^{-1}(x)\right]-((\text{Rational}[-1,2] i) \log (i x+1)+(\text{Rational}[1,2] i) \log (-i x+1))\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(\frac{7}{3}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \frac{7}{3}+1\right)+(\text{Rational}[1,2] i) \log \left(-i \frac{7}{3}+1\right)\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(-\frac{11}{5}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \left(-\frac{11}{5}\right)+1\right)+(\text{Rational}[1,2] i) \log \left(-i \left(-\frac{11}{5}\right)+1\right)\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\tan ^{-1}\left(\frac{13}{4}\right)\right]-\left((\text{Rational}[-1,2] i) \log \left(i \frac{13}{4}+1\right)+(\text{Rational}[1,2] i) \log \left(-i \frac{13}{4}+1\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+compute-engine-s-arctan-takes-only-one-argument	ArcTan[1, 1]	Pi/4	\tan ^{-1}(1,1)	\frac{\pi }{4}	disagree
+the-horizontal-asymptote-as-x-to-infty	ArcTan[Infinity]	Pi/2	\tan ^{-1}(\infty )	\frac{\pi }{2}	
+and-as-x-to-infty	ArcTan[-Infinity]	-1/2*Pi	\tan ^{-1}(-\infty )	-\frac{\pi }{2}	
+euler-s-machin-like-identity-arctan-frac-12	FullSimplify[Plus[ArcTan[Rational[1, 2]], ArcTan[Rational[1, 3]]]]				
+machin-s-formula-4-arctan-frac-15-arctan-frac-1	FullSimplify[Subtract[Times[4, ArcTan[Rational[1, 5]]], ArcTan[Rational[1, 239]]]]				

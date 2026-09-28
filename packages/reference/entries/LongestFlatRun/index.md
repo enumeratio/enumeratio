@@ -1,0 +1,9 @@
+---
+name: LongestFlatRun
+domain: Combinatorics
+signature: LongestFlatRun(...)
+summary: Longest flat run
+statOn:
+  - MotzkinPath
+stub: carrier
+---

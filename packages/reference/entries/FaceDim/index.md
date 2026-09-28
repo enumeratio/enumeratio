@@ -1,0 +1,11 @@
+---
+name: FaceDim
+domain: Combinatorics
+signature: FaceDim(...)
+summary: Associahedron face dimension
+statOn:
+  - Dissection
+  - SetComposition
+  - SignedSubset
+stub: carrier
+---

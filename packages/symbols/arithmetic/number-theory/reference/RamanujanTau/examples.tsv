@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+ramanujantau-2			[RamanujanTau, 2]	-24	
+ramanujantau-5			[RamanujanTau, 5]	4830	
+listable	Scope		[RamanujanTau, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, -24, 252, -1472, 4830, -6048]	Listable
+ramanujantau-12	Scope		[RamanujanTau, 12]	-370944	
+multiplicative-tau-6-tau-2-tau-3	Properties		[Multiply, [RamanujanTau, 2], [RamanujanTau, 3]]	-6048	Multiplicative: $\tau(6) = \tau(2)\tau(3)$

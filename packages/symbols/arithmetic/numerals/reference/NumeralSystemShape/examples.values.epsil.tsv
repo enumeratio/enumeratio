@@ -1,0 +1,5 @@
+id	in	out
+4-and-6-share-a-factor-so-this-is-not-a	NumeralSystemShape(ResidueNumerals([4, 6]))	"{\n  \"Bijective\" -> False,\n  \"Integers\" -> Range(0, 23),\n  \"Digits\" -> [Range(0, 3), Range(0, 5)],\n  \"Width\" -> 2,\n}"
+numeralsystemshape-zeckendorfnumerals	NumeralSystemShape(ZeckendorfNumerals)	"{\n  \"Bijective\" -> True,\n  \"Integers\" -> NonNegativeIntegers,\n  \"Digits\" -> Range(0, 1),\n  \"Rule\" -> \"no two adjacent ones\",\n}"
+ordinary-base-2-in-the-same-shape-every-other	NumeralSystemShape(PositionalNumerals(2))	"{\n  \"Bijective\" -> True,\n  \"Integers\" -> NonNegativeIntegers,\n  \"Digits\" -> Range(0, 1),\n}"
+every-integer-negatives-included-with-no-sign	NumeralSystemShape(BalancedNumerals(3))	{"Bijective" -> True, "Integers" -> Integers, "Digits" -> Range(-1, 1)}

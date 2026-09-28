@@ -1,0 +1,4 @@
+id	in
+mixture-mean	Mean[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+mixture-variance-total-law	Variance[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+mixture-cdf-far-right	N[CDF[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]], 100]]

@@ -1,0 +1,13 @@
+---
+name: HopfDegree
+domain: Hopf algebras
+signature: HopfDegree(element)
+summary: The degree of a homogeneous element — the sum of its composition's parts; undefined when `element` mixes degrees.
+signatures:
+  - call: HopfDegree(element)
+    description: the degree of a homogeneous `element`
+    library: enumeratio-hopf
+    type: (number) -> integer
+seeAlso:
+  - Coproduct
+---

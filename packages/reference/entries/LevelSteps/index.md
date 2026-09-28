@@ -1,0 +1,11 @@
+---
+name: LevelSteps
+domain: Combinatorics
+signature: LevelSteps(...)
+summary: Number of level steps
+statOn:
+  - ColoredMotzkinPath
+  - KMotzkinPath
+  - MotzkinPath
+stub: carrier
+---

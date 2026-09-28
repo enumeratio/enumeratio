@@ -1,0 +1,4 @@
+id	in	out
+single-position	\mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, 2)	\bigl\lbrack a, f(b), c\bigr\rbrack
+negative-position	\mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, -1)	\bigl\lbrack a, b, f(c)\bigr\rbrack
+several-positions	\mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(a), b, f(c)\bigr\rbrack

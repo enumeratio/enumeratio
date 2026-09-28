@@ -1,0 +1,47 @@
+id	in	out	tex.in	tex.out
+integerdigits-1-234	IntegerDigits[1234]	{1, 2, 3, 4}	\text{IntegerDigits}[1234]	\{1,2,3,4\}
+integerdigits-2-147-2	IntegerDigits[2147, 2]	{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}	\text{IntegerDigits}[2147,2]	\{1,0,0,0,0,1,1,0,0,0,1,1\}
+integerdigits-58-127	IntegerDigits[58127]			
+integerdigits-58-127-2	IntegerDigits[58127, 2]			
+93-784-seconds-as-days-hours-minutes-seconds	IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]	{1, 2, 3, 4}	\text{IntegerDigits}[93784,\text{MixedRadix}[\{24,60,60\}]]	\{1,2,3,4\}
+100-89-8-3-with-no-two-adjacent-ones				
+digits-past-9-are-plain-integers-58127-e30f-16	IntegerDigits[58127, 16]			
+a-mixed-radix-spelled-mixedradix-102-341-seconds	IntegerDigits[102341, MixedRadix[List[24, 60, 60]]]			
+the-leading-digit-is-unbounded-137-3-cdot-3-2	IntegerDigits[137, MixedRadix[List[3, 12]]]			
+a-width-longer-than-the-numeral-pads-with	IntegerDigits[5, 2, 8]			
+listable-in-the-base-one-digit-list-per-base	IntegerDigits[7, List[2, 3, 4]]			
+listable-threads-over-a-range-of-integers	IntegerDigits[Range[0, 7], 2]			
+threads-element-wise-over-a-list-as-wolfram-s	IntegerDigits[List[6, 7, 2], 2]	{{1, 1, 0}, {1, 1, 1}, {1, 0}}	\text{IntegerDigits}[\{6,7,2\},2]	\{\{1,1,0\},\{1,1,1\},\{1,0\}\}
+ordinary-base-2-as-a-system-value-same-digits-as	IntegerDigits[2147, 2]	{1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1}	\text{IntegerDigits}[2147,2]	\{1,0,0,0,0,1,1,0,0,0,1,1\}
+the-same-20-13-5-2-over-a-continued-fraction-s				
+a-negative-integer-with-no-sign				
+spreadsheet-column-aaa				
+independent-residues-no-place-values				
+the-10-adic-truncation-a-negative-is-spelled-by				
+factoradic-5-is-the-lehmer-code-2-1-0				
+factoradic-463-a-longer-lehmer-code				
+balanced-ternary-5-is-1-1-1				
+negativenumerals-2-3-is-1-1-1				
+negativenumerals-2-minus-2-is-1-0				
+combinatorial-base-3-zero-is-2-1-0				
+primorial-base-30-is-1-0-0-0				
+ostrowski-12-over-all-ones-convergents				
+zeckendorf-12-is-8-3-1				
+ostrowski-9-over-2-2-2-is-1-2-0				
+bijective-base-26-27-is-aa				
+bijective-base-26-702-is-zz				
+the-3-argument-form-keeps-only-the-4-least	IntegerDigits[6345354, 10, 4]	{5, 3, 5, 4}	\text{IntegerDigits}[6345354,10,4]	\{5,3,5,4\}
+all-3-bit-words-by-threading-a-padded-form-over	IntegerDigits[Range[0, 7], 2, 3]			
+the-lehmer-code-of-the-6th-permutation-of-four				
+an-integer-base-is-still-the-native-handler	IntegerDigits[255, 16]	{15, 15}	\text{IntegerDigits}[255,16]	\{15,15\}
+unlike-integerstring-there-s-always-at-least-one	IntegerDigits[0]	{0}	\text{IntegerDigits}[0]	\{0\}
+the-sign-is-discarded	IntegerDigits[-3134]	{3, 1, 3, 4}	\text{IntegerDigits}[-3134]	\{3,1,3,4\}
+no-numeral-for-a-negative-in-a-system-that				
+fixed-base-2-drops-the-sign-of-minus-5	IntegerDigits[-5, 2]			
+positionalnumerals-declines-a-negative	IntegerDigits[-5, 2]			
+an-even-balanced-base-declines				
+an-unrecognized-system-symbol-leaves-the-call	IntegerDigits[10, NotASystem]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{IntegerDigits}[10,\text{NotASystem}]-\text{IntegerDigits}[10,\text{NotASystem}]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,\frac{7}{3}\right]-\text{IntegerDigits}\left[10,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,-\frac{11}{5}\right]-\text{IntegerDigits}\left[10,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{IntegerDigits}\left[10,\frac{13}{4}\right]-\text{IntegerDigits}\left[10,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+ostrowski-declines-past-its-ceiling				
+past-the-product-there-is-no-residue-numeral				
+bijective-base-26-zero-is-the-empty-numeral				
+100-has-158-digits	Length[IntegerDigits[Factorial[100]]]			

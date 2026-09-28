@@ -1,0 +1,32 @@
+---
+name: FubiniNumbers
+domain: Collections
+signature: FubiniNumbers
+summary: The Fubini numbers (ordered Bell numbers) $1, 1, 3, 13, 75, 541, …$ as a lazy indexed collection.
+signatures:
+  - call: FubiniNumbers
+    description: The number of ordered set partitions (rankings with ties allowed) of an $n$-set, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(FubiniNumbers) = +\infty$, and $At(FubiniNumbers, k)$ unranks term $k-1$ via $a(n) = \sum_{j=1}^{n} \binom{n}{j} a(n-j)$, bigint throughout -- $At(FubiniNumbers, 1) = a(0) = 1$.'
+  - "OEIS A000670, starting exactly at its offset-0 term: $1, 1, 3, 13, 75, 541, 4683, …$."
+  - "Membership goes through [[Element]]: $Element(75, FubiniNumbers)$ is true, $Element(20, FubiniNumbers)$ is false."
+enumerate:
+  expr: Take(FubiniNumbers, 15)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - BellNumbers
+catalog:
+  - system: oeis
+    identity: A000670
+    url: https://oeis.org/A000670
+  - system: sage
+    identity: OrderedSetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition_ordered.html
+    note: no dedicated fubini/ordered-Bell function in sage — a(n) = OrderedSetPartitions(n).cardinality()
+    relation: aggregate
+grades: []
+carrier: Numeric
+unbounded: true
+---

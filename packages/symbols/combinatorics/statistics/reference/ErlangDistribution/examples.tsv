@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+erlang-pdf-exact			[PDF, [ErlangDistribution, 3, 2], 1]	[Divide, 8, [Multiply, [Gamma, 3], [Power, ExponentialE, 2]]]
+erlang-cdf-exact			[CDF, [ErlangDistribution, 3, 2], 1]	[Add, 1, [Divide, -5, [Power, ExponentialE, 2]]]
+erlang-mean-exact			[Mean, [ErlangDistribution, 3, 2]]	[Rational, 3, 2]
+erlang-variance-exact			[Variance, [ErlangDistribution, 3, 2]]	[Rational, 3, 4]

@@ -1,0 +1,12 @@
+id	in	out
+no-primes-are-1	\mathrm{PrimePi}(1)	0
+primepi-2	\mathrm{PrimePi}(2)	1
+primepi-15	\mathrm{PrimePi}(15)	6
+primepi-100	\mathrm{PrimePi}(100)	25
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{PrimePi}(\bigl\lbrack10, 100\bigr\rbrack)	\bigl\lbrack4, 25\bigr\rbrack
+rational-arguments-the-primes-up-to-7-2-are-2	\mathrm{PrimePi}(\frac{7}{2})	2
+real-arguments	\mathrm{PrimePi}(15.25)	6
+the-primes-below-a-million	\mathrm{PrimePi}(1\,000\,000)	78\,498
+listable-threads-over-a-list	\mathrm{PrimePi}(\bigl\lbrack3, 5, 17, 25\bigr\rbrack)	\bigl\lbrack2, 3, 7, 9\bigr\rbrack
+same-inverse-relation-viewed-from-primepi-s-side	\mathrm{PrimePi}(\mathrm{NthPrime}(50))=50	\top
+no-primes-are-a-negative-number	\mathrm{PrimePi}(-1)	0

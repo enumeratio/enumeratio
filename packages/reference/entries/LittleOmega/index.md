@@ -1,0 +1,10 @@
+---
+name: LittleOmega
+domain: Combinatorics
+signature: LittleOmega(...)
+summary: ω — distinct prime factors
+statOn:
+  - IntegerFactorization
+  - Numeric
+stub: carrier
+---

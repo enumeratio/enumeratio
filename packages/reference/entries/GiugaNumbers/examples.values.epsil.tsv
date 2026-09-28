@@ -1,0 +1,2 @@
+id	in	out
+the-first-4-terms	Take(GiugaNumbers, 4)	[30, 858, 1_722, 66_198]

@@ -1,0 +1,6 @@
+id	in	out
+the-cube-root-of-a-perfect-cube	\mathrm{CubeRoot}(8)	2
+the-real-root-of-a-negative-number-not-a-complex	\mathrm{CubeRoot}(-27)	-3
+at-a-non-perfect-cube-n-forces-the-numeric	N(\mathrm{CubeRoot}(2))	1.259\,921\,049\,894\,873\,2
+threads-element-wise-over-a-list	\mathrm{CubeRoot}(\bigl\lbrack-8, 27\bigr\rbrack)	\bigl\lbrack-2, 3\bigr\rbrack
+the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\top

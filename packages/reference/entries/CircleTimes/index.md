@@ -1,0 +1,14 @@
+---
+name: CircleTimes
+domain: Wolfram
+signature: CircleTimes(...)
+summary: Wolfram's own CircleTimes, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolframIdentity: true
+stub: carrier
+signatures:
+  - call: CircleTimes(...)
+    description: Wolfram's own CircleTimes, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-structures
+    type: (number*) -> number
+---

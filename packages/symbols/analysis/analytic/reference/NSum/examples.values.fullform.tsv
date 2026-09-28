@@ -1,0 +1,8 @@
+id	in
+zeta-2-via-euler-maclaurin	NSum[Power[n, -2], List[n, 1, Infinity]]
+the-alternating-harmonic-series	NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
+e-minus-one	NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
+a-finite-range-is-a-direct-sum	NSum[n, List[n, 1, 5]]
+a-much-more-slowly-convergent-power-law	NSum[Power[n, -1.1], List[n, 1, Infinity]]
+declines-the-harmonic-series	NSum[Divide[1, n], List[n, 1, Infinity]]
+declines-a-series-whose-terms-grow	NSum[n, List[n, 1, Infinity]]

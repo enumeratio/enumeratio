@@ -1,0 +1,9 @@
+---
+name: WidestArc
+domain: Combinatorics
+signature: WidestArc(...)
+summary: Widest arc
+statOn:
+  - PerfectMatching
+stub: carrier
+---

@@ -1,0 +1,5 @@
+id	in
+c-4	AlgebraDimension[TemperleyLiebAlgebra[4]]
+the-cup-cap-and-the-identity-all-of-tl-2	Basis[TemperleyLiebAlgebra[2]]
+the-cup-cap-is-planar-so-it-belongs	Element[Diagram[List[List[1, 2], List[-1, -2], List[3, -3]]], TemperleyLiebAlgebra[3]]
+e-1-2-delta-e-1	NonCommutativeMultiply[Diagram[List[List[1, 2], List[-1, -2]]], Diagram[List[List[1, 2], List[-1, -2]]]]

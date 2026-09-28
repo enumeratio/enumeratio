@@ -1,0 +1,41 @@
+id	in	out	verdict
+exp-0	exp(0)	1	
+stays-the-exact-constant-rather-than	exp(1)	E	
+compute-engine-represents-exp-x-as-e-x-once-the	exp(Symbol("x"))	True	
+a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970	
+broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[1, E], [E, 1]]	
+arbitrary-precision-via-n	N(exp(Rational(8, 5)), 30)	4.95303242439511480365428635642	
+evaluates-at-a-complex-argument	exp((2.5 + 1*I))	12.1824939607035*exp(I)	
+euler-s-identity-e-i-pi-1	exp((I * pi))	-1	
+exp-imaginaryunit-times-pi-over-2	exp((I * (S(pi) / 2)))	I	
+a-special-imaginary-argument-folds-through-e-i	exp((I * (S(pi) / 5)))	exp(I*pi/5)	
+exp-ln-2	exp(log(2))	2	
+exp-ln-neg-1	exp(log(-1))	-1	
+inverse-of-ln-symbolically	exp(log(Symbol("x")))	True	
+exp-ln-of-a-complex-argument-is-that-argument	exp(log((1 + 2*I)))	1 + 2*I	
+exp-negativeinfinity	exp(-oo)		
+exp-positiveinfinity	exp(oo)		
+element-wise-over-a-matrix-not-the-matrix	[[exp(1), exp((I * (S(pi) / 2)))], [exp(0), exp(1)]]	[[E, I], [1, E]]	
+interval-arithmetic-exp-1-ln-2-e-1-2			
+uncertainty-propagation-e-2-pm-0-01-approx-7-389			
+around-0-still-fires-the-e-base-power-rule			
+its-own-derivative	diff(exp(Symbol("x")), Symbol("x"))		
+its-own-antiderivative			
+taylor-series-about-0			
+n-decimalizes-a-combined-product	N((exp(1) * exp(2)), 30)		
+agrees-numerically-at-a-complex-point	N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))), 30)		
+to-50-significant-digits-every-one-correctly	N(exp(1), 30)	2.71828182845904523536028747135	
+to-1-significant-digit	N(exp(1), 30)	2.71828182845904523536028747135	disagree
+threads-element-wise-over-a-list	[exp(0), exp(1)]	[1, E]	
+inverse-of-ln-e-ln-x-x	enumeratio_equal(exp(log(5)), 5)	True	
+e-a-e-b-e-a-b	enumeratio_equal((exp(2) * exp(3)), exp(5))	True	
+e-as-the-limit-lim-x-to-infty-1-1-x-x			
+lim-x-to-0-frac-e-x-1-x-1			
+a-product-of-exponentials-should-combine-e-x-e-y	(exp(Symbol("x")) * exp(Symbol("y")))	True	
+combines-past-two-factors	(exp(Symbol("a")) * exp(Symbol("b")) * exp(Symbol("c")))	True	
+combines-past-extra-non-exponential-factors	(2 * exp(Symbol("x")) * exp(Symbol("y")) * Symbol("z"))	True	
+e-x-e-x-cancels-to-1	(exp(Symbol("x")) * exp((-Symbol("x"))))	1	
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig			
+exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	-2	
+a-lone-exp-factor-is-untouched	(exp(Symbol("x")) * Symbol("y"))	True	
+same-base-non-e-powers-are-left-alone	((S(2)**Symbol("x")) * (S(2)**Symbol("y")))	True	

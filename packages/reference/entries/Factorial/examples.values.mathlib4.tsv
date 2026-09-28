@@ -1,0 +1,20 @@
+id	in	out	verdict
+5-factorial	(Nat.factorial 5)	120	
+6-factorial	(Nat.factorial 6)	720	
+the-empty-product-is-1-by-convention	(Nat.factorial 0)	1	
+10-factorial	(Nat.factorial 10)	3628800	
+threads-element-wise-over-a-list	(Nat.factorial [1, 2, 3, 4])	Application type mismatch: The argument	error
+frac-n-n-1-simplifies-to-n-under-simplify-plain			
+real-arguments-evaluate-as-gamma-n-1	(Nat.factorial 3.5)		
+negative-non-integers-are-defined-too-2-5-gamma	(Nat.factorial (-2.5))		
+complex-arguments-1-i-gamma-2-i			
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	(Nat.factorial (((-1) : ℚ) / 2))		
+infty-infty			
+the-number-of-ways-to-arrange-8-distinct-books	(Nat.factorial 8)	40320	
+recurrence-n-n-n-1	(decide ((Nat.factorial 5) = (5 * (Nat.factorial 4))))	true	
+extends-to-non-integers-via-the-gamma-function	(Nat.factorial ((1 : ℚ) / 2))	Type mismatch	error
+n-gamma-n-1-see-gamma			
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+negative-integers-are-poles-of-the-gamma	(Nat.factorial (-1))	failed to synthesize instance of type class	error
+factorials-grow-fast-20-already-exceeds-2-times	(Nat.factorial 20)	2432902008176640000	
+30-has-33-digits-and-ends-in-seven-zeros	(Nat.factorial 30)		

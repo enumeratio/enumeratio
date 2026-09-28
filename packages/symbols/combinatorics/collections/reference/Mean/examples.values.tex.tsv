@@ -1,0 +1,13 @@
+id	in	out
+mean-list-1-2-3-4	\mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\frac{5}{2}
+mean-list-2-4-4-4-5-5-7-9	\mathrm{mean}(\bigl\lbrack2, 4, 4, 4, 5, 5, 7, 9\bigr\rbrack)	5
+mean-list-1p21-3p4-2p15-4-1p55	\mathrm{mean}(\bigl\lbrack1.21, 3.4, 2.15, 4, 1.55\bigr\rbrack)	2.462
+given-a-matrix-mean-is-column-wise	\mathrm{mean}(\bigl\lbrack\bigl\lbrack1, 10\bigr\rbrack, \bigl\lbrack2, 20\bigr\rbrack, \bigl\lbrack3, 30\bigr\rbrack\bigr\rbrack)	\bigl\lbrack2, 20\bigr\rbrack
+exact-rationals-give-an-exact-mean	\mathrm{mean}(\bigl\lbrack\frac{1}{2}, \frac{1}{3}, \frac{1}{6}\bigr\rbrack)	\frac{1}{3}
+symbolic-data-gives-an-exact-symbolic-mean-frac	\mathrm{mean}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\frac{a+b+c+d}{4}
+exact-constants-give-an-exact-mean-frac-2-e-pi-3	\mathrm{mean}(\bigl\lbrack\pi, e, 2\bigr\rbrack)	\frac{2+e+\pi}{3}
+of-a-matrix-of-symbols-the-exact-mean-of-each	\mathrm{mean}(\bigl\lbrack\bigl\lbrack a, u\bigr\rbrack, \bigl\lbrack b, v\bigr\rbrack, \bigl\lbrack c, w\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\frac{a+b+c}{3}, \frac{u+v+w}{3}\bigr\rbrack
+the-mean-of-a-lazy-range-exactly	\mathrm{mean}(1..100)	\frac{101}{2}
+mean-is-total-divided-by-count-mean-c-frac-sum-c	\mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}	\top
+a-single-outlier-drags-the-mean-far-from-the	\mathrm{mean}(\bigl\lbrack-100, 1, 1, 1, 1, 20\bigr\rbrack)	-\frac{38}{3}
+the-mean-of-no-data-is-nan	\mathrm{mean}(\bigl\lbrack\bigr\rbrack)	\operatorname{NaN}

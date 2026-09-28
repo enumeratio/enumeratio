@@ -1,0 +1,24 @@
+id	in	out
+product-list-1-2-3-4		
+the-empty-product-is-1-by-convention-matching		
+prod-i-1-6-i-2-6-2		
+a-symbolic-upper-limit-prod-i-1-n-i-2-n-2		
+a-symbolic-upper-limit-prod-k-1-n-k-n-see		
+exponents-add-prod-k-1-n-x-k-x-n-n-1-2		
+a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1		
+an-undefined-function-expanded-term-by-term		
+a-step-of-2-takes-every-other-index		
+over-an-explicit-list-of-values		
+a-polynomial-with-roots-1-2-and-3		
+a-double-product-over-a-3-times-3-grid		
+an-inner-limit-that-depends-on-the-outer-index-a		
+a-symbolic-triangular-product-prod-i-1-p-prod-j		
+an-infinite-product-with-a-closed-form-prod-k-1		
+an-infinite-telescoping-product-prod-k-2-infty-1		
+prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet		
+exact-rationals-in-a-collection		
+symbolic-elements		
+range-stays-lazy-on-its-own-but-product-forces		
+the-product-of-1-through-n-is-n-see-factorial	\prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack=4!	\mathrm{True}
+the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2		
+an-asymmetric-infinite-product-n-n-3-n-1-n-2		

@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-binarywords-3	Basic		[Count, [BinaryWords, 3]]	8	$Count(BinaryWords(3)) = 8$
+first-element-of-binarywords-3	Basic		[At, [BinaryWords, 3], 1]	[List, 0, 0, 0]	The first element in enumeration order
+every-element-of-binarywords-3		test	[Take, [BinaryWords, 3], 8]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	

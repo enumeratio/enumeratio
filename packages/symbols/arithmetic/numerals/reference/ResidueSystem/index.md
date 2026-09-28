@@ -1,0 +1,13 @@
+---
+name: ResidueSystem
+domain: Numeral systems
+signature: ResidueSystem(moduli)
+summary: "The old spelling of [[ResidueNumerals]], kept working: `ResidueSystem(moduli)` evaluates to its canonical form."
+signatures:
+  - call: ResidueSystem(moduli)
+    description: same as ResidueNumerals(moduli)
+    library: enumeratio-numerals
+    type: (list<integer>) -> value
+seeAlso:
+  - ResidueNumerals
+---

@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+zero-modulus	Mod[5, 0]	Indeterminate	(5 \bmod 0)	\text{Indeterminate}

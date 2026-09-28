@@ -1,0 +1,20 @@
+---
+name: Denominator
+domain: Compute engine
+signature: Denominator(number) -> nothing | number
+summary: Denominator of an expression
+signatures:
+  - call: Denominator(number) -> nothing | number
+    description: as compute-engine declares it
+  - call: Denominator(number) -> nothing | number
+    description: Denominator of an expression
+    library: enumeratio-adeles
+    type: (number | value) -> nothing | number
+    overrides: compute-engine
+statOn:
+  - BinaryWord
+  - RationalNumber
+stub: engine
+attributes:
+  - HoldAll
+---

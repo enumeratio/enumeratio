@@ -1,0 +1,5 @@
+id	in
+power-x2-alpha-half	CaputoD[Power[x, 2], List[x, 0.5]]
+constant-vanishes	CaputoD[5, List[x, 0.5]]
+integer-edge-case-vanishes	CaputoD[x, List[x, 1.5]]
+polynomial-linearity	CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]

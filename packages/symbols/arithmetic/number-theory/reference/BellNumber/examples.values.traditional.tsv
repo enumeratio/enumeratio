@@ -1,0 +1,17 @@
+id	in	out
+bellnumber-0	B_{0}	1
+bellnumber-1	B_{1}	1
+bellnumber-3	B_{3}	5
+bellnumber-5	B_{5}	52
+bellnumber-10	B_{10}	115\,975
+threads-element-wise-over-a-list-as-wolfram-s		
+exact-for-large-n	B_{30}	846\,749\,014\,511\,809\,332\,450\,147
+the-two-argument-form-gives-the-bell-touchard	B_{5}(x)	x^5+10x^4+25x^3+15x^2+x
+the-bell-polynomial-at-a-real-point-b-20-0-5	B_{20}(0.5)	270\,190\,131\,940.151\,92
+the-number-of-ways-to-partition-a-4-element-set	B_{4}	15
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	B_{5}=\binom{4}{0}B_{0}+\binom{4}{1}B_{1}+\binom{4}{2}B_{2}+\binom{4}{3}B_{3}+\binom{4}{4}B_{4}	\mathrm{True}
+the-bell-polynomial-at-1-is-the-bell-number-b-n	B_{5}(1)	52
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac		
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	B_{9}\bmod7=(B_{2}+B_{3})\bmod7	\mathrm{True}
+a-negative-argument-is-left-unevaluated	B_{-1}	B_{-1}
+a-zero-modulus-inside-a-congruence-check-is-nan	B_{9}\bmod23=(B_{4}+B_{5})\bmod0	\mathrm{False}

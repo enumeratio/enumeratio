@@ -1,4 +1,0 @@
-- id: an-edge-from-1-to-2
-  expr: [DirectedEdge, 1, 2]
-  expected: [DirectedEdge, 1, 2]
-  caption: An edge from 1 to 2

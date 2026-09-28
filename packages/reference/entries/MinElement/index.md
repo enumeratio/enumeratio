@@ -1,0 +1,9 @@
+---
+name: MinElement
+domain: Combinatorics
+signature: MinElement(...)
+summary: Smallest element
+statOn:
+  - Finset
+stub: carrier
+---

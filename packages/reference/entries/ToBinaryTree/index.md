@@ -1,0 +1,9 @@
+---
+name: ToBinaryTree
+domain: Combinatorics
+signature: ToBinaryTree(...)
+summary: To binary tree
+mapOn:
+  - DyckPath
+stub: carrier
+---

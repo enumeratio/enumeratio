@@ -1,0 +1,7 @@
+id	in
+n-pi-30	N[Pi, 30]
+the-last-digit-correctly-rounded-computing-at-30	N[Sinh[1], 30]
+a-list-number-by-number	N[List[Pi, E, Sqrt[2]], 5]
+an-exact-tie-rounds-to-the-even-digit-0-125	N[Rational[1, 8], 2]
+and-0-375-to-0-38	N[Rational[3, 8], 2]
+n-pi-1-digit	N[Pi, 1]

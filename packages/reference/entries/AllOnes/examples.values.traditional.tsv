@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms		
+1-is-in-allones	1\in\mathrm{AllOnes}	\mathrm{True}
+2-is-not-in-allones	2\in\mathrm{AllOnes}	\mathrm{False}

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+substitute-a-fixed-value			[With, [List, [Equal, x, 3]], [Multiply, x, x]]	9	substitute a fixed value
+several-bindings-at-once	Scope		[With, [List, [Equal, x, 2], [Equal, y, 5]], [Add, x, y]]	7	several bindings at once

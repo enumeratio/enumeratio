@@ -1,0 +1,43 @@
+---
+name: FibonacciNumbers
+domain: Collections
+signature: FibonacciNumbers
+summary: The Fibonacci numbers $0, 1, 1, 2, 3, 5, …$ as a lazy indexed collection.
+signatures:
+  - call: FibonacciNumbers
+    description: $F_n = F_{n-1} + F_{n-2}$, $F_0 = 0$, $F_1 = 1$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(FibonacciNumbers) = +\infty$, and $At(FibonacciNumbers, k)$ unranks the term via a memoised linear recurrence -- $At(FibonacciNumbers, 1) = F_0 = 0$ (`At` is 1-indexed; rank 0 is $F_0$).'
+  - "OEIS A000045, starting exactly at its offset-0 term: $0, 1, 1, 2, 3, 5, 8, …$."
+  - "Membership goes through [[Element]]: $Element(21, FibonacciNumbers)$ is true, $Element(10, FibonacciNumbers)$ is false. $F_1 = F_2 = 1$ repeats, so the sequence is non-decreasing rather than strictly increasing."
+enumerate:
+  expr: Take(FibonacciNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - LucasNumbers
+  - PellNumbers
+  - TribonacciNumbers
+catalog:
+  - system: mathlib4
+    identity: Nat.fib
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Basic.html
+  - system: oeis
+    identity: A000045
+    url: https://oeis.org/A000045
+  - system: sage
+    identity: sage.combinat.combinat.fibonacci(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: exact unshifted term-for-term match (F(0)=0,F(1)=1,...); verified live n=0..8 (no prior sage row for this collection)
+  - system: wikipedia
+    identity: Fibonacci sequence
+    url: https://en.wikipedia.org/wiki/Fibonacci_sequence
+    relation: conceptual
+  - system: wolfram
+    identity: Fibonacci
+    url: https://reference.wolfram.com/language/ref/Fibonacci.html
+grades: []
+carrier: Numeric
+unbounded: true
+---

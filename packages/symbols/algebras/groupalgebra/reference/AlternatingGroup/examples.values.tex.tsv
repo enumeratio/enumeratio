@@ -1,0 +1,8 @@
+id	in	out
+order-is-n-factorial-over-two	\mathrm{GroupOrder}(\mathrm{AlternatingGroup}(5))	60
+generators-odd-n	\mathrm{GroupGenerators}(\mathrm{AlternatingGroup}(5))	\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+generators-even-n	\mathrm{GroupGenerators}(\mathrm{AlternatingGroup}(4))	\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack2, 3, 4\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+generators-collapse-at-three	\mathrm{GroupGenerators}(\mathrm{AlternatingGroup}(3))	\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+elements-of-a3	\mathrm{GroupElements}(\mathrm{AlternatingGroup}(3))	\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+trivial-for-n-equals-one	\mathrm{GroupOrder}(\mathrm{AlternatingGroup}(1))	1
+trivial-for-n-equals-two	\mathrm{GroupOrder}(\mathrm{AlternatingGroup}(2))	1

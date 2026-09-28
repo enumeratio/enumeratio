@@ -1,0 +1,9 @@
+id	in	out
+8-2-3	\mathrm{MangoldtLambda}(8)	\ln(2)
+6-is-not-a-prime-power	\mathrm{MangoldtLambda}(6)	0
+mangoldtlambda-7	\mathrm{MangoldtLambda}(7)	\ln(7)
+mangoldtlambda-9	\mathrm{MangoldtLambda}(9)	\ln(3)
+numerically-ln-3	N(\mathrm{MangoldtLambda}(9))	1.098\,612\,288\,668\,109\,8
+listable	\mathrm{MangoldtLambda}(\bigl\lbrack2, 4, 6, 25\bigr\rbrack)	\bigl\lbrack\ln(2), \ln(2), 0, \ln(5)\bigr\rbrack
+n-of-a-zero-result-is-still-0	N(\mathrm{MangoldtLambda}(6))	0
+lambda-1-0	\mathrm{MangoldtLambda}(1)	0

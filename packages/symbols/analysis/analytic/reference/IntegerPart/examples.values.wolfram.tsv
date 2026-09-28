@@ -1,0 +1,9 @@
+id	in
+integerpart-2p4	IntegerPart[2.4]
+truncates-toward-0-unlike-floor	IntegerPart[-2.4]
+integerpart-7-over-2	IntegerPart[Rational[7, 2]]
+integerpart-neg-7-over-2	IntegerPart[Rational[-7, 2]]
+exact-numeric-arguments-stay-exact	IntegerPart[Pi]
+threads-element-wise-over-a-list	IntegerPart[List[2.5, -2.5]]
+complex-numbers-real-and-imaginary-parts	IntegerPart[Complex[2.5, 3.7]]
+x-integerpart-x-fractionalpart-x	(Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]] == Rational[-7, 2])

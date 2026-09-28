@@ -1,0 +1,9 @@
+---
+name: Period
+domain: Combinatorics
+signature: Period(...)
+summary: Rotation period (= the rotation orbit size)
+statOn:
+  - Word
+stub: carrier
+---

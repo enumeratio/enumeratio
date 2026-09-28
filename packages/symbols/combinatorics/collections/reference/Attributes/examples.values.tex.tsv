@@ -1,0 +1,2 @@
+id	in	out
+adds-attributes	\mathrm{Attributes}(\mathrm{Add})	\bigl\lbrack\mathrm{Flat}, \mathrm{HoldAll}, \mathrm{Listable}, \mathrm{Orderless}\bigr\rbrack

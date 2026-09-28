@@ -1,0 +1,9 @@
+---
+name: Content
+domain: Combinatorics
+signature: Content(...)
+summary: Preference content
+mapOn:
+  - ParkingFunction
+stub: carrier
+---

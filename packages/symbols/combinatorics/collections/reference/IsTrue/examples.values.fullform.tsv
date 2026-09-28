@@ -1,0 +1,5 @@
+id	in
+true-is-true	TrueQ[True]
+false-is-not-true	TrueQ[False]
+an-evaluating-comparison	TrueQ[Equal[1, 1]]
+an-unevaluated-symbol-is-false	TrueQ[x]

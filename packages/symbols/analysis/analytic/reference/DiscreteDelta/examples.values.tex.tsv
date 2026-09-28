@@ -1,0 +1,5 @@
+id	in	out
+discretedelta-zero	\mathrm{DiscreteDelta}(0)	1
+discretedelta-nonzero	\mathrm{DiscreteDelta}(1)	0
+discretedelta-multi-all-zero	\mathrm{DiscreteDelta}(0, 0)	1
+discretedelta-multi-one-nonzero	\mathrm{DiscreteDelta}(1, 0)	0

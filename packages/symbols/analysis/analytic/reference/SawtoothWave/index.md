@@ -1,0 +1,20 @@
+---
+name: SawtoothWave
+domain: Elementary functions
+signature: SawtoothWave(x)
+summary: "The sawtooth wave: x - floor(x), period 1, range [0, 1)."
+signatures:
+  - call: SawtoothWave(x)
+    description: x - floor(x), unit period, range [0, 1).
+    library: "@enumeratio/analytic"
+    type: (real | vector<real^2>, real?) -> number
+  - call: SawtoothWave({min, max}, x)
+    description: the sawtooth rescaled to vary from min to max, unit period.
+    library: "@enumeratio/analytic"
+    arity: 2
+details:
+  - Unlike [[FractionalPart]], which keeps the sign of x, SawtoothWave(x) is always in [0, 1) -- SawtoothWave(-1/4) is 3/4, not -1/4.
+  - The range form takes the range FIRST, x second -- SawtoothWave({min, max}, x) -- matching Wolfram's own argument order for this family.
+names:
+  wolframIdentity: true
+---

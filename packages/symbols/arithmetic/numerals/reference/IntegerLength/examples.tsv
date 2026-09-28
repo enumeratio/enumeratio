@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+integerlength-12-345			[IntegerLength, 12345]	5	
+integerlength-2-pow-100	Scope		[IntegerLength, [Power, 2, 100]]	31	
+255-ff-16	Scope		[IntegerLength, 255, 16]	2	$255 = \mathrm{ff}_{16}$
+listable	Scope		[IntegerLength, [List, 1, 10, 100]]	[List, 1, 2, 3]	Listable
+the-sign-is-not-counted	Possible issues		[IntegerLength, -123]	3	the sign is not counted
+0-has-length-0-unlike-its-one-element	Possible issues		[IntegerLength, 0]	0	0 has length 0, unlike its one-element [[IntegerDigits]]

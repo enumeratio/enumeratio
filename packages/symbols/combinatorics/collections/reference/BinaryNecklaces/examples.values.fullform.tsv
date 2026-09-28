@@ -1,0 +1,4 @@
+id	in
+count-binarynecklaces-5	Count[BinaryNecklaces[5]]
+first-element-of-binarynecklaces-5	Part[BinaryNecklaces[5], 1]
+every-element-of-binarynecklaces-5	Take[BinaryNecklaces[5], 8]

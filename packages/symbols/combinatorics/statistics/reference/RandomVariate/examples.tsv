@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+randomvariate-default-seed-is-reproducible			[RandomVariate, [NormalDistribution, 0, 1]]	-0.956162229384149	With no [[SeedRandom]] call, a fixed default seed still makes this reproducible
+randomvariate-n-draws	Scope		[Last, [List, [SeedRandom, 1], [RandomVariate, [UniformDistribution, [List, 0, 1]], 3]]]	[List, 0.6270739405881613, 0.002735721180215478, 0.5274470399599522]	
+randomvariate-discrete-draw	Scope		[Last, [List, [SeedRandom, 1], [RandomVariate, [PoissonDistribution, 4]]]]	1	
+randomvariate-empirical-resamples-the-data	Scope		[Last, [List, [SeedRandom, 2], [RandomVariate, [EmpiricalDistribution, [List, a, b, c]]]]]	c	
+randomvariate-is-random-over-a-distribution	Properties & Relations		[Equal, [Last, [List, [SeedRandom, 5], [RandomVariate, [NormalDistribution, 0, 1]]]], [Last, [List, [SeedRandom, 5], [Random, [NormalDistribution, 0, 1]]]]]	True	`RandomVariate` is [[Random]] over the distribution: the same draw from the same stream

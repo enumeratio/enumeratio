@@ -1,0 +1,28 @@
+---
+name: CentralDelannoyNumbers
+domain: Collections
+signature: CentralDelannoyNumbers
+summary: The central Delannoy numbers $1, 3, 13, 63, 321, …$ as a lazy indexed collection.
+signatures:
+  - call: CentralDelannoyNumbers
+    description: The count of king-move lattice paths across an $n \times n$ grid, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(CentralDelannoyNumbers) = +\infty$, and $At(CentralDelannoyNumbers, k)$ unranks term $k-1$ via $n D(n) = 3(2n-1)D(n-1) - (n-1)D(n-2)$, $D_0 = 1$, $D_1 = 3$, bigint throughout -- $At(CentralDelannoyNumbers, 1) = D_0 = 1$.'
+  - "OEIS A001850, starting exactly at its offset-0 term: $1, 3, 13, 63, 321, 1683, …$; strictly increasing."
+  - "Membership goes through [[Element]]: $Element(13, CentralDelannoyNumbers)$ is true, $Element(10, CentralDelannoyNumbers)$ is false."
+enumerate:
+  expr: Take(CentralDelannoyNumbers, 15)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - SchroederNumbers
+  - PellNumbers
+catalog:
+  - system: oeis
+    identity: A001850
+    url: https://oeis.org/A001850
+grades: []
+carrier: Numeric
+unbounded: true
+---

@@ -1,0 +1,14 @@
+---
+name: ModularFromSTWord
+domain: The modular group
+signature: ModularFromSTWord(exponents)
+summary: Rebuild a matrix from its $S/T$ factorisation — the inverse of [[ModularSTWord]].
+signatures:
+  - call: ModularFromSTWord(exponents)
+    description: the matrix $T^{e_0}ST^{e_1}S\cdots$
+    library: enumeratio-modular
+    type: (list<integer>) -> expression<ModularMatrix>
+seeAlso:
+  - ModularSTWord
+  - ModularMatrix
+---

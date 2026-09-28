@@ -1,0 +1,199 @@
+id	in	out	tex.in	tex.out
+zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	HurwitzZeta[2, 1]	Pi^2/6	\zeta (2,1)	\frac{\pi ^2}{6}
+zeta-2-2-pi-2-6-1	HurwitzZeta[2, 2]	-1 + Pi^2/6	\zeta (2,2)	\frac{\pi ^2}{6}-1
+an-inexact-a-evaluates-numerically-without-n	HurwitzZeta[3, 0.2]			
+inside-the-critical-strip-under-n	N[HurwitzZeta[0.51, 0.87]]			
+precise-zeta-s-neg-41-2-a-3-10-d80	N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 80]			
+precise-zeta-s-neg-81-2-a-2-5-d40	N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 40]			
+precise-zeta-s-neg-81-2-a-2-5-d80	N[HurwitzZeta[Rational[-81, 2], Rational[2, 5]], 80]			
+precise-zeta-s-neg-21-2-a-3-10-d40	N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 40]			
+precise-zeta-s-neg-21-2-a-3-10-d80	N[HurwitzZeta[Rational[-21, 2], Rational[3, 10]], 80]			
+precise-zeta-s-neg-11-2-a-27-10-d40	N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 40]			
+precise-zeta-s-neg-11-2-a-27-10-d80	N[HurwitzZeta[Rational[-11, 2], Rational[27, 10]], 80]			
+precise-zeta-s-neg-5-2-a-3-10-d40	N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 40]			
+precise-zeta-s-neg-5-2-a-3-10-d80	N[HurwitzZeta[Rational[-5, 2], Rational[3, 10]], 80]			
+precise-zeta-s-neg-1-2-a-1-20-d40	N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 40]			
+precise-zeta-s-neg-1-2-a-1-20-d80	N[HurwitzZeta[Rational[-1, 2], Rational[1, 20]], 80]			
+precise-zeta-s-1-2-a-5-4-d40	N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 40]			
+precise-zeta-s-1-2-a-5-4-d80	N[HurwitzZeta[Rational[1, 2], Rational[5, 4]], 80]			
+zeta-0-a-exact-at-a-3	HurwitzZeta[0, 3]			
+zeta-0-a-exact-at-a-5-over-2	HurwitzZeta[0, Rational[5, 2]]			
+zeta-neg-1-a-exact-at-a-3	HurwitzZeta[-1, 3]			
+zeta-neg-1-a-exact-at-a-5-over-2	HurwitzZeta[-1, Rational[5, 2]]			
+zeta-neg-1-a-exact-at-a-7-over-3	HurwitzZeta[-1, Rational[7, 3]]			
+zeta-neg-2-a-exact-at-a-5-over-2	HurwitzZeta[-2, Rational[5, 2]]			
+zeta-neg-3-a-exact-at-a-5-over-2	HurwitzZeta[-3, Rational[5, 2]]			
+zeta-neg-4-a-exact-at-a-5-over-2	HurwitzZeta[-4, Rational[5, 2]]			
+pole-at-s-1-for-symbolic-a	HurwitzZeta[1, a]	ComplexInfinity	\zeta (1,a)	\text{ComplexInfinity}
+pole-at-a-neg-2-re-s-positive	N[HurwitzZeta[2, -2]]			
+pole-at-a-neg-1-inexact-s	N[HurwitzZeta[0.158, -1]]			
+pole-at-a-0-re-s-positive	N[HurwitzZeta[3, 0]]			
+re-s-0-a-neg-1-is-indeterminate	N[HurwitzZeta[Complex[0, -1], -1]]			
+re-s-positive-complex-s-is-a-pole	N[HurwitzZeta[Complex[2, 1], 0]]			
+n-hurwitzzeta-2-1	N[HurwitzZeta[2, 1]]	1.6449340668482262	N[\zeta (2,1)]	1.64493
+n-hurwitzzeta-2-2	N[HurwitzZeta[2, 2]]	0.6449340668482262	N[\zeta (2,2)]	0.644934
+n-hurwitzzeta-2-3	N[HurwitzZeta[2, 3]]	0.3949340668482262	N[\zeta (2,3)]	0.394934
+n-hurwitzzeta-2-0p5	N[HurwitzZeta[2, 0.5]]	4.934802200544678	N[\zeta (2,0.5)]	4.9348
+n-hurwitzzeta-2-0p25	N[HurwitzZeta[2, 0.25]]	17.19732915450711	N[\zeta (2,0.25)]	17.1973
+n-hurwitzzeta-2-1p3	N[HurwitzZeta[2, 1.3]]	1.1342534349966196	N[\zeta (2,1.3)]	1.13425
+n-hurwitzzeta-2-7-over-3	N[HurwitzZeta[2, Rational[7, 3]]]	0.5330971254270939	N\left[\zeta \left(2,\frac{7}{3}\right)\right]	0.533097
+n-hurwitzzeta-2-1-plus-i	N[HurwitzZeta[2, Complex[1, 1]]]	0.46300009662276376 - 0.7942335427593189*I	N[\zeta (2,1+i)]	0.463\, -0.794234 i
+n-hurwitzzeta-2-2-plus-neg-0p5-times-i	N[HurwitzZeta[2, Complex[2, -0.5]]]	0.5881978909500614 + 0.18504197243379084*I	N[\zeta (2,2-0.5 i)]	0.588198\, +0.185042 i
+n-hurwitzzeta-2-neg-0p5	N[HurwitzZeta[2, -0.5]]	8.934802200544679	N[\zeta (2,-0.5)]	8.9348
+n-hurwitzzeta-2-neg-1p5	N[HurwitzZeta[2, -1.5]]	9.379246644989125	N[\zeta (2,-1.5)]	9.37925
+n-hurwitzzeta-3-1	N[HurwitzZeta[3, 1]]	1.2020569031595942	N[\zeta (3,1)]	1.20206
+n-hurwitzzeta-3-2	N[HurwitzZeta[3, 2]]	0.20205690315959424	N[\zeta (3,2)]	0.202057
+n-hurwitzzeta-3-3	N[HurwitzZeta[3, 3]]	0.07705690315959429	N[\zeta (3,3)]	0.0770569
+n-hurwitzzeta-3-0p5	N[HurwitzZeta[3, 0.5]]	8.41439832211716	N[\zeta (3,0.5)]	8.4144
+n-hurwitzzeta-3-0p25	N[HurwitzZeta[3, 0.25]]	64.66386996876845	N[\zeta (3,0.25)]	64.6639
+n-hurwitzzeta-3-1p3	N[HurwitzZeta[3, 1.3]]	0.5992312573259785	N[\zeta (3,1.3)]	0.599231
+n-hurwitzzeta-3-7-over-3	N[HurwitzZeta[3, Rational[7, 3]]]	0.13918619970080365	N\left[\zeta \left(3,\frac{7}{3}\right)\right]	0.139186
+n-hurwitzzeta-3-1-plus-i	N[HurwitzZeta[3, Complex[1, 1]]]	-0.1842764657939676 - 0.38332642517253307*I	N[\zeta (3,1+i)]	-0.184276-0.383326 i
+n-hurwitzzeta-3-2-plus-neg-0p5-times-i	N[HurwitzZeta[3, Complex[2, -0.5]]]	0.15369363373030823 + 0.10422634741373263*I	N[\zeta (3,2-0.5 i)]	0.153694\, +0.104226 i
+n-hurwitzzeta-3-neg-0p5	N[HurwitzZeta[3, -0.5]]	0.41439832211716043	N[\zeta (3,-0.5)]	0.414398
+n-hurwitzzeta-3-neg-1p5	N[HurwitzZeta[3, -1.5]]	0.11810202582086375	N[\zeta (3,-1.5)]	0.118102
+n-hurwitzzeta-5-1	N[HurwitzZeta[5, 1]]	1.03692775514337	N[\zeta (5,1)]	1.03693
+n-hurwitzzeta-5-2	N[HurwitzZeta[5, 2]]	0.03692775514336999	N[\zeta (5,2)]	0.0369278
+n-hurwitzzeta-5-3	N[HurwitzZeta[5, 3]]	0.005677755143369927	N[\zeta (5,3)]	0.00567776
+n-hurwitzzeta-5-0p5	N[HurwitzZeta[5, 0.5]]	32.14476040944447	N[\zeta (5,0.5)]	32.1448
+n-hurwitzzeta-5-0p25	N[HurwitzZeta[5, 0.25]]	1024.3489745265804	N[\zeta (5,0.25)]	1024.35
+n-hurwitzzeta-5-1p3	N[HurwitzZeta[5, 1.3]]	0.2885560675185258	N[\zeta (5,1.3)]	0.288556
+n-hurwitzzeta-5-7-over-3	N[HurwitzZeta[5, Rational[7, 3]]]	0.017985276918875106	N\left[\zeta \left(5,\frac{7}{3}\right)\right]	0.0179853
+n-hurwitzzeta-5-1-plus-i	N[HurwitzZeta[5, Complex[1, 1]]]	-0.1366461737101687 + 0.10752550214008202*I	N[\zeta (5,1+i)]	-0.136646+0.107526 i
+n-hurwitzzeta-5-2-plus-neg-0p5-times-i	N[HurwitzZeta[5, Complex[2, -0.5]]]	0.012993573083069943 + 0.028877271795314092*I	N[\zeta (5,2-0.5 i)]	0.0129936\, +0.0288773 i
+n-hurwitzzeta-5-neg-0p5	N[HurwitzZeta[5, -0.5]]	0.14476040944447052	N[\zeta (5,-0.5)]	0.14476
+n-hurwitzzeta-5-neg-1p5	N[HurwitzZeta[5, -1.5]]	0.013073166646113405	N[\zeta (5,-1.5)]	0.0130732
+n-hurwitzzeta-neg-1-1	N[HurwitzZeta[-1, 1]]	-0.08333333333333333	N[\zeta (-1,1)]	-0.0833333
+n-hurwitzzeta-neg-1-2	N[HurwitzZeta[-1, 2]]	-1.0833333333333333	N[\zeta (-1,2)]	-1.08333
+n-hurwitzzeta-neg-1-3	N[HurwitzZeta[-1, 3]]	-3.0833333333333335	N[\zeta (-1,3)]	-3.08333
+n-hurwitzzeta-neg-1-0p5	N[HurwitzZeta[-1, 0.5]]	0.041666666666666664	N[\zeta (-1,0.5)]	0.0416667
+n-hurwitzzeta-neg-1-0p25	N[HurwitzZeta[-1, 0.25]]	0.010416666666666671	N[\zeta (-1,0.25)]	0.0104167
+n-hurwitzzeta-neg-1-1p3	N[HurwitzZeta[-1, 1.3]]	-0.27833333333333293	N[\zeta (-1,1.3)]	-0.278333
+n-hurwitzzeta-neg-1-7-over-3	N[HurwitzZeta[-1, Rational[7, 3]]]	-1.638888888888889	N\left[\zeta \left(-1,\frac{7}{3}\right)\right]	-1.63889
+n-hurwitzzeta-neg-1-1-plus-i	N[HurwitzZeta[-1, Complex[1, 1]]]	0.4166666666666669 - 0.5*I	N[\zeta (-1,1+i)]	0.416667\, -0.5 i
+n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i	N[HurwitzZeta[-1, Complex[2, -0.5]]]	-0.9583333333333328 + 0.7499999999999998*I	N[\zeta (-1,2-0.5 i)]	-0.958333+0.75 i
+n-hurwitzzeta-neg-1-neg-0p5	N[HurwitzZeta[-1, -0.5]]	-0.4583333333333333	N[\zeta (-1,-0.5)]	-0.458333
+n-hurwitzzeta-neg-1-neg-1p5	N[HurwitzZeta[-1, -1.5]]	-1.9583333333333333	N[\zeta (-1,-1.5)]	-1.95833
+n-hurwitzzeta-neg-2-1	N[HurwitzZeta[-2, 1]]	0.	N[\zeta (-2,1)]	0.
+n-hurwitzzeta-neg-2-2	N[HurwitzZeta[-2, 2]]	-1.	N[\zeta (-2,2)]	-1.
+n-hurwitzzeta-neg-2-3	N[HurwitzZeta[-2, 3]]	-5.	N[\zeta (-2,3)]	-5.
+n-hurwitzzeta-neg-2-0p5	N[HurwitzZeta[-2, 0.5]]	0.	N[\zeta (-2,0.5)]	0.
+n-hurwitzzeta-neg-2-0p25	N[HurwitzZeta[-2, 0.25]]	-0.015625	N[\zeta (-2,0.25)]	-0.015625
+n-hurwitzzeta-neg-2-1p3	N[HurwitzZeta[-2, 1.3]]	-0.1039999999999992	N[\zeta (-2,1.3)]	-0.104
+n-hurwitzzeta-neg-2-7-over-3	N[HurwitzZeta[-2, Rational[7, 3]]]	-1.9012345679012352	N\left[\zeta \left(-2,\frac{7}{3}\right)\right]	-1.90123
+n-hurwitzzeta-neg-2-1-plus-i	N[HurwitzZeta[-2, Complex[1, 1]]]	0.5 + 0.16666666666666682*I	N[\zeta (-2,1+i)]	0.5\, +0.166667 i
+n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i	N[HurwitzZeta[-2, Complex[2, -0.5]]]	-0.6249999999999989 + 1.0416666666666659*I	N[\zeta (-2,2-0.5 i)]	-0.625+1.04167 i
+n-hurwitzzeta-neg-2-neg-0p5	N[HurwitzZeta[-2, -0.5]]	0.25	N[\zeta (-2,-0.5)]	0.25
+n-hurwitzzeta-neg-2-neg-1p5	N[HurwitzZeta[-2, -1.5]]	2.5	N[\zeta (-2,-1.5)]	2.5
+n-hurwitzzeta-neg-3-1	N[HurwitzZeta[-3, 1]]	0.008333333333333333	N[\zeta (-3,1)]	0.00833333
+n-hurwitzzeta-neg-3-2	N[HurwitzZeta[-3, 2]]	-0.9916666666666667	N[\zeta (-3,2)]	-0.991667
+n-hurwitzzeta-neg-3-3	N[HurwitzZeta[-3, 3]]	-8.991666666666667	N[\zeta (-3,3)]	-8.99167
+n-hurwitzzeta-neg-3-0p5	N[HurwitzZeta[-3, 0.5]]	-0.007291666666666667	N[\zeta (-3,0.5)]	-0.00729167
+n-hurwitzzeta-neg-3-0p25	N[HurwitzZeta[-3, 0.25]]	-0.00045572916666664076	N[\zeta (-3,0.25)]	-0.000455729
+n-hurwitzzeta-neg-3-1p3	N[HurwitzZeta[-3, 1.3]]	-0.029691666666665784	N[\zeta (-3,1.3)]	-0.0296917
+n-hurwitzzeta-neg-3-7-over-3	N[HurwitzZeta[-3, Rational[7, 3]]]	-2.4114197530864208	N\left[\zeta \left(-3,\frac{7}{3}\right)\right]	-2.41142
+n-hurwitzzeta-neg-3-1-plus-i	N[HurwitzZeta[-3, Complex[1, 1]]]	0.008333333333333559 + 0.5*I	N[\zeta (-3,1+i)]	0.00833333\, +0.5 i
+n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i	N[HurwitzZeta[-3, Complex[2, -0.5]]]	-0.19479166666666578 + 1.3124999999999987*I	N[\zeta (-3,2-0.5 i)]	-0.194792+1.3125 i
+n-hurwitzzeta-neg-3-neg-0p5	N[HurwitzZeta[-3, -0.5]]	-0.13229166666666667	N[\zeta (-3,-0.5)]	-0.132292
+n-hurwitzzeta-neg-3-neg-1p5	N[HurwitzZeta[-3, -1.5]]	-3.5072916666666667	N[\zeta (-3,-1.5)]	-3.50729
+n-hurwitzzeta-0p5-1	N[HurwitzZeta[0.5, 1]]	-1.460354508809588	N[\zeta (0.5,1)]	-1.46035
+n-hurwitzzeta-0p5-2	N[HurwitzZeta[0.5, 2]]	-2.4603545088095875	N[\zeta (0.5,2)]	-2.46035
+n-hurwitzzeta-0p5-3	N[HurwitzZeta[0.5, 3]]	-3.1674612899961354	N[\zeta (0.5,3)]	-3.16746
+n-hurwitzzeta-0p5-0p5	N[HurwitzZeta[0.5, 0.5]]	-0.6048986434216284	N[\zeta (0.5,0.5)]	-0.604899
+n-hurwitzzeta-0p5-0p25	N[HurwitzZeta[0.5, 0.25]]	0.23996352449563305	N[\zeta (0.5,0.25)]	0.239964
+n-hurwitzzeta-0p5-1p3	N[HurwitzZeta[0.5, 1.3]]	-1.8145890780405844	N[\zeta (0.5,1.3)]	-1.81459
+n-hurwitzzeta-0p5-7-over-3	N[HurwitzZeta[0.5, Rational[7, 3]]]	-2.7161595392875393	N\left[\zeta \left(0.5,\frac{7}{3}\right)\right]	-2.71616
+n-hurwitzzeta-0p5-1-plus-i	N[HurwitzZeta[0.5, Complex[1, 1]]]	-1.7988137444864873 - 1.0935768757211082*I	N[\zeta (0.5,1+i)]	-1.79881-1.09358 i
+n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i	N[HurwitzZeta[0.5, Complex[2, -0.5]]]	-2.4914742352880093 + 0.39832807868404924*I	N[\zeta (0.5,2-0.5 i)]	-2.49147+0.398328 i
+n-hurwitzzeta-0p5-neg-0p5	N[HurwitzZeta[0.5, -0.5]]	-0.604898643421629 - 1.4142135623730951*I	N[\zeta (0.5,-0.5)]	-0.604899-1.41421 i
+n-hurwitzzeta-0p5-neg-1p5	N[HurwitzZeta[0.5, -1.5]]	-0.6048986434216298 - 2.230710143300821*I	N[\zeta (0.5,-1.5)]	-0.604899-2.23071 i
+n-hurwitzzeta-1p5-1	N[HurwitzZeta[1.5, 1]]	2.612375348685488	N[\zeta (1.5,1)]	2.61238
+n-hurwitzzeta-1p5-2	N[HurwitzZeta[1.5, 2]]	1.6123753486854886	N[\zeta (1.5,2)]	1.61238
+n-hurwitzzeta-1p5-3	N[HurwitzZeta[1.5, 3]]	1.2588219580922146	N[\zeta (1.5,3)]	1.25882
+n-hurwitzzeta-1p5-0p5	N[HurwitzZeta[1.5, 0.5]]	4.776537947554832	N[\zeta (1.5,0.5)]	4.77654
+n-hurwitzzeta-1p5-0p25	N[HurwitzZeta[1.5, 0.25]]	10.2130553604666	N[\zeta (1.5,0.25)]	10.2131
+n-hurwitzzeta-1p5-1p3	N[HurwitzZeta[1.5, 1.3]]	2.1519554769578777	N[\zeta (1.5,1.3)]	2.15196
+n-hurwitzzeta-1p5-7-over-3	N[HurwitzZeta[1.5, Rational[7, 3]]]	1.4642542491994879	N\left[\zeta \left(1.5,\frac{7}{3}\right)\right]	1.46425
+n-hurwitzzeta-1p5-1-plus-i	N[HurwitzZeta[1.5, Complex[1, 1]]]	1.6509347519493651 - 0.9673570656987678*I	N[\zeta (1.5,1+i)]	1.65093\, -0.967357 i
+n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i	N[HurwitzZeta[1.5, Complex[2, -0.5]]]	1.5565957777657513 + 0.24210632232513432*I	N[\zeta (1.5,2-0.5 i)]	1.5566\, +0.242106 i
+n-hurwitzzeta-1p5-neg-0p5	N[HurwitzZeta[1.5, -0.5]]	4.776537947554832 + 2.8284271247461903*I	N[\zeta (1.5,-0.5)]	4.77654\, +2.82843 i
+n-hurwitzzeta-1p5-neg-1p5	N[HurwitzZeta[1.5, -1.5]]	4.776537947554832 + 3.3727581786980076*I	N[\zeta (1.5,-1.5)]	4.77654\, +3.37276 i
+n-hurwitzzeta-2p5-1	N[HurwitzZeta[2.5, 1]]	1.3414872572509173	N[\zeta (2.5,1)]	1.34149
+n-hurwitzzeta-2p5-2	N[HurwitzZeta[2.5, 2]]	0.34148725725091716	N[\zeta (2.5,2)]	0.341487
+n-hurwitzzeta-2p5-3	N[HurwitzZeta[2.5, 3]]	0.1647105619542803	N[\zeta (2.5,3)]	0.164711
+n-hurwitzzeta-2p5-0p5	N[HurwitzZeta[2.5, 0.5]]	6.24711063456881	N[\zeta (2.5,0.5)]	6.24711
+n-hurwitzzeta-2p5-0p25	N[HurwitzZeta[2.5, 0.25]]	32.84745195469769	N[\zeta (2.5,0.25)]	32.8475
+n-hurwitzzeta-2p5-1p3	N[HurwitzZeta[2.5, 1.3]]	0.7832185539082374	N[\zeta (2.5,1.3)]	0.783219
+n-hurwitzzeta-2p5-7-over-3	N[HurwitzZeta[2.5, Rational[7, 3]]]	0.2574476051502054	N\left[\zeta \left(2.5,\frac{7}{3}\right)\right]	0.257448
+n-hurwitzzeta-2p5-1-plus-i	N[HurwitzZeta[2.5, Complex[1, 1]]]	0.01873983709571817 - 0.5895477083381615*I	N[\zeta (2.5,1+i)]	0.0187398\, -0.589548 i
+n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i	N[HurwitzZeta[2.5, Complex[2, -0.5]]]	0.28782016436536645 + 0.1396966843939357*I	N[\zeta (2.5,2-0.5 i)]	0.28782\, +0.139697 i
+n-hurwitzzeta-2p5-neg-0p5	N[HurwitzZeta[2.5, -0.5]]	6.24711063456881 - 5.656854249492381*I	N[\zeta (2.5,-0.5)]	6.24711\, -5.65685 i
+n-hurwitzzeta-2p5-neg-1p5	N[HurwitzZeta[2.5, -1.5]]	6.24711063456881 - 6.019741618793592*I	N[\zeta (2.5,-1.5)]	6.24711\, -6.01974 i
+n-hurwitzzeta-neg-0p5-1	N[HurwitzZeta[-0.5, 1]]	-0.20788622497735454 + 2.5458720000534374*^-17*I	N[\zeta (-0.5,1)]	-0.207886+\text{2.5458720000534374$\grave{ }$*${}^{\wedge}$-17} i
+n-hurwitzzeta-neg-0p5-2	N[HurwitzZeta[-0.5, 2]]	-1.2078862249773599	N[\zeta (-0.5,2)]	-1.20789
+n-hurwitzzeta-neg-0p5-3	N[HurwitzZeta[-0.5, 3]]	-2.622099787350421	N[\zeta (-0.5,3)]	-2.6221
+n-hurwitzzeta-neg-0p5-0p5	N[HurwitzZeta[-0.5, 0.5]]	0.0608884655805949 - 7.456686447826932*^-18*I	N[\zeta (-0.5,0.5)]	0.0608885\, -\text{7.456686447826932$\grave{ }$*${}^{\wedge}$-18} i
+n-hurwitzzeta-neg-0p5-0p25	N[HurwitzZeta[-0.5, 0.25]]	0.09032225876124604	N[\zeta (-0.5,0.25)]	0.0903223
+n-hurwitzzeta-neg-0p5-1p3	N[HurwitzZeta[-0.5, 1.3]]	-0.4543637424202832	N[\zeta (-0.5,1.3)]	-0.454364
+n-hurwitzzeta-neg-0p5-7-over-3	N[HurwitzZeta[-0.5, Rational[7, 3]]]	-1.6396045246990028	N\left[\zeta \left(-0.5,\frac{7}{3}\right)\right]	-1.6396
+n-hurwitzzeta-neg-0p5-1-plus-i	N[HurwitzZeta[-0.5, Complex[1, 1]]]	0.08784592782017546 - 0.795101413593408*I	N[\zeta (-0.5,1+i)]	0.0878459\, -0.795101 i
+n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i	N[HurwitzZeta[-0.5, Complex[2, -0.5]]]	-1.1578011135273203 + 0.6177112023106479*I	N[\zeta (-0.5,2-0.5 i)]	-1.1578+0.617711 i
+n-hurwitzzeta-neg-0p5-neg-0p5	N[HurwitzZeta[-0.5, -0.5]]	0.06088846558059494 + 0.7071067811865476*I	N[\zeta (-0.5,-0.5)]	0.0608885\, +0.707107 i
+n-hurwitzzeta-neg-0p5-neg-1p5	N[HurwitzZeta[-0.5, -1.5]]	0.06088846558059502 + 1.9318516525781364*I	N[\zeta (-0.5,-1.5)]	0.0608885\, +1.93185 i
+n-hurwitzzeta-2-plus-i-1	N[HurwitzZeta[Complex[2, 1], 1]]	1.1503557032549028 - 0.4375308659196078*I	N[\zeta (2+i,1)]	1.15036\, -0.437531 i
+n-hurwitzzeta-2-plus-i-2	N[HurwitzZeta[Complex[2, 1], 2]]	0.15035570325490277 - 0.4375308659196078*I	N[\zeta (2+i,2)]	0.150356\, -0.437531 i
+n-hurwitzzeta-2-plus-i-3	N[HurwitzZeta[Complex[2, 1], 3]]	-0.04195402208609035 - 0.27779054684119925*I	N[\zeta (2+i,3)]	-0.041954-0.277791 i
+n-hurwitzzeta-2-plus-i-0p5	N[HurwitzZeta[Complex[2, 1], 0.5]]	3.5074988482018306 + 2.0313988089339876*I	N[\zeta (2+i,0.5)]	3.5075\, +2.0314 i
+n-hurwitzzeta-2-plus-i-0p25	N[HurwitzZeta[Complex[2, 1], 0.25]]	3.6342207988247357 + 15.19537018557054*I	N[\zeta (2+i,0.25)]	3.63422\, +15.1954 i
+n-hurwitzzeta-2-plus-i-1p3	N[HurwitzZeta[Complex[2, 1], 1.3]]	0.6341786502689004 - 0.5361103835392125*I	N[\zeta (2+i,1.3)]	0.634179\, -0.53611 i
+n-hurwitzzeta-2-plus-i-7-over-3	N[HurwitzZeta[Complex[2, 1], Rational[7, 3]]]	0.05513338963679509 - 0.3768626550483671*I	N\left[\zeta \left(2+i,\frac{7}{3}\right)\right]	0.0551334\, -0.376863 i
+n-hurwitzzeta-2-plus-i-1-plus-i	N[HurwitzZeta[Complex[2, 1], Complex[1, 1]]]	-0.6353043434400119 - 1.658848643605895*I	N[\zeta (2+i,1+i)]	-0.635304-1.65885 i
+n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i	N[HurwitzZeta[Complex[2, 1], Complex[2, -0.5]]]	0.18539348901299454 - 0.2703736924228736*I	N[\zeta (2+i,2-0.5 i)]	0.185393\, -0.270374 i
+n-hurwitzzeta-2-plus-i-neg-0p5	N[HurwitzZeta[Complex[2, 1], -0.5]]	74.71038275876376 + 61.17542480662269*I	N[\zeta (2+i,-0.5)]	74.7104\, +61.1754 i
+n-hurwitzzeta-2-plus-i-neg-1p5	N[HurwitzZeta[Complex[2, 1], -1.5]]	84.1612374150554 + 57.118643354285865*I	N[\zeta (2+i,-1.5)]	84.1612\, +57.1186 i
+n-hurwitzzeta-0p5-plus-3i-1	N[HurwitzZeta[Complex[0.5, 3], 1]]	0.5327366709742328 - 0.07889651342583304*I	N[\zeta (0.5\, +3 i,1)]	0.532737\, -0.0788965 i
+n-hurwitzzeta-0p5-plus-3i-2	N[HurwitzZeta[Complex[0.5, 3], 2]]	-0.46726332902576745 - 0.07889651342583304*I	N[\zeta (0.5\, +3 i,2)]	-0.467263-0.0788965 i
+n-hurwitzzeta-0p5-plus-3i-3	N[HurwitzZeta[Complex[0.5, 3], 3]]	-0.12290627368216751 + 0.5386941426199696*I	N[\zeta (0.5\, +3 i,3)]	-0.122906+0.538694 i
+n-hurwitzzeta-0p5-plus-3i-0p5	N[HurwitzZeta[Complex[0.5, 3], 0.5]]	-0.8021884345819376 + 0.7912600357594936*I	N[\zeta (0.5\, +3 i,0.5)]	-0.802188+0.79126 i
+n-hurwitzzeta-0p5-plus-3i-0p25	N[HurwitzZeta[Complex[0.5, 3], 0.25]]	-0.8213159956117984 - 2.117913546901069*I	N[\zeta (0.5\, +3 i,0.25)]	-0.821316-2.11791 i
+n-hurwitzzeta-0p5-plus-3i-1p3	N[HurwitzZeta[Complex[0.5, 3], 1.3]]	0.15737017483099963 - 0.44264021477004356*I	N[\zeta (0.5\, +3 i,1.3)]	0.15737\, -0.44264 i
+n-hurwitzzeta-0p5-plus-3i-7-over-3	N[HurwitzZeta[Complex[0.5, 3], Rational[7, 3]]]	-0.4537270216571716 + 0.20444019400309918*I	N\left[\zeta \left(0.5\, +3 i,\frac{7}{3}\right)\right]	-0.453727+0.20444 i
+n-hurwitzzeta-0p5-plus-3i-1-plus-i	N[HurwitzZeta[Complex[0.5, 3], Complex[1, 1]]]	-1.4173015059291316 - 8.335643562213374*I	N[\zeta (0.5\, +3 i,1+i)]	-1.4173-8.33564 i
+n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i	N[HurwitzZeta[Complex[0.5, 3], Complex[2, -0.5]]]	-0.181016361585114 + 0.009312340272340373*I	N[\zeta (0.5\, +3 i,2-0.5 i)]	-0.181016+0.00931234 i
+n-hurwitzzeta-0p5-plus-3i-neg-0p5	N[HurwitzZeta[Complex[0.5, 3], -0.5]]	15305.129609925008 + 8535.093960014085*I	N[\zeta (0.5\, +3 i,-0.5)]	15305.1\, +8535.09 i
+n-hurwitzzeta-0p5-plus-3i-neg-1p5	N[HurwitzZeta[Complex[0.5, 3], -1.5]]	5816.163167011819 + 5023.948927089384*I	N[\zeta (0.5\, +3 i,-1.5)]	5816.16\, +5023.95 i
+n-hurwitzzeta-neg-0p5-plus-i-1	N[HurwitzZeta[Complex[-0.5, 1], 1]]	-0.0008178931329526073 - 0.22307168869777871*I	N[\zeta (-0.5+i,1)]	-0.000817893-0.223072 i
+n-hurwitzzeta-neg-0p5-plus-i-2	N[HurwitzZeta[Complex[-0.5, 1], 2]]	-1.0008178931329337 - 0.2230716886977918*I	N[\zeta (-0.5+i,2)]	-1.00082-0.223072 i
+n-hurwitzzeta-neg-0p5-plus-i-3	N[HurwitzZeta[Complex[-0.5, 1], 3]]	-2.0886859801468476 + 0.6805560140961993*I	N[\zeta (-0.5+i,3)]	-2.08869+0.680556 i
+n-hurwitzzeta-neg-0p5-plus-i-0p5	N[HurwitzZeta[Complex[-0.5, 1], 0.5]]	0.10115989202216126 + 0.10136586762604087*I	N[\zeta (-0.5+i,0.5)]	0.10116\, +0.101366 i
+n-hurwitzzeta-neg-0p5-plus-i-0p25	N[HurwitzZeta[Complex[-0.5, 1], 0.25]]	-0.10559971039018182 + 0.17260556668192967*I	N[\zeta (-0.5+i,0.25)]	-0.1056+0.172606 i
+n-hurwitzzeta-neg-0p5-plus-i-1p3	N[HurwitzZeta[Complex[-0.5, 1], 1.3]]	-0.24331093868772538 - 0.3304412782584411*I	N[\zeta (-0.5+i,1.3)]	-0.243311-0.330441 i
+n-hurwitzzeta-neg-0p5-plus-i-7-over-3	N[HurwitzZeta[Complex[-0.5, 1], Rational[7, 3]]]	-1.3821851440871595 - 0.009056308250075838*I	N\left[\zeta \left(-0.5+i,\frac{7}{3}\right)\right]	-1.38219-0.00905631 i
+n-hurwitzzeta-neg-0p5-plus-i-1-plus-i	N[HurwitzZeta[Complex[-0.5, 1], Complex[1, 1]]]	1.040957543118516 - 1.7999104323368245*I	N[\zeta (-0.5+i,1+i)]	1.04096\, -1.79991 i
+n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N[HurwitzZeta[Complex[-0.5, 1], Complex[2, -0.5]]]	-0.7461533972576151 + 0.24925781603309924*I	N[\zeta (-0.5+i,2-0.5 i)]	-0.746153+0.249258 i
+n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N[HurwitzZeta[Complex[-0.5, 1], -0.5]]	-10.354125570387618 + 12.68837638092526*I	N[\zeta (-0.5+i,-0.5)]	-10.3541+12.6884 i
+n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N[HurwitzZeta[Complex[-0.5, 1], -1.5]]	0.8250495553510326 + 38.73186936468635*I	N[\zeta (-0.5+i,-1.5)]	0.82505\, +38.7319 i
+a-positive-integer-a-peels-off-the-first-terms	HurwitzZeta[7, 5]			
+complex-a	N[HurwitzZeta[2.3, Complex[8, 1]]]			
+listable-threads-over-a-list-of-orders	HurwitzZeta[List[2, 3, 4], 0.5]			
+uncertainty-in-a	HurwitzZeta[2, Around[0.5, 0.01]]			
+zeta-2-1-2-pi-2-2-the-s-2-instance-of-zeta-s-1-2	HurwitzZeta[2, Rational[1, 2]]			
+zeta-2-1-4-pi-2-8g-with-catalan-s-constant-g	HurwitzZeta[2, Rational[1, 4]]			
+to-30-significant-digits-not-yet-the-last-digit	N[HurwitzZeta[3, Rational[1, 3]], 30]			
+far-left-of-the-strip-all-40-digits-agree-with	N[HurwitzZeta[Rational[-41, 2], Rational[3, 10]], 40]			
+left-of-the-strip-at-a-non-integer-a	N[HurwitzZeta[-20, 0.7]]			
+left-of-the-strip-at-a-non-integer-a-and-s	N[HurwitzZeta[-40.5, 0.4]]			
+a-negative-a-frac-12-5-is-real-and-so-is-the	N[HurwitzZeta[5, Rational[-1, 2]]]			
+certified-digits-zeta-1-2-1-3	N[HurwitzZeta[Rational[1, 2], Rational[1, 3]], 40]			
+zeta-0-a-frac-12-a-exact-and-symbolic-in-a	HurwitzZeta[0, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\zeta (0,a)-\left(-a+\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(0,\frac{7}{3}\right)-\left(-\frac{7}{3}+\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(0,-\frac{11}{5}\right)-\left(-\left(-\frac{11}{5}\right)+\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(0,\frac{13}{4}\right)-\left(-\frac{13}{4}+\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	HurwitzZeta[-1, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\zeta (-1,a)--\frac{1}{2} \left(a^2-a+\frac{1}{6}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(-1,\frac{7}{3}\right)--\frac{1}{2} \left(\left(\frac{7}{3}\right)^2-\frac{7}{3}+\frac{1}{6}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-1,-\frac{11}{5}\right)--\frac{1}{2} \left(\left(-\frac{11}{5}\right)^2--\frac{11}{5}+\frac{1}{6}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-1,\frac{13}{4}\right)--\frac{1}{2} \left(\left(\frac{13}{4}\right)^2-\frac{13}{4}+\frac{1}{6}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+pole-at-s-1-for-every-a	HurwitzZeta[1, 3]	ComplexInfinity	\zeta (1,3)	\text{ComplexInfinity}
+zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s	HurwitzZeta[s, Rational[1, 2]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\zeta \left(s,\frac{1}{2}\right)-\left(2^s-1\right) \zeta (s)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(\frac{7}{3},\frac{1}{2}\right)-\left(2^{\frac{7}{3}}-1\right) \zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-\frac{11}{5},\frac{1}{2}\right)-\left(2^{-\frac{11}{5}}-1\right) \zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(\frac{13}{4},\frac{1}{2}\right)-\left(2^{\frac{13}{4}}-1\right) \zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+zeta-s-1-zeta-s-for-symbolic-s	HurwitzZeta[s, 1]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\zeta (s,1)-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(\frac{7}{3},1\right)-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-\frac{11}{5},1\right)-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(\frac{13}{4},1\right)-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+zeta-0-a-frac-12-a-holds-at-a-0-too	HurwitzZeta[0, 0]			
+zeta-2-a-b-3-a-3	HurwitzZeta[-2, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\zeta (-2,a)--\frac{1}{3} \left(a^3-\frac{3}{2} a^2+\frac{1}{2} a\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(-2,\frac{7}{3}\right)--\frac{1}{3} \left(\left(\frac{7}{3}\right)^3-\frac{3}{2} \left(\frac{7}{3}\right)^2+\frac{1}{2} \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-2,-\frac{11}{5}\right)--\frac{1}{3} \left(\left(-\frac{11}{5}\right)^3-\frac{3}{2} \left(-\frac{11}{5}\right)^2+\frac{1}{2} \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-2,\frac{13}{4}\right)--\frac{1}{3} \left(\left(\frac{13}{4}\right)^3-\frac{3}{2} \left(\frac{13}{4}\right)^2+\frac{1}{2} \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+partial-a-zeta-s-a-s-zeta-s-1-a				
+zeta-4-2-pi-4-90-1	HurwitzZeta[4, 2]			
+zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	HurwitzZeta[-3, Rational[7, 3]]	HurwitzZeta[-3, 7/3]	\zeta \left(-3,\frac{7}{3}\right)	\zeta \left(-3,\frac{7}{3}\right)
+re-s-0-a-0-is-indeterminate	N[HurwitzZeta[Complex[0, -1], 0]]			
+re-s-negative-a-drops-the-term-cleanly	N[HurwitzZeta[Complex[-1.5, 0.5], -2]]			

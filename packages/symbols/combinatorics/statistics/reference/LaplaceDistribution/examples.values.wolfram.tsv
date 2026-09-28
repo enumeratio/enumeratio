@@ -1,0 +1,5 @@
+id	in
+laplace-pdf-exact	PDF[LaplaceDistribution[0, Rational[1, 2]], 0]
+laplace-cdf-exact	CDF[LaplaceDistribution[0, Rational[1, 2]], 0]
+laplace-mean-exact	Mean[LaplaceDistribution[0, Rational[1, 2]]]
+laplace-variance-exact	Variance[LaplaceDistribution[0, Rational[1, 2]]]

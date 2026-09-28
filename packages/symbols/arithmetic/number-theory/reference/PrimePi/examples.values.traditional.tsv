@@ -1,0 +1,12 @@
+id	in	out
+no-primes-are-1	\pi(1)	0
+primepi-2	\pi(2)	1
+primepi-15	\pi(15)	6
+primepi-100	\pi(100)	25
+threads-element-wise-over-a-list-as-wolfram-s		
+rational-arguments-the-primes-up-to-7-2-are-2	\pi(\frac{7}{2})	2
+real-arguments	\pi(15.25)	6
+the-primes-below-a-million	\pi(1\,000\,000)	78\,498
+listable-threads-over-a-list		
+same-inverse-relation-viewed-from-primepi-s-side	\pi(p_{50})=50	\mathrm{True}
+no-primes-are-a-negative-number	\pi(-1)	0

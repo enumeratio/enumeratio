@@ -1,0 +1,27 @@
+id	in	out
+abs-neg-5		
+abs-5		
+0-is-the-only-value-with-x-0		
+abs-neg-7-over-2		
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4		
+threads-element-wise-over-a-list		
+abs-neg-2p5		
+the-modulus-of-a-complex-number-with-approximate		
+threads-over-a-matrix-entry-by-entry		
+exact-numeric-constants		
+an-exact-complex-number-gives-an-exact-radical		
+abs-imaginaryunit		
+e-i-pi-3-lies-on-the-unit-circle		
+abs-negativeinfinity		
+complex-infinity-has-infinite-magnitude-in-every		
+an-interval-maps-to-the-interval-of-absolute		
+an-interval-straddling-0-maps-to-0-the-larger		
+decides-the-sign-of-an-exact-numeric-expression		
+a-complex-radicand-inside-the-subtraction		
+the-gap-between-two-temperatures-70-and-95		
+the-distance-between-the-points-1-i-and-4-5i-of		
+even-function-x-x	\vert-8\vert=\vert8\vert	\mathrm{True}
+triangle-inequality-a-b-le-a-b	\vert3-8\vert\le\vert3\vert+\vert-8\vert	\mathrm{True}
+z-2-z-bar-z	\vert3+4i\vert^2=(3+4i)\overline{3+4i}	\mathrm{True}
+multiplicative-ab-a-b	\vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert	\mathrm{True}
+doesn-t-factor-constants-out-of-a-symbolic		

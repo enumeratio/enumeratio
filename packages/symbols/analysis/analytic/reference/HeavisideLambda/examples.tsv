@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+heavisidelambda-peak			[HeavisideLambda, 0]	1	
+heavisidelambda-endpoint			[HeavisideLambda, 1]	0	Zero at the endpoint
+heavisidelambda-neg-endpoint			[HeavisideLambda, -1]	0	
+heavisidelambda-outside	Scope		[HeavisideLambda, 2]	0	
+heavisidelambda-1-4	Scope		[HeavisideLambda, [Rational, 1, 4]]	[Rational, 3, 4]	Exact rational input, exact rational output
+heavisidelambda-1-2	Scope	test	[HeavisideLambda, [Rational, 1, 2]]	[Rational, 1, 2]	

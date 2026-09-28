@@ -1,0 +1,5 @@
+id	in	out
+by-a-cycle	Permute([a, b, c, d], Cycles([[1, 3, 2]]))	[b, c, a, d]
+by-disjoint-cycles	Permute([a, b, c, d], Cycles([[1, 3], [2, 4]]))	[c, d, a, b]
+by-a-one-line-word	Permute([a, b, c, d], [2, 3, 4, 1])	[d, a, b, c]
+by-a-permutation-group	Permute([a, b, c], PermutationGroup([Cycles([[1, 2, 3]])]))	[[a, b, c], [c, a, b], [b, c, a]]

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+zero-modulus	Possible issues		[Mod, 5, 0]	NaN	Division by a 0 modulus yields NaN rather than an error

@@ -1,0 +1,23 @@
+---
+name: Antipode
+domain: Hopf algebras
+signature: Antipode(element)
+summary: 'The antipode $S$, the last piece of a Hopf algebra: the unique map with $m(S \otimes \mathrm{id})\Delta = \eta\varepsilon$.'
+signatures:
+  - call: Antipode(element)
+    description: $S(x)$
+    library: enumeratio-hopf
+    type: (number) -> number
+details:
+  - "On a graded connected Hopf algebra the axiom DETERMINES $S$: splitting off the two trivial terms of $\\Delta$ gives $S(x) = -x - \\sum S(x')x''$, and the left factor's degree strictly drops, so the recursion terminates"
+  - Computed that way and then verified by running the axiom, rather than trusted
+  - On a commutative Hopf algebra $S$ is an involution, so $S^2 = \mathrm{id}$ on QSym
+seeAlso:
+  - Coproduct
+  - QSymM
+references:
+  - system: wikipedia
+    identity: Hopf algebra
+  - system: mathworld
+    identity: HopfAlgebra
+---

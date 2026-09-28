@@ -1,0 +1,4 @@
+id	in
+dirac-delta-at-origin	FourierTransform[DiracDelta[t], t, w]
+gaussian	FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
+cosine	FourierTransform[Cos[Times[a, t]], t, w]

@@ -1,0 +1,35 @@
+---
+name: Arcsin
+domain: Elementary functions
+signature: Arcsin(x)
+summary: Arcsine, the inverse of [[Sin]] restricted to $[-\pi/2, \pi/2]$.
+signatures:
+  - call: Arcsin(x)
+    description: the principal value $y \in [-\pi/2, \pi/2]$ with $\sin(y) = x$.
+  - call: Arcsin(x)
+    description: Arcsine, the inverse of [[Sin]] restricted to $[-\pi/2, \pi/2]$.
+    library: enumeratio-analytic
+    type: (complex) -> number
+    overrides: compute-engine
+details:
+  - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
+  - 'Odd function: $\arcsin(-x) = -\arcsin(x)$.'
+  - 'Co-function with [[Arccos]]: $\arcsin(x) + \arccos(x) = \pi/2$.'
+  - 'Undoes [[Sin]] on its principal branch: $\sin(\arcsin(x)) = x$ for $x \in [-1, 1]$.'
+  - Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\operatorname{sign}(x)\left(\frac{\pi}{2} - i\ln(|x|+\sqrt{x^2-1})\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.
+seeAlso:
+  - Sin
+  - Arccos
+  - Arctan
+references:
+  - system: wikipedia
+    identity: Inverse trigonometric functions
+  - system: mathworld
+    identity: InverseSine
+  - system: dlmf
+    identity: "4.23"
+names:
+  fungrim: Asin
+  dlmf: arcsine function
+  wolfram: ArcSin
+---

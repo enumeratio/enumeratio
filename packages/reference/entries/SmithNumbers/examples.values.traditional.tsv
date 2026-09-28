@@ -1,0 +1,4 @@
+id	in	out
+the-first-20-terms		
+4-is-a-smith-number	4\in\mathrm{SmithNumbers}	\mathrm{True}
+6-is-not-a-smith-number	6\in\mathrm{SmithNumbers}	\mathrm{False}

@@ -1,0 +1,5 @@
+id	in	out
+a-quadratic-s-minimum-value	\mathrm{MinValue}(x^2-4x+3, x)	-1
+a-simple-interval-constraint	\mathrm{MinValue}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)	1
+the-amplitude-of-cosine-alone-is-exact	\mathrm{MinValue}(\cos(3x-1), x)	-1
+exp-s-infimum	\mathrm{MinValue}(e^{x}, x)	0

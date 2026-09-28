@@ -1,0 +1,5 @@
+id	in
+implies-becomes-or-not	LogicalExpand[Implies[p, b]]
+distributes-and-over-or	LogicalExpand[And[p, Or[b, r]]]
+xor-eliminated-into-dnf	LogicalExpand[Xor[p, b]]
+a-contradictory-term-drops-out	LogicalExpand[And[p, Not[p]]]

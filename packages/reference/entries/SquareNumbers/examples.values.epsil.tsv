@@ -1,0 +1,2 @@
+id	in	out
+the-first-five-squares	Take(SquareNumbers, 5)	[1, 4, 9, 16, 25]

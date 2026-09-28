@@ -1,0 +1,6 @@
+id	in	out	tex.in	tex.out
+nest-f-x-3	Nest[f, x, 3]	f[f[f[x]]]	\text{Nest}[f,x,3]	f(f(f(x)))
+repeated-squaring-2-2-2-2	Nest[Function[Power[Slot[1], 2]], 2, 3]			
+zero-applications-leave-x-alone	Nest[f, x, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Nest}[f,x,0]-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Nest}\left[\frac{7}{3},-\frac{11}{5},0\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Nest}\left[\frac{13}{4},-\frac{17}{6},0\right]--\frac{17}{6}\right]\right],\text{Chop}\left[N\left[\text{Nest}\left[\frac{19}{8},-\frac{23}{9},0\right]--\frac{23}{9}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+nest-function-2-times-1-1-10	Nest[Function[Times[2, Slot[1]]], 1, 10]			
+three-newton-steps-toward-sqrt-2	Nest[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1, 3]			

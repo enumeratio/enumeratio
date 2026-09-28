@@ -1,0 +1,11 @@
+id	in	out
+arcsec-1		
+arcsec-2		
+arcsec-sqrt-2-pi-4		
+arcsec-neg-1		
+arcsec-2-2-pi-3		
+inside-1-1-the-value-is-purely-imaginary		
+arcsec-positiveinfinity		
+a-pole-arcsec-0-is-complex-infinity		
+derivative-for-real-x-1		
+undoes-sec-sec-arcsec-x-x	\sec(\mathrm{arcsec}(2))=2	\mathrm{True}

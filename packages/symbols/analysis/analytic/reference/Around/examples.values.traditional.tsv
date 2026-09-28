@@ -1,0 +1,17 @@
+id	in	out
+independent-uncertainties-add-in-quadrature		
+scaling-scales-the-uncertainty		
+independent-uncertainties-add-in-quadrature-2		
+3-times-around-2-0p01		
+independent-uncertainties-add-in-quadrature-sqrt		
+relative-uncertainties-combine-6-sqrt-0-1-2-2-0		
+through-a-function-f-x-delta-x		
+sqrt-around-4-0p4		
+through-a-function-f-2-3-5-not-yet-multinomial	\binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}	\mathrm{Around}(6, 0.035)
+a-power-scales-the-uncertainty-by-the-derivative		
+frac-0-2-2-sqrt-4		
+an-exact-factor-scales-the-uncertainty		
+through-an-elementary-function-delta-cdot-e-2		
+through-a-special-function-with-its-derivative		
+first-order-propagation-the-uncertainty-scales		
+ln-around-2-0p01		

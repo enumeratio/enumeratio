@@ -1,0 +1,21 @@
+id	in	out	tex.in	tex.out
+bernoullib-0	BernoulliB[0]	1	B_0	1
+bernoullib-1	BernoulliB[1]	-1/2	B_1	-\frac{1}{2}
+bernoullib-2	BernoulliB[2]	1/6	B_2	\frac{1}{6}
+bernoullib-4	BernoulliB[4]	-1/30	B_4	-\frac{1}{30}
+bernoullib-12	BernoulliB[12]	-691/2730	B_{12}	-\frac{691}{2730}
+bernoullib-10	BernoulliB[10]			
+exact-rationals-at-any-index	BernoulliB[60]			
+listable-b-n-threads-over-a-list-of-indices	BernoulliB[List[2, 4, 6]]			
+the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac	BernoulliB[4, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_4(x)-\left(x^4-2 x^3+x^2-\frac{1}{30}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_4\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^4-2 \left(\frac{7}{3}\right)^3+\left(\frac{7}{3}\right)^2-\frac{1}{30}\right)\right]\right],\text{Chop}\left[N\left[B_4\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^4-2 \left(-\frac{11}{5}\right)^3+\left(-\frac{11}{5}\right)^2-\frac{1}{30}\right)\right]\right],\text{Chop}\left[N\left[B_4\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^4-2 \left(\frac{13}{4}\right)^3+\left(\frac{13}{4}\right)^2-\frac{1}{30}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+the-bernoulli-polynomial-at-a-rational-point-b-2	BernoulliB[2, Rational[1, 2]]			
+with-a-second-argument-the-bernoulli-polynomial	BernoulliB[1, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1(x)-\left(x-\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1\left(\frac{7}{3}\right)-\left(\frac{7}{3}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(-\frac{11}{5}\right)-\left(-\frac{11}{5}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(\frac{13}{4}\right)-\left(\frac{13}{4}-\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+threads-element-wise-over-a-list-as-wolfram-s	BernoulliB[List[1, 2, 3]]	{-1/2, 1/6, 0}	B_{\{1,2,3\}}	\left\{-\frac{1}{2},\frac{1}{6},0\right\}
+faulhaber-s-formula-recovers-sum-k-0-4-k-2-30	Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]	30	\frac{\binom{3}{0} B_0 5^3+\binom{3}{1} B_1 5^2+\binom{3}{2} B_2 5^1}{3}	30
+von-staudt-clausen-the-denominator-of-b-2n-is				
+zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	(Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])			
+the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]			
+b-n-0-for-every-odd-n-1	(BernoulliB[5] == 0)	True	B_5=0	\text{True}
+b-1-1-frac-12-is-the-other-convention-for-b-1	BernoulliB[1, 1]			
+bernoulli-numbers-are-only-defined-for-n-ge-0-a	BernoulliB[-1]	BernoulliB[-1]	B_{-1}	B_{-1}
+numerators-and-denominators-grow-quickly-b-20	BernoulliB[20]	-174611/330	B_{20}	-\frac{174611}{330}

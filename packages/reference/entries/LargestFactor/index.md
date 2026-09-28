@@ -1,0 +1,10 @@
+---
+name: LargestFactor
+domain: Combinatorics
+signature: LargestFactor(...)
+summary: Largest factor
+statOn:
+  - MultiplicativePartition
+  - OrderedFactorization
+stub: carrier
+---

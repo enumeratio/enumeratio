@@ -1,0 +1,9 @@
+---
+name: PrefersFirst
+domain: Combinatorics
+signature: PrefersFirst(...)
+summary: Cars preferring the first spot
+statOn:
+  - ParkingFunction
+stub: carrier
+---

@@ -1,0 +1,25 @@
+---
+name: HermiteDecomposition
+domain: Number theory
+signature: HermiteDecomposition(m)
+summary: $\{u, h\}$ with $u$ unimodular and $u \cdot m = h$ upper triangular in Hermite normal form.
+signatures:
+  - call: HermiteDecomposition(m)
+    description: a unimodular $u$ and $h = u \cdot m$ in Hermite normal form
+    library: enumeratio-number-theory
+    type: (list<list<integer>>) -> list
+details:
+  - $h$ is upper triangular with positive pivots, and every entry above a pivot is reduced into $[0, \text{pivot})$ — the row-reduced convention that makes $h$ unique for a given $m$.
+  - '$u \in GL_n(\mathbb{Z})$: $\det u = \pm 1$, so $u$ is invertible over $\mathbb{Z}$, not merely over $\mathbb{Q}$.'
+  - Used by [[ProfiniteDecomposition]] to put a matrix over $\hat{\mathbb{Q}}$ into strong-approximation form (Hertogh's Algorithm 8.4).
+seeAlso:
+  - ProfiniteDecomposition
+  - ExtendedGCD
+names:
+  wolframIdentity: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: HermiteDecomposition[$1]
+    arity: 1
+---

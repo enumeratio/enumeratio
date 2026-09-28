@@ -1,0 +1,3 @@
+id	in
+harary-4-7-edge-count-and-min-degree	EdgeCount[HararyGraph[4, 7]]
+harary-3-7-exact-edges	EdgeList[HararyGraph[3, 7]]

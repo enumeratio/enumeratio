@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out
+the-outer-product-of-two-vectors-a-3-times-2	Outer[Times, List[1, 2, 3], List[1, 2]]			
+symbolic-entries	Outer[Times, List[1, 2, 3], List[x, y]]	{{x, y}, {2*x, 2*y}, {3*x, 3*y}}	\text{Outer}[\text{Times},\{1,2,3\},\{x,y\}]	\left( \begin{array}{cc}  x & y \\  2 x & 2 y \\  3 x & 3 y \\ \end{array} \right)
+outer-matrix-of-right-shape	Outer[Plus, List[1, 2], List[10, 20, 30]]			
+any-binary-function-an-addition-table	Outer[Plus, List[1, 2], List[10, 20]]			
+a-table-of-powers	Outer[Power, List[2, 3], List[1, 2, 3]]			
+list-gives-every-pair-like-a-cartesian-product	Outer[List, List[a, b], List[x, y]]	{{{a, x}, {a, y}}, {{b, x}, {b, y}}}	\text{Outer}[\text{List},\{a,b\},\{x,y\}]	\left( \begin{array}{cc}  \{a,x\} & \{a,y\} \\  \{b,x\} & \{b,y\} \\ \end{array} \right)

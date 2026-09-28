@@ -1,0 +1,23 @@
+id	in	out
+fibonacci-0	\mathrm{Fibonacci}(0)	0
+fibonacci-1	\mathrm{Fibonacci}(1)	1
+fibonacci-10	\mathrm{Fibonacci}(10)	55
+fibonacci-20	\mathrm{Fibonacci}(20)	6\,765
+fibonacci-8	\mathrm{Fibonacci}(8)	21
+exact-at-any-size-f-100-has-21-digits	\mathrm{Fibonacci}(100)	354\,224\,848\,179\,261\,915\,075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	\mathrm{Fibonacci}(1.5)	0.920\,442\,065\,259\,926
+the-two-argument-fibonacci-polynomial-f-7-x-from	\mathrm{Fibonacci}(7, x)	x^6+5x^4+6x^2+1
+the-fibonacci-polynomial-at-a-real-order-and	\mathrm{Fibonacci}(5.8, 3)	283.482\,730\,832\,949\,9
+special-value-of-the-fibonacci-polynomial-f-1-0	\mathrm{Fibonacci}(1, 0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	\mathrm{Fibonacci}(0, 0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	\mathrm{Fibonacci}(3, \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 26\bigr\rbrack\bigr\rbrack
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Fibonacci}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 1, 2, 3\bigr\rbrack
+consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{\mathrm{Fibonacci}(20)}{\mathrm{Fibonacci}(19)}	\frac{6\,765}{4\,181}
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}\mathrm{Fibonacci}(k)	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	\mathrm{Fibonacci}(20)=\mathrm{Fibonacci}(10)\mathrm{LucasL}(10)	\top
+the-defining-recurrence-f-10-f-9-f-8	\mathrm{Fibonacci}(10)=\mathrm{Fibonacci}(9)+\mathrm{Fibonacci}(8)	\top
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	\mathrm{Fibonacci}(5)\mathrm{Fibonacci}(7)-\mathrm{Fibonacci}(6)^2	1
+gcd-f-12-f-18-f-gcd-12-18	\gcd(\mathrm{Fibonacci}(12), \mathrm{Fibonacci}(18))=\mathrm{Fibonacci}(\gcd(12, 18))	\top
+negative-indices-are-supported-via-f-n-1-n-1-f-n	\mathrm{Fibonacci}(-5)	5
+f-1000-has-209-digits-see-integerdigits	\mathrm{Length}(\mathrm{IntegerDigits}(\mathrm{Fibonacci}(1\,000)))	209
+they-grow-fast-f-50-already-exceeds-twelve	\mathrm{Fibonacci}(50)	12\,586\,269\,025

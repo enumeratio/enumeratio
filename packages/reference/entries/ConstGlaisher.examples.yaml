@@ -1,4 +1,0 @@
-- id: const-glaisher-numeric-value
-  expr: [N, ConstGlaisher]
-  expected: 1.2824271291006226
-  caption: $A \approx 1.2824271291006226\ldots$

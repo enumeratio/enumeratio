@@ -1,4 +1,0 @@
-- id: held
-  expr: [InterpretationBox, "'F'", [Add, 2, 3]]
-  expected: [InterpretationBox, "'F'", [Add, 2, 3]]
-  caption: the expression it stands for is held

@@ -1,0 +1,17 @@
+---
+name: ReIm
+domain: Collections
+signature: ReIm(z)
+summary: "{Re(z), Im(z)} — threads over a list the way Wolfram's Listable ReIm does."
+signatures:
+  - call: ReIm(z)
+    description: the pair {Re(z), Im(z)}
+    library: enumeratio-collections
+    type: (list<any> | number) -> list<any>
+details:
+  - "Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair."
+seeAlso:
+  - NumberQ
+names:
+  wolframIdentity: true
+---

@@ -1,0 +1,16 @@
+---
+name: SetPartitions
+domain: Combinatorial collections
+signature: SetPartitions(n)
+summary: The partitions of the set $\{1, \dots, n\}$ into unordered non-empty blocks.
+signatures:
+  - call: SetPartitions(n)
+    description: the partitions of an $n$-set into blocks
+    library: enumeratio-collections
+details:
+  - Count is the Bell number $B_n$ (see [[BellNumber]])
+  - Each element is a list of blocks (a list of index lists)
+seeAlso:
+  - IntegerPartitions
+  - BellNumber
+---

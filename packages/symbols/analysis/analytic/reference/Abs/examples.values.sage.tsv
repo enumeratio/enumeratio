@@ -1,0 +1,27 @@
+id	in	out
+abs-neg-5	abs(-5)	5
+abs-5	abs(5)	5
+0-is-the-only-value-with-x-0	abs(0)	0
+abs-neg-7-over-2	abs((-7/2))	7/2
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	abs((3 + 4*I))	5
+threads-element-wise-over-a-list	[abs(-1), abs(2), abs(-3)]	[1, 2, 3]
+abs-neg-2p5	abs(-2.5)	2.50000000000000
+the-modulus-of-a-complex-number-with-approximate	abs((1.4 + 2.3*I))	2.69258240356725
+threads-over-a-matrix-entry-by-entry	[[abs((1/2)), abs(-1)], [abs((-5/3)), abs((1/2))]]	[[1/2, 1], [5/3, 1/2]]
+exact-numeric-constants	abs((-pi))	pi
+an-exact-complex-number-gives-an-exact-radical	abs((1 + 1*I))	sqrt(2)
+abs-imaginaryunit	abs(I)	1
+e-i-pi-3-lies-on-the-unit-circle	abs(exp((I * (pi / 3))))	abs(1/2*I*sqrt(3) + 1/2)
+abs-negativeinfinity	abs(-oo)	
+complex-infinity-has-infinite-magnitude-in-every	abs(unsigned_infinity)	
+an-interval-maps-to-the-interval-of-absolute		
+an-interval-straddling-0-maps-to-0-the-larger		
+decides-the-sign-of-an-exact-numeric-expression	abs((sqrt(2) - 2))	abs(sqrt(2) - 2)
+a-complex-radicand-inside-the-subtraction	abs((sqrt(-10) - 2))	abs(sqrt(-10) - 2)
+the-gap-between-two-temperatures-70-and-95	abs((70 - 95))	25
+the-distance-between-the-points-1-i-and-4-5i-of	abs(((1 + 1*I) - (4 + 5*I)))	5
+even-function-x-x	bool(abs(-8) == abs(8))	True
+triangle-inequality-a-b-le-a-b		
+z-2-z-bar-z		
+multiplicative-ab-a-b	bool(abs(((1 + 2*I) * (3 + -1*I))) == (abs((1 + 2*I)) * abs((3 + -1*I))))	True
+doesn-t-factor-constants-out-of-a-symbolic	abs((-3 * SR.var("x")))	True

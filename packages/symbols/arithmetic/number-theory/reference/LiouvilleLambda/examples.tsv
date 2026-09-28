@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+omega-12-3			[LiouvilleLambda, 12]	-1	$\Omega(12)=3$
+liouvillelambda-10			[LiouvilleLambda, 10]	1	
+liouvillelambda-1			[LiouvilleLambda, 1]	1	
+listable	Scope		[LiouvilleLambda, [Range, 10]]	[List, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1]	Listable
+lambda-n-1-omega-n-see-primeomega	Properties		[Equal, [LiouvilleLambda, 360], [Power, -1, [PrimeOmega, 360]]]	True	$\lambda(n)=(-1)^{\Omega(n)}$. See [[PrimeOmega]]

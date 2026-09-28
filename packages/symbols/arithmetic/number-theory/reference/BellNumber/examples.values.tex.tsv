@@ -1,0 +1,17 @@
+id	in	out
+bellnumber-0	\mathrm{BellNumber}(0)	1
+bellnumber-1	\mathrm{BellNumber}(1)	1
+bellnumber-3	\mathrm{BellNumber}(3)	5
+bellnumber-5	\mathrm{BellNumber}(5)	52
+bellnumber-10	\mathrm{BellNumber}(10)	115\,975
+threads-element-wise-over-a-list-as-wolfram-s	\mathrm{BellNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 2, 5, 15\bigr\rbrack
+exact-for-large-n	\mathrm{BellNumber}(30)	846\,749\,014\,511\,809\,332\,450\,147
+the-two-argument-form-gives-the-bell-touchard	\mathrm{BellNumber}(5, x)	x^5+10x^4+25x^3+15x^2+x
+the-bell-polynomial-at-a-real-point-b-20-0-5	\mathrm{BellNumber}(20, 0.5)	270\,190\,131\,940.151\,92
+the-number-of-ways-to-partition-a-4-element-set	\mathrm{BellNumber}(4)	15
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	\mathrm{BellNumber}(5)=\binom{4}{0}\mathrm{BellNumber}(0)+\binom{4}{1}\mathrm{BellNumber}(1)+\binom{4}{2}\mathrm{BellNumber}(2)+\binom{4}{3}\mathrm{BellNumber}(3)+\binom{4}{4}\mathrm{BellNumber}(4)	\top
+the-bell-polynomial-at-1-is-the-bell-number-b-n	\mathrm{BellNumber}(5, 1)	52
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	\frac{1}{e}(\sum_{k=0}^{\infty}\frac{k^5}{k!})	52
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	\mathrm{BellNumber}(9)\bmod7=(\mathrm{BellNumber}(2)+\mathrm{BellNumber}(3))\bmod7	\top
+a-negative-argument-is-left-unevaluated	\mathrm{BellNumber}(-1)	\mathrm{BellNumber}(-1)
+a-zero-modulus-inside-a-congruence-check-is-nan	\mathrm{BellNumber}(9)\bmod23=(\mathrm{BellNumber}(4)+\mathrm{BellNumber}(5))\bmod0	\bot

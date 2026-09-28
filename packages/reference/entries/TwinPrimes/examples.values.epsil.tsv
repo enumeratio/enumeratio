@@ -1,0 +1,5 @@
+id	in	out
+the-first-20-lesser-twin-primes-oeis-a001359	Take(TwinPrimes, 20)	"[\n  3,\n  5,\n  11,\n  17,\n  29,\n  41,\n  59,\n  71,\n  101,\n  107,\n  137,\n  149,\n  179,\n  191,\n  197,\n  227,\n  239,\n  269,\n  281,\n  311,\n]"
+count-twinprimes-is-unknown-but-the-first-20	Count(Take(TwinPrimes, 20))	20
+11-is-a-lesser-twin-prime	11 in TwinPrimes	True
+13-is-not-13-2-15-not-prime	13 in TwinPrimes	False

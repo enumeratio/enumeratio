@@ -1,0 +1,4 @@
+id	in	out
+only-3-1	\mathrm{Descents}(\bigl\lbrack3, 1, 2\bigr\rbrack)	1
+every-step-falls	\mathrm{Descents}(\bigl\lbrack3, 2, 1\bigr\rbrack)	2
+descents-and-ascents-partition-the-n-1-steps	\mathrm{Descents}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{Ascents}(\bigl\lbrack3, 1, 2\bigr\rbrack)=2	\top

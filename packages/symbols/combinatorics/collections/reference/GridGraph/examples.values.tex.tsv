@@ -1,0 +1,3 @@
+id	in	out
+a-3-by-4-grid	\mathrm{VertexCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))	12
+edge-count-of-a-3-by-4-grid	\mathrm{EdgeCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))	17

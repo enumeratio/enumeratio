@@ -1,0 +1,19 @@
+---
+name: IsPrimePower
+domain: Number theory
+signature: IsPrimePower(n)
+summary: Tests whether $n$ is a positive integer power of a single prime.
+signatures:
+  - call: IsPrimePower(n)
+    description: $n = p^k$ for a prime $p$, $k \ge 1$
+    library: enumeratio-number-theory
+    type: (integer) -> boolean
+details:
+  - "$1=p^0$ does not count: it has no prime base."
+  - Wolfram's `PrimePowerQ`.
+seeAlso:
+  - IsPrime
+  - FactorInteger
+names:
+  wolfram: PrimePowerQ
+---

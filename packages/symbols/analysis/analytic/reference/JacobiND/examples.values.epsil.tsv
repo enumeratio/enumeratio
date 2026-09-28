@@ -1,0 +1,5 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(JacobiND(0.3, -2))	0.918_684_525_634_504_4
+m-greater-than-1-via-the-reciprocal-modulus	N(JacobiND(0.3, 1.5))	1.069_333_535_737_140_7
+u-0-is-1-for-any-m	JacobiND(0, m)	1
+symbolic-arguments-are-left-unevaluated-rather	JacobiND(u, m)	JacobiND(u, m)

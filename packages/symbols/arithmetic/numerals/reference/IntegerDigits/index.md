@@ -1,0 +1,46 @@
+---
+name: IntegerDigits
+domain: Numeral systems
+signature: IntegerDigits(n, base?, width?)
+summary: The digits of $n$, most significant first — base 10 by default. The base slot takes a whole numeral SYSTEM, not only an integer — factorial, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed-radix, primorial, combinatorial or residue.
+signatures:
+  - call: IntegerDigits(n)
+    description: digits of $n$ in base 10, most significant first.
+  - call: IntegerDigits(n, base)
+    description: digits of $n$ in the given base.
+  - call: IntegerDigits(n, base, len)
+    description: the $len$ least-significant digits, zero-padded if needed.
+  - call: IntegerDigits(n, system)
+    description: digits in any of the systems below
+    library: enumeratio-numerals
+    type: (integer, any?, integer?) -> list<integer>
+    overrides: compute-engine
+  - call: IntegerDigits(n, system, width)
+    description: left-padded with zeros to `width` digits
+    library: enumeratio-numerals
+details:
+  - Digits come out most significant first, matching ordinary positional notation.
+  - In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.
+  - IntegerDigits(0) is $\{0\}$ -- there's always at least one digit.
+  - The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.
+  - "Systems: `PositionalNumerals(b)`, `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `Radix`, `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`"
+  - '`PositionalNumerals(b)` is ordinary base-$b$ notation, $b\ge2$ — the same digits an integer base already gives, wrapped as a system value so it can stand wherever the others do (`NumeralSystemShape`, a constant-radix `MixedRadixNumerals` comparison)'
+  - "`OstrowskiNumerals([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf"
+  - "`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead"
+  - The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up
+  - An integer with no numeral in a system — anything past $\prod m_i$ in a residue system, say — leaves the call standing rather than answering
+  - "Bijective bases have no zero DIGIT, but zero itself is the empty numeral: that is what makes the correspondence with strings a bijection"
+  - Inverted by [[FromDigits]] with the same system
+seeAlso:
+  - FromDigits
+  - NumeralSystemShape
+  - DigitCount
+  - IntegerString
+references:
+  - system: wikipedia
+    identity: Numerical digit
+  - system: rosettacode
+    identity: Sum digits of an integer
+names:
+  wolframIdentity: true
+---

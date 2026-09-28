@@ -1,0 +1,2 @@
+id	in	out
+the-one-line-word-231	FromPermutation(Permutation([2, 3, 1]))	IncreasingBinaryTree((1, [2, 0, 0], [0, 3, 0]))

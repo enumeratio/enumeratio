@@ -1,0 +1,13 @@
+---
+name: MultiplicativePartition
+domain: Combinatorics
+signature: MultiplicativePartition(...)
+summary: Catalogued in the enumeratio database; not yet written up here.
+catalogCarrier: true
+stub: carrier
+signatures:
+  - call: MultiplicativePartition(...)
+    description: Catalogued in the enumeratio database; not yet written up here.
+    library: enumeratio-domains
+    type: (list<integer>) -> multiplicative_partition
+---

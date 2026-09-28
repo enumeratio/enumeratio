@@ -1,0 +1,3 @@
+id	in
+quadratic	DifferenceDelta[Power[n, 2], n]
+linear	DifferenceDelta[Plus[Times[3, n], 5], n]

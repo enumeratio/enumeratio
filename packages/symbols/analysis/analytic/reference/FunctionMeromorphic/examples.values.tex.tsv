@@ -1,0 +1,5 @@
+id	in	out
+a-rational-function-is-meromorphic	\mathrm{FunctionMeromorphic}(\frac{1}{x}, x)	\top
+tangent-is-a-ratio-of-entire-functions	\mathrm{FunctionMeromorphic}(\tan(x), x)	\top
+a-branch-point-is-not-a-pole	\mathrm{FunctionMeromorphic}(\ln(x), x)	\bot
+polynomials-are-meromorphic	\mathrm{FunctionMeromorphic}(x^2, x)	\top

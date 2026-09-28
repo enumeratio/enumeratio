@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+perfectnumber-1			[PerfectNumber, 1]	6	
+perfectnumber-3			[PerfectNumber, 3]	496	
+perfectnumber-5			[PerfectNumber, 5]	33550336	
+listable	Scope		[PerfectNumber, [List, 1, 2, 3, 4]]	[List, 6, 28, 496, 8128]	Listable

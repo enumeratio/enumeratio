@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+standard-range			[PascalBinomial, 5, 2]	10	Agrees with Binomial(5, 2) in the standard range
+pascalbinomial-negative-n-case-2		test	[PascalBinomial, -1, 4]	1	
+negative-n	Scope		[PascalBinomial, -1, 3]	-1	C(-1, k) = (-1)^k, the standard identity for a negative upper index

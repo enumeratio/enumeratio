@@ -1,0 +1,5 @@
+id	in
+hypergeometric-pdf-exact	PDF[HypergeometricDistribution[20, 50, 100], 10]
+hypergeometric-cdf-exact-sum	CDF[HypergeometricDistribution[3, 5, 10], 2]
+hypergeometric-mean-exact	Mean[HypergeometricDistribution[20, 50, 100]]
+hypergeometric-variance-exact	Variance[HypergeometricDistribution[20, 50, 100]]

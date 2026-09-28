@@ -1,0 +1,31 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(\mathrm{EllipticTheta}(3, 0.3, 0.2))	1.331\,293\,558\,113\,586\,5
+theta2-0-3-0-2	N(\mathrm{EllipticTheta}(2, 0.3, 0.2))	1.311\,005\,733\,617\,499\,6
+theta4-0-3-0-2	N(\mathrm{EllipticTheta}(4, 0.3, 0.2))	0.671\,025\,531\,495\,733\,9
+theta2-0-0-5	N(\mathrm{EllipticTheta}(2, 0, 0.5))	2.128\,931\,250\,513\,027\,3
+theta3-0-0-5	N(\mathrm{EllipticTheta}(3, 0, 0.5))	2.128\,936\,827\,211\,877
+theta4-0-0-5	N(\mathrm{EllipticTheta}(4, 0, 0.5))	0.121\,124\,208\,002\,580\,5
+theta1-1-0-3	N(\mathrm{EllipticTheta}(1, 1, -0.3))	0.866\,687\,975\,363\,271\,9+0.866\,687\,975\,363\,271\,7i
+theta2-1-0-3	N(\mathrm{EllipticTheta}(2, 1, -0.3))	0.472\,461\,747\,802\,421\,8+0.472\,461\,747\,802\,421\,67i
+theta4-1-0-3	N(\mathrm{EllipticTheta}(4, 1, -0.3))	0.739\,760\,668\,224\,426\,4
+theta1-0-3-0-1i-0-2	N(\mathrm{EllipticTheta}(1, 0.3+0.1i, 0.2))	0.353\,519\,331\,528\,689\,14+0.117\,863\,603\,543\,459\,8i
+theta2-0-3-0-1i-0-2	N(\mathrm{EllipticTheta}(2, 0.3+0.1i, 0.2))	1.318\,908\,313\,359\,386-0.052\,397\,308\,257\,536\,52i
+theta4-0-3-0-1i-0-2	N(\mathrm{EllipticTheta}(4, 0.3+0.1i, 0.2))	0.664\,494\,858\,454\,977\,9+0.044\,248\,699\,147\,754\,304i
+theta1-0-5-0-5i-0-1-0-2i	N(\mathrm{EllipticTheta}(1, 0.5+0.5i, 0.1+0.2i))	0.679\,025\,732\,824\,591\,8+0.718\,403\,750\,521\,749\,7i
+theta3-0-5-0-5i-0-1-0-2i	N(\mathrm{EllipticTheta}(3, 0.5+0.5i, 0.1+0.2i))	1.548\,688\,939\,705\,043\,8+0.147\,862\,230\,214\,671\,93i
+theta4-0-5-0-5i-0-1-0-2i	N(\mathrm{EllipticTheta}(4, 0.5+0.5i, 0.1+0.2i))	0.424\,035\,023\,954\,019\,93-0.123\,598\,112\,763\,678\,6i
+theta1-2-0-6	N(\mathrm{EllipticTheta}(1, 2, 0.6))	1.729\,105\,126\,465\,869\,2
+theta2-2-0-6	N(\mathrm{EllipticTheta}(2, 2, 0.6))	-0.192\,412\,995\,601\,381\,78
+theta3-2-0-6	N(\mathrm{EllipticTheta}(3, 2, 0.6))	0.194\,384\,250\,102\,408
+theta4-2-0-6	N(\mathrm{EllipticTheta}(4, 2, 0.6))	1.729\,107\,884\,812\,714
+theta1-0-4-0-85	N(\mathrm{EllipticTheta}(1, 0.4, 0.85))	0.000\,955\,148\,881\,100\,570\,4
+theta2-0-4-0-85	N(\mathrm{EllipticTheta}(2, 0.4, 0.85))	1.642\,705\,601\,370\,083\,1
+theta3-0-4-0-85	N(\mathrm{EllipticTheta}(3, 0.4, 0.85))	1.642\,705\,601\,370\,083\,1
+theta4-0-4-0-85	N(\mathrm{EllipticTheta}(4, 0.4, 0.85))	0.000\,955\,149\,248\,343\,722\,9
+each-of-the-four-theta-functions-a-1	N(\mathrm{EllipticTheta}(1, 0.3, 0.2))	0.353\,430\,543\,747\,624\,5
+a-complex-argument-u	N(\mathrm{EllipticTheta}(3, 0.3+0.1i, 0.2))	1.338\,012\,245\,244\,520\,2-0.046\,698\,857\,386\,200\,96i
+a-negative-real-nome-q	N(\mathrm{EllipticTheta}(3, 1, -0.3))	1.239\,061\,275\,954\,273
+a-complex-nome-q	N(\mathrm{EllipticTheta}(2, 0.5+0.5i, 0.1+0.2i))	1.482\,111\,803\,583\,081\,8+0.163\,554\,249\,597\,655\,97i
+theta1-0-q-is-0-for-any-q-an-odd	N(\mathrm{EllipticTheta}(1, 0, 0.5))	0
+q-1-is-declined-the-series-diverges	N(\mathrm{EllipticTheta}(3, 0.3, 1))	\mathrm{EllipticTheta}(3, 0.3, 1)
+symbolic-arguments-are-left-unevaluated-rather	\mathrm{EllipticTheta}(3, u, q)	\mathrm{EllipticTheta}(3, u, q)

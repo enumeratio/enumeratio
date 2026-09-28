@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+expectation-of-the-bound-variable-is-the-mean			[Expectation, x, [Distributed, x, [NormalDistribution, 2, 3]]]	2	
+expectation-of-x-squared			[Expectation, [Power, x, 2], [Distributed, x, [NormalDistribution, 2, 3]]]	13	$Var + Mean^2 = 9 + 4$
+expectation-is-linear			[Expectation, [Add, [Multiply, 2, x], 1], [Distributed, x, [NormalDistribution, 2, 3]]]	5	
+a-shape-with-no-closed-form-stays-unevaluated	Possible issues		[Expectation, [Sin, x], [Distributed, x, [NormalDistribution, 2, 3]]]	[Expectation, [Sin, x], [Distributed, x, [NormalDistribution, 2, 3]]]	

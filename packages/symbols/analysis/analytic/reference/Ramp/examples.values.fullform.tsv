@@ -1,0 +1,6 @@
+id	in
+ramp-negative	Ramp[-2]
+ramp-positive	Ramp[3]
+ramp-zero	Ramp[0]
+ramp-equals-x-times-unitstep	Equal[Ramp[5], Times[5, UnitStep[5]]]
+ramp-derivative	D[Ramp[x], x]

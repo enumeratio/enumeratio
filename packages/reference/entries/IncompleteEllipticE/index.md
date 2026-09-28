@@ -1,0 +1,14 @@
+---
+name: IncompleteEllipticE
+domain: Wolfram
+signature: IncompleteEllipticE(...)
+summary: Wolfram's own EllipticE, mapped through for the transpiler and the oracle but not yet written up here.
+names:
+  wolfram: EllipticE
+stub: carrier
+signatures:
+  - call: IncompleteEllipticE(...)
+    description: Wolfram's own EllipticE, mapped through for the transpiler and the oracle but not yet written up here.
+    library: enumeratio-analytic
+    type: (number, number) -> number
+---

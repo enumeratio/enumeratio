@@ -1,0 +1,9 @@
+id	in	out
+at-a-1-it-is-the-bernoulli-number-b-2	NorlundB(2, 1)	1 / 6
+norlundb-4-1	NorlundB(4, 1)	-1 / 30
+norlundb-2-2	NorlundB(2, 2)	5 / 6
+norlundb-3-2	NorlundB(3, 2)	-1 / 2
+norlundb-6-4	NorlundB(6, 4)	221 / 42
+norlundb-5-3	NorlundB(5, 3)	-3 / 4
+norlundb-7-2	NorlundB(7, 2)	-1 / 6
+a-polynomial-in-a	NorlundB(1, a)	-1 / 2 * a

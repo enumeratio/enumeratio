@@ -1,0 +1,9 @@
+---
+name: ToSubset
+domain: Combinatorics
+signature: ToSubset(...)
+summary: To finset
+mapOn:
+  - Composition
+stub: carrier
+---

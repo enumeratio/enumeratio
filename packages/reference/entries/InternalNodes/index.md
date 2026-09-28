@@ -1,0 +1,9 @@
+---
+name: InternalNodes
+domain: Combinatorics
+signature: InternalNodes(...)
+summary: Number of internal nodes
+statOn:
+  - OrderedTree
+stub: carrier
+---

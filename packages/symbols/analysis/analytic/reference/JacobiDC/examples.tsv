@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiDC, 0.6, 0.4]]	1.124780426911555	A floating-point argument evaluates directly to a decimal
+m-less-than-0-via-the-imaginary-modulus	Scope		[N, [JacobiDC, 0.3, -0.7]]	1.0799397700832252	m less than 0, via the imaginary-modulus transformation
+u-0-is-1-for-any-m	Properties		[JacobiDC, 0, m]	1	u = 0 is 1, for any m
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiDC, u, m]	[JacobiDC, u, m]	Symbolic arguments are left unevaluated rather than guessed at

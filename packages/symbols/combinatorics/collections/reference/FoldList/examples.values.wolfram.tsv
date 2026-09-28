@@ -1,0 +1,6 @@
+id	in
+foldlist-add-0-1-2-3	FoldList[Plus, 0, List[1, 2, 3]]
+foldlist-add-1-2-3	FoldList[Plus, List[1, 2, 3]]
+foldlist-multiply-1-1-2-3-4	FoldList[Times, 1, List[1, 2, 3, 4]]
+foldlist-length-is-one-more	(Length[FoldList[Plus, 0, List[1, 2, 3, 4, 5]]] == Plus[Length[List[1, 2, 3, 4, 5]], 1])
+foldlist-last-is-fold	(Last[FoldList[Plus, 0, List[1, 2, 3]]] == Fold[Plus, 0, List[1, 2, 3]])

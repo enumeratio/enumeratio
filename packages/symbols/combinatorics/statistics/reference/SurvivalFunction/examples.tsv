@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+survivalfunction-chisquare			[SurvivalFunction, [ChiSquareDistribution, 3], 2]	[GammaRegularized, [Rational, 3, 2], 1]

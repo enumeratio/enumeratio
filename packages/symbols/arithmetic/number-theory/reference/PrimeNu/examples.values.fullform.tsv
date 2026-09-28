@@ -1,0 +1,12 @@
+id	in
+primenu-24	PrimeNu[24]
+primenu-360	PrimeNu[360]
+primenu-105	PrimeNu[105]
+threads-element-wise-over-a-list-as-wolfram-s	PrimeNu[List[4, 28, 180]]
+large-integers-the-15-primes-up-to-50-divide-50	PrimeNu[Factorial[50]]
+gaussian-integers-3-i-1-i-2-i	PrimeNu[Complex[3, 1]]
+gaussianintegers-true-5-splits-so-105-has-4	PrimeNu[105, Rule[GaussianIntegers, True]]
+listable-over-a-range	PrimeNu[Range[20]]
+primenu-n-is-the-length-of-factorinteger-n	Equal[PrimeNu[50], Length[FactorInteger[50]]]
+32-2-5-has-just-one-distinct-prime-factor	PrimeNu[32]
+1-has-no-prime-factors	PrimeNu[1]

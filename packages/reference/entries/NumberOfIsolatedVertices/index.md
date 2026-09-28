@@ -1,0 +1,9 @@
+---
+name: NumberOfIsolatedVertices
+domain: Combinatorics
+signature: NumberOfIsolatedVertices(...)
+summary: Number of isolated vertices
+statOn:
+  - LabeledGraph
+stub: carrier
+---

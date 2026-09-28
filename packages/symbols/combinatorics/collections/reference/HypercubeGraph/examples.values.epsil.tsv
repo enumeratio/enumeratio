@@ -1,0 +1,2 @@
+id	in	out
+q3-has-8-vertices-12-edges	[VertexCount(HypercubeGraph(3)), EdgeCount(HypercubeGraph(3))]	[8, 12]

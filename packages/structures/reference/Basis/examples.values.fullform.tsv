@@ -1,0 +1,4 @@
+id	in
+1-i-j-k	Basis[Quaternions]
+the-bicomplex-basis	Basis[MulticomplexAlgebra[2]]
+an-element-from-a-coefficient-tuple	Dot[List[1, 2, 3, 4], Basis[Quaternions]]

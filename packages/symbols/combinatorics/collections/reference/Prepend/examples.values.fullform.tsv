@@ -1,0 +1,8 @@
+id	in	back
+prepend-list-a-b-c-d-x	Prepend[List[a, b, c, d], x]	
+prepend-front-of-list	Prepend[List[1, 2, 3], 0]	
+prepend-single-element-list	Prepend[List[5], 10]	
+prepend-empty-list	Prepend[List[], 42]	
+a-rule-inserted-at-the-front-of-an-association	Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]	[Prepend, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]], [KeyValuePair, 3, d]]
+several-rules-prepended-at-once	Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]	[Prepend, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]], [List, [KeyValuePair, 3, d], [KeyValuePair, 4, e]]]
+prepend-c-x-join-x-c-see-join	Equal[Prepend[List[1, 2, 3], 0], Join[List[0], List[1, 2, 3]]]	

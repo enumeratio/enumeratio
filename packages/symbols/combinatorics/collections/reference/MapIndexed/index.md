@@ -1,0 +1,18 @@
+---
+name: MapIndexed
+domain: Collections
+signature: MapIndexed(f, list)
+summary: f applied to each element together with its 1-based index, wrapped in a one-element list.
+signatures:
+  - call: MapIndexed(f, list)
+    description: "{f(a1, {1}), f(a2, {2}), …} — the index is a LIST, not a bare integer"
+    library: enumeratio-collections
+    type: "(function: any, list<any>) -> list<any>"
+details:
+  - "The index arrives as `{i}`, not `i`: Wolfram's own MapIndexed nests over levels, and `{i}` is the level-1 position path — only the top level is implemented here, but the shape is kept for compatibility."
+seeAlso:
+  - MapThread
+  - Level
+names:
+  wolframIdentity: true
+---

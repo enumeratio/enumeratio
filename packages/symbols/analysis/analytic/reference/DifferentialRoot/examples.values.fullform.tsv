@@ -1,0 +1,2 @@
+id	in	back
+a-hand-built-first-order-ode	DifferentialRoot[Function[List[y, x], List[Equal[Plus[Minus[y[x]], Derivative[1][y][x]], 0], Equal[y[0], 1]]]][2]	Unreadable

@@ -1,0 +1,3 @@
+id	in	out
+no-self-loop	\mathrm{IsLoopFreeGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))	\mathrm{True}
+a-self-loop	\mathrm{IsLoopFreeGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))	\mathrm{False}

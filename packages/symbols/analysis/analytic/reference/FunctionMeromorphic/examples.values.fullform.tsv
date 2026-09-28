@@ -1,0 +1,5 @@
+id	in
+a-rational-function-is-meromorphic	FunctionMeromorphic[Divide[1, x], x]
+tangent-is-a-ratio-of-entire-functions	FunctionMeromorphic[Tan[x], x]
+a-branch-point-is-not-a-pole	FunctionMeromorphic[Log[x], x]
+polynomials-are-meromorphic	FunctionMeromorphic[Power[x, 2], x]

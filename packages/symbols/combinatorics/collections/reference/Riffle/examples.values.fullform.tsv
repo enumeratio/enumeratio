@@ -1,0 +1,6 @@
+id	in
+x-between-consecutive-elements	Riffle[List[a, b, c], x]
+interleave-two-lists-of-the-same-length	Riffle[List[a, b, c], List[x, y, z]]
+a-list-one-shorter-goes-strictly-between-the	Riffle[List[a, b, c], List[x, y]]
+every-3rd-element-of-the-result-is-x	Riffle[List[1, 2, 3, 4, 5, 6, 7], x, 3]
+a-single-element-has-nothing-to-separate	Riffle[List[a], x]

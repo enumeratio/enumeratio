@@ -1,0 +1,11 @@
+id	in	out	tex.in	tex.out
+chineseremainder-list-3-4-list-4-5	ChineseRemainder[List[3, 4], List[4, 5]]	19	\text{ChineseRemainder}[\{3,4\},\{4,5\}]	19
+chineseremainder-list-2-3-5-list-3-5-7	ChineseRemainder[List[2, 3, 5], List[3, 5, 7]]	68	\text{ChineseRemainder}[\{2,3,5\},\{3,5,7\}]	68
+five-congruences-unique-modulo-7-cdot-11-cdot-13	ChineseRemainder[List[1, 2, 3, 4, 5], List[7, 11, 13, 17, 19]]			
+moduli-sharing-a-factor-with-remainders-that	ChineseRemainder[List[1, 3], List[4, 6]]			
+the-least-solution-ge-200-52-2-cdot-105	ChineseRemainder[List[1, 2, 3], List[3, 5, 7], 200]			
+over-classes-the-answer-is-a-class-and-reading				
+a-third-argument-asks-for-the-smallest-solution	ChineseRemainder[List[1, 2], List[3, 5], 100]	112	\text{ChineseRemainder}[\{1,2\},\{3,5\},100]	112
+recover-123456-bmod-1001-from-its-residues-mod-7	ChineseRemainder[Mod[123456, List[7, 11, 13]], List[7, 11, 13]]			
+verifies-the-solution-satisfies-both-congruences	And[(Mod[ChineseRemainder[List[3, 4], List[4, 5]], 4] == 3), (Mod[ChineseRemainder[List[3, 4], List[4, 5]], 5] == 4)]	True	(\text{ChineseRemainder}[\{3,4\},\{4,5\}] \bmod 4)=3\land (\text{ChineseRemainder}[\{3,4\},\{4,5\}] \bmod 5)=4	\text{True}
+no-solution-exists-when-the-remainders-are	ChineseRemainder[List[1, 2], List[6, 10]]	ChineseRemainder[{1, 2}, {6, 10}]	\text{ChineseRemainder}[\{1,2\},\{6,10\}]	\text{ChineseRemainder}[\{1,2\},\{6,10\}]
