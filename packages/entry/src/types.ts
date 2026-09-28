@@ -393,3 +393,40 @@ export type ExampleImplementations = Readonly<Record<string, SystemImplementatio
  * the example's `id`. Nothing in it is keyed by expression text or array position.
  */
 export type HeadImplementations = Readonly<Record<string, ExampleImplementations>>;
+
+// --- component stories (design/vdom.md) ----------------------------------------------------
+//
+// A component's demos, as data, the way a head's examples are: `packages/components/reference/
+// <Name>.stories.yaml` beside the element sources, one file per component, read and written
+// through the same `@enumeratio/entry` machinery. A story's payload is a vdom tree rather than
+// a MathJSON expression -- `{ tag, attributes, children }` is the shape `@enumeratio/frontend`'s
+// `Rendering` renders from (children are positional arguments, attributes are named options) --
+// redeclared here rather than imported, the same way `MathJSON` mirrors compute-engine's type
+// instead of depending on it.
+
+/** One node of a story's vdom tree: a tag, its attributes (always strings -- an element's
+ * props are DOM attributes), and its children, or literal text for a leaf. */
+export interface StoryVdom {
+  readonly tag: string;
+  readonly attributes?: Readonly<Record<string, string>>;
+  readonly children?: readonly StoryVdom[];
+  readonly text?: string;
+}
+
+/** One demo on a component's reference page. */
+export interface ComponentStory {
+  /**
+   * Stable within the component: `^[a-z0-9]+(-[a-z0-9]+)*$`, at most 48 characters. Assigned
+   * once and kept when the caption or vdom changes. The deep link is `#story/<id>`.
+   */
+  readonly id: string;
+  /** Prose introducing the demo -- may use `$…$` for inline math, same as an example's caption. */
+  readonly caption: string;
+  /** Grouping heading on the component's page ("Bars", "Axes", …). Defaults to "Basic". */
+  readonly category?: string;
+  /** Longer prose kept from the story's original write-up, shown under the caption. */
+  readonly notes?: string;
+  /** What the demo renders, as a vdom tree -- the pinned source of truth; its markup is
+   * derived from this, never the other way around. */
+  readonly vdom: StoryVdom;
+}

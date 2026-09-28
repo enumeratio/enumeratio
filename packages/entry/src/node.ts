@@ -12,7 +12,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { join } from "node:path";
 import { format } from "oxfmt";
 import { FORMAT } from "./format.ts";
-import type { ReferenceEntry, ReferenceExample } from "./types.ts";
+import type { ComponentStory, ReferenceEntry, ReferenceExample } from "./types.ts";
 import { parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
 
 // A head's record is up to three files side by side: `<Head>.yaml` (the entry, all but its
@@ -20,10 +20,17 @@ import { parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
 // `<Head>.implementations.yaml` (generated; see collect-forms and the oracle scan).
 export const EXAMPLES_SUFFIX = ".examples.yaml";
 export const IMPLEMENTATIONS_SUFFIX = ".implementations.yaml";
+// A component's stories: `<Name>.stories.yaml` beside the element sources, one file per
+// component (packages/components/reference/), a plain list like `<Head>.examples.yaml`.
+export const STORIES_SUFFIX = ".stories.yaml";
 
-/** True for a `<Head>.yaml` entry file, not one of its companions. */
+/** True for a `<Head>.yaml` entry file, not one of its companions -- nor a component's
+ * `<Name>.stories.yaml`, which can share a `reference/` directory but not the shape. */
 export const isEntryFile = (file: string): boolean =>
-  file.endsWith(".yaml") && !file.endsWith(EXAMPLES_SUFFIX) && !file.endsWith(IMPLEMENTATIONS_SUFFIX);
+  file.endsWith(".yaml") &&
+  !file.endsWith(EXAMPLES_SUFFIX) &&
+  !file.endsWith(IMPLEMENTATIONS_SUFFIX) &&
+  !file.endsWith(STORIES_SUFFIX);
 
 /** The head's entry, with its examples from `<Head>.examples.yaml` (none if it's absent). */
 export function readEntry(dir: string, head: string): ReferenceEntry {
@@ -42,6 +49,22 @@ export function readEntries(dir: string | URL): ReferenceEntry[] {
     .filter(isEntryFile)
     .sort()
     .map((f) => readEntry(path, f.slice(0, -".yaml".length)));
+}
+
+/** One component's stories, in page order (absent file reads as none). */
+export function readStories(dir: string | URL, name: string): ComponentStory[] {
+  const path = join(typeof dir === "string" ? dir : dir.pathname, `${name}${STORIES_SUFFIX}`);
+  return existsSync(path) ? (parseYaml(readFileSync(path, "utf8")) as ComponentStory[]) : [];
+}
+
+/** Write `stories` to `dir/<Name>.stories.yaml`, removed when there are none. */
+export async function writeStories(dir: string | URL, name: string, stories: readonly ComponentStory[]): Promise<void> {
+  const path = join(typeof dir === "string" ? dir : dir.pathname, `${name}${STORIES_SUFFIX}`);
+  if (stories.length === 0) {
+    rmSync(path, { force: true });
+    return;
+  }
+  await writeYaml(path, stories);
 }
 
 /** Where the records live under `packages/`: `<package>/reference/`, a symbol package's

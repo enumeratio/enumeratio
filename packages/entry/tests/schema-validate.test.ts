@@ -3,6 +3,7 @@
 
 import { expect, test } from "vite-plus/test";
 import {
+  COMPONENT_STORIES_SCHEMA,
   HEAD_IMPLEMENTATIONS_SCHEMA,
   REFERENCE_ENTRY_SCHEMA,
   REFERENCE_EXAMPLES_SCHEMA,
@@ -80,5 +81,47 @@ test("rejects an unknown verdict", () => {
     }),
   ).toEqual([
     '$.zero-modulus.wolfram.verdict: expected one of ["agree","disagree","inconclusive","error"], got "maybe"',
+  ]);
+});
+
+const STORY = {
+  id: "a-3-3-matrix",
+  caption: "A 3×3 matrix",
+  vdom: { tag: "notatio-bar-chart-3d", attributes: { data: "[[1,2,3],[2,4,3],[3,1,5]]" } },
+};
+
+test("a well-formed story passes, with and without category/notes", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [STORY, { ...STORY, id: "again", category: "Bars" }])).toEqual([]);
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, notes: "More prose." }])).toEqual([]);
+});
+
+test("a story's vdom can nest children and text", () => {
+  const nested = {
+    ...STORY,
+    vdom: { tag: "notatio-row", children: [{ tag: "span", text: "so" }] },
+  };
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [nested])).toEqual([]);
+});
+
+test("rejects a story missing its required vdom", () => {
+  const { vdom: _vdom, ...withoutVdom } = STORY;
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [withoutVdom])).toEqual(['$[0]: missing required property "vdom"']);
+});
+
+test("rejects an unknown property on a story (typo guard)", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, caputre: "oops" }])).toEqual([
+    '$[0]: unexpected property "caputre"',
+  ]);
+});
+
+test("rejects an unknown property on a story's vdom node (typo guard)", () => {
+  expect(
+    validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, vdom: { ...STORY.vdom, atributes: STORY.vdom.attributes } }]),
+  ).toEqual(['$[0].vdom: unexpected property "atributes"']);
+});
+
+test("rejects a malformed story id", () => {
+  expect(validateSchema(COMPONENT_STORIES_SCHEMA, [{ ...STORY, id: "Not_Valid" }])).toEqual([
+    "$[0].id: does not match /^[a-z0-9]+(-[a-z0-9]+)*$/",
   ]);
 });

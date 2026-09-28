@@ -25,7 +25,7 @@ import {
   REFERENCE_EXAMPLES_SCHEMA,
   validateSchema,
 } from "@enumeratio/entry/schema";
-import { recordDirs } from "@enumeratio/entry/node";
+import { recordDirs, STORIES_SUFFIX } from "@enumeratio/entry/node";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
@@ -75,7 +75,13 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
 
   for (const { package: pkg, dir: referenceDir } of recordDirs(packagesRoot)) {
     const files = readdirSync(referenceDir).filter(
-      (f) => f.endsWith(ENTRY_SUFFIX) && !f.endsWith(EXAMPLES_SUFFIX) && !f.endsWith(IMPLEMENTATIONS_SUFFIX),
+      (f) =>
+        f.endsWith(ENTRY_SUFFIX) &&
+        !f.endsWith(EXAMPLES_SUFFIX) &&
+        !f.endsWith(IMPLEMENTATIONS_SUFFIX) &&
+        // A component's stories (packages/components/reference/<Name>.stories.yaml) share the
+        // directory name but not the shape -- not a head's entry.
+        !f.endsWith(STORIES_SUFFIX),
     );
 
     for (const file of files.sort()) {
