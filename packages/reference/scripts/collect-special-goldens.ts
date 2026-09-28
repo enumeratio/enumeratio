@@ -128,6 +128,8 @@ for (const z of zGrid) {
 }
 
 // --- ClausenCl(n, θ): mpmath clsin/clcos; Wolfram via PolyLog on the unit circle ----
+// 3.14159 is a deliberately near-but-not-exact sample near the Clausen period's
+// boundary, not Math.PI: it stays off the boundary rather than landing on it.
 const thetaGrid: Val[] = [0.1, 1, 2.5, 4, -1.2, 7.5, 0.001, 3.14159, { rat: [1, 3] }];
 for (const n of [1, 2, 3, 4, 5, 8, 11]) {
   for (const t of thetaGrid) {

@@ -55,6 +55,8 @@ test("a decimal reads as the digits it was typed with", () => {
     ["-0.3", -0.3],
     ["5.56", 5.56],
     ["0.000_001", 0.000001],
+    // 1.4142 is the typed digits, not Math.SQRT2: the point of this test is that
+    // parsing keeps exactly what was written, not the closer irrational value.
     ["1.414_2", 1.4142],
     ["10e-17", 1e-16],
   ] as const) {
