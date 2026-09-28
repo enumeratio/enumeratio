@@ -18,7 +18,10 @@ import { parseYaml } from "../../packages/entry/src/yaml.ts";
 type Row = Record<string, unknown>;
 type Record_ = Record<string, Record<string, Row>>;
 
-const git = (...args: string[]): string => execFileSync("git", args, { encoding: "utf8" });
+// maxBuffer: execFileSync's 1 MiB default throws ENOBUFS on a large implementations.yaml
+// (a collection's sage/wolfram answer can run to several MB), which the catch below would
+// then silently read as "no committed row" for every id in the file.
+const git = (...args: string[]): string => execFileSync("git", args, { encoding: "utf8", maxBuffer: 1024 * 1024 * 64 });
 const RECORD = /^packages\/.*\/(reference|entries)\/[^/]+\.implementations\.yaml$/;
 // Committed records, and any the scan just created.
 const files = [
