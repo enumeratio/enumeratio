@@ -90,9 +90,10 @@ export function lerchContinued(z: Cx, s: Cx, a: Cx, upperGamma: (sigma: Cx, x: C
   // Negating a real log would give −0i and put the power on the other side of its cut.
   const negL = z.im === 0 && z.re > 1 ? cx(-L.re, 0) : scale(L, -1);
   const x = mul(negL, b);
-  // compute-engine's Γ(σ, x) loses digits near the negative real axis once |x| passes ~20
-  // (Γ(−9, −23.03) misses its imaginary part π/9! entirely); don't build on it there.
-  if (x.re < -15 && Math.abs(x.im) < 0.25 * -x.re) return undefined;
+  // compute-engine's Γ(σ, x) loses digits anywhere Re(x) < 0 once |x| exceeds ~2.75
+  // (measured against mpmath across arg(x) ∈ [91°, 180°]), not just close to the negative
+  // real axis at large |x| — the same decline cortex-js/compute-engine#356 uses upstream.
+  if (x.re < 0 && abs(x) > 2.5) return undefined;
   const gamma = upperGamma(sub(cx(1), s), x);
   if (gamma === undefined) return undefined;
   const closed = mul(mul(cexp(mul(negL, b)), cpow(negL, sub(s, cx(1)))), gamma);
