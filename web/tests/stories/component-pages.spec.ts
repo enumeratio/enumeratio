@@ -20,18 +20,12 @@ const tagByName = new Map(collectComponents(srcDir).map((c) => [wrapperName(c.ta
 // What "drew something" means, per tag -- most of these elements paint plain SVG into light
 // DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a data table
 // instead (zero, one or many per-row glyph SVGs, depending on the story's `glyph`), so its
-// check is its own -- a table, OR its own `.nct-error` message, which is a real rendered
-// state too (e.g. `SymmetricGroup(20)`'s count exceeding what `Count` currently resolves
-// past Number.MAX_SAFE_INTEGER -- a known gap in the collection's own Count, tracked
-// separately, not something this smoke test should fail over). A tag with no entry here
-// falls back to "at least one <svg>".
+// check is its own -- a table body and no `.nct-error` (a count or parse the table couldn't
+// resolve). A tag with no entry here falls back to "at least one <svg>".
 const RENDER_CHECKS: Readonly<Record<string, (el: Locator) => Promise<void>>> = {
   "notatio-collection-table": async (el) => {
-    await expect(async () => {
-      const rows = await el.locator("table.nct-table tbody tr").count();
-      const error = await el.locator(".nct-error").count();
-      expect(rows > 0 || error > 0, "neither a table row nor an error message appeared").toBe(true);
-    }).toPass();
+    await expect(el.locator("table.nct-table tbody tr").first()).toBeVisible();
+    await expect(el.locator(".nct-error")).toHaveCount(0);
   },
 };
 

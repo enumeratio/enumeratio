@@ -1,12 +1,11 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/core.ts";
+import { bigintEntries, entries } from "../src/families/core.ts";
 
 // Self-cert a sample of core.ts families (kept small so counts stay well under ~5000):
 // for every rank r in [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r.
 // core.ts is not yet wired into allEntries (its Subsets/Tuples heads intentionally differ from the
 // existing hand-rolled ones), so this reads `entries` straight from the family module.
 const PARAMS: Record<string, number[]> = {
-  SymmetricGroup: [4],
   Derangements: [4],
   IntegerPartitions: [6],
   IntegerCompositions: [5],
@@ -26,6 +25,18 @@ for (const [head, p] of Object.entries(PARAMS)) {
     if (!entry) return;
     const total = entry.count(p);
     for (let r = 0; r < total; r++) {
+      const element = entry.unrank(p, r);
+      expect(entry.valid(element, p)).toBe(true);
+      expect(entry.rank(element, p)).toBe(r);
+    }
+  });
+}
+
+for (const entry of bigintEntries) {
+  const p = [4];
+  test(`${entry.head}(4) round-trips`, () => {
+    const total = entry.count(p) as bigint;
+    for (let r = 0n; r < total; r++) {
       const element = entry.unrank(p, r);
       expect(entry.valid(element, p)).toBe(true);
       expect(entry.rank(element, p)).toBe(r);
