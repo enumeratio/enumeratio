@@ -37,3 +37,91 @@
   expected: [EllipticTheta, 3, u, q]
   category: Possible issues
   caption: Symbolic arguments are left unevaluated rather than guessed at
+- id: theta2-0-3-0-2
+  expr: [N, [EllipticTheta, 2, 0.3, 0.2]]
+  expected: 1.3110057336174996
+  role: test
+- id: theta4-0-3-0-2
+  expr: [N, [EllipticTheta, 4, 0.3, 0.2]]
+  expected: 0.6710255314957339
+  role: test
+- id: theta2-0-0-5
+  expr: [N, [EllipticTheta, 2, 0, 0.5]]
+  expected: 2.1289312505130273
+  role: test
+- id: theta3-0-0-5
+  expr: [N, [EllipticTheta, 3, 0, 0.5]]
+  expected: 2.128936827211877
+  role: test
+- id: theta4-0-0-5
+  expr: [N, [EllipticTheta, 4, 0, 0.5]]
+  expected: 0.1211242080025805
+  role: test
+- id: theta1-1-0-3
+  expr: [N, [EllipticTheta, 1, 1, -0.3]]
+  expected: [Complex, 0.8666879753632719, 0.8666879753632717]
+  role: test
+- id: theta2-1-0-3
+  expr: [N, [EllipticTheta, 2, 1, -0.3]]
+  expected: [Complex, 0.4724617478024218, 0.47246174780242167]
+  role: test
+- id: theta4-1-0-3
+  expr: [N, [EllipticTheta, 4, 1, -0.3]]
+  expected: 0.7397606682244264
+  role: test
+- id: theta1-0-3-0-1i-0-2
+  expr: [N, [EllipticTheta, 1, [Complex, 0.3, 0.1], 0.2]]
+  expected: [Complex, 0.35351933152868914, 0.1178636035434598]
+  role: test
+- id: theta2-0-3-0-1i-0-2
+  expr: [N, [EllipticTheta, 2, [Complex, 0.3, 0.1], 0.2]]
+  expected: [Complex, 1.318908313359386, -0.05239730825753652]
+  role: test
+- id: theta4-0-3-0-1i-0-2
+  expr: [N, [EllipticTheta, 4, [Complex, 0.3, 0.1], 0.2]]
+  expected: [Complex, 0.6644948584549779, 0.044248699147754304]
+  role: test
+- id: theta1-0-5-0-5i-0-1-0-2i
+  expr: [N, [EllipticTheta, 1, [Complex, 0.5, 0.5], [Complex, 0.1, 0.2]]]
+  expected: [Complex, 0.6790257328245918, 0.7184037505217497]
+  role: test
+- id: theta3-0-5-0-5i-0-1-0-2i
+  expr: [N, [EllipticTheta, 3, [Complex, 0.5, 0.5], [Complex, 0.1, 0.2]]]
+  expected: [Complex, 1.5486889397050438, 0.14786223021467193]
+  role: test
+- id: theta4-0-5-0-5i-0-1-0-2i
+  expr: [N, [EllipticTheta, 4, [Complex, 0.5, 0.5], [Complex, 0.1, 0.2]]]
+  expected: [Complex, 0.42403502395401993, -0.1235981127636786]
+  role: test
+- id: theta1-2-0-6
+  expr: [N, [EllipticTheta, 1, 2, 0.6]]
+  expected: 1.7291051264658692
+  role: test
+- id: theta2-2-0-6
+  expr: [N, [EllipticTheta, 2, 2, 0.6]]
+  expected: -0.19241299560138178
+  role: test
+- id: theta3-2-0-6
+  expr: [N, [EllipticTheta, 3, 2, 0.6]]
+  expected: 0.194384250102408
+  role: test
+- id: theta4-2-0-6
+  expr: [N, [EllipticTheta, 4, 2, 0.6]]
+  expected: 1.729107884812714
+  role: test
+- id: theta1-0-4-0-85
+  expr: [N, [EllipticTheta, 1, 0.4, 0.85]]
+  expected: 0.0009551488811005704
+  role: test
+- id: theta2-0-4-0-85
+  expr: [N, [EllipticTheta, 2, 0.4, 0.85]]
+  expected: 1.6427056013700831
+  role: test
+- id: theta3-0-4-0-85
+  expr: [N, [EllipticTheta, 3, 0.4, 0.85]]
+  expected: 1.6427056013700831
+  role: test
+- id: theta4-0-4-0-85
+  expr: [N, [EllipticTheta, 4, 0.4, 0.85]]
+  expected: 0.0009551492483437229
+  role: test

@@ -17,3 +17,19 @@
   expected: 1210
   category: Applications
   caption: The number of 2-dimensional subspaces of $\mathbb{F}_3^5$
+- id: qbinomial-4-2-2
+  expr: [N, [QBinomial, 4, 2, 2]]
+  expected: 35
+  role: test
+- id: qbinomial-6-3-1
+  expr: [N, [QBinomial, 6, 3, 1]]
+  expected: 20
+  role: test
+- id: qbinomial-5-2-3
+  expr: [N, [QBinomial, 5, 2, 3]]
+  expected: 1210
+  role: test
+- id: qbinomial-8-3-2
+  expr: [N, [QBinomial, 8, 3, 2]]
+  expected: 97155
+  role: test

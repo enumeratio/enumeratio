@@ -50,3 +50,14 @@ symbolic-arguments-are-left-unevaluated-rather:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cd}(u|m)-\text{cd}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cd}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{cd}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cd}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{cd}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{cd}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{cd}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+jacobicd-0-4-0-5i-0-3:
+  epsil:
+    in: N(JacobiCD(0.4 + 0.5i, 0.3))
+    out: 1.034_017_190_005_338_8 - 0.139_337_967_212_635_17i
+  tex:
+    in: N(\mathrm{JacobiCD}(0.4+0.5i, 0.3))
+    out: 1.034\,017\,190\,005\,338\,8-0.139\,337\,967\,212\,635\,17i
+  fullform:
+    in: N[JacobiCD[Complex[0.4, 0.5], 0.3]]
+  wolfram:
+    in: N[JacobiCD[Complex[0.4, 0.5], 0.3]]

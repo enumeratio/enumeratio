@@ -31,3 +31,47 @@
   expected: 1.3238008150474936
   category: Scope
   caption: Characteristic $n > 1$
+- id: pi-0-5-0-4-0-3
+  expr: [N, [IncompleteEllipticPi, 0.5, -0.4, 0.3]]
+  expected: -0.41415173682447676
+  role: test
+- id: pi-0-5-1-9-0-3
+  expr: [N, [IncompleteEllipticPi, 0.5, 1.9, 0.3]]
+  expected: 3.216516537015119
+  role: test
+- id: pi-2-0-4-0-3
+  expr: [N, [IncompleteEllipticPi, 2, 0.4, 0.3]]
+  expected: 0.45500474909280814
+  role: test
+- id: pi-0-5-3-5-0-3
+  expr: [N, [IncompleteEllipticPi, 0.5, 3.5, 0.3]]
+  expected: 5.291058653963574
+  role: test
+- id: pi-0-2-2-0-5
+  expr: [N, [IncompleteEllipticPi, 0.2, 2, 0.5]]
+  expected: 2.8204255409214856
+  role: test
+- id: pi-0-5-0-4-0-7-0-2i
+  expr: [N, [IncompleteEllipticPi, 0.5, 0.4, [Complex, 0.7, 0.2]]]
+  expected: [Complex, 0.41877247265903567, 0.0023988666579402825]
+  role: test
+- id: pi-0-5-0-2i-0-4-0-3
+  expr: [N, [IncompleteEllipticPi, [Complex, 0.5, 0.2], 0.4, 0.3]]
+  expected: [Complex, 0.414060319808096, 0.004608575942138294]
+  role: test
+- id: pi-0-5-0-4-0-3i-0-6-0-1i
+  expr: [N, [IncompleteEllipticPi, 0.5, [Complex, 0.4, 0.3], [Complex, 0.6, 0.1]]]
+  expected: [Complex, 0.38471135810732565, 0.329996740971807]
+  role: test
+- id: pi-0-2-2-0-5i-0-3
+  expr: [N, [IncompleteEllipticPi, 0.2, [Complex, 2, 0.5], 0.3]]
+  expected: [Complex, 2.6159283014884926, 0.7015631769930666]
+  role: test
+- id: pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i
+  expr: [N, [IncompleteEllipticPi, [Complex, 1.17, 0.45], [Complex, 10.59477796076938, 0.45], [Complex, 1.17, 0.45]]]
+  expected: [Complex, -0.10348082334068165, 15.113381465309939]
+  role: test
+- id: pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i
+  expr: [N, [IncompleteEllipticPi, [Complex, 1.17, 0.45], [Complex, -5.113185307179586, 0.45], [Complex, 1.17, 0.45]]]
+  expected: [Complex, 0.6406773186066825, -8.277778194614966]
+  role: test

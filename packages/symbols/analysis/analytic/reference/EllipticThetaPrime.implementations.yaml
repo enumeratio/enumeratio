@@ -57,3 +57,278 @@ symbolic-arguments-are-left-unevaluated-rather:
     tex:
       in: \text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\vartheta _3^{\prime }(u,q)-\vartheta _3^{\prime }(u,q)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{11}{5},\frac{7}{3}\right)-\vartheta _3^{\prime }\left(-\frac{11}{5},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{17}{6},\frac{13}{4}\right)-\vartheta _3^{\prime }\left(-\frac{17}{6},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{23}{9},\frac{19}{8}\right)-\vartheta _3^{\prime }\left(-\frac{23}{9},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
       out: \text{True}
+theta2-0-3-0-2:
+  epsil:
+    in: N(EllipticThetaPrime(2, 0.3, 0.2))
+    out: -0.521_401_647_372_136
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 0.3, 0.2))
+    out: -0.521\,401\,647\,372\,136
+  fullform:
+    in: N[EllipticThetaPrime[2, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, 0.3, 0.2]]
+theta4-0-3-0-2:
+  epsil:
+    in: N(EllipticThetaPrime(4, 0.3, 0.2))
+    out: 0.439_789_861_664_664_5
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 0.3, 0.2))
+    out: 0.439\,789\,861\,664\,664\,5
+  fullform:
+    in: N[EllipticThetaPrime[4, 0.3, 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, 0.3, 0.2]]
+theta1-0-0-5:
+  epsil:
+    in: N(EllipticThetaPrime(1, 0, 0.5))
+    out: 0.548_978_532_560_340_5
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 0, 0.5))
+    out: 0.548\,978\,532\,560\,340\,5
+  fullform:
+    in: N[EllipticThetaPrime[1, 0, 0.5]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, 0, 0.5]]
+theta2-0-0-5:
+  epsil:
+    in: N(EllipticThetaPrime(2, 0, 0.5))
+    out: "0"
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 0, 0.5))
+    out: "0"
+  fullform:
+    in: N[EllipticThetaPrime[2, 0, 0.5]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, 0, 0.5]]
+theta3-0-0-5:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0, 0.5))
+    out: "0"
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0, 0.5))
+    out: "0"
+  fullform:
+    in: N[EllipticThetaPrime[3, 0, 0.5]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 0, 0.5]]
+theta4-0-0-5:
+  epsil:
+    in: N(EllipticThetaPrime(4, 0, 0.5))
+    out: "0"
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 0, 0.5))
+    out: "0"
+  fullform:
+    in: N[EllipticThetaPrime[4, 0, 0.5]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, 0, 0.5]]
+theta1-1-0-3:
+  epsil:
+    in: N(EllipticThetaPrime(1, 1, -0.3))
+    out: 0.846_342_062_911_717_8 + 0.846_342_062_911_717_4i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 1, -0.3))
+    out: 0.846\,342\,062\,911\,717\,8+0.846\,342\,062\,911\,717\,4i
+  fullform:
+    in: N[EllipticThetaPrime[1, 1, -0.3]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, 1, -0.3]]
+theta2-1-0-3:
+  epsil:
+    in: N(EllipticThetaPrime(2, 1, -0.3))
+    out: -0.916_936_690_849_149_5 - 0.916_936_690_849_149_3i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 1, -0.3))
+    out: -0.916\,936\,690\,849\,149\,5-0.916\,936\,690\,849\,149\,3i
+  fullform:
+    in: N[EllipticThetaPrime[2, 1, -0.3]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, 1, -0.3]]
+theta3-1-0-3:
+  epsil:
+    in: N(EllipticThetaPrime(3, 1, -0.3))
+    out: 1.140_131_648_921_031_6
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 1, -0.3))
+    out: 1.140\,131\,648\,921\,031\,6
+  fullform:
+    in: N[EllipticThetaPrime[3, 1, -0.3]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 1, -0.3]]
+theta4-1-0-3:
+  epsil:
+    in: N(EllipticThetaPrime(4, 1, -0.3))
+    out: -1.042_050_181_812_735
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 1, -0.3))
+    out: -1.042\,050\,181\,812\,735
+  fullform:
+    in: N[EllipticThetaPrime[4, 1, -0.3]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, 1, -0.3]]
+theta1-0-3-0-1i-0-2:
+  epsil:
+    in: N(EllipticThetaPrime(1, 0.3 + 0.1i, 0.2))
+    out: 1.179_882_000_340_677_4 - 0.001_528_659_862_239_609_5i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 0.3+0.1i, 0.2))
+    out: 1.179\,882\,000\,340\,677\,4-0.001\,528\,659\,862\,239\,609\,5i
+  fullform:
+    in: N[EllipticThetaPrime[1, Complex[0.3, 0.1], 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, Complex[0.3, 0.1], 0.2]]
+theta2-0-3-0-1i-0-2:
+  epsil:
+    in: N(EllipticThetaPrime(2, 0.3 + 0.1i, 0.2))
+    out: -0.529_134_107_582_839_7 - 0.158_384_290_347_439_12i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 0.3+0.1i, 0.2))
+    out: -0.529\,134\,107\,582\,839\,7-0.158\,384\,290\,347\,439\,12i
+  fullform:
+    in: N[EllipticThetaPrime[2, Complex[0.3, 0.1], 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, Complex[0.3, 0.1], 0.2]]
+theta4-0-3-0-1i-0-2:
+  epsil:
+    in: N(EllipticThetaPrime(4, 0.3 + 0.1i, 0.2))
+    out: 0.447_888_203_831_477_9 + 0.131_029_787_196_186_13i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 0.3+0.1i, 0.2))
+    out: 0.447\,888\,203\,831\,477\,9+0.131\,029\,787\,196\,186\,13i
+  fullform:
+    in: N[EllipticThetaPrime[4, Complex[0.3, 0.1], 0.2]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, Complex[0.3, 0.1], 0.2]]
+theta1-0-5-0-5i-0-1-0-2i:
+  epsil:
+    in: N(EllipticThetaPrime(1, 0.5 + 0.5i, 0.1 + 0.2i))
+    out: 1.163_504_069_710_498_6 - 0.333_079_503_794_471_7i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 0.5+0.5i, 0.1+0.2i))
+    out: 1.163\,504\,069\,710\,498\,6-0.333\,079\,503\,794\,471\,7i
+  fullform:
+    in: N[EllipticThetaPrime[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+theta2-0-5-0-5i-0-1-0-2i:
+  epsil:
+    in: N(EllipticThetaPrime(2, 0.5 + 0.5i, 0.1 + 0.2i))
+    out: -0.144_323_974_046_141_28 - 1.075_123_918_076_498_9i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 0.5+0.5i, 0.1+0.2i))
+    out: -0.144\,323\,974\,046\,141\,28-1.075\,123\,918\,076\,498\,9i
+  fullform:
+    in: N[EllipticThetaPrime[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+theta3-0-5-0-5i-0-1-0-2i:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0.5 + 0.5i, 0.1 + 0.2i))
+    out: 0.036_830_038_512_494_51 - 1.235_651_874_598_715_5i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0.5+0.5i, 0.1+0.2i))
+    out: 0.036\,830\,038\,512\,494\,51-1.235\,651\,874\,598\,715\,5i
+  fullform:
+    in: N[EllipticThetaPrime[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+theta4-0-5-0-5i-0-1-0-2i:
+  epsil:
+    in: N(EllipticThetaPrime(4, 0.5 + 0.5i, 0.1 + 0.2i))
+    out: 0.059_442_056_084_512_675 + 1.350_112_294_617_821i
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 0.5+0.5i, 0.1+0.2i))
+    out: 0.059\,442\,056\,084\,512\,675+1.350\,112\,294\,617\,821i
+  fullform:
+    in: N[EllipticThetaPrime[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]
+theta1-2-0-6:
+  epsil:
+    in: N(EllipticThetaPrime(1, 2, 0.6))
+    out: -2.905_659_268_779_863_7
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 2, 0.6))
+    out: -2.905\,659\,268\,779\,863\,7
+  fullform:
+    in: N[EllipticThetaPrime[1, 2, 0.6]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, 2, 0.6]]
+theta2-2-0-6:
+  epsil:
+    in: N(EllipticThetaPrime(2, 2, 0.6))
+    out: -0.872_132_059_159_085_2
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 2, 0.6))
+    out: -0.872\,132\,059\,159\,085\,2
+  fullform:
+    in: N[EllipticThetaPrime[2, 2, 0.6]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, 2, 0.6]]
+theta3-2-0-6:
+  epsil:
+    in: N(EllipticThetaPrime(3, 2, 0.6))
+    out: 0.856_696_228_148_967_8
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 2, 0.6))
+    out: 0.856\,696\,228\,148\,967\,8
+  fullform:
+    in: N[EllipticThetaPrime[3, 2, 0.6]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 2, 0.6]]
+theta4-2-0-6:
+  epsil:
+    in: N(EllipticThetaPrime(4, 2, 0.6))
+    out: -2.905_629_977_925_574
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 2, 0.6))
+    out: -2.905\,629\,977\,925\,574
+  fullform:
+    in: N[EllipticThetaPrime[4, 2, 0.6]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, 2, 0.6]]
+theta1-0-4-0-85:
+  epsil:
+    in: N(EllipticThetaPrime(1, 0.4, 0.85))
+    out: 0.013_761_909_235_493_216
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(1, 0.4, 0.85))
+    out: 0.013\,761\,909\,235\,493\,216
+  fullform:
+    in: N[EllipticThetaPrime[1, 0.4, 0.85]]
+  wolfram:
+    in: N[EllipticThetaPrime[1, 0.4, 0.85]]
+theta2-0-4-0-85:
+  epsil:
+    in: N(EllipticThetaPrime(2, 0.4, 0.85))
+    out: -8.086_224_079_602_118
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(2, 0.4, 0.85))
+    out: -8.086\,224\,079\,602\,118
+  fullform:
+    in: N[EllipticThetaPrime[2, 0.4, 0.85]]
+  wolfram:
+    in: N[EllipticThetaPrime[2, 0.4, 0.85]]
+theta3-0-4-0-85:
+  epsil:
+    in: N(EllipticThetaPrime(3, 0.4, 0.85))
+    out: -8.086_224_079_602_118
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(3, 0.4, 0.85))
+    out: -8.086\,224\,079\,602\,118
+  fullform:
+    in: N[EllipticThetaPrime[3, 0.4, 0.85]]
+  wolfram:
+    in: N[EllipticThetaPrime[3, 0.4, 0.85]]
+theta4-0-4-0-85:
+  epsil:
+    in: N(EllipticThetaPrime(4, 0.4, 0.85))
+    out: 0.013_761_900_328_694_648
+  tex:
+    in: N(\mathrm{EllipticThetaPrime}(4, 0.4, 0.85))
+    out: 0.013\,761\,900\,328\,694\,648
+  fullform:
+    in: N[EllipticThetaPrime[4, 0.4, 0.85]]
+  wolfram:
+    in: N[EllipticThetaPrime[4, 0.4, 0.85]]

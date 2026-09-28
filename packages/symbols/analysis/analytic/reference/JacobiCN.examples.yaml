@@ -37,3 +37,95 @@
   expected: [JacobiCN, u, m]
   category: Possible issues
   caption: Symbolic arguments are left unevaluated rather than guessed at
+- id: cn-1-1-0-9
+  expr: [N, [JacobiCN, 1.1, 0.9]]
+  expected: 0.5856854147823066
+  role: test
+- id: cn-0-7-0-2
+  expr: [N, [JacobiCN, -0.7, 0.2]]
+  expected: 0.771457688690515
+  role: test
+- id: cn-0-3-0
+  expr: [N, [JacobiCN, 0.3, 0]]
+  expected: { num: "0.9553364891256060196423102275680498982442" }
+  role: test
+- id: cn-0-3-1
+  expr: [N, [JacobiCN, 0.3, 1]]
+  expected: { num: "0.9566279119002482896021808621942427125498" }
+  role: test
+- id: cn-1-2-3
+  expr: [N, [JacobiCN, 1.2, 3]]
+  expected: 0.8322766624170146
+  role: test
+- id: cn-0-9-0-5
+  expr: [N, [JacobiCN, 0.9, -0.5]]
+  expected: 0.5800418476907171
+  role: test
+- id: cn-0-4-0-5i-0-3
+  expr: [N, [JacobiCN, [Complex, 0.4, 0.5], 0.3]]
+  expected: [Complex, 1.0302570555642738, -0.20531591740672292]
+  role: test
+- id: cn-0-4-0-5i-0-3-2
+  expr: [N, [JacobiCN, [Complex, 0.4, -0.5], 0.3]]
+  expected: [Complex, 1.0302570555642738, 0.20531591740672292]
+  role: test
+- id: cn-0-4-0-5i-0-3-3
+  expr: [N, [JacobiCN, [Complex, -0.4, 0.5], 0.3]]
+  expected: [Complex, 1.0302570555642738, 0.20531591740672292]
+  role: test
+- id: cn-0-4-0-5i-0-3-4
+  expr: [N, [JacobiCN, [Complex, -0.4, -0.5], 0.3]]
+  expected: [Complex, 1.0302570555642738, -0.20531591740672292]
+  role: test
+- id: cn-1-1-0-7i-0-3
+  expr: [N, [JacobiCN, [Complex, 1.1, -0.7], 0.3]]
+  expected: [Complex, 0.5572329487708397, 0.5707280407647257]
+  role: test
+- id: cn-1-1i-0-3
+  expr: [N, [JacobiCN, [Complex, 1, 1], 0.3]]
+  expected: [Complex, 0.7010548521777622, -0.8574509113879215]
+  role: test
+- id: cn-0-2-8i-0-4
+  expr: [N, [JacobiCN, [Complex, 0.2, 8], 0.4]]
+  expected: [Complex, 0.9996419059152135, -0.04034250210054846]
+  role: test
+- id: cn-0-2-8i-0-4-2
+  expr: [N, [JacobiCN, [Complex, 0.2, -8], 0.4]]
+  expected: [Complex, 0.9996419059152135, 0.04034250210054846]
+  role: test
+- id: cn-5-4i-0-6
+  expr: [N, [JacobiCN, [Complex, 5, 4], 0.6]]
+  expected: [Complex, 0.5485718390719986, -0.29173766442391863]
+  role: test
+- id: cn-0-05-1-9753631352924692i-0-3
+  expr: [N, [JacobiCN, [Complex, 0.05, 1.9753631352924692], 0.3]]
+  expected: [Complex, 14.59377427538621, -7.30899272829252]
+  role: test
+- id: cn-0-05-2-0653631352924693i-0-3
+  expr: [N, [JacobiCN, [Complex, 0.05, 2.0653631352924693], 0.3]]
+  expected: [Complex, 7.020863651426441, -35.11651100161675]
+  role: test
+- id: cn-0-05-2-074363135292469i-0-3
+  expr: [N, [JacobiCN, [Complex, 0.05, 2.074363135292469], 0.3]]
+  expected: [Complex, 0.7298826951668533, -36.50632837477241]
+  role: test
+- id: cn-0-05-2-075263135292469i-0-3
+  expr: [N, [JacobiCN, [Complex, 0.05, 2.075263135292469], 0.3]]
+  expected: [Complex, 0.07301717758483744, -36.520782417375564]
+  role: test
+- id: cn-0-3-0-2i-1-5
+  expr: [N, [JacobiCN, [Complex, 0.3, 0.2], 1.5]]
+  expected: [Complex, 0.9718189591992347, -0.05640138280168465]
+  role: test
+- id: cn-0-5-0-3i-3
+  expr: [N, [JacobiCN, [Complex, 0.5, -0.3], 3]]
+  expected: [Complex, 0.8983707786639182, 0.09918828017071424]
+  role: test
+- id: cn-0-3-0-2i-0-7
+  expr: [N, [JacobiCN, [Complex, 0.3, 0.2], -0.7]]
+  expected: [Complex, 0.9758303565524705, -0.060926219714567215]
+  role: test
+- id: cn-0-5-0-3i-3-2
+  expr: [N, [JacobiCN, [Complex, 0.5, -0.3], -3]]
+  expected: [Complex, 0.9496291897695311, 0.19569309737975166]
+  role: test
