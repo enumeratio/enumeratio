@@ -175,12 +175,12 @@ so it is malformed and is left exactly as written rather than read as having an 
 singleton. Diagrams also normalise: blocks come back in canonical order, so a written
 diagram and a computed one are the same expression.
 
-**Two libraries, one set of heads.** `Basis`, `AlgebraDimension`, `Element` and the
-ordered product are declared once by `@enumeratio/algebra` and dispatched over
-registered providers. compute-engine refuses a second `ce.declare` of a head an
-extension already declared, so this seam is what lets the diagram algebras and the
-hypercomplex units live on one engine — and what makes adding a third family a matter of
-registering one object.
+**Two libraries, one set of heads.** `Basis`, `AlgebraDimension` and `Element` are the
+members of a `FiniteDimensionalAlgebra` protocol, and each family's type conforms to it:
+`TemperleyLiebAlgebra(4)` is a `diagram_algebra`, `CliffordAlgebra(3)` a
+`clifford_algebra`, and the heads dispatch on the type. That is what lets the diagram
+algebras and the hypercomplex units live on one engine, and what makes adding a third
+family a matter of declaring one conformance.
 
 **What is not here yet.** Representation theory: the cell / standard modules, the
 semisimplicity criteria (which fail at special δ), and the Jones basic construction.

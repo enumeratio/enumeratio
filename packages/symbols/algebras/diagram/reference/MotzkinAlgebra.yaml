@@ -6,7 +6,7 @@ signatures:
   - call: MotzkinAlgebra(n)
     description: the Motzkin algebra on $n$ strands
     library: enumeratio-diagram
-    type: (integer) -> value
+    type: (integer) -> diagram_algebra
   - call: RookAlgebra(n)
     description: partial permutations — blocks of size ≤ 2, each pairing a top with a bottom
     library: enumeratio-diagram

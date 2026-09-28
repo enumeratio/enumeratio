@@ -2,7 +2,8 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolNameOf } from "@enumeratio/engine";
 import { ancestry, ensureProtocols, PROTOCOLS, type ProtocolName, protocol } from "./protocols.ts";
 
-/** A member's implementation: the receiver first. `undefined` when it has no answer. */
+/** A member's implementation: the receiver first. `undefined` when it has no answer, which
+ *  leaves the call unevaluated. */
 export type Member = (...args: BoxedExpression[]) => BoxedExpression | undefined;
 
 /** The protocols a type conforms to, each with its members' implementations. */
@@ -24,7 +25,16 @@ export function conform(ce: ComputeEngine, type: string, conformance: Conformanc
   // Parents first, the order PROTOCOLS lists them in.
   for (const { name } of PROTOCOLS) {
     const functions = conformance[name];
-    if (functions !== undefined) ce.declareProtocolImplementation(type, name, { functions: { ...functions } });
+    if (functions === undefined) continue;
+    // A member with no answer leaves the call as written, as a head without a rule does,
+    // rather than compute-engine's `Nothing`.
+    const answering = Object.fromEntries(
+      Object.entries(functions).map(([m, f]) => [
+        m,
+        (...args: BoxedExpression[]) => f(...args) ?? ce.function(m, args),
+      ]),
+    );
+    ce.declareProtocolImplementation(type, name, { functions: answering });
   }
 }
 

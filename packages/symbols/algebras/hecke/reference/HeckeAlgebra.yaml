@@ -6,7 +6,7 @@ signatures:
   - call: HeckeAlgebra(n)
     description: $H_n(q)$, the deformed group algebra of $S_n$
     library: enumeratio-hecke
-    type: (integer) -> value
+    type: (integer) -> hecke_algebra
 seeAlso:
   - HeckeT
   - HeckeIdentity

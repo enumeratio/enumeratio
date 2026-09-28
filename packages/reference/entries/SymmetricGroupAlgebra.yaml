@@ -16,4 +16,4 @@ signatures:
   - call: SymmetricGroupAlgebra(...)
     description: Mapped through to sage, oscar for the oracle; not yet written up here.
     library: enumeratio-diagram
-    type: (integer) -> value
+    type: (integer) -> diagram_algebra

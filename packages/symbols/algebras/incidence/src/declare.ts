@@ -1,4 +1,4 @@
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
@@ -99,10 +99,8 @@ export function declareIncidence(ce: ComputeEngine): void {
   /** A poset, as `presentedPoset` reads it. */
   const posetLike = "expression<Chain> | expression<BooleanLattice> | expression<DivisorLattice>";
 
-  // Return type stays `value`, not `expression<IncidenceAlgebra>`: @enumeratio/algebra's
-  // shared `Basis`/`AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …`
-  // for ANY registered algebra's carrier, and `expression<Head>` does not subtype `value`.
-  ce.declare("IncidenceAlgebra", { signature: `(${posetLike}) -> value` });
+  ce.declareType("incidence_algebra", "expression<IncidenceAlgebra>", { mint: true });
+  ce.declare("IncidenceAlgebra", { signature: `(${posetLike}) -> incidence_algebra` });
   ce.declare("PosetInterval", { signature: "(value, value) -> expression<PosetInterval>" });
 
   const interval = (present: Presented, from: number, to: number): BoxedExpression =>
@@ -180,8 +178,8 @@ export function declareIncidence(ce: ComputeEngine): void {
     },
   });
 
-  registerAlgebra(ce, {
-    name: "incidence",
+  declareAlgebra(ce, {
+    type: "incidence_algebra",
     basis: (expr) => {
       const present = incidenceOf(expr);
       if (present === undefined) return undefined;

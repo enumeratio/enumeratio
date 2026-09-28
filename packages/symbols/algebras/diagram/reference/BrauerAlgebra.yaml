@@ -6,7 +6,7 @@ signatures:
   - call: BrauerAlgebra(n)
     description: the Brauer algebra on $n$ strands
     library: enumeratio-diagram
-    type: (integer) -> value
+    type: (integer) -> diagram_algebra
 details:
   - Dimension $(2n-1)!!$ = 1, 3, 15, 105 — the perfect matchings of $2n$ points
   - "Contains the symmetric group: a permutation diagram is a matching whose every block joins a top point to a bottom one"

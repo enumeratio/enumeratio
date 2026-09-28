@@ -6,6 +6,6 @@ signatures:
   - call: Dual(x, algebra)
     description: $!x$, the Poincaré dual of $x$ in `algebra`
     library: enumeratio-geometric
-    type: (number, value) -> number
+    type: (number, clifford_algebra) -> number
 seeAlso:
   - Pseudoscalar

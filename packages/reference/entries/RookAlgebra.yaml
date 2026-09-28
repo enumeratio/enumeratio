@@ -13,4 +13,4 @@ signatures:
   - call: RookAlgebra(...)
     description: Mapped through to oscar for the oracle; not yet written up here.
     library: enumeratio-diagram
-    type: (integer) -> value
+    type: (integer) -> diagram_algebra

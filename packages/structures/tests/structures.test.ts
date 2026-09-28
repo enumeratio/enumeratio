@@ -1,8 +1,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { executeEpsil } from "@cortex-js/compute-engine/epsil";
-import { operandsOf } from "@enumeratio/engine";
+import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { describe, expect, it } from "vite-plus/test";
-import { ancestry, conform, declareStructures } from "../src/index.ts";
+import { ancestry, conform, declareAlgebra, declareStructures } from "../src/index.ts";
 
 const engine = (): ComputeEngine => {
   const ce = new ComputeEngine();
@@ -19,6 +19,9 @@ describe("the generic heads", () => {
     [["Min", 3, 1, 2], 1],
     [["Round", 2.5], 3],
     [["Round", -2.5], -3],
+    // Members called by name: a real number's floor ring.
+    [["IntegerFloor", -2.5], -3],
+    [["IntegerCeil", -2.5], -2],
     [["Clamp", 5, 0, 3], 3],
     // Strings: a linear order.
     [["Min", "'b'", "'a'", "'c'"], "'a'"],
@@ -55,7 +58,8 @@ describe("the generic heads", () => {
 });
 
 describe("a type the engine has never seen", () => {
-  // Money: whole units are its ticks, with a parity, so Round ties go to the even unit.
+  // Money: a floor order that isn't a ring. Whole units are its ticks, with a parity, so
+  // Round ties go to the even unit.
   const ce = engine();
   ce.declareType("money", "real", { mint: true } as never);
   ce.declare("Money", { signature: "(real) -> money" });
@@ -106,7 +110,7 @@ type boolean is LinearOrder`,
 
 describe("refinement", () => {
   it("lists a protocol's parents first", () =>
-    expect(ancestry("MidpointOrder")).toEqual(["PartialOrder", "FloorOrder", "MidpointOrder"]));
+    expect(ancestry("FloorRing")).toEqual(["PartialOrder", "LinearOrder", "Ring", "FloorOrder", "FloorRing"]));
 
   it("refuses a conformance missing a parent", () => {
     const ce = engine();
@@ -117,4 +121,29 @@ describe("refinement", () => {
       }),
     ).toThrow(/claims Lattice but not PartialOrder/);
   });
+});
+
+describe("a family of algebras", () => {
+  // A two-dimensional toy: basis 1 and t, and t is its only non-scalar element.
+  const ce = engine();
+  ce.declareType("toy_algebra", "expression<ToyAlgebra>", { mint: true });
+  ce.declare("ToyAlgebra", { signature: "(integer) -> toy_algebra" });
+  declareAlgebra(ce, {
+    type: "toy_algebra",
+    basis: () => ce.function("List", [ce.One, ce.symbol("t")]),
+    dimension: () => ce.number(2),
+    contains: (x) => ce.symbol(symbolNameOf(x) === "t" ? "True" : "False"),
+  });
+  const cases: [unknown, unknown][] = [
+    [
+      ["Basis", ["ToyAlgebra", 1]],
+      ["List", 1, "t"],
+    ],
+    [["AlgebraDimension", ["ToyAlgebra", 1]], 2],
+    [["Element", "t", ["ToyAlgebra", 1]], "True"],
+    [["Element", "u", ["ToyAlgebra", 1]], "False"],
+    // Not an algebra: Element stays native.
+    [["Element", 3, "Integers"], "True"],
+  ];
+  for (const [input, expected] of cases) it(JSON.stringify(input), () => expect(evaluate(ce, input)).toEqual(expected));
 });

@@ -32,21 +32,44 @@ export const PROTOCOLS = [
     members: { GreatestLowerBound: "(Self, Self) -> Self", LeastUpperBound: "(Self, Self) -> Self" },
     mathlib: "Lattice",
   },
+  // Ticks without a ring: our extension below Mathlib's `FloorRing`, for an order whose
+  // discrete points aren't the integers of a ring (whole days, multiples of a step).
   {
     name: "FloorOrder",
     refines: ["PartialOrder"],
     // The greatest tick at or below, the least at or above: the two adjoints of the ticks' inclusion.
     members: { LowerTick: "(Self) -> Self", UpperTick: "(Self) -> Self" },
-    mathlib: "FloorSemiring",
   },
+  // Extensions too: what `Round` needs to break ties without a ring's arithmetic.
   { name: "MidpointOrder", refines: ["FloorOrder"], members: { Midpoint: "(Self, Self) -> Self" } },
   { name: "TickParity", refines: ["FloorOrder"], members: { IsEvenTick: "(Self) -> boolean" } },
+  // A marker: the ring operations are compute-engine's own `Add`, `Multiply`, `Negate`, 0 and 1.
+  { name: "Ring", refines: [], members: {}, mathlib: "Ring" },
+  {
+    name: "FloorRing",
+    // A floor ring's ticks are its integers, so it is a floor order too.
+    refines: ["LinearOrder", "Ring", "FloorOrder"],
+    members: { IntegerFloor: "(Self) -> integer", IntegerCeil: "(Self) -> integer" },
+    mathlib: "FloorRing",
+  },
   {
     name: "ProductOrder",
     refines: ["PartialOrder"],
     // `WithCoordinates(x, parts)` is a value shaped like `x` with those parts: the receiver
     // picks the implementation, since a bare list can't.
     members: { Coordinates: "(Self) -> list", WithCoordinates: "(Self, list) -> Self" },
+  },
+  {
+    // Conformed to by a type whose values NAME an algebra (`HeckeAlgebra(3)`), as a Sage
+    // parent is: the element-level structure (the product as a ring) comes later.
+    name: "FiniteDimensionalAlgebra",
+    refines: [],
+    members: {
+      Basis: "(Self) -> list",
+      AlgebraDimension: "(Self) -> integer",
+      HasElement: "(Self, any) -> boolean",
+    },
+    mathlib: "FiniteDimensional",
   },
 ] as const satisfies readonly Protocol[];
 

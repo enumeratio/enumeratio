@@ -1,4 +1,4 @@
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import {
@@ -181,10 +181,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   ce.declare("CyclicGroup", { signature: "(integer) -> expression<CyclicGroup>" });
   ce.declare("DihedralGroup", { signature: "(integer) -> expression<DihedralGroup>" });
   ce.declare("GroupDirectProduct", { signature: `(${groupLike}, ${groupLike}) -> expression<GroupDirectProduct>` });
-  // Return type stays `value`, not `expression<GroupAlgebra>`: @enumeratio/algebra's
-  // shared `Basis`/`AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …`
-  // for ANY registered algebra's carrier, and `expression<Head>` does not subtype `value`.
-  ce.declare("GroupAlgebra", { signature: `(${groupLike}) -> value` });
+  ce.declareType("group_algebra", "expression<GroupAlgebra>", { mint: true });
+  ce.declare("GroupAlgebra", { signature: `(${groupLike}) -> group_algebra` });
   ce.declare("GroupBasis", { signature: "(string) -> number" });
 
   const basisExpression = (g: Group, i: number): BoxedExpression =>
@@ -649,8 +647,8 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     { min: 1, max: 2 },
   );
 
-  registerAlgebra(ce, {
-    name: "groupalgebra",
+  declareAlgebra(ce, {
+    type: "group_algebra",
     basis: (expr) => {
       const g = algebraOf(expr);
       if (g === undefined || order(g) > 512) return undefined;

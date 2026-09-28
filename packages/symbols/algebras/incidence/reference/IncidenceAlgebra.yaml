@@ -6,7 +6,7 @@ signatures:
   - call: IncidenceAlgebra(poset)
     description: the algebra of intervals of the poset
     library: enumeratio-incidence
-    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>) -> value
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>) -> incidence_algebra
 seeAlso:
   - PosetInterval
   - MoebiusFunction

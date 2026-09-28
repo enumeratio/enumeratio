@@ -1,12 +1,15 @@
 name: Basis
-domain: Hypercomplex algebra
+domain: Structures
 signature: Basis(algebra)
-summary: The $2^n$ basis blades of a named algebra, ordered by grade then by generator — so $\mathbb{H}$ comes back as $(1, i, j, k)$.
+summary: The basis of a finite-dimensional algebra, as a list.
 signatures:
   - call: Basis(algebra)
-    description: the basis blades, as a list
+    description: 'for a Clifford algebra, its $2^n$ blades, ordered by grade then by generator: $\mathbb{H}$ is $(1, i, j, k)$.'
     library: enumeratio-hypercomplex
-    type: (value) -> list
+  - call: Basis(algebra)
+    description: "The `FiniteDimensionalAlgebra` protocol's member: the basis of any algebra whose type conforms."
+    library: enumeratio-structures
+    type: (any) -> unknown
 details:
   - An algebra is an ordered list of generators; the families already carry the squares and the commutation rules
   - "Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`"

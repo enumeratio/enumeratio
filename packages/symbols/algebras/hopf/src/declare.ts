@@ -1,4 +1,4 @@
-import { registerAlgebra } from "@enumeratio/algebra";
+import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
@@ -70,9 +70,9 @@ export function declareHopf(ce: ComputeEngine): void {
   for (const head of Object.keys(BASIS_HEADS)) {
     ce.declare(head, { signature: "(list<integer>) -> number" });
   }
-  for (const head of Object.keys(ALGEBRA_HEADS)) {
-    ce.declare(head, { signature: "(integer) -> value" });
-  }
+  const algebraHeads = Object.keys(ALGEBRA_HEADS);
+  ce.declareType("graded_hopf_algebra", algebraHeads.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  for (const head of algebraHeads) ce.declare(head, { signature: "(integer) -> graded_hopf_algebra" });
   ce.declare("HopfTensor", { signature: "(number, number) -> number" });
 
   const basisExpression = (head: string, a: Composition): BoxedExpression =>
@@ -249,8 +249,8 @@ export function declareHopf(ce: ComputeEngine): void {
     },
   });
 
-  registerAlgebra(ce, {
-    name: "hopf",
+  declareAlgebra(ce, {
+    type: "graded_hopf_algebra",
     basis: (expr) => {
       const spec = ALGEBRA_HEADS[expr.operator];
       const n = integerAt(operandsOf(expr)[0]);
