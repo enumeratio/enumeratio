@@ -6,6 +6,7 @@ import {
   bigCx,
   hurwitzZetaBig,
   cx,
+  type Cx,
   lerchPhi,
   lerchPhiReal,
   applyAllPatches,
@@ -276,6 +277,40 @@ test("LerchPhi complex z matches the raw kernel", () => {
   const r = lerchPhi({ re: 0.4, im: 0.3 }, { re: 2, im: 0 }, { re: 1, im: 0 });
   expect(r.re).toBeCloseTo(1.1018365887408, 10);
   expect(r.im).toBeCloseTo(0.1098804540041, 10);
+});
+
+test("LerchPhi near the rim with Re(s) < 0 holds where the direct series cancels", () => {
+  // [z, s, a, mpmath.lerchphi at dps 30]: the series lost up to ten digits here.
+  const cases: [Cx, number, number, Cx][] = [
+    [cx(-0.849, 0.298), -3.684, 1.253, cx(-0.1600327672867217, -0.08051436488214103)],
+    [
+      cx(-0.7997488679035274, 0.5835252764765433),
+      -3.8190701635952826,
+      1.1640944549156451,
+      cx(-0.049388898906573865, -0.21780404730059108),
+    ],
+    [
+      cx(-0.9207151517679546, -0.23405898680655765),
+      -3.8949384848132773,
+      4.916401407442224,
+      cx(155.38665972342602, -27.87666505765287),
+    ],
+    // Real z < 0 (the Euler transform), and real z > 0, whose terms keep growing past where
+    // |z|ⁿ alone says to stop.
+    [cx(-0.99), -4.188949130506693, 1.5744982822248883, cx(-0.0715024188767293)],
+    [cx(0.99), -5.5295129154307485, 5.412083680968283, cx(3553379253965128.5)],
+  ];
+  for (const [z, s, a, want] of cases) {
+    const got = lerchPhi(z, cx(s), cx(a));
+    expect(Math.hypot(got.re - want.re, got.im - want.im) / Math.hypot(want.re, want.im)).toBeLessThan(1e-12);
+  }
+});
+
+test("LerchPhi near the rim with Re(s) < 0 holds for a off the axis", () => {
+  // mpmath.lerchphi at dps 30; the direct series cancels about ten digits here.
+  const got = lerchPhi(cx(0.1697971757573408, 0.9844642802584717), cx(-5.666), cx(2, 0.5));
+  const want = cx(14.858759379007553, 80.01966924208229);
+  expect(Math.hypot(got.re - want.re, got.im - want.im) / Math.hypot(want.re, want.im)).toBeLessThan(1e-12);
 });
 
 test("LerchPhi |z|>1 is out of series range (NaN, documented divergence)", () => {
