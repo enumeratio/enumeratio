@@ -7,6 +7,8 @@
     out: \bigl\lbrack1, f_1, f_2, f_1f_2\bigr\rbrack
   fullform:
     in: Basis[Quaternions]
+  sage:
+    in: list((SR.var("Quaternions")).basis())
 the-bicomplex-basis:
   epsil:
     in: Basis(MulticomplexAlgebra(2))

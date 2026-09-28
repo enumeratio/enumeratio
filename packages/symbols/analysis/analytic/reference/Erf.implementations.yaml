@@ -23,6 +23,8 @@ erf-infinity:
   fullform:
     in: Erf[Infinity]
     back: [Erf, PositiveInfinity]
+  wolfram:
+    in: Erf[Infinity]
 erf-negativeinfinity:
   epsil:
     in: Erf(NegativeInfinity)

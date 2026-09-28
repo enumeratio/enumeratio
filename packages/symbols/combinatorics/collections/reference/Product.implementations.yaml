@@ -141,6 +141,8 @@ an-undefined-function-expanded-term-by-term:
     out: f(1)f(2)f(3)f(4)
   fullform:
     in: Product[f[i], List[i, 1, 4]]
+  wolfram:
+    in: Product[f[i], List[i, 1, 4]]
 a-step-of-2-takes-every-other-index:
   epsil:
     in: Product(f(i), (i, 1, 4, 2))
@@ -149,6 +151,8 @@ a-step-of-2-takes-every-other-index:
     in: \prod_{i=1}^4f(i)
     out: f(1)f(3)
   fullform:
+    in: Product[f[i], List[i, 1, 4, 2]]
+  wolfram:
     in: Product[f[i], List[i, 1, 4, 2]]
 over-an-explicit-list-of-values:
   epsil:

@@ -166,6 +166,8 @@ nested-calls-of-any-one-head-flatten-not-just:
     out: f(a, b, c)
   fullform:
     in: Flatten[f[a, f[b, f[c]]]]
+  wolfram:
+    in: Flatten[f[a, f[b, f[c]]]]
 a-list-with-no-nesting-is-unchanged:
   epsil:
     in: Flatten([1, 2, 3])
@@ -196,4 +198,6 @@ flatten-single-level-non-list-unaffected:
     in: \mathrm{Flatten}(f(a, b))
     out: f(a, b)
   fullform:
+    in: Flatten[f[a, b]]
+  wolfram:
     in: Flatten[f[a, b]]

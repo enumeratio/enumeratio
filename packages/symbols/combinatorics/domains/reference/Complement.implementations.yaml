@@ -8,3 +8,5 @@ the-one-line-word-231:
   fullform:
     in: Complement[Permutation[List[2, 3, 1]]]
     back: [SetMinus, [Permutation, [List, 2, 3, 1]]]
+  wolfram:
+    in: Complement[Permutation[List[2, 3, 1]]]

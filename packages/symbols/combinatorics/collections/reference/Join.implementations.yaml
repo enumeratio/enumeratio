@@ -171,6 +171,8 @@ any-head-as-long-as-all-the-arguments-share-it:
     out: f(a, b)
   fullform:
     in: Join[f[a], f[b]]
+  wolfram:
+    in: Join[f[a], f[b]]
 join-is-associative:
   epsil:
     in: |-
@@ -216,6 +218,8 @@ join-splices-any-shared-head:
     in: \mathrm{Join}(f(a), f(b), f(c))
     out: f(a, b, c)
   fullform:
+    in: Join[f[a], f[b], f[c]]
+  wolfram:
     in: Join[f[a], f[b], f[c]]
 join-associations-first-seen-order:
   epsil:

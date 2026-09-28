@@ -1,3 +1,4 @@
+export { DEFINED_NAMES } from "./defined-names-data.ts";
 export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor } from "./mappings.ts";
 export { juliaFlags, type Prelude, preludeFor, type Result, runIn } from "./run.ts";

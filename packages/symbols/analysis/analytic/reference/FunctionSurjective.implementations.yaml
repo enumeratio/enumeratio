@@ -10,6 +10,8 @@ an-odd-degree-polynomial-is-onto:
     out: \mathrm{True}
   fullform:
     in: FunctionSurjective[Power[x, 3], x, Reals]
+  wolfram:
+    in: FunctionSurjective[Power[x, 3], x, Reals]
 exp-misses-the-non-positive-reals:
   epsil:
     in: FunctionSurjective(Exp(x), x, Reals)
@@ -21,6 +23,8 @@ exp-misses-the-non-positive-reals:
     in: \mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})
     out: \mathrm{False}
   fullform:
+    in: FunctionSurjective[Exp[x], x, Reals]
+  wolfram:
     in: FunctionSurjective[Exp[x], x, Reals]
 log-is-onto-the-reals:
   epsil:
@@ -34,6 +38,8 @@ log-is-onto-the-reals:
     out: \mathrm{True}
   fullform:
     in: FunctionSurjective[Log[x], x, Reals]
+  wolfram:
+    in: FunctionSurjective[Log[x], x, Reals]
 a-reciprocal-never-hits-zero:
   epsil:
     in: FunctionSurjective(1 / x, x, Reals)
@@ -45,4 +51,6 @@ a-reciprocal-never-hits-zero:
     in: \mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})
     out: \mathrm{False}
   fullform:
+    in: FunctionSurjective[Divide[1, x], x, Reals]
+  wolfram:
     in: FunctionSurjective[Divide[1, x], x, Reals]

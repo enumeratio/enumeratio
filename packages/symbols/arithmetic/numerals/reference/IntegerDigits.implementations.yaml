@@ -432,6 +432,8 @@ an-unrecognized-system-symbol-leaves-the-call:
     out: \mathrm{IntegerDigits}(10, \mathrm{NotASystem})
   fullform:
     in: IntegerDigits[10, NotASystem]
+  wolfram:
+    in: IntegerDigits[10, NotASystem]
 ostrowski-12-over-all-ones-convergents:
   epsil:
     in: IntegerDigits(12, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))

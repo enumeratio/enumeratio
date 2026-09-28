@@ -10,6 +10,8 @@ algebradimension-quaternions:
     out: "4"
   fullform:
     in: AlgebraDimension[Quaternions]
+  sage:
+    in: (SR.var("Quaternions")).dimension()
 algebradimension-cliffordalgebra-2-1:
   epsil:
     in: AlgebraDimension(CliffordAlgebra(2, 1))

@@ -5,6 +5,7 @@
 // that counts those is a work queue rather than a verdict.
 
 import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
@@ -98,19 +99,18 @@ export function emit(expr: MathJSON, system: System): Emitted {
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
       if (!bound.has(node)) {
-        // A name CONSTANTS knows for some OTHER system (Khinchin, say, which sympy has no
-        // exact form for) is still missing here, not a free variable to guess a value for.
-        // Likewise a Capitalized name that ISN'T in CONSTANTS: this codebase's convention
-        // (design/domains-are-plural-collections.md and every reference example) names a
-        // free math variable lowercase (`x`, `n`, subscripted `e_1`) and a domain, a named
-        // constant we haven't added yet, or a head passed as a value Capitalized — treating
-        // `Primes` in `Element(x, Primes)` as a variable would let the symbolic-agreement
-        // fallback (symbolic.ts) substitute a random rational FOR a set, which is nonsense.
-        // And `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is
-        // not a free variable either — Wolfram's own pattern syntax is a SUFFIX underscore
-        // (`a_`), so `_a` bare would parse there as `Blank[a]`, a different pattern
-        // altogether; staying missing is honest, passing it through wouldn't be.
-        if (node in CONSTANTS || /^[A-Z]/.test(node) || /^_[A-Za-z]/.test(node)) {
+        // A symbol is unknown (a free variable) exactly when compute-engine has no
+        // definition for it — DEFINED_NAMES (defined-names-data.ts) is generated from the
+        // fully-declared reference engine's own `lookupDefinition`, over every symbol this
+        // codebase's reference data actually uses. `Primes` and `NaN` are defined (a domain,
+        // a constant — `Element(x, Primes)`'s `Primes` is not a value to guess at, and
+        // letting the symbolic-agreement fallback (symbolic.ts) substitute a random rational
+        // FOR a set would be nonsense); `x` and DSolveValue's `Y` are not, so they're free.
+        // `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is
+        // undefined too, but still not a free variable — Wolfram's own pattern syntax is a
+        // SUFFIX underscore (`a_`), so `_a` bare would parse there as `Blank[a]`, a different
+        // pattern altogether; staying missing is honest, passing it through wouldn't be.
+        if (DEFINED_NAMES.has(node) || node in CONSTANTS || /^_[A-Za-z]/.test(node)) {
           missing.push(`symbol:${node}`);
           return node;
         }
@@ -214,6 +214,16 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.
     if (system === "wolfram" && isWolframHead(head)) return toWolfram([head, ...operands.map(walk)]);
+    // An undefined head used AS a function — `Y(x)` for DSolveValue's unknown solution `Y` —
+    // is the same "free variable" case as a bare undefined symbol, just called instead of
+    // referenced. Wolfram reads `Y[x]` with an undefined `Y` exactly as compute-engine means
+    // it: an unevaluated symbolic function application, not an error. A pattern-variable-
+    // shaped name (`_a`) is excluded for the same reason a bare one is (emit.ts's string
+    // branch, above) — this codebase's own convention, not a math name.
+    if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
+      free.add(head);
+      return toWolfram([head, ...operands.map(walk)]);
+    }
     missing.push(`${head}/${operands.length}`);
     return "0";
   };

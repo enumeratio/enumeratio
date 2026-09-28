@@ -188,6 +188,8 @@ the-number-of-arguments-of-a-call-counting-only:
     out: "2"
   fullform:
     in: Length[f[g[x, y], z]]
+  wolfram:
+    in: Length[f[g[x, y], z]]
 a-symbol-such-as-pi-is-an-atom-of-length-0:
   epsil:
     in: Length(Pi)

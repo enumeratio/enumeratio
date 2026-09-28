@@ -112,6 +112,8 @@ any-head-not-just-a-list:
     out: f(a, b, c)
   fullform:
     in: Append[f[a, b], c]
+  wolfram:
+    in: Append[f[a, b], c]
 adding-a-row-to-a-matrix:
   epsil:
     in: Append([[1, 2], [3, 4]], [5, 6])

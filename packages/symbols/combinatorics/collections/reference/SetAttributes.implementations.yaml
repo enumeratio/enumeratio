@@ -7,3 +7,5 @@ turn-on-orderless:
     out: \bigl\lbrack\bigl\lbrack\mathrm{Orderless}\bigr\rbrack\bigr\rbrack
   fullform:
     in: List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]
+  wolfram:
+    in: List[SetAttributes[HarmonicMean, Orderless], Attributes[HarmonicMean]]

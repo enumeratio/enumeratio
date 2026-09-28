@@ -7,6 +7,8 @@ discreteshift-one-step:
     out: a(n+1)
   fullform:
     in: DiscreteShift[a[n], n]
+  wolfram:
+    in: DiscreteShift[a[n], n]
 discreteshift-h-step:
   epsil:
     in: DiscreteShift(a(n), [n, 2])
@@ -15,4 +17,6 @@ discreteshift-h-step:
     in: \mathrm{DiscreteShift}(a(n), \bigl\lbrack n, 2\bigr\rbrack)
     out: a(n+2)
   fullform:
+    in: DiscreteShift[a[n], List[n, 2]]
+  wolfram:
     in: DiscreteShift[a[n], List[n, 2]]

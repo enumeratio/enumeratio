@@ -29,6 +29,8 @@ erfc-infinity:
   fullform:
     in: Erfc[Infinity]
     back: [Erfc, PositiveInfinity]
+  wolfram:
+    in: Erfc[Infinity]
 erfc-negativeinfinity:
   epsil:
     in: Erfc(NegativeInfinity)

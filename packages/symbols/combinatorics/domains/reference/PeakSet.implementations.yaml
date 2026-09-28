@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{Finset}(\operatorname{Tuple}(\bigl\lbrack2\bigr\rbrack,3))
   fullform:
     in: PeakSet[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: PeakSet[Permutation[List[2, 3, 1]]]

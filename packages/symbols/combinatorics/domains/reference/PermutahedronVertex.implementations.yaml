@@ -7,3 +7,5 @@ the-one-line-word-231-once-there-is-a-definition:
     out: \bigl\lbrack\bigr\rbrack
   fullform:
     in: PermutahedronVertex[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: PermutahedronVertex[Permutation[List[2, 3, 1]]]

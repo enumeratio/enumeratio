@@ -7,3 +7,5 @@ the-one-line-word-231:
     out: \mathrm{Composition}(\bigl\lbrack2, 1\bigr\rbrack)
   fullform:
     in: DescentComposition[Permutation[List[2, 3, 1]]]
+  wolfram:
+    in: DescentComposition[Permutation[List[2, 3, 1]]]

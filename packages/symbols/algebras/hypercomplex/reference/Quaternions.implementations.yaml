@@ -34,6 +34,8 @@ k-in-h:
     out: \mathrm{True}
   fullform:
     in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
+  sage:
+    in: enumeratio_element((SR.var("f_1") * SR.var("f_2")), SR.var("Quaternions"))
 a-multicomplex-unit-is-not-a-quaternion:
   epsil:
     in: i_1 in Quaternions
@@ -46,3 +48,5 @@ a-multicomplex-unit-is-not-a-quaternion:
     out: \mathrm{False}
   fullform:
     in: Element[Subscript[i, 1], Quaternions]
+  sage:
+    in: enumeratio_element(SR.var("i_1"), SR.var("Quaternions"))

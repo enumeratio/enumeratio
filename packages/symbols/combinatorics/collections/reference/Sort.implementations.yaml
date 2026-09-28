@@ -180,6 +180,8 @@ sorts-the-arguments-of-any-head-not-just-a-list:
     out: f(a, b, c)
   fullform:
     in: Sort[f[b, a, c]]
+  wolfram:
+    in: Sort[f[b, a, c]]
 the-result-doesn-t-depend-on-the-input-order:
   epsil:
     in: Sort(Reverse([3, 1, 2])) == Sort([3, 1, 2])

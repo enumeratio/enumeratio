@@ -18,6 +18,8 @@ nexpectation-cube-of-exponential:
     out: 0.750\,000\,000\,000\,000\,1
   fullform:
     in: NExpectation[Power[x, 3], Distributed[x, ExponentialDistribution[2]]]
+  wolfram:
+    in: NExpectation[Power[x, 3], Distributed[x, ExponentialDistribution[2]]]
 nexpectation-poisson-reciprocal:
   epsil:
     in: NExpectation((x + 1) ^ -1, Distributed(x, PoissonDistribution(3)))

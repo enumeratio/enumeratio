@@ -7,6 +7,8 @@ the-partition-4-2-1-of-7:
     out: "3"
   fullform:
     in: ConjugateOddParts[IntegerPartition[List[4, 2, 1]]]
+  wolfram:
+    in: ConjugateOddParts[IntegerPartition[List[4, 2, 1]]]
 the-partition-3-3-1-of-7:
   epsil:
     in: ConjugateOddParts(IntegerPartition([3, 3, 1]))
@@ -15,4 +17,6 @@ the-partition-3-3-1-of-7:
     in: \mathrm{ConjugateOddParts}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
     out: "1"
   fullform:
+    in: ConjugateOddParts[IntegerPartition[List[3, 3, 1]]]
+  wolfram:
     in: ConjugateOddParts[IntegerPartition[List[3, 3, 1]]]

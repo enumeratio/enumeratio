@@ -270,6 +270,19 @@ test("Module/With rewrite an Equal binding to Set, so Wolfram actually localizes
   });
 });
 
+// Found while replacing the lowercase/Capitalized heuristic with a real compute-engine lookup
+// (defined-names-data.ts, #A-72): DSolveValue's unknown solution `Y` is Capitalized AND used
+// as a CALL HEAD (`Y(x)`), not just a bare operand — the same "undefined name" question, one
+// level up. `DEFINED_NAMES` doesn't have `Y` (compute-engine has no definition for it, unlike
+// `Primes`), so an unmapped call with that head is now emitted as an unevaluated Wolfram
+// function application instead of reported missing.
+test("an undefined head used as a call emits as an unevaluated Wolfram function, not `missing`", () => {
+  expect(emit(["Y", "x"], "wolfram")).toEqual({ ok: true, source: "Y[x]", freeSymbols: ["Y", "x"] });
+  // A domain name (compute-engine-defined) used as a call head is a different question this
+  // doesn't answer for — still missing, same as before.
+  expect(emit(["Primes", "x"], "wolfram").ok).toBe(false);
+});
+
 test("a String of a bare name emits as a string literal, not a free symbol", () => {
   expect(emit(["GroupBasis", ["String", "s0"]], "oscar")).toEqual({
     ok: true,

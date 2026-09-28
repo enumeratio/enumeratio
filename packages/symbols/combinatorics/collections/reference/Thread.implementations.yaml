@@ -29,3 +29,5 @@ custom-head:
     out: g(f(1, 3), f(2, 4))
   fullform:
     in: Thread[f[g[1, 2], g[3, 4]], g]
+  wolfram:
+    in: Thread[f[g[1, 2], g[3, 4]], g]
