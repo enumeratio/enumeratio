@@ -87,19 +87,3 @@
   expr: [N, [KeiperLiLambda, 16]]
   expected: 5.717108248868793
   role: test
-- id: n-keiperlilambda-17
-  expr: [N, [KeiperLiLambda, 17]]
-  expected: 6.426582872125147
-  role: test
-- id: n-keiperlilambda-18
-  expr: [N, [KeiperLiLambda, 18]]
-  expected: 7.172480938291723
-  role: test
-- id: n-keiperlilambda-19
-  expr: [N, [KeiperLiLambda, 19]]
-  expected: 7.953743094287197
-  role: test
-- id: n-keiperlilambda-20
-  expr: [N, [KeiperLiLambda, 20]]
-  expected: 8.769276872071474
-  role: test

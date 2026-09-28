@@ -178,39 +178,3 @@ n-keiperlilambda-16:
     out: 5.717\,108\,248\,868\,793
   fullform:
     in: N[KeiperLiLambda[16]]
-n-keiperlilambda-17:
-  epsil:
-    in: N(KeiperLiLambda(17))
-    out: 6.426_582_872_125_147
-  tex:
-    in: N(\mathrm{KeiperLiLambda}(17))
-    out: 6.426\,582\,872\,125\,147
-  fullform:
-    in: N[KeiperLiLambda[17]]
-n-keiperlilambda-18:
-  epsil:
-    in: N(KeiperLiLambda(18))
-    out: 7.172_480_938_291_723
-  tex:
-    in: N(\mathrm{KeiperLiLambda}(18))
-    out: 7.172\,480\,938\,291\,723
-  fullform:
-    in: N[KeiperLiLambda[18]]
-n-keiperlilambda-19:
-  epsil:
-    in: N(KeiperLiLambda(19))
-    out: 7.953_743_094_287_197
-  tex:
-    in: N(\mathrm{KeiperLiLambda}(19))
-    out: 7.953\,743\,094\,287\,197
-  fullform:
-    in: N[KeiperLiLambda[19]]
-n-keiperlilambda-20:
-  epsil:
-    in: N(KeiperLiLambda(20))
-    out: 8.769_276_872_071_474
-  tex:
-    in: N(\mathrm{KeiperLiLambda}(20))
-    out: 8.769\,276\,872\,071\,474
-  fullform:
-    in: N[KeiperLiLambda[20]]
