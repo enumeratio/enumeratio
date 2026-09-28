@@ -41,7 +41,7 @@ test("LambertW(z, 0) and LambertW(z, -1) still go through compute-engine's nativ
   // Branches this package does not touch — regression guard against the wrapper ever
   // shadowing them.
   expect(ce.box(["LambertW", -0.14, 0]).N().re).toBeCloseTo(-0.165137789266952, 12);
-  expect(ce.box(["LambertW", -0.14, -1]).N().re).toBeCloseTo(-3.0963305842625411, 10);
+  expect(ce.box(["LambertW", -0.14, -1]).N().re).toBeCloseTo(-3.096330584262541, 10);
 });
 
 test("HypergeometricPFQ declines outside the unit disc when p = q + 1", () => {

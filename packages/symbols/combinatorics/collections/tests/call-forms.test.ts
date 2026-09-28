@@ -140,7 +140,7 @@ for (const [n, parts] of [
   [6, [2, 4]],
   [7, [2, 4]],
 ] as const) {
-  test(`IntegerPartitions(${n}, All, {${parts}}) matches a brute-force restricted-parts scan`, () => {
+  test(`IntegerPartitions(${n}, All, {${parts.join(", ")}}) matches a brute-force restricted-parts scan`, () => {
     const allowed = new Set<number>(parts);
     const want = bruteForcePartitions(n, (p) => allowed.has(p));
     const expr = ["IntegerPartitions", n, "All", ["List", ...parts]];

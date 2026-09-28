@@ -36,7 +36,7 @@ export const ALL = [1, 2, 3, 4, 5].flatMap(permutations);
 /** The permutation's cycles, each as its forward orbit [start, p(start), p(p(start)), …]. */
 export function cyclesOf(p: number[]): number[][] {
   const n = p.length;
-  const seen = new Array<boolean>(n + 1).fill(false);
+  const seen = Array.from({ length: n + 1 }, () => false);
   const cycles: number[][] = [];
   for (let start = 1; start <= n; start++) {
     if (seen[start]) continue;

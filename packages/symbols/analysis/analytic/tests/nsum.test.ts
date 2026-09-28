@@ -31,7 +31,7 @@ test("Sum 1/n! from n=1 = e - 1 (already stable, no acceleration needed)", () =>
 
 test("a much more slowly convergent power law, Sum 1/n^1.1, still clears the bar (mpmath: mpmath.zeta(1.1) = 10.5844484649508009...)", () => {
   const expr = ["NSum", ["Power", "n", -1.1], ["List", "n", 1, "PositiveInfinity"]];
-  closeTo(evalOf(expr).re, 10.5844484649508009509826043743);
+  closeTo(evalOf(expr).re, 10.584448464950801);
 });
 
 test("a finite range is a direct sum, no acceleration", () => {

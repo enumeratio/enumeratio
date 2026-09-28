@@ -22,7 +22,7 @@ describe("LERCH PHI CONTINUATION", () => {
   // follow through `wantsNumber` (see box.ts) — a float operand means a float answer.
   test("inexact arguments evaluate without N()", () => {
     const r = ce.box(["LerchPhi", 0.5, 2, 3.5]).evaluate();
-    expect(r.re).toBeCloseTo(0.11938622686982047, 12);
+    expect(r.re).toBeCloseTo(0.11938622686982046, 12);
   });
 
   // s = 1, a a positive integer: Φ(z, 1, a) reduces to −ln(1−z)/z minus the finite sum of the
@@ -68,7 +68,7 @@ describe("LERCH PHI CONTINUATION", () => {
     expect(Math.hypot(onCut.re - fromBelow.re, onCut.im - fromBelow.im)).toBeLessThan(1e-6);
     expect(Math.hypot(onCut.re - fromAbove.re, onCut.im - fromAbove.im)).toBeGreaterThan(1e-3);
     // mpmath.lerchphi(3, 2, 2) below the cut: -0.0755355085... - 0.3834880328...i
-    expect(onCut.re).toBeCloseTo(-0.07553550852076684, 8);
+    expect(onCut.re).toBeCloseTo(-0.07553550852076683, 8);
     expect(onCut.im).toBeCloseTo(-0.3834880328025781, 8);
   });
 

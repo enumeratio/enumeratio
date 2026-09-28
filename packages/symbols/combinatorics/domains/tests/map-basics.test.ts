@@ -35,18 +35,18 @@ test("extending a built-in keeps everything the built-in did", () => {
 test("Reverse, Complement and Inverse agree with plain readings", () => {
   for (const p of ALL) {
     const n = p.length;
-    expect(result(["Reverse", perm(...p)]), `rev [${p}]`).toEqual(["List", ...[...p].reverse()]);
-    expect(result(["Complement", perm(...p)]), `comp [${p}]`).toEqual(["List", ...p.map((v) => n + 1 - v)]);
+    expect(result(["Reverse", perm(...p)]), `rev [${p.join(", ")}]`).toEqual(["List", ...[...p].reverse()]);
+    expect(result(["Complement", perm(...p)]), `comp [${p.join(", ")}]`).toEqual(["List", ...p.map((v) => n + 1 - v)]);
     const inverse = Array.from({ length: n }, (_, i) => p.indexOf(i + 1) + 1);
-    expect(result(["Inverse", perm(...p)]), `inv [${p}]`).toEqual(["List", ...inverse]);
+    expect(result(["Inverse", perm(...p)]), `inv [${p.join(", ")}]`).toEqual(["List", ...inverse]);
   }
 });
 
 test("Inverse is an involution, and Reverse is too", () => {
   // A property rather than a table — the kind of check a typed map makes expressible.
   for (const p of ALL) {
-    expect(result(["Inverse", ["Inverse", perm(...p)]]), `[${p}]`).toEqual(["List", ...p]);
-    expect(result(["Reverse", ["Reverse", perm(...p)]]), `[${p}]`).toEqual(["List", ...p]);
+    expect(result(["Inverse", ["Inverse", perm(...p)]]), `[${p.join(", ")}]`).toEqual(["List", ...p]);
+    expect(result(["Reverse", ["Reverse", perm(...p)]]), `[${p.join(", ")}]`).toEqual(["List", ...p]);
   }
 });
 
@@ -60,7 +60,7 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
     // A finset is (members, n) — it carries its ground size — so the result is a Tuple. That
     // the shape shows up here rather than being papered over is the point of extracting
     // carrier shapes from enumeratio rather than guessing them.
-    expect(result(["DescentSet", perm(...p)]), `[${p}]`).toEqual(["Tuple", ["List", ...descents], p.length]);
+    expect(result(["DescentSet", perm(...p)]), `[${p.join(", ")}]`).toEqual(["Tuple", ["List", ...descents], p.length]);
     expect(ce.box(["Descents", perm(...p)] as never).evaluate().re).toBe(descents.length);
     expect(ce.box(["MajorIndex", perm(...p)] as never).evaluate().re).toBe(descents.reduce((a, b) => a + b, 0));
   }
@@ -69,7 +69,7 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
 test("ToLehmerCode is subexcedant and totals the inversions", () => {
   for (const p of ALL) {
     const code = p.map((v, i) => p.slice(i + 1).filter((w) => w < v).length);
-    expect(result(["ToLehmerCode", perm(...p)]), `[${p}]`).toEqual(["List", ...code]);
+    expect(result(["ToLehmerCode", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...code]);
     expect(ce.box(["Inversions", perm(...p)] as never).evaluate().re).toBe(code.reduce((a, b) => a + b, 0));
   }
 });
@@ -88,11 +88,14 @@ test("the new maps agree with plain readings", () => {
   const rotateRight = (p: number[]): number[] => (p.length === 0 ? [] : [p.at(-1)!, ...p.slice(0, -1)]);
   for (const p of ALL) {
     const n = p.length;
-    expect(result(["CyclicShift", perm(...p)]), `shift [${p}]`).toEqual(["List", ...rotateLeft(p)]);
-    expect(result(["InverseCyclicShift", perm(...p)]), `unshift [${p}]`).toEqual(["List", ...rotateRight(p)]);
+    expect(result(["CyclicShift", perm(...p)]), `shift [${p.join(", ")}]`).toEqual(["List", ...rotateLeft(p)]);
+    expect(result(["InverseCyclicShift", perm(...p)]), `unshift [${p.join(", ")}]`).toEqual([
+      "List",
+      ...rotateRight(p),
+    ]);
     const peaks = p.map((_, k) => k + 1).filter((i) => i > 1 && i < n && p[i - 2]! < p[i - 1]! && p[i - 1]! > p[i]!);
-    expect(result(["PeakSet", perm(...p)]), `peaks [${p}]`).toEqual(["Tuple", ["List", ...peaks], n]);
-    expect(ce.box(["Peaks", perm(...p)] as never).evaluate().re, `[${p}]`).toBe(peaks.length);
+    expect(result(["PeakSet", perm(...p)]), `peaks [${p.join(", ")}]`).toEqual(["Tuple", ["List", ...peaks], n]);
+    expect(ce.box(["Peaks", perm(...p)] as never).evaluate().re, `[${p.join(", ")}]`).toBe(peaks.length);
   }
 });
 
@@ -112,11 +115,14 @@ test("a composed map really composes its steps", () => {
   for (const p of ALL) {
     const n = p.length;
     const reversed = [...p].reverse();
-    expect(result(["ReverseComplement", perm(...p)]), `[${p}]`).toEqual(["List", ...reversed.map((v) => n + 1 - v)]);
-    expect(result(["ReverseComplement", perm(...p)]), `= Complement(Reverse) [${p}]`).toEqual(
+    expect(result(["ReverseComplement", perm(...p)]), `[${p.join(", ")}]`).toEqual([
+      "List",
+      ...reversed.map((v) => n + 1 - v),
+    ]);
+    expect(result(["ReverseComplement", perm(...p)]), `= Complement(Reverse) [${p.join(", ")}]`).toEqual(
       result(["Complement", ["Reverse", perm(...p)]]),
     );
-    expect(result(["InverseAfterComplementAfterReverse", perm(...p)]), `three-step [${p}]`).toEqual(
+    expect(result(["InverseAfterComplementAfterReverse", perm(...p)]), `three-step [${p.join(", ")}]`).toEqual(
       result(["Inverse", ["Complement", ["Reverse", perm(...p)]]]),
     );
   }

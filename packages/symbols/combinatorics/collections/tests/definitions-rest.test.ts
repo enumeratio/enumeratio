@@ -11,7 +11,7 @@ for (const head of HEADS) {
     for (let n = 0; n <= 6; n++) {
       for (const p of permutations(n)) {
         const native = ce.box([head, ["List", ...p]]).evaluate().re;
-        expect(evaluate(definition, p), `${head}([${p}])`).toBe(native);
+        expect(evaluate(definition, p), `${head}([${p.join(", ")}])`).toBe(native);
       }
     }
   });

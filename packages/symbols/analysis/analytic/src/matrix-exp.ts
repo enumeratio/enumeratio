@@ -207,7 +207,7 @@ function mulN(a: NMatrix, b: NMatrix, n: number): NMatrix {
   return r;
 }
 
-function scaleN(a: NMatrix, k: number, n: number): NMatrix {
+function scaleN(a: NMatrix, k: number): NMatrix {
   return a.map((row) => row.map((x) => scale(x, k)));
 }
 
@@ -243,13 +243,13 @@ function expNumeric(a: NMatrix, n: number): NMatrix {
   const norm = infNorm(a, n);
   const s = norm > SCALE_TARGET ? Math.max(0, Math.ceil(Math.log2(norm / SCALE_TARGET))) : 0;
   const scaleFactor = 2 ** s;
-  const scaled = s === 0 ? a : scaleN(a, 1 / scaleFactor, n);
+  const scaled = s === 0 ? a : scaleN(a, 1 / scaleFactor);
 
   let term = identityN(n);
   let result = identityN(n);
   for (let k = 1; k <= TAYLOR_TERMS; k++) {
     term = mulN(term, scaled, n);
-    term = scaleN(term, 1 / k, n);
+    term = scaleN(term, 1 / k);
     result = addN(result, term, n);
     if (infNorm(term, n) < 1e-18) break;
   }

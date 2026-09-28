@@ -84,13 +84,13 @@ for (const family of allEntries.filter((f) => f.declared !== undefined)) {
         const work = (declared.work as (p: number[]) => bigint)(p);
         // The bound has to cover what's enumerated; check it wherever the count is cheap.
         if (work > CHEAP) continue;
-        expect(work >= count, `work(${p}) = ${work} < count ${count}`).toBe(true);
+        expect(work >= count, `work(${p.join(", ")}) = ${work} < count ${count}`).toBe(true);
       }
       // Sage's an_element: the first element of the smallest nonempty fiber is a member and
       // round-trips.
       if (!element && (typeof count !== "bigint" || count > 0n)) {
         const first = family.unrank(p, 0n);
-        expect(family.valid(first, p), `valid(unrank(${p}, 0))`).toBe(true);
+        expect(family.valid(first, p), `valid(unrank(${p.join(", ")}, 0))`).toBe(true);
         expect(family.rank(first, p)).toBe(0n);
         element = true;
       }

@@ -15,7 +15,7 @@ type Expr = number | string | readonly [string, ...Expr[]];
 
 const num = (input: Expr): number => ce.box(input).N().re;
 
-const CATALAN = 0.915965594177219015;
+const CATALAN = 0.915965594177219;
 
 describe("POLYLOG Liₛ(z) = z·Φ(z, s, 1)", () => {
   test("Li₂(i) = −π²/48 + iG — complex rim, direct summation's accuracy floor", () => {

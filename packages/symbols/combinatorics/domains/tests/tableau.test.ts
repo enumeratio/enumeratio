@@ -61,20 +61,20 @@ const insertionTableau = (p: number[]): number[][] => rskTableaux(p).insertion;
 test("RskInsertion is the row word of the insertion tableau", () => {
   for (const p of ALL) {
     const rows = insertionTableau(p);
-    expect(contents(["RskInsertion", perm(...p)]), `[${p}]`).toEqual(["List", ...rows.flat()]);
+    expect(contents(["RskInsertion", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...rows.flat()]);
   }
 });
 
 test("RskShape is the shape of that tableau, and partitions n", () => {
   for (const p of ALL) {
     const shape = insertionTableau(p).map((row) => row.length);
-    expect(contents(["RskShape", perm(...p)]), `[${p}]`).toEqual(["List", ...shape]);
+    expect(contents(["RskShape", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...shape]);
     expect(
       shape.reduce((a, b) => a + b, 0),
-      `[${p}] sums to n`,
+      `[${p.join(", ")}] sums to n`,
     ).toBe(p.length);
     for (let i = 1; i < shape.length; i++)
-      expect(shape[i - 1]!, `[${p}] weakly decreasing`).toBeGreaterThanOrEqual(shape[i]!);
+      expect(shape[i - 1]!, `[${p.join(", ")}] weakly decreasing`).toBeGreaterThanOrEqual(shape[i]!);
   }
 });
 
@@ -92,7 +92,7 @@ test("the shape's first part is the longest increasing subsequence", () => {
   };
   for (const p of ALL) {
     const shape = insertionTableau(p).map((row) => row.length);
-    expect(shape[0] ?? 0, `[${p}]`).toBe(lis(p));
+    expect(shape[0] ?? 0, `[${p.join(", ")}]`).toBe(lis(p));
   }
 });
 
@@ -108,7 +108,7 @@ test("RskInsertion and RskShape are typed by carrier", () => {
 test("RskRecording records where each insertion landed", () => {
   for (const p of ALL) {
     const { recording } = rskTableaux(p);
-    expect(contents(["RskRecording", perm(...p)]), `[${p}]`).toEqual(["List", ...recording.flat()]);
+    expect(contents(["RskRecording", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...recording.flat()]);
   }
 });
 
@@ -118,10 +118,10 @@ test("the RSK pair is a composite carrier, and both halves share a shape", () =>
   // Tuple alone rather than flattening it into a List.
   for (const p of ALL) {
     const pair = ce.box(["Rsk", perm(...p)] as never).evaluate();
-    expect(String(pair.type), `[${p}]`).toBe("standard_tableau_pair");
+    expect(String(pair.type), `[${p.join(", ")}]`).toBe("standard_tableau_pair");
 
     const { insertion, recording } = rskTableaux(p);
-    expect(JSON.stringify(pair.json), `[${p}]`).toContain(JSON.stringify(insertion.flat()).slice(1, -1));
+    expect(JSON.stringify(pair.json), `[${p.join(", ")}]`).toContain(JSON.stringify(insertion.flat()).slice(1, -1));
     // Same shape is the content of the correspondence: Q is P's shape filled with positions.
     expect(insertion.map((row) => row.length)).toEqual(recording.map((row) => row.length));
   }
@@ -136,7 +136,7 @@ test("the recording tableau is standard", () => {
     for (const row of recording) for (let i = 1; i < row.length; i++) expect(row[i]!).toBeGreaterThan(row[i - 1]!);
     for (let r = 1; r < recording.length; r++)
       for (const [c, entry] of recording[r]!.entries())
-        expect(entry, `[${p}] column ${c}`).toBeGreaterThan(recording[r - 1]![c]!);
+        expect(entry, `[${p.join(", ")}] column ${c}`).toBeGreaterThan(recording[r - 1]![c]!);
   }
 });
 
@@ -147,7 +147,7 @@ test("RSK is injective on the permutations it is given", () => {
   for (const p of ALL) {
     const { insertion, recording } = rskTableaux(p);
     const key = JSON.stringify([insertion, recording]);
-    expect(seen.get(key), `[${p}] collides with [${seen.get(key)}]`).toBeUndefined();
+    expect(seen.get(key), `[${p.join(", ")}] collides with [${seen.get(key)?.join(", ")}]`).toBeUndefined();
     seen.set(key, p);
   }
 });
