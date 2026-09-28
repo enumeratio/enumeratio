@@ -1,0 +1,96 @@
+- id: listplot-index-vs-value
+  caption: "ListPlot: index vs value"
+  category: ListPlot & ListLinePlot
+  notes: A bare number list plots as index (x) vs value (y).
+  expr: [ListPlot, [List, 3, 1, 4, 1, 5, 9, 2, 6]]
+- id: listlineplot-connected
+  caption: "ListLinePlot: connected"
+  category: ListPlot & ListLinePlot
+  expr: [ListLinePlot, [List, 3, 1, 4, 1, 5, 9, 2, 6]]
+- id: barchart-labelled
+  caption: Value list with category labels
+  category: BarChart
+  expr:
+    [
+      BarChart,
+      [List, 12, 19, 7, 15, 10],
+      [Tuple, Labels, [List, "'Mon'", "'Tue'", "'Wed'", "'Thu'", "'Fri'"]],
+      [Tuple, Label, "'Daily commits'"],
+    ]
+- id: barchart-negative
+  caption: Negative values dip below the baseline
+  category: BarChart
+  expr: [BarChart, [List, 3, -2, 5, -1, 4]]
+- id: histogram-auto-bins
+  caption: Auto bin count (Sturges' rule)
+  category: Histogram
+  notes: The bin count defaults to Sturges' rule; pass `bins` to override.
+  expr: [Histogram, [List, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7]]
+- id: histogram-explicit-bins
+  caption: Explicit bin count
+  category: Histogram
+  expr: [Histogram, [List, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7], [Tuple, Bins, 4]]
+- id: piechart-proportions
+  caption: Proportions of a value list
+  category: PieChart
+  expr: [PieChart, [List, 35, 25, 20, 20], [Tuple, Labels, [List, "'A'", "'B'", "'C'", "'D'"]]]
+- id: boxwhisker-one-per-series
+  caption: One box per series
+  category: BoxWhiskerChart
+  notes: "`data` is a list of raw value lists; each series is reduced to its five-number summary (min, Q1, median, Q3, max)."
+  expr:
+    [
+      BoxWhiskerChart,
+      [List, [List, 2, 4, 4, 4, 5, 5, 7, 9], [List, 1, 2, 3, 3, 3, 4, 4, 10]],
+      [Tuple, Labels, [List, "'A'", "'B'"]],
+    ]
+- id: arrayplot-matrix-heatmap
+  caption: A matrix as a heatmap
+  category: ArrayPlot
+  notes: "Each cell's value maps to a colour ramp from blue (low) to accent (high). Cells are square: the frame's height follows rows/cols, up to a square."
+  expr: [ArrayPlot, [List, [List, 0, 1, 2, 3], [List, 1, 2, 3, 4], [List, 2, 3, 4, 5], [List, 3, 4, 5, 6]]]
+- id: arrayplot-01-two-tone
+  caption: A 0/1 matrix is two-tone
+  category: ArrayPlot
+  notes: "Like Wolfram's white/black: 0 is the background, 1 the foreground, so it follows the theme."
+  expr:
+    [
+      ArrayPlot,
+      [
+        List,
+        [List, 1, 0, 0, 0, 0, 0, 0, 0],
+        [List, 0, 1, 0, 0, 0, 0, 0, 0],
+        [List, 1, 0, 1, 0, 0, 0, 0, 0],
+        [List, 0, 0, 0, 1, 0, 0, 0, 0],
+        [List, 1, 1, 0, 0, 1, 0, 0, 0],
+        [List, 0, 0, 0, 0, 0, 1, 0, 0],
+        [List, 1, 0, 1, 0, 0, 0, 1, 0],
+        [List, 0, 0, 0, 0, 0, 0, 0, 1],
+      ],
+    ]
+- id: arrayplot-01-single-row
+  caption: A single wide row
+  category: ArrayPlot
+  expr: [ArrayPlot, [List, [List, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]]]
+- id: discreteplot-stem
+  caption: A stem plot
+  category: DiscretePlot
+  notes: A vertical stem from the zero baseline to each value, with a dot on top.
+  expr: [DiscretePlot, [List, 1, -2, 3, 4, -1, 2]]
+- id: chosen-short-list-is-bars
+  caption: A short number list is bars
+  category: Chosen from the data
+  notes: "No `type`: the shape decides -- a short number list is bars, a long one a histogram, pairs are points, a matrix is an array plot -- `chooseChartType`, which is also the rule behind the `Chart` head."
+  expr: [Chart, [List, 3, 1, 4, 1, 5]]
+- id: chosen-long-list-is-histogram
+  caption: A long number list is a histogram
+  category: Chosen from the data
+  expr: [Chart, [List, 5, 3, 8, 1, 9, 2, 7, 4, 6, 3, 5, 8, 2, 9, 1, 4, 7, 3, 6, 5, 2, 8, 4, 1, 9]]
+- id: chosen-pairs-are-points
+  caption: Pairs are points
+  category: Chosen from the data
+  expr: [Chart, [List, [List, 0, 1], [List, 1, 3], [List, 2, 2], [List, 3, 5]]]
+- id: chosen-matrix-is-array-plot
+  caption: A matrix is an array plot
+  category: Chosen from the data
+  expr: [Chart, [List, [List, 1, 0, 2], [List, 0, 3, 1], [List, 2, 1, 0]]]

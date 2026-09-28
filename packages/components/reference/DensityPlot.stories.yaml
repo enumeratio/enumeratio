@@ -1,0 +1,48 @@
+- id: trig-field
+  caption: A trig field
+  category: Function densities
+  expr: [DensityPlot, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14]]
+- id: saddle-colour-bar
+  caption: A saddle, with a colour bar
+  category: Function densities
+  notes: "`legend` adds a colour bar labelled with the sampled extremes."
+  expr:
+    [
+      DensityPlot,
+      [Add, [Power, x, 2], [Negate, [Power, y, 2]]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Legend, True],
+      [Tuple, Label, "'x² − y²'"],
+    ]
+- id: interference
+  caption: Interference
+  category: Function densities
+  notes: "`n` raises the sampling resolution -- the ramp is quantised by the cell grid, so a finer grid reads as a smoother image."
+  expr:
+    [DensityPlot, [Sin, [Multiply, x, y]], [Tuple, x, -4, 4], [Tuple, y, -4, 4], [Tuple, N, 80], [Tuple, Legend, True]]
+- id: pinned-colour-scale
+  caption: A pinned colour scale
+  category: Function densities
+  notes: "`zrange` pins the colour scale instead of using the sampled min and max, so several plots can be compared on one scale."
+  expr:
+    [
+      DensityPlot,
+      [Add, [Power, x, 2], [Power, y, 2]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, ZRange, "'0,30'"],
+      [Tuple, Legend, True],
+      [Tuple, XLabel, "'x'"],
+      [Tuple, YLabel, "'y'"],
+    ]
+- id: pre-sampled-grid
+  caption: A pre-sampled grid
+  category: List densities
+  notes: "`ListDensityPlot` shades a pre-sampled grid directly -- no expression evaluation. Row 0 is the smallest y, so it sits at the bottom of the frame."
+  expr:
+    [
+      ListDensityPlot,
+      [List, [List, 0, 1, 2, 3], [List, 1, 2, 3, 4], [List, 2, 3, 4, 5], [List, 3, 4, 5, 6]],
+      [Tuple, Legend, True],
+    ]

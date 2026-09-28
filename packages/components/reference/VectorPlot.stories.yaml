@@ -1,0 +1,46 @@
+- id: rigid-rotation
+  caption: Rigid rotation
+  category: Vector fields
+  notes: "F = (−y, x): the arrows circulate, and their length grows with the distance from the origin."
+  expr: [VectorPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]
+- id: a-saddle-field
+  caption: A saddle
+  category: Vector fields
+  notes: The same field as a comma-separated pair -- `field` and separate `u`/`v` are two spellings of the same vector.
+  expr: [VectorPlot, [Tuple, x, [Negate, y]], [Tuple, x, -2, 2], [Tuple, y, -2, 2], [Tuple, Label, "'(x, −y)'"]]
+- id: trigonometric-field
+  caption: A trigonometric field
+  category: Vector fields
+  notes: "`n` sets the arrow grid's resolution."
+  expr: [VectorPlot, [Tuple, [Sin, y], [Cos, x]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14], [Tuple, N, 16]]
+- id: rotation-as-streamlines
+  caption: Rotation, as streamlines
+  category: Streamlines
+  notes: The circular orbits of F = (−y, x). Each line carries one mid-line arrowhead showing the flow direction.
+  expr: [StreamPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]
+- id: dipole-like-flow
+  caption: A dipole-like flow
+  category: Streamlines
+  notes: "`steps` caps the RK4 steps taken in each direction from a seed -- longer lines at the cost of more integration."
+  expr:
+    [
+      StreamPlot,
+      [Tuple, [Add, [Power, x, 2], [Negate, [Power, y, 2]]], [Multiply, 2, x, y]],
+      [Tuple, x, -2, 2],
+      [Tuple, y, -2, 2],
+      [Tuple, N, 11],
+      [Tuple, Steps, 80],
+    ]
+- id: shear-flow
+  caption: Shear flow
+  category: Streamlines
+  expr:
+    [
+      StreamPlot,
+      [Tuple, y, [Sin, x]],
+      [Tuple, x, -3.14, 3.14],
+      [Tuple, y, -2, 2],
+      [Tuple, N, 10],
+      [Tuple, XLabel, "'x'"],
+      [Tuple, YLabel, "'y'"],
+    ]

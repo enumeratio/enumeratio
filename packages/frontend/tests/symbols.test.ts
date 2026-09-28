@@ -14,10 +14,13 @@ const CORPUS = [
   "Plot(Sin(x), (x, 0, 10))",
   "Plot(Sin(x))",
   "Plot3D(x * y, (x, -1, 1), (y, -1, 1))",
-  "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2))",
-  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6))",
+  'ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2), XLabel -> "x", YLabel -> "y")',
+  "ListContourPlot([[0, 1], [1, 0]])",
+  'DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), XLabel -> "x", YLabel -> "y")',
+  "ListDensityPlot([[0, 1], [1, 0]])",
   "PolarPlot(1 + Cos(t), (t, 0, 2 * Pi))",
-  "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))",
+  "ListPolarPlot([[0, 1], [1.57, 2]])",
+  'VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> "x", YLabel -> "y")',
   "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
   "ComplexPlot(Zeta(z), z)",
   "ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))",
@@ -114,6 +117,19 @@ afterAll(() => {
   if (updating) writeFileSync(GOLDEN, JSON.stringify(fresh, null, 2) + "\n");
 });
 
+// Tags a family shares: a member picked by an argument shape (`ListContourPlot`'s data grid
+// vs `ContourPlot`'s expression + iterators) needs no `fixed` attribute of its own, unlike a
+// member picked by a fixed `type` (`Histogram` on `notatio-chart`) -- so membership is titled
+// on the shared tag, not on whether `fixed` is set.
+const FAMILY_TAGS = [
+  "notatio-chart",
+  "notatio-graph-plot",
+  "notatio-vector-plot",
+  "notatio-contour-plot",
+  "notatio-density-plot",
+  "notatio-polar-plot",
+];
+
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {
   const kebab = (head: string): string => "notatio-" + head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase();
   for (const s of DRAWING_SYMBOLS) {
@@ -124,12 +140,8 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
       expect(s.tag).toBe("notatio-dynamic-module");
       continue;
     }
-    if (s.fixed !== undefined && Object.keys(s.fixed).length === 0) {
-      expect(s.tag, s.head).toBe(kebab(s.head));
-      continue;
-    }
-    if (s.fixed === undefined) expect(s.tag, s.head).toBe(kebab(s.head));
-    else expect(["notatio-chart", "notatio-graph-plot", "notatio-vector-plot"], s.head).toContain(s.tag);
+    if (s.tag === kebab(s.head)) continue;
+    expect(FAMILY_TAGS, s.head).toContain(s.tag);
   }
   expect(visualSymbol("Sin")).toBeUndefined();
   expect(visualSymbol("Plot")?.tag).toBe("notatio-plot");

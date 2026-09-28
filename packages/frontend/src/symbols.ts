@@ -127,13 +127,26 @@ function complexOf(node: Json | undefined): [number, number] | undefined {
 /** Epsil for an operand, as an attribute value. */
 const epsil = (node: Json): string => serializeExpression(node);
 
-/** MathJSON data -- lists, numbers, strings -- as the plain JSON a `data` attribute takes. */
+/** A MathJSON dictionary literal (`{dict: {…}}`, compute-engine's own associative form). */
+const dictOf = (node: unknown): Readonly<Record<string, Json>> | undefined => {
+  const dict = (node as { dict?: unknown })?.dict;
+  return dict !== null && typeof dict === "object" ? (dict as Record<string, Json>) : undefined;
+};
+
+/**
+ * MathJSON data -- lists, tuples, dictionaries, numbers, strings -- as the plain JSON a
+ * `data` attribute takes. A dictionary becomes a plain object, recursively, for a component
+ * that takes a tree or a `{nodes?, edges}` shape rather than a flat/nested list
+ * (`GraphPlot`'s `data`).
+ */
 export function toJsonData(node: Json): unknown {
   const n = numOf(node);
   if (n !== undefined) return n;
   const s = strOf(node);
   if (s !== undefined) return s;
   if (headOf(node) === "List" || headOf(node) === "Tuple") return opsOf(node).map(toJsonData);
+  const dict = dictOf(node);
+  if (dict !== undefined) return Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, toJsonData(v)]));
   const sym = symOf(node);
   if (sym === "True") return true;
   if (sym === "False") return false;
@@ -243,6 +256,15 @@ function controlName(node: Json): string | undefined {
   return symOf(inner === undefined ? first : inner[0]);
 }
 
+/**
+ * `XLabel -> "x"` / `YLabel -> "y"`: the axis captions the 2-D field plots (`ContourPlot`,
+ * `DensityPlot`, `VectorPlot`/`StreamPlot`) take. `Plot` names the same idea `AxesLabel`,
+ * one tuple for both axes (see its own option below) -- these are plain aliases instead,
+ * since `optionAttribute` can't split `XLabel` into `x-label` on its own (no lowercase
+ * letter precedes the second word's capital for it to hyphenate at).
+ */
+const AXES_LABEL_OPTIONS = { XLabel: "x-label", YLabel: "y-label" };
+
 export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "Plot",
@@ -292,6 +314,14 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         xrange: "xrange",
         yrange: "yrange",
       }),
+    options: AXES_LABEL_OPTIONS,
+  },
+  {
+    // `ListContourPlot(grid)`: a pre-sampled grid contoured directly, no expression or
+    // iterators -- the same `data` a `ListPlot3D` takes.
+    head: "ListContourPlot",
+    tag: "notatio-contour-plot",
+    attributes: dataOnly,
   },
   {
     head: "DensityPlot",
@@ -304,6 +334,13 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         xrange: "xrange",
         yrange: "yrange",
       }),
+    options: AXES_LABEL_OPTIONS,
+  },
+  {
+    // `ListDensityPlot(grid)`: a pre-sampled grid shaded directly -- see `ListContourPlot`.
+    head: "ListDensityPlot",
+    tag: "notatio-density-plot",
+    attributes: dataOnly,
   },
   {
     head: "PolarPlot",
@@ -311,15 +348,24 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     attributes: (ops) => oneVariable(ops, { value: "expr", variable: "tvar", range: "trange" }),
   },
   {
+    // `ListPolarPlot(points)`: explicit `(theta, r)` pairs, or bare radii spread evenly --
+    // see `ListContourPlot`.
+    head: "ListPolarPlot",
+    tag: "notatio-polar-plot",
+    attributes: dataOnly,
+  },
+  {
     head: "VectorPlot",
     tag: "notatio-vector-plot",
     attributes: (ops) => vectorField(ops),
+    options: AXES_LABEL_OPTIONS,
   },
   {
     head: "StreamPlot",
     tag: "notatio-vector-plot",
     fixed: { type: "stream" },
     attributes: (ops) => vectorField(ops),
+    options: AXES_LABEL_OPTIONS,
   },
   {
     head: "ComplexPlot",
