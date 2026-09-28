@@ -29,7 +29,7 @@
   expr: [N, [LambertW, 1, 1]]
   expected: [Complex, -1.5339133197935744, 4.375185153061898]
   category: Scope
-  caption: The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's <code>ProductLog[1, 1]</code>
+  caption: The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's `ProductLog[1, 1]`
 - id: the-real-branch-k-1-on-1-e-z-0
   expr: [N, [LambertW, -0.2, -1]]
   expected: { num: "-2.54264135777352642429" }

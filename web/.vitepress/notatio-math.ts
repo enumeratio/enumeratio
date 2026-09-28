@@ -26,28 +26,10 @@ interface StateBlock {
 // <notatio-out format="latex"> — the same path ReferencePage.vue already uses for
 // the `$…$` in reference summaries. Routing prose math through the same component is the point:
 // one renderer for the whole site, so a formula in a guide and a formula in a
-// reference entry look identical, and neither needs a second math library.
-
-// Braces are escaped as entities as well as the usual four: VitePress runs
-// markdown-it-attrs, which claims a trailing `{…}` in a table cell as an attribute
-// block and would swallow the `{-1}` out of `$\sqrt{-1}$`. Vue would also read a `{{`
-// as an interpolation. The browser decodes the entities, so the element still sees
-// the LaTeX it was given.
-const escapeAttr = (s: string): string =>
-  s
-    .replace(/&/g, "&amp;")
-    .replace(/"/g, "&quot;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\{/g, "&#123;")
-    .replace(/\}/g, "&#125;");
-
-// NOTE: tokens carry ALREADY-ESCAPED LaTeX. markdown-it-attrs runs after inline
-// parsing and claims a trailing `{…}` in a table header cell as an attribute block,
-// which ate the `{-1}` out of `$\sqrt{-1}$`. Escaping at token-creation time means no
-// literal brace is left in the token for it to find.
-const tex = (escaped: string, display = false): string =>
-  `<notatio-out ${display ? "display" : "inline"} format="latex" value="${escaped}"></notatio-out>`;
+// reference entry look identical, and neither needs a second math library. The actual
+// span-recognition and escaping live in prose-math.ts, shared with ReferencePage.vue's
+// non-markdown record prose.
+import { escapeAttr, matchInlineMath, texTag as tex, trimDisplayBody } from "./prose-math.ts";
 
 /**
  * Inline `$…$`. Deliberately conservative, because `$` is load-bearing elsewhere in
@@ -55,29 +37,19 @@ const tex = (escaped: string, display = false): string =>
  * route variable. So the opening `$` must be followed by something that is neither a
  * brace nor whitespace, the closing `$` must not be preceded by whitespace, and the
  * span must not cross a line. (Code spans are consumed whole by the backticks rule
- * before this ever sees them, so `` `${n}` `` is safe regardless.)
+ * before this ever sees them, so `` `${n}` `` is safe regardless.) The match itself is
+ * `matchInlineMath` from prose-math.ts, shared with ReferencePage.vue.
  */
 function mathInline(state: StateInline, silent: boolean): boolean {
-  const start = state.pos;
-  if (state.src.charCodeAt(start) !== 0x24 /* $ */) return false;
-  const after = state.src[start + 1];
-  if (after === undefined || after === "{" || after === "$" || /\s/.test(after)) return false;
-
-  let end = start + 1;
-  while (end < state.posMax) {
-    const ch = state.src[end]!;
-    if (ch === "\n") return false;
-    if (ch === "$" && state.src[end - 1] !== "\\" && !/\s/.test(state.src[end - 1]!)) break;
-    end++;
-  }
-  if (end >= state.posMax || state.src[end] !== "$") return false;
+  const m = matchInlineMath(state.src, state.pos, state.posMax);
+  if (!m) return false;
 
   if (!silent) {
     const token = state.push("notatio_math_inline", "", 0);
-    token.content = escapeAttr(state.src.slice(start + 1, end));
+    token.content = escapeAttr(m.content);
     token.markup = "$";
   }
-  state.pos = end + 1;
+  state.pos = m.end;
   return true;
 }
 
@@ -108,7 +80,7 @@ function mathBlock(state: StateBlock, startLine: number, endLine: number, silent
   } else {
     lastLine = startLine;
   }
-  body = body.replace(/\$\$\s*$/, "").trim();
+  body = trimDisplayBody(body);
   if (body === "") return false;
   if (silent) return true;
 
