@@ -64,3 +64,7 @@ heavisidetheta-derivative:
     in: D[HeavisideTheta[x], x]
   wolfram:
     in: D[HeavisideTheta[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \theta (x)}{\partial x}-\delta (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\theta \left(\frac{7}{3}\right)-\delta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\theta \left(-\frac{11}{5}\right)-\delta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\theta \left(\frac{13}{4}\right)-\delta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}

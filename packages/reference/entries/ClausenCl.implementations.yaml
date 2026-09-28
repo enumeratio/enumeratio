@@ -12,6 +12,10 @@ cl-2-pi-2-g-catalan-s-constant:
     in: ClausenCl[2, Divide[Pi, 2]]
   wolfram:
     in: ResourceFunction["ClausenCl"][2, Divide[Pi, 2]]
+    out: Catalan
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}]\left[2,\frac{\pi }{2}\right]
+      out: C
 odd-orders-are-cosine-series-cl-3-0-zeta-3:
   epsil:
     in: ClausenCl(3, 0)
@@ -26,6 +30,13 @@ odd-orders-are-cosine-series-cl-3-0-zeta-3:
     in: ClausenCl[3, 0]
   wolfram:
     in: ResourceFunction["ClausenCl"][3, 0]
+    out: If[OddQ, Zeta[3], 0]
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][3,0]
+      out: \text{If}[\text{OddQ},\zeta (3),0]
+    verdict: disagree
+    kind: unevaluated
+    note: The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute ζ(3).
 cl-2-pi-0-the-sine-series-vanishes-at-multiples:
   epsil:
     in: ClausenCl(2, Pi)
@@ -40,6 +51,10 @@ cl-2-pi-0-the-sine-series-vanishes-at-multiples:
     in: ClausenCl[2, Pi]
   wolfram:
     in: ResourceFunction["ClausenCl"][2, Pi]
+    out: "0"
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][2,\pi ]
+      out: "0"
 cl-3-pi-eta-3-frac-34-zeta-3:
   epsil:
     in: ClausenCl(3, Pi)
@@ -54,6 +69,10 @@ cl-3-pi-eta-3-frac-34-zeta-3:
     in: ClausenCl[3, Pi]
   wolfram:
     in: ResourceFunction["ClausenCl"][3, Pi]
+    out: (-3*Zeta[3])/4
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][3,\pi ]
+      out: -\frac{3 \zeta (3)}{4}
 cl-2-0-0:
   epsil:
     in: ClausenCl(2, 0)
@@ -68,6 +87,13 @@ cl-2-0-0:
     in: ClausenCl[2, 0]
   wolfram:
     in: ResourceFunction["ClausenCl"][2, 0]
+    out: If[OddQ, Zeta[2], 0]
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][2,0]
+      out: \text{If}[\text{OddQ},\zeta (2),0]
+    verdict: disagree
+    kind: unevaluated
+    note: The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute 0.
 cl-3-pi-2-frac-3-32-zeta-3:
   epsil:
     in: ClausenCl(3, Pi / 2)
@@ -82,6 +108,10 @@ cl-3-pi-2-frac-3-32-zeta-3:
     in: ClausenCl[3, Divide[Pi, 2]]
   wolfram:
     in: ResourceFunction["ClausenCl"][3, Divide[Pi, 2]]
+    out: (-3*Zeta[3])/32
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}]\left[3,\frac{\pi }{2}\right]
+      out: -\frac{3 \zeta (3)}{32}
 cl-4-pi-2-beta-4-which-has-no-closed-form-of-its:
   epsil:
     in: ClausenCl(4, Pi / 2)
@@ -96,6 +126,13 @@ cl-4-pi-2-beta-4-which-has-no-closed-form-of-its:
     in: ClausenCl[4, Divide[Pi, 2]]
   wolfram:
     in: ResourceFunction["ClausenCl"][4, Divide[Pi, 2]]
+    out: (Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}]\left[4,\frac{\pi }{2}\right]
+      out: \frac{1}{16} \left(\frac{\zeta \left(4,\frac{1}{4}\right)}{16}-\frac{\zeta \left(4,\frac{3}{4}\right)}{16}\right)
+    verdict: disagree
+    kind: shape
+    note: Wolfram answers (ζ(4,1/4) − ζ(4,3/4))/256, which is β(4) spelled through Hurwitz zeta.
 cl-2-pi-3-1-01494-the-maximum-of-cl-2:
   epsil:
     in: ClausenCl(2, 1.047_197_551_196_597_6)
@@ -110,6 +147,10 @@ cl-2-pi-3-1-01494-the-maximum-of-cl-2:
     in: ClausenCl[2, 1.0471975511965976]
   wolfram:
     in: ResourceFunction["ClausenCl"][2, 1.0471975511965976]
+    out: "1.0149416064096535"
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][2,1.0472]
+      out: "1.01494"
 cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0:
   epsil:
     in: ClausenCl(1, 0)
@@ -124,3 +165,7 @@ cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0:
     in: ClausenCl[1, 0]
   wolfram:
     in: ResourceFunction["ClausenCl"][1, 0]
+    out: Infinity
+    tex:
+      in: \text{ResourceFunction}[\text{ClausenCl}][1,0]
+      out: \infty

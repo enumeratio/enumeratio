@@ -553,6 +553,10 @@ frac-d-dx-psi-n-x-psi-n-1-x:
     in: D[PolyGamma[n, x], x]
   wolfram:
     in: D[PolyGamma[n, x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \psi ^{(n)}(x)}{\partial x}-\psi ^{(n+1)}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\psi ^{\left(\frac{7}{3}\right)}\left(-\frac{11}{5}\right)-\psi ^{\left(\frac{7}{3}+1\right)}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\psi ^{\left(\frac{13}{4}\right)}\left(-\frac{17}{6}\right)-\psi ^{\left(\frac{13}{4}+1\right)}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\psi ^{\left(\frac{19}{8}\right)}\left(-\frac{23}{9}\right)-\psi ^{\left(\frac{19}{8}+1\right)}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(polygamma(Symbol("n"), Symbol("x")), Symbol("x"))
   sage:

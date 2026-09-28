@@ -159,6 +159,10 @@ gaussianintegers-true-5-splits-so-105-has-4:
     in: PrimeNu[105, Rule[GaussianIntegers, True]]
   wolfram:
     in: PrimeNu[105, Rule[GaussianIntegers, True]]
+    out: "4"
+    tex:
+      in: \text{PrimeNu}[105,\text{GaussianIntegers}\to \text{True}]
+      out: "4"
 listable-over-a-range:
   epsil:
     in: PrimeNu(Range(20))

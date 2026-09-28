@@ -664,6 +664,10 @@ derivative-sin-x:
     in: D[Cos[x], x]
   wolfram:
     in: D[Cos[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \cos (x)}{\partial x}--\sin (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\cos \left(\frac{7}{3}\right)--\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\cos \left(-\frac{11}{5}\right)--\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\cos \left(\frac{13}{4}\right)--\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
   sympy:
     in: diff(cos(Symbol("x")), Symbol("x"))
   sage:
@@ -733,6 +737,10 @@ euler-s-formula-cos-x-frac-e-ix-e-ix-2:
     in: TrigToExp[Cos[x]]
   wolfram:
     in: TrigToExp[Cos[x]]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}[\cos (x)]-\frac{1}{2} \left(e^{i x}+e^{-i x}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(\frac{7}{3}\right)\right]-\frac{1}{2} \left(e^{i \frac{7}{3}}+e^{-i \frac{7}{3}}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(-\frac{11}{5}\right)\right]-\frac{1}{2} \left(e^{i \left(-\frac{11}{5}\right)}+e^{-i \left(-\frac{11}{5}\right)}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\cos \left(\frac{13}{4}\right)\right]-\frac{1}{2} \left(e^{i \frac{13}{4}}+e^{-i \frac{13}{4}}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 pi-24-is-past-the-automatic-special-angle-table:
   epsil:
     in: Cos(1 / 24 * Pi)

@@ -45,3 +45,7 @@ weighted-matrix-summed-weight:
     in: GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]
   wolfram:
     in: GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]
+    out: "{{0., 5., 12.}, {5., 0., 7.}, {12., 7., 0.}}"
+    tex:
+      in: \text{GraphDistanceMatrix}[]
+      out: \left( \begin{array}{ccc}  0. & 5. & 12. \\  5. & 0. & 7. \\  12. & 7. & 0. \\ \end{array} \right)

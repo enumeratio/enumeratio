@@ -118,6 +118,10 @@ derivative-frac-1-1-x-2:
     back: [D, [Subtract, [Divide, Pi, 2], [Arctan, x]], x]
   wolfram:
     in: D[Subtract[Divide[Pi, 2], ArcTan[x]], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial }{\partial x}\left(\frac{\pi }{2}-\tan ^{-1}(x)\right)--\frac{1}{x^2+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\left(\frac{\pi }{2}-\tan ^{-1}\left(\frac{7}{3}\right)\right)--\frac{1}{\left(\frac{7}{3}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\left(\frac{\pi }{2}-\tan ^{-1}\left(-\frac{11}{5}\right)\right)--\frac{1}{\left(-\frac{11}{5}\right)^2+1}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\left(\frac{\pi }{2}-\tan ^{-1}\left(\frac{13}{4}\right)\right)--\frac{1}{\left(\frac{13}{4}\right)^2+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored:
   epsil:
     in: Arccot(-Sqrt(3))

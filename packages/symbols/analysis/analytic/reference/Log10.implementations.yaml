@@ -207,6 +207,10 @@ derivative-frac-1-x-ln-10:
     in: D[Log10[x], x]
   wolfram:
     in: D[Log10[x], x]
+    out: True
+    tex:
+      in: \text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \log _{10}(x)}{\partial x}-\frac{1}{x \log (10)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\log _{10}\left(\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\log _{10}\left(-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\log _{10}\left(\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \log (10)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]
+      out: \text{True}
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(Log10(7), 30)
