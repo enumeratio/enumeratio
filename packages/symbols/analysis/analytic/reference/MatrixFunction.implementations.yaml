@@ -18,6 +18,8 @@ on-a-diagonal-matrix-f-acts-on-the-diagonal:
     out: \bigl\lbrack\bigl\lbrack f(a), 0\bigr\rbrack, \bigl\lbrack0, f(b)\bigr\rbrack\bigr\rbrack
   fullform:
     in: MatrixFunction[f, List[List[a, 0], List[0, b]]]
+  wolfram:
+    in: MatrixFunction[f, List[List[a, 0], List[0, b]]]
 with-exp-it-is-matrixexp:
   epsil:
     in: MatrixFunction(Exp, [[0, 0], [0, 0]])

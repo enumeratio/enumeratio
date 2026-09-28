@@ -60,6 +60,8 @@ nothing-is-in-the-empty-list:
     out: \mathrm{False}
   fullform:
     in: MemberQ[List[], x]
+  wolfram:
+    in: MemberQ[List[], x]
 symbolic-elements:
   epsil:
     in: Contains([x ^ 2, y ^ 2], x ^ 2)
@@ -71,6 +73,8 @@ symbolic-elements:
     in: \mathrm{Contains}(\bigl\lbrack x^2, y^2\bigr\rbrack, x^2)
     out: \mathrm{True}
   fullform:
+    in: MemberQ[List[Power[x, 2], Power[y, 2]], Power[x, 2]]
+  wolfram:
     in: MemberQ[List[Power[x, 2], Power[y, 2]], Power[x, 2]]
 elements-can-themselves-be-lists:
   epsil:
@@ -111,6 +115,8 @@ compared-after-canonical-ordering-so-b-a-matches:
     in: \mathrm{Contains}(\bigl\lbrack a+b\bigr\rbrack, b+a)
     out: \mathrm{True}
   fullform:
+    in: MemberQ[List[Plus[a, b]], Plus[b, a]]
+  wolfram:
     in: MemberQ[List[Plus[a, b]], Plus[b, a]]
 an-exact-and-an-approximate-number-with-the-same:
   epsil:

@@ -81,6 +81,8 @@ a-symbolic-upper-limit-prod-i-1-n-i-2-n-2:
     out: \left(n!\right)^2
   fullform:
     in: Product[Power[i, 2], List[i, 1, n]]
+  wolfram:
+    in: Product[Power[i, 2], List[i, 1, n]]
 a-symbolic-upper-limit-prod-k-1-n-k-n-see:
   epsil:
     in: Product(k, (k, 1, n))
@@ -89,6 +91,8 @@ a-symbolic-upper-limit-prod-k-1-n-k-n-see:
     in: \prod_{k=1}^{n}k
     out: n!
   fullform:
+    in: Product[k, List[k, 1, n]]
+  wolfram:
     in: Product[k, List[k, 1, n]]
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
   epsil:
@@ -99,6 +103,8 @@ exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
     out: \sqrt{x}^{n\times(n+1)}
   fullform:
     in: Product[Power[x, k], List[k, 1, n]]
+  wolfram:
+    in: Product[Power[x, k], List[k, 1, n]]
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
   epsil:
     in: Product((k + 1) / k, (k, 1, n))
@@ -107,6 +113,8 @@ a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
     in: \prod_{k=1}^{n}\frac{k+1}{k}
     out: n+1
   fullform:
+    in: Product[Divide[Plus[k, 1], k], List[k, 1, n]]
+  wolfram:
     in: Product[Divide[Plus[k, 1], k], List[k, 1, n]]
 an-undefined-function-expanded-term-by-term:
   epsil:
@@ -144,6 +152,8 @@ a-polynomial-with-roots-1-2-and-3:
     out: (x-3)(x-2)(x-1)
   fullform:
     in: Product[Subtract[x, k], List[k, 1, 3]]
+  wolfram:
+    in: Product[Subtract[x, k], List[k, 1, 3]]
 a-double-product-over-a-3-times-3-grid:
   epsil:
     in: Product(i + j, (i, 1, 3), (j, 1, 3))
@@ -174,6 +184,8 @@ a-symbolic-triangular-product-prod-i-1-p-prod-j:
     in: \prod_{i=1, j=1}^{p, i}2^{i+j}
     out: \sqrt{2}^{p\times(p+1)^2}
   fullform:
+    in: Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]
+  wolfram:
     in: Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]
 an-infinite-product-with-a-closed-form-prod-k-1:
   epsil:
@@ -227,6 +239,8 @@ symbolic-elements:
     in: \prod\bigl\lbrack a, b, c\bigr\rbrack
     out: abc
   fullform:
+    in: Apply[Times, List[a, b, c]]
+  wolfram:
     in: Apply[Times, List[a, b, c]]
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2:
   epsil:

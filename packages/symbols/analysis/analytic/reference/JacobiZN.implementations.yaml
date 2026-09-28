@@ -18,6 +18,8 @@ u-0-is-0-for-any-m:
     out: "0"
   fullform:
     in: JacobiZN[0, m]
+  wolfram:
+    in: JacobiZN[0, m]
 m-0-is-0-for-any-u:
   epsil:
     in: JacobiZN(u, 0)
@@ -26,6 +28,8 @@ m-0-is-0-for-any-u:
     in: \mathrm{JacobiZN}(u, 0)
     out: "0"
   fullform:
+    in: JacobiZN[u, 0]
+  wolfram:
     in: JacobiZN[u, 0]
 a-parameter-close-to-its-m-1-boundary:
   epsil:
@@ -57,4 +61,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiZN}(u, m)
     out: \mathrm{JacobiZN}(u, m)
   fullform:
+    in: JacobiZN[u, m]
+  wolfram:
     in: JacobiZN[u, m]

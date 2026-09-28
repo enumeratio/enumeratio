@@ -64,6 +64,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\mathrm{arcsch}(x)
   fullform:
     in: ArcCsch[Minus[x]]
+  wolfram:
+    in: ArcCsch[Minus[x]]
 derivative-for-real-x-ne-0:
   epsil:
     in: D(Arcsch(x), x)

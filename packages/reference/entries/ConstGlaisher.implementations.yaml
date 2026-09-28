@@ -9,3 +9,7 @@ const-glaisher-numeric-value:
     in: N[Glaisher]
   wolfram:
     in: N[Glaisher]
+  mpmath:
+    in: (glaisher)
+  sage:
+    in: N(glaisher)

@@ -234,6 +234,8 @@ erfc-x-2-erfc-x-applied-symbolically:
     out: 2-\operatorname{erfc}(x)
   fullform:
     in: Erfc[Minus[x]]
+  wolfram:
+    in: Erfc[Minus[x]]
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2:
   epsil:
     in: D(Erfc(x), x)

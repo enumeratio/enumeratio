@@ -247,3 +247,5 @@ symbolic-k-expands-over-the-divisors:
     out: 2^{k}+3^{k}+5^{k}+6^{k}+10^{k}+15^{k}+30^{k}+1
   fullform:
     in: DivisorSigma[k, 30]
+  wolfram:
+    in: DivisorSigma[k, 30]

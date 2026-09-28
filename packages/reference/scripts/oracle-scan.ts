@@ -31,9 +31,12 @@ import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import {
   emit,
+  interpretSymbolicAgreement,
+  isSymbolicSystem,
   type MathJSON,
   runIn,
   runKernel,
+  symbolicAgreementSource,
   SYSTEMS,
   type System,
   type Verdict,
@@ -124,7 +127,27 @@ const loaded = new Map([...records].map(([head, record]) => [head, structuredClo
 for (const system of systems) {
   const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
   const runnable = emitted.filter((row) => row.out.ok);
-  const sources = runnable.map((row) => (row.out as { source: string }).source);
+  // A free symbol on a symbolic system (wolfram, sympy, sage) is checked as an identity —
+  // does the difference vanish? — rather than compared value-for-value, since two closed
+  // forms that are equal can still be spelled differently (design/free-symbol-oracle
+  // question below). `symbolicAgreementSource` returns undefined when `expected` itself
+  // doesn't emit for `system`, and the case falls back to the ordinary verdict.
+  // `plainSources` is what forms.ts (collect-forms.ts) also emits and pins as `in:` — the
+  // record has to keep showing that, currency-tested by forms.test.ts, regardless of what a
+  // free-symbol case actually asks the kernel. `sources` is what's actually run: the plain
+  // source, unless it carries a free symbol on a symbolic system, in which case it's the
+  // agreement check (symbolic-mode) — `undefined` back means `expected` itself doesn't emit
+  // for `system`, so this case just falls back to the ordinary evaluate-and-compare verdict.
+  const plainSources = runnable.map((row) => (row.out as { source: string }).source);
+  const sources = runnable.map((row, index) => {
+    const freeSymbols = row.out.ok ? row.out.freeSymbols : undefined;
+    if (freeSymbols !== undefined && freeSymbols.length > 0 && isSymbolicSystem(system)) {
+      const agreement = symbolicAgreementSource(system, row.item.expr, row.item.expected, freeSymbols);
+      if (agreement !== undefined) return agreement;
+    }
+    return plainSources[index] as string;
+  });
+  const symbolicMode = runnable.map((_row, index) => sources[index] !== plainSources[index]);
   process.stderr.write(`${system}: ${runnable.length}/${cases.length} emit — running…\n`);
   const results = await runIn(system, sources);
 
@@ -137,7 +160,7 @@ for (const system of systems) {
     }
   }
   runnable.forEach((row, index) => {
-    const source = sources[index] as string;
+    const source = plainSources[index] as string;
     const result = results[index] as {
       value?: string;
       display?: string;
@@ -157,8 +180,13 @@ for (const system of systems) {
       return;
     }
     const theirs = result.value ?? "";
-    const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
-    const verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
+    let verdict: Verdict;
+    if (symbolicMode[index]) {
+      verdict = interpretSymbolicAgreement(theirs);
+    } else {
+      const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
+      verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
+    }
     outcomes.push({
       id: row.item.id,
       source,

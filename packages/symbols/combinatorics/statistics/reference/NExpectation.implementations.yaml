@@ -7,6 +7,8 @@ nexpectation-sin-of-normal:
     out: 0.010\,101\,381\,966\,839\,188
   fullform:
     in: NExpectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
+    in: NExpectation[Sin[x], Distributed[x, NormalDistribution[2, 3]]]
 nexpectation-cube-of-exponential:
   epsil:
     in: NExpectation(x ^ 3, Distributed(x, ExponentialDistribution(2)))
@@ -25,6 +27,8 @@ nexpectation-poisson-reciprocal:
     out: 0.316\,737\,643\,877\,377\,7
   fullform:
     in: NExpectation[Power[Plus[x, 1], -1], Distributed[x, PoissonDistribution[3]]]
+  wolfram:
+    in: NExpectation[Power[Plus[x, 1], -1], Distributed[x, PoissonDistribution[3]]]
 nexpectation-binomial-cube-finite-sum:
   epsil:
     in: NExpectation(x ^ 3, Distributed(x, BinomialDistribution(5, 2 / 5)))
@@ -33,4 +37,6 @@ nexpectation-binomial-cube-finite-sum:
     in: \mathrm{NExpectation}(x^3, \mathrm{Distributed}(x, \operatorname{BinomialDistribution}(5, \frac{2}{5})))
     out: "15.44"
   fullform:
+    in: NExpectation[Power[x, 3], Distributed[x, BinomialDistribution[5, Rational[2, 5]]]]
+  wolfram:
     in: NExpectation[Power[x, 3], Distributed[x, BinomialDistribution[5, Rational[2, 5]]]]

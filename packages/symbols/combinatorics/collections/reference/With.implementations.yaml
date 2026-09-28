@@ -7,6 +7,8 @@ substitute-a-fixed-value:
     out: "9"
   fullform:
     in: With[List[Equal[x, 3]], Times[x, x]]
+  wolfram:
+    in: With[List[(x == 3)], Times[x, x]]
 several-bindings-at-once:
   epsil:
     in: With([x == 2, y == 5], x + y)
@@ -16,3 +18,5 @@ several-bindings-at-once:
     out: "7"
   fullform:
     in: With[List[Equal[x, 2], Equal[y, 5]], Plus[x, y]]
+  wolfram:
+    in: With[List[(x == 2), (y == 5)], Plus[x, y]]

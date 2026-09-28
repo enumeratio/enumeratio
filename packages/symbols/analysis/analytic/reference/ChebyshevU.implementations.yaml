@@ -7,6 +7,8 @@ the-quadratic:
     out: 4x^2-1
   fullform:
     in: ChebyshevU[2, x]
+  wolfram:
+    in: ChebyshevU[2, x]
 the-cubic:
   epsil:
     in: ChebyshevU(3, x)
@@ -15,6 +17,8 @@ the-cubic:
     in: \mathrm{ChebyshevU}(3, x)
     out: 8x^3-4x
   fullform:
+    in: ChebyshevU[3, x]
+  wolfram:
     in: ChebyshevU[3, x]
 at-a-real:
   epsil:
@@ -70,6 +74,8 @@ a-symbolic-order-stays-unevaluated:
     out: \mathrm{ChebyshevU}(n, x)
   fullform:
     in: ChebyshevU[n, x]
+  wolfram:
+    in: ChebyshevU[n, x]
 at-1:
   epsil:
     in: ChebyshevU(5, 1)
@@ -124,6 +130,8 @@ order-minus-1:
     out: "0"
   fullform:
     in: ChebyshevU[-1, x]
+  wolfram:
+    in: ChebyshevU[-1, x]
 negative-order:
   epsil:
     in: ChebyshevU(-5, x)
@@ -132,6 +140,8 @@ negative-order:
     in: \mathrm{ChebyshevU}(-5, x)
     out: 4x-8x^3
   fullform:
+    in: ChebyshevU[-5, x]
+  wolfram:
     in: ChebyshevU[-5, x]
 at-u0-0-7:
   epsil:

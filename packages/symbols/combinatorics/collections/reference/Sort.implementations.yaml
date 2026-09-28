@@ -89,6 +89,8 @@ a-list-of-strings-sorts-lexicographically:
     out: \bigl\lbrack\mathrm{apple}, \mathrm{banana}, \mathrm{cherry}\bigr\rbrack
   fullform:
     in: Sort[List[banana, apple, cherry]]
+  wolfram:
+    in: Sort[List[banana, apple, cherry]]
 symbols-sort-alphabetically:
   epsil:
     in: Sort([d, b, c, a])
@@ -97,6 +99,8 @@ symbols-sort-alphabetically:
     in: \mathrm{Sort}(\bigl\lbrack d, b, c, a\bigr\rbrack)
     out: \bigl\lbrack a, b, c, d\bigr\rbrack
   fullform:
+    in: Sort[List[d, b, c, a]]
+  wolfram:
     in: Sort[List[d, b, c, a]]
 integers-rationals-and-floats-together-sort-by:
   epsil:
@@ -153,6 +157,8 @@ sorting-pairs-by-their-second-element-with-a:
     out: \bigl\lbrack\bigl\lbrack c, 1\bigr\rbrack, \bigl\lbrack a, 2\bigr\rbrack, \bigl\lbrack d, 3\bigr\rbrack\bigr\rbrack
   fullform:
     in: Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]
+  wolfram:
+    in: Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]
 sorts-the-arguments-of-any-head-not-just-a-list:
   epsil:
     in: Sort(f(b, a, c))
@@ -195,4 +201,6 @@ sort-association-orders-by-value:
     in: \mathrm{Sort}(\mathrm{Association}(\mathrm{Rule}(a, 4), \mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3)))
     out: \mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))
   fullform:
+    in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]
+  wolfram:
     in: Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]

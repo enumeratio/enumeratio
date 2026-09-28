@@ -218,7 +218,7 @@ a-zero-divisor-inside-floor:
     out: zoo
     verdict: disagree
     kind: ours
-    note: "compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity."
+    note: compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity.
     issue: 292
   sage:
     in: floor((17 / 0))
@@ -274,6 +274,12 @@ infinities-pass-through-unchanged:
     tex:
       in: \lfloor -\infty \rfloor
       out: -\infty
+  sympy:
+    in: floor(-oo)
+  mpmath:
+    in: floor(-inf)
+  sage:
+    in: floor(-oo)
 floor-2p4:
   epsil:
     in: Floor(2.4)
@@ -329,6 +335,12 @@ stays-symbolic:
     out: \lfloor x\rfloor
   fullform:
     in: Floor[x]
+  wolfram:
+    in: Floor[x]
+  sympy:
+    in: floor(Symbol("x"))
+  sage:
+    in: floor(SR.var("x"))
 exact-radicals-are-decided-numerically:
   epsil:
     in: Floor(Sqrt(50))
@@ -492,6 +504,12 @@ idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor:
     out: \lfloor x\rfloor
   fullform:
     in: Floor[Floor[x]]
+  wolfram:
+    in: Floor[Floor[x]]
+  sympy:
+    in: floor(floor(Symbol("x")))
+  sage:
+    in: floor(floor(SR.var("x")))
 legendre-s-formula-100-ends-in-lfloor-100-5:
   epsil:
     in: Floor(100 / 5) + Floor(100 / 25)
@@ -579,3 +597,9 @@ floor-add-x-1-a-free-variable-is-untouched:
     out: \lfloor x+1\rfloor
   fullform:
     in: Floor[Plus[x, 1]]
+  wolfram:
+    in: Floor[Plus[x, 1]]
+  sympy:
+    in: floor((Symbol("x") + 1))
+  sage:
+    in: floor((SR.var("x") + 1))

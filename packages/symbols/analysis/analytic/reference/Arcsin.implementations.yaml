@@ -241,6 +241,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\arcsin(x)
   fullform:
     in: ArcSin[Minus[x]]
+  wolfram:
+    in: ArcSin[Minus[x]]
 derivative-frac-1-sqrt-1-x-2:
   epsil:
     in: D(Arcsin(x), x)
@@ -258,6 +260,8 @@ antiderivative:
     in: \int\!\arcsin(x)\, \mathrm{d}x
     out: x\arcsin(x)+\sqrt{1-x^2}
   fullform:
+    in: Integrate[ArcSin[x], x]
+  wolfram:
     in: Integrate[ArcSin[x], x]
 taylor-series-about-0:
   epsil:

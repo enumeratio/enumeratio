@@ -153,6 +153,8 @@ the-default-comparison-is-structural:
     out: \mathrm{TestResultObject}((\text{Outcome},\text{Failure}), (\text{Input},x^2+2x+1), (\text{ExpectedOutput},(x+1)^2), (\text{ActualOutput},x^2+2x+1), (\text{AbsoluteTimeUsed},0))
   fullform:
     in: VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]
+  wolfram:
+    in: VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]
 a-sametest-with-a-tolerance-22-7-3-14-0-01:
   epsil:
     in: VerificationTest(22 / 7, 3.14, SameTest -> Function(Abs(a - b) < 0.01, a, b))

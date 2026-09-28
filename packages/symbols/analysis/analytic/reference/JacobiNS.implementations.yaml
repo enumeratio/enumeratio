@@ -18,6 +18,8 @@ u-0-is-a-pole-for-any-m:
     out: \tilde\infty
   fullform:
     in: JacobiNS[0, m]
+  wolfram:
+    in: JacobiNS[0, m]
 m-less-than-0-via-the-imaginary-modulus:
   epsil:
     in: N(JacobiNS(0.3, -2))
@@ -37,4 +39,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiNS}(u, m)
     out: \mathrm{JacobiNS}(u, m)
   fullform:
+    in: JacobiNS[u, m]
+  wolfram:
     in: JacobiNS[u, m]

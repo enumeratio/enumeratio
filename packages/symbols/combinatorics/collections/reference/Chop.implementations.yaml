@@ -134,6 +134,8 @@ stays-symbolic:
     out: \mathrm{chop}(x)
   fullform:
     in: Chop[x]
+  wolfram:
+    in: Chop[x]
 exact-numbers-not-near-zero-pass-through:
   epsil:
     in: Chop(1 / 3)

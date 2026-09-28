@@ -7,6 +7,8 @@ gamma-to-exp:
     out: e^{-x}
   fullform:
     in: InverseMellinTransform[Gamma[s], s, x]
+  wolfram:
+    in: InverseMellinTransform[Gamma[s], s, x]
 pi-csc-to-one-over-one-plus-x:
   epsil:
     in: InverseMellinTransform(Pi * Csc(Pi * s), s, x)
@@ -15,6 +17,8 @@ pi-csc-to-one-over-one-plus-x:
     in: \mathrm{InverseMellinTransform}(\pi\csc(\pi s), s, x)
     out: \frac{1}{x+1}
   fullform:
+    in: InverseMellinTransform[Times[Pi, Csc[Times[Pi, s]]], s, x]
+  wolfram:
     in: InverseMellinTransform[Times[Pi, Csc[Times[Pi, s]]], s, x]
 pi-csc-over-s-to-log-reciprocal:
   epsil:
@@ -25,6 +29,8 @@ pi-csc-over-s-to-log-reciprocal:
     out: \ln(\frac{1}{x}+1)
   fullform:
     in: InverseMellinTransform[Divide[Times[Pi, Csc[Times[Pi, s]]], s], s, x]
+  wolfram:
+    in: InverseMellinTransform[Divide[Times[Pi, Csc[Times[Pi, s]]], s], s, x]
 shift-gamma-a-plus-s:
   epsil:
     in: InverseMellinTransform(Gamma(a + s), s, x)
@@ -33,4 +39,6 @@ shift-gamma-a-plus-s:
     in: \mathrm{InverseMellinTransform}(\Gamma(a+s), s, x)
     out: \exp(-x)x^{a}
   fullform:
+    in: InverseMellinTransform[Gamma[Plus[a, s]], s, x]
+  wolfram:
     in: InverseMellinTransform[Gamma[Plus[a, s]], s, x]

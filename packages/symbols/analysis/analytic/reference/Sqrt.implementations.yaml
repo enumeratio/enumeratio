@@ -477,6 +477,12 @@ sqrt-positiveinfinity:
     in: Sqrt[Infinity]
   wolfram:
     in: Sqrt[Infinity]
+  sympy:
+    in: sqrt(oo)
+  mpmath:
+    in: sqrt(inf)
+  sage:
+    in: sqrt(oo)
 threads-element-wise-over-a-list:
   epsil:
     in: Sqrt([1, 4, 9])
@@ -560,6 +566,12 @@ sqrt-x-2-x-for-every-x:
     out: x
   fullform:
     in: Power[Sqrt[x], 2]
+  wolfram:
+    in: Power[Sqrt[x], 2]
+  sympy:
+    in: (S(sqrt(Symbol("x")))**2)
+  sage:
+    in: ((sqrt(SR.var("x")))^2)
 sqrt-x-2-is-not-simplified-to-x-which-would-be:
   epsil:
     in: Sqrt(x ^ 2)
@@ -569,6 +581,12 @@ sqrt-x-2-is-not-simplified-to-x-which-would-be:
     out: \sqrt{x^2}
   fullform:
     in: Sqrt[Power[x, 2]]
+  wolfram:
+    in: Sqrt[Power[x, 2]]
+  sympy:
+    in: sqrt((S(Symbol("x"))**2))
+  sage:
+    in: sqrt(((SR.var("x"))^2))
 at-x-1-sqrt-x-2-1-not-1:
   epsil:
     in: Sqrt((-1) ^ 2)

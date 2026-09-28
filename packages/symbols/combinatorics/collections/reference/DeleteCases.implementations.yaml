@@ -18,3 +18,5 @@ wildcard-pattern-removes-everything:
     out: \bigl\lbrack \bigr\rbrack
   fullform:
     in: DeleteCases[List[x, y, z], _a]
+  wolfram:
+    in: DeleteCases[List[x, y, z], _a]

@@ -7,6 +7,8 @@ a-pole-at-the-origin:
     out: x=0
   fullform:
     in: FunctionSingularities[Divide[1, x], x]
+  wolfram:
+    in: FunctionSingularities[Divide[1, x], x]
 sqrt-is-singular-at-its-own-boundary:
   epsil:
     in: FunctionSingularities(Sqrt(x), x)
@@ -15,6 +17,8 @@ sqrt-is-singular-at-its-own-boundary:
     in: \mathrm{FunctionSingularities}(\sqrt{x}, x)
     out: x\le0
   fullform:
+    in: FunctionSingularities[Sqrt[x], x]
+  wolfram:
     in: FunctionSingularities[Sqrt[x], x]
 a-polynomial-has-no-singularities:
   epsil:
@@ -28,6 +32,8 @@ a-polynomial-has-no-singularities:
     out: \mathrm{False}
   fullform:
     in: FunctionSingularities[Power[x, 2], x]
+  wolfram:
+    in: FunctionSingularities[Power[x, 2], x]
 log-s-branch-cut:
   epsil:
     in: FunctionSingularities(Ln(x), x)
@@ -36,4 +42,6 @@ log-s-branch-cut:
     in: \mathrm{FunctionSingularities}(\ln(x), x)
     out: x\le0
   fullform:
+    in: FunctionSingularities[Log[x], x]
+  wolfram:
     in: FunctionSingularities[Log[x], x]

@@ -238,6 +238,8 @@ symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays:
     out: \frac{n^2}{2}+\frac{n}{2}
   fullform:
     in: HarmonicNumber[n, -1]
+  wolfram:
+    in: HarmonicNumber[n, -1]
 the-harmonic-series-diverges:
   epsil:
     in: HarmonicNumber(PositiveInfinity)
@@ -389,6 +391,8 @@ symbolic-n-one-argument-form-stays-symbolic:
     in: H_{n}
     out: H_{n}
   fullform:
+    in: HarmonicNumber[n]
+  wolfram:
     in: HarmonicNumber[n]
 n-harmonicnumber-0p5:
   epsil:

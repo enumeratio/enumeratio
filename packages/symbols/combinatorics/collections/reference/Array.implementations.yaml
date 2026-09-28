@@ -7,6 +7,8 @@ array-f-5:
     out: \bigl\lbrack f(1), f(2), f(3), f(4), f(5)\bigr\rbrack
   fullform:
     in: Array[f, 5]
+  wolfram:
+    in: Array[f, 5]
 array-f-2-2:
   epsil:
     in: Array(f, [2, 2])
@@ -15,6 +17,8 @@ array-f-2-2:
     in: \mathrm{Array}(f, \bigl\lbrack2, 2\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack f(1, 1), f(1, 2)\bigr\rbrack, \bigl\lbrack f(2, 1), f(2, 2)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Array[f, List[2, 2]]
+  wolfram:
     in: Array[f, List[2, 2]]
 array-f-3-0:
   epsil:
@@ -25,6 +29,8 @@ array-f-3-0:
     out: \bigl\lbrack f(0), f(1), f(2)\bigr\rbrack
   fullform:
     in: Array[f, 3, 0]
+  wolfram:
+    in: Array[f, 3, 0]
 array-f-3-1-g:
   epsil:
     in: Array(f, 3, 1, g)
@@ -33,6 +39,8 @@ array-f-3-1-g:
     in: \mathrm{Array}(f, 3, 1, g)
     out: g(f(1), f(2), f(3))
   fullform:
+    in: Array[f, 3, 1, g]
+  wolfram:
     in: Array[f, 3, 1, g]
 array-squares:
   epsil:

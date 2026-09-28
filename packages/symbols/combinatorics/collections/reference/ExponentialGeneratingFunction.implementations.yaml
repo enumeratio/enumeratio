@@ -7,6 +7,8 @@ factorial:
     out: \frac{1}{1-x}
   fullform:
     in: ExponentialGeneratingFunction[Factorial[n], n, x]
+  wolfram:
+    in: ExponentialGeneratingFunction[Factorial[n], n, x]
 derangements:
   epsil:
     in: ExponentialGeneratingFunction(Subfactorial(n), n, x)
@@ -19,6 +21,8 @@ derangements:
     out: \frac{\exp(-x)}{1-x}
   fullform:
     in: ExponentialGeneratingFunction[Subfactorial[n], n, x]
+  wolfram:
+    in: ExponentialGeneratingFunction[Subfactorial[n], n, x]
 bell-numbers:
   epsil:
     in: ExponentialGeneratingFunction(BellNumber(n), n, x)
@@ -30,6 +34,8 @@ bell-numbers:
     in: \mathrm{ExponentialGeneratingFunction}(B_{n}, n, x)
     out: e^{e^{x}-1}
   fullform:
+    in: ExponentialGeneratingFunction[BellB[n], n, x]
+  wolfram:
     in: ExponentialGeneratingFunction[BellB[n], n, x]
 fibonacci:
   epsil:
@@ -48,4 +54,6 @@ fibonacci:
     in: \mathrm{ExponentialGeneratingFunction}(F_{n}, n, x)
     out: \frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))
   fullform:
+    in: ExponentialGeneratingFunction[Fibonacci[n], n, x]
+  wolfram:
     in: ExponentialGeneratingFunction[Fibonacci[n], n, x]

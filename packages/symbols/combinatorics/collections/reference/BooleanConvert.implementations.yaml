@@ -7,6 +7,8 @@ default-form-is-dnf:
     out: b\land p\lor p\land r
   fullform:
     in: BooleanConvert[And[p, Or[b, r]]]
+  wolfram:
+    in: BooleanConvert[And[p, Or[b, r]]]
 cnf-distributes-or-over-and:
   epsil:
     in: BooleanConvert(p || b && r, "CNF")
@@ -15,6 +17,8 @@ cnf-distributes-or-over-and:
     in: \mathrm{BooleanConvert}(p\lor b\land r, \text{CNF})
     out: (b\lor p)\land(p\lor r)
   fullform:
+    in: BooleanConvert[Or[p, And[b, r]], "CNF"]
+  wolfram:
     in: BooleanConvert[Or[p, And[b, r]], "CNF"]
 nnf-pushes-not-to-the-leaves-not-distributed:
   epsil:
@@ -37,6 +41,8 @@ a-tautological-clause-drops-out-of-cnf:
     out: \mathrm{True}
   fullform:
     in: BooleanConvert[Or[p, Not[p]], "CNF"]
+  wolfram:
+    in: BooleanConvert[Or[p, Not[p]], "CNF"]
 an-unimplemented-form-stays-unevaluated:
   epsil:
     in: BooleanConvert(p, "ESOP")
@@ -45,4 +51,6 @@ an-unimplemented-form-stays-unevaluated:
     in: \mathrm{BooleanConvert}(p, \text{ESOP})
     out: \mathrm{BooleanConvert}(p, \text{ESOP})
   fullform:
+    in: BooleanConvert[p, "ESOP"]
+  wolfram:
     in: BooleanConvert[p, "ESOP"]

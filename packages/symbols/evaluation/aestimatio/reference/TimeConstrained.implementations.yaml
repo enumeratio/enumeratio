@@ -23,6 +23,8 @@ factoring-a-30-digit-semiprime-outruns-a-50-ms:
   fullform:
     in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]
     back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05]
+  wolfram:
+    in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]
 a-custom-failexpr-replaces-the-default-aborted:
   epsil:
     in: |-
@@ -38,6 +40,8 @@ a-custom-failexpr-replaces-the-default-aborted:
   fullform:
     in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]
     back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05, -1]
+  wolfram:
+    in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]
 an-infinite-time-limit-imposes-no-constraint:
   epsil:
     in: TimeConstrained(1 + 2, PositiveInfinity)

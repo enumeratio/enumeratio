@@ -37,6 +37,8 @@ the-shape-of-a-left-fold:
     out: f(f(f(x, a), b), c)
   fullform:
     in: Fold[f, x, List[a, b, c]]
+  wolfram:
+    in: Fold[f, x, List[a, b, c]]
 fold-max-0-list-3-1-4-1-5:
   epsil:
     in: Fold(Max, 0, [3, 1, 4, 1, 5])
@@ -57,6 +59,8 @@ symbolic-elements:
     out: a+b+c
   fullform:
     in: Fold[Plus, 0, List[a, b, c]]
+  wolfram:
+    in: Fold[Plus, 0, List[a, b, c]]
 any-two-argument-function-here-one-that-nests:
   epsil:
     in: Fold(Function([_1, _2]), x, [a, b])
@@ -67,6 +71,8 @@ any-two-argument-function-here-one-that-nests:
     out: \bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack
   fullform:
     in: Fold[Function[List[Slot[1], Slot[2]]], x, List[a, b]]
+  wolfram:
+    in: Fold[Function[List[Slot[1], Slot[2]]], x, List[a, b]]
 without-a-seed-folding-starts-from-the-first:
   epsil:
     in: Fold(f, [a, b, c])
@@ -76,6 +82,8 @@ without-a-seed-folding-starts-from-the-first:
     out: f(f(a, b), c)
   fullform:
     in: Fold[f, List[a, b, c]]
+  wolfram:
+    in: Fold[f, List[a, b, c]]
 folding-an-empty-list-returns-the-seed:
   epsil:
     in: Fold(f, x, [])
@@ -84,6 +92,8 @@ folding-an-empty-list-returns-the-seed:
     in: \mathrm{Fold}(f, x, \bigl\lbrack \bigr\rbrack)
     out: x
   fullform:
+    in: Fold[f, x, List[]]
+  wolfram:
     in: Fold[f, x, List[]]
 folding-with-add-is-a-sum-1-2-100:
   epsil:
@@ -129,6 +139,8 @@ horner-s-rule-for-ax-2-bx-c:
     in: \mathrm{Fold}(()\mapsto x\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack a, b, c\bigr\rbrack)
     out: x\times(ax+b)+c
   fullform:
+    in: Fold[Function[Plus[Times[x, Slot[1]], Slot[2]]], 0, List[a, b, c]]
+  wolfram:
     in: Fold[Function[Plus[Times[x, Slot[1]], Slot[2]]], 0, List[a, b, c]]
 evaluate-the-continued-fraction-1-2-2-2-from-the:
   epsil:

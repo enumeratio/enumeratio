@@ -117,6 +117,8 @@ a-symbolic-matrix-stays-unevaluated-wolfram:
     out: \operatorname{rank}(\bigl\lbrack\bigl\lbrack x, 1\bigr\rbrack, \bigl\lbrack1, x\bigr\rbrack\bigr\rbrack)
   fullform:
     in: MatrixRank[List[List[x, 1], List[1, x]]]
+  wolfram:
+    in: MatrixRank[List[List[x, 1], List[1, x]]]
 a-vector-is-treated-as-a-1-n-matrix-wolfram:
   epsil:
     in: MatrixRank([1, 2, 3])
@@ -143,6 +145,8 @@ a-matrix-of-pairwise-distinct-symbols-has-full:
     in: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)
     out: "2"
   fullform:
+    in: MatrixRank[List[List[a, b], List[c, d]]]
+  wolfram:
     in: MatrixRank[List[List[a, b], List[c, d]]]
 approximate-entries:
   epsil:
@@ -268,6 +272,8 @@ a-3-times-3-matrix-of-pairwise-distinct-symbols:
     out: "3"
   fullform:
     in: MatrixRank[List[List[p, q, r], List[s, t, u], List[v, w, x]]]
+  wolfram:
+    in: MatrixRank[List[List[p, q, r], List[s, t, u], List[v, w, x]]]
 a-non-square-matrix-of-distinct-symbols-stays:
   epsil:
     in: MatrixRank([[a, b, c], [d, g, h]])
@@ -277,6 +283,8 @@ a-non-square-matrix-of-distinct-symbols-stays:
     out: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, g, h\bigr\rbrack\bigr\rbrack)
   fullform:
     in: MatrixRank[List[List[a, b, c], List[d, g, h]]]
+  wolfram:
+    in: MatrixRank[List[List[a, b, c], List[d, g, h]]]
 repeating-a-symbol-across-rows-doesn-t-qualify:
   epsil:
     in: MatrixRank([[a, b], [a, b]])
@@ -285,4 +293,6 @@ repeating-a-symbol-across-rows-doesn-t-qualify:
     in: \operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack\bigr\rbrack)
     out: "1"
   fullform:
+    in: MatrixRank[List[List[a, b], List[a, b]]]
+  wolfram:
     in: MatrixRank[List[List[a, b], List[a, b]]]

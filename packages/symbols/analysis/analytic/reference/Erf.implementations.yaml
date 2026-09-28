@@ -235,6 +235,8 @@ oddness-applied-symbolically-erf-x-erf-x:
     out: -\operatorname{erf}(x)
   fullform:
     in: Erf[Minus[x]]
+  wolfram:
+    in: Erf[Minus[x]]
 erf-erfinv-x-x-symbolically-see-erfinv:
   epsil:
     in: Erf(ErfInv(x))
@@ -246,6 +248,8 @@ erf-erfinv-x-x-symbolically-see-erfinv:
     in: \operatorname{erf}(\operatorname{erf}^{-1}(x))
     out: x
   fullform:
+    in: Erf[InverseErf[x]]
+  wolfram:
     in: Erf[InverseErf[x]]
 on-the-imaginary-axis-erf-i-i-erfi-1:
   epsil:

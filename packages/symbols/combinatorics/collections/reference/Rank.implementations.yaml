@@ -104,6 +104,8 @@ symbolic-entries:
     out: "2"
   fullform:
     in: ArrayDepth[List[List[a, b], List[c, d]]]
+  wolfram:
+    in: ArrayDepth[List[List[a, b], List[c, d]]]
 a-symbol-is-a-scalar:
   epsil:
     in: Rank(x)
@@ -112,6 +114,8 @@ a-symbol-is-a-scalar:
     in: \mathrm{Rank}(x)
     out: "0"
   fullform:
+    in: ArrayDepth[x]
+  wolfram:
     in: ArrayDepth[x]
 rectangular-arrays:
   epsil:
@@ -187,3 +191,5 @@ a-2-3-grid-of-unevaluated-calls-still-reads-as-a:
   fullform:
     in: ArrayDepth[Array[f, List[2, 3]]]
     back: [Rank, [Array, f, [List, 2, 3]]]
+  wolfram:
+    in: ArrayDepth[Array[f, List[2, 3]]]

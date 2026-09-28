@@ -625,6 +625,12 @@ a-full-turn-shift-of-a-symbolic-argument-doesn-t:
     out: \sin(x)
   fullform:
     in: Sin[Plus[x, Times[2, Pi]]]
+  wolfram:
+    in: Sin[Plus[x, Times[2, Pi]]]
+  sympy:
+    in: sin((Symbol("x") + (2 * pi)))
+  sage:
+    in: sin((SR.var("x") + (2 * pi)))
 sin-2-a-generic-argument-stays-symbolic:
   epsil:
     in: Sin(2)
@@ -657,6 +663,12 @@ sin-x-plus-y-stays-symbolic:
     out: \sin(x+y)
   fullform:
     in: Sin[Plus[x, y]]
+  wolfram:
+    in: Sin[Plus[x, y]]
+  sympy:
+    in: sin((Symbol("x") + Symbol("y")))
+  sage:
+    in: sin((SR.var("x") + SR.var("y")))
 sin-i-pi-2-i-sinh-pi-2-exactly:
   epsil:
     in: Sin(ImaginaryUnit * (Pi / 2))
@@ -724,6 +736,12 @@ wolfram-answers-sin-infty-with-the-range-of-its:
     in: Sin[Infinity]
   wolfram:
     in: Sin[Infinity]
+  sympy:
+    in: sin(oo)
+  mpmath:
+    in: sin(inf)
+  sage:
+    in: sin(oo)
 uncertainty-propagation-sin-2-pm-0-01-approx-0:
   epsil:
     in: Sin(Around(2, 0.01))
@@ -744,6 +762,12 @@ an-imaginary-argument-rewrites-to-sinh-sin-ix-i:
     out: i\sinh(x)
   fullform:
     in: Sin[Times[I, x]]
+  wolfram:
+    in: Sin[Times[I, x]]
+  sympy:
+    in: sin((I * Symbol("x")))
+  sage:
+    in: sin((I * SR.var("x")))
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sin(-x)
@@ -753,6 +777,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\sin(x)
   fullform:
     in: Sin[Minus[x]]
+  wolfram:
+    in: Sin[Minus[x]]
+  sympy:
+    in: sin((-Symbol("x")))
+  sage:
+    in: sin((-SR.var("x")))
 a-half-period-shift-reduces-sin-x-pi-sin-x:
   epsil:
     in: Sin(x + Pi)
@@ -762,6 +792,12 @@ a-half-period-shift-reduces-sin-x-pi-sin-x:
     out: -\sin(x)
   fullform:
     in: Sin[Plus[x, Pi]]
+  wolfram:
+    in: Sin[Plus[x, Pi]]
+  sympy:
+    in: sin((Symbol("x") + pi))
+  sage:
+    in: sin((SR.var("x") + pi))
 sin-arcsin-x-x-for-every-x:
   epsil:
     in: Sin(Arcsin(x))
@@ -770,6 +806,8 @@ sin-arcsin-x-x-for-every-x:
     in: \sin(\arcsin(x))
     out: x
   fullform:
+    in: Sin[ArcSin[x]]
+  wolfram:
     in: Sin[ArcSin[x]]
 sin-arcsin-2-2-past-the-real-domain:
   epsil:
@@ -802,6 +840,8 @@ sin-arccos-x-sqrt-1-x-2:
     out: \sqrt{1-x^2}
   fullform:
     in: Sin[ArcCos[x]]
+  wolfram:
+    in: Sin[ArcCos[x]]
 sin-arctan-x-frac-x-sqrt-1-x-2:
   epsil:
     in: Sin(Arctan(x))
@@ -810,6 +850,8 @@ sin-arctan-x-frac-x-sqrt-1-x-2:
     in: \sin(\arctan(x))
     out: \frac{x}{\sqrt{x^2+1}}
   fullform:
+    in: Sin[ArcTan[x]]
+  wolfram:
     in: Sin[ArcTan[x]]
 derivative-frac-d-dx-sin-x-cos-x:
   epsil:
@@ -838,6 +880,8 @@ antiderivative:
     out: -\cos(x)
   fullform:
     in: Integrate[Sin[x], x]
+  wolfram:
+    in: Integrate[Sin[x], x]
 area-under-one-arch-int-0-pi-sin-x-dx-2:
   epsil:
     in: Integrate(Sin(x), (x, 0, Pi))
@@ -855,6 +899,8 @@ int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers:
     in: \int\!\sin(x)^3\, \mathrm{d}x
     out: \frac{\cos(x)^3}{3}-\cos(x)
   fullform:
+    in: Integrate[Power[Sin[x], 3], x]
+  wolfram:
     in: Integrate[Power[Sin[x], 3], x]
 taylor-series-about-0-only-odd-powers-appear:
   epsil:
@@ -939,6 +985,8 @@ the-same-through-fullsimplify:
     in: \mathrm{FullSimplify}(\sin(x)^2+\cos(x)^2)
     out: "1"
   fullform:
+    in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+  wolfram:
     in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
 pi-15-has-a-radical-form-but-like-wolfram-s:
   epsil:

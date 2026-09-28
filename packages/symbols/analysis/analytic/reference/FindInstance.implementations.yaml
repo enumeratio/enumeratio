@@ -85,6 +85,8 @@ declines-without-an-explicit-domain:
     out: \mathrm{FindInstance}(x\gt0, x)
   fullform:
     in: FindInstance[Greater[x, 0], x]
+  wolfram:
+    in: FindInstance[Greater[x, 0], x]
 declines-on-a-pure-inequality-over-reals:
   epsil:
     in: FindInstance(x > 0, x, Reals)

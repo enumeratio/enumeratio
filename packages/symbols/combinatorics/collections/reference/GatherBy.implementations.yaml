@@ -30,3 +30,5 @@ pairs-grouped-by-their-last-element:
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, 1\bigr\rbrack, \bigl\lbrack c, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: GatherBy[List[List[a, 1], List[b, 2], List[c, 1]], Last]
+  wolfram:
+    in: GatherBy[List[List[a, 1], List[b, 2], List[c, 1]], Last]

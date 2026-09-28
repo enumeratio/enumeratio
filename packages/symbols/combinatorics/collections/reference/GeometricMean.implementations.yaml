@@ -51,6 +51,8 @@ symbolic-data:
     out: \sqrt{ab}
   fullform:
     in: GeometricMean[List[a, b]]
+  wolfram:
+    in: GeometricMean[List[a, b]]
 geometricmean-of-equal-values:
   epsil:
     in: GeometricMean([7, 7, 7])

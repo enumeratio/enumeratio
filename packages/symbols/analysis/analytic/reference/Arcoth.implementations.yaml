@@ -64,6 +64,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\mathrm{arcoth}(x)
   fullform:
     in: ArcCoth[Minus[x]]
+  wolfram:
+    in: ArcCoth[Minus[x]]
 derivative-frac-1-1-x-2:
   epsil:
     in: D(Arcoth(x), x)

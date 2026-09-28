@@ -38,6 +38,8 @@ a-free-symbol-is-false:
     out: \mathrm{False}
   fullform:
     in: IntegerQ[x]
+  wolfram:
+    in: IntegerQ[x]
 a-negative-integer:
   epsil:
     in: IsInteger(-3)

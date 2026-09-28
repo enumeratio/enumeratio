@@ -7,6 +7,8 @@ a-parabola-is-convex:
     out: "1"
   fullform:
     in: FunctionConvexity[Power[x, 2], x]
+  wolfram:
+    in: FunctionConvexity[Power[x, 2], x]
 a-cubic-has-an-inflection-point:
   epsil:
     in: FunctionConvexity(x ^ 3, x)
@@ -15,6 +17,8 @@ a-cubic-has-an-inflection-point:
     in: \mathrm{FunctionConvexity}(x^3, x)
     out: \mathrm{Indeterminate}
   fullform:
+    in: FunctionConvexity[Power[x, 3], x]
+  wolfram:
     in: FunctionConvexity[Power[x, 3], x]
 exp-is-always-convex:
   epsil:
@@ -25,6 +29,8 @@ exp-is-always-convex:
     out: "1"
   fullform:
     in: FunctionConvexity[Exp[x], x]
+  wolfram:
+    in: FunctionConvexity[Exp[x], x]
 a-restricted-domain-answers-indeterminate:
   epsil:
     in: FunctionConvexity(1 / x, x)
@@ -33,4 +39,6 @@ a-restricted-domain-answers-indeterminate:
     in: \mathrm{FunctionConvexity}(\frac{1}{x}, x)
     out: \mathrm{Indeterminate}
   fullform:
+    in: FunctionConvexity[Divide[1, x], x]
+  wolfram:
     in: FunctionConvexity[Divide[1, x], x]

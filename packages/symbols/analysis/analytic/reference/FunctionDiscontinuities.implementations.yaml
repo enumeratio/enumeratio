@@ -7,6 +7,8 @@ a-pole-is-a-discontinuity:
     out: x=0
   fullform:
     in: FunctionDiscontinuities[Divide[1, x], x]
+  wolfram:
+    in: FunctionDiscontinuities[Divide[1, x], x]
 tangent-s-poles:
   epsil:
     in: FunctionDiscontinuities(Tan(x), x)
@@ -15,6 +17,8 @@ tangent-s-poles:
     in: \mathrm{FunctionDiscontinuities}(\tan(x), x)
     out: \cos(x)=0
   fullform:
+    in: FunctionDiscontinuities[Tan[x], x]
+  wolfram:
     in: FunctionDiscontinuities[Tan[x], x]
 a-polynomial-is-continuous-everywhere:
   epsil:
@@ -27,4 +31,6 @@ a-polynomial-is-continuous-everywhere:
     in: \mathrm{FunctionDiscontinuities}(x^2, x)
     out: \mathrm{False}
   fullform:
+    in: FunctionDiscontinuities[Power[x, 2], x]
+  wolfram:
     in: FunctionDiscontinuities[Power[x, 2], x]

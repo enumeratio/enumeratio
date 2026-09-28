@@ -7,6 +7,8 @@ sin-a-plus-sin-b:
     out: 2\sin(\frac{a+b}{2})\cos(\frac{a-b}{2})
   fullform:
     in: TrigFactor[Plus[Sin[a], Sin[b]]]
+  wolfram:
+    in: TrigFactor[Plus[Sin[a], Sin[b]]]
 cos-a-minus-cos-b:
   epsil:
     in: TrigFactor(Cos(a) - Cos(b))
@@ -15,6 +17,8 @@ cos-a-minus-cos-b:
     in: \mathrm{TrigFactor}(\cos(a)-\cos(b))
     out: -2\sin(\frac{a+b}{2})\sin(\frac{a-b}{2})
   fullform:
+    in: TrigFactor[Subtract[Cos[a], Cos[b]]]
+  wolfram:
     in: TrigFactor[Subtract[Cos[a], Cos[b]]]
 one-minus-cos-x:
   epsil:
@@ -25,6 +29,8 @@ one-minus-cos-x:
     out: 2\sin(\frac{x}{2})^2
   fullform:
     in: TrigFactor[Subtract[1, Cos[x]]]
+  wolfram:
+    in: TrigFactor[Subtract[1, Cos[x]]]
 poly-in-sin-cos:
   epsil:
     in: TrigFactor(Sin(x) ^ 2 + 2 * Sin(x) * Cos(x) + Cos(x) ^ 2)
@@ -33,4 +39,6 @@ poly-in-sin-cos:
     in: \mathrm{TrigFactor}(\sin(x)^2+2\sin(x)\cos(x)+\cos(x)^2)
     out: (\sin(x)+\cos(x))^2
   fullform:
+    in: TrigFactor[Plus[Power[Sin[x], 2], Times[2, Sin[x], Cos[x]], Power[Cos[x], 2]]]
+  wolfram:
     in: TrigFactor[Plus[Power[Sin[x], 2], Times[2, Sin[x], Cos[x]], Power[Cos[x], 2]]]

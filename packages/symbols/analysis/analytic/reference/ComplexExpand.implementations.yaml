@@ -7,6 +7,8 @@ sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y:
     out: i\cos(x)\sinh(y)+\sin(x)\cosh(y)
   fullform:
     in: ComplexExpand[Sin[Plus[x, Times[I, y]]]]
+  wolfram:
+    in: ComplexExpand[Sin[Plus[x, Times[I, y]]]]
 polar-form-of-a-complex-exponential:
   epsil:
     in: ComplexExpand(Exp(x + ImaginaryUnit * y))
@@ -15,6 +17,8 @@ polar-form-of-a-complex-exponential:
     in: \mathrm{ComplexExpand}(\exp(x+i y))
     out: i\sin(y)e^{x}+\cos(y)e^{x}
   fullform:
+    in: ComplexExpand[Exp[Plus[x, Times[I, y]]]]
+  wolfram:
     in: ComplexExpand[Exp[Plus[x, Times[I, y]]]]
 complexexpand-x-plus-imaginaryunit-times-y-pow-2:
   epsil:
@@ -25,6 +29,8 @@ complexexpand-x-plus-imaginaryunit-times-y-pow-2:
     out: x^2-y^2+2i xy
   fullform:
     in: ComplexExpand[Power[Plus[x, Times[I, y]], 2]]
+  wolfram:
+    in: ComplexExpand[Power[Plus[x, Times[I, y]], 2]]
 complexexpand-abs-x-plus-imaginaryunit-times-y:
   epsil:
     in: ComplexExpand(Abs(x + ImaginaryUnit * y))
@@ -33,6 +39,8 @@ complexexpand-abs-x-plus-imaginaryunit-times-y:
     in: \mathrm{ComplexExpand}(\vert x+i y\vert)
     out: \sqrt{x^2+y^2}
   fullform:
+    in: ComplexExpand[Abs[Plus[x, Times[I, y]]]]
+  wolfram:
     in: ComplexExpand[Abs[Plus[x, Times[I, y]]]]
 wolfram-leaves-e-i-pi-5-alone-until-asked-this:
   epsil:

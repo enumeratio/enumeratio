@@ -281,6 +281,8 @@ i-x-1-1-x-symbolically:
     out: x
   fullform:
     in: BetaRegularized[x, 1, 1]
+  wolfram:
+    in: BetaRegularized[x, 1, 1]
 i-x-a-1-x-a-symbolically:
   epsil:
     in: BetaRegularized(x, a, 1)
@@ -293,6 +295,8 @@ i-x-a-1-x-a-symbolically:
     out: x^{a}
   fullform:
     in: BetaRegularized[x, a, 1]
+  wolfram:
+    in: BetaRegularized[x, a, 1]
 i-x-1-b-1-1-x-b:
   epsil:
     in: BetaRegularized(x, 1, b)
@@ -304,6 +308,8 @@ i-x-1-b-1-1-x-b:
     in: I_{x}(1, b)
     out: 1-(1-x)^{b}
   fullform:
+    in: BetaRegularized[x, 1, b]
+  wolfram:
     in: BetaRegularized[x, 1, b]
 to-30-significant-digits-every-one-correctly:
   epsil:

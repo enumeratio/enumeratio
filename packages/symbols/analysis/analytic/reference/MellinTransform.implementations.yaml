@@ -7,6 +7,8 @@ exp-neg-x-gamma:
     out: \Gamma(s)
   fullform:
     in: MellinTransform[Exp[Minus[x]], x, s]
+  wolfram:
+    in: MellinTransform[Exp[Minus[x]], x, s]
 one-over-one-plus-x:
   epsil:
     in: MellinTransform(1 / (1 + x), x, s)
@@ -15,6 +17,8 @@ one-over-one-plus-x:
     in: \mathrm{MellinTransform}(\frac{1}{1+x}, x, s)
     out: \pi\csc(\pi s)
   fullform:
+    in: MellinTransform[Divide[1, Plus[1, x]], x, s]
+  wolfram:
     in: MellinTransform[Divide[1, Plus[1, x]], x, s]
 gaussian:
   epsil:
@@ -25,6 +29,8 @@ gaussian:
     out: \frac{\Gamma(\frac{s}{2})}{2}
   fullform:
     in: MellinTransform[Exp[Minus[Power[x, 2]]], x, s]
+  wolfram:
+    in: MellinTransform[Exp[Minus[Power[x, 2]]], x, s]
 log-one-plus-x:
   epsil:
     in: MellinTransform(Ln(1 + x), x, s)
@@ -34,6 +40,8 @@ log-one-plus-x:
     out: \frac{1}{s}(\pi\csc(\pi s))
   fullform:
     in: MellinTransform[Log[Plus[1, x]], x, s]
+  wolfram:
+    in: MellinTransform[Log[Plus[1, x]], x, s]
 power-shift-x-c-exp:
   epsil:
     in: MellinTransform(x ^ a * Exp(-x), x, s)
@@ -42,4 +50,6 @@ power-shift-x-c-exp:
     in: \mathrm{MellinTransform}(x^{a}\exp(-x), x, s)
     out: \Gamma(a+s)
   fullform:
+    in: MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]
+  wolfram:
     in: MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]

@@ -100,6 +100,8 @@ a-symbolic-value-is-left-unevaluated-rather-than:
     out: \mathrm{Clamp}(x, 0, 3)
   fullform:
     in: Clip[x, List[0, 3]]
+  wolfram:
+    in: Clip[x, List[0, 3]]
 a-1-argument-clamp-x-clamps-to-the-default-range:
   epsil:
     in: Clamp(1.5)

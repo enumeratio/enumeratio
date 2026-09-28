@@ -218,6 +218,8 @@ odd-erfinv-x-erfinv-x-applied-symbolically:
     out: -\operatorname{erf}^{-1}(x)
   fullform:
     in: InverseErf[Minus[x]]
+  wolfram:
+    in: InverseErf[Minus[x]]
 frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2:
   epsil:
     in: D(ErfInv(x), x)

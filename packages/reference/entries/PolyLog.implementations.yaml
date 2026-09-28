@@ -79,6 +79,12 @@ li-1-z-ln-1-z-symbolically:
     out: -\ln(1-z)
   fullform:
     in: PolyLog[1, z]
+  wolfram:
+    in: PolyLog[1, z]
+  sympy:
+    in: polylog(1, Symbol("z"))
+  sage:
+    in: polylog(1, SR.var("z"))
 li-1-z-z-1-z-2-negative-orders-are-rational:
   epsil:
     in: PolyLog(-1, z)
@@ -88,6 +94,12 @@ li-1-z-z-1-z-2-negative-orders-are-rational:
     out: \frac{z}{(1-z)^2}
   fullform:
     in: PolyLog[-1, z]
+  wolfram:
+    in: PolyLog[-1, z]
+  sympy:
+    in: polylog(-1, Symbol("z"))
+  sage:
+    in: polylog(-1, SR.var("z"))
 li-2-1-2-pi-2-12-ln-2-2-2:
   epsil:
     in: PolyLog(2, 0.5) + 0.5 * Ln(2) ^ 2 == Pi ^ 2 / 12
@@ -423,6 +435,12 @@ li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
     out: (2^{1-n}-1)\zeta(n)
   fullform:
     in: PolyLog[n, -1]
+  wolfram:
+    in: PolyLog[n, -1]
+  sympy:
+    in: polylog(Symbol("n"), -1)
+  sage:
+    in: polylog(SR.var("n"), -1)
 li-2-z-z-1-z-1-z-3:
   epsil:
     in: PolyLog(-2, z)
@@ -432,6 +450,12 @@ li-2-z-z-1-z-1-z-3:
     out: \frac{z\times(z+1)}{(1-z)^3}
   fullform:
     in: PolyLog[-2, z]
+  wolfram:
+    in: PolyLog[-2, z]
+  sympy:
+    in: polylog(-2, Symbol("z"))
+  sage:
+    in: polylog(-2, SR.var("z"))
 interval-arithmetic:
   epsil:
     in: PolyLog(2, Interval(0.7, 0.8))
@@ -485,6 +509,12 @@ li-s-1-zeta-s-for-symbolic-s:
     out: \zeta(s)
   fullform:
     in: PolyLog[s, 1]
+  wolfram:
+    in: PolyLog[s, 1]
+  sympy:
+    in: polylog(Symbol("s"), 1)
+  sage:
+    in: polylog(SR.var("s"), 1)
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
   epsil:
     in: D(PolyLog(n, x), x)

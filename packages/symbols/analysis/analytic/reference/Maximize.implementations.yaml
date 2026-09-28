@@ -7,6 +7,8 @@ a-downward-parabola-s-vertex:
     out: \bigl\lbrack3, \bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+  wolfram:
+    in: Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
 unbounded-above-reports-positive-infinity:
   epsil:
     in: Maximize(x ^ 3, x)
@@ -15,6 +17,8 @@ unbounded-above-reports-positive-infinity:
     in: \mathrm{Maximize}(x^3, x)
     out: \bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, \infty)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Maximize[Power[x, 3], x]
+  wolfram:
     in: Maximize[Power[x, 3], x]
 a-bounded-interval-constraint:
   epsil:
@@ -25,6 +29,8 @@ a-bounded-interval-constraint:
     out: \bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
+  wolfram:
+    in: Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
 exp-of-a-negated-argument-is-unbounded-above:
   epsil:
     in: Maximize(Exp(-x), x)
@@ -33,6 +39,8 @@ exp-of-a-negated-argument-is-unbounded-above:
     in: \mathrm{Maximize}(\exp(-x), x)
     out: \bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Maximize[Exp[Minus[x]], x]
+  wolfram:
     in: Maximize[Exp[Minus[x]], x]
 a-downward-quadratic-radicand:
   epsil:
@@ -43,6 +51,8 @@ a-downward-quadratic-radicand:
     out: \bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
+  wolfram:
+    in: Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
 declines-more-than-one-variable:
   epsil:
     in: Maximize(-(x ^ 2 + y ^ 2), [x, y])
@@ -51,4 +61,6 @@ declines-more-than-one-variable:
     in: \mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)
     out: \mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)
   fullform:
+    in: Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]
+  wolfram:
     in: Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]

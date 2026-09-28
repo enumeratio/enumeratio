@@ -383,6 +383,12 @@ ln-positiveinfinity:
     in: Log[Infinity]
   wolfram:
     in: Log[Infinity]
+  sympy:
+    in: log(oo)
+  mpmath:
+    in: log(inf)
+  sage:
+    in: log(oo)
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln:
   epsil:
     in: Ln(ComplexInfinity)
@@ -394,6 +400,10 @@ ln-z-to-infty-and-its-real-part-goes-to-infty-ln:
     in: Log[ComplexInfinity]
   wolfram:
     in: Log[ComplexInfinity]
+  sympy:
+    in: log(zoo)
+  sage:
+    in: log(unsigned_infinity)
 ln-i-i-pi-2-exactly:
   epsil:
     in: Ln(ImaginaryUnit)
@@ -468,6 +478,12 @@ ln-exp-x:
     out: x
   fullform:
     in: Log[Exp[x]]
+  wolfram:
+    in: Log[Exp[x]]
+  sympy:
+    in: log(exp(Symbol("x")))
+  sage:
+    in: log(exp(SR.var("x")))
 derivative-1-x:
   epsil:
     in: D(Ln(x), x)
@@ -486,6 +502,8 @@ antiderivative-x-ln-x-x:
     out: x\ln(x)-x
   fullform:
     in: Integrate[Log[x], x]
+  wolfram:
+    in: Integrate[Log[x], x]
 mercator-series-for-ln-1-x:
   epsil:
     in: Series(Ln(1 + x), x, 0, 4)
@@ -503,6 +521,8 @@ powerexpand-splits-a-logarithm-of-a-product:
     in: \mathrm{PowerExpand}(\ln(xy))
     out: \ln(x)+\ln(y)
   fullform:
+    in: PowerExpand[Log[Times[x, y]]]
+  wolfram:
     in: PowerExpand[Log[Times[x, y]]]
 to-40-significant-digits-every-one-correctly:
   epsil:

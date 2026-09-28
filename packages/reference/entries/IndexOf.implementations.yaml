@@ -72,6 +72,8 @@ only-the-first-of-several-occurrences-is:
   fullform:
     in: First[FirstPosition[List[a, b, a, a, b, c, b], b, List[0]]]
     back: [First, [FirstPosition, [List, a, b, a, a, b, c, b], b, [List, 0]]]
+  wolfram:
+    in: First[FirstPosition[List[a, b, a, a, b, c, b], b, List[0]]]
 the-value-can-itself-be-a-list:
   epsil:
     in: IndexOf([[1, 2], [3, 4]], [3, 4])
@@ -95,5 +97,5 @@ indexof-stays-at-the-top-level-where-this-value:
     in: First[FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b, List[0]]]
     back: [First, [FirstPosition, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b, [List, 0]]]
   wolfram:
-    in:
+    in: First[FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b, List[0]]]
     note: Wolfram's $FirstPosition$ searches every level and gives $\{1, 3\}$; see [[FirstPosition]].

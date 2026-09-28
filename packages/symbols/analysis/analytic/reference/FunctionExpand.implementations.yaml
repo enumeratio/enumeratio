@@ -10,6 +10,8 @@ eta-s-1-2-1-s-zeta-s:
     out: (1-2^{1-s})\zeta(s)
   fullform:
     in: FunctionExpand[DirichletEta[s]]
+  wolfram:
+    in: FunctionExpand[DirichletEta[s]]
 beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
   epsil:
     in: FunctionExpand(DirichletBeta(s))
@@ -21,6 +23,8 @@ beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
     in: \mathrm{FunctionExpand}(\beta(s))
     out: \frac{\zeta(s, \frac{1}{4})-\zeta(s, \frac{3}{4})}{4^{s}}
   fullform:
+    in: FunctionExpand[DirichletBeta[s]]
+  wolfram:
     in: FunctionExpand[DirichletBeta[s]]
 g-frac-12-in-glaisher-s-constant:
   epsil:
@@ -70,6 +74,8 @@ a-rising-factorial-with-an-integer-length:
     out: x\times(x+1)(x+2)
   fullform:
     in: FunctionExpand[Pochhammer[x, 3]]
+  wolfram:
+    in: FunctionExpand[Pochhammer[x, 3]]
 binom-n2-frac-n-n-1-2:
   epsil:
     in: FunctionExpand(Binomial(n, 2))
@@ -79,6 +85,8 @@ binom-n2-frac-n-n-1-2:
     out: \frac{n\times(n-1)}{2}
   fullform:
     in: FunctionExpand[Binomial[n, 2]]
+  wolfram:
+    in: FunctionExpand[Binomial[n, 2]]
 a-generic-cos-argument-passes-through-unchanged:
   epsil:
     in: FunctionExpand(Cos(theta))
@@ -87,4 +95,6 @@ a-generic-cos-argument-passes-through-unchanged:
     in: \mathrm{FunctionExpand}(\cos(\theta))
     out: \cos(\theta)
   fullform:
+    in: FunctionExpand[Cos[theta]]
+  wolfram:
     in: FunctionExpand[Cos[theta]]

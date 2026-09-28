@@ -20,7 +20,7 @@ c-2-of-cos-squared:
   fullform:
     in: FourierCoefficient[Power[Cos[x], 2], x, 2]
   wolfram:
-    in: FourierCoefficient[Cos[x]^2, x, 2]
+    in: FourierCoefficient[Power[Cos[x], 2], x, 2]
     out: 1/4
 c-0-of-x-squared-is-the-average:
   epsil:
@@ -32,7 +32,7 @@ c-0-of-x-squared-is-the-average:
   fullform:
     in: FourierCoefficient[Power[x, 2], x, 0]
   wolfram:
-    in: FourierCoefficient[x^2, x, 0]
+    in: FourierCoefficient[Power[x, 2], x, 0]
     out: Pi^2/3
 c-0-of-abs-x:
   epsil:

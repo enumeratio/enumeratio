@@ -40,6 +40,8 @@
     out: e^{z}
   fullform:
     in: HypergeometricPFQ[List[], List[], z]
+  wolfram:
+    in: HypergeometricPFQ[List[], List[], z]
 1f-0-a-z-1-z-a:
   epsil:
     in: HypergeometricPFQ([a], [], z)
@@ -48,4 +50,6 @@
     in: \mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack \bigr\rbrack, z)
     out: (1-z)^{-a}
   fullform:
+    in: HypergeometricPFQ[List[a], List[], z]
+  wolfram:
     in: HypergeometricPFQ[List[a], List[], z]

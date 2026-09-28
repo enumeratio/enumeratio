@@ -136,6 +136,8 @@ a-symbolic-argument-stays-symbolic:
     out: \beta(s)
   fullform:
     in: DirichletBeta[s]
+  wolfram:
+    in: DirichletBeta[s]
 beta-5-5-pi-5-1536:
   epsil:
     in: DirichletBeta(5)

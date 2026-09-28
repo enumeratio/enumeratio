@@ -708,3 +708,7 @@ a-symbolic-modulus-stays-unevaluated:
     out: \mathrm{PowerModList}(1, \frac{1}{2}, m)
   fullform:
     in: PowerModList[1, Rational[1, 2], m]
+  wolfram:
+    in: PowerModList[1, Rational[1, 2], m]
+  sage:
+    in: enumeratio_power_mod_list(1, (1/2), SR.var("m"))

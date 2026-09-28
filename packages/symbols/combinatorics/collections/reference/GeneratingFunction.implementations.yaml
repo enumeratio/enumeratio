@@ -10,6 +10,8 @@ fibonacci:
     out: (x)(-x^2-x+1)^{-1}
   fullform:
     in: GeneratingFunction[Fibonacci[n], n, x]
+  wolfram:
+    in: GeneratingFunction[Fibonacci[n], n, x]
 catalan-numbers:
   epsil:
     in: GeneratingFunction(CatalanNumber(n), n, x)
@@ -21,6 +23,8 @@ catalan-numbers:
     in: \mathrm{GeneratingFunction}(C_{n}, n, x)
     out: \frac{1-\sqrt{1-4x}}{2x}
   fullform:
+    in: GeneratingFunction[CatalanNumber[n], n, x]
+  wolfram:
     in: GeneratingFunction[CatalanNumber[n], n, x]
 dyck-paths-via-count:
   epsil:
@@ -40,6 +44,8 @@ fixed-k-binomial:
     out: \frac{x^3}{x^4-4x^3+6x^2-4x+1}
   fullform:
     in: GeneratingFunction[Binomial[n, 3], n, x]
+  wolfram:
+    in: GeneratingFunction[Binomial[n, 3], n, x]
 geometric:
   epsil:
     in: GeneratingFunction(2 ^ n, n, x)
@@ -49,6 +55,8 @@ geometric:
     out: \frac{1}{1-2x}
   fullform:
     in: GeneratingFunction[Power[2, n], n, x]
+  wolfram:
+    in: GeneratingFunction[Power[2, n], n, x]
 no-closed-form:
   epsil:
     in: GeneratingFunction(n!, n, x)
@@ -57,4 +65,6 @@ no-closed-form:
     in: \mathrm{GeneratingFunction}(n!, n, x)
     out: \mathrm{GeneratingFunction}(n!, n, x)
   fullform:
+    in: GeneratingFunction[Factorial[n], n, x]
+  wolfram:
     in: GeneratingFunction[Factorial[n], n, x]

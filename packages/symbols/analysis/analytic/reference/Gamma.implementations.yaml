@@ -427,6 +427,8 @@ gamma-1-z-e-z-exact-and-symbolic-in-z:
     out: e^{-z}
   fullform:
     in: Gamma[1, z]
+  wolfram:
+    in: Gamma[1, z]
 so-gamma-1-z-1-e-z-the-exponential-distribution:
   epsil:
     in: Gamma(1, 0, z)
@@ -436,6 +438,8 @@ so-gamma-1-z-1-e-z-the-exponential-distribution:
     out: 1-\exp(-z)
   fullform:
     in: Gamma[1, 0, z]
+  wolfram:
+    in: Gamma[1, 0, z]
 now-that-gamma-2-z-has-a-closed-form-the-three:
   epsil:
     in: Gamma(2, 0, z)
@@ -444,6 +448,8 @@ now-that-gamma-2-z-has-a-closed-form-the-three:
     in: \Gamma(2, 0, z)
     out: 1-\frac{z+1}{e^{z}}
   fullform:
+    in: Gamma[2, 0, z]
+  wolfram:
     in: Gamma[2, 0, z]
 a-machine-precision-argument-gamma-4-5-11-6317:
   epsil:
@@ -568,6 +574,12 @@ gamma-infty-infty:
     in: Gamma[Infinity]
   wolfram:
     in: Gamma[Infinity]
+  sympy:
+    in: gamma(oo)
+  mpmath:
+    in: gamma(inf)
+  sage:
+    in: gamma(oo)
 values-far-past-the-double-range-gamma-200-5:
   epsil:
     in: Gamma(200.5)
@@ -613,6 +625,8 @@ an-integer-order-reduces-to-a-closed-form-gamma:
     in: \Gamma(2, x)
     out: (x+1)\exp(-x)
   fullform:
+    in: Gamma[2, x]
+  wolfram:
     in: Gamma[2, x]
 gamma-2-1-2-e-the-same-closed-form-at-an-exact:
   epsil:
@@ -667,6 +681,8 @@ gamma-a-0-gamma-a-the-incomplete-gamma-from-zero:
     out: \Gamma(a)
   fullform:
     in: Gamma[a, 0]
+  wolfram:
+    in: Gamma[a, 0]
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2:
   epsil:
     in: Gamma(0, 1.5)
@@ -689,6 +705,8 @@ gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc:
     in: \Gamma(\frac{1}{2}, x)
     out: \operatorname{erfc}(\sqrt{x})\sqrt{\pi}
   fullform:
+    in: Gamma[Rational[1, 2], x]
+  wolfram:
     in: Gamma[Rational[1, 2], x]
 gamma-x-gamma-x-psi-x-so-the-logarithmic:
   epsil:
@@ -775,4 +793,6 @@ three-arguments-fully-symbolic-in-both-order-and:
     in: \Gamma(s, 0, z)
     out: \Gamma(s, 0, z)
   fullform:
+    in: Gamma[s, 0, z]
+  wolfram:
     in: Gamma[s, 0, z]

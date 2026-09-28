@@ -83,6 +83,12 @@ canonicalizes-to-x-2:
   fullform:
     in: Power[x, 2]
     back: [Power, x, 2]
+  wolfram:
+    in: (x)^2
+  sympy:
+    in: (Symbol("x"))**2
+  sage:
+    in: (SR.var("x"))^2
 threads-element-wise-over-a-list:
   epsil:
     in: Square([2, 3, -4])
@@ -214,3 +220,9 @@ infinity-squared-stays-infinite-rather-than:
     tex:
       in: \infty ^2
       out: \infty
+  sympy:
+    in: (oo)**2
+  mpmath:
+    in: (inf)**2
+  sage:
+    in: (oo)^2

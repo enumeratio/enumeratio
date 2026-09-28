@@ -100,6 +100,12 @@ length-list-a-b-c-d:
     out: "4"
   fullform:
     in: Length[List[a, b, c, d]]
+  wolfram:
+    in: Length[List[a, b, c, d]]
+  sympy:
+    in: (len([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")]) if hasattr([Symbol("a"), Symbol("b"), Symbol("c"), Symbol("d")], '__len__') else 0)
+  sage:
+    in: (len([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")]) if hasattr([SR.var("a"), SR.var("b"), SR.var("c"), SR.var("d")], '__len__') else 0)
 the-empty-list-has-length-0:
   epsil:
     in: Length([])
@@ -155,6 +161,12 @@ any-expression-the-number-of-terms-in-a-sum:
     out: "4"
   fullform:
     in: Length[Plus[a, b, c, d]]
+  wolfram:
+    in: Length[Plus[a, b, c, d]]
+  sympy:
+    in: (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), '__len__') else 0)
+  sage:
+    in: (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else 0)
 the-number-of-arguments-of-a-call-counting-only:
   epsil:
     in: Length(f(g(x, y), z))
@@ -200,4 +212,6 @@ length-of-association-counts-values:
     in: \mathrm{Length}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))
     out: "3"
   fullform:
+    in: Length[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+  wolfram:
     in: Length[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]

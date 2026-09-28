@@ -7,6 +7,8 @@ a-quadratic-s-vertex:
     out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Minimize[Power[x, 2], x]
+  wolfram:
+    in: Minimize[Power[x, 2], x]
 unbounded-below-reports-negative-infinity:
   epsil:
     in: Minimize(x ^ 3, x)
@@ -15,6 +17,8 @@ unbounded-below-reports-negative-infinity:
     in: \mathrm{Minimize}(x^3, x)
     out: \bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Minimize[Power[x, 3], x]
+  wolfram:
     in: Minimize[Power[x, 3], x]
 a-rational-function-s-irrational-point:
   epsil:
@@ -25,6 +29,8 @@ a-rational-function-s-irrational-point:
     out: \bigl\lbrack-(\sqrt{2})(1+{(1-2^{1/2})}^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
   fullform:
     in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
+  wolfram:
+    in: Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
 a-simple-interval-constraint:
   epsil:
     in: Minimize([x ^ 2, x >= 1], x)
@@ -33,6 +39,8 @@ a-simple-interval-constraint:
     in: \mathrm{Minimize}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)
     out: \bigl\lbrack1, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
+  wolfram:
     in: Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
 log-s-minimum-is-at-its-domain-edge:
   epsil:
@@ -43,6 +51,8 @@ log-s-minimum-is-at-its-domain-edge:
     out: \bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Minimize[Log[x], x]
+  wolfram:
+    in: Minimize[Log[x], x]
 exp-s-infimum-is-not-attained:
   epsil:
     in: Minimize(Exp(x), x)
@@ -51,6 +61,8 @@ exp-s-infimum-is-not-attained:
     in: \mathrm{Minimize}(e^{x}, x)
     out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Minimize[Exp[x], x]
+  wolfram:
     in: Minimize[Exp[x], x]
 the-variable-as-a-one-element-list:
   epsil:
@@ -61,6 +73,8 @@ the-variable-as-a-one-element-list:
     out: \bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
   fullform:
     in: Minimize[Power[x, 2], List[x]]
+  wolfram:
+    in: Minimize[Power[x, 2], List[x]]
 declines-a-non-exact-critical-point:
   epsil:
     in: Minimize(x ^ 4 - 4 * x ^ 2, x)
@@ -69,6 +83,8 @@ declines-a-non-exact-critical-point:
     in: \mathrm{Minimize}(x^4-4x^2, x)
     out: \mathrm{Minimize}(x^4-4x^2, x)
   fullform:
+    in: Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
+  wolfram:
     in: Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
 declines-more-than-one-variable:
   epsil:
@@ -79,6 +95,8 @@ declines-more-than-one-variable:
     out: \mathrm{Minimize}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)
   fullform:
     in: Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
+  wolfram:
+    in: Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
 declines-sin-s-point-despite-an-exact-value:
   epsil:
     in: Minimize(Sin(x), x)
@@ -87,4 +105,6 @@ declines-sin-s-point-despite-an-exact-value:
     in: \mathrm{Minimize}(\sin(x), x)
     out: \mathrm{Minimize}(\sin(x), x)
   fullform:
+    in: Minimize[Sin[x], x]
+  wolfram:
     in: Minimize[Sin[x], x]

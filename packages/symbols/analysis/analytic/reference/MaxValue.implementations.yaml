@@ -7,6 +7,8 @@ a-downward-parabola-s-maximum-value:
     out: "3"
   fullform:
     in: MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
+  wolfram:
+    in: MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
 the-amplitude-of-sine-alone-is-exact:
   epsil:
     in: MaxValue(Sin(x), x)
@@ -16,6 +18,8 @@ the-amplitude-of-sine-alone-is-exact:
     out: "1"
   fullform:
     in: MaxValue[Sin[x], x]
+  wolfram:
+    in: MaxValue[Sin[x], x]
 an-unbounded-cubic:
   epsil:
     in: MaxValue(x ^ 3, x)
@@ -24,4 +28,6 @@ an-unbounded-cubic:
     in: \mathrm{MaxValue}(x^3, x)
     out: \infty
   fullform:
+    in: MaxValue[Power[x, 3], x]
+  wolfram:
     in: MaxValue[Power[x, 3], x]

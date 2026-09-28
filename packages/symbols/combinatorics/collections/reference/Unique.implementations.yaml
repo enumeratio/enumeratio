@@ -22,6 +22,8 @@ unique-list-a-b-a-c-b:
     out: \bigl\lbrack a, b, c\bigr\rbrack
   fullform:
     in: DeleteDuplicates[List[a, b, a, c, b]]
+  wolfram:
+    in: DeleteDuplicates[List[a, b, a, c, b]]
 keeps-first-occurrence-order-without-sorting:
   epsil:
     in: Unique([1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1])

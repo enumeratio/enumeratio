@@ -229,6 +229,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\cot(x)
   fullform:
     in: Cot[Minus[x]]
+  wolfram:
+    in: Cot[Minus[x]]
 derivative-csc-2-x:
   epsil:
     in: D(Cot(x), x)
@@ -246,4 +248,6 @@ antiderivative-ln-sin-x:
     in: \int\!\cot(x)\, \mathrm{d}x
     out: \ln(\vert\sin(x)\vert)
   fullform:
+    in: Integrate[Cot[x], x]
+  wolfram:
     in: Integrate[Cot[x], x]

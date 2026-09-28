@@ -16,6 +16,8 @@ distributes-and-over-or:
     out: b\land p\lor p\land r
   fullform:
     in: LogicalExpand[And[p, Or[b, r]]]
+  wolfram:
+    in: LogicalExpand[And[p, Or[b, r]]]
 xor-eliminated-into-dnf:
   epsil:
     in: LogicalExpand(Xor(p, b))
@@ -36,4 +38,6 @@ a-contradictory-term-drops-out:
     in: \mathrm{LogicalExpand}(p\land\lnot p)
     out: \mathrm{False}
   fullform:
+    in: LogicalExpand[And[p, Not[p]]]
+  wolfram:
     in: LogicalExpand[And[p, Not[p]]]

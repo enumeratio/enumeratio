@@ -217,6 +217,8 @@ rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s:
     out: (1-2^{1-s})\zeta(s)
   fullform:
     in: FunctionExpand[DirichletEta[s]]
+  wolfram:
+    in: FunctionExpand[DirichletEta[s]]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:
     in: N(DirichletEta(1 / 2), 30)

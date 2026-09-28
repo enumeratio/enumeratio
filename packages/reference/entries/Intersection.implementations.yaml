@@ -138,6 +138,8 @@ symbolic-elements:
     out: \lbrace b, c\rbrace
   fullform:
     in: Intersection[List[a, b, c], List[b, c, d]]
+  wolfram:
+    in: Intersection[List[a, b, c], List[b, c, d]]
 a-single-collection-comes-back-as-a-set:
   epsil:
     in: Intersection([1, 2, 3])
@@ -168,5 +170,5 @@ the-result-keeps-the-order-elements-were-met-in:
   fullform:
     in: Intersection[List[c, b, a], List[a, b]]
   wolfram:
-    in:
+    in: Intersection[List[c, b, a], List[a, b]]
     note: "Wolfram sorts the result: Intersection[{c, b, a}, {a, b}] is {a, b}."

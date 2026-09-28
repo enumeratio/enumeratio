@@ -196,6 +196,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\csc(x)
   fullform:
     in: Csc[Minus[x]]
+  wolfram:
+    in: Csc[Minus[x]]
 derivative-csc-x-cot-x:
   epsil:
     in: D(Csc(x), x)
@@ -213,4 +215,6 @@ antiderivative-ln-csc-x-cot-x:
     in: \int\!\csc(x)\, \mathrm{d}x
     out: -\ln(\vert\csc(x)+\cot(x)\vert)
   fullform:
+    in: Integrate[Csc[x], x]
+  wolfram:
     in: Integrate[Csc[x], x]

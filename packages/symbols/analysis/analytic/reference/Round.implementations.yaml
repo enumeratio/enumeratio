@@ -230,6 +230,8 @@ stays-symbolic:
     out: \mathrm{round}(x)
   fullform:
     in: Round[x]
+  wolfram:
+    in: Round[x]
 to-the-nearest-ten:
   epsil:
     in: Round(226, -1)
@@ -308,4 +310,6 @@ idempotent-round-round-x-round-x:
     in: \mathrm{round}(\mathrm{round}(x))
     out: \mathrm{round}(x)
   fullform:
+    in: Round[Round[x]]
+  wolfram:
     in: Round[Round[x]]

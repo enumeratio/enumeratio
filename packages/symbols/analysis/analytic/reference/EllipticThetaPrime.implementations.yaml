@@ -51,3 +51,5 @@ symbolic-arguments-are-left-unevaluated-rather:
     out: \mathrm{EllipticThetaPrime}(3, u, q)
   fullform:
     in: EllipticThetaPrime[3, u, q]
+  wolfram:
+    in: EllipticThetaPrime[3, u, q]

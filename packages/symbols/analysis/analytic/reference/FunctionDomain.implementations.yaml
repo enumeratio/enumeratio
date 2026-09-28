@@ -10,6 +10,8 @@ a-polynomial-is-defined-everywhere:
     out: \mathrm{True}
   fullform:
     in: FunctionDomain[Power[x, 2], x]
+  wolfram:
+    in: FunctionDomain[Power[x, 2], x]
 division-by-zero-excludes-the-origin:
   epsil:
     in: FunctionDomain(1 / x, x)
@@ -18,6 +20,8 @@ division-by-zero-excludes-the-origin:
     in: \mathrm{FunctionDomain}(\frac{1}{x}, x)
     out: x\lt0\lor0\lt x
   fullform:
+    in: FunctionDomain[Divide[1, x], x]
+  wolfram:
     in: FunctionDomain[Divide[1, x], x]
 a-rational-function-with-two-real-poles:
   epsil:
@@ -28,6 +32,8 @@ a-rational-function-with-two-real-poles:
     out: x\lt-1\lor-1\lt x\lt1\lor1\lt x
   fullform:
     in: FunctionDomain[Divide[1, Plus[Power[x, 2], -1]], x]
+  wolfram:
+    in: FunctionDomain[Divide[1, Plus[Power[x, 2], -1]], x]
 an-even-root-needs-a-nonnegative-radicand:
   epsil:
     in: FunctionDomain(Sqrt(x ^ 2 - 1), x)
@@ -36,6 +42,8 @@ an-even-root-needs-a-nonnegative-radicand:
     in: \mathrm{FunctionDomain}(\sqrt{x^2-1}, x)
     out: x\le-1\lor1\le x
   fullform:
+    in: FunctionDomain[Sqrt[Plus[Power[x, 2], -1]], x]
+  wolfram:
     in: FunctionDomain[Sqrt[Plus[Power[x, 2], -1]], x]
 a-natural-log-needs-a-positive-argument:
   epsil:
@@ -46,6 +54,8 @@ a-natural-log-needs-a-positive-argument:
     out: x\lt2
   fullform:
     in: FunctionDomain[Log[Subtract[2, x]], x]
+  wolfram:
+    in: FunctionDomain[Log[Subtract[2, x]], x]
 tangent-s-domain-is-declined:
   epsil:
     in: FunctionDomain(Tan(x), x)
@@ -54,4 +64,6 @@ tangent-s-domain-is-declined:
     in: \mathrm{FunctionDomain}(\tan(x), x)
     out: \mathrm{FunctionDomain}(\tan(x), x)
   fullform:
+    in: FunctionDomain[Tan[x], x]
+  wolfram:
     in: FunctionDomain[Tan[x], x]

@@ -37,6 +37,8 @@ list-a-b-c-d-list-neg-2:
     out: c
   fullform:
     in: Part[List[a, b, c, d], -2]
+  wolfram:
+    in: Part[List[a, b, c, d], -2]
 chaining-at-reaches-into-nested-collections-like:
   epsil:
     in: "[[1, 2], [3, 4]][2][1]"
@@ -61,6 +63,8 @@ a-list-of-indices-selects-several-elements-at:
     out: \bigl\lbrack a, c\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d], List[1, 3]]
+  wolfram:
+    in: Part[List[a, b, c, d], List[1, 3]]
 a-range-also-works-as-an-index-list-extracting-a:
   epsil:
     in: "[a, b, c, d, e][Range(2, 4)]"
@@ -69,6 +73,8 @@ a-range-also-works-as-an-index-list-extracting-a:
     in: \bigl\lbrack a, b, c, d, e\bigr\rbrack[2..4]
     out: \bigl\lbrack b, c, d\bigr\rbrack
   fullform:
+    in: Part[List[a, b, c, d, e], Range[2, 4]]
+  wolfram:
     in: Part[List[a, b, c, d, e], Range[2, 4]]
 index-0-is-the-collection-s-own-head-matching:
   epsil:
@@ -108,6 +114,8 @@ list-a-b-c-d-list-3:
     out: c
   fullform:
     in: Part[List[a, b, c, d], 3]
+  wolfram:
+    in: Part[List[a, b, c, d], 3]
 several-indices-reach-into-successive-levels-row:
   epsil:
     in: "[[1, 2, 3], [4, 5, 6]][2, 3]"
@@ -139,6 +147,8 @@ negative-indices-inside-an-index-list:
     out: \bigl\lbrack f, d\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], List[-1, -2]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], List[-1, -2]]
 a-stepped-range-takes-every-other-element:
   epsil:
     in: "[a, b, c, d, f][Range(1, 5, 2)]"
@@ -148,6 +158,8 @@ a-stepped-range-takes-every-other-element:
     out: \bigl\lbrack a, c, f\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Range[1, 5, 2]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Range[1, 5, 2]]
 negative-bounds-count-from-the-end-the-last:
   epsil:
     in: "[a, b, c, d, f][Range(-3, -1)]"
@@ -156,6 +168,8 @@ negative-bounds-count-from-the-end-the-last:
     in: \bigl\lbrack a, b, c, d, f\bigr\rbrack[(-3)..(-1)]
     out: \bigl\lbrack c, d, f\bigr\rbrack
   fullform:
+    in: Part[List[a, b, c, d, f], Range[-3, -1]]
+  wolfram:
     in: Part[List[a, b, c, d, f], Range[-3, -1]]
 a-lazy-range-is-indexed-directly:
   epsil:
@@ -199,6 +213,8 @@ a-span-2-4-in-wolfram-takes-a-contiguous-slice:
     out: \bigl\lbrack b, c, d\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Span[2, 4]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Span[2, 4]]
 a-stepped-span-1-1-2-takes-every-other-element:
   epsil:
     in: "[a, b, c, d, f][Span(1, -1, 2)]"
@@ -207,6 +223,8 @@ a-stepped-span-1-1-2-takes-every-other-element:
     in: \bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(1, -1, 2)]
     out: \bigl\lbrack a, c, f\bigr\rbrack
   fullform:
+    in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
+  wolfram:
     in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
 a-negative-step-1-1-1-walks-backwards-reversing:
   epsil:
@@ -217,6 +235,8 @@ a-negative-step-1-1-1-walks-backwards-reversing:
     out: \bigl\lbrack f, d, c, b, a\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
 negative-bounds-the-last-two-elements:
   epsil:
     in: "[a, b, c, d, f][Span(-2, -1)]"
@@ -226,6 +246,8 @@ negative-bounds-the-last-two-elements:
     out: \bigl\lbrack d, f\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Span[-2, -1]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Span[-2, -1]]
 parts-of-any-expression-not-just-lists-the:
   epsil:
     in: (a + b + c)[2]
@@ -234,6 +256,8 @@ parts-of-any-expression-not-just-lists-the:
     in: (a+b+c)[2]
     out: b
   fullform:
+    in: Part[Plus[a, b, c], 2]
+  wolfram:
     in: Part[Plus[a, b, c], 2]
 indexes-into-a-named-integer-collection:
   epsil:
@@ -371,4 +395,6 @@ at-integer-without-span-unaffected:
     in: \bigl\lbrack a, b, c\bigr\rbrack[2]
     out: b
   fullform:
+    in: Part[List[a, b, c], 2]
+  wolfram:
     in: Part[List[a, b, c], 2]

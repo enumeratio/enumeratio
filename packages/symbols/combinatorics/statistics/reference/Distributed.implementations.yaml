@@ -7,6 +7,8 @@ distributed-stays-itself:
     out: \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))
   fullform:
     in: Distributed[x, NormalDistribution[0, 1]]
+  wolfram:
+    in: Distributed[x, NormalDistribution[0, 1]]
 distributed-reached-through-expectation:
   epsil:
     in: Expectation(x, Distributed(x, NormalDistribution(2, 3)))
@@ -15,4 +17,6 @@ distributed-reached-through-expectation:
     in: \mathrm{Expectation}(x, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
     out: "2"
   fullform:
+    in: Expectation[x, Distributed[x, NormalDistribution[2, 3]]]
+  wolfram:
     in: Expectation[x, Distributed[x, NormalDistribution[2, 3]]]

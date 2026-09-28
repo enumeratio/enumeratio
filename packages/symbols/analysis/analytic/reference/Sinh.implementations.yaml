@@ -191,6 +191,8 @@ a-real-symbolic-argument-is-untouched:
     out: \sinh(x)
   fullform:
     in: Sinh[x]
+  wolfram:
+    in: Sinh[x]
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Sinh(-x)
@@ -200,6 +202,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\sinh(x)
   fullform:
     in: Sinh[Minus[x]]
+  wolfram:
+    in: Sinh[Minus[x]]
 sinh-arsinh-x-x-for-every-x:
   epsil:
     in: Sinh(Arsinh(x))
@@ -208,6 +212,8 @@ sinh-arsinh-x-x-for-every-x:
     in: \sinh(\mathrm{arsinh}(x))
     out: x
   fullform:
+    in: Sinh[ArcSinh[x]]
+  wolfram:
     in: Sinh[ArcSinh[x]]
 sinh-arsinh-2-2-for-every-x:
   epsil:
@@ -237,6 +243,8 @@ antiderivative:
     in: \int\!\sinh(x)\, \mathrm{d}x
     out: \cosh(x)
   fullform:
+    in: Integrate[Sinh[x], x]
+  wolfram:
     in: Integrate[Sinh[x], x]
 taylor-series-about-0:
   epsil:

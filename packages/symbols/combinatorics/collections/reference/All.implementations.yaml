@@ -77,6 +77,8 @@ one-definite-failure-decides-the-answer-even:
     out: \mathrm{False}
   fullform:
     in: AllTrue[List[1, x], EvenQ]
+  wolfram:
+    in: AllTrue[List[1, x], EvenQ]
 without-a-predicate-tests-the-elements:
   epsil:
     in: All([True, True])

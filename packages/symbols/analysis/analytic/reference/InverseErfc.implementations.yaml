@@ -99,3 +99,5 @@ erfc-erfc-1-x-x:
     out: x
   fullform:
     in: Erfc[InverseErfc[x]]
+  wolfram:
+    in: Erfc[InverseErfc[x]]

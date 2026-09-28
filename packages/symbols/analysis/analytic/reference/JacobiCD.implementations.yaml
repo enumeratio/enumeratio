@@ -18,6 +18,8 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiCD[0, m]
+  wolfram:
+    in: JacobiCD[0, m]
 m-greater-than-1-via-the-reciprocal-modulus:
   epsil:
     in: N(JacobiCD(0.3, 1.5))
@@ -37,4 +39,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiCD}(u, m)
     out: \mathrm{JacobiCD}(u, m)
   fullform:
+    in: JacobiCD[u, m]
+  wolfram:
     in: JacobiCD[u, m]

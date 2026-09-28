@@ -7,6 +7,8 @@ nestlist-f-x-3:
     out: \bigl\lbrack x, f(x), f(f(x)), f(f(f(x)))\bigr\rbrack
   fullform:
     in: NestList[f, x, 3]
+  wolfram:
+    in: NestList[f, x, 3]
 powers-of-2:
   epsil:
     in: NestList(Function(2 * _1), 1, 5)
@@ -51,4 +53,6 @@ zero-steps-just-the-seed:
     in: \mathrm{NestList}(f, x, 0)
     out: \bigl\lbrack x\bigr\rbrack
   fullform:
+    in: NestList[f, x, 0]
+  wolfram:
     in: NestList[f, x, 0]

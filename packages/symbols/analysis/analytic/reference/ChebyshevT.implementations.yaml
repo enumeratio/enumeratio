@@ -7,6 +7,8 @@ the-cubic:
     out: 4x^3-3x
   fullform:
     in: ChebyshevT[3, x]
+  wolfram:
+    in: ChebyshevT[3, x]
 the-quartic:
   epsil:
     in: ChebyshevT(4, x)
@@ -15,6 +17,8 @@ the-quartic:
     in: \mathrm{ChebyshevT}(4, x)
     out: 8x^4-8x^2+1
   fullform:
+    in: ChebyshevT[4, x]
+  wolfram:
     in: ChebyshevT[4, x]
 at-an-integer:
   epsil:
@@ -84,6 +88,8 @@ a-symbolic-order-stays-unevaluated:
     in: \mathrm{ChebyshevT}(n, x)
     out: \mathrm{ChebyshevT}(n, x)
   fullform:
+    in: ChebyshevT[n, x]
+  wolfram:
     in: ChebyshevT[n, x]
 cos-n-theta:
   epsil:
@@ -159,6 +165,8 @@ negative-order:
     in: \mathrm{ChebyshevT}(-3, x)
     out: 4x^3-3x
   fullform:
+    in: ChebyshevT[-3, x]
+  wolfram:
     in: ChebyshevT[-3, x]
 pell-identity:
   epsil:

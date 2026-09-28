@@ -7,3 +7,5 @@ pairs-each-element-with-its-1-based-index:
     out: \bigl\lbrack f(a, \bigl\lbrack1\bigr\rbrack), f(b, \bigl\lbrack2\bigr\rbrack), f(c, \bigl\lbrack3\bigr\rbrack)\bigr\rbrack
   fullform:
     in: MapIndexed[f, List[a, b, c]]
+  wolfram:
+    in: MapIndexed[f, List[a, b, c]]

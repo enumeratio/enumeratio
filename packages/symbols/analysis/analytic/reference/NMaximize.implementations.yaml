@@ -7,6 +7,8 @@ two-trig-terms-on-a-bounded-interval:
     out: \bigl\lbrack1.125, \bigl\lbrack\mathrm{Rule}(x, 2.888\,912\,406\,121\,017\,6)\bigr\rbrack\bigr\rbrack
   fullform:
     in: NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
+  wolfram:
+    in: NMaximize[List[Plus[Sin[x], Cos[Times[2, x]]], And[GreaterEqual[x, 0], LessEqual[x, 6]]], x]
 declines-without-a-bounded-constraint:
   epsil:
     in: NMaximize(-x ^ 2, x)
@@ -15,4 +17,6 @@ declines-without-a-bounded-constraint:
     in: \mathrm{NMaximize}(-x^2, x)
     out: \mathrm{NMaximize}(-x^2, x)
   fullform:
+    in: NMaximize[Minus[Power[x, 2]], x]
+  wolfram:
     in: NMaximize[Minus[Power[x, 2]], x]

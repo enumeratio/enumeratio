@@ -66,6 +66,8 @@ join-list-a-b-c-list-x-y-list-u-v-w:
     out: \bigl\lbrack a, b, c, x, y, u, v, w\bigr\rbrack
   fullform:
     in: Join[List[a, b, c], List[x, y], List[u, v, w]]
+  wolfram:
+    in: Join[List[a, b, c], List[x, y], List[u, v, w]]
 joining-matrices-stacks-their-rows:
   epsil:
     in: Join([[a, b], [c, d]], [[1, 2], [3, 4]])
@@ -74,6 +76,8 @@ joining-matrices-stacks-their-rows:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]]]
+  wolfram:
     in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]]]
 sets-as-well-as-lists-as-long-as-all-arguments:
   epsil:
@@ -118,6 +122,8 @@ at-level-2-matrices-are-joined-side-by-side:
     out: \bigl\lbrack\bigl\lbrack a, b, 1, 2\bigr\rbrack, \bigl\lbrack c, d, 3, 4\bigr\rbrack\bigr\rbrack
   fullform:
     in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]], 2]
+  wolfram:
+    in: Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]], 2]
 ragged-rows-join-at-level-2-too:
   epsil:
     in: Join([[1], [5, 6]], [[2, 3], [7]], [[4], [8]], 2)
@@ -137,6 +143,8 @@ a-row-missing-from-the-shorter-array-simply-isn:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Join[List[List[x]], List[List[1, 2], List[3, 4]], 2]
+  wolfram:
     in: Join[List[List[x]], List[List[1, 2], List[3, 4]], 2]
 any-head-as-long-as-all-the-arguments-share-it:
   epsil:
@@ -163,6 +171,8 @@ join-is-associative:
     out: \mathrm{True}
   fullform:
     in: Equal[Join[Join[List[a, b, c], List[x, y]], List[u, v, w]], Join[List[a, b, c], Join[List[x, y], List[u, v, w]]]]
+  wolfram:
+    in: (Join[Join[List[a, b, c], List[x, y]], List[u, v, w]] == Join[List[a, b, c], Join[List[x, y], List[u, v, w]]])
 join-tolerates-shorter-array-second:
   epsil:
     in: Join([[1, 2], [3, 4]], [[x]], 2)
@@ -171,6 +181,8 @@ join-tolerates-shorter-array-second:
     in: \mathrm{Join}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack x\bigr\rbrack\bigr\rbrack, 2)
     out: \bigl\lbrack\bigl\lbrack1, 2, x\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Join[List[List[1, 2], List[3, 4]], List[List[x]], 2]
+  wolfram:
     in: Join[List[List[1, 2], List[3, 4]], List[List[x]], 2]
 join-splices-any-shared-head:
   epsil:
@@ -189,4 +201,6 @@ join-associations-first-seen-order:
     in: \mathrm{Join}(\mathrm{Association}(\mathrm{Rule}(a, b)), \mathrm{Association}(\mathrm{Rule}(c, d), \mathrm{Rule}(a, f)))
     out: \mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
   fullform:
+    in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]
+  wolfram:
     in: Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]

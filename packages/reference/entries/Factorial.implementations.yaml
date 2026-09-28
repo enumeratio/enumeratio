@@ -540,6 +540,10 @@ infty-infty:
     in: Factorial[Infinity]
   wolfram:
     in: Factorial[Infinity]
+  sympy:
+    in: factorial(oo)
+  sage:
+    in: factorial(oo)
 n-gamma-n-1-see-gamma:
   epsil:
     in: 5! == Gamma(6)

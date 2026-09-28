@@ -10,6 +10,8 @@ a-reciprocal-is-injective-on-its-own-domain:
     out: \mathrm{True}
   fullform:
     in: FunctionInjective[Divide[1, x], x]
+  wolfram:
+    in: FunctionInjective[Divide[1, x], x]
 a-cubic-is-injective:
   epsil:
     in: FunctionInjective(x ^ 3, x)
@@ -21,6 +23,8 @@ a-cubic-is-injective:
     in: \mathrm{FunctionInjective}(x^3, x)
     out: \mathrm{True}
   fullform:
+    in: FunctionInjective[Power[x, 3], x]
+  wolfram:
     in: FunctionInjective[Power[x, 3], x]
 a-parabola-is-not-injective:
   epsil:
@@ -34,6 +38,8 @@ a-parabola-is-not-injective:
     out: \mathrm{False}
   fullform:
     in: FunctionInjective[Power[x, 2], x]
+  wolfram:
+    in: FunctionInjective[Power[x, 2], x]
 an-affine-function-is-injective:
   epsil:
     in: FunctionInjective(2x + 1, x)
@@ -45,4 +51,6 @@ an-affine-function-is-injective:
     in: \mathrm{FunctionInjective}(2x+1, x)
     out: \mathrm{True}
   fullform:
+    in: FunctionInjective[Plus[Times[2, x], 1], x]
+  wolfram:
     in: FunctionInjective[Plus[Times[2, x], 1], x]

@@ -219,6 +219,8 @@ antiderivative:
     out: x\arccos(x)-\sqrt{1-x^2}
   fullform:
     in: Integrate[ArcCos[x], x]
+  wolfram:
+    in: Integrate[ArcCos[x], x]
 reflection-arccos-x-pi-arccos-x:
   epsil:
     in: Arccos(-x)
@@ -227,6 +229,8 @@ reflection-arccos-x-pi-arccos-x:
     in: \arccos(-x)
     out: \pi-\arccos(x)
   fullform:
+    in: ArcCos[Minus[x]]
+  wolfram:
     in: ArcCos[Minus[x]]
 not-simply-4-4-is-outside-the-principal-range-0:
   epsil:

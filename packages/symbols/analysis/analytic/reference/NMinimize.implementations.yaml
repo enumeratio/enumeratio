@@ -7,6 +7,8 @@ a-quartic-with-two-symmetric-minima:
     out: \bigl\lbrack-0.25, \bigl\lbrack\mathrm{Rule}(x, -0.707\,106\,778\,558\,382)\bigr\rbrack\bigr\rbrack
   fullform:
     in: NMinimize[List[Subtract[Power[x, 4], Power[x, 2]], And[GreaterEqual[x, -2], LessEqual[x, 2]]], x]
+  wolfram:
+    in: NMinimize[List[Subtract[Power[x, 4], Power[x, 2]], And[GreaterEqual[x, -2], LessEqual[x, 2]]], x]
 declines-without-a-bounded-constraint:
   epsil:
     in: NMinimize(x ^ 2, x)
@@ -15,4 +17,6 @@ declines-without-a-bounded-constraint:
     in: \mathrm{NMinimize}(x^2, x)
     out: \mathrm{NMinimize}(x^2, x)
   fullform:
+    in: NMinimize[Power[x, 2], x]
+  wolfram:
     in: NMinimize[Power[x, 2], x]

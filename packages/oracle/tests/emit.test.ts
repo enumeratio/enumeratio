@@ -182,6 +182,33 @@ test("no mapping template references an operand it cannot have", () => {
   }
 });
 
+// A free bare symbol (`x` in `Cos(Arcsin(x))`) used to be unconditionally `missing` — fine for
+// a numeric lane, which has no way to evaluate a name, but wrong for a symbolic system, which
+// can carry one through like any other value (#A-72).
+test("a free bare symbol emits verbatim on a symbolic system, and stays missing on a numeric one", () => {
+  expect(emit(["Add", "x", 1], "wolfram")).toEqual({ ok: true, source: "Plus[x, 1]", freeSymbols: ["x"] });
+  expect(emit(["Add", "x", 1], "sympy")).toEqual({
+    ok: true,
+    source: '(Symbol("x") + 1)',
+    freeSymbols: ["x"],
+  });
+  expect(emit(["Add", "x", 1], "sage")).toEqual({
+    ok: true,
+    source: '(SR.var("x") + 1)',
+    freeSymbols: ["x"],
+  });
+  // mpmath, Oscar, Julia, Mathlib and Rust are numeric-only: a name is still missing there.
+  expect(emit(["Add", "x", 1], "mpmath")).toEqual({ ok: false, missing: ["symbol:x"] });
+  expect(emit(["Add", "x", 1], "julia")).toEqual({ ok: false, missing: ["symbol:x"] });
+  expect(emit(["Add", "x", 1], "mathlib4")).toEqual({ ok: false, missing: ["symbol:x"] });
+  // Two distinct free symbols, sorted and de-duplicated.
+  expect(emit(["Add", "y", "x", "x"], "sympy")).toEqual({
+    ok: true,
+    source: '(Symbol("y") + Symbol("x") + Symbol("x"))',
+    freeSymbols: ["x", "y"],
+  });
+});
+
 test("a String of a bare name emits as a string literal, not a free symbol", () => {
   expect(emit(["GroupBasis", ["String", "s0"]], "oscar")).toEqual({
     ok: true,

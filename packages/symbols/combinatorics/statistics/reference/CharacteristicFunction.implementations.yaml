@@ -7,6 +7,8 @@ characteristicfunction-normal:
     out: e^{2i t-\frac{9t^2}{2}}
   fullform:
     in: CharacteristicFunction[NormalDistribution[2, 3], t]
+  wolfram:
+    in: CharacteristicFunction[NormalDistribution[2, 3], t]
 characteristicfunction-poisson:
   epsil:
     in: CharacteristicFunction(PoissonDistribution(2), 0)
@@ -26,4 +28,6 @@ characteristicfunction-cauchy-standard:
     in: \mathrm{CharacteristicFunction}(\mathrm{CauchyDistribution}(0, 1), t)
     out: e^{-\vert t\vert}
   fullform:
+    in: CharacteristicFunction[CauchyDistribution[0, 1], t]
+  wolfram:
     in: CharacteristicFunction[CauchyDistribution[0, 1], t]

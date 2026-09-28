@@ -80,6 +80,8 @@ symbols-and-numbers-mixed-three-way-tie-wolfram:
   fullform:
     in: First[Commonest[List[b, a, c, 2, a, b, 1, 2]]]
     back: [First, [Commonest, [List, b, a, c, 2, a, b, 1, 2]]]
+  wolfram:
+    in: First[Commonest[List[b, a, c, 2, a, b, 1, 2]]]
 empty-data-has-no-mode-compute-engine-returns:
   epsil:
     in: Mode([])

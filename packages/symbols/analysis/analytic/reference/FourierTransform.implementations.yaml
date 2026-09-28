@@ -7,6 +7,8 @@ dirac-delta-at-origin:
     out: \sqrt{\frac{1}{2\pi}}
   fullform:
     in: FourierTransform[DiracDelta[t], t, w]
+  wolfram:
+    in: FourierTransform[DiracDelta[t], t, w]
 gaussian:
   epsil:
     in: FourierTransform(ExponentialE ^ (-t ^ 2), t, w)
@@ -16,6 +18,8 @@ gaussian:
     out: \frac{1}{2}(\sqrt{2}\exp(-\frac{w^2}{4}))
   fullform:
     in: FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
+  wolfram:
+    in: FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
 cosine:
   epsil:
     in: FourierTransform(Cos(a * t), t, w)
@@ -24,4 +28,6 @@ cosine:
     in: \mathrm{FourierTransform}(\cos(at), t, w)
     out: \frac{1}{2}(\sqrt{2}(\mathrm{DiracDelta}(a+w)+\mathrm{DiracDelta}(w-a))\sqrt{\pi})
   fullform:
+    in: FourierTransform[Cos[Times[a, t]], t, w]
+  wolfram:
     in: FourierTransform[Cos[Times[a, t]], t, w]

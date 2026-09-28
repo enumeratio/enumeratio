@@ -214,6 +214,8 @@ b-a-1-1-a-for-symbolic-a:
     out: \frac{1}{a}
   fullform:
     in: Beta[a, 1]
+  wolfram:
+    in: Beta[a, 1]
 b-2-b-frac-1-b-b-1-not-yet:
   epsil:
     in: Beta(2, b)
@@ -222,6 +224,8 @@ b-2-b-frac-1-b-b-1-not-yet:
     in: \mathrm{B}(2, b)
     out: \frac{1}{b\times(b+1)}
   fullform:
+    in: Beta[2, b]
+  wolfram:
     in: Beta[2, b]
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the:
   epsil:

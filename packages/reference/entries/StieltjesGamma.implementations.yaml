@@ -28,6 +28,8 @@ gamma-0-a-psi-a-symbolically-in-a:
     out: -\psi^{(0)}(a)
   fullform:
     in: StieltjesGamma[0, a]
+  wolfram:
+    in: StieltjesGamma[0, a]
 no-closed-form-past-gamma-0-stays-symbolic-until:
   epsil:
     in: StieltjesGamma(1)

@@ -514,6 +514,12 @@ tan-ix-i-tanh-x:
     out: i\tanh(x)
   fullform:
     in: Tan[Times[I, x]]
+  wolfram:
+    in: Tan[Times[I, x]]
+  sympy:
+    in: tan((I * Symbol("x")))
+  sage:
+    in: tan((I * SR.var("x")))
 oddness-pulls-the-sign-out-of-a-symbolic:
   epsil:
     in: Tan(-x)
@@ -523,6 +529,12 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\tan(x)
   fullform:
     in: Tan[Minus[x]]
+  wolfram:
+    in: Tan[Minus[x]]
+  sympy:
+    in: tan((-Symbol("x")))
+  sage:
+    in: tan((-SR.var("x")))
 tan-arctan-x-x-for-every-x:
   epsil:
     in: Tan(Arctan(x))
@@ -531,6 +543,8 @@ tan-arctan-x-x-for-every-x:
     in: \tan(\arctan(x))
     out: x
   fullform:
+    in: Tan[ArcTan[x]]
+  wolfram:
     in: Tan[ArcTan[x]]
 tan-arctan-2-2-for-every-x:
   epsil:
@@ -552,6 +566,8 @@ tan-arcsin-x-frac-x-sqrt-1-x-2:
     out: \frac{x}{\sqrt{1-x^2}}
   fullform:
     in: Tan[ArcSin[x]]
+  wolfram:
+    in: Tan[ArcSin[x]]
 derivative-sec-2-x:
   epsil:
     in: D(Tan(x), x)
@@ -569,6 +585,8 @@ antiderivative-ln-sec-x:
     in: \int\!\tan(x)\, \mathrm{d}x
     out: \ln(\vert\sec(x)\vert)
   fullform:
+    in: Integrate[Tan[x], x]
+  wolfram:
     in: Integrate[Tan[x], x]
 taylor-series-about-0:
   epsil:

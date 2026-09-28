@@ -103,6 +103,8 @@ symbolic-data-gives-an-exact-symbolic-mean-frac:
     out: \frac{a+b+c+d}{4}
   fullform:
     in: Mean[List[a, b, c, d]]
+  wolfram:
+    in: Mean[List[a, b, c, d]]
 exact-constants-give-an-exact-mean-frac-2-e-pi-3:
   epsil:
     in: Mean([Pi, ExponentialE, 2])
@@ -122,6 +124,8 @@ of-a-matrix-of-symbols-the-exact-mean-of-each:
     in: \mathrm{mean}(\bigl\lbrack\bigl\lbrack a, u\bigr\rbrack, \bigl\lbrack b, v\bigr\rbrack, \bigl\lbrack c, w\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\frac{a+b+c}{3}, \frac{u+v+w}{3}\bigr\rbrack
   fullform:
+    in: Mean[List[List[a, u], List[b, v], List[c, w]]]
+  wolfram:
     in: Mean[List[List[a, u], List[b, v], List[c, w]]]
 the-mean-of-a-lazy-range-exactly:
   epsil:

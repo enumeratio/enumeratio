@@ -180,6 +180,8 @@ evenness-drops-the-sign-of-a-symbolic-argument:
     out: \cosh(x)
   fullform:
     in: Cosh[Minus[x]]
+  wolfram:
+    in: Cosh[Minus[x]]
 cosh-arcosh-x-x-for-every-x:
   epsil:
     in: Cosh(Arcosh(x))
@@ -188,6 +190,8 @@ cosh-arcosh-x-x-for-every-x:
     in: \cosh(\mathrm{arcosh}(x))
     out: x
   fullform:
+    in: Cosh[ArcCosh[x]]
+  wolfram:
     in: Cosh[ArcCosh[x]]
 cosh-arcosh-2-2:
   epsil:
@@ -228,6 +232,8 @@ antiderivative:
     in: \int\!\cosh(x)\, \mathrm{d}x
     out: \sinh(x)
   fullform:
+    in: Integrate[Cosh[x], x]
+  wolfram:
     in: Integrate[Cosh[x], x]
 the-definition-cosh-x-frac-e-x-e-x-2:
   epsil:

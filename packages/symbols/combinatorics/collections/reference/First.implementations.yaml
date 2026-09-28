@@ -84,6 +84,8 @@ first-list-a-b-c:
     out: a
   fullform:
     in: First[List[a, b, c]]
+  wolfram:
+    in: First[List[a, b, c]]
 of-a-matrix-the-first-row:
   epsil:
     in: First([[a, b], [c, d]])
@@ -92,6 +94,8 @@ of-a-matrix-the-first-row:
     in: \mathrm{First}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack a, b\bigr\rbrack
   fullform:
+    in: First[List[List[a, b], List[c, d]]]
+  wolfram:
     in: First[List[List[a, b], List[c, d]]]
 a-lazy-range-works-too:
   epsil:
@@ -113,6 +117,8 @@ any-expression-not-just-a-list-the-first-term-of:
     out: a^2
   fullform:
     in: First[Plus[Power[a, 2], Power[b, 2]]]
+  wolfram:
+    in: First[Plus[Power[a, 2], Power[b, 2]]]
 a-default-is-ignored-when-the-collection-has-a:
   epsil:
     in: First([a, b], x)
@@ -121,6 +127,8 @@ a-default-is-ignored-when-the-collection-has-a:
     in: \mathrm{First}(\bigl\lbrack a, b\bigr\rbrack, x)
     out: a
   fullform:
+    in: First[List[a, b], x]
+  wolfram:
     in: First[List[a, b], x]
 first-default-ignored-when-nonempty:
   epsil:
@@ -142,6 +150,8 @@ first-of-association-is-first-value:
     out: a
   fullform:
     in: First[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+  wolfram:
+    in: First[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
 first-of-empty-association-falls-through:
   epsil:
     in: First(Association(), 99)
@@ -161,4 +171,6 @@ first-of-nonempty-association-ignores-default:
     in: \mathrm{First}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), 99)
     out: a
   fullform:
+    in: First[Association[Rule[1, a], Rule[2, b]], 99]
+  wolfram:
     in: First[Association[Rule[1, a], Rule[2, b]], 99]

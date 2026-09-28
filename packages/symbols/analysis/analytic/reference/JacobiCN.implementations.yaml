@@ -18,6 +18,8 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiCN[0, m]
+  wolfram:
+    in: JacobiCN[0, m]
 m-0-reduces-to-cos-u:
   epsil:
     in: JacobiCN(u, 0)
@@ -26,6 +28,8 @@ m-0-reduces-to-cos-u:
     in: \mathrm{JacobiCN}(u, 0)
     out: \cos(u)
   fullform:
+    in: JacobiCN[u, 0]
+  wolfram:
     in: JacobiCN[u, 0]
 the-quarter-period-u-elliptick-m-is-0:
   epsil:
@@ -77,4 +81,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiCN}(u, m)
     out: \mathrm{JacobiCN}(u, m)
   fullform:
+    in: JacobiCN[u, m]
+  wolfram:
     in: JacobiCN[u, m]

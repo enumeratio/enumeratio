@@ -105,6 +105,8 @@ several-sets-can-be-removed-at-once:
   fullform:
     in: Complement[Union[List[a, b, c, d, f]], Union[List[a, c]], Union[List[d]]]
     back: [SetMinus, [Union, [List, a, b, c, d, f]], [Union, [List, a, c]], [Union, [List, d]]]
+  wolfram:
+    in: Complement[Union[List[a, b, c, d, f]], Union[List[a, c]], Union[List[d]]]
 lists-as-well-as-sets-as-wolfram-s-complement:
   epsil:
     in: SetMinus([a, b, c, d, f], [a, c], [d])
@@ -113,6 +115,8 @@ lists-as-well-as-sets-as-wolfram-s-complement:
     in: \bigl\lbrack a, b, c, d, f\bigr\rbrack\setminus\operatorname{List}(a, c)\setminus\bigl\lbrack d\bigr\rbrack
     out: \lbrace b, f\rbrace
   fullform:
+    in: Complement[List[a, b, c, d, f], List[a, c], List[d]]
+  wolfram:
     in: Complement[List[a, b, c, d, f], List[a, c], List[d]]
 a-range-as-the-universe-to-remove-from-compute:
   epsil:

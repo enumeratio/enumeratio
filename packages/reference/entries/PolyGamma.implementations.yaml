@@ -418,6 +418,12 @@ psi-infty-0:
     in: PolyGamma[1, Infinity]
   wolfram:
     in: PolyGamma[1, Infinity]
+  sympy:
+    in: polygamma(1, oo)
+  mpmath:
+    in: psi(1, inf)
+  sage:
+    in: psi(1, oo)
 interval-arithmetic-the-trigamma-is-decreasing:
   epsil:
     in: PolyGamma(1, Interval(3.45, 3.46))
@@ -1566,7 +1572,7 @@ n-polygamma-neg1-2-is-loggamma-2-is-0:
     out: "-0.918938533204672741780329736406"
     verdict: disagree
     kind: convention
-    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
+    note: compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2.
   mpmath:
     in: (psi(-1, 2))
     out: "ValueError: gamma function pole"
@@ -1595,13 +1601,13 @@ n-polygamma-neg1-1-over-2:
     out: "-0.346573590279972654708616060729"
     verdict: disagree
     kind: convention
-    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
+    note: compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2.
   mpmath:
     in: (psi(-1, (mpf(1)/2)))
     out: "ValueError: gamma function pole"
     verdict: error
     kind: domain
-    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
+    note: compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file).
   sage:
     in: N(psi(-1, (1/2)))
     out: "0.572364942924700"
@@ -1624,13 +1630,13 @@ n-polygamma-neg1-1-plus-i:
     out: -1.56986173250652908066554656791 - 0.301640320467533197887531657797*I
     verdict: disagree
     kind: convention
-    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
+    note: compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2.
   mpmath:
     in: (psi(-1, mpc(1, 1)))
     out: "ValueError: gamma function pole"
     verdict: error
     kind: domain
-    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
+    note: compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file).
   sage:
     in: N(psi(-1, (1 + 1*I)))
     out: -0.650923199301856 - 0.301640320467533*I
@@ -1653,13 +1659,13 @@ n-polygamma-neg1-neg0p5:
     out: 0.346573590279972626385172340912 - 3.14159265358979311599796346854*I
     verdict: disagree
     kind: convention
-    note: "compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2."
+    note: compute-engine's ψ^(-1)(z) is ln Γ(z), as Wolfram's PolyGamma[-1, z] is; SymPy's polygamma(-1, z) is ln Γ(z) − ln(2π)/2.
   mpmath:
     in: (psi(-1, -0.5))
     out: "ValueError: gamma function pole"
     verdict: error
     kind: domain
-    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
+    note: compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file).
   sage:
     in: N(psi(-1, -0.5))
     out: 1.26551212348465 + 3.14159265358979*I
@@ -1685,13 +1691,13 @@ n-polygamma-neg2-stays-unevaluated:
     out: "-1.24875447703378426254725299358"
     verdict: inconclusive
     kind: unevaluated
-    note: "m ≤ -2 is past what compute-engine covers, so it stays symbolic; SymPy's polygamma extends to negative orders and gives a number."
+    note: m ≤ -2 is past what compute-engine covers, so it stays symbolic; SymPy's polygamma extends to negative orders and gives a number.
   mpmath:
     in: (psi(-2, 2))
     out: "ValueError: gamma function pole"
     verdict: error
     kind: domain
-    note: "compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file)."
+    note: compute-engine extends PolyGamma to negative (antiderivative) orders, but mpmath's psi(m, z) raises unconditionally for any m < 0 regardless of z (same domain gap as the other negative-order rows in this file).
   sage:
     in: N(psi(-2, 2))
     out: "ValueError: gamma function pole"

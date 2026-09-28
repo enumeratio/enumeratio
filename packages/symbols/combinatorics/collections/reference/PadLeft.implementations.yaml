@@ -18,6 +18,8 @@ a-padding-element:
     out: \bigl\lbrack x, x, 1, 2, 3\bigr\rbrack
   fullform:
     in: PadLeft[List[1, 2, 3], 5, x]
+  wolfram:
+    in: PadLeft[List[1, 2, 3], 5, x]
 a-shorter-length-drops-elements-from-the-left:
   epsil:
     in: PadLeft([1, 2, 3, 4, 5], 3)

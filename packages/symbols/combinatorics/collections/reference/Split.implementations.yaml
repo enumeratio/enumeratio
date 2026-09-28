@@ -18,6 +18,8 @@ symbolic-elements:
     out: \bigl\lbrack\bigl\lbrack a, a\bigr\rbrack, \bigl\lbrack b, b, b\bigr\rbrack, \bigl\lbrack a\bigr\rbrack\bigr\rbrack
   fullform:
     in: Split[List[a, a, b, b, b, a]]
+  wolfram:
+    in: Split[List[a, a, b, b, b, a]]
 a-test-between-neighbours-split-into-increasing:
   epsil:
     in: Split([1, 2, 3, 5, 4, 6], Less)

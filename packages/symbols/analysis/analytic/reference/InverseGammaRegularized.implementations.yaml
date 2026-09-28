@@ -40,6 +40,8 @@ q-a-0-1:
     out: "0"
   fullform:
     in: InverseGammaRegularized[a, 1]
+  wolfram:
+    in: InverseGammaRegularized[a, 1]
 q-a-infty-0:
   epsil:
     in: InverseGammaRegularized(a, 0)
@@ -49,6 +51,8 @@ q-a-infty-0:
     out: \infty
   fullform:
     in: InverseGammaRegularized[a, 0]
+  wolfram:
+    in: InverseGammaRegularized[a, 0]
 order-1-inverts-e-z:
   epsil:
     in: InverseGammaRegularized(1, s)
@@ -57,4 +61,6 @@ order-1-inverts-e-z:
     in: \mathrm{InverseGammaRegularized}(1, s)
     out: -\ln(s)
   fullform:
+    in: InverseGammaRegularized[1, s]
+  wolfram:
     in: InverseGammaRegularized[1, s]

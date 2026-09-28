@@ -235,6 +235,12 @@ nan-propagates-rather-than-being-treated-as-0:
     tex:
       in: \text{sgn}(\text{Indeterminate})
       out: \text{Indeterminate}
+  sympy:
+    in: sign(nan)
+  mpmath:
+    in: sign(nan)
+  sage:
+    in: sign(NaN)
 sign-neg-2p5:
   epsil:
     in: Sign(-2.5)
@@ -415,6 +421,12 @@ sign-positiveinfinity:
     in: Sign[Infinity]
   wolfram:
     in: Sign[Infinity]
+  sympy:
+    in: sign(oo)
+  mpmath:
+    in: sign(inf)
+  sage:
+    in: sign(oo)
 an-interval-entirely-above-0-has-sign-1:
   epsil:
     in: Sign(Interval(1, 3))

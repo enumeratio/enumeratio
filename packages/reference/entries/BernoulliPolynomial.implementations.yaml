@@ -8,6 +8,8 @@ b-0-x-1:
   fullform:
     in: BernoulliB[0, x]
     back: [BernoulliB, 0, x]
+  wolfram:
+    in: BernoulliB[0, x]
 b-1-x-x-1-2:
   epsil:
     in: BernoulliPolynomial(1, x)
@@ -18,6 +20,8 @@ b-1-x-x-1-2:
   fullform:
     in: BernoulliB[1, x]
     back: [BernoulliB, 1, x]
+  wolfram:
+    in: BernoulliB[1, x]
 b-2-0-1-6:
   epsil:
     in: N(BernoulliPolynomial(2, 0))

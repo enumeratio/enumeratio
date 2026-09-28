@@ -7,6 +7,8 @@ sparsearray-vector:
     out: \bigl\lbrack x, 0, y, 0\bigr\rbrack
   fullform:
     in: SparseArray[List[Rule[1, x], Rule[3, y]], 4]
+  wolfram:
+    in: SparseArray[List[Rule[1, x], Rule[3, y]], 4]
 sparsearray-infers-dims:
   epsil:
     in: SparseArray([Rule([1, 1], 5), Rule([2, 2], 7)])

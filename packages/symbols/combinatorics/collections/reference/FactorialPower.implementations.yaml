@@ -8,6 +8,8 @@ symbolic-falling:
   fullform:
     in: FactorialPower[x, 3]
     back: [FallingFactorial, x, 3]
+  wolfram:
+    in: FactorialPower[x, 3]
 numeric:
   epsil:
     in: FactorialPower(5, 3)
@@ -30,6 +32,8 @@ step:
   fullform:
     in: FactorialPower[x, 2, h]
     back: [FallingFactorial, x, 2, h]
+  wolfram:
+    in: FactorialPower[x, 2, h]
 zero:
   epsil:
     in: FactorialPower(x, 0)
@@ -40,3 +44,5 @@ zero:
   fullform:
     in: FactorialPower[x, 0]
     back: [FallingFactorial, x, 0]
+  wolfram:
+    in: FactorialPower[x, 0]

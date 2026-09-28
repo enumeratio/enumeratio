@@ -84,3 +84,5 @@ symbolic-arguments-are-left-unevaluated-rather:
     out: \mathrm{EllipticTheta}(3, u, q)
   fullform:
     in: EllipticTheta[3, u, q]
+  wolfram:
+    in: EllipticTheta[3, u, q]

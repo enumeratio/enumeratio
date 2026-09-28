@@ -9,3 +9,7 @@ khinchin-s-constant:
     in: N[Khinchin]
   wolfram:
     in: N[Khinchin]
+  mpmath:
+    in: (khinchin)
+  sage:
+    in: N(khinchin)

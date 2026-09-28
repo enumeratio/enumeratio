@@ -49,6 +49,8 @@ a-symbolic-base:
   fullform:
     in: Pochhammer[a, 3]
     back: [Pochhammer, a, 3]
+  wolfram:
+    in: Pochhammer[a, 3]
 a-rational-base:
   epsil:
     in: RisingFactorial(1 / 2, 3)
@@ -81,6 +83,8 @@ a-symbolic-order-is-pochhammer:
   fullform:
     in: Pochhammer[a, n]
     back: [Pochhammer, a, n]
+  wolfram:
+    in: Pochhammer[a, n]
 complex-base-and-order:
   epsil:
     in: N(RisingFactorial(2 + 5i, 3 + 2i))

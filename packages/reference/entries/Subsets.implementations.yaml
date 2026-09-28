@@ -8,7 +8,7 @@ the-documented-subsets-collection-form-listed-in:
   fullform:
     in: Subsets[List[a, b, c]]
   wolfram:
-    in:
+    in: Subsets[List[a, b, c]]
     note: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …"
 a-size-bound-the-subsets-with-at-most-2-elements:
   epsil:

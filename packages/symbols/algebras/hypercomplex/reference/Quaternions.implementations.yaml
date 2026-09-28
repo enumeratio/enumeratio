@@ -7,6 +7,10 @@ ijk-1:
     out: "-1"
   fullform:
     in: NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
+  wolfram:
+    in: NonCommutativeMultiply[Subscript[f, 1], Subscript[f, 2], Times[Subscript[f, 1], Subscript[f, 2]]]
+  sage:
+    in: (SR.var("f_1") * SR.var("f_2") * (SR.var("f_1") * SR.var("f_2")))
 k-in-h:
   epsil:
     in: f_1 * f_2 in Quaternions

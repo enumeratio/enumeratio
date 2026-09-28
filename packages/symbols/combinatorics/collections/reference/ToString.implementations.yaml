@@ -18,3 +18,5 @@ prints-an-arithmetic-expression:
     out: \text{x + 1}
   fullform:
     in: ToString[Plus[x, 1]]
+  wolfram:
+    in: ToString[Plus[x, 1]]

@@ -66,6 +66,8 @@ last-list-a-b-c:
     out: c
   fullform:
     in: Last[List[a, b, c]]
+  wolfram:
+    in: Last[List[a, b, c]]
 of-a-matrix-the-last-row:
   epsil:
     in: Last([[a, b], [c, d], [f, g]])
@@ -74,6 +76,8 @@ of-a-matrix-the-last-row:
     in: \mathrm{Last}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack f, g\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack f, g\bigr\rbrack
   fullform:
+    in: Last[List[List[a, b], List[c, d], List[f, g]]]
+  wolfram:
     in: Last[List[List[a, b], List[c, d], List[f, g]]]
 a-lazy-range-works-too:
   epsil:
@@ -95,6 +99,8 @@ any-expression-not-just-a-list-the-last-term-of:
     out: b^2
   fullform:
     in: Last[Plus[Power[a, 2], Power[b, 2]]]
+  wolfram:
+    in: Last[Plus[Power[a, 2], Power[b, 2]]]
 a-default-is-ignored-when-the-collection-has-a:
   epsil:
     in: Last([a, b], x)
@@ -103,6 +109,8 @@ a-default-is-ignored-when-the-collection-has-a:
     in: \mathrm{Last}(\bigl\lbrack a, b\bigr\rbrack, x)
     out: b
   fullform:
+    in: Last[List[a, b], x]
+  wolfram:
     in: Last[List[a, b], x]
 an-empty-collection-has-no-last-element-compute:
   epsil:
@@ -135,6 +143,8 @@ last-of-association-is-last-value:
     in: \mathrm{Last}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))
     out: c
   fullform:
+    in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+  wolfram:
     in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
 last-of-empty-association-falls-through:
   epsil:

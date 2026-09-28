@@ -7,6 +7,8 @@ zeta-2-via-euler-maclaurin:
     out: 1.644\,934\,066\,848\,228\,2
   fullform:
     in: NSum[Power[n, -2], List[n, 1, Infinity]]
+  wolfram:
+    in: NSum[Power[n, -2], List[n, 1, Infinity]]
 the-alternating-harmonic-series:
   epsil:
     in: NSum((-1) ^ (n + 1) / n, [n, 1, PositiveInfinity])
@@ -15,6 +17,8 @@ the-alternating-harmonic-series:
     in: \mathrm{NSum}(\frac{(-1)^{n+1}}{n}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
     out: 0.693\,147\,180\,559\,945\,4
   fullform:
+    in: NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
+  wolfram:
     in: NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
 e-minus-one:
   epsil:
@@ -25,6 +29,8 @@ e-minus-one:
     out: 1.718\,281\,828\,459\,045\,5
   fullform:
     in: NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
+  wolfram:
+    in: NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
 a-much-more-slowly-convergent-power-law:
   epsil:
     in: NSum(n ^ -1.1, [n, 1, PositiveInfinity])
@@ -33,6 +39,8 @@ a-much-more-slowly-convergent-power-law:
     in: \mathrm{NSum}(\frac{1}{n^{1.1}}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
     out: 10.584\,448\,464\,950\,803
   fullform:
+    in: NSum[Power[n, -1.1], List[n, 1, Infinity]]
+  wolfram:
     in: NSum[Power[n, -1.1], List[n, 1, Infinity]]
 a-finite-range-is-a-direct-sum:
   epsil:
@@ -43,6 +51,8 @@ a-finite-range-is-a-direct-sum:
     out: "15"
   fullform:
     in: NSum[n, List[n, 1, 5]]
+  wolfram:
+    in: NSum[n, List[n, 1, 5]]
 declines-the-harmonic-series:
   epsil:
     in: NSum(1 / n, [n, 1, PositiveInfinity])
@@ -52,6 +62,8 @@ declines-the-harmonic-series:
     out: \mathrm{NSum}(\frac{1}{n}, \bigl\lbrack n, 1, \infty\bigr\rbrack)
   fullform:
     in: NSum[Divide[1, n], List[n, 1, Infinity]]
+  wolfram:
+    in: NSum[Divide[1, n], List[n, 1, Infinity]]
 declines-a-series-whose-terms-grow:
   epsil:
     in: NSum(n, [n, 1, PositiveInfinity])
@@ -60,4 +72,6 @@ declines-a-series-whose-terms-grow:
     in: \mathrm{NSum}(n, \bigl\lbrack n, 1, \infty\bigr\rbrack)
     out: \mathrm{NSum}(n, \bigl\lbrack n, 1, \infty\bigr\rbrack)
   fullform:
+    in: NSum[n, List[n, 1, Infinity]]
+  wolfram:
     in: NSum[n, List[n, 1, Infinity]]

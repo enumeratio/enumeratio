@@ -238,6 +238,8 @@ the-two-argument-fibonacci-polynomial-f-7-x-from:
     out: x^6+5x^4+6x^2+1
   fullform:
     in: Fibonacci[7, x]
+  wolfram:
+    in: Fibonacci[7, x]
 the-fibonacci-polynomial-at-a-real-order-and:
   epsil:
     in: Fibonacci(5.8, 3)

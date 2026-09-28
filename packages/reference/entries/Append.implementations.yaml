@@ -71,6 +71,8 @@ append-list-a-b-c-d-x:
     out: \bigl\lbrack a, b, c, d, x\bigr\rbrack
   fullform:
     in: Append[List[a, b, c, d], x]
+  wolfram:
+    in: Append[List[a, b, c, d], x]
 onto-the-empty-list:
   epsil:
     in: Append([], x)
@@ -79,6 +81,8 @@ onto-the-empty-list:
     in: \mathrm{Append}(\bigl\lbrack \bigr\rbrack, x)
     out: \bigl\lbrack x\bigr\rbrack
   fullform:
+    in: Append[List[], x]
+  wolfram:
     in: Append[List[], x]
 a-lazy-range-is-materialised-first:
   epsil:

@@ -7,6 +7,8 @@ the-first-occurrence-of-b-nested-inside-the:
     out: \bigl\lbrack1, 3\bigr\rbrack
   fullform:
     in: FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
+  wolfram:
+    in: FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
 the-empty-list-when-the-value-isn-t-found:
   epsil:
     in: FirstPosition([a, [a, c]], b)
@@ -16,6 +18,8 @@ the-empty-list-when-the-value-isn-t-found:
     out: \bigl\lbrack \bigr\rbrack
   fullform:
     in: FirstPosition[List[a, List[a, c]], b]
+  wolfram:
+    in: FirstPosition[List[a, List[a, c]], b]
 a-match-nested-inside-an-earlier-sublist-beats-a:
   epsil:
     in: FirstPosition([a, [a, b], b], b)
@@ -24,4 +28,6 @@ a-match-nested-inside-an-earlier-sublist-beats-a:
     in: \mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, b\bigr\rbrack, b\bigr\rbrack, b)
     out: \bigl\lbrack2, 2\bigr\rbrack
   fullform:
+    in: FirstPosition[List[a, List[a, b], b], b]
+  wolfram:
     in: FirstPosition[List[a, List[a, b], b], b]

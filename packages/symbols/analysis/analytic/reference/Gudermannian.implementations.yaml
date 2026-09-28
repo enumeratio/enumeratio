@@ -82,3 +82,5 @@ an-odd-function:
     out: -\mathrm{Gudermannian}(x)
   fullform:
     in: Gudermannian[Minus[x]]
+  wolfram:
+    in: Gudermannian[Minus[x]]

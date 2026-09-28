@@ -825,3 +825,9 @@ a-free-symbol-is-untouched:
     out: x\bmod2
   fullform:
     in: Mod[x, 2]
+  wolfram:
+    in: Mod[x, 2]
+  sympy:
+    in: (Symbol("x") % 2)
+  sage:
+    in: (SR.var("x") % 2)

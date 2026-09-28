@@ -199,6 +199,8 @@ the-two-argument-lucas-polynomial-l-7-x-from-l-n:
     out: x^7+7x^5+14x^3+7x
   fullform:
     in: LucasL[7, x]
+  wolfram:
+    in: LucasL[7, x]
 the-lucas-polynomial-at-x-1-is-the-lucas-number:
   epsil:
     in: LucasL(143, 1)

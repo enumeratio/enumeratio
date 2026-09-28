@@ -222,6 +222,8 @@ rationalizes-every-approximate-number-inside-an:
     out: \frac{67x}{10}+\frac{6}{5}
   fullform:
     in: Rationalize[Plus[1.2, Times[6.7, x]]]
+  wolfram:
+    in: Rationalize[Plus[1.2, Times[6.7, x]]]
 threads-element-wise-over-a-list-compute-engine:
   epsil:
     in: Rationalize([0.5, 0.25, 0.2])

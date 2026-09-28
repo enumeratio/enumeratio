@@ -56,6 +56,6 @@ declines-a-symbolic-list:
   fullform:
     in: Fourier[List[a, b]]
   wolfram:
-    in: Fourier[{a, b}]
+    in: Fourier[List[a, b]]
     out: Fourier[{a, b}]
     note: Wolfram raises `Fourier::fftl` ("... is not a nonempty list or rectangular array of numeric quantities") and returns the call unevaluated -- the same decline we make.

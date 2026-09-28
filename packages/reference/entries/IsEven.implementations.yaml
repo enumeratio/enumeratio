@@ -156,5 +156,5 @@ a-symbol-stays-undecided-rather-than-false:
   fullform:
     in: EvenQ[x]
   wolfram:
-    in:
+    in: EvenQ[x]
     note: '$\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.'

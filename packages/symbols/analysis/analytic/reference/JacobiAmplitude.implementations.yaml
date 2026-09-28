@@ -18,6 +18,8 @@ u-0-is-0-for-any-m:
     out: "0"
   fullform:
     in: JacobiAmplitude[0, m]
+  wolfram:
+    in: JacobiAmplitude[0, m]
 m-0-reduces-to-u:
   epsil:
     in: JacobiAmplitude(u, 0)
@@ -26,6 +28,8 @@ m-0-reduces-to-u:
     in: \mathrm{JacobiAmplitude}(u, 0)
     out: u
   fullform:
+    in: JacobiAmplitude[u, 0]
+  wolfram:
     in: JacobiAmplitude[u, 0]
 a-wider-argument-u-past-the-first-quarter:
   epsil:
@@ -57,4 +61,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiAmplitude}(u, m)
     out: \mathrm{JacobiAmplitude}(u, m)
   fullform:
+    in: JacobiAmplitude[u, m]
+  wolfram:
     in: JacobiAmplitude[u, m]

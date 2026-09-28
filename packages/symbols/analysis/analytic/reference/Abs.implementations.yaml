@@ -244,6 +244,12 @@ doesn-t-factor-constants-out-of-a-symbolic:
     out: \vert-3x\vert
   fullform:
     in: Abs[Times[-3, x]]
+  wolfram:
+    in: Abs[Times[-3, x]]
+  sympy:
+    in: Abs((-3 * Symbol("x")))
+  sage:
+    in: abs((-3 * SR.var("x")))
 abs-neg-2p5:
   epsil:
     in: Abs(-2.5)
@@ -404,6 +410,12 @@ abs-negativeinfinity:
     in: Abs[-Infinity]
   wolfram:
     in: Abs[-Infinity]
+  sympy:
+    in: Abs(-oo)
+  mpmath:
+    in: fabs(-inf)
+  sage:
+    in: abs(-oo)
 complex-infinity-has-infinite-magnitude-in-every:
   epsil:
     in: Abs(ComplexInfinity)
@@ -415,6 +427,10 @@ complex-infinity-has-infinite-magnitude-in-every:
     in: Abs[ComplexInfinity]
   wolfram:
     in: Abs[ComplexInfinity]
+  sympy:
+    in: Abs(zoo)
+  sage:
+    in: abs(unsigned_infinity)
 an-interval-maps-to-the-interval-of-absolute:
   epsil:
     in: Abs(Interval(-3, 5))

@@ -51,6 +51,8 @@ symbolic-arguments-are-left-unevaluated-rather:
     out: \mathrm{IncompleteEllipticPi}(n, \phi, m)
   fullform:
     in: EllipticPi[n, phi, m]
+  wolfram:
+    in: EllipticPi[n, phi, m]
 all-three-arguments-complex-matches-mpmath-s:
   epsil:
     in: N(IncompleteEllipticPi(1.17 + 0.45i, 1.17 + 0.45i, 1.17 + 0.45i))

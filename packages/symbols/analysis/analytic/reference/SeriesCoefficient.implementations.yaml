@@ -7,6 +7,8 @@ exp-about-a-nonzero-point:
     out: \frac{e}{2}
   fullform:
     in: SeriesCoefficient[Exp[x], List[x, 1, 2]]
+  wolfram:
+    in: SeriesCoefficient[Exp[x], List[x, 1, 2]]
 sin-about-zero:
   epsil:
     in: SeriesCoefficient(Sin(x), [x, 0, 5])
@@ -15,6 +17,8 @@ sin-about-zero:
     in: \mathrm{SeriesCoefficient}(\sin(x), \bigl\lbrack x, 0, 5\bigr\rbrack)
     out: \frac{1}{120}
   fullform:
+    in: SeriesCoefficient[Sin[x], List[x, 0, 5]]
+  wolfram:
     in: SeriesCoefficient[Sin[x], List[x, 0, 5]]
 geometric-series:
   epsil:
@@ -25,6 +29,8 @@ geometric-series:
     out: "1"
   fullform:
     in: SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
+  wolfram:
+    in: SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
 log-series:
   epsil:
     in: SeriesCoefficient(Ln(1 + x), [x, 0, 4])
@@ -33,6 +39,8 @@ log-series:
     in: \mathrm{SeriesCoefficient}(\ln(1+x), \bigl\lbrack x, 0, 4\bigr\rbrack)
     out: -\frac{1}{4}
   fullform:
+    in: SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
+  wolfram:
     in: SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
 a-puiseux-half-integer-order-declines:
   epsil:
@@ -43,6 +51,8 @@ a-puiseux-half-integer-order-declines:
     out: \mathrm{SeriesCoefficient}(\sqrt{x}, \bigl\lbrack x, 0, \frac{1}{2}\bigr\rbrack)
   fullform:
     in: SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
+  wolfram:
+    in: SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
 a-negative-order-laurent-coefficient-declines:
   epsil:
     in: SeriesCoefficient(1 / x, [x, 0, -1])
@@ -52,6 +62,8 @@ a-negative-order-laurent-coefficient-declines:
     out: \mathrm{SeriesCoefficient}(\frac{1}{x}, \bigl\lbrack x, 0, -1\bigr\rbrack)
   fullform:
     in: SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
+  wolfram:
+    in: SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
 a-removable-singularity-declines:
   epsil:
     in: SeriesCoefficient(Sin(x) / x, [x, 0, 0])
@@ -60,4 +72,6 @@ a-removable-singularity-declines:
     in: \mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)
     out: \mathrm{SeriesCoefficient}(\frac{\sin(x)}{x}, \bigl\lbrack x, 0, 0\bigr\rbrack)
   fullform:
+    in: SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]
+  wolfram:
     in: SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]

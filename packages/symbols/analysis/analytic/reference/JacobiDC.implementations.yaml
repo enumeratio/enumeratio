@@ -18,6 +18,8 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiDC[0, m]
+  wolfram:
+    in: JacobiDC[0, m]
 m-less-than-0-via-the-imaginary-modulus:
   epsil:
     in: N(JacobiDC(0.3, -0.7))
@@ -37,4 +39,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiDC}(u, m)
     out: \mathrm{JacobiDC}(u, m)
   fullform:
+    in: JacobiDC[u, m]
+  wolfram:
     in: JacobiDC[u, m]

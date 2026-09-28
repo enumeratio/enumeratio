@@ -190,6 +190,8 @@ the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac:
     out: x^4-2x^3+x^2-\frac{1}{30}
   fullform:
     in: BernoulliB[4, x]
+  wolfram:
+    in: BernoulliB[4, x]
 the-bernoulli-polynomial-at-a-rational-point-b-2:
   epsil:
     in: BernoulliB(2, 1 / 2)
@@ -371,6 +373,8 @@ with-a-second-argument-the-bernoulli-polynomial:
     in: B_{1}(x)
     out: x-\frac{1}{2}
   fullform:
+    in: BernoulliB[1, x]
+  wolfram:
     in: BernoulliB[1, x]
 threads-element-wise-over-a-list-as-wolfram-s:
   epsil:

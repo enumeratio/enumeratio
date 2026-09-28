@@ -61,6 +61,12 @@ compute-engine-represents-exp-x-as-e-x-once-the:
     out: e^{x}
   fullform:
     in: Exp[x]
+  wolfram:
+    in: Exp[x]
+  sympy:
+    in: exp(Symbol("x"))
+  sage:
+    in: exp(SR.var("x"))
 inverse-of-ln-e-ln-x-x:
   epsil:
     in: Exp(Ln(5)) == 5
@@ -357,6 +363,12 @@ inverse-of-ln-symbolically:
     out: x
   fullform:
     in: Exp[Log[x]]
+  wolfram:
+    in: Exp[Log[x]]
+  sympy:
+    in: exp(log(Symbol("x")))
+  sage:
+    in: exp(log(SR.var("x")))
 exp-ln-of-a-complex-argument-is-that-argument:
   epsil:
     in: Exp(Ln(1 + 2i))
@@ -415,6 +427,12 @@ exp-negativeinfinity:
     in: Exp[-Infinity]
   wolfram:
     in: Exp[-Infinity]
+  sympy:
+    in: exp(-oo)
+  mpmath:
+    in: exp(-inf)
+  sage:
+    in: exp(-oo)
 exp-positiveinfinity:
   epsil:
     in: Exp(PositiveInfinity)
@@ -426,6 +444,12 @@ exp-positiveinfinity:
     in: Exp[Infinity]
   wolfram:
     in: Exp[Infinity]
+  sympy:
+    in: exp(oo)
+  mpmath:
+    in: exp(inf)
+  sage:
+    in: exp(oo)
 element-wise-over-a-matrix-not-the-matrix:
   epsil:
     in: Exp([[1, ImaginaryUnit * (Pi / 2)], [0, 1]])
@@ -494,6 +518,8 @@ its-own-antiderivative:
     out: e^{x}
   fullform:
     in: Integrate[Exp[x], x]
+  wolfram:
+    in: Integrate[Exp[x], x]
 taylor-series-about-0:
   epsil:
     in: Series(Exp(x), x, 0, 4)
@@ -532,6 +558,12 @@ a-product-of-exponentials-should-combine-e-x-e-y:
     out: e^{x+y}
   fullform:
     in: Times[Exp[x], Exp[y]]
+  wolfram:
+    in: Times[Exp[x], Exp[y]]
+  sympy:
+    in: (exp(Symbol("x")) * exp(Symbol("y")))
+  sage:
+    in: (exp(SR.var("x")) * exp(SR.var("y")))
 combines-past-two-factors:
   epsil:
     in: Exp(a) * Exp(b) * Exp(c)
@@ -541,6 +573,12 @@ combines-past-two-factors:
     out: e^{a+b+c}
   fullform:
     in: Times[Exp[a], Exp[b], Exp[c]]
+  wolfram:
+    in: Times[Exp[a], Exp[b], Exp[c]]
+  sympy:
+    in: (exp(Symbol("a")) * exp(Symbol("b")) * exp(Symbol("c")))
+  sage:
+    in: (exp(SR.var("a")) * exp(SR.var("b")) * exp(SR.var("c")))
 combines-past-extra-non-exponential-factors:
   epsil:
     in: 2 * Exp(x) * Exp(y) * z
@@ -550,6 +588,12 @@ combines-past-extra-non-exponential-factors:
     out: 2z\exp(x+y)
   fullform:
     in: Times[2, Exp[x], Exp[y], z]
+  wolfram:
+    in: Times[2, Exp[x], Exp[y], z]
+  sympy:
+    in: (2 * exp(Symbol("x")) * exp(Symbol("y")) * Symbol("z"))
+  sage:
+    in: (2 * exp(SR.var("x")) * exp(SR.var("y")) * SR.var("z"))
 e-x-e-x-cancels-to-1:
   epsil:
     in: Exp(x) * Exp(-x)
@@ -559,6 +603,12 @@ e-x-e-x-cancels-to-1:
     out: "1"
   fullform:
     in: Times[Exp[x], Exp[Minus[x]]]
+  wolfram:
+    in: Times[Exp[x], Exp[Minus[x]]]
+  sympy:
+    in: (exp(Symbol("x")) * exp((-Symbol("x"))))
+  sage:
+    in: (exp(SR.var("x")) * exp((-SR.var("x"))))
 a-lone-exp-factor-is-untouched:
   epsil:
     in: Exp(x) * y
@@ -568,6 +618,12 @@ a-lone-exp-factor-is-untouched:
     out: ye^{x}
   fullform:
     in: Times[Exp[x], y]
+  wolfram:
+    in: Times[Exp[x], y]
+  sympy:
+    in: (exp(Symbol("x")) * Symbol("y"))
+  sage:
+    in: (exp(SR.var("x")) * SR.var("y"))
 n-decimalizes-a-combined-product:
   epsil:
     in: N(Exp(1) * Exp(2))
@@ -613,6 +669,12 @@ same-base-non-e-powers-are-left-alone:
     out: 2^{x}\times2^{y}
   fullform:
     in: Times[Power[2, x], Power[2, y]]
+  wolfram:
+    in: Times[Power[2, x], Power[2, y]]
+  sympy:
+    in: ((S(2)**Symbol("x")) * (S(2)**Symbol("y")))
+  sage:
+    in: (((2)^SR.var("x")) * ((2)^SR.var("y")))
 euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
   epsil:
     in: ExpToTrig(Exp(ImaginaryUnit * x))
@@ -621,6 +683,8 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig:
     in: \mathrm{ExpToTrig}(\exp(i x))
     out: i\sin(x)+\cos(x)
   fullform:
+    in: ExpToTrig[Exp[Times[I, x]]]
+  wolfram:
     in: ExpToTrig[Exp[Times[I, x]]]
 to-50-significant-digits-every-one-correctly:
   epsil:

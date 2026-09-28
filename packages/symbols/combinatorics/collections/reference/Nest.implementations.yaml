@@ -7,6 +7,8 @@ nest-f-x-3:
     out: f(f(f(x)))
   fullform:
     in: Nest[f, x, 3]
+  wolfram:
+    in: Nest[f, x, 3]
 repeated-squaring-2-2-2-2:
   epsil:
     in: Nest(Function(_1 ^ 2), 2, 3)
@@ -27,6 +29,8 @@ zero-applications-leave-x-alone:
     in: \mathrm{Nest}(f, x, 0)
     out: x
   fullform:
+    in: Nest[f, x, 0]
+  wolfram:
     in: Nest[f, x, 0]
 nest-function-2-times-1-1-10:
   epsil:

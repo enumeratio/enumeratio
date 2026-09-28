@@ -7,6 +7,8 @@ abs-resolves-once-the-sign-is-known:
     out: x
   fullform:
     in: Assuming[Greater[x, 0], Abs[x]]
+  wolfram:
+    in: Assuming[Greater[x, 0], Abs[x]]
 sign-of-x-plus-sign-of-y-under-opposite-signs:
   epsil:
     in: Assuming([x > 0, y < 0], Sign(x) + Sign(y))
@@ -16,6 +18,8 @@ sign-of-x-plus-sign-of-y-under-opposite-signs:
     out: "0"
   fullform:
     in: Assuming[List[Greater[x, 0], Less[y, 0]], Plus[Sign[x], Sign[y]]]
+  wolfram:
+    in: Assuming[List[Greater[x, 0], Less[y, 0]], Plus[Sign[x], Sign[y]]]
 the-assumption-does-not-leak:
   epsil:
     in: "[Assuming(z > 0, Sign(z)), Sign(z)]"
@@ -24,4 +28,6 @@ the-assumption-does-not-leak:
     in: \bigl\lbrack\mathrm{Assuming}(z\gt0, \mathrm{sgn}(z)), \mathrm{sgn}(z)\bigr\rbrack
     out: \bigl\lbrack1, \mathrm{sgn}(z)\bigr\rbrack
   fullform:
+    in: List[Assuming[Greater[z, 0], Sign[z]], Sign[z]]
+  wolfram:
     in: List[Assuming[Greater[z, 0], Sign[z]], Sign[z]]

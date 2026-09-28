@@ -8,6 +8,8 @@ cases-wildcard-keeps-everything:
   fullform:
     in: Cases[List[1, a, 2, b], Slot[1]]
     back: [Cases, [List, 1, a, 2, b], _1]
+  wolfram:
+    in: Cases[List[1, a, 2, b], Slot[1]]
 cases-literal-value:
   epsil:
     in: Cases([1, 2, 1, 3, 1], 1)
@@ -27,6 +29,8 @@ cases-structural-pattern:
     in: \mathrm{Cases}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, 2, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\operatorname{\_a}\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Cases[List[List[1], 2, List[3]], List[_a]]
+  wolfram:
     in: Cases[List[List[1], 2, List[3]], List[_a]]
 cases-count-agree-on-length:
   epsil:
@@ -52,5 +56,5 @@ cases-typed-pattern-not-typed-here:
   fullform:
     in: Length[Cases[List[1, a, 2, b], _Integer]]
   wolfram:
-    in:
+    in: Length[Cases[List[1, a, 2, b], _Integer]]
     note: Wolfram's `_Integer` pattern only matches integers, here 2 (1 and 2).

@@ -18,3 +18,5 @@ tag-matched-catch-recovers-the-value:
     out: \mathrm{ok}
   fullform:
     in: Catch[Throw[ok, done], done]
+  wolfram:
+    in: Catch[Throw[ok, done], done]

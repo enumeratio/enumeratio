@@ -29,3 +29,5 @@ reap-only-a-matching-tag:
     out: \bigl\lbrack0, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]
+  wolfram:
+    in: Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]

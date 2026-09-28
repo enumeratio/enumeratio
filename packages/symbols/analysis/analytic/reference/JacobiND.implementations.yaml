@@ -18,6 +18,8 @@ u-0-is-1-for-any-m:
     out: "1"
   fullform:
     in: JacobiND[0, m]
+  wolfram:
+    in: JacobiND[0, m]
 m-greater-than-1-via-the-reciprocal-modulus:
   epsil:
     in: N(JacobiND(0.3, 1.5))
@@ -37,4 +39,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiND}(u, m)
     out: \mathrm{JacobiND}(u, m)
   fullform:
+    in: JacobiND[u, m]
+  wolfram:
     in: JacobiND[u, m]

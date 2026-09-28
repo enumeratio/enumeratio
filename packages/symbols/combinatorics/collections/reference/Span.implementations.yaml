@@ -7,6 +7,8 @@ positions-2-through-4-2-4-in-wolfram:
     out: \bigl\lbrack b, c, d\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Span[2, 4]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Span[2, 4]]
 every-other-element-through-the-last-1-1-2:
   epsil:
     in: "[a, b, c, d, f][Span(1, -1, 2)]"
@@ -15,6 +17,8 @@ every-other-element-through-the-last-1-1-2:
     in: \bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(1, -1, 2)]
     out: \bigl\lbrack a, c, f\bigr\rbrack
   fullform:
+    in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
+  wolfram:
     in: Part[List[a, b, c, d, f], Span[1, -1, 2]]
 a-negative-step-walks-backwards-1-1-1:
   epsil:
@@ -25,6 +29,8 @@ a-negative-step-walks-backwards-1-1-1:
     out: \bigl\lbrack f, d, c, b, a\bigr\rbrack
   fullform:
     in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
+  wolfram:
+    in: Part[List[a, b, c, d, f], Span[-1, 1, -1]]
 negative-bounds-the-last-two-elements:
   epsil:
     in: "[a, b, c, d, f][Span(-2, -1)]"
@@ -33,6 +39,8 @@ negative-bounds-the-last-two-elements:
     in: \bigl\lbrack a, b, c, d, f\bigr\rbrack[\mathrm{Span}(-2, -1)]
     out: \bigl\lbrack d, f\bigr\rbrack
   fullform:
+    in: Part[List[a, b, c, d, f], Span[-2, -1]]
+  wolfram:
     in: Part[List[a, b, c, d, f], Span[-2, -1]]
 spans-at-two-levels-cut-out-a-submatrix:
   epsil:

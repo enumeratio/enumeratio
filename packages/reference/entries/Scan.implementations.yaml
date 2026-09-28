@@ -58,6 +58,8 @@ the-shape-of-a-running-fold:
   fullform:
     in: FoldList[f, List[a, b, c]]
     back: [FoldList, f, [List, a, b, c]]
+  wolfram:
+    in: FoldList[f, List[a, b, c]]
 running-products-the-factorials:
   epsil:
     in: Scan([1, 2, 3, 4, 5], Multiply)
@@ -80,6 +82,8 @@ running-sums-of-symbolic-elements-wolfram-s:
   fullform:
     in: FoldList[Plus, List[a, b, c]]
     back: [FoldList, Add, [List, a, b, c]]
+  wolfram:
+    in: FoldList[Plus, List[a, b, c]]
 the-running-minimum:
   epsil:
     in: Scan([3, 1, 4, 1, 5], Min)

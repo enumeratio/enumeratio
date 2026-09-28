@@ -7,6 +7,8 @@ the-pythagorean-identity:
     out: "1"
   fullform:
     in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
+  wolfram:
+    in: FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]
 recognizes-the-definition-of-sinh:
   epsil:
     in: FullSimplify((Exp(x) - Exp(-x)) / 2)
@@ -15,6 +17,8 @@ recognizes-the-definition-of-sinh:
     in: \mathrm{FullSimplify}(\frac{1}{2}(e^{x}-\exp(-x)))
     out: \sinh(x)
   fullform:
+    in: FullSimplify[Divide[Subtract[Exp[x], Exp[Minus[x]]], 2]]
+  wolfram:
     in: FullSimplify[Divide[Subtract[Exp[x], Exp[Minus[x]]], 2]]
 folds-the-double-angle-product:
   epsil:
@@ -25,6 +29,8 @@ folds-the-double-angle-product:
     out: \sin(2x)
   fullform:
     in: FullSimplify[Times[2, Sin[x], Cos[x]]]
+  wolfram:
+    in: FullSimplify[Times[2, Sin[x], Cos[x]]]
 the-functional-equation-of-gamma:
   epsil:
     in: FullSimplify(Gamma(x + 1) / Gamma(x))
@@ -33,6 +39,8 @@ the-functional-equation-of-gamma:
     in: \mathrm{FullSimplify}(\frac{\Gamma(x+1)}{\Gamma(x)})
     out: x
   fullform:
+    in: FullSimplify[Divide[Gamma[Plus[x, 1]], Gamma[x]]]
+  wolfram:
     in: FullSimplify[Divide[Gamma[Plus[x, 1]], Gamma[x]]]
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3:
   epsil:
@@ -53,4 +61,6 @@ the-hyperbolic-pythagorean-identity:
     in: \mathrm{FullSimplify}(\cosh(x)^2-\sinh(x)^2)
     out: "1"
   fullform:
+    in: FullSimplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]
+  wolfram:
     in: FullSimplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]

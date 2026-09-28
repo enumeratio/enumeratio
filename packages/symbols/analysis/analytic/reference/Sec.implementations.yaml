@@ -229,6 +229,8 @@ evenness-drops-the-sign-of-a-symbolic-argument:
     out: \sec(x)
   fullform:
     in: Sec[Minus[x]]
+  wolfram:
+    in: Sec[Minus[x]]
 derivative-sec-x-tan-x:
   epsil:
     in: D(Sec(x), x)
@@ -246,4 +248,6 @@ antiderivative-ln-sec-x-tan-x:
     in: \int\!\sec(x)\, \mathrm{d}x
     out: \ln(\vert\tan(x)+\sec(x)\vert)
   fullform:
+    in: Integrate[Sec[x], x]
+  wolfram:
     in: Integrate[Sec[x], x]

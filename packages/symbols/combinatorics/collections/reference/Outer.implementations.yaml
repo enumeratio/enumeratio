@@ -18,6 +18,8 @@ symbolic-entries:
     out: \bigl\lbrack\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack2x, 2y\bigr\rbrack, \bigl\lbrack3x, 3y\bigr\rbrack\bigr\rbrack
   fullform:
     in: Outer[Times, List[1, 2, 3], List[x, y]]
+  wolfram:
+    in: Outer[Times, List[1, 2, 3], List[x, y]]
 any-binary-function-an-addition-table:
   epsil:
     in: Outer(Add, [1, 2], [10, 20])
@@ -48,6 +50,8 @@ list-gives-every-pair-like-a-cartesian-product:
     in: \mathrm{Outer}(\mathrm{List}, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack a, y\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Outer[List, List[a, b], List[x, y]]
+  wolfram:
     in: Outer[List, List[a, b], List[x, y]]
 outer-matrix-of-right-shape:
   epsil:

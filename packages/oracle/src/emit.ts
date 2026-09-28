@@ -11,7 +11,7 @@ import type { System } from "./systems.ts";
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 export type Emitted =
-  | { readonly ok: true; readonly source: string }
+  | { readonly ok: true; readonly source: string; readonly freeSymbols?: readonly string[] }
   | { readonly ok: false; readonly missing: readonly string[] };
 
 const isCall = (value: MathJSON): value is readonly MathJSON[] => Array.isArray(value) && typeof value[0] === "string";
@@ -42,6 +42,17 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
     sage: "False",
     rust: "V::Bool(false)",
   },
+  // Named values, not free variables — a bare `NaN` or `ComplexInfinity` used to fall through
+  // to the same "unknown bare symbol" path a real free variable does, which the symbolic-
+  // system fix below (#A-72) would otherwise turn into a bogus `Symbol("NaN")`: a variable
+  // named NaN, not the not-a-number value. sympy has no exact Glaisher/Khinchin, so those two
+  // stay unmapped there rather than guessed at.
+  NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  ComplexInfinity: { wolfram: "ComplexInfinity", sympy: "zoo", sage: "unsigned_infinity" },
+  PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo" },
+  NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },
+  ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher" },
+  Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin" },
 };
 
 /**
@@ -64,6 +75,9 @@ export function emit(expr: MathJSON, system: System): Emitted {
   const missing: string[] = [];
   // Variables an enclosing Sum/Product iterator binds — not free, so not missing.
   const bound = new Set<string>();
+  // Every free bare symbol actually seen, regardless of system — the numeric-only lanes still
+  // report it as missing, but the caller (a symbolic-agreement check) needs the names either way.
+  const free = new Set<string>();
 
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
@@ -83,9 +97,30 @@ export function emit(expr: MathJSON, system: System): Emitted {
       // Wolfram also knows the rest of the constants, the slots a Function binds, and a
       // mapped head passed as a value (`Fold(Add, 0, xs)`).
       if (system === "wolfram" && (node in SYMBOLS || node in HEADS || /^_\d+$/.test(node))) return toWolfram(node);
-      // An unknown bare symbol is a free variable; emitting it is fine for SymPy and Sage
-      // but meaningless numerically, so treat it as missing rather than guess.
-      if (!bound.has(node)) missing.push(`symbol:${node}`);
+      if (!bound.has(node)) {
+        // A name CONSTANTS knows for some OTHER system (Khinchin, say, which sympy has no
+        // exact form for) is still missing here, not a free variable to guess a value for.
+        // Likewise a Capitalized name that ISN'T in CONSTANTS: this codebase's convention
+        // (design/domains-are-plural-collections.md and every reference example) names a
+        // free math variable lowercase (`x`, `n`, subscripted `e_1`) and a domain, a named
+        // constant we haven't added yet, or a head passed as a value Capitalized — treating
+        // `Primes` in `Element(x, Primes)` as a variable would let the symbolic-agreement
+        // fallback (symbolic.ts) substitute a random rational FOR a set, which is nonsense.
+        if (node in CONSTANTS || /^[A-Z]/.test(node)) {
+          missing.push(`symbol:${node}`);
+          return node;
+        }
+        // A genuinely unknown lowercase bare symbol is a free variable. A symbolic system can
+        // carry it through — Wolfram verbatim (toWolfram passes an unmapped name through
+        // unchanged), SymPy and Sage as an explicit symbolic value, since neither
+        // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
+        // do with a name, so it stays missing.
+        free.add(node);
+        if (system === "wolfram") return toWolfram(node);
+        if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
+        if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
+        missing.push(`symbol:${node}`);
+      }
       return node;
     }
     if (!isCall(node)) {
@@ -161,7 +196,8 @@ export function emit(expr: MathJSON, system: System): Emitted {
   };
 
   const source = walk(expr);
-  return missing.length > 0 ? { ok: false, missing } : { ok: true, source };
+  if (missing.length > 0) return { ok: false, missing };
+  return { ok: true, source, ...(free.size > 0 ? { freeSymbols: [...free].sort() } : {}) };
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */

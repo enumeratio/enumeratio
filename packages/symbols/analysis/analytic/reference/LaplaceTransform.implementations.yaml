@@ -7,6 +7,8 @@ t-cubed:
     out: \frac{6}{s^4}
   fullform:
     in: LaplaceTransform[Power[t, 3], t, s]
+  wolfram:
+    in: LaplaceTransform[Power[t, 3], t, s]
 exp-at:
   epsil:
     in: LaplaceTransform(ExponentialE ^ (2t), t, s)
@@ -15,6 +17,8 @@ exp-at:
     in: \mathrm{LaplaceTransform}(\exp(2t), t, s)
     out: \frac{1}{s-2}
   fullform:
+    in: LaplaceTransform[Power[E, Times[2, t]], t, s]
+  wolfram:
     in: LaplaceTransform[Power[E, Times[2, t]], t, s]
 sin-at:
   epsil:
@@ -25,6 +29,8 @@ sin-at:
     out: \frac{3}{s^2+9}
   fullform:
     in: LaplaceTransform[Sin[Times[3, t]], t, s]
+  wolfram:
+    in: LaplaceTransform[Sin[Times[3, t]], t, s]
 t-cubed-exp-shift:
   epsil:
     in: LaplaceTransform(ExponentialE ^ (2t) * t ^ 3, t, s)
@@ -34,6 +40,8 @@ t-cubed-exp-shift:
     out: \frac{6}{(s-2)^4}
   fullform:
     in: LaplaceTransform[Times[Power[E, Times[2, t]], Power[t, 3]], t, s]
+  wolfram:
+    in: LaplaceTransform[Times[Power[E, Times[2, t]], Power[t, 3]], t, s]
 exp-sin-shift:
   epsil:
     in: LaplaceTransform(ExponentialE ^ (2t) * Sin(3t), t, s)
@@ -42,4 +50,6 @@ exp-sin-shift:
     in: \mathrm{LaplaceTransform}(\exp(2t)\sin(3t), t, s)
     out: (3)((s-2)^2+9)^{-1}
   fullform:
+    in: LaplaceTransform[Times[Power[E, Times[2, t]], Sin[Times[3, t]]], t, s]
+  wolfram:
     in: LaplaceTransform[Times[Power[E, Times[2, t]], Sin[Times[3, t]]], t, s]

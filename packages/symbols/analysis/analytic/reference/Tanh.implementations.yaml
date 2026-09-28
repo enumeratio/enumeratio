@@ -147,6 +147,8 @@ oddness-pulls-the-sign-out-of-a-symbolic:
     out: -\tanh(x)
   fullform:
     in: Tanh[Minus[x]]
+  wolfram:
+    in: Tanh[Minus[x]]
 tanh-artanh-x-x-for-every-x:
   epsil:
     in: Tanh(Artanh(x))
@@ -155,6 +157,8 @@ tanh-artanh-x-x-for-every-x:
     in: \tanh(\mathrm{artanh}(x))
     out: x
   fullform:
+    in: Tanh[ArcTanh[x]]
+  wolfram:
     in: Tanh[ArcTanh[x]]
 tanh-artanh-2-2-past-the-real-domain:
   epsil:
@@ -184,6 +188,8 @@ antiderivative-ln-cosh-x:
     in: \int\!\tanh(x)\, \mathrm{d}x
     out: \ln(\cosh(x))
   fullform:
+    in: Integrate[Tanh[x], x]
+  wolfram:
     in: Integrate[Tanh[x], x]
 in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x:
   epsil:

@@ -56,6 +56,6 @@ declines-a-symbolic-list:
   fullform:
     in: InverseFourier[List[a, b]]
   wolfram:
-    in: InverseFourier[{a, b}]
+    in: InverseFourier[List[a, b]]
     out: InverseFourier[{a, b}]
     note: Wolfram raises `Fourier::fftl` and returns the call unevaluated -- the same decline we make.

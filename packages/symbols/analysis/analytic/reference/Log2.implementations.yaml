@@ -123,7 +123,7 @@ a-symbolic-argument-becomes-the-two-argument-log:
   fullform:
     in: Log2[x]
   wolfram:
-    in:
+    in: Log2[x]
     note: Wolfram rewrites Log2[x] to Log[x]/Log[2].
 an-integer-power-is-pulled-out-2-log-2-3:
   epsil:

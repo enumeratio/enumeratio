@@ -347,6 +347,8 @@ barnesg-of-a-symbol-stays-symbolic:
     out: G(z)
   fullform:
     in: BarnesG[z]
+  wolfram:
+    in: BarnesG[z]
 n-barnesg-5-over-2:
   epsil:
     in: N(BarnesG(5 / 2))

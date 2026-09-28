@@ -280,6 +280,8 @@ q-a-0-1-for-symbolic-a:
     out: "1"
   fullform:
     in: GammaRegularized[a, 0]
+  wolfram:
+    in: GammaRegularized[a, 0]
 q-a-infty-0:
   epsil:
     in: GammaRegularized(a, PositiveInfinity)
@@ -291,6 +293,8 @@ q-a-infty-0:
     in: Q(a, \infty)
     out: "0"
   fullform:
+    in: GammaRegularized[a, Infinity]
+  wolfram:
     in: GammaRegularized[a, Infinity]
 q-1-x-e-x-symbolically:
   epsil:
@@ -304,6 +308,8 @@ q-1-x-e-x-symbolically:
     out: e^{-x}
   fullform:
     in: GammaRegularized[1, x]
+  wolfram:
+    in: GammaRegularized[1, x]
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
   epsil:
     in: GammaRegularized(2, x)
@@ -316,6 +322,8 @@ q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
     out: (x+1)\exp(-x)
   fullform:
     in: GammaRegularized[2, x]
+  wolfram:
+    in: GammaRegularized[2, x]
 q-1-2-x-erfc-sqrt-x-see-erfc:
   epsil:
     in: GammaRegularized(1 / 2, x)
@@ -327,6 +335,8 @@ q-1-2-x-erfc-sqrt-x-see-erfc:
     in: Q(\frac{1}{2}, x)
     out: \operatorname{erfc}(\sqrt{x})
   fullform:
+    in: GammaRegularized[Rational[1, 2], x]
+  wolfram:
     in: GammaRegularized[Rational[1, 2], x]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:

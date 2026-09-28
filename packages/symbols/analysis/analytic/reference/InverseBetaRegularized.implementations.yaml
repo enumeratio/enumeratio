@@ -40,6 +40,8 @@ i-x-1-1-x-is-its-own-inverse:
     out: s
   fullform:
     in: InverseBetaRegularized[s, 1, 1]
+  wolfram:
+    in: InverseBetaRegularized[s, 1, 1]
 i-x-a-1-x-a-inverts-to-s-1-a:
   epsil:
     in: InverseBetaRegularized(s, a, 1)
@@ -48,6 +50,8 @@ i-x-a-1-x-a-inverts-to-s-1-a:
     in: \mathrm{InverseBetaRegularized}(s, a, 1)
     out: \sqrt[a]{s}
   fullform:
+    in: InverseBetaRegularized[s, a, 1]
+  wolfram:
     in: InverseBetaRegularized[s, a, 1]
 inversebetaregularized-0-2-3:
   epsil:

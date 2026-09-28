@@ -172,5 +172,5 @@ a-symbol-stays-undecided-rather-than-false:
   fullform:
     in: OddQ[x]
   wolfram:
-    in:
+    in: OddQ[x]
     note: '$\mathrm{OddQ}[x]$ is False: OddQ tests the literal form, not what x might be.'

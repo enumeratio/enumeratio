@@ -7,6 +7,8 @@ selects-the-second-branch:
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, 0\le x\bigr\rbrack\bigr\rbrack)
   fullform:
     in: Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]]
+  wolfram:
+    in: Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]]
 evaluated-at-a-concrete-point-below-zero:
   epsil:
     in: ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, -5))
@@ -33,6 +35,8 @@ falls-through-to-the-explicit-default:
     in: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
   fullform:
+    in: Piecewise[List[List[Power[x, 2], Less[x, 0]]], 99]
+  wolfram:
     in: Piecewise[List[List[Power[x, 2], Less[x, 0]]], 99]
 every-clause-eliminated-falls-through-to-default:
   epsil:

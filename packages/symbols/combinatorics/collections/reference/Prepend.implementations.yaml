@@ -7,6 +7,8 @@ prepend-list-a-b-c-d-x:
     out: \bigl\lbrack x, a, b, c, d\bigr\rbrack
   fullform:
     in: Prepend[List[a, b, c, d], x]
+  wolfram:
+    in: Prepend[List[a, b, c, d], x]
 prepend-c-x-join-x-c-see-join:
   epsil:
     in: Prepend([1, 2, 3], 0) == Join([0], [1, 2, 3])
@@ -30,6 +32,8 @@ a-rule-inserted-at-the-front-of-an-association:
     out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
   fullform:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]
+  wolfram:
+    in: Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]
 several-rules-prepended-at-once:
   epsil:
     in: Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])
@@ -38,6 +42,8 @@ several-rules-prepended-at-once:
     in: \mathrm{Prepend}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), \bigl\lbrack\mathrm{Rule}(3, d), \mathrm{Rule}(4, e)\bigr\rbrack)
     out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(4, e), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
   fullform:
+    in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
+  wolfram:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
 prepend-front-of-list:
   epsil:

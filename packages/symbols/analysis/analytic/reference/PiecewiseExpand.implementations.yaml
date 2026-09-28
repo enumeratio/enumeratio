@@ -35,6 +35,8 @@ without-a-realness-assumption-it-declines:
     out: \vert x\vert
   fullform:
     in: PiecewiseExpand[Abs[x]]
+  wolfram:
+    in: PiecewiseExpand[Abs[x]]
 max-of-two-real-variables:
   epsil:
     in: PiecewiseExpand(Max(x, y), x in RealNumbers && y in RealNumbers)

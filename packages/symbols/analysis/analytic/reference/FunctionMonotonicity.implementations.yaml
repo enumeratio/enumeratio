@@ -7,6 +7,8 @@ a-cubic-is-increasing-everywhere:
     out: "1"
   fullform:
     in: FunctionMonotonicity[Power[x, 3], x]
+  wolfram:
+    in: FunctionMonotonicity[Power[x, 3], x]
 a-parabola-is-not-globally-monotonic:
   epsil:
     in: FunctionMonotonicity(x ^ 2, x)
@@ -15,6 +17,8 @@ a-parabola-is-not-globally-monotonic:
     in: \mathrm{FunctionMonotonicity}(x^2, x)
     out: \mathrm{Indeterminate}
   fullform:
+    in: FunctionMonotonicity[Power[x, 2], x]
+  wolfram:
     in: FunctionMonotonicity[Power[x, 2], x]
 exp-of-an-affine-argument-is-always-monotonic:
   epsil:
@@ -25,6 +29,8 @@ exp-of-an-affine-argument-is-always-monotonic:
     out: "1"
   fullform:
     in: FunctionMonotonicity[Exp[x], x]
+  wolfram:
+    in: FunctionMonotonicity[Exp[x], x]
 a-restricted-domain-answers-indeterminate:
   epsil:
     in: FunctionMonotonicity(Sqrt(x), x)
@@ -33,4 +39,6 @@ a-restricted-domain-answers-indeterminate:
     in: \mathrm{FunctionMonotonicity}(\sqrt{x}, x)
     out: \mathrm{Indeterminate}
   fullform:
+    in: FunctionMonotonicity[Sqrt[x], x]
+  wolfram:
     in: FunctionMonotonicity[Sqrt[x], x]

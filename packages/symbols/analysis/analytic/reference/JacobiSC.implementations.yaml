@@ -18,6 +18,8 @@ u-0-is-0-for-any-m:
     out: "0"
   fullform:
     in: JacobiSC[0, m]
+  wolfram:
+    in: JacobiSC[0, m]
 m-greater-than-1-via-the-reciprocal-modulus:
   epsil:
     in: N(JacobiSC(1.2, 3))
@@ -37,4 +39,6 @@ symbolic-arguments-are-left-unevaluated-rather:
     in: \mathrm{JacobiSC}(u, m)
     out: \mathrm{JacobiSC}(u, m)
   fullform:
+    in: JacobiSC[u, m]
+  wolfram:
     in: JacobiSC[u, m]

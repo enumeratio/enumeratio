@@ -585,7 +585,7 @@ another-non-integer-3-halves:
     out: "ValueError: 3/2 is not an integer"
     verdict: error
     kind: domain
-    note: "compute-engine answers False for a non-integer; SymPy's isprime raises."
+    note: compute-engine answers False for a non-integer; SymPy's isprime raises.
   sage:
     in: is_prime((3/2))
     out: False
@@ -619,8 +619,12 @@ a-symbol-stays-unevaluated:
   fullform:
     in: PrimeQ[x]
   wolfram:
-    in:
+    in: PrimeQ[x]
     note: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."
+  sympy:
+    in: isprime(Symbol("x"))
+  sage:
+    in: is_prime(SR.var("x"))
 isprime-7:
   epsil:
     in: IsPrime(7)

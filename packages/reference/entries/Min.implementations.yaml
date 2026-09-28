@@ -166,6 +166,10 @@ infinities-participate-directly-in-the:
     tex:
       in: \min (-\infty ,3)
       out: -\infty
+  sympy:
+    in: enumeratio_min(-oo, 3)
+  sage:
+    in: enumeratio_min(-oo, 3)
 multiple-arguments-lists-included-are-flattened:
   epsil:
     in: Min([3, 1], 0)
@@ -281,6 +285,12 @@ the-numeric-arguments-collapse-to-their-minimum:
     out: \min(3, x)
   fullform:
     in: Min[3, x, 5]
+  wolfram:
+    in: Min[3, x, 5]
+  sympy:
+    in: enumeratio_min(3, Symbol("x"), 5)
+  sage:
+    in: enumeratio_min(3, SR.var("x"), 5)
 compares-exact-constants-numerically-min-e-pi-5:
   epsil:
     in: Min([ExponentialE, Pi, 5])
@@ -318,6 +328,12 @@ idempotent-min-x-x-x:
     out: x
   fullform:
     in: Min[x, x]
+  wolfram:
+    in: Min[x, x]
+  sympy:
+    in: enumeratio_min(Symbol("x"), Symbol("x"))
+  sage:
+    in: enumeratio_min(SR.var("x"), SR.var("x"))
 with-no-arguments-it-returns-the-identity:
   epsil:
     in: Min()

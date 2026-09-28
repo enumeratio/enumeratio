@@ -7,6 +7,8 @@ power-x2-alpha-half:
     out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}
   fullform:
     in: CaputoD[Power[x, 2], List[x, 0.5]]
+  wolfram:
+    in: CaputoD[Power[x, 2], List[x, 0.5]]
 constant-vanishes:
   epsil:
     in: CaputoD(5, [x, 0.5])
@@ -15,6 +17,8 @@ constant-vanishes:
     in: \mathrm{CaputoD}(5, \bigl\lbrack x, 0.5\bigr\rbrack)
     out: "0"
   fullform:
+    in: CaputoD[5, List[x, 0.5]]
+  wolfram:
     in: CaputoD[5, List[x, 0.5]]
 integer-edge-case-vanishes:
   epsil:
@@ -25,6 +29,8 @@ integer-edge-case-vanishes:
     out: "0"
   fullform:
     in: CaputoD[x, List[x, 1.5]]
+  wolfram:
+    in: CaputoD[x, List[x, 1.5]]
 polynomial-linearity:
   epsil:
     in: CaputoD(x ^ 2 + 3x + 1, [x, 0.5])
@@ -33,4 +39,6 @@ polynomial-linearity:
     in: \mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)
     out: 1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}
   fullform:
+    in: CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]
+  wolfram:
     in: CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]

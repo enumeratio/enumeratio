@@ -16,3 +16,5 @@ locals-do-not-leak-or-clobber:
     out: \bigl\lbrack11, 21\bigr\rbrack
   fullform:
     in: List[Module[List[Equal[n, 10]], Plus[n, 1]], Module[List[Equal[n, 20]], Plus[n, 1]]]
+  wolfram:
+    in: List[Module[List[(n == 10)], Plus[n, 1]], Module[List[(n == 20)], Plus[n, 1]]]

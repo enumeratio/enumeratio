@@ -138,6 +138,8 @@ a-padding-element-fills-the-overhang-instead-of:
     out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
   fullform:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[1, 1], x]
+  wolfram:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[1, 1], x]
 padding-on-the-left-with-overhangs-1-1:
   epsil:
     in: Partition([1, 2, 3, 4, 5, 6], 3, 1, [-1, -1], x)
@@ -146,6 +148,8 @@ padding-on-the-left-with-overhangs-1-1:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1, \bigl\lbrack-1, -1\bigr\rbrack, x)
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, -1], x]
+  wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, -1], x]
 padding-on-both-sides-with-overhangs-1-1:
   epsil:
@@ -165,6 +169,8 @@ padding-on-both-sides-with-overhangs-1-1:
     in: \mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 3, 1, \bigl\lbrack-1, 1\bigr\rbrack, x)
     out: \bigl\lbrack\bigl\lbrack x, x, 1\bigr\rbrack, \bigl\lbrack x, 1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 4\bigr\rbrack, \bigl\lbrack3, 4, 5\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack5, 6, x\bigr\rbrack, \bigl\lbrack6, x, x\bigr\rbrack\bigr\rbrack
   fullform:
+    in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, 1], x]
+  wolfram:
     in: Partition[List[1, 2, 3, 4, 5, 6], 3, 1, List[-1, 1], x]
 reshaping-a-list-of-9-into-a-3-times-3-matrix:
   epsil:

@@ -575,3 +575,9 @@ symbolic-arguments-stay-unevaluated:
     out: \gcd(x, y)
   fullform:
     in: GCD[x, y]
+  wolfram:
+    in: GCD[x, y]
+  sympy:
+    in: gcd(Symbol("x"), Symbol("y"))
+  sage:
+    in: gcd(SR.var("x"), SR.var("y"))

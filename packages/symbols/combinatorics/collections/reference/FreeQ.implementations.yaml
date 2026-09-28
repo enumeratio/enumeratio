@@ -10,6 +10,8 @@ x-occurs-in-x-2-plus-1:
     out: \mathrm{False}
   fullform:
     in: FreeQ[Plus[Power[x, 2], 1], x]
+  wolfram:
+    in: FreeQ[Plus[Power[x, 2], 1], x]
 y-never-occurs:
   epsil:
     in: FreeQ(x ^ 2 + 1, y)
@@ -22,6 +24,8 @@ y-never-occurs:
     out: \mathrm{True}
   fullform:
     in: FreeQ[Plus[Power[x, 2], 1], y]
+  wolfram:
+    in: FreeQ[Plus[Power[x, 2], 1], y]
 looks-inside-subexpressions-not-just-top-level:
   epsil:
     in: FreeQ([[a, b]], b)
@@ -33,4 +37,6 @@ looks-inside-subexpressions-not-just-top-level:
     in: \mathrm{FreeQ}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack\bigr\rbrack, b)
     out: \mathrm{False}
   fullform:
+    in: FreeQ[List[List[a, b]], b]
+  wolfram:
     in: FreeQ[List[List[a, b]], b]

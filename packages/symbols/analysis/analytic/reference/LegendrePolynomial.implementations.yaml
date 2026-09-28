@@ -7,6 +7,8 @@ the-quadratic:
     out: \frac{3x^2}{2}-\frac{1}{2}
   fullform:
     in: LegendreP[2, x]
+  wolfram:
+    in: LegendreP[2, x]
 the-cubic:
   epsil:
     in: LegendrePolynomial(3, x)
@@ -16,6 +18,8 @@ the-cubic:
     out: \frac{5x^3}{2}-\frac{3x}{2}
   fullform:
     in: LegendreP[3, x]
+  wolfram:
+    in: LegendreP[3, x]
 the-quartic:
   epsil:
     in: LegendrePolynomial(4, x)
@@ -24,6 +28,8 @@ the-quartic:
     in: \mathrm{LegendrePolynomial}(4, x)
     out: \frac{35x^4}{8}-\frac{15x^2}{4}+\frac{3}{8}
   fullform:
+    in: LegendreP[4, x]
+  wolfram:
     in: LegendreP[4, x]
 at-a-real:
   epsil:
@@ -78,6 +84,8 @@ a-symbolic-order-stays-unevaluated:
     in: \mathrm{LegendrePolynomial}(n, x)
     out: \mathrm{LegendrePolynomial}(n, x)
   fullform:
+    in: LegendreP[n, x]
+  wolfram:
     in: LegendreP[n, x]
 at-1:
   epsil:
@@ -152,6 +160,8 @@ negative-order:
     in: \mathrm{LegendrePolynomial}(-3, x)
     out: \frac{3x^2}{2}-\frac{1}{2}
   fullform:
+    in: LegendreP[-3, x]
+  wolfram:
     in: LegendreP[-3, x]
 at-p0-0-7:
   epsil:

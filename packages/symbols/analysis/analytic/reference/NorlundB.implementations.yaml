@@ -51,3 +51,5 @@ a-polynomial-in-a:
     out: -\frac{a}{2}
   fullform:
     in: NorlundB[1, a]
+  wolfram:
+    in: NorlundB[1, a]
