@@ -325,7 +325,7 @@ export function exactRealRootsOf(ce: ComputeEngine, lhs: BoxedExpression, x: str
     if (roots === undefined) return undefined;
     out.push(...roots);
   }
-  return out.sort((p, q) => p.N().re - q.N().re);
+  return out.toSorted((p, q) => p.N().re - q.N().re);
 }
 
 // ---- tail/edge behaviour, via compute-engine's own Limit -------------------------------
