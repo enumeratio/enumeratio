@@ -18,5 +18,5 @@ signatures:
   - call: Dinv(path)
     description: The dinv statistic, read from the area sequence.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

@@ -15,5 +15,5 @@ signatures:
   - call: Area(path)
     description: "The area between the path and the axis: the total of the heights after each step."
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

@@ -13,5 +13,5 @@ signatures:
   - call: Denert(p)
     description: Sum of the excedance positions, plus the inversions within each of the excedance and non-excedance subwords.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---

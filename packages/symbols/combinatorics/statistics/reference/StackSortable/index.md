@@ -17,5 +17,5 @@ signatures:
   - call: StackSortable(p)
     description: 1 when p avoids the pattern 231, 0 otherwise — exactly the stack-sortable permutations.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

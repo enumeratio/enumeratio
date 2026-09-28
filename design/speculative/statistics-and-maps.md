@@ -170,22 +170,56 @@ question for `Sign` was never "is this mechanically possible," it's "is a permut
 parity the same _meaning_ as a complex number's sign, or a coincidental homonym like `Prime`
 the arithmetic prime versus a derivative." `Inverse`/`Reverse`/`Complement` passed that bar
 (a permutation genuinely IS a kind of list/set-like object being reversed/complemented/inverted
-in the same sense); `Sign` is the harder case, and §3.2's exception criterion and §4 Q4/Q5
-are where it's actually decided — not resolved by this survey.
+in the same sense). **Decided (Dean, 2026-09-28): `Sign` over a permutation is a coherent
+generalisation to support**, a map onto ±1 as a number's sign is, the same way the structures
+package generalises `Min` and `Floor`. It is not an overloading to avoid.
 
-### 1.5 What compute-engine's type system actually offers (recap + what's new here)
+### 1.5 What compute-engine's type system actually offers (corrected, BL-9)
 
-`domains.md` §1 covers `mint`/`alias`, dispatch, and the missing subtype lattice in full —
-not re-verified here since nothing has changed. What's new for **this** document is whether
-a collection _itself_ (not just its carrier) can be a type — e.g. is `Permutations(4)` a
-distinct type from `Permutations(5)`? No: `declareType` takes a name and a structural body:
-there is no parametrized/generic type in compute-engine's grammar (no `Permutation<4>`), so
-the only way to get a type per `n` would be minting one type per size on demand — which
-re-opens exactly the "242 names is too many to mint eagerly" problem one level down, for an
-unbounded population. **Base-domain types (today's 86 carriers) are the only scope compute-
-engine's type grammar actually supports**; "full types" (one per collection) isn't a
-trade-off to weigh, it's not offered. §3.1's dispatch design (nominal carrier types, not
-parametrized collection types) follows from this directly.
+An earlier draft said compute-engine has no parametric or generic types. That was wrong.
+Probed against 0.139:
+
+- **Polytypes and constrained signatures.** `(T, U) -> T where T, U: number`, and protocol
+  constraints (`where T is P`), which the solver enforces: a `(collection<T>, string) -> list
+where T is CombinatorialCarrier` signature rejects `SymmetricGroup(3)` with
+  `protocol-constraint-unsatisfied`, and accepts a list of `Permutation` values.
+- **Parameterized nominal types.** `ce.declareType("tagged", "list<T>", { mint: true, typeParams:
+"T" })` with a constructor `(list<T>) -> tagged<T>` infers `tagged<integer>` for
+  `Tag([1, 2])` and `tagged<string>` for `Tag(["a"])`. Variance is declarable.
+- **Conditional conformance.** A generic head conforms to a protocol under a clause
+  (`list<T> is P where T is Q`), instantiated per receiver.
+- **Parameterized kinds** it ships: `list<T>`, `collection<E>`, `indexed_collection<E>`,
+  `broadcastable<T>`.
+
+What it does not have: **a parameter indexed by a value**. A type parameter has to appear in
+the type's body (`generic-alias-unused-parameter` otherwise), so `permutation<4>` -- one type
+per size -- is not expressible. Collections per size stay values, not types.
+
+So the real options are:
+
+1. **Carriers parameterized by what they are made of.** A word over an alphabet
+   (`word<T>`), a set partition of a ground set (`set_partition<T>`), a permutation of
+   arbitrary labels. This is the species picture, F[U] for a label set U, and it is
+   expressible now.
+2. **Collections typed by their element carrier.** Today every family types its elements as a
+   bare `list<integer>` (`SymmetricGroup(3)` is `indexed_collection<list<integer>>`), so
+   nothing at the type level says those lists are permutations. If families produced carrier
+   values, `SymmetricGroup(n)` would be `indexed_collection<permutation>`, and
+   `CombinatorialStat(SymmetricGroup(4), name)` could be checked at boxing through a
+   `collection<T> where T is …` signature. The cost is that every consumer of a family's
+   elements then sees `Permutation([…])` rather than `[…]`.
+3. **Dispatch through compute-engine's solver.** One protocol (`CombinatorialCarrier`, member
+   `StatisticOf(Self, string)`) that every carrier conforms to. It works, but it is slow: see
+   §1.6.
+
+**Recommendation.** Keep `CombinatorialStat`/`CombinatorialMap`'s own table for dispatch
+(option 3 costs about 8× the table per call), and use compute-engine's generics for
+_checking_ instead:
+
+- Type collections by their element carrier (option 2), a family at a time, starting with
+  the permutations.
+- Give `CombinatorialStat` a constrained arm over `collection<T>`.
+- Parameterize the carriers that are naturally "of" something (option 1) as they come up.
 
 ### 1.6 Cost measurement
 
@@ -209,8 +243,18 @@ real numbers instead of a guess.
 ~10 µs.** In absolute terms that's noise next to the Add-200 baseline (~20-25× the typed
 overhead) and next to any real statistic body heavier than a comparison. Minting types is a
 one-time boot cost that stays under 10 ms even at more than triple today's carrier count.
-**Neither number is a reason to avoid typing** — the constraint in §1.5 (no parametric
-types) is what actually bounds the design, not cost.
+**Neither number is a reason to avoid typing.**
+
+Dispatch through compute-engine's own solver (§1.5, option 3), measured the same way on the
+census engine: 5,040 permutations of 7, `FixedPoints`, second of two passes.
+
+| call                                                        |      total |
+| ----------------------------------------------------------- | ---------: |
+| `FixedPoints([…])`, the statistic's own head                |  **61 ms** |
+| `CombinatorialStat(Permutation([…]), "FixedPoints")`, table |  **95 ms** |
+| `StatisticOf(Permutation([…]), "FixedPoints")`, CE protocol | **774 ms** |
+
+The protocol member costs about 8× the table, so dispatch stays ours.
 
 ### 1.7 FindStat
 
@@ -284,9 +328,9 @@ the parallel treatment under a distinct head (`Map` is already CE's list-mapping
 can't be reused) — name TBD (§4 Q2) — same shape otherwise: `Morphism("RskRecording", π)` or
 `Morphism(π, "RskRecording")`, `from`/`to` unchanged from `CombinatorialMap` (§3.4).
 
-**Dispatch without generics.** Compute-engine's type grammar has no parametric types (§1.5) —
-that's why a collection itself can't be a type, but it is _not_ an obstacle here, because
-dispatch never needs a compile-time generic. It needs a runtime type read:
+**Dispatch by a runtime type read.** Compute-engine has generics (§1.5), but dispatching
+through its protocol solver costs about 8× a table lookup (§1.6), so dispatch reads the
+value's type and looks the operation up in our own table:
 
 ```ts
 ce.declare("Statistic", {
@@ -365,7 +409,9 @@ numbers cut both ways and Dean should see the case made honestly, not strawmanne
   names is already too many to mint eagerly, and the catalog grows. A criterion that keeps
   _some_ bare heads still needs the mechanism above for everything it doesn't cover, so this
   alternative is additive complexity (two mechanisms) rather than a genuine substitute.
-- **`Sign` is the concrete counter-example.** Permutation `Sign` colliding with compute-engine's
+- **`Sign` was offered as the counter-example; Dean ruled the other way** (§1.4): a
+  permutation's sign is a coherent generalisation of a number's, so it is supported. The
+  argument as first made: permutation `Sign` colliding with compute-engine's
   native `(complex | signed_infinity) -> complex` `Sign` (§1.4) is not a coincidence a rename
   fixes — it's the shape the project already forbids elsewhere: don't widen a compute-engine
   notation head to an unrelated meaning (`Prime` stays the arithmetic prime, never a
@@ -551,7 +597,7 @@ collections-package filing problem, independent of this document's central quest
   The same part twice is an `OperationCollisionError`.
 - **`skipDeclared` is gone.** A statistic's bare head is declared where the name is free. A taken
   name is allowed only when the table holds another package's kernel for that very statistic,
-  or when compute-engine owns the name (`Sign`, then reached through the table only). Anything
+  or when compute-engine owns the name (`Sign`, whose head then takes the carrier as one more argument, Dean's ruling in §1.4). Anything
   else is a `StatisticCollisionError` naming every signature. Restrictions say which package
   implements them (`implementedBy: "collections"`, on 18 of 19); any other taken name is a
   `RestrictionCollisionError`.
@@ -597,8 +643,7 @@ unimplemented tail (phase 4).
    "build a second index."
 8. **Priority of the subtype-lattice upstream ask.** Already logged (`domains.md` §1.1) and
    nothing in phases 1-5 depends on it — confirming it stays low-priority background work.
-9. **Combinatorial species as the organizing generic** (Dean's brief): compute-engine has no
-   generic/parametric type machinery to hang a species functor on (§1.5), so anything here
-   would live at the `FamilyKernel`/`Declared` layer in our own code, not in CE's type system.
-   Worth a dedicated exploratory spike, or shelve until a concrete need (beyond what `Declared`
-   already expresses) shows up?
+9. **Combinatorial species as the organizing generic** (Dean's brief): compute-engine's
+   parameterized nominal types (§1.5) can express F[U], a structure over a label set, for the
+   carriers that are "of" something. Worth a spike on one species (words or set partitions)
+   before committing the layout?

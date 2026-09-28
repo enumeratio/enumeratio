@@ -12,5 +12,5 @@ signatures:
   - call: ConjugateDistinctParts(partition)
     description: Distinct part sizes of the conjugate.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (integer_partition) -> number
 ---

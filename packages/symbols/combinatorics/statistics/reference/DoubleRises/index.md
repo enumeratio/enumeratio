@@ -17,5 +17,5 @@ signatures:
   - call: DoubleRises(path)
     description: Occurrences of two consecutive up steps.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

@@ -13,5 +13,5 @@ signatures:
   - call: InitialRise(path)
     description: The length of the opening run of up steps.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

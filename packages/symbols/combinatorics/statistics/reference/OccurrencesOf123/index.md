@@ -12,5 +12,5 @@ signatures:
   - call: OccurrencesOf123(p)
     description: Triples i < j < k with p(i) < p(j) < p(k).
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (list<integer> | permutation) -> number
 ---

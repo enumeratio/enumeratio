@@ -13,5 +13,5 @@ signatures:
   - call: Hills(path)
     description: Peaks at height 1 — an up step from the axis immediately followed by a down step.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

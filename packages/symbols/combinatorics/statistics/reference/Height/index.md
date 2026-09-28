@@ -30,5 +30,5 @@ signatures:
   - call: Height(path)
     description: The greatest height the path reaches.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (dyck_path) -> number
 ---

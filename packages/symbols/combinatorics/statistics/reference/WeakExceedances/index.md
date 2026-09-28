@@ -18,5 +18,5 @@ signatures:
   - call: WeakExceedances(p)
     description: Positions with p(i) >= i.
     library: enumeratio-statistics
-    type: (list<integer>) -> number
+    type: (permutation) -> number
 ---
