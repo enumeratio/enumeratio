@@ -59,11 +59,11 @@ const listOf = (value: number | number[] | number[][]): unknown =>
   Array.isArray(value) ? ["List", ...value.map(listOf)] : value;
 
 // The order both engines use: carriers, then collections (which owns the fast permutation
-// heads), then the definitions with `skipDeclared`. A pinned value is therefore the one a
-// cell or a REPL line actually produces, not the definition's in isolation.
-// Heads compute-engine itself owns (`Sign`) are never declared from a definition here --
-// `skipDeclared` leaves them alone -- so they are documented by the core reference, not by
-// this package. Probe a bare engine to find them.
+// heads), then the definitions, which leave those heads to collections. A pinned value is
+// therefore the one a cell or a REPL line actually produces, not the definition's in isolation.
+// Heads compute-engine itself owns (`Sign`) are never declared from a definition -- they are
+// reached through `CombinatorialStatistic` -- so they are documented by the core reference, not
+// by this package. Probe a bare engine to find them.
 const bare = new ComputeEngine();
 const CORE_OWNED = new Set(
   ALL_STATISTICS.map((d) => d.head).filter((head) => bare.lookupDefinition(head) !== undefined),
@@ -72,7 +72,7 @@ const CORE_OWNED = new Set(
 const ce = new ComputeEngine();
 declareCarriers(ce);
 declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
-declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
+declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 
 // `declareStatistics` declares the FIRST definition of each head and skips the rest, so a
 // head defined on two carriers (MajorIndex, Peaks, Valleys) has exactly one live meaning.

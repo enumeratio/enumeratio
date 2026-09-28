@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerCarrier, registerOperation } from "@enumeratio/structures";
 import { type Boxed, intOf } from "./families/types.ts";
 
 // Permutation statistics over a one-line word (a List of 1..n). Pure functions,
@@ -171,4 +172,27 @@ export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): voi
   };
   for (const [head, fn] of Object.entries(WORD_STATS)) declare(head, fn, true);
   for (const [head, fn] of Object.entries(PERM_STATS)) declare(head, fn, false);
+
+  // The same kernels as the preferred implementation of each statistic in the permutations'
+  // table, where @enumeratio/statistics files the definition beside them.
+  registerCarrier(ce, { name: carrier, ...(type === undefined ? {} : { type }) });
+  for (const [name, fn] of Object.entries({ ...WORD_STATS, ...PERM_STATS })) {
+    registerOperation(ce, "CombinatorialStatistic", carrier, {
+      name,
+      type: "integer",
+      kernel: (subject) =>
+        ce.number(
+          fn(
+            asPerm(
+              subject.operator === carrier
+                ? ((subject as unknown as Boxed).ops?.[0] as BoxedExpression | undefined)
+                : subject,
+            ),
+          ),
+        ),
+    });
+  }
 }
+
+/** The names this package's permutation kernels answer to. */
+export const PERMUTATION_KERNELS: readonly string[] = [...Object.keys(WORD_STATS), ...Object.keys(PERM_STATS)];

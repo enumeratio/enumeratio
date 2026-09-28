@@ -9,11 +9,11 @@ import { declareRestricted, declareRestrictions, fillPredicate, RESTRICTIONS } f
 const ce = new ComputeEngine();
 declareCollections(ce);
 declareDomains(ce);
-// collections ships its own fast permutation statistics under several of these names, and a
-// second declaration throws — so the caller says which wins. See DeclareOptions.skipDeclared.
-declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true });
+// collections ships its own fast permutation statistics under several of these names; the
+// definitions go into the same table and leave collections' heads to it.
+declareStatistics(ce, ALL_STATISTICS);
 declareRestricted(ce);
-declareRestrictions(ce, RESTRICTIONS, { skipDeclared: true });
+declareRestrictions(ce, RESTRICTIONS);
 
 const count = (expr: unknown): number => ce.box(["Count", expr] as never).evaluate().re;
 

@@ -1,4 +1,5 @@
-export { applyDefinition, type DeclareOptions, declareStatistics } from "./declare.ts";
+export { applyDefinition, type DeclareOptions, declareStatistics, StatisticCollisionError } from "./declare.ts";
+export { findstat, type FindStatMatch } from "./findstat-data.ts";
 export { declareDistributions } from "./distributions.ts";
 export { declareDistributions2 } from "./distributions-2.ts";
 export { declareDistributions3 } from "./distributions-3.ts";

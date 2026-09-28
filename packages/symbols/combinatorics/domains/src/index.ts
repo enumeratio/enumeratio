@@ -21,6 +21,7 @@ export {
   declareRestrictions,
   fillPredicate,
   RESTRICTIONS,
+  RestrictionCollisionError,
   type Restriction,
 } from "./restriction.ts";
 export { DOMAINS } from "./domain-data.ts";

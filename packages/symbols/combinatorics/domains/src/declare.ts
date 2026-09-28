@@ -8,6 +8,7 @@
 
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { registerCarrier, registerCollectionCarrier } from "@enumeratio/structures";
 import { DOMAINS } from "./domain-data.ts";
 import { declareDomainOrders } from "./orders.ts";
 import type { Domain } from "./types.ts";
@@ -33,6 +34,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
 
   for (const domain of ordered) ce.declareType(domain.type, domain.shape, { mint: true });
   for (const domain of ordered) declareConstructor(ce, domain);
+  for (const domain of ordered) registerCarrier(ce, { name: domain.name, type: domain.type });
   if (named.has("integer_partition")) declareDomainOrders(ce);
 }
 
@@ -101,9 +103,14 @@ export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression 
  */
 export function declareDomainPlurals(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
   for (const domain of domains) {
-    if (domain.plural === undefined || ce.lookupDefinition(domain.plural) !== undefined) continue;
+    if (domain.plural === undefined) continue;
+    // `CombinatorialStatistic(IntegerPartitions, name)` reaches the carrier through its plural.
+    registerCollectionCarrier(ce, domain.plural, domain.name);
+    if (ce.lookupDefinition(domain.plural) !== undefined) continue;
     ce.declare(domain.plural, `set<${domain.type}>`);
   }
+  // compute-engine's name for the permutations of n.
+  registerCollectionCarrier(ce, "SymmetricGroup", "Permutation");
 }
 
 /**

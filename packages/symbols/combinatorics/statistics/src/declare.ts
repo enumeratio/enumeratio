@@ -4,9 +4,11 @@
 // drift from. Where a fast path does exist (the permutation statistics already in
 // @enumeratio/collections), the two are held together by a differential test instead.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import { bySignature, type Definition, SUBJECT } from "./types.ts";
+import { operationOf, registerCarrier, registerOperation } from "@enumeratio/structures";
+import { findstat } from "./findstat-data.ts";
+import { bySignature, type Definition, signatureOf, SUBJECT } from "./types.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 
@@ -30,11 +32,8 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
 }
 
 /**
- * Declare every definition as a head on `ce`. Definitions for one head on several carriers
- * share the head — which is the point — so the first definition wins the declaration and the
- * rest are reachable through `applyDefinition`. Real overload dispatch needs the
- * domain-keyed signature that design/upstreaming.md asks for; until then this is honest
- * about only answering one carrier per head.
+ * The ways a caller can wire the statistics. Each definition always goes into its carrier's
+ * `CombinatorialStatistic` table; it is also a head of its own unless that name is taken.
  */
 export interface DeclareOptions {
   /**
@@ -45,20 +44,21 @@ export interface DeclareOptions {
    * `Cycles(Permutation([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —
    * which is the whole reason the domains exist. A definition marked `alsoOnList` additionally
    * accepts a bare list, because that reading stands on its own (see `Definition.alsoOnList`).
+   * It is also what lets `CombinatorialStatistic` find a value's carrier from its type.
    *
    * Omit it and every head takes a bare list instead, which is what the definition tests use.
    */
   readonly domainTypes?: Readonly<Record<string, string>>;
-  /**
-   * Leave a head alone when something else already declared it.
-   *
-   * `@enumeratio/collections` ships its own fast permutation statistics under the same names
-   * as several defined here, and compute-engine throws on a second declaration — the very
-   * "two extensions cannot contribute to one head" problem design/upstreaming.md §3.2 raises
-   * upstream, arriving in our own code. Until there is a real answer, a caller wiring both
-   * packages has to say which one wins, and this is how it says so.
-   */
-  readonly skipDeclared?: boolean;
+}
+
+/** A statistic's name taken by something that is not the same statistic. */
+export class StatisticCollisionError extends Error {
+  readonly signatures: readonly string[];
+  constructor(signatures: readonly string[]) {
+    super(`statistics: already declared by something else: ${signatures.join(", ")}`);
+    this.name = "StatisticCollisionError";
+    this.signatures = signatures;
+  }
 }
 
 /**
@@ -81,6 +81,26 @@ function subjectType(definition: Definition, options: DeclareOptions): string {
   return definition.alsoOnList === true ? `${carrier} | ${bare}` : carrier;
 }
 
+/** FindStat's ids for each of our statistics, by signature. */
+const FINDSTAT_IDS: ReadonlyMap<string, readonly string[]> = new Map(
+  findstat.map((match) => [`${match.head}@${match.on}`, match.findstat]),
+);
+
+let bare: ComputeEngine | undefined;
+/** Whether compute-engine itself defines `head`, with a meaning of its own (`Sign`). */
+const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).lookupDefinition(head) !== undefined;
+
+/**
+ * File every definition in its carrier's `CombinatorialStatistic` table, and declare it as a
+ * head of its own where the name is free. A taken name is fine in two cases, both explicit: the
+ * table already holds another package's kernel for this very statistic (@enumeratio/collections'
+ * permutation statistics), or compute-engine owns the name with another meaning (`Sign`), when
+ * the statistic is reached through `CombinatorialStatistic` only. Anything else is a
+ * `StatisticCollisionError`, listing every one.
+ *
+ * Definitions for one head on several carriers share the head, the first declaring it; every
+ * one of them is in its carrier's table.
+ */
 export function declareStatistics(
   ce: ComputeEngine,
   definitions: readonly Definition[],
@@ -88,11 +108,30 @@ export function declareStatistics(
 ): Map<string, Definition> {
   const index = bySignature(definitions);
   const claimed = new Set<string>();
+  const collisions: string[] = [];
 
   for (const definition of definitions) {
+    const type = options.domainTypes?.[definition.on];
+    registerCarrier(ce, { name: definition.on, ...(type === undefined ? {} : { type }) });
+    const findstatIds = FINDSTAT_IDS.get(signatureOf(definition));
+    registerOperation(ce, "CombinatorialStatistic", definition.on, {
+      name: definition.head,
+      ...(findstatIds === undefined ? {} : { findstat: findstatIds }),
+      definition: (subject) =>
+        applyDefinition(
+          ce,
+          definition,
+          subject.operator === definition.on ? (operandsOf(subject)[0] ?? subject) : subject,
+        ),
+    });
+
     if (claimed.has(definition.head)) continue;
-    if (options.skipDeclared === true && ce.lookupDefinition(definition.head)) continue;
     claimed.add(definition.head);
+    if (ce.lookupDefinition(definition.head) !== undefined) {
+      const kernel = operationOf(ce, "CombinatorialStatistic", definition.on, definition.head)?.kernel;
+      if (kernel === undefined && !isEngineHead(definition.head)) collisions.push(signatureOf(definition));
+      continue;
+    }
 
     ce.declare(definition.head, {
       signature: `(${subjectType(definition, options)}) -> number`,
@@ -107,5 +146,6 @@ export function declareStatistics(
       },
     });
   }
+  if (collisions.length > 0) throw new StatisticCollisionError(collisions);
   return index;
 }

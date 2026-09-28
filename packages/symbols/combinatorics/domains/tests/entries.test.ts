@@ -15,7 +15,6 @@ const ce = new ComputeEngine();
 declareDomains(ce);
 declareCollections(ce, { permutationType: "permutation" });
 declareStatistics(ce, ALL_STATISTICS, {
-  skipDeclared: true,
   // SetPartition held back -- RGS here, blocks in the definitions. See scripts/carriers.ts.
   domainTypes: Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type])),
 });

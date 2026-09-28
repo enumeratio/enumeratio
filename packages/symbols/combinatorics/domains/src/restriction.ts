@@ -20,6 +20,8 @@
 // those as constructor parameters for exactly this reason.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerCollectionCarrier } from "@enumeratio/structures";
+import { DOMAINS } from "./domain-data.ts";
 
 /** A named restriction: a base collection plus the predicate that selects from it. */
 export interface Restriction {
@@ -32,11 +34,17 @@ export interface Restriction {
   /** The predicate, over `_x` (the constructed element). */
   readonly predicate: unknown;
   readonly summary: string;
+  /**
+   * The package whose collection of this name is the fast implementation, when there is one.
+   * With it declared, that collection answers and this restriction is its specification.
+   */
+  readonly implementedBy?: "collections";
 }
 
 export const RESTRICTIONS: readonly Restriction[] = [
   {
     name: "Derangements",
+    implementedBy: "collections",
     base: "SymmetricGroup",
     on: "permutation",
     predicate: ["Equal", ["FixedPoints", "_x"], 0],
@@ -44,6 +52,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "CyclicPermutations",
+    implementedBy: "collections",
     base: "SymmetricGroup",
     on: "permutation",
     predicate: ["Equal", ["CycleCount", "_x"], 1],
@@ -51,6 +60,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "DistinctPartitions",
+    implementedBy: "collections",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: ["Equal", ["DistinctParts", "_x"], ["Length", "_raw"]],
@@ -70,6 +80,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   // compare a part against its neighbor, via `Partition(_raw, k, 1)` sliding windows.
   {
     name: "OddCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["Equal", ["Mod", "_", 2], 1], "_"]],
@@ -77,6 +88,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "ProperCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["GreaterEqual", "_", 2], "_"]],
@@ -84,6 +96,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "DyadicCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["Equal", ["Log2", "_"], ["Floor", ["Log2", "_"]]], "_"]],
@@ -91,6 +104,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "FibonacciCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["Or", ["Equal", "_", 1], ["Equal", "_", 2]], "_"]],
@@ -98,6 +112,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "TriCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["LessEqual", "_", 3], "_"]],
@@ -105,6 +120,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "TetraCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["LessEqual", "_", 4], "_"]],
@@ -112,6 +128,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "TriangularCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: [
@@ -128,6 +145,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "PrimeCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["All", "_raw", ["Function", ["IsPrime", "_"], "_"]],
@@ -135,6 +153,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "CarlitzCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: [
@@ -146,6 +165,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "PalindromicCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: ["Equal", "_raw", ["Reverse", "_raw"]],
@@ -153,6 +173,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "ZigzagCompositions",
+    implementedBy: "collections",
     base: "IntegerCompositions",
     on: "composition",
     predicate: [
@@ -182,6 +203,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   // reason as KBoundedCompositions: m isn't expressible as a Restriction's single size parameter.
   {
     name: "OddPartitions",
+    implementedBy: "collections",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: ["All", "_raw", ["Function", ["Equal", ["Mod", "_", 2], 1], "_"]],
@@ -189,6 +211,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "PrimePartitions",
+    implementedBy: "collections",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: ["All", "_raw", ["Function", ["IsPrime", "_"], "_"]],
@@ -196,6 +219,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "SquarePartitions",
+    implementedBy: "collections",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: ["All", "_raw", ["Function", ["Equal", ["Sqrt", "_"], ["Floor", ["Sqrt", "_"]]], "_"]],
@@ -203,6 +227,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
   },
   {
     name: "TriangularPartitions",
+    implementedBy: "collections",
     base: "IntegerPartitions",
     on: "integer_partition",
     predicate: [
@@ -262,16 +287,20 @@ export function declareRestricted(ce: ComputeEngine): void {
  * hand-written count and unrank kernels. That is not a conflict to resolve — it is the
  * reference/accelerated pairing from design/namespaces.md §6 arriving somewhere new. The
  * restriction is the SPECIFICATION ("permutations with no fixed point"); the kernel is the
- * implementation; and a differential test holds them together. Pass `skipDeclared` to let the
- * kernel win at runtime while keeping the specification as data.
+ * implementation; and a differential test holds them together. A restriction says so
+ * (`implementedBy`), and then the collection answers when it is declared. Any other name
+ * already taken is a `RestrictionCollisionError`, listing every one.
  */
-export function declareRestrictions(
-  ce: ComputeEngine,
-  restrictions: readonly Restriction[] = RESTRICTIONS,
-  options: { readonly skipDeclared?: boolean } = {},
-): void {
+export function declareRestrictions(ce: ComputeEngine, restrictions: readonly Restriction[] = RESTRICTIONS): void {
+  const carrierOf = new Map(DOMAINS.map((domain) => [domain.type, domain.name]));
+  const collisions: string[] = [];
   for (const restriction of restrictions) {
-    if (options.skipDeclared === true && ce.lookupDefinition(restriction.name)) continue;
+    const carrier = carrierOf.get(restriction.on);
+    if (carrier !== undefined) registerCollectionCarrier(ce, restriction.name, carrier);
+    if (ce.lookupDefinition(restriction.name) !== undefined) {
+      if (restriction.implementedBy === undefined) collisions.push(restriction.name);
+      continue;
+    }
     ce.declare(restriction.name, {
       signature: "(integer) -> collection",
       evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
@@ -288,5 +317,16 @@ export function declareRestrictions(
           .evaluate();
       },
     });
+  }
+  if (collisions.length > 0) throw new RestrictionCollisionError(collisions);
+}
+
+/** A restriction's name taken by something that isn't its implementation. */
+export class RestrictionCollisionError extends Error {
+  readonly names: readonly string[];
+  constructor(names: readonly string[]) {
+    super(`restrictions: already declared by something else: ${names.join(", ")}`);
+    this.name = "RestrictionCollisionError";
+    this.names = names;
   }
 }
