@@ -22,6 +22,7 @@ import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
+import { declareBoxes } from "@enumeratio/boxes/src";
 
 /** Every library we ship BESIDES `@enumeratio/aestimatio`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
@@ -29,6 +30,7 @@ import { declareResidues } from "@enumeratio/residues/src";
  * declare exactly these — the worker's own engine already declares aestimatio itself
  * (redeclaring throws: "already declared in this scope"). */
 const LIBRARY_DECLARATIONS = [
+  declareBoxes,
   declareAnalytic,
   declareFractals,
   declareHypercomplex,

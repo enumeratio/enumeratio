@@ -1,0 +1,17 @@
+name: ToBoxes
+domain: Boxes
+signature: ToBoxes(expr)
+summary: The boxes an expression's traditional notation is made of, after evaluating it.
+signatures:
+  - call: ToBoxes(expr)
+    description: The boxes an expression's traditional notation is made of, after evaluating it.
+    library: enumeratio-boxes
+details:
+  - Wolfram's `ToBoxes[expr]` gives StandardForm boxes by default; ours are the traditional notation, `ToBoxes[expr, TraditionalForm]` without its `FormBox` wrapper and with templates expanded.
+  - The result is typed `boxes`.
+seeAlso:
+  - MakeBoxes
+  - DisplayForm
+  - RawBoxes
+names:
+  wolframIdentity: true

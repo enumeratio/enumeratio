@@ -1834,6 +1834,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Disk",
   },
   {
+    name: "DisplayForm",
+    wolfram: "DisplayForm",
+  },
+  {
     name: "Divide",
     wolfram: "Divide",
   },
@@ -2096,6 +2100,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Erfi",
     fungrimEntries: ["01440f", "603a49"],
+  },
+  {
+    name: "ErrorBox",
+    wolfram: "ErrorBox",
   },
   {
     name: "EulerE",
@@ -2594,8 +2602,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FourierTransform",
   },
   {
+    name: "FractionBox",
+    wolfram: "FractionBox",
+  },
+  {
     name: "FractionalPart",
     wolfram: "FractionalPart",
+  },
+  {
+    name: "FrameBox",
+    wolfram: "FrameBox",
   },
   {
     name: "FreeQ",
@@ -2972,6 +2988,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Grid",
     wolfram: "Grid",
+  },
+  {
+    name: "GridBox",
+    wolfram: "GridBox",
   },
   {
     name: "GridGraph",
@@ -3418,6 +3438,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f4e249",
       "f946a5",
     ],
+  },
+  {
+    name: "InterpretationBox",
+    wolfram: "InterpretationBox",
   },
   {
     name: "Intersection",
@@ -4324,6 +4348,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MakeBoxes",
+    wolfram: "MakeBoxes",
+  },
+  {
     name: "MangoldtLambda",
     wolfram: "MangoldtLambda",
   },
@@ -4750,6 +4778,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "OverBar",
   },
   {
+    name: "OverscriptBox",
+    wolfram: "OverscriptBox",
+  },
+  {
     name: "PDF",
     wolfram: "PDF",
   },
@@ -5123,6 +5155,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Quotient",
   },
   {
+    name: "RadicalBox",
+    wolfram: "RadicalBox",
+  },
+  {
     name: "RadioButtonBar",
     wolfram: "RadioButtonBar",
   },
@@ -5191,6 +5227,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Rationalize",
     wolfram: "Rationalize",
+  },
+  {
+    name: "RawBoxes",
+    wolfram: "RawBoxes",
   },
   {
     name: "ReIm",
@@ -5343,6 +5383,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Row",
     wolfram: "Row",
+  },
+  {
+    name: "RowBox",
+    wolfram: "RowBox",
   },
   {
     name: "Rule",
@@ -5678,6 +5722,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "SqrtBox",
+    wolfram: "SqrtBox",
+  },
+  {
     name: "SquareWave",
     wolfram: "SquareWave",
   },
@@ -5750,6 +5798,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "StringTake",
   },
   {
+    name: "StyleBox",
+    wolfram: "StyleBox",
+  },
+  {
     name: "Subfactorial",
     wolfram: "Subfactorial",
   },
@@ -5758,8 +5810,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Subgraph",
   },
   {
+    name: "SubscriptBox",
+    wolfram: "SubscriptBox",
+  },
+  {
     name: "Subsets",
     wolfram: "Subsets",
+  },
+  {
+    name: "SubsuperscriptBox",
+    wolfram: "SubsuperscriptBox",
   },
   {
     name: "Subtract",
@@ -5819,6 +5879,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Sum",
   },
   {
+    name: "SuperscriptBox",
+    wolfram: "SuperscriptBox",
+  },
+  {
     name: "Surd",
     wolfram: "Surd",
   },
@@ -5844,6 +5908,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "TagBox",
+    wolfram: "TagBox",
   },
   {
     name: "Take",
@@ -5915,6 +5983,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "TimeConstrained",
     wolfram: "TimeConstrained",
+  },
+  {
+    name: "ToBoxes",
+    wolfram: "ToBoxes",
   },
   {
     name: "ToCharacterCode",
@@ -6007,6 +6079,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "TuranGraph",
     wolfram: "TuranGraph",
+  },
+  {
+    name: "UnderoverscriptBox",
+    wolfram: "UnderoverscriptBox",
+  },
+  {
+    name: "UnderscriptBox",
+    wolfram: "UnderscriptBox",
   },
   {
     name: "UndirectedEdge",

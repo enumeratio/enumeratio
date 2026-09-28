@@ -70,6 +70,7 @@ export default {
           { declareDomains, declareDomainPlurals, declareDomainElement, declareMaps, DOMAINS },
           { declareAnalytic, declareFractals },
           { declareGraphics },
+          { declareBoxes, BOXES_LATEX },
           { declareHypercomplex },
           { declareGeometric },
           { declareDiagrams },
@@ -92,6 +93,7 @@ export default {
           import("@enumeratio/domains"),
           import("@enumeratio/analytic"),
           import("@enumeratio/formats"),
+          import("@enumeratio/boxes"),
           import("@enumeratio/hypercomplex"),
           import("@enumeratio/geometric"),
           import("@enumeratio/diagram"),
@@ -110,6 +112,7 @@ export default {
         ]);
         // Notation has to be in before the engine is built: its dictionary is fixed then.
         configureLatex(RESIDUES_LATEX);
+        configureLatex(BOXES_LATEX);
         applyEngineLibraries(configureEngine, {
           declareCollections,
           declareStatistics,
@@ -122,6 +125,7 @@ export default {
           declareAnalytic,
           declareFractals,
           declareGraphics,
+          declareBoxes,
           declareHypercomplex,
           declareGeometric,
           declareDiagrams,

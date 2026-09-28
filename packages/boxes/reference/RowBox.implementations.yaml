@@ -1,0 +1,11 @@
+inert:
+  epsil:
+    in: RowBox(["a", "+", "b"])
+    out: RowBox(["a", "+", "b"])
+  tex:
+    in: \mathrm{RowBox}(\bigl\lbrack\text{a}, \text{+}, \text{b}\bigr\rbrack)
+    out: \mathrm{RowBox}(\bigl\lbrack\text{a}, \text{+}, \text{b}\bigr\rbrack)
+  fullform:
+    in: RowBox[List["a", "+", "b"]]
+  wolfram:
+    in: RowBox[List["a", "+", "b"]]

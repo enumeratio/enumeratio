@@ -186,6 +186,21 @@ importers:
         specifier: 'catalog:'
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
+  packages/boxes:
+    devDependencies:
+      '@cortex-js/compute-engine':
+        specifier: ^0.134.0
+        version: 0.134.0
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vite:
+        specifier: 'catalog:'
+        version: '@voidzero-dev/vite-plus-core@0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)'
+      vite-plus:
+        specifier: 'catalog:'
+        version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
+
   packages/catalog:
     dependencies:
       '@enumeratio/boxed':
@@ -222,6 +237,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
@@ -371,6 +389,9 @@ importers:
       '@enumeratio/boxed':
         specifier: workspace:*
         version: link:../boxed
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
@@ -580,6 +601,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
@@ -1264,6 +1288,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../packages/symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../packages/boxes
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../packages/symbols/groups/braid

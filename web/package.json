@@ -16,6 +16,7 @@
     "@enumeratio/adeles": "workspace:*",
     "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/cli": "workspace:*",
     "@enumeratio/collections": "workspace:*",

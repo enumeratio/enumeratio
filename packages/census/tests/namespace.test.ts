@@ -13,6 +13,7 @@ import { declaredNames } from "../src/engine.ts";
 /** Free symbols we declare on purpose, with the reason. */
 const DELIBERATE: Record<string, string> = {
   q: "the Hecke deformation parameter — every coefficient is a polynomial in it",
+  boxes: "the structural type of a box expression (design/boxes.md); a declared type shares the symbol table",
 };
 
 /** The carrier TYPES. compute-engine keeps types and symbols in one table, and the engine's

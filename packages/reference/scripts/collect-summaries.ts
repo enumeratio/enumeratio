@@ -28,6 +28,32 @@ interface PackageSummaries {
 }
 
 const PACKAGES: Record<string, PackageSummaries> = {
+  boxes: {
+    heads: [
+      "DisplayForm",
+      "ErrorBox",
+      "FractionBox",
+      "FrameBox",
+      "GridBox",
+      "InterpretationBox",
+      "MakeBoxes",
+      "OverscriptBox",
+      "RadicalBox",
+      "RawBoxes",
+      "RowBox",
+      "SqrtBox",
+      "StyleBox",
+      "SubscriptBox",
+      "SubsuperscriptBox",
+      "SuperscriptBox",
+      "TagBox",
+      "TextBox",
+      "ToBoxes",
+      "UnderoverscriptBox",
+      "UnderscriptBox",
+    ],
+    outPath: "../../boxes/src/summaries-data.ts",
+  },
   collections: {
     heads: [
       "DifferenceDelta",

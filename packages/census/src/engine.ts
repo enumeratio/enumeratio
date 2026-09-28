@@ -37,6 +37,7 @@ import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
 import { declareHopf } from "@enumeratio/hopf/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
+import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
 import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
@@ -76,6 +77,7 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareBraid,
   declareCollections,
   declareGraphics,
+  declareBoxes,
   declareDomains,
   (ce) => {
     // AFTER declareCollections (above), so a plural a collection family already claims
