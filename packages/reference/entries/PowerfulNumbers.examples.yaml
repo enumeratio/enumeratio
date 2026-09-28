@@ -3,3 +3,11 @@
   expr: [Take, PowerfulNumbers, 25]
   expected:
     [List, 1, 4, 8, 9, 16, 25, 27, 32, 36, 49, 64, 72, 81, 100, 108, 121, 125, 128, 144, 169, 196, 200, 216, 225, 243]
+- id: 36-is-powerful
+  expr: [Element, 36, PowerfulNumbers]
+  expected: True
+  category: Properties
+- id: 12-is-not-powerful
+  expr: [Element, 12, PowerfulNumbers]
+  expected: False
+  category: Properties

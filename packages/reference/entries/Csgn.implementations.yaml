@@ -1,0 +1,45 @@
+csgn-1-1:
+  epsil:
+    in: Csgn(1)
+    out: "1"
+  tex:
+    in: \mathrm{Csgn}(1)
+    out: "1"
+  fullform:
+    in: Csgn[1]
+csgn-neg-3-neg-1:
+  epsil:
+    in: Csgn(-3)
+    out: "-1"
+  tex:
+    in: \mathrm{Csgn}(-3)
+    out: "-1"
+  fullform:
+    in: Csgn[-3]
+csgn-0-0:
+  epsil:
+    in: Csgn(0)
+    out: "0"
+  tex:
+    in: \mathrm{Csgn}(0)
+    out: "0"
+  fullform:
+    in: Csgn[0]
+csgn-i-1:
+  epsil:
+    in: N(Csgn(i))
+    out: "1"
+  tex:
+    in: N(\mathrm{Csgn}(i))
+    out: "1"
+  fullform:
+    in: N[Csgn[Complex[0, 1]]]
+csgn-neg-i-neg-1:
+  epsil:
+    in: N(Csgn(-i))
+    out: "-1"
+  tex:
+    in: N(\mathrm{Csgn}(-i))
+    out: "-1"
+  fullform:
+    in: N[Csgn[Complex[0, -1]]]

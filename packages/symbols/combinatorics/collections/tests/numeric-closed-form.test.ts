@@ -276,43 +276,11 @@ test("PolygonalNumbers(4) agrees with SquareNumbers (numeric-sets.ts)", () => {
 // ─── engine-level: Take / Element through the declared CE collection handlers,
 // as in numeric-sets.test.ts. Kept to values well within the safe-integer decode range that
 // declare.ts's `intOf` caps membership checks to (see the file header in
-// numeric-closed-form.ts). ──────────────────────────────────────────────────────────────────
+// numeric-closed-form.ts). Take/Element cases now live as examples (CubeNumbers,
+// TriangularNumbers, PowersOfTwo, FactorialNumbers, PolygonalNumbers, AllOnes). ─────────────
 const ce = new ComputeEngine();
 declareCollections(ce);
 
 test("TriangularNumbers is declared as an indexed_collection<integer>", () => {
   expect(ce.box("TriangularNumbers").type.toString()).toBe("indexed_collection<integer>");
-});
-
-test("Take(CubeNumbers, 5) gives the first five cubes", () => {
-  expect(ce.box(["Take", "CubeNumbers", 5]).evaluate().toString()).toBe("[1,8,27,64,125]");
-});
-
-test("Element membership on TriangularNumbers", () => {
-  expect(ce.box(["Element", 15, "TriangularNumbers"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 14, "TriangularNumbers"]).evaluate().toString()).toBe('"False"');
-});
-
-test("Element membership on PowersOfTwo", () => {
-  expect(ce.box(["Element", 64, "PowersOfTwo"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 48, "PowersOfTwo"]).evaluate().toString()).toBe('"False"');
-});
-
-test("Take(FactorialNumbers, 6) gives the first six factorials", () => {
-  expect(ce.box(["Take", "FactorialNumbers", 6]).evaluate().toString()).toBe("[1,2,6,24,120,720]");
-});
-
-test("PolygonalNumbers(k) is a one-parameter operator through the engine", () => {
-  expect(
-    ce
-      .box(["Take", ["PolygonalNumbers", 6], 5])
-      .evaluate()
-      .toString(),
-  ).toBe("[1,6,15,28,45]");
-});
-
-test("AllOnes is the constant sequence", () => {
-  expect(ce.box(["Take", "AllOnes", 5]).evaluate().toString()).toBe("[1,1,1,1,1]");
-  expect(ce.box(["Element", 1, "AllOnes"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 2, "AllOnes"]).evaluate().toString()).toBe('"False"');
 });

@@ -1,7 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { entries as numericDivisor } from "../src/families/numeric-divisor.ts";
-import { declareCollections } from "../src/library.ts";
 
 const byHead = new Map(numericDivisor.map((e) => [e.head, e]));
 
@@ -312,30 +310,8 @@ test("IdonealNumbers has exactly the 65 known numeri idonei", () => {
   expect(got.every((n) => entry.valid(n, []))).toBe(true);
 });
 
-// ─── engine-level: Take / Element through the declared CE collection handlers. ──
-
-const ce = new ComputeEngine();
-declareCollections(ce);
-
-test("Take(PracticalNumbers, 5) gives the first five practical numbers", () => {
-  expect(ce.box(["Take", "PracticalNumbers", 5]).evaluate().toString()).toBe("[1,2,4,6,8]");
-});
-test("Element membership on PowerfulNumbers", () => {
-  expect(ce.box(["Element", 36, "PowerfulNumbers"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 12, "PowerfulNumbers"]).evaluate().toString()).toBe('"False"');
-});
-test("KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2", () => {
-  expect(
-    ce
-      .box(["Take", ["KFreeIntegers", 2], 10])
-      .evaluate()
-      .toString(),
-  ).toBe(ce.box(["Take", "SquareFreeNumbers", 10]).evaluate().toString());
-});
-test("Element membership on CarmichaelNumbers", () => {
-  expect(ce.box(["Element", 561, "CarmichaelNumbers"]).evaluate().toString()).toBe('"True"');
-  expect(ce.box(["Element", 560, "CarmichaelNumbers"]).evaluate().toString()).toBe('"False"');
-});
+// Take/Element cases now live as examples (PracticalNumbers, PowerfulNumbers, KFreeIntegers,
+// SquareFreeNumbers, CarmichaelNumbers).
 
 test("KFreeIntegers(k) below 2 is just {1}, finite", () => {
   const entry = byHead.get("KFreeIntegers");

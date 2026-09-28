@@ -1,10 +1,6 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareFractals, iterateQuadratic, julia, mandelbrot } from "../src/fractal.ts";
+import { iterateQuadratic, julia, mandelbrot } from "../src/fractal.ts";
 import { emitComplexWGSL, type Json } from "@enumeratio/for-compute-engine";
-
-const ce = new ComputeEngine();
-declareFractals(ce);
 
 const mag = (c: { re: number; im: number }) => Math.hypot(c.re, c.im);
 
@@ -46,8 +42,9 @@ test("the iteration count is clamped, never zero or unbounded", () => {
   expect(Number.isFinite(mag(mandelbrot({ re: 0, im: 0 }, 1e9)))).toBe(true);
 });
 
-test("both heads evaluate numerically and lower to their GPU kernels", () => {
-  expect(ce.box(["Mandelbrot", ["Complex", -1, 0], 2] as never).N().re).toBeCloseTo(0, 12);
+// Mandelbrot's numeric-evaluate case is now an example on its own record (0 and -1 are in
+// the Mandelbrot set: the orbit of 0 never escapes, and -1 is 2-periodic).
+test("both heads lower to their GPU kernels", () => {
   expect(emitComplexWGSL(["Mandelbrot", "z", 64] as Json)?.code).toBe("mandelbrot(z, prm.p[0].xy)");
   expect(emitComplexWGSL(["Julia", "z", ["Complex", -0.4, 0.6], 64] as Json)?.code).toBe(
     "julia(z, prm.p[0].xy, prm.p[1].xy)",

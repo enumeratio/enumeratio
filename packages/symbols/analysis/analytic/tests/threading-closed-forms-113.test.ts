@@ -42,13 +42,13 @@ test("closed form: Li3(1/2) and Li2(2)", () => {
   expect(li2.im).toBeCloseTo(-Math.PI * Math.log(2), 12);
 });
 
-test("closed form: FromContinuedFraction of plain symbols builds the nested fraction", () => {
-  expect(evalOf(["FromContinuedFraction", ["List", "a", "b", "c"]])).toEqual([
-    "Add",
-    "a",
-    ["Divide", 1, ["Add", "b", ["Divide", 1, "c"]]],
-  ]);
-  // a periodic tail (nested List) is a different, unrelated item and must stay untouched
+// The plain-symbols case (a/b/c building the nested fraction) is now the
+// `symbolic-terms-build-the-nested-fraction-left` example on ContinuedFraction. What's left is
+// scope-dependent: with only analytic declared (no modular extension), a periodic tail (nested
+// List) isn't a recognized shape, so FromContinuedFraction leaves it untouched rather than
+// rebuilding the quadratic irrational the way the full reference environment's modular
+// extension does (see ContinuedFraction's `a-periodic-tail-rebuilds-the-quadratic` example).
+test("closed form: FromContinuedFraction leaves a periodic tail untouched without modular's extension", () => {
   expect(evalOf(["FromContinuedFraction", ["List", 1, ["List", 2]]])).toEqual([
     "FromContinuedFraction",
     ["List", 1, ["List", 2]],

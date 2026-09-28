@@ -1,0 +1,33 @@
+the-first-five-primes:
+  epsil:
+    in: Take(Primes, 5)
+    out: "[2, 3, 5, 7, 11]"
+  tex:
+    in: \mathrm{Take}(\mathbb{P}, 5)
+    out: \bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack
+  fullform:
+    in: Take[Primes, 5]
+11-is-prime:
+  epsil:
+    in: 11 in Primes
+    out: True
+  tex:
+    in: 11\in\mathbb{P}
+    out: \top
+  traditional:
+    in: 11\in\mathbb{P}
+    out: \mathrm{True}
+  fullform:
+    in: Element[11, Primes]
+9-is-not-prime:
+  epsil:
+    in: 9 in Primes
+    out: False
+  tex:
+    in: 9\in\mathbb{P}
+    out: \bot
+  traditional:
+    in: 9\in\mathbb{P}
+    out: \mathrm{False}
+  fullform:
+    in: Element[9, Primes]

@@ -1,0 +1,18 @@
+- id: b-0-x-1
+  expr: [BernoulliPolynomial, 0, x]
+  expected: 1
+  caption: $B_0(x) = 1$
+- id: b-1-x-x-1-2
+  expr: [BernoulliPolynomial, 1, x]
+  expected: [Add, x, [Rational, -1, 2]]
+  caption: $B_1(x) = x - 1/2$
+- id: b-2-0-1-6
+  expr: [N, [BernoulliPolynomial, 2, 0]]
+  expected: 0.16666666666666666
+  category: Scope
+  caption: $B_2(0) = 1/6$
+- id: b-2-1-1-6
+  expr: [N, [BernoulliPolynomial, 2, 1]]
+  expected: 0.16666666666666666
+  category: Scope
+  caption: $B_2(1) = 1/6$

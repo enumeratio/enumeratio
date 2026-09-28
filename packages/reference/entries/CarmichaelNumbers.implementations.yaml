@@ -34,3 +34,27 @@ the-first-25-terms:
     out: \bigl\lbrack561, 1\,105, 1\,729, 2\,465, 2\,821, 6\,601, 8\,911, 10\,585, 15\,841, 29\,341, 41\,041, 46\,657, 52\,633, 62\,745, 63\,973, 75\,361, 101\,101, 115\,921, 126\,217, 162\,401, 172\,081, 188\,461, 252\,601, 278\,545, 294\,409\bigr\rbrack
   fullform:
     in: Take[CarmichaelNumbers, 25]
+561-is-the-smallest-carmichael-number:
+  epsil:
+    in: 561 in CarmichaelNumbers
+    out: True
+  tex:
+    in: 561\in\mathrm{CarmichaelNumbers}
+    out: \top
+  traditional:
+    in: 561\in\mathrm{CarmichaelNumbers}
+    out: \mathrm{True}
+  fullform:
+    in: Element[561, CarmichaelNumbers]
+560-is-not-carmichael:
+  epsil:
+    in: 560 in CarmichaelNumbers
+    out: False
+  tex:
+    in: 560\in\mathrm{CarmichaelNumbers}
+    out: \bot
+  traditional:
+    in: 560\in\mathrm{CarmichaelNumbers}
+    out: \mathrm{False}
+  fullform:
+    in: Element[560, CarmichaelNumbers]

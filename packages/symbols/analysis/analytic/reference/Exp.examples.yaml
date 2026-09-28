@@ -156,6 +156,41 @@
   expected: [Power, ExponentialE, [Add, x, y]]
   category: Properties
   caption: "A product of exponentials combines: $e^x e^y = e^{x+y}$"
+- id: combines-past-two-factors
+  expr: [Multiply, [Exp, a], [Exp, b], [Exp, c]]
+  expected: [Power, ExponentialE, [Add, a, b, c]]
+  category: Properties
+  caption: Combines past two factors
+- id: combines-past-extra-non-exponential-factors
+  expr: [Multiply, 2, [Exp, x], [Exp, y], z]
+  expected: [Multiply, 2, z, [Power, ExponentialE, [Add, x, y]]]
+  category: Properties
+  caption: Combines past extra, non-exponential factors in the product
+- id: e-x-e-x-cancels-to-1
+  expr: [Multiply, [Exp, x], [Exp, [Negate, x]]]
+  expected: 1
+  category: Properties
+  caption: $e^x e^{-x}$ cancels to 1, past what compute-engine's own like-term merge catches
+- id: a-lone-exp-factor-is-untouched
+  expr: [Multiply, [Exp, x], y]
+  expected: [Multiply, y, [Power, ExponentialE, x]]
+  category: Possible issues
+  caption: A lone `Exp` factor is untouched -- the combine rule needs at least two
+- id: n-decimalizes-a-combined-product
+  expr: [N, [Multiply, [Exp, 1], [Exp, 2]]]
+  expected: 20.085536923187668
+  category: Scope
+  caption: $N()$ still decimalizes a combined product
+- id: agrees-numerically-at-a-complex-point
+  expr: [N, [Multiply, [Exp, [Complex, 1.3, 0.7]], [Exp, [Complex, -0.4, 2.1]]]]
+  expected: [Complex, -2.317493000510215, 0.8239378963241757]
+  category: Scope
+  caption: Agrees numerically with the plain product at a complex point
+- id: same-base-non-e-powers-are-left-alone
+  expr: [Multiply, [Power, 2, x], [Power, 2, y]]
+  expected: [Multiply, [Power, 2, x], [Power, 2, y]]
+  category: Possible issues
+  caption: $2^x 2^y$ is also an identity, but this rule only touches `ExponentialE` -- left to compute-engine's own rules
 - id: euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig
   expr: [ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]
   expected: [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]

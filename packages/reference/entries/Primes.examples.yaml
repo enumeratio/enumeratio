@@ -1,0 +1,12 @@
+- id: the-first-five-primes
+  expr: [Take, Primes, 5]
+  expected: [List, 2, 3, 5, 7, 11]
+  caption: The first five primes
+- id: 11-is-prime
+  expr: [Element, 11, Primes]
+  expected: True
+  category: Properties
+- id: 9-is-not-prime
+  expr: [Element, 9, Primes]
+  expected: False
+  category: Properties

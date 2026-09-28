@@ -30,3 +30,12 @@
       278545,
       294409,
     ]
+- id: 561-is-the-smallest-carmichael-number
+  expr: [Element, 561, CarmichaelNumbers]
+  expected: True
+  category: Properties
+  caption: 561 is the smallest Carmichael number
+- id: 560-is-not-carmichael
+  expr: [Element, 560, CarmichaelNumbers]
+  expected: False
+  category: Properties

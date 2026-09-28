@@ -2,3 +2,11 @@
   id: the-first-25-terms
   expr: [Take, AllOnes, 25]
   expected: [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+- id: 1-is-in-allones
+  expr: [Element, 1, AllOnes]
+  expected: True
+  category: Properties
+- id: 2-is-not-in-allones
+  expr: [Element, 2, AllOnes]
+  expected: False
+  category: Properties

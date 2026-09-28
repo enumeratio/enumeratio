@@ -38,3 +38,27 @@ count-twinprimes-is-unknown-but-the-first-20:
     out: "20"
   fullform:
     in: Count[Take[TwinPrimes, 20]]
+11-is-a-lesser-twin-prime:
+  epsil:
+    in: 11 in TwinPrimes
+    out: True
+  tex:
+    in: 11\in\mathrm{TwinPrimes}
+    out: \top
+  traditional:
+    in: 11\in\mathrm{TwinPrimes}
+    out: \mathrm{True}
+  fullform:
+    in: Element[11, TwinPrimes]
+13-is-not-13-2-15-not-prime:
+  epsil:
+    in: 13 in TwinPrimes
+    out: False
+  tex:
+    in: 13\in\mathrm{TwinPrimes}
+    out: \bot
+  traditional:
+    in: 13\in\mathrm{TwinPrimes}
+    out: \mathrm{False}
+  fullform:
+    in: Element[13, TwinPrimes]

@@ -1,7 +1,12 @@
 name: FallingFactorial
 domain: Wolfram
-signature: FallingFactorial(...)
-summary: Wolfram's own FactorialPower, mapped through for the transpiler and the oracle but not yet written up here.
+signature: FallingFactorial(x, n)
+summary: The falling factorial $x(x-1)\cdots(x-n+1)$ -- Wolfram's own `FactorialPower(x, n)`.
+signatures:
+  - call: FallingFactorial(x, n)
+    description: exact for an integer x and n, numeric otherwise
+    library: "@enumeratio/analytic"
+seeAlso:
+  - RisingFactorial
 names:
   wolfram: FactorialPower
-stub: carrier
