@@ -134,7 +134,7 @@ test("RamanujanTau: brute force against the q-expansion of Δ = q∏(1-q^n)^24",
   const N = 15;
   // Coefficients of ∏_{k=1}^{N}(1-q^k)^24 up to q^(N-1), by direct truncated poly multiply —
   // an independent computation of the same series, not the implementation's own algorithm.
-  let poly = Array.from({ length: N }, () => 0);
+  let poly = new Array(N).fill(0);
   poly[0] = 1;
   for (let k = 1; k < N; k++) {
     // (1-q^k)^24 truncated, via repeated squaring-free direct binomial expansion.
@@ -143,9 +143,9 @@ test("RamanujanTau: brute force against the q-expansion of Δ = q∏(1-q^n)^24",
       for (let i = 0; i < r; i++) result = (result * (n - i)) / (i + 1);
       return Math.round(result);
     };
-    const factor = Array.from({ length: N }, () => 0);
+    const factor = new Array(N).fill(0);
     for (let j = 0; j * k < N; j++) factor[j * k] = binom(24, j) * (j % 2 === 0 ? 1 : -1);
-    const next = Array.from({ length: N }, () => 0);
+    const next = new Array(N).fill(0);
     for (let a = 0; a < N; a++) {
       if (poly[a] === 0) continue;
       for (let b = 0; a + b < N; b++) next[a + b] += poly[a] * factor[b];

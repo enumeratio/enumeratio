@@ -61,7 +61,7 @@ export interface Representation {
 /** Cycles of a permutation, each starting at its least element, in order of least element —
  *  including fixed points, which is what makes the notation reversible without knowing n. */
 function cyclesOf(image: readonly number[]): number[][] {
-  const seen = Array.from({ length: image.length }, () => false);
+  const seen = new Array(image.length).fill(false);
   const cycles: number[][] = [];
   for (let start = 0; start < image.length; start++) {
     if (seen[start]) continue;
@@ -109,7 +109,7 @@ export const REPRESENTATIONS: readonly Representation[] = [
       );
       if (groups.length === 0) return text.trim() === "" ? [] : undefined;
       const size = Math.max(...groups.flat());
-      const image = Array.from({ length: size }, () => 0);
+      const image = new Array(size).fill(0);
       for (const cycle of groups)
         for (const [index, entry] of cycle.entries()) image[entry - 1] = cycle[(index + 1) % cycle.length]!;
       return image.every((v) => v >= 1) ? image : undefined;
