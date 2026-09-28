@@ -6,14 +6,14 @@ import { ensureStyles } from "./styles.ts";
 import { defineControl, emitControl } from "./define.ts";
 
 /**
- * `<notatio-input-field name="x" value="3">` -- a field you type a value into, Wolfram's
+ * `<InputField name="x" value="3">` -- a field you type a value into, Wolfram's
  * `InputField`. The text is Epsil, parsed when you press Enter or leave the field, and
  * the binding `_x` is the expression it parses to: a number, a symbol, `Sin(t)`,
  * whatever was typed. Text that does not parse leaves the binding where it was and
  * marks the field. `type="number"` accepts only a number, and `size` is the width in
  * characters.
  *
- * For a mathematical editor with typeset input, use `<notatio-in>`; this is the plain
+ * For a mathematical editor with typeset input, use `<In>`; this is the plain
  * field a form wants.
  */
 export class NotatioInputField extends LitElement {

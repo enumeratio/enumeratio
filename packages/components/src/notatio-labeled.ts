@@ -2,7 +2,7 @@ import { html, LitElement, nothing } from "lit";
 import { ensureStyles } from "./styles.ts";
 
 /**
- * `<notatio-labeled label="the square">` -- its children with a label beside them,
+ * `<Labeled label="the square">` -- its children with a label beside them,
  * Wolfram's `Labeled`. `position` puts the label `after` (default), `before`, `above`
  * or `below`. Inside a choice list an entry `Labeled(2, "two")` shows the label and
  * binds the value.

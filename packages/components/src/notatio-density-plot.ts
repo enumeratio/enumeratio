@@ -40,7 +40,7 @@ function toMatrix(data: unknown): number[][] | undefined {
 }
 
 /**
- * `<notatio-density-plot expr="\sin(x)\cos(y)" xrange="-3,3" yrange="-3,3">` --
+ * `<DensityPlot expr="\sin(x)\cos(y)" xrange="-3,3" yrange="-3,3">` --
  * a bivariate function as a heatmap (Wolfram's `DensityPlot`): the expression
  * is sampled on an `n`×`n` grid and each sample is shaded on a sequential
  * ramp. `legend` adds a colour bar; `zrange` pins the colour scale so several

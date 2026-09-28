@@ -20,12 +20,12 @@ import { Sweep } from "./sweep.ts";
 import { defineControl, emitControl } from "./define.ts";
 
 /**
- * `<notatio-slider name="k" value="1" min="0" max="5" step="0.5">` -- a track with a
+ * `<Slider name="k" value="1" min="0" max="5" step="0.5">` -- a track with a
  * thumb, Wolfram's `Slider`. Drag the thumb or click the track to set it; the arrows
  * step it, accelerating when held, Shift or PageUp/PageDown step coarse and Alt fine
- * (the same gears as a `<notatio-knob>`), Home/End go to the ends. `readout` shows the
+ * (the same gears as a `<Knob>`), Home/End go to the ends. `readout` shows the
  * value beside the track; `axis="y"` stands it up (Wolfram's `VerticalSlider`, which
- * is also `<notatio-vertical-slider>`).
+ * is also `<VerticalSlider>`).
  *
  * With no `min`/`max` the range is inferred from the value the way a knob's is, and a
  * value written without a point steps by whole numbers. `play` adds a button that

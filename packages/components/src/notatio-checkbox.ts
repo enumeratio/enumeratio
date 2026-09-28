@@ -4,7 +4,7 @@ import { ensureStyles } from "./styles.ts";
 import { defineControl, emitControl } from "./define.ts";
 
 /**
- * `<notatio-checkbox name="on">` -- a box that is ticked or not, Wolfram's `Checkbox`.
+ * `<Checkbox name="on">` -- a box that is ticked or not, Wolfram's `Checkbox`.
  * The binding `_on` is `True` or `False`; `value="True"` starts it ticked. Put the
  * words beside it in the prose -- the box is the control, the sentence is the label --
  * or give it a `label` of its own.

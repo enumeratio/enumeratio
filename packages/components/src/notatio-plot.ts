@@ -45,7 +45,7 @@ const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
   (e as unknown as { ops?: readonly BoxedExpression[] }).ops;
 
 /**
- * `<notatio-plot value="Sin(x)" domain="-6.28,6.28">` -- a 2-D line plot of a
+ * `<Plot value="Sin(x)" domain="-6.28,6.28">` -- a 2-D line plot of a
  * univariate expression. `value` is **Epsil** by default, and accepts LaTeX
  * inside a `$…$` island. Samples the
  * expression across `domain` by substituting `var` (defaults to the sole free

@@ -34,7 +34,7 @@ function toMatrix(data: unknown): number[][] | undefined {
 }
 
 /**
- * `<notatio-list-plot-3d data="[[0,1],[2,3]]">` -- 3-D data, orthographically
+ * `<ListPlot3D data="[[0,1],[2,3]]">` -- 3-D data, orthographically
  * projected. `type="surface"` (the default) reads `data` as a height grid and
  * draws it as a quad mesh (Wolfram's `ListPlot3D` / `ListSurfacePlot3D`);
  * `type="points"` reads `data` as `[x, y, z]` triples and draws a scatter

@@ -82,27 +82,27 @@ export class WorkerUnavailableError extends Error {
 const STOP_GRACE_MS = 300;
 
 /**
- * `<notatio-dynamic-module>` -- a **reactive document**, after Bret Victor's
+ * `<DynamicModule>` -- a **reactive document**, after Bret Victor's
  * [Tangle](http://worrydream.com/Tangle/): prose whose numbers you can grab, and whose
  * other numbers follow.
  *
  * It is the scope, not a control panel. The controls live inline where they are read —
- * a `<notatio-knob>` you drag, a `<notatio-toggler>` you click — and each contributes
+ * a `<Knob>` you drag, a `<Toggler>` you click — and each contributes
  * its `name` as a wildcard. Everything else in the subtree that is an Epsil expression
- * over those wildcards is a template, re-evaluated on every move: a `<notatio-dynamic>`
- * readout, a `<notatio-when>` condition, or an attribute of any other component, so the
+ * over those wildcards is a template, re-evaluated on every move: a `<Dynamic>`
+ * readout, a `<When>` condition, or an attribute of any other component, so the
  * same knob can drive a sentence and the plot beside it.
  *
  * ```html
- * <notatio-dynamic-module>
- *   A <notatio-knob name="n" value="4" min="1" max="8" step="1" />-element set has
- *   <notatio-dynamic value="2^_n" /> subsets<notatio-when test="_n > 5">, which is
- *   already more than you want to list</notatio-when>.
- *   <notatio-figure kind="subset" value="[1,3]" n="_n" />
- * </notatio-dynamic-module>
+ * <DynamicModule>
+ *   A <Knob name="n" value="4" min="1" max="8" step="1" />-element set has
+ *   <Dynamic value="2^_n" /> subsets<When test="_n > 5">, which is
+ *   already more than you want to list</When>.
+ *   <Figure kind="subset" value="[1,3]" n="_n" />
+ * </DynamicModule>
  * ```
  *
- * Unlike `<notatio-manipulate>` — the same substitution machinery behind a Wolfram-style
+ * Unlike `<Manipulate>` — the same substitution machinery behind a Wolfram-style
  * panel of sliders — a dynamic module has no chrome of its own and renders nothing. Nested
  * modules are separate scopes: a control belongs to its nearest enclosing one.
  *
@@ -110,7 +110,7 @@ const STOP_GRACE_MS = 300;
  * with no wrapper at all still find each other. The wrapper is for isolation -- two
  * examples on one page that both call their knob `n`.
  *
- * A SECOND, unrelated capability lives here too: a **transcript**. When a `<notatio-cell>`
+ * A SECOND, unrelated capability lives here too: a **transcript**. When a `<Cell>`
  * inside a module asks (`transcriptFor`), the module lazily creates one shared
  * compute-engine scope and history (`@enumeratio/frontend`'s `Transcript`) and hands it back
  * to every cell that asks -- so `Cell(a := 5)` then `Cell(a^2)` share a binding and
@@ -342,7 +342,7 @@ export class NotatioDynamicModule extends LitElement {
   }
 
   /**
-   * A descendant `<notatio-cell>` committed a new input -- the trigger a reactive module
+   * A descendant `<Cell>` committed a new input -- the trigger a reactive module
    * reacts to (design/rendering-environments.md). Only meaningful once `TrackedSymbols`
    * is set; a plain transcript ignores its own cells' commits here.
    */
@@ -376,7 +376,7 @@ export class NotatioDynamicModule extends LitElement {
    * by `tracked-symbols.ts`'s own schedule.
    *
    * When `TrackedSymbols` is set, every call also feeds the reactive graph: cheap, since
-   * `register` skips a `<notatio-cell>` it already knows, and it is the only place this
+   * `register` skips a `<Cell>` it already knows, and it is the only place this
    * class is handed an engine to box a not-yet-edited cell's `value` with.
    */
   transcriptFor(engine: ComputeEngine): Transcript {

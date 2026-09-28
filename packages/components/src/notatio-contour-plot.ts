@@ -40,7 +40,7 @@ function toMatrix(data: unknown): number[][] | undefined {
 }
 
 /**
- * `<notatio-contour-plot expr="x^2 - y^2" xrange="-3,3" yrange="-3,3">` -- the
+ * `<ContourPlot expr="x^2 - y^2" xrange="-3,3" yrange="-3,3">` -- the
  * contour lines of a bivariate expression (Wolfram's `ContourPlot`): the
  * expression is sampled on an `n`×`n` grid over `xrange`/`yrange` (substituting
  * the two free variables) and iso-lines are extracted at several levels via

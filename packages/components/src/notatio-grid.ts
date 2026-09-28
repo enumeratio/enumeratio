@@ -1,7 +1,7 @@
 import { Layout } from "./layout.ts";
 
 /**
- * `<notatio-grid columns="2">` -- its children in rows of `columns`, Wolfram's `Grid`.
+ * `<Grid columns="2">` -- its children in rows of `columns`, Wolfram's `Grid`.
  * `Grid([[a, b], [c, d]])` draws as one of these with the cells in reading order.
  */
 export class NotatioGrid extends Layout {

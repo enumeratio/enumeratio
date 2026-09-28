@@ -4,7 +4,7 @@ import { ChoiceControl } from "./choice-control.ts";
 import { defineControl } from "./define.ts";
 
 /**
- * `<notatio-list-picker name="s" values="2|3|5|7|11" value="3|7">` -- a list in view,
+ * `<ListPicker name="s" values="2|3|5|7|11" value="3|7">` -- a list in view,
  * with any number of entries selected: Wolfram's `ListPicker`. Click toggles an entry;
  * arrows move, Space toggles. The binding `_s` is the `List` of selected values in
  * list order. `single` allows one selection only (Wolfram's `Multiselection -> False`),

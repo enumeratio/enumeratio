@@ -15,7 +15,7 @@ import {
 } from "@enumeratio/frontend";
 
 /**
- * `<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))">` -- a curve in space, from an
+ * `<Curve3D value="KnotCurve(TorusKnot(2, 3))">` -- a curve in space, from an
  * expression that evaluates to a list of points.
  *
  * Driven by the expression, not by attributes: the figure on a page is then the same
@@ -26,7 +26,7 @@ import {
  * drawn as depth-sorted arcs, each cased in the background colour: the nearer strand
  * erases the farther where they meet. Hue runs along the parameter, so a strand can be
  * followed through a crossing. Drag rotates, ctrl/⌘ + wheel zooms, double-click resets —
- * the same gestures `<notatio-plot-3d>` uses.
+ * the same gestures `<Plot3D>` uses.
  */
 export class NotatioCurve3D extends LitElement {
   static properties = {

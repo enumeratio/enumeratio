@@ -14,8 +14,8 @@ interface NbCell {
 }
 
 /**
- * `<notatio-notebook>` -- a thin shell around a reactive `<notatio-dynamic-module
- * tracked-symbols="all">` of `<notatio-cell>`s: the unified cell owns editing and
+ * `<Notebook>` -- a thin shell around a reactive `<DynamicModule
+ * tracked-symbols="all">` of `<Cell>`s: the unified cell owns editing and
  * evaluation, this element owns the notebook-specific chrome (add/remove, drag to
  * reorder) and the seed.
  *
@@ -82,7 +82,7 @@ export class NotatioNotebook extends LitElement {
     this._cells = [...seeded.map((v) => this.#cell(v)), this.#cell()];
   }
 
-  /** `format` this notebook's syntax maps to on `<notatio-cell>`. */
+  /** `format` this notebook's syntax maps to on `<Cell>`. */
   get #format(): "epsil" | "latex" {
     return this.inForm === "latex" ? "latex" : "epsil";
   }
