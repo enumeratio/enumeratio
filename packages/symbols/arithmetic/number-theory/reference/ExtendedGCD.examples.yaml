@@ -80,3 +80,147 @@
   expected: [ExtendedGCD, 2.5, 3, 4]
   category: Possible issues
   caption: A real argument past two also declines
+- id: one-argument-a-unit-the-identity-bezout-pair
+  expr: [ExtendedGCD, [Complex, 3, 4], 1]
+  expected: [Tuple, 1, 0, 1]
+  caption: "one argument a unit: the identity Bezout pair"
+  category: Scope
+  role: test
+- id: one-argument-i-a-unit
+  expr: [ExtendedGCD, [Complex, 3, 4], [Complex, 0, 1]]
+  expected: [Tuple, 1, 0, [Complex, 0, -1]]
+  caption: one argument $i$, a unit
+  category: Scope
+  role: test
+- id: a-zero-first-argument
+  expr: [ExtendedGCD, 0, [Complex, -4, 3]]
+  expected: [Tuple, [Complex, 3, 4], 0, [Complex, 0, -1]]
+  caption: a zero first argument
+  category: Scope
+  role: test
+- id: a-zero-second-argument
+  expr: [ExtendedGCD, [Complex, -4, 3], 0]
+  expected: [Tuple, [Complex, 3, 4], [Complex, 0, -1], 0]
+  caption: a zero second argument
+  category: Scope
+  role: test
+- id: two-coprime-gaussian-primes-above-5
+  expr: [ExtendedGCD, [Complex, 2, 1], [Complex, 2, -1]]
+  expected: [Tuple, 1, -1, [Complex, 1, 1]]
+  caption: two coprime Gaussian primes above 5
+  category: Scope
+  role: test
+- id: a-gaussian-prime-and-a-real-prime-3-mod-4
+  expr: [ExtendedGCD, [Complex, 2, 1], 3]
+  expected: [Tuple, 1, [Complex, 1, 1], [Complex, 0, -1]]
+  caption: a Gaussian prime and a real prime, 3 mod 4
+  category: Scope
+  role: test
+- id: an-associate-pair-by-i
+  expr: [ExtendedGCD, [Complex, 3, 4], [Complex, -4, 3]]
+  expected: [Tuple, [Complex, 3, 4], 0, [Complex, 0, -1]]
+  caption: an associate pair, by $i$
+  category: Scope
+  role: test
+- id: an-associate-pair-by-1
+  expr: [ExtendedGCD, [Complex, 3, 4], [Complex, -3, -4]]
+  expected: [Tuple, [Complex, 3, 4], 0, -1]
+  caption: an associate pair, by $-1$
+  category: Scope
+  role: test
+- id: two-unrelated-composites-of-norm-25
+  expr: [ExtendedGCD, [Complex, 3, 4], [Complex, 4, 3]]
+  expected: [Tuple, 1, -4, [Complex, 4, 1]]
+  caption: two unrelated composites of norm 25
+  category: Scope
+  role: test
+- id: with-a-negative-real-prime
+  expr: [ExtendedGCD, [Complex, 3, 4], -7]
+  expected: [Tuple, 1, [Complex, -1, -1], [Complex, 0, -1]]
+  caption: with a negative real prime
+  category: Scope
+  role: test
+- id: two-large-norm-gaussians
+  expr: [ExtendedGCD, [Complex, 123, 456], [Complex, 1000, 1]]
+  expected: [Tuple, 1, [Complex, 203, -296], [Complex, -160, -56]]
+  caption: two large-norm Gaussians
+  category: Scope
+  role: test
+- id: past-2-53-in-both-parts
+  expr: [ExtendedGCD, [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }], [Complex, 4, 1]]
+  expected: [Tuple, 1, 2, [Complex, { num: "-47059883199912322470" }, { num: "11760467200350710121" }]]
+  caption: past $2^{53}$ in both parts
+  category: Scope
+  role: test
+- id: a-real-split-prime-and-its-gaussian-factor
+  expr: [ExtendedGCD, 5, [Complex, 2, 1]]
+  expected: [Tuple, [Complex, 2, 1], 0, 1]
+  caption: a real split prime and its Gaussian factor
+  category: Scope
+  role: test
+- id: two-real-composites-plain-integer-case
+  expr: [ExtendedGCD, 4, 9]
+  expected: [Tuple, 1, -2, 1]
+  caption: two real composites, plain-integer case
+  category: Scope
+  role: test
+- id: with-a-negative-real-composite
+  expr: [ExtendedGCD, -15, [Complex, 5, 5]]
+  expected: [Tuple, 5, 1, [Complex, 2, -2]]
+  caption: with a negative real composite
+  category: Scope
+  role: test
+- id: the-larger-norm-argument-given-first
+  expr: [ExtendedGCD, [Complex, 2, 1], [Complex, 123, 456]]
+  expected: [Tuple, 1, [Complex, -140, -158], 1]
+  caption: the larger-norm argument given first
+  category: Scope
+  role: test
+- id: with-an-associate-times-1
+  expr: [ExtendedGCD, [Complex, 8, 2], [Complex, -3, -4]]
+  expected: [Tuple, 1, 4, [Complex, 5, -4]]
+  caption: with an associate, times $-1$
+  category: Scope
+  role: test
+- id: with-an-associate-times-i
+  expr: [ExtendedGCD, [Complex, 8, 2], [Complex, 4, -3]]
+  expected: [Tuple, 1, 4, [Complex, -4, -5]]
+  caption: with an associate, times $-i$
+  category: Scope
+  role: test
+- id: two-coprime-primes-above-13
+  expr: [ExtendedGCD, [Complex, 3, 2], [Complex, 2, 3]]
+  expected: [Tuple, 1, -2, [Complex, 2, -1]]
+  caption: two coprime primes above 13
+  category: Scope
+  role: test
+- id: recovering-a-shared-prime-above-13
+  expr: [ExtendedGCD, [Complex, 6, 8], [Complex, 3, 2]]
+  expected: [Tuple, 1, 2, [Complex, -5, -2]]
+  caption: recovering a shared prime above 13
+  category: Scope
+  role: test
+- id: with-a-real-prime-s-associate-by-the-unit-i
+  expr: [ExtendedGCD, [Complex, 3, 4], [Complex, 0, 7]]
+  expected: [Tuple, 1, [Complex, -1, -1], 1]
+  caption: with a real prime's associate by the unit $i$
+  category: Scope
+  role: test
+- id: with-a-real-composite-5-squared
+  expr: [ExtendedGCD, [Complex, 3, 4], 25]
+  expected: [Tuple, [Complex, 3, 4], 1, 0]
+  caption: with a real composite, 5 squared
+  category: Scope
+  role: test
+- id: with-a-negative-associate
+  expr: [ExtendedGCD, [Complex, 6, 8], [Complex, -2, -3]]
+  expected: [Tuple, 1, [Complex, 0, 1], [Complex, 0, 3]]
+  caption: with a negative associate
+  category: Scope
+  role: test
+- id: a-large-norm-gaussian-and-a-real-prime-19
+  expr: [ExtendedGCD, [Complex, 123, 456], 19]
+  expected: [Tuple, 1, -2, [Complex, 13, 48]]
+  caption: a large-norm Gaussian and a real prime, 19
+  category: Scope
+  role: test

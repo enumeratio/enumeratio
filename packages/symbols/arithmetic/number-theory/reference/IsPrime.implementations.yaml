@@ -856,3 +856,495 @@ isprime-neg-2-is-true:
     verdict: error
     kind: domain
     note: primal takes non-negative machine-size integers; compute-engine's IsPrime answers the rest.
+a-unit-is-not-prime:
+  epsil:
+    in: IsPrime(1)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(1)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(1)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[1]
+  wolfram:
+    in: PrimeQ[1]
+    out: False
+    tex:
+      in: \text{PrimeQ}[1]
+      out: \text{False}
+  sympy:
+    in: isprime(1)
+  sage:
+    in: is_prime(1)
+  oscar:
+    in: is_prime(ZZ(1))
+  julia:
+    in: is_prime(ZZ(1))
+  mathlib4:
+    in: (decide (Nat.Prime 1))
+  rust:
+    in: is_prime(n(1))
+i-a-unit-is-not-prime:
+  epsil:
+    in: IsPrime(i)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(i)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(i)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Complex[0, 1]]
+  wolfram:
+    in: PrimeQ[Complex[0, 1]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[i]
+      out: \text{False}
+  sympy:
+    in: isprime((0 + 1*I))
+  sage:
+    in: is_prime((0 + 1*I))
+  oscar:
+    in: is_prime(ZZ(complex(0, 1)))
+  julia:
+    in: is_prime(ZZ(complex(0, 1)))
+0-is-not-prime:
+  epsil:
+    in: IsPrime(0)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(0)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(0)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[0]
+  wolfram:
+    in: PrimeQ[0]
+    out: False
+    tex:
+      in: \text{PrimeQ}[0]
+      out: \text{False}
+  sympy:
+    in: isprime(0)
+  sage:
+    in: is_prime(0)
+  oscar:
+    in: is_prime(ZZ(0))
+  julia:
+    in: is_prime(ZZ(0))
+  mathlib4:
+    in: (decide (Nat.Prime 0))
+  rust:
+    in: is_prime(n(0))
+the-ramified-prime-above-2:
+  epsil:
+    in: IsPrime(1 + i)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(1+i)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(1+i)
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[1, 1]]
+  wolfram:
+    in: PrimeQ[Complex[1, 1]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[1+i]
+      out: \text{True}
+  sympy:
+    in: isprime((1 + 1*I))
+  sage:
+    in: is_prime((1 + 1*I))
+  oscar:
+    in: is_prime(ZZ(complex(1, 1)))
+  julia:
+    in: is_prime(ZZ(complex(1, 1)))
+a-prime-above-5:
+  epsil:
+    in: IsPrime(2 + i)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(2+i)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(2+i)
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[2, 1]]
+  wolfram:
+    in: PrimeQ[Complex[2, 1]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[2+i]
+      out: \text{True}
+  sympy:
+    in: isprime((2 + 1*I))
+  sage:
+    in: is_prime((2 + 1*I))
+  oscar:
+    in: is_prime(ZZ(complex(2, 1)))
+  julia:
+    in: is_prime(ZZ(complex(2, 1)))
+the-other-prime-above-5:
+  epsil:
+    in: IsPrime(2 - i)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(2-i)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(2-i)
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[2, -1]]
+  wolfram:
+    in: PrimeQ[Complex[2, -1]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[2-i]
+      out: \text{True}
+  sympy:
+    in: isprime((2 + -1*I))
+  sage:
+    in: is_prime((2 + -1*I))
+  oscar:
+    in: is_prime(ZZ(complex(2, -1)))
+  julia:
+    in: is_prime(ZZ(complex(2, -1)))
+a-prime-above-13:
+  epsil:
+    in: IsPrime(3 + 2i)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(3+2i)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(3+2i)
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[3, 2]]
+  wolfram:
+    in: PrimeQ[Complex[3, 2]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[3+2 i]
+      out: \text{True}
+  sympy:
+    in: isprime((3 + 2*I))
+  sage:
+    in: is_prime((3 + 2*I))
+  oscar:
+    in: is_prime(ZZ(complex(3, 2)))
+  julia:
+    in: is_prime(ZZ(complex(3, 2)))
+a-composite-of-norm-25:
+  epsil:
+    in: IsPrime(3 + 4i)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(3+4i)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(3+4i)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Complex[3, 4]]
+  wolfram:
+    in: PrimeQ[Complex[3, 4]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[3+4 i]
+      out: \text{False}
+  sympy:
+    in: isprime((3 + 4*I))
+  sage:
+    in: is_prime((3 + 4*I))
+  oscar:
+    in: is_prime(ZZ(complex(3, 4)))
+  julia:
+    in: is_prime(ZZ(complex(3, 4)))
+an-associate-of-a-composite-is-still-composite:
+  epsil:
+    in: IsPrime(-3 - 4i)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(-3-4i)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(-3-4i)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Complex[-3, -4]]
+  wolfram:
+    in: PrimeQ[Complex[-3, -4]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[-3-4 i]
+      out: \text{False}
+  sympy:
+    in: isprime((-3 + -4*I))
+  sage:
+    in: is_prime((-3 + -4*I))
+  oscar:
+    in: is_prime(ZZ(complex(-3, -4)))
+  julia:
+    in: is_prime(ZZ(complex(-3, -4)))
+a-real-prime-s-associate-by-the-unit-i-is-still:
+  epsil:
+    in: IsPrime(7i)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(7i)
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(7i)
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[Complex[0, 7]]
+  wolfram:
+    in: PrimeQ[Complex[0, 7]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[7 i]
+      out: \text{True}
+  sympy:
+    in: isprime((0 + 7*I))
+  sage:
+    in: is_prime((0 + 7*I))
+  oscar:
+    in: is_prime(ZZ(complex(0, 7)))
+  julia:
+    in: is_prime(ZZ(complex(0, 7)))
+a-large-norm-composite:
+  epsil:
+    in: IsPrime(123 + 456i)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(123+456i)
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(123+456i)
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[Complex[123, 456]]
+  wolfram:
+    in: PrimeQ[Complex[123, 456]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[123+456 i]
+      out: \text{False}
+  sympy:
+    in: isprime((123 + 456*I))
+  sage:
+    in: is_prime((123 + 456*I))
+  oscar:
+    in: is_prime(ZZ(complex(123, 456)))
+  julia:
+    in: is_prime(ZZ(complex(123, 456)))
+3-3-mod-4-stays-prime-in-z-i:
+  epsil:
+    in: IsPrime(3, GaussianIntegers -> True)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(3, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(3, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[3, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[3, Rule[GaussianIntegers, True]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[3,\text{GaussianIntegers}\to \text{True}]
+      out: \text{True}
+7-3-mod-4-stays-prime-in-z-i:
+  epsil:
+    in: IsPrime(7, GaussianIntegers -> True)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[7, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[7, Rule[GaussianIntegers, True]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[7,\text{GaussianIntegers}\to \text{True}]
+      out: \text{True}
+19-3-mod-4-stays-prime-in-z-i:
+  epsil:
+    in: IsPrime(19, GaussianIntegers -> True)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[19, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[19, Rule[GaussianIntegers, True]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[19,\text{GaussianIntegers}\to \text{True}]
+      out: \text{True}
+a-negative-prime-3-mod-4-stays-prime:
+  epsil:
+    in: IsPrime(-7, GaussianIntegers -> True)
+    out: True
+  tex:
+    in: \mathrm{IsPrime}(-7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \top
+  traditional:
+    in: \mathrm{IsPrime}(-7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{True}
+  fullform:
+    in: PrimeQ[-7, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[-7, Rule[GaussianIntegers, True]]
+    out: True
+    tex:
+      in: \text{PrimeQ}[-7,\text{GaussianIntegers}\to \text{True}]
+      out: \text{True}
+5-1-mod-4-splits-and-is-no-longer-prime:
+  epsil:
+    in: IsPrime(5, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[5, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[5, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+13-1-mod-4-splits-and-is-no-longer-prime:
+  epsil:
+    in: IsPrime(13, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[13, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[13, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[13,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+2-ramifies-and-is-no-longer-prime:
+  epsil:
+    in: IsPrime(2, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[2, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[2, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[2,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+4-was-never-prime-and-still-isn-t:
+  epsil:
+    in: IsPrime(4, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(4, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(4, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[4, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[4, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[4,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+a-real-composite-5-squared-is-not-prime:
+  epsil:
+    in: IsPrime(25, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[25, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[25, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[25,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+1-is-not-prime-gaussian-or-not:
+  epsil:
+    in: IsPrime(1, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(1, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(1, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[1, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[1, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[1,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}
+0-is-not-prime-gaussian-or-not:
+  epsil:
+    in: IsPrime(0, GaussianIntegers -> True)
+    out: False
+  tex:
+    in: \mathrm{IsPrime}(0, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrime}(0, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \mathrm{False}
+  fullform:
+    in: PrimeQ[0, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[0, Rule[GaussianIntegers, True]]
+    out: False
+    tex:
+      in: \text{PrimeQ}[0,\text{GaussianIntegers}\to \text{True}]
+      out: \text{False}

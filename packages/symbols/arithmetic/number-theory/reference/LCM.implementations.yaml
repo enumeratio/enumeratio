@@ -431,3 +431,514 @@ a-large-integer-against-a-negative-rational:
     verdict: error
     kind: domain
     note: compute-engine extends LCM to rationals (here 20!/1 and -19/10, giving lcm(20!, 19)/gcd(1, 10) = 20! since 19 | 20!); the harness's `n()` wrapper only accepts integers, so the rational operand is a domain gap in the mapping, not a bug on either side (same gap as the Julia/Nemo row above).
+lcm-with-a-unit-is-the-other-argument-normalised:
+  epsil:
+    in: LCM(3 + 4i, 1)
+    out: 3 + 4i
+  tex:
+    in: \operatorname{lcm}(3+4i, 1)
+    out: 3+4i
+  fullform:
+    in: LCM[Complex[3, 4], 1]
+  wolfram:
+    in: LCM[Complex[3, 4], 1]
+    out: 3 + 4*I
+    tex:
+      in: \text{lcm}(3+4 i,1)
+      out: 3+4 i
+  sympy:
+    in: lcm((3 + 4*I), 1)
+  sage:
+    in: lcm((3 + 4*I), 1)
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(1))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(1))
+lcm-with-i-a-unit-is-the-other-argument:
+  epsil:
+    in: LCM(3 + 4i, i)
+    out: 3 + 4i
+  tex:
+    in: \operatorname{lcm}(3+4i, i)
+    out: 3+4i
+  fullform:
+    in: LCM[Complex[3, 4], Complex[0, 1]]
+  wolfram:
+    in: LCM[Complex[3, 4], Complex[0, 1]]
+    out: 3 + 4*I
+    tex:
+      in: \text{lcm}(3+4 i,i)
+      out: 3+4 i
+  sympy:
+    in: lcm((3 + 4*I), (0 + 1*I))
+  sage:
+    in: lcm((3 + 4*I), (0 + 1*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(0, 1)))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(0, 1)))
+lcm-with-0-is-0:
+  epsil:
+    in: LCM(0, -4 + 3i)
+    out: "0"
+  tex:
+    in: \operatorname{lcm}(0, -4+3i)
+    out: "0"
+  fullform:
+    in: LCM[0, Complex[-4, 3]]
+  wolfram:
+    in: LCM[0, Complex[-4, 3]]
+    out: "0"
+    tex:
+      in: \text{lcm}(0,-4+3 i)
+      out: "0"
+  sympy:
+    in: lcm(0, (-4 + 3*I))
+  sage:
+    in: lcm(0, (-4 + 3*I))
+  oscar:
+    in: lcm(ZZ(0), ZZ(complex(-4, 3)))
+  julia:
+    in: lcm(ZZ(0), ZZ(complex(-4, 3)))
+two-gaussian-primes-above-5-multiply-straight:
+  epsil:
+    in: LCM(2 + i, 2 - i)
+    out: "5"
+  tex:
+    in: \operatorname{lcm}(2+i, 2-i)
+    out: "5"
+  fullform:
+    in: LCM[Complex[2, 1], Complex[2, -1]]
+  wolfram:
+    in: LCM[Complex[2, 1], Complex[2, -1]]
+    out: "5"
+    tex:
+      in: \text{lcm}(2+i,2-i)
+      out: "5"
+  sympy:
+    in: lcm((2 + 1*I), (2 + -1*I))
+  sage:
+    in: lcm((2 + 1*I), (2 + -1*I))
+  oscar:
+    in: lcm(ZZ(complex(2, 1)), ZZ(complex(2, -1)))
+  julia:
+    in: lcm(ZZ(complex(2, 1)), ZZ(complex(2, -1)))
+a-gaussian-prime-and-a-real-prime-3-mod-4:
+  epsil:
+    in: LCM(2 + i, 3)
+    out: 6 + 3i
+  tex:
+    in: \operatorname{lcm}(2+i, 3)
+    out: 6+3i
+  fullform:
+    in: LCM[Complex[2, 1], 3]
+  wolfram:
+    in: LCM[Complex[2, 1], 3]
+    out: 6 + 3*I
+    tex:
+      in: \text{lcm}(2+i,3)
+      out: 6+3 i
+  sympy:
+    in: lcm((2 + 1*I), 3)
+  sage:
+    in: lcm((2 + 1*I), 3)
+  oscar:
+    in: lcm(ZZ(complex(2, 1)), ZZ(3))
+  julia:
+    in: lcm(ZZ(complex(2, 1)), ZZ(3))
+an-associate-pair-has-lcm-equal-to-their-common:
+  epsil:
+    in: LCM(3 + 4i, -4 + 3i)
+    out: 3 + 4i
+  tex:
+    in: \operatorname{lcm}(3+4i, -4+3i)
+    out: 3+4i
+  fullform:
+    in: LCM[Complex[3, 4], Complex[-4, 3]]
+  wolfram:
+    in: LCM[Complex[3, 4], Complex[-4, 3]]
+    out: 3 + 4*I
+    tex:
+      in: \text{lcm}(3+4 i,-4+3 i)
+      out: 3+4 i
+  sympy:
+    in: lcm((3 + 4*I), (-4 + 3*I))
+  sage:
+    in: lcm((3 + 4*I), (-4 + 3*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(-4, 3)))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(-4, 3)))
+another-associate-pair-by-1:
+  epsil:
+    in: LCM(3 + 4i, -3 - 4i)
+    out: 3 + 4i
+  tex:
+    in: \operatorname{lcm}(3+4i, -3-4i)
+    out: 3+4i
+  fullform:
+    in: LCM[Complex[3, 4], Complex[-3, -4]]
+  wolfram:
+    in: LCM[Complex[3, 4], Complex[-3, -4]]
+    out: 3 + 4*I
+    tex:
+      in: \text{lcm}(3+4 i,-3-4 i)
+      out: 3+4 i
+  sympy:
+    in: lcm((3 + 4*I), (-3 + -4*I))
+  sage:
+    in: lcm((3 + 4*I), (-3 + -4*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(-3, -4)))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(-3, -4)))
+two-unrelated-composites-of-norm-25:
+  epsil:
+    in: LCM(3 + 4i, 4 + 3i)
+    out: "25"
+  tex:
+    in: \operatorname{lcm}(3+4i, 4+3i)
+    out: "25"
+  fullform:
+    in: LCM[Complex[3, 4], Complex[4, 3]]
+  wolfram:
+    in: LCM[Complex[3, 4], Complex[4, 3]]
+    out: "25"
+    tex:
+      in: \text{lcm}(3+4 i,4+3 i)
+      out: "25"
+  sympy:
+    in: lcm((3 + 4*I), (4 + 3*I))
+  sage:
+    in: lcm((3 + 4*I), (4 + 3*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(4, 3)))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(4, 3)))
+lcm-with-a-negative-real-prime:
+  epsil:
+    in: LCM(3 + 4i, -7)
+    out: 21 + 28i
+  tex:
+    in: \operatorname{lcm}(3+4i, -7)
+    out: 21+28i
+  fullform:
+    in: LCM[Complex[3, 4], -7]
+  wolfram:
+    in: LCM[Complex[3, 4], -7]
+    out: 21 + 28*I
+    tex:
+      in: \text{lcm}(3+4 i,-7)
+      out: 21+28 i
+  sympy:
+    in: lcm((3 + 4*I), -7)
+  sage:
+    in: lcm((3 + 4*I), -7)
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(-7))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(-7))
+lcm-of-two-large-norm-gaussians:
+  epsil:
+    in: LCM(123 + 456i, 1_000 + i)
+    out: 122_544 + 456_123i
+  tex:
+    in: \operatorname{lcm}(123+456i, 1\,000+i)
+    out: 122\,544+456\,123i
+  fullform:
+    in: LCM[Complex[123, 456], Complex[1000, 1]]
+  wolfram:
+    in: LCM[Complex[123, 456], Complex[1000, 1]]
+    out: 122544 + 456123*I
+    tex:
+      in: \text{lcm}(123+456 i,1000+i)
+      out: 122544+456123 i
+  sympy:
+    in: lcm((123 + 456*I), (1000 + 1*I))
+  sage:
+    in: lcm((123 + 456*I), (1000 + 1*I))
+  oscar:
+    in: lcm(ZZ(complex(123, 456)), ZZ(complex(1000, 1)))
+  julia:
+    in: lcm(ZZ(complex(123, 456)), ZZ(complex(1000, 1)))
+lcm-past-2-53-in-both-parts:
+  epsil:
+    in: LCM(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)
+    out: 399_990_992_800_745_259_011 + 100_036_028_797_018_963_973i
+  tex:
+    in: \operatorname{lcm}(100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i, 4+i)
+    out: 399\,990\,992\,800\,745\,259\,011+100\,036\,028\,797\,018\,963\,973i
+  fullform:
+    in: LCM[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    back: [LCM, [Complex, 100000000000000000000, 9007199254740992], [Complex, 4, 1]]
+  wolfram:
+    in: LCM[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    out: 399990992800745259011 + 100036028797018963973*I
+    tex:
+      in: \text{lcm}(100000000000000000001+9007199254740993 i,4+i)
+      out: 399990992800745259011+100036028797018963973 i
+  sympy:
+    in: lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))
+  sage:
+    in: lcm((100000000000000000001 + 9007199254740993*I), (4 + 1*I))
+  oscar:
+    in: lcm(ZZ(complex(100000000000000000001, 9007199254740993)), ZZ(complex(4, 1)))
+  julia:
+    in: lcm(ZZ(complex(100000000000000000001, 9007199254740993)), ZZ(complex(4, 1)))
+a-real-split-prime-and-its-gaussian-factor:
+  epsil:
+    in: LCM(5, 2 + i)
+    out: "5"
+  tex:
+    in: \operatorname{lcm}(5, 2+i)
+    out: "5"
+  fullform:
+    in: LCM[5, Complex[2, 1]]
+  wolfram:
+    in: LCM[5, Complex[2, 1]]
+    out: "5"
+    tex:
+      in: \text{lcm}(5,2+i)
+      out: "5"
+  sympy:
+    in: lcm(5, (2 + 1*I))
+  sage:
+    in: lcm(5, (2 + 1*I))
+  oscar:
+    in: lcm(ZZ(5), ZZ(complex(2, 1)))
+  julia:
+    in: lcm(ZZ(5), ZZ(complex(2, 1)))
+lcm-of-two-real-composites-plain-integer-case:
+  epsil:
+    in: LCM(4, 9)
+    out: "36"
+  tex:
+    in: \operatorname{lcm}(4, 9)
+    out: "36"
+  fullform:
+    in: LCM[4, 9]
+  wolfram:
+    in: LCM[4, 9]
+    out: "36"
+    tex:
+      in: \text{lcm}(4,9)
+      out: "36"
+  sympy:
+    in: lcm(4, 9)
+  sage:
+    in: lcm(4, 9)
+  oscar:
+    in: lcm(ZZ(4), ZZ(9))
+  julia:
+    in: lcm(ZZ(4), ZZ(9))
+  mathlib4:
+    in: (Int.lcm 4 9)
+  rust:
+    in: lcm(n(4), n(9))
+lcm-with-a-negative-real-composite:
+  epsil:
+    in: LCM(-15, 5 + 5i)
+    out: 15 + 15i
+  tex:
+    in: \operatorname{lcm}(-15, 5+5i)
+    out: 15+15i
+  fullform:
+    in: LCM[-15, Complex[5, 5]]
+  wolfram:
+    in: LCM[-15, Complex[5, 5]]
+    out: 15 + 15*I
+    tex:
+      in: \text{lcm}(-15,5+5 i)
+      out: 15+15 i
+  sympy:
+    in: lcm(-15, (5 + 5*I))
+  sage:
+    in: lcm(-15, (5 + 5*I))
+  oscar:
+    in: lcm(ZZ(-15), ZZ(complex(5, 5)))
+  julia:
+    in: lcm(ZZ(-15), ZZ(complex(5, 5)))
+lcm-with-an-associate-times-1:
+  epsil:
+    in: LCM(8 + 2i, -3 - 4i)
+    out: 16 + 38i
+  tex:
+    in: \operatorname{lcm}(8+2i, -3-4i)
+    out: 16+38i
+  fullform:
+    in: LCM[Complex[8, 2], Complex[-3, -4]]
+  wolfram:
+    in: LCM[Complex[8, 2], Complex[-3, -4]]
+    out: 16 + 38*I
+    tex:
+      in: \text{lcm}(8+2 i,-3-4 i)
+      out: 16+38 i
+  sympy:
+    in: lcm((8 + 2*I), (-3 + -4*I))
+  sage:
+    in: lcm((8 + 2*I), (-3 + -4*I))
+  oscar:
+    in: lcm(ZZ(complex(8, 2)), ZZ(complex(-3, -4)))
+  julia:
+    in: lcm(ZZ(complex(8, 2)), ZZ(complex(-3, -4)))
+lcm-with-an-associate-times-i:
+  epsil:
+    in: LCM(8 + 2i, 4 - 3i)
+    out: 16 + 38i
+  tex:
+    in: \operatorname{lcm}(8+2i, 4-3i)
+    out: 16+38i
+  fullform:
+    in: LCM[Complex[8, 2], Complex[4, -3]]
+  wolfram:
+    in: LCM[Complex[8, 2], Complex[4, -3]]
+    out: 16 + 38*I
+    tex:
+      in: \text{lcm}(8+2 i,4-3 i)
+      out: 16+38 i
+  sympy:
+    in: lcm((8 + 2*I), (4 + -3*I))
+  sage:
+    in: lcm((8 + 2*I), (4 + -3*I))
+  oscar:
+    in: lcm(ZZ(complex(8, 2)), ZZ(complex(4, -3)))
+  julia:
+    in: lcm(ZZ(complex(8, 2)), ZZ(complex(4, -3)))
+two-primes-above-13-multiply-straight-through:
+  epsil:
+    in: LCM(3 + 2i, 2 + 3i)
+    out: "13"
+  tex:
+    in: \operatorname{lcm}(3+2i, 2+3i)
+    out: "13"
+  fullform:
+    in: LCM[Complex[3, 2], Complex[2, 3]]
+  wolfram:
+    in: LCM[Complex[3, 2], Complex[2, 3]]
+    out: "13"
+    tex:
+      in: \text{lcm}(3+2 i,2+3 i)
+      out: "13"
+  sympy:
+    in: lcm((3 + 2*I), (2 + 3*I))
+  sage:
+    in: lcm((3 + 2*I), (2 + 3*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 2)), ZZ(complex(2, 3)))
+  julia:
+    in: lcm(ZZ(complex(3, 2)), ZZ(complex(2, 3)))
+lcm-with-a-real-prime-s-associate-by-the-unit-i:
+  epsil:
+    in: LCM(3 + 4i, 7i)
+    out: 21 + 28i
+  tex:
+    in: \operatorname{lcm}(3+4i, 7i)
+    out: 21+28i
+  fullform:
+    in: LCM[Complex[3, 4], Complex[0, 7]]
+  wolfram:
+    in: LCM[Complex[3, 4], Complex[0, 7]]
+    out: 21 + 28*I
+    tex:
+      in: \text{lcm}(3+4 i,7 i)
+      out: 21+28 i
+  sympy:
+    in: lcm((3 + 4*I), (0 + 7*I))
+  sage:
+    in: lcm((3 + 4*I), (0 + 7*I))
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(0, 7)))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(complex(0, 7)))
+lcm-with-a-real-composite-5-squared:
+  epsil:
+    in: LCM(3 + 4i, 25)
+    out: "25"
+  tex:
+    in: \operatorname{lcm}(3+4i, 25)
+    out: "25"
+  fullform:
+    in: LCM[Complex[3, 4], 25]
+  wolfram:
+    in: LCM[Complex[3, 4], 25]
+    out: "25"
+    tex:
+      in: \text{lcm}(3+4 i,25)
+      out: "25"
+  sympy:
+    in: lcm((3 + 4*I), 25)
+  sage:
+    in: lcm((3 + 4*I), 25)
+  oscar:
+    in: lcm(ZZ(complex(3, 4)), ZZ(25))
+  julia:
+    in: lcm(ZZ(complex(3, 4)), ZZ(25))
+lcm-with-a-negative-associate:
+  epsil:
+    in: LCM(6 + 8i, -2 - 3i)
+    out: 34 + 12i
+  tex:
+    in: \operatorname{lcm}(6+8i, -2-3i)
+    out: 34+12i
+  fullform:
+    in: LCM[Complex[6, 8], Complex[-2, -3]]
+  wolfram:
+    in: LCM[Complex[6, 8], Complex[-2, -3]]
+    out: 34 + 12*I
+    tex:
+      in: \text{lcm}(6+8 i,-2-3 i)
+      out: 34+12 i
+  sympy:
+    in: lcm((6 + 8*I), (-2 + -3*I))
+  sage:
+    in: lcm((6 + 8*I), (-2 + -3*I))
+  oscar:
+    in: lcm(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
+  julia:
+    in: lcm(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
+lcm-of-a-large-norm-gaussian-and-a-real-prime-19:
+  epsil:
+    in: LCM(123 + 456i, 19)
+    out: 2_337 + 8_664i
+  tex:
+    in: \operatorname{lcm}(123+456i, 19)
+    out: 2\,337+8\,664i
+  fullform:
+    in: LCM[Complex[123, 456], 19]
+  wolfram:
+    in: LCM[Complex[123, 456], 19]
+    out: 2337 + 8664*I
+    tex:
+      in: \text{lcm}(123+456 i,19)
+      out: 2337+8664 i
+  sympy:
+    in: lcm((123 + 456*I), 19)
+  sage:
+    in: lcm((123 + 456*I), 19)
+  oscar:
+    in: lcm(ZZ(complex(123, 456)), ZZ(19))
+  julia:
+    in: lcm(ZZ(complex(123, 456)), ZZ(19))
+lcm-of-two-composites-sharing-the-prime-above-13:
+  epsil:
+    in: LCM(6 + 8i, 9 + 6i)
+    out: 6 + 108i
+  tex:
+    in: \operatorname{lcm}(6+8i, 9+6i)
+    out: 6+108i
+  fullform:
+    in: LCM[Complex[6, 8], Complex[9, 6]]
+  wolfram:
+    in: LCM[Complex[6, 8], Complex[9, 6]]
+    out: 6 + 108*I
+    tex:
+      in: \text{lcm}(6+8 i,9+6 i)
+      out: 6+108 i
+  sympy:
+    in: lcm((6 + 8*I), (9 + 6*I))
+  sage:
+    in: lcm((6 + 8*I), (9 + 6*I))
+  oscar:
+    in: lcm(ZZ(complex(6, 8)), ZZ(complex(9, 6)))
+  julia:
+    in: lcm(ZZ(complex(6, 8)), ZZ(complex(9, 6)))

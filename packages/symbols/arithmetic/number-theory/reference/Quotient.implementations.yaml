@@ -124,3 +124,385 @@ listable-threads-over-a-list:
     in: Quotient[List[10, 20, 30], 7]
   wolfram:
     in: Quotient[List[10, 20, 30], 7]
+quotient-by-a-unit-is-the-dividend-itself-up-to:
+  epsil:
+    in: Quotient(3 + 4i, i)
+    out: 4 - 3i
+  tex:
+    in: \mathrm{Quotient}(3+4i, i)
+    out: 4-3i
+  fullform:
+    in: Quotient[Complex[3, 4], Complex[0, 1]]
+  wolfram:
+    in: Quotient[Complex[3, 4], Complex[0, 1]]
+    out: 4 - 3*I
+    tex:
+      in: \text{Quotient}[3+4 i,i]
+      out: 4-3 i
+a-zero-dividend-quotients-to-0:
+  epsil:
+    in: Quotient(0, 2 + i)
+    out: "0"
+  tex:
+    in: \mathrm{Quotient}(0, 2+i)
+    out: "0"
+  fullform:
+    in: Quotient[0, Complex[2, 1]]
+  wolfram:
+    in: Quotient[0, Complex[2, 1]]
+    out: "0"
+    tex:
+      in: \text{Quotient}[0,2+i]
+      out: "0"
+quotient-by-a-gaussian-prime-norm-5:
+  epsil:
+    in: Quotient(3 + 4i, 2 + i)
+    out: 2 + i
+  tex:
+    in: \mathrm{Quotient}(3+4i, 2+i)
+    out: 2+i
+  fullform:
+    in: Quotient[Complex[3, 4], Complex[2, 1]]
+  wolfram:
+    in: Quotient[Complex[3, 4], Complex[2, 1]]
+    out: 2 + I
+    tex:
+      in: \text{Quotient}[3+4 i,2+i]
+      out: 2+i
+quotient-by-the-other-prime-above-5:
+  epsil:
+    in: Quotient(3 + 4i, 2 - i)
+    out: 2i
+  tex:
+    in: \mathrm{Quotient}(3+4i, 2-i)
+    out: 2i
+  fullform:
+    in: Quotient[Complex[3, 4], Complex[2, -1]]
+  wolfram:
+    in: Quotient[Complex[3, 4], Complex[2, -1]]
+    out: 2*I
+    tex:
+      in: \text{Quotient}[3+4 i,2-i]
+      out: 2 i
+quotient-by-a-real-prime-3-mod-4:
+  epsil:
+    in: Quotient(3 + 4i, 3)
+    out: 1 + i
+  tex:
+    in: \mathrm{Quotient}(3+4i, 3)
+    out: 1+i
+  fullform:
+    in: Quotient[Complex[3, 4], 3]
+  wolfram:
+    in: Quotient[Complex[3, 4], 3]
+    out: 1 + I
+    tex:
+      in: \text{Quotient}[3+4 i,3]
+      out: 1+i
+a-real-dividend-by-a-gaussian-divisor:
+  epsil:
+    in: Quotient(5, 2 + i)
+    out: 2 - i
+  tex:
+    in: \mathrm{Quotient}(5, 2+i)
+    out: 2-i
+  fullform:
+    in: Quotient[5, Complex[2, 1]]
+  wolfram:
+    in: Quotient[5, Complex[2, 1]]
+    out: 2 - I
+    tex:
+      in: \text{Quotient}[5,2+i]
+      out: 2-i
+quotient-by-an-associate:
+  epsil:
+    in: Quotient(8 + 2i, -4 + 3i)
+    out: -1 - i
+  tex:
+    in: \mathrm{Quotient}(8+2i, -4+3i)
+    out: -1-i
+  fullform:
+    in: Quotient[Complex[8, 2], Complex[-4, 3]]
+  wolfram:
+    in: Quotient[Complex[8, 2], Complex[-4, 3]]
+    out: -1 - I
+    tex:
+      in: \text{Quotient}[8+2 i,-4+3 i]
+      out: -1-i
+quotient-by-a-negative-real-divisor:
+  epsil:
+    in: Quotient(3 + 4i, -7)
+    out: -i
+  tex:
+    in: \mathrm{Quotient}(3+4i, -7)
+    out: -i
+  fullform:
+    in: Quotient[Complex[3, 4], -7]
+  wolfram:
+    in: Quotient[Complex[3, 4], -7]
+    out: -I
+    tex:
+      in: \text{Quotient}[3+4 i,-7]
+      out: -i
+quotient-by-a-composite-gaussian-divisor-norm-25:
+  epsil:
+    in: Quotient(123 + 456i, 3 + 4i)
+    out: 88 + 35i
+  tex:
+    in: \mathrm{Quotient}(123+456i, 3+4i)
+    out: 88+35i
+  fullform:
+    in: Quotient[Complex[123, 456], Complex[3, 4]]
+  wolfram:
+    in: Quotient[Complex[123, 456], Complex[3, 4]]
+    out: 88 + 35*I
+    tex:
+      in: \text{Quotient}[123+456 i,3+4 i]
+      out: 88+35 i
+a-gaussian-divisor-past-2-53-in-both-parts:
+  epsil:
+    in: Quotient(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)
+    out: 23_529_941_599_956_161_235 - 5_880_233_600_175_355_000i
+  tex:
+    in: \mathrm{Quotient}(100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i, 4+i)
+    out: 23\,529\,941\,599\,956\,161\,235-5\,880\,233\,600\,175\,355\,061i
+  fullform:
+    in: Quotient[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    back: [Quotient, [Complex, 100000000000000000000, 9007199254740992], [Complex, 4, 1]]
+  wolfram:
+    in: Quotient[Complex[100000000000000000001, 9007199254740993], Complex[4, 1]]
+    out: 23529941599956161235 - 5880233600175355061*I
+    tex:
+      in: \text{Quotient}[100000000000000000001+9007199254740993 i,4+i]
+      out: 23529941599956161235-5880233600175355061 i
+quotient-by-1-4i-the-other-prime-above-17:
+  epsil:
+    in: Quotient(8 + 2i, 1 + 4i)
+    out: 1 - 2i
+  tex:
+    in: \mathrm{Quotient}(8+2i, 1+4i)
+    out: 1-2i
+  fullform:
+    in: Quotient[Complex[8, 2], Complex[1, 4]]
+  wolfram:
+    in: Quotient[Complex[8, 2], Complex[1, 4]]
+    out: 1 - 2*I
+    tex:
+      in: \text{Quotient}[8+2 i,1+4 i]
+      out: 1-2 i
+a-large-norm-gaussian-divided-by-a-small-unit:
+  epsil:
+    in: Quotient(1_000 + i, 1 + i)
+    out: 500 - 500i
+  tex:
+    in: \mathrm{Quotient}(1\,000+i, 1+i)
+    out: 500-500i
+  fullform:
+    in: Quotient[Complex[1000, 1], Complex[1, 1]]
+  wolfram:
+    in: Quotient[Complex[1000, 1], Complex[1, 1]]
+    out: 500 - 500*I
+    tex:
+      in: \text{Quotient}[1000+i,1+i]
+      out: 500-500 i
+quotient-by-1-negates-each-part:
+  epsil:
+    in: Quotient(2 + i, -1)
+    out: -2 - i
+  tex:
+    in: \mathrm{Quotient}(2+i, -1)
+    out: -2-i
+  fullform:
+    in: Quotient[Complex[2, 1], -1]
+  wolfram:
+    in: Quotient[Complex[2, 1], -1]
+    out: -2 - I
+    tex:
+      in: \text{Quotient}[2+i,-1]
+      out: -2-i
+quotient-by-i-rotates-by-that-unit:
+  epsil:
+    in: Quotient(5 + 5i, -i)
+    out: -5 + 5i
+  tex:
+    in: \mathrm{Quotient}(5+5i, -i)
+    out: -5+5i
+  fullform:
+    in: Quotient[Complex[5, 5], Complex[0, -1]]
+  wolfram:
+    in: Quotient[Complex[5, 5], Complex[0, -1]]
+    out: -5 + 5*I
+    tex:
+      in: \text{Quotient}[5+5 i,-i]
+      out: -5+5 i
+a-negative-real-dividend-gaussian-divisor:
+  epsil:
+    in: Quotient(-5 - 5i, 2 + i)
+    out: -3 - i
+  tex:
+    in: \mathrm{Quotient}(-5-5i, 2+i)
+    out: -3-i
+  fullform:
+    in: Quotient[Complex[-5, -5], Complex[2, 1]]
+  wolfram:
+    in: Quotient[Complex[-5, -5], Complex[2, 1]]
+    out: -3 - I
+    tex:
+      in: \text{Quotient}[-5-5 i,2+i]
+      out: -3-i
+quotient-by-an-associate-times-1:
+  epsil:
+    in: Quotient(8 + 2i, -3 - 4i)
+    out: -1 + i
+  tex:
+    in: \mathrm{Quotient}(8+2i, -3-4i)
+    out: -1+i
+  fullform:
+    in: Quotient[Complex[8, 2], Complex[-3, -4]]
+  wolfram:
+    in: Quotient[Complex[8, 2], Complex[-3, -4]]
+    out: -1 + I
+    tex:
+      in: \text{Quotient}[8+2 i,-3-4 i]
+      out: -1+i
+quotient-by-an-associate-times-i:
+  epsil:
+    in: Quotient(8 + 2i, 4 - 3i)
+    out: 1 + i
+  tex:
+    in: \mathrm{Quotient}(8+2i, 4-3i)
+    out: 1+i
+  fullform:
+    in: Quotient[Complex[8, 2], Complex[4, -3]]
+  wolfram:
+    in: Quotient[Complex[8, 2], Complex[4, -3]]
+    out: 1 + I
+    tex:
+      in: \text{Quotient}[8+2 i,4-3 i]
+      out: 1+i
+quotient-by-the-other-prime-above-13:
+  epsil:
+    in: Quotient(6 + 8i, 2 + 3i)
+    out: "3"
+  tex:
+    in: \mathrm{Quotient}(6+8i, 2+3i)
+    out: "3"
+  fullform:
+    in: Quotient[Complex[6, 8], Complex[2, 3]]
+  wolfram:
+    in: Quotient[Complex[6, 8], Complex[2, 3]]
+    out: "3"
+    tex:
+      in: \text{Quotient}[6+8 i,2+3 i]
+      out: "3"
+quotient-by-a-prime-above-13:
+  epsil:
+    in: Quotient(6 + 8i, 3 + 2i)
+    out: 3 + i
+  tex:
+    in: \mathrm{Quotient}(6+8i, 3+2i)
+    out: 3+i
+  fullform:
+    in: Quotient[Complex[6, 8], Complex[3, 2]]
+  wolfram:
+    in: Quotient[Complex[6, 8], Complex[3, 2]]
+    out: 3 + I
+    tex:
+      in: \text{Quotient}[6+8 i,3+2 i]
+      out: 3+i
+quotient-by-a-real-prime-s-associate-by-the-unit:
+  epsil:
+    in: Quotient(3 + 4i, 7i)
+    out: "1"
+  tex:
+    in: \mathrm{Quotient}(3+4i, 7i)
+    out: "1"
+  fullform:
+    in: Quotient[Complex[3, 4], Complex[0, 7]]
+  wolfram:
+    in: Quotient[Complex[3, 4], Complex[0, 7]]
+    out: "1"
+    tex:
+      in: \text{Quotient}[3+4 i,7 i]
+      out: "1"
+quotient-by-a-real-composite-5-squared:
+  epsil:
+    in: Quotient(3 + 4i, 25)
+    out: "0"
+  tex:
+    in: \mathrm{Quotient}(3+4i, 25)
+    out: "0"
+  fullform:
+    in: Quotient[Complex[3, 4], 25]
+  wolfram:
+    in: Quotient[Complex[3, 4], 25]
+    out: "0"
+    tex:
+      in: \text{Quotient}[3+4 i,25]
+      out: "0"
+a-negative-associate-as-the-divisor:
+  epsil:
+    in: Quotient(6 + 8i, -2 - 3i)
+    out: "-3"
+  tex:
+    in: \mathrm{Quotient}(6+8i, -2-3i)
+    out: "-3"
+  fullform:
+    in: Quotient[Complex[6, 8], Complex[-2, -3]]
+  wolfram:
+    in: Quotient[Complex[6, 8], Complex[-2, -3]]
+    out: "-3"
+    tex:
+      in: \text{Quotient}[6+8 i,-2-3 i]
+      out: "-3"
+dividing-a-large-norm-gaussian-by-a-real-prime:
+  epsil:
+    in: Quotient(123 + 456i, 19)
+    out: 6 + 24i
+  tex:
+    in: \mathrm{Quotient}(123+456i, 19)
+    out: 6+24i
+  fullform:
+    in: Quotient[Complex[123, 456], 19]
+  wolfram:
+    in: Quotient[Complex[123, 456], 19]
+    out: 6 + 24*I
+    tex:
+      in: \text{Quotient}[123+456 i,19]
+      out: 6+24 i
+dividing-by-zero-is-undefined:
+  epsil:
+    in: Quotient(3 + 4i, 0)
+    out: Quotient(3 + 4i, 0)
+  tex:
+    in: \mathrm{Quotient}(3+4i, 0)
+    out: \mathrm{Quotient}(3+4i, 0)
+  fullform:
+    in: Quotient[Complex[3, 4], 0]
+  wolfram:
+    in: Quotient[Complex[3, 4], 0]
+    out: ComplexInfinity
+    tex:
+      in: \text{Quotient}[3+4 i,0]
+      out: \text{ComplexInfinity}
+    verdict: disagree
+    kind: undefined-form
+    note: We answer a zero divisor as the unevaluated call; Wolfram evaluates on to ComplexInfinity/Indeterminate.
+dividing-zero-by-zero-is-undefined:
+  epsil:
+    in: Quotient(0, 0)
+    out: Quotient(0, 0)
+  tex:
+    in: \mathrm{Quotient}(0, 0)
+    out: \mathrm{Quotient}(0, 0)
+  fullform:
+    in: Quotient[0, 0]
+  wolfram:
+    in: Quotient[0, 0]
+    out: Indeterminate
+    tex:
+      in: \text{Quotient}[0,0]
+      out: \text{Indeterminate}
+    verdict: disagree
+    kind: undefined-form
+    note: We answer a zero divisor as the unevaluated call; Wolfram evaluates on to ComplexInfinity/Indeterminate.
