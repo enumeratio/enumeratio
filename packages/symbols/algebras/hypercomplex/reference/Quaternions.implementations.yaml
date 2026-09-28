@@ -34,6 +34,8 @@ k-in-h:
     out: \mathrm{True}
   fullform:
     in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
+  wolfram:
+    in: Element[Times[Subscript[f, 1], Subscript[f, 2]], Quaternions]
   sage:
     in: enumeratio_element((SR.var("f_1") * SR.var("f_2")), SR.var("Quaternions"))
     out: "TypeError: argument of type 'sage.symbolic.expression.Expression' is not a container or iterable"
@@ -51,6 +53,8 @@ a-multicomplex-unit-is-not-a-quaternion:
     in: i_1\in\mathrm{Quaternions}
     out: \mathrm{False}
   fullform:
+    in: Element[Subscript[i, 1], Quaternions]
+  wolfram:
     in: Element[Subscript[i, 1], Quaternions]
   sage:
     in: enumeratio_element(SR.var("i_1"), SR.var("Quaternions"))

@@ -82,5 +82,5 @@ derivative-for-real-x-ne-0:
   fullform:
     in: D[ArcCsch[x], x]
   wolfram:
-    in:
+    in: D[ArcCsch[x], x]
     note: Wolfram writes it as -1/(x^2 Sqrt[1 + 1/x^2]).

@@ -40,3 +40,5 @@ edgeweight-option-is-held-exactly:
     out: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack, \operatorname{Tuple}(\mathrm{EdgeWeight},\bigl\lbrack5, 7\bigr\rbrack))
   fullform:
     in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]
+  wolfram:
+    in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]

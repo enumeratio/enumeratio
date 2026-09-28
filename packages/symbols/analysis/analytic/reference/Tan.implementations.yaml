@@ -603,6 +603,12 @@ derivative-sec-2-x:
     out: \sec(x)^2
   fullform:
     in: D[Tan[x], x]
+  wolfram:
+    in: D[Tan[x], x]
+  sympy:
+    in: diff(tan(Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(tan(SR.var("x")), SR.var("x"))
 antiderivative-ln-sec-x:
   epsil:
     in: Integrate(Tan(x), x)
@@ -654,6 +660,8 @@ rewritten-in-exponentials:
     in: \mathrm{TrigToExp}(\tan(x))
     out: -\frac{i(\exp(i x)-\exp(-i x))}{\exp(i x)+\exp(-i x)}
   fullform:
+    in: TrigToExp[Tan[x]]
+  wolfram:
     in: TrigToExp[Tan[x]]
 to-30-significant-digits-every-one-correctly:
   epsil:

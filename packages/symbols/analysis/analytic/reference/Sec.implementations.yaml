@@ -244,6 +244,8 @@ derivative-sec-x-tan-x:
     out: \tan(x)\sec(x)
   fullform:
     in: D[Sec[x], x]
+  wolfram:
+    in: D[Sec[x], x]
 antiderivative-ln-sec-x-tan-x:
   epsil:
     in: Integrate(Sec(x), x)

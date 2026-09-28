@@ -224,6 +224,8 @@ gaussianintegers-true-squares-of-1-1-i-2-3-3-3i:
     out: 50+20i
   fullform:
     in: DivisorSigma[2, 6, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: DivisorSigma[2, 6, Rule[GaussianIntegers, True]]
 listable-in-n:
   epsil:
     in: DivisorSigma(2, [1, 2, 3, 4, 5])

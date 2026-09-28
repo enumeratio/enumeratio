@@ -111,5 +111,5 @@ derivative-for-real-x-1:
   fullform:
     in: D[ArcCsc[x], x]
   wolfram:
-    in:
+    in: D[ArcCsc[x], x]
     note: Wolfram writes it as -1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.

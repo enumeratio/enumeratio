@@ -551,6 +551,12 @@ frac-d-dx-psi-n-x-psi-n-1-x:
     out: \psi^{(n+1)}(x)
   fullform:
     in: D[PolyGamma[n, x], x]
+  wolfram:
+    in: D[PolyGamma[n, x], x]
+  sympy:
+    in: diff(polygamma(Symbol("n"), Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(psi(SR.var("n"), SR.var("x")), SR.var("x"))
 to-30-significant-digits-every-one-correctly:
   epsil:
     in: N(PolyGamma(1, 1 / 3), 30)

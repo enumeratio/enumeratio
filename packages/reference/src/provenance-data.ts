@@ -2443,7 +2443,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "Primes",
     provenance: "unknown",
     declared: null,
-    wolframAlias: "Primes",
+    wolframAlias: null,
     elsewhere: ["wolfram"],
   },
   {

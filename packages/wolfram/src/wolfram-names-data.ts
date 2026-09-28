@@ -505,7 +505,6 @@ export const WOLFRAM_NAMES: Readonly<Record<string, string>> = {
   PrimeOmega: "PrimeOmega",
   PrimePi: "PrimePi",
   PrimeZetaP: "PrimeZetaP",
-  Primes: "Primes",
   PrimitiveRootList: "PrimitiveRootList",
   Probability: "Probability",
   ProbabilityDistribution: "ProbabilityDistribution",

@@ -244,6 +244,8 @@ derivative-csc-2-x:
     out: -\csc(x)^2
   fullform:
     in: D[Cot[x], x]
+  wolfram:
+    in: D[Cot[x], x]
 antiderivative-ln-sin-x:
   epsil:
     in: Integrate(Cot(x), x)

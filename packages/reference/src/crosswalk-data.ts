@@ -5214,7 +5214,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Primes",
     fungrimEntries: ["04427b"],
-    wolfram: "Primes",
   },
   {
     name: "PrimitiveRootList",

@@ -910,6 +910,12 @@ derivative-frac-d-dx-sin-x-cos-x:
     out: \cos(x)
   fullform:
     in: D[Sin[x], x]
+  wolfram:
+    in: D[Sin[x], x]
+  sympy:
+    in: diff(sin(Symbol("x")), Symbol("x"))
+  sage:
+    in: diff(sin(SR.var("x")), SR.var("x"))
 second-derivative:
   epsil:
     in: D(Sin(x), x, x)
@@ -919,6 +925,12 @@ second-derivative:
     out: -\sin(x)
   fullform:
     in: D[Sin[x], x, x]
+  wolfram:
+    in: D[Sin[x], x, x]
+  sympy:
+    in: diff(sin(Symbol("x")), Symbol("x"), Symbol("x"))
+  sage:
+    in: diff(sin(SR.var("x")), SR.var("x"), SR.var("x"))
 antiderivative:
   epsil:
     in: Integrate(Sin(x), x)
@@ -1023,6 +1035,8 @@ euler-s-formula-sin-x-frac-e-ix-e-ix-2i:
     in: \mathrm{TrigToExp}(\sin(x))
     out: (-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
   fullform:
+    in: TrigToExp[Sin[x]]
+  wolfram:
     in: TrigToExp[Sin[x]]
 simplify-knows-the-pythagorean-identity:
   epsil:

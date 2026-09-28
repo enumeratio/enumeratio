@@ -81,3 +81,5 @@ derivative-frac-1-1-x-2:
     out: \frac{1}{1-x^2}
   fullform:
     in: D[ArcCoth[x], x]
+  wolfram:
+    in: D[ArcCoth[x], x]

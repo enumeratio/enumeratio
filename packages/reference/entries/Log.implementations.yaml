@@ -189,6 +189,8 @@ derivative-in-base-3-frac-1-x-ln-3:
     out: \frac{1}{x\ln(3)}
   fullform:
     in: D[Log[3, x], x]
+  wolfram:
+    in: D[Log[3, x], x]
 log-2-frac-18-3-an-exact-negative-power-of-the:
   epsil:
     in: Log(1 / 8, 2)

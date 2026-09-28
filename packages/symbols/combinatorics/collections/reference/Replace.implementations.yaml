@@ -7,6 +7,7 @@ rewrites-the-whole-expr-matches-top-level:
     out: 100x
   fullform:
     in: Replace[Plus[x, 1], Rule[Plus[_a, 1], Times[_a, 100]]]
+    back: [Replace, [Add, x, 1], [KeyValuePair, [Add, _a, 1], [Multiply, _a, 100]]]
 leaves-expr-untouched-when-only-subexpr-matches:
   epsil:
     in: Replace([x + 1], Rule(_a + 1, _a * 100))
@@ -16,6 +17,7 @@ leaves-expr-untouched-when-only-subexpr-matches:
     out: \bigl\lbrack x+1\bigr\rbrack
   fullform:
     in: Replace[List[Plus[x, 1]], Rule[Plus[_a, 1], Times[_a, 100]]]
+    back: [Replace, [List, [Add, x, 1]], [KeyValuePair, [Add, _a, 1], [Multiply, _a, 100]]]
 tries-a-list-of-rules-in-order:
   epsil:
     in: Replace(b, [Rule(a, 1), Rule(b, 2)])
@@ -25,6 +27,7 @@ tries-a-list-of-rules-in-order:
     out: "2"
   fullform:
     in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
+    back: [Replace, b, [List, [KeyValuePair, a, 1], [KeyValuePair, b, 2]]]
   wolfram:
     in: Replace[b, List[Rule[a, 1], Rule[b, 2]]]
     out: "2"

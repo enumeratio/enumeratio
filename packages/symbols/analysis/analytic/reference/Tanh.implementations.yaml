@@ -188,6 +188,8 @@ derivative-sech-2-x:
     out: \mathrm{sech}(x)^2
   fullform:
     in: D[Tanh[x], x]
+  wolfram:
+    in: D[Tanh[x], x]
 antiderivative-ln-cosh-x:
   epsil:
     in: Integrate(Tanh(x), x)
@@ -213,6 +215,8 @@ in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x:
     in: \mathrm{TrigToExp}(\tanh(x))
     out: \frac{e^{x}-\exp(-x)}{e^{x}+\exp(-x)}
   fullform:
+    in: TrigToExp[Tanh[x]]
+  wolfram:
     in: TrigToExp[Tanh[x]]
 tanh-has-no-limit-at-complex-infinity-undefined:
   epsil:

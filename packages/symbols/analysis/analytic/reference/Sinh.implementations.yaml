@@ -247,6 +247,8 @@ derivative-cosh-x:
     out: \cosh(x)
   fullform:
     in: D[Sinh[x], x]
+  wolfram:
+    in: D[Sinh[x], x]
 antiderivative:
   epsil:
     in: Integrate(Sinh(x), x)
@@ -282,6 +284,8 @@ the-definition-sinh-x-frac-e-x-e-x-2:
     in: \mathrm{TrigToExp}(\sinh(x))
     out: \frac{1}{2}(e^{x}-\exp(-x))
   fullform:
+    in: TrigToExp[Sinh[x]]
+  wolfram:
     in: TrigToExp[Sinh[x]]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:

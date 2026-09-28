@@ -7,6 +7,7 @@ looks-up-an-existing-key:
     out: "2"
   fullform:
     in: Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]
+    back: [At, [Association, [KeyValuePair, a, 1], [KeyValuePair, b, 2]], [Key, b]]
   wolfram:
     in: Part[Association[Rule[a, 1], Rule[b, 2]], Key[b]]
     out: "2"
@@ -22,6 +23,7 @@ missing-key-answers-missing:
     out: \mathrm{Missing}
   fullform:
     in: Part[Association[Rule[a, 1]], Key[z]]
+    back: [At, [Association, [KeyValuePair, a, 1]], [Key, z]]
   wolfram:
     in: Part[Association[Rule[a, 1]], Key[z]]
     out: Missing["KeyAbsent", Key[z]]

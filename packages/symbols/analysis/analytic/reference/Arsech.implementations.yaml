@@ -66,3 +66,5 @@ derivative-frac-1-x-sqrt-1-x-2:
     out: -(x\sqrt{1-x^2})^{-1}
   fullform:
     in: D[ArcSech[x], x]
+  wolfram:
+    in: D[ArcSech[x], x]

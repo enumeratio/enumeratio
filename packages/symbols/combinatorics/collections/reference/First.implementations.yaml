@@ -166,6 +166,7 @@ first-of-association-is-first-value:
     out: a
   fullform:
     in: First[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+    back: [First, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b], [KeyValuePair, 3, c]]]
   wolfram:
     in: First[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
     out: True
@@ -192,6 +193,7 @@ first-of-nonempty-association-ignores-default:
     out: a
   fullform:
     in: First[Association[Rule[1, a], Rule[2, b]], 99]
+    back: [First, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]], 99]
   wolfram:
     in: First[Association[Rule[1, a], Rule[2, b]], 99]
     out: True

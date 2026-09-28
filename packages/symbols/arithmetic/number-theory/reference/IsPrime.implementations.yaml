@@ -408,6 +408,8 @@ a-gaussian-prime-its-norm-5-is-prime:
     out: \mathrm{False}
   fullform:
     in: PrimeQ[5, Rule[GaussianIntegers, True]]
+  wolfram:
+    in: PrimeQ[5, Rule[GaussianIntegers, True]]
 an-odd-prime-stays-prime-in-z-i-exactly-when-p:
   epsil:
     in: IsPrime([2, 3, 5, 7, 11, 13], GaussianIntegers -> True)
@@ -419,6 +421,8 @@ an-odd-prime-stays-prime-in-z-i-exactly-when-p:
     in: \mathrm{IsPrime}(\bigl\lbrack2, 3, 5, 7, 11, 13\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
   fullform:
+    in: PrimeQ[List[2, 3, 5, 7, 11, 13], Rule[GaussianIntegers, True]]
+  wolfram:
     in: PrimeQ[List[2, 3, 5, 7, 11, 13], Rule[GaussianIntegers, True]]
 isprime-5:
   epsil:

@@ -54,3 +54,5 @@ ramp-derivative:
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack0, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, \mathrm{Indeterminate})
   fullform:
     in: D[Ramp[x], x]
+  wolfram:
+    in: D[Ramp[x], x]

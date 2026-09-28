@@ -264,7 +264,7 @@ psi-x-is-the-trigamma-psi-1-x:
   fullform:
     in: D[PolyGamma[x], x]
   wolfram:
-    in:
+    in: D[PolyGamma[x], x]
     note: Wolfram writes the derivative as $\mathrm{PolyGamma}[1, x]$; compute-engine names it `Trigamma`.
 reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot:
   epsil:

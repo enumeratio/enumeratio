@@ -232,6 +232,8 @@ derivative-sinh-x:
     out: \sinh(x)
   fullform:
     in: D[Cosh[x], x]
+  wolfram:
+    in: D[Cosh[x], x]
 antiderivative:
   epsil:
     in: Integrate(Cosh(x), x)
@@ -255,6 +257,8 @@ the-definition-cosh-x-frac-e-x-e-x-2:
     in: \mathrm{TrigToExp}(\cosh(x))
     out: \frac{1}{2}(e^{x}+\exp(-x))
   fullform:
+    in: TrigToExp[Cosh[x]]
+  wolfram:
     in: TrigToExp[Cosh[x]]
 cosh-2-x-sinh-2-x-should-simplify-to-1:
   epsil:

@@ -255,6 +255,8 @@ the-derivative-of-ln-gamma-is-the-digamma:
     out: \psi(x)
   fullform:
     in: D[LogGamma[x], x]
+  wolfram:
+    in: D[LogGamma[x], x]
 off-the-positive-axis-gammaln-is-the-principal:
   epsil:
     in: GammaLn(-1.5)

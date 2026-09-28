@@ -258,6 +258,8 @@ frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2:
     out: (-\frac{2}{e^{x^2}})/\sqrt{\pi}
   fullform:
     in: D[Erfc[x], x]
+  wolfram:
+    in: D[Erfc[x], x]
 far-in-the-tail-erfc-keeps-full-relative:
   epsil:
     in: Erfc(9.5)

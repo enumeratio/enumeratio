@@ -73,3 +73,5 @@ unitbox-derivative-away-from-the-jump:
     out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{Indeterminate}, x=1/2\lor x=-1/2\bigr\rbrack\bigr\rbrack, 0)
   fullform:
     in: D[UnitBox[x], x]
+  wolfram:
+    in: D[UnitBox[x], x]

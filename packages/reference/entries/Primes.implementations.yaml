@@ -7,8 +7,6 @@ the-first-five-primes:
     out: \bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack
   fullform:
     in: Take[Primes, 5]
-  wolfram:
-    in: Take[Primes, 5]
 11-is-prime:
   epsil:
     in: 11 in Primes
@@ -21,8 +19,6 @@ the-first-five-primes:
     out: \mathrm{True}
   fullform:
     in: Element[11, Primes]
-  wolfram:
-    in: Element[11, Primes]
 9-is-not-prime:
   epsil:
     in: 9 in Primes
@@ -34,6 +30,4 @@ the-first-five-primes:
     in: 9\in\mathbb{P}
     out: \mathrm{False}
   fullform:
-    in: Element[9, Primes]
-  wolfram:
     in: Element[9, Primes]

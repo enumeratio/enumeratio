@@ -285,6 +285,8 @@ frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the:
     out: (\frac{2}{e^{x^2}})/\sqrt{\pi}
   fullform:
     in: D[Erf[x], x]
+  wolfram:
+    in: D[Erf[x], x]
 to-40-significant-digits-every-one-correctly:
   epsil:
     in: N(Erf(1), 40)

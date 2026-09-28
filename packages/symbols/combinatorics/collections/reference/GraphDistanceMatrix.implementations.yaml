@@ -43,3 +43,5 @@ weighted-matrix-summed-weight:
     out: \bigl\lbrack\bigl\lbrack0, 5, 12\bigr\rbrack, \bigl\lbrack5, 0, 7\bigr\rbrack, \bigl\lbrack12, 7, 0\bigr\rbrack\bigr\rbrack
   fullform:
     in: GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]
+  wolfram:
+    in: GraphDistanceMatrix[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]]

@@ -211,6 +211,8 @@ derivative-csc-x-cot-x:
     out: -(\csc(x)\cot(x))
   fullform:
     in: D[Csc[x], x]
+  wolfram:
+    in: D[Csc[x], x]
 antiderivative-ln-csc-x-cot-x:
   epsil:
     in: Integrate(Csc(x), x)

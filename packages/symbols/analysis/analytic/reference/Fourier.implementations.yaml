@@ -44,7 +44,7 @@ a-custom-fourierparameters:
   fullform:
     in: Fourier[List[1, 2, 3, 4], Rule[FourierParameters, List[1, -1]]]
   wolfram:
-    in: Fourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]
+    in: Fourier[List[1, 2, 3, 4], Rule[FourierParameters, List[1, -1]]]
     out: "{10. + 0.*I, -2. + 2.*I, -2. + 0.*I, -2. - 2.*I}"
 declines-a-symbolic-list:
   epsil:

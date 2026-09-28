@@ -64,6 +64,8 @@ memoryconstraint-in-process-is-an-error-not-a:
     out: \mathrm{TestResultObject}((\text{Outcome},\text{Error}), (\text{Input},5), (\text{ExpectedOutput},5), (\text{ActualOutput},\mathrm{Missing}), (\text{AbsoluteTimeUsed},0))
   fullform:
     in: VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]
+  wolfram:
+    in: VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]
 one-argument-a-predicate-that-evaluates-to-true:
   epsil:
     in: VerificationTest(2 > 1)
@@ -137,6 +139,8 @@ a-testid-is-carried-into-the-result:
     out: \mathrm{TestResultObject}((\text{Outcome},\text{Success}), (\text{Input},\tilde\infty), (\text{ExpectedOutput},\tilde\infty), (\text{ActualOutput},\tilde\infty), (\text{AbsoluteTimeUsed},0), (\text{TestID},\text{pole}))
   fullform:
     in: VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]
+  wolfram:
+    in: VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]
 the-default-comparison-is-structural:
   epsil:
     in: VerificationTest(x ^ 2 + 2x + 1, (x + 1) ^ 2)
@@ -186,3 +190,5 @@ a-sametest-with-a-tolerance-22-7-3-14-0-01:
         3.14,
         [KeyValuePair, SameTest, [Function, [List, a, b], [Less, [Abs, [Subtract, a, b]], 0.01]]],
       ]
+  wolfram:
+    in: VerificationTest[Divide[22, 7], 3.14, Rule[SameTest, Function[List[a, b], Less[Abs[Subtract[a, b]], 0.01]]]]
