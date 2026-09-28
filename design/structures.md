@@ -71,19 +71,28 @@ parents' conformances too. (An upstream candidate.)
 Mathlib's concepts and axioms, with its abbreviations spelled out (`OrderedAdditiveCommutativeGroup`,
 not `OrderedAddCommGroup`); aliases later if wanted. A first cut:
 
-| protocol                          | refines        | members                                   | laws (checked by Plausible)         | Mathlib               |
-| --------------------------------- | -------------- | ----------------------------------------- | ----------------------------------- | --------------------- |
-| `Preorder`                        | --             | `LessEqual`                               | reflexive, transitive               | `Preorder`            |
-| `PartialOrder`                    | `Preorder`     | --                                        | antisymmetric                       | `PartialOrder`        |
-| `LinearOrder`                     | `PartialOrder` | `Compare`                                 | total                               | `LinearOrder`         |
-| `Lattice`                         | `PartialOrder` | `Meet`, `Join`                            | greatest lower / least upper bounds | `Lattice`             |
-| `BoundedOrder`                    | `PartialOrder` | `Top`, `Bottom`                           | extremal                            | `BoundedOrder`        |
-| `FloorOrder`                      | `PartialOrder` | `Floor`, `Ceil` (to the ticks)            | the Galois connections above        | `FloorSemiring`       |
-| `MidpointOrder`                   | `FloorOrder`   | `Midpoint`                                | between, equidistant                | --                    |
-| `TickParity`                      | `FloorOrder`   | `IsEvenTick`                              | alternates along consecutive ticks  | --                    |
-| `OrderedAdditiveCommutativeGroup` | `PartialOrder` | `Zero`, `Negate`, `Add`                   | a group, order-compatible           | `OrderedAddCommGroup` |
-| `FiniteDimensionalAlgebra`        | --             | `Basis`, `AlgebraDimension`, `Element`, … | --                                  | `FiniteDimensional`   |
-| `Sampleable`                      | --             | `Sample`                                  | draws lie in the domain             | --                    |
+| protocol                          | refines        | members                                        | laws (checked by Plausible)                     | Mathlib               |
+| --------------------------------- | -------------- | ---------------------------------------------- | ----------------------------------------------- | --------------------- |
+| `PartialOrder`                    | --             | `Compare` (-1, 0, 1, or `NaN` if incomparable) | reflexive, antisymmetric, transitive            | `PartialOrder`        |
+| `LinearOrder`                     | `PartialOrder` | --                                             | total: never incomparable                       | `LinearOrder`         |
+| `Lattice`                         | `PartialOrder` | `GreatestLowerBound`, `LeastUpperBound`        | greatest lower / least upper bounds             | `Lattice`             |
+| `BoundedOrder`                    | `PartialOrder` | `Top`, `Bottom`                                | extremal                                        | `BoundedOrder`        |
+| `FloorOrder`                      | `PartialOrder` | `LowerTick`, `UpperTick`                       | the Galois connections above                    | `FloorSemiring`       |
+| `MidpointOrder`                   | `FloorOrder`   | `Midpoint`                                     | between, equidistant                            | --                    |
+| `TickParity`                      | `FloorOrder`   | `IsEvenTick`                                   | alternates along consecutive ticks              | --                    |
+| `ProductOrder`                    | `PartialOrder` | `Components`, `FromComponents`                 | the order and every operation are componentwise | `Prod` instances      |
+| `OrderedAdditiveCommutativeGroup` | `PartialOrder` | (compute-engine's `Add`, `Negate`, `0`)        | a group, order-compatible                       | `OrderedAddCommGroup` |
+| `FiniteDimensionalAlgebra`        | --             | `Basis`, `AlgebraDimension`, `Element`, …      | --                                              | `FiniteDimensional`   |
+| `Sampleable`                      | --             | `Sample`                                       | draws lie in the domain                         | --                    |
+
+A member becomes a head of its own, so its name must be free: a member named like an existing
+head (`Floor`, `Join`, `Infimum`, `LessEqual`) is silently shadowed by it and never dispatches.
+So the public heads -- `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round`, `Sign` -- stay
+compute-engine's and take a plain number down the native path; anything else goes to the
+members of whichever protocols its type conforms to. A product order (the complex numbers, and
+vectors later) is the case a single `Compare` can't round through -- one component above the
+midpoint and the other below -- so it has its own protocol, and every generic head works
+componentwise over it.
 
 Names are open (`FloorOrder` has no exact Mathlib counterpart, since Mathlib's needs a ring);
 the table is the proposal to argue with.
