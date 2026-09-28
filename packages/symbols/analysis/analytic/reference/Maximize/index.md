@@ -15,7 +15,7 @@ signatures:
     description: the global maximum of f restricted to cons, a simple interval constraint (x >= a, a <= x <= b, an And of two one-sided bounds, ...).
     library: "@enumeratio/analytic"
 details:
-  - "[[Minimize]]'s exact mirror image -- same scope, same machinery ([[D]]/[[Solve]]/[[Limit]] on the ORIGINAL expression, never a hand-rolled formula), same declines. See its `details` for the full account; this entry only lists Maximize's own examples."
+  - "[[Minimize]]'s exact mirror image -- same scope, same machinery ([[D]]/[[Factor]]/[[Solve]]/[[Limit]] on the ORIGINAL expression), same declines. See its `details` for the full account; this entry only lists Maximize's own examples."
 seeAlso:
   - Minimize
   - MinValue
