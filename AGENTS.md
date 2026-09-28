@@ -94,14 +94,13 @@ release. Add a tool name to select part of the graph. For example, run
 
 ## Testing
 
-- **Golden-example data, not snapshots.** Assert against a committed golden JSON file
-  (`expect(actual).toEqual(golden[id])`), regenerated behind an `UPDATE_*` env flag —
-  never `toMatchSnapshot` / `toMatchInlineSnapshot`. Their snapshot client isn't set up
-  when the `test` task runs through `vp run` (the path `vp run -r test` / CI use), so a
-  snapshot test passes under a bare `vp test` but fails the sweep; and golden JSON is
-  plain data that's reviewable and reusable elsewhere. A guard test enforces this repo-wide
-  (`packages/utils/tests/no-snapshots.test.ts`). See `packages/cli/tests/demos.test.ts` for
-  the pattern.
+- **Golden-example data, not snapshots**, in `packages/`. Assert against a committed golden
+  JSON file (`expect(actual).toEqual(golden[id])`), regenerated behind an `UPDATE_*` env
+  flag: it is plain data, reviewable and reusable elsewhere, which a `.snap` file is not. A
+  guard test enforces this for `packages/` (`packages/utils/tests/no-snapshots.test.ts`). See
+  `packages/cli/tests/demos.test.ts` for the pattern.
+- **Patches in `upstream/` test the way their upstream does**, snapshots included, so a test
+  can go upstream with its code.
 
 ## CI and deployment
 
