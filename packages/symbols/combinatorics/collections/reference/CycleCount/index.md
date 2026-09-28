@@ -14,7 +14,7 @@ signatures:
   - call: CycleCount(p)
     description: the cycle count of a one-line permutation $p$
     library: enumeratio-collections
-    type: (list) -> integer
+    type: (permutation) -> integer
 details:
   - Permutations of $\{1, \dots, n\}$ with $k$ cycles are counted by the unsigned Stirling number of the first kind $\left[{n\atop k}\right]$ (see [[StirlingS1]])
   - The identity is all fixed points, so it splits into $n$ singleton cycles; an $n$-cycle is a single cycle

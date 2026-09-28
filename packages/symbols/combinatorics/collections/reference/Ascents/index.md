@@ -7,7 +7,7 @@ signatures:
   - call: Ascents(p)
     description: the ascent count of a one-line permutation $p$
     library: enumeratio-collections
-    type: (list) -> integer
+    type: (list | permutation) -> integer
 details:
   - 'Complementary to [[Descents]]: $\mathrm{Ascents} + \mathrm{Descents} = n - 1$'
   - The identity is all-ascent, the reversal all-descent

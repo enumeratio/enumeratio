@@ -1,4 +1,4 @@
 id	in	out
-positions-2-and-3-1-2-and-2-3	\mathrm{Antiexcedances}(\bigl\lbrack3, 1, 2\bigr\rbrack)	2
-the-identity-has-none	\mathrm{Antiexcedances}(\bigl\lbrack1, 2, 3\bigr\rbrack)	0
-positions-3-and-4-2-3-and-1-4	\mathrm{Antiexcedances}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack)	2
+positions-2-and-3-1-2-and-2-3	\mathrm{Antiexcedances}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))	2
+the-identity-has-none	\mathrm{Antiexcedances}(\mathrm{Permutation}(\bigl\lbrack1, 2, 3\bigr\rbrack))	0
+positions-3-and-4-2-3-and-1-4	\mathrm{Antiexcedances}(\mathrm{Permutation}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack))	2

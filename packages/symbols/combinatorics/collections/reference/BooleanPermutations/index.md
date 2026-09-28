@@ -7,7 +7,7 @@ signatures:
   - call: BooleanPermutations(n)
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose inversions are all adjacent.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 details:
   - A lazy indexed collection; the count is $F(n+1)$ — $1, 1, 2, 3, 5, 8, …$, A000045. See [[Fibonacci]].
   - As implemented here this is NOT Tenner's "Boolean permutations" $Av(321, 3412)$, counted by $F(2n-1)$ (A001519, $1, 1, 2, 5, 13, …$); the two readings first differ at $n = 3$ (3 here against 5 there).

@@ -7,7 +7,7 @@ signatures:
   - call: SimplePermutations(n)
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ with no non-trivial interval.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 details:
   - A lazy indexed collection; there is no closed-form count implemented, so it is the enumeration's own length — A111111, $1, 2, 0, 2, 6, 46, 338, 2926, …$
   - Every permutation of size $\geq 4$ decomposes into simple permutations by substitution, which makes this family the atoms [[SeparablePermutations]] and every other substitution-closed class are built from.
