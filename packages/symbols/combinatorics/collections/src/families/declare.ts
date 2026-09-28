@@ -1,5 +1,5 @@
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineMessages, emit } from "@enumeratio/engine";
+import { defineMessages, emit, wrapOperator } from "@enumeratio/engine";
 import { allEntries } from "./index.ts";
 import {
   asBlockList,
@@ -141,7 +141,9 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
 /** Declare every family on `ce`: an indexed-collection operator, or for paramCount 0 an
  *  indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this engine. */
 export function declareFamilies(ce: ComputeEngine): void {
+  const byHead = new Map<string, FamilyKernel>();
   for (const family of allEntries) {
+    byHead.set(family.head, family);
     const collection = handlersOf(ce, family);
     if (family.declared?.work !== undefined) {
       defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
@@ -152,4 +154,26 @@ export function declareFamilies(ce: ComputeEngine): void {
       ce.declare(family.head, { signature: signatureOf(family), collection });
     }
   }
+
+  // The `count` handler can't carry an exact count past 2^53, but `Count` can: an exact
+  // integer, never a rounded one. Counts that cost enumeration stay with the handler.
+  const exactCount = (op: BoxedExpression): bigint | undefined => {
+    const family = byHead.get(op.operator);
+    if (family === undefined || family.declared?.cost.count === "enumerative") return undefined;
+    const p = Array.from({ length: family.paramCount }, (_, i) => intOf(asBoxed(op).ops?.[i]));
+    if (p.some((x) => !Number.isSafeInteger(x) || x < 0)) return undefined;
+    try {
+      const total = family.count(p);
+      return typeof total === "bigint" && total > BigInt(Number.MAX_SAFE_INTEGER) ? total : undefined;
+    } catch (error) {
+      if (needsBigint(error)) return undefined;
+      throw error;
+    }
+  };
+  wrapOperator(
+    ce,
+    ["Count", ["SymmetricGroup", 1]],
+    (ops) => ops.length === 1 && exactCount(ops[0]) !== undefined,
+    () => (ops) => ce.number(exactCount(ops[0])!),
+  );
 }

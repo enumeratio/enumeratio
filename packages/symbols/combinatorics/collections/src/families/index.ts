@@ -1,4 +1,4 @@
-import { entries as core } from "./core.ts";
+import { bigintEntries, entries as core } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
 import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
@@ -19,9 +19,7 @@ import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
-// scripts read them too.
-export const allEntries: readonly FamilyKernel[] = [
+const numberEntries = [
   ...core,
   ...subsets,
   ...words,
@@ -40,3 +38,7 @@ export const allEntries: readonly FamilyKernel[] = [
   ...numericDigitsPrimes,
   ...unlabeledTrees,
 ].map(numberKernel);
+
+// Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
+// scripts read them too.
+export const allEntries: readonly FamilyKernel[] = [...bigintEntries, ...numberEntries];

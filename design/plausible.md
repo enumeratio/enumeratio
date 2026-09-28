@@ -140,8 +140,9 @@ We keep the archived enumeratio's vocabulary:
 - **A filtered view takes its ordinality from its own iteration.** `At(Filter(F, pred), k)`
   counts survivors, and an element's rank in `F` is untouched. Only on the bare family is
   ordinality `rank + 1`.
-- **The CE boundary stays in numbers.** An exact count past 2⁵³ answers `undefined` (unknown),
-  never a rounded wrong number.
+- **The CE boundary stays in numbers.** An exact count past 2⁵³ answers `undefined` (unknown)
+  from the `count` handler, never a rounded wrong number. `Count` itself answers the exact
+  integer when the kernel is bigint and its count isn't enumerative.
 - **Migration adapter.** `numberKernel({…})` wraps a number-arithmetic kernel into the bigint
   contract. Instead of rounding it throws `RangeError`, which Plausible reports as "needs
   bigint". Those kernels then move to real bigint one at a time, heaviest first.

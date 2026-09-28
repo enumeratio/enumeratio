@@ -6,7 +6,10 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
+import { bigintEntries } from "../src/families/core.ts";
 import { declareCollections } from "../src/library.ts";
+
+const [symmetricGroup] = bigintEntries;
 
 const ce = new ComputeEngine();
 declareCollections(ce);
@@ -48,4 +51,12 @@ test("Take and RandomChoice leave a huge family unevaluated", () => {
 
 test("a count past 2^53 in a plain-number kernel is unknown, not an internal error", () => {
   expect(run(["Count", ["BoxedPlanePartitions", 7, 7, 7]]).json).toEqual(["Count", ["BoxedPlanePartitions", 7, 7, 7]]);
+});
+
+test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements index", () => {
+  expect(run(["Count", ["SymmetricGroup", 20]]).json).toEqual({ num: "2432902008176640000" });
+  expect(run(["At", ["SymmetricGroup", 20], 1]).json).toEqual(["List", ...Array.from({ length: 20 }, (_, i) => i + 1)]);
+  const last = run(["At", ["SymmetricGroup", 20], Number.MAX_SAFE_INTEGER]).json as ["List", ...number[]];
+  expect(last.length).toBe(21);
+  expect(symmetricGroup.rank(last.slice(1), [20])).toBe(BigInt(Number.MAX_SAFE_INTEGER - 1));
 });
