@@ -6,7 +6,7 @@ signatures:
   - call: AdicValuation(x)
     description: $v_b(x)$; `PositiveInfinity` for zero
     library: enumeratio-numerals
-    type: (any) -> number
+    type: (value) -> integer | signed_infinity
   - call: AdicNorm(x)
     description: "$b^{-v_b(x)}$: small when highly divisible by $b$"
     library: enumeratio-numerals

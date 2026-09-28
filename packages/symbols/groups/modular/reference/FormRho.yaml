@@ -6,7 +6,7 @@ signatures:
   - call: FormRho(form)
     description: the next form in the cycle
     library: enumeratio-modular
-    type: (value) -> value
+    type: (expression<QuadraticForm>) -> expression<QuadraticForm>
 seeAlso:
   - FormClassNumber
   - FormCycle

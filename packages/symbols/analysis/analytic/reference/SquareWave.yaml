@@ -6,7 +6,7 @@ signatures:
   - call: SquareWave(x)
     description: 1 for x - floor(x) in [0, 1/2), -1 for x - floor(x) in [1/2, 1).
     library: "@enumeratio/analytic"
-    type: (value, value?) -> number
+    type: (real | vector<real^2>, real?) -> number
   - call: SquareWave({min, max}, x)
     description: the square wave rescaled to vary between min and max, unit period.
     library: "@enumeratio/analytic"

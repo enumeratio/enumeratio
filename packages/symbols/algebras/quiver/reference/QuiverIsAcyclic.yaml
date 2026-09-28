@@ -6,7 +6,7 @@ signatures:
   - call: QuiverIsAcyclic(quiver)
     description: true when $kQ$ has a finite basis
     library: enumeratio-quiver
-    type: (value) -> boolean
+    type: (expression<LinearQuiver> | expression<Quiver> | symbol) -> boolean
 details:
   - $kQ$ is finite-dimensional exactly when $Q$ is acyclic; one loop gives the paths $e, a, a^2, \dots$ and the Jordan quiver's path algebra is $k[x]$
   - For a cyclic quiver, `Basis` and `AlgebraDimension` have no answer and leave the call standing rather than enumerating forever

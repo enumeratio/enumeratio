@@ -6,7 +6,7 @@ signatures:
   - call: BooleanLattice(n)
     description: subsets of $\{1,\dots,n\}$ ordered by inclusion
     library: enumeratio-incidence
-    type: (integer) -> value
+    type: (integer) -> expression<BooleanLattice>
 seeAlso:
   - IncidenceAlgebra
   - PosetElements

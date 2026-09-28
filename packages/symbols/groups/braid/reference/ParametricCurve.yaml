@@ -6,7 +6,7 @@ signatures:
   - call: ParametricCurve(x, y, z, span?, samples?)
     description: the sampled points of the parameterisation
     library: enumeratio-braid
-    type: (any, any, any, number?, number?) -> list
+    type: (any, any, any, number?, number?) -> list<list<real>>
 seeAlso:
   - KnotCurve
   - LorenzCurve

@@ -6,6 +6,6 @@ signatures:
   - call: ColoredPermutations(n, k)
     description: the $k^n \cdot n!$ colored permutations of $\{1, \dots, n\}$
     library: enumeratio-collections
-    type: (integer, integer) -> list<list<list<integer>>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
 seeAlso:
   - SignedPermutations

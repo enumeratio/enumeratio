@@ -405,7 +405,7 @@ export function matchInverseMellin(
 
 export function declareMellinTransform(ce: ComputeEngine): void {
   ce.declare("MellinTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, x, s] = ops;
       if (f === undefined || x === undefined || s === undefined || ops.length > 3) return undefined;
@@ -413,7 +413,7 @@ export function declareMellinTransform(ce: ComputeEngine): void {
     },
   });
   ce.declare("InverseMellinTransform", {
-    signature: "(value, value, value) -> value",
+    signature: "(expression, expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [F, s, x] = ops;
       if (F === undefined || s === undefined || x === undefined || ops.length > 3) return undefined;

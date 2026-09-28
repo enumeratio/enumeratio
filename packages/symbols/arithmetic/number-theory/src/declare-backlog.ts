@@ -434,7 +434,9 @@ export function declareBacklog(ce: ComputeEngine): void {
 
   ce.declare("EulerE", {
     description: SUMMARIES.EulerE,
-    signature: "(value, expression?) -> number",
+    // ops[0] a List (and no ops[1]) threads to a list of numbers; ops[1] present evaluates
+    // the Euler polynomial at it, which stays an unreduced expression for a symbolic point.
+    signature: "(value, expression?) -> number | list<number> | expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops[1] === undefined && ops[0]?.operator === "List") {
         const ns = operandsOf(ops[0]).map(bigIntegerAt);

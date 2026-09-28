@@ -6,7 +6,7 @@ signatures:
   - call: PositivePermutationBraid(permutation)
     description: the positive braid with no pair crossing twice
     library: enumeratio-braid
-    type: (list) -> value
+    type: (list<integer>) -> expression<Braid>
 seeAlso:
   - BraidPermutation
   - LorenzBraid

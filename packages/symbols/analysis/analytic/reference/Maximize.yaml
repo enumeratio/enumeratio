@@ -6,7 +6,7 @@ signatures:
   - call: Maximize(f, x)
     description: the global maximum of f, a real expression in the single variable x, over f's own natural domain.
     library: "@enumeratio/analytic"
-    type: (any, any) -> any
+    type: (expression, list<symbol> | symbol) -> expression
   - call: Maximize(f, {x})
     description: same as Maximize(f, x) -- Wolfram accepts the variable either bare or wrapped in a one-element list.
     library: "@enumeratio/analytic"

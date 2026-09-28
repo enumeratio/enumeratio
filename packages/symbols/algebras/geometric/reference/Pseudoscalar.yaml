@@ -6,6 +6,6 @@ signatures:
   - call: Pseudoscalar(algebra)
     description: the top blade of `algebra`
     library: enumeratio-geometric
-    type: (any) -> number
+    type: (value) -> number
 seeAlso:
   - Dual

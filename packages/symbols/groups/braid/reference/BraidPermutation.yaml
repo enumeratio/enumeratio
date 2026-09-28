@@ -6,7 +6,7 @@ signatures:
   - call: BraidPermutation(braid)
     description: where each strand ends up, forgetting which went over
     library: enumeratio-braid
-    type: (value) -> list
+    type: (expression<Braid> | string) -> list<integer>
 seeAlso:
   - BraidComponents
   - PositivePermutationBraid

@@ -6,7 +6,7 @@ signatures:
   - call: FibStrings(n)
     description: Binary words of length $n$ with no two consecutive ones
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - Count is $F_{n+2}$ (A000045, shifted).
 seeAlso:

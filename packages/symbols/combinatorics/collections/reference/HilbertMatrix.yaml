@@ -6,7 +6,7 @@ signatures:
   - call: HilbertMatrix(n)
     description: the n×n Hilbert matrix
     library: enumeratio-collections
-    type: (any) -> list<any>
+    type: (integer | list<integer>) -> list<any>
   - call: HilbertMatrix({m, n})
     description: the m×n Hilbert matrix
     library: enumeratio-collections

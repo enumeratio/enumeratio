@@ -6,7 +6,7 @@ signatures:
   - call: PretzelKnot(p, q, r)
     description: $P(p,q,r)$ as a knot, for odd $p,q,r$
     library: enumeratio-braid
-    type: (integer, integer, integer) -> value
+    type: (integer, integer, integer) -> expression<PretzelKnot>
 seeAlso:
   - TwistKnot
   - TorusKnot

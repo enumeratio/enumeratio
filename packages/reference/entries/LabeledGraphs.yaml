@@ -11,4 +11,4 @@ signatures:
   - call: LabeledGraphs(...)
     description: Simple undirected graphs on the labeled vertex set [n].
     library: enumeratio-collections
-    type: (integer) -> list<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<list<list<integer>>>

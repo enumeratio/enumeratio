@@ -6,7 +6,7 @@ signatures:
   - call: FormDiscriminant(form)
     description: $b^2-4ac$
     library: enumeratio-modular
-    type: (value) -> integer
+    type: (expression<QuadraticForm>) -> integer
 seeAlso:
   - QuadraticForm
   - FormClassNumber

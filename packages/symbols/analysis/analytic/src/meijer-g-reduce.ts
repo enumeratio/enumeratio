@@ -68,7 +68,7 @@ function reduce(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | und
 
 export function declareMeijerGReduce(ce: ComputeEngine): void {
   ce.declare("MeijerGReduce", {
-    signature: "(value, value) -> value",
+    signature: "(expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, x] = ops;
       const xName = x === undefined ? undefined : symbolNameOf(x);

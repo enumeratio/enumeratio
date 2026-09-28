@@ -6,7 +6,7 @@ signatures:
   - call: FigureEightKnot()
     description: TwistKnot(1) under its own name
     library: enumeratio-braid
-    type: () -> value
+    type: () -> expression<FigureEightKnot>
 seeAlso:
   - TwistKnot
   - AlexanderPolynomial

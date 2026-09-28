@@ -6,7 +6,7 @@ signatures:
   - call: SmoothPermutations(n)
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose Schubert variety is smooth.
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - A lazy indexed collection; the count is A032351 (Bóna, 1998) — $1, 2, 6, 22, 88, 366, …$ — with no simple closed-form generating function.
   - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $3412$ and $4231$.

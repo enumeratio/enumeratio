@@ -8,7 +8,7 @@ signatures:
   - call: Denominator(number) -> nothing | number
     description: Denominator of an expression
     library: enumeratio-adeles
-    type: (number | value) -> nothing | number | value
+    type: (number | value) -> nothing | number
     overrides: compute-engine
 statOn:
   - BinaryWord

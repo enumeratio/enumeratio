@@ -187,7 +187,7 @@ function declareKey(ce: ComputeEngine): void {
  *  convention as `ToCharacterCode`/`StringLength` in `expression-ops.ts`). */
 function declareCharacterRange(ce: ComputeEngine): void {
   ce.declare("CharacterRange", {
-    signature: "(any, any) -> list<string>",
+    signature: "(string | integer, string | integer) -> list<string>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [a, b] = ops;
       if (a === undefined || b === undefined) return undefined;
@@ -240,7 +240,7 @@ function declareReIm(ce: ComputeEngine): void {
       : ce.function("List", [ce.function("Re", [z]).evaluate(), ce.function("Im", [z]).evaluate()]);
 
   ce.declare("ReIm", {
-    signature: "(any) -> any",
+    signature: "(number | list<any>) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const z = ops[0];
       return z === undefined ? undefined : reIm(z);
@@ -331,7 +331,7 @@ function declareKaryTree(ce: ComputeEngine): void {
  *  of scope (WeightedAdjacencyMatrix, BooleanConvert) and why. */
 export function declareMiscFrontier(ce: ComputeEngine): void {
   ce.declare("DiagonalMatrix", {
-    signature: "(any, integer?) -> list<any>",
+    signature: "(list<any>, integer?) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const listExpr = ops[0];
       if (listExpr === undefined || listExpr.operator !== "List") return undefined;
@@ -342,7 +342,7 @@ export function declareMiscFrontier(ce: ComputeEngine): void {
   });
 
   ce.declare("HilbertMatrix", {
-    signature: "(any) -> list<any>",
+    signature: "(integer | list<integer>) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       // Exactly one argument — the declared signature already rejects a 2-argument call at
       // BOX time, before this ever runs (Wolfram's rectangular form takes its dimensions as

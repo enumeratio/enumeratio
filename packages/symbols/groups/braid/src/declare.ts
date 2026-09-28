@@ -124,7 +124,16 @@ export function declareBraid(ce: ComputeEngine): void {
   };
   const polynomialExpression = (p: Laurent): BoxedExpression => polynomialIn("t", p);
 
-  ce.declare("Braid", { signature: "(integer, list?) -> value" });
+  ce.declare("Braid", { signature: "(integer, list<integer>?) -> expression<Braid>" });
+
+  /** A braid, given directly or spelled as an LR word (a modular geodesic's Lorenz braid). */
+  const braidLike = "expression<Braid> | string";
+  /**
+   * A knot, however it was named: one of the closed families, a braid (whose closure it
+   * is), or an LR word.
+   */
+  const knotLike =
+    "expression<TorusKnot> | expression<TwistKnot> | expression<PretzelKnot> | expression<FigureEightKnot> | expression<Braid> | string";
 
   /** A head taking a braid and returning a value. */
   const aboutBraid = (head: string, signature: string, answer: (b: Braid) => BoxedExpression | undefined): void => {
@@ -162,7 +171,7 @@ export function declareBraid(ce: ComputeEngine): void {
   // ── the group ───────────────────────────────────────────────────────────────
 
   ce.declare("BraidProduct", {
-    signature: "(value, value) -> value",
+    signature: `(${braidLike}, ${braidLike}) -> expression<Braid>`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [a, b] = [braidOf(ops[0]), braidOf(ops[1])];
       if (a === undefined || b === undefined) return undefined;
@@ -170,9 +179,9 @@ export function declareBraid(ce: ComputeEngine): void {
       return product === undefined ? undefined : braidExpression(product);
     },
   });
-  aboutBraid("BraidInverse", "(value) -> value", (b) => braidExpression(invert(b)));
+  aboutBraid("BraidInverse", `(${braidLike}) -> expression<Braid>`, (b) => braidExpression(invert(b)));
   ce.declare("BraidPower", {
-    signature: "(value, integer) -> value",
+    signature: `(${braidLike}, integer) -> expression<Braid>`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const b = braidOf(ops[0]);
       const k = integerAt(ops[1]);
@@ -181,18 +190,20 @@ export function declareBraid(ce: ComputeEngine): void {
       return result === undefined ? undefined : braidExpression(result);
     },
   });
-  aboutBraid("BraidStrands", "(value) -> integer", (b) => ce.number(b.strands));
-  aboutBraid("BraidCrossings", "(value) -> integer", (b) => ce.number(crossings(b)));
+  aboutBraid("BraidStrands", `(${braidLike}) -> integer`, (b) => ce.number(b.strands));
+  aboutBraid("BraidCrossings", `(${braidLike}) -> integer`, (b) => ce.number(crossings(b)));
   /** The exponent sum: the abelianisation B_n → Z, and the closed diagram's writhe. */
-  aboutBraid("BraidWrithe", "(value) -> integer", (b) => ce.number(writhe(b)));
-  aboutBraid("BraidIsPositive", "(value) -> boolean", (b) => ce.symbol(isPositive(b) ? "True" : "False"));
+  aboutBraid("BraidWrithe", `(${braidLike}) -> integer`, (b) => ce.number(writhe(b)));
+  aboutBraid("BraidIsPositive", `(${braidLike}) -> boolean`, (b) => ce.symbol(isPositive(b) ? "True" : "False"));
   /** The image in the symmetric group — forget which strand went over. */
-  aboutBraid("BraidPermutation", "(value) -> list", (b) => listExpression(permutationOf(b).map((i) => i + 1)));
+  aboutBraid("BraidPermutation", `(${braidLike}) -> list<integer>`, (b) =>
+    listExpression(permutationOf(b).map((i) => i + 1)),
+  );
 
   // ── the closure, and its invariants ─────────────────────────────────────────
 
-  aboutBraid("BraidComponents", "(value) -> integer", (b) => ce.number(components(b)));
-  aboutBraid("BraidIsKnot", "(value) -> boolean", (b) => ce.symbol(isKnot(b) ? "True" : "False"));
+  aboutBraid("BraidComponents", `(${braidLike}) -> integer`, (b) => ce.number(components(b)));
+  aboutBraid("BraidIsKnot", `(${braidLike}) -> boolean`, (b) => ce.symbol(isKnot(b) ? "True" : "False"));
   /**
    * The closed-form genus of a knot named by one — the value each family's own function
    * knows without any braid at all.
@@ -208,7 +219,7 @@ export function declareBraid(ce: ComputeEngine): void {
    * The Seifert genus of the knot: the closed form for a named torus, twist or pretzel
    * knot, otherwise Bennequin on a positive braid's closure, (c − s + 1)/2.
    */
-  aboutKnot("SeifertGenus", "(value) -> integer", (k) => {
+  aboutKnot("SeifertGenus", `(${knotLike}) -> integer`, (k) => {
     const genus = closedGenus(k) ?? (k.braid === undefined ? undefined : positiveBraidGenus(k.braid));
     return genus === undefined ? undefined : ce.number(genus);
   });
@@ -224,7 +235,7 @@ export function declareBraid(ce: ComputeEngine): void {
     return pretzelAlexander(c.pretzel.p, c.pretzel.q, c.pretzel.r);
   };
   /** The Alexander polynomial of the closure, via the reduced Burau representation. */
-  aboutKnot("AlexanderPolynomial", "(value) -> expression", (k) => {
+  aboutKnot("AlexanderPolynomial", `(${knotLike}) -> expression`, (k) => {
     // A named torus, twist or pretzel knot has a closed form; anything else goes through
     // Burau.
     const closed = closedAlexander(k);
@@ -234,7 +245,7 @@ export function declareBraid(ce: ComputeEngine): void {
     const polynomial = alexanderPolynomial(b);
     return polynomial === undefined ? undefined : polynomialExpression(polynomial);
   });
-  aboutBraid("BurauMatrix", "(value) -> list", (b) => {
+  aboutBraid("BurauMatrix", `(${braidLike}) -> list<list<expression>>`, (b) => {
     const matrix = burau(b);
     return matrix === undefined
       ? undefined
@@ -248,7 +259,7 @@ export function declareBraid(ce: ComputeEngine): void {
 
   /** (σ₁ ⋯ σ_{p−1})^q in B_p, whose closure is the torus link T(p, q). */
   ce.declare("TorusBraid", {
-    signature: "(integer, integer) -> value",
+    signature: "(integer, integer) -> expression<Braid>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [p, q] = [integerAt(ops[0]), integerAt(ops[1])];
       if (p === undefined || q === undefined) return undefined;
@@ -260,16 +271,16 @@ export function declareBraid(ce: ComputeEngine): void {
    * T(p, q) as a knot rather than a braid — inert, like `Braid`, because it is a value
    * and not a computation. The invariant heads take it and use the closed forms.
    */
-  ce.declare("TorusKnot", { signature: "(integer, integer) -> value" });
+  ce.declare("TorusKnot", { signature: "(integer, integer) -> expression<TorusKnot>" });
   /** The twist knot with n half-twists past its clasp — n = 1 is the figure-eight. */
-  ce.declare("TwistKnot", { signature: "(integer) -> value" });
+  ce.declare("TwistKnot", { signature: "(integer) -> expression<TwistKnot>" });
   /** The pretzel knot P(p, q, r), for odd p, q, r. */
-  ce.declare("PretzelKnot", { signature: "(integer, integer, integer) -> value" });
+  ce.declare("PretzelKnot", { signature: "(integer, integer, integer) -> expression<PretzelKnot>" });
   /** The figure-eight knot — `TwistKnot(1)` under its own name. */
-  ce.declare("FigureEightKnot", { signature: "() -> value" });
+  ce.declare("FigureEightKnot", { signature: "() -> expression<FigureEightKnot>" });
   /** The unique positive braid realising a permutation, with no pair crossing twice. */
   ce.declare("PositivePermutationBraid", {
-    signature: "(list) -> value",
+    signature: "(list<integer>) -> expression<Braid>",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const values = integerListOf(ops[0]);
       if (values === undefined) return undefined;
@@ -285,7 +296,7 @@ export function declareBraid(ce: ComputeEngine): void {
    * Temperley–Lieb image of a braid presenting it. The two agree — that is what the
    * tests check — so which route ran is an implementation detail, not a different head.
    */
-  aboutKnot("JonesPolynomial", "(value) -> expression", (k) => {
+  aboutKnot("JonesPolynomial", `(${knotLike}) -> expression`, (k) => {
     // Only the torus family has a closed Jones form; a twist or pretzel knot's V comes
     // from whatever braid it carries, when it carries one.
     const closed = k.closed?.kind === "torus" ? torusJones(k.closed.torus.p, k.closed.torus.q) : undefined;
@@ -294,12 +305,12 @@ export function declareBraid(ce: ComputeEngine): void {
     return polynomial === undefined ? undefined : polynomialExpression(polynomial);
   });
   /** The Kauffman bracket, in A — defined for links too, where V needs a root of t. */
-  aboutKnot("KauffmanBracket", "(value) -> expression", (k) => {
+  aboutKnot("KauffmanBracket", `(${knotLike}) -> expression`, (k) => {
     const bracket = k.braid === undefined ? undefined : kauffmanBracket(k.braid);
     return bracket === undefined ? undefined : polynomialIn("A", bracket);
   });
   /** The writhe-corrected bracket (−A³)^{−w}⟨L⟩, already an invariant. */
-  aboutKnot("BracketInvariant", "(value) -> expression", (k) => {
+  aboutKnot("BracketInvariant", `(${knotLike}) -> expression`, (k) => {
     const invariant = k.braid === undefined ? undefined : bracketInvariant(k.braid);
     return invariant === undefined ? undefined : polynomialIn("A", invariant);
   });
@@ -330,7 +341,7 @@ export function declareBraid(ce: ComputeEngine): void {
    * embedding here and declines, rather than guessing one from a braid word.
    */
   ce.declare("KnotCurve", {
-    signature: "(value, integer?) -> list",
+    signature: `(${knotLike}, integer?) -> list<list<real>>`,
     evaluate: (ops) => {
       const closed = knotOf(ops[0])?.closed;
       if (closed?.kind !== "torus") return undefined;
@@ -381,7 +392,7 @@ export function declareBraid(ce: ComputeEngine): void {
   };
 
   ce.declare("ParametricCurve", {
-    signature: "(any, any, any, number?, number?) -> list",
+    signature: "(any, any, any, number?, number?) -> list<list<real>>",
     // The curve as its own equation: three coordinate expressions in `t`, sampled.
     // `KnotCurve` is a convenience over exactly this, so a reader who wants to see
     // where the shape comes from can write the parameterisation out and get the same
@@ -413,7 +424,7 @@ export function declareBraid(ce: ComputeEngine): void {
     },
   });
 
-  aboutWord("LorenzBraid", "(string) -> value", (word) => {
+  aboutWord("LorenzBraid", "(string) -> expression<Braid>", (word) => {
     const b = lorenzBraid(word);
     return b === undefined ? undefined : braidExpression(b);
   });

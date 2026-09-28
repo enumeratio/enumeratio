@@ -8,7 +8,7 @@ signatures:
   - call: ModularInverse(z, m)
     description: over the Gaussian integers
     library: enumeratio-number-theory
-    type: (value, value) -> value
+    type: (number, number) -> number
     overrides: compute-engine
 details:
   - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.

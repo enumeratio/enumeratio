@@ -68,12 +68,17 @@ const algebraOf = (expr: BoxedExpression): Quiver | undefined =>
     : undefined;
 
 export function declareQuiver(ce: ComputeEngine): void {
-  ce.declare("Quiver", { signature: "(integer, list) -> value" });
-  ce.declare("LinearQuiver", { signature: "(integer) -> value" });
+  ce.declare("Quiver", { signature: "(integer, list<list<integer>>) -> expression<Quiver>" });
+  ce.declare("LinearQuiver", { signature: "(integer) -> expression<LinearQuiver>" });
   // JordanQuiver and KroneckerQuiver are NAMES, recognised but not declared: declaring
   // them nullary gives them the type `() -> value`, which then fails PathAlgebra's
-  // `value` parameter. An undeclared symbol types as unknown and passes.
-  ce.declare("PathAlgebra", { signature: "(value) -> value" });
+  // `value` parameter. An undeclared symbol types as unknown and passes — so it is
+  // named here as `symbol` rather than left out of the union.
+  const quiverLike = "expression<Quiver> | expression<LinearQuiver> | symbol";
+  // Return type stays `value`, not `expression<PathAlgebra>`: @enumeratio/algebra's
+  // shared `Basis`/`AlgebraDimension`/`AlgebraSignature` accessors take `(value) -> …`
+  // for ANY registered algebra's carrier, and `expression<Head>` does not subtype `value`.
+  ce.declare("PathAlgebra", { signature: `(${quiverLike}) -> value` });
   ce.declare("QuiverPath", { signature: "(integer, list<integer>) -> number" });
 
   const pathExpression = (p: Path): BoxedExpression =>
@@ -95,15 +100,17 @@ export function declareQuiver(ce: ComputeEngine): void {
   };
 
   ce.declare("QuiverIsAcyclic", {
-    signature: "(value) -> boolean",
+    signature: `(${quiverLike}) -> boolean`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       return q === undefined ? undefined : ce.symbol(hasCycle(q) ? "False" : "True");
     },
   });
 
+  // `QuiverPath` itself declares its own return type `number` (not `expression<
+  // QuiverPath>`), so a `QuiverPath(...)` instance types as `number` — match that here.
   ce.declare("QuiverPathEnd", {
-    signature: "(value, number) -> integer",
+    signature: `(${quiverLike}, number) -> integer`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       const p = ops[1] === undefined ? undefined : pathOf(ops[1]);
@@ -118,7 +125,7 @@ export function declareQuiver(ce: ComputeEngine): void {
    * ordered product.
    */
   ce.declare("QuiverCompose", {
-    signature: "(value, number, number) -> number",
+    signature: `(${quiverLike}, number, number) -> number`,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       const a = ops[1] === undefined ? undefined : pathOf(ops[1]);

@@ -6,7 +6,7 @@ signatures:
   - call: RademacherSymbol(matrix)
     description: $\Psi(M) = \Phi(M) - 3\,\mathrm{sign}(c(a+d))$, via Dedekind sums
     library: enumeratio-modular
-    type: (value) -> integer
+    type: (expression<ModularMatrix> | list | string) -> integer
   - call: WordSymbol(word)
     description: the same number by counting letters
     library: enumeratio-modular

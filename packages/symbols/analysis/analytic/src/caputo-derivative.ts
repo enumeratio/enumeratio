@@ -110,7 +110,7 @@ export function matchCaputoD(
 
 export function declareCaputoD(ce: ComputeEngine): void {
   ce.declare("CaputoD", {
-    signature: "(value, tuple) -> value",
+    signature: "(expression, tuple<symbol, real>) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, spec] = ops;

@@ -6,7 +6,7 @@ signatures:
   - call: ProfinitePlot(f, x, k)
     description: residue classes mod $k!$ laid out by their factorial digits
     library: enumeratio-adeles
-    type: (any, symbol, integer?) -> any
+    type: (expression, symbol, integer?) -> expression<ArrayPlot>
   - call: ProfinitePlot(f, x)
     description: default precision $k = 5$
     library: enumeratio-adeles

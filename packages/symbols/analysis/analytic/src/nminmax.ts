@@ -131,7 +131,7 @@ function numericExtreme(
 
 function declareOne(ce: ComputeEngine, name: string, direction: "min" | "max"): void {
   ce.declare(name, {
-    signature: "(any, any) -> any",
+    signature: "(tuple<expression, expression>, symbol | list<symbol>) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [firstArg, varsArg] = ops;

@@ -6,7 +6,7 @@ signatures:
   - call: GridGraph(dims)
     description: the Cartesian product of paths of the given lengths — `GridGraph({m, n})` is an $m \times n$ grid. Vertices are numbered 1-based, row-major.
     library: enumeratio-collections
-    type: (any) -> value
+    type: (list<integer>) -> value
 seeAlso:
   - HypercubeGraph
   - CompleteGraph

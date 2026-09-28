@@ -65,7 +65,7 @@ const resolvePosition = (n: number, length: number): number | undefined => {
  *  unevaluated rather than followed. */
 function declareMapAt(ce: ComputeEngine): void {
   ce.declare("MapAt", {
-    signature: "((any) -> any, any, any) -> any",
+    signature: "((any) -> any, any, integer | list<list<integer>>) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
@@ -103,7 +103,7 @@ function declareMapAt(ce: ComputeEngine): void {
  *  `Normalize[v, f]`: `v / f(v)` for a custom norm function `f`. */
 function declareNormalize(ce: ComputeEngine): void {
   ce.declare("Normalize", {
-    signature: "(collection<any>, ((any) -> any)?) -> any",
+    signature: "(collection<any>, ((any) -> any)?) -> collection<any>",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const v = ops[0]?.evaluate();
@@ -168,7 +168,7 @@ const englishLetterNumber = (ch: string): number => {
  *  form is only answered for `"English"`; any other named alphabet is left unevaluated. */
 function declareLetterNumber(ce: ComputeEngine): void {
   ce.declare("LetterNumber", {
-    signature: "(string, string?) -> any",
+    signature: "(string, string?) -> integer | list<integer>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const s = stringAt(ops[0]);
       if (s === undefined || s.length === 0) return undefined;
@@ -199,7 +199,7 @@ const isNumberLiteral = (x: BoxedExpression): boolean =>
  *  only) generalizes via `Gamma(x+1)/Gamma(x-n+1)`. */
 function declareFactorialPower(ce: ComputeEngine): void {
   ce.declare("FactorialPower", {
-    signature: "(any, any, any?) -> any",
+    signature: "(number, number, number?) -> number",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const xExpr = ops[0];
@@ -244,7 +244,7 @@ function declareFactorialPower(ce: ComputeEngine): void {
  *  `i+j-1 ≤ n`, else `r(i+j-n)`). */
 function declareHankelMatrix(ce: ComputeEngine): void {
   ce.declare("HankelMatrix", {
-    signature: "(collection<any>, collection<any>?) -> any",
+    signature: "(collection<any>, collection<any>?) -> list<list<any>>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const c = ops[0];
       if (c === undefined) return undefined;
@@ -276,7 +276,7 @@ function declareHankelMatrix(ce: ComputeEngine): void {
  *  with no padding — `Length(list) - w` results, same as `Map(f, Partition(list, w+1, 1))`. */
 function declareMovingMap(ce: ComputeEngine): void {
   ce.declare("MovingMap", {
-    signature: "((collection<any>) -> any, collection<any>, any) -> collection",
+    signature: "((collection<any>) -> any, collection<any>, integer) -> collection",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
@@ -366,7 +366,8 @@ function parseCAInit(initExpr: BoxedExpression): CAInit | undefined {
  *  unevaluated. */
 function declareCellularAutomaton(ce: ComputeEngine): void {
   ce.declare("CellularAutomaton", {
-    signature: "(any, any, any) -> any",
+    signature:
+      "(integer<0..255>, integer | list<integer> | tuple<list<integer>, integer>, integer<0..>) -> list<list<integer>>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const rule = integerAt(ops[0]);
       const initExpr = ops[1];

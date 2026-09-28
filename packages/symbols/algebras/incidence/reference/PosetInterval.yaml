@@ -6,7 +6,7 @@ signatures:
   - call: PosetInterval(x, y)
     description: the basis element for the interval $[x,y]$
     library: enumeratio-incidence
-    type: (any, any) -> number
+    type: (value, value) -> expression<PosetInterval>
 seeAlso:
   - IncidenceAlgebra
   - MoebiusFunction

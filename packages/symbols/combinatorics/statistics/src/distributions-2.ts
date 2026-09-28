@@ -961,7 +961,7 @@ function declareConstructors2(ce: ComputeEngine): void {
   ce.declare("DiscreteUniformDistribution", { signature: "(list<integer>) -> distribution" });
   ce.declare("TriangularDistribution", { signature: "(list<real>, real?) -> distribution" });
   ce.declare("ChiSquareDistribution", { signature: "(real<0..>) -> distribution" });
-  ce.declare("LogNormalDistribution", { signature: "(any, real<0..>) -> distribution" });
+  ce.declare("LogNormalDistribution", { signature: "(real, real<0..>) -> distribution" });
   ce.declare("NegativeBinomialDistribution", {
     signature: "(real<0..>, real<0..1>) -> distribution",
   });
@@ -978,13 +978,13 @@ function declareConstructors2(ce: ComputeEngine): void {
   }
   ce.declare("StudentTDistribution", { signature: "(real<0..>) -> distribution" });
   ce.declare("WeibullDistribution", { signature: "(real<0..>, real<0..>) -> distribution" });
-  ce.declare("LaplaceDistribution", { signature: "(any, real<0..>) -> distribution" });
+  ce.declare("LaplaceDistribution", { signature: "(real, real<0..>) -> distribution" });
   ce.declare("HypergeometricDistribution", {
     signature: "(real<0..>, real<0..>, real<0..>) -> distribution",
   });
   ce.declare("RayleighDistribution", { signature: "(real<0..>) -> distribution" });
   ce.declare("ParetoDistribution", { signature: "(real<0..>, real<0..>) -> distribution" });
-  ce.declare("LogisticDistribution", { signature: "(any, real<0..>) -> distribution" });
+  ce.declare("LogisticDistribution", { signature: "(real, real<0..>) -> distribution" });
   ce.declare("ErlangDistribution", { signature: "(real<0..>, real<0..>) -> distribution" });
   ce.declare("ChiDistribution", { signature: "(real<0..>) -> distribution" });
   ce.declare("HalfNormalDistribution", { signature: "(real<0..>) -> distribution" });
@@ -1177,19 +1177,19 @@ const inverseCdfNumeric = (ce: ComputeEngine, dist: BoxedExpression, q: number):
 
 function declarePropertyFunctions(ce: ComputeEngine): void {
   ce.declare("SurvivalFunction", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, real | signed_infinity | list<real>) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
       ops.length === 2 ? survivalOf(ce, ops[0], ops[1], options) : undefined,
   });
 
   ce.declare("HazardFunction", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, real | signed_infinity | list<real>) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
       ops.length === 2 ? hazardOf(ce, ops[0], ops[1], options) : undefined,
   });
 
   ce.declare("Moment", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, integer) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const r = integerAt(ops[1]);
@@ -1198,7 +1198,7 @@ function declarePropertyFunctions(ce: ComputeEngine): void {
   });
 
   ce.declare("CentralMoment", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, integer) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const r = integerAt(ops[1]);
@@ -1207,7 +1207,7 @@ function declarePropertyFunctions(ce: ComputeEngine): void {
   });
 
   ce.declare("FactorialMoment", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, integer) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const r = integerAt(ops[1]);
@@ -1216,7 +1216,7 @@ function declarePropertyFunctions(ce: ComputeEngine): void {
   });
 
   ce.declare("Cumulant", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, integer) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const r = integerAt(ops[1]);
@@ -1225,7 +1225,7 @@ function declarePropertyFunctions(ce: ComputeEngine): void {
   });
 
   ce.declare("InverseCDF", {
-    signature: "(any, any) -> any",
+    signature: "(distribution, real) -> real",
     evaluate: (ops: readonly BoxedExpression[]) => {
       if (ops.length !== 2) return undefined;
       const [dist, q] = ops;

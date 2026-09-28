@@ -6,7 +6,7 @@ signatures:
   - call: PhylogeneticTrees(n)
     library: enumeratio-collections
     description: every rooted binary tree with leaves labeled $1, …, n$ and unlabeled internal nodes.
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - A lazy indexed collection; the count is $(2n-3)!! = A001147(n-2)$ — $PhylogeneticTrees(5)$ has $105$ elements. See [[Factorial2]].
   - "Built by successive insertion: start from the cherry $\\{1,2\\}$, then for $k = 3, …, n$ attach leaf $k$ at one of $2k-3$ places — above the current root, or subdividing one of the tree's edges."

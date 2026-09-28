@@ -6,7 +6,7 @@ signatures:
   - call: IsReducedForm(form)
     description: Gauss's reduction condition
     library: enumeratio-modular
-    type: (value) -> boolean
+    type: (expression<QuadraticForm>) -> boolean
 seeAlso:
   - QuadraticForm
   - ReduceForm

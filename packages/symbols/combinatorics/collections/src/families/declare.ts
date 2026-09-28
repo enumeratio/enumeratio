@@ -23,22 +23,25 @@ const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
  *  unrank or rank enumerates declines with `Head::toobig` rather than exhausting the heap. */
 export const ENUMERATION_LIMIT = 2_000_000n;
 
-// Collection type an operator call returns. paramCount-0 values are typed directly in declareFamilies.
+// Collection type an operator call returns: an indexed_collection of the family's own
+// element shape (see `kind` in ./types.ts), matching how paramCount-0 values are typed
+// directly in declareFamilies -- every family is a LAZY collection (`collection` handlers,
+// `isLazy: true`), never a materialized List, whatever its element shape.
 const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
   switch (kind) {
     case "nested":
-      return "collection";
+      return "indexed_collection<any>";
     case "blocks":
-      return "list<list<list<integer>>>";
+      return "indexed_collection<list<list<integer>>>";
     case "scalar":
-      return "list<integer>";
+      return "indexed_collection<integer>";
     default:
-      return "list<list<integer>>";
+      return "indexed_collection<list<integer>>";
   }
 };
 
 const signatureOf = ({ kind, paramCount }: FamilyKernel): string => {
-  const params = Array.from({ length: paramCount }, () => "integer").join(", ");
+  const params = Array.from({ length: paramCount }, () => "integer<0..>").join(", ");
   return `(${params}) -> ${collectionTypeOf(kind)}`;
 };
 

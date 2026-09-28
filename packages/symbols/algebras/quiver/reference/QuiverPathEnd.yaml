@@ -6,7 +6,7 @@ signatures:
   - call: QuiverPathEnd(quiver, path)
     description: the vertex the path ends at
     library: enumeratio-quiver
-    type: (value, number) -> integer
+    type: (expression<LinearQuiver> | expression<Quiver> | symbol, number) -> integer
 seeAlso:
   - QuiverPath
   - QuiverCompose

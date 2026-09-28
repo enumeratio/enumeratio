@@ -6,7 +6,7 @@ signatures:
   - call: PosetZeta(poset, x, y)
     description: $1$ when $x \le y$, else $0$
     library: enumeratio-incidence
-    type: (value, any, any) -> integer
+    type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, value, value) -> integer
 seeAlso:
   - MoebiusFunction
   - IncidenceAlgebra

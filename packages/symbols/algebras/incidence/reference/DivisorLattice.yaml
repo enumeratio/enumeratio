@@ -6,7 +6,7 @@ signatures:
   - call: DivisorLattice(n)
     description: the divisors of $n$ ordered by divisibility
     library: enumeratio-incidence
-    type: (integer) -> value
+    type: (integer) -> expression<DivisorLattice>
 seeAlso:
   - IncidenceAlgebra
   - PosetElements

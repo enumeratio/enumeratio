@@ -80,6 +80,33 @@ printing of the record's type with the engine's printing of what was declared, n
 record's text. And a record should say as much as the code actually guarantees: a
 positive-integer argument is `integer<1..>`, not `integer`, and a random one is `random`.
 
+### What tightening taught us
+
+Tightening every package's signatures (a type that is too narrow turns an unevaluated call
+into an `incompatible-type` error, so each change was checked against the head's examples)
+turned up how compute-engine 0.139 actually checks:
+
+- **A non-lazy head unifies types across the whole call when it is boxed.** A symbol that
+  appears free inside an `expression` argument and again as a `symbol` argument gets two
+  types, and the call errors: `LaplaceTransform(Sin(t), t, s)` with `t: symbol`. Variable
+  positions of non-lazy heads stay `expression`; lazy heads skip this check.
+- **`tuple<…>` never matches a literal list** on a non-lazy head: a literal `[a, b]` types as
+  `vector<n>`/`list<…>`. Lazy heads again skip the check.
+- **`expression<Head>` is not a `value`.** The shared algebra accessors (`Basis`,
+  `AlgebraDimension`, `Element`) take `value`, so every algebra constructor has to return
+  plain `value` instead of saying which algebra it built. The fix is a protocol those
+  accessors take and each algebra implements -- the same shape as `Random`'s sampling
+  protocol (design/random.md), and the next use of protocols after it.
+- **A union may name a type variable in at most one arm**, so "a value or a predicate on
+  values" (`T | ((T) any -> boolean)`) can't be said yet.
+- **A native head we widen stays wide.** `Min`, `Round`, `Clamp` are widened to take lists
+  and other shapes the statistics are written against; narrowing them broke the Epsil
+  definitions that call them.
+
+Where a head's arguments are genuinely arbitrary -- held expressions, pattern and control
+heads, heads that deliberately pass a non-number on down the chain -- `any` stays, and the
+record says so by leaving it.
+
 ## Why build it from records, not from code
 
 Building from code would mean booting every package's `declare` into an engine at build

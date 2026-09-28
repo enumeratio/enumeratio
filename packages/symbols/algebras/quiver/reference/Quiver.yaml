@@ -6,7 +6,7 @@ signatures:
   - call: Quiver(vertices, arrows)
     description: the quiver on that many vertices with those arrows
     library: enumeratio-quiver
-    type: (integer, list) -> value
+    type: (integer, list<list<integer>>) -> expression<Quiver>
 seeAlso:
   - QuiverPath
   - LinearQuiver

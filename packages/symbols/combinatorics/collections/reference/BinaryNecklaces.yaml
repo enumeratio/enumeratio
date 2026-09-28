@@ -6,7 +6,7 @@ signatures:
   - call: BinaryNecklaces(n)
     description: the binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit
     library: enumeratio-collections
-    type: (integer) -> list<list<integer>>
+    type: (integer<0..>) -> indexed_collection<list<integer>>
 details:
   - Count is A000031, a Burnside sum over the cyclic group $C_n$.
 seeAlso:

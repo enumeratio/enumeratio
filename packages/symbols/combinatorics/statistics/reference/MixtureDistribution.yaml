@@ -6,7 +6,7 @@ signatures:
   - call: MixtureDistribution({w1, ..., wn}, {d1, ..., dn})
     description: the weighted mixture of d1, ..., dn; weights are normalized by their sum.
     library: enumeratio-statistics
-    type: (any, any) -> distribution
+    type: (list<real>, list<distribution>) -> distribution
 details:
   - Weights are normalized by their sum before use, so $\{1,1\}$ and $\{1,2\}$-scaled-by-3 agree.
   - $PDF(x) = \sum_i (w_i/\sum w) \cdot PDF(d_i,x)$; $CDF$ the same weighted sum of $CDF(d_i,x)$.

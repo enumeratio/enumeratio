@@ -6,7 +6,7 @@ signatures:
   - call: ContinuedFractionK(f, g, (i, imin, imax))
     description: the finite continued fraction, exact, for `imin ≤ i ≤ imax`
     library: enumeratio-modular
-    type: (any, any, tuple) -> value
+    type: (any, any, tuple<symbol, integer, any>) -> number
   - call: ContinuedFractionK(f, g, (i, imin, PositiveInfinity))
     description: the infinite fraction, when $f$ and $g$ do not depend on $i$
     library: enumeratio-modular

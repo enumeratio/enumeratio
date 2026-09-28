@@ -6,7 +6,7 @@ signatures:
   - call: BraidInverse(braid)
     description: the word reversed, with every letter negated
     library: enumeratio-braid
-    type: (value) -> value
+    type: (expression<Braid> | string) -> expression<Braid>
 seeAlso:
   - BraidProduct
   - BraidPower

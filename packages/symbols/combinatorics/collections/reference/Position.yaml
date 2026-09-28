@@ -6,7 +6,7 @@ signatures:
   - call: Position(collection, value)
     description: every position `value` occurs at, each wrapped in its own $List$.
     library: enumeratio-collections
-    type: (indexed_collection<any>, any) -> list<any>
+    type: (indexed_collection<any>, any) -> list<integer> | list<list<integer>>
     overrides: compute-engine
 details:
   - Wolfram's answer where [[IndexOf]] reports only the first occurrence, as a plain index.

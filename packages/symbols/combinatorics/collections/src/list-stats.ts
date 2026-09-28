@@ -74,7 +74,7 @@ export function declareListStats(ce: ComputeEngine): void {
   // appearance (a stable sort over the tally, which is itself built in first-appearance
   // order). Commonest(c) (1-arg, every tied value) is declared in `list-heads.ts`; this only
   // adds the count argument.
-  widenSignature(ce, "Commonest", "(indexed_collection<any>, integer?) -> list<any>");
+  widenSignature(ce, "Commonest", "(indexed_collection<T>, integer?) -> list<T> where T");
   wrapOperator(
     ce,
     ["Commonest", 1, 1],

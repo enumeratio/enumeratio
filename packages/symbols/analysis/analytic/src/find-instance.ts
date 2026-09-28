@@ -320,7 +320,7 @@ function tryBoundedIntegerSearch(
 
 export function declareFindInstance(ce: ComputeEngine): void {
   ce.declare("FindInstance", {
-    signature: "(any, any, any?, any?) -> any",
+    signature: "(expression, symbol | list<symbol>, symbol?, integer<1..>?) -> expression",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [exprArg, varsArg, domainArg, nArg] = ops;

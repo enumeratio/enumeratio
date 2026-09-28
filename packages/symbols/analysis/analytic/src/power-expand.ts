@@ -55,7 +55,7 @@ export function powerExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpress
 
 export function declarePowerExpand(ce: ComputeEngine): void {
   ce.declare("PowerExpand", {
-    signature: "(value) -> value",
+    signature: "(expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[], _options: EvalOptions) => {
       const expr = ops[0];
       return expr === undefined ? undefined : powerExpand(ce, expr);

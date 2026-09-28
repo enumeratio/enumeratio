@@ -852,11 +852,16 @@ const VECTOR_KINDS6 = new Set([
 
 function declareConstructors6(ce: ComputeEngine): void {
   ce.declare("MultinomialDistribution", { signature: "(real<0..>, list<real>) -> distribution" });
-  ce.declare("MultinormalDistribution", { signature: "(list<any>, list<any>?) -> distribution" });
+  // `(Sigma)` defaults `mu` to zero; `(mu, Sigma)` gives both — see `multinormalParams`. `mu`
+  // and `Sigma` mean different things depending on arity, so this is two overloads rather than
+  // one signature with an optional trailing param.
+  ce.declare("MultinormalDistribution", {
+    signature: "((list<list<real>>) -> distribution) & ((list<real>, list<list<real>>) -> distribution)",
+  });
   ce.declare("MultivariatePoissonDistribution", { signature: "(real<0..>, list<real>) -> distribution" });
   ce.declare("ProbabilityDistribution", { signature: "(any, list<any>) -> distribution" });
-  ce.declare("ParameterMixtureDistribution", { signature: "(any, any) -> distribution" });
-  ce.declare("HistogramDistribution", { signature: "(list<any>, list<any>) -> distribution" });
+  ce.declare("ParameterMixtureDistribution", { signature: "(any, expression<Distributed>) -> distribution" });
+  ce.declare("HistogramDistribution", { signature: "(list<real>, list<real>) -> distribution" });
 }
 
 function extendStats6(ce: ComputeEngine): void {

@@ -574,7 +574,7 @@ function declareRelations(ce: ComputeEngine): void {
   ce.declare("Distributed", { signature: "(any, any) -> expression<Distributed>" });
 
   ce.declare("Expectation", {
-    signature: "(any, any) -> any",
+    signature: "(any, expression<Distributed>) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
@@ -584,7 +584,7 @@ function declareRelations(ce: ComputeEngine): void {
   });
 
   ce.declare("Probability", {
-    signature: "(any, any) -> any",
+    signature: "(any, expression<Distributed>) -> real",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
@@ -838,11 +838,14 @@ function declareDistributionConstructors(ce: ComputeEngine): void {
   }
 
   ce.declare("BinormalDistribution", {
-    signature: "(any, any?, any?) -> distribution",
+    // Wolfram's three call forms: `(rho)`, `({s1,s2}, rho)`, `({mu1,mu2}, {s1,s2}, rho)` —
+    // see `binormalParams`, which parses each lazily by operand count.
+    signature:
+      "((real) -> distribution) & ((list<real>, real) -> distribution) & ((list<real>, list<real>, real) -> distribution)",
   });
 
   ce.declare("EmpiricalDistribution", {
-    signature: "(list<any>) -> distribution",
+    signature: "(list<real>) -> distribution",
   });
 }
 

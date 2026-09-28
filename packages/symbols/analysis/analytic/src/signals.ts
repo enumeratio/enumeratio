@@ -482,19 +482,19 @@ export function declareSignals(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => evaluateRamp(ce, ops),
   });
   ce.declare("SawtoothWave", {
-    signature: "(value, value?) -> number",
+    signature: "(real | list<real^2>, real?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, sawtoothBase, SAWTOOTH_RANGE),
   });
   ce.declare("TriangleWave", {
-    signature: "(value, value?) -> number",
+    signature: "(real | list<real^2>, real?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, triangleBase, TRIANGLE_RANGE),
   });
   ce.declare("SquareWave", {
-    signature: "(value, value?) -> number",
+    signature: "(real | list<real^2>, real?) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, squareBase, SQUARE_RANGE),
   });
   ce.declare("Rescale", {
-    signature: "(value, value?, value?) -> value",
+    signature: "(real | list<real>, list<real^2>?, list<real^2>?) -> real | list<real>",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateRescale(ce, ops),
   });
   ce.declare("DiracDelta", {
@@ -506,7 +506,7 @@ export function declareSignals(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteDelta(ce, ops),
   });
   ce.declare("DiscreteShift", {
-    signature: "(value, value) -> value",
+    signature: "(expression, expression) -> expression",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteShift(ce, ops),
   });
 

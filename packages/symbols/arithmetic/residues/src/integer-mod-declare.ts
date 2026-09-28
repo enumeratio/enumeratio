@@ -84,7 +84,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   // Evaluating the constructor normalises into [0, m), and declines a non-unit denominator.
   ce.declare(INTEGER_MOD, {
     description: SUMMARIES.IntegerMod,
-    signature: "(any, integer) -> value",
+    signature: "(rational | value, integer) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => {
       // IntegerMod(IntegerMod(a, m), n) for n | m: the same class, read in the smaller ring
       // -- what `a \pmod{m} + b \pmod{m}` parses to.
@@ -204,7 +204,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   // ChineseRemainder(IntegerMod(r₁, m₁), …): the class mod lcm(mᵢ) reducing to each — the
   // native (residues, moduli) form is untouched.
-  widenSignature(ce, "ChineseRemainder", "(any+) -> any", (op) => op.operator === "List");
+  widenSignature(ce, "ChineseRemainder", "(any+) -> integer | value", (op) => op.operator === "List");
   wrapOperator(
     ce,
     ["ChineseRemainder", "x", "y"],

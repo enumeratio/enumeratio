@@ -37,7 +37,7 @@ export function declareEvaluation(ce: ComputeEngine): void {
   // held operand before evaluating it.
   ce.declare("TimeConstrained", {
     description: SUMMARIES.TimeConstrained,
-    signature: "(any, number, any?) time -> any",
+    signature: "(any, real, any?) time -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [held, secondsExpr, failExpr] = ops;
@@ -83,7 +83,7 @@ export function declareEvaluation(ce: ComputeEngine): void {
   // a bound it cannot: silently ignoring the constraint would be worse than saying so.
   ce.declare("MemoryConstrained", {
     description: SUMMARIES.MemoryConstrained,
-    signature: "(any, number, any?) environment -> any",
+    signature: "(any, real<0..>, any?) environment -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       emit(ce, "MemoryConstrained", "isolated", [ops[1] ?? ce.number(0)]);
@@ -107,7 +107,7 @@ function declareVerificationTest(ce: ComputeEngine): void {
   // constraints are in place around it.
   ce.declare("VerificationTest", {
     description: SUMMARIES.VerificationTest,
-    signature: "(any*) time -> any",
+    signature: "(any*) time -> expression<TestResultObject>",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [input, expectedRaw, ...rest] = ops;

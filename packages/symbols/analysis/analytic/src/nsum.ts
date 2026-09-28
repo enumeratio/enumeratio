@@ -242,7 +242,7 @@ function parseRange(rangeArg: BoxedExpression): { n: string; a: number; b: numbe
 
 export function declareNSum(ce: ComputeEngine): void {
   ce.declare("NSum", {
-    signature: "(any, any) -> any",
+    signature: "(expression, tuple<symbol, integer, integer | infinity>) -> number",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, rangeArg] = ops;

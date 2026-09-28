@@ -9,4 +9,4 @@ signatures:
   - call: Vee(...)
     description: Wolfram's own Vee, mapped through for the transpiler and the oracle but not yet written up here.
     library: enumeratio-geometric
-    type: (number, number, any) -> number
+    type: (number, number, value) -> number
