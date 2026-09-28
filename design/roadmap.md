@@ -100,6 +100,27 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
   today (see design/speculative/evaluation.md).
 
+- **Scenes.** Wolfram's
+  [`GeometricScene`](https://reference.wolfram.com/language/ref/GeometricScene.html) is a
+  scene described by its constraints (points, lines and the relations between them) and solved
+  for a picture. See the
+  [synthetic geometry tutorial](https://reference.wolfram.com/language/tutorial/SyntheticGeometry.html)
+  and [guide](https://reference.wolfram.com/language/guide/SyntheticGeometry.html). "Scene" is
+  probably the right word for more than that:
+  - every display we draw into (a plot, a worksheet screen, a 3-D view) as a scene with its
+    own coordinate system and camera;
+  - the projective geometry over Cl(p,q,1) as `ProjectiveScene`.
+    The unified-rendering speculation (design/speculative/graphics-and-space.md,
+    design/speculative/rendering-environments.md) should be rewritten in those terms. Past the
+    page, Wolfram links scenes to
+    [Unity](https://reference.wolfram.com/language/UnityLink/guide/UnityScene.html). The same
+    could go to an engine that emits wasm (Godot), or to Blender for rendered visualisations.
+- **`SqrtSpace`.** The Function Repository's
+  [`SqrtSpace`](https://resources.wolframcloud.com/FunctionRepository/resources/SqrtSpace/)
+  maps Cartesian points to algebraic numbers in a quadratic field and back, keeping track of
+  signs. It is a candidate head, and a Wolfram counterpart for number-theory's quadratic-field
+  work.
+
 ## 5. What this file is not
 
 Not a priority order, and not a commitment. If something here has been done, delete the line
