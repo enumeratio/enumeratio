@@ -4,7 +4,7 @@ signature: TimeConstrained(expr, t, failexpr)
 summary: Evaluates expr, but aborts after t seconds and returns failexpr.
 signatures:
   - call: TimeConstrained(expr, t)
-    description: aborts to $Aborted past $t$ seconds.
+    description: aborts to \$Aborted past $t$ seconds.
     library: enumeratio-evaluation
     type: (any, real, any?) time -> any
   - call: TimeConstrained(expr, t, failexpr)

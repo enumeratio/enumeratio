@@ -3,6 +3,7 @@ import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
+import { escapeHtml, renderProseMath } from "../../prose-math.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -32,19 +33,22 @@ const forSignature = (signature: { arity?: number; call: string }): ResolvedRefe
 // notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 
-const escapeAttr = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-// Render prose: $latex$ becomes inline typeset math; [[Symbol]] becomes a link.
+// Render prose: $latex$ / $$latex$$ become typeset math (renderProseMath -- shared with
+// notatio-math.ts's markdown pages, so the same syntax works the same way everywhere),
+// [[Symbol]] becomes a link, and everything else is HTML-escaped (this is v-html, and
+// reference prose freely uses bare `<`/`>` -- inequalities, generic types like
+// `tuple<list<integer>>` -- with no intention of it being read as markup). Split on the
+// link pattern first so math-rendering never has to look inside a `[[...]]` span or vice
+// versa.
 const linkify = (text?: string): string =>
   (text ?? "")
-    .replace(
-      /\$([^$]+)\$/g,
-      (_match, tex: string) => `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
-    )
-    .replace(/\[\[([A-Za-z0-9]+)\]\]/g, (_match, name: string) =>
-      getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : name,
-    );
+    .split(/(\[\[[A-Za-z0-9]+\]\])/g)
+    .map((part) => {
+      const name = /^\[\[([A-Za-z0-9]+)\]\]$/.exec(part)?.[1];
+      if (name === undefined) return renderProseMath(part);
+      return getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : escapeHtml(name);
+    })
+    .join("");
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
