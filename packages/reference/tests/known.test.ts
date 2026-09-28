@@ -26,9 +26,12 @@ function disagreement(expected: unknown, known: unknown, tolerance: number): str
   }
   const [x, y] = [a.N(), b.N()];
   if (Number.isNaN(x.re) || Number.isNaN(y.re)) return `${JSON.stringify(a.json)} is not ${JSON.stringify(b.json)}`;
-  const close = (u: number, v: number): boolean =>
-    u === v || Math.abs(u - v) <= tolerance * Math.max(Math.abs(u), Math.abs(v), 1);
-  return close(x.re, y.re) && close(x.im, y.im) ? undefined : `${x.toString()}, known ${y.toString()}`;
+  // One distance for a complex value, not one per component: a component near 0 beside a
+  // large other one would otherwise be held to an absolute bound.
+  const size = (re: number, im: number): number => Math.hypot(re, im || 0);
+  const gap = size(x.re - y.re, (x.im || 0) - (y.im || 0));
+  const bound = tolerance * Math.max(size(x.re, x.im), size(y.re, y.im), 1);
+  return gap <= bound ? undefined : `${x.toString()}, known ${y.toString()}`;
 }
 
 const known = referenceData().heads.flatMap(({ head, entry }) =>
