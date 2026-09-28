@@ -8,7 +8,13 @@ import { DOMAINS } from "../src/domain-data.ts";
 import { readEntries } from "@enumeratio/entry/node";
 import { declareMaps } from "../src/map.ts";
 
-const entries = readEntries(new URL("../reference/", import.meta.url));
+const entries = [
+  ...readEntries(new URL("../reference/", import.meta.url)),
+  // structures' heads over the carriers' tables need the carriers, so they run here.
+  ...readEntries(new URL("../../../../structures/reference/", import.meta.url)).filter((entry) =>
+    ["CombinatorialStatistic", "CombinatorialMap"].includes(entry.name),
+  ),
+];
 
 // The same stack both engines declare, in the same order.
 const ce = new ComputeEngine();

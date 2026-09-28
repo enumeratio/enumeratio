@@ -134,6 +134,10 @@ function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpressi
   return undefined;
 }
 
+/** Statistics of a whole collection, by name, with the head that computes each. They are heads of
+ *  their own too; this is only a second way in. */
+const COLLECTION_STATISTICS: Readonly<Record<string, string>> = { Count: "Count" };
+
 function declareHeads(ce: ComputeEngine, registry: Registry): void {
   for (const head of ["CombinatorialStatistic", "CombinatorialMap"] as const) {
     ce.declare(head, {
@@ -157,6 +161,11 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
           const entry = operationOf(ce, head, carrier.name, name);
           return entry === undefined ? undefined : (entry.kernel ?? entry.definition)?.(subject);
         }
+
+        // A statistic of the collection itself: `CombinatorialStatistic(Permutations(4), "Count")`.
+        const whole = head === "CombinatorialStatistic" ? COLLECTION_STATISTICS[name] : undefined;
+        if (whole !== undefined && subject.type.matches("collection"))
+          return ce.function(whole, [subject]).evaluate(options);
 
         // `CombinatorialStatistic(Permutations(4), "Inversions")`: the operation over the whole
         // collection, lazily -- its distribution. Elements are bare contents, so each is

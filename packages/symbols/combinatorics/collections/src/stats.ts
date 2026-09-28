@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { registerCarrier, registerOperation } from "@enumeratio/structures";
+import { registerCarrier, registerCollectionCarrier, registerOperation } from "@enumeratio/structures";
 import { type Boxed, intOf } from "./families/types.ts";
 
 // Permutation statistics over a one-line word (a List of 1..n). Pure functions,
@@ -176,6 +176,7 @@ export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): voi
   // The same kernels as the preferred implementation of each statistic in the permutations'
   // table, where @enumeratio/statistics files the definition beside them.
   registerCarrier(ce, { name: carrier, ...(type === undefined ? {} : { type }) });
+  registerCollectionCarrier(ce, "SymmetricGroup", carrier);
   for (const [name, fn] of Object.entries({ ...WORD_STATS, ...PERM_STATS })) {
     registerOperation(ce, "CombinatorialStatistic", carrier, {
       name,

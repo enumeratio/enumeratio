@@ -4,7 +4,13 @@ import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
-import { declareRestricted, declareRestrictions, fillPredicate, RESTRICTIONS } from "../src/restriction.ts";
+import {
+  declareRestricted,
+  declareRestrictions,
+  fillPredicate,
+  RESTRICTIONS,
+  RestrictionCollisionError,
+} from "../src/restriction.ts";
 
 const ce = new ComputeEngine();
 declareCollections(ce);
@@ -147,4 +153,10 @@ test("every restriction names a base collection and a carrier that exist", () =>
       restriction.on,
     ).toBe(true);
   }
+});
+
+test("a restriction's name taken by something other than its implementation is an error", () => {
+  const other = new ComputeEngine();
+  other.declare("SelfConjugatePartitions", { signature: "(integer) -> integer" });
+  expect(() => declareRestrictions(other, RESTRICTIONS)).toThrow(RestrictionCollisionError);
 });

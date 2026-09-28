@@ -1,0 +1,8 @@
+- id: inverse-of-a-permutation
+  expr: [CombinatorialMap, [Permutation, [List, 3, 1, 2]], "'Inverse'"]
+  expected: [Permutation, [List, 2, 3, 1]]
+  caption: the inverse of 312
+- id: reverse-of-a-permutation
+  expr: [CombinatorialMap, [Permutation, [List, 3, 1, 2]], "'Reverse'"]
+  expected: [Permutation, [List, 2, 1, 3]]
+  caption: the reverse of 312

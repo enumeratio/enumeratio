@@ -1,6 +1,11 @@
 # Design: statistics and maps live on their collection, not the global namespace
 
-Status: **survey + proposal, for Dean's sign-off.** Nothing here is built. Companion to
+Status: **signed off; phases 1 and 2 built** (below, "What is built"). Dean's names:
+`CombinatorialStatistic` and `CombinatorialMap` for what the text calls `Statistic` and
+`Morphism` (a morphism preserves structure, and most combinatorial maps preserve none). Very
+general statistics (`Count`, `Rank`) stay heads of their own and are reachable through
+`CombinatorialStatistic` too; a statistic compute-engine or Wolfram already names may keep a
+global head. Companion to
 [namespaces.md](../namespaces.md) (the resolver and context ladder this borrows) and
 [domains.md](../domains.md) (carriers as nominal types, held constructors, why restrictions
 are sets not subtypes) — both landed designs this document extends rather than repeats.
@@ -530,6 +535,36 @@ collections-package filing problem, independent of this document's central quest
 6. **Deferred on upstream**: once compute-engine's subtype lattice (`domains.md` §1.1) is
    real, collection-scoped maps (§3.4) can drop their runtime guard for a real `from` subtype
    — not required for anything else in this document to ship.
+
+### What is built
+
+- **The tables** are `@enumeratio/structures`' (`registerCarrier`, `registerOperation`,
+  `registerCollectionCarrier`), the leaf collections, statistics and domains can all reach.
+  `CombinatorialStatistic(x, name)` and `CombinatorialMap(x, name)` find `x`'s carrier by
+  matching its type, as protocol dispatch does, then the operation by name or FindStat id.
+  Over a collection (`SymmetricGroup(4)`, `Derangements(4)`, a plural) they map over its
+  elements lazily, so `Tally(CombinatorialStatistic(SymmetricGroup(4), "Inversions"))` is the
+  Mahonian numbers. The result is a collection, not a function: compute-engine's `Map` takes
+  only a literal `Function` as its mapping. `CombinatorialStatistic(C, "Count")` is `Count(C)`.
+- **Kernel beside definition.** collections files its permutation kernels as each
+  statistic's preferred implementation; statistics files the defining expression beside them.
+  The same part twice is an `OperationCollisionError`.
+- **`skipDeclared` is gone.** A statistic's bare head is declared where the name is free. A taken
+  name is allowed only when the table holds another package's kernel for that very statistic,
+  or when compute-engine owns the name (`Sign`, then reached through the table only). Anything
+  else is a `StatisticCollisionError` naming every signature. Restrictions say which package
+  implements them (`implementedBy: "collections"`, on 18 of 19); any other taken name is a
+  `RestrictionCollisionError`.
+- **FindStat ids** come from `@enumeratio/statistics`' `findstat-data.ts` (moved from
+  reference, which still generates it). Three ids are each shared by several of our names,
+  which agree by value: St000485 (`LargestCycleLength`, `LongestCycleLength`), St000159
+  (`DistinctParts`, `ConjugateDistinctParts`, `Corners`), St000011 (`Returns`,
+  `NumberOfTouchPoints`). An id resolves to the first; folding the duplicate names is
+  still to do.
+
+Still to do: deprecate and retire the bare heads (phase 2's second half), move each
+definition down to its collection (phase 3), `Rank` through `CombinatorialStatistic`, and the
+unimplemented tail (phase 4).
 
 ### 4. Open questions for Dean
 

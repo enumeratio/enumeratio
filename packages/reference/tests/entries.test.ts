@@ -7,9 +7,11 @@ import { referenceData } from "../src/node.ts";
 // Every head the reference engine declares, from every package's YAML. A head two packages
 // document runs once per copy, named `<package>: <Head>`; statistics and domains run under
 // their own engines, in their own packages' tests.
+// So do the heads that read the carriers' tables, which need the carriers.
 const OWN_ENGINE = new Set(["statistics", "domains"]);
+const ON_CARRIERS = new Set(["CombinatorialStatistic", "CombinatorialMap"]);
 const { heads } = referenceData();
-const loaded = heads.filter((h) => !OWN_ENGINE.has(h.package));
+const loaded = heads.filter((h) => !OWN_ENGINE.has(h.package) && !ON_CARRIERS.has(h.head));
 const copies = new Map<string, number>();
 for (const h of loaded) copies.set(h.head, (copies.get(h.head) ?? 0) + 1);
 const entries = loaded.map((h) => ({

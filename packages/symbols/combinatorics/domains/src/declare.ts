@@ -109,8 +109,6 @@ export function declareDomainPlurals(ce: ComputeEngine, domains: readonly Domain
     if (ce.lookupDefinition(domain.plural) !== undefined) continue;
     ce.declare(domain.plural, `set<${domain.type}>`);
   }
-  // compute-engine's name for the permutations of n.
-  registerCollectionCarrier(ce, "SymmetricGroup", "Permutation");
 }
 
 /**
