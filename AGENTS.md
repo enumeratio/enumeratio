@@ -69,6 +69,10 @@ release. Add a tool name to select part of the graph. For example, run
     classification as `<system>.kind`, `<system>.note`, `<system>.issue`, `<system>.tolerance`.
     Every example has an `id`: lowercase words joined by `-`, unique within the head, kept when
     the example is edited.
+    An example whose value is known from outside our evaluation also carries `known` (an exact
+    expression or high-precision number), its `source` (`DLMF 25.6.1`, `OEIS A000110`, `mpmath
+1.3 zeta`, …) and optionally a `tolerance` (relative above magnitude 1, absolute below); `tests/known.test.ts` holds `expected`
+    to it, so never "fix" a failing known check by rewriting `expected` to match the new output.
   - `examples.values.<system>.tsv`: generated, one per system, with the same rows: our own forms
     (`epsil`, `tex`, `traditional`, `fullform`) and each oracle's `in`, and what it answered.
 - Read and write a record through `@enumeratio/entry/node` (`readHead`, `writeHead`,

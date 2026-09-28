@@ -45,6 +45,16 @@
         "expected": {
           "$ref": "#/$defs/MathJSON"
         },
+        "known": {
+          "$ref": "#/$defs/MathJSON"
+        },
+        "tolerance": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "source": {
+          "type": "string"
+        },
         "caption": {
           "type": "string"
         },
@@ -116,6 +126,11 @@
         }
       },
       "required": ["id", "expr", "expected"],
+      "dependentRequired": {
+        "known": ["source"],
+        "source": ["known"],
+        "tolerance": ["known"]
+      },
       "additionalProperties": false
     },
     "Reference": {

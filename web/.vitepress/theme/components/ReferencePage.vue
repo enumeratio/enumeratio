@@ -361,6 +361,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
               <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
             </template>
           </template>
+          <!-- The value is held to one known from outside our evaluation (tests/known.test.ts). -->
+          <p v-if="ex.source" class="ref-known">Known value · {{ ex.source }}</p>
         </div>
       </details>
     </ClientOnly>
@@ -526,6 +528,11 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 .ref-example.is-planned {
   border-style: dashed;
   border-color: var(--vp-c-brand-1);
+}
+.ref-known {
+  margin: 0.25rem 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.78rem;
 }
 .ref-planned-badge {
   margin-left: 0.5rem;
