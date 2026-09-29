@@ -73,9 +73,8 @@ export const treeOfDyckPathBody: MathJSON = recurse(
   ["Length", "_raw"],
 );
 
-/** How many nodes a tree has. */
-const sizeOf = (tree: MathJSON): MathJSON =>
-  recurse(["If", isLeaf("t"), 0, ["Add", 1, self(left("t")), self(right("t"))]], ["t"], tree);
+/** How many nodes a tree has: one fewer than its leaves, which `Flatten` counts at once. */
+const sizeOf = (tree: MathJSON): MathJSON => ["Subtract", ["Length", ["Flatten", ["List", tree]]], 1];
 
 /** The number the root of `tree` gets when its nodes are numbered from `offset` + 1. */
 const rootOf = (tree: MathJSON, offset: MathJSON): MathJSON => ["Add", offset, sizeOf(left(tree)), 1];
