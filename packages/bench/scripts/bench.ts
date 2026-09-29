@@ -1,4 +1,4 @@
-// Run the benchmark catalogue and write one report per system (design/benchmarking.md).
+// Run the benchmark catalogue and write one report per system (https://github.com/enumeratio/enumeratio/wiki/Benchmarking).
 //
 //   node packages/bench/scripts/bench.ts                        # every case, every system with a harness
 //   node packages/bench/scripts/bench.ts --only Factorial,Gamma # cases whose name contains any of these

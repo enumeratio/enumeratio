@@ -1,5 +1,5 @@
 // Batch evaluation of many independent cases through the isolated evaluator
-// (design/computation.md §5.5). One case's
+// (https://github.com/enumeratio/enumeratio/wiki/Computation §5.5). One case's
 // crash or timeout never touches another's — that's the whole point of running each on
 // a pooled worker rather than in-process. Node-only, so this lives beside ./node.ts's
 // own worker machinery and is re-exported from there, never from ./index.ts.

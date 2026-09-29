@@ -4,7 +4,7 @@ import { POWER_LATEX } from "@enumeratio/engine";
 import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
-// dictionary only at construction (design/upstreaming.md §3.7), so a host appends these to
+// dictionary only at construction (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7), so a host appends these to
 // the default one -- notatio's `configureLatex(RESIDUES_LATEX)`.
 //
 //   a \pmod{n}             IntegerMod(a, n)

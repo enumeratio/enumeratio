@@ -1,4 +1,4 @@
-// Assemble the manifest (design/manifest.md) into src/generated/, which `vp pack` then
+// Assemble the manifest (https://github.com/enumeratio/enumeratio/wiki/Manifest) into src/generated/, which `vp pack` then
 // builds into dist/. Reads every package's records and a bare compute-engine; loads no
 // package's code, so it sits at the bottom of the build graph.
 //
@@ -94,7 +94,7 @@ const entry = (name: string) => {
 
 for (const [name, type] of engineTypes()) entry(name).overloads.push({ package: ENGINE, type });
 
-// reference's own copy of a head is the canonical one (design/examples-as-data.md §9), so
+// reference's own copy of a head is the canonical one (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §9), so
 // its signature spells the parameter names when it has one.
 const ranked = [...records].toSorted((a, b) =>
   cmp(a.package === "reference" ? "0" : "1", b.package === "reference" ? "0" : "1"),
@@ -150,7 +150,7 @@ for (const { package: pkg, record } of records) {
   const own = (record.signatures ?? []).filter((row) => packageOf(row.library) === pkg && row.type !== undefined);
   const types = new Set(own.map((row) => row.type));
   if (types.size > 1) {
-    // One declared signature per head until dispatch can combine overloads (design/manifest.md).
+    // One declared signature per head until dispatch can combine overloads (https://github.com/enumeratio/enumeratio/wiki/Manifest).
     throw new Error(`manifest: ${pkg} gives ${record.name} ${types.size} types; one per package for now`);
   }
   const declared: DeclaredSymbol = {

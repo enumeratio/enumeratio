@@ -4,7 +4,7 @@
 // expression into attributes (`symbols.ts`, in the base) turns these children into
 // them here. A framework that emits the structural tree -- `<Notatio>` in Vue or React,
 // or a hand-written `<Plot><Sin>…` -- needs to know nothing about the lowering: the
-// element does it (design/vdom.md).
+// element does it (https://github.com/enumeratio/enumeratio/wiki/Vdom).
 //
 // Options arrive as attributes already (`plot-range="All"`); the ones a component
 // spells differently (`PlotLabel` is the plot's `label`) are mapped the same way.

@@ -60,7 +60,7 @@ export interface CombinatorialMap {
   /** The carrier type it produces. */
   readonly to: string;
   /** The body, over `_raw` — the CONTENTS of the argument, since generic heads cannot see
-   *  through a domain constructor (design/domains.md §1.5). */
+   *  through a domain constructor (https://github.com/enumeratio/enumeratio/wiki/Domains §1.5). */
   readonly body?: unknown;
   /** A conversion between sibling carriers: no head of its own, but an overload of the target's
    *  constructor, so `SetPartition(RestrictedGrowthString([0, 1, 0]))` converts. Its `name` is

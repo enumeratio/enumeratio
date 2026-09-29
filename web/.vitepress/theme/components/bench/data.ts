@@ -1,5 +1,5 @@
 // Fetches bench-data at runtime: the index plus per-run reports and plans
-// (design/benchmarking.md §7-8). `?data=<base url>` overrides the default branch raw URL,
+// (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7-8). `?data=<base url>` overrides the default branch raw URL,
 // for local fixtures and previews.
 import type { BenchIndex, BenchSystem, Plan, Report } from "./types.ts";
 

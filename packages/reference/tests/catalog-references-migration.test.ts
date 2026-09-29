@@ -1,5 +1,4 @@
-// Retiring packages/catalog/src/catalog-data.ts, step 2 of 3 (design/speculative/
-// symbol-metadata.md's pattern, applied to the catalog dump): REFERENCES moved onto each
+// Retiring packages/catalog/src/catalog-data.ts, step 2 of 3 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata's pattern, applied to the catalog dump): REFERENCES moved onto each
 // head's `catalog:` field, and the crosswalk consumer reads a generated cache
 // (`scripts/collect-catalog-references.ts` -> `catalog-references-data.ts`) instead -- the
 // crosswalk runs in the browser and the site build, and cannot parse YAML at runtime. Step 3

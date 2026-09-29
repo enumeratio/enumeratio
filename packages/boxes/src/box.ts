@@ -1,6 +1,6 @@
 // Boxes: the presentation tree between an expression and its rendering. Plain JSON in
 // Wolfram's FullForm shape -- a leaf is a string (a token), a node is `[head, ...args]`,
-// a Wolfram list is an array and options are a trailing object. See design/boxes.md.
+// a Wolfram list is an array and options are a trailing object. See https://github.com/enumeratio/enumeratio/wiki/Boxes.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 
@@ -27,7 +27,7 @@ export type BoxNode =
   | readonly ["TagBox", Box, string, Options?]
   | readonly ["InterpretationBox", Box, MathJsonExpression, Options?]
   | readonly ["ErrorBox", Box]
-  // Prose (design/speculative/prose-pipeline.md). Inside `TextData` a leaf is text, not a token.
+  // Prose (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline). Inside `TextData` a leaf is text, not a token.
   | readonly ["TextCell", Box, string, Options?]
   | readonly ["TextData", readonly Box[]]
   | readonly ["ButtonBox", Box, Options?]

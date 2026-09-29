@@ -1,4 +1,4 @@
-// Number theory's own carriers (design/speculative/combinatorics-layering-and-plausible.md §4
+// Number theory's own carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
 // step 4): moved from combinatorics' domains/LEFTOVER_DOMAINS, which is where every one of
 // these used to be declared regardless of which package's arithmetic they actually are.
 //

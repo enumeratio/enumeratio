@@ -1,4 +1,4 @@
-// The lazy-resolution loop (design/namespaces.md §5.1). Resolve BEFORE evaluating, so the
+// The lazy-resolution loop (https://github.com/enumeratio/enumeratio/wiki/Namespaces §5.1). Resolve BEFORE evaluating, so the
 // synchronous evaluator is never asked to suspend:
 //
 //   parse -> find candidates -> resolve (async) -> declare -> box

@@ -1,6 +1,7 @@
-// Markdown that lives outside web/ — the design docs and each package's README — served
-// through dynamic routes (`/design/<slug>`, `/packages/<name>`). The files stay where they
-// are; links are rewritten here so the same markdown reads right on GitHub and on the site.
+// Markdown that lives outside web/ — each package's README — served through a dynamic route
+// (`/packages/<name>`). The files stay where they are; links are rewritten here so the same
+// markdown reads right on GitHub and on the site. Design docs and the roadmap live on the
+// wiki (https://github.com/enumeratio/enumeratio/wiki) now, not under a repo-relative route.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, posix, relative, resolve } from "node:path";
@@ -9,8 +10,6 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = resolve(here, "../../..");
 const githubBlob = "https://github.com/enumeratio/enumeratio/blob/main/";
-// design/speculative is only served by `vitepress dev` (see config.mts).
-const dev = process.argv.includes("dev");
 
 export interface WorkspacePackage {
   /** `@enumeratio/…` */
@@ -71,22 +70,8 @@ export function workspacePackages(): WorkspacePackage[] {
   return found.toSorted((a, b) => a.slug.localeCompare(b.slug));
 }
 
-export const designDir = join(repoRoot, "design");
-
-/** The top-level design docs; design/speculative is dev-only and served separately. */
-export function designDocs(): { slug: string; file: string }[] {
-  return readdirSync(designDir)
-    .filter((f) => f.endsWith(".md"))
-    .toSorted()
-    .map((f) => ({ slug: f.replace(/\.md$/, ""), file: join(designDir, f) }));
-}
-
 /** Where a repo-relative path is served on the site, if it is. */
 function siteRoute(path: string, readmes: Map<string, string>): string | undefined {
-  const design = /^design\/([^/]+)\.md$/.exec(path);
-  if (design) return `/design/${design[1]}`;
-  const speculative = /^design\/speculative\/([^/]+)\.md$/.exec(path);
-  if (speculative && dev) return `/speculative/${speculative[1]}`;
   return readmes.get(path) ?? readmes.get(path.replace(/\/$/, ""));
 }
 

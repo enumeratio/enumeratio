@@ -1,4 +1,4 @@
-// The coordinator (design/benchmarking.md §5): one long-lived harness process per system,
+// The coordinator (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §5): one long-lived harness process per system,
 // fed case by case, round-robin across systems, so a few seconds of machine noise land on
 // every system alike. Every harness speaks the same line protocol: a case name
 // (`<Head>/<id>`) on stdin, `<<name>>{json}` on stdout. Names, not positions, so a

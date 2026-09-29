@@ -1,5 +1,5 @@
 // Pure helpers for the bench viewer: unit formatting, geometric means, cross-job ratio
-// chaining, and the ok-intersection across selected systems (design/benchmarking.md §8).
+// chaining, and the ok-intersection across selected systems (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §8).
 import type { BenchSystem, CaseResult, IndexRun, Status } from "./types.ts";
 
 /** Auto-scaled duration: picks ns/µs/ms/s so the number stays in a readable range. */

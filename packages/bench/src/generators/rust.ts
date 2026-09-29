@@ -1,4 +1,4 @@
-// Rust harness generator (design/benchmarking.md §4, packages/bench/src/generate.ts's
+// Rust harness generator (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4, packages/bench/src/generate.ts's
 // contract). Writes a self-contained Cargo crate under `generated/rust/`: one `fn b_i_j() ->
 // V` per source, compiled once, and a stdin/stdout loop implementing `measure()` from
 // protocol.ts. Depends on `packages/oracle/rust` (the `V` adapters) by path; never edit that
@@ -15,7 +15,7 @@ import type { Plan } from "../types.ts";
 export const CACHES_RUST = "uncleared" as const;
 
 /** Rust's literal constructors, black-boxed so LLVM can't fold or hoist a call whose inputs
- * are compile-time constants (design/benchmarking.md §4.2 asks the same of Julia's `Ref`s). */
+ * are compile-time constants (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4.2 asks the same of Julia's `Ref`s). */
 function foldLiterals(source: string): string {
   return source
     .replace(/\bn\((-?\d+)\)/g, "n(std::hint::black_box($1))")

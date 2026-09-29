@@ -2,7 +2,7 @@
 // engine is there when the reader looks, what it can draw, how it can be touched --
 // and `reduce` (reduce.ts) closes the gap between what an expression asks for and
 // what the record allows, in the expression. Nothing here touches a DOM or a TTY:
-// the detectors take what they need as arguments. See design/rendering-environments.md.
+// the detectors take what they need as arguments. See https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments.
 
 /** How the reader can act on a rendering. Not ordered: a phone has touch and no hover. */
 export type Interaction = "links" | "keys" | "pointer" | "touch";

@@ -1,5 +1,4 @@
-// One entry point for the merged package (design/speculative/combinatorics-layering-and-
-// plausible.md §4 step 3): carriers, then the families typed by them -- the one step every
+// One entry point for the merged package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3): carriers, then the families typed by them -- the one step every
 // host (CLI, site, reference, census) agrees on doing, `carrierTypes` included.
 //
 // For now this is a stand-in that calls the existing `collections`/`domains` declarations in

@@ -1,5 +1,5 @@
 // Record prose (summaries, details, captions, notes) through the prose boxes
-// (design/speculative/prose-pipeline.md): markdown read into boxes, then HTML, with `$…$`
+// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline): markdown read into boxes, then HTML, with `$…$`
 // typeset by KaTeX from its TeX as written. Synchronous, so the same call renders at build
 // and in the browser.
 

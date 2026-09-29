@@ -1,5 +1,5 @@
 // Round-trip tests for the strict YAML schema and the single reader/writer (yaml.ts,
-// design/examples-as-data.md §4). The property under test, run over a table of values
+// https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §4). The property under test, run over a table of values
 // instead of a generator (no property-testing library is a repo dependency yet): for every
 // `value`, `parseYaml(stringifyYaml(value))` deep-equals `value`, and re-stringifying what
 // was just parsed is a no-op (the writer is idempotent -- it doubles as the formatter).

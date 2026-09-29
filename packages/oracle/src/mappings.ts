@@ -42,7 +42,7 @@ export interface Mapping {
 export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "julia"];
 
 /** Head → external-system source, generated from every head's `origin: mapped` `bindings:`
- * rows (design/speculative/symbol-metadata.md step 5;
+ * rows (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata step 5;
  * `packages/reference/scripts/collect-mappings.ts`, pinned current by
  * `mappings-migration.test.ts`). */
 export const MAPPINGS: readonly Mapping[] = MAPPINGS_DATA;

@@ -7,7 +7,7 @@ const ce = new ComputeEngine();
 declareEvaluation(ce);
 
 test("MemoryConstrained cannot be enforced in-process, so it stays unevaluated", () => {
-  // Documented in design/computation.md §5.3: a bound this process cannot enforce is never
+  // Documented in https://github.com/enumeratio/enumeratio/wiki/Computation §5.3: a bound this process cannot enforce is never
   // silently ignored — the call simply does not reduce.
   const result = ce.box(["MemoryConstrained", ["Add", 1, 2], 1_000_000]);
   const { value, messages } = collectMessages(ce, () => result.evaluate());

@@ -44,11 +44,10 @@ const LIBRARY_DECLARATIONS = [
   declareHypercomplex,
   declareDiagrams,
   // Carriers, the families typed by them, and the plural type-spaces and Element -- one call
-  // (design/speculative/combinatorics-layering-and-plausible.md §4 step 3), so the
+  // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), so the
   // permutation families yield `Permutation` values, as the site's engine has them.
   declareCombinatorics,
-  // Note: GlyphKind (frontend's own carrier, design/speculative/combinatorics-layering-and-
-  // plausible.md §4 step 5) is deliberately NOT declared in this engine — wiring it in would
+  // Note: GlyphKind (frontend's own carrier, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5) is deliberately NOT declared in this engine — wiring it in would
   // make @enumeratio/reference depend on @enumeratio/frontend, which already devDeps
   // reference for its own tests, a real build cycle. GlyphKind's reference entry states its
   // `library` directly (read, not derived from this engine — see `declaredLibrary` in

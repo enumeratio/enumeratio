@@ -1,6 +1,6 @@
 // MathMLForm -- an expression printed as presentation MathML: its traditional notation as
 // boxes (`makeBoxes`), and the boxes as MathML. Output only; a pure function of the
-// MathJSON tree, so it can be golden-tested. See design/boxes.md.
+// MathJSON tree, so it can be golden-tested. See https://github.com/enumeratio/enumeratio/wiki/Boxes.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { makeBoxes, type MathMLOptions, toMathML as boxesToMathML } from "@enumeratio/boxes";

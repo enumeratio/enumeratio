@@ -1,5 +1,5 @@
 // A family whose unrank or rank enumerates declines on the engine past ENUMERATION_LIMIT, with
-// `Head::toobig`, instead of materialising the family (design/plausible.md §9): the same path a
+// `Head::toobig`, instead of materialising the family (https://github.com/enumeratio/enumeratio/wiki/Plausible §9): the same path a
 // notebook takes through At, Take and RandomChoice. Counts a plain-number kernel can't carry
 // exactly are unknown to the engine rather than an internal error.
 

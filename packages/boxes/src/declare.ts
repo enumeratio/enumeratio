@@ -12,7 +12,7 @@ import { makeBoxes } from "./make.ts";
 // `incompatible-type` error. The box heads are inert: an evaluated box is itself.
 //
 // Each head's signature, description and attributes are its record's, read back from the
-// manifest (design/manifest.md): written once, in `reference/<Head>/index.md`.
+// manifest (https://github.com/enumeratio/enumeratio/wiki/Manifest): written once, in `reference/<Head>/index.md`.
 
 export const BOXES_TYPE = "boxes";
 

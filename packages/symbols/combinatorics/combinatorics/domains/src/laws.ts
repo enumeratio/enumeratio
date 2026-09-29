@@ -1,4 +1,4 @@
-// A map's laws, checked at one element (design/plausible.md §4.2). The carrier is the category:
+// A map's laws, checked at one element (https://github.com/enumeratio/enumeratio/wiki/Plausible §4.2). The carrier is the category:
 // a law declared on a map holds for every value of its `from` domain, so Plausible checks it
 // on elements drawn from every family over that carrier. Every map is also checked TYPED —
 // its result is a value of the `to` domain — whether or not it declares anything.

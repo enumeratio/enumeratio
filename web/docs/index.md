@@ -22,6 +22,6 @@ How to use enumeratio and notatio, and where to look things up.
   [command line](/docs/cli/command-line).
 - [**Worksheet**](/worksheet/) and [**notebook**](/notebook/) — the two kinds of sheet.
 - [**Packages**](/packages/) — a short page per workspace package, and
-  [how they fit together](/design/packages).
+  [how they fit together](https://github.com/enumeratio/enumeratio/wiki/Packages).
 - [**Playground**](/playground/) — every notatio component on its own page, for trying
   one out or embedding it in yours.

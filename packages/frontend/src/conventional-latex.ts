@@ -1,5 +1,5 @@
 // Conventional LaTeX for native compute-engine heads that write or read it wrong
-// (design/upstreaming.md §8): `Zeta` and `Beta` serialise as `\Zeta`/`\Beta` (not LaTeX
+// (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8): `Zeta` and `Beta` serialise as `\Zeta`/`\Beta` (not LaTeX
 // commands), `LCM` as `\lcm`; `\operatorname{lcm|rank|erf}` don't parse back to
 // `LCM`/`MatrixRank`/`Erf`. A power's base is bracketed when it binds looser than the
 // superscript (boxed's `POWER_LATEX`), a fraction's sign goes in front of it, and every

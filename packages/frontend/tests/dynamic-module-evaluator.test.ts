@@ -4,7 +4,7 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
 import { renderingOf } from "../src/symbols.ts";
 
-// `Evaluator -> "Worker"` (components's off-thread session, design/computation.md) only
+// `Evaluator -> "Worker"` (components's off-thread session, https://github.com/enumeratio/enumeratio/wiki/Computation) only
 // ever reaches the page as the `evaluator="worker"` attribute `renderingOf` lowers it to
 // -- and that lowering only survives a REAL engine's canonicalisation. `symbols.test.ts`'s
 // own golden corpus renders straight off `parseExpression`'s tree, never through

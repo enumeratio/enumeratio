@@ -1,4 +1,4 @@
-// Symbol-metadata step 3 (design/speculative/symbol-metadata.md), completed: naming.ts's
+// Symbol-metadata step 3 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata), completed: naming.ts's
 // RENAMED is gone; `blessedName` reads a generated table instead (naming-data.ts), rebuilt
 // from every head's `formerly:` field by scripts/collect-naming.ts -- naming.ts runs in the
 // browser too, so it can't parse YAML at runtime. This pins that the generated table is

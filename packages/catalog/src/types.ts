@@ -1,6 +1,6 @@
 // The resource model. A RESOURCE is a name that is addressable without being declared —
 // it lives in a context, is resolved on demand, and only becomes a real compute-engine
-// head if it is promoted. See design/namespaces.md.
+// head if it is promoted. See https://github.com/enumeratio/enumeratio/wiki/Namespaces.
 
 /** What kind of thing a resource names. Kind is DATA, not syntax: reclassifying a
  *  resource is a registry edit, never a rename. */
@@ -13,7 +13,7 @@ export interface Grade {
 }
 
 /** A catalogued collection, as its head's own record now carries it (`grades`/`carrier`/
- *  `unbounded`; design/speculative/symbol-metadata.md). `description` is that head's
+ *  `unbounded`; https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata). `description` is that head's
  *  `summary`. */
 export interface CatalogCollection {
   readonly name: string;
@@ -31,7 +31,7 @@ export interface CatalogCarrier {
 
 /** A statistic or map, folded to its name and overload set (`statOn`/`mapOn` on the head's
  *  own record) -- not the (collection, stat) rows the database stored, see
- *  design/namespaces.md §1. `description` is that head's `summary`. */
+ *  https://github.com/enumeratio/enumeratio/wiki/Namespaces §1. `description` is that head's `summary`. */
 export interface CatalogOverload {
   readonly name: string;
   readonly on: readonly string[];
@@ -56,7 +56,7 @@ export interface Resource {
 }
 
 /** Separates a context from a name in a qualified spelling. NOT settled — see
- *  design/namespaces.md §3.3: `~` is semantically right but LaTeX binds it to a non-breaking
+ *  https://github.com/enumeratio/enumeratio/wiki/Namespaces §3.3: `~` is semantically right but LaTeX binds it to a non-breaking
  *  space, and of the alternatives only `_` is legal in a compute-engine symbol name (where it
  *  collides with the subscript convention). A registry key is just a string, so this is cheap
  *  to change here and expensive to change once it is written down. */

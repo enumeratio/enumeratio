@@ -1,4 +1,4 @@
-// Our side of the benchmark, as a harness like every generated one (design/benchmarking.md
+// Our side of the benchmark, as a harness like every generated one (https://github.com/enumeratio/enumeratio/wiki/Benchmarking
 // §4.2): reads case names on stdin, answers `<<name>>{json}` on stdout. The engine is
 // configured once; each case is boxed once, outside the timing, and only `evaluate()` (or
 // `N()` for a numeric precision) is timed.

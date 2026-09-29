@@ -143,7 +143,7 @@ same for every result until `:env auto`. The expression can ask for a reading it
 a trailing rule — `Static -> "Pin"`, `Static -> "Sample"`, or `Static -> 3` for a sample
 count. The same rewrite runs on the site, where printing a page turns its sliders into
 grids: see [the Environments playground](/playground/environments) and
-`design/rendering-environments.md`.
+`https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments`.
 
 ## Command line
 

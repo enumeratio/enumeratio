@@ -2,8 +2,7 @@
 // out so each shard pays for its own engine instance without duplicating the reference
 // algorithms. Lives in @enumeratio/statistics (moved from combinatorics' domains area) because
 // it wires declareStatistics into the shared engine: keeping it in combinatorics would devDep
-// back on statistics, cycling with statistics' own devDep on combinatorics (design/speculative/
-// combinatorics-layering-and-plausible.md).
+// back on statistics, cycling with statistics' own devDep on combinatorics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible).
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDomains, declareMaps, DOMAINS, MAPS } from "@enumeratio/combinatorics/domains/src";

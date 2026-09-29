@@ -1,4 +1,4 @@
-// What each system's report records as its version (design/benchmarking.md §7): the kernel
+// What each system's report records as its version (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7): the kernel
 // itself, plus the pinned packages its mappings reach. Probed once per run, never timed.
 
 import { execFileSync } from "node:child_process";

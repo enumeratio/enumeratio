@@ -1,5 +1,5 @@
 // Combinatorics' own thin wrapper over the generic carrier machinery, which now lives in
-// @enumeratio/structures (design/speculative/combinatorics-layering-and-plausible.md §4 step
+// @enumeratio/structures (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step
 // 1): `declareCarriers`/`declareCarrierPlurals`/`declareCarrierElement` mint the type, the
 // held constructor and the plural/Element machinery for whatever carrier data they are given.
 // This module supplies combinatorics' own data (`DOMAINS`, from `domain-data.ts`) and keeps

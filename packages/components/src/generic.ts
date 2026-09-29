@@ -1,4 +1,4 @@
-// Every symbol as an element (design/vdom.md). For each head the engine knows that has
+// Every symbol as an element (https://github.com/enumeratio/enumeratio/wiki/Vdom). For each head the engine knows that has
 // no hand-written component, a generic `notatio-<head>` is registered here. It stands
 // for the expression `Head(args)`:
 //
@@ -298,7 +298,7 @@ export function defineGenerics(heads: readonly string[] = HEADS): number {
   return n;
 }
 
-// On demand (design/manifest.md, "Cost at scale"): a page defines the generic elements it
+// On demand (https://github.com/enumeratio/enumeratio/wiki/Manifest, "Cost at scale"): a page defines the generic elements it
 // uses, not one per head the manifest knows. An element already in the page upgrades when
 // its class arrives, and an outer generic re-reads its arguments when an inner one does.
 
