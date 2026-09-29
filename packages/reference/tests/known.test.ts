@@ -39,7 +39,7 @@ function disagreement(expected: unknown, known: unknown, tolerance: number): str
   if (a.isSame(b)) return undefined;
   const [p, q] = [a.json, b.json];
   if (Array.isArray(p) && Array.isArray(q) && p[0] === "Interval" && q[0] === "Interval")
-    return enclosure(p.slice(1), q.slice(1), tolerance);
+    return enclosure((p as unknown[]).slice(1), (q as unknown[]).slice(1), tolerance);
   if (Array.isArray(p) && Array.isArray(q) && p[0] === "List" && q[0] === "List") {
     if (p.length !== q.length) return `${p.length - 1} elements, known ${q.length - 1}`;
     for (let i = 1; i < p.length; i++) {
