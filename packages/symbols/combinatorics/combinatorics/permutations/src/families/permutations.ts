@@ -3,8 +3,15 @@
 // same roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever
 // the element representation already matches; only genuinely new combinatorics get new code here.
-import { binomial, catalanNumber } from "./shared.ts";
-import { Factorial, Inversions, IsPermutationOf, LehmerCode, PermutationRank, PermutationUnrank } from "./kernels.ts";
+import { binomial, catalanNumber } from "../../../collections/src/families/shared.ts";
+import {
+  Factorial,
+  Inversions,
+  IsPermutationOf,
+  LehmerCode,
+  PermutationRank,
+  PermutationUnrank,
+} from "../../../collections/src/families/kernels.ts";
 import {
   IsKPermutationOf,
   KPermutationCount,
@@ -12,9 +19,9 @@ import {
   KPermutationUnrank,
   KSubsetRank,
   KSubsetUnrank,
-} from "./kernels-extra.ts";
-import { IntegerPartitionRank } from "./kernels-combinatorics.ts";
-import type { NumberKernel } from "./types.ts";
+} from "../../../collections/src/families/kernels-extra.ts";
+import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
+import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
