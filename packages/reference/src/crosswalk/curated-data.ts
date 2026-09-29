@@ -177,6 +177,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A003319",
     },
   ],
+  CycleDecomposition: [
+    {
+      system: "wikipedia",
+      identity: "Permutation#Cycle notation",
+    },
+  ],
   DelannoyPaths: [
     {
       system: "oeis",
@@ -387,6 +393,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
     {
       system: "mathworld",
       identity: "Permutation",
+    },
+  ],
+  PermutationsAsCycles: [
+    {
+      system: "oeis",
+      identity: "A000142",
     },
   ],
   PermutationsAvoiding123: [

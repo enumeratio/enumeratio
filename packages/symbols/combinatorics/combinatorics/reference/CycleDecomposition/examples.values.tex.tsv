@@ -1,0 +1,4 @@
+id	in	out
+from-a-permutation	\mathrm{CycleDecomposition}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1, 4\bigr\rbrack))	\mathrm{CycleDecomposition}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack)
+back-to-the-permutation	\mathrm{Permutation}(\mathrm{CycleDecomposition}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack))	\mathrm{Permutation}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+a-statistic-through-the-permutation	\mathrm{CombinatorialStat}(\mathrm{CycleDecomposition}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack), \text{FixedPoints})	1

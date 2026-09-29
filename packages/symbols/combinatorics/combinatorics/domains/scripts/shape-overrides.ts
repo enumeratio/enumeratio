@@ -15,8 +15,13 @@ export const SHAPE_OVERRIDES: Readonly<Record<string, string>> = {
   set_partition: "list<list<integer>>",
 };
 
+/** SQL carriers this project replaces. `permutation_cycles` was a flat word with no size; a
+ *  permutation in cycle notation is a `cycle_decomposition`, fixed points kept. */
+export const RETIRED_CARRIERS: ReadonlySet<string> = new Set(["permutation_cycles"]);
+
 /** Carriers with no SQL composite type of their own: `[id, shape, plural]`. */
 export const ADDED_CARRIERS: readonly (readonly [id: string, shape: string, plural: string])[] = [
   ["binary_tree_parent_array", "list<integer>", "BinaryTreeParentArrays"],
+  ["cycle_decomposition", "list<list<integer>>", "PermutationsAsCycles"],
   ["restricted_growth_string", "list<integer>", "RestrictedGrowthStrings"],
 ];

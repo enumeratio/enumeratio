@@ -60,6 +60,10 @@ const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   BinaryTree: (element) => ["BinaryTree", nested(element)],
   BinaryTreeParentArray: (element) => ["BinaryTreeParentArray", ["List", ...(element as number[])]],
   DyckPath: (element) => ["DyckPath", ["List", ...(element as number[])]],
+  CycleDecomposition: (element) => [
+    "CycleDecomposition",
+    ["List", ...(element as number[][]).map((cycle) => ["List", ...cycle])],
+  ],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));

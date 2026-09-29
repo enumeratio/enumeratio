@@ -1,0 +1,5 @@
+id	in	out
+count-4	count(PermutationsAsCycles(4))	24
+first-is-an-n-cycle	PermutationsAsCycles(4)[1]	CycleDecomposition([[1, 2, 3, 4]])
+every-element-of-permutationsascycles-3	take(PermutationsAsCycles(3), 6)	"[\n  CycleDecomposition([[1, 2, 3]]),\n  CycleDecomposition([[1, 3, 2]]),\n  CycleDecomposition([[1], [2, 3]]),\n  CycleDecomposition([[1, 2], [3]]),\n  CycleDecomposition([[1, 3], [2]]),\n  CycleDecomposition([[1], [2], [3]]),\n]"
+cycle-counts-are-stirling-first-kind	tally(CombinatorialStat(PermutationsAsCycles(4), "CycleCount"))	([1, 2, 3, 4], [6, 11, 6, 1])
