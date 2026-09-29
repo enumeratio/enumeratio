@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
@@ -6,10 +5,9 @@ import { declareAnalytic } from "../src/declare.ts";
 // IncompleteEllipticF, IncompleteEllipticE — Fungrim's names for compute-engine's native
 // two-argument EllipticF(φ, m) / EllipticE(φ, m). IncompleteEllipticPi(n, φ, m) is a
 // from-scratch Carlson R_F/R_J evaluator (native EllipticPi's own 3-argument incomplete
-// form NaNs at some complex φ — see the direct test below). Numeric evaluation is held to
-// the oracle values in elliptic.golden.json, gathered from mpmath (ellipf/ellipe/ellippi)
-// and a Wolfram kernel by scripts/collect-elliptic-goldens.ts (neither is needed to run
-// this file).
+// form NaNs at some complex φ — see the direct test below). Oracle coverage (mpmath
+// ellipf/ellipe/ellippi and a Wolfram kernel) now lives as `known` values on the
+// reference examples (packages/reference/tests/known.test.ts), not here.
 //
 // EllipticE(m)'s own complex-modulus precision fix (design/upstreaming.md §8) moved to
 // @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
@@ -18,52 +16,6 @@ import { declareAnalytic } from "../src/declare.ts";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-interface GoldenCase {
-  head: string;
-  args: unknown[];
-  label: string;
-  tol: number;
-  mpmath?: [number, number];
-  wolfram?: [number, number];
-}
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./elliptic.golden.json", import.meta.url), "utf8"));
-
-const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
-
-const byHead = new Map<string, GoldenCase[]>();
-for (const g of goldens) byHead.set(g.head, [...(byHead.get(g.head) ?? []), g]);
-
-for (const [head, cases] of byHead) {
-  test(`${head}: ${cases.length} cases match the oracles`, () => {
-    const off: string[] = [];
-    for (const g of cases) {
-      const r = ce.box([g.head, ...g.args] as never).N();
-      const ours: [number, number] = [r.re, r.im];
-      expect(g.mpmath ?? g.wolfram, g.label).toBeDefined();
-      for (const [name, ref] of [
-        ["mpmath", g.mpmath],
-        ["wolfram", g.wolfram],
-      ] as const) {
-        if (!ref) continue;
-        const err = relErr(ours, ref);
-        if (!(err <= g.tol)) off.push(`${g.label} vs ${name}: relerr ${err.toExponential(2)}`);
-      }
-    }
-    expect(off).toEqual([]);
-  });
-}
-
-test("the golden file covers every head", () => {
-  // EllipticE's own complex-modulus cases moved to @enumeratio/for-compute-engine's
-  // elliptic-e-complex patch tests, with the patch (design/upstreaming.md §10).
-  const heads = new Set(goldens.map((g) => g.head));
-  expect([...heads].toSorted()).toEqual(
-    ["IncompleteEllipticE", "IncompleteEllipticF", "IncompleteEllipticPi"].toSorted(),
-  );
-});
 
 // --- Direct checks not tied to the golden grid --------------------------------------
 

@@ -1,41 +1,16 @@
-import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
 // The ten backlog heads landed in this pass — ExpIntegralE, LambertW (branches other than
 // 0/-1), InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY, NorlundB,
-// PrimeZetaP, HypergeometricPFQ, KleinInvariantJ. Golden values are a Wolfram kernel
-// (collect-backlog-goldens.ts); the exact symbolic identities each head also carries are
-// checked directly in the reference examples (packages/reference), not repeated here.
+// PrimeZetaP, HypergeometricPFQ, KleinInvariantJ. Oracle coverage (a Wolfram kernel) now
+// lives as `known` values on the reference examples (packages/reference/tests/known.test.ts);
+// the exact symbolic identities each head also carries are checked directly in the
+// reference examples (packages/reference), not repeated here.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
-
-interface GoldenCase {
-  head: string;
-  args: unknown[];
-  label: string;
-  tol: number;
-  wolfram?: [number, number];
-}
-
-const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./backlog-heads.golden.json", import.meta.url), "utf8"));
-
-const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
-
-test("the backlog heads landed this pass match a Wolfram kernel", () => {
-  const off: string[] = [];
-  for (const g of goldens) {
-    const r = ce.box([g.head, ...g.args] as never).N();
-    const ours: [number, number] = [r.re, r.im];
-    if (!g.wolfram) continue;
-    const err = relErr(ours, g.wolfram);
-    if (!(err <= g.tol)) off.push(`${g.label}: relerr ${err.toExponential(2)} (tol ${g.tol})`);
-  }
-  expect(off).toEqual([]);
-});
 
 test("LambertW(z, 0) and LambertW(z, -1) still go through compute-engine's native handler", () => {
   // Branches this package does not touch — regression guard against the wrapper ever

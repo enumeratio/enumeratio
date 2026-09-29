@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption
-sine-s-period-is-2-pi			[FunctionPeriod, [Sin, x], x]	[Multiply, 2, Pi]	Sine's period is 2*pi
-tangent-s-period-is-pi			[FunctionPeriod, [Tan, x], x]	Pi	Tangent's period is pi, half of sine's
-scaling-the-argument-scales-the-period			[FunctionPeriod, [Sin, [Multiply, 2, x]], x]	Pi	Doubling the argument halves the period
-exp-is-not-periodic			[FunctionPeriod, [Exp, x], x]	0	Exp is monotonic, hence not periodic
-a-polynomial-is-not-periodic		test	[FunctionPeriod, [Power, x, 2], x]	0	
+id	section	role	expr	expected	known	source	caption
+sine-s-period-is-2-pi			[FunctionPeriod, [Sin, x], x]	[Multiply, 2, Pi]	[Multiply, 2, Pi]	Wolfram 15.0.0, hand cross-checked	Sine's period is 2*pi
+tangent-s-period-is-pi			[FunctionPeriod, [Tan, x], x]	Pi	Pi	Wolfram 15.0.0, hand cross-checked	Tangent's period is pi, half of sine's
+scaling-the-argument-scales-the-period			[FunctionPeriod, [Sin, [Multiply, 2, x]], x]	Pi	Pi	Wolfram 15.0.0, hand cross-checked	Doubling the argument halves the period
+exp-is-not-periodic			[FunctionPeriod, [Exp, x], x]	0	0	Wolfram 15.0.0, hand cross-checked	Exp is monotonic, hence not periodic
+a-polynomial-is-not-periodic		test	[FunctionPeriod, [Power, x, 2], x]	0	0	Wolfram 15.0.0, hand cross-checked	

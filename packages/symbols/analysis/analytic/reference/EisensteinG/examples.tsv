@@ -1,22 +1,22 @@
-id	section	role	expr	expected
-eisensteing-4-0-1i		test	[N, [EisensteinG, 4, [Complex, 0, 1]]]	3.1512120021538976
-eisensteing-4-0-5-0-8660254037844386i		test	[N, [EisensteinG, 4, [Complex, -0.5, 0.8660254037844386]]]	-4.80648069661144e-16
-eisensteing-4-0-3-1-1i		test	[N, [EisensteinG, 4, [Complex, 0.3, 1.1]]]	[Complex, 2.000965351966997, 0.48950345678905954]
-eisensteing-4-0-3-0-05i		test	[N, [EisensteinG, 4, [Complex, 0.3, 0.05]]]	[Complex, -1455.941164172926, -1426.8013867995783]
-eisensteing-4-1-3-0-05i		test	[N, [EisensteinG, 4, [Complex, 1.3, 0.05]]]	[Complex, -1455.9411641729257, -1426.801386799578]
-eisensteing-4-2-7-1-4i		test	[N, [EisensteinG, 4, [Complex, 2.7, 1.4]]]	[Complex, 2.140275586184914, -0.07467668203006365]
-eisensteing-4-1-4-0-6i		test	[N, [EisensteinG, 4, [Complex, -1.4, 0.6]]]	[Complex, -6.7101685377592295, -4.839673427449075]
-eisensteing-6-0-1i		test	[N, [EisensteinG, 6, [Complex, 0, 1]]]	-4.517910765431173e-16
-eisensteing-6-0-5-0-8660254037844386i		test	[N, [EisensteinG, 6, [Complex, -0.5, 0.8660254037844386]]]	5.863031693425403
-eisensteing-6-0-3-1-1i		test	[N, [EisensteinG, 6, [Complex, 0.3, 1.1]]]	[Complex, 2.3773646494635474, -0.9517550349609879]
-eisensteing-6-0-3-0-05i		test	[N, [EisensteinG, 6, [Complex, 0.3, 0.05]]]	[Complex, 56191.91088620408, -20955.086158426846]
-eisensteing-6-1-3-0-05i		test	[N, [EisensteinG, 6, [Complex, 1.3, 0.05]]]	[Complex, 56191.91088620411, -20955.086158426868]
-eisensteing-6-2-7-1-4i		test	[N, [EisensteinG, 6, [Complex, 2.7, 1.4]]]	[Complex, 2.083247300705014, 0.14707439477211373]
-eisensteing-6-1-4-0-6i		test	[N, [EisensteinG, 6, [Complex, -1.4, 0.6]]]	[Complex, 14.883484583242545, -0.47312006190191985]
-eisensteing-8-0-1i		test	[N, [EisensteinG, 8, [Complex, 0, 1]]]	4.25577303536519
-eisensteing-8-0-5-0-8660254037844386i		test	[N, [EisensteinG, 8, [Complex, -0.5, 0.8660254037844386]]]	8.9179983948457e-16
-eisensteing-8-0-3-1-1i		test	[N, [EisensteinG, 8, [Complex, 0.3, 1.1]]]	[Complex, 1.6132494452417017, 0.8395538200311278]
-eisensteing-8-0-3-0-05i		test	[N, [EisensteinG, 8, [Complex, 0.3, 0.05]]]	[Complex, 36001.061211434775, 1780576.1761204482]
-eisensteing-8-1-3-0-05i		test	[N, [EisensteinG, 8, [Complex, 1.3, 0.05]]]	[Complex, 36001.06121143519, 1780576.176120449]
-eisensteing-8-2-7-1-4i		test	[N, [EisensteinG, 8, [Complex, 2.7, 1.4]]]	[Complex, 1.960801276277211, -0.1369960109196333]
-eisensteing-8-1-4-0-6i		test	[N, [EisensteinG, 8, [Complex, -1.4, 0.6]]]	[Complex, 9.258824108904506, 27.83573517076986]
+id	section	role	expr	expected	known	tolerance	source
+eisensteing-4-0-1i		test	[N, [EisensteinG, 4, [Complex, 0, 1]]]	3.1512120021538976	{num: "3.1512120021538976"}	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-0-5-0-8660254037844386i		test	[N, [EisensteinG, 4, [Complex, -0.5, 0.8660254037844386]]]	-4.80648069661144e-16	[Complex, -6.109131733472271e-16, -3.525622876472085e-31]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-0-3-1-1i		test	[N, [EisensteinG, 4, [Complex, 0.3, 1.1]]]	[Complex, 2.000965351966997, 0.48950345678905954]	[Complex, 2.000965351966997, 0.48950345678905977]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-0-3-0-05i		test	[N, [EisensteinG, 4, [Complex, 0.3, 0.05]]]	[Complex, -1455.941164172926, -1426.8013867995783]	[Complex, -1455.9411641729273, -1426.8013867995749]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-1-3-0-05i		test	[N, [EisensteinG, 4, [Complex, 1.3, 0.05]]]	[Complex, -1455.9411641729257, -1426.801386799578]	[Complex, -1455.9411641729273, -1426.8013867995749]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-2-7-1-4i		test	[N, [EisensteinG, 4, [Complex, 2.7, 1.4]]]	[Complex, 2.140275586184914, -0.07467668203006365]	[Complex, 2.140275586184914, -0.0746766820300636]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-4-1-4-0-6i		test	[N, [EisensteinG, 4, [Complex, -1.4, 0.6]]]	[Complex, -6.7101685377592295, -4.839673427449075]	[Complex, -6.710168537759231, -4.83967342744907]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-0-1i		test	[N, [EisensteinG, 6, [Complex, 0, 1]]]	-4.517910765431173e-16	{num: "-8.025421687973685e-31"}	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-0-5-0-8660254037844386i		test	[N, [EisensteinG, 6, [Complex, -0.5, 0.8660254037844386]]]	5.863031693425403	[Complex, 5.863031693425403, 5.481233598749727e-31]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-0-3-1-1i		test	[N, [EisensteinG, 6, [Complex, 0.3, 1.1]]]	[Complex, 2.3773646494635474, -0.9517550349609879]	[Complex, 2.3773646494635474, -0.9517550349609883]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-0-3-0-05i		test	[N, [EisensteinG, 6, [Complex, 0.3, 0.05]]]	[Complex, 56191.91088620408, -20955.086158426846]	[Complex, 56191.91088620397, -20955.086158426962]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-1-3-0-05i		test	[N, [EisensteinG, 6, [Complex, 1.3, 0.05]]]	[Complex, 56191.91088620411, -20955.086158426868]	[Complex, 56191.91088620397, -20955.086158426962]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-2-7-1-4i		test	[N, [EisensteinG, 6, [Complex, 2.7, 1.4]]]	[Complex, 2.083247300705014, 0.14707439477211373]	[Complex, 2.083247300705014, 0.14707439477211362]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-6-1-4-0-6i		test	[N, [EisensteinG, 6, [Complex, -1.4, 0.6]]]	[Complex, 14.883484583242545, -0.47312006190191985]	[Complex, 14.883484583242536, -0.4731200619019256]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-0-1i		test	[N, [EisensteinG, 8, [Complex, 0, 1]]]	4.25577303536519	{num: "4.2557730353651895"}	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-0-5-0-8660254037844386i		test	[N, [EisensteinG, 8, [Complex, -0.5, 0.8660254037844386]]]	8.9179983948457e-16	[Complex, 0, 1.8461566795638297e-46]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-0-3-1-1i		test	[N, [EisensteinG, 8, [Complex, 0.3, 1.1]]]	[Complex, 1.6132494452417017, 0.8395538200311278]	[Complex, 1.6132494452417012, 0.8395538200311281]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-0-3-0-05i		test	[N, [EisensteinG, 8, [Complex, 0.3, 0.05]]]	[Complex, 36001.061211434775, 1780576.1761204482]	[Complex, 36001.0612114371, 1780576.1761204435]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-1-3-0-05i		test	[N, [EisensteinG, 8, [Complex, 1.3, 0.05]]]	[Complex, 36001.06121143519, 1780576.176120449]	[Complex, 36001.0612114371, 1780576.1761204435]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-2-7-1-4i		test	[N, [EisensteinG, 8, [Complex, 2.7, 1.4]]]	[Complex, 1.960801276277211, -0.1369960109196333]	[Complex, 1.9608012762772107, -0.13699601091963326]	1e-8	mpmath 1.3.0 eisensteinE
+eisensteing-8-1-4-0-6i		test	[N, [EisensteinG, 8, [Complex, -1.4, 0.6]]]	[Complex, 9.258824108904506, 27.83573517076986]	[Complex, 9.258824108904525, 27.835735170769826]	1e-8	mpmath 1.3.0 eisensteinE
