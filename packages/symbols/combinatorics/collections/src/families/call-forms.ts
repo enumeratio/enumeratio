@@ -350,9 +350,22 @@ function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHand
 
 /** Declare the widened call forms. Call AFTER declareFamilies (IntegerPartitions,
  *  SetPartitions and Subsets must already be declared) -- declareCollections does. */
-export function declareCallForms(ce: ComputeEngine): void {
-  widenSignature(ce, "IntegerPartitions", "(integer, any?, any?) -> list<list<integer>>");
-  setCollection(ce, "IntegerPartitions", polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions));
+export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Record<string, string>> = {}): void {
+  // Typed by its carrier when it has one: `IntegerPartition([3, 1])`, as the plain family is.
+  const partition = carrierTypes.IntegerPartition;
+  widenSignature(ce, "IntegerPartitions", `(integer, any?, any?) -> list<${partition ?? "list<integer>"}>`);
+  setCollection(
+    ce,
+    "IntegerPartitions",
+    partition === undefined
+      ? polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions)
+      : polyCollection(
+          ce,
+          (e: number[]) => ["IntegerPartition", listMJ(e)],
+          (b) => asIntList((b as unknown as BoxedExpression).operator === "IntegerPartition" ? b.ops![0]! : b),
+          resolveIntegerPartitions,
+        ),
+  );
 
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the

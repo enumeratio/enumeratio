@@ -1,4 +1,4 @@
 id	in	out
 count-oddpartitions-10	Count(OddPartitions(10))	10
-first-element-of-oddpartitions-10	OddPartitions(10)[1]	[9, 1]
-every-element-of-oddpartitions-10	Take(OddPartitions(10), 10)	"[\n  [9, 1],\n  [7, 3],\n  [7, 1, 1, 1],\n  [5, 5],\n  [5, 3, 1, 1],\n  [5, 1, 1, 1, 1, 1],\n  [3, 3, 3, 1],\n  [3, 3, 1, 1, 1, 1],\n  [3, 1, 1, 1, 1, 1, 1, 1],\n  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],\n]"
+first-element-of-oddpartitions-10	OddPartitions(10)[1]	IntegerPartition([9, 1])
+every-element-of-oddpartitions-10	Take(OddPartitions(10), 10)	"[\n  IntegerPartition([9, 1]),\n  IntegerPartition([7, 3]),\n  IntegerPartition([7, 1, 1, 1]),\n  IntegerPartition([5, 5]),\n  IntegerPartition([5, 3, 1, 1]),\n  IntegerPartition([5, 1, 1, 1, 1, 1]),\n  IntegerPartition([3, 3, 3, 1]),\n  IntegerPartition([3, 3, 1, 1, 1, 1]),\n  IntegerPartition([3, 1, 1, 1, 1, 1, 1, 1]),\n  IntegerPartition([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),\n]"

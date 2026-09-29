@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-oddpartitions-10	Basic		[Count, [OddPartitions, 10]]	10	$Count(OddPartitions(10)) = 10$
-first-element-of-oddpartitions-10	Basic		[At, [OddPartitions, 10], 1]	[List, 9, 1]	The first element in enumeration order
-every-element-of-oddpartitions-10		test	[Take, [OddPartitions, 10], 10]	[List, [List, 9, 1], [List, 7, 3], [List, 7, 1, 1, 1], [List, 5, 5], [List, 5, 3, 1, 1], [List, 5, 1, 1, 1, 1, 1], [List, 3, 3, 3, 1], [List, 3, 3, 1, 1, 1, 1], [List, 3, 1, 1, 1, 1, 1, 1, 1], [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]	
+first-element-of-oddpartitions-10	Basic		[At, [OddPartitions, 10], 1]	[IntegerPartition, [List, 9, 1]]	The first element in enumeration order
+every-element-of-oddpartitions-10		test	[Take, [OddPartitions, 10], 10]	[List, [IntegerPartition, [List, 9, 1]], [IntegerPartition, [List, 7, 3]], [IntegerPartition, [List, 7, 1, 1, 1]], [IntegerPartition, [List, 5, 5]], [IntegerPartition, [List, 5, 3, 1, 1]], [IntegerPartition, [List, 5, 1, 1, 1, 1, 1]], [IntegerPartition, [List, 3, 3, 3, 1]], [IntegerPartition, [List, 3, 3, 1, 1, 1, 1]], [IntegerPartition, [List, 3, 1, 1, 1, 1, 1, 1, 1]], [IntegerPartition, [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]]	

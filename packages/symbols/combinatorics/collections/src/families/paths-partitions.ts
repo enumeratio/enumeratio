@@ -843,6 +843,7 @@ export const entries: NumberKernel[] = [
   },
   {
     head: "DyckPathsByHeight",
+    carrier: "DyckPath",
     paramCount: 2,
     kind: "ints",
     count: ([n, h]) => DyckPathsByHeightCount(n, h),

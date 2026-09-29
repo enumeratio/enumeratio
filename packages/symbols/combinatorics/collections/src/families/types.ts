@@ -66,7 +66,7 @@ interface Family {
   readonly head: string;
   /** The domain its elements inhabit when that is a carrier with a constructor (`Permutation`).
    *  Given the carrier's type, the elements are built as carrier values and the collection is
-   *  typed by it; otherwise they stay bare lists. Defaults to `declared.carrier`. */
+   *  typed by it; otherwise they stay bare lists. */
   readonly carrier?: string;
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";

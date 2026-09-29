@@ -70,7 +70,7 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply(libs.declareDomains);
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too.
-  apply((ce) => libs.declareCollections(ce, { permutationType: "permutation" }));
+  apply((ce) => libs.declareCollections(ce, { permutationType: "permutation", carrierTypes: domainTypes }));
   // AFTER declareCollections: a plural a collection family already claims (Permutations,
   // DyckPaths, ...) has to still be free when this checks, not raced by minting a bare
   // symbol for it first.

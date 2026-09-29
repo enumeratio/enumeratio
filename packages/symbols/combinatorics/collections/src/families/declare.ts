@@ -45,8 +45,9 @@ const signatureOf = ({ kind, paramCount }: FamilyKernel, elementType?: string): 
   return `(${params}) -> ${elementType === undefined ? collectionTypeOf(kind) : `indexed_collection<${elementType}>`}`;
 };
 
-/** A family's carrier, when it has one. */
-const carrierOf = (family: FamilyKernel): string | undefined => family.carrier ?? family.declared?.carrier;
+/** A family's carrier, when it names one: opting in is explicit, since a carrier's shape has to
+ *  be the family's (`declared.carrier` is only Plausible's catalogue label). */
+const carrierOf = (family: FamilyKernel): string | undefined => family.carrier;
 
 // element codecs (element -> boxed MathJSON encoder, boxed -> element decoder).
 const encoderFor = (kind: FamilyKernel["kind"]) =>

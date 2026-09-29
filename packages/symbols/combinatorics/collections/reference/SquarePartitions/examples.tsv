@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-squarepartitions-12	Basic		[Count, [SquarePartitions, 12]]	5	$Count(SquarePartitions(12)) = 5$
-first-element-of-squarepartitions-12	Basic		[At, [SquarePartitions, 12], 1]	[List, 9, 1, 1, 1]	The first element in enumeration order
-every-element-of-squarepartitions-12		test	[Take, [SquarePartitions, 12], 5]	[List, [List, 9, 1, 1, 1], [List, 4, 4, 4], [List, 4, 4, 1, 1, 1, 1], [List, 4, 1, 1, 1, 1, 1, 1, 1, 1], [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]	
+first-element-of-squarepartitions-12	Basic		[At, [SquarePartitions, 12], 1]	[IntegerPartition, [List, 9, 1, 1, 1]]	The first element in enumeration order
+every-element-of-squarepartitions-12		test	[Take, [SquarePartitions, 12], 5]	[List, [IntegerPartition, [List, 9, 1, 1, 1]], [IntegerPartition, [List, 4, 4, 4]], [IntegerPartition, [List, 4, 4, 1, 1, 1, 1]], [IntegerPartition, [List, 4, 1, 1, 1, 1, 1, 1, 1, 1]], [IntegerPartition, [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]]	

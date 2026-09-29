@@ -373,6 +373,7 @@ export const entries: NumberKernel[] = [
       (a) => baxterClass.rank(a),
     ),
     declared: baxterClass.declared,
+    carrier: "Permutation",
   },
   {
     ...ints(
@@ -417,6 +418,7 @@ export const entries: NumberKernel[] = [
       (a) => nonCrossingClass.rank(a),
     ),
     declared: nonCrossingClass.declared,
+    carrier: "Permutation",
   },
   {
     ...ints(
@@ -428,6 +430,7 @@ export const entries: NumberKernel[] = [
       (a) => separableClass.rank(a),
     ),
     declared: separableClass.declared,
+    carrier: "Permutation",
   },
   {
     ...ints(
@@ -439,6 +442,7 @@ export const entries: NumberKernel[] = [
       (a) => simpleClass.rank(a),
     ),
     declared: simpleClass.declared,
+    carrier: "Permutation",
   },
   {
     ...ints(
@@ -450,6 +454,7 @@ export const entries: NumberKernel[] = [
       (a) => smoothClass.rank(a),
     ),
     declared: smoothClass.declared,
+    carrier: "Permutation",
   },
   {
     ...ints(
@@ -461,5 +466,6 @@ export const entries: NumberKernel[] = [
       (a) => vexillaryClass.rank(a),
     ),
     declared: vexillaryClass.declared,
+    carrier: "Permutation",
   },
 ];

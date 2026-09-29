@@ -7,7 +7,7 @@ signatures:
   - call: PartitionsInBox(a, b)
     description: partitions with at most $a$ parts, each at most $b$
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<integer_partition>
 seeAlso:
   - IntegerPartitions
   - PartitionsMaxPart
