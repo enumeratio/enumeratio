@@ -764,6 +764,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "ButtonBox",
+    wolfram: "ButtonBox",
+  },
+  {
     name: "C",
     wolfram: "C",
   },
@@ -2659,6 +2663,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "FoldList",
     wolfram: "FoldList",
+  },
+  {
+    name: "FormBox",
+    wolfram: "FormBox",
   },
   {
     name: "Fourier",
@@ -6148,8 +6156,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "TemplateSlot",
+    wolfram: "TemplateSlot",
+  },
+  {
     name: "TestResultObject",
     wolfram: "TestResultObject",
+  },
+  {
+    name: "TextCell",
+    wolfram: "TextCell",
+  },
+  {
+    name: "TextData",
+    wolfram: "TextData",
   },
   {
     name: "Thread",

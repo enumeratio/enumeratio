@@ -228,6 +228,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "ButtonBox",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: "ButtonBox",
+    elsewhere: [],
+  },
+  {
     name: "DisplayForm",
     provenance: "extension",
     declared: "enumeratio-boxes",
@@ -240,6 +247,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-boxes",
     wolframAlias: "ErrorBox",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "FormBox",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: "FormBox",
+    elsewhere: [],
   },
   {
     name: "FractionBox",
@@ -347,11 +361,39 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "TemplateExpression",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "TemplateSlot",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: "TemplateSlot",
+    elsewhere: [],
+  },
+  {
     name: "TextBox",
     provenance: "unknown",
     declared: "enumeratio-boxes",
     wolframAlias: null,
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "TextCell",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: "TextCell",
+    elsewhere: [],
+  },
+  {
+    name: "TextData",
+    provenance: "unknown",
+    declared: "enumeratio-boxes",
+    wolframAlias: "TextData",
+    elsewhere: [],
   },
   {
     name: "ToBoxes",

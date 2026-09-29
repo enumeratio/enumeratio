@@ -1741,10 +1741,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "ButtonBox",
-    uses: 3,
-  },
-  {
     head: "CarlsonRK",
     uses: 3,
   },

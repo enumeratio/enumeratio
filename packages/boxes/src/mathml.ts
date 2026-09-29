@@ -29,6 +29,7 @@ import {
   underoverscript,
   underscript,
 } from "./box.ts";
+import { texSource } from "./markdown.ts";
 
 export interface MathMLOptions {
   /** `display="block"` on the `<math>` root (default inline). */
@@ -127,6 +128,26 @@ function writeNode(box: BoxNode): string {
       );
     case "ErrorBox":
       return element("merror", write(box[1]));
+    case "ButtonBox":
+    case "TextCell":
+      return write(box[1]);
+    case "TextData":
+      return element(
+        "mrow",
+        box[1].map((b) => (typeof b === "string" ? element("mtext", escape(b)) : write(b))).join(""),
+      );
+    // Held TeX isn't parsed: its source, annotated as TeX.
+    case "FormBox":
+      return box[2] === "TeXForm"
+        ? element(
+            "semantics",
+            element("mtext", escape(texSource(box[1]))) +
+              element("annotation", escape(texSource(box[1])), { encoding: "application/x-tex" }),
+          )
+        : write(box[1]);
+    case "TemplateSlot":
+    case "TemplateExpression":
+      return element("mtext", escape(`\${${box[1]}}`));
     default:
       throw new Error("unreachable: BoxNode's tags are exhaustive above");
   }

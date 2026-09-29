@@ -2,6 +2,7 @@
 // is compute-engine's LaTeX parser, which goes to an expression, not to boxes.
 
 import { type Box, type BoxNode, isNode, optionsOfBox, tokenClass } from "./box.ts";
+import { texSource } from "./markdown.ts";
 
 const COMMANDS: Record<string, string> = {
   "−": "-",
@@ -211,6 +212,16 @@ function writeNode(box: BoxNode): string {
       return write(box[1]);
     case "ErrorBox":
       return `\\textcolor{red}{${write(box[1])}}`;
+    case "ButtonBox":
+    case "TextCell":
+      return write(box[1]);
+    case "TextData":
+      return box[1].map((b) => (typeof b === "string" ? `\\text{${escapeText(b)}}` : write(b))).join("");
+    case "FormBox":
+      return box[2] === "TeXForm" ? texSource(box[1]) : write(box[1]);
+    case "TemplateSlot":
+    case "TemplateExpression":
+      return `\\text{\\$\\{${escapeText(box[1])}\\}}`;
     default:
       throw new Error("unreachable: BoxNode's tags are exhaustive above");
   }

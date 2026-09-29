@@ -19,6 +19,7 @@ import {
   toLatex,
   toMathJson,
   toMathML,
+  toAscii,
   toText,
 } from "../src/index.ts";
 import { CORPUS } from "./corpus.ts";
@@ -60,7 +61,7 @@ for (const [name, json] of Object.entries(CORPUS)) {
     // And the MathJSON encoding round-trips.
     expect(fromMathJson(toMathJson(boxes))).toEqual(boxes);
 
-    const record = { boxes, latex: toLatex(boxes), text: toText(boxes) };
+    const record = { boxes, latex: toLatex(boxes), text: toText(boxes), ascii: toAscii(boxes) };
     if (updating) {
       freshMathml[name] = { json, mathml };
       freshBoxes[name] = record;
