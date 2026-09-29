@@ -115,6 +115,17 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
     page, Wolfram links scenes to
     [Unity](https://reference.wolfram.com/language/UnityLink/guide/UnityScene.html). The same
     could go to an engine that emits wasm (Godot), or to Blender for rendered visualisations.
+- **A function repository.** Symbol definitions should keep growing without the core packages
+  growing with them. The model is Wolfram's
+  [Function Repository](https://resources.wolframcloud.com/FunctionRepository/):
+  `ResourceFunction["Name"]` resolves a name through a registry to a definition that loads on
+  demand, and the definition is a record carrying its examples and tests. For us, that means
+  records plus Epsil definitions (or kernels) loaded lazily by name, curated and versioned
+  apart from the packages, so a new collection, sibling order, statistic or map doesn't have to
+  ship in core. [namespaces.md](./namespaces.md) §3 has the `ResourceFunction` analysis, and
+  design/speculative/namespaces.md has the lazy-context idea it leads to. Nearly every catalog
+  addition (the combinatorics areas of design/speculative/combinatorics-layering-and-plausible.md
+  among them) is a candidate for the repository rather than for core.
 - **`SqrtSpace`.** The Function Repository's
   [`SqrtSpace`](https://resources.wolframcloud.com/FunctionRepository/resources/SqrtSpace/)
   maps Cartesian points to algebraic numbers in a quadratic field and back, keeping track of
