@@ -86,7 +86,7 @@ const config = withMermaid(
       // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
       // while vitepress's `plugins` field types against its own nested real `vite` --
       // two structurally-identical but nominally distinct `Plugin` types.
-      plugins: (dev ? [reviewModePlugin(webDir), referenceDataPlugin()] : [referenceDataPlugin()]) as never,
+      plugins: (dev ? [reviewModePlugin(webDir), referenceDataPlugin(dev)] : [referenceDataPlugin(dev)]) as never,
     },
     title: "enumeratio",
     description:
