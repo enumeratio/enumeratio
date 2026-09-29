@@ -89,7 +89,7 @@ test("every domain with a plural answers Element for its own constructor", () =>
   }
 });
 
-test("the two domains with no plural type space stay that way", () => {
+test("the one domain with no plural type space stays that way", () => {
   const noPlural = DOMAINS.filter((d) => d.plural === undefined).map((d) => d.name);
-  expect(noPlural).toEqual(["ContinuedFraction", "PermutationCycles"]);
+  expect(noPlural).toEqual(["ContinuedFraction"]);
 });

@@ -21,6 +21,7 @@ import {
   dyckPathKernel,
 } from "./binary-tree.ts";
 import { bstParents } from "./bst.ts";
+import { cycleDecompositionKernel, permutationOfCycleDecompositionKernel } from "./cycle-decomposition.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
 import { fromPermutationLeftChild, fromPermutationRightChild, fromPermutationRoot } from "./increasing-binary-tree.ts";
@@ -596,6 +597,26 @@ export const MAPS: readonly CombinatorialMap[] = [
     composedOf: ["BinaryTree", "BinarySearchTreeParentArray"],
     summary: "The tree built by inserting σ(1), σ(2), ... into an empty binary search tree.",
     note: "The sylvester congruence: two permutations land on the same tree exactly when they agree on which of any pair is inserted first. Built as its parent array (BinarySearchTreeParentArray), then read as a tree.",
+  },
+  {
+    name: "CycleDecomposition",
+    convert: true,
+    from: "permutation",
+    to: "cycle_decomposition",
+    kernel: cycleDecompositionKernel,
+    summary:
+      "A permutation in cycle notation, fixed points kept: each cycle from its least point, cycles in order of those points.",
+    laws: [{ inverse: "Permutation" }],
+  },
+  {
+    name: "Permutation",
+    convert: true,
+    from: "cycle_decomposition",
+    to: "permutation",
+    kernel: permutationOfCycleDecompositionKernel,
+    summary: "The permutation a cycle decomposition describes.",
+    note: "Declines a decomposition that isn't canonical: a point missing or repeated, a cycle not starting at its least point, or cycles out of order.",
+    laws: [{ inverse: "CycleDecomposition" }],
   },
   {
     name: "BinarySearchTreeParentArray",

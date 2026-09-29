@@ -98,6 +98,13 @@ export const DOMAINS: readonly Domain[] = [
     plural: "CorePartitions",
   },
   {
+    name: "CycleDecomposition",
+    type: "cycle_decomposition",
+    shape: "list<list<integer>>",
+    id: "cycle_decomposition",
+    plural: "PermutationsAsCycles",
+  },
+  {
     name: "DecoratedPermutation",
     type: "decorated_permutation",
     shape: "list<integer>",
@@ -390,12 +397,6 @@ export const DOMAINS: readonly Domain[] = [
     shape: "list<integer>",
     id: "permutation",
     plural: "Permutations",
-  },
-  {
-    name: "PermutationCycles",
-    type: "permutation_cycles",
-    shape: "list<integer>",
-    id: "permutation_cycles",
   },
   {
     name: "PermutationInversion",

@@ -3,11 +3,9 @@
 // here (matrix -> matrices, tableau -> tableaux), so every carrier gets an explicit entry
 // rather than a blind pascal-case + "s".
 //
-// Two ids are absent on purpose: `continued_fraction` and `permutation_cycles` layer their
-// SINGULAR constructor onto a real, unrelated head (compute-engine's own continued-fraction
-// expansion, Wolfram's cycle-notation conversion via `@enumeratio/groupalgebra`) and have no
-// plural type-space name of their own — there is no "the ContinuedFractions" to be an
-// element of.
+// One id is absent on purpose: `continued_fraction` layers its SINGULAR constructor onto a
+// real, unrelated head (compute-engine's own continued-fraction expansion) and has no plural
+// type-space name of its own — there is no "the ContinuedFractions" to be an element of.
 export const PLURAL_OVERRIDES: Readonly<Record<string, string>> = {
   affine_permutation: "AffinePermutations",
   alternating_sign_matrix: "AlternatingSignMatrices",

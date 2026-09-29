@@ -14,5 +14,5 @@ signatures:
   - call: Permutation(list)
     description: The singular-inhabitant constructor for a permutation, as a one-line word.
     library: enumeratio-combinatorics
-    type: (list<integer>) -> permutation
+    type: ((list<integer>) -> permutation) & ((cycle_decomposition) -> permutation)
 ---

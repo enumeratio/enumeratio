@@ -16,7 +16,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { typeFor } from "../src/types.ts";
 import { PLURAL_OVERRIDES } from "./plural-overrides.ts";
-import { ADDED_CARRIERS, SHAPE_OVERRIDES } from "./shape-overrides.ts";
+import { ADDED_CARRIERS, RETIRED_CARRIERS, SHAPE_OVERRIDES } from "./shape-overrides.ts";
 
 const pascal = (id: string): string =>
   id
@@ -29,7 +29,7 @@ const pascal = (id: string): string =>
  *  constructor already layers onto an unrelated real head instead (see `types.ts`'s
  *  `Domain.plural` doc). */
 const pluralFor = (id: string): string | undefined =>
-  id === "continued_fraction" || id === "permutation_cycles" ? undefined : (PLURAL_OVERRIDES[id] ?? `${pascal(id)}s`);
+  id === "continued_fraction" ? undefined : (PLURAL_OVERRIDES[id] ?? `${pascal(id)}s`);
 
 /** A Postgres field type, as the nearest compute-engine type. */
 function typeOf(pg: string): string {
@@ -61,7 +61,7 @@ if (!path) throw new Error("usage: extract.ts <carrier-shapes.txt>");
 
 const domains = readFileSync(path, "utf8")
   .split("\n")
-  .filter((line) => line.includes("|"))
+  .filter((line) => line.includes("|") && !RETIRED_CARRIERS.has(line.split("|")[0] ?? ""))
   .map((line) => {
     const [id = "", fields = ""] = line.split("|");
     const name = pascal(id);

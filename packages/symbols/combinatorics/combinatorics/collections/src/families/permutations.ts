@@ -13,6 +13,7 @@ import {
   KSubsetRank,
   KSubsetUnrank,
 } from "./kernels-extra.ts";
+import { IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import type { NumberKernel } from "./types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
@@ -51,7 +52,9 @@ function isEvenPermutation(perm: number[], n: number): boolean {
   return IsPermutationOf(perm, n) && Inversions(perm) % 2 === 0;
 }
 
-// ─── LehmerCodes(n): the inversion table, order-isomorphic to Permutations. Element = LehmerCode(perm) ──
+// ─── LehmerCodes(n): the inversion tables, in their own order: read as factoradic numbers, which
+// is what makes the order implied rather than chosen. They match Permutations' lex order only
+// because that is the order we chose for Permutations. Element = LehmerCode(perm) ──
 // (length n−1, trailing implied 0 dropped, same convention ./kernels.ts already uses).
 function permutationFromLehmerCode(code: number[], n: number): number[] {
   const L = [...code, 0];
@@ -654,6 +657,76 @@ function kInversionRank(perm: number[], n: number): number {
   return rank;
 }
 
+// ─── PermutationsAsCycles(n): every permutation of n in cycle notation, fixed points kept. ─────
+// A cycle decomposition is canonical: each cycle starts at its least point, cycles in order of
+// those points. Listed by cycle type in IntegerPartitions' order (the n-cycles first, the
+// identity last), then by canonical form, lexicographically. The order is our choice.
+export function CycleDecomposition(perm: readonly number[]): number[][] {
+  const seen: boolean[] = Array.from({ length: perm.length + 1 }, () => false);
+  const cycles: number[][] = [];
+  for (let start = 1; start <= perm.length; start++) {
+    if (seen[start]) continue;
+    const cycle: number[] = [];
+    for (let point = start; !seen[point]; point = perm[point - 1]!) {
+      seen[point] = true;
+      cycle.push(point);
+    }
+    cycles.push(cycle);
+  }
+  return cycles;
+}
+/** The permutation a cycle decomposition describes; undefined when it isn't a canonical one. */
+export function PermutationOfCycleDecomposition(cycles: readonly (readonly number[])[]): number[] | undefined {
+  const n = cycles.reduce((total, cycle) => total + cycle.length, 0);
+  const perm: number[] = Array.from({ length: n }, () => 0);
+  for (const cycle of cycles)
+    for (let i = 0; i < cycle.length; i++) {
+      const point = cycle[i]!;
+      if (!Number.isInteger(point) || point < 1 || point > n || perm[point - 1] !== 0) return undefined;
+      perm[point - 1] = cycle[(i + 1) % cycle.length]!;
+    }
+  const canonical = CycleDecomposition(perm);
+  return JSON.stringify(canonical) === JSON.stringify(cycles) ? perm : undefined;
+}
+const cycleTypeOf = (cycles: readonly (readonly number[])[]): number[] =>
+  cycles.map((cycle) => cycle.length).toSorted((a, b) => b - a);
+const lexCompare = (a: readonly (readonly number[])[], b: readonly (readonly number[])[]): number => {
+  const flat = (cycles: readonly (readonly number[])[]) => cycles.flatMap((cycle) => [...cycle, 0]);
+  const x = flat(a);
+  const y = flat(b);
+  for (let i = 0; i < Math.min(x.length, y.length); i++) if (x[i] !== y[i]) return x[i]! - y[i]!;
+  return x.length - y.length;
+};
+const cycleListing = new Map<number, { list: number[][][]; rank: Map<string, number> }>();
+function cyclesListed(n: number): { list: number[][][]; rank: Map<string, number> } {
+  let listed = cycleListing.get(n);
+  if (listed === undefined) {
+    const list = Array.from({ length: Factorial(n) }, (_, r) => CycleDecomposition(PermutationUnrank(n, r)))
+      .map((cycles) => ({ cycles, type: IntegerPartitionRank(cycleTypeOf(cycles), n) }))
+      .toSorted((a, b) => a.type - b.type || lexCompare(a.cycles, b.cycles))
+      .map(({ cycles }) => cycles);
+    listed = { list, rank: new Map(list.map((cycles, r) => [JSON.stringify(cycles), r])) };
+    cycleListing.set(n, listed);
+  }
+  return listed;
+}
+export const PermutationsAsCyclesFamily: NumberKernel = {
+  declared: {
+    carrier: "CycleDecomposition",
+    params: [{ name: "n", role: "axis", min: 0 }],
+    cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+    work: ([n]) => BigInt(Factorial(n!)),
+  },
+  head: "PermutationsAsCycles",
+  paramCount: 1,
+  kind: "blocks",
+  carrier: "CycleDecomposition",
+  count: ([n]) => Factorial(n!),
+  unrank: ([n], r) => cyclesListed(n!).list[Number(r)]!,
+  valid: (e, [n]) => Array.isArray(e) && (PermutationOfCycleDecomposition(e as number[][])?.length ?? -1) === n,
+  rank: (e, [n]) => cyclesListed(n!).rank.get(JSON.stringify(e)) ?? -1,
+};
+
 export const entries: NumberKernel[] = [
   ints(
     "EvenPermutations",
@@ -671,6 +744,7 @@ export const entries: NumberKernel[] = [
     (a, [n, k]) => IsKPermutationOf(a, n, k),
     (a, [n]) => KPermutationRank(a, n),
   ),
+  PermutationsAsCyclesFamily,
   ints(
     "LehmerCodes",
     1,

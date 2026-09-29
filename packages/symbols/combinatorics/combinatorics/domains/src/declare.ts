@@ -47,7 +47,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
  *
  * `ContinuedFraction` is the case that forced overloading at all: compute-engine computes
  * the expansion, `(real, integer?) -> list<integer>`, and we want the same name for the
- * value that expansion produces. `PermutationCycles` is the same shape of problem from the
+ * value that expansion produces. `PermutationCycles` was the same shape of problem from the
  * other direction — `@enumeratio/groupalgebra` declares it as Wolfram's real cycle-notation
  * conversion, and depending on which library's `declare*` runs first in a combined engine
  * (as `@enumeratio/census` builds one), this carrier constructor has to layer onto THAT

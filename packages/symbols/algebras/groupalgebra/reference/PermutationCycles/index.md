@@ -11,18 +11,13 @@ signatures:
   - call: PermutationCycles(perm, f)
     description: every position, fixed points included, each wrapped as a singleton — with `f` used in place of [[Cycles]]
     library: enumeratio-groupalgebra
-  - call: PermutationCycles(perm)
-    description: A permutation given as a one-line word $\{\sigma(1), \dots, \sigma(n)\}$, converted to disjoint-cycle notation ([[Cycles]]). The other direction of [[Permute]]'s two conventions.
-    library: enumeratio-combinatorics
-    type: ((list<integer>) -> permutation_cycles) & ((expression<Cycles> | list<integer>, any?) -> any)
-    overrides: enumeratio-groupalgebra
 seeAlso:
   - Cycles
+  - CycleDecomposition
   - Permute
   - InversePermutation
 names:
   wolframIdentity: true
-catalogCarrier: true
 ---
 
 - Cycles come out ordered by, and each starting at, its smallest point
