@@ -90,6 +90,13 @@ export function registerCollectionCarrier(ce: ComputeEngine, collection: string,
   registryOf(ce).collections.set(collection, carrier);
 }
 
+/** The carrier a collection HEAD's elements inhabit (`SymmetricGroup` -> `Permutation`), as
+ *  registered by `registerCollectionCarrier`. Undefined when `collection` isn't one, or has no
+ *  registered carrier -- its elements are bare lists. */
+export function collectionCarrierOf(ce: ComputeEngine, collection: string): string | undefined {
+  return registryOf(ce).collections.get(collection);
+}
+
 /**
  * Add `operation` to `carrier`'s table for `head`. A kernel and a definition from different
  * packages meet in one entry; the same part twice is an `OperationCollisionError`.

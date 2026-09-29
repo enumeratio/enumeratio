@@ -20,11 +20,14 @@ const tagByName = new Map(collectComponents(srcDir).map((c) => [wrapperName(c.ta
 // What "drew something" means, per tag -- most of these elements paint plain SVG into light
 // DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a data table
 // instead (zero, one or many per-row glyph SVGs, depending on the story's `glyph`), so its
-// check is its own -- a table body and no `.nct-error` (a count or parse the table couldn't
-// resolve). A tag with no entry here falls back to "at least one <svg>".
+// check is its own -- an actual DATA row, not just any `tbody tr` (the "no rows" / "scanning…"
+// placeholder is a `tr` too), and no `.nct-error` (a count or parse the table couldn't
+// resolve). `td.nct-elt` is the element column, present only on a real data row -- unlike a
+// bare `tbody tr`, which the "no rows" / "scanning…" placeholder row satisfies too. A tag with
+// no entry here falls back to "at least one <svg>".
 const RENDER_CHECKS: Readonly<Record<string, (el: Locator) => Promise<void>>> = {
   "notatio-collection-table": async (el) => {
-    await expect(el.locator("table.nct-table tbody tr").first()).toBeVisible();
+    await expect(el.locator("table.nct-table tbody td.nct-elt").first()).toBeVisible();
     await expect(el.locator(".nct-error")).toHaveCount(0);
   },
 };

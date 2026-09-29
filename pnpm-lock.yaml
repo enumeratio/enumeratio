@@ -383,6 +383,9 @@ importers:
       '@enumeratio/polytope':
         specifier: workspace:*
         version: link:../symbols/combinatorics/polytope
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../structures
       '@enumeratio/wolfram':
         specifier: workspace:*
         version: link:../wolfram
@@ -402,9 +405,15 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.139.0
         version: 0.139.0
+      '@enumeratio/collections':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/collections
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
+      '@enumeratio/statistics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/statistics
       '@webgpu/types':
         specifier: ^0.1.60
         version: 0.1.72

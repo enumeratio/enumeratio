@@ -2984,7 +2984,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "SymmetricGroup",
-    carrier: "PermutationCycles",
+    carrier: "Permutation",
     grades: [
       {
         name: "size",

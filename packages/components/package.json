@@ -27,6 +27,7 @@
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/frontend": "workspace:*",
     "@enumeratio/polytope": "workspace:*",
+    "@enumeratio/structures": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@xterm/addon-fit": "0.10.0",
     "@xterm/xterm": "5.5.0",
@@ -35,7 +36,9 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.139.0",
+    "@enumeratio/collections": "workspace:*",
     "@enumeratio/entry": "workspace:*",
+    "@enumeratio/statistics": "workspace:*",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
     "vite": "catalog:",
