@@ -4,7 +4,8 @@ import "./formats.ts";
 
 export { normalizeInputForm, toInputForm } from "./inputform.ts";
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "@enumeratio/engine";
-export { type MathMLOptions, toMathML } from "./mathml.ts";
+export { asciiMathToTeX, fromAsciiMath, toAsciiMath } from "./asciimath.ts";
+export { boxesToExpression, fromMathML, type MathMLOptions, toMathML } from "./mathml.ts";
 export {
   collectWildcards,
   type ParseExpressionOptions,

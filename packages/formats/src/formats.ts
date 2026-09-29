@@ -9,7 +9,9 @@ import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { MATHJSON_MIME } from "@enumeratio/boxes";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { toInputForm } from "./inputform.ts";
-import { type MathMLOptions, toMathML } from "./mathml.ts";
+import { makeBoxes, toText } from "@enumeratio/boxes";
+import { fromAsciiMath, toAsciiMath } from "./asciimath.ts";
+import { fromMathML, type MathMLOptions, toMathML } from "./mathml.ts";
 import { parseExpression } from "./expression.ts";
 import { portableTeX } from "./tex.ts";
 import { type FormatOptions, type ImageValue, registerFormat } from "./registry.ts";
@@ -74,7 +76,7 @@ registerFormat({
   decode: (d, o) => engine(o).parse(text(d)).json,
 });
 
-// Presentation MathML, output only. `opts.display` / `opts.fragment` pass through.
+// Presentation MathML. `opts.display` / `opts.fragment` pass through on the way out.
 registerFormat({
   name: "MathML",
   aliases: ["mathml", "MathMLForm"],
@@ -82,6 +84,27 @@ registerFormat({
   extensions: ["mml"],
   binary: false,
   encode: (v, o) => toMathML(asExpr(v).json, o as MathMLOptions | undefined),
+  decode: (d, o) => fromMathML(text(d), engine(o)),
+});
+
+// StandardForm's notation as one line of Unicode text, for a terminal or a title. Not read back.
+registerFormat({
+  name: "OutputForm",
+  aliases: ["outputform", "text"],
+  mimeTypes: ["text/x-outputform"],
+  extensions: [],
+  binary: false,
+  encode: (v) => toText(makeBoxes(asExpr(v).json)),
+});
+
+registerFormat({
+  name: "AsciiMath",
+  aliases: ["asciimath"],
+  mimeTypes: ["text/x-asciimath"],
+  extensions: ["am"],
+  binary: false,
+  encode: (v) => toAsciiMath(asExpr(v).json),
+  decode: (d, o) => fromAsciiMath(text(d), engine(o)),
 });
 
 registerFormat({

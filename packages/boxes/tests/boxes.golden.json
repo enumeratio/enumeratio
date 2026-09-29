@@ -736,7 +736,7 @@
     ],
     "latex": "\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}",
     "text": "{{1, 2}, {3, 4}}",
-    "ascii": "{{1, 2}, {3, 4}}"
+    "ascii": "((1, 2), (3, 4))"
   },
   "matrix with brackets": {
     "boxes": [
@@ -755,7 +755,7 @@
     ],
     "latex": "\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}",
     "text": "{{1, 2}, {3, 4}}",
-    "ascii": "{{1, 2}, {3, 4}}"
+    "ascii": "[[1, 2], [3, 4]]"
   },
   "matrix with str delimiters": {
     "boxes": [
@@ -774,7 +774,7 @@
     ],
     "latex": "\\begin{vmatrix}1&2\\\\3&4\\end{vmatrix}",
     "text": "{{1, 2}, {3, 4}}",
-    "ascii": "{{1, 2}, {3, 4}}"
+    "ascii": "|(1, 2), (3, 4)|"
   },
   "matrix no delimiters": {
     "boxes": [
@@ -816,13 +816,13 @@
     ],
     "latex": "\\begin{pmatrix}\\frac{1}{2}&-x\\\\x^2&\\sqrt{2}\\end{pmatrix}",
     "text": "{{1/2, −x}, {x², √2}}",
-    "ascii": "{{1/2, -x}, {x^2, sqrt(2)}}"
+    "ascii": "((1/2, -x), (x^2, sqrt(2)))"
   },
   "column vector": {
     "boxes": ["RowBox", ["(", ["GridBox", [["1"], ["2"], ["3"]]], ")"]],
     "latex": "\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}",
     "text": "{{1}, {2}, {3}}",
-    "ascii": "{{1}, {2}, {3}}"
+    "ascii": "((1), (2), (3))"
   },
   "nested matrices": {
     "boxes": [
@@ -857,7 +857,7 @@
     ],
     "latex": "\\begin{pmatrix}\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}&0\\\\0&1\\end{pmatrix}",
     "text": "{{{{1, 0}, {0, 1}}, 0}, {0, 1}}",
-    "ascii": "{{{{1, 0}, {0, 1}}, 0}, {0, 1}}"
+    "ascii": "((((1, 0), (0, 1)), 0), (0, 1))"
   },
   "delimiter": {
     "boxes": ["RowBox", ["(", ["RowBox", ["x", "+", "1"]], ")"]],
