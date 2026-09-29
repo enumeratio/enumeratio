@@ -25,9 +25,8 @@ test("CycleType crosses carriers and partitions n", () => {
     expect(result(["CycleType", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...cycleLengths(p)]);
 });
 
-test("CyclePartition labels each position with its cycle's rank", () => {
-  // A set partition IS a restricted growth string, so the block label is the rank of the
-  // cycle's least element — not an arbitrary identifier.
+test("CyclePartition takes the cycles as blocks, in order of their least elements", () => {
+  // Labelled by the rank of each cycle's least element, then read off as blocks.
   const rgs = (p: number[]): number[] => {
     const seen = new Array(p.length).fill(false);
     const labels = new Array(p.length).fill(0);
@@ -44,5 +43,9 @@ test("CyclePartition labels each position with its cycle's rank", () => {
     }
     return labels;
   };
-  for (const p of ALL) expect(result(["CyclePartition", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...rgs(p)]);
+  const blocks = (labels: number[]): unknown[] => [
+    "List",
+    ...[...new Set(labels)].map((b) => ["List", ...labels.flatMap((l, i) => (l === b ? [i + 1] : []))]),
+  ];
+  for (const p of ALL) expect(result(["CyclePartition", perm(...p)]), `[${p.join(", ")}]`).toEqual(blocks(rgs(p)));
 });

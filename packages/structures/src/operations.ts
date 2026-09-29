@@ -226,7 +226,9 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
         // A collection typed by its carrier already yields carrier values; a bare one gets each
         // element constructed.
         const type = registry.carriers.get(element)?.type;
-        const typed = type !== undefined && subject.type.matches(ce.type(`collection<${type}>`));
+        const typed =
+          (type !== undefined && subject.type.matches(ce.type(`collection<${type}>`))) ||
+          ce.function("At", [subject, ce.One]).evaluate().operator === element;
         const x = ce.symbol("_element");
         const each = ce.function("Function", [ce.function(head, [typed ? x : ce.function(element, [x]), key]), x]);
         return ce.function("Map", [each, subject]).evaluate(options);

@@ -11,7 +11,8 @@ const engine = (): ComputeEngine => {
 
 test("every carrier the catalog knows becomes a nominal type", () => {
   const ce = engine();
-  expect(DOMAINS.length).toBe(86);
+  // enumeratio's 86, and the restricted growth string (scripts/shape-overrides.ts).
+  expect(DOMAINS.length).toBe(87);
   for (const domain of DOMAINS) expect(String(ce.type(domain.type)), domain.name).toBe(domain.type);
 });
 
@@ -57,9 +58,10 @@ test("constructed values survive inside a list", () => {
 
 test("the shapes are enumeratio's actual storage, not an idealisation", () => {
   const shape = (name: string): string | undefined => DOMAINS.find((d) => d.name === name)?.shape;
-  // A set partition is a restricted growth string, NOT a list of blocks — reasoning from the
-  // name would have got this wrong, which is why the shapes are extracted rather than guessed.
-  expect(shape("SetPartition")).toBe("list<integer>");
+  // A set partition is its blocks, and its restricted growth string -- enumeratio's storage --
+  // is a carrier of its own (scripts/shape-overrides.ts).
+  expect(shape("SetPartition")).toBe("list<list<integer>>");
+  expect(shape("RestrictedGrowthString")).toBe("list<integer>");
   expect(shape("RationalNumber")).toBe("tuple<integer, integer>");
   expect(shape("ModularResidue")).toBe("tuple<integer, integer>");
   // A composite carrier names other carriers by their TYPE, which is the id verbatim.

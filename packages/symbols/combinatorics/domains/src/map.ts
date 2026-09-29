@@ -112,7 +112,7 @@ const blocksOf = (word: MathJSON, base: number): MathJSON => [
     ["Range", base, ["Max", word], 1],
     [
       "Fold",
-      ["Function", ["If", ["Equal", ["At", word, "p"], "j"], ["Append", "acc", "p"], "acc"], "acc", "p"],
+      ["Function", ["If", ["Equal", ["At", word, "p"], "j"], ["Join", "acc", ["List", "p"]], "acc"], "acc", "p"],
       ["List"],
       ["Range", 1, ["Length", word], 1],
     ],

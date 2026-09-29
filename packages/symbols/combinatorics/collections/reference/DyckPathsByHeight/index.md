@@ -7,7 +7,7 @@ signatures:
   - call: DyckPathsByHeight(n, h)
     description: Dyck paths of semilength $n$ with maximum height exactly $h$
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<dyck_path>
 seeAlso:
   - DyckPaths
 grades:

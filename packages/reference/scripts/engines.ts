@@ -43,8 +43,7 @@ const LIBRARY_DECLARATIONS = [
   (ce: ComputeEngine) =>
     declareCollections(ce, {
       permutationType: "permutation",
-      // SetPartition held back: the domain is a restricted growth string, the family's blocks.
-      carrierTypes: Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type])),
+      carrierTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])),
     }),
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   declareStructures,

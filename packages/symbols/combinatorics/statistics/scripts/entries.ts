@@ -95,7 +95,7 @@ interface Example {
 
 /**
  * Every subject a head accepts: the carrier, and a bare list when the reading also stands on
- * one. A carrier not in `CARRIER_TYPES` is not typed over at all (SetPartition), so those
+ * one. A carrier not in `CARRIER_TYPES` is not typed over at all, so those
  * heads still take the bare value and that is the only example to give.
  */
 function subjectsFor(definition: Definition, sample: { list: number[] | number[][] }): unknown[] {

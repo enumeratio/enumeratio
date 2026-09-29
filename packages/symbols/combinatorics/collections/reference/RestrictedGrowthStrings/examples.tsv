@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-restrictedgrowthstrings-4	Basic		[Count, [RestrictedGrowthStrings, 4]]	15	$Count(RestrictedGrowthStrings(4)) = 15$
-first-element-of-restrictedgrowthstrings-4	Basic		[At, [RestrictedGrowthStrings, 4], 1]	[List, 0, 0, 0, 0]	The first element in enumeration order
-every-element-of-restrictedgrowthstrings-4		test	[Take, [RestrictedGrowthStrings, 4], 5]	[List, [List, 0, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 0, 0, 1, 1], [List, 0, 0, 1, 2]]	
+first-element-of-restrictedgrowthstrings-4	Basic		[At, [RestrictedGrowthStrings, 4], 1]	[RestrictedGrowthString, [List, 0, 0, 0, 0]]	The first element in enumeration order
+every-element-of-restrictedgrowthstrings-4		test	[Take, [RestrictedGrowthStrings, 4], 5]	[List, [RestrictedGrowthString, [List, 0, 0, 0, 0]], [RestrictedGrowthString, [List, 0, 0, 0, 1]], [RestrictedGrowthString, [List, 0, 0, 1, 0]], [RestrictedGrowthString, [List, 0, 0, 1, 1]], [RestrictedGrowthString, [List, 0, 0, 1, 2]]]	

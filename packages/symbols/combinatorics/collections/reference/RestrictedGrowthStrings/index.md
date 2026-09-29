@@ -7,7 +7,7 @@ signatures:
   - call: RestrictedGrowthStrings(n)
     description: 'the restricted-growth strings of length $n$: words $w$ with $w_0 = 0$ and $w_i \le 1 + \max(w_0, …, w_{i-1})$'
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<restricted_growth_string>
 seeAlso:
   - SetPartitions
 references:

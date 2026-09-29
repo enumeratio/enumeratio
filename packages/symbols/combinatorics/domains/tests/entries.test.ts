@@ -19,8 +19,7 @@ const entries = [
 // The same stack both engines declare, in the same order.
 const ce = new ComputeEngine();
 declareDomains(ce);
-// SetPartition held back -- RGS here, blocks in the definitions. See scripts/carriers.ts.
-const carrierTypes = Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]));
+const carrierTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
 declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));

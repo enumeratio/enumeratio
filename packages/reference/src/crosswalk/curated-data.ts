@@ -431,6 +431,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000607",
     },
   ],
+  RestrictedGrowthString: [
+    {
+      system: "wikipedia",
+      identity: "Partition of a set#Restricted growth functions",
+    },
+  ],
   RestrictedGrowthStrings: [
     {
       system: "oeis",
@@ -1469,26 +1475,10 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "Quasisymmetric function",
     },
   ],
-  AlgebraDimension: [
-    {
-      system: "wikipedia",
-      identity: "Dimension (vector space)",
-    },
-  ],
   AlgebraSignature: [
     {
       system: "wikipedia",
       identity: "Metric signature",
-    },
-  ],
-  Basis: [
-    {
-      system: "wikipedia",
-      identity: "Basis (linear algebra)",
-    },
-    {
-      system: "mathworld",
-      identity: "VectorBasis",
     },
   ],
   DualAlgebra: [
@@ -2432,6 +2422,22 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       system: "fungrim",
       identity: "HurwitzZeta",
       arity: 2,
+    },
+  ],
+  AlgebraDimension: [
+    {
+      system: "wikipedia",
+      identity: "Dimension (vector space)",
+    },
+  ],
+  Basis: [
+    {
+      system: "wikipedia",
+      identity: "Basis (linear algebra)",
+    },
+    {
+      system: "mathworld",
+      identity: "VectorBasis",
     },
   ],
   ContinuedFraction: [

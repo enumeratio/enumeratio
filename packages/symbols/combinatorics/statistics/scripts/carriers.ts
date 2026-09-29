@@ -7,33 +7,22 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 
-/**
- * The carriers whose statistics are declared over the minted type. SetPartition is held back
- * on purpose: @enumeratio/domains treats a set_partition as a RESTRICTED GROWTH STRING (see
- * CyclePartition in map.ts), while every set-partition definition here -- and
- * `At(SetPartitions(n), k)` -- works in BLOCKS. Typing those heads over the carrier would
- * hand an RGS to a body expecting blocks: a wrong answer rather than a type error. They keep
- * an explicit `list<list<integer>>` signature until the two representations are reconciled.
- */
+/** The carriers whose statistics are declared over the minted type. */
 export const CARRIER_TYPES: Readonly<Record<string, string>> = {
   Permutation: "permutation",
   IntegerPartition: "integer_partition",
   DyckPath: "dyck_path",
-};
-
-/** Every carrier the constructors are minted for, including the one held back above. */
-const ALL_CARRIERS: Readonly<Record<string, string>> = {
-  ...CARRIER_TYPES,
   SetPartition: "set_partition",
 };
+
+/** Every carrier the constructors are minted for. */
+const ALL_CARRIERS: Readonly<Record<string, string>> = CARRIER_TYPES;
 
 /** The shape each carrier's constructor accepts — a set partition is a list of blocks. */
 const SHAPES: Readonly<Record<string, string>> = {
   permutation: "list<integer>",
   integer_partition: "list<integer>",
   dyck_path: "list<integer>",
-  // Blocks, matching the definitions and `At(SetPartitions(n), k)` -- NOT domain-data's RGS.
-  // Only this mirror uses it; the real carrier is not typed over until that is reconciled.
   set_partition: "list<list<integer>>",
 };
 

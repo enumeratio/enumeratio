@@ -19,9 +19,9 @@ signatures:
   - call: Crossings(partition)
     description: Pairs of arcs a < b < c < d with a~c and b~d.
     library: enumeratio-statistics
-    type: (list<list<integer>>) -> number
+    type: (set_partition) -> number
 ---
 
 - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-- Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled.
+- Takes a `SetPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
 - Read off the standard arc representation: within each block, consecutive elements are linked, and a crossing is two arcs whose spans interleave rather than nest or sit apart.
