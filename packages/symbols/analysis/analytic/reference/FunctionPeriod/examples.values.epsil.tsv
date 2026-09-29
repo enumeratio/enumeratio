@@ -1,6 +1,6 @@
 id	in	out
-sine-s-period-is-2-pi	FunctionPeriod(Sin(x), x)	2Pi
-tangent-s-period-is-pi	FunctionPeriod(Tan(x), x)	Pi
-scaling-the-argument-scales-the-period	FunctionPeriod(Sin(2x), x)	Pi
-exp-is-not-periodic	FunctionPeriod(Exp(x), x)	0
+sine-s-period-is-2-pi	FunctionPeriod(sin(x), x)	2Pi
+tangent-s-period-is-pi	FunctionPeriod(tan(x), x)	pi
+scaling-the-argument-scales-the-period	FunctionPeriod(sin(2x), x)	pi
+exp-is-not-periodic	FunctionPeriod(exp(x), x)	0
 a-polynomial-is-not-periodic	FunctionPeriod(x ^ 2, x)	0

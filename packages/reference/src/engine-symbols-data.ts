@@ -1907,7 +1907,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Integrate",
     kind: "operator",
     description: "Symbolic integral with optional bounds.",
-    signature: "(function, limits+) -> list<number> | number",
+    signature: "(function, limits+) -> list<number> | list<tuple> | number | tuple",
     wikidata: "Q80091",
     keywords: ["antiderivative", "primitive", "integral", "definite integral"],
   },
@@ -2262,7 +2262,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Length",
     kind: "operator",
     description:
-      "Number of elements in a collection. Returns +oo for an unbounded Range, an `incompatible-type` error for an operand that is decidably not a collection, `NaN` for an absent operand (`Missing`), and stays unevaluated for an infinite collection whose length is not decided.",
+      "Number of elements in a collection. Returns +oo for an infinite collection (an unbounded Range, `Integers`, `Repeat(5)`, an interval), as `Count` does, an `incompatible-type` error for an operand that is decidably not a collection, `NaN` for an absent operand (`Missing`), and stays unevaluated for a collection whose size is not known (a `Filter` over an infinite source).",
     signature: "(any) -> infinity | integer",
     keywords: ["size"],
   },
@@ -3544,7 +3544,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "ReplaceAll",
     kind: "operator",
     description:
-      "ReplaceAll(expr, rules): apply one or more replacement rules to `expr`, then evaluate the result (Mathematica `expr /. rules`). A rule is `lhs -> rhs` (parsed as `To`) or `Rule(lhs, rhs)`. Several rules may be given as extra arguments or as a `List`/`Set` of rules; they are applied simultaneously in a single pass.",
+      "ReplaceAll(expr, rules): apply one or more replacement rules to `expr`, then evaluate the result (Mathematica `expr /. rules`). A rule is `Rule(lhs, rhs)`, or `lhs -> rhs` in LaTeX (parsed as `To`; in Epsil `->` builds a dictionary entry, which is not a rule). Several rules may be given as extra arguments or as a `List`/`Set` of rules; they are applied simultaneously in a single pass.",
     signature: "(any, any+) -> any",
   },
   {
@@ -4153,8 +4153,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Timing",
     kind: "operator",
     description:
-      "`Timing(expr)` evaluates `expr` and returns a pair: the time the evaluation took, in microseconds, then the value. `Timing(expr, n)` evaluates `expr` n times (at least 3), drops the fastest and the slowest run, and returns the mean time of the others",
-    signature: "(value, repeat: integer?) -> tuple<time: number, result: value>",
+      "`Timing(expr)` evaluates `expr` and returns a pair: the time the evaluation took, in microseconds, then the value; read them as `Timing(expr)[1]` and `Timing(expr)[2]`. `Timing(expr, n)` evaluates `expr` n times (at least 3), drops the fastest and the slowest run, and returns the mean time of the others",
+    signature: "(value, repeat: integer?) -> tuple<number, value>",
   },
   {
     name: "To",

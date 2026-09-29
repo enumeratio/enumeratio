@@ -1,5 +1,5 @@
 id	in	out
 centers-add-and-radii-add	CenteredInterval(1, 1 / 2) + CenteredInterval(2, 1 / 4)	CenteredInterval(3, 3 / 4)
 an-exact-factor-scales-center-and-radius	2 * CenteredInterval(2, 1 / 2)	CenteredInterval(4, 1)
-converts-an-interval-to-center-radius-form	CenteredInterval(Interval(1, 3))	CenteredInterval(2, 1)
+converts-an-interval-to-center-radius-form	CenteredInterval(interval(1, 3))	CenteredInterval(2, 1)
 radii-add-under-subtraction-too	CenteredInterval(5, 1 / 4) - CenteredInterval(1, 1 / 4)	CenteredInterval(4, 1 / 2)

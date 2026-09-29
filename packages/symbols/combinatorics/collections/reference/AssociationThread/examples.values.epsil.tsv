@@ -1,4 +1,4 @@
 id	in	out
 pairs-keys-with-values-two-argument-form	AssociationThread([a, b], [1, 2])	Association(Rule(a, 1), Rule(b, 2))
 accepts-the-one-argument-rule-keys-values-form	AssociationThread(Rule([a, b], [1, 2]))	Association(Rule(a, 1), Rule(b, 2))
-length-on-the-result-agrees-with-association	Length(AssociationThread([a, b, c], [1, 2, 3]))	3
+length-on-the-result-agrees-with-association	length(AssociationThread([a, b, c], [1, 2, 3]))	3

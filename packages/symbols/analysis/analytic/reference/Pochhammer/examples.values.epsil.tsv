@@ -1,23 +1,23 @@
 id	in	out
-5-6-7	Pochhammer(5, 3)	210
-an-empty-product-is-1	Pochhammer(2, 0)	1
-1-5-equals-5	Pochhammer(1, 5)	120
-pochhammer-3-4	Pochhammer(3, 4)	360
-10-11-12-13-14-15	Pochhammer(10, 6)	3_603_600
-at-pochhammer-3-2	N(Pochhammer(3, 2))	12
-threads-element-wise-over-a-list-as-wolfram-s	Pochhammer([2, 3, 4], 2)	[6, 12, 20]
-a-symbolic-base-with-integer-order-expands-to	Pochhammer(n, 5)	n * (n + 1) * (n + 2) * (n + 3) * (n + 4)
-a-negative-order-expands-to-the-reciprocal	Pochhammer(n, -5)	1 / ((n - 1) * (n - 2) * (n - 3) * (n - 4) * (n - 5))
-real-base-and-order-evaluate-as-frac-gamma-a-n	Pochhammer(2.4, 8.5)	2_310_224.673_240_707_780_57
-a-zero-base-gives-0-for-any-positive-order	Pochhammer(0, 1_285)	0
-a-rational-base-frac-12-cdot-frac-32-cdot-frac	Pochhammer(1 / 2, 3)	15 / 8
-a-rational-order-evaluates-through-gamma-exactly	Pochhammer(3 / 2, 1 / 2)	2 / Sqrt(Pi)
-complex-base-and-order-evaluate-through-gamma	Pochhammer(2 + 5i, 8i)	0.000_002_138_682_291_868_096_3 - 0.000_014_218_737_711_709_974i
-dividing-by-k-counts-multisets-binom-n-k-1-k	Pochhammer(5, 3) / 3!	35
-1-n-n-since-the-rising-factorial-from-1-just	Pochhammer(1, 5) == 5!	True
-negative-order-gives-the-reciprocal-a-n-frac-1-a	Pochhammer(5, -2)	1 / 12
-order-0-is-the-empty-product-a-0-1	Pochhammer(a, 0)	1
-a-1-a	Pochhammer(a, 1)	a
-the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	Pochhammer(4, 3) == Gamma(7) / Gamma(4)	True
-rising-and-falling-factorials-x-underline-n-1-n	FallingFactorial(5, 3) == -Pochhammer(-5, 3)	True
-if-a-is-a-non-positive-integer-with-a-n-the	Pochhammer(-3, 4)	0
+5-6-7	pochhammer(5, 3)	210
+an-empty-product-is-1	pochhammer(2, 0)	1
+1-5-equals-5	pochhammer(1, 5)	120
+pochhammer-3-4	pochhammer(3, 4)	360
+10-11-12-13-14-15	pochhammer(10, 6)	3_603_600
+at-pochhammer-3-2	N(pochhammer(3, 2))	12
+threads-element-wise-over-a-list-as-wolfram-s	pochhammer([2, 3, 4], 2)	[6, 12, 20]
+a-symbolic-base-with-integer-order-expands-to	pochhammer(n, 5)	n * (n + 1) * (n + 2) * (n + 3) * (n + 4)
+a-negative-order-expands-to-the-reciprocal	pochhammer(n, -5)	1 / ((n - 1) * (n - 2) * (n - 3) * (n - 4) * (n - 5))
+real-base-and-order-evaluate-as-frac-gamma-a-n	pochhammer(2.4, 8.5)	2_310_224.673_240_707_780_57
+a-zero-base-gives-0-for-any-positive-order	pochhammer(0, 1_285)	0
+a-rational-base-frac-12-cdot-frac-32-cdot-frac	pochhammer(1 / 2, 3)	15 / 8
+a-rational-order-evaluates-through-gamma-exactly	pochhammer(3 / 2, 1 / 2)	2 / sqrt(pi)
+complex-base-and-order-evaluate-through-gamma	pochhammer(2 + 5i, 8i)	0.000_002_138_682_291_868_096_3 - 0.000_014_218_737_711_709_974i
+dividing-by-k-counts-multisets-binom-n-k-1-k	pochhammer(5, 3) / 3!	35
+1-n-n-since-the-rising-factorial-from-1-just	pochhammer(1, 5) == 5!	True
+negative-order-gives-the-reciprocal-a-n-frac-1-a	pochhammer(5, -2)	1 / 12
+order-0-is-the-empty-product-a-0-1	pochhammer(a, 0)	1
+a-1-a	pochhammer(a, 1)	a
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	pochhammer(4, 3) == gamma(7) / gamma(4)	True
+rising-and-falling-factorials-x-underline-n-1-n	FallingFactorial(5, 3) == -pochhammer(-5, 3)	True
+if-a-is-a-non-positive-integer-with-a-n-the	pochhammer(-3, 4)	0

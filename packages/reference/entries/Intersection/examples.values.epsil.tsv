@@ -1,13 +1,13 @@
 id	in	out
-intersection-list-1-2-3-list-2-3-4	Intersection([1, 2, 3], [2, 3, 4])	{2, 3}
-intersection-list-1-2-3-4-list-2-3-4-5	Intersection([1, 2, 3, 4], [2, 3, 4, 5])	{2, 3, 4}
-with-three-or-more-collections-only-elements	Intersection([1, 2, 3], [2, 3, 4], [2, 3, 5])	{2, 3}
-duplicates-are-dropped-as-well	Intersection([1, 1, 2, 3], [3, 1, 4], [4, 1, 3, 3])	{1, 3}
-symbolic-elements	Intersection([a, b, c], [b, c, d])	{b, c}
-a-single-collection-comes-back-as-a-set	Intersection([1, 2, 3])	{1, 2, 3}
-the-divisors-common-to-45-and-78	Intersection(Divisors(45), Divisors(78))	{1, 3}
-intersection-is-idempotent-a-cap-a-a	Intersection({1, 2, 3}, {1, 2, 3}) == {1, 2, 3}	True
-the-same-inclusion-exclusion-count-rearranged-a	"Length([1, 2, 3]) + Length([2, 3, 4]) == Length(Union([1, 2, 3], [2, 3, 4])) +\n                                         Length(Intersection(\n                                                              [1, 2, 3],\n                                                              [2, 3, 4],\n                                                            ))"	True
-intersecting-with-the-empty-set-gives-the-empty	Intersection([1, 2, 3], EmptySet)	EmptySet
-disjoint-collections-intersect-to-the-special	Intersection([1, 2], [3, 4])	EmptySet
-the-result-keeps-the-order-elements-were-met-in	Intersection([c, b, a], [a, b])	{b, a}
+intersection-list-1-2-3-list-2-3-4	intersection([1, 2, 3], [2, 3, 4])	{2, 3}
+intersection-list-1-2-3-4-list-2-3-4-5	intersection([1, 2, 3, 4], [2, 3, 4, 5])	{2, 3, 4}
+with-three-or-more-collections-only-elements	intersection([1, 2, 3], [2, 3, 4], [2, 3, 5])	{2, 3}
+duplicates-are-dropped-as-well	intersection([1, 1, 2, 3], [3, 1, 4], [4, 1, 3, 3])	{1, 3}
+symbolic-elements	intersection([a, b, c], [b, c, d])	{b, c}
+a-single-collection-comes-back-as-a-set	intersection([1, 2, 3])	{1, 2, 3}
+the-divisors-common-to-45-and-78	intersection(divisors(45), divisors(78))	{1, 3}
+intersection-is-idempotent-a-cap-a-a	intersection({1, 2, 3}, {1, 2, 3}) == {1, 2, 3}	True
+the-same-inclusion-exclusion-count-rearranged-a	"length([1, 2, 3]) + length([2, 3, 4]) == length(union([1, 2, 3], [2, 3, 4])) +\n                                         length(intersection(\n                                                              [1, 2, 3],\n                                                              [2, 3, 4],\n                                                            ))"	True
+intersecting-with-the-empty-set-gives-the-empty	intersection([1, 2, 3], emptySet)	emptySet
+disjoint-collections-intersect-to-the-special	intersection([1, 2], [3, 4])	emptySet
+the-result-keeps-the-order-elements-were-met-in	intersection([c, b, a], [a, b])	{b, a}

@@ -1,4 +1,4 @@
 id	in	out
-count-riordanpaths-6	Count(RiordanPaths(6))	15
+count-riordanpaths-6	count(RiordanPaths(6))	15
 first-element-of-riordanpaths-6	RiordanPaths(6)[1]	[1, 1, 1, -1, -1, -1]
-every-element-of-riordanpaths-6	Take(RiordanPaths(6), 5)	"[\n  [1, 1, 1, -1, -1, -1],\n  [1, 1, 0, 0, -1, -1],\n  [1, 1, 0, -1, 0, -1],\n  [1, 1, -1, 1, -1, -1],\n  [1, 1, -1, 0, 0, -1],\n]"
+every-element-of-riordanpaths-6	take(RiordanPaths(6), 5)	"[\n  [1, 1, 1, -1, -1, -1],\n  [1, 1, 0, 0, -1, -1],\n  [1, 1, 0, -1, 0, -1],\n  [1, 1, -1, 1, -1, -1],\n  [1, 1, -1, 0, 0, -1],\n]"

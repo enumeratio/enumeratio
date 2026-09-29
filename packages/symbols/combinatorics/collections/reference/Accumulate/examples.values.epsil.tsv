@@ -1,4 +1,4 @@
 id	in	out
 accumulate-1-2-3-4	Accumulate([1, 2, 3, 4])	[1, 3, 6, 10]
 accumulate-empty	Accumulate([])	[]
-accumulate-last-is-total	Last(Accumulate([1, 2, 3, 4, 5])) == 1 + 2 + 3 + 4 + 5	True
+accumulate-last-is-total	last(Accumulate([1, 2, 3, 4, 5])) == 1 + 2 + 3 + 4 + 5	True

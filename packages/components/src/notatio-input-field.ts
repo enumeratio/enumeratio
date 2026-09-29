@@ -78,6 +78,7 @@ export class NotatioInputField extends LitElement {
     }
     const engine = await loadEngine();
     const { json, errors } = parseExpression(trimmed, {
+      ce: engine,
       parseLatex: (tex) => engine.parse(tex).json,
     });
     this._invalid = errors.length > 0;

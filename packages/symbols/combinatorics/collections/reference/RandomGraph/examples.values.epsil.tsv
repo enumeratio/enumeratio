@@ -1,2 +1,2 @@
 id	in	out
-vertex-and-edge-count	Last([SeedRandom(9), VertexCount(RandomGraph([6, 8]))])	6
+vertex-and-edge-count	last([SeedRandom(9), VertexCount(RandomGraph([6, 8]))])	6

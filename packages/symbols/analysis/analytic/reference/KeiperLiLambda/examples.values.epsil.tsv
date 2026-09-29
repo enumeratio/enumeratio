@@ -1,6 +1,6 @@
 id	in	out
 lambda0-0-exact-under-plain-evaluation	KeiperLiLambda(0)	0
-lambda1-s-closed-form-exact-under-plain	KeiperLiLambda(1)	1 + -1 / 2 * Ln(4Pi) + 1 / 2 * EulerGamma
+lambda1-s-closed-form-exact-under-plain	KeiperLiLambda(1)	1 + -1 / 2 * ln(4Pi) + 1 / 2 * eulerGamma
 n-forces-the-closed-form-to-a-decimal	N(KeiperLiLambda(1))	0.023_095_708_966_121_033_813_5
 n-2-is-numeric-only-the-contour-integral	N(KeiperLiLambda(2))	0.092_345_735_228_047_94
 n-keiperlilambda-3	N(KeiperLiLambda(3))	0.207_638_920_554_332_03
@@ -21,5 +21,5 @@ n-keiperlilambda-17	N(KeiperLiLambda(17))	6.426_582_872_125_147
 n-keiperlilambda-18	N(KeiperLiLambda(18))	7.172_480_938_298_763
 n-keiperlilambda-19	N(KeiperLiLambda(19))	7.953_743_094_287_197
 n-keiperlilambda-20	N(KeiperLiLambda(20))	8.769_276_872_071_474
-lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	Chop(N(KeiperLiLambda(1)) - N(1 + EulerGamma / 2 - 1 / 2 * Ln(4Pi)))	0
+lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	chop(N(KeiperLiLambda(1)) - N(1 + eulerGamma / 2 - 1 / 2 * ln(4Pi)))	0
 declines-past-n-20-rather-than-returning-a-value	KeiperLiLambda(21)	KeiperLiLambda(21)

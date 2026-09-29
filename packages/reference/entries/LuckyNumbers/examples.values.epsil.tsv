@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(LuckyNumbers, 25)	"[\n  1,\n  3,\n  7,\n  9,\n  13,\n  15,\n  21,\n  25,\n  31,\n  33,\n  37,\n  43,\n  49,\n  51,\n  63,\n  67,\n  69,\n  73,\n  75,\n  79,\n  87,\n  93,\n  99,\n  105,\n  111,\n]"
+the-first-25-terms	take(LuckyNumbers, 25)	"[\n  1,\n  3,\n  7,\n  9,\n  13,\n  15,\n  21,\n  25,\n  31,\n  33,\n  37,\n  43,\n  49,\n  51,\n  63,\n  67,\n  69,\n  73,\n  75,\n  79,\n  87,\n  93,\n  99,\n  105,\n  111,\n]"

@@ -1,14 +1,14 @@
 id	in	out
-digitcount-2-147	DigitCount(2_147)	[1, 1, 0, 1, 0, 0, 1, 0, 0, 0]
-in-base-2-counts-of-digit-1-then-digit-0	DigitCount(2_147, 2)	[5, 7]
-2147-100001100011-2-has-five-1-bits	DigitCount(2_147, 2, 1)	5
-digitcount-122-000	DigitCount(122_000)	[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
-an-explicit-base-10-is-the-default	DigitCount(122_000, 10)	[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
-the-digits-of-100-30-of-them-zeros	DigitCount(100!)	[15, 19, 10, 10, 14, 19, 7, 14, 20, 30]
-a-width-counts-padding-zeros-too-000122000-has	DigitCount(122_000, 10, 0, 9)	6
-a-list-of-digit-values-gives-one-count-each	DigitCount(242_442_422, 3, [1, 2])	[6, 7]
-counts-over-the-12-least-significant-base-3	DigitCount(242_442_422, 3, [1, 2], 12)	[4, 4]
-threads-element-wise-over-a-list-as-wolfram-s	DigitCount([23, 45])	[[0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]
-the-3-argument-form-isolates-a-single-digit-s	DigitCount(2_147, 10, 1)	1
-three-trailing-zeros-not-four-122000-has-digits	DigitCount(122_000, 10, 0)	3
-0-has-one-digit-a-zero	DigitCount(0)	[0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+digitcount-2-147	digitCount(2_147)	[1, 1, 0, 1, 0, 0, 1, 0, 0, 0]
+in-base-2-counts-of-digit-1-then-digit-0	digitCount(2_147, 2)	[5, 7]
+2147-100001100011-2-has-five-1-bits	digitCount(2_147, 2, 1)	5
+digitcount-122-000	digitCount(122_000)	[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
+an-explicit-base-10-is-the-default	digitCount(122_000, 10)	[1, 2, 0, 0, 0, 0, 0, 0, 0, 3]
+the-digits-of-100-30-of-them-zeros	digitCount(100!)	[15, 19, 10, 10, 14, 19, 7, 14, 20, 30]
+a-width-counts-padding-zeros-too-000122000-has	digitCount(122_000, 10, 0, 9)	6
+a-list-of-digit-values-gives-one-count-each	digitCount(242_442_422, 3, [1, 2])	[6, 7]
+counts-over-the-12-least-significant-base-3	digitCount(242_442_422, 3, [1, 2], 12)	[4, 4]
+threads-element-wise-over-a-list-as-wolfram-s	digitCount([23, 45])	[[0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]
+the-3-argument-form-isolates-a-single-digit-s	digitCount(2_147, 10, 1)	1
+three-trailing-zeros-not-four-122000-has-digits	digitCount(122_000, 10, 0)	3
+0-has-one-digit-a-zero	digitCount(0)	[0, 0, 0, 0, 0, 0, 0, 0, 0, 1]

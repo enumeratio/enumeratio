@@ -3,4 +3,4 @@ realsign-neg-3	RealSign(-3)	-1
 realsign-0	RealSign(0)	0
 realsign-2p5	RealSign(2.5)	1
 threads-element-wise-over-a-list	RealSign([-2, 0, 5])	[-1, 0, 1]
-decides-the-sign-of-an-exact-numeric-expression	RealSign(Sqrt(2) - 2)	-1
+decides-the-sign-of-an-exact-numeric-expression	RealSign(sqrt(2) - 2)	-1

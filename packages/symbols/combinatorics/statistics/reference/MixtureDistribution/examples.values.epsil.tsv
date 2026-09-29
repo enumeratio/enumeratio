@@ -1,4 +1,4 @@
 id	in	out
-mixture-mean	"Mean(MixtureDistribution([1, 1], [\n                                   NormalDistribution(0, 1),\n                                   NormalDistribution(10, 1),\n                                 ]))"	5
-mixture-variance-total-law	"Variance(MixtureDistribution([1, 1], [\n                                       NormalDistribution(0, 1),\n                                       NormalDistribution(10, 1),\n                                     ]))"	26
-mixture-cdf-far-right	"N(CDF(MixtureDistribution([1, 1], [\n                                    NormalDistribution(0, 1),\n                                    NormalDistribution(10, 1),\n                                  ]), 100))"	1
+mixture-mean	"mean(MixtureDistribution([1, 1], [\n                                   normalDistribution(0, 1),\n                                   normalDistribution(10, 1),\n                                 ]))"	5
+mixture-variance-total-law	"variance(MixtureDistribution([1, 1], [\n                                       normalDistribution(0, 1),\n                                       normalDistribution(10, 1),\n                                     ]))"	26
+mixture-cdf-far-right	"N(cdf(MixtureDistribution([1, 1], [\n                                    normalDistribution(0, 1),\n                                    normalDistribution(10, 1),\n                                  ]), 100))"	1

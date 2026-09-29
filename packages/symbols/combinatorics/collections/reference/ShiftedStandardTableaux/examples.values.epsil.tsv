@@ -1,3 +1,3 @@
 id	in	out
-count-shiftedstandardtableaux-5-6-standard	Count(ShiftedStandardTableaux(5))	6
-every-element-of-shiftedstandardtableaux-5	Take(ShiftedStandardTableaux(5), 6)	"[\n  [[1, 2, 3, 4, 5]],\n  [[1, 2, 4, 5], [3]],\n  [[1, 2, 3, 5], [4]],\n  [[1, 2, 3, 4], [5]],\n  [[1, 2, 4], [3, 5]],\n  [[1, 2, 3], [4, 5]],\n]"
+count-shiftedstandardtableaux-5-6-standard	count(ShiftedStandardTableaux(5))	6
+every-element-of-shiftedstandardtableaux-5	take(ShiftedStandardTableaux(5), 6)	"[\n  [[1, 2, 3, 4, 5]],\n  [[1, 2, 4, 5], [3]],\n  [[1, 2, 3, 5], [4]],\n  [[1, 2, 3, 4], [5]],\n  [[1, 2, 4], [3, 5]],\n  [[1, 2, 3], [4, 5]],\n]"

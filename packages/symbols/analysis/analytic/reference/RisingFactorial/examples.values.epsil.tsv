@@ -4,9 +4,9 @@ from-1-is-the-factorial	RisingFactorial(1, 5)	120
 at-risingfactorial-2-5i	N(RisingFactorial(2 + 5i, 3 + 2i))	20.647_407_894_772_527 + 24.047_356_710_232_72i
 a-symbolic-base	RisingFactorial(a, 3)	a * (a + 1) * (a + 2)
 a-rational-base	RisingFactorial(1 / 2, 3)	15 / 8
-a-symbolic-order-is-pochhammer	RisingFactorial(a, n)	Pochhammer(a, n)
+a-symbolic-order-is-pochhammer	RisingFactorial(a, n)	pochhammer(a, n)
 complex-base-and-order	N(RisingFactorial(2 + 5i, 3 + 2i))	20.647_407_894_772_527 + 24.047_356_710_232_72i
-agrees-with-pochhammer	RisingFactorial(4, 3) == Pochhammer(4, 3)	True
+agrees-with-pochhammer	RisingFactorial(4, 3) == pochhammer(4, 3)	True
 negative-order	RisingFactorial(5, -2)	1 / 12
 a-zero-factor	RisingFactorial(-3, 4)	0
 a-pole-of-gamma-a	N(RisingFactorial(-2, 1 + i))	0

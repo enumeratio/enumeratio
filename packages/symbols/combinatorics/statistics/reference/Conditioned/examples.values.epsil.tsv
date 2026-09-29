@@ -1,7 +1,7 @@
 id	in	out
-conditioned-probability-point-given-bound	Probability(Conditioned(x == 2, x <= 5), Distributed(x, PoissonDistribution(3)))	45 / 184
-conditioned-expectation-mean-given-bound	Expectation(Conditioned(x, x <= 3), Distributed(x, PoissonDistribution(3)))	1.961_538_461_538_462
-conditioned-expectation-point	Expectation(Conditioned(x ^ 2, x == 3), Distributed(x, PoissonDistribution(3)))	9
-conditioned-probability-interval-given-bound	Probability(Conditioned(x <= 3, 1 <= x), Distributed(x, PoissonDistribution(3)))	12 / ((1 - ExponentialE ^ -3) * ExponentialE ^ 3)
-conditioned-probability-continuous-interval	"Probability(\n             Conditioned(x <= 0, -1 <= x),\n             Distributed(x, NormalDistribution(0, 1)),\n           )"	-Erf(-(Sqrt(2) / 2)) / (1 - Erf(-(Sqrt(2) / 2)))
-conditioned-expectation-continuous-unevaluated	Expectation(Conditioned(x, x <= 3), Distributed(x, NormalDistribution(0, 1)))	Expectation(Conditioned(x, x <= 3), Distributed(x, NormalDistribution(0, 1)))
+conditioned-probability-point-given-bound	Probability(Conditioned(x == 2, x <= 5), Distributed(x, poissonDistribution(3)))	45 / 184
+conditioned-expectation-mean-given-bound	Expectation(Conditioned(x, x <= 3), Distributed(x, poissonDistribution(3)))	1.961_538_461_538_462
+conditioned-expectation-point	Expectation(Conditioned(x ^ 2, x == 3), Distributed(x, poissonDistribution(3)))	9
+conditioned-probability-interval-given-bound	Probability(Conditioned(x <= 3, 1 <= x), Distributed(x, poissonDistribution(3)))	12 / ((1 - exponentialE ^ -3) * exponentialE ^ 3)
+conditioned-probability-continuous-interval	"Probability(\n             Conditioned(x <= 0, -1 <= x),\n             Distributed(x, normalDistribution(0, 1)),\n           )"	-erf(-(sqrt(2) / 2)) / (1 - erf(-(sqrt(2) / 2)))
+conditioned-expectation-continuous-unevaluated	Expectation(Conditioned(x, x <= 3), Distributed(x, normalDistribution(0, 1)))	Expectation(Conditioned(x, x <= 3), Distributed(x, normalDistribution(0, 1)))

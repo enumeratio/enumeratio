@@ -1,5 +1,5 @@
 id	in	out
 polynomials-are-entire	FunctionAnalytic(x ^ 2, x)	True
 a-pole-anywhere-in-the-plane-disqualifies-it	FunctionAnalytic(1 / x, x)	False
-sqrt-has-a-branch-point	FunctionAnalytic(Sqrt(x), x)	False
-sine-is-entire	FunctionAnalytic(Sin(x), x)	True
+sqrt-has-a-branch-point	FunctionAnalytic(sqrt(x), x)	False
+sine-is-entire	FunctionAnalytic(sin(x), x)	True

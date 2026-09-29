@@ -1,7 +1,7 @@
 id	in	out
 the-principal-adele-5-at-every-place	Adele(5)	Adele(5, 5)
 adele-2-profinitenumber-1-6-times-3	Adele(2, ProfiniteNumber(1, 6)) * 3	Adele(6, ProfiniteNumber(3, 18))
-adding-a-principal-adele-and-one-carrying-pi	Adele(5) + Adele(Pi, ProfiniteNumber(1, 6))	Adele(5 + Pi, ProfiniteNumber(0, 6))
+adding-a-principal-adele-and-one-carrying-pi	Adele(5) + Adele(pi, ProfiniteNumber(1, 6))	Adele(5 + pi, ProfiniteNumber(0, 6))
 equal-adeles-need-not-share-a-modulus	Adele(1, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))	True
 unequal-real-parts-are-not-equal	Adele(2, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))	False
 golden-idele-to-adele-1	Adele(Idele(-1, -5 / 2))	Adele(-1, -5 / 2)

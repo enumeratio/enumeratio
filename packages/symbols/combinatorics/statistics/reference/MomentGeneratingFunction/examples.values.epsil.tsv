@@ -1,4 +1,4 @@
 id	in	out
 momentgeneratingfunction-gamma	MomentGeneratingFunction(GammaDistribution(2, 1), t)	(-t + 1) ^ -2
-momentgeneratingfunction-poisson-at-zero	MomentGeneratingFunction(PoissonDistribution(2), 0)	1
+momentgeneratingfunction-poisson-at-zero	MomentGeneratingFunction(poissonDistribution(2), 0)	1
 momentgeneratingfunction-cauchy-undeclared	MomentGeneratingFunction(CauchyDistribution(0, 1), 1)	MomentGeneratingFunction(CauchyDistribution(0, 1), 1)

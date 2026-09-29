@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(ArithmeticNumbers, 25)	"[\n  1,\n  3,\n  5,\n  6,\n  7,\n  11,\n  13,\n  14,\n  15,\n  17,\n  19,\n  20,\n  21,\n  22,\n  23,\n  27,\n  29,\n  30,\n  31,\n  33,\n  35,\n  37,\n  38,\n  39,\n  41,\n]"
+the-first-25-terms	take(ArithmeticNumbers, 25)	"[\n  1,\n  3,\n  5,\n  6,\n  7,\n  11,\n  13,\n  14,\n  15,\n  17,\n  19,\n  20,\n  21,\n  22,\n  23,\n  27,\n  29,\n  30,\n  31,\n  33,\n  35,\n  37,\n  38,\n  39,\n  41,\n]"

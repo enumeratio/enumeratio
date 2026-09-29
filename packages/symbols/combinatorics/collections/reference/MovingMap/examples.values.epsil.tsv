@@ -1,2 +1,2 @@
 id	in	out
-length-of-window	MovingMap(Length, [1, 2, 3, 4], 1)	[2, 2, 2]
+length-of-window	MovingMap(length, [1, 2, 3, 4], 1)	[2, 2, 2]

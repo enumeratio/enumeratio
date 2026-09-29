@@ -1,17 +1,17 @@
 id	in	out
-beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15	DirichletBeta(1)	1 / 4 * Pi
+beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15	DirichletBeta(1)	1 / 4 * pi
 beta-2-g-catalan-s-constant	DirichletBeta(2)	Catalan
-beta-3-pi-3-32	DirichletBeta(3)	1 / 32 * Pi ^ 3
+beta-3-pi-3-32	DirichletBeta(3)	1 / 32 * pi ^ 3
 numeric-for-a-floating-point-argument-through-4	DirichletBeta(2.5)	0.948_622_174_037_054_707_445
 a-symbolic-argument-stays-symbolic	DirichletBeta(s)	DirichletBeta(s)
 beta-neg-6-e-6-2	DirichletBeta(-6)	-61 / 2
 n-dirichletbeta-4	N(DirichletBeta(4))	0.988_944_551_741_105_336_109
 complex-arguments-here-on-the-critical-line	DirichletBeta(0.5 + 14i)	1.537_115_438_440_316 + 1.343_451_426_867_757_3i
-threads-elementwise-over-an-array	DirichletBeta([[1, -1], [-1, 1]])	[[1 / 4 * Pi, 0], [0, 1 / 4 * Pi]]
-beta-s-to-1-as-s-to-infty	DirichletBeta(PositiveInfinity)	1
+threads-elementwise-over-an-array	DirichletBeta([[1, -1], [-1, 1]])	[[1 / 4 * pi, 0], [0, 1 / 4 * pi]]
+beta-s-to-1-as-s-to-infty	DirichletBeta(positiveInfinity)	1
 uncertainty-propagation-beta-2-pm-0-01-g-pm-0	DirichletBeta(Around(2, 0.01))	Around(0.915_965_594_177_219, 0.000_815_807_361_165_928)
 to-exactly-40-significant-digits-not-yet-85-come	N(DirichletBeta(2), 40)	0.915_965_594_177_219_015_054_603_514_932_384_110_774_1
-beta-7-61-pi-7-184320-the-61-is-the-euler-number	DirichletBeta(7)	61 / 184_320 * Pi ^ 7
+beta-7-61-pi-7-184320-the-61-is-the-euler-number	DirichletBeta(7)	61 / 184_320 * pi ^ 7
 beta-2k-e-2k-2-and-beta-2k-1-0	DirichletBeta([0, -1, -2, -3, -4])	[1 / 2, 0, -1 / 2, 0, 5 / 2]
-beta-5-5-pi-5-1536	DirichletBeta(5)	5 / 1_536 * Pi ^ 5
+beta-5-5-pi-5-1536	DirichletBeta(5)	5 / 1_536 * pi ^ 5
 even-s-ge-4-has-no-closed-form-and-stays	DirichletBeta(4)	DirichletBeta(4)

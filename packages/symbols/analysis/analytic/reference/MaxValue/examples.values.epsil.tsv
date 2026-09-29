@@ -1,4 +1,4 @@
 id	in	out
 a-downward-parabola-s-maximum-value	MaxValue(-x ^ 2 + 4x - 1, x)	3
-the-amplitude-of-sine-alone-is-exact	MaxValue(Sin(x), x)	1
-an-unbounded-cubic	MaxValue(x ^ 3, x)	PositiveInfinity
+the-amplitude-of-sine-alone-is-exact	MaxValue(sin(x), x)	1
+an-unbounded-cubic	MaxValue(x ^ 3, x)	positiveInfinity

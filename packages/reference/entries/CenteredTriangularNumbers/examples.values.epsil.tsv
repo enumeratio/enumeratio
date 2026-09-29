@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(CenteredTriangularNumbers, 25)	"[\n  1,\n  4,\n  10,\n  19,\n  31,\n  46,\n  64,\n  85,\n  109,\n  136,\n  166,\n  199,\n  235,\n  274,\n  316,\n  361,\n  409,\n  460,\n  514,\n  571,\n  631,\n  694,\n  760,\n  829,\n  901,\n]"
+the-first-25-terms	take(CenteredTriangularNumbers, 25)	"[\n  1,\n  4,\n  10,\n  19,\n  31,\n  46,\n  64,\n  85,\n  109,\n  136,\n  166,\n  199,\n  235,\n  274,\n  316,\n  361,\n  409,\n  460,\n  514,\n  571,\n  631,\n  694,\n  760,\n  829,\n  901,\n]"

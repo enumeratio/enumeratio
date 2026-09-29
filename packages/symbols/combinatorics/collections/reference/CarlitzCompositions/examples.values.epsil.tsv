@@ -1,4 +1,4 @@
 id	in	out
-count-carlitzcompositions-5	Count(CarlitzCompositions(5))	7
+count-carlitzcompositions-5	count(CarlitzCompositions(5))	7
 first-element-of-carlitzcompositions-5	CarlitzCompositions(5)[1]	[1, 3, 1]
-every-element-of-carlitzcompositions-5	Take(CarlitzCompositions(5), 7)	[[1, 3, 1], [1, 4], [2, 1, 2], [2, 3], [3, 2], [4, 1], [5]]
+every-element-of-carlitzcompositions-5	take(CarlitzCompositions(5), 7)	[[1, 3, 1], [1, 4], [2, 1, 2], [2, 3], [3, 2], [4, 1], [5]]

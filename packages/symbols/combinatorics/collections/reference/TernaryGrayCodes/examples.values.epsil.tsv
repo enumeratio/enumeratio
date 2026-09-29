@@ -1,3 +1,3 @@
 id	in	out
-count-ternarygraycodes-4-3-4-81	Count(TernaryGrayCodes(4))	81
-every-element-of-ternarygraycodes-3	Take(TernaryGrayCodes(3), 27)	"[\n  [0, 0, 0],\n  [0, 0, 1],\n  [0, 0, 2],\n  [0, 1, 2],\n  [0, 1, 1],\n  [0, 1, 0],\n  [0, 2, 0],\n  [0, 2, 1],\n  [0, 2, 2],\n  [1, 2, 2],\n  [1, 2, 1],\n  [1, 2, 0],\n  [1, 1, 0],\n  [1, 1, 1],\n  [1, 1, 2],\n  [1, 0, 2],\n  [1, 0, 1],\n  [1, 0, 0],\n  [2, 0, 0],\n  [2, 0, 1],\n  [2, 0, 2],\n  [2, 1, 2],\n  [2, 1, 1],\n  [2, 1, 0],\n  [2, 2, 0],\n  [2, 2, 1],\n  [2, 2, 2],\n]"
+count-ternarygraycodes-4-3-4-81	count(TernaryGrayCodes(4))	81
+every-element-of-ternarygraycodes-3	take(TernaryGrayCodes(3), 27)	"[\n  [0, 0, 0],\n  [0, 0, 1],\n  [0, 0, 2],\n  [0, 1, 2],\n  [0, 1, 1],\n  [0, 1, 0],\n  [0, 2, 0],\n  [0, 2, 1],\n  [0, 2, 2],\n  [1, 2, 2],\n  [1, 2, 1],\n  [1, 2, 0],\n  [1, 1, 0],\n  [1, 1, 1],\n  [1, 1, 2],\n  [1, 0, 2],\n  [1, 0, 1],\n  [1, 0, 0],\n  [2, 0, 0],\n  [2, 0, 1],\n  [2, 0, 2],\n  [2, 1, 2],\n  [2, 1, 1],\n  [2, 1, 0],\n  [2, 2, 0],\n  [2, 2, 1],\n  [2, 2, 2],\n]"

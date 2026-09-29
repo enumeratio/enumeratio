@@ -183,6 +183,7 @@ export class NotatioContourPlot extends LitElement {
     try {
       const engine = await loadEngine();
       const { json, errors } = parseExpression(raw, {
+        ce: engine,
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length) {

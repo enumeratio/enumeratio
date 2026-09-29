@@ -1,34 +1,34 @@
 id	in	out
-q-a-0-1-for-any-a	GammaRegularized(1, 0)	1
-q-1-z-e-z-here-at-z-1	GammaRegularized(1, 1)	1 / ExponentialE
-floating-point-arguments-evaluate-directly-to-a	GammaRegularized(2.5, 1.5)	0.699_985_835_878_627_509_1
-q-1-z-e-z-at-z-1-5	GammaRegularized(1, 1.5)	0.223_130_160_148_429_828_933
-q-2-3-3-4-3-e-3-3	GammaRegularized(2, 3.3)	0.158_597_619_825_332_023_416_08
-q-1-0-2-all-integers	N(GammaRegularized(1, 0, 2))	0.864_664_716_763_387_308_106_000_505_027_515_596_592_4
-q-2-5-1-5-3	GammaRegularized(2.5, 1.5, 3)	0.393_766_917_465_348_53
-q-0-5-0-0-25	GammaRegularized(0.5, 0, 0.25)	0.520_499_877_813_046_7
-q-3-1-7-all-integers	N(GammaRegularized(3, 1, 7))	0.890_062_439_048_084_027_228_707_502_660_350_483_254_104_75
-q-2-5-0-complex-1-5-plus-i	GammaRegularized(2.5, 0, 1.5 + i)	"0.311_826_994_456_123_800_387_767_818_958_477_786_856_190_725_271_369_139_601_696_933_010_652_517_165_035_6 +\n0.341_188_770_924_759_24i"
-q-complex-2-plus-i-0-1-5	N(GammaRegularized(2 + i, 0, 1.5))	"0.382_347_768_954_935_868_974_732_975_688_471_475_129_969_902_289_332_079_8 -\n0.333_481_540_658_552_23i"
-q-three-complex-arguments	N(GammaRegularized(2 + i, 0.5 - i, 1.5 + i))	"1.509_764_918_616_015_852_275_665_995_948_099_244_935_101_301_100_757_506 +\n0.956_382_909_213_873_6i"
-q-0-1-4-all-integers	N(GammaRegularized(0, 1, 4))	0
-threads-element-wise-over-a-list-as-wolfram-s	GammaRegularized([1, 2], 1)	[1 / ExponentialE, 2 / ExponentialE]
-complex-order-under-n	N(GammaRegularized(1 + i, 2.5))	0.007_947_060_620_119_186_222_373_870_025_622_117_84 + 0.152_536_778_541_018_44i
-three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	GammaRegularized(2.5, 0.5, 1.5)	0.262_579_937_368_668_97
-which-at-an-integer-order-equally-evaluates-to	GammaRegularized(2, 0.5, 1.5)	0.351_970_589_197_875_55
-listable-over-its-limits-q-1-infty-infty-q-1	GammaRegularized(1, [NegativeInfinity, PositiveInfinity])	[PositiveInfinity, 0]
-listable-threads-elementwise-over-a-matrix	GammaRegularized(2, [[3.5, 0], [0, 6.5]])	[[0.135_888_225_400_433_24, 1], [1, 0.011_275_793_947_331_794]]
-interval-arithmetic-q-is-decreasing-in-z	GammaRegularized(2 / 5, Interval(0.21, 0.22))	Interval(0.421_244_895_791_953_23, 0.430_390_666_940_599_5)
-to-30-significant-digits-not-yet-the-last-digit	N(GammaRegularized(2, 1), 30)	0.735_758_882_342_884_643_191_047_540_323
-q-s-z-at-a-complex-order-s-beyond-what-the	N(GammaRegularized(2 + i, 1.5))	0.617_652_231_045_064_133_665_033_103_829_741_524_6 + 0.333_481_540_658_552_3i
-the-cdf-of-a-poisson-lambda-2-random-variable-at	GammaRegularized(3, 2)	5 / ExponentialE ^ 2
-three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma	GammaRegularized(2.5, 0, 1.5)	0.300_014_164_121_371_94
-the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	1 - GammaRegularized(0.5, 1.920_729_410_347_042_5)	0.949_999_999_999_998_778_643_7
-the-polynomial-closed-form-for-an-integer-order	GammaRegularized(5, -1)	3 / 8 * ExponentialE
-q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma	GammaRegularized(-1.5, 0, 1.5)	0.985_260_074_360_347_2
-q-a-0-1-for-symbolic-a	GammaRegularized(a, 0)	1
-q-a-infty-0	GammaRegularized(a, PositiveInfinity)	0
-q-1-x-e-x-symbolically	GammaRegularized(1, x)	ExponentialE ^ (-x)
-q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	GammaRegularized(2, x)	(x + 1) * ExponentialE ^ (-x)
-q-1-2-x-erfc-sqrt-x-see-erfc	GammaRegularized(1 / 2, x)	Erfc(Sqrt(x))
-a-non-integer-order-combined-with-negative-z	GammaRegularized(2.5, -1)	GammaRegularized(2.5, -1)
+q-a-0-1-for-any-a	gammaRegularized(1, 0)	1
+q-1-z-e-z-here-at-z-1	gammaRegularized(1, 1)	1 / exponentialE
+floating-point-arguments-evaluate-directly-to-a	gammaRegularized(2.5, 1.5)	0.699_985_835_878_627_509_1
+q-1-z-e-z-at-z-1-5	gammaRegularized(1, 1.5)	0.223_130_160_148_429_828_933
+q-2-3-3-4-3-e-3-3	gammaRegularized(2, 3.3)	0.158_597_619_825_332_023_416_08
+q-1-0-2-all-integers	N(gammaRegularized(1, 0, 2))	0.864_664_716_763_387_308_106_000_505_027_515_596_592_4
+q-2-5-1-5-3	gammaRegularized(2.5, 1.5, 3)	0.393_766_917_465_348_53
+q-0-5-0-0-25	gammaRegularized(0.5, 0, 0.25)	0.520_499_877_813_046_7
+q-3-1-7-all-integers	N(gammaRegularized(3, 1, 7))	0.890_062_439_048_084_027_228_707_502_660_350_483_254_104_75
+q-2-5-0-complex-1-5-plus-i	gammaRegularized(2.5, 0, 1.5 + i)	"0.311_826_994_456_123_800_387_767_818_958_477_786_856_190_725_271_369_139_601_696_933_010_652_517_165_035_6 +\n0.341_188_770_924_759_24i"
+q-complex-2-plus-i-0-1-5	N(gammaRegularized(2 + i, 0, 1.5))	"0.382_347_768_954_935_868_974_732_975_688_471_475_129_969_902_289_332_079_8 -\n0.333_481_540_658_552_23i"
+q-three-complex-arguments	N(gammaRegularized(2 + i, 0.5 - i, 1.5 + i))	"1.509_764_918_616_015_852_275_665_995_948_099_244_935_101_301_100_757_506 +\n0.956_382_909_213_873_6i"
+q-0-1-4-all-integers	N(gammaRegularized(0, 1, 4))	0
+threads-element-wise-over-a-list-as-wolfram-s	gammaRegularized([1, 2], 1)	[1 / exponentialE, 2 / exponentialE]
+complex-order-under-n	N(gammaRegularized(1 + i, 2.5))	0.007_947_060_620_119_186_222_373_870_025_622_117_84 + 0.152_536_778_541_018_44i
+three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	gammaRegularized(2.5, 0.5, 1.5)	0.262_579_937_368_668_97
+which-at-an-integer-order-equally-evaluates-to	gammaRegularized(2, 0.5, 1.5)	0.351_970_589_197_875_55
+listable-over-its-limits-q-1-infty-infty-q-1	gammaRegularized(1, [negativeInfinity, positiveInfinity])	[positiveInfinity, 0]
+listable-threads-elementwise-over-a-matrix	gammaRegularized(2, [[3.5, 0], [0, 6.5]])	[[0.135_888_225_400_433_24, 1], [1, 0.011_275_793_947_331_794]]
+interval-arithmetic-q-is-decreasing-in-z	gammaRegularized(2 / 5, interval(0.21, 0.22))	interval(0.421_244_895_791_953_23, 0.430_390_666_940_599_5)
+to-30-significant-digits-not-yet-the-last-digit	N(gammaRegularized(2, 1), 30)	0.735_758_882_342_884_643_191_047_540_323
+q-s-z-at-a-complex-order-s-beyond-what-the	N(gammaRegularized(2 + i, 1.5))	0.617_652_231_045_064_133_665_033_103_829_741_524_6 + 0.333_481_540_658_552_3i
+the-cdf-of-a-poisson-lambda-2-random-variable-at	gammaRegularized(3, 2)	5 / exponentialE ^ 2
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma	gammaRegularized(2.5, 0, 1.5)	0.300_014_164_121_371_94
+the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar	1 - gammaRegularized(0.5, 1.920_729_410_347_042_5)	0.949_999_999_999_998_778_643_7
+the-polynomial-closed-form-for-an-integer-order	gammaRegularized(5, -1)	3 / 8 * exponentialE
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma	gammaRegularized(-1.5, 0, 1.5)	0.985_260_074_360_347_2
+q-a-0-1-for-symbolic-a	gammaRegularized(a, 0)	1
+q-a-infty-0	gammaRegularized(a, positiveInfinity)	0
+q-1-x-e-x-symbolically	gammaRegularized(1, x)	exponentialE ^ (-x)
+q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	gammaRegularized(2, x)	(x + 1) * exponentialE ^ (-x)
+q-1-2-x-erfc-sqrt-x-see-erfc	gammaRegularized(1 / 2, x)	erfc(sqrt(x))
+a-non-integer-order-combined-with-negative-z	gammaRegularized(2.5, -1)	gammaRegularized(2.5, -1)

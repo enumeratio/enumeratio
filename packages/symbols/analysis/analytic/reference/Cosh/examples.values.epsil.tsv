@@ -1,23 +1,23 @@
 id	in	out
-n-forces-the-numeric-result-that-plain	N(Cosh(0))	1
-n-cosh-1	N(Cosh(1))	1.543_080_634_815_243_778_48
-stays-symbolic-even-at-0-same-as-sinh-wrap-in-n	Cosh(0)	1
-a-float-argument-evaluates-directly-no-n-needed	Cosh(1.2)	1.810_655_567_324_374_793_09
-arbitrary-precision-via-n	N(Cosh(6 / 5))	1.810_655_567_324_374_793_09
-evaluates-at-a-complex-argument	Cosh(2.5 + i)	3.313_290_146_113_224_5 + 5.091_071_522_949_698i
-cosh-i-pi-cos-pi-1	Cosh(ImaginaryUnit * Pi)	-1
-element-wise-over-a-matrix-of-imaginary	"Cosh([\n       [ImaginaryUnit * (1Pi / 3), -(ImaginaryUnit * (1Pi / 3))],\n       [0, -(ImaginaryUnit * (1Pi / 6))],\n     ])"	[[1 / 2, 1 / 2], [1, Sqrt(3) / 2]]
-interval-arithmetic-cosh-0-ln-3-1-frac-53-not	Cosh(Interval(0, Ln(3)))	Interval(1, 5 / 3)
-uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	Cosh(Around(2 / Sqrt(3), 0.1))	Around(1.744_112_480_153_778, 0.142_896_058_148_157_56)
-cosh-positiveinfinity	Cosh(PositiveInfinity)	PositiveInfinity
-evenness-drops-the-sign-of-a-symbolic-argument	Cosh(-x)	Cosh(x)
-cosh-arcosh-x-x-for-every-x	Cosh(Arcosh(x))	x
-cosh-arcosh-2-2	Cosh(Arcosh(2))	2
-cosh-arcosh-of-a-complex-argument	Cosh(Arcosh(3i))	3i
-derivative-sinh-x	D(Cosh(x), x)	Sinh(x)
-antiderivative	Integrate(Cosh(x), x)	Sinh(x)
-to-30-significant-digits-every-one-correctly	N(Cosh(1), 30)	1.543_080_634_815_243_778_477_905_620_76
-even-function-cosh-x-cosh-x	Cosh(-1) == Cosh(1)	True
-hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	Cosh(1) ^ 2 - Sinh(1) ^ 2 == 1	True
-the-definition-cosh-x-frac-e-x-e-x-2	TrigToExp(Cosh(x))	1 / 2 * (ExponentialE ^ x + ExponentialE ^ (-x))
-cosh-2-x-sinh-2-x-should-simplify-to-1	Simplify(Cosh(x) ^ 2 - Sinh(x) ^ 2)	1
+n-forces-the-numeric-result-that-plain	N(cosh(0))	1
+n-cosh-1	N(cosh(1))	1.543_080_634_815_243_778_48
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n	cosh(0)	1
+a-float-argument-evaluates-directly-no-n-needed	cosh(1.2)	1.810_655_567_324_374_793_09
+arbitrary-precision-via-n	N(cosh(6 / 5))	1.810_655_567_324_374_793_09
+evaluates-at-a-complex-argument	cosh(2.5 + i)	3.313_290_146_113_224_5 + 5.091_071_522_949_698i
+cosh-i-pi-cos-pi-1	cosh(imaginaryUnit * pi)	-1
+element-wise-over-a-matrix-of-imaginary	"cosh([\n       [imaginaryUnit * (1Pi / 3), -(imaginaryUnit * (1Pi / 3))],\n       [0, -(imaginaryUnit * (1Pi / 6))],\n     ])"	[[1 / 2, 1 / 2], [1, sqrt(3) / 2]]
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not	cosh(interval(0, ln(3)))	interval(1, 5 / 3)
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	cosh(Around(2 / sqrt(3), 0.1))	Around(1.744_112_480_153_778, 0.142_896_058_148_157_56)
+cosh-positiveinfinity	cosh(positiveInfinity)	positiveInfinity
+evenness-drops-the-sign-of-a-symbolic-argument	cosh(-x)	cosh(x)
+cosh-arcosh-x-x-for-every-x	cosh(arcosh(x))	x
+cosh-arcosh-2-2	cosh(arcosh(2))	2
+cosh-arcosh-of-a-complex-argument	cosh(arcosh(3i))	3i
+derivative-sinh-x	D(cosh(x), x)	sinh(x)
+antiderivative	integrate(cosh(x), x)	sinh(x)
+to-30-significant-digits-every-one-correctly	N(cosh(1), 30)	1.543_080_634_815_243_778_477_905_620_76
+even-function-cosh-x-cosh-x	cosh(-1) == cosh(1)	True
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	cosh(1) ^ 2 - sinh(1) ^ 2 == 1	True
+the-definition-cosh-x-frac-e-x-e-x-2	trigToExp(cosh(x))	1 / 2 * (exponentialE ^ x + exponentialE ^ (-x))
+cosh-2-x-sinh-2-x-should-simplify-to-1	simplify(cosh(x) ^ 2 - sinh(x) ^ 2)	1

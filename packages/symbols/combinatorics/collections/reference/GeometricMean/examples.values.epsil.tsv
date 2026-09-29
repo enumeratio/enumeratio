@@ -2,6 +2,6 @@ id	in	out
 sqrt-2-cdot-8-4	GeometricMean([2, 8])	4
 sqrt-3-1-cdot-2-cdot-4-2	GeometricMean([1, 2, 4])	2
 geometricmean-of-equal-values	GeometricMean([7, 7, 7])	7
-an-exact-irrational-result	GeometricMean([2, 3])	Sqrt(6)
-sqrt-3-6	GeometricMean([1, 2, 3])	Root(6, 3)
-symbolic-data	GeometricMean([a, b])	Sqrt(a * b)
+an-exact-irrational-result	GeometricMean([2, 3])	sqrt(6)
+sqrt-3-6	GeometricMean([1, 2, 3])	root(6, 3)
+symbolic-data	GeometricMean([a, b])	sqrt(a * b)

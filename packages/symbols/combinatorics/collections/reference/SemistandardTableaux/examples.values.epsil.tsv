@@ -1,4 +1,4 @@
 id	in	out
-count-semistandardtableaux-4-3-39-every-ssyt-of	Count(SemistandardTableaux(4, 3))	39
-every-element-of-semistandardtableaux-3-2	Take(SemistandardTableaux(3, 2), 6)	"[\n  [[1, 1], [2]],\n  [[1, 2], [2]],\n  [[1, 1, 1]],\n  [[1, 1, 2]],\n  [[1, 2, 2]],\n  [[2, 2, 2]],\n]"
+count-semistandardtableaux-4-3-39-every-ssyt-of	count(SemistandardTableaux(4, 3))	39
+every-element-of-semistandardtableaux-3-2	take(SemistandardTableaux(3, 2), 6)	"[\n  [[1, 1], [2]],\n  [[1, 2], [2]],\n  [[1, 1, 1]],\n  [[1, 1, 2]],\n  [[1, 2, 2]],\n  [[2, 2, 2]],\n]"
 the-first-ssyt-of-3-cells-with-entries-in-1-2-as	SemistandardTableaux(3, 2)[1]	[[1, 1], [2]]

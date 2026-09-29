@@ -1,16 +1,16 @@
 id	in	out
-subfactorial-0	Subfactorial(0)	1
-a-single-object-can-t-be-deranged	Subfactorial(1)	0
-subfactorial-4	Subfactorial(4)	9
-subfactorial-5	Subfactorial(5)	44
-subfactorial-20	Subfactorial(20)	895_014_631_192_902_121
-threads-element-wise-over-a-list-as-wolfram-s	Subfactorial([1, 2, 3, 4])	[0, 1, 2, 9]
-exact-for-large-n	Subfactorial(48)	4_566_824_330_931_624_695_767_452_273_778_667_071_025_042_534_230_906_772_538_913
-real-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial(4.5)	19.255_831_840_742_534 + 0.157_179_122_964_615_25i
-complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial(1.6 + i)	0.296_830_458_177_711_8 + 0.284_208_547_251_969_9i
-threads-over-a-matrix-element-wise	Subfactorial([[2, 0], [0, 2]])	[[1, 1], [1, 1]]
-the-hat-check-problem-the-number-of-ways-6	Subfactorial(6)	265
-recurrence-d-n-n-d-n-1-1-n	Subfactorial(4) == 4 * Subfactorial(3) + (-1) ^ 4	True
-d-n-is-frac-n-e-rounded-to-the-nearest-integer	Subfactorial(10) == Round(10! / ExponentialE)	True
-two-term-recurrence-d-n-1-n-d-n-d-n-1	Subfactorial(6) == 5 * (Subfactorial(5) + Subfactorial(4))	True
-a-negative-argument-is-left-unevaluated	Subfactorial(-1)	Subfactorial(-1)
+subfactorial-0	subfactorial(0)	1
+a-single-object-can-t-be-deranged	subfactorial(1)	0
+subfactorial-4	subfactorial(4)	9
+subfactorial-5	subfactorial(5)	44
+subfactorial-20	subfactorial(20)	895_014_631_192_902_121
+threads-element-wise-over-a-list-as-wolfram-s	subfactorial([1, 2, 3, 4])	[0, 1, 2, 9]
+exact-for-large-n	subfactorial(48)	4_566_824_330_931_624_695_767_452_273_778_667_071_025_042_534_230_906_772_538_913
+real-arguments-evaluate-as-frac-gamma-n-1-1-e	subfactorial(4.5)	19.255_831_840_742_534 + 0.157_179_122_964_615_25i
+complex-arguments-evaluate-as-frac-gamma-n-1-1-e	subfactorial(1.6 + i)	0.296_830_458_177_711_8 + 0.284_208_547_251_969_9i
+threads-over-a-matrix-element-wise	subfactorial([[2, 0], [0, 2]])	[[1, 1], [1, 1]]
+the-hat-check-problem-the-number-of-ways-6	subfactorial(6)	265
+recurrence-d-n-n-d-n-1-1-n	subfactorial(4) == 4 * subfactorial(3) + (-1) ^ 4	True
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	subfactorial(10) == round(10! / exponentialE)	True
+two-term-recurrence-d-n-1-n-d-n-d-n-1	subfactorial(6) == 5 * (subfactorial(5) + subfactorial(4))	True
+a-negative-argument-is-left-unevaluated	subfactorial(-1)	subfactorial(-1)

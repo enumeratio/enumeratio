@@ -1,5 +1,5 @@
 id	in	out
-rayleigh-pdf-exact	PDF(RayleighDistribution(3), 3)	1 / (3 * Sqrt(ExponentialE))
-rayleigh-cdf-exact	CDF(RayleighDistribution(3), 3)	1 - Sqrt(1 / ExponentialE)
-rayleigh-mean-exact	Mean(RayleighDistribution(3))	3 / 2 * Sqrt(2) * Sqrt(Pi)
-rayleigh-variance-exact	Variance(RayleighDistribution(3))	9 / 2 * (4 - Pi)
+rayleigh-pdf-exact	pdf(RayleighDistribution(3), 3)	1 / (3 * sqrt(exponentialE))
+rayleigh-cdf-exact	cdf(RayleighDistribution(3), 3)	1 - sqrt(1 / exponentialE)
+rayleigh-mean-exact	mean(RayleighDistribution(3))	3 / 2 * sqrt(2) * sqrt(pi)
+rayleigh-variance-exact	variance(RayleighDistribution(3))	9 / 2 * (4 - pi)

@@ -11,10 +11,10 @@ subtracting-two-classes-mod-7	IntegerMod(2, 7) - IntegerMod(5, 7)	IntegerMod(4, 
 multiplying-two-classes-mod-7	IntegerMod(3, 7) * IntegerMod(5, 7)	IntegerMod(1, 7)
 power-with-exponent-negative-1-is-the-inverse	IntegerMod(3, 7) ^ -1	IntegerMod(5, 7)
 negating-a-class-mod-7	-IntegerMod(3, 7)	IntegerMod(4, 7)
-chineseremainder-integermod-2-3-integermod-3-5	ChineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5))	IntegerMod(8, 15)
-multiplicativeorder-integermod-2-7	MultiplicativeOrder(IntegerMod(2, 7))	3
-chineseremainder-integermod-1-4-integermod-3-6	ChineseRemainder(IntegerMod(1, 4), IntegerMod(3, 6))	IntegerMod(9, 12)
+chineseremainder-integermod-2-3-integermod-3-5	chineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5))	IntegerMod(8, 15)
+multiplicativeorder-integermod-2-7	multiplicativeOrder(IntegerMod(2, 7))	3
+chineseremainder-integermod-1-4-integermod-3-6	chineseRemainder(IntegerMod(1, 4), IntegerMod(3, 6))	IntegerMod(9, 12)
 2-is-not-a-unit-mod-4-and-the-message-says-so	1 / IntegerMod(2, 4)	1 / IntegerMod(2, 4)
-odd-mod-4-and-even-mod-6-at-once-no-such-class	ChineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))	ChineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))
+odd-mod-4-and-even-mod-6-at-once-no-such-class	chineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))	chineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))
 a-non-unit-denominator-mod-4-stays-unevaluated	IntegerMod(1 / 2, 4)	IntegerMod(1 / 2, 4)
 power-with-negative-exponent-of-a-non-unit	IntegerMod(2, 4) ^ -1	1 / IntegerMod(2, 4)

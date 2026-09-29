@@ -1,4 +1,4 @@
 id	in	out
-binom-5-2	Count(KSubsets(5, 2))	10
+binom-5-2	count(KSubsets(5, 2))	10
 ksubsets-5-2-list-1	KSubsets(5, 2)[1]	[1, 2]
 colex-not-lex-lexicographic-order-would-give-1-4	KSubsets(5, 2)[3]	[2, 3]

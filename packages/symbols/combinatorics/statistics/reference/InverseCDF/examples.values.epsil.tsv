@@ -1,2 +1,2 @@
 id	in	out
-inversecdf-normal-median	InverseCDF(NormalDistribution(0, 1), 1 / 2)	-6_957_290_979_756_837e-32
+inversecdf-normal-median	InverseCDF(normalDistribution(0, 1), 1 / 2)	-6_957_290_979_756_837e-32

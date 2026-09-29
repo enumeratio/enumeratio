@@ -1,4 +1,4 @@
 id	in	out
-count-skewpartitions-4-28-pairs-lambda-mu-with	Count(SkewPartitions(4))	28
-every-element-of-skewpartitions-3	Take(SkewPartitions(3), 9)	"[\n  [[1, 1, 1], []],\n  [[2, 1], []],\n  [[2, 1, 1], [1]],\n  [[2, 2], [1]],\n  [[2, 2, 1], [1, 1]],\n  [[3], []],\n  [[3, 1], [1]],\n  [[3, 2], [2]],\n  [[3, 2, 1], [2, 1]],\n]"
+count-skewpartitions-4-28-pairs-lambda-mu-with	count(SkewPartitions(4))	28
+every-element-of-skewpartitions-3	take(SkewPartitions(3), 9)	"[\n  [[1, 1, 1], []],\n  [[2, 1], []],\n  [[2, 1, 1], [1]],\n  [[2, 2], [1]],\n  [[2, 2, 1], [1, 1]],\n  [[3], []],\n  [[3, 1], [1]],\n  [[3, 2], [2]],\n  [[3, 2, 1], [2, 1]],\n]"
 the-first-skew-shape-of-size-3-as-an-outer-inner	SkewPartitions(3)[1]	[[1, 1, 1], []]

@@ -1,4 +1,4 @@
 id	in	out
-dirichlet-mean	Mean(DirichletDistribution([1, 4, 5]))	[1 / 10, 2 / 5]
-dirichlet-variance	Variance(DirichletDistribution([1, 4, 5]))	[9 / 1_100, 6 / 275]
-dirichlet-pdf	PDF(DirichletDistribution([1, 4, 5]), [1 / 10, 2 / 5])	Gamma(10) / (250 * Gamma(1) * Gamma(4) * Gamma(5))
+dirichlet-mean	mean(DirichletDistribution([1, 4, 5]))	[1 / 10, 2 / 5]
+dirichlet-variance	variance(DirichletDistribution([1, 4, 5]))	[9 / 1_100, 6 / 275]
+dirichlet-pdf	pdf(DirichletDistribution([1, 4, 5]), [1 / 10, 2 / 5])	gamma(10) / (250 * gamma(1) * gamma(4) * gamma(5))

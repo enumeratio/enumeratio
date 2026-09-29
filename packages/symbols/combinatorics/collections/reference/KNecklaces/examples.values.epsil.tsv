@@ -1,4 +1,4 @@
 id	in	out
-count-knecklaces-4-3	Count(KNecklaces(4, 3))	24
+count-knecklaces-4-3	count(KNecklaces(4, 3))	24
 first-element-of-knecklaces-4-3	KNecklaces(4, 3)[1]	[1, 1, 1, 1]
-every-element-of-knecklaces-4-3	Take(KNecklaces(4, 3), 6)	"[\n  [1, 1, 1, 1],\n  [2, 2, 2, 2],\n  [3, 3, 3, 3],\n  [1, 2, 1, 2],\n  [1, 3, 1, 3],\n  [2, 3, 2, 3],\n]"
+every-element-of-knecklaces-4-3	take(KNecklaces(4, 3), 6)	"[\n  [1, 1, 1, 1],\n  [2, 2, 2, 2],\n  [3, 3, 3, 3],\n  [1, 2, 1, 2],\n  [1, 3, 1, 3],\n  [2, 3, 2, 3],\n]"

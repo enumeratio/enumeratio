@@ -1,70 +1,70 @@
 id	in	out
-sin-0	Sin(0)	0
-exact-value-at-a-special-angle	Sin(Pi / 6)	1 / 2
-sin-pi-over-4	Sin(Pi / 4)	Sqrt(2) / 2
-sin-pi-over-3	Sin(Pi / 3)	Sqrt(3) / 2
-sin-pi-over-2	Sin(Pi / 2)	1
-sin-pi	Sin(Pi)	0
-degrees-d-converts-to-radians-so-sin-60-circ-is	Sin(Degrees(60))	Sqrt(3) / 2
-a-machine-precision-argument-evaluates	Sin(1.2)	0.932_039_085_967_226_349_67
-a-huge-10-100-argument	N(Sin(10 ^ 100))	-0.372_376_123_661_276_688_262_08
-a-huge-3-200-argument	N(Sin(3 ^ 200))	-0.938_731_708_607_074_919_637_14
-a-huge-neg-7-60-argument	N(Sin(-7 ^ 60))	0.365_121_600_402_355_550_076_03
-a-huge-10-80-plus-1-over-3-argument	N(Sin((10 ^ 80 + 1) / 3))	0.985_348_301_498_115_921_755_50
-sin-1-under-n	N(Sin(1))	0.841_470_984_807_896_5
-n-of-an-exact-argument-gives-an-arbitrary	N(Sin(6 / 5))	0.932_039_085_967_226_349_67
-evaluates-at-a-complex-argument	Sin(2.5 + i)	0.923_490_776_043_173_1 - 0.941_504_933_270_867_2i
-threads-element-wise-over-a-matrix	Sin([[5 * (Pi / 6), 0], [3 * (Pi / 2), -(Pi / 2)]])	[[1 / 2, 0], [-1, -1]]
-exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	Sin(Pi / 12)	-(Sqrt(2) / 4) + Sqrt(6) / 4
-sin-pi-8-frac-sqrt-2-sqrt-2-2	Sin(Pi / 8)	1 / 2 * Sqrt(2 - Sqrt(2))
-sin-pi-10-frac-sqrt-5-1-4	Sin(Pi / 10)	-1 / 4 + Sqrt(5) / 4
-sin-5-pi-12-frac-sqrt-6-sqrt-2-4	Sin(5 / 12 * Pi)	Sqrt(2) / 4 + Sqrt(6) / 4
-sin-3-pi-8-frac-sqrt-2-sqrt-2-2	Sin(3 / 8 * Pi)	1 / 2 * Sqrt(2 + Sqrt(2))
-large-rational-multiples-of-pi-are-reduced	Sin(100 / 3 * Pi)	-(Sqrt(3) / 2)
-any-integer-multiple-of-pi-is-a-zero-of-sine	Sin(1_000_001Pi)	0
-sin-negate-pi-is-also-zero	Sin(-Pi)	0
-sin-4-pi-is-zero	Sin(4Pi)	0
-a-full-turn-shift-of-a-symbolic-argument-doesn-t	Sin(x + 2Pi)	Sin(x)
-sin-i-pi-2-i-sinh-pi-2-exactly	Sin(ImaginaryUnit * (Pi / 2))	i * Sinh(1 / 2 * Pi)
-n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(Sin(ImaginaryUnit * (Pi / 2)))	2.301_298_902_307_294_7i
-interval-arithmetic-the-image-of-pi-6-pi-6-is	Sin(Interval(-(Pi / 6), Pi / 6))	Interval(-1 / 2, 1 / 2)
-the-image-of-the-whole-real-line-is-1-1	Sin(Interval(NegativeInfinity, PositiveInfinity))	Interval(-1, 1)
-wolfram-answers-sin-infty-with-the-range-of-its	Sin(PositiveInfinity)	Interval(-1, 1)
-uncertainty-propagation-sin-2-pm-0-01-approx-0	Sin(Around(2, 0.01))	Around(0.909_297_426_825_681_7, 0.004_161_468_365_471_424)
-an-imaginary-argument-rewrites-to-sinh-sin-ix-i	Sin(ImaginaryUnit * x)	i * Sinh(x)
-oddness-pulls-the-sign-out-of-a-symbolic	Sin(-x)	-Sin(x)
-a-half-period-shift-reduces-sin-x-pi-sin-x	Sin(x + Pi)	-Sin(x)
-sin-arcsin-x-x-for-every-x	Sin(Arcsin(x))	x
-sin-arcsin-2-2-past-the-real-domain	Sin(Arcsin(2))	2
-sin-arcsin-of-a-complex-argument	Sin(Arcsin(1 + 2i))	1 + 2i
-sin-arccos-x-sqrt-1-x-2	Sin(Arccos(x))	Sqrt(-x ^ 2 + 1)
-sin-arctan-x-frac-x-sqrt-1-x-2	Sin(Arctan(x))	x / Sqrt(x ^ 2 + 1)
-derivative-frac-d-dx-sin-x-cos-x	D(Sin(x), x)	Cos(x)
-second-derivative	D(Sin(x), x, x)	-Sin(x)
-antiderivative	Integrate(Sin(x), x)	-Cos(x)
-area-under-one-arch-int-0-pi-sin-x-dx-2	Integrate(Sin(x), (x, 0, Pi))	2
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Integrate(Sin(x) ^ 3, x)	1 / 3 * Cos(x) ^ 3 - Cos(x)
-taylor-series-about-0-only-odd-powers-appear	Series(Sin(x), x, 0, 10)	"1 / 362_880 * x ^ 9 + -1 / 5_040 * x ^ 7 + 1 / 120 * x ^ 5 + -1 / 6 * x ^ 3 + x +\nBigO(x ^ 11)"
-the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Limit(Sin(x) / x, 0)	1
-to-30-significant-digits-every-one-correctly	N(Sin(1), 30)	0.841_470_984_807_896_506_652_502_321_630
-a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(Sin(24 ^ 40))	0.400_083_152_719_766_047_071
-threads-element-wise-over-a-list	Sin([0, Pi / 2, Pi])	[0, 1, 0]
-degrees-d-converts-a-degree-measure-to-radians	Sin(Degrees(30))	1 / 2
-pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Sin(Pi / 6) ^ 2 + Cos(Pi / 6) ^ 2	1
-odd-function-sin-x-sin-x	Sin(-(Pi / 6)) == -Sin(Pi / 6)	True
-period-2-pi-adding-a-full-turn-doesn-t-change	Sin(Pi / 6 + 2Pi)	1 / 2
-double-angle-formula-via-trigexpand	TrigExpand(Sin(2x))	2 * Sin(x) * Cos(x)
-angle-addition-formula-via-trigexpand	TrigExpand(Sin(x + y))	Sin(y) * Cos(x) + Sin(x) * Cos(y)
-triple-angle-formula	TrigExpand(Sin(3x))	-Sin(x) ^ 3 + 3 * Sin(x) * Cos(x) ^ 2
-power-reduction-sin-2-x-frac-1-cos-2x-2	TrigReduce(Sin(x) ^ 2)	-1 / 2 * Cos(2x) + 1 / 2
-euler-s-formula-sin-x-frac-e-ix-e-ix-2i	TrigToExp(Sin(x))	-1 / 2 * i * ExponentialE ^ (i * x) + 1 / 2 * i * ExponentialE ^ (-i * x)
-simplify-knows-the-pythagorean-identity	Simplify(Sin(x) ^ 2 + Cos(x) ^ 2)	1
-the-same-through-fullsimplify	FullSimplify(Sin(x) ^ 2 + Cos(x) ^ 2)	1
-1-radian-isn-t-a-recognized-special-angle-so	Sin(1)	Sin(1)
-sin-2-a-generic-argument-stays-symbolic	Sin(2)	Sin(2)
-sin-x-plus-y-stays-symbolic	Sin(x + y)	Sin(x + y)
-pi-15-has-a-radical-form-but-like-wolfram-s	Sin(Pi / 15)	Sin(1 / 15 * Pi)
-a-huge-exact-argument-is-reduced-modulo-2-pi	N(Sin(10 ^ 20))	-0.645_251_285_265_780_844_206
-an-even-huger-argument-11-38	N(Sin(11 ^ 38))	0.867_534_193_184_863_032_082
-the-special-angle-table-reaches-past-30-45-60	Sin(Pi / 5)	Sqrt(2) / 4 * Sqrt(5 - Sqrt(5))
-functionexpand-gives-the-nested-radical-form	FunctionExpand(Sin(Pi / 15))	1 / 8 * (-Sqrt(15) + Sqrt(3) + Sqrt(10 + 2 * Sqrt(5)))
+sin-0	sin(0)	0
+exact-value-at-a-special-angle	sin(pi / 6)	1 / 2
+sin-pi-over-4	sin(pi / 4)	sqrt(2) / 2
+sin-pi-over-3	sin(pi / 3)	sqrt(3) / 2
+sin-pi-over-2	sin(pi / 2)	1
+sin-pi	sin(pi)	0
+degrees-d-converts-to-radians-so-sin-60-circ-is	sin(degrees(60))	sqrt(3) / 2
+a-machine-precision-argument-evaluates	sin(1.2)	0.932_039_085_967_226_349_67
+a-huge-10-100-argument	N(sin(10 ^ 100))	-0.372_376_123_661_276_688_262_08
+a-huge-3-200-argument	N(sin(3 ^ 200))	-0.938_731_708_607_074_919_637_14
+a-huge-neg-7-60-argument	N(sin(-7 ^ 60))	0.365_121_600_402_355_550_076_03
+a-huge-10-80-plus-1-over-3-argument	N(sin((10 ^ 80 + 1) / 3))	0.985_348_301_498_115_921_755_50
+sin-1-under-n	N(sin(1))	0.841_470_984_807_896_5
+n-of-an-exact-argument-gives-an-arbitrary	N(sin(6 / 5))	0.932_039_085_967_226_349_67
+evaluates-at-a-complex-argument	sin(2.5 + i)	0.923_490_776_043_173_1 - 0.941_504_933_270_867_2i
+threads-element-wise-over-a-matrix	sin([[5 * (pi / 6), 0], [3 * (pi / 2), -(pi / 2)]])	[[1 / 2, 0], [-1, -1]]
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	sin(pi / 12)	-(sqrt(2) / 4) + sqrt(6) / 4
+sin-pi-8-frac-sqrt-2-sqrt-2-2	sin(pi / 8)	1 / 2 * sqrt(2 - sqrt(2))
+sin-pi-10-frac-sqrt-5-1-4	sin(pi / 10)	-1 / 4 + sqrt(5) / 4
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	sin(5 / 12 * pi)	sqrt(2) / 4 + sqrt(6) / 4
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	sin(3 / 8 * pi)	1 / 2 * sqrt(2 + sqrt(2))
+large-rational-multiples-of-pi-are-reduced	sin(100 / 3 * pi)	-(sqrt(3) / 2)
+any-integer-multiple-of-pi-is-a-zero-of-sine	sin(1_000_001Pi)	0
+sin-negate-pi-is-also-zero	sin(-pi)	0
+sin-4-pi-is-zero	sin(4Pi)	0
+a-full-turn-shift-of-a-symbolic-argument-doesn-t	sin(x + 2Pi)	sin(x)
+sin-i-pi-2-i-sinh-pi-2-exactly	sin(imaginaryUnit * (pi / 2))	i * sinh(1 / 2 * pi)
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(sin(imaginaryUnit * (pi / 2)))	2.301_298_902_307_294_7i
+interval-arithmetic-the-image-of-pi-6-pi-6-is	sin(interval(-(pi / 6), pi / 6))	interval(-1 / 2, 1 / 2)
+the-image-of-the-whole-real-line-is-1-1	sin(interval(negativeInfinity, positiveInfinity))	interval(-1, 1)
+wolfram-answers-sin-infty-with-the-range-of-its	sin(positiveInfinity)	interval(-1, 1)
+uncertainty-propagation-sin-2-pm-0-01-approx-0	sin(Around(2, 0.01))	Around(0.909_297_426_825_681_7, 0.004_161_468_365_471_424)
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin(imaginaryUnit * x)	i * sinh(x)
+oddness-pulls-the-sign-out-of-a-symbolic	sin(-x)	-sin(x)
+a-half-period-shift-reduces-sin-x-pi-sin-x	sin(x + pi)	-sin(x)
+sin-arcsin-x-x-for-every-x	sin(arcsin(x))	x
+sin-arcsin-2-2-past-the-real-domain	sin(arcsin(2))	2
+sin-arcsin-of-a-complex-argument	sin(arcsin(1 + 2i))	1 + 2i
+sin-arccos-x-sqrt-1-x-2	sin(arccos(x))	sqrt(-x ^ 2 + 1)
+sin-arctan-x-frac-x-sqrt-1-x-2	sin(arctan(x))	x / sqrt(x ^ 2 + 1)
+derivative-frac-d-dx-sin-x-cos-x	D(sin(x), x)	cos(x)
+second-derivative	D(sin(x), x, x)	-sin(x)
+antiderivative	integrate(sin(x), x)	-cos(x)
+area-under-one-arch-int-0-pi-sin-x-dx-2	integrate(sin(x), (x, 0, Pi))	2
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	integrate(sin(x) ^ 3, x)	1 / 3 * cos(x) ^ 3 - cos(x)
+taylor-series-about-0-only-odd-powers-appear	series(sin(x), x, 0, 10)	"1 / 362_880 * x ^ 9 + -1 / 5_040 * x ^ 7 + 1 / 120 * x ^ 5 + -1 / 6 * x ^ 3 + x +\nbigO(x ^ 11)"
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	limit(sin(x) / x, 0)	1
+to-30-significant-digits-every-one-correctly	N(sin(1), 30)	0.841_470_984_807_896_506_652_502_321_630
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(sin(24 ^ 40))	0.400_083_152_719_766_047_071
+threads-element-wise-over-a-list	sin([0, pi / 2, pi])	[0, 1, 0]
+degrees-d-converts-a-degree-measure-to-radians	sin(degrees(30))	1 / 2
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	sin(pi / 6) ^ 2 + cos(pi / 6) ^ 2	1
+odd-function-sin-x-sin-x	sin(-(pi / 6)) == -sin(pi / 6)	True
+period-2-pi-adding-a-full-turn-doesn-t-change	sin(pi / 6 + 2Pi)	1 / 2
+double-angle-formula-via-trigexpand	trigExpand(sin(2x))	2 * sin(x) * cos(x)
+angle-addition-formula-via-trigexpand	trigExpand(sin(x + y))	sin(y) * cos(x) + sin(x) * cos(y)
+triple-angle-formula	trigExpand(sin(3x))	-sin(x) ^ 3 + 3 * sin(x) * cos(x) ^ 2
+power-reduction-sin-2-x-frac-1-cos-2x-2	trigReduce(sin(x) ^ 2)	-1 / 2 * cos(2x) + 1 / 2
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	trigToExp(sin(x))	-1 / 2 * i * exponentialE ^ (i * x) + 1 / 2 * i * exponentialE ^ (-i * x)
+simplify-knows-the-pythagorean-identity	simplify(sin(x) ^ 2 + cos(x) ^ 2)	1
+the-same-through-fullsimplify	FullSimplify(sin(x) ^ 2 + cos(x) ^ 2)	1
+1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)
+sin-2-a-generic-argument-stays-symbolic	sin(2)	sin(2)
+sin-x-plus-y-stays-symbolic	sin(x + y)	sin(x + y)
+pi-15-has-a-radical-form-but-like-wolfram-s	sin(pi / 15)	sin(1 / 15 * pi)
+a-huge-exact-argument-is-reduced-modulo-2-pi	N(sin(10 ^ 20))	-0.645_251_285_265_780_844_206
+an-even-huger-argument-11-38	N(sin(11 ^ 38))	0.867_534_193_184_863_032_082
+the-special-angle-table-reaches-past-30-45-60	sin(pi / 5)	sqrt(2) / 4 * sqrt(5 - sqrt(5))
+functionexpand-gives-the-nested-radical-form	FunctionExpand(sin(pi / 15))	1 / 8 * (-sqrt(15) + sqrt(3) + sqrt(10 + 2 * sqrt(5)))

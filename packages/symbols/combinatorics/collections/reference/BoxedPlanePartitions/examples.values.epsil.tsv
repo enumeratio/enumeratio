@@ -1,4 +1,4 @@
 id	in	out
-count-boxedplanepartitions-2-2-2-20-macmahon-s	Count(BoxedPlanePartitions(2, 2, 2))	20
-every-element-of-boxedplanepartitions-2-2-2	Take(BoxedPlanePartitions(2, 2, 2), 20)	"[\n  [],\n  [[1]],\n  [[2]],\n  [[1], [1]],\n  [[2], [1]],\n  [[2], [2]],\n  [[1, 1]],\n  [[2, 1]],\n  [[2, 2]],\n  [[1, 1], [1]],\n  [[2, 1], [1]],\n  [[2, 1], [2]],\n  [[2, 2], [1]],\n  [[2, 2], [2]],\n  [[1, 1], [1, 1]],\n  [[2, 1], [1, 1]],\n  [[2, 1], [2, 1]],\n  [[2, 2], [1, 1]],\n  [[2, 2], [2, 1]],\n  [[2, 2], [2, 2]],\n]"
-a-degenerate-1-times-1-times-n-box-count-n-1	Count(BoxedPlanePartitions(1, 1, 4))	5
+count-boxedplanepartitions-2-2-2-20-macmahon-s	count(BoxedPlanePartitions(2, 2, 2))	20
+every-element-of-boxedplanepartitions-2-2-2	take(BoxedPlanePartitions(2, 2, 2), 20)	"[\n  [],\n  [[1]],\n  [[2]],\n  [[1], [1]],\n  [[2], [1]],\n  [[2], [2]],\n  [[1, 1]],\n  [[2, 1]],\n  [[2, 2]],\n  [[1, 1], [1]],\n  [[2, 1], [1]],\n  [[2, 1], [2]],\n  [[2, 2], [1]],\n  [[2, 2], [2]],\n  [[1, 1], [1, 1]],\n  [[2, 1], [1, 1]],\n  [[2, 1], [2, 1]],\n  [[2, 2], [1, 1]],\n  [[2, 2], [2, 1]],\n  [[2, 2], [2, 2]],\n]"
+a-degenerate-1-times-1-times-n-box-count-n-1	count(BoxedPlanePartitions(1, 1, 4))	5

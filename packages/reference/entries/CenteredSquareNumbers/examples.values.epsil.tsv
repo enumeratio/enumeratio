@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(CenteredSquareNumbers, 25)	"[\n  1,\n  5,\n  13,\n  25,\n  41,\n  61,\n  85,\n  113,\n  145,\n  181,\n  221,\n  265,\n  313,\n  365,\n  421,\n  481,\n  545,\n  613,\n  685,\n  761,\n  841,\n  925,\n  1_013,\n  1_105,\n  1_201,\n]"
+the-first-25-terms	take(CenteredSquareNumbers, 25)	"[\n  1,\n  5,\n  13,\n  25,\n  41,\n  61,\n  85,\n  113,\n  145,\n  181,\n  221,\n  265,\n  313,\n  365,\n  421,\n  481,\n  545,\n  613,\n  685,\n  761,\n  841,\n  925,\n  1_013,\n  1_105,\n  1_201,\n]"

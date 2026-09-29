@@ -1,7 +1,7 @@
 id	in	out
-fibonacci	GeneratingFunction(Fibonacci(n), n, x)	x / (-x ^ 2 - x + 1)
-catalan-numbers	GeneratingFunction(CatalanNumber(n), n, x)	(-Sqrt(-4 * x + 1) + 1) / (2x)
-dyck-paths-via-count	GeneratingFunction(Count(DyckPaths(n)), n, x)	(-Sqrt(-4 * x + 1) + 1) / (2x)
-fixed-k-binomial	GeneratingFunction(Binomial(n, 3), n, x)	x ^ 3 / (x ^ 4 - 4 * x ^ 3 + 6 * x ^ 2 - 4x + 1)
+fibonacci	GeneratingFunction(fibonacci(n), n, x)	x / (-x ^ 2 - x + 1)
+catalan-numbers	GeneratingFunction(catalanNumber(n), n, x)	(-sqrt(-4 * x + 1) + 1) / (2x)
+dyck-paths-via-count	GeneratingFunction(count(DyckPaths(n)), n, x)	(-sqrt(-4 * x + 1) + 1) / (2x)
+fixed-k-binomial	GeneratingFunction(binomial(n, 3), n, x)	x ^ 3 / (x ^ 4 - 4 * x ^ 3 + 6 * x ^ 2 - 4x + 1)
 geometric	GeneratingFunction(2 ^ n, n, x)	1 / (-2 * x + 1)
 no-closed-form	GeneratingFunction(n!, n, x)	GeneratingFunction(n!, n, x)

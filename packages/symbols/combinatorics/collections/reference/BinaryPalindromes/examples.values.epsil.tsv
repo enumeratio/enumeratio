@@ -1,4 +1,4 @@
 id	in	out
-count-binarypalindromes-4	Count(BinaryPalindromes(4))	4
+count-binarypalindromes-4	count(BinaryPalindromes(4))	4
 first-element-of-binarypalindromes-4	BinaryPalindromes(4)[1]	[0, 0, 0, 0]
-every-element-of-binarypalindromes-4	Take(BinaryPalindromes(4), 4)	[[0, 0, 0, 0], [0, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 1]]
+every-element-of-binarypalindromes-4	take(BinaryPalindromes(4), 4)	[[0, 0, 0, 0], [0, 1, 1, 0], [1, 0, 0, 1], [1, 1, 1, 1]]

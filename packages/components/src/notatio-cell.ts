@@ -66,6 +66,7 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
       // transcript.
       const { json, diagnostics } = parseExpression(text, {
         allow: ["Assign"],
+        ce: engine,
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (diagnostics.length) throw new SyntaxProblem(diagnostics[0].message, diagnostics[0].range);

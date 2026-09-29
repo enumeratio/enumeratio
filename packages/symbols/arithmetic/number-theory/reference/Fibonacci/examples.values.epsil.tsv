@@ -1,23 +1,23 @@
 id	in	out
-fibonacci-0	Fibonacci(0)	0
-fibonacci-1	Fibonacci(1)	1
-fibonacci-10	Fibonacci(10)	55
-fibonacci-20	Fibonacci(20)	6_765
-fibonacci-8	Fibonacci(8)	21
-exact-at-any-size-f-100-has-21-digits	Fibonacci(100)	354_224_848_179_261_915_075
-a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Fibonacci(1.5)	0.920_442_065_259_926
-the-two-argument-fibonacci-polynomial-f-7-x-from	Fibonacci(7, x)	x ^ 6 + 5 * x ^ 4 + 6 * x ^ 2 + 1
-the-fibonacci-polynomial-at-a-real-order-and	Fibonacci(5.8, 3)	283.482_730_832_949_9
-special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci(1, 0)	1
-special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci(0, 0)	0
-f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci(3, [[-1, 0], [0, 5]])	[[2, 1], [1, 26]]
-threads-element-wise-over-a-list-as-wolfram-s	Fibonacci([1, 2, 3, 4])	[1, 1, 2, 3]
-consecutive-ratios-f-n-1-f-n-converge-to-the	Fibonacci(20) / Fibonacci(19)	6_765 / 4_181
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum(Fibonacci(k), (k, 1, 10))	143
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	Fibonacci(20) == Fibonacci(10) * LucasL(10)	True
-the-defining-recurrence-f-10-f-9-f-8	Fibonacci(10) == Fibonacci(9) + Fibonacci(8)	True
-cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	Fibonacci(5) * Fibonacci(7) - Fibonacci(6) ^ 2	1
-gcd-f-12-f-18-f-gcd-12-18	GCD(Fibonacci(12), Fibonacci(18)) == Fibonacci(GCD(12, 18))	True
-negative-indices-are-supported-via-f-n-1-n-1-f-n	Fibonacci(-5)	5
-f-1000-has-209-digits-see-integerdigits	Length(IntegerDigits(Fibonacci(1_000)))	209
-they-grow-fast-f-50-already-exceeds-twelve	Fibonacci(50)	12_586_269_025
+fibonacci-0	fibonacci(0)	0
+fibonacci-1	fibonacci(1)	1
+fibonacci-10	fibonacci(10)	55
+fibonacci-20	fibonacci(20)	6_765
+fibonacci-8	fibonacci(8)	21
+exact-at-any-size-f-100-has-21-digits	fibonacci(100)	354_224_848_179_261_915_075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	fibonacci(1.5)	0.920_442_065_259_926
+the-two-argument-fibonacci-polynomial-f-7-x-from	fibonacci(7, x)	x ^ 6 + 5 * x ^ 4 + 6 * x ^ 2 + 1
+the-fibonacci-polynomial-at-a-real-order-and	fibonacci(5.8, 3)	283.482_730_832_949_9
+special-value-of-the-fibonacci-polynomial-f-1-0	fibonacci(1, 0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	fibonacci(0, 0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	fibonacci(3, [[-1, 0], [0, 5]])	[[2, 1], [1, 26]]
+threads-element-wise-over-a-list-as-wolfram-s	fibonacci([1, 2, 3, 4])	[1, 1, 2, 3]
+consecutive-ratios-f-n-1-f-n-converge-to-the	fibonacci(20) / fibonacci(19)	6_765 / 4_181
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	sum(fibonacci(k), (k, 1, 10))	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	fibonacci(20) == fibonacci(10) * lucasL(10)	True
+the-defining-recurrence-f-10-f-9-f-8	fibonacci(10) == fibonacci(9) + fibonacci(8)	True
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	fibonacci(5) * fibonacci(7) - fibonacci(6) ^ 2	1
+gcd-f-12-f-18-f-gcd-12-18	gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18))	True
+negative-indices-are-supported-via-f-n-1-n-1-f-n	fibonacci(-5)	5
+f-1000-has-209-digits-see-integerdigits	length(integerDigits(fibonacci(1_000)))	209
+they-grow-fast-f-50-already-exceeds-twelve	fibonacci(50)	12_586_269_025

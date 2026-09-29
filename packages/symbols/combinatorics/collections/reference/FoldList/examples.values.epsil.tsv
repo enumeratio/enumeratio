@@ -2,5 +2,5 @@ id	in	out
 foldlist-add-0-1-2-3	FoldList(Add, 0, [1, 2, 3])	[0, 1, 3, 6]
 foldlist-add-1-2-3	FoldList(Add, [1, 2, 3])	[1, 3, 6]
 foldlist-multiply-1-1-2-3-4	FoldList(Multiply, 1, [1, 2, 3, 4])	[1, 1, 2, 6, 24]
-foldlist-length-is-one-more	Length(FoldList(Add, 0, [1, 2, 3, 4, 5])) == Length([1, 2, 3, 4, 5]) + 1	True
-foldlist-last-is-fold	Last(FoldList(Add, 0, [1, 2, 3])) == Fold(Add, 0, [1, 2, 3])	True
+foldlist-length-is-one-more	length(FoldList(Add, 0, [1, 2, 3, 4, 5])) == length([1, 2, 3, 4, 5]) + 1	True
+foldlist-last-is-fold	last(FoldList(Add, 0, [1, 2, 3])) == fold(Add, 0, [1, 2, 3])	True

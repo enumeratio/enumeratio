@@ -11,7 +11,18 @@
 // hook via `ce`; inside an island implicit multiplication works, so a product of
 // symbols needs an explicit `*` only outside one.
 
-import { type MathJsonExpression, parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import { ComputeEngine as Engine } from "@cortex-js/compute-engine";
+import {
+  type ComputeEngine,
+  type MathJsonExpression,
+  parseEpsil,
+  resolveLibraryNames,
+  serializeEpsil,
+} from "@cortex-js/compute-engine/epsil";
+
+let sharedEngine: ComputeEngine | undefined;
+/** A standard-library engine for callers that don't pass their own. */
+const libraryEngine = (): ComputeEngine => (sharedEngine ??= new Engine() as unknown as ComputeEngine);
 
 /** Heads that make an input a statement/effect rather than a plain expression. */
 const STATEMENT_HEADS = new Set([
@@ -37,6 +48,13 @@ export interface ParseExpressionOptions {
    * is otherwise an expression.
    */
   allow?: Iterable<string>;
+  /**
+   * The engine a lowercase Epsil spelling (`sin`, `print`, …) resolves against, back to the
+   * library name it stands for (`Sin`, `Print`); `parseEpsil` alone leaves the raw lowercase
+   * head. Pass the engine the result will run on, so its bindings shadow the library;
+   * without one, a shared standard-library engine resolves the names.
+   */
+  ce?: ComputeEngine;
 }
 
 export interface ParseExpressionResult {
@@ -123,6 +141,7 @@ function exactDecimals(json: MathJsonExpression, src: string): void {
  */
 export function parseExpression(src: string, options?: ParseExpressionOptions): ParseExpressionResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
+  resolveLibraryNames(json, src, options?.ce ?? libraryEngine());
   exactDecimals(json, src);
   const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")

@@ -12,5 +12,5 @@ gaussian-integers-8i-i-cdot-i-3-1-i-6	IntegerExponent(8i, 1 + i)	6
 negative-integers-base-2	IntegerExponent(-24, 2)	3
 the-trailing-zeros-of-100	IntegerExponent(100!)	24
 legendre-s-formula-lfloor-100-7-rfloor-lfloor	IntegerExponent(100!, 7)	16
-integerexponent-0-5	IntegerExponent(0, 5)	PositiveInfinity
+integerexponent-0-5	IntegerExponent(0, 5)	positiveInfinity
 base-1-has-no-well-defined-p-adic-valuation-so	IntegerExponent(10, 1)	IntegerExponent(10, 1)

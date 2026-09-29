@@ -177,6 +177,7 @@ export class NotatioVectorPlot extends LitElement {
       const vy = this.yvar || "y";
       const box = (src: string): BoxedExpression | undefined => {
         const { json, errors } = parseExpression(src, {
+          ce: engine,
           parseLatex: (tex) => engine.parse(tex).json,
         });
         if (errors.length) {
