@@ -45,7 +45,8 @@ bindings:
     arity: 2
 ---
 
-- The polylogarithm $\operatorname{Li}_s(z) = \sum_{n=1}^{\infty} z^n/n^s$ (DLMF 25.12.10) generalizes $-\ln(1-z)$ (its $s = 1$ case) to arbitrary order $s$. It is the $a = 1$ slice of the Lerch transcendent, $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$, and reduces to [[Zeta]] on its $z = 1$ edge.
+The polylogarithm $\operatorname{Li}_s(z) = \sum_{n=1}^{\infty} z^n/n^s$ (DLMF 25.12.10) generalizes $-\ln(1-z)$ (its $s = 1$ case) to arbitrary order $s$. It is the $a = 1$ slice of the Lerch transcendent, $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$, and reduces to [[Zeta]] on its $z = 1$ edge.
+
 - $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
 - $\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].
 - Low orders are elementary: $\operatorname{Li}_0(z) = z/(1-z)$, $\operatorname{Li}_1(z) = -\ln(1-z)$, $\operatorname{Li}_{-1}(z) = z/(1-z)^2$, and every negative integer order is a rational function.

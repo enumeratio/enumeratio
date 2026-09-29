@@ -70,8 +70,9 @@ restates this file's project rules for people.
 - Each head's record is a folder, `reference/<Head>/`, in the package that declares it
   (`packages/reference/entries/` for compute-engine's own heads):
   - `index.md`: what the head is, as front matter (summary, signatures, bindings,
-    references…), and its details as the markdown list below it, one item each, written as the
-    page shows them (`vp fmt` leaves these files alone).
+    references…), and below it a markdown body the page renders as written: an opening
+    paragraph or two, then the details as a list (`vp fmt` leaves these files alone). The
+    entry's `details` are read from the body, one per list item or paragraph.
   - `examples.tsv`: one row per example, in page order (each section's rows together, in
     `SECTIONS` order), with everything written by hand: `id`, `section`, `role`, `expr` and
     `expected` as flow MathJSON (`[Mod, 5, 0]`), `caption`, …, and each system's hand
