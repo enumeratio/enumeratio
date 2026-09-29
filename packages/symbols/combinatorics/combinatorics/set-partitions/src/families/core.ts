@@ -1,17 +1,22 @@
-// Surjections, SetPartitions, SetPartitionsIntoKBlocks and SetCompositions split out of
-// collections/src/families/core.ts (which mixed every area) per
+// Surjections, SetPartitions, SetPartitionsIntoKBlocks, SetCompositions and PerfectMatchings
+// split out of collections/src/families/core.ts (which mixed every area) per
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
-// §4 step 5 -- the only families in their respective core.ts sections carrying a carrier
-// ("Surjection" / "SetPartition" / "SetComposition"). PerfectMatchings, colocated with
-// SetPartitions in core.ts's "set partitions / matchings" section, declares no carrier at all
-// (even though "PerfectMatching" is a set-partitions carrier) and stays in collections per step 5
-// rule 4. The generic kernel math stays in collections/src/families/kernels*.ts.
+// §4 step 5. PerfectMatchings, colocated with SetPartitions in core.ts's "set partitions /
+// matchings" section, now carries "SetPartition" too: its "blocks" shape (a matching's pairs)
+// is exactly SetPartition's shape (list<list<integer>>), so it is wired as a RESTRICTION of
+// SetPartition rather than the "PerfectMatching" carrier (whose shape, list<integer>, is a
+// different encoding this family's kernel never produces) -- resolving the wiki's open
+// question 1. The generic kernel math stays in collections/src/families/kernels*.ts.
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import {
   SurjectionCount,
   SurjectionUnrank,
   SurjectionRank,
   IsSurjectionOf,
+  PerfectMatchingCount,
+  PerfectMatchingUnrank,
+  PerfectMatchingRank,
+  IsPerfectMatchingOf,
 } from "../../../collections/src/families/kernels-extra.ts";
 import {
   BellB,
@@ -96,5 +101,15 @@ export const entries: NumberKernel[] = [
     unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)),
     valid: (b, [n]) => IsSetPartitionOf(b as number[][], n),
     rank: (b, [n]) => SetCompositionRank(BlocksToLabels(b as number[][]), n),
+  },
+  {
+    head: "PerfectMatchings",
+    carrier: "SetPartition",
+    paramCount: 1,
+    kind: "blocks",
+    count: ([n]) => PerfectMatchingCount(n),
+    unrank: ([n], r) => PerfectMatchingUnrank(n, r),
+    valid: (b, [n]) => IsPerfectMatchingOf(b, n),
+    rank: (b, [n]) => PerfectMatchingRank(b as number[][], n),
   },
 ];

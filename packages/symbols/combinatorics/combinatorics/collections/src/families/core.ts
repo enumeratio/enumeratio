@@ -54,10 +54,6 @@ import {
   BinaryStringUnrank,
   BinaryStringRank,
   IsBinaryString,
-  PerfectMatchingCount,
-  PerfectMatchingUnrank,
-  PerfectMatchingRank,
-  IsPerfectMatchingOf,
   RootedForestCount,
   RootedForestUnrank,
   RootedForestRank,
@@ -200,20 +196,13 @@ export const entriesBeforeSetPartitions: NumberKernel[] = [
   ),
 ];
 
-// SetPartitions/SetPartitionsIntoKBlocks/SetCompositions moved to
-// set-partitions/src/families/core.ts -- §4 step 5, the only families in this section carrying a
-// carrier ("SetPartition" / "SetComposition"). PerfectMatchings below declares none at all, even
-// though "PerfectMatching" is a set-partitions carrier, and stays here per step 5 rule 4.
+// SetPartitions/SetPartitionsIntoKBlocks/SetCompositions/PerfectMatchings moved to
+// set-partitions/src/families/core.ts -- §4 step 5. PerfectMatchings' "blocks" shape
+// (list<list<integer>>) matches "SetPartition"'s exactly (the wiki's open question 1
+// resolved: pairs are its blocks, a restriction rather than the "PerfectMatching" carrier,
+// whose shape is list<integer> and does not match). LabeledTrees/RootedForests below declare
+// no carrier and stay here per step 5 rule 4.
 export const entriesBeforeTrees: NumberKernel[] = [
-  {
-    head: "PerfectMatchings",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => PerfectMatchingCount(n),
-    unrank: ([n], r) => PerfectMatchingUnrank(n, r),
-    valid: (b, [n]) => IsPerfectMatchingOf(b, n),
-    rank: (b, [n]) => PerfectMatchingRank(b as number[][], n),
-  },
   {
     head: "LabeledTrees",
     paramCount: 1,

@@ -5,3 +5,4 @@
 // -- `referenceData()`'s family order is unchanged.
 export { surjectionsEntries as coreSurjectionsEntries, entries as coreEntries } from "./core.ts";
 export { entries as pathsPartitionsEntries } from "./paths-partitions.ts";
+export { entries as matchingsEntries } from "./matchings.ts";

@@ -19,10 +19,10 @@ stub: carrier
 grades:
   - name: n
     role: axis
-carrier: PerfectMatching
+carrier: SetPartition
 signatures:
   - call: PerfectMatchings(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage, wikipedia; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<set_partition>
 ---

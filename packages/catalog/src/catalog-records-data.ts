@@ -2083,7 +2083,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "PerfectMatchings",
-    carrier: "PerfectMatching",
+    carrier: "SetPartition",
     grades: [
       {
         name: "n",

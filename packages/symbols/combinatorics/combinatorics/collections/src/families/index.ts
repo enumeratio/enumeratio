@@ -40,6 +40,7 @@ import {
   coreSurjectionsEntries as setPartitionsSurjectionsEntries,
   coreEntries as setPartitionsCoreEntries,
   pathsPartitionsEntries as setPartitionsPathsPartitionsEntries,
+  matchingsEntries as setPartitionsMatchingsEntries,
 } from "../../../set-partitions/src/families/index.ts";
 import {
   tableauxPlaneBeforeSkewStandardTableauxEntries,
@@ -75,6 +76,7 @@ const numberEntries = [
   ...subsets,
   ...wordsEntries,
   ...setPartitionsPathsPartitionsEntries,
+  ...setPartitionsMatchingsEntries,
   ...pathsPartitionsBeforeDyckPathsByHeight,
   ...latticePathsPathsPartitionsEntries,
   ...pathsPartitions,
