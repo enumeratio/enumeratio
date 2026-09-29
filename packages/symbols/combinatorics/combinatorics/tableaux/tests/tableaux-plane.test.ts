@@ -1,0 +1,351 @@
+import { expect, test } from "vite-plus/test";
+import {
+  entriesBeforeSkewStandardTableaux,
+  skewStandardTableauxEntries,
+  planePartitionsEntries,
+} from "../src/families/tableaux-plane.ts";
+
+// Split out of collections/tests/tableaux-plane.test.ts with the families (§4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
+// -- ShiftedStandardTableaux/StandardTableauPairs (no carrier) stayed there. SkewPartitions moved
+// earlier to the partitions area; its tests are in partitions/tests/tableaux-plane.test.ts.
+const byHead = new Map(
+  [...entriesBeforeSkewStandardTableaux, ...skewStandardTableauxEntries, ...planePartitionsEntries].map((e) => [
+    e.head,
+    e,
+  ]),
+);
+
+// ─── round-trip certification: rank(unrank(p,r),p) === r, and every unranked element is valid ──────────
+const PARAMS: Record<string, number[][]> = {
+  SemistandardTableaux: [
+    [0, 1],
+    [1, 1],
+    [1, 3],
+    [3, 2],
+    [3, 3],
+    [4, 2],
+  ],
+  GelfandTsetlin: [
+    [0, 2],
+    [1, 2],
+    [2, 1],
+    [2, 2],
+    [3, 2],
+  ],
+  AlternatingSignMatrices: [[0], [1], [2], [3], [4]],
+  SkewStandardTableaux: [[0], [1], [2], [3], [4]],
+  PlanePartitions: [[0], [1], [2], [3], [4], [5]],
+  BoxedPlanePartitions: [
+    [0, 0, 0],
+    [1, 1, 1],
+    [1, 1, 3],
+    [1, 2, 2],
+    [2, 1, 2],
+    [2, 2, 1],
+    [2, 2, 2],
+    [3, 2, 1],
+  ],
+};
+
+for (const [head, paramSets] of Object.entries(PARAMS)) {
+  const entry = byHead.get(head);
+  test(`${head} is registered`, () => expect(entry).toBeDefined());
+  if (!entry) continue;
+  for (const p of paramSets) {
+    test(`${head}(${p.join(", ")}) round-trips`, () => {
+      const total = entry.count(p);
+      for (let r = 0; r < total; r++) {
+        const element = entry.unrank(p, r);
+        expect(entry.valid(element, p)).toBe(true);
+        expect(entry.rank(element, p)).toBe(r);
+      }
+    });
+  }
+}
+
+// ═══ independent brute-force cross-checks (deliberately not sharing code with the kernels) ═══
+
+// SemistandardTableaux: brute-force every shape of n (via a fresh partition generator), then every
+// filling of each shape by direct backtracking — compared as a SET against the kernel's enumeration.
+function bruteIntPartitions(n: number): number[][] {
+  const out: number[][] = [];
+  const acc: number[] = [];
+  (function rec(remaining: number, max: number) {
+    if (remaining === 0) {
+      out.push(acc.slice());
+      return;
+    }
+    for (let p = Math.min(remaining, max); p >= 1; p--) {
+      acc.push(p);
+      rec(remaining - p, p);
+      acc.pop();
+    }
+  })(n, n);
+  return out;
+}
+function bruteSsytFillings(shape: number[], k: number): number[][][] {
+  const out: number[][][] = [];
+  const grid: number[][] = shape.map((len) => Array.from({ length: len }, () => 0));
+  function cell(r: number, c: number): void {
+    if (r === shape.length) {
+      out.push(grid.map((row) => row.slice()));
+      return;
+    }
+    if (c === shape[r]) {
+      cell(r + 1, 0);
+      return;
+    }
+    for (let v = 1; v <= k; v++) {
+      if (c > 0 && grid[r][c - 1] > v) continue;
+      if (r > 0 && c < shape[r - 1] && grid[r - 1][c] >= v) continue;
+      grid[r][c] = v;
+      cell(r, c + 1);
+    }
+  }
+  cell(0, 0);
+  return out;
+}
+const asKey = (rows: number[][]) => JSON.stringify(rows.map((r) => r.length)) + "|" + JSON.stringify(rows.flat());
+test("SemistandardTableaux(n,k) matches an independent brute-force enumeration for small n,k", () => {
+  for (let n = 0; n <= 4; n++)
+    for (let k = 1; k <= 3; k++) {
+      const expected = new Set<string>();
+      for (const shape of bruteIntPartitions(n)) for (const f of bruteSsytFillings(shape, k)) expected.add(asKey(f));
+      if (n === 0) expected.add(asKey([]));
+      const entry = byHead.get("SemistandardTableaux")!;
+      const total = entry.count([n, k]);
+      const got = new Set<string>();
+      for (let r = 0; r < total; r++) got.add(asKey(entry.unrank([n, k], r) as number[][]));
+      expect(got).toEqual(expected);
+      expect(total).toBe(expected.size);
+    }
+});
+
+// AlternatingSignMatrices: brute-force every {-1,0,1}^(n*n) matrix (n<=3), filtered by an independently
+// written ASM predicate, compared as a set against the kernel.
+function isAsm(m: number[][], n: number): boolean {
+  for (let i = 0; i < n; i++) {
+    let pref = 0;
+    for (let j = 0; j < n; j++) {
+      pref += m[i][j];
+      if (pref < 0 || pref > 1) return false;
+    }
+    if (pref !== 1) return false;
+  }
+  for (let j = 0; j < n; j++) {
+    let pref = 0;
+    for (let i = 0; i < n; i++) {
+      pref += m[i][j];
+      if (pref < 0 || pref > 1) return false;
+    }
+    if (pref !== 1) return false;
+  }
+  return true;
+}
+function bruteAsms(n: number): number[][][] {
+  if (n === 0) return [[]];
+  const results: number[][][] = [];
+  const total = n * n;
+  const cells = [-1, 0, 1];
+  const flat = Array.from({ length: total }, () => -1);
+  function rec(idx: number): void {
+    if (idx === total) {
+      const m: number[][] = [];
+      for (let i = 0; i < n; i++) m.push(flat.slice(i * n, i * n + n));
+      if (isAsm(m, n)) results.push(m);
+      return;
+    }
+    for (const v of cells) {
+      flat[idx] = v;
+      rec(idx + 1);
+    }
+  }
+  rec(0);
+  return results;
+}
+test("AlternatingSignMatrices(n) matches an independent brute-force filter, n<=3", () => {
+  const entry = byHead.get("AlternatingSignMatrices")!;
+  for (const n of [0, 1, 2, 3]) {
+    const expected = new Set(bruteAsms(n).map((m) => JSON.stringify(m)));
+    const total = entry.count([n]);
+    const got = new Set<string>();
+    for (let r = 0; r < total; r++) got.add(JSON.stringify(entry.unrank([n], r)));
+    expect(got).toEqual(expected);
+    expect(total).toBe(expected.size);
+  }
+});
+
+// SkewPartitions' own tests moved to partitions/tests/tableaux-plane.test.ts with the family.
+
+test("SkewStandardTableaux(n) anchors match the archived checkout's hand-verified counts 1,1,4,24,194", () => {
+  const entry = byHead.get("SkewStandardTableaux")!;
+  expect([0, 1, 2, 3, 4].map((n) => entry.count([n]))).toEqual([1, 1, 4, 24, 194]);
+});
+test("SkewStandardTableaux(n) >= StandardTableaux count is not asserted here (no cross-package import); instead every element's row_word has length n and shape sums to n", () => {
+  const entry = byHead.get("SkewStandardTableaux")!;
+  for (let n = 0; n <= 4; n++) {
+    const total = entry.count([n]);
+    for (let r = 0; r < total; r++) {
+      const [lam, mu, w] = entry.unrank([n], r) as [number[], number[], number[]];
+      expect(w.length).toBe(n);
+      expect(lam.reduce((a, b) => a + b, 0) - mu.reduce((a, b) => a + b, 0)).toBe(n);
+    }
+  }
+});
+
+// ShiftedStandardTableaux/StandardTableauPairs tests moved to collections/tests/tableaux-plane.test.ts
+// with the families (no carrier, step 5 rule 4).
+
+// PlanePartitions: independent brute-force via nested-loop generation for very small n.
+function brutePlanePartitions(n: number): number[][][] {
+  if (n === 0) return [[]];
+  const results: number[][][] = [];
+  const rows: number[][] = [];
+  function nextRows(ceiling: number[], remaining: number): number[][] {
+    // every non-empty partition r, r.length<=ceiling.length, r[j]<=ceiling[j], sum<=remaining
+    const out: number[][] = [];
+    function rec(cur: number[], sum: number): void {
+      if (cur.length > 0) out.push(cur.slice());
+      if (cur.length === ceiling.length) return;
+      const prev = cur.length ? cur[cur.length - 1] : Infinity;
+      const hi = Math.min(prev, ceiling[cur.length]);
+      for (let v = 1; v <= hi; v++) {
+        if (sum + v > remaining) break;
+        cur.push(v);
+        rec(cur, sum + v);
+        cur.pop();
+      }
+    }
+    rec([], 0);
+    return out;
+  }
+  function backtrack(ceiling: number[], remaining: number): void {
+    if (remaining === 0) {
+      results.push(rows.map((r) => r.slice()));
+      return;
+    }
+    for (const nr of nextRows(ceiling, remaining)) {
+      const cells = nr.reduce((a, b) => a + b, 0);
+      rows.push(nr);
+      backtrack(nr, remaining - cells);
+      rows.pop();
+    }
+  }
+  backtrack(
+    Array.from({ length: n }, () => n),
+    n,
+  );
+  return results;
+}
+test("PlanePartitions(n) matches OEIS A000219: 1,1,3,6,13,24,48", () => {
+  const entry = byHead.get("PlanePartitions")!;
+  expect([0, 1, 2, 3, 4, 5, 6].map((n) => entry.count([n]))).toEqual([1, 1, 3, 6, 13, 24, 48]);
+});
+test("PlanePartitions(n) matches an independent brute-force enumeration, n<=6", () => {
+  const entry = byHead.get("PlanePartitions")!;
+  for (let n = 0; n <= 6; n++) {
+    const expected = new Set(brutePlanePartitions(n).map((rows) => asKey(rows)));
+    const total = entry.count([n]);
+    const got = new Set<string>();
+    for (let r = 0; r < total; r++) got.add(asKey(entry.unrank([n], r) as number[][]));
+    expect(got).toEqual(expected);
+    expect(total).toBe(expected.size);
+  }
+});
+
+// BoxedPlanePartitions: independent brute-force over full a×b×c grids of 0..c, checked column/row-wise —
+// deliberately built as a dense grid (not the ragged carrier) so it shares no code with the kernel.
+function bruteBoxedPlanePartitions(a: number, b: number, c: number): number[][][] {
+  const results: number[][][] = [];
+  const grid: number[][] = Array.from({ length: a }, () => Array.from({ length: b }, () => 0));
+  function cell(r: number, col: number): void {
+    if (r === a) {
+      // trim to the ragged carrier: drop zero entries, drop empty trailing rows.
+      const rows = grid.map((row) => row.filter((v) => v > 0)).filter((row) => row.length > 0);
+      results.push(rows.map((row) => row.slice()));
+      return;
+    }
+    if (col === b) {
+      cell(r + 1, 0);
+      return;
+    }
+    const rowBound = col > 0 ? grid[r][col - 1] : c;
+    const colBound = r > 0 ? grid[r - 1][col] : c;
+    for (let v = 0; v <= Math.min(rowBound, colBound); v++) {
+      grid[r][col] = v;
+      cell(r, col + 1);
+    }
+    grid[r][col] = 0;
+  }
+  cell(0, 0);
+  return results;
+}
+function macMahonBoxCount(a: number, b: number, c: number): number {
+  let num = 1;
+  let den = 1;
+  for (let i = 1; i <= a; i++)
+    for (let j = 1; j <= b; j++)
+      for (let k = 1; k <= c; k++) {
+        num *= i + j + k - 1;
+        den *= i + j + k - 2;
+      }
+  return Math.round(num / den);
+}
+test("BoxedPlanePartitions(a,b,c) matches MacMahon's formula and an independent brute-force enumeration, a,b,c<=3", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  for (let a = 0; a <= 3; a++)
+    for (let b = 0; b <= 3; b++)
+      for (let c = 0; c <= 3; c++) {
+        const total = entry.count([a, b, c]);
+        expect(total).toBe(macMahonBoxCount(a, b, c));
+        const expected = new Set(bruteBoxedPlanePartitions(a, b, c).map((rows) => asKey(rows)));
+        expect(total).toBe(expected.size);
+        const got = new Set<string>();
+        for (let r = 0; r < total; r++) {
+          const element = entry.unrank([a, b, c], r) as number[][];
+          expect(entry.valid(element, [a, b, c])).toBe(true);
+          expect(entry.rank(element, [a, b, c])).toBe(r);
+          got.add(asKey(element));
+        }
+        expect(got).toEqual(expected);
+      }
+});
+test("BoxedPlanePartitions(2,2,2) = 20", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  expect(entry.count([2, 2, 2])).toBe(20);
+});
+test("BoxedPlanePartitions(1,1,n) = n+1 for n=0..5", () => {
+  const entry = byHead.get("BoxedPlanePartitions")!;
+  expect([0, 1, 2, 3, 4, 5].map((n) => entry.count([1, 1, n]))).toEqual([1, 2, 3, 4, 5, 6]);
+});
+
+// GelfandTsetlin: closed-form Weyl-dimension anchors from the archived checkout.
+test("GelfandTsetlin(2,k) for k=1..4 is 4,10,20,35", () => {
+  const entry = byHead.get("GelfandTsetlin")!;
+  expect([1, 2, 3, 4].map((k) => entry.count([2, k]))).toEqual([4, 10, 20, 35]);
+});
+test("GelfandTsetlin(n,1) for n=1..4 is 2,4,8,16", () => {
+  const entry = byHead.get("GelfandTsetlin")!;
+  expect([1, 2, 3, 4].map((n) => entry.count([n, 1]))).toEqual([2, 4, 8, 16]);
+});
+test("GelfandTsetlin(3,2) = 35", () => {
+  const entry = byHead.get("GelfandTsetlin")!;
+  expect(entry.count([3, 2])).toBe(35);
+});
+
+// SemistandardTableaux: closed-form hook-content anchors from the archived checkout.
+test("SemistandardTableaux(n,3) for n=0..4 is 1,3,9,19,39", () => {
+  const entry = byHead.get("SemistandardTableaux")!;
+  expect([0, 1, 2, 3, 4].map((n) => entry.count([n, 3]))).toEqual([1, 3, 9, 19, 39]);
+});
+test("SemistandardTableaux(3,k) for k=1..4 is 1,6,19,44", () => {
+  const entry = byHead.get("SemistandardTableaux")!;
+  expect([1, 2, 3, 4].map((k) => entry.count([3, k]))).toEqual([1, 6, 19, 44]);
+});
+
+// AlternatingSignMatrices: closed-form ASM-number anchors (A005130).
+test("AlternatingSignMatrices(n) = A005130: 1,1,2,7,42,429", () => {
+  const entry = byHead.get("AlternatingSignMatrices")!;
+  expect([0, 1, 2, 3, 4, 5].map((n) => entry.count([n]))).toEqual([1, 1, 2, 7, 42, 429]);
+});

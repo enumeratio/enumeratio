@@ -5,7 +5,7 @@ import {
   PartitionsInBoxUnrank,
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
-} from "../src/families/kernels-extra.ts";
+} from "../../collections/src/families/kernels-extra.ts";
 import { entries as coreEntries } from "../src/families/core.ts";
 
 // Certify every partition family: rank(unrank(p, r), p) === r across the whole family,

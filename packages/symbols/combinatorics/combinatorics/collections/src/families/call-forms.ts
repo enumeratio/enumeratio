@@ -39,7 +39,7 @@ import {
   StirlingS2,
 } from "./kernels-combinatorics.ts";
 import { IsKSubsetOf, IsSubsetOf, KSubsetCount, KSubsetUnrank, SubsetCount, SubsetUnrank } from "./kernels-extra.ts";
-import { partsInSet } from "./partitions.ts";
+import { partsInSet } from "../../../partitions/src/families/partitions.ts";
 import { subsetsAtMostKCount, subsetsAtMostKUnrank, subsetsAtMostKValid } from "./subsets.ts";
 import { asBlockList, asIntList, type Boxed, blocksMJ, listMJ } from "./types.ts";
 

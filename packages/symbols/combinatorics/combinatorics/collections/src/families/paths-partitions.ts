@@ -4,7 +4,6 @@
 // [0, count(p)). Kept in its own file (registered via install.ts) so parallel roadmap batches
 // don't collide with core.ts.
 import type { NumberKernel } from "./types.ts";
-import { BellB, RgsRank, RgsUnrank } from "./kernels-combinatorics.ts";
 import {
   CatalanNumber,
   DyckPathCount,
@@ -20,20 +19,8 @@ import {
   type OrdTree,
 } from "./kernels-extra.ts";
 
-// ─── RestrictedGrowthStrings(n): length-n words w with w[0]=0 and w[i] <= 1+max(w[0..i-1]) — the
-// canonical RGS encoding of a set partition of [n] (w[i] = block index of element i+1, in
-// first-appearance order). Count = BellB(n); SetPartitions already unranks via this exact word
-// (RgsUnrank/RgsRank in kernels-combinatorics.ts) and just reshapes it into blocks — here the word
-// itself IS the element. ───────────────────────────────────────────────────────────────────────
-function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== n) return false;
-  let mx = -1;
-  for (const v of e) {
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v > mx + 1) return false;
-    if (v > mx) mx = v;
-  }
-  return true;
-}
+// RestrictedGrowthStrings moved to set-partitions/src/families/paths-partitions.ts -- §4 step 5,
+// its carrier "RestrictedGrowthString" is a set-partitions one.
 
 // ─── NonCrossingPartitions(n) / NonNestingPartitions(n): both built from ONE shared process —
 // walk elements 1..n, at each step either open a new block (its least element) or extend one of
@@ -555,82 +542,6 @@ function isLukasiewiczPathOf(e: unknown, n: number): boolean {
   return needed === 0;
 }
 
-// ─── DyckPathsByHeight(n,h): Dyck paths of semilength n with maximum height EXACTLY h.
-// completions(s,height,reached) tracks steps remaining, current height (capped at h), and whether
-// height h has been touched yet; count(n,h) = completions(2n,0,h===0). unrank/rank walk up-then-
-// down exactly like plain DyckPaths, just within the height cap and the "must touch h" bookkeeping. ─
-const _dpbhMemo = new Map<string, number>();
-function dpbhCompletions(s: number, height: number, cap: number, reached: boolean): number {
-  if (height < 0 || height > cap) return 0;
-  if (s === 0) return height === 0 && reached ? 1 : 0;
-  const key = `${s},${height},${cap},${reached}`;
-  let v = _dpbhMemo.get(key);
-  if (v === undefined) {
-    const upH = height + 1;
-    const up = upH <= cap ? dpbhCompletions(s - 1, upH, cap, reached || upH === cap) : 0;
-    const down = height > 0 ? dpbhCompletions(s - 1, height - 1, cap, reached) : 0;
-    v = up + down;
-    _dpbhMemo.set(key, v);
-  }
-  return v;
-}
-function DyckPathsByHeightCount(n: number, h: number): number {
-  if (n < 0 || h < 0) return 0;
-  return dpbhCompletions(2 * n, 0, h, h === 0);
-}
-function DyckPathsByHeightUnrank(n: number, h: number, rank: number): number[] {
-  const total = DyckPathsByHeightCount(n, h);
-  let r = total ? ((rank % total) + total) % total : 0;
-  const out: number[] = [];
-  let height = 0;
-  let reached = h === 0;
-  for (let s = 2 * n; s > 0; s--) {
-    const upH = height + 1;
-    const up = upH <= h ? dpbhCompletions(s - 1, upH, h, reached || upH === h) : 0;
-    if (r < up) {
-      out.push(1);
-      height = upH;
-      reached = reached || upH === h;
-      continue;
-    }
-    r -= up;
-    out.push(0);
-    height--;
-  }
-  return out;
-}
-function DyckPathsByHeightRank(path: number[], h: number): number {
-  let r = 0;
-  let height = 0;
-  let reached = h === 0;
-  for (let i = 0; i < path.length; i++) {
-    const s = path.length - i;
-    if (path[i] === 1) {
-      const upH = height + 1;
-      height = upH; // up is always tried first — contributes 0 to rank
-      reached = reached || upH === h;
-    } else {
-      const upH = height + 1;
-      const up = upH <= h ? dpbhCompletions(s - 1, upH, h, reached || upH === h) : 0;
-      r += up;
-      height--;
-    }
-  }
-  return r;
-}
-function isDyckPathsByHeightOf(e: unknown, n: number, h: number): boolean {
-  if (!Array.isArray(e) || e.length !== 2 * n) return false;
-  let height = 0,
-    maxHeight = 0;
-  for (const s of e) {
-    if (s !== 0 && s !== 1) return false;
-    height += s === 1 ? 1 : -1;
-    if (height < 0) return false;
-    if (height > maxHeight) maxHeight = height;
-  }
-  return height === 0 && maxHeight === h;
-}
-
 // ─── MotzkinPathsByPeaks(n,k): Motzkin paths of length n with exactly k peaks — a peak is an
 // up-step immediately followed by a down-step — the Motzkin triangle (A055151).
 // completions(s,h,prevUp,peaksLeft) tracks steps remaining, current height, whether the previous
@@ -724,17 +635,12 @@ function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
   return h === 0 && peaks === k;
 }
 
-export const entries: NumberKernel[] = [
-  {
-    head: "RestrictedGrowthStrings",
-    carrier: "RestrictedGrowthString",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => BellB(n),
-    unrank: ([n], r) => RgsUnrank(n, r),
-    valid: (e, [n]) => isRestrictedGrowthStringOf(e, n),
-    rank: (e) => RgsRank(e as number[]),
-  },
+// Kept separate from `entriesAfterDyckPathsByHeight` below only so
+// collections/src/families/index.ts can splice `latticePathsPathsPartitionsEntries`
+// (DyckPathsByHeight) back in at the exact interior position it held before the lattice-paths
+// move — §4 step 5. NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
+// NonNestingMatchings below declare no carrier at all and stay here per step 5 rule 4.
+export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
   {
     head: "NonCrossingPartitions",
     paramCount: 1,
@@ -841,16 +747,11 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => isLukasiewiczPathOf(e, n),
     rank: (e) => LukasiewiczPathRank(e as number[]),
   },
-  {
-    head: "DyckPathsByHeight",
-    carrier: "DyckPath",
-    paramCount: 2,
-    kind: "ints",
-    count: ([n, h]) => DyckPathsByHeightCount(n, h),
-    unrank: ([n, h], r) => DyckPathsByHeightUnrank(n, h, r),
-    valid: (e, [n, h]) => isDyckPathsByHeightOf(e, n, h),
-    rank: (e, [, h]) => DyckPathsByHeightRank(e as number[], h),
-  },
+];
+
+// DyckPathsByHeight moved to lattice-paths/src/families/paths-partitions.ts, spliced back in
+// here by collections/src/families/index.ts — §4 step 5.
+export const entriesAfterDyckPathsByHeight: NumberKernel[] = [
   {
     head: "MotzkinPathsByPeaks",
     paramCount: 2,
