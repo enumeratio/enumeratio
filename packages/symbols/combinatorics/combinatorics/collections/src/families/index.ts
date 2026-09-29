@@ -1,4 +1,4 @@
-import { compositionsEntries as coreCompositions, entries as core } from "./core.ts";
+import { entries as core } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
 import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
@@ -18,7 +18,10 @@ import {
   partitionsEntries,
   tableauxPlaneEntries as partitionsTableauxPlaneEntries,
 } from "../../../partitions/src/families/index.ts";
-import { entries as compositions } from "./compositions.ts";
+import {
+  coreEntries as compositionsCoreEntries,
+  compositionsEntries,
+} from "../../../compositions/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -30,13 +33,13 @@ import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// `permutationsCoreEntries` (was core.ts's own permutation entries), `partitionsCoreEntries`
-// (was core.ts's own "partitions" section) and `partitionsTableauxPlaneEntries` (was
+// `permutationsCoreEntries`, `compositionsCoreEntries` and `partitionsCoreEntries` (each was
+// core.ts's own section for that area) and `partitionsTableauxPlaneEntries` (was
 // tableaux-plane.ts's SkewPartitions) keep the exact interior positions their source files held
 // before their area moves -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
 const numberEntries = [
   ...permutationsCoreEntries,
-  ...coreCompositions,
+  ...compositionsCoreEntries,
   ...partitionsCoreEntries,
   ...core,
   ...subsets,
@@ -48,7 +51,7 @@ const numberEntries = [
   ...tableauxPlane,
   ...permutationsEntries,
   ...permutationClassesEntries,
-  ...compositions,
+  ...compositionsEntries,
   ...partitionsEntries,
   ...binaryWordFamilies,
   ...numericSets,

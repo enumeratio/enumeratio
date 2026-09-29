@@ -2,10 +2,6 @@
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
 import type { NumberKernel } from "./types.ts";
 import {
-  CompositionCount,
-  CompositionFromMask,
-  CompositionRank,
-  IsCompositionOf,
   BellB,
   RgsUnrank,
   RgsRank,
@@ -34,14 +30,6 @@ import {
   TupleUnrank,
   TupleRank,
   IsTupleOf,
-  CompositionsIntoKPartsCount,
-  CompositionsIntoKPartsUnrank,
-  CompositionsIntoKPartsRank,
-  IsCompositionIntoKParts,
-  WeakCompositionCount,
-  WeakCompositionUnrank,
-  WeakCompositionRank,
-  IsWeakCompositionOf,
   MultisetCount,
   MultisetUnrank,
   MultisetRank,
@@ -126,41 +114,6 @@ const ints = (
   valid: (e, p) => valid(e as number[], p),
   rank: (e, p) => rank(e as number[], p),
 });
-
-// The compositions section, kept separate from `entries` below only so
-// collections/src/families/index.ts can splice `partitionsCoreEntries` back in at the exact
-// interior position the (now moved) "partitions" section held between them — §4 step 5,
-// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
-export const compositionsEntries: NumberKernel[] = [
-  // ── compositions ──
-  {
-    ...ints(
-      "IntegerCompositions",
-      1,
-      ([n]) => CompositionCount(n),
-      ([n], r) => CompositionFromMask(n, r),
-      (a, [n]) => IsCompositionOf(a, n),
-      (a) => CompositionRank(a),
-    ),
-    carrier: "Composition",
-  },
-  ints(
-    "CompositionsIntoKParts",
-    2,
-    ([n, k]) => CompositionsIntoKPartsCount(n, k),
-    ([n, k], r) => CompositionsIntoKPartsUnrank(n, k, r),
-    (a, [n, k]) => IsCompositionIntoKParts(a, n, k),
-    (a) => CompositionsIntoKPartsRank(a),
-  ),
-  ints(
-    "WeakCompositions",
-    2,
-    ([n, k]) => WeakCompositionCount(n, k),
-    ([n, k], r) => WeakCompositionUnrank(n, k, r),
-    (a, [n, k]) => IsWeakCompositionOf(a, n, k),
-    (a) => WeakCompositionRank(a),
-  ),
-];
 
 export const entries: NumberKernel[] = [
   // ── subsets / multisets / tuples / functions / binary words ──

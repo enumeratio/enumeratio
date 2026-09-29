@@ -6,7 +6,7 @@
 // each with its own small DP or bijection.
 //
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
-import type { NumberKernel } from "./types.ts";
+import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
