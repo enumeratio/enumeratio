@@ -5,8 +5,8 @@
 // FibonacciWords, Tuples, k-subsets); the rest (Lucas strings, Gray code, palindromes, necklaces,
 // Lyndon words) are new, several adapted from the archived enumeratio repo's compute-engine
 // packs/words.ts (Necklaces/LyndonWords there are exactly KNecklaces/KLyndonWords here).
-import { binomial } from "./shared.ts";
-import { Binomial } from "./kernels-combinatorics.ts";
+import { binomial } from "../../../collections/src/families/shared.ts";
+import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
   BinaryStringCount,
   BinaryStringUnrank,
@@ -20,8 +20,8 @@ import {
   FibonacciWordUnrank,
   FibonacciWordRank,
   IsFibonacciWord,
-} from "./kernels-extra.ts";
-import type { Declared, NumberKernel } from "./types.ts";
+} from "../../../collections/src/families/kernels-extra.ts";
+import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 

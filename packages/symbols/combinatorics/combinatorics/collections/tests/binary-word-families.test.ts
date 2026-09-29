@@ -3,16 +3,8 @@ import { entries } from "../src/families/binary-word-families.ts";
 
 // Self-cert every family: rank(unrank(p, r), p) === r across the whole family, unranked
 // elements are valid members, and every element is distinct — same recipe as words.test.ts.
+// BinaryBracelets/KBracelets moved to the words area (§4 step 5) with their tests.
 const PARAMS: Record<string, number[][]> = {
-  BinaryBracelets: [[0], [1], [2], [3], [4], [5], [6], [7]],
-  KBracelets: [
-    [1, 3],
-    [2, 3],
-    [3, 3],
-    [4, 3],
-    [0, 4],
-    [3, 4],
-  ],
   TriStrings: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10]],
   PrimitiveBinaryStrings: [[1], [2], [3], [4], [5], [6], [7], [8]],
   TernaryGrayCodes: [[0], [1], [2], [3], [4]],
@@ -61,14 +53,6 @@ function* allWords(n: number, k: number): Generator<number[]> {
     if (i < 0) return;
     w[i]++;
   }
-}
-function rotations(w: number[]): number[][] {
-  const n = w.length;
-  return Array.from({ length: n }, (_, s) => Array.from({ length: n }, (_, i) => w[(i + s) % n]));
-}
-function orbitKeys(w: number[]): string[] {
-  const rev = w.slice().toReversed();
-  return [...rotations(w), ...rotations(rev)].map((x) => x.join(","));
 }
 function hasNoRunOfK(w: number[], k: number): boolean {
   let run = 0;
@@ -130,22 +114,6 @@ function permutationsOfMultiset(n: number): number[][] {
 const asSet = (elements: number[][]) => new Set(elements.map((e) => JSON.stringify(e)));
 
 for (let n = 0; n <= 8; n++) {
-  test(`BinaryBracelets(${n}) matches an independent brute-force predicate`, () => {
-    const entry = byHead.get("BinaryBracelets")!;
-    const total = entry.count([n]);
-    const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
-    const seenOrbits = new Set<string>();
-    const canonical: number[][] = [];
-    for (const w of allWords(n, 2)) {
-      const keys = orbitKeys(w);
-      if (keys.some((k) => seenOrbits.has(k))) continue;
-      for (const k of keys) seenOrbits.add(k);
-      canonical.push(w);
-    }
-    expect(asSet(kernelElements)).toEqual(asSet(canonical));
-    expect(kernelElements.length).toBe(total);
-  });
-
   test(`TriStrings(${n}) matches an independent brute-force predicate`, () => {
     const entry = byHead.get("TriStrings")!;
     const total = entry.count([n]);
@@ -183,26 +151,6 @@ for (let n = 0; n <= 8; n++) {
 }
 
 for (let n = 1; n <= 4; n++) {
-  for (const k of [3, 4]) {
-    test(`KBracelets(${n}, ${k}) matches an independent brute-force predicate`, () => {
-      const entry = byHead.get("KBracelets")!;
-      const total = entry.count([n, k]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
-      const seenOrbits = new Set<string>();
-      const canonical: number[][] = [];
-      for (const w of allWords(n, k)) {
-        const keys = orbitKeys(w);
-        if (keys.some((key) => seenOrbits.has(key))) continue;
-        for (const key of keys) seenOrbits.add(key);
-        canonical.push(w);
-      }
-      expect(asSet(kernelElements)).toEqual(asSet(canonical));
-      expect(kernelElements.length).toBe(total);
-    });
-  }
-}
-
-for (let n = 1; n <= 4; n++) {
   test(`StirlingPermutations(${n}) matches an independent brute-force predicate`, () => {
     const entry = byHead.get("StirlingPermutations")!;
     const total = entry.count([n]);
@@ -216,10 +164,6 @@ for (let n = 1; n <= 4; n++) {
 // ─── OEIS counts, independent of the round-trip above ───────────────────────────────────────────
 const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead.get(head)!.count(p));
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
-
-test("BinaryBracelets count (A000029), n=0..12", () => {
-  expect(countsOf("BinaryBracelets", range(13))).toEqual([1, 2, 3, 4, 6, 8, 13, 18, 30, 46, 78, 126, 224]);
-});
 
 test("TriStrings count (tribonacci-like, A000073 shifted), n=0..10", () => {
   expect(countsOf("TriStrings", range(11))).toEqual([1, 2, 4, 7, 13, 24, 44, 81, 149, 274, 504]);
@@ -235,12 +179,4 @@ test("TernaryGrayCodes count = 3^n, n=0..6", () => {
 
 test("StirlingPermutations count = (2n-1)!! (A001147), n=1..7", () => {
   expect(countsOf("StirlingPermutations", range(8).slice(1))).toEqual([1, 3, 15, 105, 945, 10395, 135135]);
-});
-
-test("KBracelets(n, 2) agrees with BinaryBracelets(n)", () => {
-  const kBracelets = byHead.get("KBracelets")!;
-  const binaryBracelets = byHead.get("BinaryBracelets")!;
-  for (const n of [0, 1, 2, 3, 4, 5, 6, 7]) {
-    expect(kBracelets.count([n, 2])).toBe(binaryBracelets.count([n]));
-  }
 });

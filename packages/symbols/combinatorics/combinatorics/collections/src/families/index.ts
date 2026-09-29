@@ -1,6 +1,5 @@
 import { entries as core } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
-import { entries as words } from "./words.ts";
 import { entries as pathsPartitions } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import {
@@ -22,6 +21,10 @@ import {
   coreEntries as compositionsCoreEntries,
   compositionsEntries,
 } from "../../../compositions/src/families/index.ts";
+import {
+  wordsEntries,
+  binaryWordFamiliesEntries as wordsBinaryWordFamiliesEntries,
+} from "../../../words/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -43,7 +46,7 @@ const numberEntries = [
   ...partitionsCoreEntries,
   ...core,
   ...subsets,
-  ...words,
+  ...wordsEntries,
   ...pathsPartitions,
   ...tableauxTrees,
   ...tableauxPlaneBeforeSkewPartitions,
@@ -53,6 +56,7 @@ const numberEntries = [
   ...permutationClassesEntries,
   ...compositionsEntries,
   ...partitionsEntries,
+  ...wordsBinaryWordFamiliesEntries,
   ...binaryWordFamilies,
   ...numericSets,
   ...numericClosedForm,
