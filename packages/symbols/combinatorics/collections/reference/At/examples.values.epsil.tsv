@@ -23,7 +23,7 @@ negative-indices-inside-an-index-list	[a, b, c, d, f][[-1, -2]]	[f, d]
 a-stepped-range-takes-every-other-element	[a, b, c, d, f][Range(1, 5, 2)]	[a, c, f]
 negative-bounds-count-from-the-end-the-last	[a, b, c, d, f][Range(-3, -1)]	[c, d, f]
 a-lazy-range-is-indexed-directly	Range(5, 10)[2]	6
-all-at-the-first-level-should-take-a-whole	[[1, 2, 3], [4, 5, 6]][All, 2]	[2, 5]
+all-at-the-first-level-should-take-a-whole	[[1, 2, 3], [4, 5, 6]][all, 2]	[2, 5]
 index-lists-at-two-levels-extract-a-submatrix	[[1, 2, 3], [4, 5, 6], [7, 8, 9]][[1, 3], [2, 3]]	[[2, 3], [8, 9]]
 a-span-2-4-in-wolfram-takes-a-contiguous-slice	[a, b, c, d, f][Span(2, 4)]	[b, c, d]
 a-stepped-span-1-1-2-takes-every-other-element	[a, b, c, d, f][Span(1, -1, 2)]	[a, c, f]

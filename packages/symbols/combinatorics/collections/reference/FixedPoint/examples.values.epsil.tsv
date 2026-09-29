@@ -1,4 +1,4 @@
 id	in	out	back
-halving-and-flooring-until-nothing-changes	FixedPoint(Function(Floor(_1 / 2)), 100)	0	Unreadable
-the-dottie-number-the-fixed-point-of-cos	FixedPoint(Cos, 0.5)	0.739_085_133_215_160_641_658	
-newton-s-method-for-sqrt-2-run-to-this-engine-s	FixedPoint(Function((_1 + 2 / _1) / 2), 1.5)	1.414_213_562_373_095_048_801_687_5	Unreadable
+halving-and-flooring-until-nothing-changes	fixedPoint(Function(floor(_1 / 2)), 100)	0	Unreadable
+the-dottie-number-the-fixed-point-of-cos	fixedPoint(cos, 0.5)	0.739_085_133_215_160_641_658	
+newton-s-method-for-sqrt-2-run-to-this-engine-s	fixedPoint(Function((_1 + 2 / _1) / 2), 1.5)	1.414_213_562_373_095_048_801_687_5	Unreadable

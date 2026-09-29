@@ -1,2 +1,2 @@
 id	in	out
-the-first-20-terms	Take(SafePrimes, 20)	"[\n  5,\n  7,\n  11,\n  23,\n  47,\n  59,\n  83,\n  107,\n  167,\n  179,\n  227,\n  263,\n  347,\n  359,\n  383,\n  467,\n  479,\n  503,\n  563,\n  587,\n]"
+the-first-20-terms	take(SafePrimes, 20)	"[\n  5,\n  7,\n  11,\n  23,\n  47,\n  59,\n  83,\n  107,\n  167,\n  179,\n  227,\n  263,\n  347,\n  359,\n  383,\n  467,\n  479,\n  503,\n  563,\n  587,\n]"

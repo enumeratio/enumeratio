@@ -1,6 +1,6 @@
 id	in	out
 adicvaluation-adicnumeral-5-75	AdicValuation(AdicNumeral(5, 75))	2
-the-valuation-of-zero-is-positive-infinity	AdicValuation(AdicNumeral(5, 0))	PositiveInfinity
+the-valuation-of-zero-is-positive-infinity	AdicValuation(AdicNumeral(5, 0))	positiveInfinity
 adicnorm-adicnumeral-5-75	AdicNorm(AdicNumeral(5, 75))	1 / 25
 adicunitpart-adicnumeral-5-75	AdicUnitPart(AdicNumeral(5, 75))	AdicNumeral(5, 3)
 adicvaluation-adicnumeral-2-minus1	AdicValuation(AdicNumeral(2, -1))	0

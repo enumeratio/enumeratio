@@ -1,5 +1,5 @@
 id	in	out
-cauchy-pdf-exact	PDF(CauchyDistribution(0, 1), 0)	1 / Pi
-cauchy-cdf-exact	CDF(CauchyDistribution(0, 1), 1)	3 / 4
+cauchy-pdf-exact	pdf(CauchyDistribution(0, 1), 0)	1 / pi
+cauchy-cdf-exact	cdf(CauchyDistribution(0, 1), 1)	3 / 4
 cauchy-default-is-standard	CauchyDistribution()	CauchyDistribution(0, 1)
-cauchy-mean-indeterminate	Mean(CauchyDistribution(0, 1))	Indeterminate
+cauchy-mean-indeterminate	mean(CauchyDistribution(0, 1))	Indeterminate

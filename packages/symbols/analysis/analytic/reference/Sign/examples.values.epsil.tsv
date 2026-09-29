@@ -1,24 +1,24 @@
 id	in	out
-sign-neg-3	Sign(-3)	-1
-sign-3	Sign(3)	1
-zero-is-its-own-sign	Sign(0)	0
-sign-neg-1-over-2	Sign(-1 / 2)	-1
-the-unit-complex-number-pointing-the-same	Sign(3 + 4i)	3 / 5 + 4 / 5 * i
-threads-element-wise-over-a-list	Sign([-3, 0, 7])	[-1, 0, 1]
-sign-neg-2p5	Sign(-2.5)	-1
-sign-3p14	Sign(3.14)	1
-a-complex-number-with-approximate-parts	Sign(1.4 + 2.3i)	0.519_946_946_895_745_216_810_2 + 0.854_198_555_614_438_5i
-an-exact-complex-argument-comes-back-exact-sign	Sign(1 + i)	Sqrt(2) / 2 + Sqrt(2) / 2 * i
-threads-over-a-matrix-entry-by-entry	Sign([[1 / 2, -1], [-5 / 3, 1 / 2]])	[[1, -1], [-1, 1]]
-exact-numeric-constants	Sign(Pi)	1
-sign-neg-exponentiale	Sign(-ExponentialE)	-1
-sign-imaginaryunit	Sign(ImaginaryUnit)	i
-sign-positiveinfinity	Sign(PositiveInfinity)	1
-an-interval-entirely-above-0-has-sign-1	Sign(Interval(1, 3))	1
-decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign(Sqrt(2) - 2)	-1
-2-sqrt-2-is-the-same-certified-decision-the	Sign(2 - Sqrt(2))	1
-tells-you-the-temperature-dropped-but-not-by-how	Sign(70 - 95)	-1
-sign-z-z-z-see-abs	Sign(3 + 4i) == (3 + 4i) / Abs(3 + 4i)	True
-x-cdot-sign-x-x-here-at-x-5	-5 * Sign(-5) == Abs(-5)	True
-the-sign-of-a-nonzero-complex-number-lies-on-the	Abs(Sign(3 + 4i)) == 1	True
-nan-propagates-rather-than-being-treated-as-0	Sign(`NaN`)	`NaN`
+sign-neg-3	sign(-3)	-1
+sign-3	sign(3)	1
+zero-is-its-own-sign	sign(0)	0
+sign-neg-1-over-2	sign(-1 / 2)	-1
+the-unit-complex-number-pointing-the-same	sign(3 + 4i)	3 / 5 + 4 / 5 * i
+threads-element-wise-over-a-list	sign([-3, 0, 7])	[-1, 0, 1]
+sign-neg-2p5	sign(-2.5)	-1
+sign-3p14	sign(3.14)	1
+a-complex-number-with-approximate-parts	sign(1.4 + 2.3i)	0.519_946_946_895_745_216_810_2 + 0.854_198_555_614_438_5i
+an-exact-complex-argument-comes-back-exact-sign	sign(1 + i)	sqrt(2) / 2 + sqrt(2) / 2 * i
+threads-over-a-matrix-entry-by-entry	sign([[1 / 2, -1], [-5 / 3, 1 / 2]])	[[1, -1], [-1, 1]]
+exact-numeric-constants	sign(pi)	1
+sign-neg-exponentiale	sign(-exponentialE)	-1
+sign-imaginaryunit	sign(imaginaryUnit)	i
+sign-positiveinfinity	sign(positiveInfinity)	1
+an-interval-entirely-above-0-has-sign-1	sign(interval(1, 3))	1
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	sign(sqrt(2) - 2)	-1
+2-sqrt-2-is-the-same-certified-decision-the	sign(2 - sqrt(2))	1
+tells-you-the-temperature-dropped-but-not-by-how	sign(70 - 95)	-1
+sign-z-z-z-see-abs	sign(3 + 4i) == (3 + 4i) / abs(3 + 4i)	True
+x-cdot-sign-x-x-here-at-x-5	-5 * sign(-5) == abs(-5)	True
+the-sign-of-a-nonzero-complex-number-lies-on-the	abs(sign(3 + 4i)) == 1	True
+nan-propagates-rather-than-being-treated-as-0	sign(`NaN`)	`NaN`

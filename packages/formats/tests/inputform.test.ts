@@ -48,7 +48,7 @@ const ce = new ComputeEngine();
 
 /** The canonical MathJSON of an InputForm string, or a diagnostic. */
 function reparse(source: string): unknown {
-  const { json, errors } = parseExpression(source);
+  const { json, errors } = parseExpression(source, { ce });
   if (errors.length) return { parseError: source };
   return ce.box(json as Parameters<ComputeEngine["box"]>[0]).json;
 }

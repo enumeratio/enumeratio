@@ -40,7 +40,7 @@ test("the structural tree is the expression verbatim: heads are tags, arguments 
 test("the realized tree lowers a component's arguments into props, and typesets the rest", () => {
   const plot = vdomOf(parseExpression("Plot(Sin(k * x), (x, 0, 10))").json);
   expect(plot.tag).toBe("notatio-plot");
-  expect(plot.attributes).toEqual({ value: "Sin(k * x)", var: "x", domain: "0,10" });
+  expect(plot.attributes).toEqual({ value: "sin(k * x)", var: "x", domain: "0,10" });
   expect(plot.children).toBeUndefined();
 
   const scoped = vdomOf(parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])").json);
@@ -75,7 +75,7 @@ test("options ride as props in the structural tree, a node-valued one as a slott
   expect(tree.tag).toBe("notatio-plot");
   expect(tree.children?.slice(0, 2).map((c) => c.tag)).toEqual(["notatio-sin", "notatio-tuple"]);
   expect(tree.attributes).toEqual({
-    "plot-range": "All",
+    "plot-range": "all",
     frame: "true",
     epilog: "Point((1, 0.5))",
     "plot-label": "wave",

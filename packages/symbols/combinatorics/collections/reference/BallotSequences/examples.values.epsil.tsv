@@ -1,4 +1,4 @@
 id	in	out
-count-ballotsequences-4	Count(BallotSequences(4))	14
+count-ballotsequences-4	count(BallotSequences(4))	14
 first-element-of-ballotsequences-4	BallotSequences(4)[1]	[1, 1, 1, 1, 0, 0, 0, 0]
-every-element-of-ballotsequences-4	Take(BallotSequences(4), 5)	"[\n  [1, 1, 1, 1, 0, 0, 0, 0],\n  [1, 1, 1, 0, 1, 0, 0, 0],\n  [1, 1, 1, 0, 0, 1, 0, 0],\n  [1, 1, 1, 0, 0, 0, 1, 0],\n  [1, 1, 0, 1, 1, 0, 0, 0],\n]"
+every-element-of-ballotsequences-4	take(BallotSequences(4), 5)	"[\n  [1, 1, 1, 1, 0, 0, 0, 0],\n  [1, 1, 1, 0, 1, 0, 0, 0],\n  [1, 1, 1, 0, 0, 1, 0, 0],\n  [1, 1, 1, 0, 0, 0, 1, 0],\n  [1, 1, 0, 1, 1, 0, 0, 0],\n]"

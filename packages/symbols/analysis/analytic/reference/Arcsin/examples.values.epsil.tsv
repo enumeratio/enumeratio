@@ -1,29 +1,29 @@
 id	in	out
-arcsin-0	Arcsin(0)	0
-arcsin-1-over-2	Arcsin(1 / 2)	1 / 6 * Pi
-the-top-of-the-principal-range	Arcsin(1)	1 / 2 * Pi
-arcsin-neg-1	Arcsin(-1)	-1 / 2 * Pi
-a-machine-precision-argument-evaluates	Arcsin(0.4)	0.411_516_846_067_488_019_385
-outside-1-1-a-float-argument-gives-the-complex	Arcsin(1.5)	1.570_796_326_794_896_6 - 0.962_423_650_119_206_9i
-outside-1-1-reduces-to-the-exact-closed-form	Arcsin(2)	1 / 2 * Pi + -i * Ln(2 + Sqrt(3))
-arbitrary-precision-via-n	N(Arcsin(1 / 3))	0.339_836_909_454_121_937_096
-evaluates-at-a-complex-argument	Arcsin(2.5 + i)	1.164_623_510_289_384_7 + 1.658_693_298_856_434_7i
-threads-element-wise-over-a-matrix	Arcsin([[1, 1 / Sqrt(2)], [0, 1 / Sqrt(2)]])	[[1 / 2 * Pi, 1 / 4 * Pi], [0, 1 / 4 * Pi]]
-exact-inverse-of-a-special-value	Arcsin(Sqrt(2) / 2)	1 / 4 * Pi
-arcsin-sqrt-3-over-2	Arcsin(Sqrt(3) / 2)	1 / 3 * Pi
-recognizes-the-radical-value-sin-pi-12	Arcsin((Sqrt(6) - Sqrt(2)) / 4)	1 / 12 * Pi
-recognizes-sin-pi-10-frac-sqrt-5-1-4	Arcsin((Sqrt(5) - 1) / 4)	1 / 10 * Pi
-interval-arithmetic-arcsin-frac-13-frac-12	Arcsin(Interval(-1 / 3, 1 / 2))	Interval(Arcsin(-1 / 3), 1 / 6 * Pi)
-uncertainty-propagation-arcsin-0-9-pm-0-1-approx	Arcsin(Around(0.9, 0.1))	Around(1.119_769_514_998_634_2, 0.229_415_733_870_561_8)
-oddness-pulls-the-sign-out-of-a-symbolic	Arcsin(-x)	-Arcsin(x)
-derivative-frac-1-sqrt-1-x-2	D(Arcsin(x), x)	1 / Sqrt(-x ^ 2 + 1)
-antiderivative	Integrate(Arcsin(x), x)	x * Arcsin(x) + Sqrt(-x ^ 2 + 1)
-taylor-series-about-0	Series(Arcsin(x), x, 0, 5)	3 / 40 * x ^ 5 + 1 / 6 * x ^ 3 + x + BigO(x ^ 7)
-arcsin-sin-1-2-is-already-principal	Arcsin(Sin(1 / 2))	1 / 2
-to-30-significant-digits-not-yet-the-last-digit	N(Arcsin(1 / 3), 30)	0.339_836_909_454_121_937_096_392_513_392
-arcsin-2-past-1-1-the-odd-function-mirror-of	Arcsin(-2)	-1 / 2 * Pi + i * Ln(2 + Sqrt(3))
-sin-arcsin-x-x-on-the-principal-branch	Sin(Arcsin(1 / 2)) == 1 / 2	True
-co-function-identity-arcsin-x-arccos-x-pi-2	Arcsin(1 / 2) + Arccos(1 / 2) == Pi / 2	True
-as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	TrigToExp(Arcsin(x))	-i * Ln(i * x + Sqrt(-x ^ 2 + 1))
-not-simply-2-2-is-outside-the-principal-range-pi	Arcsin(Sin(2))	-2 + Pi
-arcsin-sin-neg-2-mirrors-through-0	Arcsin(Sin(-2))	2 - Pi
+arcsin-0	arcsin(0)	0
+arcsin-1-over-2	arcsin(1 / 2)	1 / 6 * pi
+the-top-of-the-principal-range	arcsin(1)	1 / 2 * pi
+arcsin-neg-1	arcsin(-1)	-1 / 2 * pi
+a-machine-precision-argument-evaluates	arcsin(0.4)	0.411_516_846_067_488_019_385
+outside-1-1-a-float-argument-gives-the-complex	arcsin(1.5)	1.570_796_326_794_896_6 - 0.962_423_650_119_206_9i
+outside-1-1-reduces-to-the-exact-closed-form	arcsin(2)	1 / 2 * pi + -i * ln(2 + sqrt(3))
+arbitrary-precision-via-n	N(arcsin(1 / 3))	0.339_836_909_454_121_937_096
+evaluates-at-a-complex-argument	arcsin(2.5 + i)	1.164_623_510_289_384_7 + 1.658_693_298_856_434_7i
+threads-element-wise-over-a-matrix	arcsin([[1, 1 / sqrt(2)], [0, 1 / sqrt(2)]])	[[1 / 2 * pi, 1 / 4 * pi], [0, 1 / 4 * pi]]
+exact-inverse-of-a-special-value	arcsin(sqrt(2) / 2)	1 / 4 * pi
+arcsin-sqrt-3-over-2	arcsin(sqrt(3) / 2)	1 / 3 * pi
+recognizes-the-radical-value-sin-pi-12	arcsin((sqrt(6) - sqrt(2)) / 4)	1 / 12 * pi
+recognizes-sin-pi-10-frac-sqrt-5-1-4	arcsin((sqrt(5) - 1) / 4)	1 / 10 * pi
+interval-arithmetic-arcsin-frac-13-frac-12	arcsin(interval(-1 / 3, 1 / 2))	interval(arcsin(-1 / 3), 1 / 6 * pi)
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx	arcsin(Around(0.9, 0.1))	Around(1.119_769_514_998_634_2, 0.229_415_733_870_561_8)
+oddness-pulls-the-sign-out-of-a-symbolic	arcsin(-x)	-arcsin(x)
+derivative-frac-1-sqrt-1-x-2	D(arcsin(x), x)	1 / sqrt(-x ^ 2 + 1)
+antiderivative	integrate(arcsin(x), x)	x * arcsin(x) + sqrt(-x ^ 2 + 1)
+taylor-series-about-0	series(arcsin(x), x, 0, 5)	3 / 40 * x ^ 5 + 1 / 6 * x ^ 3 + x + bigO(x ^ 7)
+arcsin-sin-1-2-is-already-principal	arcsin(sin(1 / 2))	1 / 2
+to-30-significant-digits-not-yet-the-last-digit	N(arcsin(1 / 3), 30)	0.339_836_909_454_121_937_096_392_513_392
+arcsin-2-past-1-1-the-odd-function-mirror-of	arcsin(-2)	-1 / 2 * pi + i * ln(2 + sqrt(3))
+sin-arcsin-x-x-on-the-principal-branch	sin(arcsin(1 / 2)) == 1 / 2	True
+co-function-identity-arcsin-x-arccos-x-pi-2	arcsin(1 / 2) + arccos(1 / 2) == pi / 2	True
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	trigToExp(arcsin(x))	-i * ln(i * x + sqrt(-x ^ 2 + 1))
+not-simply-2-2-is-outside-the-principal-range-pi	arcsin(sin(2))	-2 + pi
+arcsin-sin-neg-2-mirrors-through-0	arcsin(sin(-2))	2 - pi

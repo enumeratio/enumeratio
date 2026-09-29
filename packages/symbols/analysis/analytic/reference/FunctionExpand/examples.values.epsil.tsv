@@ -1,9 +1,9 @@
 id	in	out
-eta-s-1-2-1-s-zeta-s	FunctionExpand(DirichletEta(s))	(-2 ^ (-s + 1) + 1) * Zeta(s)
-beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	FunctionExpand(DirichletBeta(s))	(-Zeta(s, 3 / 4) + Zeta(s, 1 / 4)) * 4 ^ (-s)
-g-frac-12-in-glaisher-s-constant	FunctionExpand(BarnesG(1 / 2))	1 / Root(Pi, 4) * Root(2, 24) * ConstGlaisher ^ (-3 / 2) * Root(ExponentialE, 8)
-radicals-past-the-automatic-special-angle-table	FunctionExpand(Sin(Pi / 15))	1 / 8 * (-Sqrt(15) + Sqrt(3) + Sqrt(10 + 2 * Sqrt(5)))
-half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	FunctionExpand(Cos(Pi / 24))	Sqrt(2) / 4 * Sqrt(4 + Sqrt(2) + Sqrt(6))
-a-rising-factorial-with-an-integer-length	FunctionExpand(Pochhammer(x, 3))	x * (x + 1) * (x + 2)
-binom-n2-frac-n-n-1-2	FunctionExpand(Binomial(n, 2))	n * (n - 1) / 2
-a-generic-cos-argument-passes-through-unchanged	FunctionExpand(Cos(theta))	Cos(theta)
+eta-s-1-2-1-s-zeta-s	FunctionExpand(DirichletEta(s))	(-2 ^ (-s + 1) + 1) * zeta(s)
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	FunctionExpand(DirichletBeta(s))	(-zeta(s, 3 / 4) + zeta(s, 1 / 4)) * 4 ^ (-s)
+g-frac-12-in-glaisher-s-constant	FunctionExpand(BarnesG(1 / 2))	1 / root(pi, 4) * root(2, 24) * ConstGlaisher ^ (-3 / 2) * root(exponentialE, 8)
+radicals-past-the-automatic-special-angle-table	FunctionExpand(sin(pi / 15))	1 / 8 * (-sqrt(15) + sqrt(3) + sqrt(10 + 2 * sqrt(5)))
+half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	FunctionExpand(cos(pi / 24))	sqrt(2) / 4 * sqrt(4 + sqrt(2) + sqrt(6))
+a-rising-factorial-with-an-integer-length	FunctionExpand(pochhammer(x, 3))	x * (x + 1) * (x + 2)
+binom-n2-frac-n-n-1-2	FunctionExpand(binomial(n, 2))	n * (n - 1) / 2
+a-generic-cos-argument-passes-through-unchanged	FunctionExpand(cos(theta))	cos(theta)

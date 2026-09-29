@@ -8,8 +8,8 @@ h-1-the-first-term	HarmonicNumber(1)	1
 h-10-3-exact-generalized-sum	HarmonicNumber(10, 3)	19_164_113_947 / 16_003_008_000
 h-5-0-sum-k-1-5-1-5	HarmonicNumber(5, 0)	5
 h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber(0, 3)	0
-no-sum-below-n-0-one-argument-form	HarmonicNumber(-1)	ComplexInfinity
-no-sum-below-n-0-two-argument-form	HarmonicNumber(-2, 3)	ComplexInfinity
+no-sum-below-n-0-one-argument-form	HarmonicNumber(-1)	complexInfinity
+no-sum-below-n-0-two-argument-form	HarmonicNumber(-2, 3)	complexInfinity
 symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber(n)	HarmonicNumber(n)
 n-harmonicnumber-0p5	N(HarmonicNumber(0.5))	0.613_705_638_880_109_381_166
 n-harmonicnumber-complex-3-plus-2i	N(HarmonicNumber(3 + 2i))	1.972_576_411_044_740_8 + 0.516_961_128_796_076_4i
@@ -31,18 +31,18 @@ h-complex-neg1-5-plus-4i-order-3-2	HarmonicNumber(-1.5 + 4i, 3 / 2)	2.005_917_82
 non-integer-arguments-via-psi-z-1-gamma	HarmonicNumber(0.33)	0.441_523_646_937_363_528_111
 the-generalized-form-off-the-integers-via-zeta-r	HarmonicNumber(0.8, 3)	0.940_124_048_948_776_980_484
 complex-arguments	HarmonicNumber(1.5 + 2i)	1.617_049_423_074_486_3 + 0.780_197_135_729_858_8i
-order-r-1-off-the-integers-is-plain-h-z-h-e-1	N(HarmonicNumber(ExponentialE, 1))	1.750_021_380_536_541_7
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	N(HarmonicNumber(exponentialE, 1))	1.750_021_380_536_541_7
 listable-threads-over-a-list	HarmonicNumber([2, 3, 5, 7, 11])	[3 / 2, 11 / 6, 137 / 60, 363 / 140, 83_711 / 27_720]
-threads-elementwise-over-an-array-of-orders-and	HarmonicNumber(2, [[1 / 2, 2], [2, 1 / 2]])	[[1 + Sqrt(2) / 2, 5 / 4], [5 / 4, 1 + Sqrt(2) / 2]]
-interval-arithmetic-in-the-order	HarmonicNumber(0.2, Interval(2.1, 2.2))	Interval(0.386_346_941_184_175_9, 0.395_092_392_240_286_8)
+threads-elementwise-over-an-array-of-orders-and	HarmonicNumber(2, [[1 / 2, 2], [2, 1 / 2]])	[[1 + sqrt(2) / 2, 5 / 4], [5 / 4, 1 + sqrt(2) / 2]]
+interval-arithmetic-in-the-order	HarmonicNumber(0.2, interval(2.1, 2.2))	interval(0.386_346_941_184_175_9, 0.395_092_392_240_286_8)
 uncertainty-propagation-in-the-order	HarmonicNumber(3 / 2, Around(2.1, 0.01))	Around(1.145_516_434_049_132_6, 0.000_879_982_646_698_109_1)
 to-exactly-30-significant-digits-not-yet-31-come	N(HarmonicNumber(1 / 2), 30)	0.613_705_638_880_109_381_165_535_757_084
 order-1-gives-h-z-itself-not-the-zeta-1-pole	N(HarmonicNumber(2.5, 1))	1.680_372_305_546_776_047_837
 at-an-integer-order-1-agrees-exactly-with-the	HarmonicNumber(10, 1)	7_381 / 2_520
-no-sum-below-n-0	HarmonicNumber(-3)	ComplexInfinity
-h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber(1 / 2)	2 - 2 * Ln(2)
-h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber(1 / 4)	4 - 3 * Ln(2) + -1 / 2 * Pi
+no-sum-below-n-0	HarmonicNumber(-3)	complexInfinity
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber(1 / 2)	2 - 2 * ln(2)
+h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber(1 / 4)	4 - 3 * ln(2) + -1 / 2 * pi
 symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	HarmonicNumber(n, -1)	1 / 2 * n ^ 2 + 1 / 2 * n
-the-harmonic-series-diverges	HarmonicNumber(PositiveInfinity)	PositiveInfinity
-h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber(PositiveInfinity, 2)	1 / 6 * Pi ^ 2
+the-harmonic-series-diverges	HarmonicNumber(positiveInfinity)	positiveInfinity
+h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber(positiveInfinity, 2)	1 / 6 * pi ^ 2
 a-non-integer-order-stays-symbolic-under-plain	HarmonicNumber(5, 1 / 2)	HarmonicNumber(5, 1 / 2)

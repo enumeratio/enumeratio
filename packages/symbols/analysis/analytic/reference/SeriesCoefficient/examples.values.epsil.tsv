@@ -1,8 +1,8 @@
 id	in	out
-exp-about-a-nonzero-point	SeriesCoefficient(Exp(x), [x, 1, 2])	1 / 2 * ExponentialE
-sin-about-zero	SeriesCoefficient(Sin(x), [x, 0, 5])	1 / 120
+exp-about-a-nonzero-point	SeriesCoefficient(exp(x), [x, 1, 2])	1 / 2 * exponentialE
+sin-about-zero	SeriesCoefficient(sin(x), [x, 0, 5])	1 / 120
 geometric-series	SeriesCoefficient(1 / (1 - x), [x, 0, 10])	1
-log-series	SeriesCoefficient(Ln(1 + x), [x, 0, 4])	-1 / 4
-a-puiseux-half-integer-order-declines	SeriesCoefficient(Sqrt(x), [x, 0, 1 / 2])	SeriesCoefficient(Sqrt(x), [x, 0, 1 / 2])
+log-series	SeriesCoefficient(ln(1 + x), [x, 0, 4])	-1 / 4
+a-puiseux-half-integer-order-declines	SeriesCoefficient(sqrt(x), [x, 0, 1 / 2])	SeriesCoefficient(sqrt(x), [x, 0, 1 / 2])
 a-negative-order-laurent-coefficient-declines	SeriesCoefficient(1 / x, [x, 0, -1])	SeriesCoefficient(1 / x, [x, 0, -1])
-a-removable-singularity-declines	SeriesCoefficient(Sin(x) / x, [x, 0, 0])	SeriesCoefficient(Sin(x) / x, [x, 0, 0])
+a-removable-singularity-declines	SeriesCoefficient(sin(x) / x, [x, 0, 0])	SeriesCoefficient(sin(x) / x, [x, 0, 0])

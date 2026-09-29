@@ -1,14 +1,14 @@
 id	in	out	back
-fold-add-0-list-1-2-3-4	Fold(Add, 0, [1, 2, 3, 4])	10	
-fold-multiply-1-list-1-2-3-4	Fold(Multiply, 1, [1, 2, 3, 4])	24	
-the-shape-of-a-left-fold	Fold(f, x, [a, b, c])	f(f(f(x, a), b), c)	
-fold-max-0-list-3-1-4-1-5	Fold(Max, 0, [3, 1, 4, 1, 5])	5	
-symbolic-elements	Fold(Add, 0, [a, b, c])	a + b + c	
-any-two-argument-function-here-one-that-nests	Fold(Function([_1, _2]), x, [a, b])	[[x, a], b]	Unreadable
-without-a-seed-folding-starts-from-the-first	Fold(f, [a, b, c])	f(f(a, b), c)	
-assemble-a-number-from-its-decimal-digits	Fold(Function(10 * _1 + _2), 0, [1, 2, 3, 4])	1_234	Unreadable
-or-from-its-binary-digits-1011-2-11	Fold(Function(2 * _1 + _2), 0, [1, 0, 1, 1])	11	Unreadable
-horner-s-rule-for-ax-2-bx-c	Fold(Function(x * _1 + _2), 0, [a, b, c])	x * (a * x + b) + c	Unreadable
-evaluate-the-continued-fraction-1-2-2-2-from-the	Fold(Function(_2 + 1 / _1), 2, [2, 2, 1])	17 / 12	Unreadable
-folding-an-empty-list-returns-the-seed	Fold(f, x, [])	x	
-folding-with-add-is-a-sum-1-2-100	Fold(Add, 0, Range(100))	5_050	
+fold-add-0-list-1-2-3-4	fold(Add, 0, [1, 2, 3, 4])	10	
+fold-multiply-1-list-1-2-3-4	fold(Multiply, 1, [1, 2, 3, 4])	24	
+the-shape-of-a-left-fold	fold(f, x, [a, b, c])	f(f(f(x, a), b), c)	
+fold-max-0-list-3-1-4-1-5	fold(max, 0, [3, 1, 4, 1, 5])	5	
+symbolic-elements	fold(Add, 0, [a, b, c])	a + b + c	
+any-two-argument-function-here-one-that-nests	fold(Function([_1, _2]), x, [a, b])	[[x, a], b]	Unreadable
+without-a-seed-folding-starts-from-the-first	fold(f, [a, b, c])	f(f(a, b), c)	
+assemble-a-number-from-its-decimal-digits	fold(Function(10 * _1 + _2), 0, [1, 2, 3, 4])	1_234	Unreadable
+or-from-its-binary-digits-1011-2-11	fold(Function(2 * _1 + _2), 0, [1, 0, 1, 1])	11	Unreadable
+horner-s-rule-for-ax-2-bx-c	fold(Function(x * _1 + _2), 0, [a, b, c])	x * (a * x + b) + c	Unreadable
+evaluate-the-continued-fraction-1-2-2-2-from-the	fold(Function(_2 + 1 / _1), 2, [2, 2, 1])	17 / 12	Unreadable
+folding-an-empty-list-returns-the-seed	fold(f, x, [])	x	
+folding-with-add-is-a-sum-1-2-100	fold(Add, 0, Range(100))	5_050	

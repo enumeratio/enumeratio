@@ -1,57 +1,57 @@
 id	in	out
-powermod-2-10-3	PowerMod(2, 10, 3)	1
-powermod-3-50-11	PowerMod(3, 50, 11)	1
-powermod-3-2-7	PowerMod(3, 2, 7)	2
-a-negative-exponent-gives-the-modular-inverse	PowerMod(2, -1, 7)	4
-3-1-equiv-5-and-5-2-25-equiv-4	PowerMod(3, -2, 7)	4
-a-square-root-of-3-equiv-1-pmod-2	PowerMod(3, 1 / 2, 2)	1
-threads-over-a-list-of-bases	PowerMod([2, 3, 4], 2, 5)	[4, 4, 1]
-exponent-0-evaluates-even-at-a-negative-modulus	PowerMod(-2, 0, -14)	-13
-a-rational-exponent-is-a-modular-root-the-least	PowerMod(4, 1 / 2, 7)	2
-threads-over-lists-the-period-is-the-order-of-2	PowerMod(2, [10, 11, 12, 13, 14], 5)	[4, 3, 1, 2, 4]
-a-301-digit-base	PowerMod(10 ^ 300 + 1, 7, 5)	1
-a-square-root-of-3-modulo-the-prime-10-30-57	PowerMod(3, 1 / 2, 10 ^ 30 + 57)	492_767_688_934_650_018_614_948_489_645
-a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	PowerMod(2 / 3, 1, 7)	3
-gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	PowerMod(2 + i, 2, 3)	i
-a-gaussian-modulus-and-an-exponent-of-10-30	PowerMod(1 + 2i, 10 ^ 30, 7 + 2i)	1 + 2i
-11-7i-is-a-unit-mod-7-4i-so-it-has-negative	PowerMod(11 - 7i, -4, 7 + 4i)	-2 - i
-a-square-root-of-3-mod-2-is-1-trivially	PowerMod(3, 1 / 2, 2)	1
-exponent-0-base-minus-4-modulus-minus-2	PowerMod(-4, 0, -2)	-1
-exponent-0-base-5-modulus-minus-7	PowerMod(5, 0, -7)	-6
-exponent-0-with-a-positive-modulus	PowerMod(2, 0, 14)	1
-base-a-unit-any-exponent	PowerMod(i, 5, 3 + 4i)	i
-exponent-0-is-always-1	PowerMod(2 + i, 0, 7)	1
-a-negative-exponent-inverts-first	PowerMod(2 + i, -1, 2 - i)	-1
-a-negative-exponent-past-the-first-power	PowerMod(2 + i, -3, 2 - i)	-1
-modulus-a-real-prime-3-mod-4	PowerMod(3 + 4i, 4, 3)	1
-modulus-a-negative-real-prime	PowerMod(3 + 4i, 3, -7)	PowerMod(3 + 4i, 3, -7)
-modulus-a-composite-gaussian-norm-25	PowerMod(1 + i, 6, 3 + 4i)	-1 - i
-no-inverse-for-a-negative-exponent-when-the-base	PowerMod(3 + 4i, -2, 2 + i)	PowerMod(3 + 4i, -2, 2 + i)
-a-bignum-exponent-base-and-modulus-small	PowerMod(2 + i, 100_000_000_000_000_000_000, 7)	4
-a-negative-bignum-exponent	PowerMod(1 + i, -123_456_789_012_345_678_901, 11)	5 - 5i
-modulus-past-2-53	PowerMod(4 + i, 10, 100_000_000_000_000_000_001 + 9_007_199_254_740_993i)	-1_093_425 + 905_768i
-a-real-base-and-modulus-need-no-gaussian	PowerMod(5, 5, 7)	3
-result-comes-out-real-reduced-into-0-m-like-an	PowerMod(1 + i, 4, 5)	1
-modulus-1-4i-the-other-prime-above-17	PowerMod(8 + 2i, 3, 1 + 4i)	-1
-large-norm-base-and-modulus	PowerMod(123 + 456i, 7, 1_000 + i)	292 + 118i
-base-an-associate-times-1	PowerMod(-3 - 4i, 5, 7)	-1 + i
-base-an-associate-times-i	PowerMod(4 - 3i, 5, 7)	-1 - i
-modulus-a-prime-above-13	PowerMod(6 + 8i, 3, 3 + 2i)	i
-modulus-the-other-prime-above-13	PowerMod(6 + 8i, 3, 2 + 3i)	i
-base-a-real-prime-s-associate-by-the-unit-i	PowerMod(7i, 3, 3 + 2i)	1
-modulus-a-real-composite-5-squared	PowerMod(1 + i, 4, 25)	21
-a-negative-unit-exponent-is-its-own-inverse	PowerMod(i, -1, 7)	-i
-modulus-a-negative-associate	PowerMod(2 + i, 5, -2 - 3i)	-1 - i
-one-step-of-rsa-style-modular-exponentiation-7	PowerMod(7, 13, 33)	13
-341-11-cdot-31-passes-fermat-s-test-to-base-2	PowerMod(2, 340, 341)	1
-diffie-hellman-both-parties-reach-the-shared-key	PowerMod(PowerMod(5, 6, 23), 15, 23) == PowerMod(PowerMod(5, 15, 23), 6, 23)	True
-by-definition-a-b-bmod-m-computed-without-ever	PowerMod(2, 10, 3) == 2 ^ 10 % 3	True
-euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	PowerMod(7, Totient(19), 19)	1
-no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	PowerMod(2, -1, 4)	PowerMod(2, -1, 4)
-a-nonzero-exponent-at-the-same-negative-modulus	PowerMod(-2, 3, -14)	PowerMod(-2, 3, -14)
-2-is-not-a-square-mod-5-so-there-is-no-root	PowerMod(2, 1 / 2, 5)	PowerMod(2, 1 / 2, 5)
-a-positive-exponent-at-a-negative-modulus-1-2	PowerMod(1, 2, -2)	PowerMod(1, 2, -2)
-a-positive-exponent-at-a-negative-modulus-3-2-7	PowerMod(3, 2, -7)	PowerMod(3, 2, -7)
-a-positive-exponent-at-a-negative-modulus-341	PowerMod(-1, 340, -2)	PowerMod(-1, 340, -2)
-a-positive-exponent-at-a-negative-modulus-5-1-7	PowerMod(5, 1, -7)	PowerMod(5, 1, -7)
-a-negative-exponent-at-a-negative-modulus-2-1-5	PowerMod(2, -1, -5)	PowerMod(2, -1, -5)
+powermod-2-10-3	powerMod(2, 10, 3)	1
+powermod-3-50-11	powerMod(3, 50, 11)	1
+powermod-3-2-7	powerMod(3, 2, 7)	2
+a-negative-exponent-gives-the-modular-inverse	powerMod(2, -1, 7)	4
+3-1-equiv-5-and-5-2-25-equiv-4	powerMod(3, -2, 7)	4
+a-square-root-of-3-equiv-1-pmod-2	powerMod(3, 1 / 2, 2)	1
+threads-over-a-list-of-bases	powerMod([2, 3, 4], 2, 5)	[4, 4, 1]
+exponent-0-evaluates-even-at-a-negative-modulus	powerMod(-2, 0, -14)	-13
+a-rational-exponent-is-a-modular-root-the-least	powerMod(4, 1 / 2, 7)	2
+threads-over-lists-the-period-is-the-order-of-2	powerMod(2, [10, 11, 12, 13, 14], 5)	[4, 3, 1, 2, 4]
+a-301-digit-base	powerMod(10 ^ 300 + 1, 7, 5)	1
+a-square-root-of-3-modulo-the-prime-10-30-57	powerMod(3, 1 / 2, 10 ^ 30 + 57)	492_767_688_934_650_018_614_948_489_645
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	powerMod(2 / 3, 1, 7)	3
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	powerMod(2 + i, 2, 3)	i
+a-gaussian-modulus-and-an-exponent-of-10-30	powerMod(1 + 2i, 10 ^ 30, 7 + 2i)	1 + 2i
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative	powerMod(11 - 7i, -4, 7 + 4i)	-2 - i
+a-square-root-of-3-mod-2-is-1-trivially	powerMod(3, 1 / 2, 2)	1
+exponent-0-base-minus-4-modulus-minus-2	powerMod(-4, 0, -2)	-1
+exponent-0-base-5-modulus-minus-7	powerMod(5, 0, -7)	-6
+exponent-0-with-a-positive-modulus	powerMod(2, 0, 14)	1
+base-a-unit-any-exponent	powerMod(i, 5, 3 + 4i)	i
+exponent-0-is-always-1	powerMod(2 + i, 0, 7)	1
+a-negative-exponent-inverts-first	powerMod(2 + i, -1, 2 - i)	-1
+a-negative-exponent-past-the-first-power	powerMod(2 + i, -3, 2 - i)	-1
+modulus-a-real-prime-3-mod-4	powerMod(3 + 4i, 4, 3)	1
+modulus-a-negative-real-prime	powerMod(3 + 4i, 3, -7)	powerMod(3 + 4i, 3, -7)
+modulus-a-composite-gaussian-norm-25	powerMod(1 + i, 6, 3 + 4i)	-1 - i
+no-inverse-for-a-negative-exponent-when-the-base	powerMod(3 + 4i, -2, 2 + i)	powerMod(3 + 4i, -2, 2 + i)
+a-bignum-exponent-base-and-modulus-small	powerMod(2 + i, 100_000_000_000_000_000_000, 7)	4
+a-negative-bignum-exponent	powerMod(1 + i, -123_456_789_012_345_678_901, 11)	5 - 5i
+modulus-past-2-53	powerMod(4 + i, 10, 100_000_000_000_000_000_001 + 9_007_199_254_740_993i)	-1_093_425 + 905_768i
+a-real-base-and-modulus-need-no-gaussian	powerMod(5, 5, 7)	3
+result-comes-out-real-reduced-into-0-m-like-an	powerMod(1 + i, 4, 5)	1
+modulus-1-4i-the-other-prime-above-17	powerMod(8 + 2i, 3, 1 + 4i)	-1
+large-norm-base-and-modulus	powerMod(123 + 456i, 7, 1_000 + i)	292 + 118i
+base-an-associate-times-1	powerMod(-3 - 4i, 5, 7)	-1 + i
+base-an-associate-times-i	powerMod(4 - 3i, 5, 7)	-1 - i
+modulus-a-prime-above-13	powerMod(6 + 8i, 3, 3 + 2i)	i
+modulus-the-other-prime-above-13	powerMod(6 + 8i, 3, 2 + 3i)	i
+base-a-real-prime-s-associate-by-the-unit-i	powerMod(7i, 3, 3 + 2i)	1
+modulus-a-real-composite-5-squared	powerMod(1 + i, 4, 25)	21
+a-negative-unit-exponent-is-its-own-inverse	powerMod(i, -1, 7)	-i
+modulus-a-negative-associate	powerMod(2 + i, 5, -2 - 3i)	-1 - i
+one-step-of-rsa-style-modular-exponentiation-7	powerMod(7, 13, 33)	13
+341-11-cdot-31-passes-fermat-s-test-to-base-2	powerMod(2, 340, 341)	1
+diffie-hellman-both-parties-reach-the-shared-key	powerMod(powerMod(5, 6, 23), 15, 23) == powerMod(powerMod(5, 15, 23), 6, 23)	True
+by-definition-a-b-bmod-m-computed-without-ever	powerMod(2, 10, 3) == 2 ^ 10 % 3	True
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	powerMod(7, totient(19), 19)	1
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	powerMod(2, -1, 4)	powerMod(2, -1, 4)
+a-nonzero-exponent-at-the-same-negative-modulus	powerMod(-2, 3, -14)	powerMod(-2, 3, -14)
+2-is-not-a-square-mod-5-so-there-is-no-root	powerMod(2, 1 / 2, 5)	powerMod(2, 1 / 2, 5)
+a-positive-exponent-at-a-negative-modulus-1-2	powerMod(1, 2, -2)	powerMod(1, 2, -2)
+a-positive-exponent-at-a-negative-modulus-3-2-7	powerMod(3, 2, -7)	powerMod(3, 2, -7)
+a-positive-exponent-at-a-negative-modulus-341	powerMod(-1, 340, -2)	powerMod(-1, 340, -2)
+a-positive-exponent-at-a-negative-modulus-5-1-7	powerMod(5, 1, -7)	powerMod(5, 1, -7)
+a-negative-exponent-at-a-negative-modulus-2-1-5	powerMod(2, -1, -5)	powerMod(2, -1, -5)

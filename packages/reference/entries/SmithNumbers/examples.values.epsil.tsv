@@ -1,4 +1,4 @@
 id	in	out
-the-first-20-terms	Take(SmithNumbers, 20)	"[\n  4,\n  22,\n  27,\n  58,\n  85,\n  94,\n  121,\n  166,\n  202,\n  265,\n  274,\n  319,\n  346,\n  355,\n  378,\n  382,\n  391,\n  438,\n  454,\n  483,\n]"
+the-first-20-terms	take(SmithNumbers, 20)	"[\n  4,\n  22,\n  27,\n  58,\n  85,\n  94,\n  121,\n  166,\n  202,\n  265,\n  274,\n  319,\n  346,\n  355,\n  378,\n  382,\n  391,\n  438,\n  454,\n  483,\n]"
 4-is-a-smith-number	4 in SmithNumbers	True
 6-is-not-a-smith-number	6 in SmithNumbers	False

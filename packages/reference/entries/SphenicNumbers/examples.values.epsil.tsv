@@ -1,2 +1,2 @@
 id	in	out
-the-first-20-terms	Take(SphenicNumbers, 20)	"[\n  30,\n  42,\n  66,\n  70,\n  78,\n  102,\n  105,\n  110,\n  114,\n  130,\n  138,\n  154,\n  165,\n  170,\n  174,\n  182,\n  186,\n  190,\n  195,\n  222,\n]"
+the-first-20-terms	take(SphenicNumbers, 20)	"[\n  30,\n  42,\n  66,\n  70,\n  78,\n  102,\n  105,\n  110,\n  114,\n  130,\n  138,\n  154,\n  165,\n  170,\n  174,\n  182,\n  186,\n  190,\n  195,\n  222,\n]"

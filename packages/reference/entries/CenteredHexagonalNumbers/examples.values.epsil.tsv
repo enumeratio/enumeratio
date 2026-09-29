@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(CenteredHexagonalNumbers, 25)	"[\n  1,\n  7,\n  19,\n  37,\n  61,\n  91,\n  127,\n  169,\n  217,\n  271,\n  331,\n  397,\n  469,\n  547,\n  631,\n  721,\n  817,\n  919,\n  1_027,\n  1_141,\n  1_261,\n  1_387,\n  1_519,\n  1_657,\n  1_801,\n]"
+the-first-25-terms	take(CenteredHexagonalNumbers, 25)	"[\n  1,\n  7,\n  19,\n  37,\n  61,\n  91,\n  127,\n  169,\n  217,\n  271,\n  331,\n  397,\n  469,\n  547,\n  631,\n  721,\n  817,\n  919,\n  1_027,\n  1_141,\n  1_261,\n  1_387,\n  1_519,\n  1_657,\n  1_801,\n]"

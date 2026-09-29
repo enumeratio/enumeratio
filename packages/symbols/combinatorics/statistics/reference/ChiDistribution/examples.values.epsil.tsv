@@ -1,4 +1,4 @@
 id	in	out
-chi-pdf-exact	PDF(ChiDistribution(3), 1)	Sqrt(2) / (2 * Gamma(3 / 2) * Sqrt(ExponentialE))
-chi-cdf-exact	CDF(ChiDistribution(3), 1)	1 - GammaRegularized(3 / 2, 1 / 2)
-chi-mean-exact	Mean(ChiDistribution(3))	Sqrt(2) * Gamma(2) / Gamma(3 / 2)
+chi-pdf-exact	pdf(ChiDistribution(3), 1)	sqrt(2) / (2 * gamma(3 / 2) * sqrt(exponentialE))
+chi-cdf-exact	cdf(ChiDistribution(3), 1)	1 - gammaRegularized(3 / 2, 1 / 2)
+chi-mean-exact	mean(ChiDistribution(3))	sqrt(2) * gamma(2) / gamma(3 / 2)

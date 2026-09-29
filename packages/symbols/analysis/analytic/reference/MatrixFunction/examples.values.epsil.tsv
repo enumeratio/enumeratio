@@ -1,6 +1,6 @@
 id	in	out	back
-the-principal-square-root-of-a-diagonal-matrix	MatrixFunction(Sqrt, [[4, 0], [0, 9]])	[[2, 0], [0, 3]]	
+the-principal-square-root-of-a-diagonal-matrix	MatrixFunction(sqrt, [[4, 0], [0, 9]])	[[2, 0], [0, 3]]	
 on-a-diagonal-matrix-f-acts-on-the-diagonal	MatrixFunction(f, [[a, 0], [0, b]])	[[f(a), 0], [0, f(b)]]	
-matrixfunction-cos-list-list-0-0-list-0-0	MatrixFunction(Cos, [[0, 0], [0, 0]])	[[1, 0], [0, 1]]	
-with-exp-it-is-matrixexp	MatrixFunction(Exp, [[0, 0], [0, 0]])	[[1, 0], [0, 1]]	
+matrixfunction-cos-list-list-0-0-list-0-0	MatrixFunction(cos, [[0, 0], [0, 0]])	[[1, 0], [0, 1]]	
+with-exp-it-is-matrixexp	MatrixFunction(exp, [[0, 0], [0, 0]])	[[1, 0], [0, 1]]	
 a-polynomial-f-agrees-with-the-matrix-power	MatrixFunction(Function(_1 ^ 2), [[1, 1], [0, 1]])	[[1, 2], [0, 1]]	Unreadable

@@ -1,13 +1,13 @@
 id	in	out
-lambertw-0	LambertW(0)	0
-1-cdot-e-1-e	LambertW(ExponentialE)	1
-branch-2-at-5	N(LambertW(5, 2))	-0.784_086_339_255_851_3 + 10.923_920_160_375_756i
-branch-1-at-neg-1	N(LambertW(-1, 1))	-2.062_277_729_598_284 + 7.588_631_178_472_513i
-branch-5-at-10	N(LambertW(10, 5))	-1.092_879_582_990_904_2 + 29.808_483_249_094_696i
-branch-3-at-a-complex-argument	N(LambertW(1 + 2i, 3))	-2.107_207_506_626_455_3 + 18.271_085_431_136_87i
-the-branch-point-1-e	LambertW(-(1 / ExponentialE))	-1
-2e-2-w-e-w-at-w-2	LambertW(2 * ExponentialE ^ 2)	2
-ln-2-cdot-e-ln-2-frac-ln-2-2	LambertW(-(Ln(2) / 2))	-Ln(2)
-a-branch-other-than-0-or-1-checked-against-n	N(LambertW(-0.14, -3))	-4.645_279_174_278_859 - 13.812_745_325_218_817i
-the-branch-k-1-written-in-compute-engine-s-z-k	N(LambertW(1, 1))	-1.533_913_319_793_574_4 + 4.375_185_153_061_898i
-the-real-branch-k-1-on-1-e-z-0	N(LambertW(-0.2, -1))	-2.542_641_357_773_526_424_29
+lambertw-0	lambertW(0)	0
+1-cdot-e-1-e	lambertW(exponentialE)	1
+branch-2-at-5	N(lambertW(5, 2))	-0.784_086_339_255_851_3 + 10.923_920_160_375_756i
+branch-1-at-neg-1	N(lambertW(-1, 1))	-2.062_277_729_598_284 + 7.588_631_178_472_513i
+branch-5-at-10	N(lambertW(10, 5))	-1.092_879_582_990_904_2 + 29.808_483_249_094_696i
+branch-3-at-a-complex-argument	N(lambertW(1 + 2i, 3))	-2.107_207_506_626_455_3 + 18.271_085_431_136_87i
+the-branch-point-1-e	lambertW(-(1 / exponentialE))	-1
+2e-2-w-e-w-at-w-2	lambertW(2 * exponentialE ^ 2)	2
+ln-2-cdot-e-ln-2-frac-ln-2-2	lambertW(-(ln(2) / 2))	-ln(2)
+a-branch-other-than-0-or-1-checked-against-n	N(lambertW(-0.14, -3))	-4.645_279_174_278_859 - 13.812_745_325_218_817i
+the-branch-k-1-written-in-compute-engine-s-z-k	N(lambertW(1, 1))	-1.533_913_319_793_574_4 + 4.375_185_153_061_898i
+the-real-branch-k-1-on-1-e-z-0	N(lambertW(-0.2, -1))	-2.542_641_357_773_526_424_29

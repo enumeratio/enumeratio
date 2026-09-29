@@ -1,7 +1,7 @@
 id	in	out
 a-downward-parabola-s-vertex	Maximize(-x ^ 2 + 4x - 1, x)	[3, [Rule(x, 2)]]
-unbounded-above-reports-positive-infinity	Maximize(x ^ 3, x)	[PositiveInfinity, [Rule(x, PositiveInfinity)]]
+unbounded-above-reports-positive-infinity	Maximize(x ^ 3, x)	[positiveInfinity, [Rule(x, positiveInfinity)]]
 a-bounded-interval-constraint	Maximize([-x ^ 2 + 4x - 1, x >= 0 && x <= 1], x)	[2, [Rule(x, 1)]]
-exp-of-a-negated-argument-is-unbounded-above	Maximize(Exp(-x), x)	[PositiveInfinity, [Rule(x, NegativeInfinity)]]
-a-downward-quadratic-radicand	Maximize(Sqrt(4 - x ^ 2), x)	[2, [Rule(x, 0)]]
+exp-of-a-negated-argument-is-unbounded-above	Maximize(exp(-x), x)	[positiveInfinity, [Rule(x, negativeInfinity)]]
+a-downward-quadratic-radicand	Maximize(sqrt(4 - x ^ 2), x)	[2, [Rule(x, 0)]]
 declines-more-than-one-variable	Maximize(-(x ^ 2 + y ^ 2), [x, y])	Maximize(-(x ^ 2 + y ^ 2), [x, y])

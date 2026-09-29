@@ -1,2 +1,2 @@
 id	in	out
-the-first-20-terms	Take(SquarefreeSemiprimes, 20)	[6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69]
+the-first-20-terms	take(SquarefreeSemiprimes, 20)	[6, 10, 14, 15, 21, 22, 26, 33, 34, 35, 38, 39, 46, 51, 55, 57, 58, 62, 65, 69]

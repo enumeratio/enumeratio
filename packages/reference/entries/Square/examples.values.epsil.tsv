@@ -7,4 +7,4 @@ threads-element-wise-over-a-list	Square([2, 3, -4])	[4, 9, 16]
 the-area-of-a-3-3-square-tile	Square(3)	9
 even-function-x-2-x-2	Square(-5) == Square(5)	True
 1-i-2-2i-squaring-a-complex-number-needn-t-stay	Square(1 + i) == 2i	True
-infinity-squared-stays-infinite-rather-than	Square(PositiveInfinity)	PositiveInfinity
+infinity-squared-stays-infinite-rather-than	Square(positiveInfinity)	positiveInfinity

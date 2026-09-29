@@ -273,6 +273,7 @@ export class NotatioCollectionTable extends LitElement {
       if (generation !== this.#generation) return;
       this.#engine = engine;
       const { json, errors } = parseExpression(src, {
+        ce: engine,
         parseLatex: (tex) => engine.parse(tex).json,
       });
       if (errors.length > 0) throw new Error(errors.join("; "));
@@ -313,6 +314,7 @@ export class NotatioCollectionTable extends LitElement {
     const engine = this.#engine;
     if (!engine) return { error: "engine not ready" };
     const { json, errors } = parseExpression(source, {
+      ce: engine,
       parseLatex: (tex) => engine.parse(tex).json,
     });
     return errors.length > 0 ? { error: errors.join("; ") } : { json, error: "" };

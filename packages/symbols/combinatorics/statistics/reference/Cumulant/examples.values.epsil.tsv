@@ -1,4 +1,4 @@
 id	in	out
 cumulant-order-1-is-mean	Cumulant(ChiSquareDistribution(3), 1)	3
 cumulant-order-2-is-variance	Cumulant(ChiSquareDistribution(3), 2)	6
-cumulant-poisson-order-5	Cumulant(PoissonDistribution(3), 5)	3
+cumulant-poisson-order-5	Cumulant(poissonDistribution(3), 5)	3

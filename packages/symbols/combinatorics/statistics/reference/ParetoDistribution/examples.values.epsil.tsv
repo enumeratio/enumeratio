@@ -1,5 +1,5 @@
 id	in	out
-pareto-pdf-exact	PDF(ParetoDistribution(1, 3), 2)	3 / 16
-pareto-cdf-exact	CDF(ParetoDistribution(1, 3), 2)	7 / 8
-pareto-mean-exact	Mean(ParetoDistribution(1, 3))	3 / 2
-pareto-variance-exact	Variance(ParetoDistribution(1, 3))	3 / 4
+pareto-pdf-exact	pdf(ParetoDistribution(1, 3), 2)	3 / 16
+pareto-cdf-exact	cdf(ParetoDistribution(1, 3), 2)	7 / 8
+pareto-mean-exact	mean(ParetoDistribution(1, 3))	3 / 2
+pareto-variance-exact	variance(ParetoDistribution(1, 3))	3 / 4

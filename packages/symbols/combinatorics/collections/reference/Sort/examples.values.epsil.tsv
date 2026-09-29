@@ -1,17 +1,17 @@
 id	in	out	back
-sort-list-3-1-2	Sort([3, 1, 2])	[1, 2, 3]	
-sort-list-4-2-5-1-3	Sort([4, 2, 5, 1, 3])	[1, 2, 3, 4, 5]	
-symbols-sort-alphabetically	Sort([d, b, c, a])	[a, b, c, d]	
-sort-association-orders-by-value	Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))	Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))	
-a-custom-comparator-sorts-in-a-different-order	Sort([3, 1, 2], Function(_1 > _2))	[3, 2, 1]	Unreadable
-a-list-of-strings-sorts-lexicographically	Sort([banana, apple, cherry])	[apple, banana, cherry]	
-integers-rationals-and-floats-together-sort-by	Sort([3 / 2, 1, 0.5, -2])	[-2, 0.5, 1, 3 / 2]	
-exact-numeric-constants-sort-by-their-value	Sort([Pi, ExponentialE, 2, 3, 1, Sqrt(2)])	[1, Sqrt(2), 2, ExponentialE, 3, Pi]	
-less-as-the-ordering-function-sorts-by-numeric	Sort([Pi, ExponentialE, 2, 3, 1, Sqrt(2)], Less)	[1, Sqrt(2), 2, ExponentialE, 3, Pi]	
-a-named-ordering-function-greater-sorts-in	Sort([4, 1, 3, 2, 2], Greater)	[4, 3, 2, 2, 1]	
-sorting-pairs-by-their-second-element-with-a	Sort([[a, 2], [c, 1], [d, 3]], Function(_1[2] < _2[2]))	[[c, 1], [a, 2], [d, 3]]	Unreadable
-sorts-the-arguments-of-any-head-not-just-a-list	Sort(f(b, a, c))	f(a, b, c)	
-sort-is-idempotent-sorting-an-already-sorted	Sort(Sort([3, 1, 2])) == Sort([3, 1, 2])	True	
-sort-c-at-c-ordering-c-see-ordering-and-at	Sort([3, 1, 2]) == [3, 1, 2][Ordering([3, 1, 2])]	True	
-the-result-doesn-t-depend-on-the-input-order	Sort(Reverse([3, 1, 2])) == Sort([3, 1, 2])	True	
-the-empty-list-sorts-to-itself	Sort([])	[]	
+sort-list-3-1-2	sort([3, 1, 2])	[1, 2, 3]	
+sort-list-4-2-5-1-3	sort([4, 2, 5, 1, 3])	[1, 2, 3, 4, 5]	
+symbols-sort-alphabetically	sort([d, b, c, a])	[a, b, c, d]	
+sort-association-orders-by-value	sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))	Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))	
+a-custom-comparator-sorts-in-a-different-order	sort([3, 1, 2], Function(_1 > _2))	[3, 2, 1]	Unreadable
+a-list-of-strings-sorts-lexicographically	sort([banana, apple, cherry])	[apple, banana, cherry]	
+integers-rationals-and-floats-together-sort-by	sort([3 / 2, 1, 0.5, -2])	[-2, 0.5, 1, 3 / 2]	
+exact-numeric-constants-sort-by-their-value	sort([pi, exponentialE, 2, 3, 1, sqrt(2)])	[1, sqrt(2), 2, exponentialE, 3, pi]	
+less-as-the-ordering-function-sorts-by-numeric	sort([pi, exponentialE, 2, 3, 1, sqrt(2)], Less)	[1, sqrt(2), 2, exponentialE, 3, pi]	
+a-named-ordering-function-greater-sorts-in	sort([4, 1, 3, 2, 2], Greater)	[4, 3, 2, 2, 1]	
+sorting-pairs-by-their-second-element-with-a	sort([[a, 2], [c, 1], [d, 3]], Function(_1[2] < _2[2]))	[[c, 1], [a, 2], [d, 3]]	Unreadable
+sorts-the-arguments-of-any-head-not-just-a-list	sort(f(b, a, c))	f(a, b, c)	
+sort-is-idempotent-sorting-an-already-sorted	sort(sort([3, 1, 2])) == sort([3, 1, 2])	True	
+sort-c-at-c-ordering-c-see-ordering-and-at	sort([3, 1, 2]) == [3, 1, 2][ordering([3, 1, 2])]	True	
+the-result-doesn-t-depend-on-the-input-order	sort(reverse([3, 1, 2])) == sort([3, 1, 2])	True	
+the-empty-list-sorts-to-itself	sort([])	[]	

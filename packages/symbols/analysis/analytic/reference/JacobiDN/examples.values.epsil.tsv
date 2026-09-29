@@ -28,5 +28,5 @@ m-less-than-0-via-the-imaginary-modulus	N(JacobiDN(0.3, -2))	1.088_512_946_606_2
 a-complex-argument-u	N(JacobiDN(0.3 + 0.4i, 0.5))	1.012_262_082_212_854 - 0.062_849_685_024_787_7i
 u-0-is-1-for-any-m	JacobiDN(0, m)	1
 m-0-is-1-for-any-u	JacobiDN(u, 0)	1
-the-quarter-period-u-elliptick-m-is-sqrt	JacobiDN(EllipticK(m), m)	Sqrt(-m + 1)
+the-quarter-period-u-elliptick-m-is-sqrt	JacobiDN(ellipticK(m), m)	sqrt(-m + 1)
 symbolic-arguments-are-left-unevaluated-rather	JacobiDN(u, m)	JacobiDN(u, m)

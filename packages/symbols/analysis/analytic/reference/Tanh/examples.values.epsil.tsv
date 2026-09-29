@@ -1,20 +1,20 @@
 id	in	out
-n-forces-the-numeric-result-that-plain	N(Tanh(0))	0
-n-tanh-1	N(Tanh(1))	0.761_594_155_955_764_888_119
-stays-symbolic-even-at-0-same-as-sinh-and-cosh	Tanh(0)	0
-a-float-argument-evaluates-directly-no-n-needed	Tanh(2.2)	0.975_743_130_031_451_520_414
-arbitrary-precision-via-n	N(Tanh(11 / 5))	0.975_743_130_031_451_520_414
-evaluates-at-a-complex-argument	Tanh(2.5 + i)	1.005_548_011_895_06 + 0.012_322_138_255_828_353i
-interval-arithmetic-tanh-is-increasing-so-tanh-0	Tanh(Interval(0, Ln(2)))	Interval(0, 3 / 5)
-uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	Tanh(Around(2 / Sqrt(3), 0.1))	Around(0.819_305_290_078_300_8, 0.032_873_884_164_971_15)
-the-horizontal-asymptote-at-infty	Tanh(PositiveInfinity)	1
-tanh-i-pi-4-i-tan-pi-4-i	Tanh(ImaginaryUnit * (Pi / 4))	i
-oddness-pulls-the-sign-out-of-a-symbolic	Tanh(-x)	-Tanh(x)
-tanh-artanh-x-x-for-every-x	Tanh(Artanh(x))	x
-tanh-artanh-2-2-past-the-real-domain	Tanh(Artanh(2))	2
-derivative-sech-2-x	D(Tanh(x), x)	Sech(x) ^ 2
-antiderivative-ln-cosh-x	Integrate(Tanh(x), x)	Ln(Cosh(x))
-tanh-has-no-limit-at-complex-infinity-undefined	Tanh(ComplexInfinity)	`NaN`
-to-30-significant-digits-every-one-correctly	N(Tanh(1), 30)	0.761_594_155_955_764_888_119_458_282_605
-tanh-x-frac-sinh-x-cosh-x	Tanh(1) == Sinh(1) / Cosh(1)	True
-in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	TrigToExp(Tanh(x))	"(-ExponentialE ^ (-x) + ExponentialE ^ x) / (ExponentialE ^ x + ExponentialE ^\n                                                                (-x))"
+n-forces-the-numeric-result-that-plain	N(tanh(0))	0
+n-tanh-1	N(tanh(1))	0.761_594_155_955_764_888_119
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(0)	0
+a-float-argument-evaluates-directly-no-n-needed	tanh(2.2)	0.975_743_130_031_451_520_414
+arbitrary-precision-via-n	N(tanh(11 / 5))	0.975_743_130_031_451_520_414
+evaluates-at-a-complex-argument	tanh(2.5 + i)	1.005_548_011_895_06 + 0.012_322_138_255_828_353i
+interval-arithmetic-tanh-is-increasing-so-tanh-0	tanh(interval(0, ln(2)))	interval(0, 3 / 5)
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	tanh(Around(2 / sqrt(3), 0.1))	Around(0.819_305_290_078_300_8, 0.032_873_884_164_971_15)
+the-horizontal-asymptote-at-infty	tanh(positiveInfinity)	1
+tanh-i-pi-4-i-tan-pi-4-i	tanh(imaginaryUnit * (pi / 4))	i
+oddness-pulls-the-sign-out-of-a-symbolic	tanh(-x)	-tanh(x)
+tanh-artanh-x-x-for-every-x	tanh(artanh(x))	x
+tanh-artanh-2-2-past-the-real-domain	tanh(artanh(2))	2
+derivative-sech-2-x	D(tanh(x), x)	sech(x) ^ 2
+antiderivative-ln-cosh-x	integrate(tanh(x), x)	ln(cosh(x))
+tanh-has-no-limit-at-complex-infinity-undefined	tanh(complexInfinity)	`NaN`
+to-30-significant-digits-every-one-correctly	N(tanh(1), 30)	0.761_594_155_955_764_888_119_458_282_605
+tanh-x-frac-sinh-x-cosh-x	tanh(1) == sinh(1) / cosh(1)	True
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	trigToExp(tanh(x))	"(-exponentialE ^ (-x) + exponentialE ^ x) / (exponentialE ^ x + exponentialE ^\n                                                                (-x))"

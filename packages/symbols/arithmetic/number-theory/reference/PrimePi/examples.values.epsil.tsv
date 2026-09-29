@@ -1,12 +1,12 @@
 id	in	out
-no-primes-are-1	PrimePi(1)	0
-primepi-2	PrimePi(2)	1
-primepi-15	PrimePi(15)	6
-primepi-100	PrimePi(100)	25
-threads-element-wise-over-a-list-as-wolfram-s	PrimePi([10, 100])	[4, 25]
-rational-arguments-the-primes-up-to-7-2-are-2	PrimePi(7 / 2)	2
-real-arguments	PrimePi(15.25)	6
-the-primes-below-a-million	PrimePi(1_000_000)	78_498
-listable-threads-over-a-list	PrimePi([3, 5, 17, 25])	[2, 3, 7, 9]
-same-inverse-relation-viewed-from-primepi-s-side	PrimePi(NthPrime(50)) == 50	True
-no-primes-are-a-negative-number	PrimePi(-1)	0
+no-primes-are-1	primePi(1)	0
+primepi-2	primePi(2)	1
+primepi-15	primePi(15)	6
+primepi-100	primePi(100)	25
+threads-element-wise-over-a-list-as-wolfram-s	primePi([10, 100])	[4, 25]
+rational-arguments-the-primes-up-to-7-2-are-2	primePi(7 / 2)	2
+real-arguments	primePi(15.25)	6
+the-primes-below-a-million	primePi(1_000_000)	78_498
+listable-threads-over-a-list	primePi([3, 5, 17, 25])	[2, 3, 7, 9]
+same-inverse-relation-viewed-from-primepi-s-side	primePi(nthPrime(50)) == 50	True
+no-primes-are-a-negative-number	primePi(-1)	0

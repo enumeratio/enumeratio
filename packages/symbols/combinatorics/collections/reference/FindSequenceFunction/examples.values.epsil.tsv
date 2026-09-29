@@ -1,5 +1,5 @@
 id	in	out
 geometric	FindSequenceFunction([1, 2, 4, 8, 16], n)	2 ^ n
 polynomial	FindSequenceFunction([1, 4, 9, 16, 25], n)	n ^ 2 + 2n + 1
-catalan-numbers	FindSequenceFunction([1, 1, 2, 5, 14, 42, 132], n)	CatalanNumber(n)
+catalan-numbers	FindSequenceFunction([1, 1, 2, 5, 14, 42, 132], n)	catalanNumber(n)
 factorial	FindSequenceFunction([1, 1, 2, 6, 24, 120], n)	n!

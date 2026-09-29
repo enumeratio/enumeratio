@@ -1,18 +1,18 @@
 id	in	out
-multinomial-1-2-1	Multinomial(1, 2, 1)	12
-multinomial-2-3-4	Multinomial(2, 3, 4)	1_260
-threads-element-wise-over-a-list-as-wolfram-s	Multinomial([2, 3, 5], 3)	[10, 20, 56]
-zero-parts-contribute-0-1	Multinomial(0, 0, 1)	1
-real-arguments-evaluate-via-the-gamma-function	Multinomial(2, 0.2, 5)	34.317_803_519_999_95
-complex-arguments-evaluate-via-the-gamma	Multinomial(1 + i, 0.2, 4)	2.894_060_302_449_624 + 9.104_625_875_691_285i
-an-around-argument-should-propagate-its	Multinomial(Around(2, 0.01), 2)	Around(6, 0.035)
-the-number-of-distinct-letter-arrangements-of	Multinomial(1, 4, 4, 2)	34_650
-the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Multinomial(2, 3, 1)	60
-with-two-arguments-it-reduces-to-binomial-binom	Multinomial(7, 3) == Binomial(10, 3)	True
-orderless-permuting-the-arguments-doesn-t-change	Multinomial(1, 2, 3) == Multinomial(3, 1, 2)	True
-the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	Multinomial(3, 4, 5) == 12! / (3! * 4! * 5!)	True
-all-ones-parts-give-n-every-part-is-a-single	Multinomial(1, 1, 1, 1)	24
-all-zero-arguments-still-give-the-empty-product	Multinomial(0, 0, 0)	1
-a-single-argument-is-always-1-there-s-only-one	Multinomial(5)	1
-a-single-symbolic-argument-is-also-1	Multinomial(n)	1
-with-no-arguments-it-is-the-empty-product-1	Multinomial()	1
+multinomial-1-2-1	multinomial(1, 2, 1)	12
+multinomial-2-3-4	multinomial(2, 3, 4)	1_260
+threads-element-wise-over-a-list-as-wolfram-s	multinomial([2, 3, 5], 3)	[10, 20, 56]
+zero-parts-contribute-0-1	multinomial(0, 0, 1)	1
+real-arguments-evaluate-via-the-gamma-function	multinomial(2, 0.2, 5)	34.317_803_519_999_95
+complex-arguments-evaluate-via-the-gamma	multinomial(1 + i, 0.2, 4)	2.894_060_302_449_624 + 9.104_625_875_691_285i
+an-around-argument-should-propagate-its	multinomial(Around(2, 0.01), 2)	Around(6, 0.035)
+the-number-of-distinct-letter-arrangements-of	multinomial(1, 4, 4, 2)	34_650
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	multinomial(2, 3, 1)	60
+with-two-arguments-it-reduces-to-binomial-binom	multinomial(7, 3) == binomial(10, 3)	True
+orderless-permuting-the-arguments-doesn-t-change	multinomial(1, 2, 3) == multinomial(3, 1, 2)	True
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	multinomial(3, 4, 5) == 12! / (3! * 4! * 5!)	True
+all-ones-parts-give-n-every-part-is-a-single	multinomial(1, 1, 1, 1)	24
+all-zero-arguments-still-give-the-empty-product	multinomial(0, 0, 0)	1
+a-single-argument-is-always-1-there-s-only-one	multinomial(5)	1
+a-single-symbolic-argument-is-also-1	multinomial(n)	1
+with-no-arguments-it-is-the-empty-product-1	multinomial()	1

@@ -13,7 +13,7 @@ at-t4-2-3i	N(ChebyshevT(4, 2 + 3i))	-911 - 1_056i
 at-a-rational	ChebyshevT(5, 1 / 3)	241 / 243
 at-a-complex-argument	ChebyshevT(4, 2 + 3i)	-911 - 1_056i
 a-symbolic-order-stays-unevaluated	ChebyshevT(n, x)	ChebyshevT(n, x)
-cos-n-theta	ChebyshevT(6, 1 / 2) == Cos(6 * (Pi / 3))	True
+cos-n-theta	ChebyshevT(6, 1 / 2) == cos(6 * (pi / 3))	True
 at-1	ChebyshevT(7, 1)	1
 at-minus-1	ChebyshevT(7, -1)	-1
 parity	ChebyshevT(5, -1 / 3) == -ChebyshevT(5, 1 / 3)	True

@@ -3,21 +3,21 @@
     "rendering": {
       "tag": "notatio-plot",
       "attributes": {
-        "value": "Sin(x)",
+        "value": "sin(x)",
         "var": "x",
         "domain": "0,10"
       }
     },
-    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot>"
+    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot>"
   },
   "Plot(Sin(x))": {
     "rendering": {
       "tag": "notatio-plot",
       "attributes": {
-        "value": "Sin(x)"
+        "value": "sin(x)"
       }
     },
-    "markup": "<notatio-plot value=\"Sin(x)\"></notatio-plot>"
+    "markup": "<notatio-plot value=\"sin(x)\"></notatio-plot>"
   },
   "Plot3D(x * y, (x, -1, 1), (y, -1, 1))": {
     "rendering": {
@@ -60,7 +60,7 @@
     "rendering": {
       "tag": "notatio-density-plot",
       "attributes": {
-        "expr": "Sin(x) * Cos(y)",
+        "expr": "sin(x) * cos(y)",
         "xvar": "x",
         "xrange": "0,6",
         "yvar": "y",
@@ -69,7 +69,7 @@
         "y-label": "y"
       }
     },
-    "markup": "<notatio-density-plot expr=\"Sin(x) * Cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" x-label=\"x\" y-label=\"y\"></notatio-density-plot>"
+    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" x-label=\"x\" y-label=\"y\"></notatio-density-plot>"
   },
   "ListDensityPlot([[0, 1], [1, 0]])": {
     "rendering": {
@@ -84,12 +84,12 @@
     "rendering": {
       "tag": "notatio-polar-plot",
       "attributes": {
-        "expr": "1 + Cos(t)",
+        "expr": "1 + cos(t)",
         "tvar": "t",
         "trange": "0,2Pi"
       }
     },
-    "markup": "<notatio-polar-plot expr=\"1 + Cos(t)\" tvar=\"t\" trange=\"0,2Pi\"></notatio-polar-plot>"
+    "markup": "<notatio-polar-plot expr=\"1 + cos(t)\" tvar=\"t\" trange=\"0,2Pi\"></notatio-polar-plot>"
   },
   "ListPolarPlot([[0, 1], [1.57, 2]])": {
     "rendering": {
@@ -135,11 +135,11 @@
     "rendering": {
       "tag": "notatio-complex-plot",
       "attributes": {
-        "value": "Zeta(z)",
+        "value": "zeta(z)",
         "var": "z"
       }
     },
-    "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
+    "markup": "<notatio-complex-plot value=\"zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
   "ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))": {
     "rendering": {
@@ -156,11 +156,11 @@
     "rendering": {
       "tag": "notatio-complex-plot-3d",
       "attributes": {
-        "value": "Gamma(z)",
+        "value": "gamma(z)",
         "var": "z"
       }
     },
-    "markup": "<notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d>"
+    "markup": "<notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d>"
   },
   "ListPlot([1, 4, 9, 16])": {
     "rendering": {
@@ -318,14 +318,14 @@
         {
           "tag": "notatio-plot",
           "attributes": {
-            "value": "Sin(_a * x)",
+            "value": "sin(_a * x)",
             "var": "x",
             "domain": "0,10"
           }
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"Sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
   },
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "rendering": {
@@ -337,12 +337,12 @@
         {
           "tag": "notatio-dynamic",
           "attributes": {
-            "value": "Sin(_a) + _b"
+            "value": "sin(_a) + _b"
           }
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
   },
   "Image(\"data:image/png;base64,AAA\")": {
     "rendering": {
@@ -745,12 +745,12 @@
           "tag": "notatio-input-field",
           "attributes": {
             "name": "f",
-            "value": "Sin(x)"
+            "value": "sin(x)"
           }
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><notatio-input-field name=\"f\" value=\"Sin(x)\"></notatio-input-field></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-input-field name=\"f\" value=\"sin(x)\"></notatio-input-field></notatio-dynamic-module>"
   },
   "Locator((p, (1, 0.5)))": {
     "rendering": {
@@ -927,7 +927,7 @@
             {
               "tag": "notatio-plot",
               "attributes": {
-                "value": "Sin(_k * x)",
+                "value": "sin(_k * x)",
                 "var": "x",
                 "domain": "0,10"
               }
@@ -945,33 +945,33 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-dynamic-module>"
   },
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))": {
     "rendering": {
       "tag": "notatio-plot",
       "attributes": {
-        "value": "Sin(x)",
+        "value": "sin(x)",
         "var": "x",
         "domain": "0,10",
         "plot-range": "-1,1",
         "epilog": "Point((1, 0.5))"
       }
     },
-    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\" epilog=\"Point((1, 0.5))\"></notatio-plot>"
+    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\" epilog=\"Point((1, 0.5))\"></notatio-plot>"
   },
   "Plot(Sin(x), (x, 0, 10), [PlotLabel -> \"sine\", GridLines -> True], PlotLabel -> \"no\")": {
     "rendering": {
       "tag": "notatio-plot",
       "attributes": {
-        "value": "Sin(x)",
+        "value": "sin(x)",
         "var": "x",
         "domain": "0,10",
         "label": "sine",
         "grid": "true"
       }
     },
-    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" label=\"sine\" grid=\"true\"></notatio-plot>"
+    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" label=\"sine\" grid=\"true\"></notatio-plot>"
   },
   "Slider(k, (0, 5), Appearance -> \"Labeled\")": {
     "rendering": {
@@ -1022,10 +1022,10 @@
       "tag": "notatio-test-result-object",
       "attributes": {
         "outcome": "Aborted",
-        "input": "FactorInteger(n)",
+        "input": "factorInteger(n)",
         "time": "0.05"
       }
     },
-    "markup": "<notatio-test-result-object outcome=\"Aborted\" input=\"FactorInteger(n)\" time=\"0.05\"></notatio-test-result-object>"
+    "markup": "<notatio-test-result-object outcome=\"Aborted\" input=\"factorInteger(n)\" time=\"0.05\"></notatio-test-result-object>"
   }
 }

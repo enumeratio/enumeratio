@@ -28,7 +28,7 @@
     },
     {
       "in": "22/7 - Pi",
-      "out": "\u001b[2mOut[3]= \u001b[0m22 / 7 - Pi"
+      "out": "\u001b[2mOut[3]= \u001b[0m22 / 7 - pi"
     }
   ],
   "constants": [
@@ -52,7 +52,7 @@
     },
     {
       "in": "Sin(x)^2 + Cos(x)^2",
-      "out": "\u001b[2mOut[2]= \u001b[0mSin(x) ^ 2 + Cos(x) ^ 2"
+      "out": "\u001b[2mOut[2]= \u001b[0msin(x) ^ 2 + cos(x) ^ 2"
     },
     {
       "in": "(x + 1)*(x - 1)",
@@ -190,7 +190,7 @@
     },
     {
       "in": "2 * $\\sqrt{2}$",
-      "out": "\u001b[2mOut[2]= \u001b[0m2 * Sqrt(2)"
+      "out": "\u001b[2mOut[2]= \u001b[0m2 * sqrt(2)"
     }
   ],
   "input-mode": [

@@ -1,5 +1,5 @@
 id	in	out
-geometric-pdf-exact	PDF(GeometricDistribution(1 / 4), 2)	9 / 64
-geometric-cdf-exact	CDF(GeometricDistribution(1 / 4), 2)	37 / 64
-geometric-mean-exact	Mean(GeometricDistribution(1 / 4))	3
-geometric-variance-exact	Variance(GeometricDistribution(1 / 4))	12
+geometric-pdf-exact	pdf(GeometricDistribution(1 / 4), 2)	9 / 64
+geometric-cdf-exact	cdf(GeometricDistribution(1 / 4), 2)	37 / 64
+geometric-mean-exact	mean(GeometricDistribution(1 / 4))	3
+geometric-variance-exact	variance(GeometricDistribution(1 / 4))	12

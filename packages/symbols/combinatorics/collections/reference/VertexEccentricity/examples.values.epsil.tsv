@@ -1,3 +1,3 @@
 id	in	out
 petersen-is-2-eccentric-everywhere	VertexEccentricity(PetersenGraph(), 1)	2
-disconnected-vertex-is-infinite	"VertexEccentricity(Graph([1, 2, 3, 4], [\n                                         UndirectedEdge(1, 2),\n                                         UndirectedEdge(3, 4),\n                                       ]), 1)"	PositiveInfinity
+disconnected-vertex-is-infinite	"VertexEccentricity(Graph([1, 2, 3, 4], [\n                                         UndirectedEdge(1, 2),\n                                         UndirectedEdge(3, 4),\n                                       ]), 1)"	positiveInfinity

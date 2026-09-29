@@ -1,4 +1,4 @@
 id	in	out
-count-permutationsavoiding123-4	Count(PermutationsAvoiding123(4))	14
+count-permutationsavoiding123-4	count(PermutationsAvoiding123(4))	14
 first-element-of-permutationsavoiding123-4	PermutationsAvoiding123(4)[1]	[3, 2, 1, 4]
-every-element-of-permutationsavoiding123-4	Take(PermutationsAvoiding123(4), 14)	"[\n  [3, 2, 1, 4],\n  [3, 2, 4, 1],\n  [3, 1, 4, 2],\n  [3, 4, 1, 2],\n  [3, 4, 2, 1],\n  [2, 1, 4, 3],\n  [2, 4, 1, 3],\n  [2, 4, 3, 1],\n  [4, 2, 1, 3],\n  [4, 2, 3, 1],\n  [1, 4, 3, 2],\n  [4, 1, 3, 2],\n  [4, 3, 1, 2],\n  [4, 3, 2, 1],\n]"
+every-element-of-permutationsavoiding123-4	take(PermutationsAvoiding123(4), 14)	"[\n  [3, 2, 1, 4],\n  [3, 2, 4, 1],\n  [3, 1, 4, 2],\n  [3, 4, 1, 2],\n  [3, 4, 2, 1],\n  [2, 1, 4, 3],\n  [2, 4, 1, 3],\n  [2, 4, 3, 1],\n  [4, 2, 1, 3],\n  [4, 2, 3, 1],\n  [1, 4, 3, 2],\n  [4, 1, 3, 2],\n  [4, 3, 1, 2],\n  [4, 3, 2, 1],\n]"

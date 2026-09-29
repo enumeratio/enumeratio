@@ -8,7 +8,7 @@ test("trailing rules are options, bare or in lists, and the leftmost setting win
   const { ops, options } = optionsOf(
     parse("Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), [Frame -> True, PlotRange -> All])"),
   );
-  expect(ops.map((o) => serializeExpression(o))).toEqual(["Sin(x)", "(x, 0, 10)"]);
+  expect(ops.map((o) => serializeExpression(o))).toEqual(["sin(x)", "(x, 0, 10)"]);
   expect(Object.keys(options)).toEqual(["PlotRange", "Frame"]);
   expect(serializeExpression(options.PlotRange)).toBe("(-1, 1)");
   expect(serializeExpression(options.Frame)).toBe("True");
@@ -31,6 +31,6 @@ test("the canonical Tuple a rule becomes still reads as one, an iterator does no
 
 test("options are written back as trailing rules, and round-trip", () => {
   const expr = withOptions("Plot", [parse("Sin(x)")], { PlotRange: parse("All") });
-  expect(serializeExpression(expr)).toBe("Plot(Sin(x), PlotRange -> All)");
+  expect(serializeExpression(expr)).toBe("Plot(sin(x), PlotRange -> all)");
   expect(Object.keys(optionsOf(expr).options)).toEqual(["PlotRange"]);
 });

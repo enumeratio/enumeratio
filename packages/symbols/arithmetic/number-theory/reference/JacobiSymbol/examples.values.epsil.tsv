@@ -1,11 +1,11 @@
 id	in	out
-0-whenever-n-and-m-share-a-factor	JacobiSymbol(10, 5)	0
-3-is-not-a-quadratic-residue-mod-5-the-residues	JacobiSymbol(3, 5)	-1
-jacobisymbol-1-001-9-907	JacobiSymbol(1_001, 9_907)	-1
-threads-element-wise-over-a-list-as-wolfram-s	JacobiSymbol([2, 3, 5, 7, 11], 3)	[-1, 0, -1, 1, -1]
-larger-arguments-10-10-1-against-the-1000th	JacobiSymbol(10 ^ 10 + 1, NthPrime(1_000))	1
-completely-multiplicative-in-the-top-argument-a	JacobiSymbol(3, 7) * JacobiSymbol(5, 7) == JacobiSymbol(3 * 5, 7)	True
-quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	JacobiSymbol(3, 7) * JacobiSymbol(7, 3)	-1
-1-m-1-m-1-2	JacobiSymbol(-1, 7)	-1
-by-convention-the-symbol-is-1-whenever-m-1	JacobiSymbol(0, 1)	1
-2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	JacobiSymbol(2, 15)	1
+0-whenever-n-and-m-share-a-factor	jacobiSymbol(10, 5)	0
+3-is-not-a-quadratic-residue-mod-5-the-residues	jacobiSymbol(3, 5)	-1
+jacobisymbol-1-001-9-907	jacobiSymbol(1_001, 9_907)	-1
+threads-element-wise-over-a-list-as-wolfram-s	jacobiSymbol([2, 3, 5, 7, 11], 3)	[-1, 0, -1, 1, -1]
+larger-arguments-10-10-1-against-the-1000th	jacobiSymbol(10 ^ 10 + 1, nthPrime(1_000))	1
+completely-multiplicative-in-the-top-argument-a	jacobiSymbol(3, 7) * jacobiSymbol(5, 7) == jacobiSymbol(3 * 5, 7)	True
+quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	jacobiSymbol(3, 7) * jacobiSymbol(7, 3)	-1
+1-m-1-m-1-2	jacobiSymbol(-1, 7)	-1
+by-convention-the-symbol-is-1-whenever-m-1	jacobiSymbol(0, 1)	1
+2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	jacobiSymbol(2, 15)	1

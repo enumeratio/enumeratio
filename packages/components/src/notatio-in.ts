@@ -442,7 +442,11 @@ export class NotatioIn extends LitElement {
   #latexOf(text: string): string | undefined {
     const engine = NotatioIn.#engine;
     if (!engine) return undefined;
-    const { json, errors } = parseExpression(text, { allow: ["Assign"], parseLatex: (tex) => engine.parse(tex).json });
+    const { json, errors } = parseExpression(text, {
+      allow: ["Assign"],
+      ce: engine,
+      parseLatex: (tex) => engine.parse(tex).json,
+    });
     if (errors.length > 0) return undefined;
     try {
       return engine.box(json, { form: "raw" }).latex;

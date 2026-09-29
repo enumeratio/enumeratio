@@ -1,7 +1,7 @@
 id	in	out
-c-3	Count(DyckPaths(3))	5
+c-3	count(DyckPaths(3))	5
 three-ups-then-three-downs	DyckPaths(3)[1]	DyckPath([1, 1, 1, 0, 0, 0])
-by-height	Tally(CombinatorialStat(DyckPaths(4), "Height"))	([4, 3, 2, 1], [1, 5, 7, 1])
-returns-are-the-catalan-triangle	Tally(CombinatorialStat(DyckPaths(4), "Returns"))	([1, 2, 3, 4], [5, 5, 3, 1])
-peaks-are-narayana	Tally(CombinatorialStat(DyckPaths(4), "Peaks"))	([1, 2, 3, 4], [1, 6, 6, 1])
-area-is-carlitz-q-catalan	Tally(CombinatorialStat(DyckPaths(4), "Area"))	([16, 14, 12, 10, 8, 6, 4], [1, 1, 2, 3, 3, 3, 1])
+by-height	tally(CombinatorialStat(DyckPaths(4), "Height"))	([4, 3, 2, 1], [1, 5, 7, 1])
+returns-are-the-catalan-triangle	tally(CombinatorialStat(DyckPaths(4), "Returns"))	([1, 2, 3, 4], [5, 5, 3, 1])
+peaks-are-narayana	tally(CombinatorialStat(DyckPaths(4), "Peaks"))	([1, 2, 3, 4], [1, 6, 6, 1])
+area-is-carlitz-q-catalan	tally(CombinatorialStat(DyckPaths(4), "Area"))	([16, 14, 12, 10, 8, 6, 4], [1, 1, 2, 3, 3, 3, 1])

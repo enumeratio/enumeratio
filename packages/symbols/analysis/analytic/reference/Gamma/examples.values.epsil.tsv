@@ -1,48 +1,48 @@
 id	in	out
-a-pole-of-gamma	Gamma(0)	ComplexInfinity
-a-pole-of-gamma-at-negative-1	Gamma(-1)	ComplexInfinity
-a-pole-of-gamma-at-negative-2	Gamma(-2)	ComplexInfinity
-a-floating-point-argument-evaluates-directly-to	Gamma(2.5)	1.329_340_388_179_137_020_47
-threads-over-a-list-so-poles-evaluate-concretely	Gamma([0, -1])	[ComplexInfinity, ComplexInfinity]
-three-arguments-the-integral-between-two-limits	Gamma(2.5, 0, 1.5)	0.398_820_945_392_343_9
-int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3	Gamma(2.5, 1.5, 3)	0.523_450_266_915_488_6
-a-machine-precision-argument-gamma-4-5-11-6317	Gamma(4.5)	11.631_728_396_567_448_929_1
-gamma-5-4-24	Gamma(5)	24
-two-arguments-with-a-complex-second-argument	Gamma(2.5, 1.5 + i)	0.914_816_170_324_099_8 - 0.453_556_013_183_482_1i
-n-gamma-1-0-2-exponential-cdf-at-a-concrete-z	N(Gamma(1, 0, 2))	0.864_664_716_763_387_308_106
-three-arguments-fully-symbolic-in-both-order-and	Gamma(s, 0, z)	Gamma(s, 0, z)
-gamma-0-5-0-0-25	Gamma(0.5, 0, 0.25)	0.922_562_012_825_585_3
-gamma-neg1-5-0-1-5	Gamma(-1.5, 0, 1.5)	2.328_437_350_591_27
-gamma-3-1-7-all-integers	N(Gamma(3, 1, 7))	1.780_124_878_096_168_054_457_415_005_320_700_966_508_209_5
-gamma-2-5-0-complex-1-5-plus-i	Gamma(2.5, 0, 1.5 + i)	0.414_524_217_855_037_220_473_625_612_505_858_887_098 + 0.453_556_013_183_482_1i
-gamma-complex-2-plus-i-0-1-5	Gamma(2 + i, 0, 1.5)	0.364_066_025_570_145_13 - 0.086_581_481_284_565_94i
-gamma-three-complex-arguments	Gamma(2 + i, 0.5 - i, 1.5 + i)	0.657_722_093_626_211_1 + 1.142_433_810_813_164_2i
-gamma-0-1-4-all-integers	N(Gamma(0, 1, 4))	0.215_604_581_985_671_6
-threads-over-a-list-and-reduces-each-integer	Gamma([1, 2, 3, 4, 5])	[1, 1, 2, 6, 24]
-gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	Gamma(5 / 2)	3 / 4 * Sqrt(Pi)
-complex-arguments-evaluate-directly	Gamma(2.3 + i)	0.719_140_936_537_281_1 + 0.540_614_467_909_848_7i
-half-integers-have-closed-forms-gamma-7-2-frac	Gamma(7 / 2)	15 / 8 * Sqrt(Pi)
-including-negative-half-integers-gamma-3-2-frac	Gamma(-3 / 2)	4 / 3 * Sqrt(Pi)
-gamma-infty-infty	Gamma(PositiveInfinity)	PositiveInfinity
-values-far-past-the-double-range-gamma-200-5	Gamma(200.5)	5_573_168_944_801_379_133_643_202_962_906_591_494_178e334
-two-arguments-the-upper-incomplete-gamma-gamma-5	Gamma(2.5, 1.5)	0.930_519_442_786_793_1
-an-integer-order-reduces-to-a-closed-form-gamma	Gamma(2, x)	(x + 1) * ExponentialE ^ (-x)
-gamma-2-1-2-e-the-same-closed-form-at-an-exact	Gamma(2, 1)	2 / ExponentialE
-listable-threads-elementwise-over-a-matrix-and	Gamma(2, [[7 / 2, 0], [0, 13 / 2]])	[[9 / (2 * ExponentialE ^ (7 / 2)), 1], [1, 15 / (2 * ExponentialE ^ (13 / 2))]]
-interval-arithmetic-the-image-of-1-4-1-5-whose	Gamma(Interval(1.4, 1.5))	Interval(0.885_603_194_410_888_7, 0.887_263_817_503_075_3)
-uncertainty-propagation-gamma-2-5-pm-0-01-1-3293	Gamma(Around(2.5, 0.01))	Around(1.329_340_388_179_137, 0.009_347_345_216_260_856)
-to-40-significant-digits-every-one-correctly	N(Gamma(1 / 3), 40)	2.678_938_534_707_747_633_655_692_940_974_677_644_129
-the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	Pi ^ 2 / Gamma(3) == Pi ^ 2 / 2	True
-extends-the-factorial-gamma-n-1-n-so-gamma-6-5	Gamma(6) == 5!	True
-functional-equation-gamma-z-1-z-gamma-z-here-at	Gamma(6) == 5 * Gamma(5)	True
-reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z	Gamma(1 / 3) * Gamma(2 / 3) == Pi / Sin(Pi / 3)	True
-gamma-1-2-sqrt-pi	Gamma(1 / 2) == Sqrt(Pi)	True
-gamma-1-z-e-z-exact-and-symbolic-in-z	Gamma(1, z)	ExponentialE ^ (-z)
-so-gamma-1-z-1-e-z-the-exponential-distribution	Gamma(1, 0, z)	-ExponentialE ^ (-z) + 1
-now-that-gamma-2-z-has-a-closed-form-the-three	Gamma(2, 0, z)	-((z + 1) * ExponentialE ^ (-z)) + 1
-gamma-a-0-gamma-a-the-incomplete-gamma-from-zero	Gamma(a, 0)	Gamma(a)
-gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2	Gamma(0, 1.5)	0.100_019_582_406_632_52
-gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc	Gamma(1 / 2, x)	Erfc(Sqrt(x)) * Sqrt(Pi)
-gamma-x-gamma-x-psi-x-so-the-logarithmic	D(Gamma(x), x) / Gamma(x)	Digamma(x)
-squaring-the-reflection-formula-at-z-1-2	Gamma(1 / 2) ^ 2 == Pi	True
-gamma-i-2-pi-sinh-pi-0-27203	N(Abs(Gamma(ImaginaryUnit)) ^ 2)	0.272_029_054_982_132_823_542
+a-pole-of-gamma	gamma(0)	complexInfinity
+a-pole-of-gamma-at-negative-1	gamma(-1)	complexInfinity
+a-pole-of-gamma-at-negative-2	gamma(-2)	complexInfinity
+a-floating-point-argument-evaluates-directly-to	gamma(2.5)	1.329_340_388_179_137_020_47
+threads-over-a-list-so-poles-evaluate-concretely	gamma([0, -1])	[complexInfinity, complexInfinity]
+three-arguments-the-integral-between-two-limits	gamma(2.5, 0, 1.5)	0.398_820_945_392_343_9
+int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3	gamma(2.5, 1.5, 3)	0.523_450_266_915_488_6
+a-machine-precision-argument-gamma-4-5-11-6317	gamma(4.5)	11.631_728_396_567_448_929_1
+gamma-5-4-24	gamma(5)	24
+two-arguments-with-a-complex-second-argument	gamma(2.5, 1.5 + i)	0.914_816_170_324_099_8 - 0.453_556_013_183_482_1i
+n-gamma-1-0-2-exponential-cdf-at-a-concrete-z	N(gamma(1, 0, 2))	0.864_664_716_763_387_308_106
+three-arguments-fully-symbolic-in-both-order-and	gamma(s, 0, z)	gamma(s, 0, z)
+gamma-0-5-0-0-25	gamma(0.5, 0, 0.25)	0.922_562_012_825_585_3
+gamma-neg1-5-0-1-5	gamma(-1.5, 0, 1.5)	2.328_437_350_591_27
+gamma-3-1-7-all-integers	N(gamma(3, 1, 7))	1.780_124_878_096_168_054_457_415_005_320_700_966_508_209_5
+gamma-2-5-0-complex-1-5-plus-i	gamma(2.5, 0, 1.5 + i)	0.414_524_217_855_037_220_473_625_612_505_858_887_098 + 0.453_556_013_183_482_1i
+gamma-complex-2-plus-i-0-1-5	gamma(2 + i, 0, 1.5)	0.364_066_025_570_145_13 - 0.086_581_481_284_565_94i
+gamma-three-complex-arguments	gamma(2 + i, 0.5 - i, 1.5 + i)	0.657_722_093_626_211_1 + 1.142_433_810_813_164_2i
+gamma-0-1-4-all-integers	N(gamma(0, 1, 4))	0.215_604_581_985_671_6
+threads-over-a-list-and-reduces-each-integer	gamma([1, 2, 3, 4, 5])	[1, 1, 2, 6, 24]
+gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer	gamma(5 / 2)	3 / 4 * sqrt(pi)
+complex-arguments-evaluate-directly	gamma(2.3 + i)	0.719_140_936_537_281_1 + 0.540_614_467_909_848_7i
+half-integers-have-closed-forms-gamma-7-2-frac	gamma(7 / 2)	15 / 8 * sqrt(pi)
+including-negative-half-integers-gamma-3-2-frac	gamma(-3 / 2)	4 / 3 * sqrt(pi)
+gamma-infty-infty	gamma(positiveInfinity)	positiveInfinity
+values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5_573_168_944_801_379_133_643_202_962_906_591_494_178e334
+two-arguments-the-upper-incomplete-gamma-gamma-5	gamma(2.5, 1.5)	0.930_519_442_786_793_1
+an-integer-order-reduces-to-a-closed-form-gamma	gamma(2, x)	(x + 1) * exponentialE ^ (-x)
+gamma-2-1-2-e-the-same-closed-form-at-an-exact	gamma(2, 1)	2 / exponentialE
+listable-threads-elementwise-over-a-matrix-and	gamma(2, [[7 / 2, 0], [0, 13 / 2]])	[[9 / (2 * exponentialE ^ (7 / 2)), 1], [1, 15 / (2 * exponentialE ^ (13 / 2))]]
+interval-arithmetic-the-image-of-1-4-1-5-whose	gamma(interval(1.4, 1.5))	interval(0.885_603_194_410_888_7, 0.887_263_817_503_075_3)
+uncertainty-propagation-gamma-2-5-pm-0-01-1-3293	gamma(Around(2.5, 0.01))	Around(1.329_340_388_179_137, 0.009_347_345_216_260_856)
+to-40-significant-digits-every-one-correctly	N(gamma(1 / 3), 40)	2.678_938_534_707_747_633_655_692_940_974_677_644_129
+the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	pi ^ 2 / gamma(3) == pi ^ 2 / 2	True
+extends-the-factorial-gamma-n-1-n-so-gamma-6-5	gamma(6) == 5!	True
+functional-equation-gamma-z-1-z-gamma-z-here-at	gamma(6) == 5 * gamma(5)	True
+reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z	gamma(1 / 3) * gamma(2 / 3) == pi / sin(pi / 3)	True
+gamma-1-2-sqrt-pi	gamma(1 / 2) == sqrt(pi)	True
+gamma-1-z-e-z-exact-and-symbolic-in-z	gamma(1, z)	exponentialE ^ (-z)
+so-gamma-1-z-1-e-z-the-exponential-distribution	gamma(1, 0, z)	-exponentialE ^ (-z) + 1
+now-that-gamma-2-z-has-a-closed-form-the-three	gamma(2, 0, z)	-((z + 1) * exponentialE ^ (-z)) + 1
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero	gamma(a, 0)	gamma(a)
+gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2	gamma(0, 1.5)	0.100_019_582_406_632_52
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc	gamma(1 / 2, x)	erfc(sqrt(x)) * sqrt(pi)
+gamma-x-gamma-x-psi-x-so-the-logarithmic	D(gamma(x), x) / gamma(x)	digamma(x)
+squaring-the-reflection-formula-at-z-1-2	gamma(1 / 2) ^ 2 == pi	True
+gamma-i-2-pi-sinh-pi-0-27203	N(abs(gamma(imaginaryUnit)) ^ 2)	0.272_029_054_982_132_823_542

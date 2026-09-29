@@ -3,4 +3,4 @@ level-expr-1-gives-the-top-level-operands	Level([1, [2, 3], 4], 1)	[1, [2, 3], 4
 level-expr-0-is-just-expr-itself	Level([1, [2, 3]], [0])	[[1, [2, 3]]]
 level-expr-2-gives-levels-1-and-2-together	Level([1, [2, 3], 4], 2)	[1, 2, 3, [2, 3], 4]
 level-expr-1-gives-every-leaf	Level([1, [2, 3], 4], [-1])	[1, 2, 3, 4]
-level-expr-infinity-reaches-every-level	Level([1, [2, [3]]], PositiveInfinity)	[1, 2, 3, [3], [2, [3]]]
+level-expr-infinity-reaches-every-level	Level([1, [2, [3]]], positiveInfinity)	[1, 2, 3, [3], [2, [3]]]

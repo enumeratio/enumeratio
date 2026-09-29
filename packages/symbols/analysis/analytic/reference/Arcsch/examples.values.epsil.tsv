@@ -1,8 +1,8 @@
 id	in	out
-n-arcsch-2	N(Arcsch(2))	0.481_211_825_059_603_447_495
-a-pole-at-0	Arcsch(0)	ComplexInfinity
-arcsch-positiveinfinity	Arcsch(PositiveInfinity)	0
-a-float-argument-evaluates-directly	Arcsch(1.5)	0.625_145_117_250_416_687_636
-as-a-logarithm-arcsch-1-ln-1-sqrt-2	TrigToExp(Arcsch(1))	Ln(1 + Sqrt(2))
-oddness-pulls-the-sign-out-of-a-symbolic	Arcsch(-x)	-Arcsch(x)
-derivative-for-real-x-ne-0	D(Arcsch(x), x)	-1 / (Abs(x) * Sqrt(x ^ 2 + 1))
+n-arcsch-2	N(arcsch(2))	0.481_211_825_059_603_447_495
+a-pole-at-0	arcsch(0)	complexInfinity
+arcsch-positiveinfinity	arcsch(positiveInfinity)	0
+a-float-argument-evaluates-directly	arcsch(1.5)	0.625_145_117_250_416_687_636
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	trigToExp(arcsch(1))	ln(1 + sqrt(2))
+oddness-pulls-the-sign-out-of-a-symbolic	arcsch(-x)	-arcsch(x)
+derivative-for-real-x-ne-0	D(arcsch(x), x)	-1 / (abs(x) * sqrt(x ^ 2 + 1))

@@ -1,6 +1,6 @@
 id	in	out
 t-cubed	LaplaceTransform(t ^ 3, t, s)	6 / s ^ 4
-exp-at	LaplaceTransform(ExponentialE ^ (2t), t, s)	1 / (s - 2)
-sin-at	LaplaceTransform(Sin(3t), t, s)	3 / (s ^ 2 + 9)
-t-cubed-exp-shift	LaplaceTransform(ExponentialE ^ (2t) * t ^ 3, t, s)	6 / (s - 2) ^ 4
-exp-sin-shift	LaplaceTransform(ExponentialE ^ (2t) * Sin(3t), t, s)	3 / ((s - 2) ^ 2 + 9)
+exp-at	LaplaceTransform(exponentialE ^ (2t), t, s)	1 / (s - 2)
+sin-at	LaplaceTransform(sin(3t), t, s)	3 / (s ^ 2 + 9)
+t-cubed-exp-shift	LaplaceTransform(exponentialE ^ (2t) * t ^ 3, t, s)	6 / (s - 2) ^ 4
+exp-sin-shift	LaplaceTransform(exponentialE ^ (2t) * sin(3t), t, s)	3 / ((s - 2) ^ 2 + 9)

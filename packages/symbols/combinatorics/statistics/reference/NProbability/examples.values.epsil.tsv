@@ -1,4 +1,4 @@
 id	in	out
-nprobability-normal-outside-one-sigma-ish	NProbability(x ^ 2 > 1, Distributed(x, NormalDistribution(0, 1)))	0.317_310_507_838_716_9
-nprobability-poisson-is-even	NProbability(x % 2 == 0, Distributed(x, PoissonDistribution(4)))	0.500_167_731_313_946_8
-nprobability-agrees-with-exact-cdf	NProbability(x <= 5, Distributed(x, PoissonDistribution(3)))	0.916_082_057_968_696_6
+nprobability-normal-outside-one-sigma-ish	NProbability(x ^ 2 > 1, Distributed(x, normalDistribution(0, 1)))	0.317_310_507_838_716_9
+nprobability-poisson-is-even	NProbability(x % 2 == 0, Distributed(x, poissonDistribution(4)))	0.500_167_731_313_946_8
+nprobability-agrees-with-exact-cdf	NProbability(x <= 5, Distributed(x, poissonDistribution(3)))	0.916_082_057_968_696_6

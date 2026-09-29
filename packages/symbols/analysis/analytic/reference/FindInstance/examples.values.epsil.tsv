@@ -1,11 +1,11 @@
 id	in	out
 a-quadratic-with-two-real-roots	FindInstance(x ^ 2 == 4, x, Reals)	[[Rule(x, 2)]]
 both-roots-with-an-explicit-count	FindInstance(x ^ 2 == 4, x, Reals, 2)	[[Rule(x, 2)], [Rule(x, -2)]]
-an-irrational-root-is-exact	FindInstance(x ^ 2 == 2, x, Reals)	[[Rule(x, Sqrt(2))]]
+an-irrational-root-is-exact	FindInstance(x ^ 2 == 2, x, Reals)	[[Rule(x, sqrt(2))]]
 a-linear-equation	FindInstance(2x + 3 == 7, x, Reals)	[[Rule(x, 2)]]
 no-real-root-is-a-proven-empty-result	FindInstance(x ^ 2 == -1, x, Reals)	[]
-a-non-integer-root-is-also-proven-empty	FindInstance(x ^ 2 == 2, x, Integers)	[]
-a-bounded-integer-search	FindInstance(x > 0 && x < 10, x, Integers, 3)	[[Rule(x, 1)], [Rule(x, 2)], [Rule(x, 3)]]
-a-multivariate-bounded-integer-search	"FindInstance(\n              x + y == 5 && x > 0 && x < 10 && y > 0 && y < 10,\n              [x, y],\n              Integers,\n              3,\n            )"	[[Rule(x, 1), Rule(y, 4)], [Rule(x, 2), Rule(y, 3)], [Rule(x, 3), Rule(y, 2)]]
+a-non-integer-root-is-also-proven-empty	FindInstance(x ^ 2 == 2, x, integers)	[]
+a-bounded-integer-search	FindInstance(x > 0 && x < 10, x, integers, 3)	[[Rule(x, 1)], [Rule(x, 2)], [Rule(x, 3)]]
+a-multivariate-bounded-integer-search	"FindInstance(\n              x + y == 5 && x > 0 && x < 10 && y > 0 && y < 10,\n              [x, y],\n              integers,\n              3,\n            )"	[[Rule(x, 1), Rule(y, 4)], [Rule(x, 2), Rule(y, 3)], [Rule(x, 3), Rule(y, 2)]]
 declines-without-an-explicit-domain	FindInstance(x > 0, x)	FindInstance(x > 0, x)
 declines-on-a-pure-inequality-over-reals	FindInstance(x > 0, x, Reals)	FindInstance(x > 0, x, Reals)

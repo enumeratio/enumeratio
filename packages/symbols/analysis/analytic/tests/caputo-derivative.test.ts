@@ -36,7 +36,7 @@ test("CaputoD: linearity over a polynomial", () => {
   expect(evalOf(["CaputoD", ["Add", ["Power", "x", 2], ["Multiply", 3, "x"], 1], ["List", "x", 0.5]])).toEqual([
     "Add",
     ["Multiply", { num: "1.5045055561273500985282118708287268955844" }, ["Power", "x", 1.5]],
-    ["Multiply", { num: "3.385137501286537721688476709364635515064" }, ["Sqrt", "x"]],
+    ["Multiply", { num: "3.385137501286537721688476709364635515064" }, ["Power", "x", 0.5]],
   ]);
 });
 

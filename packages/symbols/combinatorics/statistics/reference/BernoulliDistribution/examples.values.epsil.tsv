@@ -1,5 +1,5 @@
 id	in	out
-bernoulli-pdf-exact	PDF(BernoulliDistribution(1 / 3), 1)	1 / 3
-bernoulli-cdf-exact	CDF(BernoulliDistribution(1 / 3), 0)	2 / 3
-bernoulli-mean-exact	Mean(BernoulliDistribution(1 / 3))	1 / 3
-bernoulli-variance-exact	Variance(BernoulliDistribution(1 / 3))	2 / 9
+bernoulli-pdf-exact	pdf(BernoulliDistribution(1 / 3), 1)	1 / 3
+bernoulli-cdf-exact	cdf(BernoulliDistribution(1 / 3), 0)	2 / 3
+bernoulli-mean-exact	mean(BernoulliDistribution(1 / 3))	1 / 3
+bernoulli-variance-exact	variance(BernoulliDistribution(1 / 3))	2 / 9

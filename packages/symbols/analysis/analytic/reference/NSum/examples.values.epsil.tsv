@@ -1,8 +1,8 @@
 id	in	out
-zeta-2-via-euler-maclaurin	NSum(n ^ -2, [n, 1, PositiveInfinity])	1.644_934_066_848_228_2
-the-alternating-harmonic-series	NSum((-1) ^ (n + 1) / n, [n, 1, PositiveInfinity])	0.693_147_180_559_945_4
-e-minus-one	NSum(1 / n!, [n, 1, PositiveInfinity])	1.718_281_828_459_045_5
+zeta-2-via-euler-maclaurin	NSum(n ^ -2, [n, 1, positiveInfinity])	1.644_934_066_848_228_2
+the-alternating-harmonic-series	NSum((-1) ^ (n + 1) / n, [n, 1, positiveInfinity])	0.693_147_180_559_945_4
+e-minus-one	NSum(1 / n!, [n, 1, positiveInfinity])	1.718_281_828_459_045_5
 a-finite-range-is-a-direct-sum	NSum(n, [n, 1, 5])	15
-a-much-more-slowly-convergent-power-law	NSum(n ^ -1.1, [n, 1, PositiveInfinity])	10.584_448_464_950_803
-declines-the-harmonic-series	NSum(1 / n, [n, 1, PositiveInfinity])	NSum(1 / n, [n, 1, PositiveInfinity])
-declines-a-series-whose-terms-grow	NSum(n, [n, 1, PositiveInfinity])	NSum(n, [n, 1, PositiveInfinity])
+a-much-more-slowly-convergent-power-law	NSum(n ^ -1.1, [n, 1, positiveInfinity])	10.584_448_464_950_803
+declines-the-harmonic-series	NSum(1 / n, [n, 1, positiveInfinity])	NSum(1 / n, [n, 1, positiveInfinity])
+declines-a-series-whose-terms-grow	NSum(n, [n, 1, positiveInfinity])	NSum(n, [n, 1, positiveInfinity])
