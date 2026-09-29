@@ -9,7 +9,7 @@ signatures:
   - call: Permutations(n)
     description: 'The permutations of $\{1, \ldots, n\}$ as one-line words: the collection [[SymmetricGroup]](n).'
     library: enumeratio-collections
-    type: "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>) & ((integer<0..>) -> indexed_collection<list<integer>>)"
+    type: "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>) & ((integer<0..>) -> indexed_collection<permutation>)"
     overrides: compute-engine
 seeAlso:
   - SymmetricGroup
