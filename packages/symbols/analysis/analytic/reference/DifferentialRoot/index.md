@@ -8,14 +8,14 @@ signatures:
     description: the function's value at $x_0$, by summing the Taylor series the ODE (and the stored initial derivatives) determine.
     library: "@enumeratio/analytic"
     type: (any) -> any
-details:
-  - Ordinarily built by [[DifferentialRootReduce]] rather than by hand — the example below constructs one directly (the defining ODE of $e^x$) to show the evaluation contract on its own.
-  - Numeric only, unlike [[DifferenceRoot]]'s exact rational arithmetic — this is the one place this package computes a numeric-only answer by design (see difference-root.ts's header).
-  - Attached to the native `Apply` operator the same way [[DifferenceRoot]] is (never redeclares it), so only a call whose head is `DifferentialRoot(...)` is intercepted.
-  - Declines when the expansion point is not an ordinary point of the ODE (the leading coefficient vanishes there), or the series hasn't visibly settled within a generous term budget — most often because the target is outside the radius of convergence.
 seeAlso:
   - DifferentialRootReduce
   - DifferenceRoot
 names:
   wolframIdentity: true
 ---
+
+- Ordinarily built by [[DifferentialRootReduce]] rather than by hand — the example below constructs one directly (the defining ODE of $e^x$) to show the evaluation contract on its own.
+- Numeric only, unlike [[DifferenceRoot]]'s exact rational arithmetic — this is the one place this package computes a numeric-only answer by design (see difference-root.ts's header).
+- Attached to the native `Apply` operator the same way [[DifferenceRoot]] is (never redeclares it), so only a call whose head is `DifferentialRoot(...)` is intercepted.
+- Declines when the expansion point is not an ordinary point of the ODE (the leading coefficient vanishes there), or the series hasn't visibly settled within a generous term budget — most often because the target is outside the radius of convergence.

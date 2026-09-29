@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ built up by direct and skew sums.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count is the large Schröder numbers, A006318 — $1, 2, 6, 22, 90, …$
-  - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2413$ and $3142$ — there is no closed-form unrank of the permutation itself.
-  - Separable permutations are exactly those avoiding every non-trivial [[SimplePermutations]] pattern beyond length $2$ — every one decomposes recursively as a direct or skew sum.
 enumerate:
   expr: SeparablePermutations(4)
   columns: Descents, Inversions
@@ -29,3 +25,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count is the large Schröder numbers, A006318 — $1, 2, 6, 22, 90, …$
+- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2413$ and $3142$ — there is no closed-form unrank of the permutation itself.
+- Separable permutations are exactly those avoiding every non-trivial [[SimplePermutations]] pattern beyond length $2$ — every one decomposes recursively as a direct or skew sum.

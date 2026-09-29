@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the $3^n$ base-3 digit strings of length $n$, Gray-code ordered.
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - A lazy indexed collection; the count is the closed form $3^n$, but the ORDER is the point — it is the standard reflected-Gray-code recursion (each digit's block traversed forward or reversed in turn), not lexicographic.
-  - Each element is the digit string itself, as a list over $\{0,1,2\}$.
-  - $At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.
 enumerate:
   expr: TernaryGrayCodes(4)
   columns: Descents, Ascents
@@ -31,3 +27,7 @@ grades:
     role: axis
 carrier: TernaryGrayCode
 ---
+
+- A lazy indexed collection; the count is the closed form $3^n$, but the ORDER is the point — it is the standard reflected-Gray-code recursion (each digit's block traversed forward or reversed in turn), not lexicographic.
+- Each element is the digit string itself, as a list over $\{0,1,2\}$.
+- $At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.

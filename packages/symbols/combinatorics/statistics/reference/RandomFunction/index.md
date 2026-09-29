@@ -11,10 +11,6 @@ signatures:
   - call: RandomFunction(proc, [List, tmin, tmax, dt])
     description: samples over steps of size $dt$ from $tmin$ to $tmax$ (the final step may be short, landing exactly on $tmax$).
     library: enumeratio-statistics
-details:
-  - Returns a PLAIN LIST of `{t, x}` pairs — `List(List(t0, x0), List(t1, x1), ...)` — NOT Wolfram's `TemporalData` object (an opaque, richer carrier with its own interpolation/display machinery this engine does not have). A documented divergence, not an oversight.
-  - 'Draws through the same seeded PRNG stream [[RandomVariate]] uses (`SeedRandom` reseeds both together): Euler–Maruyama increments for a [[WienerProcess]], and an independent $Poisson(\lambda\, dt)$ draw per step for a [[PoissonProcess]] — both exact in distribution for their process, not merely approximate.'
-  - Reproducible for a fixed seed and grid, but NOT bit-identical to Wolfram's own generator — only the sampled distribution's shape is guaranteed to match, never the exact sequence of numbers (the same divergence [[RandomVariate]] documents).
 seeAlso:
   - WienerProcess
   - PoissonProcess
@@ -23,3 +19,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Returns a PLAIN LIST of `{t, x}` pairs — `List(List(t0, x0), List(t1, x1), ...)` — NOT Wolfram's `TemporalData` object (an opaque, richer carrier with its own interpolation/display machinery this engine does not have). A documented divergence, not an oversight.
+- Draws through the same seeded PRNG stream [[RandomVariate]] uses (`SeedRandom` reseeds both together): Euler–Maruyama increments for a [[WienerProcess]], and an independent $Poisson(\lambda\, dt)$ draw per step for a [[PoissonProcess]] — both exact in distribution for their process, not merely approximate.
+- Reproducible for a fixed seed and grid, but NOT bit-identical to Wolfram's own generator — only the sampled distribution's shape is guaranteed to match, never the exact sequence of numbers (the same divergence [[RandomVariate]] documents).

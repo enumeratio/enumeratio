@@ -21,13 +21,6 @@ signatures:
     library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-collections
-details:
-  - 'The least integer $\ge x$: $\lceil x \rceil$.'
-  - Rounds toward $+\infty$, not toward 0 -- so $\lceil -3.7 \rceil = -3$, not $-4$.
-  - For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Floor]].
-  - Agrees with [[Floor]] exactly on integers.
-  - Threads element-wise over a list.
-  - A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.
 seeAlso:
   - Floor
   - Round
@@ -60,3 +53,10 @@ bindings:
     template: ceil($1)
     arity: 1
 ---
+
+- The least integer $\ge x$: $\lceil x \rceil$.
+- Rounds toward $+\infty$, not toward 0 -- so $\lceil -3.7 \rceil = -3$, not $-4$.
+- For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Floor]].
+- Agrees with [[Floor]] exactly on integers.
+- Threads element-wise over a list.
+- A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.

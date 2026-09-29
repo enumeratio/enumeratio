@@ -8,12 +8,12 @@ signatures:
     description: set $q$ and drop whatever vanishes
     library: enumeratio-hecke
     type: (number, number) -> number
-details:
-  - At $q = 1$ the two cases of the multiplication rule become one, and $T_u T_v = T_{uv}$ for every pair — checked exhaustively over $S_2$, $S_3$ and $S_4$
-  - Everything interesting about $H_n(q)$ — Kazhdan–Lusztig theory, the Jones polynomial, representations at roots of unity — lives at $q \ne 1$
 seeAlso:
   - HeckeT
 references:
   - system: wikipedia
     identity: Iwahori–Hecke algebra
 ---
+
+- At $q = 1$ the two cases of the multiplication rule become one, and $T_u T_v = T_{uv}$ for every pair — checked exhaustively over $S_2$, $S_3$ and $S_4$
+- Everything interesting about $H_n(q)$ — Kazhdan–Lusztig theory, the Jones polynomial, representations at roots of unity — lives at $q \ne 1$

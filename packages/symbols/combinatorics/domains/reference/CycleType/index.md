@@ -3,9 +3,6 @@ name: CycleType
 domain: Combinatorial maps
 signature: CycleType(Permutation)
 summary: The multiset of cycle lengths, as a partition.
-details:
-  - Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-  - The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.
 references:
   - system: wikipedia
     identity: Cyclic permutation
@@ -24,3 +21,6 @@ signatures:
     library: enumeratio-domains
     type: (permutation) -> integer_partition
 ---
+
+- Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.

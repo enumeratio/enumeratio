@@ -8,9 +8,6 @@ signatures:
     description: ${}_pF_q(a; b; z)$, for parameter lists `a` (length $p$) and `b` (length $q$).
     library: "@enumeratio/analytic"
     type: (list, list, number) -> number
-details:
-  - "Three closed forms stay exact ahead of the numeric series, symbolic $z$ (and parameters) included: ${}_0F_0(;;z) = e^z$; ${}_1F_0(a;;z) = (1-z)^{-a}$; and $\\mathrm{HypergeometricPFQ}(\\ldots; 0) = 1$ for any parameter lists (the series' own leading term)."
-  - "Otherwise: $p \\le q$ converges for any $z$; $p = q+1$ only inside the unit disc, matching this package's Regularized forms — declined outside it rather than attempting an analytic continuation."
 primitive: kernel
 bindings:
   - origin: native
@@ -24,3 +21,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Three closed forms stay exact ahead of the numeric series, symbolic $z$ (and parameters) included: ${}_0F_0(;;z) = e^z$; ${}_1F_0(a;;z) = (1-z)^{-a}$; and $\mathrm{HypergeometricPFQ}(\ldots; 0) = 1$ for any parameter lists (the series' own leading term).
+- Otherwise: $p \le q$ converges for any $z$; $p = q+1$ only inside the unit disc, matching this package's Regularized forms — declined outside it rather than attempting an analytic continuation.

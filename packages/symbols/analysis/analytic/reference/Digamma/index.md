@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - 'Digamma is the order-zero polygamma: $\psi(z) = \psi^{(0)}(z)$. The higher derivatives are [[PolyGamma]].'
-  - $\psi(1) = -\gamma$, the negative Euler-Mascheroni constant.
-  - "Recurrence inherited from Gamma's functional equation: $\\psi(z+1) = \\psi(z) + 1/z$."
-  - $\psi(1/2) = -\gamma - 2\ln 2$.
-  - Poles at the nonpositive integers, the same poles as [[Gamma]].
-  - compute-engine's plain evaluation would otherwise leave Digamma at an exact integer argument symbolic except at the poles; `@enumeratio/analytic` overrides it at every positive integer via $\psi(n) = H_{n-1} - \gamma$, reusing [[HarmonicNumber]]. A rational, non-integer argument, or N(), still goes through the numeric path.
 seeAlso:
   - Gamma
   - Zeta
@@ -35,3 +28,10 @@ names:
   wikidata: Q905326
   wolfram: PolyGamma
 ---
+
+- Digamma is the order-zero polygamma: $\psi(z) = \psi^{(0)}(z)$. The higher derivatives are [[PolyGamma]].
+- $\psi(1) = -\gamma$, the negative Euler-Mascheroni constant.
+- Recurrence inherited from Gamma's functional equation: $\psi(z+1) = \psi(z) + 1/z$.
+- $\psi(1/2) = -\gamma - 2\ln 2$.
+- Poles at the nonpositive integers, the same poles as [[Gamma]].
+- compute-engine's plain evaluation would otherwise leave Digamma at an exact integer argument symbolic except at the poles; `@enumeratio/analytic` overrides it at every positive integer via $\psi(n) = H_{n-1} - \gamma$, reusing [[HarmonicNumber]]. A rational, non-integer argument, or N(), still goes through the numeric path.

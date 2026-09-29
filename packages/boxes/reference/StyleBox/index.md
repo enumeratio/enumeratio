@@ -8,11 +8,11 @@ signatures:
     description: "A box drawn in a style: `FontColor`, `FontWeight`, `FontSlant`, `FontSize`, `Background`."
     library: enumeratio-boxes
     type: (boxes, expression*) -> boxes
-details:
-  - MathML's `mstyle`.
 seeAlso:
   - FrameBox
   - TextBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `mstyle`.

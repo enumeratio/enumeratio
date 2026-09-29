@@ -18,13 +18,13 @@ signatures:
     library: enumeratio-collections
     type: (value, number?) -> value
     overrides: enumeratio-analytic
-details:
-  - Finds a simple rational number near x.
-  - With one argument, it finds the simplest fraction within about one machine epsilon of x's current value; a second argument sets an explicit tolerance instead.
-  - An already-exact rational (or integer) is returned unchanged.
-  - Builds the approximation via continued fractions, the same technique behind classic approximations like $\pi \approx 355/113$.
 seeAlso:
   - Round
 names:
   wolframIdentity: true
 ---
+
+- Finds a simple rational number near x.
+- With one argument, it finds the simplest fraction within about one machine epsilon of x's current value; a second argument sets an explicit tolerance instead.
+- An already-exact rational (or integer) is returned unchanged.
+- Builds the approximation via continued fractions, the same technique behind classic approximations like $\pi \approx 355/113$.

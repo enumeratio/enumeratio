@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the plane partitions fitting an $a \times b \times c$ box.
     type: (integer<0..>, integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - "A lazy indexed collection, exact and closed-form by MacMahon's box formula: $Count(BoxedPlanePartitions(a,b,c)) = \\prod_{i=1}^{a} \\prod_{j=1}^{b} \\prod_{k=1}^{c} \\frac{i+j+k-1}{i+j+k-2}$ — $Count(BoxedPlanePartitions(2,2,2)) = 20$."
-  - "Each element is the array's rows, [[PlanePartitions]]'s ragged carrier: entries weakly decrease along every row and down every column, with trailing zeros trimmed rather than stored."
-  - Unranked in shape-then-entries order, same as [[PlanePartitions]]; rank/unrank enumerate the box and index into it, so stick to small boxes.
 enumerate:
   expr: BoxedPlanePartitions(2, 2, 2)
 seeAlso:
@@ -32,3 +28,7 @@ grades:
     role: axis
 carrier: PlanePartition
 ---
+
+- A lazy indexed collection, exact and closed-form by MacMahon's box formula: $Count(BoxedPlanePartitions(a,b,c)) = \prod_{i=1}^{a} \prod_{j=1}^{b} \prod_{k=1}^{c} \frac{i+j+k-1}{i+j+k-2}$ — $Count(BoxedPlanePartitions(2,2,2)) = 20$.
+- Each element is the array's rows, [[PlanePartitions]]'s ragged carrier: entries weakly decrease along every row and down every column, with trailing zeros trimmed rather than stored.
+- Unranked in shape-then-entries order, same as [[PlanePartitions]]; rank/unrank enumerate the box and index into it, so stick to small boxes.

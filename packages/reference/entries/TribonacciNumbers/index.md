@@ -6,10 +6,6 @@ summary: The tribonacci numbers $0, 0, 1, 1, 2, 4, 7, …$ as a lazy indexed col
 signatures:
   - call: TribonacciNumbers
     description: $T_n = T_{n-1} + T_{n-2} + T_{n-3}$, $T_0 = 0$, $T_1 = 0$, $T_2 = 1$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(TribonacciNumbers) = +\infty$, and $At(TribonacciNumbers, 1) = T_0 = 0$.'
-  - "OEIS A000073, starting exactly at its offset-0 term: $0, 0, 1, 1, 2, 4, 7, 13, …$."
-  - "Membership goes through [[Element]]: $Element(24, TribonacciNumbers)$ is true, $Element(6, TribonacciNumbers)$ is false."
 enumerate:
   expr: Take(TribonacciNumbers, 20)
 seeAlso:
@@ -31,3 +27,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(TribonacciNumbers) = +\infty$, and $At(TribonacciNumbers, 1) = T_0 = 0$.
+- OEIS A000073, starting exactly at its offset-0 term: $0, 0, 1, 1, 2, 4, 7, 13, …$.
+- Membership goes through [[Element]]: $Element(24, TribonacciNumbers)$ is true, $Element(6, TribonacciNumbers)$ is false.

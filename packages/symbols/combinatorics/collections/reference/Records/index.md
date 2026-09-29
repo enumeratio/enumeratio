@@ -8,11 +8,11 @@ signatures:
     description: the record count of a one-line permutation $p$
     library: enumeratio-collections
     type: (list | permutation) -> integer
-details:
-  - The first position is always a record vacuously, so $\mathrm{Records}(p) \geq 1$ for $n \geq 1$
-  - Equidistributed with [[CycleCount]] over $S_n$ (Foata's bijection), so both follow the unsigned Stirling numbers of the first kind $\left[{n\atop k}\right]$
 seeAlso:
   - CycleCount
   - StirlingS1
   - SymmetricGroup
 ---
+
+- The first position is always a record vacuously, so $\mathrm{Records}(p) \geq 1$ for $n \geq 1$
+- Equidistributed with [[CycleCount]] over $S_n$ (Foata's bijection), so both follow the unsigned Stirling numbers of the first kind $\left[{n\atop k}\right]$

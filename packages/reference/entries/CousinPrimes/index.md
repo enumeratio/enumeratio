@@ -6,11 +6,6 @@ summary: "The (lesser) cousin primes $3, 7, 13, 19, 37, …$: primes $p$ with $p
 signatures:
   - call: CousinPrimes
     description: the lesser prime $p$ of a cousin pair $(p, p+4)$, an indexed collection of open infinitude.
-details:
-  - A lazy indexed collection; open infinitude (a cousin-prime analogue of the twin-prime conjecture), so $Count(CousinPrimes) = NaN$. OEIS A023200 (the lesser member).
-  - $At(CousinPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+4$ -- $At(CousinPrimes, 2) = 7$.
-  - "Membership goes through [[Element]]: $Element(7, CousinPrimes)$ is true ($7, 11$ both prime), $Element(11, CousinPrimes)$ is false ($15$ is not)."
-  - $CousinPrimes$ is $PrimePairs(4)$ verbatim.
 enumerate:
   expr: Take(CousinPrimes, 20)
 seeAlso:
@@ -28,3 +23,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection; open infinitude (a cousin-prime analogue of the twin-prime conjecture), so $Count(CousinPrimes) = NaN$. OEIS A023200 (the lesser member).
+- $At(CousinPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+4$ -- $At(CousinPrimes, 2) = 7$.
+- Membership goes through [[Element]]: $Element(7, CousinPrimes)$ is true ($7, 11$ both prime), $Element(11, CousinPrimes)$ is false ($15$ is not).
+- $CousinPrimes$ is $PrimePairs(4)$ verbatim.

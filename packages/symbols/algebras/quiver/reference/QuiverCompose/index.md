@@ -8,10 +8,6 @@ signatures:
     description: $p$ then $q$, or 0
     library: enumeratio-quiver
     type: (expression<LinearQuiver> | expression<Quiver> | symbol, number, number) -> number
-details:
-  - Associative, and the trivial paths act as local identities
-  - Zero is an honest answer here — it is returned as 0, not left symbolic
-  - The quiver is an argument because a path carries no reference to its own quiver
 seeAlso:
   - QuiverPath
   - QuiverIsAcyclic
@@ -19,3 +15,7 @@ references:
   - system: wikipedia
     identity: Quiver (mathematics)
 ---
+
+- Associative, and the trivial paths act as local identities
+- Zero is an honest answer here — it is returned as 0, not left symbolic
+- The quiver is an argument because a path carries no reference to its own quiver

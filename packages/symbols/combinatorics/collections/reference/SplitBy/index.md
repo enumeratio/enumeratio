@@ -8,11 +8,11 @@ signatures:
     description: runs on which $f(element)$ stays the same.
     library: enumeratio-collections
     type: (indexed_collection<T>, (T) any -> any) -> list<list<T>> where T
-details:
-  - '[[Split]] with the adjacency test "same $f$ value" instead of plain equality.'
 seeAlso:
   - Split
   - GatherBy
 names:
   wolframIdentity: true
 ---
+
+- [[Split]] with the adjacency test "same $f$ value" instead of plain equality.

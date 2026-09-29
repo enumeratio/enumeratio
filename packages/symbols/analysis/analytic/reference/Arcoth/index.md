@@ -11,10 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).
 seeAlso:
   - Artanh
 names:
   wolfram: ArcCoth
 ---
+
+- Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).

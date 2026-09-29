@@ -14,8 +14,6 @@ signatures:
   - call: NestWhile(f, x, test, m, max)
     description: Additionally caps the number of $f$-applications at $max$.
     library: enumeratio-collections
-details:
-  - Capped at 4096 applications of $f$ regardless of $max$ — see [[While]].
 seeAlso:
   - NestWhileList
   - While
@@ -25,3 +23,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Capped at 4096 applications of $f$ regardless of $max$ — see [[While]].

@@ -11,10 +11,10 @@ signatures:
   - call: Normalize(v, f)
     description: v / f(v), a custom norm function
     library: enumeratio-collections
-details:
-  - The zero vector is returned unchanged -- there is no direction to normalize it to.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- The zero vector is returned unchanged -- there is no direction to normalize it to.

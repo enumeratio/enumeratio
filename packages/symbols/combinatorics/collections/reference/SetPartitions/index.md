@@ -7,10 +7,10 @@ signatures:
   - call: SetPartitions(n)
     description: the partitions of an $n$-set into blocks
     library: enumeratio-collections
-details:
-  - Count is the Bell number $B_n$ (see [[BellNumber]])
-  - Each element is a list of blocks (a list of index lists)
 seeAlso:
   - IntegerPartitions
   - BellNumber
 ---
+
+- Count is the Bell number $B_n$ (see [[BellNumber]])
+- Each element is a list of blocks (a list of index lists)

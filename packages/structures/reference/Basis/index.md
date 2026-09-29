@@ -11,11 +11,6 @@ signatures:
     description: "The `FiniteDimensionalAlgebra` protocol's member: the basis of any algebra whose type conforms."
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - An algebra is an ordered list of generators; the families already carry the squares and the commutation rules
-  - "Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`"
-  - 'Named: [[Quaternions]] (also $\mathbb{H}$), `BicomplexNumbers`, `TricomplexNumbers`, `SplitComplexNumbers`, `DualNumbers`'
-  - No element constructor is needed — `Dot` threads a tuple of scalars over the basis
 seeAlso:
   - Quaternions
   - AlgebraDimension
@@ -31,3 +26,8 @@ bindings:
     template: list(($1).basis())
     arity: 1
 ---
+
+- An algebra is an ordered list of generators; the families already carry the squares and the commutation rules
+- Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`
+- Named: [[Quaternions]] (also $\mathbb{H}$), `BicomplexNumbers`, `TricomplexNumbers`, `SplitComplexNumbers`, `DualNumbers`
+- No element constructor is needed — `Dot` threads a tuple of scalars over the basis

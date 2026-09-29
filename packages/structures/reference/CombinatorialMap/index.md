@@ -10,8 +10,8 @@ signatures:
     type: (any, string) -> any
 attributes:
   - HoldAll
-details:
-  - 'A map between carriers (FindStat''s "map"): it need preserve nothing, so it is not a morphism. Found through its source carrier''s table, as a statistic is.'
 seeAlso:
   - CombinatorialStat
 ---
+
+- A map between carriers (FindStat's "map"): it need preserve nothing, so it is not a morphism. Found through its source carrier's table, as a statistic is.

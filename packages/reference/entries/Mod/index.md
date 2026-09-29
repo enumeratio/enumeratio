@@ -24,12 +24,6 @@ signatures:
     library: enumeratio-residues
     type: (real, real) -> real
     overrides: enumeratio-analytic
-details:
-  - Equivalent to $a-b\,\mathrm{Quotient}(a,b)$, i.e. $a-b\lfloor a/b\rfloor$.
-  - When $b>0$ the result lies in $[0,b)$; the sign of the result always matches the sign of $b$.
-  - 'Periodic: $a\bmod n=(a+kn)\bmod n$ for any integer $k$.'
-  - compute-engine returns NaN for a zero modulus rather than leaving the call unevaluated.
-  - A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.
 seeAlso:
   - PowerMod
 references:
@@ -76,3 +70,9 @@ bindings:
     arity: 2
     threadArg: 2
 ---
+
+- Equivalent to $a-b\,\mathrm{Quotient}(a,b)$, i.e. $a-b\lfloor a/b\rfloor$.
+- When $b>0$ the result lies in $[0,b)$; the sign of the result always matches the sign of $b$.
+- Periodic: $a\bmod n=(a+kn)\bmod n$ for any integer $k$.
+- compute-engine returns NaN for a zero modulus rather than leaving the call unevaluated.
+- A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.

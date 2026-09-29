@@ -8,12 +8,6 @@ signatures:
     description: the numeric global minimum of f over the bounded interval cons implies, for any real-valued f (not just the exact core [[Minimize]] covers).
     library: "@enumeratio/analytic"
     type: (tuple<expression, expression>, list<symbol> | symbol) -> expression
-details:
-  - "Method: sample f at 201 points across the interval (endpoints included), then refine the best sample with a golden-section search bracketed by its two neighbours (or use it as-is when the best sample IS an endpoint, with no interior bracket to refine into). Converges to a bracket width under 1e-11 (relative to the interval)."
-  - Always numeric -- unlike [[Minimize]], never returns an exact closed form, and works on any real-valued f, not just a recognized shape.
-  - "Requires an explicit BOUNDED constraint: `NMinimize(f, x)` alone declines, since an unconstrained numeric search has no principled starting box to invent. A constraint with an unbounded side (x >= a with no upper bound) also declines."
-  - Declines on more than one variable.
-  - A function that packs more variation into the interval than the 201-point grid resolves (many tightly-spaced local minima, or a spike narrower than the grid) can still be missed -- a real limitation of a sampling-based search, not hidden here.
 seeAlso:
   - NMaximize
   - Minimize
@@ -23,3 +17,9 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Method: sample f at 201 points across the interval (endpoints included), then refine the best sample with a golden-section search bracketed by its two neighbours (or use it as-is when the best sample IS an endpoint, with no interior bracket to refine into). Converges to a bracket width under 1e-11 (relative to the interval).
+- Always numeric -- unlike [[Minimize]], never returns an exact closed form, and works on any real-valued f, not just a recognized shape.
+- Requires an explicit BOUNDED constraint: `NMinimize(f, x)` alone declines, since an unconstrained numeric search has no principled starting box to invent. A constraint with an unbounded side (x >= a with no upper bound) also declines.
+- Declines on more than one variable.
+- A function that packs more variation into the interval than the 201-point grid resolves (many tightly-spaced local minima, or a spike narrower than the grid) can still be missed -- a real limitation of a sampling-based search, not hidden here.

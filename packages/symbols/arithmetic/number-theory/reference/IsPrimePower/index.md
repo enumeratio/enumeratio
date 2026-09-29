@@ -8,12 +8,12 @@ signatures:
     description: $n = p^k$ for a prime $p$, $k \ge 1$
     library: enumeratio-number-theory
     type: (integer) -> boolean
-details:
-  - "$1=p^0$ does not count: it has no prime base."
-  - Wolfram's `PrimePowerQ`.
 seeAlso:
   - IsPrime
   - FactorInteger
 names:
   wolfram: PrimePowerQ
 ---
+
+- $1=p^0$ does not count: it has no prime base.
+- Wolfram's `PrimePowerQ`.

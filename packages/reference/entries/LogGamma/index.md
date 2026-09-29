@@ -8,11 +8,6 @@ signatures:
     description: the log-gamma function $\ln\Gamma(z)$, analytically continued.
     library: enumeratio-analytic
     type: (number) -> number
-details:
-  - "For real $z > 0$ it is simply $\\ln\\Gamma(z)$: $\\ln\\Gamma(n) = \\ln (n-1)!$, $\\ln\\Gamma(\\tfrac12) = \\tfrac12\\ln\\pi$ -- where it agrees with compute-engine's own [[GammaLn]]."
-  - "Elsewhere it is the continuation across the upper and lower half-planes, continuous off $(-\\infty, 0]$ — the convention Wolfram's $\\mathrm{LogGamma}$ and mpmath's `loggamma` share. $\\ln(\\Gamma(z))$ with a principal logarithm jumps by $2\\pi i$ wherever $\\Gamma$ crosses the negative axis; this does not. [[GammaLn]] is that principal version, so the two genuinely differ: at $z = -5/2$, GammaLn is $-0.0562$ while LogGamma is $-0.0562 - 3\\pi i$."
-  - $+\infty$ at the poles of $\Gamma$, the nonpositive integers.
-  - Numerically, Stirling's series for large $\operatorname{Re}(z)$ with the recurrence $\ln\Gamma(z) = \ln\Gamma(z+n) - \sum_{k<n}\ln(z+k)$ — in principal logarithms, which for $\operatorname{Im}(z) \ne 0$ is exactly the continuation. compute-engine has a complex [[Gamma]] but no LogGamma of its own.
 bindings:
   - origin: reference
     form: notatio
@@ -42,3 +37,8 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- For real $z > 0$ it is simply $\ln\Gamma(z)$: $\ln\Gamma(n) = \ln (n-1)!$, $\ln\Gamma(\tfrac12) = \tfrac12\ln\pi$ -- where it agrees with compute-engine's own [[GammaLn]].
+- Elsewhere it is the continuation across the upper and lower half-planes, continuous off $(-\infty, 0]$ — the convention Wolfram's $\mathrm{LogGamma}$ and mpmath's `loggamma` share. $\ln(\Gamma(z))$ with a principal logarithm jumps by $2\pi i$ wherever $\Gamma$ crosses the negative axis; this does not. [[GammaLn]] is that principal version, so the two genuinely differ: at $z = -5/2$, GammaLn is $-0.0562$ while LogGamma is $-0.0562 - 3\pi i$.
+- $+\infty$ at the poles of $\Gamma$, the nonpositive integers.
+- Numerically, Stirling's series for large $\operatorname{Re}(z)$ with the recurrence $\ln\Gamma(z) = \ln\Gamma(z+n) - \sum_{k<n}\ln(z+k)$ — in principal logarithms, which for $\operatorname{Im}(z) \ne 0$ is exactly the continuation. compute-engine has a complex [[Gamma]] but no LogGamma of its own.

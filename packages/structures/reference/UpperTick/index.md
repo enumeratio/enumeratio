@@ -8,12 +8,12 @@ signatures:
     description: The least tick at or above x, in a type whose order has ticks.
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - The `FloorOrder` protocol's member, and what `Ceil` answers for such a type.
-  - "Left adjoint of the ticks' inclusion: $x$ is at or below a tick $z$ exactly when $\\mathrm{UpperTick}(x)$ is."
-  - "`FloorOrder` is our extension below Mathlib's `FloorRing`, for ticks that aren't a ring's integers."
 seeAlso:
   - LowerTick
   - Ceil
   - Midpoint
 ---
+
+- The `FloorOrder` protocol's member, and what `Ceil` answers for such a type.
+- Left adjoint of the ticks' inclusion: $x$ is at or below a tick $z$ exactly when $\mathrm{UpperTick}(x)$ is.
+- `FloorOrder` is our extension below Mathlib's `FloorRing`, for ticks that aren't a ring's integers.

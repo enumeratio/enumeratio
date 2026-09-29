@@ -8,8 +8,6 @@ signatures:
     description: Motzkin paths of length $n$ with no level step taken at height $0$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Riordan number (A005043).
 seeAlso:
   - DyckPaths
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: MotzkinPath
 ---
+
+- Count is the Riordan number (A005043).

@@ -11,9 +11,6 @@ signatures:
   - call: Throw(value, tag)
     description: Like $Throw(value)$, but only a $Catch(expr, tag)$ matching $tag$ exactly stops it — an untagged or non-matching $Catch$ lets it propagate further out.
     library: enumeratio-collections
-details:
-  - Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
-  - A $Throw$ that reaches no matching $Catch$ propagates out of the whole evaluation.
 seeAlso:
   - Catch
 names:
@@ -21,3 +18,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
+- A $Throw$ that reaches no matching $Catch$ propagates out of the whole evaluation.

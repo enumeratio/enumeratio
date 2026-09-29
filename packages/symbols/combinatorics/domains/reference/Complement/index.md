@@ -3,8 +3,6 @@ name: Complement
 domain: Combinatorial maps
 signature: Complement(Permutation)
 summary: Each entry replaced by n + 1 minus itself.
-details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 catalog:
   - system: findstat
     identity: Mp00039
@@ -25,3 +23,5 @@ signatures:
     type: ((set<any>+) -> set) & ((permutation) -> permutation)
     overrides: compute-engine
 ---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

@@ -7,12 +7,12 @@ signatures:
   - call: SymmetricGroup(n)
     description: the $n!$ permutations of $n$ elements
     library: enumeratio-collections
-details:
-  - Count is $n!$ (see [[Factorial]])
-  - Elements are one-line words in lexicographic order; the identity comes first
-  - Fixed-point-free permutations are [[Derangements]]; self-inverse ones are [[Involutions]]
 seeAlso:
   - Derangements
   - Involutions
   - Factorial
 ---
+
+- Count is $n!$ (see [[Factorial]])
+- Elements are one-line words in lexicographic order; the identity comes first
+- Fixed-point-free permutations are [[Derangements]]; self-inverse ones are [[Involutions]]

@@ -11,11 +11,11 @@ signatures:
   - call: IsMatrix(m, test)
     description: as above, and test holds of every entry
     library: enumeratio-collections
-details:
-  - A ragged List of Lists (rows of different lengths), an empty List, or anything of rank other than exactly 2, is False.
 seeAlso:
   - IsVector
   - IsArray
 names:
   wolfram: MatrixQ
 ---
+
+- A ragged List of Lists (rows of different lengths), an empty List, or anything of rank other than exactly 2, is False.

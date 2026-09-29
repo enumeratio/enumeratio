@@ -11,12 +11,6 @@ signatures:
     library: "@enumeratio/analytic"
     type: (integer, number?) -> number
     overrides: compute-engine
-details:
-  - Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.
-  - $B_n = 0$ for every odd $n > 1$; $B_1 = -\frac12$ under this (the "$B_n^-$") convention.
-  - Drive Faulhaber's formula for power sums, $\sum_{k=0}^{n-1} k^p = \frac{1}{p+1}\sum_{j=0}^{p}\binom{p+1}{j} B_j\, n^{p+1-j}$. See [[Binomial]].
-  - 'Related to the Riemann zeta function: $\zeta(-n) = -\dfrac{B_{n+1}}{n+1}$ for $n \ge 1$, and $\zeta(2n) = \dfrac{(-1)^{n+1} B_{2n} (2\pi)^{2n}}{2\,(2n)!}$.'
-  - compute-engine only defines $B_n$ for nonnegative integer $n$. With a second argument, BernoulliB(n, x) is the Bernoulli polynomial $B_n(x)$, as in Wolfram — the same as [[BernoulliPolynomial]].
 references:
   - system: wikipedia
     identity: Bernoulli number
@@ -45,3 +39,9 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.
+- $B_n = 0$ for every odd $n > 1$; $B_1 = -\frac12$ under this (the "$B_n^-$") convention.
+- Drive Faulhaber's formula for power sums, $\sum_{k=0}^{n-1} k^p = \frac{1}{p+1}\sum_{j=0}^{p}\binom{p+1}{j} B_j\, n^{p+1-j}$. See [[Binomial]].
+- Related to the Riemann zeta function: $\zeta(-n) = -\dfrac{B_{n+1}}{n+1}$ for $n \ge 1$, and $\zeta(2n) = \dfrac{(-1)^{n+1} B_{2n} (2\pi)^{2n}}{2\,(2n)!}$.
+- compute-engine only defines $B_n$ for nonnegative integer $n$. With a second argument, BernoulliB(n, x) is the Bernoulli polynomial $B_n(x)$, as in Wolfram — the same as [[BernoulliPolynomial]].

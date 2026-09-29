@@ -11,8 +11,6 @@ signatures:
   - call: PathGraph(n)
     description: the path $1 - 2 - \dots - n$ — our own convenience extension.
     library: enumeratio-collections
-details:
-  - "`PathGraph(n)` is a convenience this library adds; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified) — it only accepts a vertex list. Both forms are accepted here, but the Wolfram transpiler treats the whole head as foreign (its own context, not a plain rename) since it cannot tell the two call shapes apart — see `FOREIGN` in `@enumeratio/wolfram`."
 seeAlso:
   - CycleGraph
   - CompleteGraph
@@ -25,3 +23,5 @@ bindings:
       version: 15.0.0
       on: 2026-09-28
 ---
+
+- `PathGraph(n)` is a convenience this library adds; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified) — it only accepts a vertex list. Both forms are accepted here, but the Wolfram transpiler treats the whole head as foreign (its own context, not a plain rename) since it cannot tell the two call shapes apart — see `FOREIGN` in `@enumeratio/wolfram`.

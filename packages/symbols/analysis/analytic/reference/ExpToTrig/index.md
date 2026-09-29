@@ -8,11 +8,11 @@ signatures:
     description: "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue."
     library: "@enumeratio/analytic"
     type: (expression) -> expression
-details:
-  - Rewrites `Exp(ix)` to `cos(x) + i·sin(x)` and a real `Exp(x)` to `cosh(x) + sinh(x)` everywhere in the tree, then simplifies. A combination that cancels back down to a single Cosh/Sinh/Sin -- the Scope examples -- falls out of that simplification pass; there is no separate 'recognize this shape' rule.
 seeAlso:
   - ComplexExpand
   - TrigToExp
 names:
   wolframIdentity: true
 ---
+
+- Rewrites `Exp(ix)` to `cos(x) + i·sin(x)` and a real `Exp(x)` to `cosh(x) + sinh(x)` everywhere in the tree, then simplifies. A combination that cancels back down to a single Cosh/Sinh/Sin -- the Scope examples -- falls out of that simplification pass; there is no separate 'recognize this shape' rule.

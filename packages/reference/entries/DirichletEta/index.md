@@ -8,11 +8,6 @@ signatures:
     description: the Dirichlet eta function $\eta(s)$.
     library: enumeratio-analytic
     type: (number) -> number
-details:
-  - "$\\eta(s) = (1 - 2^{1-s})\\zeta(s)$: the alternating series converges for $\\operatorname{Re}(s) > 0$, and the factor cancels $\\zeta$'s pole, so $\\eta$ is entire with $\\eta(1) = \\ln 2$."
-  - "Integer values follow from [[Zeta]]'s: $\\eta(2) = \\pi^2/12$, $\\eta(0) = \\tfrac12$, $\\eta(-1) = \\tfrac14$, and $\\eta(3) = \\tfrac34\\zeta(3)$ stays in terms of $\\zeta(3)$."
-  - 'Zeros: the nontrivial zeros of $\zeta$, plus those of $1 - 2^{1-s}$ on the line $\operatorname{Re}(s) = 1$.'
-  - Plain evaluation reduces exact integer $s$ through $\zeta$; other exact $s$ stays symbolic (as in Wolfram) until N() or a floating-point argument. Numerically, complex $s$ is supported; within $0.25$ of $s = 1$ the alternating series is summed directly (Euler transform, via [[LerchPhi]]) so no pole is cancelled.
 bindings:
   - origin: reference
     form: notatio
@@ -42,3 +37,8 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- $\eta(s) = (1 - 2^{1-s})\zeta(s)$: the alternating series converges for $\operatorname{Re}(s) > 0$, and the factor cancels $\zeta$'s pole, so $\eta$ is entire with $\eta(1) = \ln 2$.
+- Integer values follow from [[Zeta]]'s: $\eta(2) = \pi^2/12$, $\eta(0) = \tfrac12$, $\eta(-1) = \tfrac14$, and $\eta(3) = \tfrac34\zeta(3)$ stays in terms of $\zeta(3)$.
+- Zeros: the nontrivial zeros of $\zeta$, plus those of $1 - 2^{1-s}$ on the line $\operatorname{Re}(s) = 1$.
+- Plain evaluation reduces exact integer $s$ through $\zeta$; other exact $s$ stays symbolic (as in Wolfram) until N() or a floating-point argument. Numerically, complex $s$ is supported; within $0.25$ of $s = 1$ the alternating series is summed directly (Euler transform, via [[LerchPhi]]) so no pole is cancelled.

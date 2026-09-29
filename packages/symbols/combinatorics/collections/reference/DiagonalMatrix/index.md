@@ -11,10 +11,10 @@ signatures:
   - call: DiagonalMatrix(list, k)
     description: an (n + |k|)×(n + |k|) matrix with list on the k-th diagonal (k > 0 above, k < 0 below)
     library: enumeratio-collections
-details:
-  - The result grows with k rather than staying n×n — Wolfram's own convention, kernel-checked (`DiagonalMatrix[{1, 2}, 1]` is 3×3, not 2×2).
 seeAlso:
   - HilbertMatrix
 names:
   wolframIdentity: true
 ---
+
+- The result grows with k rather than staying n×n — Wolfram's own convention, kernel-checked (`DiagonalMatrix[{1, 2}, 1]` is 3×3, not 2×2).

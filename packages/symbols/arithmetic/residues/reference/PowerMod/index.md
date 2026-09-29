@@ -19,14 +19,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, number, number) -> number
     overrides: enumeratio-residues
-details:
-  - Computed by repeated squaring, without ever forming $a^b$ directly -- efficient even for huge $b$.
-  - A negative $b$ gives the modular inverse of $a$ raised to $|b|$, when it exists.
-  - The inverse is undefined whenever $\gcd(a,m)\neq1$; compute-engine leaves such calls unevaluated.
-  - Equal to $\mathrm{Mod}(a^b, m)$ for positive $b$, just far more efficient. See [[Mod]].
-  - A rational exponent $s/r$ gives the least $x$ with $x^r \equiv a^s$ — the first element of [[PowerModList]] — and stays unevaluated when there is none.
-  - Threads over lists in any argument.
-  - Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.
 seeAlso:
   - Mod
   - PowerModList
@@ -58,3 +50,11 @@ bindings:
     arity: 3
     note: Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.
 ---
+
+- Computed by repeated squaring, without ever forming $a^b$ directly -- efficient even for huge $b$.
+- A negative $b$ gives the modular inverse of $a$ raised to $|b|$, when it exists.
+- The inverse is undefined whenever $\gcd(a,m)\neq1$; compute-engine leaves such calls unevaluated.
+- Equal to $\mathrm{Mod}(a^b, m)$ for positive $b$, just far more efficient. See [[Mod]].
+- A rational exponent $s/r$ gives the least $x$ with $x^r \equiv a^s$ — the first element of [[PowerModList]] — and stays unevaluated when there is none.
+- Threads over lists in any argument.
+- Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.

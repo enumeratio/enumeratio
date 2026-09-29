@@ -8,12 +8,12 @@ signatures:
     description: the coin problem's answer for these denominations
     library: enumeratio-number-theory
     type: (list<integer>) -> integer
-details:
-  - By the round-robin shortest-path algorithm over $\mathbb{Z}/a_0$ for the smallest generator $a_0$, not by searching [[FrobeniusSolve]] upward.
-  - Requires the generators' $\gcd$ to be 1 — otherwise every multiple of that gcd past it is still unreachable, so the answer is $+\infty$.
 seeAlso:
   - FrobeniusSolve
   - GCD
 names:
   wolframIdentity: true
 ---
+
+- By the round-robin shortest-path algorithm over $\mathbb{Z}/a_0$ for the smallest generator $a_0$, not by searching [[FrobeniusSolve]] upward.
+- Requires the generators' $\gcd$ to be 1 — otherwise every multiple of that gcd past it is still unreachable, so the answer is $+\infty$.

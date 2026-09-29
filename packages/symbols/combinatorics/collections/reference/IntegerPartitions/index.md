@@ -7,11 +7,11 @@ signatures:
   - call: IntegerPartitions(n)
     description: the partitions of $n$ into positive parts
     library: enumeratio-collections
-details:
-  - Count is the partition function $p(n)$
-  - Each element is a weakly decreasing list of parts summing to $n$
-  - When order matters, use [[IntegerCompositions]]
 seeAlso:
   - IntegerCompositions
   - SetPartitions
 ---
+
+- Count is the partition function $p(n)$
+- Each element is a weakly decreasing list of parts summing to $n$
+- When order matters, use [[IntegerCompositions]]

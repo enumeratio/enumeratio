@@ -8,13 +8,13 @@ signatures:
     description: every element of $collection$ that matches $pattern$, in order.
     library: enumeratio-collections
     type: (collection<any>, any) -> collection
-details:
-  - "Matches compute-engine's own wildcards: a bare `_` (or named, `_a`) matches any single element, `__`/`___` match one-or-more/zero-or-more within a structural pattern, and a pattern built from a head applied to wildcards (e.g. $List(\\_a)$) matches that structure."
-  - A plain value (no wildcard) matches by exact equality, same as [[Count]].
-  - Only the top level of the collection is searched.
 seeAlso:
   - Count
   - Select
 names:
   wolframIdentity: true
 ---
+
+- Matches compute-engine's own wildcards: a bare `_` (or named, `_a`) matches any single element, `__`/`___` match one-or-more/zero-or-more within a structural pattern, and a pattern built from a head applied to wildcards (e.g. $List(\_a)$) matches that structure.
+- A plain value (no wildcard) matches by exact equality, same as [[Count]].
+- Only the top level of the collection is searched.

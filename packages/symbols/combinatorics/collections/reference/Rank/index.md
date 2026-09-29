@@ -11,11 +11,11 @@ signatures:
     library: enumeratio-collections
     type: (value) -> integer
     overrides: compute-engine
-details:
-  - Tensor rank in the array sense — Wolfram's `ArrayDepth`, NumPy's `ndim`.
-  - Not the rank of a matrix (its number of independent rows); that is [[MatrixRank]].
 names:
   wolfram: ArrayDepth
 statOn:
   - Finset
 ---
+
+- Tensor rank in the array sense — Wolfram's `ArrayDepth`, NumPy's `ndim`.
+- Not the rank of a matrix (its number of independent rows); that is [[MatrixRank]].

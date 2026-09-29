@@ -17,12 +17,6 @@ signatures:
   - call: TorusBraid(p, q)
     description: $(\sigma_1\cdots\sigma_{p-1})^q$, whose closure is $T(p,q)$
     library: enumeratio-braid
-details:
-  - 'Relations: $\sigma_i\sigma_j = \sigma_j\sigma_i$ for $|i-j| \ge 2$, and $\sigma_i\sigma_{i+1}\sigma_i = \sigma_{i+1}\sigma_i\sigma_{i+1}$'
-  - Adding $\sigma_i^2 = 1$ gives the symmetric group, which is why $B_n$ surjects onto $S_n$
-  - Two different words can name the same braid; nothing here solves the word problem, so only invariants are computed
-  - "`BraidComponents` counts the permutation's cycles — the closure is a knot exactly when it is an $n$-cycle"
-  - An $LR$ word from the modular group is accepted anywhere a braid is, via its Lorenz braid
 seeAlso:
   - AlexanderPolynomial
   - LorenzBraid
@@ -33,3 +27,9 @@ references:
   - system: mathworld
     identity: BraidGroup
 ---
+
+- Relations: $\sigma_i\sigma_j = \sigma_j\sigma_i$ for $|i-j| \ge 2$, and $\sigma_i\sigma_{i+1}\sigma_i = \sigma_{i+1}\sigma_i\sigma_{i+1}$
+- Adding $\sigma_i^2 = 1$ gives the symmetric group, which is why $B_n$ surjects onto $S_n$
+- Two different words can name the same braid; nothing here solves the word problem, so only invariants are computed
+- `BraidComponents` counts the permutation's cycles — the closure is a knot exactly when it is an $n$-cycle
+- An $LR$ word from the modular group is accepted anywhere a braid is, via its Lorenz braid

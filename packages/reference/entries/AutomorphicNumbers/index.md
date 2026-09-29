@@ -6,10 +6,6 @@ summary: "The automorphic numbers $1, 5, 6, 25, 76, 376, …$: $n$ whose square 
 signatures:
   - call: AutomorphicNumbers
     description: the $n$ with $n^2 \equiv n \pmod{10^{\mathrm{digits}(n)}}$, excluding the trivial 0, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(AutomorphicNumbers) = +\infty$ -- the two nontrivial 10-adic idempotents ($…890625$ and $…109376$) extend to a new automorphic number of every digit length. OEIS A003226.'
-  - $At(AutomorphicNumbers, k)$ unranks from a table built by Hensel-lifting those idempotents digit by digit (not a search -- the terms thin out too fast, roughly 10x per step, for a scan to reach past the mid-teens); $At(AutomorphicNumbers, 5) = 76$. Terms whose value exceeds $2^{53}-1$ answer $NaN$, the same representable-range limit as [[NarcissisticNumbers]].
-  - "Membership goes through [[Element]]: $Element(76, AutomorphicNumbers)$ is true ($76^2=5776$), $Element(77, AutomorphicNumbers)$ is false."
 enumerate:
   expr: Take(AutomorphicNumbers, 20)
 seeAlso:
@@ -25,3 +21,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(AutomorphicNumbers) = +\infty$ -- the two nontrivial 10-adic idempotents ($…890625$ and $…109376$) extend to a new automorphic number of every digit length. OEIS A003226.
+- $At(AutomorphicNumbers, k)$ unranks from a table built by Hensel-lifting those idempotents digit by digit (not a search -- the terms thin out too fast, roughly 10x per step, for a scan to reach past the mid-teens); $At(AutomorphicNumbers, 5) = 76$. Terms whose value exceeds $2^{53}-1$ answer $NaN$, the same representable-range limit as [[NarcissisticNumbers]].
+- Membership goes through [[Element]]: $Element(76, AutomorphicNumbers)$ is true ($76^2=5776$), $Element(77, AutomorphicNumbers)$ is false.

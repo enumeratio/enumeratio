@@ -8,16 +8,6 @@ signatures:
     description: the Lerch transcendent $\Phi(z, s, a)$.
     library: enumeratio-analytic
     type: (number, number, number) -> number
-details:
-  - 'At $z = 1$ it is the Hurwitz zeta: $\Phi(1, s, a) = \zeta(s, a)$, so $\Phi(1, s, 1) = \zeta(s)$. See [[HurwitzZeta]].'
-  - 'It carries the polylogarithm: $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ — e.g. $\operatorname{Li}_2(1/2) = \tfrac12\Phi(1/2, 2, 1) = \pi^2/12 - (\ln 2)^2/2$.'
-  - 'At $z = -1$ it is the Dirichlet eta: $\Phi(-1, s, 1) = \eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = (1 - 2^{1-s})\zeta(s)$, so $\Phi(-1, 1, 1) = \ln 2$.'
-  - "And the Dirichlet beta / Catalan's constant: $\\Phi(-1, 2, \\tfrac12) = 4\\beta(2) = 4G = 3.6638\\ldots$"
-  - $\Phi(z, 0, a) = 1/(1 - z)$ — the geometric series (and its continuation), independent of $a$, for all $z \ne 1$.
-  - 'Convergence: the series converges for $|z| < 1$ (any $s$, $a$), and on $|z| = 1$ only for $\operatorname{Re}(s) > 1$; elsewhere it is defined by analytic continuation in $z$.'
-  - Poles at $a = 0, -1, -2, \ldots$, from the singular $(n+a) = 0$ term, as for [[HurwitzZeta]].
-  - Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\eta(s)$ and Catalan cases reach machine precision. Past $|z| = 1$ it is continued by the Hermite-type integral representation, $\Phi = \tfrac{1}{2a^s} + z^{-a}(-\ln z)^{s-1}\Gamma(1-s, -a\ln z) - 2\int_0^\infty \frac{\sin(t\ln z - s\arctan(t/a))}{(a^2+t^2)^{s/2}(e^{2\pi t}-1)}\,dt$, with other $a$ shifted by $\Phi(z, s, a) = a^{-s} + z\Phi(z, s, a+1)$; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do. Where the terms cancel below double precision, or the incomplete gamma can't be trusted (near the negative real axis past $|x| \approx 20$), it stays unevaluated rather than guess.
-  - 'Certified digits: for exact real $z$, $s$ and $a$ (integers, rationals or decimals) with $|z| < 1$ and $a > 0$, $\mathrm{N}(\Phi(z, s, a), d)$ is proven. The series is summed in ball arithmetic, and its tail after a term $t$ is bounded by $|t| R/(1-R)$, where $R = |z|\,e^{\max(0, -s)/(n+a)}$ bounds every later ratio of terms; the d digits are those both ends of the enclosure round to. See [[N]].'
 bindings:
   - origin: reference
     form: notatio
@@ -66,3 +56,13 @@ names:
   dlmf: Lerch's transcendent
   wolframIdentity: true
 ---
+
+- At $z = 1$ it is the Hurwitz zeta: $\Phi(1, s, a) = \zeta(s, a)$, so $\Phi(1, s, 1) = \zeta(s)$. See [[HurwitzZeta]].
+- It carries the polylogarithm: $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ — e.g. $\operatorname{Li}_2(1/2) = \tfrac12\Phi(1/2, 2, 1) = \pi^2/12 - (\ln 2)^2/2$.
+- At $z = -1$ it is the Dirichlet eta: $\Phi(-1, s, 1) = \eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = (1 - 2^{1-s})\zeta(s)$, so $\Phi(-1, 1, 1) = \ln 2$.
+- And the Dirichlet beta / Catalan's constant: $\Phi(-1, 2, \tfrac12) = 4\beta(2) = 4G = 3.6638\ldots$
+- $\Phi(z, 0, a) = 1/(1 - z)$ — the geometric series (and its continuation), independent of $a$, for all $z \ne 1$.
+- Convergence: the series converges for $|z| < 1$ (any $s$, $a$), and on $|z| = 1$ only for $\operatorname{Re}(s) > 1$; elsewhere it is defined by analytic continuation in $z$.
+- Poles at $a = 0, -1, -2, \ldots$, from the singular $(n+a) = 0$ term, as for [[HurwitzZeta]].
+- Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\eta(s)$ and Catalan cases reach machine precision. Past $|z| = 1$ it is continued by the Hermite-type integral representation, $\Phi = \tfrac{1}{2a^s} + z^{-a}(-\ln z)^{s-1}\Gamma(1-s, -a\ln z) - 2\int_0^\infty \frac{\sin(t\ln z - s\arctan(t/a))}{(a^2+t^2)^{s/2}(e^{2\pi t}-1)}\,dt$, with other $a$ shifted by $\Phi(z, s, a) = a^{-s} + z\Phi(z, s, a+1)$; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do. Where the terms cancel below double precision, or the incomplete gamma can't be trusted (near the negative real axis past $|x| \approx 20$), it stays unevaluated rather than guess.
+- Certified digits: for exact real $z$, $s$ and $a$ (integers, rationals or decimals) with $|z| < 1$ and $a > 0$, $\mathrm{N}(\Phi(z, s, a), d)$ is proven. The series is summed in ball arithmetic, and its tail after a term $t$ is bounded by $|t| R/(1-R)$, where $R = |z|\,e^{\max(0, -s)/(n+a)}$ bounds every later ratio of terms; the d digits are those both ends of the enclosure round to. See [[N]].

@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the $(P, Q)$ pairs of size `size`, in bijection with the permutations of `size` via RSK.
     type: (integer<0..>) -> indexed_collection<any>
-details:
-  - 'A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].'
-  - Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
-  - Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.
 enumerate:
   expr: StandardTableauPairs(4)
 seeAlso:
@@ -33,3 +29,7 @@ grades:
     role: axis
 carrier: StandardTableauPair
 ---
+
+- A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].
+- Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
+- Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.

@@ -8,12 +8,12 @@ signatures:
     description: "A two-dimensional array of boxes: a matrix's body, a piecewise definition's cases."
     library: enumeratio-boxes
     type: (list<list<boxes>>, expression*) -> boxes
-details:
-  - Rows are lists of boxes, as in Wolfram's `GridBox[{{…}, …}]`.
-  - MathML's `mtable`.
 seeAlso:
   - RowBox
   - FractionBox
 names:
   wolframIdentity: true
 ---
+
+- Rows are lists of boxes, as in Wolfram's `GridBox[{{…}, …}]`.
+- MathML's `mtable`.

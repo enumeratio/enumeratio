@@ -8,11 +8,6 @@ signatures:
     description: the Jacobi elliptic function ds, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
-  - $\operatorname{ds}(u,m) = \operatorname{dn}(u,m)/\operatorname{sn}(u,m)$ — [[JacobiDN]] and [[JacobiSN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
-  - ds has a pole at u = 0 (sn(0,m) = 0, for any m).
-  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiDN
   - JacobiSN
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+- $\operatorname{ds}(u,m) = \operatorname{dn}(u,m)/\operatorname{sn}(u,m)$ — [[JacobiDN]] and [[JacobiSN]] share this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+- ds has a pole at u = 0 (sn(0,m) = 0, for any m).
+- Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

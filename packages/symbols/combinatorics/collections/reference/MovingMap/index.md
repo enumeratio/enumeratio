@@ -8,10 +8,10 @@ signatures:
     description: f applied to each window {list[i], …, list[i+w]} -- Length(list) - w results
     library: enumeratio-collections
     type: ((collection<any>) -> any, collection<any>, integer) -> collection
-details:
-  - Same as Map(f, Partition(list, w + 1, 1)) -- no boundary padding or clipping, unlike a centered-radius window.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- Same as Map(f, Partition(list, w + 1, 1)) -- no boundary padding or clipping, unlike a centered-radius window.

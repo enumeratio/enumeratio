@@ -6,10 +6,6 @@ summary: "The Mersenne primes $3, 7, 31, 127, 8191, …$: primes of the form $2^
 signatures:
   - call: MersennePrimes
     description: the primes $2^p-1$ for a prime exponent $p$, an indexed collection of open infinitude -- only finitely many are known at any time.
-details:
-  - A lazy indexed collection; whether there are infinitely many is the open Lenstra-Pomerance-Wagstaff conjecture, so $Count(MersennePrimes) = NaN$. OEIS A000668.
-  - "$At(MersennePrimes, k)$ unranks from a table of exponents verified by the Lucas-Lehmer test, not a search -- the known terms grow to tens of millions of digits, so past the point a value would exceed what a numeric collection element can represent exactly ($2^{53}-1$), $At$ answers $NaN$ rather than hang looking for more: $At(MersennePrimes, 4) = 127$ ($p=7$), and $At(MersennePrimes, 9)$ is $NaN$ (the 9th, $2^{61}-1$, exists and is known, but doesn't fit)."
-  - "Membership goes through [[Element]]: $Element(127, MersennePrimes)$ is true, $Element(63, MersennePrimes)$ is false ($2^6-1=63=3^2 \\times 7$, and 6 isn't even prime)."
 enumerate:
   expr: Take(MersennePrimes, 8)
 seeAlso:
@@ -31,3 +27,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection; whether there are infinitely many is the open Lenstra-Pomerance-Wagstaff conjecture, so $Count(MersennePrimes) = NaN$. OEIS A000668.
+- $At(MersennePrimes, k)$ unranks from a table of exponents verified by the Lucas-Lehmer test, not a search -- the known terms grow to tens of millions of digits, so past the point a value would exceed what a numeric collection element can represent exactly ($2^{53}-1$), $At$ answers $NaN$ rather than hang looking for more: $At(MersennePrimes, 4) = 127$ ($p=7$), and $At(MersennePrimes, 9)$ is $NaN$ (the 9th, $2^{61}-1$, exists and is known, but doesn't fit).
+- Membership goes through [[Element]]: $Element(127, MersennePrimes)$ is true, $Element(63, MersennePrimes)$ is false ($2^6-1=63=3^2 \times 7$, and 6 isn't even prime).

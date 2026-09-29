@@ -8,9 +8,6 @@ signatures:
     description: Ordered selections of $k$ distinct elements from $\{1, …, n\}$ — the $k$-permutations of $n$
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the falling factorial $n^{\underline{k}} = n!/(n-k)!$.
-  - Each element is a length-$k$ one-line word with distinct entries from $\{1, …, n\}$.
 seeAlso:
   - SymmetricGroup
   - Subsets
@@ -44,3 +41,6 @@ grades:
     role: axis
 carrier: Arrangement
 ---
+
+- Count is the falling factorial $n^{\underline{k}} = n!/(n-k)!$.
+- Each element is a length-$k$ one-line word with distinct entries from $\{1, …, n\}$.

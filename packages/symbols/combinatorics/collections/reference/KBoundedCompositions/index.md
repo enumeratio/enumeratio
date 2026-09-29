@@ -8,8 +8,6 @@ signatures:
     description: the compositions of $n$ into parts from $\{1, …, k\}$
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the generalized $k$-nacci sequence; specializes to [[FibonacciCompositions]] at $k=2$, [[TriCompositions]] at $k=3$, [[TetraCompositions]] at $k=4$.
 seeAlso:
   - IntegerCompositions
   - FibonacciCompositions
@@ -26,3 +24,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is the generalized $k$-nacci sequence; specializes to [[FibonacciCompositions]] at $k=2$, [[TriCompositions]] at $k=3$, [[TetraCompositions]] at $k=4$.

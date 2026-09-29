@@ -11,10 +11,6 @@ signatures:
   - call: ContinuedFractionK(f, g, (i, imin, PositiveInfinity))
     description: the infinite fraction, when $f$ and $g$ do not depend on $i$
     library: enumeratio-modular
-details:
-  - "The iterator is written the same way `Sum` and `Product` write theirs: `Tuple(i, imin, imax)`"
-  - 'The finite fraction is built right to left: $f_{imax}/g_{imax}$ first, then each $f_i/(g_i + \text{that})$ down to $i = imin$'
-  - "The infinite case is solved algebraically, not truncated: constant $f, g$ make $x = f/(g+x)$, whose positive root $x = (-g + \\sqrt{g^2+4f})/2$ is the fraction's value — an $f$ or $g$ that depends on $i$ has no such closed form here, and the call stays unevaluated"
 seeAlso:
   - Convergents
   - ContinuedFraction
@@ -23,3 +19,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- The iterator is written the same way `Sum` and `Product` write theirs: `Tuple(i, imin, imax)`
+- The finite fraction is built right to left: $f_{imax}/g_{imax}$ first, then each $f_i/(g_i + \text{that})$ down to $i = imin$
+- The infinite case is solved algebraically, not truncated: constant $f, g$ make $x = f/(g+x)$, whose positive root $x = (-g + \sqrt{g^2+4f})/2$ is the fraction's value — an $f$ or $g$ that depends on $i$ has no such closed form here, and the call stays unevaluated

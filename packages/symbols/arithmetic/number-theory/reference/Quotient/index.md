@@ -8,10 +8,6 @@ signatures:
     description: $\lfloor m/n \rfloor$ for integers; $m/n$ rounded half-even in each part for Gaussian integers
     library: enumeratio-number-theory
     type: (number, number, number?) -> number
-details:
-  - For integers, $\lfloor m/n \rfloor$, so $m = n\,\mathrm{Quotient}(m, n) + \mathrm{Mod}(m, n)$ with the remainder taking the sign of $n$.
-  - 'For Gaussian integers the quotient rounds instead, ties to even, which is what makes $\mathbb{Z}[i]$ Euclidean: the remainder then has smaller norm than $n$.'
-  - compute-engine has no Quotient; this follows Wolfram's.
 seeAlso:
   - Mod
   - GCD
@@ -33,3 +29,7 @@ bindings:
       version: 15.0.0
       on: 2026-09-28
 ---
+
+- For integers, $\lfloor m/n \rfloor$, so $m = n\,\mathrm{Quotient}(m, n) + \mathrm{Mod}(m, n)$ with the remainder taking the sign of $n$.
+- For Gaussian integers the quotient rounds instead, ties to even, which is what makes $\mathbb{Z}[i]$ Euclidean: the remainder then has smaller norm than $n$.
+- compute-engine has no Quotient; this follows Wolfram's.

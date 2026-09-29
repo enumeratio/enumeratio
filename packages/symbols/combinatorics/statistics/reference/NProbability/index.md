@@ -8,11 +8,6 @@ signatures:
     description: tries the exact Probability first; otherwise sums (discrete) or integrates (continuous) the indicator of cond against the PDF numerically. Always returns a machine float.
     library: enumeratio-statistics
     type: (any, expression<Distributed>) -> number
-details:
-  - Tries `Probability(cond, Distributed(x, dist))` first, converted to a float, whenever it resolves.
-  - Otherwise sums/integrates `PDF(x)` over exactly the points/region where `cond` holds — evaluated by direct numeric substitution, so `cond` can be any boolean expression compute-engine can evaluate at a concrete point (`Mod`, `Or`, `x^2 > 1`, ...), not only `Equal`/`Less`/`LessEqual`/`And`.
-  - Continuous conditions are NOT generally smooth indicators (`x^2 > 1` jumps at $x=\pm 1$) — plain tanh-sinh quadrature loses most of its accuracy right at a jump, so the boundary is located first (by bisection) and each constant-truth piece is integrated on its own.
-  - Same $10^{-12}$ tail/convergence tolerance as [[NExpectation]]; same scope gap for wave-4 compound distributions.
 seeAlso:
   - Probability
   - NExpectation
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Tries `Probability(cond, Distributed(x, dist))` first, converted to a float, whenever it resolves.
+- Otherwise sums/integrates `PDF(x)` over exactly the points/region where `cond` holds — evaluated by direct numeric substitution, so `cond` can be any boolean expression compute-engine can evaluate at a concrete point (`Mod`, `Or`, `x^2 > 1`, ...), not only `Equal`/`Less`/`LessEqual`/`And`.
+- Continuous conditions are NOT generally smooth indicators (`x^2 > 1` jumps at $x=\pm 1$) — plain tanh-sinh quadrature loses most of its accuracy right at a jump, so the boundary is located first (by bisection) and each constant-truth piece is integrated on its own.
+- Same $10^{-12}$ tail/convergence tolerance as [[NExpectation]]; same scope gap for wave-4 compound distributions.

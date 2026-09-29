@@ -8,10 +8,10 @@ signatures:
     description: An $n$th-root sign over a box, the index in its crook.
     library: enumeratio-boxes
     type: (boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `mroot`.
 seeAlso:
   - SqrtBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `mroot`.

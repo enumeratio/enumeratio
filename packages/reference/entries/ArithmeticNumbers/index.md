@@ -6,10 +6,6 @@ summary: The arithmetic numbers $1, 3, 5, 6, 7, …$ -- integers whose divisors 
 signatures:
   - call: ArithmeticNumbers
     description: the $n$ with $\tau(n) \mid \sigma(n)$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(ArithmeticNumbers) = +\infty$ (almost all integers are arithmetic -- the exceptions have density zero), and $At$ unranks the $k$-th by scanning forward, testing $\sigma(n) \bmod \tau(n) = 0$.'
-  - OEIS A003601.
-  - "Membership goes through [[Element]]: $Element(6, ArithmeticNumbers)$ is true (divisors $1,2,3,6$ average $3$), $Element(4, ArithmeticNumbers)$ is false (divisors $1,2,4$ average $7/3$)."
 enumerate:
   expr: Take(ArithmeticNumbers, 20)
 seeAlso:
@@ -25,3 +21,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(ArithmeticNumbers) = +\infty$ (almost all integers are arithmetic -- the exceptions have density zero), and $At$ unranks the $k$-th by scanning forward, testing $\sigma(n) \bmod \tau(n) = 0$.
+- OEIS A003601.
+- Membership goes through [[Element]]: $Element(6, ArithmeticNumbers)$ is true (divisors $1,2,3,6$ average $3$), $Element(4, ArithmeticNumbers)$ is false (divisors $1,2,4$ average $7/3$).

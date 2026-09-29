@@ -11,10 +11,10 @@ signatures:
   - call: FromCharacterCode({n1, n2, …})
     description: the string built from each code point, in order
     library: enumeratio-collections
-details:
-  - Code points, not UTF-16 units — see [[ToCharacterCode]].
 seeAlso:
   - ToCharacterCode
 names:
   wolframIdentity: true
 ---
+
+- Code points, not UTF-16 units — see [[ToCharacterCode]].

@@ -14,10 +14,10 @@ signatures:
   - call: Echo(expr, label, f)
     description: Like $Echo(expr, label)$, but prints $f(expr)$ instead of $expr$ itself — the RETURNED value is still $expr$, unchanged.
     library: enumeratio-collections
-details:
-  - "This engine has no console: printing is routed through @enumeratio/engine's message channel instead (`Echo::printed` for the plain form, `Echo::labeled` with a label), collectible with `collectMessages` — not skipped outright, so a caller that wants the printed text still can get it."
 seeAlso:
   - AbsoluteTiming
 names:
   wolframIdentity: true
 ---
+
+- This engine has no console: printing is routed through @enumeratio/engine's message channel instead (`Echo::printed` for the plain form, `Echo::labeled` with a label), collectible with `collectMessages` — not skipped outright, so a caller that wants the printed text still can get it.

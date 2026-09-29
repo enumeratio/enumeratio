@@ -8,10 +8,6 @@ signatures:
     description: entry $(i, j)$ is the weight of the edge from vertex $i$ to vertex $j$ (both directions, for an undirected edge) — 1, [[AdjacencyMatrix]]'s own default, when $g$ carries no EdgeWeight at all.
     library: enumeratio-collections
     type: (value) -> list<list<number>>
-details:
-  - $g$ carries its weights via `EdgeWeight -> {w1, w2, …}`, one weight per edge in EdgeList order, given as a Graph(edges, EdgeWeight -> {…}) option — see [[Graph]]'s own note. The Property/PropertyValue per-edge form is not supported.
-  - A multi-edge (two edges between the same ordered pair) sums its parallel edges' weights, matching how AdjacencyMatrix sums parallel edges' counts.
-  - Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — the same simplification [[AdjacencyMatrix]] documents, for the same reason.
 seeAlso:
   - AdjacencyMatrix
   - Graph
@@ -19,3 +15,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $g$ carries its weights via `EdgeWeight -> {w1, w2, …}`, one weight per edge in EdgeList order, given as a Graph(edges, EdgeWeight -> {…}) option — see [[Graph]]'s own note. The Property/PropertyValue per-edge form is not supported.
+- A multi-edge (two edges between the same ordered pair) sums its parallel edges' weights, matching how AdjacencyMatrix sums parallel edges' counts.
+- Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — the same simplification [[AdjacencyMatrix]] documents, for the same reason.

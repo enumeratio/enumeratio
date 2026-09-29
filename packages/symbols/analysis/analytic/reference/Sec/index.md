@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex) -> number
     overrides: compute-engine
-details:
-  - $\sec(x) = \frac{1}{\cos(x)}$.
-  - Even function, period $2\pi$, same as [[Cos]].
-  - Undefined wherever $\cos(x) = 0$, the same poles as [[Tan]].
 seeAlso:
   - Cos
   - Csc
@@ -23,3 +19,7 @@ names:
   dlmf: secant function
   wolframIdentity: true
 ---
+
+- $\sec(x) = \frac{1}{\cos(x)}$.
+- Even function, period $2\pi$, same as [[Cos]].
+- Undefined wherever $\cos(x) = 0$, the same poles as [[Tan]].

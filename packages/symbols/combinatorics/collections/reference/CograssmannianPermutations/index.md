@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ with at most one ascent.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count is the same $2^n - n$ as [[GrassmannianPermutations]] (A000325), since complementing every value $v \mapsto n+1-v$ turns each descent into an ascent and vice versa.
-  - Each element is the one-line word of the complemented permutation.
-  - $At$ unranks the Grassmannian permutation of the same rank and applies the value-complement, so it inherits that family's order (identity first, then increasing first-block size).
 enumerate:
   expr: CograssmannianPermutations(4)
   columns: Ascents, Inversions
@@ -29,3 +25,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count is the same $2^n - n$ as [[GrassmannianPermutations]] (A000325), since complementing every value $v \mapsto n+1-v$ turns each descent into an ascent and vice versa.
+- Each element is the one-line word of the complemented permutation.
+- $At$ unranks the Grassmannian permutation of the same rank and applies the value-complement, so it inherits that family's order (identity first, then increasing first-block size).

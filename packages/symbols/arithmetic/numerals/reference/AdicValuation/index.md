@@ -14,10 +14,6 @@ signatures:
   - call: AdicUnitPart(x)
     description: $x / b^{v_b(x)}$, a unit of $\mathbb{Z}_b$
     library: enumeratio-numerals
-details:
-  - "For composite $b$ this is the largest $k$ with $b^k | x$, which is not a valuation in the strict sense (it is not additive: $v_{10}(2) + v_{10}(5) = 0 ≠ v_{10}(10)$) — but it is what the expansion's leading zeros count"
-  - "A capped zero is $O(b^{prec})$, so its valuation is reported as the precision: all that is known"
-  - Wolfram's `IntegerExponent[n, p]` is the valuation on integers
 seeAlso:
   - AdicNumeral
   - AdicExpansion
@@ -34,3 +30,7 @@ bindings:
       version: "10.9"
       on: 2026-09-28
 ---
+
+- For composite $b$ this is the largest $k$ with $b^k | x$, which is not a valuation in the strict sense (it is not additive: $v_{10}(2) + v_{10}(5) = 0 ≠ v_{10}(10)$) — but it is what the expansion's leading zeros count
+- A capped zero is $O(b^{prec})$, so its valuation is reported as the precision: all that is known
+- Wolfram's `IntegerExponent[n, p]` is the valuation on integers

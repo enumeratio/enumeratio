@@ -8,9 +8,6 @@ signatures:
     description: True if expr matches pattern, False otherwise
     library: enumeratio-collections
     type: (any, any) -> boolean
-details:
-  - "Built directly on compute-engine's own wildcard grammar (`BoxedExpression.match`): `_`/`_name` matches one element, `__`/`__name` one-or-more, `___`/`___name` zero-or-more — Wolfram's Blank/BlankSequence/BlankNullSequence, unnamed or named."
-  - "There is no head-restricted blank (Wolfram's `_Integer`): a wildcard binds to whatever it lands on, with no type filter. `Pattern`/`Optional` (`x_:default`) and condition patterns (`_?test`) aren't implemented either."
 seeAlso:
   - FreeQ
   - Replace
@@ -19,3 +16,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Built directly on compute-engine's own wildcard grammar (`BoxedExpression.match`): `_`/`_name` matches one element, `__`/`__name` one-or-more, `___`/`___name` zero-or-more — Wolfram's Blank/BlankSequence/BlankNullSequence, unnamed or named.
+- There is no head-restricted blank (Wolfram's `_Integer`): a wildcard binds to whatever it lands on, with no type filter. `Pattern`/`Optional` (`x_:default`) and condition patterns (`_?test`) aren't implemented either.

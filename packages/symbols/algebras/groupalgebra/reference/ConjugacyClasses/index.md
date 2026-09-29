@@ -11,11 +11,6 @@ signatures:
   - call: GroupCentreDimension(group)
     description: how many there are
     library: enumeratio-groupalgebra
-details:
-  - An abelian group has one class per element, so $\dim Z(k[G]) = |G|$
-  - $D_n$ has $(n+3)/2$ classes for odd $n$ and $(n+6)/2$ for even $n$
-  - '$D_3 \cong S_3$ has three: the identity, the transpositions, and the 3-cycles'
-  - The classes partition the group, and the identity is always alone in its own
 seeAlso:
   - ClassSum
   - GroupBasis
@@ -25,3 +20,8 @@ references:
   - system: mathworld
     identity: ConjugacyClass
 ---
+
+- An abelian group has one class per element, so $\dim Z(k[G]) = |G|$
+- $D_n$ has $(n+3)/2$ classes for odd $n$ and $(n+6)/2$ for even $n$
+- $D_3 \cong S_3$ has three: the identity, the transpositions, and the 3-cycles
+- The classes partition the group, and the identity is always alone in its own

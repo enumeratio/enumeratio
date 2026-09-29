@@ -11,9 +11,6 @@ signatures:
   - call: VertexEccentricity(g, v)
     description: just v's eccentricity.
     library: enumeratio-collections
-details:
-  - The moment any OTHER vertex is unreachable from v, the eccentricity is PositiveInfinity -- not just the max over whatever happens to be reachable.
-  - Distances respect edge direction, same as [[GraphDistance]].
 seeAlso:
   - GraphRadius
   - GraphDiameter
@@ -21,3 +18,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- The moment any OTHER vertex is unreachable from v, the eccentricity is PositiveInfinity -- not just the max over whatever happens to be reachable.
+- Distances respect edge direction, same as [[GraphDistance]].

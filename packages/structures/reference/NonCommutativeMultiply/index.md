@@ -17,13 +17,6 @@ signatures:
     description: 'The ordered product, for units that anticommute. $\times$ cannot host one: `Multiply` is declared commutative, so canonicalisation sorts its operands before any handler runs and the sign is lost.'
     library: enumeratio-structures
     type: (number*) -> number
-details:
-  - Wolfram spells this head the same way (infix `**`), keeping it apart from `Times`; matrix multiplication is likewise its own head, `Dot`
-  - On the COMMUTING families it simply agrees with $\times$, so it is safe to use everywhere
-  - A tensor product of two scalars is their product, so $2 \otimes 3$ is $6$
-  - 'Associative across mixed families: the commutation factor $\varepsilon(g,h) = (-1)^{\mathrm{anti}(g)\mathrm{anti}(h)}$ is a bicharacter'
-  - Juxtaposition carries the sign on its own -- $e_2e_1$ is caught before `Multiply`'s commutative sort can reach it
-  - 'An explicit $\times$ or $\cdot$ is not: it parses straight to a sorted `Multiply`, so it REFUSES two distinct anticommuting units rather than assert a sign it cannot justify'
 seeAlso:
   - Norm
   - Basis
@@ -35,3 +28,10 @@ bindings:
     form: sage
     template: ($**)
 ---
+
+- Wolfram spells this head the same way (infix `**`), keeping it apart from `Times`; matrix multiplication is likewise its own head, `Dot`
+- On the COMMUTING families it simply agrees with $\times$, so it is safe to use everywhere
+- A tensor product of two scalars is their product, so $2 \otimes 3$ is $6$
+- Associative across mixed families: the commutation factor $\varepsilon(g,h) = (-1)^{\mathrm{anti}(g)\mathrm{anti}(h)}$ is a bicharacter
+- Juxtaposition carries the sign on its own -- $e_2e_1$ is caught before `Multiply`'s commutative sort can reach it
+- An explicit $\times$ or $\cdot$ is not: it parses straight to a sorted `Multiply`, so it REFUSES two distinct anticommuting units rather than assert a sign it cannot justify

@@ -8,9 +8,6 @@ signatures:
     description: the vertices of one shortest $u \to v$ path, both ends included; the empty list if $v$ is unreachable from $u$.
     library: enumeratio-collections
     type: (value, any, any) -> list<any>
-details:
-  - A directed edge is only traversable forward; an undirected edge, either way.
-  - "Weighted (g carries EdgeWeight): the path minimizing summed edge weight (Dijkstra), not the fewest hops — same as Wolfram, which reads EdgeWeight automatically when present. Requires every weight to be non-negative; a negative weight leaves the call unevaluated rather than guess (Dijkstra doesn't support them — Wolfram itself switches algorithm in that case, out of scope here)."
 seeAlso:
   - GraphDistance
   - GraphDistanceMatrix
@@ -18,3 +15,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- A directed edge is only traversable forward; an undirected edge, either way.
+- Weighted (g carries EdgeWeight): the path minimizing summed edge weight (Dijkstra), not the fewest hops — same as Wolfram, which reads EdgeWeight automatically when present. Requires every weight to be non-negative; a negative weight leaves the call unevaluated rather than guess (Dijkstra doesn't support them — Wolfram itself switches algorithm in that case, out of scope here).

@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-residues
     type: (integer | value, integer?, list<integer>?) -> integer
     overrides: compute-engine
-details:
-  - Also called the modulo order; defined only when $\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.
-  - Always divides $\varphi(n)$, by Lagrange's theorem applied to the group of units mod $n$. See [[Totient]].
-  - Unevaluated when no order exists.
-  - Computed from Carmichael's $\lambda(n)$ by stripping primes off it, so $n$ and each $p - 1$ must be factored.
-  - 'The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.'
 seeAlso:
   - PowerMod
 references:
@@ -32,3 +26,9 @@ bindings:
     template: Mod($1, $2).multiplicative_order()
     arity: 2
 ---
+
+- Also called the modulo order; defined only when $\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.
+- Always divides $\varphi(n)$, by Lagrange's theorem applied to the group of units mod $n$. See [[Totient]].
+- Unevaluated when no order exists.
+- Computed from Carmichael's $\lambda(n)$ by stripping primes off it, so $n$ and each $p - 1$ must be factored.
+- The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.

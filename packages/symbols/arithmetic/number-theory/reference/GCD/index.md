@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (any*) -> number
     overrides: compute-engine
-details:
-  - "Also called the greatest common factor: the largest positive integer dividing every argument."
-  - Paired with [[LCM]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.
-  - compute-engine discards signs before computing, so $\gcd(-a,b)=\gcd(a,b)$.
-  - $\gcd(0,n)=n$ since every integer divides 0; with no arguments at all compute-engine returns 0, GCD's identity element.
-  - 'Extends to rationals: $\gcd(p_1/q_1, \dots) = \gcd(p_1, \dots)/\operatorname{lcm}(q_1, \dots)$.'
 seeAlso:
   - LCM
   - ExtendedGCD
@@ -69,3 +63,9 @@ bindings:
     arity: 2
     threadArg: 2
 ---
+
+- Also called the greatest common factor: the largest positive integer dividing every argument.
+- Paired with [[LCM]] by $\gcd(a,b)\cdot\operatorname{lcm}(a,b)=ab$.
+- compute-engine discards signs before computing, so $\gcd(-a,b)=\gcd(a,b)$.
+- $\gcd(0,n)=n$ since every integer divides 0; with no arguments at all compute-engine returns 0, GCD's identity element.
+- Extends to rationals: $\gcd(p_1/q_1, \dots) = \gcd(p_1, \dots)/\operatorname{lcm}(q_1, \dots)$.

@@ -8,9 +8,6 @@ signatures:
     description: "A row of boxes, juxtaposed left to right: the box a sequence of tokens makes."
     library: enumeratio-boxes
     type: (list<boxes>) -> boxes
-details:
-  - The argument is a list, as in Wolfram's `RowBox[{…}]`; each entry is a box or a string token.
-  - Presentation MathML's `mrow`.
 seeAlso:
   - TextBox
   - GridBox
@@ -18,3 +15,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- The argument is a list, as in Wolfram's `RowBox[{…}]`; each entry is a box or a string token.
+- Presentation MathML's `mrow`.

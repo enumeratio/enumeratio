@@ -8,10 +8,6 @@ signatures:
     description: the Riemann–Siegel Z-function.
     library: "@enumeratio/analytic"
     type: (number) -> number
-details:
-  - Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.
-  - Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].
-  - The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.
 primitive: numeric
 bindings:
   - origin: native
@@ -29,3 +25,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.
+- Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].
+- The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.

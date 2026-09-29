@@ -31,12 +31,6 @@ signatures:
     library: enumeratio-adeles
     type: (complex | infinity) -> number
     overrides: enumeratio-numerals
-details:
-  - 'The additive inverse: $\operatorname{Negate}(x) = -x$.'
-  - "Double negation cancels: $-(-x) = x$."
-  - "Distributes over a sum: $-(a+b) = -a - b$."
-  - Threads element-wise over a list.
-  - compute-engine keeps Negate as its own head rather than rewriting to $\mathrm{Multiply}(-1, x)$.
 seeAlso:
   - Abs
   - Sign
@@ -80,3 +74,9 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- The additive inverse: $\operatorname{Negate}(x) = -x$.
+- Double negation cancels: $-(-x) = x$.
+- Distributes over a sum: $-(a+b) = -a - b$.
+- Threads element-wise over a list.
+- compute-engine keeps Negate as its own head rather than rewriting to $\mathrm{Multiply}(-1, x)$.

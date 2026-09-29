@@ -11,10 +11,6 @@ signatures:
   - call: HankelTransform(f, r, s, n)
     description: the order-$n$ Hankel transform.
     library: "@enumeratio/analytic"
-details:
-  - "Order 0 (each pair, and its strip `Re(a) > 0` where one applies, confirmed against `wolframscript`'s `HankelTransform[..., GenerateConditions -> True]`, matching its normalisation exactly): $e^{-ar}\\to a/(a^2+s^2)^{3/2}$, $e^{-ar^2}\\to \\frac{1}{2a}e^{-s^2/(4a)}$, $1/r\\to 1/s$, $1/\\sqrt{r^2+a^2}\\to e^{-as}/s$."
-  - "Two further orders Wolfram's own examples state explicitly, also covered: order 1's $e^{-ar}\\to s/(a^2+s^2)^{3/2}$, and $1/r\\to 1/s$ at ANY order `n` (`n > -1/2`, an identity independent of the order)."
-  - "Declined: any other order for $e^{-ar}$/$e^{-ar^2}$/$1/\\sqrt{r^2+a^2}$ (Wolfram's own closed forms there involve `Hypergeometric2F1Regularized`/`Hypergeometric1F1Regularized` — not elementary, not chased), and an unknown-sign `a`."
 primitive: kernel
 bindings:
   - origin: native
@@ -27,3 +23,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Order 0 (each pair, and its strip `Re(a) > 0` where one applies, confirmed against `wolframscript`'s `HankelTransform[..., GenerateConditions -> True]`, matching its normalisation exactly): $e^{-ar}\to a/(a^2+s^2)^{3/2}$, $e^{-ar^2}\to \frac{1}{2a}e^{-s^2/(4a)}$, $1/r\to 1/s$, $1/\sqrt{r^2+a^2}\to e^{-as}/s$.
+- Two further orders Wolfram's own examples state explicitly, also covered: order 1's $e^{-ar}\to s/(a^2+s^2)^{3/2}$, and $1/r\to 1/s$ at ANY order `n` (`n > -1/2`, an identity independent of the order).
+- Declined: any other order for $e^{-ar}$/$e^{-ar^2}$/$1/\sqrt{r^2+a^2}$ (Wolfram's own closed forms there involve `Hypergeometric2F1Regularized`/`Hypergeometric1F1Regularized` — not elementary, not chased), and an unknown-sign `a`.

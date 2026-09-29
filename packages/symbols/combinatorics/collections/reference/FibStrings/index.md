@@ -8,8 +8,6 @@ signatures:
     description: Binary words of length $n$ with no two consecutive ones
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $F_{n+2}$ (A000045, shifted).
 seeAlso:
   - LucasStrings
   - BinaryWords
@@ -26,3 +24,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is $F_{n+2}$ (A000045, shifted).

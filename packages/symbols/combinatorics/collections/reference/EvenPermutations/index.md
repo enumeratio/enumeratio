@@ -8,9 +8,6 @@ signatures:
     description: the even permutations of $\{1, …, n\}$ — the alternating group $A_n$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $n!/2$ for $n \ge 2$, and $1$ for $n \le 1$ (A001710).
-  - Each element is a one-line permutation with an even number of inversions.
 seeAlso:
   - SymmetricGroup
   - Inversions
@@ -31,3 +28,6 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is $n!/2$ for $n \ge 2$, and $1$ for $n \le 1$ (A001710).
+- Each element is a one-line permutation with an even number of inversions.

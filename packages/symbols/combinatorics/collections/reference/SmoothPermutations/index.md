@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose Schubert variety is smooth.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count is A032351 (Bóna, 1998) — $1, 2, 6, 22, 88, 366, …$ — with no simple closed-form generating function.
-  - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $3412$ and $4231$.
-  - Smoothness of the Schubert variety $X_\pi$ is equivalent to pattern-avoidance (Lakshmibai–Sandhya, 1990); no closed-form unrank of the permutation itself is implemented.
 enumerate:
   expr: SmoothPermutations(4)
   columns: Descents, Inversions
@@ -25,3 +21,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count is A032351 (Bóna, 1998) — $1, 2, 6, 22, 88, 366, …$ — with no simple closed-form generating function.
+- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $3412$ and $4231$.
+- Smoothness of the Schubert variety $X_\pi$ is equivalent to pattern-avoidance (Lakshmibai–Sandhya, 1990); no closed-form unrank of the permutation itself is implemented.

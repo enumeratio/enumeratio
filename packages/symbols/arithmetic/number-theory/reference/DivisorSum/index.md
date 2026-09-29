@@ -11,9 +11,6 @@ signatures:
   - call: DivisorSum(n, f, cond)
     description: $\sum_{d\mid n,\ \mathrm{cond}(d)} f(d)$
     library: enumeratio-number-theory
-details:
-  - $f$ and $\mathrm{cond}$ are `Function` literals over the divisor.
-  - "DivisorSigma, MoebiusMu's divisor-sum identity and Totient's are all instances: see [[DivisorSigma]], [[MoebiusMu]], [[Totient]]."
 seeAlso:
   - Divisors
   - DivisorSigma
@@ -25,3 +22,6 @@ statOn:
   - IntegerFactorization
   - Numeric
 ---
+
+- $f$ and $\mathrm{cond}$ are `Function` literals over the divisor.
+- DivisorSigma, MoebiusMu's divisor-sum identity and Totient's are all instances: see [[DivisorSigma]], [[MoebiusMu]], [[Totient]].

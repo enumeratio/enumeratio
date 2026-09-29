@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - 'Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.'
-  - Called gammaln in MATLAB and SciPy, lgamma in C's math library.
-  - "Inherits Gamma's recurrence in log form: $\\operatorname{GammaLn}(z+1) = \\operatorname{GammaLn}(z) + \\ln z$."
-  - $\operatorname{GammaLn}(1/2) = \frac{1}{2}\ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$.
-  - Diverges to $+\infty$ at the nonpositive integers, the poles of Gamma -- the log of a diverging magnitude, rather than the ComplexInfinity that [[Gamma]] itself returns there.
-  - "It is $\\ln(\\Gamma(z))$ with a PRINCIPAL logarithm, which for complex $z$ is not the same function as Wolfram's $\\mathrm{LogGamma}$: the two differ by multiples of $2\\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters."
 seeAlso:
   - Gamma
   - LogGamma
@@ -33,3 +26,10 @@ names:
   fungrim: LogGamma
   wolfram: LogGamma
 ---
+
+- Defined via [[Gamma]]: $\operatorname{GammaLn}(z) = \ln \Gamma(z)$ for $z > 0$, where $\Gamma$ is positive so no branch-cut ambiguity arises.
+- Called gammaln in MATLAB and SciPy, lgamma in C's math library.
+- Inherits Gamma's recurrence in log form: $\operatorname{GammaLn}(z+1) = \operatorname{GammaLn}(z) + \ln z$.
+- $\operatorname{GammaLn}(1/2) = \frac{1}{2}\ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$.
+- Diverges to $+\infty$ at the nonpositive integers, the poles of Gamma -- the log of a diverging magnitude, rather than the ComplexInfinity that [[Gamma]] itself returns there.
+- It is $\ln(\Gamma(z))$ with a PRINCIPAL logarithm, which for complex $z$ is not the same function as Wolfram's $\mathrm{LogGamma}$: the two differ by multiples of $2\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters.

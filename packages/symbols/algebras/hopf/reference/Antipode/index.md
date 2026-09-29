@@ -8,10 +8,6 @@ signatures:
     description: $S(x)$
     library: enumeratio-hopf
     type: (number) -> number
-details:
-  - "On a graded connected Hopf algebra the axiom DETERMINES $S$: splitting off the two trivial terms of $\\Delta$ gives $S(x) = -x - \\sum S(x')x''$, and the left factor's degree strictly drops, so the recursion terminates"
-  - Computed that way and then verified by running the axiom, rather than trusted
-  - On a commutative Hopf algebra $S$ is an involution, so $S^2 = \mathrm{id}$ on QSym
 seeAlso:
   - Coproduct
   - QSymM
@@ -21,3 +17,7 @@ references:
   - system: mathworld
     identity: HopfAlgebra
 ---
+
+- On a graded connected Hopf algebra the axiom DETERMINES $S$: splitting off the two trivial terms of $\Delta$ gives $S(x) = -x - \sum S(x')x''$, and the left factor's degree strictly drops, so the recursion terminates
+- Computed that way and then verified by running the axiom, rather than trusted
+- On a commutative Hopf algebra $S$ is an involution, so $S^2 = \mathrm{id}$ on QSym

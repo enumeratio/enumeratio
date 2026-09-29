@@ -8,9 +8,6 @@ signatures:
     description: the position of the first occurrence of `value`, searching every level rather than just the top one.
     library: enumeratio-collections
     type: (any, any) -> list<integer>
-details:
-  - Unlike [[IndexOf]] and [[Position]], which only look at the top level, FirstPosition descends into nested collections — depth-first, outer to inner, left to right.
-  - The empty $List$ when the value isn't found anywhere.
 seeAlso:
   - IndexOf
   - Position
@@ -18,3 +15,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Unlike [[IndexOf]] and [[Position]], which only look at the top level, FirstPosition descends into nested collections — depth-first, outer to inner, left to right.
+- The empty $List$ when the value isn't found anywhere.

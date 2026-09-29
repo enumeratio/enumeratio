@@ -8,8 +8,6 @@ signatures:
     description: the binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A000031, a Burnside sum over the cyclic group $C_n$.
 seeAlso:
   - LyndonWords
   - KNecklaces
@@ -30,3 +28,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is A000031, a Burnside sum over the cyclic group $C_n$.

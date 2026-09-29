@@ -8,10 +8,10 @@ signatures:
     description: Literal text inside boxes, set as text rather than read as tokens.
     library: enumeratio-boxes
     type: (string, expression*) -> boxes
-details:
-  - Where Wolfram quotes a string inside a string (`"\"otherwise\""`), this is a head of its own. Wolfram's own `TextBox` is undocumented, so this one's meaning is ours.
-  - "`ShowStringCharacters -> True` shows a string value with its quotes (MathML's `ms`)."
 seeAlso:
   - RowBox
   - StyleBox
 ---
+
+- Where Wolfram quotes a string inside a string (`"\"otherwise\""`), this is a head of its own. Wolfram's own `TextBox` is undocumented, so this one's meaning is ours.
+- `ShowStringCharacters -> True` shows a string value with its quotes (MathML's `ms`).

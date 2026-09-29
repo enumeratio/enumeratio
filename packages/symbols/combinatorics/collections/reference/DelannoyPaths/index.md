@@ -8,8 +8,6 @@ signatures:
     description: Lattice paths from $(0,0)$ to $(n,n)$ using East, North, and Diagonal steps
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the central Delannoy number (A001850).
 seeAlso:
   - DyckPaths
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: DelannoyPath
 ---
+
+- Count is the central Delannoy number (A001850).

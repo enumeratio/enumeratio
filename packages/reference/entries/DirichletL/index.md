@@ -8,12 +8,6 @@ signatures:
     description: the L-function of [[DirichletCharacter]] $\chi_j \bmod k$.
     library: enumeratio-analytic
     type: (integer, integer, number) -> number
-details:
-  - "$L(s, \\chi_1 \\bmod 1) = \\zeta(s)$, and for the principal character mod $k$ the Euler factors at the primes dividing $k$ drop out: $L(s, \\chi_1) = \\zeta(s)\\prod_{p \\mid k}(1 - p^{-s})$ — so it inherits $\\zeta$'s pole at $s = 1$. Every non-principal $L$ is entire."
-  - $L(s, \chi_2 \bmod 4) = \beta(s)$, the [[DirichletBeta]] function; $\eta(s)$ is not an L-function of this family (the alternating sign is not a character mod 2) but is $(1 - 2^{1-s})\zeta(s)$. See [[DirichletEta]].
-  - "$L(1, \\chi) \\neq 0$ for every non-principal $\\chi$ is the analytic heart of Dirichlet's theorem: each residue class coprime to $k$ contains infinitely many primes."
-  - "Values at nonpositive integers are exact: $L(-n, \\chi) = -k^n \\sum_{r=1}^{k} \\chi(r)\\,B_{n+1}(r/k)/(n+1)$, an algebraic number in the character's roots of unity (generalized Bernoulli numbers). See [[BernoulliB]]."
-  - Numerically, $L(s, \chi) = k^{-s}\sum_{r=1}^{k}\chi(r)\,\zeta(s, r/k)$ on the [[HurwitzZeta]] kernel, for complex $s$; near $s = 1$ the Hurwitz poles cancel against each other, so there the Laurent expansion in the generalized [[StieltjesGamma]] constants is summed instead.
 bindings:
   - origin: reference
     form: notatio
@@ -49,3 +43,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- $L(s, \chi_1 \bmod 1) = \zeta(s)$, and for the principal character mod $k$ the Euler factors at the primes dividing $k$ drop out: $L(s, \chi_1) = \zeta(s)\prod_{p \mid k}(1 - p^{-s})$ — so it inherits $\zeta$'s pole at $s = 1$. Every non-principal $L$ is entire.
+- $L(s, \chi_2 \bmod 4) = \beta(s)$, the [[DirichletBeta]] function; $\eta(s)$ is not an L-function of this family (the alternating sign is not a character mod 2) but is $(1 - 2^{1-s})\zeta(s)$. See [[DirichletEta]].
+- $L(1, \chi) \neq 0$ for every non-principal $\chi$ is the analytic heart of Dirichlet's theorem: each residue class coprime to $k$ contains infinitely many primes.
+- Values at nonpositive integers are exact: $L(-n, \chi) = -k^n \sum_{r=1}^{k} \chi(r)\,B_{n+1}(r/k)/(n+1)$, an algebraic number in the character's roots of unity (generalized Bernoulli numbers). See [[BernoulliB]].
+- Numerically, $L(s, \chi) = k^{-s}\sum_{r=1}^{k}\chi(r)\,\zeta(s, r/k)$ on the [[HurwitzZeta]] kernel, for complex $s$; near $s = 1$ the Hurwitz poles cancel against each other, so there the Laurent expansion in the generalized [[StieltjesGamma]] constants is summed instead.

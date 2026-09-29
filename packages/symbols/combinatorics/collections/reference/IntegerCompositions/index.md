@@ -8,9 +8,6 @@ signatures:
     description: the ordered compositions of $n$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $2^{n-1}$ for $n \ge 1$
-  - Unlike [[IntegerPartitions]], order matters
 seeAlso:
   - IntegerPartitions
 references:
@@ -39,3 +36,6 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is $2^{n-1}$ for $n \ge 1$
+- Unlike [[IntegerPartitions]], order matters

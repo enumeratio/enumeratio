@@ -11,15 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number, number?) -> number
     overrides: compute-engine
-details:
-  - $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
-  - '$\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].'
-  - 'Low orders are elementary: $\operatorname{Li}_0(z) = z/(1-z)$, $\operatorname{Li}_1(z) = -\ln(1-z)$, $\operatorname{Li}_{-1}(z) = z/(1-z)^2$, and every negative integer order is a rational function.'
-  - The dilogarithm $\operatorname{Li}_2$ has the special values $\operatorname{Li}_2(1) = \pi^2/6$, $\operatorname{Li}_2(-1) = -\pi^2/12$, and $\operatorname{Li}_2(\tfrac12) = \pi^2/12 - (\ln 2)^2/2$.
-  - 'Convergence: the series converges for $|z| < 1$, and on $|z| = 1$ for $\operatorname{Re}(s) > 1$. Outside the disk the function continues analytically, with a branch cut along $[1, \infty)$ — so $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ is complex.'
-  - Integer orders (including the continuation past $|z| = 1$) are compute-engine's own. `@enumeratio/analytic` adds non-integer and complex $s$ by summing the Lerch series, which reaches $|z| \leq 1$ only; outside that disk a non-integer order is left unevaluated rather than guessed.
-  - 'Certified digits: for exact real $s$ and $z$ (integers, rationals or decimals) with $|z| < 1$, $\mathrm{N}(\operatorname{Li}_s(z), d)$ is proven, not just agreed on. The Lerch series is summed in ball arithmetic with its tail bounded, and the d digits are those both ends of the enclosure round to. See [[N]].'
-  - As with the other numeric heads, an exact argument stays symbolic under plain evaluation — pair with N(), or pass an inexact argument.
 seeAlso:
   - LerchPhi
   - Zeta
@@ -53,3 +44,12 @@ bindings:
     template: polylog($1, $2)
     arity: 2
 ---
+
+- $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
+- $\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].
+- Low orders are elementary: $\operatorname{Li}_0(z) = z/(1-z)$, $\operatorname{Li}_1(z) = -\ln(1-z)$, $\operatorname{Li}_{-1}(z) = z/(1-z)^2$, and every negative integer order is a rational function.
+- The dilogarithm $\operatorname{Li}_2$ has the special values $\operatorname{Li}_2(1) = \pi^2/6$, $\operatorname{Li}_2(-1) = -\pi^2/12$, and $\operatorname{Li}_2(\tfrac12) = \pi^2/12 - (\ln 2)^2/2$.
+- Convergence: the series converges for $|z| < 1$, and on $|z| = 1$ for $\operatorname{Re}(s) > 1$. Outside the disk the function continues analytically, with a branch cut along $[1, \infty)$ — so $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ is complex.
+- Integer orders (including the continuation past $|z| = 1$) are compute-engine's own. `@enumeratio/analytic` adds non-integer and complex $s$ by summing the Lerch series, which reaches $|z| \leq 1$ only; outside that disk a non-integer order is left unevaluated rather than guessed.
+- Certified digits: for exact real $s$ and $z$ (integers, rationals or decimals) with $|z| < 1$, $\mathrm{N}(\operatorname{Li}_s(z), d)$ is proven, not just agreed on. The Lerch series is summed in ball arithmetic with its tail bounded, and the d digits are those both ends of the enclosure round to. See [[N]].
+- As with the other numeric heads, an exact argument stays symbolic under plain evaluation — pair with N(), or pass an inexact argument.

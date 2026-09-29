@@ -8,10 +8,10 @@ signatures:
     description: A box drawn with a frame around it.
     library: enumeratio-boxes
     type: (boxes, expression*) -> boxes
-details:
-  - MathML Core has no `menclose`, so MathML draws the frame with CSS on an `mrow`; LaTeX writes `\boxed`.
 seeAlso:
   - StyleBox
 names:
   wolframIdentity: true
 ---
+
+- MathML Core has no `menclose`, so MathML draws the frame with CSS on an `mrow`; LaTeX writes `\boxed`.

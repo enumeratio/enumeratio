@@ -8,11 +8,11 @@ signatures:
     description: 'A base with boxes below and above it: $\sum_{n=1}^{10}$.'
     library: enumeratio-boxes
     type: (boxes, boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `munderover`.
 seeAlso:
   - UnderscriptBox
   - OverscriptBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `munderover`.

@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $\mu, \sigma$, unevaluated.
     library: enumeratio-statistics
     type: (real, real<0..>) -> distribution
-details:
-  - $PDF(x) = PDF(NormalDistribution(\mu,\sigma), \log x) / x$ — delegates to compute-engine's native Normal PDF rather than writing out the Gaussian by hand.
-  - $CDF(x) = CDF(NormalDistribution(\mu,\sigma), \log x)$, same delegation.
-  - $Mean = e^{\mu+\sigma^2/2}$, $Variance = (e^{\sigma^2}-1)e^{2\mu+\sigma^2}$, both exact.
-  - '[[RandomVariate]] draws $e^{\mu + \sigma Z}$ for a standard normal $Z$.'
 seeAlso:
   - NormalDistribution
   - PDF
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = PDF(NormalDistribution(\mu,\sigma), \log x) / x$ — delegates to compute-engine's native Normal PDF rather than writing out the Gaussian by hand.
+- $CDF(x) = CDF(NormalDistribution(\mu,\sigma), \log x)$, same delegation.
+- $Mean = e^{\mu+\sigma^2/2}$, $Variance = (e^{\sigma^2}-1)e^{2\mu+\sigma^2}$, both exact.
+- [[RandomVariate]] draws $e^{\mu + \sigma Z}$ for a standard normal $Z$.

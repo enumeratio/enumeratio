@@ -11,14 +11,6 @@ signatures:
   - call: IntegerMod(u/v, m)
     description: a rational reads as $u \cdot v^{-1}$, when $v$ is a unit mod $m$
     library: enumeratio-residues
-details:
-  - '[[Mod]] answers an integer; `IntegerMod` IS the class, so `+`, `·`, `/` and powers of it are computed in $\mathbb{Z}/m$ — a negative power inverts, and dividing by a non-unit leaves the call standing'
-  - A bare integer or rational next to an `IntegerMod` is read in the same ring
-  - Two classes with different moduli meet in $\mathbb{Z}/\gcd(m, n)$, the largest ring both reduce to — Sage's coercion
-  - '[[ChineseRemainder]] of classes is the class mod $\operatorname{lcm}$ that reduces to each, and [[MultiplicativeOrder]] of a unit is its order'
-  - The elements of [[IntegerModRing]](m)
-  - Written $a \pmod{m}$, and typed that way too; `a \bmod m` is still [[Mod]], and `a \equiv b \pmod{m}` is still a congruence. TraditionalForm writes the coset, $a + m\mathbb{Z}$
-  - A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`
 seeAlso:
   - IntegerModRing
   - Mod
@@ -40,3 +32,11 @@ bindings:
       version: "10.9"
       on: 2026-09-27
 ---
+
+- [[Mod]] answers an integer; `IntegerMod` IS the class, so `+`, `·`, `/` and powers of it are computed in $\mathbb{Z}/m$ — a negative power inverts, and dividing by a non-unit leaves the call standing
+- A bare integer or rational next to an `IntegerMod` is read in the same ring
+- Two classes with different moduli meet in $\mathbb{Z}/\gcd(m, n)$, the largest ring both reduce to — Sage's coercion
+- [[ChineseRemainder]] of classes is the class mod $\operatorname{lcm}$ that reduces to each, and [[MultiplicativeOrder]] of a unit is its order
+- The elements of [[IntegerModRing]](m)
+- Written $a \pmod{m}$, and typed that way too; `a \bmod m` is still [[Mod]], and `a \equiv b \pmod{m}` is still a congruence. TraditionalForm writes the coset, $a + m\mathbb{Z}$
+- A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`

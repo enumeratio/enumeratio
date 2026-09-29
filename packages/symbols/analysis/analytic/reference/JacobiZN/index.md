@@ -8,12 +8,6 @@ signatures:
     description: the Jacobi zeta function, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
-  - Composed from [[JacobiAmplitude]]'s amplitude and the already-declared [[IncompleteEllipticE]], [[EllipticE]], [[EllipticK]] (DLMF 22.16.31) — not a separate numeric method.
-  - Real m between 0 and 1 only, inheriting [[JacobiAmplitude]]'s restriction (no verified amplitude transform for m outside that range).
-  - Z(0,m) = 0, for any m in range; Z(u,0) = 0, for any u — am(u,0) = u makes E(am,0) = u exactly, canceling the E(0)/K(0)·u = u term.
-  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiAmplitude
   - EllipticE
@@ -21,3 +15,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+- Composed from [[JacobiAmplitude]]'s amplitude and the already-declared [[IncompleteEllipticE]], [[EllipticE]], [[EllipticK]] (DLMF 22.16.31) — not a separate numeric method.
+- Real m between 0 and 1 only, inheriting [[JacobiAmplitude]]'s restriction (no verified amplitude transform for m outside that range).
+- Z(0,m) = 0, for any m in range; Z(u,0) = 0, for any u — am(u,0) = u makes E(am,0) = u exactly, canceling the E(0)/K(0)·u = u term.
+- Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

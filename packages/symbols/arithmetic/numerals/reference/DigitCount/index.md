@@ -15,11 +15,6 @@ signatures:
     library: enumeratio-numerals
     type: (integer, integer?, (integer | list<integer>)?, integer?) -> integer | list<integer>
     overrides: compute-engine
-details:
-  - Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.
-  - The default base-10 form orders counts 1 through 9, then 0 last.
-  - The 3-argument form isolates the count of a single digit value.
-  - Trailing zeros count individually -- 122000 has three trailing 0 digits, not a single "trailing zeros" tally.
 seeAlso:
   - IntegerDigits
   - DigitSum
@@ -28,3 +23,8 @@ names:
 statOn:
   - Numeric
 ---
+
+- Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.
+- The default base-10 form orders counts 1 through 9, then 0 last.
+- The 3-argument form isolates the count of a single digit value.
+- Trailing zeros count individually -- 122000 has three trailing 0 digits, not a single "trailing zeros" tally.

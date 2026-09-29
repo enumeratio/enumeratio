@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex) -> number
     overrides: compute-engine
-details:
-  - $\csc(x) = \frac{1}{\sin(x)}$.
-  - Odd function, period $2\pi$, same as [[Sin]].
-  - Undefined wherever $\sin(x) = 0$, the same poles as [[Cot]].
 seeAlso:
   - Sin
   - Sec
@@ -23,3 +19,7 @@ names:
   dlmf: cosecant function
   wolframIdentity: true
 ---
+
+- $\csc(x) = \frac{1}{\sin(x)}$.
+- Odd function, period $2\pi$, same as [[Sin]].
+- Undefined wherever $\sin(x) = 0$, the same poles as [[Cot]].

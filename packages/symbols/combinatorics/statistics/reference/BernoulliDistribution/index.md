@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $p$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..1>) -> distribution
-details:
-  - $PDF$ is $1-p$ at $0$, $p$ at $1$, and $0$ elsewhere.
-  - $CDF$ is $0$ below $0$, $1-p$ on $[0,1)$, and $1$ from $1$ on.
-  - $Mean = p$, $Variance = p(1-p)$, both exact.
-  - "[[RandomVariate]] draws a single uniform and compares it to $p$."
 seeAlso:
   - GeometricDistribution
   - BinomialDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF$ is $1-p$ at $0$, $p$ at $1$, and $0$ elsewhere.
+- $CDF$ is $0$ below $0$, $1-p$ on $[0,1)$, and $1$ from $1$ on.
+- $Mean = p$, $Variance = p(1-p)$, both exact.
+- [[RandomVariate]] draws a single uniform and compares it to $p$.

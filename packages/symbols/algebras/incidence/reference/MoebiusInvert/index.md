@@ -11,10 +11,6 @@ signatures:
   - call: PosetSumDown(poset, values)
     description: the map it undoes, $g(y) = \sum_{x \le y} f(x)$
     library: enumeratio-incidence
-details:
-  - Values are given in the poset's own order — see [[PosetElements]] for that listing
-  - On a chain this is first differences; on the Boolean lattice it is inclusion–exclusion; on the divisor lattice it is classical Möbius inversion
-  - The two directions are inverse on every poset, which is the theorem
 seeAlso:
   - MoebiusFunction
   - PosetElements
@@ -24,3 +20,7 @@ references:
   - system: mathworld
     identity: MoebiusInversionFormula
 ---
+
+- Values are given in the poset's own order — see [[PosetElements]] for that listing
+- On a chain this is first differences; on the Boolean lattice it is inclusion–exclusion; on the divisor lattice it is classical Möbius inversion
+- The two directions are inverse on every poset, which is the theorem

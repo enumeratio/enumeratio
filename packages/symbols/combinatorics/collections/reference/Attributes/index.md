@@ -8,11 +8,6 @@ signatures:
     description: The subset of $\{Flat, HoldAll, Listable, Orderless\}$ $f$'s operator definition carries, alphabetically.
     library: enumeratio-collections
     type: (symbol) -> list<symbol>
-details:
-  - "Maps compute-engine's own operator flags to the closest genuine Wolfram attribute name, and no further: $associative \\to Flat$, $lazy \\to HoldAll$, $broadcastable \\to Listable$, $commutative \\to Orderless$."
-  - "Compute-engine's `idempotent` and `involution` flags are deliberately excluded: real algebraic properties it tracks for pattern matching, but not Wolfram `Attributes` names — Wolfram has no such entries, so reporting them would claim a fact that doesn't exist."
-  - '`HoldAll` for `lazy` is an approximation: compute-engine''s `lazy` means "operands arrive unevaluated", the effect of Wolfram''s `HoldAll` without distinguishing it from `HoldFirst`/`HoldRest`/`HoldAllComplete`.'
-  - An undeclared or non-operator symbol reads as no attributes.
 seeAlso:
   - SetAttributes
 names:
@@ -20,3 +15,8 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Maps compute-engine's own operator flags to the closest genuine Wolfram attribute name, and no further: $associative \to Flat$, $lazy \to HoldAll$, $broadcastable \to Listable$, $commutative \to Orderless$.
+- Compute-engine's `idempotent` and `involution` flags are deliberately excluded: real algebraic properties it tracks for pattern matching, but not Wolfram `Attributes` names — Wolfram has no such entries, so reporting them would claim a fact that doesn't exist.
+- `HoldAll` for `lazy` is an approximation: compute-engine's `lazy` means "operands arrive unevaluated", the effect of Wolfram's `HoldAll` without distinguishing it from `HoldFirst`/`HoldRest`/`HoldAllComplete`.
+- An undeclared or non-operator symbol reads as no attributes.

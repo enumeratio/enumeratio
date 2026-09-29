@@ -8,13 +8,6 @@ signatures:
     description: the Jacobi elliptic sine, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
-  - Numeric evaluation is the descending Landen/arithmetic-geometric-mean method (Abramowitz & Stegun 16.4) for real u, real m between 0 and 1, extended to m outside that range by the reciprocal-modulus (m > 1) and imaginary-modulus (m < 0) transformations, and to complex u via DLMF 22.8's real addition formulas (real-u/real-(1−m) evaluations combined algebraically — verified against mpmath to ~1e-13 relative across all four quadrants, large Im(u), and close to sn's poles).
-  - A genuinely complex m stays unevaluated — neither the AGM recursion nor either parameter transform has been verified there.
-  - Exact at u = 0 (sn = 0, for any m), m = 0 (sn = [[Sin]](u)), m = 1 (sn = [[Tanh]](u)), and the quarter period u = [[EllipticK]](m) (sn = 1).
-  - $\operatorname{sn}^2(u,m) + \operatorname{cn}^2(u,m) = 1$ and $\operatorname{dn}^2(u,m) + m\operatorname{sn}^2(u,m) = 1$, checked at complex u as part of this head's tests.
-  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiCN
   - JacobiDN
@@ -23,3 +16,10 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+- Numeric evaluation is the descending Landen/arithmetic-geometric-mean method (Abramowitz & Stegun 16.4) for real u, real m between 0 and 1, extended to m outside that range by the reciprocal-modulus (m > 1) and imaginary-modulus (m < 0) transformations, and to complex u via DLMF 22.8's real addition formulas (real-u/real-(1−m) evaluations combined algebraically — verified against mpmath to ~1e-13 relative across all four quadrants, large Im(u), and close to sn's poles).
+- A genuinely complex m stays unevaluated — neither the AGM recursion nor either parameter transform has been verified there.
+- Exact at u = 0 (sn = 0, for any m), m = 0 (sn = [[Sin]](u)), m = 1 (sn = [[Tanh]](u)), and the quarter period u = [[EllipticK]](m) (sn = 1).
+- $\operatorname{sn}^2(u,m) + \operatorname{cn}^2(u,m) = 1$ and $\operatorname{dn}^2(u,m) + m\operatorname{sn}^2(u,m) = 1$, checked at complex u as part of this head's tests.
+- Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

@@ -11,14 +11,14 @@ signatures:
     library: enumeratio-collections
     type: (any+) -> set
     overrides: compute-engine
-details:
-  - Duplicates within and across all the argument collections are removed; the result is returned as a $Set$.
-  - "Commutative and idempotent: $A \\cup A = A$, and argument order doesn't affect the result."
-  - 'Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Intersection]] and [[Length]].'
-  - Sorted, matching Wolfram's Union — compute-engine's own de-duplication preserves first-seen order instead.
 seeAlso:
   - Intersection
   - SetMinus
 names:
   wolframIdentity: true
 ---
+
+- Duplicates within and across all the argument collections are removed; the result is returned as a $Set$.
+- Commutative and idempotent: $A \cup A = A$, and argument order doesn't affect the result.
+- Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Intersection]] and [[Length]].
+- Sorted, matching Wolfram's Union — compute-engine's own de-duplication preserves first-seen order instead.

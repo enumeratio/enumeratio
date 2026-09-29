@@ -12,10 +12,6 @@ signatures:
   - call: LambertW(z, k)
     description: the $k$-th branch $W_k(z)$, by Halley's iteration from the standard log-log seed (Corless et al. 1996). $k=0$ and $k=-1$ stay on compute-engine's own native handler.
     library: "@enumeratio/analytic"
-details:
-  - compute-engine's own argument order is $(z, k)$, not Wolfram's $\mathrm{ProductLog}[k, z]$ — checked directly (`LambertW(-0.14, -1)` is the $k=-1$ branch; `LambertW(-1, -0.14)` declines). The existing $k=0$/$-1$ order is kept as-is; the Wolfram crosswalk carries the reversal.
-  - Exact values are recognized structurally at $z=0$, $z=e$ (giving $w=1$), $z=-1/e$ (giving $w=-1$), $z = n\,e^n$ for small integer $n$, and $z=-\ln(k)/k$ for small integer $k \ge 2$ (giving $w=-\ln k$, since $e^{-\ln k}=1/k$) — even under plain `evaluate()`, not just `N()`.
-  - Every other branch is solved by Halley's method in the complex plane; checked against `wolframscript`'s `N[ProductLog[k, z], 16]` at several points (real and complex $z$, several $k$) to full double precision.
 primitive: kernel
 bindings:
   - origin: native
@@ -36,3 +32,7 @@ references:
 names:
   wikidata: Q429331
 ---
+
+- compute-engine's own argument order is $(z, k)$, not Wolfram's $\mathrm{ProductLog}[k, z]$ — checked directly (`LambertW(-0.14, -1)` is the $k=-1$ branch; `LambertW(-1, -0.14)` declines). The existing $k=0$/$-1$ order is kept as-is; the Wolfram crosswalk carries the reversal.
+- Exact values are recognized structurally at $z=0$, $z=e$ (giving $w=1$), $z=-1/e$ (giving $w=-1$), $z = n\,e^n$ for small integer $n$, and $z=-\ln(k)/k$ for small integer $k \ge 2$ (giving $w=-\ln k$, since $e^{-\ln k}=1/k$) — even under plain `evaluate()`, not just `N()`.
+- Every other branch is solved by Halley's method in the complex plane; checked against `wolframscript`'s `N[ProductLog[k, z], 16]` at several points (real and complex $z$, several $k$) to full double precision.

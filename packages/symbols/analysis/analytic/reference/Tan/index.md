@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex) -> number
     overrides: compute-engine
-details:
-  - $\tan(x) = \frac{\sin(x)}{\cos(x)}$.
-  - 'Odd function: $\tan(-x) = -\tan(x)$.'
-  - Period $\pi$ -- half the period of [[Sin]] and [[Cos]].
-  - Undefined wherever $\cos(x) = 0$, i.e. at odd multiples of $\pi/2$; compute-engine returns ComplexInfinity there rather than an error.
 seeAlso:
   - Sin
   - Cos
@@ -58,3 +53,8 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- $\tan(x) = \frac{\sin(x)}{\cos(x)}$.
+- Odd function: $\tan(-x) = -\tan(x)$.
+- Period $\pi$ -- half the period of [[Sin]] and [[Cos]].
+- Undefined wherever $\cos(x) = 0$, i.e. at odd multiples of $\pi/2$; compute-engine returns ComplexInfinity there rather than an error.

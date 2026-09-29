@@ -8,11 +8,11 @@ signatures:
     description: true iff a 2-colouring exists (BFS, underlying graph, direction ignored) — false for any graph with an odd cycle, including a self-loop.
     library: enumeratio-collections
     type: (value) -> boolean
-details:
-  - Wolfram calls this `BipartiteGraphQ`; this library uses the `Is…` spelling everywhere.
 seeAlso:
   - IsConnectedGraph
   - CycleGraph
 names:
   wolfram: BipartiteGraphQ
 ---
+
+- Wolfram calls this `BipartiteGraphQ`; this library uses the `Is…` spelling everywhere.

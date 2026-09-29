@@ -8,10 +8,6 @@ signatures:
     description: the $n!$ permutations of $\{1, …, n\}$.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - 'A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.'
-  - Each element is the image word $[\pi(1), …, \pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.
-  - The derangements — permutations with no fixed point — number $Subfactorial(n)$. See [[Subfactorial]].
 enumerate:
   expr: SymmetricGroup(5)
   columns: Descents, MajorIndex, Inversions, CycleCount, FixedPoints
@@ -61,3 +57,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \times 10^{18}$ rows — pages as cheaply as a small one.
+- Each element is the image word $[\pi(1), …, \pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.
+- The derangements — permutations with no fixed point — number $Subfactorial(n)$. See [[Subfactorial]].

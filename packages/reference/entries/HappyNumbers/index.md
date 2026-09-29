@@ -6,10 +6,6 @@ summary: "The happy numbers $1, 7, 10, 13, 19, …$: iterating sum-of-squared-di
 signatures:
   - call: HappyNumbers
     description: the $n$ whose sum-of-squared-digits iteration reaches 1 (rather than the other cycle, $\{4,16,37,58,89,145,42,20\}$), an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(HappyNumbers) = +\infty$. OEIS A007770.'
-  - $At(HappyNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HappyNumbers, 5) = 19$.
-  - 'Membership goes through [[Element]]: $Element(7, HappyNumbers)$ is true ($7 \to 49 \to 97 \to 130 \to 10 \to 1$), $Element(4, HappyNumbers)$ is false (the other cycle).'
 enumerate:
   expr: Take(HappyNumbers, 20)
 seeAlso:
@@ -25,3 +21,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(HappyNumbers) = +\infty$. OEIS A007770.
+- $At(HappyNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HappyNumbers, 5) = 19$.
+- Membership goes through [[Element]]: $Element(7, HappyNumbers)$ is true ($7 \to 49 \to 97 \to 130 \to 10 \to 1$), $Element(4, HappyNumbers)$ is false (the other cycle).

@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $k$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>) -> distribution
-details:
-  - $PDF(x) = 2^{1-k/2}x^{k-1}e^{-x^2/2}/\Gamma(k/2)$ for $x \geq 0$.
-  - $CDF(x) = P(k/2, x^2/2)$ via [[GammaRegularized]] (same convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
-  - $Mean = \sqrt{2}\,\Gamma((k+1)/2)/\Gamma(k/2)$, $Variance = k - Mean^2$, both exact.
-  - '[[RandomVariate]] samples $\sqrt{V}$ for an independent [[ChiSquareDistribution]]($k$) draw $V$.'
 seeAlso:
   - ChiSquareDistribution
   - MaxwellDistribution
@@ -22,3 +17,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = 2^{1-k/2}x^{k-1}e^{-x^2/2}/\Gamma(k/2)$ for $x \geq 0$.
+- $CDF(x) = P(k/2, x^2/2)$ via [[GammaRegularized]] (same convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
+- $Mean = \sqrt{2}\,\Gamma((k+1)/2)/\Gamma(k/2)$, $Variance = k - Mean^2$, both exact.
+- [[RandomVariate]] samples $\sqrt{V}$ for an independent [[ChiSquareDistribution]]($k$) draw $V$.

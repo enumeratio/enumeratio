@@ -6,10 +6,6 @@ summary: The factorials $1, 2, 6, 24, …$ — $n!$ — the number of permutatio
 signatures:
   - call: FactorialNumbers
     description: $n!$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(FactorialNumbers) = +\infty$, and $At(FactorialNumbers, k) = k!$ -- exact for every $k$, since every term is computed over arbitrary-precision integers rather than floats -- $At(FactorialNumbers, 20) = 2432902008176640000$, already past $2^{53}$.'
-  - "OEIS A000142, whose offset differs from ours: A000142 opens $a(0) = a(1) = 1$ (the duplicate $0! = 1! = 1$); this collection starts at $n=1$, so $At(FactorialNumbers, 1) = 1$ without repeating."
-  - Membership goes through [[Element]] by growing the factorial sequence forward until it reaches or passes the candidate -- $Element(720, FactorialNumbers)$ is true, $Element(700, FactorialNumbers)$ is false. See [[Factorial]] for the scalar function.
 enumerate:
   expr: Take(FactorialNumbers, 20)
 seeAlso:
@@ -38,3 +34,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(FactorialNumbers) = +\infty$, and $At(FactorialNumbers, k) = k!$ -- exact for every $k$, since every term is computed over arbitrary-precision integers rather than floats -- $At(FactorialNumbers, 20) = 2432902008176640000$, already past $2^{53}$.
+- OEIS A000142, whose offset differs from ours: A000142 opens $a(0) = a(1) = 1$ (the duplicate $0! = 1! = 1$); this collection starts at $n=1$, so $At(FactorialNumbers, 1) = 1$ without repeating.
+- Membership goes through [[Element]] by growing the factorial sequence forward until it reaches or passes the candidate -- $Element(720, FactorialNumbers)$ is true, $Element(700, FactorialNumbers)$ is false. See [[Factorial]] for the scalar function.

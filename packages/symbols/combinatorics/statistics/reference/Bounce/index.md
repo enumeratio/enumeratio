@@ -3,10 +3,6 @@ name: Bounce
 domain: Dyck path statistics
 signature: Bounce(path)
 summary: The bounce statistic, which walks the path bouncing off its own peaks.
-details:
-  - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-  - "Equidistributed with Area: (Bounce, Area) and (Area, Dinv) share the same bivariate distribution (see dyck.test.ts)."
 catalog:
   - system: findstat
     identity: St000005
@@ -20,3 +16,7 @@ signatures:
     library: enumeratio-statistics
     type: (dyck_path) -> number
 ---
+
+- Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- Equidistributed with Area: (Bounce, Area) and (Area, Dinv) share the same bivariate distribution (see dyck.test.ts).

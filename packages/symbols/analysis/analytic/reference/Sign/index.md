@@ -21,11 +21,6 @@ signatures:
     library: enumeratio-statistics
     type: ((permutation) -> number) & ((complex | signed_infinity) -> complex)
     overrides: enumeratio-collections
-details:
-  - $\operatorname{sign}(x) = -1, 0, 1$ for $x < 0$, $x = 0$, $x > 0$ respectively.
-  - For a complex number, $\operatorname{sign}(z) = z/|z|$, the unit complex number pointing toward z. See [[Abs]].
-  - 'Recovers the original magnitude: $x = |x|\,\operatorname{sign}(x)$.'
-  - $\operatorname{sign}(\pm\infty) = \pm 1$, but $\operatorname{sign}(\mathrm{NaN})$ propagates as NaN rather than 0.
 seeAlso:
   - Abs
   - Negate
@@ -61,3 +56,8 @@ bindings:
 statOn:
   - Permutation
 ---
+
+- $\operatorname{sign}(x) = -1, 0, 1$ for $x < 0$, $x = 0$, $x > 0$ respectively.
+- For a complex number, $\operatorname{sign}(z) = z/|z|$, the unit complex number pointing toward z. See [[Abs]].
+- Recovers the original magnitude: $x = |x|\,\operatorname{sign}(x)$.
+- $\operatorname{sign}(\pm\infty) = \pm 1$, but $\operatorname{sign}(\mathrm{NaN})$ propagates as NaN rather than 0.

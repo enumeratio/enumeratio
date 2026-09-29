@@ -11,9 +11,6 @@ signatures:
   - call: MaxValue({f, cons}, x)
     description: the global maximum of f restricted to a simple interval constraint cons.
     library: "@enumeratio/analytic"
-details:
-  - A projection of [[Maximize]] onto just the value -- same scope, same machinery; see [[Minimize]]'s `details` for the full account.
-  - The one case this covers that Maximize itself declines -- Sin/Cos of an affine argument, unconstrained -- because a value alone doesn't need a witnessing point Wolfram's own choice of (among infinitely many) isn't reproducible here. Its exact amplitude, +-1, is well defined regardless.
 seeAlso:
   - Maximize
   - MinValue
@@ -25,3 +22,6 @@ statOn:
 attributes:
   - HoldAll
 ---
+
+- A projection of [[Maximize]] onto just the value -- same scope, same machinery; see [[Minimize]]'s `details` for the full account.
+- The one case this covers that Maximize itself declines -- Sin/Cos of an affine argument, unconstrained -- because a value alone doesn't need a witnessing point Wolfram's own choice of (among infinitely many) isn't reproducible here. Its exact amplitude, +-1, is well defined regardless.

@@ -8,11 +8,11 @@ signatures:
     description: $\sqrt[n]{x_1 x_2 \cdots x_n}$ for the $n$ elements of $collection$.
     library: enumeratio-collections
     type: (collection<any>) -> number
-details:
-  - See [[HarmonicMean]] and [[Mean]] for the other Pythagorean means.
 seeAlso:
   - HarmonicMean
   - Mean
 names:
   wolframIdentity: true
 ---
+
+- See [[HarmonicMean]] and [[Mean]] for the other Pythagorean means.

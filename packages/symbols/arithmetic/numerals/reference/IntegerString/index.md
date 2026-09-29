@@ -16,13 +16,13 @@ signatures:
   - call: IntegerString(n, "Roman")
     description: the Roman numeral for n, same as [[RomanNumeral]].
     library: enumeratio-numerals
-details:
-  - Bases above 10 use letters a-z for digit values beyond 9, up to base 36.
-  - compute-engine keeps a leading minus sign for negative n
-  - A third argument pads with leading zeros to that length, or keeps only the last that many digits; with it, a negative n is left unevaluated (Wolfram drops the sign, compute-engine keeps it).
-  - compute-engine's second argument is always a numeric base.
 seeAlso:
   - IntegerDigits
 names:
   wolframIdentity: true
 ---
+
+- Bases above 10 use letters a-z for digit values beyond 9, up to base 36.
+- compute-engine keeps a leading minus sign for negative n
+- A third argument pads with leading zeros to that length, or keeps only the last that many digits; with it, a negative n is left unevaluated (Wolfram drops the sign, compute-engine keeps it).
+- compute-engine's second argument is always a numeric base.

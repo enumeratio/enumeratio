@@ -17,10 +17,6 @@ signatures:
   - call: IntegerPartitions(n, All, parts)
     description: the partitions of $n$ using only parts drawn from the given list.
     library: enumeratio-collections
-details:
-  - A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.
-  - Each element is the part list in weakly decreasing order; drawn as a Ferrers diagram, its statistics (Length, LargestPart, DurfeeSquare, …) live in $@enumeratio/statistics$.
-  - Conjugation (transposing the diagram) is an involution; the self-conjugate partitions of $n$ equal the partitions of $n$ into distinct odd parts.
 enumerate:
   expr: IntegerPartitions(8)
   columns: Length, LargestPart, DistinctParts, DurfeeSquare
@@ -61,3 +57,7 @@ grades:
     role: axis
 carrier: IntegerPartition
 ---
+
+- A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.
+- Each element is the part list in weakly decreasing order; drawn as a Ferrers diagram, its statistics (Length, LargestPart, DurfeeSquare, …) live in $@enumeratio/statistics$.
+- Conjugation (transposing the diagram) is an involution; the self-conjugate partitions of $n$ equal the partitions of $n$ into distinct odd parts.

@@ -14,11 +14,6 @@ signatures:
   - call: SymmetricGroupAlgebra(n)
     description: permutation diagrams only — dimension $n!$
     library: enumeratio-diagram
-details:
-  - Dimension $M(2n)$ = 2, 9, 51, 323 — the Motzkin numbers, which count the same paths with a flat step that Catalan counts without
-  - "Contains [[TemperleyLiebAlgebra]]: dropping the requirement that every point be paired is exactly what turns Catalan into Motzkin"
-  - '`RookAlgebra(n)` counts $\sum_k \binom{n}{k}^2 k!$ — the partial permutations, i.e. the placements of non-attacking rooks'
-  - "`SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections"
 seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
@@ -37,3 +32,8 @@ bindings:
     arity: 1
     note: Sage has no Motzkin algebra.
 ---
+
+- Dimension $M(2n)$ = 2, 9, 51, 323 — the Motzkin numbers, which count the same paths with a flat step that Catalan counts without
+- Contains [[TemperleyLiebAlgebra]]: dropping the requirement that every point be paired is exactly what turns Catalan into Motzkin
+- `RookAlgebra(n)` counts $\sum_k \binom{n}{k}^2 k!$ — the partial permutations, i.e. the placements of non-attacking rooks
+- `SymmetricGroupAlgebra(n)` is the group algebra of $S_n$, the diagrams that are honest bijections

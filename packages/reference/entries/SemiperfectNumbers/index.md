@@ -6,10 +6,6 @@ summary: The semiperfect numbers $6, 12, 18, 20, …$ -- integers equal to a sum
 signatures:
   - call: SemiperfectNumbers
     description: the $n$ with a proper-divisor subset summing to $n$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(SemiperfectNumbers) = +\infty$ (every perfect number is trivially semiperfect, taking the whole divisor set), and $At$ unranks the $k$-th by scanning forward, testing each candidate with a subset-sum search over its proper divisors.'
-  - OEIS A005835.
-  - "Membership goes through [[Element]]: $Element(12, SemiperfectNumbers)$ is true ($12 = 2 + 4 + 6$), $Element(70, SemiperfectNumbers)$ is false -- $70$ is abundant but [[WeirdNumbers|weird]]."
 enumerate:
   expr: Take(SemiperfectNumbers, 20)
 seeAlso:
@@ -30,3 +26,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(SemiperfectNumbers) = +\infty$ (every perfect number is trivially semiperfect, taking the whole divisor set), and $At$ unranks the $k$-th by scanning forward, testing each candidate with a subset-sum search over its proper divisors.
+- OEIS A005835.
+- Membership goes through [[Element]]: $Element(12, SemiperfectNumbers)$ is true ($12 = 2 + 4 + 6$), $Element(70, SemiperfectNumbers)$ is false -- $70$ is abundant but [[WeirdNumbers|weird]].

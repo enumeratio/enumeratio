@@ -10,10 +10,6 @@ signatures:
     description: The Dyck paths of semilength $n$ — balanced up/down words — a lazy family of Catalan many.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - A lazy indexed collection; the count is the Catalan number $C_n = \frac{1}{n+1}\binom{2n}{n}$ — $C_4 = 14$. See [[CatalanNumber]].
-  - Each element is the step word (1 up, 0 down); drawn as a mountain range. Height, Area, Returns and Hills are Dyck-path statistics.
-  - In bijection with binary trees, triangulations, and non-crossing partitions — all Catalan families.
 enumerate:
   expr: DyckPaths(4)
   columns: Height, Area, Returns
@@ -52,3 +48,7 @@ grades:
     role: axis
 carrier: DyckPath
 ---
+
+- A lazy indexed collection; the count is the Catalan number $C_n = \frac{1}{n+1}\binom{2n}{n}$ — $C_4 = 14$. See [[CatalanNumber]].
+- Each element is the step word (1 up, 0 down); drawn as a mountain range. Height, Area, Returns and Hills are Dyck-path statistics.
+- In bijection with binary trees, triangulations, and non-crossing partitions — all Catalan families.

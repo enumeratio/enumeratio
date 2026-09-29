@@ -11,9 +11,9 @@ signatures:
   - call: HankelMatrix(c, r)
     description: the n×m Hankel matrix (n = Length(c), m = Length(r)) with r as the last row
     library: enumeratio-collections
-details:
-  - "A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j."
-  - r's first element coincides with c's last (both are the matrix's shared corner), so it never surfaces on its own.
 names:
   wolframIdentity: true
 ---
+
+- A Hankel matrix is constant along each anti-diagonal: M(i, j) depends only on i + j.
+- r's first element coincides with c's last (both are the matrix's shared corner), so it never surfaces on its own.

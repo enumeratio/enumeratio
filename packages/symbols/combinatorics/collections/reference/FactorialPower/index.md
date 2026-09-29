@@ -11,12 +11,12 @@ signatures:
   - call: FactorialPower(x, n, h)
     description: x(x-h)(x-2h)…(x-(n-1)h), stepping by h instead of 1
     library: enumeratio-collections
-details:
-  - A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).
-  - A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).
-  - A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).
+- A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).
+- A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default.

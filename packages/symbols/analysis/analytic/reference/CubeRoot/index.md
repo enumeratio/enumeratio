@@ -8,11 +8,11 @@ signatures:
     description: the real cube root of x.
     library: "@enumeratio/analytic"
     type: (number) -> number
-details:
-  - Real-valued even at a negative x -- $\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.
-  - Threads over a list, element-wise.
-  - An exact non-perfect-cube argument (like $\sqrt[3]{2}$) stays symbolic under plain evaluation; a floating-point argument, or N(), gives a decimal.
-  - A concretely complex argument is outside CubeRoot's real domain and is left unevaluated.
 names:
   wolframIdentity: true
 ---
+
+- Real-valued even at a negative x -- $\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.
+- Threads over a list, element-wise.
+- An exact non-perfect-cube argument (like $\sqrt[3]{2}$) stays symbolic under plain evaluation; a floating-point argument, or N(), gives a decimal.
+- A concretely complex argument is outside CubeRoot's real domain and is left unevaluated.

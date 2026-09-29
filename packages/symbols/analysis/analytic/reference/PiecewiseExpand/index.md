@@ -11,12 +11,12 @@ signatures:
   - call: PiecewiseExpand(expr, assumptions)
     description: assume $assumptions$ (scoped, as in [[Assuming]]) for the rewrite, then forget it.
     library: "@enumeratio/analytic"
-details:
-  - Each rewrite fires only once its argument(s) are known real — `Abs`/`Sign`/`UnitStep`/`Clip` on a genuinely complex value are not piecewise-comparable, so (matching Wolfram's own `PiecewiseExpand`) an argument whose realness isn't established is left untouched rather than guessed at.
-  - Rewrites recurse into subexpressions, so `PiecewiseExpand(Abs(x) + 1, …)` rewrites the `Abs` inside the sum.
-  - 2-argument `Max`/`Min` only — no general n-ary rewrite.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- Each rewrite fires only once its argument(s) are known real — `Abs`/`Sign`/`UnitStep`/`Clip` on a genuinely complex value are not piecewise-comparable, so (matching Wolfram's own `PiecewiseExpand`) an argument whose realness isn't established is left untouched rather than guessed at.
+- Rewrites recurse into subexpressions, so `PiecewiseExpand(Abs(x) + 1, …)` rewrites the `Abs` inside the sum.
+- 2-argument `Max`/`Min` only — no general n-ary rewrite.

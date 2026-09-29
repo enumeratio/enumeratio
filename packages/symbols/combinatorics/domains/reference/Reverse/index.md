@@ -3,8 +3,6 @@ name: Reverse
 domain: Combinatorial maps
 signature: Reverse(Permutation)
 summary: The word read backwards.
-details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 names:
   wolframIdentity: true
 catalog:
@@ -28,3 +26,5 @@ signatures:
     type: "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T) & ((permutation) -> permutation)"
     overrides: compute-engine
 ---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

@@ -8,13 +8,13 @@ signatures:
     description: '$a(nmin), \dots, a(nmax)$, given $eqns$: one general recurrence equation over $a$ plus its initial conditions.'
     library: enumeratio-collections
     type: "(eqns: list<any>, a: any, spec: list<any>) -> list<any>"
-details:
-  - $eqns$ mixes literal-index equations (initial conditions, $a(1) = 7$) with exactly one general equation whose index mentions $n$ ($a(n+1) = 3\,a(n)$, or plainly $a(n) = a(n-1) + a(n-2)$) — only a single recurrence order is supported, not a piecewise definition.
-  - "$a$ never needs to be declared as a head: it is read directly out of $eqns$ and resolved by walking the recurrence, not by evaluating $a(n)$ as an ordinary compute-engine call."
-  - See [[LinearRecurrence]] for the constant-coefficient case without writing out the equations.
 seeAlso:
   - LinearRecurrence
   - Fibonacci
 names:
   wolframIdentity: true
 ---
+
+- $eqns$ mixes literal-index equations (initial conditions, $a(1) = 7$) with exactly one general equation whose index mentions $n$ ($a(n+1) = 3\,a(n)$, or plainly $a(n) = a(n-1) + a(n-2)$) — only a single recurrence order is supported, not a piecewise definition.
+- $a$ never needs to be declared as a head: it is read directly out of $eqns$ and resolved by walking the recurrence, not by evaluating $a(n)$ as an ordinary compute-engine call.
+- See [[LinearRecurrence]] for the constant-coefficient case without writing out the equations.

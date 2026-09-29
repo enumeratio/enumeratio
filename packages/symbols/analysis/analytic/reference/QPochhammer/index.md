@@ -8,10 +8,6 @@ signatures:
     description: the q-Pochhammer symbol $(a; q)_n$.
     library: "@enumeratio/analytic"
     type: (complex, complex, infinity | integer) -> number
-details:
-  - Finite $n \ge 0$ builds the product from exact boxed arithmetic — an exact rational $a$ or $q$ stays exact, and $n = 0$ gives the empty product, 1, even for symbolic $a$ and $q$.
-  - $n = \infty$ is Euler's infinite product, numeric-only and only where it converges ($|q| < 1$); it stays symbolic for exact operands (use `N()`) and for $|q| \ge 1$.
-  - Negative or symbolic $n$ is not implemented and stays symbolic — Wolfram's extension to negative $n$ via $(a;q)_{-n} = 1/\prod_{k=1}^n(1 - a q^{-k})$ is not carried here.
 primitive: kernel
 bindings:
   - origin: native
@@ -29,3 +25,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Finite $n \ge 0$ builds the product from exact boxed arithmetic — an exact rational $a$ or $q$ stays exact, and $n = 0$ gives the empty product, 1, even for symbolic $a$ and $q$.
+- $n = \infty$ is Euler's infinite product, numeric-only and only where it converges ($|q| < 1$); it stays symbolic for exact operands (use `N()`) and for $|q| \ge 1$.
+- Negative or symbolic $n$ is not implemented and stays symbolic — Wolfram's extension to negative $n$ via $(a;q)_{-n} = 1/\prod_{k=1}^n(1 - a q^{-k})$ is not carried here.

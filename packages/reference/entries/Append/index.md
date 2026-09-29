@@ -9,13 +9,13 @@ signatures:
   - call: Append(expr, value)
     description: "`value` added as the last operand of any expression, not just a collection."
     library: enumeratio-collections
-details:
-  - $Append(c, x) = Join(c, \{x\})$. See [[Join]].
-  - Appending a list nests it as a single element rather than splicing its contents in — use [[Join]] to splice.
-  - Works on a set as well as a list, and on the operands of any expression.
 seeAlso:
   - Join
   - Prepend
 names:
   wolframIdentity: true
 ---
+
+- $Append(c, x) = Join(c, \{x\})$. See [[Join]].
+- Appending a list nests it as a single element rather than splicing its contents in — use [[Join]] to splice.
+- Works on a set as well as a list, and on the operands of any expression.

@@ -8,10 +8,6 @@ signatures:
     description: ${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\Gamma(b_1)\Gamma(b_2))$.
     library: "@enumeratio/analytic"
     type: (number, number, number, number, number, number) -> number
-details:
-  - compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.
-  - The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.
-  - Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.
 primitive: numeric
 bindings:
   - origin: native
@@ -25,3 +21,7 @@ bindings:
 seeAlso:
   - Hypergeometric2F1Regularized
 ---
+
+- compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.
+- The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.
+- Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.

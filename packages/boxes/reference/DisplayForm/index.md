@@ -8,11 +8,11 @@ signatures:
     description: Boxes shown as what they draw, rather than as the expression that describes them.
     library: enumeratio-boxes
     type: (boxes) -> expression
-details:
-  - Stays as written; a renderer draws its boxes.
 seeAlso:
   - RawBoxes
   - ToBoxes
 names:
   wolframIdentity: true
 ---
+
+- Stays as written; a renderer draws its boxes.

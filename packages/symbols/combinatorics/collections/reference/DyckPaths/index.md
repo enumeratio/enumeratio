@@ -7,10 +7,10 @@ signatures:
   - call: DyckPaths(n)
     description: the Dyck paths of semilength $n$
     library: enumeratio-collections
-details:
-  - Count is the Catalan number $C_n$ (see [[CatalanNumber]])
-  - Each element is a 0/1 step sequence with every prefix having at least as many 1s as 0s
 seeAlso:
   - BinaryTrees
   - CatalanNumber
 ---
+
+- Count is the Catalan number $C_n$ (see [[CatalanNumber]])
+- Each element is a 0/1 step sequence with every prefix having at least as many 1s as 0s

@@ -6,10 +6,6 @@ summary: The Thue–Morse sequence $0, 1, 1, 0, 1, 0, 0, 1, …$ as a lazy index
 signatures:
   - call: ThueMorseNumbers
     description: $t(n) = popcount(n) \bmod 2$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(ThueMorseNumbers) = +\infty$, and $At(ThueMorseNumbers, 1) = t(0) = 0$.'
-  - "OEIS A010060, starting exactly at its offset-0 term: $0, 1, 1, 0, 1, 0, 0, 1, 1, 0, …$."
-  - Not monotone; every term is $0$ or $1$, so membership is exactly $\{0, 1\}$ -- $Element(0, ThueMorseNumbers)$ and $Element(1, ThueMorseNumbers)$ are true, everything else (including $2$) is false.
 enumerate:
   expr: Take(ThueMorseNumbers, 20)
 seeAlso:
@@ -28,3 +24,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(ThueMorseNumbers) = +\infty$, and $At(ThueMorseNumbers, 1) = t(0) = 0$.
+- OEIS A010060, starting exactly at its offset-0 term: $0, 1, 1, 0, 1, 0, 0, 1, 1, 0, …$.
+- Not monotone; every term is $0$ or $1$, so membership is exactly $\{0, 1\}$ -- $Element(0, ThueMorseNumbers)$ and $Element(1, ThueMorseNumbers)$ are true, everything else (including $2$) is false.

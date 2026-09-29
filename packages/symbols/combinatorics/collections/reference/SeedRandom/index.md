@@ -13,11 +13,11 @@ signatures:
     library: enumeratio-statistics
     type: (integer?) state -> any
     overrides: enumeratio-collections
-details:
-  - "One generator per engine instance: [[RandomInteger]] draws from it, and the same seed always starts the same sequence."
-  - Our generator is our own (a small deterministic PRNG), not Wolfram's Mersenne-twister-based one — a shared seed value does not draw the same numbers as Wolfram would.
 seeAlso:
   - RandomInteger
 names:
   wolframIdentity: true
 ---
+
+- One generator per engine instance: [[RandomInteger]] draws from it, and the same seed always starts the same sequence.
+- Our generator is our own (a small deterministic PRNG), not Wolfram's Mersenne-twister-based one — a shared seed value does not draw the same numbers as Wolfram would.

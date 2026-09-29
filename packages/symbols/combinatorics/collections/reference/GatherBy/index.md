@@ -8,8 +8,6 @@ signatures:
     description: elements grouped by $f(element)$, in first-appearance order.
     library: enumeratio-collections
     type: (indexed_collection<T>, (T) any -> any) -> list<list<T>> where T
-details:
-  - '[[Gather]] with the equivalence "same $f$ value" instead of plain equality.'
 seeAlso:
   - Gather
   - SplitBy
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- [[Gather]] with the equivalence "same $f$ value" instead of plain equality.

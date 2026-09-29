@@ -8,11 +8,11 @@ signatures:
     description: true iff $g$ is connected (underlying, direction ignored) and has exactly $|V(g)| - 1$ edges — the standard connected-plus-edge-count tree test.
     library: enumeratio-collections
     type: (value) -> boolean
-details:
-  - Wolfram calls this `TreeGraphQ`; this library uses the `Is…` spelling everywhere.
 seeAlso:
   - IsConnectedGraph
   - CompleteKaryTree
 names:
   wolfram: TreeGraphQ
 ---
+
+- Wolfram calls this `TreeGraphQ`; this library uses the `Is…` spelling everywhere.

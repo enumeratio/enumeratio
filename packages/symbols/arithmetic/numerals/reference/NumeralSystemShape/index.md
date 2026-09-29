@@ -8,11 +8,11 @@ signatures:
     description: "`Bijective`, `Integers`, and when they apply `Digits` (one set, or one per place), `Width` and `Rule`"
     library: enumeratio-numerals
     type: (any) -> dictionary
-details:
-  - "`Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system"
-  - "`Rule` names a constraint no per-place bound captures: Zeckendorf's no two adjacent ones, Ostrowski's ceiling rule"
-  - 'A residue system whose moduli share a factor still spells every integer below $\prod m_i$, but not uniquely: `Bijective` is False'
 seeAlso:
   - IntegerDigits
   - FromDigits
 ---
+
+- `Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system
+- `Rule` names a constraint no per-place bound captures: Zeckendorf's no two adjacent ones, Ostrowski's ceiling rule
+- A residue system whose moduli share a factor still spells every integer below $\prod m_i$, but not uniquely: `Bijective` is False

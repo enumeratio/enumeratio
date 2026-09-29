@@ -8,13 +8,13 @@ signatures:
     description: x with uncertainty dx, propagated as Around(f(x), |f′(x)|·dx) through a function f.
     library: "@enumeratio/analytic"
     type: (number, real?) -> number
-details:
-  - Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives.
-  - Every other function -- the elementary heads, Log in any base, and the special functions -- takes f′ from compute-engine's symbolic D where it resolves, and from a central difference where it doesn't.
-  - "A head is propagated through as ONE function of its uncertain argument, before its own definition expands it: Multinomial(Around(2, 0.01), 2) is (a+2)(a+1)/2 at a = 2 ± 0.01, so 6 ± 0.035. Expanding first would count the same uncertainty in a numerator and a denominator as if they were independent."
 seeAlso:
   - Interval
   - CenteredInterval
 names:
   wolframIdentity: true
 ---
+
+- Add sums several independent uncertainties in quadrature (√Σdxᵢ²); a scalar Multiply scales the uncertainty linearly; several Around factors multiplied together combine their RELATIVE uncertainties in quadrature (the same rule, since d(∏xᵢ) = Σⱼ(∏_{i≠j}xᵢ)dxⱼ in quadrature, divided back out by the product); Power with a concrete exponent and Exp (Wolfram's Exp, canonicalized to Power(E, ·)) use their own closed-form derivatives.
+- Every other function -- the elementary heads, Log in any base, and the special functions -- takes f′ from compute-engine's symbolic D where it resolves, and from a central difference where it doesn't.
+- A head is propagated through as ONE function of its uncertain argument, before its own definition expands it: Multinomial(Around(2, 0.01), 2) is (a+2)(a+1)/2 at a = 2 ± 0.01, so 6 ± 0.035. Expanding first would count the same uncertainty in a numerator and a denominator as if they were independent.

@@ -8,12 +8,12 @@ signatures:
     description: A numerator over a denominator.
     library: enumeratio-boxes
     type: (boxes, boxes, expression*) -> boxes
-details:
-  - "`FractionLine -> False` drops the bar, as a binomial coefficient's stack does."
-  - MathML's `mfrac`.
 seeAlso:
   - SqrtBox
   - GridBox
 names:
   wolframIdentity: true
 ---
+
+- `FractionLine -> False` drops the bar, as a binomial coefficient's stack does.
+- MathML's `mfrac`.

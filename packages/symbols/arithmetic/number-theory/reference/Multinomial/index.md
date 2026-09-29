@@ -16,12 +16,6 @@ signatures:
     library: enumeratio-number-theory
     type: (any*) -> any
     overrides: enumeratio-analytic
-details:
-  - Counts the ways to split $k_1 + k_2 + \cdots$ labeled items into groups of the given sizes.
-  - 'With two arguments it reduces to [[Binomial]]: $\binom{k_1+k_2}{k_1}$.'
-  - "Orderless: permuting the arguments doesn't change the value."
-  - All-zero arguments and a single argument both reduce to the empty product, 1.
-  - compute-engine requires all-integer arguments; a list argument is threaded over element-wise, as Wolfram's Listable heads do.
 seeAlso:
   - Binomial
   - Factorial
@@ -33,3 +27,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Counts the ways to split $k_1 + k_2 + \cdots$ labeled items into groups of the given sizes.
+- With two arguments it reduces to [[Binomial]]: $\binom{k_1+k_2}{k_1}$.
+- Orderless: permuting the arguments doesn't change the value.
+- All-zero arguments and a single argument both reduce to the empty product, 1.
+- compute-engine requires all-integer arguments; a list argument is threaded over element-wise, as Wolfram's Listable heads do.

@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the standard fillings of every shifted diagram of a strict partition of `size`, entries $1..n$ increasing along rows and down columns.
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - A lazy indexed collection; the count is exact but not a simple closed form — computed by recursive corner removal, the same identity the shifted hook-length formula gives; $1, 1, 1, 2, 3, 6, 12, …$ for $n = 0, 1, 2, …$.
-  - Each element is the diagram's rows; row $i$ (0-indexed) occupies columns $i..i{+}shape[i]{-}1$, so a cell shares a column with the cell one row up and one entry over.
-  - Unranked by shape (strict partitions of $n$, in distinct-parts order), then by recursive corner-removal order within a shape — the value $n$ always sits at a removable corner.
 enumerate:
   expr: ShiftedStandardTableaux(6)
   columns: Length
@@ -23,3 +19,7 @@ grades:
     role: axis
 carrier: StandardTableau
 ---
+
+- A lazy indexed collection; the count is exact but not a simple closed form — computed by recursive corner removal, the same identity the shifted hook-length formula gives; $1, 1, 1, 2, 3, 6, 12, …$ for $n = 0, 1, 2, …$.
+- Each element is the diagram's rows; row $i$ (0-indexed) occupies columns $i..i{+}shape[i]{-}1$, so a cell shares a column with the cell one row up and one entry over.
+- Unranked by shape (strict partitions of $n$, in distinct-parts order), then by recursive corner-removal order within a shape — the value $n$ always sits at a removable corner.

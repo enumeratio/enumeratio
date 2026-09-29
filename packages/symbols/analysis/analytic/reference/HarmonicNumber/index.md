@@ -11,13 +11,6 @@ signatures:
   - call: HarmonicNumber(n, r)
     description: the generalized harmonic number $H_n^{(r)} = \sum_{k=1}^n k^{-r}$.
     library: "@enumeratio/analytic"
-details:
-  - 'At a non-negative integer $n$ (and an integer $r$ of either sign, in the two-argument form) the sum is exact: $H_0 = 0$, $H_1 = 1$, $H_2 = \tfrac32$, $H_{10} = \tfrac{7381}{2520}$.'
-  - Continued off the lattice by the standard digamma identity $H_z = \psi(z+1) + \gamma$ ([[PolyGamma]], [[EulerGamma]]) and its generalization $H_z^{(r)} = \zeta(r) - \zeta(r, z+1)$ ([[Zeta]], [[HurwitzZeta]]) — both reduce to the same exact values at the integers, so there is one formula, not a case split.
-  - "Order $r = 1$ is the one place that generalization can't be used directly: $\\zeta(1)$ is itself a pole, at every $z$, even though $H_z^{(1)} = H_z$ is perfectly finite. HarmonicNumber(z, 1) is routed straight to the one-argument $\\psi(z+1) + \\gamma$ instead."
-  - 'Negative integer $n$ has no sum and is a pole: $H_{-1} = H_{-2} = \cdots = \mathrm{ComplexInfinity}$, in both the one- and two-argument forms — matching Wolfram, which does not extend the sum by the continuation there.'
-  - Complex $z$ and complex/non-integer $r$ are supported numerically, via [[PolyGamma]]'s digamma ($r$ absent) and [[HurwitzZeta]] ($r$ present).
-  - A non-integer $r$ (or non-integer $z$ with $r$ present) stays symbolic under plain evaluation even at an otherwise-exact $n$ — the sum $\sum k^{-r}$ has no rational value there — and only reduces under N() or a floating-point argument, the same gate every head in this package uses.
 bindings:
   - origin: reference
     form: notatio
@@ -40,3 +33,10 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- At a non-negative integer $n$ (and an integer $r$ of either sign, in the two-argument form) the sum is exact: $H_0 = 0$, $H_1 = 1$, $H_2 = \tfrac32$, $H_{10} = \tfrac{7381}{2520}$.
+- Continued off the lattice by the standard digamma identity $H_z = \psi(z+1) + \gamma$ ([[PolyGamma]], [[EulerGamma]]) and its generalization $H_z^{(r)} = \zeta(r) - \zeta(r, z+1)$ ([[Zeta]], [[HurwitzZeta]]) — both reduce to the same exact values at the integers, so there is one formula, not a case split.
+- Order $r = 1$ is the one place that generalization can't be used directly: $\zeta(1)$ is itself a pole, at every $z$, even though $H_z^{(1)} = H_z$ is perfectly finite. HarmonicNumber(z, 1) is routed straight to the one-argument $\psi(z+1) + \gamma$ instead.
+- Negative integer $n$ has no sum and is a pole: $H_{-1} = H_{-2} = \cdots = \mathrm{ComplexInfinity}$, in both the one- and two-argument forms — matching Wolfram, which does not extend the sum by the continuation there.
+- Complex $z$ and complex/non-integer $r$ are supported numerically, via [[PolyGamma]]'s digamma ($r$ absent) and [[HurwitzZeta]] ($r$ present).
+- A non-integer $r$ (or non-integer $z$ with $r$ present) stays symbolic under plain evaluation even at an otherwise-exact $n$ — the sum $\sum k^{-r}$ has no rational value there — and only reduces under N() or a floating-point argument, the same gate every head in this package uses.

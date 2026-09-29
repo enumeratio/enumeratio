@@ -8,8 +8,6 @@ signatures:
     description: exact for $r=0$ (always $1$), $r=1$ (always $0$) and $r=2$ (always [[Variance]]); $r\geq 3$ stays unevaluated.
     library: enumeratio-statistics
     type: (distribution, integer) -> real
-details:
-  - Generic over every distribution this package's [[Variance]] answers, old or new.
 seeAlso:
   - Moment
   - FactorialMoment
@@ -18,3 +16,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Generic over every distribution this package's [[Variance]] answers, old or new.

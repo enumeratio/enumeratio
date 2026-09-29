@@ -8,8 +8,6 @@ signatures:
     description: every vertex with the smallest (finite) eccentricity, in VertexList(g) order.
     library: enumeratio-collections
     type: (value) -> list<any>
-details:
-  - A vertex with an infinite eccentricity (unreachable from some other vertex) is never in the center, even on a disconnected graph where every FINITE eccentricity happens to tie.
 seeAlso:
   - GraphPeriphery
   - GraphRadius
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- A vertex with an infinite eccentricity (unreachable from some other vertex) is never in the center, even on a disconnected graph where every FINITE eccentricity happens to tie.

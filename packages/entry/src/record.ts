@@ -1,6 +1,7 @@
 // A head's record on disk: one folder, `reference/<Head>/`, holding
 //
-//   index.md                          the entry's fields as front matter; a markdown body
+//   index.md                          the entry's fields as front matter; its details as the
+//                                     markdown body's list
 //   examples.tsv                      one row per example, in page order: everything written
 //                                     by hand, including each system's classification columns
 //   examples.values.<system>.tsv      generated: that system's writing of each example (and,
@@ -91,8 +92,33 @@ export function parseIndex(text: string): { fields: Record<string, unknown>; bod
   return { fields: (parseYaml(match[1] ?? "") ?? {}) as Record<string, unknown>, body: match[2]!.replace(/^\n/, "") };
 }
 
-async function indexText(fields: Record<string, unknown>, body: string): Promise<string> {
-  return `---\n${await formatYaml(fields)}---\n${body === "" ? "" : `\n${body.replace(/\n*$/, "\n")}`}`;
+/** A head's details as the body's markdown list: one item each, a line break indented under it. */
+const detailsMarkdown = (details: readonly string[]): string =>
+  details.map((detail) => `- ${detail.replace(/\n/g, "\n  ")}`).join("\n");
+
+/** The body's details: each list item, or each paragraph that isn't one. */
+export function detailsOf(body: string): string[] {
+  const details: string[] = [];
+  let open = false; // the last line belongs to an item still being read
+  for (const line of body.split("\n")) {
+    if (line.trim() === "") open = false;
+    else if (/^[-*] /.test(line)) {
+      details.push(line.slice(2));
+      open = true;
+    } else if (open) details[details.length - 1] += `\n${line.replace(/^ {2}/, "")}`;
+    else {
+      details.push(line.trim());
+      open = true;
+    }
+  }
+  return details;
+}
+
+/** `index.md`'s text: the fields as front matter, the details (if any) as the body's list,
+ * each exactly as written (vp fmt leaves these files alone; see vite.config.ts). */
+async function indexText({ details, ...fields }: Record<string, unknown>, body: string): Promise<string> {
+  const text = Array.isArray(details) && details.length > 0 ? detailsMarkdown(details as string[]) : body;
+  return `---\n${await formatYaml(fields)}---\n${text === "" ? "" : `\n${text.replace(/\n*$/, "\n")}`}`;
 }
 
 // --- examples.tsv and the values files --------------------------------------------------
@@ -256,6 +282,7 @@ export function decodeHead(files: ReadonlyMap<string, string>): HeadRecord {
       rows[system] = { ...generated, ...rows[system] };
     }
   }
+  if (body.trim() !== "" && fields["details"] === undefined) fields["details"] = detailsOf(body);
   const entry = { ...fields, examples } as unknown as ReferenceEntry;
   if (Object.keys(record).length === 0) return { entry, body };
   const implementations = orderImplementations(record as unknown as HeadImplementations, ids, SYSTEM_ORDER);

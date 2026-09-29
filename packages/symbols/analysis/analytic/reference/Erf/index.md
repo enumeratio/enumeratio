@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number?) -> number
     overrides: compute-engine
-details:
-  - 'Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$.'
-  - $\operatorname{erf}(0) = 0$, and $\operatorname{erf}(\pm\infty) = \pm 1$ -- the total (signed) area under the Gaussian.
-  - 'Complementary with [[Erfc]]: $\operatorname{erf}(z) + \operatorname{erfc}(z) = 1$.'
-  - 'Builds the normal CDF: $\Phi(x) = \frac{1}{2}\left(1 + \operatorname{erf}(x/\sqrt{2})\right)$.'
-  - compute-engine requires an inexact (floating-point) argument to produce a numeric value under plain evaluation; an exact integer or rational argument is left symbolic outside the special points 0 and $\pm\infty$.
 seeAlso:
   - Erfc
   - ErfInv
@@ -30,3 +24,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Odd function: $\operatorname{erf}(-z) = -\operatorname{erf}(z)$.
+- $\operatorname{erf}(0) = 0$, and $\operatorname{erf}(\pm\infty) = \pm 1$ -- the total (signed) area under the Gaussian.
+- Complementary with [[Erfc]]: $\operatorname{erf}(z) + \operatorname{erfc}(z) = 1$.
+- Builds the normal CDF: $\Phi(x) = \frac{1}{2}\left(1 + \operatorname{erf}(x/\sqrt{2})\right)$.
+- compute-engine requires an inexact (floating-point) argument to produce a numeric value under plain evaluation; an exact integer or rational argument is left symbolic outside the special points 0 and $\pm\infty$.

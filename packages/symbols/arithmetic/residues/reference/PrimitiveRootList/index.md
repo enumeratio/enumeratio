@@ -8,11 +8,6 @@ signatures:
     description: the generators of the unit group mod $n$, or $\{\}$ when it is not cyclic
     library: enumeratio-residues
     type: (integer) -> list<integer>
-details:
-  - $(\mathbb{Z}/n)^\times$ is cyclic exactly for $n = 1, 2, 4, p^k, 2p^k$ with $p$ an odd prime; otherwise there are no primitive roots and the list is empty.
-  - 'When there is one generator $g$ there are $\varphi(\varphi(n))$: the powers $g^k$ with $\gcd(k, \varphi(n)) = 1$.'
-  - A candidate $g$ is a generator iff $g^{\varphi(n)/q} \not\equiv 1$ for every prime $q \mid \varphi(n)$, so $\varphi(n)$ has to be factored.
-  - At most 100 000 roots are listed; past that the call stays unevaluated. [[PrimitiveRoot]] gives the least one at any size.
 seeAlso:
   - PrimitiveRoot
   - MultiplicativeOrder
@@ -31,3 +26,8 @@ bindings:
     arity: 1
     note: Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).
 ---
+
+- $(\mathbb{Z}/n)^\times$ is cyclic exactly for $n = 1, 2, 4, p^k, 2p^k$ with $p$ an odd prime; otherwise there are no primitive roots and the list is empty.
+- When there is one generator $g$ there are $\varphi(\varphi(n))$: the powers $g^k$ with $\gcd(k, \varphi(n)) = 1$.
+- A candidate $g$ is a generator iff $g^{\varphi(n)/q} \not\equiv 1$ for every prime $q \mid \varphi(n)$, so $\varphi(n)$ has to be factored.
+- At most 100 000 roots are listed; past that the call stays unevaluated. [[PrimitiveRoot]] gives the least one at any size.

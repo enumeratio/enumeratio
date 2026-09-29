@@ -11,9 +11,6 @@ signatures:
   - call: Sow(e, tag)
     description: Like $Sow(e)$, but records under $tag$ instead of the untagged group.
     library: enumeratio-collections
-details:
-  - A $Sow$ with no enclosing $Reap$ is a no-op — it still returns $e$, nothing is recorded anywhere.
-  - A $Sow$ inside a NESTED $Reap$ feeds only the innermost one; it does not also reach further out, matching Wolfram (an inner $Reap$ "consumes" what's sown inside it).
 seeAlso:
   - Reap
 names:
@@ -21,3 +18,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- A $Sow$ with no enclosing $Reap$ is a no-op — it still returns $e$, nothing is recorded anywhere.
+- A $Sow$ inside a NESTED $Reap$ feeds only the innermost one; it does not also reach further out, matching Wolfram (an inner $Reap$ "consumes" what's sown inside it).

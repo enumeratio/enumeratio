@@ -8,8 +8,6 @@ signatures:
     description: f(n+1) - f(n), simplified
     library: enumeratio-collections
     type: (any, symbol) -> any
-details:
-  - Substitutes n -> n+1 into f and simplifies the difference; stays symbolic when it does not collapse further.
 seeAlso:
   - DiscreteRatio
 names:
@@ -17,3 +15,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Substitutes n -> n+1 into f and simplifies the difference; stays symbolic when it does not collapse further.

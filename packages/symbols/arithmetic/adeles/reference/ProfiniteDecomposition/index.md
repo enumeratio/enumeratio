@@ -11,9 +11,6 @@ signatures:
   - call: ProfiniteDecomposition(m, d)
     description: with $d$ = $\det m$ supplied explicitly rather than computed from $m$'s entries
     library: enumeratio-adeles
-details:
-  - "Hertogh's Algorithm 8.4: $GL_n(\\hat{\\mathbb{Q}}) = GL_n(\\hat{\\mathbb{Z}}) \\cdot GL_n^+(\\mathbb{Q})$, strong approximation for $GL_n$ over $\\mathbb{Q}$."
-  - $b$'s entries are profinite numbers; $a$'s are rationals. Built on [[HermiteDecomposition]] of the denominators.
 seeAlso:
   - HermiteDecomposition
   - ProfiniteNumber
@@ -27,3 +24,6 @@ bindings:
       version: "10.9"
       on: 2026-09-28
 ---
+
+- Hertogh's Algorithm 8.4: $GL_n(\hat{\mathbb{Q}}) = GL_n(\hat{\mathbb{Z}}) \cdot GL_n^+(\mathbb{Q})$, strong approximation for $GL_n$ over $\mathbb{Q}$.
+- $b$'s entries are profinite numbers; $a$'s are rationals. Built on [[HermiteDecomposition]] of the denominators.
