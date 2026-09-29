@@ -11,7 +11,13 @@
 // hook via `ce`; inside an island implicit multiplication works, so a product of
 // symbols needs an explicit `*` only outside one.
 
-import { type MathJsonExpression, parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import {
+  type ComputeEngine,
+  type MathJsonExpression,
+  parseEpsil,
+  resolveLibraryNames,
+  serializeEpsil,
+} from "@cortex-js/compute-engine/epsil";
 
 /** Heads that make an input a statement/effect rather than a plain expression. */
 const STATEMENT_HEADS = new Set([
@@ -37,6 +43,12 @@ export interface ParseExpressionOptions {
    * is otherwise an expression.
    */
   allow?: Iterable<string>;
+  /**
+   * The engine a lowercase Epsil spelling (`sin`, `print`, …) resolves against, back to the
+   * library name it stands for (`Sin`, `Print`) -- `parseEpsil` alone leaves it as the raw
+   * lowercase head. Omit only when the caller never feeds this back to the engine.
+   */
+  ce?: ComputeEngine;
 }
 
 export interface ParseExpressionResult {
@@ -123,6 +135,7 @@ function exactDecimals(json: MathJsonExpression, src: string): void {
  */
 export function parseExpression(src: string, options?: ParseExpressionOptions): ParseExpressionResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
+  if (options?.ce) resolveLibraryNames(json, src, options.ce);
   exactDecimals(json, src);
   const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")
