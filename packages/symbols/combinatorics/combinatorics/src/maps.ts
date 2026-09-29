@@ -21,11 +21,7 @@ import {
   registerOperation,
 } from "@enumeratio/structures";
 import {
-  binaryTreeOfDyckPathKernel,
-  binaryTreeOfParentArrayKernel,
-  binaryTreeParentArrayKernel,
   dyckPathBody,
-  dyckPathKernel,
   parentArrayBody,
   treeOfDyckPathBody,
   treeOfDyckPathGuard,
@@ -35,10 +31,8 @@ import {
 import { bstParents } from "../trees/src/bst.ts";
 import {
   cycleDecompositionBody,
-  cycleDecompositionKernel,
   permutationOfCycleDecompositionBody,
   permutationOfCycleDecompositionGuard,
-  permutationOfCycleDecompositionKernel,
 } from "../permutations/src/cycle-decomposition.ts";
 import {
   fromPermutationLeftChild,
@@ -68,10 +62,6 @@ export interface CombinatorialMap {
   readonly convert?: boolean;
   /** FindStat map ids, for a map whose record doesn't state them (a conversion has none). */
   readonly findstat?: readonly string[];
-  /** The body compiled: the map over the argument's contents as MathJSON, preferred when
-   *  present. Undefined declines. It validates for itself, so the guard (which belongs to the
-   *  body) isn't run; tests/map-definitions.test.ts holds it to the body's answers. */
-  readonly kernel?: (contents: unknown) => unknown;
   /** A predicate over `_raw`, checked before `body`. When it evaluates to anything but
    *  `"True"` the map DECLINES — the call stays unevaluated, the way a restriction's `Filter`
    *  never materialises what it excludes, rather than answering wrong for a subject outside
@@ -631,7 +621,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "cycle_decomposition",
     body: cycleDecompositionBody,
-    kernel: cycleDecompositionKernel,
     summary:
       "A permutation in cycle notation, fixed points kept: each cycle from its least point, cycles in order of those points.",
     laws: [{ inverse: "Permutation" }],
@@ -643,7 +632,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: permutationOfCycleDecompositionBody,
     guard: permutationOfCycleDecompositionGuard,
-    kernel: permutationOfCycleDecompositionKernel,
     summary: "The permutation a cycle decomposition describes.",
     note: "Declines a decomposition that isn't canonical: a point missing or repeated, a cycle not starting at its least point, or cycles out of order.",
     laws: [{ inverse: "CycleDecomposition" }],
@@ -663,7 +651,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     from: "binary_tree",
     to: "binary_tree_parent_array",
     body: parentArrayBody,
-    kernel: binaryTreeParentArrayKernel,
     summary:
       "A binary tree as its parent array: its nodes numbered in order, entry k the number of the k-th node's parent, 0 at the root.",
     note: "An order isomorphism: the k-th tree BinaryTrees lists goes to the k-th array BinaryTreeParentArrays lists.",
@@ -677,7 +664,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "binary_tree",
     body: treeOfParentArrayBody,
     guard: treeOfParentArrayGuard,
-    kernel: binaryTreeOfParentArrayKernel,
     summary: "The binary tree an in-order parent array describes: a node below its parent goes left, above it right.",
     note: "Declines an array that isn't one: two roots, two left children, a cycle, or labels out of order.",
     laws: [{ inverse: "BinaryTreeParentArray" }],
@@ -689,7 +675,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     from: "binary_tree",
     to: "dyck_path",
     body: dyckPathBody,
-    kernel: dyckPathKernel,
     summary: "A binary tree [L, R] as the Dyck path U φ(L) D φ(R).",
     note: "FindStat's Mp00012. A bijection, so every Dyck path statistic answers on a tree; not order-preserving between BinaryTrees and DyckPaths, which list in different orders.",
     findstat: ["Mp00012"],
@@ -702,7 +687,6 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "binary_tree",
     body: treeOfDyckPathBody,
     guard: treeOfDyckPathGuard,
-    kernel: binaryTreeOfDyckPathKernel,
     summary: "A Dyck path U A D B, cut at its first return, as the binary tree [φ⁻¹(A), φ⁻¹(B)].",
     laws: [{ inverse: "DyckPath" }],
   },
@@ -868,11 +852,8 @@ export function declareMaps(
       if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
       const contents = operandsOf(subject)[0];
       if (contents === undefined) return undefined;
-      const compiled = map.kernel !== undefined;
-      const image = compiled ? map.kernel!(contents.json) : fill(map.body, contents.json);
-      if (image === undefined) return undefined;
-      const main = materialise(ce, ce.box(image as never).evaluate());
-      if (map.guard !== undefined && !compiled) {
+      const main = materialise(ce, ce.box(fill(map.body, contents.json) as never).evaluate());
+      if (map.guard !== undefined) {
         const guard = fill(fill(map.guard, contents.json), main.json, "_image");
         if (ce.box(guard as never).evaluate().json !== "True") return undefined;
       }
@@ -927,8 +908,8 @@ export function declareMaps(
   }
 }
 
-/** What a map's Epsil definition gives for `contents` (MathJSON), ignoring any kernel: the
- *  body, materialised, or undefined when its guard declines. */
+/** What a map's definition gives for `contents` (MathJSON): the body, materialised, or
+ *  undefined when its guard declines. */
 export function evaluateDefinition(ce: ComputeEngine, map: CombinatorialMap, contents: unknown): unknown {
   const main = materialise(ce, ce.box(fill(map.body, contents) as never).evaluate());
   if (map.guard !== undefined) {

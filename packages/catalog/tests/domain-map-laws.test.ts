@@ -67,7 +67,7 @@ const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
 
 const constructorOf = new Map(CARRIERS.map((c) => [c.type, c.name]));
 
-for (const map of MAPS.filter((m) => m.body !== undefined || m.kernel !== undefined || m.composedOf !== undefined)) {
+for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== undefined)) {
   const carrier = constructorOf.get(map.from) as string;
   const construct = CONSTRUCT[carrier];
   const families = allEntries.filter((f) => f.kind !== "scalar" && carrierOf(f) === carrier);
