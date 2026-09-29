@@ -1,3 +1,10 @@
 id	in
 4	Count[SymmetricGroup[4]]
 the-identity	Part[SymmetricGroup[3], 1]
+inversions-are-mahonian	
+major-index-is-equidistributed	
+descents-are-eulerian	
+excedances-are-eulerian-too	
+cycles-are-stirling-numbers-of-the-first-kind	
+fixed-points-are-the-rencontres-numbers	
+half-are-even	

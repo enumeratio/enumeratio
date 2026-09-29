@@ -19,7 +19,7 @@ signatures:
   - call: Sign(p)
     description: "A permutation's sign: 1 when it has an even number of inversions, -1 when odd (FindStat St000037)."
     library: enumeratio-statistics
-    type: ((permutation) -> number) & ((complex | signed_infinity) -> complex)
+    type: (complex | permutation | signed_infinity) -> complex | number
     overrides: enumeratio-collections
 seeAlso:
   - Abs

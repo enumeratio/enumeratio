@@ -11,7 +11,8 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCollections } from "@enumeratio/collections/src";
-import { declareDomains, DOMAINS } from "@enumeratio/domains/src";
+import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains/src";
+import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -62,6 +63,12 @@ const LIBRARY_DECLARATIONS = [
   // index and the two-argument polynomial form -- `widenSignature` just assigns the
   // operator's `signature` field, so whichever call runs last wins.
   declareNumberTheory,
+  // The statistics and maps, as the site has them, so `CombinatorialStat` and
+  // `CombinatorialMap` answer here too (a collection's distributions are its examples).
+  (ce: ComputeEngine) => {
+    declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])) });
+    declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+  },
 ];
 
 /** Every library we ship, in the order the reference tests declare them. */

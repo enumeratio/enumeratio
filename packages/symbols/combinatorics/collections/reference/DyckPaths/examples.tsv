@@ -1,3 +1,7 @@
 id	section	role	expr	expected	caption
 c-3			[Count, [DyckPaths, 3]]	5	$C_3$
 three-ups-then-three-downs			[At, [DyckPaths, 3], 1]	[DyckPath, [List, 1, 1, 1, 0, 0, 0]]	three ups then three downs
+by-height	Statistics		[Tally, [CombinatorialStat, [DyckPaths, 4], "'Height'"]]	[Tuple, [List, 4, 3, 2, 1], [List, 1, 5, 7, 1]]	Dyck paths of semilength 4 by height
+returns-are-the-catalan-triangle	Statistics		[Tally, [CombinatorialStat, [DyckPaths, 4], "'Returns'"]]	[Tuple, [List, 1, 2, 3, 4], [List, 5, 5, 3, 1]]	by returns to the axis: a row of the Catalan triangle
+peaks-are-narayana	Statistics		[Tally, [CombinatorialStat, [DyckPaths, 4], "'Peaks'"]]	[Tuple, [List, 1, 2, 3, 4], [List, 1, 6, 6, 1]]	by peaks: the Narayana numbers
+area-is-carlitz-q-catalan	Statistics		[Tally, [CombinatorialStat, [DyckPaths, 4], "'Area'"]]	[Tuple, [List, 16, 14, 12, 10, 8, 6, 4], [List, 1, 1, 2, 3, 3, 3, 1]]	by area: the coefficients of Carlitz's q-Catalan number
