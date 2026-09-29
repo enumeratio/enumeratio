@@ -7,7 +7,7 @@ signatures:
   - call: TriangularCompositions(n)
     description: the compositions of $n$ into triangular-number parts
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
 references:

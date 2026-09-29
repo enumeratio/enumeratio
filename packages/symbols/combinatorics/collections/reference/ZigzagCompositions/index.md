@@ -7,7 +7,7 @@ signatures:
   - call: ZigzagCompositions(n)
     description: "the alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction"
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
   - AlternatingPermutations

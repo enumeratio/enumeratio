@@ -404,8 +404,9 @@ export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Recor
   if (permutations !== undefined) {
     const native = permutations.evaluate;
     const signature = `${permutations.signature as unknown as string}`;
+    const permutationType = carrierTypes.Permutation;
     (permutations as { signature: unknown }).signature = ce.type(
-      `${signature} & ((integer<0..>) -> indexed_collection<list<integer>>)`,
+      `${signature} & ((integer<0..>) -> indexed_collection<${permutationType ?? "list<integer>"}>)`,
     );
     permutations.evaluate = (ops, options) => {
       const n = ops.length === 1 ? integerAt(ops[0]) : undefined;

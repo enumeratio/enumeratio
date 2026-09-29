@@ -1,4 +1,4 @@
 id	in	out
 count-primecompositions-7	count(PrimeCompositions(7))	6
-first-element-of-primecompositions-7	PrimeCompositions(7)[1]	[2, 2, 3]
-every-element-of-primecompositions-7	take(PrimeCompositions(7), 6)	[[2, 2, 3], [2, 3, 2], [2, 5], [3, 2, 2], [5, 2], [7]]
+first-element-of-primecompositions-7	PrimeCompositions(7)[1]	Composition([2, 2, 3])
+every-element-of-primecompositions-7	take(PrimeCompositions(7), 6)	"[\n  Composition([2, 2, 3]),\n  Composition([2, 3, 2]),\n  Composition([2, 5]),\n  Composition([3, 2, 2]),\n  Composition([5, 2]),\n  Composition([7]),\n]"

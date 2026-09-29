@@ -7,7 +7,7 @@ signatures:
   - call: PalindromicCompositions(n)
     description: the compositions of $n$ that read the same forwards and backwards
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
 references:

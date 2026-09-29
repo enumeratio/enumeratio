@@ -226,10 +226,13 @@ As built (`domains/src/laws.ts`, `domains/tests/laws.test.ts`):
   from that family's derived instance, seeded per map.
 - A family's carrier is its declared one, falling back to the catalogue's while the ratchet
   exists.
-- A kernel element becomes a carrier value through a small per-carrier table: Permutation
-  today. Carriers whose storage differs from the kernel's (SetPartition's growth string against
-  the kernel's blocks) join as they're written, and a map with declared laws on a carrier
-  without an entry fails the test.
+- A family increasingly yields its carrier's own typed value directly (`carrier` on the family
+  kernel, the type minted through `carrierTypes`) rather than a bare list — Permutation,
+  Composition, IntegerPartition, DyckPath, SetPartition and others so far. `collectionCarrierOf`'s
+  per-carrier wrap-at-use table (#389) is the migration bridge for families not yet converted,
+  the same way `registerProduct` is being retired elsewhere: it shrinks as families convert and
+  goes away once the last one does. A map with declared laws on a carrier still untyped and
+  without a wrap-table entry fails the test.
 - A guarded map that declines a subject (KrewerasComplement off the non-crossing permutations)
   counts as a decline, not a failure.
 - The laws take n = 0 too. They first turned up compute-engine's `Range(1, 0)`, which counts

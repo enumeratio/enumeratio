@@ -7,7 +7,7 @@ signatures:
   - call: TriCompositions(n)
     description: the compositions of $n$ into parts from $\{1, 2, 3\}$
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
   - TetraCompositions

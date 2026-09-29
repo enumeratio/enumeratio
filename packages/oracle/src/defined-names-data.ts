@@ -153,6 +153,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "Complex",
   "ComplexExpand",
   "ComplexInfinity",
+  "Composition",
   "CongruentMod",
   "Conjugate",
   "ConjugateComposition",

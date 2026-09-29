@@ -1,4 +1,4 @@
 id	in	out
 count-primecompositions-7	\mathrm{Count}(\mathrm{PrimeCompositions}(7))	6
-first-element-of-primecompositions-7	\mathrm{PrimeCompositions}(7)[1]	\bigl\lbrack2, 2, 3\bigr\rbrack
-every-element-of-primecompositions-7	\mathrm{Take}(\mathrm{PrimeCompositions}(7), 6)	\bigl\lbrack\bigl\lbrack2, 2, 3\bigr\rbrack, \bigl\lbrack2, 3, 2\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack3, 2, 2\bigr\rbrack, \bigl\lbrack5, 2\bigr\rbrack, \bigl\lbrack7\bigr\rbrack\bigr\rbrack
+first-element-of-primecompositions-7	\mathrm{PrimeCompositions}(7)[1]	\mathrm{Composition}(\bigl\lbrack2, 2, 3\bigr\rbrack)
+every-element-of-primecompositions-7	\mathrm{Take}(\mathrm{PrimeCompositions}(7), 6)	\bigl\lbrack\mathrm{Composition}(\bigl\lbrack2, 2, 3\bigr\rbrack), \mathrm{Composition}(\bigl\lbrack2, 3, 2\bigr\rbrack), \mathrm{Composition}(\bigl\lbrack2, 5\bigr\rbrack), \mathrm{Composition}(\bigl\lbrack3, 2, 2\bigr\rbrack), \mathrm{Composition}(\bigl\lbrack5, 2\bigr\rbrack), \mathrm{Composition}(\bigl\lbrack7\bigr\rbrack)\bigr\rbrack
