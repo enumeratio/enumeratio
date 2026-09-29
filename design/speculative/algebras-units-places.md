@@ -56,7 +56,7 @@ Unit(Clifford, 2)`, a basis element, not a third family member. `Basis(B)` retur
 **The identity is not a unit either.** It is `1`, the image of the base ring's 1 under the
 structure map (Mathlib's `algebraMap R A`). Conventions that write it `e_0` (octonions, some
 Clifford texts) or `j_0` / `i_0` (multicomplex towers) are display names for that identity,
-bound like any other name (§5). Units index from 1, so `Unit(family, 0)` never has to mean
+bound like any other name (§6). Units index from 1, so `Unit(family, 0)` never has to mean
 two things.
 
 **ℂ is the one place compute-engine already has a value.** Its `ImaginaryUnit` is the complex
@@ -122,42 +122,60 @@ package already runs per pair (`declare.ts`), reading a list of indices instead 
 
 For a commuting family the same spelling needs none of that bookkeeping: `i_{12}` would just
 mean `i_1 · i_2`, order-independent, so multi-index notation is really a `Clifford`-family
-shorthand rather than a new mechanism.
+shorthand rather than a new mechanism. (Octonion blades need one more piece — bracketing,
+not just sign — since their product isn't associative; §5.)
 
 - **Printing:** a blade's notatio form renders as one subscript list, `e_{12}`, not `e_1e_2`
   — display only; the value is still the canonically sorted product.
 - **Parsing:** compute-engine's LaTeX reader already treats a bare subscript as part of a
   symbol's name. A subscript that is itself a list (`e_{12}`) needs a small extension to read
   it as several indices and rebuild the product, canonicalised exactly as `e_2 e_1` already
-  is today. Not yet built: parked with the first slice (§11).
+  is today. Not yet built: parked with the first slice (§12).
 
 ## 4. A unifying model: twisted group algebras
 
-Every family above is a special case of one construction: the group algebra of (ℤ/2)ⁿ,
-twisted by a 2-cocycle. A basis element is indexed by a subset S ⊆ {1, …, n} — a group
-element of (ℤ/2)ⁿ under symmetric difference — and a cocycle β fixes the product
-`u_S u_T = β(S, T) u_{S△T}` (zero once a degenerate index repeats). The commutation factor
-`ε(S, T) = β(S, T) / β(T, S) ∈ {±1}` decides commute versus anticommute for that pair; β on
-single generators fixes each unit's square. This is Albuquerque and Majid's construction of
-Clifford algebras as twisted group algebras of (ℤ/2)ⁿ (arXiv:math/0011040, _Clifford algebras
-obtained by twisting of group algebras_, published in J. Pure Appl. Algebra, 2002), which
-generalises their earlier construction of the octonions the same way — there, though,
-associativity itself needs a further 3-cocycle (a _quasialgebra_), so octonions sit outside
-the associative case this design needs, and stay out of scope. Scheunert's ε-commutative
-("color") algebras (_Generalized Lie algebras_, J. Math. Phys., 1979) are the same
-commutation-factor idea one level up, at (super-)Lie brackets, with ordinary
-super-commutativity as its ℤ/2, ε = −1-on-odd-pairs special case. (Hedge: the exact β for a
-general diagonal signature is their result, not re-derived here — treat the shape above as a
-sketch to check, not a verified construction, and re-confirm both citations' details before
-this leaves speculative.)
+Every family above is close to one construction: the group algebra of (ℤ/2)ⁿ, twisted by a
+2-cochain. A basis element is indexed by a subset S ⊆ {1, …, n} — a group element of (ℤ/2)ⁿ
+under symmetric difference — and a function F on pairs of subsets fixes the product
+`u_S u_T = F(S, T) u_{S△T}` (zero once a degenerate index repeats). The commutation factor
+`ε(S, T) = F(S, T) / F(T, S) ∈ {±1}` decides commute versus anticommute for that pair; F on
+single generators fixes each unit's square.
 
-`Multicomplex` and `SplitComplex` are the trivial-cocycle case: ε ≡ +1 (everything commutes),
-β on singletons giving the declared square. `Clifford` is the fully graded case, ε(S, T) = −1
-for any two distinct generators, β on singletons giving each unit's declared square. A
-family, in this design, is a _preset_ over the general model — a grading (trivial for the
-three commuting families, ℤ/2-by-generator for `Clifford`), a per-generator square, and the
-pairwise sign the two imply — not a closed list; a fifth preset (an intermediate grading) has
-somewhere to go if one turns up.
+**Whether the result is associative depends on F, not on this recipe.** F's coboundary,
+`∂F(R, S, T) = F(S, T) F(R, S△T) / (F(R, S) F(R△S, T))`, is the **associator** φ: the algebra
+is associative exactly when φ ≡ 1, i.e. F is a genuine 2-cocycle. That's the Clifford,
+quaternion, multicomplex and split-complex case — `∂F = 1` throughout §1–§3. When φ ≠ 1 the
+same recipe still gives a well-defined, unital, division-capable algebra, only a
+_quasialgebra_: associative up to the associator, which is exactly the octonions (§5). This is
+Albuquerque and Majid's construction: the associative case in _Clifford algebras obtained by
+twisting of group algebras_ (arXiv:math/0011040, J. Pure Appl. Algebra, 2002), the
+quasialgebra case, for the octonions specifically, in their earlier _Quasialgebra structure of
+the octonions_ (J. Algebra 220 (1999), pp. 188–224 by our reading, though citations vary —
+worth re-confirming the exact pages before this leaves speculative). Scheunert's
+ε-commutative ("color") algebras (_Generalized Lie algebras_, J. Math. Phys., 1979) are the
+same commutation-factor idea one level up, at (super-)Lie brackets, with ordinary
+super-commutativity as its ℤ/2, ε = −1-on-odd-pairs special case. (Hedge: the exact F for a
+general diagonal signature, associative or not, is Albuquerque–Majid's result, not re-derived
+here — treat the shape above as a sketch to check, not a verified construction.)
+
+`Multicomplex` and `SplitComplex` are the trivial case: ε ≡ +1 (everything commutes), F on
+singletons giving the declared square, and (being 1-dimensional per index, so nothing to
+associate across three indices in a way that could fail) trivially associative regardless.
+`Clifford` is the fully graded, cocycle case: ε(S, T) = −1 for any two distinct generators, F
+on singletons giving each unit's declared square, φ ≡ 1. A family, in this design, is a
+_preset_ over the general model — a grading, a per-generator square, and a pairwise sign —
+together with whichever of associative or quasi- that preset lands on; not a closed list,
+since the model already has room for the one case (§5) that needs the wider F.
+
+**Implementation-wise:** the multiplication table always comes from F — one function of two
+subsets, looked up or computed once per pair of blades appearing. Bracketing only has to be
+tracked when φ ≠ 1: an associative family's product can flatten any chain
+`u_{S₁} u_{S₂} ⋯ u_{Sₖ}` into one canonical blade regardless of how it was grouped, exactly
+what §3 already does. A quasialgebra can't flatten past three factors without recording how
+they were grouped — except that the octonions are _alternative_ (any two elements generate an
+associative subalgebra, so `(xx)y = x(xy)` and `(xy)y = x(yy)` always hold), which is the one
+property standing between "track every bracketing" and "track none": products of at most two
+distinct blades never need bracketing at all; three or more do, exactly where φ can bite.
 
 **Combining two families defaults to the _ungraded_ tensor:** cross-family units simply
 commute, as §1 already assumes for a `Clifford` `i` next to a `Multicomplex` `i_1`. This is
@@ -181,7 +199,61 @@ pseudoscalar `e_1 e_2 e_3` squares to −1 and, because three is odd, commutes w
 like a central "i", but it is `Unit(Clifford,1) * Unit(Clifford,2) * Unit(Clifford,3)`, not a
 fourth unit — the same rule §1 already gives `k` in ℍ.
 
-## 5. Names are bound per context
+## 5. Octonions
+
+The octonions 𝕆 are the φ ≠ 1 point of §4: eight dimensions, one further doubling past ℍ,
+alternative but not associative.
+
+**Cayley–Dickson doubling** is the second construction, and the one that scales best:
+ℝ → ℂ → ℍ → 𝕆 → sedenions, each step pairing an algebra A with itself,
+`(a, b)(c, d) = (ac − d̄b, da + bc̄)`, and multiplying by a parameter that can flip a sign at
+each stage (`CayleyDickson(A, c)`, already named in §7). Every step past 𝕆 keeps the norm
+multiplicative but loses alternativity along with associativity — the sedenions have zero
+divisors — so 𝕆 is the last stop with a division algebra (over ℝ; §7's "several models" point
+applies here too, since 𝕆 also has a Clifford-adjacent presentation via the even part of
+Cl(0, 7), not pursued in this slice).
+
+Doubling `QuaternionAlgebra(K, a, b)` by a third parameter c gives the general presentation:
+`OctonionAlgebra(K, a, b, c)`, i, j, l (say) with i² = a, j² = b, l² = c, ij = −ji and so on
+through the seven anticommuting units, associative only in the sub-quaternion span. Over ℝ,
+(a, b, c) = (−1, −1, −1) is the division algebra 𝕆; a sign flip anywhere in (a, b, c) gives an
+isotropic norm form and hence a **split octonion algebra** 𝕆ₛ — the general
+classification is by the isomorphism class of the norm form, a 3-fold Pfister form, which we
+have not re-derived past this. `OctonionAlgebra`, `Octonion`, `Octonions`, `CayleyDickson`,
+`Alternative` and `Quasialgebra` are all free against compute-engine 0.139 and the repo's
+records (checked as in §2). Whether Mathlib (as opposed to a community formalisation project
+building on its Cayley–Dickson-style `Quaternion`) already has an `Octonion` type we could not
+confirm one way or the other — check before relying on `Octonion` as a Mathlib name.
+
+**Composition algebras and square identities.** ℍ's multiplicative norm is Euler's
+four-square identity — a product of two sums of four squares is a sum of four squares — and
+restricting it to the Lipschitz or (maximal-order) Hurwitz integers is one route to Lagrange's
+four-square theorem, that every natural number is a sum of four squares. 𝕆's norm is the
+analogous **Degen eight-square identity**. Hurwitz's 1898 theorem on composition algebras says
+this stops here: a multiplicative quadratic norm's dimension can only be 1, 2, 4 or 8 (ℝ, ℂ,
+ℍ, 𝕆) — there is no sixteen-square identity of the same kind. (The repo's `SquaresR` already
+answers "which numbers are a sum of r squares"; a four- or eight-square _identity_, as an
+algebraic fact about products, is a different, related head, not in the first slice.)
+
+**Integral and finite forms.** ℍ has the Lipschitz integers ℤ⟨i, j, k⟩ and the larger, maximal
+Hurwitz order (Lipschitz plus half-integer combinations), whose unit group has order 24 and
+whose norm-one elements are Lagrange's four squares made concrete. 𝕆 has an analogous integral
+form — the Coxeter (or Cayley) integers — whose 240 norm-one elements are exactly the 240
+roots of the E₈ lattice: the maximal order of the integral octonions _is_ E₈. Over a finite
+field, every octonion algebra is split, i.e. isomorphic to Zorn's vector-matrix algebra —
+because the norm form is an 8-dimensional (3-fold Pfister) form, and every quadratic form of
+dimension ≥ 5 over a finite field is isotropic, which for a Pfister form forces it hyperbolic.
+The same argument runs over any non-archimedean local field with finite residue field (a
+Pfister form isotropic over such a field is again hyperbolic), so **an octonion algebra over ℚ
+is classified only by its behaviour at ∞** — no finite place ever ramifies it, unlike a
+quaternion algebra's Hilbert symbol (§9). We could not independently verify Hurwitz's
+1898 dimension theorem or the finite-field/local splitting fact beyond the reasoning above and
+one corroborating source; flag both for a closer check before implementation.
+
+Not in this slice: `OctonionAlgebra` itself, the associator/bracketing machinery §4 needs for
+it, integral orders, and the E₈ connection.
+
+## 6. Names are bound per context
 
 `i`, `i_1`, `e_0`, `j_0` and `f_2` are display names. A notebook scope binds them:
 
@@ -208,7 +280,7 @@ definition, so it is not free, and it maps cleanly: Sage `QuaternionAlgebra(QQ, 
 -1).gens()[0]`, Wolfram `Quaternion[0, 1, 0, 0]` from the `Quaternions`` package. Captions
 and the notatio form can still show `i` by rendering under a binding.
 
-## 6. Several models of one algebra
+## 7. Several models of one algebra
 
 ℍ has at least four standard constructions:
 
@@ -219,7 +291,7 @@ and the notatio form can still show `i` by rendering under a binding.
   equivalence of the Clifford algebra of a two-dimensional form with ℍ[R, c₁, c₂], which is
   precedent for the map below.
 - Cayley–Dickson: ℂ doubled with −1, `CayleyDickson(ComplexNumbers, -1)`; the next step is the
-  octonions. Not in Mathlib: extension.
+  octonions (§5). Not in Mathlib: extension.
 - Matrices: the subalgebra of M₂(ℂ) with i ↦ diag(ImaginaryUnit, −ImaginaryUnit),
   j ↦ ((0, 1), (−1, 0)). Mathlib's `Subalgebra`.
 
@@ -236,15 +308,15 @@ under a presentation.** The `AlgebraEquivalence` between them carries `Unit(Clif
 generator on either side — it's `i·j` in the presentation and `e_{12}` (§3) in the family
 view, the same derived product, never a unit itself (§1). For general (a, b),
 `QuaternionAlgebra(K, a, b)` still maps onto `Unit(Clifford, k)` with declared squares a, b
-(§2) — that mapping is now total, not just the a, b ∈ {−1, +1} case the first draft allowed,
-since a `Clifford` unit's square is no longer pinned to {−1, 0, +1}.
+(§2) — that mapping is total, not just the a, b ∈ {−1, +1} case the first draft allowed, since
+a `Clifford` unit's square is not pinned to {−1, 0, +1}.
 
 A named algebra like `Quaternions` resolves to one chosen model, and the others carry a
 canonical equivalence to it. A context picks a model the way it picks names, by binding `H`.
 Results stay in the model they were computed in; moving between models is an explicit map,
 never a silent coercion.
 
-## 7. What needs a fixed dimension
+## 8. What needs a fixed dimension
 
 Not everything here is open-family arithmetic. `Basis(B)` and `AlgebraDimension(B)` are
 questions about a chosen finite span, and everything built on its pseudoscalar I — the Hodge
@@ -254,13 +326,14 @@ that isn't stable while a family can still grow. Arithmetic, reversion, grade in
 norms and versor inverses don't: they're per-unit or per-product, so they work whether or not
 anyone has fixed an algebra around the units involved.
 
-## 8. Places, via the adeles
+## 9. Places, via the adeles
 
 Over ℚ a quaternion algebra B = (a, b) is classified by its **ramified places**: a finite
 set of even size, drawn from the primes and ∞. At each place v, B ⊗ ℚ_v is either split,
 M₂(ℚ_v), or the unique quaternion division algebra over ℚ_v, and the Hilbert symbol (a, b)_v
 decides which: −1 ramifies, +1 splits. (−1, −1) ramifies at exactly 2 and ∞; (−1, 3) at 2
-and 3; (1, 1) nowhere, which is M₂(ℚ).
+and 3; (1, 1) nowhere, which is M₂(ℚ). An octonion algebra over ℚ has no such finite
+ramification at all (§5): every finite place splits it, so only ∞ can distinguish 𝕆 from 𝕆ₛ.
 
 The same picture places units. √−1 lies in ℚ_p exactly when p ≡ 1 (mod 4), so at those
 places Gaussian `i` has an image: two p-adic square roots of −1, one per prime above p. That
@@ -286,13 +359,15 @@ Over a number field this waits on the number-field layer the adeles package's ne
 needs anyway. Sage's adeles library, the package's oracle, recently accepted our fix PR, so
 that oracle stays usable against a current Sage.
 
-## 9. Prior art, and what already exists
+## 10. Prior art, and what already exists
 
 - **Mathlib**: `QuaternionAlgebra`, `Quaternion` (ℍ[R]) with `star` and `normSq`;
   `CliffordAlgebra Q`, its even part, and its equivalences with ℂ and ℍ; `Algebra R A`,
   `Subalgebra`, `AlgHom`, `AlgEquiv`; `Algebra.norm` and `Algebra.trace` (determinant and
   trace of multiplication); `NumberField.InfinitePlace`, p-adic numbers and adic completions.
-  No Hilbert symbol or quaternion ramification that we found.
+  No Hilbert symbol or quaternion ramification that we found, and no confirmed `Octonion`
+  (§5) — community formalisation work toward one exists, built on the same Cayley–Dickson
+  doubling, but we couldn't confirm it has landed.
 - **Sage** is the oracle. `QuaternionAlgebra(K, a, b)` with `.gens()`, `.invariants()`,
   `.ramified_primes()` (finite only; ∞ is implied by parity), `.discriminant()`,
   `.is_division_algebra()`, `.is_matrix_ring()`; `hilbert_symbol(a, b, p)` with p = −1 for ∞;
@@ -311,11 +386,11 @@ of "a field as a value, with explicit embeddings";`NumberField*` is its naming p
   this design, not three (§2); `CliffordAlgebra` and its sibling constructors; the named
   `Quaternions` (= Cl(0, 2)), `BicomplexNumbers` and friends; `Basis`, `AlgebraDimension`,
   `AlgebraSignature`, `NonCommutativeMultiply`, `Norm`; the geometric package on top of
-  Clifford. All of them now conform through `clifford_algebra`.
+  Clifford. All of them now conform through `clifford_algebra`. No octonion support yet.
 
 How the design subsumes it: the constructors stay, as finite spans whose units are
 `Unit(family, k)` (§2). The families stop being fixed to one algebra and become the open
-things §2–§4 describe; the default bindings of §5 are what a context gets when it names none.
+things §2–§4 describe; the default bindings of §6 are what a context gets when it names none.
 `Quaternions` becomes an alias for one model of ℍ. `Basis`, `AlgebraDimension` and
 `AlgebraSignature` take any presented algebra; `AlgebraDimension` is no longer always 2ⁿ,
 even though the quaternion algebra happens to fit.
@@ -323,14 +398,15 @@ even though the quaternion algebra happens to fit.
 **`Norm` is a collision to fix, not only a decision.** Ours is the determinant of
 multiplication, Mathlib's `Algebra.norm`: `Norm(3 + 4 i_1)` is 25. compute-engine's `Norm` of
 `3 + 4 ImaginaryUnit` is 5. Same head, different meanings. Rename ours `AlgebraNorm`, and give
-the quaternion reduced norm its own head (§11).
+the quaternion reduced norm its own head (§12).
 
-## 10. Relation to structures
+## 11. Relation to structures
 
 design/structures.md makes a head require structure and a type provide it, through
 compute-engine protocols with `refines` as data. #364 conformed each algebra family's
 _name_ type to `FiniteDimensionalAlgebra` and left the ordered product as a registry
-(`registerProduct`) "until elements have types". This design gives them types. Three seams:
+(`registerProduct`) "until elements have types". This design gives them types. Four seams —
+the fourth new, for the octonions:
 
 **1. Element-level conformance: yes.** `Unit(family, k)`, and every element built from it,
 carries a type minted by the families and indices it actually uses — not by whichever
@@ -368,27 +444,42 @@ path. `FloorRing` still refines `Ring`, unchanged.
 member, `Star`. `Conjugate` joins structures' generic heads: a non-number dispatches to `Star`,
 the way `Min` reaches `Compare`, and numbers stay native.
 
+**3. `Ring` assumes associative — octonions don't fit it.** §5's quasialgebra needs a weaker
+hierarchy below `Ring`: a **non-unital, non-associative ring** (Mathlib's abbreviated
+`NonUnitalNonAssocRing`, spelled out here) has `NonCommutativeMultiply` distributing over
+`Add` and nothing else; a **non-associative ring** (Mathlib's `NonAssocRing`) adds the unit;
+neither requires associativity, so `Ring` becomes the associative refinement of the latter, not
+the base case. `𝕆`'s type conforms to `NonAssociativeRing` and to a further marker, an
+**alternative ring** (Mathlib has `IsAlternative`-style structure for this, name to spell out
+and confirm rather than assume), for `(xx)y = x(xy)` and `(xy)y = x(yy)`. Both
+`NonUnitalNonAssociativeRing` and `NonAssociativeRing` are extensions where Mathlib's own names
+are abbreviated; whether an `AlternativeRing` protocol name already exists there under a
+different spelling needs the same `lookupDefinition`-and-Mathlib check as everything else here,
+not yet done.
+
 Open: whether
 compute-engine's `Add` accepts non-number operand types at all, or needs the widened signature
 the order heads got. To probe before building.
 
-**3. Naming.** Every proposed head, member and protocol was checked against compute-engine
+**4. Naming.** Every proposed head, member and protocol was checked against compute-engine
 0.139's definitions (`lookupDefinition`, bare and with every package declared) and against the
 repo's records. `CommutativeRing` and `StarRing` are free too.
 
-| name                                                 | status                                                                                                |
-| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `Unit`                                               | free (checked bare and against the repo's records; see §2)                                            |
-| `QuaternionAlgebra`                                  | free; Mathlib's name                                                                                  |
-| `HilbertSymbol`, `RamifiedPlaces`                    | free; extensions                                                                                      |
-| `Completion`                                         | free                                                                                                  |
-| `AlgebraHomomorphism`, `AlgebraEquivalence`          | free; Mathlib's `AlgHom`, `AlgEquiv` spelled out                                                      |
-| `CayleyDickson`                                      | free; extension                                                                                       |
-| `ReducedNorm`, `ReducedTrace`, `ReducedDiscriminant` | free                                                                                                  |
-| `AlgebraNorm`                                        | free; Mathlib's `Algebra.norm`                                                                        |
-| `Star` (member)                                      | free in compute-engine and the records; Mathlib's `star`                                              |
-| `Discriminant`, `Norm`, `Trace`, `Conjugate`         | compute-engine's (polynomial discriminant, vector norm, matrix trace, complex conjugate): not widened |
-| `GaussianRationals`                                  | an existing carrier record: reuse, don't redeclare                                                    |
+| name                                                                   | status                                                                                                |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `Unit`                                                                 | free (checked bare and against the repo's records; see §2)                                            |
+| `QuaternionAlgebra`                                                    | free; Mathlib's name                                                                                  |
+| `HilbertSymbol`, `RamifiedPlaces`                                      | free; extensions                                                                                      |
+| `Completion`                                                           | free                                                                                                  |
+| `AlgebraHomomorphism`, `AlgebraEquivalence`                            | free; Mathlib's `AlgHom`, `AlgEquiv` spelled out                                                      |
+| `CayleyDickson`                                                        | free; extension                                                                                       |
+| `OctonionAlgebra`, `Octonion`, `Octonions`, `Quasialgebra`             | free (§5); `Octonion` unconfirmed in Mathlib                                                          |
+| `ReducedNorm`, `ReducedTrace`, `ReducedDiscriminant`                   | free                                                                                                  |
+| `AlgebraNorm`                                                          | free; Mathlib's `Algebra.norm`                                                                        |
+| `Star` (member)                                                        | free in compute-engine and the records; Mathlib's `star`                                              |
+| `NonUnitalNonAssociativeRing`, `NonAssociativeRing`, `AlternativeRing` | free; Mathlib's abbreviated names spelled out (§11)                                                   |
+| `Discriminant`, `Norm`, `Trace`, `Conjugate`                           | compute-engine's (polynomial discriminant, vector norm, matrix trace, complex conjugate): not widened |
+| `GaussianRationals`                                                    | an existing carrier record: reuse, don't redeclare                                                    |
 
 `Conjugate` is the one compute-engine head worth routing through, since quaternion conjugation
 is the same involution complex conjugation is. `Norm`, `Trace` and `Discriminant` mean
@@ -398,18 +489,23 @@ is wrong for an indefinite algebra.
 
 **New rows for the hierarchy table** in design/structures.md, added there when they are built:
 
-| protocol          | refines | members                  | laws                                                                           | Mathlib    |
-| ----------------- | ------- | ------------------------ | ------------------------------------------------------------------------------ | ---------- |
-| `Ring`            | --      | `NonCommutativeMultiply` | a ring: associative, distributive, unital; `Add` and `Negate` compute-engine's | `Ring`     |
-| `CommutativeRing` | `Ring`  | --                       | the product commutes; it is compute-engine's `Multiply`                        | `CommRing` |
-| `StarRing`        | `Ring`  | `Star`                   | an involutive anti-automorphism                                                | `StarRing` |
+| protocol                      | refines                       | members                  | laws                                                                  | Mathlib                 |
+| ----------------------------- | ----------------------------- | ------------------------ | --------------------------------------------------------------------- | ----------------------- |
+| `NonUnitalNonAssociativeRing` | --                            | `NonCommutativeMultiply` | the product distributes over `Add`, no unit, no associativity assumed | `NonUnitalNonAssocRing` |
+| `NonAssociativeRing`          | `NonUnitalNonAssociativeRing` | --                       | has a unit                                                            | `NonAssocRing`          |
+| `Ring`                        | `NonAssociativeRing`          | --                       | the product is associative; `Add` and `Negate` compute-engine's       | `Ring`                  |
+| `AlternativeRing`             | `NonAssociativeRing`          | --                       | `(xx)y = x(xy)`, `(xy)y = x(yy)`                                      | to confirm              |
+| `CommutativeRing`             | `Ring`                        | --                       | the product commutes; it is compute-engine's `Multiply`               | `CommRing`              |
+| `StarRing`                    | `Ring`                        | `Star`                   | an involutive anti-automorphism                                       | `StarRing`              |
 
 The element types (`quaternion_element`, `clifford_element`, …) conform to `Ring` and
-`StarRing`, and their algebras' name types keep `FiniteDimensionalAlgebra`. The two extensions
-are `Unit` and `QuaternionAlgebra`'s characteristic-2 restriction. `HilbertSymbol` and
-`RamifiedPlaces` are plain heads, not protocols.
+`StarRing`, and their algebras' name types keep `FiniteDimensionalAlgebra`. `octonion_element`
+(§5) conforms to `AlternativeRing` and `StarRing` but not `Ring`. The extensions are `Unit`,
+`QuaternionAlgebra`'s characteristic-2 restriction, and the non-associative hierarchy where
+Mathlib's names are abbreviated. `HilbertSymbol` and `RamifiedPlaces` are plain heads, not
+protocols.
 
-## 11. First slice
+## 12. First slice
 
 - `QuaternionAlgebra(K, a, b)` over ℚ (a number field later), with `Unit`, a typed element
   whose product is its own `NonCommutativeMultiply` member, `Conjugate` via `Star`,
@@ -423,7 +519,7 @@ are `Unit` and `QuaternionAlgebra`'s characteristic-2 restriction. `HilbertSymbo
   quaternion algebra's name type instead. `Basis(Quaternions)` then returns (1, i, j, k) as
   `Unit(Clifford, 1)`, `Unit(Clifford, 2)` and their product `e_{12}` (§3), printed under a
   binding, not the Cl(0, 2) blades `f_1`, `f_2`, `f_1f_2`. Cl(0, 2) keeps its blades and
-  reaches ℍ through the equivalence of §6.
+  reaches ℍ through the equivalence of §7.
 - Rename the hypercomplex `Norm` to `AlgebraNorm`.
 - Respell the existing quaternion examples with `Unit`, so the oracle rows compare values,
   not free symbols.
@@ -431,8 +527,10 @@ are `Unit` and `QuaternionAlgebra`'s characteristic-2 restriction. `HilbertSymbo
   covers it (a = b = −1, over ℝ).
 
 Not in the slice: homomorphisms between models, completions of units, `Completion(B, v)`,
-orders, the general twisted-group-algebra cocycle of §4, multi-index parsing (§3), and a
-declared `GradedTensor` head for the non-default combination of two families.
+orders, the general twisted-group-algebra F of §4, multi-index parsing (§3), a declared
+`GradedTensor` head for the non-default combination of two families, and everything in §5:
+`OctonionAlgebra`, `NonUnitalNonAssociativeRing`/`NonAssociativeRing`/`AlternativeRing`, and
+the associator/bracketing machinery.
 
 ## Open
 
@@ -449,11 +547,19 @@ declared `GradedTensor` head for the non-default combination of two families.
 - **Ungraded versus graded combination.** §4 assumes the ungraded tensor is the default for
   two distinct families and the graded tensor only ever shows up as one `Clifford` family
   growing, never as an explicit choice between two named families. Is that inference enough,
-  or does a genuinely mixed graded case (if one turns up) need a `GradedTensor` head a context
-  states explicitly?
-- **The twisted-group-algebra cocycle.** §4 sketches the shape from Albuquerque–Majid without
-  re-deriving the general diagonal-signature β. Worth implementing directly, or keep the
-  per-index square/commutation surface as the only API and treat the cocycle as an
-  explanation, not a mechanism?
+  or does a genuinely mixed graded case need a `GradedTensor` head a context states
+  explicitly? Still open — nothing in §5 forces an answer either way.
+- **The twisted-group-algebra F.** §4 sketches the shape from Albuquerque–Majid without
+  re-deriving the general diagonal-signature construction, associative or not. Worth
+  implementing directly, or keep the per-index square/commutation surface as the only API and
+  treat F as an explanation, not a mechanism?
 - **Multi-index grammar.** Exact parsing rules for `e_{12}` versus a bare `e_12`, and for an
   unsorted or repeated index list arriving from LaTeX input (§3).
+- **Bracketing surface.** Does an octonion element's value need to carry association
+  structure explicitly (a parse tree of products), or can alternativity's "only three or more
+  distinct blades need it" rule (§4) be exploited to keep the common case flat?
+- **`Octonion` in Mathlib.** Unconfirmed either way (§5, §10); check before citing it as
+  existing or as an extension.
+- **Split octonions' presentation.** Whether `OctonionAlgebra(K, a, b, c)`'s general
+  classification (by its norm form's isomorphism class) is worth building directly, or
+  whether the first slice only needs the two named cases, 𝕆 and 𝕆ₛ.
