@@ -25,5 +25,6 @@ names:
   wolframIdentity: true
 ---
 
+- The regularized Gauss hypergeometric function $\mathbf{F}(a,b;c;z) = {}_2F_1(a,b;c;z)/\Gamma(c)$ (DLMF 15.2.2, fungrim:fe6e74) divides [[Hypergeometric2F1]] by $\Gamma(c)$, but — unlike doing that division after the fact — is entire in $c$: it stays finite exactly where $\Gamma(c)$ has a pole, at $c$ a nonpositive integer. At such a $c = -n$ it reduces to an ordinary (unregularized) hypergeometric function at shifted parameters, $\mathbf{F}(a,b;-n;z) = \dfrac{(a)_{n+1}(b)_{n+1}}{(n+1)!}\,z^{n+1}\,{}_2F_1(a{+}n{+}1,b{+}n{+}1;n{+}2;z)$ (DLMF 15.2.3_5).
 - Computed by the $1/\Gamma$-per-term series ($p = q + 1$ here), so it stays finite at $c$ a nonpositive integer rather than dividing `Hypergeometric2F1` by `Gamma(c)`'s pole there.
 - The series only converges for $|z| < 1$; outside the unit disc this stays symbolic rather than answering with a guessed analytic continuation. Several of Fungrim's own identities for this head (e.g. fungrim:90ac58) rewrite to a different argument first — that rewrite belongs in the identity layer, not here.
