@@ -48,6 +48,8 @@ jobs:
       - run: pnpm --filter @enumeratio/statistics exec vp test run tests/compiled.test.ts
       # Compiled maps against the interpreter, over the larger sample.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-maps.test.ts
+      # Every head in an engine holding only what the resolver picks, against the full one.
+      - run: pnpm --filter @enumeratio/reference exec vp test run tests/resolver.test.ts
 
   # A real browser against a real dev server, checking every component story renders (the
   # custom element upgrades, draws something, no console errors) -- see web/tests/stories.

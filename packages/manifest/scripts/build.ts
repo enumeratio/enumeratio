@@ -4,7 +4,7 @@
 //
 //   node packages/manifest/scripts/build.ts
 
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
@@ -47,6 +47,30 @@ for (const { package: pkg, dir } of recordDirs(PACKAGES)) {
       record: parseIndex(readFileSync(join(dir, head, INDEX_FILE), "utf8")).fields as Record_,
     });
   }
+}
+
+// --- which of our packages each one needs ------------------------------------------------
+
+/** Every workspace package's `@enumeratio/*` runtime dependencies, by package name. */
+function packageRequires(): Record<string, string[]> {
+  const dirs = [
+    ...readdirSync(PACKAGES).map((name) => join(PACKAGES, name)),
+    ...readdirSync(join(PACKAGES, "symbols")).flatMap((group) =>
+      readdirSync(join(PACKAGES, "symbols", group)).map((name) => join(PACKAGES, "symbols", group, name)),
+    ),
+  ];
+  const requires: Record<string, string[]> = {};
+  for (const dir of dirs) {
+    const file = join(dir, "package.json");
+    if (!existsSync(file)) continue;
+    const pkg = JSON.parse(readFileSync(file, "utf8")) as { name?: string; dependencies?: Record<string, string> };
+    if (!pkg.name?.startsWith("@enumeratio/")) continue;
+    requires[packageOf(pkg.name)] = Object.keys(pkg.dependencies ?? {})
+      .filter((dep) => dep.startsWith("@enumeratio/"))
+      .map(packageOf)
+      .toSorted(cmp);
+  }
+  return requires;
 }
 
 // --- the engine's own heads -------------------------------------------------------------
@@ -178,6 +202,15 @@ mkdirSync(join(OUT, "package"), { recursive: true });
 writeFileSync(
   join(OUT, "symbols.ts"),
   `${HEADER}import type { SymbolInfo } from "../types.ts";\n\nexport const SYMBOLS: Readonly<Record<string, SymbolInfo>> = ${JSON.stringify(symbols)};\n`,
+);
+const requires = sorted(packageRequires());
+writeFileSync(
+  join(OUT, "packages.ts"),
+  `${HEADER}/** Each of our packages' own \`@enumeratio/*\` runtime dependencies, by package name. */
+export const PACKAGES: Readonly<Record<string, { readonly requires: readonly string[] }>> = ${JSON.stringify(
+    Object.fromEntries(Object.entries(requires).map(([name, deps]) => [name, { requires: deps }])),
+  )};
+`,
 );
 for (const [pkg, table] of [...perPackage].toSorted(([a], [b]) => cmp(a, b))) {
   const declared = sorted(table);

@@ -10,3 +10,15 @@ export { SYMBOLS };
 /** The head called `name`, or undefined. */
 export const symbolInfo = (name: string): SymbolInfo | undefined =>
   Object.hasOwn(SYMBOLS, name) ? SYMBOLS[name] : undefined;
+export { DECLARERS } from "./declarers-data.ts";
+export { PACKAGES } from "./generated/packages.ts";
+export {
+  createResolver,
+  type Library,
+  type Lookup,
+  namesOf,
+  packagesFor,
+  packagesNeeded,
+  plan,
+  type Resolver,
+} from "./resolve.ts";

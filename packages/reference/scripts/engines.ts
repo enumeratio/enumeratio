@@ -24,6 +24,7 @@ import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
+import type { Library } from "@enumeratio/manifest";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures/src";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
@@ -88,6 +89,52 @@ const LIBRARY_DECLARATIONS = [
 
 /** Every library we ship, in the order the reference tests declare them. */
 export const DECLARATIONS = [declareEvaluation, ...LIBRARY_DECLARATIONS];
+
+/**
+ * The same libraries by package, for the resolver (`@enumeratio/manifest`'s `createResolver`),
+ * in the same order. A package is one library: combinatorics brings its maps and its
+ * carriers' plurals with it, where `LIBRARY_DECLARATIONS` declares those last.
+ */
+export const LIBRARIES: readonly Library<ComputeEngine>[] = [
+  { name: "boxes", declare: declareBoxes },
+  {
+    name: "analytic",
+    declare: (ce) => {
+      declareAnalytic(ce);
+      declareFractals(ce);
+    },
+  },
+  { name: "hypercomplex", declare: declareHypercomplex },
+  { name: "diagram", declare: declareDiagrams },
+  {
+    name: "combinatorics",
+    declare: (ce) => {
+      declareCombinatorics(ce);
+      declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
+      declareCarrierPlurals(ce, CARRIERS);
+      declareCarrierElement(ce, CARRIERS);
+    },
+  },
+  { name: "structures", declare: declareStructures },
+  { name: "residues", declare: declareResidues },
+  { name: "numerals", declare: declareNumerals },
+  { name: "hecke", declare: declareHecke },
+  { name: "incidence", declare: declareIncidence },
+  { name: "quiver", declare: declareQuiver },
+  { name: "hopf", declare: declareHopf },
+  { name: "groupalgebra", declare: declareGroupAlgebra },
+  { name: "modular", declare: declareModular },
+  { name: "adeles", declare: declareAdeles },
+  { name: "braid", declare: declareBraid },
+  { name: "number-theory", declare: declareNumberTheory },
+  {
+    name: "statistics",
+    requires: ["combinatorics"],
+    names: ["CombinatorialStat", "Tally"],
+    declare: (ce) =>
+      declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])) }),
+  },
+];
 
 export const declaredEngine = (): ComputeEngine => {
   const ce = new ComputeEngine();
