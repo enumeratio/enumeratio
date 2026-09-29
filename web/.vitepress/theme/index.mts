@@ -65,9 +65,9 @@ export default {
       const startEngine = async (): Promise<void> => {
         const [
           { configureEngine, configureLatex },
-          { declareCollections },
+          { declareCombinatorics },
           { ALL_STATISTICS, declareStatistics },
-          { declareDomains, declareDomainPlurals, declareDomainElement, declareMaps, DOMAINS },
+          { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS },
           { declareAnalytic, declareFractals },
           { declareGraphics },
           { declareBoxes, BOXES_LATEX },
@@ -89,7 +89,7 @@ export default {
           { declareEvaluation },
         ] = await Promise.all([
           import("@enumeratio/components"),
-          import("@enumeratio/combinatorics/collections"),
+          import("@enumeratio/combinatorics"),
           import("@enumeratio/statistics"),
           import("@enumeratio/combinatorics/domains"),
           import("@enumeratio/analytic"),
@@ -116,10 +116,9 @@ export default {
         configureLatex(RESIDUES_LATEX);
         configureLatex(BOXES_LATEX);
         applyEngineLibraries(configureEngine, {
-          declareCollections,
+          declareCombinatorics,
           declareStatistics,
           ALL_STATISTICS,
-          declareDomains,
           declareDomainPlurals,
           declareDomainElement,
           declareMaps,

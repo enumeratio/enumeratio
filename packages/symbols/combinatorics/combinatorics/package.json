@@ -9,6 +9,11 @@
   ],
   "type": "module",
   "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
     "./collections": {
       "types": "./dist/collections.d.mts",
       "import": "./dist/collections.mjs"

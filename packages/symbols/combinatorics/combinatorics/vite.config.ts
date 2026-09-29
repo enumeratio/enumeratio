@@ -3,6 +3,7 @@ import { defineConfig } from "vite-plus";
 export default defineConfig({
   pack: {
     entry: {
+      index: "src/index.ts",
       collections: "collections/src/index.ts",
       domains: "domains/src/index.ts",
     },

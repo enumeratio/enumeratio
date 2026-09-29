@@ -10,8 +10,8 @@ import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
-import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { declareCombinatorics } from "@enumeratio/combinatorics/src";
+import { declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -38,14 +38,10 @@ const LIBRARY_DECLARATIONS = [
   declareFractals,
   declareHypercomplex,
   declareDiagrams,
-  // The carriers, so the permutation families yield `Permutation` values, as the site's engine
-  // has them.
-  declareDomains,
-  (ce: ComputeEngine) =>
-    declareCollections(ce, {
-      permutationType: "permutation",
-      carrierTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])),
-    }),
+  // Carriers, the families typed by them, and the plural type-spaces and Element -- one call
+  // (design/speculative/combinatorics-layering-and-plausible.md §4 step 3), so the
+  // permutation families yield `Permutation` values, as the site's engine has them.
+  declareCombinatorics,
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   declareStructures,
   declareResidues,
@@ -65,6 +61,10 @@ const LIBRARY_DECLARATIONS = [
   declareNumberTheory,
   // The statistics and maps, as the site has them, so `CombinatorialStat` and
   // `CombinatorialMap` answer here too (a collection's distributions are its examples).
+  // `declareMaps` stays out of `declareCombinatorics` and here, LAST: it widens `Inverse`
+  // rather than minting it, and has to run after structures/groupalgebra/modular declare
+  // their own `Inverse` so its permutation-carrier overload is the one left standing (see
+  // @enumeratio/combinatorics' src/index.ts).
   (ce: ComputeEngine) => {
     declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])) });
     declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));

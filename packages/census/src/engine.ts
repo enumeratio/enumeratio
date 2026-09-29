@@ -18,19 +18,18 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
-import { declareDiagrams } from "@enumeratio/diagram/src";
+import { declareCombinatorics } from "@enumeratio/combinatorics/src";
 import {
   DOMAINS,
   RESTRICTIONS,
   declareCompose,
   declareDomainElement,
   declareDomainPlurals,
-  declareDomains,
   declareMaps,
   declareRestricted,
   declareRestrictions,
 } from "@enumeratio/combinatorics/domains/src";
+import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGraphics } from "@enumeratio/formats/src";
 import { declareGeometric } from "@enumeratio/geometric/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -65,13 +64,13 @@ import {
 
 type Declare = (ce: ComputeEngine) => void;
 
-// Carriers index statistics, maps and restrictions by (type -> constructor).
-const domainTypes = (): Record<string, string> =>
-  Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
-
-// Statistics and collections take each carrier's type by its name, as the site's engine gives them.
+// Statistics takes each carrier's type by its name, as the site's engine gives it.
 const carrierTypes = (): Record<string, string> =>
   Object.fromEntries(DOMAINS.map((domain) => [domain.name, domain.type]));
+
+// `declareMaps` takes the constructor by its type, the other way around.
+const domainTypes = (): Record<string, string> =>
+  Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
 
 /**
  * Every declaration with the package that owns it, in an order that satisfies what depends
@@ -109,15 +108,15 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // later, would replace this package's wider signature (the real index, the two-argument
   // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
   ["number-theory", declareNumberTheory],
-  // The carriers before collections: the permutation families yield `Permutation` values, typed
-  // by the minted type, as the site's engine has them.
-  ["combinatorics", declareDomains],
-  ["combinatorics", (ce) => declareCollections(ce, { permutationType: "permutation", carrierTypes: carrierTypes() })],
+  // Carriers, then the families typed by them -- one call (design/speculative/combinatorics-
+  // layering-and-plausible.md §4 step 3), in place of `declareDomains` + `declareCollections`
+  // separately.
+  ["combinatorics", declareCombinatorics],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   ["structures", declareStructures],
   ["formats", declareGraphics],
   ["boxes", declareBoxes],
-  // AFTER declareCollections (above), so a plural a collection family already claims
+  // AFTER declareCombinatorics (above), so a plural a collection family already claims
   // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
   // bare symbol first.
   [
@@ -127,8 +126,9 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
       declareDomainElement(ce);
     },
   ],
-  // Statistics, maps and restrictions all key off the carrier types, so they have to follow
-  // `declareDomains`.
+  // Statistics keys off the carrier types too, so it has to follow `declareCombinatorics`.
+  // combinatorics has no dependency on statistics, so this package still builds and passes
+  // its own `domainTypes`.
   [
     "statistics",
     (ce) => {
@@ -142,6 +142,10 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
       declareProcesses(ce);
     },
   ],
+  // `declareMaps` stays out of `declareCombinatorics` and here, at its ORIGINAL position:
+  // it widens `Inverse` rather than minting it, and has to run after structures/
+  // groupalgebra/modular declare their own `Inverse` so its permutation-carrier overload is
+  // the one left standing (see @enumeratio/combinatorics' src/index.ts).
   [
     "combinatorics",
     (ce) => {
