@@ -6,7 +6,7 @@ non-square-matrices-too	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr
 matrixrank-list-list-0-0-list-0-0	\operatorname{rank}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)	0
 a-matrix-of-pairwise-distinct-symbols-has-full	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	2
 approximate-entries	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2.5\bigr\rbrack, \bigl\lbrack3.5, 4\bigr\rbrack\bigr\rbrack)	2
-complex-entries-the-second-row-is-i-times-the	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, i\bigr\rbrack, \bigl\lbracki, -1\bigr\rbrack\bigr\rbrack)	1
+complex-entries-the-second-row-is-i-times-the	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, i\bigr\rbrack, \bigl\lbrack i, -1\bigr\rbrack\bigr\rbrack)	1
 exact-numeric-entries	\operatorname{rank}(\bigl\lbrack\bigl\lbrack\pi, e\bigr\rbrack, \bigl\lbrack2\pi, 2e\bigr\rbrack\bigr\rbrack)	1
 the-second-row-is-sqrt-2-times-the-first	\operatorname{rank}(\bigl\lbrack\bigl\lbrack\sqrt{2}, 1\bigr\rbrack, \bigl\lbrack2, \sqrt{2}\bigr\rbrack\bigr\rbrack)	1
 a-3-4-matrix-with-one-dependent-row	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack2, 4, 6, 8\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack\bigr\rbrack)	2

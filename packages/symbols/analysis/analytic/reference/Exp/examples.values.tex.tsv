@@ -3,7 +3,7 @@ exp-0	e^{0}	1
 stays-the-exact-constant-rather-than	e^{1}	e
 compute-engine-represents-exp-x-as-e-x-once-the	e^{x}	e^{x}
 a-machine-precision-argument-evaluates	e^{3.4}	29.964\,100\,047\,397\,013\,348\,2
-broadcasts-element-wise-giving-begin-pmatrix-1-e	\exp\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack	\bigl\lbrack\bigl\lbrack1, e\bigr\rbrack, \bigl\lbracke, 1\bigr\rbrack\bigr\rbrack
+broadcasts-element-wise-giving-begin-pmatrix-1-e	\exp\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack	\bigl\lbrack\bigl\lbrack1, e\bigr\rbrack, \bigl\lbrack e, 1\bigr\rbrack\bigr\rbrack
 arbitrary-precision-via-n	N(\exp(\frac{8}{5}))	4.953\,032\,424\,395\,114\,803\,65
 evaluates-at-a-complex-argument	\exp(2.5+i)	6.582\,229\,578\,192\,772\,984\,4+10.251\,215\,190\,529\,404i
 euler-s-identity-e-i-pi-1	\exp(i\pi)	-1
@@ -15,7 +15,7 @@ inverse-of-ln-symbolically	\exp(\ln(x))	x
 exp-ln-of-a-complex-argument-is-that-argument	\exp(\ln(1+2i))	1+2i
 exp-negativeinfinity	e^{-\infty}	0
 exp-positiveinfinity	e^{\infty}	\infty
-element-wise-over-a-matrix-not-the-matrix	\exp\bigl\lbrack\bigl\lbrack1, \frac{i\pi}{2}\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack	\bigl\lbrack\bigl\lbracke, i\bigr\rbrack, \bigl\lbrack1, e\bigr\rbrack\bigr\rbrack
+element-wise-over-a-matrix-not-the-matrix	\exp\bigl\lbrack\bigl\lbrack1, \frac{i\pi}{2}\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack	\bigl\lbrack\bigl\lbrack e, i\bigr\rbrack, \bigl\lbrack1, e\bigr\rbrack\bigr\rbrack
 interval-arithmetic-exp-1-ln-2-e-1-2	\exp(\mathrm{Interval}(-1, \ln(2)))	\mathrm{Interval}(\frac{1}{e}, 2)
 uncertainty-propagation-e-2-pm-0-01-approx-7-389	\exp(\mathrm{Around}(2, 0.01))	\mathrm{Around}(7.389\,056\,098\,930\,65, 0.073\,890\,560\,989\,306\,5)
 around-0-still-fires-the-e-base-power-rule	N(\exp(\mathrm{Around}(0, 0.1)))	\mathrm{Around}(1, 0.1)

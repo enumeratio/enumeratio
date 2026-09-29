@@ -10,7 +10,7 @@ the-modulus-of-a-complex-number-with-approximate	\vert1.4+2.3i\vert	2.692\,582\,
 threads-over-a-matrix-entry-by-entry	\vert\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack\vert	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack
 exact-numeric-constants	\vert-\pi\vert	\pi
 an-exact-complex-number-gives-an-exact-radical	\vert1+i\vert	\sqrt{2}
-abs-imaginaryunit	\verti\vert	1
+abs-imaginaryunit	\vert i\vert	1
 e-i-pi-3-lies-on-the-unit-circle	\vert\exp(\frac{i\pi}{3})\vert	1
 abs-negativeinfinity	\vert-\infty\vert	\infty
 complex-infinity-has-infinite-magnitude-in-every	\vert\tilde\infty\vert	\infty

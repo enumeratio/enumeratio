@@ -1,6 +1,6 @@
 id	in	out
 string-take-s-n-takes-the-first-n-characters	\mathrm{StringTake}(\text{\text{hello world}}, 5)	\text{hello}
 string-take-s-negative-n-takes-last-n-chars	\mathrm{StringTake}(\text{\text{hello world}}, -5)	\text{world}
-string-take-s-n-takes-the-nth-character-alone	\mathrm{StringTake}(\text{\mathrm{hello}}, \bigl\lbrack2\bigr\rbrack)	\text{e}
+string-take-s-n-takes-the-nth-character-alone	\mathrm{StringTake}(\text{hello}, \bigl\lbrack2\bigr\rbrack)	\text{e}
 string-take-s-m-n-takes-an-inclusive-range	\mathrm{StringTake}(\text{\text{hello world}}, \bigl\lbrack1, 5\bigr\rbrack)	\text{hello}
 string-take-s-m-negative-n-counts-from-end	\mathrm{StringTake}(\text{\text{hello world}}, \bigl\lbrack1, -7\bigr\rbrack)	\text{hello}
