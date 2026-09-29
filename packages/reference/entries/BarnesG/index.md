@@ -59,6 +59,7 @@ names:
   wolframIdentity: true
 ---
 
+- The Barnes G-function is the double gamma function: it satisfies $G(z+1) = \Gamma(z)\,G(z)$ with $G(1) = 1$ (DLMF 5.17.1), one level up from $\Gamma(z+1) = z\,\Gamma(z)$, and carries the Weierstrass-type product $G(z+1) = (2\pi)^{z/2} \exp\!\left(-\tfrac12 z(z+1) - \tfrac12\gamma z^2\right) \prod_{k=1}^\infty \left(1+\tfrac{z}{k}\right)^k \exp\!\left(-z+\tfrac{z^2}{2k}\right)$ (DLMF 5.17.3) that entire functions are built from.
 - Functional equation $G(z+1) = \Gamma(z)\,G(z)$, the analogue of $\Gamma(z+1) = z\,\Gamma(z)$ one level up; see [[Gamma]].
 - At positive integers $G(n) = 0!\,1!\,2!\cdots(n-2)!$ — the superfactorial: $G(1) = G(2) = G(3) = 1$, $G(4) = 2$, $G(5) = 12$, $G(6) = 288$, $G(7) = 34560$. Exact and arbitrarily large.
 - Zeros at the nonpositive integers $0, -1, -2, \dots$ (where $\Gamma$ has poles); entire, with no poles of its own.
