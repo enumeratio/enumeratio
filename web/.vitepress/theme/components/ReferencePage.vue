@@ -5,7 +5,8 @@ import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
-import { escapeHtml, renderProseMath } from "../../prose-math.ts";
+import "katex/dist/katex.min.css";
+import { renderBlock, renderInline } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -43,22 +44,10 @@ const forSignature = (signature: { arity?: number; call: string }): ResolvedRefe
 // notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 
-// Render prose: $latex$ / $$latex$$ become typeset math (renderProseMath -- shared with
-// notatio-math.ts's markdown pages, so the same syntax works the same way everywhere),
-// [[Symbol]] becomes a link, and everything else is HTML-escaped (this is v-html, and
-// reference prose freely uses bare `<`/`>` -- inequalities, generic types like
-// `tuple<list<integer>>` -- with no intention of it being read as markup). Split on the
-// link pattern first so math-rendering never has to look inside a `[[...]]` span or vice
-// versa.
-const linkify = (text?: string): string =>
-  (text ?? "")
-    .split(/(\[\[[A-Za-z0-9]+\]\])/g)
-    .map((part) => {
-      const name = /^\[\[([A-Za-z0-9]+)\]\]$/.exec(part)?.[1];
-      if (name === undefined) return renderProseMath(part);
-      return getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : escapeHtml(name);
-    })
-    .join("");
+// Record prose is markdown: `$…$` typeset from its TeX by KaTeX, `[[Head]]` a link to its page.
+const link = (name: string): string | undefined => (getEntry(name) ? `/reference/symbol/${name}` : undefined);
+const inline = (text?: string): string => renderInline(text ?? "", { link });
+const block = (text: string): string => renderBlock(text, { link });
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
@@ -238,7 +227,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       What is known about it elsewhere is mostly recorded against the collections that enumerate it, and says so.
     </p>
     <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-    <p v-html="linkify(entry.summary)"></p>
+    <p v-html="inline(entry.summary)"></p>
 
     <Crosswalk :references="headwide" />
 
@@ -246,7 +235,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       <div v-for="(sig, i) in entry.signatures" :key="i" class="ref-signature">
         <code>{{ sig.call }}</code>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <span class="ref-sig-desc" v-html="linkify(sig.description)"></span>
+        <span class="ref-sig-desc" v-html="inline(sig.description)"></span>
         <Crosswalk v-if="forSignature(sig).length" :references="forSignature(sig)" inline />
       </div>
     </div>
@@ -271,7 +260,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       <summary>Details</summary>
       <ul>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <li v-for="(d, i) in entry.details" :key="i" v-html="linkify(d)"></li>
+        <li v-for="(d, i) in entry.details" :key="i" v-html="block(d)"></li>
       </ul>
     </details>
 
@@ -330,7 +319,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
             <button aria-label="Next case" @click="cycle(key, cases, 1)">›</button>
           </div>
           <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-          <p v-if="ex.caption" class="ref-caption" v-html="linkify(ex.caption)"></p>
+          <p v-if="ex.caption" class="ref-caption" v-html="inline(ex.caption)"></p>
           <notatio-cell
             :key="i"
             format="mathjson"
@@ -358,7 +347,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
           <template v-if="!dirty[i] && !alternativesOf(ex)">
             <template v-for="d in divergences(ex)" :key="d.system">
               <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-              <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
+              <p class="ref-divergence-note" v-html="inline(d.note)"></p>
             </template>
           </template>
           <!-- The value is held to one known from outside our evaluation (tests/known.test.ts). -->
@@ -397,9 +386,9 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         </ClientOnly>
         <notatio-code v-if="impl.code" :language="impl.form" :value="impl.code" />
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <p v-if="impl.produces" class="ref-impl-note" v-html="`Produces ${linkify(impl.produces)}.`"></p>
+        <p v-if="impl.produces" class="ref-impl-note" v-html="`Produces ${inline(impl.produces)}.`"></p>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <p v-if="impl.note" class="ref-impl-note" v-html="linkify(impl.note)"></p>
+        <p v-if="impl.note" class="ref-impl-note" v-html="inline(impl.note)"></p>
       </div>
     </section>
 

@@ -10,6 +10,7 @@ catalogMode: prefer
 catalog:
   "@types/node": ^24
   ajv: ^8.20.0
+  katex: ^0.16.47
   mermaid: ^11.17.2
   oxfmt: 0.66.0 # the version vite-plus pins, so records match `vp fmt`
   ts-morph: ^28.0.0

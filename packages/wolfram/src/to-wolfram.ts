@@ -81,6 +81,9 @@ export const FOREIGN: Record<string, string> = {
   // Ours is literal text inside boxes (design/boxes.md); Wolfram writes that as a quoted
   // string, and its own TextBox is undocumented.
   TextBox: "an undocumented front-end box whose meaning Wolfram does not publish",
+  // Ours holds a hole's Epsil as written, for the environment to parse; Wolfram's holds the
+  // expression itself.
+  TemplateExpression: "a template hole holding an expression, evaluated when the template is applied",
   Area: "the area of a geometric region",
   Perimeter: "the perimeter of a geometric region",
   Depth: "the number of indices needed to reach any part of an expression",

@@ -33,10 +33,11 @@ export function toMathJson(box: Box): Json {
   const head = box[0];
   const args = box.slice(1, ARITY[head] + 1) as unknown[];
   const encoded: Json[] = args.map((arg, i) => {
-    if (head === "RowBox") return list((arg as Box[]).map(toMathJson));
+    if (head === "RowBox" || head === "TextData") return list((arg as Box[]).map(toMathJson));
     if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
-    if (head === "TextBox") return { str: arg as string };
-    if (head === "TagBox" && i === 1) return arg as string;
+    if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression") return { str: arg as string };
+    if ((head === "TagBox" || head === "FormBox") && i === 1) return arg as string;
+    if (head === "TextCell" && i === 1) return { str: arg as string };
     if (head === "InterpretationBox" && i === 1) return arg as Json;
     return toMathJson(arg as Box);
   });
@@ -119,10 +120,13 @@ export function fromMathJson(json: Json): Box {
   const arity = ARITY[head];
   if (ops.length !== arity) fail(`${head} takes ${arity} argument(s)`, json);
   const args: unknown[] = ops.map((op, i) => {
-    if (head === "RowBox") return listItems(op).map(fromMathJson);
+    if (head === "RowBox" || head === "TextData") return listItems(op).map(fromMathJson);
     if (head === "GridBox") return listItems(op).map((r) => listItems(r).map(fromMathJson));
-    if (head === "TextBox") return stringOf(op) ?? fail("TextBox takes a string", op);
-    if (head === "TagBox" && i === 1) return symbolOf(op) ?? stringOf(op) ?? fail("TagBox takes a tag name", op);
+    if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression")
+      return stringOf(op) ?? fail(`${head} takes a string`, op);
+    if ((head === "TagBox" || head === "FormBox") && i === 1)
+      return symbolOf(op) ?? stringOf(op) ?? fail(`${head} takes a name`, op);
+    if (head === "TextCell" && i === 1) return stringOf(op) ?? fail("TextCell takes a style name", op);
     if (head === "InterpretationBox" && i === 1) return op;
     return fromMathJson(op);
   });

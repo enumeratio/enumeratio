@@ -113,6 +113,9 @@ catalogs:
     ajv:
       specifier: ^8.20.0
       version: 8.20.0
+    katex:
+      specifier: ^0.16.47
+      version: 0.16.47
     mermaid:
       specifier: ^11.17.2
       version: 11.17.2
@@ -1394,6 +1397,9 @@ importers:
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../packages/structures
+      katex:
+        specifier: 'catalog:'
+        version: 0.16.47
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.140.0

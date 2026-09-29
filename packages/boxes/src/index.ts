@@ -5,4 +5,7 @@ export { toLatex } from "./latex.ts";
 export { BOXES_LATEX } from "./latex-entries.ts";
 export { APPLY_FUNCTION, INVISIBLE_TIMES, makeBoxes } from "./make.ts";
 export { MATHJSON_MIME, type MathMLOptions, MathMLSyntaxError, parseMathML, toMathML } from "./mathml.ts";
-export { toText } from "./text.ts";
+export { toAscii, toText } from "./text.ts";
+export { type Hole, type HtmlOptions, toHtml } from "./html.ts";
+export { readInlineMarkdown, readMarkdown, texSource, toMarkdown } from "./markdown.ts";
+export { texToAscii, texToText } from "./tex-text.ts";

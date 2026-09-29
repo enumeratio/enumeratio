@@ -26,7 +26,17 @@ export type BoxNode =
   | readonly ["FrameBox", Box, Options?]
   | readonly ["TagBox", Box, string, Options?]
   | readonly ["InterpretationBox", Box, MathJsonExpression, Options?]
-  | readonly ["ErrorBox", Box];
+  | readonly ["ErrorBox", Box]
+  // Prose (design/speculative/prose-pipeline.md). Inside `TextData` a leaf is text, not a token.
+  | readonly ["TextCell", Box, string, Options?]
+  | readonly ["TextData", readonly Box[]]
+  | readonly ["ButtonBox", Box, Options?]
+  // `form` is how the box reads: `TeXForm` holds TeX as written (its leaves are TeX, never
+  // parsed); `TraditionalForm`/`StandardForm` hold formula boxes.
+  | readonly ["FormBox", Box, string]
+  // Holes, filled by the environment: a name, or an expression's Epsil.
+  | readonly ["TemplateSlot", string, Options?]
+  | readonly ["TemplateExpression", string, Options?];
 
 export type BoxHead = BoxNode[0];
 
@@ -49,6 +59,12 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   TagBox: 2,
   InterpretationBox: 2,
   ErrorBox: 1,
+  TextCell: 2,
+  TextData: 1,
+  ButtonBox: 1,
+  FormBox: 2,
+  TemplateSlot: 1,
+  TemplateExpression: 1,
 };
 
 export const BOX_HEADS = Object.keys(ARITY) as readonly BoxHead[];
@@ -57,6 +73,10 @@ export const BOX_HEADS = Object.keys(ARITY) as readonly BoxHead[];
 export const isNode = (box: Box | undefined): box is BoxNode => box !== undefined && typeof box !== "string";
 
 export const isBoxHead = (head: unknown): head is BoxHead => typeof head === "string" && Object.hasOwn(ARITY, head);
+
+/** A sequence of boxes (a prose document's cells) rather than one box. */
+export const isBoxSequence = (value: Box | readonly Box[]): value is readonly Box[] =>
+  Array.isArray(value) && !isBoxHead(value[0]);
 
 /** A node's options, or `{}`. */
 export const optionsOfBox = (box: BoxNode): Options => {
@@ -87,6 +107,16 @@ export const frame = (box: Box, options?: Options): Box => ["FrameBox", ...withO
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
 export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["InterpretationBox", box, expr];
 export const error = (box: Box): Box => ["ErrorBox", box];
+export const textCell = (content: Box, cellStyle: string, options?: Options): Box =>
+  ["TextCell", ...withOptions([content, cellStyle] as const, options)] as Box;
+export const textData = (items: readonly Box[]): Box => ["TextData", items];
+export const button = (label: Box, options?: Options): Box =>
+  ["ButtonBox", ...withOptions([label] as const, options)] as Box;
+export const form = (box: Box, name: string): Box => ["FormBox", box, name];
+export const slot = (name: string, options?: Options): Box =>
+  ["TemplateSlot", ...withOptions([name] as const, options)] as Box;
+export const templateExpression = (source: string, options?: Options): Box =>
+  ["TemplateExpression", ...withOptions([source] as const, options)] as Box;
 
 export type TokenClass = "identifier" | "number" | "operator";
 
@@ -123,12 +153,17 @@ export function isBox(value: unknown): value is Box {
   const args = value.slice(1, arity + 1) as unknown[];
   switch (head) {
     case "RowBox":
+    case "TextData":
       return Array.isArray(args[0]) && args[0].every(isBox);
     case "GridBox":
       return Array.isArray(args[0]) && args[0].every((r: unknown) => Array.isArray(r) && r.every(isBox));
     case "TextBox":
+    case "TemplateSlot":
+    case "TemplateExpression":
       return typeof args[0] === "string";
     case "TagBox":
+    case "TextCell":
+    case "FormBox":
       return isBox(args[0]) && typeof args[1] === "string";
     case "InterpretationBox":
       return isBox(args[0]) && args[1] !== undefined;
