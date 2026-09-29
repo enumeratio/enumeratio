@@ -5,6 +5,7 @@
 // that counts those is a work queue rather than a verdict.
 
 import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { CARRIER_NAMES } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
@@ -200,6 +201,15 @@ export function emit(expr: MathJSON, system: System): Emitted {
       }
       return fill(template, operands.map(walk));
     }
+    // A carrier CONSTRUCTOR call (`Permutation([2, 1, 3])`) with no mapping of its own: we
+    // decide what counts as equivalent, and an external system's raw structure IS our
+    // carrier value — https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
+    // §4 step 5. Unwrap to the contents every carrier constructor is declared over exactly
+    // one of (`declareConstructor`'s `(shape) -> type` signature; `contentsOf` reads the same
+    // single operand) so the emitted source is the system's own plain list/tuple, not a
+    // missing head. A future per-system mapping (added to mappings-data.ts) still wins, since
+    // `mappingFor` above is tried first.
+    if (CARRIER_NAMES.has(head) && operands.length === 1) return walk(operands[0] as MathJSON);
     // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
     // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an
     // ASSIGNMENT there (`Set[n, 10]`) — left as `Equal`, the vars list isn't a valid

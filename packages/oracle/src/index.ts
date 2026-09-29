@@ -1,3 +1,4 @@
+export { CARRIER_NAMES } from "./carrier-names-data.ts";
 export { DEFINED_NAMES } from "./defined-names-data.ts";
 export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor } from "./mappings.ts";

@@ -167,6 +167,13 @@ export function carrierNameForType(ce: ComputeEngine, type: string): string | un
   return undefined;
 }
 
+/** Every carrier constructor name registered on `ce` (`registerCarrier`/`declareCarriers`),
+ *  across every owning package — the list oracle's engine-free `emit`/`structural` modules
+ *  bake into a generated data file, since they cannot hold a live engine themselves. */
+export function allCarrierNames(ce: ComputeEngine): readonly string[] {
+  return [...registryOf(ce).carriers.keys()];
+}
+
 /**
  * Add `operation` to `carrier`'s table for `head`. A kernel and a definition from different
  * packages meet in one entry; the same part twice is an `OperationCollisionError`.
