@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-lukasiewiczpaths-4	Basic		[Count, [LukasiewiczPaths, 4]]	14	$Count(LukasiewiczPaths(4)) = 14$
-first-element-of-lukasiewiczpaths-4	Basic		[At, [LukasiewiczPaths, 4], 1]	[List, 0, 0, 0, 0, -1]	The first element in enumeration order
-every-element-of-lukasiewiczpaths-4		test	[Take, [LukasiewiczPaths, 4], 5]	[List, [List, 0, 0, 0, 0, -1], [List, 0, 0, 1, -1, -1], [List, 0, 1, 0, -1, -1], [List, 1, 0, 0, -1, -1], [List, 0, 1, -1, 0, -1]]	
+first-element-of-lukasiewiczpaths-4	Basic		[At, [LukasiewiczPaths, 4], 1]	[LukasiewiczPath, [List, 0, 0, 0, 0, -1]]	The first element in enumeration order
+every-element-of-lukasiewiczpaths-4		test	[Take, [LukasiewiczPaths, 4], 5]	[List, [LukasiewiczPath, [List, 0, 0, 0, 0, -1]], [LukasiewiczPath, [List, 0, 0, 1, -1, -1]], [LukasiewiczPath, [List, 0, 1, 0, -1, -1]], [LukasiewiczPath, [List, 1, 0, 0, -1, -1]], [LukasiewiczPath, [List, 0, 1, -1, 0, -1]]]	

@@ -26,20 +26,12 @@ import {
   LabeledTreeUnrank,
   LabeledTreeRank,
   IsLabeledTreeOf,
-  MotzkinCount,
-  MotzkinUnrank,
-  MotzkinRank,
-  IsMotzkinPath,
   FibonacciWordCount,
   FibonacciWordUnrank,
   FibonacciWordRank,
   IsFibonacciWord,
   GrayCodeSubsetUnrank,
   GrayCodeSubsetRank,
-  SchroederCount,
-  SchroederUnrank,
-  SchroederRank,
-  IsSchroederPath,
   OrderedTreeCount,
   OrderedTreeUnrank,
   OrderedTreeRank,
@@ -169,23 +161,10 @@ export const entriesBeforeDyckPaths: NumberKernel[] = [
 // Kept separate from `entriesBeforeTrees` below only so collections/src/families/index.ts can
 // splice `setPartitionsCoreEntries` (SetPartitions, SetPartitionsIntoKBlocks, SetCompositions)
 // back in at the exact interior position it held before the set-partitions-area move — §4 step 5.
+// MotzkinPaths/SchroederPaths moved to lattice-paths/src/families/core.ts (wire-carriers lane
+// A-90): both now carry "MotzkinPath"/"SchroederPath". FibonacciWords declares no carrier and
+// stays here per step 5 rule 4.
 export const entriesBeforeSetPartitions: NumberKernel[] = [
-  ints(
-    "MotzkinPaths",
-    1,
-    ([n]) => MotzkinCount(n),
-    ([n], r) => MotzkinUnrank(n, r),
-    (a, [n]) => IsMotzkinPath(a, n),
-    (a) => MotzkinRank(a),
-  ),
-  ints(
-    "SchroederPaths",
-    1,
-    ([n]) => SchroederCount(n),
-    ([n], r) => SchroederUnrank(n, r),
-    (a, [n]) => IsSchroederPath(a, n),
-    (a) => SchroederRank(a),
-  ),
   ints(
     "FibonacciWords",
     1,

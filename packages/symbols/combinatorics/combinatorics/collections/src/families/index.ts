@@ -6,10 +6,7 @@ import {
   entries as core,
 } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
-import {
-  entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight,
-  entriesAfterDyckPathsByHeight as pathsPartitions,
-} from "./paths-partitions.ts";
+import { entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import { entries as tableauxPlane } from "./tableaux-plane.ts";
 import {
@@ -33,6 +30,7 @@ import {
 } from "../../../words/src/families/index.ts";
 import {
   coreEntries as latticePathsCoreEntries,
+  pathsPartitionsBeforeDyckPathsByHeightEntries as latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
 import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
@@ -77,9 +75,9 @@ const numberEntries = [
   ...wordsEntries,
   ...setPartitionsPathsPartitionsEntries,
   ...setPartitionsMatchingsEntries,
+  ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
   ...pathsPartitionsBeforeDyckPathsByHeight,
   ...latticePathsPathsPartitionsEntries,
-  ...pathsPartitions,
   ...tableauxTrees,
   ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
