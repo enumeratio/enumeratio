@@ -1,0 +1,110 @@
+- id: a-saddle
+  caption: A saddle
+  category: Surfaces
+  expr: [Plot3D, [Subtract, [Power, x, 2], [Power, y, 2]], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]
+- id: a-ripple
+  caption: A ripple
+  category: Surfaces
+  expr: [Plot3D, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14]]
+- id: auto-rotating-spin
+  caption: Auto-rotating (spin on)
+  category: Surfaces
+  notes: "`Spin -> True` starts the view turning on load; the ⟳ spin button toggles it, and drag to take over."
+  expr: [Plot3D, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14], [Tuple, Spin, True]]
+- id: radial-bump-title-key
+  caption: A radial bump (title + height key)
+  category: Surfaces
+  notes: "`PlotLabel` is a title; `ColorLegend` draws a height key matching the surface's shading. Hover to read a sample."
+  expr:
+    [
+      Plot3D,
+      [Exp, [Negate, [Divide, [Add, [Power, x, 2], [Power, y, 2]], 4]]],
+      [Tuple, x, -4, 4],
+      [Tuple, y, -4, 4],
+      [Tuple, PlotLabel, "'Gaussian'"],
+      [Tuple, ColorLegend, True],
+    ]
+- id: a-preset-view
+  caption: A preset view
+  category: Surfaces
+  notes: The initial view is attribute-driven; drag to change it, then double-click to snap back here.
+  expr:
+    [
+      Plot3D,
+      [Multiply, [Sin, x], [Cos, y]],
+      [Tuple, x, -3.14, 3.14],
+      [Tuple, y, -3.14, 3.14],
+      [Tuple, Azimuth, 200],
+      [Tuple, Elevation, 40],
+      [Tuple, Zoom, 0.8],
+    ]
+- id: two-overlaid-surfaces
+  caption: Two overlaid surfaces
+  category: Surfaces
+  notes: A list of expressions draws several surfaces on one shared z-scale, each in its own colour. Two ripples offset in z stack as clean layers.
+  expr:
+    [
+      Plot3D,
+      [List, [Add, [Multiply, [Sin, x], [Cos, y]], 2.5], [Subtract, [Multiply, [Cos, x], [Sin, y]], 2.5]],
+      [Tuple, x, -3.14, 3.14],
+      [Tuple, y, -3.14, 3.14],
+    ]
+- id: axes-off
+  caption: Axes off
+  category: Surfaces
+  expr:
+    [Plot3D, [Subtract, [Power, x, 2], [Power, y, 2]], [Tuple, x, -2, 2], [Tuple, y, -2, 2], [Tuple, Axes, "'false'"]]
+- id: sweep-a-frequency
+  caption: Sweep a frequency (press ▶)
+  category: Manipulate
+  notes: The slider fills `_k` and re-samples the whole grid; press ▶ to sweep it.
+  expr:
+    [
+      Manipulate,
+      [
+        Plot3D,
+        [Multiply, [Sin, [Multiply, k, x]], [Cos, [Multiply, k, y]]],
+        [Tuple, x, -3.14, 3.14],
+        [Tuple, y, -3.14, 3.14],
+      ],
+      [Tuple, k, 0.5, 3],
+    ]
+- id: morph-between-two-surfaces
+  caption: Morph between two surfaces
+  category: Manipulate
+  notes: A blend parameter `t` in [0, 1] interpolates a saddle into a ripple. Press ▶ to watch it morph.
+  expr:
+    [
+      Manipulate,
+      [
+        Plot3D,
+        [
+          Add,
+          [Multiply, [Subtract, 1, t], [Subtract, [Power, x, 2], [Power, y, 2]]],
+          [Multiply, t, [Sin, x], [Cos, y], 4],
+        ],
+        [Tuple, x, -2, 2],
+        [Tuple, y, -2, 2],
+      ],
+      [Tuple, t, 0, 1],
+    ]
+- id: travelling-wavefront
+  caption: A travelling wavefront (animate the phase)
+  category: Manipulate
+  notes: Animating the phase `p` sends ripples outward from the origin.
+  expr:
+    [
+      Manipulate,
+      [
+        Plot3D,
+        [Sin, [Subtract, [Multiply, 2, [Sqrt, [Add, [Power, x, 2], [Power, y, 2]]]], p]],
+        [Tuple, x, -4, 4],
+        [Tuple, y, -4, 4],
+      ],
+      [Tuple, p, 0, 6.283],
+    ]
+- id: surface-evaluated-on-gpu
+  caption: A surface evaluated on the GPU
+  category: GPU evaluation
+  notes: The grid (here 100×100) is computed in a compute shader, then drawn through the same SVG surface. Needs a WebGPU browser; otherwise it renders on the CPU.
+  expr: [Plot3D, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14], [Tuple, Gpu, 100]]
