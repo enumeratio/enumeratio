@@ -59,16 +59,25 @@ export type Domain = CarrierDeclaration;
 export const typeFor = (id: string): string => id;
 
 /**
- * Declare every carrier and its constructor on `ce`. Does NOT declare the plural type-space
- * names — `declareCarrierPlurals` does that, and has to run AFTER whatever else in the engine
- * declares a collection family (`Permutations`, `DyckPaths`, …): a plural name a family will
- * claim has to still be free when THAT runs, so minting a bare symbol for it here, before
- * collections gets a turn, would make collections' own `ce.declare` throw "already declared"
- * instead of the other way around. See `declareCarrierPlurals`'s own doc for why a live
- * `ce.lookupDefinition` check at THAT later point is what makes the two compose regardless of
- * order.
+ * Declare every carrier and its constructor on `ce`, and — by default — its plural type-space
+ * name and `Element` membership too (`declareCarrierPlurals` / `declareCarrierElement`): once
+ * an option KEY is never a carrier's plural (`Over -> GaussianIntegers`, not `GaussianIntegers
+ * -> True`; see the Wolfram-`GaussianIntegers`-option retirement), a bare option VALUE reading
+ * as a typed `set<...>` symbol instead of an untyped tag is no longer a problem, so the plural
+ * can be minted right alongside the type and constructor.
+ *
+ * Pass `{ plurals: false }` to keep minting the plural separately (`declareCarrierPlurals` /
+ * `declareCarrierElement`, called by hand later) — needed only when a carrier's plural name
+ * might still be claimed by a REAL collection family this same host declares afterward
+ * (`Permutations`, `DyckPaths`, …): that family's own `ce.declare` throws "already declared" if
+ * this already minted a bare `set<...>` symbol for the name first. `@enumeratio/combinatorics`'s
+ * domains are the one caller that still needs this — see its own `declareDomains`.
  */
-export function declareCarriers(ce: ComputeEngine, carriers: readonly CarrierDeclaration[]): void {
+export function declareCarriers(
+  ce: ComputeEngine,
+  carriers: readonly CarrierDeclaration[],
+  options?: { readonly plurals?: boolean },
+): void {
   // Types first: a constructor's signature names its own type, so the type has to exist.
   // Shapes referring to another carrier (a tableau pair is two tableaux) are declared in
   // dependency order by sorting those last.
@@ -80,6 +89,11 @@ export function declareCarriers(ce: ComputeEngine, carriers: readonly CarrierDec
   for (const carrier of ordered) ce.declareType(carrier.type, carrier.shape, { mint: true });
   for (const carrier of ordered) declareConstructor(ce, carrier);
   for (const carrier of ordered) registerCarrier(ce, { name: carrier.name, type: carrier.type });
+
+  if (options?.plurals !== false) {
+    declareCarrierPlurals(ce, ordered);
+    declareCarrierElement(ce, ordered);
+  }
 }
 
 /**

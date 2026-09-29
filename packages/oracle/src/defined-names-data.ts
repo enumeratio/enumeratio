@@ -328,6 +328,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "GammaRegularized",
   "Gather",
   "GatherBy",
+  "GaussianIntegers",
   "GelfandTsetlin",
   "GeneratingFunction",
   "GeometricMean",

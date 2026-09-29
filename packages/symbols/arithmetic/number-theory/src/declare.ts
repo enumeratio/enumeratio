@@ -9,7 +9,7 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
-import { declareCarrierElement, declareCarrierPlurals, declareCarriers } from "@enumeratio/structures";
+import { declareCarriers } from "@enumeratio/structures";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { NUMBER_THEORY_CARRIERS } from "./carrier-data.ts";
 import { declareBacklog } from "./declare-backlog.ts";
@@ -30,16 +30,13 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: ComputeEngine): void {
-  // This package's own carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
-  // step 4) — see carrier-data.ts for why they sit here rather than in numerals, and why the
-  // ordering this runs at (after numerals, after modular) is load-bearing. Types and
-  // constructors only: the PLURAL type-space names are a separate call
-  // (`declareNumberTheoryCarrierPlurals`) a host opts into, the same reason combinatorics'
-  // own `declareDomains` and `declareDomainPlurals` are split — minting a carrier's plural
-  // (`GaussianIntegers`) gives that symbol a `set<...>` type, which breaks a host that reads
-  // it as a bare option value (`KeyValuePair(GaussianIntegers, True)` in `IsPrime(n,
-  // GaussianIntegers -> True)`) if that host never wanted the plural minted at all —
-  // `packages/reference/scripts/engines.ts` is exactly that host.
+  // This package's own carriers — see carrier-data.ts for why they sit here rather than in
+  // numerals, and why the ordering this runs at (after numerals, after modular) is
+  // load-bearing. Types, constructor, plural type-space names and `Element` membership, all
+  // in one call: now that the ring an option like `IsPrime`'s reads is named by an `Over -> R`
+  // VALUE rather than a `GaussianIntegers -> True` KEY (#417's retirement), minting
+  // `GaussianIntegers` as `set<gaussian_integer>` right away no longer breaks anything reading
+  // it as a bare option tag.
   declareCarriers(ce, NUMBER_THEORY_CARRIERS);
 
   declareGaussian(ce);
@@ -564,12 +561,4 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   declareFastPrimes(ce);
   declareFastFactorial(ce);
   declareFastGcd(ce);
-}
-
-/** This package's carriers' plural type-space names and `Element` membership — see
- *  `declareNumberTheory`'s doc for why this is a separate call. Call after whatever else in
- *  the engine declares a collection family, same as `declareDomainPlurals`. */
-export function declareNumberTheoryCarrierPlurals(ce: ComputeEngine): void {
-  declareCarrierPlurals(ce, NUMBER_THEORY_CARRIERS);
-  declareCarrierElement(ce, NUMBER_THEORY_CARRIERS);
 }

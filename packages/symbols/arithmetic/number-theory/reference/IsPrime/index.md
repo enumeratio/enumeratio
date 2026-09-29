@@ -6,7 +6,7 @@ summary: Tests whether n is a prime number.
 signatures:
   - call: IsPrime(n)
     description: tests whether $n$ is prime.
-  - call: IsPrime(n, GaussianIntegers -> True)
+  - call: IsPrime(n, Over -> GaussianIntegers)
     description: tests whether $n$ is prime in $\mathbb{Z}[i]$; a complex $n$ is always tested there
     library: enumeratio-number-theory
     type: (number, any*) -> boolean

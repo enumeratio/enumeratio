@@ -35,16 +35,16 @@ import { declareGeometric } from "@enumeratio/geometric/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
 import { declareHopf } from "@enumeratio/hopf/src";
-import { declareHypercomplex, declareHypercomplexCarrierPlurals } from "@enumeratio/hypercomplex/src";
+import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
-import { declareFrontendCarriers, declareFrontendCarrierPlurals } from "@enumeratio/frontend/declare-carriers";
-import { declareNumberTheory, declareNumberTheoryCarrierPlurals } from "@enumeratio/number-theory/src";
-import { declareNumerals, declareNumeralsCarrierPlurals } from "@enumeratio/numerals/src";
+import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
+import { declareNumberTheory } from "@enumeratio/number-theory/src";
+import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
-import { declareResidues, declareResiduesCarrierPlurals } from "@enumeratio/residues/src";
+import { declareResidues } from "@enumeratio/residues/src";
 import {
   declareStructures,
   ensureAlgebraHeads,
@@ -126,17 +126,11 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
       declareDomainElement(ce);
     },
   ],
-  // GlyphKind and the arithmetic carriers moved here from combinatorics' domains/
-  // LEFTOVER_DOMAINS (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 steps
-  // 4-5) — their plurals held the same relative position there, all minted together as part
-  // of one combined list; each owning package's own carrier-plurals call now does the same
-  // job, each still its own PACKAGE_DECLARATIONS entry so `contributions()` attributes it.
+  // GlyphKind — moved here from combinatorics' domains/LEFTOVER_DOMAINS. Type, constructor,
+  // plural type-space name and `Element` membership, all in `declareFrontendCarriers` now
+  // (`declareCarriers`' default folding) — residues/numerals/number-theory/hypercomplex,
+  // listed above at their own declare call, already fold theirs the same way.
   ["frontend", declareFrontendCarriers],
-  ["frontend", declareFrontendCarrierPlurals],
-  ["residues", declareResiduesCarrierPlurals],
-  ["numerals", declareNumeralsCarrierPlurals],
-  ["number-theory", declareNumberTheoryCarrierPlurals],
-  ["hypercomplex", declareHypercomplexCarrierPlurals],
   // Statistics keys off the carrier types too, so it has to follow `declareCombinatorics`.
   // combinatorics has no dependency on statistics, so this package still builds and passes
   // its own `domainTypes`.

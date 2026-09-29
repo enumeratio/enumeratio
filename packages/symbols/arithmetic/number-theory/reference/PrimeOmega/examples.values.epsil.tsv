@@ -5,7 +5,7 @@ primeomega-12	primeOmega(12)	3
 threads-element-wise-over-a-list-as-wolfram-s	primeOmega([4, 12, 24])	[2, 3, 4]
 large-integers	primeOmega(30!)	59
 gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	primeOmega(5 + 9i)	2
-gaussianintegers-true-12-1-i-4-cdot-3	primeOmega(12, GaussianIntegers -> True)	5
+gaussianintegers-true-12-1-i-4-cdot-3	primeOmega(12, Over -> GaussianIntegers)	5
 listable-over-a-range	primeOmega(Range(20))	[0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3]
 completely-additive-omega-mn-omega-m-omega-n-for	primeOmega(24 * 40) == primeOmega(24) + primeOmega(40)	True
 omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	primeOmega(8) >= primeNu(8)	True

@@ -5,7 +5,7 @@ primenu-105	\mathrm{PrimeNu}(105)	3
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{PrimeNu}(\bigl\lbrack4, 28, 180\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
 large-integers-the-15-primes-up-to-50-divide-50	\mathrm{PrimeNu}(50!)	15
 gaussian-integers-3-i-1-i-2-i	\mathrm{PrimeNu}(3+i)	2
-gaussianintegers-true-5-splits-so-105-has-4	\mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	4
+gaussianintegers-true-5-splits-so-105-has-4	\mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	4
 listable-over-a-range	\mathrm{PrimeNu}(1..20)	\bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
 primenu-n-is-the-length-of-factorinteger-n	\mathrm{PrimeNu}(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))	\top
 32-2-5-has-just-one-distinct-prime-factor	\mathrm{PrimeNu}(32)	1

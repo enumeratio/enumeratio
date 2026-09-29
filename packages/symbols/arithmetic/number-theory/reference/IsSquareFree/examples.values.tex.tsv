@@ -6,7 +6,7 @@ every-prime-is-squarefree	\mathrm{IsSquareFree}(17)	\top
 issquarefree-20	\mathrm{IsSquareFree}(20)	\bot
 threads-element-wise-over-a-list	\mathrm{IsSquareFree}(\bigl\lbrack10, 4, 12\bigr\rbrack)	\bigl\lbrack\top, \bot, \bot\bigr\rbrack
 gaussian-integers-3-2i-is-a-gaussian-prime	\mathrm{IsSquareFree}(3+2i)	\top
-gaussianintegers-true-2-i-1-i-2	\mathrm{IsSquareFree}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
+gaussianintegers-true-2-i-1-i-2	\mathrm{IsSquareFree}(2, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
 rationals-numerator-and-denominator-are-both	\mathrm{IsSquareFree}(\frac{2}{3})	\top
 polynomials-x-2-6x-6-has-no-repeated-factor	\mathrm{IsSquareFree}(x^2+6x+6)	\top
 multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	\mathrm{IsSquareFree}(x^3-x^2y)	\bot

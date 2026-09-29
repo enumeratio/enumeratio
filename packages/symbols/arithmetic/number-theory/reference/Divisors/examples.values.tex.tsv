@@ -5,10 +5,10 @@ a-prime-s-only-divisors-are-1-and-itself	\mathrm{Divisors}(13)	\bigl\lbrack1, 13
 divisors-6	\mathrm{Divisors}(6)	\bigl\lbrack1, 2, 3, 6\bigr\rbrack
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Divisors}(\bigl\lbrack4, 6\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack1, 2, 3, 6\bigr\rbrack\bigr\rbrack
 divisors-3-plus-4i	\mathrm{Divisors}(3+4i)	\bigl\lbrack1, 2+i, 3+4i\bigr\rbrack
-13-2-3i-3-2i-splits-so-it-gains-two-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+13-2-3i-3-2i-splits-so-it-gains-two-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
 6-4i-i-1-i-2-3-2i	\mathrm{Divisors}(6+4i)	\bigl\lbrack1, 1+i, 1+5i, 2, 3+2i, 6+4i\bigr\rbrack
 listable-threads-over-a-list	\mathrm{Divisors}(\bigl\lbrack605, 871, 824\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 5, 11, 55, 121, 605\bigr\rbrack, \bigl\lbrack1, 13, 67, 871\bigr\rbrack, \bigl\lbrack1, 2, 4, 8, 103, 206, 412, 824\bigr\rbrack\bigr\rbrack
-5-in-the-gaussian-integers	\mathrm{Divisors}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 1+2i, 2+i, 5\bigr\rbrack
+5-in-the-gaussian-integers	\mathrm{Divisors}(5, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 1+2i, 2+i, 5\bigr\rbrack
 a-unit-s-only-divisor-is-1-its-own-normalisation	\mathrm{Divisors}(i)	\bigl\lbrack1\bigr\rbrack
 a-gaussian-prime-s-only-divisors-are-1-and	\mathrm{Divisors}(1+i)	\bigl\lbrack1, 1+i\bigr\rbrack
 a-prime-above-5	\mathrm{Divisors}(2+i)	\bigl\lbrack1, 2+i\bigr\rbrack
@@ -18,12 +18,12 @@ a-prime-above-13	\mathrm{Divisors}(3+2i)	\bigl\lbrack1, 3+2i\bigr\rbrack
 an-associate-has-the-same-divisors-up-to-that	\mathrm{Divisors}(-3-4i)	\bigl\lbrack1, 2+i, 3+4i\bigr\rbrack
 a-real-prime-s-associate-by-the-unit-i	\mathrm{Divisors}(7i)	\bigl\lbrack1, 7\bigr\rbrack
 a-negative-real-prime-complex-argument-form	\mathrm{Divisors}(-7)	\bigl\lbrack1, 7\bigr\rbrack
-7-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 7\bigr\rbrack
-13-1-mod-4-gains-gaussian-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
-a-real-composite-5-squared	\mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 1+2i, 2+i, 3+4i, 4+3i, 5, 5+10i, 10+5i, 25\bigr\rbrack
-2-ramifies-divisors-run-through-1-i	\mathrm{Divisors}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 1+i, 2\bigr\rbrack
-19-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 19\bigr\rbrack
-a-negative-real-composite	\mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
+7-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(7, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 7\bigr\rbrack
+13-1-mod-4-gains-gaussian-divisors	\mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+a-real-composite-5-squared	\mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 1+2i, 2+i, 3+4i, 4+3i, 5, 5+10i, 10+5i, 25\bigr\rbrack
+2-ramifies-divisors-run-through-1-i	\mathrm{Divisors}(2, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 1+i, 2\bigr\rbrack
+19-3-mod-4-has-the-same-divisors-as-in-z	\mathrm{Divisors}(19, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 19\bigr\rbrack
+a-negative-real-composite	\mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
 the-divisor-count-d-n-equals-sigma-0-n-see	\mathrm{Length}(\mathrm{Divisors}(20))=\mathrm{DivisorSigma}(0, 20)	\top
 1-has-exactly-one-divisor-itself	\mathrm{Divisors}(1)	\bigl\lbrack1\bigr\rbrack
 only-positive-divisors-even-for-negative-n	\mathrm{Divisors}(-6)	\bigl\lbrack1, 2, 3, 6\bigr\rbrack
