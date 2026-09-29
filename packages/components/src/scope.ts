@@ -2,7 +2,7 @@
 // `<notatio-dynamic-module>` is an explicit one over its subtree; the PAGE is the implicit one,
 // so a `<notatio-slider name="k">` and a `<notatio-dynamic value="_k^2">` written
 // anywhere on a page, with no wrapper, still find each other -- the wrapper is only
-// for isolation, when two examples reuse a name (design/vdom.md).
+// for isolation, when two examples reuse a name (https://github.com/enumeratio/enumeratio/wiki/Vdom).
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";

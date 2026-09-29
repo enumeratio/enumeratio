@@ -2,7 +2,7 @@
 // wildcard `_p`, in terms of heads compute-engine already has.
 //
 // These are not what runs; `stats.ts` holds the fast loops and those stay the
-// implementation. What these are for (design/namespaces.md §6):
+// implementation. What these are for (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6):
 //
 //   1. they SAY what the statistic means, in a form a reader can expand and evaluate;
 //   2. they are a differential oracle for the fast version — `tests/definitions.test.ts`
@@ -82,7 +82,7 @@ export const DEFINITIONS: Readonly<Record<string, MathJSON>> = {
 
 /**
  * Heads that do NOT reduce, with the reason — the primitive frontier for this package
- * (design/namespaces.md §6.1). Being on it is a claim to be justified, not a place to put
+ * (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6.1). Being on it is a claim to be justified, not a place to put
  * anything inconvenient.
  */
 export const PRIMITIVE: Readonly<Record<string, string>> = {

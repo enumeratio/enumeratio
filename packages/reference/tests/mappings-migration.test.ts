@@ -1,4 +1,4 @@
-// Symbol-metadata step 5 (design/speculative/symbol-metadata.md), completed: `mappings.ts`'s
+// Symbol-metadata step 5 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata), completed: `mappings.ts`'s
 // hand `MAPPINGS` literal is gone; it reads a generated table instead (mappings-data.ts,
 // packages/reference/scripts/collect-mappings.ts), rebuilt from every head's `origin: mapped`
 // `bindings:` rows -- `emit.ts` runs in the browser too, so it can't parse YAML at runtime.

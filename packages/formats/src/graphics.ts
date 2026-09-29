@@ -129,7 +129,7 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "DynamicModule",
   // The controls (Wolfram's Control family) and the layout that arranges them: an
   // expression over these draws as an interface, with the controls' variables bound
-  // through the page (design/components-and-symbols.md).
+  // through the page (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols).
   "Slider",
   "VerticalSlider",
   "Animator",

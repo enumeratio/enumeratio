@@ -8,8 +8,7 @@ import { readEntries } from "@enumeratio/entry/node";
 
 const entries = [
   // combinatorics' reference/ is now one directory shared by the collections and domains
-  // areas (recordDirs wants one `reference/` per package, design/speculative/combinatorics-
-  // layering-and-plausible.md's step-1 merge); this file only means to re-check the maps
+  // areas (recordDirs wants one `reference/` per package, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step-1 merge); this file only means to re-check the maps
   // (originally `domains/reference/`), so it filters to entries that carry a map tag.
   ...readEntries(new URL("../../combinatorics/reference/", import.meta.url)).filter(
     (entry) => entry.mapOn !== undefined,

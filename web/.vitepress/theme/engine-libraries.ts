@@ -45,6 +45,7 @@ export interface EngineLibraries {
   readonly declareNumberTheory: typeof import("@enumeratio/number-theory").declareNumberTheory;
   readonly declareAdeles: typeof import("@enumeratio/adeles").declareAdeles;
   readonly declareBraid: typeof import("@enumeratio/braid").declareBraid;
+  readonly declareFrontendCarriers: typeof import("@enumeratio/frontend/declare-carriers").declareFrontendCarriers;
 }
 
 /**
@@ -57,8 +58,7 @@ export interface EngineLibraries {
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */
 export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) => void, libs: EngineLibraries): void {
-  // Carriers, then the families typed by them -- one call (design/speculative/combinatorics-
-  // layering-and-plausible.md §4 step 3). Everything below declares heads OVER these minted
+  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3). Everything below declares heads OVER these minted
   // types, so they have to exist before a signature can name one.
   apply(libs.declareCombinatorics);
   // Every domain's plural type-space name, and Element membership over it -- AFTER
@@ -66,6 +66,9 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // ...) is still free when this checks, not raced by minting a bare symbol first.
   apply(libs.declareDomainPlurals);
   apply(libs.declareDomainElement);
+  // GlyphKind: type, constructor, plural type-space name and `Element` membership, all in
+  // one call (`declareCarriers`' default plural folding).
+  apply(libs.declareFrontendCarriers);
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too. Collections
   // already declares the fast permutation heads under the same names, so those are skipped

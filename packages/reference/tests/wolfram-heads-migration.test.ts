@@ -1,4 +1,4 @@
-// Symbol-metadata step 4 (design/speculative/symbol-metadata.md), completed: `to-wolfram.ts`'s
+// Symbol-metadata step 4 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata), completed: `to-wolfram.ts`'s
 // hand `HEADS` literal is gone; it reads a generated table instead (`wolfram-names-data.ts`,
 // `packages/reference/scripts/collect-wolfram-names.ts`), rebuilt from every head's
 // `names.wolfram` / `names.wolframIdentity` field -- `to-wolfram.ts` runs in the browser too,
@@ -14,7 +14,7 @@ import { loadReferenceData, PACKAGES } from "../src/node.ts";
 const { heads } = loadReferenceData(PACKAGES);
 
 // Every head keeps at most one copy of `names.wolfram`/`wolframIdentity` -- reference's own
-// when the head has two documenting packages (design/examples-as-data.md §9), so this reads
+// when the head has two documenting packages (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §9), so this reads
 // every loaded head rather than `referenceData()`'s canonical-only view: the migration writes
 // the canonical copy, and a stale duplicate copy would only show up here.
 const wolframFromYaml: Record<string, string> = {};

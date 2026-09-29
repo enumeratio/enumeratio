@@ -28,7 +28,7 @@ export function checkImplementations(entries: readonly ReferenceEntry[], exists?
     const bindings = rows(entry);
     if (bindings.length === 0) continue;
 
-    // Nothing is silently irreducible — design/namespaces.md §6.1. A `mapped` row alone
+    // Nothing is silently irreducible — https://github.com/enumeratio/enumeratio/wiki/Namespaces §6.1. A `mapped` row alone
     // doesn't trigger this: it's a crosswalk fact about another system's spelling (symbol-
     // metadata step 5), not a claim about how OUR head reduces, so a head documented ONLY by
     // its oracle mappings (many bare compute-engine/foreign heads never get a `reference`,

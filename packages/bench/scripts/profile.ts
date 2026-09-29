@@ -1,4 +1,4 @@
-// cpu-profile our side of chosen cases (design/benchmarking.md §9): one TS harness process
+// cpu-profile our side of chosen cases (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §9): one TS harness process
 // per case under V8's sampling profiler. The .cpuprofile files open in Chrome DevTools or
 // speedscope.
 //

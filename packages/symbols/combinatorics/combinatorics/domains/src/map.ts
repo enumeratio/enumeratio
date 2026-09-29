@@ -13,7 +13,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
-import { registerEquivalence, registerOperation } from "@enumeratio/structures";
+import {
+  applyComposition,
+  attachConversion,
+  extendBuiltin,
+  registerEquivalence,
+  registerOperation,
+} from "@enumeratio/structures";
 import {
   dyckPathBody,
   parentArrayBody,
@@ -21,17 +27,25 @@ import {
   treeOfDyckPathGuard,
   treeOfParentArrayBody,
   treeOfParentArrayGuard,
-} from "./binary-tree.ts";
-import { bstParents } from "./bst.ts";
+} from "../../trees/src/binary-tree.ts";
+import { bstParents } from "../../trees/src/bst.ts";
 import {
   cycleDecompositionBody,
   permutationOfCycleDecompositionBody,
   permutationOfCycleDecompositionGuard,
-} from "./cycle-decomposition.ts";
-import { applyComposition } from "./compose.ts";
-import { extendBuiltin } from "./extend.ts";
-import { fromPermutationLeftChild, fromPermutationRightChild, fromPermutationRoot } from "./increasing-binary-tree.ts";
-import { insertionReadingWord, insertionRowWord, insertionShape, recordingRowWord, rskRowWords } from "./tableau.ts";
+} from "../../permutations/src/cycle-decomposition.ts";
+import {
+  fromPermutationLeftChild,
+  fromPermutationRightChild,
+  fromPermutationRoot,
+} from "../../trees/src/increasing-binary-tree.ts";
+import {
+  insertionReadingWord,
+  insertionRowWord,
+  insertionShape,
+  recordingRowWord,
+  rskRowWords,
+} from "../../tableaux/src/tableau.ts";
 
 export interface CombinatorialMap {
   readonly name: string;
@@ -40,7 +54,7 @@ export interface CombinatorialMap {
   /** The carrier type it produces. */
   readonly to: string;
   /** The body, over `_raw` — the CONTENTS of the argument, since generic heads cannot see
-   *  through a domain constructor (design/domains.md §1.5). */
+   *  through a domain constructor (https://github.com/enumeratio/enumeratio/wiki/Domains §1.5). */
   readonly body?: unknown;
   /** A conversion between sibling carriers: no head of its own, but an overload of the target's
    *  constructor, so `SetPartition(RestrictedGrowthString([0, 1, 0]))` converts. Its `name` is
@@ -869,7 +883,7 @@ export function declareMaps(
 
     if (map.convert === true) {
       if (from === undefined || map.name !== wrap) throw new Error(`${map.name}: a conversion is named for its target`);
-      attachConversion(ce, wrap, from, map, handle);
+      attachConversion(ce, wrap, from, map.from, map.to, handle);
       continue;
     }
 
@@ -903,28 +917,6 @@ export function evaluateDefinition(ce: ComputeEngine, map: CombinatorialMap, con
     if (ce.box(guard as never).evaluate().json !== "True") return undefined;
   }
   return main.json;
-}
-
-/** A conversion as an overload of the target carrier's constructor: given a value of the source
- *  carrier it converts, and anything else goes on to what the constructor already did (hold). */
-function attachConversion(
-  ce: ComputeEngine,
-  target: string,
-  source: string,
-  map: CombinatorialMap,
-  handle: (subject: BoxedExpression) => BoxedExpression | undefined,
-): void {
-  const definition = ce.lookupDefinition(target);
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) throw new Error(`${target}: no constructor to convert with`);
-  const existingEvaluate = operator.evaluate;
-  // A lone arm is wrapped before it joins an overload set; `(a) -> b & c` would read as
-  // returning `b & c`.
-  const existing = String(operator.signature);
-  const arms = existing.includes(" & ") ? existing : `(${existing})`;
-  (operator as { signature: unknown }).signature = ce.type(`${arms} & ((${map.from}) -> ${map.to})`);
-  operator.evaluate = (ops: readonly BoxedExpression[], options) =>
-    ops.length === 1 && ops[0]?.operator === source ? handle(ops[0]) : existingEvaluate?.(ops, options);
 }
 
 /** Force a lazy result into a concrete List.

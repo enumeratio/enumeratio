@@ -77,9 +77,13 @@ class Writer {
           if (items.length === 2 && first === "{") {
             return `{${second[1].map((r) => r.map((b) => this.write(b)).join(" ")).join("; ")}}`;
           }
-          // A fenced matrix: the nested lists already fence it.
+          // A fenced matrix: the nested lists already fence it. AsciiMath writes its rows in
+          // brackets or parentheses inside the fence: `[[1, 2], [3, 4]]`, `|(1, 2), (3, 4)|`.
           if (items.length === 3 && typeof first === "string" && OPEN.has(first) && typeof third === "string") {
-            return this.write(second);
+            if (this.alphabet === "unicode") return this.write(second);
+            const [open, close] = first === "[" ? ["[", "]"] : ["(", ")"];
+            const rows = second[1].map((r) => `${open}${r.map((b) => this.write(b)).join(", ")}${close}`);
+            return `${first}${rows.join(", ")}${third}`;
           }
         }
         // Two juxtaposed boxes (`x^2` then `dx`) need a space where MathML needs nothing.

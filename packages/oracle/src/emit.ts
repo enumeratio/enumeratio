@@ -54,6 +54,15 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },
   ConstGlaisher: { wolfram: "Glaisher", mpmath: "glaisher", sage: "glaisher" },
   Khinchin: { wolfram: "Khinchin", mpmath: "khinchin", sage: "khinchin" },
+  // Our carrier's plural type-space symbol, now DEFINED_NAMES-defined (declareCarriers'
+  // default plural folding). Without an entry here it would fall into the DEFINED_NAMES
+  // branch below and get reported missing whenever it appears as a bare option VALUE
+  // (`Over -> GaussianIntegers`) — a named value here too, same as True/False/NaN above,
+  // not a free variable. Wolfram's own name for the same choice is unprefixed
+  // `GaussianIntegers` (see @enumeratio/wolfram's `FOREIGN` and `to-wolfram.ts`'s
+  // `KeyValuePair` special case); no other system's emit ever reaches this bare, since none
+  // has a curated `Over`-arity mapping for the heads that take it.
+  GaussianIntegers: { wolfram: "GaussianIntegers" },
 };
 
 /**

@@ -43,7 +43,7 @@ export const SYMBOLS: Record<string, string> = {
 };
 
 /** compute-engine head → Wolfram head, generated from every head's `names.wolfram` /
- * `names.wolframIdentity` field (design/speculative/symbol-metadata.md step 4;
+ * `names.wolframIdentity` field (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata step 4;
  * `packages/reference/scripts/collect-wolfram-names.ts`, pinned current by
  * `wolfram-heads-migration.test.ts`). Identity entries are kept on purpose: the map doubles
  * as the registry of heads the transpiler vouches for (`isWolframHead`), as opposed to heads
@@ -78,7 +78,7 @@ export const CONTEXT = "enumeratio`";
  * a wrong answer rather than a missing one, which is worse than either.
  */
 export const FOREIGN: Record<string, string> = {
-  // Ours is literal text inside boxes (design/boxes.md); Wolfram writes that as a quoted
+  // Ours is literal text inside boxes (https://github.com/enumeratio/enumeratio/wiki/Boxes); Wolfram writes that as a quoted
   // string, and its own TextBox is undocumented.
   TextBox: "an undocumented front-end box whose meaning Wolfram does not publish",
   // Ours holds a hole's Epsil as written, for the environment to parse; Wolfram's holds the
@@ -91,7 +91,7 @@ export const FOREIGN: Record<string, string> = {
   Composition: "a composition of functions, Composition[f, g]",
   Word: "the token specification used by Read and Find",
   Restricted: "an Interpreter form narrowed by a condition",
-  // Ours is the carrier's plural type-space symbol (design/domains.md §2 — Element(x,
+  // Ours is the carrier's plural type-space symbol (https://github.com/enumeratio/enumeratio/wiki/Domains §2 — Element(x,
   // GaussianIntegers) checks x's carrier); Wolfram's is an option flag (IsPrime[n,
   // GaussianIntegers -> True]), never a value on its own.
   GaussianIntegers: "the GaussianIntegers -> True/False option several number-theory functions take",
@@ -256,6 +256,20 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // unevaluated. Only a binding's own `Equal` is rewritten, not one deeper in the body.
   Module: (a) => localScope("Module", a),
   With: (a) => localScope("With", a),
+  // `Over -> R` is our own ring-selection option (never a Wolfram key -- a key is never a
+  // domain/collection name, #417's retirement of `GaussianIntegers -> True`); Wolfram's
+  // IsPrime/FactorInteger/Divisors/… spell the same choice of ring as their own
+  // `GaussianIntegers -> True/False` option instead. Recognised ring VALUES translate to
+  // that; anything else falls through to the generic `Rule[key, value]` rename (which
+  // `Over` itself, having no Wolfram counterpart, would emit unhelpfully -- there is no
+  // other ring to translate yet).
+  KeyValuePair: (a) => {
+    const [key, value] = a;
+    if (key === "Over" && (value === "GaussianIntegers" || value === "Integers")) {
+      return `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`;
+    }
+    return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
+  },
 };
 
 function localScope(head: string, args: MathJson[]): string {

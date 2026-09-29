@@ -1,6 +1,6 @@
 id	in	out
-harmonic-oscillator	\mathrm{DSolveValue}(Y^{\doubleprime}(x)+Y(x)=0, Y(x), x)	\sin(x)C(2)+\cos(x)C(1)
-with-initial-conditions	\mathrm{DSolveValue}(\begin{cases}Y^{\doubleprime}(x)+Y(x)=0\\Y(0)=1\\Y^{\prime}(0)=0\end{cases}, Y(x), x)	\cos(x)
-distinct-real-roots	\mathrm{DSolveValue}(Y^{\doubleprime}(x)-3Y^{\prime}(x)+2Y(x)=0, Y(x), x)	C(1)\exp(2x)+C(2)e^{x}
-repeated-root	\mathrm{DSolveValue}(Y^{\doubleprime}(x)-4Y^{\prime}(x)+4Y(x)=0, Y(x), x)	(xC(2)+C(1))\exp(2x)
-resonance-sine-forcing	\mathrm{DSolveValue}(Y^{\doubleprime}(x)+Y(x)=\sin(x), Y(x), x)	-\frac{x\cos(x)}{2}+\sin(x)C(2)+\cos(x)C(1)
+harmonic-oscillator	\mathrm{DSolveValue}(Y^{\prime\prime}(x)+Y(x)=0, Y(x), x)	\sin(x)C(2)+\cos(x)C(1)
+with-initial-conditions	\mathrm{DSolveValue}(\begin{cases}Y^{\prime\prime}(x)+Y(x)=0\\Y(0)=1\\Y^{\prime}(0)=0\end{cases}, Y(x), x)	\cos(x)
+distinct-real-roots	\mathrm{DSolveValue}(Y^{\prime\prime}(x)-3Y^{\prime}(x)+2Y(x)=0, Y(x), x)	C(1)\exp(2x)+C(2)e^{x}
+repeated-root	\mathrm{DSolveValue}(Y^{\prime\prime}(x)-4Y^{\prime}(x)+4Y(x)=0, Y(x), x)	(xC(2)+C(1))\exp(2x)
+resonance-sine-forcing	\mathrm{DSolveValue}(Y^{\prime\prime}(x)+Y(x)=\sin(x), Y(x), x)	-\frac{x\cos(x)}{2}+\sin(x)C(2)+\cos(x)C(1)

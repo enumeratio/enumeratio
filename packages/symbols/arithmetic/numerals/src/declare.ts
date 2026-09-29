@@ -14,7 +14,9 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { gcd } from "@enumeratio/residues";
+import { declareCarriers } from "@enumeratio/structures";
 import { declareAdic } from "./adic-declare.ts";
+import { NUMERALS_CARRIERS } from "./carrier-data.ts";
 import {
   bigIntToBaseString,
   digitLength,
@@ -199,6 +201,10 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
 }
 
 export function declareNumerals(ce: ComputeEngine): void {
+  // This package's own carriers — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
+  // constructors, plural type-space names and `Element` membership, all in one call.
+  declareCarriers(ce, NUMERALS_CARRIERS);
+
   defineMessages(ce, "IntegerDigits", { nonum: "`1` has no numeral in `2`." });
   defineMessages(ce, "FromDigits", { nonum: "`1` is not a numeral in `2`." });
   defineMessages(ce, "ResidueNumerals", {

@@ -9,7 +9,8 @@ import { data } from "../.vitepress/data/repo-docs.data.ts";
 # Packages
 
 The workspace packages, each with a short page. How they fit together, and which side of
-the enumeratio/notatio line each sits on, is in [the package map](/design/packages).
+the enumeratio/notatio line each sits on, is on the wiki's
+[Packages](https://github.com/enumeratio/enumeratio/wiki/Packages) page.
 
 <dl>
   <template v-for="pkg in data.packages" :key="pkg.slug">

@@ -1,4 +1,4 @@
-// Markdown as prose boxes, and back (design/speculative/prose-pipeline.md). One pass, no
+// Markdown as prose boxes, and back (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline). One pass, no
 // parser behind it: a `$…$` island is TeX held as written (`FormBox(tex, "TeXForm")`), and
 // a `${…}` hole is found by scanning, in running text and inside TeX alike, as Observable
 // does. The subset is what records and guides use: paragraphs, ATX headings, lists, block

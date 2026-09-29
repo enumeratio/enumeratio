@@ -18,7 +18,7 @@
 //
 // The list should stay short, and every entry should fail one of those tests. The renames
 // made under it are data now, not a table here: each head's own `formerly:` field
-// (design/speculative/symbol-metadata.md) names the catalog spelling it replaced --
+// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata) names the catalog spelling it replaced --
 // `CycleCount`'s says `Cycles` (rule 1: returns the NUMBER of cycles, not the cycles, leaving
 // `Cycles` free for the cycle decomposition Wolfram's own `Cycles` holds); `TwoCycleCount`,
 // `ThreeCycleCount`, `OccurrencesOf213`, `StandardTableauCount` and `TouchPointCount` all say

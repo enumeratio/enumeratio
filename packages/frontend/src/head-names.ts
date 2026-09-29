@@ -1,6 +1,6 @@
 // Every head that gets a `notatio-<head>` tag: every head the manifest knows (the engine's
-// own and every record's, design/manifest.md), the heads that draw, and the leaf tags of
-// the structural tree (design/vdom.md §1).
+// own and every record's, https://github.com/enumeratio/enumeratio/wiki/Manifest), the heads that draw, and the leaf tags of
+// the structural tree (https://github.com/enumeratio/enumeratio/wiki/Vdom §1).
 
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { SYMBOLS } from "@enumeratio/manifest";

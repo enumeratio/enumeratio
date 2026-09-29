@@ -28,9 +28,9 @@ signatures:
       - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
       - Type names: integer, rational, real, number, positive_integer, etc.
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
-    library: enumeratio-combinatorics
+    library: enumeratio-structures
     type: (any, any, boolean?) -> boolean
-    overrides: enumeratio-structures
+    overrides: compute-engine
   - call: Element(any, any, boolean?) -> boolean
     description: |-
       Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
@@ -43,9 +43,84 @@ signatures:
       - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
       - Type names: integer, rational, real, number, positive_integer, etc.
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
-    library: enumeratio-structures
+    library: enumeratio-combinatorics
     type: (any, any, boolean?) -> boolean
-    overrides: compute-engine
+    overrides: enumeratio-number-theory
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-frontend
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-combinatorics
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-residues
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-hypercomplex
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-numerals
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-residues
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-number-theory
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-numerals
+  - call: Element(any, any, boolean?) -> boolean
+    description: |-
+      Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
+
+      Element supports two modes of operation:
+      1. Set membership: Element(3, [List, 1, 2, 3]) checks if 3 is in the list
+      2. Type-style membership: Element(x, integer) checks if x has type integer
+
+      Type-style membership works with:
+      - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
+      - Type names: integer, rational, real, number, positive_integer, etc.
+      - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
+    library: enumeratio-hypercomplex
+    type: (any, any, boolean?) -> boolean
+    overrides: enumeratio-structures
 bindings:
   - origin: mapped
     form: wolfram

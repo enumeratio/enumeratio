@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, symlinkSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
@@ -56,7 +56,7 @@ for (const dir of packageDirs) {
 }
 
 // `@enumeratio/combinatorics` merges the `collections` and `domains` areas wholesale
-// (design/speculative/combinatorics-layering-and-plausible.md), each keeping its own
+// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible), each keeping its own
 // nested `<area>/src/index.ts` rather than a package-root `src/`, so the generic
 // dist->src rewrite above (which only swaps the `/dist/` segment) can't find them.
 // Alias the two `./collections` / `./domains` subpaths by hand.
@@ -66,25 +66,8 @@ for (const area of ["collections", "domains"]) {
   srcAliases.push({ find: new RegExp(`^@enumeratio/combinatorics/${area}$`), replacement: abs });
 }
 
-// design/speculative/: open design, rendered by `vitepress dev` only. It is linked into the
-// site as web/speculative (a gitignored symlink) and left out of builds.
 const dev = process.argv.includes("dev");
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const speculativeDir = resolve(webDir, "../design/speculative");
-const speculativeLink = resolve(webDir, "speculative");
-if (dev && existsSync(speculativeDir) && !existsSync(speculativeLink)) {
-  symlinkSync(speculativeDir, speculativeLink, "dir");
-}
-const speculative =
-  dev && existsSync(speculativeLink)
-    ? readdirSync(speculativeLink)
-        .filter((f) => f.endsWith(".md"))
-        .toSorted()
-        .map((f) => ({
-          text: f.replace(/\.md$/, ""),
-          link: `/speculative/${f.replace(/\.md$/, "")}`,
-        }))
-    : [];
 
 const config = withMermaid(
   defineConfig({
@@ -104,8 +87,8 @@ const config = withMermaid(
       "Mathematics you can compute, draw and check — every object with a home, every claim with a test, all live in your browser.",
     lang: "en-US",
     cleanUrls: true,
-    // `/review` (review mode) is dev-only, same as `/speculative`.
-    srcExclude: dev ? [] : ["speculative/**", "review/**"],
+    // `/review` (review mode) is dev-only.
+    srcExclude: dev ? [] : ["review/**"],
     // Dynamic reference routes carry their name in params; use it as the page title
     // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
     transformPageData(pageData: { params?: { name?: string }; title?: string }) {
@@ -263,7 +246,6 @@ const config = withMermaid(
             },
           ],
         },
-        ...(speculative.length > 0 ? [{ text: "Speculative (dev only)", items: speculative }] : []),
       ],
       socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/enumeratio" }],
     },

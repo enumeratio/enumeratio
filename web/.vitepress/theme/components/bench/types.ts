@@ -1,4 +1,4 @@
-// Mirrors packages/bench/src/types.ts's report/plan/index shapes (design/benchmarking.md §7).
+// Mirrors packages/bench/src/types.ts's report/plan/index shapes (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7).
 // Duplicated rather than imported: web shouldn't depend on packages/bench. Keep in sync by hand.
 
 export type BenchSystem = "ts" | "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "rust";

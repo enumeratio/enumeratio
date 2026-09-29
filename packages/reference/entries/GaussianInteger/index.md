@@ -10,6 +10,6 @@ stub: carrier
 signatures:
   - call: GaussianInteger(...)
     description: As a Gaussian integer
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (tuple<integer, integer>) -> gaussian_integer
 ---

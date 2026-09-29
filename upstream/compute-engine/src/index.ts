@@ -14,7 +14,7 @@ import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 export type { LibraryRecord, Patch } from "./patch.ts";
 export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.ts";
 
-// #340 special-function family (design/upstreaming.md §10; @enumeratio/analytic's
+// #340 special-function family (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10; @enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
 // The API landed in compute-engine 0.139; the arbitrary-precision N(x, d) path (this
 // patch's remaining job) has not -- see zeta-hurwitz.ts.
@@ -89,7 +89,7 @@ export {
 } from "./patches/stieltjes.ts";
 
 // Kernels several of the above (and @enumeratio/analytic's own non-candidate heads) depend
-// on -- see design/upstreaming.md §10 ("Kernels several candidates share").
+// on -- see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10 ("Kernels several candidates share").
 export {
   type Cx,
   cx,
@@ -176,7 +176,7 @@ export function applyAllPatches(ce: ComputeEngine): void {
   applyPatches(ce, PATCHES);
 }
 
-/** Every head any patch declares -- cheap, no engine needed (design/upstreaming.md §10). */
+/** Every head any patch declares -- cheap, no engine needed (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10). */
 export function symbols(): readonly string[] {
   return symbolsOf(PATCHES);
 }

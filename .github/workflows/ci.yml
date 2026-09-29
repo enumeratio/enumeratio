@@ -40,9 +40,9 @@ jobs:
           path: web/.vitepress/dist
           retention-days: 3
 
-  # Whether a PR touches anything the package suites can see: they read nothing under `web/`
-  # or `design/`, so a PR confined to those (and root docs) skips the shards. Pushes to main
-  # and manual runs always test.
+  # Whether a PR touches anything the package suites can see: they read nothing under `web/`,
+  # so a PR confined to that (and root docs) skips the shards. Pushes to main and manual runs
+  # always test.
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -58,7 +58,6 @@ jobs:
           filters: |
             packages:
               - '**'
-              - '!design/**'
               - '!web/**'
               - '!*.md'
 

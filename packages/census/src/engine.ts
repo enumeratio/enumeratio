@@ -40,6 +40,7 @@ import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
+import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
@@ -75,7 +76,7 @@ const domainTypes = (): Record<string, string> =>
 /**
  * Every declaration with the package that owns it, in an order that satisfies what depends
  * on what. The package is the directory name, as the manifest names packages: what a step
- * adds or re-signs is that package's contribution (design/manifest.md).
+ * adds or re-signs is that package's contribution (https://github.com/enumeratio/enumeratio/wiki/Manifest).
  */
 export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = [
   ["evaluation", declareEvaluation],
@@ -106,10 +107,9 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   ["braid", declareBraid],
   // After adeles, as in reference's engines: adeles' Fibonacci/LucasL widening, declared
   // later, would replace this package's wider signature (the real index, the two-argument
-  // polynomial). Until overloads dispatch (design/manifest.md), the last declare wins.
+  // polynomial). Until overloads dispatch (https://github.com/enumeratio/enumeratio/wiki/Manifest), the last declare wins.
   ["number-theory", declareNumberTheory],
-  // Carriers, then the families typed by them -- one call (design/speculative/combinatorics-
-  // layering-and-plausible.md §4 step 3), in place of `declareDomains` + `declareCollections`
+  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), in place of `declareDomains` + `declareCollections`
   // separately.
   ["combinatorics", declareCombinatorics],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
@@ -126,6 +126,11 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
       declareDomainElement(ce);
     },
   ],
+  // GlyphKind — moved here from combinatorics' domains/LEFTOVER_DOMAINS. Type, constructor,
+  // plural type-space name and `Element` membership, all in `declareFrontendCarriers` now
+  // (`declareCarriers`' default folding) — residues/numerals/number-theory/hypercomplex,
+  // listed above at their own declare call, already fold theirs the same way.
+  ["frontend", declareFrontendCarriers],
   // Statistics keys off the carrier types too, so it has to follow `declareCombinatorics`.
   // combinatorics has no dependency on statistics, so this package still builds and passes
   // its own `domainTypes`.

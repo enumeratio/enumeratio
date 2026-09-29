@@ -1,7 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 
 // A patch: something we offered compute-engine upstream, applied locally until it lands.
-// See design/upstreaming.md §10 -- laid out like compute-engine itself (numerics/, library/,
+// See https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10 -- laid out like compute-engine itself (numerics/, library/,
 // compilation/ under src/compute-engine/), with one manifest per future PR under
 // src/patches/, naming the issue and PR, the files it would carry, and the library record
 // it declares.

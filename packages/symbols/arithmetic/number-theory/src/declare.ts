@@ -9,7 +9,9 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
+import { declareCarriers } from "@enumeratio/structures";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
+import { NUMBER_THEORY_CARRIERS } from "./carrier-data.ts";
 import { declareBacklog } from "./declare-backlog.ts";
 import { declareFastFactorial } from "./declare-fast-factorial.ts";
 import { declareFastGcd } from "./declare-fast-gcd.ts";
@@ -28,6 +30,15 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: ComputeEngine): void {
+  // This package's own carriers — see carrier-data.ts for why they sit here rather than in
+  // numerals, and why the ordering this runs at (after numerals, after modular) is
+  // load-bearing. Types, constructor, plural type-space names and `Element` membership, all
+  // in one call: now that the ring an option like `IsPrime`'s reads is named by an `Over -> R`
+  // VALUE rather than a `GaussianIntegers -> True` KEY (#417's retirement), minting
+  // `GaussianIntegers` as `set<gaussian_integer>` right away no longer breaks anything reading
+  // it as a bare option tag.
+  declareCarriers(ce, NUMBER_THEORY_CARRIERS);
+
   declareGaussian(ce);
   declareGaussianRationalGcdLcm(ce);
   declareWidened(ce);

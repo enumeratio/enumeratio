@@ -4,12 +4,14 @@
 // divides the value, p = 1 — not just the bench's own three cases.
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
+import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareNumberTheory } from "../src/declare.ts";
 import { fibonacci, fibonacciMod, lucasL, lucasLMod } from "../src/fast-recurrence.ts";
 
 const ce = new ComputeEngine();
 declareResidues(ce);
+declareNumerals(ce);
 declareNumberTheory(ce);
 const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
 

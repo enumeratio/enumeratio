@@ -6,7 +6,7 @@ summary: The prime factorisation of n as a list of [prime, exponent] pairs.
 signatures:
   - call: FactorInteger(n)
     description: prime factorization of $n$ as $[\mathrm{prime}, \mathrm{exponent}]$ pairs.
-  - call: FactorInteger(n, GaussianIntegers -> True)
+  - call: FactorInteger(n, Over -> GaussianIntegers)
     description: 'the factorisation in $\mathbb{Z}[i]$: a unit first when it is not 1, then first-quadrant primes; a complex $n$ is always factored there'
     library: enumeratio-number-theory
     type: (number, any*) -> list

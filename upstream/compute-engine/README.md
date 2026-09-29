@@ -2,7 +2,7 @@
 
 What we have offered `@cortex-js/compute-engine` upstream, kept apart from what is ours —
 the model is Mathlib's `ForMathlib/`: code written in our repo, shaped for theirs. See
-`design/upstreaming.md` §10.
+`https://github.com/enumeratio/enumeratio/wiki/Upstreaming` §10.
 
 A leaf package: depends on compute-engine and `@enumeratio/engine`, nothing else of ours.
 Other packages import from here; this package never imports from them.

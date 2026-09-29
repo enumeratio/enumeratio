@@ -2,7 +2,7 @@
   "name": "@enumeratio/bench",
   "version": "0.0.0",
   "private": true,
-  "description": "Cross-system benchmarks: a catalogue of cases as data, native scripts generated per system through the oracle's emit, one measurement protocol, and per-run JSON reports. See design/benchmarking.md.",
+  "description": "Cross-system benchmarks: a catalogue of cases as data, native scripts generated per system through the oracle's emit, one measurement protocol, and per-run JSON reports. See https://github.com/enumeratio/enumeratio/wiki/Benchmarking.",
   "license": "WTFPL",
   "type": "module",
   "exports": {

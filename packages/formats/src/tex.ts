@@ -3,14 +3,30 @@
 // round an operand that fails its type check. Exported TeX is for a LaTeX document, so it is
 // rewritten into commands amsmath and amssymb provide.
 
-const MACROS: readonly (readonly [RegExp, string])[] = [
-  [/\\imaginaryI(?![a-zA-Z])/g, "i"],
-  [/\\exponentialE(?![a-zA-Z])/g, "e"],
+/** A letter for a command, spaced off a command name before it (`\lbrack e`, not `\lbracke`). */
+const letter =
+  (c: string) =>
+  (_: string, command: string | undefined): string =>
+    command === undefined ? c : `${command} ${c}`;
+
+const MACROS: readonly (readonly [RegExp, string | ((...args: string[]) => string)])[] = [
+  [/(\\[a-zA-Z]+)?\\imaginaryI(?![a-zA-Z])/g, letter("i")],
+  [/(\\[a-zA-Z]+)?\\exponentialE(?![a-zA-Z])/g, letter("e")],
   [/\\differentialD(?![a-zA-Z])/g, "\\mathrm{d}"],
   [/\\([NZQRC])(?![a-zA-Z])/g, "\\mathbb{$1}"],
   [/\\degree(?![a-zA-Z])/g, "^{\\circ}"],
   [/\\lparen(?![a-zA-Z])/g, "("],
   [/\\rparen(?![a-zA-Z])/g, ")"],
+  [/\\doubleprime(?![a-zA-Z])/g, "\\prime\\prime"],
+  [/\\tripleprime(?![a-zA-Z])/g, "\\prime\\prime\\prime"],
+  // A string's text, which compute-engine sets upright a second time.
+  [/\\text\{\\mathrm\{([^{}]*)\}\}/g, "\\text{$1}"],
+  // A string's `^` and `_`, which compute-engine leaves bare: math-only in text mode.
+  [
+    /\\text\{([^{}]*)\}/g,
+    (_: string, text: string) =>
+      `\\text{${text.replace(/(?<!\\)\^/g, "\\textasciicircum{}").replace(/(?<!\\)_/g, "\\_")}}`,
+  ],
 ];
 
 /** The balanced `{…}` group opening at `text[start]`, as `[contents, end]`. */
@@ -43,6 +59,6 @@ function unwrapMarkup(text: string): string {
 /** `latex` with MathLive-only commands rewritten for a LaTeX document. */
 export function portableTeX(latex: string): string {
   let out = unwrapMarkup(latex);
-  for (const [pattern, replacement] of MACROS) out = out.replace(pattern, replacement);
+  for (const [pattern, replacement] of MACROS) out = out.replace(pattern, replacement as string);
   return out;
 }

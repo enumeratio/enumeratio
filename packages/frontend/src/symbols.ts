@@ -4,7 +4,7 @@ import { serializeExpression } from "@enumeratio/formats/expression";
 import type { ScaleName } from "./scales.ts";
 
 // A symbol and its component are the same thing seen from two ends
-// (design/components-and-symbols.md). This is the map between them: for every head that
+// (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols). This is the map between them: for every head that
 // draws, which tag draws it and where its arguments land as attributes. It is pure --
 // no DOM, no Lit -- so it can be read by the docs build to emit the Vue wrappers, by
 // `<notatio-out>` to render an evaluated `Plot(…)`, and by anything else that holds an
@@ -762,7 +762,7 @@ const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
 
 /**
  * `TrackedSymbols -> All | Automatic | True | {a, b}` -- Wolfram's option name for the
- * capability that makes a `DynamicModule` reactive (design/rendering-environments.md's
+ * capability that makes a `DynamicModule` reactive (https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments's
  * companion, `tracked-symbols.ts`): every cell that reads a changed tracked symbol
  * re-evaluates, transitively, instead of the module staying a plain top-to-bottom
  * transcript. Normalised to one attribute, `tracked-symbols`, so the element parses it
@@ -782,7 +782,7 @@ const trackedSymbolsOption = (value: Json): Record<string, string> => {
 
 /**
  * `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
- * `Dynamic` (design/computation.md): which kernel a `DynamicModule`'s cells evaluate
+ * `Dynamic` (https://github.com/enumeratio/enumeratio/wiki/Computation): which kernel a `DynamicModule`'s cells evaluate
  * against. `"Local"` (the default, and anything not recognised as `"Worker"`) leaves
  * the attribute unset -- today's in-page evaluation; `"Worker"` sets it, routing
  * evaluation to the module's own `@enumeratio/evaluation/browser` session instead

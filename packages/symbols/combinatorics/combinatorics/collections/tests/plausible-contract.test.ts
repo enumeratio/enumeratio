@@ -1,4 +1,4 @@
-// The Plausible contract (design/plausible.md §6): every family declares what it is — carrier,
+// The Plausible contract (https://github.com/enumeratio/enumeratio/wiki/Plausible §6): every family declares what it is — carrier,
 // params, the cost of each operation, and a work bound wherever it enumerates — so the sampler
 // derives everything from the declaration and keeps no lists of its own. Families not yet
 // declared sit on a ratchet (plausible-undeclared.json) that only ever shrinks: after declaring,

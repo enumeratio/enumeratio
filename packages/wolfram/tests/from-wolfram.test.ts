@@ -26,10 +26,21 @@ test("symbols, with the reverse of the SYMBOLS map", () => {
 test("True/False round-trip as MathJSON symbol strings, not JS booleans", () => {
   expect(fromWolfram("True")).toBe("True");
   expect(fromWolfram("False")).toBe("False");
-  // An option value, as this codebase writes truth values elsewhere (see
-  // number-theory's GaussianIntegers option, e.g. IsPrime(5, GaussianIntegers -> True)).
+  // An option value, as this codebase writes truth values elsewhere -- a generic structural
+  // round-trip, independent of whether our own heads still read `GaussianIntegers` as a KEY
+  // (they don't; see `Over` below).
   const expr: MathJson = ["IsPrime", 5, ["KeyValuePair", "GaussianIntegers", "True"]];
   expect(fromWolfram(toWolfram(expr))).toEqual(expr);
+});
+
+test("Over -> GaussianIntegers, our own ring option, transpiles to Wolfram's GaussianIntegers -> True", () => {
+  // #417's retirement: our heads read the ring off `Over`'s VALUE, never a `GaussianIntegers`
+  // KEY -- but Wolfram's own IsPrime/FactorInteger/Divisors/… still spell the same choice as
+  // `GaussianIntegers -> True`, so the oracle rows keep agreeing.
+  expect(toWolfram(["IsPrime", 5, ["KeyValuePair", "Over", "GaussianIntegers"]])).toBe(
+    "PrimeQ[5, Rule[GaussianIntegers, True]]",
+  );
+  expect(toWolfram(["KeyValuePair", "Over", "Integers"])).toBe("Rule[GaussianIntegers, False]");
 });
 
 test("FullForm's DirectedInfinity spellings", () => {

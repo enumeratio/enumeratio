@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
+import { declareCarriers } from "@enumeratio/structures";
+import { HYPERCOMPLEX_CARRIERS } from "./carrier-data.ts";
 import {
   addMultivectors,
   conjugateMultivector,
@@ -119,6 +121,10 @@ const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(cont
 const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
 
 export function declareHypercomplex(ce: ComputeEngine): void {
+  // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
+  // constructor, plural type-space name and `Element` membership, all in one call.
+  declareCarriers(ce, HYPERCOMPLEX_CARRIERS);
+
   const linear = (
     ops: readonly BoxedExpression[],
     combine: (parts: Parameters<typeof addMultivectors>[1]) => BoxedExpression | undefined,

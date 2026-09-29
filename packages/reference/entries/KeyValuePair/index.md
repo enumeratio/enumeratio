@@ -2,21 +2,13 @@
 name: KeyValuePair
 domain: Compute engine
 signature: KeyValuePair(key, value)
-summary: A key/value pair -- how an option is passed to a head that takes one, e.g. `FactorInteger(5, KeyValuePair(GaussianIntegers, True))`.
+summary: A key/value pair -- how an option is passed to a head that takes one, e.g. `FactorInteger(5, KeyValuePair(Over, GaussianIntegers))`.
 signatures:
   - call: KeyValuePair(key, value)
     description: as compute-engine declares it
 names:
   wolfram: Rule
 bindings:
-  - origin: mapped
-    form: wolfram
-    template: Rule[$1, $2]
-    arity: 2
-    note: Wolfram's own option-rule head, `key -> value`.
-    checked:
-      version: 15.0.0
-      on: 2026-09-27
   - origin: mapped
     form: sympy
     template: ($1, $2)

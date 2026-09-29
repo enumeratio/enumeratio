@@ -11,9 +11,11 @@ const engine = (): ComputeEngine => {
 
 test("every carrier the catalog knows becomes a nominal type", () => {
   const ce = engine();
-  // enumeratio's 86, plus the restricted growth string and the other hand-added carriers —
-  // see each area's domain-data.ts and domains/src/domain-data.ts's LEFTOVER_DOMAINS.
-  expect(DOMAINS.length).toBe(88);
+  // combinatorics' own carriers — the areas' data, plus its findstat tooling records. The
+  // arithmetic and GlyphKind carriers that used to live in LEFTOVER_DOMAINS moved to their
+  // owning packages (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 steps
+  // 4-5); each package's own tests pin its own carrier count now.
+  expect(DOMAINS.length).toBe(71);
   for (const domain of DOMAINS) expect(String(ce.type(domain.type)), domain.name).toBe(domain.type);
 });
 
@@ -63,8 +65,7 @@ test("the shapes are enumeratio's actual storage, not an idealisation", () => {
   // is a carrier of its own (scripts/shape-overrides.ts).
   expect(shape("SetPartition")).toBe("list<list<integer>>");
   expect(shape("RestrictedGrowthString")).toBe("list<integer>");
-  expect(shape("RationalNumber")).toBe("tuple<integer, integer>");
-  expect(shape("ModularResidue")).toBe("tuple<integer, integer>");
+  // RationalNumber/ModularResidue moved to numerals/residues; their shapes are pinned there now.
   // A composite carrier names other carriers by their TYPE, which is the id verbatim.
   expect(shape("StandardTableauPair")).toBe("tuple<standard_tableau, standard_tableau>");
 });

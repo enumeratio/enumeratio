@@ -1,9 +1,8 @@
 // Dev-server-only "review mode": a small REST API in front of a markdown backlog
 // file, for working an owner through a backlog of shipped features (see the
 // task's AGENTS.md-adjacent spec / lane notes). Registered only for
-// `vitepress dev` (see config.mts, matching the design/speculative pattern) and
-// gated again here with `apply: "serve"`, so it never runs during
-// `vitepress build` / `vitepress preview`.
+// `vitepress dev` (see config.mts's `dev` flag) and gated again here with
+// `apply: "serve"`, so it never runs during `vitepress build` / `vitepress preview`.
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";

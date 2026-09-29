@@ -1,0 +1,99 @@
+{
+  "\\frac{x+1}{y-2}": {
+    "asciimath": "(x + 1)/(y - 2)"
+  },
+  "1 - 2x": {
+    "asciimath": "-2 x + 1"
+  },
+  "x - y - z": {
+    "asciimath": "x - y - z"
+  },
+  "a - (b - c)": {
+    "asciimath": "a - b + c"
+  },
+  "-x": {
+    "asciimath": "-x"
+  },
+  "x \\ge 3": {
+    "asciimath": "3 <= x"
+  },
+  "\\int_0^1 x^2 dx": {
+    "asciimath": "int_0^1 x^2 dx"
+  },
+  "\\sum_{n=1}^{10} n^2": {
+    "asciimath": "sum_(n = 1)^10 n^2"
+  },
+  "\\prod_{k=1}^{5} k": {
+    "asciimath": "prod_(k = 1)^5 k"
+  },
+  "\\lim_{x\\to 0}\\frac{\\sin x}{x}": {
+    "asciimath": "lim_(x -> 0) (sin(x))/x"
+  },
+  "e^{i\\pi}+1": {
+    "asciimath": "1 + e^(i pi)"
+  },
+  "2 + 3i": {
+    "asciimath": "2 + 3 i"
+  },
+  "1 - i": {
+    "asciimath": "1 - i"
+  },
+  "2 - \\frac{1}{2}i": {
+    "asciimath": "2 + (-1)/2 i"
+  },
+  "-3i": {
+    "asciimath": "-3 i"
+  },
+  "\\sin(x)\\cos(y)": {
+    "asciimath": "sin(x) cos(y)"
+  },
+  "\\sqrt{x}": {
+    "asciimath": "sqrt(x)"
+  },
+  "\\sqrt[3]{x}": {
+    "asciimath": "root(3)(x)"
+  },
+  "\\frac{1}{2}": {
+    "asciimath": "1/2"
+  },
+  "x^2+1": {
+    "asciimath": "x^2 + 1"
+  },
+  "10^{-3}": {
+    "asciimath": "10^(-3)"
+  },
+  "0.0000000000000001": {
+    "asciimath": "1 xx 10^(-16)"
+  },
+  "-0.0000000000000001": {
+    "asciimath": "-1 xx 10^(-16)"
+  },
+  "2.5\\times10^{-16}": {
+    "asciimath": "2.5 xx 10^(-16)"
+  },
+  "\\binom{5}{3}": {
+    "asciimath": "(5; 3)",
+    "back": ["Tuple", 5, 3]
+  },
+  "|x|": {
+    "asciimath": "|x|"
+  },
+  "\\log_2(8)": {
+    "asciimath": "log_2(8)"
+  },
+  "\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}": {
+    "asciimath": "((1, 2), (3, 4))"
+  },
+  "\\{1,2,3\\}": {
+    "asciimath": "{1, 2, 3}"
+  },
+  "[1,2,3]": {
+    "asciimath": "[1, 2, 3]"
+  },
+  "x_1 + x_2": {
+    "asciimath": "x_1 + x_2"
+  },
+  "\\frac{d}{dx} x^2": {
+    "asciimath": "d/(dx) x^2"
+  }
+}

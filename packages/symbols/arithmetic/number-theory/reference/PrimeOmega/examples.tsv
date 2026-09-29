@@ -5,7 +5,7 @@ primeomega-12			[PrimeOmega, 12]	3
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[PrimeOmega, [List, 4, 12, 24]]	[List, 2, 3, 4]	Threads element-wise over a list, as Wolfram's Listable heads do
 large-integers	Scope		[PrimeOmega, [Factorial, 30]]	59	Large integers
 gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	Scope		[PrimeOmega, [Complex, 5, 9]]	2	Gaussian integers: $5+9i$ has norm $106=2\cdot53$, so two prime factors
-gaussianintegers-true-12-1-i-4-cdot-3	Scope		[PrimeOmega, 12, [KeyValuePair, GaussianIntegers, True]]	5	GaussianIntegers -> True: $12=-(1+i)^4\cdot3$
+gaussianintegers-true-12-1-i-4-cdot-3	Scope		[PrimeOmega, 12, [KeyValuePair, Over, GaussianIntegers]]	5	GaussianIntegers -> True: $12=-(1+i)^4\cdot3$
 listable-over-a-range	Scope		[PrimeOmega, [Range, 20]]	[List, 0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3]	Listable over a [[Range]]
 completely-additive-omega-mn-omega-m-omega-n-for	Properties		[Equal, [PrimeOmega, [Multiply, 24, 40]], [Add, [PrimeOmega, 24], [PrimeOmega, 40]]]	True	Completely additive: $\Omega(mn)=\Omega(m)+\Omega(n)$ for all $m,n$
 omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	Properties		[GreaterEqual, [PrimeOmega, 8], [PrimeNu, 8]]	True	$\Omega(n)\ge\nu(n)$ always; here $8=2^3$ gives $\Omega=3$ but $\nu=1$. See [[PrimeNu]]

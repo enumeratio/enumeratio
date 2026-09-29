@@ -1,6 +1,7 @@
 // An example's id is its address: `#example/<id>` on its page, its test name, its rows in the
-// implementations record (design/examples-as-data.md §3). Deleting an example is fine. Giving
-// a surviving example a new id breaks every link to it, so a rename has to be said out loud:
+// implementations record (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §3).
+// Deleting an example is fine. Giving a surviving example a new id breaks every link to it,
+// so a rename has to be said out loud:
 // the PR description carries a line `renamed: <Head>/<old> -> <new>` for each one.
 //
 //   BASE=<merge-base sha> PR_BODY="$(…)" node .github/scripts/example-ids.ts

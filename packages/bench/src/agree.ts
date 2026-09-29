@@ -1,4 +1,4 @@
-// The correctness gate (design/benchmarking.md §4.5): a system's answer must match the pinned
+// The correctness gate (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4.5): a system's answer must match the pinned
 // one before its time counts. Exact answers compare as text, never through a double.
 
 import { compare, normalise } from "@enumeratio/oracle/src";

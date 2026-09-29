@@ -1,4 +1,4 @@
-// `declareCombinatorics` (design/speculative/combinatorics-layering-and-plausible.md §4 step
+// `declareCombinatorics` (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step
 // 3): an engine built with ONLY this one call still yields typed elements -- carriers,
 // families and maps all land without a host building `carrierTypes` or the constructor table
 // itself.

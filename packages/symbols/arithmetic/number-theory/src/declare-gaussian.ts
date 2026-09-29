@@ -4,6 +4,7 @@ import {
   bigRationalAt,
   mayBeInteger,
   operandsOf,
+  optionName,
   optionsOf,
   widenSignature,
   wrapOperator,
@@ -34,12 +35,25 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // compute-engine's integer heads, carried into ℤ[i] the way Wolfram carries them: a Gaussian
 // argument switches Mod, Quotient, GCD, LCM, ExtendedGCD and ModularInverse over on its own,
-// and `GaussianIntegers -> True` asks IsPrime, FactorInteger and Divisors to read a rational
-// integer in ℤ[i] (5 = (2 + i)(2 − i) is no longer prime). Each native head keeps its own
-// handler for everything else: the signature is widened in place and the Gaussian case is
+// and `Over -> GaussianIntegers` asks IsPrime, FactorInteger, Divisors and friends to read a
+// rational integer in ℤ[i] (5 = (2 + i)(2 − i) is no longer prime). Each native head keeps its
+// own handler for everything else: the signature is widened in place and the Gaussian case is
 // attached in front.
+//
+// `Over` chooses the ring by VALUE (a collection: `Integers`, the default, or the minted
+// `GaussianIntegers`), never by an option KEY — a key is never a domain or collection name
+// (the retired `GaussianIntegers -> True` was exactly that: its own carrier's plural doubling
+// as an option key, which is why minting the plural type-space name used to have to wait,
+// #417). `RINGS` is the one place that maps a ring's symbol to how these heads answer over it;
+// adding a ring later (a `EuclideanDomain`/`UniqueFactorizationMonoid` dispatch through
+// @enumeratio/structures) means widening this table, not this file's call sites.
 
 type Ops = readonly BoxedExpression[];
+
+/** The rings `Over` accepts today — ℤ, the default, and ℤ[i]. */
+type Ring = "Integers" | "GaussianIntegers";
+
+const RINGS: Readonly<Record<string, Ring>> = { Integers: "Integers", GaussianIntegers: "GaussianIntegers" };
 
 /** Every operand a Gaussian integer, and at least one of them off the real line. */
 const gaussianCall = (ops: Ops): Gaussian[] | undefined => {
@@ -49,18 +63,20 @@ const gaussianCall = (ops: Ops): Gaussian[] | undefined => {
 };
 
 /**
- * The `GaussianIntegers` option among the trailing rules: true, false, or undefined when absent.
- * Any other option leaves the call alone.
+ * The `Over` option among the trailing rules: the ring it names (`Integers` when absent), or
+ * `"other"` when a DIFFERENT option is present, or `Over` names something besides one of
+ * `RINGS` — either way the call is left alone rather than guessed at. The retired
+ * `GaussianIntegers -> True` key spelling is deliberately NOT read here: a key is never a
+ * carrier name, so that spelling simply isn't recognised as this option any more.
  */
-function gaussianOption(head: string, ops: Ops): { positional: number; value?: boolean } | "other" {
+function overOption(head: string, ops: Ops): { positional: number; ring: Ring } | "other" {
   const split = optionsOf([head, ...ops.map((op) => op.json)] as never);
   const names = Object.keys(split.options);
-  if (names.some((name) => name !== "GaussianIntegers")) return "other";
-  const setting = split.options.GaussianIntegers;
-  return {
-    positional: split.ops.length,
-    value: setting === undefined ? undefined : setting === "True",
-  };
+  if (names.some((name) => name !== "Over")) return "other";
+  const raw = split.options.Over;
+  const ring = raw === undefined ? "Integers" : RINGS[optionName(raw) ?? ""];
+  if (ring === undefined) return "other";
+  return { positional: split.ops.length, ring };
 }
 
 /** ⌊a/b⌋ for bigints, b ≠ 0. */
@@ -178,9 +194,9 @@ export function declareGaussian(ce: ComputeEngine): void {
   );
 
   // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
-  // only when asked. `GaussianIntegers -> False` (or no option) is the rational-integer call:
-  // `integer` where given (compute-engine's own factoriser gives up on p³ for a 21-digit p),
-  // else — or when it declines — the native handler.
+  // only when `Over -> GaussianIntegers` asks for it. `Over -> Integers` (or no option) is
+  // the rational-integer call: `integer` where given (compute-engine's own factoriser gives
+  // up on p³ for a 21-digit p), else — or when it declines — the native handler.
   const optionHead = (
     head: string,
     signature: string,
@@ -199,14 +215,14 @@ export function declareGaussian(ce: ComputeEngine): void {
     }
     const nativeEvaluate = operator.evaluate;
     const evaluate: typeof operator.evaluate = (ops, options) => {
-      const option = gaussianOption(head, ops);
+      const option = overOption(head, ops);
       if (option === "other" || option.positional !== 1) return undefined;
       // With the tuple exemption the engine no longer threads a list for us.
       if (ops[0]?.operator === "List") {
         return list(operandsOf(ops[0]).map((item) => evaluate!([item, ...ops.slice(1)], options)!));
       }
       const z = gaussianAt(ops[0]);
-      if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
+      if (z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) return answer(z);
       return (z !== undefined ? integer?.(z[0]) : undefined) ?? nativeEvaluate?.(ops.slice(0, 1), options);
     };
     operator.evaluate = evaluate;
@@ -264,7 +280,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   );
 
   // PrimeNu, PrimeOmega, MoebiusMu and IsSquareFree already answer plain integers (widened in
-  // declare.ts's threadOverLists); only the `GaussianIntegers -> True` read of a rational
+  // declare.ts's threadOverLists); only the `Over -> GaussianIntegers` read of a rational
   // integer, and a Gaussian argument off the real line, are new here.
   const bool = (value: boolean): BoxedExpression => ce.symbol(value ? "True" : "False");
 
@@ -285,7 +301,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     return squareFree === undefined ? undefined : bool(squareFree);
   });
 
-  // DivisorSigma(k, n, GaussianIntegers -> True): two positional arguments ahead of the
+  // DivisorSigma(k, n, Over -> GaussianIntegers): two positional arguments ahead of the
   // option, so it needs its own wiring rather than `optionHead`'s single-positional one.
   // Widened first so a Complex n, or a trailing option tuple, reach `evaluate` at all.
   widenSignature(ce, "DivisorSigma", "(number, number, any*) -> number");
@@ -294,18 +310,18 @@ export function declareGaussian(ce: ComputeEngine): void {
     nativeDivisorSigma !== undefined && "operator" in nativeDivisorSigma ? nativeDivisorSigma.operator : undefined;
   if (divisorSigmaOperator !== undefined) {
     // declare.ts marks DivisorSigma broadcastable, for the list-in-n case; without this a
-    // rule canonicalising to a Tuple (the GaussianIntegers option) gets threaded over too.
+    // rule canonicalising to a Tuple (the Over option) gets threaded over too.
     const flags = divisorSigmaOperator as { broadcastExemptions: readonly string[] };
     if (!flags.broadcastExemptions.includes("tuples")) {
       flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
     }
     const nativeEvaluate = divisorSigmaOperator.evaluate;
     divisorSigmaOperator.evaluate = (ops, options) => {
-      const option = gaussianOption("DivisorSigma", ops);
+      const option = overOption("DivisorSigma", ops);
       if (option !== "other" && option.positional === 2) {
         const k = bigIntegerAt(ops[0]);
         const z = gaussianAt(ops[1]);
-        if (k !== undefined && z !== undefined && (z[1] !== 0n || option.value === true)) {
+        if (k !== undefined && z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) {
           const sum = divisorSigmaGaussian(k, z);
           if (sum !== undefined) return gaussianExpression(ce, sum);
         }

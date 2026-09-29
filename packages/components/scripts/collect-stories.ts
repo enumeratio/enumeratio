@@ -1,8 +1,7 @@
 // Rebuild `src/stories-data.ts` from every `reference/<Name>.stories.yaml` -- the component
 // reference pages read this file, not the YAML, the same way the crosswalk reads
 // `curated-data.ts` instead of parsing records at runtime (they run in the browser and the
-// site build, and cannot parse YAML there). A story's `expr` is the source of truth (design/
-// vdom.md: a MathJSON node and a vdom node are the same tree under a renaming); its source
+// site build, and cannot parse YAML there). A story's `expr` is the source of truth (https://github.com/enumeratio/enumeratio/wiki/Vdom: a MathJSON node and a vdom node are the same tree under a renaming); its source
 // panel shows it in several equivalent written forms, each derived here and pinned so the page
 // never re-derives one:
 //
@@ -15,7 +14,7 @@
 //     same lowering that draws the live render -- plus `markupOf`);
 //   - `vdom`, the expression's own tree verbatim (`structuralOf`/`structuralMarkupOf`): every
 //     head a tag, every argument a child, PascalCase heads and all. Kept rather than dropped:
-//     it shows the AST shape design/vdom.md is about, which `vue`/`react`/`html` all obscure
+//     it shows the AST shape https://github.com/enumeratio/enumeratio/wiki/Vdom is about, which `vue`/`react`/`html` all obscure
 //     the moment a component maps an argument to an attribute (a chart's `data`, say) instead
 //     of a child -- `vue` doesn't cover it, so it stays, last.
 //

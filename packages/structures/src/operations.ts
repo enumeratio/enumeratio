@@ -2,7 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // Named operations on a carrier: the combinatorial statistics and maps
-// (design/speculative/statistics-and-maps.md). A carrier like `Permutation` has dozens of
+// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Statistics-and-Maps). A carrier like `Permutation` has dozens of
 // statistics, too many and too generically named for a global head each, so they are reached
 // through one head per kind -- `CombinatorialStat(π, "Inversions")` -- that finds the
 // carrier from its argument's type, as a protocol member does, and the operation by name or by
@@ -155,6 +155,16 @@ function implementationOf(ce: ComputeEngine, head: OperationHead, carrier: strin
  *  registered carrier -- its elements are bare lists. */
 export function collectionCarrierOf(ce: ComputeEngine, collection: string): string | undefined {
   return registryOf(ce).collections.get(collection);
+}
+
+/** The carrier CONSTRUCTOR name whose minted type is `type` (`permutation` -> `Permutation`),
+ *  as registered by `registerCarrier`/`declareCarriers`. Undefined when no registered carrier
+ *  has that type. */
+export function carrierNameForType(ce: ComputeEngine, type: string): string | undefined {
+  for (const carrier of registryOf(ce).carriers.values()) {
+    if (carrier.type === type) return carrier.name;
+  }
+  return undefined;
 }
 
 /**

@@ -11,7 +11,12 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCombinatorics } from "@enumeratio/combinatorics/src";
-import { declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import {
+  declareDomainElement,
+  declareDomainPlurals,
+  declareMaps,
+  DOMAINS,
+} from "@enumeratio/combinatorics/domains/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -39,10 +44,15 @@ const LIBRARY_DECLARATIONS = [
   declareHypercomplex,
   declareDiagrams,
   // Carriers, the families typed by them, and the plural type-spaces and Element -- one call
-  // (design/speculative/combinatorics-layering-and-plausible.md §4 step 3), so the
+  // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), so the
   // permutation families yield `Permutation` values, as the site's engine has them.
   declareCombinatorics,
-  // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
+  // Note: GlyphKind (frontend's own carrier, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5) is deliberately NOT declared in this engine — wiring it in would
+  // make @enumeratio/reference depend on @enumeratio/frontend, which already devDeps
+  // reference for its own tests, a real build cycle. GlyphKind's reference entry states its
+  // `library` directly (read, not derived from this engine — see `declaredLibrary` in
+  // provenance.ts), so this only affects its `provenance` classification, and it is a stub
+  // with no examples either way.
   declareStructures,
   declareResidues,
   declareNumerals,
@@ -68,6 +78,17 @@ const LIBRARY_DECLARATIONS = [
   (ce: ComputeEngine) => {
     declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])) });
     declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+  },
+  // Combinatorics' own carriers mint their plural type-space names and `Element` membership
+  // LAST, same as every other host (CLI, site, census): `declareCollections`, above, has
+  // already had first claim on any plural a real family enumerates (`Permutations`,
+  // `DyckPaths`, …), so this only mints the leftover carriers' `set<...>` symbols. Every other
+  // library's carriers fold this into their own `declare*` call already (`declareCarriers`'
+  // default); this is the one still-separate step, so the reference engine now runs it too —
+  // it used to skip it entirely.
+  (ce: ComputeEngine) => {
+    declareDomainPlurals(ce);
+    declareDomainElement(ce);
   },
 ];
 

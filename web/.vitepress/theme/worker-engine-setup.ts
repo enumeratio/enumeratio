@@ -28,6 +28,7 @@ import { declareBraid } from "@enumeratio/braid";
 import { declareCombinatorics } from "@enumeratio/combinatorics";
 import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
 import { declareDiagrams } from "@enumeratio/diagram";
+import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
 import { declareStructures } from "@enumeratio/structures";
@@ -52,6 +53,7 @@ export function configure(ce: ComputeEngine): void {
     ALL_STATISTICS,
     declareDomainPlurals,
     declareDomainElement,
+    declareFrontendCarriers,
     declareMaps,
     DOMAINS,
     declareAnalytic,

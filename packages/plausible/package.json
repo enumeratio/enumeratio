@@ -2,7 +2,7 @@
   "name": "@enumeratio/plausible",
   "version": "0.0.0",
   "private": true,
-  "description": "Seeded, size-aware generators for Plausible, the property sampler over our value spaces (design/plausible.md). A leaf with no workspace dependencies, so collections, reference and bench can all import it.",
+  "description": "Seeded, size-aware generators for Plausible, the property sampler over our value spaces (https://github.com/enumeratio/enumeratio/wiki/Plausible). A leaf with no workspace dependencies, so collections, reference and bench can all import it.",
   "license": "WTFPL",
   "type": "module",
   "exports": {

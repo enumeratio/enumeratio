@@ -6,7 +6,7 @@ every-prime-is-squarefree	isSquareFree(17)	True
 issquarefree-20	isSquareFree(20)	False
 threads-element-wise-over-a-list	isSquareFree([10, 4, 12])	[True, False, False]
 gaussian-integers-3-2i-is-a-gaussian-prime	isSquareFree(3 + 2i)	True
-gaussianintegers-true-2-i-1-i-2	isSquareFree(2, GaussianIntegers -> True)	False
+gaussianintegers-true-2-i-1-i-2	isSquareFree(2, Over -> GaussianIntegers)	False
 rationals-numerator-and-denominator-are-both	isSquareFree(2 / 3)	True
 polynomials-x-2-6x-6-has-no-repeated-factor	isSquareFree(x ^ 2 + 6x + 6)	True
 multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	isSquareFree(x ^ 3 - x ^ 2 * y)	False

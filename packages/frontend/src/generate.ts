@@ -5,7 +5,7 @@
 // is present is an attribute that is on. A page then writes `<Plot value="Sin(x)" />` or
 // `<Histogram data="[1,2,2,3]" />` and gets a compile-time check on the spelling: the
 // same names the engine knows, in the template language or in JSX
-// (design/components-and-symbols.md §2, design/vdom.md).
+// (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols §2, https://github.com/enumeratio/enumeratio/wiki/Vdom).
 //
 // Two kinds of component come out of one reading of the sources:
 //   - one per element, named for its tag (`notatio-plot-3d` -> `Plot3D`);

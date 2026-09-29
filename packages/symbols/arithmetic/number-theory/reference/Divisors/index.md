@@ -6,7 +6,7 @@ summary: All positive divisors of n, in increasing order.
 signatures:
   - call: Divisors(n)
     description: all positive divisors of $n$, increasing.
-  - call: Divisors(n, GaussianIntegers -> True)
+  - call: Divisors(n, Over -> GaussianIntegers)
     description: the first-quadrant divisors in $\mathbb{Z}[i]$, by real part then imaginary
     library: enumeratio-number-theory
     type: (number, any*) -> list

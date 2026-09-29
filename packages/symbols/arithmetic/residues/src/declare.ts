@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/engine";
+import { declareCarriers } from "@enumeratio/structures";
+import { RESIDUES_CARRIERS } from "./carrier-data.ts";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
@@ -23,6 +25,10 @@ const nativeEvaluate = (ce: ComputeEngine, name: string): Native => {
 };
 
 export function declareResidues(ce: ComputeEngine): void {
+  // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
+  // constructor, plural type-space name and `Element` membership, all in one call.
+  declareCarriers(ce, RESIDUES_CARRIERS);
+
   const list = (xs: readonly bigint[]): BoxedExpression =>
     ce.function(
       "List",

@@ -1,5 +1,4 @@
-// Retiring packages/catalog/src/catalog-data.ts, step 3 of 3 (design/speculative/
-// symbol-metadata.md's pattern, applied to the catalog dump): what `declareCatalog` needs --
+// Retiring packages/catalog/src/catalog-data.ts, step 3 of 3 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata's pattern, applied to the catalog dump): what `declareCatalog` needs --
 // CARRIERS, COLLECTIONS, STATS and MAPS -- moved onto each head's own record (`grades`/
 // `carrier`/`unbounded`, `catalogCarrier`, `statOn`/`mapOn`), and `@enumeratio/catalog` reads
 // a generated cache (`scripts/collect-catalog-records.ts` -> `catalog-records-data.ts`)

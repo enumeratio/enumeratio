@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: GaussianRational(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (tuple<rational_number, rational_number>) -> gaussian_rational
 ---

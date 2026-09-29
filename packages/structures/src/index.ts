@@ -9,6 +9,7 @@ export { type AlgebraFamily, declareAlgebra, ensureAlgebraHeads, type Product, r
 export { compare, type Conformance, conform, type Member, member } from "./conform.ts";
 export {
   type Carrier,
+  carrierNameForType,
   collectionCarrierOf,
   ensureOperationHeads,
   type Operation,
@@ -21,6 +22,37 @@ export {
   registerOperation,
 } from "./operations.ts";
 export { ancestry, ensureProtocols, PROTOCOLS, type Protocol, type ProtocolName } from "./protocols.ts";
+export {
+  attachConversion,
+  type CarrierDeclaration,
+  contentsOf,
+  declareCarrierElement,
+  declareCarrierPlurals,
+  declareCarriers,
+  /** @deprecated Renamed `CarrierDeclaration`. */
+  type Domain,
+  type Shape,
+  typeFor,
+} from "./carriers.ts";
+export { type Extension, extendBuiltin, PRIVATE_SUFFIX, privateNameFor, publicName } from "./extend.ts";
+export {
+  ALL_REPRESENTATIONS,
+  canonicalFor,
+  LATEX_REPRESENTATIONS,
+  type Medium,
+  type Representation,
+  REPRESENTATIONS,
+  representationsFor,
+} from "./representation.ts";
+export { applyComposition, declareCompose } from "./compose.ts";
+export {
+  declareRestricted,
+  declareRestrictions,
+  fillPredicate,
+  RESTRICTIONS,
+  RestrictionCollisionError,
+  type Restriction,
+} from "./restriction.ts";
 
 /** The protocols, compute-engine's types' conformances, the generic heads over them, and the algebra heads. */
 export function declareStructures(ce: ComputeEngine): void {

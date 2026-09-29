@@ -1,4 +1,4 @@
-// The measurement protocol (design/benchmarking.md §5). Every generated harness implements
+// The measurement protocol (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §5). Every generated harness implements
 // exactly this, from these numbers; bump `version` whenever one changes, since runs under
 // different protocols don't compare.
 

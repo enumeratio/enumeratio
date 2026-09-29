@@ -10,7 +10,7 @@ min-min-folds-into-a-normal-call	\min(\min(), 5)	5
 nested-lists-are-flattened-into-the-pool	\min(2, 3, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	-\frac{5}{3}
 exact-numbers-are-compared-numerically	\min(\sqrt{2}, \frac{3}{2})	\sqrt{2}
 the-numeric-arguments-collapse-to-their-minimum	\min(3, x, 5)	\min(3, x)
-compares-exact-constants-numerically-min-e-pi-5	\min(\bigl\lbracke, \pi, 5\bigr\rbrack)	e
+compares-exact-constants-numerically-min-e-pi-5	\min(\bigl\lbrack e, \pi, 5\bigr\rbrack)	e
 the-min-of-two-intervals-is-the-interval-of	\min(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))	\mathrm{Interval}(-3, 3)
 the-day-s-low-from-the-same-hourly-readings-see	\min(68, 72, 65, 80, 74)	65
 commutative-order-doesn-t-matter	\min(3, 7)=\min(7, 3)	\top

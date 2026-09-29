@@ -1,6 +1,6 @@
 # perf
 
-Advisory perf-drift tooling for `.github/workflows/perf.yml` (design/roadmap.md's "profiler job
+Advisory perf-drift tooling for `.github/workflows/perf.yml` (https://github.com/enumeratio/enumeratio/wiki/Roadmap's "profiler job
 in CI"). Runs each `packages/*` suite through vitest's JSON reporter, one package at a time so
 they don't contend for the same runner cores, and records per-test/per-file durations plus
 package wall time.

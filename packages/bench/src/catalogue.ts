@@ -1,4 +1,4 @@
-// The interim catalogue (design/benchmarking.md §3): `catalogue/*.yaml`, each a map from head
+// The interim catalogue (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §3): `catalogue/*.yaml`, each a map from head
 // to its cases, in the example shape plus `bench`. They move into each head's own
 // `reference/<Head>/index.md` as `role: bench` examples once the reference loader lands.
 

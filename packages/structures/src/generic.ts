@@ -3,7 +3,7 @@ import { operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumera
 import { compare, member } from "./conform.ts";
 
 // The generic heads: compute-engine's own `Min`, `Max`, `Clamp`, `Floor`, `Ceil`, `Round`,
-// taught to work on any value whose type has the structure they need (design/structures.md).
+// taught to work on any value whose type has the structure they need (https://github.com/enumeratio/enumeratio/wiki/Structures).
 // A real number keeps the native path, and so does anything with an unknown in it. Anything
 // else goes to the members of the protocols its type conforms to; when it conforms to none,
 // the native handler has it as before.

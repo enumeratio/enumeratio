@@ -1,5 +1,5 @@
 id	in	out
 2-5-7-equiv-1	\mathrm{GroupProduct}(C_{6}, \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{5}))	\mathrm{GroupBasis}(\text{1})
 d-4-8	\dim(k[D_{4}])	8
-s-2-1	\mathrm{GroupProduct}(D_{4}, \mathrm{GroupBasis}(\text{\mathrm{s0}}), \mathrm{GroupBasis}(\text{\mathrm{s0}}))	\mathrm{GroupBasis}(\text{0})
+s-2-1	\mathrm{GroupProduct}(D_{4}, \mathrm{GroupBasis}(\text{s0}), \mathrm{GroupBasis}(\text{s0}))	\mathrm{GroupBasis}(\text{0})
 so-k-d-4-is-not-commutative-either	\mathrm{GroupIsAbelian}(D_{4})	\mathrm{False}

@@ -1,4 +1,4 @@
-// The Wolfram Language harness (design/benchmarking.md §4.2). wolframscript runs its kernel
+// The Wolfram Language harness (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4.2). wolframscript runs its kernel
 // over a link, so the kernel can't read our stdin: the harness connects back to the
 // coordinator over TCP instead (`socket`). Each source is parsed once when the script loads,
 // held, and released inside the timing; `ClearSystemCache[]` runs before every sample.
