@@ -181,7 +181,15 @@ export interface ReferenceData {
   readonly kernels: Readonly<Record<string, string>>;
 }
 
-const cache = new Map<string, ReferenceData>();
+// vitepress's build reloads vite.config.mts (and everything it imports, transitively) through
+// more than one module runner in the same process -- once to resolve dynamic-route paths, again
+// per Rollup build (client, then SSR) -- so a plain module-level Map is a fresh, empty cache each
+// time. globalThis is the one thing every one of those module instances actually shares.
+const CACHE_KEY = Symbol.for("enumeratio.referenceData.cache");
+const cache = ((globalThis as Record<symbol, unknown>)[CACHE_KEY] ??= new Map<string, ReferenceData>()) as Map<
+  string,
+  ReferenceData
+>;
 
 /**
  * The reference data every consumer reads: the YAML, validated (a problem throws). Each

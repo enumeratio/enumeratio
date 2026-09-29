@@ -11,13 +11,17 @@ const RESOLVED = `\0${ID}`;
 // A head folder's files: index.md, examples.tsv and the generated examples.values.<system>.tsv.
 const WATCHED = /\/packages\/.*\/(reference|entries)\/[^/]+\/(index\.md|examples(\.values\.[^/.]+)?\.tsv)$/;
 
-export function referenceDataPlugin(): Plugin {
+export function referenceDataPlugin(dev: boolean): Plugin {
   return {
     name: "enumeratio-reference-data",
     resolveId: (id) => (id === ID ? RESOLVED : undefined),
     load(id) {
       if (id !== RESOLVED) return undefined;
-      return `export default ${JSON.stringify(referenceData(undefined, { fresh: true }).entries)};`;
+      // Dev rereads from disk every time so a record change (below) actually shows up. A build
+      // has nothing to invalidate, so let referenceData's own memo answer every call after the
+      // first -- resolving dynamic routes, and each of the client/SSR bundles, all read the same
+      // parse of the YAML.
+      return `export default ${JSON.stringify(referenceData(undefined, { fresh: dev }).entries)};`;
     },
     configureServer(server: ViteDevServer) {
       // The config is bundled to a temp file, so paths come from the site root (web/), not import.meta.
