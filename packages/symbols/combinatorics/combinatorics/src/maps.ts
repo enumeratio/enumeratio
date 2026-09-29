@@ -20,6 +20,8 @@ import {
   registerEquivalence,
   registerOperation,
 } from "@enumeratio/structures";
+import { CARRIERS } from "./carriers.ts";
+import { fastDefinition } from "./compiled.ts";
 import {
   dyckPathBody,
   parentArrayBody,
@@ -841,9 +843,22 @@ export function declareMaps(
   constructorFor: Readonly<Record<string, string>>,
   maps: readonly CombinatorialMap[] = MAPS,
 ): void {
+  const shapeOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier.shape]));
   for (const map of maps) {
     const wrap = constructorFor[map.to];
     if (wrap === undefined) throw new Error(`no constructor for ${map.to}`);
+    // The definition as it runs: compiled where compute-engine's compiler takes it, memoized.
+    const definition =
+      map.body === undefined
+        ? undefined
+        : fastDefinition({
+            ce,
+            body: map.body,
+            guard: map.guard,
+            from: shapeOf.get(map.from),
+            to: shapeOf.get(map.to),
+            interpret: (contents) => evaluateDefinition(ce, map, contents),
+          });
 
     const handle = (subject: BoxedExpression): BoxedExpression | undefined => {
       // A composed map applies its steps right to left, each through its own declared head —
@@ -852,11 +867,9 @@ export function declareMaps(
       if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
       const contents = operandsOf(subject)[0];
       if (contents === undefined) return undefined;
-      const main = materialise(ce, ce.box(fill(map.body, contents.json) as never).evaluate());
-      if (map.guard !== undefined) {
-        const guard = fill(fill(map.guard, contents.json), main.json, "_image");
-        if (ce.box(guard as never).evaluate().json !== "True") return undefined;
-      }
+      const image = definition?.(contents.json);
+      if (image === undefined) return undefined;
+      const main = ce.box(image as never);
       const extra = (map.extra ?? []).map((argument) => ce.box(fill(argument, contents.json) as never).evaluate());
       // A tuple-shaped carrier takes ONE argument that is a Tuple, not several arguments —
       // `finset` is `(members, n)`, so a map into it hands over a single Tuple.
