@@ -1,18 +1,16 @@
 // The site's reference, assembled from the documented entries (the loader's, one per head):
 // behind them a stub for every carrier domain and every symbol the bare engine binds, so each
-// has a page that shows its crosswalk. Stubs never shadow an entry. Shared by the browser
-// (reference.ts, over the virtual module) and the Node side of the site (reference-node.ts).
+// has a page that shows its crosswalk. Stubs never shadow an entry. Assembled in Node, for the
+// dynamic routes and the virtual module (reference-node.ts, reference-data.ts); the browser
+// only looks things up in the result (reference-lookups.ts).
 
 import { CARRIERS } from "@enumeratio/combinatorics";
 import type { Carrier } from "@enumeratio/structures";
 import type { MathJSON, ReferenceEntry } from "@enumeratio/reference";
 import { engineEntries } from "@enumeratio/reference";
+import { lookups } from "./reference-lookups.ts";
 
-export interface HeadInfo {
-  href?: string;
-  definition?: ReferenceEntry["examples"][number]["expr"];
-  primitive?: string;
-}
+export type { HeadInfo } from "./reference-lookups.ts";
 
 /** Split `tuple<A, B, …>`'s inner list on top-level commas -- a shape can nest
  *  (`tuple<list<integer>, list<integer>>`), so a plain `.split(",")` would cut inside it. */
@@ -103,29 +101,5 @@ export function assemble(loaded: readonly ReferenceEntry[]) {
       new Set([...byName.keys(), ...carrierStubs.map((s) => s.name), ...pluralStubs.map((s) => s.name)]),
     ),
   ];
-  const getEntry = (name: string): ReferenceEntry | undefined => entries.find((entry) => entry.name === name);
-  /**
-   * The head resolver a reference page hands to its TreeForm cells: a link to the entry, the
-   * `reference` implementation to unfold into, and the primitive reason when there is one.
-   */
-  const resolveHead = (name: string): HeadInfo | undefined => {
-    const entry = getEntry(name);
-    if (!entry) return undefined;
-    const definition = entry.bindings?.find((impl) => impl.origin === "reference")?.expr;
-    return {
-      href: `/reference/symbol/${name}`,
-      ...(definition === undefined ? {} : { definition }),
-      ...(entry.primitive ? { primitive: entry.primitive } : {}),
-    };
-  };
-  const entriesByDomain = (): { domain: string; entries: ReferenceEntry[] }[] => {
-    const groups = new Map<string, ReferenceEntry[]>();
-    for (const entry of entries) {
-      const group = groups.get(entry.domain) ?? [];
-      group.push(entry);
-      groups.set(entry.domain, group);
-    }
-    return [...groups].map(([domain, group]) => ({ domain, entries: group }));
-  };
-  return { documented, entries, getEntry, resolveHead, entriesByDomain };
+  return { documented, ...lookups(entries) };
 }

@@ -1,15 +1,23 @@
-// `virtual:reference-entries`: the documented entries, one per head, as the loader reads them
-// from every package's YAML. In dev, a change to any record (entry or implementations) invalidates the
+// `virtual:reference-entries`: the assembled reference, one entry per head, as the loader reads
+// them from every package's records. In dev, a change to any record (entry or implementations) invalidates the
 // module and reloads the page.
 
 import { resolve } from "node:path";
+import type { ReferenceEntry } from "@enumeratio/reference";
 import { referenceData } from "@enumeratio/reference/node";
+import { assemble } from "./data/reference-assemble.ts";
 import type { Plugin, ViteDevServer } from "vite";
 
 const ID = "virtual:reference-entries";
 const RESOLVED = `\0${ID}`;
 // A head folder's files: index.md, examples.tsv and the generated examples.values.<system>.tsv.
 const WATCHED = /\/packages\/.*\/(reference|entries)\/[^/]+\/(index\.md|examples(\.values\.[^/.]+)?\.tsv)$/;
+
+/** An entry without what only its own page shows: examples, body and details. */
+const slim = ({ examples: _examples, body: _body, details: _details, ...entry }: ReferenceEntry): ReferenceEntry => ({
+  ...entry,
+  examples: [],
+});
 
 export function referenceDataPlugin(dev: boolean): Plugin {
   return {
@@ -21,7 +29,10 @@ export function referenceDataPlugin(dev: boolean): Plugin {
       // has nothing to invalidate, so let referenceData's own memo answer every call after the
       // first -- resolving dynamic routes, and each of the client/SSR bundles, all read the same
       // parse of the YAML.
-      return `export default ${JSON.stringify(referenceData(undefined, { fresh: dev }).entries)};`;
+      const { entries } = assemble(referenceData(undefined, { fresh: dev }).entries);
+      // A build ships each symbol page its own entry (its route's params) and every page only
+      // what cross-page lookups read; dev keeps whole entries here, reread on every edit.
+      return `export default ${JSON.stringify(dev ? entries : entries.map(slim))};`;
     },
     configureServer(server: ViteDevServer) {
       // The config is bundled to a temp file, so paths come from the site root (web/), not import.meta.

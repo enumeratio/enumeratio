@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
+import { crosswalkFor, type ReferenceEntry, type ResolvedReference } from "@enumeratio/reference";
 import { visualSymbol } from "@enumeratio/frontend/symbols";
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
@@ -9,8 +9,9 @@ import { renderBlock, renderInline, renderProse } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
-const props = defineProps<{ name: string }>();
-const entry = computed(() => getEntry(props.name));
+const props = defineProps<{ name: string; entry?: ReferenceEntry }>();
+// The route hands over the whole entry in a build; dev reads it live from the reference data.
+const entry = computed(() => (import.meta.env.DEV ? getEntry(props.name) : (props.entry ?? getEntry(props.name))));
 
 // Where this head is drawn, if it is -- symbols.ts's own head<->tag map
 // (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols), not the record's `bindings` (a `component` binding is

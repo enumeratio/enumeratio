@@ -1,9 +1,9 @@
-// The reference as the theme sees it, in the browser and in SSR: the entries come from the
-// `virtual:reference-entries` module (reference-data.ts), which the loader fills from every
-// package's YAML at build time and refreshes in dev.
+// The reference as the theme sees it, in the browser and in SSR: the assembled entries come from
+// the `virtual:reference-entries` module (reference-data.ts), whole in dev and slim in a build,
+// where a symbol page gets its own entry through its route.
 
 import loaded from "virtual:reference-entries";
-import { assemble } from "./reference-assemble.ts";
+import { lookups } from "./reference-lookups.ts";
 
-export type { HeadInfo } from "./reference-assemble.ts";
-export const { documented, entries, getEntry, resolveHead, entriesByDomain } = assemble(loaded);
+export type { HeadInfo } from "./reference-lookups.ts";
+export const { entries, getEntry, resolveHead, entriesByDomain } = lookups(loaded);
