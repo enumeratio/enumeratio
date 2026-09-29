@@ -1,12 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareStructures } from "@enumeratio/structures";
 import { describe, expect, it } from "vite-plus/test";
-import { declareDomains } from "../../domains/src/index.ts";
+import { declareCombinatoricsCarriers } from "../../src/carriers.ts";
 
 // Integer partitions under dominance: a lattice, not a total order.
 const ce = new ComputeEngine();
 declareStructures(ce);
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 
 const P = (...parts: number[]) => ["IntegerPartition", ["List", ...parts]];
 const evaluate = (json: unknown) => ce.box(json as never).evaluate().json;

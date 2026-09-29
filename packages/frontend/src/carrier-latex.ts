@@ -18,15 +18,15 @@
 // engine's own serialisation is triggered, and the conventional spelling stays available for
 // display — which is the honest division rather than a compromise.
 //
-// These entries cannot be contributed by `declareDomains`: compute-engine takes its LaTeX
+// These entries cannot be contributed by `declareCarriers`: compute-engine takes its LaTeX
 // dictionary as a CONSTRUCTOR option that REPLACES the default (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7).
 // A caller merges them:
 //
 //   new ComputeEngine({ latexSyntax: new LatexSyntax({
-//     dictionary: [...LATEX_DICTIONARY, ...carrierLatex(DOMAINS)],
+//     dictionary: [...LATEX_DICTIONARY, ...carrierLatex(CARRIERS)],
 //   })})
 
-import type { Domain } from "@enumeratio/structures";
+import type { Carrier } from "@enumeratio/structures";
 
 /** Loose shape of a compute-engine LaTeX dictionary entry, typed structurally so this
  *  data-only module does not drag the engine's types in. */
@@ -40,8 +40,8 @@ export interface LatexEntry {
 
 /** The trigger for a carrier constructor — `\perm`, `\intpart`, … Short, and distinct from
  *  anything in the standard dictionary. */
-export const triggerFor = (domain: Domain): string =>
-  `\\${domain.type.replace(/_(.)/g, (_, c: string) => c.toUpperCase())}`;
+export const triggerFor = (carrier: Carrier): string =>
+  `\\${carrier.type.replace(/_(.)/g, (_, c: string) => c.toUpperCase())}`;
 
 /** The operands of a constructed carrier value, as raw MathJSON. */
 function contentsOf(expr: unknown): unknown[] {
@@ -54,15 +54,15 @@ function contentsOf(expr: unknown): unknown[] {
  * A dictionary entry per carrier: serialises with its trigger so the result reads back, and
  * parses that trigger into the constructor.
  */
-export function carrierLatex(domains: readonly Domain[]): LatexEntry[] {
-  return domains.map((domain) => ({
+export function carrierLatex(carriers: readonly Carrier[]): LatexEntry[] {
+  return carriers.map((carrier) => ({
     kind: "function" as const,
-    name: domain.name,
-    latexTrigger: triggerFor(domain),
+    name: carrier.name,
+    latexTrigger: triggerFor(carrier),
     serialize: (_serializer: unknown, expr: unknown): string =>
-      `${triggerFor(domain)}(${contentsOf(expr).map(String).join(", ")})`,
+      `${triggerFor(carrier)}(${contentsOf(expr).map(String).join(", ")})`,
     parse: (parser: { parseArguments: () => unknown[] | null }): unknown => [
-      domain.name,
+      carrier.name,
       ["List", ...(parser.parseArguments() ?? [])],
     ],
   }));

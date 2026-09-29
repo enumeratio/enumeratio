@@ -24,8 +24,8 @@ export interface Operation {
   readonly kernel?: (subject: BoxedExpression) => BoxedExpression | undefined;
 }
 
-/** A carrier: its constructor head (`Permutation`) and, when minted, its type (`permutation`). */
-export interface Carrier {
+/** A minimal carrier registration: its constructor head (`Permutation`) and, when minted, its type (`permutation`). */
+export interface CarrierRegistration {
   readonly name: string;
   readonly type?: string;
 }
@@ -47,7 +47,7 @@ interface Table {
 }
 
 interface Registry {
-  readonly carriers: Map<string, Carrier>;
+  readonly carriers: Map<string, CarrierRegistration>;
   /** A collection head (`Permutations`, `Derangements`) to the carrier its elements inhabit. */
   readonly collections: Map<string, string>;
   readonly tables: Record<OperationHead, Table>;
@@ -85,7 +85,7 @@ function registryOf(ce: ComputeEngine): Registry {
 }
 
 /** Name a carrier, and the type its values carry when there is one. Idempotent. */
-export function registerCarrier(ce: ComputeEngine, carrier: Carrier): void {
+export function registerCarrier(ce: ComputeEngine, carrier: CarrierRegistration): void {
   const registry = registryOf(ce);
   const known = registry.carriers.get(carrier.name);
   if (known?.type === undefined) registry.carriers.set(carrier.name, { ...known, ...carrier });
@@ -205,9 +205,9 @@ export function operationOf(
 }
 
 /** The carrier `subject` is a value of: its type matched as protocol dispatch matches it. */
-const parsedTypes = new WeakMap<Carrier, ReturnType<ComputeEngine["type"]>>();
+const parsedTypes = new WeakMap<CarrierRegistration, ReturnType<ComputeEngine["type"]>>();
 
-function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpression): Carrier | undefined {
+function carrierOf(ce: ComputeEngine, registry: Registry, subject: BoxedExpression): CarrierRegistration | undefined {
   // A carrier's own constructor names it outright: `Permutation([…])` is a permutation.
   const named = subject.operator === undefined ? undefined : registry.carriers.get(subject.operator);
   if (named?.type !== undefined) return named;

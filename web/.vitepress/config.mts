@@ -55,12 +55,11 @@ for (const dir of packageDirs) {
   }
 }
 
-// `@enumeratio/combinatorics` merges the `collections` and `domains` areas wholesale
-// (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible), each keeping its own
-// nested `<area>/src/index.ts` rather than a package-root `src/`, so the generic
-// dist->src rewrite above (which only swaps the `/dist/` segment) can't find them.
-// Alias the two `./collections` / `./domains` subpaths by hand.
-for (const area of ["collections", "domains"]) {
+// `@enumeratio/combinatorics` keeps its `collections` area (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
+// under its own nested `<area>/src/index.ts` rather than a package-root `src/`, so the
+// generic dist->src rewrite above (which only swaps the `/dist/` segment) can't find it.
+// Alias the `./collections` subpath by hand.
+for (const area of ["collections"]) {
   const abs = resolve(pkgsDir, "symbols/combinatorics/combinatorics", area, "src/index.ts");
   if (!existsSync(abs)) continue;
   srcAliases.push({ find: new RegExp(`^@enumeratio/combinatorics/${area}$`), replacement: abs });

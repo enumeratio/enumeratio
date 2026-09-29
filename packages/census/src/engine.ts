@@ -18,17 +18,7 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
-import { declareCombinatorics } from "@enumeratio/combinatorics/src";
-import {
-  DOMAINS,
-  RESTRICTIONS,
-  declareCompose,
-  declareDomainElement,
-  declareDomainPlurals,
-  declareMaps,
-  declareRestricted,
-  declareRestrictions,
-} from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGraphics } from "@enumeratio/formats/src";
 import { declareGeometric } from "@enumeratio/geometric/src";
@@ -46,10 +36,16 @@ import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import {
+  declareCarrierElement,
+  declareCarrierPlurals,
+  declareCompose,
+  declareRestricted,
+  declareRestrictions,
   declareStructures,
   ensureAlgebraHeads,
   ensureOperationHeads,
   ensureProtocols,
+  RESTRICTIONS,
 } from "@enumeratio/structures/src";
 import {
   ALL_STATISTICS,
@@ -67,11 +63,11 @@ type Declare = (ce: ComputeEngine) => void;
 
 // Statistics takes each carrier's type by its name, as the site's engine gives it.
 const carrierTypes = (): Record<string, string> =>
-  Object.fromEntries(DOMAINS.map((domain) => [domain.name, domain.type]));
+  Object.fromEntries(CARRIERS.map((carrier) => [carrier.name, carrier.type]));
 
 // `declareMaps` takes the constructor by its type, the other way around.
-const domainTypes = (): Record<string, string> =>
-  Object.fromEntries(DOMAINS.map((domain) => [domain.type, domain.name]));
+const constructorTypes = (): Record<string, string> =>
+  Object.fromEntries(CARRIERS.map((carrier) => [carrier.type, carrier.name]));
 
 /**
  * Every declaration with the package that owns it, in an order that satisfies what depends
@@ -109,7 +105,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // later, would replace this package's wider signature (the real index, the two-argument
   // polynomial). Until overloads dispatch (https://github.com/enumeratio/enumeratio/wiki/Manifest), the last declare wins.
   ["number-theory", declareNumberTheory],
-  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), in place of `declareDomains` + `declareCollections`
+  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), in place of `declareCombinatoricsCarriers` + `declareCollections`
   // separately.
   ["combinatorics", declareCombinatorics],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
@@ -122,11 +118,11 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   [
     "combinatorics",
     (ce) => {
-      declareDomainPlurals(ce);
-      declareDomainElement(ce);
+      declareCarrierPlurals(ce, CARRIERS);
+      declareCarrierElement(ce, CARRIERS);
     },
   ],
-  // GlyphKind — moved here from combinatorics' domains/LEFTOVER_DOMAINS. Type, constructor,
+  // GlyphKind — moved here from combinatorics' now-retired domains area's LEFTOVER_CARRIERS. Type, constructor,
   // plural type-space name and `Element` membership, all in `declareFrontendCarriers` now
   // (`declareCarriers`' default folding) — residues/numerals/number-theory/hypercomplex,
   // listed above at their own declare call, already fold theirs the same way.
@@ -154,7 +150,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   [
     "combinatorics",
     (ce) => {
-      declareMaps(ce, domainTypes());
+      declareMaps(ce, constructorTypes());
       declareRestricted(ce);
       declareRestrictions(ce, RESTRICTIONS);
     },

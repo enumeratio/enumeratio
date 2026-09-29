@@ -5,7 +5,6 @@ export default defineConfig({
     entry: {
       index: "src/index.ts",
       collections: "collections/src/index.ts",
-      domains: "domains/src/index.ts",
     },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },
@@ -17,7 +16,7 @@ export default defineConfig({
     options: { typeAware: true, typeCheck: true },
   },
   fmt: {},
-  // domains' exhaustive map/tableau suites (RSK over S5, etc.) set the floor;
+  // the map/tableau suites' exhaustive checks (RSK over S5, etc.) set the floor;
   // collections' permutation-class round-trips fit well inside it.
   test: { testTimeout: 300_000 },
 });

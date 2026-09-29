@@ -12,9 +12,9 @@
 // it has to run after modular's widening, the same relative position combinatorics held it in
 // before this move. Every host declares modular before number-theory already.
 
-import type { CarrierDeclaration } from "@enumeratio/structures";
+import type { Carrier } from "@enumeratio/structures";
 
-export const NUMBER_THEORY_CARRIERS: readonly CarrierDeclaration[] = [
+export const NUMBER_THEORY_CARRIERS: readonly Carrier[] = [
   {
     name: "CollatzTrajectory",
     type: "collatz_trajectory",

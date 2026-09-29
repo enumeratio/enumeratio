@@ -1,20 +1,19 @@
-// `Element(x, <plural>)` membership (https://github.com/enumeratio/enumeratio/wiki/Domains §2, `declareDomainElement` in
-// declare.ts): True for a value of the matching carrier, False for one of ours on a
+// `Element(x, <plural>)` membership (https://github.com/enumeratio/enumeratio/wiki/Domains §2, `declareCarrierElement` in
+// @enumeratio/structures): True for a value of the matching carrier, False for one of ours on a
 // DIFFERENT carrier, unevaluated for anything else (a bare symbol, a value with no
 // declared carrier at all).
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { type Carrier, declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { declareDomainElement, declareDomainPlurals, declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import type { Domain } from "@enumeratio/structures";
+import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
 
 const engine = (): ComputeEngine => {
   const ce = new ComputeEngine();
-  declareDomains(ce);
+  declareCombinatoricsCarriers(ce);
   // No collections declared in this package's own tests, so every plural is free to mint.
-  declareDomainPlurals(ce);
-  declareDomainElement(ce);
+  declareCarrierPlurals(ce, CARRIERS);
+  declareCarrierElement(ce, CARRIERS);
   return ce;
 };
 
@@ -39,8 +38,8 @@ function splitArgs(inner: string): string[] {
 /** A structurally-valid (not necessarily combinatorially meaningful) MathJSON value for a
  *  shape: a leaf primitive, a one-element `list<...>`, a `tuple<...>` of its parts, or —
  *  for a composite carrier's shape naming another carrier by TYPE (a tableau pair is two
- *  tableaux) — that other domain's own constructor, applied recursively. */
-function sampleFor(shape: string, byType: ReadonlyMap<string, Domain>): unknown {
+ *  tableaux) — that other carrier's own constructor, applied recursively. */
+function sampleFor(shape: string, byType: ReadonlyMap<string, Carrier>): unknown {
   if (shape === "integer" || shape === "number") return 1;
   if (shape === "string") return "'a'";
   if (shape === "boolean") return true;
@@ -49,9 +48,9 @@ function sampleFor(shape: string, byType: ReadonlyMap<string, Domain>): unknown 
   if (shape.startsWith("tuple<")) {
     return ["Tuple", ...splitArgs(shape.slice(6, -1)).map((part) => sampleFor(part, byType))];
   }
-  const domain = byType.get(shape);
-  if (domain === undefined) throw new Error(`element.test.ts: no sample for shape "${shape}"`);
-  return [domain.name, sampleFor(domain.shape, byType)];
+  const carrier = byType.get(shape);
+  if (carrier === undefined) throw new Error(`carriers-element.test.ts: no sample for shape "${shape}"`);
+  return [carrier.name, sampleFor(carrier.shape, byType)];
 }
 
 test("Element(DyckPath([1, 0]), DyckPaths) is True", () => {
@@ -72,26 +71,27 @@ test("Element stays unevaluated for a bare, unresolved symbol", () => {
 
 test("a compute-engine native meaning still answers when x is not one of ours", () => {
   // RationalNumbers is both a compute-engine native (the mathematical set of all rationals)
-  // and one of our own carriers (@enumeratio/combinatorics/domains' rational_number) -- our layer only
-  // claims the case it recognises, so a plain number still gets compute-engine's own answer.
+  // and one of our own carriers (@enumeratio/number-theory's rational_number) -- our layer
+  // only claims the case it recognises, so a plain number still gets compute-engine's own
+  // answer.
   const ce = engine();
   expect(ce.box(["Element", 3, "RationalNumbers"]).evaluate().json).toBe("True");
 });
 
-test("every domain with a plural answers Element for its own constructor", () => {
+test("every carrier with a plural answers Element for its own constructor", () => {
   const ce = engine();
-  const byType = new Map(DOMAINS.map((d) => [d.type, d]));
-  for (const domain of DOMAINS) {
-    if (domain.plural === undefined) continue;
-    const value = [domain.name, sampleFor(domain.shape, byType)];
-    const result = ce.box(["Element", value, domain.plural] as never).evaluate();
-    expect(result.json, `Element(${domain.name}(…), ${domain.plural})`).toBe("True");
+  const byType = new Map(CARRIERS.map((c) => [c.type, c]));
+  for (const carrier of CARRIERS) {
+    if (carrier.plural === undefined) continue;
+    const value = [carrier.name, sampleFor(carrier.shape, byType)];
+    const result = ce.box(["Element", value, carrier.plural] as never).evaluate();
+    expect(result.json, `Element(${carrier.name}(…), ${carrier.plural})`).toBe("True");
   }
 });
 
 test("every combinatorics carrier has a plural type space", () => {
   // ContinuedFraction — the one carrier without one — moved to numerals/number-theory; that
   // package's own tests pin the no-plural case now.
-  const noPlural = DOMAINS.filter((d) => d.plural === undefined).map((d) => d.name);
+  const noPlural = CARRIERS.filter((c) => c.plural === undefined).map((c) => c.name);
   expect(noPlural).toEqual([]);
 });

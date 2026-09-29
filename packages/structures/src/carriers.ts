@@ -16,7 +16,7 @@ import { carrierNameForType, registerCarrier, registerCollectionCarrier } from "
 /** The structural shape a carrier's values have, as a compute-engine type expression. */
 export type Shape = string;
 
-export interface CarrierDeclaration {
+export interface Carrier {
   /** The carrier's name, singular — and the CONSTRUCTOR head's spelling. */
   readonly name: string;
   /** The nominal type's name — lowercase singular, which a signature reads. */
@@ -41,9 +41,6 @@ export interface CarrierDeclaration {
   /** The membership predicate, as a head taking a value of the parent carrier. */
   readonly predicate?: string;
 }
-
-/** @deprecated Renamed `CarrierDeclaration`. Kept while importers move. */
-export type Domain = CarrierDeclaration;
 
 /**
  * Three names for three things, and no suffix on any of them — because compute-engine's own
@@ -75,14 +72,14 @@ export const typeFor = (id: string): string => id;
  */
 export function declareCarriers(
   ce: ComputeEngine,
-  carriers: readonly CarrierDeclaration[],
+  carriers: readonly Carrier[],
   options?: { readonly plurals?: boolean },
 ): void {
   // Types first: a constructor's signature names its own type, so the type has to exist.
   // Shapes referring to another carrier (a tableau pair is two tableaux) are declared in
   // dependency order by sorting those last.
   const named = new Set(carriers.map((c) => c.type));
-  const refersToCarrier = (c: CarrierDeclaration): boolean =>
+  const refersToCarrier = (c: Carrier): boolean =>
     [...named].some((other) => other !== c.type && c.shape.includes(other));
   const ordered = [...carriers.filter((c) => !refersToCarrier(c)), ...carriers.filter(refersToCarrier)];
 
@@ -113,7 +110,7 @@ export function declareCarriers(
  * arm, and the existing signature may already be an overload set with a `where` clause on one
  * of its arms, which splicing in unwrapped keeps legal.
  */
-function declareConstructor(ce: ComputeEngine, carrier: CarrierDeclaration): void {
+function declareConstructor(ce: ComputeEngine, carrier: Carrier): void {
   const clause = `(${carrier.shape}) -> ${carrier.type}`;
   const definition = ce.lookupDefinition(carrier.name);
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
@@ -146,7 +143,7 @@ export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression 
  * what makes `Element(x, <plural>)` answer regardless of whether this minted a fresh symbol or
  * the name was already spoken for.
  */
-export function declareCarrierPlurals(ce: ComputeEngine, carriers: readonly CarrierDeclaration[]): void {
+export function declareCarrierPlurals(ce: ComputeEngine, carriers: readonly Carrier[]): void {
   for (const carrier of carriers) {
     if (carrier.plural === undefined) continue;
     // `CombinatorialStat(IntegerPartitions, name)` reaches the carrier through its plural.
@@ -167,11 +164,9 @@ export function declareCarrierPlurals(ce: ComputeEngine, carriers: readonly Carr
  * `declareConstructor`: mutating the existing operator's `evaluate` never calls `ce.declare` a
  * second time, so it never throws regardless of which package's declare call ran first.
  */
-export function declareCarrierElement(ce: ComputeEngine, carriers: readonly CarrierDeclaration[]): void {
+export function declareCarrierElement(ce: ComputeEngine, carriers: readonly Carrier[]): void {
   const carrierOf = new Map(
-    carriers
-      .filter((c): c is CarrierDeclaration & { plural: string } => c.plural !== undefined)
-      .map((c) => [c.plural, c.name]),
+    carriers.filter((c): c is Carrier & { plural: string } => c.plural !== undefined).map((c) => [c.plural, c.name]),
   );
   const constructors = new Set(carriers.map((c) => c.name));
 

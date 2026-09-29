@@ -137,7 +137,7 @@ const PERM_STATS: Record<string, (p: number[]) => number> = {
 
 export interface StatsOptions {
   /**
-   * The minted carrier type for a permutation (`@enumeratio/combinatorics/domains`' `permutation`). Given
+   * The minted carrier type for a permutation (`@enumeratio/combinatorics`' `permutation`). Given
    * it, each head takes the CARRIER: `Cycles(Permutation([2,3,1]))` is the question and
    * `Cycles([2,3,1])` is a type error. A word statistic additionally accepts a bare list,
    * because that reading stands on its own.
@@ -153,7 +153,7 @@ export interface StatsOptions {
   readonly permutationCarrier?: string;
   /**
    * Every carrier's minted type, by its constructor (`{ IntegerPartition: "integer_partition" }`,
-   * from `@enumeratio/combinatorics/domains`). A family whose elements are one of them yields that carrier's
+   * from `@enumeratio/combinatorics`). A family whose elements are one of them yields that carrier's
    * values and is typed by it. `permutationType` is the permutations' entry.
    */
   readonly carrierTypes?: Readonly<Record<string, string>>;

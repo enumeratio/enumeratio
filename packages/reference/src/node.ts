@@ -289,11 +289,12 @@ export function writeOracleAgreements(data: ReferenceData = referenceData()): vo
 const OWN_ENGINE = new Set(["statistics"]);
 
 /** The combinatorics area's maps (originally `@enumeratio/domains`, before it merged into
- * `@enumeratio/combinatorics` wholesale: https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step 1) -- the same carrier-typed-argument problem as `OWN_ENGINE`, but the
- * merge means `packageOf` can no longer single them out from the collections area by package
- * name alone. This is the domains area's reference/ folder listing as of the merge; it moves
- * with the heads when maps are carved into their own area (migration step 5). */
-const DOMAINS_HEADS = new Set([
+ * `@enumeratio/combinatorics` wholesale, and before ITS domains area was retired: https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's
+ * step 1) -- the same carrier-typed-argument problem as `OWN_ENGINE`, but the merge means
+ * `packageOf` can no longer single them out from the collections area by package name alone.
+ * This is the (former) domains area's reference/ folder listing as of the merge; it moves
+ * with the heads when maps are carved into their own area. */
+const MAP_HEADS = new Set([
   "ArcRepresentation",
   "BinarySearchTree",
   "BinarySearchTreeParentArray",
@@ -341,11 +342,9 @@ const DOMAINS_HEADS = new Set([
 ]);
 
 /** The entries the reference engine evaluates: every head but those in `OWN_ENGINE` or
- * `DOMAINS_HEADS`. */
+ * `MAP_HEADS`. */
 export function referenceEntries(data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
-  return data.entries.filter(
-    (entry) => !OWN_ENGINE.has(data.packageOf.get(entry.name)!) && !DOMAINS_HEADS.has(entry.name),
-  );
+  return data.entries.filter((entry) => !OWN_ENGINE.has(data.packageOf.get(entry.name)!) && !MAP_HEADS.has(entry.name));
 }
 
 /** One package's own entries (by directory name), as that package's tests run them. */

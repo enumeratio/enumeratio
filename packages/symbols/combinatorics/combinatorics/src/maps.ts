@@ -27,25 +27,25 @@ import {
   treeOfDyckPathGuard,
   treeOfParentArrayBody,
   treeOfParentArrayGuard,
-} from "../../trees/src/binary-tree.ts";
-import { bstParents } from "../../trees/src/bst.ts";
+} from "../trees/src/binary-tree.ts";
+import { bstParents } from "../trees/src/bst.ts";
 import {
   cycleDecompositionBody,
   permutationOfCycleDecompositionBody,
   permutationOfCycleDecompositionGuard,
-} from "../../permutations/src/cycle-decomposition.ts";
+} from "../permutations/src/cycle-decomposition.ts";
 import {
   fromPermutationLeftChild,
   fromPermutationRightChild,
   fromPermutationRoot,
-} from "../../trees/src/increasing-binary-tree.ts";
+} from "../trees/src/increasing-binary-tree.ts";
 import {
   insertionReadingWord,
   insertionRowWord,
   insertionShape,
   recordingRowWord,
   rskRowWords,
-} from "../../tableaux/src/tableau.ts";
+} from "../tableaux/src/tableau.ts";
 
 export interface CombinatorialMap {
   readonly name: string;

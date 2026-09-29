@@ -5,10 +5,10 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import type { CarrierDeclaration } from "../src/carriers.ts";
+import type { Carrier } from "../src/carriers.ts";
 import { declareCarrierElement, declareCarrierPlurals, declareCarriers } from "../src/carriers.ts";
 
-const SAME_CARRIER: readonly CarrierDeclaration[] = [
+const SAME_CARRIER: readonly Carrier[] = [
   { name: "Widget", type: "widget", shape: "list<integer>", id: "widget", plural: "Widgets" },
 ];
 

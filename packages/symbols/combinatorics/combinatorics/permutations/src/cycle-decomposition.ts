@@ -2,7 +2,7 @@
 // its size and converts back. Wolfram's `Cycles` drops fixed points and so doesn't. The
 // conversions are defined in Epsil; tests/map-definitions.test.ts checks them against the
 // collections' own (`PermutationsAsCycles`).
-import { recurse, self } from "../../domains/src/recursion.ts";
+import { recurse, self } from "../../src/recursion.ts";
 
 type MathJSON = unknown;
 

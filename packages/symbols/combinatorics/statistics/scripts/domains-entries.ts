@@ -1,8 +1,9 @@
-// combinatorics' domains area's generated reference entries — one per combinatorial map, plus
-// one per undefined map on the frontier. Same shape and the same reason as the statistics
-// entries: the map data carries a signature and a summary but no worked example, so this
-// evaluates each map at a fixed subject and pins the answer. scripts/collect-domains-
-// entries.ts writes them; tests/domains-generated.test.ts checks they're current.
+// combinatorics' maps' generated reference entries (maps used to live in combinatorics' now-
+// retired domains area) — one per combinatorial map, plus one per undefined map on the
+// frontier. Same shape and the same reason as the statistics entries: the map data carries a
+// signature and a summary but no worked example, so this evaluates each map at a fixed subject
+// and pins the answer. scripts/collect-domains-entries.ts writes them; tests/domains-
+// generated.test.ts checks they're current.
 //
 // Lives here, not in combinatorics, because it needs declareStatistics: combinatorics already
 // devDeps statistics would cycle back (statistics needs declareCollections for its own
@@ -15,13 +16,13 @@ import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { ALL_STATISTICS, declareStatistics } from "../src/index.ts";
 import {
+  CARRIERS,
   type CombinatorialMap,
-  declareDomains,
+  declareCombinatoricsCarriers,
   declareMaps,
-  DOMAINS,
   MAPS,
   UNDEFINED_MAPS,
-} from "@enumeratio/combinatorics/domains/src";
+} from "@enumeratio/combinatorics/src";
 
 /** A sample value per carrier TYPE, as the contents a constructor wraps. */
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
@@ -47,13 +48,13 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   binary_word: { contents: ["List", 0, 1, 1, 0, 0], caption: "the binary word $01100$" },
 };
 
-const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
+const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 const ce = new ComputeEngine();
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 // A guard may read a statistic (KrewerasComplement's counts cycles), so the statistics go in
 // before the maps — the same order tests/entries.test.ts uses.
 declareStatistics(ce, ALL_STATISTICS, {
-  domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])),
+  domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])),
 });
 declareMaps(ce, constructorFor);
 
@@ -124,7 +125,7 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry 
     details: [
       `Would take a \`${carrier(map.from)}\` to a \`${carrier(map.to)}\`.`,
       `On the map frontier: ${map.why}`,
-      "Listed in `UNDEFINED_MAPS` (@enumeratio/combinatorics/domains) with that reason — a claim to be justified, not a place to put anything inconvenient.",
+      "Listed in `UNDEFINED_MAPS` (@enumeratio/combinatorics) with that reason — a claim to be justified, not a place to put anything inconvenient.",
     ],
     examples: withIds(examples),
   };

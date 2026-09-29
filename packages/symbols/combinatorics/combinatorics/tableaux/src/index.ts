@@ -1,1 +1,1 @@
-export { TABLEAUX_DOMAINS } from "./domain-data.ts";
+export { TABLEAUX_CARRIERS } from "./carrier-data.ts";

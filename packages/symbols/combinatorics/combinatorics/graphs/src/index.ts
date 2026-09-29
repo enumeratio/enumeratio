@@ -1,1 +1,1 @@
-export { GRAPHS_DOMAINS } from "./domain-data.ts";
+export { GRAPHS_CARRIERS } from "./carrier-data.ts";

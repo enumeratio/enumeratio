@@ -427,7 +427,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       evaluate: permutationCycles,
     });
   } else {
-    // @enumeratio/combinatorics/domains' carrier constructor got the name first; a second declare throws.
+    // @enumeratio/combinatorics' carrier constructor got the name first; a second declare throws.
     widenSignature(
       ce,
       "PermutationCycles",

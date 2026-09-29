@@ -6,7 +6,7 @@
 // of the session. Three libraries did that, so `x`, `y` and `q` were global symbols a user
 // could collide with. Probes now box inside a pushed scope; this is the net.
 
-import { DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS } from "@enumeratio/combinatorics/src";
 import { FRONTEND_CARRIERS } from "@enumeratio/frontend/declare-carriers";
 import { HYPERCOMPLEX_CARRIERS } from "@enumeratio/hypercomplex/src";
 import { NUMBER_THEORY_CARRIERS } from "@enumeratio/number-theory/src";
@@ -41,7 +41,7 @@ for (const type of [
  *  Every package that owns carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4) contributes its own, not just combinatorics. */
 const CARRIER_TYPES = new Set(
   [
-    ...DOMAINS,
+    ...CARRIERS,
     ...NUMBER_THEORY_CARRIERS,
     ...RESIDUES_CARRIERS,
     ...NUMERALS_CARRIERS,

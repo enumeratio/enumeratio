@@ -1,13 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { expect, test } from "vite-plus/test";
 import { declareCompose, publicName } from "@enumeratio/structures";
-import { declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import { declareMaps, MAPS } from "../src/map.ts";
+import { expect, test } from "vite-plus/test";
+import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
+import { declareMaps, MAPS } from "../src/maps.ts";
 
 const ce = new ComputeEngine();
-declareDomains(ce);
-declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+declareCombinatoricsCarriers(ce);
+declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 declareCompose(ce);
 
 const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];

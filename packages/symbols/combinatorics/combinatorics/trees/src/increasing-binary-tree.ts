@@ -6,7 +6,7 @@
 // the root is always labelled 1 — heap order puts the global minimum at the top regardless of
 // which permutation it came from.
 //
-// REPRESENTATION. `increasing_binary_tree`'s declared shape (domain-data.ts) is
+// REPRESENTATION. `increasing_binary_tree`'s declared shape (carrier-data.ts) is
 // `tuple<integer, list<integer>, list<integer>>` — root, then left_child/right_child arrays
 // indexed BY VALUE, 0 meaning no child. Same parent-pointer-by-VALUE convention bst.ts chose
 // for `binary_tree`, for the same reason: a value's identity is fixed the moment it is placed,

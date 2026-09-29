@@ -3,7 +3,7 @@
 // Almost everything here is a statement about the BLOCK SIZES, so that list is built once.
 // Crossings and nestings are not: they read the standard ARC REPRESENTATION instead — within
 // each block (already ascending), link consecutive elements — and compare arcs pairwise. See
-// `ArcRepresentation` in @enumeratio/combinatorics/domains for the same construction as a typed map.
+// `ArcRepresentation` in @enumeratio/combinatorics for the same construction as a typed map.
 
 import type { Definition, MathJSON } from "./types.ts";
 import {
@@ -43,7 +43,7 @@ const sizeHere: MathJSON = ["Length", at("i")];
 // Within one block (already ascending), the consecutive pairs (b1,b2), (b2,b3), .... A
 // `Fold`'s bound variable turns out not to survive being read from inside a NESTED fold's own
 // step (only as that nested fold's INITIAL value, the way `iterate`/`orbitLeast` in
-// @enumeratio/combinatorics/domains' map.ts use an outer index) — so this is built with `Map` throughout
+// @enumeratio/combinatorics' map.ts use an outer index) — so this is built with `Map` throughout
 // instead, one list of arcs per block, flattened with the native `Flatten`. And within that
 // nesting, the OUTER bound variable is spelled "blk", never "i": "i" is compute-engine's
 // imaginary unit, and a definition's `_x` is substituted in AFTER the expression is

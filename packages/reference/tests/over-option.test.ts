@@ -2,7 +2,7 @@
 // domain/collection name), and the plural rejoin folds every carrier's plural type-space name
 // and `Element` membership into its own `declareCarriers` call by default — including on the
 // REFERENCE engine, which used to skip that step entirely (see structures' `carriers.ts` and
-// combinatorics' own `declareDomainPlurals` step in `scripts/engines.ts`). This pins both: the
+// combinatorics' own `declareCarrierPlurals` step in `scripts/engines.ts`). This pins both: the
 // option itself works on the fully-declared reference engine, and it does so with the carrier
 // plurals actually declared, not despite them being skipped.
 

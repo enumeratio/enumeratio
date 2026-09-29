@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers, declareMaps } from "@enumeratio/combinatorics/src";
 
 // Four maps taken off the UNDEFINED_MAPS frontier: BinarySearchTree (permutation ->
 // binary_tree), KnuthClassRepresentative and KrewerasComplement (both permutation ->
@@ -12,11 +12,11 @@ import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/combinatorics/
 // expressions are nested folds and get expensive fast, so the exhaustive CE check stops at
 // n = 4.
 
-const domainTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
-const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
+const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
+const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
 const ce = new ComputeEngine();
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 // KrewerasComplement's guard reads CycleCount, so statistics has to be declared before
 // maps — the same order map.test.ts uses.
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });

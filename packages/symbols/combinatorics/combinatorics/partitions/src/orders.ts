@@ -42,7 +42,7 @@ const meet = (x: readonly number[], y: readonly number[]): number[] | undefined 
   return s[length - 1] === t[length - 1] ? fromPartialSums(s.map((v, i) => Math.min(v, t[i]!))) : undefined;
 };
 
-export function declareDomainOrders(ce: ComputeEngine): void {
+export function declareCarrierOrders(ce: ComputeEngine): void {
   const partition = (parts: readonly number[] | undefined) =>
     parts === undefined
       ? undefined

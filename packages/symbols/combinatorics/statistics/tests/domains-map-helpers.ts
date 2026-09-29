@@ -5,15 +5,15 @@
 // back on statistics, cycling with statistics' own devDep on combinatorics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible).
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
-import { declareDomains, declareMaps, DOMAINS, MAPS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers, declareMaps, MAPS } from "@enumeratio/combinatorics/src";
 
-export { DOMAINS, MAPS };
+export { CARRIERS, MAPS };
 
-const domainTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
-const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
+const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
+const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
 export const ce = new ComputeEngine();
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);
 

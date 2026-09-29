@@ -1,12 +1,11 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareDomains } from "../../domains/src/declare.ts";
-import { DOMAINS } from "../../domains/src/domain-data.ts";
-import { declareMaps } from "../../domains/src/map.ts";
+import { CARRIERS, declareCombinatoricsCarriers } from "../../src/carriers.ts";
+import { declareMaps } from "../../src/maps.ts";
 
 const ce = new ComputeEngine();
-declareDomains(ce);
-declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+declareCombinatoricsCarriers(ce);
+declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
 const contents = (expr: unknown): unknown => {
@@ -102,7 +101,7 @@ test("RskInsertion and RskShape are typed by carrier", () => {
   expect(String(ce.box(["RskShape", p] as never).evaluate().type)).toBe("integer_partition");
   // A standard tableau is a ROW WORD, not a nested list — the carrier shape says so, and a
   // nested result would be rejected by the type rather than quietly accepted.
-  expect(DOMAINS.find((d) => d.name === "StandardTableau")?.shape).toBe("list<integer>");
+  expect(CARRIERS.find((c) => c.name === "StandardTableau")?.shape).toBe("list<integer>");
 });
 
 test("RskRecording records where each insertion landed", () => {

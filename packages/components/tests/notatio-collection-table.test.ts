@@ -1,6 +1,6 @@
 // Integration test for the collection-table's per-column carrier wrap (BL-1): a REAL engine,
 // declared in the same order and with the same options as the production page
-// (web/.vitepress/theme/engine-libraries.ts's domains -> collections -> domain plurals ->
+// (web/.vitepress/theme/engine-libraries.ts's carriers -> collections -> carrier plurals ->
 // statistics -> structures slice), driving the exact mechanism the component uses
 // (`collectionCarrierOf`, `wantsCarrier`, `substituteRowPerHead`, and the bare/wrapped
 // representations `#representations` computes) rather than re-deriving it.
@@ -20,19 +20,26 @@ import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { declareCollections } from "@enumeratio/combinatorics/collections";
-import { declareDomainElement, declareDomainPlurals, declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics";
 import { substituteRowPerHead, wantsCarrier } from "@enumeratio/frontend";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
-import { collectionCarrierOf, declareStructures } from "@enumeratio/structures";
+import {
+  collectionCarrierOf,
+  declareCarrierElement,
+  declareCarrierPlurals,
+  declareStructures,
+} from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 
 function productionEngine(): ComputeEngine {
   const ce = new ComputeEngine();
-  const domainTypes = Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]));
-  declareDomains(ce);
+  const domainTypes = Object.fromEntries(
+    CARRIERS.filter((c) => c.name !== "SetPartition").map((c) => [c.name, c.type]),
+  );
+  declareCombinatoricsCarriers(ce);
   declareCollections(ce, { permutationType: "permutation" });
-  declareDomainPlurals(ce);
-  declareDomainElement(ce);
+  declareCarrierPlurals(ce, CARRIERS);
+  declareCarrierElement(ce, CARRIERS);
   declareStatistics(ce, ALL_STATISTICS, { domainTypes });
   declareStructures(ce);
   return ce;

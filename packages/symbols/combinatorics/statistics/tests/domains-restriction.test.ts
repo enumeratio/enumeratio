@@ -2,19 +2,18 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
 import {
-  declareDomains,
   declareRestricted,
   declareRestrictions,
-  DOMAINS,
   fillPredicate,
   RESTRICTIONS,
   RestrictionCollisionError,
-} from "@enumeratio/combinatorics/domains/src";
+} from "@enumeratio/structures";
 
 const ce = new ComputeEngine();
 declareCollections(ce);
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 // collections ships its own fast permutation statistics under several of these names; the
 // definitions go into the same table and leave collections' heads to it.
 declareStatistics(ce, ALL_STATISTICS);
@@ -149,7 +148,7 @@ test("every restriction names a base collection and a carrier that exist", () =>
   for (const restriction of RESTRICTIONS) {
     expect(ce.lookupDefinition(restriction.base), restriction.base).toBeTruthy();
     expect(
-      DOMAINS.some((d) => d.type === restriction.on),
+      CARRIERS.some((c) => c.type === restriction.on),
       restriction.on,
     ).toBe(true);
   }

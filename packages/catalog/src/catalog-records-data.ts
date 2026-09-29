@@ -4751,7 +4751,7 @@ export const MAPS: readonly CatalogOverload[] = [
     name: "PermutahedronVertex",
     on: ["Permutation"],
     description:
-      "Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/symbols/combinatorics/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close. Not yet defined.",
+      "Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/symbols/combinatorics/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (set-partitions/src/carrier-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close. Not yet defined.",
   },
   {
     name: "Promotion",

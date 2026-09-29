@@ -4,7 +4,7 @@
 // `BinarySearchTreeParentArray` builds; see bst.ts), and as a Dyck path. The conversions are
 // defined in Epsil, by recursion (recursion.ts); tests/map-definitions.test.ts checks them
 // against an independent TypeScript reading.
-import { isLeaf, recurse, self } from "../../domains/src/recursion.ts";
+import { isLeaf, recurse, self } from "../../src/recursion.ts";
 
 type MathJSON = unknown;
 

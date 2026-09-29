@@ -1,1 +1,1 @@
-export { SET_PARTITIONS_DOMAINS } from "./domain-data.ts";
+export { SET_PARTITIONS_CARRIERS } from "./carrier-data.ts";

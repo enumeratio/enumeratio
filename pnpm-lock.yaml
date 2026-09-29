@@ -346,6 +346,9 @@ importers:
       '@enumeratio/statistics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/statistics
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../structures
     devDependencies:
       '@types/node':
         specifier: ^24

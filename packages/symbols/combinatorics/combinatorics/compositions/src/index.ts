@@ -1,1 +1,1 @@
-export { COMPOSITIONS_DOMAINS } from "./domain-data.ts";
+export { COMPOSITIONS_CARRIERS } from "./carrier-data.ts";

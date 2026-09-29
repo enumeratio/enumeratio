@@ -8,7 +8,7 @@ import { ensureProtocols } from "./protocols.ts";
 export { type AlgebraFamily, declareAlgebra, ensureAlgebraHeads, type Product, registerProduct } from "./algebra.ts";
 export { compare, type Conformance, conform, type Member, member } from "./conform.ts";
 export {
-  type Carrier,
+  type CarrierRegistration,
   carrierNameForType,
   collectionCarrierOf,
   ensureOperationHeads,
@@ -24,13 +24,11 @@ export {
 export { ancestry, ensureProtocols, PROTOCOLS, type Protocol, type ProtocolName } from "./protocols.ts";
 export {
   attachConversion,
-  type CarrierDeclaration,
+  type Carrier,
   contentsOf,
   declareCarrierElement,
   declareCarrierPlurals,
   declareCarriers,
-  /** @deprecated Renamed `CarrierDeclaration`. */
-  type Domain,
   type Shape,
   typeFor,
 } from "./carriers.ts";

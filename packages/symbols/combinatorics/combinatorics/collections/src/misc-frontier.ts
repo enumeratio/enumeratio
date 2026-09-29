@@ -297,7 +297,7 @@ function declareRandomComplex(ce: ComputeEngine): void {
 
 /** `KaryTree(n)` (binary, `k = 2`) / `KaryTree(n, k)`: the `k`-ary tree on `n` VERTICES, in
  *  breadth-first (heap) layout — vertex `i`'s parent is `⌊(i - 2) / k⌋ + 1`. NOT the same
- *  head as our `KAryTree` DOMAIN (`domains/src/domain-data.ts`, the combinatorial family of
+ *  head as our `KAryTree` DOMAIN (`src/carriers.ts`, the combinatorial family of
  *  every n-node k-ary tree shape, for enumeration/ranking) or `CompleteKaryTree` in
  *  `graphs.ts` (a LEVEL count, always perfectly filled) — Wolfram's `KaryTree` is a single
  *  specific tree sized by vertex count, not level count, and the last level need not be
