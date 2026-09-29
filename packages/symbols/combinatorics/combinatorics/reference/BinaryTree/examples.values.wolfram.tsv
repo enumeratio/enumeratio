@@ -1,0 +1,3 @@
+id	in
+from-a-dyck-path	List[1, 1, 0, 0, 1, 0]
+from-a-parent-array	List[2, 0, 2, 3]

@@ -7,7 +7,7 @@ signatures:
   - call: NonNestingMatchings(n)
     description: the perfect matchings of $\{1, …, 2n\}$ with no two nesting chords
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<set_partition>
 seeAlso:
   - NonCrossingMatchings
   - DyckPaths
@@ -21,7 +21,7 @@ catalog:
 grades:
   - name: n
     role: axis
-carrier: PerfectMatching
+carrier: SetPartition
 ---
 
 - Count is the Catalan number $C_n$ (A000108).

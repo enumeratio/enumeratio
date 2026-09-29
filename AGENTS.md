@@ -26,12 +26,15 @@ release. Add a tool name to select part of the graph. For example, run
 
 <!--VITE PLUS END-->
 
-## Design docs
+## The wiki
 
-Design docs, the roadmap and contributor notes live on the
-[wiki](https://github.com/enumeratio/enumeratio/wiki); `design/` is gone from the repo, and new
-design writing goes on the wiki. [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing)
-restates this file's project rules for people.
+Design docs, the roadmap and contributor notes live on the [wiki](https://github.com/enumeratio/enumeratio/wiki); `design/` is gone
+from the repo, and new design writing goes on the wiki. This file keeps the rules a change
+must follow, each short, with a link where the wiki explains it:
+[Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing) is the long form of this file (toolchain, names, reference
+entries, tests, git, code), [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment) the workflows, and
+[Lanes](https://github.com/enumeratio/enumeratio/wiki/Lanes) parallel work across sessions. When a rule here changes, change it there
+too; when the wiki grows a rule an agent must follow, add its one line here.
 
 ## Names
 
@@ -68,35 +71,24 @@ restates this file's project rules for people.
 ## Reference entries
 
 - Each head's record is a folder, `reference/<Head>/`, in the package that declares it
-  (`packages/reference/entries/` for compute-engine's own heads):
-  - `index.md`: what the head is, as front matter (summary, signatures, bindings,
-    references…), and below it a markdown body the page renders as written: an opening
-    paragraph or two, then the details as a list (`vp fmt` leaves these files alone). The
-    entry's `details` are read from the body, one per list item or paragraph.
-  - `examples.tsv`: one row per example, in page order (each section's rows together, in
-    `SECTIONS` order), with everything written by hand: `id`, `section`, `role`, `expr` and
-    `expected` as flow MathJSON (`[Mod, 5, 0]`), `caption`, …, and each system's hand
-    classification as `<system>.kind`, `<system>.note`, `<system>.issue`, `<system>.tolerance`.
-    Every example has an `id`: lowercase words joined by `-`, unique within the head, kept when
-    the example is edited.
-    An example whose value is known from outside our evaluation also carries `known` (an exact
-    expression or high-precision number), its `source` (`DLMF 25.6.1`, `OEIS A000110`, `mpmath
-1.3 zeta`, …) and optionally a `tolerance` (relative above magnitude 1, absolute below); `tests/known.test.ts` holds `expected`
-    to it, so never "fix" a failing known check by rewriting `expected` to match the new output.
-  - `examples.values.<system>.tsv`: generated, one per system, with the same rows: our own forms
-    (`epsil`, `tex`, `traditional`, `fullform`) and each oracle's `in`, and what it answered.
-- Read and write a record through `@enumeratio/entry/node` (`readHead`, `writeHead`,
-  `updateHead`, `readEntries`, `writeEntries`), never by hand-parsing its files. Hand edits to
-  `index.md` and `examples.tsv` are fine; `node packages/reference/scripts/format-records.ts`
-  tidies them (and puts rows back in page order). A TSV cell is its text as written (TeX's
-  backslashes and all); an empty cell is an absent field, and a cell that can't sit in a row
-  as written (a tab or line break, a leading `"`, the empty string) is a JSON string.
+  (`packages/reference/entries/` for compute-engine's own heads): `index.md` (front matter,
+  then a markdown body the page renders as written), `examples.tsv` (one hand-written row
+  per example, in page order, each with a stable lowercase `id`), and the generated
+  `examples.values.<system>.tsv`. The format is on the wiki's
+  [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing#where-a-change-goes) and
+  [Examples-as-Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data).
+- Read and write records through `@enumeratio/entry/node` (`readHead`, `writeHead`,
+  `updateHead`, `readEntries`, `writeEntries`), never by hand-parsing their files. Hand edits
+  are fine; `node packages/reference/scripts/format-records.ts` tidies them. A TSV cell is
+  its text as written; one that can't sit in a row as written (a tab or line break, a
+  leading `"`, the empty string) is a JSON string.
+- An example with `known` (and its `source`) is held to it by `tests/known.test.ts`: never
+  "fix" a failing known check by rewriting `expected`.
 - After adding or changing an example (or a printer or transpiler), run
-  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`; notatio's forms test says so
-  when it's needed. Kernel answers come from `oracle-scan.ts --accept`; notes and
-  classifications are the hand columns in `examples.tsv`.
-- Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
-  site gets them from its `virtual:reference-entries` module. Add a head by adding its folder.
+  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`. Kernel answers come from
+  `oracle-scan.ts --accept`; notes and classifications are the hand columns.
+- Everything reads the records through `@enumeratio/reference/node` (`referenceData`). Add a
+  head by adding its folder.
 
 ## Git hygiene
 
@@ -115,50 +107,59 @@ restates this file's project rules for people.
 
 ## Testing
 
-- **Golden-example data, not snapshots**, in `packages/`. Assert against a committed golden
-  JSON file (`expect(actual).toEqual(golden[id])`), regenerated behind an `UPDATE_*` env
-  flag: it is plain data, reviewable and reusable elsewhere, which a `.snap` file is not. A
-  guard test enforces this for `packages/` (`packages/utils/tests/no-snapshots.test.ts`). See
-  `packages/cli/tests/demos.test.ts` for the pattern.
+- **Examples are the snapshots.** A head's expected values are its reference examples
+  (`expected`, `known`, and the generated `examples.values.<system>.tsv`), and a test of
+  what a head evaluates to asserts against them, not against a golden file of its own. Add
+  a `role: test` example for a case too many to show on the page.
+- **Golden JSON only for output that isn't a head's value** (CLI demos, rendered forms,
+  visuals): `expect(actual).toEqual(golden[id])`, regenerated behind an `UPDATE_*` flag.
+  Never `toMatchSnapshot` in `packages/`: a guard test forbids it, and the snapshot client
+  isn't set up under `vp run`.
+- **Cross-check the routes.** Where a fix can differ by route, the same inputs go through
+  `evaluate()`, `.N()`, the parse route and the compiled code, and agree.
 - **Patches in `upstream/` test the way their upstream does**, snapshots included, so a test
   can go upstream with its code.
 - **Long sweeps run nightly; the standard run stays fast.** A test that samples or enumerates
   takes a small budget by default and its full one under `DEEP_TESTS=1`, which `nightly.yml`'s
   `deep-tests` job sets (give the package a filter there). Keep the important cases in the
-  standard run as fixed examples, not left to the sample.
+  standard run as fixed examples, not left to the sample. Don't just raise a timeout.
+
+## Code
+
+- **Every route in the same change.** A fix to what a head evaluates to also fixes `.N()`,
+  simplification and each compile target (JavaScript, WGSL). A fact that must hold on
+  several routes lives in one helper they all call, not a copy per route.
+- **Numerics: decline rather than answer wrong.** A kernel that can't vouch for its digits
+  leaves the expression unevaluated: not `NaN` (a floating-point result with no value) and
+  not a sentinel like `0`. Before sending one, check:
+  - convergence needs several consecutive small, decreasing terms and a tail bound, not one
+    small term;
+  - every loop has a cap (shifts, recurrences, retries), and past it the kernel declines;
+  - error targets are relative to the result, and a result is returned only with the digits
+    asked for;
+  - guard radii and accuracy claims are measured on a grid against an oracle (mpmath), and
+    stated as measured;
+  - a float operand gives a float result;
+  - the type handler never claims `real` on a branch cut or at a pole;
+  - past the double range a value is carried scaled or stays symbolic.
+- **Comments** state the current rule in the present tense, short and next to the code:
+  - cite the formula (DLMF 25.11.1);
+  - give the case that breaks without the code;
+  - a guard threshold is a named constant, commented with the case that needs it.
+
+  No history ("this used to…") and no bare references to a design section.
 
 ## CI and deployment
 
 - **Gate** (`ci.yml`, every push and PR): `pnpm -r run build` for the library packages, then
   `vp check`, the per-package tests (`pnpm -r run test`) and the site build. The dists come
   first because type-aware lint and the tests resolve siblings through `dist/`.
-- **Production** (`enumeratio.dev`) ships from GitHub Pages on merge to `main` (`pages.yml`;
-  `web/public/CNAME` names the domain).
-- **Every build** of every commit — PR pushes and `main` — also goes up as a Cloudflare Pages
-  preview at `<sha7>.enumeratio.pages.dev`, direct-uploaded from the artifact the gate already
-  built. The PR's sticky `<!-- cf-preview -->` comment carries the URL; review links go below
-  its first two lines, which each push rewrites and leaves the rest. `preview-cleanup.yml`
-  nightly deletes a PR's previews a day after it closes, and untagged previews older than 30
-  days; a tagged commit's preview stays. Needs repo secrets
-  `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
-- **Advisory sweeps** — never required checks. `plausible.yml` (Plausible, after Lean 4's; the
-  wiki's [Plausible](https://github.com/enumeratio/enumeratio/wiki/Plausible)) samples the collection
-  kernels on every push touching them and deeply each night; a failure files/reopens one
-  rolling issue, `plausible sampling regression`, labelled `nightly-fixup`. `nightly.yml`
-  rescans the light oracle lanes against the committed sidecars nightly, one job per
-  ecosystem: Python (mpmath, SymPy), Julia (Nemo, Combinatorics.jl) and Rust (num, primal,
-  statrs, adic). Each also runs the oracle Plausible (`reference/scripts/oracle-plausible.ts`):
-  samples resampled from the documented examples toward the edges of each domain, seeded by the
-  date so every job draws the same ones, checked against that ecosystem's lanes; what no
-  classified example explains goes to a rolling `oracle Plausible findings: <ecosystem>` issue
-  for triage. Weekly it rescans the Oscar, Mathlib, Sage (in Docker, with the adeles and
-  adic goldens) and Wolfram lanes the same way and follows every crosswalk link. Examples
-  too many to render (grid points, edge cases) are still data: `role: test` examples in the
-  head's `examples.tsv`, tested and scanned like the rest. A lane fails when a row it
-  had answered changes verdict, classification or input, not on a float's printed digits. A
-  row answered for the first time (a new example the weekly kernels hadn't seen) is a
-  warning, and every lane uploads what it accepted as an `oracle-records-<system>` artifact
-  to apply and classify without the kernel. Wolfram runs on an on-demand license, the
-  `WOLFRAMSCRIPT_ENTITLEMENTID` secret, and skips without it. The nightly-fixup routine
-  (06:15 UTC) reads these runs, files `CI failure: <workflow> › <job>` issues, and opens fix
-  PRs — it never merges.
+- **Production** (`enumeratio.dev`) ships from GitHub Pages on merge to `main`. Every build
+  also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
+  sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
+  two lines, which each push rewrites.
+- **Advisory sweeps** (Plausible, the nightly and weekly oracle rescans) are never required
+  checks. A lane fails when an answered row changes verdict, classification or input, not on
+  a float's printed digits. Failures file rolling issues labelled `nightly-fixup`; the
+  nightly-fixup routine opens fix PRs and never merges. Workflows, secrets and artifacts:
+  the wiki's [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment).

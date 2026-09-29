@@ -1,0 +1,4 @@
+id	in
+from-a-permutation	list(vec![n(2), n(3), n(1), n(4)])
+back-to-the-permutation	list(vec![list(vec![n(1), n(3)]), list(vec![n(2)])])
+a-statistic-through-the-permutation	

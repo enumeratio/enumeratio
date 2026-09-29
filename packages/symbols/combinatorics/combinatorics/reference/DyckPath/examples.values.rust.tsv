@@ -1,0 +1,4 @@
+id	in
+from-a-binary-tree	list(vec![list(vec![n(0), n(0)]), list(vec![n(0), list(vec![n(0), n(0)])])])
+by-target-collection	
+by-findstat-id	
