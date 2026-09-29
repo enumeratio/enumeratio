@@ -621,6 +621,7 @@ export class NotatioOut extends LitElement {
     const source = this.value ?? "";
     if (this.format === "mathjson") return JSON.parse(source) as MathJsonExpression;
     const { json, errors } = parseExpression(source, {
+      ce: engine,
       parseLatex: (tex) => engine.parse(tex).json,
     });
     if (errors.length) throw new Error(errors.join("; "));
