@@ -85,6 +85,12 @@ three-arguments-the-nielsen-generalized
 s-2-2-1-pi-4-360			
 s-1-2-1-2-zeta-3-8-ln-3-2-6			
 to-30-significant-digits-not-yet-the-requested	N(polylog(2, Rational(1, 2)), 30)	0.582240526465012505902656320160	
+image-order-2-over-0p7-to-0p8			
+image-order-2-over-neg-0p9-to-0p9			
+image-order-0p5-over-neg-0p5-to-0p95			
+image-order-neg-1p5-over-neg-0p3-to-0p3			
+image-order-neg-3-over-neg-0p5-to-0p2			
+image-order-5-over-neg-0p99-to-0p99			
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	

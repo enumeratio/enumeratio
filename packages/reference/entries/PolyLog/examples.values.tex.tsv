@@ -85,6 +85,12 @@ three-arguments-the-nielsen-generalized	\operatorname{Li}_{1}(2)	\zeta(3)
 s-2-2-1-pi-4-360	\operatorname{Li}_{2}(2)	\frac{\pi^4}{360}
 s-1-2-1-2-zeta-3-8-ln-3-2-6	\operatorname{Li}_{1}(2)	0.094\,753\,004\,230\,127\,7
 to-30-significant-digits-not-yet-the-requested	N(\operatorname{Li}_{2}(\frac{1}{2}), 30)	0.582\,240\,526\,465\,012\,505\,903
+image-order-2-over-0p7-to-0p8	\operatorname{Li}_{2}(\mathrm{Interval}(0.7, 0.8))	\mathrm{Interval}(0.889\,377\,624\,286\,038, 1.074\,794\,600\,008\,25)
+image-order-2-over-neg-0p9-to-0p9	\operatorname{Li}_{2}(\mathrm{Interval}(-0.9, 0.9))	\mathrm{Interval}(-0.752\,163\,179\,217\,262, 1.299\,714\,723\,004\,96)
+image-order-0p5-over-neg-0p5-to-0p95	\operatorname{Li}_{0.5}(\mathrm{Interval}(-0.5, 0.95))	\mathrm{Interval}(-0.373\,752\,237\,980\,974, 6.376\,361\,372\,585\,55)
+image-order-neg-1p5-over-neg-0p3-to-0p3	\operatorname{Li}_{-1.5}(\mathrm{Interval}(-0.3, 0.3))	\mathrm{Interval}(-0.140\,350\,469\,986\,165, 0.803\,887\,928\,285\,341)
+image-order-neg-3-over-neg-0p5-to-0p2	\operatorname{Li}_{-3}(\mathrm{Interval}(-0.5, 0.2))	\mathrm{Interval}(-0.041\,666\,666\,666\,833\,4, 0.898\,437\,500\,000\,001)
+image-order-5-over-neg-0p99-to-0p99	\operatorname{Li}_{5}(\mathrm{Interval}(-0.99, 0.99))	\mathrm{Interval}(-0.962\,647\,165\,657\,348, 1.026\,110\,477\,101\,31)
 li-1-2-1-zeta-1-2-a-non-integer-order-from	\operatorname{Li}_{0.5}(1)	-1.460\,354\,508\,809\,586\,812\,89
 li-1-2-1-2-0-80612672-via-the-lerch-series	\operatorname{Li}_{0.5}(0.5)	0.806\,126\,723\,042\,852\,2
 li-5-2-1-2-0-46229778-the-alternating-side-euler	\operatorname{Li}_{2.5}(-0.5)	-0.462\,297\,782\,190\,063\,46
