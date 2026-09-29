@@ -172,6 +172,17 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
       }
       return node;
     }
+    // A non-negative integer exponent building a big power (Power(10, 100)) must stay
+    // non-negative: flipping its sign turns an intended huge integer into a tiny fraction,
+    // which breaks every integer-only downstream head (LCM, IsPrime, Mod, GCD, PowerMod, ...).
+    if (head === "Power" && ops.length === 2 && Number.isInteger(ops[1]) && (ops[1] as number) >= 0) {
+      const base = walk(ops[0] as MathJSON);
+      if (random() < 0.5) {
+        changed = true;
+        return [head, base, Math.abs(numberNear(random, ops[1] as number))] as MathJSON;
+      }
+      return [head, base, ops[1] as number];
+    }
     const family = FAMILIES.get(head as string);
     if (family !== undefined && ops.length === family.paramCount && ops.every((op) => Number.isInteger(op))) {
       if (random() < 0.5) {

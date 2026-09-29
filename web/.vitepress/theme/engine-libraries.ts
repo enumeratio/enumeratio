@@ -19,10 +19,9 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 // call sites below, rather than silently accepting a wrong signature the way a loose
 // `(ce: ComputeEngine) => void` would.
 export interface EngineLibraries {
-  readonly declareCollections: typeof import("@enumeratio/combinatorics/collections").declareCollections;
+  readonly declareCombinatorics: typeof import("@enumeratio/combinatorics").declareCombinatorics;
   readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
   readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
-  readonly declareDomains: typeof import("@enumeratio/combinatorics/domains").declareDomains;
   readonly declareDomainPlurals: typeof import("@enumeratio/combinatorics/domains").declareDomainPlurals;
   readonly declareDomainElement: typeof import("@enumeratio/combinatorics/domains").declareDomainElement;
   readonly declareMaps: typeof import("@enumeratio/combinatorics/domains").declareMaps;
@@ -58,22 +57,23 @@ export interface EngineLibraries {
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */
 export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) => void, libs: EngineLibraries): void {
-  // Carriers first: everything below declares heads OVER these minted types, so they
-  // have to exist before a signature can name one.
-  const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
-  const domainTypes = Object.fromEntries(libs.DOMAINS.map((d) => [d.name, d.type]));
-  apply(libs.declareDomains);
-  // A combinatorial statistic is a function of a carrier, so that is what these heads
-  // take. The ones that are ALSO plain list functions accept a bare list too.
-  apply((ce) => libs.declareCollections(ce, { permutationType: "permutation", carrierTypes: domainTypes }));
-  // AFTER declareCollections: a plural a collection family already claims (Permutations,
-  // DyckPaths, ...) has to still be free when this checks, not raced by minting a bare
-  // symbol for it first.
+  // Carriers, then the families typed by them -- one call (design/speculative/combinatorics-
+  // layering-and-plausible.md §4 step 3). Everything below declares heads OVER these minted
+  // types, so they have to exist before a signature can name one.
+  apply(libs.declareCombinatorics);
+  // Every domain's plural type-space name, and Element membership over it -- AFTER
+  // collections, so a plural a collection family already claims (Permutations, DyckPaths,
+  // ...) is still free when this checks, not raced by minting a bare symbol first.
   apply(libs.declareDomainPlurals);
   apply(libs.declareDomainElement);
-  // Collections already declares the fast permutation heads under the same names, so
-  // those are skipped here — one head, one owner.
+  // A combinatorial statistic is a function of a carrier, so that is what these heads
+  // take. The ones that are ALSO plain list functions accept a bare list too. Collections
+  // already declares the fast permutation heads under the same names, so those are skipped
+  // here — one head, one owner. Statistics has no dependency from combinatorics, so its
+  // `domainTypes` is still built and passed by the host.
+  const domainTypes = Object.fromEntries(libs.DOMAINS.map((d) => [d.name, d.type]));
   apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { domainTypes }));
+  const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);
