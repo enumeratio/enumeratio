@@ -751,7 +751,9 @@ export function BinaryTreeOfParentArray(parents: readonly number[]): BinTree | u
     return l === undefined || r === undefined ? undefined : [l, r];
   };
   const tree = n === 0 ? 0 : build(root, 0);
-  return tree !== undefined && BinaryTreeParentArray(tree).every((p, i) => p === parents[i]) ? tree : undefined;
+  if (tree === undefined) return undefined;
+  const back = BinaryTreeParentArray(tree);
+  return back.length === n && back.every((p, i) => p === parents[i]) ? tree : undefined;
 }
 export function IsBinaryTreeParentArray(a: unknown, n: number): boolean {
   return Array.isArray(a) && a.length === n && BinaryTreeOfParentArray(a as number[]) !== undefined;
