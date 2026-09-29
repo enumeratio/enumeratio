@@ -43,6 +43,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm -r --filter @enumeratio/analytic run test
+      # Statistics compiled from their Epsil against the hand-written kernels; the timing table
+      # goes to the job summary.
+      - run: pnpm --filter @enumeratio/statistics exec vp test run tests/compiled.test.ts
       # Compiled maps against the interpreter, over the larger sample.
       - run: pnpm --filter @enumeratio/combinatorics exec vp test run tests/compiled-maps.test.ts
 
