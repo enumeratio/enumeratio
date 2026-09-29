@@ -7,7 +7,7 @@ signatures:
   - call: DyadicCompositions(n)
     description: the compositions of $n$ into powers-of-two parts
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
 references:

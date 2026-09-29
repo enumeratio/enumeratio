@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-primecompositions-7	Basic		[Count, [PrimeCompositions, 7]]	6	$Count(PrimeCompositions(7)) = 6$
-first-element-of-primecompositions-7	Basic		[At, [PrimeCompositions, 7], 1]	[List, 2, 2, 3]	The first element in enumeration order
-every-element-of-primecompositions-7		test	[Take, [PrimeCompositions, 7], 6]	[List, [List, 2, 2, 3], [List, 2, 3, 2], [List, 2, 5], [List, 3, 2, 2], [List, 5, 2], [List, 7]]	
+first-element-of-primecompositions-7	Basic		[At, [PrimeCompositions, 7], 1]	[Composition, [List, 2, 2, 3]]	The first element in enumeration order
+every-element-of-primecompositions-7		test	[Take, [PrimeCompositions, 7], 6]	[List, [Composition, [List, 2, 2, 3]], [Composition, [List, 2, 3, 2]], [Composition, [List, 2, 5]], [Composition, [List, 3, 2, 2]], [Composition, [List, 5, 2]], [Composition, [List, 7]]]	

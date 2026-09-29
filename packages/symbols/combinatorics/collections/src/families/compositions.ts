@@ -315,7 +315,9 @@ function isZigzag(parts: unknown, n: number): boolean {
   return true;
 }
 
-export const entries: NumberKernel[] = [
+// Every restricted family here shares IntegerCompositions' shape (core.ts): a list of parts
+// summing to n, typed by the same carrier.
+const restricted: NumberKernel[] = [
   // ── parts drawn from an allowed set S ──
   ints(
     "OddCompositions",
@@ -416,3 +418,5 @@ export const entries: NumberKernel[] = [
     (a) => zigzagRank(a),
   ),
 ];
+
+export const entries: NumberKernel[] = restricted.map((k) => ({ ...k, carrier: "Composition" }));

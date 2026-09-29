@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-propercompositions-6	Basic		[Count, [ProperCompositions, 6]]	5	$Count(ProperCompositions(6)) = 5$
-first-element-of-propercompositions-6	Basic		[At, [ProperCompositions, 6], 1]	[List, 2, 2, 2]	The first element in enumeration order
-every-element-of-propercompositions-6		test	[Take, [ProperCompositions, 6], 5]	[List, [List, 2, 2, 2], [List, 2, 4], [List, 3, 3], [List, 4, 2], [List, 6]]	
+first-element-of-propercompositions-6	Basic		[At, [ProperCompositions, 6], 1]	[Composition, [List, 2, 2, 2]]	The first element in enumeration order
+every-element-of-propercompositions-6		test	[Take, [ProperCompositions, 6], 5]	[List, [Composition, [List, 2, 2, 2]], [Composition, [List, 2, 4]], [Composition, [List, 3, 3]], [Composition, [List, 4, 2]], [Composition, [List, 6]]]	
