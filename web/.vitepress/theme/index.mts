@@ -2,6 +2,7 @@ import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
 import { registerNotatio } from "@enumeratio/frontend/vue";
 import DefaultTheme from "vitepress/theme";
+import "katex/dist/katex.min.css";
 import { applyEngineLibraries } from "./engine-libraries.ts";
 import Layout from "./Layout.vue";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";

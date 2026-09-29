@@ -67,7 +67,7 @@ const tex = (source: string): Box => ["FormBox", texWithHoles(source), "TeXForm"
  * followed by a space, the closer isn't preceded by one or followed by a digit, and a hole
  * inside is skipped whole. -1 when there's no island (a bare `$` is a dollar sign).
  */
-function closeDollar(s: string, start: number, max: number): number {
+export function closeDollar(s: string, start: number, max = s.length): number {
   const after = s[start + 1];
   if (after === undefined || after === "$" || /\s/.test(after)) return -1;
   for (let i = start + 1; i < max; i++) {
