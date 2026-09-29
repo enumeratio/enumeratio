@@ -176,25 +176,21 @@ test("DurfeeSquare (carrier-only) dispatches correctly over every still-bare par
   for (const row of rows) expect(evalStat(ce, "DurfeeSquare", row, carrier)).toBe(reference(intsOf(row, carrier)));
 });
 
-test("Height (carrier-only) is WRAPPED, per its declared type -- known-broken past that point", () => {
-  // Height itself hits an unrelated, pre-existing bug once wrapped: its definition is
-  // `Max(profile)` over the still-lazy height-profile Map, and @enumeratio/structures'
-  // generic Min/Max (packages/structures/src/generic.ts's `wrapOperator` over "Max", guarded
-  // by `isStructured`) treats that unmaterialised Map as a single "structured" value rather
-  // than letting native Max flatten and reduce it -- so `extremum` hands the pool of one
-  // straight back, unevaluated. Confirmed by reproducing it with `applyDefinition` directly,
-  // no wrap/dispatch code of ours involved. Out of scope for BL-1 (structures/generic.ts is
-  // Protocols/BL-7 territory) -- reported to the coordinator rather than fixed here. `Area`
-  // and `Returns`, DyckPath statistics that don't route through `Max`, exercise the same
-  // wrap-then-dispatch path end to end below.
+test("Height (carrier-only) dispatches correctly over every still-bare path of DyckPaths(4)", () => {
   const ce = productionEngine();
   const carrier = collectionCarrierOf(ce, "DyckPaths");
   expect(carrier).toBe("DyckPath");
-  const row = rowsOf(ce, ["DyckPaths", 4])[0]!;
-  const { bare, wrapped } = representationsOf(row, carrier);
-  const bareType = ce.box(bare as never).type;
-  const carrierType = ce.box(wrapped as never).type;
-  expect(wantsCarrier(ce, "Height", 0, bareType, carrierType)).toBe(true);
+  const rows = rowsOf(ce, ["DyckPaths", 4]);
+  expect(rows.length).toBeGreaterThan(0);
+
+  // 1 = up, 0 = down (statistics/src/dyck.ts).
+  const reference = (steps: number[]): number => {
+    let h = 0;
+    let max = 0;
+    for (const s of steps) max = Math.max(max, (h += s === 1 ? 1 : -1));
+    return max;
+  };
+  for (const row of rows) expect(evalStat(ce, "Height", row, carrier)).toBe(reference(intsOf(row, carrier)));
 });
 
 test("Area and Returns (carrier-only) dispatch correctly over every still-bare path of DyckPaths(4)", () => {
