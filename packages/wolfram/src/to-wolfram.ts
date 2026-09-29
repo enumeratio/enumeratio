@@ -256,6 +256,20 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // unevaluated. Only a binding's own `Equal` is rewritten, not one deeper in the body.
   Module: (a) => localScope("Module", a),
   With: (a) => localScope("With", a),
+  // `Over -> R` is our own ring-selection option (never a Wolfram key -- a key is never a
+  // domain/collection name, #417's retirement of `GaussianIntegers -> True`); Wolfram's
+  // IsPrime/FactorInteger/Divisors/… spell the same choice of ring as their own
+  // `GaussianIntegers -> True/False` option instead. Recognised ring VALUES translate to
+  // that; anything else falls through to the generic `Rule[key, value]` rename (which
+  // `Over` itself, having no Wolfram counterpart, would emit unhelpfully -- there is no
+  // other ring to translate yet).
+  KeyValuePair: (a) => {
+    const [key, value] = a;
+    if (key === "Over" && (value === "GaussianIntegers" || value === "Integers")) {
+      return `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`;
+    }
+    return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
+  },
 };
 
 function localScope(head: string, args: MathJson[]): string {

@@ -20,10 +20,15 @@ import { DOMAINS } from "./domain-data.ts";
 /**
  * Declare every combinatorics carrier and its constructor on `ce`. Does NOT declare the
  * plural type-space names — `declareDomainPlurals` does that; see its own doc for why it has
- * to run later, after whatever else in the engine declares a collection family.
+ * to run later, after whatever else in the engine declares a collection family. Unlike
+ * `@enumeratio/structures`' other carrier owners, this one still opts OUT of `declareCarriers`'
+ * default plural folding (`{ plurals: false }`): a combinatorics carrier's plural
+ * (`Permutations`, `DyckPaths`, …) is routinely the name a REAL collection family
+ * (`declareCollections`) declares right after this runs, and that family's own `ce.declare`
+ * would throw "already declared" if a bare `set<...>` symbol had already claimed the name here.
  */
 export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = DOMAINS): void {
-  declareCarriers(ce, domains);
+  declareCarriers(ce, domains, { plurals: false });
   // Partitions' dominance order needs the carrier declared first; combinatorics-specific, so
   // it stays a call here rather than in the generic structures machinery.
   if (domains.some((domain) => domain.type === "integer_partition")) declareDomainOrders(ce);

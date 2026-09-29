@@ -46,11 +46,6 @@ export interface EngineLibraries {
   readonly declareAdeles: typeof import("@enumeratio/adeles").declareAdeles;
   readonly declareBraid: typeof import("@enumeratio/braid").declareBraid;
   readonly declareFrontendCarriers: typeof import("@enumeratio/frontend/declare-carriers").declareFrontendCarriers;
-  readonly declareFrontendCarrierPlurals: typeof import("@enumeratio/frontend/declare-carriers").declareFrontendCarrierPlurals;
-  readonly declareHypercomplexCarrierPlurals: typeof import("@enumeratio/hypercomplex").declareHypercomplexCarrierPlurals;
-  readonly declareResiduesCarrierPlurals: typeof import("@enumeratio/residues").declareResiduesCarrierPlurals;
-  readonly declareNumeralsCarrierPlurals: typeof import("@enumeratio/numerals").declareNumeralsCarrierPlurals;
-  readonly declareNumberTheoryCarrierPlurals: typeof import("@enumeratio/number-theory").declareNumberTheoryCarrierPlurals;
 }
 
 /**
@@ -72,8 +67,8 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // ...) is still free when this checks, not raced by minting a bare symbol first.
   apply(libs.declareDomainPlurals);
   apply(libs.declareDomainElement);
-  // GlyphKind's carrier itself (type + constructor); its plural is below, after every
-  // arithmetic package's own carrier is declared too — see that comment.
+  // GlyphKind: type, constructor, plural type-space name and `Element` membership, all in
+  // one call (`declareCarriers`' default plural folding).
   apply(libs.declareFrontendCarriers);
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too. Collections
@@ -104,15 +99,6 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply(libs.declareGroupAlgebra);
   apply(libs.declareModular);
   apply(libs.declareNumberTheory);
-  // The arithmetic carriers' (and GlyphKind's) plural type-space names and Element
-  // membership, now that every one of them is declared -- moved here from combinatorics'
-  // domains/LEFTOVER_DOMAINS (design/speculative/combinatorics-layering-and-plausible.md §4
-  // steps 4-5), which minted every carrier's plural together in one combined list.
-  apply(libs.declareFrontendCarrierPlurals);
-  apply(libs.declareHypercomplexCarrierPlurals);
-  apply(libs.declareResiduesCarrierPlurals);
-  apply(libs.declareNumeralsCarrierPlurals);
-  apply(libs.declareNumberTheoryCarrierPlurals);
   apply(libs.declareAdeles);
   apply(libs.declareBraid);
 }

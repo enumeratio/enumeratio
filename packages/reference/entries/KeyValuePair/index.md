@@ -2,7 +2,7 @@
 name: KeyValuePair
 domain: Compute engine
 signature: KeyValuePair(key, value)
-summary: A key/value pair -- how an option is passed to a head that takes one, e.g. `FactorInteger(5, KeyValuePair(GaussianIntegers, True))`.
+summary: A key/value pair -- how an option is passed to a head that takes one, e.g. `FactorInteger(5, KeyValuePair(Over, GaussianIntegers))`.
 signatures:
   - call: KeyValuePair(key, value)
     description: as compute-engine declares it

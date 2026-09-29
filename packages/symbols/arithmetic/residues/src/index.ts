@@ -1,4 +1,4 @@
-export { declareResidues, declareResiduesCarrierPlurals } from "./declare.ts";
+export { declareResidues } from "./declare.ts";
 export { RESIDUES_CARRIERS } from "./carrier-data.ts";
 export { crt, crtSolve, extendedGcd, gcd, invMod, isqrt, lehmerGcd, mod, powMod, valuation } from "./arith.ts";
 export { factorInteger, isPrime, RHO_BUDGET, totientOf } from "./primes.ts";

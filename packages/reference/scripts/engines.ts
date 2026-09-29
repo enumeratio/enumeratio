@@ -11,7 +11,12 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareCombinatorics } from "@enumeratio/combinatorics/src";
-import { declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import {
+  declareDomainElement,
+  declareDomainPlurals,
+  declareMaps,
+  DOMAINS,
+} from "@enumeratio/combinatorics/domains/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -74,6 +79,17 @@ const LIBRARY_DECLARATIONS = [
   (ce: ComputeEngine) => {
     declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])) });
     declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+  },
+  // Combinatorics' own carriers mint their plural type-space names and `Element` membership
+  // LAST, same as every other host (CLI, site, census): `declareCollections`, above, has
+  // already had first claim on any plural a real family enumerates (`Permutations`,
+  // `DyckPaths`, …), so this only mints the leftover carriers' `set<...>` symbols. Every other
+  // library's carriers fold this into their own `declare*` call already (`declareCarriers`'
+  // default); this is the one still-separate step, so the reference engine now runs it too —
+  // it used to skip it entirely.
+  (ce: ComputeEngine) => {
+    declareDomainPlurals(ce);
+    declareDomainElement(ce);
   },
 ];
 

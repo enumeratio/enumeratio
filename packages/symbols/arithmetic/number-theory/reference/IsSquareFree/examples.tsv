@@ -6,7 +6,7 @@ every-prime-is-squarefree			[IsSquareFree, 17]	True	Every prime is squarefree
 issquarefree-20			[IsSquareFree, 20]	False			
 threads-element-wise-over-a-list	Scope		[IsSquareFree, [List, 10, 4, 12]]	[List, True, False, False]	Threads element-wise over a list	domain	We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.
 gaussian-integers-3-2i-is-a-gaussian-prime	Scope		[IsSquareFree, [Complex, 3, 2]]	True	Gaussian integers: $3+2i$ is a Gaussian prime		
-gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, GaussianIntegers, True]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$		
+gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, Over, GaussianIntegers]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$		
 rationals-numerator-and-denominator-are-both	Scope		[IsSquareFree, [Rational, 2, 3]]	True	Rationals: numerator and denominator are both squarefree		
 polynomials-x-2-6x-6-has-no-repeated-factor	Scope		[IsSquareFree, [Add, [Power, x, 2], [Multiply, 6, x], 6]]	True	Polynomials: $x^2+6x+6$ has no repeated factor -- decided by $\gcd(f, f')$ via [[D]] and compute-engine's own PolynomialGCD		
 multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	Scope		[IsSquareFree, [Subtract, [Power, x, 3], [Multiply, [Power, x, 2], y]]]	False	Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$		
