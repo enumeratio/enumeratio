@@ -9,6 +9,7 @@ export { type AlgebraFamily, declareAlgebra, ensureAlgebraHeads, type Product, r
 export { compare, type Conformance, conform, type Member, member } from "./conform.ts";
 export {
   type Carrier,
+  collectionCarrierOf,
   ensureOperationHeads,
   type Operation,
   OperationCollisionError,
