@@ -456,7 +456,7 @@ export class NotatioOut extends LitElement {
     ensureStyles();
   }
 
-  // Light DOM: MathLive's static markup needs the page-level `mathlive/static.css`.
+  // Light DOM: the typeset markup needs the page-level KaTeX stylesheet.
   protected override createRenderRoot(): HTMLElement {
     return this;
   }
@@ -513,7 +513,7 @@ export class NotatioOut extends LitElement {
     // `box` forces boxing (without evaluating) so the source/AST forms populate.
     // Every other form needs the parsed expression, so only StandardForm takes it.
     if (this.format === "latex" && !this.evaluate && !this.box && !this.expect && this.form === "standard") {
-      // MathLive's static renderer takes its style from the LaTeX itself.
+      // The typesetter takes its style from the LaTeX itself.
       return {
         latex: this.display ? `\\displaystyle ${source}` : source,
         json: undefined,

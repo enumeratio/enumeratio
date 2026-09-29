@@ -1,5 +1,5 @@
-// These elements render in light DOM (MathLive's static markup needs the page's
-// `mathlive/static.css`), so their styles live in one document-level stylesheet
+// These elements render in light DOM (typeset markup needs the page's KaTeX and
+// MathLive stylesheets), so their styles live in one document-level stylesheet
 // injected on first use rather than per-shadow-root.
 
 import { ensureCopyHandler } from "./selection.ts";

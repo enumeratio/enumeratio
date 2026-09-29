@@ -72,9 +72,9 @@ const PROMPT = "value";
  * committed -- its native `change` event, which it fires on Enter and on blur (only if
  * the value actually changed since focus). A consumer that only cares about finished
  * edits -- a cell inside a transcript, where Wolfram evaluates on Shift+Enter, not on
- * every keystroke -- listens for `notatio-commit` instead. When `readonly`, it renders
- * static markup via `mathlive/ssr` and never loads the (heavy) editor. MathLive is
- * lazy-loaded the first time an editable input mounts.
+ * every keystroke -- listens for `notatio-commit` instead. It shows the value typeset
+ * (KaTeX, selectable) until clicked, and only then loads MathLive's (heavy) editor; when
+ * `readonly`, it never does.
  *
  * A reader can type a *wrapper head* around an expression -- `N(x)` for a number,
  * `FullForm(x)` for the AST, `TraditionalForm(x)` for the rendering (see
@@ -143,6 +143,7 @@ export class NotatioIn extends LitElement {
     step: { type: Number },
     _markup: { state: true },
     _playing: { state: true },
+    _editing: { state: true },
   };
 
   declare value: string;
@@ -160,6 +161,8 @@ export class NotatioIn extends LitElement {
   declare step: number;
   declare _markup: string;
   declare _playing: boolean;
+  /** Typeset until first clicked (or Enter); the editor loads then. */
+  declare _editing: boolean;
 
   constructor() {
     super();
@@ -178,6 +181,7 @@ export class NotatioIn extends LitElement {
     this.step = Number.NaN;
     this._markup = "";
     this._playing = false;
+    this._editing = false;
     ensureStyles();
   }
 
@@ -375,8 +379,29 @@ export class NotatioIn extends LitElement {
     }
   }
 
+  /** Showing typeset markup rather than the editor. */
+  get #typeset(): boolean {
+    return this.readonly || !this._editing;
+  }
+
+  #edit = (): void => {
+    this._editing = true;
+  };
+
+  // A click edits; a drag that selected some of the formula is a selection, left alone.
+  #onTypesetClick = (): void => {
+    if (window.getSelection()?.isCollapsed === false) return;
+    this.#edit();
+  };
+
+  #onTypesetKeydown = (event: KeyboardEvent): void => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    this.#edit();
+  };
+
   protected override willUpdate(changed: PropertyValues): void {
-    if (this.readonly && (changed.has("value") || changed.has("readonly"))) {
+    if (this.#typeset && (changed.has("value") || changed.has("readonly") || changed.has("_editing"))) {
       void this.#renderStatic();
     }
     if (changed.has("value")) {
@@ -467,11 +492,12 @@ export class NotatioIn extends LitElement {
     }
   }
 
-  protected override async updated(): Promise<void> {
-    if (this.readonly) return;
+  protected override async updated(changed: PropertyValues): Promise<void> {
+    if (this.#typeset) return;
     await loadEditor();
     const field = this.#field;
     if (!field) return;
+    if (changed.has("_editing")) queueMicrotask(() => field.focus());
     field.onExport = this.#onExport;
     if (this.#pinned) {
       // Read-only *plus* prompts is what makes the declaration unreachable: MathLive
@@ -492,6 +518,21 @@ export class NotatioIn extends LitElement {
 
   protected override render(): unknown {
     if (this.readonly) return html`<span class="notatio-static">${unsafeHTML(this._markup)}</span>`;
+    if (!this._editing) {
+      return html`<div class="notatio-in-row">
+        <span
+          class="notatio-static is-editable"
+          tabindex="0"
+          role="textbox"
+          aria-readonly="false"
+          title="Click or press Enter to edit"
+          @click=${this.#onTypesetClick}
+          @keydown=${this.#onTypesetKeydown}
+          >${unsafeHTML(this._markup)}</span
+        >
+        ${this.#playButton()}
+      </div>`;
+    }
     return html`<div class="notatio-in-row">
       <math-field @input=${this.#onInput} @change=${this.#onCommit}></math-field>
       ${this.#playButton()}
