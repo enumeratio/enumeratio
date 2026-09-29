@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/engine";
+import { declareCarrierElement, declareCarrierPlurals, declareCarriers } from "@enumeratio/structures";
+import { RESIDUES_CARRIERS } from "./carrier-data.ts";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
@@ -23,6 +25,12 @@ const nativeEvaluate = (ce: ComputeEngine, name: string): Native => {
 };
 
 export function declareResidues(ce: ComputeEngine): void {
+  // This package's own carrier (design/speculative/combinatorics-layering-and-plausible.md §4
+  // step 4) — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types and constructors
+  // only; plurals are a separate call (`declareResiduesCarrierPlurals`) — see
+  // @enumeratio/number-theory's `declareNumberTheory` for why.
+  declareCarriers(ce, RESIDUES_CARRIERS);
+
   const list = (xs: readonly bigint[]): BoxedExpression =>
     ce.function(
       "List",
@@ -135,4 +143,11 @@ export function declareResidues(ce: ComputeEngine): void {
 
   declareIntegerMod(ce);
   declareModExactConstant(ce);
+}
+
+/** This package's carrier's plural type-space name and `Element` membership — a separate
+ *  call, same reason as `@enumeratio/number-theory`'s `declareNumberTheoryCarrierPlurals`. */
+export function declareResiduesCarrierPlurals(ce: ComputeEngine): void {
+  declareCarrierPlurals(ce, RESIDUES_CARRIERS);
+  declareCarrierElement(ce, RESIDUES_CARRIERS);
 }

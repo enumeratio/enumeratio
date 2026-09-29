@@ -1,9 +1,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { canonicalFor, REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import { declareRendering } from "../src/render.ts";
-import { canonicalFor, REPRESENTATIONS, representationsFor } from "../src/representation.ts";
+import { declareRendering } from "../src/carrier-render.ts";
 
 const ce = new ComputeEngine();
 declareDomains(ce);

@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: FractionalNumber(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-numerals
     type: (tuple<integer, integer>) -> fractional_number
 ---

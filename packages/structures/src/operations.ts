@@ -157,6 +157,16 @@ export function collectionCarrierOf(ce: ComputeEngine, collection: string): stri
   return registryOf(ce).collections.get(collection);
 }
 
+/** The carrier CONSTRUCTOR name whose minted type is `type` (`permutation` -> `Permutation`),
+ *  as registered by `registerCarrier`/`declareCarriers`. Undefined when no registered carrier
+ *  has that type. */
+export function carrierNameForType(ce: ComputeEngine, type: string): string | undefined {
+  for (const carrier of registryOf(ce).carriers.values()) {
+    if (carrier.type === type) return carrier.name;
+  }
+  return undefined;
+}
+
 /**
  * Add `operation` to `carrier`'s table for `head`. A kernel and a definition from different
  * packages meet in one entry; the same part twice is an `OperationCollisionError`.

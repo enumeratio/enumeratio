@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: IntegerFactorization(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (tuple<boolean, list<number>, list<integer>>) -> integer_factorization
 ---

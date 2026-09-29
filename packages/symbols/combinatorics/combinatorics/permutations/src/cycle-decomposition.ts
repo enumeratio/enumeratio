@@ -3,7 +3,7 @@
 // conversions are defined in Epsil (below) and compiled to the collections kernels
 // (`PermutationsAsCycles`) behind a MathJSON boundary.
 import { CycleDecomposition, PermutationOfCycleDecomposition } from "../../collections/src/families/permutations.ts";
-import { recurse, self } from "./recursion.ts";
+import { recurse, self } from "../../domains/src/recursion.ts";
 
 type MathJSON = unknown;
 

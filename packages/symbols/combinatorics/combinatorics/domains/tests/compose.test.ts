@@ -1,10 +1,9 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareCompose } from "../src/compose.ts";
+import { declareCompose, publicName } from "@enumeratio/structures";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
 import { declareMaps, MAPS } from "../src/map.ts";
-import { publicName } from "../src/extend.ts";
 
 const ce = new ComputeEngine();
 declareDomains(ce);

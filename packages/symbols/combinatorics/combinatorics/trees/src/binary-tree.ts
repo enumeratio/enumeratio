@@ -11,7 +11,7 @@ import {
   type BinTree,
 } from "../../collections/src/families/kernels-extra.ts";
 
-import { isLeaf, recurse, self } from "./recursion.ts";
+import { isLeaf, recurse, self } from "../../domains/src/recursion.ts";
 
 type Tree = BinTree;
 type MathJSON = unknown;

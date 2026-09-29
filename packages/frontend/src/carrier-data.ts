@@ -1,0 +1,17 @@
+// frontend's own carrier (design/speculative/combinatorics-layering-and-plausible.md §4 step
+// 5): moved from combinatorics' domains/LEFTOVER_DOMAINS, as an interim home — the roadmap
+// will later make glyphs and renderers data in symbol metadata instead. Distinct from this
+// package's own `GlyphKind` (glyphs.ts), which is an unrelated TypeScript union for the SVG
+// glyph renderer, not a compute-engine carrier.
+
+import type { CarrierDeclaration } from "@enumeratio/structures";
+
+export const FRONTEND_CARRIERS: readonly CarrierDeclaration[] = [
+  {
+    name: "GlyphKind",
+    type: "glyph_kind",
+    shape: "tuple<string, string>",
+    id: "glyph_kind",
+    plural: "GlyphKinds",
+  },
+];

@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareStructures } from "@enumeratio/structures";
 import { describe, expect, it } from "vite-plus/test";
-import { declareDomains } from "../src/index.ts";
+import { declareDomains } from "../../domains/src/index.ts";
 
 // Integer partitions under dominance: a lattice, not a total order.
 const ce = new ComputeEngine();

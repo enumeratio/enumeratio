@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: CollatzTrajectory(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (list<integer>) -> collatz_trajectory
 ---
