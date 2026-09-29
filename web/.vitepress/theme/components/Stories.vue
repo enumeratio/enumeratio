@@ -10,15 +10,13 @@
 // reviewed. More forms land as more tabs, not a wider switch statement.
 import { toVNode, vdomOf } from "@enumeratio/frontend/vdom";
 import { h, reactive } from "vue";
-import { renderProseMath } from "../../prose-math.ts";
+import { renderInline } from "../../prose.ts";
 import type { StoryData } from "../../data/stories.ts";
 
 defineProps<{ stories: readonly StoryData[] }>();
 
-// A story's caption/notes are prose like an example's caption, not markdown: `$…$` becomes
-// typeset math and everything else is escaped (renderProseMath, shared with ReferencePage.vue's
-// `linkify` and the guides' markdown-it plugin -- the same syntax works the same way everywhere).
-const prose = (text?: string): string => renderProseMath(text ?? "");
+// A story's caption and notes are prose like an example's caption (prose.ts).
+const prose = (text?: string): string => renderInline(text ?? "");
 
 /** A render-function component for one story: `<component :is="liveNode(story)" />`. */
 const liveNode = (story: StoryData) => () => toVNode(vdomOf(story.expr as never), h);

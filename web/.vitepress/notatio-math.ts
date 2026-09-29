@@ -4,6 +4,7 @@
 // signatures.
 interface Token {
   content: string;
+  meta: unknown;
   markup: string;
   map: [number, number] | null;
 }
@@ -22,34 +23,29 @@ interface StateBlock {
   push(type: string, tag: string, nesting: number): Token;
 }
 
-// `$latex$` and `$$latex$$` in markdown, rendered by MathLive through
-// <notatio-out format="latex"> — the same path ReferencePage.vue already uses for
-// the `$…$` in reference summaries. Routing prose math through the same component is the point:
-// one renderer for the whole site, so a formula in a guide and a formula in a
-// reference entry look identical, and neither needs a second math library. The actual
-// span-recognition and escaping live in prose-math.ts, shared with ReferencePage.vue's
-// non-markdown record prose.
-import { escapeAttr, matchInlineMath, texTag as tex, trimDisplayBody } from "./prose-math.ts";
+// `$latex$` and `$$latex$$` in markdown pages, typeset by KaTeX at build: TeX held as written,
+// recognised by the same rule as record prose (boxes' `closeDollar`), and drawn by the same
+// `tex` (prose.ts), so a formula in a guide and in a reference entry are one thing.
+import { closeDollar } from "@enumeratio/boxes";
+import { tex } from "./prose.ts";
 
-/**
- * Inline `$…$`. Deliberately conservative, because `$` is load-bearing elsewhere in
- * these docs: `${…}` is Manipulate's template placeholder and `$params` is a VitePress
- * route variable. So the opening `$` must be followed by something that is neither a
- * brace nor whitespace, the closing `$` must not be preceded by whitespace, and the
- * span must not cross a line. (Code spans are consumed whole by the backticks rule
- * before this ever sees them, so `` `${n}` `` is safe regardless.) The match itself is
- * `matchInlineMath` from prose-math.ts, shared with ReferencePage.vue.
- */
+// Vue compiles the page as a template, so `{{` would be an interpolation; KaTeX's MathML
+// annotation carries the TeX, braces and all, and as entities the browser still reads them as
+// braces. The TeX rides in `meta`, not `content`: VitePress's markdown-it-attrs reads a token's
+// content and would claim a trailing `{…}` (`\end{pmatrix}` in a table cell) as attributes.
+const vueSafe = (html: string): string => html.replace(/\{/g, "&#123;").replace(/\}/g, "&#125;");
+
+/** Inline `$…$`. Code spans are consumed whole by the backticks rule before this sees them. */
 function mathInline(state: StateInline, silent: boolean): boolean {
-  const m = matchInlineMath(state.src, state.pos, state.posMax);
-  if (!m) return false;
-
+  if (state.src.charCodeAt(state.pos) !== 0x24 /* $ */) return false;
+  const end = closeDollar(state.src, state.pos, state.posMax);
+  if (end < 0) return false;
   if (!silent) {
     const token = state.push("notatio_math_inline", "", 0);
-    token.content = escapeAttr(m.content);
+    token.meta = state.src.slice(state.pos + 1, end);
     token.markup = "$";
   }
-  state.pos = m.end;
+  state.pos = end + 1;
   return true;
 }
 
@@ -80,12 +76,12 @@ function mathBlock(state: StateBlock, startLine: number, endLine: number, silent
   } else {
     lastLine = startLine;
   }
-  body = trimDisplayBody(body);
+  body = body.replace(/\$\$\s*$/, "").trim();
   if (body === "") return false;
   if (silent) return true;
 
   const token = state.push("notatio_math_block", "", 0);
-  token.content = escapeAttr(body);
+  token.meta = body;
   token.map = [startLine, lastLine + 1];
   state.line = lastLine + 1;
   return true;
@@ -104,7 +100,7 @@ export function notatioMath(md: MarkdownItLike): void {
   md.block.ruler.before("fence", "notatio_math_block", mathBlock, {
     alt: ["paragraph", "reference", "blockquote", "list"],
   });
-  const rules = md.renderer.rules as Record<string, (tokens: { content: string }[], index: number) => string>;
-  rules["notatio_math_inline"] = (tokens, index) => tex(tokens[index]!.content);
-  rules["notatio_math_block"] = (tokens, index) => `${tex(tokens[index]!.content.replace(/\n/g, " "), true)}\n`;
+  const rules = md.renderer.rules as Record<string, (tokens: { meta: unknown }[], index: number) => string>;
+  rules["notatio_math_inline"] = (tokens, index) => vueSafe(tex(tokens[index]!.meta as string, false));
+  rules["notatio_math_block"] = (tokens, index) => `${vueSafe(tex(tokens[index]!.meta as string, true))}\n`;
 }

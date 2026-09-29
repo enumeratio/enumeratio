@@ -5,7 +5,6 @@ import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
-import "katex/dist/katex.min.css";
 import { renderBlock, renderInline } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
