@@ -13,7 +13,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
-import { registerOperation } from "@enumeratio/structures";
+import { registerEquivalence, registerOperation } from "@enumeratio/structures";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
@@ -83,6 +83,42 @@ const nextInBlock = (i: MathJSON): MathJSON => {
  *  block structure a map reads at every position (`parts`, the leaders) is computed once
  *  here rather than once per position per read; see tableau.ts for the rule. */
 const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => ["Apply", ["Function", body, name], value];
+
+/** `expr` with every `from` symbol renamed `to`. */
+const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
+  expr === from ? to : Array.isArray(expr) ? (expr as readonly MathJSON[]).map((x) => rename(x, from, to)) : expr;
+
+/** A set partition's restricted growth string, labels from 0: position i carries the index of
+ *  its block, blocks in order of their least elements (as a set_partition keeps them). */
+const growthStringOf = (blocks: MathJSON): MathJSON =>
+  forEach(
+    ["Range", 1, ["Length", ["Flatten", blocks]], 1],
+    [
+      "Fold",
+      ["Function", ["If", ["Element", "i", ["At", blocks, "k"]], ["Subtract", "k", 1], "acc"], "acc", "k"],
+      -1,
+      ["Range", 1, ["Length", blocks], 1],
+    ],
+  );
+
+/** The blocks of a restricted growth string whose labels start at `base`: block j holds the
+ *  positions labelled j, in increasing order. Each block is folded, so it is a list rather than
+ *  a lazy filter. */
+const blocksOf = (word: MathJSON, base: number): MathJSON => [
+  "If",
+  ["Equal", ["Length", word], 0],
+  ["List"],
+  forEach(
+    ["Range", base, ["Max", word], 1],
+    [
+      "Fold",
+      ["Function", ["If", ["Equal", ["At", word, "p"], "j"], ["Append", "acc", "p"], "acc"], "acc", "p"],
+      ["List"],
+      ["Range", 1, ["Length", word], 1],
+    ],
+    "j",
+  ),
+];
 
 /** A fold over `1 .. n`, indexing rather than iterating a structure — the rule from
  *  tableau.ts, which is what makes these evaluate at all. */
@@ -444,9 +480,13 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "CyclePartition",
     from: "permutation",
     to: "set_partition",
-    // Each position labelled with the rank of its cycle's least element — which is exactly a
-    // restricted growth string, and therefore exactly what a set_partition IS.
-    body: byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
+    // Each position labelled with the rank of its cycle's least element (a restricted growth
+    // string from 1), then read off as blocks.
+    body: bind(
+      "cw",
+      byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
+      blocksOf("cw", 1),
+    ),
     summary: "The orbits, as a set partition of the positions.",
     note: "Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.",
   },
@@ -521,15 +561,33 @@ export const MAPS: readonly CombinatorialMap[] = [
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
   },
   {
+    name: "RestrictedGrowthStringOf",
+    from: "set_partition",
+    to: "restricted_growth_string",
+    body: growthStringOf("_raw"),
+    summary: "A set partition's restricted growth string: each position labelled with its block's index, from 0.",
+    note: "An order isomorphism: the k-th set partition of n, in the order SetPartitions lists them, goes to the k-th restricted growth string of length n. So everything defined on one carrier is available on the other through it.",
+    laws: [{ inverse: "SetPartitionOf" }],
+  },
+  {
+    name: "SetPartitionOf",
+    from: "restricted_growth_string",
+    to: "set_partition",
+    body: blocksOf("_raw", 0),
+    summary: "The set partition a restricted growth string labels: block j holds the positions labelled j.",
+    note: "The inverse of RestrictedGrowthStringOf, and order-preserving in the same way.",
+    laws: [{ inverse: "RestrictedGrowthStringOf" }],
+  },
+  {
     name: "ArcRepresentation",
     from: "set_partition",
     to: "endofunction",
-    // `_raw` is the restricted growth string: position i's block label. A block's members
-    // are already in ascending order by position, so "the next element in i's block" is just
-    // the smallest later position sharing i's label — a function on 1..n, which is exactly
-    // what an endofunction IS. The arcs of the standard representation are the pairs
-    // (i, f(i)) with f(i) != i; a position last in its block is a fixed point.
-    body: forEach(positions, nextInBlock("i")),
+    // Read through the restricted growth string: position i's block label. A block's members
+    // are in ascending order by position, so "the next element in i's block" is just the
+    // smallest later position sharing i's label — a function on 1..n, which is exactly what
+    // an endofunction IS. The arcs of the standard representation are the pairs (i, f(i)) with
+    // f(i) != i; a position last in its block is a fixed point.
+    body: bind("aw", growthStringOf("_raw"), rename(forEach(positions, nextInBlock("i")), "_raw", "aw")),
     summary: "Each position linked to the next in its block, or to itself when last.",
     note: "The statistics frontier calls this the arc representation: within each block, consecutive elements (b1,b2), (b2,b3), .... Encoding it as an endofunction rather than a bare list of pairs keeps it a typed carrier — Crossings, Nestings and CrossingNestingTotal (@enumeratio/statistics) read the arcs off this without needing a carrier of their own.",
   },
@@ -584,6 +642,11 @@ export function declareMaps(
         .filter((ref) => ref.on === undefined || ref.on === from)
         .map((ref) => ref.id);
       registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, findstat, definition: handle });
+      // A map with an inverse between two carriers makes them equivalent: what one carrier
+      // defines, the other reaches through the map (set partitions and their growth strings).
+      const to = constructorFor[map.to];
+      if (to !== undefined && to !== from && map.laws?.some((law) => typeof law === "object"))
+        registerEquivalence(ce, from, to, handle);
     }
 
     // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending

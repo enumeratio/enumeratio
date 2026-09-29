@@ -357,8 +357,28 @@ export function declareCallForms(ce: ComputeEngine): void {
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
-  widenSignature(ce, "SetPartitions", "(integer | collection<any>, integer?) -> list<list<list<any>>>");
-  setCollection(ce, "SetPartitions", polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions));
+  // Over 1..n, typed by its carrier when it has one; over an explicit list, blocks of those
+  // elements, which no carrier holds.
+  const setPartition = carrierTypes.SetPartition;
+  widenSignature(
+    ce,
+    "SetPartitions",
+    setPartition === undefined
+      ? "(integer | collection<any>, integer?) -> list<list<list<any>>>"
+      : `(integer | collection<any>, integer?) -> list<${setPartition} | list<list<any>>>`,
+  );
+  setCollection(
+    ce,
+    "SetPartitions",
+    setPartition === undefined
+      ? polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions)
+      : polyCollection(
+          ce,
+          (blocks: number[][]) => ["SetPartition", blocksMJ(blocks)],
+          (b) => asBlockList((b as unknown as BoxedExpression).operator === "SetPartition" ? b.ops![0]! : b),
+          resolveSetPartitions,
+        ),
+  );
 
   widenSignature(ce, "Subsets", "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));

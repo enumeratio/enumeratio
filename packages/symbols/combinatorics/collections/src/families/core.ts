@@ -460,6 +460,7 @@ export const entries: NumberKernel[] = [
   // ── set partitions / matchings (blocks) ──
   {
     head: "SetPartitions",
+    carrier: "SetPartition",
     paramCount: 1,
     kind: "blocks",
     count: ([n]) => BellB(n),
@@ -469,6 +470,7 @@ export const entries: NumberKernel[] = [
   },
   {
     head: "SetPartitionsIntoKBlocks",
+    carrier: "SetPartition",
     paramCount: 2,
     kind: "blocks",
     count: ([n, k]) => StirlingS2(n, k),
