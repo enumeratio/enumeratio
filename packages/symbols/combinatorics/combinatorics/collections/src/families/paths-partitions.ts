@@ -6,7 +6,11 @@
 // RestrictedGrowthStrings and NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
 // NonNestingMatchings moved to set-partitions/src/families/{paths-partitions,matchings}.ts --
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5. The latter four now carry
-// "SetPartition" (their "blocks" shape matches it exactly).
+// "SetPartition" (their "blocks" shape matches it exactly). DelannoyPaths/LukasiewiczPaths/
+// MotzkinPathsByPeaks moved to lattice-paths/src/families/paths-partitions.ts (wire-carriers
+// lane A-90): they now carry "DelannoyPath"/"LukasiewiczPath"/"MotzkinPath".
+// GrandDyckPaths/RiordanPaths/FinePaths/BallotSequences declare no carrier and stay here per
+// step 5 rule 4.
 import type { NumberKernel } from "./types.ts";
 import {
   CatalanNumber,
@@ -17,9 +21,6 @@ import {
   KSubsetCount,
   KSubsetRank,
   KSubsetUnrank,
-  OrderedTreeRank,
-  OrderedTreeUnrank,
-  type OrdTree,
 } from "./kernels-extra.ts";
 
 // ─── GrandDyckPaths(n): free ±1-step paths of length 2n over up(1)/down(0), starting and ending at
@@ -34,103 +35,6 @@ function isGrandDyckPathOf(e: unknown, n: number): boolean {
     if (s === 1) ones++;
   }
   return ones === n;
-}
-
-// ─── DelannoyPaths(n): lattice paths from (0,0) to (n,n) using East=(1,0), North=(0,1), and
-// Diagonal=(1,1) steps — encoded as a token sequence over {0=E,1=N,2=D} whose length varies (n for
-// an all-diagonal path, up to 2n for an all-E/N path). f[i][j] = # completions from (i,j) to
-// (n,n): f(n,n)=1, f(i,j) = f(i+1,j) [E] + f(i,j+1) [N] + f(i+1,j+1) [D] (each only when the
-// target stays in range). count(n) = f(0,0), the central Delannoy numbers (1,3,13,63,321,...).
-// unrank/rank walk from (0,0) toward (n,n), trying E, then N, then D at each step. ───────────────
-const _delannoyMemo = new Map<number, number[][]>();
-function delannoyTable(n: number): number[][] {
-  const cached = _delannoyMemo.get(n);
-  if (cached) return cached;
-  const f: number[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
-  f[n][n] = 1;
-  for (let i = n; i >= 0; i--) {
-    for (let j = n; j >= 0; j--) {
-      if (i === n && j === n) continue;
-      const e = i + 1 <= n ? f[i + 1][j] : 0;
-      const north = j + 1 <= n ? f[i][j + 1] : 0;
-      const d = i + 1 <= n && j + 1 <= n ? f[i + 1][j + 1] : 0;
-      f[i][j] = e + north + d;
-    }
-  }
-  _delannoyMemo.set(n, f);
-  return f;
-}
-function DelannoyPathCount(n: number): number {
-  if (n < 0) return 0;
-  return delannoyTable(n)[0][0];
-}
-function DelannoyPathUnrank(n: number, rank: number): number[] {
-  if (n <= 0) return [];
-  const f = delannoyTable(n);
-  const total = f[0][0];
-  let r = total ? ((rank % total) + total) % total : 0;
-  const out: number[] = [];
-  let i = 0,
-    j = 0;
-  while (i < n || j < n) {
-    const blockE = i + 1 <= n ? f[i + 1][j] : 0;
-    if (r < blockE) {
-      out.push(0);
-      i++;
-      continue;
-    }
-    r -= blockE;
-    const blockN = j + 1 <= n ? f[i][j + 1] : 0;
-    if (r < blockN) {
-      out.push(1);
-      j++;
-      continue;
-    }
-    r -= blockN;
-    out.push(2);
-    i++;
-    j++;
-  }
-  return out;
-}
-function DelannoyPathRank(path: number[], n: number): number {
-  if (n <= 0) return 0;
-  const f = delannoyTable(n);
-  let i = 0,
-    j = 0,
-    rank = 0;
-  for (const step of path) {
-    if (step === 0) {
-      i++;
-      continue;
-    }
-    const blockE = i + 1 <= n ? f[i + 1][j] : 0;
-    rank += blockE;
-    if (step === 1) {
-      j++;
-      continue;
-    }
-    const blockN = j + 1 <= n ? f[i][j + 1] : 0;
-    rank += blockN;
-    i++;
-    j++;
-  }
-  return rank;
-}
-function isDelannoyPathOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e)) return false;
-  let i = 0,
-    j = 0;
-  for (const step of e) {
-    if (step === 0) i++;
-    else if (step === 1) j++;
-    else if (step === 2) {
-      i++;
-      j++;
-    } else return false;
-    if (i > n || j > n) return false;
-  }
-  return i === n && j === n;
 }
 
 // ─── RiordanPaths(n): Motzkin paths of length n (steps U=+1,L=0,D=-1) with no LEVEL step taken at
@@ -291,134 +195,6 @@ function isFinePathOf(e: unknown, n: number): boolean {
   return true;
 }
 
-// ─── LukasiewiczPaths(n): length-(n+1) integer words a_0..a_n (each a_i >= -1, prefix sums stay
-// >=0 with the last one landing at -1) in bijection with plane trees on n edges via preorder
-// traversal — a_i = (number of children of the i-th node, preorder) - 1. Reuses
-// OrderedTree{Unrank,Rank} from kernels-extra.ts (same Catalan(n) count) and just reshapes the
-// tree into its preorder child-count word. ──────────────────────────────────────────────────────
-function preorderWord(node: OrdTree): number[] {
-  const out: number[] = [node.length - 1];
-  for (const child of node) out.push(...preorderWord(child));
-  return out;
-}
-function wordToOrderedTree(word: number[], pos: { i: number }): OrdTree {
-  const numChildren = word[pos.i] + 1;
-  pos.i++;
-  const children: OrdTree[] = [];
-  for (let c = 0; c < numChildren; c++) children.push(wordToOrderedTree(word, pos));
-  return children;
-}
-function LukasiewiczPathUnrank(n: number, rank: number): number[] {
-  return preorderWord(OrderedTreeUnrank(n, rank));
-}
-function LukasiewiczPathRank(word: number[]): number {
-  return OrderedTreeRank(wordToOrderedTree(word, { i: 0 }));
-}
-function isLukasiewiczPathOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== n + 1) return false;
-  let needed = 1; // node-slots still awaiting a node, starting with just the root
-  for (const a of e) {
-    if (typeof a !== "number" || !Number.isInteger(a) || a < -1) return false;
-    if (needed <= 0) return false;
-    needed += a;
-    if (needed < 0) return false;
-  }
-  return needed === 0;
-}
-
-// ─── MotzkinPathsByPeaks(n,k): Motzkin paths of length n with exactly k peaks — a peak is an
-// up-step immediately followed by a down-step — the Motzkin triangle (A055151).
-// completions(s,h,prevUp,peaksLeft) tracks steps remaining, current height, whether the previous
-// step was an up-step (so an immediate down-step scores a peak), and peaks still to place. ──────
-const _mpbpMemo = new Map<string, number>();
-function mpbpCompletions(s: number, h: number, prevUp: boolean, peaksLeft: number): number {
-  if (h < 0 || peaksLeft < 0) return 0;
-  if (s === 0) return h === 0 && peaksLeft === 0 ? 1 : 0;
-  const key = `${s},${h},${prevUp},${peaksLeft}`;
-  let v = _mpbpMemo.get(key);
-  if (v === undefined) {
-    const up = mpbpCompletions(s - 1, h + 1, true, peaksLeft);
-    const level = mpbpCompletions(s - 1, h, false, peaksLeft);
-    const down = h > 0 ? mpbpCompletions(s - 1, h - 1, false, peaksLeft - (prevUp ? 1 : 0)) : 0;
-    v = up + level + down;
-    _mpbpMemo.set(key, v);
-  }
-  return v;
-}
-function MotzkinPathsByPeaksCount(n: number, k: number): number {
-  if (n < 0 || k < 0) return 0;
-  return mpbpCompletions(n, 0, false, k);
-}
-function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[] {
-  const total = MotzkinPathsByPeaksCount(n, k);
-  let r = total ? ((rank % total) + total) % total : 0;
-  const out: number[] = [];
-  let h = 0,
-    prevUp = false,
-    peaksLeft = k;
-  for (let s = n; s > 0; s--) {
-    const up = mpbpCompletions(s - 1, h + 1, true, peaksLeft);
-    if (r < up) {
-      out.push(1);
-      h++;
-      prevUp = true;
-      continue;
-    }
-    r -= up;
-    const level = mpbpCompletions(s - 1, h, false, peaksLeft);
-    if (r < level) {
-      out.push(0);
-      prevUp = false;
-      continue;
-    }
-    r -= level;
-    out.push(-1);
-    if (prevUp) peaksLeft--;
-    h--;
-    prevUp = false;
-  }
-  return out;
-}
-function MotzkinPathsByPeaksRank(path: number[], k: number): number {
-  let r = 0,
-    h = 0,
-    prevUp = false,
-    peaksLeft = k;
-  for (let i = 0; i < path.length; i++) {
-    const s = path.length - i;
-    const step = path[i];
-    if (step === 1) {
-      h++;
-      prevUp = true;
-      continue;
-    }
-    r += mpbpCompletions(s - 1, h + 1, true, peaksLeft);
-    if (step === 0) {
-      prevUp = false;
-      continue;
-    }
-    r += mpbpCompletions(s - 1, h, false, peaksLeft);
-    if (prevUp) peaksLeft--;
-    h--;
-    prevUp = false;
-  }
-  return r;
-}
-function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
-  if (!Array.isArray(e) || e.length !== n) return false;
-  let h = 0,
-    peaks = 0,
-    prevUp = false;
-  for (const s of e) {
-    if (s !== -1 && s !== 0 && s !== 1) return false;
-    if (s === -1 && prevUp) peaks++;
-    h += s;
-    if (h < 0) return false;
-    prevUp = s === 1;
-  }
-  return h === 0 && peaks === k;
-}
-
 // Kept separate from `entriesAfterDyckPathsByHeight` below only so
 // collections/src/families/index.ts can splice `latticePathsPathsPartitionsEntries`
 // (DyckPathsByHeight) back in at the exact interior position it held before the lattice-paths
@@ -442,15 +218,6 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
       for (let i = 0; i < path.length; i++) if (path[i] === 1) ups.push(i + 1);
       return KSubsetRank(ups);
     },
-  },
-  {
-    head: "DelannoyPaths",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => DelannoyPathCount(n),
-    unrank: ([n], r) => DelannoyPathUnrank(n, r),
-    valid: (e, [n]) => isDelannoyPathOf(e, n),
-    rank: (e, [n]) => DelannoyPathRank(e as number[], n),
   },
   {
     head: "RiordanPaths",
@@ -478,28 +245,5 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
     unrank: ([n], r) => DyckPathUnrank(n, r),
     valid: (e, [n]) => IsDyckPath(e as number[], n),
     rank: (e) => DyckPathRank(e as number[]),
-  },
-  {
-    head: "LukasiewiczPaths",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => CatalanNumber(n),
-    unrank: ([n], r) => LukasiewiczPathUnrank(n, r),
-    valid: (e, [n]) => isLukasiewiczPathOf(e, n),
-    rank: (e) => LukasiewiczPathRank(e as number[]),
-  },
-];
-
-// DyckPathsByHeight moved to lattice-paths/src/families/paths-partitions.ts, spliced back in
-// here by collections/src/families/index.ts — §4 step 5.
-export const entriesAfterDyckPathsByHeight: NumberKernel[] = [
-  {
-    head: "MotzkinPathsByPeaks",
-    paramCount: 2,
-    kind: "ints",
-    count: ([n, k]) => MotzkinPathsByPeaksCount(n, k),
-    unrank: ([n, k], r) => MotzkinPathsByPeaksUnrank(n, k, r),
-    valid: (e, [n, k]) => isMotzkinPathsByPeaksOf(e, n, k),
-    rank: (e, [, k]) => MotzkinPathsByPeaksRank(e as number[], k),
   },
 ];

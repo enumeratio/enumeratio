@@ -1,8 +1,8 @@
 // DyckPaths split out of collections/src/families/core.ts (which mixed every area) per
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
-// §4 step 5. Judgment call: DyckPaths is the only family in core.ts's "lattice-path words"
-// section carrying a top-level `carrier` ("DyckPath", a lattice-paths carrier); LatticePaths,
-// MotzkinPaths, SchroederPaths and FibonacciWords declare no carrier at all and stay in
+// §4 step 5. MotzkinPaths/SchroederPaths joined it (§4 step 5, wire-carriers lane A-90):
+// their element (list<integer>) matches MotzkinPath/SchroederPath's shape exactly, same as
+// DyckPaths <-> DyckPath. LatticePaths and FibonacciWords declare no carrier at all and stay in
 // collections per step 5 rule 4 -- so does most of paths-partitions.ts's lattice-path block for
 // the same reason (see lattice-paths/src/families/paths-partitions.ts). The generic kernel math
 // stays in collections/src/families/kernels*.ts.
@@ -12,6 +12,14 @@ import {
   DyckPathUnrank,
   DyckPathRank,
   IsDyckPath,
+  MotzkinCount,
+  MotzkinUnrank,
+  MotzkinRank,
+  IsMotzkinPath,
+  SchroederCount,
+  SchroederUnrank,
+  SchroederRank,
+  IsSchroederPath,
 } from "../../../collections/src/families/kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors collections/core.ts's private `ints`.
@@ -43,5 +51,27 @@ export const entries: NumberKernel[] = [
       (a) => DyckPathRank(a),
     ),
     carrier: "DyckPath",
+  },
+  {
+    ...ints(
+      "MotzkinPaths",
+      1,
+      ([n]) => MotzkinCount(n),
+      ([n], r) => MotzkinUnrank(n, r),
+      (a, [n]) => IsMotzkinPath(a, n),
+      (a) => MotzkinRank(a),
+    ),
+    carrier: "MotzkinPath",
+  },
+  {
+    ...ints(
+      "SchroederPaths",
+      1,
+      ([n]) => SchroederCount(n),
+      ([n], r) => SchroederUnrank(n, r),
+      (a, [n]) => IsSchroederPath(a, n),
+      (a) => SchroederRank(a),
+    ),
+    carrier: "SchroederPath",
   },
 ];

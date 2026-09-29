@@ -7,7 +7,7 @@ signatures:
   - call: LukasiewiczPaths(n)
     description: 'Łukasiewicz paths: length-$(n+1)$ integer words $a_0, …, a_n$ (each $\ge -1$) whose prefix sums stay $\ge 0$ and end at $-1$'
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<lukasiewicz_path>
 seeAlso:
   - DyckPaths
 references:

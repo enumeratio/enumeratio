@@ -1,4 +1,4 @@
 id	in	out
 count-delannoypaths-3	count(DelannoyPaths(3))	63
-first-element-of-delannoypaths-3	DelannoyPaths(3)[1]	[0, 0, 0, 1, 1, 1]
-every-element-of-delannoypaths-3	take(DelannoyPaths(3), 5)	"[\n  [0, 0, 0, 1, 1, 1],\n  [0, 0, 1, 0, 1, 1],\n  [0, 0, 1, 1, 0, 1],\n  [0, 0, 1, 1, 1, 0],\n  [0, 0, 1, 1, 2],\n]"
+first-element-of-delannoypaths-3	DelannoyPaths(3)[1]	DelannoyPath([0, 0, 0, 1, 1, 1])
+every-element-of-delannoypaths-3	take(DelannoyPaths(3), 5)	"[\n  DelannoyPath([0, 0, 0, 1, 1, 1]),\n  DelannoyPath([0, 0, 1, 0, 1, 1]),\n  DelannoyPath([0, 0, 1, 1, 0, 1]),\n  DelannoyPath([0, 0, 1, 1, 1, 0]),\n  DelannoyPath([0, 0, 1, 1, 2]),\n]"

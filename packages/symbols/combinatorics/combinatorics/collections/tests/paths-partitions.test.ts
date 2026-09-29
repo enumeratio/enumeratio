@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
-import { entriesBeforeDyckPathsByHeight, entriesAfterDyckPathsByHeight } from "../src/families/paths-partitions.ts";
+import { entriesBeforeDyckPathsByHeight } from "../src/families/paths-partitions.ts";
 import { numberKernel } from "../src/families/types.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
@@ -9,18 +9,17 @@ import { numberKernel } from "../src/families/types.ts";
 // RestrictedGrowthStrings to the set-partitions area, and NonCrossingPartitions/
 // NonNestingPartitions/NonCrossingMatchings/NonNestingMatchings there too (now carrying
 // "SetPartition") — §4 step 5 — each with its tests
-// (set-partitions/tests/{paths-partitions,matchings}.test.ts).
+// (set-partitions/tests/{paths-partitions,matchings}.test.ts). DelannoyPaths/LukasiewiczPaths/
+// MotzkinPathsByPeaks moved to lattice-paths/tests/paths-partitions.test.ts (wire-carriers lane
+// A-90), now carrying their area carriers.
 const PARAMS: Record<string, number[]> = {
-  DelannoyPaths: [4],
   GrandDyckPaths: [5],
   RiordanPaths: [8],
   FinePaths: [7],
   BallotSequences: [6],
-  LukasiewiczPaths: [6],
-  MotzkinPathsByPeaks: [7, 2],
 };
 
-const byHead = new Map([...entriesBeforeDyckPathsByHeight, ...entriesAfterDyckPathsByHeight].map((e) => [e.head, e]));
+const byHead = new Map(entriesBeforeDyckPathsByHeight.map((e) => [e.head, e]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
@@ -41,13 +40,10 @@ for (const [head, p] of Object.entries(PARAMS)) {
 // PARAMS above (mirrors tests/plausible.test.ts's use of scripts/properties.ts).
 const draw = random(20260924);
 const PLAUSIBLE_PARAMS: Record<string, number[]> = {
-  DelannoyPaths: [3],
   GrandDyckPaths: [4],
   RiordanPaths: [7],
   FinePaths: [6],
   BallotSequences: [5],
-  LukasiewiczPaths: [5],
-  MotzkinPathsByPeaks: [6, 1],
 };
 for (const [head, p] of Object.entries(PLAUSIBLE_PARAMS)) {
   const entry = byHead.get(head);
@@ -68,22 +64,8 @@ test("counts match their OEIS sequences", () => {
   const count = (head: string, p: number[]) => byHead.get(head)!.count(p);
   const seq = (head: string, n: number) => Array.from({ length: n }, (_, i) => count(head, [i]));
 
-  const catalan = [1, 1, 2, 5, 14, 42, 132];
-  for (const head of ["BallotSequences", "LukasiewiczPaths"]) {
-    expect(seq(head, 7)).toEqual(catalan); // A000108
-  }
-  expect(seq("DelannoyPaths", 6)).toEqual([1, 3, 13, 63, 321, 1683]); // A001850
+  expect(seq("BallotSequences", 7)).toEqual([1, 1, 2, 5, 14, 42, 132]); // A000108
   expect(seq("GrandDyckPaths", 6)).toEqual([1, 2, 6, 20, 70, 252]); // A000984
   expect(seq("RiordanPaths", 9)).toEqual([1, 0, 1, 1, 3, 6, 15, 36, 91]); // A005043
   expect(seq("FinePaths", 9)).toEqual([1, 0, 1, 2, 6, 18, 57, 186, 622]); // A000957
-});
-
-test("MotzkinPathsByPeaks rows sum to the Motzkin numbers", () => {
-  const entry = byHead.get("MotzkinPathsByPeaks")!;
-  const motzkin = [1, 1, 2, 4, 9, 21, 51]; // A001006
-  for (let n = 0; n <= 6; n++) {
-    let sum = 0;
-    for (let k = 0; k <= n; k++) sum += entry.count([n, k]);
-    expect(sum).toBe(motzkin[n]);
-  }
 });

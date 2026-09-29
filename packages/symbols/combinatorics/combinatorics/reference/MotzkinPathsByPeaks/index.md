@@ -7,7 +7,7 @@ signatures:
   - call: MotzkinPathsByPeaks(n, k)
     description: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<motzkin_path>
 seeAlso:
   - DyckPaths
 references:

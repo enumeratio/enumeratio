@@ -1,4 +1,4 @@
 id	in	out
 count-lukasiewiczpaths-4	\mathrm{Count}(\mathrm{LukasiewiczPaths}(4))	14
-first-element-of-lukasiewiczpaths-4	\mathrm{LukasiewiczPaths}(4)[1]	\bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack
-every-element-of-lukasiewiczpaths-4	\mathrm{Take}(\mathrm{LukasiewiczPaths}(4), 5)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack, \bigl\lbrack0, 0, 1, -1, -1\bigr\rbrack, \bigl\lbrack0, 1, 0, -1, -1\bigr\rbrack, \bigl\lbrack1, 0, 0, -1, -1\bigr\rbrack, \bigl\lbrack0, 1, -1, 0, -1\bigr\rbrack\bigr\rbrack
+first-element-of-lukasiewiczpaths-4	\mathrm{LukasiewiczPaths}(4)[1]	\mathrm{LukasiewiczPath}(\bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack)
+every-element-of-lukasiewiczpaths-4	\mathrm{Take}(\mathrm{LukasiewiczPaths}(4), 5)	\bigl\lbrack\mathrm{LukasiewiczPath}(\bigl\lbrack0, 0, 0, 0, -1\bigr\rbrack), \mathrm{LukasiewiczPath}(\bigl\lbrack0, 0, 1, -1, -1\bigr\rbrack), \mathrm{LukasiewiczPath}(\bigl\lbrack0, 1, 0, -1, -1\bigr\rbrack), \mathrm{LukasiewiczPath}(\bigl\lbrack1, 0, 0, -1, -1\bigr\rbrack), \mathrm{LukasiewiczPath}(\bigl\lbrack0, 1, -1, 0, -1\bigr\rbrack)\bigr\rbrack

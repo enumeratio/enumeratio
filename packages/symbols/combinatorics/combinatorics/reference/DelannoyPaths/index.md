@@ -7,7 +7,7 @@ signatures:
   - call: DelannoyPaths(n)
     description: Lattice paths from $(0,0)$ to $(n,n)$ using East, North, and Diagonal steps
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<delannoy_path>
 seeAlso:
   - DyckPaths
 references:
