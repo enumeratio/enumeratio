@@ -4,7 +4,7 @@ import { integerAt } from "@enumeratio/engine";
 // The one collection contract, shared by every family. A FamilyKernel is a pure kernel
 // (count / unrank / rank / valid) over plain JS values, with NO compute-engine
 // dependency. The engine wiring (MathJSON boxing, CE collection handlers) is declare.ts.
-// Counts and ranks are bigint (design/plausible.md §3.4); most families are still written
+// Counts and ranks are bigint (https://github.com/enumeratio/enumeratio/wiki/Plausible §3.4); most families are still written
 // as a NumberKernel and lifted by `numberKernel`, which refuses rather than rounds past 2^53.
 //
 // element shape (`kind`):
@@ -28,7 +28,7 @@ export type Element = number[] | number[][] | NestedTree | number;
  *  and `NaN` (unknown — a declared open problem, e.g. TwinPrimes). */
 export type Count = bigint | number;
 
-/** What an operation costs (design/plausible.md §3.3): arithmetic in the params and rank;
+/** What an operation costs (https://github.com/enumeratio/enumeratio/wiki/Plausible §3.3): arithmetic in the params and rank;
  *  tables polynomial in the params; time and memory in the elements it generates; or growing
  *  with the element's value (an nth-match scan of an infinite sequence). */
 export type Cost = "closed" | "polynomial" | "enumerative" | "scan";
@@ -42,7 +42,7 @@ export interface Param {
   readonly max?: number;
 }
 
-/** What a family tells Plausible about itself (design/plausible.md §3). Optional while the
+/** What a family tells Plausible about itself (https://github.com/enumeratio/enumeratio/wiki/Plausible §3). Optional while the
  *  families migrate; the contract test ratchets the ones still undeclared. */
 export interface Declared {
   /** The domain its elements inhabit — the catalogue's carrier, e.g. "Permutation". */

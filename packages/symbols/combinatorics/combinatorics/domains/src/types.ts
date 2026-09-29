@@ -18,7 +18,7 @@ export interface Domain {
   /** enumeratio's snake_case carrier id — which is also the type's spelling. */
   readonly id: string;
   /**
-   * The domain's TYPE-SPACE name, plural — every domain has one (design/domains.md §2's
+   * The domain's TYPE-SPACE name, plural — every domain has one (https://github.com/enumeratio/enumeratio/wiki/Domains §2's
    * corrected rule), whether or not a same-named collection family already exists.
    * `declareDomainElement` (`declare.ts`) is what makes `Element(x, DyckPaths)` answer for
    * it: True when `x` is a `DyckPath(...)` value, False for a value of another carrier,

@@ -1,4 +1,4 @@
-// Structural checks on the generated Julia-family harnesses (design/benchmarking.md §4): no
+// Structural checks on the generated Julia-family harnesses (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4): no
 // kernel needed, just the emitted text. `generated.test.ts` checks the committed files match a
 // fresh generation; these check what a fresh generation should contain.
 

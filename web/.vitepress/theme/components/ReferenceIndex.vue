@@ -13,7 +13,7 @@ const stubGroups = every
   .map((group) => ({ ...group, entries: group.entries.filter((entry) => entry.stub) }))
   .filter((group) => group.entries.length);
 
-// Where each head stands on the reduction (design/namespaces.md §6.1): it has a reference
+// Where each head stands on the reduction (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6.1): it has a reference
 // definition, it sits on the primitive frontier for a stated reason, or neither -- which is
 // the population the frontier lint will eventually refuse.
 type Standing = "defined" | "primitive" | "undeclared";

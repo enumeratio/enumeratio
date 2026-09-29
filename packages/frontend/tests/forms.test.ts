@@ -1,5 +1,5 @@
 // Every reference example's forms, as the printers and transpilers make them today, are the
-// ones its implementations record pins (design/examples-as-data.md §2): our `epsil`, `tex`
+// ones its implementations record pins (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2): our `epsil`, `tex`
 // and `traditional`, each other system's `in`, and `fullform` with its `back` wherever
 // @enumeratio/wolfram's FullForm doesn't read back as the example. A printer or transpiler change shows up here as a data diff to
 // commit, in the same PR. No kernel needed.

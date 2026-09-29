@@ -1,7 +1,7 @@
 # Verification
 
 `VerificationTest(input, expected, …)` — `@enumeratio/evaluation`'s reference-example
-primitive (design/computation.md §5.4). It evaluates `input` under the given constraints,
+primitive (https://github.com/enumeratio/enumeratio/wiki/Computation §5.4). It evaluates `input` under the given constraints,
 compares the result with `expected` (default: structural sameness), and returns a
 `TestResultObject`: the outcome (`Success`, `Failure`, `Error` or `Aborted`), the input
 and actual output, and how long it took. `<notatio-test-result-object>` draws it as an

@@ -1,5 +1,5 @@
 // Rebuild `src/naming-data.ts` from every head's `formerly:` field (symbol-metadata step 3,
-// design/speculative/symbol-metadata.md). `blessedName` needs this reversed -- old catalog
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata). `blessedName` needs this reversed -- old catalog
 // name to the head we actually declare -- and needs it as plain data: `naming.ts` runs in the
 // browser too, so it cannot parse YAML at runtime the way a Node script can.
 //

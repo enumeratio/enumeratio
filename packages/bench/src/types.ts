@@ -1,4 +1,4 @@
-// The shapes design/benchmarking.md §3 and §7 describe: a catalogue case, the plan the
+// The shapes https://github.com/enumeratio/enumeratio/wiki/Benchmarking §3 and §7 describe: a catalogue case, the plan the
 // generators work from, and the report every runner writes.
 
 import type { MathJSON } from "@enumeratio/oracle/src";
@@ -196,7 +196,7 @@ export interface Protocol {
 }
 
 /**
- * `index.json` at the root of the `bench-data` branch (design/benchmarking.md §7): every run,
+ * `index.json` at the root of the `bench-data` branch (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7): every run,
  * newest last. Each run's files are `runs/<id>/plan.json` and `runs/<id>/<system>.json`.
  */
 export interface BenchIndex {

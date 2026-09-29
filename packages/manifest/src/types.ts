@@ -1,4 +1,4 @@
-// The manifest's shape (design/manifest.md). Everything here is known without loading a
+// The manifest's shape (https://github.com/enumeratio/enumeratio/wiki/Manifest). Everything here is known without loading a
 // head's code: read from the reference records, and from a bare compute-engine for the
 // engine's own heads.
 

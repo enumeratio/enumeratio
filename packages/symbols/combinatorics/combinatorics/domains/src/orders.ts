@@ -2,7 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import { conform } from "@enumeratio/structures";
 
-// Carriers' orders (design/structures.md): what makes `Min`, `Max` and `Clamp` work on them.
+// Carriers' orders (https://github.com/enumeratio/enumeratio/wiki/Structures): what makes `Min`, `Max` and `Clamp` work on them.
 //
 // Integer partitions of the same n under dominance: λ ⊵ μ when every partial sum of λ is at
 // least μ's. A lattice but not a total order -- [3, 1, 1, 1] and [2, 2, 2] are incomparable --

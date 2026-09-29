@@ -1,4 +1,4 @@
-// What each package does to the engine (design/manifest.md): declare every package in
+// What each package does to the engine (https://github.com/enumeratio/enumeratio/wiki/Manifest): declare every package in
 // order, and note, for every head, which packages add it, re-sign it or replace its
 // handler -- the type the engine then prints, whether it holds its arguments, and who had
 // the head before. The manifest must say the same; `tests/manifest.test.ts` holds it to it.

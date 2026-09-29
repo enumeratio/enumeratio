@@ -31,7 +31,7 @@ import { toInputForm } from "@enumeratio/formats";
 //
 // Slot (`#`, `#1`) is NOT declared here: Epsil's own pure-function literals already lower
 // `#`/`#1` to compute-engine's `Function`/parameter-symbol representation at parse time (see
-// `design/syntax-and-formats.md`), so there is no bare `Slot` head left to give meaning to
+// `https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats`), so there is no bare `Slot` head left to give meaning to
 // on this engine — declaring one would just shadow that lowering.
 
 /** Call a (possibly `Function`-headed) expression as an operator over `args` — same

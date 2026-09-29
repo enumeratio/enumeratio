@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 
 // Repo-wide guard: `@enumeratio/entry` owns the strict YAML schema and the single reader/
-// writer (design/examples-as-data.md §4, §9 "YAML typing"). Nothing else may import `yaml`
+// writer (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §4, §9 "YAML typing"). Nothing else may import `yaml`
 // directly -- a stray `yaml.parse()`/`YAML.stringify()` with the library's own default (YAML
 // 1.2 core) schema would quietly turn `True` into `true` and `0o17` into `15`, exactly the
 // trap the strict schema exists to close. Go through `parseYaml`/`stringifyYaml` instead.

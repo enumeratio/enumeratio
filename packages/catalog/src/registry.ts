@@ -1,7 +1,7 @@
 // The context registry and its search path — the part that makes 280 collections cost
 // nothing until asked for, and lets a name move toward the global table by evidence.
 //
-// Three rungs (design/namespaces.md §4):
+// Three rungs (https://github.com/enumeratio/enumeratio/wiki/Namespaces §4):
 //   namespaced  registered in a context, reachable only fully qualified
 //   blessed     its context is on the search path, so the bare name resolves
 //   promoted    it has a real head, and compute-engine answers it directly

@@ -1,6 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 
-// The structures a generic head can require (design/structures.md), as compute-engine
+// The structures a generic head can require (https://github.com/enumeratio/enumeratio/wiki/Structures), as compute-engine
 // protocols. compute-engine has no refinement, so `refines` is ours: `conform` makes a type
 // that claims a protocol claim its parents too.
 //

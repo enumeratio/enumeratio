@@ -1,4 +1,4 @@
-// The properties Plausible checks at a sampled address (design/plausible.md §4.1). Which ones
+// The properties Plausible checks at a sampled address (https://github.com/enumeratio/enumeratio/wiki/Plausible §4.1). Which ones
 // apply is decided by what the family declares; the sampling, shrinking and supervision live in
 // sampleable.ts, run-family.ts and plausible.ts.
 //

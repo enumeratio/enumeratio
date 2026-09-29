@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Storybook cards on a component's reference page: each of the component's stories
 // (packages/components/reference/<Name>.stories.yaml, via stories-data.ts) as a live render
-// plus its source. `expr` is the source of truth (design/vdom.md); the live render is
+// plus its source. `expr` is the source of truth (https://github.com/enumeratio/enumeratio/wiki/Vdom); the live render is
 // `vdomOf(expr)` handed to Vue's `h` through `toVNode`, computed here at runtime -- that
 // lowering is cheap and pure. The source panel shows `story.forms`, a tab per written form --
 // `epsil` (the default), `vue`, `react`, `html`, and `vdom` -- each with a caption saying

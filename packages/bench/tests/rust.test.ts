@@ -1,4 +1,4 @@
-// Structural checks on the generated Rust harness (design/benchmarking.md §4): no kernel, no
+// Structural checks on the generated Rust harness (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4): no kernel, no
 // cargo, just the emitted text. `generated.test.ts` checks the committed files match a fresh
 // generation; these check what a fresh generation should contain.
 

@@ -28,8 +28,7 @@ import { engineSymbols as engineData } from "../src/engine-symbols-data.ts";
 import { packageEntries, referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();
-// collections and domains merged into one package (design/speculative/combinatorics-layering-
-// and-plausible.md's step 1); one packageEntries() call now covers both areas.
+// collections and domains merged into one package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step 1); one packageEntries() call now covers both areas.
 const combinatoricsEntries = packageEntries("combinatorics");
 const statisticEntries = packageEntries("statistics");
 import { fungrimSymbols } from "../src/fungrim-symbols-data.ts";

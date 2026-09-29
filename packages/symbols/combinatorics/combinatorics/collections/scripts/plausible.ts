@@ -1,4 +1,4 @@
-// Plausible over the collection catalogue (design/plausible.md): every family sampled from what
+// Plausible over the collection catalogue (https://github.com/enumeratio/enumeratio/wiki/Plausible): every family sampled from what
 // it declares — its params, the cost of each operation, a work bound where it enumerates — with
 // no lists of families here. Each family runs in a heap-capped worker under a time cap, so a
 // declaration that understates its cost is a finding rather than a dead run.

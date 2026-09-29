@@ -3,7 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { contributions, ENGINE } from "../src/contributions.ts";
 import { fullEngine } from "../src/engine.ts";
 
-// Nothing widens a head in code alone (design/manifest.md): whatever a package does to a
+// Nothing widens a head in code alone (https://github.com/enumeratio/enumeratio/wiki/Manifest): whatever a package does to a
 // head -- adds it, re-signs it, replaces its handler -- the head's record says so, with the
 // type the engine ends up printing. The manifest is built from the records, so it knows
 // every head's every overload before any code is loaded.

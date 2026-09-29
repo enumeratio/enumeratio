@@ -9,7 +9,7 @@ import { declareAnalytic } from "../src/declare.ts";
 // ellipf/ellipe/ellippi and a Wolfram kernel) now lives as `known` values on the
 // reference examples (packages/reference/tests/known.test.ts), not here.
 //
-// EllipticE(m)'s own complex-modulus precision fix (design/upstreaming.md §8) moved to
+// EllipticE(m)'s own complex-modulus precision fix (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8) moved to
 // @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
 // cortex-js/compute-engine#346/#348 — declareElliptic below applies it in the same spot
 // it used to run in.
@@ -42,7 +42,7 @@ test("IncompleteEllipticE reduces φ outside [-π/2, π/2] itself, rather than t
   // Pinned against mpmath's ellipe(0.57 + π, 0.57 + 0.23i). Native EllipticE used to get
   // this wrong (3.18823689387969 vs the correct 3.20276744106921, see elliptic.ts) --
   // compute-engine 0.139's own hardening of its Carlson code (cortex-js/compute-engine
-  // #346, design/upstreaming.md §8) fixed this case natively too, so the "native
+  // #346, https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8) fixed this case natively too, so the "native
   // disagrees" check below no longer holds. Keeping the explicit reduction in
   // `declareIncompleteE` regardless: it is still correct, and a case where native regresses
   // again is exactly what this test's own correctness assertions (not the removed one)

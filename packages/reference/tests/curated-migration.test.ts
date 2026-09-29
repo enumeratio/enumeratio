@@ -1,4 +1,4 @@
-// Symbol-metadata step 2 (design/speculative/symbol-metadata.md), completed: curated.ts's
+// Symbol-metadata step 2 (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata), completed: curated.ts's
 // tables are gone, and the crosswalk consumer reads each head's `references:`/`names:`
 // instead, through a generated cache (`scripts/collect-curated.ts` -> `curated-data.ts`) --
 // the crosswalk runs in the browser and the site build, and cannot parse YAML at runtime.

@@ -1,6 +1,6 @@
 // Renames agreed but not executed — the queue to drain when a package is quiet.
 //
-// A head's own `formerly:` field (design/speculative/symbol-metadata.md) records renames
+// A head's own `formerly:` field (https://github.com/enumeratio/enumeratio/wiki/Speculative-Symbol-Metadata) records renames
 // that HAVE happened (catalog name → head; @enumeratio/statistics's `blessedName` reads the
 // generated table built from it). This is the other end: a head we still declare under a
 // spelling we have decided
@@ -10,7 +10,7 @@
 //
 // The rule for what goes here is the one naming.ts states: a Wolfram collision is not a
 // reason to rename; a name that misdescribes its result, or breaks the house spelling
-// (`…Count`, `…Numerals`), is. Web-component tags are queued in design/component-naming.md
+// (`…Count`, `…Numerals`), is. Web-component tags are queued in https://github.com/enumeratio/enumeratio/wiki/Component-Naming
 // §4 rather than here, since they are not engine heads.
 
 export interface QueuedRename {

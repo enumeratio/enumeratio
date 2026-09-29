@@ -1,4 +1,4 @@
-// Which tiers a run takes (design/benchmarking.md §3.3). Tiers are data on each case; a suite
+// Which tiers a run takes (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §3.3). Tiers are data on each case; a suite
 // only chooses among them, so a case times the same whichever suite ran it.
 
 import type { BenchCase, Tier } from "./types.ts";

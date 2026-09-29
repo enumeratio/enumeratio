@@ -1,4 +1,4 @@
-// Hand-maintained (design/speculative/combinatorics-layering-and-plausible.md §4 step 4).
+// Hand-maintained (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4).
 // Carriers with their own combinatorics area live there now — see the imports below — and
 // this file keeps only the LEFTOVER carriers: arithmetic values (`GaussianInteger`,
 // `ModularResidue`, `RationalNumber`, `Fraction`, the factorizations, `ContinuedFraction`,

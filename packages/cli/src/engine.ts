@@ -193,8 +193,7 @@ export class Session {
       latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
     });
     // Carriers, the families typed by them, the plural type-spaces and Element, and the maps
-    // between carriers -- one call (design/speculative/combinatorics-layering-and-
-    // plausible.md §4 step 3).
+    // between carriers -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3).
     declareCombinatorics(this.ce);
     // Every domain's plural type-space name, and Element membership over it -- AFTER
     // collections, so a plural a collection family already claims (Permutations, DyckPaths,

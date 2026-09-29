@@ -1,4 +1,4 @@
-// How we write each reference example, as data (design/examples-as-data.md §2): the rows of
+// How we write each reference example, as data (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2): the rows of
 // its implementations record that no kernel is needed for. Our own forms -- `epsil`, the
 // InputForm you can retype; `tex`, our TeX serialisation; `traditional`, the TraditionalForm
 // TeX where it differs; `fullform`, the Wolfram FullForm @enumeratio/wolfram writes, with

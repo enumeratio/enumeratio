@@ -1,5 +1,5 @@
 // Declare the carrier domains: a NOMINAL type per carrier, and a held constructor that makes
-// a value carry it (design/domains.md §1.2).
+// a value carry it (https://github.com/enumeratio/enumeratio/wiki/Domains §1.2).
 //
 // The constructor has no `evaluate` handler on purpose. A head with a signature and no
 // handler does not collapse, so `AsPermutation([2,1,3])` stays itself through evaluation and
@@ -88,8 +88,7 @@ export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression 
 
 /**
  * Mint every domain's plural TYPE-SPACE name as a set-valued symbol, the way compute-engine's
- * own `Integers` is a symbol whose type is `set<integer>` rather than a callable (design/
- * domains.md §2) — but only when the name isn't ALREADY something at the point this runs: a
+ * own `Integers` is a symbol whose type is `set<integer>` rather than a callable (https://github.com/enumeratio/enumeratio/wiki/Domains §2) — but only when the name isn't ALREADY something at the point this runs: a
  * same-named collection family that enumerates this carrier (`Permutations`, `DyckPaths`,
  * …), or a compute-engine native with its own real meaning (`RationalNumbers` is both at
  * once — a bare `ce.lookupDefinition` audit found no plural that collides with a

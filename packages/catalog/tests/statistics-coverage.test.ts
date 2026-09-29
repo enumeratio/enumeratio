@@ -1,7 +1,6 @@
 // Moved here from @enumeratio/statistics (originally tests/coverage.test.ts) to break a
 // devDependency cycle: statistics -> catalog -> combinatorics -> statistics, once collections
-// and domains merged into combinatorics (design/speculative/combinatorics-layering-and-
-// plausible.md). catalog already devDeps statistics' public API, so the drift check moved to
+// and domains merged into combinatorics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible). catalog already devDeps statistics' public API, so the drift check moved to
 // the side of the edge that doesn't cycle.
 import { STATS } from "../src/index.ts";
 import { expect, test } from "vite-plus/test";

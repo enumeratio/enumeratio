@@ -1,4 +1,4 @@
-// The special-function heads offered upstream (design/upstreaming.md §10): BarnesG,
+// The special-function heads offered upstream (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10): BarnesG,
 // LogBarnesG, LogGamma, ClausenCl, StieltjesGamma, LerchPhi, HurwitzZeta and the Zeta,
 // PolyGamma and PolyLog widenings. A pull request for a plain record below adds it to
 // compute-engine's own library/special-functions.ts; a widening function is an edit to

@@ -1,4 +1,4 @@
-// `Element(x, <plural>)` membership (design/domains.md §2, `declareDomainElement` in
+// `Element(x, <plural>)` membership (https://github.com/enumeratio/enumeratio/wiki/Domains §2, `declareDomainElement` in
 // declare.ts): True for a value of the matching carrier, False for one of ours on a
 // DIFFERENT carrier, unevaluated for anything else (a bare symbol, a value with no
 // declared carrier at all).

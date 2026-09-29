@@ -16,7 +16,7 @@ import {
 
 // ModularJ, ModularLambda, EisensteinG — Fungrim-frontier heads over τ in the upper
 // half-plane, delegating to compute-engine's own native EisensteinE/JacobiTheta rather
-// than reimplementing a q-series (design/namespaces.md §6: extend, don't reimplement).
+// than reimplementing a q-series (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6: extend, don't reimplement).
 //
 // Both EisensteinE (Eisenstein series, a naive q-series here) and the theta-ratio behind
 // λ grow the way the true functions genuinely do near a cusp (Im τ → 0), which is real

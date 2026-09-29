@@ -39,7 +39,7 @@ const LIBRARY_DECLARATIONS = [
   declareHypercomplex,
   declareDiagrams,
   // Carriers, the families typed by them, and the plural type-spaces and Element -- one call
-  // (design/speculative/combinatorics-layering-and-plausible.md §4 step 3), so the
+  // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), so the
   // permutation families yield `Permutation` values, as the site's engine has them.
   declareCombinatorics,
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.

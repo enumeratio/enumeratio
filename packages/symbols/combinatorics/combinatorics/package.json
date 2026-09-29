@@ -2,7 +2,7 @@
   "name": "@enumeratio/combinatorics",
   "version": "0.0.0",
   "private": true,
-  "description": "Combinatorial collections and carrier domains for @cortex-js/compute-engine, merged wholesale ahead of per-area carving (design/speculative/combinatorics-layering-and-plausible.md).",
+  "description": "Combinatorial collections and carrier domains for @cortex-js/compute-engine, merged wholesale ahead of per-area carving (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible).",
   "license": "WTFPL",
   "files": [
     "dist"

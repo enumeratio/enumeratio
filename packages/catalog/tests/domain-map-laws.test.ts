@@ -1,12 +1,11 @@
-// Plausible's carrier laws (design/plausible.md §4.2): a map's laws — and its typing — hold for
+// Plausible's carrier laws (https://github.com/enumeratio/enumeratio/wiki/Plausible §4.2): a map's laws — and its typing — hold for
 // every value of its source carrier, so each is checked on elements drawn from every family
 // over that carrier: pick a family, then an address in it, the way Plausible's Sum instance
 // does. Seeded per map, so a failure replays.
 //
 // Moved here from @enumeratio/combinatorics' domains area (originally domains/tests/
 // laws.test.ts) to break a devDependency cycle: combinatorics -> catalog -> combinatorics, once
-// collections and domains merged into one package (design/speculative/combinatorics-layering-
-// and-plausible.md). catalog already devDeps combinatorics' public API for its own tests, so
+// collections and domains merged into one package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible). catalog already devDeps combinatorics' public API for its own tests, so
 // this moved to the side of the edge that doesn't cycle; the engine setup below is
 // domains/tests/map-helpers.ts's, inlined since that helper is package-internal.
 

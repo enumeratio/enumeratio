@@ -1,4 +1,4 @@
-// The number-theory heads offered upstream (design/upstreaming.md §10): the Dirichlet
+// The number-theory heads offered upstream (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10): the Dirichlet
 // family (DirichletEta, DirichletBeta, DirichletCharacter, DirichletL). A pull request for
 // the Dirichlet record adds it to compute-engine's own library/number-theory.ts.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";

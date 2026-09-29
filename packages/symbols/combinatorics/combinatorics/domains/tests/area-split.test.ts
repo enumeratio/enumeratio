@@ -1,5 +1,4 @@
-// Replaces the extractor's generated.test.ts pin (design/speculative/combinatorics-layering-
-// and-plausible.md §4 step 4): the extractor is retired, so what needs checking now is that
+// Replaces the extractor's generated.test.ts pin (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4): the extractor is retired, so what needs checking now is that
 // the area files and the leftover data — both hand-maintained — agree with `DOMAINS`, the
 // record every host declares from.
 import { expect, test } from "vite-plus/test";

@@ -7,7 +7,7 @@ import { declareAnalytic } from "../src/declare.ts";
 // Three things about the definitions in src/definitions.ts:
 //
 //   1. each one AGREES with the kernel it documents — the differential oracle that stops a
-//      second implementation from rotting (design/namespaces.md §6);
+//      second implementation from rotting (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6);
 //   2. every head stays SYMBOLIC under evaluate() and produces a number only under N();
 //   3. the derivatives attached to `Derivative` are the right ones.
 //

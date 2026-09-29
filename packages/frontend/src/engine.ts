@@ -18,7 +18,7 @@ const latexEntries: Partial<LatexDictionaryEntry>[] = [...NOTATIO_LATEX, ...CONV
 /**
  * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised --
  * to the shared engine. compute-engine only takes a dictionary at construction
- * (design/upstreaming.md §3.7), so these must land before the engine exists: register
+ * (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7), so these must land before the engine exists: register
  * them where the libraries are declared, behind `__notatioEngineReady`. Appended to the
  * default dictionary, so an entry with an existing trigger takes precedence, and one with
  * an existing name replaces it.

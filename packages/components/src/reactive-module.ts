@@ -61,7 +61,7 @@ interface WorkerHost {
  * has seen, kept current as each cell commits, and `schedule`'s diagnostics turned into
  * `data-reactive-error` on the cells they cite -- a duplicate definition or a cycle shown
  * on every cell it names, an ordinal reference rejected outright, the way
- * design/rendering-environments.md's `TrackedSymbols` capability is supposed to read.
+ * https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments's `TrackedSymbols` capability is supposed to read.
  *
  * Making a cell's binding actually visible to another cell is two steps, not one:
  *

@@ -1,7 +1,7 @@
 // Restrictions — as SETS, and anonymous by default.
 //
 // A derangement is a permutation with no fixed points. The instinct is a subtype, and
-// compute-engine cannot express one between minted types (design/domains.md §1.1). But the
+// compute-engine cannot express one between minted types (https://github.com/enumeratio/enumeratio/wiki/Domains §1.1). But the
 // instinct is worth questioning anyway: a subtype SPLITS the carrier, so a derangement would
 // stop being a permutation and every permutation statistic would need re-declaring. A set
 // KEEPS the carrier, and everything already written keeps working.
@@ -248,7 +248,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
  *
  *  `.subs()` is too late: boxing `Equal(FixedPoints(_x), 0)` type-checks `FixedPoints`
  *  against an untyped wildcard, fails against a domain-typed signature, and bakes an error
- *  into the tree that substitution cannot repair. Same lesson as design/namespaces.md §3.2 —
+ *  into the tree that substitution cannot repair. Same lesson as https://github.com/enumeratio/enumeratio/wiki/Namespaces §3.2 —
  *  the check happens on the way in.
  *
  *  Two wildcards, because a constructed value is opaque to generic heads (§1.5): `_x` is the
@@ -285,7 +285,7 @@ export function declareRestricted(ce: ComputeEngine): void {
  *
  * Several of these names ALREADY exist as fast collections in `@enumeratio/combinatorics/collections`, with
  * hand-written count and unrank kernels. That is not a conflict to resolve — it is the
- * reference/accelerated pairing from design/namespaces.md §6 arriving somewhere new. The
+ * reference/accelerated pairing from https://github.com/enumeratio/enumeratio/wiki/Namespaces §6 arriving somewhere new. The
  * restriction is the SPECIFICATION ("permutations with no fixed point"); the kernel is the
  * implementation; and a differential test holds them together. A restriction says so
  * (`implementedBy`), and then the collection answers when it is declared. Any other name

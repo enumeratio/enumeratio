@@ -13,11 +13,12 @@ import { declaredNames } from "../src/engine.ts";
 /** Free symbols we declare on purpose, with the reason. */
 const DELIBERATE: Record<string, string> = {
   q: "the Hecke deformation parameter — every coefficient is a polynomial in it",
-  boxes: "the structural type of a box expression (design/boxes.md); a declared type shares the symbol table",
+  boxes:
+    "the structural type of a box expression (https://github.com/enumeratio/enumeratio/wiki/Boxes); a declared type shares the symbol table",
 };
 
 /** The types algebras' names carry, which `FiniteDimensionalAlgebra` dispatches on
- *  (design/structures.md): types, lowercase like the carriers below. */
+ *  (https://github.com/enumeratio/enumeratio/wiki/Structures): types, lowercase like the carriers below. */
 for (const type of [
   "clifford_algebra",
   "diagram_algebra",
