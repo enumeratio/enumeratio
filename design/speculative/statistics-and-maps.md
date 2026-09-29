@@ -640,6 +640,17 @@ collections-package filing problem, independent of this document's central quest
   `NumberOfTouchPoints`). An id resolves to the first; folding the duplicate names is
   still to do.
 
+- **Equivalent carriers.** A map with an `{ inverse }` law between two carriers makes them
+  equivalent (`registerEquivalence`), and a statistic or map one carrier lacks is transported
+  from the other through the bijection, one step. So each is defined once, on whichever carrier
+  states it most naturally, and which carrier is the storage matters much less. The first pair:
+  a set partition is its blocks (a shape override on enumeratio's SQL storage), and its
+  restricted growth string is a carrier of its own. `RestrictedGrowthStringOf` and
+  `SetPartitionOf` are an order isomorphism (the k-th set partition goes to the k-th string),
+  and every set-partition statistic answers on the strings. This is enumeratio's "sibling
+  collection related by an order isomorphism", with the collection borrowing its partner's
+  ranking.
+
 Still to do: deprecate and retire the bare heads (phase 2's second half), move each
 definition down to its collection (phase 3), `Rank` through `CombinatorialStat`, and the
 unimplemented tail (phase 4).

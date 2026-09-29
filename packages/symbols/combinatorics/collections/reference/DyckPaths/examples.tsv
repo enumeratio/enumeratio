@@ -1,3 +1,3 @@
 id	section	role	expr	expected	caption
 c-3			[Count, [DyckPaths, 3]]	5	$C_3$
-three-ups-then-three-downs			[At, [DyckPaths, 3], 1]	[List, 1, 1, 1, 0, 0, 0]	three ups then three downs
+three-ups-then-three-downs			[At, [DyckPaths, 3], 1]	[DyckPath, [List, 1, 1, 1, 0, 0, 0]]	three ups then three downs

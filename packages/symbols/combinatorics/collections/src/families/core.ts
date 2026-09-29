@@ -308,46 +308,61 @@ export const entries: NumberKernel[] = [
   ),
 
   // ── partitions ──
-  ints(
-    "IntegerPartitions",
-    1,
-    ([n]) => PartitionsP(n),
-    ([n], r) => IntegerPartitionUnrank(n, r),
-    (a, [n]) => IsPartitionOf(a, n),
-    (a, [n]) => IntegerPartitionRank(a, n),
-  ),
-  ints(
-    "PartitionsIntoKParts",
-    2,
-    ([n, k]) => KPartPartitionCount(n, k),
-    ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
-    (a, [n, k]) => IsPartitionOf(a, n, k),
-    (a, [n]) => IntegerPartitionKRank(a, n),
-  ),
-  ints(
-    "DistinctPartitions",
-    1,
-    ([n]) => PartitionsQ(n),
-    ([n], r) => DistinctPartitionUnrank(n, r),
-    (a, [n]) => IsDistinctPartitionOf(a, n),
-    (a, [n]) => DistinctPartitionRank(a, n),
-  ),
-  ints(
-    "PartitionsMaxPart",
-    2,
-    ([n, m]) => PartitionsMaxPartCount(n, m),
-    ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
-    (a, [n, m]) => IsPartitionMaxPart(a, n, m),
-    (a, [, m]) => PartitionsMaxPartRank(a, m),
-  ),
-  ints(
-    "PartitionsInBox",
-    2,
-    ([a, b]) => PartitionsInBoxCount(a, b),
-    ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
-    (x, [a, b]) => IsPartitionInBox(x, a, b),
-    (x, [a, b]) => PartitionsInBoxRank(x, a, b),
-  ),
+  {
+    ...ints(
+      "IntegerPartitions",
+      1,
+      ([n]) => PartitionsP(n),
+      ([n], r) => IntegerPartitionUnrank(n, r),
+      (a, [n]) => IsPartitionOf(a, n),
+      (a, [n]) => IntegerPartitionRank(a, n),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "PartitionsIntoKParts",
+      2,
+      ([n, k]) => KPartPartitionCount(n, k),
+      ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
+      (a, [n, k]) => IsPartitionOf(a, n, k),
+      (a, [n]) => IntegerPartitionKRank(a, n),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "DistinctPartitions",
+      1,
+      ([n]) => PartitionsQ(n),
+      ([n], r) => DistinctPartitionUnrank(n, r),
+      (a, [n]) => IsDistinctPartitionOf(a, n),
+      (a, [n]) => DistinctPartitionRank(a, n),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "PartitionsMaxPart",
+      2,
+      ([n, m]) => PartitionsMaxPartCount(n, m),
+      ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
+      (a, [n, m]) => IsPartitionMaxPart(a, n, m),
+      (a, [, m]) => PartitionsMaxPartRank(a, m),
+    ),
+    carrier: "IntegerPartition",
+  },
+  {
+    ...ints(
+      "PartitionsInBox",
+      2,
+      ([a, b]) => PartitionsInBoxCount(a, b),
+      ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
+      (x, [a, b]) => IsPartitionInBox(x, a, b),
+      (x, [a, b]) => PartitionsInBoxRank(x, a, b),
+    ),
+    carrier: "IntegerPartition",
+  },
 
   // ── subsets / multisets / tuples / functions / binary words ──
   ints(
@@ -424,14 +439,17 @@ export const entries: NumberKernel[] = [
     (x, [a, b]) => IsLatticePathOf(x, a, b),
     (x) => LatticePathRank(x),
   ),
-  ints(
-    "DyckPaths",
-    1,
-    ([n]) => DyckPathCount(n),
-    ([n], r) => DyckPathUnrank(n, r),
-    (a, [n]) => IsDyckPath(a, n),
-    (a) => DyckPathRank(a),
-  ),
+  {
+    ...ints(
+      "DyckPaths",
+      1,
+      ([n]) => DyckPathCount(n),
+      ([n], r) => DyckPathUnrank(n, r),
+      (a, [n]) => IsDyckPath(a, n),
+      (a) => DyckPathRank(a),
+    ),
+    carrier: "DyckPath",
+  },
   ints(
     "MotzkinPaths",
     1,
@@ -460,6 +478,7 @@ export const entries: NumberKernel[] = [
   // ── set partitions / matchings (blocks) ──
   {
     head: "SetPartitions",
+    carrier: "SetPartition",
     paramCount: 1,
     kind: "blocks",
     count: ([n]) => BellB(n),
@@ -469,6 +488,7 @@ export const entries: NumberKernel[] = [
   },
   {
     head: "SetPartitionsIntoKBlocks",
+    carrier: "SetPartition",
     paramCount: 2,
     kind: "blocks",
     count: ([n, k]) => StirlingS2(n, k),

@@ -7,7 +7,7 @@ signatures:
   - call: PartitionsMaxPart(n, m)
     description: partitions of $n$ with every part $\le m$
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<integer_partition>
 seeAlso:
   - IntegerPartitions
   - PartitionsInBox

@@ -7,7 +7,7 @@ signatures:
   - call: LargestPartPartitions(n, m)
     description: the partitions of $n$ whose largest part is exactly $m$
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<integer_partition>
 seeAlso:
   - IntegerPartitions
 references:

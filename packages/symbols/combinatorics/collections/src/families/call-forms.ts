@@ -350,15 +350,48 @@ function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHand
 
 /** Declare the widened call forms. Call AFTER declareFamilies (IntegerPartitions,
  *  SetPartitions and Subsets must already be declared) -- declareCollections does. */
-export function declareCallForms(ce: ComputeEngine): void {
-  widenSignature(ce, "IntegerPartitions", "(integer, any?, any?) -> list<list<integer>>");
-  setCollection(ce, "IntegerPartitions", polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions));
+export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Record<string, string>> = {}): void {
+  // Typed by its carrier when it has one: `IntegerPartition([3, 1])`, as the plain family is.
+  const partition = carrierTypes.IntegerPartition;
+  widenSignature(ce, "IntegerPartitions", `(integer, any?, any?) -> list<${partition ?? "list<integer>"}>`);
+  setCollection(
+    ce,
+    "IntegerPartitions",
+    partition === undefined
+      ? polyCollection(ce, listMJ, asIntList, resolveIntegerPartitions)
+      : polyCollection(
+          ce,
+          (e: number[]) => ["IntegerPartition", listMJ(e)],
+          (b) => asIntList((b as unknown as BoxedExpression).operator === "IntegerPartition" ? b.ops![0]! : b),
+          resolveIntegerPartitions,
+        ),
+  );
 
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an
   // explicit list of elements, not just the family's integer index n -- alongside the
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
-  widenSignature(ce, "SetPartitions", "(integer | collection<any>, integer?) -> list<list<list<any>>>");
-  setCollection(ce, "SetPartitions", polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions));
+  // Over 1..n, typed by its carrier when it has one; over an explicit list, blocks of those
+  // elements, which no carrier holds.
+  const setPartition = carrierTypes.SetPartition;
+  widenSignature(
+    ce,
+    "SetPartitions",
+    setPartition === undefined
+      ? "(integer | collection<any>, integer?) -> list<list<list<any>>>"
+      : `(integer | collection<any>, integer?) -> list<${setPartition} | list<list<any>>>`,
+  );
+  setCollection(
+    ce,
+    "SetPartitions",
+    setPartition === undefined
+      ? polyCollection(ce, blocksMJ, asBlockList, resolveSetPartitions)
+      : polyCollection(
+          ce,
+          (blocks: number[][]) => ["SetPartition", blocksMJ(blocks)],
+          (b) => asBlockList((b as unknown as BoxedExpression).operator === "SetPartition" ? b.ops![0]! : b),
+          resolveSetPartitions,
+        ),
+  );
 
   widenSignature(ce, "Subsets", "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>");
   setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));

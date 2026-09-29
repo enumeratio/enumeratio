@@ -61,16 +61,11 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // Carriers first: everything below declares heads OVER these minted types, so they
   // have to exist before a signature can name one.
   const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
-  // SetPartition is held back: domains treats it as a restricted growth string while
-  // every set-partition definition works in blocks -- typing those heads over the
-  // carrier would be a wrong answer rather than a type error.
-  const domainTypes = Object.fromEntries(
-    libs.DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
-  );
+  const domainTypes = Object.fromEntries(libs.DOMAINS.map((d) => [d.name, d.type]));
   apply(libs.declareDomains);
   // A combinatorial statistic is a function of a carrier, so that is what these heads
   // take. The ones that are ALSO plain list functions accept a bare list too.
-  apply((ce) => libs.declareCollections(ce, { permutationType: "permutation" }));
+  apply((ce) => libs.declareCollections(ce, { permutationType: "permutation", carrierTypes: domainTypes }));
   // AFTER declareCollections: a plural a collection family already claims (Permutations,
   // DyckPaths, ...) has to still be free when this checks, not raced by minting a bare
   // symbol for it first.

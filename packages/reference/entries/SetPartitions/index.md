@@ -7,7 +7,7 @@ signatures:
   - call: SetPartitions(n)
     description: every way to split $\{1, …, n\}$ into disjoint non-empty blocks.
     library: enumeratio-collections
-    type: (collection<any> | integer, integer?) -> list<list<list<any>>>
+    type: (collection<any> | integer, integer?) -> list<list<list<any>> | set_partition>
   - call: SetPartitions(n, k)
     description: the set partitions of $\{1, …, n\}$ into exactly $k$ blocks.
     library: enumeratio-collections

@@ -20,9 +20,10 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   integer_partition: { contents: ["List", 3, 2, 1], caption: "the partition $3 + 2 + 1$" },
   binary_tree: { contents: ["List", 1, 2, 3], caption: "a three-node tree" },
   set_partition: {
-    contents: ["List", 1, 2, 1, 3],
-    caption: "the restricted growth string of $\\{1,3\\} \\mid \\{2\\} \\mid \\{4\\}$",
+    contents: ["List", ["List", 1, 3], ["List", 2], ["List", 4]],
+    caption: "the set partition $\\{1,3\\} \\mid \\{2\\} \\mid \\{4\\}$",
   },
+  restricted_growth_string: { contents: ["List", 0, 1, 0, 2], caption: "the restricted growth string $0102$" },
 };
 
 const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
@@ -31,7 +32,7 @@ declareDomains(ce);
 // A guard may read a statistic (KrewerasComplement's counts cycles), so the statistics go in
 // before the maps — the same order tests/entries.test.ts uses.
 declareStatistics(ce, ALL_STATISTICS, {
-  domainTypes: Object.fromEntries(DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type])),
+  domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])),
 });
 declareMaps(ce, constructorFor);
 

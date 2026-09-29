@@ -12,6 +12,13 @@ test("ConjugateAfterCycleType is the conjugate of the cycle type", () => {
   }
 });
 
+/** A restricted growth string's blocks, as a set partition's MathJSON: one block per label, in
+ *  order of first appearance. */
+const blocksOf = (rgs: number[]): unknown[] => [
+  "List",
+  ...[...new Set(rgs)].map((label) => ["List", ...rgs.flatMap((l, i) => (l === label ? [i + 1] : []))]),
+];
+
 test("ArcRepresentation links each position to the next in its block", () => {
   // The reference: for position i, the smallest LATER position sharing i's label, or i itself
   // when none does — exactly the standard arc representation, read as a function.
@@ -22,7 +29,7 @@ test("ArcRepresentation links each position to the next in its block", () => {
     });
   for (const n of [1, 2, 3, 4, 5])
     for (const rgs of restrictedGrowthStrings(n))
-      expect(result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]), `${rgs.join(", ")}`).toEqual([
+      expect(result(["ArcRepresentation", ["SetPartition", blocksOf(rgs)]]), `${rgs.join(", ")}`).toEqual([
         "List",
         ...linking(rgs),
       ]);

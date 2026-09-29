@@ -727,6 +727,7 @@ function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
 export const entries: NumberKernel[] = [
   {
     head: "RestrictedGrowthStrings",
+    carrier: "RestrictedGrowthString",
     paramCount: 1,
     kind: "ints",
     count: ([n]) => BellB(n),
@@ -842,6 +843,7 @@ export const entries: NumberKernel[] = [
   },
   {
     head: "DyckPathsByHeight",
+    carrier: "DyckPath",
     paramCount: 2,
     kind: "ints",
     count: ([n, h]) => DyckPathsByHeightCount(n, h),

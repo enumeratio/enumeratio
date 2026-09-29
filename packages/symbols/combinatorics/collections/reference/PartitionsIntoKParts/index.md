@@ -7,7 +7,7 @@ signatures:
   - call: PartitionsIntoKParts(n, k)
     description: partitions of $n$ with exactly $k$ parts
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<integer_partition>
 seeAlso:
   - IntegerPartitions
   - PartitionsInBox

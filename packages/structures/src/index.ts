@@ -17,6 +17,7 @@ export {
   operationOf,
   registerCarrier,
   registerCollectionCarrier,
+  registerEquivalence,
   registerOperation,
 } from "./operations.ts";
 export { ancestry, ensureProtocols, PROTOCOLS, type Protocol, type ProtocolName } from "./protocols.ts";
