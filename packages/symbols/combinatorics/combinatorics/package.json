@@ -43,7 +43,6 @@
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/plausible": "workspace:*",
     "@enumeratio/residues": "workspace:*",
-    "@enumeratio/statistics": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",

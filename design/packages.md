@@ -145,15 +145,19 @@ The dev-only edges that matter:
 - `reference` and `census` devDepend on the symbol packages to aggregate them, so a symbol
   package must never depend on either, not even for a type. Entry types come from `entry`;
   anything that needs every entry at once lives in `reference`.
-- `combinatorics` and `statistics` devDepend on `entry` and `plausible` for their record
-  and sampling tests. `combinatorics`' domains area also devDepends on `statistics` for
-  cross-package integration tests. Merging `collections` and `domains` into `combinatorics`
-  would otherwise have folded two prior non-cyclic edges (`domains` → `catalog`,
-  `catalog` → `collections`; `domains` → `statistics`, `statistics` → `catalog`) into
-  `combinatorics` ↔ `catalog` and `catalog` ↔ `combinatorics` ↔ `statistics` cycles, so the
-  catalog-dependent tests that caused the reverse edges (a carrier fallback check, a
-  catalog-coverage drift check) moved into `catalog`'s own suite instead — `catalog` now
-  devDepends on `combinatorics` and `statistics`, neither of which depends back on it.
+- `statistics` devDepends on `combinatorics`, `entry` and `plausible` for its record and
+  sampling tests, plus `entry` and `plausible` on their own for `combinatorics`' record and
+  sampling tests. Merging `collections` and `domains` into `combinatorics` would otherwise
+  have folded prior non-cyclic edges into cycles (`combinatorics` ↔ `catalog`, `catalog` ↔
+  `combinatorics` ↔ `statistics`, and `combinatorics` ↔ `statistics` again through their
+  reference-entry generators each needing the other's `declare*`), so every reverse edge
+  moved to the side that already depends one-way: the catalog-dependent tests (a carrier
+  fallback check, a catalog-coverage drift check) moved into `catalog`'s own suite, and
+  combinatorics' domains-area map entries generator (needs `declareStatistics`) moved into
+  `statistics/scripts/` and `statistics/tests/` (`domains-entries.ts` and friends), writing
+  back into combinatorics' `reference/`. `combinatorics` now has no devDependency on
+  `catalog` or `statistics`; `catalog` and `statistics` each devDepend on `combinatorics`,
+  never the reverse — no cycle.
 - The algebra providers devDepend on `hypercomplex` for tests; several symbol packages
   devDepend on `oracle` for their goldens.
 - `notatio` devDepends on `reference`, `oracle`, `entry`, `wolfram` and `braid` for its

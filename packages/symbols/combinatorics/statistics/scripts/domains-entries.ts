@@ -1,18 +1,27 @@
-// The domains package's generated reference entries — one per combinatorial map, plus one per
-// undefined map on the frontier. Same shape and the same reason as the statistics entries:
-// the map data carries a signature and a summary but no worked example, so this evaluates
-// each map at a fixed subject and pins the answer. scripts/collect-entries.ts writes them;
-// tests/generated.test.ts checks they're current.
+// combinatorics' domains area's generated reference entries — one per combinatorial map, plus
+// one per undefined map on the frontier. Same shape and the same reason as the statistics
+// entries: the map data carries a signature and a summary but no worked example, so this
+// evaluates each map at a fixed subject and pins the answer. scripts/collect-domains-
+// entries.ts writes them; tests/domains-generated.test.ts checks they're current.
+//
+// Lives here, not in combinatorics, because it needs declareStatistics: combinatorics already
+// devDeps statistics would cycle back (statistics needs declareCollections for its own
+// generator and tests), so the generator that needs the OTHER package's declare function moved
+// to the side that already depends one-way (statistics -> combinatorics), per enumeratio#408.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
-import { declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import { UNDEFINED_MAPS } from "../src/frontier-maps.ts";
-import { type CombinatorialMap, declareMaps, MAPS } from "../src/map.ts";
+import { ALL_STATISTICS, declareStatistics } from "../src/index.ts";
+import {
+  type CombinatorialMap,
+  declareDomains,
+  declareMaps,
+  DOMAINS,
+  MAPS,
+  UNDEFINED_MAPS,
+} from "@enumeratio/combinatorics/domains/src";
 
 /** A sample value per carrier TYPE, as the contents a constructor wraps. */
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {

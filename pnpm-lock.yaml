@@ -1109,9 +1109,6 @@ importers:
       '@enumeratio/plausible':
         specifier: workspace:*
         version: link:../../../plausible
-      '@enumeratio/statistics':
-        specifier: workspace:*
-        version: link:../statistics
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
