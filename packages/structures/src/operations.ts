@@ -51,7 +51,12 @@ interface Registry {
   /** A collection head (`Permutations`, `Derangements`) to the carrier its elements inhabit. */
   readonly collections: Map<string, string>;
   readonly tables: Record<OperationHead, Table>;
+  /** From a carrier to the carriers it is equivalent to, each with the bijection there. */
+  readonly equivalences: Map<string, { readonly to: string; readonly forward: Transport }[]>;
 }
+
+/** A bijection between carriers, applied to a value of the first. */
+type Transport = (subject: BoxedExpression) => BoxedExpression | undefined;
 
 // On the engine, so a package's dist and another's source share one registry.
 const REGISTRY = Symbol.for("@enumeratio/structures:operations");
@@ -72,6 +77,7 @@ function registryOf(ce: ComputeEngine): Registry {
     carriers: new Map(),
     collections: new Map(),
     tables: { CombinatorialStat: table(), CombinatorialMap: table() },
+    equivalences: new Map(),
   };
   held[REGISTRY] = registry;
   declareHeads(ce, registry);
@@ -93,6 +99,37 @@ export function registerCollectionCarrier(ce: ComputeEngine, collection: string,
 /** The carrier a collection HEAD's elements inhabit (`SymmetricGroup` -> `Permutation`), as
  *  registered by `registerCollectionCarrier`. Undefined when `collection` isn't one, or has no
  *  registered carrier -- its elements are bare lists. */
+/**
+ * Say that `from` and `to` are the same structure written two ways, with `forward` the
+ * bijection from one to the other (`RestrictedGrowthStringOf`, from set partitions to their
+ * strings). A statistic or map `from` lacks is then reached through `to`: defined once, on
+ * whichever carrier states it most naturally. Register each direction on its own.
+ */
+export function registerEquivalence(ce: ComputeEngine, from: string, to: string, forward: Transport): void {
+  const equivalences = registryOf(ce).equivalences;
+  const known = equivalences.get(from) ?? [];
+  if (!known.some((e) => e.to === to)) equivalences.set(from, [...known, { to, forward }]);
+}
+
+/**
+ * How `head`'s operation `key` is computed on `carrier`: its own, else transported from an
+ * equivalent carrier (one step), or undefined.
+ */
+function implementationOf(ce: ComputeEngine, head: OperationHead, carrier: string, key: string): Transport | undefined {
+  const own = operationOf(ce, head, carrier, key);
+  if (own !== undefined) return own.kernel ?? own.definition;
+  for (const { to, forward } of registryOf(ce).equivalences.get(carrier) ?? []) {
+    const there = operationOf(ce, head, to, key);
+    const apply = there?.kernel ?? there?.definition;
+    if (apply !== undefined)
+      return (subject) => {
+        const image = forward(subject);
+        return image === undefined ? undefined : apply(image);
+      };
+  }
+  return undefined;
+}
+
 export function collectionCarrierOf(ce: ComputeEngine, collection: string): string | undefined {
   return registryOf(ce).collections.get(collection);
 }
@@ -173,10 +210,7 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
 
         // `CombinatorialStat(π, "Inversions")`: the value's carrier, then the operation.
         const carrier = carrierOf(ce, registry, subject);
-        if (carrier !== undefined) {
-          const entry = operationOf(ce, head, carrier.name, name);
-          return entry === undefined ? undefined : (entry.kernel ?? entry.definition)?.(subject);
-        }
+        if (carrier !== undefined) return implementationOf(ce, head, carrier.name, name)?.(subject);
 
         // A statistic of the collection itself: `CombinatorialStat(Permutations(4), "Count")`.
         const whole = head === "CombinatorialStat" ? COLLECTION_STATISTICS[name] : undefined;
@@ -188,11 +222,13 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
         // constructed as the carrier first.
         const collection = symbolNameOf(subject) ?? subject.operator;
         const element = collection === undefined ? undefined : registry.collections.get(collection);
-        if (element === undefined || operationOf(ce, head, element, name) === undefined) return undefined;
+        if (element === undefined || implementationOf(ce, head, element, name) === undefined) return undefined;
         // A collection typed by its carrier already yields carrier values; a bare one gets each
         // element constructed.
         const type = registry.carriers.get(element)?.type;
-        const typed = type !== undefined && subject.type.matches(ce.type(`collection<${type}>`));
+        const typed =
+          (type !== undefined && subject.type.matches(ce.type(`collection<${type}>`))) ||
+          ce.function("At", [subject, ce.One]).evaluate().operator === element;
         const x = ce.symbol("_element");
         const each = ce.function("Function", [ce.function(head, [typed ? x : ce.function(element, [x]), key]), x]);
         return ce.function("Map", [each, subject]).evaluate(options);

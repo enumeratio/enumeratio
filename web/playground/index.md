@@ -16,8 +16,8 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Cell](/playground/cell) — `<notatio-cell>`, a notebook In/Out pair
 - [Verification](/playground/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
 - [Figure (glyphs)](/playground/figure) — `<notatio-figure>`, combinatorial pictorial forms
-- [Plot](/playground/plot) — `<notatio-plot>`, function plots of one variable
-- [Plot 3D](/playground/plot-3d) — `<notatio-plot-3d>`, bivariate surfaces, projected and shaded in plain SVG
+- [Plot](/reference/component/Plot) — function plots of one variable; stories moved to its component reference page
+- [Plot 3D](/reference/component/Plot3D) — bivariate surfaces, projected and shaded in plain SVG; stories moved to its component reference page
 - [Contour Plot](/reference/component/ContourPlot) — contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares; stories moved to its component reference page
 - [Density Plot](/reference/component/DensityPlot) — a bivariate function (or a pre-sampled grid) as a heatmap on a sequential ramp; stories moved to its component reference page
 - [Vector & Stream Plot](/reference/component/VectorPlot) — a planar vector field as arrows, or as streamlines by fixed-step RK4; stories moved to its component reference page
@@ -26,7 +26,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Bar Chart 3D](/reference/component/BarChart3D) — a matrix of heights as depth-sorted 3-D bars; stories moved to its component reference page
 - [Chart](/reference/component/Chart) — data-driven 2-D charts (bar, histogram, pie, box-whisker, array, discrete, list); stories moved to its component reference page
 - [GraphPlot](/reference/component/GraphPlot) — graph & hierarchical layouts (tree, graph, layered graph, dendrogram); stories moved to its component reference page
-- [Complex Plot](/playground/complex-plot) — `<notatio-complex-plot>`, domain-colouring of a complex expression, one WebGPU invocation per pixel
+- [Complex Plot](/reference/component/ComplexPlot) — domain-colouring of a complex expression, one WebGPU invocation per pixel; stories moved to its component reference page
 - [Complex Plot 3D](/reference/component/ComplexPlot3D) — |f(z)| as a surface over the plane, faces coloured by arg f(z); stories moved to its component reference page
 - [Collection table](/reference/component/CollectionTable) — a paged table over a lazy indexed collection, with statistics as columns; stories moved to its component reference page
 - [Worksheet](/playground/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells

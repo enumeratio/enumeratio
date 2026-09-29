@@ -16,13 +16,23 @@ const MAX_SIZE = 6;
 const BUDGET = 5_000n;
 
 const catalogCarrier = new Map(COLLECTIONS.map((c) => [c.name, c.carrier]));
-const carrierOf = (f: FamilyKernel): string | undefined => f.declared?.carrier ?? catalogCarrier.get(f.head);
+const carrierOf = (f: FamilyKernel): string | undefined =>
+  f.carrier ?? f.declared?.carrier ?? catalogCarrier.get(f.head);
 
 /** How a family's kernel element becomes a value of its carrier. Carriers whose storage differs
  *  from the kernel's (SetPartition is a growth string, the kernel's blocks) join as they're
  *  written. */
 const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
+  RestrictedGrowthString: (element) => ["RestrictedGrowthString", ["List", ...(element as number[])]],
+  SetPartition: (element) => ["SetPartition", ["List", ...(element as number[][]).map((block) => ["List", ...block])]],
+  SetComposition: (element) => [
+    "SetComposition",
+    ["List", ...(element as number[][]).map((block) => ["List", ...block])],
+  ],
+  Surjection: (element) => ["Surjection", ["List", ...(element as number[])]],
+  Composition: (element) => ["Composition", ["List", ...(element as number[])]],
+  BinaryWord: (element) => ["BinaryWord", ["List", ...(element as number[])]],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
@@ -30,7 +40,7 @@ const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
 for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== undefined)) {
   const carrier = constructorOf.get(map.from) as string;
   const construct = CONSTRUCT[carrier];
-  const families = allEntries.filter((f) => f.kind === "ints" && carrierOf(f) === carrier);
+  const families = allEntries.filter((f) => (f.kind === "ints" || f.kind === "blocks") && carrierOf(f) === carrier);
 
   test.skipIf(construct === undefined || families.length === 0)(
     `${map.name} keeps its laws over ${carrier}`,

@@ -1,4 +1,4 @@
 id	in	out
 count-squarepartitions-12	Count(SquarePartitions(12))	5
-first-element-of-squarepartitions-12	SquarePartitions(12)[1]	[9, 1, 1, 1]
-every-element-of-squarepartitions-12	Take(SquarePartitions(12), 5)	"[\n  [9, 1, 1, 1],\n  [4, 4, 4],\n  [4, 4, 1, 1, 1, 1],\n  [4, 1, 1, 1, 1, 1, 1, 1, 1],\n  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],\n]"
+first-element-of-squarepartitions-12	SquarePartitions(12)[1]	IntegerPartition([9, 1, 1, 1])
+every-element-of-squarepartitions-12	Take(SquarePartitions(12), 5)	"[\n  IntegerPartition([9, 1, 1, 1]),\n  IntegerPartition([4, 4, 4]),\n  IntegerPartition([4, 4, 1, 1, 1, 1]),\n  IntegerPartition([4, 1, 1, 1, 1, 1, 1, 1, 1]),\n  IntegerPartition([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),\n]"

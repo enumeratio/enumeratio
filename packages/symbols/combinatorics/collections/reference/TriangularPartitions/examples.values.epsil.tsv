@@ -1,4 +1,4 @@
 id	in	out
 count-triangularpartitions-12	Count(TriangularPartitions(12))	10
-first-element-of-triangularpartitions-12	TriangularPartitions(12)[1]	[10, 1, 1]
-every-element-of-triangularpartitions-12	Take(TriangularPartitions(12), 10)	"[\n  [10, 1, 1],\n  [6, 6],\n  [6, 3, 3],\n  [6, 3, 1, 1, 1],\n  [6, 1, 1, 1, 1, 1, 1],\n  [3, 3, 3, 3],\n  [3, 3, 3, 1, 1, 1],\n  [3, 3, 1, 1, 1, 1, 1, 1],\n  [3, 1, 1, 1, 1, 1, 1, 1, 1, 1],\n  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],\n]"
+first-element-of-triangularpartitions-12	TriangularPartitions(12)[1]	IntegerPartition([10, 1, 1])
+every-element-of-triangularpartitions-12	Take(TriangularPartitions(12), 10)	"[\n  IntegerPartition([10, 1, 1]),\n  IntegerPartition([6, 6]),\n  IntegerPartition([6, 3, 3]),\n  IntegerPartition([6, 3, 1, 1, 1]),\n  IntegerPartition([6, 1, 1, 1, 1, 1, 1]),\n  IntegerPartition([3, 3, 3, 3]),\n  IntegerPartition([3, 3, 3, 1, 1, 1]),\n  IntegerPartition([3, 3, 1, 1, 1, 1, 1, 1]),\n  IntegerPartition([3, 1, 1, 1, 1, 1, 1, 1, 1, 1]),\n  IntegerPartition([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),\n]"

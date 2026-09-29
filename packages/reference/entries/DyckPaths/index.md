@@ -9,7 +9,7 @@ signatures:
   - call: DyckPaths(n)
     description: The Dyck paths of semilength $n$ — balanced up/down words — a lazy family of Catalan many.
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<dyck_path>
 enumerate:
   expr: DyckPaths(4)
   columns: Height, Area, Returns

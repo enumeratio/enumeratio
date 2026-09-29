@@ -176,15 +176,8 @@ export interface Parsed {
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
 const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
 
-/**
- * Carrier name to minted type, for the statistics. SetPartition is held back: domains treats
- * a set_partition as a restricted growth string while every set-partition definition works in
- * BLOCKS, so typing those heads over the carrier would be a wrong answer rather than a type
- * error. See `packages/symbols/combinatorics/statistics/scripts/carriers.ts`.
- */
-const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(
-  DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
-);
+/** Carrier name to minted type, for the statistics and the collections. */
+const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
 
 export class Session {
   readonly ce: ComputeEngine;
@@ -204,7 +197,7 @@ export class Session {
     // A combinatorial statistic is a function of a carrier, so that is what these heads take.
     // The ones that are ALSO plain list functions -- they compare entries with each other
     // rather than with their positions -- accept a bare list too; see `Definition.alsoOnList`.
-    declareCollections(this.ce, { permutationType: "permutation" });
+    declareCollections(this.ce, { permutationType: "permutation", carrierTypes: DOMAIN_TYPES });
     // Every domain's plural type-space name, and Element membership over it -- AFTER
     // collections, so a plural a collection family already claims (Permutations, DyckPaths,
     // ...) is still free when this checks, not raced by minting a bare symbol first.

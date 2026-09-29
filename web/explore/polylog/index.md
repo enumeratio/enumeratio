@@ -43,7 +43,7 @@ $\psi'(\tfrac12) = \pi^2/2$.
 
 Colour the complex $z$-plane by hue = argument, brightness = magnitude, and the two functions
 could hardly look less alike — which is exactly the difference between their kernels. Both
-are the same [`<notatio-complex-plot>`](/playground/complex-plot) element, handed a different
+are the same [`<notatio-complex-plot>`](/reference/component/ComplexPlot) element, handed a different
 expression; every constant in them is a slider.
 
 <ClientOnly>

@@ -22,7 +22,7 @@ const entries = readEntries(new URL("../reference/", import.meta.url));
 // package, so reaching back would be a build cycle -- see scripts/carriers.ts.)
 const ce = new ComputeEngine();
 declareCarriers(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation, carrierTypes: CARRIER_TYPES });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 declareDistributions(ce);
 declareDistributions2(ce);

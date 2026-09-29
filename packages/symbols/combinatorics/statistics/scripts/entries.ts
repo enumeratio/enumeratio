@@ -71,7 +71,7 @@ const CORE_OWNED = new Set(
 
 const ce = new ComputeEngine();
 declareCarriers(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation, carrierTypes: CARRIER_TYPES });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 
 // `declareStatistics` declares the FIRST definition of each head and skips the rest, so a
@@ -95,7 +95,7 @@ interface Example {
 
 /**
  * Every subject a head accepts: the carrier, and a bare list when the reading also stands on
- * one. A carrier not in `CARRIER_TYPES` is not typed over at all (SetPartition), so those
+ * one. A carrier not in `CARRIER_TYPES` is not typed over at all, so those
  * heads still take the bare value and that is the only example to give.
  */
 function subjectsFor(definition: Definition, sample: { list: number[] | number[][] }): unknown[] {

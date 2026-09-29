@@ -1,2 +1,5 @@
 id	section	role	expr	expected	caption
 b-4			[Count, [SetPartitions, 4]]	15	$B_4$
+blocks-are-stirling-numbers-of-the-second-kind	Statistics		[Tally, [CombinatorialStat, [SetPartitions, 5], "'Blocks'"]]	[Tuple, [List, 1, 2, 3, 4, 5], [List, 1, 15, 25, 10, 1]]	set partitions of 5 by blocks: the Stirling numbers of the second kind
+by-singleton-blocks	Statistics		[Tally, [CombinatorialStat, [SetPartitions, 5], "'SingletonBlocks'"]]	[Tuple, [List, 0, 1, 2, 3, 5], [List, 11, 20, 10, 10, 1]]	by singleton blocks
+one-crossing-at-4	Statistics		[Tally, [CombinatorialStat, [SetPartitions, 4], "'Crossings'"]]	[Tuple, [List, 0, 1], [List, 14, 1]]	by crossings: the 14 non-crossing ones, a Catalan number, and one more

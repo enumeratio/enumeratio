@@ -7739,6 +7739,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "ParametricPlot",
+    provenance: "unknown",
+    declared: "enumeratio-formats",
+    wolframAlias: "ParametricPlot",
+    elsewhere: [],
+  },
+  {
     name: "PieChart",
     provenance: "unknown",
     declared: "enumeratio-formats",

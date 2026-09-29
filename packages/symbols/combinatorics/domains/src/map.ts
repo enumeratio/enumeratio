@@ -13,7 +13,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
-import { registerOperation } from "@enumeratio/structures";
+import { registerEquivalence, registerOperation } from "@enumeratio/structures";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
@@ -50,6 +50,13 @@ export interface CombinatorialMap {
   /** What Plausible checks on every element of every family over `from` (laws.ts). Beyond
    *  these, every map is checked to be TYPED: its result is a `to`. */
   readonly laws?: readonly Law[];
+  /**
+   * Whether the map preserves rank between two collections: the k-th element of `from` at
+   * size n goes to the k-th of `to` at size n + `sizeOffset`. The strongest claim a bijection
+   * can make; it lets either collection borrow the other's ranking. Checked by
+   * tests/equivalence.test.ts.
+   */
+  readonly orderIsomorphism?: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
 }
 
 /** A map's law: f∘f = id, f∘f = f, or g∘f = id for the named map g. */
@@ -83,6 +90,111 @@ const nextInBlock = (i: MathJSON): MathJSON => {
  *  block structure a map reads at every position (`parts`, the leaders) is computed once
  *  here rather than once per position per read; see tableau.ts for the rule. */
 const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => ["Apply", ["Function", body, name], value];
+
+/** `expr` with every `from` symbol renamed `to`. */
+const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
+  expr === from ? to : Array.isArray(expr) ? (expr as readonly MathJSON[]).map((x) => rename(x, from, to)) : expr;
+
+/** A set partition's restricted growth string, labels from `base`: position i carries the index
+ *  of its block, blocks in the order they are kept. */
+const growthStringOf = (blocks: MathJSON, base = 0): MathJSON =>
+  forEach(
+    ["Range", 1, ["Length", ["Flatten", blocks]], 1],
+    [
+      "Fold",
+      ["Function", ["If", ["Element", "i", ["At", blocks, "k"]], ["Add", "k", base - 1], "acc"], "acc", "k"],
+      -1,
+      ["Range", 1, ["Length", blocks], 1],
+    ],
+  );
+
+/** The blocks of a restricted growth string whose labels start at `base`: block j holds the
+ *  positions labelled j, in increasing order. Each block is folded, so it is a list rather than
+ *  a lazy filter. */
+const blocksOf = (word: MathJSON, base: number): MathJSON => [
+  "If",
+  ["Equal", ["Length", word], 0],
+  ["List"],
+  forEach(
+    ["Range", base, ["Max", word], 1],
+    [
+      "Fold",
+      ["Function", ["If", ["Equal", ["At", word, "p"], "j"], ["Join", "acc", ["List", "p"]], "acc"], "acc", "p"],
+      ["List"],
+      ["Range", 1, ["Length", word], 1],
+    ],
+    "j",
+  ),
+];
+
+/** A composition's partial sums, folded into a list. */
+const partialSums = (parts: MathJSON): MathJSON => [
+  "Fold",
+  [
+    "Function",
+    ["Join", "acc", ["List", ["Add", ["If", ["Equal", ["Length", "acc"], 0], 0, ["Last", "acc"]], ["At", parts, "i"]]]],
+    "acc",
+    "i",
+  ],
+  ["List"],
+  ["Range", 1, ["Length", parts], 1],
+];
+
+/** A composition's size, n: the sum of its parts. */
+const sizeOf = (parts: MathJSON): MathJSON => [
+  "Fold",
+  ["Function", ["Add", "acc", ["At", parts, "i"]], "acc", "i"],
+  0,
+  ["Range", 1, ["Length", parts], 1],
+];
+
+/** A composition of n as its cut word of length n - 1: bit j is 1 when the composition is cut
+ *  after position n - j, so compositions and words are listed in the same order. */
+const cutWordOf = (parts: MathJSON): MathJSON =>
+  // `bind` spreads a list across the function's parameters, so the partial sums are inlined.
+  bind("cn", sizeOf(parts), [
+    "If",
+    // n = 1: the empty word, and no range to walk.
+    ["Less", "cn", 2],
+    ["List"],
+    forEach(
+      ["Range", 1, ["Subtract", "cn", 1], 1],
+      ["If", ["Element", ["Subtract", "cn", "j"], partialSums(parts)], 1, 0],
+      "j",
+    ),
+  ]);
+
+/** The composition of m + 1 a cut word of length m describes: the parts between the cuts. */
+const compositionOfCutWord = (word: MathJSON): MathJSON =>
+  bind(
+    "bounds",
+    [
+      "Join",
+      ["List", 0],
+      [
+        "Fold",
+        [
+          "Function",
+          [
+            "If",
+            ["Equal", ["At", word, ["Subtract", ["Add", ["Length", word], 1], "p"]], 1],
+            ["Join", "acc", ["List", "p"]],
+            "acc",
+          ],
+          "acc",
+          "p",
+        ],
+        ["List"],
+        ["Range", 1, ["Length", word], 1],
+      ],
+      ["List", ["Add", ["Length", word], 1]],
+    ],
+    forEach(
+      ["Range", 1, ["Subtract", ["Length", "bounds"], 1], 1],
+      ["Subtract", ["At", "bounds", ["Add", "q", 1]], ["At", "bounds", "q"]],
+      "q",
+    ),
+  );
 
 /** A fold over `1 .. n`, indexing rather than iterating a structure — the rule from
  *  tableau.ts, which is what makes these evaluate at all. */
@@ -444,9 +556,13 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "CyclePartition",
     from: "permutation",
     to: "set_partition",
-    // Each position labelled with the rank of its cycle's least element — which is exactly a
-    // restricted growth string, and therefore exactly what a set_partition IS.
-    body: byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
+    // Each position labelled with the rank of its cycle's least element (a restricted growth
+    // string from 1), then read off as blocks.
+    body: bind(
+      "cw",
+      byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
+      blocksOf("cw", 1),
+    ),
     summary: "The orbits, as a set partition of the positions.",
     note: "Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.",
   },
@@ -521,15 +637,73 @@ export const MAPS: readonly CombinatorialMap[] = [
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
   },
   {
+    name: "RestrictedGrowthStringOf",
+    from: "set_partition",
+    to: "restricted_growth_string",
+    body: growthStringOf("_raw"),
+    summary: "A set partition's restricted growth string: each position labelled with its block's index, from 0.",
+    note: "An order isomorphism: the k-th set partition of n, in the order SetPartitions lists them, goes to the k-th restricted growth string of length n. So everything defined on one carrier is available on the other through it.",
+    laws: [{ inverse: "SetPartitionOf" }],
+    orderIsomorphism: { from: "SetPartitions", to: "RestrictedGrowthStrings" },
+  },
+  {
+    name: "SetPartitionOf",
+    from: "restricted_growth_string",
+    to: "set_partition",
+    body: blocksOf("_raw", 0),
+    summary: "The set partition a restricted growth string labels: block j holds the positions labelled j.",
+    note: "The inverse of RestrictedGrowthStringOf, and order-preserving in the same way.",
+    laws: [{ inverse: "RestrictedGrowthStringOf" }],
+    orderIsomorphism: { from: "RestrictedGrowthStrings", to: "SetPartitions" },
+  },
+  {
+    name: "SurjectionOf",
+    from: "set_composition",
+    to: "surjection",
+    body: growthStringOf("_raw", 1),
+    summary: "A set composition as a surjection: each position labelled with its block's index, from 1.",
+    laws: [{ inverse: "SetCompositionOf" }],
+  },
+  {
+    name: "SetCompositionOf",
+    from: "surjection",
+    to: "set_composition",
+    body: blocksOf("_raw", 1),
+    summary: "The set composition a surjection labels: block j holds the positions labelled j.",
+    laws: [{ inverse: "SurjectionOf" }],
+  },
+  {
+    name: "CutWord",
+    from: "composition",
+    to: "binary_word",
+    body: cutWordOf("_raw"),
+    // The composition of 0 has no word: words of length n - 1 start at n = 1.
+    guard: ["Greater", ["Length", "_raw"], 0],
+    summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
+    note: "An order isomorphism: the k-th composition of n, as IntegerCompositions lists them, goes to the k-th binary word of length n - 1.",
+    laws: [{ inverse: "CompositionOfCutWord" }],
+    orderIsomorphism: { from: "IntegerCompositions", to: "BinaryWords", sizeOffset: -1 },
+  },
+  {
+    name: "CompositionOfCutWord",
+    from: "binary_word",
+    to: "composition",
+    body: compositionOfCutWord("_raw"),
+    summary: "The composition of m + 1 a binary word of length m cuts out.",
+    note: "The inverse of CutWord, and order-preserving in the same way.",
+    laws: [{ inverse: "CutWord" }],
+    orderIsomorphism: { from: "BinaryWords", to: "IntegerCompositions", sizeOffset: 1 },
+  },
+  {
     name: "ArcRepresentation",
     from: "set_partition",
     to: "endofunction",
-    // `_raw` is the restricted growth string: position i's block label. A block's members
-    // are already in ascending order by position, so "the next element in i's block" is just
-    // the smallest later position sharing i's label — a function on 1..n, which is exactly
-    // what an endofunction IS. The arcs of the standard representation are the pairs
-    // (i, f(i)) with f(i) != i; a position last in its block is a fixed point.
-    body: forEach(positions, nextInBlock("i")),
+    // Read through the restricted growth string: position i's block label. A block's members
+    // are in ascending order by position, so "the next element in i's block" is just the
+    // smallest later position sharing i's label — a function on 1..n, which is exactly what
+    // an endofunction IS. The arcs of the standard representation are the pairs (i, f(i)) with
+    // f(i) != i; a position last in its block is a fixed point.
+    body: bind("aw", growthStringOf("_raw"), rename(forEach(positions, nextInBlock("i")), "_raw", "aw")),
     summary: "Each position linked to the next in its block, or to itself when last.",
     note: "The statistics frontier calls this the arc representation: within each block, consecutive elements (b1,b2), (b2,b3), .... Encoding it as an endofunction rather than a bare list of pairs keeps it a typed carrier — Crossings, Nestings and CrossingNestingTotal (@enumeratio/statistics) read the arcs off this without needing a carrier of their own.",
   },
@@ -584,6 +758,11 @@ export function declareMaps(
         .filter((ref) => ref.on === undefined || ref.on === from)
         .map((ref) => ref.id);
       registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, findstat, definition: handle });
+      // A map with an inverse between two carriers makes them equivalent: what one carrier
+      // defines, the other reaches through the map (set partitions and their growth strings).
+      const to = constructorFor[map.to];
+      if (to !== undefined && to !== from && map.laws?.some((law) => typeof law === "object"))
+        registerEquivalence(ce, from, to, handle);
     }
 
     // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending

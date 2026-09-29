@@ -24,5 +24,5 @@ signatures:
   - call: Surjections(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
     library: enumeratio-collections
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<surjection>
 ---

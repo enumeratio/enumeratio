@@ -151,6 +151,12 @@ export interface StatsOptions {
   readonly permutationType?: string;
   /** The constructor head wrapping that type — `Permutation`. */
   readonly permutationCarrier?: string;
+  /**
+   * Every carrier's minted type, by its constructor (`{ IntegerPartition: "integer_partition" }`,
+   * from `@enumeratio/domains`). A family whose elements are one of them yields that carrier's
+   * values and is typed by it. `permutationType` is the permutations' entry.
+   */
+  readonly carrierTypes?: Readonly<Record<string, string>>;
 }
 
 /** Declare the permutation-statistic heads on `ce` (each maps a permutation to an integer). */

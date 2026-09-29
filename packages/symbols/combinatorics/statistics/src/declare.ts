@@ -106,12 +106,18 @@ function extendEngineHead(ce: ComputeEngine, definition: Definition, type: strin
   const found = ce.lookupDefinition(definition.head);
   const operator = found !== undefined && "operator" in found ? found.operator : undefined;
   if (operator === undefined || type === undefined) return;
-  (operator as { signature: unknown }).signature = ce.type(`((${type}) -> number) & ${String(operator.signature)}`);
-  const native = operator.evaluate;
+  // A one-argument head takes the carrier as one more type of its argument: an overload set
+  // would turn away what the native arm took (`Sign(NaN)` stops matching either arm).
+  const native = String(operator.signature);
+  const single = /^\(([^,&]+)\) -> ([^&]+)$/.exec(native);
+  (operator as { signature: unknown }).signature = ce.type(
+    single === null ? `((${type}) -> number) & ${native}` : `(${type} | ${single[1]}) -> ${single[2]} | number`,
+  );
+  const nativeEvaluate = operator.evaluate;
   operator.evaluate = (ops, options) => {
     const subject = ops[0];
     if (subject?.operator === definition.on) return applyDefinition(ce, definition, operandsOf(subject)[0] ?? subject);
-    return native?.(ops, options);
+    return nativeEvaluate?.(ops, options);
   };
 }
 

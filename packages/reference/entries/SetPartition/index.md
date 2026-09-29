@@ -14,5 +14,5 @@ signatures:
   - call: SetPartition(list)
     description: The singular-inhabitant constructor for a partition of a set, as its blocks.
     library: enumeratio-domains
-    type: (list<integer>) -> set_partition
+    type: (list<list<integer>>) -> set_partition
 ---

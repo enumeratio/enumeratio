@@ -1,4 +1,5 @@
 id	in	out
 count-restrictedgrowthstrings-4	\mathrm{Count}(\mathrm{RestrictedGrowthStrings}(4))	15
-first-element-of-restrictedgrowthstrings-4	\mathrm{RestrictedGrowthStrings}(4)[1]	\bigl\lbrack0, 0, 0, 0\bigr\rbrack
-every-element-of-restrictedgrowthstrings-4	\mathrm{Take}(\mathrm{RestrictedGrowthStrings}(4), 5)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 2\bigr\rbrack\bigr\rbrack
+first-element-of-restrictedgrowthstrings-4	\mathrm{RestrictedGrowthStrings}(4)[1]	\mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack)
+every-element-of-restrictedgrowthstrings-4	\mathrm{Take}(\mathrm{RestrictedGrowthStrings}(4), 5)	\bigl\lbrack\mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack), \mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 0, 1\bigr\rbrack), \mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 1, 0\bigr\rbrack), \mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 1, 1\bigr\rbrack), \mathrm{RestrictedGrowthString}(\bigl\lbrack0, 0, 1, 2\bigr\rbrack)\bigr\rbrack
+blocks-through-set-partitions	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{RestrictedGrowthStrings}(4), \text{Blocks}))	\operatorname{Tuple}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack,\bigl\lbrack1, 7, 6, 1\bigr\rbrack)

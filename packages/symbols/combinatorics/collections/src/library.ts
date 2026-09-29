@@ -36,8 +36,12 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
   const { permutationType, permutationCarrier = "Permutation" } = options;
-  declareFamilies(ce, permutationType === undefined ? {} : { [permutationCarrier]: permutationType });
-  declareCallForms(ce);
+  const carrierTypes = {
+    ...options.carrierTypes,
+    ...(permutationType === undefined ? {} : { [permutationCarrier]: permutationType }),
+  };
+  declareFamilies(ce, carrierTypes);
+  declareCallForms(ce, carrierTypes);
   declareListOps(ce);
   declareListHeads(ce);
   declareListLevelHeads(ce);
@@ -55,7 +59,7 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareStats(ce, options);
   // Which carrier each family's elements inhabit, for `CombinatorialStat(family, name)`.
   for (const family of allEntries)
-    if (family.declared !== undefined) registerCollectionCarrier(ce, family.head, family.declared.carrier);
+    if (family.carrier !== undefined) registerCollectionCarrier(ce, family.head, family.carrier);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);

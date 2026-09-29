@@ -1,3 +1,7 @@
 id	in	out
 c-3	\mathrm{Count}(\mathrm{DyckPaths}(3))	5
-three-ups-then-three-downs	\mathrm{DyckPaths}(3)[1]	\bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack
+three-ups-then-three-downs	\mathrm{DyckPaths}(3)[1]	\mathrm{DyckPath}(\bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack)
+by-height	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{DyckPaths}(4), \text{Height}))	\operatorname{Tuple}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack,\bigl\lbrack1, 5, 7, 1\bigr\rbrack)
+returns-are-the-catalan-triangle	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{DyckPaths}(4), \text{Returns}))	\operatorname{Tuple}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack,\bigl\lbrack5, 5, 3, 1\bigr\rbrack)
+peaks-are-narayana	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{DyckPaths}(4), \text{Peaks}))	\operatorname{Tuple}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack,\bigl\lbrack1, 6, 6, 1\bigr\rbrack)
+area-is-carlitz-q-catalan	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{DyckPaths}(4), \text{Area}))	\operatorname{Tuple}(\bigl\lbrack16, 14, 12, 10, 8, 6, 4\bigr\rbrack,\bigl\lbrack1, 1, 2, 3, 3, 3, 1\bigr\rbrack)
