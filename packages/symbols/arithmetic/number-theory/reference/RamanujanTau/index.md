@@ -8,11 +8,11 @@ signatures:
     description: the coefficient of $q^n$ in $\Delta(q)$
     library: enumeratio-number-theory
     type: (integer) -> integer
-details:
-  - 'Multiplicative: $\tau(mn)=\tau(m)\tau(n)$ for coprime $m,n$.'
-  - Computed by truncated power-series multiplication of $\prod(1-q^k)^{24}$, exactly, not from a closed form.
 seeAlso:
   - PartitionsQ
 names:
   wolframIdentity: true
 ---
+
+- Multiplicative: $\tau(mn)=\tau(m)\tau(n)$ for coprime $m,n$.
+- Computed by truncated power-series multiplication of $\prod(1-q^k)^{24}$, exactly, not from a closed form.

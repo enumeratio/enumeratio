@@ -11,8 +11,6 @@ signatures:
   - call: Split(list, test)
     description: runs on which adjacent elements agree by a custom two-argument test.
     library: enumeratio-collections
-details:
-  - "Runs, not groups: only ADJACENT equal elements join a run, so the same value can appear in several separate runs. See [[Gather]] to group every occurrence together regardless of position."
 seeAlso:
   - Gather
   - SplitBy
@@ -20,3 +18,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Runs, not groups: only ADJACENT equal elements join a run, so the same value can appear in several separate runs. See [[Gather]] to group every occurrence together regardless of position.

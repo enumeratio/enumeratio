@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the SSYT of `size` cells over every partition shape, entries from 1 to `max_entry`.
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
-  - "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau)."
-  - "Unranked in shape-then-entries order: by row-length shape first, then the flattened filling."
 enumerate:
   expr: SemistandardTableaux(4, 3)
   columns: Length
@@ -38,3 +34,7 @@ grades:
     role: axis
 carrier: SemistandardTableau
 ---
+
+- A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
+- Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau).
+- Unranked in shape-then-entries order: by row-length shape first, then the flattened filling.

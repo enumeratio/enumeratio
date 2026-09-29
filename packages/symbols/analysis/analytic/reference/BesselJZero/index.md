@@ -8,10 +8,6 @@ signatures:
     description: the $k$-th positive zero of $J_\nu$.
     library: "@enumeratio/analytic"
     type: (number, integer) -> number
-details:
-  - compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.
-  - McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.
-  - Matches mpmath's `besseljzero(nu, k)` and Wolfram's `BesselJZero[nu, k]`.
 primitive: numeric
 bindings:
   - origin: native
@@ -27,3 +23,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.
+- McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.
+- Matches mpmath's `besseljzero(nu, k)` and Wolfram's `BesselJZero[nu, k]`.

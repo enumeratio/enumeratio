@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose inversions are all adjacent.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count is $F(n+1)$ — $1, 1, 2, 3, 5, 8, …$, A000045. See [[Fibonacci]].
-  - As implemented here this is NOT Tenner's "Boolean permutations" $Av(321, 3412)$, counted by $F(2n-1)$ (A001519, $1, 1, 2, 5, 13, …$); the two readings first differ at $n = 3$ (3 here against 5 there).
-  - Each permutation is a product of pairwise non-adjacent adjacent transpositions — a bijection with independent sets of the path graph on $\{1, …, n-1\}$, i.e. with a length-$(n-1)$ Fibonacci word. $At$ unranks that word and applies its transpositions to the identity.
 enumerate:
   expr: BooleanPermutations(4)
   columns: Descents, Inversions
@@ -30,3 +26,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count is $F(n+1)$ — $1, 1, 2, 3, 5, 8, …$, A000045. See [[Fibonacci]].
+- As implemented here this is NOT Tenner's "Boolean permutations" $Av(321, 3412)$, counted by $F(2n-1)$ (A001519, $1, 1, 2, 5, 13, …$); the two readings first differ at $n = 3$ (3 here against 5 there).
+- Each permutation is a product of pairwise non-adjacent adjacent transpositions — a bijection with independent sets of the path graph on $\{1, …, n-1\}$, i.e. with a length-$(n-1)$ Fibonacci word. $At$ unranks that word and applies its transpositions to the identity.

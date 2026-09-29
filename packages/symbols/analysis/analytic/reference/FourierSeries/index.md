@@ -8,9 +8,6 @@ signatures:
     description: the order-$n$ Fourier series of $f(x)$ on $[-\pi, \pi]$, for a nonnegative integer $n$.
     library: "@enumeratio/analytic"
     type: (expression, expression, integer<0..>) -> expression
-details:
-  - Built entirely from closed forms, not a call through compute-engine's own `Integrate` — probing found `Integrate` both too weak to reach most of these forms (it declines `x^2 * Cos(2x)` outright) and, worse, silently wrong on one it does answer (`Integrate(Abs(x) * Exp(-ix), {x, -pi, pi})` comes back exactly half of what an independent numeric quadrature gives). See [[FourierCoefficient]] for exactly what's covered.
-  - Always period $2\pi$ on $[-\pi, \pi]$, matching Wolfram's own default — there's no period argument here.
 primitive: kernel
 bindings:
   - origin: native
@@ -23,3 +20,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Built entirely from closed forms, not a call through compute-engine's own `Integrate` — probing found `Integrate` both too weak to reach most of these forms (it declines `x^2 * Cos(2x)` outright) and, worse, silently wrong on one it does answer (`Integrate(Abs(x) * Exp(-ix), {x, -pi, pi})` comes back exactly half of what an independent numeric quadrature gives). See [[FourierCoefficient]] for exactly what's covered.
+- Always period $2\pi$ on $[-\pi, \pi]$, matching Wolfram's own default — there's no period argument here.

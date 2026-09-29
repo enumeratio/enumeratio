@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption
-a-parabola-s-range-is-bounded-below			[FunctionRange, [Power, x, 2], x, y]	[LessEqual, 0, y]	A parabola's range is bounded below by its vertex
-a-reciprocal-never-reaches-zero			[FunctionRange, [Divide, 1, x], x, y]	[Or, [Less, y, 0], [Less, 0, y]]	A reciprocal never reaches zero
-sine-s-range-is-the-unit-interval			[FunctionRange, [Sin, x], x, y]	[LessEqual, -1, y, 1]	Sine's range is the unit interval
-exp-s-range-is-the-positive-reals	Scope		[FunctionRange, [Exp, x], x, y]	[Less, 0, y]	Exp's range is the positive reals
-a-quadratic-denominator-is-declined	Possible issues		[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	A quadratic denominator's range needs its vertex value too, and stays unevaluated for now
+id	section	role	expr	expected	known	source	caption
+a-parabola-s-range-is-bounded-below			[FunctionRange, [Power, x, 2], x, y]	[LessEqual, 0, y]	[LessEqual, 0, y]	Wolfram 15.0.0, hand cross-checked	A parabola's range is bounded below by its vertex
+a-reciprocal-never-reaches-zero			[FunctionRange, [Divide, 1, x], x, y]	[Or, [Less, y, 0], [Less, 0, y]]			A reciprocal never reaches zero
+sine-s-range-is-the-unit-interval			[FunctionRange, [Sin, x], x, y]	[LessEqual, -1, y, 1]	[LessEqual, -1, y, 1]	Wolfram 15.0.0, hand cross-checked	Sine's range is the unit interval
+exp-s-range-is-the-positive-reals	Scope		[FunctionRange, [Exp, x], x, y]	[Less, 0, y]	[Less, 0, y]	Wolfram 15.0.0, hand cross-checked	Exp's range is the positive reals
+a-quadratic-denominator-is-declined	Possible issues		[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	Wolfram 15.0.0, hand cross-checked	A quadratic denominator's range needs its vertex value too, and stays unevaluated for now

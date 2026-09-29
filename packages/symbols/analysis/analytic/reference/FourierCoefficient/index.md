@@ -8,14 +8,6 @@ signatures:
     description: $c_n$, for a concrete integer $n$.
     library: "@enumeratio/analytic"
     type: (expression, expression, integer) -> expression
-details:
-  - "Covered, combined by linearity (a sum, a negation, a constant factor free of $x$):"
-  - '- a trig monomial $\cos(x)^p \sin(x)^q$ (nonnegative integer $p, q$ — a plain $\cos(x)$ or $\sin(x)$ is $p=1,q=0$ or $p=0,q=1$), via the exponential binomial expansion $\cos(x) = (E+E^{-1})/2$, $\sin(x) = (E-E^{-1})/(2i)$, $E = e^{ix}$ -- exact, and what covers a "sin/cos polynomial" like $\cos^2(x)$ (checked against Wolfram directly).'
-  - '- $\cos(mx)$ / $\sin(mx)$ for a nonzero integer $m$ -- one resonant pair of terms.'
-  - "- $x$, $x^2$, $|x|$: the standard sawtooth, parabola, and triangle-wave coefficients."
-  - '- $e^{ax}$ for a nonzero real constant $a$: $c_n = (-1)^n \sinh(a\pi)/(\pi(a - in))$.'
-  - 'Declined, on purpose: a symbolic order $n$ (Wolfram answers with a `Piecewise` closed form there, which is a materially bigger derivation than any single one of the atoms above and not attempted here); $x^k$ for $k > 2$; a mixed polynomial-times-trig product like $x\cos(x)$; and anything else outside the list -- correctness over coverage.'
-  - Deliberately NOT built on compute-engine's own `Integrate`, which probing found both too weak to reach most of these forms (it declines `x^2 * Cos(2x)` outright) and, on one it does answer, silently wrong -- `Integrate(Abs(x) * Exp(-ix), {x, -pi, pi})` comes back exactly half of what an independent numeric quadrature gives.
 primitive: kernel
 bindings:
   - origin: native
@@ -28,3 +20,11 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Covered, combined by linearity (a sum, a negation, a constant factor free of $x$):
+- - a trig monomial $\cos(x)^p \sin(x)^q$ (nonnegative integer $p, q$ — a plain $\cos(x)$ or $\sin(x)$ is $p=1,q=0$ or $p=0,q=1$), via the exponential binomial expansion $\cos(x) = (E+E^{-1})/2$, $\sin(x) = (E-E^{-1})/(2i)$, $E = e^{ix}$ -- exact, and what covers a "sin/cos polynomial" like $\cos^2(x)$ (checked against Wolfram directly).
+- - $\cos(mx)$ / $\sin(mx)$ for a nonzero integer $m$ -- one resonant pair of terms.
+- - $x$, $x^2$, $|x|$: the standard sawtooth, parabola, and triangle-wave coefficients.
+- - $e^{ax}$ for a nonzero real constant $a$: $c_n = (-1)^n \sinh(a\pi)/(\pi(a - in))$.
+- Declined, on purpose: a symbolic order $n$ (Wolfram answers with a `Piecewise` closed form there, which is a materially bigger derivation than any single one of the atoms above and not attempted here); $x^k$ for $k > 2$; a mixed polynomial-times-trig product like $x\cos(x)$; and anything else outside the list -- correctness over coverage.
+- Deliberately NOT built on compute-engine's own `Integrate`, which probing found both too weak to reach most of these forms (it declines `x^2 * Cos(2x)` outright) and, on one it does answer, silently wrong -- `Integrate(Abs(x) * Exp(-ix), {x, -pi, pi})` comes back exactly half of what an independent numeric quadrature gives.

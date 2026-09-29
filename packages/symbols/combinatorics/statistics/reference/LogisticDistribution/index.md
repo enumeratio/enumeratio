@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $\mu, \beta$, unevaluated.
     library: enumeratio-statistics
     type: (real, real<0..>) -> distribution
-details:
-  - $PDF(x) = e^{-(x-\mu)/\beta} \big/ \big(\beta(1+e^{-(x-\mu)/\beta})^2\big)$, exact.
-  - $CDF(x) = 1/(1+e^{-(x-\mu)/\beta})$, exact.
-  - $Mean = \mu$, $Variance = \beta^2\pi^2/3$, both exact.
-  - '[[RandomVariate]] samples via inverse transform: $\mu + \beta\log(U/(1-U))$.'
 seeAlso:
   - LaplaceDistribution
   - PDF
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = e^{-(x-\mu)/\beta} \big/ \big(\beta(1+e^{-(x-\mu)/\beta})^2\big)$, exact.
+- $CDF(x) = 1/(1+e^{-(x-\mu)/\beta})$, exact.
+- $Mean = \mu$, $Variance = \beta^2\pi^2/3$, both exact.
+- [[RandomVariate]] samples via inverse transform: $\mu + \beta\log(U/(1-U))$.

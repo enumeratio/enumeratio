@@ -20,11 +20,11 @@ signatures:
   - call: Array(f, n, r, h)
     description: like $Array(f, n, r)$, wrapped in $h$ at every level instead of $List$.
     library: enumeratio-collections
-details:
-  - The scalar forms of $n$ and $r$ are shorthand for $\{n\}$ and every dimension sharing origin $r$.
-  - See [[Tabulate]] for a lazy array read without materialising it.
 seeAlso:
   - Tabulate
 names:
   wolframIdentity: true
 ---
+
+- The scalar forms of $n$ and $r$ are shorthand for $\{n\}$ and every dimension sharing origin $r$.
+- See [[Tabulate]] for a lazy array read without materialising it.

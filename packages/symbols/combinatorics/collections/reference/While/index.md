@@ -11,9 +11,6 @@ signatures:
   - call: While(test, body)
     description: Evaluates $body$ each time $test$ (re-evaluated first) reads $True$; stops as soon as it doesn't.
     library: enumeratio-collections
-details:
-  - Always returns $Nothing$, like [[Do]].
-  - Capped at 4096 iterations, past which the loop simply stops — Wolfram's own default cap, $IterationLimit, is much larger and configurable; this one is fixed.
 seeAlso:
   - Do
   - NestWhile
@@ -22,3 +19,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Always returns $Nothing$, like [[Do]].
+- Capped at 4096 iterations, past which the loop simply stops — Wolfram's own default cap, $IterationLimit, is much larger and configurable; this one is fixed.

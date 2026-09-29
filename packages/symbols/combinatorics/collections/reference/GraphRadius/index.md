@@ -8,8 +8,6 @@ signatures:
     description: min over v of VertexEccentricity(g, v); PositiveInfinity if g is disconnected.
     library: enumeratio-collections
     type: (value) -> real | signed_infinity
-details:
-  - radius <= diameter <= 2 * radius always holds for a connected graph.
 seeAlso:
   - GraphDiameter
   - GraphCenter
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- radius <= diameter <= 2 * radius always holds for a connected graph.

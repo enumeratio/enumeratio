@@ -16,12 +16,6 @@ signatures:
     library: enumeratio-number-theory
     type: (any) -> any
     overrides: enumeratio-analytic
-details:
-  - 'Skips every other factor: $n!! = n(n-2)(n-4)\cdots$, stopping at 1 (n odd) or 2 (n even).'
-  - 'Recurrence: $n!! = n\,(n-2)!!$, with $0!! = 1$.'
-  - 'Splits an ordinary factorial into its even and odd parts: $n! = n!!\,(n-1)!!$.'
-  - $(2n-1)!!$ counts the perfect matchings of $2n$ objects into pairs.
-  - The recurrence run downwards extends it to negative odd integers, $(-2k-1)!! = \dfrac{(-1)^k}{(2k-1)!!}$; at negative even integers it hits a pole (a division by the $0!!$ term) and returns NaN.
 seeAlso:
   - Factorial
 references:
@@ -33,3 +27,9 @@ names:
   fungrim: DoubleFactorial
   wolframIdentity: true
 ---
+
+- Skips every other factor: $n!! = n(n-2)(n-4)\cdots$, stopping at 1 (n odd) or 2 (n even).
+- Recurrence: $n!! = n\,(n-2)!!$, with $0!! = 1$.
+- Splits an ordinary factorial into its even and odd parts: $n! = n!!\,(n-1)!!$.
+- $(2n-1)!!$ counts the perfect matchings of $2n$ objects into pairs.
+- The recurrence run downwards extends it to negative odd integers, $(-2k-1)!! = \dfrac{(-1)^k}{(2k-1)!!}$; at negative even integers it hits a pole (a division by the $0!!$ term) and returns NaN.

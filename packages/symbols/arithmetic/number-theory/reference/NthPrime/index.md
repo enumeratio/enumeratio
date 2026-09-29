@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (integer) -> integer
     overrides: compute-engine
-details:
-  - 'Inverse of [[PrimePi]]: $\pi(p_n)=n$.'
-  - Grows asymptotically like $n\ln n$, by the prime number theorem.
-  - n must be a positive integer; compute-engine leaves non-positive n, including NthPrime(0), unevaluated.
-  - Threads element-wise over a list, as Wolfram's Listable heads do.
 seeAlso:
   - FactorInteger
   - PrimePi
@@ -27,3 +22,8 @@ references:
 names:
   wolfram: Prime
 ---
+
+- Inverse of [[PrimePi]]: $\pi(p_n)=n$.
+- Grows asymptotically like $n\ln n$, by the prime number theorem.
+- n must be a positive integer; compute-engine leaves non-positive n, including NthPrime(0), unevaluated.
+- Threads element-wise over a list, as Wolfram's Listable heads do.

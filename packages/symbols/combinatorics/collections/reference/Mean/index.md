@@ -16,14 +16,14 @@ signatures:
     library: enumeratio-statistics
     type: ((collection<any> | distribution | number)+) -> number
     overrides: enumeratio-collections
-details:
-  - $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].
-  - Sensitive to outliers — a single extreme value can drag the mean far from the bulk of the data. See [[Median]] for a more robust alternative.
-  - Given a matrix (a list of equal-length rows), computes the mean of each column.
-  - See [[Mode]] for the most frequent value rather than the average.
 seeAlso:
   - Median
   - Mode
 names:
   wolframIdentity: true
 ---
+
+- $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]].
+- Sensitive to outliers — a single extreme value can drag the mean far from the bulk of the data. See [[Median]] for a more robust alternative.
+- Given a matrix (a list of equal-length rows), computes the mean of each column.
+- See [[Mode]] for the most frequent value rather than the average.

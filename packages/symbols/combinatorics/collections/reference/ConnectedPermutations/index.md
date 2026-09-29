@@ -8,8 +8,6 @@ signatures:
     description: "Indecomposable (connected) permutations of $\\{1, …, n\\}$: no proper prefix's values are exactly $\\{1, …, j\\}$"
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A003319.
 seeAlso:
   - SymmetricGroup
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is A003319.

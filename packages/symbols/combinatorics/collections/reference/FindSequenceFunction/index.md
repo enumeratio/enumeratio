@@ -8,10 +8,6 @@ signatures:
     description: a closed form for the sequence given by list, in n
     library: enumeratio-collections
     type: (list<any>, symbol) -> any
-details:
-  - "Tries, in order, a polynomial fit (exact finite differences: the least degree whose difference row vanishes), a small registry of named sequences (Fibonacci, Catalan, factorial, derangements, Bell numbers) matched by value, and a linear-recurrence fit (Berlekamp--Massey over ℚ) resolved to a closed form for orders 1 (geometric) and 2 (exponential-polynomial, via the recurrence's characteristic roots)."
-  - Every closed form found is exact -- re-evaluating it reproduces the input list precisely, not just approximately.
-  - Falls back to staying symbolic when nothing fits.
 seeAlso:
   - GeneratingFunction
   - ExponentialGeneratingFunction
@@ -21,3 +17,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Tries, in order, a polynomial fit (exact finite differences: the least degree whose difference row vanishes), a small registry of named sequences (Fibonacci, Catalan, factorial, derangements, Bell numbers) matched by value, and a linear-recurrence fit (Berlekamp--Massey over ℚ) resolved to a closed form for orders 1 (geometric) and 2 (exponential-polynomial, via the recurrence's characteristic roots).
+- Every closed form found is exact -- re-evaluating it reproduces the input list precisely, not just approximately.
+- Falls back to staying symbolic when nothing fits.

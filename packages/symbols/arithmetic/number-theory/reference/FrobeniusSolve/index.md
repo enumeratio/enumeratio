@@ -8,10 +8,10 @@ signatures:
     description: every $x \ge 0$ with $\sum a_i x_i = b$
     library: enumeratio-number-theory
     type: (list<integer>, integer) -> list
-details:
-  - The search behind [[FrobeniusNumber]], for the caller who wants the solutions themselves.
 seeAlso:
   - FrobeniusNumber
 names:
   wolframIdentity: true
 ---
+
+- The search behind [[FrobeniusNumber]], for the caller who wants the solutions themselves.

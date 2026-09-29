@@ -8,8 +8,6 @@ signatures:
     description: the compositions of $n$ into parts from $\{1, 2\}$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Fibonacci number $F_{n+1}$ (A000045, shifted).
 seeAlso:
   - IntegerCompositions
   - KBoundedCompositions
@@ -26,3 +24,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is the Fibonacci number $F_{n+1}$ (A000045, shifted).

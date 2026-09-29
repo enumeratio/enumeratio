@@ -8,10 +8,6 @@ signatures:
     description: the exponential generating function of expr(n) in x
     library: enumeratio-collections
     type: (any, symbol, symbol) -> any
-details:
-  - For a C-finite sequence of recurrence order at most 2 (Fibonacci-like sequences), the characteristic roots come straight out of the compute engine's own `Sqrt`/arithmetic, so an irrational discriminant stays exact rather than being hand-simplified -- e.g. Fibonacci's $\sqrt5$.
-  - A small registry covers named factorial-growth sequences that are not C-finite at all -- $n!$, the derangement numbers, and the Bell numbers -- each with a textbook closed form.
-  - "Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here."
 seeAlso:
   - GeneratingFunction
   - FindSequenceFunction
@@ -21,3 +17,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- For a C-finite sequence of recurrence order at most 2 (Fibonacci-like sequences), the characteristic roots come straight out of the compute engine's own `Sqrt`/arithmetic, so an irrational discriminant stays exact rather than being hand-simplified -- e.g. Fibonacci's $\sqrt5$.
+- A small registry covers named factorial-growth sequences that are not C-finite at all -- $n!$, the derangement numbers, and the Bell numbers -- each with a textbook closed form.
+- Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here.

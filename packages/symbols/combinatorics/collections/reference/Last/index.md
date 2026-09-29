@@ -14,15 +14,15 @@ signatures:
   - call: Last(expr)
     description: the last operand of any expression, not just a collection.
     library: enumeratio-collections
-details:
-  - $Last(c) = At(c, -1)$. See [[At]].
-  - Positional indexing from the front (index 1) and back (negative indices).
-  - Complements [[First]] for the other end of a collection.
-  - A second argument supplies a default for an empty collection, instead of $Missing$.
-  - Works on the operands of any expression, not just a collection's elements.
 seeAlso:
   - First
   - At
 names:
   wolframIdentity: true
 ---
+
+- $Last(c) = At(c, -1)$. See [[At]].
+- Positional indexing from the front (index 1) and back (negative indices).
+- Complements [[First]] for the other end of a collection.
+- A second argument supplies a default for an empty collection, instead of $Missing$.
+- Works on the operands of any expression, not just a collection's elements.

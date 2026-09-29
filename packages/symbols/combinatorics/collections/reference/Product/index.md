@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-collections
     type: (any, tuple*) -> number
     overrides: compute-engine
-details:
-  - The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].
-  - "The product of $1$ through $n$ is $n!$: $Product(Range(1, n)) = Factorial(n)$."
-  - Applies $\mathrm{Times}$ across the list's elements (the product of a list).
-  - Forces evaluation of a lazy collection like [[Range]], which otherwise stays unevaluated on its own.
-  - "A symbolic bound closes in two general shapes: $\\prod i^m = (\\prod i)^m$ for $m$ free of the index (a factorial power), and $\\prod c^{f(i)} = c^{\\sum f(i)}$ for $c$ free of the index, the sum found by Faulhaber's formula for any polynomial $f$. A product with more than one `Tuple` clause reduces inner-first, so a triangular product (an inner limit depending on the outer index) closes too, once the inner reduction leaves a shape the outer sum recognises."
-  - An infinite product $\prod_{k=k_0}^{\infty} P(k)/Q(k)$, for $P$ and $Q$ polynomials of equal degree and equal leading coefficient, factors both over $\mathbb{C}$ and rewrites the ratio as a Gamma-function product via the Pochhammer identity $\prod_{k=k_0}^{N}(k-a) = \Gamma(N+1-a)/\Gamma(k_0-a)$; the series converges exactly when the roots' sums agree, which cancels the $N \to \infty$ tail. Each factor then closes either straight to a factorial (a real integer root) or, paired with its negation, via Gamma recursion and the reflection formula $\Gamma(z)\Gamma(1-z) = \pi/\sin(\pi z)$. Roots come from `Factor`'s own linear and irreducible-quadratic pieces (rational, Gaussian, or quadratic-surd only); anything past that -- an unresolved root, a pole, or an unpaired leftover -- leaves the product unevaluated rather than guess.
 seeAlso:
   - Length
 names:
@@ -25,3 +18,10 @@ names:
 attributes:
   - HoldAll
 ---
+
+- The empty product is 1 by convention, matching $Factorial(0)$. See [[Factorial]].
+- The product of $1$ through $n$ is $n!$: $Product(Range(1, n)) = Factorial(n)$.
+- Applies $\mathrm{Times}$ across the list's elements (the product of a list).
+- Forces evaluation of a lazy collection like [[Range]], which otherwise stays unevaluated on its own.
+- A symbolic bound closes in two general shapes: $\prod i^m = (\prod i)^m$ for $m$ free of the index (a factorial power), and $\prod c^{f(i)} = c^{\sum f(i)}$ for $c$ free of the index, the sum found by Faulhaber's formula for any polynomial $f$. A product with more than one `Tuple` clause reduces inner-first, so a triangular product (an inner limit depending on the outer index) closes too, once the inner reduction leaves a shape the outer sum recognises.
+- An infinite product $\prod_{k=k_0}^{\infty} P(k)/Q(k)$, for $P$ and $Q$ polynomials of equal degree and equal leading coefficient, factors both over $\mathbb{C}$ and rewrites the ratio as a Gamma-function product via the Pochhammer identity $\prod_{k=k_0}^{N}(k-a) = \Gamma(N+1-a)/\Gamma(k_0-a)$; the series converges exactly when the roots' sums agree, which cancels the $N \to \infty$ tail. Each factor then closes either straight to a factorial (a real integer root) or, paired with its negation, via Gamma recursion and the reflection formula $\Gamma(z)\Gamma(1-z) = \pi/\sin(\pi z)$. Roots come from `Factor`'s own linear and irreducible-quadratic pieces (rational, Gaussian, or quadratic-surd only); anything past that -- an unresolved root, a pole, or an unpaired leftover -- leaves the product unevaluated rather than guess.

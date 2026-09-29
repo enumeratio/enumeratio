@@ -8,13 +8,6 @@ signatures:
     description: the degree-$n$ Chebyshev polynomial of the second kind at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
     type: (integer, number) -> number
-details:
-  - '$U_0 = 1$, $U_1 = 2x$, and $U_{n+1} = 2x\,U_n - U_{n-1}$: the recurrence of [[ChebyshevT]] from a different start. The coefficients are integers and the leading one is $2^n$.'
-  - $U_n(\cos\theta) = \dfrac{\sin((n+1)\theta)}{\sin\theta}$, so $U_n(1) = n + 1$ and $U_n(-1) = (-1)^n (n+1)$.
-  - 'With the first kind: $T_n = \tfrac12(U_n - U_{n-2})$, and $T_n(x)^2 - (x^2-1)\,U_{n-1}(x)^2 = 1$.'
-  - 'A negative order folds as Wolfram does: $U_{-1} = 0$ and $U_{-n} = -U_{n-2}$ for $n \ge 2$.'
-  - At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
-  - A symbolic order stays unevaluated. The signature takes an integer order only; Wolfram continues $U_\nu$ to non-integer $\nu$, and that is not implemented here.
 primitive: kernel
 bindings:
   - origin: native
@@ -39,3 +32,10 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- $U_0 = 1$, $U_1 = 2x$, and $U_{n+1} = 2x\,U_n - U_{n-1}$: the recurrence of [[ChebyshevT]] from a different start. The coefficients are integers and the leading one is $2^n$.
+- $U_n(\cos\theta) = \dfrac{\sin((n+1)\theta)}{\sin\theta}$, so $U_n(1) = n + 1$ and $U_n(-1) = (-1)^n (n+1)$.
+- With the first kind: $T_n = \tfrac12(U_n - U_{n-2})$, and $T_n(x)^2 - (x^2-1)\,U_{n-1}(x)^2 = 1$.
+- A negative order folds as Wolfram does: $U_{-1} = 0$ and $U_{-n} = -U_{n-2}$ for $n \ge 2$.
+- At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
+- A symbolic order stays unevaluated. The signature takes an integer order only; Wolfram continues $U_\nu$ to non-integer $\nu$, and that is not implemented here.

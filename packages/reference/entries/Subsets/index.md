@@ -20,10 +20,6 @@ signatures:
   - call: Subsets(n, {kmin, kmax, dn})
     description: the subsets of $\{1, …, n\}$ with size in $kmin, kmin+dn, …$ up to $kmax$; $dn$ defaults to $1$.
     library: enumeratio-collections
-details:
-  - "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built."
-  - The subsets carrying a fixed size $k$ number $\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].
-  - Each element is the subset's list of members; [[Length]] is its size.
 enumerate:
   expr: Subsets(4)
   columns: Length, Sum
@@ -65,3 +61,7 @@ grades:
     role: axis
 carrier: Finset
 ---
+
+- A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.
+- The subsets carrying a fixed size $k$ number $\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].
+- Each element is the subset's list of members; [[Length]] is its size.

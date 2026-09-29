@@ -13,11 +13,6 @@ signatures:
     library: enumeratio-numerals
     type: (integer, integer?, integer?) -> integer
     overrides: compute-engine
-details:
-  - Equivalent to summing [[IntegerDigits]](n, base).
-  - In base 2, the digit sum is the number of set bits (population count).
-  - $n\equiv\mathrm{DigitSum}(n)\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.
-  - The sign of n is discarded before summing.
 seeAlso:
   - DigitCount
 references:
@@ -32,3 +27,8 @@ names:
 statOn:
   - Numeric
 ---
+
+- Equivalent to summing [[IntegerDigits]](n, base).
+- In base 2, the digit sum is the number of set bits (population count).
+- $n\equiv\mathrm{DigitSum}(n)\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.
+- The sign of n is discarded before summing.

@@ -6,10 +6,6 @@ summary: The prime numbers $2, 3, 5, 7, 11, …$ as a lazy indexed collection, u
 signatures:
   - call: Primes
     description: the primes in increasing order, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(Primes) = +\infty$, and $At(Primes, k)$ unranks the $k$-th prime without ever sieving a full prefix -- $At(Primes, 5) = 11$.'
-  - OEIS A000040.
-  - "Membership goes through [[Element]]: $Element(11, Primes)$ is true, $Element(9, Primes)$ is false."
 enumerate:
   expr: Take(Primes, 20)
 seeAlso:
@@ -20,3 +16,7 @@ seeAlso:
   - AbundantNumbers
   - SmoothNumbers
 ---
+
+- A lazy indexed collection: $Count(Primes) = +\infty$, and $At(Primes, k)$ unranks the $k$-th prime without ever sieving a full prefix -- $At(Primes, 5) = 11$.
+- OEIS A000040.
+- Membership goes through [[Element]]: $Element(11, Primes)$ is true, $Element(9, Primes)$ is false.

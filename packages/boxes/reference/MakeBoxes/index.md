@@ -10,11 +10,11 @@ signatures:
     type: (any) -> boxes
 attributes:
   - HoldAll
-details:
-  - Holds its argument, so the notation is of what was written.
 seeAlso:
   - ToBoxes
   - DisplayForm
 names:
   wolframIdentity: true
 ---
+
+- Holds its argument, so the notation is of what was written.

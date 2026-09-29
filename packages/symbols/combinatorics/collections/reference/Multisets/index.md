@@ -8,9 +8,6 @@ signatures:
     description: size-$k$ multisets over $n$ symbols
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $\binom{n + k - 1}{k}$, the number of combinations with repetition
-  - Each element is a non-decreasing length-$k$ list
 seeAlso:
   - KSubsets
   - Tuples
@@ -39,3 +36,6 @@ grades:
     role: axis
 carrier: Multiset
 ---
+
+- Count is $\binom{n + k - 1}{k}$, the number of combinations with repetition
+- Each element is a non-decreasing length-$k$ list

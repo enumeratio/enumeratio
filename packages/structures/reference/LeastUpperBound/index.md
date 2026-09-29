@@ -8,10 +8,10 @@ signatures:
     description: "The join of two values in a lattice: the least value at or above both."
     library: enumeratio-structures
     type: (any, any) -> unknown
-details:
-  - The `Lattice` protocol's member, and what `Max` folds when its arguments' type is a lattice.
 seeAlso:
   - GreatestLowerBound
   - Max
   - Compare
 ---
+
+- The `Lattice` protocol's member, and what `Max` folds when its arguments' type is a lattice.

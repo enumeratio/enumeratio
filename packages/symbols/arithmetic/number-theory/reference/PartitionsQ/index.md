@@ -8,12 +8,12 @@ signatures:
     description: $q(n)$, distinct-part partitions of $n$
     library: enumeratio-number-theory
     type: (integer) -> integer
-details:
-  - By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].
-  - Counts the [[DistinctPartitions]] family.
 seeAlso:
   - DistinctPartitions
   - IntegerPartitions
 names:
   wolframIdentity: true
 ---
+
+- By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].
+- Counts the [[DistinctPartitions]] family.

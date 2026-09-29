@@ -23,13 +23,6 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-collections
-details:
-  - The smallest of its arguments, or of a single list argument.
-  - Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Max]].
-  - "Commutative and associative: order and grouping don't matter."
-  - $\min(a,b) + \max(a,b) = a + b$ for any two values. See [[Max]].
-  - Infinities participate directly in the comparison.
-  - With no arguments at all, returns the identity element $+\infty$.
 seeAlso:
   - Max
   - Clamp
@@ -49,3 +42,10 @@ bindings:
     template: enumeratio_min($*,)
     note: Same flattening as Max.
 ---
+
+- The smallest of its arguments, or of a single list argument.
+- Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Max]].
+- Commutative and associative: order and grouping don't matter.
+- $\min(a,b) + \max(a,b) = a + b$ for any two values. See [[Max]].
+- Infinities participate directly in the comparison.
+- With no arguments at all, returns the identity element $+\infty$.

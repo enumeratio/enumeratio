@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number) -> integer
     overrides: compute-engine
-details:
-  - Also called Euler's phi function; central to RSA key generation and elementary number theory.
-  - 'Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ whenever $\gcd(m,n)=1$.'
-  - For $n=p_1^{k_1}\cdots p_m^{k_m}$, $\varphi(n)=n\prod_i\left(1-\frac1{p_i}\right)$.
-  - 'Divisor sum identity: $\sum_{d\mid n}\varphi(d)=n$.'
-  - $\varphi(0) = 0$, as in Wolfram; a list argument is threaded over element-wise.
 seeAlso:
   - MultiplicativeOrder
   - DivisorSigma
@@ -64,3 +58,9 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Also called Euler's phi function; central to RSA key generation and elementary number theory.
+- Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ whenever $\gcd(m,n)=1$.
+- For $n=p_1^{k_1}\cdots p_m^{k_m}$, $\varphi(n)=n\prod_i\left(1-\frac1{p_i}\right)$.
+- Divisor sum identity: $\sum_{d\mid n}\varphi(d)=n$.
+- $\varphi(0) = 0$, as in Wolfram; a list argument is threaded over element-wise.

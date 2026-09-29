@@ -8,12 +8,12 @@ signatures:
     description: $PositiveInfinity$ for an exact number, otherwise its significant decimal digit count.
     library: enumeratio-collections
     type: (any) -> integer<1..> | signed_infinity
-details:
-  - Exact numbers (integers, rationals, radicals, symbolic constants like $\pi$) carry infinite precision, Wolfram's own convention.
-  - For an inexact number, this counts the digits actually written — `2.5` has 2, and a literal with more digits than a double can represent is rounded to about 16.
 seeAlso:
   - IsMachineNumber
   - IsNumeric
 names:
   wolframIdentity: true
 ---
+
+- Exact numbers (integers, rationals, radicals, symbolic constants like $\pi$) carry infinite precision, Wolfram's own convention.
+- For an inexact number, this counts the digits actually written — `2.5` has 2, and a literal with more digits than a double can represent is rounded to about 16.

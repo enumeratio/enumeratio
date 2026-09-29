@@ -6,10 +6,6 @@ summary: The deficient numbers $1, 2, 3, 4, 5, 7, …$ -- integers whose proper 
 signatures:
   - call: DeficientNumbers
     description: the $n$ with $\sigma(n) - n < n$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(DeficientNumbers) = +\infty$ -- deficient numbers include every prime -- and $At(DeficientNumbers, k)$ unranks the $k$-th by scanning forward from the last cached match.'
-  - OEIS A005100.
-  - "Membership goes through [[Element]]: $Element(7, DeficientNumbers)$ is true, $Element(12, DeficientNumbers)$ is false (abundant)."
 enumerate:
   expr: Take(DeficientNumbers, 20)
 seeAlso:
@@ -29,3 +25,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(DeficientNumbers) = +\infty$ -- deficient numbers include every prime -- and $At(DeficientNumbers, k)$ unranks the $k$-th by scanning forward from the last cached match.
+- OEIS A005100.
+- Membership goes through [[Element]]: $Element(7, DeficientNumbers)$ is true, $Element(12, DeficientNumbers)$ is false (abundant).

@@ -8,8 +8,6 @@ signatures:
     description: CIRCULAR binary words of length $n$ with no two consecutive ones, wraparound included
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Lucas numbers, with $n=0$ special-cased to $1$ (A000032).
 seeAlso:
   - FibStrings
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is the Lucas numbers, with $n=0$ special-cased to $1$ (A000032).

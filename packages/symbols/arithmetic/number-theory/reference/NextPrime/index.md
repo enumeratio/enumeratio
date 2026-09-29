@@ -13,11 +13,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, number?) -> integer
     overrides: compute-engine
-details:
-  - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.
-  - NextPrime(n, k) generalizes to the $(m+k)$th prime, so a negative $k$ steps backward to a prime below $n$.
-  - n need not be prime or even an integer; compute-engine simply finds the next prime above it.
-  - Threads element-wise over a list, as Wolfram's Listable heads do.
 seeAlso:
   - NthPrime
   - PrimePi
@@ -29,3 +24,8 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.
+- NextPrime(n, k) generalizes to the $(m+k)$th prime, so a negative $k$ steps backward to a prime below $n$.
+- n need not be prime or even an integer; compute-engine simply finds the next prime above it.
+- Threads element-wise over a list, as Wolfram's Listable heads do.

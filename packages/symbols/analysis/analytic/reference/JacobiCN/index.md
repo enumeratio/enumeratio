@@ -8,12 +8,6 @@ signatures:
     description: the Jacobi elliptic cosine, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
-  - Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel (Abramowitz & Stegun 16.4); see there for the m-outside-[0,1] and complex-u coverage this rests on.
-  - A genuinely complex m stays unevaluated.
-  - Exact at u = 0 (cn = 1, for any m), m = 0 (cn = [[Cos]](u)), m = 1 (cn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (cn = 0).
-  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiSN
   - JacobiDN
@@ -22,3 +16,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use — not the elliptic modulus k itself.
+- Numeric evaluation shares [[JacobiSN]]'s descending Landen/arithmetic-geometric-mean kernel (Abramowitz & Stegun 16.4); see there for the m-outside-[0,1] and complex-u coverage this rests on.
+- A genuinely complex m stays unevaluated.
+- Exact at u = 0 (cn = 1, for any m), m = 0 (cn = [[Cos]](u)), m = 1 (cn = 1/[[Cosh]](u)), and the quarter period u = [[EllipticK]](m) (cn = 0).
+- Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

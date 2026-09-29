@@ -17,12 +17,6 @@ signatures:
   - call: DedekindSum(h, k)
     description: $s(h,k)$, exactly
     library: enumeratio-modular
-details:
-  - $\mathrm{SL}(2,\mathbb{Z})\backslash\mathrm{SL}(2,\mathbb{R})$ is the complement of a trefoil in $S^3$, so a closed orbit of the modular flow is a knot in that complement
-  - 'Ghys: the modular knots are exactly the LORENZ knots, and $\mathrm{lk}(k_\gamma,\text{trefoil}) = \Psi(\gamma)$'
-  - $\Phi(M) = (a+d)/c - 12\,\mathrm{sign}(c)\,s(d,|c|)$ is a quasimorphism, NOT a class function; only the corrected $\Psi$ is
-  - Dedekind sums are checked against reciprocity, $s(h,k)+s(k,h) = -\frac14 + \frac{1}{12}(h/k + k/h + 1/hk)$
-  - $\Psi$ is undefined on elliptic and parabolic elements — they have no closed geodesic
 seeAlso:
   - ModularClasses
   - ModularWord
@@ -32,3 +26,9 @@ references:
   - system: mathworld
     identity: DedekindSum
 ---
+
+- $\mathrm{SL}(2,\mathbb{Z})\backslash\mathrm{SL}(2,\mathbb{R})$ is the complement of a trefoil in $S^3$, so a closed orbit of the modular flow is a knot in that complement
+- Ghys: the modular knots are exactly the LORENZ knots, and $\mathrm{lk}(k_\gamma,\text{trefoil}) = \Psi(\gamma)$
+- $\Phi(M) = (a+d)/c - 12\,\mathrm{sign}(c)\,s(d,|c|)$ is a quasimorphism, NOT a class function; only the corrected $\Psi$ is
+- Dedekind sums are checked against reciprocity, $s(h,k)+s(k,h) = -\frac14 + \frac{1}{12}(h/k + k/h + 1/hk)$
+- $\Psi$ is undefined on elliptic and parabolic elements — they have no closed geodesic

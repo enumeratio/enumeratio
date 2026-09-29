@@ -8,8 +8,6 @@ signatures:
     description: 'Subexcedant sequences of length $n$: words $(a_0, …, a_{n-1})$ with $0 \le a_i \le i$ — another factorial-base encoding of permutations'
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $n!$ (A000142); a sibling of [[LehmerCodes]] with the bound $a_i \le i$ instead of $a_i \le n-1-i$.
 seeAlso:
   - SymmetricGroup
   - LehmerCodes
@@ -26,3 +24,5 @@ grades:
     role: axis
 carrier: SubexcedantSeq
 ---
+
+- Count is $n!$ (A000142); a sibling of [[LehmerCodes]] with the bound $a_i \le i$ instead of $a_i \le n-1-i$.

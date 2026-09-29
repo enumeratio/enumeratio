@@ -8,13 +8,13 @@ signatures:
     description: the dominant (Perron) eigenvector of g's undirected adjacency matrix, normalized so the entries SUM to 1, in VertexList(g) order.
     library: enumeratio-collections
     type: (value) -> list<number>
-details:
-  - Edge direction is ignored -- built from the underlying (undirected) adjacency matrix, same convention as IsConnectedGraph.
-  - "Normalized so the entries SUM to 1 -- kernel-verified against Wolfram 15: PathGraph({1,2,3,4}) -> {0.190983, 0.309017, 0.309017, 0.190983}, StarGraph(4) -> {0.366025, 0.211325, 0.211325, 0.211325}."
-  - Computed by power iteration on (adjacency + identity), not the bare adjacency matrix -- a bipartite graph's spectrum is symmetric about 0, and the +1 shift is what keeps the iteration from oscillating between the two equal-magnitude extreme eigenvalues.
 seeAlso:
   - ClosenessCentrality
   - VertexDegree
 names:
   wolframIdentity: true
 ---
+
+- Edge direction is ignored -- built from the underlying (undirected) adjacency matrix, same convention as IsConnectedGraph.
+- Normalized so the entries SUM to 1 -- kernel-verified against Wolfram 15: PathGraph({1,2,3,4}) -> {0.190983, 0.309017, 0.309017, 0.190983}, StarGraph(4) -> {0.366025, 0.211325, 0.211325, 0.211325}.
+- Computed by power iteration on (adjacency + identity), not the bare adjacency matrix -- a bipartite graph's spectrum is symmetric about 0, and the +1 shift is what keeps the iteration from oscillating between the two equal-magnitude extreme eigenvalues.

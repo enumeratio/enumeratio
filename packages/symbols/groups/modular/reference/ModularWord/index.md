@@ -14,12 +14,6 @@ signatures:
   - call: ModularSTWord(matrix)
     description: the alternating $S$/$T$ factorisation, as its list of $T$-exponents
     library: enumeratio-modular
-details:
-  - $L = \begin{pmatrix}1&0\\1&1\end{pmatrix}$ and $R = \begin{pmatrix}1&1\\0&1\end{pmatrix}$ generate the positive cone
-  - 'The peel never searches: $R$ comes off when $a \ge c$ and $b \ge d$, $L$ when $c \ge a$ and $d \ge b$, and both at once would force determinant $0$'
-  - '`ModularKind` sorts by $|\mathrm{tr}|$ against $2$ — elliptic, parabolic, hyperbolic'
-  - A positive word is hyperbolic exactly when it uses both letters; all-$L$ and all-$R$ are parabolic
-  - 'Rebuilding from an $S$/$T$ word can return $-M$: that sign is the $\pm I$ that $\mathrm{PSL}$ quotients out'
 seeAlso:
   - ContinuedFraction
   - ModularClasses
@@ -30,3 +24,9 @@ references:
   - system: mathworld
     identity: ModularGroupGamma
 ---
+
+- $L = \begin{pmatrix}1&0\\1&1\end{pmatrix}$ and $R = \begin{pmatrix}1&1\\0&1\end{pmatrix}$ generate the positive cone
+- The peel never searches: $R$ comes off when $a \ge c$ and $b \ge d$, $L$ when $c \ge a$ and $d \ge b$, and both at once would force determinant $0$
+- `ModularKind` sorts by $|\mathrm{tr}|$ against $2$ — elliptic, parabolic, hyperbolic
+- A positive word is hyperbolic exactly when it uses both letters; all-$L$ and all-$R$ are parabolic
+- Rebuilding from an $S$/$T$ word can return $-M$: that sign is the $\pm I$ that $\mathrm{PSL}$ quotients out

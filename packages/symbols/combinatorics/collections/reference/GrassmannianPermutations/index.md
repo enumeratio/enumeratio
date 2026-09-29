@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ with at most one descent.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count is $2^n - n$, A000325.
-  - A permutation with at most one descent is the sorted-ascending concatenation of a value-subset $A$ (the "first block") with its sorted-ascending complement, split at the descent; every subset gives such a permutation except that the $n+1$ prefix subsets $\{1, …, k\}$ all collapse to the identity.
-  - $At$ fixes the identity at rank $0$ and, for increasing block size $k = 1, …, n-1$, unranks $A$ from the size-$k$ subsets in colex order ([[Binomial]]-many minus the one prefix subset already spoken for).
 enumerate:
   expr: GrassmannianPermutations(4)
   columns: Descents, Inversions
@@ -30,3 +26,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count is $2^n - n$, A000325.
+- A permutation with at most one descent is the sorted-ascending concatenation of a value-subset $A$ (the "first block") with its sorted-ascending complement, split at the descent; every subset gives such a permutation except that the $n+1$ prefix subsets $\{1, …, k\}$ all collapse to the identity.
+- $At$ fixes the identity at rank $0$ and, for increasing block size $k = 1, …, n-1$, unranks $A$ from the size-$k$ subsets in colex order ([[Binomial]]-many minus the one prefix subset already spoken for).

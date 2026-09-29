@@ -8,11 +8,11 @@ signatures:
     description: 'A base with a subscript and a superscript: $\int_0^1$.'
     library: enumeratio-boxes
     type: (boxes, boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `msubsup`.
 seeAlso:
   - SubscriptBox
   - SuperscriptBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `msubsup`.

@@ -6,11 +6,6 @@ summary: The triangular numbers $1, 3, 6, 10, …$ — $T(n) = n(n+1)/2$ — dot
 signatures:
   - call: TriangularNumbers
     description: $T(n) = n(n+1)/2$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(TriangularNumbers) = +\infty$, and $At(TriangularNumbers, k) = k(k+1)/2$ unranks in closed form -- $At(TriangularNumbers, 5) = 15$.'
-  - OEIS A000217.
-  - "Membership goes through [[Element]] by inverting the closed form exactly: $x$ is triangular iff $8x+1$ is a perfect square -- $Element(15, TriangularNumbers)$ is true, $Element(14, TriangularNumbers)$ is false."
-  - The $k$-gonal case $k=3$ of [[PolygonalNumbers]].
 enumerate:
   expr: Take(TriangularNumbers, 20)
 seeAlso:
@@ -36,3 +31,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(TriangularNumbers) = +\infty$, and $At(TriangularNumbers, k) = k(k+1)/2$ unranks in closed form -- $At(TriangularNumbers, 5) = 15$.
+- OEIS A000217.
+- Membership goes through [[Element]] by inverting the closed form exactly: $x$ is triangular iff $8x+1$ is a perfect square -- $Element(15, TriangularNumbers)$ is true, $Element(14, TriangularNumbers)$ is false.
+- The $k$-gonal case $k=3$ of [[PolygonalNumbers]].

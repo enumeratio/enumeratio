@@ -11,11 +11,6 @@ signatures:
   - call: ProbabilityDistribution(pdf, {x, min, max, 1})
     description: discrete, mass pdf(x) over {min, ..., max} — step size pinned to 1.
     library: enumeratio-statistics
-details:
-  - $pdf$ is used AS WRITTEN, not renormalized — same as Wolfram's own `ProbabilityDistribution`, which does not renormalize its `pdf` argument either; it is the caller's responsibility that it already integrates/sums to 1.
-  - $PDF(v) = pdf|_{x=v}$ (substitution) inside $[min,max]$, $0$ outside.
-  - "$CDF$/$Mean$/$Variance$ go through compute-engine's own native `Integrate` (continuous) or `Sum` (discrete): exact whenever those resolve to a closed form, and left UNEVALUATED (not approximated) when they don't — numeric approximation still reaches them through `N`, same as everywhere else in this package."
-  - An arbitrary discrete step size (other than 1) is out of scope for this head.
 seeAlso:
   - HistogramDistribution
   - PDF
@@ -24,3 +19,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $pdf$ is used AS WRITTEN, not renormalized — same as Wolfram's own `ProbabilityDistribution`, which does not renormalize its `pdf` argument either; it is the caller's responsibility that it already integrates/sums to 1.
+- $PDF(v) = pdf|_{x=v}$ (substitution) inside $[min,max]$, $0$ outside.
+- $CDF$/$Mean$/$Variance$ go through compute-engine's own native `Integrate` (continuous) or `Sum` (discrete): exact whenever those resolve to a closed form, and left UNEVALUATED (not approximated) when they don't — numeric approximation still reaches them through `N`, same as everywhere else in this package.
+- An arbitrary discrete step size (other than 1) is out of scope for this head.

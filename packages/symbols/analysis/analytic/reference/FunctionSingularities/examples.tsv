@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-a-pole-at-the-origin			[FunctionSingularities, [Divide, 1, x], x]	[Equal, x, 0]	A simple pole at the origin
-sqrt-is-singular-at-its-own-boundary			[FunctionSingularities, [Sqrt, x], x]	[LessEqual, x, 0]	Sqrt is singular AT x=0 too, not just where the radicand goes negative
-a-polynomial-has-no-singularities			[FunctionSingularities, [Power, x, 2], x]	False	A polynomial is entire
-log-s-branch-cut			[FunctionSingularities, [Ln, x], x]	[LessEqual, x, 0]	Log's branch cut and its excluded domain coincide here
+id	section	role	expr	expected	known	source	caption
+a-pole-at-the-origin			[FunctionSingularities, [Divide, 1, x], x]	[Equal, x, 0]	[Equal, x, 0]	Wolfram 15.0.0, hand cross-checked	A simple pole at the origin
+sqrt-is-singular-at-its-own-boundary			[FunctionSingularities, [Sqrt, x], x]	[LessEqual, x, 0]	[LessEqual, x, 0]	Wolfram 15.0.0, hand cross-checked	Sqrt is singular AT x=0 too, not just where the radicand goes negative
+a-polynomial-has-no-singularities			[FunctionSingularities, [Power, x, 2], x]	False	False	Wolfram 15.0.0, hand cross-checked	A polynomial is entire
+log-s-branch-cut			[FunctionSingularities, [Ln, x], x]	[LessEqual, x, 0]			Log's branch cut and its excluded domain coincide here

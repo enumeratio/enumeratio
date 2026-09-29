@@ -8,11 +8,11 @@ signatures:
     description: the sign of f in the real variable x, when it is constant over the whole real line.
     library: "@enumeratio/analytic"
     type: (expression, symbol) -> expression
-details:
-  - Matches Wolfram's convention that this needs domain $\mathbb R$ to answer definitively -- `FunctionSign(Sqrt(x), x)` is `Indeterminate` even though $\sqrt x\ge0$ wherever it's defined, because $\sqrt x$ isn't defined for every real x (confirmed against `wolframscript`).
-  - A polynomial's sign comes from its closed-form shape (see [[FunctionMonotonicity]]'s classifier); a rational function's sign is the product of its numerator's and denominator's, when both are individually determinate; Exp is always 1.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- Matches Wolfram's convention that this needs domain $\mathbb R$ to answer definitively -- `FunctionSign(Sqrt(x), x)` is `Indeterminate` even though $\sqrt x\ge0$ wherever it's defined, because $\sqrt x$ isn't defined for every real x (confirmed against `wolframscript`).
+- A polynomial's sign comes from its closed-form shape (see [[FunctionMonotonicity]]'s classifier); a rational function's sign is the product of its numerator's and denominator's, when both are individually determinate; Exp is always 1.

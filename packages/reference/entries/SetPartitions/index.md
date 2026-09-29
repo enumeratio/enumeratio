@@ -14,10 +14,6 @@ signatures:
   - call: SetPartitions(collection)
     description: the set partitions of any finite collection.
     library: enumeratio-collections
-details:
-  - A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].
-  - The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].
-  - Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.
 enumerate:
   expr: SetPartitions(4)
   columns: Length, Max(Map(Length, _))
@@ -65,3 +61,7 @@ grades:
     role: axis
 carrier: SetPartition
 ---
+
+- A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].
+- The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].
+- Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.

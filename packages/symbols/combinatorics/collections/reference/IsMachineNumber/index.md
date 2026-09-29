@@ -8,12 +8,12 @@ signatures:
     description: $True$ for an inexact number carrying at most 15 significant decimal digits, $False$ otherwise (including every exact number).
     library: enumeratio-collections
     type: (any) -> boolean
-details:
-  - Wolfram spells this `MachineNumberQ`; renamed to the `Is…` convention used across compute-engine predicates.
-  - Compute engine keeps no separate "machine" number representation — every inexact value is a decimal carrying as many digits as it was given — so this is approximated by digit count against Wolfram's ~15.95-digit `MachinePrecision`, documented as a divergence.
 seeAlso:
   - IsNumeric
   - Precision
 names:
   wolfram: MachineNumberQ
 ---
+
+- Wolfram spells this `MachineNumberQ`; renamed to the `Is…` convention used across compute-engine predicates.
+- Compute engine keeps no separate "machine" number representation — every inexact value is a decimal carrying as many digits as it was given — so this is approximated by digit count against Wolfram's ~15.95-digit `MachinePrecision`, documented as a divergence.

@@ -17,5 +17,9 @@ n-keiperlilambda-13	N(\mathrm{KeiperLiLambda}(13))	3.817\,240\,057\,847\,946
 n-keiperlilambda-14	N(\mathrm{KeiperLiLambda}(14))	4.411\,477\,678\,680\,598\,5
 n-keiperlilambda-15	N(\mathrm{KeiperLiLambda}(15))	5.045\,079\,372\,026\,794
 n-keiperlilambda-16	N(\mathrm{KeiperLiLambda}(16))	5.717\,108\,248\,868\,793
+n-keiperlilambda-17	N(\mathrm{KeiperLiLambda}(17))	6.426\,582\,872\,125\,147
+n-keiperlilambda-18	N(\mathrm{KeiperLiLambda}(18))	7.172\,480\,938\,298\,763
+n-keiperlilambda-19	N(\mathrm{KeiperLiLambda}(19))	7.953\,743\,094\,287\,197
+n-keiperlilambda-20	N(\mathrm{KeiperLiLambda}(20))	8.769\,276\,872\,071\,474
 lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	\mathrm{chop}(N(\mathrm{KeiperLiLambda}(1))-N((1+\gamma/2)-\ln(4\pi)/2))	0
 declines-past-n-20-rather-than-returning-a-value	\mathrm{KeiperLiLambda}(21)	\mathrm{KeiperLiLambda}(21)

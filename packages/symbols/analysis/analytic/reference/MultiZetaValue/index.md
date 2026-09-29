@@ -8,10 +8,6 @@ signatures:
     description: the depth-2 Euler sum $\zeta(s_1, s_2)$.
     library: "@enumeratio/analytic"
     type: (integer, integer) -> number
-details:
-  - Scoped to depth 2 with both weights $\ge 2$ — every `MultiZetaValue` identity Fungrim declares is this shape, which is also exactly what makes the double sum converge unconditionally. A general depth-$n$ MZV over compositions is a different, open-ended project and is not attempted here.
-  - 'Numerically: $\zeta(s_1,s_2) = \sum_{n\ge1} n^{-s_1} H_{n-1}^{(s_2)}$, summed directly for $10^5$ terms with the tail approximated by $\zeta(s_2)\cdot\sum_{n>N} n^{-s_1}$ (both from the native [[Zeta]]).'
-  - "Small cases have closed forms Fungrim states directly: $\\zeta(2,2) = \\tfrac34\\zeta(4)$, $\\zeta(3,3) = \\tfrac12(\\zeta(3)^2-\\zeta(6))$, and Euler's reflection $\\zeta(a)\\zeta(b) - \\zeta(a+b) = \\zeta(a,b) + \\zeta(b,a)$ for $a,b\\ge2$."
 primitive: numeric
 bindings:
   - origin: native
@@ -38,3 +34,7 @@ seeAlso:
   - Zeta
   - HurwitzZeta
 ---
+
+- Scoped to depth 2 with both weights $\ge 2$ — every `MultiZetaValue` identity Fungrim declares is this shape, which is also exactly what makes the double sum converge unconditionally. A general depth-$n$ MZV over compositions is a different, open-ended project and is not attempted here.
+- Numerically: $\zeta(s_1,s_2) = \sum_{n\ge1} n^{-s_1} H_{n-1}^{(s_2)}$, summed directly for $10^5$ terms with the tail approximated by $\zeta(s_2)\cdot\sum_{n>N} n^{-s_1}$ (both from the native [[Zeta]]).
+- Small cases have closed forms Fungrim states directly: $\zeta(2,2) = \tfrac34\zeta(4)$, $\zeta(3,3) = \tfrac12(\zeta(3)^2-\zeta(6))$, and Euler's reflection $\zeta(a)\zeta(b) - \zeta(a+b) = \zeta(a,b) + \zeta(b,a)$ for $a,b\ge2$.

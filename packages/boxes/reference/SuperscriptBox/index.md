@@ -8,8 +8,6 @@ signatures:
     description: "A base with a superscript: $x^2$."
     library: enumeratio-boxes
     type: (boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `msup`.
 seeAlso:
   - SubscriptBox
   - SubsuperscriptBox
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- MathML's `msup`.

@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - $0! = 1$ by convention, the empty product.
-  - 'Recurrence: $n! = n\,(n-1)!$.'
-  - Extends to non-integers via the Gamma function, $n! = \Gamma(n+1)$, so half-integer factorials involve $\sqrt{\pi}$.
-  - Grows faster than any exponential; Stirling's approximation $n! \sim \sqrt{2\pi n}\,(n/e)^n$ describes the asymptotics.
-  - compute-engine returns ComplexInfinity at negative integers, the poles of Gamma, rather than leaving the expression unevaluated.
 seeAlso:
   - Binomial
   - Factorial2
@@ -70,3 +64,9 @@ catalog:
     identity: Factorial
     url: https://reference.wolfram.com/language/ref/Factorial.html
 ---
+
+- $0! = 1$ by convention, the empty product.
+- Recurrence: $n! = n\,(n-1)!$.
+- Extends to non-integers via the Gamma function, $n! = \Gamma(n+1)$, so half-integer factorials involve $\sqrt{\pi}$.
+- Grows faster than any exponential; Stirling's approximation $n! \sim \sqrt{2\pi n}\,(n/e)^n$ describes the asymptotics.
+- compute-engine returns ComplexInfinity at negative integers, the poles of Gamma, rather than leaving the expression unevaluated.

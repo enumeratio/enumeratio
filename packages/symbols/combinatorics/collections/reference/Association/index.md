@@ -8,10 +8,6 @@ signatures:
     description: a key -> value map, built from $Rule$ pairs.
     library: enumeratio-collections
     type: "(rules: expression<Rule>*) -> any"
-details:
-  - "Its own operator, not compute-engine's $Dictionary$: $Dictionary$'s keys are strings only, and every example here keys on a plain number."
-  - "[[Length]], [[First]], [[Last]], [[Join]] and [[Sort]] are extended to recognize an $Association$ and answer in terms of its values, falling through to their ordinary list handling otherwise."
-  - "Not a general replacement for $Dictionary$ or a full port of Wolfram's Association: only the operations the examples below exercise are implemented."
 seeAlso:
   - Length
   - First
@@ -21,3 +17,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Its own operator, not compute-engine's $Dictionary$: $Dictionary$'s keys are strings only, and every example here keys on a plain number.
+- [[Length]], [[First]], [[Last]], [[Join]] and [[Sort]] are extended to recognize an $Association$ and answer in terms of its values, falling through to their ordinary list handling otherwise.
+- Not a general replacement for $Dictionary$ or a full port of Wolfram's Association: only the operations the examples below exercise are implemented.

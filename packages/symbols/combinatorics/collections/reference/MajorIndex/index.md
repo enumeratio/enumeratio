@@ -31,9 +31,6 @@ signatures:
     description: the major index of a one-line permutation $p$
     library: enumeratio-collections
     type: (list | permutation) -> integer
-details:
-  - Introduced by MacMahon, who proved it equidistributed with [[Inversions]] over $S_n$
-  - Both are Mahonian, so their common generating function is the q-factorial $[n]_q!$
 seeAlso:
   - Inversions
   - Descents
@@ -52,3 +49,6 @@ statOn:
   - Permutation
   - StandardTableau
 ---
+
+- Introduced by MacMahon, who proved it equidistributed with [[Inversions]] over $S_n$
+- Both are Mahonian, so their common generating function is the q-factorial $[n]_q!$

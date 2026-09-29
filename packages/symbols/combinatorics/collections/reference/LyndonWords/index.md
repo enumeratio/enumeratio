@@ -8,8 +8,6 @@ signatures:
     description: "the binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations"
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A001037, via Möbius inversion over the divisors of $n$.
 seeAlso:
   - BinaryNecklaces
   - KLyndonWords
@@ -29,3 +27,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is A001037, via Möbius inversion over the divisors of $n$.

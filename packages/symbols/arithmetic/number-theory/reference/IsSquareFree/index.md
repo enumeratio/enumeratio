@@ -14,11 +14,6 @@ signatures:
   - call: IsSquareFree(f, x)
     description: whether $f$ has no repeated factor as a polynomial in $x$ alone.
     library: enumeratio-number-theory
-details:
-  - An integer is squarefree if it is divisible by no perfect square other than 1.
-  - Every prime is squarefree; 1 is vacuously squarefree.
-  - Equivalent to $\mu(n)\neq0$. See [[MoebiusMu]].
-  - Returns False unless $n$ is provably squarefree.
 seeAlso:
   - MoebiusMu
   - FactorInteger
@@ -32,3 +27,8 @@ references:
 names:
   wolfram: SquareFreeQ
 ---
+
+- An integer is squarefree if it is divisible by no perfect square other than 1.
+- Every prime is squarefree; 1 is vacuously squarefree.
+- Equivalent to $\mu(n)\neq0$. See [[MoebiusMu]].
+- Returns False unless $n$ is provably squarefree.

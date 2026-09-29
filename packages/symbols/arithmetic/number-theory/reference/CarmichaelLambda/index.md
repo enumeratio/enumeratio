@@ -11,12 +11,12 @@ signatures:
     library: enumeratio-number-theory
     type: (integer) -> integer
     overrides: compute-engine
-details:
-  - compute-engine has this natively; the gap closed here is Wolfram's $\lambda(-n)=\lambda(n)$ and threading over a list, which the native handler left unevaluated.
-  - $\lambda(n) \mid \varphi(n)$ always, and the two agree exactly when $(\mathbb{Z}/n)^\times$ is cyclic. See [[Totient]].
 seeAlso:
   - Totient
   - MultiplicativeOrder
 names:
   wolframIdentity: true
 ---
+
+- compute-engine has this natively; the gap closed here is Wolfram's $\lambda(-n)=\lambda(n)$ and threading over a list, which the native handler left unevaluated.
+- $\lambda(n) \mid \varphi(n)$ always, and the two agree exactly when $(\mathbb{Z}/n)^\times$ is cyclic. See [[Totient]].

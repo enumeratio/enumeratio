@@ -11,14 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number?) -> number
     overrides: compute-engine
-details:
-  - $\psi^{(0)}$ is the digamma — see [[Digamma]] — and $\psi^{(1)}$ the trigamma.
-  - 'For $m \geq 1$ it is a Hurwitz zeta in disguise: $\psi^{(m)}(z) = (-1)^{m+1}\, m!\, \zeta(m+1, z)$. See [[HurwitzZeta]].'
-  - "So at $z = 1$ every order is a zeta value: $\\psi^{(m)}(1) = (-1)^{m+1} m!\\, \\zeta(m+1)$, giving $\\psi'(1) = \\pi^2/6$ and $\\psi''(1) = -2\\zeta(3)$."
-  - "Half-integer arguments pick up the alternating zeta: $\\psi'(\\tfrac12) = \\pi^2/2$."
-  - "Recurrence from $\\Gamma$: $\\psi^{(m)}(z+1) = \\psi^{(m)}(z) + (-1)^m m!\\, z^{-m-1}$, so $\\psi'(1) - \\psi'(2) = 1$."
-  - Poles at the nonpositive integers, of order $m+1$ — the poles of [[Gamma]], differentiated.
-  - Real $z$ is compute-engine's own; `@enumeratio/analytic` adds complex $z$ through the Euler–Maclaurin Hurwitz kernel, and the WGSL lowering for GPU plotting.
 seeAlso:
   - Digamma
   - Gamma
@@ -57,3 +49,11 @@ bindings:
     arity: 2
     note: mpmath and Sage call it psi; the argument order matches.
 ---
+
+- $\psi^{(0)}$ is the digamma — see [[Digamma]] — and $\psi^{(1)}$ the trigamma.
+- For $m \geq 1$ it is a Hurwitz zeta in disguise: $\psi^{(m)}(z) = (-1)^{m+1}\, m!\, \zeta(m+1, z)$. See [[HurwitzZeta]].
+- So at $z = 1$ every order is a zeta value: $\psi^{(m)}(1) = (-1)^{m+1} m!\, \zeta(m+1)$, giving $\psi'(1) = \pi^2/6$ and $\psi''(1) = -2\zeta(3)$.
+- Half-integer arguments pick up the alternating zeta: $\psi'(\tfrac12) = \pi^2/2$.
+- Recurrence from $\Gamma$: $\psi^{(m)}(z+1) = \psi^{(m)}(z) + (-1)^m m!\, z^{-m-1}$, so $\psi'(1) - \psi'(2) = 1$.
+- Poles at the nonpositive integers, of order $m+1$ — the poles of [[Gamma]], differentiated.
+- Real $z$ is compute-engine's own; `@enumeratio/analytic` adds complex $z$ through the Euler–Maclaurin Hurwitz kernel, and the WGSL lowering for GPU plotting.

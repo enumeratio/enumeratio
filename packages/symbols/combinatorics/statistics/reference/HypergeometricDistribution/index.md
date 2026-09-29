@@ -8,14 +8,14 @@ signatures:
     description: an inert distribution object — carries $n, nsucc, ntotal$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>, real<0..>, real<0..>) -> distribution
-details:
-  - $PDF(k) = \binom{nsucc}{k}\binom{ntotal-nsucc}{n-k} \big/ \binom{ntotal}{n}$, exact.
-  - $CDF(x) = \sum_{k=0}^{\lfloor x\rfloor} PDF(k)$, an exact FINITE sum (not a closed form) — only answers when $\lfloor x\rfloor$ resolves to a concrete integer, otherwise stays unevaluated rather than build an unbounded symbolic [[Sum]].
-  - $Mean = n \cdot nsucc/ntotal$, $Variance = n\dfrac{nsucc}{ntotal}\left(1-\dfrac{nsucc}{ntotal}\right)\dfrac{ntotal-n}{ntotal-1}$, both exact.
-  - "[[RandomVariate]] samples via sequential without-replacement Bernoulli draws (exact, not an approximation)."
 seeAlso:
   - BinomialDistribution
   - PDF
 names:
   wolframIdentity: true
 ---
+
+- $PDF(k) = \binom{nsucc}{k}\binom{ntotal-nsucc}{n-k} \big/ \binom{ntotal}{n}$, exact.
+- $CDF(x) = \sum_{k=0}^{\lfloor x\rfloor} PDF(k)$, an exact FINITE sum (not a closed form) — only answers when $\lfloor x\rfloor$ resolves to a concrete integer, otherwise stays unevaluated rather than build an unbounded symbolic [[Sum]].
+- $Mean = n \cdot nsucc/ntotal$, $Variance = n\dfrac{nsucc}{ntotal}\left(1-\dfrac{nsucc}{ntotal}\right)\dfrac{ntotal-n}{ntotal-1}$, both exact.
+- [[RandomVariate]] samples via sequential without-replacement Bernoulli draws (exact, not an approximation).

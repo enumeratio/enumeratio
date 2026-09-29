@@ -8,8 +8,6 @@ signatures:
     description: the binary strings of length $n$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $2^n$ (A000079).
 seeAlso:
   - Words
   - BinaryWordsByWeight
@@ -32,3 +30,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is $2^n$ (A000079).

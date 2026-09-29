@@ -12,9 +12,9 @@ signatures:
     description: f with every free occurrence of n replaced by n + h -- an h-step shift, given as the {n, h} pair.
     library: "@enumeratio/analytic"
     arity: 2
-details:
-  - A substitution, not an arithmetic evaluation -- f need not itself be a declared function; DiscreteShift(a(n), n) is a(n + 1) even though a has no definition.
-  - The h-step form takes n and h together as the second argument, {n, h} -- not a third argument.
 names:
   wolframIdentity: true
 ---
+
+- A substitution, not an arithmetic evaluation -- f need not itself be a declared function; DiscreteShift(a(n), n) is a(n + 1) even though a has no definition.
+- The h-step form takes n and h together as the second argument, {n, h} -- not a third argument.

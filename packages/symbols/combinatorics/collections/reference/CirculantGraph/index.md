@@ -11,11 +11,11 @@ signatures:
   - call: CirculantGraph(n, {k1, k2, …})
     description: the union of the connection sets for every offset given.
     library: enumeratio-collections
-details:
-  - Each vertex has degree 2 per offset, except an offset of exactly n/2 (n even), which gives only one edge per vertex (i and i + n/2 are each other's only match at that offset).
 seeAlso:
   - CycleGraph
   - HararyGraph
 names:
   wolframIdentity: true
 ---
+
+- Each vertex has degree 2 per offset, except an offset of exactly n/2 (n even), which gives only one edge per vertex (i and i + n/2 are each other's only match at that offset).

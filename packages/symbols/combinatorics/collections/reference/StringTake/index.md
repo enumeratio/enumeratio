@@ -14,10 +14,10 @@ signatures:
   - call: StringTake(s, {m, n})
     description: characters m through n inclusive, 1-based, negative counting from the end
     library: enumeratio-collections
-details:
-  - Positions and lengths count Unicode code points — see [[StringLength]].
 seeAlso:
   - StringLength
 names:
   wolframIdentity: true
 ---
+
+- Positions and lengths count Unicode code points — see [[StringLength]].

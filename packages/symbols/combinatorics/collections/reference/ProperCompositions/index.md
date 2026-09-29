@@ -8,8 +8,6 @@ signatures:
     description: the compositions of $n$ into parts $\ge 2$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - "Count follows a shifted Fibonacci recurrence: $1, 0, 1, 1, 2, 3, 5, 8, …$."
 seeAlso:
   - IntegerCompositions
   - OddCompositions
@@ -23,3 +21,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count follows a shifted Fibonacci recurrence: $1, 0, 1, 1, 2, 3, 5, 8, …$.

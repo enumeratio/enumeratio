@@ -8,8 +8,6 @@ signatures:
     description: the binary strings of length $n$ with exactly $k$ ones
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $\binom{n}{k}$ (see [[Binomial]]).
 seeAlso:
   - BinaryWords
   - Binomial
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is $\binom{n}{k}$ (see [[Binomial]]).

@@ -11,11 +11,11 @@ signatures:
     library: enumeratio-analytic
     type: (complex | signed_infinity) -> number
     overrides: compute-engine
-details:
-  - Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.
 seeAlso:
   - Cot
   - Arctan
 names:
   fungrim: Acot
 ---
+
+- Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.

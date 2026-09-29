@@ -8,11 +8,6 @@ signatures:
     description: the D-finite reduction of $f(x)$, as $\mathrm{DifferentialRoot}(\ldots)(x)$.
     library: "@enumeratio/analytic"
     type: (expression, symbol) -> expression
-details:
-  - Expands about $x_0 = 0$ wherever that's an ordinary point of the ODE (every case except BesselJ, whose coefficient of $y''$ vanishes at $x=0$); BesselJ expands about $x_0=1$ instead, matching a local wolframscript's own choice there. A single-pole rational function $A/(x{-}a)$ also moves off $a$ itself.
-  - Every reduction's initial conditions come from evaluating $f$ and its derivatives (via compute-engine's own `D`) at the expansion point directly, so they stay exact wherever compute-engine's own arithmetic is (e.g. AiryAi(0), or $2/\sqrt\pi$ for erf); BesselJ's derivative uses the standard identity $J_\nu'(x) = (J_{\nu-1}(x) - J_{\nu+1}(x))/2$.
-  - Verified by evaluating the reduction back (via [[DifferentialRoot]]'s own Taylor-series stepper) against the original function at several points inside the radius of convergence, in both this package's own tests and against a local wolframscript.
-  - Declines a rational function whose denominator isn't a single linear factor, a BesselJ/AiryAi/AiryBi argument that isn't the plain variable, and any sum or product of two of these (no small closure algorithm for D-finite sums is implemented here — see difference-root.ts's own sum rule for the *hypergeometric* case, which doesn't carry over to a general ODE).
 seeAlso:
   - DifferentialRoot
   - DifferenceRootReduce
@@ -25,3 +20,8 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Expands about $x_0 = 0$ wherever that's an ordinary point of the ODE (every case except BesselJ, whose coefficient of $y''$ vanishes at $x=0$); BesselJ expands about $x_0=1$ instead, matching a local wolframscript's own choice there. A single-pole rational function $A/(x{-}a)$ also moves off $a$ itself.
+- Every reduction's initial conditions come from evaluating $f$ and its derivatives (via compute-engine's own `D`) at the expansion point directly, so they stay exact wherever compute-engine's own arithmetic is (e.g. AiryAi(0), or $2/\sqrt\pi$ for erf); BesselJ's derivative uses the standard identity $J_\nu'(x) = (J_{\nu-1}(x) - J_{\nu+1}(x))/2$.
+- Verified by evaluating the reduction back (via [[DifferentialRoot]]'s own Taylor-series stepper) against the original function at several points inside the radius of convergence, in both this package's own tests and against a local wolframscript.
+- Declines a rational function whose denominator isn't a single linear factor, a BesselJ/AiryAi/AiryBi argument that isn't the plain variable, and any sum or product of two of these (no small closure algorithm for D-finite sums is implemented here — see difference-root.ts's own sum rule for the *hypergeometric* case, which doesn't carry over to a general ODE).

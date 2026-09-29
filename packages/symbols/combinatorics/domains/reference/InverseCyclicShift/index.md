@@ -3,8 +3,6 @@ name: InverseCyclicShift
 domain: Combinatorial maps
 signature: InverseCyclicShift(Permutation)
 summary: Rotate the word one place to the right.
-details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 mapOn:
   - Permutation
 signatures:
@@ -13,3 +11,5 @@ signatures:
     library: enumeratio-domains
     type: (permutation) -> permutation
 ---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

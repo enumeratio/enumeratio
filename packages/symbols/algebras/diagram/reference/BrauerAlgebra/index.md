@@ -8,11 +8,6 @@ signatures:
     description: the Brauer algebra on $n$ strands
     library: enumeratio-diagram
     type: (integer) -> diagram_algebra
-details:
-  - Dimension $(2n-1)!!$ = 1, 3, 15, 105 — the perfect matchings of $2n$ points
-  - "Contains the symmetric group: a permutation diagram is a matching whose every block joins a top point to a bottom one"
-  - The generators satisfy $s_i^2 = 1$, the braid relation, and $s_ie_i = e_i$
-  - Restricting further to the PLANAR matchings gives [[TemperleyLiebAlgebra]]
 seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
@@ -30,3 +25,8 @@ bindings:
     template: EnumeratioDiagramAlgebra(:brauer, $1)
     arity: 1
 ---
+
+- Dimension $(2n-1)!!$ = 1, 3, 15, 105 — the perfect matchings of $2n$ points
+- Contains the symmetric group: a permutation diagram is a matching whose every block joins a top point to a bottom one
+- The generators satisfy $s_i^2 = 1$, the braid relation, and $s_ie_i = e_i$
+- Restricting further to the PLANAR matchings gives [[TemperleyLiebAlgebra]]

@@ -8,12 +8,12 @@ signatures:
     description: the u-derivative of the a-th Jacobi theta function (a = 1, 2, 3, or 4), argument u, nome q.
     library: "@enumeratio/analytic"
     type: (number, number, number) -> number
-details:
-  - Shares [[EllipticTheta]]'s nome convention, series-convergence rule, and decline conditions — see there.
-  - The termwise u-derivative of DLMF 20.2.1-20.2.4, verified against mpmath's `jtheta(a, u, q, derivative=1)` and a Wolfram kernel at complex u, complex q, and real negative q.
-  - Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - EllipticTheta
 names:
   wolframIdentity: true
 ---
+
+- Shares [[EllipticTheta]]'s nome convention, series-convergence rule, and decline conditions — see there.
+- The termwise u-derivative of DLMF 20.2.1-20.2.4, verified against mpmath's `jtheta(a, u, q, derivative=1)` and a Wolfram kernel at complex u, complex q, and real negative q.
+- Numeric only — a symbolic u or q stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

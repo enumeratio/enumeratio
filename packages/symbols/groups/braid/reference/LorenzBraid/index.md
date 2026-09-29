@@ -14,13 +14,6 @@ signatures:
   - call: TripNumber(word)
     description: the count of $LR$ corners — the braid index of the link
     library: enumeratio-braid
-details:
-  - The word's cyclic rotations name the orbit's points; both branches of the template preserve orientation, so they are ordered lexicographically with $L < R$
-  - The flow sends each rotation to the next, and the positive permutation braid of that permutation is the Lorenz braid
-  - Trip number $1$ means braid index $1$, which means the unknot — so $L^pR^q$ draws the UNKNOT, not $T(p,q)$
-  - When the permutation is a rotation $i \mapsto i+k$ on $n$ points the knot is $T(k, n-k)$; those words are the Christoffel words
-  - The shortest geodesic drawing a trefoil is $LLRLR$, of symbolic length 5
-  - A repeated word traverses one geodesic several times and has no well-defined point order, so it is refused
 seeAlso:
   - Braid
   - AlexanderPolynomial
@@ -31,3 +24,10 @@ references:
   - system: mathworld
     identity: LorenzAttractor
 ---
+
+- The word's cyclic rotations name the orbit's points; both branches of the template preserve orientation, so they are ordered lexicographically with $L < R$
+- The flow sends each rotation to the next, and the positive permutation braid of that permutation is the Lorenz braid
+- Trip number $1$ means braid index $1$, which means the unknot — so $L^pR^q$ draws the UNKNOT, not $T(p,q)$
+- When the permutation is a rotation $i \mapsto i+k$ on $n$ points the knot is $T(k, n-k)$; those words are the Christoffel words
+- The shortest geodesic drawing a trefoil is $LLRLR$, of symbolic length 5
+- A repeated word traverses one geodesic several times and has no well-defined point order, so it is refused

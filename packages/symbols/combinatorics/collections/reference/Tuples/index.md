@@ -8,9 +8,6 @@ signatures:
     description: the $n^k$ length-$k$ tuples
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $n^k$
-  - Elements are ordered as mixed-radix (base $n$) counting
 seeAlso:
   - Subsets
   - Multisets
@@ -22,3 +19,6 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Count is $n^k$
+- Elements are ordered as mixed-radix (base $n$) counting

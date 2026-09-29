@@ -8,10 +8,10 @@ signatures:
     description: true iff no edge of g joins a vertex to itself.
     library: enumeratio-collections
     type: (value) -> boolean
-details:
-  - Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.
 seeAlso:
   - IsSimpleGraph
 names:
   wolfram: LoopFreeGraphQ
 ---
+
+- Wolfram calls this `LoopFreeGraphQ`; this library uses the `Is…` spelling everywhere.

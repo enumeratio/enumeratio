@@ -8,8 +8,6 @@ signatures:
     description: true iff g is simple (no self-loop, no repeated edge) and its underlying graph is a path.
     library: enumeratio-collections
     type: (value) -> boolean
-details:
-  - Wolfram calls this `PathGraphQ`; this library uses the `Is…` spelling everywhere (see [[IsConnectedGraph]]'s own note).
 seeAlso:
   - PathGraph
   - IsTreeGraph
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolfram: PathGraphQ
 ---
+
+- Wolfram calls this `PathGraphQ`; this library uses the `Is…` spelling everywhere (see [[IsConnectedGraph]]'s own note).

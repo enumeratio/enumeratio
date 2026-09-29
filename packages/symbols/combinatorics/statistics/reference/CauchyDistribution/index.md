@@ -11,12 +11,6 @@ signatures:
   - call: CauchyDistribution()
     description: the standard Cauchy distribution, $a=0, b=1$.
     library: enumeratio-statistics
-details:
-  - $PDF(x) = 1/(\pi b(1+((x-a)/b)^2))$, exact.
-  - $CDF(x) = 1/2 + \arctan((x-a)/b)/\pi$, exact — added in the batch that also filled the matching gap for [[StudentTDistribution]] and [[HypergeometricDistribution]] (each has its own closed or exact-finite-sum form; none shares a formula with Cauchy).
-  - $Mean$ and $Variance$ are `Indeterminate` — they genuinely do not exist for this distribution, matching Wolfram.
-  - '[[CharacteristicFunction]]$(t) = e^{iat-b|t|}$, exact. No [[MomentGeneratingFunction]] — $E[e^{tX}]$ diverges for any $t\neq0$, a genuine fact about this distribution, not a gap.'
-  - '[[RandomVariate]] samples via inverse transform: $a + b\tan(\pi(U-1/2))$.'
 seeAlso:
   - StudentTDistribution
   - LaplaceDistribution
@@ -25,3 +19,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = 1/(\pi b(1+((x-a)/b)^2))$, exact.
+- $CDF(x) = 1/2 + \arctan((x-a)/b)/\pi$, exact — added in the batch that also filled the matching gap for [[StudentTDistribution]] and [[HypergeometricDistribution]] (each has its own closed or exact-finite-sum form; none shares a formula with Cauchy).
+- $Mean$ and $Variance$ are `Indeterminate` — they genuinely do not exist for this distribution, matching Wolfram.
+- [[CharacteristicFunction]]$(t) = e^{iat-b|t|}$, exact. No [[MomentGeneratingFunction]] — $E[e^{tX}]$ diverges for any $t\neq0$, a genuine fact about this distribution, not a gap.
+- [[RandomVariate]] samples via inverse transform: $a + b\tan(\pi(U-1/2))$.

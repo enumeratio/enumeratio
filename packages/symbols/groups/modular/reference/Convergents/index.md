@@ -14,13 +14,13 @@ signatures:
   - call: Convergents(x, n)
     description: the first $n$ convergents of $x$, via `ContinuedFraction(x, n)`
     library: enumeratio-modular
-details:
-  - The two-term recurrence $p_k = a_k p_{k-1} + p_{k-2}$, $q_k = a_k q_{k-1} + q_{k-2}$, seeded $p_{-1}=1, p_{-2}=0, q_{-1}=0, q_{-2}=1$ — the same recurrence [[ModularMatrix]] multiplication runs, one $T^{a_k}S$ at a time
-  - Every convergent is in lowest terms, and each is a better rational approximation of $x$ than any fraction with a smaller denominator
-  - "`Convergents(x)` (no `n`) needs a RATIONAL $x$, since `ContinuedFraction(x)` alone does; an irrational needs `Convergents(x, n)`"
 seeAlso:
   - ContinuedFraction
   - ContinuedFractionK
 names:
   wolframIdentity: true
 ---
+
+- The two-term recurrence $p_k = a_k p_{k-1} + p_{k-2}$, $q_k = a_k q_{k-1} + q_{k-2}$, seeded $p_{-1}=1, p_{-2}=0, q_{-1}=0, q_{-2}=1$ — the same recurrence [[ModularMatrix]] multiplication runs, one $T^{a_k}S$ at a time
+- Every convergent is in lowest terms, and each is a better rational approximation of $x$ than any fraction with a smaller denominator
+- `Convergents(x)` (no `n`) needs a RATIONAL $x$, since `ContinuedFraction(x)` alone does; an irrational needs `Convergents(x, n)`

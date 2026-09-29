@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the plane partitions summing to `size` (OEIS A000219).
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - A lazy indexed collection with no known simple closed form, unlike ordinary partitions' generating function; the count is the cached enumeration's length — $Count(PlanePartitions(6)) = 48$.
-  - Each element is the array's rows; entries weakly decrease along every row and down every column, and the whole array sums to $n$.
-  - "Unranked in shape-then-entries order: by row-length shape first, then the flattened array."
 enumerate:
   expr: PlanePartitions(6)
   columns: Length
@@ -31,3 +27,7 @@ grades:
     role: axis
 carrier: PlanePartition
 ---
+
+- A lazy indexed collection with no known simple closed form, unlike ordinary partitions' generating function; the count is the cached enumeration's length — $Count(PlanePartitions(6)) = 48$.
+- Each element is the array's rows; entries weakly decrease along every row and down every column, and the whole array sums to $n$.
+- Unranked in shape-then-entries order: by row-length shape first, then the flattened array.

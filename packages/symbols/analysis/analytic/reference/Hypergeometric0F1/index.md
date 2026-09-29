@@ -8,9 +8,6 @@ signatures:
     description: ${}_0F_1(b; z)$, by its defining series.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).
-  - Poles at $b$ a nonpositive integer $0, -1, -2, \dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.
 primitive: numeric
 bindings:
   - origin: native
@@ -27,3 +24,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).
+- Poles at $b$ a nonpositive integer $0, -1, -2, \dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.

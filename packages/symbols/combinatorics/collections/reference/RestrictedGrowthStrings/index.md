@@ -8,8 +8,6 @@ signatures:
     description: 'the restricted-growth strings of length $n$: words $w$ with $w_0 = 0$ and $w_i \le 1 + \max(w_0, …, w_{i-1})$'
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Bell number $B_n$ (A000110); the canonical RGS encoding of a set partition of $\{1, …, n\}$ used by [[SetPartitions]].
 seeAlso:
   - SetPartitions
 references:
@@ -28,3 +26,5 @@ grades:
     role: axis
 carrier: SetPartition
 ---
+
+- Count is the Bell number $B_n$ (A000110); the canonical RGS encoding of a set partition of $\{1, …, n\}$ used by [[SetPartitions]].

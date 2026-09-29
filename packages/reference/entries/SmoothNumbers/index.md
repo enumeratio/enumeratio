@@ -8,10 +8,6 @@ signatures:
     description: the positive integers whose prime factors are all $\le k$, an infinite indexed collection.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<integer>
-details:
-  - 'A lazy indexed collection for each $k$: $Count(SmoothNumbers(k)) = +\infty$, and $At(SmoothNumbers(k), i)$ unranks the $i$-th $k$-smooth number -- $At(SmoothNumbers(7), 1) = 1$ (vacuously smooth).'
-  - 7-smooth numbers are OEIS A002473.
-  - 'Membership goes through [[Element]]: $Element(12, SmoothNumbers(7))$ is true (its factors $2, 3 \le 7$), $Element(22, SmoothNumbers(7))$ is false ($22 = 2 \times 11$).'
 enumerate:
   expr: Take(SmoothNumbers(7), 20)
 seeAlso:
@@ -25,3 +21,7 @@ grades:
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection for each $k$: $Count(SmoothNumbers(k)) = +\infty$, and $At(SmoothNumbers(k), i)$ unranks the $i$-th $k$-smooth number -- $At(SmoothNumbers(7), 1) = 1$ (vacuously smooth).
+- 7-smooth numbers are OEIS A002473.
+- Membership goes through [[Element]]: $Element(12, SmoothNumbers(7))$ is true (its factors $2, 3 \le 7$), $Element(22, SmoothNumbers(7))$ is false ($22 = 2 \times 11$).

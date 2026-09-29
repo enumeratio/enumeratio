@@ -6,12 +6,6 @@ summary: The Jacobi symbol (n/m), generalising the Legendre symbol to composite 
 signatures:
   - call: JacobiSymbol(n, m)
     description: the Jacobi symbol $\left(\frac{n}{m}\right)$.
-details:
-  - Generalizes the Legendre symbol from prime $m$ to any odd $m$, by multiplying the Legendre symbols of $m$'s prime factors.
-  - 0 whenever $n$ and $m$ share a factor.
-  - 'Completely multiplicative in the top argument: $\left(\frac{a}{m}\right)\left(\frac{b}{m}\right)=\left(\frac{ab}{m}\right)$.'
-  - By convention $\left(\frac{n}{1}\right)=1$ for every $n$.
-  - Unlike the Legendre symbol, $\left(\frac{n}{m}\right)=1$ doesn't imply $n$ is a quadratic residue mod $m$ when $m$ is composite.
 seeAlso:
   - PowerMod
   - LegendreSymbol
@@ -26,3 +20,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Generalizes the Legendre symbol from prime $m$ to any odd $m$, by multiplying the Legendre symbols of $m$'s prime factors.
+- 0 whenever $n$ and $m$ share a factor.
+- Completely multiplicative in the top argument: $\left(\frac{a}{m}\right)\left(\frac{b}{m}\right)=\left(\frac{ab}{m}\right)$.
+- By convention $\left(\frac{n}{1}\right)=1$ for every $n$.
+- Unlike the Legendre symbol, $\left(\frac{n}{m}\right)=1$ doesn't imply $n$ is a quadratic residue mod $m$ when $m$ is composite.

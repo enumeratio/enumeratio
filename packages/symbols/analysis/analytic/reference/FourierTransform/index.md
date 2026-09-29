@@ -8,9 +8,6 @@ signatures:
     description: $F(w) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(t) e^{iwt}\,dt$, Wolfram's default `FourierParameters -> {0, 1}`.
     library: "@enumeratio/analytic"
     type: (expression, expression, expression) -> expression
-details:
-  - "Covered: `DiracDelta(t - a)`, `UnitStep(t)`, $\\sin(at)$, $\\cos(at)$, the Gaussian $e^{-at^2}$ ($\\mathrm{Re}(a) > 0$, checked via `isPositive`), $e^{-a|t|}$ ($a > 0$), a constant, sums (linearity), a constant factor, and the modulation theorem — an $e^{iat}$ factor shifts $w \\to w + a$ in the rest's transform, covering $e^{iat}$ alone ($\\to \\sqrt{2\\pi}\\,\\delta(w+a)$) and further products with the table above."
-  - 'Declined: an opaque function; `UnitStep(t - a)` for $a \neq 0$ (only the unshifted `UnitStep(t)` is covered — `DiracDelta(t - a)` for any `a` is covered, since its transform is just a phase); a product of two independently-transformable pieces outside the modulation shape; any `FourierParameters` other than the default (a 4th argument is declined outright).'
 primitive: kernel
 bindings:
   - origin: native
@@ -23,3 +20,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Covered: `DiracDelta(t - a)`, `UnitStep(t)`, $\sin(at)$, $\cos(at)$, the Gaussian $e^{-at^2}$ ($\mathrm{Re}(a) > 0$, checked via `isPositive`), $e^{-a|t|}$ ($a > 0$), a constant, sums (linearity), a constant factor, and the modulation theorem — an $e^{iat}$ factor shifts $w \to w + a$ in the rest's transform, covering $e^{iat}$ alone ($\to \sqrt{2\pi}\,\delta(w+a)$) and further products with the table above.
+- Declined: an opaque function; `UnitStep(t - a)` for $a \neq 0$ (only the unshifted `UnitStep(t)` is covered — `DiracDelta(t - a)` for any `a` is covered, since its transform is just a phase); a product of two independently-transformable pieces outside the modulation shape; any `FourierParameters` other than the default (a 4th argument is declined outright).

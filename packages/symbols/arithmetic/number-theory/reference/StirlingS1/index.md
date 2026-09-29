@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (integer, integer) -> integer
     overrides: compute-engine
-details:
-  - 'Coefficients relating falling factorials to ordinary powers: $(x)_n = \sum_{k} s(n, k)\, x^k$.'
-  - $|s(n, k)|$ counts the permutations of n elements with exactly k cycles.
-  - $s(n, n) = 1$ and $s(n, 0) = 0$ for $n > 0$, with the boundary case $s(0, 0) = 1$.
-  - 'The unsigned values in each row sum to $n!$: $\sum_k |s(n, k)| = n!$'
-  - $s(n, 1) = (-1)^{n-1}(n-1)!$.
-  - Threads element-wise over a list of $n$, as Wolfram's Listable heads do.
 seeAlso:
   - Binomial
   - Stirling
@@ -65,3 +58,10 @@ catalog:
     url: https://reference.wolfram.com/language/ref/StirlingS1.html
     note: WL StirlingS1 is SIGNED; stirling1 here is the UNSIGNED cycle-count c(n,k) = |StirlingS1(n,k)|
 ---
+
+- Coefficients relating falling factorials to ordinary powers: $(x)_n = \sum_{k} s(n, k)\, x^k$.
+- $|s(n, k)|$ counts the permutations of n elements with exactly k cycles.
+- $s(n, n) = 1$ and $s(n, 0) = 0$ for $n > 0$, with the boundary case $s(0, 0) = 1$.
+- The unsigned values in each row sum to $n!$: $\sum_k |s(n, k)| = n!$
+- $s(n, 1) = (-1)^{n-1}(n-1)!$.
+- Threads element-wise over a list of $n$, as Wolfram's Listable heads do.

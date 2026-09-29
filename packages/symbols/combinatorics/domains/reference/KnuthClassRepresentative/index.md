@@ -3,9 +3,6 @@ name: KnuthClassRepresentative
 domain: Combinatorial maps
 signature: KnuthClassRepresentative(Permutation)
 summary: The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.
-details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-  - "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing."
 mapOn:
   - Permutation
 signatures:
@@ -14,3 +11,6 @@ signatures:
     library: enumeratio-domains
     type: (permutation) -> permutation
 ---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing.

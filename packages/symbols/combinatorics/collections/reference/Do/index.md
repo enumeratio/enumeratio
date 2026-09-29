@@ -17,11 +17,6 @@ signatures:
   - call: Do(body, {i, imin, imax, di})
     description: Evaluates $body$ with $i$ running $imin, imin+di, \dots$ up to (or down to, for $di<0$) $imax$.
     library: enumeratio-collections
-details:
-  - "Always returns $Nothing$ — this library's stand-in for Wolfram's $Null$ (see the $Nothing: Null$ entry in @enumeratio/wolfram's `SYMBOLS` map)."
-  - $i$, when named, is a fresh local for the whole call, the same way [[Module]]'s locals are — it does not leak, and does not clobber an outer binding of the same name.
-  - Bounds and step are integers only; Wolfram additionally allows real-valued iterators.
-  - The examples below place the $Do$ call inside a $List$ alongside its surrounding statements — the $Nothing$ it returns simply vanishes from that $List$ (compute-engine's own behavior for $Nothing$, matching Wolfram), which is why each result has one fewer entry than statements written.
 seeAlso:
   - While
   - Module
@@ -30,3 +25,8 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Always returns $Nothing$ — this library's stand-in for Wolfram's $Null$ (see the $Nothing: Null$ entry in @enumeratio/wolfram's `SYMBOLS` map).
+- $i$, when named, is a fresh local for the whole call, the same way [[Module]]'s locals are — it does not leak, and does not clobber an outer binding of the same name.
+- Bounds and step are integers only; Wolfram additionally allows real-valued iterators.
+- The examples below place the $Do$ call inside a $List$ alongside its surrounding statements — the $Nothing$ it returns simply vanishes from that $List$ (compute-engine's own behavior for $Nothing$, matching Wolfram), which is why each result has one fewer entry than statements written.

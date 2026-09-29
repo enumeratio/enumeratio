@@ -8,8 +8,6 @@ signatures:
     description: entry $(i, j)$ is the number of edges from vertex $i$ to vertex $j$ — 0 or 1 for a simple graph, symmetric when every edge is undirected.
     library: enumeratio-collections
     type: (value) -> list<list<integer>>
-details:
-  - Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — a deliberate simplification here, since this library has no sparse-matrix head to return instead.
 seeAlso:
   - IncidenceMatrix
   - VertexDegree
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Returned as a plain matrix (a list of lists) rather than Wolfram's default `SparseArray` — a deliberate simplification here, since this library has no sparse-matrix head to return instead.

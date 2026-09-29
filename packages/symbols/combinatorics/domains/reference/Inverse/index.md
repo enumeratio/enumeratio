@@ -3,8 +3,6 @@ name: Inverse
 domain: Combinatorial maps
 signature: Inverse(Permutation)
 summary: "The inverse permutation: position of each value."
-details:
-  - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 references:
   - system: wikipedia
     identity: Permutation#Composition of permutations
@@ -28,3 +26,5 @@ signatures:
     type: ((expression<ModularMatrix> | matrix | string) -> expression<ModularMatrix> | matrix) & ((permutation) -> permutation)
     overrides: enumeratio-modular
 ---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

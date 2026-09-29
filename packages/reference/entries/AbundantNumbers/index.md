@@ -6,10 +6,6 @@ summary: The abundant numbers $12, 18, 20, 24, …$ -- integers whose proper div
 signatures:
   - call: AbundantNumbers
     description: the $n$ with $\sigma(n) - n > n$ (proper-divisor sum exceeds $n$), an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(AbundantNumbers) = +\infty$, and $At(AbundantNumbers, k)$ unranks the $k$-th abundant number by scanning forward from the last cached match -- $At(AbundantNumbers, 5) = 30$.'
-  - OEIS A005101.
-  - "Membership goes through [[Element]]: $Element(12, AbundantNumbers)$ is true, $Element(28, AbundantNumbers)$ is false (perfect, not abundant)."
 enumerate:
   expr: Take(AbundantNumbers, 20)
 seeAlso:
@@ -29,3 +25,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(AbundantNumbers) = +\infty$, and $At(AbundantNumbers, k)$ unranks the $k$-th abundant number by scanning forward from the last cached match -- $At(AbundantNumbers, 5) = 30$.
+- OEIS A005101.
+- Membership goes through [[Element]]: $Element(12, AbundantNumbers)$ is true, $Element(28, AbundantNumbers)$ is false (perfect, not abundant).

@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> boolean
     overrides: compute-engine
-details:
-  - A prime has no positive divisors other than 1 and itself; 1 itself is not prime.
-  - Returns False unless n is provably prime -- there's no third "unknown" outcome.
-  - Threads element-wise over a list argument.
-  - A negative n is prime when its absolute value is, matching Wolfram's PrimeQ (which counts a prime's associates); compute-engine's native IsPrime returns False there instead.
 seeAlso:
   - FactorInteger
   - NextPrime
@@ -58,3 +53,8 @@ bindings:
     template: is_prime($1)
     arity: 1
 ---
+
+- A prime has no positive divisors other than 1 and itself; 1 itself is not prime.
+- Returns False unless n is provably prime -- there's no third "unknown" outcome.
+- Threads element-wise over a list argument.
+- A negative n is prime when its absolute value is, matching Wolfram's PrimeQ (which counts a prime's associates); compute-engine's native IsPrime returns False there instead.

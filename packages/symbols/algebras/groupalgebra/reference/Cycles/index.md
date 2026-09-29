@@ -8,10 +8,6 @@ signatures:
     description: the permutation that cycles each listed tuple and fixes every other point
     library: enumeratio-groupalgebra
     type: (list<list<integer>>) -> expression<Cycles>
-details:
-  - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
-  - The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
-  - "[[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one"
 seeAlso:
   - PermutationCycles
   - Permute
@@ -32,3 +28,7 @@ catalog:
 statOn:
   - Permutation
 ---
+
+- Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
+- The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
+- [[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one

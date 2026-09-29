@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> list
     overrides: compute-engine
-details:
-  - For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.
-  - Multiplying the $p^e$ factors back together recovers $n$.
-  - compute-engine represents 1 as $1^1$ and 0 as $0^1$.
-  - Negative $n$ carries an explicit $-1^1$ unit factor ahead of the prime factors.
-  - compute-engine handles ordinary integers only.
 seeAlso:
   - NthPrime
   - Divisors
@@ -38,3 +32,9 @@ bindings:
     arity: 1
     note: Sage has no unit factor for 1, 0 or a negative n — a shape difference from compute-engine's explicit 1^1/0^1/-1^1, not a bug.
 ---
+
+- For $n=p_1^{k_1}\cdots p_m^{k_m}$, returns the pairs $\{p_1,k_1\},\ldots,\{p_m,k_m\}$ in increasing order of prime.
+- Multiplying the $p^e$ factors back together recovers $n$.
+- compute-engine represents 1 as $1^1$ and 0 as $0^1$.
+- Negative $n$ carries an explicit $-1^1$ unit factor ahead of the prime factors.
+- compute-engine handles ordinary integers only.

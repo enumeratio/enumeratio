@@ -8,10 +8,6 @@ signatures:
     description: the elements of list that do NOT match pattern
     library: enumeratio-collections
     type: (any, any) -> any
-details:
-  - Top level only — Wolfram's optional levelspec/n (search below the top, cap how many to delete) aren't implemented.
-  - Built on the same match primitive as [[MatchQ]] and [[FreeQ]], so it shares their wildcard grammar and their limits.
-  - "A string-literal pattern inherits a compute-engine quirk: two EQUAL string literals don't count as a match (`MatchQ` already answers False for it), so `DeleteCases` won't remove them either — not something patched around here."
 seeAlso:
   - MatchQ
   - FreeQ
@@ -21,3 +17,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Top level only — Wolfram's optional levelspec/n (search below the top, cap how many to delete) aren't implemented.
+- Built on the same match primitive as [[MatchQ]] and [[FreeQ]], so it shares their wildcard grammar and their limits.
+- A string-literal pattern inherits a compute-engine quirk: two EQUAL string literals don't count as a match (`MatchQ` already answers False for it), so `DeleteCases` won't remove them either — not something patched around here.

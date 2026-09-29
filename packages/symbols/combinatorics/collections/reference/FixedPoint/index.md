@@ -9,10 +9,6 @@ signatures:
     library: enumeratio-collections
     type: "(function: any, x: any) -> any"
     overrides: compute-engine
-details:
-  - compute-engine declares $FixedPoint$ itself but ships no evaluator for it; this library extends that declaration rather than replacing it.
-  - Capped at 10,000 iterations, so a sequence that never settles fails closed instead of looping forever — Wolfram's own (much larger, configurable) cap is $MaxIterations.
-  - Stops the moment two successive values are the SAME ($SameQ$, structural equality) — exact for an exact sequence, like the halving example below. For an inexact (floating) sequence, also stops once two successive values agree to the engine's working precision ($|\Delta| \le |x| \cdot 10^{1 - precision}$), since a converging inexact iteration essentially never becomes bit-for-bit identical.
 seeAlso:
   - Nest
   - NestList
@@ -21,3 +17,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- compute-engine declares $FixedPoint$ itself but ships no evaluator for it; this library extends that declaration rather than replacing it.
+- Capped at 10,000 iterations, so a sequence that never settles fails closed instead of looping forever — Wolfram's own (much larger, configurable) cap is $MaxIterations.
+- Stops the moment two successive values are the SAME ($SameQ$, structural equality) — exact for an exact sequence, like the halving example below. For an inexact (floating) sequence, also stops once two successive values agree to the engine's working precision ($|\Delta| \le |x| \cdot 10^{1 - precision}$), since a converging inexact iteration essentially never becomes bit-for-bit identical.

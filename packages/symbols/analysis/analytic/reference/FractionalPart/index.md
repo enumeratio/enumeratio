@@ -8,11 +8,11 @@ signatures:
     description: x minus [[IntegerPart]](x), with the sign of x.
     library: "@enumeratio/analytic"
     type: (number) -> number
-details:
-  - "Keeps the sign of x, unlike compute-engine's native [[Fract]], which always lands in $[0, 1)$: $\\mathrm{FractionalPart}(-7/2) = -1/2$, where $\\mathrm{Fract}(-7/2) = 1/2$."
-  - 'Exact where [[IntegerPart]] is: an exact rational reduces to an exact rational, and a symbolic constant like Pi stays exact and symbolic ($\mathrm{FractionalPart}(\pi) = \pi - 3$).'
-  - Zero exactly on the integers.
-  - Real domain -- a concretely complex argument is left unevaluated.
 names:
   wolframIdentity: true
 ---
+
+- Keeps the sign of x, unlike compute-engine's native [[Fract]], which always lands in $[0, 1)$: $\mathrm{FractionalPart}(-7/2) = -1/2$, where $\mathrm{Fract}(-7/2) = 1/2$.
+- Exact where [[IntegerPart]] is: an exact rational reduces to an exact rational, and a symbolic constant like Pi stays exact and symbolic ($\mathrm{FractionalPart}(\pi) = \pi - 3$).
+- Zero exactly on the integers.
+- Real domain -- a concretely complex argument is left unevaluated.

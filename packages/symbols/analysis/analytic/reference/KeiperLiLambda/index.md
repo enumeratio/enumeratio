@@ -8,13 +8,13 @@ signatures:
     description: the n-th Keiper–Li coefficient, for a nonnegative integer n.
     library: "@enumeratio/analytic"
     type: (integer) -> number
-details:
-  - $\xi(s) = \tfrac12 s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$, the completed (Riemann) xi function — entire, and sharing ζ's nontrivial zeros.
-  - $\lambda_0 = 0$ and $\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi) \approx 0.02310$ are closed forms; both evaluate exactly under plain evaluation, not just under N().
-  - $n \geq 2$ is computed by Cauchy's differentiation formula — a contour integral of $\log\xi$ around $s=1$ — since repeated finite differences lose too much precision by n = 2 or 3.
-  - "Numeric only for n ≥ 2: needs N() or a floating-point argument."
-  - Declines (leaves the call unevaluated) past n = 20, where float64 rounding in the contour sum starts costing real digits, and for any negative or non-integer n.
-  - "Li's criterion: the Riemann hypothesis holds if and only if $\\lambda_n \\geq 0$ for every positive integer n."
 seeAlso:
   - Zeta
 ---
+
+- $\xi(s) = \tfrac12 s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$, the completed (Riemann) xi function — entire, and sharing ζ's nontrivial zeros.
+- $\lambda_0 = 0$ and $\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi) \approx 0.02310$ are closed forms; both evaluate exactly under plain evaluation, not just under N().
+- $n \geq 2$ is computed by Cauchy's differentiation formula — a contour integral of $\log\xi$ around $s=1$ — since repeated finite differences lose too much precision by n = 2 or 3.
+- Numeric only for n ≥ 2: needs N() or a floating-point argument.
+- Declines (leaves the call unevaluated) past n = 20, where float64 rounding in the contour sum starts costing real digits, and for any negative or non-integer n.
+- Li's criterion: the Riemann hypothesis holds if and only if $\lambda_n \geq 0$ for every positive integer n.

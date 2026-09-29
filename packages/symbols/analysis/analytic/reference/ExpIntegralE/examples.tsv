@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption
-e-1-3-2-gamma-0-3-2			[ExpIntegralE, 1, 1.5]	0.10001958240663265	$E_1(3/2) = \Gamma(0, 3/2)$
-expintegrale-2-1p5			[ExpIntegralE, 2, 1.5]	0.07310078653848084	
-e-3-2		test	[N, [ExpIntegralE, 3, 2]]	0.03013337979781589	
-order-1-5-at-3-2		test	[ExpIntegralE, 1.5, 3.2]	0.009156991428870985	
-non-integer-order	Scope		[ExpIntegralE, 0.5, 2.5]	0.028414299709289756	Non-integer order
-exact-arguments-under-n	Scope		[N, [ExpIntegralE, 1, 1]]	0.21938393439552029	Exact arguments under N()
-e-n-0-1-n-1-for-n-1	Properties		[ExpIntegralE, 2, 0]	1	$E_n(0) = 1/(n-1)$ for $n > 1$
-e-0-x-e-x-x	Properties		[ExpIntegralE, 0, x]	[Divide, [Power, ExponentialE, [Negate, x]], x]	$E_0(x) = e^{-x}/x$
+id	section	role	expr	expected	known	tolerance	source	caption
+e-1-3-2-gamma-0-3-2			[ExpIntegralE, 1, 1.5]	0.10001958240663265	{num: "0.10001958240663263"}	1e-9	Wolfram 15.0.0 ExpIntegralE	$E_1(3/2) = \Gamma(0, 3/2)$
+expintegrale-2-1p5			[ExpIntegralE, 2, 1.5]	0.07310078653848084	{num: "0.0731007865384809"}	1e-9	Wolfram 15.0.0 ExpIntegralE	
+e-3-2		test	[N, [ExpIntegralE, 3, 2]]	0.03013337979781589	{num: "0.03013337979781589"}	1e-9	Wolfram 15.0.0 ExpIntegralE	
+order-1-5-at-3-2		test	[ExpIntegralE, 1.5, 3.2]	0.009156991428870985	{num: "0.009156991428870985"}	1e-9	Wolfram 15.0.0 ExpIntegralE	
+non-integer-order	Scope		[ExpIntegralE, 0.5, 2.5]	0.028414299709289756	{num: "0.02841429970928976"}	1e-9	Wolfram 15.0.0 ExpIntegralE	Non-integer order
+exact-arguments-under-n	Scope		[N, [ExpIntegralE, 1, 1]]	0.21938393439552029				Exact arguments under N()
+e-n-0-1-n-1-for-n-1	Properties		[ExpIntegralE, 2, 0]	1				$E_n(0) = 1/(n-1)$ for $n > 1$
+e-0-x-e-x-x	Properties		[ExpIntegralE, 0, x]	[Divide, [Power, ExponentialE, [Negate, x]], x]				$E_0(x) = e^{-x}/x$

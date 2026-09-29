@@ -8,9 +8,6 @@ signatures:
     description: the numeric global maximum of f over the bounded interval cons implies, for any real-valued f (not just the exact core [[Maximize]] covers).
     library: "@enumeratio/analytic"
     type: (tuple<expression, expression>, list<symbol> | symbol) -> expression
-details:
-  - "[[NMinimize]]'s exact mirror image -- same method (201-point sampling plus a golden-section refinement, converged to a bracket width under 1e-11 relative to the interval), same requirement for an explicit bounded constraint, same declines. See its `details` for the full account."
-  - When f has more than one point attaining the same global maximum, this reports whichever the sampling grid's basin of attraction happens to land on first -- a different, equally valid witness than another correct implementation (or Wolfram's own NMaximize) might report for the same value.
 seeAlso:
   - NMinimize
   - Maximize
@@ -20,3 +17,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- [[NMinimize]]'s exact mirror image -- same method (201-point sampling plus a golden-section refinement, converged to a bracket width under 1e-11 relative to the interval), same requirement for an explicit bounded constraint, same declines. See its `details` for the full account.
+- When f has more than one point attaining the same global maximum, this reports whichever the sampling grid's basin of attraction happens to land on first -- a different, equally valid witness than another correct implementation (or Wolfram's own NMaximize) might report for the same value.

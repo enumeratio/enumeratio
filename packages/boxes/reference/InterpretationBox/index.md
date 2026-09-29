@@ -10,12 +10,12 @@ signatures:
     type: (boxes, expression, expression*) -> boxes
 attributes:
   - HoldAll
-details:
-  - The expression is held, as Wolfram holds it.
-  - MathML's `semantics`, with the expression's MathJSON as the annotation (`application/mathjson+json`).
 seeAlso:
   - TagBox
   - ToBoxes
 names:
   wolframIdentity: true
 ---
+
+- The expression is held, as Wolfram holds it.
+- MathML's `semantics`, with the expression's MathJSON as the annotation (`application/mathjson+json`).

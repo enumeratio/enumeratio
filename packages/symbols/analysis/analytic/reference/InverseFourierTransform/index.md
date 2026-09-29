@@ -8,9 +8,6 @@ signatures:
     description: $f(t)$ such that $\mathcal{F}\{f\}(w) = F(w)$, for the two forms below.
     library: "@enumeratio/analytic"
     type: (expression, expression, expression) -> expression
-details:
-  - "Covered: `DiracDelta(w)` $\\to 1/\\sqrt{2\\pi}$, and a `w`-free constant $c \\to c\\sqrt{2\\pi}$ (the inverse of `FourierTransform`'s own constant rule)."
-  - "Declined: everything else — no rational-function or trig table the way `InverseLaplaceTransform` has one, since the corresponding `FourierTransform` images are themselves distributional (a sum of `DiracDelta`s) rather than an algebraic shape to invert termwise here."
 primitive: kernel
 bindings:
   - origin: native
@@ -23,3 +20,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Covered: `DiracDelta(w)` $\to 1/\sqrt{2\pi}$, and a `w`-free constant $c \to c\sqrt{2\pi}$ (the inverse of `FourierTransform`'s own constant rule).
+- Declined: everything else — no rational-function or trig table the way `InverseLaplaceTransform` has one, since the corresponding `FourierTransform` images are themselves distributional (a sum of `DiracDelta`s) rather than an algebraic shape to invert termwise here.

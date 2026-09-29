@@ -8,8 +8,6 @@ signatures:
     description: the binary words of length $n$ that read the same reversed
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $2^{\lceil n/2 \rceil}$.
 seeAlso:
   - BinaryWords
   - PalindromicCompositions
@@ -23,3 +21,5 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is $2^{\lceil n/2 \rceil}$.

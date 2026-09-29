@@ -8,10 +8,10 @@ signatures:
     description: Boxes marked as an error.
     library: enumeratio-boxes
     type: (boxes) -> boxes
-details:
-  - MathML's `merror`.
 seeAlso:
   - TextBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `merror`.

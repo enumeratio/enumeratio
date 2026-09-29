@@ -8,11 +8,11 @@ signatures:
     description: the number of Unicode code points in s
     library: enumeratio-collections
     type: (string) -> integer
-details:
-  - "Counts code points, not UTF-16 units: `a😀b` has 3, not 4 (the emoji is one code point represented as two UTF-16 units) — same convention as [[ToCharacterCode]] and compute-engine's own `Characters`."
 seeAlso:
   - StringTake
   - ToCharacterCode
 names:
   wolframIdentity: true
 ---
+
+- Counts code points, not UTF-16 units: `a😀b` has 3, not 4 (the emoji is one code point represented as two UTF-16 units) — same convention as [[ToCharacterCode]] and compute-engine's own `Characters`.

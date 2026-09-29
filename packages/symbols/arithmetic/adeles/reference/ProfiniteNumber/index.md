@@ -14,11 +14,6 @@ signatures:
   - call: ProfiniteNumber(list)
     description: glue a list of [[AdicNumeral]] values by CRT into one profinite number
     library: enumeratio-adeles
-details:
-  - $\hat{\mathbb{Z}} = \varprojlim \mathbb{Z}/n\mathbb{Z}$, the profinite completion of $\mathbb{Z}$; $\hat{\mathbb{Q}} = \hat{\mathbb{Z}} \otimes \mathbb{Q}$ is the finite adèle ring, one coordinate per prime bundled together.
-  - "`Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` are wrapped to recognise a `ProfiniteNumber` operand, like `AdicNumeral`."
-  - "[[Numerator]] and [[Denominator]] split a profinite number into its numerator and denominator as profinite numbers (the denominator as an ordinary integer); [[AdicNumeral]]`(p, z)` projects it to $\\mathbb{Q}_p$; [[Fibonacci]] and `LucasL` take a profinite argument (Lenstra's profinite Fibonacci numbers)."
-  - "`ProfiniteNumber({AdicNumeral(p1, …), AdicNumeral(p2, …), …})` reassembles a profinite number from its images at several primes by the Chinese remainder theorem."
 seeAlso:
   - Adele
   - Idele
@@ -49,3 +44,8 @@ bindings:
       version: "10.9"
       on: 2026-09-28
 ---
+
+- $\hat{\mathbb{Z}} = \varprojlim \mathbb{Z}/n\mathbb{Z}$, the profinite completion of $\mathbb{Z}$; $\hat{\mathbb{Q}} = \hat{\mathbb{Z}} \otimes \mathbb{Q}$ is the finite adèle ring, one coordinate per prime bundled together.
+- `Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` are wrapped to recognise a `ProfiniteNumber` operand, like `AdicNumeral`.
+- [[Numerator]] and [[Denominator]] split a profinite number into its numerator and denominator as profinite numbers (the denominator as an ordinary integer); [[AdicNumeral]]`(p, z)` projects it to $\mathbb{Q}_p$; [[Fibonacci]] and `LucasL` take a profinite argument (Lenstra's profinite Fibonacci numbers).
+- `ProfiniteNumber({AdicNumeral(p1, …), AdicNumeral(p2, …), …})` reassembles a profinite number from its images at several primes by the Chinese remainder theorem.

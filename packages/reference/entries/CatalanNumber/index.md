@@ -16,11 +16,6 @@ signatures:
     library: enumeratio-number-theory
     type: (any) -> any
     overrides: enumeratio-analytic
-details:
-  - The Catalan numbers have the closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$.
-  - They satisfy the recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$ with $C_0 = 1$.
-  - $C_n$ is the number of monotonic lattice paths from one corner of an $n \times n$ grid to the opposite corner that stay below the diagonal.
-  - compute-engine extends $C_n$ to real and complex arguments through the [[Binomial]] gamma-function form $C_n = \Gamma(2n+1)/(\Gamma(n+1)\,\Gamma(n+2))$. At a negative integer it instead follows Wolfram's own $C_n = \binom{2n}{n} - \binom{2n}{n+1}$ with $\binom{n}{k} = 0$ for a negative integer $k$, giving $C_{-1} = -1$ and $C_n = 0$ for every integer $n \le -2$ (the smooth Gamma-ratio limit disagrees at $n=-1$, giving $-\tfrac12$ -- see the divergence note on that example).
 seeAlso:
   - Binomial
   - BellNumber
@@ -67,3 +62,8 @@ catalog:
     identity: CatalanNumber
     url: https://reference.wolfram.com/language/ref/CatalanNumber.html
 ---
+
+- The Catalan numbers have the closed form $C_n = \frac{1}{n+1}\binom{2n}{n}$.
+- They satisfy the recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$ with $C_0 = 1$.
+- $C_n$ is the number of monotonic lattice paths from one corner of an $n \times n$ grid to the opposite corner that stay below the diagonal.
+- compute-engine extends $C_n$ to real and complex arguments through the [[Binomial]] gamma-function form $C_n = \Gamma(2n+1)/(\Gamma(n+1)\,\Gamma(n+2))$. At a negative integer it instead follows Wolfram's own $C_n = \binom{2n}{n} - \binom{2n}{n+1}$ with $\binom{n}{k} = 0$ for a negative integer $k$, giving $C_{-1} = -1$ and $C_n = 0$ for every integer $n \le -2$ (the smooth Gamma-ratio limit disagrees at $n=-1$, giving $-\tfrac12$ -- see the divergence note on that example).

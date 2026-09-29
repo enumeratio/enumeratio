@@ -6,11 +6,6 @@ summary: The pentagonal numbers $1, 5, 12, 22, …$ — $P(n) = n(3n-1)/2$ — d
 signatures:
   - call: PentagonalNumbers
     description: $P(n) = n(3n-1)/2$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(PentagonalNumbers) = +\infty$, and $At(PentagonalNumbers, k) = k(3k-1)/2$ unranks in closed form -- $At(PentagonalNumbers, 5) = 35$.'
-  - OEIS A000326.
-  - Membership goes through [[Element]] by inverting the closed form exactly, solving the quadratic in $n$ over the integers -- $Element(35, PentagonalNumbers)$ is true, $Element(36, PentagonalNumbers)$ is false.
-  - The $k$-gonal case $k=5$ of [[PolygonalNumbers]]; not to be confused with the (signed-index) generalized pentagonal numbers of Euler's pentagonal number theorem.
 enumerate:
   expr: Take(PentagonalNumbers, 20)
 seeAlso:
@@ -36,3 +31,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(PentagonalNumbers) = +\infty$, and $At(PentagonalNumbers, k) = k(3k-1)/2$ unranks in closed form -- $At(PentagonalNumbers, 5) = 35$.
+- OEIS A000326.
+- Membership goes through [[Element]] by inverting the closed form exactly, solving the quadratic in $n$ over the integers -- $Element(35, PentagonalNumbers)$ is true, $Element(36, PentagonalNumbers)$ is false.
+- The $k$-gonal case $k=5$ of [[PolygonalNumbers]]; not to be confused with the (signed-index) generalized pentagonal numbers of Euler's pentagonal number theorem.

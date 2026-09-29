@@ -8,12 +8,12 @@ signatures:
     description: "How two values of a partially ordered type compare: -1, 0 or 1, or NaN when they are incomparable."
     library: enumeratio-structures
     type: (any, any) -> unknown
-details:
-  - "The `PartialOrder` protocol's member: a type conforms by saying how it compares two of its values."
-  - Reflexive, antisymmetric and transitive; a `LinearOrder` never answers NaN.
-  - "Under dominance, $[3,1,1,1]$ and $[2,2,2]$ are incomparable: NaN."
 seeAlso:
   - Min
   - Max
   - GreatestLowerBound
 ---
+
+- The `PartialOrder` protocol's member: a type conforms by saying how it compares two of its values.
+- Reflexive, antisymmetric and transitive; a `LinearOrder` never answers NaN.
+- Under dominance, $[3,1,1,1]$ and $[2,2,2]$ are incomparable: NaN.

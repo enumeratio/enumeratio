@@ -6,12 +6,6 @@ summary: 'The nth root of x: $\sqrt[n]{x} = x^{1/n}$.'
 signatures:
   - call: Root(x, n)
     description: the nth root $\sqrt[n]{x} = x^{1/n}$.
-details:
-  - 'The nth root: $\mathrm{Root}(x, n) = x^{1/n}$. See [[Sqrt]] for the special case $n = 2$.'
-  - 'Odd roots of a negative number stay real: $\sqrt[3]{-8} = -2$. Even roots of a negative number canonicalize toward [[Sqrt]] instead, and evaluate exactly only when the radicand is itself a perfect power.'
-  - 'A negative index gives the reciprocal root: $\mathrm{Root}(x, -n) = x^{-1/n}$.'
-  - Both arguments are required -- unlike [[Sqrt]], there's no default index.
-  - Evaluates exactly only when x is a perfect nth power; otherwise it stays in symbolic form, like $\sqrt[3]{2}$.
 seeAlso:
   - Sqrt
   - Square
@@ -21,3 +15,9 @@ references:
   - system: mathworld
     identity: nthRoot
 ---
+
+- The nth root: $\mathrm{Root}(x, n) = x^{1/n}$. See [[Sqrt]] for the special case $n = 2$.
+- Odd roots of a negative number stay real: $\sqrt[3]{-8} = -2$. Even roots of a negative number canonicalize toward [[Sqrt]] instead, and evaluate exactly only when the radicand is itself a perfect power.
+- A negative index gives the reciprocal root: $\mathrm{Root}(x, -n) = x^{-1/n}$.
+- Both arguments are required -- unlike [[Sqrt]], there's no default index.
+- Evaluates exactly only when x is a perfect nth power; otherwise it stays in symbolic form, like $\sqrt[3]{2}$.

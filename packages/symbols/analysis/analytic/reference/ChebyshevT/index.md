@@ -8,13 +8,6 @@ signatures:
     description: the degree-$n$ Chebyshev polynomial of the first kind at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
     type: (integer, number) -> number
-details:
-  - $T_0 = 1$, $T_1 = x$, and $T_{n+1} = 2x\,T_n - T_{n-1}$. The coefficients are integers and the leading one is $2^{n-1}$ for $n \ge 1$.
-  - $T_n(\cos\theta) = \cos(n\theta)$, so on $[-1, 1]$ the polynomial oscillates between $-1$ and $1$, and $T_n(1) = 1$, $T_n(-1) = (-1)^n$.
-  - "Composition multiplies degrees: $T_m(T_n(x)) = T_{mn}(x)$. Parity follows the degree: $T_n(-x) = (-1)^n T_n(x)$."
-  - "A negative order folds as Wolfram does: $T_{-n} = T_n$."
-  - At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
-  - A symbolic order stays unevaluated. The signature takes an integer order only; Wolfram continues $T_\nu$ to non-integer $\nu$, and that is not implemented here.
 primitive: kernel
 bindings:
   - origin: native
@@ -39,3 +32,10 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- $T_0 = 1$, $T_1 = x$, and $T_{n+1} = 2x\,T_n - T_{n-1}$. The coefficients are integers and the leading one is $2^{n-1}$ for $n \ge 1$.
+- $T_n(\cos\theta) = \cos(n\theta)$, so on $[-1, 1]$ the polynomial oscillates between $-1$ and $1$, and $T_n(1) = 1$, $T_n(-1) = (-1)^n$.
+- Composition multiplies degrees: $T_m(T_n(x)) = T_{mn}(x)$. Parity follows the degree: $T_n(-x) = (-1)^n T_n(x)$.
+- A negative order folds as Wolfram does: $T_{-n} = T_n$.
+- At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
+- A symbolic order stays unevaluated. The signature takes an integer order only; Wolfram continues $T_\nu$ to non-integer $\nu$, and that is not implemented here.

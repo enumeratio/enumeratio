@@ -11,10 +11,6 @@ signatures:
   - call: Commonest(collection, n)
     description: the $n$ commonest elements, most frequent first, ties broken by first appearance.
     library: enumeratio-collections
-details:
-  - "Wolfram's answer to a tied [[Mode]]: where Mode picks one, Commonest returns every value tied for the highest frequency."
-  - 'With a unique mode, $Commonest(c) = \{Mode(c)\}$: a single-element list.'
-  - Every returned value occurs exactly as many times as the highest frequency in the collection. See [[Count]].
 seeAlso:
   - Mode
   - Mean
@@ -22,3 +18,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Wolfram's answer to a tied [[Mode]]: where Mode picks one, Commonest returns every value tied for the highest frequency.
+- With a unique mode, $Commonest(c) = \{Mode(c)\}$: a single-element list.
+- Every returned value occurs exactly as many times as the highest frequency in the collection. See [[Count]].

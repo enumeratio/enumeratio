@@ -8,12 +8,12 @@ signatures:
     description: the $n$th known Mersenne prime's exponent
     library: enumeratio-number-theory
     type: (integer) -> integer
-details:
-  - From a fixed table of the first 20 known Mersenne prime exponents, proven complete this far since the 1950s — well short of GIMPS's ongoing search. Past the table the call stays unevaluated rather than searching.
-  - "Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$."
 seeAlso:
   - PerfectNumber
   - IsPrime
 names:
   wolframIdentity: true
 ---
+
+- From a fixed table of the first 20 known Mersenne prime exponents, proven complete this far since the 1950s — well short of GIMPS's ongoing search. Past the table the call stays unevaluated rather than searching.
+- Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$.

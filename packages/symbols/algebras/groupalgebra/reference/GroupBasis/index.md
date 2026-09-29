@@ -11,12 +11,6 @@ signatures:
   - call: GroupProduct(group, a, b)
     description: multiply — the group is named, since a basis element does not carry it
     library: enumeratio-groupalgebra
-details:
-  - 'Groups: `CyclicGroup(n)` with elements $0 \dots n-1$, `DihedralGroup(n)` with elements `k` for $r^k$ and `s k` for $s r^k$, and `GroupDirectProduct(g, h)`'
-  - $k[\mathbb{Z}_n]$ multiplies by adding indices mod $n$ — it is $k[x]/(x^n-1)$
-  - $k[G]$ is commutative exactly when $G$ is abelian
-  - "Dihedral relations: $r^n = 1$, $s^2 = 1$, $s r s = r^{-1}$"
-  - $\dim k[G] = |G|$, and `Basis(GroupAlgebra(group))` lists the elements
 seeAlso:
   - ClassSum
   - ConjugacyClasses
@@ -32,3 +26,9 @@ bindings:
     template: EnumeratioBasis($1)
     arity: 1
 ---
+
+- Groups: `CyclicGroup(n)` with elements $0 \dots n-1$, `DihedralGroup(n)` with elements `k` for $r^k$ and `s k` for $s r^k$, and `GroupDirectProduct(g, h)`
+- $k[\mathbb{Z}_n]$ multiplies by adding indices mod $n$ — it is $k[x]/(x^n-1)$
+- $k[G]$ is commutative exactly when $G$ is abelian
+- Dihedral relations: $r^n = 1$, $s^2 = 1$, $s r s = r^{-1}$
+- $\dim k[G] = |G|$, and `Basis(GroupAlgebra(group))` lists the elements

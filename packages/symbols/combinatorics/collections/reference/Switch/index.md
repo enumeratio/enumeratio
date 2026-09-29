@@ -8,8 +8,6 @@ signatures:
     description: The first $val_i$ whose $form_i$ (evaluated) $expr$ (evaluated) equals; a bare $\_$ (Blank) as a $form_i$ always matches, as a default case. Stays unevaluated if nothing matches.
     library: enumeratio-collections
     type: (any, any*) -> any
-details:
-  - Matching is structural equality only, not Wolfram's fuller pattern language — a form is either a literal value or the bare wildcard $\_$.
 seeAlso:
   - Do
 names:
@@ -17,3 +15,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Matching is structural equality only, not Wolfram's fuller pattern language — a form is either a literal value or the bare wildcard $\_$.

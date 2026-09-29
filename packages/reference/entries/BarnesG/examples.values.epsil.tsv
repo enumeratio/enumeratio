@@ -19,6 +19,11 @@ g-infty-infty	BarnesG(PositiveInfinity)	PositiveInfinity
 interval-arithmetic-g-is-increasing-on-1-17-1-18	BarnesG(Interval(1.17, 1.18))	Interval(1.052_216_328_686_19, 1.054_193_606_435_7)
 uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	BarnesG(Around(2.1, 0.01))	Around(0.984_772_724_354_046_5, 0.001_449_505_695_943_639)
 to-30-significant-digits-not-yet-the-requested	N(BarnesG(1 / 2), 30)	0.603_244_281_209_446_206_191_429_224_535
+image-over-1p17-to-1p18	BarnesG(Interval(1.17, 1.18))	Interval(1.052_216_328_686_19, 1.054_193_606_435_7)
+image-over-1-to-3	BarnesG(Interval(1, 3))	Interval(0.946_845_604_899_07, 1.073_051_785_683_14)
+image-over-0p5-to-1p5	BarnesG(Interval(0.5, 1.5))	Interval(0.603_244_281_209_446, 1.073_051_785_683_11)
+image-over-2p2-to-2p9	BarnesG(Interval(2.2, 2.9))	Interval(0.946_845_605_269_706, 0.977_293_088_208_56)
+image-over-neg-1p9-to-neg-1p1	BarnesG(Interval(-1.9, -1.1))	Interval(-0.074_099_944_002_203_8, -0.001_850_171_280_328_3)
 g-vanishes-at-the-nonpositive-integers	BarnesG(0)	0
 all-of-them	BarnesG(-3)	0
 the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	Gamma(6) ^ 5 / BarnesG(6)	86_400_000

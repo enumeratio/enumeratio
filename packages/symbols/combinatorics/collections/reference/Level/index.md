@@ -20,13 +20,13 @@ signatures:
   - call: Level(expr, {-1})
     description: every leaf, regardless of depth — Wolfram's own "leaves" shorthand
     library: enumeratio-collections
-details:
-  - "Wolfram's own POST-ORDER: a node's children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts, not before them. Siblings keep their original order; only each node's position relative to its OWN descendants moves."
-  - Only `{-1}` (and bare `-1`) is supported among negative levels — Wolfram's general negative-level-from-the-leaves counting (`{-2}`, `{-3, -1}`, …) is left undone.
-  - No 4th-argument predicate form, and no Heads option.
 seeAlso:
   - MapIndexed
   - Pick
 names:
   wolframIdentity: true
 ---
+
+- Wolfram's own POST-ORDER: a node's children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts, not before them. Siblings keep their original order; only each node's position relative to its OWN descendants moves.
+- Only `{-1}` (and bare `-1`) is supported among negative levels — Wolfram's general negative-level-from-the-leaves counting (`{-2}`, `{-3, -1}`, …) is left undone.
+- No 4th-argument predicate form, and no Heads option.

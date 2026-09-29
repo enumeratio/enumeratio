@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — Wolfram's own call shape, a single two-element list.
     library: enumeratio-statistics
     type: (list<integer>) -> distribution
-details:
-  - $PDF(k) = 1/(max-min+1)$ — no bounds check outside $\{min,\ldots,max\}$ (a documented divergence).
-  - $CDF(x) = (\lfloor x\rfloor - min + 1)/(max-min+1)$, clamped to $0$ below $min$ and $1$ above $max$.
-  - $Mean = (min+max)/2$, $Variance = ((max-min+1)^2-1)/12$, both exact.
-  - '[[RandomVariate]] draws $min + \lfloor U \cdot (max-min+1)\rfloor$.'
 seeAlso:
   - UniformDistribution
   - PDF
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(k) = 1/(max-min+1)$ — no bounds check outside $\{min,\ldots,max\}$ (a documented divergence).
+- $CDF(x) = (\lfloor x\rfloor - min + 1)/(max-min+1)$, clamped to $0$ below $min$ and $1$ above $max$.
+- $Mean = (min+max)/2$, $Variance = ((max-min+1)^2-1)/12$, both exact.
+- [[RandomVariate]] draws $min + \lfloor U \cdot (max-min+1)\rfloor$.

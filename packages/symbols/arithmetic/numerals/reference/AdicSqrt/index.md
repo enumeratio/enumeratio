@@ -8,9 +8,9 @@ signatures:
     description: the root, to `prec` digits (default 20)
     library: enumeratio-numerals
     type: (value, integer?) -> value
-details:
-  - Needs an even valuation, and (for odd $p$) a unit part that is a quadratic residue mod $p$; for $p=2$ the unit part must be $1 \bmod 8$
 seeAlso:
   - AdicNumeral
   - HenselLift
 ---
+
+- Needs an even valuation, and (for odd $p$) a unit part that is a quadratic residue mod $p$; for $p=2$ the unit part must be $1 \bmod 8$

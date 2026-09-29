@@ -6,10 +6,6 @@ summary: The centered triangular numbers $1, 4, 10, 19, …$ — $(3n^2-3n+2)/2$
 signatures:
   - call: CenteredTriangularNumbers
     description: $(3n^2-3n+2)/2$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(CenteredTriangularNumbers) = +\infty$, and $At(CenteredTriangularNumbers, k) = (3k^2-3k+2)/2$ unranks in closed form -- $At(CenteredTriangularNumbers, 5) = 31$.'
-  - OEIS A005448.
-  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(31, CenteredTriangularNumbers)$ is true, $Element(30, CenteredTriangularNumbers)$ is false.
 enumerate:
   expr: Take(CenteredTriangularNumbers, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(CenteredTriangularNumbers) = +\infty$, and $At(CenteredTriangularNumbers, k) = (3k^2-3k+2)/2$ unranks in closed form -- $At(CenteredTriangularNumbers, 5) = 31$.
+- OEIS A005448.
+- Membership goes through [[Element]] by inverting the closed form exactly -- $Element(31, CenteredTriangularNumbers)$ is true, $Element(30, CenteredTriangularNumbers)$ is false.

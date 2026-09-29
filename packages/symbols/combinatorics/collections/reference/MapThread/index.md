@@ -8,12 +8,12 @@ signatures:
     description: "{f(a1, b1, …), f(a2, b2, …), …} for lists = {{a1, a2, …}, {b1, b2, …}, …}"
     library: enumeratio-collections
     type: "(function: any, lists: list<any>) -> list<any>"
-details:
-  - Every row of lists must be the same length; a ragged input is left unevaluated.
-  - The 3-argument Wolfram form (a level spec) isn't implemented — only the top level threads.
 seeAlso:
   - MapIndexed
   - Through
 names:
   wolframIdentity: true
 ---
+
+- Every row of lists must be the same length; a ragged input is left unevaluated.
+- The 3-argument Wolfram form (a level spec) isn't implemented — only the top level threads.

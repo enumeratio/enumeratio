@@ -19,13 +19,6 @@ signatures:
     library: enumeratio-adeles
     type: (integer | value) -> integer | value
     overrides: compute-engine
-details:
-  - Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.
-  - "Closed form (Binet's formula): $F_n = \\frac{\\varphi^n - \\psi^n}{\\sqrt5}$, where $\\varphi = \\frac{1+\\sqrt5}{2}$ and $\\psi = \\frac{1-\\sqrt5}{2}$."
-  - Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\varphi$. See [[LucasL]].
-  - 'GCD identity: $\gcd(F_m, F_n) = F_{\gcd(m,n)}$.'
-  - Extends to negative n via $F_{-n} = (-1)^{n+1} F_n$.
-  - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.
 seeAlso:
   - LucasL
 references:
@@ -78,3 +71,10 @@ bindings:
     threadArg: 1
     note: Julia's bare fibonacci(::Int) overflows past F(92); Nemo's ZZ makes it arbitrary-precision, and the BigInt conversion keeps the result a type Julia's own big() and arithmetic still know (other templates wrap operands in big(...)), unlike the bare ZZRingElem.
 ---
+
+- Defined by the recurrence $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$, $F_1 = 1$.
+- Closed form (Binet's formula): $F_n = \frac{\varphi^n - \psi^n}{\sqrt5}$, where $\varphi = \frac{1+\sqrt5}{2}$ and $\psi = \frac{1-\sqrt5}{2}$.
+- Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\varphi$. See [[LucasL]].
+- GCD identity: $\gcd(F_m, F_n) = F_{\gcd(m,n)}$.
+- Extends to negative n via $F_{-n} = (-1)^{n+1} F_n$.
+- A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.

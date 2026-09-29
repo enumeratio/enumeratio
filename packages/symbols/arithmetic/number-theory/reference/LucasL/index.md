@@ -19,13 +19,6 @@ signatures:
     library: enumeratio-adeles
     type: (integer | value) -> integer | value
     overrides: compute-engine
-details:
-  - Defined by the same recurrence as [[Fibonacci]], $L_n = L_{n-1} + L_{n-2}$, but started from $L_0 = 2$, $L_1 = 1$.
-  - 'Closed form: $L_n = \varphi^n + \psi^n$, where $\varphi = \frac{1+\sqrt5}{2}$ and $\psi = \frac{1-\sqrt5}{2}$.'
-  - Related to Fibonacci by $L_n = F_{n-1} + F_{n+1}$ and, conversely, $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$.
-  - Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio, just as they do for [[Fibonacci]].
-  - Extends to negative n via $L_{-n} = (-1)^n L_n$.
-  - A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.
 seeAlso:
   - Fibonacci
 references:
@@ -59,3 +52,10 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Defined by the same recurrence as [[Fibonacci]], $L_n = L_{n-1} + L_{n-2}$, but started from $L_0 = 2$, $L_1 = 1$.
+- Closed form: $L_n = \varphi^n + \psi^n$, where $\varphi = \frac{1+\sqrt5}{2}$ and $\psi = \frac{1-\sqrt5}{2}$.
+- Related to Fibonacci by $L_n = F_{n-1} + F_{n+1}$ and, conversely, $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$.
+- Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio, just as they do for [[Fibonacci]].
+- Extends to negative n via $L_{-n} = (-1)^n L_n$.
+- A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.

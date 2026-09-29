@@ -11,9 +11,6 @@ signatures:
   - call: SetAttributes(f, {attr1, attr2, ...})
     description: Turns on several attributes at once.
     library: enumeratio-collections
-details:
-  - Only $\{Flat, HoldAll, Listable, Orderless\}$ can actually be turned on — see [[Attributes]] for why those four and no others. Declines (stays unevaluated) for an undeclared $f$, or any attribute name outside that set, rather than silently accepting a change that didn't happen.
-  - Always returns $Nothing$, like Wolfram's own $Null$.
 seeAlso:
   - Attributes
 names:
@@ -21,3 +18,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Only $\{Flat, HoldAll, Listable, Orderless\}$ can actually be turned on — see [[Attributes]] for why those four and no others. Declines (stays unevaluated) for an undeclared $f$, or any attribute name outside that set, rather than silently accepting a change that didn't happen.
+- Always returns $Nothing$, like Wolfram's own $Null$.

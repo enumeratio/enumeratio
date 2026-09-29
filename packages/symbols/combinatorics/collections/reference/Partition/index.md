@@ -16,15 +16,15 @@ signatures:
   - call: Partition(collection, n, d, {kL, kR}, pad?)
     description: sliding windows whose overhang past either end of the collection wraps around cyclically, or — with a trailing `pad` — is filled with `pad` instead.
     library: enumeratio-collections
-details:
-  - "[[Flatten]] undoes Partition: chunking and re-flattening recovers the original list — when the length divides evenly."
-  - With $d < n$, windows overlap; the two-argument form is equivalent to $d = n$, giving non-overlapping chunks.
-  - A ragged remainder, shorter than $n$, is dropped rather than kept as a partial chunk.
-  - "A list of sizes generalizes chunking to a rank-k array: each dimension gets its own window size (and, optionally, its own offset)."
-  - The overhang pair $\{k_L, k_R\}$ pins where the first window starts and the last one ends, each counted from the near end of the collection — 1-based, negative counting from the far end of the WINDOW instead. Without a padding element, an overhang past either end wraps around cyclically.
 seeAlso:
   - Flatten
   - UpTo
 names:
   wolframIdentity: true
 ---
+
+- [[Flatten]] undoes Partition: chunking and re-flattening recovers the original list — when the length divides evenly.
+- With $d < n$, windows overlap; the two-argument form is equivalent to $d = n$, giving non-overlapping chunks.
+- A ragged remainder, shorter than $n$, is dropped rather than kept as a partial chunk.
+- A list of sizes generalizes chunking to a rank-k array: each dimension gets its own window size (and, optionally, its own offset).
+- The overhang pair $\{k_L, k_R\}$ pins where the first window starts and the last one ends, each counted from the near end of the collection — 1-based, negative counting from the far end of the WINDOW instead. Without a padding element, an overhang past either end wraps around cyclically.

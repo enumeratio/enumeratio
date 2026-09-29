@@ -11,10 +11,10 @@ signatures:
   - call: AssociationThread(keys -> values)
     description: the same, with keys and values given as one Rule instead of two arguments
     library: enumeratio-collections
-details:
-  - Builds the SAME `Association` head as [[Association]] — Rule pairs, not compute-engine's string-keyed Dictionary. See that entry's own notes for why.
 seeAlso:
   - Association
 names:
   wolframIdentity: true
 ---
+
+- Builds the SAME `Association` head as [[Association]] — Rule pairs, not compute-engine's string-keyed Dictionary. See that entry's own notes for why.

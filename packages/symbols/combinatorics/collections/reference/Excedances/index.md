@@ -8,9 +8,6 @@ signatures:
     description: the excedance count of a one-line permutation $p$
     library: enumeratio-collections
     type: (permutation) -> integer
-details:
-  - "Equidistributed with [[Descents]] over $S_n$: both are Eulerian statistics"
-  - A fixed point is neither an excedance nor an antiexcedance, so $\mathrm{Excedances} + \mathrm{Antiexcedances} + \mathrm{FixedPoints} = n$
 seeAlso:
   - Antiexcedances
   - Descents
@@ -27,3 +24,6 @@ statOn:
   - DecoratedPermutation
   - Permutation
 ---
+
+- Equidistributed with [[Descents]] over $S_n$: both are Eulerian statistics
+- A fixed point is neither an excedance nor an antiexcedance, so $\mathrm{Excedances} + \mathrm{Antiexcedances} + \mathrm{FixedPoints} = n$

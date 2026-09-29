@@ -8,12 +8,12 @@ signatures:
     description: the smallest positive p with f(x+p) = f(x) for every x, or 0 when f is not periodic.
     library: "@enumeratio/analytic"
     type: (expression, symbol) -> expression
-details:
-  - A nonconstant polynomial, a genuine rational function, Sqrt, Ln, and Exp of a nonconstant affine argument are all provably non-periodic (each is monotonic or unbounded), so this answers `0` for them rather than declining.
-  - Sin/Cos(a x + b) has period $2\pi/|a|$; Tan(a x + b) has period $\pi/|a|$.
-  - Does not yet combine periods across a sum of trig terms with different (even commensurate) frequencies, such as $\sin x + \cos 2x$ — that composition is outside the single-shape classifier this file is built on, and is declined.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- A nonconstant polynomial, a genuine rational function, Sqrt, Ln, and Exp of a nonconstant affine argument are all provably non-periodic (each is monotonic or unbounded), so this answers `0` for them rather than declining.
+- Sin/Cos(a x + b) has period $2\pi/|a|$; Tan(a x + b) has period $\pi/|a|$.
+- Does not yet combine periods across a sum of trig terms with different (even commensurate) frequencies, such as $\sin x + \cos 2x$ — that composition is outside the single-shape classifier this file is built on, and is declined.

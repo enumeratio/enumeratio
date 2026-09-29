@@ -6,10 +6,6 @@ summary: The untouchable numbers $2, 5, 52, 88, …$ -- integers that are no num
 signatures:
   - call: UntouchableNumbers
     description: the $n$ with $\sigma(m) - m \ne n$ for every $m$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(UntouchableNumbers) = +\infty$ (Erdős), and $At$ unranks the $k$-th by scanning forward, testing each candidate $n$ against a sieve of aliquot sums $\sigma(m) - m$ for $m$ up to $n^2$ -- large enough to catch $m = p^2$ for a prime $p$ as big as $n - 1$, which gives aliquot sum $1 + p = n$.'
-  - OEIS A005114. $1$ is excluded by convention even though it's also never an aliquot sum for $m > 1$; the sequence starts at $2$.
-  - 'Membership goes through [[Element]]: $Element(5, UntouchableNumbers)$ is true, $Element(4, UntouchableNumbers)$ is false ($\sigma(9) - 9 = 4$).'
 enumerate:
   expr: Take(UntouchableNumbers, 15)
 seeAlso:
@@ -25,3 +21,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(UntouchableNumbers) = +\infty$ (Erdős), and $At$ unranks the $k$-th by scanning forward, testing each candidate $n$ against a sieve of aliquot sums $\sigma(m) - m$ for $m$ up to $n^2$ -- large enough to catch $m = p^2$ for a prime $p$ as big as $n - 1$, which gives aliquot sum $1 + p = n$.
+- OEIS A005114. $1$ is excluded by convention even though it's also never an aliquot sum for $m > 1$; the sequence starts at $2$.
+- Membership goes through [[Element]]: $Element(5, UntouchableNumbers)$ is true, $Element(4, UntouchableNumbers)$ is false ($\sigma(9) - 9 = 4$).

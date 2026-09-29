@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $n, p$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>, real<0..1>) -> distribution
-details:
-  - $PDF(k) = \binom{n+k-1}{k} p^n (1-p)^k$.
-  - $CDF(x) = I_p(n, \lfloor x\rfloor + 1)$, the regularized incomplete beta, via [[BetaRegularized]] — the standard negative-binomial/incomplete-beta identity — clamped to $0$ below $x=0$.
-  - $Mean = n(1-p)/p$, $Variance = n(1-p)/p^2$, both exact.
-  - "[[RandomVariate]] sums $n$ [[GeometricDistribution]]-style draws."
 seeAlso:
   - GeometricDistribution
   - BinomialDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(k) = \binom{n+k-1}{k} p^n (1-p)^k$.
+- $CDF(x) = I_p(n, \lfloor x\rfloor + 1)$, the regularized incomplete beta, via [[BetaRegularized]] — the standard negative-binomial/incomplete-beta identity — clamped to $0$ below $x=0$.
+- $Mean = n(1-p)/p$, $Variance = n(1-p)/p^2$, both exact.
+- [[RandomVariate]] sums $n$ [[GeometricDistribution]]-style draws.

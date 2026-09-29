@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (integer, any?) -> any
     overrides: compute-engine
-details:
-  - Recurrence $B_{n+1} = \sum_{k=0}^{n} \binom{n}{k}\, B_k$, built from [[Binomial]] and the lower Bell numbers.
-  - Generating function $\sum_{n} B_n \frac{t^n}{n!} = e^{e^t - 1}$.
-  - Equals the sum of Stirling numbers of the second kind over all block counts, $B_n = \sum_{k=0}^{n} S(n, k)$.
-  - Also arise as the nth moment of a Poisson distribution with mean 1.
-  - compute-engine requires a nonnegative integer argument; a negative n is left unevaluated.
-  - The two-argument form $B_n(x)$ is the Bell (Touchard) polynomial; $B_n(1) = B_n$.
 seeAlso:
   - StirlingS1
 references:
@@ -68,3 +61,10 @@ catalog:
     identity: BellB
     url: https://reference.wolfram.com/language/ref/BellB.html
 ---
+
+- Recurrence $B_{n+1} = \sum_{k=0}^{n} \binom{n}{k}\, B_k$, built from [[Binomial]] and the lower Bell numbers.
+- Generating function $\sum_{n} B_n \frac{t^n}{n!} = e^{e^t - 1}$.
+- Equals the sum of Stirling numbers of the second kind over all block counts, $B_n = \sum_{k=0}^{n} S(n, k)$.
+- Also arise as the nth moment of a Poisson distribution with mean 1.
+- compute-engine requires a nonnegative integer argument; a negative n is left unevaluated.
+- The two-argument form $B_n(x)$ is the Bell (Touchard) polynomial; $B_n(1) = B_n$.

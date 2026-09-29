@@ -8,9 +8,6 @@ signatures:
     description: The boxes an expression's traditional notation is made of, after evaluating it.
     library: enumeratio-boxes
     type: (any) -> boxes
-details:
-  - Wolfram's `ToBoxes[expr]` gives StandardForm boxes by default; ours are the traditional notation, `ToBoxes[expr, TraditionalForm]` without its `FormBox` wrapper and with templates expanded.
-  - The result is typed `boxes`.
 seeAlso:
   - MakeBoxes
   - DisplayForm
@@ -18,3 +15,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Wolfram's `ToBoxes[expr]` gives StandardForm boxes by default; ours are the traditional notation, `ToBoxes[expr, TraditionalForm]` without its `FormBox` wrapper and with templates expanded.
+- The result is typed `boxes`.

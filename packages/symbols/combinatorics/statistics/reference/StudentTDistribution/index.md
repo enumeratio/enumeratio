@@ -8,12 +8,6 @@ signatures:
     description: an inert distribution object — carries $\nu$, unevaluated. Only the single-parameter (not the location-scale 3-argument Wolfram) form is implemented — a documented scope limit.
     library: enumeratio-statistics
     type: (real<0..>) -> distribution
-details:
-  - $PDF(x) = \dfrac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)}\left(1+\dfrac{x^2}{\nu}\right)^{-(\nu+1)/2}$, exact.
-  - $CDF(x) = \tfrac12 I_z(\nu/2, 1/2)$ for $x<0$, $1 - \tfrac12 I_z(\nu/2, 1/2)$ for $x\geq0$, where $z=\nu/(\nu+x^2)$ and $I$ is [[BetaRegularized]] — exact (Abramowitz & Stegun 26.7.1).
-  - $Mean = 0$ unconditionally — exact only for $\nu>1$; a documented divergence for $\nu \leq 1$, where the mean is actually undefined.
-  - $Variance = \nu/(\nu-2)$ unconditionally — exact only for $\nu>2$; same divergence policy for $\nu \leq 2$.
-  - '[[RandomVariate]] samples $Z/\sqrt{V/\nu}$ for a standard normal $Z$ and an independent [[ChiSquareDistribution]]($\nu$) draw $V$.'
 seeAlso:
   - CauchyDistribution
   - ChiSquareDistribution
@@ -21,3 +15,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = \dfrac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)}\left(1+\dfrac{x^2}{\nu}\right)^{-(\nu+1)/2}$, exact.
+- $CDF(x) = \tfrac12 I_z(\nu/2, 1/2)$ for $x<0$, $1 - \tfrac12 I_z(\nu/2, 1/2)$ for $x\geq0$, where $z=\nu/(\nu+x^2)$ and $I$ is [[BetaRegularized]] — exact (Abramowitz & Stegun 26.7.1).
+- $Mean = 0$ unconditionally — exact only for $\nu>1$; a documented divergence for $\nu \leq 1$, where the mean is actually undefined.
+- $Variance = \nu/(\nu-2)$ unconditionally — exact only for $\nu>2$; same divergence policy for $\nu \leq 2$.
+- [[RandomVariate]] samples $Z/\sqrt{V/\nu}$ for a standard normal $Z$ and an independent [[ChiSquareDistribution]]($\nu$) draw $V$.

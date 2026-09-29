@@ -1,7 +1,7 @@
-id	section	role	expr	expected	caption
-2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2			[HypergeometricPFQ, [List, 1, 1], [List, 2], 0.5]	1.3862943611198906	${}_2F_1(1, 1; 2; z) = -\ln(1-z)/z$, here $2\ln 2$
-1f-1-1-2-z-e-z-1-z			[HypergeometricPFQ, [List, 1], [List, 2], 0.5]	1.2974425414002564	${}_1F_1(1; 2; z) = (e^z - 1)/z$
-2f-1-2-3-5-z-0-3		test	[HypergeometricPFQ, [List, 2, 3], [List, 5], 0.3]	1.5109117821595697	
-3f-2	Scope		[HypergeometricPFQ, [List, 1, 2, 3], [List, 4, 5], 0.5]	1.189874754256423	${}_3F_2$
-0f-0-z-e-z	Properties		[HypergeometricPFQ, [List], [List], z]	[Power, ExponentialE, z]	${}_0F_0(;;z) = e^z$
-1f-0-a-z-1-z-a	Properties		[HypergeometricPFQ, [List, a], [List], z]	[Power, [Add, [Negate, z], 1], [Negate, a]]	${}_1F_0(a;;z) = (1-z)^{-a}$
+id	section	role	expr	expected	known	tolerance	source	caption
+2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2			[HypergeometricPFQ, [List, 1, 1], [List, 2], 0.5]	1.3862943611198906	{num: "1.38629436111989"}	1e-9	Wolfram 15.0.0 HypergeometricPFQ	${}_2F_1(1, 1; 2; z) = -\ln(1-z)/z$, here $2\ln 2$
+1f-1-1-2-z-e-z-1-z			[HypergeometricPFQ, [List, 1], [List, 2], 0.5]	1.2974425414002564				${}_1F_1(1; 2; z) = (e^z - 1)/z$
+2f-1-2-3-5-z-0-3		test	[HypergeometricPFQ, [List, 2, 3], [List, 5], 0.3]	1.5109117821595697	{num: "1.5109117821595697"}	1e-9	Wolfram 15.0.0 HypergeometricPFQ	
+3f-2	Scope		[HypergeometricPFQ, [List, 1, 2, 3], [List, 4, 5], 0.5]	1.189874754256423	{num: "1.1898747542564232"}	1e-9	Wolfram 15.0.0 HypergeometricPFQ	${}_3F_2$
+0f-0-z-e-z	Properties		[HypergeometricPFQ, [List], [List], z]	[Power, ExponentialE, z]				${}_0F_0(;;z) = e^z$
+1f-0-a-z-1-z-a	Properties		[HypergeometricPFQ, [List, a], [List], z]	[Power, [Add, [Negate, z], 1], [Negate, a]]				${}_1F_0(a;;z) = (1-z)^{-a}$

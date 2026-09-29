@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the permutations of $\{1, …, n\}$ whose cycles are a non-crossing set partition.
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - A lazy indexed collection; the count follows a verified recurrence on the block containing $1$ — $1, 2, 6, 23, 105, …$ — with no OEIS match confirmed for this reading, so none is cited.
-  - As implemented, cyclic order within a block is unconstrained; requiring each cycle's elements to increase (the interval $[e, (1\,2\,…\,n)]$ in absolute order) instead gives the Catalan reading $1, 2, 5, 14, …$
-  - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those whose cycles are non-crossing.
 enumerate:
   expr: NonCrossingPermutations(4)
   columns: CycleCount, FixedPoints
@@ -25,3 +21,7 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- A lazy indexed collection; the count follows a verified recurrence on the block containing $1$ — $1, 2, 6, 23, 105, …$ — with no OEIS match confirmed for this reading, so none is cited.
+- As implemented, cyclic order within a block is unconstrained; requiring each cycle's elements to increase (the interval $[e, (1\,2\,…\,n)]$ in absolute order) instead gives the Catalan reading $1, 2, 5, 14, …$
+- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those whose cycles are non-crossing.

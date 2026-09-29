@@ -11,13 +11,13 @@ signatures:
   - call: ProfinitePlot(f, x)
     description: default precision $k = 5$
     library: enumeratio-adeles
-details:
-  - Each cell is a pair of residue classes mod $k!$; a cell is filled when $f$ maps its column class into its row class, evaluating $f$ on `ProfiniteNumber(a, k!)` for every $a$.
-  - $k$ is capped at 6 ($6! = 720$ cells a side) to keep the plot tractable.
-  - The result is an [[ArrayPlot]] of 0/1 cells, as in Hertogh's `ProfiniteGraph`.
 seeAlso:
   - ProfiniteNumber
   - ArrayPlot
 attributes:
   - HoldAll
 ---
+
+- Each cell is a pair of residue classes mod $k!$; a cell is filled when $f$ maps its column class into its row class, evaluating $f$ on `ProfiniteNumber(a, k!)` for every $a$.
+- $k$ is capped at 6 ($6! = 720$ cells a side) to keep the plot tractable.
+- The result is an [[ArrayPlot]] of 0/1 cells, as in Hertogh's `ProfiniteGraph`.

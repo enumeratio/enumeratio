@@ -8,9 +8,6 @@ signatures:
     description: ${}_1F_1(a,b;z) / \Gamma(b)$.
     library: "@enumeratio/analytic"
     type: (number, number, number) -> number
-details:
-  - compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.
-  - Entire in $z$ ($p = q$ for this series), so never declines on $z$.
 primitive: numeric
 bindings:
   - origin: native
@@ -27,3 +24,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.
+- Entire in $z$ ($p = q$ for this series), so never declines on $z$.

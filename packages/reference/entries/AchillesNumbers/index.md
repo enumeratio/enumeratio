@@ -6,10 +6,6 @@ summary: The Achilles numbers $72, 108, 200, 288, …$ -- powerful but not a per
 signatures:
   - call: AchillesNumbers
     description: the powerful $n > 1$ that aren't of the form $a^k$ ($a, k \ge 2$), an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(AchillesNumbers) = +\infty$, and $At$ unranks the $k$-th by scanning forward, testing [[PowerfulNumbers|powerfulness]] and then [[PerfectPowerNumbers|non-perfect-power]]ness.'
-  - "OEIS A052486. $72 = 2^3 \\cdot 3^2$ is the smallest: every prime factor's exponent is $\\ge 2$ (powerful), but no single base and exponent produce it (not a perfect power)."
-  - "Membership goes through [[Element]]: $Element(72, AchillesNumbers)$ is true, $Element(64, AchillesNumbers)$ is false ($64 = 2^6$, a perfect power)."
 enumerate:
   expr: Take(AchillesNumbers, 15)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(AchillesNumbers) = +\infty$, and $At$ unranks the $k$-th by scanning forward, testing [[PowerfulNumbers|powerfulness]] and then [[PerfectPowerNumbers|non-perfect-power]]ness.
+- OEIS A052486. $72 = 2^3 \cdot 3^2$ is the smallest: every prime factor's exponent is $\ge 2$ (powerful), but no single base and exponent produce it (not a perfect power).
+- Membership goes through [[Element]]: $Element(72, AchillesNumbers)$ is true, $Element(64, AchillesNumbers)$ is false ($64 = 2^6$, a perfect power).

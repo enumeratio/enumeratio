@@ -8,9 +8,6 @@ signatures:
     description: the descent count of a one-line permutation $p$
     library: enumeratio-collections
     type: (list | permutation) -> integer
-details:
-  - The permutations of $\{1, \dots, n\}$ with $k$ descents are counted by the Eulerian number $\left\langle{n\atop k}\right\rangle$
-  - 'Complementary to [[Ascents]]: every adjacent pair is one or the other, so $\mathrm{Descents} + \mathrm{Ascents} = n - 1$'
 seeAlso:
   - Ascents
   - MajorIndex
@@ -48,3 +45,6 @@ statOn:
   - Surjection
   - Word
 ---
+
+- The permutations of $\{1, \dots, n\}$ with $k$ descents are counted by the Eulerian number $\left\langle{n\atop k}\right\rangle$
+- Complementary to [[Ascents]]: every adjacent pair is one or the other, so $\mathrm{Descents} + \mathrm{Ascents} = n - 1$

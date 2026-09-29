@@ -8,9 +8,6 @@ signatures:
     description: the Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $n!$ (A000142); order-isomorphic to [[SymmetricGroup]] via the Lehmer code bijection.
-  - Each element is the code itself, not the permutation it decodes to.
 seeAlso:
   - SymmetricGroup
   - SubexcedantSeqs
@@ -35,3 +32,6 @@ grades:
     role: axis
 carrier: PermutationInversion
 ---
+
+- Count is $n!$ (A000142); order-isomorphic to [[SymmetricGroup]] via the Lehmer code bijection.
+- Each element is the code itself, not the permutation it decodes to.

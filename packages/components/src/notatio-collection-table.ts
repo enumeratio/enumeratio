@@ -1,7 +1,8 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { BoxedExpression, BoxedType } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { toInputForm } from "@enumeratio/formats/inputform";
+import { collectionCarrierOf } from "@enumeratio/structures";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
@@ -22,6 +23,8 @@ import {
   renderGlyph,
   splitColumns,
   substituteRow,
+  substituteRowPerHead,
+  wantsCarrier,
 } from "@enumeratio/frontend";
 
 const log = debug("collection-table");
@@ -112,10 +115,14 @@ export class NotatioCollectionTable extends LitElement {
     page: { type: Number, reflect: true },
     /**
      * The carrier its rows inhabit -- the constructor head from `@enumeratio/domains`,
-     * e.g. `Permutation`. Set it and each row is handed to the columns and the filter AS
-     * that carrier, so a statistic of a permutation (`Cycles`, `FixedPoints`) can be asked
-     * for at all: those heads take the carrier, not a bare list. Leave it unset and rows
-     * stay bare lists, which only the list-function statistics accept.
+     * e.g. `Permutation`. Auto-derived from the collection's own head (`SymmetricGroup` ->
+     * `Permutation`) via `@enumeratio/structures`' collection→carrier registry, so this is
+     * an OVERRIDE, needed only when the collection isn't registered or a story wants a
+     * different reading. Whichever carrier is in play, each column and the filter wrap the
+     * row in it only where the statistic actually declares that carrier as its argument
+     * type -- never a blanket wrap, since a bare-list function (`Length`, `Max`, a
+     * `Descents`-style word statistic) answers a different, wrong question over the
+     * carrier than over the row itself.
      */
     carrier: { type: String },
     /** Draw each row as a glyph too: `permutation`, `subset`, `partition`, `dyck`, … */
@@ -171,6 +178,16 @@ export class NotatioCollectionTable extends LitElement {
   #generation = 0;
   #elements = new Map<number, BoxedExpression>();
   #cells = new Map<string, CellValue>();
+  /** The carrier in play: `carrier` if set, else auto-derived from the collection's head. */
+  #carrierName: string | undefined;
+  /** The bare list's and the carrier's own types, each boxed once from the first row seen --
+   *  every row of one collection shares a shape (already a carrier value, or not), so one
+   *  probe of each stands for all of them. */
+  #bareType: BoxedType | undefined;
+  #carrierType: BoxedType | undefined;
+  /** Per (head, argument index): does that argument want the row wrapped in the carrier?
+   *  Read once from the head's signature, then reused for every row -- see `wantsCarrier`. */
+  #wrapCache = new Map<string, boolean>();
 
   constructor() {
     super();
@@ -216,10 +233,12 @@ export class NotatioCollectionTable extends LitElement {
       return;
     }
     if (!this.#coll) return;
+    if (changed.has("carrier")) this.#resolveCarrier();
     if (changed.has("columns")) this.#parseColumns();
     if (changed.has("filter")) this.#restartScan();
     if (changed.has("scanLimit") && this._matches && !this._scanning) this.#resumeScan();
     if (
+      changed.has("carrier") ||
       changed.has("columns") ||
       changed.has("filter") ||
       changed.has("sort") ||
@@ -267,6 +286,7 @@ export class NotatioCollectionTable extends LitElement {
       }
       this.#coll = coll;
       this._total = total;
+      this.#resolveCarrier();
       this.#parseColumns();
       this.#restartScan();
       this.#refresh();
@@ -308,13 +328,88 @@ export class NotatioCollectionTable extends LitElement {
   }
 
   /**
-   * The row as the columns and the filter see it: the bare element, or that element wrapped
-   * in its carrier constructor when `carrier` says what these rows are. A statistic of a
-   * permutation takes a `Permutation`, not a list -- the wrapping is what lets it be asked.
+   * The carrier in play for this collection: the `carrier` attribute if set, else derived
+   * from the collection's own head via `@enumeratio/structures`' registry (`SymmetricGroup`
+   * -> `Permutation`). Resets the per-(head, argument) wrap decisions and the probed types,
+   * both of which are stale once the carrier changes.
    */
-  #subject(elt: BoxedExpression): MathJsonExpression {
-    // A family typed by its carrier already yields carrier values.
-    return this.carrier && elt.operator !== this.carrier ? ([this.carrier, elt.json] as MathJsonExpression) : elt.json;
+  #resolveCarrier(): void {
+    const engine = this.#engine;
+    const coll = this.#coll;
+    const head = coll?.operator;
+    this.#carrierName = this.carrier || (engine && head ? collectionCarrierOf(engine, head) : undefined) || undefined;
+    this.#bareType = undefined;
+    this.#carrierType = undefined;
+    this.#wrapCache.clear();
+    this.#cells.clear();
+  }
+
+  /**
+   * `elt` as the columns and the filter see it, two ways: the bare list, and the row wrapped
+   * in its carrier. A family may already yield carrier VALUES (`SymmetricGroup`'s elements are
+   * `Permutation(...)`, not bare lists, once it is declared with a carrier type) -- then the
+   * bare form is the carrier's own single argument, unwrapped, rather than a fresh wrap on
+   * top, so neither reading ever double-wraps or fabricates a wrapper the source never had.
+   */
+  #representations(elt: BoxedExpression): { bare: MathJsonExpression; wrapped: MathJsonExpression } {
+    const name = this.#carrierName;
+    if (!name) return { bare: elt.json, wrapped: elt.json };
+    const json = elt.json;
+    if (elt.operator === name && Array.isArray(json) && json.length === 2) {
+      return { bare: json[1] as MathJsonExpression, wrapped: json };
+    }
+    return { bare: json, wrapped: [name, json] as MathJsonExpression };
+  }
+
+  /** The bare list's and the carrier's own boxed types, each probed once from the first row
+   *  seen (every row of a collection shares its shape) and reused after. Both fall back to
+   *  `elt.type` when there is no carrier, or probing fails. */
+  #typesFor(
+    elt: BoxedExpression,
+    bare: MathJsonExpression,
+    wrapped: MathJsonExpression,
+  ): {
+    bareType: BoxedType;
+    carrierType: BoxedType | undefined;
+  } {
+    if (!this.#carrierName) return { bareType: elt.type, carrierType: undefined };
+    if (!this.#bareType) {
+      try {
+        this.#bareType = bare === elt.json ? elt.type : this.#engine!.box(bare as BoxInput).type;
+      } catch (err) {
+        log("bare type probe failed", err);
+      }
+    }
+    if (!this.#carrierType) {
+      try {
+        this.#carrierType = wrapped === elt.json ? elt.type : this.#engine!.box(wrapped as BoxInput).type;
+      } catch (err) {
+        log("carrier type probe failed", this.#carrierName, err);
+      }
+    }
+    return { bareType: this.#bareType ?? elt.type, carrierType: this.#carrierType };
+  }
+
+  /** Whether `head`'s declared argument `argIndex` wants the row wrapped in the carrier --
+   *  read once from the signature per (head, argIndex), reused for every later row. Never
+   *  retried: a head this can't read stays bare, same as one with no carrier at all. */
+  #decide(head: string, argIndex: number, bareType: BoxedType, carrierType: BoxedType | undefined): boolean {
+    const key = `${head}\0${argIndex}`;
+    const cached = this.#wrapCache.get(key);
+    if (cached !== undefined) return cached;
+    const decision = wantsCarrier(this.#engine!, head, argIndex, bareType, carrierType);
+    this.#wrapCache.set(key, decision);
+    return decision;
+  }
+
+  /** `json` with `_` replaced by `elt`: bare where no carrier is in play, else per-argument,
+   *  by what each occurrence's enclosing head actually declares (BL-1) -- never a blanket wrap,
+   *  and never a double wrap when `elt` is already a carrier value. */
+  #substitute(json: MathJsonExpression, elt: BoxedExpression): MathJsonExpression {
+    if (!this.#carrierName) return substituteRow(json, elt.json);
+    const { bare, wrapped } = this.#representations(elt);
+    const { bareType, carrierType } = this.#typesFor(elt, bare, wrapped);
+    return substituteRowPerHead(json, bare, wrapped, (head, i) => this.#decide(head, i, bareType, carrierType));
   }
 
   /** Evaluate a column at a row; memoised per (column, index) for the collection. */
@@ -327,7 +422,7 @@ export class NotatioCollectionTable extends LitElement {
       value = { text: "⚠" };
     } else {
       try {
-        const result = this.#engine!.box(substituteRow(col.json, this.#subject(elt)) as BoxInput).evaluate();
+        const result = this.#engine!.box(this.#substitute(col.json, elt) as BoxInput).evaluate();
         if (result.operator === "Error") {
           value = { text: "⚠" };
         } else if (Number.isFinite(result.re) && result.im === 0) {
@@ -398,7 +493,7 @@ export class NotatioCollectionTable extends LitElement {
 
   #holds(pred: MathJsonExpression, elt: BoxedExpression): boolean {
     try {
-      const r = this.#engine!.box(substituteRow(pred, this.#subject(elt)) as BoxInput).evaluate();
+      const r = this.#engine!.box(this.#substitute(pred, elt) as BoxInput).evaluate();
       return r.json === "True";
     } catch {
       return false;

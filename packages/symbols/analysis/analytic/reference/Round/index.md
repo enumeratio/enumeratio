@@ -18,12 +18,6 @@ signatures:
     library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-analytic
-details:
-  - 'Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.'
-  - "A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten."
-  - $\mathrm{Round}(x, 0)$ agrees with the 1-argument form.
-  - Threads element-wise over a list.
-  - The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.
 seeAlso:
   - Floor
   - Ceil
@@ -36,3 +30,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.
+- A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten.
+- $\mathrm{Round}(x, 0)$ agrees with the 1-argument form.
+- Threads element-wise over a list.
+- The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.

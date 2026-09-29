@@ -10,6 +10,8 @@ huge-arguments-straight-from-the-asymptotic	N(\mathrm{LogBarnesG}(10^{1\,000}))	
 interval-arithmetic-over-an-increasing-stretch	\mathrm{LogBarnesG}(\mathrm{Interval}(0.111, 0.112))	\mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
 uncertainty-propagation-through-ln-g	\mathrm{LogBarnesG}(\mathrm{Around}(1.2, 0.01))	\mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
 ln-g-infty-infty	\mathrm{LogBarnesG}(\infty)	\infty
+image-over-0p111-to-0p112	\mathrm{LogBarnesG}(\mathrm{Interval}(0.111, 0.112))	\mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
+image-over-0p3-to-4	\mathrm{LogBarnesG}(\mathrm{Interval}(0.3, 4))	\mathrm{Interval}(-1.028\,295\,630\,323\,21, 0.693\,147\,180\,559\,946)
 g-0-0-so-its-logarithm-is-infty	\mathrm{LogBarnesG}(0)	-\infty
 exact-at-the-integers-ln-g-10-ln	\mathrm{LogBarnesG}(10)	2\ln(14)+3\ln(10)+9\ln(3)+18\ln(2)+\ln(5)
 the-continuation-not-ln-of-the-value-g-2-5-0-yet	\mathrm{LogBarnesG}(-2.5)	-2.574\,748\,476\,853\,131+18.849\,555\,921\,538\,76i

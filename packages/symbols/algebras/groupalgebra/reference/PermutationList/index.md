@@ -11,10 +11,6 @@ signatures:
   - call: PermutationList(perm, n)
     description: the one-line word, padded with fixed points to length $n$
     library: enumeratio-groupalgebra
-details:
-  - Only takes [[Cycles]] — a one-line word is already this head's own answer, so there is nothing to convert
-  - "`n` shorter than the cycles' own largest point leaves the call unevaluated — there is no room for that point in the result"
-  - The inverse of [[PermutationCycles]]'s no-argument form, which reads a one-line word back into cycle notation
 seeAlso:
   - Cycles
   - PermutationCycles
@@ -23,3 +19,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Only takes [[Cycles]] — a one-line word is already this head's own answer, so there is nothing to convert
+- `n` shorter than the cycles' own largest point leaves the call unevaluated — there is no room for that point in the result
+- The inverse of [[PermutationCycles]]'s no-argument form, which reads a one-line word back into cycle notation

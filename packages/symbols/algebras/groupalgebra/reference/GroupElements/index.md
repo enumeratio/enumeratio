@@ -11,9 +11,6 @@ signatures:
   - call: GroupElements(group, positions)
     description: a `PermutationGroup`'s or `AlternatingGroup`'s elements at `positions`, in its own order
     library: enumeratio-groupalgebra
-details:
-  - A `PermutationGroup`'s or `AlternatingGroup`'s elements print as [[Cycles]], not as [[GroupBasis]] labels — its elements are permutations, not abstract group-algebra basis vectors
-  - The identity always comes first; the rest follow the ascending order of their one-line words
 seeAlso:
   - GroupOrder
   - PermutationGroup
@@ -22,3 +19,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- A `PermutationGroup`'s or `AlternatingGroup`'s elements print as [[Cycles]], not as [[GroupBasis]] labels — its elements are permutations, not abstract group-algebra basis vectors
+- The identity always comes first; the rest follow the ascending order of their one-line words

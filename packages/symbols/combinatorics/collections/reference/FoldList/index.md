@@ -11,12 +11,12 @@ signatures:
   - call: FoldList(f, list)
     description: like the 3-argument form, using the first element of $list$ as $x_0$ and folding over the rest.
     library: enumeratio-collections
-details:
-  - The last element equals [[Fold]]($f$, $x_0$, $list$).
-  - See [[Accumulate]] for the common case $f = Add$.
 seeAlso:
   - Fold
   - Accumulate
 names:
   wolframIdentity: true
 ---
+
+- The last element equals [[Fold]]($f$, $x_0$, $list$).
+- See [[Accumulate]] for the common case $f = Add$.

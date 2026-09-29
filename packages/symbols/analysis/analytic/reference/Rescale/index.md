@@ -16,10 +16,10 @@ signatures:
     description: x rescaled from {min, max} to {ymin, ymax}.
     library: "@enumeratio/analytic"
     arity: 3
-details:
-  - A bare scalar with no range to rescale against -- Rescale(x) where x is not a list -- has no sensible reading and stays unevaluated.
-  - Rescale(x, {min, max}) is Rescale(x, {min, max}, {0, 1}) with the target range left implicit.
-  - Exact rational input and bounds give an exact rational result.
 names:
   wolframIdentity: true
 ---
+
+- A bare scalar with no range to rescale against -- Rescale(x) where x is not a list -- has no sensible reading and stays unevaluated.
+- Rescale(x, {min, max}) is Rescale(x, {min, max}, {0, 1}) with the target range left implicit.
+- Exact rational input and bounds give an exact rational result.

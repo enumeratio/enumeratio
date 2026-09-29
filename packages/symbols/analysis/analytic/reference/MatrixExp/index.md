@@ -11,12 +11,6 @@ signatures:
   - call: MatrixExp(A, v)
     description: "$e^A v$: `A`'s matrix exponential applied to the vector `v`."
     library: "@enumeratio/analytic"
-details:
-  - NOT [[Exp]] of a matrix, which broadcasts element-wise instead -- see that entry's divergence note.
-  - "Exact where the structure gives one: a diagonal A reduces to elementwise Exp on the diagonal; a 2×2 A reduces to a closed form in Cosh, Sinh and Sqrt of its trace and determinant (which also covers every 2×2 nilpotent and repeated-eigenvalue case, and -- written to recognize a provably negative discriminant -- every 2×2 rotation generator, in Cos and Sin instead); a nilpotent A of any size, with exact entries, reduces to its truncated Taylor series."
-  - "Otherwise numeric only, produced under N(): scaling-and-squaring, in double precision."
-  - Rejects a non-square argument, same as [[MatrixRank]]'s siblings [[Inverse]], [[MatrixPower]], and [[Determinant]].
-  - MatrixExp(A, v) computes $e^A$ first (via whichever path above applies) and multiplies by `v`; it is not a matrix-free method, just a shorter call.
 seeAlso:
   - Exp
   - MatrixPower
@@ -25,3 +19,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- NOT [[Exp]] of a matrix, which broadcasts element-wise instead -- see that entry's divergence note.
+- Exact where the structure gives one: a diagonal A reduces to elementwise Exp on the diagonal; a 2×2 A reduces to a closed form in Cosh, Sinh and Sqrt of its trace and determinant (which also covers every 2×2 nilpotent and repeated-eigenvalue case, and -- written to recognize a provably negative discriminant -- every 2×2 rotation generator, in Cos and Sin instead); a nilpotent A of any size, with exact entries, reduces to its truncated Taylor series.
+- Otherwise numeric only, produced under N(): scaling-and-squaring, in double precision.
+- Rejects a non-square argument, same as [[MatrixRank]]'s siblings [[Inverse]], [[MatrixPower]], and [[Determinant]].
+- MatrixExp(A, v) computes $e^A$ first (via whichever path above applies) and multiplies by `v`; it is not a matrix-free method, just a shorter call.

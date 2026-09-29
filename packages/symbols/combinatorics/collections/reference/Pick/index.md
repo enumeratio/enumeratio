@@ -11,12 +11,12 @@ signatures:
   - call: Pick(list, sel, patt)
     description: elements of list where the corresponding sel element matches patt
     library: enumeratio-collections
-details:
-  - list and sel must be the same length.
-  - Matching uses the same wildcard grammar as [[MatchQ]].
 seeAlso:
   - Level
   - MatchQ
 names:
   wolframIdentity: true
 ---
+
+- list and sel must be the same length.
+- Matching uses the same wildcard grammar as [[MatchQ]].

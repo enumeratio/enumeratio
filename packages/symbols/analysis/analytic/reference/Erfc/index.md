@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | signed_infinity) -> complex
     overrides: compute-engine
-details:
-  - Defined as $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$. See [[Erf]].
-  - $\operatorname{erfc}(0) = 1$, $\operatorname{erfc}(\infty) = 0$, $\operatorname{erfc}(-\infty) = 2$.
-  - $\operatorname{erfc}(-z) = 2 - \operatorname{erfc}(z)$, the mirror image of Erf's oddness.
-  - Computed directly from a continued fraction for large $|z|$ rather than as $1-\operatorname{erf}(z)$, since that subtraction would lose all precision once $\operatorname{erf}(z)$ rounds to $\pm1$.
-  - compute-engine requires an inexact (floating-point) argument to produce a numeric value under plain evaluation, the same convention as [[Erf]].
 seeAlso:
   - Erf
 references:
@@ -30,3 +24,9 @@ names:
   dlmf: complementary error function
   wolframIdentity: true
 ---
+
+- Defined as $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$. See [[Erf]].
+- $\operatorname{erfc}(0) = 1$, $\operatorname{erfc}(\infty) = 0$, $\operatorname{erfc}(-\infty) = 2$.
+- $\operatorname{erfc}(-z) = 2 - \operatorname{erfc}(z)$, the mirror image of Erf's oddness.
+- Computed directly from a continued fraction for large $|z|$ rather than as $1-\operatorname{erf}(z)$, since that subtraction would lose all precision once $\operatorname{erf}(z)$ rounds to $\pm1$.
+- compute-engine requires an inexact (floating-point) argument to produce a numeric value under plain evaluation, the same convention as [[Erf]].

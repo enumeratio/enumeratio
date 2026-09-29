@@ -11,10 +11,6 @@ signatures:
   - call: Thread(f(a1, …, an), h)
     description: like Thread(f(...)), threading only over operands headed by h instead of List
     library: enumeratio-collections
-details:
-  - Operands not headed by h are broadcast unchanged to every threaded call.
-  - Left unevaluated when the h-headed operands don't all share one length.
-  - Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.
 seeAlso:
   - MovingMap
   - Array
@@ -23,3 +19,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Operands not headed by h are broadcast unchanged to every threaded call.
+- Left unevaluated when the h-headed operands don't all share one length.
+- Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.

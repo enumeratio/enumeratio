@@ -12,10 +12,10 @@ signatures:
     description: the triangle wave rescaled to vary from min to max, unit period.
     library: "@enumeratio/analytic"
     arity: 2
-details:
-  - Default range is {-1, 1} with a sine-like phase, NOT the [0, 1] tent [[UnitTriangle]]/[[HeavisideLambda]] use -- TriangleWave(0) = 0, not 1.
-  - Continuous everywhere, including at the peak and trough.
-  - The range form takes the range FIRST, x second -- TriangleWave({min, max}, x) -- matching [[SawtoothWave]] and [[SquareWave]].
 names:
   wolframIdentity: true
 ---
+
+- Default range is {-1, 1} with a sine-like phase, NOT the [0, 1] tent [[UnitTriangle]]/[[HeavisideLambda]] use -- TriangleWave(0) = 0, not 1.
+- Continuous everywhere, including at the peak and trough.
+- The range form takes the range FIRST, x second -- TriangleWave({min, max}, x) -- matching [[SawtoothWave]] and [[SquareWave]].

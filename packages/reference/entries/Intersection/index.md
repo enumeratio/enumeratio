@@ -6,14 +6,14 @@ summary: The elements common to all the argument collections.
 signatures:
   - call: Intersection(a, b, …)
     description: the elements common to every collection, as a $Set$.
-details:
-  - 'Idempotent: $A \cap A = A$.'
-  - Disjoint collections intersect to the symbol $EmptySet$, not an empty $Set$.
-  - With three or more collections, only elements present in all of them survive.
-  - 'Same counting identity as [[Union]], rearranged: $|A| + |B| = |A \cup B| + |A \cap B|$.'
 seeAlso:
   - Union
   - SetMinus
 names:
   wolframIdentity: true
 ---
+
+- Idempotent: $A \cap A = A$.
+- Disjoint collections intersect to the symbol $EmptySet$, not an empty $Set$.
+- With three or more collections, only elements present in all of them survive.
+- Same counting identity as [[Union]], rearranged: $|A| + |B| = |A \cup B| + |A \cap B|$.

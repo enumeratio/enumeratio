@@ -8,11 +8,11 @@ signatures:
     description: generic over every distribution this package's [[CDF]] answers, old or new — it goes back through [[CDF]] rather than switching on the distribution's head.
     library: enumeratio-statistics
     type: (distribution, list<real> | real | signed_infinity) -> real
-details:
-  - Exact wherever [[CDF]] is exact for `dist`; unevaluated otherwise.
 seeAlso:
   - CDF
   - HazardFunction
 names:
   wolframIdentity: true
 ---
+
+- Exact wherever [[CDF]] is exact for `dist`; unevaluated otherwise.

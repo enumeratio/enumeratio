@@ -8,13 +8,13 @@ signatures:
     description: the sequence's value at $n_0$, running the recurrence stored in `fn` forward from whichever initial condition is closest below $n_0$.
     library: "@enumeratio/analytic"
     type: (any) -> any
-details:
-  - Ordinarily built by [[DifferenceRootReduce]] rather than by hand — the examples below construct one directly to show the evaluation contract on its own.
-  - Evaluation is attached to the native `Apply` operator (never redeclares it — see derivatives.ts's own `Derivative`/`D` hook for the same pattern), so it only intercepts a call whose head is `DifferenceRoot(...)`; every other `Apply` call is untouched.
-  - Declines (stays symbolic) at a step whose leading coefficient evaluates to exactly 0 with no initial condition to jump to instead, and at a negative or non-integer target.
 seeAlso:
   - DifferenceRootReduce
   - DifferentialRoot
 names:
   wolframIdentity: true
 ---
+
+- Ordinarily built by [[DifferenceRootReduce]] rather than by hand — the examples below construct one directly to show the evaluation contract on its own.
+- Evaluation is attached to the native `Apply` operator (never redeclares it — see derivatives.ts's own `Derivative`/`D` hook for the same pattern), so it only intercepts a call whose head is `DifferenceRoot(...)`; every other `Apply` call is untouched.
+- Declines (stays symbolic) at a step whose leading coefficient evaluates to exactly 0 with no initial condition to jump to instead, and at a negative or non-integer target.

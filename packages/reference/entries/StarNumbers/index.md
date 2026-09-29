@@ -6,11 +6,6 @@ summary: The star numbers $1, 13, 37, 73, …$ — $6n^2-6n+1$ — centered figu
 signatures:
   - call: StarNumbers
     description: $6n^2-6n+1$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(StarNumbers) = +\infty$, and $At(StarNumbers, k) = 6k^2-6k+1$ unranks in closed form -- $At(StarNumbers, 5) = 121$.'
-  - OEIS A003154.
-  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(121, StarNumbers)$ is true, $Element(120, StarNumbers)$ is false.
-  - Every star number is both centered hexagonal and centered triangular in disguise (it is the centered figurate number of the $\{6/2\}$ hexagram).
 enumerate:
   expr: Take(StarNumbers, 20)
 seeAlso:
@@ -26,3 +21,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(StarNumbers) = +\infty$, and $At(StarNumbers, k) = 6k^2-6k+1$ unranks in closed form -- $At(StarNumbers, 5) = 121$.
+- OEIS A003154.
+- Membership goes through [[Element]] by inverting the closed form exactly -- $Element(121, StarNumbers)$ is true, $Element(120, StarNumbers)$ is false.
+- Every star number is both centered hexagonal and centered triangular in disguise (it is the centered figurate number of the $\{6/2\}$ hexagram).

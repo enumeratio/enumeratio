@@ -8,12 +8,6 @@ signatures:
     description: the Kronecker symbol $\left(\frac{a}{n}\right)$.
     library: enumeratio-modular
     type: (integer, integer) -> integer
-details:
-  - Agrees with [[JacobiSymbol]] wherever $n$ is odd and positive, and with [[LegendreSymbol]] where $n$ is also prime — this is the head above both.
-  - $\left(\frac{a}{0}\right)=1$ if $a=\pm1$, else 0; $\left(\frac{a}{-1}\right)=1$ if $a\ge0$, $-1$ if $a<0$.
-  - $\left(\frac{a}{2}\right)=0$ for even $a$; $1$ if $a\equiv\pm1\pmod 8$; $-1$ if $a\equiv\pm3\pmod 8$ — this is the piece Jacobi's odd-$n$ restriction leaves out.
-  - 'Completely multiplicative in $n$: $\left(\frac{a}{n_1n_2}\right)=\left(\frac{a}{n_1}\right)\left(\frac{a}{n_2}\right)$.'
-  - "Bignum-safe: both arguments may exceed the double-precision range."
 seeAlso:
   - JacobiSymbol
   - LegendreSymbol
@@ -28,3 +22,9 @@ bindings:
       version: 15.0.0
       on: 2026-09-28
 ---
+
+- Agrees with [[JacobiSymbol]] wherever $n$ is odd and positive, and with [[LegendreSymbol]] where $n$ is also prime — this is the head above both.
+- $\left(\frac{a}{0}\right)=1$ if $a=\pm1$, else 0; $\left(\frac{a}{-1}\right)=1$ if $a\ge0$, $-1$ if $a<0$.
+- $\left(\frac{a}{2}\right)=0$ for even $a$; $1$ if $a\equiv\pm1\pmod 8$; $-1$ if $a\equiv\pm3\pmod 8$ — this is the piece Jacobi's odd-$n$ restriction leaves out.
+- Completely multiplicative in $n$: $\left(\frac{a}{n_1n_2}\right)=\left(\frac{a}{n_1}\right)\left(\frac{a}{n_2}\right)$.
+- Bignum-safe: both arguments may exceed the double-precision range.

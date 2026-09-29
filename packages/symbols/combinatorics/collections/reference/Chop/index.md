@@ -11,13 +11,13 @@ signatures:
     library: enumeratio-collections
     type: (any, number?) -> any
     overrides: compute-engine
-details:
-  - Replaces a value smaller in magnitude than about $10^{-10}$ with exact 0 -- cleanup for the floating-point noise left over from a numeric computation.
-  - Chops the real and imaginary parts of a complex number independently.
-  - Only the value's own magnitude matters -- $\mathrm{Chop}(1.000000000001)$ stays as is, since it isn't close to 0, even though it's close to the integer 1.
-  - A second argument overrides the default $10^{-10}$ threshold.
 seeAlso:
   - Round
 names:
   wolframIdentity: true
 ---
+
+- Replaces a value smaller in magnitude than about $10^{-10}$ with exact 0 -- cleanup for the floating-point noise left over from a numeric computation.
+- Chops the real and imaginary parts of a complex number independently.
+- Only the value's own magnitude matters -- $\mathrm{Chop}(1.000000000001)$ stays as is, since it isn't close to 0, even though it's close to the integer 1.
+- A second argument overrides the default $10^{-10}$ threshold.

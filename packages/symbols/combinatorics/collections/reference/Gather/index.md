@@ -11,8 +11,6 @@ signatures:
   - call: Gather(list, test)
     description: elements grouped by a custom two-argument equivalence test.
     library: enumeratio-collections
-details:
-  - "Groups, not runs: every occurrence of a value lands in the same group wherever it appears — unlike [[Split]], which only joins ADJACENT equal elements. See [[GatherBy]] to group by a function's value instead of the elements themselves."
 seeAlso:
   - GatherBy
   - Split
@@ -20,3 +18,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Groups, not runs: every occurrence of a value lands in the same group wherever it appears — unlike [[Split]], which only joins ADJACENT equal elements. See [[GatherBy]] to group by a function's value instead of the elements themselves.

@@ -8,11 +8,11 @@ signatures:
     description: The greatest integer at or below x, in a floor ring.
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - The `FloorRing` protocol's member (Mathlib's `Int.floor`), and what `Floor` answers for such a type.
-  - "The right adjoint of the integers' inclusion: an integer $n$ is at most $x$ exactly when $n \\le \\mathrm{IntegerFloor}(x)$."
 seeAlso:
   - IntegerCeil
   - Floor
   - LowerTick
 ---
+
+- The `FloorRing` protocol's member (Mathlib's `Int.floor`), and what `Floor` answers for such a type.
+- The right adjoint of the integers' inclusion: an integer $n$ is at most $x$ exactly when $n \le \mathrm{IntegerFloor}(x)$.

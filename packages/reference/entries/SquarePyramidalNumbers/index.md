@@ -6,11 +6,6 @@ summary: The square pyramidal numbers $1, 5, 14, 30, …$ — $n(n+1)(2n+1)/6$ �
 signatures:
   - call: SquarePyramidalNumbers
     description: $n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(SquarePyramidalNumbers) = +\infty$, and $At(SquarePyramidalNumbers, k) = k(k+1)(2k+1)/6$ unranks in closed form -- $At(SquarePyramidalNumbers, 5) = 55$.'
-  - OEIS A000330.
-  - Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(55, SquarePyramidalNumbers)$ is true, $Element(56, SquarePyramidalNumbers)$ is false.
-  - $SquarePyramidalNumbers(n) = \sum_{i=1}^n SquareNumbers(i)$.
 enumerate:
   expr: Take(SquarePyramidalNumbers, 20)
 seeAlso:
@@ -27,3 +22,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(SquarePyramidalNumbers) = +\infty$, and $At(SquarePyramidalNumbers, k) = k(k+1)(2k+1)/6$ unranks in closed form -- $At(SquarePyramidalNumbers, 5) = 55$.
+- OEIS A000330.
+- Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(55, SquarePyramidalNumbers)$ is true, $Element(56, SquarePyramidalNumbers)$ is false.
+- $SquarePyramidalNumbers(n) = \sum_{i=1}^n SquareNumbers(i)$.

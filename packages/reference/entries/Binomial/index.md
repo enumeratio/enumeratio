@@ -16,13 +16,6 @@ signatures:
     library: enumeratio-number-theory
     type: (complex | infinity, complex | infinity) -> number
     overrides: enumeratio-analytic
-details:
-  - 'The general definition runs through the Gamma function: $\binom{n}{k} = \frac{\Gamma(n+1)}{\Gamma(k+1)\,\Gamma(n-k+1)}$.'
-  - 'Symmetric in its arguments: $\binom{n}{k} = \binom{n}{n-k}$.'
-  - "Pascal's rule builds each row from the last: $\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}$."
-  - Row sums give $\sum_{k=0}^{n} \binom{n}{k} = 2^n$.
-  - "compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form."
-  - "A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise."
 seeAlso:
   - Factorial
   - Multinomial
@@ -84,3 +77,10 @@ catalog:
     identity: Binomial
     url: https://reference.wolfram.com/language/ref/Binomial.html
 ---
+
+- The general definition runs through the Gamma function: $\binom{n}{k} = \frac{\Gamma(n+1)}{\Gamma(k+1)\,\Gamma(n-k+1)}$.
+- Symmetric in its arguments: $\binom{n}{k} = \binom{n}{n-k}$.
+- Pascal's rule builds each row from the last: $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+- Row sums give $\sum_{k=0}^{n} \binom{n}{k} = 2^n$.
+- compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form.
+- A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise.

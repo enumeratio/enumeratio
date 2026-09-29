@@ -11,12 +11,12 @@ signatures:
   - call: Prepend(association, rule)
     description: "`association` with `rule` (or a list of rules) inserted at the front; a prepended key displaces any later entry for the same key."
     library: enumeratio-collections
-details:
-  - $Prepend(c, x) = Join(\{x\}, c)$. See [[Join]].
-  - Complements [[Append]] at the other end of a collection.
 seeAlso:
   - Append
   - Join
 names:
   wolframIdentity: true
 ---
+
+- $Prepend(c, x) = Join(\{x\}, c)$. See [[Join]].
+- Complements [[Append]] at the other end of a collection.

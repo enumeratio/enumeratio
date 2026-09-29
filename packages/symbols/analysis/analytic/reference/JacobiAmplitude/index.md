@@ -8,12 +8,6 @@ signatures:
     description: the Jacobi amplitude, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
-  - $\operatorname{sn}(u,m) = \sin(\operatorname{am}(u,m))$, $\operatorname{cn}(u,m) = \cos(\operatorname{am}(u,m))$ — the amplitude is what the descending Landen/AGM recursion behind [[JacobiSN]]/[[JacobiCN]]/[[JacobiDN]] computes directly (Abramowitz & Stegun 16.4), continuously (not just modulo $\pi$, unlike reconstructing it from $\arcsin$ of sn alone).
-  - Real m between 0 and 1 only — unlike the pq family, no parameter transform for m outside [0,1] has been verified for the amplitude itself, so this head declines there.
-  - am(0,m) = 0, for any m in range; am(u,0) = u, for any u.
-  - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiSN
   - JacobiCN
@@ -22,3 +16,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+- $\operatorname{sn}(u,m) = \sin(\operatorname{am}(u,m))$, $\operatorname{cn}(u,m) = \cos(\operatorname{am}(u,m))$ — the amplitude is what the descending Landen/AGM recursion behind [[JacobiSN]]/[[JacobiCN]]/[[JacobiDN]] computes directly (Abramowitz & Stegun 16.4), continuously (not just modulo $\pi$, unlike reconstructing it from $\arcsin$ of sn alone).
+- Real m between 0 and 1 only — unlike the pq family, no parameter transform for m outside [0,1] has been verified for the amplitude itself, so this head declines there.
+- am(0,m) = 0, for any m in range; am(u,0) = u, for any u.
+- Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

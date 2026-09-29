@@ -6,10 +6,6 @@ summary: The primorials $2, 6, 30, 210, …$ — $p_n\#$ — the product of the 
 signatures:
   - call: PrimorialNumbers
     description: $p_n\#$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(PrimorialNumbers) = +\infty$, and $At(PrimorialNumbers, k) = p_k\#$, computed exactly over arbitrary-precision integers -- $At(PrimorialNumbers, 5) = 2310$.'
-  - "OEIS A002110, whose offset differs from ours: A002110 opens with the empty product $a(0) = 1$; this collection starts at $n=1$ (value $2$), so the empty product is not itself a member."
-  - Membership goes through [[Element]] by growing the sequence forward until it reaches or passes the candidate -- $Element(2310, PrimorialNumbers)$ is true, $Element(2000, PrimorialNumbers)$ is false.
 enumerate:
   expr: Take(PrimorialNumbers, 20)
 seeAlso:
@@ -30,3 +26,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(PrimorialNumbers) = +\infty$, and $At(PrimorialNumbers, k) = p_k\#$, computed exactly over arbitrary-precision integers -- $At(PrimorialNumbers, 5) = 2310$.
+- OEIS A002110, whose offset differs from ours: A002110 opens with the empty product $a(0) = 1$; this collection starts at $n=1$ (value $2$), so the empty product is not itself a member.
+- Membership goes through [[Element]] by growing the sequence forward until it reaches or passes the candidate -- $Element(2310, PrimorialNumbers)$ is true, $Element(2000, PrimorialNumbers)$ is false.

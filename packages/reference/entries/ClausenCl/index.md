@@ -8,12 +8,6 @@ signatures:
     description: the Clausen function $\mathrm{Cl}_n(\theta)$ of integer order $n \ge 1$ and real $\theta$.
     library: enumeratio-analytic
     type: (integer, number) -> number
-details:
-  - $\mathrm{Cl}_2(\theta) = -\int_0^\theta \ln\left|2\sin\tfrac{t}{2}\right|\,dt$ is the classical Clausen function; $\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$, infinite at $\theta \equiv 0$.
-  - "Parity alternates with the order (DLMF §25.12(ii), mpmath's `clsin` / `clcos`): even $n$ gives the odd, $2\\pi$-periodic sine series, odd $n$ the even cosine series, so that $\\mathrm{Cl}_n(\\theta) = \\operatorname{Im}\\operatorname{Li}_n(e^{i\\theta})$ or $\\operatorname{Re}\\operatorname{Li}_n(e^{i\\theta})$ respectively. See [[PolyLog]]."
-  - "Special values: $\\mathrm{Cl}_2(\\pi/2) = G$ (Catalan's constant), $\\mathrm{Cl}_{2m}(0) = \\mathrm{Cl}_{2m}(\\pi) = 0$, $\\mathrm{Cl}_{2m+1}(0) = \\zeta(2m+1)$, $\\mathrm{Cl}_{2m+1}(\\pi) = -\\eta(2m+1)$, $\\mathrm{Cl}_{2m}(\\pi/2) = \\beta(2m)$, $\\mathrm{Cl}_{2m+1}(\\pi/2) = -2^{-(2m+1)}\\eta(2m+1)$. See [[DirichletEta]], [[DirichletBeta]]."
-  - $\mathrm{Cl}_2$ peaks at $\theta = \pi/3$ with value $1.01494\ldots$, the Gieseking constant's companion; the volume of the ideal regular tetrahedron is $3\,\mathrm{Cl}_2(\pi/3)/2$.
-  - "Wolfram has no Clausen head: there it is spelled $\\operatorname{Im}[\\mathrm{PolyLog}[n, e^{i\\theta}]]$, which is how the oracle checks are phrased. Numerically, the polylogarithm's expansion at the unit circle (DLMF 25.12.12) with $\\theta$ reduced into $(-\\pi, \\pi]$."
 bindings:
   - origin: reference
     form: notatio
@@ -57,3 +51,9 @@ references:
   - system: mathworld
     identity: ClausenFunction
 ---
+
+- $\mathrm{Cl}_2(\theta) = -\int_0^\theta \ln\left|2\sin\tfrac{t}{2}\right|\,dt$ is the classical Clausen function; $\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$, infinite at $\theta \equiv 0$.
+- Parity alternates with the order (DLMF §25.12(ii), mpmath's `clsin` / `clcos`): even $n$ gives the odd, $2\pi$-periodic sine series, odd $n$ the even cosine series, so that $\mathrm{Cl}_n(\theta) = \operatorname{Im}\operatorname{Li}_n(e^{i\theta})$ or $\operatorname{Re}\operatorname{Li}_n(e^{i\theta})$ respectively. See [[PolyLog]].
+- Special values: $\mathrm{Cl}_2(\pi/2) = G$ (Catalan's constant), $\mathrm{Cl}_{2m}(0) = \mathrm{Cl}_{2m}(\pi) = 0$, $\mathrm{Cl}_{2m+1}(0) = \zeta(2m+1)$, $\mathrm{Cl}_{2m+1}(\pi) = -\eta(2m+1)$, $\mathrm{Cl}_{2m}(\pi/2) = \beta(2m)$, $\mathrm{Cl}_{2m+1}(\pi/2) = -2^{-(2m+1)}\eta(2m+1)$. See [[DirichletEta]], [[DirichletBeta]].
+- $\mathrm{Cl}_2$ peaks at $\theta = \pi/3$ with value $1.01494\ldots$, the Gieseking constant's companion; the volume of the ideal regular tetrahedron is $3\,\mathrm{Cl}_2(\pi/3)/2$.
+- Wolfram has no Clausen head: there it is spelled $\operatorname{Im}[\mathrm{PolyLog}[n, e^{i\theta}]]$, which is how the oracle checks are phrased. Numerically, the polylogarithm's expansion at the unit circle (DLMF 25.12.12) with $\theta$ reduced into $(-\pi, \pi]$.

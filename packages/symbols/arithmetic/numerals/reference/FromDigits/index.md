@@ -28,15 +28,6 @@ signatures:
   - call: FromDigits({digits, exponent})
     description: reads the single `{digits, exponent}` pair [[RealDigits]] itself returns, base 10.
     library: enumeratio-numerals
-details:
-  - "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies"
-  - In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value
-  - Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound
-  - "Reading a `ResidueNumerals` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back"
-  - 'In a fixed base, the inverse of [[IntegerDigits]]: $\mathrm{FromDigits}(\mathrm{IntegerDigits}(n))=n$ for $n\ge0$.'
-  - Digits need not be restricted to $0..\mathrm{base}-1$ -- a digit $\ge$ base simply carries into higher place values.
-  - An empty digit list has no natural value; compute-engine leaves it unevaluated rather than returning 0.
-  - compute-engine's FromDigits takes a list of digits, not a digit string.
 seeAlso:
   - IntegerDigits
   - NumeralSystemShape
@@ -44,3 +35,12 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies
+- In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value
+- Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound
+- Reading a `ResidueNumerals` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back
+- In a fixed base, the inverse of [[IntegerDigits]]: $\mathrm{FromDigits}(\mathrm{IntegerDigits}(n))=n$ for $n\ge0$.
+- Digits need not be restricted to $0..\mathrm{base}-1$ -- a digit $\ge$ base simply carries into higher place values.
+- An empty digit list has no natural value; compute-engine leaves it unevaluated rather than returning 0.
+- compute-engine's FromDigits takes a list of digits, not a digit string.

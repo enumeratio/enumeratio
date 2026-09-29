@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex) -> number
     overrides: compute-engine
-details:
-  - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
-  - 'Odd function: $\arcsin(-x) = -\arcsin(x)$.'
-  - 'Co-function with [[Arccos]]: $\arcsin(x) + \arccos(x) = \pi/2$.'
-  - 'Undoes [[Sin]] on its principal branch: $\sin(\arcsin(x)) = x$ for $x \in [-1, 1]$.'
-  - Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\operatorname{sign}(x)\left(\frac{\pi}{2} - i\ln(|x|+\sqrt{x^2-1})\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.
 seeAlso:
   - Sin
   - Arccos
@@ -33,3 +27,9 @@ names:
   dlmf: arcsine function
   wolfram: ArcSin
 ---
+
+- Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
+- Odd function: $\arcsin(-x) = -\arcsin(x)$.
+- Co-function with [[Arccos]]: $\arcsin(x) + \arccos(x) = \pi/2$.
+- Undoes [[Sin]] on its principal branch: $\sin(\arcsin(x)) = x$ for $x \in [-1, 1]$.
+- Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\operatorname{sign}(x)\left(\frac{\pi}{2} - i\ln(|x|+\sqrt{x^2-1})\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.

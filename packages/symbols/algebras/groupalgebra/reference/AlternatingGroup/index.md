@@ -8,10 +8,6 @@ signatures:
     description: the alternating group on $n$ points
     library: enumeratio-groupalgebra
     type: (integer) -> expression<AlternatingGroup>
-details:
-  - "`GroupOrder(AlternatingGroup(n))` is $n!/2$ without materialising all $n!/2$ permutations — $A_1$ and $A_2$ are both trivial, order 1"
-  - '`GroupGenerators(AlternatingGroup(n))` is the 3-cycle $(1\,2\,3)$ together with the longest even cycle available: $(1\,2\,\dots\,n)$ when $n$ is odd, $(2\,3\,\dots\,n)$ when $n$ is even — an $n$-cycle is an even permutation exactly when $n$ is odd'
-  - "`GroupElements(AlternatingGroup(n))`, like [[PermutationGroup]]'s, prints elements as [[Cycles]] and takes an optional `Part`-style position selector"
 seeAlso:
   - SymmetricGroup
   - GroupOrder
@@ -22,3 +18,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- `GroupOrder(AlternatingGroup(n))` is $n!/2$ without materialising all $n!/2$ permutations — $A_1$ and $A_2$ are both trivial, order 1
+- `GroupGenerators(AlternatingGroup(n))` is the 3-cycle $(1\,2\,3)$ together with the longest even cycle available: $(1\,2\,\dots\,n)$ when $n$ is odd, $(2\,3\,\dots\,n)$ when $n$ is even — an $n$-cycle is an even permutation exactly when $n$ is odd
+- `GroupElements(AlternatingGroup(n))`, like [[PermutationGroup]]'s, prints elements as [[Cycles]] and takes an optional `Part`-style position selector

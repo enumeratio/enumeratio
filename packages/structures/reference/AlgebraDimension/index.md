@@ -11,9 +11,6 @@ signatures:
     description: "The `FiniteDimensionalAlgebra` protocol's member: the dimension of any algebra whose type conforms (Mathlib's `Module.finrank`)."
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - Every subset of the generators is one basis blade, so the dimension doubles per generator
-  - A separate head from compute-engine's `Dimension`, which is defined for lists and matrices and is deliberately left alone
 seeAlso:
   - Basis
   - AlgebraSignature
@@ -37,3 +34,6 @@ bindings:
     template: dim($1)
     arity: 1
 ---
+
+- Every subset of the generators is one basis blade, so the dimension doubles per generator
+- A separate head from compute-engine's `Dimension`, which is defined for lists and matrices and is deliberately left alone

@@ -8,12 +8,12 @@ signatures:
     description: an inert binding — `x` follows `dist`. Stays itself under evaluation; only [[Expectation]]/[[Probability]] read it.
     library: enumeratio-statistics
     type: (any, any) -> expression<Distributed>
-details:
-  - Wolfram's own infix `x \[Distributed] dist` parses to exactly this call. Only the second argument of [[Expectation]]/[[Probability]] is read as a `Distributed` binding — elsewhere it is just an inert expression.
-  - The first argument is read structurally (it must be a symbol) rather than type-checked — compute-engine PINS a parameter typed literally `symbol` onto that symbol's inferred type globally, breaking later unrelated uses of the same name (confirmed empirically); typing it `any` here avoids that.
 seeAlso:
   - Expectation
   - Probability
 names:
   wolframIdentity: true
 ---
+
+- Wolfram's own infix `x \[Distributed] dist` parses to exactly this call. Only the second argument of [[Expectation]]/[[Probability]] is read as a `Distributed` binding — elsewhere it is just an inert expression.
+- The first argument is read structurally (it must be a symbol) rather than type-checked — compute-engine PINS a parameter typed literally `symbol` onto that symbol's inferred type globally, breaking later unrelated uses of the same name (confirmed empirically); typing it `any` here avoids that.

@@ -11,11 +11,6 @@ signatures:
   - call: PlanarPartitionAlgebra(n)
     description: only the planar diagrams — dimension $C(2n)$
     library: enumeratio-diagram
-details:
-  - "Dimension $B(2n)$: 2, 15, 203, 4140 for $n = 1,2,3,4$ — the Bell numbers at even index"
-  - Restricting to planar diagrams gives $C(2n)$, the Catalan numbers
-  - "[[Basis]] lists the diagrams and [[AlgebraDimension]] answers from the closed form, so the dimension is available well past the point where listing is useful"
-  - "[[Element]] tests membership, which is what makes the inclusions checkable"
 seeAlso:
   - Diagram
   - BrauerAlgebra
@@ -48,3 +43,8 @@ grades:
     role: axis
 carrier: SetPartition
 ---
+
+- Dimension $B(2n)$: 2, 15, 203, 4140 for $n = 1,2,3,4$ — the Bell numbers at even index
+- Restricting to planar diagrams gives $C(2n)$, the Catalan numbers
+- [[Basis]] lists the diagrams and [[AlgebraDimension]] answers from the closed form, so the dimension is available well past the point where listing is useful
+- [[Element]] tests membership, which is what makes the inclusions checkable

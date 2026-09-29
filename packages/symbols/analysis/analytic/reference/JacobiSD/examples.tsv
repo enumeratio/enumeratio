@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-a-floating-point-argument-evaluates-directly-to			[N, [JacobiSD, 0.3, -2]]	0.2793015774746946	A floating-point argument evaluates directly to a decimal
-m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiSD, 1.1, 0.9]]	1.2678217669206615	m close to its m = 1 boundary
-u-0-is-0-for-any-m	Properties		[JacobiSD, 0, m]	0	u = 0 is 0, for any m
-symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiSD, u, m]	[JacobiSD, u, m]	Symbolic arguments are left unevaluated rather than guessed at
+id	section	role	expr	expected	known	tolerance	source	caption
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiSD, 0.3, -2]]	0.2793015774746946	{num: "0.2793015774746946"}	1e-13	mpmath 1.3.0 ellipfun	A floating-point argument evaluates directly to a decimal
+m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiSD, 1.1, 0.9]]	1.2678217669206615				m close to its m = 1 boundary
+u-0-is-0-for-any-m	Properties		[JacobiSD, 0, m]	0				u = 0 is 0, for any m
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiSD, u, m]	[JacobiSD, u, m]				Symbolic arguments are left unevaluated rather than guessed at

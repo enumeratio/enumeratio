@@ -8,10 +8,6 @@ signatures:
     description: true when $kQ$ has a finite basis
     library: enumeratio-quiver
     type: (expression<LinearQuiver> | expression<Quiver> | symbol) -> boolean
-details:
-  - $kQ$ is finite-dimensional exactly when $Q$ is acyclic; one loop gives the paths $e, a, a^2, \dots$ and the Jordan quiver's path algebra is $k[x]$
-  - For a cyclic quiver, `Basis` and `AlgebraDimension` have no answer and leave the call standing rather than enumerating forever
-  - '$kA_n$ is the incidence algebra of a chain: its paths are the pairs $i \le j$, so both have dimension $\binom{n+1}{2}$'
 seeAlso:
   - QuiverPath
   - QuiverCompose
@@ -22,3 +18,7 @@ references:
   - system: mathworld
     identity: AcyclicDigraph
 ---
+
+- $kQ$ is finite-dimensional exactly when $Q$ is acyclic; one loop gives the paths $e, a, a^2, \dots$ and the Jordan quiver's path algebra is $k[x]$
+- For a cyclic quiver, `Basis` and `AlgebraDimension` have no answer and leave the call standing rather than enumerating forever
+- $kA_n$ is the incidence algebra of a chain: its paths are the pairs $i \le j$, so both have dimension $\binom{n+1}{2}$

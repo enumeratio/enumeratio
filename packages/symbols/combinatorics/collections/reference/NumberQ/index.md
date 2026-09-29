@@ -8,10 +8,10 @@ signatures:
     description: True for an Integer/Real/Rational/Complex literal, False otherwise
     library: enumeratio-collections
     type: (any) -> boolean
-details:
-  - Unlike compute-engine's own isNumber (True for Pi, GoldenRatio, …), NumberQ(Pi) is False — Wolfram's own distinction, kernel-checked (`NumberQ[Pi]` is False, `NumberQ[N[Pi]]` is True).
 seeAlso:
   - ReIm
 names:
   wolframIdentity: true
 ---
+
+- Unlike compute-engine's own isNumber (True for Pi, GoldenRatio, …), NumberQ(Pi) is False — Wolfram's own distinction, kernel-checked (`NumberQ[Pi]` is False, `NumberQ[N[Pi]]` is True).

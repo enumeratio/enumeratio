@@ -8,9 +8,6 @@ signatures:
     description: ${}_0F_1(b; z) / \Gamma(b)$.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - 'Computed by its own series $\sum_{k\ge0} z^k / (\Gamma(b+k)\,k!)$ rather than dividing `Hypergeometric0F1` by `Gamma(b)`: at $b$ a nonpositive integer, `Gamma(b)` is itself a pole, and $1/\Gamma$ is taken directly (zero there, by the standard convention) so the sum stays finite exactly where the naive division would not.'
-  - Entire in $z$ too ($p \le q$ for this series), so — unlike [[Hypergeometric2F1Regularized]] — never declines on $z$.
 primitive: numeric
 bindings:
   - origin: native
@@ -27,3 +24,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Computed by its own series $\sum_{k\ge0} z^k / (\Gamma(b+k)\,k!)$ rather than dividing `Hypergeometric0F1` by `Gamma(b)`: at $b$ a nonpositive integer, `Gamma(b)` is itself a pole, and $1/\Gamma$ is taken directly (zero there, by the standard convention) so the sum stays finite exactly where the naive division would not.
+- Entire in $z$ too ($p \le q$ for this series), so — unlike [[Hypergeometric2F1Regularized]] — never declines on $z$.

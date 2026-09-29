@@ -8,8 +8,6 @@ signatures:
     description: Free $\pm 1$-step paths of length $2n$ starting and ending at height $0$, with no non-negativity constraint
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the central binomial coefficient $\binom{2n}{n}$ (A000984).
 seeAlso:
   - DyckPaths
 references:
@@ -20,3 +18,5 @@ grades:
     role: axis
 carrier: DyckPath
 ---
+
+- Count is the central binomial coefficient $\binom{2n}{n}$ (A000984).

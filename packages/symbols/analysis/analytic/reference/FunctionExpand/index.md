@@ -8,10 +8,6 @@ signatures:
     description: "`expr` with a handful of named special-function identities applied."
     library: "@enumeratio/analytic"
     type: (expression) -> expression
-details:
-  - "Not a general special-function identity engine: DirichletEta and DirichletBeta rewrite in terms of the (Hurwitz) zeta this package already declares, BarnesG(½) in Glaisher's constant, and two special angles (Sin(π/15), Cos(π/24)) past compute-engine's automatic table -- each is a named identity, not a derivation."
-  - The two special angles are pinned lookups at exactly those arguments, not a general nested-radical solver for an arbitrary rational multiple of π.
-  - "Pochhammer(x, 3) and Binomial(n, 2) need no rule here: compute-engine's own evaluator already expands a concrete nonnegative integer length into the product before FunctionExpand runs."
 seeAlso:
   - FullSimplify
   - DirichletEta
@@ -20,3 +16,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Not a general special-function identity engine: DirichletEta and DirichletBeta rewrite in terms of the (Hurwitz) zeta this package already declares, BarnesG(½) in Glaisher's constant, and two special angles (Sin(π/15), Cos(π/24)) past compute-engine's automatic table -- each is a named identity, not a derivation.
+- The two special angles are pinned lookups at exactly those arguments, not a general nested-radical solver for an arbitrary rational multiple of π.
+- Pochhammer(x, 3) and Binomial(n, 2) need no rule here: compute-engine's own evaluator already expands a concrete nonnegative integer length into the product before FunctionExpand runs.

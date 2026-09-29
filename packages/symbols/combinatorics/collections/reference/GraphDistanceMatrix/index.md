@@ -8,10 +8,6 @@ signatures:
     description: row/column order follows VertexList(g); entry (i, j) is GraphDistance(g, v_i, v_j).
     library: enumeratio-collections
     type: (value) -> list<list<real | signed_infinity>>
-details:
-  - Respects edge direction, same as [[GraphDistance]] itself -- row i is the distances FROM vertex i.
-  - An unreachable pair reads PositiveInfinity, matching GraphDistance on a disconnected graph.
-  - "Weighted (g carries EdgeWeight): every entry is GraphDistance's own weighted (Dijkstra, summed-weight) reading, not an edge count; a negative weight leaves the WHOLE matrix unevaluated, same as GraphDistance itself."
 seeAlso:
   - GraphDistance
   - FindShortestPath
@@ -20,3 +16,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Respects edge direction, same as [[GraphDistance]] itself -- row i is the distances FROM vertex i.
+- An unreachable pair reads PositiveInfinity, matching GraphDistance on a disconnected graph.
+- Weighted (g carries EdgeWeight): every entry is GraphDistance's own weighted (Dijkstra, summed-weight) reading, not an edge count; a negative weight leaves the WHOLE matrix unevaluated, same as GraphDistance itself.

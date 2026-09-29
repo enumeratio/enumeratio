@@ -3,9 +3,6 @@ name: LargestPart
 domain: Partition statistics
 signature: LargestPart(partition)
 summary: The largest part.
-details:
-  - Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
 catalog:
   - system: findstat
     identity: St001447
@@ -23,3 +20,6 @@ signatures:
     library: enumeratio-statistics
     type: (integer_partition) -> number
 ---
+
+- Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

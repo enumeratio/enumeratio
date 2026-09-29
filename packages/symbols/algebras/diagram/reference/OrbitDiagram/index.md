@@ -17,12 +17,6 @@ signatures:
   - call: DiagramCoarsenings(d)
     description: every partition coarser than this one
     library: enumeratio-diagram
-details:
-  - $d_\lambda = \sum_{\mu \succeq \lambda} x_\mu$, and the inverse carries $\mu_\Pi(\lambda,\mu) = \prod_{B}(-1)^{k_B-1}(k_B-1)!$
-  - Coarsening is partitioning the blocks, so a diagram with $k$ blocks has $\mathrm{Bell}(k)$ coarsenings
-  - The change of basis is unitriangular in the number of blocks, which is what makes the two maps inverse
-  - Contrast the Hopf-algebra bases, which invert over the BOOLEAN lattice where the Möbius function is only a sign — the factorials here are the cost of merging any blocks rather than adjacent ones
-  - The map onto the symmetric group's centraliser algebra kills $x_\lambda$ exactly when $\lambda$ has more blocks than $\delta$ — a statement with no clean form in the diagram basis
 seeAlso:
   - Diagram
   - PartitionAlgebra
@@ -30,3 +24,9 @@ references:
   - system: wikipedia
     identity: Group action#Orbits and stabilizers
 ---
+
+- $d_\lambda = \sum_{\mu \succeq \lambda} x_\mu$, and the inverse carries $\mu_\Pi(\lambda,\mu) = \prod_{B}(-1)^{k_B-1}(k_B-1)!$
+- Coarsening is partitioning the blocks, so a diagram with $k$ blocks has $\mathrm{Bell}(k)$ coarsenings
+- The change of basis is unitriangular in the number of blocks, which is what makes the two maps inverse
+- Contrast the Hopf-algebra bases, which invert over the BOOLEAN lattice where the Möbius function is only a sign — the factorials here are the cost of merging any blocks rather than adjacent ones
+- The map onto the symmetric group's centraliser algebra kills $x_\lambda$ exactly when $\lambda$ has more blocks than $\delta$ — a statement with no clean form in the diagram basis

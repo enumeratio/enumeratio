@@ -8,12 +8,12 @@ signatures:
     description: The greatest tick at or below x, in a type whose order has ticks.
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - The `FloorOrder` protocol's member, and what `Floor` answers for such a type.
-  - "Right adjoint of the ticks' inclusion: a tick $z$ is at or below $x$ exactly when it is at or below $\\mathrm{LowerTick}(x)$."
-  - "`FloorOrder` is our extension below Mathlib's `FloorRing`, for ticks that aren't a ring's integers."
 seeAlso:
   - UpperTick
   - Floor
   - Midpoint
 ---
+
+- The `FloorOrder` protocol's member, and what `Floor` answers for such a type.
+- Right adjoint of the ticks' inclusion: a tick $z$ is at or below $x$ exactly when it is at or below $\mathrm{LowerTick}(x)$.
+- `FloorOrder` is our extension below Mathlib's `FloorRing`, for ticks that aren't a ring's integers.

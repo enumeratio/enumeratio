@@ -8,12 +8,6 @@ signatures:
     description: $\mu$ on the interval $[x,y]$, and 0 when $x \not\le y$
     library: enumeratio-incidence
     type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>, value, value) -> integer
-details:
-  - Defined by $\mu(x,x) = 1$ and $\mu(x,y) = -\sum_{x \le z < y}\mu(x,z)$ — which is exactly the statement that $\mu$ inverts $\zeta$
-  - On `DivisorLattice(n)`, $\mu([a,b])$ is the classical number-theoretic $\mu(b/a)$
-  - On `BooleanLattice(n)`, $\mu([S,T]) = (-1)^{|T \setminus S|}$ — the signs of inclusion–exclusion
-  - On a chain, $\mu$ is 1 on a point, $-1$ on a cover, and 0 on anything longer
-  - "Posets: `Chain(n)`, `BooleanLattice(n)` (elements are subsets), `DivisorLattice(n)` (elements are divisors)"
 seeAlso:
   - MoebiusInvert
   - PosetZeta
@@ -24,3 +18,9 @@ references:
   - system: mathworld
     identity: MoebiusFunction
 ---
+
+- Defined by $\mu(x,x) = 1$ and $\mu(x,y) = -\sum_{x \le z < y}\mu(x,z)$ — which is exactly the statement that $\mu$ inverts $\zeta$
+- On `DivisorLattice(n)`, $\mu([a,b])$ is the classical number-theoretic $\mu(b/a)$
+- On `BooleanLattice(n)`, $\mu([S,T]) = (-1)^{|T \setminus S|}$ — the signs of inclusion–exclusion
+- On a chain, $\mu$ is 1 on a point, $-1$ on a cover, and 0 on anything longer
+- Posets: `Chain(n)`, `BooleanLattice(n)` (elements are subsets), `DivisorLattice(n)` (elements are divisors)

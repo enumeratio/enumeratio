@@ -8,12 +8,6 @@ signatures:
     description: $\Delta(x)$, as a sum of tensor pairs
     library: enumeratio-hopf
     type: (number) -> number
-details:
-  - This is what makes these Hopf algebras rather than merely algebras — the product puts things together, the coproduct pulls them apart
-  - The two are tied by the bialgebra axiom $\Delta(xy) = \Delta(x)\Delta(y)$, checked across every pair of basis elements up to degree 3 in both algebras
-  - Both coproducts are coassociative
-  - Tensor pairs use `HopfTensor(left, right)`, NOT `CircleTimes` — that head is already the shared ordered product
-  - "Graded: the two halves' degrees sum to the degree of the input"
 seeAlso:
   - QSymM
   - Antipode
@@ -26,3 +20,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- This is what makes these Hopf algebras rather than merely algebras — the product puts things together, the coproduct pulls them apart
+- The two are tied by the bialgebra axiom $\Delta(xy) = \Delta(x)\Delta(y)$, checked across every pair of basis elements up to degree 3 in both algebras
+- Both coproducts are coassociative
+- Tensor pairs use `HopfTensor(left, right)`, NOT `CircleTimes` — that head is already the shared ordered product
+- Graded: the two halves' degrees sum to the degree of the input

@@ -1,21 +1,25 @@
-id	section	role	expr	expected	caption
-lambda0-0-exact-under-plain-evaluation			[KeiperLiLambda, 0]	0	λ₀ = 0, exact under plain evaluation
-lambda1-s-closed-form-exact-under-plain			[KeiperLiLambda, 1]	[Add, 1, [Multiply, [Rational, -1, 2], [Ln, [Multiply, 4, Pi]]], [Multiply, [Rational, 1, 2], EulerGamma]]	λ₁'s closed form, exact under plain evaluation
-n-forces-the-closed-form-to-a-decimal			[N, [KeiperLiLambda, 1]]	{num: "0.0230957089661210338135"}	N() forces the closed form to a decimal
-n-2-is-numeric-only-the-contour-integral			[N, [KeiperLiLambda, 2]]	0.09234573522804794	n ≥ 2 is numeric-only: the contour-integral evaluator
-n-keiperlilambda-3			[N, [KeiperLiLambda, 3]]	0.20763892055433203	
-n-keiperlilambda-4		test	[N, [KeiperLiLambda, 4]]	0.36879047949224164	
-n-keiperlilambda-5		test	[N, [KeiperLiLambda, 5]]	0.5755427144611774	
-n-keiperlilambda-6		test	[N, [KeiperLiLambda, 6]]	0.8275660122823792	
-n-keiperlilambda-7		test	[N, [KeiperLiLambda, 7]]	1.1244601175709594	
-n-keiperlilambda-8		test	[N, [KeiperLiLambda, 8]]	1.4657556771470606	
-n-keiperlilambda-9		test	[N, [KeiperLiLambda, 9]]	1.8509160483825342	
-n-keiperlilambda-10		test	[N, [KeiperLiLambda, 10]]	2.2793393631931576	
-n-keiperlilambda-11		test	[N, [KeiperLiLambda, 11]]	2.750360838220196	
-n-keiperlilambda-12		test	[N, [KeiperLiLambda, 12]]	3.2632553206246198	
-n-keiperlilambda-13		test	[N, [KeiperLiLambda, 13]]	3.817240057847946	
-n-keiperlilambda-14		test	[N, [KeiperLiLambda, 14]]	4.4114776786805985	
-n-keiperlilambda-15		test	[N, [KeiperLiLambda, 15]]	5.045079372026794	
-n-keiperlilambda-16		test	[N, [KeiperLiLambda, 16]]	5.717108248868793	
-lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	Properties		[Chop, [Subtract, [N, [KeiperLiLambda, 1]], [N, [Subtract, [Add, 1, [Divide, EulerGamma, 2]], [Multiply, [Rational, 1, 2], [Ln, [Multiply, 4, Pi]]]]]]]	0	$\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi)$, exactly
-declines-past-n-20-rather-than-returning-a-value	Possible issues		[KeiperLiLambda, 21]	[KeiperLiLambda, 21]	Declines past n = 20 rather than returning a value that has quietly lost precision
+id	section	role	expr	expected	known	tolerance	source	caption
+lambda0-0-exact-under-plain-evaluation			[KeiperLiLambda, 0]	0	{num: "0"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	λ₀ = 0, exact under plain evaluation
+lambda1-s-closed-form-exact-under-plain			[KeiperLiLambda, 1]	[Add, 1, [Multiply, [Rational, -1, 2], [Ln, [Multiply, 4, Pi]]], [Multiply, [Rational, 1, 2], EulerGamma]]				λ₁'s closed form, exact under plain evaluation
+n-forces-the-closed-form-to-a-decimal			[N, [KeiperLiLambda, 1]]	{num: "0.0230957089661210338135"}	{num: "0.023095708966121033"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	N() forces the closed form to a decimal
+n-2-is-numeric-only-the-contour-integral			[N, [KeiperLiLambda, 2]]	0.09234573522804794	{num: "0.09234573522804668"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	n ≥ 2 is numeric-only: the contour-integral evaluator
+n-keiperlilambda-3			[N, [KeiperLiLambda, 3]]	0.20763892055433203	{num: "0.2076389205543248"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-4		test	[N, [KeiperLiLambda, 4]]	0.36879047949224164	{num: "0.36879047949224164"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-5		test	[N, [KeiperLiLambda, 5]]	0.5755427144611774	{num: "0.5755427144611774"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-6		test	[N, [KeiperLiLambda, 6]]	0.8275660122823792	{num: "0.8275660122823792"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-7		test	[N, [KeiperLiLambda, 7]]	1.1244601175709594	{num: "1.1244601175709594"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-8		test	[N, [KeiperLiLambda, 8]]	1.4657556771470606	{num: "1.4657556771470606"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-9		test	[N, [KeiperLiLambda, 9]]	1.8509160483825342	{num: "1.8509160483825342"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-10		test	[N, [KeiperLiLambda, 10]]	2.2793393631931576	{num: "2.2793393631931576"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-11		test	[N, [KeiperLiLambda, 11]]	2.750360838220196	{num: "2.750360838220196"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-12		test	[N, [KeiperLiLambda, 12]]	3.2632553206246198	{num: "3.2632553206246198"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-13		test	[N, [KeiperLiLambda, 13]]	3.817240057847946	{num: "3.817240057847946"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-14		test	[N, [KeiperLiLambda, 14]]	4.4114776786805985	{num: "4.4114776786805985"}	1e-11	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-15		test	[N, [KeiperLiLambda, 15]]	5.045079372026794	{num: "5.045079372026794"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-16		test	[N, [KeiperLiLambda, 16]]	5.717108248868793	{num: "5.717108248868793"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-17		test	[N, [KeiperLiLambda, 17]]	6.426582872125147	{num: "6.426582872117203"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-18		test	[N, [KeiperLiLambda, 18]]	7.172480938298763	{num: "7.172480938291723"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-19		test	[N, [KeiperLiLambda, 19]]	7.953743094287197	{num: "7.953743094311901"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+n-keiperlilambda-20		test	[N, [KeiperLiLambda, 20]]	8.769276872071474	{num: "8.769276872093215"}	1e-9	mpmath 1.3.0 (independent Cauchy contour-integral implementation)	
+lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	Properties		[Chop, [Subtract, [N, [KeiperLiLambda, 1]], [N, [Subtract, [Add, 1, [Divide, EulerGamma, 2]], [Multiply, [Rational, 1, 2], [Ln, [Multiply, 4, Pi]]]]]]]	0				$\lambda_1 = 1 + \gamma/2 - \tfrac12\ln(4\pi)$, exactly
+declines-past-n-20-rather-than-returning-a-value	Possible issues		[KeiperLiLambda, 21]	[KeiperLiLambda, 21]				Declines past n = 20 rather than returning a value that has quietly lost precision

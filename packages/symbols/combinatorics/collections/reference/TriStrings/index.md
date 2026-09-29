@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the length-$n$ binary strings avoiding three 1s in a row.
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - A lazy indexed collection; the count $T(n)$ satisfies $T(n)=T(n-1)+T(n-2)+T(n-3)$ with $T(0)=1$, $T(1)=2$, $T(2)=4$ — a tribonacci-style recurrence (OEIS A000073, shifted).
-  - Each element is the bit string itself, as a list of 0s and 1s.
-  - "$At$ unranks via the same combinatorial-number-system walk as the other binary-word families: at each position, the number of valid completions with a leading 0 sizes the block that sorts first."
 enumerate:
   expr: TriStrings(6)
   columns: Descents, Ascents
@@ -29,3 +25,7 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- A lazy indexed collection; the count $T(n)$ satisfies $T(n)=T(n-1)+T(n-2)+T(n-3)$ with $T(0)=1$, $T(1)=2$, $T(2)=4$ — a tribonacci-style recurrence (OEIS A000073, shifted).
+- Each element is the bit string itself, as a list of 0s and 1s.
+- $At$ unranks via the same combinatorial-number-system walk as the other binary-word families: at each position, the number of valid completions with a leading 0 sizes the block that sorts first.

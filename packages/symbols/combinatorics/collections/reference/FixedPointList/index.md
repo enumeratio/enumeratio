@@ -8,9 +8,6 @@ signatures:
     description: $\{x, f(x), f(f(x)), \dots\}$, stopping once two consecutive values are structurally the same — the repeated value ends the list once.
     library: enumeratio-collections
     type: (any, any) -> list<any>
-details:
-  - Stops on exact structural equality (Wolfram's $SameQ$), not the numeric-precision agreement [[FixedPoint]] additionally uses for an inexact sequence — adequate for exact/rational values, which is what every example here uses.
-  - Capped at 4096 applications of $f$, same as [[NestWhile]].
 seeAlso:
   - FixedPoint
   - NestWhileList
@@ -19,3 +16,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Stops on exact structural equality (Wolfram's $SameQ$), not the numeric-precision agreement [[FixedPoint]] additionally uses for an inexact sequence — adequate for exact/rational values, which is what every example here uses.
+- Capped at 4096 applications of $f$, same as [[NestWhile]].

@@ -8,8 +8,8 @@ signatures:
     description: 1 inside (-1/2, 1/2), 0 outside [-1/2, 1/2], and unevaluated (stays symbolic) exactly at x = ±1/2.
     library: "@enumeratio/analytic"
     type: (real) -> number
-details:
-  - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than closed -- [[UnitBox]](±1/2) = 1, HeavisidePi(±1/2) unevaluated. The two heads exist for the two conventions.
 names:
   wolframIdentity: true
 ---
+
+- The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than closed -- [[UnitBox]](±1/2) = 1, HeavisidePi(±1/2) unevaluated. The two heads exist for the two conventions.

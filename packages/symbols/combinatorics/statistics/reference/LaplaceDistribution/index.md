@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $\mu, b$, unevaluated.
     library: enumeratio-statistics
     type: (real, real<0..>) -> distribution
-details:
-  - $PDF(x) = e^{-|x-\mu|/b}/(2b)$, exact.
-  - $CDF(x) = e^{(x-\mu)/b}/2$ for $x < \mu$, $1-e^{-(x-\mu)/b}/2$ otherwise.
-  - $Mean = \mu$, $Variance = 2b^2$, both exact.
-  - "[[RandomVariate]] samples via inverse transform."
 seeAlso:
   - CauchyDistribution
   - LogisticDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = e^{-|x-\mu|/b}/(2b)$, exact.
+- $CDF(x) = e^{(x-\mu)/b}/2$ for $x < \mu$, $1-e^{-(x-\mu)/b}/2$ otherwise.
+- $Mean = \mu$, $Variance = 2b^2$, both exact.
+- [[RandomVariate]] samples via inverse transform.

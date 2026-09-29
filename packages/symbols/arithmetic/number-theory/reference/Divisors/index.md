@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> list
     overrides: compute-engine
-details:
-  - Includes both 1 and $n$ itself; a prime's only divisors are those two.
-  - The count of divisors, $d(n)$, equals $\sigma_0(n)$. See [[DivisorSigma]].
-  - Highly composite numbers (like 720) pack unusually many divisors relative to their size.
-  - compute-engine only returns ordinary positive divisors.
-  - Threads element-wise over a list, as Wolfram's Listable heads do.
 seeAlso:
   - FactorInteger
   - DivisorSigma
@@ -35,3 +29,9 @@ bindings:
     template: divisors($1)
     arity: 1
 ---
+
+- Includes both 1 and $n$ itself; a prime's only divisors are those two.
+- The count of divisors, $d(n)$, equals $\sigma_0(n)$. See [[DivisorSigma]].
+- Highly composite numbers (like 720) pack unusually many divisors relative to their size.
+- compute-engine only returns ordinary positive divisors.
+- Threads element-wise over a list, as Wolfram's Listable heads do.

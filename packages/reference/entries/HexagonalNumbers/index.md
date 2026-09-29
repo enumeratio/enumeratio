@@ -6,11 +6,6 @@ summary: The hexagonal numbers $1, 6, 15, 28, …$ — $H(n) = n(2n-1)$ — dots
 signatures:
   - call: HexagonalNumbers
     description: $H(n) = n(2n-1)$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(HexagonalNumbers) = +\infty$, and $At(HexagonalNumbers, k) = k(2k-1)$ unranks in closed form -- $At(HexagonalNumbers, 5) = 45$.'
-  - OEIS A000384.
-  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(45, HexagonalNumbers)$ is true, $Element(44, HexagonalNumbers)$ is false.
-  - Every hexagonal number is triangular ($H(n) = T(2n-1)$); the $k$-gonal case $k=6$ of [[PolygonalNumbers]].
 enumerate:
   expr: Take(HexagonalNumbers, 20)
 seeAlso:
@@ -36,3 +31,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(HexagonalNumbers) = +\infty$, and $At(HexagonalNumbers, k) = k(2k-1)$ unranks in closed form -- $At(HexagonalNumbers, 5) = 45$.
+- OEIS A000384.
+- Membership goes through [[Element]] by inverting the closed form exactly -- $Element(45, HexagonalNumbers)$ is true, $Element(44, HexagonalNumbers)$ is false.
+- Every hexagonal number is triangular ($H(n) = T(2n-1)$); the $k$-gonal case $k=6$ of [[PolygonalNumbers]].

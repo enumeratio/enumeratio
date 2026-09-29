@@ -8,11 +8,11 @@ signatures:
     description: Boxes to be drawn in place, inside a larger expression.
     library: enumeratio-boxes
     type: (boxes) -> expression
-details:
-  - Stays as written; wherever it sits, the notation of the whole uses these boxes for that part.
 seeAlso:
   - DisplayForm
   - ToBoxes
 names:
   wolframIdentity: true
 ---
+
+- Stays as written; wherever it sits, the notation of the whole uses these boxes for that part.

@@ -8,11 +8,11 @@ signatures:
     description: $x$ followed by every intermediate value up to $Nest(f, x, n)$, $n + 1$ entries in all.
     library: enumeratio-collections
     type: "(function: any, x: any, n: integer) -> list<any>"
-details:
-  - See [[Nest]] for just the final value.
 seeAlso:
   - Nest
   - FixedPoint
 names:
   wolframIdentity: true
 ---
+
+- See [[Nest]] for just the final value.

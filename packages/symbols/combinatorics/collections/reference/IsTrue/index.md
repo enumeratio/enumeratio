@@ -8,11 +8,11 @@ signatures:
     description: True only if expr evaluates to True, False otherwise
     library: enumeratio-collections
     type: (any) -> boolean
-details:
-  - No third "unknown" outcome — an unevaluated symbolic expression, False, or anything else that isn't literally True all answer False.
-  - Wolfram's TrueQ; ours spells predicates Is… (see IsPrime, IsConnectedGraph).
 seeAlso:
   - IsInteger
 names:
   wolfram: TrueQ
 ---
+
+- No third "unknown" outcome — an unevaluated symbolic expression, False, or anything else that isn't literally True all answer False.
+- Wolfram's TrueQ; ours spells predicates Is… (see IsPrime, IsConnectedGraph).

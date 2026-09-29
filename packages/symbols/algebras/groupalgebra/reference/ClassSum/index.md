@@ -11,11 +11,6 @@ signatures:
   - call: IsCentral(group, element)
     description: whether an element commutes with everything
     library: enumeratio-groupalgebra
-details:
-  - A single non-central element is not central, but the class sum containing it always is — that is the point
-  - Class sums have disjoint supports, so they are linearly independent and form a basis of the centre
-  - The first class is always the identity alone
-  - $\dim Z(k[G])$ is the number of conjugacy classes, which is also the number of irreducible characters of $G$
 seeAlso:
   - ConjugacyClasses
   - GroupBasis
@@ -31,3 +26,8 @@ bindings:
     arity: 2
     note: Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.
 ---
+
+- A single non-central element is not central, but the class sum containing it always is — that is the point
+- Class sums have disjoint supports, so they are linearly independent and form a basis of the centre
+- The first class is always the identity alone
+- $\dim Z(k[G])$ is the number of conjugacy classes, which is also the number of irreducible characters of $G$

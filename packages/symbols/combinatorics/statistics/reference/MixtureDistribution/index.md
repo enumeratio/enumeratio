@@ -8,12 +8,6 @@ signatures:
     description: the weighted mixture of d1, ..., dn; weights are normalized by their sum.
     library: enumeratio-statistics
     type: (list<real>, list<distribution>) -> distribution
-details:
-  - Weights are normalized by their sum before use, so $\{1,1\}$ and $\{1,2\}$-scaled-by-3 agree.
-  - $PDF(x) = \sum_i (w_i/\sum w) \cdot PDF(d_i,x)$; $CDF$ the same weighted sum of $CDF(d_i,x)$.
-  - $Mean = \sum_i (w_i/\sum w) \cdot Mean(d_i)$.
-  - '$Variance$ by the law of total variance: $\sum_i \hat w_i \, Var(d_i) + \sum_i \hat w_i (Mean(d_i) - Mean)^2$, where $\hat w_i$ is the normalized weight.'
-  - "[[RandomVariate]] picks a component by its normalized weight against one uniform draw, then delegates to `RandomVariate` on that component — so it reuses whatever per-kind sampler that component already has, old or new, including another compound distribution."
 seeAlso:
   - TruncatedDistribution
   - ProductDistribution
@@ -21,3 +15,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Weights are normalized by their sum before use, so $\{1,1\}$ and $\{1,2\}$-scaled-by-3 agree.
+- $PDF(x) = \sum_i (w_i/\sum w) \cdot PDF(d_i,x)$; $CDF$ the same weighted sum of $CDF(d_i,x)$.
+- $Mean = \sum_i (w_i/\sum w) \cdot Mean(d_i)$.
+- $Variance$ by the law of total variance: $\sum_i \hat w_i \, Var(d_i) + \sum_i \hat w_i (Mean(d_i) - Mean)^2$, where $\hat w_i$ is the normalized weight.
+- [[RandomVariate]] picks a component by its normalized weight against one uniform draw, then delegates to `RandomVariate` on that component — so it reuses whatever per-kind sampler that component already has, old or new, including another compound distribution.

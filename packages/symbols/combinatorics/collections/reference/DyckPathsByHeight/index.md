@@ -8,8 +8,6 @@ signatures:
     description: Dyck paths of semilength $n$ with maximum height exactly $h$
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - 'Rows sum to the Catalan numbers (A000108): $\sum_h Count(DyckPathsByHeight(n, h)) = C_n$.'
 seeAlso:
   - DyckPaths
 grades:
@@ -19,3 +17,5 @@ grades:
     role: axis
 carrier: DyckPath
 ---
+
+- Rows sum to the Catalan numbers (A000108): $\sum_h Count(DyckPathsByHeight(n, h)) = C_n$.

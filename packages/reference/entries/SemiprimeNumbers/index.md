@@ -6,10 +6,6 @@ summary: 'The semiprimes $4, 6, 9, 10, 14, …$: products of exactly two primes,
 signatures:
   - call: SemiprimeNumbers
     description: the $n$ with $\Omega(n) = 2$ (two prime factors counted with multiplicity, so $4=2^2$ counts), an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(SemiprimeNumbers) = +\infty$ -- $2p$ is semiprime for every prime $p$. OEIS A001358. Identical to [[KAlmostPrimes]]$(2)$.'
-  - $At(SemiprimeNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SemiprimeNumbers, 3) = 9$ ($3^2$).
-  - 'Membership goes through [[Element]]: $Element(9, SemiprimeNumbers)$ is true, $Element(8, SemiprimeNumbers)$ is false ($2^3$, $\Omega=3$).'
 enumerate:
   expr: Take(SemiprimeNumbers, 20)
 seeAlso:
@@ -27,3 +23,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(SemiprimeNumbers) = +\infty$ -- $2p$ is semiprime for every prime $p$. OEIS A001358. Identical to [[KAlmostPrimes]]$(2)$.
+- $At(SemiprimeNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(SemiprimeNumbers, 3) = 9$ ($3^2$).
+- Membership goes through [[Element]]: $Element(9, SemiprimeNumbers)$ is true, $Element(8, SemiprimeNumbers)$ is false ($2^3$, $\Omega=3$).
