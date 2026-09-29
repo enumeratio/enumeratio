@@ -1,4 +1,4 @@
 id	in	out
-count-zigzagcomposition-6	Count(ZigzagCompositions(6))	12
+count-zigzagcomposition-6	count(ZigzagCompositions(6))	12
 first-element-of-zigzagcomposition-6	ZigzagCompositions(6)[1]	[1, 2, 1, 2]
-every-element-of-zigzagcomposition-6	Take(ZigzagCompositions(6), 12)	"[\n  [1, 2, 1, 2],\n  [1, 3, 2],\n  [1, 4, 1],\n  [1, 5],\n  [2, 1, 2, 1],\n  [2, 1, 3],\n  [2, 3, 1],\n  [2, 4],\n  [3, 1, 2],\n  [4, 2],\n  [5, 1],\n  [6],\n]"
+every-element-of-zigzagcomposition-6	take(ZigzagCompositions(6), 12)	"[\n  [1, 2, 1, 2],\n  [1, 3, 2],\n  [1, 4, 1],\n  [1, 5],\n  [2, 1, 2, 1],\n  [2, 1, 3],\n  [2, 3, 1],\n  [2, 4],\n  [3, 1, 2],\n  [4, 2],\n  [5, 1],\n  [6],\n]"

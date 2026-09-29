@@ -1,4 +1,4 @@
 id	in	out
-count-lucasstrings-4	Count(LucasStrings(4))	7
+count-lucasstrings-4	count(LucasStrings(4))	7
 first-element-of-lucasstrings-4	LucasStrings(4)[1]	[0, 0, 0, 0]
-every-element-of-lucasstrings-4	Take(LucasStrings(4), 7)	"[\n  [0, 0, 0, 0],\n  [0, 0, 0, 1],\n  [0, 0, 1, 0],\n  [0, 1, 0, 0],\n  [0, 1, 0, 1],\n  [1, 0, 0, 0],\n  [1, 0, 1, 0],\n]"
+every-element-of-lucasstrings-4	take(LucasStrings(4), 7)	"[\n  [0, 0, 0, 0],\n  [0, 0, 0, 1],\n  [0, 0, 1, 0],\n  [0, 1, 0, 0],\n  [0, 1, 0, 1],\n  [1, 0, 0, 0],\n  [1, 0, 1, 0],\n]"

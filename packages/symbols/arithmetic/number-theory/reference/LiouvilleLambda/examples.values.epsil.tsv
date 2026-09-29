@@ -3,4 +3,4 @@ omega-12-3	LiouvilleLambda(12)	-1
 liouvillelambda-10	LiouvilleLambda(10)	1
 liouvillelambda-1	LiouvilleLambda(1)	1
 listable	LiouvilleLambda(Range(10))	[1, -1, -1, 1, -1, 1, -1, -1, 1, 1]
-lambda-n-1-omega-n-see-primeomega	LiouvilleLambda(360) == (-1) ^ PrimeOmega(360)	True
+lambda-n-1-omega-n-see-primeomega	LiouvilleLambda(360) == (-1) ^ primeOmega(360)	True

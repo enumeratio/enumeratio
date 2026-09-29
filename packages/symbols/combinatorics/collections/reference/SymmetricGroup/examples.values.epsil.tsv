@@ -1,10 +1,10 @@
 id	in	out
-4	Count(SymmetricGroup(4))	24
+4	count(SymmetricGroup(4))	24
 the-identity	SymmetricGroup(3)[1]	Permutation([1, 2, 3])
-inversions-are-mahonian	Tally(CombinatorialStat(SymmetricGroup(4), "Inversions"))	([0, 1, 2, 3, 4, 5, 6], [1, 3, 5, 6, 5, 3, 1])
-major-index-is-equidistributed	Tally(CombinatorialStat(SymmetricGroup(4), "MajorIndex"))	([0, 3, 2, 5, 1, 4, 6], [1, 6, 5, 3, 3, 5, 1])
-descents-are-eulerian	Tally(CombinatorialStat(SymmetricGroup(4), "Descents"))	([0, 1, 2, 3], [1, 11, 11, 1])
-excedances-are-eulerian-too	Tally(CombinatorialStat(SymmetricGroup(4), "Excedances"))	([0, 1, 2, 3], [1, 11, 11, 1])
-cycles-are-stirling-numbers-of-the-first-kind	Tally(CombinatorialStat(SymmetricGroup(4), "CycleCount"))	([4, 3, 2, 1], [1, 6, 11, 6])
-fixed-points-are-the-rencontres-numbers	Tally(CombinatorialStat(SymmetricGroup(4), "FixedPoints"))	([4, 2, 1, 0], [1, 6, 8, 9])
-half-are-even	Tally(CombinatorialStat(SymmetricGroup(4), "Sign"))	([1, -1], [12, 12])
+inversions-are-mahonian	tally(CombinatorialStat(SymmetricGroup(4), "Inversions"))	([0, 1, 2, 3, 4, 5, 6], [1, 3, 5, 6, 5, 3, 1])
+major-index-is-equidistributed	tally(CombinatorialStat(SymmetricGroup(4), "MajorIndex"))	([0, 3, 2, 5, 1, 4, 6], [1, 6, 5, 3, 3, 5, 1])
+descents-are-eulerian	tally(CombinatorialStat(SymmetricGroup(4), "Descents"))	([0, 1, 2, 3], [1, 11, 11, 1])
+excedances-are-eulerian-too	tally(CombinatorialStat(SymmetricGroup(4), "Excedances"))	([0, 1, 2, 3], [1, 11, 11, 1])
+cycles-are-stirling-numbers-of-the-first-kind	tally(CombinatorialStat(SymmetricGroup(4), "CycleCount"))	([4, 3, 2, 1], [1, 6, 11, 6])
+fixed-points-are-the-rencontres-numbers	tally(CombinatorialStat(SymmetricGroup(4), "FixedPoints"))	([4, 2, 1, 0], [1, 6, 8, 9])
+half-are-even	tally(CombinatorialStat(SymmetricGroup(4), "Sign"))	([1, -1], [12, 12])

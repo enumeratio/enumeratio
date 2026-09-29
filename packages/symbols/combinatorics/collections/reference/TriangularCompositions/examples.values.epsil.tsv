@@ -1,4 +1,4 @@
 id	in	out
-count-triangularcomposition-6	Count(TriangularCompositions(6))	7
+count-triangularcomposition-6	count(TriangularCompositions(6))	7
 first-element-of-triangularcomposition-6	TriangularCompositions(6)[1]	[1, 1, 1, 1, 1, 1]
-every-element-of-triangularcomposition-6	Take(TriangularCompositions(6), 7)	"[\n  [1, 1, 1, 1, 1, 1],\n  [1, 1, 1, 3],\n  [1, 1, 3, 1],\n  [1, 3, 1, 1],\n  [3, 1, 1, 1],\n  [3, 3],\n  [6],\n]"
+every-element-of-triangularcomposition-6	take(TriangularCompositions(6), 7)	"[\n  [1, 1, 1, 1, 1, 1],\n  [1, 1, 1, 3],\n  [1, 1, 3, 1],\n  [1, 3, 1, 1],\n  [3, 1, 1, 1],\n  [3, 3],\n  [6],\n]"

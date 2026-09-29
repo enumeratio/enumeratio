@@ -1,2 +1,2 @@
 id	in	out	back
-halve-and-floor-down-to-the-fixed-point	FixedPointList(Function(Floor(_1 / 2)), 10)	[10, 5, 2, 1, 0, 0]	Unreadable
+halve-and-floor-down-to-the-fixed-point	FixedPointList(Function(floor(_1 / 2)), 10)	[10, 5, 2, 1, 0, 0]	Unreadable

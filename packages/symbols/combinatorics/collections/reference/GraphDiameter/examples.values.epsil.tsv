@@ -1,3 +1,3 @@
 id	in	out
 path-5-has-diameter-4	"GraphDiameter(Graph([1, 2, 3, 4, 5], [\n                                       UndirectedEdge(1, 2),\n                                       UndirectedEdge(2, 3),\n                                       UndirectedEdge(3, 4),\n                                       UndirectedEdge(4, 5),\n                                     ]))"	4
-disconnected-graph-has-infinite-diameter	GraphDiameter(Graph([1, 2, 3, 4], [UndirectedEdge(1, 2), UndirectedEdge(3, 4)]))	PositiveInfinity
+disconnected-graph-has-infinite-diameter	GraphDiameter(Graph([1, 2, 3, 4], [UndirectedEdge(1, 2), UndirectedEdge(3, 4)]))	positiveInfinity

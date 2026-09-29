@@ -13,4 +13,4 @@ double-negation-cancels-x-x	--x	x
 distributes-over-a-sum-a-b-a-b	-(a + b) == -a - b	True
 a-b-b-a	-(a - b)	-a + b
 the-additive-inverse-x-x-0	-x + x	0
-flips-signed-infinities-too	-PositiveInfinity	NegativeInfinity
+flips-signed-infinities-too	-positiveInfinity	negativeInfinity

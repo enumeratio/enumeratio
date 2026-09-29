@@ -1,4 +1,4 @@
 id	in	out
 a-pole-is-a-discontinuity	FunctionDiscontinuities(1 / x, x)	x == 0
-tangent-s-poles	FunctionDiscontinuities(Tan(x), x)	Cos(x) == 0
+tangent-s-poles	FunctionDiscontinuities(tan(x), x)	cos(x) == 0
 a-polynomial-is-continuous-everywhere	FunctionDiscontinuities(x ^ 2, x)	False

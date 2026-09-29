@@ -1,4 +1,4 @@
 id	in	out
-the-first-20-terms	Take(NarcissisticNumbers, 20)	"[\n  1,\n  2,\n  3,\n  4,\n  5,\n  6,\n  7,\n  8,\n  9,\n  153,\n  370,\n  371,\n  407,\n  1_634,\n  8_208,\n  9_474,\n  54_748,\n  92_727,\n  93_084,\n  548_834,\n]"
+the-first-20-terms	take(NarcissisticNumbers, 20)	"[\n  1,\n  2,\n  3,\n  4,\n  5,\n  6,\n  7,\n  8,\n  9,\n  153,\n  370,\n  371,\n  407,\n  1_634,\n  8_208,\n  9_474,\n  54_748,\n  92_727,\n  93_084,\n  548_834,\n]"
 the-88th-and-largest-term-is-exact	NarcissisticNumbers[88]	115_132_219_018_763_992_565_095_597_973_971_522_401
-narcissistic-armstrong-numbers-are-proven-finite	Count(NarcissisticNumbers)	88
+narcissistic-armstrong-numbers-are-proven-finite	count(NarcissisticNumbers)	88

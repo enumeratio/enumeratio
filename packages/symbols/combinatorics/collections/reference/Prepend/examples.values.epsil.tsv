@@ -5,4 +5,4 @@ prepend-single-element-list	Prepend([5], 10)	[10, 5]
 prepend-empty-list	Prepend([], 42)	[42]
 a-rule-inserted-at-the-front-of-an-association	Prepend(Association(Rule(1, a), Rule(2, b)), Rule(3, d))	Association(Rule(3, d), Rule(1, a), Rule(2, b))
 several-rules-prepended-at-once	Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])	Association(Rule(3, d), Rule(4, e), Rule(1, a), Rule(2, b))
-prepend-c-x-join-x-c-see-join	Prepend([1, 2, 3], 0) == Join([0], [1, 2, 3])	True
+prepend-c-x-join-x-c-see-join	Prepend([1, 2, 3], 0) == join([0], [1, 2, 3])	True

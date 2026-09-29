@@ -1,2 +1,2 @@
 id	in	out
-the-first-25-terms	Take(PentagonalNumbers, 25)	"[\n  1,\n  5,\n  12,\n  22,\n  35,\n  51,\n  70,\n  92,\n  117,\n  145,\n  176,\n  210,\n  247,\n  287,\n  330,\n  376,\n  425,\n  477,\n  532,\n  590,\n  651,\n  715,\n  782,\n  852,\n  925,\n]"
+the-first-25-terms	take(PentagonalNumbers, 25)	"[\n  1,\n  5,\n  12,\n  22,\n  35,\n  51,\n  70,\n  92,\n  117,\n  145,\n  176,\n  210,\n  247,\n  287,\n  330,\n  376,\n  425,\n  477,\n  532,\n  590,\n  651,\n  715,\n  782,\n  852,\n  925,\n]"

@@ -1,22 +1,22 @@
 id	in	out
-min-3-1-4-1-5	Min(3, 1, 4, 1, 5)	1
-also-accepts-a-single-list-argument	Min([3, 1, 4])	1
-min-neg-1-neg-5	Min(-1, -5)	-5
-a-single-argument-is-returned-unchanged	Min(3)	3
-min-9-2	Min(9, 2)	2
-min-list-4-1-7-2	Min([4, 1, 7, 2])	1
-min-5p56-neg-4p8-7p3	Min(5.56, -4.8, 7.3)	-4.8
-min-min-folds-into-a-normal-call	Min(Min(), 5)	5
-nested-lists-are-flattened-into-the-pool	Min(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])	-5 / 3
-exact-numbers-are-compared-numerically	Min(Sqrt(2), 3 / 2)	Sqrt(2)
-the-numeric-arguments-collapse-to-their-minimum	Min(3, x, 5)	Min(3, x)
-compares-exact-constants-numerically-min-e-pi-5	Min([ExponentialE, Pi, 5])	ExponentialE
-the-min-of-two-intervals-is-the-interval-of	Min(Interval(1, 3), Interval(-3, 5))	Interval(-3, 3)
-the-day-s-low-from-the-same-hourly-readings-see	Min(68, 72, 65, 80, 74)	65
-commutative-order-doesn-t-matter	Min(3, 7) == Min(7, 3)	True
-min-a-b-max-a-b-a-b-see-max	Min(4, 9) + Max(4, 9) == 4 + 9	True
-idempotent-min-x-x-x	Min(x, x)	x
-infinities-participate-directly-in-the	Min(NegativeInfinity, 3)	NegativeInfinity
-multiple-arguments-lists-included-are-flattened	Min([3, 1], 0)	0
-with-no-arguments-it-returns-the-identity	Min()	PositiveInfinity
-the-min-of-an-empty-list-is-nan	Min([])	`NaN`
+min-3-1-4-1-5	min(3, 1, 4, 1, 5)	1
+also-accepts-a-single-list-argument	min([3, 1, 4])	1
+min-neg-1-neg-5	min(-1, -5)	-5
+a-single-argument-is-returned-unchanged	min(3)	3
+min-9-2	min(9, 2)	2
+min-list-4-1-7-2	min([4, 1, 7, 2])	1
+min-5p56-neg-4p8-7p3	min(5.56, -4.8, 7.3)	-4.8
+min-min-folds-into-a-normal-call	min(min(), 5)	5
+nested-lists-are-flattened-into-the-pool	min(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])	-5 / 3
+exact-numbers-are-compared-numerically	min(sqrt(2), 3 / 2)	sqrt(2)
+the-numeric-arguments-collapse-to-their-minimum	min(3, x, 5)	min(3, x)
+compares-exact-constants-numerically-min-e-pi-5	min([exponentialE, pi, 5])	exponentialE
+the-min-of-two-intervals-is-the-interval-of	min(interval(1, 3), interval(-3, 5))	interval(-3, 3)
+the-day-s-low-from-the-same-hourly-readings-see	min(68, 72, 65, 80, 74)	65
+commutative-order-doesn-t-matter	min(3, 7) == min(7, 3)	True
+min-a-b-max-a-b-a-b-see-max	min(4, 9) + max(4, 9) == 4 + 9	True
+idempotent-min-x-x-x	min(x, x)	x
+infinities-participate-directly-in-the	min(negativeInfinity, 3)	negativeInfinity
+multiple-arguments-lists-included-are-flattened	min([3, 1], 0)	0
+with-no-arguments-it-returns-the-identity	min()	positiveInfinity
+the-min-of-an-empty-list-is-nan	min([])	`NaN`

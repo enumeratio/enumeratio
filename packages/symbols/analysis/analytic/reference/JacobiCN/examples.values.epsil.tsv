@@ -27,6 +27,6 @@ m-greater-than-1-via-the-reciprocal-modulus	N(JacobiCN(0.3, 1.5))	0.957_262_699_
 m-less-than-0-via-the-imaginary-modulus	N(JacobiCN(0.3, -2))	0.952_664_569_791_101_9
 a-complex-argument-u	N(JacobiCN(0.3 + 0.4i, 0.5))	1.027_992_872_007_962_7 - 0.123_775_864_136_771_64i
 u-0-is-1-for-any-m	JacobiCN(0, m)	1
-m-0-reduces-to-cos-u	JacobiCN(u, 0)	Cos(u)
-the-quarter-period-u-elliptick-m-is-0	JacobiCN(EllipticK(m), m)	0
+m-0-reduces-to-cos-u	JacobiCN(u, 0)	cos(u)
+the-quarter-period-u-elliptick-m-is-0	JacobiCN(ellipticK(m), m)	0
 symbolic-arguments-are-left-unevaluated-rather	JacobiCN(u, m)	JacobiCN(u, m)

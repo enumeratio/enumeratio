@@ -1,6 +1,6 @@
 id	in	out
-finishes-well-inside-the-deadline-so-the-value	TimeConstrained(Sum(k, (k, 1, 10)), 1)	55
-factoring-a-30-digit-semiprime-outruns-a-50-ms	TimeConstrained(FactorInteger(1_001_000_000_000_040_037_000_000_000_111), 0.05)	Aborted
-a-custom-failexpr-replaces-the-default-aborted	"TimeConstrained(\n                 FactorInteger(1_001_000_000_000_040_037_000_000_000_111),\n                 0.05,\n                 -1,\n               )"	-1
-an-infinite-time-limit-imposes-no-constraint	TimeConstrained(1 + 2, PositiveInfinity)	3
+finishes-well-inside-the-deadline-so-the-value	TimeConstrained(sum(k, (k, 1, 10)), 1)	55
+factoring-a-30-digit-semiprime-outruns-a-50-ms	TimeConstrained(factorInteger(1_001_000_000_000_040_037_000_000_000_111), 0.05)	Aborted
+a-custom-failexpr-replaces-the-default-aborted	"TimeConstrained(\n                 factorInteger(1_001_000_000_000_040_037_000_000_000_111),\n                 0.05,\n                 -1,\n               )"	-1
+an-infinite-time-limit-imposes-no-constraint	TimeConstrained(1 + 2, positiveInfinity)	3
 failexpr-is-held-it-is-never-evaluated-when-expr	TimeConstrained(2 + 3, 1, 1 / 0)	5

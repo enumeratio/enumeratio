@@ -1,5 +1,5 @@
 id	in	out
-an-interior-point	IsIntervalMember(Interval(1, 5), 3)	True
-a-closed-endpoint-is-a-member	IsIntervalMember(Interval(1, 5), 5)	True
-an-open-endpoint-is-not-a-member	IsIntervalMember(Interval(Open(1), 5), 1)	False
-outside-the-interval	IsIntervalMember(Interval(1, 5), 6)	False
+an-interior-point	IsIntervalMember(interval(1, 5), 3)	True
+a-closed-endpoint-is-a-member	IsIntervalMember(interval(1, 5), 5)	True
+an-open-endpoint-is-not-a-member	IsIntervalMember(interval(open(1), 5), 1)	False
+outside-the-interval	IsIntervalMember(interval(1, 5), 6)	False

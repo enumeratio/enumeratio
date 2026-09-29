@@ -1,2 +1,2 @@
 id	in	out
-survivalfunction-chisquare	SurvivalFunction(ChiSquareDistribution(3), 2)	GammaRegularized(3 / 2, 1)
+survivalfunction-chisquare	SurvivalFunction(ChiSquareDistribution(3), 2)	gammaRegularized(3 / 2, 1)

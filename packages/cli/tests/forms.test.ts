@@ -58,5 +58,5 @@ test("Epsil is the default input; $…$ islands parse LaTeX", () => {
 
 test("inputform renders Epsil", () => {
   expect(renderForm(box(["Add", ["Power", "x", 2], 1]), "inputform")).toBe("x ^ 2 + 1");
-  expect(renderForm(box(["Binomial", 10, 3]), "inputform")).toBe("Binomial(10, 3)");
+  expect(renderForm(box(["Binomial", 10, 3]), "inputform")).toBe("binomial(10, 3)");
 });

@@ -5,6 +5,6 @@ every-element-tied-for-most-frequent-symbols-and	Commonest([b, a, c, 2, a, b, 1,
 a-single-most-frequent-element-still-comes-back	Commonest([1, 2, 2, 3, 3, 3, 4])	[3]
 all-distinct-all-tie	Commonest([1, 2, 3])	[1, 2, 3]
 the-n-commonest-most-frequent-first	Commonest([1, 2, 2, 3, 3, 3, 4], 2)	[3, 2]
-with-a-unique-mode-commonest-c-mode-c-see-mode	First(Commonest([1, 2, 2, 3]))	2
-without-a-tie-the-single-commonest-element-is	First(Commonest([1, 2, 2, 3, 3, 3, 4])) == Mode([1, 2, 2, 3, 3, 3, 4])	True
+with-a-unique-mode-commonest-c-mode-c-see-mode	first(Commonest([1, 2, 2, 3]))	2
+without-a-tie-the-single-commonest-element-is	first(Commonest([1, 2, 2, 3, 3, 3, 4])) == mode([1, 2, 2, 3, 3, 3, 4])	True
 a-frequency-tie-between-4-and-1-is-broken-by	Commonest([4, 1, 1, 4], 1)	[4]

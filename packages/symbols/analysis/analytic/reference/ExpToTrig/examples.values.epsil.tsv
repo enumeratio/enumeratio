@@ -1,5 +1,5 @@
 id	in	out
-euler-s-formula	ExpToTrig(Exp(ImaginaryUnit * x))	i * Sin(x) + Cos(x)
-a-real-exponential-splits-into-hyperbolic-parts	ExpToTrig(Exp(x))	Sinh(x) + Cosh(x)
-recognizes-cosh	ExpToTrig((Exp(x) + Exp(-x)) / 2)	Cosh(x)
-recognizes-sin	"ExpToTrig((Exp(ImaginaryUnit * x) - Exp(-(ImaginaryUnit * x))) /\n          (2ImaginaryUnit))"	Sin(x)
+euler-s-formula	ExpToTrig(exp(imaginaryUnit * x))	i * sin(x) + cos(x)
+a-real-exponential-splits-into-hyperbolic-parts	ExpToTrig(exp(x))	sinh(x) + cosh(x)
+recognizes-cosh	ExpToTrig((exp(x) + exp(-x)) / 2)	cosh(x)
+recognizes-sin	"ExpToTrig((exp(imaginaryUnit * x) - exp(-(imaginaryUnit * x))) /\n          (2ImaginaryUnit))"	sin(x)

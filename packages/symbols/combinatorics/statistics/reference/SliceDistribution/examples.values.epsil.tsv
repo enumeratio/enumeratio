@@ -1,4 +1,4 @@
 id	in	out
-slice-distribution-wiener	SliceDistribution(WienerProcess(1, 2), 3)	NormalDistribution(3, 2 * Sqrt(3))
-slice-distribution-poisson	SliceDistribution(PoissonProcess(5), 2)	PoissonDistribution(10)
-slice-distribution-feeds-pdf-unchanged	Mean(SliceDistribution(PoissonProcess(5), 2))	10
+slice-distribution-wiener	SliceDistribution(WienerProcess(1, 2), 3)	normalDistribution(3, 2 * sqrt(3))
+slice-distribution-poisson	SliceDistribution(PoissonProcess(5), 2)	poissonDistribution(10)
+slice-distribution-feeds-pdf-unchanged	mean(SliceDistribution(PoissonProcess(5), 2))	10

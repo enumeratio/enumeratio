@@ -1,4 +1,4 @@
 id	in	out
-count-propercompositions-6	Count(ProperCompositions(6))	5
+count-propercompositions-6	count(ProperCompositions(6))	5
 first-element-of-propercompositions-6	ProperCompositions(6)[1]	[2, 2, 2]
-every-element-of-propercompositions-6	Take(ProperCompositions(6), 5)	[[2, 2, 2], [2, 4], [3, 3], [4, 2], [6]]
+every-element-of-propercompositions-6	take(ProperCompositions(6), 5)	[[2, 2, 2], [2, 4], [3, 3], [4, 2], [6]]

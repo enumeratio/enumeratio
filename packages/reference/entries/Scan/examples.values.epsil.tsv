@@ -1,10 +1,10 @@
 id	in	out	back
-scan-list-1-2-3-4-add	Scan([1, 2, 3, 4], Add)	[1, 3, 6, 10]	
-the-shape-of-a-running-fold	Scan([a, b, c], f)	[a, f(a, b), f(f(a, b), c)]	
-the-running-maximum	Scan([1, 2, 3, 4], Max)	[1, 2, 3, 4]	
-running-products-the-factorials	Scan([1, 2, 3, 4, 5], Multiply)	[1, 2, 6, 24, 120]	
-running-sums-of-symbolic-elements-wolfram-s	Scan([a, b, c], Add)	[a, a + b, a + b + c]	
-the-running-minimum	Scan([3, 1, 4, 1, 5], Min)	[3, 1, 1, 1, 1]	
-an-empty-list-scans-to-an-empty-list	Scan([], Add)	[]	
-the-values-of-every-prefix-of-the-binary-digits	Scan([1, 0, 1, 1], Function(2 * _1 + _2))	[1, 2, 5, 11]	Unreadable
-the-seeded-form-is-still-the-same-length-as-xs	Scan([1, 2, 3], Add, 10)	[11, 13, 16]	
+scan-list-1-2-3-4-add	scan([1, 2, 3, 4], Add)	[1, 3, 6, 10]	
+the-shape-of-a-running-fold	scan([a, b, c], f)	[a, f(a, b), f(f(a, b), c)]	
+the-running-maximum	scan([1, 2, 3, 4], max)	[1, 2, 3, 4]	
+running-products-the-factorials	scan([1, 2, 3, 4, 5], Multiply)	[1, 2, 6, 24, 120]	
+running-sums-of-symbolic-elements-wolfram-s	scan([a, b, c], Add)	[a, a + b, a + b + c]	
+the-running-minimum	scan([3, 1, 4, 1, 5], min)	[3, 1, 1, 1, 1]	
+an-empty-list-scans-to-an-empty-list	scan([], Add)	[]	
+the-values-of-every-prefix-of-the-binary-digits	scan([1, 0, 1, 1], Function(2 * _1 + _2))	[1, 2, 5, 11]	Unreadable
+the-seeded-form-is-still-the-same-length-as-xs	scan([1, 2, 3], Add, 10)	[11, 13, 16]	

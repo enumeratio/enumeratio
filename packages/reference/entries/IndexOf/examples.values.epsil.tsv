@@ -1,8 +1,8 @@
 id	in	out
-indexof-list-1-2-3-2	IndexOf([1, 2, 3], 2)	2
-0-signals-that-the-value-isn-t-present-since-0	IndexOf([1, 2, 3], 9)	0
-only-the-first-of-several-occurrences-is	IndexOf([a, b, a, a, b, c, b], b)	2
-the-value-can-itself-be-a-list	IndexOf([[1, 2], [3, 4]], [3, 4])	2
-at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	[10, 20, 30][IndexOf([10, 20, 30], 20)] == 20	True
-indexof-reports-only-the-first-occurrence-see	IndexOf([1, 2, 3, 2], 2)	2
-indexof-stays-at-the-top-level-where-this-value	IndexOf([[a, a, b], [b, a, a], [a, b, a]], b)	0
+indexof-list-1-2-3-2	indexOf([1, 2, 3], 2)	2
+0-signals-that-the-value-isn-t-present-since-0	indexOf([1, 2, 3], 9)	0
+only-the-first-of-several-occurrences-is	indexOf([a, b, a, a, b, c, b], b)	2
+the-value-can-itself-be-a-list	indexOf([[1, 2], [3, 4]], [3, 4])	2
+at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	[10, 20, 30][indexOf([10, 20, 30], 20)] == 20	True
+indexof-reports-only-the-first-occurrence-see	indexOf([1, 2, 3, 2], 2)	2
+indexof-stays-at-the-top-level-where-this-value	indexOf([[a, a, b], [b, a, a], [a, b, a]], b)	0

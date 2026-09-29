@@ -1,2 +1,2 @@
 id	in	out
-2-4	Count(IntegerCompositions(5))	16
+2-4	count(IntegerCompositions(5))	16

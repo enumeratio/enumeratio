@@ -1,9 +1,9 @@
 id	in	out
-probability-distribution-pdf-in-range	PDF(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)	1
-probability-distribution-pdf-outside	PDF(ProbabilityDistribution(2x, [x, 0, 1]), 2)	0
-probability-distribution-mean	Mean(ProbabilityDistribution(2x, [x, 0, 1]))	2 / 3
-probability-distribution-variance	Variance(ProbabilityDistribution(2x, [x, 0, 1]))	1 / 18
-probability-distribution-cdf	CDF(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)	1 / 4
-probability-distribution-discrete-pdf	PDF(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]), 2)	1 / 4
-probability-distribution-discrete-mean	Mean(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]))	5 / 2
-probability-distribution-stays-unevaluated	Mean(ProbabilityDistribution(Sin(x ^ x), [x, 0, 1]))	Mean(ProbabilityDistribution(Sin(x ^ x), [x, 0, 1]))
+probability-distribution-pdf-in-range	pdf(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)	1
+probability-distribution-pdf-outside	pdf(ProbabilityDistribution(2x, [x, 0, 1]), 2)	0
+probability-distribution-mean	mean(ProbabilityDistribution(2x, [x, 0, 1]))	2 / 3
+probability-distribution-variance	variance(ProbabilityDistribution(2x, [x, 0, 1]))	1 / 18
+probability-distribution-cdf	cdf(ProbabilityDistribution(2x, [x, 0, 1]), 1 / 2)	1 / 4
+probability-distribution-discrete-pdf	pdf(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]), 2)	1 / 4
+probability-distribution-discrete-mean	mean(ProbabilityDistribution(1 / 4, [x, 1, 4, 1]))	5 / 2
+probability-distribution-stays-unevaluated	mean(ProbabilityDistribution(sin(x ^ x), [x, 0, 1]))	mean(ProbabilityDistribution(sin(x ^ x), [x, 0, 1]))

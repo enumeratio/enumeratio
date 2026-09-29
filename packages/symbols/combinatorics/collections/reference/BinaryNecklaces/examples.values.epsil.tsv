@@ -1,4 +1,4 @@
 id	in	out
-count-binarynecklaces-5	Count(BinaryNecklaces(5))	8
+count-binarynecklaces-5	count(BinaryNecklaces(5))	8
 first-element-of-binarynecklaces-5	BinaryNecklaces(5)[1]	[0, 0, 0, 0, 0]
-every-element-of-binarynecklaces-5	Take(BinaryNecklaces(5), 8)	"[\n  [0, 0, 0, 0, 0],\n  [1, 1, 1, 1, 1],\n  [0, 0, 0, 0, 1],\n  [0, 0, 0, 1, 1],\n  [0, 0, 1, 0, 1],\n  [0, 0, 1, 1, 1],\n  [0, 1, 0, 1, 1],\n  [0, 1, 1, 1, 1],\n]"
+every-element-of-binarynecklaces-5	take(BinaryNecklaces(5), 8)	"[\n  [0, 0, 0, 0, 0],\n  [1, 1, 1, 1, 1],\n  [0, 0, 0, 0, 1],\n  [0, 0, 0, 1, 1],\n  [0, 0, 1, 0, 1],\n  [0, 0, 1, 1, 1],\n  [0, 1, 0, 1, 1],\n  [0, 1, 1, 1, 1],\n]"

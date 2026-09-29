@@ -1,2 +1,2 @@
 id	in	out
-the-first-20-lesser-cousin-primes-oeis-a023200	Take(CousinPrimes, 20)	"[\n  3,\n  7,\n  13,\n  19,\n  37,\n  43,\n  67,\n  79,\n  97,\n  103,\n  109,\n  127,\n  163,\n  193,\n  223,\n  229,\n  277,\n  307,\n  313,\n  349,\n]"
+the-first-20-lesser-cousin-primes-oeis-a023200	take(CousinPrimes, 20)	"[\n  3,\n  7,\n  13,\n  19,\n  37,\n  43,\n  67,\n  79,\n  97,\n  103,\n  109,\n  127,\n  163,\n  193,\n  223,\n  229,\n  277,\n  307,\n  313,\n  349,\n]"

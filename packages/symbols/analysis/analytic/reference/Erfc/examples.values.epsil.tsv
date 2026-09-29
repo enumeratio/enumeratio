@@ -1,20 +1,20 @@
 id	in	out
-erfc-0	Erfc(0)	1
-erfc-infinity	Erfc(`Infinity`)	0
-erfc-negativeinfinity	Erfc(NegativeInfinity)	2
-a-floating-point-argument-evaluates-directly-to	Erfc(0.5)	0.479_500_122_186_953_462_317
-a-machine-precision-argument	Erfc(1.5)	0.033_894_853_524_689_272_933
-threads-element-wise-over-a-list-as-wolfram-s	Erfc([0, 1])	[1, Erfc(1)]
-complex-arguments-should-evaluate-as-they-do-for	Erfc(1.5 - i)	-0.078_399_207_498_933_45 - 0.027_963_711_238_655_847i
-listable-threads-over-its-limits-at-pm-infty	Erfc([PositiveInfinity, NegativeInfinity])	[0, 2]
-interval-arithmetic-erfc-is-decreasing-so-the	Erfc(Interval(0.2, 0.3))	Interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
-uncertainty-propagation	Erfc(Around(2, 0.01))	Around(0.004_677_734_981_047_266, 0.000_206_669_853_540_920_54)
-to-30-significant-digits-every-one-correctly	N(Erfc(2), 30)	0.004_677_734_981_047_265_837_930_743_632_75
-erfc-z-2-erfc-z-here-at-z-1	Erfc(-1) + Erfc(1) == 2	True
-definition-erf-z-erfc-z-1-see-erf	Erf(2) + Erfc(2) == 1	True
-erfc-x-2-erfc-x-applied-symbolically	Erfc(-x)	-Erfc(x) + 2
-frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D(Erfc(x), x)	-2 * ExponentialE ^ (-x ^ 2) / Sqrt(Pi)
-an-exact-integer-argument-is-left-unevaluated	Erfc(1)	Erfc(1)
-far-in-the-tail-erfc-keeps-full-relative	Erfc(9.5)	376_921_448_565_487_994_168e-61
-whereas-1-erf-9-5-cancels-to-exactly-0-in	1 - Erf(9.5)	0
-the-gaussian-tail-shrinks-fast-only-about-7	Erfc(3.5)	0.000_000_743_098_372_341_412_745_524
+erfc-0	erfc(0)	1
+erfc-infinity	erfc(`Infinity`)	0
+erfc-negativeinfinity	erfc(negativeInfinity)	2
+a-floating-point-argument-evaluates-directly-to	erfc(0.5)	0.479_500_122_186_953_462_317
+a-machine-precision-argument	erfc(1.5)	0.033_894_853_524_689_272_933
+threads-element-wise-over-a-list-as-wolfram-s	erfc([0, 1])	[1, erfc(1)]
+complex-arguments-should-evaluate-as-they-do-for	erfc(1.5 - i)	-0.078_399_207_498_933_45 - 0.027_963_711_238_655_847i
+listable-threads-over-its-limits-at-pm-infty	erfc([positiveInfinity, negativeInfinity])	[0, 2]
+interval-arithmetic-erfc-is-decreasing-so-the	erfc(interval(0.2, 0.3))	interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
+uncertainty-propagation	erfc(Around(2, 0.01))	Around(0.004_677_734_981_047_266, 0.000_206_669_853_540_920_54)
+to-30-significant-digits-every-one-correctly	N(erfc(2), 30)	0.004_677_734_981_047_265_837_930_743_632_75
+erfc-z-2-erfc-z-here-at-z-1	erfc(-1) + erfc(1) == 2	True
+definition-erf-z-erfc-z-1-see-erf	erf(2) + erfc(2) == 1	True
+erfc-x-2-erfc-x-applied-symbolically	erfc(-x)	-erfc(x) + 2
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D(erfc(x), x)	-2 * exponentialE ^ (-x ^ 2) / sqrt(pi)
+an-exact-integer-argument-is-left-unevaluated	erfc(1)	erfc(1)
+far-in-the-tail-erfc-keeps-full-relative	erfc(9.5)	376_921_448_565_487_994_168e-61
+whereas-1-erf-9-5-cancels-to-exactly-0-in	1 - erf(9.5)	0
+the-gaussian-tail-shrinks-fast-only-about-7	erfc(3.5)	0.000_000_743_098_372_341_412_745_524

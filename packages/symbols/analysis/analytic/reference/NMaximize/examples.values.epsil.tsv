@@ -1,3 +1,3 @@
 id	in	out
-two-trig-terms-on-a-bounded-interval	NMaximize([Sin(x) + Cos(2x), x >= 0 && x <= 6], x)	[1.125, [Rule(x, 2.888_912_406_121_017_6)]]
+two-trig-terms-on-a-bounded-interval	NMaximize([sin(x) + cos(2x), x >= 0 && x <= 6], x)	[1.125, [Rule(x, 2.888_912_406_121_017_6)]]
 declines-without-a-bounded-constraint	NMaximize(-x ^ 2, x)	NMaximize(-x ^ 2, x)

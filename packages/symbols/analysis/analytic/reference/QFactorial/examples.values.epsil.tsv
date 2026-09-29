@@ -6,5 +6,5 @@ qfactorial-4-2-2	N(QFactorial(4, 2))	315
 qfactorial-3-1-2	N(QFactorial(3, 1 / 2))	2.625
 qfactorial-6-3	N(QFactorial(6, 3))	91_611_520
 qfactorial-3-1-over-2	QFactorial(3, 1 / 2)	21 / 8
-the-inversion-generating-function-of	Expand(QFactorial(3, q))	q ^ 3 + 2 * q ^ 2 + 2q + 1
+the-inversion-generating-function-of	expand(QFactorial(3, q))	q ^ 3 + 2 * q ^ 2 + 2q + 1
 at-q-1-it-is-the-ordinary-factorial	QFactorial(5, 1)	120

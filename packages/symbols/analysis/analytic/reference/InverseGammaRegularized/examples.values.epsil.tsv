@@ -5,5 +5,5 @@ inversegammaregularized-2p5-0p3	InverseGammaRegularized(2.5, 0.3)	3.032_214_992_
 qinv-5-0-1	InverseGammaRegularized(5, 0.1)	7.993_589_586_052_63
 qinv-0-5-0-9	InverseGammaRegularized(0.5, 0.9)	0.007_895_387_046_715_613
 q-a-0-1	InverseGammaRegularized(a, 1)	0
-q-a-infty-0	InverseGammaRegularized(a, 0)	PositiveInfinity
-order-1-inverts-e-z	InverseGammaRegularized(1, s)	-Ln(s)
+q-a-infty-0	InverseGammaRegularized(a, 0)	positiveInfinity
+order-1-inverts-e-z	InverseGammaRegularized(1, s)	-ln(s)

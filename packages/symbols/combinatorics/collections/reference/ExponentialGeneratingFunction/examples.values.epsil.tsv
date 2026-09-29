@@ -1,5 +1,5 @@
 id	in	out
 factorial	ExponentialGeneratingFunction(n!, n, x)	1 / (-x + 1)
-derangements	ExponentialGeneratingFunction(Subfactorial(n), n, x)	ExponentialE ^ (-x) / (-x + 1)
-bell-numbers	ExponentialGeneratingFunction(BellNumber(n), n, x)	ExponentialE ^ (ExponentialE ^ x - 1)
-fibonacci	ExponentialGeneratingFunction(Fibonacci(n), n, x)	"-(Sqrt(5) / 5) * ExponentialE ^ (1 / 2 * x * (1 - Sqrt(5))) + Sqrt(5) / 5 * ExponentialE ^\n                                                                            (1 /\n                                                                             2 *\n                                                                             x *\n                                                                             (1 +\n                                                                              Sqrt(5)))"
+derangements	ExponentialGeneratingFunction(subfactorial(n), n, x)	exponentialE ^ (-x) / (-x + 1)
+bell-numbers	ExponentialGeneratingFunction(bellNumber(n), n, x)	exponentialE ^ (exponentialE ^ x - 1)
+fibonacci	ExponentialGeneratingFunction(fibonacci(n), n, x)	"-(sqrt(5) / 5) * exponentialE ^ (1 / 2 * x * (1 - sqrt(5))) + sqrt(5) / 5 * exponentialE ^\n                                                                            (1 /\n                                                                             2 *\n                                                                             x *\n                                                                             (1 +\n                                                                              sqrt(5)))"

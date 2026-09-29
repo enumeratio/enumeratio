@@ -8,8 +8,8 @@ a-third-argument-offsets-the-range-the-result	17 % 5 % 1	2	[Mod, [Mod, 17, 5], 1
 with-offset-1-the-residues-run-1-2-3-rather-than	5 % 3 % 1	2	[Mod, [Mod, 5, 3], 1]
 rationals-are-reduced-exactly	5 / 2 % 2	1 / 2	
 3p14-mod-2	3.14 % 2	1.14	
-an-exact-irrational-reduces-exactly-to-2-sqrt-7	Sqrt(28) % 3	-3 + 2 * Sqrt(7)	
-a-symbolic-constant-reduces-exactly-to-pi-2	Pi % 2	-2 + Pi	
+an-exact-irrational-reduces-exactly-to-2-sqrt-7	sqrt(28) % 3	-3 + 2 * sqrt(7)	
+a-symbolic-constant-reduces-exactly-to-pi-2	pi % 2	-2 + pi	
 a-10-001-digit-dividend	10 ^ 10_000 % 10_007	6_333	
 threads-over-a-list-of-moduli	10 % [3, 4, 7]	[1, 2, 3]	
 a-gaussian-integer-5-3i-2-2-2i	(5 + 3i) % 2	1 - i	
@@ -17,7 +17,7 @@ a-gaussian-integer-5-3i-2-2-2i	(5 + 3i) % 2	1 - i
 gaussian-integers-the-quotient-rounds-so-each	(7 + 5i) % 3	1 - i	
 a-gaussian-modulus-7-5i-2-i-4-i-i	(7 + 5i) % (2 + i)	-i	
 exact-in-both-parts-past-2-53	(100_000_000_000_000_000_001 + 9_007_199_254_740_993i) % (2 + i)	0	
-eulers-number-mod-2-reduces-exactly	ExponentialE % 2	-2 + ExponentialE	
+eulers-number-mod-2-reduces-exactly	exponentialE % 2	-2 + exponentialE	
 gaussian-reduced-by-a-unit-modulus-is-always-0	(3 + 4i) % 1	0	
 gaussian-reduced-by-i-is-always-0	(3 + 4i) % i	0	
 a-zero-dividend-reduces-to-0	0 % (2 + i)	0	

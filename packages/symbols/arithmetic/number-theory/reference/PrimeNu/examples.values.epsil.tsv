@@ -1,12 +1,12 @@
 id	in	out
-primenu-24	PrimeNu(24)	2
-primenu-360	PrimeNu(360)	3
-primenu-105	PrimeNu(105)	3
-threads-element-wise-over-a-list-as-wolfram-s	PrimeNu([4, 28, 180])	[1, 2, 3]
-large-integers-the-15-primes-up-to-50-divide-50	PrimeNu(50!)	15
-gaussian-integers-3-i-1-i-2-i	PrimeNu(3 + i)	2
-gaussianintegers-true-5-splits-so-105-has-4	PrimeNu(105, GaussianIntegers -> True)	4
-listable-over-a-range	PrimeNu(Range(20))	[0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]
-primenu-n-is-the-length-of-factorinteger-n	PrimeNu(50) == Length(FactorInteger(50))	True
-32-2-5-has-just-one-distinct-prime-factor	PrimeNu(32)	1
-1-has-no-prime-factors	PrimeNu(1)	0
+primenu-24	primeNu(24)	2
+primenu-360	primeNu(360)	3
+primenu-105	primeNu(105)	3
+threads-element-wise-over-a-list-as-wolfram-s	primeNu([4, 28, 180])	[1, 2, 3]
+large-integers-the-15-primes-up-to-50-divide-50	primeNu(50!)	15
+gaussian-integers-3-i-1-i-2-i	primeNu(3 + i)	2
+gaussianintegers-true-5-splits-so-105-has-4	primeNu(105, GaussianIntegers -> True)	4
+listable-over-a-range	primeNu(Range(20))	[0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]
+primenu-n-is-the-length-of-factorinteger-n	primeNu(50) == length(factorInteger(50))	True
+32-2-5-has-just-one-distinct-prime-factor	primeNu(32)	1
+1-has-no-prime-factors	primeNu(1)	0
