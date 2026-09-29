@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: GaussianFractional(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (tuple<fractional_number, fractional_number>) -> gaussian_fractional
 ---

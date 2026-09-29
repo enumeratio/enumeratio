@@ -20,8 +20,7 @@
 // those as constructor parameters for exactly this reason.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { registerCollectionCarrier } from "@enumeratio/structures";
-import { DOMAINS } from "./domain-data.ts";
+import { carrierNameForType, registerCollectionCarrier } from "./operations.ts";
 
 /** A named restriction: a base collection plus the predicate that selects from it. */
 export interface Restriction {
@@ -292,10 +291,12 @@ export function declareRestricted(ce: ComputeEngine): void {
  * already taken is a `RestrictionCollisionError`, listing every one.
  */
 export function declareRestrictions(ce: ComputeEngine, restrictions: readonly Restriction[] = RESTRICTIONS): void {
-  const carrierOf = new Map(DOMAINS.map((domain) => [domain.type, domain.name]));
   const collisions: string[] = [];
   for (const restriction of restrictions) {
-    const carrier = carrierOf.get(restriction.on);
+    // Read off `ce`'s own carrier registry rather than a static list, so this composes
+    // regardless of which owning package's `declareCarriers` call minted `restriction.on` —
+    // it only has to have happened already (every call site declares carriers first).
+    const carrier = carrierNameForType(ce, restriction.on);
     if (carrier !== undefined) registerCollectionCarrier(ce, restriction.name, carrier);
     if (ce.lookupDefinition(restriction.name) !== undefined) {
       if (restriction.implementedBy === undefined) collisions.push(restriction.name);

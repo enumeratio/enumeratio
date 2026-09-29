@@ -1,5 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
+import { declareCarrierElement, declareCarrierPlurals, declareCarriers } from "@enumeratio/structures";
+import { HYPERCOMPLEX_CARRIERS } from "./carrier-data.ts";
 import {
   addMultivectors,
   conjugateMultivector,
@@ -119,6 +121,12 @@ const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(cont
 const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
 
 export function declareHypercomplex(ce: ComputeEngine): void {
+  // This package's own carrier (design/speculative/combinatorics-layering-and-plausible.md §4
+  // step 4) — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types and constructors
+  // only; plurals are a separate call (`declareHypercomplexCarrierPlurals`) — see
+  // @enumeratio/number-theory's `declareNumberTheory` for why.
+  declareCarriers(ce, HYPERCOMPLEX_CARRIERS);
+
   const linear = (
     ops: readonly BoxedExpression[],
     combine: (parts: Parameters<typeof addMultivectors>[1]) => BoxedExpression | undefined,
@@ -237,4 +245,11 @@ export function declareHypercomplex(ce: ComputeEngine): void {
 
   declareAlgebras(ce);
   declareOrderedJuxtaposition(ce);
+}
+
+/** This package's carrier's plural type-space name and `Element` membership — a separate
+ *  call, same reason as `@enumeratio/number-theory`'s `declareNumberTheoryCarrierPlurals`. */
+export function declareHypercomplexCarrierPlurals(ce: ComputeEngine): void {
+  declareCarrierPlurals(ce, HYPERCOMPLEX_CARRIERS);
+  declareCarrierElement(ce, HYPERCOMPLEX_CARRIERS);
 }

@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: EgyptianFraction(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (list<integer>) -> egyptian_fraction
 ---

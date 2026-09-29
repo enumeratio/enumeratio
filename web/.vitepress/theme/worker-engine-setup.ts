@@ -28,6 +28,7 @@ import { declareBraid } from "@enumeratio/braid";
 import { declareCombinatorics } from "@enumeratio/combinatorics";
 import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
 import { declareDiagrams } from "@enumeratio/diagram";
+import { declareFrontendCarrierPlurals, declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
 import { declareStructures } from "@enumeratio/structures";
@@ -35,13 +36,13 @@ import { declareGeometric } from "@enumeratio/geometric";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
 import { declareHecke } from "@enumeratio/hecke";
 import { declareHopf } from "@enumeratio/hopf";
-import { declareHypercomplex } from "@enumeratio/hypercomplex";
+import { declareHypercomplex, declareHypercomplexCarrierPlurals } from "@enumeratio/hypercomplex";
 import { declareIncidence } from "@enumeratio/incidence";
 import { declareModular } from "@enumeratio/modular";
-import { declareNumberTheory } from "@enumeratio/number-theory";
-import { declareNumerals } from "@enumeratio/numerals";
+import { declareNumberTheory, declareNumberTheoryCarrierPlurals } from "@enumeratio/number-theory";
+import { declareNumerals, declareNumeralsCarrierPlurals } from "@enumeratio/numerals";
 import { declareQuiver } from "@enumeratio/quiver";
-import { declareResidues } from "@enumeratio/residues";
+import { declareResidues, declareResiduesCarrierPlurals } from "@enumeratio/residues";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 import { applyEngineLibraries } from "./engine-libraries.ts";
 
@@ -52,6 +53,8 @@ export function configure(ce: ComputeEngine): void {
     ALL_STATISTICS,
     declareDomainPlurals,
     declareDomainElement,
+    declareFrontendCarriers,
+    declareFrontendCarrierPlurals,
     declareMaps,
     DOMAINS,
     declareAnalytic,
@@ -60,10 +63,13 @@ export function configure(ce: ComputeEngine): void {
     declareBoxes,
     declareStructures,
     declareHypercomplex,
+    declareHypercomplexCarrierPlurals,
     declareGeometric,
     declareDiagrams,
     declareResidues,
+    declareResiduesCarrierPlurals,
     declareNumerals,
+    declareNumeralsCarrierPlurals,
     declareHecke,
     declareIncidence,
     declareQuiver,
@@ -71,6 +77,7 @@ export function configure(ce: ComputeEngine): void {
     declareGroupAlgebra,
     declareModular,
     declareNumberTheory,
+    declareNumberTheoryCarrierPlurals,
     declareAdeles,
     declareBraid,
   });

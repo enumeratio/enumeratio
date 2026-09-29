@@ -26,7 +26,7 @@
 //     dictionary: [...LATEX_DICTIONARY, ...carrierLatex(DOMAINS)],
 //   })})
 
-import type { Domain } from "./types.ts";
+import type { Domain } from "@enumeratio/structures";
 
 /** Loose shape of a compute-engine LaTeX dictionary entry, typed structurally so this
  *  data-only module does not drag the engine's types in. */

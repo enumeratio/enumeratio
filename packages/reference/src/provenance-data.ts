@@ -3583,7 +3583,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "CollatzTrajectory",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -3870,7 +3870,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "EgyptianFraction",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: ["sympy"],
   },
@@ -4052,7 +4052,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "FractionalNumber",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-numerals",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4087,7 +4087,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "GaussianFractional",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4101,7 +4101,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "GaussianInteger",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4115,7 +4115,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "GaussianRational",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4150,7 +4150,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "GlyphKind",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-frontend",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4164,7 +4164,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "GoldbachPartition",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4276,7 +4276,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "IntegerFactorization",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4675,7 +4675,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "ModularResidue",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-residues",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -4703,7 +4703,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "Multicomplex",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-hypercomplex",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -5235,7 +5235,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "PythagoreanTriple",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -5263,7 +5263,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "RationalNumber",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-numerals",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -5557,7 +5557,7 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "SquareDecomposition",
     provenance: "unknown",
-    declared: "enumeratio-combinatorics",
+    declared: "enumeratio-number-theory",
     wolframAlias: null,
     elsewhere: [],
   },

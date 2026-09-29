@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/manifest": "workspace:*"
+    "@enumeratio/manifest": "workspace:*",
+    "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.140.0",

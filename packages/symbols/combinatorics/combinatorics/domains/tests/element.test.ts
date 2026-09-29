@@ -7,7 +7,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareDomainElement, declareDomainPlurals, declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
-import type { Domain } from "../src/types.ts";
+import type { Domain } from "@enumeratio/structures";
 
 const engine = (): ComputeEngine => {
   const ce = new ComputeEngine();
@@ -89,7 +89,9 @@ test("every domain with a plural answers Element for its own constructor", () =>
   }
 });
 
-test("the one domain with no plural type space stays that way", () => {
+test("every combinatorics carrier has a plural type space", () => {
+  // ContinuedFraction — the one carrier without one — moved to numerals/number-theory; that
+  // package's own tests pin the no-plural case now.
   const noPlural = DOMAINS.filter((d) => d.plural === undefined).map((d) => d.name);
-  expect(noPlural).toEqual(["ContinuedFraction"]);
+  expect(noPlural).toEqual([]);
 });

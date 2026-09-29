@@ -6,7 +6,7 @@ summary: A bare numerator/denominator pair over `number`, kept unreduced — unl
 signatures:
   - call: Fraction(numerator, denominator)
     description: a numerator/denominator pair, unreduced and untyped beyond `number`
-    library: enumeratio-combinatorics
+    library: enumeratio-numerals
     type: (tuple<number, number>) -> fraction
 seeAlso:
   - RationalNumber

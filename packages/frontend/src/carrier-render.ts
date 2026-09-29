@@ -6,7 +6,7 @@
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import { ALL_REPRESENTATIONS, canonicalFor, type Medium, type Representation } from "./representation.ts";
+import { ALL_REPRESENTATIONS, canonicalFor, type Medium, type Representation } from "@enumeratio/structures";
 
 const intsOf = (expr: BoxedExpression | undefined): number[] =>
   operandsOf(expr).map((operand) => Math.trunc(Number(operand.re)));

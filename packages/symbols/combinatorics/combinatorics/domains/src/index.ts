@@ -1,12 +1,20 @@
 export { contentsOf, declareDomainElement, declareDomainPlurals, declareDomains } from "./declare.ts";
-export { applyComposition, declareCompose } from "./compose.ts";
-export { type Extension, extendBuiltin, PRIVATE_SUFFIX, privateNameFor, publicName } from "./extend.ts";
-export { type CombinatorialMap, declareMaps, type Law, MAPS } from "./map.ts";
+export { type CombinatorialMap, declareMaps, evaluateDefinition, type Law, MAPS } from "./map.ts";
 export { checkLaws, type LawFailure } from "./laws.ts";
 export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
-export { carrierLatex, type LatexEntry, triggerFor } from "./latex.ts";
-export { declareRendering } from "./render.ts";
+export { DOMAINS, LEFTOVER_DOMAINS } from "./domain-data.ts";
+export type { Domain, Shape } from "@enumeratio/structures";
+// Generic carrier machinery moved to @enumeratio/structures (design/speculative/combinatorics-
+// layering-and-plausible.md §4 step 1) — re-exported here so nothing importing
+// `@enumeratio/combinatorics/domains` for these has to change.
 export {
+  applyComposition,
+  declareCompose,
+  type Extension,
+  extendBuiltin,
+  PRIVATE_SUFFIX,
+  privateNameFor,
+  publicName,
   ALL_REPRESENTATIONS,
   canonicalFor,
   LATEX_REPRESENTATIONS,
@@ -14,15 +22,18 @@ export {
   type Representation,
   REPRESENTATIONS,
   representationsFor,
-} from "./representation.ts";
-export { afterInserting, bumpedFrom, insertionShape, insertionTableau, rowAfterInserting } from "./tableau.ts";
-export {
   declareRestricted,
   declareRestrictions,
   fillPredicate,
   RESTRICTIONS,
   RestrictionCollisionError,
   type Restriction,
-} from "./restriction.ts";
-export { DOMAINS } from "./domain-data.ts";
-export { type Domain, type Shape, typeFor } from "./types.ts";
+} from "@enumeratio/structures";
+// Area-owned carrier code, re-exported from its new home (step 2).
+export {
+  afterInserting,
+  bumpedFrom,
+  insertionShape,
+  insertionTableau,
+  rowAfterInserting,
+} from "../../tableaux/src/tableau.ts";
