@@ -1,4 +1,4 @@
 id	in	out
 count-binarywords-3	Count(BinaryWords(3))	8
-first-element-of-binarywords-3	BinaryWords(3)[1]	[0, 0, 0]
-every-element-of-binarywords-3	Take(BinaryWords(3), 8)	"[\n  [0, 0, 0],\n  [0, 0, 1],\n  [0, 1, 0],\n  [0, 1, 1],\n  [1, 0, 0],\n  [1, 0, 1],\n  [1, 1, 0],\n  [1, 1, 1],\n]"
+first-element-of-binarywords-3	BinaryWords(3)[1]	BinaryWord([0, 0, 0])
+every-element-of-binarywords-3	Take(BinaryWords(3), 8)	"[\n  BinaryWord([0, 0, 0]),\n  BinaryWord([0, 0, 1]),\n  BinaryWord([0, 1, 0]),\n  BinaryWord([0, 1, 1]),\n  BinaryWord([1, 0, 0]),\n  BinaryWord([1, 0, 1]),\n  BinaryWord([1, 1, 0]),\n  BinaryWord([1, 1, 1]),\n]"

@@ -14,5 +14,5 @@ signatures:
   - call: SetComposition(list)
     description: The singular-inhabitant constructor for a composition of a set, as its ordered blocks.
     library: enumeratio-domains
-    type: (list<integer>) -> set_composition
+    type: (list<list<integer>>) -> set_composition
 ---

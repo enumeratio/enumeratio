@@ -26,6 +26,13 @@ const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
   RestrictedGrowthString: (element) => ["RestrictedGrowthString", ["List", ...(element as number[])]],
   SetPartition: (element) => ["SetPartition", ["List", ...(element as number[][]).map((block) => ["List", ...block])]],
+  SetComposition: (element) => [
+    "SetComposition",
+    ["List", ...(element as number[][]).map((block) => ["List", ...block])],
+  ],
+  Surjection: (element) => ["Surjection", ["List", ...(element as number[])]],
+  Composition: (element) => ["Composition", ["List", ...(element as number[])]],
+  BinaryWord: (element) => ["BinaryWord", ["List", ...(element as number[])]],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));

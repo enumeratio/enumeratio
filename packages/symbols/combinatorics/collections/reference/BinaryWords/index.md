@@ -7,7 +7,7 @@ signatures:
   - call: BinaryWords(n)
     description: the binary strings of length $n$
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - Words
   - BinaryWordsByWeight

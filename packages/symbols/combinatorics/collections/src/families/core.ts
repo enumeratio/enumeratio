@@ -282,14 +282,17 @@ export const entries: NumberKernel[] = [
   },
 
   // ── compositions ──
-  ints(
-    "IntegerCompositions",
-    1,
-    ([n]) => CompositionCount(n),
-    ([n], r) => CompositionFromMask(n, r),
-    (a, [n]) => IsCompositionOf(a, n),
-    (a) => CompositionRank(a),
-  ),
+  {
+    ...ints(
+      "IntegerCompositions",
+      1,
+      ([n]) => CompositionCount(n),
+      ([n], r) => CompositionFromMask(n, r),
+      (a, [n]) => IsCompositionOf(a, n),
+      (a) => CompositionRank(a),
+    ),
+    carrier: "Composition",
+  },
   ints(
     "CompositionsIntoKParts",
     2,
@@ -405,14 +408,17 @@ export const entries: NumberKernel[] = [
     (a, [n, k]) => IsTupleOf(a, n, k),
     (a, [n]) => TupleRank(a, n),
   ),
-  ints(
-    "Surjections",
-    2,
-    ([n, k]) => SurjectionCount(n, k),
-    ([n, k], r) => SurjectionUnrank(n, k, r),
-    (a, [n, k]) => IsSurjectionOf(a, n, k),
-    (a, [, k]) => SurjectionRank(a, k),
-  ),
+  {
+    ...ints(
+      "Surjections",
+      2,
+      ([n, k]) => SurjectionCount(n, k),
+      ([n, k], r) => SurjectionUnrank(n, k, r),
+      (a, [n, k]) => IsSurjectionOf(a, n, k),
+      (a, [, k]) => SurjectionRank(a, k),
+    ),
+    carrier: "Surjection",
+  },
   ints(
     "Endofunctions",
     1,
@@ -498,6 +504,7 @@ export const entries: NumberKernel[] = [
   },
   {
     head: "SetCompositions",
+    carrier: "SetComposition",
     paramCount: 1,
     kind: "blocks",
     count: ([n]) => Fubini(n),

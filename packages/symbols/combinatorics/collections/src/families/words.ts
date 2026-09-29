@@ -376,14 +376,17 @@ const wordClass = (carrier: string, base?: number): Declared => ({
 export const entries: NumberKernel[] = [
   // BinaryWords(n): strings over {0,1}. Reuses the BinaryStrings kernel (same family, catalogued
   // under this name).
-  ints(
-    "BinaryWords",
-    1,
-    ([n]) => BinaryStringCount(n),
-    ([n], r) => BinaryStringUnrank(n, r),
-    (a, [n]) => IsBinaryString(a, n),
-    (a) => BinaryStringRank(a),
-  ),
+  {
+    ...ints(
+      "BinaryWords",
+      1,
+      ([n]) => BinaryStringCount(n),
+      ([n], r) => BinaryStringUnrank(n, r),
+      (a, [n]) => IsBinaryString(a, n),
+      (a) => BinaryStringRank(a),
+    ),
+    carrier: "BinaryWord",
+  },
   // BinaryWordsByWeight(n, k): length-n binary words of Hamming weight k.
   ints(
     "BinaryWordsByWeight",

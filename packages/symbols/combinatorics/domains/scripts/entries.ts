@@ -24,6 +24,13 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
     caption: "the set partition $\\{1,3\\} \\mid \\{2\\} \\mid \\{4\\}$",
   },
   restricted_growth_string: { contents: ["List", 0, 1, 0, 2], caption: "the restricted growth string $0102$" },
+  set_composition: {
+    contents: ["List", ["List", 2, 4], ["List", 1], ["List", 3]],
+    caption: "the set composition $\\{2,4\\} \\mid \\{1\\} \\mid \\{3\\}$",
+  },
+  surjection: { contents: ["List", 2, 1, 3, 1], caption: "the surjection $2131$" },
+  composition: { contents: ["List", 2, 1, 3], caption: "the composition $2 + 1 + 3$" },
+  binary_word: { contents: ["List", 0, 1, 1, 0, 0], caption: "the binary word $01100$" },
 };
 
 const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));

@@ -650,6 +650,13 @@ collections-package filing problem, independent of this document's central quest
   and every set-partition statistic answers on the strings. This is enumeratio's "sibling
   collection related by an order isomorphism", with the collection borrowing its partner's
   ranking.
+- **More pairs, and the law they claim.** A set composition is its ordered blocks too, with
+  `SurjectionOf` / `SetCompositionOf` to the surjection word; a composition of n goes to its cut
+  word of length n - 1 (`CutWord` / `CompositionOfCutWord`). A map that is an order isomorphism
+  says so (`orderIsomorphism: { from, to, sizeOffset }` on the map), and
+  `domains/tests/equivalence.test.ts` checks it: the k-th element of one collection maps to the
+  k-th of the other, for every small size. Dyck paths and binary trees wait on the tree
+  encoding: the collection's trees are nested, the domain's flat.
 
 Still to do: deprecate and retire the bare heads (phase 2's second half), move each
 definition down to its collection (phase 3), `Rank` through `CombinatorialStat`, and the
