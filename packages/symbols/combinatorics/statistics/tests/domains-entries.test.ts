@@ -3,12 +3,12 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers, declareMaps } from "@enumeratio/combinatorics/src";
 import { readEntries } from "@enumeratio/entry/node";
 
 const entries = [
-  // combinatorics' reference/ is now one directory shared by the collections and domains
-  // areas (recordDirs wants one `reference/` per package, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step-1 merge); this file only means to re-check the maps
+  // combinatorics' reference/ is now one directory shared by the collections and (former)
+  // domains areas (recordDirs wants one `reference/` per package, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step-1 merge); this file only means to re-check the maps
   // (originally `domains/reference/`), so it filters to entries that carry a map tag.
   ...readEntries(new URL("../../combinatorics/reference/", import.meta.url)).filter(
     (entry) => entry.mapOn !== undefined,
@@ -21,11 +21,11 @@ const entries = [
 
 // The same stack both engines declare, in the same order.
 const ce = new ComputeEngine();
-declareDomains(ce);
-const carrierTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
+declareCombinatoricsCarriers(ce);
+const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
-declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 for (const entry of entries) {
   for (const example of entry.examples) {

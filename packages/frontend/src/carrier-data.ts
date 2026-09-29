@@ -4,9 +4,9 @@
 // package's own `GlyphKind` (glyphs.ts), which is an unrelated TypeScript union for the SVG
 // glyph renderer, not a compute-engine carrier.
 
-import type { CarrierDeclaration } from "@enumeratio/structures";
+import type { Carrier } from "@enumeratio/structures";
 
-export const FRONTEND_CARRIERS: readonly CarrierDeclaration[] = [
+export const FRONTEND_CARRIERS: readonly Carrier[] = [
   {
     name: "GlyphKind",
     type: "glyph_kind",

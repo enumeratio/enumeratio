@@ -1,7 +1,7 @@
 // Row data for the four reference catalogue pages, read straight from the packages
 // that own each class. Kept in one module so the shared row shape stays in sync.
 import { allEntries } from "@enumeratio/combinatorics/collections";
-import { DOMAINS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics/domains";
+import { CARRIERS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics";
 import {
   crosswalkFor,
   crosswalkForCollection,
@@ -45,7 +45,7 @@ export const statisticsRows: readonly CatalogRow[] = [...ALL_STATISTICS]
 
 // A map's endpoints are carrier TYPES (`permutation`); the crosswalk is keyed by the carrier's
 // domain name (`Permutation`).
-const carrierName = (type: string): string => DOMAINS.find((d) => d.type === type)?.name ?? type;
+const carrierName = (type: string): string => CARRIERS.find((c) => c.type === type)?.name ?? type;
 
 // Combinatorial maps — a directed arrow between carriers; frontier maps are named but
 // not yet defined.
@@ -69,13 +69,13 @@ export const mapsRows: readonly CatalogRow[] = [
 
 // Carrier domains — the nominal types combinatorial objects are stored as; badge is the
 // underlying storage shape.
-export const domainsRows: readonly CatalogRow[] = [...DOMAINS]
-  .map((d) => ({
-    name: d.name,
-    href: symbol(d.name),
-    badges: [d.shape],
-    summary: d.restricts ? `restricts ${d.restricts}` : undefined,
-    references: crosswalkFor(d.name),
+export const domainsRows: readonly CatalogRow[] = [...CARRIERS]
+  .map((c) => ({
+    name: c.name,
+    href: symbol(c.name),
+    badges: [c.shape],
+    summary: c.restricts ? `restricts ${c.restricts}` : undefined,
+    references: crosswalkFor(c.name),
   }))
   .toSorted(byName);
 

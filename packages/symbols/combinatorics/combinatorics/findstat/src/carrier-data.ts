@@ -3,9 +3,9 @@
 // LEFTOVER_DOMAINS, which is where every carrier without an area used to sit regardless of
 // what it actually was.
 
-import type { Domain } from "@enumeratio/structures";
+import type { Carrier } from "@enumeratio/structures";
 
-export const FINDSTAT_DOMAINS: readonly Domain[] = [
+export const FINDSTAT_CARRIERS: readonly Carrier[] = [
   {
     name: "DistributionMatchHit",
     type: "distribution_match_hit",

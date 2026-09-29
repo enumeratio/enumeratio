@@ -39,7 +39,7 @@
 //   vp node packages/census/scripts/audit-head-map.ts
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { DOMAINS } from "@enumeratio/combinatorics/domains";
+import { CARRIERS } from "@enumeratio/combinatorics";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { NUMERAL_ALIASES } from "@enumeratio/numerals";
 import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/frontend/symbols";
@@ -130,7 +130,7 @@ const HELD_HEADS = new Set([
   ...[...VISUAL_SYMBOLS, ...CONTROL_SYMBOLS, ...LAYOUT_SYMBOLS].map((symbol) => symbol.head),
   ...GRAPHICS_HEADS,
   "Rasterize",
-  ...DOMAINS.map((domain) => domain.name),
+  ...CARRIERS.map((carrier) => carrier.name),
   ...Object.keys(NUMERAL_ALIASES),
 ]);
 

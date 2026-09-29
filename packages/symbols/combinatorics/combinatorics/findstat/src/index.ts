@@ -1,1 +1,1 @@
-export { FINDSTAT_DOMAINS } from "./domain-data.ts";
+export { FINDSTAT_CARRIERS } from "./carrier-data.ts";

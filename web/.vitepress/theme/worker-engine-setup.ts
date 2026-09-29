@@ -25,13 +25,12 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
 import { declareBraid } from "@enumeratio/braid";
-import { declareCombinatorics } from "@enumeratio/combinatorics";
-import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
 import { declareDiagrams } from "@enumeratio/diagram";
 import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
-import { declareStructures } from "@enumeratio/structures";
+import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 import { declareGeometric } from "@enumeratio/geometric";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
 import { declareHecke } from "@enumeratio/hecke";
@@ -51,11 +50,11 @@ export function configure(ce: ComputeEngine): void {
     declareCombinatorics,
     declareStatistics,
     ALL_STATISTICS,
-    declareDomainPlurals,
-    declareDomainElement,
+    declareCarrierPlurals,
+    declareCarrierElement,
     declareFrontendCarriers,
     declareMaps,
-    DOMAINS,
+    CARRIERS,
     declareAnalytic,
     declareFractals,
     declareGraphics,

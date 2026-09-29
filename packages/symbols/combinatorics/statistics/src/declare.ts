@@ -39,7 +39,7 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
 export interface DeclareOptions {
   /**
    * Declare each statistic over its carrier's DOMAIN TYPE, and unwrap the constructed value
-   * before evaluating. Pass `@enumeratio/combinatorics/domains`' type names, keyed by carrier.
+   * before evaluating. Pass `@enumeratio/combinatorics`' type names, keyed by carrier.
    *
    * This is the intended mode: a combinatorial statistic is a function OF a carrier, so
    * `Cycles(Permutation([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —

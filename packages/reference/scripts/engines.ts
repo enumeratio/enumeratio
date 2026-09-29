@@ -10,13 +10,7 @@ import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
-import { declareCombinatorics } from "@enumeratio/combinatorics/src";
-import {
-  declareDomainElement,
-  declareDomainPlurals,
-  declareMaps,
-  DOMAINS,
-} from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -30,7 +24,7 @@ import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
-import { declareStructures } from "@enumeratio/structures/src";
+import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures/src";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
@@ -76,8 +70,8 @@ const LIBRARY_DECLARATIONS = [
   // their own `Inverse` so its permutation-carrier overload is the one left standing (see
   // @enumeratio/combinatorics' src/index.ts).
   (ce: ComputeEngine) => {
-    declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(DOMAINS.map((d) => [d.name, d.type])) });
-    declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+    declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])) });
+    declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
   },
   // Combinatorics' own carriers mint their plural type-space names and `Element` membership
   // LAST, same as every other host (CLI, site, census): `declareCollections`, above, has
@@ -87,8 +81,8 @@ const LIBRARY_DECLARATIONS = [
   // default); this is the one still-separate step, so the reference engine now runs it too —
   // it used to skip it entirely.
   (ce: ComputeEngine) => {
-    declareDomainPlurals(ce);
-    declareDomainElement(ce);
+    declareCarrierPlurals(ce, CARRIERS);
+    declareCarrierElement(ce, CARRIERS);
   },
 ];
 

@@ -1,6 +1,6 @@
 // The carrier types this package's statistics are declared over, mirrored here.
 //
-// @enumeratio/combinatorics/domains owns these — it is where they are minted and where the constructors
+// @enumeratio/combinatorics owns these — it is where they are minted and where the constructors
 // come from — but it DEPENDS on this package, so importing it back would be a build cycle
 // (`vp run -r build` refuses it). The four names below are the contract between the two,
 // and `packages/symbols/combinatorics/statistics/tests/domains-entries.test.ts` exercises the real declaration.
@@ -26,7 +26,7 @@ const SHAPES: Readonly<Record<string, string>> = {
   set_partition: "list<list<integer>>",
 };
 
-/** Mint the carrier types and their held constructors, the way `declareDomains` does. */
+/** Mint the carrier types and their held constructors, the way combinatorics' own carrier declare does. */
 export function declareCarriers(ce: ComputeEngine): void {
   for (const type of Object.values(ALL_CARRIERS)) ce.declareType(type, SHAPES[type]!, { mint: true });
   for (const [name, type] of Object.entries(ALL_CARRIERS))

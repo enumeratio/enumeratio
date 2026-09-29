@@ -3,7 +3,7 @@
 // once; rank = index in that order. Element = level sequence (depths in canonical DFS order, root
 // first at depth 0) for the two unlabelled families, and an insertion-choice / arity digit sequence
 // for phylogenetic / non-crossing trees — all "ints" kind, matching the catalogued carriers'
-// list<integer> shape (see packages/symbols/combinatorics/domains/src/domain-data.ts).
+// list<integer> shape (see packages/symbols/combinatorics/combinatorics/trees/src/carrier-data.ts).
 import type { NumberKernel } from "./types.ts";
 import { Binomial } from "./kernels-combinatorics.ts";
 import { KSubsetUnrank, KSubsetRank } from "./kernels-extra.ts";

@@ -1,7 +1,7 @@
 // Shard of map.test.ts: typing, the extended built-ins, and the straightforward maps. See
 // map-helpers.ts for shared setup, and the other map-*.test.ts files for the pricier shards.
 import { expect, test } from "vite-plus/test";
-import { ALL, ce, DOMAINS, MAPS, perm, result } from "./domains-map-helpers.ts";
+import { ALL, ce, CARRIERS, MAPS, perm, result } from "./domains-map-helpers.ts";
 
 test("a map is typed by carrier, and rejects the wrong one", () => {
   // The reason domains came before maps: without them every map is list -> list.
@@ -131,11 +131,11 @@ test("a composed map really composes its steps", () => {
 test("every map names a carrier that exists", () => {
   for (const map of MAPS) {
     expect(
-      DOMAINS.some((d) => d.type === map.from),
+      CARRIERS.some((c) => c.type === map.from),
       map.name,
     ).toBe(true);
     expect(
-      DOMAINS.some((d) => d.type === map.to),
+      CARRIERS.some((c) => c.type === map.to),
       map.name,
     ).toBe(true);
   }

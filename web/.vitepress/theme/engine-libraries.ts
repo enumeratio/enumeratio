@@ -22,10 +22,10 @@ export interface EngineLibraries {
   readonly declareCombinatorics: typeof import("@enumeratio/combinatorics").declareCombinatorics;
   readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
   readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
-  readonly declareDomainPlurals: typeof import("@enumeratio/combinatorics/domains").declareDomainPlurals;
-  readonly declareDomainElement: typeof import("@enumeratio/combinatorics/domains").declareDomainElement;
-  readonly declareMaps: typeof import("@enumeratio/combinatorics/domains").declareMaps;
-  readonly DOMAINS: typeof import("@enumeratio/combinatorics/domains").DOMAINS;
+  readonly declareCarrierPlurals: typeof import("@enumeratio/structures").declareCarrierPlurals;
+  readonly declareCarrierElement: typeof import("@enumeratio/structures").declareCarrierElement;
+  readonly declareMaps: typeof import("@enumeratio/combinatorics").declareMaps;
+  readonly CARRIERS: typeof import("@enumeratio/combinatorics").CARRIERS;
   readonly declareAnalytic: typeof import("@enumeratio/analytic").declareAnalytic;
   readonly declareFractals: typeof import("@enumeratio/analytic").declareFractals;
   readonly declareGraphics: typeof import("@enumeratio/formats").declareGraphics;
@@ -61,11 +61,11 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3). Everything below declares heads OVER these minted
   // types, so they have to exist before a signature can name one.
   apply(libs.declareCombinatorics);
-  // Every domain's plural type-space name, and Element membership over it -- AFTER
+  // Every carrier's plural type-space name, and Element membership over it -- AFTER
   // collections, so a plural a collection family already claims (Permutations, DyckPaths,
   // ...) is still free when this checks, not raced by minting a bare symbol first.
-  apply(libs.declareDomainPlurals);
-  apply(libs.declareDomainElement);
+  apply((ce) => libs.declareCarrierPlurals(ce, libs.CARRIERS));
+  apply((ce) => libs.declareCarrierElement(ce, libs.CARRIERS));
   // GlyphKind: type, constructor, plural type-space name and `Element` membership, all in
   // one call (`declareCarriers`' default plural folding).
   apply(libs.declareFrontendCarriers);
@@ -74,9 +74,9 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // already declares the fast permutation heads under the same names, so those are skipped
   // here — one head, one owner. Statistics has no dependency from combinatorics, so its
   // `domainTypes` is still built and passed by the host.
-  const domainTypes = Object.fromEntries(libs.DOMAINS.map((d) => [d.name, d.type]));
+  const domainTypes = Object.fromEntries(libs.CARRIERS.map((c) => [c.name, c.type]));
   apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { domainTypes }));
-  const constructorFor = Object.fromEntries(libs.DOMAINS.map((d) => [d.type, d.name]));
+  const constructorFor = Object.fromEntries(libs.CARRIERS.map((c) => [c.type, c.name]));
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);
   apply(libs.declareFractals);

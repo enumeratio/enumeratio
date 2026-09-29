@@ -3,32 +3,32 @@
 // over that carrier: pick a family, then an address in it, the way Plausible's Sum instance
 // does. Seeded per map, so a failure replays.
 //
-// Moved here from @enumeratio/combinatorics' domains area (originally domains/tests/
+// Moved here from @enumeratio/combinatorics' now-retired domains area (originally domains/tests/
 // laws.test.ts) to break a devDependency cycle: combinatorics -> catalog -> combinatorics, once
 // collections and domains merged into one package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible). catalog already devDeps combinatorics' public API for its own tests, so
-// this moved to the side of the edge that doesn't cycle; the engine setup below is
-// domains/tests/map-helpers.ts's, inlined since that helper is package-internal.
+// this moved to the side of the edge that doesn't cycle; the engine setup below was originally
+// domains/tests/map-helpers.ts's, inlined since that helper was package-internal.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { COLLECTIONS } from "../src/index.ts";
 import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 import { sampleable } from "@enumeratio/combinatorics/collections/sampleable";
 import {
+  CARRIERS,
   checkLaws,
-  declareDomains,
+  declareCombinatoricsCarriers,
   declareMaps,
-  DOMAINS,
   type LawFailure,
   MAPS,
-} from "@enumeratio/combinatorics/domains/src";
+} from "@enumeratio/combinatorics/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { streamFor } from "@enumeratio/plausible";
 import { expect, test } from "vite-plus/test";
 
-const domainTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
-const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
+const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
+const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 const ce = new ComputeEngine();
-declareDomains(ce);
+declareCombinatoricsCarriers(ce);
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);
 
@@ -65,7 +65,7 @@ const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   ],
 };
 
-const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
+const constructorOf = new Map(CARRIERS.map((c) => [c.type, c.name]));
 
 for (const map of MAPS.filter((m) => m.body !== undefined || m.kernel !== undefined || m.composedOf !== undefined)) {
   const carrier = constructorOf.get(map.from) as string;

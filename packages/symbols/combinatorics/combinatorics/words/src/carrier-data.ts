@@ -1,10 +1,10 @@
-// Carrier domains for the words area (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4). Hand-maintained: split from the retired domains/scripts/extract.ts
+// Carrier data for the words area (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4). Hand-maintained: split from the retired domains/scripts/extract.ts
 // generator, one-time, from the last generated domain-data.ts. Families for this area move
 // here in step 5.
 
-import type { Domain } from "@enumeratio/structures";
+import type { Carrier } from "@enumeratio/structures";
 
-export const WORDS_DOMAINS: readonly Domain[] = [
+export const WORDS_CARRIERS: readonly Carrier[] = [
   {
     name: "AscentSequence",
     type: "ascent_sequence",

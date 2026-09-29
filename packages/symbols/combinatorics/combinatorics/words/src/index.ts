@@ -1,1 +1,1 @@
-export { WORDS_DOMAINS } from "./domain-data.ts";
+export { WORDS_CARRIERS } from "./carrier-data.ts";

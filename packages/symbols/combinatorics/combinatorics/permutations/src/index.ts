@@ -1,1 +1,1 @@
-export { PERMUTATIONS_DOMAINS } from "./domain-data.ts";
+export { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";

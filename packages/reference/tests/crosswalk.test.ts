@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
-import { DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS as COMBINATORICS_CARRIERS } from "@enumeratio/combinatorics/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
@@ -28,7 +28,7 @@ import { engineSymbols as engineData } from "../src/engine-symbols-data.ts";
 import { packageEntries, referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();
-// collections and domains merged into one package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step 1); one packageEntries() call now covers both areas.
+// collections and the (now-retired) domains area merged into one package (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's step 1); one packageEntries() call now covers both areas.
 const combinatoricsEntries = packageEntries("combinatorics");
 const statisticEntries = packageEntries("statistics");
 import { fungrimSymbols } from "../src/fungrim-symbols-data.ts";
@@ -48,7 +48,7 @@ const known = new Set<string>([
   ...entries.map((e) => e.name),
   ...combinatoricsEntries.map((e) => e.name),
   ...statisticEntries.map((e) => e.name),
-  ...DOMAINS.map((d) => d.name),
+  ...COMBINATORICS_CARRIERS.map((c) => c.name),
   ...engineData.map((s) => s.name),
   ...COLLECTIONS.map((c) => c.name),
   ...CARRIERS.map((c) => c.name),

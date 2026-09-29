@@ -5,8 +5,8 @@
 // is returned as structured data and drawn by whichever adapter runs the core.
 
 import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
-import { declareCombinatorics } from "@enumeratio/combinatorics";
-import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
+import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import {
@@ -199,10 +199,10 @@ export interface Parsed {
 
 /** Carrier name to minted type, for the statistics package (still outside `declareCombinatorics`
  *  -- combinatorics has no dependency on statistics). */
-const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
+const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
-const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
+const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
 export class Session {
   readonly ce: ComputeEngine;
@@ -222,8 +222,8 @@ export class Session {
     // Every domain's plural type-space name, and Element membership over it -- AFTER
     // collections, so a plural a collection family already claims (Permutations, DyckPaths,
     // ...) is still free when this checks, not raced by minting a bare symbol first.
-    declareDomainPlurals(this.ce);
-    declareDomainElement(this.ce);
+    declareCarrierPlurals(this.ce, CARRIERS);
+    declareCarrierElement(this.ce, CARRIERS);
     // A combinatorial statistic is a function of a carrier, so that is what these heads take.
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.

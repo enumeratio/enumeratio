@@ -18,7 +18,7 @@ const entries = readEntries(new URL("../reference/", import.meta.url));
 
 // The order both engines use: carriers, collections (which owns the fast permutation heads),
 // then the definitions, which leave collections' heads to it. A statistic is a function OF a carrier, so that
-// is what these heads take. (@enumeratio/combinatorics/domains itself is NOT imported: it depends on this
+// is what these heads take. (@enumeratio/combinatorics itself is NOT imported: it depends on this
 // package, so reaching back would be a build cycle -- see scripts/carriers.ts.)
 const ce = new ComputeEngine();
 declareCarriers(ce);

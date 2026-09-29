@@ -3,7 +3,8 @@
 // has a page that shows its crosswalk. Stubs never shadow an entry. Shared by the browser
 // (reference.ts, over the virtual module) and the Node side of the site (reference-node.ts).
 
-import { DOMAINS, type Domain } from "@enumeratio/combinatorics/domains";
+import { CARRIERS } from "@enumeratio/combinatorics";
+import type { Carrier } from "@enumeratio/structures";
 import type { MathJSON, ReferenceEntry } from "@enumeratio/reference";
 import { engineEntries } from "@enumeratio/reference";
 
@@ -35,7 +36,7 @@ function splitShapeArgs(inner: string): string[] {
  *  one-element `list<...>`, a `tuple<...>` of its parts, or another carrier's own
  *  constructor when the shape names it by type (a tableau pair is two tableaux). Used only
  *  to build the one worked example a plural's stub page shows. */
-function sampleForShape(shape: string, byType: ReadonlyMap<string, Domain>): MathJSON {
+function sampleForShape(shape: string, byType: ReadonlyMap<string, Carrier>): MathJSON {
   if (shape === "integer" || shape === "number") return 1;
   if (shape === "string") return "'a'";
   if (shape === "boolean") return true;
@@ -43,8 +44,8 @@ function sampleForShape(shape: string, byType: ReadonlyMap<string, Domain>): Mat
   if (shape.startsWith("tuple<")) {
     return ["Tuple", ...splitShapeArgs(shape.slice(6, -1)).map((part) => sampleForShape(part, byType))];
   }
-  const domain = byType.get(shape);
-  return domain === undefined ? 1 : [domain.name, sampleForShape(domain.shape, byType)];
+  const carrier = byType.get(shape);
+  return carrier === undefined ? 1 : [carrier.name, sampleForShape(carrier.shape, byType)];
 }
 
 export function assemble(loaded: readonly ReferenceEntry[]) {
@@ -62,34 +63,34 @@ export function assemble(loaded: readonly ReferenceEntry[]) {
   /** The documented heads -- the ones with examples, and the ones prose auto-links. */
   const documented: readonly ReferenceEntry[] = [...byName.values()];
   const byNameLower = new Set([...byName.keys()].map((name) => name.toLowerCase()));
-  const carrierStubs: ReferenceEntry[] = DOMAINS.filter(
-    (d) => !byName.has(d.name) && !byNameLower.has(d.name.toLowerCase()),
-  ).map((d) => ({
-    name: d.name,
+  const carrierStubs: ReferenceEntry[] = CARRIERS.filter(
+    (c) => !byName.has(c.name) && !byNameLower.has(c.name.toLowerCase()),
+  ).map((c) => ({
+    name: c.name,
     domain: "Carrier domains",
-    signature: `${d.name}: ${d.shape}`,
-    summary: d.restricts
-      ? `A carrier domain restricting ${d.restricts}.`
+    signature: `${c.name}: ${c.shape}`,
+    summary: c.restricts
+      ? `A carrier domain restricting ${c.restricts}.`
       : "A carrier domain: the nominal type this object is stored and dispatched as.",
     examples: [],
     stub: "carrier",
   }));
   const takenLower = new Set([...byNameLower, ...carrierStubs.map((s) => s.name.toLowerCase())]);
-  const byType = new Map(DOMAINS.map((d) => [d.type, d]));
-  // A domain's plural TYPE-SPACE name gets its own stub page too -- same case-insensitive
+  const byType = new Map(CARRIERS.map((c) => [c.type, c]));
+  // A carrier's plural TYPE-SPACE name gets its own stub page too -- same case-insensitive
   // guard as above (a plural minted fresh, or one that already names a collection family,
   // can still collide with something documented or another carrier's stub by case alone).
-  const pluralStubs: ReferenceEntry[] = DOMAINS.filter(
-    (d): d is Domain & { plural: string } =>
-      d.plural !== undefined && !byName.has(d.plural) && !takenLower.has(d.plural.toLowerCase()),
-  ).map((d) => {
-    const sample: MathJSON = [d.name, sampleForShape(d.shape, byType)];
-    const expr: MathJSON = ["Element", sample, d.plural];
+  const pluralStubs: ReferenceEntry[] = CARRIERS.filter(
+    (c): c is Carrier & { plural: string } =>
+      c.plural !== undefined && !byName.has(c.plural) && !takenLower.has(c.plural.toLowerCase()),
+  ).map((c) => {
+    const sample: MathJSON = [c.name, sampleForShape(c.shape, byType)];
+    const expr: MathJSON = ["Element", sample, c.plural];
     return {
-      name: d.plural,
+      name: c.plural,
       domain: "Carrier domains",
-      signature: `${d.plural}: set<${d.type}>`,
-      summary: `The type space of ${d.name} -- Element(x, ${d.plural}) is True for a ${d.name}(...) value, False for one of another carrier.`,
+      signature: `${c.plural}: set<${c.type}>`,
+      summary: `The type space of ${c.name} -- Element(x, ${c.plural}) is True for a ${c.name}(...) value, False for one of another carrier.`,
       examples: [{ id: "membership", expr, expected: "True" }],
       stub: "carrier",
     };

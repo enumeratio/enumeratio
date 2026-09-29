@@ -1,5 +1,5 @@
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
-import { declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
 import { ALL_REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { carrierLatex, triggerFor } from "../src/carrier-latex.ts";
@@ -9,11 +9,11 @@ import { declareRendering } from "../src/carrier-render.ts";
 const engine = (): ComputeEngine => {
   const ce = new ComputeEngine({
     latexSyntax: new LatexSyntax({
-      dictionary: [...LATEX_DICTIONARY, ...(carrierLatex(DOMAINS) as never[])],
+      dictionary: [...LATEX_DICTIONARY, ...(carrierLatex(CARRIERS) as never[])],
     }),
   });
-  declareDomains(ce);
-  declareRendering(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+  declareCombinatoricsCarriers(ce);
+  declareRendering(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
   return ce;
 };
 
@@ -42,7 +42,7 @@ test("conventional notation does NOT read back on its own", () => {
 test("the engine's own serialisation keeps a trigger, and round-trips", () => {
   for (const p of ALL) {
     const written = ce.box(perm(...p) as never).evaluate().latex;
-    expect(written, `[${p.join(", ")}]`).toContain(triggerFor(DOMAINS.find((d) => d.name === "Permutation")!));
+    expect(written, `[${p.join(", ")}]`).toContain(triggerFor(CARRIERS.find((d) => d.name === "Permutation")!));
     expect(ce.parse(written).json, `[${p.join(", ")}]`).toEqual(["Permutation", ["List", ...p]]);
   }
 });
@@ -75,6 +75,6 @@ test("each carrier and medium has exactly one canonical representation", () => {
 });
 
 test("a trigger is distinct per carrier", () => {
-  const triggers = DOMAINS.map(triggerFor);
-  expect(new Set(triggers).size).toBe(DOMAINS.length);
+  const triggers = CARRIERS.map(triggerFor);
+  expect(new Set(triggers).size).toBe(CARRIERS.length);
 });

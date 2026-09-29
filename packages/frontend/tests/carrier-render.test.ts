@@ -1,12 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
 import { canonicalFor, REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { declareRendering } from "../src/carrier-render.ts";
 
 const ce = new ComputeEngine();
-declareDomains(ce);
-declareRendering(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
+declareCombinatoricsCarriers(ce);
+declareRendering(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 const perm = (...entries: number[]): unknown => ["Permutation", ["List", ...entries]];
 const text = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;
@@ -84,7 +84,7 @@ test("exactly one representation per carrier and medium is canonical", () => {
 test("every representation names a carrier that exists", () => {
   for (const representation of REPRESENTATIONS)
     expect(
-      DOMAINS.some((d) => d.type === representation.on),
+      CARRIERS.some((c) => c.type === representation.on),
       representation.on,
     ).toBe(true);
 });

@@ -1,7 +1,7 @@
 // Binary search tree from successive insertion — the sylvester congruence map (permutation ->
 // binary_tree).
 //
-// REPRESENTATION. `binary_tree`'s declared shape (domain-data.ts) is `list<integer>`, flat —
+// REPRESENTATION. `binary_tree`'s declared shape (carrier-data.ts) is `list<integer>`, flat —
 // not the nested `leaf 0 / [L, R]` shape the collections package uses to GENERATE
 // `BinaryTrees(n)` (packages/symbols/combinatorics/collections/src/families/kernels-extra.ts). Nothing in the repo yet
 // constructs a `binary_tree` value, so there is no existing decoder to match; the flat shape

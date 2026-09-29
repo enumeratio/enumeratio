@@ -6,11 +6,11 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
 
 const ce = new ComputeEngine();
-declareDomains(ce);
-const carrierTypes = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
+declareCombinatoricsCarriers(ce);
+const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 
