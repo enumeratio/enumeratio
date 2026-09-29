@@ -220,9 +220,9 @@ notebook.
 - **Maps.** A map record keeps the shorthand vocabulary (`involution`, `idempotent`,
   `{inverse: g}`, `orderIsomorphism`). The loader expands it to `ForAll` statements, and a
   drift test holds the two together. For example, involution becomes
-  `ForAll(Element(x, C), Equal(f(f(x)), x))`. Typed is always on: `Element(f(x), C′)`. A map with
-  a TypeScript kernel is still defined by its Epsil body; the kernel is that body compiled, and
-  the law is stated of the head either way.
+  `ForAll(Element(x, C), Equal(f(f(x)), x))`. Typed is always on: `Element(f(x), C′)`. A map is
+  defined in Epsil only; any compiled form is an optimizer's output, and the law is stated of the
+  head either way.
 - **Statistics, later:** equidistribution, as
   `Equal(Tally(CombinatorialStat(F(n), s)), Tally(CombinatorialStat(F(n), t)))`.
 

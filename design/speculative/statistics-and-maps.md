@@ -652,9 +652,10 @@ collections-package filing problem, independent of this document's central quest
   (FindStat's Mp00012); and a composition of n with its cut word, a binary word of length
   n - 1 (`CutWord`, and back by `Composition(word)`). Every map is defined in Epsil, the nested ones by recursion: a
   function handed itself as an argument, so a body stays one closed expression
-  (`domains/src/recursion.ts`). A map may also carry a TypeScript `kernel`, its body compiled;
-  the kernel runs when present, and `domains/tests/map-definitions.test.ts` holds it to the
-  body's answers on every small value and on values that aren't the carrier's.
+  (`domains/src/recursion.ts`). There is no hand-written kernel as input: a hand kernel is a
+  black box an optimizer can't compile, fuse or simplify through, so a compiled form, when one is
+  needed, is the optimizer's output from the Epsil. `domains/tests/map-definitions.test.ts`
+  checks the recursive definitions against an independent TypeScript reading.
 - **Orders.** A carrier has no order; a collection is a carrier with a total order, and sibling
   collections exist for distinct useful orders. Where a conversion happens to match two
   collections' orders it says so (`orderIsomorphism`), and `domains/tests/equivalence.test.ts`
