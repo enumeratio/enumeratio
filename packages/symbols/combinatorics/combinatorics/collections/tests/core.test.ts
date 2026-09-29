@@ -1,14 +1,14 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/core.ts";
+import { compositionsEntries, entries } from "../src/families/core.ts";
 
 // Self-cert a sample of core.ts families (kept small so counts stay well under ~5000):
 // for every rank r in [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r.
 // core.ts is not yet wired into allEntries (its Subsets/Tuples heads intentionally differ from the
 // existing hand-rolled ones), so this reads `entries` straight from the family module. The
 // permutation-area families this file used to also cover (Derangements, SymmetricGroup) moved to
-// permutations/tests/core.test.ts -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
+// permutations/tests/core.test.ts, and the partitions-area ones (IntegerPartitions) to
+// partitions/tests/core.test.ts -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
 const PARAMS: Record<string, number[]> = {
-  IntegerPartitions: [6],
   IntegerCompositions: [5],
   KSubsets: [5, 2],
   Tuples: [3, 2],
@@ -17,7 +17,7 @@ const PARAMS: Record<string, number[]> = {
   BinaryTrees: [4],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map([...compositionsEntries, ...entries].map((e) => [e.head, e]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

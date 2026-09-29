@@ -2,7 +2,7 @@
 // wired to a kernel. One shape: "partitions of n with every part drawn from an allowed set S" — a
 // generic DP builder (count by largest-allowed-part recurrence, unrank/rank in the same
 // largest-part-first, weakly-decreasing order IntegerPartitions uses in ./core.ts), instantiated
-// per family. Plus LargestPartPartitions, built on ./kernels-extra.ts's PartitionsMaxPart (a
+// per family. Plus LargestPartPartitions, built on collections' kernels-extra.ts's PartitionsMaxPart (a
 // partition of n−m with parts ≤ m, prefixed by m).
 //
 // n = 0 always has exactly one (empty) partition, matching IntegerPartitions(0) in ./core.ts.
@@ -11,13 +11,13 @@
 // families ALREADY declared under other kernel heads (PartitionsIntoKParts / PartitionsMaxPart /
 // PartitionsInBox, all in ./core.ts) — each one's own record says so ("Catalogued as an alias
 // of ..." in its summary). No kernel here.
-import type { NumberKernel } from "./types.ts";
+import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import {
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
   PartitionsMaxPartRank,
   IsPartitionMaxPart,
-} from "./kernels-extra.ts";
+} from "../../../collections/src/families/kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's / compositions.ts's `ints`.
 const ints = (

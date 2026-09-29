@@ -6,13 +6,6 @@ import {
   CompositionFromMask,
   CompositionRank,
   IsCompositionOf,
-  PartitionsP,
-  IntegerPartitionUnrank,
-  IntegerPartitionRank,
-  IsPartitionOf,
-  KPartPartitionCount,
-  IntegerPartitionKUnrank,
-  IntegerPartitionKRank,
   BellB,
   RgsUnrank,
   RgsRank,
@@ -75,14 +68,6 @@ import {
   IsFibonacciWord,
   GrayCodeSubsetUnrank,
   GrayCodeSubsetRank,
-  PartitionsQ,
-  DistinctPartitionUnrank,
-  DistinctPartitionRank,
-  IsDistinctPartitionOf,
-  PartitionsInBoxCount,
-  PartitionsInBoxUnrank,
-  PartitionsInBoxRank,
-  IsPartitionInBox,
   BinaryTreeCount,
   BinaryTreeUnrank,
   BinaryTreeRank,
@@ -117,10 +102,6 @@ import {
   PerfectMatchingUnrank,
   PerfectMatchingRank,
   IsPerfectMatchingOf,
-  PartitionsMaxPartCount,
-  PartitionsMaxPartUnrank,
-  PartitionsMaxPartRank,
-  IsPartitionMaxPart,
   RootedForestCount,
   RootedForestUnrank,
   RootedForestRank,
@@ -146,7 +127,11 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: NumberKernel[] = [
+// The compositions section, kept separate from `entries` below only so
+// collections/src/families/index.ts can splice `partitionsCoreEntries` back in at the exact
+// interior position the (now moved) "partitions" section held between them — §4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
+export const compositionsEntries: NumberKernel[] = [
   // ── compositions ──
   {
     ...ints(
@@ -175,64 +160,9 @@ export const entries: NumberKernel[] = [
     (a, [n, k]) => IsWeakCompositionOf(a, n, k),
     (a) => WeakCompositionRank(a),
   ),
+];
 
-  // ── partitions ──
-  {
-    ...ints(
-      "IntegerPartitions",
-      1,
-      ([n]) => PartitionsP(n),
-      ([n], r) => IntegerPartitionUnrank(n, r),
-      (a, [n]) => IsPartitionOf(a, n),
-      (a, [n]) => IntegerPartitionRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "PartitionsIntoKParts",
-      2,
-      ([n, k]) => KPartPartitionCount(n, k),
-      ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
-      (a, [n, k]) => IsPartitionOf(a, n, k),
-      (a, [n]) => IntegerPartitionKRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "DistinctPartitions",
-      1,
-      ([n]) => PartitionsQ(n),
-      ([n], r) => DistinctPartitionUnrank(n, r),
-      (a, [n]) => IsDistinctPartitionOf(a, n),
-      (a, [n]) => DistinctPartitionRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "PartitionsMaxPart",
-      2,
-      ([n, m]) => PartitionsMaxPartCount(n, m),
-      ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
-      (a, [n, m]) => IsPartitionMaxPart(a, n, m),
-      (a, [, m]) => PartitionsMaxPartRank(a, m),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "PartitionsInBox",
-      2,
-      ([a, b]) => PartitionsInBoxCount(a, b),
-      ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
-      (x, [a, b]) => IsPartitionInBox(x, a, b),
-      (x, [a, b]) => PartitionsInBoxRank(x, a, b),
-    ),
-    carrier: "IntegerPartition",
-  },
-
+export const entries: NumberKernel[] = [
   // ── subsets / multisets / tuples / functions / binary words ──
   ints(
     "Subsets",

@@ -294,79 +294,12 @@ export function IsAlternatingSignMatrixOf(e: unknown, n: number): boolean {
   return true;
 }
 
-// ═══ SkewPartitions(size) — REDUCED skew shapes λ/μ with `size` cells (Sage SkewPartitions(n)) ═══
-// "Reduced" = no empty row (μ_i < λ_i) and no empty column (every column 1..λ_1 covered by some row's
-// [μ_i+1, λ_i]). No closed form (ported from the archived checkout's own comment) — count is the cached
-// enumeration's length. Element: `[lam, mu]`.
-function isColumnReduced(aStarts: readonly number[], bEnds: readonly number[]): boolean {
-  const maxCol = bEnds[0] ?? 0;
-  for (let col = 1; col <= maxCol; col++) {
-    let covered = false;
-    for (let i = 0; i < bEnds.length; i++)
-      if (aStarts[i] <= col && col <= bEnds[i]) {
-        covered = true;
-        break;
-      }
-    if (!covered) return false;
-  }
-  return true;
-}
-const skewPart = indexedFamily<[number[], number[]]>((key) => {
-  const n = Number(key);
-  const results: [number[], number[]][] = [];
-  const aStarts: number[] = [];
-  const bEnds: number[] = [];
-  function backtrack(cells: number): void {
-    if (cells === n) {
-      if (isColumnReduced(aStarts, bEnds)) {
-        const lam = bEnds.slice();
-        const mu = aStarts.map((a) => a - 1).filter((x) => x > 0);
-        results.push([lam, mu]);
-      }
-      return;
-    }
-    const prevB = bEnds.length ? bEnds[bEnds.length - 1] : n;
-    for (let b = 1; b <= prevB; b++) {
-      const prevA = aStarts.length ? aStarts[aStarts.length - 1] : b;
-      for (let a = 1; a <= Math.min(b, prevA); a++) {
-        const rowCells = b - a + 1;
-        if (cells + rowCells > n) continue;
-        aStarts.push(a);
-        bEnds.push(b);
-        backtrack(cells + rowCells);
-        aStarts.pop();
-        bEnds.pop();
-      }
-    }
-  }
-  backtrack(0);
-  results.sort((x, y) => cmpNumArrays(x[0], y[0]) || cmpNumArrays(x[1], y[1]));
-  return results;
-});
-export function SkewPartitionsUnrank(n: number, rank: number): [number[], number[]] {
-  return skewPart.unrank(String(n), rank);
-}
-export function SkewPartitionsRank(e: [number[], number[]], n: number): number {
-  return skewPart.rank(String(n), e);
-}
-export function IsSkewPartitionOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== 2) return false;
-  const [lam, mu] = e as [number[], number[]];
-  if (!Array.isArray(lam) || !Array.isArray(mu) || mu.length > lam.length) return false;
-  for (let i = 0; i < lam.length; i++) {
-    if (!Number.isInteger(lam[i]) || lam[i] < 1) return false;
-    if (i > 0 && lam[i] > lam[i - 1]) return false;
-    const m = mu[i] ?? 0;
-    if (!Number.isInteger(m) || m < 0) return false;
-    if (i > 0 && m > (mu[i - 1] ?? 0)) return false;
-    if (m >= lam[i]) return false;
-  }
-  const totalLam = lam.reduce((a, b) => a + b, 0);
-  const totalMu = mu.reduce((a, b) => a + b, 0);
-  if (totalLam - totalMu !== n) return false;
-  const aStarts = lam.map((_, i) => (mu[i] ?? 0) + 1);
-  return isColumnReduced(aStarts, lam);
-}
+// SkewPartitions moved to partitions/src/families/tableaux-plane.ts (§4 step 5, its carrier
+// "SkewPartition" is a partitions-area one, not this file's tableaux carriers) — see that file's
+// header comment for the judgment call. `skewStd` below still enumerates over every skew shape
+// via the same cached `skewPart` table, and `IsSkewPartitionOf` bounds-checks a skew filling's
+// shape, so both come back from there.
+import { IsSkewPartitionOf, skewPart } from "../../../partitions/src/families/tableaux-plane.ts";
 
 // ═══ SkewStandardTableaux(size) — standard tableaux on reduced skew shapes λ/μ, summed over every shape ═══
 // No closed form. Element: `[lam, mu, rowWord]` — rowWord[i] = 0-based row of entry i+1 (placement order),
@@ -820,7 +753,11 @@ const factorialBig = (n: number): bigint => {
   return f;
 };
 
-export const entries: NumberKernel[] = [
+// Kept separate from `entries` below only so collections/src/families/index.ts can splice
+// `partitionsTableauxPlaneEntries` (SkewPartitions) back in at the exact interior position it
+// held before the partitions-area move — §4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
+export const entriesBeforeSkewPartitions: NumberKernel[] = [
   {
     head: "SemistandardTableaux",
     paramCount: 2,
@@ -866,21 +803,9 @@ export const entries: NumberKernel[] = [
       work: ([n]) => BigInt(AlternatingSignMatrixCount(n)),
     },
   },
-  {
-    head: "SkewPartitions",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => skewPart.count(String(n)),
-    unrank: ([n], r) => SkewPartitionsUnrank(n, r),
-    valid: (e, [n]) => IsSkewPartitionOf(e, n),
-    rank: (e, [n]) => SkewPartitionsRank(e as [number[], number[]], n),
-    declared: {
-      carrier: "SkewPartition",
-      params: [axis("size")],
-      cost: enumerated("enumerative"),
-      work: ([n]) => 4n ** BigInt(n),
-    },
-  },
+];
+
+export const entries: NumberKernel[] = [
   {
     head: "SkewStandardTableaux",
     paramCount: 1,
