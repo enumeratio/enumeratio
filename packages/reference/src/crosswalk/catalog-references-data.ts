@@ -871,13 +871,6 @@ export const CATALOG_REFERENCES: readonly CatalogCrosswalkRow[] = [
     url: "https://oeis.org/A023359",
   },
   {
-    subject: "DyckPathOf",
-    on: "BinaryTree",
-    system: "findstat",
-    identity: "Mp00012",
-    url: "https://www.findstat.org/Mp00012",
-  },
-  {
     subject: "DyckPaths",
     system: "mathlib4",
     identity: "DyckWord",

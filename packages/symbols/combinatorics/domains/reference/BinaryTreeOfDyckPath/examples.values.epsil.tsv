@@ -1,2 +1,0 @@
-id	in	out
-the-dyck-path-uuddud	BinaryTreeOfDyckPath(DyckPath([1, 1, 0, 0, 1, 0]))	BinaryTree([[0, 0], [0, 0]])

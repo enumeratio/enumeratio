@@ -4,9 +4,9 @@
 // A set partition is its blocks: the collections, every set-partition statistic and FindStat
 // all read it that way. Its restricted growth string, the SQL storage, is a carrier of its own,
 // order-isomorphic to it (the k-th set partition's string is the k-th string), and the two are
-// joined by `RestrictedGrowthStringOf`/`SetPartitionOf` (src/map.ts).
+// each constructor converting from the other (src/map.ts).
 // A set composition is likewise its ordered blocks; its word (position i labelled with its
-// block's index) is a Surjection, joined by `SurjectionOf`/`SetCompositionOf`.
+// block's index) is a Surjection, converted the same way.
 // A binary tree is nested, leaf 0 and node [left, right], as BinaryTrees lists it; the flat
 // storage is its in-order parent array, a carrier of its own (src/binary-tree.ts).
 export const SHAPE_OVERRIDES: Readonly<Record<string, string>> = {

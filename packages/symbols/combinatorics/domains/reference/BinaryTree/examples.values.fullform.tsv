@@ -1,0 +1,3 @@
+id	in
+from-a-dyck-path	BinaryTree[DyckPath[List[1, 1, 0, 0, 1, 0]]]
+from-a-parent-array	BinaryTree[BinaryTreeParentArray[List[2, 0, 2, 3]]]

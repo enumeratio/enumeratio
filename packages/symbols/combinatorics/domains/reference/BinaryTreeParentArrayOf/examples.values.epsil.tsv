@@ -1,2 +1,0 @@
-id	in	out
-a-four-node-tree	BinaryTreeParentArrayOf(BinaryTree([[0, 0], [0, [0, 0]]]))	BinaryTreeParentArray([2, 0, 2, 3])

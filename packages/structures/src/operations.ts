@@ -98,7 +98,7 @@ export function registerCollectionCarrier(ce: ComputeEngine, collection: string,
 
 /**
  * Say that `from` and `to` are the same structure written two ways, with `forward` the
- * bijection from one to the other (`RestrictedGrowthStringOf`, from set partitions to their
+ * bijection from one to the other (`RestrictedGrowthString(partition)`, from set partitions to their
  * strings). A statistic or map `from` lacks is then reached through `to`: defined once, on
  * whichever carrier states it most naturally. Register each direction on its own.
  */
@@ -217,7 +217,9 @@ const COLLECTION_STATISTICS: Readonly<Record<string, string>> = { Count: "Count"
 function declareHeads(ce: ComputeEngine, registry: Registry): void {
   for (const head of ["CombinatorialStat", "CombinatorialMap"] as const) {
     ce.declare(head, {
-      signature: "(any, string) -> any",
+      // The key is a name or FindStat id; a map's may instead be the target collection
+      // (`CombinatorialMap(τ, DyckPaths)`), which picks the conversion to its carrier.
+      signature: "(any, any) -> any",
       // Over a collection, the operation mapped over it; on a value, the answer.
       type: (ops, { engine }) =>
         engine.type(
@@ -228,7 +230,8 @@ function declareHeads(ce: ComputeEngine, registry: Registry): void {
       evaluate: ([held, heldKey], options) => {
         const subject = held?.evaluate();
         const key = heldKey?.evaluate();
-        const name = stringAt(key);
+        const target = head === "CombinatorialMap" && key !== undefined ? symbolNameOf(key) : undefined;
+        const name = (target === undefined ? undefined : registry.collections.get(target)) ?? stringAt(key);
         if (subject === undefined || key === undefined || name === undefined) return undefined;
 
         // `CombinatorialStat(π, "Inversions")`: the value's carrier, then the operation.

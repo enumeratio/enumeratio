@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 c-4	Basic		[Count, [BinaryTreeParentArrays, 4]]	14	$C_4$
-first-element-of-binarytreeparentarrays-3	Basic		[At, [BinaryTreeParentArrays, 3], 1]	[BinaryTreeParentArray, [List, 2, 3, 0]]	The left spine: node 3 is the root, 2 its left child, 1 below that
-returns-are-the-catalan-triangle	Statistics		[Tally, [CombinatorialStat, [BinaryTreeParentArrays, 4], "'Returns'"]]	[Tuple, [List, 1, 2, 3, 4], [List, 5, 5, 3, 1]]	A Dyck path statistic, two bijections away
+first-element-of-binarytreeparentarrays-3	Basic		[At, [BinaryTreeParentArrays, 3], 1]	[BinaryTreeParentArray, [List, 0, 1, 2]]	The right spine: node 1 is the root, 2 its right child, 3 below that
+returns-are-the-catalan-triangle	Statistics		[Tally, [CombinatorialStat, [BinaryTreeParentArrays, 4], "'Returns'"]]	[Tuple, [List, 4, 3, 2, 1], [List, 1, 3, 5, 5]]	A Dyck path statistic, two bijections away

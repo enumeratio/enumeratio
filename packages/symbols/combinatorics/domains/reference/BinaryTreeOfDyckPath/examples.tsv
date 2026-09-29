@@ -1,2 +1,0 @@
-id	section	role	expr	expected	caption
-the-dyck-path-uuddud			[BinaryTreeOfDyckPath, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	[BinaryTree, [List, [List, 0, 0], [List, 0, 0]]]	the Dyck path $UUDDUD$

@@ -672,39 +672,35 @@ export function GrayCodeSubsetRank(s: number[]): number {
   return r;
 }
 
-// ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R].
-// Ranked as their Dyck paths U φ(L) D φ(R) (FindStat's Mp00012) are, so the two collections list
-// in step and either can borrow the other's order. ─────
+// ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R]. ─────
 export type BinTree = 0 | [BinTree, BinTree];
 export function BinaryTreeCount(n: number): number {
   return CatalanNumber(n);
 }
-function binaryTreeOfDyck(word: readonly number[], from: number, to: number): BinTree {
-  if (from === to) return 0;
-  let height = 0;
-  let j = from;
-  do height += word[j++] === 1 ? 1 : -1;
-  while (height > 0);
-  return [binaryTreeOfDyck(word, from + 1, j - 1), binaryTreeOfDyck(word, j, to)];
-}
-function dyckOfBinaryTree(t: BinTree, out: number[] = []): number[] {
-  if (t !== 0) {
-    out.push(1);
-    dyckOfBinaryTree(t[0], out);
-    out.push(0);
-    dyckOfBinaryTree(t[1], out);
-  }
-  return out;
-}
 export function BinaryTreeUnrank(n: number, rank: number): BinTree {
-  const word = DyckPathUnrank(n, rank);
-  return binaryTreeOfDyck(word, 0, word.length);
-}
-export function BinaryTreeRank(t: BinTree): number {
-  return DyckPathRank(dyckOfBinaryTree(t));
+  if (n === 0) return 0;
+  const total = CatalanNumber(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  for (let i = 0; i < n; i++) {
+    const cl = CatalanNumber(i),
+      cr = CatalanNumber(n - 1 - i);
+    const block = cl * cr;
+    if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
+    r -= block;
+  }
+  return 0; // unreachable
 }
 function binTreeSize(t: BinTree): number {
   return t === 0 ? 0 : 1 + binTreeSize(t[0]) + binTreeSize(t[1]);
+}
+export function BinaryTreeRank(t: BinTree): number {
+  if (t === 0) return 0;
+  const n = binTreeSize(t);
+  const li = binTreeSize(t[0]);
+  let base = 0;
+  for (let i = 0; i < li; i++) base += CatalanNumber(i) * CatalanNumber(n - 1 - i);
+  const cr = CatalanNumber(n - 1 - li);
+  return base + BinaryTreeRank(t[0]) * cr + BinaryTreeRank(t[1]);
 }
 export function IsBinaryTree(t: unknown, n: number): boolean {
   const ok = (x: unknown): boolean => x === 0 || (Array.isArray(x) && x.length === 2 && ok(x[0]) && ok(x[1]));

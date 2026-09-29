@@ -125,8 +125,8 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry 
  * aspirational: the head has no definition, so the example records what it would answer and
  * the test asserts the gap is still open. */
 export const generated: GeneratedEntries = {
-  entries: [...MAPS.map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)],
-  owned: new Set([...MAPS, ...UNDEFINED_MAPS].map((m) => m.name)),
+  entries: [...MAPS.filter((m) => m.convert !== true).map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)],
+  owned: new Set([...MAPS.filter((m) => m.convert !== true), ...UNDEFINED_MAPS].map((m) => m.name)),
   // Anything else on a record (`formerly`, `references`, `names`) is curated by hand.
   fields: new Set(["name", "domain", "signature", "summary", "details", "examples", "seeAlso"]),
 };

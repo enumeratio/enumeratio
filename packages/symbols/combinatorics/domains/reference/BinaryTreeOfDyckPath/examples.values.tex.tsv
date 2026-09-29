@@ -1,2 +1,0 @@
-id	in	out
-the-dyck-path-uuddud	\mathrm{BinaryTreeOfDyckPath}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))	\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)

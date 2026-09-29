@@ -7,7 +7,7 @@ signatures:
   - call: CombinatorialStat(x, name)
     description: the statistic `name` (or FindStat id, `"St000018"`) of `x`, a value of a carrier such as `Permutation`; over a collection, the statistic of each element, lazily, and `"Count"` the collection's size.
     library: enumeratio-structures
-    type: (any, string) -> any
+    type: (any, any) -> any
 attributes:
   - HoldAll
 seeAlso:
