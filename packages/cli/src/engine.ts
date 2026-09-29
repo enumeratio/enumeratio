@@ -21,7 +21,7 @@ import {
   declareStatistics,
 } from "@enumeratio/statistics";
 
-export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil";
+export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil" | "asciimath" | "mathml";
 
 export interface Classified {
   syntax: Syntax;
@@ -39,11 +39,15 @@ const SYNTAX_PREFIX: Record<string, Syntax> = {
   latex: "latex",
   ep: "epsil",
   epsil: "epsil",
+  am: "asciimath",
+  asciimath: "asciimath",
+  mml: "mathml",
+  mathml: "mathml",
 };
 
 /**
  * Decide how to read an input line. An explicit syntax pragma
- * (`:latex|:mathjson|:wolfram|:epsil`, plus short aliases) selects the syntax for
+ * (`:latex|:mathjson|:wolfram|:epsil|:asciimath|:mathml`, plus short aliases) selects the syntax for
  * that line; otherwise the line uses the session default (Epsil), rendered back
  * as InputForm.
  * LaTeX inside Epsil goes in `$…$` islands, or `:latex` for a whole LaTeX line.
@@ -55,7 +59,20 @@ export function classifyInput(src: string, fallback: Syntax = "epsil"): Classifi
   return { syntax: fallback, body: t };
 }
 
-export const FORMS = ["inputform", "tex", "mathjson", "wolfram", "epsil", "numpy", "glsl", "wgsl", "js"] as const;
+export const FORMS = [
+  "inputform",
+  "tex",
+  "mathjson",
+  "wolfram",
+  "epsil",
+  "outputform",
+  "asciimath",
+  "mathml",
+  "numpy",
+  "glsl",
+  "wgsl",
+  "js",
+] as const;
 export type Form = (typeof FORMS)[number];
 
 export const FORM_LABEL: Record<Form, string> = {
@@ -64,6 +81,9 @@ export const FORM_LABEL: Record<Form, string> = {
   mathjson: "MathJSON",
   wolfram: "WolframFullForm",
   epsil: "Epsil",
+  outputform: "OutputForm",
+  asciimath: "AsciiMath",
+  mathml: "MathML",
   numpy: "NumPy / Python",
   glsl: "GLSL",
   wgsl: "WGSL",
@@ -77,6 +97,9 @@ const FORMAT_OF: Record<Form, string> = {
   mathjson: "MathJSON",
   wolfram: "WL",
   epsil: "Epsil",
+  outputform: "OutputForm",
+  asciimath: "AsciiMath",
+  mathml: "MathML",
   numpy: "Python",
   glsl: "GLSL",
   wgsl: "WGSL",
@@ -88,7 +111,7 @@ export function renderForm(expr: BoxedExpression, form: Form): string {
   return String(exportTo(expr, FORMAT_OF[form]));
 }
 
-export const SYNTAXES: readonly Syntax[] = ["latex", "mathjson", "wolfram", "epsil"];
+export const SYNTAXES: readonly Syntax[] = ["latex", "mathjson", "wolfram", "epsil", "asciimath", "mathml"];
 
 // Short aliases accepted anywhere a full name is — documented names are the full
 // ones, but the sets are finite so a unique prefix (or a listed alias) resolves.
@@ -104,8 +127,7 @@ const FORM_ALIASES: Record<string, Form> = {
   wolframfullform: "wolfram",
   wolframlanguage: "wolfram",
   standardform: "inputform",
-  outputform: "inputform",
-  text: "inputform",
+  text: "outputform",
 };
 const SYNTAX_ALIASES: Record<string, Syntax> = {
   tex: "latex",
@@ -113,6 +135,8 @@ const SYNTAX_ALIASES: Record<string, Syntax> = {
   mj: "mathjson",
   json: "mathjson",
   ep: "epsil",
+  am: "asciimath",
+  mml: "mathml",
 };
 
 /** Resolve a name to one of `options` by exact match, a listed alias, or a
@@ -339,6 +363,10 @@ export class Session {
         return this.ce.box(importFrom(body, "MathJSON") as Parameters<ComputeEngine["box"]>[0]);
       case "epsil":
         return this.ce.box(importFrom(body, "Epsil", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0]);
+      case "asciimath":
+        return this.ce.box(importFrom(body, "AsciiMath", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0]);
+      case "mathml":
+        return this.ce.box(importFrom(body, "MathML", { ce: this.ce }) as Parameters<ComputeEngine["box"]>[0]);
       default:
         throw new Error("unreachable: Syntax is exhaustive above");
     }

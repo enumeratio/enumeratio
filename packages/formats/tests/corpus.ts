@@ -1,0 +1,38 @@
+// Shared by the text formats' tests. The corpus is every shape InputForm's normalization rules touch, plus enough ordinary
+// expressions to catch a rule firing where it shouldn't. Each is printed from both
+// trees compute-engine can hand us -- the canonical one, and the "raw" parse that keeps
+// what was typed -- because the rules exist to reconcile exactly those two.
+export const CORPUS = [
+  "\\frac{x+1}{y-2}",
+  "1 - 2x",
+  "x - y - z",
+  "a - (b - c)",
+  "-x",
+  "x \\ge 3",
+  "\\int_0^1 x^2 dx",
+  "\\sum_{n=1}^{10} n^2",
+  "\\prod_{k=1}^{5} k",
+  "\\lim_{x\\to 0}\\frac{\\sin x}{x}",
+  "e^{i\\pi}+1",
+  "2 + 3i",
+  "1 - i",
+  "2 - \\frac{1}{2}i",
+  "-3i",
+  "\\sin(x)\\cos(y)",
+  "\\sqrt{x}",
+  "\\sqrt[3]{x}",
+  "\\frac{1}{2}",
+  "x^2+1",
+  "10^{-3}",
+  "0.0000000000000001",
+  "-0.0000000000000001",
+  "2.5\\times10^{-16}",
+  "\\binom{5}{3}",
+  "|x|",
+  "\\log_2(8)",
+  "\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}",
+  "\\{1,2,3\\}",
+  "[1,2,3]",
+  "x_1 + x_2",
+  "\\frac{d}{dx} x^2",
+];
