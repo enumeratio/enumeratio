@@ -104,7 +104,12 @@ const firstReturn = (from: MathJSON, to: MathJSON): MathJSON => [
         [
           "List",
           ["Add", ["At", "acc", 1], ["Subtract", ["Multiply", 2, ["At", "_raw", "j"]], 1]],
-          ["If", ["Equal", ["Add", ["At", "acc", 1], ["Subtract", ["Multiply", 2, ["At", "_raw", "j"]], 1]], 0], "j", 0],
+          [
+            "If",
+            ["Equal", ["Add", ["At", "acc", 1], ["Subtract", ["Multiply", 2, ["At", "_raw", "j"]], 1]], 0],
+            "j",
+            0,
+          ],
         ],
       ],
       "acc",
@@ -128,7 +133,11 @@ export const treeOfDyckPathBody: MathJSON = recurse(
       "If",
       ["Equal", firstReturn("a", "b"), 0],
       0,
-      ["List", self(["Add", "a", 1], ["Subtract", firstReturn("a", "b"), 1]), self(["Add", firstReturn("a", "b"), 1], "b")],
+      [
+        "List",
+        self(["Add", "a", 1], ["Subtract", firstReturn("a", "b"), 1]),
+        self(["Add", firstReturn("a", "b"), 1], "b"),
+      ],
     ],
   ],
   ["a", "b"],

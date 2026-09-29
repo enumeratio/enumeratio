@@ -27,10 +27,13 @@ export const permutationOfCycleDecompositionKernel = (json: MathJSON): MathJSON 
 
 // The definitions, in Epsil; the kernels above are their compiled form.
 
-
 /** The cycle of `p` through `start`, from `start`. */
 const cycleThrough = (p: MathJSON, start: MathJSON): MathJSON =>
-  recurse(["If", ["Equal", ["At", p, "x"], start], ["List", "x"], ["Join", ["List", "x"], self(["At", p, "x"])]], ["x"], start);
+  recurse(
+    ["If", ["Equal", ["At", p, "x"], start], ["List", "x"], ["Join", ["List", "x"], self(["At", p, "x"])]],
+    ["x"],
+    start,
+  );
 
 /** Each cycle from its least point, cycles in order of those points: start a cycle at every
  *  point no earlier cycle has reached. */
@@ -57,12 +60,7 @@ const successor = (cycles: MathJSON, i: MathJSON): MathJSON => [
       "Fold",
       [
         "Function",
-        [
-          "If",
-          ["Equal", ["At", "c", "k"], i],
-          ["At", "c", ["Add", ["Mod", "k", ["Length", "c"]], 1]],
-          "to",
-        ],
+        ["If", ["Equal", ["At", "c", "k"], i], ["At", "c", ["Add", ["Mod", "k", ["Length", "c"]], 1]], "to"],
         "to",
         "k",
       ],

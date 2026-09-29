@@ -4,7 +4,12 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { BinaryTreeParentArray, BinaryTreeUnrank, type BinTree, DyckPathUnrank } from "../../collections/src/families/kernels-extra.ts";
+import {
+  BinaryTreeParentArray,
+  BinaryTreeUnrank,
+  type BinTree,
+  DyckPathUnrank,
+} from "../../collections/src/families/kernels-extra.ts";
 import { Factorial, PermutationUnrank } from "../../collections/src/families/kernels.ts";
 import { CycleDecomposition } from "../../collections/src/families/permutations.ts";
 import { evaluateDefinition, MAPS } from "../src/map.ts";
@@ -22,7 +27,12 @@ const permutations = upTo(Factorial, PermutationUnrank);
 /** Contents of every small value of each source carrier, then some that aren't one. */
 const SUBJECTS: Record<string, unknown[]> = {
   binary_tree: trees.map(nested),
-  binary_tree_parent_array: [...trees.map((t) => list(BinaryTreeParentArray(t))), list([2, 1]), list([0, 0]), list([2, 0, 1])],
+  binary_tree_parent_array: [
+    ...trees.map((t) => list(BinaryTreeParentArray(t))),
+    list([2, 1]),
+    list([0, 0]),
+    list([2, 0, 1]),
+  ],
   dyck_path: [...upTo(catalan, DyckPathUnrank).map(list), list([0, 1]), list([1, 1]), list([1, 0, 0, 1])],
   permutation: permutations.map(list),
   cycle_decomposition: [
