@@ -1,11 +1,12 @@
 import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
-import { entries } from "../src/families/paths-partitions.ts";
+import { entriesBeforeDyckPathsByHeight, entriesAfterDyckPathsByHeight } from "../src/families/paths-partitions.ts";
 import { numberKernel } from "../src/families/types.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
-// small so counts stay well under ~1000.
+// small so counts stay well under ~1000. DyckPathsByHeight moved to the lattice-paths area (§4
+// step 5) with its tests.
 const PARAMS: Record<string, number[]> = {
   RestrictedGrowthStrings: [6],
   NonCrossingPartitions: [6],
@@ -18,11 +19,10 @@ const PARAMS: Record<string, number[]> = {
   FinePaths: [7],
   BallotSequences: [6],
   LukasiewiczPaths: [6],
-  DyckPathsByHeight: [6, 3],
   MotzkinPathsByPeaks: [7, 2],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map([...entriesBeforeDyckPathsByHeight, ...entriesAfterDyckPathsByHeight].map((e) => [e.head, e]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
@@ -54,7 +54,6 @@ const PLAUSIBLE_PARAMS: Record<string, number[]> = {
   FinePaths: [6],
   BallotSequences: [5],
   LukasiewiczPaths: [5],
-  DyckPathsByHeight: [5, 2],
   MotzkinPathsByPeaks: [6, 1],
 };
 for (const [head, p] of Object.entries(PLAUSIBLE_PARAMS)) {
@@ -92,16 +91,6 @@ test("counts match their OEIS sequences", () => {
   expect(seq("GrandDyckPaths", 6)).toEqual([1, 2, 6, 20, 70, 252]); // A000984
   expect(seq("RiordanPaths", 9)).toEqual([1, 0, 1, 1, 3, 6, 15, 36, 91]); // A005043
   expect(seq("FinePaths", 9)).toEqual([1, 0, 1, 2, 6, 18, 57, 186, 622]); // A000957
-});
-
-test("DyckPathsByHeight rows sum to the Catalan numbers", () => {
-  const entry = byHead.get("DyckPathsByHeight")!;
-  const catalan = [1, 1, 2, 5, 14, 42, 132]; // A000108
-  for (let n = 0; n <= 6; n++) {
-    let sum = 0;
-    for (let h = 0; h <= n; h++) sum += entry.count([n, h]);
-    expect(sum).toBe(catalan[n]);
-  }
 });
 
 test("MotzkinPathsByPeaks rows sum to the Motzkin numbers", () => {

@@ -38,10 +38,6 @@ import {
   LatticePathUnrank,
   LatticePathRank,
   IsLatticePathOf,
-  DyckPathCount,
-  DyckPathUnrank,
-  DyckPathRank,
-  IsDyckPath,
   LabeledTreeCount,
   LabeledTreeUnrank,
   LabeledTreeRank,
@@ -115,7 +111,11 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: NumberKernel[] = [
+// Kept separate from `entries` below only so collections/src/families/index.ts can splice
+// `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held
+// before the lattice-paths-area move — §4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
+export const entriesBeforeDyckPaths: NumberKernel[] = [
   // ── subsets / multisets / tuples / functions / binary words ──
   ints(
     "Subsets",
@@ -194,17 +194,9 @@ export const entries: NumberKernel[] = [
     (x, [a, b]) => IsLatticePathOf(x, a, b),
     (x) => LatticePathRank(x),
   ),
-  {
-    ...ints(
-      "DyckPaths",
-      1,
-      ([n]) => DyckPathCount(n),
-      ([n], r) => DyckPathUnrank(n, r),
-      (a, [n]) => IsDyckPath(a, n),
-      (a) => DyckPathRank(a),
-    ),
-    carrier: "DyckPath",
-  },
+];
+
+export const entries: NumberKernel[] = [
   ints(
     "MotzkinPaths",
     1,

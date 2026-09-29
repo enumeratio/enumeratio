@@ -1,6 +1,9 @@
-import { entries as core } from "./core.ts";
+import { entriesBeforeDyckPaths as coreBeforeDyckPaths, entries as core } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
-import { entries as pathsPartitions } from "./paths-partitions.ts";
+import {
+  entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight,
+  entriesAfterDyckPathsByHeight as pathsPartitions,
+} from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
 import {
   entriesBeforeSkewPartitions as tableauxPlaneBeforeSkewPartitions,
@@ -25,6 +28,10 @@ import {
   wordsEntries,
   binaryWordFamiliesEntries as wordsBinaryWordFamiliesEntries,
 } from "../../../words/src/families/index.ts";
+import {
+  coreEntries as latticePathsCoreEntries,
+  pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
+} from "../../../lattice-paths/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -44,9 +51,13 @@ const numberEntries = [
   ...permutationsCoreEntries,
   ...compositionsCoreEntries,
   ...partitionsCoreEntries,
+  ...coreBeforeDyckPaths,
+  ...latticePathsCoreEntries,
   ...core,
   ...subsets,
   ...wordsEntries,
+  ...pathsPartitionsBeforeDyckPathsByHeight,
+  ...latticePathsPathsPartitionsEntries,
   ...pathsPartitions,
   ...tableauxTrees,
   ...tableauxPlaneBeforeSkewPartitions,
