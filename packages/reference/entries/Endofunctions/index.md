@@ -19,5 +19,5 @@ signatures:
   - call: Endofunctions(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<endofunction>
 ---

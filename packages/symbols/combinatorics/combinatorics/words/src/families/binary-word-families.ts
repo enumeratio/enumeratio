@@ -2,12 +2,13 @@
 // mixed every area) per https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 5. Judgment call: these two are the only families in that file carrying a `declared`
 // (Plausible) carrier -- "BinaryWord" and "Word", both words-area carriers -- while TriStrings,
-// PrimitiveBinaryStrings, TernaryGrayCodes and StirlingPermutations have none at all (even though
-// a "TernaryGrayCode" carrier exists) and so stay in collections per step 5 rule 4. `normRank`,
-// `arraysEqual`, `compareArrays`, `rotateLeft`, `divisorsOf`, `ints` are small local helpers
-// duplicated from the source file (mirrors the permutations pilot's `ints`); `reversed` and
-// `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
-// collections' copy).
+// PrimitiveBinaryStrings and StirlingPermutations have none at all and so stay in collections per
+// step 5 rule 4. TernaryGrayCodes joined this file (wire-carriers lane A-91): it now carries the
+// top-level (non-`declared`) "TernaryGrayCode" carrier, same shape (list<integer>) it already
+// catalogued as. `normRank`, `arraysEqual`, `compareArrays`, `rotateLeft`, `divisorsOf`, `ints` are
+// small local helpers duplicated from the source file (mirrors the permutations pilot's `ints`);
+// `reversed` and `eulerPhi` are used ONLY by the bracelet families and moved outright (removed
+// from collections' copy).
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
@@ -162,6 +163,51 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
+// ─── TernaryGrayCodes(n): base-3 reflected Gray code — length-n words over {0,1,2} where
+// consecutive words differ by ±1 in exactly one digit. Standard b-ary reflection: prefix each of
+// the b sub-blocks (one per leading digit j) with the previous level's list traversed forward
+// (j even) or reversed (j odd); adjacent blocks then share their boundary suffix so only the new
+// digit changes by 1 at every seam, and induction carries the property into each sub-block. Count
+// is the closed form 3^n; unrank/rank enumerate-then-index off a cached list — cheap at the small
+// n this family is tested at, and the recursive construction has no simpler unrank/rank. ───────────
+const ternaryGrayCache = new Map<number, number[][]>();
+function ternaryGrayList(n: number): number[][] {
+  const cached = ternaryGrayCache.get(n);
+  if (cached) return cached;
+  let list: number[][];
+  if (n === 0) {
+    list = [[]];
+  } else {
+    const prev = ternaryGrayList(n - 1);
+    list = [];
+    for (let digit = 0; digit < 3; digit++) {
+      let block = prev;
+      if (digit % 2 !== 0) {
+        block = prev.slice();
+        block.reverse();
+      }
+      for (const w of block) list.push([digit, ...w]);
+    }
+  }
+  ternaryGrayCache.set(n, list);
+  return list;
+}
+function ternaryGrayCount(n: number): number {
+  return 3 ** n;
+}
+function ternaryGrayUnrank(n: number, r: number): number[] {
+  const total = ternaryGrayCount(n);
+  return ternaryGrayList(n)[normRank(r, total)].slice();
+}
+function ternaryGrayRank(w: number[], n: number): number {
+  return ternaryGrayList(n).findIndex((x) => arraysEqual(x, w));
+}
+function ternaryGrayValid(w: unknown, n: number): boolean {
+  if (!Array.isArray(w) || w.length !== n) return false;
+  for (const b of w) if (b !== 0 && b !== 1 && b !== 2) return false;
+  return true;
+}
+
 /** Words up to rotation (or reflection): unrank and rank enumerate all base^size words. */
 const wordClass = (carrier: string, base?: number): Declared => ({
   carrier,
@@ -200,5 +246,17 @@ export const entries: NumberKernel[] = [
       (a, [n, k]) => braceletRank(a, n, k),
     ),
     declared: wordClass("Word"),
+  },
+  // TernaryGrayCodes(n): base-3 reflected Gray code order.
+  {
+    ...ints(
+      "TernaryGrayCodes",
+      1,
+      ([n]) => ternaryGrayCount(n),
+      ([n], r) => ternaryGrayUnrank(n, r),
+      (a, [n]) => ternaryGrayValid(a, n),
+      (a, [n]) => ternaryGrayRank(a, n),
+    ),
+    carrier: "TernaryGrayCode",
   },
 ];

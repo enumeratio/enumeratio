@@ -7,7 +7,7 @@ signatures:
   - call: TernaryGrayCodes(n)
     library: enumeratio-combinatorics
     description: the $3^n$ base-3 digit strings of length $n$, Gray-code ordered.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<ternary_gray_code>
 enumerate:
   expr: TernaryGrayCodes(4)
   columns: Descents, Ascents
