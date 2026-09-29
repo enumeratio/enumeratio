@@ -1,2 +1,5 @@
 id	in
 c-4	Count[BinaryTrees[4]]
+first-element-of-binarytrees-3	Part[BinaryTrees[3], 1]
+every-element-of-binarytrees-3	Take[BinaryTrees[3], 5]
+peaks-are-narayana	Tally[CombinatorialStat[BinaryTrees[4], "Peaks"]]

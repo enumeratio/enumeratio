@@ -1,2 +1,5 @@
 id	in	out
 c-4	\mathrm{Count}(\mathrm{BinaryTrees}(4))	14
+first-element-of-binarytrees-3	\mathrm{BinaryTrees}(3)[1]	\mathrm{BinaryTree}(\bigl\lbrack0, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack)
+every-element-of-binarytrees-3	\mathrm{Take}(\mathrm{BinaryTrees}(3), 5)	\bigl\lbrack\mathrm{BinaryTree}(\bigl\lbrack0, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack), \mathrm{BinaryTree}(\bigl\lbrack0, \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, 0\bigr\rbrack\bigr\rbrack), \mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack), \mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack, 0\bigr\rbrack), \mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, 0\bigr\rbrack, 0\bigr\rbrack)\bigr\rbrack
+peaks-are-narayana	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{BinaryTrees}(4), \text{Peaks}))	\operatorname{Tuple}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack,\bigl\lbrack1, 6, 6, 1\bigr\rbrack)

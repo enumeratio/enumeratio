@@ -44,6 +44,7 @@ function sampleFor(shape: string, byType: ReadonlyMap<string, Domain>): unknown 
   if (shape === "integer" || shape === "number") return 1;
   if (shape === "string") return "'a'";
   if (shape === "boolean") return true;
+  if (shape.includes(" | ")) return sampleFor(shape.split(" | ")[0]!, byType);
   if (shape.startsWith("list<")) return ["List", sampleFor(shape.slice(5, -1), byType)];
   if (shape.startsWith("tuple<")) {
     return ["Tuple", ...splitArgs(shape.slice(6, -1)).map((part) => sampleFor(part, byType))];

@@ -399,6 +399,7 @@ const NOVEL = [
   "BinaryBracelets",
   "BinaryNecklaces",
   "BinaryPalindromes",
+  "BinaryTreeParentArrays",
   "BinaryTrees",
   "BinaryWords",
   "BinaryWordsByWeight",

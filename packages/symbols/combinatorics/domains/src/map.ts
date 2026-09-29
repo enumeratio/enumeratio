@@ -14,6 +14,12 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import { registerEquivalence, registerOperation } from "@enumeratio/structures";
+import {
+  binaryTreeOfDyckPathKernel,
+  binaryTreeOfParentArrayKernel,
+  binaryTreeParentArrayKernel,
+  dyckPathKernel,
+} from "./binary-tree.ts";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
@@ -29,6 +35,15 @@ export interface CombinatorialMap {
   /** The body, over `_raw` — the CONTENTS of the argument, since generic heads cannot see
    *  through a domain constructor (design/domains.md §1.5). */
   readonly body?: unknown;
+  /** A conversion between sibling carriers: no head of its own, but an overload of the target's
+   *  constructor, so `SetPartition(RestrictedGrowthString([0, 1, 0]))` converts. Its `name` is
+   *  that constructor, which is also its key for `CombinatorialMap` and for laws. */
+  readonly convert?: boolean;
+  /** FindStat map ids, for a map whose record doesn't state them (a conversion has none). */
+  readonly findstat?: readonly string[];
+  /** In place of a body: the map over the argument's contents as MathJSON, for a result an
+   *  Epsil fold can't build (a nested tree). Undefined declines, as a failed guard does. */
+  readonly kernel?: (contents: unknown) => unknown;
   /** A predicate over `_raw`, checked before `body`. When it evaluates to anything but
    *  `"True"` the map DECLINES — the call stays unevaluated, the way a restriction's `Filter`
    *  never materialises what it excludes, rather than answering wrong for a subject outside
@@ -578,9 +593,61 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "BinarySearchTree",
     from: "permutation",
     to: "binary_tree",
-    body: bstParents,
+    composedOf: ["BinaryTree", "BinarySearchTreeParentArray"],
     summary: "The tree built by inserting σ(1), σ(2), ... into an empty binary search tree.",
-    note: "The sylvester congruence: two permutations land on the same tree exactly when they agree on which of any pair is inserted first. See bst.ts for the parent-pointer encoding chosen for `binary_tree` and why.",
+    note: "The sylvester congruence: two permutations land on the same tree exactly when they agree on which of any pair is inserted first. Built as its parent array (BinarySearchTreeParentArray), then read as a tree.",
+  },
+  {
+    name: "BinarySearchTreeParentArray",
+    from: "permutation",
+    to: "binary_tree_parent_array",
+    body: bstParents,
+    summary:
+      "The binary search tree of σ as its parent array: entry v is the value v is inserted under, 0 for the root.",
+    note: "A search tree's values are its in-order labels, so this is the tree's in-order parent array. See bst.ts for why a fold builds it this way.",
+  },
+  {
+    name: "BinaryTreeParentArray",
+    convert: true,
+    from: "binary_tree",
+    to: "binary_tree_parent_array",
+    kernel: binaryTreeParentArrayKernel,
+    summary:
+      "A binary tree as its parent array: its nodes numbered in order, entry k the number of the k-th node's parent, 0 at the root.",
+    note: "An order isomorphism: the k-th tree BinaryTrees lists goes to the k-th array BinaryTreeParentArrays lists.",
+    laws: [{ inverse: "BinaryTree" }],
+    orderIsomorphism: { from: "BinaryTrees", to: "BinaryTreeParentArrays" },
+  },
+  {
+    name: "BinaryTree",
+    convert: true,
+    from: "binary_tree_parent_array",
+    to: "binary_tree",
+    kernel: binaryTreeOfParentArrayKernel,
+    summary: "The binary tree an in-order parent array describes: a node below its parent goes left, above it right.",
+    note: "Declines an array that isn't one: two roots, two left children, a cycle, or labels out of order.",
+    laws: [{ inverse: "BinaryTreeParentArray" }],
+    orderIsomorphism: { from: "BinaryTreeParentArrays", to: "BinaryTrees" },
+  },
+  {
+    name: "DyckPath",
+    convert: true,
+    from: "binary_tree",
+    to: "dyck_path",
+    kernel: dyckPathKernel,
+    summary: "A binary tree [L, R] as the Dyck path U φ(L) D φ(R).",
+    note: "FindStat's Mp00012. A bijection, so every Dyck path statistic answers on a tree; not order-preserving between BinaryTrees and DyckPaths, which list in different orders.",
+    findstat: ["Mp00012"],
+    laws: [{ inverse: "BinaryTree" }],
+  },
+  {
+    name: "BinaryTree",
+    convert: true,
+    from: "dyck_path",
+    to: "binary_tree",
+    kernel: binaryTreeOfDyckPathKernel,
+    summary: "A Dyck path U A D B, cut at its first return, as the binary tree [φ⁻¹(A), φ⁻¹(B)].",
+    laws: [{ inverse: "DyckPath" }],
   },
   {
     name: "FromPermutation",
@@ -637,40 +704,44 @@ export const MAPS: readonly CombinatorialMap[] = [
     note: "The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)",
   },
   {
-    name: "RestrictedGrowthStringOf",
+    name: "RestrictedGrowthString",
+    convert: true,
     from: "set_partition",
     to: "restricted_growth_string",
     body: growthStringOf("_raw"),
     summary: "A set partition's restricted growth string: each position labelled with its block's index, from 0.",
     note: "An order isomorphism: the k-th set partition of n, in the order SetPartitions lists them, goes to the k-th restricted growth string of length n. So everything defined on one carrier is available on the other through it.",
-    laws: [{ inverse: "SetPartitionOf" }],
+    laws: [{ inverse: "SetPartition" }],
     orderIsomorphism: { from: "SetPartitions", to: "RestrictedGrowthStrings" },
   },
   {
-    name: "SetPartitionOf",
+    name: "SetPartition",
+    convert: true,
     from: "restricted_growth_string",
     to: "set_partition",
     body: blocksOf("_raw", 0),
     summary: "The set partition a restricted growth string labels: block j holds the positions labelled j.",
-    note: "The inverse of RestrictedGrowthStringOf, and order-preserving in the same way.",
-    laws: [{ inverse: "RestrictedGrowthStringOf" }],
+    note: "The inverse of RestrictedGrowthString(partition), and order-preserving in the same way.",
+    laws: [{ inverse: "RestrictedGrowthString" }],
     orderIsomorphism: { from: "RestrictedGrowthStrings", to: "SetPartitions" },
   },
   {
-    name: "SurjectionOf",
+    name: "Surjection",
+    convert: true,
     from: "set_composition",
     to: "surjection",
     body: growthStringOf("_raw", 1),
     summary: "A set composition as a surjection: each position labelled with its block's index, from 1.",
-    laws: [{ inverse: "SetCompositionOf" }],
+    laws: [{ inverse: "SetComposition" }],
   },
   {
-    name: "SetCompositionOf",
+    name: "SetComposition",
+    convert: true,
     from: "surjection",
     to: "set_composition",
     body: blocksOf("_raw", 1),
     summary: "The set composition a surjection labels: block j holds the positions labelled j.",
-    laws: [{ inverse: "SurjectionOf" }],
+    laws: [{ inverse: "Surjection" }],
   },
   {
     name: "CutWord",
@@ -681,11 +752,12 @@ export const MAPS: readonly CombinatorialMap[] = [
     guard: ["Greater", ["Length", "_raw"], 0],
     summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
     note: "An order isomorphism: the k-th composition of n, as IntegerCompositions lists them, goes to the k-th binary word of length n - 1.",
-    laws: [{ inverse: "CompositionOfCutWord" }],
+    laws: [{ inverse: "Composition" }],
     orderIsomorphism: { from: "IntegerCompositions", to: "BinaryWords", sizeOffset: -1 },
   },
   {
-    name: "CompositionOfCutWord",
+    name: "Composition",
+    convert: true,
     from: "binary_word",
     to: "composition",
     body: compositionOfCutWord("_raw"),
@@ -739,7 +811,9 @@ export function declareMaps(
       if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
       const contents = operandsOf(subject)[0];
       if (contents === undefined) return undefined;
-      const main = materialise(ce, ce.box(fill(map.body, contents.json) as never).evaluate());
+      const image = map.kernel === undefined ? fill(map.body, contents.json) : map.kernel(contents.json);
+      if (image === undefined) return undefined;
+      const main = materialise(ce, ce.box(image as never).evaluate());
       if (map.guard !== undefined) {
         const guard = fill(fill(map.guard, contents.json), main.json, "_image");
         if (ce.box(guard as never).evaluate().json !== "True") return undefined;
@@ -754,15 +828,24 @@ export function declareMaps(
     const from = constructorFor[map.from];
     if (from !== undefined) {
       // FindStat's map ids (`Mp00066`), as the map's record states them.
-      const findstat = (symbolInfo(map.name)?.findstat ?? [])
-        .filter((ref) => ref.on === undefined || ref.on === from)
-        .map((ref) => ref.id);
+      const findstat = [
+        ...(map.findstat ?? []),
+        ...(map.convert === true ? [] : (symbolInfo(map.name)?.findstat ?? []))
+          .filter((ref) => ref.on === undefined || ref.on === from)
+          .map((ref) => ref.id),
+      ];
       registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, findstat, definition: handle });
       // A map with an inverse between two carriers makes them equivalent: what one carrier
       // defines, the other reaches through the map (set partitions and their growth strings).
       const to = constructorFor[map.to];
       if (to !== undefined && to !== from && map.laws?.some((law) => typeof law === "object"))
         registerEquivalence(ce, from, to, handle);
+    }
+
+    if (map.convert === true) {
+      if (from === undefined || map.name !== wrap) throw new Error(`${map.name}: a conversion is named for its target`);
+      attachConversion(ce, wrap, from, map, handle);
+      continue;
     }
 
     // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending
@@ -784,6 +867,28 @@ export function declareMaps(
       },
     });
   }
+}
+
+/** A conversion as an overload of the target carrier's constructor: given a value of the source
+ *  carrier it converts, and anything else goes on to what the constructor already did (hold). */
+function attachConversion(
+  ce: ComputeEngine,
+  target: string,
+  source: string,
+  map: CombinatorialMap,
+  handle: (subject: BoxedExpression) => BoxedExpression | undefined,
+): void {
+  const definition = ce.lookupDefinition(target);
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  if (operator === undefined) throw new Error(`${target}: no constructor to convert with`);
+  const existingEvaluate = operator.evaluate;
+  // A lone arm is wrapped before it joins an overload set; `(a) -> b & c` would read as
+  // returning `b & c`.
+  const existing = String(operator.signature);
+  const arms = existing.includes(" & ") ? existing : `(${existing})`;
+  (operator as { signature: unknown }).signature = ce.type(`${arms} & ((${map.from}) -> ${map.to})`);
+  operator.evaluate = (ops: readonly BoxedExpression[], options) =>
+    ops.length === 1 && ops[0]?.operator === source ? handle(ops[0]) : existingEvaluate?.(ops, options);
 }
 
 /** Force a lazy result into a concrete List.

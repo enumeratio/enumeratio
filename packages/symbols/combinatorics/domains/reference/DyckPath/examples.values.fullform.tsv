@@ -1,0 +1,4 @@
+id	in
+from-a-binary-tree	DyckPath[BinaryTree[List[List[0, 0], List[0, List[0, 0]]]]]
+by-target-collection	CombinatorialMap[BinaryTree[List[List[0, 0], List[0, List[0, 0]]]], DyckPaths]
+by-findstat-id	CombinatorialMap[BinaryTree[List[List[0, 0], List[0, List[0, 0]]]], "Mp00012"]

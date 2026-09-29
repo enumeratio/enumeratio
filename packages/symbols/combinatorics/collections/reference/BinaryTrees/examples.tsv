@@ -1,2 +1,5 @@
 id	section	role	expr	expected	caption
 c-4			[Count, [BinaryTrees, 4]]	14	$C_4$
+first-element-of-binarytrees-3	Basic		[At, [BinaryTrees, 3], 1]	[BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]]	The first tree, the right spine: an empty left subtree comes first
+every-element-of-binarytrees-3		test	[Take, [BinaryTrees, 3], 5]	[List, [BinaryTree, [List, 0, [List, 0, [List, 0, 0]]]], [BinaryTree, [List, 0, [List, [List, 0, 0], 0]]], [BinaryTree, [List, [List, 0, 0], [List, 0, 0]]], [BinaryTree, [List, [List, 0, [List, 0, 0]], 0]], [BinaryTree, [List, [List, [List, 0, 0], 0], 0]]]	
+peaks-are-narayana	Statistics		[Tally, [CombinatorialStat, [BinaryTrees, 4], "'Peaks'"]]	[Tuple, [List, 4, 3, 2, 1], [List, 1, 6, 6, 1]]	A Dyck path statistic, through [[DyckPath]] of each tree: the Narayana numbers

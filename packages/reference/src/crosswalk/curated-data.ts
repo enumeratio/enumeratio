@@ -143,6 +143,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "A000031",
     },
   ],
+  BinaryTree: [
+    {
+      system: "wikipedia",
+      identity: "Binary tree",
+    },
+  ],
   BinaryWords: [
     {
       system: "oeis",

@@ -7,7 +7,7 @@ signatures:
   - call: CombinatorialMap(x, name)
     description: the map `name` (or FindStat id, `"Mp00066"`) applied to `x`, a value of a carrier such as `Permutation`, giving a value of the map's target carrier; over a collection, the map applied to each element, lazily.
     library: enumeratio-structures
-    type: (any, string) -> any
+    type: (any, any) -> any
 attributes:
   - HoldAll
 seeAlso:

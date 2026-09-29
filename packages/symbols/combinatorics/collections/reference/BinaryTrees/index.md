@@ -2,14 +2,15 @@
 name: BinaryTrees
 domain: Combinatorial collections
 signature: BinaryTrees(n)
-summary: The binary trees with $n$ internal nodes, as nested lists.
+summary: "The binary trees with $n$ internal nodes, as nested lists: a leaf is $0$, a node $[L, R]$."
 signatures:
   - call: BinaryTrees(n)
     description: the binary trees with $n$ internal nodes
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<any>
+    type: (integer<0..>) -> indexed_collection<binary_tree>
 seeAlso:
   - DyckPaths
+  - BinaryTreeParentArrays
   - CatalanNumber
 references:
   - system: wikipedia
@@ -36,4 +37,5 @@ carrier: BinaryTree
 ---
 
 - Count is the Catalan number $C_n$ (see [[CatalanNumber]])
-- In bijection with [[DyckPaths]] of the same semilength
+- Listed by the size of the left subtree, then the left subtree's rank, then the right's. [[DyckPaths]] lists the same objects in another order: `DyckPath(tree)` (up, left tree, down, right tree) is a bijection, so every Dyck path statistic answers on a tree, but the $k$-th tree doesn't go to the $k$-th path.
+- [[BinaryTreeParentArrays]] lists the same trees flat, in the same order.

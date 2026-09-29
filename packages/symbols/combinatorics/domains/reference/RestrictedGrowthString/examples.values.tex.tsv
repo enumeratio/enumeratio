@@ -1,0 +1,2 @@
+id	in	out
+from-a-set-partition	\mathrm{RestrictedGrowthString}(\mathrm{SetPartition}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack))	\mathrm{RestrictedGrowthString}(\bigl\lbrack0, 1, 0, 2\bigr\rbrack)

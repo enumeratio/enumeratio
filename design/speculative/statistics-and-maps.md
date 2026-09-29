@@ -640,23 +640,24 @@ collections-package filing problem, independent of this document's central quest
   `NumberOfTouchPoints`). An id resolves to the first; folding the duplicate names is
   still to do.
 
-- **Equivalent carriers.** A map with an `{ inverse }` law between two carriers makes them
+- **Equivalent carriers.** A converter pair with an `{ inverse }` law makes two carriers
   equivalent (`registerEquivalence`), and a statistic or map one carrier lacks is transported
-  from the other through the bijection, one step. So each is defined once, on whichever carrier
-  states it most naturally, and which carrier is the storage matters much less. The first pair:
-  a set partition is its blocks (a shape override on enumeratio's SQL storage), and its
-  restricted growth string is a carrier of its own. `RestrictedGrowthStringOf` and
-  `SetPartitionOf` are an order isomorphism (the k-th set partition goes to the k-th string),
-  and every set-partition statistic answers on the strings. This is enumeratio's "sibling
-  collection related by an order isomorphism", with the collection borrowing its partner's
-  ranking.
-- **More pairs, and the law they claim.** A set composition is its ordered blocks too, with
-  `SurjectionOf` / `SetCompositionOf` to the surjection word; a composition of n goes to its cut
-  word of length n - 1 (`CutWord` / `CompositionOfCutWord`). A map that is an order isomorphism
-  says so (`orderIsomorphism: { from, to, sizeOffset }` on the map), and
-  `domains/tests/equivalence.test.ts` checks it: the k-th element of one collection maps to the
-  k-th of the other, for every small size. Dyck paths and binary trees wait on the tree
-  encoding: the collection's trees are nested, the domain's flat.
+  from the nearest carrier that has it, through the chain of bijections. So each is defined
+  once, on whichever carrier states it most naturally, and which carrier is the storage matters
+  much less. A conversion is not a head of its own: it is an overload of the target's
+  constructor, chosen by the argument's type (`SetPartition(RestrictedGrowthString([0, 1, 0, 2]))`),
+  also reached as `CombinatorialMap(x, SetPartitions)` (by the target collection) or by FindStat
+  id. The pairs: set partitions (blocks) and restricted growth strings; set compositions
+  (blocks) and surjections; binary trees (nested), their in-order parent arrays and Dyck paths
+  (FindStat's Mp00012); and a composition of n with its cut word, a binary word of length
+  n - 1 (`CutWord`, and back by `Composition(word)`). Building a nested value is recursion an
+  Epsil fold can't express, so the tree conversions are kernels (`kernel` on a map, in place of
+  a body).
+- **Orders.** A carrier has no order; a collection is a carrier with a total order, and sibling
+  collections exist for distinct useful orders. Where a conversion happens to match two
+  collections' orders it says so (`orderIsomorphism`), and `domains/tests/equivalence.test.ts`
+  checks it: set partitions and growth strings, compositions and cut words, binary trees and
+  parent arrays. Mp00012 is a bijection but not order-preserving between BinaryTrees and DyckPaths.
 
 Still to do: deprecate and retire the bare heads (phase 2's second half), move each
 definition down to its collection (phase 3), `Rank` through `CombinatorialStat`, and the

@@ -24,6 +24,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     name: "BinaryTree",
   },
   {
+    name: "BinaryTreeParentArray",
+  },
+  {
     name: "BinaryWord",
   },
   {
@@ -458,6 +461,17 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     description: "The binary words of length $n$ that read the same reversed.",
   },
   {
+    name: "BinaryTreeParentArrays",
+    carrier: "BinaryTreeParentArray",
+    grades: [
+      {
+        name: "n",
+        role: "axis",
+      },
+    ],
+    description: "The binary trees with $n$ nodes, each as its in-order parent array.",
+  },
+  {
     name: "BinaryTrees",
     carrier: "BinaryTree",
     grades: [
@@ -466,7 +480,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
         role: "axis",
       },
     ],
-    description: "The binary trees with $n$ internal nodes, as nested lists.",
+    description: "The binary trees with $n$ internal nodes, as nested lists: a leaf is $0$, a node $[L, R]$.",
   },
   {
     name: "BinaryWords",

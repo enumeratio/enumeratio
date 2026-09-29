@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+from-a-binary-tree	Basic		[DyckPath, [BinaryTree, [List, [List, 0, 0], [List, 0, [List, 0, 0]]]]]	[DyckPath, [List, 1, 1, 0, 0, 1, 0, 1, 0]]	From a binary tree: up, left tree, down, right tree (FindStat Mp00012)
+by-target-collection	Basic		[CombinatorialMap, [BinaryTree, [List, [List, 0, 0], [List, 0, [List, 0, 0]]]], DyckPaths]	[DyckPath, [List, 1, 1, 0, 0, 1, 0, 1, 0]]	The same conversion, chosen by the target collection
+by-findstat-id	Basic		[CombinatorialMap, [BinaryTree, [List, [List, 0, 0], [List, 0, [List, 0, 0]]]], "'Mp00012'"]	[DyckPath, [List, 1, 1, 0, 0, 1, 0, 1, 0]]	The same conversion, by its FindStat id

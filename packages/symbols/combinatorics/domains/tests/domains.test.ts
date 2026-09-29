@@ -12,7 +12,7 @@ const engine = (): ComputeEngine => {
 test("every carrier the catalog knows becomes a nominal type", () => {
   const ce = engine();
   // enumeratio's 86, and the restricted growth string (scripts/shape-overrides.ts).
-  expect(DOMAINS.length).toBe(87);
+  expect(DOMAINS.length).toBe(88);
   for (const domain of DOMAINS) expect(String(ce.type(domain.type)), domain.name).toBe(domain.type);
 });
 

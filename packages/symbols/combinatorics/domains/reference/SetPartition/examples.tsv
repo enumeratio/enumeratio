@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-its-growth-string	Basic		[SetPartition, [RestrictedGrowthString, [List, 0, 1, 0, 2]]]	[SetPartition, [List, [List, 1, 3], [List, 2], [List, 4]]]	From its restricted growth string: block j holds the positions labelled j

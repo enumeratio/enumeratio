@@ -707,6 +707,55 @@ export function IsBinaryTree(t: unknown, n: number): boolean {
   return ok(t) && binTreeSize(t as BinTree) === n;
 }
 
+// ─── BinaryTreeParentArrays(n): the same trees, each as its in-order parent array (entry k is the
+// parent of the k-th node in order, 0 at the root). Listed in BinaryTrees' order. The domains
+// package converts the same way for its maps (domains/src/binary-tree.ts). ─────
+export function BinaryTreeParentArray(t: BinTree): number[] {
+  const parents: number[] = [];
+  let next = 1;
+  const walk = (x: BinTree): number => {
+    if (x === 0) return 0;
+    const left = walk(x[0]);
+    const me = next++;
+    const right = walk(x[1]);
+    if (left !== 0) parents[left - 1] = me;
+    if (right !== 0) parents[right - 1] = me;
+    return me;
+  };
+  const root = walk(t);
+  if (root !== 0) parents[root - 1] = 0;
+  return parents;
+}
+/** The tree an in-order parent array describes; undefined when it describes none. */
+export function BinaryTreeOfParentArray(parents: readonly number[]): BinTree | undefined {
+  const n = parents.length;
+  const left = Array.from({ length: n + 1 }, () => 0);
+  const right = Array.from({ length: n + 1 }, () => 0);
+  let root = 0;
+  for (let v = 1; v <= n; v++) {
+    const p = parents[v - 1]!;
+    if (!Number.isInteger(p) || p < 0 || p > n || p === v) return undefined;
+    const side = v < p ? left : right;
+    if (p === 0) {
+      if (root !== 0) return undefined;
+      root = v;
+    } else if (side[p] !== 0) return undefined;
+    else side[p] = v;
+  }
+  const build = (v: number, depth: number): BinTree | undefined => {
+    if (v === 0) return 0;
+    if (depth > n) return undefined;
+    const l = build(left[v]!, depth + 1);
+    const r = build(right[v]!, depth + 1);
+    return l === undefined || r === undefined ? undefined : [l, r];
+  };
+  const tree = n === 0 ? 0 : build(root, 0);
+  return tree !== undefined && BinaryTreeParentArray(tree).every((p, i) => p === parents[i]) ? tree : undefined;
+}
+export function IsBinaryTreeParentArray(a: unknown, n: number): boolean {
+  return Array.isArray(a) && a.length === n && BinaryTreeOfParentArray(a as number[]) !== undefined;
+}
+
 // ─── Derangements(n): permutations with no fixed point. Count = subfactorial D(n). ──────────────────────
 const _subfac: number[] = [1, 0];
 function subfactorial(n: number): number {
