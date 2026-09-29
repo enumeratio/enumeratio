@@ -51,6 +51,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     name: "CorePartition",
   },
   {
+    name: "CycleDecomposition",
+  },
+  {
     name: "DecoratedPermutation",
   },
   {
@@ -172,9 +175,6 @@ export const CARRIERS: readonly CatalogCarrier[] = [
   },
   {
     name: "Permutation",
-  },
-  {
-    name: "PermutationCycles",
   },
   {
     name: "PermutationInversion",
@@ -2130,6 +2130,17 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     description: "Return all permutations of length k (default full length) of a collection.",
+  },
+  {
+    name: "PermutationsAsCycles",
+    carrier: "CycleDecomposition",
+    grades: [
+      {
+        name: "n",
+        role: "axis",
+      },
+    ],
+    description: "Every permutation of $\\{1, …, n\\}$ in cycle notation, fixed points kept, listed by cycle type.",
   },
   {
     name: "PermutationsAvoiding123",

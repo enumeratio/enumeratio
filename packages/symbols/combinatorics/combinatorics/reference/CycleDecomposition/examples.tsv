@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+from-a-permutation	Basic		[CycleDecomposition, [Permutation, [List, 2, 3, 1, 4]]]	[CycleDecomposition, [List, [List, 1, 2, 3], [List, 4]]]	From a permutation: $4$ is a fixed point, kept as its own cycle
+back-to-the-permutation	Basic		[Permutation, [CycleDecomposition, [List, [List, 1, 3], [List, 2]]]]	[Permutation, [List, 3, 2, 1]]	And back
+a-statistic-through-the-permutation	Basic		[CombinatorialStat, [CycleDecomposition, [List, [List, 1, 2, 3], [List, 4]]], "'FixedPoints'"]	1	A permutation statistic, through the conversion

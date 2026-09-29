@@ -1,0 +1,4 @@
+id	in
+from-a-permutation	CycleDecomposition[Permutation[List[2, 3, 1, 4]]]
+back-to-the-permutation	Permutation[CycleDecomposition[List[List[1, 3], List[2]]]]
+a-statistic-through-the-permutation	CombinatorialStat[CycleDecomposition[List[List[1, 2, 3], List[4]]], "FixedPoints"]

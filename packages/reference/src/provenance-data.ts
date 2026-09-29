@@ -1047,6 +1047,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CycleDecomposition",
+    provenance: "extension",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "CycleGraph",
     provenance: "extension",
     declared: "enumeratio-combinatorics",
@@ -2260,6 +2267,13 @@ export const provenance: readonly HeadRecord[] = [
   {
     name: "Permutation",
     provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "PermutationsAsCycles",
+    provenance: "extension",
     declared: "enumeratio-combinatorics",
     wolframAlias: null,
     elsewhere: [],

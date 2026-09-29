@@ -22,9 +22,9 @@ export interface Domain {
    * corrected rule), whether or not a same-named collection family already exists.
    * `declareDomainElement` (`declare.ts`) is what makes `Element(x, DyckPaths)` answer for
    * it: True when `x` is a `DyckPath(...)` value, False for a value of another carrier,
-   * unevaluated for anything it cannot place. Absent for exactly the two domains whose
-   * SINGULAR name already layers onto an unrelated real head (`ContinuedFraction`,
-   * `PermutationCycles`) — there is no plural type space for either.
+   * unevaluated for anything it cannot place. Absent only for `ContinuedFraction`, whose
+   * SINGULAR name layers onto compute-engine's own expansion — there is no plural type space
+   * for it.
    */
   readonly plural?: string;
   /** The domain this one RESTRICTS, when it is a restriction. compute-engine cannot express
