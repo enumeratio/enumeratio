@@ -114,10 +114,11 @@ export function detailsOf(body: string): string[] {
   return details;
 }
 
-/** `index.md`'s text: the fields as front matter, the details (if any) as the body's list,
- * each exactly as written (vp fmt leaves these files alone; see vite.config.ts). */
-async function indexText({ details, ...fields }: Record<string, unknown>, body: string): Promise<string> {
-  const text = Array.isArray(details) && details.length > 0 ? detailsMarkdown(details as string[]) : body;
+/** `index.md`'s text: the fields as front matter, then the body exactly as written, or the
+ * details as its list when they changed (vp fmt leaves these files alone; see vite.config.ts). */
+async function indexText({ details, body: _body, ...fields }: Record<string, unknown>, body: string): Promise<string> {
+  const kept = !Array.isArray(details) || JSON.stringify(detailsOf(body)) === JSON.stringify(details);
+  const text = kept ? body.trim() : detailsMarkdown(details as string[]);
   return `---\n${await formatYaml(fields)}---\n${text === "" ? "" : `\n${text.replace(/\n*$/, "\n")}`}`;
 }
 

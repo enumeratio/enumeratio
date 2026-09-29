@@ -61,7 +61,8 @@ names:
   wolframIdentity: true
 ---
 
-- The Hurwitz zeta function $\zeta(s, a) = \sum_{n=0}^{\infty} (n+a)^{-s}$ (DLMF 25.11.1) generalizes [[Zeta]] by shifting the summation index by a parameter $a$; the series converges for $\operatorname{Re}(s) > 1$ and $a$ off the nonpositive reals, and continues analytically elsewhere to a function meromorphic in $s$ with a single simple pole at $s = 1$.
+The Hurwitz zeta function $\zeta(s, a) = \sum_{n=0}^{\infty} (n+a)^{-s}$ (DLMF 25.11.1) generalizes [[Zeta]] by shifting the summation index by a parameter $a$; the series converges for $\operatorname{Re}(s) > 1$ and $a$ off the nonpositive reals, and continues analytically elsewhere to a function meromorphic in $s$ with a single simple pole at $s = 1$.
+
 - Generalizes the Riemann zeta: $\zeta(s, 1) = \zeta(s)$, and $\zeta(s, m) = \zeta(s) - \sum_{k=1}^{m-1} k^{-s}$ for a positive integer $m$ (so $\zeta(2, 2) = \pi^2/6 - 1$).
 - Nonpositive integer $s$: $\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\zeta(0, a) = \tfrac12 - a$ and $\zeta(-1, a) = -\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].
 - Pole at $s = 1$: $\zeta(1, a) = \text{ComplexInfinity}$ for every $a$.

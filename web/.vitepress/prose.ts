@@ -34,3 +34,7 @@ export function renderBlock(markdown: string, options: ProseOptions = {}): strin
   const only = cells.length === 1 ? (cells[0] as readonly [string, Box, string]) : undefined;
   return toHtml(only?.[2] === "Text" ? only[1] : cells, { tex, ...options });
 }
+
+/** A whole markdown document (a record's body) as block HTML. */
+export const renderProse = (markdown: string, options: ProseOptions = {}): string =>
+  toHtml(readMarkdown(markdown), { tex, ...options });

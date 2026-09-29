@@ -269,6 +269,11 @@ export interface ReferenceEntry {
   /** A "Details" panel: bullet notes about the concept and how it behaves. */
   readonly details?: readonly string[];
   /**
+   * Derived by the loader, never written in a record's front matter: `index.md`'s markdown
+   * body, which the page renders as prose. `details` is read from it.
+   */
+  readonly body?: string;
+  /**
    * Default display form for the Out cell on this entry's page (StandardForm by
    * default). A compile-target entry sets this to its form, e.g. "wolfram", so
    * every example dumps that form's source string.

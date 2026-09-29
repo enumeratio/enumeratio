@@ -57,7 +57,8 @@ bindings:
     threadArg: 1
 ---
 
-- The gamma function $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\,dt$ for $\operatorname{Re}(z) > 0$ (DLMF 5.2.1), continued analytically elsewhere, is the standard extension of the factorial to real and complex arguments. The two- and three-argument forms below split that same integral at a finite endpoint rather than $\infty$.
+The gamma function $\Gamma(z) = \int_0^\infty t^{z-1} e^{-t}\,dt$ for $\operatorname{Re}(z) > 0$ (DLMF 5.2.1), continued analytically elsewhere, is the standard extension of the factorial to real and complex arguments. The two- and three-argument forms below split that same integral at a finite endpoint rather than $\infty$.
+
 - Extends the factorial: $\Gamma(n) = (n-1)!$ for positive integers n, so [[Factorial]] is $\Gamma(n+1)$.
 - Functional equation: $\Gamma(z+1) = z\,\Gamma(z)$.
 - Reflection formula: $\Gamma(z)\,\Gamma(1-z) = \dfrac{\pi}{\sin(\pi z)}$, linking $\Gamma$ at z and $1-z$.

@@ -212,9 +212,10 @@ export function referenceData(
 
   const withRecord = (h: LoadedHead): ReferenceEntry => {
     const record = h.implementations;
-    if (record === undefined) return h.entry;
+    const entry = h.body.trim() === "" ? h.entry : { ...h.entry, body: h.body };
+    if (record === undefined) return entry;
     return {
-      ...h.entry,
+      ...entry,
       examples: h.entry.examples.map((example) => {
         const rows = record[example.id];
         if (rows === undefined) return example;
