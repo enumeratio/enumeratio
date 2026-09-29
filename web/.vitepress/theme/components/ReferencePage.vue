@@ -5,7 +5,7 @@ import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
-import { renderBlock, renderInline } from "../../prose.ts";
+import { renderBlock, renderInline, renderProse } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -47,6 +47,7 @@ const toJson = (expr: unknown): string => JSON.stringify(expr);
 const link = (name: string): string | undefined => (getEntry(name) ? `/reference/symbol/${name}` : undefined);
 const inline = (text?: string): string => renderInline(text ?? "", { link });
 const block = (text: string): string => renderBlock(text, { link });
+const prose = (markdown: string): string => renderProse(markdown, { link });
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
@@ -255,9 +256,12 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </template>
     </p>
 
-    <details v-if="entry.details?.length" id="details" class="ref-details" open>
+    <details v-if="entry.body || entry.details?.length" id="details" class="ref-details" open>
       <summary>Details</summary>
-      <ul>
+      <!-- The record's body, as markdown; a record written without one has only its details. -->
+      <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+      <div v-if="entry.body" class="ref-body" v-html="prose(entry.body)"></div>
+      <ul v-else>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <li v-for="(d, i) in entry.details" :key="i" v-html="block(d)"></li>
       </ul>
@@ -482,9 +486,17 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
   margin: 0.5rem 0 0;
   padding-left: 1.1rem;
 }
-.ref-details li {
+.ref-details li,
+.ref-body {
   margin: 0.3rem 0;
   color: var(--vp-c-text-2);
+}
+.ref-body :deep(p) {
+  margin: 0.5rem 0;
+}
+.ref-body :deep(ul) {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
 }
 .ref-stub {
   color: var(--vp-c-text-2);

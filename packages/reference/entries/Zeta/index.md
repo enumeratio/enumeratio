@@ -104,7 +104,8 @@ names:
   wolframIdentity: true
 ---
 
-- The Riemann zeta function $\zeta(s) = \sum_{n=1}^{\infty} n^{-s}$, for $\operatorname{Re}(s) > 1$, extends by analytic continuation to a meromorphic function on all of $\mathbb{C}$ with a single simple pole at $s = 1$. Over the primes it factors as the Euler product $\zeta(s) = \prod_p (1 - p^{-s})^{-1}$ (DLMF 25.2.11), which is where its role in the distribution of primes comes from. It is [[HurwitzZeta]]'s $a = 1$ slice, $\zeta(s) = \zeta(s, 1)$, and [[PolyLog]]'s $z = 1$ edge, $\zeta(s) = \operatorname{Li}_s(1)$.
+The Riemann zeta function $\zeta(s) = \sum_{n=1}^{\infty} n^{-s}$, for $\operatorname{Re}(s) > 1$, extends by analytic continuation to a meromorphic function on all of $\mathbb{C}$ with a single simple pole at $s = 1$. Over the primes it factors as the Euler product $\zeta(s) = \prod_p (1 - p^{-s})^{-1}$ (DLMF 25.2.11), which is where its role in the distribution of primes comes from. It is [[HurwitzZeta]]'s $a = 1$ slice, $\zeta(s) = \zeta(s, 1)$, and [[PolyLog]]'s $z = 1$ edge, $\zeta(s) = \operatorname{Li}_s(1)$.
+
 - Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.
 - Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.
 - Special values at nonpositive integers relate to the Bernoulli numbers: $\zeta(-n) = -B_{n+1}/(n+1)$. See [[BernoulliB]].
