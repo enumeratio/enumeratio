@@ -94,6 +94,7 @@ function svgOf(expr: BoxedExpression): string | undefined {
  */
 export const GRAPHICS_HEADS: readonly string[] = [
   "Plot",
+  "ParametricPlot",
   "Plot3D",
   "ContourPlot",
   "ListContourPlot",

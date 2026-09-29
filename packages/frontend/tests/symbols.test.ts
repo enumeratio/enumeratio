@@ -128,6 +128,7 @@ const FAMILY_TAGS = [
   "notatio-contour-plot",
   "notatio-density-plot",
   "notatio-polar-plot",
+  "notatio-plot", // ParametricPlot: Wolfram's own separate head, same component as Plot
 ];
 
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {

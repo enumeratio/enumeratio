@@ -1,6 +1,7 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import type { ScaleName } from "./scales.ts";
 
 // A symbol and its component are the same thing seen from two ends
 // (design/components-and-symbols.md). This is the map between them: for every head that
@@ -265,6 +266,38 @@ function controlName(node: Json): string | undefined {
  */
 const AXES_LABEL_OPTIONS = { XLabel: "x-label", YLabel: "y-label" };
 
+/**
+ * A Wolfram scaling-function name (`"Log"`, `"Log10"`, `"Log2"`, `"Sqrt"`, `"Linear"`,
+ * `"None"`) as our own lowercase `ScaleName` -- `scales.ts`'s vocabulary is already just
+ * the lowercased Wolfram spelling, `None` aside (Wolfram's way of saying no scaling).
+ */
+function scalingFunctionName(value: Json): ScaleName | undefined {
+  const name = (strOf(value) ?? symOf(value))?.toLowerCase();
+  if (name === "none") return "linear";
+  return name === "linear" || name === "log" || name === "log10" || name === "log2" || name === "sqrt"
+    ? name
+    : undefined;
+}
+
+/**
+ * `ScalingFunctions -> "Log"` (one function, the y axis -- how `LogPlot` is really just
+ * `Plot` with this option, Wolfram's own idiom) or `-> ("Log", "Log")` (a pair, x then y).
+ */
+function scalingFunctionsOption(value: Json): Record<string, string> {
+  const pair = tupleOf(value);
+  const out: Record<string, string> = {};
+  if (pair !== undefined) {
+    const x = scalingFunctionName(pair[0]);
+    const y = scalingFunctionName(pair[1]);
+    if (x) out["x-scale"] = x;
+    if (y) out["y-scale"] = y;
+    return out;
+  }
+  const y = scalingFunctionName(value);
+  if (y) out["y-scale"] = y;
+  return out;
+}
+
 export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "Plot",
@@ -274,6 +307,13 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       PlotLabel: "label",
       GridLines: "grid",
       PlotLegends: "legend",
+      // `Filling -> True` / `ColorFunction -> "y"`: genuine Wolfram `Plot` options with
+      // no kebab-cased match on the component's own attribute names (`fill`, `color-by`).
+      Filling: "fill",
+      ColorFunction: "color-by",
+      // `PlotPoints -> 240`: Wolfram's name for the initial sample count before adaptive
+      // refinement -- the component calls the same thing `samples`.
+      PlotPoints: "samples",
       // `AxesLabel -> ("x", "y")`, or one label for the x axis.
       AxesLabel: (value) => {
         const parts = tupleOf(value) ?? [value];
@@ -289,7 +329,18 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         const y = tupleOf(parts[1]) ?? (parts.length === 2 && tupleOf(parts[0]) === undefined ? parts : undefined);
         return y === undefined ? {} : { "plot-range": y.map(clean).join(",") };
       },
+      ScalingFunctions: scalingFunctionsOption,
     },
+  },
+  {
+    // `ParametricPlot({fx, fy}, (t, tmin, tmax))`: Wolfram's own separate head for a
+    // parametric curve -- reuses `Plot`'s tag with `parametric` fixed on, the same way
+    // `StreamPlot` reuses `VectorPlot`'s tag below.
+    head: "ParametricPlot",
+    tag: "notatio-plot",
+    fixed: { parametric: "true" },
+    attributes: (ops) => oneVariable(ops, { value: "value", variable: "var", range: "domain" }),
+    options: { PlotPoints: "samples" },
   },
   {
     head: "Plot3D",
@@ -302,6 +353,9 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         xrange: "x-domain",
         yrange: "y-domain",
       }),
+    // `PlotLabel -> "…"`: same idea as `Plot`'s, but this component's caption attribute
+    // is `label`, not the two-word kebab `optionAttribute` would default to.
+    options: { PlotLabel: "label" },
   },
   {
     head: "ContourPlot",

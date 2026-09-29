@@ -1,0 +1,138 @@
+- id: sine-one-period
+  caption: Sine over one period
+  category: Curves
+  expr: [Plot, [Sin, x], [Tuple, x, -6.283, 6.283]]
+- id: a-cubic
+  caption: A cubic
+  category: Curves
+  expr: [Plot, [Subtract, [Power, x, 3], [Multiply, 3, x]], [Tuple, x, -3, 3]]
+- id: a-pole
+  caption: A pole (1/x)
+  category: Curves
+  notes: The sample straddling `0` is non-finite, so the curve splits into two segments instead of streaking across the asymptote.
+  expr: [Plot, [Divide, 1, x], [Tuple, x, -3, 3]]
+- id: wide-domain-more-samples
+  caption: A wider domain, more samples
+  category: Curves
+  notes: The playground page's demo highlighted a `$…$` LaTeX island parsing to this same expression -- moot for a story, whose `expr` is already parsed MathJSON; `PlotPoints` raises the resolution over the wider domain.
+  expr: [Plot, [Multiply, x, [Sin, x]], [Tuple, x, -12.566, 12.566], [Tuple, PlotPoints, 240]]
+- id: log-y-scale
+  caption: Log y-scale (exponential ⇒ straight line)
+  category: Curves
+  notes: A `ScalingFunctions -> "Log"` y-axis renders eˣ as a straight line; the range labels still read the raw values. Non-positive samples fall outside the log domain and gap out.
+  expr: [Plot, [Exp, x], [Tuple, x, 0, 5], [Tuple, ScalingFunctions, "'Log'"]]
+- id: several-series
+  caption: Several series
+  category: Curves
+  notes: A list of expressions overlays one curve per entry, each in its own colour. Hover to read every series at the pointer's x.
+  expr: [Plot, [List, [Sin, x], [Cos, x], [Multiply, [Sin, x], [Cos, x]]], [Tuple, x, -6.283, 6.283]]
+- id: parametric-lissajous
+  caption: Parametric curve (a Lissajous figure)
+  category: Curves
+  notes: "`ParametricPlot` reads the pair as (x(t), y(t)) and traces it over the iterator's range -- Wolfram's own separate head for this, rather than a flag on `Plot`."
+  expr:
+    [
+      ParametricPlot,
+      [Tuple, [Sin, [Multiply, 3, t]], [Sin, [Multiply, 4, t]]],
+      [Tuple, t, 0, 6.283],
+      [Tuple, PlotPoints, 400],
+    ]
+- id: points-mode
+  caption: Points mode
+  category: Curves
+  expr: [Plot, [Sin, x], [Tuple, x, 0, 6.283], [Tuple, Mode, "'points'"], [Tuple, PlotPoints, 40]]
+- id: grid-fill-legend-labels
+  caption: Grid, fill, legend, labels
+  category: Chrome & colour
+  notes: The `Plot`-style chrome, all opt-in -- light gridlines, a filled area to the zero axis, a legend keyed to the series, an axis label, a forced `PlotRange`, and a `PlotLabel` title.
+  expr:
+    [
+      Plot,
+      [List, [Sin, x], [Cos, x]],
+      [Tuple, x, -6.283, 6.283],
+      [Tuple, GridLines, True],
+      [Tuple, Filling, True],
+      [Tuple, PlotLegends, True],
+      [Tuple, AxesLabel, "'x'"],
+      [Tuple, PlotRange, [Tuple, -1.2, 1.2]],
+      [Tuple, PlotLabel, "'sin & cos'"],
+    ]
+- id: color-by-value
+  caption: Colour by value (ColorFunction)
+  category: Chrome & colour
+  notes: '`ColorFunction -> "y"` ramps the stroke from blue (low) to accent (high) by height; `"x"` ramps left-to-right.'
+  expr: [Plot, [Sin, x], [Tuple, x, -6.283, 6.283], [Tuple, ColorFunction, "'y'"]]
+- id: axes-off
+  caption: Axes off (bare curve)
+  category: Chrome & colour
+  expr: [Plot, [Sin, x], [Tuple, x, -6.283, 6.283], [Tuple, Axes, "'false'"]]
+- id: two-parameters
+  caption: Two parameters
+  category: Manipulate
+  notes: "`a` scales the frequency, `b` shifts the phase -- each free parameter becomes its own slider and fills its wildcard."
+  expr:
+    [
+      Manipulate,
+      [Plot, [Sin, [Add, [Multiply, a, x], b]], [Tuple, x, -6.283, 6.283]],
+      [Tuple, a, 1, 5],
+      [Tuple, b, 0, 6.283],
+    ]
+- id: amplitude-frequency-phase
+  caption: Amplitude · frequency · phase
+  category: Manipulate
+  notes: Three sliders with explicit initial values -- the classic sinusoid knobs.
+  expr:
+    [
+      Manipulate,
+      [
+        Plot,
+        [Multiply, A, [Sin, [Add, [Multiply, w, x], p]]],
+        [Tuple, x, -6.283, 6.283],
+        [Tuple, PlotRange, [Tuple, -2, 2]],
+      ],
+      [Tuple, [Tuple, A, 1], 0, 2],
+      [Tuple, [Tuple, w, 2], 0.5, 6],
+      [Tuple, p, 0, 6.283],
+    ]
+- id: animate-the-phase
+  caption: Animate the phase (press ▶)
+  category: Manipulate
+  notes: Press ▶ on `t`'s slider to watch the wave travel; ⏸ to stop.
+  expr: [Manipulate, [Plot, [Sin, [Subtract, x, t]], [Tuple, x, -6.283, 6.283]], [Tuple, t, 0, 6.283]]
+- id: movable-resizable-bump
+  caption: A movable, resizable bump
+  category: Manipulate
+  notes: "`c` slides a Gaussian bump left/right, `s` widens it."
+  expr:
+    [
+      Manipulate,
+      [
+        Plot,
+        [Exp, [Negate, [Divide, [Power, [Subtract, x, c], 2], s]]],
+        [Tuple, x, -6.283, 6.283],
+        [Tuple, PlotRange, [Tuple, 0, 1.1]],
+        [Tuple, Filling, True],
+      ],
+      [Tuple, [Tuple, c, 0], -5, 5],
+      [Tuple, [Tuple, s, 1], 0.2, 4],
+    ]
+- id: stepped-integer-harmonic
+  caption: A stepped, integer harmonic
+  category: Manipulate
+  notes: A step of `1` makes `n` an integer knob -- sweep the harmonics with ▶.
+  expr:
+    [
+      Manipulate,
+      [Plot, [Sin, [Multiply, n, x]], [Tuple, x, -6.283, 6.283], [Tuple, GridLines, True]],
+      [Tuple, [Tuple, n, 1], 1, 8, 1],
+    ]
+- id: discrete-choice
+  caption: A discrete choice
+  category: Manipulate
+  notes: A control's second argument as a list becomes a setter over discrete values.
+  expr:
+    [
+      Manipulate,
+      [Plot, [Sin, [Multiply, k, x]], [Tuple, x, -6.283, 6.283], [Tuple, GridLines, True]],
+      [Tuple, k, [List, 1, 2, 3, 5]],
+    ]

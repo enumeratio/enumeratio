@@ -1,0 +1,48 @@
+- id: a-rational-function
+  caption: A rational function
+  category: Any expression
+  notes: The three cube roots of unity are the black zeros; the poles at ±i are the points every hue spirals into. Reading the colour wheel around a point gives its order, and the direction of the winding says zero or pole.
+  expr:
+    [
+      ComplexPlot,
+      [Divide, [Subtract, [Power, z, 3], 1], [Add, [Power, z, 2], 1]],
+      [Tuple, Extent, 4],
+      [Tuple, Height, 380],
+    ]
+- id: essential-singularity
+  caption: An essential singularity
+  category: Any expression
+  notes: Every hue, infinitely often, in any neighbourhood of the origin -- Picard's theorem as a picture.
+  expr: [ComplexPlot, [Exp, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]
+- id: riemann-zeta
+  caption: The Riemann zeta function
+  category: Special functions
+  notes: The pole at z = 1, the trivial zeros marching left along the real axis, and the critical strip's zeros stacked up the imaginary axis.
+  expr: [ComplexPlot, [Zeta, z], [Tuple, Extent, 40], [Tuple, Height, 380]]
+- id: disk-of-convergence
+  caption: A disk of convergence
+  category: Special functions
+  notes: "`Mask` dims everything outside that radius -- for a series whose disk of convergence is part of the story. The polylogarithm's Lerch series reaches |z| < 1 only, so the lit disk is exactly its domain."
+  expr: [ComplexPlot, [PolyLog, 2, z], [Tuple, Mask, 1], [Tuple, Height, 380]]
+- id: polylog-order
+  caption: The polylogarithm's order
+  category: Every constant an axis
+  notes: Sweep the order and watch the disk go from the wound-up spirals of a small real part to the near-linear ramp where the first term dominates.
+  expr:
+    [
+      Manipulate,
+      [ComplexPlot, [PolyLog, s, z], [Tuple, Mask, 1], [Tuple, Height, 380]],
+      [Tuple, s, 0.25, 6, 0.05],
+      [Tuple, Fps, True],
+    ]
+- id: two-axes-at-once
+  caption: Two axes at once
+  category: Every constant an axis
+  notes: "Framing is manipulable too -- `Center` takes the list form [c, 0], and `Extent` a bare wildcard. The polygamma's poles sit at 0, −1, −2, …, of order m+1 -- raise the order and the hue winds more times around each."
+  expr:
+    [
+      Manipulate,
+      [ComplexPlot, [PolyGamma, m, z], [Tuple, Center, [List, c, 0]], [Tuple, Extent, 6], [Tuple, Height, 380]],
+      [Tuple, m, 1, 12, 1],
+      [Tuple, c, -4, 1, 0.1],
+    ]

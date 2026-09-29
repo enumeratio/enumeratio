@@ -11,7 +11,7 @@ complex plane and colour each point by the value there — a _domain colouring_:
 
 Every pixel below runs the same Euler–Maclaurin kernel as the CPU path —
 `@enumeratio/analytic`'s exported `zetaWGSL`, evaluated per pixel, per frame, on the GPU,
-through the general [`<notatio-complex-plot>`](/playground/complex-plot) element. Both conventions
+through the general [`<notatio-complex-plot>`](/reference/component/ComplexPlot) element. Both conventions
 are drawn at once from the same $s$, so the difference between them is a glance rather
 than a toggle. Drag to pan, scroll to zoom; hit ▶ to sweep $\operatorname{Im}(s)$ up the
 critical strip.

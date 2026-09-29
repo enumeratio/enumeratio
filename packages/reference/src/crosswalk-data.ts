@@ -4952,6 +4952,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Panel",
   },
   {
+    name: "ParametricPlot",
+    wolfram: "ParametricPlot",
+  },
+  {
     name: "Partition",
     wolfram: "Partition",
   },
