@@ -1,3 +1,5 @@
 id	section	role	expr	expected	caption
 p-6			[Count, [IntegerPartitions, 6]]	11	$p(6)$
 the-single-part-6			[At, [IntegerPartitions, 6], 1]	[IntegerPartition, [List, 6]]	the single part $6$
+by-largest-part	Statistics		[Tally, [CombinatorialStat, [IntegerPartitions, 7], "'LargestPart'"]]	[Tuple, [List, 7, 6, 5, 4, 3, 2, 1], [List, 1, 1, 2, 3, 4, 3, 1]]	partitions of 7 by largest part
+by-distinct-part-sizes	Statistics		[Tally, [CombinatorialStat, [IntegerPartitions, 7], "'DistinctParts'"]]	[Tuple, [List, 1, 2, 3], [List, 2, 11, 2]]	partitions of 7 by how many distinct part sizes they use

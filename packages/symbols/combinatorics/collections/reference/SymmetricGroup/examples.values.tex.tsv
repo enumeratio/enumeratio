@@ -1,3 +1,10 @@
 id	in	out
 4	\mathrm{Count}(\mathrm{SymmetricGroup}(4))	24
 the-identity	\mathrm{SymmetricGroup}(3)[1]	\mathrm{Permutation}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+inversions-are-mahonian	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{Inversions}))	\operatorname{Tuple}(\bigl\lbrack0, 1, 2, 3, 4, 5, 6\bigr\rbrack,\bigl\lbrack1, 3, 5, 6, 5, 3, 1\bigr\rbrack)
+major-index-is-equidistributed	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{MajorIndex}))	\operatorname{Tuple}(\bigl\lbrack0, 3, 2, 5, 1, 4, 6\bigr\rbrack,\bigl\lbrack1, 6, 5, 3, 3, 5, 1\bigr\rbrack)
+descents-are-eulerian	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{Descents}))	\operatorname{Tuple}(\bigl\lbrack0, 1, 2, 3\bigr\rbrack,\bigl\lbrack1, 11, 11, 1\bigr\rbrack)
+excedances-are-eulerian-too	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{Excedances}))	\operatorname{Tuple}(\bigl\lbrack0, 1, 2, 3\bigr\rbrack,\bigl\lbrack1, 11, 11, 1\bigr\rbrack)
+cycles-are-stirling-numbers-of-the-first-kind	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{CycleCount}))	\operatorname{Tuple}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack,\bigl\lbrack1, 6, 11, 6\bigr\rbrack)
+fixed-points-are-the-rencontres-numbers	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{FixedPoints}))	\operatorname{Tuple}(\bigl\lbrack4, 2, 1, 0\bigr\rbrack,\bigl\lbrack1, 6, 8, 9\bigr\rbrack)
+half-are-even	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SymmetricGroup}(4), \text{Sign}))	\operatorname{Tuple}(\bigl\lbrack1, -1\bigr\rbrack,\bigl\lbrack12, 12\bigr\rbrack)

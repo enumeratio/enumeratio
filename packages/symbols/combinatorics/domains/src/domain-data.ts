@@ -484,7 +484,7 @@ export const DOMAINS: readonly Domain[] = [
   {
     name: "SetComposition",
     type: "set_composition",
-    shape: "list<integer>",
+    shape: "list<list<integer>>",
     id: "set_composition",
     plural: "SetCompositions",
   },

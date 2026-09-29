@@ -19,5 +19,5 @@ signatures:
   - call: SetCompositions(n)
     description: "Compositions of a set: an ordered sequence of blocks partitioning it."
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<set_composition>
 ---

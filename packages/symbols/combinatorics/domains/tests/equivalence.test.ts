@@ -5,7 +5,7 @@ import { declareStructures } from "@enumeratio/structures/src";
 import { expect, test } from "vite-plus/test";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
-import { declareMaps } from "../src/map.ts";
+import { declareMaps, MAPS } from "../src/map.ts";
 
 // Set partitions and restricted growth strings: one structure, two carriers, joined by an order
 // isomorphism, so what one defines the other reaches.
@@ -19,17 +19,21 @@ declareMaps(ce, Object.fromEntries(DOMAINS.map((d) => [d.type, d.name])));
 
 const value = (json: unknown) => ce.box(json as never).evaluate().json;
 
-test("the k-th set partition goes to the k-th restricted growth string, and back", () => {
-  for (let n = 0; n <= 5; n++) {
-    const count = value(["Count", ["SetPartitions", n]]) as number;
-    for (let k = 1; k <= count; k++) {
-      const partition = value(["At", ["SetPartitions", n], k]);
-      const word = value(["At", ["RestrictedGrowthStrings", n], k]);
-      expect(value(["CombinatorialMap", partition, "'RestrictedGrowthStringOf'"]), `${n}, ${k}`).toEqual(word);
-      expect(value(["CombinatorialMap", word, "'SetPartitionOf'"]), `${n}, ${k}`).toEqual(partition);
+// Every map claiming an order isomorphism: the k-th element of its source collection at size n
+// goes to the k-th of its target at n + sizeOffset.
+for (const map of MAPS.filter((m) => m.orderIsomorphism !== undefined)) {
+  const { from, to, sizeOffset = 0 } = map.orderIsomorphism!;
+  test(`${map.name} takes the k-th of ${from} to the k-th of ${to}`, () => {
+    for (let n = Math.max(0, -sizeOffset); n <= 5; n++) {
+      const count = value(["Count", [from, n]]) as number;
+      expect(value(["Count", [to, n + sizeOffset]]), `${n}`).toEqual(count);
+      for (let k = 1; k <= count; k++)
+        expect(value(["CombinatorialMap", value(["At", [from, n], k]), `'${map.name}'`]), `${n}, ${k}`).toEqual(
+          value(["At", [to, n + sizeOffset], k]),
+        );
     }
-  }
-});
+  });
+}
 
 test("a statistic defined on set partitions answers on their growth strings", () => {
   const word = ["RestrictedGrowthString", ["List", 0, 1, 0, 2, 2]];

@@ -1,2 +1,5 @@
 id	in	out
 b-4	\mathrm{Count}(\mathrm{SetPartitions}(4))	15
+blocks-are-stirling-numbers-of-the-second-kind	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SetPartitions}(5), \text{Blocks}))	\operatorname{Tuple}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack,\bigl\lbrack1, 15, 25, 10, 1\bigr\rbrack)
+by-singleton-blocks	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SetPartitions}(5), \text{SingletonBlocks}))	\operatorname{Tuple}(\bigl\lbrack0, 1, 2, 3, 5\bigr\rbrack,\bigl\lbrack11, 20, 10, 10, 1\bigr\rbrack)
+one-crossing-at-4	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{SetPartitions}(4), \text{Crossings}))	\operatorname{Tuple}(\bigl\lbrack0, 1\bigr\rbrack,\bigl\lbrack14, 1\bigr\rbrack)

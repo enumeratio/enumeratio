@@ -87,6 +87,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "BinaryNecklaces",
   "BinaryPalindromes",
   "BinaryTrees",
+  "BinaryWord",
   "BinaryWords",
   "BinaryWordsByWeight",
   "Binomial",

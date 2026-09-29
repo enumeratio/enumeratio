@@ -7,7 +7,7 @@ signatures:
   - call: IntegerCompositions(n)
     description: the ordered compositions of $n$
     library: enumeratio-collections
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerPartitions
 references:

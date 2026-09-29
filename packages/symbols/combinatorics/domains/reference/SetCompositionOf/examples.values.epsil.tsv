@@ -1,0 +1,2 @@
+id	in	out
+the-surjection-2131	SetCompositionOf(Surjection([2, 1, 3, 1]))	SetComposition([[2, 4], [1], [3]])

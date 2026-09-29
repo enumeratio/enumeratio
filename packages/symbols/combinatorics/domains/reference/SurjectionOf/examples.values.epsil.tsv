@@ -1,0 +1,2 @@
+id	in	out
+the-set-composition-2-4-mid-1-mid-3	SurjectionOf(SetComposition([[2, 4], [1], [3]]))	Surjection([2, 1, 3, 1])

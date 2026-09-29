@@ -1,2 +1,3 @@
 id	in
 count-involutions-4	Count[Involutions[4]]
+by-fixed-points	Tally[CombinatorialStat[Involutions[5], "FixedPoints"]]
