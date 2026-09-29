@@ -10,14 +10,6 @@ names:
   wolfram: Rule
 bindings:
   - origin: mapped
-    form: wolfram
-    template: Rule[$1, $2]
-    arity: 2
-    note: Wolfram's own option-rule head, `key -> value`.
-    checked:
-      version: 15.0.0
-      on: 2026-09-27
-  - origin: mapped
     form: sympy
     template: ($1, $2)
     arity: 2

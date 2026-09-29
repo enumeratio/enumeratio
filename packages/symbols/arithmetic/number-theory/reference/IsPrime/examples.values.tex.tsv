@@ -10,7 +10,7 @@ isprime-7	\mathrm{IsPrime}(7)	\top
 threads-element-wise-over-a-short-list	\mathrm{IsPrime}(\bigl\lbrack2, 3, 4\bigr\rbrack)	\bigl\lbrack\top, \top, \bot\bigr\rbrack
 7-is-prime-its-associate-7-is-matching-wolfram-s	\mathrm{IsPrime}(-7)	\top
 a-gaussian-prime-its-norm-5-is-prime	\mathrm{IsPrime}(2+i)	\top
-5-2-i-2-i-splits-in-z-i	\mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
+5-2-i-2-i-splits-in-z-i	\mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
 large-integers-10-3000-1-is-divisible-by-10-8-1	\mathrm{IsPrime}(10^{3\,000}+1)	\bot
 isprime-neg-1-is-false	\mathrm{IsPrime}(-1)	\bot
 isprime-neg-4-is-false	\mathrm{IsPrime}(-4)	\bot
@@ -26,19 +26,19 @@ a-composite-of-norm-25	\mathrm{IsPrime}(3+4i)	\bot
 an-associate-of-a-composite-is-still-composite	\mathrm{IsPrime}(-3-4i)	\bot
 a-real-prime-s-associate-by-the-unit-i-is-still	\mathrm{IsPrime}(7i)	\top
 a-large-norm-composite	\mathrm{IsPrime}(123+456i)	\bot
-3-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(3, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\top
-7-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\top
-19-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(19, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\top
-a-negative-prime-3-mod-4-stays-prime	\mathrm{IsPrime}(-7, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\top
-5-1-mod-4-splits-and-is-no-longer-prime	\mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-13-1-mod-4-splits-and-is-no-longer-prime	\mathrm{IsPrime}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-2-ramifies-and-is-no-longer-prime	\mathrm{IsPrime}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-4-was-never-prime-and-still-isn-t	\mathrm{IsPrime}(4, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-a-real-composite-5-squared-is-not-prime	\mathrm{IsPrime}(25, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-1-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(1, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
-0-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(0, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bot
+3-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(3, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\top
+7-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(7, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\top
+19-3-mod-4-stays-prime-in-z-i	\mathrm{IsPrime}(19, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\top
+a-negative-prime-3-mod-4-stays-prime	\mathrm{IsPrime}(-7, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\top
+5-1-mod-4-splits-and-is-no-longer-prime	\mathrm{IsPrime}(5, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+13-1-mod-4-splits-and-is-no-longer-prime	\mathrm{IsPrime}(13, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+2-ramifies-and-is-no-longer-prime	\mathrm{IsPrime}(2, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+4-was-never-prime-and-still-isn-t	\mathrm{IsPrime}(4, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+a-real-composite-5-squared-is-not-prime	\mathrm{IsPrime}(25, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+1-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(1, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
+0-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(0, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bot
 a-common-choice-of-prime-modulus-for-hashing	\mathrm{IsPrime}(1\,000\,000\,007)	\top
-an-odd-prime-stays-prime-in-z-i-exactly-when-p	\mathrm{IsPrime}(\bigl\lbrack2, 3, 5, 7, 11, 13\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))	\bigl\lbrack\bot, \top, \bot, \top, \top, \bot\bigr\rbrack
+an-odd-prime-stays-prime-in-z-i-exactly-when-p	\mathrm{IsPrime}(\bigl\lbrack2, 3, 5, 7, 11, 13\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack\bot, \top, \bot, \top, \top, \bot\bigr\rbrack
 non-integers-are-not-prime	\mathrm{IsPrime}(\frac{1}{2})	\bot
 another-non-integer-3-halves	\mathrm{IsPrime}(\frac{3}{2})	\bot
 a-symbol-stays-unevaluated	\mathrm{IsPrime}(x)	\mathrm{IsPrime}(x)

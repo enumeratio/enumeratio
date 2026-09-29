@@ -522,11 +522,9 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     head: "KeyValuePair",
     arity: 2,
     emit: {
-      wolfram: "Rule[$1, $2]",
       sympy: "($1, $2)",
       sage: "($1, $2)",
     },
-    note: "Wolfram's own option-rule head, `key -> value`.",
   },
   {
     head: "KroneckerSymbol",

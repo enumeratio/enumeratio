@@ -45,7 +45,7 @@ signatures:
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
     library: enumeratio-combinatorics
     type: (any, any, boolean?) -> boolean
-    overrides: enumeratio-structures
+    overrides: enumeratio-number-theory
   - call: Element(any, any, boolean?) -> boolean
     description: |-
       Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
@@ -75,7 +75,7 @@ signatures:
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
     library: enumeratio-residues
     type: (any, any, boolean?) -> boolean
-    overrides: enumeratio-frontend
+    overrides: enumeratio-hypercomplex
   - call: Element(any, any, boolean?) -> boolean
     description: |-
       Test whether a value is an element of a collection. Optional third argument is a boolean expression (condition) for filtered iteration in Sum/Product.
@@ -120,7 +120,7 @@ signatures:
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
     library: enumeratio-hypercomplex
     type: (any, any, boolean?) -> boolean
-    overrides: enumeratio-number-theory
+    overrides: enumeratio-structures
 bindings:
   - origin: mapped
     form: wolfram
