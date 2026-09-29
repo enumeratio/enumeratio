@@ -5,13 +5,12 @@ import { numberKernel } from "../src/families/types.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
-// small so counts stay well under ~1000. DyckPathsByHeight moved to the lattice-paths area, and
-// RestrictedGrowthStrings to the set-partitions area (§4 step 5) with their tests.
+// small so counts stay well under ~1000. DyckPathsByHeight moved to the lattice-paths area,
+// RestrictedGrowthStrings to the set-partitions area, and NonCrossingPartitions/
+// NonNestingPartitions/NonCrossingMatchings/NonNestingMatchings there too (now carrying
+// "SetPartition") — §4 step 5 — each with its tests
+// (set-partitions/tests/{paths-partitions,matchings}.test.ts).
 const PARAMS: Record<string, number[]> = {
-  NonCrossingPartitions: [6],
-  NonNestingPartitions: [6],
-  NonCrossingMatchings: [6],
-  NonNestingMatchings: [6],
   DelannoyPaths: [4],
   GrandDyckPaths: [5],
   RiordanPaths: [8],
@@ -42,10 +41,6 @@ for (const [head, p] of Object.entries(PARAMS)) {
 // PARAMS above (mirrors tests/plausible.test.ts's use of scripts/properties.ts).
 const draw = random(20260924);
 const PLAUSIBLE_PARAMS: Record<string, number[]> = {
-  NonCrossingPartitions: [5],
-  NonNestingPartitions: [5],
-  NonCrossingMatchings: [5],
-  NonNestingMatchings: [5],
   DelannoyPaths: [3],
   GrandDyckPaths: [4],
   RiordanPaths: [7],
@@ -74,14 +69,7 @@ test("counts match their OEIS sequences", () => {
   const seq = (head: string, n: number) => Array.from({ length: n }, (_, i) => count(head, [i]));
 
   const catalan = [1, 1, 2, 5, 14, 42, 132];
-  for (const head of [
-    "NonCrossingPartitions",
-    "NonNestingPartitions",
-    "NonCrossingMatchings",
-    "NonNestingMatchings",
-    "BallotSequences",
-    "LukasiewiczPaths",
-  ]) {
+  for (const head of ["BallotSequences", "LukasiewiczPaths"]) {
     expect(seq(head, 7)).toEqual(catalan); // A000108
   }
   expect(seq("DelannoyPaths", 6)).toEqual([1, 3, 13, 63, 321, 1683]); // A001850

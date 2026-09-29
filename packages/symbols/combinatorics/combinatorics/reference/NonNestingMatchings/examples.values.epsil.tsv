@@ -1,4 +1,4 @@
 id	in	out
 count-nonnestingmatchings-4	count(NonNestingMatchings(4))	14
-first-element-of-nonnestingmatchings-4	NonNestingMatchings(4)[1]	[[1, 5], [2, 6], [3, 7], [4, 8]]
-every-element-of-nonnestingmatchings-4	take(NonNestingMatchings(4), 5)	"[\n  [[1, 5], [2, 6], [3, 7], [4, 8]],\n  [[1, 4], [2, 6], [3, 7], [5, 8]],\n  [[1, 4], [2, 5], [3, 7], [6, 8]],\n  [[1, 4], [2, 5], [3, 6], [7, 8]],\n  [[1, 3], [2, 6], [4, 7], [5, 8]],\n]"
+first-element-of-nonnestingmatchings-4	NonNestingMatchings(4)[1]	SetPartition([[1, 5], [2, 6], [3, 7], [4, 8]])
+every-element-of-nonnestingmatchings-4	take(NonNestingMatchings(4), 5)	"[\n  SetPartition([[1, 5], [2, 6], [3, 7], [4, 8]]),\n  SetPartition([[1, 4], [2, 6], [3, 7], [5, 8]]),\n  SetPartition([[1, 4], [2, 5], [3, 7], [6, 8]]),\n  SetPartition([[1, 4], [2, 5], [3, 6], [7, 8]]),\n  SetPartition([[1, 3], [2, 6], [4, 7], [5, 8]]),\n]"

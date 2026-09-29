@@ -290,6 +290,23 @@ test("a String of a bare name emits as a string literal, not a free symbol", () 
   });
 });
 
+// #404 (CutWord): a carrier constructor with no system mapping used to stop emit() cold —
+// `missing: ["Permutation/1"]` — silently shrinking oracle coverage for every typed family.
+// We decide what counts as equivalent, and the external system's own encoding IS our carrier
+// value's contents, with no head wrapper needed.
+test("a carrier constructor with no mapping unwraps to its contents, for every system", () => {
+  expect(emit(["Permutation", ["List", 2, 1, 3]], "wolfram")).toEqual({ ok: true, source: "List[2, 1, 3]" });
+  expect(emit(["Permutation", ["List", 2, 1, 3]], "sympy")).toEqual({ ok: true, source: "[2, 1, 3]" });
+  expect(emit(["Permutation", ["List", 2, 1, 3]], "sage")).toEqual({ ok: true, source: "[2, 1, 3]" });
+  // Nested: a carrier built from another carrier's value unwraps all the way down.
+  expect(emit(["SetPartition", ["Permutation", ["List", 1, 2]]], "sympy")).toEqual({
+    ok: true,
+    source: "[1, 2]",
+  });
+  // Not a carrier constructor call (no such head) — still reports missing, as before.
+  expect(emit(["NotACarrier", 1], "sympy")).toEqual({ ok: false, missing: ["NotACarrier/1"] });
+});
+
 test("an algebra element compares as a combination, whatever order its terms are in", () => {
   const ours = ["Add", ["GroupBasis", "'1'"], ["Multiply", 2, ["GroupBasis", `'"s0"'`]]];
   expect(linearCombination(ours)).toEqual(

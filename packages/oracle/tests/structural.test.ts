@@ -38,6 +38,16 @@ test("numeric values still reduce, inside lists too", () => {
   expect(reduce(theirs, valuesOnly(evaluateAll))).toEqual([0.5, symbolic(["PowerMod", 2, -1, 4]), 1]);
 });
 
+test("a carrier constructor reduces to its contents, same as List vs. Tuple leniency", () => {
+  const ours = ["Permutation", ["List", 2, 1, 3]] as MathJSON;
+  const theirs = ["List", 2, 1, 3] as MathJSON; // an external system's own, unwrapped, encoding
+  expect(reduce(ours, symbolic)).toEqual(reduce(theirs, symbolic));
+  expect(compareTrees(reduce(ours, symbolic), reduce(theirs, symbolic))).toBe("agree");
+  // Nested carriers unwrap all the way down.
+  const nested = ["SetPartition", ["Permutation", ["List", 1, 2]]] as MathJSON;
+  expect(reduce(nested, symbolic)).toEqual(reduce(["List", 1, 2] as MathJSON, symbolic));
+});
+
 test("truth values reduce to booleans whichever evaluator reads the rest", () => {
   expect(reduce("True", symbolic)).toBe(true);
   expect(reduce(["List", "True", "False"], valuesOnly(symbolic))).toEqual([true, false]);
