@@ -13,7 +13,7 @@ import {
   DyckPathUnrank,
 } from "../collections/src/families/kernels-extra.ts";
 import { Factorial, PermutationUnrank } from "../collections/src/families/kernels.ts";
-import { CycleDecomposition, PermutationOfCycleDecomposition } from "../collections/src/families/permutations.ts";
+import { CycleDecomposition, PermutationOfCycleDecomposition } from "../permutations/src/families/permutations.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
 
 const MAX = 4;

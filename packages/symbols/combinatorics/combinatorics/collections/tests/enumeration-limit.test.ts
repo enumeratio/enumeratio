@@ -6,7 +6,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
-import { bigintEntries } from "../src/families/core.ts";
+import { bigintEntries } from "../../permutations/src/families/core.ts";
 import { declareCollections } from "../src/library.ts";
 
 const [symmetricGroup] = bigintEntries;

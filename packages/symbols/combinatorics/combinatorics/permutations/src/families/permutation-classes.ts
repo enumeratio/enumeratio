@@ -10,8 +10,8 @@
 // (Baxter's rational formula, a verified noncrossing-partition recurrence, Separable's reuse of
 // SchroederCount); Simple/Smooth/Vexillary have no closed form implemented here, so count is the
 // enumeration's own length — exact, just not sub-factorial.
-import { binomial } from "./shared.ts";
-import { Factorial, IsPermutationOf, PermutationUnrank } from "./kernels.ts";
+import { binomial } from "../../../collections/src/families/shared.ts";
+import { Factorial, IsPermutationOf, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import {
   FibonacciWordCount,
   FibonacciWordRank,
@@ -19,8 +19,8 @@ import {
   KSubsetRank,
   KSubsetUnrank,
   SchroederCount,
-} from "./kernels-extra.ts";
-import type { Declared, NumberKernel } from "./types.ts";
+} from "../../../collections/src/families/kernels-extra.ts";
+import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
 const ints = (
