@@ -19,6 +19,11 @@ g-infty-infty	G(\infty)	\infty
 interval-arithmetic-g-is-increasing-on-1-17-1-18	G(\mathrm{Interval}(1.17, 1.18))	\mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
 uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	G(\mathrm{Around}(2.1, 0.01))	\mathrm{Around}(0.984\,772\,724\,354\,046\,5, 0.001\,449\,505\,695\,943\,639)
 to-30-significant-digits-not-yet-the-requested	N(G(\frac{1}{2}), 30)	0.603\,244\,281\,209\,446\,206\,191
+image-over-1p17-to-1p18	G(\mathrm{Interval}(1.17, 1.18))	\mathrm{Interval}(1.052\,216\,328\,686\,19, 1.054\,193\,606\,435\,7)
+image-over-1-to-3	G(\mathrm{Interval}(1, 3))	\mathrm{Interval}(0.946\,845\,604\,899\,07, 1.073\,051\,785\,683\,14)
+image-over-0p5-to-1p5	G(\mathrm{Interval}(0.5, 1.5))	\mathrm{Interval}(0.603\,244\,281\,209\,446, 1.073\,051\,785\,683\,11)
+image-over-2p2-to-2p9	G(\mathrm{Interval}(2.2, 2.9))	\mathrm{Interval}(0.946\,845\,605\,269\,706, 0.977\,293\,088\,208\,56)
+image-over-neg-1p9-to-neg-1p1	G(\mathrm{Interval}(-1.9, -1.1))	\mathrm{Interval}(-0.074\,099\,944\,002\,203\,8, -0.001\,850\,171\,280\,328\,3)
 g-vanishes-at-the-nonpositive-integers	G(0)	0
 all-of-them	G(-3)	0
 the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	\frac{\Gamma(6)^5}{G(6)}	86\,400\,000

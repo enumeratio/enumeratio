@@ -10,6 +10,8 @@ huge-arguments-straight-from-the-asymptotic	N[LogBarnesG[Power[10, 1000]]]
 interval-arithmetic-over-an-increasing-stretch	LogBarnesG[Interval[List[0.111, 0.112]]]			
 uncertainty-propagation-through-ln-g	LogBarnesG[Around[1.2, 0.01]]			
 ln-g-infty-infty	LogBarnesG[Infinity]			
+image-over-0p111-to-0p112	LogBarnesG[Interval[List[0.111, 0.112]]]			
+image-over-0p3-to-4	LogBarnesG[Interval[List[0.3, 4]]]			
 g-0-0-so-its-logarithm-is-infty	LogBarnesG[0]	-Infinity	\text{logG}(0)	-\infty
 exact-at-the-integers-ln-g-10-ln	LogBarnesG[10]			
 the-continuation-not-ln-of-the-value-g-2-5-0-yet	LogBarnesG[-2.5]			

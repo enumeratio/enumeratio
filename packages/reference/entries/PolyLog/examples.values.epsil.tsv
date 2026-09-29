@@ -85,6 +85,12 @@ three-arguments-the-nielsen-generalized	PolyLog(1, 2, 1)	Zeta(3)
 s-2-2-1-pi-4-360	PolyLog(2, 2, 1)	1 / 360 * Pi ^ 4
 s-1-2-1-2-zeta-3-8-ln-3-2-6	PolyLog(1, 2, 0.5)	0.094_753_004_230_127_7
 to-30-significant-digits-not-yet-the-requested	N(PolyLog(2, 1 / 2), 30)	0.582_240_526_465_012_505_902_656_320_160
+image-order-2-over-0p7-to-0p8	PolyLog(2, Interval(0.7, 0.8))	Interval(0.889_377_624_286_038, 1.074_794_600_008_25)
+image-order-2-over-neg-0p9-to-0p9	PolyLog(2, Interval(-0.9, 0.9))	Interval(-0.752_163_179_217_262, 1.299_714_723_004_96)
+image-order-0p5-over-neg-0p5-to-0p95	PolyLog(0.5, Interval(-0.5, 0.95))	Interval(-0.373_752_237_980_974, 6.376_361_372_585_55)
+image-order-neg-1p5-over-neg-0p3-to-0p3	PolyLog(-1.5, Interval(-0.3, 0.3))	Interval(-0.140_350_469_986_165, 0.803_887_928_285_341)
+image-order-neg-3-over-neg-0p5-to-0p2	PolyLog(-3, Interval(-0.5, 0.2))	Interval(-0.041_666_666_666_833_4, 0.898_437_500_000_001)
+image-order-5-over-neg-0p99-to-0p99	PolyLog(5, Interval(-0.99, 0.99))	Interval(-0.962_647_165_657_348, 1.026_110_477_101_31)
 li-1-2-1-zeta-1-2-a-non-integer-order-from	PolyLog(0.5, 1)	-1.460_354_508_809_586_812_89
 li-1-2-1-2-0-80612672-via-the-lerch-series	PolyLog(0.5, 0.5)	0.806_126_723_042_852_2
 li-5-2-1-2-0-46229778-the-alternating-side-euler	PolyLog(2.5, -0.5)	-0.462_297_782_190_063_46
