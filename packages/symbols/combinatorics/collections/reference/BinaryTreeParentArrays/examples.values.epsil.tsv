@@ -1,0 +1,4 @@
+id	in	out
+c-4	Count(BinaryTreeParentArrays(4))	14
+first-element-of-binarytreeparentarrays-3	BinaryTreeParentArrays(3)[1]	BinaryTreeParentArray([2, 3, 0])
+returns-are-the-catalan-triangle	Tally(CombinatorialStat(BinaryTreeParentArrays(4), "Returns"))	([1, 2, 3, 4], [5, 5, 3, 1])

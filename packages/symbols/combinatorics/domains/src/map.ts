@@ -14,6 +14,12 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import { registerEquivalence, registerOperation } from "@enumeratio/structures";
+import {
+  binaryTreeOfDyckPathKernel,
+  binaryTreeOfParentArrayKernel,
+  binaryTreeParentArrayKernel,
+  dyckPathKernel,
+} from "./binary-tree.ts";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
@@ -29,6 +35,9 @@ export interface CombinatorialMap {
   /** The body, over `_raw` — the CONTENTS of the argument, since generic heads cannot see
    *  through a domain constructor (design/domains.md §1.5). */
   readonly body?: unknown;
+  /** In place of a body: the map over the argument's contents as MathJSON, for a result an
+   *  Epsil fold can't build (a nested tree). Undefined declines, as a failed guard does. */
+  readonly kernel?: (contents: unknown) => unknown;
   /** A predicate over `_raw`, checked before `body`. When it evaluates to anything but
    *  `"True"` the map DECLINES — the call stays unevaluated, the way a restriction's `Filter`
    *  never materialises what it excludes, rather than answering wrong for a subject outside
@@ -578,9 +587,58 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "BinarySearchTree",
     from: "permutation",
     to: "binary_tree",
-    body: bstParents,
+    composedOf: ["BinaryTreeOfParentArray", "BinarySearchTreeParentArray"],
     summary: "The tree built by inserting σ(1), σ(2), ... into an empty binary search tree.",
-    note: "The sylvester congruence: two permutations land on the same tree exactly when they agree on which of any pair is inserted first. See bst.ts for the parent-pointer encoding chosen for `binary_tree` and why.",
+    note: "The sylvester congruence: two permutations land on the same tree exactly when they agree on which of any pair is inserted first. Built as its parent array (BinarySearchTreeParentArray), then read as a tree.",
+  },
+  {
+    name: "BinarySearchTreeParentArray",
+    from: "permutation",
+    to: "binary_tree_parent_array",
+    body: bstParents,
+    summary:
+      "The binary search tree of σ as its parent array: entry v is the value v is inserted under, 0 for the root.",
+    note: "A search tree's values are its in-order labels, so this is the tree's in-order parent array. See bst.ts for why a fold builds it this way.",
+  },
+  {
+    name: "BinaryTreeParentArrayOf",
+    from: "binary_tree",
+    to: "binary_tree_parent_array",
+    kernel: binaryTreeParentArrayKernel,
+    summary:
+      "A binary tree as its parent array: its nodes numbered in order, entry k the number of the k-th node's parent, 0 at the root.",
+    note: "An order isomorphism: the k-th tree BinaryTrees lists goes to the k-th array BinaryTreeParentArrays lists.",
+    laws: [{ inverse: "BinaryTreeOfParentArray" }],
+    orderIsomorphism: { from: "BinaryTrees", to: "BinaryTreeParentArrays" },
+  },
+  {
+    name: "BinaryTreeOfParentArray",
+    from: "binary_tree_parent_array",
+    to: "binary_tree",
+    kernel: binaryTreeOfParentArrayKernel,
+    summary: "The binary tree an in-order parent array describes: a node below its parent goes left, above it right.",
+    note: "Declines an array that isn't one: two roots, two left children, a cycle, or labels out of order.",
+    laws: [{ inverse: "BinaryTreeParentArrayOf" }],
+    orderIsomorphism: { from: "BinaryTreeParentArrays", to: "BinaryTrees" },
+  },
+  {
+    name: "DyckPathOf",
+    from: "binary_tree",
+    to: "dyck_path",
+    kernel: dyckPathKernel,
+    summary: "A binary tree [L, R] as the Dyck path U φ(L) D φ(R).",
+    note: "FindStat's Mp00012. An order isomorphism: BinaryTrees is ranked through it, so the k-th tree goes to the k-th Dyck path.",
+    laws: [{ inverse: "BinaryTreeOfDyckPath" }],
+    orderIsomorphism: { from: "BinaryTrees", to: "DyckPaths" },
+  },
+  {
+    name: "BinaryTreeOfDyckPath",
+    from: "dyck_path",
+    to: "binary_tree",
+    kernel: binaryTreeOfDyckPathKernel,
+    summary: "A Dyck path U A D B, cut at its first return, as the binary tree [φ⁻¹(A), φ⁻¹(B)].",
+    laws: [{ inverse: "DyckPathOf" }],
+    orderIsomorphism: { from: "DyckPaths", to: "BinaryTrees" },
   },
   {
     name: "FromPermutation",
@@ -739,7 +797,9 @@ export function declareMaps(
       if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
       const contents = operandsOf(subject)[0];
       if (contents === undefined) return undefined;
-      const main = materialise(ce, ce.box(fill(map.body, contents.json) as never).evaluate());
+      const image = map.kernel === undefined ? fill(map.body, contents.json) : map.kernel(contents.json);
+      if (image === undefined) return undefined;
+      const main = materialise(ce, ce.box(image as never).evaluate());
       if (map.guard !== undefined) {
         const guard = fill(fill(map.guard, contents.json), main.json, "_image");
         if (ce.box(guard as never).evaluate().json !== "True") return undefined;

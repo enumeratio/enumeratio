@@ -655,8 +655,14 @@ collections-package filing problem, independent of this document's central quest
   word of length n - 1 (`CutWord` / `CompositionOfCutWord`). A map that is an order isomorphism
   says so (`orderIsomorphism: { from, to, sizeOffset }` on the map), and
   `domains/tests/equivalence.test.ts` checks it: the k-th element of one collection maps to the
-  k-th of the other, for every small size. Dyck paths and binary trees wait on the tree
-  encoding: the collection's trees are nested, the domain's flat.
+  k-th of the other, for every small size.
+- **Binary trees, three ways.** A `BinaryTree` is nested (leaf 0, node [left, right]); its
+  in-order parent array, what `BinarySearchTreeParentArray` builds, is a carrier of its own; and
+  `DyckPathOf` (FindStat's Mp00012, U φ(L) D φ(R)) joins it to Dyck paths. BinaryTrees is ranked
+  through its Dyck paths, so both joins are order isomorphisms. Building a nested value is
+  recursion an Epsil fold can't express, so these maps are kernels (`kernel` on a map, in place
+  of a body). Transport follows a chain of equivalences, shortest first, so a parent array
+  answers every Dyck path statistic through the tree.
 
 Still to do: deprecate and retire the bare heads (phase 2's second half), move each
 definition down to its collection (phase 3), `Rank` through `CombinatorialStat`, and the

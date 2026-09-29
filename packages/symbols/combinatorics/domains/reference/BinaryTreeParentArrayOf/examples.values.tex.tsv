@@ -1,0 +1,2 @@
+id	in	out
+a-four-node-tree	\mathrm{BinaryTreeParentArrayOf}(\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\mathrm{BinaryTreeParentArray}(\bigl\lbrack2, 0, 2, 3\bigr\rbrack)

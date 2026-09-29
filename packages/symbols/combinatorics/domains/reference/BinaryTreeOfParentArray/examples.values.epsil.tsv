@@ -1,0 +1,2 @@
+id	in	out
+the-parent-array-2023	BinaryTreeOfParentArray(BinaryTreeParentArray([2, 0, 2, 3]))	BinaryTree([[0, 0], [0, [0, 0]]])

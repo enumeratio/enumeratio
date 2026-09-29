@@ -1,0 +1,2 @@
+id	in	out
+a-four-node-tree	\mathrm{DyckPathOf}(\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack)

@@ -3252,6 +3252,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "BinaryTreeParentArrays",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "BinaryTrees",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -3409,13 +3416,6 @@ export const provenance: readonly HeadRecord[] = [
     name: "BigOmega",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
-    name: "BinaryTree",
-    provenance: "unknown",
-    declared: "enumeratio-domains",
     wolframAlias: null,
     elsewhere: [],
   },

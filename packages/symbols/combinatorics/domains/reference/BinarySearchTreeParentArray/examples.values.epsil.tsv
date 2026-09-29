@@ -1,0 +1,2 @@
+id	in	out
+the-one-line-word-231	BinarySearchTreeParentArray(Permutation([2, 3, 1]))	BinaryTreeParentArray([2, 0, 2])

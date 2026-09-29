@@ -1,2 +1,2 @@
 id	in	out
-the-one-line-word-231	\mathrm{BinarySearchTree}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))	\mathrm{BinaryTree}(\bigl\lbrack2, 0, 2\bigr\rbrack)
+the-one-line-word-231	\mathrm{BinarySearchTree}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))	\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+a-four-node-tree			[DyckPathOf, [BinaryTree, [List, [List, 0, 0], [List, 0, [List, 0, 0]]]]]	[DyckPath, [List, 1, 1, 0, 0, 1, 0, 1, 0]]	a four-node tree

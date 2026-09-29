@@ -1,0 +1,2 @@
+id	in	out
+a-four-node-tree	DyckPathOf(BinaryTree([[0, 0], [0, [0, 0]]]))	DyckPath([1, 1, 0, 0, 1, 0, 1, 0])

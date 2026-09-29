@@ -1,2 +1,5 @@
 id	in	out
 c-4	Count(BinaryTrees(4))	14
+first-element-of-binarytrees-3	BinaryTrees(3)[1]	BinaryTree([[[0, 0], 0], 0])
+every-element-of-binarytrees-3	Take(BinaryTrees(3), 5)	"[\n  BinaryTree([[[0, 0], 0], 0]),\n  BinaryTree([[0, [0, 0]], 0]),\n  BinaryTree([[0, 0], [0, 0]]),\n  BinaryTree([0, [[0, 0], 0]]),\n  BinaryTree([0, [0, [0, 0]]]),\n]"
+peaks-are-narayana	Tally(CombinatorialStat(BinaryTrees(4), "Peaks"))	([1, 2, 3, 4], [1, 6, 6, 1])

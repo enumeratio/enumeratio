@@ -22,6 +22,8 @@ const carrierOf = (f: FamilyKernel): string | undefined =>
 /** How a family's kernel element becomes a value of its carrier. Carriers whose storage differs
  *  from the kernel's (SetPartition is a growth string, the kernel's blocks) join as they're
  *  written. */
+const nested = (tree: unknown): unknown => (Array.isArray(tree) ? ["List", ...tree.map(nested)] : tree);
+
 const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
   RestrictedGrowthString: (element) => ["RestrictedGrowthString", ["List", ...(element as number[])]],
@@ -33,14 +35,17 @@ const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
   Surjection: (element) => ["Surjection", ["List", ...(element as number[])]],
   Composition: (element) => ["Composition", ["List", ...(element as number[])]],
   BinaryWord: (element) => ["BinaryWord", ["List", ...(element as number[])]],
+  BinaryTree: (element) => ["BinaryTree", nested(element)],
+  BinaryTreeParentArray: (element) => ["BinaryTreeParentArray", ["List", ...(element as number[])]],
+  DyckPath: (element) => ["DyckPath", ["List", ...(element as number[])]],
 };
 
 const constructorOf = new Map(DOMAINS.map((d) => [d.type, d.name]));
 
-for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== undefined)) {
+for (const map of MAPS.filter((m) => m.body !== undefined || m.kernel !== undefined || m.composedOf !== undefined)) {
   const carrier = constructorOf.get(map.from) as string;
   const construct = CONSTRUCT[carrier];
-  const families = allEntries.filter((f) => (f.kind === "ints" || f.kind === "blocks") && carrierOf(f) === carrier);
+  const families = allEntries.filter((f) => f.kind !== "scalar" && carrierOf(f) === carrier);
 
   test.skipIf(construct === undefined || families.length === 0)(
     `${map.name} keeps its laws over ${carrier}`,

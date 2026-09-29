@@ -70,9 +70,18 @@ function bstParentsRef(p: readonly number[]): number[] {
   return parent.slice(1);
 }
 
-test("BinarySearchTree agrees with plain insertion, up to n = 4", () => {
+test("BinarySearchTreeParentArray agrees with plain insertion, up to n = 4", () => {
   for (const p of ALL4)
-    expect(contents(["BinarySearchTree", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...bstParentsRef(p)]);
+    expect(contents(["BinarySearchTreeParentArray", perm(...p)]), `[${p.join(", ")}]`).toEqual([
+      "List",
+      ...bstParentsRef(p),
+    ]);
+});
+
+test("BinarySearchTree reads the parent array as a nested tree", () => {
+  // 2 is the root, 1 its left child, 3 its right.
+  expect(contents(["BinarySearchTree", perm(2, 3, 1)])).toEqual(["List", ["List", 0, 0], ["List", 0, 0]]);
+  expect(contents(["BinarySearchTree", perm(1, 2)])).toEqual(["List", 0, ["List", 0, 0]]);
 });
 
 test("BinarySearchTree is typed as binary_tree", () => {

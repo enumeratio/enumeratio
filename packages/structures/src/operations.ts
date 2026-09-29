@@ -96,9 +96,6 @@ export function registerCollectionCarrier(ce: ComputeEngine, collection: string,
   registryOf(ce).collections.set(collection, carrier);
 }
 
-/** The carrier a collection HEAD's elements inhabit (`SymmetricGroup` -> `Permutation`), as
- *  registered by `registerCollectionCarrier`. Undefined when `collection` isn't one, or has no
- *  registered carrier -- its elements are bare lists. */
 /**
  * Say that `from` and `to` are the same structure written two ways, with `forward` the
  * bijection from one to the other (`RestrictedGrowthStringOf`, from set partitions to their
@@ -112,24 +109,50 @@ export function registerEquivalence(ce: ComputeEngine, from: string, to: string,
 }
 
 /**
- * How `head`'s operation `key` is computed on `carrier`: its own, else transported from an
- * equivalent carrier (one step), or undefined.
+ * How `head`'s operation `key` is computed on `carrier`: its own, else transported from the
+ * nearest equivalent carrier that has it, through the chain of bijections there (a binary
+ * tree's parent array reaches the Dyck path statistics through the tree), or undefined.
  */
 function implementationOf(ce: ComputeEngine, head: OperationHead, carrier: string, key: string): Transport | undefined {
-  const own = operationOf(ce, head, carrier, key);
-  if (own !== undefined) return own.kernel ?? own.definition;
-  for (const { to, forward } of registryOf(ce).equivalences.get(carrier) ?? []) {
-    const there = operationOf(ce, head, to, key);
-    const apply = there?.kernel ?? there?.definition;
-    if (apply !== undefined)
-      return (subject) => {
-        const image = forward(subject);
-        return image === undefined ? undefined : apply(image);
-      };
+  const equivalences = registryOf(ce).equivalences;
+  // Breadth first, so the chain is the shortest; each entry carries the composed bijection.
+  const seen = new Set([carrier]);
+  let frontier: { carrier: string; path?: Transport }[] = [{ carrier }];
+  while (frontier.length > 0) {
+    const next: typeof frontier = [];
+    for (const { carrier: here, path } of frontier) {
+      const found = operationOf(ce, head, here, key);
+      const apply = found?.kernel ?? found?.definition;
+      if (apply !== undefined)
+        return path === undefined
+          ? apply
+          : (subject) => {
+              const image = path(subject);
+              return image === undefined ? undefined : apply(image);
+            };
+      for (const { to, forward } of equivalences.get(here) ?? []) {
+        if (seen.has(to)) continue;
+        seen.add(to);
+        next.push({
+          carrier: to,
+          path:
+            path === undefined
+              ? forward
+              : (subject) => {
+                  const image = path(subject);
+                  return image === undefined ? undefined : forward(image);
+                },
+        });
+      }
+    }
+    frontier = next;
   }
   return undefined;
 }
 
+/** The carrier a collection HEAD's elements inhabit (`SymmetricGroup` -> `Permutation`), as
+ *  registered by `registerCollectionCarrier`. Undefined when `collection` isn't one, or has no
+ *  registered carrier -- its elements are bare lists. */
 export function collectionCarrierOf(ce: ComputeEngine, collection: string): string | undefined {
   return registryOf(ce).collections.get(collection);
 }

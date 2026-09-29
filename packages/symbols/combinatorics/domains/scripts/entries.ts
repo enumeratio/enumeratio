@@ -18,7 +18,12 @@ import { type CombinatorialMap, declareMaps, MAPS } from "../src/map.ts";
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
   permutation: { contents: ["List", 2, 3, 1], caption: "the one-line word $231$" },
   integer_partition: { contents: ["List", 3, 2, 1], caption: "the partition $3 + 2 + 1$" },
-  binary_tree: { contents: ["List", 1, 2, 3], caption: "a three-node tree" },
+  binary_tree: {
+    contents: ["List", ["List", 0, 0], ["List", 0, ["List", 0, 0]]],
+    caption: "a four-node tree",
+  },
+  binary_tree_parent_array: { contents: ["List", 2, 0, 2, 3], caption: "the parent array $2023$" },
+  dyck_path: { contents: ["List", 1, 1, 0, 0, 1, 0], caption: "the Dyck path $UUDDUD$" },
   set_partition: {
     contents: ["List", ["List", 1, 3], ["List", 2], ["List", 4]],
     caption: "the set partition $\\{1,3\\} \\mid \\{2\\} \\mid \\{4\\}$",

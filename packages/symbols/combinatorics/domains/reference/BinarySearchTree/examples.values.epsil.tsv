@@ -1,2 +1,2 @@
 id	in	out
-the-one-line-word-231	BinarySearchTree(Permutation([2, 3, 1]))	BinaryTree([2, 0, 2])
+the-one-line-word-231	BinarySearchTree(Permutation([2, 3, 1]))	BinaryTree([[0, 0], [0, 0]])

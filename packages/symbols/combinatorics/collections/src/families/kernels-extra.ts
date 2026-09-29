@@ -672,39 +672,92 @@ export function GrayCodeSubsetRank(s: number[]): number {
   return r;
 }
 
-// ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R]. ─────
+// ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R].
+// Ranked as their Dyck paths U φ(L) D φ(R) (FindStat's Mp00012) are, so the two collections list
+// in step and either can borrow the other's order. ─────
 export type BinTree = 0 | [BinTree, BinTree];
 export function BinaryTreeCount(n: number): number {
   return CatalanNumber(n);
 }
-export function BinaryTreeUnrank(n: number, rank: number): BinTree {
-  if (n === 0) return 0;
-  const total = CatalanNumber(n);
-  let r = total ? ((rank % total) + total) % total : 0;
-  for (let i = 0; i < n; i++) {
-    const cl = CatalanNumber(i),
-      cr = CatalanNumber(n - 1 - i);
-    const block = cl * cr;
-    if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
-    r -= block;
+function binaryTreeOfDyck(word: readonly number[], from: number, to: number): BinTree {
+  if (from === to) return 0;
+  let height = 0;
+  let j = from;
+  do height += word[j++] === 1 ? 1 : -1;
+  while (height > 0);
+  return [binaryTreeOfDyck(word, from + 1, j - 1), binaryTreeOfDyck(word, j, to)];
+}
+function dyckOfBinaryTree(t: BinTree, out: number[] = []): number[] {
+  if (t !== 0) {
+    out.push(1);
+    dyckOfBinaryTree(t[0], out);
+    out.push(0);
+    dyckOfBinaryTree(t[1], out);
   }
-  return 0; // unreachable
+  return out;
+}
+export function BinaryTreeUnrank(n: number, rank: number): BinTree {
+  const word = DyckPathUnrank(n, rank);
+  return binaryTreeOfDyck(word, 0, word.length);
+}
+export function BinaryTreeRank(t: BinTree): number {
+  return DyckPathRank(dyckOfBinaryTree(t));
 }
 function binTreeSize(t: BinTree): number {
   return t === 0 ? 0 : 1 + binTreeSize(t[0]) + binTreeSize(t[1]);
 }
-export function BinaryTreeRank(t: BinTree): number {
-  if (t === 0) return 0;
-  const n = binTreeSize(t);
-  const li = binTreeSize(t[0]);
-  let base = 0;
-  for (let i = 0; i < li; i++) base += CatalanNumber(i) * CatalanNumber(n - 1 - i);
-  const cr = CatalanNumber(n - 1 - li);
-  return base + BinaryTreeRank(t[0]) * cr + BinaryTreeRank(t[1]);
-}
 export function IsBinaryTree(t: unknown, n: number): boolean {
   const ok = (x: unknown): boolean => x === 0 || (Array.isArray(x) && x.length === 2 && ok(x[0]) && ok(x[1]));
   return ok(t) && binTreeSize(t as BinTree) === n;
+}
+
+// ─── BinaryTreeParentArrays(n): the same trees, each as its in-order parent array (entry k is the
+// parent of the k-th node in order, 0 at the root). Listed in BinaryTrees' order. The domains
+// package converts the same way for its maps (domains/src/binary-tree.ts). ─────
+export function BinaryTreeParentArray(t: BinTree): number[] {
+  const parents: number[] = [];
+  let next = 1;
+  const walk = (x: BinTree): number => {
+    if (x === 0) return 0;
+    const left = walk(x[0]);
+    const me = next++;
+    const right = walk(x[1]);
+    if (left !== 0) parents[left - 1] = me;
+    if (right !== 0) parents[right - 1] = me;
+    return me;
+  };
+  const root = walk(t);
+  if (root !== 0) parents[root - 1] = 0;
+  return parents;
+}
+/** The tree an in-order parent array describes; undefined when it describes none. */
+export function BinaryTreeOfParentArray(parents: readonly number[]): BinTree | undefined {
+  const n = parents.length;
+  const left = Array.from({ length: n + 1 }, () => 0);
+  const right = Array.from({ length: n + 1 }, () => 0);
+  let root = 0;
+  for (let v = 1; v <= n; v++) {
+    const p = parents[v - 1]!;
+    if (!Number.isInteger(p) || p < 0 || p > n || p === v) return undefined;
+    const side = v < p ? left : right;
+    if (p === 0) {
+      if (root !== 0) return undefined;
+      root = v;
+    } else if (side[p] !== 0) return undefined;
+    else side[p] = v;
+  }
+  const build = (v: number, depth: number): BinTree | undefined => {
+    if (v === 0) return 0;
+    if (depth > n) return undefined;
+    const l = build(left[v]!, depth + 1);
+    const r = build(right[v]!, depth + 1);
+    return l === undefined || r === undefined ? undefined : [l, r];
+  };
+  const tree = n === 0 ? 0 : build(root, 0);
+  return tree !== undefined && BinaryTreeParentArray(tree).every((p, i) => p === parents[i]) ? tree : undefined;
+}
+export function IsBinaryTreeParentArray(a: unknown, n: number): boolean {
+  return Array.isArray(a) && a.length === n && BinaryTreeOfParentArray(a as number[]) !== undefined;
 }
 
 // ─── Derangements(n): permutations with no fixed point. Count = subfactorial D(n). ──────────────────────
