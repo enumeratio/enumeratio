@@ -5,14 +5,8 @@
 // is returned as structured data and drawn by whichever adapter runs the core.
 
 import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/combinatorics/collections";
-import {
-  declareDomainElement,
-  declareDomainPlurals,
-  declareDomains,
-  declareMaps,
-  DOMAINS,
-} from "@enumeratio/combinatorics/domains";
+import { declareCombinatorics } from "@enumeratio/combinatorics";
+import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import {
@@ -179,11 +173,12 @@ export interface Parsed {
   raw: BoxedExpression;
 }
 
+/** Carrier name to minted type, for the statistics package (still outside `declareCombinatorics`
+ *  -- combinatorics has no dependency on statistics). */
+const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
+
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
 const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
-
-/** Carrier name to minted type, for the statistics and the collections. */
-const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(DOMAINS.map((d) => [d.name, d.type]));
 
 export class Session {
   readonly ce: ComputeEngine;
@@ -197,18 +192,16 @@ export class Session {
     this.ce = new ComputeEngine({
       latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
     });
-    // Carriers first: everything below declares heads OVER these minted types, so they have
-    // to exist before a signature can name one.
-    declareDomains(this.ce);
-    // A combinatorial statistic is a function of a carrier, so that is what these heads take.
-    // The ones that are ALSO plain list functions -- they compare entries with each other
-    // rather than with their positions -- accept a bare list too; see `Definition.alsoOnList`.
-    declareCollections(this.ce, { permutationType: "permutation", carrierTypes: DOMAIN_TYPES });
+    // Carriers, the families typed by them, the plural type-spaces and Element, and the maps
+    // between carriers -- one call (design/speculative/combinatorics-layering-and-
+    // plausible.md §4 step 3).
+    declareCombinatorics(this.ce);
     // Every domain's plural type-space name, and Element membership over it -- AFTER
     // collections, so a plural a collection family already claims (Permutations, DyckPaths,
     // ...) is still free when this checks, not raced by minting a bare symbol first.
     declareDomainPlurals(this.ce);
     declareDomainElement(this.ce);
+    // A combinatorial statistic is a function of a carrier, so that is what these heads take.
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.
     declareStatistics(this.ce, ALL_STATISTICS, { domainTypes: DOMAIN_TYPES });

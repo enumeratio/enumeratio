@@ -25,15 +25,9 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
 import { declareBraid } from "@enumeratio/braid";
-import { declareCollections } from "@enumeratio/combinatorics/collections";
+import { declareCombinatorics } from "@enumeratio/combinatorics";
+import { declareDomainElement, declareDomainPlurals, declareMaps, DOMAINS } from "@enumeratio/combinatorics/domains";
 import { declareDiagrams } from "@enumeratio/diagram";
-import {
-  declareDomainElement,
-  declareDomainPlurals,
-  declareDomains,
-  declareMaps,
-  DOMAINS,
-} from "@enumeratio/combinatorics/domains";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
 import { declareStructures } from "@enumeratio/structures";
@@ -53,10 +47,9 @@ import { applyEngineLibraries } from "./engine-libraries.ts";
 
 export function configure(ce: ComputeEngine): void {
   applyEngineLibraries((fn) => fn(ce), {
-    declareCollections,
+    declareCombinatorics,
     declareStatistics,
     ALL_STATISTICS,
-    declareDomains,
     declareDomainPlurals,
     declareDomainElement,
     declareMaps,
