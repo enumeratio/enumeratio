@@ -13,7 +13,7 @@ signatures:
     overrides: compute-engine
   - call: MatrixRank(A)
     description: "The rank of a matrix: the number of linearly independent rows (equivalently, columns)."
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (value) -> integer
     overrides: enumeratio-analytic
 names:

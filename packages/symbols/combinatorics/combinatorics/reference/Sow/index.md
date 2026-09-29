@@ -1,0 +1,23 @@
+---
+name: Sow
+domain: Collections
+signature: Sow(e)
+summary: Sends a value to the nearest enclosing Reap, and returns it.
+signatures:
+  - call: Sow(e)
+    description: Records $e$ (evaluated) into the nearest enclosing [[Reap]]'s untagged group, and returns $e$.
+    library: enumeratio-combinatorics
+    type: (any, any?) -> any
+  - call: Sow(e, tag)
+    description: Like $Sow(e)$, but records under $tag$ instead of the untagged group.
+    library: enumeratio-combinatorics
+seeAlso:
+  - Reap
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- A $Sow$ with no enclosing $Reap$ is a no-op — it still returns $e$, nothing is recorded anywhere.
+- A $Sow$ inside a NESTED $Reap$ feeds only the innermost one; it does not also reach further out, matching Wolfram (an inner $Reap$ "consumes" what's sown inside it).

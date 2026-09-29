@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
-import { DOMAINS } from "@enumeratio/domains/src";
+import { DOMAINS } from "@enumeratio/combinatorics/domains/src";
 import { MAPPINGS } from "@enumeratio/oracle/src";
 import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
@@ -28,9 +28,10 @@ import { engineSymbols as engineData } from "../src/engine-symbols-data.ts";
 import { packageEntries, referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();
-const collectionEntries = packageEntries("collections");
+// collections and domains merged into one package (design/speculative/combinatorics-layering-
+// and-plausible.md's step 1); one packageEntries() call now covers both areas.
+const combinatoricsEntries = packageEntries("combinatorics");
 const statisticEntries = packageEntries("statistics");
-const domainEntries = packageEntries("domains");
 import { fungrimSymbols } from "../src/fungrim-symbols-data.ts";
 import { crosswalk, engineSymbols } from "../scripts/crosswalk.ts";
 
@@ -46,9 +47,8 @@ test("the generated engine-symbol and crosswalk data are what the collector deri
 /** Every name a curated row may be keyed by: a documented head, the engine's, a catalog name. */
 const known = new Set<string>([
   ...entries.map((e) => e.name),
-  ...collectionEntries.map((e) => e.name),
+  ...combinatoricsEntries.map((e) => e.name),
   ...statisticEntries.map((e) => e.name),
-  ...domainEntries.map((e) => e.name),
   ...DOMAINS.map((d) => d.name),
   ...engineData.map((s) => s.name),
   ...COLLECTIONS.map((c) => c.name),

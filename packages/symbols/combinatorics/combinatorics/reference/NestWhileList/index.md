@@ -1,0 +1,19 @@
+---
+name: NestWhileList
+domain: Collections
+signature: NestWhileList(f, x, test)
+summary: Like NestWhile, but returns every intermediate value along the way.
+signatures:
+  - call: NestWhileList(f, x, test)
+    description: Every value from $x$ up to (and including) the first one where $test$ fails — the same stopping rule as [[NestWhile]], collected instead of just the last one.
+    library: enumeratio-combinatorics
+    type: (any, any, any) -> list<any>
+seeAlso:
+  - NestWhile
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- Capped at 4096 applications of $f$, same as [[NestWhile]].

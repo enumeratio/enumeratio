@@ -1,0 +1,26 @@
+---
+name: BinaryWordsByWeight
+domain: Collections
+signature: BinaryWordsByWeight(n, k)
+summary: The binary strings of length $n$ with exactly $k$ ones.
+signatures:
+  - call: BinaryWordsByWeight(n, k)
+    description: the binary strings of length $n$ with exactly $k$ ones
+    library: enumeratio-combinatorics
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - BinaryWords
+  - Binomial
+catalog:
+  - system: oeis
+    identity: A007318
+    url: https://oeis.org/A007318
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: BinaryWord
+---
+
+- Count is $\binom{n}{k}$ (see [[Binomial]]).

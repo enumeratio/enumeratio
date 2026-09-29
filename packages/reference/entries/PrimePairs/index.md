@@ -6,7 +6,7 @@ summary: The lesser prime $p$ of a pair $(p, p+gap)$, both prime -- $gap$ select
 signatures:
   - call: PrimePairs(gap)
     description: the prime $p$ with $p+gap$ also prime, an indexed collection of open infinitude for every $gap$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(PrimePairs(4), 20)

@@ -11,6 +11,6 @@ stub: carrier
 signatures:
   - call: IncreasingBinaryTrees(...)
     description: Binary trees on n labeled nodes, heap-ordered by label — n! of them.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<any>
 ---

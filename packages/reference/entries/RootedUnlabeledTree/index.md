@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: RootedUnlabeledTree(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> rooted_unlabeled_tree
 ---

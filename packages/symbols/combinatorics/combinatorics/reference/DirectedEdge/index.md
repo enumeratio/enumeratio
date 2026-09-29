@@ -1,0 +1,19 @@
+---
+name: DirectedEdge
+domain: Collections
+signature: DirectedEdge(u, v)
+summary: A directed edge from u to v — the edge head [[Graph]] holds in its edge list.
+signatures:
+  - call: DirectedEdge(u, v)
+    description: an edge FROM $u$ TO $v$ — [[FindShortestPath]] and [[GraphDistance]] only traverse it forward, from $u$ to $v$.
+    library: enumeratio-combinatorics
+    type: (any, any) -> value
+seeAlso:
+  - UndirectedEdge
+  - Graph
+names:
+  wolframIdentity: true
+---
+
+- Inert, like [[Graph]] itself — it holds exactly as written.
+- Wolfram prints this infix as $u \to v$ (`u -> v`); Epsil's own `->` already means [[KeyValuePair]] (not this), so this round-trips through call-form syntax, `DirectedEdge(u, v)`, which Wolfram accepts as equivalent input.

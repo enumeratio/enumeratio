@@ -10,6 +10,6 @@ stub: carrier
 signatures:
   - call: Dissection(...)
     description: Dissection
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<list<integer>, integer>) -> dissection
 ---

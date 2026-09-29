@@ -1,0 +1,18 @@
+---
+name: Accumulate
+domain: Collections
+signature: Accumulate(list)
+summary: The running sums of a list.
+signatures:
+  - call: Accumulate(list)
+    description: $\{a_1, a_1+a_2, a_1+a_2+a_3, \ldots\}$.
+    library: enumeratio-combinatorics
+    type: (collection<any>) -> collection
+seeAlso:
+  - FoldList
+names:
+  wolframIdentity: true
+---
+
+- The first element is kept as-is; each later element is the sum of everything up to and including it.
+- Equivalent to $FoldList(Add, list)$ — see [[FoldList]].

@@ -15,7 +15,7 @@ signatures:
     overrides: compute-engine
   - call: Rationalize(x, tolerance?)
     description: Finds a simple rational number near x.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (value, number?) -> value
     overrides: enumeratio-analytic
 seeAlso:

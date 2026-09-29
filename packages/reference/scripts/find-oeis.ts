@@ -21,7 +21,7 @@
 
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
-import { allEntries, countNumber, type FamilyKernel } from "@enumeratio/collections/src";
+import { allEntries, countNumber, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 
 /** A count as a plain number, or undefined past 2^53 (or where the kernel isn't bigint yet). */
 const countAt = (entry: FamilyKernel, p: number[]): number | undefined => {

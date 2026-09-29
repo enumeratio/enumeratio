@@ -8,7 +8,7 @@ signatures:
     description: $f(\ldots f(f(init, x_1), x_2)\ldots, x_n)$ — $init$ combined with each element of $xs$ in turn.
   - call: Fold(f, xs)
     description: "the same fold with no seed, starting from $xs$'s own first element: $f(\\ldots f(x_1, x_2)\\ldots, x_n)$."
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
 seeAlso:
   - Scan
 names:

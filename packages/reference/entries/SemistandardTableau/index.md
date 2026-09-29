@@ -13,6 +13,6 @@ catalogCarrier: true
 signatures:
   - call: SemistandardTableau(list)
     description: The singular-inhabitant constructor for a semistandard Young tableau, as its rows.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<list<integer>, list<integer>>) -> semistandard_tableau
 ---

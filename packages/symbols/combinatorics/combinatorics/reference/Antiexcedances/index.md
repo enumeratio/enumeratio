@@ -1,0 +1,18 @@
+---
+name: Antiexcedances
+domain: Permutation statistics
+signature: Antiexcedances(p)
+summary: "The number of antiexcedances of $p$: positions $i$ with $p_i < i$."
+signatures:
+  - call: Antiexcedances(p)
+    description: the antiexcedance count of a one-line permutation $p$
+    library: enumeratio-combinatorics
+    type: (permutation) -> integer
+seeAlso:
+  - Excedances
+  - Descents
+  - SymmetricGroup
+---
+
+- Equidistributed with [[Excedances]] over $S_n$: inverting a permutation swaps its excedance and antiexcedance counts
+- Never counts a fixed point, same as [[Excedances]]

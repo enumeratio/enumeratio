@@ -6,7 +6,7 @@
 // of the session. Three libraries did that, so `x`, `y` and `q` were global symbols a user
 // could collide with. Probes now box inside a pushed scope; this is the net.
 
-import { DOMAINS } from "@enumeratio/domains/src";
+import { DOMAINS } from "@enumeratio/combinatorics/domains/src";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 

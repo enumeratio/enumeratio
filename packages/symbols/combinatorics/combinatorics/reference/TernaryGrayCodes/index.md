@@ -1,0 +1,33 @@
+---
+name: TernaryGrayCodes
+domain: Collections
+signature: TernaryGrayCodes(n)
+summary: Length-$n$ words over $\{0,1,2\}$ in base-3 reflected Gray code order, where consecutive words differ by $\pm1$ in exactly one digit.
+signatures:
+  - call: TernaryGrayCodes(n)
+    library: enumeratio-combinatorics
+    description: the $3^n$ base-3 digit strings of length $n$, Gray-code ordered.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+enumerate:
+  expr: TernaryGrayCodes(4)
+  columns: Descents, Ascents
+seeAlso:
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000244
+    url: https://oeis.org/A000244
+  - system: sage
+    identity: sage.combinat.gray_codes.product([3]*n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/gray_codes.html
+    note: a SWITCH generator, not an element class (same pattern as gray_codes → product([2]*n)); product([3]*n) walks the reflected ternary Gray code = our carrier
+grades:
+  - name: n
+    role: axis
+carrier: TernaryGrayCode
+---
+
+- A lazy indexed collection; the count is the closed form $3^n$, but the ORDER is the point — it is the standard reflected-Gray-code recursion (each digit's block traversed forward or reversed in turn), not lexicographic.
+- Each element is the digit string itself, as a list over $\{0,1,2\}$.
+- $At$ unranks directly into that Gray-code order, so consecutive indices always differ in exactly one digit, by exactly 1.

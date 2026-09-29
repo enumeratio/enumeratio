@@ -26,7 +26,7 @@ signatures:
     library: enumeratio-modular
   - call: ContinuedFraction(x)
     description: The regular continued fraction $[a_0; a_1, a_2, \dots]$ of $p/q$. Its partial quotients are the run lengths of the rational's Stern–Brocot path, and the $T$-exponents of its matrix — one object under three names.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: ((list<integer>) -> continued_fraction) & ((real, integer?) -> list<integer>)
     overrides: enumeratio-modular
 seeAlso:

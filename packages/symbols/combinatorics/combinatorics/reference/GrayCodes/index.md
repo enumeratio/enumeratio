@@ -1,0 +1,36 @@
+---
+name: GrayCodes
+domain: Collections
+signature: GrayCodes(n)
+summary: The binary words of length $n$ in binary-reflected Gray-code order.
+signatures:
+  - call: GrayCodes(n)
+    description: the binary words of length $n$ in binary-reflected Gray-code order
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - BinaryWords
+references:
+  - system: oeis
+    identity: A003188
+catalog:
+  - system: oeis
+    identity: A003188
+    url: https://oeis.org/A003188
+    note: flat sequence; our gray_code_unrank(n,r) renders g(r) as an n-bit word, r<2^n
+  - system: sage
+    identity: sage.combinat.gray_codes
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/gray_codes.html
+    note: a module of loopless Gray-code SWITCH generators (Knuth Algorithm H), not an element class; product([2]*n) yields the binary reflected code = our carrier
+  - system: wikipedia
+    identity: Gray code
+    url: https://en.wikipedia.org/wiki/Gray_code
+    relation: conceptual
+grades:
+  - name: n
+    role: axis
+carrier: BinaryWord
+---
+
+- Count is $2^n$; consecutive words differ in exactly one bit.
+- $g(r) = r \oplus \lfloor r/2 \rfloor$ (A003188).

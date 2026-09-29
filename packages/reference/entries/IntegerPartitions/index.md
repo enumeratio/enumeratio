@@ -6,17 +6,17 @@ summary: The partitions of $n$ into positive parts, as a lazy indexed family.
 signatures:
   - call: IntegerPartitions(n)
     description: every way to write $n$ as a sum of positive parts, order-insensitive.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer, any?, any?) -> list<integer_partition>
   - call: IntegerPartitions(n, k)
     description: the partitions of $n$ into at most $k$ parts.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: IntegerPartitions(n, {k})
     description: the partitions of $n$ into exactly $k$ parts.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: IntegerPartitions(n, All, parts)
     description: the partitions of $n$ using only parts drawn from the given list.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
 enumerate:
   expr: IntegerPartitions(8)
   columns: Length, LargestPart, DistinctParts, DurfeeSquare

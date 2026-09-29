@@ -6,7 +6,7 @@ summary: The $k$-almost primes -- integers with exactly $k$ prime factors, count
 signatures:
   - call: KAlmostPrimes(k)
     description: the $n$ with $\Omega(n) = k$, an infinite indexed collection for every $k \geq 1$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(KAlmostPrimes(3), 20)

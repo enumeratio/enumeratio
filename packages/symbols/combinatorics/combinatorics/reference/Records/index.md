@@ -1,0 +1,18 @@
+---
+name: Records
+domain: Permutation statistics
+signature: Records(p)
+summary: "The number of records (left-to-right maxima) of $p$: positions $i$ with $p_i > p_j$ for all $j < i$."
+signatures:
+  - call: Records(p)
+    description: the record count of a one-line permutation $p$
+    library: enumeratio-combinatorics
+    type: (list | permutation) -> integer
+seeAlso:
+  - CycleCount
+  - StirlingS1
+  - SymmetricGroup
+---
+
+- The first position is always a record vacuously, so $\mathrm{Records}(p) \geq 1$ for $n \geq 1$
+- Equidistributed with [[CycleCount]] over $S_n$ (Foata's bijection), so both follow the unsigned Stirling numbers of the first kind $\left[{n\atop k}\right]$

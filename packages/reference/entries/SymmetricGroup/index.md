@@ -6,7 +6,7 @@ summary: The $n!$ permutations of $\{1, …, n\}$ as a lazy indexed family, in o
 signatures:
   - call: SymmetricGroup(n)
     description: the $n!$ permutations of $\{1, …, n\}$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<permutation>
 enumerate:
   expr: SymmetricGroup(5)

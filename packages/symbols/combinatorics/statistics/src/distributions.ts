@@ -25,7 +25,7 @@ import {
 //
 // A distribution is an inert head carrying its parameters — declared with a signature and no
 // `evaluate` (or, for the ones needing a default filled in, an `evaluate` that only
-// normalizes the call shape and returns itself), the same pattern `@enumeratio/domains`'
+// normalizes the call shape and returns itself), the same pattern `@enumeratio/combinatorics/domains`'
 // carrier constructors use. PDF/CDF/Mean/Variance are exact wherever a closed form exists;
 // Expectation/Probability recognize a handful of closed-form shapes (linear/quadratic
 // polynomials in the bound variable; simple and chained relational conditions) and otherwise

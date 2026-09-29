@@ -1,0 +1,31 @@
+---
+name: VexillaryPermutations
+domain: Collections
+signature: VexillaryPermutations(n)
+summary: The permutations of $\{1, …, n\}$ avoiding the pattern $2143$, as a lazy indexed family.
+signatures:
+  - call: VexillaryPermutations(n)
+    library: enumeratio-combinatorics
+    description: the permutations of $\{1, …, n\}$ avoiding $2143$.
+    type: (integer<0..>) -> indexed_collection<permutation>
+enumerate:
+  expr: VexillaryPermutations(4)
+  columns: Descents, MajorIndex
+  glyph: permutation
+seeAlso:
+  - SmoothPermutations
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A005802
+    url: https://oeis.org/A005802
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+---
+
+- A lazy indexed collection; the count is A005802 — $1, 2, 6, 23, 103, 513, …$
+- Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2143$.
+- Vexillary ("flag") permutations are exactly those whose Schubert polynomial is a single Schur polynomial — the name is Lascoux and Schützenberger's.

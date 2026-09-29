@@ -19,6 +19,6 @@ carrier: Permutation
 signatures:
   - call: CyclicPermutations(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, sage; not yet written up here.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<permutation>
 ---

@@ -55,6 +55,17 @@ for (const dir of packageDirs) {
   }
 }
 
+// `@enumeratio/combinatorics` merges the `collections` and `domains` areas wholesale
+// (design/speculative/combinatorics-layering-and-plausible.md), each keeping its own
+// nested `<area>/src/index.ts` rather than a package-root `src/`, so the generic
+// dist->src rewrite above (which only swaps the `/dist/` segment) can't find them.
+// Alias the two `./collections` / `./domains` subpaths by hand.
+for (const area of ["collections", "domains"]) {
+  const abs = resolve(pkgsDir, "symbols/combinatorics/combinatorics", area, "src/index.ts");
+  if (!existsSync(abs)) continue;
+  srcAliases.push({ find: new RegExp(`^@enumeratio/combinatorics/${area}$`), replacement: abs });
+}
+
 // design/speculative/: open design, rendered by `vitepress dev` only. It is linked into the
 // site as web/speculative (a gitignored symlink) and left out of builds.
 const dev = process.argv.includes("dev");

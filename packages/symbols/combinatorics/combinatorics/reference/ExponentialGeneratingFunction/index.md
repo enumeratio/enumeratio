@@ -1,0 +1,23 @@
+---
+name: ExponentialGeneratingFunction
+domain: Combinatorics
+signature: ExponentialGeneratingFunction(expr, n, x)
+summary: The exponential generating function $\sum_n \mathrm{expr}(n)\,x^n/n!$ of a sequence, in closed form, when one exists.
+signatures:
+  - call: ExponentialGeneratingFunction(expr, n, x)
+    description: the exponential generating function of expr(n) in x
+    library: enumeratio-combinatorics
+    type: (any, symbol, symbol) -> any
+seeAlso:
+  - GeneratingFunction
+  - FindSequenceFunction
+  - DiscreteRatio
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- For a C-finite sequence of recurrence order at most 2 (Fibonacci-like sequences), the characteristic roots come straight out of the compute engine's own `Sqrt`/arithmetic, so an irrational discriminant stays exact rather than being hand-simplified -- e.g. Fibonacci's $\sqrt5$.
+- A small registry covers named factorial-growth sequences that are not C-finite at all -- $n!$, the derangement numbers, and the Bell numbers -- each with a textbook closed form.
+- Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here.

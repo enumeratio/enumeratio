@@ -1,0 +1,13 @@
+---
+name: Factorization
+domain: Combinatorial maps
+signature: Factorization(bases, exponents)
+summary: A multiplicative factorization as parallel lists — $\prod \text{bases}_i^{\text{exponents}_i}$ — with `bases` left as `number` rather than `integer`, unlike the prime-specific [[IntegerFactorization]].
+signatures:
+  - call: Factorization(bases, exponents)
+    description: a factorization as parallel `bases`/`exponents` lists
+    library: enumeratio-combinatorics
+    type: (tuple<list<number>, list<integer>>) -> factorization
+seeAlso:
+  - IntegerFactorization
+---

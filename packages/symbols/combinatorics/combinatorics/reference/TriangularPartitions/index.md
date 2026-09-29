@@ -1,0 +1,26 @@
+---
+name: TriangularPartitions
+domain: Collections
+signature: TriangularPartitions(n)
+summary: The partitions of $n$ into triangular-number parts.
+signatures:
+  - call: TriangularPartitions(n)
+    description: the partitions of $n$ into triangular-number parts
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<integer_partition>
+seeAlso:
+  - IntegerPartitions
+references:
+  - system: oeis
+    identity: A007294
+catalog:
+  - system: oeis
+    identity: A007294
+    url: https://oeis.org/A007294
+grades:
+  - name: n
+    role: axis
+carrier: IntegerPartition
+---
+
+- Count is A007294.

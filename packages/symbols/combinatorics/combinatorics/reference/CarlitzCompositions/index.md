@@ -1,0 +1,26 @@
+---
+name: CarlitzCompositions
+domain: Collections
+signature: CarlitzCompositions(n)
+summary: The compositions of $n$ with no two equal adjacent parts.
+signatures:
+  - call: CarlitzCompositions(n)
+    description: the compositions of $n$ with no two equal adjacent parts
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<composition>
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A003242
+catalog:
+  - system: oeis
+    identity: A003242
+    url: https://oeis.org/A003242
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---
+
+- Count is A003242.

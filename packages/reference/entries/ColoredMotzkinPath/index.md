@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: ColoredMotzkinPath(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<list<integer>, list<integer>>) -> colored_motzkin_path
 ---

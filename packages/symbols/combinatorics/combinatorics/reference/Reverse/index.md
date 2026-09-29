@@ -1,0 +1,30 @@
+---
+name: Reverse
+domain: Combinatorial maps
+signature: Reverse(Permutation)
+summary: The word read backwards.
+names:
+  wolframIdentity: true
+catalog:
+  - system: findstat
+    identity: Mp00038
+    url: https://www.findstat.org/Mp00038
+    on: Composition
+  - system: findstat
+    identity: Mp00064
+    url: https://www.findstat.org/Mp00064
+    on: Permutation
+mapOn:
+  - BinaryWord
+  - Composition
+  - Permutation
+  - SetPartition
+signatures:
+  - call: Reverse(Permutation)
+    description: The word read backwards.
+    library: enumeratio-combinatorics
+    type: "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T) & ((permutation) -> permutation)"
+    overrides: compute-engine
+---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

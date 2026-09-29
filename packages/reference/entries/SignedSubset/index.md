@@ -10,6 +10,6 @@ stub: carrier
 signatures:
   - call: SignedSubset(...)
     description: Signed subset
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<list<integer>, integer>) -> signed_subset
 ---

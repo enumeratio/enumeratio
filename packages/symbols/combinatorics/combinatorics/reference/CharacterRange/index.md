@@ -1,0 +1,21 @@
+---
+name: CharacterRange
+domain: Collections
+signature: CharacterRange(c1, c2) / CharacterRange(n1, n2)
+summary: Every character from c1 to c2, inclusive, in Unicode code-point order.
+signatures:
+  - call: CharacterRange(c1, c2)
+    description: the characters from c1 to c2, inclusive
+    library: enumeratio-combinatorics
+    type: (integer | string, integer | string) -> list<string>
+  - call: CharacterRange(n1, n2)
+    description: the same range, given as code points directly
+    library: enumeratio-combinatorics
+seeAlso:
+  - ToCharacterCode
+  - FromCharacterCode
+names:
+  wolframIdentity: true
+---
+
+- Counts code points, the same convention ToCharacterCode/StringLength/FromCharacterCode (expression-ops.ts) already use — an astral character is one code point, not two UTF-16 units.

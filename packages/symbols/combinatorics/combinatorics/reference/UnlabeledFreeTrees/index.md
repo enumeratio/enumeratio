@@ -1,0 +1,31 @@
+---
+name: UnlabeledFreeTrees
+domain: Collections
+signature: UnlabeledFreeTrees(n)
+summary: The free (unrooted) trees on $n$ unlabelled nodes, up to isomorphism.
+signatures:
+  - call: UnlabeledFreeTrees(n)
+    library: enumeratio-combinatorics
+    description: every tree on $n$ unlabelled nodes with no distinguished root, one per isomorphism class.
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+enumerate:
+  expr: UnlabeledFreeTrees(7)
+  columns: Max
+seeAlso:
+  - RootedUnlabeledTrees
+  - Binomial
+  - Count
+  - At
+catalog:
+  - system: oeis
+    identity: A000055
+    url: https://oeis.org/A000055
+grades:
+  - name: n
+    role: axis
+carrier: UnlabeledFreeTree
+---
+
+- A lazy indexed collection; the count is $A000055(n)$ — $A000055(7) = 11$ — obtained by canonically rooting each free tree at its centroid: every branch must weigh at most $\lfloor n/2 \rfloor$, then a correction $\binom{T(m), 2}$ (Otter 1948) removes the double count from trees split by a central edge into two non-isomorphic halves.
+- Each element is a level sequence, exactly as for $RootedUnlabeledTrees$, but rooted at the tree's centroid rather than an arbitrary node.
+- See [[Binomial]] for the correction term and [[RootedUnlabeledTrees]] for the shared encoding and children-multiset kernel.

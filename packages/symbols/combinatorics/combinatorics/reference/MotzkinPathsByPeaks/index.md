@@ -1,0 +1,24 @@
+---
+name: MotzkinPathsByPeaks
+domain: Collections
+signature: MotzkinPathsByPeaks(n, k)
+summary: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step.
+signatures:
+  - call: MotzkinPathsByPeaks(n, k)
+    description: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step
+    library: enumeratio-combinatorics
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - DyckPaths
+references:
+  - system: oeis
+    identity: A055151
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: MotzkinPath
+---
+
+- Row $n$ is the Motzkin triangle (A055151); rows sum to the Motzkin numbers (A001006).

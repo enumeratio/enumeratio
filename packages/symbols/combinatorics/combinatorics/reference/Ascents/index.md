@@ -1,0 +1,37 @@
+---
+name: Ascents
+domain: Permutation statistics
+signature: Ascents(p)
+summary: "The number of ascents of $p$: positions $i$ with $p_i < p_{i+1}$."
+signatures:
+  - call: Ascents(p)
+    description: the ascent count of a one-line permutation $p$
+    library: enumeratio-combinatorics
+    type: (list | permutation) -> integer
+seeAlso:
+  - Descents
+  - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Permutation#Ascents, descents, runs, exceedances
+  - system: mathworld
+    identity: PermutationAscent
+catalog:
+  - system: findstat
+    identity: St000761
+    url: https://www.findstat.org/St000761
+    on: Composition
+  - system: findstat
+    identity: St000245
+    url: https://www.findstat.org/St000245
+    on: Permutation
+statOn:
+  - Arrangement
+  - AscentSequence
+  - Composition
+  - Permutation
+  - Word
+---
+
+- Complementary to [[Descents]]: $\mathrm{Ascents} + \mathrm{Descents} = n - 1$
+- The identity is all-ascent, the reversal all-descent

@@ -1,0 +1,34 @@
+---
+name: PermutationsAvoiding123
+domain: Collections
+signature: PermutationsAvoiding123(n)
+summary: Permutations of $\{1, …, n\}$ avoiding the pattern $1-2-3$.
+signatures:
+  - call: PermutationsAvoiding123(n)
+    description: Permutations of $\{1, …, n\}$ avoiding the pattern $1-2-3$
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - SymmetricGroup
+  - PermutationsAvoiding132
+  - PermutationsAvoiding213
+  - PermutationsAvoiding231
+  - PermutationsAvoiding312
+  - PermutationsAvoiding321
+references:
+  - system: oeis
+    identity: A000108
+catalog:
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: Permutations(n, avoiding=[1,2,3])
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+---
+
+- Count is the Catalan number $C_n$ (A000108) — Knuth's classical pattern-avoidance result.

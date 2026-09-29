@@ -1,0 +1,21 @@
+---
+name: VertexOutDegree
+domain: Collections
+signature: VertexOutDegree(g, v)
+summary: The number of edges of a [[Graph]] leaving a vertex.
+signatures:
+  - call: VertexOutDegree(g)
+    description: every vertex's out-degree, in VertexList(g) order.
+    library: enumeratio-combinatorics
+    type: (value, any?) -> integer | list<integer>
+  - call: VertexOutDegree(g, v)
+    description: just v's out-degree.
+    library: enumeratio-combinatorics
+seeAlso:
+  - VertexInDegree
+  - VertexDegree
+names:
+  wolframIdentity: true
+---
+
+- See [[VertexInDegree]] for how undirected edges are handled -- the two heads are symmetric.

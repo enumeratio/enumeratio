@@ -1,0 +1,18 @@
+---
+name: PetersenGraph
+domain: Collections
+signature: PetersenGraph()
+summary: The Petersen graph — the standard 10-vertex, 15-edge, 3-regular example graph.
+signatures:
+  - call: PetersenGraph()
+    description: outer 5-cycle (vertices 1-5), inner pentagram (6-10, step 2), and the 5 spokes joining $i$ to $i + 5$.
+    library: enumeratio-combinatorics
+    type: () -> value
+seeAlso:
+  - CycleGraph
+  - IsBipartiteGraph
+names:
+  wolframIdentity: true
+---
+
+- 3-regular, non-bipartite (girth 5, so it has odd cycles), and connected — every property a reader would reach for this graph to demonstrate.

@@ -9,7 +9,7 @@ hold — it is a **bijection with an interval of the integers**. Fix an order, a
 family becomes an indexed collection: _rank_ takes an object to its position, _unrank_
 takes a position back to an object. Everything else follows.
 
-`@enumeratio/collections` declares each family as a lazy indexed collection on
+`@enumeratio/combinatorics/collections` declares each family as a lazy indexed collection on
 compute-engine, so its own `Count` and `At` answer by arithmetic rather than by
 enumeration.
 

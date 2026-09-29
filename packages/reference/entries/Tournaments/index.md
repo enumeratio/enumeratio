@@ -11,6 +11,6 @@ stub: carrier
 signatures:
   - call: Tournaments(...)
     description: Orientations of the complete graph on [n].
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
 ---

@@ -10,6 +10,6 @@ stub: carrier
 signatures:
   - call: LabeledGraph(...)
     description: As a single-graded labeled_graph
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<integer, list<integer>>) -> labeled_graph
 ---

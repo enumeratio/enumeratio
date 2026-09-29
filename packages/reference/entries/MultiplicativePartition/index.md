@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: MultiplicativePartition(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> multiplicative_partition
 ---

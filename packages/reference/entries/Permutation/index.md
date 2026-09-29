@@ -13,6 +13,6 @@ catalogCarrier: true
 signatures:
   - call: Permutation(list)
     description: The singular-inhabitant constructor for a permutation, as a one-line word.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> permutation
 ---

@@ -20,6 +20,6 @@ carrier: OrderedTree
 signatures:
   - call: OrderedTrees(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<any>
 ---

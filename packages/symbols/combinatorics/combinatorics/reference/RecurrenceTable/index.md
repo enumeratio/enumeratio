@@ -1,0 +1,20 @@
+---
+name: RecurrenceTable
+domain: Collections
+signature: RecurrenceTable(eqns, a, {n, nmin, nmax})
+summary: A table of the values of a sequence defined by a recurrence equation and initial conditions.
+signatures:
+  - call: RecurrenceTable(eqns, a, {n, nmin, nmax})
+    description: '$a(nmin), \dots, a(nmax)$, given $eqns$: one general recurrence equation over $a$ plus its initial conditions.'
+    library: enumeratio-combinatorics
+    type: "(eqns: list<any>, a: any, spec: list<any>) -> list<any>"
+seeAlso:
+  - LinearRecurrence
+  - Fibonacci
+names:
+  wolframIdentity: true
+---
+
+- $eqns$ mixes literal-index equations (initial conditions, $a(1) = 7$) with exactly one general equation whose index mentions $n$ ($a(n+1) = 3\,a(n)$, or plainly $a(n) = a(n-1) + a(n-2)$) — only a single recurrence order is supported, not a piecewise definition.
+- $a$ never needs to be declared as a head: it is read directly out of $eqns$ and resolved by walking the recurrence, not by evaluating $a(n)$ as an ordinary compute-engine call.
+- See [[LinearRecurrence]] for the constant-coefficient case without writing out the equations.

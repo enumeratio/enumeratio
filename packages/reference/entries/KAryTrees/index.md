@@ -13,6 +13,6 @@ stub: carrier
 signatures:
   - call: KAryTrees(...)
     description: Trees where every internal node has exactly k children — the Fuss-Catalan count.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>, integer<0..>) -> indexed_collection<any>
 ---

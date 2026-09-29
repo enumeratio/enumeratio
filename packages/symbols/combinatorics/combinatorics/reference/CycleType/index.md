@@ -1,0 +1,26 @@
+---
+name: CycleType
+domain: Combinatorial maps
+signature: CycleType(Permutation)
+summary: The multiset of cycle lengths, as a partition.
+references:
+  - system: wikipedia
+    identity: Cyclic permutation
+  - system: mathworld
+    identity: PermutationCycle
+catalog:
+  - system: findstat
+    identity: Mp00108
+    url: https://www.findstat.org/Mp00108
+    on: Permutation
+mapOn:
+  - Permutation
+signatures:
+  - call: CycleType(Permutation)
+    description: The multiset of cycle lengths, as a partition.
+    library: enumeratio-combinatorics
+    type: (permutation) -> integer_partition
+---
+
+- Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.

@@ -1,6 +1,6 @@
 # Carrier domains
 
-Every carrier domain in `@enumeratio/domains` — the nominal types a combinatorial
+Every carrier domain in `@enumeratio/combinatorics/domains` — the nominal types a combinatorial
 object is stored and dispatched as (`Permutation`, `IntegerPartition`,
 `AlternatingSignMatrix`, …). The badge is the underlying storage **shape** (what a
 value actually is: `list<integer>`, `matrix<integer>`, …); the domain is the

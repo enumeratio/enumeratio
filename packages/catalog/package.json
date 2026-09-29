@@ -27,8 +27,10 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.140.0",
-    "@enumeratio/collections": "workspace:*",
+    "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",
+    "@enumeratio/plausible": "workspace:*",
+    "@enumeratio/statistics": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

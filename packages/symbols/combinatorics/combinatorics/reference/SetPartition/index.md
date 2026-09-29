@@ -1,0 +1,17 @@
+---
+name: SetPartition
+domain: Collections
+signature: SetPartition(list)
+summary: The singular-inhabitant constructor for a partition of a set, as its blocks.
+references:
+  - system: wikipedia
+    identity: Partition of a set
+  - system: mathworld
+    identity: SetPartition
+catalogCarrier: true
+signatures:
+  - call: SetPartition(list)
+    description: The singular-inhabitant constructor for a partition of a set, as its blocks.
+    library: enumeratio-combinatorics
+    type: ((list<list<integer>>) -> set_partition) & ((restricted_growth_string) -> set_partition)
+---

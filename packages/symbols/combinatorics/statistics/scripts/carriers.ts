@@ -1,9 +1,9 @@
 // The carrier types this package's statistics are declared over, mirrored here.
 //
-// @enumeratio/domains owns these — it is where they are minted and where the constructors
+// @enumeratio/combinatorics/domains owns these — it is where they are minted and where the constructors
 // come from — but it DEPENDS on this package, so importing it back would be a build cycle
 // (`vp run -r build` refuses it). The four names below are the contract between the two,
-// and `packages/symbols/combinatorics/domains/tests/entries.test.ts` exercises the real declaration.
+// and `packages/symbols/combinatorics/statistics/tests/domains-entries.test.ts` exercises the real declaration.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 

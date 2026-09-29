@@ -6,7 +6,7 @@ summary: The $k$-gonal figurate numbers $P(k, n) = \big((k-2)n^2 - (k-4)n\big)/2
 signatures:
   - call: PolygonalNumbers(k)
     description: $P(k, n)$ for $n = 1, 2, 3, …$, the $k$-gonal numbers.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(PolygonalNumbers(5), 20)

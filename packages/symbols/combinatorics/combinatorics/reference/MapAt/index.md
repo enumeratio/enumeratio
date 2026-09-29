@@ -1,0 +1,20 @@
+---
+name: MapAt
+domain: Collections
+signature: MapAt(f, expr, n)
+summary: f applied to the part of expr at position n, leaving the rest of expr unchanged.
+signatures:
+  - call: MapAt(f, expr, n)
+    description: f applied at the (1-based, negative counts from the end) position n
+    library: enumeratio-combinatorics
+    type: ((any) -> any, any, integer | list<list<integer>>) -> any
+  - call: MapAt(f, expr, {{n1}, {n2}, …})
+    description: f applied independently at each of several top-level positions
+    library: enumeratio-combinatorics
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.

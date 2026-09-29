@@ -1,0 +1,19 @@
+---
+name: IsNumeric
+domain: Collections
+signature: IsNumeric(expr)
+summary: Whether expr denotes a definite numeric quantity, without evaluating it.
+signatures:
+  - call: IsNumeric(expr)
+    description: $True$ for a number literal or an expression built from numeric literals and constants like $\pi$, $False$ otherwise.
+    library: enumeratio-combinatorics
+    type: (any) -> boolean
+seeAlso:
+  - IsMachineNumber
+  - Precision
+names:
+  wolfram: NumericQ
+---
+
+- Wolfram spells this `NumericQ`; renamed to the `Is…` convention used across compute-engine predicates.
+- A plain symbol with no numeric value (like `x`) is not numeric, even though it could later be assigned one.

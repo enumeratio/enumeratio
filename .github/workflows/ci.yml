@@ -62,7 +62,7 @@ jobs:
               - '!web/**'
               - '!*.md'
 
-  # A handful of suites (statistics, domains, collections) are CPU-bound and saturate a 4-vCPU
+  # A handful of suites (statistics, combinatorics) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
   # Rebalance by moving a package between the shards below (or adding one) as suites grow.
@@ -76,14 +76,13 @@ jobs:
         include:
           - shard: statistics
             filter: --filter @enumeratio/statistics
-          - shard: domains-collections
-            filter: --filter @enumeratio/domains --filter @enumeratio/collections
+          - shard: combinatorics
+            filter: --filter @enumeratio/combinatorics
           - shard: rest
             filter: >-
               --filter '!@enumeratio/web'
               --filter '!@enumeratio/statistics'
-              --filter '!@enumeratio/domains'
-              --filter '!@enumeratio/collections'
+              --filter '!@enumeratio/combinatorics'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

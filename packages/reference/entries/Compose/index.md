@@ -9,6 +9,6 @@ stub: carrier
 signatures:
   - call: Compose(...)
     description: Wolfram's own Composition, mapped through for the transpiler and the oracle but not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (any+) -> function
 ---

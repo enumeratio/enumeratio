@@ -11,6 +11,6 @@ stub: carrier
 signatures:
   - call: RecursiveTrees(...)
     description: Increasing trees on n labeled vertices — (n−1)! of them.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<list<integer>>
 ---

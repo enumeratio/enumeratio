@@ -6,7 +6,7 @@ summary: The $k$-free integers -- naturals with no prime factor raised to the $k
 signatures:
   - call: KFreeIntegers(k)
     description: the positive integers whose every prime factor has exponent $< k$, an infinite indexed collection.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(KFreeIntegers(3), 20)

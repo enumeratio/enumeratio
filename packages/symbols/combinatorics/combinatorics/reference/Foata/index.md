@@ -1,0 +1,21 @@
+---
+name: Foata
+domain: Combinatorial maps
+signature: Foata(Permutation)
+summary: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
+catalog:
+  - system: findstat
+    identity: Mp00067
+    url: https://www.findstat.org/Mp00067
+    on: Permutation
+mapOn:
+  - Permutation
+signatures:
+  - call: Foata(Permutation)
+    description: "Foata's fundamental bijection: cycles rotated to their max, ordered by increasing max, parentheses erased."
+    library: enumeratio-combinatorics
+    type: (permutation) -> permutation
+---
+
+- Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- The first fundamental transformation — it sends a permutation with k cycles to one with k left-to-right maxima. (The catalog's title also names maj → inv, which is the SECOND fundamental transformation's property; this map is the first.)

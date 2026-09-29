@@ -20,7 +20,7 @@
 
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/evaluation/src/node";
-import { allEntries, type FamilyKernel } from "@enumeratio/collections/src";
+import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { referenceEntries } from "../src/node.ts";

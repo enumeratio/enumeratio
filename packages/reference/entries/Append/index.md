@@ -8,7 +8,7 @@ signatures:
     description: the collection with `value` added as its last element.
   - call: Append(expr, value)
     description: "`value` added as the last operand of any expression, not just a collection."
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
 seeAlso:
   - Join
   - Prepend

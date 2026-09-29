@@ -1,0 +1,29 @@
+---
+name: TriCompositions
+domain: Collections
+signature: TriCompositions(n)
+summary: The compositions of $n$ into parts from $\{1, 2, 3\}$.
+signatures:
+  - call: TriCompositions(n)
+    description: the compositions of $n$ into parts from $\{1, 2, 3\}$
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<composition>
+seeAlso:
+  - IntegerCompositions
+  - TetraCompositions
+  - KBoundedCompositions
+references:
+  - system: oeis
+    identity: A000073
+catalog:
+  - system: oeis
+    identity: A000073
+    url: https://oeis.org/A000073
+    note: "tribonacci (A000073 shifted): compositions into {1,2,3}"
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---
+
+- Count is the tribonacci number (A000073).

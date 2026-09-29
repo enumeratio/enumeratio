@@ -1,0 +1,22 @@
+---
+name: Gather
+domain: Collections
+signature: Gather(list)
+summary: Group identical elements into sublists, in order of first appearance.
+signatures:
+  - call: Gather(list)
+    description: elements grouped by equality, in first-appearance order.
+    library: enumeratio-combinatorics
+    type: (indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T
+  - call: Gather(list, test)
+    description: elements grouped by a custom two-argument equivalence test.
+    library: enumeratio-combinatorics
+seeAlso:
+  - GatherBy
+  - Split
+  - Union
+names:
+  wolframIdentity: true
+---
+
+- Groups, not runs: every occurrence of a value lands in the same group wherever it appears — unlike [[Split]], which only joins ADJACENT equal elements. See [[GatherBy]] to group by a function's value instead of the elements themselves.

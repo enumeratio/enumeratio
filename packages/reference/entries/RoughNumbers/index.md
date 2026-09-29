@@ -6,7 +6,7 @@ summary: The $k$-rough numbers -- positive integers with no prime factor below $
 signatures:
   - call: RoughNumbers(k)
     description: the $n \geq 1$ whose prime factors are all $\geq k$ ($n=1$ counts, vacuously), an infinite indexed collection for every $k$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(RoughNumbers(7), 20)

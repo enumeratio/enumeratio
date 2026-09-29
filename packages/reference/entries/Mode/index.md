@@ -8,7 +8,7 @@ signatures:
     description: the most frequently occurring element.
   - call: Mode(collection)
     description: The most frequently occurring element of the collection.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: ((collection<any> | number)+) -> nan | real | signed_infinity
     overrides: compute-engine
 seeAlso:

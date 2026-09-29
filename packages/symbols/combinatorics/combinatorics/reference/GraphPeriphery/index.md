@@ -1,0 +1,17 @@
+---
+name: GraphPeriphery
+domain: Collections
+signature: GraphPeriphery(g)
+summary: The vertices of a [[Graph]] whose eccentricity equals GraphDiameter(g).
+signatures:
+  - call: GraphPeriphery(g)
+    description: every vertex with the largest (finite) eccentricity, in VertexList(g) order.
+    library: enumeratio-combinatorics
+    type: (value) -> list<any>
+seeAlso:
+  - GraphCenter
+  - GraphDiameter
+  - VertexEccentricity
+names:
+  wolframIdentity: true
+---

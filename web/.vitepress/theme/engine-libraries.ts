@@ -19,14 +19,14 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 // call sites below, rather than silently accepting a wrong signature the way a loose
 // `(ce: ComputeEngine) => void` would.
 export interface EngineLibraries {
-  readonly declareCollections: typeof import("@enumeratio/collections").declareCollections;
+  readonly declareCollections: typeof import("@enumeratio/combinatorics/collections").declareCollections;
   readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
   readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
-  readonly declareDomains: typeof import("@enumeratio/domains").declareDomains;
-  readonly declareDomainPlurals: typeof import("@enumeratio/domains").declareDomainPlurals;
-  readonly declareDomainElement: typeof import("@enumeratio/domains").declareDomainElement;
-  readonly declareMaps: typeof import("@enumeratio/domains").declareMaps;
-  readonly DOMAINS: typeof import("@enumeratio/domains").DOMAINS;
+  readonly declareDomains: typeof import("@enumeratio/combinatorics/domains").declareDomains;
+  readonly declareDomainPlurals: typeof import("@enumeratio/combinatorics/domains").declareDomainPlurals;
+  readonly declareDomainElement: typeof import("@enumeratio/combinatorics/domains").declareDomainElement;
+  readonly declareMaps: typeof import("@enumeratio/combinatorics/domains").declareMaps;
+  readonly DOMAINS: typeof import("@enumeratio/combinatorics/domains").DOMAINS;
   readonly declareAnalytic: typeof import("@enumeratio/analytic").declareAnalytic;
   readonly declareFractals: typeof import("@enumeratio/analytic").declareFractals;
   readonly declareGraphics: typeof import("@enumeratio/formats").declareGraphics;

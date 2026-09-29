@@ -1,0 +1,25 @@
+---
+name: Thread
+domain: Collections
+signature: Thread(f(a1, …, an))
+summary: f applied elementwise across every list-headed argument, other arguments broadcast.
+signatures:
+  - call: Thread(f(a1, …, an))
+    description: f threaded over every List-headed operand
+    library: enumeratio-combinatorics
+    type: (any, symbol?) -> any
+  - call: Thread(f(a1, …, an), h)
+    description: like Thread(f(...)), threading only over operands headed by h instead of List
+    library: enumeratio-combinatorics
+seeAlso:
+  - MovingMap
+  - Array
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- Operands not headed by h are broadcast unchanged to every threaded call.
+- Left unevaluated when the h-headed operands don't all share one length.
+- Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.

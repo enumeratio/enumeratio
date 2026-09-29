@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: GlyphKind(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<string, string>) -> glyph_kind
 ---

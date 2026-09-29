@@ -1,0 +1,24 @@
+---
+name: While
+domain: Collections
+signature: While(test, body)
+summary: Evaluates an expression repeatedly while a test stays true.
+signatures:
+  - call: While(test)
+    description: Re-evaluates $test$ until it reads other than $True$.
+    library: enumeratio-combinatorics
+    type: (any, any?) -> any
+  - call: While(test, body)
+    description: Evaluates $body$ each time $test$ (re-evaluated first) reads $True$; stops as soon as it doesn't.
+    library: enumeratio-combinatorics
+seeAlso:
+  - Do
+  - NestWhile
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- Always returns $Nothing$, like [[Do]].
+- Capped at 4096 iterations, past which the loop simply stops — Wolfram's own default cap, $IterationLimit, is much larger and configurable; this one is fixed.

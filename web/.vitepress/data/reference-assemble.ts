@@ -3,7 +3,7 @@
 // has a page that shows its crosswalk. Stubs never shadow an entry. Shared by the browser
 // (reference.ts, over the virtual module) and the Node side of the site (reference-node.ts).
 
-import { DOMAINS, type Domain } from "@enumeratio/domains";
+import { DOMAINS, type Domain } from "@enumeratio/combinatorics/domains";
 import type { MathJSON, ReferenceEntry } from "@enumeratio/reference";
 import { engineEntries } from "@enumeratio/reference";
 
