@@ -11,12 +11,12 @@ test("MathML: root element and display option", () => {
   );
 });
 
-test("MathML: registered as an export-only format", () => {
+test("MathML: registered as a format", () => {
   const ce = new ComputeEngine();
   const format = getFormat("mathml");
   expect(format?.name).toBe("MathML");
   expect(exportFormats()).toContain("MathML");
-  expect(importFormats()).not.toContain("MathML");
+  expect(importFormats()).toContain("MathML");
   expect(getFormat("MathMLForm")).toBe(format);
   expect(exportTo(ce.box(["Add", "x", 1]), "MathML")).toBe(
     '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow></math>',

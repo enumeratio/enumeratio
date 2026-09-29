@@ -18,6 +18,10 @@
       "types": "./dist/inputform.d.mts",
       "import": "./dist/inputform.mjs"
     },
+    "./asciimath": {
+      "types": "./dist/asciimath.d.mts",
+      "import": "./dist/asciimath.mjs"
+    },
     "./mathml": {
       "types": "./dist/mathml.d.mts",
       "import": "./dist/mathml.mjs"
@@ -37,7 +41,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/mathml.ts src/tex.ts",
+    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -46,7 +50,8 @@
     "@enumeratio/boxes": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/raster": "workspace:*",
-    "@enumeratio/wolfram": "workspace:*"
+    "@enumeratio/wolfram": "workspace:*",
+    "asciimath2tex": "catalog:"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.140.0",
