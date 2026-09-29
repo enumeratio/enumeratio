@@ -132,34 +132,27 @@ const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
 
 /** A set partition's restricted growth string, labels from `base`: position i carries the index
  *  of its block, blocks in the order they are kept. */
-const growthStringOf = (blocks: MathJSON, base = 0): MathJSON =>
-  forEach(
-    ["Range", 1, ["Length", ["Flatten", blocks]], 1],
-    [
-      "Fold",
-      ["Function", ["If", ["Element", "i", ["At", blocks, "k"]], ["Add", "k", base - 1], "acc"], "acc", "k"],
-      -1,
-      ["Range", 1, ["Length", blocks], 1],
-    ],
-  );
+const growthStringOf = (blocks: MathJSON, base = 0): MathJSON => [
+  "Map",
+  ["Function", ["Add", base - 1, ["IndexWhere", blocks, ["Function", ["Element", "i", "b"], "b"]]], "i"],
+  ["Range", 1, ["Length", ["Flatten", blocks]], 1],
+];
 
 /** The blocks of a restricted growth string whose labels start at `base`: block j holds the
- *  positions labelled j, in increasing order. Each block is folded, so it is a list rather than
- *  a lazy filter. */
+ *  positions labelled j, in increasing order. */
 const blocksOf = (word: MathJSON, base: number): MathJSON => [
   "If",
   ["Equal", ["Length", word], 0],
   ["List"],
-  forEach(
-    ["Range", base, ["Max", word], 1],
+  [
+    "Map",
     [
-      "Fold",
-      ["Function", ["If", ["Equal", ["At", word, "p"], "j"], ["Join", "acc", ["List", "p"]], "acc"], "acc", "p"],
-      ["List"],
-      ["Range", 1, ["Length", word], 1],
+      "Function",
+      ["Filter", ["Range", 1, ["Length", word], 1], ["Function", ["Equal", ["At", word, "p"], "j"], "p"]],
+      "j",
     ],
-    "j",
-  ),
+    ["Range", base, ["Max", word], 1],
+  ],
 ];
 
 /** A composition's partial sums, folded into a list. */
@@ -941,13 +934,20 @@ export function evaluateDefinition(ce: ComputeEngine, map: CombinatorialMap, con
 function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression {
   // A Tuple is already a concrete value — and materialising one would flatten it into a
   // List, which is exactly wrong for a composite carrier like `standard_tableau_pair`.
-  if (value.operator === "List" || value.operator === "Tuple") return value;
-  const size = ce.function("Count", [value]).evaluate().re;
-  if (!Number.isFinite(size)) return value;
-  const entries = Array.from({ length: size }, (_, index) =>
-    ce.function("At", [value, ce.number(index + 1)]).evaluate(),
+  const concrete = value.operator === "List" || value.operator === "Tuple";
+  let items: readonly BoxedExpression[];
+  if (concrete) items = operandsOf(value);
+  else {
+    const size = ce.function("Count", [value]).evaluate().re;
+    if (!Number.isFinite(size)) return value;
+    items = Array.from({ length: size }, (_, index) => ce.function("At", [value, ce.number(index + 1)]).evaluate());
+  }
+  // An item may itself be lazy (a `Map` of `Filter`s), so each is forced too.
+  const forced = items.map((item) =>
+    item.operator !== "List" && item.isCollection === true ? materialise(ce, item) : item,
   );
-  return ce.function("List", entries).evaluate();
+  if (concrete && forced.every((item, index) => item === items[index])) return value;
+  return ce.function(concrete ? value.operator : "List", forced).evaluate();
 }
 
 /** Replace `_raw` (or another placeholder) with the argument's contents, before boxing. */
