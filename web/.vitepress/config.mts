@@ -9,55 +9,63 @@ import { notatioSymbols } from "./notatio-symbols.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
-// The symbols as Vue components are generated here, before the theme is bundled, so
-// `@enumeratio/frontend`'s `src/vue-generated.ts` exists for the theme to register.
-generate("vue");
-
-// Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs
-// site reads sibling packages directly and never depends on a prior `vp pack` of
-// them — dev and build both stay in sync with source, with no stale-dist surprises.
-// Each package's exports are read, and any target under dist/ is remapped to the
-// matching src/*.ts; exports that already point at src are used as-is.
-const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
-const srcAliases: { find: RegExp; replacement: string }[] = [];
-// Symbol packages sit a level deeper, under packages/symbols/<group>/.
-const packageDirs = readdirSync(pkgsDir).flatMap((name) =>
-  name === "symbols"
-    ? readdirSync(resolve(pkgsDir, name)).flatMap((group) =>
-        readdirSync(resolve(pkgsDir, name, group)).map((pkg) => `${name}/${group}/${pkg}`),
-      )
-    : [name],
-);
-for (const dir of packageDirs) {
-  const manifest = resolve(pkgsDir, dir, "package.json");
-  if (!existsSync(manifest)) continue;
-  const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
-    name?: string;
-    exports?: Record<string, unknown>;
-  };
-  if (!pkg.name?.startsWith("@enumeratio/") || !pkg.exports) continue;
-  for (const [sub, entry] of Object.entries(pkg.exports)) {
-    const target = typeof entry === "string" ? entry : (entry as { import?: string })?.import;
-    if (typeof target !== "string") continue;
-    const srcRel = target.includes("/dist/")
-      ? target.replace("/dist/", "/src/").replace(/\.(m|c)?js$/, ".ts")
-      : target.startsWith("./src/")
-        ? target
-        : undefined;
-    if (!srcRel) continue;
-    const abs = resolve(pkgsDir, dir, srcRel);
-    if (!existsSync(abs)) continue;
-    const spec = sub === "." ? pkg.name : pkg.name + sub.slice(1);
-    srcAliases.push({
-      find: new RegExp(`^${spec.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`),
-      replacement: abs,
-    });
-  }
-}
-
 // design/speculative/: open design, rendered by `vitepress dev` only. It is linked into the
 // site as web/speculative (a gitignored symlink) and left out of builds.
 const dev = process.argv.includes("dev");
+
+// The symbols as Vue components are generated here, before the theme is bundled, so
+// `@enumeratio/frontend`'s `src/vue-generated.ts` exists for the theme to register. A
+// production build reads `@enumeratio/frontend` from its already-built dist (below), packed
+// from whatever this same generator wrote during that package's own build step
+// (`.github/actions/setup` runs it earlier in the same CI job) -- rerunning it here would only
+// rewrite src with an identical file, so only dev, which reads src live, needs it.
+if (dev) generate("vue");
+
+// Dev only: resolve every @enumeratio/* import (bare and subpaths) to its source, so editing a
+// sibling package shows up without a `vp pack` of it first. A production build leaves this
+// empty and falls through to each package's own `exports`: dist for anything with a build step
+// (CI's setup action builds every one before the site build runs), plain src for the few
+// packages that never had a dist entry (reference, entry, bench, census, plausible). Each
+// package's exports are read here only to confirm the src file this dev alias would point at
+// actually exists.
+const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
+const srcAliases: { find: RegExp; replacement: string }[] = [];
+if (dev) {
+  // Symbol packages sit a level deeper, under packages/symbols/<group>/.
+  const packageDirs = readdirSync(pkgsDir).flatMap((name) =>
+    name === "symbols"
+      ? readdirSync(resolve(pkgsDir, name)).flatMap((group) =>
+          readdirSync(resolve(pkgsDir, name, group)).map((pkg) => `${name}/${group}/${pkg}`),
+        )
+      : [name],
+  );
+  for (const dir of packageDirs) {
+    const manifest = resolve(pkgsDir, dir, "package.json");
+    if (!existsSync(manifest)) continue;
+    const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
+      name?: string;
+      exports?: Record<string, unknown>;
+    };
+    if (!pkg.name?.startsWith("@enumeratio/") || !pkg.exports) continue;
+    for (const [sub, entry] of Object.entries(pkg.exports)) {
+      const target = typeof entry === "string" ? entry : (entry as { import?: string })?.import;
+      if (typeof target !== "string") continue;
+      const srcRel = target.includes("/dist/")
+        ? target.replace("/dist/", "/src/").replace(/\.(m|c)?js$/, ".ts")
+        : target.startsWith("./src/")
+          ? target
+          : undefined;
+      if (!srcRel) continue;
+      const abs = resolve(pkgsDir, dir, srcRel);
+      if (!existsSync(abs)) continue;
+      const spec = sub === "." ? pkg.name : pkg.name + sub.slice(1);
+      srcAliases.push({
+        find: new RegExp(`^${spec.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`),
+        replacement: abs,
+      });
+    }
+  }
+}
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const speculativeDir = resolve(webDir, "../design/speculative");
 const speculativeLink = resolve(webDir, "speculative");
