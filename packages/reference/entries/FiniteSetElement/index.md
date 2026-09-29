@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: FiniteSetElement(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<integer, integer>) -> finite_set_element
 ---

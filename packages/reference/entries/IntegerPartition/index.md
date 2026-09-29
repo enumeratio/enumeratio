@@ -13,6 +13,6 @@ catalogCarrier: true
 signatures:
   - call: IntegerPartition(list)
     description: The singular-inhabitant constructor for an integer partition, as its parts.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> integer_partition
 ---

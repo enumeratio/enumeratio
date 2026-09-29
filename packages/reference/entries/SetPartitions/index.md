@@ -6,14 +6,14 @@ summary: The partitions of the set $\{1, …, n\}$ into non-empty blocks, a lazy
 signatures:
   - call: SetPartitions(n)
     description: every way to split $\{1, …, n\}$ into disjoint non-empty blocks.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (collection<any> | integer, integer?) -> list<list<list<any>> | set_partition>
   - call: SetPartitions(n, k)
     description: the set partitions of $\{1, …, n\}$ into exactly $k$ blocks.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: SetPartitions(collection)
     description: the set partitions of any finite collection.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
 enumerate:
   expr: SetPartitions(4)
   columns: Length, Max(Map(Length, _))

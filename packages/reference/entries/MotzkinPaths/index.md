@@ -16,6 +16,6 @@ carrier: MotzkinPath
 signatures:
   - call: MotzkinPaths(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<list<integer>>
 ---

@@ -6,20 +6,20 @@ summary: The power set of $\{1, …, n\}$ — every subset, as a lazy indexed fa
 signatures:
   - call: Subsets(n)
     description: the $2^n$ subsets of $\{1, …, n\}$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (collection<any> | integer, (integer | list<integer>)?) -> list<list<any>>
   - call: Subsets(collection)
     description: the subsets of any finite collection.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: Subsets(n, k)
     description: the subsets of $\{1, …, n\}$ of size at most $k$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: Subsets(n, {k})
     description: the subsets of $\{1, …, n\}$ of size exactly $k$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
   - call: Subsets(n, {kmin, kmax, dn})
     description: the subsets of $\{1, …, n\}$ with size in $kmin, kmin+dn, …$ up to $kmax$; $dn$ defaults to $1$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
 enumerate:
   expr: Subsets(4)
   columns: Length, Sum

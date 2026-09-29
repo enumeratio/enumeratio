@@ -2,7 +2,7 @@
 //
 // A permutation of {1..n} is stored here as a plain array `sigma` of length n, 0-indexed,
 // with `sigma[i-1] === sigma(i)` — the same one-line convention `SymmetricGroup`'s lazy
-// family already uses (`packages/symbols/combinatorics/collections/src/families/core.ts`).
+// family already uses (`packages/symbols/combinatorics/combinatorics/collections/src/families/core.ts`).
 // Cycle notation (Wolfram's `Cycles[{{...}}, ...]`) is just another way to WRITE the same
 // function: cycle `(i1 i2 … ik)` means `sigma(i1) = i2, …, sigma(ik) = i1`.
 //

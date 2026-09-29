@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: ColoredPermutation(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<list<integer>, list<integer>>) -> colored_permutation
 ---

@@ -1,0 +1,16 @@
+---
+name: PascalBinomial
+domain: Collections
+signature: PascalBinomial(n, m)
+summary: The binomial coefficient, extended to a negative n so Pascal's identity still holds.
+signatures:
+  - call: PascalBinomial(n, m)
+    description: n(n-1)…(n-m+1) / m!, for m >= 0 and any integer n
+    library: enumeratio-combinatorics
+    type: (number, number) -> number
+names:
+  wolframIdentity: true
+---
+
+- Agrees with [[Binomial]] where n >= m >= 0; for a negative n it is the standard generalized binomial coefficient, which still satisfies Pascal's recurrence P(n, m) = P(n-1, m-1) + P(n-1, m).
+- A negative m is left unevaluated -- Wolfram's extension there is a documented gap, not yet cross-checked against a kernel.

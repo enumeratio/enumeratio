@@ -114,7 +114,7 @@ export class NotatioCollectionTable extends LitElement {
     /** The current page, 1-based. */
     page: { type: Number, reflect: true },
     /**
-     * The carrier its rows inhabit -- the constructor head from `@enumeratio/domains`,
+     * The carrier its rows inhabit -- the constructor head from `@enumeratio/combinatorics/domains`,
      * e.g. `Permutation`. Auto-derived from the collection's own head (`SymmetricGroup` ->
      * `Permutation`) via `@enumeratio/structures`' collection→carrier registry, so this is
      * an OVERRIDE, needed only when the collection isn't registered or a story wants a

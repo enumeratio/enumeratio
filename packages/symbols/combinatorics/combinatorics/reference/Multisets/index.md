@@ -1,0 +1,41 @@
+---
+name: Multisets
+domain: Combinatorial collections
+signature: Multisets(n, k)
+summary: The size-k multisets drawn from $\{1, \dots, n\}$ (combinations with repetition).
+signatures:
+  - call: Multisets(n, k)
+    description: size-$k$ multisets over $n$ symbols
+    library: enumeratio-combinatorics
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - KSubsets
+  - Tuples
+references:
+  - system: wikipedia
+    identity: Multiset
+  - system: mathworld
+    identity: Multiset
+catalog:
+  - system: mathlib4
+    identity: Sym (Fin n) k
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Sym/Basic.html
+  - system: sage
+    identity: sage.combinat.combinat.number_of_unordered_tuples(S, k)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/combinat.html
+    note: the multichoose ((|S| multichoose k)); matches fiber_count exactly; verified live (3,2)=6, (5,3)=35 (no prior sage row for this collection)
+    relation: aggregate
+  - system: wikipedia
+    identity: Multiset
+    url: https://en.wikipedia.org/wiki/Multiset
+    relation: conceptual
+grades:
+  - name: n
+    role: axis
+  - name: k
+    role: axis
+carrier: Multiset
+---
+
+- Count is $\binom{n + k - 1}{k}$, the number of combinations with repetition
+- Each element is a non-decreasing length-$k$ list

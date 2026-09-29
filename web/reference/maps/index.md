@@ -1,6 +1,6 @@
 # Combinatorial maps
 
-Every combinatorial map in `@enumeratio/domains` — a structure-respecting function
+Every combinatorial map in `@enumeratio/combinatorics/domains` — a structure-respecting function
 from one carrier to another (a bijection, a forgetful map, a statistic-preserving
 correspondence). The badge is `from → to`. Frontier maps (dimmed) are named and
 have a known signature but no definition yet.

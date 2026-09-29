@@ -1,0 +1,26 @@
+---
+name: DyadicCompositions
+domain: Collections
+signature: DyadicCompositions(n)
+summary: The compositions of $n$ into powers-of-two parts.
+signatures:
+  - call: DyadicCompositions(n)
+    description: the compositions of $n$ into powers-of-two parts
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<composition>
+seeAlso:
+  - IntegerCompositions
+references:
+  - system: oeis
+    identity: A023359
+catalog:
+  - system: oeis
+    identity: A023359
+    url: https://oeis.org/A023359
+grades:
+  - name: n
+    role: axis
+carrier: Composition
+---
+
+- Count is A023359.

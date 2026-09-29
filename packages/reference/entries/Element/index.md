@@ -28,7 +28,7 @@ signatures:
       - Mathematical sets: Integers, RealNumbers, ComplexNumbers, etc.
       - Type names: integer, rational, real, number, positive_integer, etc.
       - Invalid type names remain unevaluated (e.g., Element(2, "Booleans"))
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (any, any, boolean?) -> boolean
     overrides: enumeratio-structures
   - call: Element(any, any, boolean?) -> boolean

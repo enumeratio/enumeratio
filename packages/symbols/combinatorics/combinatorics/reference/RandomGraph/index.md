@@ -1,0 +1,18 @@
+---
+name: RandomGraph
+domain: Collections
+signature: RandomGraph({n, m})
+summary: A uniformly-chosen simple undirected [[Graph]] with n vertices and exactly m edges.
+signatures:
+  - call: RandomGraph({n, m})
+    description: n vertices, m edges, no self-loop or parallel edge; unevaluated if m exceeds C(n, 2).
+    library: enumeratio-combinatorics
+    type: (any) random -> value
+seeAlso:
+  - RandomInteger
+  - SeedRandom
+names:
+  wolframIdentity: true
+---
+
+- Drawn by a Fisher-Yates shuffle of the C(n, 2) possible edges, taking the first m -- from the SAME seeded stream RandomInteger uses (see list-frontier.ts), reseeded together by SeedRandom. NOT Wolfram's own generator or algorithm: only VertexCount / EdgeCount / simplicity are guaranteed to match, the same divergence RandomInteger's own reference entry documents.

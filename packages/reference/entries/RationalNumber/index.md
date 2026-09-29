@@ -10,6 +10,6 @@ stub: carrier
 signatures:
   - call: RationalNumber(...)
     description: To rational number
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (tuple<integer, integer>) -> rational_number
 ---

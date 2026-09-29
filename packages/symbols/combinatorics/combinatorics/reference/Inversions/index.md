@@ -1,0 +1,36 @@
+---
+name: Inversions
+domain: Permutation statistics
+signature: Inversions(p)
+summary: "The number of inversions of a permutation $p$: pairs $i < j$ with $p_i > p_j$ (its Kendall-tau distance from the identity)."
+signatures:
+  - call: Inversions(p)
+    description: the inversion count of a one-line permutation $p$
+    library: enumeratio-combinatorics
+    type: (list | permutation) -> integer
+seeAlso:
+  - MajorIndex
+  - Descents
+  - SymmetricGroup
+references:
+  - system: wikipedia
+    identity: Inversion (discrete mathematics)
+  - system: mathworld
+    identity: PermutationInversion
+catalog:
+  - system: findstat
+    identity: St000018
+    url: https://www.findstat.org/St000018
+    on: Permutation
+statOn:
+  - Arrangement
+  - Permutation
+  - PermutationCycles
+  - PermutationInversion
+  - SignedPermutation
+---
+
+- Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)
+- Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$
+- Equidistributed with [[MajorIndex]] on $S_n$ (MacMahon), so both are Mahonian statistics
+- Aggregates over a whole collection compose from built-ins: $\mathrm{Sum}(\mathrm{Map}(\mathrm{Inversions}, \mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family

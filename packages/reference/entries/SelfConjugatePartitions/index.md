@@ -20,6 +20,6 @@ carrier: IntegerPartition
 signatures:
   - call: SelfConjugatePartitions(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (integer) -> collection
 ---

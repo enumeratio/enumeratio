@@ -2,7 +2,7 @@
 //
 // There is no TypeScript kernel behind these heads, so there is no second implementation to
 // drift from. Where a fast path does exist (the permutation statistics already in
-// @enumeratio/collections), the two are held together by a differential test instead.
+// @enumeratio/combinatorics/collections), the two are held together by a differential test instead.
 
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
@@ -39,7 +39,7 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
 export interface DeclareOptions {
   /**
    * Declare each statistic over its carrier's DOMAIN TYPE, and unwrap the constructed value
-   * before evaluating. Pass `@enumeratio/domains`' type names, keyed by carrier.
+   * before evaluating. Pass `@enumeratio/combinatorics/domains`' type names, keyed by carrier.
    *
    * This is the intended mode: a combinatorial statistic is a function OF a carrier, so
    * `Cycles(Permutation([2,1,3]))` is the question and `Cycles([2,1,3])` is a type error —
@@ -128,7 +128,7 @@ const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).l
 /**
  * File every definition in its carrier's `CombinatorialStat` table, and declare it as a
  * head of its own where the name is free. A taken name is fine in two cases, both explicit: the
- * table already holds another package's kernel for this very statistic (@enumeratio/collections'
+ * table already holds another package's kernel for this very statistic (@enumeratio/combinatorics/collections'
  * permutation statistics), or compute-engine owns the name (`Sign`), when its head is
  * generalised to take the carrier too. Anything else is a
  * `StatisticCollisionError`, listing every one.

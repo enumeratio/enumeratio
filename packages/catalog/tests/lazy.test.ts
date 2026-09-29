@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { expect, test } from "vite-plus/test";
 import { applicationCandidates, canonicalParse, prepare, rawParse } from "../src/lazy.ts";
 import { ResourceRegistry } from "../src/registry.ts";

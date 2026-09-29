@@ -4,8 +4,8 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { COLLECTIONS } from "@enumeratio/catalog/src";
-import { allEntries } from "@enumeratio/collections/src";
-import { PRIVATE_SUFFIX, publicName } from "@enumeratio/domains/src";
+import { allEntries } from "@enumeratio/combinatorics/collections/src";
+import { PRIVATE_SUFFIX, publicName } from "@enumeratio/combinatorics/domains/src";
 import { expect, test } from "vite-plus/test";
 import { bindings, fullEngine } from "../src/engine.ts";
 

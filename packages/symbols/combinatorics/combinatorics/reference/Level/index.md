@@ -1,0 +1,32 @@
+---
+name: Level
+domain: Collections
+signature: Level(expr, n) / Level(expr, {n}) / Level(expr, {n1, n2})
+summary: Every subexpression of expr at the given level(s) — level 0 is expr itself.
+signatures:
+  - call: Level(expr, n)
+    description: levels 1 through n
+    library: enumeratio-combinatorics
+    type: (any, any) -> list<any>
+  - call: Level(expr, {n})
+    description: level n alone
+    library: enumeratio-combinatorics
+  - call: Level(expr, {n1, n2})
+    description: levels n1 through n2
+    library: enumeratio-combinatorics
+  - call: Level(expr, PositiveInfinity)
+    description: every level, all the way to the leaves
+    library: enumeratio-combinatorics
+  - call: Level(expr, {-1})
+    description: every leaf, regardless of depth — Wolfram's own "leaves" shorthand
+    library: enumeratio-combinatorics
+seeAlso:
+  - MapIndexed
+  - Pick
+names:
+  wolframIdentity: true
+---
+
+- Wolfram's own POST-ORDER: a node's children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts, not before them. Siblings keep their original order; only each node's position relative to its OWN descendants moves.
+- Only `{-1}` (and bare `-1`) is supported among negative levels — Wolfram's general negative-level-from-the-leaves counting (`{-2}`, `{-3, -1}`, …) is left undone.
+- No 4th-argument predicate form, and no Heads option.

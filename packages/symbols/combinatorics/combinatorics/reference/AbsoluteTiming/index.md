@@ -1,0 +1,19 @@
+---
+name: AbsoluteTiming
+domain: Collections
+signature: AbsoluteTiming(expr)
+summary: Evaluates an expression and reports the wall-clock time it took.
+signatures:
+  - call: AbsoluteTiming(expr)
+    description: '$\{seconds, value\}$: the wall-clock seconds spent evaluating $expr$, as a real number, and its value.'
+    library: enumeratio-combinatorics
+    type: (any) time -> any
+seeAlso:
+  - Echo
+names:
+  wolframIdentity: true
+attributes:
+  - HoldAll
+---
+
+- $seconds$ is inherently nondeterministic (it depends on the machine and the moment) — the worked example below extracts just the value half with [[At]], rather than pinning a timing figure.

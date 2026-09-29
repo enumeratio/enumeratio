@@ -1,6 +1,6 @@
 name: Plausible
 
-# Property-based sampling over the collection catalogue (packages/symbols/combinatorics/collections/scripts/plausible.ts): random
+# Property-based sampling over the collection catalogue (packages/symbols/combinatorics/combinatorics/collections/scripts/plausible.ts): random
 # (family, params, rank) points, checked for round trip, validity, injectivity and count. A fresh seed each run
 # means a red result is a finding to triage, not a broken build — so this is ADVISORY, never a required check.
 #   push / PR  — default budget, scoped to the kernels and the harness. The job stays green; a failure
@@ -11,10 +11,10 @@ on:
   push:
     branches: [main]
     paths:
-      - packages/symbols/combinatorics/collections/**
+      - packages/symbols/combinatorics/combinatorics/collections/**
   pull_request:
     paths:
-      - packages/symbols/combinatorics/collections/**
+      - packages/symbols/combinatorics/combinatorics/collections/**
   schedule:
     - cron: "41 4 * * *" # 04:41 UTC, after nightly.yml
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
           if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             export PLAUSIBLE_POINTS=100 PLAUSIBLE_MAX_SIZE=9
           fi
-          node packages/symbols/combinatorics/collections/scripts/plausible.ts 2>&1 | tee plausible.log
+          node packages/symbols/combinatorics/combinatorics/collections/scripts/plausible.ts 2>&1 | tee plausible.log
 
       - name: open/reopen the tracking issue
         if: steps.run.outcome == 'failure'
@@ -64,7 +64,7 @@ jobs:
               ``,
               `Run: ${runUrl}`,
               ``,
-              `Each failure prints the exact replay command (\`node packages/symbols/combinatorics/collections/scripts/plausible.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
+              `Each failure prints the exact replay command (\`node packages/symbols/combinatorics/combinatorics/collections/scripts/plausible.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
               ``,
               '```',
               tail,

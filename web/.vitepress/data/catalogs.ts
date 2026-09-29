@@ -1,7 +1,7 @@
 // Row data for the four reference catalogue pages, read straight from the packages
 // that own each class. Kept in one module so the shared row shape stays in sync.
-import { allEntries } from "@enumeratio/collections";
-import { DOMAINS, MAPS, UNDEFINED_MAPS } from "@enumeratio/domains";
+import { allEntries } from "@enumeratio/combinatorics/collections";
+import { DOMAINS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics/domains";
 import {
   crosswalkFor,
   crosswalkForCollection,

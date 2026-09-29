@@ -5,8 +5,14 @@
 // is returned as structured data and drawn by whichever adapter runs the core.
 
 import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/collections";
-import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
+import { declareCollections } from "@enumeratio/combinatorics/collections";
+import {
+  declareDomainElement,
+  declareDomainPlurals,
+  declareDomains,
+  declareMaps,
+  DOMAINS,
+} from "@enumeratio/combinatorics/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import {

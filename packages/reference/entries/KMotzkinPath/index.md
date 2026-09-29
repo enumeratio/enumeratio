@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: KMotzkinPath(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> k_motzkin_path
 ---

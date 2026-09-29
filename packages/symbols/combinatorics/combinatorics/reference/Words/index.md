@@ -1,0 +1,34 @@
+---
+name: Words
+domain: Collections
+signature: Words(size, base)
+summary: The strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$.
+signatures:
+  - call: Words(size, base)
+    description: the strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$
+    library: enumeratio-combinatorics
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - Tuples
+  - BinaryWords
+catalog:
+  - system: sage
+    identity: sage.combinat.words.words.Words(base, size)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/words/words.html
+    note: "arg order reversed: sage's Words(k, n) is alphabet-size-then-length vs our words(size, base) = length-then-alphabet-size; same {1..base}^size lex enumeration"
+  - system: sympy
+    identity: variations
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.variations
+    note: variations(seq, k, repetition=True) — length-k tuples over a len(seq)-letter alphabet = words(size=k, base=len(seq))
+  - system: mathlib4
+    identity: List.Vector
+    note: a length-n word over Fin b = List.Vector (Fin b) n
+grades:
+  - name: size
+    role: axis
+  - name: base
+    role: param
+carrier: Word
+---
+
+- Count is $base^{size}$; the same family as [[Tuples]], with grades reordered.

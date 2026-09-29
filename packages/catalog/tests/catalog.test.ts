@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "../src/catalog-records-data.ts";
 import { declareCatalog } from "../src/declare.ts";

@@ -8,6 +8,6 @@ stub: carrier
 signatures:
   - call: LabeledTree(...)
     description: Catalogued in the enumeratio database; not yet written up here.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> labeled_tree
 ---

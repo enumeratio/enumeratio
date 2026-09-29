@@ -1,0 +1,19 @@
+---
+name: HararyGraph
+domain: Collections
+signature: HararyGraph(k, n)
+summary: The minimum-edge k-connected graph on n vertices (Harary, 1962).
+signatures:
+  - call: HararyGraph(k, n)
+    description: EdgeCount = ceil(k n / 2), minimum vertex degree >= k.
+    library: enumeratio-combinatorics
+    type: (integer, integer) -> value
+seeAlso:
+  - CirculantGraph
+  - IsConnectedGraph
+names:
+  wolframIdentity: true
+---
+
+- k even: the circulant CirculantGraph(n, {1, …, k/2}). k odd, n even: that circulant plus the n/2 diametrically-opposite edges. k odd, n odd: that circulant plus vertex 1 joined to BOTH floor(n/2)+1 and ceil(n/2)+1 (1 alone ends up with degree k + 1 -- the one vertex n*k being odd forces to take the remainder), plus i <-> i + ceil(n/2) (1-based) giving everyone else their kth edge.
+- Kernel-verified against Wolfram 15 for the odd/odd case: HararyGraph(3, 7) gives exactly the 7-cycle plus {1-4, 1-5, 2-6, 3-7}. The even-k and (odd-k, even-n) cases follow the standard, unambiguous Harary construction and were not separately kernel-checked.

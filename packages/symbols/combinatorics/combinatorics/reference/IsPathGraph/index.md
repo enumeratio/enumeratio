@@ -1,0 +1,19 @@
+---
+name: IsPathGraph
+domain: Collections
+signature: IsPathGraph(g)
+summary: Whether a [[Graph]] is a simple path — a single chain of vertices, each joined once to the next.
+signatures:
+  - call: IsPathGraph(g)
+    description: true iff g is simple (no self-loop, no repeated edge) and its underlying graph is a path.
+    library: enumeratio-combinatorics
+    type: (value) -> boolean
+seeAlso:
+  - PathGraph
+  - IsTreeGraph
+  - IsAcyclicGraph
+names:
+  wolfram: PathGraphQ
+---
+
+- Wolfram calls this `PathGraphQ`; this library uses the `Is…` spelling everywhere (see [[IsConnectedGraph]]'s own note).

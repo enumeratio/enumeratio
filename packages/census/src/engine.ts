@@ -18,7 +18,7 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import {
   DOMAINS,
@@ -30,7 +30,7 @@ import {
   declareMaps,
   declareRestricted,
   declareRestrictions,
-} from "@enumeratio/domains/src";
+} from "@enumeratio/combinatorics/domains/src";
 import { declareGraphics } from "@enumeratio/formats/src";
 import { declareGeometric } from "@enumeratio/geometric/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
@@ -111,8 +111,8 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   ["number-theory", declareNumberTheory],
   // The carriers before collections: the permutation families yield `Permutation` values, typed
   // by the minted type, as the site's engine has them.
-  ["domains", declareDomains],
-  ["collections", (ce) => declareCollections(ce, { permutationType: "permutation", carrierTypes: carrierTypes() })],
+  ["combinatorics", declareDomains],
+  ["combinatorics", (ce) => declareCollections(ce, { permutationType: "permutation", carrierTypes: carrierTypes() })],
   // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
   ["structures", declareStructures],
   ["formats", declareGraphics],
@@ -121,7 +121,7 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
   // bare symbol first.
   [
-    "domains",
+    "combinatorics",
     (ce) => {
       declareDomainPlurals(ce);
       declareDomainElement(ce);
@@ -143,14 +143,14 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
     },
   ],
   [
-    "domains",
+    "combinatorics",
     (ce) => {
       declareMaps(ce, domainTypes());
       declareRestricted(ce);
       declareRestrictions(ce, RESTRICTIONS);
     },
   ],
-  ["domains", declareCompose],
+  ["combinatorics", declareCompose],
   ["catalog", (ce) => declareCatalog(ce, { bless: [ENUMERATIO] })],
 ];
 

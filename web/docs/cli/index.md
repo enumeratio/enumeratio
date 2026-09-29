@@ -31,7 +31,7 @@ syntax pragma forces a syntax for one line, and `:in <syntax>` changes the defau
 | MathJSON          | `:mathjson ["Binomial", 10, 3]` | the interchange form       |
 
 All evaluate to the same thing — the combinatorial heads (`Binomial`, `Inversions`,
-`Descents`, `MajorIndex`, …) come from `@enumeratio/collections`. Bare LaTeX (a line
+`Descents`, `MajorIndex`, …) come from `@enumeratio/combinatorics/collections`. Bare LaTeX (a line
 starting with `\`) is **not** accepted in Epsil — use a `$…$` island or `:latex`.
 
 ## Output forms

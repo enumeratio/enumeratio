@@ -1,0 +1,33 @@
+---
+name: EvenPermutations
+domain: Collections
+signature: EvenPermutations(n)
+summary: The even permutations of $\{1, …, n\}$ — the alternating group $A_n$.
+signatures:
+  - call: EvenPermutations(n)
+    description: the even permutations of $\{1, …, n\}$ — the alternating group $A_n$
+    library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<list<integer>>
+seeAlso:
+  - SymmetricGroup
+  - Inversions
+references:
+  - system: oeis
+    identity: A001710
+catalog:
+  - system: oeis
+    identity: A001710
+    url: https://oeis.org/A001710
+  - system: sage
+    identity: sage.groups.perm_gps.permgroup_named.AlternatingGroup(n)
+    url: https://doc.sagemath.org/html/en/reference/groups/sage/groups/perm_gps/permgroup_named.html
+    note: a GROUP object (order n!/2), not a plain combinatorial class — the underlying permutation set is our collection
+    relation: partial
+grades:
+  - name: size
+    role: axis
+carrier: Permutation
+---
+
+- Count is $n!/2$ for $n \ge 2$, and $1$ for $n \le 1$ (A001710).
+- Each element is a one-line permutation with an even number of inversions.

@@ -13,6 +13,6 @@ catalogCarrier: true
 signatures:
   - call: StandardTableau(list)
     description: The singular-inhabitant constructor for a standard Young tableau, as its rows.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: (list<integer>) -> standard_tableau
 ---

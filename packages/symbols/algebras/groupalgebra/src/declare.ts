@@ -243,7 +243,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   };
 
   aboutGroup("GroupOrder", `(${anyGroupLike}) -> integer`, (g) => ce.number(order(g)));
-  // GroupOrder(SymmetricGroup(n)) -> n!. SymmetricGroup is @enumeratio/collections' own
+  // GroupOrder(SymmetricGroup(n)) -> n!. SymmetricGroup is @enumeratio/combinatorics/collections' own
   // lazy indexed family (n! one-line words) rather than a Group this package builds a
   // Cayley table for -- n! elements would make that table, not the answer, the expensive
   // part. Attached right here (not from collections, which declares SymmetricGroup) so it
@@ -427,7 +427,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       evaluate: permutationCycles,
     });
   } else {
-    // @enumeratio/domains' carrier constructor got the name first; a second declare throws.
+    // @enumeratio/combinatorics/domains' carrier constructor got the name first; a second declare throws.
     widenSignature(
       ce,
       "PermutationCycles",

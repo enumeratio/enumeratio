@@ -1,0 +1,22 @@
+---
+name: VertexInDegree
+domain: Collections
+signature: VertexInDegree(g, v)
+summary: The number of edges of a [[Graph]] pointing INTO a vertex.
+signatures:
+  - call: VertexInDegree(g)
+    description: every vertex's in-degree, in VertexList(g) order.
+    library: enumeratio-combinatorics
+    type: (value, any?) -> integer | list<integer>
+  - call: VertexInDegree(g, v)
+    description: just v's in-degree.
+    library: enumeratio-combinatorics
+seeAlso:
+  - VertexOutDegree
+  - VertexDegree
+names:
+  wolframIdentity: true
+---
+
+- On a graph with at least one directed edge, undirected edges contribute NOTHING to VertexInDegree (kernel-verified against Wolfram 15): Graph({1->2, 2<->3, 3->1}) gives in-degree {1, 1, 0} -- the undirected 2<->3 edge is invisible here, only the two directed edges count, each at the one endpoint it actually points to.
+- On a graph with NO directed edge at all (purely undirected), VertexInDegree = VertexOutDegree = VertexDegree instead.

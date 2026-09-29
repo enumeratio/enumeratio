@@ -27,11 +27,11 @@ it.
 
 ### 1.1 What's declared today, and what's only catalogued
 
-| population                   |                    catalogued (stub records) | actually defined                                  | where                                                             |
-| ---------------------------- | -------------------------------------------: | ------------------------------------------------- | ----------------------------------------------------------------- |
-| statistic names              | **242** (`statOn:` on 242 reference entries) | **84**, on 4 carriers                             | `packages/symbols/combinatorics/statistics/src/all.ts`            |
-| restriction/map-ish families |                                          n/a | **19** restrictions, **25** of 85 catalogued maps | `packages/symbols/combinatorics/domains/src/{restriction,map}.ts` |
-| carriers                     |                                           86 | **86**, all minted as nominal CE types            | `packages/symbols/combinatorics/domains/src/domain-data.ts`       |
+| population                   |                    catalogued (stub records) | actually defined                                  | where                                                                           |
+| ---------------------------- | -------------------------------------------: | ------------------------------------------------- | ------------------------------------------------------------------------------- |
+| statistic names              | **242** (`statOn:` on 242 reference entries) | **84**, on 4 carriers                             | `packages/symbols/combinatorics/statistics/src/all.ts`                          |
+| restriction/map-ish families |                                          n/a | **19** restrictions, **25** of 85 catalogued maps | `packages/symbols/combinatorics/combinatorics/domains/src/{restriction,map}.ts` |
+| carriers                     |                                           86 | **86**, all minted as nominal CE types            | `packages/symbols/combinatorics/combinatorics/domains/src/domain-data.ts`       |
 
 (242 and 85 match the census in `design/namespaces.md` §1 exactly — that count hasn't moved.
 `grep -rl statOn: packages/reference/entries/*.yaml \| wc -l` → 242;
@@ -60,7 +60,7 @@ is a MathJSON tree over the wildcard `_x`, and it **is** the implementation
 This is already the "metadata plus an implementation as an actual math expression" Dean
 asked for, at the statistic level — it just isn't filed under the collection.
 
-**Maps** (`packages/symbols/combinatorics/domains/src/map.ts`) are already closer to the
+**Maps** (`packages/symbols/combinatorics/combinatorics/domains/src/map.ts`) are already closer to the
 target shape: a `CombinatorialMap` names `from`/`to` **carrier types**, a body over `_raw`,
 an optional `guard`, and a `composedOf` chain that type-checks step by step. 25 of the 85
 catalogued map names have one.
@@ -78,7 +78,7 @@ const p = ce.box(["AsPermutation", ["List", 2, 1, 3]]);
 p.evaluate().type; // Permutation — survives evaluation because there's no handler to collapse it
 ```
 
-All 86 carriers are minted this way (`declareDomains`, `packages/symbols/combinatorics/domains/src/declare.ts`).
+All 86 carriers are minted this way (`declareDomains`, `packages/symbols/combinatorics/combinatorics/domains/src/declare.ts`).
 A held constructor with a signature and no `evaluate` handler doesn't collapse, so
 `FixedPoints(AsPermutation([2,1,3]))` type-checks and `FixedPoints([2,1,3])` is rejected —
 real dispatch, not a naming convention. The one gap `domains.md` §1.1 already logs: **minted
@@ -97,7 +97,7 @@ worth a one-line fix wherever it's read next, not a design question.
 
 ### 1.3 Collections: `Declared` capability, carrier by string
 
-A collection family (`packages/symbols/combinatorics/collections/src/families/*.ts`, 25
+A collection family (`packages/symbols/combinatorics/combinatorics/collections/src/families/*.ts`, 25
 files) carries a `Declared` record (`design/plausible.md` §3.5):
 
 ```ts
@@ -156,7 +156,7 @@ specification agree to compete for a name," never two unrelated things silently 
 §3.5 turns that into the collision-error design.
 
 **A related, sharper finding: maps already have an audited extension mechanism that
-statistics never reaches for.** `packages/symbols/combinatorics/domains/src/extend.ts` exists
+statistics never reaches for.** `packages/symbols/combinatorics/combinatorics/domains/src/extend.ts` exists
 precisely to add a permutation-specific clause to a compute-engine built-in without losing
 its original behaviour (`domains.md` §5.2-§5.3, "the shadowing audit"), and `declareMaps`
 uses it: checked directly (`MAPS` against an engine built up to the maps step), **3 of the 25
@@ -474,7 +474,7 @@ Move the `Definition` record (and its examples) to live beside the collection/ca
 on, matching `plausible.md` §4.2's existing walk (family → carrier → maps/statistics):
 
 ```
-packages/symbols/combinatorics/collections/src/families/permutation-classes.ts
+packages/symbols/combinatorics/combinatorics/collections/src/families/permutation-classes.ts
   └─ Declared { carrier: "Permutation", … }        (existing)
   └─ statistics: readonly Definition[]              (new — was in the standalone statistics package)
       { head: "Inversions", on: "Permutation", expr: …, catalog: [{system:"findstat", identity:"St000018"}] }

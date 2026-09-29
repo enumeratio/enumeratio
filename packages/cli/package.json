@@ -26,8 +26,7 @@
   },
   "dependencies": {
     "@cortex-js/compute-engine": "^0.140.0",
-    "@enumeratio/collections": "workspace:*",
-    "@enumeratio/domains": "workspace:*",
+    "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/frontend": "workspace:*",
     "@enumeratio/raster": "workspace:*",

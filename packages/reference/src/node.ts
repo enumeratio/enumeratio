@@ -281,14 +281,72 @@ export function writeOracleAgreements(data: ReferenceData = referenceData()): vo
   );
 }
 
-/** Packages whose heads need their own engine (statistics over the carriers, the maps over
- * those): the reference engine (scripts/engines.ts) doesn't declare them, and each package's
- * own entries test runs them. */
-const OWN_ENGINE = new Set(["statistics", "domains"]);
+/** Packages whose heads need their own engine (statistics over the carriers): the bare-vs-ours
+ * provenance comparison (scripts/provenance.ts) can't classify a head whose examples take a
+ * carrier-typed argument (`Permutation(...)`, `SetPartition(...)`, …) -- a bare engine doesn't
+ * understand the constructor, so the comparison never runs and a genuine override reads as
+ * unclassified. Each such package's own entries test runs its examples directly instead. */
+const OWN_ENGINE = new Set(["statistics"]);
 
-/** The entries the reference engine evaluates: every head but those in `OWN_ENGINE`. */
+/** The combinatorics area's maps (originally `@enumeratio/domains`, before it merged into
+ * `@enumeratio/combinatorics` wholesale: design/speculative/combinatorics-layering-and-
+ * plausible.md's step 1) -- the same carrier-typed-argument problem as `OWN_ENGINE`, but the
+ * merge means `packageOf` can no longer single them out from the collections area by package
+ * name alone. This is the domains area's reference/ folder listing as of the merge; it moves
+ * with the heads when maps are carved into their own area (migration step 5). */
+const DOMAINS_HEADS = new Set([
+  "ArcRepresentation",
+  "BinarySearchTree",
+  "BinarySearchTreeParentArray",
+  "BinaryTree",
+  "BinaryTreeParentArray",
+  "Complement",
+  "Complement_",
+  "ComposeApply",
+  "Composition",
+  "ConjugacyClassRepresentative",
+  "ConjugateAfterCycleType",
+  "CutWord",
+  "CyclePartition",
+  "CycleType",
+  "CyclicShift",
+  "DescentComposition",
+  "DescentSet",
+  "DistributionMatchHit",
+  "DyckPath",
+  "Factorization",
+  "FindStatHit",
+  "Foata",
+  "Fraction",
+  "FromPermutation",
+  "Inverse",
+  "InverseAfterComplementAfterReverse",
+  "InverseCyclicShift",
+  "KnuthClassRepresentative",
+  "KrewerasComplement",
+  "PeakSet",
+  "PermutahedronVertex",
+  "Restricted",
+  "RestrictedGrowthString",
+  "Reverse",
+  "ReverseComplement",
+  "Reverse_",
+  "Rsk",
+  "RskInsertion",
+  "RskRecording",
+  "RskShape",
+  "SetComposition",
+  "SetPartition",
+  "Surjection",
+  "ToLehmerCode",
+]);
+
+/** The entries the reference engine evaluates: every head but those in `OWN_ENGINE` or
+ * `DOMAINS_HEADS`. */
 export function referenceEntries(data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
-  return data.entries.filter((entry) => !OWN_ENGINE.has(data.packageOf.get(entry.name)!));
+  return data.entries.filter(
+    (entry) => !OWN_ENGINE.has(data.packageOf.get(entry.name)!) && !DOMAINS_HEADS.has(entry.name),
+  );
 }
 
 /** One package's own entries (by directory name), as that package's tests run them. */

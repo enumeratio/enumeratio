@@ -1,4 +1,4 @@
-// #113: `Rationalize(x, 0)` (packages/symbols/combinatorics/collections/src/arith-heads.ts) and
+// #113: `Rationalize(x, 0)` (packages/symbols/combinatorics/combinatorics/collections/src/arith-heads.ts) and
 // `Rationalize(x, dx)` for a concrete positive dx (packages/symbols/analysis/analytic/src/precision-113.ts,
 // PR #146) are two separate `wrapOperator` attachments on the same head, with disjoint
 // `applies` gates (dx === 0 vs dx > 0). `wrapOperator` chains by capture order -- whichever
@@ -7,7 +7,7 @@
 // own declaration order (analytic, then collections).
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { expect, test } from "vite-plus/test";
 
 function engineWith(order: readonly ((ce: ComputeEngine) => void)[]): ComputeEngine {

@@ -19,8 +19,8 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { declareCollections } from "@enumeratio/collections";
-import { declareDomainElement, declareDomainPlurals, declareDomains, DOMAINS } from "@enumeratio/domains";
+import { declareCollections } from "@enumeratio/combinatorics/collections";
+import { declareDomainElement, declareDomainPlurals, declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains";
 import { substituteRowPerHead, wantsCarrier } from "@enumeratio/frontend";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 import { collectionCarrierOf, declareStructures } from "@enumeratio/structures";

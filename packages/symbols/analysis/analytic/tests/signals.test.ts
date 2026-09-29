@@ -8,7 +8,7 @@ import { declareAnalytic } from "../src/declare.ts";
 // (rational in, rational out) -- unlike elementary.test.ts's Gudermannian/Hyperfactorial
 // cases, there is no oracle drift to budget for, and each head's exact cases are pinned
 // as examples on its own record. `Clip` is not tested here: it is answered by
-// compute-engine's native `Clamp`, exercised in packages/symbols/combinatorics/collections/tests
+// compute-engine's native `Clamp`, exercised in packages/symbols/combinatorics/combinatorics/collections/tests
 // instead.
 
 const ce = new ComputeEngine();

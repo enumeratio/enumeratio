@@ -1,0 +1,32 @@
+---
+name: Peaks
+domain: Permutation statistics
+signature: Peaks(p)
+summary: "The number of peaks of $p$: interior positions $i$ with $p_{i-1} < p_i > p_{i+1}$."
+signatures:
+  - call: Peaks(p)
+    description: the peak count of a one-line permutation $p$
+    library: enumeratio-combinatorics
+    type: (list | permutation) -> integer
+seeAlso:
+  - Valleys
+  - Descents
+  - SymmetricGroup
+catalog:
+  - system: findstat
+    identity: St000023
+    url: https://www.findstat.org/St000023
+    on: Permutation
+statOn:
+  - ColoredMotzkinPath
+  - DelannoyPath
+  - DyckPath
+  - KDyckPath
+  - KMotzkinPath
+  - MotzkinPath
+  - Permutation
+  - SchroederPath
+---
+
+- Only interior positions count ($1 < i < n$), so $\mathrm{Peaks}(p) = 0$ whenever $n \leq 2$
+- Peaks and [[Valleys]] alternate along the sequence, so they differ by at most $1$

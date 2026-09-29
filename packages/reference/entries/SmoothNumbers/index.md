@@ -6,7 +6,7 @@ summary: The $k$-smooth numbers -- positive integers with every prime factor $\l
 signatures:
   - call: SmoothNumbers(k)
     description: the positive integers whose prime factors are all $\le k$, an infinite indexed collection.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<integer>
 enumerate:
   expr: Take(SmoothNumbers(7), 20)

@@ -12,7 +12,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
 import { CARRIER_TYPES, declareCarriers } from "./carriers.ts";
@@ -141,7 +141,7 @@ const entryFor = (definition: Definition): ReferenceEntry => {
   const details = [
     `Defined over \`${definition.on}\` as an expression in \`_x\`, evaluated by compute-engine — the definition IS the implementation.`,
     CARRIER_TYPES[definition.on] === undefined
-      ? `Not yet typed over its carrier: \`${definition.on}\` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled.`
+      ? `Not yet typed over its carrier: \`${definition.on}\` is a restricted growth string in @enumeratio/combinatorics/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled.`
       : definition.alsoOnList === true
         ? `Takes a \`${definition.on}\`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.`
         : `Takes a \`${definition.on}\` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.`,

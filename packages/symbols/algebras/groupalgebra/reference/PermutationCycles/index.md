@@ -13,7 +13,7 @@ signatures:
     library: enumeratio-groupalgebra
   - call: PermutationCycles(perm)
     description: A permutation given as a one-line word $\{\sigma(1), \dots, \sigma(n)\}$, converted to disjoint-cycle notation ([[Cycles]]). The other direction of [[Permute]]'s two conventions.
-    library: enumeratio-domains
+    library: enumeratio-combinatorics
     type: ((list<integer>) -> permutation_cycles) & ((expression<Cycles> | list<integer>, any?) -> any)
     overrides: enumeratio-groupalgebra
 seeAlso:

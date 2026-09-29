@@ -1,0 +1,24 @@
+---
+name: RandomComplex
+domain: Collections
+signature: RandomComplex() / RandomComplex(zmax) / RandomComplex({zmin, zmax})
+summary: A uniformly random complex number in a rectangle of the complex plane.
+signatures:
+  - call: RandomComplex()
+    description: uniform over the unit square (real and imaginary parts each in [0, 1])
+    library: enumeratio-combinatorics
+    type: (any?) random -> any
+  - call: RandomComplex(zmax)
+    description: uniform over the rectangle with corners 0 and zmax
+    library: enumeratio-combinatorics
+  - call: RandomComplex({zmin, zmax})
+    description: uniform over the rectangle with corners zmin and zmax
+    library: enumeratio-combinatorics
+seeAlso:
+  - RandomInteger
+  - SeedRandom
+names:
+  wolframIdentity: true
+---
+
+- Draws from the SAME seeded stream as [[RandomInteger]] (call [[SeedRandom]](seed) first for a reproducible sequence) — our own generator, not Wolfram's, so only the shape and range of the answer are guaranteed to match.

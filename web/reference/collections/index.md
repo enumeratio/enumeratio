@@ -1,6 +1,6 @@
 # Collections
 
-Every collection head in `@enumeratio/collections` — the enumerable families
+Every collection head in `@enumeratio/combinatorics/collections` — the enumerable families
 (`Subsets`, `SymmetricGroup`, `IntegerPartitions`, …) and the set operations over
 them. Each is a lazy indexed family: `Count` is closed-form and `At` unranks. The
 badge is the head's signature. Enumerable families carry their own

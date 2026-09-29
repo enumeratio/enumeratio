@@ -39,7 +39,7 @@
 //   vp node packages/census/scripts/audit-head-map.ts
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { DOMAINS } from "@enumeratio/domains";
+import { DOMAINS } from "@enumeratio/combinatorics/domains";
 import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { NUMERAL_ALIASES } from "@enumeratio/numerals";
 import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/frontend/symbols";

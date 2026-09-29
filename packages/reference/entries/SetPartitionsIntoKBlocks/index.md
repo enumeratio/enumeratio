@@ -32,6 +32,6 @@ carrier: SetPartition
 signatures:
   - call: SetPartitionsIntoKBlocks(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage, wolfram; not yet written up here.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>, integer<0..>) -> indexed_collection<set_partition>
 ---

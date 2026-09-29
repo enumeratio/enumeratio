@@ -25,6 +25,6 @@ carrier: Composition
 signatures:
   - call: CompositionsIntoKParts(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4, oeis, sage; not yet written up here.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
 ---

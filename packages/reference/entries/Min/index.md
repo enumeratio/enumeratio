@@ -10,7 +10,7 @@ signatures:
     description: the smallest value in a list.
   - call: Min()
     description: the identity element $+\infty$, for a call with no arguments at all.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (any*) -> any
     overrides: enumeratio-analytic
   - call: Min(a, b, …)
@@ -22,7 +22,7 @@ signatures:
     description: for values of any ordered type, not just numbers -- the meet, in a lattice that is not a total order.
     library: enumeratio-structures
     type: (any*) -> any
-    overrides: enumeratio-collections
+    overrides: enumeratio-combinatorics
 seeAlso:
   - Max
   - Clamp

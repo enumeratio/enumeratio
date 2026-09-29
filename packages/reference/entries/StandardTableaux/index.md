@@ -27,6 +27,6 @@ carrier: StandardTableau
 signatures:
   - call: StandardTableaux(n)
     description: "Standard Young tableaux: fillings of a partition shape, weakly increasing along rows and columns."
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
 ---

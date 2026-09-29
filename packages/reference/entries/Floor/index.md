@@ -8,7 +8,7 @@ signatures:
     description: the greatest integer $\le x$, $\lfloor x \rfloor$.
   - call: Floor(x, step)
     description: the greatest multiple of `step` at or below x, $\mathrm{step}\cdot\lfloor x/\mathrm{step}\rfloor$.
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (number, number?) -> number
     overrides: enumeratio-analytic
   - call: Floor(x)
@@ -20,7 +20,7 @@ signatures:
     description: in a floor ring (Mathlib's), the greatest integer at or below x; in a floor order, the greatest tick at or below x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are floored separately.
     library: enumeratio-structures
     type: (any, any?) -> any
-    overrides: enumeratio-collections
+    overrides: enumeratio-combinatorics
 seeAlso:
   - Ceil
   - Round

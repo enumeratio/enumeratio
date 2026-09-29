@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 // Buildless src subpaths: the entry tests must run without a prior `vp pack`.
-import { declareCollections } from "@enumeratio/collections/src";
+import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { expect, test } from "vite-plus/test";
 import { CARRIER_TYPES, declareCarriers } from "../scripts/carriers.ts";
 import { ALL_STATISTICS } from "../src/all.ts";
@@ -18,7 +18,7 @@ const entries = readEntries(new URL("../reference/", import.meta.url));
 
 // The order both engines use: carriers, collections (which owns the fast permutation heads),
 // then the definitions, which leave collections' heads to it. A statistic is a function OF a carrier, so that
-// is what these heads take. (@enumeratio/domains itself is NOT imported: it depends on this
+// is what these heads take. (@enumeratio/combinatorics/domains itself is NOT imported: it depends on this
 // package, so reaching back would be a build cycle -- see scripts/carriers.ts.)
 const ce = new ComputeEngine();
 declareCarriers(ce);

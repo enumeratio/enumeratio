@@ -11,6 +11,6 @@ stub: carrier
 signatures:
   - call: LabeledGraphs(...)
     description: Simple undirected graphs on the labeled vertex set [n].
-    library: enumeratio-collections
+    library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
 ---

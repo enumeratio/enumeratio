@@ -25,9 +25,15 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
 import { declareBraid } from "@enumeratio/braid";
-import { declareCollections } from "@enumeratio/collections";
+import { declareCollections } from "@enumeratio/combinatorics/collections";
 import { declareDiagrams } from "@enumeratio/diagram";
-import { declareDomainElement, declareDomainPlurals, declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
+import {
+  declareDomainElement,
+  declareDomainPlurals,
+  declareDomains,
+  declareMaps,
+  DOMAINS,
+} from "@enumeratio/combinatorics/domains";
 import { declareGraphics } from "@enumeratio/formats";
 import { declareBoxes } from "@enumeratio/boxes";
 import { declareStructures } from "@enumeratio/structures";

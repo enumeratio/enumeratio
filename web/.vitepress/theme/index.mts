@@ -89,9 +89,9 @@ export default {
           { declareEvaluation },
         ] = await Promise.all([
           import("@enumeratio/components"),
-          import("@enumeratio/collections"),
+          import("@enumeratio/combinatorics/collections"),
           import("@enumeratio/statistics"),
-          import("@enumeratio/domains"),
+          import("@enumeratio/combinatorics/domains"),
           import("@enumeratio/analytic"),
           import("@enumeratio/formats"),
           import("@enumeratio/boxes"),

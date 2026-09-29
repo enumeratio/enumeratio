@@ -1,0 +1,19 @@
+---
+name: UndirectedEdge
+domain: Collections
+signature: UndirectedEdge(u, v)
+summary: An undirected edge between two vertices — the edge head [[Graph]] holds in its edge list.
+signatures:
+  - call: UndirectedEdge(u, v)
+    description: an edge between $u$ and $v$, undirected — [[VertexDegree]] and the connectivity heads count it toward both endpoints and traverse it in either direction, regardless of which argument is which.
+    library: enumeratio-combinatorics
+    type: (any, any) -> value
+seeAlso:
+  - DirectedEdge
+  - Graph
+names:
+  wolframIdentity: true
+---
+
+- Inert, like [[Graph]] itself — it holds exactly as written; nothing here evaluates it away.
+- Wolfram prints this infix as $u \leftrightarrow v$ (`u <-> v`); Epsil has no infix form for it yet, so it round-trips through call-form syntax, `UndirectedEdge(u, v)`, which Wolfram accepts as equivalent input.

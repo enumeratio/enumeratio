@@ -1,0 +1,34 @@
+---
+name: KBracelets
+domain: Collections
+signature: KBracelets(n, k)
+summary: Words of length $n$ over a $k$-letter alphabet up to rotation and reflection — bracelets over $k$ colours, a lazy indexed family.
+signatures:
+  - call: KBracelets(n, k)
+    library: enumeratio-combinatorics
+    description: the bracelets of $n$ beads, each one of $k$ colours.
+    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+enumerate:
+  expr: KBracelets(4, 3)
+  columns: Descents, Ascents
+seeAlso:
+  - BinaryBracelets
+  - Totient
+  - Count
+  - At
+catalog:
+  - system: sympy
+    identity: bracelets
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.bracelets
+    note: 0-indexed colors, shift +1 for our 1-based letters
+grades:
+  - name: size
+    role: axis
+  - name: base
+    role: param
+carrier: Word
+---
+
+- A lazy indexed collection; generalises [[BinaryBracelets]] from $k=2$ to any alphabet size, by the same Burnside sum over $D_n$.
+- Each element is the lexicographically-least word in its rotation-and-reflection orbit, over letters $0,…,k-1$.
+- $At$ unranks over these canonical words in ascending lexicographic order.
