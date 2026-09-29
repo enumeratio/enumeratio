@@ -11,10 +11,7 @@ import {
   entriesAfterDyckPathsByHeight as pathsPartitions,
 } from "./paths-partitions.ts";
 import { entries as tableauxTrees } from "./tableaux-trees.ts";
-import {
-  entriesBeforeSkewPartitions as tableauxPlaneBeforeSkewPartitions,
-  entries as tableauxPlane,
-} from "./tableaux-plane.ts";
+import { entries as tableauxPlane } from "./tableaux-plane.ts";
 import {
   bigintEntries as permutationsBigintEntries,
   coreEntries as permutationsCoreEntries,
@@ -44,6 +41,11 @@ import {
   coreEntries as setPartitionsCoreEntries,
   pathsPartitionsEntries as setPartitionsPathsPartitionsEntries,
 } from "../../../set-partitions/src/families/index.ts";
+import {
+  tableauxPlaneBeforeSkewStandardTableauxEntries,
+  tableauxPlaneSkewStandardTableauxEntries,
+  tableauxPlanePlanePartitionsEntries,
+} from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -77,9 +79,11 @@ const numberEntries = [
   ...latticePathsPathsPartitionsEntries,
   ...pathsPartitions,
   ...tableauxTrees,
-  ...tableauxPlaneBeforeSkewPartitions,
+  ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
+  ...tableauxPlaneSkewStandardTableauxEntries,
   ...tableauxPlane,
+  ...tableauxPlanePlanePartitionsEntries,
   ...permutationsEntries,
   ...permutationClassesEntries,
   ...compositionsEntries,
