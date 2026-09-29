@@ -12,12 +12,14 @@ composition of heads over those typed values (§5–§8). Nothing here is built.
   its carrier types and constructors, its families, its statistics and maps, and its records.
 - **Carriers are declared before families, in the same call**, so typed elements are the
   default. The `carrierTypes` option and #389's `collectionCarrierOf` wrap retire.
-- `collections` keeps the family contract (`FamilyKernel`, cost classes, the helpers) and the
-  generic collection heads; it never learns a carrier. `domains` keeps the carrier machinery
-  (minting, held constructors, representations, `Render`/`ParseAs`) and loses its data.
-  `statistics` keeps the distributions and processes.
-- **Carrier rule:** a nontrivial conversion earns two carriers and a converter; a trivial one
-  earns one carrier, in the form that is harder to derive (§2).
+- **Merge first, carve later.** `collections` and `domains` merge into `combinatorics` as they
+  are; what belongs elsewhere (arithmetic families and carriers, the generic list heads) is
+  pieced out afterwards. No boundary between them is kept just because it exists today.
+- **Carrier rule:** a form is a carrier when it is counted and ordered in its own right, and a
+  representation when it only prints and parses the same value (§2). Conversions between
+  carriers are overloads of the target's constructor, not heads.
+- **Order is first-class.** A carrier has no order; a collection is a carrier plus a total
+  order, and states it. Sibling collections exist for distinct useful orders (§2).
 - **A property is an Epsil statement**, `ForAll(Element(x, D), P)`. `FindCounterexample`
   samples it through `Random`, shrinks what fails and returns counterexamples as values.
   `VerificationTest` turns that into a pass or fail. Laws are data on the records.
@@ -52,39 +54,46 @@ Two surveys fed the proposal:
 
 ## 2. The carrier rule
 
-> If converting between two structural encodings is **nontrivial**, keep both as carriers,
-> joined by a converter pair with an `{inverse}` law. If it's **trivial**, keep one carrier,
-> in the form that is harder to derive from the other.
+> A form is a **carrier** when it is a family counted and ordered in its own right, with its
+> own collection. It is a **representation** when it only prints and parses the same value
+> (render and parse, design/domains.md §3).
 
-- **Nontrivial** means a bijection with content: RSK, Prüfer, the Lehmer code, the Dyck-path
-  and tree bijections, Foata. It also covers the case where the natural statistics don't
-  carry across simply.
-- **Trivial** means a relabelling, flattening, sorting or partial sums: a linear pass anyone
-  would write inline. The other form is then a **representation** (render and parse), not a
-  carrier (design/domains.md §3).
-- **Siblings share a ranking.** Where a converter pair exists, make it an order isomorphism if
-  possible. One collection then borrows the other's rank, as BinaryTrees does through Dyck
-  paths (#401). `domains/tests/equivalence.test.ts` checks the claim.
+- How cheap the conversion is doesn't decide it. With statistics and maps shared across
+  equivalences, an extra carrier costs one converter pair and buys a typed collection and a
+  checked order claim. Growth strings, surjections, binary trees' parent arrays and
+  permutations in cycle notation are carriers; a partition's frequency form is a
+  representation.
+- **Conversions are constructor overloads.** Two carriers are joined by a converter pair with
+  an `{inverse}` law, written as the target's constructor on the source's value:
+  `SetPartition(RestrictedGrowthString([0, 1, 0, 2]))`, `DyckPath(tree)`. The same conversion
+  is reached as `CombinatorialMap(x, DyckPaths)` (by the target collection) or by FindStat id.
+  A named map is for a bijection with an identity of its own, not for every pair (#401).
+- **Order is first-class.** A carrier doesn't care about order; a collection is a carrier plus
+  a total order, and it can't enumerate consistently without one. Each collection states its
+  order. Sibling collections exist for distinct _useful_ orders over one carrier, or over
+  sibling carriers (`BinaryTrees` by root split, `DyckPaths` in lex order). Where a conversion
+  happens to match two collections' orders it says so (`orderIsomorphism`), and
+  `domains/tests/equivalence.test.ts` checks it, but that is a claim, not a goal.
 - **A restriction is not a carrier** (design/domains.md §4). `Derangements` holds
   permutations.
 
 Applied to what exists:
 
-| carriers                                                                             | verdict                                                                                                                                                                                                                                                                                                                |
-| ------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BinaryTree`, `KAryTree`, `OrderedTree`, `PlaneTree`, `IncreasingBinaryTree`         | **Nested**, since flattening is cheap. #401 makes `BinaryTree` nested and joins it to `DyckPath` by an order isomorphism (FindStat Mp00012). `OrderedTree` and `PlaneTree` are the same object and should fold into one carrier. `IncreasingBinaryTree` ↔ `Permutation` is nontrivial, so both stay, with a converter. |
-| `BinaryTree` and `BinaryTreeParentArray` (#401)                                      | #401 keeps two carriers. By the rule the parent array is a cheap flattening, so it would be a representation. Open question 2.                                                                                                                                                                                         |
-| `DyckPath` with `BinaryTree`, `NonCrossingMatchings`, 321-avoiding `Permutation`s    | Nontrivial. Separate carriers, joined by order isomorphisms where they exist.                                                                                                                                                                                                                                          |
-| `SetPartition` (blocks) and `RestrictedGrowthString`                                 | The conversion is a linear relabelling, so the rule gives one carrier: the blocks. The growth string becomes a representation, and `RestrictedGrowthStrings(n)` becomes `SetPartitions(n)` written that way. That reverses #396's added carrier. Open question 1.                                                      |
-| `SetComposition` (blocks) and `Surjection`                                           | Same argument: one carrier (the blocks), with the word as a representation. Open question 1.                                                                                                                                                                                                                           |
-| `Composition` and its cut word                                                       | Settled. The cut word is a `BinaryWord`, a carrier in its own right (all binary words), reached by `CutWord` / `CompositionOfCutWord`.                                                                                                                                                                                 |
-| `Permutation` and `PermutationCycles`                                                | Trivial. Cycle notation is already a representation of `Permutation`, so `PermutationCycles` retires as a carrier.                                                                                                                                                                                                     |
-| `Permutation` and `SubexcedantSeq` (Lehmer code)                                     | Nontrivial. Both stay, joined by `ToLehmerCode` and its inverse.                                                                                                                                                                                                                                                       |
-| `LabeledTree` and Prüfer sequences                                                   | Nontrivial. Both stay: the tree nested, the sequence as a word.                                                                                                                                                                                                                                                        |
-| `IntegerPartition` and its frequency form                                            | Trivial. The frequency form is a representation (built).                                                                                                                                                                                                                                                               |
-| `StandardTableau` (row word), `SemistandardTableau`, `SkewTableau`, `PlanePartition` | **Nested rows**. A reading word is a flattening, and the shape is the part that is hard to derive.                                                                                                                                                                                                                     |
-| `AlternatingSignMatrix`, `GelfandTsetlinPattern`                                     | Nested rows, for the same reason.                                                                                                                                                                                                                                                                                      |
-| `PerfectMatching`                                                                    | Pairs are its blocks, so it is a restriction of `SetPartition` rather than a carrier. Open question 3.                                                                                                                                                                                                                 |
+| carriers                                                                             | verdict                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `BinaryTree`, `KAryTree`, `OrderedTree`, `PlaneTree`, `IncreasingBinaryTree`         | **Nested**. #401 makes `BinaryTree` nested and joins it to `DyckPath` by FindStat's Mp00012, a bijection (not order-preserving between `BinaryTrees` and `DyckPaths`). `OrderedTree` and `PlaneTree` are the same object and should fold into one carrier. `IncreasingBinaryTree` ↔ `Permutation` is nontrivial, so both stay, with a converter. |
+| `BinaryTree` and `BinaryTreeParentArray` (#401)                                      | Two carriers: the parent arrays are a collection in `BinaryTrees`' order (#401).                                                                                                                                                                                                                                                                 |
+| `DyckPath` with `BinaryTree`, `NonCrossingMatchings`, 321-avoiding `Permutation`s    | Nontrivial. Separate carriers, joined by order isomorphisms where they exist.                                                                                                                                                                                                                                                                    |
+| `SetPartition` (blocks) and `RestrictedGrowthString`                                 | Two carriers (#396): growth strings are counted and ordered in their own right, order-isomorphic to `SetPartitions`.                                                                                                                                                                                                                             |
+| `SetComposition` (blocks) and `Surjection`                                           | Two carriers, likewise.                                                                                                                                                                                                                                                                                                                          |
+| `Composition` and its cut word                                                       | Settled. The cut word is a `BinaryWord`, a carrier in its own right (all binary words), reached by `CutWord` / `CompositionOfCutWord`.                                                                                                                                                                                                           |
+| `Permutation` and `PermutationCycles`                                                | Two carriers: Wolfram's `Cycles` replaces the unused `permutation_cycles`, with a sibling collection of the permutations of n in cycle notation, ordered by cycle type (next, after #401).                                                                                                                                                       |
+| `Permutation` and `SubexcedantSeq` (Lehmer code)                                     | Nontrivial. Both stay, joined by `ToLehmerCode` and its inverse.                                                                                                                                                                                                                                                                                 |
+| `LabeledTree` and Prüfer sequences                                                   | Nontrivial. Both stay: the tree nested, the sequence as a word.                                                                                                                                                                                                                                                                                  |
+| `IntegerPartition` and its frequency form                                            | Trivial. The frequency form is a representation (built).                                                                                                                                                                                                                                                                                         |
+| `StandardTableau` (row word), `SemistandardTableau`, `SkewTableau`, `PlanePartition` | **Nested rows**. A reading word is a flattening, and the shape is the part that is hard to derive.                                                                                                                                                                                                                                               |
+| `AlternatingSignMatrix`, `GelfandTsetlinPattern`                                     | Nested rows, for the same reason.                                                                                                                                                                                                                                                                                                                |
+| `PerfectMatching`                                                                    | Pairs are its blocks, so it is a restriction of `SetPartition` rather than a carrier. Open question 1.                                                                                                                                                                                                                                           |
 
 Storage follows the carrier, not the archive's SQL type: carrier-shapes.txt stops being the
 source of truth.
@@ -93,12 +102,13 @@ source of truth.
 
 ```mermaid
 flowchart BT
-  domains[domains: carrier machinery] --> structures
-  collections[collections: family contract, generic heads] --> structures
-  combinatorics[combinatorics: areas] --> domains & collections & structures
-  arithmetic[arithmetic packages] --> domains
-  statistics[statistics: distributions, processes] --> collections
+  combinatorics[combinatorics: collections + domains, then areas] --> structures
+  arithmetic[arithmetic packages] --> combinatorics
+  statistics[statistics: distributions, processes] --> combinatorics
 ```
+
+Start by merging `collections` and `domains` into `combinatorics` as they are. The bullets
+below are where the pieces end up once it is carved.
 
 - **`combinatorics`** has one subpath export per area. The site imports only the areas a page
   needs; the site build is mostly bundling, so tree-shaking matters. A map between
@@ -127,25 +137,28 @@ demo goldens green, with only a record's `library` field changing.
 
 1. **Wait for #401 and A-78.** Every family that has a carrier is typed first. That makes
    typing a property of the family, not of this move.
-2. **One entry point.** Add `declareCombinatorics`, which for now calls the existing packages
+2. **Merge `collections` and `domains`** into `combinatorics` wholesale (`git mv`, one
+   package, both source trees intact). The devDependency between them goes, and with it the
+   code written twice because neither could import the other (#401's tree conversion).
+3. **One entry point.** Add `declareCombinatorics`, which for now calls the existing packages
    in the right order. Switch the CLI, site, reference and census engines to it. The hosts
    stop passing `carrierTypes`. No head moves.
-3. **Carriers move, area by area.** Split `domain-data.ts` by area into `combinatorics` for the
+4. **Carriers move, area by area.** Split `domain-data.ts` by area into `combinatorics` for the
    last time and retire the extractor. Leave re-exports in `domains` until the step finishes.
-4. **Families move, area by area,** with their record folders (`git mv`, to keep history).
+5. **Families move, area by area,** with their record folders (`git mv`, to keep history).
    Inside `combinatorics` a family's carrier is known when it's declared, so it's typed. Once
    the last carrier-bearing family has moved, `carrierTypes` is deleted.
-5. **Statistics and maps move** with their generators. `scripts/entries.ts` and
+6. **Statistics and maps move** with their generators. `scripts/entries.ts` and
    `collect-entries.ts` from both `statistics` and `domains` become one generator per area
    inside `combinatorics`. `writeEntries`' owned-heads mode already shares a folder with
    hand-written records, and each package's `generated.test.ts` drift test moves with its
    generator: a clean regeneration after the move proves nothing changed. The frontier stubs
    and FindStat data go with them. Map laws move from `map.ts` onto the map records (§6).
    Rerun `collect-forms` and the manifest once, at the end of each area.
-6. **Retire the bridges.** Remove the #389 wrap in the collection table, and remove `laws.ts`'s
+7. **Retire the bridges.** Remove the #389 wrap in the collection table, and remove `laws.ts`'s
    kernel-to-carrier table. A guard test requires every family on a carrier to yield that
    carrier's type.
-7. **The leftovers leave:** the arithmetic and notatio carriers move out, and `statistics`
+8. **The leftovers leave:** the arithmetic and notatio carriers move out, and `statistics`
    keeps only the distributions and processes.
 
 ## 5. Plausible as symbols
@@ -228,7 +241,7 @@ notebook.
 > _Migration only:_ until every family on a carrier is typed, a kernel element is wrapped in
 > its carrier by a per-carrier table (today `laws.ts`, and `collectionCarrierOf` in the
 > collection table). That table fails the test for any map with laws on a carrier it doesn't
-> cover. Both bridges are removed in step 6 of the layering migration.
+> cover. Both bridges are removed in step 7 of the layering migration.
 
 ## 7. What carries over, and how
 
@@ -266,18 +279,13 @@ before.
 
 ## Open questions
 
-1. **Growth strings and surjection words.** By the rule these are representations, not
-   carriers. That reverses #396's `RestrictedGrowthString` carrier and demotes `Surjection`.
-   Keep both as carriers anyway, because each is also a family counted in its own right?
-2. **`BinaryTreeParentArray` (#401)** is a cheap flattening. Should it be a representation, or
-   is there a reason it needs to be a carrier?
-3. **Restrictions or carriers?** Should `PerfectMatching` (and matchings generally) become
+1. **Restrictions or carriers?** Should `PerfectMatching` (and matchings generally) become
    restrictions of `SetPartition`? Should `OrderedTree` and `PlaneTree` fold into one carrier,
    and under which name?
-4. **Numeric families.** Should the numeric families move to arithmetic as part of this, or
+2. **Numeric families.** Should the numeric families move to arithmetic as part of this, or
    stay in `collections` indefinitely?
-5. **The size option on `Random`.** What should it be called? Neither Wolfram nor
+3. **The size option on `Random`.** What should it be called? Neither Wolfram nor
    compute-engine has one. `MaxSize` follows Plausible's `Configuration` and is free.
-6. **`FindCounterexample` over a finite `D` within budget** is effectively a proof. Should it
+4. **`FindCounterexample` over a finite `D` within budget** is effectively a proof. Should it
    say so, for example by returning `ForAll`'s `True` alongside the empty list, or stay a
    search?
