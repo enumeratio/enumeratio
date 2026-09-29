@@ -11,7 +11,8 @@ const engine = (): ComputeEngine => {
 
 test("every carrier the catalog knows becomes a nominal type", () => {
   const ce = engine();
-  // enumeratio's 86, and the restricted growth string (scripts/shape-overrides.ts).
+  // enumeratio's 86, plus the restricted growth string and the other hand-added carriers —
+  // see each area's domain-data.ts and domains/src/domain-data.ts's LEFTOVER_DOMAINS.
   expect(DOMAINS.length).toBe(88);
   for (const domain of DOMAINS) expect(String(ce.type(domain.type)), domain.name).toBe(domain.type);
 });
