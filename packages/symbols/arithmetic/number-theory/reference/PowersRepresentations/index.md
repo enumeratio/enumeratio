@@ -8,10 +8,10 @@ signatures:
     description: every non-decreasing $(x_1 \le \dots \le x_k)$ with $\sum x_i^p = n$
     library: enumeratio-number-theory
     type: (integer, integer, integer) -> list
-details:
-  - Lexicographic order. See [[SquaresR]] for just the count, at $p=2$.
 seeAlso:
   - SquaresR
 names:
   wolframIdentity: true
 ---
+
+- Lexicographic order. See [[SquaresR]] for just the count, at $p=2$.

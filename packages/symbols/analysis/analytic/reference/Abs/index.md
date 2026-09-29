@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - For a real number, $|x| = x$ if $x \ge 0$ and $|x| = -x$ if $x < 0$.
-  - For a complex number $a+bi$, $|a+bi| = \sqrt{a^2+b^2}$, its distance from the origin.
-  - Always non-negative, with $|x| = 0$ exactly at $x = 0$.
-  - Satisfies the triangle inequality $|a+b| \le |a| + |b|$.
-  - compute-engine doesn't factor constants out of a symbolic argument -- $|-3x|$ stays as written rather than simplifying to $3|x|$.
 seeAlso:
   - Sign
   - Chop
@@ -49,3 +43,9 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- For a real number, $|x| = x$ if $x \ge 0$ and $|x| = -x$ if $x < 0$.
+- For a complex number $a+bi$, $|a+bi| = \sqrt{a^2+b^2}$, its distance from the origin.
+- Always non-negative, with $|x| = 0$ exactly at $x = 0$.
+- Satisfies the triangle inequality $|a+b| \le |a| + |b|$.
+- compute-engine doesn't factor constants out of a symbolic argument -- $|-3x|$ stays as written rather than simplifying to $3|x|$.

@@ -8,8 +8,6 @@ signatures:
     description: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Eulerian number $\left\langle{n \atop k}\right\rangle$ (A008292).
 seeAlso:
   - SymmetricGroup
   - KCyclePermutations
@@ -38,3 +36,5 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is the Eulerian number $\left\langle{n \atop k}\right\rangle$ (A008292).

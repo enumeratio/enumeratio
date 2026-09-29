@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - 'Even function: $\cos(-x) = \cos(x)$.'
-  - Period $2\pi$.
-  - 'Reciprocal of [[Sec]]: $\cos(x) = \frac{1}{\sec(x)}$.'
-  - 'Co-function with [[Sin]]: $\cos(x) = \sin(\pi/2 - x)$.'
 seeAlso:
   - Sin
   - Tan
@@ -58,3 +53,8 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Even function: $\cos(-x) = \cos(x)$.
+- Period $2\pi$.
+- Reciprocal of [[Sec]]: $\cos(x) = \frac{1}{\sec(x)}$.
+- Co-function with [[Sin]]: $\cos(x) = \sin(\pi/2 - x)$.

@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: "(complex | infinity, base: (complex | infinity)?) -> complex | infinity"
     overrides: compute-engine
-details:
-  - 'Inverse of [[Exp]]: $\ln(e^x) = x$.'
-  - "The natural logarithm. Note compute-engine's own [[Log]] is not a synonym: it defaults to base 10 (see that entry)."
-  - $\ln(0) = -\infty$. A negative real argument reduces to the principal value $\ln(-q) = \ln(q) + i\pi$ for a positive rational $q$ (`@enumeratio/analytic`); compute-engine's own plain evaluation would otherwise leave it symbolic.
 seeAlso:
   - Exp
   - Log
@@ -52,3 +48,7 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Inverse of [[Exp]]: $\ln(e^x) = x$.
+- The natural logarithm. Note compute-engine's own [[Log]] is not a synonym: it defaults to base 10 (see that entry).
+- $\ln(0) = -\infty$. A negative real argument reduces to the principal value $\ln(-q) = \ln(q) + i\pi$ for a positive rational $q$ (`@enumeratio/analytic`); compute-engine's own plain evaluation would otherwise leave it symbolic.

@@ -61,8 +61,9 @@ release. Add a tool name to select part of the graph. For example, run
 
 - Each head's record is a folder, `reference/<Head>/`, in the package that declares it
   (`packages/reference/entries/` for compute-engine's own heads):
-  - `index.md`: what the head is, as front matter (summary, signatures, details, bindings,
-    references…), and an optional markdown description below it.
+  - `index.md`: what the head is, as front matter (summary, signatures, bindings,
+    references…), and its details as the markdown list below it, one item each, written as the
+    page shows them (`vp fmt` leaves these files alone).
   - `examples.tsv`: one row per example, in page order (each section's rows together, in
     `SECTIONS` order), with everything written by hand: `id`, `section`, `role`, `expr` and
     `expected` as flow MathJSON (`[Mod, 5, 0]`), `caption`, …, and each system's hand

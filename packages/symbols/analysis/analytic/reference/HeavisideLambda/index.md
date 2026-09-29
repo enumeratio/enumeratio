@@ -8,9 +8,9 @@ signatures:
     description: max(1 - |x|, 0).
     library: "@enumeratio/analytic"
     type: (real) -> number
-details:
-  - Continuous everywhere, so HeavisideLambda(±1) = 0 falls out of the formula, no special case.
-  - The same function as [[UnitTriangle]] -- Wolfram gives it a second name for the Heaviside/Dirac generalized-function family it belongs to (it is HeavisideTheta convolved with itself).
 names:
   wolframIdentity: true
 ---
+
+- Continuous everywhere, so HeavisideLambda(±1) = 0 falls out of the formula, no special case.
+- The same function as [[UnitTriangle]] -- Wolfram gives it a second name for the Heaviside/Dirac generalized-function family it belongs to (it is HeavisideTheta convolved with itself).

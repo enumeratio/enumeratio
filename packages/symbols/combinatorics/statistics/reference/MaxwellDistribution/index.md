@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $\sigma$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>) -> distribution
-details:
-  - $PDF(x) = \sqrt{2/\pi}\,x^2 e^{-x^2/(2\sigma^2)}/\sigma^3$ for $x \geq 0$.
-  - $CDF(x) = P(3/2, x^2/(2\sigma^2))$ via [[GammaRegularized]] (the standard chi-square-CDF identity for Maxwell), clamped to $0$ below $x=0$.
-  - $Mean = 2\sigma\sqrt{2/\pi}$, $Variance = \sigma^2(3\pi-8)/\pi$, both exact.
-  - '[[RandomVariate]] samples $\sigma\sqrt{V}$ for an independent [[ChiSquareDistribution]]($3$) draw $V$.'
 seeAlso:
   - ChiDistribution
   - RayleighDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = \sqrt{2/\pi}\,x^2 e^{-x^2/(2\sigma^2)}/\sigma^3$ for $x \geq 0$.
+- $CDF(x) = P(3/2, x^2/(2\sigma^2))$ via [[GammaRegularized]] (the standard chi-square-CDF identity for Maxwell), clamped to $0$ below $x=0$.
+- $Mean = 2\sigma\sqrt{2/\pi}$, $Variance = \sigma^2(3\pi-8)/\pi$, both exact.
+- [[RandomVariate]] samples $\sigma\sqrt{V}$ for an independent [[ChiSquareDistribution]]($3$) draw $V$.

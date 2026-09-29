@@ -11,11 +11,6 @@ signatures:
   - call: TriangularDistribution({a, b}, c)
     description: mode given explicitly.
     library: enumeratio-statistics
-details:
-  - $PDF(x) = 2(x-a)/((b-a)(c-a))$ for $x < c$, $2(b-x)/((b-a)(b-c))$ otherwise — no boundary clamp against $a$ or $b$ (a documented divergence).
-  - $CDF$ is the corresponding piecewise quadratic.
-  - $Mean = (a+b+c)/3$, $Variance = (a^2+b^2+c^2-ab-ac-bc)/18$, both exact.
-  - "[[RandomVariate]] samples via inverse transform."
 seeAlso:
   - DiscreteUniformDistribution
   - PDF
@@ -23,3 +18,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = 2(x-a)/((b-a)(c-a))$ for $x < c$, $2(b-x)/((b-a)(b-c))$ otherwise — no boundary clamp against $a$ or $b$ (a documented divergence).
+- $CDF$ is the corresponding piecewise quadratic.
+- $Mean = (a+b+c)/3$, $Variance = (a^2+b^2+c^2-ab-ac-bc)/18$, both exact.
+- [[RandomVariate]] samples via inverse transform.

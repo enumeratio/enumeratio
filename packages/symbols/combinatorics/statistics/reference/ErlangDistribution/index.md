@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $n, \lambda$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>, real<0..>) -> distribution
-details:
-  - $PDF(x) = \lambda^n x^{n-1}e^{-\lambda x}/\Gamma(n)$ for $x \geq 0$.
-  - $CDF(x) = P(n, \lambda x)$, the regularized lower incomplete gamma via [[GammaRegularized]] (same upper-tail-native convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
-  - $Mean = n/\lambda$, $Variance = n/\lambda^2$, both exact.
-  - '[[RandomVariate]] samples via the same Marsaglia–Tsang [[GammaDistribution]] draw, shape $n$, scale $1/\lambda$.'
 seeAlso:
   - GammaDistribution
   - ChiSquareDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = \lambda^n x^{n-1}e^{-\lambda x}/\Gamma(n)$ for $x \geq 0$.
+- $CDF(x) = P(n, \lambda x)$, the regularized lower incomplete gamma via [[GammaRegularized]] (same upper-tail-native convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
+- $Mean = n/\lambda$, $Variance = n/\lambda^2$, both exact.
+- [[RandomVariate]] samples via the same Marsaglia–Tsang [[GammaDistribution]] draw, shape $n$, scale $1/\lambda$.

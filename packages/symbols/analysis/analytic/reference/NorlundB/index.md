@@ -8,10 +8,6 @@ signatures:
     description: $B_n^{(a)}$, exact.
     library: "@enumeratio/analytic"
     type: (integer, number) -> number
-details:
-  - Computed by logging the EGF $t/(e^t-1) = \sum B_k t^k/k!$ into a power series $g(t)$ (the standard power-series-logarithm recurrence), then exponentiating $a \cdot g(t)$ back — a genuine polynomial identity in $a$, since each convolution step contributes one more factor of $a$. Every step is exact bigint-rational arithmetic; no float is involved until $a$ itself is one.
-  - At a symbolic $a$, returns the polynomial as a MathJSON expression in $a$; at a concrete rational $a$, an exact rational number; at a float $a$, a float.
-  - Checked directly against Wolfram's own `NorlundB` at several $(n, a)$ pairs, including $n = 6, a = 4$ ($221/42$).
 primitive: kernel
 bindings:
   - origin: native
@@ -23,3 +19,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Computed by logging the EGF $t/(e^t-1) = \sum B_k t^k/k!$ into a power series $g(t)$ (the standard power-series-logarithm recurrence), then exponentiating $a \cdot g(t)$ back — a genuine polynomial identity in $a$, since each convolution step contributes one more factor of $a$. Every step is exact bigint-rational arithmetic; no float is involved until $a$ itself is one.
+- At a symbolic $a$, returns the polynomial as a MathJSON expression in $a$; at a concrete rational $a$, an exact rational number; at a float $a$, a float.
+- Checked directly against Wolfram's own `NorlundB` at several $(n, a)$ pairs, including $n = 6, a = 4$ ($221/42$).

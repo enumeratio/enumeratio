@@ -8,9 +8,6 @@ signatures:
     description: generic over every distribution this package's [[PDF]] and [[CDF]] answer, old or new.
     library: enumeratio-statistics
     type: (distribution, list<real> | real | signed_infinity) -> real
-details:
-  - Exact wherever [[PDF]] and [[CDF]] are both exact for `dist`; unevaluated otherwise.
-  - For [[RayleighDistribution]]($\sigma$), this reduces to the well-known linear hazard $x/\sigma^2$.
 seeAlso:
   - PDF
   - CDF
@@ -18,3 +15,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Exact wherever [[PDF]] and [[CDF]] are both exact for `dist`; unevaluated otherwise.
+- For [[RayleighDistribution]]($\sigma$), this reduces to the well-known linear hazard $x/\sigma^2$.

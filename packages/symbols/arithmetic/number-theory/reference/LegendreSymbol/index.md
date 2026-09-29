@@ -6,10 +6,6 @@ summary: "The Legendre symbol (n/p): whether n is a quadratic residue mod the od
 signatures:
   - call: LegendreSymbol(n, p)
     description: the Legendre symbol $\left(\frac{n}{p}\right)$.
-details:
-  - 1 if $n$ is a nonzero quadratic residue mod $p$, $-1$ if it is a nonresidue, 0 if $p\mid n$.
-  - Defined only for an odd prime $p$; compute-engine leaves the call symbolic for any other $p$.
-  - The prime case of [[JacobiSymbol]] and [[KroneckerSymbol]] — all three agree wherever the domains overlap.
 seeAlso:
   - JacobiSymbol
   - KroneckerSymbol
@@ -21,3 +17,7 @@ references:
 names:
   wolfram: JacobiSymbol
 ---
+
+- 1 if $n$ is a nonzero quadratic residue mod $p$, $-1$ if it is a nonresidue, 0 if $p\mid n$.
+- Defined only for an odd prime $p$; compute-engine leaves the call symbolic for any other $p$.
+- The prime case of [[JacobiSymbol]] and [[KroneckerSymbol]] — all three agree wherever the domains overlap.

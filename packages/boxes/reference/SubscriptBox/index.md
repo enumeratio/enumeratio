@@ -8,8 +8,6 @@ signatures:
     description: "A base with a subscript: $x_1$."
     library: enumeratio-boxes
     type: (boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `msub`.
 seeAlso:
   - SuperscriptBox
   - SubsuperscriptBox
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- MathML's `msub`.

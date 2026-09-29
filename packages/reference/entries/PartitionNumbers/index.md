@@ -6,10 +6,6 @@ summary: The integer partition counts $p(n) = 1, 1, 2, 3, 5, 7, …$ as a lazy i
 signatures:
   - call: PartitionNumbers
     description: $p(n)$, the number of integer partitions of $n$, an infinite indexed collection.
-details:
-  - "A lazy indexed collection: $Count(PartitionNumbers) = +\\infty$, and $At(PartitionNumbers, k)$ unranks $p(k-1)$ via Euler's pentagonal-number recurrence, bigint throughout -- $At(PartitionNumbers, 1) = p(0) = 1$."
-  - "OEIS A000041, starting exactly at its offset-0 term: $1, 1, 2, 3, 5, 7, 11, 15, …$."
-  - "Membership goes through [[Element]]: $Element(11, PartitionNumbers)$ is true, $Element(9, PartitionNumbers)$ is false. See [[IntegerPartitions]] for the partitions themselves, not just their count."
 enumerate:
   expr: Take(PartitionNumbers, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(PartitionNumbers) = +\infty$, and $At(PartitionNumbers, k)$ unranks $p(k-1)$ via Euler's pentagonal-number recurrence, bigint throughout -- $At(PartitionNumbers, 1) = p(0) = 1$.
+- OEIS A000041, starting exactly at its offset-0 term: $1, 1, 2, 3, 5, 7, 11, 15, …$.
+- Membership goes through [[Element]]: $Element(11, PartitionNumbers)$ is true, $Element(9, PartitionNumbers)$ is false. See [[IntegerPartitions]] for the partitions themselves, not just their count.

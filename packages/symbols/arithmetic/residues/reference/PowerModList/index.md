@@ -19,15 +19,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, number, number) -> list<number>
     overrides: enumeratio-residues
-details:
-  - "The problem splits over the prime powers of $m$ by the Chinese remainder theorem: a root mod $m$ is one root per channel $p^e$, every combination, so the count is the product of the channel counts."
-  - Mod a prime $p$ the units are cyclic of order $p - 1$, so $x^r \equiv b$ has exactly $\gcd(r, p-1)$ roots or none. One root is built Sylow subgroup by Sylow subgroup — only the primes dividing $r$ need a discrete log — so $p - 1$ is never factored and a 30-digit prime costs a millisecond.
-  - 'Roots are Hensel-lifted up each prime power: a root with $r x^{r-1} \not\equiv 0 \pmod p$ lifts uniquely; a singular one (the 2-adic channel of a square root, or $p \mid x$) lifts to all $p$ of its lifts or to none.'
-  - The modulus has to be factored, by trial division and Pollard's rho under a step budget. A product of two large primes is out of reach, and the call stays unevaluated — which is the whole security of the Rabin cryptosystem.
-  - At most 100 000 roots are listed; past that the call stays unevaluated rather than build the list.
-  - Beyond Wolfram, a rational $a = u/v$ with $\gcd(v, m) = 1$ is read in $\mathbb{Z}/m$ as $u \cdot v^{-1}$, the image of $\mathbb{Z}_{(m)}$; a denominator sharing a factor with $m$ has no image, and the list is empty. See [[RationalReconstruction]] for the way back.
-  - Threads over lists in any argument.
-  - 'Over the Gaussian integers — beyond Wolfram, whose PowerModList takes integers only — $m$ factors into Gaussian prime powers: a split prime maps onto $\mathbb{Z}/p^e$ by $i \mapsto \sqrt{-1}$, an inert $p$ has residue field $\mathbb{F}_{p^2}$ and lifts by Hensel, and $1 + i$ lifts by testing both residues.'
 seeAlso:
   - PowerMod
   - ModularInverse
@@ -48,3 +39,12 @@ bindings:
     arity: 3
     note: Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.
 ---
+
+- The problem splits over the prime powers of $m$ by the Chinese remainder theorem: a root mod $m$ is one root per channel $p^e$, every combination, so the count is the product of the channel counts.
+- Mod a prime $p$ the units are cyclic of order $p - 1$, so $x^r \equiv b$ has exactly $\gcd(r, p-1)$ roots or none. One root is built Sylow subgroup by Sylow subgroup — only the primes dividing $r$ need a discrete log — so $p - 1$ is never factored and a 30-digit prime costs a millisecond.
+- Roots are Hensel-lifted up each prime power: a root with $r x^{r-1} \not\equiv 0 \pmod p$ lifts uniquely; a singular one (the 2-adic channel of a square root, or $p \mid x$) lifts to all $p$ of its lifts or to none.
+- The modulus has to be factored, by trial division and Pollard's rho under a step budget. A product of two large primes is out of reach, and the call stays unevaluated — which is the whole security of the Rabin cryptosystem.
+- At most 100 000 roots are listed; past that the call stays unevaluated rather than build the list.
+- Beyond Wolfram, a rational $a = u/v$ with $\gcd(v, m) = 1$ is read in $\mathbb{Z}/m$ as $u \cdot v^{-1}$, the image of $\mathbb{Z}_{(m)}$; a denominator sharing a factor with $m$ has no image, and the list is empty. See [[RationalReconstruction]] for the way back.
+- Threads over lists in any argument.
+- Over the Gaussian integers — beyond Wolfram, whose PowerModList takes integers only — $m$ factors into Gaussian prime powers: a split prime maps onto $\mathbb{Z}/p^e$ by $i \mapsto \sqrt{-1}$, an inert $p$ has residue field $\mathbb{F}_{p^2}$ and lifts by Hensel, and $1 + i$ lifts by testing both residues.

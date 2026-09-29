@@ -8,8 +8,6 @@ signatures:
     description: the partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs nest
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - Count is the Catalan number $C_n$ (A000108).
 seeAlso:
   - SetPartitions
   - NonCrossingPartitions
@@ -32,3 +30,5 @@ grades:
     role: axis
 carrier: SetPartition
 ---
+
+- Count is the Catalan number $C_n$ (A000108).

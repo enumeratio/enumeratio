@@ -8,8 +8,8 @@ signatures:
     description: A value shaped like x with the given coordinates.
     library: enumeratio-structures
     type: (any, any) -> unknown
-details:
-  - The `ProductOrder` protocol's member that rebuilds a value from its coordinates; x picks the implementation, since a bare list can't.
 seeAlso:
   - Coordinates
 ---
+
+- The `ProductOrder` protocol's member that rebuilds a value from its coordinates; x picks the implementation, since a bare list can't.

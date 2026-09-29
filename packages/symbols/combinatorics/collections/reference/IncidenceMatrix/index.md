@@ -8,11 +8,11 @@ signatures:
     description: row = vertex (in [[VertexList]] order), column = edge (in [[EdgeList]] order). An undirected edge puts 1 in both its endpoints' rows; a directed edge puts -1 at its source and 1 at its target.
     library: enumeratio-collections
     type: (value) -> list<list<integer>>
-details:
-  - Returned as a plain matrix (a list of lists), same convention as [[AdjacencyMatrix]].
 seeAlso:
   - AdjacencyMatrix
   - EdgeList
 names:
   wolframIdentity: true
 ---
+
+- Returned as a plain matrix (a list of lists), same convention as [[AdjacencyMatrix]].

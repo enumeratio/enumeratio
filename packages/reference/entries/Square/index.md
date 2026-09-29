@@ -6,12 +6,6 @@ summary: "The second power of x: $x^2$."
 signatures:
   - call: Square(x)
     description: the second power $x^2$.
-details:
-  - 'Canonicalizes to $x^2$: $\mathrm{Square}(x)$ and $\mathrm{Power}(x, 2)$ are the same expression. See [[Sqrt]].'
-  - "Even function: $(-x)^2 = x^2$, so the sign of the input is lost."
-  - Always non-negative for real x; for a complex number it need not be, e.g. $(1+i)^2 = 2i$.
-  - Threads element-wise over a list.
-  - "Square is purely a convenience head: it canonicalizes away to $x^2$ (Power)."
 seeAlso:
   - Sqrt
   - Root
@@ -33,3 +27,9 @@ bindings:
     template: ($1)^2
     arity: 1
 ---
+
+- Canonicalizes to $x^2$: $\mathrm{Square}(x)$ and $\mathrm{Power}(x, 2)$ are the same expression. See [[Sqrt]].
+- Even function: $(-x)^2 = x^2$, so the sign of the input is lost.
+- Always non-negative for real x; for a complex number it need not be, e.g. $(1+i)^2 = 2i$.
+- Threads element-wise over a list.
+- Square is purely a convenience head: it canonicalizes away to $x^2$ (Power).

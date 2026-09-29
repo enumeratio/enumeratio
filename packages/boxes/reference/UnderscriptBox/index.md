@@ -8,11 +8,11 @@ signatures:
     description: 'A box set below a base: the limit under $\lim$.'
     library: enumeratio-boxes
     type: (boxes, boxes, expression*) -> boxes
-details:
-  - MathML's `munder`.
 seeAlso:
   - OverscriptBox
   - UnderoverscriptBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `munder`.

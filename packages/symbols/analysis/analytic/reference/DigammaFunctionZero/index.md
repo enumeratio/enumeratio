@@ -8,9 +8,6 @@ signatures:
     description: the $n$-th real zero of $\psi$, $n \ge 0$.
     library: "@enumeratio/analytic"
     type: (integer) -> number
-details:
-  - $\psi$ is real, meromorphic, with simple poles at $0, -1, -2, \dots$ and strictly increasing between consecutive poles ($\psi' = $ trigamma $> 0$), so each interval carries exactly one zero — bisection on the native [[PolyGamma]]/[[Digamma]] finds it without a separate digamma implementation.
-  - $\psi(x_0) = 0$ at $x_0 \approx 1.4616321449683623$, sometimes called the digamma's positive real zero.
 primitive: numeric
 bindings:
   - origin: native
@@ -31,3 +28,6 @@ bindings:
 seeAlso:
   - PolyGamma
 ---
+
+- $\psi$ is real, meromorphic, with simple poles at $0, -1, -2, \dots$ and strictly increasing between consecutive poles ($\psi' = $ trigamma $> 0$), so each interval carries exactly one zero — bisection on the native [[PolyGamma]]/[[Digamma]] finds it without a separate digamma implementation.
+- $\psi(x_0) = 0$ at $x_0 \approx 1.4616321449683623$, sometimes called the digamma's positive real zero.

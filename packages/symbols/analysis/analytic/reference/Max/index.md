@@ -18,12 +18,6 @@ signatures:
     library: enumeratio-structures
     type: (any*) -> any
     overrides: enumeratio-analytic
-details:
-  - The largest of its arguments, or of a single list argument.
-  - Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Min]].
-  - "Commutative and associative: order and grouping don't matter."
-  - 'NaN poisons the result: it beats every other comparison, even $+\infty$.'
-  - With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element.
 seeAlso:
   - Min
   - Clamp
@@ -43,3 +37,9 @@ bindings:
     template: enumeratio_max($*,)
     note: Wolfram (and our Max) flattens nested lists into one pool; bare SymPy Max()/Sage max() on a list (or a list of lists) either raise or compare lexicographically instead, so both go through a flattening helper (run.ts's SYMPY_PREAMBLE / SAGE_PREAMBLE).
 ---
+
+- The largest of its arguments, or of a single list argument.
+- Multiple arguments -- lists included -- are flattened into one pool rather than compared pairwise or threaded element-wise. See [[Min]].
+- Commutative and associative: order and grouping don't matter.
+- NaN poisons the result: it beats every other comparison, even $+\infty$.
+- With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element.

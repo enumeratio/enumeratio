@@ -14,14 +14,14 @@ signatures:
   - call: Ordering(collection, All, Greater)
     description: every index, ordered descending rather than ascending.
     library: enumeratio-collections
-details:
-  - "$c[[Ordering(c)]] = Sort(c)$: applying the permutation at those positions recovers [[Sort]]'s result."
-  - Ties break in favor of earlier position, i.e. it's a stable ordering.
-  - Symbols order alphabetically by name, matching Wolfram's canonical ordering.
-  - A second argument $n$ takes just the first $n$ indices of the full ordering; see the signatures above for the negative-count, $\{m, n\}$, and $UpTo$ forms.
 seeAlso:
   - Sort
   - UpTo
 names:
   wolframIdentity: true
 ---
+
+- $c[[Ordering(c)]] = Sort(c)$: applying the permutation at those positions recovers [[Sort]]'s result.
+- Ties break in favor of earlier position, i.e. it's a stable ordering.
+- Symbols order alphabetically by name, matching Wolfram's canonical ordering.
+- A second argument $n$ takes just the first $n$ indices of the full ordering; see the signatures above for the negative-count, $\{m, n\}$, and $UpTo$ forms.

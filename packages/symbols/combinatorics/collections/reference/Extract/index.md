@@ -11,13 +11,13 @@ signatures:
   - call: Extract(expr, {{pos1}, {pos2}, …})
     description: the LIST of parts at each of several positions, one per element
     library: enumeratio-collections
-details:
-  - Same 1-based, negative-counts-from-the-end indexing as At/Part.
-  - "Disambiguated Wolfram's own way: pos is a single path unless every one of its own elements is itself a List, in which case it's a list of paths."
-  - Extract(expr, {}) is expr itself — the trivial, zero-step path.
 seeAlso:
   - ReplacePart
   - Level
 names:
   wolframIdentity: true
 ---
+
+- Same 1-based, negative-counts-from-the-end indexing as At/Part.
+- Disambiguated Wolfram's own way: pos is a single path unless every one of its own elements is itself a List, in which case it's a list of paths.
+- Extract(expr, {}) is expr itself — the trivial, zero-step path.

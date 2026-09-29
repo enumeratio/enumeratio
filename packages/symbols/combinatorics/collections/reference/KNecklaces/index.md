@@ -8,8 +8,6 @@ signatures:
     description: the words of length $n$ over a $k$-letter alphabet up to rotation, represented by the lexicographically-least word in each orbit
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $\frac{1}{n}\sum_{d \mid n} \varphi(d) \, k^{n/d}$; specializes to [[BinaryNecklaces]] at $k=2$.
 seeAlso:
   - BinaryNecklaces
   - KLyndonWords
@@ -29,3 +27,5 @@ grades:
     role: param
 carrier: Word
 ---
+
+- Count is $\frac{1}{n}\sum_{d \mid n} \varphi(d) \, k^{n/d}$; specializes to [[BinaryNecklaces]] at $k=2$.

@@ -8,11 +8,6 @@ signatures:
     description: the Jacobi elliptic function nc, argument u, parameter m.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
-  - $\operatorname{nc}(u,m) = 1/\operatorname{cn}(u,m)$ — [[JacobiCN]] shares this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
-  - nc(0,m) = 1, for any m; nc has a pole at the quarter period u = EllipticK(m) (cn = 0 there).
-  - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 seeAlso:
   - JacobiCN
   - JacobiCD
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $m = k^2$, the same convention [[EllipticK]] / [[EllipticF]] use.
+- $\operatorname{nc}(u,m) = 1/\operatorname{cn}(u,m)$ — [[JacobiCN]] shares this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
+- nc(0,m) = 1, for any m; nc has a pole at the quarter period u = EllipticK(m) (cn = 0 there).
+- Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.

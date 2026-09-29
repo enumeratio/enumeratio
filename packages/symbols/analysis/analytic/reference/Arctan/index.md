@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | signed_infinity) -> number
     overrides: compute-engine
-details:
-  - Defined for every real x, unlike [[Arcsin]] and [[Arccos]].
-  - 'Odd function: $\arctan(-x) = -\arctan(x)$.'
-  - Horizontal asymptotes at $\pm\pi/2$ as $x \to \pm\infty$.
-  - The two-argument atan2 form is a separate compute-engine function, $\mathrm{Arctan2}(x, y)$, rather than an overload of Arctan.
 seeAlso:
   - Tan
   - Arcsin
@@ -32,3 +27,8 @@ names:
   dlmf: arctangent function
   wolfram: ArcTan
 ---
+
+- Defined for every real x, unlike [[Arcsin]] and [[Arccos]].
+- Odd function: $\arctan(-x) = -\arctan(x)$.
+- Horizontal asymptotes at $\pm\pi/2$ as $x \to \pm\infty$.
+- The two-argument atan2 form is a separate compute-engine function, $\mathrm{Arctan2}(x, y)$, rather than an overload of Arctan.

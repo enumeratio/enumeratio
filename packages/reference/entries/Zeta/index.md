@@ -70,15 +70,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number?) -> number
     overrides: compute-engine
-details:
-  - 'Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.'
-  - 'Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.'
-  - 'Special values at nonpositive integers relate to the Bernoulli numbers: $\zeta(-n) = -B_{n+1}/(n+1)$. See [[BernoulliB]].'
-  - 'Pole at $s=1$: $\zeta(1) = \text{ComplexInfinity}$, reflecting the divergence of the harmonic series.'
-  - Odd integers $\geq 3$ (Apéry's constant $\zeta(3)$, and beyond) have no known closed form and stay numeric-only.
-  - compute-engine reduces Zeta to an exact closed form at these special integer points -- even under plain evaluation, and even threaded over a list -- but leaves other reals, like $\zeta(3)$, symbolic pending N().
-  - "The two-argument form $\\zeta(s, a) = \\sum_{n\\geq 0} (n+a)^{-s}$ is provided by `@enumeratio/analytic` (compute-engine's built-in Zeta is single-argument). It equals [[HurwitzZeta]] for $\\operatorname{Re}(a) > 0$ but follows Wolfram's generalized-zeta convention for $a \\leq 0$: the terms off the positive axis use $((n+a)^2)^{-s/2}$ and the $n+a=0$ term is dropped, so $\\zeta(s, a)$ stays finite at $a = 0, -1, -2, \\dots$ -- in particular $\\zeta(s, 0) = \\zeta(s)$ -- where [[HurwitzZeta]] has poles."
-  - 'Certified digits: at an exact real $s \ne 1$ (an integer, a rational or a decimal), $\mathrm{N}(\zeta(s), d)$ is proven, not just agreed on, and so is $\mathrm{N}(\zeta(s, a), d)$ for an exact $a > 0$. See [[HurwitzZeta]] for the bound, and [[N]].'
 seeAlso:
   - HurwitzZeta
   - BernoulliB
@@ -112,3 +103,12 @@ names:
   fungrim: RiemannZeta
   wolframIdentity: true
 ---
+
+- Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.
+- Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.
+- Special values at nonpositive integers relate to the Bernoulli numbers: $\zeta(-n) = -B_{n+1}/(n+1)$. See [[BernoulliB]].
+- Pole at $s=1$: $\zeta(1) = \text{ComplexInfinity}$, reflecting the divergence of the harmonic series.
+- Odd integers $\geq 3$ (Apéry's constant $\zeta(3)$, and beyond) have no known closed form and stay numeric-only.
+- compute-engine reduces Zeta to an exact closed form at these special integer points -- even under plain evaluation, and even threaded over a list -- but leaves other reals, like $\zeta(3)$, symbolic pending N().
+- The two-argument form $\zeta(s, a) = \sum_{n\geq 0} (n+a)^{-s}$ is provided by `@enumeratio/analytic` (compute-engine's built-in Zeta is single-argument). It equals [[HurwitzZeta]] for $\operatorname{Re}(a) > 0$ but follows Wolfram's generalized-zeta convention for $a \leq 0$: the terms off the positive axis use $((n+a)^2)^{-s/2}$ and the $n+a=0$ term is dropped, so $\zeta(s, a)$ stays finite at $a = 0, -1, -2, \dots$ -- in particular $\zeta(s, 0) = \zeta(s)$ -- where [[HurwitzZeta]] has poles.
+- Certified digits: at an exact real $s \ne 1$ (an integer, a rational or a decimal), $\mathrm{N}(\zeta(s), d)$ is proven, not just agreed on, and so is $\mathrm{N}(\zeta(s, a), d)$ for an exact $a > 0$. See [[HurwitzZeta]] for the bound, and [[N]].

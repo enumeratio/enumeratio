@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-collections
     type: (any) -> infinity | integer
     overrides: compute-engine
-details:
-  - Works on any collection head, not just $List$ — e.g. $Set$.
-  - "Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]."
-  - An atom has no parts, so its length is 0 — it isn't a type error.
-  - Any other expression's length is its number of top-level operands, e.g. the number of terms in a sum.
-  - See [[Count]] to count occurrences of a specific value instead of every element.
 seeAlso:
   - Count
 names:
@@ -42,3 +36,9 @@ statOn:
   - IntegerPartition
   - LabeledTree
 ---
+
+- Works on any collection head, not just $List$ — e.g. $Set$.
+- Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]].
+- An atom has no parts, so its length is 0 — it isn't a type error.
+- Any other expression's length is its number of top-level operands, e.g. the number of terms in a sum.
+- See [[Count]] to count occurrences of a specific value instead of every element.

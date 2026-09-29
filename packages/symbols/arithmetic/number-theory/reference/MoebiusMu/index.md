@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> integer
     overrides: compute-engine
-details:
-  - $\mu(n)=0$ if $n$ has a squared prime factor; otherwise $\mu(n)=(-1)^{\omega(n)}$ for $\omega(n)$ distinct prime factors.
-  - $\mu(1)=1$ by convention, the empty product.
-  - 'Underlies Möbius inversion: $\sum_{d\mid n}\mu(d)=0$ for every $n>1$.'
-  - $n$ is squarefree exactly when $\mu(n)\neq0$. See [[IsSquareFree]].
-  - $\mu$ is only defined on positive integers; compute-engine leaves $n\le0$ unevaluated.
 seeAlso:
   - FactorInteger
   - IsSquareFree
@@ -63,3 +57,9 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- $\mu(n)=0$ if $n$ has a squared prime factor; otherwise $\mu(n)=(-1)^{\omega(n)}$ for $\omega(n)$ distinct prime factors.
+- $\mu(1)=1$ by convention, the empty product.
+- Underlies Möbius inversion: $\sum_{d\mid n}\mu(d)=0$ for every $n>1$.
+- $n$ is squarefree exactly when $\mu(n)\neq0$. See [[IsSquareFree]].
+- $\mu$ is only defined on positive integers; compute-engine leaves $n\le0$ unevaluated.

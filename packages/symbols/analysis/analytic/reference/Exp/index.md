@@ -6,10 +6,6 @@ summary: The natural exponential function $e^x$.
 signatures:
   - call: Exp(x)
     description: $e^x$, the natural exponential of x.
-details:
-  - 'Inverse of [[Ln]]: $\ln(e^x) = x$ and $e^{\ln x} = x$ for $x > 0$.'
-  - Once the argument is symbolic, compute-engine represents Exp(x) as Power(ExponentialE, x) -- the same object as $e^x$ written with [[Power]].
-  - Applied to a matrix (or any nested list) it broadcasts element-wise, same as Wolfram's Exp -- this is NOT the matrix exponential, which is [[MatrixExp]].
 seeAlso:
   - Ln
   - Log
@@ -47,3 +43,7 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Inverse of [[Ln]]: $\ln(e^x) = x$ and $e^{\ln x} = x$ for $x > 0$.
+- Once the argument is symbolic, compute-engine represents Exp(x) as Power(ExponentialE, x) -- the same object as $e^x$ written with [[Power]].
+- Applied to a matrix (or any nested list) it broadcasts element-wise, same as Wolfram's Exp -- this is NOT the matrix exponential, which is [[MatrixExp]].

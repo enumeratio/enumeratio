@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> integer
     overrides: compute-engine
-details:
-  - Counts distinct primes only -- $\nu(2^5)=1$, not 5.
-  - Equal to the length of [[FactorInteger]]$(n)$.
-  - '$\nu(1)=0$: 1 has no prime factors.'
-  - Always $\nu(n)\le\Omega(n)$, with equality exactly when $n$ is squarefree. See [[PrimeOmega]].
 seeAlso:
   - PrimeOmega
   - FactorInteger
@@ -30,3 +25,8 @@ names:
   dlmf: number of distinct primes dividing a number
   wolframIdentity: true
 ---
+
+- Counts distinct primes only -- $\nu(2^5)=1$, not 5.
+- Equal to the length of [[FactorInteger]]$(n)$.
+- $\nu(1)=0$: 1 has no prime factors.
+- Always $\nu(n)\le\Omega(n)$, with equality exactly when $n$ is squarefree. See [[PrimeOmega]].

@@ -6,10 +6,6 @@ summary: The highly composite numbers $1, 2, 4, 6, 12, 24, …$ -- integers with
 signatures:
   - call: HighlyCompositeNumbers
     description: the $n$ with $\tau(n) > \tau(m)$ for every $m < n$, an infinite indexed collection.
-details:
-  - "A lazy indexed collection: $Count(HighlyCompositeNumbers) = +\\infty$ ($n!$'s divisor count strictly increases with $n$), and $At$ unranks the $k$-th by scanning forward, keeping a running record of the largest divisor count seen so far."
-  - Ramanujan's sequence, OEIS A002182.
-  - 'Membership goes through [[Element]]: $Element(12, HighlyCompositeNumbers)$ is true ($\tau(12) = 6$, a new record over $1..11$), $Element(18, HighlyCompositeNumbers)$ is false ($\tau(18) = 6$, not a new record).'
 enumerate:
   expr: Take(HighlyCompositeNumbers, 15)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(HighlyCompositeNumbers) = +\infty$ ($n!$'s divisor count strictly increases with $n$), and $At$ unranks the $k$-th by scanning forward, keeping a running record of the largest divisor count seen so far.
+- Ramanujan's sequence, OEIS A002182.
+- Membership goes through [[Element]]: $Element(12, HighlyCompositeNumbers)$ is true ($\tau(12) = 6$, a new record over $1..11$), $Element(18, HighlyCompositeNumbers)$ is false ($\tau(18) = 6$, not a new record).

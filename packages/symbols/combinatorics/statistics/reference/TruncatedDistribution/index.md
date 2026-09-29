@@ -8,12 +8,6 @@ signatures:
     description: restricts dist to [a, b] (continuous) or (a, b] (discrete), renormalized.
     library: enumeratio-statistics
     type: (list<real>, distribution) -> distribution
-details:
-  - $Z = CDF(dist,b) - CDF(dist,a)$; $PDF(x) = PDF(dist,x)/Z$ inside the support, $0$ outside.
-  - A continuous base's support is the CLOSED interval $[a,b]$; a DISCRETE base's support is the right-HALF-OPEN interval $(a,b]$ — Wolfram's own convention (e.g. `TruncatedDistribution[{2,5}, PoissonDistribution[3]]` has support $\{3,4,5\}$, not $\{2,...,5\}$). Both share the same normalizer $Z$, since $CDF(x) = P(X \le x)$ either way.
-  - $CDF(x) = (CDF(dist,x) - CDF(dist,a))/Z$ for $x$ in range, clamped to $0$ below and $1$ above.
-  - "$Mean$ is exact only where the base has a closed-form partial expectation this package knows: [[UniformDistribution]] (trivially — the truncated uniform IS $Uniform(a,b)$), [[NormalDistribution]] (the standard truncated-normal-mean identity), `ExponentialDistribution` (compute-engine native, via the memoryless shift identity). Any other base's $Mean$ stays unevaluated."
-  - Variance is not implemented for this head (out of scope for this batch) — stays unevaluated.
 seeAlso:
   - MixtureDistribution
   - PDF
@@ -22,3 +16,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $Z = CDF(dist,b) - CDF(dist,a)$; $PDF(x) = PDF(dist,x)/Z$ inside the support, $0$ outside.
+- A continuous base's support is the CLOSED interval $[a,b]$; a DISCRETE base's support is the right-HALF-OPEN interval $(a,b]$ — Wolfram's own convention (e.g. `TruncatedDistribution[{2,5}, PoissonDistribution[3]]` has support $\{3,4,5\}$, not $\{2,...,5\}$). Both share the same normalizer $Z$, since $CDF(x) = P(X \le x)$ either way.
+- $CDF(x) = (CDF(dist,x) - CDF(dist,a))/Z$ for $x$ in range, clamped to $0$ below and $1$ above.
+- $Mean$ is exact only where the base has a closed-form partial expectation this package knows: [[UniformDistribution]] (trivially — the truncated uniform IS $Uniform(a,b)$), [[NormalDistribution]] (the standard truncated-normal-mean identity), `ExponentialDistribution` (compute-engine native, via the memoryless shift identity). Any other base's $Mean$ stays unevaluated.
+- Variance is not implemented for this head (out of scope for this batch) — stays unevaluated.

@@ -8,10 +8,6 @@ signatures:
     description: Tricomi's confluent hypergeometric $U(a,b,z)$.
     library: "@enumeratio/analytic"
     type: (number, number, number) -> number
-details:
-  - compute-engine 0.128 references this head only inside its identity rules (relating it to `HypergeometricUStar`) but never actually declares it as an operator, so there was nothing to extend — it is declared directly here, reusing the same Kummer connection-formula kernel as `HypergeometricUStar`.
-  - "$b$ at (or very near) an integer is declined, for the same reason `HypergeometricUStar` declines there: the connection formula's $\\Gamma(1-b)$ and $\\Gamma(b-1)$ blow up, and the log-case limit that resolves it is not implemented."
-  - $U(a,b,z) \cdot z^a$ equals `HypergeometricUStar(a,b,z)` exactly (fungrim:c8fcc7), which is how this is cross-checked.
 primitive: numeric
 bindings:
   - origin: native
@@ -28,3 +24,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- compute-engine 0.128 references this head only inside its identity rules (relating it to `HypergeometricUStar`) but never actually declares it as an operator, so there was nothing to extend — it is declared directly here, reusing the same Kummer connection-formula kernel as `HypergeometricUStar`.
+- $b$ at (or very near) an integer is declined, for the same reason `HypergeometricUStar` declines there: the connection formula's $\Gamma(1-b)$ and $\Gamma(b-1)$ blow up, and the log-case limit that resolves it is not implemented.
+- $U(a,b,z) \cdot z^a$ equals `HypergeometricUStar(a,b,z)` exactly (fungrim:c8fcc7), which is how this is cross-checked.

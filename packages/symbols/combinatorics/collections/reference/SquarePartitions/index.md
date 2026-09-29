@@ -8,8 +8,6 @@ signatures:
     description: the partitions of $n$ into perfect-square parts
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A001156.
 seeAlso:
   - IntegerPartitions
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: IntegerPartition
 ---
+
+- Count is A001156.

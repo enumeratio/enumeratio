@@ -3,9 +3,6 @@ name: ReflectionLength
 domain: Permutation statistics
 signature: ReflectionLength(p)
 summary: n minus the number of cycles — the minimum number of transpositions.
-details:
-  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
 statOn:
   - Permutation
 signatures:
@@ -14,3 +11,6 @@ signatures:
     library: enumeratio-statistics
     type: (permutation) -> number
 ---
+
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

@@ -8,13 +8,6 @@ signatures:
     description: the degree-$n$ Legendre polynomial at $x$, for an integer $n$.
     library: "@enumeratio/analytic"
     type: (integer, number) -> number
-details:
-  - $P_0 = 1$, $P_1 = x$, and Bonnet's recurrence $(n+1)\,P_{n+1} = (2n+1)\,x\,P_n - n\,P_{n-1}$. The coefficients are rationals whose denominators are powers of 2.
-  - $\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = \dfrac{2}{2n+1}\,\delta_{mn}$.
-  - "$P_n(1) = 1$ and $P_n(-1) = (-1)^n$. Parity follows the degree: $P_n(-x) = (-1)^n P_n(x)$."
-  - "A negative order folds as Wolfram does: $P_{-n} = P_{n-1}$."
-  - At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
-  - The name is Fungrim's. Wolfram calls it `LegendreP`, which also takes a non-integer degree and, with three arguments, the associated functions; only the integer-degree polynomial is implemented here.
 primitive: kernel
 bindings:
   - origin: native
@@ -38,3 +31,10 @@ references:
 names:
   wolfram: LegendreP
 ---
+
+- $P_0 = 1$, $P_1 = x$, and Bonnet's recurrence $(n+1)\,P_{n+1} = (2n+1)\,x\,P_n - n\,P_{n-1}$. The coefficients are rationals whose denominators are powers of 2.
+- $\int_{-1}^{1} P_m(x)\,P_n(x)\,dx = \dfrac{2}{2n+1}\,\delta_{mn}$.
+- $P_n(1) = 1$ and $P_n(-1) = (-1)^n$. Parity follows the degree: $P_n(-x) = (-1)^n P_n(x)$.
+- A negative order folds as Wolfram does: $P_{-n} = P_{n-1}$.
+- At an integer $n$ and a symbolic or exact $x$ the result is the expanded polynomial. At a floating-point or complex $x$ the recurrence runs directly on the number.
+- The name is Fungrim's. Wolfram calls it `LegendreP`, which also takes a non-integer degree and, with three arguments, the associated functions; only the integer-degree polynomial is implemented here.

@@ -8,11 +8,6 @@ signatures:
     description: the $\binom{n}{k}$ subsets of size $k$
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the binomial coefficient $\binom{n}{k}$
-  - 'Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\{2,3\}$ precedes $\{1,4\}$'
-  - That is the order [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in — the two are the same map
-  - $k = 0$ gives the single empty subset; $k > n$ gives an empty family
 seeAlso:
   - Subsets
   - Multisets
@@ -57,3 +52,8 @@ grades:
     role: axis
 carrier: Finset
 ---
+
+- Count is the binomial coefficient $\binom{n}{k}$
+- Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\{2,3\}$ precedes $\{1,4\}$
+- That is the order [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in — the two are the same map
+- $k = 0$ gives the single empty subset; $k > n$ gives an empty family

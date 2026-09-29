@@ -11,12 +11,12 @@ signatures:
   - call: IsVector(list, test)
     description: as above, and test holds of every element
     library: enumeratio-collections
-details:
-  - A List containing a List (even a ragged one) is a matrix shape, not a vector — False.
-  - test is applied via Apply, same calling convention as a Function literal passed to Select/Map.
 seeAlso:
   - IsMatrix
   - IsArray
 names:
   wolfram: VectorQ
 ---
+
+- A List containing a List (even a ragged one) is a matrix shape, not a vector — False.
+- test is applied via Apply, same calling convention as a Function literal passed to Select/Map.

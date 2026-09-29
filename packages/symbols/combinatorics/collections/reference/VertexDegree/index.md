@@ -12,11 +12,11 @@ signatures:
     description: the degree of $v$ alone.
     library: enumeratio-collections
     arity: 2
-details:
-  - Total degree, in and out combined — a directed edge counts once at each endpoint, same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check against an independently-computed sum on random graphs.
 seeAlso:
   - AdjacencyMatrix
   - Graph
 names:
   wolframIdentity: true
 ---
+
+- Total degree, in and out combined — a directed edge counts once at each endpoint, same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check against an independently-computed sum on random graphs.

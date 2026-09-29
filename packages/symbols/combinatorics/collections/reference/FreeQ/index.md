@@ -8,9 +8,6 @@ signatures:
     description: True unless pattern matches expr or some subexpression
     library: enumeratio-collections
     type: (any, any) -> boolean
-details:
-  - Searches the WHOLE tree, not just the top level — that's the difference from [[MatchQ]], which only checks expr itself.
-  - Uses the same wildcard grammar as [[MatchQ]] — see its reference entry for what's supported.
 seeAlso:
   - MatchQ
   - Level
@@ -19,3 +16,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Searches the WHOLE tree, not just the top level — that's the difference from [[MatchQ]], which only checks expr itself.
+- Uses the same wildcard grammar as [[MatchQ]] — see its reference entry for what's supported.

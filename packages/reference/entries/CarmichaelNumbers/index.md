@@ -6,10 +6,6 @@ summary: The Carmichael numbers $561, 1105, 1729, …$ -- composite Fermat pseud
 signatures:
   - call: CarmichaelNumbers
     description: the composite $n$ satisfying Korselt's criterion, an infinite indexed collection.
-details:
-  - "A lazy indexed collection: $Count(CarmichaelNumbers) = +\\infty$ (Alford–Granville–Pomerance, 1994), and $At$ unranks the $k$-th by scanning forward, testing Korselt's criterion -- $n$ squarefree, and $(p-1) \\mid (n-1)$ for every prime $p \\mid n$ -- which is equivalent to passing the Fermat test $a^{n-1} \\equiv 1 \\pmod n$ for every $a$ coprime to $n$."
-  - OEIS A002997. $561 = 3 \cdot 11 \cdot 17$ is the smallest, found by Korselt in 1899 (four years before Carmichael's first published example).
-  - "Membership goes through [[Element]]: $Element(561, CarmichaelNumbers)$ is true, $Element(560, CarmichaelNumbers)$ is false."
 enumerate:
   expr: Take(CarmichaelNumbers, 10)
 seeAlso:
@@ -29,3 +25,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(CarmichaelNumbers) = +\infty$ (Alford–Granville–Pomerance, 1994), and $At$ unranks the $k$-th by scanning forward, testing Korselt's criterion -- $n$ squarefree, and $(p-1) \mid (n-1)$ for every prime $p \mid n$ -- which is equivalent to passing the Fermat test $a^{n-1} \equiv 1 \pmod n$ for every $a$ coprime to $n$.
+- OEIS A002997. $561 = 3 \cdot 11 \cdot 17$ is the smallest, found by Korselt in 1899 (four years before Carmichael's first published example).
+- Membership goes through [[Element]]: $Element(561, CarmichaelNumbers)$ is true, $Element(560, CarmichaelNumbers)$ is false.

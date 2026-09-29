@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $k$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>) -> distribution
-details:
-  - $PDF(x) = x^{k/2-1} e^{-x/2} / (2^{k/2}\Gamma(k/2))$ for $x \geq 0$ — no domain clamp on the PDF itself (same policy as [[GammaDistribution]]).
-  - $CDF(x) = P(k/2, x/2)$, the regularized lower incomplete gamma, via [[GammaRegularized]] (compute-engine's native two-argument form is the upper tail), clamped to $0$ below $x=0$.
-  - $Mean = k$, $Variance = 2k$, both exact.
-  - "[[RandomVariate]] samples via the same Marsaglia–Tsang [[GammaDistribution]] draw, shape $k/2$, scale $2$."
 seeAlso:
   - GammaDistribution
   - PDF
@@ -20,3 +15,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = x^{k/2-1} e^{-x/2} / (2^{k/2}\Gamma(k/2))$ for $x \geq 0$ — no domain clamp on the PDF itself (same policy as [[GammaDistribution]]).
+- $CDF(x) = P(k/2, x/2)$, the regularized lower incomplete gamma, via [[GammaRegularized]] (compute-engine's native two-argument form is the upper tail), clamped to $0$ below $x=0$.
+- $Mean = k$, $Variance = 2k$, both exact.
+- [[RandomVariate]] samples via the same Marsaglia–Tsang [[GammaDistribution]] draw, shape $k/2$, scale $2$.

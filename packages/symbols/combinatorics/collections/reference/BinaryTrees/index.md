@@ -8,9 +8,6 @@ signatures:
     description: the binary trees with $n$ internal nodes
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<any>
-details:
-  - Count is the Catalan number $C_n$ (see [[CatalanNumber]])
-  - In bijection with [[DyckPaths]] of the same semilength
 seeAlso:
   - DyckPaths
   - CatalanNumber
@@ -37,3 +34,6 @@ grades:
     role: axis
 carrier: BinaryTree
 ---
+
+- Count is the Catalan number $C_n$ (see [[CatalanNumber]])
+- In bijection with [[DyckPaths]] of the same semilength

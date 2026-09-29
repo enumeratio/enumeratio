@@ -8,8 +8,6 @@ signatures:
     description: the perfect matchings of $\{1, …, 2n\}$ with no two crossing chords — the balanced-parenthesis reading of a Dyck path
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - Count is the Catalan number $C_n$ (A000108).
 seeAlso:
   - NonNestingMatchings
   - DyckPaths
@@ -30,3 +28,5 @@ grades:
     role: axis
 carrier: PerfectMatching
 ---
+
+- Count is the Catalan number $C_n$ (A000108).

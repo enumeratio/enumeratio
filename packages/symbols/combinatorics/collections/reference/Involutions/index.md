@@ -8,9 +8,6 @@ signatures:
     description: the self-inverse permutations of $n$ elements
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<permutation>
-details:
-  - Count satisfies $a(n) = a(n-1) + (n-1)\,a(n-2)$
-  - A sub-family of [[SymmetricGroup]]
 seeAlso:
   - SymmetricGroup
   - Derangements
@@ -38,3 +35,6 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count satisfies $a(n) = a(n-1) + (n-1)\,a(n-2)$
+- A sub-family of [[SymmetricGroup]]

@@ -8,11 +8,11 @@ signatures:
     description: $2^{p-1}(2^p-1)$ for the $n$th known Mersenne prime exponent $p$
     library: enumeratio-number-theory
     type: (integer) -> integer
-details:
-  - Every even perfect number has this form (Euclid–Euler); whether an odd one exists is open. From the same table as [[MersennePrimeExponent]], so it stays unevaluated past it.
 seeAlso:
   - MersennePrimeExponent
   - IsPerfect
 names:
   wolframIdentity: true
 ---
+
+- Every even perfect number has this form (Euclid–Euler); whether an odd one exists is open. From the same table as [[MersennePrimeExponent]], so it stays unevaluated past it.

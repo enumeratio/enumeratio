@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the triangular arrays with `rows` rows (lengths $n, n-1, …, 1$), entries from 0 to `max_entry`, each row interlacing the row above it.
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - A lazy indexed collection; the count is the closed-form dimension formula $\prod_{1 \le i \le j \le n} \frac{k+i+j-1}{i+j-1}$.
-  - "Each element is the array's rows, top (length $n$) to bottom (length 1); row $i{+}1$ interlaces row $i$: within a row entries weakly decrease, and $row_i[j] \\ge row_{i+1}[j] \\ge row_i[j+1]$."
-  - Unranked in backtracking generation order — rows built top-down, each row's entries enumerated within the bounds the row above imposes.
 enumerate:
   expr: GelfandTsetlin(3, 2)
 seeAlso:
@@ -27,3 +23,7 @@ grades:
     role: axis
 carrier: GelfandTsetlinPattern
 ---
+
+- A lazy indexed collection; the count is the closed-form dimension formula $\prod_{1 \le i \le j \le n} \frac{k+i+j-1}{i+j-1}$.
+- Each element is the array's rows, top (length $n$) to bottom (length 1); row $i{+}1$ interlaces row $i$: within a row entries weakly decrease, and $row_i[j] \ge row_{i+1}[j] \ge row_i[j+1]$.
+- Unranked in backtracking generation order — rows built top-down, each row's entries enumerated within the bounds the row above imposes.

@@ -11,12 +11,12 @@ signatures:
   - call: EulerE(n, x)
     description: the $n$th Euler polynomial, evaluated at $x$
     library: enumeratio-number-theory
-details:
-  - Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\sum_{k=0}^{n/2}\binom{n}{2k}E_{2k}=0$.
-  - $E_n = 2^n E_n(\frac12)$ ties the numbers to the polynomials.
-  - Not to be confused with [[BernoulliB]] or [[EulerGamma]].
 seeAlso:
   - BernoulliB
 names:
   wolframIdentity: true
 ---
+
+- Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\sum_{k=0}^{n/2}\binom{n}{2k}E_{2k}=0$.
+- $E_n = 2^n E_n(\frac12)$ ties the numbers to the polynomials.
+- Not to be confused with [[BernoulliB]] or [[EulerGamma]].

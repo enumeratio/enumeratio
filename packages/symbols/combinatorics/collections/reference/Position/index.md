@@ -9,13 +9,13 @@ signatures:
     library: enumeratio-collections
     type: (indexed_collection<any>, any) -> list<integer> | list<list<integer>>
     overrides: compute-engine
-details:
-  - Wolfram's answer where [[IndexOf]] reports only the first occurrence, as a plain index.
-  - An empty $List$ when the value isn't present.
-  - Each position is wrapped in its own single-element $List$, matching Wolfram's Position — since a position can itself be a multi-level index into a nested collection.
 seeAlso:
   - IndexOf
   - At
 names:
   wolframIdentity: true
 ---
+
+- Wolfram's answer where [[IndexOf]] reports only the first occurrence, as a plain index.
+- An empty $List$ when the value isn't present.
+- Each position is wrapped in its own single-element $List$, matching Wolfram's Position — since a position can itself be a multi-level index into a nested collection.

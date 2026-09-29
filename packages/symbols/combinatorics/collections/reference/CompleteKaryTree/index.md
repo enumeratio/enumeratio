@@ -12,11 +12,11 @@ signatures:
     description: $n = (k^{\text{levels}} - 1) / (k - 1)$ vertices, 1-indexed heap layout — vertex $i$'s children are $k(i-1)+2, \dots, k(i-1)+k+1$.
     library: enumeratio-collections
     arity: 2
-details:
-  - "`levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7."
 seeAlso:
   - StarGraph
   - IsTreeGraph
 names:
   wolframIdentity: true
 ---
+
+- `levels` counts LEVELS, not vertices (kernel-verified): `CompleteKaryTree(1, 2)` is a single vertex, `CompleteKaryTree(3, 2)` has 7.

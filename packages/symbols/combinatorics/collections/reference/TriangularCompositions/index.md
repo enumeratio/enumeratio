@@ -8,8 +8,6 @@ signatures:
     description: the compositions of $n$ into triangular-number parts
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A023361.
 seeAlso:
   - IntegerCompositions
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is A023361.

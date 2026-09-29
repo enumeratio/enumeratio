@@ -8,8 +8,8 @@ signatures:
     description: the matrix whose $(i, j)$ entry is $f$ applied to $list1$'s $i$-th and $list2$'s $j$-th element.
     library: enumeratio-collections
     type: "(function: any, list<any>, list<any>) -> list<list<any>>"
-details:
-  - $Outer(List, a, b)$ is the Cartesian product of $a$ and $b$, each pair wrapped in its own [[List]].
 names:
   wolframIdentity: true
 ---
+
+- $Outer(List, a, b)$ is the Cartesian product of $a$ and $b$, each pair wrapped in its own [[List]].

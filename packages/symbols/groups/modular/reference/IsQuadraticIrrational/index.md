@@ -8,14 +8,14 @@ signatures:
     description: whether $x$ is a quadratic irrational
     library: enumeratio-modular
     type: (value) -> boolean
-details:
-  - 'Recognised structurally: a rational affine combination with exactly one irrational `Sqrt` term, at any rational scale — $\sqrt n$, $3\sqrt2$, $1+\sqrt5$, $(1+\sqrt5)/2$, $1-\sqrt3$'
-  - A rational is not irrational, so it is `False`, not merely unrecognised
-  - Wolfram calls this `QuadraticIrrationalQ`; the name here follows compute-engine's own `Is…` convention instead
-  - Every quadratic irrational's continued fraction is eventually periodic (Lagrange's theorem), and conversely — see [[ContinuedFraction]]
 seeAlso:
   - ContinuedFraction
   - Convergents
 names:
   wolfram: QuadraticIrrationalQ
 ---
+
+- Recognised structurally: a rational affine combination with exactly one irrational `Sqrt` term, at any rational scale — $\sqrt n$, $3\sqrt2$, $1+\sqrt5$, $(1+\sqrt5)/2$, $1-\sqrt3$
+- A rational is not irrational, so it is `False`, not merely unrecognised
+- Wolfram calls this `QuadraticIrrationalQ`; the name here follows compute-engine's own `Is…` convention instead
+- Every quadratic irrational's continued fraction is eventually periodic (Lagrange's theorem), and conversely — see [[ContinuedFraction]]

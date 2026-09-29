@@ -11,11 +11,11 @@ signatures:
   - call: VertexOutDegree(g, v)
     description: just v's out-degree.
     library: enumeratio-collections
-details:
-  - See [[VertexInDegree]] for how undirected edges are handled -- the two heads are symmetric.
 seeAlso:
   - VertexInDegree
   - VertexDegree
 names:
   wolframIdentity: true
 ---
+
+- See [[VertexInDegree]] for how undirected edges are handled -- the two heads are symmetric.

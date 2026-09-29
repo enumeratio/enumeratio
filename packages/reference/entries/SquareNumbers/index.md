@@ -6,10 +6,6 @@ summary: The perfect squares $1, 4, 9, 16, …$ as a lazy indexed collection, un
 signatures:
   - call: SquareNumbers
     description: the squares $k^2$ for $k = 1, 2, 3, …$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(SquareNumbers) = +\infty$, and $At(SquareNumbers, k) = k^2$ unranks in closed form -- $At(SquareNumbers, 5) = 25$.'
-  - OEIS A000290.
-  - "Membership goes through [[Element]]: $Element(16, SquareNumbers)$ is true, $Element(15, SquareNumbers)$ is false."
 enumerate:
   expr: Take(SquareNumbers, 20)
 seeAlso:
@@ -33,3 +29,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(SquareNumbers) = +\infty$, and $At(SquareNumbers, k) = k^2$ unranks in closed form -- $At(SquareNumbers, 5) = 25$.
+- OEIS A000290.
+- Membership goes through [[Element]]: $Element(16, SquareNumbers)$ is true, $Element(15, SquareNumbers)$ is false.

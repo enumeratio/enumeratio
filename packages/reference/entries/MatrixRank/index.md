@@ -16,10 +16,10 @@ signatures:
     library: enumeratio-collections
     type: (value) -> integer
     overrides: enumeratio-analytic
-details:
-  - Written $\operatorname{rank} A$. Row rank equals column rank, so $\operatorname{rank} A = \operatorname{rank} A^\top$.
-  - A square matrix is invertible exactly when its rank is its size.
-  - Not the array [[Rank]], which counts dimensions.
 names:
   wolframIdentity: true
 ---
+
+- Written $\operatorname{rank} A$. Row rank equals column rank, so $\operatorname{rank} A = \operatorname{rank} A^\top$.
+- A square matrix is invertible exactly when its rank is its size.
+- Not the array [[Rank]], which counts dimensions.

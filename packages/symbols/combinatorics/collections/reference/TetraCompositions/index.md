@@ -8,8 +8,6 @@ signatures:
     description: the compositions of $n$ into parts from $\{1, 2, 3, 4\}$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the tetranacci number (A000078).
 seeAlso:
   - IntegerCompositions
   - TriCompositions
@@ -27,3 +25,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is the tetranacci number (A000078).

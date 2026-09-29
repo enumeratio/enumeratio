@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, number) -> number
     overrides: compute-engine
-details:
-  - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.
-  - Read off the Bézout coefficient of [[ExtendedGCD]].
-  - For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.
 seeAlso:
   - PowerMod
   - ExtendedGCD
@@ -35,3 +31,7 @@ bindings:
     template: inverse_mod($1, $2)
     arity: 2
 ---
+
+- Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.
+- Read off the Bézout coefficient of [[ExtendedGCD]].
+- For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.

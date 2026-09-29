@@ -3,9 +3,9 @@ name: MajorIndex
 domain: Permutation statistics
 signature: MajorIndex(p)
 summary: The SUM of the descent positions — not their count.
-details:
-  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
-  - The distinction from Descents is the entire content of the statistic.
-  - "A separate definition exists for `DyckPath` (The sum of the descent positions of the step word — where an up step is followed by a down step.) but is not the one declared: one head, one owner."
 ---
+
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.
+- The distinction from Descents is the entire content of the statistic.
+- A separate definition exists for `DyckPath` (The sum of the descent positions of the step word — where an up step is followed by a down step.) but is not the one declared: one head, one owner.

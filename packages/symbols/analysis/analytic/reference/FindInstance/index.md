@@ -14,12 +14,6 @@ signatures:
   - call: FindInstance(expr, vars, domain, n)
     description: up to n instances over domain.
     library: "@enumeratio/analytic"
-details:
-  - "Three provably correct paths, tried in order: a univariate polynomial equation of degree <= 2 with exact integer coefficients, solved by our own quadratic formula -- a COMPLETE real-root enumeration, so when every root fails the rest of the constraints, the conjunction is genuinely infeasible; failing that, compute-engine's [[Solve]] as a best-effort finder for equations it happens to solve (never trusted to prove absence); and a bounded integer search, brute-forced over a box whose edges every variable's simple inequalities in expr imply directly."
-  - Every candidate is re-substituted into every original constraint and re-evaluated before being returned -- the actual safety net, independent of which path produced it.
-  - An empty result ([]) is only ever returned when infeasibility is proven -- the quadratic route's complete root set, or the bounded search's exhaustive box -- never merely because nothing was found.
-  - "Declines (leaves the call unevaluated) on: the unstated default domain (Complexes); any domain but Reals or Integers; more than one variable without a bounded Integers search; a pure inequality over Reals (no equation, so no provable witness); Or; and an integer search whose bounds are not directly implied by expr's own inequalities."
-  - Matches Wolfram''s output shape -- a list of rule lists, `{{x -> 1}}` -- via [[Rule]].
 seeAlso:
   - Solve
   - Rule
@@ -29,3 +23,9 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Three provably correct paths, tried in order: a univariate polynomial equation of degree <= 2 with exact integer coefficients, solved by our own quadratic formula -- a COMPLETE real-root enumeration, so when every root fails the rest of the constraints, the conjunction is genuinely infeasible; failing that, compute-engine's [[Solve]] as a best-effort finder for equations it happens to solve (never trusted to prove absence); and a bounded integer search, brute-forced over a box whose edges every variable's simple inequalities in expr imply directly.
+- Every candidate is re-substituted into every original constraint and re-evaluated before being returned -- the actual safety net, independent of which path produced it.
+- An empty result ([]) is only ever returned when infeasibility is proven -- the quadratic route's complete root set, or the bounded search's exhaustive box -- never merely because nothing was found.
+- Declines (leaves the call unevaluated) on: the unstated default domain (Complexes); any domain but Reals or Integers; more than one variable without a bounded Integers search; a pure inequality over Reals (no equation, so no provable witness); Or; and an integer search whose bounds are not directly implied by expr's own inequalities.
+- Matches Wolfram''s output shape -- a list of rule lists, `{{x -> 1}}` -- via [[Rule]].

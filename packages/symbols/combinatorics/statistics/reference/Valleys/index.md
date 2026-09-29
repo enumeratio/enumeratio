@@ -3,8 +3,8 @@ name: Valleys
 domain: Permutation statistics
 signature: Valleys(p)
 summary: Interior positions with p(i-1) > p(i) < p(i+1).
-details:
-  - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence."
-  - "A separate definition exists for `DyckPath` (Occurrences of a down step immediately followed by an up step.) but is not the one declared: one head, one owner."
 ---
+
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.
+- A separate definition exists for `DyckPath` (Occurrences of a down step immediately followed by an up step.) but is not the one declared: one head, one owner.

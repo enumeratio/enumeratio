@@ -21,13 +21,6 @@ signatures:
     library: enumeratio-structures
     type: (any, any?) -> any
     overrides: enumeratio-collections
-details:
-  - 'The greatest integer $\le x$: $\lfloor x \rfloor$.'
-  - Rounds toward $-\infty$, not toward 0 -- so $\lfloor -3.5 \rfloor = -4$, not $-3$.
-  - For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Ceil]].
-  - $\lfloor -x \rfloor = -\lceil x \rceil$.
-  - Threads element-wise over a list.
-  - A second argument floors to the nearest multiple of it -- the step needn't be an integer.
 seeAlso:
   - Ceil
   - Round
@@ -60,3 +53,10 @@ bindings:
     template: floor($1)
     arity: 1
 ---
+
+- The greatest integer $\le x$: $\lfloor x \rfloor$.
+- Rounds toward $-\infty$, not toward 0 -- so $\lfloor -3.5 \rfloor = -4$, not $-3$.
+- For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Ceil]].
+- $\lfloor -x \rfloor = -\lceil x \rceil$.
+- Threads element-wise over a list.
+- A second argument floors to the nearest multiple of it -- the step needn't be an integer.

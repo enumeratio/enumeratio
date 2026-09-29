@@ -11,14 +11,14 @@ signatures:
     library: enumeratio-collections
     type: "((T+) -> T where T: string) & ((collection<any>*) -> collection)"
     overrides: compute-engine
-details:
-  - $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]].
-  - The argument collections don't need to be $List$, but must all share the same head.
-  - A trailing integer argument joins at that level instead of the top level.
-  - See [[Append]] for adding a single element rather than concatenating collections.
 seeAlso:
   - Flatten
   - Append
 names:
   wolframIdentity: true
 ---
+
+- $Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]].
+- The argument collections don't need to be $List$, but must all share the same head.
+- A trailing integer argument joins at that level instead of the top level.
+- See [[Append]] for adding a single element rather than concatenating collections.

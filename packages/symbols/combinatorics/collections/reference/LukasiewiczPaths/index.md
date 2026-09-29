@@ -8,8 +8,6 @@ signatures:
     description: 'Łukasiewicz paths: length-$(n+1)$ integer words $a_0, …, a_n$ (each $\ge -1$) whose prefix sums stay $\ge 0$ and end at $-1$'
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Catalan number $C_n$ (A000108); in bijection with plane trees on $n$ edges via the preorder child-count word.
 seeAlso:
   - DyckPaths
 references:
@@ -20,3 +18,5 @@ grades:
     role: axis
 carrier: LukasiewiczPath
 ---
+
+- Count is the Catalan number $C_n$ (A000108); in bijection with plane trees on $n$ edges via the preorder child-count word.

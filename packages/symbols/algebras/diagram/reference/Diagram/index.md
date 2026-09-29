@@ -8,12 +8,6 @@ signatures:
     description: blocks of signed labels — positive on the top row, negative on the bottom
     library: enumeratio-diagram
     type: (list) -> number
-details:
-  - "Multiplication is geometric: stack $a$ above $b$, glue $a$'s bottom row to $b$'s top, keep what stays connected between the outer rows and discard the middle"
-  - A block left entirely in the discarded middle was a closed loop, and contributes one factor of the loop parameter $\delta$ — so these algebras live over $\mathbb{Z}[\delta]$
-  - 'Use the ORDERED product ([[NonCommutativeMultiply]], infix $\otimes$): a diagram algebra is not commutative'
-  - Diagrams normalise, so a written diagram and a computed one are the same expression
-  - Every point $\pm 1 … \pm n$ must appear exactly once; a diagram missing one is malformed and is left as written
 seeAlso:
   - TemperleyLiebAlgebra
   - PartitionAlgebra
@@ -24,3 +18,9 @@ bindings:
     template: enumeratio_diagram($1)
     arity: 1
 ---
+
+- Multiplication is geometric: stack $a$ above $b$, glue $a$'s bottom row to $b$'s top, keep what stays connected between the outer rows and discard the middle
+- A block left entirely in the discarded middle was a closed loop, and contributes one factor of the loop parameter $\delta$ — so these algebras live over $\mathbb{Z}[\delta]$
+- Use the ORDERED product ([[NonCommutativeMultiply]], infix $\otimes$): a diagram algebra is not commutative
+- Diagrams normalise, so a written diagram and a computed one are the same expression
+- Every point $\pm 1 … \pm n$ must appear exactly once; a diagram missing one is malformed and is left as written

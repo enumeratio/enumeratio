@@ -8,9 +8,6 @@ signatures:
     description: the Gaussian binomial coefficient $\binom{n}{k}_q$.
     library: "@enumeratio/analytic"
     type: (integer, integer, complex) -> number
-details:
-  - Built by the Pascal-like recurrence $\binom{n}{k}_q = \binom{n-1}{k-1}_q + q^k \binom{n-1}{k}_q$, with $\binom{n}{0}_q = \binom{n}{n}_q = 1$ — pure addition and multiplication, never division, so it stays a genuine polynomial for symbolic $q$ that `Expand` can open up. The equivalent quotient $[n]_q!/([k]_q![n-k]_q!)$ is exact numerically but `Expand` alone can't cancel it down to a polynomial when $q$ is symbolic, which is why the recurrence is used instead.
-  - At $q = 1$ it reduces to the ordinary $\binom{n}{k}$ by the same recurrence Pascal's triangle uses.
 primitive: kernel
 bindings:
   - origin: native
@@ -29,3 +26,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Built by the Pascal-like recurrence $\binom{n}{k}_q = \binom{n-1}{k-1}_q + q^k \binom{n-1}{k}_q$, with $\binom{n}{0}_q = \binom{n}{n}_q = 1$ — pure addition and multiplication, never division, so it stays a genuine polynomial for symbolic $q$ that `Expand` can open up. The equivalent quotient $[n]_q!/([k]_q![n-k]_q!)$ is exact numerically but `Expand` alone can't cancel it down to a polynomial when $q$ is symbolic, which is why the recurrence is used instead.
+- At $q = 1$ it reduces to the ordinary $\binom{n}{k}$ by the same recurrence Pascal's triangle uses.

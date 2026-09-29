@@ -8,8 +8,6 @@ signatures:
     description: "Ballot sequences of length $2n$: 0/1 words where every prefix has at least as many 1s as 0s"
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Catalan number $C_n$ (A000108); the same family as [[DyckPaths]].
 seeAlso:
   - DyckPaths
 references:
@@ -25,3 +23,5 @@ grades:
     role: axis
 carrier: DyckPath
 ---
+
+- Count is the Catalan number $C_n$ (A000108); the same family as [[DyckPaths]].

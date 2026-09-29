@@ -11,11 +11,11 @@ signatures:
   - call: Refine(expr)
     description: simplify $expr$ under whatever is already assumed (e.g. inside an enclosing [[Assuming]]).
     library: "@enumeratio/analytic"
-details:
-  - "Delegates entirely to compute-engine's own `simplify()` under a scoped assumption (see [[Assuming]] for the scoping mechanism) — this covers exactly the sign/domain reasoning `simplify()` already does: $\\sqrt{x^2} \\to x$ under $x>0$ (and $\\to -x$ under $x<0$), $|x| \\to x$, $\\ln(e^x) \\to x$, $\\operatorname{sign}(x) \\to 1$."
-  - A condition that `simplify()` has no rule for is left alone, same as Wolfram's `Refine` declines a fact it can't use — this is not a general decision procedure for arbitrary predicates.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- Delegates entirely to compute-engine's own `simplify()` under a scoped assumption (see [[Assuming]] for the scoping mechanism) — this covers exactly the sign/domain reasoning `simplify()` already does: $\sqrt{x^2} \to x$ under $x>0$ (and $\to -x$ under $x<0$), $|x| \to x$, $\ln(e^x) \to x$, $\operatorname{sign}(x) \to 1$.
+- A condition that `simplify()` has no rule for is left alone, same as Wolfram's `Refine` declines a fact it can't use — this is not a general decision procedure for arbitrary predicates.

@@ -8,10 +8,10 @@ signatures:
     description: $\mathbb{Z}/m$ — Sage's `Zmod(m)`
     library: enumeratio-residues
     type: (integer) -> set
-details:
-  - "A collection: it counts, enumerates and answers membership, so `Count`, `ListFrom` and `Element` work on it directly"
-  - Membership is by modulus — `IntegerMod(3, 7)` is not in `IntegerModRing(5)`
-  - compute-engine's `QuotientRing(Integers, m)` — what $\mathbb{Z}/m\mathbb{Z}$ parses to — specialises to it, and it is written back that way
 seeAlso:
   - IntegerMod
 ---
+
+- A collection: it counts, enumerates and answers membership, so `Count`, `ListFrom` and `Element` work on it directly
+- Membership is by modulus — `IntegerMod(3, 7)` is not in `IntegerModRing(5)`
+- compute-engine's `QuotientRing(Integers, m)` — what $\mathbb{Z}/m\mathbb{Z}$ parses to — specialises to it, and it is written back that way

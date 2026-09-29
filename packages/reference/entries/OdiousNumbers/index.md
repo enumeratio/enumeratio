@@ -6,10 +6,6 @@ summary: "The odious numbers $1, 2, 4, 7, 8, …$: positive integers with an odd
 signatures:
   - call: OdiousNumbers
     description: the $n$ with an odd binary popcount, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(OdiousNumbers) = +\infty$, the complement of [[EvilNumbers]] among the positive integers. OEIS A000069.'
-  - $At(OdiousNumbers, k)$ unranks by scanning forward -- $At(OdiousNumbers, 4) = 7$.
-  - "Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]])."
 enumerate:
   expr: Take(OdiousNumbers, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(OdiousNumbers) = +\infty$, the complement of [[EvilNumbers]] among the positive integers. OEIS A000069.
+- $At(OdiousNumbers, k)$ unranks by scanning forward -- $At(OdiousNumbers, 4) = 7$.
+- Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]]).

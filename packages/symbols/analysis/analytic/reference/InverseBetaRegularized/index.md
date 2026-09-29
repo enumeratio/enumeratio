@@ -8,9 +8,6 @@ signatures:
     description: solves $s = I_x(a, b)$ for $x$.
     library: "@enumeratio/analytic"
     type: (number, number, number) -> number
-details:
-  - $I_x(1, 1) = x$ is its own inverse, and $I_x(a, 1) = x^a$ inverts to $s^{1/a}$ — both exact, symbolic $s$ (and $a$) included.
-  - "Otherwise: a safeguarded Newton's method against `BetaRegularized(x, a, b)`, using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits."
 primitive: kernel
 bindings:
   - origin: native
@@ -24,3 +21,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $I_x(1, 1) = x$ is its own inverse, and $I_x(a, 1) = x^a$ inverts to $s^{1/a}$ — both exact, symbolic $s$ (and $a$) included.
+- Otherwise: a safeguarded Newton's method against `BetaRegularized(x, a, b)`, using the Beta density $x^{a-1}(1-x)^{b-1}/B(a,b)$ (in log space) as the derivative; checked against `wolframscript` to 20 digits.

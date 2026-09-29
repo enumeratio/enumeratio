@@ -8,9 +8,6 @@ signatures:
     description: an inert process object — carries its rate, unevaluated. [[SliceDistribution]] and [[RandomFunction]] both read it.
     library: enumeratio-statistics
     type: (real<0..>) -> expression<PoissonProcess>
-details:
-  - '$SliceDistribution(PoissonProcess(\lambda), t) = PoissonDistribution(\lambda t)$ — exact: the event count up to a fixed time $t$ is Poisson by definition.'
-  - '[[RandomFunction]](PoissonProcess(lambda), {tmin, tmax, dt}) draws one seeded sample path by summing an independent $Poisson(\lambda\, dt)$ draw per grid step — exact in distribution, since disjoint-interval counts of a Poisson process are themselves independent Poisson draws. Counts are nondecreasing nonnegative integers along the path.'
 seeAlso:
   - WienerProcess
   - SliceDistribution
@@ -19,3 +16,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $SliceDistribution(PoissonProcess(\lambda), t) = PoissonDistribution(\lambda t)$ — exact: the event count up to a fixed time $t$ is Poisson by definition.
+- [[RandomFunction]](PoissonProcess(lambda), {tmin, tmax, dt}) draws one seeded sample path by summing an independent $Poisson(\lambda\, dt)$ draw per grid step — exact in distribution, since disjoint-interval counts of a Poisson process are themselves independent Poisson draws. Counts are nondecreasing nonnegative integers along the path.

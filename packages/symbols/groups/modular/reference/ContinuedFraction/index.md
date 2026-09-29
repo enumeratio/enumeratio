@@ -29,13 +29,6 @@ signatures:
     library: enumeratio-domains
     type: ((list<integer>) -> continued_fraction) & ((real, integer?) -> list<integer>)
     overrides: enumeratio-modular
-details:
-  - '`ContinuedFraction` and `FromContinuedFraction` are compute-engine''s heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"'
-  - For a quadratic irrational $(a+b\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision
-  - 'The expansion is made unique by never ending in $1$: $[\ldots, k, 1]$ is rewritten $[\ldots, k+1]$'
-  - The path is $R^{a_0}L^{a_1}R^{a_2}\cdots$ with the LAST exponent one short — the final step is the arrival, not a turn
-  - Consecutive Farey fractions satisfy $ps - qr = -1$, which is a determinant, which is a group element
-  - The Fibonacci fractions alternate $RLRL\dots$, the sense in which $\varphi$ is the most irrational number
 seeAlso:
   - ModularWord
   - IntegerDigits
@@ -67,3 +60,10 @@ bindings:
     note: Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.
 catalogCarrier: true
 ---
+
+- `ContinuedFraction` and `FromContinuedFraction` are compute-engine's heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"
+- For a quadratic irrational $(a+b\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision
+- The expansion is made unique by never ending in $1$: $[\ldots, k, 1]$ is rewritten $[\ldots, k+1]$
+- The path is $R^{a_0}L^{a_1}R^{a_2}\cdots$ with the LAST exponent one short — the final step is the arrival, not a turn
+- Consecutive Farey fractions satisfy $ps - qr = -1$, which is a determinant, which is a group element
+- The Fibonacci fractions alternate $RLRL\dots$, the sense in which $\varphi$ is the most irrational number

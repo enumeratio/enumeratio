@@ -14,11 +14,6 @@ signatures:
   - call: ModularClass(word)
     description: the canonical name of one class
     library: enumeratio-modular
-details:
-  - "Conjugating by the first letter rotates the word: $x^{-1}(xw)x = wx$"
-  - The count is $\frac1n\sum_{d\mid n}\varphi(d)2^{n/d} - 2$ — binary necklaces, less the two constant ones, which are parabolic
-  - The primitive classes are the aperiodic necklaces, counted by $\frac1n\sum_{d\mid n}\mu(d)2^{n/d}$ — Lyndon words
-  - Word length is the SYMBOLIC period; the geodesic's length is $2\,\mathrm{arccosh}(|\mathrm{tr}|/2)$, and the two orderings differ
 seeAlso:
   - RademacherSymbol
   - ModularWord
@@ -28,3 +23,8 @@ references:
   - system: mathworld
     identity: ModularGroupGamma
 ---
+
+- Conjugating by the first letter rotates the word: $x^{-1}(xw)x = wx$
+- The count is $\frac1n\sum_{d\mid n}\varphi(d)2^{n/d} - 2$ — binary necklaces, less the two constant ones, which are parabolic
+- The primitive classes are the aperiodic necklaces, counted by $\frac1n\sum_{d\mid n}\mu(d)2^{n/d}$ — Lyndon words
+- Word length is the SYMBOLIC period; the geodesic's length is $2\,\mathrm{arccosh}(|\mathrm{tr}|/2)$, and the two orderings differ

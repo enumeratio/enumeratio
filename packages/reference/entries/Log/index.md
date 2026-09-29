@@ -13,10 +13,6 @@ signatures:
     library: enumeratio-analytic
     type: "(complex | infinity, base: (complex | infinity)?) -> number"
     overrides: compute-engine
-details:
-  - "compute-engine's default base is 10, not $e$: Log(z) means $\\log_{10}(z)$, and [[Ln]] is the natural logarithm."
-  - compute-engine's $\mathrm{Log}(z, b)$ takes the value first (value, then base) and defaults to base 10 in the one-argument form; for the natural logarithm use [[Ln]].
-  - 'Product rule: $\log_b(xy) = \log_b(x) + \log_b(y)$. Power rule: $\log_b(x^k) = k \log_b(x)$.'
 seeAlso:
   - Ln
   - Log2
@@ -28,3 +24,7 @@ references:
   - system: mathworld
     identity: Logarithm
 ---
+
+- compute-engine's default base is 10, not $e$: Log(z) means $\log_{10}(z)$, and [[Ln]] is the natural logarithm.
+- compute-engine's $\mathrm{Log}(z, b)$ takes the value first (value, then base) and defaults to base 10 in the one-argument form; for the natural logarithm use [[Ln]].
+- Product rule: $\log_b(xy) = \log_b(x) + \log_b(y)$. Power rule: $\log_b(x^k) = k \log_b(x)$.

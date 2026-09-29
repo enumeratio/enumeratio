@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries its parameters, unevaluated. [[PDF]], [[CDF]], [[Mean]], [[Variance]] and [[RandomVariate]] all read it.
     library: enumeratio-statistics
     type: (real<0..>, real<0..>) -> distribution
-details:
-  - $PDF(x) = \dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$, via [[Beta]]. No domain clamp outside $[0,1]$ — the formula is evaluated as written there too.
-  - $CDF(x) = I_x(\alpha,\beta)$ via [[BetaRegularized]], clamped to $0$ below $x=0$ and $1$ above $x=1$.
-  - $Mean = \dfrac{\alpha}{\alpha+\beta}$, $Variance = \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$, both exact.
-  - "[[RandomVariate]] samples via two [[GammaDistribution]] draws (Marsaglia–Tsang), $X/(X+Y)$ — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram."
 seeAlso:
   - GammaDistribution
   - PDF
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = \dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$, via [[Beta]]. No domain clamp outside $[0,1]$ — the formula is evaluated as written there too.
+- $CDF(x) = I_x(\alpha,\beta)$ via [[BetaRegularized]], clamped to $0$ below $x=0$ and $1$ above $x=1$.
+- $Mean = \dfrac{\alpha}{\alpha+\beta}$, $Variance = \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$, both exact.
+- [[RandomVariate]] samples via two [[GammaDistribution]] draws (Marsaglia–Tsang), $X/(X+Y)$ — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram.

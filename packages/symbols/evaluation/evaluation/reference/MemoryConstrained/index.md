@@ -8,12 +8,12 @@ signatures:
     description: in-process, stays unevaluated; real only inside evaluateIsolated.
     library: enumeratio-evaluation
     type: (any, real<0..>, any?) environment -> any
-details:
-  - JavaScript cannot cap the memory a synchronous, in-process computation uses. In-process, MemoryConstrained therefore stays unevaluated rather than pretending to enforce a bound it cannot — silently ignoring the constraint would be worse than saying so plainly.
-  - "The bound is real inside @enumeratio/evaluation/node's evaluateIsolated: the worker's own resourceLimits.maxOldGenerationSizeMb, a heap cap the runtime itself enforces."
-  - "Held: expr and failexpr are not evaluated in-process, since there is nothing here to run them under."
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- JavaScript cannot cap the memory a synchronous, in-process computation uses. In-process, MemoryConstrained therefore stays unevaluated rather than pretending to enforce a bound it cannot — silently ignoring the constraint would be worse than saying so plainly.
+- The bound is real inside @enumeratio/evaluation/node's evaluateIsolated: the worker's own resourceLimits.maxOldGenerationSizeMb, a heap cap the runtime itself enforces.
+- Held: expr and failexpr are not evaluated in-process, since there is nothing here to run them under.

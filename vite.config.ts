@@ -5,7 +5,13 @@ export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  fmt: { ...FORMAT },
+  fmt: {
+    ...FORMAT,
+    // A record's index.md is written by its own writer (@enumeratio/entry's record.ts), and its
+    // body holds a head's details as written: markdown formatting would rewrite `*x*` as `_x_`,
+    // which the page shows as text. yaml.test holds the files to the writer instead.
+    ignorePatterns: ["packages/**/reference/*/index.md", "packages/reference/entries/*/index.md"],
+  },
   lint: {
     jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
     // Everything oxlint enables by default is `correctness`; as errors, a new finding fails

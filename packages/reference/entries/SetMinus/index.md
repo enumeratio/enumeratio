@@ -6,12 +6,6 @@ summary: The elements of set a that are not also in set b.
 signatures:
   - call: SetMinus(a, b)
     description: the elements of `a` that are not also in `b`.
-details:
-  - 'Not commutative: $A \setminus B$ generally differs from $B \setminus A$.'
-  - Removing elements that aren't present in `a` leaves it unchanged.
-  - 'Identity: $A \setminus (A \setminus B) = A \cap B$. See [[Intersection]].'
-  - Subtracting a superset of `a` collapses the result to $EmptySet$.
-  - The result preserves encounter order rather than sorting into a canonical order.
 seeAlso:
   - Union
   - Intersection
@@ -19,3 +13,9 @@ names:
   wikidata: Q845126
   wolfram: Complement
 ---
+
+- Not commutative: $A \setminus B$ generally differs from $B \setminus A$.
+- Removing elements that aren't present in `a` leaves it unchanged.
+- Identity: $A \setminus (A \setminus B) = A \cap B$. See [[Intersection]].
+- Subtracting a superset of `a` collapses the result to $EmptySet$.
+- The result preserves encounter order rather than sorting into a canonical order.

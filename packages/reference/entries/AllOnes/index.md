@@ -6,10 +6,6 @@ summary: The constant sequence $1, 1, 1, …$ as a lazy indexed collection.
 signatures:
   - call: AllOnes
     description: the constant $1$, repeated forever.
-details:
-  - 'A lazy indexed collection: $Count(AllOnes) = +\infty$, and $At(AllOnes, k) = 1$ for every $k$.'
-  - OEIS A000012.
-  - "A repeated-term collection: every position holds the same value, so $At$ still indexes by position while [[Element]] answers membership in the *set* of values -- $Element(1, AllOnes)$ is true, $Element(2, AllOnes)$ is false."
 enumerate:
   expr: Take(AllOnes, 20)
 seeAlso:
@@ -24,3 +20,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(AllOnes) = +\infty$, and $At(AllOnes, k) = 1$ for every $k$.
+- OEIS A000012.
+- A repeated-term collection: every position holds the same value, so $At$ still indexes by position while [[Element]] answers membership in the *set* of values -- $Element(1, AllOnes)$ is true, $Element(2, AllOnes)$ is false.

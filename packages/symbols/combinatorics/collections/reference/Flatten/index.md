@@ -19,13 +19,13 @@ signatures:
   - call: Flatten(expr)
     description: nested calls of any one head flatten, not just $List$'s.
     library: enumeratio-collections
-details:
-  - "Undoes [[Partition]]: chunking and then re-flattening recovers the original list."
-  - Simply deletes inner braces/levels; it doesn't otherwise reorder or transform elements.
-  - A depth argument limits flattening to that many levels, leaving deeper nesting intact.
-  - Any single head's nested calls flatten, not just $List$'s.
 seeAlso:
   - Join
 names:
   wolframIdentity: true
 ---
+
+- Undoes [[Partition]]: chunking and then re-flattening recovers the original list.
+- Simply deletes inner braces/levels; it doesn't otherwise reorder or transform elements.
+- A depth argument limits flattening to that many levels, leaving deeper nesting intact.
+- Any single head's nested calls flatten, not just $List$'s.

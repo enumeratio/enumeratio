@@ -7,9 +7,9 @@ signatures:
   - call: Mandelbrot(c, n?)
     description: iterates from 0 at the parameter c, n times (default 64), stopping early once it has clearly escaped
     library: "@enumeratio/analytic"
-details:
-  - Numeric only -- evaluates under N() or when an operand is inexact; otherwise stays unevaluated.
-  - Lowers to a compiled real-scalar kernel and to the WGSL `mandelbrot` shader function for GPU rendering.
 seeAlso:
   - Julia
 ---
+
+- Numeric only -- evaluates under N() or when an operand is inexact; otherwise stays unevaluated.
+- Lowers to a compiled real-scalar kernel and to the WGSL `mandelbrot` shader function for GPU rendering.

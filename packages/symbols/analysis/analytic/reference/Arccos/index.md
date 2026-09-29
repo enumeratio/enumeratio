@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex) -> number
     overrides: compute-engine
-details:
-  - Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
-  - 'Co-function with [[Arcsin]]: $\arccos(x) = \pi/2 - \arcsin(x)$.'
-  - 'Undoes [[Cos]] on its principal branch: $\cos(\arccos(x)) = x$ for $x \in [-1, 1]$.'
 seeAlso:
   - Cos
   - Arcsin
@@ -31,3 +27,7 @@ names:
   dlmf: arccosine function
   wolfram: ArcCos
 ---
+
+- Real-valued only for $x \in [-1, 1]$; outside that range the result is complex.
+- Co-function with [[Arcsin]]: $\arccos(x) = \pi/2 - \arcsin(x)$.
+- Undoes [[Cos]] on its principal branch: $\cos(\arccos(x)) = x$ for $x \in [-1, 1]$.

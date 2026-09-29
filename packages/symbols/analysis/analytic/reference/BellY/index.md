@@ -8,10 +8,6 @@ signatures:
     description: $B_{n,k}(x_1, \dots, x_{n-k+1})$, from the list `xs`.
     library: "@enumeratio/analytic"
     type: (integer, integer, list) -> number
-details:
-  - "Comtet's recurrence: $B_{n,k} = \\sum_{i=1}^{n-k+1} \\binom{n-1}{i-1} x_i B_{n-i,k-1}$, with $B_{0,0}=1$."
-  - All-ones arguments give the Stirling numbers of the second kind; $x_j = j!$ gives the (unsigned) Lah numbers — both checked directly against Wolfram's `BellY`.
-  - "`xs` must have exactly $n-k+1$ elements, matching Wolfram's own arity requirement."
 primitive: kernel
 bindings:
   - origin: native
@@ -24,3 +20,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Comtet's recurrence: $B_{n,k} = \sum_{i=1}^{n-k+1} \binom{n-1}{i-1} x_i B_{n-i,k-1}$, with $B_{0,0}=1$.
+- All-ones arguments give the Stirling numbers of the second kind; $x_j = j!$ gives the (unsigned) Lah numbers — both checked directly against Wolfram's `BellY`.
+- `xs` must have exactly $n-k+1$ elements, matching Wolfram's own arity requirement.

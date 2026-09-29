@@ -8,8 +8,6 @@ signatures:
     description: Motzkin paths of length $n$ with exactly $k$ peaks — an up-step immediately followed by a down-step
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Row $n$ is the Motzkin triangle (A055151); rows sum to the Motzkin numbers (A001006).
 seeAlso:
   - DyckPaths
 references:
@@ -22,3 +20,5 @@ grades:
     role: axis
 carrier: MotzkinPath
 ---
+
+- Row $n$ is the Motzkin triangle (A055151); rows sum to the Motzkin numbers (A001006).

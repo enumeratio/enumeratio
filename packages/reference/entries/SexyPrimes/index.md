@@ -6,11 +6,6 @@ summary: "The (lesser) sexy primes $5, 7, 11, 13, 17, …$: primes $p$ with $p+6
 signatures:
   - call: SexyPrimes
     description: the lesser prime $p$ of a sexy pair $(p, p+6)$, an indexed collection of open infinitude.
-details:
-  - A lazy indexed collection; open infinitude, so $Count(SexyPrimes) = NaN$. OEIS A023201 (the lesser member; named for the Latin \emph{sex}, six).
-  - $At(SexyPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+6$ -- $At(SexyPrimes, 1) = 5$.
-  - "Membership goes through [[Element]]: $Element(5, SexyPrimes)$ is true ($5, 11$ both prime), $Element(7, SexyPrimes)$ is true too ($7,13$); $Element(9, SexyPrimes)$ is false (not prime)."
-  - $SexyPrimes$ is $PrimePairs(6)$ verbatim.
 enumerate:
   expr: Take(SexyPrimes, 20)
 seeAlso:
@@ -28,3 +23,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection; open infinitude, so $Count(SexyPrimes) = NaN$. OEIS A023201 (the lesser member; named for the Latin \emph{sex}, six).
+- $At(SexyPrimes, k)$ unranks by scanning forward, testing primality of $n$ and $n+6$ -- $At(SexyPrimes, 1) = 5$.
+- Membership goes through [[Element]]: $Element(5, SexyPrimes)$ is true ($5, 11$ both prime), $Element(7, SexyPrimes)$ is true too ($7,13$); $Element(9, SexyPrimes)$ is false (not prime).
+- $SexyPrimes$ is $PrimePairs(6)$ verbatim.

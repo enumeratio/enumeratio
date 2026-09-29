@@ -8,8 +8,6 @@ signatures:
     description: the partitions of $n$ into prime parts
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A000607.
 seeAlso:
   - IntegerPartitions
 references:
@@ -24,3 +22,5 @@ grades:
     role: axis
 carrier: IntegerPartition
 ---
+
+- Count is A000607.

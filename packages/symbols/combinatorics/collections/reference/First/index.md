@@ -14,15 +14,15 @@ signatures:
   - call: First(expr)
     description: the first operand of any expression, not just a collection.
     library: enumeratio-collections
-details:
-  - $First(c) = At(c, 1)$. See [[At]].
-  - Positional indexing from the front (index 1) and back (negative indices).
-  - On an empty collection with no default given, returns the symbol $Missing$ rather than raising an error.
-  - A second argument supplies a default for an empty collection, instead of $Missing$.
-  - Works on the operands of any expression, not just a collection's elements.
 seeAlso:
   - Last
   - At
 names:
   wolframIdentity: true
 ---
+
+- $First(c) = At(c, 1)$. See [[At]].
+- Positional indexing from the front (index 1) and back (negative indices).
+- On an empty collection with no default given, returns the symbol $Missing$ rather than raising an error.
+- A second argument supplies a default for an empty collection, instead of $Missing$.
+- Works on the operands of any expression, not just a collection's elements.

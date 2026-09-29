@@ -11,10 +11,10 @@ signatures:
   - call: MapAt(f, expr, {{n1}, {n2}, …})
     description: f applied independently at each of several top-level positions
     library: enumeratio-collections
-details:
-  - Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.
 names:
   wolframIdentity: true
 attributes:
   - HoldAll
 ---
+
+- Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.

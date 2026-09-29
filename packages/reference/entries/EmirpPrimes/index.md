@@ -6,10 +6,6 @@ summary: "The emirps $13, 17, 31, 37, 71, …$: primes whose decimal reversal is
 signatures:
   - call: EmirpPrimes
     description: the prime $p$ with $\mathrm{reverse}(p) \ne p$ also prime, an indexed collection of open infinitude.
-details:
-  - A lazy indexed collection; infinitude is conjectured but unproven, so $Count(EmirpPrimes) = NaN$. OEIS A006567. Excludes palindromic primes ($\mathrm{reverse}(p)=p$ is disqualified, even though $p$ is trivially 'prime both ways').
-  - $At(EmirpPrimes, k)$ unranks by scanning forward, testing primality of $n$ and its reversal -- $At(EmirpPrimes, 1) = 13$ ($31$ is prime, and $31 \ne 13$).
-  - "Membership goes through [[Element]]: $Element(13, EmirpPrimes)$ is true, $Element(11, EmirpPrimes)$ is false (reversal is itself, a palindrome)."
 enumerate:
   expr: Take(EmirpPrimes, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection; infinitude is conjectured but unproven, so $Count(EmirpPrimes) = NaN$. OEIS A006567. Excludes palindromic primes ($\mathrm{reverse}(p)=p$ is disqualified, even though $p$ is trivially 'prime both ways').
+- $At(EmirpPrimes, k)$ unranks by scanning forward, testing primality of $n$ and its reversal -- $At(EmirpPrimes, 1) = 13$ ($31$ is prime, and $31 \ne 13$).
+- Membership goes through [[Element]]: $Element(13, EmirpPrimes)$ is true, $Element(11, EmirpPrimes)$ is false (reversal is itself, a palindrome).

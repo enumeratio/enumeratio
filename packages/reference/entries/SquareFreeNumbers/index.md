@@ -6,10 +6,6 @@ summary: The squarefree numbers $1, 2, 3, 5, 6, …$ -- integers divisible by no
 signatures:
   - call: SquareFreeNumbers
     description: the $n$ with every prime factor's exponent $\le 1$, an infinite indexed collection.
-details:
-  - "A lazy indexed collection: $Count(SquareFreeNumbers) = +\\infty$ (density $6/\\pi^2$), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation."
-  - OEIS A005117. Exactly $[[KFreeIntegers]](2)$ -- the two families are unranked identically.
-  - 'Membership goes through [[Element]]: $Element(10, SquareFreeNumbers)$ is true ($10 = 2 \cdot 5$), $Element(12, SquareFreeNumbers)$ is false ($12 = 2^2 \cdot 3$).'
 enumerate:
   expr: Take(SquareFreeNumbers, 20)
 seeAlso:
@@ -29,3 +25,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(SquareFreeNumbers) = +\infty$ (density $6/\pi^2$), and $At$ unranks the $k$-th by scanning forward, testing each candidate's factorisation.
+- OEIS A005117. Exactly $[[KFreeIntegers]](2)$ -- the two families are unranked identically.
+- Membership goes through [[Element]]: $Element(10, SquareFreeNumbers)$ is true ($10 = 2 \cdot 5$), $Element(12, SquareFreeNumbers)$ is false ($12 = 2^2 \cdot 3$).

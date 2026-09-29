@@ -11,11 +11,6 @@ signatures:
   - call: Fourier(list, FourierParameters -> {a, b})
     description: the general two-parameter transform $f_s = \sqrt{|b|/n^{1-a}}\sum_r \mathrm{list}_r\, e^{2\pi i b (r-1)(s-1)/n}$.
     library: "@enumeratio/analytic"
-details:
-  - Always numeric, matching Wolfram exactly — even an all-exact input like `Fourier({0, 0, 0})` comes back as machine floats there, never a symbolic or exact result, so this declines (stays unevaluated) rather than fabricate an exact answer for anything that isn't already a concrete numeric list or matrix.
-  - A rectangular matrix gets the 2D transform, separable into the 1D transform along each dimension in turn; both dimensions' `FourierParameters` prefactors are folded into a single multiplication at the end rather than applied one dimension at a time, which avoids the extra rounding two separate `Sqrt`s would otherwise leave in every entry.
-  - Direct $O(n^2)$ summation, not an FFT — correct for any $n$ and fast enough at the sizes these heads see in practice; a genuinely large transform would want a radix-2 or Bluestein implementation instead.
-  - "Declined: a symbolic entry, an empty list, a ragged nested list, a list more than two levels deep, or an `FourierParameters` option that isn't a 2-element real list."
 primitive: kernel
 bindings:
   - origin: native
@@ -29,3 +24,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Always numeric, matching Wolfram exactly — even an all-exact input like `Fourier({0, 0, 0})` comes back as machine floats there, never a symbolic or exact result, so this declines (stays unevaluated) rather than fabricate an exact answer for anything that isn't already a concrete numeric list or matrix.
+- A rectangular matrix gets the 2D transform, separable into the 1D transform along each dimension in turn; both dimensions' `FourierParameters` prefactors are folded into a single multiplication at the end rather than applied one dimension at a time, which avoids the extra rounding two separate `Sqrt`s would otherwise leave in every entry.
+- Direct $O(n^2)$ summation, not an FFT — correct for any $n$ and fast enough at the sizes these heads see in practice; a genuinely large transform would want a radix-2 or Bluestein implementation instead.
+- Declined: a symbolic entry, an empty list, a ragged nested list, a list more than two levels deep, or an `FourierParameters` option that isn't a 2-element real list.

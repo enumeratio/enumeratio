@@ -6,10 +6,6 @@ summary: 'The prime powers $2, 3, 4, 5, 7, 8, 9, 11, …$: $p^k$ for a prime $p$
 signatures:
   - call: PrimePowerNumbers
     description: the $n = p^k$ for a prime $p$ and integer $k \geq 1$, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(PrimePowerNumbers) = +\infty$ ([[Primes]] alone already is). OEIS A246655.'
-  - $At(PrimePowerNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(PrimePowerNumbers, 3) = 4$ ($2^2$).
-  - 'Membership goes through [[Element]]: $Element(9, PrimePowerNumbers)$ is true ($3^2$), $Element(12, PrimePowerNumbers)$ is false ($2^2 \times 3$, two distinct primes).'
 enumerate:
   expr: Take(PrimePowerNumbers, 20)
 seeAlso:
@@ -29,3 +25,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(PrimePowerNumbers) = +\infty$ ([[Primes]] alone already is). OEIS A246655.
+- $At(PrimePowerNumbers, k)$ unranks by scanning forward, factoring each candidate -- $At(PrimePowerNumbers, 3) = 4$ ($2^2$).
+- Membership goes through [[Element]]: $Element(9, PrimePowerNumbers)$ is true ($3^2$), $Element(12, PrimePowerNumbers)$ is false ($2^2 \times 3$, two distinct primes).

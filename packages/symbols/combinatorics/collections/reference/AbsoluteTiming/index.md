@@ -8,8 +8,6 @@ signatures:
     description: '$\{seconds, value\}$: the wall-clock seconds spent evaluating $expr$, as a real number, and its value.'
     library: enumeratio-collections
     type: (any) time -> any
-details:
-  - $seconds$ is inherently nondeterministic (it depends on the machine and the moment) — the worked example below extracts just the value half with [[At]], rather than pinning a timing figure.
 seeAlso:
   - Echo
 names:
@@ -17,3 +15,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- $seconds$ is inherently nondeterministic (it depends on the machine and the moment) — the worked example below extracts just the value half with [[At]], rather than pinning a timing figure.

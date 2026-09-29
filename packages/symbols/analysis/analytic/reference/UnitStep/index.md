@@ -12,10 +12,10 @@ signatures:
     description: the product of the unit steps -- 0 as soon as any argument is negative.
     library: "@enumeratio/analytic"
     arity: 2
-details:
-  - 1 at exactly 0, unlike [[Heaviside]]'s $\tfrac12$ there.
-  - 'Several arguments: 0 the moment any one of them is negative, 1 otherwise -- the multivariate step used for a region like $x \ge 0 \wedge y \ge 0$.'
-  - A single list argument threads element-wise; several scalar arguments combine as above -- the two call forms are not the same shape.
 names:
   wolframIdentity: true
 ---
+
+- 1 at exactly 0, unlike [[Heaviside]]'s $\tfrac12$ there.
+- Several arguments: 0 the moment any one of them is negative, 1 otherwise -- the multivariate step used for a region like $x \ge 0 \wedge y \ge 0$.
+- A single list argument threads element-wise; several scalar arguments combine as above -- the two call forms are not the same shape.

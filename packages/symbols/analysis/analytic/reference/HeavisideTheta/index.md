@@ -12,10 +12,10 @@ signatures:
     description: the product of the individual steps -- 0 as soon as any argument is negative, unevaluated if none is negative but at least one is exactly 0.
     library: "@enumeratio/analytic"
     arity: 2
-details:
-  - "Deliberately distinct from compute-engine's own native `Heaviside`, which this package does not touch: `Heaviside(0)` evaluates to 0 there, not Wolfram's convention. `HeavisideTheta` is a separate head so both conventions stay available."
-  - Also distinct from [[UnitStep]] (declared in unit-step.ts), which takes the value 1 at exactly 0 rather than staying unevaluated.
-  - D(HeavisideTheta(x), x) = DiracDelta(x).
 names:
   wolframIdentity: true
 ---
+
+- Deliberately distinct from compute-engine's own native `Heaviside`, which this package does not touch: `Heaviside(0)` evaluates to 0 there, not Wolfram's convention. `HeavisideTheta` is a separate head so both conventions stay available.
+- Also distinct from [[UnitStep]] (declared in unit-step.ts), which takes the value 1 at exactly 0 rather than staying unevaluated.
+- D(HeavisideTheta(x), x) = DiracDelta(x).

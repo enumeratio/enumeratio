@@ -8,12 +8,6 @@ signatures:
     description: the Dirichlet beta function $\beta(s)$.
     library: enumeratio-analytic
     type: (number) -> number
-details:
-  - $\beta(s) = 4^{-s}\left(\zeta(s, \tfrac14) - \zeta(s, \tfrac34)\right)$ in terms of [[HurwitzZeta]], which is how it is evaluated numerically (complex $s$ included).
-  - 'Odd positive integers have closed forms in $\pi$ and the Euler numbers: $\beta(2k+1) = (-1)^k E_{2k}\,\pi^{2k+1} / (4^{k+1}(2k)!)$ — $\beta(1) = \pi/4$ (Leibniz), $\beta(3) = \pi^3/32$, $\beta(5) = 5\pi^5/1536$.'
-  - "Even positive integers do not: $\\beta(2) = G = 0.9159\\ldots$ is Catalan's constant, and $\\beta(4), \\beta(6), \\dots$ stay symbolic."
-  - 'Nonpositive integers are Euler numbers: $\beta(-2k) = E_{2k}/2$ ($\beta(0) = \tfrac12$, $\beta(-2) = -\tfrac12$, $\beta(-4) = \tfrac52$), and $\beta(-(2k+1)) = 0$.'
-  - Functional equation $\beta(1-s) = (\pi/2)^{-s} \sin(\pi s/2)\,\Gamma(s)\,\beta(s)$; entire, no poles.
 bindings:
   - origin: reference
     form: notatio
@@ -45,3 +39,9 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- $\beta(s) = 4^{-s}\left(\zeta(s, \tfrac14) - \zeta(s, \tfrac34)\right)$ in terms of [[HurwitzZeta]], which is how it is evaluated numerically (complex $s$ included).
+- Odd positive integers have closed forms in $\pi$ and the Euler numbers: $\beta(2k+1) = (-1)^k E_{2k}\,\pi^{2k+1} / (4^{k+1}(2k)!)$ — $\beta(1) = \pi/4$ (Leibniz), $\beta(3) = \pi^3/32$, $\beta(5) = 5\pi^5/1536$.
+- Even positive integers do not: $\beta(2) = G = 0.9159\ldots$ is Catalan's constant, and $\beta(4), \beta(6), \dots$ stay symbolic.
+- Nonpositive integers are Euler numbers: $\beta(-2k) = E_{2k}/2$ ($\beta(0) = \tfrac12$, $\beta(-2) = -\tfrac12$, $\beta(-4) = \tfrac52$), and $\beta(-(2k+1)) = 0$.
+- Functional equation $\beta(1-s) = (\pi/2)^{-s} \sin(\pi s/2)\,\Gamma(s)\,\beta(s)$; entire, no poles.

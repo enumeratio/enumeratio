@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number?) -> number
     overrides: compute-engine
-details:
-  - 'Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.'
-  - $\operatorname{erfinv}(0) = 0$, and $\operatorname{erfinv}(x) \to \pm\infty$ as $x \to \pm 1$, the limits where Erf itself saturates.
-  - Computed by Newton's method on Erf itself, refining an initial approximation to full machine precision.
-  - 'Intrinsically ill-conditioned near $x = \pm1$: a tiny change in x there produces a large change in the result.'
-  - compute-engine leaves a call outside $[-1, 1]$ unevaluated rather than erroring or returning NaN.
 seeAlso:
   - Erf
   - Erfc
@@ -29,3 +23,9 @@ names:
   dlmf: inverse error function
   wolfram: InverseErf
 ---
+
+- Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.
+- $\operatorname{erfinv}(0) = 0$, and $\operatorname{erfinv}(x) \to \pm\infty$ as $x \to \pm 1$, the limits where Erf itself saturates.
+- Computed by Newton's method on Erf itself, refining an initial approximation to full machine precision.
+- Intrinsically ill-conditioned near $x = \pm1$: a tiny change in x there produces a large change in the result.
+- compute-engine leaves a call outside $[-1, 1]$ unevaluated rather than erroring or returning NaN.

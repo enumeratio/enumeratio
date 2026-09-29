@@ -8,9 +8,6 @@ signatures:
     description: the binary words of length $n$ in binary-reflected Gray-code order
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $2^n$; consecutive words differ in exactly one bit.
-  - $g(r) = r \oplus \lfloor r/2 \rfloor$ (A003188).
 seeAlso:
   - BinaryWords
 references:
@@ -34,3 +31,6 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- Count is $2^n$; consecutive words differ in exactly one bit.
+- $g(r) = r \oplus \lfloor r/2 \rfloor$ (A003188).

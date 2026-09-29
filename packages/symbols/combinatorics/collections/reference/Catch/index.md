@@ -11,9 +11,6 @@ signatures:
   - call: Catch(expr, tag)
     description: Like $Catch(expr)$, but only catches a $Throw$ whose tag matches $tag$ exactly — any other $Throw$ (untagged, or a different tag) propagates past this $Catch$.
     library: enumeratio-collections
-details:
-  - Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
-  - An error that is not one of our own $Throw$s is never caught here — it propagates as a normal error would.
 seeAlso:
   - Throw
 names:
@@ -21,3 +18,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Only exact tag equality is matched, not Wolfram's fuller pattern-matching form.
+- An error that is not one of our own $Throw$s is never caught here — it propagates as a normal error would.

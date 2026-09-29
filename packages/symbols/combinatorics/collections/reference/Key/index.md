@@ -8,10 +8,6 @@ signatures:
     description: an inert tag around k, meaningful as the second operand of At on an Association
     library: enumeratio-collections
     type: (any) -> any
-details:
-  - Reads the SAME Rule-pair Association [[AssociationThread]] and list-functional.ts's Association build — not compute-engine's own string-keyed Dictionary.
-  - Missing(k) answers Missing rather than leaving the call unevaluated, matching Wolfram's own default.
-  - Wolfram's OTHER reading of Key — as a standalone operator, Key(k)(assoc) — isn't implemented; only the At(assoc, Key(k)) form is.
 seeAlso:
   - AssociationThread
   - At
@@ -20,3 +16,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Reads the SAME Rule-pair Association [[AssociationThread]] and list-functional.ts's Association build — not compute-engine's own string-keyed Dictionary.
+- Missing(k) answers Missing rather than leaving the call unevaluated, matching Wolfram's own default.
+- Wolfram's OTHER reading of Key — as a standalone operator, Key(k)(assoc) — isn't implemented; only the At(assoc, Key(k)) form is.

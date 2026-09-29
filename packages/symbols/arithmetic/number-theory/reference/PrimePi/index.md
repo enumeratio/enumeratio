@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (real) -> integer
     overrides: compute-engine
-details:
-  - 'Inverse of [[NthPrime]]: $\pi(p_n)=n$.'
-  - Asymptotically $\pi(x)\sim x/\ln x$, the prime number theorem.
-  - n need not be an integer or prime itself -- PrimePi(n) counts primes up to whatever real value is given.
-  - Threads element-wise over a list, as Wolfram's Listable heads do.
 seeAlso:
   - NthPrime
   - NextPrime
@@ -58,3 +53,8 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Inverse of [[NthPrime]]: $\pi(p_n)=n$.
+- Asymptotically $\pi(x)\sim x/\ln x$, the prime number theorem.
+- n need not be an integer or prime itself -- PrimePi(n) counts primes up to whatever real value is given.
+- Threads element-wise over a list, as Wolfram's Listable heads do.

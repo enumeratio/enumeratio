@@ -12,8 +12,6 @@ signatures:
     description: just the $m$-th term, as a one-element list.
   - call: LinearRecurrence(kernel, init, {m1, m2})
     description: the terms from index $m1$ through $m2$, inclusive.
-details:
-  - "Exact throughout: an integer or rational $kernel$ and $init$ stay integer or rational all the way out, never floating point."
 seeAlso:
   - RecurrenceTable
   - Fibonacci
@@ -21,3 +19,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Exact throughout: an integer or rational $kernel$ and $init$ stay integer or rational all the way out, never floating point.

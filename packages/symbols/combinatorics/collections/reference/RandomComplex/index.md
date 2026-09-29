@@ -14,11 +14,11 @@ signatures:
   - call: RandomComplex({zmin, zmax})
     description: uniform over the rectangle with corners zmin and zmax
     library: enumeratio-collections
-details:
-  - Draws from the SAME seeded stream as [[RandomInteger]] (call [[SeedRandom]](seed) first for a reproducible sequence) — our own generator, not Wolfram's, so only the shape and range of the answer are guaranteed to match.
 seeAlso:
   - RandomInteger
   - SeedRandom
 names:
   wolframIdentity: true
 ---
+
+- Draws from the SAME seeded stream as [[RandomInteger]] (call [[SeedRandom]](seed) first for a reproducible sequence) — our own generator, not Wolfram's, so only the shape and range of the answer are guaranteed to match.

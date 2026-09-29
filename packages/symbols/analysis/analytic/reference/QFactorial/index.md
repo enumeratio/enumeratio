@@ -8,9 +8,6 @@ signatures:
     description: the q-factorial $[n]_q!$.
     library: "@enumeratio/analytic"
     type: (integer, complex) -> number
-details:
-  - Built as a product of q-integers $[k]_q$, each a sum of $k$ powers of $q$ — exact boxed arithmetic throughout, so it reduces to a number for numeric $q$ (rational stays rational) and to a genuine polynomial in $q$ that `Expand` can open up for symbolic $q$.
-  - At $q = 1$, $[k]_1 = k$ termwise (no division, so no $q \to 1$ limit to take), reducing exactly to $n!$.
 primitive: kernel
 bindings:
   - origin: native
@@ -29,3 +26,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Built as a product of q-integers $[k]_q$, each a sum of $k$ powers of $q$ — exact boxed arithmetic throughout, so it reduces to a number for numeric $q$ (rational stays rational) and to a genuine polynomial in $q$ that `Expand` can open up for symbolic $q$.
+- At $q = 1$, $[k]_1 = k$ termwise (no division, so no $q \to 1$ limit to take), reducing exactly to $n!$.

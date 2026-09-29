@@ -8,9 +8,6 @@ signatures:
     description: the peak count of a one-line permutation $p$
     library: enumeratio-collections
     type: (list | permutation) -> integer
-details:
-  - Only interior positions count ($1 < i < n$), so $\mathrm{Peaks}(p) = 0$ whenever $n \leq 2$
-  - Peaks and [[Valleys]] alternate along the sequence, so they differ by at most $1$
 seeAlso:
   - Valleys
   - Descents
@@ -30,3 +27,6 @@ statOn:
   - Permutation
   - SchroederPath
 ---
+
+- Only interior positions count ($1 < i < n$), so $\mathrm{Peaks}(p) = 0$ whenever $n \leq 2$
+- Peaks and [[Valleys]] alternate along the sequence, so they differ by at most $1$

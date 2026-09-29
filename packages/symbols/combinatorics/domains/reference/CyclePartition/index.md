@@ -3,9 +3,6 @@ name: CyclePartition
 domain: Combinatorial maps
 signature: CyclePartition(Permutation)
 summary: The orbits, as a set partition of the positions.
-details:
-  - Takes a `Permutation` and returns a `SetPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-  - Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.
 mapOn:
   - Permutation
 signatures:
@@ -14,3 +11,6 @@ signatures:
     library: enumeratio-domains
     type: (permutation) -> set_partition
 ---
+
+- Takes a `Permutation` and returns a `SetPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.

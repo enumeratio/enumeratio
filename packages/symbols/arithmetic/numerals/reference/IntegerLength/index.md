@@ -10,9 +10,6 @@ signatures:
     type: (integer, integer?) -> integer
   - call: IntegerLength(n, base)
     description: the number of digits in the given base
-details:
-  - The sign of $n$ is not counted — `IntegerLength(-123)` is 3, same as `IntegerLength(123)`
-  - "`IntegerLength(0)` is 0, unlike [[IntegerDigits]]'s one-element `{0}` — there is no shortest numeral for 0, only the empty one"
 seeAlso:
   - IntegerDigits
   - IntegerReverse
@@ -20,3 +17,6 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- The sign of $n$ is not counted — `IntegerLength(-123)` is 3, same as `IntegerLength(123)`
+- `IntegerLength(0)` is 0, unlike [[IntegerDigits]]'s one-element `{0}` — there is no shortest numeral for 0, only the empty one

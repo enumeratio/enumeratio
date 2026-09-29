@@ -8,11 +8,6 @@ signatures:
     description: an inert distribution object — carries $\sigma$, unevaluated.
     library: enumeratio-statistics
     type: (real<0..>) -> distribution
-details:
-  - $PDF(x) = (x/\sigma^2)e^{-x^2/(2\sigma^2)}$ for $x \geq 0$.
-  - $CDF(x) = 1-e^{-x^2/(2\sigma^2)}$, clamped to $0$ below $x=0$.
-  - $Mean = \sigma\sqrt{\pi/2}$, $Variance = (4-\pi)\sigma^2/2$, both exact.
-  - '[[RandomVariate]] samples via inverse transform: $\sigma\sqrt{-2\log U}$.'
 seeAlso:
   - ChiDistribution
   - MaxwellDistribution
@@ -21,3 +16,8 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF(x) = (x/\sigma^2)e^{-x^2/(2\sigma^2)}$ for $x \geq 0$.
+- $CDF(x) = 1-e^{-x^2/(2\sigma^2)}$, clamped to $0$ below $x=0$.
+- $Mean = \sigma\sqrt{\pi/2}$, $Variance = (4-\pi)\sigma^2/2$, both exact.
+- [[RandomVariate]] samples via inverse transform: $\sigma\sqrt{-2\log U}$.

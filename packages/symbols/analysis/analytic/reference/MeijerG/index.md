@@ -8,10 +8,6 @@ signatures:
     description: $G^{m,n}_{p,q}\left(z \,\middle|\, \begin{matrix}a_1,\ldots,a_p\\b_1,\ldots,b_q\end{matrix}\right)$, numerically.
     library: "@enumeratio/analytic"
     type: (list, list, number) -> number
-details:
-  - Numeric only (like this package's `Hypergeometric0F1` and friends — always declines for a symbolic `z` or parameter, never returns a symbolic closed form). Requires $m \ge 1$ and $p \le q$, so every term's ${}_pF_q$ has upper-count $\le$ lower-count $+ 1$, the shape `pfqSeries` already handles (entire, or convergent only inside the unit disc).
-  - 'Declined: $p > q$; $m = 0$; two of the $b_h$ ($h \le m$) congruent mod 1 (a non-simple pole — the log-case formula this does not implement); a Γ-argument in the prefactor landing on a non-positive integer (a further degeneracy); non-numeric operands.'
-  - Verified against wolframscript's own `MeijerG` at several parameter sets, including the plain-exponential case ($m{=}1,n{=}0,p{=}0,q{=}1$) and cases with both $a$- and $b$-parameters.
 primitive: kernel
 bindings:
   - origin: native
@@ -24,3 +20,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Numeric only (like this package's `Hypergeometric0F1` and friends — always declines for a symbolic `z` or parameter, never returns a symbolic closed form). Requires $m \ge 1$ and $p \le q$, so every term's ${}_pF_q$ has upper-count $\le$ lower-count $+ 1$, the shape `pfqSeries` already handles (entire, or convergent only inside the unit disc).
+- Declined: $p > q$; $m = 0$; two of the $b_h$ ($h \le m$) congruent mod 1 (a non-simple pole — the log-case formula this does not implement); a Γ-argument in the prefactor landing on a non-positive integer (a further degeneracy); non-numeric operands.
+- Verified against wolframscript's own `MeijerG` at several parameter sets, including the plain-exponential case ($m{=}1,n{=}0,p{=}0,q{=}1$) and cases with both $a$- and $b$-parameters.

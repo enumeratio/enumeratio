@@ -20,13 +20,6 @@ signatures:
   - call: PellSolution(D)
     description: the fundamental $(t, u)$ with $t^2 - Du^2 = 4$
     library: enumeratio-modular
-details:
-  - Indefinite means $D > 0$ and $D$ is not a perfect square; a square discriminant gives a form that factors, with no cycle
-  - $\mathrm{SL}(2,\mathbb{Z})$ acts by $(x,y) \mapsto (px+qy, rx+sy)$ and preserves $D$, so classes live inside one discriminant
-  - Gauss's reduction condition is $|\sqrt{D} - 2|a|| < b < \sqrt{D}$, and `FormRho` steps round the cycle
-  - A cycle's length is always even, because $\rho$ flips the sign of the leading coefficient
-  - The automorph has trace $t > 2$, hence is hyperbolic — so a form class IS one of the closed geodesics [[ModularClasses]] counts
-  - A discriminant $\not\equiv 0, 1 \pmod 4$ has no forms at all, and the class number is 0
 seeAlso:
   - ModularClasses
   - ContinuedFraction
@@ -37,3 +30,10 @@ references:
   - system: mathworld
     identity: ClassNumber
 ---
+
+- Indefinite means $D > 0$ and $D$ is not a perfect square; a square discriminant gives a form that factors, with no cycle
+- $\mathrm{SL}(2,\mathbb{Z})$ acts by $(x,y) \mapsto (px+qy, rx+sy)$ and preserves $D$, so classes live inside one discriminant
+- Gauss's reduction condition is $|\sqrt{D} - 2|a|| < b < \sqrt{D}$, and `FormRho` steps round the cycle
+- A cycle's length is always even, because $\rho$ flips the sign of the leading coefficient
+- The automorph has trace $t > 2$, hence is hyperbolic — so a form class IS one of the closed geodesics [[ModularClasses]] counts
+- A discriminant $\not\equiv 0, 1 \pmod 4$ has no forms at all, and the class number is 0

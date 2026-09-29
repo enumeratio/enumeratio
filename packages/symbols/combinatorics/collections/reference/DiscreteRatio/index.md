@@ -8,8 +8,6 @@ signatures:
     description: f(n+1)/f(n), simplified
     library: enumeratio-collections
     type: (any, symbol) -> any
-details:
-  - Substitutes $n \to n+1$ into $f$ and simplifies the quotient; stays symbolic when the ratio does not collapse further (e.g. a ratio of two named sequences with no known closed form).
 seeAlso:
   - GeneratingFunction
   - FindSequenceFunction
@@ -18,3 +16,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Substitutes $n \to n+1$ into $f$ and simplifies the quotient; stays symbolic when the ratio does not collapse further (e.g. a ratio of two named sequences with no known closed form).

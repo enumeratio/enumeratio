@@ -8,8 +8,6 @@ signatures:
     description: exact for $r=0,1,2$ via the raw-moment identity $E[X(X-1)]=E[X^2]-E[X]$; $r\geq 3$ stays unevaluated.
     library: enumeratio-statistics
     type: (distribution, integer) -> real
-details:
-  - Generic over every distribution this package's [[Moment]] answers, old or new.
 seeAlso:
   - Moment
   - CentralMoment
@@ -17,3 +15,5 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Generic over every distribution this package's [[Moment]] answers, old or new.

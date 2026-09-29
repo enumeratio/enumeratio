@@ -8,10 +8,6 @@ signatures:
     description: the elements, listed so that smaller ones come first
     library: enumeratio-incidence
     type: (expression<BooleanLattice> | expression<Chain> | expression<DivisorLattice>) -> list<list<integer> | number>
-details:
-  - The linear extension is what makes $\zeta$ upper-triangular with ones on the diagonal, hence invertible over the integers — and therefore what makes $\mu$ integral
-  - '`DivisorLattice` elements are integers; `BooleanLattice` elements are subsets; `Chain` elements are $1 \dots n$'
-  - '`AlgebraDimension(IncidenceAlgebra(poset))` counts the intervals: $\binom{n+1}{2}$ for a chain, $3^n$ for the Boolean lattice'
 seeAlso:
   - MoebiusFunction
   - MoebiusInvert
@@ -21,3 +17,7 @@ references:
   - system: mathworld
     identity: PartiallyOrderedSet
 ---
+
+- The linear extension is what makes $\zeta$ upper-triangular with ones on the diagonal, hence invertible over the integers — and therefore what makes $\mu$ integral
+- `DivisorLattice` elements are integers; `BooleanLattice` elements are subsets; `Chain` elements are $1 \dots n$
+- `AlgebraDimension(IncidenceAlgebra(poset))` counts the intervals: $\binom{n+1}{2}$ for a chain, $3^n$ for the Boolean lattice

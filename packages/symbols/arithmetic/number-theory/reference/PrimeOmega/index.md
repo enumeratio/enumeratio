@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (number, any*) -> integer
     overrides: compute-engine
-details:
-  - Counts every prime factor with multiplicity -- $\Omega(2^5)=5$, unlike [[PrimeNu]]'s 1.
-  - 'Completely additive: $\Omega(mn)=\Omega(m)+\Omega(n)$ for all $m,n$, not just coprime ones.'
-  - '$\Omega(1)=0$: 1 has no prime factors.'
-  - $\Omega(n)=\nu(n)$ exactly when $n$ is squarefree; otherwise $\Omega(n)>\nu(n)$.
 seeAlso:
   - PrimeNu
   - FactorInteger
@@ -29,3 +24,8 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- Counts every prime factor with multiplicity -- $\Omega(2^5)=5$, unlike [[PrimeNu]]'s 1.
+- Completely additive: $\Omega(mn)=\Omega(m)+\Omega(n)$ for all $m,n$, not just coprime ones.
+- $\Omega(1)=0$: 1 has no prime factors.
+- $\Omega(n)=\nu(n)$ exactly when $n$ is squarefree; otherwise $\Omega(n)>\nu(n)$.

@@ -8,8 +8,6 @@ signatures:
     description: Permutations of $\{1, …, n\}$ with exactly $k$ inversions — row $n$ of the Mahonian triangle
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the coefficient of $q^k$ in the $q$-factorial $[n]_q!$ (A008302).
 seeAlso:
   - SymmetricGroup
   - Inversions
@@ -28,3 +26,5 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is the coefficient of $q^k$ in the $q$-factorial $[n]_q!$ (A008302).

@@ -14,10 +14,6 @@ signatures:
   - call: Adele(idele)
     description: the underlying adèle of an [[Idele]]
     library: enumeratio-adeles
-details:
-  - The real part is any closed-form real constant compute-engine can evaluate numerically, not only a rational.
-  - "`Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` thread over an adèle, real part and finite part separately."
-  - An [[Idele]] is an adèle together with the extra data an idèle carries (a finite set of distinguished units); `Adele(idele)` forgets that and keeps only the value.
 seeAlso:
   - ProfiniteNumber
   - Idele
@@ -39,3 +35,7 @@ bindings:
       version: "10.9"
       on: 2026-09-28
 ---
+
+- The real part is any closed-form real constant compute-engine can evaluate numerically, not only a rational.
+- `Add`, `Multiply`, `Negate`, `Divide`, `Power`, `Equal`, `NotEqual` thread over an adèle, real part and finite part separately.
+- An [[Idele]] is an adèle together with the extra data an idèle carries (a finite set of distinguished units); `Adele(idele)` forgets that and keeps only the value.

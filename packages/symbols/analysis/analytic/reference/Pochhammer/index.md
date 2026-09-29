@@ -11,13 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (complex | infinity, complex | infinity) -> number
     overrides: compute-engine
-details:
-  - 'Closed form via the Gamma function: $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$.'
-  - $(1)_n = n!$, since the rising factorial from 1 just counts up to n.
-  - 'Negative order gives the falling reciprocal: $(a)_{-n} = \frac{1}{(a-1)(a-2)\cdots(a-n)}$.'
-  - 'Dividing by $k!$ counts multisets: $\binom{n+k-1}{k} = \frac{(n)_k}{k!}$.'
-  - If a is a non-positive integer with $|a| < n$, the product picks up a zero factor and vanishes.
-  - A building block of hypergeometric series, where it appears in both numerator and denominator terms.
 seeAlso:
   - Factorial
   - Binomial
@@ -33,3 +26,10 @@ names:
   wikidata: Q2339261
   wolframIdentity: true
 ---
+
+- Closed form via the Gamma function: $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$.
+- $(1)_n = n!$, since the rising factorial from 1 just counts up to n.
+- Negative order gives the falling reciprocal: $(a)_{-n} = \frac{1}{(a-1)(a-2)\cdots(a-n)}$.
+- Dividing by $k!$ counts multisets: $\binom{n+k-1}{k} = \frac{(n)_k}{k!}$.
+- If a is a non-positive integer with $|a| < n$, the product picks up a zero factor and vanishes.
+- A building block of hypergeometric series, where it appears in both numerator and denominator terms.

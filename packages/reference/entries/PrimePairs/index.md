@@ -8,11 +8,6 @@ signatures:
     description: the prime $p$ with $p+gap$ also prime, an indexed collection of open infinitude for every $gap$.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<integer>
-details:
-  - A lazy indexed collection for each $gap$; whether there are infinitely many prime pairs at ANY fixed gap is open (the twin-prime conjecture generalises to every gap), so $Count(PrimePairs(gap)) = NaN$ for every $gap$, not just $gap=2$.
-  - $PrimePairs(2)$, $PrimePairs(4)$, $PrimePairs(6)$ are [[TwinPrimes]], [[CousinPrimes]], [[SexyPrimes]] verbatim.
-  - $At(PrimePairs(gap), i)$ unranks the $i$-th match by scanning forward, testing primality of $n$ and $n+gap$ -- $At(PrimePairs(4), 1) = 3$.
-  - "Membership goes through [[Element]]: $Element(3, PrimePairs(4))$ is true ($3,7$ both prime), $Element(5, PrimePairs(4))$ is false ($9$ is not)."
 enumerate:
   expr: Take(PrimePairs(4), 20)
 seeAlso:
@@ -28,3 +23,8 @@ grades:
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection for each $gap$; whether there are infinitely many prime pairs at ANY fixed gap is open (the twin-prime conjecture generalises to every gap), so $Count(PrimePairs(gap)) = NaN$ for every $gap$, not just $gap=2$.
+- $PrimePairs(2)$, $PrimePairs(4)$, $PrimePairs(6)$ are [[TwinPrimes]], [[CousinPrimes]], [[SexyPrimes]] verbatim.
+- $At(PrimePairs(gap), i)$ unranks the $i$-th match by scanning forward, testing primality of $n$ and $n+gap$ -- $At(PrimePairs(4), 1) = 3$.
+- Membership goes through [[Element]]: $Element(3, PrimePairs(4))$ is true ($3,7$ both prime), $Element(5, PrimePairs(4))$ is false ($9$ is not).

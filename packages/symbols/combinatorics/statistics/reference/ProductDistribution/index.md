@@ -11,10 +11,6 @@ signatures:
   - call: ProductDistribution({d, n})
     description: n independent copies of the same $d$ — rewritten to the n-ary form at construction.
     library: enumeratio-statistics
-details:
-  - $PDF$ at a list $\{x_1,\ldots,x_n\}$ is the product $\prod_i PDF(d_i,x_i)$; $CDF$ the product of $CDF(d_i,x_i)$ — both valid only because the factors are assumed independent.
-  - $Mean$ and $Variance$ are componentwise lists, $\{Mean(d_1),\ldots\}$ and $\{Variance(d_1),\ldots\}$.
-  - "[[RandomVariate]] draws a list, one independent draw per factor."
 seeAlso:
   - MarginalDistribution
   - MixtureDistribution
@@ -23,3 +19,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $PDF$ at a list $\{x_1,\ldots,x_n\}$ is the product $\prod_i PDF(d_i,x_i)$; $CDF$ the product of $CDF(d_i,x_i)$ — both valid only because the factors are assumed independent.
+- $Mean$ and $Variance$ are componentwise lists, $\{Mean(d_1),\ldots\}$ and $\{Variance(d_1),\ldots\}$.
+- [[RandomVariate]] draws a list, one independent draw per factor.

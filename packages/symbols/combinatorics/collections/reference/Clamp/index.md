@@ -19,11 +19,6 @@ signatures:
     library: enumeratio-structures
     type: (any, any?, any?, any?, any?) -> any
     overrides: enumeratio-collections
-details:
-  - 'Constrains a value to $[\mathrm{lower}, \mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.'
-  - A 1-argument $\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].
-  - "Idempotent: clamping an already-clamped value changes nothing."
-  - Doesn't validate that lower $\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.
 seeAlso:
   - Min
   - Max
@@ -31,3 +26,8 @@ references:
   - system: wikipedia
     identity: Clamp (function)
 ---
+
+- Constrains a value to $[\mathrm{lower}, \mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.
+- A 1-argument $\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].
+- Idempotent: clamping an already-clamped value changes nothing.
+- Doesn't validate that lower $\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.

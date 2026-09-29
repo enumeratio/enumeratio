@@ -8,11 +8,11 @@ signatures:
     description: the Gudermannian function of x.
     library: "@enumeratio/analytic"
     type: (number) -> number
-details:
-  - $\operatorname{gd}(0) = 0$, and $\operatorname{gd}(x) \to \pm\pi/2$ as $x \to \pm\infty$ -- the horizontal asymptotes.
-  - 'An odd function: $\operatorname{gd}(-x) = -\operatorname{gd}(x)$.'
-  - $\operatorname{gd}'(x) = \operatorname{sech}(x)$; differentiable via [[D]].
-  - Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.
 names:
   wolframIdentity: true
 ---
+
+- $\operatorname{gd}(0) = 0$, and $\operatorname{gd}(x) \to \pm\pi/2$ as $x \to \pm\infty$ -- the horizontal asymptotes.
+- An odd function: $\operatorname{gd}(-x) = -\operatorname{gd}(x)$.
+- $\operatorname{gd}'(x) = \operatorname{sech}(x)$; differentiable via [[D]].
+- Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.

@@ -8,10 +8,10 @@ signatures:
     description: the pair {Re(z), Im(z)}
     library: enumeratio-collections
     type: (list<any> | number) -> list<any>
-details:
-  - "Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair."
 seeAlso:
   - NumberQ
 names:
   wolframIdentity: true
 ---
+
+- Listable: ReIm({z1, z2}) is {ReIm(z1), ReIm(z2)}, not a single flattened pair.

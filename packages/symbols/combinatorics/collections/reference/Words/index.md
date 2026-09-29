@@ -8,8 +8,6 @@ signatures:
     description: the strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$
     library: enumeratio-collections
     type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is $base^{size}$; the same family as [[Tuples]], with grades reordered.
 seeAlso:
   - Tuples
   - BinaryWords
@@ -32,3 +30,5 @@ grades:
     role: param
 carrier: Word
 ---
+
+- Count is $base^{size}$; the same family as [[Tuples]], with grades reordered.

@@ -8,10 +8,6 @@ signatures:
     description: an inert distribution object wrapping `data` (a list).
     library: enumeratio-statistics
     type: (list<real>) -> distribution
-details:
-  - "[[PDF]]/[[CDF]] at $x$ are the observed PROPORTIONS — the count of `data` equal to (resp. at most) $x$, divided by its length. Wolfram's own `PDF` is a continuous, kernel-smoothed density; this is a discrete empirical measure instead, a documented divergence."
-  - "[[Mean]]/[[Variance]] delegate to [[Mean]]/[[Variance]] of `data` itself (sample variance, $n-1$) — the same convention Wolfram's `Variance[EmpiricalDistribution[data]] = Variance[data]` uses."
-  - "[[RandomVariate]] resamples uniformly from `data`, with replacement."
 seeAlso:
   - Mean
   - Variance
@@ -19,3 +15,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- [[PDF]]/[[CDF]] at $x$ are the observed PROPORTIONS — the count of `data` equal to (resp. at most) $x$, divided by its length. Wolfram's own `PDF` is a continuous, kernel-smoothed density; this is a discrete empirical measure instead, a documented divergence.
+- [[Mean]]/[[Variance]] delegate to [[Mean]]/[[Variance]] of `data` itself (sample variance, $n-1$) — the same convention Wolfram's `Variance[EmpiricalDistribution[data]] = Variance[data]` uses.
+- [[RandomVariate]] resamples uniformly from `data`, with replacement.

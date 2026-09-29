@@ -11,11 +11,6 @@ signatures:
     library: enumeratio-number-theory
     type: (integer, integer) -> integer
     overrides: compute-engine
-details:
-  - compute-engine spells the second-kind number $\left\{{n\atop k}\right\}$ as $\mathrm{Stirling}$.
-  - It satisfies the recurrence $S(n, k) = k\,S(n-1, k) + S(n-1, k-1)$
-  - 'Summing over $k$ gives the Bell number: $\sum_k S(n, k) = B_n$ (see [[BellNumber]])'
-  - The signed first-kind numbers are [[StirlingS1]]
 seeAlso:
   - StirlingS1
   - BellNumber
@@ -69,3 +64,8 @@ catalog:
     identity: StirlingS2
     url: https://reference.wolfram.com/language/ref/StirlingS2.html
 ---
+
+- compute-engine spells the second-kind number $\left\{{n\atop k}\right\}$ as $\mathrm{Stirling}$.
+- It satisfies the recurrence $S(n, k) = k\,S(n-1, k) + S(n-1, k-1)$
+- Summing over $k$ gives the Bell number: $\sum_k S(n, k) = B_n$ (see [[BellNumber]])
+- The signed first-kind numbers are [[StirlingS1]]

@@ -26,16 +26,6 @@ signatures:
   - call: SeifertGenus(knot)
     description: $(p-1)(q-1)/2$ for $T(p,q)$, $1$ for a twist or pretzel knot, else a POSITIVE braid's $(c-s+1)/2$
     library: enumeratio-braid
-details:
-  - $\Delta(t) \doteq \det(\psi(\beta) - I)\cdot(1-t)/(1-t^n)$, for $\psi$ the reduced Burau representation
-  - $\Delta$ is only defined up to $\pm t^k$, so results are normalised — lowest term at $t^0$ with a positive coefficient
-  - $\Delta_{T(p,q)}(t) = (t^{pq}-1)(t-1)/((t^p-1)(t^q-1))$, which is the oracle the Burau computation is checked against
-  - $\Delta_{TwistKnot(n)}(t) = nt^2 - (2n+1)t + n$; $n=1$ is the figure-eight and $n=-1$ is the trefoil
-  - $\Delta_{P(p,q,r)}(t) = \tfrac14[(pq+qr+rp)(t-2+t^{-1}) + (t+2+t^{-1})]$, for odd $p,q,r$
-  - A twist or pretzel knot is genus 1 always — the underlying Seifert surface has two disks joined by two or three bands, and adding a twist lengthens a band rather than adding one
-  - 'The determinant uses Bareiss elimination: every intermediate is a minor, so each division is exact over $\mathbb{Z}[t,t^{-1}]$'
-  - "Bennequin: on a POSITIVE braid, Seifert's algorithm is already optimal, so the genus formula holds — on a mixed braid it does not"
-  - No braid-word family in $n$ or $(p,q,r)$ is known for twist or pretzel knots in general, so `JonesPolynomial` and `KnotCurve` decline there except at the figure-eight and the trefoil, which carry the specific braid this package already had for them
 seeAlso:
   - Braid
   - LorenzBraid
@@ -45,3 +35,13 @@ references:
   - system: mathworld
     identity: AlexanderPolynomial
 ---
+
+- $\Delta(t) \doteq \det(\psi(\beta) - I)\cdot(1-t)/(1-t^n)$, for $\psi$ the reduced Burau representation
+- $\Delta$ is only defined up to $\pm t^k$, so results are normalised — lowest term at $t^0$ with a positive coefficient
+- $\Delta_{T(p,q)}(t) = (t^{pq}-1)(t-1)/((t^p-1)(t^q-1))$, which is the oracle the Burau computation is checked against
+- $\Delta_{TwistKnot(n)}(t) = nt^2 - (2n+1)t + n$; $n=1$ is the figure-eight and $n=-1$ is the trefoil
+- $\Delta_{P(p,q,r)}(t) = \tfrac14[(pq+qr+rp)(t-2+t^{-1}) + (t+2+t^{-1})]$, for odd $p,q,r$
+- A twist or pretzel knot is genus 1 always — the underlying Seifert surface has two disks joined by two or three bands, and adding a twist lengthens a band rather than adding one
+- The determinant uses Bareiss elimination: every intermediate is a minor, so each division is exact over $\mathbb{Z}[t,t^{-1}]$
+- Bennequin: on a POSITIVE braid, Seifert's algorithm is already optimal, so the genus formula holds — on a mixed braid it does not
+- No braid-word family in $n$ or $(p,q,r)$ is known for twist or pretzel knots in general, so `JonesPolynomial` and `KnotCurve` decline there except at the figure-eight and the trefoil, which carry the specific braid this package already had for them

@@ -14,11 +14,6 @@ signatures:
   - call: ChineseRemainder(IntegerMod(r1, m1), IntegerMod(r2, m2), …)
     description: the [[IntegerMod]] class mod $\operatorname{lcm}(m_i)$ that reduces to each
     library: enumeratio-residues
-details:
-  - When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\cdots m_n$ by the Chinese remainder theorem.
-  - A solution exists for non-coprime moduli only when the remainders agree on every shared factor; otherwise the system is inconsistent.
-  - An inconsistent system is left unevaluated, with a `ChineseRemainder::nsol` message naming the two congruences that clash.
-  - A third argument $d$ asks for the smallest solution $x \ge d$ instead, as Wolfram's does.
 seeAlso:
   - Mod
   - IntegerMod
@@ -33,3 +28,8 @@ references:
 names:
   wolframIdentity: true
 ---
+
+- When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\cdots m_n$ by the Chinese remainder theorem.
+- A solution exists for non-coprime moduli only when the remainders agree on every shared factor; otherwise the system is inconsistent.
+- An inconsistent system is left unevaluated, with a `ChineseRemainder::nsol` message naming the two congruences that clash.
+- A third argument $d$ asks for the smallest solution $x \ge d$ instead, as Wolfram's does.

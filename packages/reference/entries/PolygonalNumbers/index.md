@@ -8,10 +8,6 @@ signatures:
     description: $P(k, n)$ for $n = 1, 2, 3, …$, the $k$-gonal numbers.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<integer>
-details:
-  - 'A lazy indexed family for each $k \ge 3$: $Count(PolygonalNumbers(k)) = +\infty$, and $At(PolygonalNumbers(k), n)$ unranks $P(k, n)$ in closed form -- $At(PolygonalNumbers(5), 3) = 12$.'
-  - $k = 3, 4, 5, 6, 7, 8$ reproduce [[TriangularNumbers]], [[SquareNumbers]], [[PentagonalNumbers]], [[HexagonalNumbers]], [[HeptagonalNumbers]] and [[OctagonalNumbers]] termwise; those fixed-$k$ names exist as their own lazy collections for convenience, not as a separate definition.
-  - Membership goes through [[Element]] by inverting the quadratic in $n$ exactly for the given $k$ -- $Element(12, PolygonalNumbers(5))$ is true, $Element(13, PolygonalNumbers(5))$ is false.
 enumerate:
   expr: Take(PolygonalNumbers(5), 20)
 seeAlso:
@@ -36,3 +32,7 @@ grades:
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed family for each $k \ge 3$: $Count(PolygonalNumbers(k)) = +\infty$, and $At(PolygonalNumbers(k), n)$ unranks $P(k, n)$ in closed form -- $At(PolygonalNumbers(5), 3) = 12$.
+- $k = 3, 4, 5, 6, 7, 8$ reproduce [[TriangularNumbers]], [[SquareNumbers]], [[PentagonalNumbers]], [[HexagonalNumbers]], [[HeptagonalNumbers]] and [[OctagonalNumbers]] termwise; those fixed-$k$ names exist as their own lazy collections for convenience, not as a separate definition.
+- Membership goes through [[Element]] by inverting the quadratic in $n$ exactly for the given $k$ -- $Element(12, PolygonalNumbers(5))$ is true, $Element(13, PolygonalNumbers(5))$ is false.

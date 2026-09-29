@@ -6,10 +6,6 @@ summary: "The evil numbers $0, 3, 5, 6, 9, …$: nonnegative integers with an ev
 signatures:
   - call: EvilNumbers
     description: the $n \geq 0$ with an even binary popcount, an infinite indexed collection.
-details:
-  - 'A lazy indexed collection: $Count(EvilNumbers) = +\infty$, and this is the one family here whose first term is 0 rather than 1 (popcount 0 is even). OEIS A001969.'
-  - $At(EvilNumbers, k)$ unranks by scanning forward -- $At(EvilNumbers, 1) = 0$, $At(EvilNumbers, 2) = 3$.
-  - "Membership goes through [[Element]]: $Element(6, EvilNumbers)$ is true ($110_2$, two 1-bits), $Element(7, EvilNumbers)$ is false ([[OdiousNumbers]], three 1-bits)."
 enumerate:
   expr: Take(EvilNumbers, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(EvilNumbers) = +\infty$, and this is the one family here whose first term is 0 rather than 1 (popcount 0 is even). OEIS A001969.
+- $At(EvilNumbers, k)$ unranks by scanning forward -- $At(EvilNumbers, 1) = 0$, $At(EvilNumbers, 2) = 3$.
+- Membership goes through [[Element]]: $Element(6, EvilNumbers)$ is true ($110_2$, two 1-bits), $Element(7, EvilNumbers)$ is false ([[OdiousNumbers]], three 1-bits).

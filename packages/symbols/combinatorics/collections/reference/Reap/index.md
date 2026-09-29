@@ -11,9 +11,6 @@ signatures:
   - call: Reap(expr, tag)
     description: Like $Reap(expr)$, but the second element holds only the group whose tag matches $tag$ exactly (or several groups, one per entry, for $Reap(expr, \{tag1, tag2, ...\})$) — a requested tag nothing was sown under comes back as $\{\}$.
     library: enumeratio-collections
-details:
-  - Only exact tag equality is matched here, not Wolfram's fuller pattern-matching form of the second argument.
-  - "Sequencing several $Sow$s in one $expr$: use $[Last, [List, ...]]$ (Wolfram's $a; b; c$), not compute-engine's own $Block$ — see [[Sow]]'s examples and control.ts's module doc for why."
 seeAlso:
   - Sow
 names:
@@ -21,3 +18,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Only exact tag equality is matched here, not Wolfram's fuller pattern-matching form of the second argument.
+- Sequencing several $Sow$s in one $expr$: use $[Last, [List, ...]]$ (Wolfram's $a; b; c$), not compute-engine's own $Block$ — see [[Sow]]'s examples and control.ts's module doc for why.

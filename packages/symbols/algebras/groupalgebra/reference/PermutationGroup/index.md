@@ -11,10 +11,6 @@ signatures:
   - call: PermutationGroup({perm, ...}, n)
     description: the same group, with its degree (largest point moved) at least `n`
     library: enumeratio-groupalgebra
-details:
-  - An empty generator list is the trivial group, order 1
-  - A single generator gives the cyclic group of its order — the least common multiple of its cycle lengths
-  - Dihedral groups arise as `PermutationGroup` of an $n$-cycle (rotation) and a 2-cycle-full involution (a flip)
 seeAlso:
   - Cycles
   - GroupOrder
@@ -25,3 +21,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- An empty generator list is the trivial group, order 1
+- A single generator gives the cyclic group of its order — the least common multiple of its cycle lengths
+- Dihedral groups arise as `PermutationGroup` of an $n$-cycle (rotation) and a 2-cycle-full involution (a flip)

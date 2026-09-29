@@ -11,12 +11,12 @@ signatures:
   - call: IsArray(t, test)
     description: as above, and test holds of every leaf
     library: enumeratio-collections
-details:
-  - Generalizes IsVector (rank 1) and IsMatrix (rank 2) to any rank, including a flat List (rank 1) and a ragged List (False, same as the other two).
-  - A non-List is False — a bare scalar isn't an array of rank 0 here.
 seeAlso:
   - IsVector
   - IsMatrix
 names:
   wolfram: ArrayQ
 ---
+
+- Generalizes IsVector (rank 1) and IsMatrix (rank 2) to any rank, including a flat List (rank 1) and a ragged List (False, same as the other two).
+- A non-List is False — a bare scalar isn't an array of rank 0 here.

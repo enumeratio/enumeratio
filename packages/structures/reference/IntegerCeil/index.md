@@ -8,10 +8,10 @@ signatures:
     description: The least integer at or above x, in a floor ring.
     library: enumeratio-structures
     type: (any) -> unknown
-details:
-  - The `FloorRing` protocol's member (Mathlib's `Int.ceil`), and what `Ceil` answers for such a type.
 seeAlso:
   - IntegerFloor
   - Ceil
   - UpperTick
 ---
+
+- The `FloorRing` protocol's member (Mathlib's `Int.ceil`), and what `Ceil` answers for such a type.

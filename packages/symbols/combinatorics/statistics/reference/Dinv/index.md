@@ -3,10 +3,6 @@ name: Dinv
 domain: Dyck path statistics
 signature: Dinv(path)
 summary: The dinv statistic, read from the area sequence.
-details:
-  - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-  - "dinv = #{i<j : a_i=a_j} + #{i<j : a_i=a_j+1}; the two counts never overlap (a_i=a_j and a_i=a_j+1 can't both hold), so this is one pass over the pairs."
 catalog:
   - system: findstat
     identity: St000006
@@ -20,3 +16,7 @@ signatures:
     library: enumeratio-statistics
     type: (dyck_path) -> number
 ---
+
+- Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- dinv = #{i<j : a_i=a_j} + #{i<j : a_i=a_j+1}; the two counts never overlap (a_i=a_j and a_i=a_j+1 can't both hold), so this is one pass over the pairs.

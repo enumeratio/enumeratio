@@ -8,10 +8,10 @@ signatures:
     description: A square-root sign over a box.
     library: enumeratio-boxes
     type: (boxes, expression*) -> boxes
-details:
-  - MathML's `msqrt`.
 seeAlso:
   - RadicalBox
 names:
   wolframIdentity: true
 ---
+
+- MathML's `msqrt`.

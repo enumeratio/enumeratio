@@ -8,8 +8,6 @@ signatures:
     description: Every value from $x$ up to (and including) the first one where $test$ fails — the same stopping rule as [[NestWhile]], collected instead of just the last one.
     library: enumeratio-collections
     type: (any, any, any) -> list<any>
-details:
-  - Capped at 4096 applications of $f$, same as [[NestWhile]].
 seeAlso:
   - NestWhile
 names:
@@ -17,3 +15,5 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Capped at 4096 applications of $f$, same as [[NestWhile]].

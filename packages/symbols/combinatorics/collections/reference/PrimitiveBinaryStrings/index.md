@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the length-$n$ binary strings that are not themselves a shorter word repeated.
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - A lazy indexed collection; the count is $\sum_{d\mid n}\mu(d)\,2^{n/d}$, the un-normalised sum inside the binary Lyndon-word count. See [[MoebiusMu]].
-  - Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.
-  - Each element is the bit string itself; $At$ unranks over the rotations of the binary Lyndon words, sorted ascending lexicographically.
 enumerate:
   expr: PrimitiveBinaryStrings(6)
   columns: Descents, Ascents
@@ -29,3 +25,7 @@ grades:
     role: axis
 carrier: BinaryWord
 ---
+
+- A lazy indexed collection; the count is $\sum_{d\mid n}\mu(d)\,2^{n/d}$, the un-normalised sum inside the binary Lyndon-word count. See [[MoebiusMu]].
+- Every primitive word's $n$ rotations are pairwise distinct and together form the orbit of exactly one length-$n$ Lyndon word, so the family is the union of every such orbit.
+- Each element is the bit string itself; $At$ unranks over the rotations of the binary Lyndon words, sorted ascending lexicographically.

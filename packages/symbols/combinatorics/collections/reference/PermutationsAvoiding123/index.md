@@ -8,8 +8,6 @@ signatures:
     description: Permutations of $\{1, …, n\}$ avoiding the pattern $1-2-3$
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Catalan number $C_n$ (A000108) — Knuth's classical pattern-avoidance result.
 seeAlso:
   - SymmetricGroup
   - PermutationsAvoiding132
@@ -32,3 +30,5 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is the Catalan number $C_n$ (A000108) — Knuth's classical pattern-avoidance result.

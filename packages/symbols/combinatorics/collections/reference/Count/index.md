@@ -11,15 +11,15 @@ signatures:
     library: enumeratio-collections
     type: (collection<any>, any?) -> infinity | integer
     overrides: compute-engine
-details:
-  - A value absent from the collection counts as 0.
-  - A lazy family's count past $2^{53}$ comes back as the exact integer, when its kernel counts in bigint.
-  - Tests exact equality against a fixed value — not a Wolfram-style typed pattern like `_Integer`.
-  - See [[Length]] for the total element count, and [[IndexOf]] for a single matching position.
-  - A bare integer level spec counts matches at every level from 1 through it; $\{level\}$ counts that level only.
 seeAlso:
   - Length
   - IndexOf
 names:
   wolframIdentity: true
 ---
+
+- A value absent from the collection counts as 0.
+- A lazy family's count past $2^{53}$ comes back as the exact integer, when its kernel counts in bigint.
+- Tests exact equality against a fixed value — not a Wolfram-style typed pattern like `_Integer`.
+- See [[Length]] for the total element count, and [[IndexOf]] for a single matching position.
+- A bare integer level spec counts matches at every level from 1 through it; $\{level\}$ counts that level only.

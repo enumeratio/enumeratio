@@ -3,9 +3,6 @@ name: LargestBlock
 domain: Set partition statistics
 signature: LargestBlock(partition)
 summary: The size of the largest block.
-details:
-  - Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
-  - "Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled."
 catalog:
   - system: findstat
     identity: St001062
@@ -20,3 +17,6 @@ signatures:
     library: enumeratio-statistics
     type: (list<list<integer>>) -> number
 ---
+
+- Defined over `SetPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Not yet typed over its carrier: `SetPartition` is a restricted growth string in @enumeratio/domains but a list of BLOCKS here, so the head still takes the bare blocks until the two representations are reconciled.

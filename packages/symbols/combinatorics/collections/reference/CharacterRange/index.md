@@ -11,11 +11,11 @@ signatures:
   - call: CharacterRange(n1, n2)
     description: the same range, given as code points directly
     library: enumeratio-collections
-details:
-  - Counts code points, the same convention ToCharacterCode/StringLength/FromCharacterCode (expression-ops.ts) already use — an astral character is one code point, not two UTF-16 units.
 seeAlso:
   - ToCharacterCode
   - FromCharacterCode
 names:
   wolframIdentity: true
 ---
+
+- Counts code points, the same convention ToCharacterCode/StringLength/FromCharacterCode (expression-ops.ts) already use — an astral character is one code point, not two UTF-16 units.

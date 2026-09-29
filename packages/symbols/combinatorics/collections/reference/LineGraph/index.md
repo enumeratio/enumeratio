@@ -8,11 +8,11 @@ signatures:
     description: one vertex per edge of g (numbered 1..EdgeCount(g), in EdgeList order), UNDIRECTED regardless of g's own edge directions.
     library: enumeratio-collections
     type: (value) -> value
-details:
-  - EdgeCount(LineGraph(g)) = sum over v of C(VertexDegree(v), 2) for a simple g -- every pair of edges sharing vertex v contributes one line-graph edge.
 seeAlso:
   - VertexDegree
   - AdjacencyGraph
 names:
   wolframIdentity: true
 ---
+
+- EdgeCount(LineGraph(g)) = sum over v of C(VertexDegree(v), 2) for a simple g -- every pair of edges sharing vertex v contributes one line-graph edge.

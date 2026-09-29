@@ -8,10 +8,6 @@ signatures:
     library: enumeratio-collections
     description: the ASMs of size `size` × `size`.
     type: (integer<0..>) -> indexed_collection<list<list<integer>>>
-details:
-  - A lazy indexed collection; the count is the ASM number $A(n) = \prod_{j=0}^{n-1} \frac{(3j+1)!}{(n+j)!}$ (the Robbins numbers, OEIS A005130) — $A(4) = 42$.
-  - Each element is the matrix's rows; every row and column sums to 1, and every partial sum reading a row or column from its start lies in $\{0, 1\}$ — the alternating-sign condition.
-  - The permutation matrices are exactly the ASMs with no $-1$ entry; $A(n) \ge n!$ for every $n$, with equality only at $n \le 2$.
 enumerate:
   expr: AlternatingSignMatrices(4)
 seeAlso:
@@ -33,3 +29,7 @@ grades:
     role: axis
 carrier: AlternatingSignMatrix
 ---
+
+- A lazy indexed collection; the count is the ASM number $A(n) = \prod_{j=0}^{n-1} \frac{(3j+1)!}{(n+j)!}$ (the Robbins numbers, OEIS A005130) — $A(4) = 42$.
+- Each element is the matrix's rows; every row and column sums to 1, and every partial sum reading a row or column from its start lies in $\{0, 1\}$ — the alternating-sign condition.
+- The permutation matrices are exactly the ASMs with no $-1$ entry; $A(n) \ge n!$ for every $n$, with equality only at $n \le 2$.

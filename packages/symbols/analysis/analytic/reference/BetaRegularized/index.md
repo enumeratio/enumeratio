@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number, number, number?) -> number
     overrides: compute-engine
-details:
-  - "Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$."
-  - "Symmetry: $I_x(a, b) + I_{1-x}(b, a) = 1$."
-  - 'Ties to the binomial CDF: for $X \sim \text{Binomial}(n, p)$, $P(X \leq k) = I_{1-p}(n-k, k+1)$.'
-  - "By symmetry, $I_{1/2}(a, a) = 1/2$ for any a: a symmetric Beta(a, a) distribution has its median exactly at the midpoint."
-  - compute-engine leaves x outside $[0, 1]$ symbolic rather than erroring or returning NaN.
 seeAlso:
   - Beta
   - GammaRegularized
@@ -24,3 +18,9 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- Normalized against [[Beta]]: $I_x(a, b)$ is the incomplete beta integral at x, divided by $B(a, b)$, so $I_0(a,b)=0$ and $I_1(a,b)=1$.
+- Symmetry: $I_x(a, b) + I_{1-x}(b, a) = 1$.
+- Ties to the binomial CDF: for $X \sim \text{Binomial}(n, p)$, $P(X \leq k) = I_{1-p}(n-k, k+1)$.
+- By symmetry, $I_{1/2}(a, a) = 1/2$ for any a: a symmetric Beta(a, a) distribution has its median exactly at the midpoint.
+- compute-engine leaves x outside $[0, 1]$ symbolic rather than erroring or returning NaN.

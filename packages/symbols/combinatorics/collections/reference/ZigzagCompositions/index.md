@@ -8,8 +8,6 @@ signatures:
     description: "the alternating compositions of $n$: $a_1 < a_2 > a_3 < …$ or $a_1 > a_2 < a_3 > …$, either starting direction"
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is A025047.
 seeAlso:
   - IntegerCompositions
   - AlternatingPermutations
@@ -21,3 +19,5 @@ grades:
     role: axis
 carrier: Composition
 ---
+
+- Count is A025047.

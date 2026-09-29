@@ -8,13 +8,13 @@ signatures:
     description: True if lo (or) x (or) hi, closed by default, open where wrapped in Open(...)
     library: enumeratio-collections
     type: (any, any) -> boolean
-details:
-  - "Open(...) on either bound makes that side strict: IsIntervalMember(Interval(Open(1), 5), 1) is False."
-  - Only a single Interval(lo, hi) -- Wolfram's union-of-intervals form Interval({a, b}, {c, d}, ...) isn't handled.
-  - Bounds and x are compared as doubles (via N()) -- exact enough for membership, which only ever needs a comparison.
-  - "An Open(...) bound has no Wolfram transpilation: Wolfram's own Interval object is always closed (Interval[{min, max}] means min <= x <= max, with no open-bound notation at all), so an Open(...) example here stays untranslated rather than round-tripping to a Wolfram call that would silently test the wrong (closed) condition."
 seeAlso:
   - IsTrue
 names:
   wolfram: IntervalMemberQ
 ---
+
+- Open(...) on either bound makes that side strict: IsIntervalMember(Interval(Open(1), 5), 1) is False.
+- Only a single Interval(lo, hi) -- Wolfram's union-of-intervals form Interval({a, b}, {c, d}, ...) isn't handled.
+- Bounds and x are compared as doubles (via N()) -- exact enough for membership, which only ever needs a comparison.
+- An Open(...) bound has no Wolfram transpilation: Wolfram's own Interval object is always closed (Interval[{min, max}] means min <= x <= max, with no open-bound notation at all), so an Open(...) example here stays untranslated rather than round-tripping to a Wolfram call that would silently test the wrong (closed) condition.

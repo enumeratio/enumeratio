@@ -11,13 +11,13 @@ signatures:
   - call: AdicSqrt(x, prec?)
     description: a square root in $\mathbb{Z}_p$, prime $p$; declines when there is none
     library: enumeratio-numerals
-details:
-  - Each Newton step doubles the number of correct digits, so 20 digits take five steps
-  - "The result is capped at `prec` (default 20): a root found this way is known modulo $b^{prec}$ and nothing more, which is where capped values come from"
-  - A root with $f'(seed) ≡ 0$ is not simple and does not lift this way — $x^3 − x$ from 1 in $\mathbb{Z}_2$ declines
-  - "Composite $b$ works when $f'(seed)$ is coprime to $b$, and that is how the non-rational elements of $\\mathbb{Z}_{10}$ appear: $x^2 − x$ from 5 lifts to the idempotent $…890625$"
-  - "Square roots: an odd prime needs $x$ to be a quadratic residue mod $p$; $p = 2$ needs $x ≡ 1 \\pmod 8$ and starts the iteration one level up, since $f'(a) = 2a$ is not a unit"
 seeAlso:
   - AdicNumeral
   - AdicExpansion
 ---
+
+- Each Newton step doubles the number of correct digits, so 20 digits take five steps
+- The result is capped at `prec` (default 20): a root found this way is known modulo $b^{prec}$ and nothing more, which is where capped values come from
+- A root with $f'(seed) ≡ 0$ is not simple and does not lift this way — $x^3 − x$ from 1 in $\mathbb{Z}_2$ declines
+- Composite $b$ works when $f'(seed)$ is coprime to $b$, and that is how the non-rational elements of $\mathbb{Z}_{10}$ appear: $x^2 − x$ from 5 lifts to the idempotent $…890625$
+- Square roots: an odd prime needs $x$ to be a quadratic residue mod $p$; $p = 2$ needs $x ≡ 1 \pmod 8$ and starts the iteration one level up, since $f'(a) = 2a$ is not a unit

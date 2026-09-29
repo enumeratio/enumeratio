@@ -12,9 +12,9 @@ signatures:
     description: the product of the unit boxes -- 0 as soon as any argument is outside its own [-1/2, 1/2].
     library: "@enumeratio/analytic"
     arity: 2
-details:
-  - Defined everywhere, including the boundary -- unlike [[HeavisidePi]], the same rectangular pulse shape but left unevaluated at x = ±1/2 instead of closed there. UnitBox and HeavisidePi differ exactly at the boundary.
-  - D(UnitBox(x), x) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 away from the jump, undefined exactly at the two points where UnitBox is discontinuous.
 names:
   wolframIdentity: true
 ---
+
+- Defined everywhere, including the boundary -- unlike [[HeavisidePi]], the same rectangular pulse shape but left unevaluated at x = ±1/2 instead of closed there. UnitBox and HeavisidePi differ exactly at the boundary.
+- D(UnitBox(x), x) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 away from the jump, undefined exactly at the two points where UnitBox is discontinuous.

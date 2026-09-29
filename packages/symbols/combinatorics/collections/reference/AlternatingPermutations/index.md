@@ -8,9 +8,6 @@ signatures:
     description: 'Alternating (zigzag) permutations of $\{1, …, n\}$: $a_1 < a_2 > a_3 < …$'
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<list<integer>>
-details:
-  - Count is the Euler zigzag (up/down) number (A000111).
-  - Each element is a one-line permutation.
 seeAlso:
   - SymmetricGroup
   - ZigzagCompositions
@@ -26,3 +23,6 @@ grades:
     role: axis
 carrier: Permutation
 ---
+
+- Count is the Euler zigzag (up/down) number (A000111).
+- Each element is a one-line permutation.

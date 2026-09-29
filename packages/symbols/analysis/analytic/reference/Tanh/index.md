@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
-details:
-  - $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$, ranging over $(-1, 1)$.
-  - 'Odd function: $\tanh(-x) = -\tanh(x)$.'
-  - Same fold-only-with-N(...) behavior as [[Sinh]] and [[Cosh]].
 seeAlso:
   - Sinh
   - Cosh
@@ -29,3 +25,7 @@ names:
   dlmf: hyperbolic tangent function
   wolframIdentity: true
 ---
+
+- $\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$, ranging over $(-1, 1)$.
+- Odd function: $\tanh(-x) = -\tanh(x)$.
+- Same fold-only-with-N(...) behavior as [[Sinh]] and [[Cosh]].

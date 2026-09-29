@@ -6,10 +6,6 @@ summary: The centered square numbers $1, 5, 13, 25, …$ — $2n^2-2n+1$ — a s
 signatures:
   - call: CenteredSquareNumbers
     description: $2n^2-2n+1$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(CenteredSquareNumbers) = +\infty$, and $At(CenteredSquareNumbers, k) = 2k^2-2k+1$ unranks in closed form -- $At(CenteredSquareNumbers, 5) = 41$.'
-  - OEIS A001844.
-  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(41, CenteredSquareNumbers)$ is true, $Element(40, CenteredSquareNumbers)$ is false.
 enumerate:
   expr: Take(CenteredSquareNumbers, 20)
 seeAlso:
@@ -26,3 +22,7 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(CenteredSquareNumbers) = +\infty$, and $At(CenteredSquareNumbers, k) = 2k^2-2k+1$ unranks in closed form -- $At(CenteredSquareNumbers, 5) = 41$.
+- OEIS A001844.
+- Membership goes through [[Element]] by inverting the closed form exactly -- $Element(41, CenteredSquareNumbers)$ is true, $Element(40, CenteredSquareNumbers)$ is false.

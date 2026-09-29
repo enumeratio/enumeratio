@@ -8,10 +8,6 @@ signatures:
     description: $body$, evaluated with $x$, $y$, ... as fresh local variables (each initialized, or left unbound, per its own binding) invisible outside the call.
     library: enumeratio-collections
     type: (any, any) -> any
-details:
-  - Each call gets its own scope, so a recursive or repeated $Module$ call never has its locals collide with an outer binding — or another call's — of the same name.
-  - An initializer's value (the $y0$ in $y = y0$) is computed in the OUTER context, before any local shadows it, same as [[With]] — a later binding cannot read an earlier one's local value.
-  - A binding with no `= value` (a bare $x$) declares an uninitialized local; referencing it before assigning gives an unevaluated symbol, not an error.
 seeAlso:
   - With
 names:
@@ -19,3 +15,7 @@ names:
 attributes:
   - HoldAll
 ---
+
+- Each call gets its own scope, so a recursive or repeated $Module$ call never has its locals collide with an outer binding — or another call's — of the same name.
+- An initializer's value (the $y0$ in $y = y0$) is computed in the OUTER context, before any local shadows it, same as [[With]] — a later binding cannot read an earlier one's local value.
+- A binding with no `= value` (a bare $x$) declares an uninitialized local; referencing it before assigning gives an unevaluated symbol, not an error.

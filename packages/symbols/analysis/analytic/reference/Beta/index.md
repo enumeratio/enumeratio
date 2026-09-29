@@ -11,12 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (number, number, number?, number?) -> number
     overrides: compute-engine
-details:
-  - 'Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.'
-  - "Symmetric: $B(a, b) = B(b, a)$."
-  - 'Integral form: $B(a, b) = \int_0^1 t^{a-1}(1-t)^{b-1}\,dt$.'
-  - 'Ties to [[Binomial]]: $B(k+1, n-k+1) = \dfrac{1}{(n+1)\binom{n}{k}}$.'
-  - compute-engine evaluates Beta exactly for positive-integer a and b (an exact rational result) and detects the poles at nonpositive integers, returning ComplexInfinity.
 seeAlso:
   - Gamma
   - Binomial
@@ -33,3 +27,9 @@ names:
   wikidata: Q468881
   wolframIdentity: true
 ---
+
+- Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.
+- Symmetric: $B(a, b) = B(b, a)$.
+- Integral form: $B(a, b) = \int_0^1 t^{a-1}(1-t)^{b-1}\,dt$.
+- Ties to [[Binomial]]: $B(k+1, n-k+1) = \dfrac{1}{(n+1)\binom{n}{k}}$.
+- compute-engine evaluates Beta exactly for positive-integer a and b (an exact rational result) and detects the poles at nonpositive integers, returning ComplexInfinity.

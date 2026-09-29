@@ -8,11 +8,6 @@ signatures:
     description: the conjunction of every consecutive link, where each relᵢ is one of Equal, NotEqual, Less, LessEqual, Greater, GreaterEqual.
     library: "@enumeratio/analytic"
     type: (expression, expression, expression, expression*) -> boolean
-details:
-  - A chain that uses the SAME relation throughout (0 < x < 5) is already [[Less]] or [[LessEqual]] etc. taking more than two arguments -- see those heads. Inequality exists for a chain that MIXES relations (0 <= x < 5), which compute-engine's own n-ary comparison heads don't represent.
-  - Evaluates as the And of its pairwise links, applied through the relation heads compute-engine already ships -- so a fully numeric chain folds all the way to True/False, and a symbolic one is left as And of whatever didn't fold.
-  - Round-trips with Wolfram, which prints exactly this shape whenever Reduce, FunctionDomain, or a mixed-relation input (`0 <= x < 5`) produces one -- see packages/wolfram/src/to-wolfram.ts.
-  - Declines (leaves the call unevaluated) on a malformed chain -- an even argument count, or something other than one of the six relations in a relation slot.
 seeAlso:
   - Less
   - LessEqual
@@ -22,3 +17,8 @@ names:
 attributes:
   - HoldAll
 ---
+
+- A chain that uses the SAME relation throughout (0 < x < 5) is already [[Less]] or [[LessEqual]] etc. taking more than two arguments -- see those heads. Inequality exists for a chain that MIXES relations (0 <= x < 5), which compute-engine's own n-ary comparison heads don't represent.
+- Evaluates as the And of its pairwise links, applied through the relation heads compute-engine already ships -- so a fully numeric chain folds all the way to True/False, and a symbolic one is left as And of whatever didn't fold.
+- Round-trips with Wolfram, which prints exactly this shape whenever Reduce, FunctionDomain, or a mixed-relation input (`0 <= x < 5`) produces one -- see packages/wolfram/src/to-wolfram.ts.
+- Declines (leaves the call unevaluated) on a malformed chain -- an even argument count, or something other than one of the six relations in a relation slot.

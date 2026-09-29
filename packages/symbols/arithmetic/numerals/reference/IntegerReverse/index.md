@@ -12,12 +12,12 @@ signatures:
     description: reversed in the given base
   - call: IntegerReverse(n, base, len)
     description: padded to `len` digits (leading zeros) before reversing
-details:
-  - A trailing zero of $n$ becomes a leading zero of the reversal, which then simply vanishes — `IntegerReverse(1200)` is 21, not 0021
-  - The sign of $n$ is not carried through; the digits reverse as if $n$ were non-negative
 seeAlso:
   - IntegerDigits
   - IntegerLength
 names:
   wolframIdentity: true
 ---
+
+- A trailing zero of $n$ becomes a leading zero of the reversal, which then simply vanishes — `IntegerReverse(1200)` is 21, not 0021
+- The sign of $n$ is not carried through; the digits reverse as if $n$ were non-negative

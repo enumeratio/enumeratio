@@ -8,11 +8,6 @@ signatures:
     description: the inversion count of a one-line permutation $p$
     library: enumeratio-collections
     type: (list | permutation) -> integer
-details:
-  - Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)
-  - Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$
-  - Equidistributed with [[MajorIndex]] on $S_n$ (MacMahon), so both are Mahonian statistics
-  - 'Aggregates over a whole collection compose from built-ins: $\mathrm{Sum}(\mathrm{Map}(\mathrm{Inversions}, \mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family'
 seeAlso:
   - MajorIndex
   - Descents
@@ -34,3 +29,8 @@ statOn:
   - PermutationInversion
   - SignedPermutation
 ---
+
+- Ranges from $0$ (the identity) to $\binom{n}{2}$ (the reversal $n, n-1, \dots, 1$)
+- Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$
+- Equidistributed with [[MajorIndex]] on $S_n$ (MacMahon), so both are Mahonian statistics
+- Aggregates over a whole collection compose from built-ins: $\mathrm{Sum}(\mathrm{Map}(\mathrm{Inversions}, \mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family

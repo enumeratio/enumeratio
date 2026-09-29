@@ -11,9 +11,9 @@ signatures:
   - call: LetterNumber(s)
     description: a list, one position per character of string s
     library: enumeratio-collections
-details:
-  - Case-insensitive -- LetterNumber("D") and LetterNumber("d") agree.
-  - The LetterNumber(c, alphabet) form is only answered for alphabet = "English"; any other named alphabet is left unevaluated.
 names:
   wolframIdentity: true
 ---
+
+- Case-insensitive -- LetterNumber("D") and LetterNumber("d") agree.
+- The LetterNumber(c, alphabet) form is only answered for alphabet = "English"; any other named alphabet is left unevaluated.

@@ -8,9 +8,6 @@ signatures:
     description: the fixed-point count of a one-line permutation $p$
     library: enumeratio-collections
     type: (permutation) -> integer
-details:
-  - A permutation with no fixed points is a derangement (see [[Derangements]])
-  - Averaged over $S_n$ the count is exactly $1$, independent of $n$
 seeAlso:
   - Derangements
   - CycleCount
@@ -31,3 +28,6 @@ statOn:
   - Permutation
   - SignedPermutation
 ---
+
+- A permutation with no fixed points is a derangement (see [[Derangements]])
+- Averaged over $S_n$ the count is exactly $1$, independent of $n$

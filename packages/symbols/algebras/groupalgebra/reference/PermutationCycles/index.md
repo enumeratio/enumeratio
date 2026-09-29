@@ -16,10 +16,6 @@ signatures:
     library: enumeratio-domains
     type: ((list<integer>) -> permutation_cycles) & ((expression<Cycles> | list<integer>, any?) -> any)
     overrides: enumeratio-groupalgebra
-details:
-  - Cycles come out ordered by, and each starting at, its smallest point
-  - Already-Cycles input passes straight through unchanged — `PermutationCycles` is idempotent on its own output
-  - The identity permutation has no non-trivial cycles, so `PermutationCycles({1, ..., n})` is `Cycles({})`
 seeAlso:
   - Cycles
   - Permute
@@ -28,3 +24,7 @@ names:
   wolframIdentity: true
 catalogCarrier: true
 ---
+
+- Cycles come out ordered by, and each starting at, its smallest point
+- Already-Cycles input passes straight through unchanged — `PermutationCycles` is idempotent on its own output
+- The identity permutation has no non-trivial cycles, so `PermutationCycles({1, ..., n})` is `Cycles({})`

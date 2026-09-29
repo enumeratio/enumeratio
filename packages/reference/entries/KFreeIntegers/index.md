@@ -8,10 +8,6 @@ signatures:
     description: the positive integers whose every prime factor has exponent $< k$, an infinite indexed collection.
     library: enumeratio-collections
     type: (integer<0..>) -> indexed_collection<integer>
-details:
-  - "A lazy indexed collection for each $k$: $Count(KFreeIntegers(k)) = +\\infty$, and $At(KFreeIntegers(k), i)$ unranks the $i$-th by scanning forward, testing each candidate's factorisation against $k$."
-  - $KFreeIntegers(2)$ is exactly [[SquareFreeNumbers]] (A005117); $KFreeIntegers(3)$ is the cube-free numbers, A004709.
-  - 'Membership goes through [[Element]]: $Element(8, KFreeIntegers(3))$ is false ($8 = 2^3$, exponent $3 \ge 3$), $Element(8, KFreeIntegers(4))$ is true.'
 enumerate:
   expr: Take(KFreeIntegers(3), 20)
 seeAlso:
@@ -25,3 +21,7 @@ grades:
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection for each $k$: $Count(KFreeIntegers(k)) = +\infty$, and $At(KFreeIntegers(k), i)$ unranks the $i$-th by scanning forward, testing each candidate's factorisation against $k$.
+- $KFreeIntegers(2)$ is exactly [[SquareFreeNumbers]] (A005117); $KFreeIntegers(3)$ is the cube-free numbers, A004709.
+- Membership goes through [[Element]]: $Element(8, KFreeIntegers(3))$ is false ($8 = 2^3$, exponent $3 \ge 3$), $Element(8, KFreeIntegers(4))$ is true.

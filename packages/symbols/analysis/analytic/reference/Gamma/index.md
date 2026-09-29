@@ -13,15 +13,6 @@ signatures:
     library: "@enumeratio/analytic"
     type: (complex | infinity, (complex | infinity)?, (complex | infinity)?) -> number
     overrides: compute-engine
-details:
-  - 'Extends the factorial: $\Gamma(n) = (n-1)!$ for positive integers n, so [[Factorial]] is $\Gamma(n+1)$.'
-  - 'Functional equation: $\Gamma(z+1) = z\,\Gamma(z)$.'
-  - 'Reflection formula: $\Gamma(z)\,\Gamma(1-z) = \dfrac{\pi}{\sin(\pi z)}$, linking $\Gamma$ at z and $1-z$.'
-  - Poles at the nonpositive integers $0, -1, -2, \ldots$, where $\Gamma$ diverges to ComplexInfinity.
-  - $\Gamma(1/2) = \sqrt{\pi}$, the constant behind the normal distribution's normalizing factor. See [[Erf]].
-  - compute-engine's plain evaluation would otherwise leave Gamma at exact integer or rational arguments unevaluated (`@enumeratio/analytic` overrides it, reducing every integer and half-integer exactly); a floating-point argument, or N(), still reduces to a decimal.
-  - "The three-argument form (`@enumeratio/analytic`) is Wolfram's generalized incomplete gamma, the integral between two limits: $\\Gamma(s, z_0, z_1) = \\Gamma(s, z_0) - \\Gamma(s, z_1)$. It is the only spelling here for the LOWER incomplete gamma $\\gamma(s, z) = \\Gamma(s, 0, z)$, which is what the Gamma-distribution CDF and the $\\chi^2$ CDF are built from. See [[GammaRegularized]] for the normalized version."
-  - $\Gamma(1, z) = e^{-z}$, also supplied by `@enumeratio/analytic` -- exact and valid for symbolic $z$, which is what makes $\Gamma(1, 0, z)$ collapse to $1 - e^{-z}$ as Wolfram's does.
 seeAlso:
   - Factorial
   - GammaLn
@@ -65,3 +56,12 @@ bindings:
     arity: 1
     threadArg: 1
 ---
+
+- Extends the factorial: $\Gamma(n) = (n-1)!$ for positive integers n, so [[Factorial]] is $\Gamma(n+1)$.
+- Functional equation: $\Gamma(z+1) = z\,\Gamma(z)$.
+- Reflection formula: $\Gamma(z)\,\Gamma(1-z) = \dfrac{\pi}{\sin(\pi z)}$, linking $\Gamma$ at z and $1-z$.
+- Poles at the nonpositive integers $0, -1, -2, \ldots$, where $\Gamma$ diverges to ComplexInfinity.
+- $\Gamma(1/2) = \sqrt{\pi}$, the constant behind the normal distribution's normalizing factor. See [[Erf]].
+- compute-engine's plain evaluation would otherwise leave Gamma at exact integer or rational arguments unevaluated (`@enumeratio/analytic` overrides it, reducing every integer and half-integer exactly); a floating-point argument, or N(), still reduces to a decimal.
+- The three-argument form (`@enumeratio/analytic`) is Wolfram's generalized incomplete gamma, the integral between two limits: $\Gamma(s, z_0, z_1) = \Gamma(s, z_0) - \Gamma(s, z_1)$. It is the only spelling here for the LOWER incomplete gamma $\gamma(s, z) = \Gamma(s, 0, z)$, which is what the Gamma-distribution CDF and the $\chi^2$ CDF are built from. See [[GammaRegularized]] for the normalized version.
+- $\Gamma(1, z) = e^{-z}$, also supplied by `@enumeratio/analytic` -- exact and valid for symbolic $z$, which is what makes $\Gamma(1, 0, z)$ collapse to $1 - e^{-z}$ as Wolfram's does.

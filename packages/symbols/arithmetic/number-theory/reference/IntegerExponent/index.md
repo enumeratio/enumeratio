@@ -11,10 +11,6 @@ signatures:
   - call: IntegerExponent(n)
     description: base 10
     library: enumeratio-number-theory
-details:
-  - "Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]]."
-  - $n = 0$ has every power of $b$ as a divisor, so `IntegerExponent(0, b)` is `PositiveInfinity`.
-  - $b$ need not be prime — `IntegerExponent(n, 6)` is the largest $k$ with $6^k \mid n$, not the 2-adic or 3-adic valuation.
 seeAlso:
   - AdicValuation
   - FactorInteger
@@ -30,3 +26,7 @@ bindings:
     template: multiplicity($2, $1)
     arity: 2
 ---
+
+- Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]].
+- $n = 0$ has every power of $b$ as a divisor, so `IntegerExponent(0, b)` is `PositiveInfinity`.
+- $b$ need not be prime — `IntegerExponent(n, 6)` is the largest $k$ with $6^k \mid n$, not the 2-adic or 3-adic valuation.

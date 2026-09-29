@@ -11,9 +11,6 @@ signatures:
   - call: Replace(expr, {rule1, rule2, …})
     description: like the 2-argument form, trying each rule in order and using the first that matches
     library: enumeratio-collections
-details:
-  - "TOP LEVEL ONLY: this is the difference from compute-engine's own ReplaceAll (Wolfram's `/.`), which recurses into every subexpression. Replace is Wolfram's own `/.` restricted to depth 0 — closer to Wolfram's ReplaceAll would actually be `ReplaceAll` here."
-  - Built on BoxedExpression's own match/subs rather than compute-engine's replace method, which (probed) silently no-ops on a literal, non-wildcard match target reached through a boxed Rule.
 seeAlso:
   - MatchQ
   - ReplacePart
@@ -22,3 +19,6 @@ names:
 attributes:
   - HoldAll
 ---
+
+- TOP LEVEL ONLY: this is the difference from compute-engine's own ReplaceAll (Wolfram's `/.`), which recurses into every subexpression. Replace is Wolfram's own `/.` restricted to depth 0 — closer to Wolfram's ReplaceAll would actually be `ReplaceAll` here.
+- Built on BoxedExpression's own match/subs rather than compute-engine's replace method, which (probed) silently no-ops on a literal, non-wildcard match target reached through a boxed Rule.

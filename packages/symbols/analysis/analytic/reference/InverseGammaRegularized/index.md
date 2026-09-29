@@ -8,10 +8,6 @@ signatures:
     description: solves $s = Q(a, z)$ for $z$.
     library: "@enumeratio/analytic"
     type: (number, number) -> number
-details:
-  - $Q(a, 0) = 1$ and $Q(a, \infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \infty` are exact regardless.
-  - $Q(1, z) = e^{-z}$ inverts exactly to $-\ln s$, symbolic $s$ included.
-  - "Otherwise: a safeguarded Newton's method (falls back to bisection whenever a step would leave the bracket) against the forward function `GammaRegularized(a, z)`, whose own accuracy was checked directly against `wolframscript` to 20 digits."
 primitive: kernel
 bindings:
   - origin: native
@@ -26,3 +22,7 @@ seeAlso:
 names:
   wolframIdentity: true
 ---
+
+- $Q(a, 0) = 1$ and $Q(a, \infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \infty` are exact regardless.
+- $Q(1, z) = e^{-z}$ inverts exactly to $-\ln s$, symbolic $s$ included.
+- Otherwise: a safeguarded Newton's method (falls back to bisection whenever a step would leave the bracket) against the forward function `GammaRegularized(a, z)`, whose own accuracy was checked directly against `wolframscript` to 20 digits.

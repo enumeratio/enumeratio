@@ -6,11 +6,6 @@ summary: The tetrahedral numbers $1, 4, 10, 20, …$ — $\binom{n+2}{3}$ — st
 signatures:
   - call: TetrahedralNumbers
     description: $\binom{n+2}{3}$ for $n = 1, 2, 3, …$.
-details:
-  - 'A lazy indexed collection: $Count(TetrahedralNumbers) = +\infty$, and $At(TetrahedralNumbers, k) = \binom{k+2}{3}$ unranks in closed form -- $At(TetrahedralNumbers, 5) = 35$.'
-  - OEIS A000292.
-  - Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(35, TetrahedralNumbers)$ is true, $Element(36, TetrahedralNumbers)$ is false.
-  - $TetrahedralNumbers(n) = \sum_{i=1}^n TriangularNumbers(i)$; the 4-simplex case is [[PentatopeNumbers]].
 enumerate:
   expr: Take(TetrahedralNumbers, 20)
 seeAlso:
@@ -28,3 +23,8 @@ grades: []
 carrier: Numeric
 unbounded: true
 ---
+
+- A lazy indexed collection: $Count(TetrahedralNumbers) = +\infty$, and $At(TetrahedralNumbers, k) = \binom{k+2}{3}$ unranks in closed form -- $At(TetrahedralNumbers, 5) = 35$.
+- OEIS A000292.
+- Membership goes through [[Element]] by bisecting the monotone cubic for its exact root -- $Element(35, TetrahedralNumbers)$ is true, $Element(36, TetrahedralNumbers)$ is false.
+- $TetrahedralNumbers(n) = \sum_{i=1}^n TriangularNumbers(i)$; the 4-simplex case is [[PentatopeNumbers]].

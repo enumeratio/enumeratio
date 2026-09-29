@@ -8,12 +8,12 @@ signatures:
     description: true iff the underlying (direction-blind) graph is one piece (false for a graph with no vertices).
     library: enumeratio-collections
     type: (value) -> boolean
-details:
-  - Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.
-  - "Tests WEAK connectivity, unlike [[ConnectedComponents]] (which respects direction): a directed 2-cycle plus a downstream vertex is one weakly-connected piece even though it has two strongly-connected components — see [[ConnectedComponents]]'s own example."
 seeAlso:
   - ConnectedComponents
   - IsTreeGraph
 names:
   wolfram: ConnectedGraphQ
 ---
+
+- Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.
+- Tests WEAK connectivity, unlike [[ConnectedComponents]] (which respects direction): a directed 2-cycle plus a downstream vertex is one weakly-connected piece even though it has two strongly-connected components — see [[ConnectedComponents]]'s own example.

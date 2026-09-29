@@ -14,11 +14,11 @@ signatures:
     description: $m$ to the $k$-th power, for any integer $k$ — compute-engine's own head
   - call: Inverse(m)
     description: the group inverse — compute-engine's own head
-details:
-  - Every head here also accepts a WORD in place of a matrix — `ModularMatrix("LR")` or just the string
-  - A plain nested-list matrix pairs with a `ModularMatrix` too, since it canonicalises the same way; a `Tuple` or a `Vector` does not, and is left unevaluated — there's no settled convention for what that pairing should mean
-  - $M$ and $-M$ are the same element of $\mathrm{PSL}(2,\mathbb{Z})$, so `Inverse` and `MatrixPower` may hand back the negated matrix
 seeAlso:
   - ModularWord
   - RademacherSymbol
 ---
+
+- Every head here also accepts a WORD in place of a matrix — `ModularMatrix("LR")` or just the string
+- A plain nested-list matrix pairs with a `ModularMatrix` too, since it canonicalises the same way; a `Tuple` or a `Vector` does not, and is left unevaluated — there's no settled convention for what that pairing should mean
+- $M$ and $-M$ are the same element of $\mathrm{PSL}(2,\mathbb{Z})$, so `Inverse` and `MatrixPower` may hand back the negated matrix

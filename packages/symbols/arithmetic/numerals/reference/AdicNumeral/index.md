@@ -16,13 +16,6 @@ signatures:
     library: enumeratio-adeles
     type: (integer, rational | value, integer?) -> value
     overrides: enumeratio-numerals
-details:
-  - Two values share the head. An EXACT adic is a rational, and its expansion can be produced to any depth (it is eventually periodic). A CAPPED adic is known only modulo $b^{prec}$ — what a Hensel lift produces, and what any arithmetic with a capped operand yields; the precision of a sum is the weaker operand's, of a product $\min(v_1 + p_2, v_2 + p_1)$
-  - 'Prime $b$ gives the field $\mathbb{Q}_p$: any non-zero divisor works and the result may have negative valuation (digits past the point). Composite $b$ gives the ring $\mathbb{Z}_b$ — no field, zero divisors, and division only by units (coprime to $b$)'
-  - A rational the base cannot expand — $1/2$ in $\mathbb{Z}_{10}$ — leaves the call standing
-  - A rational operand beside an adic one is read in the same base, so `AdicNumeral(10, 1/3) * 3` is `AdicNumeral(10, 1)`. Adics of different bases never combine
-  - "Not a compute-engine number type: the value is a function expression, and `Add`, `Multiply`, `Negate`, `Divide`, `Power` are wrapped to recognise it (`Subtract` reaches them by canonicalisation)"
-  - Default precision for anything unbounded — Hensel lifting, `AdicSqrt` — is 20 digits
 seeAlso:
   - AdicExpansion
   - AdicValuation
@@ -51,3 +44,10 @@ bindings:
       version: "10.9"
       on: 2026-09-28
 ---
+
+- Two values share the head. An EXACT adic is a rational, and its expansion can be produced to any depth (it is eventually periodic). A CAPPED adic is known only modulo $b^{prec}$ — what a Hensel lift produces, and what any arithmetic with a capped operand yields; the precision of a sum is the weaker operand's, of a product $\min(v_1 + p_2, v_2 + p_1)$
+- Prime $b$ gives the field $\mathbb{Q}_p$: any non-zero divisor works and the result may have negative valuation (digits past the point). Composite $b$ gives the ring $\mathbb{Z}_b$ — no field, zero divisors, and division only by units (coprime to $b$)
+- A rational the base cannot expand — $1/2$ in $\mathbb{Z}_{10}$ — leaves the call standing
+- A rational operand beside an adic one is read in the same base, so `AdicNumeral(10, 1/3) * 3` is `AdicNumeral(10, 1)`. Adics of different bases never combine
+- Not a compute-engine number type: the value is a function expression, and `Add`, `Multiply`, `Negate`, `Divide`, `Power` are wrapped to recognise it (`Subtract` reaches them by canonicalisation)
+- Default precision for anything unbounded — Hensel lifting, `AdicSqrt` — is 20 digits
