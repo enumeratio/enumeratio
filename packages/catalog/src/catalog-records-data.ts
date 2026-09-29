@@ -1861,7 +1861,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "NonCrossingMatchings",
-    carrier: "PerfectMatching",
+    carrier: "SetPartition",
     grades: [
       {
         name: "n",
@@ -1918,7 +1918,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "NonNestingMatchings",
-    carrier: "PerfectMatching",
+    carrier: "SetPartition",
     grades: [
       {
         name: "n",

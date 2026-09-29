@@ -7,7 +7,7 @@ signatures:
   - call: NonNestingPartitions(n)
     description: the partitions of $\{1, …, n\}$ with no two blocks whose consecutive-element arcs nest
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<set_partition>
 seeAlso:
   - SetPartitions
   - NonCrossingPartitions
