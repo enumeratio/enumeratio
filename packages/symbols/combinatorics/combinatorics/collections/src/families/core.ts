@@ -2,22 +2,6 @@
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
 import type { NumberKernel } from "./types.ts";
 import {
-  BellB,
-  RgsUnrank,
-  RgsRank,
-  RgsToBlocks,
-  BlocksToRgs,
-  IsSetPartitionOf,
-  StirlingS2,
-  SetPartitionsIntoKBlocksUnrank,
-  SetPartitionsIntoKBlocksRank,
-  Fubini,
-  SetCompositionUnrank,
-  SetCompositionRank,
-  LabelsToOrderedBlocks,
-  BlocksToLabels,
-} from "./kernels-combinatorics.ts";
-import {
   SubsetCount,
   SubsetUnrank,
   SubsetRank,
@@ -66,10 +50,6 @@ import {
   KAryTreeRank,
   IsKAryTree,
   type KTree,
-  SurjectionCount,
-  SurjectionUnrank,
-  SurjectionRank,
-  IsSurjectionOf,
   BinaryStringCount,
   BinaryStringUnrank,
   BinaryStringRank,
@@ -107,7 +87,11 @@ const ints = (
 // `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held
 // before the lattice-paths-area move — §4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
-export const entriesBeforeDyckPaths: NumberKernel[] = [
+// Kept separate from `entriesBeforeDyckPaths` below only so collections/src/families/index.ts
+// can splice `setPartitionsSurjectionsEntries` (Surjections) back in at the exact interior
+// position it held before the set-partitions-area move — §4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
+export const entriesBeforeSurjections: NumberKernel[] = [
   // ── subsets / multisets / tuples / functions / binary words ──
   ints(
     "Subsets",
@@ -149,17 +133,11 @@ export const entriesBeforeDyckPaths: NumberKernel[] = [
     (a, [n, k]) => IsTupleOf(a, n, k),
     (a, [n]) => TupleRank(a, n),
   ),
-  {
-    ...ints(
-      "Surjections",
-      2,
-      ([n, k]) => SurjectionCount(n, k),
-      ([n, k], r) => SurjectionUnrank(n, k, r),
-      (a, [n, k]) => IsSurjectionOf(a, n, k),
-      (a, [, k]) => SurjectionRank(a, k),
-    ),
-    carrier: "Surjection",
-  },
+];
+
+// Surjections moved to set-partitions/src/families/core.ts -- §4 step 5, the only family in this
+// section carrying a `carrier` ("Surjection").
+export const entriesBeforeDyckPaths: NumberKernel[] = [
   ints(
     "Endofunctions",
     1,
@@ -192,7 +170,10 @@ export const entriesBeforeDyckPaths: NumberKernel[] = [
 // can splice `treesCoreEntries` (BinaryTrees, BinaryTreeParentArrays) back in at the exact
 // interior position it held before the trees-area move — §4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
-export const entriesBeforeTrees: NumberKernel[] = [
+// Kept separate from `entriesBeforeTrees` below only so collections/src/families/index.ts can
+// splice `setPartitionsCoreEntries` (SetPartitions, SetPartitionsIntoKBlocks, SetCompositions)
+// back in at the exact interior position it held before the set-partitions-area move — §4 step 5.
+export const entriesBeforeSetPartitions: NumberKernel[] = [
   ints(
     "MotzkinPaths",
     1,
@@ -217,38 +198,13 @@ export const entriesBeforeTrees: NumberKernel[] = [
     (a, [n]) => IsFibonacciWord(a, n),
     (a) => FibonacciWordRank(a),
   ),
+];
 
-  // ── set partitions / matchings (blocks) ──
-  {
-    head: "SetPartitions",
-    carrier: "SetPartition",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => BellB(n),
-    unrank: ([n], r) => RgsToBlocks(RgsUnrank(n, r)),
-    valid: (b, [n]) => IsSetPartitionOf(b as number[][], n),
-    rank: (b, [n]) => RgsRank(BlocksToRgs(b as number[][], n)),
-  },
-  {
-    head: "SetPartitionsIntoKBlocks",
-    carrier: "SetPartition",
-    paramCount: 2,
-    kind: "blocks",
-    count: ([n, k]) => StirlingS2(n, k),
-    unrank: ([n, k], r) => RgsToBlocks(SetPartitionsIntoKBlocksUnrank(n, k, r)),
-    valid: (b, [n, k]) => IsSetPartitionOf(b as number[][], n, k),
-    rank: (b, [n, k]) => SetPartitionsIntoKBlocksRank(BlocksToRgs(b as number[][], n), k),
-  },
-  {
-    head: "SetCompositions",
-    carrier: "SetComposition",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => Fubini(n),
-    unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)),
-    valid: (b, [n]) => IsSetPartitionOf(b as number[][], n),
-    rank: (b, [n]) => SetCompositionRank(BlocksToLabels(b as number[][]), n),
-  },
+// SetPartitions/SetPartitionsIntoKBlocks/SetCompositions moved to
+// set-partitions/src/families/core.ts -- §4 step 5, the only families in this section carrying a
+// carrier ("SetPartition" / "SetComposition"). PerfectMatchings below declares none at all, even
+// though "PerfectMatching" is a set-partitions carrier, and stays here per step 5 rule 4.
+export const entriesBeforeTrees: NumberKernel[] = [
   {
     head: "PerfectMatchings",
     paramCount: 1,

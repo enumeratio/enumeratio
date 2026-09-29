@@ -5,10 +5,9 @@ import { numberKernel } from "../src/families/types.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
-// small so counts stay well under ~1000. DyckPathsByHeight moved to the lattice-paths area (§4
-// step 5) with its tests.
+// small so counts stay well under ~1000. DyckPathsByHeight moved to the lattice-paths area, and
+// RestrictedGrowthStrings to the set-partitions area (§4 step 5) with their tests.
 const PARAMS: Record<string, number[]> = {
-  RestrictedGrowthStrings: [6],
   NonCrossingPartitions: [6],
   NonNestingPartitions: [6],
   NonCrossingMatchings: [6],
@@ -43,7 +42,6 @@ for (const [head, p] of Object.entries(PARAMS)) {
 // PARAMS above (mirrors tests/plausible.test.ts's use of scripts/properties.ts).
 const draw = random(20260924);
 const PLAUSIBLE_PARAMS: Record<string, number[]> = {
-  RestrictedGrowthStrings: [5],
   NonCrossingPartitions: [5],
   NonNestingPartitions: [5],
   NonCrossingMatchings: [5],
@@ -75,7 +73,6 @@ test("counts match their OEIS sequences", () => {
   const count = (head: string, p: number[]) => byHead.get(head)!.count(p);
   const seq = (head: string, n: number) => Array.from({ length: n }, (_, i) => count(head, [i]));
 
-  expect(seq("RestrictedGrowthStrings", 8)).toEqual([1, 1, 2, 5, 15, 52, 203, 877]); // A000110
   const catalan = [1, 1, 2, 5, 14, 42, 132];
   for (const head of [
     "NonCrossingPartitions",

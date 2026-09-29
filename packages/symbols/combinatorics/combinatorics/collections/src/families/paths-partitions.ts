@@ -4,7 +4,6 @@
 // [0, count(p)). Kept in its own file (registered via install.ts) so parallel roadmap batches
 // don't collide with core.ts.
 import type { NumberKernel } from "./types.ts";
-import { BellB, RgsRank, RgsUnrank } from "./kernels-combinatorics.ts";
 import {
   CatalanNumber,
   DyckPathCount,
@@ -20,20 +19,8 @@ import {
   type OrdTree,
 } from "./kernels-extra.ts";
 
-// ─── RestrictedGrowthStrings(n): length-n words w with w[0]=0 and w[i] <= 1+max(w[0..i-1]) — the
-// canonical RGS encoding of a set partition of [n] (w[i] = block index of element i+1, in
-// first-appearance order). Count = BellB(n); SetPartitions already unranks via this exact word
-// (RgsUnrank/RgsRank in kernels-combinatorics.ts) and just reshapes it into blocks — here the word
-// itself IS the element. ───────────────────────────────────────────────────────────────────────
-function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== n) return false;
-  let mx = -1;
-  for (const v of e) {
-    if (typeof v !== "number" || !Number.isInteger(v) || v < 0 || v > mx + 1) return false;
-    if (v > mx) mx = v;
-  }
-  return true;
-}
+// RestrictedGrowthStrings moved to set-partitions/src/families/paths-partitions.ts -- §4 step 5,
+// its carrier "RestrictedGrowthString" is a set-partitions one.
 
 // ─── NonCrossingPartitions(n) / NonNestingPartitions(n): both built from ONE shared process —
 // walk elements 1..n, at each step either open a new block (its least element) or extend one of
@@ -651,18 +638,9 @@ function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
 // Kept separate from `entriesAfterDyckPathsByHeight` below only so
 // collections/src/families/index.ts can splice `latticePathsPathsPartitionsEntries`
 // (DyckPathsByHeight) back in at the exact interior position it held before the lattice-paths
-// move — §4 step 5.
+// move — §4 step 5. NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
+// NonNestingMatchings below declare no carrier at all and stay here per step 5 rule 4.
 export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
-  {
-    head: "RestrictedGrowthStrings",
-    carrier: "RestrictedGrowthString",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => BellB(n),
-    unrank: ([n], r) => RgsUnrank(n, r),
-    valid: (e, [n]) => isRestrictedGrowthStringOf(e, n),
-    rank: (e) => RgsRank(e as number[]),
-  },
   {
     head: "NonCrossingPartitions",
     paramCount: 1,

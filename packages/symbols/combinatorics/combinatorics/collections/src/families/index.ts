@@ -1,5 +1,7 @@
 import {
+  entriesBeforeSurjections as coreBeforeSurjections,
   entriesBeforeDyckPaths as coreBeforeDyckPaths,
+  entriesBeforeSetPartitions as coreBeforeSetPartitions,
   entriesBeforeTrees as coreBeforeTrees,
   entries as core,
 } from "./core.ts";
@@ -37,6 +39,11 @@ import {
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
 import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
+import {
+  coreSurjectionsEntries as setPartitionsSurjectionsEntries,
+  coreEntries as setPartitionsCoreEntries,
+  pathsPartitionsEntries as setPartitionsPathsPartitionsEntries,
+} from "../../../set-partitions/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -48,21 +55,24 @@ import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// `permutationsCoreEntries`, `compositionsCoreEntries` and `partitionsCoreEntries` (each was
-// core.ts's own section for that area) and `partitionsTableauxPlaneEntries` (was
-// tableaux-plane.ts's SkewPartitions) keep the exact interior positions their source files held
-// before their area moves -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
+// Every `<area>...Entries` group below keeps the exact interior position its source file held
+// before that area's move -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
 const numberEntries = [
   ...permutationsCoreEntries,
   ...compositionsCoreEntries,
   ...partitionsCoreEntries,
+  ...coreBeforeSurjections,
+  ...setPartitionsSurjectionsEntries,
   ...coreBeforeDyckPaths,
   ...latticePathsCoreEntries,
+  ...coreBeforeSetPartitions,
+  ...setPartitionsCoreEntries,
   ...coreBeforeTrees,
   ...treesCoreEntries,
   ...core,
   ...subsets,
   ...wordsEntries,
+  ...setPartitionsPathsPartitionsEntries,
   ...pathsPartitionsBeforeDyckPathsByHeight,
   ...latticePathsPathsPartitionsEntries,
   ...pathsPartitions,
