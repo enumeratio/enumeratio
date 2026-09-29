@@ -1,8 +1,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import { declareMaps } from "../src/map.ts";
+import { declareDomains } from "../../domains/src/declare.ts";
+import { DOMAINS } from "../../domains/src/domain-data.ts";
+import { declareMaps } from "../../domains/src/map.ts";
 
 const ce = new ComputeEngine();
 declareDomains(ce);

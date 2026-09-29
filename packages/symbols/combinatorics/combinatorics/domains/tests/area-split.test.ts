@@ -3,6 +3,7 @@
 // record every host declares from.
 import { expect, test } from "vite-plus/test";
 import { COMPOSITIONS_DOMAINS } from "../../compositions/src/domain-data.ts";
+import { FINDSTAT_DOMAINS } from "../../findstat/src/domain-data.ts";
 import { GRAPHS_DOMAINS } from "../../graphs/src/domain-data.ts";
 import { LATTICE_PATHS_DOMAINS } from "../../lattice-paths/src/domain-data.ts";
 import { PARTITIONS_DOMAINS } from "../../partitions/src/domain-data.ts";
@@ -23,6 +24,7 @@ const AREAS = {
   "set-partitions": SET_PARTITIONS_DOMAINS,
   tableaux: TABLEAUX_DOMAINS,
   graphs: GRAPHS_DOMAINS,
+  findstat: FINDSTAT_DOMAINS,
 } as const;
 
 test("DOMAINS is exactly the areas plus the leftover carriers, no duplicates", () => {

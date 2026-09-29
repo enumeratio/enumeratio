@@ -1,10 +1,9 @@
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { declareDomains, DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { ALL_REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { declareDomains } from "../src/declare.ts";
-import { DOMAINS } from "../src/domain-data.ts";
-import { carrierLatex, triggerFor } from "../src/latex.ts";
-import { declareRendering } from "../src/render.ts";
-import { ALL_REPRESENTATIONS, representationsFor } from "../src/representation.ts";
+import { carrierLatex, triggerFor } from "../src/carrier-latex.ts";
+import { declareRendering } from "../src/carrier-render.ts";
 
 /** An engine whose LaTeX dictionary carries the carrier constructors. */
 const engine = (): ComputeEngine => {

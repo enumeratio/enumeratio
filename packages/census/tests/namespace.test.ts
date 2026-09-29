@@ -7,6 +7,11 @@
 // could collide with. Probes now box inside a pushed scope; this is the net.
 
 import { DOMAINS } from "@enumeratio/combinatorics/domains/src";
+import { FRONTEND_CARRIERS } from "@enumeratio/frontend/declare-carriers";
+import { HYPERCOMPLEX_CARRIERS } from "@enumeratio/hypercomplex/src";
+import { NUMBER_THEORY_CARRIERS } from "@enumeratio/number-theory/src";
+import { NUMERALS_CARRIERS } from "@enumeratio/numerals/src";
+import { RESIDUES_CARRIERS } from "@enumeratio/residues/src";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 
@@ -32,8 +37,18 @@ for (const type of [
 
 /** The carrier TYPES. compute-engine keeps types and symbols in one table, and the engine's
  *  own convention spells a type lowercase (`integer`, `indexed_collection`), so these are
- *  the one legitimate class of lowercase name — see domains/src/types.ts. */
-const CARRIER_TYPES = new Set(DOMAINS.map((domain) => domain.type));
+ *  the one legitimate class of lowercase name — see @enumeratio/structures' carriers.ts.
+ *  Every package that owns carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4) contributes its own, not just combinatorics. */
+const CARRIER_TYPES = new Set(
+  [
+    ...DOMAINS,
+    ...NUMBER_THEORY_CARRIERS,
+    ...RESIDUES_CARRIERS,
+    ...NUMERALS_CARRIERS,
+    ...HYPERCOMPLEX_CARRIERS,
+    ...FRONTEND_CARRIERS,
+  ].map((carrier) => carrier.type),
+);
 
 const added = declaredNames();
 

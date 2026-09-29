@@ -27,7 +27,8 @@
     "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
-    "@enumeratio/residues": "workspace:*"
+    "@enumeratio/residues": "workspace:*",
+    "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.140.0",

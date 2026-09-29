@@ -14,7 +14,9 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { gcd } from "@enumeratio/residues";
+import { declareCarrierElement, declareCarrierPlurals, declareCarriers } from "@enumeratio/structures";
 import { declareAdic } from "./adic-declare.ts";
+import { NUMERALS_CARRIERS } from "./carrier-data.ts";
 import {
   bigIntToBaseString,
   digitLength,
@@ -199,6 +201,12 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
 }
 
 export function declareNumerals(ce: ComputeEngine): void {
+  // This package's own carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
+  // step 4) — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types and constructors
+  // only; plurals are a separate call (`declareNumeralsCarrierPlurals`) — see
+  // @enumeratio/number-theory's `declareNumberTheory` for why.
+  declareCarriers(ce, NUMERALS_CARRIERS);
+
   defineMessages(ce, "IntegerDigits", { nonum: "`1` has no numeral in `2`." });
   defineMessages(ce, "FromDigits", { nonum: "`1` is not a numeral in `2`." });
   defineMessages(ce, "ResidueNumerals", {
@@ -694,4 +702,11 @@ export function declareNumerals(ce: ComputeEngine): void {
       }
     },
   });
+}
+
+/** This package's carriers' plural type-space names and `Element` membership — a separate
+ *  call, same reason as `@enumeratio/number-theory`'s `declareNumberTheoryCarrierPlurals`. */
+export function declareNumeralsCarrierPlurals(ce: ComputeEngine): void {
+  declareCarrierPlurals(ce, NUMERALS_CARRIERS);
+  declareCarrierElement(ce, NUMERALS_CARRIERS);
 }

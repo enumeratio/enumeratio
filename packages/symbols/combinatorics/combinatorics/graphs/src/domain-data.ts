@@ -2,7 +2,7 @@
 // generator, one-time, from the last generated domain-data.ts. Families for this area move
 // here in step 5.
 
-import type { Domain } from "../../domains/src/types.ts";
+import type { Domain } from "@enumeratio/structures";
 
 export const GRAPHS_DOMAINS: readonly Domain[] = [
   {

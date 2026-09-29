@@ -6,7 +6,7 @@ summary: A multiplicative factorization as parallel lists — $\prod \text{bases
 signatures:
   - call: Factorization(bases, exponents)
     description: a factorization as parallel `bases`/`exponents` lists
-    library: enumeratio-combinatorics
+    library: enumeratio-number-theory
     type: (tuple<list<number>, list<integer>>) -> factorization
 seeAlso:
   - IntegerFactorization
