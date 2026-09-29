@@ -19,7 +19,7 @@ export const CARRIER_TYPES: Readonly<Record<string, string>> = {
 const ALL_CARRIERS: Readonly<Record<string, string>> = CARRIER_TYPES;
 
 /** The shape each carrier's constructor accepts — a set partition is a list of blocks. */
-const SHAPES: Readonly<Record<string, string>> = {
+export const SHAPES: Readonly<Record<string, string>> = {
   permutation: "list<integer>",
   integer_partition: "list<integer>",
   dyck_path: "list<integer>",

@@ -1,9 +1,10 @@
 // Declare a statistic from its DEFINITION — the expression is the implementation.
 //
-// There is no TypeScript kernel behind these heads, so there is no second implementation to
-// drift from. Where a fast path does exist (the permutation statistics already in
+// There is no hand-written TypeScript behind these heads, so there is no second implementation
+// to drift from; what runs fast is compiled from the definition itself (compiled.ts). Where a fast path does exist (the permutation statistics already in
 // @enumeratio/combinatorics/collections), the two are held together by a differential test instead.
 
+import { compiledStatistic } from "./compiled.ts";
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
@@ -17,7 +18,23 @@ type BoxInput = Parameters<ComputeEngine["box"]>[0];
  * Evaluate `definition` at `subject` — substitute the wildcard and evaluate. Exported
  * because it is also how the tests and the reduction analysis reach a definition.
  */
+const compiledCache = new WeakMap<Definition, ReturnType<typeof compiledStatistic> | null>();
+
 export function applyDefinition(ce: ComputeEngine, definition: Definition, subject: BoxedExpression): BoxedExpression {
+  // Compiled ahead of time where it could be; the interpreter below is the definition itself.
+  let compiled = compiledCache.get(definition);
+  if (compiled === undefined) compiledCache.set(definition, (compiled = compiledStatistic(ce, definition) ?? null));
+  const answer = compiled?.(subject.json);
+  if (answer !== undefined) return ce.box(answer as never);
+  return interpretDefinition(ce, definition, subject);
+}
+
+/** The definition evaluated by the interpreter alone: what the compiled code is held to. */
+export function interpretDefinition(
+  ce: ComputeEngine,
+  definition: Definition,
+  subject: BoxedExpression,
+): BoxedExpression {
   // In a scope of its own: boxing declares the free `_x`, and a definition that fixes its
   // type (Depth's `Abs(At(_x, i) - i)` makes it a number) would otherwise pin that type on
   // the global `_x` for every later definition, whose `Length(_x)` then never reduces.
