@@ -472,6 +472,7 @@ export const WOLFRAM_NAMES: Readonly<Record<string, string>> = {
   PadRight: "PadRight",
   Panel: "Panel",
   ParameterMixtureDistribution: "ParameterMixtureDistribution",
+  ParametricPlot: "ParametricPlot",
   ParetoDistribution: "ParetoDistribution",
   Partition: "Partition",
   PartitionsQ: "PartitionsQ",
