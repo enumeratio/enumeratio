@@ -166,7 +166,7 @@ const declareSparseArray = (ce: ComputeEngine): void => {
 
 // --- RandomInteger: the Wolfram spelling of Random over a Range --------------------------
 //
-// One seeded stream per engine lives in @enumeratio/engine (`Random`, design/random.md);
+// One seeded stream per engine lives in @enumeratio/engine (`Random`, https://github.com/enumeratio/enumeratio/wiki/Random);
 // `SeedRandom` restarts it and every draw -- RandomInteger, RandomGraph, RandomComplex,
 // statistics' RandomVariate -- comes from it.
 

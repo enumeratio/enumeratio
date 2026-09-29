@@ -2,7 +2,7 @@
 // `_`-prefixed wildcards in parameter order, in terms of heads compute-engine already has.
 //
 // These are not what runs; the kernels in this package stay the implementation. What these
-// are for (design/namespaces.md §6):
+// are for (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6):
 //
 //   1. they SAY what the head means, in a form a reader can unfold (≝) and evaluate;
 //   2. they are a differential oracle for the kernel — `tests/definitions.test.ts` evaluates
@@ -96,7 +96,7 @@ export const DEFINITIONS: Readonly<Record<string, Json>> = {
 
 /**
  * Heads that do NOT reduce, with the reason — the primitive frontier for this package
- * (design/namespaces.md §6.1). Being on it is a claim to be justified, not a place to put
+ * (https://github.com/enumeratio/enumeratio/wiki/Namespaces §6.1). Being on it is a claim to be justified, not a place to put
  * anything inconvenient.
  */
 export const PRIMITIVE: Readonly<Record<string, string>> = {

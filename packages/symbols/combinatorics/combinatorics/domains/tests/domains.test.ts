@@ -13,7 +13,7 @@ test("every carrier the catalog knows becomes a nominal type", () => {
   const ce = engine();
   // combinatorics' own carriers — the areas' data, plus its findstat tooling records. The
   // arithmetic and GlyphKind carriers that used to live in LEFTOVER_DOMAINS moved to their
-  // owning packages (design/speculative/combinatorics-layering-and-plausible.md §4 steps
+  // owning packages (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 steps
   // 4-5); each package's own tests pin its own carrier count now.
   expect(DOMAINS.length).toBe(71);
   for (const domain of DOMAINS) expect(String(ce.type(domain.type)), domain.name).toBe(domain.type);

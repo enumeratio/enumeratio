@@ -1,4 +1,4 @@
-// design/roadmap.md §1's warning, made a guard: `HarmonicNumber` is in the wolfram head
+// https://github.com/enumeratio/enumeratio/wiki/Roadmap §1's warning, made a guard: `HarmonicNumber` is in the wolfram head
 // map (`packages/wolfram/src/to-wolfram.ts` `HEADS`), so the transpiler emits it, but the
 // engine never declares it — a head the transpiler vouches for and the engine cannot
 // answer. This test only fails a NEW head of that shape (`undeclared`): the milder

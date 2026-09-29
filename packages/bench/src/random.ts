@@ -1,4 +1,4 @@
-// Seeded draws for sampled cases (design/benchmarking.md §3.2). The seed is part of the case,
+// Seeded draws for sampled cases (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §3.2). The seed is part of the case,
 // so every run and every system sees the same inputs; the draws are written into the
 // generated scripts as literals.
 

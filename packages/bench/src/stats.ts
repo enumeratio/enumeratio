@@ -1,5 +1,5 @@
 // Summary statistics every runner's samples go through, in one place, so a statistic means
-// the same thing for every system (design/benchmarking.md §5).
+// the same thing for every system (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §5).
 
 import type { Summary } from "./types.ts";
 

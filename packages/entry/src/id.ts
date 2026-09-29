@@ -1,4 +1,4 @@
-// Example ids (design/examples-as-data.md §3). An id is data: assigned once, from the
+// Example ids (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §3). An id is data: assigned once, from the
 // caption, and kept when the caption or `expr` changes. These helpers pick a fresh one.
 
 export const EXAMPLE_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;

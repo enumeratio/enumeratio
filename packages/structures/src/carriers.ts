@@ -1,5 +1,5 @@
 // Carrier declaration: a NOMINAL type per carrier, and a held constructor that makes a value
-// carry it (design/domains.md §1.2; design/speculative/combinatorics-layering-and-plausible.md
+// carry it (https://github.com/enumeratio/enumeratio/wiki/Domains §1.2; https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 1). Generic across every owning package — combinatorics' areas, the arithmetic
 // packages (number-theory, residues, numerals, hypercomplex) — each calls `declareCarriers`
 // with its own carrier data instead of one shared module minting everything.
@@ -26,7 +26,7 @@ export interface CarrierDeclaration {
   /** enumeratio's snake_case carrier id — which is also the type's spelling. */
   readonly id: string;
   /**
-   * The carrier's TYPE-SPACE name, plural — every carrier has one (design/domains.md §2's
+   * The carrier's TYPE-SPACE name, plural — every carrier has one (https://github.com/enumeratio/enumeratio/wiki/Domains §2's
    * corrected rule), whether or not a same-named collection family already exists.
    * `declareCarrierElement` is what makes `Element(x, DyckPaths)` answer for it: True when
    * `x` is a `DyckPath(...)` value, False for a value of another carrier, unevaluated for
@@ -120,8 +120,7 @@ export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression 
 
 /**
  * Mint every carrier's plural TYPE-SPACE name as a set-valued symbol, the way compute-engine's
- * own `Integers` is a symbol whose type is `set<integer>` rather than a callable (design/
- * domains.md §2) — but only when the name isn't ALREADY something at the point this runs: a
+ * own `Integers` is a symbol whose type is `set<integer>` rather than a callable (https://github.com/enumeratio/enumeratio/wiki/Domains §2) — but only when the name isn't ALREADY something at the point this runs: a
  * same-named collection family that enumerates this carrier (`Permutations`, `DyckPaths`, …),
  * a compute-engine native with its own real meaning, or another owning PACKAGE's carrier that
  * minted the same plural first. That last case is settled by this same `ce.lookupDefinition`

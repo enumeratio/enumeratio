@@ -1,5 +1,5 @@
 // `@enumeratio/reference/node`'s fs loader, over small fixture directories -- not real data
-// (none exists yet; the data flip is step 4 of design/examples-as-data.md). Each fixture
+// (none exists yet; the data flip is step 4 of https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data). Each fixture
 // under tests/fixtures/ mimics `<packagesRoot>/<package>/reference/*.yaml`.
 
 import { fileURLToPath } from "node:url";

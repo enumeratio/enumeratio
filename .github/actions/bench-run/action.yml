@@ -1,5 +1,5 @@
 name: Bench run
-description: Run the benchmark catalogue for some systems on this runner (always with our own side, as the same-machine anchor) and publish the reports to the bench-data branch. See design/benchmarking.md §6–7.
+description: Run the benchmark catalogue for some systems on this runner (always with our own side, as the same-machine anchor) and publish the reports to the bench-data branch. See the wiki's [Benchmarking](https://github.com/enumeratio/enumeratio/wiki/Benchmarking) §6–7.
 
 inputs:
   systems:

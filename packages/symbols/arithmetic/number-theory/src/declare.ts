@@ -30,7 +30,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: ComputeEngine): void {
-  // This package's own carriers (design/speculative/combinatorics-layering-and-plausible.md §4
+  // This package's own carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
   // step 4) — see carrier-data.ts for why they sit here rather than in numerals, and why the
   // ordering this runs at (after numerals, after modular) is load-bearing. Types and
   // constructors only: the PLURAL type-space names are a separate call

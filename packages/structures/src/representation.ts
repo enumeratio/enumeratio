@@ -1,7 +1,7 @@
 // Representations: how an element is WRITTEN, not what it is.
 //
 // This layer is modelled on enumeratio's `base_repr`, and reading that settled a question
-// this project had got wrong. An earlier version of design/domains.md argued that one-line
+// this project had got wrong. An earlier version of https://github.com/enumeratio/enumeratio/wiki/Domains argued that one-line
 // and cycle notation are two DOMAINS — different structures, related by a bijection.
 // enumeratio says otherwise, and it is right:
 //

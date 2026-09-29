@@ -1,4 +1,4 @@
-// The `bench-data` branch (design/benchmarking.md §7): each run's files under `runs/<id>/`,
+// The `bench-data` branch (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7): each run's files under `runs/<id>/`,
 // with `run.json` describing it, and `index.json` rebuilt from those, so two jobs publishing
 // at once only ever conflict on files they both derive.
 

@@ -1,5 +1,4 @@
-// `declareCarriers`/`declareCarrierPlurals`/`declareCarrierElement` (design/speculative/
-// combinatorics-layering-and-plausible.md §4 step 1): every owning package calls these with
+// `declareCarriers`/`declareCarrierPlurals`/`declareCarrierElement` (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 1): every owning package calls these with
 // its own carrier data, so two packages minting the SAME plural name (as combinatorics and
 // number-theory both briefly did for `GaussianIntegers`, #411) has to settle by a registry
 // check regardless of which package's declare call runs first — never by call order.

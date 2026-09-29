@@ -1,4 +1,4 @@
-// One `Random` (design/random.md): compute-engine's own head, drawing from one seeded stream
+// One `Random` (https://github.com/enumeratio/enumeratio/wiki/Random): compute-engine's own head, drawing from one seeded stream
 // per engine, over whatever can be sampled. A finite collection samples itself -- a uniform
 // index, then `at` -- and so does an interval; any other type says how by registering a
 // sampler (a distribution, in statistics). The Wolfram spellings (`RandomInteger`,

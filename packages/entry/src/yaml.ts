@@ -1,4 +1,4 @@
-// The strict YAML schema and the single reader/writer (design/examples-as-data.md §4). Every
+// The strict YAML schema and the single reader/writer (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §4). Every
 // `reference/<Head>/index.md` and `reference/<Head>/examples.values.*.tsv` file goes through these
 // two functions, and nothing else in the repo is allowed to import `yaml` directly (see
 // `packages/utils/tests/no-yaml-imports.test.ts`) -- a stray `yaml.parse` with YAML 1.2's core

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// The benchmark viewer (design/benchmarking.md §8): across-systems comparison for one run,
+// The benchmark viewer (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §8): across-systems comparison for one run,
 // a system's median over time, and the support matrix. Data is fetched at runtime from
 // `bench-data` (see ./data.ts); `?data=` overrides the base for local fixtures/previews.
 import { computed, onMounted, ref, watch } from "vue";
@@ -145,7 +145,7 @@ async function selectRun(run: IndexRun): Promise<void> {
 // ---- over-time view ----
 const timePoints = ref<TimePoint[]>([]);
 const timeLoading = ref(false);
-// A tag averages its cases instead of showing one (design/benchmarking.md §8).
+// A tag averages its cases instead of showing one (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §8).
 const timeTag = ref("");
 const allTags = computed(() => [...new Set(plan.value?.cases.flatMap((c) => c.tags ?? []))].toSorted());
 const tagCases = computed(
@@ -263,11 +263,8 @@ onMounted(async () => {
       <p>
         Once the nightly job lands its first run, this page will show medians across systems, a support matrix, and
         trends over time. See
-        <a
-          href="https://github.com/enumeratio/enumeratio/blob/main/design/benchmarking.md"
-          target="_blank"
-          rel="noopener"
-          >design/benchmarking.md</a
+        <a href="https://github.com/enumeratio/enumeratio/wiki/Benchmarking" target="_blank" rel="noopener"
+          >https://github.com/enumeratio/enumeratio/wiki/Benchmarking</a
         >
         for the plan.
       </p>
@@ -277,11 +274,8 @@ onMounted(async () => {
       <p>Couldn't load benchmark data: {{ errorMessage }}</p>
       <p>
         See
-        <a
-          href="https://github.com/enumeratio/enumeratio/blob/main/design/benchmarking.md"
-          target="_blank"
-          rel="noopener"
-          >design/benchmarking.md</a
+        <a href="https://github.com/enumeratio/enumeratio/wiki/Benchmarking" target="_blank" rel="noopener"
+          >https://github.com/enumeratio/enumeratio/wiki/Benchmarking</a
         >
         for how this page is meant to work.
       </p>

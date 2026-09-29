@@ -1,4 +1,4 @@
-// JSON Schema for the two YAML records (design/examples-as-data.md §2, §4), generated from
+// JSON Schema for the two YAML records (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2, §4), generated from
 // the types in `types.ts` -- so an editor with a YAML language server gets completion and
 // validation on `reference/<Head>/index.md` and `reference/<Head>/examples.values.*.tsv`. This
 // module is the generator; `scripts/generate-schema.ts` writes its output to `schema/`, and
@@ -188,7 +188,7 @@ const REFERENCE_NAMES: JsonSchema = {
   additionalProperties: false,
 };
 
-/** `reference/<Head>/index.md`: the hand-written entry, all but its examples (design/examples-as-data.md §2). */
+/** `reference/<Head>/index.md`: the hand-written entry, all but its examples (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2). */
 export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://enumeratio.dev/schema/reference-entry.schema.json",
@@ -320,7 +320,7 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
 
 /**
  * `reference/<Head>/examples.values.*.tsv`: every example's implementations, keyed by id
- * (design/examples-as-data.md §2, §6).
+ * (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2, §6).
  */
 export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",

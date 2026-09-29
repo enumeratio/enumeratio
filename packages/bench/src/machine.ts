@@ -1,4 +1,4 @@
-// The machine a run was on (design/benchmarking.md §7): the fields that decide whether two
+// The machine a run was on (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7): the fields that decide whether two
 // timings are comparable, a hash of them so the viewer can split series by machine, and how
 // loaded it was when the run started and ended.
 

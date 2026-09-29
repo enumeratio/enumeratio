@@ -127,7 +127,7 @@ function examplesFor(definition: Definition): Example[] {
   return out;
 }
 
-/** Ids for a head's examples, from their captions (design/examples-as-data.md §3). */
+/** Ids for a head's examples, from their captions (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §3). */
 const withIds = (examples: readonly Example[]): ReferenceExample[] => {
   const taken = new Set<string>();
   return examples.map((e) => ({

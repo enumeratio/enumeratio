@@ -1,4 +1,4 @@
-// A family's Plausible instance, derived from what it declares (design/plausible.md §3): the
+// A family's Plausible instance, derived from what it declares (https://github.com/enumeratio/enumeratio/wiki/Plausible §3): the
 // proxy is the ADDRESS — params plus a rank in that fiber — `interp` is `unrank`, and shrinking
 // works on the address, so no family writes a sampler or a shrinker of its own.
 //

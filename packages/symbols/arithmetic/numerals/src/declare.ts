@@ -201,7 +201,7 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
 }
 
 export function declareNumerals(ce: ComputeEngine): void {
-  // This package's own carriers (design/speculative/combinatorics-layering-and-plausible.md §4
+  // This package's own carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
   // step 4) — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types and constructors
   // only; plurals are a separate call (`declareNumeralsCarrierPlurals`) — see
   // @enumeratio/number-theory's `declareNumberTheory` for why.

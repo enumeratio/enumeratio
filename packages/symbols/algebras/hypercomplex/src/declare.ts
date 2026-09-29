@@ -121,7 +121,7 @@ const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(cont
 const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
 
 export function declareHypercomplex(ce: ComputeEngine): void {
-  // This package's own carrier (design/speculative/combinatorics-layering-and-plausible.md §4
+  // This package's own carrier (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
   // step 4) — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types and constructors
   // only; plurals are a separate call (`declareHypercomplexCarrierPlurals`) — see
   // @enumeratio/number-theory's `declareNumberTheory` for why.

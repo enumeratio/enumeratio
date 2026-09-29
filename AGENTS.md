@@ -26,6 +26,13 @@ release. Add a tool name to select part of the graph. For example, run
 
 <!--VITE PLUS END-->
 
+## Design docs
+
+Design docs, the roadmap and contributor notes live on the
+[wiki](https://github.com/enumeratio/enumeratio/wiki); `design/` is gone from the repo, and new
+design writing goes on the wiki. [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing)
+restates this file's project rules for people.
+
 ## Names
 
 - **enumeratio** is the mathematics: the symbol definitions (collections, domains,
@@ -42,12 +49,12 @@ release. Add a tool name to select part of the graph. For example, run
   as", InputForm, the `*Form` heads). What an attribute or cell holds is an expression:
   MathJSON, written in Epsil (`$…$` LaTeX islands are Epsil's). `parseExpression` reports
   statements and effects; a cell may be one `:=` binding (`allow: ["Assign"]`). See
-  `design/syntax-and-formats.md`.
+  the wiki's [Syntax-and-Formats](https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats).
 - In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
-  and `notatio` keys its component serialisation, the vdom as Vue/React markup
-  (`design/examples-as-data.md` §2, signed off).
-- Package names have not all caught up; do not rename them in passing — see
-  `design/component-naming.md` for how renames wait.
+  and `notatio` keys its component serialisation, the vdom as Vue/React markup (the wiki's
+  [Examples-as-Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data) §2, signed off).
+- Package names have not all caught up; do not rename them in passing — see the wiki's
+  [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
 
 ## Upstream candidates
 
@@ -55,7 +62,8 @@ release. Add a tool name to select part of the graph. For example, run
   widens a native head) is written in `upstream/compute-engine/` as a patch, not in a symbol
   package, even before anything is proposed upstream. Its code is laid out as in
   compute-engine (`src/compute-engine/{numerics,library,compilation}`); its reference entries
-  live in `packages/reference/entries/` and never go upstream. See `design/upstreaming.md` §10.
+  live in `packages/reference/entries/` and never go upstream. See the wiki's
+  [Upstreaming](https://github.com/enumeratio/enumeratio/wiki/Upstreaming) §10.
 
 ## Reference entries
 
@@ -132,7 +140,8 @@ release. Add a tool name to select part of the graph. For example, run
   nightly deletes a PR's previews a day after it closes, and untagged previews older than 30
   days; a tagged commit's preview stays. Needs repo secrets
   `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
-- **Advisory sweeps** — never required checks. `plausible.yml` (Plausible, after Lean 4's; `design/plausible.md`) samples the collection
+- **Advisory sweeps** — never required checks. `plausible.yml` (Plausible, after Lean 4's; the
+  wiki's [Plausible](https://github.com/enumeratio/enumeratio/wiki/Plausible)) samples the collection
   kernels on every push touching them and deeply each night; a failure files/reopens one
   rolling issue, `plausible sampling regression`, labelled `nightly-fixup`. `nightly.yml`
   rescans the light oracle lanes against the committed sidecars nightly, one job per

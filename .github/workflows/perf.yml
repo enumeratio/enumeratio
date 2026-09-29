@@ -1,6 +1,7 @@
 name: Perf
 
-# Advisory nightly sweep (design/roadmap.md's "profiler job in CI"). Runs each package's vitest suite,
+# Advisory nightly sweep (the wiki's Roadmap, "profiler job in CI":
+# https://github.com/enumeratio/enumeratio/wiki/Roadmap). Runs each package's vitest suite,
 # one at a time so packages don't contend for the same cores, and records per-test/per-file durations
 # plus package wall time via tools/perf/src/collect.ts. History lives as JSON on a dedicated orphan
 # branch, `perf-data` — durable and `git show perf-data:history.json | jq` inspectable, no external

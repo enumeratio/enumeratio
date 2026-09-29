@@ -4,8 +4,7 @@ export { checkLaws, type LawFailure } from "./laws.ts";
 export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
 export { DOMAINS, LEFTOVER_DOMAINS } from "./domain-data.ts";
 export type { Domain, Shape } from "@enumeratio/structures";
-// Generic carrier machinery moved to @enumeratio/structures (design/speculative/combinatorics-
-// layering-and-plausible.md §4 step 1) — re-exported here so nothing importing
+// Generic carrier machinery moved to @enumeratio/structures (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 1) — re-exported here so nothing importing
 // `@enumeratio/combinatorics/domains` for these has to change.
 export {
   applyComposition,

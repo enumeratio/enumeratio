@@ -1,6 +1,7 @@
 name: Bench
 
-# Cross-system benchmarks (design/benchmarking.md §6). One runner installs the light ecosystems
+# Cross-system benchmarks (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §6). One
+# runner installs the light ecosystems
 # from the caches the oracle lanes use and runs our side, mpmath, SymPy, Julia and Rust
 # interleaved, so every ratio in a run comes from one machine and one time window. Reports go
 # to the orphan `bench-data` branch (runs/<id>/, index.json), which the site's /bench/ viewer

@@ -215,7 +215,7 @@ function printAttributes(attributes: Readonly<Record<string, string>>): string {
 
 /**
  * A structural tree (`structuralOf`) as the markup a person would author by hand
- * (design/vdom.md): lit tags renamed to their Vue/React wrapper (`notatio-bar-chart-3d` ->
+ * (https://github.com/enumeratio/enumeratio/wiki/Vdom): lit tags renamed to their Vue/React wrapper (`notatio-bar-chart-3d` ->
  * `BarChart3D`), attributes as-is (`structuralOf` already lowers options into kebab-case
  * attributes), and a run of leaf children collapsed to their comma-joined `value`s
  * (`<Tuple>x, 0, 10</Tuple>`) rather than one nested atom tag each -- the "short spelling" the

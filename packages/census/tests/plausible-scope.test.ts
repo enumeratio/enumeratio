@@ -1,4 +1,4 @@
-// Plausible's reach (design/plausible.md §6): every head this namespace declares with collection
+// Plausible's reach (https://github.com/enumeratio/enumeratio/wiki/Plausible §6): every head this namespace declares with collection
 // handlers is a family Plausible can sample — or is exempt here, with a reason. Walking the
 // engine rather than a registry means a collection can't escape by never registering.
 

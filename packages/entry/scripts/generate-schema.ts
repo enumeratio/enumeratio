@@ -1,4 +1,4 @@
-// Write the JSON Schema for the three records (design/examples-as-data.md §4) to
+// Write the JSON Schema for the three records (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §4) to
 // `schema/*.schema.json`. `tests/schema.test.ts` fails if a committed file drifts from this;
 // run this script to bring it back in sync.
 //

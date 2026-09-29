@@ -1,4 +1,4 @@
-// The support matrix (design/benchmarking.md §4.1): for each case and system, the native
+// The support matrix (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4.1): for each case and system, the native
 // source the generator will write, or why the system sits this one out. Built before any
 // timing, so "Julia is missing NextPrime" is data, not a silent gap.
 

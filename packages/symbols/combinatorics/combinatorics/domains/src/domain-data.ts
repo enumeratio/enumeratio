@@ -1,4 +1,4 @@
-// Hand-maintained (design/speculative/combinatorics-layering-and-plausible.md §4 step 4).
+// Hand-maintained (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4).
 // Every carrier now has an owning area — arithmetic values (`GaussianInteger`,
 // `ModularResidue`, `RationalNumber`, `Fraction`, the factorizations, `ContinuedFraction`,
 // `EgyptianFraction`, `Multicomplex`, `CollatzTrajectory`, `PythagoreanTriple`,

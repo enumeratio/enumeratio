@@ -2,7 +2,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { PATCHES, patchSymbols, symbols } from "../src/index.ts";
 
-// Every patch's heads are cheap to list -- no engine needed (design/upstreaming.md §10). For
+// Every patch's heads are cheap to list -- no engine needed (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10). For
 // a plain-record patch that's just `Object.keys(patch.library)`; for a function-form patch
 // (one that captures a native handler) the manifest states `heads` explicitly, since the
 // function's keys aren't knowable without an engine.

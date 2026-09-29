@@ -133,7 +133,7 @@ function argumentTypesAt(ce: ComputeEngine, head: string, argIndex: number): Box
 /**
  * Whether `head`'s declared type at `argIndex` calls for the row wrapped in its carrier
  * rather than passed bare, given the row's own bare type -- read once from the signature, per
- * (head, argIndex, carrier), and never retried or re-checked per row (design/plausible.md
+ * (head, argIndex, carrier), and never retried or re-checked per row (https://github.com/enumeratio/enumeratio/wiki/Plausible
  * §4.2, BL-1). A head whose declared type already accepts the bare row -- `Length`'s `any`,
  * a word statistic's `list | permutation` union -- gets it unwrapped even when the carrier
  * would ALSO satisfy the type; only a head that REJECTS the bare row and accepts the carrier

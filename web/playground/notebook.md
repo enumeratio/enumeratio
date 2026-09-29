@@ -25,6 +25,6 @@ Drag a cell by its number (left) to reorder it; the numbering follows automatica
   prose, …), lifted out of the numbering, double-click to edit.
 - This element is the [worksheet](/playground/worksheet) without its screen, and is set to
   fold into it: `Notebook` is the Wolfram symbol for a transcript, and that is what the
-  [notebook](/notebook/) route will hold. See `design/notebooks.md`.
+  [notebook](/notebook/) route will hold. See `https://github.com/enumeratio/enumeratio/wiki/Notebooks`.
 - A real terminal REPL running the `@enumeratio/cli` logic lives separately, under
   the [CLI docs](/docs/cli/repl) — not here.

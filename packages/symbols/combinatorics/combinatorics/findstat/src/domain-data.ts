@@ -1,5 +1,4 @@
-// Carrier data for combinatorics' FindStat tooling (design/speculative/combinatorics-
-// layering-and-plausible.md §4 step 3): records the FindStat oracle scripts use, not
+// Carrier data for combinatorics' FindStat tooling (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3): records the FindStat oracle scripts use, not
 // mathematical carriers of an area's own. Split from domains/src/domain-data.ts's
 // LEFTOVER_DOMAINS, which is where every carrier without an area used to sit regardless of
 // what it actually was.

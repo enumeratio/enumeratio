@@ -1,4 +1,4 @@
-// Write each package's contribution to the engine into the records (design/manifest.md):
+// Write each package's contribution to the engine into the records (https://github.com/enumeratio/enumeratio/wiki/Manifest):
 // declare every package in order, and for each head a step adds or re-signs, or whose
 // handler it replaces, give the head's record a typed row for that package -- `type` as the
 // engine prints it, `overrides` naming who had the head before, `HoldAll` for `lazy`. A
@@ -31,7 +31,7 @@ interface Located {
 }
 const records = new Map<string, Located>();
 const dirOf = new Map<string, string>();
-// reference's own copy is the canonical one (design/examples-as-data.md §9).
+// reference's own copy is the canonical one (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §9).
 const dirs = recordDirs(PACKAGES).toSorted(
   (a, b) => Number(b.package === "reference") - Number(a.package === "reference"),
 );

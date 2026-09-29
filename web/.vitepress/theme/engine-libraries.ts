@@ -63,8 +63,7 @@ export interface EngineLibraries {
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.
  */
 export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) => void, libs: EngineLibraries): void {
-  // Carriers, then the families typed by them -- one call (design/speculative/combinatorics-
-  // layering-and-plausible.md §4 step 3). Everything below declares heads OVER these minted
+  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3). Everything below declares heads OVER these minted
   // types, so they have to exist before a signature can name one.
   apply(libs.declareCombinatorics);
   // Every domain's plural type-space name, and Element membership over it -- AFTER
@@ -106,7 +105,7 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   apply(libs.declareNumberTheory);
   // The arithmetic carriers' (and GlyphKind's) plural type-space names and Element
   // membership, now that every one of them is declared -- moved here from combinatorics'
-  // domains/LEFTOVER_DOMAINS (design/speculative/combinatorics-layering-and-plausible.md §4
+  // domains/LEFTOVER_DOMAINS (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4
   // steps 4-5), which minted every carrier's plural together in one combined list.
   apply(libs.declareFrontendCarrierPlurals);
   apply(libs.declareHypercomplexCarrierPlurals);

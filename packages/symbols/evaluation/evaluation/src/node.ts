@@ -1,6 +1,6 @@
 // Node-only isolated evaluation: `MemoryConstrained`'s real enforcement, `evaluateIsolated`'s
 // hard time kill (`terminate()`, the only cancel that always works against a tight loop —
-// see design/computation.md §5.3), a reusable worker pool, and a stateful session. Kept out of
+// see https://github.com/enumeratio/enumeratio/wiki/Computation §5.3), a reusable worker pool, and a stateful session. Kept out of
 // `./index.ts` so a browser bundle never sees `node:worker_threads`.
 
 import { availableParallelism } from "node:os";
@@ -274,7 +274,7 @@ export function evaluateIsolated(json: unknown, options: EvaluateIsolatedOptions
 
 // ---------------------------------------------------------------------------------------
 // Session: one `./session-worker.ts`, one `ComputeEngine`, held across `evaluate` calls —
-// for a notebook evaluating off the caller's own thread. See design/computation.md §5.3.
+// for a notebook evaluating off the caller's own thread. See https://github.com/enumeratio/enumeratio/wiki/Computation §5.3.
 // ---------------------------------------------------------------------------------------
 
 export type NodeSessionWorkerFactory = (url: URL, options: { workerData?: unknown }) => NodeWorkerLike;
@@ -324,7 +324,7 @@ export interface Session {
  * 5` in one call is visible to `a^2` in the next.
  *
  * A `timeMs` kill on a runaway call terminates the worker outright (`terminate()` is the
- * only cancel that reliably stops a tight, uncooperative loop — design/computation.md
+ * only cancel that reliably stops a tight, uncooperative loop — https://github.com/enumeratio/enumeratio/wiki/Computation
  * §3): a fresh worker with a fresh engine takes over for the NEXT call, but everything
  * bound before the kill is gone. That call's own result reports `reset: true` rather
  * than silently continuing as if nothing happened.

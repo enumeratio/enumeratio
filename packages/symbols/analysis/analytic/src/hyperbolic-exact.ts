@@ -6,7 +6,7 @@ import type { EvalOptions } from "@enumeratio/for-compute-engine";
 // them for the circular ones: the values at 0 (and arcosh 1 = 0), as Wolfram gives them.
 //
 // The at-0 table for Sinh/Cosh/Tanh/Sech/Csch/Coth/Arsinh/Artanh (cortex-js/compute-engine
-// #341/#342, design/upstreaming.md §10) landed natively in compute-engine 0.139 -- the
+// #341/#342, https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) landed natively in compute-engine 0.139 -- the
 // @enumeratio/for-compute-engine hyperbolic-zero patch that used to apply it here was
 // retired. Arcosh(1) = 0 is a different point and NOT part of that issue, so it stays
 // here, in SPECIAL.

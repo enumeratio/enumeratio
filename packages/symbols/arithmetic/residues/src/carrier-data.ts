@@ -1,4 +1,4 @@
-// residues' own carrier (design/speculative/combinatorics-layering-and-plausible.md §4 step
+// residues' own carrier (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step
 // 4): moved from combinatorics' domains/LEFTOVER_DOMAINS.
 
 import type { CarrierDeclaration } from "@enumeratio/structures";

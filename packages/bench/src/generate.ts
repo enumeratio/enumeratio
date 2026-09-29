@@ -1,4 +1,4 @@
-// Native harness generation (design/benchmarking.md §4). Each generator turns the plan for the
+// Native harness generation (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4). Each generator turns the plan for the
 // whole catalogue into one self-contained script for its system, committed under
 // `generated/<system>/`, so a mappings or catalogue change shows up as a script diff and the
 // kernel side needs no Node to run.

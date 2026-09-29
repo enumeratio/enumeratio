@@ -14,7 +14,7 @@ const BADGE: Readonly<Record<Exclude<Outcome, "">, { symbol: string; label: stri
 
 /**
  * `<TestResultObject>` -- `VerificationTest`'s `TestResultObject`
- * (design/computation.md §5.4): the held input as an In row, the actual output as an Out
+ * (https://github.com/enumeratio/enumeratio/wiki/Computation §5.4): the held input as an In row, the actual output as an Out
  * row, and a badge for the outcome (Success ✓ / Failure ≠, expected shown / Error ! /
  * Aborted ∅), plus the time used and, when set, the TestID. Reuses `<Out>`
  * (`label`/`label-menu`) for both rows rather than re-typesetting anything itself.

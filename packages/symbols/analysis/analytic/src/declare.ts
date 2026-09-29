@@ -108,7 +108,7 @@ import { declareNSum } from "./nsum.ts";
  * `PolyGamma`'s complex-argument extensions -- and `BarnesG`, `LogBarnesG`, `LogGamma`,
  * `ClausenCl`, the Dirichlet family (`DirichletEta`, `DirichletBeta`, `DirichletCharacter`,
  * `DirichletL`) and `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they
- * live in `@enumeratio/for-compute-engine` as patches (design/upstreaming.md §10) and are
+ * live in `@enumeratio/for-compute-engine` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
  * applied here at the point their declarations used to run, so declare order and behaviour
  * are unchanged.
  *

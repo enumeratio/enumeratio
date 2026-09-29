@@ -1,4 +1,4 @@
-// Report assembly (design/benchmarking.md §7): one JSON file per system per run.
+// Report assembly (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §7): one JSON file per system per run.
 
 import { execFileSync } from "node:child_process";
 import { machine } from "./machine.ts";
