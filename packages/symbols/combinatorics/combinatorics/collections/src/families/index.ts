@@ -1,4 +1,8 @@
-import { entriesBeforeDyckPaths as coreBeforeDyckPaths, entries as core } from "./core.ts";
+import {
+  entriesBeforeDyckPaths as coreBeforeDyckPaths,
+  entriesBeforeTrees as coreBeforeTrees,
+  entries as core,
+} from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
 import {
   entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight,
@@ -32,6 +36,7 @@ import {
   coreEntries as latticePathsCoreEntries,
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
+import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
 import { entries as numericClosedForm } from "./numeric-closed-form.ts";
@@ -53,6 +58,8 @@ const numberEntries = [
   ...partitionsCoreEntries,
   ...coreBeforeDyckPaths,
   ...latticePathsCoreEntries,
+  ...coreBeforeTrees,
+  ...treesCoreEntries,
   ...core,
   ...subsets,
   ...wordsEntries,

@@ -52,14 +52,6 @@ import {
   IsFibonacciWord,
   GrayCodeSubsetUnrank,
   GrayCodeSubsetRank,
-  BinaryTreeCount,
-  BinaryTreeUnrank,
-  BinaryTreeRank,
-  IsBinaryTree,
-  BinaryTreeParentArray,
-  BinaryTreeOfParentArray,
-  IsBinaryTreeParentArray,
-  type BinTree,
   SchroederCount,
   SchroederUnrank,
   SchroederRank,
@@ -196,7 +188,11 @@ export const entriesBeforeDyckPaths: NumberKernel[] = [
   ),
 ];
 
-export const entries: NumberKernel[] = [
+// Kept separate from the final `entries` export below only so collections/src/families/index.ts
+// can splice `treesCoreEntries` (BinaryTrees, BinaryTreeParentArrays) back in at the exact
+// interior position it held before the trees-area move — §4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
+export const entriesBeforeTrees: NumberKernel[] = [
   ints(
     "MotzkinPaths",
     1,
@@ -280,33 +276,12 @@ export const entries: NumberKernel[] = [
     valid: (a, [n]) => IsRootedForest(a, n),
     rank: (a, [n]) => RootedForestRank(a as number[], n),
   },
+];
 
-  // ── trees with nested elements (leaf 0 / [], node = children) ──
-  {
-    head: "BinaryTrees",
-    paramCount: 1,
-    kind: "nested",
-    carrier: "BinaryTree",
-    count: ([n]) => BinaryTreeCount(n),
-    unrank: ([n], r) => BinaryTreeUnrank(n, r),
-    valid: (e, [n]) => IsBinaryTree(e, n),
-    rank: (e) => BinaryTreeRank(e as BinTree),
-  },
-  {
-    declared: {
-      carrier: "BinaryTreeParentArray",
-      params: [{ name: "n", role: "axis", min: 0 }],
-      cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
-    },
-    head: "BinaryTreeParentArrays",
-    paramCount: 1,
-    kind: "ints",
-    carrier: "BinaryTreeParentArray",
-    count: ([n]) => BinaryTreeCount(n),
-    unrank: ([n], r) => BinaryTreeParentArray(BinaryTreeUnrank(n, r)),
-    valid: (e, [n]) => IsBinaryTreeParentArray(e, n),
-    rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
-  },
+// BinaryTrees/BinaryTreeParentArrays moved to trees/src/families/core.ts -- §4 step 5, the only
+// two families in this section carrying a `carrier`. KAryTrees/OrderedTrees below declare none
+// and stay here per step 5 rule 4.
+export const entries: NumberKernel[] = [
   {
     head: "KAryTrees",
     paramCount: 2,
