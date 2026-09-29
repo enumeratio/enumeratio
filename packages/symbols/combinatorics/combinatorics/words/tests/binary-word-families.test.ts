@@ -4,6 +4,7 @@ import { entries } from "../src/families/binary-word-families.ts";
 // BinaryBracelets/KBracelets split out of collections/tests/binary-word-families.test.ts with the
 // family (§4 step 5, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // -- same recipe: rank(unrank(p, r), p) === r, unranked elements are valid and distinct.
+// TernaryGrayCodes joined them here (wire-carriers lane A-91), now carrying "TernaryGrayCode".
 const PARAMS: Record<string, number[][]> = {
   BinaryBracelets: [[0], [1], [2], [3], [4], [5], [6], [7]],
   KBracelets: [
@@ -14,6 +15,7 @@ const PARAMS: Record<string, number[][]> = {
     [0, 4],
     [3, 4],
   ],
+  TernaryGrayCodes: [[0], [1], [2], [3], [4]],
 };
 
 const byHead = new Map(entries.map((e) => [e.head, e]));
@@ -107,9 +109,28 @@ for (let n = 1; n <= 4; n++) {
   }
 }
 
+for (let n = 0; n <= 4; n++) {
+  test(`TernaryGrayCodes(${n}) is a valid ternary Gray code (adjacent words differ by ±1 in one digit)`, () => {
+    const entry = byHead.get("TernaryGrayCodes")!;
+    const total = entry.count([n]);
+    const seq = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
+    const all = Array.from(allWords(n, 3));
+    expect(asSet(seq)).toEqual(asSet(all)); // every word appears exactly once
+    for (let i = 0; i + 1 < seq.length; i++) {
+      const diffs = seq[i].map((d, j) => d - seq[i + 1][j]).filter((d) => d !== 0);
+      expect(diffs.length).toBe(1);
+      expect(Math.abs(diffs[0])).toBe(1);
+    }
+  });
+}
+
 // ─── OEIS counts, independent of the round-trip above ───────────────────────────────────────────
 const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead.get(head)!.count(p));
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
+
+test("TernaryGrayCodes count = 3^n, n=0..6", () => {
+  expect(countsOf("TernaryGrayCodes", range(7))).toEqual([1, 3, 9, 27, 81, 243, 729]);
+});
 
 test("BinaryBracelets count (A000029), n=0..12", () => {
   expect(countsOf("BinaryBracelets", range(13))).toEqual([1, 2, 3, 4, 6, 8, 13, 18, 30, 46, 78, 126, 224]);

@@ -4,10 +4,10 @@ import { entries } from "../src/families/binary-word-families.ts";
 // Self-cert every family: rank(unrank(p, r), p) === r across the whole family, unranked
 // elements are valid members, and every element is distinct — same recipe as words.test.ts.
 // BinaryBracelets/KBracelets moved to the words area (§4 step 5) with their tests.
+// TernaryGrayCodes joined them there (wire-carriers lane A-91), now carrying "TernaryGrayCode".
 const PARAMS: Record<string, number[][]> = {
   TriStrings: [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10]],
   PrimitiveBinaryStrings: [[1], [2], [3], [4], [5], [6], [7], [8]],
-  TernaryGrayCodes: [[0], [1], [2], [3], [4]],
   StirlingPermutations: [[1], [2], [3], [4], [5]],
 };
 
@@ -133,21 +133,6 @@ for (let n = 0; n <= 8; n++) {
       expect(kernelElements.length).toBe(total);
     });
   }
-
-  if (n <= 4) {
-    test(`TernaryGrayCodes(${n}) is a valid ternary Gray code (adjacent words differ by ±1 in one digit)`, () => {
-      const entry = byHead.get("TernaryGrayCodes")!;
-      const total = entry.count([n]);
-      const seq = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
-      const all = Array.from(allWords(n, 3));
-      expect(asSet(seq)).toEqual(asSet(all)); // every word appears exactly once
-      for (let i = 0; i + 1 < seq.length; i++) {
-        const diffs = seq[i].map((d, j) => d - seq[i + 1][j]).filter((d) => d !== 0);
-        expect(diffs.length).toBe(1);
-        expect(Math.abs(diffs[0])).toBe(1);
-      }
-    });
-  }
 }
 
 for (let n = 1; n <= 4; n++) {
@@ -171,10 +156,6 @@ test("TriStrings count (tribonacci-like, A000073 shifted), n=0..10", () => {
 
 test("PrimitiveBinaryStrings count (A027375), n=1..10", () => {
   expect(countsOf("PrimitiveBinaryStrings", range(11).slice(1))).toEqual([2, 2, 6, 12, 30, 54, 126, 240, 504, 990]);
-});
-
-test("TernaryGrayCodes count = 3^n, n=0..6", () => {
-  expect(countsOf("TernaryGrayCodes", range(7))).toEqual([1, 3, 9, 27, 81, 243, 729]);
 });
 
 test("StirlingPermutations count = (2n-1)!! (A001147), n=1..7", () => {

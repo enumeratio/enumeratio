@@ -124,16 +124,10 @@ export const entriesBeforeSurjections: NumberKernel[] = [
 ];
 
 // Surjections moved to set-partitions/src/families/core.ts -- §4 step 5, the only family in this
-// section carrying a `carrier` ("Surjection").
+// section carrying a `carrier` ("Surjection"). Endofunctions moved to words/src/families/core.ts
+// (wire-carriers lane A-91): it now carries "Endofunction". BinaryStrings/LatticePaths below
+// declare no carrier and stay here per step 5 rule 4.
 export const entriesBeforeDyckPaths: NumberKernel[] = [
-  ints(
-    "Endofunctions",
-    1,
-    ([n]) => n ** n,
-    ([n], r) => TupleUnrank(n, n, r),
-    (a, [n]) => IsTupleOf(a, n, n),
-    (a, [n]) => TupleRank(a, n),
-  ),
   ints(
     "BinaryStrings",
     1,

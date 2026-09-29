@@ -25,8 +25,9 @@ function rotateLeft(w: number[], s: number): number[] {
 
 // BinaryBracelets/KBracelets (and their own `reversed`/`eulerPhi` helpers) moved to
 // words/src/families/binary-word-families.ts — §4 step 5, their `declared.carrier` ("BinaryWord"
-// / "Word") is a words-area one. TriStrings/PrimitiveBinaryStrings/TernaryGrayCodes/
-// StirlingPermutations below declare no carrier at all and stay here per step 5 rule 4.
+// / "Word") is a words-area one. TernaryGrayCodes joined them there (wire-carriers lane A-91),
+// now carrying "TernaryGrayCode". TriStrings/PrimitiveBinaryStrings/StirlingPermutations below
+// declare no carrier at all and stay here per step 5 rule 4.
 
 // ─── number theory (mirrors words.ts's private copy — needed here too). ───────
 function divisorsOf(n: number): number[] {
@@ -178,51 +179,6 @@ function primitiveValid(w: unknown, n: number): boolean {
   return true;
 }
 
-// ─── TernaryGrayCodes(n): base-3 reflected Gray code — length-n words over {0,1,2} where
-// consecutive words differ by ±1 in exactly one digit. Standard b-ary reflection: prefix each of
-// the b sub-blocks (one per leading digit j) with the previous level's list traversed forward
-// (j even) or reversed (j odd); adjacent blocks then share their boundary suffix so only the new
-// digit changes by 1 at every seam, and induction carries the property into each sub-block. Count
-// is the closed form 3^n; unrank/rank enumerate-then-index off a cached list — cheap at the small
-// n this family is tested at, and the recursive construction has no simpler unrank/rank. ───────────
-const ternaryGrayCache = new Map<number, number[][]>();
-function ternaryGrayList(n: number): number[][] {
-  const cached = ternaryGrayCache.get(n);
-  if (cached) return cached;
-  let list: number[][];
-  if (n === 0) {
-    list = [[]];
-  } else {
-    const prev = ternaryGrayList(n - 1);
-    list = [];
-    for (let digit = 0; digit < 3; digit++) {
-      let block = prev;
-      if (digit % 2 !== 0) {
-        block = prev.slice();
-        block.reverse();
-      }
-      for (const w of block) list.push([digit, ...w]);
-    }
-  }
-  ternaryGrayCache.set(n, list);
-  return list;
-}
-function ternaryGrayCount(n: number): number {
-  return 3 ** n;
-}
-function ternaryGrayUnrank(n: number, r: number): number[] {
-  const total = ternaryGrayCount(n);
-  return ternaryGrayList(n)[normRank(r, total)].slice();
-}
-function ternaryGrayRank(w: number[], n: number): number {
-  return ternaryGrayList(n).findIndex((x) => arraysEqual(x, w));
-}
-function ternaryGrayValid(w: unknown, n: number): boolean {
-  if (!Array.isArray(w) || w.length !== n) return false;
-  for (const b of w) if (b !== 0 && b !== 1 && b !== 2) return false;
-  return true;
-}
-
 // ─── StirlingPermutations(n): permutations of the multiset {1,1,2,2,…,n,n} where everything
 // between the two copies of i exceeds i — count (2n-1)!! (A001147). Built by inserting the pair
 // (k,k), for k = 2..n in increasing order, adjacently into one of the 2(k-1)+1 gaps of a
@@ -325,15 +281,6 @@ export const entries: NumberKernel[] = [
     ([n], r) => primitiveUnrank(n, r),
     (a, [n]) => primitiveValid(a, n),
     (a, [n]) => primitiveRank(a, n),
-  ),
-  // TernaryGrayCodes(n): base-3 reflected Gray code order.
-  ints(
-    "TernaryGrayCodes",
-    1,
-    ([n]) => ternaryGrayCount(n),
-    ([n], r) => ternaryGrayUnrank(n, r),
-    (a, [n]) => ternaryGrayValid(a, n),
-    (a, [n]) => ternaryGrayRank(a, n),
   ),
   // StirlingPermutations(n): permutations of {1,1,2,2,...,n,n} with the betweenness property.
   ints(

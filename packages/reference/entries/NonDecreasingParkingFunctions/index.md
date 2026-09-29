@@ -16,5 +16,5 @@ signatures:
   - call: NonDecreasingParkingFunctions(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<parking_function>
 ---

@@ -875,6 +875,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "Tan",
   "Tanh",
   "TemperleyLiebAlgebra",
+  "TernaryGrayCode",
   "TernaryGrayCodes",
   "TestResultObject",
   "TetraCompositions",

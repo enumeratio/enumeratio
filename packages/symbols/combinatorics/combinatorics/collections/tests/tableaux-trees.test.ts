@@ -1,13 +1,16 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/tableaux-trees.ts";
-import { CatalanNumber, InvolutionCount, LabeledTreeCount } from "../src/families/kernels-extra.ts";
+import {
+  entriesBeforeParkingFunctions,
+  entriesAfterNonDecreasingParkingFunctions,
+} from "../src/families/tableaux-trees.ts";
+import { InvolutionCount, LabeledTreeCount } from "../src/families/kernels-extra.ts";
 
 // Self-cert every tableaux-trees.ts family: for every rank r in [0, count), unrank produces a
 // valid element and rank(unrank(r)) === r. Sizes kept small so counts stay well under ~5000.
+// ParkingFunctions/NonDecreasingParkingFunctions moved to words/tests/tableaux-trees.test.ts
+// (wire-carriers lane A-91), now carrying "ParkingFunction".
 const PARAMS: Record<string, number[][]> = {
   PruferSequences: [[1], [2], [3], [5]],
-  ParkingFunctions: [[1], [2], [3], [4]],
-  NonDecreasingParkingFunctions: [[1], [4], [6]],
   Tournaments: [[1], [2], [3], [4]],
   LabeledGraphs: [[1], [2], [3], [4]],
   LabeledGraphsByEdges: [
@@ -23,7 +26,9 @@ const PARAMS: Record<string, number[][]> = {
   SytTwoColumn: [[1], [5], [6]],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(
+  [...entriesBeforeParkingFunctions, ...entriesAfterNonDecreasingParkingFunctions].map((e) => [e.head, e]),
+);
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
@@ -45,16 +50,6 @@ for (const [head, paramSets] of Object.entries(PARAMS)) {
 test("PruferSequences(n) counts match LabeledTrees(n) (n^(n-2))", () => {
   const e = byHead.get("PruferSequences")!;
   for (const n of [1, 2, 3, 4, 5, 6]) expect(e.count([n])).toBe(LabeledTreeCount(n));
-});
-
-test("ParkingFunctions(n) = (n+1)^(n-1) — A000272-adjacent parking numbers", () => {
-  const e = byHead.get("ParkingFunctions")!;
-  expect([1, 2, 3, 4, 5].map((n) => e.count([n]))).toEqual([1, 3, 16, 125, 1296]);
-});
-
-test("NonDecreasingParkingFunctions(n) = CatalanNumber(n)", () => {
-  const e = byHead.get("NonDecreasingParkingFunctions")!;
-  for (const n of [0, 1, 2, 3, 4, 5, 6]) expect(e.count([n])).toBe(CatalanNumber(n));
 });
 
 test("Tournaments(n) = LabeledGraphs(n) = 2^C(n,2)", () => {
@@ -95,8 +90,6 @@ test("SytTwoRow(n) = SytTwoColumn(n) = C(n, floor(n/2))", () => {
 test("golden: rank-0 elements of each family at a fixed size", () => {
   const golden: Record<string, unknown> = {
     PruferSequences: byHead.get("PruferSequences")!.unrank([5], 0),
-    ParkingFunctions: byHead.get("ParkingFunctions")!.unrank([4], 0),
-    NonDecreasingParkingFunctions: byHead.get("NonDecreasingParkingFunctions")!.unrank([6], 0),
     Tournaments: byHead.get("Tournaments")!.unrank([3], 0),
     LabeledGraphs: byHead.get("LabeledGraphs")!.unrank([3], 0),
     RecursiveTrees: byHead.get("RecursiveTrees")!.unrank([5], 0),
@@ -107,8 +100,6 @@ test("golden: rank-0 elements of each family at a fixed size", () => {
   };
   expect(golden).toEqual({
     PruferSequences: [1, 1, 1],
-    ParkingFunctions: [1, 1, 1, 1],
-    NonDecreasingParkingFunctions: [1, 1, 1, 1, 1, 1],
     Tournaments: [
       [1, 2],
       [1, 3],
