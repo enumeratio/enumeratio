@@ -91,13 +91,18 @@ export function compileTyped(
   }
 }
 
-let helpers: unknown;
+const helpersByEngine = new WeakMap<ComputeEngine, unknown>();
 
-/** compute-engine's runtime helpers (`_SYS`), which generated code calls into. Not exported by
- *  compute-engine, so taken from a compiled function once. */
+/** compute-engine's runtime helpers (`_SYS`), which generated code calls into. They belong to an
+ *  engine (its random source, its streams), so each engine gets its own. Not exported by
+ *  compute-engine, so taken from a function compiled on that engine. */
 export function runtimeHelpers(ce: ComputeEngine): unknown {
-  helpers ??= compileTyped(ce, ["Add", "_h", 1], { _h: "integer" })?.run.SYS;
-  if (helpers === undefined) throw new Error("compute-engine's compiled-code helpers are unavailable");
+  let helpers = helpersByEngine.get(ce);
+  if (helpers === undefined) {
+    helpers = compileTyped(ce, ["Add", "_h", 1], { _h: "integer" })?.run.SYS;
+    if (helpers === undefined) throw new Error("compute-engine's compiled-code helpers are unavailable");
+    helpersByEngine.set(ce, helpers);
+  }
   return helpers;
 }
 
