@@ -29,7 +29,10 @@ the resolver possible (below).
   its `symbols/index.json`. Only the index and the definitions an expression uses are
   fetched, and each is checked against its pin. With `check`, `createRegistryResolver` runs
   a definition's examples (from its record, packed as `examples.json`) in a scratch engine
-  before declaring it, once per pin: a failure refuses it, or with `mode: "flag"` is reported. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  before declaring it, once per pin: a failure refuses it, or with `mode: "flag"` is reported.
+  Packing also writes the package's JavaScript entry (`scripts/symbol-entry.ts`), so it works
+  as a plain library: `declare(ce)`, and each definition that compiles to self-contained
+  JavaScript as a plain function, checked against its examples. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 

@@ -141,3 +141,28 @@ test("install check over npm: a published example the definition doesn't meet re
   expect(ensured.failed).toEqual({ "ada.Quad": ["quad-3: 12, expected 13"] });
   expect(ensured.errors).toEqual(["ada.Quad: 1 example(s) fail"]);
 });
+
+test("a packed package is a plain library too: declare(ce), and compiled functions", async () => {
+  // Installed side by side, as npm would: bob's entry imports @ada/primes by name.
+  const root = mkdtempSync(join(tmpdir(), "install-"));
+  for (const [spec, dir] of Object.entries(PACKAGES)) {
+    const target = join(root, "node_modules", spec.slice(0, spec.lastIndexOf("@")));
+    cpSync(join(FIXTURES, dir), target, { recursive: true });
+    await packSymbols(target);
+  }
+  const ada = await import(join(root, "node_modules/@ada/primes/dist/index.js"));
+  const bob = await import(join(root, "node_modules/@bob/extra/dist/index.js"));
+  // Self-contained compiled code is exported; code needing compute-engine's runtime isn't.
+  expect(ada.Twice(21)).toBe(42);
+  expect(ada.Quad).toBeUndefined();
+  const ce = new ComputeEngine();
+  bob.declare(ce);
+  expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 2])).toBe(16);
+  expect(evaluate(ce, ["MemberCall", "ada", "'Quad'", 2])).toBe(8);
+  // The heads are the registry's, so a pin means the same thing either way.
+  const npm = npmRegistry<Engine>(SPECS, cdn());
+  expect((await npm.resolve("ada.Quad"))?.head).toBe(ada.definitions.Quad.head);
+  expect(readFileSync(join(root, "node_modules/@ada/primes/dist/index.d.ts"), "utf8")).toContain(
+    "export declare const Twice: (x0: number) => number;",
+  );
+});

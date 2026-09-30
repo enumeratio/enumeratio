@@ -45,6 +45,7 @@ export {
   SearchPathError,
   type SearchPathOptions,
   searchPath,
+  withHeads,
 } from "./registry.ts";
 export {
   type FetchJson,
