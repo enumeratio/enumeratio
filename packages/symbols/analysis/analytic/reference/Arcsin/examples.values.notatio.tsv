@@ -29,4 +29,4 @@ co-function-identity-arcsin-x-arccos-x-pi-2	<Equal><Add><Arcsin><Rational>1 2</R
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	<TrigToExp><Arcsin>x</Arcsin></TrigToExp>	<Multiply><Complex>0 -1</Complex> <Ln><Add><Multiply><Complex>0 1</Complex> x</Multiply> <Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Add></Ln></Multiply>
 not-simply-2-2-is-outside-the-principal-range-pi	<Arcsin><Sin>2</Sin></Arcsin>	<Add>-2 Pi</Add>
 arcsin-sin-neg-2-mirrors-through-0	<Arcsin><Sin>-2</Sin></Arcsin>	<Add>2 <Negate>Pi</Negate></Add>
-arcsin-complexinfinity-is-indeterminate-the-real	<Arcsin>ComplexInfinity</Arcsin>	<Indeterminate />
+arcsin-complexinfinity-is-complexinfinity	<Arcsin>ComplexInfinity</Arcsin>	<ComplexInfinity />

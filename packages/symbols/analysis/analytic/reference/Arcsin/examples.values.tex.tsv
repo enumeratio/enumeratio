@@ -29,4 +29,4 @@ co-function-identity-arcsin-x-arccos-x-pi-2	\arcsin(\frac{1}{2})+\arccos(\frac{1
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	\mathrm{TrigToExp}(\arcsin(x))	-i\ln(i x+\sqrt{1-x^2})
 not-simply-2-2-is-outside-the-principal-range-pi	\arcsin(\sin(2))	\pi-2
 arcsin-sin-neg-2-mirrors-through-0	\arcsin(\sin(-2))	2-\pi
-arcsin-complexinfinity-is-indeterminate-the-real	\arcsin(\tilde\infty)	\operatorname{Indeterminate}
+arcsin-complexinfinity-is-complexinfinity	\arcsin(\tilde\infty)	\tilde\infty

@@ -1,2 +1,2 @@
 id	in	out
-arsinh-complexinfinity-is-indeterminate-the-real	arsinh(complexInfinity)	Indeterminate
+arsinh-complexinfinity-is-complexinfinity	arsinh(complexInfinity)	complexInfinity

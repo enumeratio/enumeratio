@@ -29,4 +29,4 @@ co-function-identity-arcsin-x-arccos-x-pi-2	arcsin(1 / 2) + arccos(1 / 2) == pi 
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	trigToExp(arcsin(x))	-i * ln(i * x + sqrt(-x ^ 2 + 1))
 not-simply-2-2-is-outside-the-principal-range-pi	arcsin(sin(2))	-2 + pi
 arcsin-sin-neg-2-mirrors-through-0	arcsin(sin(-2))	2 - pi
-arcsin-complexinfinity-is-indeterminate-the-real	arcsin(complexInfinity)	Indeterminate
+arcsin-complexinfinity-is-complexinfinity	arcsin(complexInfinity)	complexInfinity

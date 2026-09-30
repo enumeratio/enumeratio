@@ -17,5 +17,5 @@ frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D[Erfc[x], x]	True		\text{Module}\left[\le
 an-exact-integer-argument-is-left-unevaluated	Erfc[1]	Erfc[1]		\text{erfc}(1)	\text{erfc}(1)	
 far-in-the-tail-erfc-keeps-full-relative	Erfc[9.5]	3.76921448565488*^-41		\text{erfc}(9.5)	\text{3.76921448565488$\grave{ }$*${}^{\wedge}$-41}	
 whereas-1-erf-9-5-cancels-to-exactly-0-in	Subtract[1, Erf[9.5]]	0.		1-\text{erf}(9.5)	0.	
-erfc-complexinfinity-is-indeterminate-inheriting	Erfc[ComplexInfinity]					
+erfc-complexinfinity-is-indeterminate-inheriting	Erfc[ComplexInfinity]	Erfc[ComplexInfinity]		\text{erfc}(\text{ComplexInfinity})	\text{erfc}(\text{ComplexInfinity})	disagree
 the-gaussian-tail-shrinks-fast-only-about-7	Erfc[3.5]	7.43098372341413*^-7		\text{erfc}(3.5)	\text{7.43098372341413$\grave{ }$*${}^{\wedge}$-7}	

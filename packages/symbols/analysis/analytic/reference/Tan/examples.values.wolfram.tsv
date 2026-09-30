@@ -41,4 +41,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	Tan[Divide[Pi, 2]]	ComplexInfinity		\tan
 same-rule-as-sin-and-cos-a-non-special-numeric	Tan[1]	Tan[1]		\tan (1)	\tan (1)	
 a-pole-at-negative-pi-over-2-too	Tan[Divide[Pi, -2]]	ComplexInfinity		\tan \left(-\frac{\pi }{2}\right)	\text{ComplexInfinity}	
 a-pole-reached-through-periodicity-unreduced	Tan[Plus[Divide[Pi, -2], Pi]]	ComplexInfinity		\tan \left(-\frac{\pi }{2}+\pi \right)	\text{ComplexInfinity}	
-tan-complexinfinity-is-indeterminate-poles-recur	Tan[ComplexInfinity]					
+tan-complexinfinity-is-indeterminate-poles-recur	Tan[ComplexInfinity]	Indeterminate		\tan (\text{ComplexInfinity})	\text{Indeterminate}	

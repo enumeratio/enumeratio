@@ -29,4 +29,4 @@ co-function-identity-arcsin-x-arccos-x-pi-2	Equal[Plus[ArcSin[Rational[1, 2]], A
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	TrigToExp[ArcSin[x]]
 not-simply-2-2-is-outside-the-principal-range-pi	ArcSin[Sin[2]]
 arcsin-sin-neg-2-mirrors-through-0	ArcSin[Sin[-2]]
-arcsin-complexinfinity-is-indeterminate-the-real	ArcSin[ComplexInfinity]
+arcsin-complexinfinity-is-complexinfinity	ArcSin[ComplexInfinity]

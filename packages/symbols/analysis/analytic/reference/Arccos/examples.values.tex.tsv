@@ -21,4 +21,4 @@ arccos-infinity-is-the-opposite-directed	\arccos(-\infty)	\mathrm{DirectedInfini
 cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\top
 reflection-arccos-x-pi-arccos-x	\arccos(-x)	\pi-\arccos(x)
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	\arccos(2)	\arccos(2)
-arccos-complexinfinity-is-indeterminate-for-the	\arccos(\tilde\infty)	\operatorname{Indeterminate}
+arccos-complexinfinity-is-complexinfinity	\arccos(\tilde\infty)	\tilde\infty

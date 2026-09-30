@@ -22,10 +22,9 @@ const indeterminate = (ce: ComputeEngine) => ce.symbol("Indeterminate");
 //
 // arccos(z) = pi/2 - arcsin(z), so its directions are arcsin's negated.
 //
-// At the undirected ComplexInfinity, the limit genuinely depends on the direction of
-// approach (real +Infinity and real -Infinity alone already disagree, -i vs +i) --
-// Indeterminate, the same "no single answer" convention CE 0.141 gives Gamma/Factorial/
-// Zeta/Digamma/PolyGamma at ComplexInfinity.
+// At the undirected ComplexInfinity the direction varies but the magnitude doesn't:
+// arcsin(z) = -i ln(iz + sqrt(1 - z^2)) grows like ln|2z| along every direction (DLMF
+// 4.23.19), so the limit is the unsigned ComplexInfinity, as Wolfram answers.
 export function evaluateArcsinArccosAtInfinity(ce: ComputeEngine): void {
   widenSignature(
     ce,
@@ -41,7 +40,7 @@ export function evaluateArcsinArccosAtInfinity(ce: ComputeEngine): void {
       const z = ops[0]!;
       if (isPositiveInfinity(z)) return directedInfinity(ce, negI(ce));
       if (isNegativeInfinity(z)) return directedInfinity(ce, ce.symbol("ImaginaryUnit"));
-      return indeterminate(ce);
+      return ce.symbol("ComplexInfinity");
     },
     1,
   );
@@ -60,7 +59,7 @@ export function evaluateArcsinArccosAtInfinity(ce: ComputeEngine): void {
       const z = ops[0]!;
       if (isPositiveInfinity(z)) return directedInfinity(ce, ce.symbol("ImaginaryUnit"));
       if (isNegativeInfinity(z)) return directedInfinity(ce, negI(ce));
-      return indeterminate(ce);
+      return ce.symbol("ComplexInfinity");
     },
     1,
   );
@@ -96,8 +95,9 @@ export function evaluateArctanArccotAtComplexInfinity(ce: ComputeEngine): void {
 // bounded, same drop-the-finite-part rule as Arcsin/Arccos above.
 //
 // Arsinh/Arcosh/Artanh/Arsech all reject the undirected ComplexInfinity at boxing
-// (`complex | signed_infinity`, no `~oo`) for the same direction-dependent reason as
-// Arcsin/Arctan -- Indeterminate.
+// (`complex | signed_infinity`, no `~oo`). Arsinh and Arcosh grow like ln|2z| in every
+// direction (DLMF 4.37.16, 4.37.19), so they are ComplexInfinity there, like Arcsin; Artanh
+// and Arsech stay bounded but approach +-i*Pi/2 by direction -- Indeterminate.
 export function evaluateHyperbolicInverseAtInfinity(ce: ComputeEngine): void {
   widenSignature(
     ce,
@@ -114,17 +114,20 @@ export function evaluateHyperbolicInverseAtInfinity(ce: ComputeEngine): void {
   );
 
   for (const head of ["Arsinh", "Arcosh", "Artanh", "Arsech"] as const) {
+    const unbounded = head === "Arsinh" || head === "Arcosh";
     widenSignature(
       ce,
       head,
-      "(complex | signed_infinity | ~oo) -> number | signed_infinity | Indeterminate",
+      unbounded
+        ? "(complex | signed_infinity | ~oo) -> number | signed_infinity | ~oo"
+        : "(complex | signed_infinity | ~oo) -> number | signed_infinity | Indeterminate",
       () => true,
     );
     wrapOperator(
       ce,
       [head],
       (ops) => ops[0] !== undefined && isComplexInfinity(ops[0]),
-      () => () => indeterminate(ce),
+      () => () => (unbounded ? ce.symbol("ComplexInfinity") : indeterminate(ce)),
       1,
     );
   }

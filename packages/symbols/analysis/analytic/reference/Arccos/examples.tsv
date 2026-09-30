@@ -21,4 +21,4 @@ arccos-infinity-is-the-opposite-directed	Scope		[Arccos, NegativeInfinity]	[Dire
 cos-arccos-x-x-on-the-principal-branch	Properties		[Equal, [Cos, [Arccos, [Rational, 1, 2]]], [Rational, 1, 2]]	True			$\cos(\arccos(x)) = x$ on the principal branch
 reflection-arccos-x-pi-arccos-x	Properties		[Arccos, [Negate, x]]	[Add, [Negate, [Arccos, x]], Pi]			Reflection: $\arccos(-x) = \pi - \arccos x$
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	Possible issues		[Arccos, 2]	[Arccos, 2]			Outside $[-1, 1]$ this stays symbolic, same as [[Arcsin]]; N(...) gives a complex approximation
-arccos-complexinfinity-is-indeterminate-for-the	Possible issues		[Arccos, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.23.22	Arccos(ComplexInfinity) is Indeterminate, for the same direction-dependence as Arcsin
+arccos-complexinfinity-is-complexinfinity	Possible issues		[Arccos, ComplexInfinity]	ComplexInfinity	ComplexInfinity	DLMF 4.23.22	Arccos(ComplexInfinity) is ComplexInfinity, unbounded in every direction as Arcsin is

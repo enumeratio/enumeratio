@@ -21,4 +21,4 @@ arccos-infinity-is-the-opposite-directed	<Arccos>NegativeInfinity</Arccos>	<Dire
 cos-arccos-x-x-on-the-principal-branch	<Equal><Cos><Arccos><Rational>1 2</Rational></Arccos></Cos> <Rational>1 2</Rational></Equal>	<True />
 reflection-arccos-x-pi-arccos-x	<Arccos><Negate>x</Negate></Arccos>	<Add><Negate><Arccos>x</Arccos></Negate> Pi</Add>
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	<Arccos>2</Arccos>	<Arccos>2</Arccos>
-arccos-complexinfinity-is-indeterminate-for-the	<Arccos>ComplexInfinity</Arccos>	<Indeterminate />
+arccos-complexinfinity-is-complexinfinity	<Arccos>ComplexInfinity</Arccos>	<ComplexInfinity />

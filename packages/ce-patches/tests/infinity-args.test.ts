@@ -18,9 +18,9 @@ describe("Arcsin/Arccos at the infinities", () => {
     expect(at("Arccos", "NegativeInfinity").json).toEqual(["DirectedInfinity", ["Complex", 0, -1]]);
   });
 
-  test("Arcsin/Arccos(ComplexInfinity) is Indeterminate -- direction-dependent", () => {
-    expect(at("Arcsin", "ComplexInfinity").json).toBe("Indeterminate");
-    expect(at("Arccos", "ComplexInfinity").json).toBe("Indeterminate");
+  test("Arcsin/Arccos(ComplexInfinity) is ComplexInfinity -- unbounded in every direction", () => {
+    expect(at("Arcsin", "ComplexInfinity").json).toBe("ComplexInfinity");
+    expect(at("Arccos", "ComplexInfinity").json).toBe("ComplexInfinity");
   });
 
   test("ordinary calls are untouched", () => {
@@ -45,9 +45,9 @@ describe("Hyperbolic inverses at the infinities", () => {
     expect(at("Arcosh", "NegativeInfinity").json).toBe("PositiveInfinity");
   });
 
-  test("Arsinh/Arcosh/Artanh/Arsech(ComplexInfinity) are Indeterminate", () => {
-    expect(at("Arsinh", "ComplexInfinity").json).toBe("Indeterminate");
-    expect(at("Arcosh", "ComplexInfinity").json).toBe("Indeterminate");
+  test("Arsinh/Arcosh(ComplexInfinity) are ComplexInfinity, Artanh/Arsech Indeterminate", () => {
+    expect(at("Arsinh", "ComplexInfinity").json).toBe("ComplexInfinity");
+    expect(at("Arcosh", "ComplexInfinity").json).toBe("ComplexInfinity");
     expect(at("Artanh", "ComplexInfinity").json).toBe("Indeterminate");
     expect(at("Arsech", "ComplexInfinity").json).toBe("Indeterminate");
   });

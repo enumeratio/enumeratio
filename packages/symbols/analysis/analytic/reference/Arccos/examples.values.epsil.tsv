@@ -21,4 +21,4 @@ arccos-infinity-is-the-opposite-directed	arccos(negativeInfinity)	DirectedInfini
 cos-arccos-x-x-on-the-principal-branch	cos(arccos(1 / 2)) == 1 / 2	True
 reflection-arccos-x-pi-arccos-x	arccos(-x)	-arccos(x) + pi
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	arccos(2)	arccos(2)
-arccos-complexinfinity-is-indeterminate-for-the	arccos(complexInfinity)	Indeterminate
+arccos-complexinfinity-is-complexinfinity	arccos(complexInfinity)	complexInfinity

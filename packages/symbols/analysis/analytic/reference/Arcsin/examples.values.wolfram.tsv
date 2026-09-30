@@ -22,11 +22,11 @@ taylor-series-about-0	""
 arcsin-sin-1-2-is-already-principal	ArcSin[Sin[Rational[1, 2]]]	1/2		\sin ^{-1}\left(\sin \left(\frac{1}{2}\right)\right)	\frac{1}{2}	
 to-30-significant-digits-not-yet-the-last-digit	N[ArcSin[Rational[1, 3]], 30]	0.3398369094541219370963925133917640663882446903324580714318`30.	0.339836909454121937096392513392	N\left[\sin ^{-1}\left(\frac{1}{3}\right),30\right]	0.339836909454121937096392513392	
 arcsin-2-past-1-1-the-odd-function-mirror-of	ArcSin[-2]	-ArcSin[2]		\sin ^{-1}(-2)	-\sin ^{-1}(2)	
-arcsin-infinity-is-a-directed-infinity-along-the	ArcSin[Infinity]					
-arcsin-infinity-is-the-opposite-directed	ArcSin[-Infinity]					
+arcsin-infinity-is-a-directed-infinity-along-the	ArcSin[Infinity]	DirectedInfinity[-I]		\sin ^{-1}(\infty )	(-i) \infty	
+arcsin-infinity-is-the-opposite-directed	ArcSin[-Infinity]	DirectedInfinity[I]		\sin ^{-1}(-\infty )	i \infty	
 sin-arcsin-x-x-on-the-principal-branch	(Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])	True		\sin \left(\sin ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}	\text{True}	
 co-function-identity-arcsin-x-arccos-x-pi-2	(Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])	True		\sin ^{-1}\left(\frac{1}{2}\right)+\cos ^{-1}\left(\frac{1}{2}\right)=\frac{\pi }{2}	\text{True}	
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	TrigToExp[ArcSin[x]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{TrigToExp}\left[\sin ^{-1}(x)\right]--i \log \left(i x+\sqrt{-x^2+1}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(\frac{7}{3}\right)\right]--i \log \left(i \frac{7}{3}+\sqrt{-\left(\frac{7}{3}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(-\frac{11}{5}\right)\right]--i \log \left(i \left(-\frac{11}{5}\right)+\sqrt{-\left(-\frac{11}{5}\right)^2+1}\right)\right]\right],\text{Chop}\left[N\left[\text{TrigToExp}\left[\sin ^{-1}\left(\frac{13}{4}\right)\right]--i \log \left(i \frac{13}{4}+\sqrt{-\left(\frac{13}{4}\right)^2+1}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 not-simply-2-2-is-outside-the-principal-range-pi	ArcSin[Sin[2]]	-2 + Pi		\sin ^{-1}(\sin (2))	\pi -2	
 arcsin-sin-neg-2-mirrors-through-0	ArcSin[Sin[-2]]	2 - Pi		\sin ^{-1}(\sin (-2))	2-\pi	
-arcsin-complexinfinity-is-indeterminate-the-real	ArcSin[ComplexInfinity]					
+arcsin-complexinfinity-is-complexinfinity	ArcSin[ComplexInfinity]	ComplexInfinity		\sin ^{-1}(\text{ComplexInfinity})	\text{ComplexInfinity}	
