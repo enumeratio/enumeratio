@@ -12,4 +12,7 @@ order-0	\mathrm{Hypergeometric0F1Regularized}(0, 0.5)	0.635\,861\,728\,156\,068\
 order-neg-2-at-0-7	\mathrm{Hypergeometric0F1Regularized}(-2, 0.7)	0.067\,899\,051\,474\,626\,27
 order-0-at-a-complex-argument	N(\mathrm{Hypergeometric0F1Regularized}(0, 0.3+0.4i))	0.254\,883\,343\,005\,815\,44+0.523\,422\,395\,184\,101\,5i
 order-neg-1-at-a-complex-argument	N(\mathrm{Hypergeometric0F1Regularized}(-1, -0.5+0.2i))	0.094\,271\,666\,089\,704\,03-0.078\,024\,919\,432\,037\,83i
+n-hypergeometric0f1regularized-0-neg-48-50	N(\mathrm{Hypergeometric0F1Regularized}(0, -48), 50)	-0.753\,564\,080\,448\,271\,8
+n-hypergeometric0f1regularized-4-0-25	N(\mathrm{Hypergeometric0F1Regularized}(4, 0), 25)	0.166\,666\,666\,666\,666\,82
+matrixfunction-function	\mathrm{MatrixFunction}(()\mapsto\mathrm{Hypergeometric0F1Regularized}(\frac{1}{2}, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{Hypergeometric0F1Regularized}(\frac{1}{2}, \frac{1}{2}), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{Hypergeometric0F1Regularized}(\frac{1}{2}, \frac{1}{2})\bigr\rbrack\bigr\rbrack
 exact-arguments-stay-unevaluated-n-gives-the	\mathrm{Hypergeometric0F1Regularized}(-1, 2)	\mathrm{Hypergeometric0F1Regularized}(-1, 2)

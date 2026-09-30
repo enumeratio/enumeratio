@@ -5,3 +5,5 @@ a-branch-point-is-not-a-pole	\mathrm{FunctionMeromorphic}(\ln(x), x)	\mathrm{Fal
 polynomials-are-meromorphic	\mathrm{FunctionMeromorphic}(x^2, x)	\mathrm{True}
 functionmeromorphic-sqrt-z-z	\mathrm{FunctionMeromorphic}(\sqrt{z}, z)	\mathrm{False}
 functionmeromorphic-ln-z-z	\mathrm{FunctionMeromorphic}(\ln(z), z)	\mathrm{False}
+list-functionmeromorphic-x-times-x-pow-2-plus-1	\bigl\lbrack\mathrm{FunctionMeromorphic}(\frac{x}{x^2+1}, x), \mathrm{FunctionMeromorphic}(\frac{x^2+1}{x^2-1}, x), \mathrm{FunctionMeromorphic}(x^3-2x^2-5x+6, x)\bigr\rbrack	\bigl\lbrack\mathrm{FunctionMeromorphic}(\frac{x}{x^2+1}, x), \mathrm{FunctionMeromorphic}(\frac{x^2+1}{x^2-1}, x), \mathrm{True}\bigr\rbrack
+list-functionmeromorphic-tan-x-x	\bigl\lbrack\mathrm{FunctionMeromorphic}(\tan(x), x), \mathrm{FunctionMeromorphic}(\sec(x), x), \mathrm{FunctionMeromorphic}(\mathrm{sech}(x), x)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{FunctionMeromorphic}(\sec(x), x), \mathrm{FunctionMeromorphic}(\mathrm{sech}(x), x)\bigr\rbrack

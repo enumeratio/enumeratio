@@ -52,6 +52,9 @@ isprime-list-7-11	isprime([7, 11])
 isprime-list-5-7-2	isprime([5, 7, 2])		
 isprime-19	isprime(19)		
 divisorsum-19-function-1-1-isprime			
+filter-divisors-625-isprime			
+filter-divisors-2-434-500-isprime			
+filter-divisors-65-isprime			
 non-integers-are-not-prime	isprime(Rational(1, 2))	ValueError: 1/2 is not an integer	error
 another-non-integer-3-halves	isprime(Rational(3, 2))	ValueError: 3/2 is not an integer	error
 a-symbol-stays-unevaluated	isprime(Symbol("x"))	ValueError: x is not an integer	error

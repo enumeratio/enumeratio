@@ -44,7 +44,7 @@ import {
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle/src";
-import { orderImplementations, type SystemImplementation } from "@enumeratio/entry";
+import { isSettled, orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";
 import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
@@ -86,12 +86,18 @@ const newOnly = args.includes("--new-only");
 const accept = args.includes("--accept");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
-// Every non-aspirational example, UNFILTERED — the authority for "does this example still
-// exist" (the write-out loop's deletion guard, below), so a partial `--head`/`--ids` run
-// can't be misread as "every other example of this head is gone."
+// Every settled example (not aspirational, not in triage), UNFILTERED — the authority for "does
+// this example still exist" (the write-out loop's deletion guard, below), so a partial
+// `--head`/`--ids` run can't be misread as "every other example of this head is gone."
+const inTriage = new Map(
+  referenceEntries(data).map((entry) => [
+    entry.name,
+    new Set(entry.examples.filter((example) => example.role === "triage").map((example) => example.id)),
+  ]),
+);
 const allCases: Case[] = referenceEntries(data).flatMap((entry) =>
   entry.examples
-    .filter((example) => example.aspirational !== true)
+    .filter((example) => isSettled(example))
     .map((example) => ({
       id: `${entry.name}/${example.id}`,
       head: entry.name,
@@ -280,7 +286,11 @@ for (const system of systems) {
     const ofHead = cases.filter((c) => c.head === head);
     // From `allCases`, not `ofHead`: a `--head`/`--ids`-scoped run still has to see every
     // OTHER example of this head as present, or it would delete their rows as "gone".
-    const current = new Set(allCases.filter((c) => c.head === head).map((c) => c.key));
+    // A row in triage isn't scanned but keeps the run it was triaged on.
+    const current = new Set([
+      ...allCases.filter((c) => c.head === head).map((c) => c.key),
+      ...(inTriage.get(head) ?? []),
+    ]);
     const put = (id: string, row: SystemImplementation | undefined): void => {
       const { [system]: _old, ...rest } = record[id] ?? {};
       const next = row === undefined ? rest : { ...rest, [system]: row };
@@ -382,7 +392,7 @@ if (changedVerdicts.length > 0) {
 const exampleAt = new Map(
   referenceEntries(data).flatMap((entry) =>
     entry.examples
-      .filter((example) => example.aspirational !== true)
+      .filter((example) => isSettled(example))
       .map((example) => [
         `${entry.name}\0${example.id}`,
         { id: `${entry.name}/${example.id}`, expected: example.expected as MathJSON },

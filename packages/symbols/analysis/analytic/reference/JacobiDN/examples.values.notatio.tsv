@@ -28,6 +28,8 @@ m-less-than-0-via-the-imaginary-modulus	<N><JacobiDN>0.3 -2</JacobiDN></N>	<ToEx
 a-complex-argument-u	<N><JacobiDN><Complex>0.3 0.4</Complex> 0.5</JacobiDN></N>	<Complex>1.012262082212854 -0.0628496850247877</Complex>
 matrixfunction-function-jacobidn-neg-1-over-3	<MatrixFunction><Function><Block><JacobiDN><Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply> _1</JacobiDN></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List>2 0</List> <List>0 2</List></List>
 list-jacobidn-z-0-jacobidn-z-1	<List><JacobiDN>z 0</JacobiDN> <JacobiDN>z 1</JacobiDN></List>	<List>1 <Divide>1 <Cosh>z</Cosh></Divide></List>
+n-jacobidn-3-1-over-3-50	<N><JacobiDN>3 <Rational>1 3</Rational></JacobiDN> 50</N>	<JacobiDN>3 0.33333333333333333333333333333333333333333333333333</JacobiDN>
+list-jacobidn-0-m-jacobidn-1-over-2-times	<List><JacobiDN>0 m</JacobiDN> <JacobiDN><Multiply><Rational>1 2</Rational> <EllipticK>m</EllipticK></Multiply> m</JacobiDN> <JacobiDN><EllipticK>m</EllipticK> m</JacobiDN></List>	<List>1 <JacobiDN><Multiply><Rational>1 2</Rational> <EllipticK>m</EllipticK></Multiply> m</JacobiDN> <Sqrt><Add><Negate>m</Negate> 1</Add></Sqrt></List>
 u-0-is-1-for-any-m	<JacobiDN>0 m</JacobiDN>	<ToExpression>1</ToExpression>
 m-0-is-1-for-any-u	<JacobiDN>u 0</JacobiDN>	<ToExpression>1</ToExpression>
 the-quarter-period-u-elliptick-m-is-sqrt	<JacobiDN><EllipticK>m</EllipticK> m</JacobiDN>	<Sqrt><Add><Negate>m</Negate> 1</Add></Sqrt>

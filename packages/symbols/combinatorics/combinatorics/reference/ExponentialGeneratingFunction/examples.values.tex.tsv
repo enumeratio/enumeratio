@@ -4,3 +4,6 @@ derangements	\mathrm{ExponentialGeneratingFunction}(\mathrm{Subfactorial}(n), n,
 bell-numbers	\mathrm{ExponentialGeneratingFunction}(\mathrm{BellNumber}(n), n, x)	e^{e^{x}-1}
 fibonacci	\mathrm{ExponentialGeneratingFunction}(\mathrm{Fibonacci}(n), n, x)	\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))
 exponentialgeneratingfunction-1-n-x	\mathrm{ExponentialGeneratingFunction}(1, n, x)	e^{x}
+list-exponentialgeneratingfunction-unitstep-n-n	\bigl\lbrack\mathrm{ExponentialGeneratingFunction}(\mathrm{UnitStep}(n), n, z), \mathrm{ExponentialGeneratingFunction}(\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack	\bigl\lbrack e^{z}, \mathrm{ExponentialGeneratingFunction}(\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack
+list-exponentialgeneratingfunction-n-times	\bigl\lbrack\mathrm{ExponentialGeneratingFunction}(n\mathrm{UnitStep}(n), n, z), \mathrm{ExponentialGeneratingFunction}((n-3)\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack	\bigl\lbrack ze^{z}, \mathrm{ExponentialGeneratingFunction}((n-3)\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack
+list-exponentialgeneratingfunction-n-n-z	\bigl\lbrack\mathrm{ExponentialGeneratingFunction}(n, n, z), \mathrm{ExponentialGeneratingFunction}(n^2, n, z)\bigr\rbrack	\bigl\lbrack ze^{z}, \mathrm{ExponentialGeneratingFunction}(n^2, n, z)\bigr\rbrack

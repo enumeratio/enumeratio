@@ -21,6 +21,7 @@ matrixfunction-floor-list-list-1-over-2-neg-1	\mathrm{MatrixFunction}(\mathrm{Fl
 floor-0	\lfloor0\rfloor	0
 floor-positiveinfinity	\lfloor\infty\rfloor	\infty
 piecewiseexpand-floor-x-2-0-lt-x-lt-4	\mathrm{PiecewiseExpand}(\lfloor x\rfloor, 0\lt x\lt4)	\lfloor x\rfloor
+d-floor-x-x	\frac{\mathrm{d}\lfloor x\rfloor}{\mathrm{d}x}	0
 how-many-full-5-item-packs-fit-in-17-items	\lfloor\frac{17}{5}\rfloor	3
 legendre-s-formula-100-ends-in-lfloor-100-5	\lfloor\frac{100}{5}\rfloor+\lfloor\frac{100}{25}\rfloor	24
 the-number-of-decimal-digits-of-n-is-lfloor-log	\lfloor\log_{10}(12\,345)\rfloor+1	5

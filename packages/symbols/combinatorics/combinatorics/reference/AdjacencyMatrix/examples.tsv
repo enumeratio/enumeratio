@@ -1,3 +1,5 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-adjacency-matrix-of-k4			[AdjacencyMatrix, [CompleteGraph, 4]]	[List, [List, 0, 1, 1, 1], [List, 1, 0, 1, 1], [List, 1, 1, 0, 1], [List, 1, 1, 1, 0]]	$K_4$'s adjacency matrix — every off-diagonal entry is 1	shape	Same entries; Wolfram's AdjacencyMatrix returns a SparseArray object instead of a dense matrix.
-a-directed-edge-is-asymmetric			[AdjacencyMatrix, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2]]]]	[List, [List, 0, 1], [List, 0, 0]]	A single directed edge gives an asymmetric matrix	shape	compute-engine returns a dense matrix; Wolfram's AdjacencyMatrix returns a SparseArray object over the same entries.
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+adjacency-matrix-of-k4			[AdjacencyMatrix, [CompleteGraph, 4]]	[List, [List, 0, 1, 1, 1], [List, 1, 0, 1, 1], [List, 1, 1, 0, 1], [List, 1, 1, 1, 0]]	$K_4$'s adjacency matrix — every off-diagonal entry is 1		shape	Same entries; Wolfram's AdjacencyMatrix returns a SparseArray object instead of a dense matrix.
+a-directed-edge-is-asymmetric			[AdjacencyMatrix, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2]]]]	[List, [List, 0, 1], [List, 0, 0]]	A single directed edge gives an asymmetric matrix		shape	compute-engine returns a dense matrix; Wolfram's AdjacencyMatrix returns a SparseArray object over the same entries.
+shape-adjacencymatrix-g	Properties	triage	[Shape, [AdjacencyMatrix, g]]	[Tuple]		gap		Dimensions[AdjacencyMatrix[g]] on an undefined symbol g returns Tuple[] instead of {1} — same class of symbolic-shape-inference gap as ReIm/shape-reim-mat
+adjacencymatrix-graph-list-list	Possible issues	triage	[AdjacencyMatrix, [Graph, [List], [List]]]	[List]		emit		

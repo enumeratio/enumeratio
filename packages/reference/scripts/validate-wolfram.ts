@@ -14,6 +14,7 @@
 
 import { runKernel } from "@enumeratio/oracle/bounded";
 import { toWolfram } from "@enumeratio/wolfram/src";
+import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();
@@ -34,7 +35,7 @@ interface Case {
 const cases: Case[] = [];
 for (const entry of entries) {
   for (const [i, ex] of entry.examples.entries()) {
-    if (ex.aspirational) continue;
+    if (!isSettled(ex)) continue;
     const isBool = ex.expected === "True" || ex.expected === "False";
     const n = asNumber(ex.expected);
     if (!isBool && n === null) continue; // only numeric / boolean are comparable

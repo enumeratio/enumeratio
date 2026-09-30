@@ -2,7 +2,6 @@
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import type { ReferenceExample } from "@enumeratio/entry";
 import type { WolframDataRecord, WolframDataSource } from "@enumeratio/oracle/src";
 import { HEADS } from "@enumeratio/wolfram/src";
 
@@ -44,26 +43,3 @@ export function decline(rows: Readonly<Record<string, readonly unknown[]>>): voi
     declined[head] = [...new Set([...(declined[head] ?? []), ...exprs.map((e) => JSON.stringify(e))])];
   writeFileSync(DECLINED, `${JSON.stringify(declined, null, 1)}\n`);
 }
-
-/** Adopted rows Wolfram doesn't agree with, by head: out of the records until a lane triages
- * them, and not adopted again meanwhile. */
-export const TRIAGE = `${WOLFRAM_CACHE}/triage.json`;
-
-export interface TriageRow {
-  readonly id: string;
-  readonly expr: unknown;
-  readonly ours: unknown;
-  readonly in?: string;
-  /** Heads with no Wolfram mapping, when the call doesn't emit. */
-  readonly missing?: readonly string[];
-  readonly wolfram?: string;
-  readonly verdict: string;
-  readonly bucket: string;
-  /** A lane's reason for keeping it here (a gap it can't close yet). */
-  readonly reason?: string;
-  /** The row as it was adopted, to write back once it's fixed or classified. */
-  readonly example: ReferenceExample;
-}
-
-export const readTriage = (): Record<string, TriageRow[]> =>
-  existsSync(TRIAGE) ? (JSON.parse(readFileSync(TRIAGE, "utf8")) as Record<string, TriageRow[]>) : {};

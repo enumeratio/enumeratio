@@ -2,4 +2,11 @@ id	in	out
 gamma-to-exp	\mathrm{InverseMellinTransform}(\Gamma(s), s, x)	e^{-x}
 pi-csc-to-one-over-one-plus-x	\mathrm{InverseMellinTransform}(\pi\csc(\pi s), s, x)	\frac{1}{x+1}
 pi-csc-over-s-to-log-reciprocal	\mathrm{InverseMellinTransform}(\frac{1}{s}(\pi\csc(\pi s)), s, x)	\ln(\frac{1}{x}+1)
+inversemellintransform-1-over-gamma-neg-1-over-2	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2}+\frac{1}{2})\times2^{s-1}}{\Gamma(\frac{3}{2}-\frac{s}{2})a^{s}}, s, x)	\mathrm{InverseMellinTransform}(\frac{\frac{\Gamma(s/2+1/2)\times2^{s-1}}{a^{s}}}{\Gamma(\frac{3}{2}-\frac{s}{2})}, s, x)
 shift-gamma-a-plus-s	\mathrm{InverseMellinTransform}(\Gamma(a+s), s, x)	\exp(-x)x^{a}
+inversemellintransform-gamma-s-s-neg-2	\mathrm{InverseMellinTransform}(\Gamma(s), s, -2)	e^2
+inversemellintransform-1-over-b-plus-s-times-a	\mathrm{InverseMellinTransform}(\frac{a^{s}}{b+s}, s, x)	\mathrm{InverseMellinTransform}(\frac{a^{s}}{b+s}, s, x)
+inversemellintransform-1-over-gamma-neg-1-over-3	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})\times2^{s-1}}{\Gamma(1-\frac{s}{2})}, s, x)	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})\times2^{s-1}}{\Gamma(1-\frac{s}{2})}, s, x)
+inversemellintransform-gamma-s-times-1-over-a	\mathrm{InverseMellinTransform}(\Gamma(s/a)^2, s, x)	\mathrm{InverseMellinTransform}(\Gamma(s/a)^2, s, x)
+inversemellintransform-1-over-gamma-neg-1-over-4	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})\Gamma(1-s)}{\Gamma(1-\frac{s}{2})}, s, x)	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})\Gamma(1-s)}{\Gamma(1-\frac{s}{2})}, s, x)
+inversemellintransform-1-over-neg-s-plus-1-times	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})}{1-s}, s, x)	\mathrm{InverseMellinTransform}(\frac{\Gamma(\frac{s}{2})}{1-s}, s, x)

@@ -1,2 +1,3 @@
-id	section	role	expr	expected	caption
-an-edge-between-1-and-2			[UndirectedEdge, 1, 2]	[UndirectedEdge, 1, 2]	An edge between 1 and 2
+id	section	role	expr	expected	caption	triage	wolfram.note
+an-edge-between-1-and-2			[UndirectedEdge, 1, 2]	[UndirectedEdge, 1, 2]	An edge between 1 and 2		
+subgraph-completegraph-4-list-undirectededge-1-2	Scope	triage	[Subgraph, [CompleteGraph, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3]]]	[Graph, [List], [List]]		gap	Subgraph[CompleteGraph[4], {edges}] returns an empty Graph[{},{}]  instead of the induced subgraph on the edges' endpoints — Subgraph with an explicit edge-list (as opposed to a vertex-list) selector isn't implemented

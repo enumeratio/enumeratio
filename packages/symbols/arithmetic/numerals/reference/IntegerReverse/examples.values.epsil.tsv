@@ -7,6 +7,7 @@ integerreverse-1-234-10-6	IntegerReverse(1_234, 10, 6)	432_100
 padded-to-5-digits-first-00123-reversed	IntegerReverse(123, 10, 5)	32_100
 listable	IntegerReverse([12, 345])	[21, 543]
 integerreverse-list-123-234-345-456	IntegerReverse([123, 234, 345, 456])	[321, 432, 543, 654]
+integerreverse-1-234-mixedradixnumerals-list-7	IntegerReverse(1_234, MixedRadixNumerals([7, 11]))	4_321
 a-palindrome-is-its-own-reversal	IntegerReverse(12_321)	12_321
 integerreverse-842	IntegerReverse(842)	248
 integerreverse-84-200	IntegerReverse(84_200)	248

@@ -40,6 +40,9 @@ functionsurjective-tan-x-x	<FunctionSurjective><Tan>x</Tan> x</FunctionSurjectiv
 functionsingularities-tan-x-x	<FunctionSingularities><Tan>x</Tan> x</FunctionSingularities>	<Equal><Cos>x</Cos> 0</Equal>
 functiondiscontinuities-tan-x-x	<FunctionDiscontinuities><Tan>x</Tan> x</FunctionDiscontinuities>	<Equal><Cos>x</Cos> 0</Equal>
 matrixfunction-function-tan-1-1-list-list-5-over	<MatrixFunction><Function><Block><Tan>_1</Tan></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> Pi</List> <List><Multiply><Rational>1 3</Rational> Pi</Multiply> <Negate>Pi</Negate></List></List></MatrixFunction>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 39</Divide></Negate> <Multiply><Rational>2 13</Rational> <Sqrt>3</Sqrt></Multiply></List> <List><Multiply><Rational>2 39</Rational> <Sqrt>3</Sqrt></Multiply> <Multiply><Rational>-4 13</Rational> <Sqrt>3</Sqrt></Multiply></List></List>
+assuming-m-in-integers-refine-tan-pi-times-m	<Assuming><Element>m Integers</Element> <Refine><Tan><Multiply>Pi m</Multiply></Tan></Refine></Assuming>	<Tan><Multiply>Pi m</Multiply></Tan>
+assuming-m-in-integers-fullsimplify-refine-tan	<Assuming><Element>m Integers</Element> <FullSimplify><Refine><Tan><Multiply>Pi <Add><Multiply>1 <Power>2 -1</Power></Multiply> m</Add></Multiply></Tan></Refine></FullSimplify></Assuming>	<Tan><Multiply>Pi <Add>m <Rational>1 2</Rational></Add></Multiply></Tan>
+tan-positiveinfinity	<Tan>PositiveInfinity</Tan>	<Indeterminate />
 threads-element-wise-over-a-list	<Tan><List>0 <Divide>Pi 4</Divide></List></Tan>	<List>0 1</List>
 tan-x-frac-sin-x-cos-x	<Equal><Tan><Divide>Pi 4</Divide></Tan> <Divide><Sin><Divide>Pi 4</Divide></Sin> <Cos><Divide>Pi 4</Divide></Cos></Divide></Equal>	<True />
 odd-function-tan-x-tan-x	<Tan><Negate><Divide>Pi 4</Divide></Negate></Tan>	<ToExpression>-1</ToExpression>

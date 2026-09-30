@@ -2,3 +2,7 @@ id	in	out
 3-4-5	<Normalize><List>3 4</List></Normalize>	<List><Rational>3 5</Rational> <Rational>4 5</Rational></List>
 normalize-list-1-5-1	<Normalize><List>1 5 1</List></Normalize>	<List><Divide><Sqrt>3</Sqrt> 9</Divide> <Multiply><Rational>5 9</Rational> <Sqrt>3</Sqrt></Multiply> <Divide><Sqrt>3</Sqrt> 9</Divide></List>
 zero-vector	<Normalize><List>0 0</List></Normalize>	<List>0 0</List>
+normalize-list-x-y-f	<Normalize><List>x y</List> f</Normalize>	<List><Divide>x <f><List>x y</List></f></Divide> <Divide>y <f><List>x y</List></f></Divide></List>
+normalize-s	<Normalize>s</Normalize>	<s />
+normalize-list-x-y	<Normalize><List>x y</List></Normalize>	<List><Divide>x <Sqrt><Add><Power><Abs>x</Abs> 2</Power> <Power><Abs>y</Abs> 2</Power></Add></Sqrt></Divide> <Divide>y <Sqrt><Add><Power><Abs>x</Abs> 2</Power> <Power><Abs>y</Abs> 2</Power></Add></Sqrt></Divide></List>
+normalize-1-plus-x-plus-x-pow-2-function	<Normalize><Add>1 x <Power>x 2</Power></Add> <Function><Integrate><Power>_1 2</Power> <Limits>x -1 1</Limits></Integrate></Function></Normalize>	<Divide>1 <Multiply>2 <Add><Power>x 2</Power> x 1</Add></Multiply></Divide>

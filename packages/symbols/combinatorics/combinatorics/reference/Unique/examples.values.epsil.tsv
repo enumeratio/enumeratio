@@ -10,4 +10,5 @@ unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	unique([1, 7, 8, 4, 3, 4, 1, 9, 8, 9, 
 count-the-distinct-elements	length(unique([1, 2, 2, 3, 3, 3]))	3	
 the-residues-mod-3-that-occur-in-order-of-first	unique(Range(10) % 3)	[1, 2, 0]	
 idempotent	unique(unique([1, 1, 2]))	[1, 2]	
+unique-list-function-sum-1-eq-sum-2-1-2	unique(list, Function(sum(_1) == sum(_2), _1, _2))	[]	Unreadable
 unique-list-3-3-3-function-false	unique([3, 3, 3], Function(False))	[3, 3, 3]	Unreadable

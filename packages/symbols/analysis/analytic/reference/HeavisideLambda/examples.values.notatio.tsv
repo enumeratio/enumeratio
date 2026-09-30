@@ -7,3 +7,4 @@ heavisidelambda-1-4	<HeavisideLambda><Rational>1 4</Rational></HeavisideLambda>	
 heavisidelambda-1-2	<HeavisideLambda><Rational>1 2</Rational></HeavisideLambda>	<Rational>1 2</Rational>
 heavisidelambda-pi-over-4-exact	<HeavisideLambda><Divide>Pi 4</Divide></HeavisideLambda>	<Add>1 <Multiply><Rational>-1 4</Rational> Pi</Multiply></Add>
 matrixfunction-heavisidelambda-list-list-neg-1-0	<MatrixFunction>HeavisideLambda <List><List>-1 0</List> <List><Rational>-1 2</Rational> <Rational>1 2</Rational></List></List></MatrixFunction>	<List><List>0 0</List> <List><Rational>-1 6</Rational> <Rational>1 2</Rational></List></List>
+n-heavisidelambda-5-over-17-50	<N><HeavisideLambda><Rational>5 17</Rational></HeavisideLambda> 50</N>	<ToExpression>0.7058823529411764</ToExpression>

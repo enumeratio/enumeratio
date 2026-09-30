@@ -1,6 +1,7 @@
 id	in	out
 factorial-ratio		
 geometric-ratio		
+discreteratio-r-pow-i-i		
 discreteratio-x-pow-2-x		
 discreteratio-x-minus-r-1-times-x-minus-r-2-x		
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow		
@@ -17,3 +18,11 @@ discreteratio-catalannumber-x-x	\mathrm{DiscreteRatio}(C_{x}, x)	\frac{C_{x+1}}{
 list-discreteratio-f-n-discreteratio-f-k		
 discreteratio-gammaregularized-n-z-n	\mathrm{DiscreteRatio}(Q(n, z), n)	\frac{Q(n+1, z)}{Q(n, z)}
 list-discreteratio-binomial-n-k-n-discreteratio		
+discreteratio-a-times-q-pow-x-plus-b-times-q-pow		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x		
+discreteratio-a-times-q-pow-x-plus-b-times-q-p-2		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2		
+discreteratio-qpochhammer-a-q-x-x		
+discreteratio-qbinomial-a-x-q-times-qfactorial-x		
+discreteratio-barnesg-x-x	\mathrm{DiscreteRatio}(G(x), x)	\frac{G(x+1)}{G(x)}
+discreteratio-hyperfactorial-x-x		

@@ -18,6 +18,8 @@ x-3-y-3-has-no-repeated-factor	<IsSquareFree><Subtract><Power>x 3</Power> <Power
 issquarefree-3-plus-10-pow-70	<IsSquareFree><Add>3 <Power>10 70</Power></Add></IsSquareFree>	<True />
 issquarefree-2	<IsSquareFree>2</IsSquareFree>	<True />
 issquarefree-x-pow-2-minus-3	<IsSquareFree><Add><Power>x 2</Power> -3</Add></IsSquareFree>	<True />
+n-1-over-100-000-times-length-filter-range-1-100	<N><Multiply><Rational>1 100000</Rational> <Length><Filter><Range>1 100000</Range> IsSquareFree</Filter></Length></Multiply></N>	<ToExpression>0.00002</ToExpression>
+issquarefree-q	<IsSquareFree>q</IsSquareFree>	<True />
 n-is-squarefree-exactly-when-mu-n-neq-0-see	<Equal><IsSquareFree>10</IsSquareFree> <Not><Equal><MoebiusMu>10</MoebiusMu> 0</Equal></Not></Equal>	<True />
 issquarefree-210	<IsSquareFree>210</IsSquareFree>	<True />
 issquarefree-14	<IsSquareFree>14</IsSquareFree>	<True />

@@ -20,5 +20,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	NumericQ[InverseErf[Divide[1, Pi], Rational[
 erfinv-0-0	InverseErf[0, 0]	0		\text{erf}^{-1}(0,0)	0	
 erfinv-0-1	InverseErf[0, 1]	Infinity		\text{erf}^{-1}(0,1)	\infty	
 erfinv-1-0	InverseErf[1, 0]	1		\text{erf}^{-1}(1,0)	1	
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	Solve[(Plus[Power[InverseErf[x], 3], Times[2, InverseErf[x]]] == 1), x]	{{x -> -Erf[2*(2/(3*(9 + Sqrt[177])))^(1/3) - ((9 + Sqrt[177])/2)^(1/3)/3^(2/3)]}}				disagree
+attributes-erfinv	Attributes[InverseErf]	{Listable, NumericFunction, Protected, ReadProtected}				disagree
 outside-its-real-domain-1-1-compute-engine	InverseErf[2]	InverseErf[2]		\text{erf}^{-1}(2)	\text{erf}^{-1}(2)	
 blows-up-near-the-boundary-erfinv-0-9999-is	InverseErf[0.9999]	2.75106390571208		\text{erf}^{-1}(0.9999)	2.75106	

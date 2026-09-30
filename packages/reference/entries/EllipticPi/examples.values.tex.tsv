@@ -1,5 +1,9 @@
 id	in	out
 functionexpand-ellipticpi-list-list-neg-1-0-list	\mathrm{FunctionExpand}(\mathrm{EllipticPi}(\bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack, 0))	\bigl\lbrack\bigl\lbrack\mathrm{EllipticPi}(-1, 0), \mathrm{EllipticPi}(0, 0)\bigr\rbrack, \bigl\lbrack\mathrm{EllipticPi}(0, 0), \mathrm{EllipticPi}(\frac{1}{2}, 0)\bigr\rbrack\bigr\rbrack
 functionexpand-matrixfunction-function	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(()\mapsto\mathrm{EllipticPi}(\operatorname{\_1}, 0), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\mathrm{EllipticPi}(-1, 0), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{EllipticPi}(\frac{1}{2}, 0)\bigr\rbrack\bigr\rbrack
+n-ellipticpi-3-over-10-2-over-5-50	N(\mathrm{EllipticPi}(\frac{3}{10}, \frac{2}{5}), 50)	2.148\,795\,415\,866\,456\,6
+n-ellipticpi-3-over-10-2-2-over-5-50	N(\mathrm{EllipticPi}(\frac{3}{10}, 2, \frac{2}{5}), 50)	2.906\,928\,215\,899\,509\,6
+simplify-integrate-ellipticpi-n-m-m	\mathrm{Simplify}(\int\!\mathrm{EllipticPi}(n, m)\, \mathrm{d}m)	\int\!\mathrm{EllipticPi}(n, m)\, \mathrm{d}m
 ellipticpi-0-0-1	\mathrm{EllipticPi}(0, 0, 1)	0
 ellipticpi-0-0-0	\mathrm{EllipticPi}(0, 0, 0)	0
+n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow	N(\mathrm{EllipticPi}(2, (i\bigl\lbrack-1, 1\bigr\rbrack)/10^6+\frac{\pi}{2}))	\bigl\lbrack\mathrm{EllipticPi}(2, 1.570\,796\,326\,794\,896\,619\,23-0.000\,001i), \mathrm{EllipticPi}(2, 1.570\,796\,326\,794\,896\,619\,23+0.000\,001i)\bigr\rbrack

@@ -159,7 +159,9 @@ function referenceProbe(
 ): { call: MathJSON; expected: MathJSON; volatile: ReadonlySet<string> } | undefined {
   const own = referenceEntries.filter((entry) => entry.name === head);
   for (const entry of [...own, ...referenceEntries]) {
-    const example = entry.examples.find((e) => !e.aspirational && mentions(e.expr, head));
+    const example = entry.examples.find(
+      (e) => e.role !== "aspirational" && e.role !== "triage" && mentions(e.expr, head),
+    );
     if (example) {
       return {
         call: example.expr,

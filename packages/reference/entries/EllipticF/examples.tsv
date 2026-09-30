@@ -1,7 +1,10 @@
-id	section	role	expr	expected	known	source
-ellipticf-list-list-1-0-list-0-1-0	Scope		[EllipticF, [List, [List, 1, 0], [List, 0, 1]], 0]	[List, [List, [EllipticF, 1, 0], 0], [List, 0, [EllipticF, 1, 0]]]		
-matrixfunction-function-ellipticf-1-0-1-list	Scope		[MatrixFunction, [Function, [Block, [EllipticF, _1, 0]], _1], [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, [EllipticF, 1, 0], 0], [List, 0, [EllipticF, 1, 0]]]		
-ellipticf-0-1	Properties		[EllipticF, 0, 1]	0	0	Wolfram MathematicalFunctionData, EllipticF
-ellipticf-0-0	Properties		[EllipticF, 0, 0]	0	0	Wolfram MathematicalFunctionData, EllipticF
-ellipticf-jacobiamplitude-0-0-0	Properties		[EllipticF, [JacobiAmplitude, 0, 0], 0]	0	0	Wolfram MathematicalFunctionData, EllipticF
-ellipticf-jacobiamplitude-0-1-1	Properties		[EllipticF, [JacobiAmplitude, 0, 1], 1]	0	0	Wolfram MathematicalFunctionData, EllipticF
+id	section	role	expr	expected	known	source	triage	wolfram.note
+ellipticf-list-list-1-0-list-0-1-0	Scope		[EllipticF, [List, [List, 1, 0], [List, 0, 1]], 0]	[List, [List, [EllipticF, 1, 0], 0], [List, 0, [EllipticF, 1, 0]]]				
+matrixfunction-function-ellipticf-1-0-1-list	Scope		[MatrixFunction, [Function, [Block, [EllipticF, _1, 0]], _1], [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, [EllipticF, 1, 0], 0], [List, 0, [EllipticF, 1, 0]]]				
+n-ellipticf-12-over-5-3-50	Scope	triage	[N, [EllipticF, [Rational, 12, 5], 3], 50]	[Complex, 1.0010773804561055, -1.923166189504625]			gap	N(EllipticF(...), 50) returns a plain machine-double result (matching Wolfram's value to ~15-16 digits, the double-precision limit) instead of computing to the requested 50 digits -- EllipticF's numeric evaluator ignores the requested precision digit count.
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m	Scope	triage	[List, [EllipticF, 0, m], [EllipticF, [Multiply, [Rational, 1, 2], Pi], m]]	[List, 0, [EllipticF, [Multiply, [Rational, 1, 2], Pi], m]]			unscanned	
+ellipticf-0-1	Properties		[EllipticF, 0, 1]	0	0	Wolfram MathematicalFunctionData, EllipticF		
+ellipticf-0-0	Properties		[EllipticF, 0, 0]	0	0	Wolfram MathematicalFunctionData, EllipticF		
+ellipticf-jacobiamplitude-0-0-0	Properties		[EllipticF, [JacobiAmplitude, 0, 0], 0]	0	0	Wolfram MathematicalFunctionData, EllipticF		
+ellipticf-jacobiamplitude-0-1-1	Properties		[EllipticF, [JacobiAmplitude, 0, 1], 1]	0	0	Wolfram MathematicalFunctionData, EllipticF		
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq	Properties	triage	[Solve, [Equal, [Add, [Power, [EllipticF, z, m], 3], [EllipticF, z, m]], x], z]	[List]			unscanned	

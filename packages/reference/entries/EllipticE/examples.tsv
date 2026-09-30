@@ -1,9 +1,10 @@
-id	section	role	expr	expected	known	source
-n-elliptice-1-over-3-50	Scope		[N, [EllipticE, [Rational, 1, 3]], 50]	{num: "1.4303152571722197239225284145322837302944509074089"}		
-elliptice-list-list-1-0-list-0-1	Scope		[EllipticE, [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, 1, [EllipticE, 0]], [List, [EllipticE, 0], 1]]		
-matrixfunction-elliptice-list-list-1-0-list-0-1	Scope		[MatrixFunction, EllipticE, [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, 1, 0], [List, 0, 1]]		
-list-elliptice-0-elliptice-1	Scope		[List, [EllipticE, 0], [EllipticE, 1]]	[List, [EllipticE, 0], 1]		
-list-elliptice-positiveinfinity-elliptice	Scope		[List, [EllipticE, PositiveInfinity], [EllipticE, ComplexInfinity]]	[List, ComplexInfinity, ComplexInfinity]		
-elliptice-0-1	Properties		[EllipticE, 0, 1]	0	0	Wolfram MathematicalFunctionData, EllipticE
-elliptice-0-0	Properties		[EllipticE, 0, 0]	0	0	Wolfram MathematicalFunctionData, EllipticE
-elliptice-1	Properties		[EllipticE, 1]	1	1	Wolfram MathematicalFunctionData, EllipticE:Complete
+id	section	role	expr	expected	known	source	triage
+n-elliptice-1-over-3-50	Scope		[N, [EllipticE, [Rational, 1, 3]], 50]	{num: "1.4303152571722197239225284145322837302944509074089"}			
+elliptice-list-list-1-0-list-0-1	Scope		[EllipticE, [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, 1, [EllipticE, 0]], [List, [EllipticE, 0], 1]]			
+matrixfunction-elliptice-list-list-1-0-list-0-1	Scope		[MatrixFunction, EllipticE, [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, 1, 0], [List, 0, 1]]			
+list-elliptice-0-elliptice-1	Scope		[List, [EllipticE, 0], [EllipticE, 1]]	[List, [EllipticE, 0], 1]			
+list-elliptice-positiveinfinity-elliptice	Scope		[List, [EllipticE, PositiveInfinity], [EllipticE, ComplexInfinity]]	[List, ComplexInfinity, ComplexInfinity]			
+n-elliptice-2-over-3-2-50	Scope	triage	[N, [EllipticE, [Rational, 2, 3], 2], 50]	0.5605757297886915			compare
+elliptice-0-1	Properties		[EllipticE, 0, 1]	0	0	Wolfram MathematicalFunctionData, EllipticE	
+elliptice-0-0	Properties		[EllipticE, 0, 0]	0	0	Wolfram MathematicalFunctionData, EllipticE	
+elliptice-1	Properties		[EllipticE, 1]	1	1	Wolfram MathematicalFunctionData, EllipticE:Complete	

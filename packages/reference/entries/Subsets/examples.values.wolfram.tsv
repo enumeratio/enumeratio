@@ -1,12 +1,19 @@
 id	in	out	tex.in	tex.out	verdict
 the-documented-subsets-collection-form-listed-in	Subsets[List[a, b, c]]	{{}, {a}, {b}, {c}, {a, b}, {a, c}, {b, c}, {a, b, c}}	\text{Subsets}[\{a,b,c\}]	\{\{\},\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}	disagree
+subsets-list-a-b-c-d-2	Subsets[List[a, b, c, d], 2]	{{}, {a}, {b}, {c}, {d}, {a, b}, {a, c}, {a, d}, {b, c}, {b, d}, {c, d}}			disagree
+subsets-list-a-b-c-d-list-2	Subsets[List[a, b, c, d], List[2]]	{{a, b}, {a, c}, {a, d}, {b, c}, {b, d}, {c, d}}			disagree
 a-size-bound-the-subsets-with-at-most-2-elements	Length[Subsets[Range[4], 2]]	11	\text{Length}[\text{Subsets}[\text{Range}[4],2]]	11	
 an-exact-size-2-binom-4-2-subsets	Length[Subsets[Range[4], List[2]]]	6	\text{Length}[\text{Subsets}[\text{Range}[4],\{2\}]]	6	
 a-size-range-0-5-2-the-even-size-subsets-2-4-of	Length[Subsets[Range[5], List[0, 5, 2]]]	16	\text{Length}[\text{Subsets}[\text{Range}[5],\{0,5,2\}]]	16	
 subsets-list-a-b-c-d	Subsets[List[a, b, c, d]]	{{}, {a}, {b}, {c}, {d}, {a, b}, {a, c}, {a, d}, {b, c}, {b, d}, {c, d}, {a, b, c}, {a, b, d}, {a, c, d}, {b, c, d}, {a, b, c, d}}			disagree
+subsets-a-plus-b-plus-c	Subsets[Plus[a, b, c]]	{0, a, b, c, a + b, a + c, b + c, a + b + c}			disagree
+subsets-list-a-b-c-d-exponentiale-list-0-5-2	Subsets[List[a, b, c, d, E], List[0, 5, 2]]	{{}, {a, b}, {a, c}, {a, d}, {a, E}, {b, c}, {b, d}, {b, E}, {c, d}, {c, E}, {d, E}, {a, b, c, d}, {a, b, c, E}, {a, b, d, E}, {a, c, d, E}, {b, c, d, E}}			disagree
 subsets-divisors-10	Subsets[Divisors[10]]	{{}, {1}, {2}, {5}, {10}, {1, 2}, {1, 5}, {1, 10}, {2, 5}, {2, 10}, {5, 10}, {1, 2, 5}, {1, 2, 10}, {1, 5, 10}, {2, 5, 10}, {1, 2, 5, 10}}			disagree
 subsets-list-1-2-3-4-list-3	Subsets[List[1, 2, 3, 4], List[3]]	{{1, 2, 3}, {1, 2, 4}, {1, 3, 4}, {2, 3, 4}}	\text{Subsets}[\{1,2,3,4\},\{3\}]	\left( \begin{array}{ccc}  1 & 2 & 3 \\  1 & 2 & 4 \\  1 & 3 & 4 \\  2 & 3 & 4 \\ \end{array} \right)	
+sum-subsets-exponentiale-times-a-times-b-times-c	Total[Subsets[Times[E, a, b, c, d], List[3]]]	a*b*c + a*b*d + a*c*d + b*c*d + a*b*E + a*c*E + b*c*E + a*d*E + b*d*E + c*d*E			disagree
+subsets-list-1-2-4-8-16-list-3	Subsets[List[1, 2, 4, 8, 16], List[3]]	{{1, 2, 4}, {1, 2, 8}, {1, 2, 16}, {1, 4, 8}, {1, 4, 16}, {1, 8, 16}, {2, 4, 8}, {2, 4, 16}, {2, 8, 16}, {4, 8, 16}}			disagree
 a-set-of-n-elements-has-2-n-subsets-count	Length[Subsets[Range[1, 10]]]	1024	\text{Length}[\text{Subsets}[\text{Range}[1,10]]]	1024	
 counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum[Binomial[5, k], List[k, 0, 5]]	32	\sum _{k=0}^5 \binom{5}{k}	32	
 subsets-list-c-b-a	Subsets[List[c, b, a]]	{{}, {c}, {b}, {a}, {c, b}, {c, a}, {b, a}, {c, b, a}}			disagree
 subsets-list-a-b-c-list-2	Subsets[List[a, b, c], List[2]]	{{a, b}, {a, c}, {b, c}}	\text{Subsets}[\{a,b,c\},\{2\}]	\left( \begin{array}{cc}  a & b \\  a & c \\  b & c \\ \end{array} \right)	
+subsets-list-a-b-b-b	Subsets[List[a, b, b, b]]	{{}, {a}, {b}, {b}, {b}, {a, b}, {a, b}, {a, b}, {b, b}, {b, b}, {b, b}, {a, b, b}, {a, b, b}, {a, b, b}, {b, b, b}, {a, b, b, b}}			disagree

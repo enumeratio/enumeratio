@@ -1,6 +1,8 @@
-id	in
-standard-range	PascalBinomial[5, 2]
-pascalbinomial-negative-n-case-2	PascalBinomial[-1, 4]
-pascalbinomial-10-3	PascalBinomial[10, 3]
-negative-n	PascalBinomial[-1, 3]
-pascalbinomial-8-4	PascalBinomial[8, 4]
+id	in	back
+standard-range	PascalBinomial[5, 2]	
+pascalbinomial-negative-n-case-2	PascalBinomial[-1, 4]	
+pascalbinomial-10-3	PascalBinomial[10, 3]	
+negative-n	PascalBinomial[-1, 3]	
+pascalbinomial-8-4	PascalBinomial[8, 4]	
+n-pascalbinomial-7-over-3-1-over-5-20	N[PascalBinomial[Rational[7, 3], Rational[1, 5]], 20]	
+matrixfunction-function-pascalbinomial-1-2-1	MatrixFunction[Function[PascalBinomial[Slot[1], 2]], List[List[Times[Rational[5, 6], Pi], 0], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 2], Pi]]]]	[MatrixFunction, [Function, [PascalBinomial, _1, 2]], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]

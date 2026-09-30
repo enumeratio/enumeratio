@@ -13,4 +13,6 @@ sqrt-2-times-this-2-5758-is-the-two-sided-99	\mathrm{InverseErfc}(0.01)	1.821\,3
 erfc-erfc-1-x-x	\mathrm{Erfc}(\mathrm{InverseErfc}(x))	x
 list-erfc-inverseerfc-z-inverseerfc-erfc-z	\bigl\lbrack\mathrm{Erfc}(\mathrm{InverseErfc}(z)), \mathrm{InverseErfc}(\mathrm{Erfc}(z))\bigr\rbrack	\bigl\lbrack z, \mathrm{InverseErfc}(\mathrm{Erfc}(z))\bigr\rbrack
 isnumeric-inverseerfc-1-over-2	\mathrm{IsNumeric}(\mathrm{InverseErfc}(\frac{1}{2}))	\top
+solve-inverseerfc-x-pow-2-plus-inverseerfc-x-eq	\mathrm{Solve}(\mathrm{InverseErfc}(x)^2+\mathrm{InverseErfc}(x)=1, x)	\bigl\lbrack\bigr\rbrack
+attributes-inverseerfc	\mathrm{Attributes}(\mathrm{InverseErfc})	\bigl\lbrack\mathrm{Listable}\bigr\rbrack
 deep-in-the-tail-it-keeps-full-precision-where	\mathrm{InverseErfc}(1.0\cdot10^{-10})	4.572\,824\,967\,389\,485

@@ -23,6 +23,7 @@ import { runCases } from "@enumeratio/evaluation/src/node";
 import { allFamilies, type AnyFamily } from "@enumeratio/combinatorics/collections/src";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
 import { between as edgeBiased } from "@enumeratio/plausible";
+import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
 import { verdictOf } from "./oracle-verdict.ts";
 
@@ -214,7 +215,7 @@ interface Sample {
 
 const templates: Template[] = entries.flatMap((entry) =>
   entry.examples
-    .filter((example) => example.aspirational !== true && example.volatile === undefined)
+    .filter((example) => isSettled(example) && example.volatile === undefined)
     .filter((example) => systems.some((system) => emit(example.expr as MathJSON, system).ok))
     .map((example) => ({
       id: `${entry.name}/${example.id}`,

@@ -2,6 +2,7 @@ id	in	out
 a-3-by-4-grid		
 edge-count-of-a-3-by-4-grid		
 list-gridgraph-list-2-2-2-gridgraph-list-2-2-2-2		
+gridgraph-list-2-3		
 map-function-vertexeccentricity-gridgraph-list-3		
 ispathgraph-gridgraph-list-1-4	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack1, 4\bigr\rbrack))	\mathrm{True}
 ispathgraph-gridgraph-list-4-1	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack4, 1\bigr\rbrack))	\mathrm{True}

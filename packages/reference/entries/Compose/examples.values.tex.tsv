@@ -1,0 +1,2 @@
+id	in	out
+apply-compose-f-g-h-list-x-y-z	\mathrm{Compose}(f, g, h)\lhd\bigl\lbrack x, y, z\bigr\rbrack	(\operatorname{\_1}, \operatorname{\_2})\mapsto((f, g, h)\mapsto\mathrm{Compose}(f, g, h))(\bigl\lbrack x, y, z\bigr\rbrack, \operatorname{\_1}, \operatorname{\_2});

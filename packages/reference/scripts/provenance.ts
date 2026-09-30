@@ -199,7 +199,9 @@ export function declaredLibrary(entry: ReferenceEntry): string | undefined {
 
 /** Classify one entry's head by what the two engines do with its own examples. */
 export function classify(bare: ComputeEngine, ours: ComputeEngine, entry: ReferenceEntry): HeadProvenance {
+  // A row in triage holds an unsettled answer: it says nothing yet about whose head this is.
   const calls = entry.examples
+    .filter((example) => example.role !== "triage")
     .map((example) => findCall(example.expr, entry.name))
     .filter((call): call is MathJSON => call !== undefined);
   const declared = declaredLibrary(entry);

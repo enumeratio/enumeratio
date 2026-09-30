@@ -28,3 +28,4 @@ refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	\mathrm{Refine}(\ln(x^{y}), x\gt0\land
 refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	\mathrm{Refine}(\sqrt{x^2+2xy+y^2}, x+y\ge0)	\vert x+y\vert
 an-undecidable-inequality-is-left-alone	\mathrm{Refine}(x^2\gt0)	0\lt x^2
 refine-x-in-realnumbers-x-pow-2-lt-1	\mathrm{Refine}(x\in\mathbb{R}, x^2\lt1)	x\in\mathbb{R}
+refine-neg-1-lt-x-lt-1-x-pow-2-lt-1	\mathrm{Refine}(-1\lt x\lt1, x^2\lt1)	-1\lt x

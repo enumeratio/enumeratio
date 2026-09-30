@@ -1,4 +1,6 @@
-id	in	out
-sow-feeds-the-nearest-reap	Reap(Sow(5))	[5, [[5]]]
-sow-outside-any-reap-is-a-no-op	Sow(7)	7
-sow-x	Sow(x)	x
+id	in	out	back
+sow-feeds-the-nearest-reap	Reap(Sow(5))	[5, [[5]]]	
+sow-outside-any-reap-is-a-no-op	Sow(7)	7	
+reap-sum-sow-i-pow-2-plus-1-i-10	Reap(sum(Sow(i ^ 2) + 1, (i, 10)))	"[395, [[\n         1,\n         1,\n         4,\n         4,\n         9,\n         9,\n         16,\n         16,\n         25,\n         25,\n         36,\n         36,\n         49,\n         49,\n         64,\n         64,\n         81,\n         81,\n         100,\n         100,\n       ]]]"	
+reap-do-sow-i-i-pow-2-mod-10-list-i-20	Reap(Do(Sow(i, i ^ 2 % 10), [i, 20]))	"[[\n   [1, 9, 11, 19],\n   [2, 8, 12, 18],\n   [3, 7, 13, 17],\n   [4, 6, 14, 16],\n   [5, 15],\n   [10, 20],\n ]]"	Unreadable
+sow-x	Sow(x)	x	

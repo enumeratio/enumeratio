@@ -1,6 +1,7 @@
 id	in	out
 sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y	ComplexExpand(sin(x + imaginaryUnit * y))	i * cos(x) * sinh(y) + sin(x) * cosh(y)
 polar-form-of-a-complex-exponential	ComplexExpand(exp(x + imaginaryUnit * y))	i * sin(y) * exponentialE ^ x + cos(y) * exponentialE ^ x
+complexexpand-reim-cos-i-pow-x	ComplexExpand(ReIm(cos(i ^ x)))	[real(cos(i ^ x)), imaginary(cos(i ^ x))]
 complexexpand-x-plus-imaginaryunit-times-y-pow-2	ComplexExpand((x + imaginaryUnit * y) ^ 2)	x ^ 2 - y ^ 2 + 2i * x * y
 complexexpand-abs-x-plus-imaginaryunit-times-y	ComplexExpand(abs(x + imaginaryUnit * y))	sqrt(x ^ 2 + y ^ 2)
 wolfram-leaves-e-i-pi-5-alone-until-asked-this	ComplexExpand(exp(imaginaryUnit * (pi / 5)))	1 / 4 + sqrt(5) / 4 + sqrt(2) / 4 * i * sqrt(5 - sqrt(5))

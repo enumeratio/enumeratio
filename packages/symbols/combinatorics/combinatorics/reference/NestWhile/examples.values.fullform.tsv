@@ -5,4 +5,5 @@ nestwhile-ln-100-function-1-gt-0	NestWhile[Log, 100, Function[Greater[Slot[1], 0
 nestwhile-function-1-times-2-pow-neg-1-123-456-2	NestWhile[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ, 1, 4]
 nestwhile-function-1-plus-1-888-function	NestWhile[Function[Plus[Slot[1], 1]], 888, Function[Not[PrimeQ[Slot[1]]]]]
 nestwhile-function-1-plus-1-1-function-fibonacci	NestWhile[Function[Plus[Slot[1], 1]], 1, Function[LessEqual[Fibonacci[Slot[1]], Power[10, 6]]]]
+nestwhile-function-1-plus-1-888-function-2	NestWhile[Function[Plus[Slot[1], 1]], 888, Function[Or[Not[PrimeQ[Slot[1]]], Not[PrimeQ[Slot[3]]]]], 3]
 nestwhile-function-floor-1-times-2-pow-neg-1-10	NestWhile[Function[Floor[Times[Slot[1], Power[2, -1]]]], 10, Function[Greater[Slot[1], 0]]]

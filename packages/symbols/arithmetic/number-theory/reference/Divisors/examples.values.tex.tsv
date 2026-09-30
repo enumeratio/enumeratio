@@ -26,6 +26,7 @@ a-real-composite-5-squared	\mathrm{Divisors}(25, \mathrm{KeyValuePair}(\mathrm{O
 a-negative-real-composite	\mathrm{Divisors}(-15, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack1, 1+2i, 2+i, 3, 3+6i, 5, 6+3i, 15\bigr\rbrack
 divisors-3	\mathrm{Divisors}(3)	\bigl\lbrack1, 3\bigr\rbrack
 8-times-sum-filter-divisors-20-function	8(\sum\mathrm{Filter}(\mathrm{Divisors}(20), ()\mapsto\lnot(4\mid\operatorname{\_1})))	144
+filter-range-1-9-999-function-sum-divisors-1-eq	\mathrm{Filter}(1..9\,999, ()\mapsto\sum\mathrm{Divisors}(\operatorname{\_1})=2\operatorname{\_1})	\bigl\lbrack6, 28, 496, \dots\bigr\rbrack
 the-divisor-count-d-n-equals-sigma-0-n-see	\mathrm{Length}(\mathrm{Divisors}(20))=\mathrm{DivisorSigma}(0, 20)	\top
 divisors-2	\mathrm{Divisors}(2)	\bigl\lbrack1, 2\bigr\rbrack
 divisors-4	\mathrm{Divisors}(4)	\bigl\lbrack1, 2, 4\bigr\rbrack

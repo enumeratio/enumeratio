@@ -7,4 +7,5 @@ discretedelta-exponentiale-catalan-1-over-2	\mathrm{DiscreteDelta}(e, \mathrm{Ca
 discretedelta-0-0-0	\mathrm{DiscreteDelta}(0, 0, 0)	1
 discretedelta-0-0-0-0	\mathrm{DiscreteDelta}(0, 0, 0, 0)	1
 assuming-x-lt-0-y-gt-0-refine-discretedelta-x-x	\mathrm{Assuming}(x\lt0\land y\gt0, \mathrm{Refine}(\mathrm{DiscreteDelta}(x, x, y)))	\mathrm{DiscreteDelta}(x, x, y)
+fullsimplify-matrixfunction-discretedelta-list	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(\mathrm{DiscreteDelta}, \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack5, 1\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack5\mathrm{DiscreteDelta}^{\prime}(1), 0\bigr\rbrack\bigr\rbrack
 discretedelta-1-over-2-times-sqrt-2-minus-sqrt-2	\mathrm{DiscreteDelta}(\frac{1}{2}(\sqrt{2-(2+2^{1/2})^{1/2}})-\sin(\frac{\pi}{16}))	0

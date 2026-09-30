@@ -25,13 +25,17 @@ declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 for (const entry of entries) {
   for (const example of entry.examples) {
-    const label = example.aspirational ? " (gap)" : "";
-    test(`${entry.name} example/${example.id}${label}`, () => {
+    if (example.role === "triage") {
+      test.skip(`${entry.name} example/${example.id} (triage: ${example.triage ?? "unbucketed"})`, () => {});
+      continue;
+    }
+    const aspirational = example.role === "aspirational";
+    test(`${entry.name} example/${example.id}${aspirational ? " (gap)" : ""}`, () => {
       const input = example.expr as unknown as Parameters<ComputeEngine["box"]>[0];
       const output = ce.box(input).evaluate().json;
       // An undefined map has no head to call, so its example is a claim about what it WOULD
-      // answer. If this starts matching, the gap closed — drop `aspirational`.
-      if (example.aspirational) expect(output).not.toEqual(example.expected);
+      // answer. If this starts matching, the gap closed — drop `role: aspirational`.
+      if (aspirational) expect(output).not.toEqual(example.expected);
       else expect(output).toEqual(example.expected);
     });
   }

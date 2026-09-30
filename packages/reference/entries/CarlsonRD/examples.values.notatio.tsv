@@ -10,3 +10,4 @@ rd-1-1i-2-3	<N><CarlsonRD><Complex>1 1</Complex> 2 3</CarlsonRD></N>	<Complex>0.
 rd-3-2i-1-1i-5	<N><CarlsonRD><Complex>3 -2</Complex> <Complex>1 1</Complex> 5</CarlsonRD></N>	<Complex>0.14256827575652475 0.0008428574064519433</Complex>
 rd-0-5-0-5i-0-5-0-5i-2	<N><CarlsonRD><Complex>0.5 0.5</Complex> <Complex>0.5 -0.5</Complex> 2</CarlsonRD></N>	<ToExpression>0.6592440083528994</ToExpression>
 rd-1-3-2-5-2	<N><CarlsonRD><Rational>1 3</Rational> 2 <Rational>5 2</Rational></CarlsonRD></N>	<ToExpression>0.4335667291403934</ToExpression>
+n-carlsonrd-1-7-11-50	<N><CarlsonRD>1 7 11</CarlsonRD> 50</N>	<ToExpression>0.05367385963401343</ToExpression>

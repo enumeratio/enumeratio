@@ -16,6 +16,10 @@ foldlist-list-x-list-a-b-c-d
 foldlist-function-10-times-1-plus-2-1-2-0-list-4		
 foldlist-function-1-list-2-1-2-a-plus-b-times-x		
 foldlist-multiply-1-range-1-10		
+foldlist-function-1-over-1-plus-2-1-2-x-reverse		
+foldlist-function-1-times-x-plus-2-1-2-0-list-a		
+foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c		
+foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
 foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\mathrm{True}
 foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}
 rest-foldlist-add-0-list-a-b-c-d-exponentiale		

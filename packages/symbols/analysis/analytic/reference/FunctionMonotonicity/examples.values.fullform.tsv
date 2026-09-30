@@ -1,5 +1,6 @@
-id	in
-a-cubic-is-increasing-everywhere	FunctionMonotonicity[Power[x, 3], x]
-a-parabola-is-not-globally-monotonic	FunctionMonotonicity[Power[x, 2], x]
-exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity[Exp[x], x]
-a-restricted-domain-answers-indeterminate	FunctionMonotonicity[Sqrt[x], x]
+id	in	back
+a-cubic-is-increasing-everywhere	FunctionMonotonicity[Power[x, 3], x]	
+a-parabola-is-not-globally-monotonic	FunctionMonotonicity[Power[x, 2], x]	
+exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity[Exp[x], x]	
+map-function-functionmonotonicity-1-x-1-list	Map[Function[FunctionMonotonicity[Slot[1], x]], List[Plus[Ramp[x], 1], Plus[x, Ramp[x]]]]	[Map, [Function, [FunctionMonotonicity, _1, x]], [List, [Add, [Ramp, x], 1], [Add, x, [Ramp, x]]]]
+a-restricted-domain-answers-indeterminate	FunctionMonotonicity[Sqrt[x], x]	

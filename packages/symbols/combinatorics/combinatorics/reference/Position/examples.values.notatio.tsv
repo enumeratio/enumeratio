@@ -2,4 +2,5 @@ id	in	out
 position-list-1-2-3-2-2	<Position><List>1 2 3 2</List> 2</Position>	<List><List>2</List> <List>4</List></List>
 a-value-absent-from-the-collection-has-no	<Position><List>1 2 3</List> 9</Position>	<Apply>List</Apply>
 position-list-a-b-a-a-b-c-b-b	<Position><List>a b a a b c b</List> b</Position>	<List><List>2</List> <List>5</List> <List>7</List></List>
+position-list-list-a-a-b-list-b-a-a-list-a-b-a-b	<Position><List><List>a a b</List> <List>b a a</List> <List>a b a</List></List> b</Position>	<Apply>List</Apply>
 position-s-first-entry-agrees-with-indexof	<At><Position><List>1 2 3 2</List> 2</Position> 1</At>	<List>2</List>

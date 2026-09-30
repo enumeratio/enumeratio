@@ -13,9 +13,15 @@ const entries = referenceEntries(data);
 // The record the site shows for each head: the one beside the entry it chose.
 const records = data.heads.filter((h) => h.implementations && data.packageOf.get(h.head) === h.package);
 
+// A row waiting in triage is a mismatch no lane has classified yet: the checks below skip it.
+const triageIds = (examples: readonly { id: string; role?: string }[]): Set<string> =>
+  new Set(examples.filter((e) => e.role === "triage").map((e) => e.id));
+
 test("every row that is not an agreement is classified, with a note", () => {
-  for (const { head, implementations } of records) {
+  for (const { head, entry, implementations } of records) {
+    const triage = triageIds(entry.examples);
     for (const [id, bySystem] of Object.entries(implementations!)) {
+      if (triage.has(id)) continue;
       for (const [system, row] of Object.entries(bySystem)) {
         const label = `${head}/${id} (${system})`;
         if (row.tolerance !== undefined) {
@@ -40,7 +46,7 @@ test("every row that is not an agreement is classified, with a note", () => {
 
 test("every scanned row still describes a current, non-aspirational example", () => {
   for (const { head, entry, implementations } of records) {
-    const ids = new Set(entry.examples.filter((e) => e.aspirational !== true).map((e) => e.id));
+    const ids = new Set(entry.examples.filter((e) => e.role !== "aspirational").map((e) => e.id));
     for (const [id, rows] of Object.entries(implementations!))
       for (const [system, row] of Object.entries(rows))
         if (!OWN_FORMS.has(system) && row.out !== undefined)
@@ -52,7 +58,7 @@ test("a Wolfram disagree row has a note, and a live input", () => {
   for (const entry of entries) {
     for (const example of entry.examples) {
       const row = example.others?.wolfram;
-      if (row === undefined || row.verdict !== "disagree") continue;
+      if (row === undefined || row.verdict !== "disagree" || example.role === "triage") continue;
       const label = `${entry.name} example/${example.id}`;
       expect(row.note, label).toBeTruthy();
       // `freeSymbols` (emit.ts) is present whenever the expression carries a free variable —

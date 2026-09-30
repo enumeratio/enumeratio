@@ -4,3 +4,5 @@ shape-1	shape(1)	Tuple()
 shape-list-1-2	shape([1, 2])	Tuple(2)
 shape-list-list-1-2	shape([[1, 2]])	(1, 2)
 length-shape-list-list-a-b-list-c-d-eq-rank-list	length(shape([[a, b], [c, d]])) == rank([[a, b], [c, d]])	True
+shape-array-a-list-2-1-4-3	shape(Array(a, [2, 1, 4, 3]))	Tuple()
+shape-sqrt-2	shape(sqrt(2))	Tuple()

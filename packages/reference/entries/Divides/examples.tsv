@@ -1,10 +1,11 @@
-id	section	role	expr	expected
-divides-2-10			[Divides, 2, 10]	True
-divides-2-5			[Divides, 2, 5]	False
-divides-3-6	Scope		[Divides, 3, 6]	True
-divides-16-001-1-plus-10-pow-3-000	Scope		[Divides, 16001, [Add, 1, [Power, 10, 3000]]]	True
-divides-3-2-895	Applications		[Divides, 3, 2895]	True
-divides-11-918-082	Applications		[Divides, 11, 918082]	True
-list-isinteger-5-divides-2-10	Properties		[List, [IsInteger, 5], [Divides, 2, 10]]	[List, True, True]
-divides-8-48	Properties		[Divides, 8, 48]	True
-divides-12-25	Properties		[Divides, 12, 25]	False
+id	section	role	expr	expected	triage	wolfram.note
+divides-2-10			[Divides, 2, 10]	True		
+divides-2-5			[Divides, 2, 5]	False		
+divides-3-6	Scope		[Divides, 3, 6]	True		
+divides-16-001-1-plus-10-pow-3-000	Scope		[Divides, 16001, [Add, 1, [Power, 10, 3000]]]	True		
+divides-3-2-895	Applications		[Divides, 3, 2895]	True		
+divides-11-918-082	Applications		[Divides, 11, 918082]	True		
+list-isinteger-5-divides-2-10	Properties		[List, [IsInteger, 5], [Divides, 2, 10]]	[List, True, True]		
+divides-8-48	Properties		[Divides, 8, 48]	True		
+divides-12-25	Properties		[Divides, 12, 25]	False		
+simplify-divides-a-b-times-a-list-a-b-in	Properties	triage	[Simplify, [Divides, a, [Multiply, b, a]], [Element, [List, a, b], Integers]]	[Divides, a, [Multiply, a, b]]	gap	Simplify isn't implemented (same gap as CatalanNumber's row). Reducing Divides(a, a*b) to True under an integer-domain assumption needs assumption-driven simplification.

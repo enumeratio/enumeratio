@@ -1,6 +1,7 @@
-id	in	out	tex.in	tex.out
-fixed-points-are-dropped	Cycles[List[List[1, 3, 2], List[5], List[4]]]	Cycles[{{1, 3, 2}}]	\text{Cycles}[\{\{1,3,2\},\{5\},\{4\}\}]	\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]
-applying-a-cycle	Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]	{b, c, a, d}	\text{Permute}\left[\{a,b,c,d\},\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	\{b,c,a,d\}
-cycles-list-list-1-list-2-list-3-list-4	Cycles[List[List[1], List[2], List[3], List[4]]]	Cycles[{}]	\text{Cycles}\left[\left( \begin{array}{c}  1 \\  2 \\  3 \\  4 \\ \end{array} \right)\right]	\text{Cycles}[\{\}]
-permutationreplace-3-cycles-list-list-1-3-2	PermutationReplace[3, Cycles[List[List[1, 3, 2]]]]	2	\text{PermutationReplace}\left[3,\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	2
-permutationreplace-4-cycles-list-list-1-3-2	PermutationReplace[4, Cycles[List[List[1, 3, 2]]]]	4	\text{PermutationReplace}\left[4,\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	4
+id	in	out	tex.in	tex.out	verdict
+fixed-points-are-dropped	Cycles[List[List[1, 3, 2], List[5], List[4]]]	Cycles[{{1, 3, 2}}]	\text{Cycles}[\{\{1,3,2\},\{5\},\{4\}\}]	\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]	
+cycles-list-list-4-10-2-5-list-9-list-7-1-18	Cycles[List[List[4, 10, 2, 5], List[9], List[7, 1, 18]]]	Cycles[{{1, 18, 7}, {2, 5, 4, 10}}]			disagree
+applying-a-cycle	Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]	{b, c, a, d}	\text{Permute}\left[\{a,b,c,d\},\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	\{b,c,a,d\}	
+cycles-list-list-1-list-2-list-3-list-4	Cycles[List[List[1], List[2], List[3], List[4]]]	Cycles[{}]	\text{Cycles}\left[\left( \begin{array}{c}  1 \\  2 \\  3 \\  4 \\ \end{array} \right)\right]	\text{Cycles}[\{\}]	
+permutationreplace-3-cycles-list-list-1-3-2	PermutationReplace[3, Cycles[List[List[1, 3, 2]]]]	2	\text{PermutationReplace}\left[3,\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	2	
+permutationreplace-4-cycles-list-list-1-3-2	PermutationReplace[4, Cycles[List[List[1, 3, 2]]]]	4	\text{PermutationReplace}\left[4,\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	4	

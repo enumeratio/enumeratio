@@ -4,6 +4,7 @@ elliptice-list-list-1-0-list-0-1	ellipticE([[1, 0], [0, 1]])	[[1, ellipticE(0)],
 matrixfunction-elliptice-list-list-1-0-list-0-1	MatrixFunction(ellipticE, [[1, 0], [0, 1]])	[[1, 0], [0, 1]]
 list-elliptice-0-elliptice-1	[ellipticE(0), ellipticE(1)]	[ellipticE(0), 1]
 list-elliptice-positiveinfinity-elliptice	[ellipticE(positiveInfinity), ellipticE(complexInfinity)]	[complexInfinity, complexInfinity]
+n-elliptice-2-over-3-2-50	N(ellipticE(2 / 3, 2), 50)	0.560_575_729_788_691_5
 elliptice-0-1	ellipticE(0, 1)	0
 elliptice-0-0	ellipticE(0, 0)	0
 elliptice-1	ellipticE(1)	1

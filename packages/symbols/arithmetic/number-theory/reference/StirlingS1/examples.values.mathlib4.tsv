@@ -8,6 +8,7 @@ threads-element-wise-over-a-list-as-wolfram-s	(Nat.stirlingFirst [2, 4, 6] 2)
 exact-for-large-n	(Nat.stirlingFirst 50 2)		
 a-mid-sized-n-and-k-past-the-fast-paths	(Nat.stirlingFirst 40 14)		
 the-number-of-permutations-of-5-elements-with	(Nat.stirlingFirst 5 3)	35	
+abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n			
 the-signed-row-sum-vanishes-for-n-ge-2			
 s-n-n-1-binom-n-2	(decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))		

@@ -353,7 +353,9 @@ const OVERRIDDEN = [
 
 // Evaluates the whole corpus in both engines: seconds, not the default 5s budget on a busy box.
 test("we change exactly the compute-engine heads we mean to, and no others", () => {
-  const corpus = entries.flatMap((entry) => entry.examples.map((example) => example.expr));
+  const corpus = entries.flatMap((entry) =>
+    entry.examples.filter((example) => example.role !== "triage").map((example) => example.expr),
+  );
   expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
 });
 

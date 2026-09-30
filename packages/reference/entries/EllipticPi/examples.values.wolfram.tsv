@@ -1,5 +1,9 @@
-id	in	out	tex.in	tex.out
-functionexpand-ellipticpi-list-list-neg-1-0-list	FunctionExpand[EllipticPi[List[List[-1, 0], List[0, Rational[1, 2]]], 0]]	{{Pi/(2*Sqrt[2]), Pi/2}, {Pi/2, Pi/Sqrt[2]}}	\text{FunctionExpand}\left[\Pi \left(\left.\left( \begin{array}{cc}  -1 & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)\right|0\right)\right]	\left( \begin{array}{cc}  \frac{\pi }{2 \sqrt{2}} & \frac{\pi }{2} \\  \frac{\pi }{2} & \frac{\pi }{\sqrt{2}} \\ \end{array} \right)
-functionexpand-matrixfunction-function	FunctionExpand[MatrixFunction[Function[EllipticPi[Slot[1], 0]], List[List[-1, 0], List[0, Rational[1, 2]]]]]	{{Pi/(2*Sqrt[2]), 0}, {0, Pi/Sqrt[2]}}	\text{FunctionExpand}\left[\text{MatrixFunction}\left[\Pi (\text{$\#$1}|0)\&,\left( \begin{array}{cc}  -1 & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  \frac{\pi }{2 \sqrt{2}} & 0 \\  0 & \frac{\pi }{\sqrt{2}} \\ \end{array} \right)
-ellipticpi-0-0-1	EllipticPi[0, 0, 1]	0	\Pi (0;0|1)	0
-ellipticpi-0-0-0	EllipticPi[0, 0, 0]	0	\Pi (0;0|0)	0
+id	in	out	tex.in	tex.out	verdict
+functionexpand-ellipticpi-list-list-neg-1-0-list	FunctionExpand[EllipticPi[List[List[-1, 0], List[0, Rational[1, 2]]], 0]]	{{Pi/(2*Sqrt[2]), Pi/2}, {Pi/2, Pi/Sqrt[2]}}	\text{FunctionExpand}\left[\Pi \left(\left.\left( \begin{array}{cc}  -1 & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)\right|0\right)\right]	\left( \begin{array}{cc}  \frac{\pi }{2 \sqrt{2}} & \frac{\pi }{2} \\  \frac{\pi }{2} & \frac{\pi }{\sqrt{2}} \\ \end{array} \right)	
+functionexpand-matrixfunction-function	FunctionExpand[MatrixFunction[Function[EllipticPi[Slot[1], 0]], List[List[-1, 0], List[0, Rational[1, 2]]]]]	{{Pi/(2*Sqrt[2]), 0}, {0, Pi/Sqrt[2]}}	\text{FunctionExpand}\left[\text{MatrixFunction}\left[\Pi (\text{$\#$1}|0)\&,\left( \begin{array}{cc}  -1 & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  \frac{\pi }{2 \sqrt{2}} & 0 \\  0 & \frac{\pi }{\sqrt{2}} \\ \end{array} \right)	
+n-ellipticpi-3-over-10-2-over-5-50	N[EllipticPi[Rational[3, 10], Rational[2, 5]], 50]	2.14879541586645663593602278637545035024330073227011442023868676331789545254013`50.			disagree
+n-ellipticpi-3-over-10-2-2-over-5-50	N[EllipticPi[Rational[3, 10], 2, Rational[2, 5]], 50]	2.90692821589950947656615915778587741628156224961017469001869589289277596277487`50.			disagree
+simplify-integrate-ellipticpi-n-m-m					
+ellipticpi-0-0-1	EllipticPi[0, 0, 1]	0	\Pi (0;0|1)	0	
+ellipticpi-0-0-0	EllipticPi[0, 0, 0]	0	\Pi (0;0|0)	0	
+n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow	N[EllipticPi[2, Plus[Times[Complex[0, 1], List[-1, 1], Power[10, -6]], Times[Rational[1, 2], Pi]]]]	{-0.7575657212929102 + 2.772694807841726*I, -0.7575657212929102 - 2.772694807841726*I}			disagree

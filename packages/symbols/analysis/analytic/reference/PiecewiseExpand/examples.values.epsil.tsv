@@ -12,4 +12,9 @@ assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	Assuming(x ^ 2 < 3, PiecewiseExpan
 piecewiseexpand-pw	PiecewiseExpand(pw)	pw
 piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	PiecewiseExpand(-1 <= max(x, y) <= 1)	-1 <= max(x, y) <= 1
 piecewiseexpand-max-abs-x-abs-y-realnumbers	PiecewiseExpand(max(abs(x), abs(y)), realNumbers)	max(abs(x), abs(y))
+map-piecewiseexpand-list-min-x-y-max-x-y-z	map(PiecewiseExpand, [min(x, y), max(x, y, z), UnitStep(x), clamp(x, a, b)])	[min(x, y), max(x, y, z), UnitStep(x), clamp(x, a, b)]
+assuming-list-0-lt-eq-x-lt-eq-3-map	"Assuming([0 <= x <= 3], map(PiecewiseExpand, [\n                                               floor(x),\n                                               ceil(x),\n                                               round(x),\n                                               IntegerPart(x),\n                                               FractionalPart(x),\n                                             ]))"	[floor(x), ceil(x), round(x), IntegerPart(x), FractionalPart(x)]
+assuming-0-lt-eq-k-lt-eq-3m-map-piecewiseexpand	Assuming(0 <= k <= 3m, map(PiecewiseExpand, [k % m, Quotient(k, m)]))	[k % m, Quotient(k, m)]
+map-piecewiseexpand-list-unitbox-x-unittriangle	map(PiecewiseExpand, [UnitBox(x), UnitTriangle(x)])	[UnitBox(x), UnitTriangle(x)]
+assuming-list-0-lt-eq-x-lt-eq-3-map-2	"Assuming([0 <= x <= 3], map(\n                             PiecewiseExpand,\n                             [SquareWave(x), TriangleWave(x), SawtoothWave(x)],\n                           ))"	[SquareWave(x), TriangleWave(x), SawtoothWave(x)]
 without-a-realness-assumption-it-declines	PiecewiseExpand(abs(x))	abs(x)

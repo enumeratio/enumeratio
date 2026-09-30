@@ -21,3 +21,4 @@ a-list-with-no-nesting-is-unchanged	\mathrm{Flatten}(\bigl\lbrack1, 2, 3\bigr\rb
 flattening-an-m-times-n-matrix-gives-mn-elements	\mathrm{Length}(\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack))	6
 flatten-array-a-list-3-4	\mathrm{Flatten}(\mathrm{Array}(a, \bigl\lbrack3, 4\bigr\rbrack))	\bigl\lbrack a(1, 1), a(1, 2), a(1, 3), a(1, 4), a(2, 1), a(2, 2), a(2, 3), a(2, 4), a(3, 1), a(3, 2), a(3, 3), a(3, 4)\bigr\rbrack
 flatten-array-function-100-times-1-plus-10-times	\mathrm{Flatten}(\mathrm{Array}(()\mapsto100\operatorname{\_1}+10\operatorname{\_2}+\operatorname{\_3}, \bigl\lbrack3, 3, 3\bigr\rbrack))	\bigl\lbrack111, 112, 113, 121, 122, 123, 131, 132, 133, 211, 212, 213, 221, 222, 223, 231, 232, 233, 311, 312, 313, 321, 322, 323, 331, 332, 333\bigr\rbrack
+flatten-array	\mathrm{Flatten}(\mathrm{array})	\mathrm{Nothing}

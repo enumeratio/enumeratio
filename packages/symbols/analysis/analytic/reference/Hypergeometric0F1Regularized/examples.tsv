@@ -1,15 +1,18 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-matches-hypergeometric0f1-2-0-5-gamma-2			[Hypergeometric0F1Regularized, 2, 0.5]	1.2717234563121365	matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)		
-b-1-is-a-pole-of-gamma-but-the-regularized-form			[Hypergeometric0F1Regularized, -1, 0.5]	0.1471797367221067	$b = -1$ is a pole of $\Gamma$, but the regularized form is finite there		
-at-the-pole-b-1-under-n	Basic		[N, [Hypergeometric0F1Regularized, -1, 2]]	3.7150355604584364	At the pole $b = -1$ under N		
-b-1-5-at-neg-0-7		test	[Hypergeometric0F1Regularized, 1.5, -0.7]	0.6707946255741352			
-rational-order-7-3-at-2-5		test	[Hypergeometric0F1Regularized, [Rational, 7, 3], 2.5]	2.150351150907756			
-complex-order-1-plus-i-at-0-5		test	[N, [Hypergeometric0F1Regularized, [Complex, 1, 1], 0.5]]	[Complex, 2.476270194944867, 0.18885329562027878]			
-order-2-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, 2, [Complex, 0.5, 0.5]]]	[Complex, 1.248175636885929, 0.2934012962643341]			
-negative-order-neg-0-5-at-0-3		test	[Hypergeometric0F1Regularized, -0.5, 0.3]	-0.05857240214082423			
-complex-order-and-argument		test	[N, [Hypergeometric0F1Regularized, [Complex, -2.5, 1.5], [Complex, 1.2, -0.8]]]	[Complex, 2.7356652974870386, 25.894454183167475]			
-order-0		test	[Hypergeometric0F1Regularized, 0, 0.5]	0.6358617281560686			
-order-neg-2-at-0-7		test	[Hypergeometric0F1Regularized, -2, 0.7]	0.06789905147462627			
-order-0-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, 0, [Complex, 0.3, 0.4]]]	[Complex, 0.25488334300581544, 0.5234223951841015]			
-order-neg-1-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, -1, [Complex, -0.5, 0.2]]]	[Complex, 0.09427166608970403, -0.07802491943203783]			
-exact-arguments-stay-unevaluated-n-gives-the	Possible issues		[Hypergeometric0F1Regularized, -1, 2]	[Hypergeometric0F1Regularized, -1, 2]	Exact arguments stay unevaluated; N gives the number	unevaluated	Exact arguments stay symbolic here; Wolfram continues via its own regularized-function identity (4*Hypergeometric0F1Regularized[3,2]).
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+matches-hypergeometric0f1-2-0-5-gamma-2			[Hypergeometric0F1Regularized, 2, 0.5]	1.2717234563121365	matches Hypergeometric0F1(2, 0.5) / Gamma(2) = Hypergeometric0F1(2, 0.5)			
+b-1-is-a-pole-of-gamma-but-the-regularized-form			[Hypergeometric0F1Regularized, -1, 0.5]	0.1471797367221067	$b = -1$ is a pole of $\Gamma$, but the regularized form is finite there			
+at-the-pole-b-1-under-n	Basic		[N, [Hypergeometric0F1Regularized, -1, 2]]	3.7150355604584364	At the pole $b = -1$ under N			
+b-1-5-at-neg-0-7		test	[Hypergeometric0F1Regularized, 1.5, -0.7]	0.6707946255741352				
+rational-order-7-3-at-2-5		test	[Hypergeometric0F1Regularized, [Rational, 7, 3], 2.5]	2.150351150907756				
+complex-order-1-plus-i-at-0-5		test	[N, [Hypergeometric0F1Regularized, [Complex, 1, 1], 0.5]]	[Complex, 2.476270194944867, 0.18885329562027878]				
+order-2-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, 2, [Complex, 0.5, 0.5]]]	[Complex, 1.248175636885929, 0.2934012962643341]				
+negative-order-neg-0-5-at-0-3		test	[Hypergeometric0F1Regularized, -0.5, 0.3]	-0.05857240214082423				
+complex-order-and-argument		test	[N, [Hypergeometric0F1Regularized, [Complex, -2.5, 1.5], [Complex, 1.2, -0.8]]]	[Complex, 2.7356652974870386, 25.894454183167475]				
+order-0		test	[Hypergeometric0F1Regularized, 0, 0.5]	0.6358617281560686				
+order-neg-2-at-0-7		test	[Hypergeometric0F1Regularized, -2, 0.7]	0.06789905147462627				
+order-0-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, 0, [Complex, 0.3, 0.4]]]	[Complex, 0.25488334300581544, 0.5234223951841015]				
+order-neg-1-at-a-complex-argument		test	[N, [Hypergeometric0F1Regularized, -1, [Complex, -0.5, 0.2]]]	[Complex, 0.09427166608970403, -0.07802491943203783]				
+n-hypergeometric0f1regularized-0-neg-48-50	Scope	triage	[N, [Hypergeometric0F1Regularized, 0, -48], 50]	-0.7535640804482718		compare		
+n-hypergeometric0f1regularized-4-0-25	Scope	triage	[N, [Hypergeometric0F1Regularized, 4, 0], 25]	0.16666666666666682		compare		
+matrixfunction-function	Scope	triage	[MatrixFunction, [Function, [Block, [Hypergeometric0F1Regularized, [Rational, 1, 2], _1]], _1], [List, [List, [Rational, 1, 2], 0], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Hypergeometric0F1Regularized, [Rational, 1, 2], [Rational, 1, 2]], 0], [List, 0, [Hypergeometric0F1Regularized, [Rational, 1, 2], [Rational, 1, 2]]]]		gap		Same missing-concrete-evaluator cause as the Hypergeometric0F1 row above.
+exact-arguments-stay-unevaluated-n-gives-the	Possible issues		[Hypergeometric0F1Regularized, -1, 2]	[Hypergeometric0F1Regularized, -1, 2]	Exact arguments stay unevaluated; N gives the number		unevaluated	Exact arguments stay symbolic here; Wolfram continues via its own regularized-function identity (4*Hypergeometric0F1Regularized[3,2]).

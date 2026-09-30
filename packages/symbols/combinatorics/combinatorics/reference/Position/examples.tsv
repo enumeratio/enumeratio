@@ -1,5 +1,6 @@
-id	section	role	expr	expected	caption
-position-list-1-2-3-2-2			[Position, [List, 1, 2, 3, 2], 2]	[List, [List, 2], [List, 4]]	
-a-value-absent-from-the-collection-has-no			[Position, [List, 1, 2, 3], 9]	[List]	A value absent from the collection has no positions
-position-list-a-b-a-a-b-c-b-b			[Position, [List, a, b, a, a, b, c, b], b]	[List, [List, 2], [List, 5], [List, 7]]	
-position-s-first-entry-agrees-with-indexof	Properties		[At, [Position, [List, 1, 2, 3, 2], 2], 1]	[List, 2]	Position's first entry agrees with [[IndexOf]]
+id	section	role	expr	expected	caption	triage	wolfram.note
+position-list-1-2-3-2-2			[Position, [List, 1, 2, 3, 2], 2]	[List, [List, 2], [List, 4]]			
+a-value-absent-from-the-collection-has-no			[Position, [List, 1, 2, 3], 9]	[List]	A value absent from the collection has no positions		
+position-list-a-b-a-a-b-c-b-b			[Position, [List, a, b, a, a, b, c, b], b]	[List, [List, 2], [List, 5], [List, 7]]			
+position-list-list-a-a-b-list-b-a-a-list-a-b-a-b		triage	[Position, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b]	[List]		gap	Position[matrix, b] returns List[] instead of every {row,col} path — Position over a nested (matrix-shaped) collection isn't implemented, only flat top-level search
+position-s-first-entry-agrees-with-indexof	Properties		[At, [Position, [List, 1, 2, 3, 2], 2], 1]	[List, 2]	Position's first entry agrees with [[IndexOf]]		

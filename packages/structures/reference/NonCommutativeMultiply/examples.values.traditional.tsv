@@ -1,6 +1,7 @@
 id	in	out
 the-canonical-order		
 noncommutativemultiply-a-b-c-eq	\mathrm{NonCommutativeMultiply}(a, b, c)=\mathrm{NonCommutativeMultiply}(a, b, c)	\mathrm{True}
+list-a-times-b-eq-a-times-b	\begin{cases}ab=ab\\\mathrm{NonCommutativeMultiply}(a, b)=\mathrm{NonCommutativeMultiply}(b, a)\end{cases}	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
 scalars-the-implied-identity-factor		
 commuting-units-agrees-with-times		
 the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13		
@@ -8,5 +9,7 @@ reversing-the-operands-flips-the-sign
 e-1e-2-2-1		
 associative-nested-products-flatten		
 undeclared-symbols-are-taken-to-commute-so-the		
+list-noncommutativemultiply-0-a		
+neg-a-times-c-plus-noncommutativemultiply-a-plus		
 plain-times-declines-both-orders-arrive		
 noncommutativemultiply-a		

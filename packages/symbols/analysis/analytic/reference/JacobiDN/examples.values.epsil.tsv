@@ -28,6 +28,8 @@ m-less-than-0-via-the-imaginary-modulus	N(JacobiDN(0.3, -2))	1.088_512_946_606_2
 a-complex-argument-u	N(JacobiDN(0.3 + 0.4i, 0.5))	1.012_262_082_212_854 - 0.062_849_685_024_787_7i	
 matrixfunction-function-jacobidn-neg-1-over-3	MatrixFunction(Function(JacobiDN(-1 / 3 * i * pi, _1), _1), [[1, 0], [0, 1]])	[[2, 0], [0, 2]]	Unreadable
 list-jacobidn-z-0-jacobidn-z-1	[JacobiDN(z, 0), JacobiDN(z, 1)]	[1, 1 / cosh(z)]	
+n-jacobidn-3-1-over-3-50	N(JacobiDN(3, 1 / 3), 50)	"JacobiDN(\n          3,\n          0.333_333_333_333_333_333_333_333_333_333_333_333_333_333_333_333_33,\n        )"	
+list-jacobidn-0-m-jacobidn-1-over-2-times	[JacobiDN(0, m), JacobiDN(1 / 2 * ellipticK(m), m), JacobiDN(ellipticK(m), m)]	[1, JacobiDN(1 / 2 * ellipticK(m), m), sqrt(-m + 1)]	
 u-0-is-1-for-any-m	JacobiDN(0, m)	1	
 m-0-is-1-for-any-u	JacobiDN(u, 0)	1	
 the-quarter-period-u-elliptick-m-is-sqrt	JacobiDN(ellipticK(m), m)	sqrt(-m + 1)	

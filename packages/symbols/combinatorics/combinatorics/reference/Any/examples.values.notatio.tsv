@@ -10,3 +10,4 @@ without-a-predicate-tests-the-elements	<Any><List>False True</List></Any>	<True 
 a-level-argument-tests-the-elements-at-depth-2	<Any><List><List>1 2</List> <List>3 -4</List></List> <Function><Less>_1 0</Less></Function> 2</Any>	<True />
 always-false-on-an-empty-list	<Any><Apply>List</Apply> IsEven</Any>	<False />
 some-element-passes-exactly-when-not-every	<Equal><Any><List>1 3 5</List> IsEven</Any> <Not><All><List>1 3 5</List> IsOdd</All></Not></Equal>	<True />
+map-logicalexpand-list-any-list-x-y-z-f	<Map>LogicalExpand <List><Any><List>x y z</List> f</Any> <Not><NoneTrue><List>x y z</List> f</NoneTrue></Not></List></Map>	<List><Any><List>x y z</List> f</Any> <Not><NoneTrue><List>x y z</List> f</NoneTrue></Not></List>

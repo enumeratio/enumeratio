@@ -1,4 +1,7 @@
 id	in
 prints-a-list-as-notatio-source	ToString[List[1, 2, 3]]
+tostring-x-pow-2	ToString[Power[x, 2]]
 prints-an-arithmetic-expression	ToString[Plus[x, 1]]
+tostring-exponentiale-pow-x	ToString[Power[E, x]]
+tostring-cos-x-plus-cos-y	ToString[Plus[Cos[x], Cos[y]]]
 tostring-kappa	ToString[kappa]

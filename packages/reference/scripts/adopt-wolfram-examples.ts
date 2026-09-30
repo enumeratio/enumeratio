@@ -31,7 +31,7 @@ import { toInputForm } from "../../formats/src/inputform.ts";
 import { DEFAULT_TOLERANCE, disagreement } from "../src/known.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 import { baseId } from "./example-id.ts";
-import { ADOPTED, cachedRecords, readCached, readDeclined, readTriage, WOLFRAM_CACHE } from "./wolfram-cache.ts";
+import { ADOPTED, cachedRecords, readCached, readDeclined, WOLFRAM_CACHE } from "./wolfram-cache.ts";
 import { adaptInput, assignedNames, judge, mentions, SECTION } from "./wolfram-examples.ts";
 
 const { values, positionals } = parseArgs({
@@ -187,11 +187,10 @@ const forms = await canonicalForms([...existing.map((e) => e.expr), ...raw.map((
 const knownForms = await canonicalForms(raw.map((c) => c.known ?? 0));
 const formOf = (form: { expr: unknown } | { why: string } | undefined): unknown =>
   form !== undefined && "expr" in form ? form.expr : undefined;
-// Already on the head, waiting in triage, or dropped by hand: not written again.
+// Already on the head (a triage row included) or dropped by hand: not written again.
 const seen = new Set([
   ...existing.map((e, i) => `${e.head} ${JSON.stringify(formOf(forms[i]) ?? e.expr)}`),
   ...Object.entries(readDeclined()).flatMap(([head, exprs]) => exprs.map((e) => `${head} ${e}`)),
-  ...Object.entries(readTriage()).flatMap(([head, rows]) => rows.map((r) => `${head} ${JSON.stringify(r.expr)}`)),
 ]);
 const candidates: Candidate[] = [];
 for (const [i, c] of raw.entries()) {

@@ -1,5 +1,6 @@
 id	in	out
 keeps-elements-where-sel-is-true	\mathrm{Pick}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\top, \bot, \top\bigr\rbrack)	\bigl\lbrack a, c\bigr\rbrack
 pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1	\mathrm{Pick}(\bigl\lbrack a, b, c, d, e\bigr\rbrack, \bigl\lbrack1, 0, 1, 0, 0\bigr\rbrack, 1)	\bigl\lbrack a, c\bigr\rbrack
+pick-list-list-a-b-c-list-d-exponentiale-f-list	\mathrm{Pick}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack\bigr\rbrack, 1)	\bigl\lbrack\bigr\rbrack
 an-explicit-pattern-keeps-elements-matching	\mathrm{Pick}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack, 1)	\bigl\lbrack a, c\bigr\rbrack
 pick-list-a-b-c-d-list-true-false-false-true	\mathrm{Pick}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack\top, \bot, \bot, \top\bigr\rbrack)	\bigl\lbrack a, d\bigr\rbrack

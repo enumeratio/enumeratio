@@ -11,4 +11,5 @@ a-rational-multiple-of-a-surd	\mathrm{IsQuadraticIrrational}(3\sqrt{2})	\mathrm{
 a-surd-subtracted-from-a-rational	\mathrm{IsQuadraticIrrational}(1-\sqrt{3})	\mathrm{True}
 isquadraticirrational-3-over-2	\mathrm{IsQuadraticIrrational}(\frac{3}{2})	\mathrm{False}
 isquadraticirrational-list-sqrt-2-sqrt-3-2	\mathrm{IsQuadraticIrrational}(\bigl\lbrack\sqrt{2}, \sqrt{3}, 2\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+isquadraticirrational-s	\mathrm{IsQuadraticIrrational}(s)	\mathrm{False}
 a-rational-is-not-irrational	\mathrm{IsQuadraticIrrational}(\frac{3}{4})	\mathrm{False}

@@ -24,6 +24,9 @@ derivative-sec-x-tan-x	D(sec(x), x)	tan(x) * sec(x)
 antiderivative-ln-sec-x-tan-x	integrate(sec(x), x)	ln(abs(tan(x) + sec(x)))	
 n-sec-6-over-5-50	N(sec(6 / 5), 50)	2.759_703_601_332_406_456_883_432_939_237_783_860_073_115_323_011	
 matrixfunction-function-sec-1-1-list-list-5-over	"MatrixFunction(\n                Function(sec(_1), _1),\n                [[5 / 6 * pi, 0], [1 / 6 * pi, -1 / 4 * pi]],\n              )"	[[-2 / 3 * sqrt(3), 0], [-2 / 13 * sqrt(2) + -4 / 39 * sqrt(3), sqrt(2)]]	Unreadable
+assuming-m-in-integers-refine-sec-pi-times-1	Assuming(m in integers, Refine(sec(pi * (1 * 2 ^ -1 + m))))	sec(pi * (m + 1 / 2))	
+assuming-m-in-integers-fullsimplify-refine-sec	Assuming(m in integers, FullSimplify(Refine(sec(pi * m))))	sec(pi * m)	
+sec-positiveinfinity	sec(positiveInfinity)	Indeterminate	
 reciprocal-of-cos-sec-x-frac-1-cos-x	sec(pi / 3) == 1 / cos(pi / 3)	True	
 pythagorean-identity-1-tan-2-x-sec-2-x	1 + tan(pi / 6) ^ 2 == sec(pi / 6) ^ 2	True	
 sec-1-over-10-times-pi	sec(1 / 10 * pi)	sqrt(10) / 5 * sqrt(5 - sqrt(5))	

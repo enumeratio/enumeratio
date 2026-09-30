@@ -8,3 +8,4 @@ a-ragged-list-of-lists-is-not-a-matrix	MatrixQ[List[List[1, 2], List[3]]]	False	
 an-empty-list-is-not-a-matrix	MatrixQ[List[]]	False	\text{MatrixQ}[\{\}]	\text{False}
 a-test-function-must-hold-of-every-entry	MatrixQ[List[List[2, 4], List[6, 8]], EvenQ]	True	\text{MatrixQ}\left[\left( \begin{array}{cc}  2 & 4 \\  6 & 8 \\ \end{array} \right),\text{EvenQ}\right]	\text{True}
 list-ismatrix-mat-ismatrix-expr	List[MatrixQ[mat], MatrixQ[expr]]	{False, False}	\{\text{MatrixQ}[\text{mat}],\text{MatrixQ}[\text{expr}]\}	\{\text{False},\text{False}\}
+ismatrix-m				

@@ -4,9 +4,12 @@ m-less-than-0-via-the-imaginary-modulus	N[JacobiNC[0.3, -2]]	1.0496874048955949	
 the-quarter-period-is-a-pole-even-when-m-is-0	JacobiNC[EllipticK[0], 0]				
 matrixfunction-function-jacobinc-neg-1-over-3	MatrixFunction[Function[JacobiNC[Times[Complex[0, Rational[-1, 3]], Pi], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{1/2, 0}, {0, 1/2}}	\text{MatrixFunction}\left[\text{nc}((\text{Rational}[-1,3] i) \pi |\text{$\#$1})\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)	
 list-jacobinc-z-0-jacobinc-z-1	List[JacobiNC[z, 0], JacobiNC[z, 1]]	{Sec[z], Cosh[z]}			disagree
-u-0-is-1-for-any-m	JacobiNC[0, m]				
+n-jacobinc-2-1-over-3-50	N[JacobiNC[2, Rational[1, 3]], 50]	-4.62153404848079684747412916548882057229143687836574268124984715046365436557664`50.			disagree
+list-jacobinc-0-m-jacobinc-1-over-2-times					
+list-jacobinc-elliptick-m-m-jacobinc-3-times					
+u-0-is-1-for-any-m					
 jacobinc-0-0	JacobiNC[0, 0]	1	\text{nc}(0|0)	1	
 jacobinc-1-over-2-times-pi-0	JacobiNC[Times[Rational[1, 2], Pi], 0]	ComplexInfinity	\text{nc}\left(\left.\frac{1}{2} \pi \right|0\right)	\text{ComplexInfinity}	
 jacobinc-0-1	JacobiNC[0, 1]	1	\text{nc}(0|1)	1	
 jacobinc-1-over-2-times-i-times-pi-1	JacobiNC[Times[Complex[0, Rational[1, 2]], Pi], 1]	0	\text{nc}((\text{Rational}[1,2] i) \pi |1)	0	
-symbolic-arguments-are-left-unevaluated-rather	JacobiNC[u, m]				
+symbolic-arguments-are-left-unevaluated-rather					

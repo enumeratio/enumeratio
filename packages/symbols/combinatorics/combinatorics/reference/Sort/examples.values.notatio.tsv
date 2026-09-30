@@ -18,8 +18,11 @@ sort-join-ln-range-1-10-sqrt-range-1-10-less	<Sort><Join><Ln><Range>1 10</Range>
 sort-list-aa-abb-ba-b-aaa	<Sort><List>"aa" "abb" "ba" "b" "aaa"</List></Sort>	<List>"aa" "aaa" "abb" "b" "ba"</List>
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt	<Sort><List>-11 10 2 1 -4</List> <Function><Block><Less><Abs>_1</Abs> <Abs>_2</Abs></Less></Block> _1 _2</Function></Sort>	<List>1 2 -4 10 -11</List>
 sort-join-ln-range-1-10-sqrt-range-1-10	<Sort><Join><Ln><Range>1 10</Range></Ln> <Sqrt><Range>1 10</Range></Sqrt></Join></Sort>	<List>0 <Ln>2</Ln> 1 <Ln>3</Ln> <Multiply>2 <Ln>2</Ln></Multiply> <Sqrt>2</Sqrt> <Ln>5</Ln> <Sqrt>3</Sqrt> <Ln>6</Ln> <Ln>7</Ln> 2 <Multiply>3 <Ln>2</Ln></Multiply> <Multiply>2 <Ln>3</Ln></Multiply> <Sqrt>5</Sqrt> <Ln>10</Ln> <Sqrt>6</Sqrt> <Sqrt>7</Sqrt> <Multiply>2 <Sqrt>2</Sqrt></Multiply> 3 <Sqrt>10</Sqrt></List>
+sort-list-i-1-plus-i-1-minus-i-2-plus-3i	<Sort><List><Complex>0 1</Complex> <Complex>1 1</Complex> <Complex>1 -1</Complex> <Complex>2 3</Complex></List> <Function><Block><Less><Real>_1</Real> <Real>_2</Real></Less></Block> _1 _2</Function></Sort>	<List><Complex>0 1</Complex> <Complex>1 1</Complex> <Complex>1 -1</Complex> <Complex>2 3</Complex></List>
+sort-list-aa-abb-ba-b-aaa-function-stringlength	<Sort><List>"aa" "abb" "ba" "b" "aaa"</List> <Function><Block><Less><StringLength>_1</StringLength> <StringLength>_2</StringLength></Less></Block> _1 _2</Function></Sort>	<List>"b" "aa" "ba" "abb" "aaa"</List>
 sort-is-idempotent-sorting-an-already-sorted	<Equal><Sort><Sort><List>3 1 2</List></Sort></Sort> <Sort><List>3 1 2</List></Sort></Equal>	<True />
 sort-c-at-c-ordering-c-see-ordering-and-at	<Equal><Sort><List>3 1 2</List></Sort> <At><List>3 1 2</List> <Ordering><List>3 1 2</List></Ordering></At></Equal>	<True />
 the-result-doesn-t-depend-on-the-input-order	<Equal><Sort><Reverse><List>3 1 2</List></Reverse></Sort> <Sort><List>3 1 2</List></Sort></Equal>	<True />
+sort-list	<Sort>list</Sort>	<Nothing />
 the-empty-list-sorts-to-itself	<Sort><Apply>List</Apply></Sort>	<Apply>List</Apply>
 sort-list-positiveinfinity-sqrt-2-1-2	<Sort><List>PositiveInfinity <Sqrt>2</Sqrt> 1 2 NegativeInfinity <Divide><Sqrt>2</Sqrt> 2</Divide></List></Sort>	<List>NegativeInfinity <Divide><Sqrt>2</Sqrt> 2</Divide> 1 <Sqrt>2</Sqrt> 2 PositiveInfinity</List>

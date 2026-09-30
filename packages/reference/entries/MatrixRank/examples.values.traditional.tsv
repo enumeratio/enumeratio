@@ -15,10 +15,13 @@ matrixrank-identitymatrix-5
 a-3-times-3-matrix-of-pairwise-distinct-symbols		
 matrixrank-list-list-a-b-list-2a-2b		
 matrixrank-hilbertmatrix-3		
+matrixrank-m		
+matrixrank-n-m		
 the-4-4-hilbert-matrix-is-badly-conditioned-but		
 row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\mathrm{True}
 rank-nullity-the-rank-plus-the-dimension-of-the		
 an-outer-product-u-v-top-has-rank-1-a-lazy		
+list-matrixrank-m-matrixrank-transpose-m		
 a-symbolic-matrix-stays-unevaluated-wolfram		
 a-vector-is-treated-as-a-1-n-matrix-wolfram		
 a-non-square-matrix-of-distinct-symbols-stays		

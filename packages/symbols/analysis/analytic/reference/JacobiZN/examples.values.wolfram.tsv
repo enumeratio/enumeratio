@@ -5,7 +5,9 @@ zn-2-5-0-3	N[JacobiZN[2.5, 0.3]]	-0.08051850367193739	N[\text{zn}(2.5|0.3)]	-0.0
 a-parameter-close-to-its-m-1-boundary	N[JacobiZN[1.1, 0.9]]	0.3547122001998714	N[\text{zn}(1.1|0.9)]	0.354712	
 matrixfunction-function-jacobizn-neg-1-over-3	MatrixFunction[Function[JacobiZN[Times[Complex[0, Rational[-1, 3]], Pi], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{(-I)*Sqrt[3], 0}, {0, (-I)*Sqrt[3]}}	\text{MatrixFunction}\left[\text{zn}((\text{Rational}[-1,3] i) \pi |\text{$\#$1})\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  -i \sqrt{3} & 0 \\  0 & -i \sqrt{3} \\ \end{array} \right)	
 list-jacobizn-u-0-jacobizn-u-1	List[JacobiZN[u, 0], JacobiZN[u, 1]]	{0, Tanh[u]}	\{\text{zn}(u|0),\text{zn}(u|1)\}	\{0,\tanh (u)\}	
-u-0-is-0-for-any-m	JacobiZN[0, m]				
+n-jacobizn-1-1-over-2-50	N[JacobiZN[1, Rational[1, 2]], 50]	0.14380198649913294348031582657890642012147872394084472820349618191511711270324`50.			disagree
+list-jacobizn-0-m-jacobizn-1-over-2-times					
+u-0-is-0-for-any-m					
 m-0-is-0-for-any-u	JacobiZN[u, 0]	0	\text{zn}(u|0)	0	
 m-outside-0-1-is-declined	N[JacobiZN[0.3, -0.5]]	-0.06674873862762035	N[\text{zn}(0.3|-0.5)]	-0.0667487	disagree
-symbolic-arguments-are-left-unevaluated-rather	JacobiZN[u, m]				
+symbolic-arguments-are-left-unevaluated-rather					

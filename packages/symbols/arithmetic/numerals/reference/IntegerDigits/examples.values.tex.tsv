@@ -32,6 +32,7 @@ ostrowski-9-over-2-2-2-is-1-2-0	\mathrm{IntegerDigits}(9, \mathrm{OstrowskiNumer
 bijective-base-26-27-is-aa	\mathrm{IntegerDigits}(27, \mathrm{BijectiveNumerals}(26))	\bigl\lbrack1, 1\bigr\rbrack
 bijective-base-26-702-is-zz	\mathrm{IntegerDigits}(702, \mathrm{BijectiveNumerals}(26))	\bigl\lbrack26, 26\bigr\rbrack
 integerdigits-137-mixedradixnumerals-list-3-12	\mathrm{IntegerDigits}(137, \mathrm{MixedRadixNumerals}(\bigl\lbrack3, 12\bigr\rbrack))	\bigl\lbrack3, 2, 5\bigr\rbrack
+integerdigits-1-084-mixedradixnumerals-list-17	\mathrm{IntegerDigits}(1\,084, \mathrm{MixedRadixNumerals}(\bigl\lbrack17, 15, 11\bigr\rbrack), 2)	\bigl\lbrack0, 6, 8, 6\bigr\rbrack
 the-3-argument-form-keeps-only-the-4-least	\mathrm{IntegerDigits}(6\,345\,354, 10, 4)	\bigl\lbrack5, 3, 5, 4\bigr\rbrack
 all-3-bit-words-by-threading-a-padded-form-over	\mathrm{IntegerDigits}(0..7, 2, 3)	\bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack
 the-lehmer-code-of-the-6th-permutation-of-four	\mathrm{IntegerDigits}(5, \mathrm{FactorialNumerals}, 4)	\bigl\lbrack0, 2, 1, 0\bigr\rbrack

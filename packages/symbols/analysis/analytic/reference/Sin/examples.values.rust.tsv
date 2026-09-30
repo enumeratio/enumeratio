@@ -58,6 +58,8 @@ functionsurjective-sin-x-x
 functionsingularities-sin-x-x			
 functiondiscontinuities-sin-x-x			
 matrixfunction-function-sin-1-1-list-list-5-over			
+assuming-m-in-integers-refine-sin-pi-times-m			
+assuming-m-in-integers-fullsimplify-sin-pi-times			
 threads-element-wise-over-a-list	sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
 degrees-d-converts-a-degree-measure-to-radians			
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))	1.0	

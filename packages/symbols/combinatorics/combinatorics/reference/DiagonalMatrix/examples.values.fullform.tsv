@@ -1,5 +1,6 @@
-id	in
-main-diagonal	DiagonalMatrix[List[1, 2, 3]]
-super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]
-sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]
-diagonalmatrix-list-a-b-c-d	DiagonalMatrix[List[a, b, c, d]]
+id	in	back
+main-diagonal	DiagonalMatrix[List[1, 2, 3]]	
+super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]	
+sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]	
+diagonalmatrix-list-a-b-c-d	DiagonalMatrix[List[a, b, c, d]]	
+thread-shape-diagonalmatrix-list-k-eq-length	Thread[Unevaluated[Equal[Dimensions[DiagonalMatrix[list, k]], Plus[Length[list], Abs[k]]]]]	[Thread, [Unevaluated, [Equal, [Shape, [DiagonalMatrix, list, k]], [Add, [Length, list], [Abs, k]]]]]

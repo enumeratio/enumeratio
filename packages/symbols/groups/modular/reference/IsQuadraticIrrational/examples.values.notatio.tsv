@@ -11,4 +11,5 @@ a-rational-multiple-of-a-surd	<IsQuadraticIrrational><Multiply>3 <Sqrt>2</Sqrt><
 a-surd-subtracted-from-a-rational	<IsQuadraticIrrational><Subtract>1 <Sqrt>3</Sqrt></Subtract></IsQuadraticIrrational>	<True />
 isquadraticirrational-3-over-2	<IsQuadraticIrrational><Rational>3 2</Rational></IsQuadraticIrrational>	<False />
 isquadraticirrational-list-sqrt-2-sqrt-3-2	<IsQuadraticIrrational><List><Sqrt>2</Sqrt> <Sqrt>3</Sqrt> 2</List></IsQuadraticIrrational>	<List>True True False</List>
+isquadraticirrational-s	<IsQuadraticIrrational>s</IsQuadraticIrrational>	<False />
 a-rational-is-not-irrational	<IsQuadraticIrrational><Rational>3 4</Rational></IsQuadraticIrrational>	<False />
