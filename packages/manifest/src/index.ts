@@ -22,3 +22,17 @@ export {
   plan,
   type Resolver,
 } from "./resolve.ts";
+export {
+  createRegistryResolver,
+  type DeclaringEngine,
+  type Definition,
+  definitionRegistry,
+  type Ensured,
+  manifestRegistry,
+  namespaceOf,
+  qualifiedNamesOf,
+  type Registry,
+  type RegistryResolver,
+  type Resolution,
+  searchPath,
+} from "./registry.ts";

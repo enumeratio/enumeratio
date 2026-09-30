@@ -17,6 +17,12 @@ the resolver possible (below).
   manifest doesn't know how to import anything), resolves the heads and symbols it names to
   the packages that declare them, widens to those packages' own dependencies, and declares
   them into an engine in dependency order. See [Speculative Lazy Engine](https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Engine).
+- **`createRegistryResolver` / `Registry` / `manifestRegistry` / `definitionRegistry` /
+  `searchPath`** (`src/registry.ts`) — the same, one name at a time through registries, so
+  nothing lists every name: our packages are one registry, Epsil definitions under a
+  namespace another. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  of functions, which is how Epsil's `.` already evaluates. See
+  [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 
 ## Commands
 
