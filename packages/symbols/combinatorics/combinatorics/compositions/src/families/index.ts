@@ -3,5 +3,5 @@
 // position it held before the move (§4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // -- `referenceData()`'s family order is unchanged.
-export { entries as coreEntries } from "./core.ts";
+export { families as coreFamilies } from "./core.ts";
 export { entries as compositionsEntries } from "./compositions.ts";

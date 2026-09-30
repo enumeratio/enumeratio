@@ -118,10 +118,12 @@ function render(entries: readonly Entry[]): string {
       [
         `  ${e.head}: {`,
         `    hash: ${JSON.stringify(e.hash)},`,
-        ...(e.interpreted.length === 0 ? [] : [`    interpreted: ${JSON.stringify(e.interpreted)},`]),
+        // Code keys before the `interpreted` marker: tests/compiled-families.test.ts's drift
+        // check builds its own key order the same way (code first, the marker last).
         ...OPERATIONS.flatMap((operation) =>
           e.code[operation] === undefined ? [] : [`    ${operation}: (_SYS, _) => ${e.code[operation]},`],
         ),
+        ...(e.interpreted.length === 0 ? [] : [`    interpreted: ${JSON.stringify(e.interpreted)},`]),
         "  },",
       ].join("\n"),
     )
@@ -130,7 +132,9 @@ function render(entries: readonly Entry[]): string {
 // compute-engine's JavaScript compiler. Do not edit: rerun the script. Each entry is used only
 // while \`hash\` matches its definitions; see ./epsil.ts.
 // A definition that ignores one of its inputs compiles to code that never reads it.
-/* eslint-disable no-unused-vars */
+// A \`Join\` of single-element \`List\`s (a fixed head or tail spliced onto a filtered range, e.g.
+// IntegerCompositions' boundaries) compiles to a single-element array spread.
+/* eslint-disable no-unused-vars, unicorn/no-useless-spread */
 
 export const COMPILED_FAMILIES = {
 ${body}
