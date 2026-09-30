@@ -1,2 +1,3 @@
 id	in	out
 grouporder-dihedralgroup-10	\mathrm{GroupOrder}(\mathrm{DihedralGroup}(10))	20
+groupelements-dihedralgroup-4	\mathrm{GroupElements}(\mathrm{DihedralGroup}(4))	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1}), \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{3}), \mathrm{GroupBasis}(\text{s0}), \mathrm{GroupBasis}(\text{s1}), \mathrm{GroupBasis}(\text{s2}), \mathrm{GroupBasis}(\text{s3})\bigr\rbrack

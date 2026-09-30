@@ -8,3 +8,5 @@ negative-bounds-the-last-two-elements	Part[List[a, b, c, d, f], Span[-2, -1]]	{d
 spans-at-two-levels-cut-out-a-submatrix	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]	{{4, 5}, {7, 8}}	\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)[[2\text{;;}3,1\text{;;}2]]	\left( \begin{array}{cc}  4 & 5 \\  7 & 8 \\ \end{array} \right)
 list-a-b-c-d-exponentiale-f-g-h-list-span-2-neg	Part[List[a, b, c, d, E, f, g, h], Span[2, -3]]	{b, c, d, E, f}	\{a,b,c,d,e,f,g,h\}[[2\text{;;}-3]]	\{b,c,d,e,f\}
 characterrange-a-z-list-span-1-5	Part[CharacterRange["a", "z"], Span[1, 5]]	{"a", "b", "c", "d", "e"}	\text{CharacterRange}[\text{a},\text{z}][[1\text{;;}5]]	\{\text{a},\text{b},\text{c},\text{d},\text{e}\}
+range-1-10-list-span-3-neg-1	Part[Range[1, 10], Span[3, -1]]	{3, 4, 5, 6, 7, 8, 9, 10}	\text{Range}[1,10][[3\text{;;}-1]]	\{3,4,5,6,7,8,9,10\}
+range-1-10-list-span-1-neg-1-2	Part[Range[1, 10], Span[1, -1, 2]]	{1, 3, 5, 7, 9}	\text{Range}[1,10][[1\text{;;}-1\text{;;}2]]	\{1,3,5,7,9\}

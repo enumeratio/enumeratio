@@ -1,2 +1,6 @@
 id	in
 grouporder-cyclicgroup-10	order((enumeratio_cyclic(cyclic_group(PermGroup, 10), 10)).G)
+groupelements-cyclicgroup-10	
+groupelements-cyclicgroup-1	
+groupelements-cyclicgroup-2	
+groupelements-cyclicgroup-3	

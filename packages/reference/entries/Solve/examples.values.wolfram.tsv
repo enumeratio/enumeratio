@@ -2,6 +2,9 @@ id	in	out	tex.in	tex.out	verdict
 solve-x-2-1-for-x	Solve[(Power[x, 2] == 1), x]	{{x -> -1}, {x -> 1}}	\text{Solve}\left[x^2=1,x\right]	\{\{x\to -1\},\{x\to 1\}\}	disagree
 solve-x-2-4-0-a-bare-expression-reads-as-0	Solve[Subtract[Power[x, 2], 4], x]	Solve[-4 + x^2, x]	\text{Solve}\left[x^2-4,x\right]	\text{Solve}\left[x^2-4,x\right]	disagree
 solve-x-1-0-a-single-real-root	Solve[(Plus[x, 1] == 0), x]	{{x -> -1}}	\text{Solve}[x+1=0,x]	\{\{x\to -1\}\}	disagree
+solve-x-pow-2-plus-a-times-x-plus-1-eq-0-x	Solve[(Plus[Power[x, 2], Times[a, x], 1] == 0), x]	{{x -> (-a - Sqrt[-4 + a^2])/2}, {x -> (-a + Sqrt[-4 + a^2])/2}}			disagree
+solve-x-pow-2-plus-2-times-x-pow-2-minus-2-eq-0	Solve[(Times[Plus[Power[x, 2], 2], Plus[Power[x, 2], -2]] == 0), Element[x, Reals]]	{{x -> -Sqrt[2]}, {x -> Sqrt[2]}}			disagree
 solve-x-2-1-0-yields-complex-roots	Solve[(Plus[Power[x, 2], 1] == 0), x]	{{x -> -I}, {x -> I}}	\text{Solve}\left[x^2+1=0,x\right]	\{\{x\to -i\},\{x\to i\}\}	disagree
 solve-x-eq-1-x-eq-2-x	Solve[And[(x == 1), (x == 2)], x]	{}	\text{Solve}[x=1\land x=2,x]	\{\}	
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	Solve[(Plus[Times[a, Power[x, 2]], Times[b, x], c] == 0), x]	{{x -> (-b - Sqrt[b^2 - 4*a*c])/(2*a)}, {x -> (-b + Sqrt[b^2 - 4*a*c])/(2*a)}}			disagree
 a-2-2-linear-system-each-solution-is-a-tuple	Solve[List[(Plus[x, y] == 3), (Subtract[x, y] == 1)], List[x, y]]	{{x -> 2, y -> 1}}	\text{Solve}[\{x+y=3,x-y=1\},\{x,y\}]	\{\{x\to 2,y\to 1\}\}	disagree

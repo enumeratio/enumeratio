@@ -1,2 +1,6 @@
-id	section	role	expr	expected
-grouporder-cyclicgroup-10			[GroupOrder, [CyclicGroup, 10]]	10
+id	section	role	expr	expected	wolfram.kind	wolfram.note
+grouporder-cyclicgroup-10			[GroupOrder, [CyclicGroup, 10]]	10		
+groupelements-cyclicgroup-10			[GroupElements, [CyclicGroup, 10]]	[List, [GroupBasis, "'0'"], [GroupBasis, "'1'"], [GroupBasis, "'2'"], [GroupBasis, "'3'"], [GroupBasis, "'4'"], [GroupBasis, "'5'"], [GroupBasis, "'6'"], [GroupBasis, "'7'"], [GroupBasis, "'8'"], [GroupBasis, "'9'"]]	convention	GroupElements returns our own abstract generator-power labels (GroupBasis(k)) rather than concrete Cycles(...) permutation representations -- a representation choice for how CyclicGroup/DihedralGroup elements print, not a value bug. Same cause for all CyclicGroup/DihedralGroup rows in this batch.
+groupelements-cyclicgroup-1	Scope		[GroupElements, [CyclicGroup, 1]]	[List, [GroupBasis, "'0'"]]	convention	Same GroupBasis-vs-Cycles representation choice as groupelements-cyclicgroup-10.
+groupelements-cyclicgroup-2	Scope		[GroupElements, [CyclicGroup, 2]]	[List, [GroupBasis, "'0'"], [GroupBasis, "'1'"]]	convention	Same GroupBasis-vs-Cycles representation choice as groupelements-cyclicgroup-10.
+groupelements-cyclicgroup-3	Scope		[GroupElements, [CyclicGroup, 3]]	[List, [GroupBasis, "'0'"], [GroupBasis, "'1'"], [GroupBasis, "'2'"]]	convention	Same GroupBasis-vs-Cycles representation choice as groupelements-cyclicgroup-10.

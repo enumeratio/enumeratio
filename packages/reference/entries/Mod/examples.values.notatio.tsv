@@ -71,6 +71,7 @@ neg-27-over-10-mod-23-over-5	<Mod><Rational>-27 10</Rational> <Rational>23 5</Ra
 pi-mod-exponentiale	<Mod>Pi ExponentialE</Mod>	<Add>Pi <Negate>ExponentialE</Negate></Add>
 0-mod-2	<Mod>0 2</Mod>	<ToExpression>0</ToExpression>
 1-mod-1	<Mod>1 1</Mod>	<ToExpression>0</ToExpression>
+15-mod-7	<Mod>15 7</Mod>	<ToExpression>1</ToExpression>
 division-by-a-0-modulus-yields-nan-rather-than	<Mod>5 0</Mod>	<Indeterminate />
 periodicity-with-a-zero-modulus-on-one-side	<Equal><Mod>35 13</Mod> <Mod><Add>17 <Multiply>3 5</Multiply></Add> 0</Mod></Equal>	<False />
 rounding-ties-to-even-means-1-and-1-both-appear	<List><Mod><Complex>1 2</Complex> 2</Mod> <Mod><Complex>3 2</Complex> 2</Mod></List>	<List>1 -1</List>

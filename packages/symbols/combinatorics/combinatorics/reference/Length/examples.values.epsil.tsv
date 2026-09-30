@@ -17,6 +17,7 @@ length-x	length(x)	0
 length-123-456	length(123_456)	0
 length-1-over-10	length(1 / 10)	0
 length-3-plus-i	length(3 + i)	0
+length-string	length("string")	0
 length-list-list-a-b-c-list-d-exponentiale-f	length([[a, b, c], [d, exponentialE, f]])	2
 length-x-pow-9-plus-x-pow-2-plus-x-plus-1	length(x ^ 9 + x ^ 2 + x + 1)	4
 length-integerdigits-1-000-factorial	length(integerDigits(1_000!))	2_568
@@ -26,3 +27,4 @@ length-filter-issquarefree-past-iteration-budget	length(filter(Range(1, 1_679), 
 length-1-over-3	length(1 / 3)	0
 length-2-plus-i	length(2 + i)	0
 length-7	length(7)	0
+length-sqrt-7	length(sqrt(7))	0

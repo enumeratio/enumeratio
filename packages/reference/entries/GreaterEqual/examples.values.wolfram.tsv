@@ -1,7 +1,9 @@
-id	in	out	tex.in	tex.out
-0-lt-eq-1	LessEqual[0, 1]	True	0\leq 1	\text{True}
-4-over-3-lt-eq-3-over-2	LessEqual[Rational[4, 3], Rational[3, 2]]	True	\frac{4}{3}\leq \frac{3}{2}	\text{True}
-pi-lt-eq-n-pi-20	LessEqual[Pi, N[Pi, 20]]	True	\pi \leq N[\pi ,20]	\text{True}
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\leq e^{\pi }	\text{True}
-sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	LessEqual[Sqrt[Plus[5, Times[2, Sqrt[6]]]], Plus[Sqrt[2], Sqrt[3]]]	True	\sqrt{5+2 \sqrt{6}}\leq \sqrt{2}+\sqrt{3}	\text{True}
-refine-sqrt-x-pow-2-x-gt-eq-0	Refine[Sqrt[Power[x, 2]], GreaterEqual[x, 0]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Refine}\left[\sqrt{x^2},x\geq 0\right]-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{7}{3}\right)^2},\frac{7}{3}\geq 0\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(-\frac{11}{5}\right)^2},-\frac{11}{5}\geq 0\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{13}{4}\right)^2},\frac{13}{4}\geq 0\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+id	in	out	tex.in	tex.out	verdict
+0-lt-eq-1	LessEqual[0, 1]	True	0\leq 1	\text{True}	
+4-over-3-lt-eq-3-over-2	LessEqual[Rational[4, 3], Rational[3, 2]]	True	\frac{4}{3}\leq \frac{3}{2}	\text{True}	
+pi-lt-eq-n-pi-20	LessEqual[Pi, N[Pi, 20]]	True	\pi \leq N[\pi ,20]	\text{True}	
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\leq e^{\pi }	\text{True}	
+sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	LessEqual[Sqrt[Plus[5, Times[2, Sqrt[6]]]], Plus[Sqrt[2], Sqrt[3]]]	True	\sqrt{5+2 \sqrt{6}}\leq \sqrt{2}+\sqrt{3}	\text{True}	
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	LessEqual[Times[Pi, Plus[1, Times[256, Power[10, -20]]]], N[Pi, 20]]	False			disagree
+x-lt-eq-x	LessEqual[x, x]	x <= x			disagree
+refine-sqrt-x-pow-2-x-gt-eq-0	Refine[Sqrt[Power[x, 2]], GreaterEqual[x, 0]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Refine}\left[\sqrt{x^2},x\geq 0\right]-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{7}{3}\right)^2},\frac{7}{3}\geq 0\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(-\frac{11}{5}\right)^2},-\frac{11}{5}\geq 0\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{13}{4}\right)^2},\frac{13}{4}\geq 0\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	

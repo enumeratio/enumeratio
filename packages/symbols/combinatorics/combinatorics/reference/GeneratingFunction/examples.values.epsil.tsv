@@ -6,3 +6,4 @@ fixed-k-binomial	GeneratingFunction(binomial(n, 3), n, x)	x ^ 3 / (x ^ 4 - 4 * x
 geometric	GeneratingFunction(2 ^ n, n, x)	1 / (-2 * x + 1)
 generatingfunction-1-n-x	GeneratingFunction(1, n, x)	1 / (-x + 1)
 no-closed-form	GeneratingFunction(n!, n, x)	GeneratingFunction(n!, n, x)
+list-generatingfunction-n-n-z-generatingfunction	[GeneratingFunction(n, n, z), GeneratingFunction(n ^ 2, n, z)]	[z / (z ^ 2 - 2z + 1), (z ^ 2 + z) / (-z ^ 3 + 3 * z ^ 2 - 3z + 1)]

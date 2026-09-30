@@ -10,4 +10,5 @@ a-plain-integer	Scope		[IsQuadraticIrrational, 5]	False	a plain integer
 a-rational-multiple-of-a-surd	Scope		[IsQuadraticIrrational, [Multiply, 3, [Sqrt, 2]]]	True	a rational multiple of a surd
 a-surd-subtracted-from-a-rational	Scope		[IsQuadraticIrrational, [Subtract, 1, [Sqrt, 3]]]	True	a surd subtracted from a rational
 isquadraticirrational-3-over-2	Scope		[IsQuadraticIrrational, [Rational, 3, 2]]	False	
+isquadraticirrational-list-sqrt-2-sqrt-3-2	Scope		[IsQuadraticIrrational, [List, [Sqrt, 2], [Sqrt, 3], 2]]	[List, True, True, False]	
 a-rational-is-not-irrational	Possible issues		[IsQuadraticIrrational, [Rational, 3, 4]]	False	a rational is not irrational

@@ -28,4 +28,5 @@ catalannumber-neg-7	\mathrm{CatalanNumber}(-7)	0
 catalannumber-neg-6	\mathrm{CatalanNumber}(-6)	0
 catalannumber-neg-4	\mathrm{CatalanNumber}(-4)	0
 catalannumber-neg-3	\mathrm{CatalanNumber}(-3)	0
+differencerootreduce-catalannumber-k-k	\mathrm{DifferenceRootReduce}(\mathrm{CatalanNumber}(k), k)	\mathrm{DifferenceRoot}((y, n)\mapsto\begin{cases}(n+2)y(n+1)-2(2n+1)y(n)=0\\y(0)=1\end{cases})\lhd k
 they-grow-fast-c-15-already-passes-nine-million	\mathrm{CatalanNumber}(15)	9\,694\,845

@@ -4,4 +4,6 @@ id	in	out
 pi-lt-eq-n-pi-20	pi <= N(pi, 20)	True
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	pi ^ exponentialE <= exponentialE ^ pi	True
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	sqrt(5 + 2 * sqrt(6)) <= sqrt(2) + sqrt(3)	True
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	pi * (1 + 256 * 10 ^ -20) <= N(pi, 20)	True
+x-lt-eq-x	x <= x	True
 refine-sqrt-x-pow-2-x-gt-eq-0	Refine(sqrt(x ^ 2), x >= 0)	x

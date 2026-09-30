@@ -28,4 +28,5 @@ catalannumber-neg-7	<CatalanNumber>-7</CatalanNumber>	<ToExpression>0</ToExpress
 catalannumber-neg-6	<CatalanNumber>-6</CatalanNumber>	<ToExpression>0</ToExpression>
 catalannumber-neg-4	<CatalanNumber>-4</CatalanNumber>	<ToExpression>0</ToExpression>
 catalannumber-neg-3	<CatalanNumber>-3</CatalanNumber>	<ToExpression>0</ToExpression>
+differencerootreduce-catalannumber-k-k	<DifferenceRootReduce><CatalanNumber>k</CatalanNumber> k</DifferenceRootReduce>	<Apply><DifferenceRoot><Function><Block><List><Equal><Add><Multiply>-2 <Add><Multiply>2 n</Multiply> 1</Add> <y>n</y></Multiply> <Multiply><Add>n 2</Add> <y><Add>n 1</Add></y></Multiply></Add> 0</Equal> <Equal><y>0</y> 1</Equal></List></Block> y n</Function></DifferenceRoot> k</Apply>
 they-grow-fast-c-15-already-passes-nine-million	<CatalanNumber>15</CatalanNumber>	<ToExpression>9694845</ToExpression>

@@ -5,3 +5,5 @@ a-plain-symbol-is-not-numberq	\mathrm{NumberQ}(x)	\mathrm{False}
 numberq-n-sqrt-2	\mathrm{NumberQ}(N(\sqrt{2}))	\mathrm{True}
 list-numberq-c-numberq-d	\bigl\lbrack\mathrm{NumberQ}(c), \mathrm{NumberQ}(d)\bigr\rbrack	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack
 list-numberq-o-numberq-u	\bigl\lbrack\mathrm{NumberQ}(o), \mathrm{NumberQ}(u)\bigr\rbrack	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack
+numberq-sqrt-2	\mathrm{NumberQ}(\sqrt{2})	\mathrm{True}
+numberq-positiveinfinity	\mathrm{NumberQ}(\infty)	\mathrm{True}

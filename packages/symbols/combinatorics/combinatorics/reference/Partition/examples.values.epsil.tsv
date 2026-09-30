@@ -10,6 +10,7 @@ partition-list-a-b-c-d-exponentiale-f-5-1-list	partition([a, b, c, d, exponentia
 partition-list-a-b-c-d-exponentiale-f-3-1-list-1	partition([a, b, c, d, exponentialE, f], 3, 1, [1, 1], pad)	"[\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n  [exponentialE, f, pad],\n  [f, pad, pad],\n]"
 partition-list-a-b-c-d-exponentiale-f-3-1-list	partition([a, b, c, d, exponentialE, f], 3, 1, [-1, -1], pad)	"[\n  [pad, pad, a],\n  [pad, a, b],\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n]"
 partition-list-a-b-c-d-exponentiale-f-3-1-list-2	partition([a, b, c, d, exponentialE, f], 3, 1, [-1, 1], pad)	"[\n  [pad, pad, a],\n  [pad, a, b],\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n  [exponentialE, f, pad],\n  [f, pad, pad],\n]"
+partition-list-a-b-c-d-exponentiale-f-4-1-list	partition([a, b, c, d, exponentialE, f], 4, 1, [-1, 1], [pad, dap])	"[\n  [dap, pad, dap, a],\n  [pad, dap, a, b],\n  [dap, a, b, c],\n  [a, b, c, d],\n  [b, c, d, exponentialE],\n  [c, d, exponentialE, f],\n  [d, exponentialE, f, pad],\n  [exponentialE, f, pad, dap],\n  [f, pad, dap, pad],\n]"
 a-third-offset-argument-produces-overlapping	partition([1, 2, 3, 4, 5, 6], 3, 1)	[[1, 2, 3], [2, 3, 4], [3, 4, 5], [4, 5, 6]]
 windows-of-3-with-offset-2-share-one-element	partition([1, 2, 3, 4, 5, 6, 7], 3, 2)	[[1, 2, 3], [3, 4, 5], [5, 6, 7]]
 an-offset-larger-than-the-size-skips-elements	partition([1, 2, 3, 4, 5, 6, 7], 2, 3)	[[1, 2], [4, 5]]
@@ -28,5 +29,13 @@ partition-list-a-b-c-d-exponentiale-f-g-3-1-li-2	partition([a, b, c, d, exponent
 partition-list-a-b-c-d-exponentiale-f-g-3-1-li-3	partition([a, b, c, d, exponentialE, f, g], 3, 1, [2, 1], x)	"[\n  [x, a, b],\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n  [exponentialE, f, g],\n  [f, g, x],\n  [g, x, x],\n]"
 partition-list-a-b-c-d-exponentiale-f-g-h-2-3	partition([a, b, c, d, exponentialE, f, g, h], 2, 3)	[[a, b], [d, exponentialE], [g, h]]
 partition-list-a-b-c-d-exponentiale-f-g-3-3-list	partition([a, b, c, d, exponentialE, f, g], 3, 3, [5, -5], x)	[[x, x, x], [x, a, b], [c, d, exponentialE], [f, g, x], [x, x, x]]
+partition-list-a-b-c-d-exponentiale-f-g-3-3-1	partition([a, b, c, d, exponentialE, f, g], 3, 3, 1)	[[a, b, c], [d, exponentialE, f], [g, a, b]]
+partition-list-a-b-c-d-exponentiale-f-g-3-3-1-x	partition([a, b, c, d, exponentialE, f, g], 3, 3, 1, x)	[[a, b, c], [d, exponentialE, f], [g, x, x]]
+partition-list-a-b-c-d-exponentiale-f-g-3-3-1-2	partition([a, b, c, d, exponentialE, f, g], 3, 3, 1, [x, y, z])	[[a, b, c], [d, exponentialE, f], [g, y, z]]
+partition-list-a-b-c-d-exponentiale-f-g-3-3-1-3	partition([a, b, c, d, exponentialE, f, g], 3, 3, 1, [])	[[a, b, c], [d, exponentialE, f], [g]]
+partition-list-a-b-c-d-exponentiale-f-g-3-3-neg	partition([a, b, c, d, exponentialE, f, g], 3, 3, -1, [])	[[a], [b, c, d], [exponentialE, f, g]]
+partition-list-a-b-c-d-exponentiale-f-g-3-1-1-x	partition([a, b, c, d, exponentialE, f, g], 3, 1, 1, x)	"[\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n  [exponentialE, f, g],\n  [f, g, x],\n  [g, x, x],\n]"
+partition-list-a-b-c-d-exponentiale-f-g-3-1-neg	partition([a, b, c, d, exponentialE, f, g], 3, 1, -1, x)	"[\n  [x, x, a],\n  [x, a, b],\n  [a, b, c],\n  [b, c, d],\n  [c, d, exponentialE],\n  [d, exponentialE, f],\n  [exponentialE, f, g],\n]"
+partition-list-a-b-c-d-exponentiale-f-g-4-1-list	partition([a, b, c, d, exponentialE, f, g], 4, 1, [-1, 1], [x, y])	"[\n  [y, x, y, a],\n  [x, y, a, b],\n  [y, a, b, c],\n  [a, b, c, d],\n  [b, c, d, exponentialE],\n  [c, d, exponentialE, f],\n  [d, exponentialE, f, g],\n  [exponentialE, f, g, y],\n  [f, g, y, x],\n  [g, y, x, y],\n]"
 reshaping-a-list-of-9-into-a-3-times-3-matrix	partition([1, 2, 3, 4, 5, 6, 7, 8, 9], 3)	[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 1-5-partitioned-by-2-drops-the-ragged-remainder	partition([1, 2, 3, 4, 5], 2)	[[1, 2], [3, 4]]

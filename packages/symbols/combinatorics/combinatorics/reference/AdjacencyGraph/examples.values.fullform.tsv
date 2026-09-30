@@ -6,3 +6,4 @@ vertexlist-adjacencygraph-list-list-1-1-1-0-list	VertexList[AdjacencyGraph[List[
 vertexlist-adjacencygraph-list-a-b-c-d-list-list	VertexList[AdjacencyGraph[List[a, b, c, d], List[List[1, 1, 1, 0], List[1, 0, 1, 1], List[1, 1, 0, 1], List[0, 1, 1, 0]]]]
 adjacencygraph-list-list-0-1-1-0-list-1-0-1-1	AdjacencyGraph[List[List[0, 1, 1, 0], List[1, 0, 1, 1], List[1, 1, 0, 1], List[0, 1, 1, 0]]]
 adjacencygraph-list-list-0-1-1-1-1-list-1-0-1-1	AdjacencyGraph[List[List[0, 1, 1, 1, 1], List[1, 0, 1, 1, 1], List[1, 1, 0, 1, 1], List[1, 1, 1, 0, 1], List[1, 1, 1, 1, 0]]]
+adjacencygraph-list-list-1-1-1-list-1-0-1-list-1	AdjacencyGraph[List[List[1, 1, 1], List[1, 0, 1], List[1, 1, 1]]]

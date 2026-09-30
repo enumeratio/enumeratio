@@ -1,22 +1,23 @@
-id	section	role	expr	expected	caption
-rank-5			[Rank, 5]	0	
-rank-list-1-2-3			[Rank, [List, 1, 2, 3]]	1	
-rank-list-list-1-0-list-0-1			[Rank, [List, [List, 1, 0], [List, 0, 1]]]	2	
-rank-list-list-list-1-2-list-3-4-list-list-5-6			[Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]	3	
-symbolic-entries			[Rank, [List, [List, a, b], [List, c, d]]]	2	Symbolic entries
-a-symbol-is-a-scalar			[Rank, x]	0	A symbol is a scalar
-rectangular-arrays	Scope		[Rank, [List, [List, 1, 2, 3], [List, 4, 5, 6]]]	2	Rectangular arrays
-rank-identitymatrix-3	Scope		[Rank, [IdentityMatrix, 3]]	2	
-a-ragged-list-has-depth-1-only-its-outer-level	Scope		[Rank, [List, [List, 1, 2], [List, 3]]]	1	A ragged list has depth 1 -- only its outer level is a full array
-likewise-a-list-mixing-scalars-and-lists	Scope		[Rank, [List, 1, [List, 2, 3]]]	1	...likewise a list mixing scalars and lists
-the-empty-list-is-still-a-vector-of-length-0	Scope		[Rank, [List]]	1	The empty list is still a vector, of length 0
-and-a-1-0-matrix	Scope		[Rank, [List, [List]]]	2	...and $\{\{\}\}$ a 1×0 matrix
-a-2-3-grid-of-unevaluated-calls-still-reads-as-a	Scope		[Rank, [Tabulate, f, 2, 3]]	2	A 2×3 grid of unevaluated calls still reads as a matrix, from its dimensions alone
-rank-list-list-a-b-list-c	Scope		[Rank, [List, [List, a, b], [List, c]]]	1	
-the-length-of-the-array-s-shape	Properties		[Equal, [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]], [Length, [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]]]	True	The length of the array's shape
-rank-list-list-a-b-list-c-d-eq-length-shape-list	Properties		[Equal, [Rank, [List, [List, a, b], [List, c, d]]], [Length, [Shape, [List, [List, a, b], [List, c, d]]]]]	True	
-rank-1	Properties		[Rank, 1]	0	
-rank-list-1-2	Properties		[Rank, [List, 1, 2]]	1	
-rank-list-list-1-2	Properties		[Rank, [List, [List, 1, 2]]]	2	
-rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	Properties		[Equal, [Rank, [Array, a, [List, 2, 1, 4, 3]]], [Length, [List, 2, 1, 4, 3]]]	True	
-a-singular-2-2-matrix-still-has-rank-2-its	Possible issues		[Rank, [List, [List, 1, 2], [List, 2, 4]]]	2	A singular 2×2 matrix still has Rank 2; its [[MatrixRank]] is 1
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+rank-5			[Rank, 5]	0			
+rank-list-1-2-3			[Rank, [List, 1, 2, 3]]	1			
+rank-list-list-1-0-list-0-1			[Rank, [List, [List, 1, 0], [List, 0, 1]]]	2			
+rank-list-list-list-1-2-list-3-4-list-list-5-6			[Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]	3			
+symbolic-entries			[Rank, [List, [List, a, b], [List, c, d]]]	2	Symbolic entries		
+a-symbol-is-a-scalar			[Rank, x]	0	A symbol is a scalar		
+rectangular-arrays	Scope		[Rank, [List, [List, 1, 2, 3], [List, 4, 5, 6]]]	2	Rectangular arrays		
+rank-identitymatrix-3	Scope		[Rank, [IdentityMatrix, 3]]	2			
+a-ragged-list-has-depth-1-only-its-outer-level	Scope		[Rank, [List, [List, 1, 2], [List, 3]]]	1	A ragged list has depth 1 -- only its outer level is a full array		
+likewise-a-list-mixing-scalars-and-lists	Scope		[Rank, [List, 1, [List, 2, 3]]]	1	...likewise a list mixing scalars and lists		
+the-empty-list-is-still-a-vector-of-length-0	Scope		[Rank, [List]]	1	The empty list is still a vector, of length 0		
+and-a-1-0-matrix	Scope		[Rank, [List, [List]]]	2	...and $\{\{\}\}$ a 1×0 matrix		
+a-2-3-grid-of-unevaluated-calls-still-reads-as-a	Scope		[Rank, [Tabulate, f, 2, 3]]	2	A 2×3 grid of unevaluated calls still reads as a matrix, from its dimensions alone		
+rank-list-list-a-b-list-c	Scope		[Rank, [List, [List, a, b], [List, c]]]	1			
+the-length-of-the-array-s-shape	Properties		[Equal, [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]], [Length, [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]]]	True	The length of the array's shape		
+rank-list-list-a-b-list-c-d-eq-length-shape-list	Properties		[Equal, [Rank, [List, [List, a, b], [List, c, d]]], [Length, [Shape, [List, [List, a, b], [List, c, d]]]]]	True			
+rank-1	Properties		[Rank, 1]	0			
+rank-list-1-2	Properties		[Rank, [List, 1, 2]]	1			
+rank-list-list-1-2	Properties		[Rank, [List, [List, 1, 2]]]	2			
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	Properties		[Equal, [Rank, [Array, a, [List, 2, 1, 4, 3]]], [Length, [List, 2, 1, 4, 3]]]	True			
+a-singular-2-2-matrix-still-has-rank-2-its	Possible issues		[Rank, [List, [List, 1, 2], [List, 2, 4]]]	2	A singular 2×2 matrix still has Rank 2; its [[MatrixRank]] is 1		
+rank-sqrt-2	Possible issues		[Rank, [Sqrt, 2]]	0		convention	same Sqrt-folds-to-a-numeric-literal representational difference as Length/length-sqrt-7 — ArrayDepth reads 0 operands on our numeric-literal Sqrt(2) where Wolfram's Power[2,1/2] structurally has 1

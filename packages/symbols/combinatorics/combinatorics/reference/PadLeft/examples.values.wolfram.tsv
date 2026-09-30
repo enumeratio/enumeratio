@@ -3,5 +3,9 @@ padded-with-zeros-on-the-left	PadLeft[List[1, 2, 3], 5]	{0, 0, 1, 2, 3}	\text{Pa
 a-padding-element	PadLeft[List[1, 2, 3], 5, x]	{x, x, 1, 2, 3}	\text{PadLeft}[\{1,2,3\},5,x]	\{x,x,1,2,3\}
 padleft-list-a-b-c-10	PadLeft[List[a, b, c], 10]	{0, 0, 0, 0, 0, 0, 0, a, b, c}	\text{PadLeft}[\{a,b,c\},10]	\{0,0,0,0,0,0,0,a,b,c\}
 padleft-list-a-b-c-10-x	PadLeft[List[a, b, c], 10, x]	{x, x, x, x, x, x, x, a, b, c}	\text{PadLeft}[\{a,b,c\},10,x]	\{x,x,x,x,x,x,x,a,b,c\}
+padleft-list-a-b-c-10-list-x-y-z	PadLeft[List[a, b, c], 10, List[x, y, z]]	{z, x, y, z, x, y, z, a, b, c}	\text{PadLeft}[\{a,b,c\},10,\{x,y,z\}]	\{z,x,y,z,x,y,z,a,b,c\}
 a-shorter-length-drops-elements-from-the-left	PadLeft[List[1, 2, 3, 4, 5], 3]	{3, 4, 5}	\text{PadLeft}[\{1,2,3,4,5\},3]	\{3,4,5\}
 with-no-length-a-ragged-array-is-padded-to-a	PadLeft[List[List[1], List[2, 3]]]	{{0, 1}, {2, 3}}	\text{PadLeft}[\{\{1\},\{2,3\}\}]	\left( \begin{array}{cc}  0 & 1 \\  2 & 3 \\ \end{array} \right)
+padleft-list-a-b-c-neg-10	PadLeft[List[a, b, c], -10]	{a, b, c, 0, 0, 0, 0, 0, 0, 0}	\text{PadLeft}[\{a,b,c\},-10]	\{a,b,c,0,0,0,0,0,0,0\}
+padleft-list-a-b-c-7-list-list-u-v	PadLeft[List[a, b, c], 7, List[List[u, v]]]	{{u, v}, {u, v}, {u, v}, {u, v}, a, b, c}	\text{PadLeft}\left[\{a,b,c\},7,\left( \begin{array}{cc}  u & v \\ \end{array} \right)\right]	\{\{u,v\},\{u,v\},\{u,v\},\{u,v\},a,b,c\}
+padleft-list-a-b-c-7-list-u-v	PadLeft[List[a, b, c], 7, List[u, v]]	{v, u, v, u, a, b, c}	\text{PadLeft}[\{a,b,c\},7,\{u,v\}]	\{v,u,v,u,a,b,c\}

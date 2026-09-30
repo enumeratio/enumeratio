@@ -16,3 +16,4 @@ discreteratio-fallingfactorial-x-a-1-times	"DiscreteRatio(FallingFactorial(x, a_
 discreteratio-catalannumber-x-x	DiscreteRatio(catalanNumber(x), x)	catalanNumber(x + 1) / catalanNumber(x)
 list-discreteratio-f-n-discreteratio-f-k	[DiscreteRatio(f, n), DiscreteRatio(f, k)]	[1, 1]
 discreteratio-gammaregularized-n-z-n	DiscreteRatio(gammaRegularized(n, z), n)	gammaRegularized(n + 1, z) / gammaRegularized(n, z)
+list-discreteratio-binomial-n-k-n-discreteratio	[DiscreteRatio(binomial(n, k), n), DiscreteRatio(binomial(n, k), k)]	[binomial(n + 1, k) / binomial(n, k), binomial(n, k + 1) / binomial(n, k)]

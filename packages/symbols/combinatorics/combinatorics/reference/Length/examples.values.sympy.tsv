@@ -17,6 +17,7 @@ length-x	(len(Symbol("x")) if hasattr(Symbol("x"), '__len__') else (len(Symbol("
 length-123-456	(len(123456) if hasattr(123456, '__len__') else (len(123456.args) if hasattr(123456, 'args') else 0))	
 length-1-over-10	(len(Rational(1, 10)) if hasattr(Rational(1, 10), '__len__') else (len(Rational(1, 10).args) if hasattr(Rational(1, 10), 'args') else 0))	
 length-3-plus-i	(len((3 + 1*I)) if hasattr((3 + 1*I), '__len__') else (len((3 + 1*I).args) if hasattr((3 + 1*I), 'args') else 0))	
+length-string	(len("string") if hasattr("string", '__len__') else (len("string".args) if hasattr("string", 'args') else 0))	
 length-list-list-a-b-c-list-d-exponentiale-f	(len([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), E, Symbol("f")]]) if hasattr([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), E, Symbol("f")]], '__len__') else (len([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), E, Symbol("f")]].args) if hasattr([[Symbol("a"), Symbol("b"), Symbol("c")], [Symbol("d"), E, Symbol("f")]], 'args') else 0))	
 length-x-pow-9-plus-x-pow-2-plus-x-plus-1	(len(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1)) if hasattr(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1), '__len__') else (len(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1).args) if hasattr(((S(Symbol("x"))**9) + (S(Symbol("x"))**2) + Symbol("x") + 1), 'args') else 0))	
 length-integerdigits-1-000-factorial		
@@ -26,3 +27,4 @@ length-filter-issquarefree-past-iteration-budget
 length-1-over-3	(len(Rational(1, 3)) if hasattr(Rational(1, 3), '__len__') else (len(Rational(1, 3).args) if hasattr(Rational(1, 3), 'args') else 0))	
 length-2-plus-i	(len((2 + 1*I)) if hasattr((2 + 1*I), '__len__') else (len((2 + 1*I).args) if hasattr((2 + 1*I), 'args') else 0))	
 length-7	(len(7) if hasattr(7, '__len__') else (len(7.args) if hasattr(7, 'args') else 0))	
+length-sqrt-7	(len(sqrt(7)) if hasattr(sqrt(7), '__len__') else (len(sqrt(7).args) if hasattr(sqrt(7), 'args') else 0))	

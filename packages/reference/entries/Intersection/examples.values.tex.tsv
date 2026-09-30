@@ -9,5 +9,6 @@ the-divisors-common-to-45-and-78	\mathrm{Divisors}(45)\cap\mathrm{Divisors}(78)	
 intersection-is-idempotent-a-cap-a-a	\lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace	\top
 the-same-inclusion-exclusion-count-rearranged-a	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\top
 intersecting-with-the-empty-set-gives-the-empty	\bigl\lbrack1, 2, 3\bigr\rbrack\cap\emptyset	\emptyset
+intersection-list-a-b-c-list-d-exponentiale-f	\bigl\lbrack a, b, c\bigr\rbrack\cap\bigl\lbrack d, e, f\bigr\rbrack	\emptyset
 disjoint-collections-intersect-to-the-special	\operatorname{List}(1, 2)\cap\operatorname{List}(3, 4)	\emptyset
 the-result-keeps-the-order-elements-were-met-in	\bigl\lbrack c, b, a\bigr\rbrack\cap\operatorname{List}(a, b)	\lbrace b, a\rbrace

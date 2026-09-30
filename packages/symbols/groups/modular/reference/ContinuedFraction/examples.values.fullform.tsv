@@ -16,6 +16,7 @@ a-cube-root-algebraic-degree-3-not-periodic-so-a	ContinuedFraction[Power[2, Rati
 symbolic-terms-build-the-nested-fraction-left	FromContinuedFraction[List[a, b, c]]	
 25-terms-past-the-double-precision-wall	ContinuedFraction[GoldenRatio, 25]	
 continuedfraction-n-pi	ContinuedFraction[N[Pi]]	
+continuedfraction-n-pi-20	ContinuedFraction[N[Pi, 20]]	
 continuedfraction-sqrt-exponentiale-25	ContinuedFraction[Sqrt[E], 25]	
 n-root-product-continuedfraction-pi-1-000-1-000	N[Power[Apply[Times, ContinuedFraction[Pi, 1000]], Divide[1, 1000]]]	[N, [Power, [Product, [ContinuedFraction, Pi, 1000]], [Divide, 1, 1000]]]
 continuedfraction-exponentiale-pow-sqrt-163	ContinuedFraction[Power[E, Times[Sqrt[163], Pi]], 10]	

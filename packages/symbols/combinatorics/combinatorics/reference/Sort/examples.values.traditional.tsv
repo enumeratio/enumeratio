@@ -3,6 +3,7 @@ sort-list-3-1-2
 sort-list-4-2-5-1-3		
 symbols-sort-alphabetically		
 sort-association-orders-by-value		
+sort-list-cat-fish-catfish-cat		
 a-custom-comparator-sorts-in-a-different-order		
 a-list-of-strings-sorts-lexicographically		
 integers-rationals-and-floats-together-sort-by		
@@ -16,7 +17,9 @@ sort-list-neg-11-10-2-1-neg-4
 sort-join-ln-range-1-10-sqrt-range-1-10-less		
 sort-list-aa-abb-ba-b-aaa		
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt		
+sort-join-ln-range-1-10-sqrt-range-1-10		
 sort-is-idempotent-sorting-an-already-sorted	\mathrm{Sort}(\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}
 sort-c-at-c-ordering-c-see-ordering-and-at	\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\bigl\lbrack3, 1, 2\bigr\rbrack[\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)]	\mathrm{True}
 the-result-doesn-t-depend-on-the-input-order	\mathrm{Sort}(\mathrm{Reverse}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}
 the-empty-list-sorts-to-itself		
+sort-list-positiveinfinity-sqrt-2-1-2		

@@ -1,8 +1,10 @@
-id	in	out
-4-eq-4	4 == 4	True
-n-pi-20-eq-pi	N(pi, 20) == pi	True
-sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	sqrt(2) + sqrt(3) == sqrt(5 + 2 * sqrt(6))	True
-x-eq-x	x == x	True
-3-eq-3-eq-3	3 == 3 == 3	True
-list-1-2-eq-list-1-2	[1, 2] == [1, 2]	True
-list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	[x == x, x == y, sqrt(2) + sqrt(3) == sqrt(5 + 2 * sqrt(6)), pi == N(pi)]	[True, x == y, True, True]
+id	in	out	back
+4-eq-4	4 == 4	True	
+n-pi-20-eq-pi	N(pi, 20) == pi	True	
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	sqrt(2) + sqrt(3) == sqrt(5 + 2 * sqrt(6))	True	
+x-eq-x	x == x	True	
+3-eq-3-eq-3	3 == 3 == 3	True	
+list-1-2-eq-list-1-2	[1, 2] == [1, 2]	True	
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	N(pi, 20) == pi * (1 + 256 * 10 ^ -20)	True	
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	[x == x, x == y, sqrt(2) + sqrt(3) == sqrt(5 + 2 * sqrt(6)), pi == N(pi)]	[True, x == y, True, True]	
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	solve(a * x ^ 2 + b * x + c == 0, x)	[(-b + sqrt(b ^ 2 - 4 * a * c)) / (2a), (-b - sqrt(b ^ 2 - 4 * a * c)) / (2a)]	[Solve, [Equal, [Add, [Add, [Multiply, a, [Power, x, 2]], [Multiply, b, x]], c], 0], x]

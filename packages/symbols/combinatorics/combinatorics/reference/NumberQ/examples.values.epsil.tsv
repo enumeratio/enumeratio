@@ -5,3 +5,5 @@ a-plain-symbol-is-not-numberq	NumberQ(x)	False
 numberq-n-sqrt-2	NumberQ(N(sqrt(2)))	True
 list-numberq-c-numberq-d	[NumberQ(c), NumberQ(d)]	[False, False]
 list-numberq-o-numberq-u	[NumberQ(o), NumberQ(u)]	[False, False]
+numberq-sqrt-2	NumberQ(sqrt(2))	True
+numberq-positiveinfinity	NumberQ(positiveInfinity)	True

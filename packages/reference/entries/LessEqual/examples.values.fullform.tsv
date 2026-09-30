@@ -4,4 +4,6 @@ id	in
 n-pi-20-lt-eq-pi	LessEqual[N[Pi, 20], Pi]
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]
 sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	LessEqual[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]
+n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	LessEqual[N[Pi, 20], Times[Pi, Plus[1, Times[-256, Power[10, -20]]]]]
+x-lt-eq-x	LessEqual[x, x]
 refine-sqrt-x-pow-2-x-lt-eq-0	Refine[Sqrt[Power[x, 2]], LessEqual[x, 0]]

@@ -28,4 +28,5 @@ catalannumber-neg-7	Properties		[CatalanNumber, -7]	0	0	Wolfram MathematicalFunc
 catalannumber-neg-6	Properties		[CatalanNumber, -6]	0	0	Wolfram MathematicalFunctionData, CatalanNumber											
 catalannumber-neg-4	Properties		[CatalanNumber, -4]	0	0	Wolfram MathematicalFunctionData, CatalanNumber											
 catalannumber-neg-3	Properties		[CatalanNumber, -3]	0	0	Wolfram MathematicalFunctionData, CatalanNumber											
+differencerootreduce-catalannumber-k-k	Properties		[DifferenceRootReduce, [CatalanNumber, k], k]	[Apply, [DifferenceRoot, [Function, [Block, [List, [Equal, [Add, [Multiply, -2, [Add, [Multiply, 2, n], 1], [y, n]], [Multiply, [Add, n, 2], [y, [Add, n, 1]]]], 0], [Equal, [y, 0], 1]]], y, n]], k]				convention	Both recurrences are algebraically identical (-2*(2n+1) == -2-4n, coefficients just distributed differently); a different but equal closed form for the same DifferenceRoot, not a value bug.								
 they-grow-fast-c-15-already-passes-nine-million	Neat examples		[CatalanNumber, 15]	9694845			They grow fast: $C_{15}$ already passes nine million										

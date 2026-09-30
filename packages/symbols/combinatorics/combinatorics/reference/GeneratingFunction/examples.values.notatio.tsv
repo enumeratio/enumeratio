@@ -6,3 +6,4 @@ fixed-k-binomial	<GeneratingFunction><Binomial>n 3</Binomial> n x</GeneratingFun
 geometric	<GeneratingFunction><Power>2 n</Power> n x</GeneratingFunction>	<Divide>1 <Add><Multiply>-2 x</Multiply> 1</Add></Divide>
 generatingfunction-1-n-x	<GeneratingFunction>1 n x</GeneratingFunction>	<Divide>1 <Add><Negate>x</Negate> 1</Add></Divide>
 no-closed-form	<GeneratingFunction><Factorial>n</Factorial> n x</GeneratingFunction>	<GeneratingFunction><Factorial>n</Factorial> n x</GeneratingFunction>
+list-generatingfunction-n-n-z-generatingfunction	<List><GeneratingFunction>n n z</GeneratingFunction> <GeneratingFunction><Power>n 2</Power> n z</GeneratingFunction></List>	<List><Divide>z <Add><Power>z 2</Power> <Multiply>-2 z</Multiply> 1</Add></Divide> <Divide><Add><Power>z 2</Power> z</Add> <Add><Negate><Power>z 3</Power></Negate> <Multiply>3 <Power>z 2</Power></Multiply> <Multiply>-3 z</Multiply> 1</Add></Divide></List>

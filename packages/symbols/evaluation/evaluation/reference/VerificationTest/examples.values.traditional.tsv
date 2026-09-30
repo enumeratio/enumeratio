@@ -2,9 +2,12 @@ id	in	out
 input-matches-expected		
 input-evaluates-but-does-not-match-expected		
 one-argument-a-predicate-that-evaluates-to-true	\mathrm{VerificationTest}(2\gt1)	\mathrm{TestResultObject}((\text{Outcome},\text{Success}), (\text{Input},1\lt2), (\text{ExpectedOutput},\mathrm{Missing}), (\text{ActualOutput},\mathrm{True}), (\text{AbsoluteTimeUsed},0))
+verificationtest-2-plus-2-3		
+verificationtest-1-times-0-pow-neg-1		
 a-symbolic-computation-checked-against-its		
 a-testid-is-carried-into-the-result		
 a-sametest-with-a-tolerance-22-7-3-14-0-01		
 memoryconstraint-in-process-is-an-error-not-a		
 one-argument-succeeds-whenever-input-evaluates		
 the-default-comparison-is-structural		
+verificationtest-complexinfinity-1-times-0-pow		

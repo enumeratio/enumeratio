@@ -3,8 +3,11 @@ x-between-consecutive-elements	Riffle[List[a, b, c], x]	{a, x, b, x, c}	\text{Ri
 interleave-two-lists-of-the-same-length	Riffle[List[a, b, c], List[x, y, z]]	{a, x, b, y, c, z}	\text{Riffle}[\{a,b,c\},\{x,y,z\}]	\{a,x,b,y,c,z\}
 riffle-list-1-2-3-4-5-6-7-8-9-x	Riffle[List[1, 2, 3, 4, 5, 6, 7, 8, 9], x]	{1, x, 2, x, 3, x, 4, x, 5, x, 6, x, 7, x, 8, x, 9}	\text{Riffle}[\{1,2,3,4,5,6,7,8,9\},x]	\{1,x,2,x,3,x,4,x,5,x,6,x,7,x,8,x,9\}
 riffle-list-1-2-3-4-5-6-7-8-9-x-3	Riffle[List[1, 2, 3, 4, 5, 6, 7, 8, 9], x, 3]	{1, 2, x, 3, 4, x, 5, 6, x, 7, 8, x, 9}	\text{Riffle}[\{1,2,3,4,5,6,7,8,9\},x,3]	\{1,2,x,3,4,x,5,6,x,7,8,x,9\}
+riffle-list-1-2-3-4-5-6-7-8-9-list-x-y	Riffle[List[1, 2, 3, 4, 5, 6, 7, 8, 9], List[x, y]]	{1, x, 2, y, 3, x, 4, y, 5, x, 6, y, 7, x, 8, y, 9}	\text{Riffle}[\{1,2,3,4,5,6,7,8,9\},\{x,y\}]	\{1,x,2,y,3,x,4,y,5,x,6,y,7,x,8,y,9\}
 a-list-one-shorter-goes-strictly-between-the	Riffle[List[a, b, c], List[x, y]]	{a, x, b, y, c}	\text{Riffle}[\{a,b,c\},\{x,y\}]	\{a,x,b,y,c\}
 every-3rd-element-of-the-result-is-x	Riffle[List[1, 2, 3, 4, 5, 6, 7], x, 3]	{1, 2, x, 3, 4, x, 5, 6, x, 7}	\text{Riffle}[\{1,2,3,4,5,6,7\},x,3]	\{1,2,x,3,4,x,5,6,x,7\}
 a-single-element-has-nothing-to-separate	Riffle[List[a], x]	{a}	\text{Riffle}[\{a\},x]	\{a\}
 riffle-list-a-b-c-d-list-x-y-z-w	Riffle[List[a, b, c, d], List[x, y, z, w]]	{a, x, b, y, c, z, d, w}	\text{Riffle}[\{a,b,c,d\},\{x,y,z,w\}]	\{a,x,b,y,c,z,d,w\}
+riffle-range-1-10-0	Riffle[Range[1, 10], 0]	{1, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10}	\text{Riffle}[\text{Range}[1,10],0]	\{1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10\}
+riffle-range-1-10-neg-range-1-10	Riffle[Range[1, 10], Minus[Range[1, 10]]]	{1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7, 8, -8, 9, -9, 10, -10}	\text{Riffle}[\text{Range}[1,10],-\text{Range}[1,10]]	\{1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7,8,-8,9,-9,10,-10\}
 riffle-list-a-b-c-d-x	Riffle[List[a, b, c, d], x]	{a, x, b, x, c, x, d}	\text{Riffle}[\{a,b,c,d\},x]	\{a,x,b,x,c,x,d\}

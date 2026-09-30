@@ -4,3 +4,4 @@ grouped-by-absolute-value			[GatherBy, [List, -2, 1, 2, -1, 3], Abs]	[List, [Lis
 gatherby-list-1-2-3-4-5-isodd			[GatherBy, [List, 1, 2, 3, 4, 5], IsOdd]	[List, [List, 1, 3, 5], [List, 2, 4]]	
 gatherby-list-list-a-1-list-b-1-list-a-2-list-d			[GatherBy, [List, [List, a, 1], [List, b, 1], [List, a, 2], [List, d, 1], [List, b, 3]], First]	[List, [List, [List, a, 1], [List, a, 2]], [List, [List, b, 1], [List, b, 3]], [List, [List, d, 1]]]	
 pairs-grouped-by-their-last-element	Scope		[GatherBy, [List, [List, a, 1], [List, b, 2], [List, c, 1]], Last]	[List, [List, [List, a, 1], [List, c, 1]], [List, [List, b, 2]]]	Pairs grouped by their last element
+gatherby-range-1-10-function-1-mod-3-1	Applications		[GatherBy, [Range, 1, 10], [Function, [Block, [Mod, _1, 3]], _1]]	[List, [List, 1, 4, 7, 10], [List, 2, 5, 8], [List, 3, 6, 9]]	

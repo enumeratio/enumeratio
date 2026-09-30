@@ -15,10 +15,12 @@ foldlist-append-list-x-list-a-b-c-d	Applications		[FoldList, Append, [List, x], 
 foldlist-list-x-list-a-b-c-d	Applications		[FoldList, List, x, [List, a, b, c, d]]	[List, x, [List, x, a], [List, [List, x, a], b], [List, [List, [List, x, a], b], c], [List, [List, [List, [List, x, a], b], c], d]]			
 foldlist-function-10-times-1-plus-2-1-2-0-list-4	Applications		[FoldList, [Function, [Block, [Add, [Multiply, 10, _1], _2]], _1, _2], 0, [List, 4, 5, 1, 6, 7, 8]]	[List, 0, 4, 45, 451, 4516, 45167, 451678]			
 foldlist-function-1-list-2-1-2-a-plus-b-times-x	Applications		[FoldList, [Function, [Block, [At, _1, _2]], _1, _2], [Multiply, [Add, a, b], [Add, [Power, x, 2], [Power, y, 2]]], [List, 2, 1, 1]]	[List, [Multiply, [Add, a, b], [Add, [Power, x, 2], [Power, y, 2]]], [Add, [Power, x, 2], [Power, y, 2]], [Power, x, 2], x]			
+foldlist-multiply-1-range-1-10	Applications		[FoldList, Multiply, 1, [Range, 1, 10]]	[List, 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800]			
 foldlist-length-is-one-more	Properties		[Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]	True			One longer than the input list
 foldlist-last-is-fold	Properties		[Equal, [Last, [FoldList, Add, 0, [List, 1, 2, 3]]], [Fold, Add, 0, [List, 1, 2, 3]]]	True			The last element is what Fold alone would give
 rest-foldlist-add-0-list-a-b-c-d-exponentiale	Properties		[Rest, [FoldList, Add, 0, [List, a, b, c, d, ExponentialE]]]	[List, a, [Add, a, b], [Add, a, b, c], [Add, a, b, c, d], [Add, a, b, c, d, ExponentialE]]			
 foldlist-f-x-list	Properties		[FoldList, f, x, [List]]	[List, x]			
 foldlist-f-x-list-a-b-c	Properties		[FoldList, f, x, [List, a, b, c]]	[List, x, [f, x, a], [f, [f, x, a], b], [f, [f, [f, x, a], b], c]]			
 foldlist-add-list-a-b-c-d	Properties		[FoldList, Add, [List, a, b, c, d]]	[List, a, [Add, a, b], [Add, a, b, c], [Add, a, b, c, d]]			
+length-foldlist-f-x-range-1-10	Properties		[Length, [FoldList, f, x, [Range, 1, 10]]]	11			
 foldlist-f-list	Possible issues		[FoldList, f, [List]]	[List]			

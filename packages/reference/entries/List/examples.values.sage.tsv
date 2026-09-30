@@ -6,3 +6,6 @@ outer-f-list-1-2-list-a-b-c
 prepend-list-1-2-3-list-a-b-c	
 flatten-list-list-1-2-list-a-b-c	
 map-f-list-1-2-3-4	
+list-a-b-c-plus-list-1-2-3	([SR.var("a"), SR.var("b"), SR.var("c")] + [1, 2, 3])
+subsets-list-1-2-3	
+solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	

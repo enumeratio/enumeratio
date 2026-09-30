@@ -10,4 +10,5 @@ a-plain-integer	\mathrm{IsQuadraticIrrational}(5)	\bot
 a-rational-multiple-of-a-surd	\mathrm{IsQuadraticIrrational}(3\sqrt{2})	\top
 a-surd-subtracted-from-a-rational	\mathrm{IsQuadraticIrrational}(1-\sqrt{3})	\top
 isquadraticirrational-3-over-2	\mathrm{IsQuadraticIrrational}(\frac{3}{2})	\bot
+isquadraticirrational-list-sqrt-2-sqrt-3-2	\mathrm{IsQuadraticIrrational}(\bigl\lbrack\sqrt{2}, \sqrt{3}, 2\bigr\rbrack)	\bigl\lbrack\top, \top, \bot\bigr\rbrack
 a-rational-is-not-irrational	\mathrm{IsQuadraticIrrational}(\frac{3}{4})	\bot

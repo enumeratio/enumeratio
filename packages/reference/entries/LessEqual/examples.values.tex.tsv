@@ -4,4 +4,6 @@ id	in	out
 n-pi-20-lt-eq-pi	N(\pi, 20)\le\pi	\top
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	\pi^{e}\le e^{\pi}	\top
 sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	\sqrt{2}+\sqrt{3}\le\sqrt{5+2\sqrt{6}}	\top
+n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	N(\pi, 20)\le\pi(1-\frac{256}{10^{20}})	\top
+x-lt-eq-x	x\le x	\top
 refine-sqrt-x-pow-2-x-lt-eq-0	\mathrm{Refine}(\sqrt{x^2}, x\le0)	-x

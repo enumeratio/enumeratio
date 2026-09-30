@@ -1,2 +1,6 @@
 id	in	out
 grouporder-cyclicgroup-10	<GroupOrder><CyclicGroup>10</CyclicGroup></GroupOrder>	<ToExpression>10</ToExpression>
+groupelements-cyclicgroup-10	<GroupElements><CyclicGroup>10</CyclicGroup></GroupElements>	<List><GroupBasis>"0"</GroupBasis> <GroupBasis>"1"</GroupBasis> <GroupBasis>"2"</GroupBasis> <GroupBasis>"3"</GroupBasis> <GroupBasis>"4"</GroupBasis> <GroupBasis>"5"</GroupBasis> <GroupBasis>"6"</GroupBasis> <GroupBasis>"7"</GroupBasis> <GroupBasis>"8"</GroupBasis> <GroupBasis>"9"</GroupBasis></List>
+groupelements-cyclicgroup-1	<GroupElements><CyclicGroup>1</CyclicGroup></GroupElements>	<List><GroupBasis>"0"</GroupBasis></List>
+groupelements-cyclicgroup-2	<GroupElements><CyclicGroup>2</CyclicGroup></GroupElements>	<List><GroupBasis>"0"</GroupBasis> <GroupBasis>"1"</GroupBasis></List>
+groupelements-cyclicgroup-3	<GroupElements><CyclicGroup>3</CyclicGroup></GroupElements>	<List><GroupBasis>"0"</GroupBasis> <GroupBasis>"1"</GroupBasis> <GroupBasis>"2"</GroupBasis></List>

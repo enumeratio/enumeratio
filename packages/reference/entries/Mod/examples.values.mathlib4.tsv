@@ -71,6 +71,7 @@ neg-27-over-10-mod-23-over-5	(((((-27) : ℚ) / 10) : ℤ) % ((23 : ℚ) / 5))
 pi-mod-exponentiale			
 0-mod-2	((0 : ℤ) % 2)		
 1-mod-1	((1 : ℤ) % 1)		
+15-mod-7	((15 : ℤ) % 7)		
 division-by-a-0-modulus-yields-nan-rather-than	((5 : ℤ) % 0)	5	inconclusive
 periodicity-with-a-zero-modulus-on-one-side	(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))		
 rounding-ties-to-even-means-1-and-1-both-appear			
