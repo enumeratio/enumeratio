@@ -12,5 +12,5 @@ signatures:
   - call: IncreasingBinaryTrees(...)
     description: Binary trees on n labeled nodes, heap-ordered by label — n! of them.
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<any>
+    type: (integer<0..>) -> indexed_collection<increasing_binary_tree>
 ---

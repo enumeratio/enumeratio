@@ -108,6 +108,8 @@ export const CARRIER_NAMES: ReadonlySet<string> = new Set([
 // absent here packs no leading params (0): its operand's slots, when there is more than one,
 // are all elements (e.g. StandardTableauPair's carrierElements).
 export const CARRIER_PARAMS: ReadonlyMap<string, number> = new Map([
+  ["Finset", 1],
   ["LabeledGraph", 1],
+  ["Multiset", 1],
   ["Tournament", 1],
 ]);

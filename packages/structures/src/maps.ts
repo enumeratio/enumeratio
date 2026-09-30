@@ -146,9 +146,14 @@ export function declareMaps<M extends MapDeclaration>(
       const image = definition?.(contents.json);
       if (image === undefined) return undefined;
       const main = ce.box(image as never);
-      const extra = (map.extra ?? []).map((argument) => ce.box(fill(argument, contents.json) as never).evaluate());
+      // Materialised the same way `body` is (`evaluateDefinition`'s own `materialise` call) --
+      // an extra argument can be just as lazy (DescentSet/PeakSet's Filter-over-Range), and a
+      // carrier's VALUE holds a concrete Tuple slot, not a promise of one.
+      const extra = (map.extra ?? []).map((argument) =>
+        materialise(ce, ce.box(fill(argument, contents.json) as never).evaluate()),
+      );
       // A tuple-shaped carrier takes ONE argument that is a Tuple, not several arguments —
-      // a carrier like `finset` is `(members, n)`, so a map into it hands over a single Tuple.
+      // a carrier like `finset` is `(n, members)`, so a map into it hands over a single Tuple.
       const argument = extra.length === 0 ? main : ce.function("Tuple", [main, ...extra]).evaluate();
       return ce.function(wrap, [argument]).evaluate();
     };

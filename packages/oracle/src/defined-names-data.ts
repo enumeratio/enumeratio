@@ -307,6 +307,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "FindSequenceFunction",
   "FindShortestPath",
   "FinePaths",
+  "Finset",
   "First",
   "FirstDescent",
   "FirstPosition",
