@@ -2,7 +2,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { overloadTable } from "@enumeratio/engine";
-import type { Library, plan as Plan } from "@enumeratio/manifest";
+import { type Library, namesOf, type plan as Plan } from "@enumeratio/manifest";
 
 interface Scope {
   readonly bindings: Map<string, unknown>;
@@ -25,6 +25,8 @@ function snapshot(ce: ComputeEngine): Map<string, readonly unknown[]> {
   }
   return out;
 }
+
+const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
 const changed = (before: readonly unknown[] | undefined, after: readonly unknown[]): boolean =>
   before === undefined || before.some((x, i) => x !== after[i]);
@@ -51,10 +53,36 @@ export function declarers(libraries: readonly Library<ComputeEngine>[], plan: ty
       (table[name] ??= []).push(library.name);
     }
   }
-  const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
   return Object.fromEntries(
     Object.keys(table)
       .toSorted(cmp)
       .map((name) => [name, table[name]!]),
   );
+}
+
+const ARGUMENTS = ["x", "y", "z"];
+
+/** Each head that canonicalises to others (`Lb(x)` is `Log(x, 2)`), with the heads it becomes,
+ *  in an engine holding every library: an expression needs what it's rewritten to as well. */
+export function canonicalNames(libraries: readonly Library<ComputeEngine>[]): Record<string, string[]> {
+  const ce = new ComputeEngine();
+  for (const library of libraries) void library.declare(ce);
+  const out: Record<string, string[]> = {};
+  for (const name of [...snapshot(ce).keys()].filter((n) => /^[A-Z]/.test(n)).toSorted(cmp)) {
+    const reached = new Set<string>();
+    for (let n = 1; n <= ARGUMENTS.length; n++) {
+      let json: unknown;
+      try {
+        json = ce.box([name, ...ARGUMENTS.slice(0, n)]).json;
+      } catch {
+        continue;
+      }
+      const names = namesOf(json);
+      // Unchanged, or not a call it takes (`Pi(x)`, a head at the wrong arity).
+      if (names.has(name) || names.has("Error")) continue;
+      for (const found of names) if (!ARGUMENTS.includes(found)) reached.add(found);
+    }
+    if (reached.size > 0) out[name] = [...reached].toSorted(cmp);
+  }
+  return out;
 }

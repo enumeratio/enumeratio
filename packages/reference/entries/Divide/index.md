@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-hypercomplex
@@ -21,16 +25,24 @@ signatures:
     library: enumeratio-residues
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-numerals
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: enumeratio-residues
+    on:
+      - AdicNumeral
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-adeles
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: enumeratio-numerals
+    on:
+      - Adele
+      - Idele
+      - ProfiniteNumber
 names:
   wikidataConfirmed: true
   wolframIdentity: true

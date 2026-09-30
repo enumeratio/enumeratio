@@ -101,9 +101,6 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   ["modular", declareModular],
   ["adeles", declareAdeles],
   ["braid", declareBraid],
-  // After adeles, as in reference's engines: adeles' Fibonacci/LucasL widening, declared
-  // later, would replace this package's wider signature (the real index, the two-argument
-  // polynomial). Until overloads dispatch (https://github.com/enumeratio/enumeratio/wiki/Manifest), the last declare wins.
   ["number-theory", declareNumberTheory],
   // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), in place of `declareCombinatoricsCarriers` + `declareCollections`
   // separately.

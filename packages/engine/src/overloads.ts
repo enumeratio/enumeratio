@@ -52,6 +52,8 @@ interface Table {
   computed?: string;
   readonly rows: Overload[];
   ordered: Overload[];
+  /** The handler the table installs, to notice one wrapped around it from outside. */
+  dispatch?: Evaluate;
 }
 
 const tables = new WeakMap<Operator, Table>();
@@ -96,15 +98,33 @@ export function joinSignatures(signatures: readonly string[]): string {
 const signatureOf = (table: Table): string =>
   joinSignatures([table.nativeSignature, ...table.rows.flatMap((row) => row.signature ?? [])]);
 
-/** A head's table as declared on `ce`: its own signature and its rows, or `undefined`. */
-export function overloadTable(
-  ce: ComputeEngine,
-  head: string,
-): { readonly nativeSignature: string; readonly rows: readonly Overload[] } | undefined {
+export interface OverloadTable {
+  /** The head's own signature, with any widening the table has absorbed. */
+  readonly nativeSignature: string;
+  readonly rows: readonly Overload[];
+  /** The head's own handler, which the rows fall back to. */
+  readonly native: Evaluate | undefined;
+  /** Something outside the table has wrapped the handler it installed. */
+  readonly wrapped: boolean;
+  /** Something outside the table has assigned a signature since it last computed one. */
+  readonly resigned: boolean;
+}
+
+/** A head's table as declared on `ce`, or `undefined`. */
+export function overloadTable(ce: ComputeEngine, head: string): OverloadTable | undefined {
   const definition = ce.lookupDefinition(head);
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  const table = operator === undefined ? undefined : tables.get(operator as Operator);
-  return table === undefined ? undefined : { nativeSignature: table.nativeSignature, rows: table.rows };
+  const operator = (definition !== undefined && "operator" in definition ? definition.operator : undefined) as
+    | Operator
+    | undefined;
+  const table = operator === undefined ? undefined : tables.get(operator);
+  if (operator === undefined || table === undefined) return undefined;
+  return {
+    nativeSignature: table.nativeSignature,
+    rows: table.rows,
+    native: table.native,
+    wrapped: operator.evaluate !== table.dispatch,
+    resigned: String(operator.signature) !== table.computed,
+  };
 }
 
 const operands = (op: BoxedExpression): readonly BoxedExpression[] =>
@@ -178,6 +198,7 @@ export function defineOverload(ce: ComputeEngine, head: string, overload: Overlo
       }
       return created.native?.(ops, options);
     };
+    created.dispatch = operator.evaluate;
   }
   const current = String(operator.signature);
   if (table.computed !== undefined && current !== table.computed) table.nativeSignature = current;

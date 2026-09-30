@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (value+) -> value
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Add(value+) -> value
     description: Sum of two or more values.
     library: enumeratio-hypercomplex
@@ -21,16 +25,23 @@ signatures:
     library: enumeratio-residues
     type: (value+) -> value
     overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
   - call: Add(value+) -> value
     description: Sum of two or more values.
     library: enumeratio-numerals
     type: (value+) -> value
     overrides: enumeratio-residues
+    on:
+      - AdicNumeral
   - call: Add(value+) -> value
     description: Sum of two or more values.
     library: enumeratio-adeles
     type: (value+) -> value
     overrides: enumeratio-numerals
+    on:
+      - Adele
+      - ProfiniteNumber
 names:
   wolfram: Plus
 stub: engine

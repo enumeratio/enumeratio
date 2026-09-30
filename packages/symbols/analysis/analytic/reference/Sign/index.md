@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | signed_infinity) -> complex
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Sign(x)
     description: "The sign of x: -1, 0, or 1 for negative, zero, or positive x."
     library: enumeratio-combinatorics

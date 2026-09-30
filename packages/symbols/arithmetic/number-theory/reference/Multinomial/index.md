@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (integer+) -> integer
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Multinomial(k_1, k_2, …)
     description: The multinomial coefficient $\frac{(k_1 + k_2 + \cdots)!}{k_1!\,k_2!\cdots}$ generalises [[Binomial]] to more than two parts.
     library: enumeratio-number-theory

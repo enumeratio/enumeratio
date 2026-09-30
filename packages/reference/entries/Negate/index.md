@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-hypercomplex
@@ -21,16 +25,23 @@ signatures:
     library: enumeratio-residues
     type: (complex | infinity) -> number
     overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-numerals
     type: (complex | infinity) -> number
     overrides: enumeratio-residues
+    on:
+      - AdicNumeral
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-adeles
     type: (complex | infinity) -> number
     overrides: enumeratio-numerals
+    on:
+      - Adele
+      - ProfiniteNumber
 seeAlso:
   - Abs
   - Sign
