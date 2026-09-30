@@ -1,4 +1,4 @@
 id	in	out	tex.in	tex.out	verdict
-lim-x-to-0-sin-x-x-1	Limit[Function[Divide[Sin[Slot[1]], Slot[1]]], 0]	Limit[Sin[#1]/#1 & , 0]	\text{Limit}\left[\frac{\sin (\text{$\#$1})}{\text{$\#$1}}\&,0\right]	\text{Limit}\left[\frac{\sin (\text{$\#$1})}{\text{$\#$1}}\&,0\right]	disagree
-right-hand-limit-of-1-x-at-0-is-infinity	Limit[Function[Divide[1, Slot[1]]], 0, 1]	Limit[1/#1 & , 0, 1]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,0,1\right]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,0,1\right]	disagree
-limit-of-1-x-as-x-to-infinity-is-0	Limit[Function[Divide[1, Slot[1]]], Infinity]	Limit[1/#1 & , Infinity]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,\infty \right]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,\infty \right]	disagree
+lim-x-to-0-sin-x-x-1	Limit[Divide[Sin[x], x], Rule[x, 0]]	Limit[Sin[#1]/#1 & , 0]	\text{Limit}\left[\frac{\sin (\text{$\#$1})}{\text{$\#$1}}\&,0\right]	\text{Limit}\left[\frac{\sin (\text{$\#$1})}{\text{$\#$1}}\&,0\right]	disagree
+right-hand-limit-of-1-x-at-0-is-infinity	Limit[Divide[1, x], Rule[x, 0], Rule[Direction, "FromAbove"]]	Limit[1/#1 & , 0, 1]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,0,1\right]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,0,1\right]	disagree
+limit-of-1-x-as-x-to-infinity-is-0	Limit[Divide[1, x], Rule[x, Infinity]]	Limit[1/#1 & , Infinity]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,\infty \right]	\text{Limit}\left[\frac{1}{\text{$\#$1}}\&,\infty \right]	disagree

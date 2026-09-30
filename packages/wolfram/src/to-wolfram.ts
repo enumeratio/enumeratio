@@ -262,6 +262,49 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // unevaluated. Only a binding's own `Equal` is rewritten, not one deeper in the body.
   Module: (a) => localScope("Module", a),
   With: (a) => localScope("With", a),
+  // Limit(Function(body[, x]), point[, dir]): our `Function` argument stays a pure function
+  // (Slot-based `body&`, or `x |-> body`) all the way through -- Wolfram's `Limit` instead
+  // wants the plain expression and a `Rule` binding the point (`Limit[body, x -> point]`),
+  // never a Function it would apply. `unwrapFunctionArg` gives the (variable, body) pair,
+  // minting a fresh `x` and substituting it for the anonymous form's Slot refs when the
+  // function has no named parameter. `dir` is our own +1/-1 (checked directly: `Limit(1/x,
+  // 0, 1)` is PositiveInfinity, the RIGHT-hand limit -- `x` approaching 0 from values ABOVE
+  // it), which is `Direction -> "FromAbove"` in Wolfram's current (string, not signed-number)
+  // spelling; -1 is `"FromBelow"`.
+  Limit: (a) => {
+    const [fn, point, dir] = a;
+    const { variable, body } = unwrapFunctionArg(fn, "x");
+    const binding = `Rule[${variable}, ${toWolfram(point)}]`;
+    if (dir === undefined) return `Limit[${toWolfram(body)}, ${binding}]`;
+    const dirValue = typeof dir === "number" ? dir : typeof dir === "string" ? Number(dir) : undefined;
+    const direction = dirValue === 1 ? `"FromAbove"` : dirValue === -1 ? `"FromBelow"` : toWolfram(dir);
+    return `Limit[${toWolfram(body)}, ${binding}, Rule[Direction, ${direction}]]`;
+  },
+  // Map(f, xs) is Wolfram's own Map[f, xs]; Map(f, xs, ys, …) with MORE than one collection
+  // zips them elementwise instead (confirmed against compute-engine's own description,
+  // "apply a function to each element" -- for several collections, element-wise together) --
+  // Wolfram's Map never takes more than one collection, so that shape is MapThread[f, {xs,
+  // ys, …}] there.
+  Map: (a) => {
+    const [f, ...collections] = a;
+    if (collections.length <= 1) return call("Map", a);
+    return `MapThread[${toWolfram(f)}, List[${collections.map((c) => toWolfram(c)).join(", ")}]]`;
+  },
+  // Table(body, iterator) with an actual iterator (Set/Limits/Tuple -- `i` from `a` to `b`)
+  // is a plain rename (falls through via HEADS). Table(f, n) -- OUR OWN Tabulate-shaped
+  // overload, `f` applied to each of the first `n` naturals -- has no such Wolfram overload
+  // (`Table[f, n]` there is `n` copies of the plain SYMBOL `f`, not `n` calls to it); Wolfram
+  // needs the same `body, {i, n}` shape as any other Table, so `f`/`Function(body[, i])` is
+  // unwrapped the same way `Limit` above does, and wrapped in a fresh iterator.
+  Table: (a) => {
+    const [fn, spec] = a;
+    const isIteratorSpec =
+      (Array.isArray(spec) && ["Set", "Limits", "Tuple"].includes(spec[0] as string)) ||
+      (typeof spec === "string" && /^(Set|Limits|Tuple)\[/.test(spec));
+    if (a.length !== 2 || isIteratorSpec) return call("Table", a);
+    const { variable, body } = unwrapFunctionArg(fn, "i");
+    return `Table[${toWolfram(body)}, List[${variable}, ${toWolfram(spec)}]]`;
+  },
   // `Over -> R` is our own ring-selection option (never a Wolfram key -- a key is never a
   // domain/collection name, #417's retirement of `GaussianIntegers -> True`); Wolfram's
   // IsPrime/FactorInteger/Divisors/… spell the same choice of ring as their own
@@ -277,6 +320,88 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
   },
 };
+
+/**
+ * Unwraps a `Limit`/`Table` function argument into its bound variable and body, for the
+ * Wolfram forms (`Limit[body, x -> point]`, `Table[body, {i, n}]`) that take the two apart
+ * rather than a pure function. A `Function` literal with a named parameter (`Function(body,
+ * x)`) uses that name; the anonymous, Slot-based form (`Function(body)`, no params, `_1`/`_`
+ * inside) mints `fallback` as a fresh variable and substitutes it for the slot. A bare,
+ * non-`Function` argument (`f` itself, our own Tabulate-shaped `Table(f, n)` overload) is
+ * treated as a callable applied to the fresh variable: `f[i]`.
+ *
+ * `fn` arrives one of two ways, and this handles both: raw MathJSON (array or `{fn:[...]}`),
+ * when `toWolfram` is called directly (the `fullform` reference column, this package's own
+ * tests); or an ALREADY-RENDERED Wolfram source string, when it's reached through
+ * `@enumeratio/oracle`'s `emit` -- which pre-walks every operand (to collect its own
+ * `missing`/free-variable bookkeeping) before calling `toWolfram` with the walked, now
+ * string, results. The rest of this file's SPECIAL cases dodge that distinction for free:
+ * `toWolfram` on an already-rendered string is the identity (nothing here matches its own
+ * Slot/subscript/quote syntax), so wrapping one in more Wolfram source is transparent. This
+ * one has to look INSIDE the argument (the variable name, the Slot substitution), so it
+ * can't just forward blindly -- the string form gets its own textual `Function[...]` parse.
+ */
+function unwrapFunctionArg(fn: MathJson, fallback: string): { variable: string; body: MathJson } {
+  if (typeof fn === "string") {
+    const m = /^Function\[([\s\S]*)\]$/.exec(fn);
+    if (m === null) return { variable: fallback, body: `${fn}[${fallback}]` };
+    const parts = splitTopLevel(m[1]);
+    if (parts.length >= 2) return { variable: parts[0], body: parts.slice(1).join(", ") };
+    return { variable: fallback, body: parts[0].replace(/Slot\[1\]/g, fallback) };
+  }
+  const parts = headArgs(fn);
+  if (parts && parts.head === "Function") {
+    const [rawBody, ...params] = parts.args;
+    const rawBodyParts = headArgs(rawBody);
+    const body = rawBodyParts?.head === "Block" ? rawBodyParts.args[0] : rawBody;
+    if (params.length >= 1) return { variable: toWolfram(params[0]), body };
+    return { variable: fallback, body: substituteSlot(body, fallback) };
+  }
+  return { variable: fallback, body: [fn, fallback] };
+}
+
+/** `node`'s head and arguments, whichever of the two call shapes it's written in (a bare
+ * array, or the `{fn:[...]}` object form) -- `undefined` for anything else (an atom). */
+function headArgs(node: MathJson): { head: MathJson; args: MathJson[] } | undefined {
+  if (Array.isArray(node)) return { head: node[0], args: node.slice(1) };
+  if (node && typeof node === "object" && "fn" in node) return { head: node.fn[0], args: node.fn.slice(1) };
+  return undefined;
+}
+
+/** `s` split at its top-level commas -- ones outside any `[...]` nesting -- the way a
+ * `Head[a, b, c]`'s own argument list would be, given just its inside (`a, b, c`). */
+function splitTopLevel(s: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (c === "[") depth++;
+    else if (c === "]") depth--;
+    else if (c === "," && depth === 0) {
+      parts.push(s.slice(start, i));
+      start = i + 1;
+    }
+  }
+  parts.push(s.slice(start));
+  return parts.map((p) => p.trim());
+}
+
+/** `_n`/`_` (Slot 1) replaced by `fresh`, everywhere in `node` except inside a nested
+ * `Function`'s own body -- that function has its own, separately-scoped slots. */
+function substituteSlot(node: MathJson, fresh: string): MathJson {
+  if (typeof node === "string") return /^_(\d*)$/.test(node) ? fresh : node;
+  if (Array.isArray(node)) {
+    if (node[0] === "Function") return node;
+    return node.map((child) => substituteSlot(child, fresh));
+  }
+  if (node && typeof node === "object") {
+    if ("sym" in node) return /^_(\d*)$/.test(node.sym) ? { sym: fresh } : node;
+    if ("fn" in node)
+      return node.fn[0] === "Function" ? node : { fn: node.fn.map((child) => substituteSlot(child, fresh)) };
+  }
+  return node;
+}
 
 function localScope(head: string, args: MathJson[]): string {
   const [vars, body] = args;

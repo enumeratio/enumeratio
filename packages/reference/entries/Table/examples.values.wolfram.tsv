@@ -1,5 +1,5 @@
 id	in	out	tex.in	tex.out	verdict
 table-of-i-2-for-i-from-1-to-5					
 odd-numbers-from-1-to-9-stepping-by-2					
-the-same-shape-of-table-with-a-plain-function	Table[Function[Power[Slot[1], 2]], 5]	{#1^2 & , #1^2 & , #1^2 & , #1^2 & , #1^2 & }	\text{Table}\left[\text{$\#$1}^2\&,5\right]	\left\{\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&\right\}	disagree
+the-same-shape-of-table-with-a-plain-function	Table[Power[i, 2], List[i, 5]]	{#1^2 & , #1^2 & , #1^2 & , #1^2 & , #1^2 & }	\text{Table}\left[\text{$\#$1}^2\&,5\right]	\left\{\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&,\text{$\#$1}^2\&\right\}	disagree
 a-constant-body-is-still-evaluated-once-per					
