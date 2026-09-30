@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { describe, expect, it, test } from "vite-plus/test";
-import { collectComponents, structuralMarkupOf, wrapperName } from "../src/reflect.ts";
+import { collectComponents, structuralMarkupOf, headOfTag } from "../src/reflect.ts";
 import { structuralOf } from "../src/vdom.ts";
 
 const summaryOf = (source: string): string | undefined => {
@@ -73,10 +73,10 @@ customElements.define("notatio-x", NotatioX);
   });
 });
 
-test("wrapperName is tagOf run backwards", () => {
-  expect(wrapperName("notatio-bar-chart-3d")).toBe("BarChart3D");
-  expect(wrapperName("notatio-plot-3d")).toBe("Plot3D");
-  expect(wrapperName("notatio-collection-table")).toBe("CollectionTable");
+test("headOfTag is tagOf run backwards", () => {
+  expect(headOfTag("notatio-bar-chart-3d")).toBe("BarChart3D");
+  expect(headOfTag("notatio-plot-3d")).toBe("Plot3D");
+  expect(headOfTag("notatio-collection-table")).toBe("CollectionTable");
 });
 
 describe("structuralMarkupOf", () => {

@@ -17,12 +17,9 @@
 //   pass (caught by `packages/reference`'s `entries.test.ts`). CLI, site and census all called
 //   `declareCarrierPlurals` / `declareCarrierElement` right after collections already; they keep
 //   doing that themselves.
-// - `declareMaps` widens a shared name (`Inverse`) rather than minting a fresh one, and the
-//   last widening wins (`widenSignature` just assigns `signature`). Reference and census both
-//   declare `Inverse` again later (structures' matrix inverse, groupalgebra's) and rely on
-//   THEIRS losing to `declareMaps`' permutation-carrier one, which they call after. Folding it
-//   in here would move it ahead of those and flip the winner (same test, `Inverse` on a
-//   permutation).
+// - `declareMaps` extends shared names (`Inverse`, `Reverse`) rather than minting fresh ones.
+//   `Inverse`'s permutation form is a row in its table (defineOverload), so it no longer has
+//   to be declared after modular's; the hosts still call it themselves, with their constructors.
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "../collections/src/index.ts";
 import { CARRIERS, declareCombinatoricsCarriers } from "./carriers.ts";

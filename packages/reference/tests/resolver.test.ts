@@ -15,15 +15,22 @@ test("DECLARERS is what declaring each library finds", () => {
   expect(declarers(LIBRARIES, plan)).toEqual(DECLARERS);
 });
 
-const SAMPLE = new Set(["Zeta", "HypergeometricPFQ", "Permutations", "IntegerMod", "Adele", "Quaternion", "Floor"]);
+// The heads whose overloads live in tables (defineOverload), whatever order declares them, among them.
+const SAMPLE = new Set([
+  "Zeta",
+  "HypergeometricPFQ",
+  "Permutations",
+  "IntegerMod",
+  "Adele",
+  "Quaternion",
+  "Floor",
+  "Fibonacci",
+  "LucasL",
+  "Inverse",
+]);
 
-// Where the lazy engine differs, and why. Both are declare-order bugs the resolver surfaces:
-// a widening that assigns a signature instead of combining with the one before it, so which
-// package's form survives depends on who declared last.
+// Where the lazy engine differs, and why.
 const KNOWN: Readonly<Record<string, string>> = {
-  Fibonacci: "adeles' widening clobbers number-theory's, which needs adeles declared first",
-  LucasL: "adeles' widening clobbers number-theory's, which needs adeles declared first",
-  Inverse: "modular's Inverse clobbers combinatorics' permutation overload unless the maps come last",
   // Its results carry timings.
   VerificationTest: "timing fields differ run to run",
 };

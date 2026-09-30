@@ -9,7 +9,7 @@ signatures:
   - call: Fibonacci(nu)
     description: a real (non-integer) index via Binet's formula, $F_\nu = \frac{\varphi^\nu - \cos(\pi\nu)\varphi^{-\nu}}{\sqrt5}$.
     library: enumeratio-number-theory
-    type: (number | value, any?) -> any
+    type: (number, any?) -> any
     overrides: enumeratio-adeles
   - call: Fibonacci(n, x)
     description: the Fibonacci polynomial $F_n(x)$, from $F_n(x) = xF_{n-1}(x) + F_{n-2}(x)$, exact for a nonnegative integer n and numeric via the two-variable Binet formula for a real order.
@@ -17,7 +17,7 @@ signatures:
   - call: Fibonacci(n)
     description: The nth Fibonacci number, with $F_0 = 0$ and $F_1 = 1$, extended to negative n by the same recurrence.
     library: enumeratio-adeles
-    type: (integer | value) -> integer | value
+    type: (value) -> value
     overrides: compute-engine
 seeAlso:
   - LucasL

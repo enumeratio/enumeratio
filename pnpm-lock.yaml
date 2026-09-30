@@ -244,6 +244,9 @@ importers:
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
@@ -549,15 +552,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4
-      '@types/react':
-        specifier: ^19.1.0
-        version: 19.3.0
       '@webgpu/types':
         specifier: ^0.1.60
         version: 0.1.72
-      react:
-        specifier: ^19.1.0
-        version: 19.3.0
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -567,9 +564,6 @@ importers:
       vite-plus:
         specifier: 'catalog:'
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
-      vue:
-        specifier: ^3.5.42
-        version: 3.5.42(typescript@7.0.2)
 
   packages/manifest:
     devDependencies:
@@ -674,6 +668,9 @@ importers:
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
@@ -2564,9 +2561,6 @@ packages:
   '@types/node@26.5.0':
     resolution: {integrity: sha512-dVSGpriSoCgz8WnDNTuSSuSv1PC/ALXihO4ulRZt7Md8k9mlbdin3lGOcDE8SnWOgf513ByWlXd7BK4azmyg/A==}
 
-  '@types/react@19.3.0':
-    resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
-
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
@@ -3633,10 +3627,6 @@ packages:
   react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
-  react@19.3.0:
-    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
-    engines: {node: '>=0.10.0'}
-
   readdirp@5.1.1:
     resolution: {integrity: sha512-Kko+Y5XQ6fM+Ce3dq3m9YGxnacYZYl9cA1wZjaF3Vbry2L3i1qVg8+CAgNPsXRArPMUMCaOR7oa9Nqntc43JKA==}
     engines: {node: '>= 20.19.0'}
@@ -4693,10 +4683,6 @@ snapshots:
   '@types/node@26.5.0':
     dependencies:
       undici-types: 8.9.0
-
-  '@types/react@19.3.0':
-    dependencies:
-      csstype: 3.2.3
 
   '@types/trusted-types@2.0.7': {}
 
@@ -5785,8 +5771,6 @@ snapshots:
   quansync@1.0.0: {}
 
   react-is@17.0.2: {}
-
-  react@19.3.0: {}
 
   readdirp@5.1.1:
     optional: true

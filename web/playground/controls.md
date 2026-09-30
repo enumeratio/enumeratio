@@ -225,36 +225,35 @@ arguments by name too: `<notatio-binomial n="5" k="2">`.
 </p>
 </Story>
 
-## In Vue
+## As a vdom
 
-The same trees, from the template side. Every symbol is a Vue component
-(`<Slider>`, `<Row>`, `<Dynamic>` — from `@enumeratio/frontend/vue`, generated from the
-element sources), and `<Notatio expr>` renders an expression as the tree it is —
-`structuralOf` in the base package, handed to Vue's `h`: every head a tag, every
-argument a child, every option a prop. The elements do the rest.
+The same trees, written structurally: every head a tag, every argument a child, every
+option an attribute — `structuralOf` in the base package, and what an expression's
+component form is. The elements do the rest, lowering their own children.
 
 <Story
-  title="The symbols as components">
-<DynamicModule>
-<Row>
-<Slider name="k" :min="0" :max="5" :step="0.5" value="2" readout />
-<Dynamic value="_k ^ 2" />
-</Row>
-</DynamicModule>
+  title="The realized tree">
+<notatio-dynamic-module>
+<notatio-row>
+<notatio-slider name="k" min="0" max="5" step="0.5" value="2" readout></notatio-slider>
+<notatio-dynamic value="_k ^ 2"></notatio-dynamic>
+</notatio-row>
+</notatio-dynamic-module>
 </Story>
 
 <Story
   title="An expression, as a vdom">
 <template #description>
-Inspect the DOM: a <code>notatio-row</code> holding a <code>notatio-list</code> of a
-<code>notatio-slider</code>, a string and a <code>notatio-dynamic</code>.
+<code>Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])</code>, structurally: a
+<code>notatio-row</code> holding a <code>notatio-list</code> of a <code>notatio-slider</code>,
+a string and a <code>notatio-dynamic</code>.
 </template>
-<Notatio expr='Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])' />
+<notatio-row><notatio-list><notatio-slider><notatio-tuple>k, 1</notatio-tuple><notatio-tuple>0, 5, 0.5</notatio-tuple></notatio-slider><notatio-string value="squared is"></notatio-string><notatio-dynamic><notatio-power>k, 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
 </Story>
 
 <Story
   title="A plot with options, as a vdom">
-<Notatio expr='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1.5, 1)))' />
+<notatio-plot plot-range="(-1, 1)" epilog="Point((1.5, 1))"><notatio-sin>x</notatio-sin><notatio-tuple>x, 0, 10</notatio-tuple></notatio-plot>
 </Story>
 
 ## Every symbol, and no wrapper

@@ -9,7 +9,6 @@ import { readdirSync } from "node:fs";
 import { COMPONENT_STORIES_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { readStories, STORIES_SUFFIX } from "@enumeratio/entry/node";
 import { toInputForm } from "@enumeratio/formats";
-import { reactMarkupOf, usageOf, vueMarkupOf } from "@enumeratio/frontend/generate";
 import { markupOf, renderingOf } from "@enumeratio/frontend/symbols";
 import { structuralMarkupOf } from "@enumeratio/frontend/reflect";
 import { structuralOf, vdomOf } from "@enumeratio/frontend/vdom";
@@ -18,27 +17,11 @@ import { type StoryData, type StoryForm, STORIES_DATA } from "../src/stories-dat
 
 const referenceDir = new URL("../reference/", import.meta.url);
 
-const escapeAttr = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-const notatioFallback = (json: never): string => `<Notatio expr="${escapeAttr(toInputForm(json))}" />`;
-
 /** Every written form of `expr`, mirroring collect-stories.ts's `formsOf`. */
 function formsOf(expr: StoryData["expr"]): StoryForm[] {
   const json = expr as never;
-  const usage = usageOf(json);
   return [
-    { id: "epsil", label: "Epsil", caption: "notebook cells, the CLI, <Notatio expr>", text: toInputForm(json) },
-    {
-      id: "vue",
-      label: "Vue",
-      caption: "VitePress, Vue SFCs, Nuxt",
-      text: usage ? vueMarkupOf(usage) : notatioFallback(json),
-    },
-    {
-      id: "react",
-      label: "React",
-      caption: "MDX, Next, any React",
-      text: usage ? reactMarkupOf(usage) : notatioFallback(json),
-    },
+    { id: "epsil", label: "Epsil", caption: "notebook cells, the CLI", text: toInputForm(json) },
     { id: "html", label: "Web component", caption: "plain HTML", text: markupOf(renderingOf(json) ?? vdomOf(json)) },
     {
       id: "vdom",

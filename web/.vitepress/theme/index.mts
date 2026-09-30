@@ -1,6 +1,5 @@
 import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
-import { registerNotatio } from "@enumeratio/frontend/vue";
 import DefaultTheme from "vitepress/theme";
 import "katex/dist/katex.min.css";
 import { applyEngineLibraries } from "./engine-libraries.ts";
@@ -28,8 +27,6 @@ const ComponentIndex = defineAsyncComponent(() => import("./components/Component
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
 const BenchViewer = defineAsyncComponent(() => import("./components/bench/BenchViewer.vue"));
 const EnvironmentPreview = defineAsyncComponent(() => import("./components/EnvironmentPreview.vue"));
-// The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
-// from @enumeratio/frontend/vue, generated there from the element sources.
 
 export default {
   extends: DefaultTheme,
@@ -52,7 +49,6 @@ export default {
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
     app.component("BenchViewer", BenchViewer);
-    registerNotatio(app);
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads
     // evaluate in the playground and docs -- collections (Combinations/Subsets/…),

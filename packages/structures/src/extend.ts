@@ -29,6 +29,7 @@
 //   Reverse("abc")                  'cba'                  string overload intact
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { defineOverload } from "@enumeratio/engine";
 
 /** The marker that makes a name private. A TRAILING underscore, because it is legal in a
  *  compute-engine symbol, never appears at the end of a real head, and is one character to
@@ -59,6 +60,8 @@ function overloaded(signature: string, on: string, returns: string): string {
 }
 
 export interface Extension {
+  /** The package extending it, as the manifest names it. */
+  readonly package: string;
   /** The built-in to extend. */
   readonly head: string;
   /** The carrier type this extension handles. */
@@ -84,19 +87,17 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
   const handlers = operator.collection;
   const signature = overloaded(String(operator.signature), extension.on, extension.returns);
 
-  // An EVALUATE-backed head (Sign, Inverse, Sort) is the easy case: capture the handler,
-  // declare our clause with its honest return type, and hand back anything that is not ours.
-  // Nothing leaks and the signature tells the truth.
+  // An EVALUATE-backed head (Sign, Inverse, Sort) is the easy case: a row in its table
+  // (defineOverload), with its honest return type; anything not ours goes on to the next row
+  // or the head's own handler, whoever declared first.
   if (handlers === undefined) {
-    ce.declare(extension.head, {
-      signature,
-      evaluate: (ops: readonly BoxedExpression[], options): BoxedExpression | undefined => {
-        const subject = ops[0];
-        if (subject !== undefined && String(subject.type) === extension.on) return extension.handle(subject, ce);
-        return operator.evaluate?.(ops, options);
-      },
+    return defineOverload(ce, extension.head, {
+      package: extension.package,
+      signature: `(${extension.on}) -> ${extension.returns}`,
+      arity: 1,
+      when: (ops) => String(ops[0]!.type) === extension.on,
+      evaluate: (ops) => extension.handle(ops[0]!, ce),
     });
-    return true;
   }
 
   // A COLLECTION-backed head (Reverse, Complement) has no evaluate to delegate to, and its

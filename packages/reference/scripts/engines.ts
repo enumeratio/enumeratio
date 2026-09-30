@@ -59,10 +59,6 @@ const LIBRARY_DECLARATIONS = [
   declareModular,
   declareAdeles,
   declareBraid,
-  // Last: adeles' Fibonacci/LucasL widening (`(integer | value) -> integer | value`, no
-  // second argument) would otherwise clobber this package's wider signature for the real
-  // index and the two-argument polynomial form -- `widenSignature` just assigns the
-  // operator's `signature` field, so whichever call runs last wins.
   declareNumberTheory,
   // The statistics and maps, as the site has them, so `CombinatorialStat` and
   // `CombinatorialMap` answer here too (a collection's distributions are its examples).

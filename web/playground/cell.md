@@ -125,16 +125,3 @@ stop control (or Escape) that aborts it.
 <template #description>The second cell adds up two million terms one at a time -- several seconds of real work, off this thread. Scroll or click elsewhere while it runs: the page keeps responding. Stop it with the ■ button or Escape.</template>
 <notatio-out format="epsil" value="Notebook([Cell(a := 5), Cell(Sum(k, (k, 1, 2 * 10^6)))], Evaluator -> Worker)" />
 </Story>
-
-## As a Vue component
-
-`<Cell>` is the same element behind a Vue component named for the symbol, whose props
-are the attributes, typed — generated from the element source, like every other
-component's (see [the playground overview](/playground/#as-vue-components)). A markdown
-author composes Vue and gets a compile-time check on the spelling; the element
-underneath is unchanged.
-
-<Story
-  title="The Vue wrapper">
-<Cell value="Binomial(10, 3) + 1 / 2" out-form="input" />
-</Story>
