@@ -1,0 +1,7 @@
+[
+  {
+    "id": "quad-3",
+    "expr": ["MemberCall", "ada", "'Quad'", 3],
+    "expected": 12
+  }
+]

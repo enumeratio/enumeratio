@@ -157,3 +157,46 @@ test("a bare head the path brings in is its qualified name; a symbol stays itsel
   // Excluded, `Sin` is the system's own.
   expect((await resolver.ensure(ce, ["Sin", 0])).expression).toEqual(["Sin", 0]);
 });
+
+// Examples ride with a definition and aren't part of its pin: a wrong one fails the check.
+const carol = definitionRegistry<Engine>("carol", {
+  Triple: {
+    ...unary(["Multiply", 3, "x"]),
+    examples: [
+      { id: "triple-2", expr: ["MemberCall", "carol", "'Triple'", 2], expected: 6 },
+      { id: "triple-third", expr: ["MemberCall", "carol", "'Triple'", 0.1], expected: 0.3, tolerance: 1e-12 },
+    ],
+  },
+  Wrong: {
+    ...unary(["Add", "x", 1]),
+    examples: [{ id: "wrong-2", expr: ["MemberCall", "carol", "'Wrong'", 2], expected: 4 }],
+  },
+});
+
+test("install check: a definition's examples run in a scratch engine before it is declared", async () => {
+  let scratch = 0;
+  const check = { engine: () => (scratch++, new ComputeEngine()) };
+  const resolver = createRegistryResolver(carol, { check });
+  const ce = new ComputeEngine();
+  const triple = ["MemberCall", "carol", "'Triple'", 5];
+  const passed = await resolver.ensure(ce, triple);
+  expect([passed.errors, passed.failed]).toEqual([[], {}]);
+  expect(evaluate(ce, triple)).toBe(15);
+  // Enforced, a failing example keeps the definition out; the check runs once per pin.
+  const wrong = ["MemberCall", "carol", "'Wrong'", 2];
+  const refused = await resolver.ensure(ce, wrong);
+  expect(refused.failed).toEqual({ "carol.Wrong": ["wrong-2: 3, expected 4"] });
+  expect(refused.errors).toEqual(["carol.Wrong: 1 example(s) fail"]);
+  expect(refused.declared).toEqual([]);
+  await resolver.ensure(new ComputeEngine(), triple);
+  expect(scratch).toBe(2);
+});
+
+test("install check, flagged: declared anyway, and the failures reported", async () => {
+  const resolver = createRegistryResolver(carol, { check: { engine: () => new ComputeEngine(), mode: "flag" } });
+  const ce = new ComputeEngine();
+  const wrong = ["MemberCall", "carol", "'Wrong'", 2];
+  const flagged = await resolver.ensure(ce, wrong);
+  expect([flagged.errors, Object.keys(flagged.failed)]).toEqual([[], ["carol.Wrong"]]);
+  expect(evaluate(ce, wrong)).toBe(3);
+});

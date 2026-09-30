@@ -30,6 +30,8 @@ export {
   type Definition,
   definitionRegistry,
   type Ensured,
+  type Example,
+  type InstallCheck,
   manifestRegistry,
   namespaceOf,
   pinnedHead,

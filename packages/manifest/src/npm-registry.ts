@@ -4,11 +4,12 @@
 //   "enumeratio": { "namespace": "ada", "index": "./symbols/index.json", "system": ">=0.1" }
 //
 // and ships `symbols/<Name>/definition.json` (signature, body, requires) beside the index,
-// which `symbolIndexOf` builds at pack time. A version is read over a CDN (jsDelivr by
+// which `symbolIndexOf` builds at pack time, with `examples.json` from the symbol's record
+// (`index.md`, `examples.tsv`, as ours are) for the install check. A version is read over a CDN (jsDelivr by
 // default), so a page fetches one small index per namespace and then only the definitions an
 // expression uses. Every definition is checked against its pin before it is used.
 
-import { type Definition, pinnedHead, pinOf, type Registry } from "./registry.ts";
+import { type Definition, type Example, pinnedHead, pinOf, type Registry } from "./registry.ts";
 
 /** The `enumeratio` field of a symbol package's `package.json`. */
 export interface SymbolPackageField {
@@ -26,7 +27,13 @@ export interface SymbolIndex {
   readonly symbols: Readonly<
     Record<
       string,
-      { readonly signature: string; readonly pin: string; readonly requires?: Readonly<Record<string, string>> }
+      {
+        readonly signature: string;
+        readonly pin: string;
+        readonly requires?: Readonly<Record<string, string>>;
+        /** How many examples `<Name>/examples.json` holds, for the install check. */
+        readonly examples?: number;
+      }
     >
   >;
 }
@@ -43,6 +50,7 @@ export async function symbolIndexOf(
       signature: definition.signature,
       pin: await pinOf(definition),
       ...(definition.requires === undefined ? {} : { requires: definition.requires }),
+      ...(definition.examples?.length ? { examples: definition.examples.length } : {}),
     };
   }
   return { namespace, symbols };
@@ -130,7 +138,15 @@ export function npmRegistry<Engine extends object>(
       if (found === undefined || entry === undefined || (pin !== undefined && pin !== entry.pin)) return undefined;
       const definition = (await read(`${found.root}${member}/definition.json`)) as Definition;
       if ((await pinOf(definition)) !== entry.pin) return undefined;
-      return { head: pinnedHead(namespace!, member, entry.pin), definition, pin: entry.pin };
+      const examples = entry.examples
+        ? async () => (await read(`${found.root}${member}/examples.json`)) as readonly Example[]
+        : undefined;
+      return {
+        head: pinnedHead(namespace!, member, entry.pin),
+        definition,
+        pin: entry.pin,
+        ...(examples === undefined ? {} : { examples }),
+      };
     },
   };
 }

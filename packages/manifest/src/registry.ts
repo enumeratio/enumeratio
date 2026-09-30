@@ -29,12 +29,30 @@ export interface Definition {
   readonly signature: string;
   readonly body: unknown;
   readonly requires?: Readonly<Record<string, string>>;
+  /** Its examples, for `definitionRegistry`; not part of the pin. */
+  readonly examples?: readonly Example[];
 }
 
-/** What declares a name: `head` is what the name refers to once declared. */
+/** One of a definition's examples, as a record's are: what `expr` evaluates to. */
+export interface Example {
+  readonly id: string;
+  readonly expr: unknown;
+  readonly expected: unknown;
+  /** Relative, for a float result; exact otherwise. */
+  readonly tolerance?: number;
+}
+
+/**
+ * What declares a name: `head` is what the name refers to once declared. A definition may
+ * bring its examples, loaded only when it is checked; they aren't part of its pin.
+ */
 export type Resolution<Engine extends object> = { readonly head: string } & (
   | { readonly libraries: readonly Library<Engine>[] }
-  | { readonly definition: Definition; readonly pin: string }
+  | {
+      readonly definition: Definition;
+      readonly pin: string;
+      readonly examples?: () => Promise<readonly Example[]>;
+    }
 );
 
 export interface Registry<Engine extends object> {
@@ -131,7 +149,12 @@ export function definitionRegistry<Engine extends object>(
       const all = await versions(member);
       const found = pin === undefined ? all.at(-1) : all.find((v) => v.pin === pin);
       if (found === undefined) return undefined;
-      return { head: pinnedHead(namespace, member, found.pin), ...found };
+      const { examples } = found.definition;
+      return {
+        head: pinnedHead(namespace, member, found.pin),
+        ...found,
+        ...(examples === undefined ? {} : { examples: async () => examples }),
+      };
     },
   };
 }
@@ -306,8 +329,34 @@ export interface Ensured {
   readonly unresolved: readonly string[];
   /** The pin each qualified name the expression itself used resolved to: its lock entries. */
   readonly pins: Readonly<Record<string, string>>;
-  /** Definitions refused, and why: a dependency not pinned, or its pin not found. */
+  /** Definitions refused, and why: a dependency not pinned, its pin not found, or (enforced) an example failing. */
   readonly errors: readonly string[];
+  /** Definitions checked in this call whose examples failed, by name: the failures. */
+  readonly failed: Readonly<Record<string, readonly string[]>>;
+}
+
+/** Install checking: a definition's examples run in a scratch engine before it is declared. */
+export interface InstallCheck<Engine extends DeclaringEngine> {
+  /** A fresh engine to check in, with what the host always declares. */
+  readonly engine: () => Engine;
+  /** `enforce` (the default) refuses a definition whose examples fail; `flag` declares it and reports them. */
+  readonly mode?: "enforce" | "flag";
+}
+
+interface CheckedValue {
+  readonly json: unknown;
+  isSame(other: CheckedValue): boolean;
+  N(): { readonly re: number; readonly im: number };
+}
+
+/** Whether `got` is `expected`: the same expression, or within `tolerance` where both are numbers. */
+function agrees(got: CheckedValue, expected: CheckedValue, tolerance = 0): boolean {
+  if (got.isSame(expected)) return true;
+  if (tolerance === 0) return false;
+  const [a, b] = [got.N(), expected.N()];
+  const close = (x: number, y: number): boolean =>
+    Number.isFinite(x) && Number.isFinite(y) && Math.abs(x - y) <= tolerance * Math.max(1, Math.abs(y));
+  return close(a.re, b.re) && close(a.im, b.im);
 }
 
 /** Declares into an engine what its expressions name, through a registry. */
@@ -333,9 +382,36 @@ interface EngineState {
  */
 export function createRegistryResolver<Engine extends DeclaringEngine>(
   registry: Registry<Engine>,
-  { path }: { path?: SearchPath } = {},
+  { path, check }: { path?: SearchPath; check?: InstallCheck<Engine> } = {},
 ): RegistryResolver<Engine> {
   const states = new WeakMap<Engine, EngineState>();
+  // Each pin's failures, checked once for every engine this resolver serves.
+  const checked = new Map<string, Promise<readonly string[]>>();
+  const scratch = check === undefined ? undefined : createRegistryResolver(registry);
+
+  /** Run a definition's examples in a fresh engine, its name locked to its pin. */
+  const failuresOf = async (name: string, found: { pin: string; examples?: () => Promise<readonly Example[]> }) => {
+    const ce = check!.engine();
+    const lock = { [name]: found.pin };
+    const failures: string[] = [];
+    for (const example of (await found.examples?.()) ?? []) {
+      const { expression, errors } = await scratch!.ensure(ce, example.expr, lock);
+      if (errors.length > 0) {
+        failures.push(`${example.id}: ${errors.join("; ")}`);
+        continue;
+      }
+      try {
+        const box = (json: unknown) => (ce as unknown as { box(j: unknown): { evaluate(): CheckedValue } }).box(json);
+        const got = box(expression).evaluate();
+        const expected = box(example.expected).evaluate();
+        if (!agrees(got, expected, example.tolerance))
+          failures.push(`${example.id}: ${JSON.stringify(got.json)}, expected ${JSON.stringify(expected.json)}`);
+      } catch (error) {
+        failures.push(`${example.id}: throws ${(error as Error).message}`);
+      }
+    }
+    return failures;
+  };
 
   return {
     async ensure(ce, given, lock = {}) {
@@ -350,6 +426,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
       const declared: string[] = [];
       const unresolved: string[] = [];
       const errors: string[] = [];
+      const failed: Record<string, readonly string[]> = {};
       const pins: Record<string, string> = {};
 
       const declareLibraries = async (libraries: readonly Library<Engine>[]): Promise<void> => {
@@ -370,6 +447,15 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         if (done !== undefined) return true;
         if (ce.lookupDefinition(found.head) !== undefined) return true;
         state.definitions.set(found.pin, false);
+        const declaredIt = await declareChecked(name, found);
+        if (!declaredIt) state.definitions.delete(found.pin);
+        return declaredIt;
+      };
+
+      const declareChecked = async (
+        name: string,
+        found: Resolution<Engine> & { definition: Definition; pin: string },
+      ): Promise<boolean> => {
         const { signature, body, requires = {} } = found.definition;
         const heads = new Map<string, string>();
         for (const used of qualifiedNamesOf(body)) {
@@ -389,6 +475,21 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         for (const used of plainNamesOf(body, new Set())) {
           const dependency = await registry.resolve(used);
           if (dependency !== undefined && "libraries" in dependency) await declareLibraries(dependency.libraries);
+        }
+        if (check !== undefined) {
+          let failures = checked.get(found.pin);
+          if (failures === undefined) {
+            failures = failuresOf(name, found);
+            checked.set(found.pin, failures);
+          }
+          const failing = await failures;
+          if (failing.length > 0) {
+            failed[name] = failing;
+            if (check.mode !== "flag") {
+              errors.push(`${name}: ${failing.length} example(s) fail`);
+              return false;
+            }
+          }
         }
         ce.declare(found.head, { signature, evaluate: withHeads(body, heads) } as never);
         state.definitions.set(found.pin, true);
@@ -417,7 +518,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         const found = await registry.resolve(name);
         if (found !== undefined && "libraries" in found) await declareLibraries(found.libraries);
       }
-      return { expression: json, declared, unresolved, pins, errors };
+      return { expression: json, declared, unresolved, pins, errors, failed };
     },
   };
 }

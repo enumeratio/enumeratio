@@ -3,11 +3,14 @@
 //   node packages/manifest/scripts/pack-symbols.ts <package-dir>
 //
 // Reads `package.json`'s `enumeratio` field and every `symbols/<Name>/definition.json` beside
-// the index it names, and writes the index (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2).
+// the index it names, writes each symbol's examples (from its record, `index.md` and
+// `examples.tsv`, less the aspirational ones) as `examples.json` for the install check, and
+// writes the index (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2).
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import type { Definition } from "../src/registry.ts";
+import { readEntries } from "@enumeratio/entry/node";
+import type { Definition, Example } from "../src/registry.ts";
 import { type SymbolPackageField, symbolIndexOf } from "../src/npm-registry.ts";
 
 /** Pack the package at `dir`: its index, written and returned. */
@@ -16,10 +19,23 @@ export async function packSymbols(dir: string): Promise<string> {
   if (pkg.enumeratio === undefined) throw new Error(`${dir}: package.json has no "enumeratio" field`);
   const indexPath = join(dir, pkg.enumeratio.index);
   const symbolsDir = dirname(indexPath);
+  const records = new Map(readEntries(symbolsDir).map((entry) => [entry.name, entry]));
   const definitions: Record<string, Definition> = {};
   for (const name of readdirSync(symbolsDir)) {
     const file = join(symbolsDir, name, "definition.json");
-    if (existsSync(file)) definitions[name] = JSON.parse(readFileSync(file, "utf8")) as Definition;
+    if (!existsSync(file)) continue;
+    const definition = JSON.parse(readFileSync(file, "utf8")) as Definition;
+    const examples: Example[] = (records.get(name)?.examples ?? [])
+      .filter((e) => e.aspirational !== true)
+      .map(({ id, expr, expected, tolerance }) => ({
+        id,
+        expr,
+        expected,
+        ...(tolerance === undefined ? {} : { tolerance }),
+      }));
+    if (examples.length > 0)
+      writeFileSync(join(symbolsDir, name, "examples.json"), `${JSON.stringify(examples, null, 2)}\n`);
+    definitions[name] = { ...definition, examples };
   }
   const index = await symbolIndexOf(pkg.enumeratio.namespace, definitions);
   writeFileSync(indexPath, `${JSON.stringify(index, null, 2)}\n`);
