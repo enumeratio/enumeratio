@@ -1,4 +1,4 @@
 id	in	out
 binom-5-2	<Count><KSubsets>5 2</KSubsets></Count>	<ToExpression>10</ToExpression>
-ksubsets-5-2-list-1	<At><KSubsets>5 2</KSubsets> 1</At>	<List>1 2</List>
-colex-not-lex-lexicographic-order-would-give-1-4	<At><KSubsets>5 2</KSubsets> 3</At>	<List>2 3</List>
+ksubsets-5-2-list-1	<At><KSubsets>5 2</KSubsets> 1</At>	<Finset><Tuple>5 <List>1 2</List></Tuple></Finset>
+colex-not-lex-lexicographic-order-would-give-1-4	<At><KSubsets>5 2</KSubsets> 3</At>	<Finset><Tuple>5 <List>2 3</List></Tuple></Finset>

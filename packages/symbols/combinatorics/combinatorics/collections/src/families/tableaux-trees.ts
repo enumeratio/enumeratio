@@ -340,11 +340,7 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => IncreasingBinaryTreeUnrank(n, r),
     valid: (e, [n]) => IsIncreasingBinaryTree(e, n),
     rank: (e) => IncreasingBinaryTreeRank(e as LabTree),
-    // Not yet carrier-typed: the catalog's IncreasingBinaryTree carrier declares
-    // `tuple<integer, list<integer>, list<integer>>`, but this family's "nested" kind encodes
-    // its [label, left, right] LabTree recursively (left/right are themselves LabTree, not
-    // flat integer lists) -- `nestMJ` produces e.g. [1,0,[2,0,0]] for n=2, which fails the
-    // carrier's declared type check. Reported, not forced (see A-113).
+    carrier: "IncreasingBinaryTree",
   },
   {
     head: "StandardTableaux",

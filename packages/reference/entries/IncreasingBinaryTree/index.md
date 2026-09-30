@@ -9,5 +9,5 @@ signatures:
   - call: IncreasingBinaryTree(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (tuple<integer, list<integer>, list<integer>>) -> increasing_binary_tree
+    type: (integer | list<any>) -> increasing_binary_tree
 ---

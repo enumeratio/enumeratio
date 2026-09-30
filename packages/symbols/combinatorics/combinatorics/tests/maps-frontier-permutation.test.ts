@@ -251,49 +251,36 @@ test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", ()
 // ── FromPermutation ───────────────────────────────────────────────────────────────────────
 
 /** The increasing binary tree, read directly off the recursive definition: the position of
- *  the smallest value in `p[lo..hi]` roots that range, its value's children are the trees of
- *  the ranges before and after. Arrays are 1-indexed by VALUE, matching the encoding
- *  increasing-binary-tree.ts builds without recursion. */
-function fromPermutationRef(p: readonly number[]): {
-  root: number;
-  left: number[];
-  right: number[];
-} {
-  const n = p.length;
-  const left = new Array(n + 1).fill(0);
-  const right = new Array(n + 1).fill(0);
-  const build = (lo: number, hi: number): number => {
-    if (lo > hi) return 0;
-    let mi = lo;
-    for (let k = lo + 1; k <= hi; k++) if (p[k]! < p[mi]!) mi = k;
-    const rootValue = p[mi]!;
-    left[rootValue] = build(lo, mi - 1);
-    right[rootValue] = build(mi + 1, hi);
-    return rootValue;
-  };
-  const root = build(0, n - 1);
-  return { root, left: left.slice(1), right: right.slice(1) };
+ *  the smallest value in `p` roots it, everything before that position is the LEFT subtree
+ *  (same recursion), everything after it the RIGHT — nested `[label, left, right]`, leaf 0,
+ *  matching the shape both FromPermutation and IncreasingBinaryTrees' `cartesianTree` build. */
+type LabTree = 0 | [number, LabTree, LabTree];
+function fromPermutationRef(p: readonly number[]): LabTree {
+  if (p.length === 0) return 0;
+  let mi = 0;
+  for (let i = 1; i < p.length; i++) if (p[i]! < p[mi]!) mi = i;
+  return [p[mi]!, fromPermutationRef(p.slice(0, mi)), fromPermutationRef(p.slice(mi + 1))];
 }
 
-/** The constructed value's Tuple — the single argument `IncreasingBinaryTree` wraps. */
-const tupleOf = (expr: unknown): { json: unknown }[] | undefined =>
-  (ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: { json: unknown }[] }[] }).ops?.[0]?.ops as
-    | { json: unknown }[]
-    | undefined;
+/** The constructed value's nested tree, decoded off the List/leaf MathJSON structure — the
+ *  single argument `IncreasingBinaryTree` wraps. */
+const treeOf = (expr: unknown): unknown => {
+  const decode = (b: { ops?: readonly { json: unknown; ops?: unknown }[]; json?: unknown }): unknown =>
+    b.ops ? b.ops.map((op) => decode(op as never)) : b.json;
+  const evaluated = ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: unknown; json?: unknown }[] };
+  return decode(evaluated.ops?.[0] as never);
+};
 
 test("FromPermutation agrees with minimum-splitting recursion, up to n = 4", () => {
   for (const p of ALL4) {
-    const ref = fromPermutationRef(p);
-    const tuple = tupleOf(["FromPermutation", perm(...p)]);
-    expect(tuple?.[0]?.json, `root [${p.join(", ")}]`).toBe(ref.root);
-    expect(tuple?.[1]?.json, `left_child [${p.join(", ")}]`).toEqual(["List", ...ref.left]);
-    expect(tuple?.[2]?.json, `right_child [${p.join(", ")}]`).toEqual(["List", ...ref.right]);
+    expect(treeOf(["FromPermutation", perm(...p)]), `[${p.join(", ")}]`).toEqual(fromPermutationRef(p));
   }
 });
 
 test("FromPermutation's root is always 1", () => {
   for (const p of ALL4) {
-    expect(tupleOf(["FromPermutation", perm(...p)])?.[0]?.json, `[${p.join(", ")}]`).toBe(1);
+    const tree = treeOf(["FromPermutation", perm(...p)]) as LabTree;
+    expect(tree === 0 ? undefined : tree[0], `[${p.join(", ")}]`).toBe(1);
   }
 });
 

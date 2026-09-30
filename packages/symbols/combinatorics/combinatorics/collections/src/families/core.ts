@@ -43,6 +43,10 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
+  // Carrier options, when this family's elements are typed -- e.g. Finset/Multiset's
+  // `carrierParams: 1` prefixes `n` onto the carrier's Tuple argument (declare.ts), same as
+  // graphs' Tournament/LabeledGraph.
+  carrierOptions?: { carrier: string; carrierParams?: number },
 ): NumberKernel => ({
   head,
   paramCount,
@@ -51,6 +55,7 @@ const ints = (
   unrank,
   valid: (e, p) => valid(e as number[], p),
   rank: (e, p) => rank(e as number[], p),
+  ...carrierOptions,
 });
 
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
@@ -70,6 +75,7 @@ export const entriesBeforeSurjections: NumberKernel[] = [
     ([n], r) => SubsetUnrank(n, r),
     (a, [n]) => IsSubsetOf(a, n),
     (a) => SubsetRank(a),
+    { carrier: "Finset", carrierParams: 1 },
   ),
   ints(
     "KSubsets",
@@ -78,6 +84,7 @@ export const entriesBeforeSurjections: NumberKernel[] = [
     ([n, k], r) => KSubsetUnrank(n, k, r),
     (a, [n, k]) => IsKSubsetOf(a, n, k),
     (a) => KSubsetRank(a),
+    { carrier: "Finset", carrierParams: 1 },
   ),
   ints(
     "GrayCodeSubsets",
@@ -86,6 +93,8 @@ export const entriesBeforeSurjections: NumberKernel[] = [
     ([n], r) => GrayCodeSubsetUnrank(n, r),
     (a, [n]) => IsSubsetOf(a, n),
     (a) => GrayCodeSubsetRank(a),
+    // Not carrier-typed here: out of scope for A-116 (only Subsets/KSubsets/Multisets asked
+    // for), though its elements are the same Finset shape as Subsets'.
   ),
   ints(
     "Multisets",
@@ -94,6 +103,7 @@ export const entriesBeforeSurjections: NumberKernel[] = [
     ([n, k], r) => MultisetUnrank(n, k, r),
     (a, [n, k]) => IsMultisetOf(a, n, k),
     (a) => MultisetRank(a),
+    { carrier: "Multiset", carrierParams: 1 },
   ),
   ints(
     "Tuples",

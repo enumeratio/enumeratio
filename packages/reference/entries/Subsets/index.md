@@ -7,7 +7,7 @@ signatures:
   - call: Subsets(n)
     description: the $2^n$ subsets of $\{1, …, n\}$.
     library: enumeratio-combinatorics
-    type: (collection<any> | integer, (integer | list<integer>)?) -> list<list<any>>
+    type: (collection<any> | integer, (integer | list<integer>)?) -> list<finset | list<any>>
   - call: Subsets(collection)
     description: the subsets of any finite collection.
     library: enumeratio-combinatorics

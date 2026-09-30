@@ -57,10 +57,10 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
       .slice(0, -1)
       .map((_, k) => k + 1)
       .filter((i) => p[i - 1]! > p[i]!);
-    // A finset is (members, n) — it carries its ground size — so the result is a Tuple. That
-    // the shape shows up here rather than being papered over is the point of extracting
-    // carrier shapes from enumeratio rather than guessing them.
-    expect(result(["DescentSet", perm(...p)]), `[${p.join(", ")}]`).toEqual(["Tuple", ["List", ...descents], p.length]);
+    // A finset is (n, members) — it carries its ground size, first — so the result is a
+    // Tuple. That the shape shows up here rather than being papered over is the point of
+    // extracting carrier shapes from enumeratio rather than guessing them.
+    expect(result(["DescentSet", perm(...p)]), `[${p.join(", ")}]`).toEqual(["Tuple", p.length, ["List", ...descents]]);
     expect(ce.box(["Descents", perm(...p)] as never).evaluate().re).toBe(descents.length);
     expect(ce.box(["MajorIndex", perm(...p)] as never).evaluate().re).toBe(descents.reduce((a, b) => a + b, 0));
   }
@@ -94,7 +94,7 @@ test("the new maps agree with plain readings", () => {
       ...rotateRight(p),
     ]);
     const peaks = p.map((_, k) => k + 1).filter((i) => i > 1 && i < n && p[i - 2]! < p[i - 1]! && p[i - 1]! > p[i]!);
-    expect(result(["PeakSet", perm(...p)]), `peaks [${p.join(", ")}]`).toEqual(["Tuple", ["List", ...peaks], n]);
+    expect(result(["PeakSet", perm(...p)]), `peaks [${p.join(", ")}]`).toEqual(["Tuple", n, ["List", ...peaks]]);
     expect(ce.box(["Peaks", perm(...p)] as never).evaluate().re, `[${p.join(", ")}]`).toBe(peaks.length);
   }
 });

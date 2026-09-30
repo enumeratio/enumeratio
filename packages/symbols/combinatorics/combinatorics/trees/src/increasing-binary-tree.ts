@@ -7,20 +7,28 @@
 // which permutation it came from.
 //
 // REPRESENTATION. `increasing_binary_tree`'s declared shape (carrier-data.ts) is
-// `tuple<integer, list<integer>, list<integer>>` — root, then left_child/right_child arrays
-// indexed BY VALUE, 0 meaning no child. Same parent-pointer-by-VALUE convention bst.ts chose
-// for `binary_tree`, for the same reason: a value's identity is fixed the moment it is placed,
-// so indexing by it (rather than by tree position) needs no separate node-numbering scheme.
+// `integer | list<any>` — BinaryTree/KAryTree/OrderedTree's own nested convention, label
+// folded in as the node's first slot: leaf 0, node [label, left, right]. This is what
+// IncreasingBinaryTrees (collections/src/families/tableaux-trees.ts, its `cartesianTree`)
+// already builds, so FromPermutation has to build the same shape rather than the flat
+// by-value parent-array tuple this file built before (A-116).
 //
-// AVOIDING RECURSION. The rule from tableau.ts: iterate over a RANGE and index, never fold or
-// filter over a list carved out of the accumulator. The recursive min-splitting has a direct,
-// non-recursive characterisation — the "nearest smaller value" fact behind the standard linear
-// Cartesian-tree construction: position i's parent is whichever of its nearest smaller
-// neighbour to the LEFT (L) and to the RIGHT (R) exists and is the tighter bound — the one
-// with the LARGER value, when both exist (permutation values are distinct, so there is never a
-// tie). `i` is L's RIGHT child (i lies to L's right) or R's LEFT child (i lies to R's left).
+// THE NEAREST-SMALLER-VALUE CHARACTERISATION. The rule from tableau.ts: iterate over a RANGE
+// and index, never fold or filter over a list carved out of the accumulator. The recursive
+// min-splitting has a direct, non-recursive characterisation — position i's parent is whichever
+// of its nearest smaller neighbour to the LEFT (L) and to the RIGHT (R) exists and is the
+// tighter bound — the one with the LARGER value, when both exist (permutation values are
+// distinct, so there is never a tie). `i` is L's RIGHT child (i lies to L's right) or R's LEFT
+// child (i lies to R's left). That still holds — it is what makes `childPositionOnSide` below a
+// plain fold rather than a search — but the tree ITSELF is now assembled with real recursion
+// (`recurse`/`self`, @enumeratio/structures — "a fold can't build a nested value; this can"),
+// walking down from the root position rather than building flat left/right arrays by value.
 
-type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
+import { recurse, self } from "../../src/recursion.ts";
+
+// `unknown`, not a strict recursive union: `recurse`/`self` (@enumeratio/structures) are typed
+// over `unknown` themselves, same as binary-tree.ts's own use of them.
+type MathJSON = unknown;
 
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const count = (list: MathJSON): MathJSON => ["Count", list];
@@ -87,10 +95,10 @@ const parentPos = (i: MathJSON): MathJSON =>
     nearestSmallerRight(i),
   ]);
 
-/** The value of `i`'s child on `side` of its parent — `i` lies left of a right-side parent, or
- *  right of a left-side parent — 0 if `i` has no such child. At most one position can match a
- *  given (parent, side) pair, so overwriting on every match is exact. */
-const childOnSide = (parentPosition: MathJSON, side: "left" | "right"): MathJSON =>
+/** The POSITION of `i`'s child on `side` of its parent — `i` lies left of a right-side parent,
+ *  or right of a left-side parent — 0 (no position) if `i` has no such child. At most one
+ *  position can match a given (parent, side) pair, so overwriting on every match is exact. */
+const childPositionOnSide = (parentPosition: MathJSON, side: "left" | "right"): MathJSON =>
   overRange(
     SIZE,
     0,
@@ -101,21 +109,24 @@ const childOnSide = (parentPosition: MathJSON, side: "left" | "right"): MathJSON
         ["Equal", parentPos("ci"), parentPosition],
         side === "left" ? ["Less", "ci", parentPosition] : ["Greater", "ci", parentPosition],
       ],
-      val("ci"),
+      "ci",
       "cacc",
     ],
     "cacc",
     "ci",
   );
 
-/** `left_child` / `right_child`, indexed by value 1..n: for each value `v`, its child on
- *  `side`, read off `_raw` by folding over v = 1..n and indexing — never a fold over a list
- *  taken out of the accumulator (tableau.ts). */
-const childList = (side: "left" | "right"): MathJSON =>
-  overRange(SIZE, ["List"], ["Join", "lracc", ["List", childOnSide(posOf("lrv"), side)]], "lracc", "lrv");
+/** The node at position `p` — 0 (leaf) at position 0, otherwise `[val(p), left, right]`,
+ *  recursing on the child POSITIONS `childPositionOnSide` finds. Real recursion
+ *  (`recurse`/`self`), not a fold: assembling a nested value needs it. */
+const nodeAt = (p: MathJSON): MathJSON => [
+  "If",
+  ["Equal", p, 0],
+  0,
+  ["List", val(p), self(childPositionOnSide(p, "left")), self(childPositionOnSide(p, "right"))],
+];
 
-/** The root's label — always 1, since every permutation of [n] holds the value 1 and heap
- *  order puts the global minimum at the top. */
-export const fromPermutationRoot: MathJSON = 1;
-export const fromPermutationLeftChild: MathJSON = childList("left");
-export const fromPermutationRightChild: MathJSON = childList("right");
+/** The whole tree: the node rooted at the position of value 1 — every permutation of [n] holds
+ *  the value 1, and heap order puts the global minimum at the top regardless of which
+ *  permutation it came from, so that position is always the root. */
+export const fromPermutationTree: MathJSON = recurse(nodeAt("p"), ["p"], posOf(1));

@@ -21,12 +21,18 @@ function countOf(expr: unknown): unknown {
 /** `["List", …]` (at every depth) -> a plain nested array, to compare against a
  *  brute-force generator's plain JS output without either side reformatting for the other.
  *  Also unwraps a one-arg carrier constructor (`IntegerPartition(x)`, `SetPartition(x)`) around
- *  the same shape, typed now that its area's carrier is declared alongside it. */
+ *  the same shape, typed now that its area's carrier is declared alongside it -- and, for a
+ *  carrier whose shape prefixes params onto the element (`Finset(Tuple(n, list))`), drops
+ *  those leading params and keeps the Tuple's last slot, the element itself. */
 function stripLists(x: unknown): unknown {
   if (!Array.isArray(x)) return x;
   const [head, ...rest] = x;
   if (head === "List") return rest.map(stripLists);
-  if (typeof head === "string" && rest.length === 1) return stripLists(rest[0]);
+  if (typeof head === "string" && rest.length === 1) {
+    const inner = rest[0];
+    if (Array.isArray(inner) && inner[0] === "Tuple") return stripLists(inner[inner.length - 1]);
+    return stripLists(inner);
+  }
   return x;
 }
 
