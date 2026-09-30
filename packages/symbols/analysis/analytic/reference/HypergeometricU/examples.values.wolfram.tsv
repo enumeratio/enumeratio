@@ -1,7 +1,7 @@
-id	in
-a-generic-point-checked-against-mpmath-s-hyperu	HypergeometricU[1, 2.5, 3]
-a-0-5-b-1-5-at-2	HypergeometricU[0.5, 1.5, 2]
-a-complex-argument	N[HypergeometricU[1, 2.5, Complex[0.5, 0.5]]]
-complex-a-at-1-5	N[HypergeometricU[Complex[1, 0.5], 2.5, 1.5]]
-b-negative-1-5-at-0-8	HypergeometricU[2, -1.5, 0.8]
-integer-b-stays-symbolic-the-connection-formula	HypergeometricU[1, 2, 3]
+id	in	out	tex.in	tex.out	verdict
+a-generic-point-checked-against-mpmath-s-hyperu	HypergeometricU[1, 2.5, 3]	0.38234066249038373	U(1,2.5,3)	0.382341	
+a-0-5-b-1-5-at-2	HypergeometricU[0.5, 1.5, 2]	0.7071067811865476	U(0.5,1.5,2)	0.707107	
+a-complex-argument	N[HypergeometricU[1, 2.5, Complex[0.5, 0.5]]]	1.1187557119467137 - 1.7171115370895236*I	N[U(1,2.5,0.5\, +0.5 i)]	1.11876\, -1.71711 i	
+complex-a-at-1-5	N[HypergeometricU[Complex[1, 0.5], 2.5, 1.5]]	0.8629494293536286 - 0.33701732173686794*I	N[U(1+0.5 i,2.5,1.5)]	0.862949\, -0.337017 i	
+b-negative-1-5-at-0-8	HypergeometricU[2, -1.5, 0.8]	0.05832383825616377	U(2,-1.5,0.8)	0.0583238	
+integer-b-stays-symbolic-the-connection-formula	HypergeometricU[1, 2, 3]	1/3	U(1,2,3)	\frac{1}{3}	disagree

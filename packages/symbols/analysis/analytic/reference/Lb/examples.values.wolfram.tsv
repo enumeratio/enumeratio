@@ -2,10 +2,10 @@ id	in	out	tex.in	tex.out
 lb-8	Log2[8]	3	\log _2(8)	3
 lb-1	Log2[1]	0	\log _2(1)	0
 lb-1-024	Log2[1024]	10	\log _2(1024)	10
-a-machine-precision-argument-evaluates	Log2[1.4142]			
-lb-2-pow-10	Log2[Power[2, 10]]			
+a-machine-precision-argument-evaluates	Log2[1.4142]	0.49998616442187416	\log _2(1.4142)	0.499986
+lb-2-pow-10	Log2[Power[2, 10]]	10	\log _2\left(2^{10}\right)	10
 same-exact-negative-power-fold-as-log2-lb-frac	Log2[Rational[1, 8]]	-3	\log _2\left(\frac{1}{8}\right)	-3
-lb-0	Log2[0]			
-threads-element-wise-over-a-list	Log2[List[1, 2, 4, 8]]			
-same-as-log2-the-logarithm-of-complex-infinity	Log2[ComplexInfinity]			
+lb-0	Log2[0]	-Infinity	\log _2(0)	-\infty
+threads-element-wise-over-a-list	Log2[List[1, 2, 4, 8]]	{0, 1, 2, 3}	\log _2(\{1,2,4,8\})	\{0,1,2,3\}
+same-as-log2-the-logarithm-of-complex-infinity	Log2[ComplexInfinity]	Infinity	\log _2(\text{ComplexInfinity})	\infty
 identical-to-log2	(Log2[64] == Log2[64])	True	\log _2(64)=\log _2(64)	\text{True}

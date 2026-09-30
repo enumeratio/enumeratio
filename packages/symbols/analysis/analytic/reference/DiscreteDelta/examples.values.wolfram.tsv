@@ -1,5 +1,5 @@
-id	in
-discretedelta-zero	DiscreteDelta[0]
-discretedelta-nonzero	DiscreteDelta[1]
-discretedelta-multi-all-zero	DiscreteDelta[0, 0]
-discretedelta-multi-one-nonzero	DiscreteDelta[1, 0]
+id	in	out	tex.in	tex.out
+discretedelta-zero	DiscreteDelta[0]	1	\delta (0)	1
+discretedelta-nonzero	DiscreteDelta[1]	0	\delta (1)	0
+discretedelta-multi-all-zero	DiscreteDelta[0, 0]	1	\delta (0,0)	1
+discretedelta-multi-one-nonzero	DiscreteDelta[1, 0]	0	\delta (1,0)	0

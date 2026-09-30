@@ -1,13 +1,13 @@
-id	in
-lambertw-0	ProductLog[0]
-1-cdot-e-1-e	ProductLog[E]
-branch-2-at-5	N[ProductLog[2, 5]]
-branch-1-at-neg-1	N[ProductLog[1, -1]]
-branch-5-at-10	N[ProductLog[5, 10]]
-branch-3-at-a-complex-argument	N[ProductLog[3, Complex[1, 2]]]
-the-branch-point-1-e	ProductLog[Minus[Divide[1, E]]]
-2e-2-w-e-w-at-w-2	ProductLog[Times[2, Power[E, 2]]]
-ln-2-cdot-e-ln-2-frac-ln-2-2	ProductLog[Minus[Divide[Log[2], 2]]]
-a-branch-other-than-0-or-1-checked-against-n	N[ProductLog[-3, -0.14]]
-the-branch-k-1-written-in-compute-engine-s-z-k	N[ProductLog[1, 1]]
-the-real-branch-k-1-on-1-e-z-0	N[ProductLog[-1, -0.2]]
+id	in	out	tex.in	tex.out
+lambertw-0	ProductLog[0]	0	W(0)	0
+1-cdot-e-1-e	ProductLog[E]	1	W(e)	1
+branch-2-at-5	N[ProductLog[2, 5]]	-0.784086339255851 + 10.923920160375756*I	N\left[W_2(5)\right]	-0.784086+10.9239 i
+branch-1-at-neg-1	N[ProductLog[1, -1]]	-2.062277729598284 + 7.588631178472513*I	N\left[W_1(-1)\right]	-2.06228+7.58863 i
+branch-5-at-10	N[ProductLog[5, 10]]	-1.092879582990904 + 29.808483249094696*I	N\left[W_5(10)\right]	-1.09288+29.8085 i
+branch-3-at-a-complex-argument	N[ProductLog[3, Complex[1, 2]]]	-2.1072075066264553 + 18.27108543113687*I	N\left[W_3(1+2 i)\right]	-2.10721+18.2711 i
+the-branch-point-1-e	ProductLog[Minus[Divide[1, E]]]	-1	W\left(-\frac{1}{e}\right)	-1
+2e-2-w-e-w-at-w-2	ProductLog[Times[2, Power[E, 2]]]	2	W\left(2 e^2\right)	2
+ln-2-cdot-e-ln-2-frac-ln-2-2	ProductLog[Minus[Divide[Log[2], 2]]]	-Log[2]	W\left(-\frac{\log (2)}{2}\right)	-\log (2)
+a-branch-other-than-0-or-1-checked-against-n	N[ProductLog[-3, -0.14]]	-4.645279174278859 - 13.812745325218817*I	N\left[W_{-3}(-0.14)\right]	-4.64528-13.8127 i
+the-branch-k-1-written-in-compute-engine-s-z-k	N[ProductLog[1, 1]]	-1.5339133197935744 + 4.375185153061898*I	N\left[W_1(1)\right]	-1.53391+4.37519 i
+the-real-branch-k-1-on-1-e-z-0	N[ProductLog[-1, -0.2]]	-2.5426413577735265	N\left[W_{-1}(-0.2)\right]	-2.54264

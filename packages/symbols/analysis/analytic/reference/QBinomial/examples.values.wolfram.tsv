@@ -1,9 +1,9 @@
-id	in
-frac-2-4-1-2-3-1-2-2-1-2-1-35	QBinomial[4, 2, 2]
-qbinomial-4-2-2	N[QBinomial[4, 2, 2]]
-qbinomial-6-3-1	N[QBinomial[6, 3, 1]]
-qbinomial-5-2-3	N[QBinomial[5, 2, 3]]
-qbinomial-8-3-2	N[QBinomial[8, 3, 2]]
-a-polynomial-in-q-whose-coefficients-count	
-the-number-of-2-dimensional-subspaces-of-f-3-5	QBinomial[5, 2, 3]
-at-q-1-it-is-binomial-6-3	QBinomial[6, 3, 1]
+id	in	out	tex.in	tex.out
+frac-2-4-1-2-3-1-2-2-1-2-1-35	QBinomial[4, 2, 2]	35	\binom{4}{2}_2	35
+qbinomial-4-2-2	N[QBinomial[4, 2, 2]]	35.	N\left[\binom{4}{2}_2\right]	35.
+qbinomial-6-3-1	N[QBinomial[6, 3, 1]]	20.	N\left[\binom{6}{3}_1\right]	20.
+qbinomial-5-2-3	N[QBinomial[5, 2, 3]]	1210.	N\left[\binom{5}{2}_3\right]	1210.
+qbinomial-8-3-2	N[QBinomial[8, 3, 2]]	97155.	N\left[\binom{8}{3}_2\right]	97155.
+a-polynomial-in-q-whose-coefficients-count				
+the-number-of-2-dimensional-subspaces-of-f-3-5	QBinomial[5, 2, 3]	1210	\binom{5}{2}_3	1210
+at-q-1-it-is-binomial-6-3	QBinomial[6, 3, 1]	20	\binom{6}{3}_1	20

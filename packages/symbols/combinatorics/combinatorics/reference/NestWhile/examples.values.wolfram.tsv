@@ -1,2 +1,2 @@
-id	in
-halve-while-even	NestWhile[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]
+id	in	out	tex.in	tex.out
+halve-while-even	NestWhile[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]	3	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,96,(\text{$\#$1} \bmod 2)=0\&\right]	3

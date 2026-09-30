@@ -1,32 +1,32 @@
 id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiDN[0.3, 0.5]]			
-dn-1-1-0-9	N[JacobiDN[1.1, 0.9]]			
-dn-0-7-0-2	N[JacobiDN[-0.7, 0.2]]			
-dn-0-3-0	N[JacobiDN[0.3, 0]]			
-dn-0-3-1	N[JacobiDN[0.3, 1]]			
-dn-1-2-3	N[JacobiDN[1.2, 3]]			
-dn-0-9-0-5	N[JacobiDN[0.9, -0.5]]			
-dn-0-4-0-5i-0-3	N[JacobiDN[Complex[0.4, 0.5], 0.3]]			
-dn-0-4-0-5i-0-3-2	N[JacobiDN[Complex[0.4, -0.5], 0.3]]			
-dn-0-4-0-5i-0-3-3	N[JacobiDN[Complex[-0.4, 0.5], 0.3]]			
-dn-0-4-0-5i-0-3-4	N[JacobiDN[Complex[-0.4, -0.5], 0.3]]			
-dn-1-1-0-7i-0-3	N[JacobiDN[Complex[1.1, -0.7], 0.3]]			
-dn-1-1i-0-3	N[JacobiDN[Complex[1, 1], 0.3]]			
-dn-0-2-8i-0-4	N[JacobiDN[Complex[0.2, 8], 0.4]]			
-dn-0-2-8i-0-4-2	N[JacobiDN[Complex[0.2, -8], 0.4]]			
-dn-5-4i-0-6	N[JacobiDN[Complex[5, 4], 0.6]]			
-dn-0-05-1-9753631352924692i-0-3	N[JacobiDN[Complex[0.05, 1.9753631352924692], 0.3]]			
-dn-0-05-2-0653631352924693i-0-3	N[JacobiDN[Complex[0.05, 2.0653631352924693], 0.3]]			
-dn-0-05-2-074363135292469i-0-3	N[JacobiDN[Complex[0.05, 2.074363135292469], 0.3]]			
-dn-0-05-2-075263135292469i-0-3	N[JacobiDN[Complex[0.05, 2.075263135292469], 0.3]]			
-dn-0-3-0-2i-1-5	N[JacobiDN[Complex[0.3, 0.2], 1.5]]			
-dn-0-5-0-3i-3	N[JacobiDN[Complex[0.5, -0.3], 3]]			
-dn-0-3-0-2i-0-7	N[JacobiDN[Complex[0.3, 0.2], -0.7]]			
-dn-0-5-0-3i-3-2	N[JacobiDN[Complex[0.5, -0.3], -3]]			
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiDN[0.3, 1.5]]			
-m-less-than-0-via-the-imaginary-modulus	N[JacobiDN[0.3, -2]]			
-a-complex-argument-u	N[JacobiDN[Complex[0.3, 0.4], 0.5]]			
-u-0-is-1-for-any-m	JacobiDN[0, m]	1	\text{dn}(0|m)	1
+a-floating-point-argument-evaluates-directly-to	N[JacobiDN[0.3, 0.5]]	0.9782405041743611	N[\text{dn}(0.3|0.5)]	0.978241
+dn-1-1-0-9	N[JacobiDN[1.1, 0.9]]	0.6393157784536923	N[\text{dn}(1.1|0.9)]	0.639316
+dn-0-7-0-2	N[JacobiDN[-0.7, 0.2]]	0.9586602073143238	N[\text{dn}(-0.7|0.2)]	0.95866
+dn-0-3-0	N[JacobiDN[0.3, 0]]	1.	N[\text{dn}(0.3|0)]	1.
+dn-0-3-1	N[JacobiDN[0.3, 1]]	0.9566279119002483	N[\text{dn}(0.3|1)]	0.956628
+dn-1-2-3	N[JacobiDN[1.2, 3]]	-0.27938025773489433	N[\text{dn}(1.2|3)]	-0.27938
+dn-0-9-0-5	N[JacobiDN[0.9, -0.5]]	1.154025878160351	N[\text{dn}(0.9|-0.5)]	1.15403
+dn-0-4-0-5i-0-3	N[JacobiDN[Complex[0.4, 0.5], 0.3]]	1.00487337640867 - 0.06315069465286599*I	N[\text{dn}(0.4\, +0.5 i|0.3)]	1.00487\, -0.0631507 i
+dn-0-4-0-5i-0-3-2	N[JacobiDN[Complex[0.4, -0.5], 0.3]]	1.00487337640867 + 0.06315069465286599*I	N[\text{dn}(0.4\, -0.5 i|0.3)]	1.00487\, +0.0631507 i
+dn-0-4-0-5i-0-3-3	N[JacobiDN[Complex[-0.4, 0.5], 0.3]]	1.00487337640867 + 0.06315069465286599*I	N[\text{dn}(-0.4+0.5 i|0.3)]	1.00487\, +0.0631507 i
+dn-0-4-0-5i-0-3-4	N[JacobiDN[Complex[-0.4, -0.5], 0.3]]	1.00487337640867 - 0.06315069465286599*I	N[\text{dn}(-0.4-0.5 i|0.3)]	1.00487\, -0.0631507 i
+dn-1-1-0-7i-0-3	N[JacobiDN[Complex[1.1, -0.7], 0.3]]	0.8415968676751103 + 0.11336608344803291*I	N[\text{dn}(1.1\, -0.7 i|0.3)]	0.841597\, +0.113366 i
+dn-1-1i-0-3	N[JacobiDN[Complex[1, 1], 0.3]]	0.8216157247168823 - 0.21948951456834062*I	N[\text{dn}(1+i|0.3)]	0.821616\, -0.21949 i
+dn-0-2-8i-0-4	N[JacobiDN[Complex[0.2, 8], 0.4]]	0.9996614235141449 - 0.01613668577803639*I	N[\text{dn}(0.2\, +8 i|0.4)]	0.999661\, -0.0161367 i
+dn-0-2-8i-0-4-2	N[JacobiDN[Complex[0.2, -8], 0.4]]	0.9996614235141449 + 0.01613668577803639*I	N[\text{dn}(0.2\, -8 i|0.4)]	0.999661\, +0.0161367 i
+dn-5-4i-0-6	N[JacobiDN[Complex[5, 4], 0.6]]	-0.739167170349424 + 0.12990760968776005*I	N[\text{dn}(5+4 i|0.6)]	-0.739167+0.129908 i
+dn-0-05-1-9753631352924692i-0-3	N[JacobiDN[Complex[0.05, 1.9753631352924692], 0.3]]	8.02832986328273 - 3.9858522958170357*I	N[\text{dn}(0.05\, +1.97536 i|0.3)]	8.02833\, -3.98585 i
+dn-0-05-2-0653631352924693i-0-3	N[JacobiDN[Complex[0.05, 2.0653631352924693], 0.3]]	3.848988201550719 - 19.21660104519258*I	N[\text{dn}(0.05\, +2.06536 i|0.3)]	3.84899\, -19.2166 i
+dn-0-05-2-074363135292469i-0-3	N[JacobiDN[Complex[0.05, 2.074363135292469], 0.3]]	0.4001235008848022 - 19.97783480794059*I	N[\text{dn}(0.05\, +2.07436 i|0.3)]	0.400124\, -19.9778 i
+dn-0-05-2-075263135292469i-0-3	N[JacobiDN[Complex[0.05, 2.075263135292469], 0.3]]	0.04002818369329038 - 19.985751607488005*I	N[\text{dn}(0.05\, +2.07526 i|0.3)]	0.0400282\, -19.9858 i
+dn-0-3-0-2i-1-5	N[JacobiDN[Complex[0.3, 0.2], 1.5]]	0.9587649365733537 - 0.08575397009348795*I	N[\text{dn}(0.3\, +0.2 i|1.5)]	0.958765\, -0.085754 i
+dn-0-5-0-3i-3	N[JacobiDN[Complex[0.5, -0.3], 3]]	0.7261100881973706 + 0.3681584401857735*I	N[\text{dn}(0.5\, -0.3 i|3)]	0.72611\, +0.368158 i
+dn-0-3-0-2i-0-7	N[JacobiDN[Complex[0.3, 0.2], -0.7]]	1.0186736897365127 + 0.040854651214155616*I	N[\text{dn}(0.3\, +0.2 i|-0.7)]	1.01867\, +0.0408547 i
+dn-0-5-0-3i-3-2	N[JacobiDN[Complex[0.5, -0.3], -3]]	1.2662359548295512 - 0.4402873180138982*I	N[\text{dn}(0.5\, -0.3 i|-3)]	1.26624\, -0.440287 i
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiDN[0.3, 1.5]]	0.9351619177552997	N[\text{dn}(0.3|1.5)]	0.935162
+m-less-than-0-via-the-imaginary-modulus	N[JacobiDN[0.3, -2]]	1.0885129466062726	N[\text{dn}(0.3|-2)]	1.08851
+a-complex-argument-u	N[JacobiDN[Complex[0.3, 0.4], 0.5]]	1.0122620822128683 - 0.06284968502478049*I	N[\text{dn}(0.3\, +0.4 i|0.5)]	1.01226\, -0.0628497 i
+u-0-is-1-for-any-m				
 m-0-is-1-for-any-u	JacobiDN[u, 0]	1	\text{dn}(u|0)	1
 the-quarter-period-u-elliptick-m-is-sqrt				
-symbolic-arguments-are-left-unevaluated-rather	JacobiDN[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{dn}(u|m)-\text{dn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{dn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{dn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{dn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{dn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{dn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{dn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+symbolic-arguments-are-left-unevaluated-rather				

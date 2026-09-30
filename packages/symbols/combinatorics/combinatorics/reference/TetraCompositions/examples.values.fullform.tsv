@@ -1,4 +1,4 @@
-id	in
-count-tetracompositions-6	Count[TetraCompositions[6]]
-first-element-of-tetracompositions-6	Part[TetraCompositions[6], 1]
-every-element-of-tetracompositions-6	Take[TetraCompositions[6], 29]
+id	in	back
+count-tetracompositions-6	Length[TetraCompositions[6]]	[Length, [TetraCompositions, 6]]
+first-element-of-tetracompositions-6	Part[TetraCompositions[6], 1]	
+every-element-of-tetracompositions-6	Take[TetraCompositions[6], 29]	

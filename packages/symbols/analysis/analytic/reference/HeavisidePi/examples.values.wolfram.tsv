@@ -1,5 +1,5 @@
-id	in
-heavisidepi-inside	HeavisidePi[0]
-heavisidepi-boundary-unevaluated	HeavisidePi[Rational[1, 2]]
-heavisidepi-neg-boundary-unevaluated	HeavisidePi[Rational[-1, 2]]
-heavisidepi-outside	HeavisidePi[1]
+id	in	out	tex.in	tex.out	verdict
+heavisidepi-inside	HeavisidePi[0]	1	\Pi (0)	1	
+heavisidepi-boundary-unevaluated	HeavisidePi[Rational[1, 2]]	HeavisidePi[1/2]	\Pi \left(\frac{1}{2}\right)	\Pi \left(\frac{1}{2}\right)	
+heavisidepi-neg-boundary-unevaluated	HeavisidePi[Rational[-1, 2]]	HeavisidePi[1/2]	\Pi \left(-\frac{1}{2}\right)	\Pi \left(\frac{1}{2}\right)	disagree
+heavisidepi-outside	HeavisidePi[1]	0	\Pi (1)	0	

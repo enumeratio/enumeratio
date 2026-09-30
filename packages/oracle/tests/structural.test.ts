@@ -1,3 +1,4 @@
+import { fromWolfram } from "@enumeratio/wolfram/src";
 import { describe, expect, test } from "vite-plus/test";
 import { compare, parsePython } from "../src/compare.ts";
 import type { MathJSON } from "../src/emit.ts";
@@ -38,6 +39,70 @@ test("numeric values still reduce, inside lists too", () => {
   expect(reduce(theirs, valuesOnly(evaluateAll))).toEqual([0.5, symbolic(["PowerMod", 2, -1, 4]), 1]);
 });
 
+// KaryTree(5) (the default k=2 binary tree on 5 vertices: root 1, children 2 3, 2's children
+// 4 5) -- ours spells its edges as an explicit UndirectedEdge list; Wolfram's own answer
+// packs them into a cached `{Null, SparseArray[...]}` adjacency matrix instead. Structurally
+// nothing alike for the SAME graph, so a plain `compareTrees` on the raw reduce would always
+// disagree; `reduce`'s `Graph` case has to read both down to the same vertices+edges shape.
+// `theirs` is run through `fromWolfram` on Wolfram's OWN literal answer text (not hand-typed
+// MathJSON) -- its `Null` reads back as our `Nothing`, not the string `"Null"`, which a
+// hand-typed tree would get wrong without ever failing to typecheck.
+test("a Graph answer compares by vertices + edges, not by Wolfram's cached SparseArray shape", () => {
+  // A real evaluator, not `evaluateAll`'s "everything reduces to 1" stand-in — vertex/edge
+  // labels have to keep their own identity for a structural graph comparison to mean
+  // anything.
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3, 4, 5],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 4], ["UndirectedEdge", 2, 5]],
+  ] as MathJSON;
+  // Wolfram's actual `KaryTree[5]` answer text, as scanned (examples.values.wolfram.tsv):
+  // edges as a compressed-row-storage adjacency matrix (row i's nonzero columns are
+  // `colIndices[rowPtr[i-1] .. rowPtr[i]-1]`): row 1 -> {2, 3}, row 2 -> {1, 4, 5}, row 3 ->
+  // {1}, row 4 -> {2}, row 5 -> {2} (the matrix is symmetric — each edge appears from both
+  // endpoints).
+  const theirs = fromWolfram(
+    "Graph[{1, 2, 3, 4, 5}, {Null, SparseArray[Automatic, {5, 5}, 0, {1, {{0, 2, 5, 6, 7, 8}, {{2}, {3}, {1}, {4}, {5}, {1}, {2}, {2}}}, Pattern}]}]",
+  ) as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+  // A genuinely different graph (a missing edge) still disagrees.
+  const fewerEdges = [
+    "Graph",
+    ["List", 1, 2, 3, 4, 5],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 4]],
+  ] as MathJSON;
+  expect(compareTrees(reduce(fewerEdges, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
+});
+
+// Subgraph(CompleteGraph(4), [1, 2, 3]): Wolfram's answer also carries a layout option list.
+test("a Graph answer's trailing options don't change the graph", () => {
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 3]],
+  ] as MathJSON;
+  const theirs = fromWolfram(
+    'Graph[{1, 2, 3}, {Null, SparseArray[Automatic, {3, 3}, 0, {1, {{0, 2, 4, 6}, {{2}, {3}, {1}, {3}, {1}, {2}}}, Pattern}]}, {GraphLayout -> "StarEmbedding"}]',
+  ) as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+});
+
+// CycleDecomposition/from-a-permutation: `Permutation([2, 3, 1, 4])` decomposes into cycles
+// (1 2 3), a 3-cycle, and 4, a FIXED point -- ours keeps the fixed point as its own singleton
+// cycle (`[[1,2,3],[4]]`); Wolfram's `Cycles[{{1,2,3}}]` (its own answer, unwrapped by name
+// since `Cycles` is never one of our heads) omits it. Same permutation, not a shape mismatch.
+test("CycleDecomposition and Wolfram's own Cycles compare equal once a fixed point is dropped", () => {
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = ["CycleDecomposition", ["List", ["List", 1, 2, 3], ["List", 4]]] as MathJSON;
+  const theirs = fromWolfram("Cycles[{{1, 2, 3}}]") as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+  // A genuinely different cycle structure still disagrees.
+  const differentCycles = ["CycleDecomposition", ["List", ["List", 1, 3], ["List", 2]]] as MathJSON;
+  expect(compareTrees(reduce(differentCycles, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
+});
+
 test("a carrier constructor reduces to its contents, same as List vs. Tuple leniency", () => {
   const ours = ["Permutation", ["List", 2, 1, 3]] as MathJSON;
   const theirs = ["List", 2, 1, 3] as MathJSON; // an external system's own, unwrapped, encoding
@@ -62,6 +127,24 @@ test("truth values reduce to booleans whichever evaluator reads the rest", () =>
   expect(reduce("True", symbolic)).toBe(true);
   expect(reduce(["List", "True", "False"], valuesOnly(symbolic))).toEqual([true, false]);
   expect(compareTrees(reduce("True", symbolic), reduce("True", symbolic))).toBe("agree");
+});
+
+test("Rule and KeyValuePair compare by their two operands, not their head", () => {
+  // `fromWolfram` reads a scanned `Rule[x, 2]` back as `KeyValuePair` (the ambiguous reverse
+  // of `HEADS`, kept for the `Over` option's own round trip in from-wolfram.test.ts), while
+  // Maximize/FindInstance bindings and Association entries are built as `Rule` directly — so
+  // this pair has to compare equal, the same List vs. Tuple leniency `SEQUENCE_HEADS` gives.
+  const ours = ["Rule", "x", 2] as MathJSON;
+  const theirs = ["KeyValuePair", "x", 2] as MathJSON;
+  expect(reduce(ours, symbolic)).toEqual(reduce(theirs, symbolic));
+  expect(compareTrees(reduce(ours, symbolic), reduce(theirs, symbolic))).toBe("agree");
+  // Nested inside a List, as Maximize's `{value, {x -> argmax}}` answer shape does.
+  const wrapped = ["List", 3, ["List", ours]] as MathJSON;
+  const wrappedTheirs = ["List", 3, ["List", theirs]] as MathJSON;
+  expect(compareTrees(reduce(wrapped, symbolic), reduce(wrappedTheirs, symbolic))).toBe("agree");
+  // A genuine value difference on either side still disagrees.
+  const different = ["KeyValuePair", "x", 3] as MathJSON;
+  expect(compareTrees(reduce(ours, symbolic), reduce(different, symbolic))).toBe("disagree");
 });
 
 describe("comparison past the double range and of exact rationals", () => {

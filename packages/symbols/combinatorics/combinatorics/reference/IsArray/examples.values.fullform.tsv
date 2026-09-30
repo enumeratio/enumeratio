@@ -1,6 +1,6 @@
-id	in
-a-rectangular-nesting-is-an-array	ArrayQ[List[List[1, 2], List[3, 4]]]
-a-ragged-nesting-is-not-an-array	ArrayQ[List[List[1, 2], List[3]]]
-a-flat-list-is-a-rank-1-array	ArrayQ[List[1, 2, 3]]
-a-non-list-is-not-an-array	ArrayQ[3]
-a-test-function-must-hold-of-every-leaf	ArrayQ[List[List[2, 4], List[6, 8]], EvenQ]
+id	in	back
+a-rectangular-nesting-is-an-array	ArrayQ[List[List[1, 2], List[3, 4]]]	
+a-ragged-nesting-is-not-an-array	ArrayQ[List[List[1, 2], List[3]]]	
+a-flat-list-is-a-rank-1-array	ArrayQ[List[1, 2, 3]]	
+a-non-list-is-not-an-array	ArrayQ[3]	
+a-test-function-must-hold-of-every-leaf	ArrayQ[List[List[2, 4], List[6, 8]], Blank[], EvenQ]	[IsArray, [List, [List, 2, 4], [List, 6, 8]], [Blank], IsEven]

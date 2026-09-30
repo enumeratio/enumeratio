@@ -12,19 +12,19 @@ primepairs-gap-6-first-term-is-5
 deficientnumbers-6th-term-is-7					
 kfreeintegers-2-first-term-is-1					
 at-lazy-family-collection-element					
-at-span-submatrix-two-levels	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]				
+at-span-submatrix-two-levels	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]	{{4, 5}, {7, 8}}	\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)[[2\text{;;}3,1\text{;;}2]]	\left( \begin{array}{cc}  4 & 5 \\  7 & 8 \\ \end{array} \right)	
 at-integer-without-span-unaffected	Part[List[a, b, c], 2]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\{a,b,c\}[[2]]-b],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}[[2]]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\left\{-\frac{17}{6},\frac{19}{8},-\frac{23}{9}\right\}[[2]]-\frac{19}{8}\right]\right],\text{Chop}\left[N\left[\left\{\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right\}[[2]]--\frac{11}{5}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 a-list-of-indices-selects-several-elements-at	Part[List[a, b, c, d], List[1, 3]]	{a, c}	\{a,b,c,d\}[[\{1,3\}]]	\{a,c\}	
-a-range-also-works-as-an-index-list-extracting-a	Part[List[a, b, c, d, e], Range[2, 4]]	{b, c, d}	\{a,b,c,d,e\}[[\text{Range}[2,4]]]	\{b,c,d\}	
-index-0-is-the-collection-s-own-head-matching	Part[List[1, 2, 3], 0]				
-several-indices-reach-into-successive-levels-row	Part[List[List[1, 2, 3], List[4, 5, 6]], 2, 3]				
-negative-indices-work-at-every-level	Part[List[List[1, 2], List[3, 4]], -1, -1]				
+a-range-also-works-as-an-index-list-extracting-a					
+index-0-is-the-collection-s-own-head-matching	Part[List[1, 2, 3], 0]	List	\{1,2,3\}[[0]]	\text{List}	
+several-indices-reach-into-successive-levels-row	Part[List[List[1, 2, 3], List[4, 5, 6]], 2, 3]	6	\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\ \end{array} \right)[[2,3]]	6	
+negative-indices-work-at-every-level	Part[List[List[1, 2], List[3, 4]], -1, -1]	4	\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)[[-1,-1]]	4	
 negative-indices-inside-an-index-list	Part[List[a, b, c, d, f], List[-1, -2]]	{f, d}	\{a,b,c,d,f\}[[\{-1,-2\}]]	\{f,d\}	
 a-stepped-range-takes-every-other-element	Part[List[a, b, c, d, f], Range[1, 5, 2]]	{a, c, f}	\{a,b,c,d,f\}[[\text{Range}[1,5,2]]]	\{a,c,f\}	
 negative-bounds-count-from-the-end-the-last	Part[List[a, b, c, d, f], Range[-3, -1]]	{c, d, f}	\{a,b,c,d,f\}[[\text{Range}[-3,-1]]]	\{c,d,f\}	
-a-lazy-range-is-indexed-directly	Part[Range[5, 10], 2]				
-all-at-the-first-level-should-take-a-whole	Part[List[List[1, 2, 3], List[4, 5, 6]], AllTrue, 2]				
-index-lists-at-two-levels-extract-a-submatrix	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], List[1, 3], List[2, 3]]				
+a-lazy-range-is-indexed-directly	Part[Range[5, 10], 2]	6	\text{Range}[5,10][[2]]	6	
+all-at-the-first-level-should-take-a-whole	Part[List[List[1, 2, 3], List[4, 5, 6]], All, 2]	{2, 5}	\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\ \end{array} \right)[[\text{All},2]]	\{2,5\}	
+index-lists-at-two-levels-extract-a-submatrix	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], List[1, 3], List[2, 3]]	{{2, 3}, {8, 9}}	\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)[[\{1,3\},\{2,3\}]]	\left( \begin{array}{cc}  2 & 3 \\  8 & 9 \\ \end{array} \right)	
 a-span-2-4-in-wolfram-takes-a-contiguous-slice	Part[List[a, b, c, d, f], Span[2, 4]]	{b, c, d}	\{a,b,c,d,f\}[[2\text{;;}4]]	\{b,c,d\}	
 a-stepped-span-1-1-2-takes-every-other-element	Part[List[a, b, c, d, f], Span[1, -1, 2]]	{a, c, f}	\{a,b,c,d,f\}[[1\text{;;}-1\text{;;}2]]	\{a,c,f\}	
 a-negative-step-1-1-1-walks-backwards-reversing	Part[List[a, b, c, d, f], Span[-1, 1, -1]]	{f, d, c, b, a}	\{a,b,c,d,f\}[[-1\text{;;}1\text{;;}-1]]	\{f,d,c,b,a\}	

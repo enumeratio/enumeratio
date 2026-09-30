@@ -1,3 +1,3 @@
-id	in
-symmetric-matrix-is-undirected	EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]
-asymmetric-matrix-is-directed	EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]
+id	in	out	tex.in	tex.out
+symmetric-matrix-is-undirected	EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]	{UndirectedEdge[1, 2], UndirectedEdge[1, 3]}	\text{EdgeList}\left[\text{AdjacencyGraph}\left[\left( \begin{array}{ccc}  0 & 1 & 1 \\  1 & 0 & 0 \\  1 & 0 & 0 \\ \end{array} \right)\right]\right]	\{1\unicode{f3d4}2,1\unicode{f3d4}3\}
+asymmetric-matrix-is-directed	EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]	{DirectedEdge[1, 2]}	\text{EdgeList}\left[\text{AdjacencyGraph}\left[\left( \begin{array}{cc}  0 & 1 \\  0 & 0 \\ \end{array} \right)\right]\right]	\{1\unicode{f3d5}2\}

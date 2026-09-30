@@ -1,5 +1,5 @@
 id	in
-4	Count[SymmetricGroup[4]]
+4	Length[SymmetricGroup[4]]
 the-identity	Part[SymmetricGroup[3], 1]
 inversions-are-mahonian	
 major-index-is-equidistributed	

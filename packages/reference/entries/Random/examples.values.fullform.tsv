@@ -1,4 +1,4 @@
-id	in
-a-permutation-of-4-seeded	Last[List[SeedRandom[7], RandomReal[Permutations[4]]]]
-a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomReal[IntegerPartitions[10], 3]]]]
-randominteger-is-random-over-a-range	Equal[Last[List[SeedRandom[5], RandomInteger[List[10, 20]]]], Last[List[SeedRandom[5], RandomReal[Range[10, 20]]]]]
+id	in	back
+a-permutation-of-4-seeded	Last[List[SeedRandom[7], RandomChoice[Permutations[4]]]]	[Last, [List, [SeedRandom, 7], [RandomChoice, [Permutations, 4]]]]
+a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomChoice[IntegerPartitions[10], 3]]]]	[Length, [Last, [List, [SeedRandom, 1], [RandomChoice, [IntegerPartitions, 10], 3]]]]
+randominteger-is-random-over-a-range	Equal[Last[List[SeedRandom[5], RandomInteger[List[10, 20]]]], Last[List[SeedRandom[5], RandomChoice[Range[10, 20]]]]]	[Equal, [Last, [List, [SeedRandom, 5], [RandomInteger, [List, 10, 20]]]], [Last, [List, [SeedRandom, 5], [RandomChoice, [Range, 10, 20]]]]]

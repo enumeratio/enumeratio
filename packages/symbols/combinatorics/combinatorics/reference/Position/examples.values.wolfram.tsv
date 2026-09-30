@@ -1,4 +1,4 @@
-id	in
-position-list-1-2-3-2-2	Position[List[1, 2, 3, 2], 2]
-a-value-absent-from-the-collection-has-no	Position[List[1, 2, 3], 9]
-position-s-first-entry-agrees-with-indexof	Part[Position[List[1, 2, 3, 2], 2], 1]
+id	in	out	tex.in	tex.out
+position-list-1-2-3-2-2	Position[List[1, 2, 3, 2], 2]	{{2}, {4}}	\text{Position}[\{1,2,3,2\},2]	\left( \begin{array}{c}  2 \\  4 \\ \end{array} \right)
+a-value-absent-from-the-collection-has-no	Position[List[1, 2, 3], 9]	{}	\text{Position}[\{1,2,3\},9]	\{\}
+position-s-first-entry-agrees-with-indexof	Part[Position[List[1, 2, 3, 2], 2], 1]	{2}	\text{Position}[\{1,2,3,2\},2][[1]]	\{2\}

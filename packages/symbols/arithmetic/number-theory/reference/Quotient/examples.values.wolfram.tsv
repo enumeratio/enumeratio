@@ -1,12 +1,12 @@
 id	in	out	tex.in	tex.out	verdict
 quotient-17-5	Quotient[17, 5]	3	\text{Quotient}[17,5]	3	
 the-floor-not-truncation	Quotient[-7, 2]	-4	\text{Quotient}[-7,2]	-4	
-the-remainder-takes-the-sign-of-n	Quotient[17, -5]				
+the-remainder-takes-the-sign-of-n	Quotient[17, -5]	-4	\text{Quotient}[17,-5]	-4	
 7-5i-2-i-3-8-0-6i-rounded	Quotient[Complex[7, 5], Complex[2, 1]]	4 + I	\text{Quotient}[7+5 i,2+i]	4+i	
-real-arguments-lfloor-7-5-2-rfloor	Quotient[7.5, 2]				
-rational-arguments-lfloor-21-2-rfloor	Quotient[Rational[7, 2], Rational[1, 3]]				
-quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q	Quotient[17, 5, 3]				
-listable-threads-over-a-list	Quotient[List[10, 20, 30], 7]				
+real-arguments-lfloor-7-5-2-rfloor	Quotient[7.5, 2]	3	\text{Quotient}[7.5,2]	3	
+rational-arguments-lfloor-21-2-rfloor	Quotient[Rational[7, 2], Rational[1, 3]]	10	\text{Quotient}\left[\frac{7}{2},\frac{1}{3}\right]	10	
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q	Quotient[17, 5, 3]	2	\text{Quotient}[17,5,3]	2	
+listable-threads-over-a-list	Quotient[List[10, 20, 30], 7]	{1, 2, 4}	\text{Quotient}[\{10,20,30\},7]	\{1,2,4\}	
 quotient-by-a-unit-is-the-dividend-itself-up-to	Quotient[Complex[3, 4], Complex[0, 1]]	4 - 3*I	\text{Quotient}[3+4 i,i]	4-3 i	
 a-zero-dividend-quotients-to-0	Quotient[0, Complex[2, 1]]	0	\text{Quotient}[0,2+i]	0	
 quotient-by-a-gaussian-prime-norm-5	Quotient[Complex[3, 4], Complex[2, 1]]	2 + I	\text{Quotient}[3+4 i,2+i]	2+i	
@@ -32,5 +32,5 @@ a-negative-associate-as-the-divisor	Quotient[Complex[6, 8], Complex[-2, -3]]	-3	
 dividing-a-large-norm-gaussian-by-a-real-prime	Quotient[Complex[123, 456], 19]	6 + 24*I	\text{Quotient}[123+456 i,19]	6+24 i	
 dividing-by-zero-is-undefined	Quotient[Complex[3, 4], 0]	ComplexInfinity	\text{Quotient}[3+4 i,0]	\text{ComplexInfinity}	disagree
 dividing-zero-by-zero-is-undefined	Quotient[0, 0]	Indeterminate	\text{Quotient}[0,0]	\text{Indeterminate}	disagree
-m-n-quotient-m-n-mod-m-n-see-mod	Plus[Times[5, Quotient[17, 5]], Mod[17, 5]]				
+m-n-quotient-m-n-mod-m-n-see-mod	Plus[Times[5, Quotient[17, 5]], Mod[17, 5]]	17	5 \text{Quotient}[17,5]+(17 \bmod 5)	17	
 2-5-2-5i-rounds-to-even-in-each-part	Quotient[Complex[5, 5], 2]	2 + 2*I	\text{Quotient}[5+5 i,2]	2+2 i	

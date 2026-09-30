@@ -2,14 +2,14 @@ id	in	out	tex.in	tex.out
 nextprime-10	NextPrime[10]	11	\text{NextPrime}[10]	11
 nextprime-100	NextPrime[100]	101	\text{NextPrime}[100]	101
 the-second-prime-after-10	NextPrime[10, 2]	13	\text{NextPrime}[10,2]	13
-nextprime-6	NextPrime[6]			
-the-second-prime-after-50	NextPrime[50, 2]			
-the-largest-prime-below-50	NextPrime[50, -1]			
+nextprime-6	NextPrime[6]	7	\text{NextPrime}[6]	7
+the-second-prime-after-50	NextPrime[50, 2]	59	\text{NextPrime}[50,2]	59
+the-largest-prime-below-50	NextPrime[50, -1]	47	\text{NextPrime}[50,-1]	47
 threads-element-wise-over-a-list-as-wolfram-s	NextPrime[List[1, 5, 10, 15]]	{2, 7, 11, 17}	\text{NextPrime}[\{1,5,10,15\}]	\{2,7,11,17\}
-large-integers-the-first-prime-past-a-googol-is	NextPrime[Power[10, 100]]			
-rational-n-the-next-prime-above-7-2	NextPrime[Rational[7, 2]]			
-real-n-the-next-prime-above-100-5	NextPrime[100.5]			
-nextprime-steps-from-p-n-to-p-n-1-see-nthprime	(NextPrime[Prime[20]] == Prime[21])			
+large-integers-the-first-prime-past-a-googol-is	NextPrime[Power[10, 100]]	10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267	\text{NextPrime}\left[10^{100}\right]	10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267
+rational-n-the-next-prime-above-7-2	NextPrime[Rational[7, 2]]	5	\text{NextPrime}\left[\frac{7}{2}\right]	5
+real-n-the-next-prime-above-100-5	NextPrime[100.5]	101	\text{NextPrime}[100.5]	101
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	(NextPrime[Prime[20]] == Prime[21])	True	\text{NextPrime}\left[p_{20}\right]=p_{21}	\text{True}
 a-negative-k-walks-backward-giving-the-prime	NextPrime[10, -1]	7	\text{NextPrime}[10,-1]	7
-negative-n-wolfram-counts-7-as-prime-and-returns	NextPrime[-10]			
-nextprime-neg-2	NextPrime[-2]			
+negative-n-wolfram-counts-7-as-prime-and-returns	NextPrime[-10]	-7	\text{NextPrime}[-10]	-7
+nextprime-neg-2	NextPrime[-2]	2	\text{NextPrime}[-2]	2

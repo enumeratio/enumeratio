@@ -1,2 +1,2 @@
-id	in
-star-hub-is-maximally-close	ClosenessCentrality[StarGraph[5], 1]
+id	in	out	tex.in	tex.out
+star-hub-is-maximally-close	Part[ClosenessCentrality[StarGraph[5]], 1]	1.	\text{ClosenessCentrality}[\text{StarGraph}[5]][[1]]	1.

@@ -1,28 +1,28 @@
-id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	sympy.issue	mpmath.kind	mpmath.note	rust.kind	rust.note
-floor-7-over-2			[Floor, [Rational, 7, 2]]	3										
-floor-3p7			[Floor, 3.7]	3										
-integers-pass-through-unchanged			[Floor, 5]	5	Integers pass through unchanged									
-threads-element-wise-over-a-list			[Floor, [List, 1.2, -1.2, 3.7]]	[List, 1, -2, 3]	Threads element-wise over a list	threading	compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars.		threading	compute-engine's Floor threads over the list; mpmath's takes scalars.	threading	compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars.
-floor-2p4			[Floor, 2.4]	2										
-floor-2p6			[Floor, 2.6]	2										
-floor-2p7		test	[Floor, 2.7]	2										
-floor-add-x-1-a-free-variable-is-untouched		test	[Floor, [Add, x, 1]]	[Floor, [Add, x, 1]]	A free variable added to an integer is still untouched									
-stays-symbolic	Scope		[Floor, x]	[Floor, x]	Stays symbolic									
-exact-radicals-are-decided-numerically	Scope		[Floor, [Sqrt, 50]]	7	Exact radicals are decided numerically									
-a-negative-radicand-inside-floor	Scope	test	[Floor, [Sqrt, -1]]	[Complex, 0, 1]	Floor(Sqrt(-1)) stays complex: Floor is a no-op on a non-real value	domain	compute-engine's Floor is a no-op on the already-integral complex value i; Sage's floor() declines outright on an element of a complex quadratic number field.						domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine's Floor is a no-op on the resulting complex value.
-evaluates-at-an-exact-constant-lfloor-pi-rfloor	Scope		[Floor, Pi]	3	Evaluates at an exact constant: $\lfloor\pi\rfloor = 3$									
-and-at-its-negative-lfloor-pi-rfloor-4	Scope		[Floor, [Negate, Pi]]	-4	...and at its negative, $\lfloor -\pi \rfloor = -4$									
-a-second-argument-floors-to-a-multiple-of-it-the	Scope		[Floor, 226, 10]	220	A second argument floors to a multiple of it -- the nearest multiple of 10 below 226									
-the-step-needn-t-be-an-integer-3-5-cdot-lfloor	Scope		[Floor, -10.3, 3.5]	-10.5	...the step needn't be an integer: $3.5 \cdot \lfloor -10.3/3.5 \rfloor = -10.5$									
-nor-rational-2-pi-e-approx-3-57-floors-to-the	Scope		[Floor, [Subtract, [Multiply, 2, Pi], ExponentialE], [Rational, 5, 4]]	[Rational, 5, 2]	...nor rational: $2\pi - e \approx 3.57$ floors to the multiple $5/2$ of $5/4$									
-floors-the-real-and-imaginary-parts-separately	Scope		[Floor, [Complex, 5.37, -1.3]]	[Complex, 5, -2]	Floors the real and imaginary parts separately	unevaluated	compute-engine evaluates Floor on a complex float, flooring the real and imaginary parts separately; Sage's floor() leaves the complex argument unevaluated, printing it back symbolically.							
-how-many-full-5-item-packs-fit-in-17-items	Applications		[Floor, [Divide, 17, 5]]	3	How many full 5-item packs fit in 17 items									
-legendre-s-formula-100-ends-in-lfloor-100-5	Applications		[Add, [Floor, [Divide, 100, 5]], [Floor, [Divide, 100, 25]]]	24	Legendre's formula: $100!$ ends in $\lfloor 100/5 \rfloor + \lfloor 100/25 \rfloor = 24$ zeros									
-the-number-of-decimal-digits-of-n-is-lfloor-log	Applications		[Add, [Floor, [Log, 12345]], 1]	5	The number of decimal digits of n is $\lfloor \log_{10} n \rfloor + 1$									
-the-first-four-digits-of-e	Applications		[Floor, [Multiply, 1000, ExponentialE]]	2718	The first four digits of $e$									
-for-a-non-integer-x-lceil-x-rceil-lfloor-x	Properties		[Equal, [Add, [Floor, [Rational, 7, 2]], 1], [Ceil, [Rational, 7, 2]]]	True	For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Ceil]]									
-lfloor-x-rfloor-lceil-x-rceil	Properties		[Equal, [Floor, [Rational, -7, 2]], [Negate, [Ceil, [Rational, 7, 2]]]]	True	$\lfloor -x \rfloor = -\lceil x \rceil$									
-idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	Properties		[Floor, [Floor, x]]	[Floor, x]	Idempotent: $\lfloor\lfloor x \rfloor\rfloor = \lfloor x \rfloor$, since the inner value is already an integer									
-a-zero-divisor-inside-floor	Possible issues	test	[Floor, [Divide, 17, 0]]	[Floor, ComplexInfinity]	A division by zero inside Floor stays symbolic around ComplexInfinity	undefined-form	Both decline: compute-engine answers Floor(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Floor is even applied.	ours	compute-engine leaves Floor(ComplexInfinity) symbolic; SymPy's zoo matches Wolfram's ComplexInfinity.	292			undefined-form	Both decline: compute-engine answers "ComplexInfinity", and Rust's exact division panics on the zero denominator before Floor is even applied.
-rounds-toward-infty-not-toward-0-floor-3-2-is-4	Possible issues		[Floor, -3.2]	-4	Rounds toward $-\infty$, not toward 0: floor(-3.2) is -4, not -3									
-infinities-pass-through-unchanged	Possible issues		[Floor, NegativeInfinity]	NegativeInfinity	Infinities pass through unchanged									
+id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	rust.kind	rust.note
+floor-7-over-2			[Floor, [Rational, 7, 2]]	3									
+floor-3p7			[Floor, 3.7]	3									
+integers-pass-through-unchanged			[Floor, 5]	5	Integers pass through unchanged								
+threads-element-wise-over-a-list			[Floor, [List, 1.2, -1.2, 3.7]]	[List, 1, -2, 3]	Threads element-wise over a list	threading	compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's Floor threads over the list; mpmath's takes scalars.	threading	compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars.
+floor-2p4			[Floor, 2.4]	2									
+floor-2p6			[Floor, 2.6]	2									
+floor-2p7		test	[Floor, 2.7]	2									
+floor-add-x-1-a-free-variable-is-untouched		test	[Floor, [Add, x, 1]]	[Floor, [Add, x, 1]]	A free variable added to an integer is still untouched								
+stays-symbolic	Scope		[Floor, x]	[Floor, x]	Stays symbolic								
+exact-radicals-are-decided-numerically	Scope		[Floor, [Sqrt, 50]]	7	Exact radicals are decided numerically								
+a-negative-radicand-inside-floor	Scope	test	[Floor, [Sqrt, -1]]	[Complex, 0, 1]	Floor(Sqrt(-1)) stays complex: Floor is a no-op on a non-real value	domain	compute-engine's Floor is a no-op on the already-integral complex value i; Sage's floor() declines outright on an element of a complex quadratic number field.					domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine's Floor is a no-op on the resulting complex value.
+evaluates-at-an-exact-constant-lfloor-pi-rfloor	Scope		[Floor, Pi]	3	Evaluates at an exact constant: $\lfloor\pi\rfloor = 3$								
+and-at-its-negative-lfloor-pi-rfloor-4	Scope		[Floor, [Negate, Pi]]	-4	...and at its negative, $\lfloor -\pi \rfloor = -4$								
+a-second-argument-floors-to-a-multiple-of-it-the	Scope		[Floor, 226, 10]	220	A second argument floors to a multiple of it -- the nearest multiple of 10 below 226								
+the-step-needn-t-be-an-integer-3-5-cdot-lfloor	Scope		[Floor, -10.3, 3.5]	-10.5	...the step needn't be an integer: $3.5 \cdot \lfloor -10.3/3.5 \rfloor = -10.5$								
+nor-rational-2-pi-e-approx-3-57-floors-to-the	Scope		[Floor, [Subtract, [Multiply, 2, Pi], ExponentialE], [Rational, 5, 4]]	[Rational, 5, 2]	...nor rational: $2\pi - e \approx 3.57$ floors to the multiple $5/2$ of $5/4$								
+floors-the-real-and-imaginary-parts-separately	Scope		[Floor, [Complex, 5.37, -1.3]]	[Complex, 5, -2]	Floors the real and imaginary parts separately	unevaluated	compute-engine evaluates Floor on a complex float, flooring the real and imaginary parts separately; Sage's floor() leaves the complex argument unevaluated, printing it back symbolically.						
+how-many-full-5-item-packs-fit-in-17-items	Applications		[Floor, [Divide, 17, 5]]	3	How many full 5-item packs fit in 17 items								
+legendre-s-formula-100-ends-in-lfloor-100-5	Applications		[Add, [Floor, [Divide, 100, 5]], [Floor, [Divide, 100, 25]]]	24	Legendre's formula: $100!$ ends in $\lfloor 100/5 \rfloor + \lfloor 100/25 \rfloor = 24$ zeros								
+the-number-of-decimal-digits-of-n-is-lfloor-log	Applications		[Add, [Floor, [Log, 12345]], 1]	5	The number of decimal digits of n is $\lfloor \log_{10} n \rfloor + 1$								
+the-first-four-digits-of-e	Applications		[Floor, [Multiply, 1000, ExponentialE]]	2718	The first four digits of $e$								
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	Properties		[Equal, [Add, [Floor, [Rational, 7, 2]], 1], [Ceil, [Rational, 7, 2]]]	True	For a non-integer x, $\lceil x \rceil = \lfloor x \rfloor + 1$. See [[Ceil]]								
+lfloor-x-rfloor-lceil-x-rceil	Properties		[Equal, [Floor, [Rational, -7, 2]], [Negate, [Ceil, [Rational, 7, 2]]]]	True	$\lfloor -x \rfloor = -\lceil x \rceil$								
+idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	Properties		[Floor, [Floor, x]]	[Floor, x]	Idempotent: $\lfloor\lfloor x \rfloor\rfloor = \lfloor x \rfloor$, since the inner value is already an integer								
+a-zero-divisor-inside-floor	Possible issues	test	[Floor, [Divide, 17, 0]]	ComplexInfinity	A division by zero inside Floor simplifies to ComplexInfinity	undefined-form	Both decline: compute-engine answers Floor(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Floor is even applied.					undefined-form	Both decline: compute-engine answers "ComplexInfinity", and Rust's exact division panics on the zero denominator before Floor is even applied.
+rounds-toward-infty-not-toward-0-floor-3-2-is-4	Possible issues		[Floor, -3.2]	-4	Rounds toward $-\infty$, not toward 0: floor(-3.2) is -4, not -3								
+infinities-pass-through-unchanged	Possible issues		[Floor, NegativeInfinity]	NegativeInfinity	Infinities pass through unchanged								

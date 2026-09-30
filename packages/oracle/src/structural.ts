@@ -22,6 +22,14 @@ export type Tree = Leaf | readonly Tree[];
 /** Heads whose operands are compared element-wise. `Set` is reduced order-free. */
 const SEQUENCE_HEADS = new Set(["List", "Tuple", "Set"]);
 
+/** A key/value pair, compared by its two operands, not its head — `fromWolfram` reads a
+ * Wolfram `Rule[k, v]` back as `KeyValuePair` (`REVERSE_HEADS`'s ambiguity, resolved for the
+ * `Over` option's own round trip), while our own kernels build `Rule` directly for a binding
+ * or an `Association` entry (optimize.ts, find-instance.ts, expression-ops.ts,
+ * list-functional.ts). Without this, an otherwise-agreeing `Maximize`/`FindInstance`/
+ * `Association` answer reads as a false disagreement on head spelling alone. */
+const PAIR_HEADS = new Set(["Rule", "KeyValuePair"]);
+
 /** Numbers by value, everything else by its text — a stable order for a Set. */
 const byValue = (a: Tree, b: Tree): number =>
   typeof a === "number" && typeof b === "number" ? a - b : JSON.stringify(a).localeCompare(JSON.stringify(b));
@@ -79,6 +87,19 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
     const items = expr.slice(1).map((item) => reduce(item, evaluate));
     return expr[0] === "Set" ? [...items].toSorted(byValue) : items;
   }
+  if (Array.isArray(expr) && typeof expr[0] === "string" && PAIR_HEADS.has(expr[0]) && expr.length === 3) {
+    return expr.slice(1).map((item) => reduce(item, evaluate));
+  }
+  // CycleDecomposition/Wolfram's own `Cycles` (unmapped -- `Cycles` is never one of OUR
+  // heads, so `fromWolfram` reads it through by name): Wolfram's `Cycles` omits a FIXED
+  // POINT (a length-1 cycle) entirely, while ours always keeps one for every element -- so
+  // `CycleDecomposition([[1,2,3],[4]])` and `Cycles[{{1,2,3}}]` are the SAME permutation,
+  // not a shape mismatch. `reduceCycles` drops singleton cycles before comparing (a cycle's
+  // own element order still matters -- (1 2 3) and (1 3 2) are different permutations -- so
+  // only the top-level SET of cycles is order-free, not what is inside one).
+  if (Array.isArray(expr) && (expr[0] === "CycleDecomposition" || expr[0] === "Cycles") && expr.length === 2) {
+    return reduceCycles(expr[1] as MathJSON, evaluate);
+  }
   // A carrier CONSTRUCTOR call (`Permutation([2, 1, 3])`) reduces to its contents, exactly
   // like `emit.ts` unwraps it for an external system — we decide what counts as equivalent,
   // and an external system's raw structure IS our carrier value, with no head wrapper needed
@@ -106,12 +127,100 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
     const rest = packedOperands.slice(CARRIER_PARAMS.get(expr[0]) ?? 0);
     return reduce(rest.length === 1 ? (rest[0] as MathJSON) : (["Tuple", ...rest] as MathJSON), evaluate);
   }
+  // A `Graph` answer compares by vertices + edges, not by exact shape: Wolfram's own answer
+  // carries a cached `SparseArray` adjacency matrix as its edge argument (`Graph[vertices,
+  // {Null, SparseArray[...]}]`), not our `List[UndirectedEdge[...], ...]` -- structurally
+  // nothing alike even for the identical graph. `reduceGraph` reduces either encoding to the
+  // same canonical `[vertices, edgeKeys]` shape. Trailing options (`{GraphLayout -> ...}`)
+  // don't change the graph.
+  if (Array.isArray(expr) && expr[0] === "Graph" && expr.length >= 3) {
+    return reduceGraph(expr[1] as MathJSON, expr[2] as MathJSON, evaluate);
+  }
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an
   // evaluator that only reads values (`symbolic`, `valuesOnly`) would leave them as text.
   if (expr === "True") return true;
   if (expr === "False") return false;
   return evaluate(expr);
+}
+
+/** An edge, canonicalised to a comparable, order-free key: `min-max` for an undirected pair
+ *  (a Wolfram adjacency matrix records both (i, j) and (j, i), so this also dedupes), `a->b`
+ *  for a directed one. */
+const edgeKey = (a: Tree, b: Tree, directed: boolean): string =>
+  directed ? `${JSON.stringify(a)}->${JSON.stringify(b)}` : [JSON.stringify(a), JSON.stringify(b)].toSorted().join("-");
+
+/**
+ * Wolfram's own `Graph` answer packs its edges as a cached `{Null, SparseArray[...]}` pair
+ * rather than an explicit edge list -- `SparseArray[Automatic, {n, n}, 0, {1, {rowPtr,
+ * colIndices}, values}]`, the compressed-row-storage encoding of its (0/1) adjacency matrix.
+ * `values` is irrelevant to topology (an edge either is or isn't there) and often prints
+ * elided/truncated besides, so only `rowPtr`/`colIndices` are read: row `i`'s nonzero columns
+ * are `colIndices[rowPtr[i-1] .. rowPtr[i]-1]`, each itself a singleton `{col}`.
+ * `undefined` when `sparse` isn't shaped the way an adjacency matrix's SparseArray prints.
+ */
+function decodeSparseAdjacency(sparse: MathJSON): readonly (readonly [number, number])[] | undefined {
+  if (!Array.isArray(sparse) || sparse[0] !== "SparseArray" || sparse.length < 5) return undefined;
+  const structure = sparse[4];
+  if (!Array.isArray(structure) || structure[0] !== "List" || structure.length < 3) return undefined;
+  const inner = structure[2];
+  if (!Array.isArray(inner) || inner[0] !== "List" || inner.length < 3) return undefined;
+  const rowPtrList = inner[1];
+  const colIndexList = inner[2];
+  if (!Array.isArray(rowPtrList) || rowPtrList[0] !== "List") return undefined;
+  if (!Array.isArray(colIndexList) || colIndexList[0] !== "List") return undefined;
+  const rowPtr = rowPtrList.slice(1) as number[];
+  const cols = colIndexList.slice(1).map((c) => (Array.isArray(c) && c[0] === "List" ? (c[1] as number) : undefined));
+  const edges: [number, number][] = [];
+  for (let row = 0; row < rowPtr.length - 1; row++) {
+    for (let k = rowPtr[row]; k < rowPtr[row + 1]; k++) {
+      const col = cols[k];
+      if (col !== undefined) edges.push([row + 1, col]);
+    }
+  }
+  return edges;
+}
+
+/** `cyclesArg`'s cycles, dropping any length-1 (fixed-point) cycle and sorting the rest by
+ *  their own (order-preserved) contents — the canonical form both `CycleDecomposition([...])`
+ *  and Wolfram's own `Cycles[{...}]` reduce to. */
+function reduceCycles(cyclesArg: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
+  const list = Array.isArray(cyclesArg) && cyclesArg[0] === "List" ? cyclesArg.slice(1) : [];
+  const cycles = list
+    .map((c) => (Array.isArray(c) && c[0] === "List" ? c.slice(1) : [c]))
+    .filter((c) => c.length > 1)
+    .map((c) => c.map((el) => reduce(el as MathJSON, evaluate)))
+    .toSorted((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  return cycles;
+}
+
+/** `Graph(vertices, edgeSpec)` reduced to `["Graph", sortedVertices, sortedEdgeKeys]`: our
+ *  own `List[UndirectedEdge[a, b], ...]` / `List[DirectedEdge[a, b], ...]` edge spec, or
+ *  Wolfram's cached `List[Null, SparseArray[...]]` one, read down to the same comparable
+ *  shape either way. An edge spec neither form decodes reduces to an empty edge list rather
+ *  than failing the whole comparison — a genuine shape mismatch still shows up as a vertex
+ *  or edge-count disagreement. */
+function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
+  const vertexList = Array.isArray(vertices) && vertices[0] === "List" ? vertices.slice(1) : [];
+  const reducedVertices = vertexList.map((v) => reduce(v as MathJSON, evaluate)).toSorted(byValue);
+
+  const items = Array.isArray(edgeSpec) && edgeSpec[0] === "List" ? edgeSpec.slice(1) : [];
+  let edgeKeys: string[];
+  // `fromWolfram` reads Wolfram's `Null` back as OUR `Nothing` (its own reverse spelling,
+  // `to-wolfram.ts`'s `SYMBOLS` table: `Nothing: "Null"`) -- never the string `"Null"`.
+  if (items.length === 2 && items[0] === "Nothing" && Array.isArray(items[1]) && items[1][0] === "SparseArray") {
+    const decoded = decodeSparseAdjacency(items[1] as MathJSON) ?? [];
+    edgeKeys = decoded.map(([a, b]) => edgeKey(a, b, false));
+  } else {
+    edgeKeys = items.flatMap((item) => {
+      if (!Array.isArray(item) || item.length !== 3) return [];
+      if (item[0] !== "UndirectedEdge" && item[0] !== "DirectedEdge") return [];
+      const a = reduce(item[1] as MathJSON, evaluate);
+      const b = reduce(item[2] as MathJSON, evaluate);
+      return [edgeKey(a, b, item[0] === "DirectedEdge")];
+    });
+  }
+  return ["Graph", reducedVertices, [...new Set(edgeKeys)].toSorted()];
 }
 
 const close = (a: number, b: number, tolerance: number): boolean =>

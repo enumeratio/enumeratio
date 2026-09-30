@@ -23,6 +23,6 @@ the-first-four-digits-of-e	\lfloor1\,000e\rfloor	2\,718
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\top
 lfloor-x-rfloor-lceil-x-rceil	\lfloor-\frac{7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\top
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	\lfloor\lfloor x\rfloor\rfloor	\lfloor x\rfloor
-a-zero-divisor-inside-floor	\lfloor\frac{17}{0}\rfloor	\lfloor\tilde\infty\rfloor
+a-zero-divisor-inside-floor	\lfloor\frac{17}{0}\rfloor	\tilde\infty
 rounds-toward-infty-not-toward-0-floor-3-2-is-4	\lfloor-3.2\rfloor	-4
 infinities-pass-through-unchanged	\lfloor-\infty\rfloor	-\infty

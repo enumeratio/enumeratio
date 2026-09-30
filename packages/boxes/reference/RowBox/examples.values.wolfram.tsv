@@ -1,2 +1,2 @@
-id	in
-inert	RowBox[List["a", "+", "b"]]
+id	in	out	tex.in	tex.out
+inert	RowBox[List["a", "+", "b"]]	RowBox[{"a", "+", "b"}]	\text{RowBox}[\{\text{a},+,\text{b}\}]	\text{RowBox}[\{\text{a},+,\text{b}\}]

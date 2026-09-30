@@ -10,6 +10,7 @@ import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
 import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
+import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
@@ -91,6 +92,7 @@ export {
 export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } from "./patches/log-gamma.ts";
 export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
+export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export { clausenPatch, evaluateClausen, clausen } from "./patches/clausen.ts";
 export {
@@ -196,6 +198,7 @@ export const PATCHES: readonly Patch[] = [
   stieltjes,
   gammaInfinity,
   sqrtInfinity,
+  ceilFloorInfinity,
   multiplyDirectedInfinity,
 ];
 

@@ -3,14 +3,14 @@ subfactorial-0	Subfactorial[0]	1	\text{Subfactorial}[0]	1
 a-single-object-can-t-be-deranged	Subfactorial[1]	0	\text{Subfactorial}[1]	0
 subfactorial-4	Subfactorial[4]	9	\text{Subfactorial}[4]	9
 subfactorial-5	Subfactorial[5]	44	\text{Subfactorial}[5]	44
-subfactorial-20	Subfactorial[20]			
+subfactorial-20	Subfactorial[20]	895014631192902121	\text{Subfactorial}[20]	895014631192902121
 threads-element-wise-over-a-list-as-wolfram-s	Subfactorial[List[1, 2, 3, 4]]	{0, 1, 2, 9}	\text{Subfactorial}[\{1,2,3,4\}]	\{0,1,2,9\}
-exact-for-large-n	Subfactorial[48]			
-real-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[4.5]			
-complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[Complex[1.6, 1]]			
-threads-over-a-matrix-element-wise	Subfactorial[List[List[2, 0], List[0, 2]]]			
+exact-for-large-n	Subfactorial[48]	4566824330931624695767452273778667071025042534230906772538913	\text{Subfactorial}[48]	4566824330931624695767452273778667071025042534230906772538913
+real-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[4.5]	19.255831840742534 + 0.15717912296461523*I	\text{Subfactorial}[4.5]	19.2558\, +0.157179 i
+complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[Complex[1.6, 1]]	0.2968304581777118 + 0.28420854725197*I	\text{Subfactorial}[1.6\, +i]	0.29683\, +0.284209 i
+threads-over-a-matrix-element-wise	Subfactorial[List[List[2, 0], List[0, 2]]]	{{1, 1}, {1, 1}}	\text{Subfactorial}\left[\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 1 \\  1 & 1 \\ \end{array} \right)
 the-hat-check-problem-the-number-of-ways-6	Subfactorial[6]	265	\text{Subfactorial}[6]	265
 recurrence-d-n-n-d-n-1-1-n	(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])	True	\text{Subfactorial}[4]=4 \text{Subfactorial}[3]+(-1)^4	\text{True}
-d-n-is-frac-n-e-rounded-to-the-nearest-integer	(Subfactorial[10] == Round[Divide[Factorial[10], E]])			
-two-term-recurrence-d-n-1-n-d-n-d-n-1	(Subfactorial[6] == Times[5, Plus[Subfactorial[5], Subfactorial[4]]])			
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	(Subfactorial[10] == Round[Divide[Factorial[10], E]])	True	\text{Subfactorial}[10]=\text{Round}\left[\frac{10!}{e}\right]	\text{True}
+two-term-recurrence-d-n-1-n-d-n-d-n-1	(Subfactorial[6] == Times[5, Plus[Subfactorial[5], Subfactorial[4]]])	True	\text{Subfactorial}[6]=5 (\text{Subfactorial}[5]+\text{Subfactorial}[4])	\text{True}
 a-negative-argument-is-left-unevaluated	Subfactorial[-1]	Subfactorial[-1]	\text{Subfactorial}[-1]	\text{Subfactorial}[-1]

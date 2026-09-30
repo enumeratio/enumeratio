@@ -310,6 +310,58 @@ test("a carrier constructor with no mapping unwraps to its contents, for every s
   expect(emit(["NotACarrier", 1], "sympy")).toEqual({ ok: false, missing: ["NotACarrier/1"] });
 });
 
+// CycleDecomposition/Permutation, when one wraps the other, is a format conversion (cycle
+// notation <-> one-line notation) -- not the plain "carrier's raw contents" unwrap above. The
+// naive unwrap would flatten straight past both heads to the bare inner list, losing the
+// conversion Wolfram's PermutationCycles/PermutationList need to draw.
+test("CycleDecomposition(Permutation(...)) and its reverse emit Wolfram's own conversion, not a bare unwrap", () => {
+  expect(emit(["CycleDecomposition", ["Permutation", ["List", 2, 3, 1, 4]]], "wolfram")).toEqual({
+    ok: true,
+    source: "PermutationCycles[List[2, 3, 1, 4]]",
+  });
+  expect(emit(["Permutation", ["CycleDecomposition", ["List", ["List", 1, 3], ["List", 2]]]], "wolfram")).toEqual({
+    ok: true,
+    source: "PermutationList[Cycles[List[List[1, 3], List[2]]]]",
+  });
+});
+
+// #A-121: the SAME "outer SPECIAL case never sees the true inner structure" problem
+// CycleDecomposition/Permutation above hits from the carrier unwrap, but from TWO other
+// generic mechanisms -- `emit()`'s own per-operand `walk()` pre-walk (Count/Random) and
+// Equal's own per-system MAPPINGS_DATA template (Thread), both of which run before
+// `toWolfram`'s `SPECIAL` case for the OUTER head ever sees the inner call's raw shape. A
+// fix that only worked through `toWolfram()` directly (the `to-wolfram.test.ts` unit tests)
+// missed all three the first time around -- these go through the actual oracle path.
+test("Count/Random/Thread SPECIAL cases work through emit()'s pre-walked path, not just toWolfram() directly", () => {
+  // Count(list, Function(...)): the predicate arrives at Count's SPECIAL case as an
+  // ALREADY-RENDERED "Function[...]" string (walk() stringifies the Function operand before
+  // Count's own case runs), which needs the same head-name parse `headArgs` gives a raw tree.
+  expect(emit(["Count", ["List", 1, 2, 3, 4], ["Function", ["Greater", "_1", 2]]], "wolfram")).toEqual({
+    ok: true,
+    source: "Count[List[1, 2, 3, 4], PatternTest[Blank[], Function[Greater[Slot[1], 2]]]]",
+  });
+  // Count(collection): Wolfram's Count always needs a pattern, so the 1-arg form needs
+  // Length instead -- a free symbol here (no Wolfram TwinPrimes) still comes back missing,
+  // but AS Length, not Count.
+  expect(emit(["Count", "TwinPrimes"], "wolfram")).toEqual({ ok: false, missing: ["symbol:TwinPrimes"] });
+  expect(emit(["Count", ["List", 1, 2, 3]], "wolfram")).toEqual({ ok: true, source: "Length[List[1, 2, 3]]" });
+  // Random(collection, n): the domain arrives pre-walked as a string too.
+  expect(emit(["Random", ["IntegerPartitions", 10], 3], "wolfram")).toEqual({
+    ok: true,
+    source: "RandomChoice[IntegerPartitions[10], 3]",
+  });
+  expect(emit(["Random", ["Range", 10, 20]], "wolfram")).toEqual({
+    ok: true,
+    source: "RandomChoice[Range[10, 20]]",
+  });
+  // Thread(Equal(l1, l2)): Equal has its OWN per-system mapping template (`"($1 == $2)"`,
+  // infix) that runs before Thread's SPECIAL case would otherwise see `Equal[...]`'s shape.
+  expect(emit(["Thread", ["Equal", ["List", 1, 2, 3], ["List", 1, 5, 3]]], "wolfram")).toEqual({
+    ok: true,
+    source: "Thread[Unevaluated[Equal[List[1, 2, 3], List[1, 5, 3]]]]",
+  });
+});
+
 // A-92: Tournament/LabeledGraph pack a `carrierParams` prefix (n) onto the element (edges) as a
 // Tuple -- `Tournament(n, edges)`. No system has a bare `Tuple/2` mapping (nor should it: the
 // arity depends on which family packed it), so this unwraps ONE level further than a plain

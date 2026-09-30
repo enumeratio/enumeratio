@@ -188,6 +188,38 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // `["String", "s0"]` spells a string, not the symbol s0.
     if (head === "String" && operands.length === 1 && typeof operands[0] === "string")
       return JSON.stringify(operands[0]);
+    // CycleDecomposition(Permutation(...)) / Permutation(CycleDecomposition(...)): the ONE
+    // case where these two carriers (both `CARRIER_NAMES`) need more than the generic
+    // unwrap-to-bare-contents fallback below -- one wrapping the other is a cycle-notation
+    // <-> one-line-notation format CONVERSION (`toWolfram`'s own SPECIAL case:
+    // `PermutationCycles`/`PermutationList∘Cycles`), not a value to unwrap past. Telling
+    // "composed" from "bare" apart needs the RAW tree -- the generic per-operand `walk()`
+    // the isWolframHead branch further down would use instead stringifies a nested carrier
+    // call before the outer one ever saw its head, losing exactly that distinction. A BARE
+    // `Permutation(list)`/`CycleDecomposition(list)` (not composed) falls through to the
+    // unwrap below exactly as before.
+    if (system === "wolfram" && (head === "CycleDecomposition" || head === "Permutation") && operands.length === 1) {
+      const inner = operands[0];
+      const complement = head === "CycleDecomposition" ? "Permutation" : "CycleDecomposition";
+      if (isCall(inner) && inner[0] === complement && inner.length === 2) {
+        return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
+      }
+    }
+    // Thread(Equal(...)): the SAME raw-tree problem, from a different generic mechanism --
+    // `Equal` has its own per-system MAPPINGS_DATA template (`"($1 == $2)"`, infix, for the
+    // symbolic systems' own comparison operator), which the generic dispatch below applies
+    // to the inner operand BEFORE `toWolfram`'s `Thread` SPECIAL case ever runs, turning it
+    // into a parenthesized infix STRING no longer shaped like `Equal[...]` -- exactly the
+    // shape that case's own `headArgs` needs to recognize to know Thread needs Unevaluated.
+    // Bypassing straight to `toWolfram` on the untouched node, as CycleDecomposition/
+    // Permutation above, sidesteps the mapping template the same way it sidesteps the
+    // carrier unwrap.
+    if (system === "wolfram" && head === "Thread" && operands.length === 1) {
+      const inner = operands[0];
+      if (isCall(inner) && inner[0] === "Equal" && inner.length === 3) {
+        return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
+      }
+    }
     const mapping = mappingFor(head, operands.length);
     const template = mapping?.emit[system];
     if (template !== undefined) {

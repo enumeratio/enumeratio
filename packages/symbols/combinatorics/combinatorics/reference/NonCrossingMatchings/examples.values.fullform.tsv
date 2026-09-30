@@ -1,4 +1,4 @@
-id	in
-count-noncrossingmatchings-4	Count[NonCrossingMatchings[4]]
-first-element-of-noncrossingmatchings-4	Part[NonCrossingMatchings[4], 1]
-every-element-of-noncrossingmatchings-4	Take[NonCrossingMatchings[4], 5]
+id	in	back
+count-noncrossingmatchings-4	Length[NonCrossingMatchings[4]]	[Length, [NonCrossingMatchings, 4]]
+first-element-of-noncrossingmatchings-4	Part[NonCrossingMatchings[4], 1]	
+every-element-of-noncrossingmatchings-4	Take[NonCrossingMatchings[4], 5]	

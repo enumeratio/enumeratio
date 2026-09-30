@@ -1,12 +1,12 @@
 id	in	out	tex.in	tex.out
-erfc-1-1-2-erf-1-1-2	InverseErfc[0.5]			
-erfc-1-1-0	InverseErfc[1]			
-argument-1-7	InverseErfc[1.7]			
-deep-tail-0-001	InverseErfc[0.001]			
-erfc-1-0-infty	InverseErfc[0]			
-erfc-1-2-infty	InverseErfc[2]			
-arguments-in-1-2-give-negative-values	InverseErfc[1.5]			
-listable	InverseErfc[List[0, 1]]			
-sqrt-2-times-this-2-5758-is-the-two-sided-99	InverseErfc[0.01]			
+erfc-1-1-2-erf-1-1-2	InverseErfc[0.5]	0.47693627620446993	\text{erfc}^{-1}(0.5)	0.476936
+erfc-1-1-0	InverseErfc[1]	0	\text{erfc}^{-1}(1)	0
+argument-1-7	InverseErfc[1.7]	-0.732869077959217	\text{erfc}^{-1}(1.7)	-0.732869
+deep-tail-0-001	InverseErfc[0.001]	2.3267537655135246	\text{erfc}^{-1}(0.001)	2.32675
+erfc-1-0-infty	InverseErfc[0]	Infinity	\text{erfc}^{-1}(0)	\infty
+erfc-1-2-infty	InverseErfc[2]	-Infinity	\text{erfc}^{-1}(2)	-\infty
+arguments-in-1-2-give-negative-values	InverseErfc[1.5]	-0.47693627620446993	\text{erfc}^{-1}(1.5)	-0.476936
+listable	InverseErfc[List[0, 1]]	{Infinity, 0}	\text{erfc}^{-1}(\{0,1\})	\{\infty ,0\}
+sqrt-2-times-this-2-5758-is-the-two-sided-99	InverseErfc[0.01]	1.8213863677184499	\text{erfc}^{-1}(0.01)	1.82139
 erfc-erfc-1-x-x	Erfc[InverseErfc[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erfc}\left(\text{erfc}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-deep-in-the-tail-it-keeps-full-precision-where	InverseErfc[1*^-10]			
+deep-in-the-tail-it-keeps-full-precision-where	InverseErfc[1*^-10]	InverseErfc[1/10000000000]	\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)	\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)

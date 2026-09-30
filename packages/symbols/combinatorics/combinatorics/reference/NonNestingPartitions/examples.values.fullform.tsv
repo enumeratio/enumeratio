@@ -1,4 +1,4 @@
-id	in
-count-nonnestingpartitions-4	Count[NonNestingPartitions[4]]
-first-element-of-nonnestingpartitions-4	Part[NonNestingPartitions[4], 1]
-every-element-of-nonnestingpartitions-4	Take[NonNestingPartitions[4], 5]
+id	in	back
+count-nonnestingpartitions-4	Length[NonNestingPartitions[4]]	[Length, [NonNestingPartitions, 4]]
+first-element-of-nonnestingpartitions-4	Part[NonNestingPartitions[4], 1]	
+every-element-of-nonnestingpartitions-4	Take[NonNestingPartitions[4], 5]	

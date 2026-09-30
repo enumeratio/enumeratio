@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-centers-add-and-radii-add			[Add, [CenteredInterval, 1, [Rational, 1, 2]], [CenteredInterval, 2, [Rational, 1, 4]]]	[CenteredInterval, 3, [Rational, 3, 4]]	Centers add and radii add
-an-exact-factor-scales-center-and-radius			[Multiply, 2, [CenteredInterval, 2, [Rational, 1, 2]]]	[CenteredInterval, 4, 1]	An exact factor scales center and radius
-converts-an-interval-to-center-radius-form	Scope		[CenteredInterval, [Interval, 1, 3]]	[CenteredInterval, 2, 1]	Converts an [[Interval]] to center-radius form
-radii-add-under-subtraction-too	Scope		[Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]	[CenteredInterval, 4, [Rational, 1, 2]]	Radii add under subtraction too
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+centers-add-and-radii-add			[Add, [CenteredInterval, 1, [Rational, 1, 2]], [CenteredInterval, 2, [Rational, 1, 4]]]	[CenteredInterval, 3, [Rational, 3, 4]]	Centers add and radii add	shape	Same internal-representation leak as the other CenteredInterval rows; rendered form (3.00±0.750) matches ours.
+an-exact-factor-scales-center-and-radius			[Multiply, 2, [CenteredInterval, 2, [Rational, 1, 2]]]	[CenteredInterval, 4, 1]	An exact factor scales center and radius	shape	Wolfram's CenteredInterval FullForm exposes its internal packed ball-arithmetic representation; its rendered form (4.00±1.00) matches ours exactly.
+converts-an-interval-to-center-radius-form	Scope		[CenteredInterval, [Interval, 1, 3]]	[CenteredInterval, 2, 1]	Converts an [[Interval]] to center-radius form	shape	Same internal-representation leak; rendered form (2.00±1.00) matches ours.
+radii-add-under-subtraction-too	Scope		[Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]	[CenteredInterval, 4, [Rational, 1, 2]]	Radii add under subtraction too	shape	Same internal-representation leak; rendered form (4.00±0.500) matches ours.

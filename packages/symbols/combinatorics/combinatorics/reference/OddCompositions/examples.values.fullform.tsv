@@ -1,4 +1,4 @@
-id	in
-count-oddcompositions-6	Count[OddCompositions[6]]
-first-element-of-oddcompositions-6	Part[OddCompositions[6], 1]
-every-element-of-oddcompositions-6	Take[OddCompositions[6], 8]
+id	in	back
+count-oddcompositions-6	Length[OddCompositions[6]]	[Length, [OddCompositions, 6]]
+first-element-of-oddcompositions-6	Part[OddCompositions[6], 1]	
+every-element-of-oddcompositions-6	Take[OddCompositions[6], 8]	

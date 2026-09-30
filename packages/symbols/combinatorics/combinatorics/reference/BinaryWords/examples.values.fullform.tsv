@@ -1,4 +1,4 @@
-id	in
-count-binarywords-3	Count[BinaryWords[3]]
-first-element-of-binarywords-3	Part[BinaryWords[3], 1]
-every-element-of-binarywords-3	Take[BinaryWords[3], 8]
+id	in	back
+count-binarywords-3	Length[BinaryWords[3]]	[Length, [BinaryWords, 3]]
+first-element-of-binarywords-3	Part[BinaryWords[3], 1]	
+every-element-of-binarywords-3	Take[BinaryWords[3], 8]	

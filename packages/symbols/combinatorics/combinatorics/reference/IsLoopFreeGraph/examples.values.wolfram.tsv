@@ -1,3 +1,3 @@
-id	in
-no-self-loop	LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 2]]]]
-a-self-loop	LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
+id	in	out	tex.in	tex.out
+no-self-loop	LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 2]]]]	True	\text{LoopFreeGraphQ}[]	\text{True}
+a-self-loop	LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 1]]]]	False	\text{LoopFreeGraphQ}[]	\text{False}

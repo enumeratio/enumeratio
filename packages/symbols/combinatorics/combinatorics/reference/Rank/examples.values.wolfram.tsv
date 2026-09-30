@@ -5,12 +5,12 @@ rank-list-list-1-0-list-0-1	ArrayDepth[List[List[1, 0], List[0, 1]]]	2	\text{Arr
 rank-list-list-list-1-2-list-3-4-list-list-5-6	ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]	3	\text{ArrayDepth}\left[\left( \begin{array}{cc}  \{1,2\} & \{3,4\} \\  \{5,6\} & \{7,8\} \\ \end{array} \right)\right]	3
 symbolic-entries	ArrayDepth[List[List[a, b], List[c, d]]]	2	\text{ArrayDepth}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]	2
 a-symbol-is-a-scalar	ArrayDepth[x]	0	\text{ArrayDepth}[x]	0
-rectangular-arrays	ArrayDepth[List[List[1, 2, 3], List[4, 5, 6]]]			
+rectangular-arrays	ArrayDepth[List[List[1, 2, 3], List[4, 5, 6]]]	2	\text{ArrayDepth}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\ \end{array} \right)\right]	2
 rank-identitymatrix-3				
-a-ragged-list-has-depth-1-only-its-outer-level	ArrayDepth[List[List[1, 2], List[3]]]			
-likewise-a-list-mixing-scalars-and-lists	ArrayDepth[List[1, List[2, 3]]]			
-the-empty-list-is-still-a-vector-of-length-0	ArrayDepth[List[]]			
-and-a-1-0-matrix	ArrayDepth[List[List[]]]			
+a-ragged-list-has-depth-1-only-its-outer-level	ArrayDepth[List[List[1, 2], List[3]]]	1	\text{ArrayDepth}[\{\{1,2\},\{3\}\}]	1
+likewise-a-list-mixing-scalars-and-lists	ArrayDepth[List[1, List[2, 3]]]	1	\text{ArrayDepth}[\{1,\{2,3\}\}]	1
+the-empty-list-is-still-a-vector-of-length-0	ArrayDepth[List[]]	1	\text{ArrayDepth}[\{\}]	1
+and-a-1-0-matrix	ArrayDepth[List[List[]]]	2	\text{ArrayDepth}[\{\{\}\}]	2
 a-2-3-grid-of-unevaluated-calls-still-reads-as-a	ArrayDepth[Array[f, List[2, 3]]]	2	\text{ArrayDepth}[\text{Array}[f,\{2,3\}]]	2
 the-length-of-the-array-s-shape	(ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]] == Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]])	True	\text{ArrayDepth}\left[\left( \begin{array}{cc}  \{1,2\} & \{3,4\} \\  \{5,6\} & \{7,8\} \\ \end{array} \right)\right]=\text{Length}\left[\text{Dimensions}\left[\left( \begin{array}{cc}  \{1,2\} & \{3,4\} \\  \{5,6\} & \{7,8\} \\ \end{array} \right)\right]\right]	\text{True}
 a-singular-2-2-matrix-still-has-rank-2-its	ArrayDepth[List[List[1, 2], List[2, 4]]]	2	\text{ArrayDepth}\left[\left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\ \end{array} \right)\right]	2

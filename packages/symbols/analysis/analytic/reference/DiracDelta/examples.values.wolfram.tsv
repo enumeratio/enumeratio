@@ -1,5 +1,5 @@
-id	in
-diracdelta-zero-unevaluated	DiracDelta[0]
-diracdelta-nonzero	DiracDelta[2]
-diracdelta-negative	DiracDelta[-3]
-diracdelta-multivariate-one-nonzero	DiracDelta[0, 1]
+id	in	out	tex.in	tex.out
+diracdelta-zero-unevaluated	DiracDelta[0]	DiracDelta[0]	\delta (0)	\delta (0)
+diracdelta-nonzero	DiracDelta[2]	0	\delta (2)	0
+diracdelta-negative	DiracDelta[-3]	0	\delta (-3)	0
+diracdelta-multivariate-one-nonzero	DiracDelta[0, 1]	0	\delta (0,1)	0

@@ -1,32 +1,32 @@
-id	section	role	expr	expected	caption	sage.kind	sage.note
-3-cdot-5-15-equiv-1			[ModularInverse, 3, 7]	5	$3 \cdot 5 = 15 \equiv 1$		
-modularinverse-2-11			[ModularInverse, 2, 11]	6			
-a-negative-argument-3-cdot-2-6-equiv-1	Scope		[ModularInverse, -3, 7]	2	a negative argument: $-3 \cdot 2 = -6 \equiv 1$		
-a-21-digit-modulus	Scope		[ModularInverse, 3, [Add, [Power, 10, 20], 1]]	{num: "33333333333333333334"}	a 21-digit modulus		
-listable-threads-over-a-list	Scope		[ModularInverse, [List, 2, 3, 4], 11]	[List, 6, 4, 3]	Listable: threads over a list	threading	compute-engine's ModularInverse is Listable and threads over the list; Sage's inverse_mod() takes a scalar only and raises a TypeError trying to coerce the list.
-2-i-6-4i-8-14i-equiv-1-pmod-7	Scope		[ModularInverse, [Complex, 2, 1], 7]	[Complex, 6, 4]	$(2 + i)(6 + 4i) = 8 + 14i \equiv 1 \pmod 7$	domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-modularinverse-11-plus-neg-7-times-i-7-plus-4i	Scope		[ModularInverse, [Complex, 11, -7], [Complex, 7, 4]]	[Complex, -1, 2]		domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
-a-gaussian-base-and-a-gaussian-modulus	Scope	test	[ModularInverse, [Complex, 3, -1], [Complex, 5, 2]]	[Complex, -1, -1]	A Gaussian base and a Gaussian modulus	domain	compute-engine computes the Gaussian modular inverse directly; Sage's inverse_mod() doesn't understand Gaussian integers and returns a meaningless integer, 16, instead.
-inverse-mod-a-unit-is-always-0	Scope	test	[ModularInverse, [Complex, 3, 4], 1]	0	inverse mod a unit is always 0		
-inverse-mod-i-is-always-0	Scope	test	[ModularInverse, [Complex, 3, 4], [Complex, 0, 1]]	0	inverse mod $i$ is always 0		
-a-unit-is-its-own-inverse-mod-anything-it-s-a	Scope	test	[ModularInverse, [Complex, 0, 1], [Complex, 2, 1]]	[Complex, 0, -1]	a unit is its own inverse mod anything it's a unit under		
-inverse-of-a-gaussian-prime-mod-a-coprime	Scope	test	[ModularInverse, [Complex, 2, 1], [Complex, 2, -1]]	-1	inverse of a Gaussian prime mod a coprime Gaussian prime		
-inverse-mod-a-real-prime-3-mod-4	Scope	test	[ModularInverse, [Complex, 2, 1], 3]	[Complex, 1, 1]	inverse mod a real prime, 3 mod 4		
-no-inverse-when-the-gcd-isn-t-a-unit-shared	Scope	test	[ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]	[ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]	no inverse when the gcd isn't a unit: shared factor		
-inverse-mod-a-negative-real-prime	Scope	test	[ModularInverse, [Complex, 2, 1], -7]	[Complex, -1, -3]	inverse mod a negative real prime		
-inverse-mod-a-composite-gaussian-modulus-norm-25	Scope	test	[ModularInverse, [Complex, 1, 1], [Complex, 3, 4]]	[Complex, 0, 3]	inverse mod a composite Gaussian modulus, norm 25		
-inverse-mod-a-modulus-past-2-53	Scope	test	[ModularInverse, [Complex, 4, 1], [Complex, {num: "100000000000000000001"}, {num: "9007199254740993"}]]	[Complex, {num: "-47059883199912322470"}, {num: "11760467200350710121"}]	inverse mod a modulus past $2^{53}$		
-inverse-mod-1-4i-the-other-prime-above-17	Scope	test	[ModularInverse, [Complex, 8, 2], [Complex, 1, 4]]	-1	inverse mod $1+4i$, the other prime above 17		
-a-real-base-inverted-mod-a-gaussian-modulus	Scope	test	[ModularInverse, 5, [Complex, 2, 1]]	[ModularInverse, 5, [Complex, 2, 1]]	a real base inverted mod a Gaussian modulus		
-inverse-mod-a-large-norm-gaussian	Scope	test	[ModularInverse, [Complex, 1, 1], [Complex, 123, 456]]	[Complex, -166, 289]	inverse mod a large-norm Gaussian		
-inverse-mod-a-negative-real-composite-has-none	Scope	test	[ModularInverse, [Complex, 5, 5], -15]	[ModularInverse, [Complex, 5, 5], -15]	inverse mod a negative real composite has none: shared factor of 5		
-inverse-of-a-prime-above-13-mod-the-other-prime	Scope	test	[ModularInverse, [Complex, 3, 2], [Complex, 2, 3]]	-2	inverse of a prime above 13 mod the other prime above 13		
-inverse-mod-a-negative-associate	Scope	test	[ModularInverse, [Complex, 2, 1], [Complex, -2, -3]]	[Complex, -1, -1]	inverse mod a negative associate		
-inverse-mod-a-real-composite-5-squared-has-none	Scope	test	[ModularInverse, [Complex, 5, 5], 25]	[ModularInverse, [Complex, 5, 5], 25]	inverse mod a real composite, 5 squared, has none		
-inverse-of-a-real-prime-s-associate-by-i-mod-a	Scope	test	[ModularInverse, [Complex, 0, 7], [Complex, 3, 2]]	[Complex, 0, -2]	inverse of a real prime's associate (by $i$) mod a Gaussian prime		
-inverse-mod-a-real-prime-19	Scope	test	[ModularInverse, [Complex, 2, 1], 19]	[Complex, 8, 15]	inverse mod a real prime, 19		
-no-inverse-mod-0	Scope	test	[ModularInverse, [Complex, 2, 1], 0]	[ModularInverse, [Complex, 2, 1], 0]	no inverse mod 0		
-a-real-base-with-no-inverse-mod-a-shared-factor	Scope	test	[ModularInverse, 5, [Complex, 5, 5]]	[ModularInverse, 5, [Complex, 5, 5]]	a real base with no inverse mod a shared-factor composite		
-the-same-as-powermod-with-exponent-1	Properties		[Equal, [ModularInverse, 3, 7], [PowerMod, 3, -1, 7]]	True	the same as [[PowerMod]] with exponent $-1$		
-a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	Properties		[Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]	1	$a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$		
-gcd-2-4-2-no-inverse	Possible issues		[ModularInverse, 2, 4]	[ModularInverse, 2, 4]	$\gcd(2, 4) = 2$: no inverse	undefined-form	Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
+3-cdot-5-15-equiv-1			[ModularInverse, 3, 7]	5	$3 \cdot 5 = 15 \equiv 1$				
+modularinverse-2-11			[ModularInverse, 2, 11]	6					
+a-negative-argument-3-cdot-2-6-equiv-1	Scope		[ModularInverse, -3, 7]	2	a negative argument: $-3 \cdot 2 = -6 \equiv 1$				
+a-21-digit-modulus	Scope		[ModularInverse, 3, [Add, [Power, 10, 20], 1]]	{num: "33333333333333333334"}	a 21-digit modulus				
+listable-threads-over-a-list	Scope		[ModularInverse, [List, 2, 3, 4], 11]	[List, 6, 4, 3]	Listable: threads over a list	threading	compute-engine threads ModularInverse (Listable) over the list of bases; Wolfram's ModularInverse isn't Listable and leaves the call unevaluated.	threading	compute-engine's ModularInverse is Listable and threads over the list; Sage's inverse_mod() takes a scalar only and raises a TypeError trying to coerce the list.
+2-i-6-4i-8-14i-equiv-1-pmod-7	Scope		[ModularInverse, [Complex, 2, 1], 7]	[Complex, 6, 4]	$(2 + i)(6 + 4i) = 8 + 14i \equiv 1 \pmod 7$			domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	Scope		[ModularInverse, [Complex, 11, -7], [Complex, 7, 4]]	[Complex, -1, 2]				domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+a-gaussian-base-and-a-gaussian-modulus	Scope	test	[ModularInverse, [Complex, 3, -1], [Complex, 5, 2]]	[Complex, -1, -1]	A Gaussian base and a Gaussian modulus			domain	compute-engine computes the Gaussian modular inverse directly; Sage's inverse_mod() doesn't understand Gaussian integers and returns a meaningless integer, 16, instead.
+inverse-mod-a-unit-is-always-0	Scope	test	[ModularInverse, [Complex, 3, 4], 1]	0	inverse mod a unit is always 0				
+inverse-mod-i-is-always-0	Scope	test	[ModularInverse, [Complex, 3, 4], [Complex, 0, 1]]	0	inverse mod $i$ is always 0				
+a-unit-is-its-own-inverse-mod-anything-it-s-a	Scope	test	[ModularInverse, [Complex, 0, 1], [Complex, 2, 1]]	[Complex, 0, -1]	a unit is its own inverse mod anything it's a unit under				
+inverse-of-a-gaussian-prime-mod-a-coprime	Scope	test	[ModularInverse, [Complex, 2, 1], [Complex, 2, -1]]	-1	inverse of a Gaussian prime mod a coprime Gaussian prime				
+inverse-mod-a-real-prime-3-mod-4	Scope	test	[ModularInverse, [Complex, 2, 1], 3]	[Complex, 1, 1]	inverse mod a real prime, 3 mod 4				
+no-inverse-when-the-gcd-isn-t-a-unit-shared	Scope	test	[ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]	[ModularInverse, [Complex, 3, 4], [Complex, 2, 1]]	no inverse when the gcd isn't a unit: shared factor				
+inverse-mod-a-negative-real-prime	Scope	test	[ModularInverse, [Complex, 2, 1], -7]	[Complex, -1, -3]	inverse mod a negative real prime				
+inverse-mod-a-composite-gaussian-modulus-norm-25	Scope	test	[ModularInverse, [Complex, 1, 1], [Complex, 3, 4]]	[Complex, 0, 3]	inverse mod a composite Gaussian modulus, norm 25				
+inverse-mod-a-modulus-past-2-53	Scope	test	[ModularInverse, [Complex, 4, 1], [Complex, {num: "100000000000000000001"}, {num: "9007199254740993"}]]	[Complex, {num: "-47059883199912322470"}, {num: "11760467200350710121"}]	inverse mod a modulus past $2^{53}$				
+inverse-mod-1-4i-the-other-prime-above-17	Scope	test	[ModularInverse, [Complex, 8, 2], [Complex, 1, 4]]	-1	inverse mod $1+4i$, the other prime above 17				
+a-real-base-inverted-mod-a-gaussian-modulus	Scope	test	[ModularInverse, 5, [Complex, 2, 1]]	[ModularInverse, 5, [Complex, 2, 1]]	a real base inverted mod a Gaussian modulus				
+inverse-mod-a-large-norm-gaussian	Scope	test	[ModularInverse, [Complex, 1, 1], [Complex, 123, 456]]	[Complex, -166, 289]	inverse mod a large-norm Gaussian				
+inverse-mod-a-negative-real-composite-has-none	Scope	test	[ModularInverse, [Complex, 5, 5], -15]	[ModularInverse, [Complex, 5, 5], -15]	inverse mod a negative real composite has none: shared factor of 5				
+inverse-of-a-prime-above-13-mod-the-other-prime	Scope	test	[ModularInverse, [Complex, 3, 2], [Complex, 2, 3]]	-2	inverse of a prime above 13 mod the other prime above 13				
+inverse-mod-a-negative-associate	Scope	test	[ModularInverse, [Complex, 2, 1], [Complex, -2, -3]]	[Complex, -1, -1]	inverse mod a negative associate				
+inverse-mod-a-real-composite-5-squared-has-none	Scope	test	[ModularInverse, [Complex, 5, 5], 25]	[ModularInverse, [Complex, 5, 5], 25]	inverse mod a real composite, 5 squared, has none				
+inverse-of-a-real-prime-s-associate-by-i-mod-a	Scope	test	[ModularInverse, [Complex, 0, 7], [Complex, 3, 2]]	[Complex, 0, -2]	inverse of a real prime's associate (by $i$) mod a Gaussian prime				
+inverse-mod-a-real-prime-19	Scope	test	[ModularInverse, [Complex, 2, 1], 19]	[Complex, 8, 15]	inverse mod a real prime, 19				
+no-inverse-mod-0	Scope	test	[ModularInverse, [Complex, 2, 1], 0]	[ModularInverse, [Complex, 2, 1], 0]	no inverse mod 0				
+a-real-base-with-no-inverse-mod-a-shared-factor	Scope	test	[ModularInverse, 5, [Complex, 5, 5]]	[ModularInverse, 5, [Complex, 5, 5]]	a real base with no inverse mod a shared-factor composite				
+the-same-as-powermod-with-exponent-1	Properties		[Equal, [ModularInverse, 3, 7], [PowerMod, 3, -1, 7]]	True	the same as [[PowerMod]] with exponent $-1$				
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	Properties		[Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]	1	$a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$				
+gcd-2-4-2-no-inverse	Possible issues		[ModularInverse, 2, 4]	[ModularInverse, 2, 4]	$\gcd(2, 4) = 2$: no inverse			undefined-form	Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.

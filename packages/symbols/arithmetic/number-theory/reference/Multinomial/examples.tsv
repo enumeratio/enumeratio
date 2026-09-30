@@ -1,18 +1,18 @@
-id	section	role	expr	expected	caption
-multinomial-1-2-1			[Multinomial, 1, 2, 1]	12	
-multinomial-2-3-4			[Multinomial, 2, 3, 4]	1260	
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[Multinomial, [List, 2, 3, 5], 3]	[List, 10, 20, 56]	Threads element-wise over a list, as Wolfram's Listable heads do
-zero-parts-contribute-0-1	Scope		[Multinomial, 0, 0, 1]	1	Zero parts contribute $0! = 1$
-real-arguments-evaluate-via-the-gamma-function	Scope		[Multinomial, 2, 0.2, 5]	34.31780351999995	Real arguments evaluate via the Gamma function, $\frac{\Gamma(8.2)}{2!\,\Gamma(1.2)\,5!}$
-complex-arguments-evaluate-via-the-gamma	Scope		[Multinomial, [Complex, 1, 1], 0.2, 4]	[Complex, 2.894060302449624, 9.104625875691285]	Complex arguments evaluate via the Gamma function too
-an-around-argument-should-propagate-its	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	An Around argument propagates its uncertainty through the head as one function: $\frac{(a+2)(a+1)}{2}$ at $a = 2 \pm 0.01$ is $6 \pm 0.035$
-the-number-of-distinct-letter-arrangements-of	Applications		[Multinomial, 1, 4, 4, 2]	34650	The number of distinct letter arrangements of MISSISSIPPI: 1 M, 4 I's, 4 S's, 2 P's
-the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Applications		[Multinomial, 2, 3, 1]	60	The coefficient of $a^2 b^3 c$ in $(a+b+c)^6$
-with-two-arguments-it-reduces-to-binomial-binom	Properties		[Equal, [Multinomial, 7, 3], [Binomial, 10, 3]]	True	With two arguments it reduces to [[Binomial]]: $\binom{n_1+n_2}{n_1}$
-orderless-permuting-the-arguments-doesn-t-change	Properties		[Equal, [Multinomial, 1, 2, 3], [Multinomial, 3, 1, 2]]	True	Orderless: permuting the arguments doesn't change the value
-the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	Properties		[Equal, [Multinomial, 3, 4, 5], [Divide, [Factorial, 12], [Multiply, [Factorial, 3], [Factorial, 4], [Factorial, 5]]]]	True	The factorial form $\frac{(k_1+k_2+k_3)!}{k_1!\,k_2!\,k_3!}$. See [[Factorial]]
-all-ones-parts-give-n-every-part-is-a-single	Properties		[Multinomial, 1, 1, 1, 1]	24	All-ones parts give $n!$: every part is a single labelled item
-all-zero-arguments-still-give-the-empty-product	Possible issues		[Multinomial, 0, 0, 0]	1	All-zero arguments still give the empty product, 1
-a-single-argument-is-always-1-there-s-only-one	Possible issues		[Multinomial, 5]	1	A single argument is always 1: there's only one way to split n items into one group
-a-single-symbolic-argument-is-also-1	Possible issues	test	[Multinomial, n]	1	A single symbolic argument is also 1
-with-no-arguments-it-is-the-empty-product-1	Possible issues		[Multinomial]	1	With no arguments it is the empty product, 1
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+multinomial-1-2-1			[Multinomial, 1, 2, 1]	12			
+multinomial-2-3-4			[Multinomial, 2, 3, 4]	1260			
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Multinomial, [List, 2, 3, 5], 3]	[List, 10, 20, 56]	Threads element-wise over a list, as Wolfram's Listable heads do		
+zero-parts-contribute-0-1	Scope		[Multinomial, 0, 0, 1]	1	Zero parts contribute $0! = 1$		
+real-arguments-evaluate-via-the-gamma-function	Scope		[Multinomial, 2, 0.2, 5]	34.31780351999995	Real arguments evaluate via the Gamma function, $\frac{\Gamma(8.2)}{2!\,\Gamma(1.2)\,5!}$		
+complex-arguments-evaluate-via-the-gamma	Scope		[Multinomial, [Complex, 1, 1], 0.2, 4]	[Complex, 2.894060302449624, 9.104625875691285]	Complex arguments evaluate via the Gamma function too		
+an-around-argument-should-propagate-its	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	An Around argument propagates its uncertainty through the head as one function: $\frac{(a+2)(a+1)}{2}$ at $a = 2 \pm 0.01$ is $6 \pm 0.035$	precision	Agrees to ~5 significant digits in the uncertainty; the tail digits are float-rounding noise in the Around propagation.
+the-number-of-distinct-letter-arrangements-of	Applications		[Multinomial, 1, 4, 4, 2]	34650	The number of distinct letter arrangements of MISSISSIPPI: 1 M, 4 I's, 4 S's, 2 P's		
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Applications		[Multinomial, 2, 3, 1]	60	The coefficient of $a^2 b^3 c$ in $(a+b+c)^6$		
+with-two-arguments-it-reduces-to-binomial-binom	Properties		[Equal, [Multinomial, 7, 3], [Binomial, 10, 3]]	True	With two arguments it reduces to [[Binomial]]: $\binom{n_1+n_2}{n_1}$		
+orderless-permuting-the-arguments-doesn-t-change	Properties		[Equal, [Multinomial, 1, 2, 3], [Multinomial, 3, 1, 2]]	True	Orderless: permuting the arguments doesn't change the value		
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	Properties		[Equal, [Multinomial, 3, 4, 5], [Divide, [Factorial, 12], [Multiply, [Factorial, 3], [Factorial, 4], [Factorial, 5]]]]	True	The factorial form $\frac{(k_1+k_2+k_3)!}{k_1!\,k_2!\,k_3!}$. See [[Factorial]]		
+all-ones-parts-give-n-every-part-is-a-single	Properties		[Multinomial, 1, 1, 1, 1]	24	All-ones parts give $n!$: every part is a single labelled item		
+all-zero-arguments-still-give-the-empty-product	Possible issues		[Multinomial, 0, 0, 0]	1	All-zero arguments still give the empty product, 1		
+a-single-argument-is-always-1-there-s-only-one	Possible issues		[Multinomial, 5]	1	A single argument is always 1: there's only one way to split n items into one group		
+a-single-symbolic-argument-is-also-1	Possible issues	test	[Multinomial, n]	1	A single symbolic argument is also 1		
+with-no-arguments-it-is-the-empty-product-1	Possible issues		[Multinomial]	1	With no arguments it is the empty product, 1		

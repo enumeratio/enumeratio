@@ -1,5 +1,5 @@
 id	in	out	tex.in	tex.out
 distance-along-a-path-graph				
-unreachable-is-infinite	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], UndirectedEdge[3, 4]]], 4, 1]			
-unreachable-against-a-longer-directed-chain	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]			
+unreachable-is-infinite	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], UndirectedEdge[3, 4]]], 4, 1]	Infinity	\text{GraphDistance}[,4,1]	\infty
+unreachable-against-a-longer-directed-chain	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]	Infinity	\text{GraphDistance}[,4,1]	\infty
 weighted-distance-is-summed-weight-not-hop-count	GraphDistance[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]], 1, 3]	12.	\text{GraphDistance}[,1,3]	12.

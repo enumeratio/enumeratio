@@ -1,8 +1,8 @@
-id	in
-a-3-level-binary-tree-has-7-vertices	VertexCount[CompleteKaryTree[3, 2]]
-a-single-level-tree-is-one-vertex	VertexCount[CompleteKaryTree[1, 2]]
-a-3-level-binary-tree-is-a-tree	TreeGraphQ[CompleteKaryTree[3, 2]]
-root-degree-of-a-ternary-tree	VertexDegree[CompleteKaryTree[3, 3], 1]
-a-3-level-ternary-tree-has-13-vertices	VertexCount[CompleteKaryTree[3, 3]]
-the-1-arg-form-defaults-to-binary	VertexCount[CompleteKaryTree[4]]
-edge-list-of-a-3-level-binary-tree	EdgeList[CompleteKaryTree[3, 2]]
+id	in	out	tex.in	tex.out
+a-3-level-binary-tree-has-7-vertices	VertexCount[CompleteKaryTree[3, 2]]	7	\text{VertexCount}[\text{CompleteKaryTree}[3,2]]	7
+a-single-level-tree-is-one-vertex	VertexCount[CompleteKaryTree[1, 2]]	1	\text{VertexCount}[\text{CompleteKaryTree}[1,2]]	1
+a-3-level-binary-tree-is-a-tree	TreeGraphQ[CompleteKaryTree[3, 2]]	True	\text{TreeGraphQ}[\text{CompleteKaryTree}[3,2]]	\text{True}
+root-degree-of-a-ternary-tree	VertexDegree[CompleteKaryTree[3, 3], 1]	3	\text{VertexDegree}[\text{CompleteKaryTree}[3,3],1]	3
+a-3-level-ternary-tree-has-13-vertices	VertexCount[CompleteKaryTree[3, 3]]	13	\text{VertexCount}[\text{CompleteKaryTree}[3,3]]	13
+the-1-arg-form-defaults-to-binary	VertexCount[CompleteKaryTree[4]]	15	\text{VertexCount}[\text{CompleteKaryTree}[4]]	15
+edge-list-of-a-3-level-binary-tree	EdgeList[CompleteKaryTree[3, 2]]	{UndirectedEdge[1, 2], UndirectedEdge[1, 3], UndirectedEdge[2, 4], UndirectedEdge[2, 5], UndirectedEdge[3, 6], UndirectedEdge[3, 7]}	\text{EdgeList}[\text{CompleteKaryTree}[3,2]]	\{1\unicode{f3d4}2,1\unicode{f3d4}3,2\unicode{f3d4}4,2\unicode{f3d4}5,3\unicode{f3d4}6,3\unicode{f3d4}7\}

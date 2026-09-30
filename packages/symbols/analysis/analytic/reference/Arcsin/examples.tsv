@@ -1,29 +1,29 @@
-id	section	role	expr	expected	caption	wolfram.note
-arcsin-0			[Arcsin, 0]	0		
-arcsin-1-over-2			[Arcsin, [Rational, 1, 2]]	[Multiply, [Rational, 1, 6], Pi]		
-the-top-of-the-principal-range			[Arcsin, 1]	[Multiply, [Rational, 1, 2], Pi]	The top of the principal range	
-arcsin-neg-1			[Arcsin, -1]	[Multiply, [Rational, -1, 2], Pi]		
-a-machine-precision-argument-evaluates			[Arcsin, 0.4]	{num: "0.411516846067488019385"}	A machine-precision argument evaluates numerically	
-outside-1-1-a-float-argument-gives-the-complex			[Arcsin, 1.5]	[Complex, 1.5707963267948966, -0.9624236501192069]	Outside $[-1, 1]$ a float argument gives the complex principal value	
-outside-1-1-reduces-to-the-exact-closed-form	Scope		[Arcsin, 2]	[Add, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]]]	Outside $[-1, 1]$, reduces to the exact closed form $\frac{\pi}{2} - i\ln(2+\sqrt3)$ -- the branch compute-engine's own $N(\mathrm{Arcsin}(2))$ already takes, overriding its plain policy of leaving the call symbolic	Wolfram leaves ArcSin[2] unevaluated; its N[ArcSin[2]] is the same principal value, 1.5708 - 1.31696 I, since ArcSin[z] = -I Log[I z + Sqrt[1 - z^2]].
-arbitrary-precision-via-n	Scope		[N, [Arcsin, [Rational, 1, 3]]]	{num: "0.339836909454121937096"}	Arbitrary precision via N(...)	
-evaluates-at-a-complex-argument	Scope		[Arcsin, [Complex, 2.5, 1]]	[Complex, 1.1646235102893847, 1.6586932988564347]	Evaluates at a complex argument	
-threads-element-wise-over-a-matrix	Scope		[Arcsin, [List, [List, 1, [Divide, 1, [Sqrt, 2]]], [List, 0, [Divide, 1, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Rational, 1, 4], Pi]], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]	Threads element-wise over a matrix	
-exact-inverse-of-a-special-value	Scope		[Arcsin, [Divide, [Sqrt, 2], 2]]	[Multiply, [Rational, 1, 4], Pi]	Exact inverse of a special value	
-arcsin-sqrt-3-over-2	Scope		[Arcsin, [Divide, [Sqrt, 3], 2]]	[Multiply, [Rational, 1, 3], Pi]		
-recognizes-the-radical-value-sin-pi-12	Scope		[Arcsin, [Divide, [Subtract, [Sqrt, 6], [Sqrt, 2]], 4]]	[Multiply, [Rational, 1, 12], Pi]	Recognizes the radical value $\sin(\pi/12)$	
-recognizes-sin-pi-10-frac-sqrt-5-1-4	Scope		[Arcsin, [Divide, [Subtract, [Sqrt, 5], 1], 4]]	[Multiply, [Rational, 1, 10], Pi]	Recognizes $\sin(\pi/10) = \frac{\sqrt5 - 1}{4}$	
-interval-arithmetic-arcsin-frac-13-frac-12	Scope		[Arcsin, [Interval, [Rational, -1, 3], [Rational, 1, 2]]]	[Interval, [Arcsin, [Rational, -1, 3]], [Multiply, [Rational, 1, 6], Pi]]	Interval arithmetic: $\arcsin[-\tfrac13, \tfrac12] = [\arcsin(-\tfrac13), \tfrac{\pi}{6}]$	Wolfram folds the odd argument to $-\arcsin(1/3)$; compute-engine leaves $\arcsin(-1/3)$ as is (oddness normalisation is a separate, still-aspirational rule).
-uncertainty-propagation-arcsin-0-9-pm-0-1-approx	Scope		[Arcsin, [Around, 0.9, 0.1]]	[Around, 1.1197695149986342, 0.2294157338705618]	Uncertainty propagation: $\arcsin(0.9 \pm 0.1) \approx 1.120 \pm 0.229$	
-oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcsin, [Negate, x]]	[Negate, [Arcsin, x]]	Oddness pulls the sign out of a symbolic argument: $\arcsin(-x) = -\arcsin x$	
-derivative-frac-1-sqrt-1-x-2	Scope		[D, [Arcsin, x], x]	[Divide, 1, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]	Derivative: $\frac{1}{\sqrt{1 - x^2}}$	
-antiderivative	Scope		[Integrate, [Arcsin, x], x]	[Add, [Multiply, x, [Arcsin, x]], [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]	Antiderivative	
-taylor-series-about-0	Scope		[Series, [Arcsin, x], x, 0, 5]	[Add, [Multiply, [Rational, 3, 40], [Power, x, 5]], [Multiply, [Rational, 1, 6], [Power, x, 3]], x, [BigO, [Power, x, 7]]]	Taylor series about 0	Wolfram's Series[ArcSin[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
-arcsin-sin-1-2-is-already-principal	Scope		[Arcsin, [Sin, [Rational, 1, 2]]]	[Rational, 1, 2]	Already principal: $1/2$ is inside $[-\pi/2, \pi/2]$, so this reduces to itself	
-to-30-significant-digits-not-yet-the-last-digit	Scope		[N, [Arcsin, [Rational, 1, 3]], 30]	{num: "0.339836909454121937096392513392"}	To 30 significant digits, the last one correctly rounded	
-arcsin-2-past-1-1-the-odd-function-mirror-of	Scope		[Arcsin, -2]	[Add, [Multiply, [Rational, -1, 2], Pi], [Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]]]	$\arcsin(-2)$ past $[-1,1]$: the odd-function mirror of $\arcsin(2)$.	
-sin-arcsin-x-x-on-the-principal-branch	Properties		[Equal, [Sin, [Arcsin, [Rational, 1, 2]]], [Rational, 1, 2]]	True	$\sin(\arcsin(x)) = x$ on the principal branch	
-co-function-identity-arcsin-x-arccos-x-pi-2	Properties		[Equal, [Add, [Arcsin, [Rational, 1, 2]], [Arccos, [Rational, 1, 2]]], [Divide, Pi, 2]]	True	Co-function identity: $\arcsin(x) + \arccos(x) = \pi/2$	
-as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	Properties		[TrigToExp, [Arcsin, x]]	[Multiply, [Complex, 0, -1], [Ln, [Add, [Multiply, [Complex, 0, 1], x], [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]]]	As a logarithm: $\arcsin x = -i\ln(ix + \sqrt{1 - x^2})$	
-not-simply-2-2-is-outside-the-principal-range-pi	Possible issues		[Arcsin, [Sin, 2]]	[Add, -2, Pi]	Not simply 2: $2$ is outside the principal range $[-\pi/2, \pi/2]$, so $\arcsin(\sin 2) = \pi - 2$	
-arcsin-sin-neg-2-mirrors-through-0	Possible issues		[Arcsin, [Sin, -2]]	[Add, 2, [Negate, Pi]]	Mirrors through 0: $\arcsin(\sin(-2)) = 2 - \pi$	
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+arcsin-0			[Arcsin, 0]	0			
+arcsin-1-over-2			[Arcsin, [Rational, 1, 2]]	[Multiply, [Rational, 1, 6], Pi]			
+the-top-of-the-principal-range			[Arcsin, 1]	[Multiply, [Rational, 1, 2], Pi]	The top of the principal range		
+arcsin-neg-1			[Arcsin, -1]	[Multiply, [Rational, -1, 2], Pi]			
+a-machine-precision-argument-evaluates			[Arcsin, 0.4]	{num: "0.411516846067488019385"}	A machine-precision argument evaluates numerically		
+outside-1-1-a-float-argument-gives-the-complex			[Arcsin, 1.5]	[Complex, 1.5707963267948966, -0.9624236501192069]	Outside $[-1, 1]$ a float argument gives the complex principal value		
+outside-1-1-reduces-to-the-exact-closed-form	Scope		[Arcsin, 2]	[Add, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]]]	Outside $[-1, 1]$, reduces to the exact closed form $\frac{\pi}{2} - i\ln(2+\sqrt3)$ -- the branch compute-engine's own $N(\mathrm{Arcsin}(2))$ already takes, overriding its plain policy of leaving the call symbolic		Wolfram leaves ArcSin[2] unevaluated; its N[ArcSin[2]] is the same principal value, 1.5708 - 1.31696 I, since ArcSin[z] = -I Log[I z + Sqrt[1 - z^2]].
+arbitrary-precision-via-n	Scope		[N, [Arcsin, [Rational, 1, 3]]]	{num: "0.339836909454121937096"}	Arbitrary precision via N(...)		
+evaluates-at-a-complex-argument	Scope		[Arcsin, [Complex, 2.5, 1]]	[Complex, 1.1646235102893847, 1.6586932988564347]	Evaluates at a complex argument		
+threads-element-wise-over-a-matrix	Scope		[Arcsin, [List, [List, 1, [Divide, 1, [Sqrt, 2]]], [List, 0, [Divide, 1, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Rational, 1, 4], Pi]], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]	Threads element-wise over a matrix		
+exact-inverse-of-a-special-value	Scope		[Arcsin, [Divide, [Sqrt, 2], 2]]	[Multiply, [Rational, 1, 4], Pi]	Exact inverse of a special value		
+arcsin-sqrt-3-over-2	Scope		[Arcsin, [Divide, [Sqrt, 3], 2]]	[Multiply, [Rational, 1, 3], Pi]			
+recognizes-the-radical-value-sin-pi-12	Scope		[Arcsin, [Divide, [Subtract, [Sqrt, 6], [Sqrt, 2]], 4]]	[Multiply, [Rational, 1, 12], Pi]	Recognizes the radical value $\sin(\pi/12)$		
+recognizes-sin-pi-10-frac-sqrt-5-1-4	Scope		[Arcsin, [Divide, [Subtract, [Sqrt, 5], 1], 4]]	[Multiply, [Rational, 1, 10], Pi]	Recognizes $\sin(\pi/10) = \frac{\sqrt5 - 1}{4}$		
+interval-arithmetic-arcsin-frac-13-frac-12	Scope		[Arcsin, [Interval, [Rational, -1, 3], [Rational, 1, 2]]]	[Interval, [Arcsin, [Rational, -1, 3]], [Multiply, [Rational, 1, 6], Pi]]	Interval arithmetic: $\arcsin[-\tfrac13, \tfrac12] = [\arcsin(-\tfrac13), \tfrac{\pi}{6}]$	shape	Wolfram folds the odd argument to $-\arcsin(1/3)$; compute-engine leaves $\arcsin(-1/3)$ as is (oddness normalisation is a separate, still-aspirational rule).
+uncertainty-propagation-arcsin-0-9-pm-0-1-approx	Scope		[Arcsin, [Around, 0.9, 0.1]]	[Around, 1.1197695149986342, 0.2294157338705618]	Uncertainty propagation: $\arcsin(0.9 \pm 0.1) \approx 1.120 \pm 0.229$		
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcsin, [Negate, x]]	[Negate, [Arcsin, x]]	Oddness pulls the sign out of a symbolic argument: $\arcsin(-x) = -\arcsin x$		
+derivative-frac-1-sqrt-1-x-2	Scope		[D, [Arcsin, x], x]	[Divide, 1, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]	Derivative: $\frac{1}{\sqrt{1 - x^2}}$		
+antiderivative	Scope		[Integrate, [Arcsin, x], x]	[Add, [Multiply, x, [Arcsin, x]], [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]	Antiderivative		
+taylor-series-about-0	Scope		[Series, [Arcsin, x], x, 0, 5]	[Add, [Multiply, [Rational, 3, 40], [Power, x, 5]], [Multiply, [Rational, 1, 6], [Power, x, 3]], x, [BigO, [Power, x, 7]]]	Taylor series about 0		Wolfram's Series[ArcSin[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
+arcsin-sin-1-2-is-already-principal	Scope		[Arcsin, [Sin, [Rational, 1, 2]]]	[Rational, 1, 2]	Already principal: $1/2$ is inside $[-\pi/2, \pi/2]$, so this reduces to itself		
+to-30-significant-digits-not-yet-the-last-digit	Scope		[N, [Arcsin, [Rational, 1, 3]], 30]	{num: "0.339836909454121937096392513392"}	To 30 significant digits, the last one correctly rounded		
+arcsin-2-past-1-1-the-odd-function-mirror-of	Scope		[Arcsin, -2]	[Add, [Multiply, [Rational, -1, 2], Pi], [Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]]]	$\arcsin(-2)$ past $[-1,1]$: the odd-function mirror of $\arcsin(2)$.		
+sin-arcsin-x-x-on-the-principal-branch	Properties		[Equal, [Sin, [Arcsin, [Rational, 1, 2]]], [Rational, 1, 2]]	True	$\sin(\arcsin(x)) = x$ on the principal branch		
+co-function-identity-arcsin-x-arccos-x-pi-2	Properties		[Equal, [Add, [Arcsin, [Rational, 1, 2]], [Arccos, [Rational, 1, 2]]], [Divide, Pi, 2]]	True	Co-function identity: $\arcsin(x) + \arccos(x) = \pi/2$		
+as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	Properties		[TrigToExp, [Arcsin, x]]	[Multiply, [Complex, 0, -1], [Ln, [Add, [Multiply, [Complex, 0, 1], x], [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]]]	As a logarithm: $\arcsin x = -i\ln(ix + \sqrt{1 - x^2})$		
+not-simply-2-2-is-outside-the-principal-range-pi	Possible issues		[Arcsin, [Sin, 2]]	[Add, -2, Pi]	Not simply 2: $2$ is outside the principal range $[-\pi/2, \pi/2]$, so $\arcsin(\sin 2) = \pi - 2$		
+arcsin-sin-neg-2-mirrors-through-0	Possible issues		[Arcsin, [Sin, -2]]	[Add, 2, [Negate, Pi]]	Mirrors through 0: $\arcsin(\sin(-2)) = 2 - \pi$		

@@ -1,4 +1,4 @@
-id	in
-count-granddyckpaths-3	Count[GrandDyckPaths[3]]
-first-element-of-granddyckpaths-3	Part[GrandDyckPaths[3], 1]
-every-element-of-granddyckpaths-3	Take[GrandDyckPaths[3], 5]
+id	in	back
+count-granddyckpaths-3	Length[GrandDyckPaths[3]]	[Length, [GrandDyckPaths, 3]]
+first-element-of-granddyckpaths-3	Part[GrandDyckPaths[3], 1]	
+every-element-of-granddyckpaths-3	Take[GrandDyckPaths[3], 5]	

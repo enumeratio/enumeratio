@@ -1,5 +1,5 @@
-id	in
-riemannsiegeltheta-1p5	RiemannSiegelTheta[1.5]
-n-riemannsiegeltheta-10	N[RiemannSiegelTheta[10]]
-riemannsiegeltheta-50	N[RiemannSiegelTheta[50]]
-riemannsiegeltheta-0	RiemannSiegelTheta[0]
+id	in	out	tex.in	tex.out
+riemannsiegeltheta-1p5	RiemannSiegelTheta[1.5]	-2.1981908573794104	\vartheta (1.5)	-2.19819
+n-riemannsiegeltheta-10	N[RiemannSiegelTheta[10]]	-3.067074396289898	N[\vartheta (10)]	-3.06707
+riemannsiegeltheta-50	N[RiemannSiegelTheta[50]]	26.461366070161414	N[\vartheta (50)]	26.4614
+riemannsiegeltheta-0	RiemannSiegelTheta[0]	0	\vartheta (0)	0

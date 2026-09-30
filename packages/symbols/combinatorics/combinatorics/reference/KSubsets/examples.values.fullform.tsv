@@ -1,4 +1,4 @@
-id	in
-binom-5-2	Count[KSubsets[5, 2]]
-ksubsets-5-2-list-1	Part[KSubsets[5, 2], 1]
-colex-not-lex-lexicographic-order-would-give-1-4	Part[KSubsets[5, 2], 3]
+id	in	back
+binom-5-2	Length[KSubsets[5, 2]]	[Length, [KSubsets, 5, 2]]
+ksubsets-5-2-list-1	Part[KSubsets[5, 2], 1]	
+colex-not-lex-lexicographic-order-would-give-1-4	Part[KSubsets[5, 2], 3]	

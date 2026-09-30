@@ -1,4 +1,4 @@
-id	in
-numberexpand-1-234	NumberExpand[1234]
-base-2-zero-terms-kept	NumberExpand[10, 2]
-every-term-carries-the-sign	NumberExpand[-123]
+id	in	out	tex.in	tex.out
+numberexpand-1-234	NumberExpand[1234]	{1000, 200, 30, 4}	\text{NumberExpand}[1234]	\{1000,200,30,4\}
+base-2-zero-terms-kept	NumberExpand[10, 2]	{8, 0, 2, 0}	\text{NumberExpand}[10,2]	\{8,0,2,0\}
+every-term-carries-the-sign	NumberExpand[-123]	{-100, -20, -3}	\text{NumberExpand}[-123]	\{-100,-20,-3\}

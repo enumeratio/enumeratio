@@ -1,2 +1,2 @@
-id	in
-an-edge-from-1-to-2	DirectedEdge[1, 2]
+id	in	out	tex.in	tex.out
+an-edge-from-1-to-2	DirectedEdge[1, 2]	DirectedEdge[1, 2]	1\unicode{f3d5}2	1\unicode{f3d5}2

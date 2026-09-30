@@ -1,4 +1,4 @@
-id	in
-count-kinversionpermutations-4-3	Count[KInversionPermutations[4, 3]]
-first-element-of-kinversionpermutations-4-3	Part[KInversionPermutations[4, 3], 1]
-every-element-of-kinversionpermutations-4-3	Take[KInversionPermutations[4, 3], 6]
+id	in	back
+count-kinversionpermutations-4-3	Length[KInversionPermutations[4, 3]]	[Length, [KInversionPermutations, 4, 3]]
+first-element-of-kinversionpermutations-4-3	Part[KInversionPermutations[4, 3], 1]	
+every-element-of-kinversionpermutations-4-3	Take[KInversionPermutations[4, 3], 6]	

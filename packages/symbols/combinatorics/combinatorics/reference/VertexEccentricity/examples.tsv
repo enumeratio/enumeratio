@@ -1,3 +1,3 @@
-id	section	role	expr	expected
-petersen-is-2-eccentric-everywhere			[VertexEccentricity, [PetersenGraph], 1]	2
-disconnected-vertex-is-infinite			[VertexEccentricity, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 1]	PositiveInfinity
+id	section	role	expr	expected	wolfram.kind	wolfram.note
+petersen-is-2-eccentric-everywhere			[VertexEccentricity, [PetersenGraph], 1]	2		
+disconnected-vertex-is-infinite			[VertexEccentricity, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 1]	PositiveInfinity	convention	compute-engine's VertexEccentricity treats a disconnected vertex as having infinite eccentricity; Wolfram computes the eccentricity within the vertex's own reachable component instead (1 here).

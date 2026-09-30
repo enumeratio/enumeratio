@@ -1,4 +1,4 @@
-id	in
-count-triangularcomposition-6	Count[TriangularCompositions[6]]
-first-element-of-triangularcomposition-6	Part[TriangularCompositions[6], 1]
-every-element-of-triangularcomposition-6	Take[TriangularCompositions[6], 7]
+id	in	back
+count-triangularcomposition-6	Length[TriangularCompositions[6]]	[Length, [TriangularCompositions, 6]]
+first-element-of-triangularcomposition-6	Part[TriangularCompositions[6], 1]	
+every-element-of-triangularcomposition-6	Take[TriangularCompositions[6], 7]	

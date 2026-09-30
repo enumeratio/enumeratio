@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption
-prepend-list-a-b-c-d-x			[Prepend, [List, a, b, c, d], x]	[List, x, a, b, c, d]	
-prepend-front-of-list		test	[Prepend, [List, 1, 2, 3], 0]	[List, 0, 1, 2, 3]	
-prepend-single-element-list		test	[Prepend, [List, 5], 10]	[List, 10, 5]	
-prepend-empty-list		test	[Prepend, [List], 42]	[List, 42]	
-a-rule-inserted-at-the-front-of-an-association	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [Rule, 3, d]]	[Association, [Rule, 3, d], [Rule, 1, a], [Rule, 2, b]]	A rule inserted at the front of an association
-several-rules-prepended-at-once	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [List, [Rule, 3, d], [Rule, 4, e]]]	[Association, [Rule, 3, d], [Rule, 4, e], [Rule, 1, a], [Rule, 2, b]]	Several rules prepended at once
-prepend-c-x-join-x-c-see-join	Properties		[Equal, [Prepend, [List, 1, 2, 3], 0], [Join, [List, 0], [List, 1, 2, 3]]]	True	$Prepend(c, x) = Join(\{x\}, c)$. See [[Join]]
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+prepend-list-a-b-c-d-x			[Prepend, [List, a, b, c, d], x]	[List, x, a, b, c, d]			
+prepend-front-of-list		test	[Prepend, [List, 1, 2, 3], 0]	[List, 0, 1, 2, 3]			
+prepend-single-element-list		test	[Prepend, [List, 5], 10]	[List, 10, 5]			
+prepend-empty-list		test	[Prepend, [List], 42]	[List, 42]			
+a-rule-inserted-at-the-front-of-an-association	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [Rule, 3, d]]	[Association, [Rule, 3, d], [Rule, 1, a], [Rule, 2, b]]	A rule inserted at the front of an association	shape	Same key/value pairs in the same order; Wolfram prints its native <|...|> association literal instead of our Association(...) form.
+several-rules-prepended-at-once	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [List, [Rule, 3, d], [Rule, 4, e]]]	[Association, [Rule, 3, d], [Rule, 4, e], [Rule, 1, a], [Rule, 2, b]]	Several rules prepended at once		
+prepend-c-x-join-x-c-see-join	Properties		[Equal, [Prepend, [List, 1, 2, 3], 0], [Join, [List, 0], [List, 1, 2, 3]]]	True	$Prepend(c, x) = Join(\{x\}, c)$. See [[Join]]		

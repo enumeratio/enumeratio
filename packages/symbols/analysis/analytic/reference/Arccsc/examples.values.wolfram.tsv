@@ -1,10 +1,10 @@
-id	in	out	tex.in	tex.out
-arccsc-1	ArcCsc[1]	Pi/2	\csc ^{-1}(1)	\frac{\pi }{2}
-arccsc-2	ArcCsc[2]	Pi/6	\csc ^{-1}(2)	\frac{\pi }{6}
-arccsc-sqrt-2-pi-4	ArcCsc[Sqrt[2]]			
-an-odd-function	ArcCsc[-2]			
-inside-1-1-the-value-is-complex	ArcCsc[0.5]			
-arccsc-positiveinfinity	ArcCsc[Infinity]			
-a-pole-arccsc-0-is-complex-infinity	ArcCsc[0]			
-derivative-for-real-x-1	D[ArcCsc[x], x]			
-undoes-csc-csc-arccsc-x-x	(Csc[ArcCsc[2]] == 2)	True	\csc \left(\csc ^{-1}(2)\right)=2	\text{True}
+id	in	out	tex.in	tex.out	verdict
+arccsc-1	ArcCsc[1]	Pi/2	\csc ^{-1}(1)	\frac{\pi }{2}	
+arccsc-2	ArcCsc[2]	Pi/6	\csc ^{-1}(2)	\frac{\pi }{6}	
+arccsc-sqrt-2-pi-4	ArcCsc[Sqrt[2]]	Pi/4	\csc ^{-1}\left(\sqrt{2}\right)	\frac{\pi }{4}	
+an-odd-function	ArcCsc[-2]	-1/6*Pi	\csc ^{-1}(-2)	-\frac{\pi }{6}	
+inside-1-1-the-value-is-complex	ArcCsc[0.5]	1.5707963267948966 - 1.3169578969248166*I	\csc ^{-1}(0.5)	1.5708\, -1.31696 i	
+arccsc-positiveinfinity	ArcCsc[Infinity]	0	\csc ^{-1}(\infty )	0	
+a-pole-arccsc-0-is-complex-infinity	ArcCsc[0]	ComplexInfinity	\csc ^{-1}(0)	\text{ComplexInfinity}	
+derivative-for-real-x-1	D[ArcCsc[x], x]	Indeterminate	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \csc ^{-1}(x)}{\partial x}--\frac{1}{| x|  \sqrt{x^2-1}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\csc ^{-1}\left(\frac{7}{3}\right)--\frac{1}{\left| \frac{7}{3}\right|  \sqrt{\left(\frac{7}{3}\right)^2-1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\csc ^{-1}\left(-\frac{11}{5}\right)--\frac{1}{\left| -\frac{11}{5}\right|  \sqrt{\left(-\frac{11}{5}\right)^2-1}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\csc ^{-1}\left(\frac{13}{4}\right)--\frac{1}{\left| \frac{13}{4}\right|  \sqrt{\left(\frac{13}{4}\right)^2-1}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
+undoes-csc-csc-arccsc-x-x	(Csc[ArcCsc[2]] == 2)	True	\csc \left(\csc ^{-1}(2)\right)=2	\text{True}	

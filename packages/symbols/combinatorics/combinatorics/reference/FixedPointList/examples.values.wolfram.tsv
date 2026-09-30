@@ -1,2 +1,2 @@
-id	in
-halve-and-floor-down-to-the-fixed-point	FixedPointList[Function[Floor[Divide[Slot[1], 2]]], 10]
+id	in	out	tex.in	tex.out
+halve-and-floor-down-to-the-fixed-point	FixedPointList[Function[Floor[Divide[Slot[1], 2]]], 10]	{10, 5, 2, 1, 0, 0}	\text{FixedPointList}\left[\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,10\right]	\{10,5,2,1,0,0\}

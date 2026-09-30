@@ -18,6 +18,6 @@ how-many-5-seat-vans-are-needed-to-carry-17	<Ceil><Divide>17 5</Divide></Ceil>	<
 ten-bits-are-enough-to-number-1000-items-lceil	<Ceil><Log>1000 2</Log></Ceil>	<ToExpression>10</ToExpression>
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	<Equal><Ceil><Rational>7 2</Rational></Ceil> <Add><Floor><Rational>7 2</Rational></Floor> 1</Add></Equal>	<True />
 floor-and-ceil-agree-exactly-on-integers	<Equal><Ceil>5</Ceil> <Floor>5</Floor></Equal>	<True />
-a-zero-divisor-inside-ceil	<Ceil><Divide>16 0</Divide></Ceil>	<Ceil>ComplexInfinity</Ceil>
+a-zero-divisor-inside-ceil	<Ceil><Divide>16 0</Divide></Ceil>	<ComplexInfinity />
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	<Ceil>-3.7</Ceil>	<ToExpression>-3</ToExpression>
 nan-propagates-rather-than-erroring	<Ceil>NaN</Ceil>	<NaN />

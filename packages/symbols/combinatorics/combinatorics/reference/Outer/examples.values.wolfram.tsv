@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out
-the-outer-product-of-two-vectors-a-3-times-2	Outer[Times, List[1, 2, 3], List[1, 2]]			
+the-outer-product-of-two-vectors-a-3-times-2	Outer[Times, List[1, 2, 3], List[1, 2]]	{{1, 2}, {2, 4}, {3, 6}}	\text{Outer}[\text{Times},\{1,2,3\},\{1,2\}]	\left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\  3 & 6 \\ \end{array} \right)
 symbolic-entries	Outer[Times, List[1, 2, 3], List[x, y]]	{{x, y}, {2*x, 2*y}, {3*x, 3*y}}	\text{Outer}[\text{Times},\{1,2,3\},\{x,y\}]	\left( \begin{array}{cc}  x & y \\  2 x & 2 y \\  3 x & 3 y \\ \end{array} \right)
-outer-matrix-of-right-shape	Outer[Plus, List[1, 2], List[10, 20, 30]]			
-any-binary-function-an-addition-table	Outer[Plus, List[1, 2], List[10, 20]]			
-a-table-of-powers	Outer[Power, List[2, 3], List[1, 2, 3]]			
+outer-matrix-of-right-shape	Outer[Plus, List[1, 2], List[10, 20, 30]]	{{11, 21, 31}, {12, 22, 32}}	\text{Outer}[\text{Plus},\{1,2\},\{10,20,30\}]	\left( \begin{array}{ccc}  11 & 21 & 31 \\  12 & 22 & 32 \\ \end{array} \right)
+any-binary-function-an-addition-table	Outer[Plus, List[1, 2], List[10, 20]]	{{11, 21}, {12, 22}}	\text{Outer}[\text{Plus},\{1,2\},\{10,20\}]	\left( \begin{array}{cc}  11 & 21 \\  12 & 22 \\ \end{array} \right)
+a-table-of-powers	Outer[Power, List[2, 3], List[1, 2, 3]]	{{2, 4, 8}, {3, 9, 27}}	\text{Outer}[\text{Power},\{2,3\},\{1,2,3\}]	\left( \begin{array}{ccc}  2 & 4 & 8 \\  3 & 9 & 27 \\ \end{array} \right)
 list-gives-every-pair-like-a-cartesian-product	Outer[List, List[a, b], List[x, y]]	{{{a, x}, {a, y}}, {{b, x}, {b, y}}}	\text{Outer}[\text{List},\{a,b\},\{x,y\}]	\left( \begin{array}{cc}  \{a,x\} & \{a,y\} \\  \{b,x\} & \{b,y\} \\ \end{array} \right)

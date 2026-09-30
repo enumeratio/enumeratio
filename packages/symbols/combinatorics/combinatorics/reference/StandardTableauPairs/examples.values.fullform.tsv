@@ -1,3 +1,3 @@
-id	in
-count-standardtableaupairs-4-4-24-rsk-is-a	Count[StandardTableauPairs[4]]
-every-element-of-standardtableaupairs-4	Take[StandardTableauPairs[4], 24]
+id	in	back
+count-standardtableaupairs-4-4-24-rsk-is-a	Length[StandardTableauPairs[4]]	[Length, [StandardTableauPairs, 4]]
+every-element-of-standardtableaupairs-4	Take[StandardTableauPairs[4], 24]	

@@ -1,4 +1,4 @@
-id	in
-count-boxedplanepartitions-2-2-2-20-macmahon-s	Count[BoxedPlanePartitions[2, 2, 2]]
-every-element-of-boxedplanepartitions-2-2-2	Take[BoxedPlanePartitions[2, 2, 2], 20]
-a-degenerate-1-times-1-times-n-box-count-n-1	Count[BoxedPlanePartitions[1, 1, 4]]
+id	in	back
+count-boxedplanepartitions-2-2-2-20-macmahon-s	Length[BoxedPlanePartitions[2, 2, 2]]	[Length, [BoxedPlanePartitions, 2, 2, 2]]
+every-element-of-boxedplanepartitions-2-2-2	Take[BoxedPlanePartitions[2, 2, 2], 20]	
+a-degenerate-1-times-1-times-n-box-count-n-1	Length[BoxedPlanePartitions[1, 1, 4]]	[Length, [BoxedPlanePartitions, 1, 1, 4]]

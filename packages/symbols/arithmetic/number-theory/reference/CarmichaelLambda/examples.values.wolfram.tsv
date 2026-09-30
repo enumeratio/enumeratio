@@ -1,4 +1,4 @@
-id	in
-listable	CarmichaelLambda[List[8, 15]]
-negative-n-lambda-n-lambda-n	CarmichaelLambda[-100]
-listable-over-a-range	CarmichaelLambda[Range[10]]
+id	in	out	tex.in	tex.out
+listable	CarmichaelLambda[List[8, 15]]	{2, 4}	\lambda (\{8,15\})	\{2,4\}
+negative-n-lambda-n-lambda-n	CarmichaelLambda[-100]	20	\lambda (-100)	20
+listable-over-a-range	CarmichaelLambda[Range[10]]	{1, 1, 2, 2, 4, 2, 6, 2, 6, 4}	\lambda (\text{Range}[10])	\{1,1,2,2,4,2,6,2,6,4\}

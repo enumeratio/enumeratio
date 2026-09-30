@@ -1,4 +1,4 @@
-id	in
-count-evenpermutations-4	Count[EvenPermutations[4]]
-first-element-of-evenpermutations-4	Part[EvenPermutations[4], 1]
-every-element-of-evenpermutations-4	Take[EvenPermutations[4], 12]
+id	in	back
+count-evenpermutations-4	Length[EvenPermutations[4]]	[Length, [EvenPermutations, 4]]
+first-element-of-evenpermutations-4	Part[EvenPermutations[4], 1]	
+every-element-of-evenpermutations-4	Take[EvenPermutations[4], 12]	

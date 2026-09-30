@@ -1,5 +1,5 @@
 id	in	out	tex.in	tex.out
 b-0-x-1	BernoulliB[0, x]	1	B_0(x)	1
 b-1-x-x-1-2	BernoulliB[1, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1(x)-\left(x-\frac{1}{2}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1\left(\frac{7}{3}\right)-\left(\frac{7}{3}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(-\frac{11}{5}\right)-\left(-\frac{11}{5}-\frac{1}{2}\right)\right]\right],\text{Chop}\left[N\left[B_1\left(\frac{13}{4}\right)-\left(\frac{13}{4}-\frac{1}{2}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-b-2-0-1-6	N[BernoulliB[2, 0]]			
-b-2-1-1-6	N[BernoulliB[2, 1]]			
+b-2-0-1-6	N[BernoulliB[2, 0]]	0.16666666666666666	N[B_2(0)]	0.166667
+b-2-1-1-6	N[BernoulliB[2, 1]]	0.16666666666666666	N[B_2(1)]	0.166667

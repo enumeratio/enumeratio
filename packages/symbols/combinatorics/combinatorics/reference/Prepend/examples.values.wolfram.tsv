@@ -1,8 +1,8 @@
-id	in	out	tex.in	tex.out
-prepend-list-a-b-c-d-x	Prepend[List[a, b, c, d], x]	{x, a, b, c, d}	\text{Prepend}[\{a,b,c,d\},x]	\{x,a,b,c,d\}
-prepend-front-of-list	Prepend[List[1, 2, 3], 0]			
-prepend-single-element-list	Prepend[List[5], 10]			
-prepend-empty-list	Prepend[List[], 42]			
-a-rule-inserted-at-the-front-of-an-association	Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]	<|3 -> d, 1 -> a, 2 -> b|>	\text{Prepend}[\text{Association}[1\to a,2\to b],3\to d]	\unicode{f113}3\to d,1\to a,2\to b\unicode{f114}
-several-rules-prepended-at-once	Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]	<|3 -> d, 4 -> e, 1 -> a, 2 -> b|>	\text{Prepend}[\text{Association}[1\to a,2\to b],\{3\to d,4\to e\}]	\unicode{f113}3\to d,4\to e,1\to a,2\to b\unicode{f114}
-prepend-c-x-join-x-c-see-join	(Prepend[List[1, 2, 3], 0] == Join[List[0], List[1, 2, 3]])			
+id	in	out	tex.in	tex.out	verdict
+prepend-list-a-b-c-d-x	Prepend[List[a, b, c, d], x]	{x, a, b, c, d}	\text{Prepend}[\{a,b,c,d\},x]	\{x,a,b,c,d\}	
+prepend-front-of-list	Prepend[List[1, 2, 3], 0]	{0, 1, 2, 3}	\text{Prepend}[\{1,2,3\},0]	\{0,1,2,3\}	
+prepend-single-element-list	Prepend[List[5], 10]	{10, 5}	\text{Prepend}[\{5\},10]	\{10,5\}	
+prepend-empty-list	Prepend[List[], 42]	{42}	\text{Prepend}[\{\},42]	\{42\}	
+a-rule-inserted-at-the-front-of-an-association	Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]	<|3 -> d, 1 -> a, 2 -> b|>	\text{Prepend}[\text{Association}[1\to a,2\to b],3\to d]	\unicode{f113}3\to d,1\to a,2\to b\unicode{f114}	disagree
+several-rules-prepended-at-once					
+prepend-c-x-join-x-c-see-join	(Prepend[List[1, 2, 3], 0] == Join[List[0], List[1, 2, 3]])	True	\text{Prepend}[\{1,2,3\},0]=\text{Join}[\{0\},\{1,2,3\}]	\text{True}	

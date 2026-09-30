@@ -1,9 +1,9 @@
-id	in
-rc-1-4	N[CarlsonRC[1, 4]]
-rc-1-1	N[CarlsonRC[1, 1]]
-rc-3-2	N[CarlsonRC[3, 2]]
-rc-1-2i-3	N[CarlsonRC[Complex[1, 2], 3]]
-rc-0-1i-0-1i	N[CarlsonRC[Complex[0, 1], Complex[0, -1]]]
-rc-1-1-2	N[CarlsonRC[1, -1]]
-rc-4-3	N[CarlsonRC[4, -3]]
-rc-2-0-5	N[CarlsonRC[2, -0.5]]
+id	in	out	tex.in	tex.out
+rc-1-4	N[CarlsonRC[1, 4]]	0.6045997880780727	N[R_C(1,4)]	0.6046
+rc-1-1	N[CarlsonRC[1, 1]]	1.	N[R_C(1,1)]	1.
+rc-3-2	N[CarlsonRC[3, 2]]	0.6584789484624082	N[R_C(3,2)]	0.658479
+rc-1-2i-3	N[CarlsonRC[Complex[1, 2], 3]]	0.612853689915641 - 0.10481507789285555*I	N[R_C(1+2 i,3)]	0.612854\, -0.104815 i
+rc-0-1i-0-1i	N[CarlsonRC[Complex[0, 1], Complex[0, -1]]]	1.2260849569072199 + 0.3447113698876767*I	N[R_C(i,-i)]	1.22608\, +0.344711 i
+rc-1-1-2	N[CarlsonRC[1, -1]]	0.6232252401402305	N[R_C(1,-1)]	0.623225
+rc-4-3	N[CarlsonRC[4, -3]]	0.3729174986774662	N[R_C(4,-3)]	0.372917
+rc-2-0-5	N[CarlsonRC[2, -0.5]]	0.9130352425169029	N[R_C(2,-0.5)]	0.913035

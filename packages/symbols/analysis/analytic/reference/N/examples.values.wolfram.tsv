@@ -1,7 +1,7 @@
-id	in
-n-pi-30	N[Pi, 30]
-the-last-digit-correctly-rounded-computing-at-30	N[Sinh[1], 30]
-a-list-number-by-number	N[List[Pi, E, Sqrt[2]], 5]
-an-exact-tie-rounds-to-the-even-digit-0-125	N[Rational[1, 8], 2]
-and-0-375-to-0-38	N[Rational[3, 8], 2]
-n-pi-1-digit	N[Pi, 1]
+id	in	out	shown	tex.in	tex.out	verdict
+n-pi-30	N[Pi, 30]	3.1415926535897932384626433832795028841971693993751058151208`30.	3.14159265358979323846264338328	N[\pi ,30]	3.14159265358979323846264338328	
+the-last-digit-correctly-rounded-computing-at-30	N[Sinh[1], 30]	1.1752011936438014568823818505956008151557179813340958702296`30.	1.17520119364380145688238185060	N[\sinh (1),30]	1.17520119364380145688238185060	
+a-list-number-by-number	N[List[Pi, E, Sqrt[2]], 5]	{3.1415926535897932385`5., 2.7182818284590452353`5., 1.4142135623730950488`5.}	{3.1416, 2.7183, 1.4142}	N\left[\left\{\pi ,e,\sqrt{2}\right\},5\right]	\{3.1416,2.7183,1.4142\}	disagree
+an-exact-tie-rounds-to-the-even-digit-0-125	N[Rational[1, 8], 2]	0.125`2.	0.12	N\left[\frac{1}{8},2\right]	0.12	disagree
+and-0-375-to-0-38	N[Rational[3, 8], 2]	0.375`2.	0.38	N\left[\frac{3}{8},2\right]	0.38	disagree
+n-pi-1-digit	N[Pi, 1]	3.1415926535897932385`1.	3.	N[\pi ,1]	3.	disagree

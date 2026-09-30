@@ -1,18 +1,18 @@
 id	in	out	tex.in	tex.out
 factorinteger-360	FactorInteger[360]	{{2, 3}, {3, 2}, {5, 1}}	\text{FactorInteger}[360]	\left( \begin{array}{cc}  2 & 3 \\  3 & 2 \\  5 & 1 \\ \end{array} \right)
 factorinteger-84	FactorInteger[84]	{{2, 2}, {3, 1}, {7, 1}}	\text{FactorInteger}[84]	\left( \begin{array}{cc}  2 & 2 \\  3 & 1 \\  7 & 1 \\ \end{array} \right)
-factorinteger-120	FactorInteger[120]			
-factorinteger-36	FactorInteger[36]			
+factorinteger-120	FactorInteger[120]	{{2, 3}, {3, 1}, {5, 1}}	\text{FactorInteger}[120]	\left( \begin{array}{cc}  2 & 3 \\  3 & 1 \\  5 & 1 \\ \end{array} \right)
+factorinteger-36	FactorInteger[36]	{{2, 2}, {3, 2}}	\text{FactorInteger}[36]	\left( \begin{array}{cc}  2 & 2 \\  3 & 2 \\ \end{array} \right)
 threads-element-wise-over-a-list-as-wolfram-s	FactorInteger[List[12, 18]]	{{{2, 2}, {3, 1}}, {{2, 1}, {3, 2}}}	\text{FactorInteger}[\{12,18\}]	\left( \begin{array}{cc}  \{2,2\} & \{3,1\} \\  \{2,1\} & \{3,2\} \\ \end{array} \right)
 5-i-1-2i-2-i	FactorInteger[5, Rule[GaussianIntegers, True]]	{{-I, 1}, {1 + 2*I, 1}, {2 + I, 1}}	\text{FactorInteger}[5,\text{GaussianIntegers}\to \text{True}]	\left( \begin{array}{cc}  -i & 1 \\  1+2 i & 1 \\  2+i & 1 \\ \end{array} \right)
 3-4i-2-i-2	FactorInteger[Complex[3, 4]]	{{2 + I, 2}}	\text{FactorInteger}[3+4 i]	\left( \begin{array}{cc}  2+i & 2 \\ \end{array} \right)
 a-21-digit-gaussian-integer-through-its-norm	FactorInteger[Complex[100000000000000000039, 100000000000000000129]]	{{-I, 1}, {1 + I, 1}, {99 + 34*I, 1}, {1538 + 213*I, 1}, {277789996706096 + 549000467740335*I, 1}}	\text{FactorInteger}[100000000000000000039+100000000000000000129 i]	\left( \begin{array}{cc}  -i & 1 \\  1+i & 1 \\  99+34 i & 1 \\  1538+213 i & 1 \\  277789996706096+549000467740335 i & 1 \\ \end{array} \right)
-rationals-the-denominator-s-primes-get-negative	FactorInteger[Rational[3, 8]]			
-9-12i-3-2-i-2	FactorInteger[Complex[9, 12]]			
+rationals-the-denominator-s-primes-get-negative	FactorInteger[Rational[3, 8]]	{{2, -3}, {3, 1}}	\text{FactorInteger}\left[\frac{3}{8}\right]	\left( \begin{array}{cc}  2 & -3 \\  3 & 1 \\ \end{array} \right)
+9-12i-3-2-i-2	FactorInteger[Complex[9, 12]]	{{2 + I, 2}, {3, 1}}	\text{FactorInteger}[9+12 i]	\left( \begin{array}{cc}  2+i & 2 \\  3 & 1 \\ \end{array} \right)
 36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime	FactorInteger[36, Rule[GaussianIntegers, True]]	{{-1, 1}, {1 + I, 4}, {3, 2}}	\text{FactorInteger}[36,\text{GaussianIntegers}\to \text{True}]	\left( \begin{array}{cc}  -1 & 1 \\  1+i & 4 \\  3 & 2 \\ \end{array} \right)
-listable-threads-over-a-list	FactorInteger[List[11, 101, 1001]]			
-a-21-digit-prime-cubed-factors-at-once	FactorInteger[Power[100000000000000000039, 3]]			
-factorinteger-of-a-negative-rational	FactorInteger[Rational[-3, 8]]			
+listable-threads-over-a-list	FactorInteger[List[11, 101, 1001]]	{{{11, 1}}, {{101, 1}}, {{7, 1}, {11, 1}, {13, 1}}}	\text{FactorInteger}[\{11,101,1001\}]	\left\{\left( \begin{array}{cc}  11 & 1 \\ \end{array} \right),\left( \begin{array}{cc}  101 & 1 \\ \end{array} \right),\left( \begin{array}{cc}  7 & 1 \\  11 & 1 \\  13 & 1 \\ \end{array} \right)\right\}
+a-21-digit-prime-cubed-factors-at-once	FactorInteger[Power[100000000000000000039, 3]]	{{100000000000000000039, 3}}	\text{FactorInteger}\left[100000000000000000039^3\right]	\left( \begin{array}{cc}  100000000000000000039 & 3 \\ \end{array} \right)
+factorinteger-of-a-negative-rational	FactorInteger[Rational[-3, 8]]	{{-1, 1}, {2, -3}, {3, 1}}	\text{FactorInteger}\left[-\frac{3}{8}\right]	\left( \begin{array}{cc}  -1 & 1 \\  2 & -3 \\  3 & 1 \\ \end{array} \right)
 a-unit-factors-as-itself	FactorInteger[Complex[0, 1]]	{{I, 1}}	\text{FactorInteger}[i]	\left( \begin{array}{cc}  i & 1 \\ \end{array} \right)
 the-ramified-prime-above-2-factors-as-itself	FactorInteger[Complex[1, 1]]	{{1 + I, 1}}	\text{FactorInteger}[1+i]	\left( \begin{array}{cc}  1+i & 1 \\ \end{array} \right)
 a-prime-above-5-factors-as-itself	FactorInteger[Complex[2, 1]]	{{2 + I, 1}}	\text{FactorInteger}[2+i]	\left( \begin{array}{cc}  2+i & 1 \\ \end{array} \right)
@@ -38,7 +38,7 @@ multiplying-the-p-e-factors-back-together	(Times[Power[2, 3], Power[3, 2], 5] ==
 compute-engine-returns-the-trivial-factor-1-1	FactorInteger[1]	{{1, 1}}	\text{FactorInteger}[1]	\left( \begin{array}{cc}  1 & 1 \\ \end{array} \right)
 0-is-represented-as-0-1	FactorInteger[0]	{{0, 1}}	\text{FactorInteger}[0]	\left( \begin{array}{cc}  0 & 1 \\ \end{array} \right)
 negative-numbers-carry-an-explicit-1-unit-factor	FactorInteger[-60]	{{-1, 1}, {2, 2}, {3, 1}, {5, 1}}	\text{FactorInteger}[-60]	\left( \begin{array}{cc}  -1 & 1 \\  2 & 2 \\  3 & 1 \\  5 & 1 \\ \end{array} \right)
-1-is-a-unit-and-factors-as-itself	FactorInteger[-1]			
-factorinteger-neg-12	FactorInteger[-12]			
-a-non-integer-real-stays-unevaluated	FactorInteger[2.5]			
+1-is-a-unit-and-factors-as-itself	FactorInteger[-1]	{{-1, 1}}	\text{FactorInteger}[-1]	\left( \begin{array}{cc}  -1 & 1 \\ \end{array} \right)
+factorinteger-neg-12	FactorInteger[-12]	{{-1, 1}, {2, 2}, {3, 1}}	\text{FactorInteger}[-12]	\left( \begin{array}{cc}  -1 & 1 \\  2 & 2 \\  3 & 1 \\ \end{array} \right)
+a-non-integer-real-stays-unevaluated	FactorInteger[2.5]	FactorInteger[2.5]	\text{FactorInteger}[2.5]	\text{FactorInteger}[2.5]
 the-hardy-ramanujan-taxicab-number-7-times-13	FactorInteger[1729]	{{7, 1}, {13, 1}, {19, 1}}	\text{FactorInteger}[1729]	\left( \begin{array}{cc}  7 & 1 \\  13 & 1 \\  19 & 1 \\ \end{array} \right)

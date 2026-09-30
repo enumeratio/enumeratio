@@ -1,8 +1,8 @@
-id	in
-a-generic-point-inside-the-unit-disc	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 0.5]
-a-0-5-1-1-5-2-2-5-at-neg-0-4	HypergeometricPFQRegularized[List[0.5, 1, 1.5], List[2, 2.5], -0.4]
-a-lower-parameter-0-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[0, 2], 0.3]
-a-lower-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[-1, 2], 0.3]
-an-upper-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[2, -1], 0.3]
-a-complex-argument	N[HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], Complex[0.3, 0.2]]]
-z-ge-1-stays-symbolic-no-continuation-past-the	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 1.2]
+id	in	out	tex.in	tex.out	verdict
+a-generic-point-inside-the-unit-disc	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 0.5]	0.5507754140499156	\, _3\tilde{F}_2(1,1,1;2,3;0.5)	0.550775	
+a-0-5-1-1-5-2-2-5-at-neg-0-4	HypergeometricPFQRegularized[List[0.5, 1, 1.5], List[2, 2.5], -0.4]	0.7125415161247438	\, _3\tilde{F}_2(0.5,1,1.5;2,2.5;-0.4)	0.712542	
+a-lower-parameter-0-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[0, 2], 0.3]	0.23965494877565385	\, _3\tilde{F}_2(1,1,1;0,2;0.3)	0.239655	
+a-lower-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[-1, 2], 0.3]	0.13293500040787565	\, _3\tilde{F}_2(1,1,1;-1,2;0.3)	0.132935	
+an-upper-parameter-neg-1-at-0-3	HypergeometricPFQRegularized[List[1, 1, 1], List[2, -1], 0.3]	0.13293500040787565	\, _3\tilde{F}_2(1,1,1;2,-1;0.3)	0.132935	
+a-complex-argument	N[HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], Complex[0.3, 0.2]]]	0.5261674816890403 + 0.020656153732402715*I	N\left[\, _3\tilde{F}_2(1,1,1;2,3;0.3\, +0.2 i)\right]	0.526167\, +0.0206562 i	
+z-ge-1-stays-symbolic-no-continuation-past-the	HypergeometricPFQRegularized[List[1, 1, 1], List[2, 3], 1.2]	0.717441481926341 - 0.04098440651386914*I	\, _3\tilde{F}_2(1,1,1;2,3;1.2)	0.717441\, -0.0409844 i	disagree

@@ -1,3 +1,3 @@
-id	in
-count-tristrings-6-44-binary-strings-of-length-6	Count[TriStrings[6]]
-every-element-of-tristrings-6	Take[TriStrings[6], 44]
+id	in	back
+count-tristrings-6-44-binary-strings-of-length-6	Length[TriStrings[6]]	[Length, [TriStrings, 6]]
+every-element-of-tristrings-6	Take[TriStrings[6], 44]	

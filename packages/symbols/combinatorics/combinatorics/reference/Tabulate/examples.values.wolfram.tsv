@@ -3,9 +3,9 @@ tabulate-function-1-pow-2-5	Array[Function[Power[Slot[1], 2]], 5]	{1, 4, 9, 16, 
 a-symbolic-function-shows-the-indices	Array[f, 3]	{f[1], f[2], f[3]}	\text{Array}[f,3]	\{f(1),f(2),f(3)\}
 the-multi-dimensional-form-a-rectangular-grid	Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]	{{1, 2}, {2, 4}}	\text{Array}[\text{$\#$1} \text{$\#$2}\&,\{2,2\}]	\left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\ \end{array} \right)
 a-2-3-grid	Array[f, List[2, 3]]	{{f[1, 1], f[1, 2], f[1, 3]}, {f[2, 1], f[2, 2], f[2, 3]}}	\text{Array}[f,\{2,3\}]	\left( \begin{array}{ccc}  f(1,1) & f(1,2) & f(1,3) \\  f(2,1) & f(2,2) & f(2,3) \\ \end{array} \right)
-tabulate-add-2-2	Array[Plus, List[2, 2]]			
+tabulate-add-2-2	Array[Plus, List[2, 2]]	{{2, 3}, {3, 4}}	\text{Array}[\text{Plus},\{2,2\}]	\left( \begin{array}{cc}  2 & 3 \\  3 & 4 \\ \end{array} \right)
 three-dimensions-give-a-2-2-2-array	Array[f, List[2, 2, 2]]	{{{f[1, 1, 1], f[1, 1, 2]}, {f[1, 2, 1], f[1, 2, 2]}}, {{f[2, 1, 1], f[2, 1, 2]}, {f[2, 2, 1], f[2, 2, 2]}}}	\text{Array}[f,\{2,2,2\}]	\left( \begin{array}{cc}  \{f(1,1,1),f(1,1,2)\} & \{f(1,2,1),f(1,2,2)\} \\  \{f(2,1,1),f(2,1,2)\} & \{f(2,2,1),f(2,2,2)\} \\ \end{array} \right)
 length-0-gives-the-empty-list	Array[f, 0]	{}	\text{Array}[f,0]	\{\}
-the-3-3-hilbert-matrix-1-i-j-1	Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]			
+the-3-3-hilbert-matrix-1-i-j-1	Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]	{{1, 1/2, 1/3}, {1/2, 1/3, 1/4}, {1/3, 1/4, 1/5}}	\text{Array}\left[\frac{1}{(\text{$\#$1}+\text{$\#$2})-1}\&,\{3,3\}\right]	\left( \begin{array}{ccc}  1 & \frac{1}{2} & \frac{1}{3} \\  \frac{1}{2} & \frac{1}{3} & \frac{1}{4} \\  \frac{1}{3} & \frac{1}{4} & \frac{1}{5} \\ \end{array} \right)
 the-3-3-identity-matrix				
-pascal-s-triangle-as-a-lower-triangular-matrix	Array[Binomial, List[3, 3]]			
+pascal-s-triangle-as-a-lower-triangular-matrix	Array[Binomial, List[3, 3]]	{{1, 0, 0}, {2, 1, 0}, {3, 3, 1}}	\text{Array}[\text{Binomial},\{3,3\}]	\left( \begin{array}{ccc}  1 & 0 & 0 \\  2 & 1 & 0 \\  3 & 3 & 1 \\ \end{array} \right)

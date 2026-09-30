@@ -1,4 +1,4 @@
-id	in
-count-words-3-2	Count[Words[3, 2]]
-first-element-of-words-3-2	Part[Words[3, 2], 1]
-every-element-of-words-3-2	Take[Words[3, 2], 8]
+id	in	back
+count-words-3-2	Length[Words[3, 2]]	[Length, [Words, 3, 2]]
+first-element-of-words-3-2	Part[Words[3, 2], 1]	
+every-element-of-words-3-2	Take[Words[3, 2], 8]	

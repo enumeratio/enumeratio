@@ -1,3 +1,3 @@
-id	in
-path-4-matches-wolfram	EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
-star-4-hub-is-most-central	EigenvectorCentrality[StarGraph[4]]
+id	in	out	tex.in	tex.out
+path-4-matches-wolfram	EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]	{0.1909830056250525, 0.3090169943749473, 0.3090169943749476, 0.19098300562505266}	\text{EigenvectorCentrality}[]	\{0.190983,0.309017,0.309017,0.190983\}
+star-4-hub-is-most-central	EigenvectorCentrality[StarGraph[4]]	{0.3660254037844386, 0.2113248654051871, 0.21132486540518716, 0.21132486540518708}	\text{EigenvectorCentrality}[\text{StarGraph}[4]]	\{0.366025,0.211325,0.211325,0.211325\}

@@ -1,2 +1,2 @@
-id	in
-wheel-6-edge-count	EdgeCount[WheelGraph[6]]
+id	in	out	tex.in	tex.out
+wheel-6-edge-count	EdgeCount[WheelGraph[6]]	10	\text{EdgeCount}[\text{WheelGraph}[6]]	10

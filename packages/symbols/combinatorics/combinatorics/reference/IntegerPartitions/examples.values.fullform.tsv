@@ -1,5 +1,5 @@
-id	in
-p-6	Count[IntegerPartitions[6]]
-the-single-part-6	Part[IntegerPartitions[6], 1]
-by-largest-part	Tally[CombinatorialStat[IntegerPartitions[7], "LargestPart"]]
-by-distinct-part-sizes	Tally[CombinatorialStat[IntegerPartitions[7], "DistinctParts"]]
+id	in	back
+p-6	Length[IntegerPartitions[6]]	[Length, [IntegerPartitions, 6]]
+the-single-part-6	Part[IntegerPartitions[6], 1]	
+by-largest-part	Tally[CombinatorialStat[IntegerPartitions[7], "LargestPart"]]	
+by-distinct-part-sizes	Tally[CombinatorialStat[IntegerPartitions[7], "DistinctParts"]]	

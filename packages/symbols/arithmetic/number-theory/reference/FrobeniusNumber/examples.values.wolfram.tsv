@@ -1,6 +1,6 @@
-id	in
-the-mcnugget-number	FrobeniusNumber[List[6, 9, 20]]
-frobeniusnumber-list-3-5	FrobeniusNumber[List[3, 5]]
-frobeniusnumber-list-12-16-20-27	FrobeniusNumber[List[12, 16, 20, 27]]
-two-generators-ab-a-b	FrobeniusNumber[List[4, 7]]
-not-coprime-infinitely-many-numbers-are	FrobeniusNumber[List[2, 4]]
+id	in	out	tex.in	tex.out
+the-mcnugget-number	FrobeniusNumber[List[6, 9, 20]]	43	\text{FrobeniusNumber}[\{6,9,20\}]	43
+frobeniusnumber-list-3-5	FrobeniusNumber[List[3, 5]]	7	\text{FrobeniusNumber}[\{3,5\}]	7
+frobeniusnumber-list-12-16-20-27	FrobeniusNumber[List[12, 16, 20, 27]]	89	\text{FrobeniusNumber}[\{12,16,20,27\}]	89
+two-generators-ab-a-b	FrobeniusNumber[List[4, 7]]	17	\text{FrobeniusNumber}[\{4,7\}]	17
+not-coprime-infinitely-many-numbers-are	FrobeniusNumber[List[2, 4]]	Infinity	\text{FrobeniusNumber}[\{2,4\}]	\infty

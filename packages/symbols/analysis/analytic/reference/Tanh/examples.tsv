@@ -1,20 +1,20 @@
-id	section	role	expr	expected	caption
-n-forces-the-numeric-result-that-plain			[N, [Tanh, 0]]	0	N(...) forces the numeric result that plain evaluation withholds
-n-tanh-1			[N, [Tanh, 1]]	{num: "0.761594155955764888119"}	
-stays-symbolic-even-at-0-same-as-sinh-and-cosh			[Tanh, 0]	0	Exact at 0, as [[Sinh]] and [[Cosh]] are
-a-float-argument-evaluates-directly-no-n-needed			[Tanh, 2.2]	{num: "0.975743130031451520414"}	A float argument evaluates directly, no N(...) needed
-arbitrary-precision-via-n	Scope		[N, [Tanh, [Rational, 11, 5]]]	{num: "0.975743130031451520414"}	Arbitrary precision via N(...)
-evaluates-at-a-complex-argument	Scope		[Tanh, [Complex, 2.5, 1]]	[Complex, 1.00554801189506, 0.012322138255828353]	Evaluates at a complex argument
-interval-arithmetic-tanh-is-increasing-so-tanh-0	Scope		[Tanh, [Interval, 0, [Ln, 2]]]	[Interval, 0, [Rational, 3, 5]]	Interval arithmetic: $\tanh$ is increasing, so $\tanh[0, \ln 2] = [0, \tfrac35]$
-uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	Scope		[Tanh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 0.8193052900783008, 0.03287388416497115]	Uncertainty propagation: $\tanh(2/\sqrt3 \pm 0.1) \approx 0.819 \pm 0.033$
-the-horizontal-asymptote-at-infty	Scope		[Tanh, PositiveInfinity]	1	The horizontal asymptote at $+\infty$
-tanh-i-pi-4-i-tan-pi-4-i	Scope		[Tanh, [Multiply, ImaginaryUnit, [Divide, Pi, 4]]]	[Complex, 0, 1]	$\tanh(i\pi/4) = i\tan(\pi/4) = i$
-oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Tanh, [Negate, x]]	[Negate, [Tanh, x]]	Oddness pulls the sign out of a symbolic argument: $\tanh(-x) = -\tanh x$
-tanh-artanh-x-x-for-every-x	Scope		[Tanh, [Artanh, x]]	x	$\tanh(\operatorname{artanh} x) = x$ for every $x$
-tanh-artanh-2-2-past-the-real-domain	Scope		[Tanh, [Artanh, 2]]	2	$\tanh(\operatorname{artanh}(2)) = 2$, even past $(-1, 1)$
-derivative-sech-2-x	Scope		[D, [Tanh, x], x]	[Power, [Sech, x], 2]	Derivative: $\operatorname{sech}^2 x$
-antiderivative-ln-cosh-x	Scope		[Integrate, [Tanh, x], x]	[Ln, [Cosh, x]]	Antiderivative: $\ln\cosh x$
-tanh-has-no-limit-at-complex-infinity-undefined	Scope		[Tanh, ComplexInfinity]	NaN	$\tanh$ has no limit at complex infinity, undefined from any direction: NaN
-to-30-significant-digits-every-one-correctly	Scope		[N, [Tanh, 1], 30]	{num: "0.761594155955764888119458282605"}	To 30 significant digits, every one correctly rounded
-tanh-x-frac-sinh-x-cosh-x	Properties		[Equal, [Tanh, 1], [Divide, [Sinh, 1], [Cosh, 1]]]	True	$\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$
-in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	Properties		[TrigToExp, [Tanh, x]]	[Divide, [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]	In exponentials: $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+n-forces-the-numeric-result-that-plain			[N, [Tanh, 0]]	0	N(...) forces the numeric result that plain evaluation withholds		
+n-tanh-1			[N, [Tanh, 1]]	{num: "0.761594155955764888119"}			
+stays-symbolic-even-at-0-same-as-sinh-and-cosh			[Tanh, 0]	0	Exact at 0, as [[Sinh]] and [[Cosh]] are		
+a-float-argument-evaluates-directly-no-n-needed			[Tanh, 2.2]	{num: "0.975743130031451520414"}	A float argument evaluates directly, no N(...) needed		
+arbitrary-precision-via-n	Scope		[N, [Tanh, [Rational, 11, 5]]]	{num: "0.975743130031451520414"}	Arbitrary precision via N(...)		
+evaluates-at-a-complex-argument	Scope		[Tanh, [Complex, 2.5, 1]]	[Complex, 1.00554801189506, 0.012322138255828353]	Evaluates at a complex argument		
+interval-arithmetic-tanh-is-increasing-so-tanh-0	Scope		[Tanh, [Interval, 0, [Ln, 2]]]	[Interval, 0, [Rational, 3, 5]]	Interval arithmetic: $\tanh$ is increasing, so $\tanh[0, \ln 2] = [0, \tfrac35]$		
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	Scope		[Tanh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 0.8193052900783008, 0.03287388416497115]	Uncertainty propagation: $\tanh(2/\sqrt3 \pm 0.1) \approx 0.819 \pm 0.033$		
+the-horizontal-asymptote-at-infty	Scope		[Tanh, PositiveInfinity]	1	The horizontal asymptote at $+\infty$		
+tanh-i-pi-4-i-tan-pi-4-i	Scope		[Tanh, [Multiply, ImaginaryUnit, [Divide, Pi, 4]]]	[Complex, 0, 1]	$\tanh(i\pi/4) = i\tan(\pi/4) = i$		
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Tanh, [Negate, x]]	[Negate, [Tanh, x]]	Oddness pulls the sign out of a symbolic argument: $\tanh(-x) = -\tanh x$		
+tanh-artanh-x-x-for-every-x	Scope		[Tanh, [Artanh, x]]	x	$\tanh(\operatorname{artanh} x) = x$ for every $x$		
+tanh-artanh-2-2-past-the-real-domain	Scope		[Tanh, [Artanh, 2]]	2	$\tanh(\operatorname{artanh}(2)) = 2$, even past $(-1, 1)$		
+derivative-sech-2-x	Scope		[D, [Tanh, x], x]	[Power, [Sech, x], 2]	Derivative: $\operatorname{sech}^2 x$		
+antiderivative-ln-cosh-x	Scope		[Integrate, [Tanh, x], x]	[Ln, [Cosh, x]]	Antiderivative: $\ln\cosh x$		
+tanh-has-no-limit-at-complex-infinity-undefined	Scope		[Tanh, ComplexInfinity]	NaN	$\tanh$ has no limit at complex infinity, undefined from any direction: NaN	undefined-form	Both decline: compute-engine spells it NaN, Wolfram spells it Indeterminate.
+to-30-significant-digits-every-one-correctly	Scope		[N, [Tanh, 1], 30]	{num: "0.761594155955764888119458282605"}	To 30 significant digits, every one correctly rounded		
+tanh-x-frac-sinh-x-cosh-x	Properties		[Equal, [Tanh, 1], [Divide, [Sinh, 1], [Cosh, 1]]]	True	$\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$		
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	Properties		[TrigToExp, [Tanh, x]]	[Divide, [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]	In exponentials: $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$		

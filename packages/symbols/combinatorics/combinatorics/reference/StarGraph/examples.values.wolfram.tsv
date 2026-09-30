@@ -1,2 +1,2 @@
-id	in
-centre-degree-of-a-6-vertex-star	VertexDegree[StarGraph[6], 1]
+id	in	out	tex.in	tex.out
+centre-degree-of-a-6-vertex-star	VertexDegree[StarGraph[6], 1]	5	\text{VertexDegree}[\text{StarGraph}[6],1]	5

@@ -1,18 +1,18 @@
-id	in	out	tex.in	tex.out
-log10-1-000	Log10[1000]	3	\log _{10}(1000)	3
-log10-1	Log10[1]	0	\log _{10}(1)	0
-log10-100-000	Log10[100000]	5	\log _{10}(100000)	5
-log10-1-000-000	Log10[1000000]			
-n-for-a-decimal-value	N[Log10[2]]			
-an-exact-negative-power-of-10-folds-too-log-10	Log10[Rational[1, 100]]	-2	\log _{10}\left(\frac{1}{100}\right)	-2
-a-symbolic-argument-becomes-compute-engine-s	Log10[x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\log _{10}(x)-\log _{10}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\log _{10}\left(\frac{7}{3}\right)-\log _{10}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\log _{10}\left(-\frac{11}{5}\right)-\log _{10}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\log _{10}\left(\frac{13}{4}\right)-\log _{10}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-log10-5p5	Log10[5.5]			
-threads-element-wise-over-a-list	Log10[List[1, 10, 100, 1000]]			
-element-wise-over-a-matrix-including-the-exact	Log10[List[List[1, 100], List[0, Rational[1, 100]]]]			
-as-with-ln-the-logarithm-of-complex-infinity-is	Log10[ComplexInfinity]			
-interval-arithmetic-log-10-frac-13-2-log-10-3	Log10[Interval[List[Rational[1, 3], 2]]]			
-uncertainty-propagation-log-10-frac-1-101-pm-0	Log10[Around[Rational[1, 101], 0.01]]			
-derivative-frac-1-x-ln-10	D[Log10[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \log _{10}(x)}{\partial x}-\frac{1}{x \log (10)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\log _{10}\left(\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\log _{10}\left(-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\log _{10}\left(\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \log (10)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-to-30-significant-digits-every-one-correctly	N[Log10[7], 30]			
-a-float-argument-folds-even-for-a-fractional	Log10[0.001]	-3.	\log _{10}(0.001)	-3.
-same-as-compute-engine-s-default-base-log	(Log10[1000] == Log[10, 1000])	True	\log _{10}(1000)=\log _{10}(1000)	\text{True}
+id	in	out	shown	tex.in	tex.out	verdict
+log10-1-000	Log10[1000]	3		\log _{10}(1000)	3	
+log10-1	Log10[1]	0		\log _{10}(1)	0	
+log10-100-000	Log10[100000]	5		\log _{10}(100000)	5	
+log10-1-000-000	Log10[1000000]	6		\log _{10}(1000000)	6	
+n-for-a-decimal-value	N[Log10[2]]	0.30102999566398114		N\left[\log _{10}(2)\right]	0.30103	
+an-exact-negative-power-of-10-folds-too-log-10	Log10[Rational[1, 100]]	-2		\log _{10}\left(\frac{1}{100}\right)	-2	
+a-symbolic-argument-becomes-compute-engine-s	Log10[x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\log _{10}(x)-\log _{10}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\log _{10}\left(\frac{7}{3}\right)-\log _{10}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\log _{10}\left(-\frac{11}{5}\right)-\log _{10}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\log _{10}\left(\frac{13}{4}\right)-\log _{10}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+log10-5p5	Log10[5.5]	0.7403626894942439		\log _{10}(5.5)	0.740363	
+threads-element-wise-over-a-list	Log10[List[1, 10, 100, 1000]]	{0, 1, 2, 3}		\log _{10}(\{1,10,100,1000\})	\{0,1,2,3\}	
+element-wise-over-a-matrix-including-the-exact	Log10[List[List[1, 100], List[0, Rational[1, 100]]]]	{{0, 2}, {-Infinity, -2}}		\log _{10}\left(\left( \begin{array}{cc}  1 & 100 \\  0 & \frac{1}{100} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  0 & 2 \\  -\infty  & -2 \\ \end{array} \right)	
+as-with-ln-the-logarithm-of-complex-infinity-is	Log10[ComplexInfinity]	Infinity		\log _{10}(\text{ComplexInfinity})	\infty	
+interval-arithmetic-log-10-frac-13-2-log-10-3	Log10[Interval[List[Rational[1, 3], 2]]]	Interval[{-(Log[3]/Log[10]), Log[2]/Log[10]}]		\log _{10}\left(\text{Interval}\left[\left\{\frac{1}{3},2\right\}\right]\right)	\text{Interval}\left[\left\{-\frac{\log (3)}{\log (10)},\frac{\log (2)}{\log (10)}\right\}\right]	disagree
+uncertainty-propagation-log-10-frac-1-101-pm-0	Log10[Around[Rational[1, 101], 0.01]]	Around[-2.0043213737826426, 0.43863742672228434]		\log _{10}\left(\frac{1}{101}\pm 0.010\right)	-2.0\pm 0.4	
+derivative-frac-1-x-ln-10	D[Log10[x], x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \log _{10}(x)}{\partial x}-\frac{1}{x \log (10)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\log _{10}\left(\frac{7}{3}\right)-\frac{1}{\frac{7}{3} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\log _{10}\left(-\frac{11}{5}\right)--\frac{1}{\frac{11}{5} \log (10)}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\log _{10}\left(\frac{13}{4}\right)-\frac{1}{\frac{13}{4} \log (10)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+to-30-significant-digits-every-one-correctly	N[Log10[7], 30]	0.8450980400142568307122162585926361934835723963239654065037`30.	0.845098040014256830712216258593	N\left[\log _{10}(7),30\right]	0.845098040014256830712216258593	
+a-float-argument-folds-even-for-a-fractional	Log10[0.001]	-3.		\log _{10}(0.001)	-3.	
+same-as-compute-engine-s-default-base-log	(Log10[1000] == Log[10, 1000])	True		\log _{10}(1000)=\log _{10}(1000)	\text{True}	

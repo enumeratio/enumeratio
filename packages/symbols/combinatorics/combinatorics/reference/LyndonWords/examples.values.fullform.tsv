@@ -1,4 +1,4 @@
-id	in
-count-lyndonwords-5	Count[LyndonWords[5]]
-first-element-of-lyndonwords-5	Part[LyndonWords[5], 1]
-every-element-of-lyndonwords-5	Take[LyndonWords[5], 6]
+id	in	back
+count-lyndonwords-5	Length[LyndonWords[5]]	[Length, [LyndonWords, 5]]
+first-element-of-lyndonwords-5	Part[LyndonWords[5], 1]	
+every-element-of-lyndonwords-5	Take[LyndonWords[5], 6]	

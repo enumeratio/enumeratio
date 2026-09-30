@@ -1,7 +1,7 @@
-id	in
-8-2-3	PrimePowerQ[8]
-12-2-2-cdot-3-has-two-distinct-primes	PrimePowerQ[12]
-a-prime-is-its-own-first-power	PrimePowerQ[7]
-listable	PrimePowerQ[List[2, 4, 6, 9, 10, 16]]
-large-integers	PrimePowerQ[Power[3, 40]]
-1-is-p-0-which-does-not-count	PrimePowerQ[1]
+id	in	out	tex.in	tex.out
+8-2-3	PrimePowerQ[8]	True	\text{PrimePowerQ}[8]	\text{True}
+12-2-2-cdot-3-has-two-distinct-primes	PrimePowerQ[12]	False	\text{PrimePowerQ}[12]	\text{False}
+a-prime-is-its-own-first-power	PrimePowerQ[7]	True	\text{PrimePowerQ}[7]	\text{True}
+listable	PrimePowerQ[List[2, 4, 6, 9, 10, 16]]	{True, True, False, True, False, True}	\text{PrimePowerQ}[\{2,4,6,9,10,16\}]	\{\text{True},\text{True},\text{False},\text{True},\text{False},\text{True}\}
+large-integers	PrimePowerQ[Power[3, 40]]	True	\text{PrimePowerQ}\left[3^{40}\right]	\text{True}
+1-is-p-0-which-does-not-count	PrimePowerQ[1]	False	\text{PrimePowerQ}[1]	\text{False}

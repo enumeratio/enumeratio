@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 the-documented-subsets-collection-form-listed-in	Subsets[List[a, b, c]]	{{}, {a}, {b}, {c}, {a, b}, {a, c}, {b, c}, {a, b, c}}	\text{Subsets}[\{a,b,c\}]	\{\{\},\{a\},\{b\},\{c\},\{a,b\},\{a,c\},\{b,c\},\{a,b,c\}\}	disagree
-a-size-bound-the-subsets-with-at-most-2-elements	Count[Subsets[4, 2]]				
-an-exact-size-2-binom-4-2-subsets	Count[Subsets[4, List[2]]]				
-a-size-range-0-5-2-the-even-size-subsets-2-4-of	Count[Subsets[5, List[0, 5, 2]]]				
-a-set-of-n-elements-has-2-n-subsets-count	Length[Subsets[Range[1, 10]]]				
-counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum[Binomial[5, k], List[k, 0, 5]]				
+a-size-bound-the-subsets-with-at-most-2-elements	Length[Subsets[Range[4], 2]]	11	\text{Length}[\text{Subsets}[\text{Range}[4],2]]	11	
+an-exact-size-2-binom-4-2-subsets	Length[Subsets[Range[4], List[2]]]	6	\text{Length}[\text{Subsets}[\text{Range}[4],\{2\}]]	6	
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	Length[Subsets[Range[5], List[0, 5, 2]]]	16	\text{Length}[\text{Subsets}[\text{Range}[5],\{0,5,2\}]]	16	
+a-set-of-n-elements-has-2-n-subsets-count	Length[Subsets[Range[1, 10]]]	1024	\text{Length}[\text{Subsets}[\text{Range}[1,10]]]	1024	
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum[Binomial[5, k], List[k, 0, 5]]	32	\sum _{k=0}^5 \binom{5}{k}	32	

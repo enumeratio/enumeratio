@@ -1,4 +1,4 @@
-id	in
-count-binarywordsbyweight-4-2	Count[BinaryWordsByWeight[4, 2]]
-first-element-of-binarywordsbyweight-4-2	Part[BinaryWordsByWeight[4, 2], 1]
-every-element-of-binarywordsbyweight-4-2	Take[BinaryWordsByWeight[4, 2], 6]
+id	in	back
+count-binarywordsbyweight-4-2	Length[BinaryWordsByWeight[4, 2]]	[Length, [BinaryWordsByWeight, 4, 2]]
+first-element-of-binarywordsbyweight-4-2	Part[BinaryWordsByWeight[4, 2], 1]	
+every-element-of-binarywordsbyweight-4-2	Take[BinaryWordsByWeight[4, 2], 6]	

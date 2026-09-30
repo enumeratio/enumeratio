@@ -241,3 +241,8 @@ test("a bare Wolfram base in IntegerDigits/FromDigits stays bare, not rewrapped 
   expect(fromWolfram("IntegerDigits[2147, 2]")).toEqual(["IntegerDigits", 2147, 2]);
   expect(fromWolfram("FromDigits[List[1, 0, 1], 2]")).toEqual(["FromDigits", ["List", 1, 0, 1], 2]);
 });
+
+test("a rule written infix reads back as a Rule call", () => {
+  expect(fromWolfram('{GraphLayout -> "StarEmbedding"}')).toEqual(fromWolfram('{Rule[GraphLayout, "StarEmbedding"]}'));
+  expect(fromWolfram("x -> y -> z")).toEqual(fromWolfram("Rule[x, Rule[y, z]]"));
+});

@@ -6,4 +6,4 @@ qinv-5-0-1		test	[InverseGammaRegularized, 5, 0.1]	7.99358958605263	{num: "7.993
 qinv-0-5-0-9		test	[InverseGammaRegularized, 0.5, 0.9]	0.007895387046715613	{num: "0.007895387046715613"}	1e-9	Wolfram 15.0.0 InverseGammaRegularized			
 q-a-0-1	Properties		[InverseGammaRegularized, a, 1]	0				$Q(a, 0) = 1$	unevaluated	Same conservative auto-evaluation as GammaRegularized — Wolfram doesn't resolve this degenerate-parameter identity without an explicit Limit[].
 q-a-infty-0	Properties		[InverseGammaRegularized, a, 0]	PositiveInfinity				$Q(a, \infty) = 0$	unevaluated	Same conservative auto-evaluation as the other InverseGammaRegularized example.
-order-1-inverts-e-z	Properties		[InverseGammaRegularized, 1, s]	[Negate, [Ln, s]]				Order 1 inverts $e^{-z}$	unevaluated	Same conservative auto-evaluation as the other InverseGammaRegularized examples — Wolfram leaves this symbolic without an explicit Limit[].
+order-1-inverts-e-z	Properties		[InverseGammaRegularized, 1, s]	[Negate, [Ln, s]]				Order 1 inverts $e^{-z}$		Same conservative auto-evaluation as the other InverseGammaRegularized examples — Wolfram leaves this symbolic without an explicit Limit[].

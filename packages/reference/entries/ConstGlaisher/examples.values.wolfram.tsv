@@ -1,2 +1,2 @@
-id	in
-const-glaisher-numeric-value	N[Glaisher]
+id	in	out	tex.in	tex.out
+const-glaisher-numeric-value	N[Glaisher]	1.2824271291006226	N[A]	1.28243

@@ -1,3 +1,3 @@
-id	in
-removes-a-literal-value	DeleteCases[List[1, 2, 3, 2, 4], 2]
-wildcard-pattern-removes-everything	
+id	in	out	tex.in	tex.out
+removes-a-literal-value	DeleteCases[List[1, 2, 3, 2, 4], 2]	{1, 3, 4}	\text{DeleteCases}[\{1,2,3,2,4\},2]	\{1,3,4\}
+wildcard-pattern-removes-everything				

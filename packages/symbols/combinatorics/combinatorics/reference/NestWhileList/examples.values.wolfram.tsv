@@ -1,2 +1,2 @@
-id	in
-halve-while-even-collecting-every-step	NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]
+id	in	out	tex.in	tex.out
+halve-while-even-collecting-every-step	NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]	{96, 48, 24, 12, 6, 3}	\text{NestWhileList}\left[\frac{\text{$\#$1}}{2}\&,96,(\text{$\#$1} \bmod 2)=0\&\right]	\{96,48,24,12,6,3\}

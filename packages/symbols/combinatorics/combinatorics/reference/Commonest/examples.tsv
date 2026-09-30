@@ -1,10 +1,10 @@
-id	section	role	expr	expected	caption
-commonest-list-1-1-2-2-3			[Commonest, [List, 1, 1, 2, 2, 3]]	[List, 1, 2]	
-with-a-unique-mode-commonest-returns-a-single			[Commonest, [List, 1, 2, 2, 3]]	[List, 2]	With a unique mode, Commonest returns a single-element list
-every-element-tied-for-most-frequent-symbols-and			[Commonest, [List, b, a, c, 2, a, b, 1, 2]]	[List, b, a, 2]	Every element tied for most frequent, symbols and numbers alike
-a-single-most-frequent-element-still-comes-back			[Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]	[List, 3]	A single most-frequent element still comes back in a list
-all-distinct-all-tie	Scope		[Commonest, [List, 1, 2, 3]]	[List, 1, 2, 3]	All distinct: all tie
-the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 3, 2]	The $n$ commonest, most frequent first
-with-a-unique-mode-commonest-c-mode-c-see-mode	Properties		[First, [Commonest, [List, 1, 2, 2, 3]]]	2	With a unique mode, $Commonest(c) = \{Mode(c)\}$. See [[Mode]]
-without-a-tie-the-single-commonest-element-is	Properties		[Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [Mode, [List, 1, 2, 2, 3, 3, 3, 4]]]	True	Without a tie, the single commonest element is the [[Mode]]
-a-frequency-tie-between-4-and-1-is-broken-by	Properties		[Commonest, [List, 4, 1, 1, 4], 1]	[List, 4]	A frequency tie between $4$ and $1$ is broken by first appearance in the list.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+commonest-list-1-1-2-2-3			[Commonest, [List, 1, 1, 2, 2, 3]]	[List, 1, 2]			
+with-a-unique-mode-commonest-returns-a-single			[Commonest, [List, 1, 2, 2, 3]]	[List, 2]	With a unique mode, Commonest returns a single-element list		
+every-element-tied-for-most-frequent-symbols-and			[Commonest, [List, b, a, c, 2, a, b, 1, 2]]	[List, b, a, 2]	Every element tied for most frequent, symbols and numbers alike		
+a-single-most-frequent-element-still-comes-back			[Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]	[List, 3]	A single most-frequent element still comes back in a list		
+all-distinct-all-tie	Scope		[Commonest, [List, 1, 2, 3]]	[List, 1, 2, 3]	All distinct: all tie		
+the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 3, 2]	The $n$ commonest, most frequent first	convention	compute-engine orders the n commonest elements strictly most-frequent-first (3 before 2); the scanned Wolfram result came back as {2, 3} for this list — a secondary-ordering difference in Commonest's tie/output convention.
+with-a-unique-mode-commonest-c-mode-c-see-mode	Properties		[First, [Commonest, [List, 1, 2, 2, 3]]]	2	With a unique mode, $Commonest(c) = \{Mode(c)\}$. See [[Mode]]		
+without-a-tie-the-single-commonest-element-is	Properties		[Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [Mode, [List, 1, 2, 2, 3, 3, 3, 4]]]	True	Without a tie, the single commonest element is the [[Mode]]		
+a-frequency-tie-between-4-and-1-is-broken-by	Properties		[Commonest, [List, 4, 1, 1, 4], 1]	[List, 4]	A frequency tie between $4$ and $1$ is broken by first appearance in the list.		

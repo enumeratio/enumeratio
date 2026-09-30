@@ -1,15 +1,15 @@
-id	in
-matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized[2, 0.5]
-b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized[-1, 0.5]
-at-the-pole-b-1-under-n	N[Hypergeometric0F1Regularized[-1, 2]]
-b-1-5-at-neg-0-7	Hypergeometric0F1Regularized[1.5, -0.7]
-rational-order-7-3-at-2-5	Hypergeometric0F1Regularized[Rational[7, 3], 2.5]
-complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]
-order-2-at-a-complex-argument	N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized[-0.5, 0.3]
-complex-order-and-argument	N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
-order-0	Hypergeometric0F1Regularized[0, 0.5]
-order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]
-order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]
-order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]
-exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]
+id	in	out	tex.in	tex.out	verdict
+matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized[2, 0.5]	1.271723456312137	\, _0\tilde{F}_1(;2;0.5)	1.27172	
+b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized[-1, 0.5]	0.1471797367221067	\, _0\tilde{F}_1(;-1;0.5)	0.14718	
+at-the-pole-b-1-under-n	N[Hypergeometric0F1Regularized[-1, 2]]	3.715035560458437	N[\, _0\tilde{F}_1(;-1;2)]	3.71504	
+b-1-5-at-neg-0-7	Hypergeometric0F1Regularized[1.5, -0.7]	0.670794625574135	\, _0\tilde{F}_1(;1.5;-0.7)	0.670795	
+rational-order-7-3-at-2-5	Hypergeometric0F1Regularized[Rational[7, 3], 2.5]	2.1503511509077553	\, _0\tilde{F}_1\left(;\frac{7}{3};2.5\right)	2.15035	
+complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]	2.4762701949448696 + 0.1888532956202782*I	N[\, _0\tilde{F}_1(;1+i;0.5)]	2.47627\, +0.188853 i	
+order-2-at-a-complex-argument	N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]	1.2481756368859287 + 0.2934012962643341*I	N[\, _0\tilde{F}_1(;2;0.5\, +0.5 i)]	1.24818\, +0.293401 i	
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized[-0.5, 0.3]	-0.0585724021408243	\, _0\tilde{F}_1(;-0.5;0.3)	-0.0585724	
+complex-order-and-argument	N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	2.73566529748704 + 25.894454183167486*I	N[\, _0\tilde{F}_1(;-2.5+1.5 i;1.2\, -0.8 i)]	2.73567\, +25.8945 i	
+order-0	Hypergeometric0F1Regularized[0, 0.5]	0.6358617281560685	\, _0\tilde{F}_1(;0;0.5)	0.635862	
+order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]	0.06789905147462626	\, _0\tilde{F}_1(;-2;0.7)	0.0678991	
+order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]	0.2548833430058154 + 0.5234223951841014*I	N[\, _0\tilde{F}_1(;0;0.3\, +0.4 i)]	0.254883\, +0.523422 i	
+order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]	0.09427166608970398 - 0.07802491943203788*I	N[\, _0\tilde{F}_1(;-1;-0.5+0.2 i)]	0.0942717\, -0.0780249 i	
+exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]	4*Hypergeometric0F1Regularized[3, 2]	\, _0\tilde{F}_1(;-1;2)	4 \, _0\tilde{F}_1(;3;2)	disagree

@@ -1,15 +1,15 @@
 id	in	out	tex.in	tex.out
 lcm-4-6	LCM[4, 6]	12	\text{lcm}(4,6)	12
 lcm-is-variadic-it-accepts-any-number-of	LCM[4, 6, 10]	60	\text{lcm}(4,6,10)	60
-lcm-2-3-5	LCM[2, 3, 5]			
+lcm-2-3-5	LCM[2, 3, 5]	30	\text{lcm}(2,3,5)	30
 over-the-rationals-the-lcm-of-the-numerators	LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]	6	\text{lcm}\left(\frac{1}{3},\frac{2}{5},\frac{3}{7}\right)	6
 1-3i-i-3-i-associates-share-their-multiples	LCM[Complex[3, 1], Complex[-1, 3]]	3 + I	\text{lcm}(3+i,-1+3 i)	3+i
-negative-integers	LCM[3, -5, 7]			
-gaussian-primes-of-norm-41-and-13-the-lcm-is-the	LCM[Complex[-4, 5], Complex[2, 3]]			
-gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]			
-big-integers-the-exact-118-digit-lcm-past-where	LCM[Factorial[20], Plus[Power[10, 100], 3]]			
-listable-a-single-list-argument-threads-element	LCM[12, List[3, 7, 40]]			
-a-large-integer-against-a-negative-rational	LCM[Factorial[20], Plus[Power[10, -1], -2]]			
+negative-integers	LCM[3, -5, 7]	105	\text{lcm}(3,-5,7)	105
+gaussian-primes-of-norm-41-and-13-the-lcm-is-the	LCM[Complex[-4, 5], Complex[2, 3]]	23 + 2*I	\text{lcm}(-4+5 i,2+3 i)	23+2 i
+gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3	LCM[Complex[Rational[1, 2], Rational[3, 5]], Complex[Rational[1, 3], 1]]	21 + 13*I	\text{lcm}(\text{Rational}[1,2]+\text{Rational}[3,5] i,\text{Rational}[1,3]+i)	21+13 i
+big-integers-the-exact-118-digit-lcm-past-where	LCM[Factorial[20], Plus[Power[10, 100], 3]]	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000	\text{lcm}\left(20!,10^{100}+3\right)	3475574297395200000000000000000000000000000000000000000000000000000000000000000000000000000000000001042672289218560000
+listable-a-single-list-argument-threads-element	LCM[12, List[3, 7, 40]]	{12, 84, 120}	\text{lcm}(12,\{3,7,40\})	\{12,84,120\}
+a-large-integer-against-a-negative-rational	LCM[Factorial[20], Plus[Power[10, -1], -2]]	2432902008176640000	\text{lcm}\left(20!,\frac{1}{10}-2\right)	2432902008176640000
 lcm-with-a-unit-is-the-other-argument-normalised	LCM[Complex[3, 4], 1]	3 + 4*I	\text{lcm}(3+4 i,1)	3+4 i
 lcm-with-i-a-unit-is-the-other-argument	LCM[Complex[3, 4], Complex[0, 1]]	3 + 4*I	\text{lcm}(3+4 i,i)	3+4 i
 lcm-with-0-is-0	LCM[0, Complex[-4, 3]]	0	\text{lcm}(0,-4+3 i)	0
@@ -32,7 +32,7 @@ lcm-with-a-real-composite-5-squared	LCM[Complex[3, 4], 25]	25	\text{lcm}(3+4 i,2
 lcm-with-a-negative-associate	LCM[Complex[6, 8], Complex[-2, -3]]	34 + 12*I	\text{lcm}(6+8 i,-2-3 i)	34+12 i
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19	LCM[Complex[123, 456], 19]	2337 + 8664*I	\text{lcm}(123+456 i,19)	2337+8664 i
 lcm-of-two-composites-sharing-the-prime-above-13	LCM[Complex[6, 8], Complex[9, 6]]	6 + 108*I	\text{lcm}(6+8 i,9+6 i)	6+108 i
-the-smallest-number-divisible-by-each-of-1	LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]			
+the-smallest-number-divisible-by-each-of-1	LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	2520	\text{lcm}(1,2,3,4,5,6,7,8,9,10)	2520
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])	True	\gcd (27,81) \text{lcm}(27,81)=27\ 81	\text{True}
 a-single-argument-is-returned-unchanged	LCM[5]	5	\text{lcm}(5)	5
 0-absorbs-the-lcm-with-0-is-0	LCM[0, 5]	0	\text{lcm}(0,5)	0

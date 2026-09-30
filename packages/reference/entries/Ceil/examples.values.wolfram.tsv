@@ -1,23 +1,23 @@
-id	in	out	tex.in	tex.out
-ceil-7-over-2	Ceiling[Rational[7, 2]]	4	\left\lceil \frac{7}{2}\right\rceil	4
-ceil-3p2	Ceiling[3.2]	4	\lceil 3.2\rceil	4
-ceil-3p7	Ceiling[3.7]			
-integers-pass-through-unchanged	Ceiling[5]	5	\lceil 5\rceil	5
-threads-element-wise-over-a-list	Ceiling[List[1.2, -1.2, 3.7]]	{2, -1, 4}	\lceil \{1.2,-1.2,3.7\}\rceil	\{2,-1,4\}
-ceil-2p4	Ceiling[2.4]			
-ceil-2p6	Ceiling[2.6]			
-idempotent-lceil-lceil-x-rceil-rceil	Ceiling[Ceiling[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil \lceil x\rceil \rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{7}{3}\right\rceil \right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil -\frac{11}{5}\right\rceil \right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{13}{4}\right\rceil \right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-stays-symbolic	Ceiling[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil x\rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \frac{7}{3}\right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil -\frac{11}{5}\right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \frac{13}{4}\right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-exact-radicals-are-decided-numerically	Ceiling[Sqrt[50]]			
-evaluates-at-an-exact-constant-lceil-pi-rceil-4	Ceiling[Pi]			
-a-second-argument-rounds-up-to-a-multiple-of-it	Ceiling[226, 10]			
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Ceiling[-10.3, 3.5]			
-nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]			
-rounds-the-real-and-imaginary-parts-up	Ceiling[Complex[5.37, -1.3]]			
-how-many-5-seat-vans-are-needed-to-carry-17	Ceiling[Divide[17, 5]]	4	\left\lceil \frac{17}{5}\right\rceil	4
-ten-bits-are-enough-to-number-1000-items-lceil	Ceiling[Log[2, 1000]]			
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])	True	\left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1	\text{True}
-floor-and-ceil-agree-exactly-on-integers	(Ceiling[5] == Floor[5])	True	\lceil 5\rceil =\lfloor 5\rfloor	\text{True}
-a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]			
-rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	-3	\lceil -3.7\rceil	-3
-nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	Indeterminate	\lceil \text{Indeterminate}\rceil	\text{Indeterminate}
+id	in	out	tex.in	tex.out	verdict
+ceil-7-over-2	Ceiling[Rational[7, 2]]	4	\left\lceil \frac{7}{2}\right\rceil	4	
+ceil-3p2	Ceiling[3.2]	4	\lceil 3.2\rceil	4	
+ceil-3p7	Ceiling[3.7]	4	\lceil 3.7\rceil	4	
+integers-pass-through-unchanged	Ceiling[5]	5	\lceil 5\rceil	5	
+threads-element-wise-over-a-list	Ceiling[List[1.2, -1.2, 3.7]]	{2, -1, 4}	\lceil \{1.2,-1.2,3.7\}\rceil	\{2,-1,4\}	
+ceil-2p4	Ceiling[2.4]	3	\lceil 2.4\rceil	3	
+ceil-2p6	Ceiling[2.6]	3	\lceil 2.6\rceil	3	
+idempotent-lceil-lceil-x-rceil-rceil	Ceiling[Ceiling[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil \lceil x\rceil \rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{7}{3}\right\rceil \right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil -\frac{11}{5}\right\rceil \right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \left\lceil \frac{13}{4}\right\rceil \right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+stays-symbolic	Ceiling[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lceil x\rceil -\lceil x\rceil ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lceil \frac{7}{3}\right\rceil -\left\lceil \frac{7}{3}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil -\frac{11}{5}\right\rceil -\left\lceil -\frac{11}{5}\right\rceil \right]\right],\text{Chop}\left[N\left[\left\lceil \frac{13}{4}\right\rceil -\left\lceil \frac{13}{4}\right\rceil \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+exact-radicals-are-decided-numerically	Ceiling[Sqrt[50]]	8	\left\lceil \sqrt{50}\right\rceil	8	
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	Ceiling[Pi]	4	\lceil \pi \rceil	4	
+a-second-argument-rounds-up-to-a-multiple-of-it	Ceiling[226, 10]	230	\text{Ceiling}[226,10]	230	
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Ceiling[-10.3, 3.5]	-7.	\text{Ceiling}[-10.3,3.5]	-7.	
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]	15/4	\text{Ceiling}\left[2 \pi -e,\frac{5}{4}\right]	\frac{15}{4}	
+rounds-the-real-and-imaginary-parts-up	Ceiling[Complex[5.37, -1.3]]	6 - I	\lceil 5.37\, -1.3 i\rceil	6-i	
+how-many-5-seat-vans-are-needed-to-carry-17	Ceiling[Divide[17, 5]]	4	\left\lceil \frac{17}{5}\right\rceil	4	
+ten-bits-are-enough-to-number-1000-items-lceil	Ceiling[Log[2, 1000]]	10	\left\lceil \log _2(1000)\right\rceil	10	
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])	True	\left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1	\text{True}	
+floor-and-ceil-agree-exactly-on-integers	(Ceiling[5] == Floor[5])	True	\lceil 5\rceil =\lfloor 5\rfloor	\text{True}	
+a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	-3	\lceil -3.7\rceil	-3	
+nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	Indeterminate	\lceil \text{Indeterminate}\rceil	\text{Indeterminate}	disagree

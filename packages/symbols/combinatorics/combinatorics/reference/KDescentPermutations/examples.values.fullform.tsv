@@ -1,4 +1,4 @@
-id	in
-count-kdescentpermutations-4-1	Count[KDescentPermutations[4, 1]]
-first-element-of-kdescentpermutations-4-1	Part[KDescentPermutations[4, 1], 1]
-every-element-of-kdescentpermutations-4-1	Take[KDescentPermutations[4, 1], 11]
+id	in	back
+count-kdescentpermutations-4-1	Length[KDescentPermutations[4, 1]]	[Length, [KDescentPermutations, 4, 1]]
+first-element-of-kdescentpermutations-4-1	Part[KDescentPermutations[4, 1], 1]	
+every-element-of-kdescentpermutations-4-1	Take[KDescentPermutations[4, 1], 11]	

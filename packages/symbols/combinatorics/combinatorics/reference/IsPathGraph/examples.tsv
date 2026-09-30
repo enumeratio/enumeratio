@@ -1,3 +1,3 @@
-id	section	role	expr	expected
-an-actual-path-is-a-path			[IsPathGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]]]	True
-a-cycle-is-not-a-path			[IsPathGraph, [CycleGraph, 4]]	False
+id	section	role	expr	expected	wolfram.kind	wolfram.note
+an-actual-path-is-a-path			[IsPathGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]]]	True		
+a-cycle-is-not-a-path			[IsPathGraph, [CycleGraph, 4]]	False	convention	Wolfram's PathGraphQ answers True for CycleGraph[4]; ours follows the textbook definition (a path has two degree-1 endpoints, a cycle has none).

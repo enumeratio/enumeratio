@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out
 array-f-5	Array[f, 5]	{f[1], f[2], f[3], f[4], f[5]}	\text{Array}[f,5]	\{f(1),f(2),f(3),f(4),f(5)\}
-array-squares	Array[Function[Power[Slot[1], 2]], 5]			
+array-squares	Array[Function[Power[Slot[1], 2]], 5]	{1, 4, 9, 16, 25}	\text{Array}\left[\text{$\#$1}^2\&,5\right]	\{1,4,9,16,25\}
 array-f-2-2	Array[f, List[2, 2]]	{{f[1, 1], f[1, 2]}, {f[2, 1], f[2, 2]}}	\text{Array}[f,\{2,2\}]	\left( \begin{array}{cc}  f(1,1) & f(1,2) \\  f(2,1) & f(2,2) \\ \end{array} \right)
 array-f-3-0	Array[f, 3, 0]	{f[0], f[1], f[2]}	\text{Array}[f,3,0]	\{f(0),f(1),f(2)\}
-array-f-3-1-g	Array[f, 3, 1, g]	g[f[1], f[2], f[3]]	\text{Array}[f,3,1,g]	g(f(1),f(2),f(3))
+array-f-3-1-g	Array[f, 3, 1, g]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Array}[f,3,1,g]-g(f(1),f(2),f(3))],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Array}\left[\frac{7}{3},3,1,-\frac{11}{5}\right]-g(f(1),f(2),f(3))\right]\right],\text{Chop}\left[N\left[\text{Array}\left[\frac{13}{4},3,1,-\frac{17}{6}\right]-g(f(1),f(2),f(3))\right]\right],\text{Chop}\left[N\left[\text{Array}\left[\frac{19}{8},3,1,-\frac{23}{9}\right]-g(f(1),f(2),f(3))\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
 array-i-plus-j-named-params-2-2				

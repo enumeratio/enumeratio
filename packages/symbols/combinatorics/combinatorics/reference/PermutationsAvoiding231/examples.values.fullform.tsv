@@ -1,4 +1,4 @@
-id	in
-count-permutationsavoiding231-4	Count[PermutationsAvoiding231[4]]
-first-element-of-permutationsavoiding231-4	Part[PermutationsAvoiding231[4], 1]
-every-element-of-permutationsavoiding231-4	Take[PermutationsAvoiding231[4], 14]
+id	in	back
+count-permutationsavoiding231-4	Length[PermutationsAvoiding231[4]]	[Length, [PermutationsAvoiding231, 4]]
+first-element-of-permutationsavoiding231-4	Part[PermutationsAvoiding231[4], 1]	
+every-element-of-permutationsavoiding231-4	Take[PermutationsAvoiding231[4], 14]	

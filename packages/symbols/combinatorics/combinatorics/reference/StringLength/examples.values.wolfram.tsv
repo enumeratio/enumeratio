@@ -1,2 +1,2 @@
-id	in
-counts-code-points-not-utf-16-units	StringLength["a😀b"]
+id	in	out	tex.in	tex.out	verdict
+counts-code-points-not-utf-16-units	StringLength["a😀b"]	6	\text{StringLength}[\text{a$\eth \unicode{009f}\unicode{0098}\unicode{0080}$b}]	6	disagree

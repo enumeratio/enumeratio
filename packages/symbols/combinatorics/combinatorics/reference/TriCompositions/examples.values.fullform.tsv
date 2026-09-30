@@ -1,4 +1,4 @@
-id	in
-count-tricompositions-6	Count[TriCompositions[6]]
-first-element-of-tricompositions-6	Part[TriCompositions[6], 1]
-every-element-of-tricompositions-6	Take[TriCompositions[6], 24]
+id	in	back
+count-tricompositions-6	Length[TriCompositions[6]]	[Length, [TriCompositions, 6]]
+first-element-of-tricompositions-6	Part[TriCompositions[6], 1]	
+every-element-of-tricompositions-6	Take[TriCompositions[6], 24]	

@@ -1,4 +1,4 @@
-id	in
-a-permutation-of-4-seeded	
-a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomReal[IntegerPartitions[10], 3]]]]
-randominteger-is-random-over-a-range	(Last[List[SeedRandom[5], RandomInteger[List[10, 20]]]] == Last[List[SeedRandom[5], RandomReal[Range[10, 20]]]])
+id	in	out	tex.in	tex.out
+a-permutation-of-4-seeded				
+a-count-draws-that-many	Length[Last[List[SeedRandom[1], RandomChoice[IntegerPartitions[10], 3]]]]	3	\text{Length}[\text{Last}[\{\text{SeedRandom}[1],\text{RandomChoice}[\text{IntegerPartitions}[10],3]\}]]	3
+randominteger-is-random-over-a-range	(Last[List[SeedRandom[5], RandomInteger[List[10, 20]]]] == Last[List[SeedRandom[5], RandomChoice[Range[10, 20]]]])	True	\text{Last}[\{\text{SeedRandom}[5],\text{RandomInteger}[\{10,20\}]\}]=\text{Last}[\{\text{SeedRandom}[5],\text{RandomChoice}[\text{Range}[10,20]]\}]	\text{True}
