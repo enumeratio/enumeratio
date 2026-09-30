@@ -11,7 +11,7 @@ import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
-import { notebookSession, pageKernel, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
+import { pageKernel, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
 import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -31,6 +31,15 @@ import {
   type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/frontend";
+
+/** A stable id per module, naming its session in the page's kernel. */
+const moduleIds = new WeakMap<Element, number>();
+let nextModuleId = 1;
+const sessionIdOf = (host: Element): number => {
+  let id = moduleIds.get(host);
+  if (id === undefined) moduleIds.set(host, (id = nextModuleId++));
+  return id;
+};
 
 /** A cell's answer, as `#evaluate` gives it to `#compute`. */
 interface Evaluated {
@@ -613,7 +622,7 @@ export class NotatioOut extends LitElement {
           ? host.evaluateRemote.bind(host)
           : reactive
             ? undefined
-            : pageKernel(notebookSession(host));
+            : pageKernel(`notebook:${sessionIdOf(host)}`);
     if (ask === undefined) return undefined;
     log("kernel-evaluate", this.value);
     this.#abort = new AbortController();

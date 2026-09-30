@@ -211,6 +211,12 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       "Integrate",
       a.map((it) => (Array.isArray(it) && it[0] === "Limits" ? ["List", ...it.slice(1)] : it)),
     ),
+  // `Solve(eqs, x, y)` lists its unknowns as arguments; Wolfram takes them as one list, and
+  // reads `Solve[eqs, x, y]` as a solve for `x` over the domain `y`.
+  Solve: (a) =>
+    a.length > 2 && a.slice(1).every((unknown) => typeof unknown === "string")
+      ? `Solve[${toWolfram(a[0])}, ${toWolfram(["List", ...a.slice(1)])}]`
+      : call("Solve", a),
   // Wolfram's interval is closed and takes its bounds as a list: `Interval[{a, b}]`.
   Interval: (a) =>
     a.length === 2 && !a.some((b) => Array.isArray(b) && b[0] === "Open")

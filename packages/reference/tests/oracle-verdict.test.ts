@@ -28,3 +28,26 @@ test("Wolfram's value agreeing is not enough for N(x, d): its displayed digits m
   expect(verdictOf("wolfram", 0.12, tie, 0.05, true)).toBe("disagree");
   expect(verdictOf("wolfram", 0.12, { ...tie, shown: "0.12" }, 0.05, true)).toBe("agree");
 });
+
+test("a lone integer answer to N(x, d) is judged by the digits Wolfram displays", () => {
+  const e = { value: "2.7182818284590452354`1.", numeric: "2.7182818284590452354`1.", shown: "3." };
+  expect(verdictOf("wolfram", 3, e, undefined, true)).toBe("agree");
+  expect(verdictOf("wolfram", 2, e, undefined, true)).toBe("disagree");
+});
+
+test("Solve: Wolfram's rules and ours are the same solutions, in any order", () => {
+  const rules = "List[List[Rule[x, -1]], List[Rule[x, 1]]]";
+  const answer = { value: rules, numeric: rules };
+  expect(verdictOf("wolfram", ["List", 1, -1], answer, undefined, false, "Solve")).toBe("agree");
+  expect(verdictOf("wolfram", ["List", 1, 2], answer, undefined, false, "Solve")).toBe("disagree");
+  const system = { value: "List[List[Rule[x, 2], Rule[y, 1]]]", numeric: "List[List[Rule[x, 2], Rule[y, 1]]]" };
+  expect(verdictOf("wolfram", ["List", ["Tuple", 2, 1]], system, undefined, false, "Solve")).toBe("agree");
+  // Without the head, a list of values is not a list of rule lists.
+  expect(verdictOf("wolfram", ["List", 1, -1], answer)).toBe("disagree");
+});
+
+test("an interval is its endpoints, and NaN is Wolfram's Indeterminate", () => {
+  const interval = { value: "Interval[List[Power[E, -1], 2]]", numeric: "Interval[List[0.36787944117144233, 2.]]" };
+  expect(verdictOf("wolfram", ["Interval", ["Divide", 1, "ExponentialE"], 2], interval)).toBe("agree");
+  expect(verdictOf("wolfram", "NaN", { value: "Indeterminate" })).toBe("agree");
+});

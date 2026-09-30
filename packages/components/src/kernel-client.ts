@@ -105,19 +105,3 @@ export async function translate(request: RemoteRequest): Promise<{ json: unknown
   if (answer.error !== undefined) throw Object.assign(new Error(answer.error), { range: answer.range });
   return { json: answer.value, ...(answer.written !== undefined ? { written: answer.written } : {}) };
 }
-
-const notebookIds = new WeakMap<Element, number>();
-let nextNotebook = 1;
-
-/** The session a notebook's cells share in the page's kernel. */
-export function notebookSession(host: Element): string {
-  let id = notebookIds.get(host);
-  if (id === undefined) notebookIds.set(host, (id = nextNotebook++));
-  return `notebook:${id}`;
-}
-
-/** Tell the page's kernel to forget `sessionId` (a notebook that left the page). */
-export function closePageSession(sessionId: string): void {
-  if (page === undefined || page === null) return;
-  void page.evaluate(undefined, { session: sessionId, close: true }).catch(() => undefined);
-}

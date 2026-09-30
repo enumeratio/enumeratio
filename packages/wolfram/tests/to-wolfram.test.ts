@@ -368,6 +368,13 @@ test("CycleDecomposition/Permutation round-trip via Wolfram's own PermutationCyc
   );
 });
 
+test("Solve(eqs, x, y) lists its unknowns; a list or a single unknown is left as written", () => {
+  const eqs = ["List", ["Equal", ["Add", "x", "y"], 3], ["Equal", ["Subtract", "x", "y"], 1]];
+  expect(toWolfram(["Solve", eqs, "x", "y"])).toBe(`Solve[${toWolfram(eqs)}, List[x, y]]`);
+  expect(toWolfram(["Solve", eqs, ["List", "x", "y"]])).toBe(`Solve[${toWolfram(eqs)}, List[x, y]]`);
+  expect(toWolfram(["Solve", ["Equal", "x", 1], "x"])).toBe("Solve[Equal[x, 1], x]");
+});
+
 test("ClosenessCentrality(g, v) selects one vertex via Part, Wolfram having no 2-argument form", () => {
   expect(toWolfram(["ClosenessCentrality", ["StarGraph", 5], 1])).toBe("Part[ClosenessCentrality[StarGraph[5]], 1]");
 });
