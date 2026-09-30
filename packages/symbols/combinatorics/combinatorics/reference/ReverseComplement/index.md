@@ -20,6 +20,8 @@ signatures:
     description: Reverse, then complement.
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
+laws:
+  - involution
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

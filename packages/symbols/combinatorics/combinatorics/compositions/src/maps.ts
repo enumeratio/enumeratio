@@ -51,7 +51,5 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     guard: ["Greater", ["Length", "_raw"], 0],
     summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
     note: "An order isomorphism: the k-th composition of n, as IntegerCompositions lists them, goes to the k-th binary word of length n - 1.",
-    laws: [{ inverse: "Composition" }],
-    orderIsomorphism: { from: "IntegerCompositions", to: "BinaryWords", sizeOffset: -1 },
   },
 ];

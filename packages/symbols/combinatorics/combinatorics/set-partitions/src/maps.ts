@@ -40,8 +40,6 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     body: growthStringOf("_raw"),
     summary: "A set partition's restricted growth string: each position labelled with its block's index, from 0.",
     note: "An order isomorphism: the k-th set partition of n, in the order SetPartitions lists them, goes to the k-th restricted growth string of length n. So everything defined on one carrier is available on the other through it.",
-    laws: [{ inverse: "SetPartition" }],
-    orderIsomorphism: { from: "SetPartitions", to: "RestrictedGrowthStrings" },
   },
   {
     name: "SetPartition",
@@ -51,8 +49,6 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     body: blocksOf("_raw", 0),
     summary: "The set partition a restricted growth string labels: block j holds the positions labelled j.",
     note: "The inverse of RestrictedGrowthString(partition), and order-preserving in the same way.",
-    laws: [{ inverse: "RestrictedGrowthString" }],
-    orderIsomorphism: { from: "RestrictedGrowthStrings", to: "SetPartitions" },
   },
   {
     name: "Surjection",
@@ -61,7 +57,6 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     to: "surjection",
     body: growthStringOf("_raw", 1),
     summary: "A set composition as a surjection: each position labelled with its block's index, from 1.",
-    laws: [{ inverse: "SetComposition" }],
   },
   {
     name: "SetComposition",
@@ -70,7 +65,6 @@ export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
     to: "set_composition",
     body: blocksOf("_raw", 1),
     summary: "The set composition a surjection labels: block j holds the positions labelled j.",
-    laws: [{ inverse: "Surjection" }],
   },
   {
     name: "ArcRepresentation",

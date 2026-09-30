@@ -15,6 +15,5 @@ export const LATTICE_PATHS_MAPS: readonly CombinatorialMap[] = [
     body: treeOfDyckPathBody,
     guard: treeOfDyckPathGuard,
     summary: "A Dyck path U A D B, cut at its first return, as the binary tree [φ⁻¹(A), φ⁻¹(B)].",
-    laws: [{ inverse: "DyckPath" }],
   },
 ];

@@ -14,6 +14,11 @@ signatures:
 seeAlso:
   - RestrictedGrowthStrings
   - SetPartition
+laws:
+  - inverse: SetPartition
+  - orderIsomorphism:
+      from: SetPartitions
+      to: RestrictedGrowthStrings
 ---
 
 - The same structure as a set partition, written as the block index of each position: $01022$ is

@@ -176,6 +176,39 @@ const CATALOG_GRADE: JsonSchema = {
   additionalProperties: false,
 };
 
+const ENTRY_LAW: JsonSchema = {
+  description:
+    "A combinatorial map's law, in the shorthand vocabulary -- see EntryLaw. `on` " +
+    "disambiguates a law for one overload of a shared name (BinaryTree is two maps).",
+  anyOf: [
+    { enum: ["involution", "idempotent"] },
+    {
+      type: "object",
+      properties: { inverse: { type: "string" }, on: { type: "string" } },
+      required: ["inverse"],
+      additionalProperties: false,
+    },
+    {
+      type: "object",
+      properties: {
+        orderIsomorphism: {
+          type: "object",
+          properties: {
+            from: { type: "string" },
+            to: { type: "string" },
+            sizeOffset: { type: "integer" },
+          },
+          required: ["from", "to"],
+          additionalProperties: false,
+        },
+        on: { type: "string" },
+      },
+      required: ["orderIsomorphism"],
+      additionalProperties: false,
+    },
+  ],
+};
+
 const REFERENCE_NAMES: JsonSchema = {
   type: "object",
   properties: {
@@ -235,6 +268,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     formerly: { type: "array", items: { type: "string" } },
     stub: { enum: ["engine", "carrier"] },
     attributes: { type: "array", items: { enum: ["HoldAll"] } },
+    laws: { type: "array", items: { $ref: "#/$defs/EntryLaw" } },
   },
   required: ["name", "domain", "signature", "summary"],
   additionalProperties: false,
@@ -245,6 +279,7 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     Reference: REFERENCE,
     CatalogGrade: CATALOG_GRADE,
     ReferenceNames: REFERENCE_NAMES,
+    EntryLaw: ENTRY_LAW,
   },
 };
 

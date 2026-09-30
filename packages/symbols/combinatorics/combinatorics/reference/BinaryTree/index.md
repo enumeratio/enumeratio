@@ -16,6 +16,15 @@ seeAlso:
   - BinaryTrees
   - BinaryTreeParentArray
   - DyckPath
+laws:
+  - inverse: BinaryTreeParentArray
+    on: binary_tree_parent_array
+  - orderIsomorphism:
+      from: BinaryTreeParentArrays
+      to: BinaryTrees
+    on: binary_tree_parent_array
+  - inverse: DyckPath
+    on: dyck_path
 ---
 
 - `BinaryTree([[0, 0], 0])` is a root whose left child is a single node. The empty tree is `BinaryTree(0)`.
