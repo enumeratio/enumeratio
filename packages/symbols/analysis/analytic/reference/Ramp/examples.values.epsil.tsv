@@ -3,4 +3,4 @@ ramp-negative	Ramp(-2)	0
 ramp-positive	Ramp(3)	3
 ramp-zero	Ramp(0)	0
 ramp-equals-x-times-unitstep	Ramp(5) == 5 * UnitStep(5)	True
-ramp-derivative	D(Ramp(x), x)	Piecewise([[0, x < 0], [1, 0 < x]], `NaN`)
+ramp-derivative	D(Ramp(x), x)	Piecewise([[0, x < 0], [1, 0 < x]], Indeterminate)

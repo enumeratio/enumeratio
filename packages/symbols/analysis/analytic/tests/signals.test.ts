@@ -110,12 +110,12 @@ test("D(Ramp(x)) is 0 below 0, 1 above 0, undefined at 0", () => {
   const d = ce.box(["D", ["Ramp", "x"], "x"] as never).evaluate() as BoxedExpression;
   expect(d.subs({ x: 3 }).evaluate().isSame(1)).toBe(true);
   expect(d.subs({ x: -3 }).evaluate().isSame(0)).toBe(true);
-  expect(d.subs({ x: 0 }).evaluate().isNaN).toBe(true);
+  expect(d.subs({ x: 0 }).evaluate().isIndeterminate).toBe(true);
 });
 
 test("D(UnitBox(x)) is 0 away from the boundary, undefined exactly at x = ±1/2", () => {
   const d = ce.box(["D", ["UnitBox", "x"], "x"] as never).evaluate() as BoxedExpression;
   expect(d.subs({ x: 3 }).evaluate().isSame(0)).toBe(true);
-  expect(d.subs({ x: ce.box(["Rational", 1, 2]) }).evaluate().isNaN).toBe(true);
-  expect(d.subs({ x: ce.box(["Rational", -1, 2]) }).evaluate().isNaN).toBe(true);
+  expect(d.subs({ x: ce.box(["Rational", 1, 2]) }).evaluate().isIndeterminate).toBe(true);
+  expect(d.subs({ x: ce.box(["Rational", -1, 2]) }).evaluate().isIndeterminate).toBe(true);
 });

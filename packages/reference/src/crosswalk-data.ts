@@ -3475,6 +3475,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "EllipticPi",
   },
   {
+    name: "Indeterminate",
+    wolfram: "Indeterminate",
+  },
+  {
     name: "Inequality",
     wolfram: "Inequality",
   },

@@ -20,6 +20,11 @@ test("numbers use Wolfram's *^ exponent, never e (which is a symbol there)", () 
   expect(toWolfram(Number.NEGATIVE_INFINITY)).toBe("-Infinity");
 });
 
+test("our NaN and Indeterminate both print as Wolfram's one Indeterminate", () => {
+  expect(toWolfram("NaN")).toBe("Indeterminate");
+  expect(toWolfram("Indeterminate")).toBe("Indeterminate");
+});
+
 test("string literals: the 'quoted' shorthand and the {str} form both become strings", () => {
   expect(toWolfram("'LRLR'")).toBe('"LRLR"');
   expect(toWolfram({ str: "LRLR" })).toBe('"LRLR"');

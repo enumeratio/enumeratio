@@ -5,4 +5,4 @@ unitbox-boundary-neg-1-2	<UnitBox><Rational>-1 2</Rational></UnitBox>	<ToExpress
 unitbox-outside-the-box	<UnitBox>1</UnitBox>	<ToExpression>0</ToExpression>
 unitbox-product-of-two-boxes	<UnitBox>0 0</UnitBox>	<ToExpression>1</ToExpression>
 unitbox-product-second-at-its-boundary	<UnitBox>0 <Rational>1 2</Rational></UnitBox>	<ToExpression>1</ToExpression>
-unitbox-derivative-away-from-the-jump	<D><UnitBox>x</UnitBox> x</D>	<Piecewise><List><List>NaN <Or><Equal>x <Rational>1 2</Rational></Equal> <Equal>x <Rational>-1 2</Rational></Equal></Or></List></List> 0</Piecewise>
+unitbox-derivative-away-from-the-jump	<D><UnitBox>x</UnitBox> x</D>	<Piecewise><List><List>Indeterminate <Or><Equal>x <Rational>1 2</Rational></Equal> <Equal>x <Rational>-1 2</Rational></Equal></Or></List></List> 0</Piecewise>

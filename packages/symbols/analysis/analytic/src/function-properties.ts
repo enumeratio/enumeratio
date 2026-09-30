@@ -879,8 +879,12 @@ function continuousOf(
 
 // ---- declaration ----------------------------------------------------------------------
 
+// "indeterminate" is a genuine, proven answer (e.g. a parabola's sign truly does change), not
+// a declined one -- but Wolfram itself declines to reduce these past the bare call (its own
+// FunctionMonotonicity etc. answer Indeterminate, not a value), so we match that by staying
+// unevaluated too rather than picking a marker of our own.
 const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): BoxedExpression | undefined =>
-  t === undefined ? undefined : t === "indeterminate" ? ce.symbol("NaN") : ce.number(t);
+  t === undefined || t === "indeterminate" ? undefined : ce.number(t);
 
 /** A `(any, symbol) -> any` head over `recognize` + `f`, declining (returning
  * `undefined`, which leaves the call unevaluated) whenever `recognize` or `f` do. */

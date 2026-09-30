@@ -5,4 +5,4 @@ unitbox-boundary-neg-1-2			[UnitBox, [Rational, -1, 2]]	1	The boundary is closed
 unitbox-outside-the-box	Scope		[UnitBox, 1]	0	Outside the box
 unitbox-product-of-two-boxes	Scope		[UnitBox, 0, 0]	1	Two arguments -- the product of their unit boxes
 unitbox-product-second-at-its-boundary	Scope	test	[UnitBox, 0, [Rational, 1, 2]]	1	
-unitbox-derivative-away-from-the-jump	Properties		[D, [UnitBox, x], x]	[Piecewise, [List, [List, NaN, [Or, [Equal, x, [Rational, 1, 2]], [Equal, x, [Rational, -1, 2]]]]], 0]	0 away from the jump, undefined exactly at the boundary
+unitbox-derivative-away-from-the-jump	Properties		[D, [UnitBox, x], x]	[Piecewise, [List, [List, Indeterminate, [Or, [Equal, x, [Rational, 1, 2]], [Equal, x, [Rational, -1, 2]]]]], 0]	0 away from the jump, undefined exactly at the boundary

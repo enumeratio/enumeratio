@@ -1,5 +1,5 @@
 id	in	out
 a-parabola-is-convex	FunctionConvexity(x ^ 2, x)	1
-a-cubic-has-an-inflection-point	FunctionConvexity(x ^ 3, x)	`NaN`
+a-cubic-has-an-inflection-point	FunctionConvexity(x ^ 3, x)	FunctionConvexity(x ^ 3, x)
 exp-is-always-convex	FunctionConvexity(exp(x), x)	1
-a-restricted-domain-answers-indeterminate	FunctionConvexity(1 / x, x)	`NaN`
+a-restricted-domain-answers-indeterminate	FunctionConvexity(1 / x, x)	FunctionConvexity(1 / x, x)
