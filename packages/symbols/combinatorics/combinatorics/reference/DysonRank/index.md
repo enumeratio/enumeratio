@@ -1,0 +1,24 @@
+---
+name: DysonRank
+domain: Partition statistics
+signature: DysonRank(partition)
+summary: Largest part minus number of parts.
+references:
+  - system: wikipedia
+    identity: Rank of a partition
+catalog:
+  - system: findstat
+    identity: St000145
+    url: https://www.findstat.org/St000145
+    on: IntegerPartition
+statOn:
+  - IntegerPartition
+signatures:
+  - call: DysonRank(partition)
+    description: Largest part minus number of parts.
+    library: enumeratio-combinatorics
+    type: (integer_partition) -> number
+---
+
+- Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

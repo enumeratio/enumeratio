@@ -5,12 +5,16 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
+import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PARTITIONS_CARRIERS } from "./carrier-data.ts";
 import { coreEntries, partitionsEntries, tableauxPlaneEntries } from "./families/index.ts";
 import { declareCarrierOrders } from "./orders.ts";
+import { PARTITION_STATISTICS } from "./statistics.ts";
 
 export function declarePartitions(ce: ComputeEngine): void {
   declareCarriers(ce, PARTITIONS_CARRIERS, { plurals: false });
   declareCarrierOrders(ce);
   declareFamilies(ce, [...coreEntries, ...partitionsEntries, ...tableauxPlaneEntries].map(numberKernel));
+  // Its statistics, after its own carriers and families (step 6b).
+  declareStatistics(ce, PARTITION_STATISTICS);
 }
