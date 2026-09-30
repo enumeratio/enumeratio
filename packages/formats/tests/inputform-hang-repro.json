@@ -1,0 +1,60 @@
+[
+  "Equal",
+  [
+    "Divide",
+    [
+      "Add",
+      ["Power", ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]], ["Add", "n", 1]],
+      [
+        "Negate",
+        [
+          "Multiply",
+          ["Cos", ["Multiply", { "num": "3.1415926535897932384626433832795028841971694" }, ["Add", "n", 1]]],
+          [
+            "Power",
+            ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]],
+            ["Add", ["Negate", "n"], -1]
+          ]
+        ]
+      ]
+    ],
+    ["Sqrt", ["Add", ["Power", "x", 2], 4]]
+  ],
+  [
+    "Divide",
+    [
+      "Add",
+      [
+        "Negate",
+        [
+          "Multiply",
+          "x",
+          ["Cos", ["Multiply", { "num": "3.1415926535897932384626433832795028841971694" }, "n"]],
+          ["Power", ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]], ["Negate", "n"]]
+        ]
+      ],
+      ["Multiply", "x", ["Power", ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]], "n"]],
+      ["Power", ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]], ["Add", "n", -1]],
+      [
+        "Negate",
+        [
+          "Multiply",
+          [
+            "Cos",
+            [
+              "Add",
+              ["Multiply", { "num": "3.1415926535897932384626433832795028841971694" }, "n"],
+              { "num": "-3.1415926535897932384626433832795028841971694" }
+            ]
+          ],
+          [
+            "Power",
+            ["Multiply", 0.5, ["Add", "x", ["Sqrt", ["Add", ["Power", "x", 2], 4]]]],
+            ["Add", ["Negate", "n"], 1]
+          ]
+        ]
+      ]
+    ],
+    ["Sqrt", ["Add", ["Power", "x", 2], 4]]
+  ]
+]
