@@ -15,6 +15,7 @@ import {
 } from "../../../permutations/src/families/index.ts";
 import {
   coreEntries as partitionsCoreEntries,
+  coreEpsilFamilies as partitionsCoreEpsilFamilies,
   partitionsEntries,
   tableauxPlaneEntries as partitionsTableauxPlaneEntries,
 } from "../../../partitions/src/families/index.ts";
@@ -122,6 +123,7 @@ const numberEntries = [
 export const allFamilies: readonly AnyFamily[] = [
   ...permutationsCoreFamilies,
   ...compositionsCoreFamilies,
+  ...partitionsCoreEpsilFamilies,
   ...numberEntries,
 ];
 

@@ -1115,6 +1115,329 @@ export const COMPILED_FAMILIES = {
             : false
           : undefined)(_._x.length),
   },
+  PartitionsInBox: {
+    hash: "296629b8",
+    count: (_SYS, _) =>
+      ((_CND) => (_CND === true ? _SYS.binomial(_._a + _._b, _._a) : _CND === false ? 0 : NaN))(
+        ((_tv1) =>
+          _tv1 === false
+            ? false
+            : ((_tv3) => (_tv1 === true ? _tv3 : _tv3 === false ? false : undefined))(
+                ((_tv2) => (_._a === _._a && _._a !== undefined && _tv2 === _tv2 ? _._a <= _tv2 : undefined))(
+                  _._a + _._b,
+                ),
+              ))(_._a === _._a && _._a !== undefined ? 0 <= _._a : undefined),
+      ),
+    unrank: (_SYS, _) =>
+      ((_f) =>
+        ((_f) => Array.from({ length: _SYS.rangeCount(1, _._a, 1) }, (_e, i) => 1 + i * 1).map((_x) => _f(_x)))(
+          (() => {
+            let _tv45 = false;
+            let _tv1;
+            let _tv46;
+            _js7: {
+              const _js8 = (_v1) =>
+                _._b +
+                _v1 +
+                -Array.from({ length: _SYS.rangeCount(_v1 + -1, _tv1, 1) }, (_e, i) => _v1 + -1 + i * 1).reduce(
+                  (
+                    (_f) => (_a, _b) =>
+                      _f(_a, _b)
+                  )(
+                    (() => {
+                      let _tv39 = false;
+                      let _tv2, _tv3;
+                      let _tv40;
+                      _js5: {
+                        const _js6 = (_v2, _v3) =>
+                          ((_tv6, _tv35) => (_tv6 === _tv6 && _tv35 === _tv35 ? (_tv6 <= _tv35 ? _v3 : _v2) : NaN))(
+                            ((_CND) => (_CND === true ? _SYS.binomial(_v3, _v1) : _CND === false ? 0 : NaN))(
+                              ((_tv4) =>
+                                _tv4 === false
+                                  ? false
+                                  : ((_tv5) => (_tv4 === true ? _tv5 : _tv5 === false ? false : undefined))(
+                                      _v1 === _v1 && _v3 === _v3 ? _v1 <= _v3 : undefined,
+                                    ))(_v1 === _v1 ? _tv2 : undefined),
+                            ),
+                            _tv3.reduce(
+                              (
+                                (_f) => (_a, _b) =>
+                                  _f(_a, _b)
+                              )(
+                                (
+                                  (_tv32) => (_tv33, _tv34) =>
+                                    Array.isArray(_tv33) || Array.isArray(_tv34)
+                                      ? _SYS.bcastFn(_tv32, _tv33, _tv34)
+                                      : _tv32(_tv33, _tv34)
+                                )(
+                                  (_v4, _v5) =>
+                                    _v4 +
+                                    -((_CND) =>
+                                      _CND === true
+                                        ? _SYS.binomial(
+                                            Array.from(
+                                              { length: _SYS.rangeCount(_v5 + -1, _._a + _._b + -1, 1) },
+                                              (_e, i) => _v5 + -1 + i * 1,
+                                            ).reduce(
+                                              (
+                                                (_f) => (_a, _b) =>
+                                                  _f(_a, _b)
+                                              )(
+                                                (() => {
+                                                  let _tv28 = false;
+                                                  let _tv21;
+                                                  let _tv29;
+                                                  _js3: {
+                                                    const _js4 = (_v8, _v9) =>
+                                                      ((_tv24) =>
+                                                        _tv24 === _tv24 && _v4 === _v4
+                                                          ? _tv24 <= _v4
+                                                            ? _v9
+                                                            : _v8
+                                                          : NaN)(
+                                                        ((_CND) =>
+                                                          _CND === true
+                                                            ? _SYS.binomial(_v9, _v5)
+                                                            : _CND === false
+                                                              ? 0
+                                                              : NaN)(
+                                                          ((_tv22) =>
+                                                            _tv22 === false
+                                                              ? false
+                                                              : ((_tv23) =>
+                                                                  _tv22 === true
+                                                                    ? _tv23
+                                                                    : _tv23 === false
+                                                                      ? false
+                                                                      : undefined)(
+                                                                  _v5 === _v5 && _v9 === _v9 ? _v5 <= _v9 : undefined,
+                                                                ))(_v5 === _v5 ? _tv21 : undefined),
+                                                        ),
+                                                      );
+                                                    {
+                                                      const _tv25 = _js4;
+                                                      {
+                                                        _tv29 = (_tv26, _tv27) =>
+                                                          Array.isArray(_tv26) || Array.isArray(_tv27)
+                                                            ? _SYS.bcastFn(_tv25, _tv26, _tv27)
+                                                            : _tv25(_tv26, _tv27);
+                                                        break _js3;
+                                                      }
+                                                    }
+                                                  }
+                                                  return (_tv30, _tv31) => {
+                                                    if (!_tv28) {
+                                                      _tv28 = true;
+                                                      _tv21 = 0 <= _v5;
+                                                    }
+                                                    return _tv29(_tv30, _tv31);
+                                                  };
+                                                })(),
+                                              ),
+                                              _v5 + -1,
+                                            ),
+                                            _v5,
+                                          )
+                                        : _CND === false
+                                          ? 0
+                                          : NaN)(
+                                      ((_tv7) =>
+                                        _tv7 === false
+                                          ? false
+                                          : ((_tv20) => (_tv7 === true ? _tv20 : _tv20 === false ? false : undefined))(
+                                              ((_tv19) => (_v5 === _v5 && _tv19 === _tv19 ? _v5 <= _tv19 : undefined))(
+                                                Array.from(
+                                                  { length: _SYS.rangeCount(_v5 + -1, _._a + _._b + -1, 1) },
+                                                  (_e, i) => _v5 + -1 + i * 1,
+                                                ).reduce(
+                                                  (
+                                                    (_f) => (_a, _b) =>
+                                                      _f(_a, _b)
+                                                  )(
+                                                    (() => {
+                                                      let _tv15 = false;
+                                                      let _tv8;
+                                                      let _tv16;
+                                                      _js1: {
+                                                        const _js2 = (_v6, _v7) =>
+                                                          ((_tv11) =>
+                                                            _tv11 === _tv11 && _v4 === _v4
+                                                              ? _tv11 <= _v4
+                                                                ? _v7
+                                                                : _v6
+                                                              : NaN)(
+                                                            ((_CND) =>
+                                                              _CND === true
+                                                                ? _SYS.binomial(_v7, _v5)
+                                                                : _CND === false
+                                                                  ? 0
+                                                                  : NaN)(
+                                                              ((_tv9) =>
+                                                                _tv9 === false
+                                                                  ? false
+                                                                  : ((_tv10) =>
+                                                                      _tv9 === true
+                                                                        ? _tv10
+                                                                        : _tv10 === false
+                                                                          ? false
+                                                                          : undefined)(
+                                                                      _v5 === _v5 && _v7 === _v7
+                                                                        ? _v5 <= _v7
+                                                                        : undefined,
+                                                                    ))(_v5 === _v5 ? _tv8 : undefined),
+                                                            ),
+                                                          );
+                                                        {
+                                                          const _tv12 = _js2;
+                                                          {
+                                                            _tv16 = (_tv13, _tv14) =>
+                                                              Array.isArray(_tv13) || Array.isArray(_tv14)
+                                                                ? _SYS.bcastFn(_tv12, _tv13, _tv14)
+                                                                : _tv12(_tv13, _tv14);
+                                                            break _js1;
+                                                          }
+                                                        }
+                                                      }
+                                                      return (_tv17, _tv18) => {
+                                                        if (!_tv15) {
+                                                          _tv15 = true;
+                                                          _tv8 = 0 <= _v5;
+                                                        }
+                                                        return _tv16(_tv17, _tv18);
+                                                      };
+                                                    })(),
+                                                  ),
+                                                  _v5 + -1,
+                                                ),
+                                              ),
+                                            ))(_v5 === _v5 ? 0 <= _v5 : undefined),
+                                    ),
+                                ),
+                              ),
+                              _._r,
+                            ),
+                          );
+                        {
+                          const _tv36 = _js6;
+                          {
+                            _tv40 = (_tv37, _tv38) =>
+                              Array.isArray(_tv37) || Array.isArray(_tv38)
+                                ? _SYS.bcastFn(_tv36, _tv37, _tv38)
+                                : _tv36(_tv37, _tv38);
+                            break _js5;
+                          }
+                        }
+                      }
+                      return (_tv41, _tv42) => {
+                        if (!_tv39) {
+                          _tv39 = true;
+                          _tv2 = 0 <= _v1;
+                          _tv3 = Array.from({ length: _SYS.rangeCount(_._a, _v1 + 1, -1) }, (_e, i) => _._a + i * -1);
+                        }
+                        return _tv40(_tv41, _tv42);
+                      };
+                    })(),
+                  ),
+                  _v1 + -1,
+                ) +
+                -1;
+              {
+                const _tv43 = _js8;
+                {
+                  _tv46 = (_tv44) => (Array.isArray(_tv44) ? _SYS.bcastFn(_tv43, _tv44) : _tv43(_tv44));
+                  break _js7;
+                }
+              }
+            }
+            return (_tv47) => {
+              if (!_tv45) {
+                _tv45 = true;
+                _tv1 = _._a + _._b + -1;
+              }
+              return _tv46(_tv47);
+            };
+          })(),
+        ).filter((_x) => _f(_x)))(
+        (
+          (_tv48) => (_tv49) =>
+            Array.isArray(_tv49) ? _SYS.bcastFn(_tv48, _tv49) : _tv48(_tv49)
+        )((_v10) => 0 < _v10),
+      ),
+    rank: (_SYS, _) =>
+      Array.from({ length: _SYS.rangeCount(1, _._a, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv6) => (_tv7, _tv8) =>
+              Array.isArray(_tv7) || Array.isArray(_tv8) ? _SYS.bcastFn(_tv6, _tv7, _tv8) : _tv6(_tv7, _tv8)
+          )(
+            (_v1, _v2) =>
+              _v1 +
+              ((_CND) =>
+                _CND === true
+                  ? _SYS.binomial(
+                      _._b +
+                        _v2 +
+                        -((_tv5) =>
+                          _v2 === _v2 && _tv5 === _tv5
+                            ? _v2 <= _tv5
+                              ? _SYS.atNumeric(_._x, _v2, "integer")
+                              : 0
+                            : NaN)(_._x.length) +
+                        -1,
+                      _v2,
+                    )
+                  : _CND === false
+                    ? 0
+                    : NaN)(
+                ((_tv1) =>
+                  _tv1 === false
+                    ? false
+                    : ((_tv4) => (_tv1 === true ? _tv4 : _tv4 === false ? false : undefined))(
+                        ((_tv3) => (_v2 === _v2 && _tv3 === _tv3 ? _v2 <= _tv3 : undefined))(
+                          _._b +
+                            _v2 +
+                            -((_tv2) =>
+                              _v2 === _v2 && _tv2 === _tv2
+                                ? _v2 <= _tv2
+                                  ? _SYS.atNumeric(_._x, _v2, "integer")
+                                  : 0
+                                : NaN)(_._x.length) +
+                            -1,
+                        ),
+                      ))(_v2 === _v2 ? 0 <= _v2 : undefined),
+              ),
+          ),
+        ),
+        0,
+      ),
+    valid: (_SYS, _) =>
+      _._x.length <= _._a &&
+      Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv1) => (_tv2, _tv3) =>
+              Array.isArray(_tv2) || Array.isArray(_tv3) ? _SYS.bcastFn(_tv1, _tv2, _tv3) : _tv1(_tv2, _tv3)
+          )(
+            (_v1, _v2) =>
+              _v1 &&
+              1 <= _SYS.atNumeric(_._x, _v2, "integer") &&
+              _SYS.atNumeric(_._x, _v2, "integer") <= _._b &&
+              (_v2 === _v2
+                ? 1 < _v2
+                  ? _SYS.atNumeric(_._x, _v2, "integer") <= _SYS.atNumeric(_._x, _v2 + -1, "integer")
+                  : true
+                : undefined),
+          ),
+        ),
+        true,
+      ),
+  },
   SignedPermutations: {
     hash: "d3277213",
     count: (_SYS, _) => _SYS.factorial(_._n) * _SYS.pow(2, _._n),
