@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 2425, disagree 138, inconclusive 45, error 3
+## wolfram — agree 2462, disagree 142, inconclusive 45, error 3
 
 | example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
 | ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -70,6 +70,10 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `First/an-empty-collection-has-no-first-element-compute`           | undefined-form | `Missing`                                                                                    | `First[{}]`                                                                                  |
 | `FirstPosition/the-empty-list-when-the-value-isn-t-found`          | convention     | `[]`                                                                                         | `Missing["NotFound"]`                                                                        |
 | `FromDigits/an-empty-digit-list-is-left-unevaluated-rather`        | domain         | `["FromDigits",["List"]]`                                                                    | `0`                                                                                          |
+| `Gamma/gamma-complex-infinity-indeterminate`                       | convention     | `Indeterminate`                                                                              | `ComplexInfinity`                                                                            |
+| `Gamma/interval-arithmetic-the-image-of-1-4-1-5-whose`             | precision      | `["Interval",0.8856031944108887,0.8872638175030753]`                                         | `Interval[{0.8856031943123525, 0.8872638175253088}]`                                         |
+| `Gamma/uncertainty-propagation-gamma-2-5-pm-0-01-1-3293`           | precision      | `["Around",1.329340388179137,0.009347345216260856]`                                          | `Around[1.329340388179137, 0.009347345216260855]`                                            |
+| `Gamma/values-far-past-the-double-range-gamma-200-5`               | precision      | `5.57316894480137913364e+373`                                                                | `5.57316894480151571830788453'13.01979740938499*^373`                                        |
 | `GammaRegularized/a-non-integer-order-combined-with-negative-z`    | domain         | `["GammaRegularized",2.5,-1]`                                                                | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
 | `GammaRegularized/q-a-0-1-for-symbolic-a`                          | unevaluated    | `1`                                                                                          | `GammaRegularized[a, 0]`                                                                     |
 | `GCD/lists-aren-t-threaded-element-wise-they-re`                   | convention     | `2`                                                                                          | `{2, 4}`                                                                                     |
