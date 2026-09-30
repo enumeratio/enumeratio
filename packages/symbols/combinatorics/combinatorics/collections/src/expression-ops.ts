@@ -1,6 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
-import { toInputForm } from "@enumeratio/formats";
+import { integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enumeratio/engine";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,
 // MapIndexed, StringLength, FreeQ, StringTake, Replace, Through, ToCharacterCode,
@@ -23,7 +22,7 @@ import { toInputForm } from "@enumeratio/formats";
 // AssociationThread builds the SAME `Association` head as `list-functional.ts` (Rule pairs,
 // not compute-engine's string-keyed `Dictionary`) — see that file's own module doc for why.
 //
-// ToString prints Epsil (this repo's own syntax, via `@enumeratio/formats`'s
+// ToString prints Epsil (this repo's own syntax, via `@enumeratio/engine`'s
 // `toInputForm`), not Wolfram InputForm — there is no Wolfram-syntax printer in this repo,
 // and Epsil is InputForm's counterpart here (round-trips through `parseExpression` the same
 // way InputForm round-trips through Wolfram's own parser). Documented as a divergence on

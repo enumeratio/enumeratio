@@ -1,7 +1,8 @@
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import { parseEpsil, type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { expect, test } from "vite-plus/test";
-import { BOXES_LATEX, declareBoxes, fraction, fromMathJson, makeBoxes, row, sqrt, superscript } from "../src/index.ts";
+import { declareBoxes, fraction, fromMathJson, makeBoxes, row, sqrt, superscript } from "../src/index.ts";
+import { BOXES_LATEX } from "../src/render/index.ts";
 
 const ce = new ComputeEngine({ latexSyntax: new LatexSyntax({ dictionary: [...LATEX_DICTIONARY, ...BOXES_LATEX] }) });
 declareBoxes(ce);

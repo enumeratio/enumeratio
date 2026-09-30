@@ -9,19 +9,14 @@ import {
   interpretation,
   isBox,
   makeBoxes,
-  MathMLSyntaxError,
-  parseMathML,
   row,
   style,
   tag,
   text,
   tokenClass,
-  toLatex,
   toMathJson,
-  toMathML,
-  toAscii,
-  toText,
 } from "../src/index.ts";
+import { MathMLSyntaxError, parseMathML, toLatex, toMathML, toAscii, toText } from "../src/render/index.ts";
 import { CORPUS } from "./corpus.ts";
 
 // Goldens are committed JSON compared with `toEqual`, never snapshots. Regenerate with

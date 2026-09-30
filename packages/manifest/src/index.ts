@@ -11,7 +11,7 @@ export { SYMBOLS };
 export const symbolInfo = (name: string): SymbolInfo | undefined =>
   Object.hasOwn(SYMBOLS, name) ? SYMBOLS[name] : undefined;
 export { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
-export { PACKAGES } from "./generated/packages.ts";
+export { HIERARCHY, type Layer, PACKAGES, type Placement } from "./hierarchy.ts";
 export {
   createResolver,
   type Library,

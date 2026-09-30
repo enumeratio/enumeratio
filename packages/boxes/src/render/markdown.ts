@@ -4,7 +4,7 @@
 // does. The subset is what records and guides use: paragraphs, ATX headings, lists, block
 // quotes, fenced code, `$$` display blocks; emphasis, strong, code spans, links, `[[Head]]`.
 
-import { type Box, type BoxNode, isBoxSequence, isNode, type Options, optionsOfBox } from "./box.ts";
+import { type Box, type BoxNode, isBoxSequence, isNode, type Options, optionsOfBox } from "../box.ts";
 
 const HEADINGS = ["Title", "Section", "Subsection", "Subsubsection", "Subsubsubsection", "Subsubsubsubsection"];
 const ITEMS = ["Item", "Subitem", "Subsubitem"];

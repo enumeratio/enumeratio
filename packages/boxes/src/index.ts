@@ -1,8 +1,9 @@
+// The box tree, `MakeBoxes` and the notation registry: base, what every symbol package's
+// notation extends. The serialisers are presentation, at `@enumeratio/boxes/render`.
+
 export * from "./box.ts";
 export { BOXES_TYPE, declareBoxes } from "./declare.ts";
 export { BoxFormError, fromMathJson, toMathJson } from "./json.ts";
-export { toLatex } from "./latex.ts";
-export { BOXES_LATEX } from "./latex-entries.ts";
 export { APPLY_FUNCTION, INVISIBLE_TIMES, makeBoxes } from "./make.ts";
 export {
   fence,
@@ -17,8 +18,6 @@ export {
   subscripted,
   type Writer,
 } from "./notation.ts";
-export { MATHJSON_MIME, type MathMLOptions, MathMLSyntaxError, parseMathML, toMathML } from "./mathml.ts";
-export { toAscii, toText } from "./text.ts";
-export { type Hole, type HtmlOptions, toHtml } from "./html.ts";
-export { closeDollar, readInlineMarkdown, readMarkdown, texSource, toMarkdown } from "./markdown.ts";
-export { texToAscii, texToText } from "./tex-text.ts";
+// Transitional: components' notatio-out.ts, frontend's kernel-host.ts and the site's
+// session-worker-entry.ts still read these here. Presentation only; the hierarchy test keeps symbol packages off them.
+export { BOXES_LATEX, toAscii, toLatex } from "./render/index.ts";

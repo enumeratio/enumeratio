@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { makeBoxes, notationOf, toLatex } from "@enumeratio/boxes";
+import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { toLatex } from "@enumeratio/boxes/render";
 import { afterAll, expect, test } from "vite-plus/test";
 import { declaredEngine } from "../../reference/scripts/engines.ts";
 

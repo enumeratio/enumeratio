@@ -5,7 +5,8 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { makeBoxes, toAscii } from "@enumeratio/boxes";
+import { makeBoxes } from "@enumeratio/boxes";
+import { toAscii } from "@enumeratio/boxes/render";
 // By path: the package's `module` field names a file it doesn't ship.
 import asciimath2tex from "asciimath2tex/dist/asciimath2tex.js";
 

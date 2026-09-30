@@ -3,7 +3,8 @@
 // typeset by KaTeX from its TeX as written. Synchronous, so the same call renders at build
 // and in the browser.
 
-import { type Box, readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes";
+import { type Box } from "@enumeratio/boxes";
+import { readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes/render";
 import katex from "katex";
 
 const typeset = new Map<string, string>();

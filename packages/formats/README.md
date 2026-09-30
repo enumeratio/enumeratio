@@ -18,7 +18,8 @@ notation and need it back as an expression.
   (assignment, declarations, pragmas) — `parseExpression` reports those rather than
   evaluating them.
 - `./inputform` — `toInputForm`: an expression printed as Epsil you could retype, with a
-  normalization pass over compute-engine's raw and canonical serializations.
+  normalization pass over compute-engine's raw and canonical serializations (written in
+  [`engine`](../engine/README.md), re-exported here).
 - `./tex` — `portableTeX`: compute-engine's LaTeX rewritten for a document (amsmath/amssymb
   macros in place of MathLive-only commands like `\imaginaryI`).
 - `./mathml`, `./asciimath` — MathMLForm and AsciiMath, built on [`boxes`](../boxes/README.md)'s
