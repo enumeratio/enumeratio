@@ -23,6 +23,43 @@ export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: 
   (numericApproximation ?? false) && ce.precision > DOUBLE_DIGITS + REQUESTED_DIGITS_GUARD;
 
 /**
+ * Once a periodic double-only kernel's argument spans more than this many periods, `value`'s
+ * OWN double rounding (`ulp(value) ~ |value|·2^-52`) already exceeds a period, so the reduced
+ * position within it is rounding noise, not signal — no digit count can rescue that. Measured
+ * against mpmath at the reported bug (`JacobiCD(10^16, 2/7)`, ~1.5·10^15 periods: wrong even
+ * in sign next to a sibling head at the same scale) and at the boundary, holding steady across
+ * three unrelated families (a Jacobi pq kernel, `EllipticTheta`, `ModularLambda`, each checked
+ * on its own period): at 10^6 periods each still agrees with mpmath to ~9-10 digits; at 10^7,
+ * only ~8-9 — already short of the loosest tolerance (1e-9) this family uses anywhere. Kept at
+ * a clean order of magnitude below that crossover for margin.
+ */
+export const MAX_PERIODS_FOR_DOUBLE = 1e6;
+
+/** `value`'s own double rounding has already swallowed more than `maxPeriods` worth of
+ * `period` — declining is safer than returning a reduced position that's pure rounding noise.
+ * `false` (never decline) for a non-finite or non-positive `period`, e.g. a family's own
+ * period computation didn't converge or doesn't apply at this operand. */
+export const periodsExceedDouble = (value: number, period: number, maxPeriods = MAX_PERIODS_FOR_DOUBLE): boolean =>
+  Number.isFinite(value) && Number.isFinite(period) && period > 0 && Math.abs(value) / period > maxPeriods;
+
+/**
+ * Below this many multiples of `1/Im(τ)`, a modular kernel's own SL2(Z) reduction
+ * (`reduceToFundamentalDomain`, modular.ts) is climbing toward a genuine cusp asymptotic —
+ * the true value there really does grow roughly like `exp(π/Im τ)` (checked against mpmath:
+ * `ModularLambda` matches it to ~14-16 digits well past this), not a numerical artifact. But
+ * that same growth costs a double kernel digits just as fast once τ is close enough to the
+ * real axis: measured against mpmath, `1/Im τ = 100` still agrees to ~12 digits, `1/Im τ = 150`
+ * only ~10, and `1/Im τ = 200` just ~7 — already short of this family's loosest tolerance
+ * (1e-9) — with the double kernel overflowing outright by `1/Im τ ≈ 400`.
+ */
+export const MAX_INVERSE_IM_TAU = 100;
+
+/** `τ` is close enough to the real axis that its true (correct) growth there already costs a
+ * double kernel more digits than `MAX_INVERSE_IM_TAU`'s measured margin allows. */
+export const tauTooCloseToRealAxis = (im: number): boolean =>
+  Number.isFinite(im) && Math.abs(im) < 1 / MAX_INVERSE_IM_TAU;
+
+/**
  * `value` rounded to the digits the engine was actually asked for, or undefined if it is not
  * a number at all.
  *

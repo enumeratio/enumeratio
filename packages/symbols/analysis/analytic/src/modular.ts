@@ -5,6 +5,8 @@ import {
   isFiniteNum,
   isRealInt,
   numberResult,
+  periodsExceedDouble,
+  tauTooCloseToRealAxis,
   wantsNumber,
   abs,
   cx,
@@ -45,6 +47,16 @@ import {
 
 const MAX_REDUCE_STEPS = 200;
 const REDUCE_EPS = 1e-12;
+
+/**
+ * `τ` is too far out for `reduceToFundamentalDomain` below to keep its digits: `Re τ` past
+ * `MAX_PERIODS_FOR_DOUBLE` multiples of T's period (1) has already lost its fractional part
+ * to `τ`'s own double rounding (the reported bug: `τ = i + π·10^22`, ~3·10^21 periods, so
+ * `Math.round(tau.re)` has nothing left to round against), and `τ` closer to the real axis
+ * than `tauTooCloseToRealAxis` allows costs the same digits to the true asymptotic growth
+ * near the cusp (both measured in precise.ts's docs).
+ */
+const tauTooFarForDouble = (tau: Cx): boolean => periodsExceedDouble(tau.re, 1) || tauTooCloseToRealAxis(tau.im);
 
 interface ReduceStep {
   kind: "T" | "S";
@@ -162,6 +174,7 @@ function declareKleinInvariantJ(ce: ComputeEngine): void {
       // The SL2(Z) reduction and its q-series below are plain-double: N(…, d) past what a
       // double carries would otherwise silently hand back ~17 correct digits as if they were d.
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (tauTooFarForDouble(cx(tau.re, tau.im))) return undefined;
       return numberResult(ce, scale(modularJ(ce, cx(tau.re, tau.im)), 1 / 1728));
     },
   });
@@ -182,6 +195,7 @@ export function declareModular(ce: ComputeEngine): void {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (tauTooFarForDouble(cx(tau.re, tau.im))) return undefined;
       return numberResult(ce, modularJ(ce, cx(tau.re, tau.im)));
     },
   });
@@ -192,6 +206,7 @@ export function declareModular(ce: ComputeEngine): void {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (tauTooFarForDouble(cx(tau.re, tau.im))) return undefined;
       return numberResult(ce, modularLambda(ce, cx(tau.re, tau.im)));
     },
   });
@@ -206,6 +221,7 @@ export function declareModular(ce: ComputeEngine): void {
       if (!isRealInt(k) || k.re < 4 || k.re % 2 !== 0) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (tauTooFarForDouble(cx(tau.re, tau.im))) return undefined;
       return numberResult(ce, eisensteinG(ce, k.re, cx(tau.re, tau.im)));
     },
   });
