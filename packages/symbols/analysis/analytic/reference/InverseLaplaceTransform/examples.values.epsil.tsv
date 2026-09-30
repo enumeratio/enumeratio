@@ -2,22 +2,22 @@ id	in	out
 one-over-s-squared	InverseLaplaceTransform(s ^ -2, s, t)	t
 one-over-s-minus-a	InverseLaplaceTransform((s - a) ^ -1, s, t)	exponentialE ^ (a * t)
 s-over-s-squared-plus-a-squared	InverseLaplaceTransform(s / (s ^ 2 + a ^ 2), s, t)	cos(a * t)
-inverselaplacetransform-1-over-s-plus-1-s-t	InverseLaplaceTransform(1 / (s + 1), s, t)	exponentialE ^ (-t)
-inverselaplacetransform-ln-1-over-b-plus-s-times	InverseLaplaceTransform(ln(1 / (b + s) * (a + s)), s, t)	InverseLaplaceTransform(ln(a + s) - ln(b + s), s, t)
-inverselaplacetransform-a-times-1-over-a-pow-2	InverseLaplaceTransform(a * (1 / (a ^ 2 + s ^ 2)), s, t)	sin(a * t)
-inverselaplacetransform-s-times-1-over-a-pow-2	InverseLaplaceTransform(s * (1 / (a ^ 2 + s ^ 2)), s, t)	cos(a * t)
-fullsimplify-inverselaplacetransform-a-times-1	FullSimplify(InverseLaplaceTransform(a * (1 / (-a ^ 2 + s ^ 2)), s, t))	sinh(a * t)
-fullsimplify-inverselaplacetransform-s-times-1	FullSimplify(InverseLaplaceTransform(s * (1 / (-a ^ 2 + s ^ 2)), s, t))	cosh(a * t)
-inverselaplacetransform-s-times-a-pow-2-plus-s	InverseLaplaceTransform(s * (a ^ 2 + s ^ 2) ^ -2, s, t)	InverseLaplaceTransform(s / (a ^ 2 + s ^ 2) ^ 2, s, t)
-inverselaplacetransform-s-times-1-over-a-pow-2-2	InverseLaplaceTransform(s * (1 / ((a ^ 2 + s ^ 2) * (b ^ 2 + s ^ 2))), s, t)	InverseLaplaceTransform(s / ((a ^ 2 + s ^ 2) * (b ^ 2 + s ^ 2)), s, t)
-fullsimplify-inverselaplacetransform-1-over-neg	"FullSimplify(InverseLaplaceTransform(1 / ((-a ^ 2 + s ^ 2) * (-b ^ 2 + s ^ 2)) *\n                                     s ^ 2, s, t))"	InverseLaplaceTransform(s ^ 2 / ((-a ^ 2 + s ^ 2) * (-b ^ 2 + s ^ 2)), s, t)
-inverselaplacetransform-1-over-s-minus-2-times	InverseLaplaceTransform(1 / ((s - 2) * sqrt(s)) * exponentialE ^ (-5 * s), s, t)	InverseLaplaceTransform(exponentialE ^ (-5 * s) / ((s - 2) * sqrt(s)), s, t)
-inverselaplacetransform-1-over-a-plus-s-times	InverseLaplaceTransform(1 / (a + s) * sqrt(b + s), s, t)	InverseLaplaceTransform(sqrt(b + s) / (a + s), s, t)
-inverselaplacetransform-1-over-s-minus-1-times	InverseLaplaceTransform(1 / (s - 1) * ln(s), s, t)	InverseLaplaceTransform(ln(s) / (s - 1), s, t)
-inverselaplacetransform-ln-1-over-s-pow-2-plus-2	InverseLaplaceTransform(ln(1 / (s ^ 2 + 2) * (s ^ 2 + 1)), s, t)	InverseLaplaceTransform(-ln(s ^ 2 + 2) + ln(s ^ 2 + 1), s, t)
-inverselaplacetransform-1-over-root-s-3-times-ln	InverseLaplaceTransform(1 / root(s, 3) * ln(4s), s, t)	InverseLaplaceTransform(ln(4s) / root(s, 3), s, t)
-inverselaplacetransform-1-over-s-times-ln-s-pow	InverseLaplaceTransform(1 / s * ln(s) ^ 2, s, t)	InverseLaplaceTransform(ln(s) ^ 2 / s, s, t)
-inverselaplacetransform-1-over-root-s-3-times	InverseLaplaceTransform(1 / root(s, 3) * gamma(1 / 3, s), s, t)	InverseLaplaceTransform(gamma(1 / 3, s) / root(s, 3), s, t)
-inverselaplacetransform-1-over-sqrt-s-times-erf	InverseLaplaceTransform(1 / sqrt(s) * erf(sqrt(2s)), s, t)	InverseLaplaceTransform(erf(sqrt(2s)) / sqrt(s), s, t)
-inverselaplacetransform-elliptick-a-pow-2-times	InverseLaplaceTransform(ellipticK(a ^ 2 * s ^ -2) + -1 / 2 * pi, s, t)	InverseLaplaceTransform(ellipticK(a ^ 2 / s ^ 2) + -1 / 2 * pi, s, t)
-inverselaplacetransform-s-times-neg-elliptice-a	InverseLaplaceTransform(s * (-ellipticE(a ^ 2 * s ^ -2) + 1 / 2 * pi), s, t)	InverseLaplaceTransform(1 / 2 * s * (-2 * ellipticE(a ^ 2 / s ^ 2) + pi), s, t)
+inverselaplacetransform-1-over-s-plus-1-s-t		
+inverselaplacetransform-ln-1-over-b-plus-s-times		
+inverselaplacetransform-a-times-1-over-a-pow-2		
+inverselaplacetransform-s-times-1-over-a-pow-2		
+fullsimplify-inverselaplacetransform-a-times-1		
+fullsimplify-inverselaplacetransform-s-times-1		
+inverselaplacetransform-s-times-a-pow-2-plus-s		
+inverselaplacetransform-s-times-1-over-a-pow-2-2		
+fullsimplify-inverselaplacetransform-1-over-neg		
+inverselaplacetransform-1-over-s-minus-2-times		
+inverselaplacetransform-1-over-a-plus-s-times		
+inverselaplacetransform-1-over-s-minus-1-times		
+inverselaplacetransform-ln-1-over-s-pow-2-plus-2		
+inverselaplacetransform-1-over-root-s-3-times-ln		
+inverselaplacetransform-1-over-s-times-ln-s-pow		
+inverselaplacetransform-1-over-root-s-3-times		
+inverselaplacetransform-1-over-sqrt-s-times-erf		
+inverselaplacetransform-elliptick-a-pow-2-times		
+inverselaplacetransform-s-times-neg-elliptice-a		

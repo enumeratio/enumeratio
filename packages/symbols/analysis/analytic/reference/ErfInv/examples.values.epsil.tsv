@@ -12,8 +12,8 @@ to-30-significant-digits-every-one-correctly	N(erfInv(1 / 2), 30)	0.476_936_276_
 n-erfinv-33-over-100-50	N(erfInv(33 / 100), 50)	0.301_332_146_133_705_826_128_502_718_158_394_773_965_824_282_828_53
 functionexpand-matrixfunction-erfinv-list-list-0	FunctionExpand(MatrixFunction(erfInv, [[0, 1 / 2], [1, 0]]))	"[[\n   1 / 2 * erfInv(-(sqrt(2) / 2)) + 1 / 2 * erfInv(sqrt(2) / 2),\n   -(sqrt(2) / 4) * erfInv(-(sqrt(2) / 2)) + sqrt(2) / 4 * erfInv(sqrt(2) / 2),\n ], [\n     -(sqrt(2) / 2) * erfInv(-(sqrt(2) / 2)) + sqrt(2) / 2 * erfInv(sqrt(2) / 2),\n     1 / 2 * erfInv(-(sqrt(2) / 2)) + 1 / 2 * erfInv(sqrt(2) / 2),\n   ]]"
 erfinv-a-erf-a-z	erfInv(a, erf(a, z))	erfInv(erf(z))
-functionexpand-erf-erfinv-s	FunctionExpand(erf(erfInv(s)))	s
-erfinv-s-eq-erfinv-0-s	erfInv(s) == erfInv(0, s)	True
+functionexpand-erf-erfinv-s		
+erfinv-s-eq-erfinv-0-s		
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	sqrt(2) * erfInv(0.95)	1.959_963_984_540_054_235_527_460_400_177_851_935_713_577_92
 inverse-of-erf-erf-erfinv-x-x-see-erf	erf(erfInv(0.5)) == 0.5	True
 odd-erfinv-x-erfinv-x-applied-symbolically	erfInv(-x)	-erfInv(x)
@@ -22,7 +22,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	IsNumeric(erfInv(1 / pi, 1 / 2))	True
 erfinv-0-0	erfInv(0, 0)	0
 erfinv-0-1	erfInv(0, 1)	positiveInfinity
 erfinv-1-0	erfInv(1, 0)	erfInv(erf(1))
-solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	solve(erfInv(x) ^ 3 + 2 * erfInv(x) == 1, x)	[]
-attributes-erfinv	Attributes(erfInv)	[Listable]
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1		
+attributes-erfinv		
 outside-its-real-domain-1-1-compute-engine	erfInv(2)	erfInv(2)
 blows-up-near-the-boundary-erfinv-0-9999-is	erfInv(0.999_9)	2.751_063_905_712_060_796_15

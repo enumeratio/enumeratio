@@ -12,7 +12,7 @@ caputod-x-pow-2-list-x-1-times-2-pow-neg-1	CaputoD(x ^ 2, [x, 1 * 2 ^ -1])	8 * x
 caputod-c-list-x-2-times-3-pow-neg-1	CaputoD(c, [x, 2 * 3 ^ -1])	0
 polynomial-linearity	CaputoD(x ^ 2 + 3x + 1, [x, 0.5])	1.504_505_556_127_350_098_532 * x ^ 1.5 + 3.385_137_501_286_537_721_7 * x ^ 0.5
 exact-order-polynomial-half	CaputoD(x ^ 2 + 3x + 1, [x, 1 / 2])	6 * sqrt(x) / sqrt(pi) + 8 * x ^ (3 / 2) / (3 * sqrt(pi))
-fullsimplify-laplacetransform-caputod-sin-t-list	FullSimplify(LaplaceTransform(CaputoD(sin(t), [t, 3 * 2 ^ -1]), t, s))	LaplaceTransform(CaputoD(sin(t), [t, 3 / 2]), t, s)
+fullsimplify-laplacetransform-caputod-sin-t-list		
 caputod-x-pow-3-list-x-1-times-2-pow-neg-1	CaputoD(x ^ 3, [x, 1 * 2 ^ -1])	16 * x ^ (5 / 2) / (5 * sqrt(pi))
 caputod-x-pow-2-list-x-4-times-5-pow-neg-1	CaputoD(x ^ 2, [x, 4 * 5 ^ -1])	2 * x ^ (6 / 5) / gamma(11 / 5)
 caputod-c-list-x-1-times-2-pow-neg-1	CaputoD(c, [x, 1 * 2 ^ -1])	0

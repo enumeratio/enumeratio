@@ -6,4 +6,4 @@ isnumeric-plain-symbol	IsNumeric(x)	False
 isnumeric-sqrt-2	IsNumeric(sqrt(2))	True
 isnumeric-expr	IsNumeric(expr)	False
 isnumeric-exponentiale	IsNumeric(exponentialE)	True
-ismatrix-m-isnumeric	IsMatrix(m, IsNumeric)	False
+ismatrix-m-isnumeric		

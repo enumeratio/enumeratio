@@ -1,6 +1,6 @@
 id	in
 length-of-window	MovingMap[Length, List[1, 2, 3, 4], 1]
 movingmap-mean-list-x-1-x-2-x-3-x-4-x-5-2	MovingMap[Mean, List[Subscript[x, 1], Subscript[x, 2], Subscript[x, 3], Subscript[x, 4], Subscript[x, 5]], 2]
-movingmap-f-data-2	MovingMap[f, data, 2]
-movingmap-f-v-2	MovingMap[f, v, 2]
-movingmap-function-last-1-minus-first-1-data-1	MovingMap[Function[Plus[Last[Slot[1]], Times[-1, First[Slot[1]]]]], data, 1]
+movingmap-f-data-2	
+movingmap-f-v-2	
+movingmap-function-last-1-minus-first-1-data-1	

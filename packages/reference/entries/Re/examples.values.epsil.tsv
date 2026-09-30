@@ -2,18 +2,18 @@ id	in	out
 re-of-3-plus-4i-is-3	re(3 + 4i)	3
 re-of-a-real-number-is-itself	re(5)	5
 re-of-pi-is-pi-a-real-symbolic-constant	re(pi)	pi
-real-2-plus-3i	real(2 + 3i)	2
-real-2-times-exponentiale-pow-1-over-3-times-i	real(2 * exponentialE ^ (1 / 3 * i * pi))	1
-real-3-over-2-plus-4-over-5-times-i	real(3 / 2 + 4 / 5 * i)	3 / 2
-n-real-exponentiale-plus-i-times-pi-25	N(real(exponentialE + i * pi), 25)	2.718_281_828_459_045_235_360_287
-real-41-over-25-minus-2i	real(41 / 25 - 2i)	41 / 25
-real-list-list-1-u-list-v-neg-i	real([[1, u], [v, -i]])	[[1, real(u)], [real(v), 0]]
-real-0	real(0)	0
-real-positiveinfinity	real(positiveInfinity)	positiveInfinity
-real-positiveinfinity-times-i	real(positiveInfinity * i)	Indeterminate
-real-complexinfinity	real(complexInfinity)	Indeterminate
-piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand(re(imaginaryUnit * x), -2 < x < 2)	real(i * x)
-simplify-re-x-x-gt-0	simplify(re(x), x > 0)	real(x)
+real-2-plus-3i		
+real-2-times-exponentiale-pow-1-over-3-times-i		
+real-3-over-2-plus-4-over-5-times-i		
+n-real-exponentiale-plus-i-times-pi-25		
+real-41-over-25-minus-2i		
+real-list-list-1-u-list-v-neg-i		
+real-0		
+real-positiveinfinity		
+real-positiveinfinity-times-i		
+real-complexinfinity		
+piecewiseexpand-re-imaginaryunit-times-x-neg-2		
+simplify-re-x-x-gt-0		
 re-of-a-symbolic-value-stays-unevaluated	re(x)	real(x)
 real-1	real(1)	1
 real-neg-1	real(-1)	-1
@@ -27,7 +27,7 @@ real-sqrt-3-plus-i	real(sqrt(3) + i)	sqrt(3)
 real-1-plus-sqrt-3-times-i	real(1 + sqrt(3) * i)	1
 real-neg-1-plus-sqrt-3-times-i	real(-1 + sqrt(3) * i)	-1
 real-neg-sqrt-3-plus-i	real(-sqrt(3) + i)	-sqrt(3)
-list-real-x-times-exponentiale-pow-1-over-5	[real(x * exponentialE ^ (1 / 5 * i * pi)), real(2x + i)]	"[\n  real(x * (1 / 4 + sqrt(5) / 4 + sqrt(2) / 4 * i * sqrt(5 - sqrt(5)))),\n  real(2x + i),\n]"
+list-real-x-times-exponentiale-pow-1-over-5		
 real-neg-sqrt-3-minus-i	real(-sqrt(3) - i)	-sqrt(3)
 real-neg-1-plus-neg-sqrt-3-times-i	real(-1 + -sqrt(3) * i)	-1
 real-1-plus-neg-sqrt-3-times-i	real(1 + -sqrt(3) * i)	1

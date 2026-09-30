@@ -2,6 +2,6 @@ id	in	out
 sum-p-1-p-2	<N><PrimeZetaP>2</PrimeZetaP></N>	<ToExpression>0.4522474200410655</ToExpression>
 n-primezetap-3	<N><PrimeZetaP>3</PrimeZetaP></N>	<ToExpression>0.17476263929944355</ToExpression>
 n-primezetap-4	<N><PrimeZetaP>4</PrimeZetaP></N>	<ToExpression>0.07699313976424685</ToExpression>
-n-primezetap-2-50	<N><PrimeZetaP>2</PrimeZetaP> 50</N>	<ToExpression>0.4522474200410655</ToExpression>
+n-primezetap-2-50		
 primezetap-2p5	<PrimeZetaP>2.5</PrimeZetaP>	<ToExpression>0.273680737993234</ToExpression>
-n-primezetap-4-over-11-50	<N><PrimeZetaP><Rational>4 11</Rational></PrimeZetaP> 50</N>	<PrimeZetaP>0.36363636363636363636363636363636363636363636363636</PrimeZetaP>
+n-primezetap-4-over-11-50		

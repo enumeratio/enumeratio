@@ -24,9 +24,9 @@ derivative-sec-x-tan-x	<D><Sec>x</Sec> x</D>	<Multiply><Tan>x</Tan> <Sec>x</Sec>
 antiderivative-ln-sec-x-tan-x	<Integrate><Sec>x</Sec> x</Integrate>	<Ln><Abs><Add><Tan>x</Tan> <Sec>x</Sec></Add></Abs></Ln>
 n-sec-6-over-5-50	<N><Sec><Rational>6 5</Rational></Sec> 50</N>	<ToExpression>2.759703601332406456883432939237783860073115323011</ToExpression>
 matrixfunction-function-sec-1-1-list-list-5-over	<MatrixFunction><Function><Block><Sec>_1</Sec></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> 0</List> <List><Multiply><Rational>1 6</Rational> Pi</Multiply> <Multiply><Rational>-1 4</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Multiply><Rational>-2 3</Rational> <Sqrt>3</Sqrt></Multiply> 0</List> <List><Add><Multiply><Rational>-2 13</Rational> <Sqrt>2</Sqrt></Multiply> <Multiply><Rational>-4 39</Rational> <Sqrt>3</Sqrt></Multiply></Add> <Sqrt>2</Sqrt></List></List>
-assuming-m-in-integers-refine-sec-pi-times-1	<Assuming><Element>m Integers</Element> <Refine><Sec><Multiply>Pi <Add><Multiply>1 <Power>2 -1</Power></Multiply> m</Add></Multiply></Sec></Refine></Assuming>	<Sec><Multiply>Pi <Add>m <Rational>1 2</Rational></Add></Multiply></Sec>
-assuming-m-in-integers-fullsimplify-refine-sec	<Assuming><Element>m Integers</Element> <FullSimplify><Refine><Sec><Multiply>Pi m</Multiply></Sec></Refine></FullSimplify></Assuming>	<Sec><Multiply>Pi m</Multiply></Sec>
-sec-positiveinfinity	<Sec>PositiveInfinity</Sec>	<Indeterminate />
+assuming-m-in-integers-refine-sec-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-sec		
+sec-positiveinfinity		
 reciprocal-of-cos-sec-x-frac-1-cos-x	<Equal><Sec><Divide>Pi 3</Divide></Sec> <Divide>1 <Cos><Divide>Pi 3</Divide></Cos></Divide></Equal>	<True />
 pythagorean-identity-1-tan-2-x-sec-2-x	<Equal><Add>1 <Power><Tan><Divide>Pi 6</Divide></Tan> 2</Power></Add> <Power><Sec><Divide>Pi 6</Divide></Sec> 2</Power></Equal>	<True />
 sec-1-over-10-times-pi	<Sec><Multiply><Rational>1 10</Rational> Pi</Multiply></Sec>	<Multiply><Divide><Sqrt>10</Sqrt> 5</Divide> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply>

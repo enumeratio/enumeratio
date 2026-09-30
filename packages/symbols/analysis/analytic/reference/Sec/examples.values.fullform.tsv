@@ -24,9 +24,9 @@ derivative-sec-x-tan-x	D[Sec[x], x]
 antiderivative-ln-sec-x-tan-x	Integrate[Sec[x], x]	
 n-sec-6-over-5-50	N[Sec[Rational[6, 5]], 50]	
 matrixfunction-function-sec-1-1-list-list-5-over	MatrixFunction[Function[Sec[Slot[1]]], List[List[Times[Rational[5, 6], Pi], 0], List[Times[Rational[1, 6], Pi], Times[Rational[-1, 4], Pi]]]]	[MatrixFunction, [Function, [Sec, _1]], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 1, 6], Pi], [Multiply, [Rational, -1, 4], Pi]]]]
-assuming-m-in-integers-refine-sec-pi-times-1	Assuming[Element[m, Integers], Refine[Sec[Times[Pi, Plus[Times[1, Power[2, -1]], m]]]]]	
-assuming-m-in-integers-fullsimplify-refine-sec	Assuming[Element[m, Integers], FullSimplify[Refine[Sec[Times[Pi, m]]]]]	
-sec-positiveinfinity	Sec[Infinity]	
+assuming-m-in-integers-refine-sec-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-sec		
+sec-positiveinfinity		
 reciprocal-of-cos-sec-x-frac-1-cos-x	Equal[Sec[Divide[Pi, 3]], Divide[1, Cos[Divide[Pi, 3]]]]	
 pythagorean-identity-1-tan-2-x-sec-2-x	Equal[Plus[1, Power[Tan[Divide[Pi, 6]], 2]], Power[Sec[Divide[Pi, 6]], 2]]	
 sec-1-over-10-times-pi	Sec[Times[Rational[1, 10], Pi]]	

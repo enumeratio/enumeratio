@@ -4,15 +4,15 @@ exp-at	<LaplaceTransform><Power>ExponentialE <Multiply>2 t</Multiply></Power> t 
 sin-at	<LaplaceTransform><Sin><Multiply>3 t</Multiply></Sin> t s</LaplaceTransform>	<Divide>3 <Add><Power>s 2</Power> 9</Add></Divide>
 t-cubed-exp-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Power>t 3</Power></Multiply> t s</LaplaceTransform>	<Divide>6 <Power><Add>s -2</Add> 4</Power></Divide>
 exp-sin-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Sin><Multiply>3 t</Multiply></Sin></Multiply> t s</LaplaceTransform>	<Divide>3 <Add><Power><Add>s -2</Add> 2</Power> 9</Add></Divide>
-laplacetransform-1-t-s	<LaplaceTransform>1 t s</LaplaceTransform>	<Divide>1 s</Divide>
-laplacetransform-3-times-t-pow-2-plus-5t-minus-7	<LaplaceTransform><Add><Multiply>3 <Power>t 2</Power></Multiply> <Multiply>5 t</Multiply> -7</Add> t s</LaplaceTransform>	<Add><Divide>-7 s</Divide> <Divide>5 <Power>s 2</Power></Divide> <Divide>6 <Power>s 3</Power></Divide></Add>
-laplacetransform-exponentiale-pow-neg-a-times-t	<LaplaceTransform><Power>ExponentialE <Negate><Multiply>a t</Multiply></Negate></Power> t s</LaplaceTransform>	<Divide>1 <Add>a s</Add></Divide>
-simplify-laplacetransform-b-times-sinh-a-times-t	<Simplify><LaplaceTransform><Multiply><Add><Multiply>b <Sinh><Multiply>a t</Multiply></Sinh></Multiply> <Multiply>-1 <Multiply>a <Sinh><Multiply>b t</Multiply></Sinh></Multiply></Multiply></Add> <Power><Add><Power>a 2</Power> <Multiply>-1 <Power>b 2</Power></Multiply></Add> -1</Power></Multiply> t s</LaplaceTransform></Simplify>	<LaplaceTransform><Divide><Add><Multiply>b <Sinh><Multiply>a t</Multiply></Sinh></Multiply> <Negate><Multiply>a <Sinh><Multiply>b t</Multiply></Sinh></Multiply></Negate></Add> <Add><Power>a 2</Power> <Negate><Power>b 2</Power></Negate></Add></Divide> t s</LaplaceTransform>
-laplacetransform-1-over-t-times-exponentiale-pow	<LaplaceTransform><Multiply><Divide>1 t</Divide> <Add><Power>ExponentialE t</Power> -1</Add></Multiply> t s</LaplaceTransform>	<LaplaceTransform><Divide><Add><Power>ExponentialE t</Power> -1</Add> t</Divide> t s</LaplaceTransform>
-laplacetransform-1-over-sqrt-t-times-chebyshevt	<LaplaceTransform><Multiply><Divide>1 <Sqrt>t</Sqrt></Divide> <ChebyshevT>n <Multiply><Divide>1 <Add>t 1</Add></Divide> <Add><Negate>t</Negate> 1</Add></Multiply></ChebyshevT> <Power><Add>t 1</Add> n</Power></Multiply> t s</LaplaceTransform>	<LaplaceTransform><Divide><Multiply><ChebyshevT>n <Divide><Add><Negate>t</Negate> 1</Add> <Add>t 1</Add></Divide></ChebyshevT> <Power><Add>t 1</Add> n</Power></Multiply> <Sqrt>t</Sqrt></Divide> t s</LaplaceTransform>
-laplacetransform-gamma-nu-a-times-1-over-t-t-s	<LaplaceTransform><Gamma>nu <Multiply>a <Divide>1 t</Divide></Multiply></Gamma> t s</LaplaceTransform>	<LaplaceTransform><Gamma>nu <Divide>a t</Divide></Gamma> t s</LaplaceTransform>
-laplacetransform-diracdelta-t-minus-1-t-s	<LaplaceTransform><DiracDelta><Add>t -1</Add></DiracDelta> t s</LaplaceTransform>	<Power>ExponentialE <Negate>s</Negate></Power>
-laplacetransform-1-over-gamma-m-plus-1-times	<LaplaceTransform><Multiply><Divide>1 <Multiply><Gamma><Add>m 1</Add></Gamma> <Gamma><Add>n 1</Add></Gamma></Multiply></Divide> <Power>x m</Power> <Power>y n</Power></Multiply> <List>x y</List> <List>p q</List></LaplaceTransform>	<LaplaceTransform><Divide><Multiply><Power>x m</Power> <Power>y n</Power></Multiply> <Multiply><Gamma><Add>m 1</Add></Gamma> <Gamma><Add>n 1</Add></Gamma></Multiply></Divide> <List>x y</List> <List>p q</List></LaplaceTransform>
-laplacetransform-1-over-sqrt-x-times-y-times-cos	<LaplaceTransform><Multiply><Divide>1 <Sqrt><Multiply>x y</Multiply></Sqrt></Divide> <Cos><Sqrt><Multiply>x y</Multiply></Sqrt></Cos></Multiply> <List>x y</List> <List>p q</List></LaplaceTransform>	<LaplaceTransform><Divide><Cos><Sqrt><Multiply>x y</Multiply></Sqrt></Cos> <Multiply><Sqrt>x</Sqrt> <Sqrt>y</Sqrt></Multiply></Divide> <List>x y</List> <List>p q</List></LaplaceTransform>
-laplacetransform-1-over-t-times-sin-3t-t-s	<LaplaceTransform><Multiply><Divide>1 t</Divide> <Sin><Multiply>3 t</Multiply></Sin></Multiply> t s</LaplaceTransform>	<LaplaceTransform><Divide><Sin><Multiply>3 t</Multiply></Sin> t</Divide> t s</LaplaceTransform>
-fullsimplify-laplacetransform-realabs-sin-t-t-s	<FullSimplify><LaplaceTransform><RealAbs><Sin>t</Sin></RealAbs> t s</LaplaceTransform></FullSimplify>	<LaplaceTransform><Abs><Sin>t</Sin></Abs> t s</LaplaceTransform>
+laplacetransform-1-t-s		
+laplacetransform-3-times-t-pow-2-plus-5t-minus-7		
+laplacetransform-exponentiale-pow-neg-a-times-t		
+simplify-laplacetransform-b-times-sinh-a-times-t		
+laplacetransform-1-over-t-times-exponentiale-pow		
+laplacetransform-1-over-sqrt-t-times-chebyshevt		
+laplacetransform-gamma-nu-a-times-1-over-t-t-s		
+laplacetransform-diracdelta-t-minus-1-t-s		
+laplacetransform-1-over-gamma-m-plus-1-times		
+laplacetransform-1-over-sqrt-x-times-y-times-cos		
+laplacetransform-1-over-t-times-sin-3t-t-s		
+fullsimplify-laplacetransform-realabs-sin-t-t-s		

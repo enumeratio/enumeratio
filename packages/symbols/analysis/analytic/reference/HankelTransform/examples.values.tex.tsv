@@ -2,15 +2,15 @@ id	in	out
 exp-neg-ar-order0	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s))	(a)(\sqrt{a^2+s^2}^{3})^{-1}
 one-over-r	\mathrm{HankelTransform}(\frac{1}{r}, r, s)	\frac{1}{s}
 one-over-sqrt-r2-a2	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\frac{1}{\sqrt{r^2+a^2}}, r, s))	\frac{\exp(-(as))}{s}
-hankeltransform-exponentiale-pow-neg-r-r-s	\mathrm{HankelTransform}(\exp(-r), r, s)	\sqrt{s^2+1}^{-3}
-hankeltransform-1-over-r-pow-2-plus-1-times-cos	\mathrm{HankelTransform}(\frac{\cos(r)}{r^2+1}, r, s)	\mathrm{HankelTransform}(\frac{\cos(r)}{r^2+1}, r, s)
+hankeltransform-exponentiale-pow-neg-r-r-s		
+hankeltransform-1-over-r-pow-2-plus-1-times-cos		
 exp-neg-ar-order1	\mathrm{Assuming}(a\gt0, \mathrm{HankelTransform}(\exp(-(ar)), r, s, 1))	(s)(\sqrt{a^2+s^2}^{3})^{-1}
 hankeltransform-1-over-r-times-sin-r-r-1-over-3	\mathrm{HankelTransform}(\frac{\sin(r)}{r}, r, \frac{1}{3})	\mathrm{HankelTransform}(\frac{\sin(r)}{r}, r, \frac{1}{3})
-hankeltransform-1-over-r-times-sin-r-r-s	\mathrm{HankelTransform}(\frac{\sin(r)}{r}, r, s)	\mathrm{HankelTransform}(\frac{\sin(r)}{r}, r, s)
-hankeltransform-1-over-r-times-exponentiale-pow	\mathrm{HankelTransform}(\frac{1}{re^{r}}, r, s)	\mathrm{HankelTransform}(\frac{\exp(-r)}{r}, r, s)
-hankeltransform-neg-exponentiale-pow-neg-m-times	\mathrm{HankelTransform}((1-\exp(-(mr)))/r^2, r, s)	\mathrm{HankelTransform}((1-\exp(-(mr)))/r^2, r, s)
-hankeltransform-1-over-r-times-exponentiale-po-2	\mathrm{HankelTransform}((r\exp(a^2r^2))^{-1}, r, s)	\mathrm{HankelTransform}(\frac{1}{r}(\exp(-(a^2r^2))), r, s)
-hankeltransform-ln-a-pow-2-times-r-pow-neg-2	\mathrm{HankelTransform}(\ln(\frac{a^2}{r^2}+1), r, s)	\mathrm{HankelTransform}(\ln(\frac{a^2}{r^2}+1), r, s)
-hankeltransform-1-over-b-pow-2-plus-r-pow-2	\mathrm{HankelTransform}((\sin(r))(b^2+r^2)^{-1}, r, s)	\mathrm{HankelTransform}((\sin(r))(b^2+r^2)^{-1}, r, s)
-hankeltransform-1-over-r-times-erfc-r-r-s	\mathrm{HankelTransform}(\frac{\mathrm{Erfc}(r)}{r}, r, s)	\mathrm{HankelTransform}(\frac{\mathrm{Erfc}(r)}{r}, r, s)
-hankeltransform-1-over-r-times-expintegrale-1-r	\mathrm{HankelTransform}(\frac{\mathrm{ExpIntegralE}(1, r)}{r}, r, s)	\mathrm{HankelTransform}(\frac{\mathrm{ExpIntegralE}(1, r)}{r}, r, s)
+hankeltransform-1-over-r-times-sin-r-r-s		
+hankeltransform-1-over-r-times-exponentiale-pow		
+hankeltransform-neg-exponentiale-pow-neg-m-times		
+hankeltransform-1-over-r-times-exponentiale-po-2		
+hankeltransform-ln-a-pow-2-times-r-pow-neg-2		
+hankeltransform-1-over-b-pow-2-plus-r-pow-2		
+hankeltransform-1-over-r-times-erfc-r-r-s		
+hankeltransform-1-over-r-times-expintegrale-1-r		

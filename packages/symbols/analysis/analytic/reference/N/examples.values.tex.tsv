@@ -22,16 +22,16 @@ n-exponentiale	N(e)	2.718\,281\,828\,459\,045\,235\,36
 n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(\pi-2\mathrm{pit}, \bigl\lbrack\infty, 20\bigr\rbrack)	3.141\,592\,653\,589\,793\,238\,46-2\mathrm{pit}
 n-crt	N(\mathrm{crt})	\mathrm{crt}
 n-crt-47	N(\mathrm{crt}, 47)	\mathrm{crt}
-n-2-pow-1-000-000	N(2^{1\,000\,000})	9.900\,656\,229\,295\,898\,250\,7\cdot10^{301029}
-n-m	N(m)	m
-n-pi-pow-10-list-positiveinfinity-5	N(\pi^{10}, \bigl\lbrack\infty, 5\bigr\rbrack)	93\,648.047\,476\,083\,020\,973\,7
-n-pi-pow-10-list-positiveinfinity-1	N(\pi^{10}, \bigl\lbrack\infty, 1\bigr\rbrack)	93\,648.047\,476\,083\,020\,973\,7
+n-2-pow-1-000-000		
+n-m		
+n-pi-pow-10-list-positiveinfinity-5		
+n-pi-pow-10-list-positiveinfinity-1		
 n-exponentiale-pow-sin-1-000	N(\exp(\sin(1\,000)))	2.286\,173\,685\,812\,171\,102\,23
 n-exponentiale-pow-sin-1-000-47	N(\exp(\sin(1\,000)), 47)	2.286\,173\,685\,812\,171\,102\,23
-n-1-minus-goldenratio-plus-1-over-goldenratio-20	N(1-\varphi+\frac{1}{\varphi}, 20)	-2.0\cdot10^{-340}
-n-1-minus-goldenratio-plus-1-over-goldenratio	N(1-\varphi+\frac{1}{\varphi}, \bigl\lbrack\infty, 20\bigr\rbrack)	4.13\cdot10^{-22}
-n-exponentiale-pow-100-list-positiveinfinity-neg	N(e^{100}, \bigl\lbrack\infty, -10\bigr\rbrack)	2.688\,117\,141\,816\,135\,448\,41\cdot10^{43}
-n-10-000-000-000-times-neg-exponentiale-pow-999	N(10\,000\,000\,000(e^{100}-\exp(\frac{999\,999\,999\,999}{10\,000\,000\,000})), \bigl\lbrack\infty, 20\bigr\rbrack)	2.688\,117\,141\,7\cdot10^{43}
+n-1-minus-goldenratio-plus-1-over-goldenratio-20		
+n-1-minus-goldenratio-plus-1-over-goldenratio		
+n-exponentiale-pow-100-list-positiveinfinity-neg		
+n-10-000-000-000-times-neg-exponentiale-pow-999		
 an-exact-tie-rounds-to-the-even-digit-0-125	N(\frac{1}{8}, 2)	0.12
 and-0-375-to-0-38	N(\frac{3}{8}, 2)	0.38
 n-pi-1-digit	N(\pi, 1)	3

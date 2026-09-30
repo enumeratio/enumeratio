@@ -2,11 +2,11 @@ id	in
 numberexpand-1-234	NumberExpand[1234]
 numberexpand-157	NumberExpand[157]
 numberexpand-157-2	NumberExpand[157, 2]
-numberexpand-157-2-3	NumberExpand[157, 2, 3]
+numberexpand-157-2-3	
 base-2-zero-terms-kept	NumberExpand[10, 2]
 every-term-carries-the-sign	NumberExpand[-123]
 numberexpand-1-437	NumberExpand[1437]
 numberexpand-neg-14-379	NumberExpand[-14379]
 numberexpand-1-532	NumberExpand[1532]
 numberexpand-1-532-10	NumberExpand[1532, 10]
-numberexpand-1-437-10-8	NumberExpand[1437, 10, 8]
+numberexpand-1-437-10-8	

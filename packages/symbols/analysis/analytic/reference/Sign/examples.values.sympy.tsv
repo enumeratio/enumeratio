@@ -23,8 +23,8 @@ sign-123-minus-456i	sign((123 + -456*I))
 fullsimplify-matrixfunction-sign-list-list-1		
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1		
-d-sign-x-x	diff(sign(Symbol("x")), Symbol("x"))	
-sign-positiveinfinity-times-i	sign((oo * (0 + 1*I)))	
+d-sign-x-x		
+sign-positiveinfinity-times-i		
 tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1
 sign-z-z-z-see-abs	enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))	True
 x-cdot-sign-x-x-here-at-x-5	enumeratio_equal((-5 * sign(-5)), Abs(-5))	True

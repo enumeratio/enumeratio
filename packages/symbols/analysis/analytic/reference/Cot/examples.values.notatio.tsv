@@ -23,9 +23,9 @@ derivative-csc-2-x	<D><Cot>x</Cot> x</D>	<Negate><Power><Csc>x</Csc> 2</Power></
 antiderivative-ln-sin-x	<Integrate><Cot>x</Cot> x</Integrate>	<Ln><Abs><Sin>x</Sin></Abs></Ln>
 n-cot-6-over-5-50	<N><Cot><Rational>6 5</Rational></Cot> 50</N>	<ToExpression>0.38877956936820491163419150497190340959498492594098</ToExpression>
 matrixfunction-function-cot-1-1-list-list-5-over	<MatrixFunction><Function><Block><Cot>_1</Cot></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> <Multiply><Rational>1 2</Rational> Pi</Multiply></List> <List><Multiply><Rational>3 2</Rational> Pi</Multiply> <Multiply><Rational>-1 6</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Divide><Sqrt>3</Sqrt> 3</Divide> 0</List> <List>0 <Divide><Sqrt>3</Sqrt> 3</Divide></List></List>
-assuming-m-in-integers-refine-cot-pi-times-1	<Assuming><Element>m Integers</Element> <Refine><Cot><Multiply>Pi <Add><Multiply>1 <Power>2 -1</Power></Multiply> m</Add></Multiply></Cot></Refine></Assuming>	<Cot><Multiply>Pi <Add>m <Rational>1 2</Rational></Add></Multiply></Cot>
-assuming-m-in-integers-fullsimplify-refine-cot	<Assuming><Element>m Integers</Element> <FullSimplify><Refine><Cot><Multiply>Pi m</Multiply></Cot></Refine></FullSimplify></Assuming>	<Cot><Multiply>Pi m</Multiply></Cot>
-cot-positiveinfinity	<Cot>PositiveInfinity</Cot>	<Indeterminate />
+assuming-m-in-integers-refine-cot-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cot		
+cot-positiveinfinity		
 reciprocal-of-tan-cot-x-frac-1-tan-x	<Equal><Cot><Divide>Pi 4</Divide></Cot> <Divide>1 <Tan><Divide>Pi 4</Divide></Tan></Divide></Equal>	<True />
 pythagorean-identity-1-cot-2-x-csc-2-x	<Equal><Add>1 <Power><Cot><Divide>Pi 6</Divide></Cot> 2</Power></Add> <Power><Csc><Divide>Pi 6</Divide></Csc> 2</Power></Equal>	<True />
 cot-1-over-10-times-pi	<Cot><Multiply><Rational>1 10</Rational> Pi</Multiply></Cot>	<Sqrt><Add>5 <Multiply>2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt>

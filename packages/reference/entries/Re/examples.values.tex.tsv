@@ -2,18 +2,18 @@ id	in	out
 re-of-3-plus-4i-is-3	\mathrm{Re}(3+4i)	3
 re-of-a-real-number-is-itself	\mathrm{Re}(5)	5
 re-of-pi-is-pi-a-real-symbolic-constant	\mathrm{Re}(\pi)	\pi
-real-2-plus-3i	\Re(2+3i)	2
-real-2-times-exponentiale-pow-1-over-3-times-i	\Re(2\exp((\frac{1}{3}i)\pi))	1
-real-3-over-2-plus-4-over-5-times-i	\Re(\frac{3}{2}+\frac{4}{5}i)	\frac{3}{2}
-n-real-exponentiale-plus-i-times-pi-25	N(\Re(e+i\pi), 25)	2.718\,281\,828\,459\,045\,235\,36
-real-41-over-25-minus-2i	\Re(\frac{41}{25}-2i)	\frac{41}{25}
-real-list-list-1-u-list-v-neg-i	\Re(\bigl\lbrack\bigl\lbrack1, u\bigr\rbrack, \bigl\lbrack v, -i\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, \Re(u)\bigr\rbrack, \bigl\lbrack\Re(v), 0\bigr\rbrack\bigr\rbrack
-real-0	\Re(0)	0
-real-positiveinfinity	\Re(\infty)	\infty
-real-positiveinfinity-times-i	\Re(\infty i)	\operatorname{Indeterminate}
-real-complexinfinity	\Re(\tilde\infty)	\operatorname{Indeterminate}
-piecewiseexpand-re-imaginaryunit-times-x-neg-2	\mathrm{PiecewiseExpand}(\mathrm{Re}(i x), -2\lt x\lt2)	\Re(i x)
-simplify-re-x-x-gt-0	\mathrm{Simplify}(\mathrm{Re}(x), x\gt0)	\Re(x)
+real-2-plus-3i		
+real-2-times-exponentiale-pow-1-over-3-times-i		
+real-3-over-2-plus-4-over-5-times-i		
+n-real-exponentiale-plus-i-times-pi-25		
+real-41-over-25-minus-2i		
+real-list-list-1-u-list-v-neg-i		
+real-0		
+real-positiveinfinity		
+real-positiveinfinity-times-i		
+real-complexinfinity		
+piecewiseexpand-re-imaginaryunit-times-x-neg-2		
+simplify-re-x-x-gt-0		
 re-of-a-symbolic-value-stays-unevaluated	\mathrm{Re}(x)	\Re(x)
 real-1	\Re(1)	1
 real-neg-1	\Re(-1)	-1
@@ -27,7 +27,7 @@ real-sqrt-3-plus-i	\Re(\sqrt{3}+i)	\sqrt{3}
 real-1-plus-sqrt-3-times-i	\Re(1+\sqrt{3}i)	1
 real-neg-1-plus-sqrt-3-times-i	\Re(\sqrt{3}i-1)	-1
 real-neg-sqrt-3-plus-i	\Re(i-\sqrt{3})	-\sqrt{3}
-list-real-x-times-exponentiale-pow-1-over-5	\bigl\lbrack\Re(x\exp((1/5i)\pi)), \Re(2x+i)\bigr\rbrack	\bigl\lbrack\Re(x\times(\frac{1}{4}+\frac{\sqrt{5}}{4}+(\frac{2^{1/2}}{4}i)\sqrt{5-5^{1/2}})), \Re(2x+i)\bigr\rbrack
+list-real-x-times-exponentiale-pow-1-over-5		
 real-neg-sqrt-3-minus-i	\Re(-i-\sqrt{3})	-\sqrt{3}
 real-neg-1-plus-neg-sqrt-3-times-i	\Re(-\sqrt{3}i-1)	-1
 real-1-plus-neg-sqrt-3-times-i	\Re(1-\sqrt{3}i)	1

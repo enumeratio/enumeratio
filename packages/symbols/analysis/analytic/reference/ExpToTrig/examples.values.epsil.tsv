@@ -9,6 +9,6 @@ exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	ExpToTrig(-ln(-i * x + 1) + ln(i
 exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	ExpToTrig(exponentialE ^ x <= 11 && 3 ^ (i * x) == 7)	sinh(x) + cosh(x) <= 11 && 3 ^ (i * x) == 7
 exptotrig-neg-1-pow-5-over-7	ExpToTrig((-1) ^ (5 / 7))	-1
 exptotrig-list-exponentiale-pow-i-times-x-eq-neg	ExpToTrig([exponentialE ^ (i * x) == -1, root(-1, 11)])	[i * sin(x) + cos(x) == -1, -1]
-exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2	ExpToTrig(-ln(-x + 2) + ln(x + 2))	ln((x + 2) / (-x + 2))
+exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2		
 exptotrig-root-neg-1-16	ExpToTrig(root(-1, 16))	root(-1, 16)
 exptotrig-exponentiale-pow-i-times-x-eq-neg-1	ExpToTrig(exponentialE ^ (i * x) == -1)	i * sin(x) + cos(x) == -1

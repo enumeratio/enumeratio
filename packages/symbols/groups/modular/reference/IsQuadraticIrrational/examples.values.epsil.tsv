@@ -11,5 +11,5 @@ a-rational-multiple-of-a-surd	IsQuadraticIrrational(3 * sqrt(2))	True
 a-surd-subtracted-from-a-rational	IsQuadraticIrrational(1 - sqrt(3))	True
 isquadraticirrational-3-over-2	IsQuadraticIrrational(3 / 2)	False
 isquadraticirrational-list-sqrt-2-sqrt-3-2	IsQuadraticIrrational([sqrt(2), sqrt(3), 2])	[True, True, False]
-isquadraticirrational-s	IsQuadraticIrrational(s)	False
+isquadraticirrational-s		
 a-rational-is-not-irrational	IsQuadraticIrrational(3 / 4)	False

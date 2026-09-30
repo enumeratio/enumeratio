@@ -1,3 +1,3 @@
 id	in	out
 an-edge-between-1-and-2	<UndirectedEdge>1 2</UndirectedEdge>	<UndirectedEdge>1 2</UndirectedEdge>
-subgraph-completegraph-4-list-undirectededge-1-2	<Subgraph><CompleteGraph>4</CompleteGraph> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List></Subgraph>	<Graph><Apply>List</Apply> <Apply>List</Apply></Graph>
+subgraph-completegraph-4-list-undirectededge-1-2		

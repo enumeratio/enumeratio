@@ -28,8 +28,8 @@ m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiCN}(0.3, -2))	0.952\,664
 a-complex-argument-u	N(\mathrm{JacobiCN}(0.3+0.4i, 0.5))	1.027\,992\,872\,007\,962\,7-0.123\,775\,864\,136\,771\,64i
 matrixfunction-function-jacobicn-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiCN}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack
 list-jacobicn-z-0-jacobicn-z-1	\bigl\lbrack\mathrm{JacobiCN}(z, 0), \mathrm{JacobiCN}(z, 1)\bigr\rbrack	\bigl\lbrack\cos(z), \frac{1}{\cosh(z)}\bigr\rbrack
-n-jacobicn-2-1-over-3-50	N(\mathrm{JacobiCN}(2, \frac{1}{3}), 50)	\mathrm{JacobiCN}(2, 0.\overline{3})
-list-jacobicn-0-m-jacobicn-1-over-2-times	\bigl\lbrack\mathrm{JacobiCN}(0, m), \mathrm{JacobiCN}(\frac{\mathrm{EllipticK}(m)}{2}, m), \mathrm{JacobiCN}(\mathrm{EllipticK}(m), m)\bigr\rbrack	\bigl\lbrack1, \mathrm{JacobiCN}(\frac{\mathrm{EllipticK}(m)}{2}, m), 0\bigr\rbrack
+n-jacobicn-2-1-over-3-50		
+list-jacobicn-0-m-jacobicn-1-over-2-times		
 u-0-is-1-for-any-m	\mathrm{JacobiCN}(0, m)	1
 m-0-reduces-to-cos-u	\mathrm{JacobiCN}(u, 0)	\cos(u)
 the-quarter-period-u-elliptick-m-is-0	\mathrm{JacobiCN}(\mathrm{EllipticK}(m), m)	0

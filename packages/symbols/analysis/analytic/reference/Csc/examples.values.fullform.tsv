@@ -23,9 +23,9 @@ derivative-csc-x-cot-x	D[Csc[x], x]
 antiderivative-ln-csc-x-cot-x	Integrate[Csc[x], x]	
 n-csc-6-over-5-50	N[Csc[Rational[6, 5]], 50]	
 matrixfunction-function-csc-1-1-list-list-1-over	MatrixFunction[Function[Csc[Slot[1]]], List[List[Times[Rational[1, 3], Pi], Pi], List[Times[Rational[1, 6], Pi], Times[Rational[-1, 2], Pi]]]]	[MatrixFunction, [Function, [Csc, _1]], [List, [List, [Multiply, [Rational, 1, 3], Pi], Pi], [List, [Multiply, [Rational, 1, 6], Pi], [Multiply, [Rational, -1, 2], Pi]]]]
-assuming-m-in-integers-refine-csc-pi-times-m	Assuming[Element[m, Integers], Refine[Csc[Times[Pi, m]]]]	
-assuming-m-in-integers-fullsimplify-refine-csc	Assuming[Element[m, Integers], FullSimplify[Refine[Csc[Times[Pi, Plus[Times[1, Power[2, -1]], m]]]]]]	
-csc-positiveinfinity	Csc[Infinity]	
+assuming-m-in-integers-refine-csc-pi-times-m		
+assuming-m-in-integers-fullsimplify-refine-csc		
+csc-positiveinfinity		
 reciprocal-of-sin-csc-x-frac-1-sin-x	Equal[Csc[Divide[Pi, 6]], Divide[1, Sin[Divide[Pi, 6]]]]	
 csc-1-over-8-times-pi	Csc[Times[Rational[1, 8], Pi]]	
 csc-3-over-10-times-pi	Csc[Times[Rational[3, 10], Pi]]	

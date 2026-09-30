@@ -9,8 +9,8 @@ n-expintegrale-1-plus-i-2-plus-3i	N(\mathrm{ExpIntegralE}(1+i, 2+3i))	-0.018\,94
 expintegrale-0-z	\mathrm{ExpIntegralE}(0, z)	\frac{\exp(-z)}{z}
 seriescoefficient-expintegrale-0-x-list-x-0-n	\mathrm{SeriesCoefficient}(\mathrm{ExpIntegralE}(0, x), \bigl\lbrack x, 0, n\bigr\rbrack)	\mathrm{SeriesCoefficient}(\frac{\exp(-x)}{x}, \bigl\lbrack x, 0, n\bigr\rbrack)
 expintegrale-0-positiveinfinity	\mathrm{ExpIntegralE}(0, \infty)	0
-n-expintegrale-3-11-over-5-50	N(\mathrm{ExpIntegralE}(3, \frac{11}{5}), 50)	0.023\,520\,656\,648\,276\,496
-simplify-functionexpand-list-expintegrale-5	\mathrm{Simplify}(\mathrm{FunctionExpand}(\bigl\lbrack\mathrm{ExpIntegralE}(5/2, z), \mathrm{ExpIntegralE}(4, z), \mathrm{ExpIntegralE}(-4, z)\bigr\rbrack))	\bigl\lbrack\mathrm{ExpIntegralE}(\frac{5}{2}, z), \mathrm{ExpIntegralE}(4, z), \mathrm{ExpIntegralE}(-4, z)\bigr\rbrack
+n-expintegrale-3-11-over-5-50		
+simplify-functionexpand-list-expintegrale-5		
 e-n-0-1-n-1-for-n-1	\mathrm{ExpIntegralE}(2, 0)	1
 e-0-x-e-x-x	\mathrm{ExpIntegralE}(0, x)	\frac{\exp(-x)}{x}
 expintegrale-0-0	\mathrm{ExpIntegralE}(0, 0)	\tilde\infty

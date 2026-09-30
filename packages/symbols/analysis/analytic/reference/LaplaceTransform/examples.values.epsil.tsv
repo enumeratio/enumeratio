@@ -1,18 +1,18 @@
-id	in	out	back
-t-cubed	LaplaceTransform(t ^ 3, t, s)	6 / s ^ 4	
-exp-at	LaplaceTransform(exponentialE ^ (2t), t, s)	1 / (s - 2)	
-sin-at	LaplaceTransform(sin(3t), t, s)	3 / (s ^ 2 + 9)	
-t-cubed-exp-shift	LaplaceTransform(exponentialE ^ (2t) * t ^ 3, t, s)	6 / (s - 2) ^ 4	
-exp-sin-shift	LaplaceTransform(exponentialE ^ (2t) * sin(3t), t, s)	3 / ((s - 2) ^ 2 + 9)	
-laplacetransform-1-t-s	LaplaceTransform(1, t, s)	1 / s	
-laplacetransform-3-times-t-pow-2-plus-5t-minus-7	LaplaceTransform(3 * t ^ 2 + 5t - 7, t, s)	-7 / s + 5 / s ^ 2 + 6 / s ^ 3	
-laplacetransform-exponentiale-pow-neg-a-times-t	LaplaceTransform(exponentialE ^ (-(a * t)), t, s)	1 / (a + s)	
-simplify-laplacetransform-b-times-sinh-a-times-t	"simplify(LaplaceTransform((b * sinh(a * t) - a * sinh(b * t)) * (a ^ 2 - b ^ 2) ^\n                                                                -1, t, s))"	LaplaceTransform((b * sinh(a * t) - a * sinh(b * t)) / (a ^ 2 - b ^ 2), t, s)	[Simplify, [LaplaceTransform, [Multiply, [Subtract, [Multiply, b, [Sinh, [Multiply, a, t]]], [Multiply, a, [Sinh, [Multiply, b, t]]]], [Power, [Subtract, [Power, a, 2], [Power, b, 2]], -1]], t, s]]
-laplacetransform-1-over-t-times-exponentiale-pow	LaplaceTransform(1 / t * (exponentialE ^ t - 1), t, s)	LaplaceTransform((exponentialE ^ t - 1) / t, t, s)	
-laplacetransform-1-over-sqrt-t-times-chebyshevt	"LaplaceTransform(1 / sqrt(t) * ChebyshevT(n, 1 / (t + 1) * (-t + 1)) * (t + 1) ^\n                                                                       n, t, s)"	"LaplaceTransform(\n                  ChebyshevT(n, (-t + 1) / (t + 1)) * (t + 1) ^ n / sqrt(t),\n                  t,\n                  s,\n                )"	
-laplacetransform-gamma-nu-a-times-1-over-t-t-s	LaplaceTransform(gamma(nu, a * (1 / t)), t, s)	LaplaceTransform(gamma(nu, a / t), t, s)	
-laplacetransform-diracdelta-t-minus-1-t-s	LaplaceTransform(DiracDelta(t - 1), t, s)	exponentialE ^ (-s)	
-laplacetransform-1-over-gamma-m-plus-1-times	"LaplaceTransform(\n                  1 / (gamma(m + 1) * gamma(n + 1)) * x ^ m * y ^ n,\n                  [x, y],\n                  [p, q],\n                )"	LaplaceTransform(x ^ m * y ^ n / (gamma(m + 1) * gamma(n + 1)), [x, y], [p, q])	
-laplacetransform-1-over-sqrt-x-times-y-times-cos	LaplaceTransform(1 / sqrt(x * y) * cos(sqrt(x * y)), [x, y], [p, q])	LaplaceTransform(cos(sqrt(x * y)) / (sqrt(x) * sqrt(y)), [x, y], [p, q])	
-laplacetransform-1-over-t-times-sin-3t-t-s	LaplaceTransform(1 / t * sin(3t), t, s)	LaplaceTransform(sin(3t) / t, t, s)	
-fullsimplify-laplacetransform-realabs-sin-t-t-s	FullSimplify(LaplaceTransform(RealAbs(sin(t)), t, s))	LaplaceTransform(abs(sin(t)), t, s)	
+id	in	out
+t-cubed	LaplaceTransform(t ^ 3, t, s)	6 / s ^ 4
+exp-at	LaplaceTransform(exponentialE ^ (2t), t, s)	1 / (s - 2)
+sin-at	LaplaceTransform(sin(3t), t, s)	3 / (s ^ 2 + 9)
+t-cubed-exp-shift	LaplaceTransform(exponentialE ^ (2t) * t ^ 3, t, s)	6 / (s - 2) ^ 4
+exp-sin-shift	LaplaceTransform(exponentialE ^ (2t) * sin(3t), t, s)	3 / ((s - 2) ^ 2 + 9)
+laplacetransform-1-t-s		
+laplacetransform-3-times-t-pow-2-plus-5t-minus-7		
+laplacetransform-exponentiale-pow-neg-a-times-t		
+simplify-laplacetransform-b-times-sinh-a-times-t		
+laplacetransform-1-over-t-times-exponentiale-pow		
+laplacetransform-1-over-sqrt-t-times-chebyshevt		
+laplacetransform-gamma-nu-a-times-1-over-t-t-s		
+laplacetransform-diracdelta-t-minus-1-t-s		
+laplacetransform-1-over-gamma-m-plus-1-times		
+laplacetransform-1-over-sqrt-x-times-y-times-cos		
+laplacetransform-1-over-t-times-sin-3t-t-s		
+fullsimplify-laplacetransform-realabs-sin-t-t-s		

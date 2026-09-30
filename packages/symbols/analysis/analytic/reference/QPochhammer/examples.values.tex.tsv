@@ -10,7 +10,7 @@ qpochhammer-3-5-9	\mathrm{QPochhammer}(3, 5, 9)	-175\,258\,163\,137\,268\,414\,8
 functionexpand-qpochhammer-a-2-1	\mathrm{FunctionExpand}(\mathrm{QPochhammer}(a, 2, 1))	1-a
 qpochhammer-1-over-2-plus-1-over-2-times-i-1	\mathrm{QPochhammer}(\frac{1}{2}+\frac{1}{2}i, \frac{1}{2}-\frac{1}{2}i, 10)	\frac{95\,264\,271}{268\,435\,456}-\frac{25\,488\,603}{268\,435\,456}i
 matrixfunction-function-qpochhammer-3-1-5-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{QPochhammer}(3, \operatorname{\_1}, 5), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-128, 0\bigr\rbrack, \bigl\lbrack0, -1\,452\,215\,072\bigr\rbrack\bigr\rbrack
-functionexpand-qpochhammer-2-q-5	\mathrm{FunctionExpand}(\mathrm{QPochhammer}(2, q, 5))	(1-2q^4)(1-2q^3)(1-2q^2)(2q-1)
+functionexpand-qpochhammer-2-q-5		
 the-empty-product	\mathrm{QPochhammer}(a, q, 0)	1
 qpochhammer-0-0-0	\mathrm{QPochhammer}(0, 0, 0)	1
 qpochhammer-0-0-1	\mathrm{QPochhammer}(0, 0, 1)	1

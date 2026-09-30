@@ -7,6 +7,6 @@ qfactorial-3-1-2	N(QFactorial(3, 1 / 2))	2.625
 qfactorial-6-3	N(QFactorial(6, 3))	91_611_520	
 qfactorial-3-1-over-2	QFactorial(3, 1 / 2)	21 / 8	
 matrixfunction-function-1-pow-2-plus-1-plus-1	MatrixFunction(Function((_1 ^ 2 + _1 + 1) * (_1 + 1), _1), [[-1, 0], [0, 5]])	[[0, 0], [0, 186]]	Unreadable
-n-qfactorial-1-over-3-6-50	N(QFactorial(1 / 3, 6), 50)	QFactorial(1 / 3, 6)	
+n-qfactorial-1-over-3-6-50			
 the-inversion-generating-function-of	expand(QFactorial(3, q))	q ^ 3 + 2 * q ^ 2 + 2q + 1	
 at-q-1-it-is-the-ordinary-factorial	QFactorial(5, 1)	120	

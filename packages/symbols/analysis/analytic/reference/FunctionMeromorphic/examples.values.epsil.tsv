@@ -5,5 +5,5 @@ a-branch-point-is-not-a-pole	FunctionMeromorphic(ln(x), x)	False
 polynomials-are-meromorphic	FunctionMeromorphic(x ^ 2, x)	True
 functionmeromorphic-sqrt-z-z	FunctionMeromorphic(sqrt(z), z)	False
 functionmeromorphic-ln-z-z	FunctionMeromorphic(ln(z), z)	False
-list-functionmeromorphic-x-times-x-pow-2-plus-1	"[\n  FunctionMeromorphic(x * (x ^ 2 + 1) ^ -1, x),\n  FunctionMeromorphic((x ^ 2 + 1) * (x ^ 2 - 1) ^ -1, x),\n  FunctionMeromorphic(x ^ 3 - 2 * x ^ 2 - 5x + 6, x),\n]"	"[\n  FunctionMeromorphic(x * (x ^ 2 + 1) ^ -1, x),\n  FunctionMeromorphic((x ^ 2 + 1) * (x ^ 2 - 1) ^ -1, x),\n  True,\n]"
-list-functionmeromorphic-tan-x-x	"[\n  FunctionMeromorphic(tan(x), x),\n  FunctionMeromorphic(sec(x), x),\n  FunctionMeromorphic(sech(x), x),\n]"	[True, FunctionMeromorphic(sec(x), x), FunctionMeromorphic(sech(x), x)]
+list-functionmeromorphic-x-times-x-pow-2-plus-1		
+list-functionmeromorphic-tan-x-x		

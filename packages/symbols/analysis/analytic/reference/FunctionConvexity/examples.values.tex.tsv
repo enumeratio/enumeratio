@@ -2,6 +2,6 @@ id	in	out
 a-parabola-is-convex	\mathrm{FunctionConvexity}(x^2, x)	1
 a-cubic-has-an-inflection-point	\mathrm{FunctionConvexity}(x^3, x)	\mathrm{FunctionConvexity}(x^3, x)
 exp-is-always-convex	\mathrm{FunctionConvexity}(e^{x}, x)	1
-map-function-functionconvexity-1-list-x-y-1-list	\mathrm{Map}(()\mapsto\mathrm{FunctionConvexity}(\operatorname{\_1}, \bigl\lbrack x, y\bigr\rbrack), \bigl\lbrack x^2, x^2+y^2\bigr\rbrack)	\bigl\lbrack\mathrm{FunctionConvexity}(x^2, \bigl\lbrack x, y\bigr\rbrack), \mathrm{FunctionConvexity}(x^2+y^2, \bigl\lbrack x, y\bigr\rbrack)\bigr\rbrack
+map-function-functionconvexity-1-list-x-y-1-list		
 functionconvexity-x-pow-2-minus-1-x	\mathrm{FunctionConvexity}(x^2-1, x)	1
 a-restricted-domain-answers-indeterminate	\mathrm{FunctionConvexity}(\frac{1}{x}, x)	\mathrm{FunctionConvexity}(\frac{1}{x}, x)

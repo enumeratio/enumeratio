@@ -8,7 +8,7 @@ threads-element-wise-over-a-list-as-wolfram-s	stirlingS1([2, 4, 6], 2)	[1, 11, 2
 exact-for-large-n	stirlingS1(50, 2)	2_724_619_372_591_264_761_651_711_494_187_624_530_726_005_154_239_846_809_600_000_000	
 a-mid-sized-n-and-k-past-the-fast-paths	stirlingS1(40, 14)	1_640_591_781_294_212_129_275_881_145_293_779_479_141_760	
 the-number-of-permutations-of-5-elements-with	stirlingS1(5, 3)	35	
-abs-stirlings1-n-range-1-n	abs(stirlingS1(n, Range(1, n)))	map(Function(abs(_1), _1), map(Function(stirlingS1(n, _1), _1), Range(1, n)))	
+abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n	sum(abs(stirlingS1(4, k)), (k, 0, 4)) == 4!	True	
 the-signed-row-sum-vanishes-for-n-ge-2	sum(stirlingS1(6, k), (k, 0, 6))	0	
 s-n-n-1-binom-n-2	stirlingS1(6, 5) == -binomial(6, 2)	True	

@@ -2,4 +2,4 @@ id	in	out
 adds-attributes	\mathrm{Attributes}(\mathrm{Add})	\bigl\lbrack\mathrm{Flat}, \mathrm{HoldAll}, \mathrm{Listable}, \mathrm{Orderless}\bigr\rbrack
 attributes-f	\mathrm{Attributes}(f)	\bigl\lbrack\bigr\rbrack
 attributes-syms	\mathrm{Attributes}(\mathrm{syms})	\bigl\lbrack\bigr\rbrack
-attributes-attributes	\mathrm{Attributes}(\mathrm{Attributes})	\bigl\lbrack\mathrm{HoldAll}\bigr\rbrack
+attributes-attributes		

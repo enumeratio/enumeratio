@@ -4,7 +4,7 @@ iscomposite-13	\mathrm{IsComposite}(13)	\bot
 iscomposite-1-plus-10-pow-3-000	\mathrm{IsComposite}(1+10^{3\,000})	\top
 iscomposite-list-1-2-3-4-5-6	\mathrm{IsComposite}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack\bot, \bot, \bot, \top, \bot, \top\bigr\rbrack
 iscomposite-5	\mathrm{IsComposite}(5)	\bot
-iscomposite-3-plus-i	\mathrm{IsComposite}(3+i)	\bot
+iscomposite-3-plus-i		
 iscomposite-8	\mathrm{IsComposite}(8)	\top
 iscomposite-12	\mathrm{IsComposite}(12)	\top
 iscomposite-67	\mathrm{IsComposite}(67)	\bot

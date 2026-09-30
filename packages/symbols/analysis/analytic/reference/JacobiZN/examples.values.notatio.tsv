@@ -5,8 +5,8 @@ zn-2-5-0-3	<N><JacobiZN>2.5 0.3</JacobiZN></N>	<ToExpression>-0.0805185036719375
 a-parameter-close-to-its-m-1-boundary	<N><JacobiZN>1.1 0.9</JacobiZN></N>	<ToExpression>0.35471220019987126</ToExpression>
 matrixfunction-function-jacobizn-neg-1-over-3	<MatrixFunction><Function><Block><JacobiZN><Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply> _1</JacobiZN></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List><Complex>0 <Negate><Sqrt>3</Sqrt></Negate></Complex> 0</List> <List>0 <Complex>0 <Negate><Sqrt>3</Sqrt></Negate></Complex></List></List>
 list-jacobizn-u-0-jacobizn-u-1	<List><JacobiZN>u 0</JacobiZN> <JacobiZN>u 1</JacobiZN></List>	<List>0 <Tanh>u</Tanh></List>
-n-jacobizn-1-1-over-2-50	<N><JacobiZN>1 <Rational>1 2</Rational></JacobiZN> 50</N>	<JacobiZN>1 0.5</JacobiZN>
-list-jacobizn-0-m-jacobizn-1-over-2-times	<List><JacobiZN>0 m</JacobiZN> <JacobiZN><Multiply><Rational>1 2</Rational> <EllipticK>m</EllipticK></Multiply> m</JacobiZN> <JacobiZN><EllipticK>m</EllipticK> m</JacobiZN></List>	<List>0 <JacobiZN><Multiply><Rational>1 2</Rational> <EllipticK>m</EllipticK></Multiply> m</JacobiZN> <JacobiZN><EllipticK>m</EllipticK> m</JacobiZN></List>
+n-jacobizn-1-1-over-2-50		
+list-jacobizn-0-m-jacobizn-1-over-2-times		
 u-0-is-0-for-any-m	<JacobiZN>0 m</JacobiZN>	<ToExpression>0</ToExpression>
 m-0-is-0-for-any-u	<JacobiZN>u 0</JacobiZN>	<ToExpression>0</ToExpression>
 m-outside-0-1-is-declined	<N><JacobiZN>0.3 -0.5</JacobiZN></N>	<JacobiZN>0.3 -0.5</JacobiZN>

@@ -2,22 +2,22 @@ id	in	out
 one-over-s-squared	<InverseLaplaceTransform><Power>s -2</Power> s t</InverseLaplaceTransform>	<t />
 one-over-s-minus-a	<InverseLaplaceTransform><Power><Add>s <Negate>a</Negate></Add> -1</Power> s t</InverseLaplaceTransform>	<Power>ExponentialE <Multiply>a t</Multiply></Power>
 s-over-s-squared-plus-a-squared	<InverseLaplaceTransform><Divide>s <Add><Power>s 2</Power> <Power>a 2</Power></Add></Divide> s t</InverseLaplaceTransform>	<Cos><Multiply>a t</Multiply></Cos>
-inverselaplacetransform-1-over-s-plus-1-s-t	<InverseLaplaceTransform><Divide>1 <Add>s 1</Add></Divide> s t</InverseLaplaceTransform>	<Power>ExponentialE <Negate>t</Negate></Power>
-inverselaplacetransform-ln-1-over-b-plus-s-times	<InverseLaplaceTransform><Ln><Multiply><Divide>1 <Add>b s</Add></Divide> <Add>a s</Add></Multiply></Ln> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Add><Ln><Add>a s</Add></Ln> <Negate><Ln><Add>b s</Add></Ln></Negate></Add> s t</InverseLaplaceTransform>
-inverselaplacetransform-a-times-1-over-a-pow-2	<InverseLaplaceTransform><Multiply>a <Divide>1 <Add><Power>a 2</Power> <Power>s 2</Power></Add></Divide></Multiply> s t</InverseLaplaceTransform>	<Sin><Multiply>a t</Multiply></Sin>
-inverselaplacetransform-s-times-1-over-a-pow-2	<InverseLaplaceTransform><Multiply>s <Divide>1 <Add><Power>a 2</Power> <Power>s 2</Power></Add></Divide></Multiply> s t</InverseLaplaceTransform>	<Cos><Multiply>a t</Multiply></Cos>
-fullsimplify-inverselaplacetransform-a-times-1	<FullSimplify><InverseLaplaceTransform><Multiply>a <Divide>1 <Add><Negate><Power>a 2</Power></Negate> <Power>s 2</Power></Add></Divide></Multiply> s t</InverseLaplaceTransform></FullSimplify>	<Sinh><Multiply>a t</Multiply></Sinh>
-fullsimplify-inverselaplacetransform-s-times-1	<FullSimplify><InverseLaplaceTransform><Multiply>s <Divide>1 <Add><Negate><Power>a 2</Power></Negate> <Power>s 2</Power></Add></Divide></Multiply> s t</InverseLaplaceTransform></FullSimplify>	<Cosh><Multiply>a t</Multiply></Cosh>
-inverselaplacetransform-s-times-a-pow-2-plus-s	<InverseLaplaceTransform><Multiply>s <Power><Add><Power>a 2</Power> <Power>s 2</Power></Add> -2</Power></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide>s <Power><Add><Power>a 2</Power> <Power>s 2</Power></Add> 2</Power></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-s-times-1-over-a-pow-2-2	<InverseLaplaceTransform><Multiply>s <Divide>1 <Multiply><Add><Power>a 2</Power> <Power>s 2</Power></Add> <Add><Power>b 2</Power> <Power>s 2</Power></Add></Multiply></Divide></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide>s <Multiply><Add><Power>a 2</Power> <Power>s 2</Power></Add> <Add><Power>b 2</Power> <Power>s 2</Power></Add></Multiply></Divide> s t</InverseLaplaceTransform>
-fullsimplify-inverselaplacetransform-1-over-neg	<FullSimplify><InverseLaplaceTransform><Multiply><Divide>1 <Multiply><Add><Negate><Power>a 2</Power></Negate> <Power>s 2</Power></Add> <Add><Negate><Power>b 2</Power></Negate> <Power>s 2</Power></Add></Multiply></Divide> <Power>s 2</Power></Multiply> s t</InverseLaplaceTransform></FullSimplify>	<InverseLaplaceTransform><Divide><Power>s 2</Power> <Multiply><Add><Negate><Power>a 2</Power></Negate> <Power>s 2</Power></Add> <Add><Negate><Power>b 2</Power></Negate> <Power>s 2</Power></Add></Multiply></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-s-minus-2-times	<InverseLaplaceTransform><Multiply><Divide>1 <Multiply><Add>s -2</Add> <Sqrt>s</Sqrt></Multiply></Divide> <Power>ExponentialE <Multiply>-5 s</Multiply></Power></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Power>ExponentialE <Multiply>-5 s</Multiply></Power> <Multiply><Add>s -2</Add> <Sqrt>s</Sqrt></Multiply></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-a-plus-s-times	<InverseLaplaceTransform><Multiply><Divide>1 <Add>a s</Add></Divide> <Sqrt><Add>b s</Add></Sqrt></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Sqrt><Add>b s</Add></Sqrt> <Add>a s</Add></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-s-minus-1-times	<InverseLaplaceTransform><Multiply><Divide>1 <Add>s -1</Add></Divide> <Ln>s</Ln></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Ln>s</Ln> <Add>s -1</Add></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-ln-1-over-s-pow-2-plus-2	<InverseLaplaceTransform><Ln><Multiply><Divide>1 <Add><Power>s 2</Power> 2</Add></Divide> <Add><Power>s 2</Power> 1</Add></Multiply></Ln> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Add><Negate><Ln><Add><Power>s 2</Power> 2</Add></Ln></Negate> <Ln><Add><Power>s 2</Power> 1</Add></Ln></Add> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-root-s-3-times-ln	<InverseLaplaceTransform><Multiply><Divide>1 <Root>s 3</Root></Divide> <Ln><Multiply>4 s</Multiply></Ln></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Ln><Multiply>4 s</Multiply></Ln> <Root>s 3</Root></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-s-times-ln-s-pow	<InverseLaplaceTransform><Multiply><Divide>1 s</Divide> <Power><Ln>s</Ln> 2</Power></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Power><Ln>s</Ln> 2</Power> s</Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-root-s-3-times	<InverseLaplaceTransform><Multiply><Divide>1 <Root>s 3</Root></Divide> <Gamma><Rational>1 3</Rational> s</Gamma></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Gamma><Rational>1 3</Rational> s</Gamma> <Root>s 3</Root></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-1-over-sqrt-s-times-erf	<InverseLaplaceTransform><Multiply><Divide>1 <Sqrt>s</Sqrt></Divide> <Erf><Sqrt><Multiply>2 s</Multiply></Sqrt></Erf></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Divide><Erf><Sqrt><Multiply>2 s</Multiply></Sqrt></Erf> <Sqrt>s</Sqrt></Divide> s t</InverseLaplaceTransform>
-inverselaplacetransform-elliptick-a-pow-2-times	<InverseLaplaceTransform><Add><EllipticK><Multiply><Power>a 2</Power> <Power>s -2</Power></Multiply></EllipticK> <Multiply><Rational>-1 2</Rational> Pi</Multiply></Add> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Add><EllipticK><Divide><Power>a 2</Power> <Power>s 2</Power></Divide></EllipticK> <Multiply><Rational>-1 2</Rational> Pi</Multiply></Add> s t</InverseLaplaceTransform>
-inverselaplacetransform-s-times-neg-elliptice-a	<InverseLaplaceTransform><Multiply>s <Add><Negate><EllipticE><Multiply><Power>a 2</Power> <Power>s -2</Power></Multiply></EllipticE></Negate> <Multiply><Rational>1 2</Rational> Pi</Multiply></Add></Multiply> s t</InverseLaplaceTransform>	<InverseLaplaceTransform><Multiply><Rational>1 2</Rational> s <Add><Multiply>-2 <EllipticE><Divide><Power>a 2</Power> <Power>s 2</Power></Divide></EllipticE></Multiply> Pi</Add></Multiply> s t</InverseLaplaceTransform>
+inverselaplacetransform-1-over-s-plus-1-s-t		
+inverselaplacetransform-ln-1-over-b-plus-s-times		
+inverselaplacetransform-a-times-1-over-a-pow-2		
+inverselaplacetransform-s-times-1-over-a-pow-2		
+fullsimplify-inverselaplacetransform-a-times-1		
+fullsimplify-inverselaplacetransform-s-times-1		
+inverselaplacetransform-s-times-a-pow-2-plus-s		
+inverselaplacetransform-s-times-1-over-a-pow-2-2		
+fullsimplify-inverselaplacetransform-1-over-neg		
+inverselaplacetransform-1-over-s-minus-2-times		
+inverselaplacetransform-1-over-a-plus-s-times		
+inverselaplacetransform-1-over-s-minus-1-times		
+inverselaplacetransform-ln-1-over-s-pow-2-plus-2		
+inverselaplacetransform-1-over-root-s-3-times-ln		
+inverselaplacetransform-1-over-s-times-ln-s-pow		
+inverselaplacetransform-1-over-root-s-3-times		
+inverselaplacetransform-1-over-sqrt-s-times-erf		
+inverselaplacetransform-elliptick-a-pow-2-times		
+inverselaplacetransform-s-times-neg-elliptice-a		

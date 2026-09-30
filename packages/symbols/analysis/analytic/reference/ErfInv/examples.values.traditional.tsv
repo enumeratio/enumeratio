@@ -12,8 +12,8 @@ to-30-significant-digits-every-one-correctly	N(\operatorname{erf}^{-1}(\frac{1}{
 n-erfinv-33-over-100-50	N(\operatorname{erf}^{-1}(\frac{33}{100}), 50)	0.301\,332\,146\,133\,705\,826\,129
 functionexpand-matrixfunction-erfinv-list-list-0	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(\mathrm{ErfInv}, \bigl\lbrack\bigl\lbrack0, 1/2\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\operatorname{erf}^{-1}(-2^{1/2}/2))+\frac{\operatorname{erf}^{-1}(2^{1/2}/2)}{2}, \frac{1}{4}(\sqrt{2}\operatorname{erf}^{-1}(2^{1/2}/2))-\frac{1}{4}(\sqrt{2}\operatorname{erf}^{-1}(-2^{1/2}/2))\bigr\rbrack, \bigl\lbrack\frac{1}{2}(\sqrt{2}\operatorname{erf}^{-1}(2^{1/2}/2))-\frac{1}{2}(\sqrt{2}\operatorname{erf}^{-1}(-2^{1/2}/2)), \frac{1}{2}(\operatorname{erf}^{-1}(-2^{1/2}/2))+\frac{\operatorname{erf}^{-1}(2^{1/2}/2)}{2}\bigr\rbrack\bigr\rbrack
 erfinv-a-erf-a-z	\mathrm{ErfInv}(a, \operatorname{erf}(a, z))	\operatorname{erf}^{-1}(\operatorname{erf}(z))
-functionexpand-erf-erfinv-s	\mathrm{FunctionExpand}(\operatorname{erf}(\operatorname{erf}^{-1}(s)))	s
-erfinv-s-eq-erfinv-0-s	\operatorname{erf}^{-1}(s)=\mathrm{ErfInv}(0, s)	\mathrm{True}
+functionexpand-erf-erfinv-s		
+erfinv-s-eq-erfinv-0-s		
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	\sqrt{2}\operatorname{erf}^{-1}(0.95)	1.959\,963\,984\,540\,054\,235\,53
 inverse-of-erf-erf-erfinv-x-x-see-erf	\operatorname{erf}(\operatorname{erf}^{-1}(0.5))=0.5	\mathrm{True}
 odd-erfinv-x-erfinv-x-applied-symbolically	\operatorname{erf}^{-1}(-x)	-\operatorname{erf}^{-1}(x)
@@ -22,7 +22,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	\mathrm{IsNumeric}(\mathrm{ErfInv}(\frac{1}{
 erfinv-0-0		
 erfinv-0-1		
 erfinv-1-0	\mathrm{ErfInv}(1, 0)	\operatorname{erf}^{-1}(\operatorname{erf}(1))
-solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	\mathrm{Solve}({\operatorname{erf}^{-1}(x)}^3+2\operatorname{erf}^{-1}(x)=1, x)	\bigl\lbrack\bigr\rbrack
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1		
 attributes-erfinv		
 outside-its-real-domain-1-1-compute-engine	\operatorname{erf}^{-1}(2)	\operatorname{erf}^{-1}(2)
 blows-up-near-the-boundary-erfinv-0-9999-is	\operatorname{erf}^{-1}(0.999\,9)	2.751\,063\,905\,712\,060\,796\,15

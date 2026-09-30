@@ -1,8 +1,8 @@
-id	in	out	back
-3-4-5	Normalize([3, 4])	[3 / 5, 4 / 5]	
-normalize-list-1-5-1	Normalize([1, 5, 1])	[sqrt(3) / 9, 5 / 9 * sqrt(3), sqrt(3) / 9]	
-zero-vector	Normalize([0, 0])	[0, 0]	
-normalize-list-x-y-f	Normalize([x, y], f)	[x / f([x, y]), y / f([x, y])]	
-normalize-s	Normalize(s)	s	
-normalize-list-x-y	Normalize([x, y])	[x / sqrt(abs(x) ^ 2 + abs(y) ^ 2), y / sqrt(abs(x) ^ 2 + abs(y) ^ 2)]	
-normalize-1-plus-x-plus-x-pow-2-function	Normalize(1 + x + x ^ 2, Function(integrate(_1 ^ 2, (x, -1, 1))))	1 / (2 * (x ^ 2 + x + 1))	Unreadable
+id	in	out
+3-4-5	Normalize([3, 4])	[3 / 5, 4 / 5]
+normalize-list-1-5-1	Normalize([1, 5, 1])	[sqrt(3) / 9, 5 / 9 * sqrt(3), sqrt(3) / 9]
+zero-vector	Normalize([0, 0])	[0, 0]
+normalize-list-x-y-f		
+normalize-s		
+normalize-list-x-y		
+normalize-1-plus-x-plus-x-pow-2-function		

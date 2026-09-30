@@ -23,8 +23,8 @@ sign-123-minus-456i	\mathrm{sgn}(123-456i)	\frac{41\sqrt{24\,785}}{24\,785}+-\fr
 fullsimplify-matrixfunction-sign-list-list-1	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(\mathrm{Sign}, \bigl\lbrack\bigl\lbrack1/2, -1\bigr\rbrack, \bigl\lbrack-5/3, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack0, -\frac{15^{1/2}}{5}\bigr\rbrack, \bigl\lbrack-\frac{15^{1/2}}{3}, 0\bigr\rbrack\bigr\rbrack
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2	\mathrm{PiecewiseExpand}(\mathrm{sgn}(x), -2\lt x\lt2)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, 0)
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\mathrm{sgn}(\overline{1+2i})=\overline{\mathrm{sgn}(1+2i)}	\top
-d-sign-x-x	\frac{\mathrm{d}\mathrm{sgn}(x)}{\mathrm{d}x}	0
-sign-positiveinfinity-times-i	\mathrm{sgn}(\infty i)	\operatorname{Indeterminate}
+d-sign-x-x		
+sign-positiveinfinity-times-i		
 tells-you-the-temperature-dropped-but-not-by-how	\mathrm{sgn}(70-95)	-1
 sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\top
 x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\top

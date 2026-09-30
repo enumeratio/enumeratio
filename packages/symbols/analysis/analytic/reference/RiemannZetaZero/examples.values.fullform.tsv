@@ -4,7 +4,7 @@ n-riemannzetazero-2	N[ZetaZero[2]]
 n-riemannzetazero-50	N[ZetaZero[50]]
 n-riemannzetazero-10	N[ZetaZero[10]]
 n-list-riemannzetazero-1-riemannzetazero-2	N[List[ZetaZero[1], ZetaZero[2], ZetaZero[3]]]
-n-riemannzetazero-54-50	N[ZetaZero[54], 50]
-n-riemannzetazero-46-20	N[ZetaZero[46], 20]
-n-riemannzetazero-neg-1-eq-conjugate	N[Equal[ZetaZero[-1], Conjugate[ZetaZero[1]]]]
+n-riemannzetazero-54-50	
+n-riemannzetazero-46-20	
+n-riemannzetazero-neg-1-eq-conjugate	
 n-riemannzetazero-0	N[ZetaZero[0]]

@@ -8,6 +8,6 @@ a-rising-factorial-with-an-integer-length	FunctionExpand(pochhammer(x, 3))	x * (
 binom-n2-frac-n-n-1-2	FunctionExpand(binomial(n, 2))	n * (n - 1) / 2
 functionexpand-1-over-sqrt-x-pow-2-times-sin	FunctionExpand(1 / sqrt(x ^ 2) * sin(sqrt(x ^ 2)))	sin(sqrt(x ^ 2)) / sqrt(x ^ 2)
 functionexpand-1-over-zeta-z-times-zeta-neg-z	FunctionExpand(1 / zeta(z) * zeta(-z + 1))	zeta(-z + 1) / zeta(z)
-functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	FunctionExpand([sqrt(-x ^ 2), ln(sqrt(-x ^ 2 + 1))])	[sqrt(-x ^ 2), 1 / 2 * ln(-x ^ 2 + 1)]
+functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg		
 functionexpand-polylog-2-z-plus-polylog-2-neg-z	FunctionExpand(polyLog(2, z) + polyLog(2, -z + 1) - zeta(2))	polyLog(2, z) + polyLog(2, -z + 1) + -1 / 6 * pi ^ 2
 a-generic-cos-argument-passes-through-unchanged	FunctionExpand(cos(theta))	cos(theta)

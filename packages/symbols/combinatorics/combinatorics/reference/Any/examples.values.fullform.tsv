@@ -10,4 +10,4 @@ without-a-predicate-tests-the-elements	AnyTrue[List[False, True]]
 a-level-argument-tests-the-elements-at-depth-2	AnyTrue[List[List[1, 2], List[3, -4]], Function[Less[Slot[1], 0]], 2]	
 always-false-on-an-empty-list	AnyTrue[List[], EvenQ]	
 some-element-passes-exactly-when-not-every	Equal[AnyTrue[List[1, 3, 5], EvenQ], Not[AllTrue[List[1, 3, 5], OddQ]]]	
-map-logicalexpand-list-any-list-x-y-z-f	Map[LogicalExpand, List[AnyTrue[List[x, y, z], f], Not[NoneTrue[List[x, y, z], f]]]]	
+map-logicalexpand-list-any-list-x-y-z-f		

@@ -1,5 +1,5 @@
 id	in
 path-4-matches-wolfram	EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
 star-4-hub-is-most-central	EigenvectorCentrality[StarGraph[4]]
-reverse-sortby-transpose-list-vertexlist-g	Reverse[SortBy[Transpose[List[VertexList[g], EigenvectorCentrality[g]]], Last]]
+reverse-sortby-transpose-list-vertexlist-g	
 1-over-neg-length-connectedcomponents-g-plus	Times[Divide[1, Plus[Minus[Length[ConnectedComponents[g]]], VertexCount[g]]], Plus[VertexCount[h], -1], EigenvectorCentrality[h]]

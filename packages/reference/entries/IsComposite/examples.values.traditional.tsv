@@ -4,7 +4,7 @@ iscomposite-13	\mathrm{IsComposite}(13)	\mathrm{False}
 iscomposite-1-plus-10-pow-3-000	\mathrm{IsComposite}(1+10^{3\,000})	\mathrm{True}
 iscomposite-list-1-2-3-4-5-6	\mathrm{IsComposite}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack\mathrm{False}, \mathrm{False}, \mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
 iscomposite-5	\mathrm{IsComposite}(5)	\mathrm{False}
-iscomposite-3-plus-i	\mathrm{IsComposite}(3+i)	\mathrm{False}
+iscomposite-3-plus-i		
 iscomposite-8	\mathrm{IsComposite}(8)	\mathrm{True}
 iscomposite-12	\mathrm{IsComposite}(12)	\mathrm{True}
 iscomposite-67	\mathrm{IsComposite}(67)	\mathrm{False}

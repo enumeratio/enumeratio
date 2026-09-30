@@ -19,7 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1	MatrixFunction(ceil, [[1 / 2, -1], 
 ceil-0	ceil(0)	0
 ceil-positiveinfinity	ceil(positiveInfinity)	positiveInfinity
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4	PiecewiseExpand(ceil(x, 2), 0 < x < 4)	ceil(x, 2)
-d-ceil-x-x	D(ceil(x), x)	0
+d-ceil-x-x		
 how-many-5-seat-vans-are-needed-to-carry-17	ceil(17 / 5)	4
 ten-bits-are-enough-to-number-1000-items-lceil	ceil(log(1_000, 2))	10
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	ceil(7 / 2) == floor(7 / 2) + 1	True

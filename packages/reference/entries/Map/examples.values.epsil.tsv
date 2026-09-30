@@ -5,16 +5,16 @@ map-add-over-two-collections-zips-them	map(Add, [1, 2, 3], [10, 20, 30])	[11, 22
 map-f-list-a-b-c-d-exponentiale	map(f, [a, b, c, d, exponentialE])	[f(a), f(b), f(c), f(d), f(exponentialE)]	
 map-f-list-list-a-b-list-c-d-exponentiale	map(f, [[a, b], [c, d, exponentialE]])	[f([a, b]), f([c, d, exponentialE])]	
 map-function-x-pow-2-x-list-1-2-3-4	map(Function(x ^ 2, x), [1, 2, 3, 4])	[1, 4, 9, 16]	Unreadable
-map-f-list-list-a-b-list-c-d-exponentiale-list-2	map(f, [[a, b], [c, d, exponentialE]], [2])	[f([a, b], 2)]	
+map-f-list-list-a-b-list-c-d-exponentiale-list-2			
 map-f-list-list-list-list-list-a	map(f, [[[[[a]]]]])	[f([[[[a]]]])]	
 map-f-list-a-b-c	map(f, [a, b, c])	[f(a), f(b), f(c)]	
 map-f-list-list-list-list-list-a-list-2	map(f, [[[[[a]]]]], [2])	[f([[[[a]]]], 2)]	
-map-f-list-list-list-list-list-a-list-0-2	map(f, [[[[[a]]]]], [0, 2])	[f([[[[a]]]], 0)]	
-map-f-list-list-list-list-list-a-list-0	map(f, [[[[[a]]]]], [0, positiveInfinity])	[f([[[[a]]]], 0)]	
-map-f-list-list-list-list-list-a-list-2-neg-3	map(f, [[[[[a]]]]], [2, -3])	[f([[[[a]]]], 2)]	
+map-f-list-list-list-list-list-a-list-0-2			
+map-f-list-list-list-list-list-a-list-0			
+map-f-list-list-list-list-list-a-list-2-neg-3			
 map-reverse-list-list-a-b-list-c-d-list	map(reverse, [[a, b], [c, d], [exponentialE, f]])	[[b, a], [d, c], [f, exponentialE]]	
 map-function-1-plus-list-x-y-1-list-list-1-1	map(Function(_1 + [x, y], _1), [[1, 1], [2, 2], [3, 3], [4, 4]])	[[x + 1, y + 1], [x + 2, y + 2], [x + 3, y + 3], [x + 4, y + 4]]	Unreadable
 mapping-over-an-empty-collection-returns-empty	map(Square, [])	[]	
 map-sqrt-list-1-2-3-4	map(sqrt, [1, 2, 3, 4])	[1, sqrt(2), sqrt(3), 2]	
 map-f-list-x-y-z	map(f, [x, y, z])	[f(x), f(y), f(z)]	
-map-f-list-list-a-b-list-c-list-list-d-list-0	map(f, [[a, b], [c], [[d]]], [0, positiveInfinity])	[f([a, b], 0), f([c], positiveInfinity)]	
+map-f-list-list-a-b-list-c-list-list-d-list-0			

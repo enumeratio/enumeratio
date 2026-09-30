@@ -24,7 +24,7 @@ discreteratio-a-times-q-pow-x-plus-b-times-q-p-2
 discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2		
 discreteratio-qpochhammer-a-q-x-x		
 discreteratio-qbinomial-a-x-q-times-qfactorial-x		
-discreteratio-barnesg-x-x	\mathrm{DiscreteRatio}(G(x), x)	\frac{G(x+1)}{G(x)}
+discreteratio-barnesg-x-x		
 discreteratio-hyperfactorial-x-x		
-discreteratio-betaregularized-z-n-m-m	\mathrm{DiscreteRatio}(I_{z}(n, m), m)	\frac{I_{z}(n, m+1)}{I_{z}(n, m)}
+discreteratio-betaregularized-z-n-m-m		
 discreteratio-c-pow-a-times-k-plus-b-k		
