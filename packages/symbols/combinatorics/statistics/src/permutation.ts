@@ -11,7 +11,6 @@ import {
   and,
   atLeastValue,
   atMostValue,
-  bind,
   count,
   distance,
   equals,
@@ -40,7 +39,6 @@ import {
   fold,
   forEach,
   subtract,
-  upTo,
   visiting,
   x,
 } from "./vocabulary.ts";
@@ -123,41 +121,53 @@ const longestIncreasingRun: MathJSON = [
 
 // ── cycle structure ──────────────────────────────────────────────────────────────────────
 //
-// These were on the frontier as "blocked on a CyclePartition map". They are not. A
-// permutation of size n returns every point to itself within n steps, so the orbit of i is
-// just { p^k(i) : k = 1..n } — and p^k is a fold that applies the permutation k times. No
-// map, no recursion, no visited set.
+// A permutation of size n returns every point to itself within n steps, so i's cycle is found
+// by walking from i for n steps. The walk is a fold whose state is one integer: the point
+// reached, or, once the walk has settled, a non-positive marker that the remaining steps carry
+// through unchanged. No map, no visited set, no list-valued state: O(n) per point, O(n²) in
+// all, and it compiles.
 //
-// The one subtlety is picking a representative: i LEADS its cycle exactly when it is the
-// smallest element of its own orbit. That turns "the set of cycles" into a filter over
-// positions, which is the shape everything else here already uses.
+// i LEADS its cycle when it is the cycle's smallest point. That turns "the set of cycles" into a
+// filter over positions, the shape everything else here already uses.
 
-/** p^k(i): apply the permutation k times. */
-const iterate = (start: MathJSON, times: MathJSON): MathJSON => [
-  "Fold",
-  ["Function", at("a"), "a", "b"],
-  start,
-  upTo(times),
+/** The steps of a walk: n of them, enough to go round any cycle. */
+const steps: MathJSON = ["Range", 1, length(), 1];
+
+/** Whether i leads its cycle: walking from p(i), the walk gets back to i (marker 0) before it
+ *  meets anything smaller (marker -1). */
+const leads = (i: MathJSON): MathJSON =>
+  equals(
+    [
+      "Fold",
+      [
+        "Function",
+        ["If", ["LessEqual", "w", 0], "w", ["If", equals("w", i), 0, ["If", less("w", i), -1, at("w")]]],
+        "w",
+        "k",
+      ],
+      at(i),
+      steps,
+    ],
+    0,
+  );
+
+/** The length of i's cycle: walking from i, on getting back to i at step k the marker is -k. */
+const cycleLengthAt = (i: MathJSON): MathJSON => [
+  "Negate",
+  [
+    "Fold",
+    ["Function", ["If", ["LessEqual", "w", 0], "w", ["If", equals(at("w"), i), ["Negate", "k"], at("w")]], "w", "k"],
+    i,
+    steps,
+  ],
 ];
-/** The orbit of i, as the (repeating) list p(i), p²(i), …, pⁿ(i). */
-const orbit = (i: MathJSON): MathJSON => forEach(positions, iterate(i, "k"), "k");
-/** Positions that lead their own cycle. CycleCount/ReflectionLength only need the count of
- *  these, not any length, so they read this directly rather than going through `orbitInfo`. */
-const cycleLeaders: MathJSON = where(positions, equals("i", ["Min", orbit("i")]));
 
-/** [isLeader, cycleLength] for position i, reading orbit(i) once. */
-const orbitInfoAt = (i: MathJSON): MathJSON =>
-  bind("orb", orbit(i), ["List", equals(i, ["Min", "orb"]), ["Length", ["Union", "orb"]]]);
-const isLeaderFlag = (entry: MathJSON): MathJSON => at(1, entry);
-const lengthOfEntry = (entry: MathJSON): MathJSON => at(2, entry);
-const orbitInfoExpr: MathJSON = forEach(positions, orbitInfoAt("i"), "i");
-const withOrbitInfo = (body: MathJSON): MathJSON => bind("orbitInfo", orbitInfoExpr, body);
-/** Each leader's cycle length, read off `orbitInfo`. */
-const cycleLengths: MathJSON = forEach(
-  where("orbitInfo", isLeaderFlag("entry"), "entry"),
-  lengthOfEntry("entry"),
-  "entry",
-);
+/** Positions that lead their own cycle, one per cycle. */
+const cycleLeaders: MathJSON = where(["Range", 1, length(), 1], leads("i"));
+/** Each cycle's length, one per cycle. */
+const cycleLengths: MathJSON = forEach(cycleLeaders, cycleLengthAt("i"));
+/** How many cycles have length `size`. */
+const cyclesOfLength = (size: number): MathJSON => count(cycleLengths, equals("c", size), "c");
 
 // Patience sorting, as a fold carrying a GROWING accumulator.
 //
@@ -342,36 +352,27 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     "n minus the number of cycles — the minimum number of transpositions.",
     nonEmpty(subtract(length(), ["Count", cycleLeaders])),
   ),
-  stat("LargestCycleLength", "The size of the largest cycle.", nonEmpty(withOrbitInfo(["Max", cycleLengths]))),
+  stat("LargestCycleLength", "The size of the largest cycle.", nonEmpty(["Max", cycleLengths])),
   stat(
     "LongestCycleLength",
     "The size of the largest cycle (the catalog's second spelling).",
-    nonEmpty(withOrbitInfo(["Max", cycleLengths])),
+    nonEmpty(["Max", cycleLengths]),
   ),
   stat(
     "DistinctCycleLengths",
     "How many distinct cycle sizes occur.",
-    nonEmpty(withOrbitInfo(["Length", ["Union", cycleLengths]])),
+    // The lengths 1..n that some cycle has.
+    nonEmpty(count(["Range", 1, length(), 1], ["Greater", count(cycleLengths, equals("c", "m"), "c"), 0], "m")),
   ),
-  stat(
-    "TwoCycleCount",
-    "Cycles of size exactly two.",
-    // Filters the already-computed lengths directly — no need to touch `orbit` again the way
-    // re-deriving each leader's length from scratch would.
-    nonEmpty(withOrbitInfo(count(cycleLengths, equals("cycleLen", 2), "cycleLen"))),
-  ),
-  stat(
-    "ThreeCycleCount",
-    "Cycles of size exactly three.",
-    nonEmpty(withOrbitInfo(count(cycleLengths, equals("cycleLen", 3), "cycleLen"))),
-  ),
+  stat("TwoCycleCount", "Cycles of size exactly two.", nonEmpty(cyclesOfLength(2))),
+  stat("ThreeCycleCount", "Cycles of size exactly three.", nonEmpty(cyclesOfLength(3))),
   stat(
     "Order",
     "The order of p in the symmetric group — the lcm of its cycle lengths.",
     // Spelled LCM, not Lcm — compute-engine uses all-caps for this one and TitleCase for
     // Max/Min/Mod, which is the naming incoherence upstreaming.md §3.5 is about.
     // It also takes arguments rather than a list, so the lcm of a computed list is a fold.
-    nonEmpty(withOrbitInfo(fold(cycleLengths, 1, ["LCM", "a", "b"])), 1),
+    nonEmpty(fold(cycleLengths, 1, ["LCM", "a", "b"]), 1),
   ),
 
   word(
