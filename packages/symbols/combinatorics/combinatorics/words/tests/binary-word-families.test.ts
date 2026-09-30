@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/binary-word-families.ts";
 
 // BinaryBracelets/KBracelets split out of collections/tests/binary-word-families.test.ts with the
@@ -20,7 +21,7 @@ const PARAMS: Record<string, number[][]> = {
   StirlingPermutations: [[1], [2], [3], [4], [5]],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, paramsList] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

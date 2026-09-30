@@ -10,7 +10,7 @@ import { declareCombinatorics } from "../src/index.ts";
 import { numberKernel } from "../collections/src/families/types.ts";
 import type { FamilyKernel } from "../collections/src/families/types.ts";
 import { collectionsEntries } from "../collections/src/families/index.ts";
-import { kernelsOn } from "../collections/src/families/epsil.ts";
+import { kernelsOn, liftFamily } from "../collections/src/families/epsil.ts";
 import {
   coreFamilies as permutationsCoreFamilies,
   permutationClassesEntries,
@@ -68,21 +68,27 @@ const allFamilies: readonly FamilyKernel[] = [
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
   ...kernelsOn(new ComputeEngine(), compositionsCoreFamilies),
   ...compositionsEntries.map(numberKernel),
-  ...[...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(
-    numberKernel,
+  ...kernelsOn(
+    new ComputeEngine(),
+    [...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(
+      liftFamily,
+    ),
   ),
   ...[
     ...latticePathsCoreEntries,
     ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
     ...latticePathsPathsPartitionsEntries,
   ].map(numberKernel),
-  ...[
-    ...treesLabeledEntries,
-    ...treesRootedForestsEntries,
-    ...treesCoreEntries,
-    ...treesPruferSequencesEntries,
-    ...treesUnlabeledTreesEntries,
-  ].map(numberKernel),
+  ...kernelsOn(
+    new ComputeEngine(),
+    [
+      ...treesLabeledEntries,
+      ...treesRootedForestsEntries,
+      ...treesCoreEntries,
+      ...treesPruferSequencesEntries,
+      ...treesUnlabeledTreesEntries,
+    ].map(liftFamily),
+  ),
   ...[
     ...setPartitionsSurjectionsEntries,
     ...setPartitionsCoreEntries,
@@ -97,7 +103,7 @@ const allFamilies: readonly FamilyKernel[] = [
     ...tableauxPlanePlanePartitionsEntries,
   ].map(numberKernel),
   ...graphsCoreEntries.map(numberKernel),
-  ...collectionsEntries,
+  ...kernelsOn(new ComputeEngine(), collectionsEntries),
 ];
 
 const carrierFamilies = allFamilies.filter((f) => f.carrier !== undefined);

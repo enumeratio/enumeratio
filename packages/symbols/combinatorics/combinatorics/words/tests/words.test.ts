@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/words.ts";
 
 // Self-cert every words.ts family, mirroring core.test.ts: for every rank r in [0, count),
@@ -36,7 +37,7 @@ const PARAMS: Record<string, number[][]> = {
   ],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, paramsList] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

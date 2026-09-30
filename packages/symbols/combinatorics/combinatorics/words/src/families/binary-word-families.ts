@@ -12,6 +12,8 @@
 // duplicated from the source file (mirrors the permutations pilot's `ints`); `reversed` and
 // `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
 // collections' copy).
+import { ternaryGrayCodes } from "../../../collections/src/families/closed-forms.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
@@ -170,11 +172,11 @@ const ints = (
 // consecutive words differ by ±1 in exactly one digit. Standard b-ary reflection: prefix each of
 // the b sub-blocks (one per leading digit j) with the previous level's list traversed forward
 // (j even) or reversed (j odd); adjacent blocks then share their boundary suffix so only the new
-// digit changes by 1 at every seam, and induction carries the property into each sub-block. Count
-// is the closed form 3^n; unrank/rank enumerate-then-index off a cached list — cheap at the small
-// n this family is tested at, and the recursive construction has no simpler unrank/rank. ───────────
+// digit changes by 1 at every seam, and induction carries the property into each sub-block. The
+// family itself is defined in Epsil (closed-forms.ts: a digit is reflected by the parity of the
+// digits before it); this list is the construction its agreement test reads it against. ──────────
 const ternaryGrayCache = new Map<number, number[][]>();
-function ternaryGrayList(n: number): number[][] {
+export function ternaryGrayList(n: number): number[][] {
   const cached = ternaryGrayCache.get(n);
   if (cached) return cached;
   let list: number[][];
@@ -194,21 +196,6 @@ function ternaryGrayList(n: number): number[][] {
   }
   ternaryGrayCache.set(n, list);
   return list;
-}
-function ternaryGrayCount(n: number): number {
-  return 3 ** n;
-}
-function ternaryGrayUnrank(n: number, r: number): number[] {
-  const total = ternaryGrayCount(n);
-  return ternaryGrayList(n)[normRank(r, total)].slice();
-}
-function ternaryGrayRank(w: number[], n: number): number {
-  return ternaryGrayList(n).findIndex((x) => arraysEqual(x, w));
-}
-function ternaryGrayValid(w: unknown, n: number): boolean {
-  if (!Array.isArray(w) || w.length !== n) return false;
-  for (const b of w) if (b !== 0 && b !== 1 && b !== 2) return false;
-  return true;
 }
 
 // ─── StirlingPermutations(n): permutations of the multiset {1,1,2,2,…,n,n} where everything
@@ -291,7 +278,15 @@ const wordClass = (carrier: string, base?: number): Declared => ({
   work: ([n, k]) => BigInt(base ?? (k as number)) ** BigInt(n as number),
 });
 
-export const entries: NumberKernel[] = [
+// Closed-form family, defined in Epsil (collections/src/families/closed-forms.ts); the list
+// construction above is the independent reading its agreement test checks it against.
+const ternaryGrayCodesFamily = ternaryGrayCodes({
+  head: "TernaryGrayCodes",
+  params: ["_n"],
+  carrier: "TernaryGrayCode",
+});
+
+export const entries: (NumberKernel | EpsilFamily)[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
   {
     ...ints(
@@ -316,18 +311,7 @@ export const entries: NumberKernel[] = [
     ),
     declared: wordClass("Word"),
   },
-  // TernaryGrayCodes(n): base-3 reflected Gray code order.
-  {
-    ...ints(
-      "TernaryGrayCodes",
-      1,
-      ([n]) => ternaryGrayCount(n),
-      ([n], r) => ternaryGrayUnrank(n, r),
-      (a, [n]) => ternaryGrayValid(a, n),
-      (a, [n]) => ternaryGrayRank(a, n),
-    ),
-    carrier: "TernaryGrayCode",
-  },
+  ternaryGrayCodesFamily,
   // StirlingPermutations(n): permutations of {1,1,2,2,...,n,n} with the betweenness property.
   {
     ...ints(

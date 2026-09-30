@@ -4,7 +4,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
-import { numberKernel } from "../../collections/src/families/types.ts";
+import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { TREES_CARRIERS } from "./carrier-data.ts";
 import {
   coreEntries,
@@ -26,6 +26,6 @@ export function declareTrees(ce: ComputeEngine): void {
       ...coreEntries,
       ...pruferSequencesEntries,
       ...unlabeledTreesEntries,
-    ].map(numberKernel),
+    ].map(liftFamily),
   );
 }

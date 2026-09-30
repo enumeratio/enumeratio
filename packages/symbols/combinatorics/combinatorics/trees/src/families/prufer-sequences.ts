@@ -3,7 +3,10 @@
 // it now carries "PruferSequence" -- a word, counted in its own right (n^(n-2)), not the edge
 // list the Prüfer bijection decodes to (that's LabeledTree's job: see
 // ../prufer-conversion.ts, a LabeledTree(...) constructor overload built with structures'
-// attachConversion).
+// attachConversion). Defined in Epsil (Tuples(n, n − 2)); the TS functions below are the
+// independent reading its agreement test checks it against.
+import { pruferSequences } from "../../../collections/src/families/closed-forms.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { TupleCount, TupleUnrank, TupleRank, IsTupleOf } from "../../../collections/src/families/kernels-extra.ts";
 
@@ -25,15 +28,6 @@ export function IsPruferSequenceOf(seq: unknown, n: number): boolean {
   return Array.isArray(seq) && IsTupleOf(seq as number[], n, n - 2);
 }
 
-export const entries: NumberKernel[] = [
-  {
-    head: "PruferSequences",
-    paramCount: 1,
-    kind: "ints",
-    carrier: "PruferSequence",
-    count: ([n]) => PruferSequenceCount(n),
-    unrank: ([n], r) => PruferSequenceUnrank(n, r),
-    valid: (e, [n]) => IsPruferSequenceOf(e, n),
-    rank: (e, [n]) => PruferSequenceRank(e as number[], n),
-  },
+export const entries: (NumberKernel | EpsilFamily)[] = [
+  pruferSequences({ head: "PruferSequences", params: ["_n"], carrier: "PruferSequence" }),
 ];
