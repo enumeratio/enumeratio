@@ -2,8 +2,11 @@
 name: Expand
 domain: Hypercomplex algebra
 signature: Expand(x)
-summary: Put a hypercomplex element $x$ in blade normal form — for a hypercomplex operand, the same result the multivector arithmetic already produces.
+summary: Expand out products and positive integer powers; for a hypercomplex operand, puts $x$ in blade normal form — the same result the multivector arithmetic already produces.
 signatures:
+  - call: Expand(x)
+    description: expand out products and positive integer powers.
+    type: (value) -> value
   - call: Expand(x)
     description: $x$ in blade normal form
     library: enumeratio-hypercomplex
@@ -14,4 +17,6 @@ attributes:
 seeAlso:
   - NonCommutativeMultiply
   - Basis
+names:
+  wolframIdentity: true
 ---

@@ -1,0 +1,4 @@
+id	in	out
+expand-x-1-2-into-x-2-2x-1	<Expand><Power><Add>x 1</Add> 2</Power></Expand>	<Add><Power>x 2</Power> <Multiply>2 x</Multiply> 1</Add>
+expand-x-1-x-1-into-the-difference-of-squares	<Expand><Multiply><Add>x 1</Add> <Add>x -1</Add></Multiply></Expand>	<Add><Power>x 2</Power> -1</Add>
+expand-x-y-3-a-two-variable-binomial-power	<Expand><Power><Add>x y</Add> 3</Power></Expand>	<Add><Power>x 3</Power> <Power>y 3</Power> <Multiply>3 y <Power>x 2</Power></Multiply> <Multiply>3 x <Power>y 2</Power></Multiply></Add>

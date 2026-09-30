@@ -2,4 +2,4 @@ id	in	out	tex.in	tex.out
 gather-list-1-7-3-7-2-3-9	Gather[List[1, 7, 3, 7, 2, 3, 9]]			
 symbolic-elements	Gather[List[a, b, a, a, c, b]]	{{a, a, a}, {b, b}, {c}}	\text{Gather}[\{a,b,a,a,c,b\}]	\{\{a,a,a\},\{b,b\},\{c\}\}
 a-test-decides-which-elements-belong-together	Gather[List[1, 2, 3, 4, 5, 6], Function[(Mod[Slot[1], 2] == Mod[Slot[2], 2])]]			
-the-group-sizes-are-the-multiplicities-of-the				
+the-group-sizes-are-the-multiplicities-of-the	(Map[Length, Gather[List[1, 7, 3, 7, 2, 3, 9]]] == List[1, 2, 2, 1, 1])			

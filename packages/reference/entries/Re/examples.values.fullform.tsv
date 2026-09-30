@@ -1,0 +1,5 @@
+id	in
+re-of-3-plus-4i-is-3	Re[Complex[3, 4]]
+re-of-a-real-number-is-itself	Re[5]
+re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]
+re-of-a-symbolic-value-stays-unevaluated	Re[x]

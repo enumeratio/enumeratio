@@ -1,0 +1,5 @@
+id	in	out
+re-of-3-plus-4i-is-3	re(3 + 4i)	3
+re-of-a-real-number-is-itself	re(5)	5
+re-of-pi-is-pi-a-real-symbolic-constant	re(pi)	pi
+re-of-a-symbolic-value-stays-unevaluated	re(x)	real(x)

@@ -45,7 +45,7 @@ antiderivative	Integrate[Sin[x], x]	True	\text{Module}\left[\{d=\text{Quiet}[\te
 area-under-one-arch-int-0-pi-sin-x-dx-2				
 int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Integrate[Power[Sin[x], 3], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\int \sin ^3(x) \, dx-\left(\frac{1}{3} \cos ^3(x)-\cos (x)\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sin ^3\left(\frac{7}{3}\right) \, d\frac{7}{3}-\left(\frac{1}{3} \cos ^3\left(\frac{7}{3}\right)-\cos \left(\frac{7}{3}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^3\left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\left(\frac{1}{3} \cos ^3\left(-\frac{11}{5}\right)-\cos \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\int \sin ^3\left(\frac{13}{4}\right) \, d\frac{13}{4}-\left(\frac{1}{3} \cos ^3\left(\frac{13}{4}\right)-\cos \left(\frac{13}{4}\right)\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
 taylor-series-about-0-only-odd-powers-appear				
-the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1				
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Limit[Function[x, Divide[Sin[x], x]], 0]			
 to-30-significant-digits-every-one-correctly	N[Sin[1], 30]			
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N[Sin[Power[24, 40]]]			
 threads-element-wise-over-a-list	Sin[List[0, Divide[Pi, 2], Pi]]	{0, 1, 0}	\sin \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)	\{0,1,0\}

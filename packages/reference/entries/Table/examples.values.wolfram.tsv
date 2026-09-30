@@ -1,0 +1,5 @@
+id	in
+table-of-i-2-for-i-from-1-to-5	
+odd-numbers-from-1-to-9-stepping-by-2	
+the-same-shape-of-table-with-a-plain-function	Table[Function[Power[Slot[1], 2]], 5]
+a-constant-body-is-still-evaluated-once-per	

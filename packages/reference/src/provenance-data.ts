@@ -1950,6 +1950,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Map",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Map",
+    elsewhere: [],
+  },
+  {
     name: "MapAt",
     provenance: "extension",
     declared: "enumeratio-combinatorics",
@@ -2991,6 +2998,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-combinatorics",
     wolframAlias: "SymmetricGroup",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "Table",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Table",
+    elsewhere: [],
   },
   {
     name: "Tabulate",
@@ -6584,6 +6598,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "Limit",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Limit",
+    elsewhere: [],
+  },
+  {
     name: "List",
     provenance: "unknown",
     declared: null,
@@ -6780,6 +6801,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Re",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Re",
+    elsewhere: [],
+  },
+  {
     name: "Real",
     provenance: "unknown",
     declared: null,
@@ -6827,6 +6855,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-analytic",
     wolframAlias: null,
     elsewhere: ["wolfram", "sympy"],
+  },
+  {
+    name: "Solve",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Solve",
+    elsewhere: [],
   },
   {
     name: "StandardDeviation",
@@ -8181,9 +8216,9 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Expand",
-    provenance: "unknown",
-    declared: "enumeratio-hypercomplex",
-    wolframAlias: null,
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "Expand",
     elsewhere: ["wolfram", "sympy"],
   },
   {

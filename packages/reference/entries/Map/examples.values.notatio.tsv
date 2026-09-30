@@ -1,0 +1,5 @@
+id	in	out
+map-square-over-1-2-3-4	<Map>Square <List>1 2 3 4</List></Map>	<List>1 4 9 16</List>
+map-a-lambda-adding-1-to-each-element	<Map><Function><Add>_ 1</Add></Function> <List>1 2 3</List></Map>	<List>2 3 4</List>
+map-add-over-two-collections-zips-them	<Map>Add <List>1 2 3</List> <List>10 20 30</List></Map>	<List>11 22 33</List>
+mapping-over-an-empty-collection-returns-empty	<Map>Square <Apply>List</Apply></Map>	<Apply>List</Apply>
