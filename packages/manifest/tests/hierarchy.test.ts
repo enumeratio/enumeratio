@@ -13,11 +13,6 @@ import { HIERARCHY, PACKAGES } from "../src/hierarchy.ts";
 const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
 const SCOPE = "@enumeratio/";
 
-/** Names the boxes main entry still re-exports from its serialisers, for presentation files
- *  not yet on `/render` (components' notatio-out.ts, frontend's kernel-host.ts, the site's
- *  session-worker-entry.ts). */
-const TRANSITIONAL = new Set(["BOXES_LATEX", "toAscii", "toLatex"]);
-
 /** Not shipped: what a package's tests, scripts and records hold. */
 const SKIP = new Set([
   "node_modules",
@@ -86,20 +81,6 @@ function ownerOf(ws: Workspace, file: string): string {
 }
 
 const IMPORT = /(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)["']([^"']+)["']/g;
-const NAMED =
-  /import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*["']([^"']+)["']|export\s+(?:type\s+)?\{([^}]*)\}\s*from\s*["']([^"']+)["']/g;
-const namesIn = (list: string): string[] =>
-  list
-    .split(",")
-    .map((n) =>
-      n
-        .trim()
-        .replace(/^type\s+/, "")
-        .split(/\s+as\s+/)[0]!
-        .trim(),
-    )
-    .filter(Boolean);
-
 function closure(name: string, seen = new Set<string>()): Set<string> {
   for (const parent of HIERARCHY[name]?.extends ?? []) {
     if (seen.has(parent)) continue;
@@ -181,25 +162,12 @@ test("no shipped source imports up the hierarchy", () => {
             bad.push(`${where}: ${violation(from, to)}`);
         }
       }
-      // What a library reads from boxes' main entry stays off its transitional serialisers.
-      if (HIERARCHY[from]!.layer !== "presentation" && HIERARCHY[from]!.layer !== "tooling") {
-        for (const m of text.matchAll(NAMED)) {
-          const [list, specifier] = m[1] !== undefined ? [m[1], m[2]!] : [m[3]!, m[4]!];
-          const main = specifier === "@enumeratio/boxes" || specifier === "@enumeratio/boxes/src";
-          for (const name of main ? namesIn(list) : [])
-            if (TRANSITIONAL.has(name)) bad.push(`${where}: ${name} is presentation`);
-        }
-      }
     }
   }
   expect(bad).toEqual([]);
 });
 
-test("boxes' main entry reaches its serialisers only for the transitional names", () => {
+test("boxes' main entry doesn't reach its serialisers: they're `/render`'s", () => {
   const index = readFileSync(join(ROOT, "packages/boxes/src/index.ts"), "utf8");
-  const reexported = [...index.matchAll(NAMED)]
-    .filter((m) => m[4]?.startsWith("./render/"))
-    .flatMap((m) => namesIn(m[3]!));
-  expect(reexported.filter((name) => !TRANSITIONAL.has(name))).toEqual([]);
-  expect(index).not.toMatch(/export \* from ["']\.\/render/);
+  expect(index).not.toMatch(/from ["']\.\/render/);
 });

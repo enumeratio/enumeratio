@@ -18,6 +18,3 @@ export {
   subscripted,
   type Writer,
 } from "./notation.ts";
-// Transitional: components' notatio-out.ts, frontend's kernel-host.ts and the site's
-// session-worker-entry.ts still read these here. Presentation only; the hierarchy test keeps symbol packages off them.
-export { BOXES_LATEX, toAscii, toLatex } from "./render/index.ts";

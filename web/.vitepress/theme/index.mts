@@ -66,7 +66,7 @@ export default {
           { declareFrontendCarriers },
           { declareAnalytic, declareFractals },
           { declareGraphics },
-          { declareBoxes, BOXES_LATEX },
+          { declareBoxes },
           { declareCarrierElement, declareCarrierPlurals, declareStructures },
           { declareHypercomplex },
           { declareGeometric },
@@ -109,7 +109,7 @@ export default {
         ]);
         // Notation has to be in before the engine is built: its dictionary is fixed then.
         configureLatex(RESIDUES_LATEX);
-        configureLatex(BOXES_LATEX);
+        configureLatex((await import("@enumeratio/boxes/render")).BOXES_LATEX);
         applyEngineLibraries(configureEngine, {
           declareCombinatorics,
           declareCarrierPlurals,
