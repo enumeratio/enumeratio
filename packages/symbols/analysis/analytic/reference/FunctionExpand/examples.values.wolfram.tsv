@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
-eta-s-1-2-1-s-zeta-s					
-beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34					
+eta-s-1-2-1-s-zeta-s	FunctionExpand[DirichletEta[s]]				
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	FunctionExpand[DirichletBeta[s]]				
 g-frac-12-in-glaisher-s-constant	FunctionExpand[BarnesG[Rational[1, 2]]]	(2^(1/24)*E^(1/8))/(Glaisher^(3/2)*Pi^(1/4))	\text{FunctionExpand}\left[G\left(\frac{1}{2}\right)\right]	\frac{\sqrt[24]{2} \sqrt[8]{e}}{\sqrt[4]{\pi } A^{3/2}}	disagree
 radicals-past-the-automatic-special-angle-table	FunctionExpand[Sin[Divide[Pi, 15]]]	-1/8*(Sqrt[3]*(-1 + Sqrt[5])) + Sqrt[(5 + Sqrt[5])/2]/4	\text{FunctionExpand}\left[\sin \left(\frac{\pi }{15}\right)\right]	\frac{1}{4} \sqrt{\frac{1}{2} \left(5+\sqrt{5}\right)}-\frac{1}{8} \sqrt{3} \left(\sqrt{5}-1\right)	
 half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	FunctionExpand[Cos[Divide[Pi, 24]]]	(Sqrt[3*(2 - Sqrt[2])]*(1 + Sqrt[2]))/4 + ((-1 + Sqrt[2])*Sqrt[2 + Sqrt[2]])/4	\text{FunctionExpand}\left[\cos \left(\frac{\pi }{24}\right)\right]	\frac{1}{4} \sqrt{3 \left(2-\sqrt{2}\right)} \left(1+\sqrt{2}\right)+\frac{1}{4} \left(\sqrt{2}-1\right) \sqrt{2+\sqrt{2}}	

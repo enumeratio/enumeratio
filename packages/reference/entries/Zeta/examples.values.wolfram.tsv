@@ -7,7 +7,7 @@ apery-s-constant-zeta-3-numerically	N[Zeta[3]]	1.2020569031595942		N[\zeta (3)]	
 a-machine-precision-argument	Zeta[1.5]	2.612375348685488		\zeta (1.5)	2.61238	
 zeta-8-pi-8-9450	Zeta[8]	Pi^8/9450		\zeta (8)	\frac{\pi ^8}{9450}	
 zeta-5-b-6-6-1-252	Zeta[-5]	-1/252		\zeta (-5)	-\frac{1}{252}	
-zeta-symbolic-s-under-n-stays-symbolic						
+zeta-symbolic-s-under-n-stays-symbolic	N[Zeta[s]]					
 zeta-half-stays-symbolic-until-n	Zeta[Rational[1, 2]]	Zeta[1/2]		\zeta \left(\frac{1}{2}\right)	\zeta \left(\frac{1}{2}\right)	
 zeta-complex-argument-stays-symbolic-until-n	Zeta[Complex[2, 1]]	Zeta[2 + I]		\zeta (2+i)	\zeta (2+i)	
 n-zeta-complex-2-plus-i	N[Zeta[Complex[2, 1]]]	1.1503557032549028 - 0.4375308659196078*I		N[\zeta (2+i)]	1.15036\, -0.437531 i	
@@ -43,7 +43,7 @@ zeta-0-1-2	Zeta[0]	-1/2		\zeta (0)	-\frac{1}{2}
 trivial-zero-zeta-2n-0-for-positive-integer-n	Zeta[-2]	0		\zeta (-2)	0	
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	Zeta[-3]	1/120		\zeta (-3)	\frac{1}{120}	
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges	Zeta[1]	ComplexInfinity		\zeta (1)	\text{ComplexInfinity}	
-zeta-s-1-zeta-s-for-symbolic-s						
+zeta-s-1-zeta-s-for-symbolic-s	Zeta[s, 1]					
 zeta-0-1	Zeta[0, 1]	-1/2		\zeta (0,1)	-\frac{1}{2}	
 zeta-neg-1-1	Zeta[-1, 1]	-1/12		\zeta (-1,1)	-\frac{1}{12}	
 zeta-0-1-over-4	Zeta[0, Rational[1, 4]]	1/4		\zeta \left(0,\frac{1}{4}\right)	\frac{1}{4}	

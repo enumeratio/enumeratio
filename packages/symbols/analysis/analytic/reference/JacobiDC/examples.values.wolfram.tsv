@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 a-floating-point-argument-evaluates-directly-to	N[JacobiDC[0.6, 0.4]]	1.124780426911555	N[\text{dc}(0.6|0.4)]	1.12478	
 m-less-than-0-via-the-imaginary-modulus	N[JacobiDC[0.3, -0.7]]	1.0799397700832252	N[\text{dc}(0.3|-0.7)]	1.07994	
-u-0-is-1-for-any-m					
-symbolic-arguments-are-left-unevaluated-rather					
+u-0-is-1-for-any-m	JacobiDC[0, m]				
+symbolic-arguments-are-left-unevaluated-rather	JacobiDC[u, m]				
 u-1e16-declines-rather-than-answering-wrong	N[JacobiDC[Power[10, 16], Rational[5, 7]]]	-1.971424716060679	N\left[\text{dc}\left(10^{16}|\frac{5}{7}\right)\right]	-1.97142	disagree

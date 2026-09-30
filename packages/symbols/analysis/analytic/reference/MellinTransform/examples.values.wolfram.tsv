@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out
-exp-neg-x-gamma				
-one-over-one-plus-x				
-gaussian				
-log-one-plus-x				
-power-shift-x-c-exp				
+exp-neg-x-gamma	MellinTransform[Exp[Minus[x]], x, s]			
+one-over-one-plus-x	MellinTransform[Divide[1, Plus[1, x]], x, s]			
+gaussian	MellinTransform[Exp[Minus[Power[x, 2]]], x, s]			
+log-one-plus-x	MellinTransform[Log[Plus[1, x]], x, s]			
+power-shift-x-c-exp	MellinTransform[Times[Power[x, a], Exp[Minus[x]]], x, s]			
 mellintransform-1-over-x-plus-1-x-1-over-2	MellinTransform[Divide[1, Plus[x, 1]], x, Rational[1, 2]]	Pi	\mathcal{M}_x\left[\frac{1}{x+1}\right]\left(\frac{1}{2}\right)	\pi
