@@ -21,4 +21,4 @@ tells-you-the-temperature-dropped-but-not-by-how	Applications		[Sign, [Subtract,
 sign-z-z-z-see-abs	Properties		[Equal, [Sign, [Complex, 3, 4]], [Divide, [Complex, 3, 4], [Abs, [Complex, 3, 4]]]]	True	$\operatorname{sign}(z) = z/|z|$. See [[Abs]]				
 x-cdot-sign-x-x-here-at-x-5	Properties		[Equal, [Multiply, -5, [Sign, -5]], [Abs, -5]]	True	$x \cdot \operatorname{sign}(x) = |x|$, here at $x = -5$				
 the-sign-of-a-nonzero-complex-number-lies-on-the	Properties		[Equal, [Abs, [Sign, [Complex, 3, 4]]], 1]	True	The sign of a nonzero complex number lies on the unit circle				
-nan-propagates-rather-than-being-treated-as-0	Possible issues		[Sign, NaN]	NaN	NaN propagates rather than being treated as 0	undefined-form	Both decline: compute-engine's NaN is the float can't-decide spelling (CE 0.141); Wolfram has no NaN and answers Indeterminate for the same input.		
+nan-propagates-rather-than-being-treated-as-0	Possible issues		[Sign, NaN]	NaN	NaN propagates rather than being treated as 0	undefined-form	Both decline: compute-engine spells it NaN, Wolfram spells it Indeterminate.		

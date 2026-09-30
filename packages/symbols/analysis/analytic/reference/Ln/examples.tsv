@@ -16,7 +16,7 @@ ln-positiveinfinity	Scope		[Ln, PositiveInfinity]	PositiveInfinity
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln	Scope		[Ln, ComplexInfinity]	PositiveInfinity	$|\ln z| \to \infty$ and its real part goes to $+\infty$: $\ln(\tilde\infty) = +\infty$								
 ln-i-i-pi-2-exactly	Scope		[Ln, ImaginaryUnit]	[Multiply, [Complex, 0, [Rational, 1, 2]], Pi]	$\ln i = i\pi/2$ exactly								
 a-unit-fraction-becomes-a-negated-logarithm-ln	Scope		[Ln, [Rational, 1, 2]]	[Negate, [Ln, 2]]	A unit fraction becomes a negated logarithm: $\ln\tfrac12 = -\ln 2$								
-interval-arithmetic-ln-is-increasing-so-ln-frac	Scope		[Ln, [Interval, [Rational, 1, 3], ExponentialE]]	[Interval, [Negate, [Ln, 3]], 1]	Interval arithmetic: $\ln$ is increasing, so $\ln[\tfrac13, e]$ is the interval of the endpoint values -- $\ln(1/3)$ folds to $-\ln 3$ (see the unit-fraction example above)	unclassified	""						
+interval-arithmetic-ln-is-increasing-so-ln-frac	Scope		[Ln, [Interval, [Rational, 1, 3], ExponentialE]]	[Interval, [Negate, [Ln, 3]], 1]	Interval arithmetic: $\ln$ is increasing, so $\ln[\tfrac13, e]$ is the interval of the endpoint values -- $\ln(1/3)$ folds to $-\ln 3$ (see the unit-fraction example above)	shape	Same value (-Ln(3) and 1, since Ln(e)=1); ours emits a flat Interval[a,b], Wolfram's Interval[{a,b}] wraps the endpoints in a list.						
 uncertainty-propagation-ln-2-pm-0-01-approx-0	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.005]	Uncertainty propagation: $\ln(2 \pm 0.01) \approx 0.693 \pm 0.005$								
 ln-exp-x	Scope		[Ln, [Exp, x]]	x									
 derivative-1-x	Scope		[D, [Ln, x], x]	[Divide, 1, x]	Derivative: $1/x$								

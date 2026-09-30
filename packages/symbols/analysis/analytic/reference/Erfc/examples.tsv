@@ -7,8 +7,8 @@ a-machine-precision-argument			[Erfc, 1.5]	{num: "0.033894853524689272933"}	A ma
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[Erfc, [List, 0, 1]]	[List, 1, [Erfc, 1]]	Threads element-wise over a list, as Wolfram's Listable heads do		
 complex-arguments-should-evaluate-as-they-do-for	Scope		[Erfc, [Complex, 1.5, -1]]	[Complex, -0.07839920749893345, -0.027963711238655847]	Complex arguments evaluate, as they do for [[Erf]]: $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$		
 listable-threads-over-its-limits-at-pm-infty	Scope		[Erfc, [List, PositiveInfinity, NegativeInfinity]]	[List, 0, 2]	Listable: threads over its limits at $\pm\infty$		
-interval-arithmetic-erfc-is-decreasing-so-the	Scope		[Erfc, [Interval, 0.2, 0.3]]	[Interval, 0.6713732405408726, 0.7772974107895215]	Interval arithmetic: Erfc is decreasing, so the endpoints swap	unclassified	""
-uncertainty-propagation	Scope		[Erfc, [Around, 2, 0.01]]	[Around, 0.004677734981047266, 0.00020666985354092054]	Uncertainty propagation	unclassified	""
+interval-arithmetic-erfc-is-decreasing-so-the	Scope		[Erfc, [Interval, 0.2, 0.3]]	[Interval, 0.6713732405408726, 0.7772974107895215]	Interval arithmetic: Erfc is decreasing, so the endpoints swap	precision	mpmath's tight image matches ours; Wolfram's numeric Interval evaluation of Erfc gives a looser conservative bound.
+uncertainty-propagation	Scope		[Erfc, [Around, 2, 0.01]]	[Around, 0.004677734981047266, 0.00020666985354092054]	Uncertainty propagation	precision	Last-bit float64 rounding difference in the propagated uncertainty.
 to-30-significant-digits-every-one-correctly	Scope		[N, [Erfc, 2], 30]	{num: "0.00467773498104726583793074363275"}	To 30 significant digits, every one correctly rounded		
 erfc-z-2-erfc-z-here-at-z-1	Properties		[Equal, [Add, [Erfc, -1], [Erfc, 1]], 2]	True	$\operatorname{erfc}(-z) = 2 - \operatorname{erfc}(z)$, here at $z = 1$		
 definition-erf-z-erfc-z-1-see-erf	Properties		[Equal, [Add, [Erf, 2], [Erfc, 2]], 1]	True	Definition: $\operatorname{erf}(z) + \operatorname{erfc}(z) = 1$. See [[Erf]]		

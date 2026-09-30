@@ -14,7 +14,7 @@ tanh-artanh-x-x-for-every-x	Scope		[Tanh, [Artanh, x]]	x	$\tanh(\operatorname{ar
 tanh-artanh-2-2-past-the-real-domain	Scope		[Tanh, [Artanh, 2]]	2	$\tanh(\operatorname{artanh}(2)) = 2$, even past $(-1, 1)$		
 derivative-sech-2-x	Scope		[D, [Tanh, x], x]	[Power, [Sech, x], 2]	Derivative: $\operatorname{sech}^2 x$		
 antiderivative-ln-cosh-x	Scope		[Integrate, [Tanh, x], x]	[Ln, [Cosh, x]]	Antiderivative: $\ln\cosh x$		
-tanh-has-no-limit-at-complex-infinity-undefined	Scope		[Tanh, ComplexInfinity]	NaN	$\tanh$ has no limit at complex infinity, undefined from any direction: NaN	unclassified	""
+tanh-has-no-limit-at-complex-infinity-undefined	Scope		[Tanh, ComplexInfinity]	NaN	$\tanh$ has no limit at complex infinity, undefined from any direction: NaN	undefined-form	Both decline: compute-engine spells it NaN, Wolfram spells it Indeterminate.
 to-30-significant-digits-every-one-correctly	Scope		[N, [Tanh, 1], 30]	{num: "0.761594155955764888119458282605"}	To 30 significant digits, every one correctly rounded		
 tanh-x-frac-sinh-x-cosh-x	Properties		[Equal, [Tanh, 1], [Divide, [Sinh, 1], [Cosh, 1]]]	True	$\tanh(x) = \frac{\sinh(x)}{\cosh(x)}$		
 in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	Properties		[TrigToExp, [Tanh, x]]	[Divide, [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]	In exponentials: $\tanh x = \frac{e^x - e^{-x}}{e^x + e^{-x}}$		
