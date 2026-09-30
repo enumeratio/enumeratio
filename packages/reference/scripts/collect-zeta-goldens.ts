@@ -12,7 +12,7 @@
 import { writeFileSync } from "node:fs";
 import { runKernel } from "@enumeratio/oracle/bounded";
 import { BigDecimal } from "@cortex-js/compute-engine";
-import { bigCx, hurwitzZeta, hurwitzZetaBig } from "@enumeratio/for-compute-engine/src";
+import { bigCx, hurwitzZeta, hurwitzZetaBig } from "@enumeratio/ce-patches/src";
 
 type Pair = [number, number];
 

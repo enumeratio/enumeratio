@@ -9,6 +9,8 @@ import {
   namespaceOf,
   pinOf,
   qualifiedNamesOf,
+  combineRegistries,
+  SearchPathError,
   searchPath,
 } from "../src/index.ts";
 
@@ -88,7 +90,7 @@ test("a dependency beyond the system must be pinned; a pin that isn't there fail
 test("a definition may use system names unpinned: they move with the system", async () => {
   const log: string[] = [];
   const library = (name: string): Library<Engine> => ({ name, declare: () => void log.push(name) });
-  const registry = searchPath(
+  const registry = combineRegistries(
     manifestRegistry([library("analytic")]),
     definitionRegistry<Engine>("ada", { Zh: unary(["MemberCall", "Analytic", "'HurwitzZeta'", "x", 1]) }),
   );
@@ -111,7 +113,7 @@ test("libraries: only what an expression names, each once per engine", async () 
   const log: string[] = [];
   const library = (name: string): Library<Engine> => ({ name, declare: () => void log.push(name) });
   const libraries = [library("analytic"), library("hypercomplex"), library("structures")];
-  const resolver = createRegistryResolver(searchPath(await ada(), manifestRegistry(libraries)));
+  const resolver = createRegistryResolver(combineRegistries(await ada(), manifestRegistry(libraries)));
   const ce = new ComputeEngine();
   expect((await resolver.ensure(ce, ["HurwitzZeta", 2, 1])).declared).toEqual(["analytic"]);
   expect((await resolver.ensure(ce, ["HurwitzZeta", 3, 1])).declared).toEqual([]);
@@ -120,4 +122,38 @@ test("libraries: only what an expression names, each once per engine", async () 
   expect((await resolver.ensure(new ComputeEngine(), qualified)).declared).toEqual(["analytic"]);
   const wrong = ["MemberCall", "Hypercomplex", "'HurwitzZeta'", 2, 1];
   expect((await resolver.ensure(new ComputeEngine(), wrong)).unresolved).toEqual(["Hypercomplex.HurwitzZeta"]);
+});
+
+const bob = definitionRegistry<Engine>("bob", {
+  Sq: unary(["Power", "x", 2]),
+  Halve: unary(["Divide", "x", 2]),
+  Sin: unary(1),
+});
+
+test("a search path settles bare names when it is set up, not when an expression meets them", async () => {
+  const registry = combineRegistries(await ada(), bob);
+  // `Sq` is both curators'; `Sin` is the system's, which no namespace shadows.
+  const error = await searchPath(registry, { use: ["ada", "bob"] }).catch((e: unknown) => e);
+  expect(error).toBeInstanceOf(SearchPathError);
+  expect((error as SearchPathError).conflicts).toEqual([
+    { name: "Sq", namespaces: ["ada", "bob"], system: false },
+    { name: "Sin", namespaces: ["ada", "bob"], system: true },
+  ]);
+  // Preferring the system's name away doesn't work; excluding it does.
+  await expect(searchPath(registry, { use: ["ada", "bob"], prefer: { Sq: "bob", Sin: "ada" } })).rejects.toThrow(
+    "Sin: the system, ada, bob",
+  );
+  await expect(searchPath(registry, { use: ["nobody"] })).rejects.toThrow("no registry serves the namespace nobody");
+});
+
+test("a bare head the path brings in is its qualified name; a symbol stays itself", async () => {
+  const registry = combineRegistries(await ada(), bob);
+  const path = await searchPath(registry, { use: ["ada", "bob"], prefer: { Sq: "bob" }, exclude: ["Sin"] });
+  const resolver = createRegistryResolver(registry, { path });
+  const ce = new ComputeEngine();
+  const ensured = await resolver.ensure(ce, ["Add", ["Sq", 3], ["Halve", "Sq"]]);
+  expect(ensured.expression).toEqual(["Add", ["MemberCall", "bob", "'Sq'", 3], ["MemberCall", "bob", "'Halve'", "Sq"]]);
+  expect(evaluate(ce, ["Add", ["MemberCall", "bob", "'Sq'", 3], ["MemberCall", "bob", "'Halve'", 4]])).toBe(11);
+  // Excluded, `Sin` is the system's own.
+  expect((await resolver.ensure(ce, ["Sin", 0])).expression).toEqual(["Sin", 0]);
 });

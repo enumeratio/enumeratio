@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
-import { isFiniteNum, isRealInt, wantsNumber, logGammaReal } from "@enumeratio/for-compute-engine";
+import { isFiniteNum, isRealInt, wantsNumber, logGammaReal } from "@enumeratio/ce-patches";
 
 // I_x(a, b) past x = 1 at a positive integer b: (1 − t)^(b−1) is a polynomial, so the
 // defining integral is a finite sum, B_x(a, b) = Σⱼ C(b−1, j)(−1)ʲ x^(a+j)/(a+j), real for

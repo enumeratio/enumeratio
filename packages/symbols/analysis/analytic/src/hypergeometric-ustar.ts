@@ -14,7 +14,7 @@ import {
   scale,
   sub,
   logGamma,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // HypergeometricUStar(a, b, z) — Fungrim's regularized Tricomi confluent
 // hypergeometric function, U*(a, b, z) = z^a U(a, b, z) (fungrim:c8fcc7 is exactly

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt, wantsNumber } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isRealInt, wantsNumber } from "@enumeratio/ce-patches";
 
 // MultiZetaValue(s₁, s₂) — Fungrim's depth-2 multiple zeta value
 // ζ(s₁, s₂) = Σ_{n₁ > n₂ ≥ 1} n₁^{−s₁} n₂^{−s₂}.

@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, evaluateBernoulliPolynomial } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, evaluateBernoulliPolynomial } from "@enumeratio/ce-patches";
 import { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 import { evaluateCsgn } from "./csgn.ts";
 import { evaluateCongruentMod } from "./congruent-mod.ts";
@@ -13,9 +13,9 @@ import { GLAISHER_VALUE } from "./const-glaisher.ts";
 // The heads for what's still ours beyond the zeta family — HarmonicNumber, ChebyshevT,
 // ChebyshevU, LegendrePolynomial, RisingFactorial, BernoulliPolynomial, FallingFactorial,
 // XGCD, Csgn, ConstGlaisher, CongruentMod — plus the Catalan constant (several of the
-// #340 candidates' closed forms, now in @enumeratio/for-compute-engine, land on it too, so
+// #340 candidates' closed forms, now in @enumeratio/ce-patches, land on it too, so
 // it stays declared here). BarnesG, LogBarnesG, LogGamma, ClausenCl, the Dirichlet family
-// and StieltjesGamma moved to for-compute-engine's patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10);
+// and StieltjesGamma moved to ce-patches's patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10);
 // see barnes-g/, log-gamma/, clausen/, dirichlet/ and stieltjes/ there. Same shape as
 // before: exact Wolfram reductions first, then the numeric kernel when a number is
 // wanted, symbolic otherwise. Declared by `declareAnalytic` (declare.ts).

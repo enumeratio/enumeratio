@@ -13,7 +13,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/dirichlet-l.ts
+    source: packages/ce-patches/src/compute-engine/numerics/dirichlet-l.ts
     note: A discrete logarithm against the cyclic decomposition — an algorithm over mutable state, not a tree.
   - origin: mapped
     form: wolfram

@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { carlsonRC, carlsonRD, carlsonRF, carlsonRG, carlsonRJ } from "../src/carlson.ts";
-import { cx } from "@enumeratio/for-compute-engine";
+import { cx } from "@enumeratio/ce-patches";
 import { declareAnalytic } from "../src/declare.ts";
 
 // CarlsonRF, CarlsonRC, CarlsonRD, CarlsonRJ, CarlsonRG — the Carlson symmetric elliptic

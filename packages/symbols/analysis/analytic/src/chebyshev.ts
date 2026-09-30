@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import type { Json } from "@enumeratio/for-compute-engine";
+import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
   isFiniteNum,
@@ -10,7 +10,7 @@ import {
   scale,
   sub,
   type Cx,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // ChebyshevT(n, x) / ChebyshevU(n, x): T_0 = 1, T_1 = x, T_k = 2x T_{k-1} − T_{k-2}
 // (U seeded U_0 = 1, U_1 = 2x — the same recurrence, a different start). Wolfram uses
