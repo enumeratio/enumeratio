@@ -1,7 +1,7 @@
-id	in
-the-documented-subsets-collection-form-listed-in	Subsets[List[a, b, c]]
-a-size-bound-the-subsets-with-at-most-2-elements	Count[Subsets[4, 2]]
-an-exact-size-2-binom-4-2-subsets	Count[Subsets[4, List[2]]]
-a-size-range-0-5-2-the-even-size-subsets-2-4-of	Count[Subsets[5, List[0, 5, 2]]]
-a-set-of-n-elements-has-2-n-subsets-count	Length[Subsets[Range[1, 10]]]
-counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum[Binomial[5, k], List[k, 0, 5]]
+id	in	back
+the-documented-subsets-collection-form-listed-in	Subsets[List[a, b, c]]	
+a-size-bound-the-subsets-with-at-most-2-elements	Count[Subsets[Range[4], 2]]	[Count, [Subsets, [Range, 4], 2]]
+an-exact-size-2-binom-4-2-subsets	Count[Subsets[Range[4], List[2]]]	[Count, [Subsets, [Range, 4], [List, 2]]]
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	Count[Subsets[Range[5], List[0, 5, 2]]]	[Count, [Subsets, [Range, 5], [List, 0, 5, 2]]]
+a-set-of-n-elements-has-2-n-subsets-count	Length[Subsets[Range[1, 10]]]	
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	Sum[Binomial[5, k], List[k, 0, 5]]	

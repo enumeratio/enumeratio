@@ -1,2 +1,2 @@
 id	in	out	tex.in	tex.out	verdict
-star-hub-is-maximally-close	ClosenessCentrality[StarGraph[5], 1]	ClosenessCentrality[Graph[{1, 2, 3, 4, 5}, {Null, SparseArray[Automatic, {5, 5}, 0, {1, {{0, 4, 5, 6, 7, 8}, {{2}, {3}, {4}, {5}, {1}, {1}, {1}, {1}}}, Pattern}]}, {GraphLayout -> "StarEmbedding"}], 1]	\text{ClosenessCentrality}[\text{StarGraph}[5],1]	\text{ClosenessCentrality}[,1]	disagree
+star-hub-is-maximally-close	Part[ClosenessCentrality[StarGraph[5]], 1]	ClosenessCentrality[Graph[{1, 2, 3, 4, 5}, {Null, SparseArray[Automatic, {5, 5}, 0, {1, {{0, 4, 5, 6, 7, 8}, {{2}, {3}, {4}, {5}, {1}, {1}, {1}, {1}}}, Pattern}]}, {GraphLayout -> "StarEmbedding"}], 1]	\text{ClosenessCentrality}[\text{StarGraph}[5],1]	\text{ClosenessCentrality}[,1]	disagree

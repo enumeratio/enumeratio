@@ -310,6 +310,21 @@ test("a carrier constructor with no mapping unwraps to its contents, for every s
   expect(emit(["NotACarrier", 1], "sympy")).toEqual({ ok: false, missing: ["NotACarrier/1"] });
 });
 
+// CycleDecomposition/Permutation, when one wraps the other, is a format conversion (cycle
+// notation <-> one-line notation) -- not the plain "carrier's raw contents" unwrap above. The
+// naive unwrap would flatten straight past both heads to the bare inner list, losing the
+// conversion Wolfram's PermutationCycles/PermutationList need to draw.
+test("CycleDecomposition(Permutation(...)) and its reverse emit Wolfram's own conversion, not a bare unwrap", () => {
+  expect(emit(["CycleDecomposition", ["Permutation", ["List", 2, 3, 1, 4]]], "wolfram")).toEqual({
+    ok: true,
+    source: "PermutationCycles[List[2, 3, 1, 4]]",
+  });
+  expect(emit(["Permutation", ["CycleDecomposition", ["List", ["List", 1, 3], ["List", 2]]]], "wolfram")).toEqual({
+    ok: true,
+    source: "PermutationList[Cycles[List[List[1, 3], List[2]]]]",
+  });
+});
+
 // A-92: Tournament/LabeledGraph pack a `carrierParams` prefix (n) onto the element (edges) as a
 // Tuple -- `Tournament(n, edges)`. No system has a bare `Tuple/2` mapping (nor should it: the
 // arity depends on which family packed it), so this unwraps ONE level further than a plain

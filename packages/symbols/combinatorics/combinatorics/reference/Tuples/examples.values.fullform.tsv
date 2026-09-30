@@ -1,3 +1,3 @@
-id	in
-2-3	Count[Tuples[2, 3]]
-tuples-2-3-list-1	Part[Tuples[2, 3], 1]
+id	in	back
+2-3	Count[Tuples[Range[2], 3]]	[Count, [Tuples, [Range, 2], 3]]
+tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	[At, [Tuples, [Range, 2], 3], 1]

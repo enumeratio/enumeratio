@@ -1,2 +1,2 @@
-id	in
-star-hub-is-maximally-close	ClosenessCentrality[StarGraph[5], 1]
+id	in	back
+star-hub-is-maximally-close	Part[ClosenessCentrality[StarGraph[5]], 1]	[At, [ClosenessCentrality, [StarGraph, 5]], 1]

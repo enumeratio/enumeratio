@@ -156,9 +156,15 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // which is the closest thing to a canonical set — and what `Intersection` et al
   // return, so set identities still compare Equal.
   Set: (a) => `Union[${call("List", a)}]`,
-  // Clamp(x, lo, hi) is Clip[x, {lo, hi}]; the 1-arg form clips to [-1, 1] in both.
+  // Clamp(x, lo, hi) is Clip[x, {lo, hi}]; the 1-arg form clips to [-1, 1] in both. The
+  // 5-arg form adds replacement values for outside the range, Clip's own third argument
+  // `{vlo, vhi}` -- also a pair, not the two flat trailing operands a plain rename would give.
   Clamp: (a) =>
-    a.length === 3 ? `Clip[${toWolfram(a[0])}, List[${toWolfram(a[1])}, ${toWolfram(a[2])}]]` : call("Clip", a),
+    a.length === 5
+      ? `Clip[${toWolfram(a[0])}, List[${toWolfram(a[1])}, ${toWolfram(a[2])}], List[${toWolfram(a[3])}, ${toWolfram(a[4])}]]`
+      : a.length === 3
+        ? `Clip[${toWolfram(a[0])}, List[${toWolfram(a[1])}, ${toWolfram(a[2])}]]`
+        : call("Clip", a),
   // Wolfram's Sum/Product only take an iterator; the 1-arg list form is Total /
   // Times-apply. With an iterator the names agree and `Tuple` becomes `{k, a, b}`.
   Sum: (a) => (a.length === 1 ? `Total[${toWolfram(a[0])}]` : call("Sum", a)),
@@ -319,7 +325,105 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     }
     return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
   },
+  // Count(list, predicate) is a PREDICATE test; Wolfram's Count[list, pattern] takes a
+  // pattern instead, so a bare rename (`Count[list, pred]`) asks Wolfram to match `pred`
+  // LITERALLY rather than call it -- the pattern that DOES call it is `_?pred`
+  // (`PatternTest[Blank[], pred]` in full form). Count(list, value) -- a plain value, not a
+  // `Function` -- is already exact-equality, which is what a bare rename gives correctly, so
+  // only the `Function`-literal predicate form is rewritten.
+  Count: (a) => {
+    if (a.length === 2) {
+      const parts = headArgs(a[1]);
+      if (parts?.head === "Function") {
+        return `Count[${toWolfram(a[0])}, PatternTest[Blank[], ${toWolfram(a[1])}]]`;
+      }
+    }
+    return call("Count", a);
+  },
+  // IsArray(a, test) checks `test` holds of every LEAF; Wolfram's ArrayQ[array, patt, test]
+  // takes the same test as its THIRD argument, with a level pattern (`_`, any depth) in
+  // between -- our 2-arg call has no slot for that pattern, so a bare rename hands `test`
+  // to ArrayQ's PATTERN position instead, where it means something else entirely.
+  IsArray: (a) => (a.length === 2 ? `ArrayQ[${toWolfram(a[0])}, Blank[], ${toWolfram(a[1])}]` : call("ArrayQ", a)),
+  // Thread(Equal(l1, l2)): Wolfram evaluates the argument to Thread BEFORE Thread ever sees
+  // it, and `Equal` on two same-length lists is a whole-list equality test (a single
+  // Boolean), not an elementwise one -- so by the time Thread runs, its argument has already
+  // collapsed to `True`/`False` and there is nothing left to thread over.
+  // `Unevaluated[...]` defers that evaluation to Thread itself, which is what our own
+  // `Thread` always meant (matches Wolfram unchanged when the scalar-broadcast case leaves
+  // `Equal` unevaluated on its own -- Unevaluated is a no-op there, not a behavior change).
+  Thread: (a) => {
+    const parts = a.length === 1 ? headArgs(a[0]) : undefined;
+    if (parts?.head === "Equal") return `Thread[Unevaluated[${toWolfram(a[0])}]]`;
+    return call("Thread", a);
+  },
+  // Random(domain, n) draws n times WITH replacement (engine/random.ts's ARMS: every draw
+  // is an independent uniform-index sample) -- Wolfram's population sampler for that is
+  // RandomChoice[list, n], not RandomReal (the identity rename, right only for the no-domain
+  // and interval/distribution forms). A distribution or `Interval` domain keeps the identity
+  // rename; anything else array-shaped is a finite collection to draw from.
+  Random: (a) => {
+    if (a.length === 0) return call("RandomReal", a);
+    const domain = a[0];
+    const parts = headArgs(domain);
+    const isDistribution = typeof parts?.head === "string" && parts.head.endsWith("Distribution");
+    if (parts === undefined || isDistribution || parts.head === "Interval") return call("RandomReal", a);
+    const shape = a[1];
+    return shape === undefined
+      ? `RandomChoice[${toWolfram(domain)}]`
+      : `RandomChoice[${toWolfram(domain)}, ${toWolfram(shape)}]`;
+  },
+  // Subsets(n, spec)/Tuples(n, k): our own carrier-sized overload, `n` standing for the
+  // first `n` naturals rather than an explicit collection -- Wolfram's Subsets/Tuples take
+  // only an actual collection, so a bare integer first argument becomes `Range[n]`.
+  Subsets: (a) =>
+    a.length >= 2 && isIntegerLiteral(a[0])
+      ? `Subsets[Range[${toWolfram(a[0])}], ${toWolfram(a[1])}]`
+      : call("Subsets", a),
+  Tuples: (a) =>
+    a.length === 2 && isIntegerLiteral(a[0])
+      ? `Tuples[Range[${toWolfram(a[0])}], ${toWolfram(a[1])}]`
+      : call("Tuples", a),
+  // CycleDecomposition(Permutation(...))/Permutation(CycleDecomposition(...)) is a FORMAT
+  // CONVERSION (cycle notation <-> one-line notation) -- `PermutationCycles`/
+  // `PermutationList∘Cycles` are Wolfram's own conversions between the two. OUTSIDE that
+  // composition, neither head gets a SPECIAL case here: a bare `Permutation(list)` (no
+  // Wolfram head of its own) stays the literal, unmapped `Permutation[List[...]]` this
+  // transpiler always gave it -- the oracle's own bare-contents unwrap (`emit.ts`'s
+  // CARRIER_NAMES fallback) already turns that into Wolfram's plain list for the "wolfram"
+  // reference column; only the COMPOSED case needs help, and only `emit.ts` (which sees the
+  // raw, unwalked tree) can tell composed from bare apart -- see its own CycleDecomposition/
+  // Permutation special case.
+  CycleDecomposition: (a) => {
+    const parts = headArgs(a[0]);
+    if (parts?.head === "Permutation") return `PermutationCycles[${toWolfram(parts.args[0])}]`;
+    return call("CycleDecomposition", a);
+  },
+  Permutation: (a) => {
+    const parts = headArgs(a[0]);
+    if (parts?.head === "CycleDecomposition") return `PermutationList[Cycles[${toWolfram(parts.args[0])}]]`;
+    return call("Permutation", a);
+  },
+  // ClosenessCentrality(g, v) selects one vertex's value; Wolfram's ClosenessCentrality has
+  // no such 2-argument form (only `ClosenessCentrality[g]`, a list over every vertex in
+  // `VertexList[g]` order) -- `Part[...]` picks the same position out of that list. Exact
+  // for a graph whose vertex labels already run `1..n` in `VertexList` order (every call
+  // this maps today), not a general vertex-name lookup.
+  ClosenessCentrality: (a) =>
+    a.length === 2
+      ? `Part[ClosenessCentrality[${toWolfram(a[0])}], ${toWolfram(a[1])}]`
+      : call("ClosenessCentrality", a),
 };
+
+/** `x` is a plain integer literal, in whichever of the two forms a `SPECIAL` case may see it
+ * (see `unwrapFunctionArg`'s doc comment): raw MathJson, or an already-rendered Wolfram
+ * source string (from `@enumeratio/oracle`'s pre-walked `emit`). */
+function isIntegerLiteral(x: MathJson): boolean {
+  if (typeof x === "number") return Number.isInteger(x);
+  if (typeof x === "string") return /^-?\d+$/.test(x);
+  if (typeof x === "object" && x !== null && "num" in x) return /^-?\d+$/.test(x.num);
+  return false;
+}
 
 /**
  * Unwraps a `Limit`/`Table` function argument into its bound variable and body, for the
@@ -453,6 +557,11 @@ function symbolToWolfram(s: string): string {
   if (slot) return `Slot[${slot[1] || 1}]`;
   const subscript = /^([A-Za-z][A-Za-z0-9]*)_([A-Za-z0-9]+)$/.exec(s);
   if (subscript) return `Subscript[${subscript[1]}, ${subscript[2]}]`;
+  // `All` bare is Wolfram's own level-spec/wildcard symbol (a `Part`/`At` span, a third
+  // `Ordering` argument, an `IntegerPartitions`/`PartitionsQ` "any part" spec) -- genuinely
+  // its own thing there, never `AllTrue`. Only the predicate HEAD `All(pred)` means
+  // `AllTrue` (`HEADS["All"]`, consulted below); a BARE reference must skip that mapping.
+  if (s === "All") return "All";
   // A head passed as a value (`Scan(xs, Add)`) takes its Wolfram name too. FOREIGN is
   // deliberately NOT consulted here: `GaussianIntegers` bare is genuinely ambiguous between
   // our own carrier's type-space symbol and Wolfram's real option flag (`PrimeQ[n,

@@ -30,4 +30,4 @@ theta1-0-q-is-0-for-any-q-an-odd	N[EllipticTheta[1, 0, 0.5]]	0.	N[\vartheta _1(0
 q-1-is-declined-the-series-diverges	N[EllipticTheta[3, 0.3, 1]]	EllipticTheta[3, 0.3, 1.]	N[\vartheta _3(0.3,1)]	\vartheta _3(0.3,1.)	
 symbolic-arguments-are-left-unevaluated-rather					
 u-1e30-declines-rather-than-answering-wrong	N[EllipticTheta[1, Power[10, 30], Rational[1, 2]]]	0.005123734170741451	N\left[\vartheta _1\left(10^{30},\frac{1}{2}\right)\right]	0.00512373	disagree
-u-1e30-mpmath-true-value					
+u-1e30-mpmath-true-value	N[EllipticTheta[1, Power[10, 30], Rational[1, 2]]]				

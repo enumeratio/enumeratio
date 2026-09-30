@@ -261,3 +261,73 @@ test("Table(Function(body), n) unwraps to Wolfram's body + {i, n} iterator", () 
   // quirk is unaffected by the Function-unwrapping added here.)
   expect(toWolfram(["Table", "i", ["Limits", "i", 1, 10]])).toBe("Table[i, Limits[i, 1, 10]]");
 });
+
+test("bare `All` stays Wolfram's own level-spec/wildcard symbol; only the predicate head means AllTrue", () => {
+  expect(toWolfram(["Ordering", ["List", 2, 6, 1, 9, 3], "All", "Greater"])).toBe(
+    "Ordering[List[2, 6, 1, 9, 3], All, Greater]",
+  );
+  expect(toWolfram(["At", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]], "All", 2])).toBe(
+    "Part[List[List[1, 2, 3], List[4, 5, 6]], All, 2]",
+  );
+  // The head call still means the predicate.
+  expect(toWolfram(["All", ["List", 1, 2, 3], "Positive"])).toBe("AllTrue[List[1, 2, 3], Positive]");
+});
+
+test("Clamp(x, lo, hi, vlo, vhi) is Clip's {lo, hi}, {vlo, vhi} replacement-value form", () => {
+  expect(toWolfram(["Clamp", -5, 0, 3, -1, 10])).toBe("Clip[-5, List[0, 3], List[-1, 10]]");
+  expect(toWolfram(["Clamp", 5, 0, 3, -1, 10])).toBe("Clip[5, List[0, 3], List[-1, 10]]");
+});
+
+test("Count(list, predicate) is Wolfram's Count[list, _?pred]; a plain value stays exact equality", () => {
+  expect(toWolfram(["Count", ["List", 1, 2, 3, 4], ["Function", ["Greater", "_1", 2]]])).toBe(
+    "Count[List[1, 2, 3, 4], PatternTest[Blank[], Function[Greater[Slot[1], 2]]]]",
+  );
+  expect(toWolfram(["Count", ["List", 1, 2, 2, 3], 2])).toBe("Count[List[1, 2, 2, 3], 2]");
+});
+
+test("IsArray(a, test) inserts ArrayQ's level pattern between the array and the test", () => {
+  expect(toWolfram(["IsArray", ["List", ["List", 2, 4], ["List", 6, 8]], "IsEven"])).toBe(
+    "ArrayQ[List[List[2, 4], List[6, 8]], Blank[], EvenQ]",
+  );
+});
+
+test("Thread(Equal(l1, l2)) defers Equal's evaluation so Thread has something to thread over", () => {
+  expect(toWolfram(["Thread", ["Equal", ["List", 1, 2, 3], ["List", 1, 5, 3]]])).toBe(
+    "Thread[Unevaluated[Equal[List[1, 2, 3], List[1, 5, 3]]]]",
+  );
+});
+
+test("Random(collection, n) draws with replacement via RandomChoice; a distribution/interval domain keeps RandomReal", () => {
+  expect(toWolfram(["Random", ["IntegerPartitions", 10], 3])).toBe("RandomChoice[IntegerPartitions[10], 3]");
+  expect(toWolfram(["Random", ["Range", 10, 20]])).toBe("RandomChoice[Range[10, 20]]");
+  expect(toWolfram(["Random"])).toBe("RandomReal[]");
+  expect(toWolfram(["Random", ["NormalDistribution", 0, 1]])).toBe("RandomReal[NormalDistribution[0, 1]]");
+});
+
+test("Subsets(n, spec)/Tuples(n, k) with an integer n draw from Range(n), our carrier-sized overload", () => {
+  expect(toWolfram(["Subsets", 4, 2])).toBe("Subsets[Range[4], 2]");
+  expect(toWolfram(["Subsets", 4, ["List", 2]])).toBe("Subsets[Range[4], List[2]]");
+  expect(toWolfram(["Tuples", 2, 3])).toBe("Tuples[Range[2], 3]");
+  // An actual collection is left alone.
+  expect(toWolfram(["Subsets", ["List", "a", "b", "c"]])).toBe("Subsets[List[a, b, c]]");
+});
+
+test("CycleDecomposition/Permutation round-trip via Wolfram's own PermutationCycles/PermutationList∘Cycles", () => {
+  expect(toWolfram(["CycleDecomposition", ["Permutation", ["List", 2, 3, 1, 4]]])).toBe(
+    "PermutationCycles[List[2, 3, 1, 4]]",
+  );
+  expect(toWolfram(["Permutation", ["CycleDecomposition", ["List", ["List", 1, 3], ["List", 2]]]])).toBe(
+    "PermutationList[Cycles[List[List[1, 3], List[2]]]]",
+  );
+  // Outside that composition, a bare call stays the literal, unmapped rename it always was
+  // (the oracle's own carrier-contents unwrap handles the bare case separately — see
+  // `emit.test.ts`).
+  expect(toWolfram(["Permutation", ["List", 2, 3, 1, 4]])).toBe("Permutation[List[2, 3, 1, 4]]");
+  expect(toWolfram(["CycleDecomposition", ["List", ["List", 1, 2, 3], ["List", 4]]])).toBe(
+    "CycleDecomposition[List[List[1, 2, 3], List[4]]]",
+  );
+});
+
+test("ClosenessCentrality(g, v) selects one vertex via Part, Wolfram having no 2-argument form", () => {
+  expect(toWolfram(["ClosenessCentrality", ["StarGraph", 5], 1])).toBe("Part[ClosenessCentrality[StarGraph[5]], 1]");
+});

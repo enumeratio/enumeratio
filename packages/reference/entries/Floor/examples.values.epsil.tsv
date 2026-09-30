@@ -23,6 +23,6 @@ the-first-four-digits-of-e	floor(1_000 * exponentialE)	2_718
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	floor(7 / 2) + 1 == ceil(7 / 2)	True
 lfloor-x-rfloor-lceil-x-rceil	floor(-7 / 2) == -ceil(7 / 2)	True
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	floor(floor(x))	floor(x)
-a-zero-divisor-inside-floor	floor(17 / 0)	floor(complexInfinity)
+a-zero-divisor-inside-floor	floor(17 / 0)	complexInfinity
 rounds-toward-infty-not-toward-0-floor-3-2-is-4	floor(-3.2)	-4
 infinities-pass-through-unchanged	floor(negativeInfinity)	negativeInfinity

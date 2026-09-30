@@ -18,6 +18,6 @@ how-many-5-seat-vans-are-needed-to-carry-17	ceil(17 / 5)	4
 ten-bits-are-enough-to-number-1000-items-lceil	ceil(log(1_000, 2))	10
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	ceil(7 / 2) == floor(7 / 2) + 1	True
 floor-and-ceil-agree-exactly-on-integers	ceil(5) == floor(5)	True
-a-zero-divisor-inside-ceil	ceil(16 / 0)	ceil(complexInfinity)
+a-zero-divisor-inside-ceil	ceil(16 / 0)	complexInfinity
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3
 nan-propagates-rather-than-erroring	ceil(`NaN`)	`NaN`
