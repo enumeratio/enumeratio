@@ -4,7 +4,6 @@
 // @enumeratio/wolfram's FullForm doesn't read back as the example. A printer or transpiler change shows up here as a data diff to
 // commit, in the same PR. No kernel needed.
 
-import { isDeepStrictEqual } from "node:util";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { recordWithForms } from "../scripts/forms.ts";
@@ -13,12 +12,18 @@ const FIX = "regenerate: UPDATE_FORMS=1 node packages/frontend/scripts/collect-f
 
 const { heads } = loadReferenceData(PACKAGES);
 
-test("every record pins the forms the printers and transpilers make", () => {
-  const stale = heads
-    .filter((h) => !isDeepStrictEqual(recordWithForms(h.entry.examples, h.implementations), h.implementations ?? {}))
-    .map((h) => h.head);
-  expect(stale, FIX).toEqual([]);
-}, 60_000); // prints and transpiles every example: past the 5 s default on CI runners
+// One head's printing, past the 5 s default on a CI runner: MinValue's TimeConstrained example
+// takes seconds in InputForm (compute-engine's Epsil formatter re-lays out every level).
+const HEAD_BUDGET_MS = 20_000;
+
+// One test per head: all of them together take a minute on a CI runner.
+test.each(heads.map((h) => [`${h.package}/${h.head}`, h] as const))(
+  "%s pins the forms the printers make",
+  (_, h) => {
+    expect(recordWithForms(h.entry.examples, h.implementations), FIX).toEqual(h.implementations ?? {});
+  },
+  HEAD_BUDGET_MS,
+);
 
 // A transpiler that stopped emitting, or a reader that stopped reading, would show here first.
 test("most examples make the trip to Wolfram and back exactly", () => {
