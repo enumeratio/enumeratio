@@ -20,6 +20,8 @@ signatures:
     library: enumeratio-hypercomplex
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: enumeratio-analytic
+    symbols:
+      - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-residues

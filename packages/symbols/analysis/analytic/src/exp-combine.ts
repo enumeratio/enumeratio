@@ -23,6 +23,9 @@ function isExpPower(op: BoxedExpression): boolean {
   return base !== undefined && symbolNameOf(base) === "ExponentialE";
 }
 
+/** Where `hasTwoExpPowers` can hold: somewhere E is named (`Exp(x)` canonicalises to it). */
+export const EXP_SYMBOLS = "^ExponentialE$";
+
 /**
  * O(n), allocation-free gate: at least two `Power(ExponentialE, _)` factors among `ops`.
  * Bails the moment a second one is seen, so a product with zero or one such factor — the
