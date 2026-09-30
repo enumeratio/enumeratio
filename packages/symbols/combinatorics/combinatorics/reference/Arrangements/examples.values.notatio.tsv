@@ -1,4 +1,4 @@
 id	in	out
 count-arrangements-4-2	<Count><Arrangements>4 2</Arrangements></Count>	<ToExpression>12</ToExpression>
-first-element-of-arrangements-4-2	<At><Arrangements>4 2</Arrangements> 1</At>	<List>1 2</List>
-every-element-of-arrangements-4-2	<Take><Arrangements>4 2</Arrangements> 12</Take>	<List><List>1 2</List> <List>1 3</List> <List>1 4</List> <List>2 1</List> <List>2 3</List> <List>2 4</List> <List>3 1</List> <List>3 2</List> <List>3 4</List> <List>4 1</List> <List>4 2</List> <List>4 3</List></List>
+first-element-of-arrangements-4-2	<At><Arrangements>4 2</Arrangements> 1</At>	<Arrangement><List>1 2</List></Arrangement>
+every-element-of-arrangements-4-2	<Take><Arrangements>4 2</Arrangements> 12</Take>	<List><Arrangement><List>1 2</List></Arrangement> <Arrangement><List>1 3</List></Arrangement> <Arrangement><List>1 4</List></Arrangement> <Arrangement><List>2 1</List></Arrangement> <Arrangement><List>2 3</List></Arrangement> <Arrangement><List>2 4</List></Arrangement> <Arrangement><List>3 1</List></Arrangement> <Arrangement><List>3 2</List></Arrangement> <Arrangement><List>3 4</List></Arrangement> <Arrangement><List>4 1</List></Arrangement> <Arrangement><List>4 2</List></Arrangement> <Arrangement><List>4 3</List></Arrangement></List>

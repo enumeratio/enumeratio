@@ -7,7 +7,7 @@ signatures:
   - call: KDescentPermutations(n, k)
     description: Permutations of $\{1, …, n\}$ with exactly $k$ descents — row $n$ of the Eulerian triangle
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - KCyclePermutations

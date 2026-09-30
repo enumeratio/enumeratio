@@ -7,7 +7,7 @@ signatures:
   - call: PermutationsAvoiding231(n)
     description: Permutations of $\{1, …, n\}$ avoiding the pattern $2-3-1$
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - PermutationsAvoiding123

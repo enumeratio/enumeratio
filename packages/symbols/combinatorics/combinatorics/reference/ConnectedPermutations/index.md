@@ -7,7 +7,7 @@ signatures:
   - call: ConnectedPermutations(n)
     description: "Indecomposable (connected) permutations of $\\{1, …, n\\}$: no proper prefix's values are exactly $\\{1, …, j\\}$"
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
 references:

@@ -7,7 +7,7 @@ signatures:
   - call: LehmerCodes(n)
     description: the Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation_inversion>
 seeAlso:
   - SymmetricGroup
   - SubexcedantSeqs

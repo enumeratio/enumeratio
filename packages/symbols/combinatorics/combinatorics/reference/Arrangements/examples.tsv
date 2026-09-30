@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-arrangements-4-2	Basic		[Count, [Arrangements, 4, 2]]	12	$Count(Arrangements(4, 2)) = 12$
-first-element-of-arrangements-4-2	Basic		[At, [Arrangements, 4, 2], 1]	[List, 1, 2]	The first element in enumeration order
-every-element-of-arrangements-4-2		test	[Take, [Arrangements, 4, 2], 12]	[List, [List, 1, 2], [List, 1, 3], [List, 1, 4], [List, 2, 1], [List, 2, 3], [List, 2, 4], [List, 3, 1], [List, 3, 2], [List, 3, 4], [List, 4, 1], [List, 4, 2], [List, 4, 3]]	
+first-element-of-arrangements-4-2	Basic		[At, [Arrangements, 4, 2], 1]	[Arrangement, [List, 1, 2]]	The first element in enumeration order
+every-element-of-arrangements-4-2		test	[Take, [Arrangements, 4, 2], 12]	[List, [Arrangement, [List, 1, 2]], [Arrangement, [List, 1, 3]], [Arrangement, [List, 1, 4]], [Arrangement, [List, 2, 1]], [Arrangement, [List, 2, 3]], [Arrangement, [List, 2, 4]], [Arrangement, [List, 3, 1]], [Arrangement, [List, 3, 2]], [Arrangement, [List, 3, 4]], [Arrangement, [List, 4, 1]], [Arrangement, [List, 4, 2]], [Arrangement, [List, 4, 3]]]	
