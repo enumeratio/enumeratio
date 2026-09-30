@@ -32,3 +32,4 @@ q-1-x-e-x-symbolically	Q(1, x)	e^{-x}
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	Q(2, x)	(x+1)\exp(-x)
 q-1-2-x-erfc-sqrt-x-see-erfc	Q(\frac{1}{2}, x)	\operatorname{erfc}(\sqrt{x})
 a-non-integer-order-combined-with-negative-z	Q(2.5, -1)	Q(2.5, -1)
+gamma-regularized-0-0-is-indeterminate	Q(0, 0)	\operatorname{Indeterminate}

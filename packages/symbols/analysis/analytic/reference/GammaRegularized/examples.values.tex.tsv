@@ -32,3 +32,4 @@ q-1-x-e-x-symbolically	\operatorname{GammaRegularized}(1, x)	e^{-x}
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	\operatorname{GammaRegularized}(2, x)	(x+1)\exp(-x)
 q-1-2-x-erfc-sqrt-x-see-erfc	\operatorname{GammaRegularized}(\frac{1}{2}, x)	\mathrm{Erfc}(\sqrt{x})
 a-non-integer-order-combined-with-negative-z	\operatorname{GammaRegularized}(2.5, -1)	\operatorname{GammaRegularized}(2.5, -1)
+gamma-regularized-0-0-is-indeterminate	\operatorname{GammaRegularized}(0, 0)	\operatorname{Indeterminate}
