@@ -46,15 +46,25 @@ export function evaluateCooperatively(
   // the elided display form (five elements, a placeholder, five more), so
   // `Length(Range(1, 20))` counted the eleven items of the display and gave 11. On the
   // result, too, `true` elides past ten elements (`Range(1, 20)` comes back as five, a
-  // `ContinuationPlaceholder`, five), so a known count is passed as the element budget --
-  // up to MATERIALIZE_LIMIT; past that the elided form stands.
+  // `ContinuationPlaceholder`, five) -- see
+  // .git/lanes/data/upstream-materialization-true-elides.md -- so a known count is passed
+  // as the element budget instead, up to MATERIALIZE_LIMIT.
+  //
+  // Past that (count unknown -- a `Select`/`Filter` result never reports one ahead of
+  // walking it -- or too large to fit the budget), there is no numeric budget we can hand
+  // `evaluate()` that materializes it exactly: passing `true` would hit the compute-engine
+  // bug above and splice a literal `"ContinuationPlaceholder"` string into `.json`, silently
+  // corrupting real data for any caller that reads the result programmatically. DECLINE
+  // instead: hand back the still-lazy result exactly as `materialize: false` would. A caller
+  // that asked for materialized data and gets a lazy expression back can tell the difference
+  // (`isLazyCollection` on what it received) -- a caller that gets a `ContinuationPlaceholder`
+  // spliced into its data cannot.
   const run = (): BoxedExpression => {
     const result = boxed.evaluate();
     if (!materialize || !result.isLazyCollection) return result;
     const count = result.count;
-    const budget =
-      count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT ? Math.max(count, 1) : true;
-    return result.evaluate({ materialization: budget });
+    if (count === undefined || !Number.isFinite(count) || count > MATERIALIZE_LIMIT) return result;
+    return result.evaluate({ materialization: Math.max(count, 1) });
   };
   // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
   // evaluation on the same engine -- the next case in a pooled worker, the next notebook

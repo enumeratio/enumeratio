@@ -2,5 +2,6 @@ id	in	out
 foldlist-add-0-1-2-3		
 foldlist-add-1-2-3		
 foldlist-multiply-1-1-2-3-4		
+foldlist-lcm-1-range-2-10-lazy-not-list		
 foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\mathrm{True}
 foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}

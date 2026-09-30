@@ -344,13 +344,22 @@ export function declareListHeads(ce: ComputeEngine): void {
   // collection's. compute-engine raises a type error for both instead. Length is unary;
   // guard explicitly so a future widening of the signature can't reach this rule with
   // extra operands.
+  //
+  // A genuine collection (Range, Filter, ...) is a different case: when compute-engine's own
+  // Length declines on one -- it does this silently (no thrown error) once counting the
+  // elements would run past its iteration budget, e.g. Length(Filter(Range(1, 9999), p)) for
+  // a slow predicate -- operandsOf(ops[0]) reads the UNEVALUATED call's own arguments (for
+  // Filter, the source collection and the predicate: always 2), not element count. Answering
+  // with that would silently swap a correct-but-expensive count for a small, wrong one. Decline
+  // instead, same as compute-engine's own Count/Select do for the identical case.
   wrapOperator(
     ce,
     ["Length", 1],
     () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
-      return result === undefined || result.operator === "Error" ? ce.number(operandsOf(ops[0]).length) : result;
+      if (result !== undefined && result.operator !== "Error") return result;
+      return ops[0].isCollection ? undefined : ce.number(operandsOf(ops[0]).length);
     },
     1,
   );

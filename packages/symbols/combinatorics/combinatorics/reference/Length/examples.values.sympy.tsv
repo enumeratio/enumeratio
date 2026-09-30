@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only
 a-symbol-such-as-pi-is-an-atom-of-length-0	(len(pi) if hasattr(pi, '__len__') else (len(pi.args) if hasattr(pi, 'args') else 0))	0
 a-lazy-range-is-counted-without-being		
 length-join-a-b-length-a-length-b-see-join		
+length-filter-issquarefree-past-iteration-budget		

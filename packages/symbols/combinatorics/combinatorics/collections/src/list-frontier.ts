@@ -1,5 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { ensureRandom, integerAt, operandsOf, seedRandom, symbolNameOf, uniform01 } from "@enumeratio/engine";
+import {
+  collectionElements,
+  ensureRandom,
+  integerAt,
+  operandsOf,
+  seedRandom,
+  symbolNameOf,
+  uniform01,
+} from "@enumeratio/engine";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's
@@ -94,7 +102,9 @@ const declareCases = (ce: ComputeEngine): void => {
       const list = ops[0];
       const pattern = ops[1];
       if (list === undefined || pattern === undefined) return undefined;
-      const matched = operandsOf(list).filter((item) => item.match(pattern) !== null);
+      const elements = collectionElements(list);
+      if (elements === undefined) return undefined;
+      const matched = elements.filter((item) => item.match(pattern) !== null);
       return ce.function("List", matched);
     },
   });
@@ -303,11 +313,18 @@ export function declareListFrontier(ce: ComputeEngine): void {
     },
   });
 
+  // `operandsOf` reads a call's own constructor arguments -- for a lazy collection like
+  // `Range(1, 10)` that is `[1, 10]`, not the ten elements it denotes (see `operandsOf`'s own
+  // doc in @enumeratio/engine). `collectionElements` walks the real elements instead, and
+  // DECLINES (undefined) rather than fold over the wrong, short list when a collection runs
+  // past compute-engine's iteration budget mid-walk -- the same call left unevaluated, not a
+  // truncated answer.
   ce.declare("Accumulate", {
     signature: "(collection<any>) -> collection",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       if (ops[0] === undefined) return undefined;
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       if (items.length === 0) return ce.function("List", []);
       const [seed, ...rest] = items;
       return foldListFrom(ce, ce.symbol("Add"), seed, rest);
@@ -319,9 +336,13 @@ export function declareListFrontier(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
       if (f === undefined) return undefined;
-      if (ops.length >= 3 && ops[2] !== undefined) return foldListFrom(ce, f, ops[1], operandsOf(ops[2]));
+      if (ops.length >= 3 && ops[2] !== undefined) {
+        const items = collectionElements(ops[2]);
+        return items === undefined ? undefined : foldListFrom(ce, f, ops[1], items);
+      }
       if (ops[1] === undefined) return undefined;
-      const items = operandsOf(ops[1]);
+      const items = collectionElements(ops[1]);
+      if (items === undefined) return undefined;
       if (items.length === 0) return ce.function("List", []);
       const [seed, ...rest] = items;
       return foldListFrom(ce, f, seed, rest);

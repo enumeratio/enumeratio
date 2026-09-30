@@ -2,5 +2,6 @@ id	in	out
 foldlist-add-0-1-2-3	\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack0, 1, 3, 6\bigr\rbrack
 foldlist-add-1-2-3	\mathrm{FoldList}(\mathrm{Add}, \bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack1, 3, 6\bigr\rbrack
 foldlist-multiply-1-1-2-3-4	\mathrm{FoldList}(\mathrm{Multiply}, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 1, 2, 6, 24\bigr\rbrack
+foldlist-lcm-1-range-2-10-lazy-not-list	\mathrm{FoldList}(\mathrm{LCM}, 1, 2..10)	\bigl\lbrack1, 2, 6, 12, 60, 60, 420, 840, 2\,520, 2\,520\bigr\rbrack
 foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\top
 foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\top

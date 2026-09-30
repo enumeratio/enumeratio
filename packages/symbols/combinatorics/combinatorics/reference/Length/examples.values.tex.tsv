@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only	\mathrm{Length}(f(g(x, y), z))	2
 a-symbol-such-as-pi-is-an-atom-of-length-0	\mathrm{Length}(\pi)	0
 a-lazy-range-is-counted-without-being	\mathrm{Length}(1..20)	20
 length-join-a-b-length-a-length-b-see-join	\mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)	\top
+length-filter-issquarefree-past-iteration-budget	\mathrm{Length}(\mathrm{Filter}(1..1\,679, \mathrm{IsSquareFree}))	\mathrm{Length}(\mathrm{Filter}(1..1\,679, \mathrm{IsSquareFree}))
