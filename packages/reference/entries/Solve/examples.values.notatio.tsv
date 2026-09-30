@@ -1,0 +1,6 @@
+id	in	out
+solve-x-2-1-for-x	<Solve><Equal><Power>x 2</Power> 1</Equal> x</Solve>	<List>1 -1</List>
+solve-x-2-4-0-a-bare-expression-reads-as-0	<Solve><Subtract><Power>x 2</Power> 4</Subtract> x</Solve>	<List>2 -2</List>
+solve-x-1-0-a-single-real-root	<Solve><Equal><Add>x 1</Add> 0</Equal> x</Solve>	<List>-1</List>
+solve-x-2-1-0-yields-complex-roots	<Solve><Equal><Add><Power>x 2</Power> 1</Add> 0</Equal> x</Solve>	<List><Complex>0 1</Complex> <Complex>0 -1</Complex></List>
+a-2-2-linear-system-each-solution-is-a-tuple	<Solve><List><Equal><Add>x y</Add> 3</Equal> <Equal><Subtract>x y</Subtract> 1</Equal></List> <List>x y</List></Solve>	<List><Tuple>2 1</Tuple></List>

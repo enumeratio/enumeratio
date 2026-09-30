@@ -1,0 +1,4 @@
+id	in	out	back
+expand-x-1-2-into-x-2-2x-1	expand((x + 1) ^ 2)	x ^ 2 + 2x + 1	
+expand-x-1-x-1-into-the-difference-of-squares	expand((x + 1) * (x - 1))	x ^ 2 - 1	[Expand, [Multiply, [Add, x, 1], [Subtract, x, 1]]]
+expand-x-y-3-a-two-variable-binomial-power	expand((x + y) ^ 3)	x ^ 3 + y ^ 3 + 3 * y * x ^ 2 + 3 * x * y ^ 2	

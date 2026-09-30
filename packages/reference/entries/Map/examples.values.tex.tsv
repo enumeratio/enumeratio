@@ -1,0 +1,5 @@
+id	in	out
+map-square-over-1-2-3-4	\mathrm{Map}(\mathrm{Square}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 4, 9, 16\bigr\rbrack
+map-a-lambda-adding-1-to-each-element	\mathrm{Map}(()\mapsto\operatorname{\_}+1, \bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack2, 3, 4\bigr\rbrack
+map-add-over-two-collections-zips-them	\mathrm{Map}(\mathrm{Add}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack10, 20, 30\bigr\rbrack)	\bigl\lbrack11, 22, 33\bigr\rbrack
+mapping-over-an-empty-collection-returns-empty	\mathrm{Map}(\mathrm{Square}, \bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack

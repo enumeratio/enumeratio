@@ -1,0 +1,5 @@
+id	in	out	back
+map-square-over-1-2-3-4	map(Square, [1, 2, 3, 4])	[1, 4, 9, 16]	
+map-a-lambda-adding-1-to-each-element	map(Function(_ + 1), [1, 2, 3])	[2, 3, 4]	Unreadable
+map-add-over-two-collections-zips-them	map(Add, [1, 2, 3], [10, 20, 30])	[11, 22, 33]	
+mapping-over-an-empty-collection-returns-empty	map(Square, [])	[]	

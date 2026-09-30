@@ -2373,6 +2373,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ExpToTrig",
   },
   {
+    name: "Expand",
+    wolfram: "Expand",
+  },
+  {
     name: "ExponentialE",
     wolfram: "E",
   },
@@ -4234,6 +4238,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Level",
   },
   {
+    name: "Limit",
+    wolfram: "Limit",
+  },
+  {
     name: "Line",
     wolfram: "Line",
   },
@@ -4510,6 +4518,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e4315f",
       "ee86fb",
     ],
+    wolfram: "Map",
   },
   {
     name: "MapAt",
@@ -5428,6 +5437,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RawBoxes",
   },
   {
+    name: "Re",
+    wolfram: "Re",
+  },
+  {
     name: "ReIm",
     wolfram: "ReIm",
   },
@@ -5863,6 +5876,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["373aa1", "447541", "4fa169", "60dc3e", "6af603", "8eed2c", "9d0839", "b6111c", "d12aa0"],
   },
   {
+    name: "Solve",
+    wolfram: "Solve",
+  },
+  {
     name: "Sort",
     wolfram: "Sort",
   },
@@ -6103,6 +6120,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Table",
+    wolfram: "Table",
   },
   {
     name: "TagBox",

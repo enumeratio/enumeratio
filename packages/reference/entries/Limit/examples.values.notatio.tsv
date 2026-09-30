@@ -1,0 +1,4 @@
+id	in	out
+lim-x-to-0-sin-x-x-1	<Limit><Function><Divide><Sin>_1</Sin> _1</Divide></Function> 0</Limit>	<ToExpression>1</ToExpression>
+right-hand-limit-of-1-x-at-0-is-infinity	<Limit><Function><Divide>1 _1</Divide></Function> 0 1</Limit>	<PositiveInfinity />
+limit-of-1-x-as-x-to-infinity-is-0	<Limit><Function><Divide>1 _1</Divide></Function> PositiveInfinity</Limit>	<ToExpression>0</ToExpression>

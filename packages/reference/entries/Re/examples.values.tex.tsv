@@ -1,0 +1,5 @@
+id	in	out
+re-of-3-plus-4i-is-3	\mathrm{Re}(3+4i)	3
+re-of-a-real-number-is-itself	\mathrm{Re}(5)	5
+re-of-pi-is-pi-a-real-symbolic-constant	\mathrm{Re}(\pi)	\pi
+re-of-a-symbolic-value-stays-unevaluated	\mathrm{Re}(x)	\Re(x)

@@ -1,0 +1,5 @@
+id	in	out
+re-of-3-plus-4i-is-3	<Re><Complex>3 4</Complex></Re>	<ToExpression>3</ToExpression>
+re-of-a-real-number-is-itself	<Re>5</Re>	<ToExpression>5</ToExpression>
+re-of-pi-is-pi-a-real-symbolic-constant	<Re>Pi</Re>	<Pi />
+re-of-a-symbolic-value-stays-unevaluated	<Re>x</Re>	<Real>x</Real>
