@@ -401,12 +401,13 @@ const HALF_JSON: Json = ["Rational", 1, 2];
 const SIGNAL_DERIVATIVES: Readonly<Record<string, Readonly<Record<string, SignalPartial>>>> = {
   // D(HeavisideTheta(x)) = DiracDelta(x).
   HeavisideTheta: { "1": { params: ["x"], body: ["DiracDelta", "x"] } },
-  // D(Ramp(x)) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- Wolfram's own answer;
-  // NOT UnitStep(x), which would be a different (defined-at-0) function. The bound parameter
-  // is named "u", not "x" -- applying a `Function(body, "x")` to the literal symbol `x` (the
-  // common case, `D(Ramp(x), x)`) hits a compute-engine substitution quirk where an Equal/
-  // Less/Greater condition on the same-named bound variable spuriously resolves to a
-  // definite boolean instead of staying undecided; a distinct bound name sidesteps it.
+  // D(Ramp(x)) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- Wolfram's own answer, an
+  // exact indeterminate form at the kink, not a floating-point NaN; NOT UnitStep(x), which would
+  // be a different (defined-at-0) function. The bound parameter is named "u", not "x" -- applying
+  // a `Function(body, "x")` to the literal symbol `x` (the common case, `D(Ramp(x), x)`) hits a
+  // compute-engine substitution quirk where an Equal/Less/Greater condition on the same-named
+  // bound variable spuriously resolves to a definite boolean instead of staying undecided; a
+  // distinct bound name sidesteps it.
   Ramp: {
     "1": {
       params: ["u"],
@@ -414,8 +415,9 @@ const SIGNAL_DERIVATIVES: Readonly<Record<string, Readonly<Record<string, Signal
     },
   },
   // D(UnitBox(x)) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 on the open
-  // interior and exterior alike (UnitBox is locally constant away from the boundary),
-  // undefined exactly at the two points where it jumps. Bound parameter "u", see Ramp above.
+  // interior and exterior alike (UnitBox is locally constant away from the boundary), an exact
+  // indeterminate form exactly at the two points where it jumps. Bound parameter "u", see Ramp
+  // above.
   UnitBox: {
     "1": {
       params: ["u"],

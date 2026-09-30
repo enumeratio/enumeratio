@@ -1,5 +1,5 @@
-id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
-a-parabola-is-convex			[FunctionConvexity, [Power, x, 2], x]	1	1	Wolfram 15.0.0, hand cross-checked	A parabola is convex everywhere		
-a-cubic-has-an-inflection-point			[FunctionConvexity, [Power, x, 3], x]	Indeterminate	Indeterminate	Wolfram 15.0.0, hand cross-checked	A cubic's second derivative changes sign at the inflection point	undefined-form	Both sides say the classification is undecidable, spelled differently: we pin the bare symbol Indeterminate, Wolfram's own FunctionConvexity also answers Indeterminate but fromWolfram translates that symbol to our NaN, so the structural comparison sees NaN against Indeterminate.
-exp-is-always-convex			[FunctionConvexity, [Exp, x], x]	1	1	Wolfram 15.0.0, hand cross-checked	Exp is always convex		
-a-restricted-domain-answers-indeterminate	Properties		[FunctionConvexity, [Divide, 1, x], x]	Indeterminate			1/x's domain isn't all of R, so this is Indeterminate rather than a guess about its (genuinely mixed) shape	undefined-form	Same Indeterminate-vs-NaN spelling gap as the cubic example: fromWolfram always maps Wolfram's Indeterminate to our NaN, losing the distinction from our own Indeterminate classification marker.
+id	section	role	expr	expected	known	source	caption
+a-parabola-is-convex			[FunctionConvexity, [Power, x, 2], x]	1	1	Wolfram 15.0.0, hand cross-checked	A parabola is convex everywhere
+a-cubic-has-an-inflection-point			[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	Wolfram 15.0.0, hand cross-checked	A cubic's second derivative changes sign at the inflection point
+exp-is-always-convex			[FunctionConvexity, [Exp, x], x]	1	1	Wolfram 15.0.0, hand cross-checked	Exp is always convex
+a-restricted-domain-answers-indeterminate	Properties		[FunctionConvexity, [Divide, 1, x], x]	[FunctionConvexity, [Divide, 1, x], x]			1/x's domain isn't all of R, so we decline rather than guess about its (genuinely mixed) shape

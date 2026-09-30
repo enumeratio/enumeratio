@@ -60,7 +60,14 @@ export type Verdict = "agree" | "disagree" | "inconclusive";
 
 /** Compare an oracle's printed value against ours. */
 export function compare(ours: string, theirs: string, tolerance = 1e-9): Verdict {
-  if (theirs === "" || /^(none|null|\$failed|indeterminate)$/i.test(theirs.trim())) {
+  // Wolfram's Indeterminate is its own "can't decide" signal -- inconclusive against most
+  // answers, same as None/Null/$Failed below, EXCEPT when ours is itself NaN or Indeterminate
+  // (both emit as the literal `Indeterminate` for wolfram, see emit.ts's CONSTANTS): then the
+  // two sides are making the identical claim, and that's agreement, not a shrug.
+  if (/^indeterminate$/i.test(theirs.trim())) {
+    return /^indeterminate$/i.test(ours.trim()) ? "agree" : "inconclusive";
+  }
+  if (theirs === "" || /^(none|null|\$failed)$/i.test(theirs.trim())) {
     return "inconclusive";
   }
   const [a, b] = [asNumber(ours), asNumber(theirs)];

@@ -167,6 +167,9 @@ test("comparison is forgiving about spelling and strict about value", () => {
   expect(compare("1.644934", "pi**2/6")).toBe("inconclusive");
   expect(compare("3", "")).toBe("inconclusive");
   expect(compare("3", "Indeterminate")).toBe("inconclusive");
+  // Ours is NaN or Indeterminate too (both emit as Wolfram's literal `Indeterminate`) --
+  // same claim, so this is agreement, not a shrug.
+  expect(compare("Indeterminate", "Indeterminate")).toBe("agree");
   expect(normalise(" {1, 2} ")).toBe("[1,2]");
 });
 

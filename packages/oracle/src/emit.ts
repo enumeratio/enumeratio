@@ -50,6 +50,10 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   // named NaN, not the not-a-number value. sympy has no exact Glaisher/Khinchin, so those two
   // stay unmapped there rather than guessed at.
   NaN: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
+  // Our other named "no value" answer, for an exact indeterminate form (0/0) rather than a
+  // floating-point result — Wolfram (and every other system here) has only the one notion,
+  // so it emits identically to NaN above.
+  Indeterminate: { wolfram: "Indeterminate", sympy: "nan", mpmath: "nan", sage: "NaN" },
   ComplexInfinity: { wolfram: "ComplexInfinity", sympy: "zoo", sage: "unsigned_infinity" },
   PositiveInfinity: { wolfram: "Infinity", sympy: "oo", mpmath: "inf", sage: "oo" },
   NegativeInfinity: { wolfram: "-Infinity", sympy: "-oo", mpmath: "-inf", sage: "-oo" },

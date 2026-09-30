@@ -20,7 +20,7 @@ test("symbols, with the reverse of the SYMBOLS map", () => {
   expect(fromWolfram("I")).toBe("ImaginaryUnit");
   expect(fromWolfram("Infinity")).toBe("PositiveInfinity");
   expect(fromWolfram("-Infinity")).toBe("NegativeInfinity");
-  expect(fromWolfram("Indeterminate")).toBe("NaN");
+  expect(fromWolfram("Indeterminate")).toBe("Indeterminate");
 });
 
 test("True/False round-trip as MathJSON symbol strings, not JS booleans", () => {

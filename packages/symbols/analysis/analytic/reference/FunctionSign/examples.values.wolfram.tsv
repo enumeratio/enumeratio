@@ -1,5 +1,5 @@
-id	in	out	tex.in	tex.out	verdict
-a-perfect-square-is-never-negative	FunctionSign[Power[x, 2], x]	1	\text{FunctionSign}\left[x^2,x\right]	1	
-a-sum-of-a-square-and-a-positive-constant	FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]	1	\text{FunctionSign}\left[\frac{1}{x^2+1},x\right]	1	
-exp-is-always-positive	FunctionSign[Exp[x], x]	1	\text{FunctionSign}[\exp (x),x]	1	
-a-cubic-changes-sign	FunctionSign[Power[x, 3], x]	Indeterminate	\text{FunctionSign}\left[x^3,x\right]	\text{Indeterminate}	disagree
+id	in	out	tex.in	tex.out
+a-perfect-square-is-never-negative	FunctionSign[Power[x, 2], x]	1	\text{FunctionSign}\left[x^2,x\right]	1
+a-sum-of-a-square-and-a-positive-constant	FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]	1	\text{FunctionSign}\left[\frac{1}{x^2+1},x\right]	1
+exp-is-always-positive	FunctionSign[Exp[x], x]	1	\text{FunctionSign}[\exp (x),x]	1
+a-cubic-changes-sign	FunctionSign[Power[x, 3], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{FunctionSign}\left[x^3,x\right]-\text{FunctionSign}\left[x^3,x\right]\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{FunctionSign}\left[\left(\frac{7}{3}\right)^3,\frac{7}{3}\right]-\text{FunctionSign}\left[\left(\frac{7}{3}\right)^3,\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{FunctionSign}\left[\left(-\frac{11}{5}\right)^3,-\frac{11}{5}\right]-\text{FunctionSign}\left[\left(-\frac{11}{5}\right)^3,-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{FunctionSign}\left[\left(\frac{13}{4}\right)^3,\frac{13}{4}\right]-\text{FunctionSign}\left[\left(\frac{13}{4}\right)^3,\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
