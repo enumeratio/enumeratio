@@ -12,6 +12,8 @@ export interface Overload {
   readonly type?: string;
   /** The package whose overlapping overload this one replaces. */
   readonly overrides?: string;
+  /** The carriers it applies to, when it applies to nothing else. */
+  readonly on?: readonly string[];
 }
 
 export interface SymbolInfo {

@@ -123,6 +123,9 @@ export interface ReferenceSignature {
   readonly type?: string;
   /** The library whose overlapping overload this one replaces (https://github.com/enumeratio/enumeratio/wiki/Manifest). */
   readonly overrides?: string;
+  /** The carriers this overload applies to (an operand's head is one of them), when it applies
+   *  to nothing else: it matters only where one of them exists, so doesn't pull its package. */
+  readonly on?: readonly string[];
   /**
    * Where THIS call form lives elsewhere, when the head's references do not apply to it
    * wholesale -- two-argument `Zeta` is Hurwitz's function and links to Hurwitz's pages.

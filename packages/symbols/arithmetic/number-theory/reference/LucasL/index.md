@@ -19,6 +19,8 @@ signatures:
     library: enumeratio-adeles
     type: (value) -> value
     overrides: compute-engine
+    on:
+      - ProfiniteNumber
 seeAlso:
   - Fibonacci
 references:
