@@ -201,21 +201,27 @@ const ints = (
 
 export const entries: NumberKernel[] = [
   // TriStrings(n): binary words with no 3 consecutive 1s.
-  ints(
-    "TriStrings",
-    1,
-    ([n]) => triCount(n),
-    ([n], r) => triUnrank(n, r),
-    (a, [n]) => triValid(a, n),
-    (a, [n]) => triRank(a, n),
-  ),
+  {
+    ...ints(
+      "TriStrings",
+      1,
+      ([n]) => triCount(n),
+      ([n], r) => triUnrank(n, r),
+      (a, [n]) => triValid(a, n),
+      (a, [n]) => triRank(a, n),
+    ),
+    carrier: "BinaryWord",
+  },
   // PrimitiveBinaryStrings(n): aperiodic binary words — A027375.
-  ints(
-    "PrimitiveBinaryStrings",
-    1,
-    ([n]) => primitiveCount(n),
-    ([n], r) => primitiveUnrank(n, r),
-    (a, [n]) => primitiveValid(a, n),
-    (a, [n]) => primitiveRank(a, n),
-  ),
+  {
+    ...ints(
+      "PrimitiveBinaryStrings",
+      1,
+      ([n]) => primitiveCount(n),
+      ([n], r) => primitiveUnrank(n, r),
+      (a, [n]) => primitiveValid(a, n),
+      (a, [n]) => primitiveRank(a, n),
+    ),
+    carrier: "BinaryWord",
+  },
 ];

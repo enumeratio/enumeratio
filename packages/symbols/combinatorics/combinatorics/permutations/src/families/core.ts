@@ -105,14 +105,17 @@ export const entries: NumberKernel[] = [
     (a, [n, k]) => IsKPermutationOf(a, n, k),
     (a, [n]) => KPermutationRank(a, n),
   ),
-  ints(
-    "SignedPermutations",
-    1,
-    ([n]) => SignedPermutationCount(n),
-    ([n], r) => SignedPermutationUnrank(n, r),
-    (a, [n]) => IsSignedPermutationOf(a, n),
-    (a) => SignedPermutationRank(a),
-  ),
+  {
+    ...ints(
+      "SignedPermutations",
+      1,
+      ([n]) => SignedPermutationCount(n),
+      ([n], r) => SignedPermutationUnrank(n, r),
+      (a, [n]) => IsSignedPermutationOf(a, n),
+      (a) => SignedPermutationRank(a),
+    ),
+    carrier: "SignedPermutation",
+  },
   {
     ...ints(
       "CyclicPermutations",

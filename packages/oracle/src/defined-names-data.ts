@@ -1021,6 +1021,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "WheelGraph",
   "While",
   "With",
+  "Word",
   "WordSymbol",
   "Words",
   "XGCD",

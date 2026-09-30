@@ -1,4 +1,4 @@
 id	in	out
 count-words-3-2	<Count><Words>3 2</Words></Count>	<ToExpression>8</ToExpression>
-first-element-of-words-3-2	<At><Words>3 2</Words> 1</At>	<List>1 1 1</List>
-every-element-of-words-3-2	<Take><Words>3 2</Words> 8</Take>	<List><List>1 1 1</List> <List>1 1 2</List> <List>1 2 1</List> <List>1 2 2</List> <List>2 1 1</List> <List>2 1 2</List> <List>2 2 1</List> <List>2 2 2</List></List>
+first-element-of-words-3-2	<At><Words>3 2</Words> 1</At>	<Word><List>1 1 1</List></Word>
+every-element-of-words-3-2	<Take><Words>3 2</Words> 8</Take>	<List><Word><List>1 1 1</List></Word> <Word><List>1 1 2</List></Word> <Word><List>1 2 1</List></Word> <Word><List>1 2 2</List></Word> <Word><List>2 1 1</List></Word> <Word><List>2 1 2</List></Word> <Word><List>2 2 1</List></Word> <Word><List>2 2 2</List></Word></List>

@@ -7,7 +7,7 @@ signatures:
   - call: TriStrings(n)
     library: enumeratio-combinatorics
     description: the length-$n$ binary strings avoiding three 1s in a row.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 enumerate:
   expr: TriStrings(6)
   columns: Descents, Ascents
