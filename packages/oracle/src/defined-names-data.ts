@@ -849,6 +849,8 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "SquareWave",
   "SquarefreeSemiprimes",
   "SquaresR",
+  "StandardTableau",
+  "StandardTableauPair",
   "StandardTableauPairs",
   "StarGraph",
   "StarNumbers",

@@ -1,12 +1,12 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/tableaux-plane.ts";
+import { entries } from "../src/families/standard-tableau-pairs.ts";
 
-// SemistandardTableaux, GelfandTsetlin, AlternatingSignMatrices, SkewStandardTableaux,
-// PlanePartitions and BoxedPlanePartitions moved to the tableaux area (§4 step 5,
-// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
-// with their tests, now in tableaux/tests/tableaux-plane.test.ts -- every one of them carries a
-// `declared.carrier`. ShiftedStandardTableaux joined them there (wire-carriers lane A-92), now
-// carrying "ShiftedStandardTableau". StandardTableauPairs declares none and stays here.
+// Moved out of collections/tests/tableaux-plane.test.ts alongside the family (§4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible):
+// StandardTableauPairs now carries "StandardTableauPair". These tests exercise the pure kernel
+// (count/unrank/rank/valid over plain JS values) -- unaffected by the carrier wiring, which is
+// declare.ts's concern (see tableaux/tests/carrier.test.ts or the collections declare tests for
+// the CE-level typed-element check).
 const byHead = new Map(entries.map((e) => [e.head, e]));
 
 const PARAMS: Record<string, number[][]> = {

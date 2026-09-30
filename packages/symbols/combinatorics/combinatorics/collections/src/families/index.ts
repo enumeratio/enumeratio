@@ -11,7 +11,6 @@ import {
   entriesBeforeParkingFunctions as tableauxTreesBeforeParkingFunctions,
   entriesAfterNonDecreasingParkingFunctions as tableauxTreesAfterNonDecreasingParkingFunctions,
 } from "./tableaux-trees.ts";
-import { entries as tableauxPlane } from "./tableaux-plane.ts";
 import {
   bigintEntries as permutationsBigintEntries,
   coreEntries as permutationsCoreEntries,
@@ -56,6 +55,7 @@ import {
   tableauxPlaneSkewStandardTableauxEntries,
   tableauxPlaneShiftedStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
+  standardTableauPairsEntries,
 } from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
@@ -100,7 +100,7 @@ const numberEntries = [
   ...partitionsTableauxPlaneEntries,
   ...tableauxPlaneSkewStandardTableauxEntries,
   ...tableauxPlaneShiftedStandardTableauxEntries,
-  ...tableauxPlane,
+  ...standardTableauPairsEntries,
   ...tableauxPlanePlanePartitionsEntries,
   ...permutationsEntries,
   ...permutationClassesEntries,

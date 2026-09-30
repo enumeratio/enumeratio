@@ -65,8 +65,20 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   // Tuple, alongside the element -- e.g. Tournament(n, edges). 0 for every carrier whose shape
   // is just the element's own shape (`Permutation([2, 1])`).
   const carrierParams = family.carrierParams ?? 0;
+  const carrierElements = family.carrierElements;
+  // A nested sub-element's own carrier holds its LEAVES, flattened -- `StandardTableau`'s shape
+  // is `list<integer>` (a row word), not a nested `list<list<integer>>` (which the type system
+  // rejects, and CE has no carrier for anyway). The shape a flat word came from isn't always
+  // recoverable from the word alone -- decode below hands the flat sequence on as-is, and it's
+  // `valid()`'s job to re-derive a shape when it can (see IsStandardTableauPairOf).
+  const flattenLeaves = (t: unknown): number[] =>
+    Array.isArray(t) ? t.flatMap((x) => flattenLeaves(x)) : [t as number];
   // A carrier's elements are its values, `Permutation([2, 1])`; membership takes either form.
   const encode = (p: number[], value: unknown): unknown => {
+    if (carrier !== undefined && carrierElements !== undefined) {
+      const parts = (value as readonly unknown[]).map((v, i) => [carrierElements[i], listMJ(flattenLeaves(v))]);
+      return [carrier, ["Tuple", ...parts]];
+    }
     const encoded = (bareEncode as (x: never) => unknown)(value as never);
     if (carrier === undefined) return encoded;
     if (carrierParams === 0) return [carrier, encoded];
@@ -75,6 +87,10 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   const decode = (b: Boxed): unknown => {
     if (carrier === undefined || (b as unknown as BoxedExpression).operator !== carrier) return bareDecode(b as never);
     const inner = b.ops?.[0];
+    if (carrierElements !== undefined) {
+      const tupleOps = inner?.ops ?? [];
+      return tupleOps.map((sub) => bareDecode((sub.ops?.[0] ?? sub) as never));
+    }
     if (carrierParams === 0) return bareDecode(inner as never);
     const tupleOps = inner?.ops;
     return bareDecode(tupleOps?.[tupleOps.length - 1] as never);

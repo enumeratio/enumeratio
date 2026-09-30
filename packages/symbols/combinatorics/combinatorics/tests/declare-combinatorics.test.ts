@@ -33,6 +33,23 @@ test("a DyckPath comes out typed", () => {
   expect(path.operator).toEqual("DyckPath");
 });
 
+test("a StandardTableauPair comes out typed, its two slots each a StandardTableau", () => {
+  const ce = engine();
+  const pair = ce.box(["At", ["StandardTableauPairs", 4], 1]).evaluate();
+  expect(pair.operator).toEqual("StandardTableauPair");
+  expect(pair.json).toEqual([
+    "StandardTableauPair",
+    ["Tuple", ["StandardTableau", ["List", 1, 2, 3, 4]], ["StandardTableau", ["List", 1, 2, 3, 4]]],
+  ]);
+});
+
+test("Contains sees a StandardTableauPair it was just handed back", () => {
+  const ce = engine();
+  const pair = ce.box(["At", ["StandardTableauPairs", 4], 1]);
+  const contained = ce.box(["Contains", ["StandardTableauPairs", 4], pair]).evaluate();
+  expect(contained.json).toEqual("True");
+});
+
 test("declareCombinatorics is not idempotent -- a second call on the same engine throws", () => {
   const ce = engine();
   expect(() => declareCombinatorics(ce)).toThrow();
