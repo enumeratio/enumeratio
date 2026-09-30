@@ -73,12 +73,27 @@ function order(rows: readonly Overload[]): Overload[] {
   return out;
 }
 
-/** The head's signature: its own, and every row's, as one intersection of call shapes. */
-function signatureOf(table: Table): string {
-  const shapes = [...new Set([table.nativeSignature, ...table.rows.flatMap((row) => row.signature ?? [])])];
+/** Call shapes as one intersection, in a canonical order. */
+export function joinSignatures(signatures: readonly string[]): string {
+  const shapes = [...new Set(signatures)];
   // An intersection already is one (and wrapping it whole breaks the `where` clauses inside).
   const shape = (s: string): string => (s.includes("&") ? s : `(${s})`);
   return shapes.length === 1 ? shapes[0]! : shapes.toSorted(cmp).map(shape).join(" & ");
+}
+
+/** The head's signature: its own, and every row's. */
+const signatureOf = (table: Table): string =>
+  joinSignatures([table.nativeSignature, ...table.rows.flatMap((row) => row.signature ?? [])]);
+
+/** A head's table as declared on `ce`: its own signature and its rows, or `undefined`. */
+export function overloadTable(
+  ce: ComputeEngine,
+  head: string,
+): { readonly nativeSignature: string; readonly rows: readonly Overload[] } | undefined {
+  const definition = ce.lookupDefinition(head);
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const table = operator === undefined ? undefined : tables.get(operator as Operator);
+  return table === undefined ? undefined : { nativeSignature: table.nativeSignature, rows: table.rows };
 }
 
 const matches = (row: Overload, ops: readonly BoxedExpression[]): boolean =>

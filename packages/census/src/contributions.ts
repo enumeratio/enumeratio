@@ -4,13 +4,15 @@
 // the head before. The manifest must say the same; `tests/manifest.test.ts` holds it to it.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { joinSignatures, overloadTable } from "@enumeratio/engine";
 import { PACKAGE_DECLARATIONS } from "./engine.ts";
 
 export const ENGINE = "compute-engine";
 
 export interface Contribution {
   readonly pkg: string;
-  /** The head's signature as the engine prints it after this package. */
+  /** The head's signature as the engine prints it after this package; for a head with a
+   *  table (`defineOverload`), this package's rows' own call shapes. */
   type: string;
   lazy: boolean;
   /** Who had the head before this package: the engine, an earlier package, or nobody. */
@@ -74,6 +76,18 @@ export function contributions(): Map<string, Contribution[]> {
       owner.set(name, pkg);
     }
     before = after;
+  }
+  // A head with a table: a package contributes its rows' own shapes (or the head's own, for rows
+  // that add none), not the head's whole signature after it.
+  for (const [name, list] of out) {
+    const table = overloadTable(ce, name);
+    if (table === undefined) continue;
+    for (const c of list) {
+      const rows = table.rows.filter((row) => row.package === c.pkg);
+      if (rows.length === 0) continue;
+      const own = rows.flatMap((row) => row.signature ?? []);
+      c.type = ce.type(own.length > 0 ? joinSignatures(own) : table.nativeSignature).toString();
+    }
   }
   return out;
 }

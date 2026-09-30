@@ -23,7 +23,7 @@ signatures:
   - call: Inverse(Permutation)
     description: "The inverse permutation: position of each value."
     library: enumeratio-combinatorics
-    type: ((expression<ModularMatrix> | matrix | string) -> expression<ModularMatrix> | matrix) & ((permutation) -> permutation)
+    type: (permutation) -> permutation
     overrides: enumeratio-modular
 ---
 

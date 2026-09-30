@@ -21,6 +21,7 @@
     "@enumeratio/catalog": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
