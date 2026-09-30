@@ -33,7 +33,10 @@ const binom = (n: bigint, k: bigint): bigint => {
  * Matches `wolframscript`'s `Beta[1/2, 2, 3] = 11/192` and `Beta[1/4, 1/2, 2, 3] = 109/3072`.
  */
 function incompleteBetaExact(z: Q, a: bigint, b: bigint): Q | undefined {
-  if (a < 0n || b < 1n) return undefined;
+  // a = 0 is the j = 0 term's own z^a/a — a genuine 1/0 in this series, not a value the
+  // formula clears (B_z(0, b) is a pole for any z, from the t^{-1} the integral carries at
+  // its lower limit): decline rather than let `mkQ(·, 0)` silently mint a bogus rational.
+  if (a <= 0n || b < 1n) return undefined;
   let sum: Q = [0n, 1n];
   for (let j = 0n; j < b; j++) {
     const c = binom(b - 1n, j) * (j % 2n === 0n ? 1n : -1n);
@@ -55,6 +58,15 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
 /** Does `r`'s JSON still mention `head`? (same test `incomplete-gamma.ts` uses for Gamma.) */
 const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
+/**
+ * Is `r` literally the float `NaN` value (`isNumberLiteral`, `re` unrepresentable), as
+ * opposed to a symbolic/compound expression a declined call stays as -- whose `.re` is
+ * ALSO `NaN` (it isn't a number at all), so testing `Number.isNaN(r.re)` alone would
+ * misfire on every ordinary decline, not just a genuine `NaN` answer.
+ */
+const isNaNValue = (r: BoxedExpression | undefined): boolean =>
+  r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
+
 // --- Beta: complete (a, b), incomplete (z, a, b) and generalized incomplete (z0, z1, a, b) ---
 
 /**
@@ -73,8 +85,13 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       if (ops.length === 2) {
         const r = nativeBeta?.(ops, options);
-        if (!declined(r, "Beta")) return r;
         const [a, b] = ops;
+        // Native answers an exact pole-cancelling call like Beta(∞, 0) with the float
+        // sentinel `NaN` rather than declining it -- an exact operand pair calls that
+        // `Indeterminate` instead (same convention `incomplete-gamma.ts` applies).
+        const isExact = (op: BoxedExpression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
+        if (isNaNValue(r) && isExact(a) && isExact(b)) return ce.symbol("Indeterminate");
+        if (!declined(r, "Beta")) return r;
         // B(a, 1) = Γ(a)Γ(1)/Γ(a+1) = 1/a, exact for any a (including symbolic).
         if (isRealInt(b) && b.re === 1) return finish(ce.function("Divide", [ce.One, a]), options);
         // B(a, n) = (n−1)!/(a(a+1)⋯(a+n−1)) at a small positive integer n, either side.

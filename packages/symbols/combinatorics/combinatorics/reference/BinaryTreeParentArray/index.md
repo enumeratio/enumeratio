@@ -12,6 +12,11 @@ signatures:
 seeAlso:
   - BinaryTreeParentArrays
   - BinaryTree
+laws:
+  - inverse: BinaryTree
+  - orderIsomorphism:
+      from: BinaryTrees
+      to: BinaryTreeParentArrays
 ---
 
 - Number the nodes in order. A node numbered below its parent is its left child, above it its right, so parentage alone fixes the tree: $2023$ is a root 2 with left child 1 and right child 3, and 4 to the right of 3.

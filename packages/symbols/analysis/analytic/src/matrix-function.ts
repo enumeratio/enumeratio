@@ -27,14 +27,14 @@ function applyF(ce: ComputeEngine, f: BoxedExpression, x: BoxedExpression): Boxe
 
 /** f′(x₀), via `D` on `f` applied to a fresh symbol, evaluated there. `applied` is
  * `.evaluate()`d before differentiating — `D` needs the beta-reduced body (`t^2`), not the
- * unevaluated `Apply(f, t)` a `Function` literal boxes as. `x0` substitutes in by its exact
- * `.json`, not a `.N()` float -- an exact eigenvalue (1/2) must give an exact derivative
- * where one exists, not "apply(derivative(f), 0.5)". */
+ * unevaluated `Apply(f, t)` a `Function` literal boxes as. `x0` substitutes as the boxed
+ * expression it is (exact stays exact) — `subs` takes an `Expression` directly, no need to
+ * round-trip it through a JS number. */
 function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: BoxedExpression): BoxedExpression {
   const t = "_matrixFunction_t";
   const applied = applyF(ce, f, ce.symbol(t));
   const derivative = ce.function("D", [applied, ce.symbol(t)]).evaluate();
-  return derivative.subs({ [t]: x0.json as never }).evaluate();
+  return derivative.subs({ [t]: x0 }).evaluate();
 }
 
 function diagonalApply(

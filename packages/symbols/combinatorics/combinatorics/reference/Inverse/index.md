@@ -25,6 +25,8 @@ signatures:
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
     overrides: enumeratio-modular
+laws:
+  - involution
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

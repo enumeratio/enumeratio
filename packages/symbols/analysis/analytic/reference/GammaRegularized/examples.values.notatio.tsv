@@ -32,3 +32,4 @@ q-1-x-e-x-symbolically	<GammaRegularized>1 x</GammaRegularized>	<Power>Exponenti
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	<GammaRegularized>2 x</GammaRegularized>	<Multiply><Add>x 1</Add> <Power>ExponentialE <Negate>x</Negate></Power></Multiply>
 q-1-2-x-erfc-sqrt-x-see-erfc	<GammaRegularized><Rational>1 2</Rational> x</GammaRegularized>	<Erfc><Sqrt>x</Sqrt></Erfc>
 a-non-integer-order-combined-with-negative-z	<GammaRegularized>2.5 -1</GammaRegularized>	<GammaRegularized>2.5 -1</GammaRegularized>
+gamma-regularized-0-0-is-indeterminate	<GammaRegularized>0 0</GammaRegularized>	<Indeterminate />

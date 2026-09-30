@@ -15,3 +15,4 @@ even-double-factorials-2n-2-n-n	<Equal><Factorial2>10</Factorial2> <Multiply><Po
 odd-double-factorials-2n-1-frac-2n-2-n-n	<Equal><Factorial2>9</Factorial2> <Divide><Factorial>10</Factorial> <Multiply><Power>2 5</Power> <Factorial>5</Factorial></Multiply></Divide></Equal>	<True />
 negative-even-arguments-hit-a-pole-in-the	<Factorial2>-2</Factorial2>	<NaN />
 15-2-027-025-already-past-two-million-despite	<Factorial2>15</Factorial2>	<ToExpression>2027025</ToExpression>
+factorial2-of-negative-infinity-is-indeterminate	<Factorial2>NegativeInfinity</Factorial2>	<Indeterminate />

@@ -23,6 +23,15 @@ import { gammaExactValue } from "./widened.ts";
 const unreduced = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
 /**
+ * Is `r` literally the float `NaN` value (`isNumberLiteral`, `re` unrepresentable), as
+ * opposed to a symbolic/compound expression a declined call stays as -- whose `.re` is
+ * ALSO `NaN` (it isn't a number at all), so testing `Number.isNaN(r.re)` alone would
+ * misfire on every ordinary decline, not just a genuine `NaN` answer.
+ */
+const isNaNValue = (r: BoxedExpression | undefined): boolean =>
+  r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
+
+/**
  * The three-argument form as an expression in the two-argument one. Both are differences of
  * upper tails; the regularized one divides by Γ(s) rather than subtracting two Q values, so
  * that Q(s, 0, z) = 1 − Q(s, z) holds for negative s too (where Γ(s, 0) and Γ(s) are both
@@ -60,9 +69,18 @@ export function evaluateIncompleteGamma(
       const x = bigRationalAt(ops[0]);
       return (x !== undefined ? gammaExactValue(ce, x) : undefined) ?? r;
     }
-    if (ops.length !== 2 || !declined(r, head)) return r;
+    if (ops.length !== 2) return r;
     const [s, z] = ops;
     if (s === undefined || z === undefined) return r;
+    // GammaRegularized(0, 0) = Q(0, 0): both Γ(0, 0) and Γ(0) are poles, at the same rate,
+    // and native answers the exact call with the float sentinel `NaN` rather than declining
+    // it -- our convention keeps `NaN` for a genuinely inexact operand and calls an exact
+    // indeterminate ratio `Indeterminate` instead (CE 0.141's own convention elsewhere).
+    const isExact = (op: BoxedExpression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
+    if (head === "GammaRegularized" && isNaNValue(r) && isExact(s) && isExact(z)) {
+      return ce.symbol("Indeterminate");
+    }
+    if (!declined(r, head)) return r;
     const sJson = s.json as unknown as BoxInput;
     const zJson = z.json as unknown as BoxInput;
     // Γ(1, z) = e^{−z}: exact, valid for symbolic z, and what makes Γ(1, 0, z) collapse.

@@ -8,6 +8,12 @@ signatures:
     description: A composition of n as the binary word of length n - 1 marking where it is cut.
     library: enumeratio-combinatorics
     type: (composition) -> binary_word
+laws:
+  - inverse: Composition
+  - orderIsomorphism:
+      from: IntegerCompositions
+      to: BinaryWords
+      sizeOffset: -1
 ---
 
 - Takes a `Composition` and returns a `BinaryWord` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

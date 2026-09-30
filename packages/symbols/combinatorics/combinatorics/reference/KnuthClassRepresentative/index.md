@@ -10,6 +10,8 @@ signatures:
     description: The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
+laws:
+  - idempotent
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

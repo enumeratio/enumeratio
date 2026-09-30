@@ -15,3 +15,4 @@ even-double-factorials-2n-2-n-n	10!!=2^5\times5!	\mathrm{True}
 odd-double-factorials-2n-1-frac-2n-2-n-n	9!!=(10!)(2^5\times5!)^{-1}	\mathrm{True}
 negative-even-arguments-hit-a-pole-in-the		
 15-2-027-025-already-past-two-million-despite		
+factorial2-of-negative-infinity-is-indeterminate		

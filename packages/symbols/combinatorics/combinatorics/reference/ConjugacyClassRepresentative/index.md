@@ -10,6 +10,8 @@ signatures:
     description: The canonical permutation with the same cycle type.
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
+laws:
+  - idempotent
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

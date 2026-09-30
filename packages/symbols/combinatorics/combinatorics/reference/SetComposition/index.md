@@ -14,4 +14,6 @@ signatures:
     description: The singular-inhabitant constructor for a composition of a set, as its ordered blocks.
     library: enumeratio-combinatorics
     type: ((list<list<integer>>) -> set_composition) & ((surjection) -> set_composition)
+laws:
+  - inverse: Surjection
 ---

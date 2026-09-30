@@ -16,6 +16,8 @@ seeAlso:
 references:
   - system: wikipedia
     identity: Permutation#Cycle notation
+laws:
+  - inverse: Permutation
 ---
 
 - Keeping the fixed points is what makes it a permutation of a definite size, so it converts back: `Permutation(CycleDecomposition(p))` is `p`, and every permutation statistic answers on a decomposition. Wolfram's [[Cycles]] drops them, so it can't say how many points there are.

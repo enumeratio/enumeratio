@@ -14,4 +14,10 @@ signatures:
     description: The singular-inhabitant constructor for a composition of an integer, as its parts.
     library: enumeratio-combinatorics
     type: ((list<integer>) -> composition) & ((binary_word) -> composition)
+laws:
+  - inverse: CutWord
+  - orderIsomorphism:
+      from: BinaryWords
+      to: IntegerCompositions
+      sizeOffset: 1
 ---

@@ -250,6 +250,25 @@ export interface ReferenceNames {
   readonly wolframIdentity?: boolean;
 }
 
+/**
+ * A combinatorial map's law, checked at one element (https://github.com/enumeratio/enumeratio/wiki/Plausible §4.2) -- the
+ * shorthand vocabulary written on a map's record (`@enumeratio/combinatorics`' own generator
+ * writes it into `CombinatorialMap.laws`/`.orderIsomorphism` at build time; `checkLaws`
+ * (@enumeratio/structures) reads that same shape, unchanged). `on` disambiguates a law that
+ * applies to only ONE of a shared name's overloads (`BinaryTree` is two maps, from
+ * `binary_tree_parent_array` and from `dyck_path`, each with its own inverse) -- the same
+ * convention `ReferenceSignature.on` uses; omitted, the law applies to every overload this
+ * record's name has.
+ */
+export type EntryLaw =
+  | "involution"
+  | "idempotent"
+  | { readonly inverse: string; readonly on?: string }
+  | {
+      readonly orderIsomorphism: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
+      readonly on?: string;
+    };
+
 /** A single compute-engine function's reference entry. */
 export interface ReferenceEntry {
   readonly name: string;
@@ -344,6 +363,9 @@ export interface ReferenceEntry {
   readonly stub?: "engine" | "carrier";
   /** Wolfram-style attributes; `HoldAll` is compute-engine's `lazy` (https://github.com/enumeratio/enumeratio/wiki/Manifest). */
   readonly attributes?: readonly SymbolAttribute[];
+  /** A combinatorial map's laws, in the shorthand vocabulary -- see `EntryLaw`. Absent for
+   *  anything that isn't a map. */
+  readonly laws?: readonly EntryLaw[];
 }
 
 export type SymbolAttribute = "HoldAll";

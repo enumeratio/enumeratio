@@ -32,3 +32,4 @@ q-1-x-e-x-symbolically	gammaRegularized(1, x)	exponentialE ^ (-x)
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s	gammaRegularized(2, x)	(x + 1) * exponentialE ^ (-x)
 q-1-2-x-erfc-sqrt-x-see-erfc	gammaRegularized(1 / 2, x)	erfc(sqrt(x))
 a-non-integer-order-combined-with-negative-z	gammaRegularized(2.5, -1)	gammaRegularized(2.5, -1)
+gamma-regularized-0-0-is-indeterminate	gammaRegularized(0, 0)	Indeterminate

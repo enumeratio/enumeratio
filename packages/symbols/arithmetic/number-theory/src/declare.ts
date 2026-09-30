@@ -258,11 +258,16 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // shadow. And not a non-number either: a symbol, an `Interval`, an `Around` or a
   // `ProfiniteNumber` goes on down the handler chain, where whatever knows that kind of value
   // (analytic's tagged arithmetic, adeles) answers it -- rather than having a Gamma formula
-  // built around it.
+  // built around it. Also not ±Infinity/ComplexInfinity: `PositiveInfinity` et al are
+  // themselves `isNumberLiteral` (a JS ±Infinity `re`), and running one through a Gamma
+  // identity or a trig-based continuation in plain double arithmetic is how Factorial2(-∞)
+  // came back the literal `NaN` (Cos(π·(-∞)) has none) instead of native's own Indeterminate.
   const inexactNumber = (op: BoxedExpression): boolean =>
     (op as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true &&
     integerAt(op) === undefined &&
-    bigRationalAt(op) === undefined;
+    bigRationalAt(op) === undefined &&
+    Number.isFinite(op.re) &&
+    Number.isFinite(op.im);
   // The native handler takes everything the wrappers don't: integers and exact rationals, as
   // before, and every non-number, so the handlers beneath it still see those.
   const nativeTakes = (op: BoxedExpression): boolean => !inexactNumber(op);
@@ -326,16 +331,19 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // Pochhammer with a rational (or otherwise exact, non-integer) real order: the same
   // Gamma identity as the complex case above, but kept EXACT via `.evaluate()` rather
   // than forced to `.N()` -- Gamma is already exact at the integers and half-integers,
-  // so (3/2)_(1/2) = Γ(2)/Γ(3/2) comes back as 2/√π rather than a decimal. A nonnegative
-  // integer order is excluded -- that's the falling-factorial product above, kept exact
-  // without going through Gamma at all.
+  // so (3/2)_(1/2) = Γ(2)/Γ(3/2) comes back as 2/√π rather than a decimal. An integer
+  // order (either sign) is excluded: native Pochhammer already gets every integer n right,
+  // including the poles a negative n can hit at a ∈ {1, …, −n} -- the falling-factorial
+  // product above for n ≥ 0, and for n < 0, (a)_{-m} = 1/[(a−1)⋯(a−m)] (DLMF 5.2.vi). Routing
+  // a negative n through this Gamma ratio instead is wrong whenever a is ALSO a nonpositive
+  // integer: Γ(a+n) and Γ(a) are then both poles, and their ratio came back Indeterminate
+  // where the finite-difference value (e.g. (0)_{-1} = −1) is exact and defined.
   wrapOperator(
     ce,
     ["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]],
     (ops) => {
       if (ops.length !== 2 || isNonReal(ops[0]) || isNonReal(ops[1])) return false;
-      const nInt = integerAt(ops[1]);
-      if (nInt !== undefined && nInt >= 0) return false;
+      if (integerAt(ops[1]) !== undefined) return false;
       return isExact(ops[0]) && isExact(ops[1]);
     },
     () => (ops) => {
