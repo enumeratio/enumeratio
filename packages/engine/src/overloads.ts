@@ -19,6 +19,10 @@ export interface Overload {
    *  expression's source) matches: hypercomplex's generators, `i_1` or `e_2`. Data for the
    *  resolver, which loads the package only for an expression naming one; `when` checks it. */
   readonly symbols?: string;
+  /** Applies when an operand's type is one of these carrier types (`permutation`): for a
+   *  carrier that is a type rather than a head. The resolver skips the package where it mints
+   *  them all, since what makes such a value brings it. */
+  readonly types?: readonly string[];
   /** … and no operand's head is one of these. */
   readonly unless?: readonly string[];
   readonly arity?: Arity;
@@ -155,6 +159,7 @@ const mayApply = (row: Overload, ops: readonly BoxedExpression[], heads: () => S
 const matches = (row: Overload, ops: readonly BoxedExpression[]): boolean =>
   fits(row.arity, ops.length) &&
   (row.on === undefined || ops.some((op) => row.on!.includes(op.operator))) &&
+  (row.types === undefined || ops.some((op) => row.types!.includes(String(op.type)))) &&
   (row.unless === undefined || !ops.some((op) => row.unless!.includes(op.operator))) &&
   (row.when === undefined || row.when(ops));
 

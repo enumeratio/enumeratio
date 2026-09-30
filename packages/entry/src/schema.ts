@@ -110,6 +110,7 @@ const REFERENCE_SIGNATURE: JsonSchema = {
     overrides: { type: "string" },
     on: { type: "array", items: { type: "string" } },
     symbols: { type: "array", items: { type: "string" } },
+    types: { type: "array", items: { type: "string" } },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
   },
   required: ["call", "description"],

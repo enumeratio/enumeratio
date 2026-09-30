@@ -129,6 +129,8 @@ export interface ReferenceSignature {
   /** The symbol names it applies to, as regular expressions (`^e_[1-9]\d*$`), when it applies
    *  to nothing else: it matters only where an expression names one. */
   readonly symbols?: readonly string[];
+  /** The carrier types it applies to (`permutation`), when it applies to nothing else. */
+  readonly types?: readonly string[];
   /**
    * Where THIS call form lives elsewhere, when the head's references do not apply to it
    * wholesale -- two-argument `Zeta` is Hurwitz's function and links to Hurwitz's pages.

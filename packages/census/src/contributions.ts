@@ -21,6 +21,8 @@ export interface Contribution {
   on?: string[];
   /** The symbol patterns its rows apply to, when every row names carriers or symbols. */
   symbols?: string[];
+  /** The carrier types its rows apply to, likewise. */
+  types?: string[];
 }
 
 interface Scope {
@@ -121,12 +123,16 @@ export function contributions(): Map<string, Contribution[]> {
       const own = table.rows.filter((row) => row.package === c.pkg).flatMap((row) => row.signature ?? []);
       if (own.length > 0) c.type = ce.type(joinSignatures(own)).toString();
       const rows = table.rows.filter((row) => row.package === c.pkg);
-      const conditional = rows.every((row) => row.on !== undefined || row.symbols !== undefined);
+      const conditional = rows.every(
+        (row) => row.on !== undefined || row.symbols !== undefined || row.types !== undefined,
+      );
       if (!beyondRows.has(`${name}@${c.pkg}`) && rows.length > 0 && conditional) {
         const on = [...new Set(rows.flatMap((row) => row.on ?? []))].toSorted();
         const symbols = [...new Set(rows.flatMap((row) => row.symbols ?? []))].toSorted();
         if (on.length > 0) c.on = on;
         if (symbols.length > 0) c.symbols = symbols;
+        const types = [...new Set(rows.flatMap((row) => row.types ?? []))].toSorted();
+        if (types.length > 0) c.types = types;
       }
     }
   }

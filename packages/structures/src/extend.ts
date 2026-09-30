@@ -95,7 +95,7 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
       package: extension.package,
       signature: `(${extension.on}) -> ${extension.returns}`,
       arity: 1,
-      when: (ops) => String(ops[0]!.type) === extension.on,
+      types: [extension.on],
       evaluate: (ops) => extension.handle(ops[0]!, ce),
     });
   }

@@ -98,11 +98,13 @@ for (const [name, list] of [...contributions].toSorted(([a], [b]) => (a < b ? -1
       ...(c.previous !== undefined ? { overrides: libraryOf(c.previous) } : {}),
     };
     if (c.previous === undefined) delete (row as { overrides?: string }).overrides;
-    const conditions = row as { on?: readonly string[]; symbols?: readonly string[] };
+    const conditions = row as { on?: readonly string[]; symbols?: readonly string[]; types?: readonly string[] };
     if (c.on !== undefined) conditions.on = c.on;
     else delete conditions.on;
     if (c.symbols !== undefined) conditions.symbols = c.symbols;
     else delete conditions.symbols;
+    if (c.types !== undefined) conditions.types = c.types;
+    else delete conditions.types;
     if (at >= 0) rows[at] = row;
     else rows.push(row);
     typed++;
