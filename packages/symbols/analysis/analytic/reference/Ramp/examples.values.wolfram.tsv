@@ -2,7 +2,7 @@ id	in	out	tex.in	tex.out
 ramp-negative	Ramp[-2]	0	\text{Ramp}[-2]	0
 ramp-positive	Ramp[3]	3	\text{Ramp}[3]	3
 ramp-zero	Ramp[0]	0	\text{Ramp}[0]	0
-ramp-pi-exact	Ramp[Pi]			
-ramp-negative-pi-exact	Ramp[Minus[Pi]]			
+ramp-pi-exact	Ramp[Pi]	Pi	\text{Ramp}[\pi ]	\pi
+ramp-negative-pi-exact	Ramp[Minus[Pi]]	0	\text{Ramp}[-\pi ]	0
 ramp-equals-x-times-unitstep	(Ramp[5] == Times[5, UnitStep[5]])	True	\text{Ramp}[5]=5 \theta (5)	\text{True}
 ramp-derivative	D[Ramp[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{Ramp}[x]}{\partial x}-\left( \begin{array}{cc}  \{ &  \begin{array}{cc}  0 & x<0 \\  1 & 0<x \\  \text{Indeterminate} & \text{True} \\ \end{array}  \\ \end{array} \right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{Ramp}\left[\frac{7}{3}\right]-\left( \begin{array}{cc}  \{ &  \begin{array}{cc}  0 & \frac{7}{3}<0 \\  1 & 0<\frac{7}{3} \\  \text{Indeterminate} & \text{True} \\ \end{array}  \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{Ramp}\left[-\frac{11}{5}\right]-\left( \begin{array}{cc}  \{ &  \begin{array}{cc}  0 & -\frac{11}{5}<0 \\  1 & 0<-\frac{11}{5} \\  \text{Indeterminate} & \text{True} \\ \end{array}  \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{Ramp}\left[\frac{13}{4}\right]-\left( \begin{array}{cc}  \{ &  \begin{array}{cc}  0 & \frac{13}{4}<0 \\  1 & 0<\frac{13}{4} \\  \text{Indeterminate} & \text{True} \\ \end{array}  \\ \end{array} \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

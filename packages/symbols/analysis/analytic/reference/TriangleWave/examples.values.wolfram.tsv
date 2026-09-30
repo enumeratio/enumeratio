@@ -4,5 +4,5 @@ trianglewave-quarter-peak	TriangleWave[Rational[1, 4]]	1	\text{TriangleWave}\lef
 trianglewave-half	TriangleWave[Rational[1, 2]]	0	\text{TriangleWave}\left[\frac{1}{2}\right]	0
 trianglewave-three-quarters-trough	TriangleWave[Rational[3, 4]]	-1	\text{TriangleWave}\left[\frac{3}{4}\right]	-1
 trianglewave-ranged	TriangleWave[List[0, 10], Rational[1, 2]]	5	\text{TriangleWave}\left[\{0,10\},\frac{1}{2}\right]	5
-trianglewave-negative-pi-exact	TriangleWave[Minus[Pi]]			
+trianglewave-negative-pi-exact	TriangleWave[Minus[Pi]]	TriangleWave[-Pi]	\text{TriangleWave}[-\pi ]	\text{TriangleWave}[-\pi ]
 trianglewave-periodic	(TriangleWave[Rational[1, 4]] == TriangleWave[Plus[Rational[1, 4], 3]])	True	\text{TriangleWave}\left[\frac{1}{4}\right]=\text{TriangleWave}\left[\frac{1}{4}+3\right]	\text{True}
