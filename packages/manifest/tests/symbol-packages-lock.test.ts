@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { type FetchJson, lockPackages, specsOf } from "../src/index.ts";
+import { type FetchJson, lockPackages, npmHost, specsOf } from "../src/symbol-packages/index.ts";
 
 // A small npm: each package's versions and what each version's package.json says.
 const symbols = (namespace: string, dependencies: Record<string, string> = {}, system?: string) => ({
@@ -30,7 +30,7 @@ function npm() {
     listed.push(name);
     return Object.keys(WORLD[name] ?? {});
   };
-  return { fetch, listVersions, listed };
+  return { host: { ...npmHost({ fetch }), versions: listVersions }, listed };
 }
 
 test("ranges to the highest versions every asker admits, closed over symbol dependencies", async () => {

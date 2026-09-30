@@ -20,27 +20,20 @@ the resolver possible (below).
 - **`createRegistryResolver` / `Registry` / `manifestRegistry` / `definitionRegistry` /
   `combineRegistries` / `searchPath` / `pinOf`** (`src/registry.ts`) — the same, one name at
   a time through registries, so nothing lists every name: our packages are one registry,
-  Epsil definitions under a namespace (pinned by content) another. `searchPath` brings
-  chosen namespaces' names into bare use, and refuses at setup a name two of them share or
-  the system has, until it is preferred or excluded.
-- **`npmRegistry` / `symbolIndexOf`** (`src/npm-registry.ts`) — symbol packages on npm, read
-  over jsDelivr: a package marks itself with an `enumeratio` field (`namespace`, its scope;
-  `index`), ships `symbols/<Name>/definition.json`, and `scripts/pack-symbols.ts <dir>` writes
-  its `symbols/index.json`. Only the index and the definitions an expression uses are
-  fetched, and each is checked against its pin. With `check`, `createRegistryResolver` runs
-  a definition's examples (from its record, packed as `examples.json`) in a scratch engine
-  before declaring it, once per pin: a failure refuses it, or with `mode: "flag"` is reported.
-  Packing also writes the package's JavaScript entry (`scripts/symbol-entry.ts`), so it works
-  as a plain library: `declare(ce)`, and each definition that compiles to self-contained
-  JavaScript as a plain function, checked against its examples.
-- **`lockPackages` / `specsOf`** (`src/npm-lock.ts`) — symbol packages asked for by range
-  (`@ada/primes@^1.0.0`) to the exact versions `npmRegistry` reads, closed over the symbol
-  packages they depend on: per package, the highest version every range asking for it
-  admits (`semver`) and whose `system` range admits the system's version
-  (`SYSTEM_VERSION`, the repository's own); a lock's version holds while both still do.
-  `npmRegistry` refuses a package whose `system` range doesn't admit it. A qualified name (`Statistics.Mean`) declares its namespace as a record
-  of functions, which is how Epsil's `.` already evaluates. See
-  [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
+  Epsil definitions under a namespace (pinned by content) another. A qualified name
+  (`Statistics.Mean`) declares its namespace as a record of functions, which is how Epsil's
+  `.` already evaluates. `searchPath` brings chosen namespaces' names into bare use, and
+  refuses at setup a name two of them share or the system has, until it is preferred or
+  excluded. With `check`, a definition's examples run in a scratch engine before it is
+  declared, once per pin.
+- **`./symbol-packages`** (`src/symbol-packages/`) — symbol packages from a package host (npm
+  or GitHub over jsDelivr; `PackageHost` for others) as a registry (`packageRegistry`), their
+  format (`symbolIndexOf`), and ranges locked to versions (`lockPackages`, by `semver`, checking
+  each package's `system` range against `SYSTEM_VERSION`). A subpath, so the resolver alone
+  doesn't bring `semver`. `scripts/pack-symbols.ts <dir>` writes a package's index, its
+  examples and its JavaScript entry.
+
+See [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 
 ## Commands
 

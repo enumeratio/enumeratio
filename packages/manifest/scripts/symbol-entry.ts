@@ -11,7 +11,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { compile } from "@cortex-js/compute-engine/compile";
-import type { SymbolIndex } from "../src/npm-registry.ts";
+import type { SymbolIndex } from "../src/symbol-packages/format.ts";
 import { type Definition, type Example, pinnedHead, qualifiedNamesOf, withHeads } from "../src/registry.ts";
 
 export interface EntryInput {

@@ -8,17 +8,15 @@ import { join } from "node:path";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { packSymbols } from "../scripts/pack-symbols.ts";
+import { combineRegistries, createRegistryResolver, type Library, manifestRegistry, searchPath } from "../src/index.ts";
 import {
-  combineRegistries,
-  createRegistryResolver,
   type FetchJson,
-  type Library,
+  githubHost,
   lockPackages,
-  manifestRegistry,
-  npmRegistry,
-  searchPath,
+  npmHost,
+  packageRegistry,
   specsOf,
-} from "../src/index.ts";
+} from "../src/symbol-packages/index.ts";
 
 const FIXTURES = new URL("./fixtures/npm/", import.meta.url).pathname;
 const CDN = "https://cdn.jsdelivr.net/npm";
@@ -55,7 +53,7 @@ test("the fixtures' indexes are what packing their definitions writes", async ()
 
 test("a package's symbols evaluate at their pins, fetching only what the expression uses", async () => {
   const { fetch, log } = cdn();
-  const npm = npmRegistry<Engine>(SPECS, { fetch });
+  const npm = packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }) });
   const ce = new ComputeEngine();
   const octuple = ["MemberCall", "bob", "'Octuple'", 1];
   const ensured = await createRegistryResolver(npm).ensure(ce, octuple);
@@ -78,12 +76,10 @@ test("a definition that doesn't hash to its pin isn't served", async () => {
       ? { ...(json as object), body: ["Function", ["Multiply", 3, "x"], "x"] }
       : json,
   );
-  const ensured = await createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch })).ensure(new ComputeEngine(), [
-    "MemberCall",
-    "ada",
-    "'Twice'",
-    1,
-  ]);
+  const ensured = await createRegistryResolver(packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }) })).ensure(
+    new ComputeEngine(),
+    ["MemberCall", "ada", "'Twice'", 1],
+  );
   expect(ensured.unresolved).toEqual(["ada.Twice"]);
 });
 
@@ -93,16 +89,19 @@ test("a scoped package's namespace is its scope", async () => {
       ? { ...(json as object), enumeratio: { namespace: "ada", index: "./symbols/index.json" } }
       : json,
   );
-  await expect(npmRegistry<Engine>(SPECS, { fetch }).names!("bob")).rejects.toThrow(
-    "@bob/extra@2.0.0 claims the namespace ada, not its scope bob",
+  await expect(packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }) }).names!("bob")).rejects.toThrow(
+    "@bob/extra@2.0.0 claims the namespace ada, not bob",
   );
-  expect(() => npmRegistry<Engine>(["@ada/primes"], { fetch })).toThrow("needs a version");
+  expect(() => packageRegistry<Engine>(["@ada/primes"], { host: npmHost({ fetch }) })).toThrow("needs a version");
 });
 
 test("beside the system: a search path over npm namespaces, and system names unpinned", async () => {
   const log: string[] = [];
   const analytic: Library<Engine> = { name: "analytic", declare: () => void log.push("analytic") };
-  const registry = combineRegistries(manifestRegistry([analytic]), npmRegistry<Engine>(SPECS, cdn()));
+  const registry = combineRegistries(
+    manifestRegistry([analytic]),
+    packageRegistry<Engine>(SPECS, { host: npmHost(cdn()) }),
+  );
   const path = await searchPath(registry, { use: ["ada", "bob"] });
   const ensured = await createRegistryResolver(registry, { path }).ensure(new ComputeEngine(), [
     "Add",
@@ -116,7 +115,7 @@ test("beside the system: a search path over npm namespaces, and system names unp
 
 test("install check over npm: each package's examples, fetched only to check", async () => {
   const { fetch, log } = cdn();
-  const resolver = createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch }), {
+  const resolver = createRegistryResolver(packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }) }), {
     check: { engine: () => new ComputeEngine() },
   });
   const ce = new ComputeEngine();
@@ -136,7 +135,7 @@ test("install check over npm: a published example the definition doesn't meet re
       ? [{ id: "quad-3", expr: ["MemberCall", "ada", "'Quad'", 3], expected: 13 }]
       : json,
   );
-  const resolver = createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch }), {
+  const resolver = createRegistryResolver(packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }) }), {
     check: { engine: () => new ComputeEngine() },
   });
   const ensured = await resolver.ensure(new ComputeEngine(), ["MemberCall", "bob", "'Octuple'", 2]);
@@ -162,7 +161,7 @@ test("a packed package is a plain library too: declare(ce), and compiled functio
   expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 2])).toBe(16);
   expect(evaluate(ce, ["MemberCall", "ada", "'Quad'", 2])).toBe(8);
   // The heads are the registry's, so a pin means the same thing either way.
-  const npm = npmRegistry<Engine>(SPECS, cdn());
+  const npm = packageRegistry<Engine>(SPECS, { host: npmHost(cdn()) });
   expect((await npm.resolve("ada.Quad"))?.head).toBe(ada.definitions.Quad.head);
   expect(readFileSync(join(root, "node_modules/@ada/primes/dist/index.d.ts"), "utf8")).toContain(
     "export declare const Twice: (x0: number) => number;",
@@ -173,10 +172,10 @@ test("from ranges: lock the versions, then read them", async () => {
   const { fetch } = cdn();
   const listVersions = async (name: string) =>
     SPECS.filter((spec) => spec.startsWith(`${name}@`)).map((spec) => spec.slice(name.length + 1));
-  const lock = await lockPackages(["@bob/extra@^2.0.0"], { fetch, listVersions });
+  const lock = await lockPackages(["@bob/extra@^2.0.0"], { host: { ...npmHost({ fetch }), versions: listVersions } });
   expect(lock).toEqual({ "@ada/primes": "1.0.0", "@bob/extra": "2.0.0" });
   const ce = new ComputeEngine();
-  await createRegistryResolver(npmRegistry<Engine>(specsOf(lock), { fetch })).ensure(ce, [
+  await createRegistryResolver(packageRegistry<Engine>(specsOf(lock), { host: npmHost({ fetch }) })).ensure(ce, [
     "MemberCall",
     "bob",
     "'Octuple'",
@@ -187,8 +186,29 @@ test("from ranges: lock the versions, then read them", async () => {
 
 test("a package whose system range doesn't admit the system's version isn't read", async () => {
   const { fetch } = cdn();
-  expect(await npmRegistry<Engine>(SPECS, { fetch, system: "0.9.0" }).names!("ada")).toContain("Twice");
-  await expect(npmRegistry<Engine>(SPECS, { fetch, system: "1.0.0" }).names!("ada")).rejects.toThrow(
-    "npm registry: @ada/primes@1.0.0 is for the system 0.x, not 1.0.0",
+  expect(await packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }), system: "0.9.0" }).names!("ada")).toContain(
+    "Twice",
   );
+  await expect(
+    packageRegistry<Engine>(SPECS, { host: npmHost({ fetch }), system: "1.0.0" }).names!("ada"),
+  ).rejects.toThrow("package registry: @ada/primes@1.0.0 is for the system 0.x, not 1.0.0");
+});
+
+test("the same package from GitHub, versioned by its tags: the owner is the namespace", async () => {
+  const urls: string[] = [];
+  const fetch = async (url: string) => {
+    urls.push(url);
+    const path = url.replace("https://cdn.jsdelivr.net/gh/ada/primes@1.0.0/", "");
+    return JSON.parse(readFileSync(join(FIXTURES, "ada-primes", path), "utf8"));
+  };
+  const ce = new ComputeEngine();
+  const registry = packageRegistry<Engine>(["ada/primes@1.0.0"], { host: githubHost({ fetch }) });
+  await createRegistryResolver(registry).ensure(ce, ["MemberCall", "ada", "'Quad'", 3]);
+  expect(evaluate(ce, ["MemberCall", "ada", "'Quad'", 3])).toBe(12);
+  expect(urls[0]).toBe("https://cdn.jsdelivr.net/gh/ada/primes@1.0.0/package.json");
+  await expect(
+    packageRegistry<Engine>(["bob/primes@1.0.0"], {
+      host: githubHost({ fetch: async (url) => fetch(url.replace("bob/", "ada/")) }),
+    }).names!("ada"),
+  ).rejects.toThrow("claims the namespace ada, not bob");
 });

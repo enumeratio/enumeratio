@@ -1,38 +1,24 @@
 // Version ranges to exact versions (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2):
 // a host asks for symbol packages by range, as npm does, and gets the exact versions
-// `npmRegistry` reads, closed over the symbol packages they depend on. A lock keeps what was
+// `packageRegistry` reads, closed over the symbol packages they depend on. A lock keeps what was
 // chosen: a locked version stays while every range asking for it still admits it, so a page
 // means at run time what it meant when it was locked.
 
 import { maxSatisfying, rsort, satisfies, validRange } from "semver";
-import { admitsSystem, type FetchJson, fetchJson, type SymbolPackageField } from "./npm-registry.ts";
-import { SYSTEM_VERSION } from "./system.ts";
+import { SYSTEM_VERSION } from "../system.ts";
+import { admitsSystem, type SymbolPackageField } from "./format.ts";
+import { npmHost, type PackageHost } from "./host.ts";
 
 /** The exact version chosen for each package, by name. */
 export type PackageLock = Readonly<Record<string, string>>;
 
-/** Every published version of a package. */
-export type ListVersions = (name: string) => Promise<readonly string[]>;
-
-/** jsDelivr's list of a package's versions. */
-export const jsdelivrVersions =
-  (fetch: FetchJson = fetchJson): ListVersions =>
-  async (name) => {
-    const data = (await fetch(`https://data.jsdelivr.com/v1/packages/npm/${name}`)) as {
-      versions: readonly { version: string }[];
-    };
-    return data.versions.map((v) => v.version);
-  };
-
 export interface LockOptions {
+  /** Where the packages come from: npm, over jsDelivr, by default. */
+  readonly host?: PackageHost;
   /** The system's version, which a chosen version's `system` range must admit: ours by default. */
   readonly system?: string;
   /** What was chosen before: kept where every range still admits it. */
   readonly lock?: PackageLock;
-  readonly listVersions?: ListVersions;
-  /** Where a package version's files are: jsDelivr's npm mirror by default. */
-  readonly cdn?: string;
-  readonly fetch?: FetchJson;
 }
 
 /** `@ada/primes@^1.0.0` as its name and range. */
@@ -50,13 +36,12 @@ function parseWanted(spec: string): { name: string; range: string } {
  * nothing satisfies, or two ranges no one version meets, throws, naming them.
  */
 export async function lockPackages(wanted: readonly string[], options: LockOptions = {}): Promise<PackageLock> {
-  const { lock = {}, cdn = "https://cdn.jsdelivr.net/npm", fetch = fetchJson, system = SYSTEM_VERSION } = options;
-  const listVersions = options.listVersions ?? jsdelivrVersions(fetch);
+  const { lock = {}, host = npmHost(), system = SYSTEM_VERSION } = options;
   const versionLists = new Map<string, Promise<readonly string[]>>();
   const versionsOf = (name: string): Promise<readonly string[]> => {
     let list = versionLists.get(name);
     if (list === undefined) {
-      list = listVersions(name);
+      list = host.versions(name);
       versionLists.set(name, list);
     }
     return list;
@@ -70,7 +55,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
     const key = `${name}@${version}`;
     let found = manifests.get(key);
     if (found === undefined) {
-      found = fetch(`${cdn}/${key}/package.json`) as Promise<PackageJson>;
+      found = host.file(name, version, "package.json") as Promise<PackageJson>;
       manifests.set(key, found);
     }
     return found;
@@ -82,7 +67,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
   };
 
   type Ask = { readonly name: string; readonly range: string; readonly by: string };
-  const host: Ask[] = wanted.map((spec) => ({ ...parseWanted(spec), by: "the host" }));
+  const hostAsks: Ask[] = wanted.map((spec) => ({ ...parseWanted(spec), by: "the host" }));
   // What each package version asks of the symbol packages it depends on, read once.
   const asksOf = new Map<string, Promise<Ask[]>>();
   const dependencyAsks = (name: string, version: string): Promise<Ask[]> => {
@@ -113,7 +98,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
   let chosen = new Map<string, string>();
   for (let round = 0; ; round++) {
     if (round > MAX_ROUNDS) throw new Error("lockPackages: the choice doesn't settle");
-    const asks = [...host];
+    const asks = [...hostAsks];
     for (const [name, version] of chosen) asks.push(...(await dependencyAsks(name, version)));
     const byName = new Map<string, Ask[]>();
     for (const ask of asks) {
@@ -153,6 +138,6 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
 /** A cap on the rounds a choice takes to settle: each round only adds what chosen versions ask. */
 const MAX_ROUNDS = 64;
 
-/** A lock as the specs `npmRegistry` takes: `name@version`. */
+/** A lock as the specs `packageRegistry` takes: `name@version`. */
 export const specsOf = (lock: PackageLock): string[] =>
   Object.entries(lock).map(([name, version]) => `${name}@${version}`);

@@ -13,6 +13,10 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./symbol-packages": {
+      "types": "./dist/symbol-packages.d.mts",
+      "import": "./dist/symbol-packages.mjs"
+    },
     "./package/*": {
       "types": "./dist/package/*.d.mts",
       "import": "./dist/package/*.mjs"

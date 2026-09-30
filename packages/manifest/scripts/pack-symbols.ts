@@ -14,7 +14,7 @@ import { readEntries } from "@enumeratio/entry/node";
 import { validRange } from "semver";
 import type { Definition, Example } from "../src/registry.ts";
 import { entryOf } from "./symbol-entry.ts";
-import { type SymbolPackageField, symbolIndexOf } from "../src/npm-registry.ts";
+import { type SymbolPackageField, symbolIndexOf } from "../src/symbol-packages/format.ts";
 
 /** Pack the package at `dir`: its index, written and returned. */
 export async function packSymbols(dir: string): Promise<string> {
