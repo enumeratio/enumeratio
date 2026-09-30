@@ -209,10 +209,6 @@ function applyHead(name: string, args: MathJson[]): MathJson {
   if (name === "Midpoint" && args.length === 1 && isList(args[0]) && args[0].length === 3) {
     return ["Midpoint", args[0][1], args[0][2]];
   }
-  // Solve[eqs, {x, y}] is our Solve(eqs, x, y).
-  if (name === "Solve" && args.length === 2 && isList(args[1]) && args[1].length > 2) {
-    return ["Solve", args[0], ...args[1].slice(1)];
-  }
   // Always `_n`, so compute-engine's bare `_` comes back as `_1`.
   if (name === "Slot" && args.length === 1 && typeof args[0] === "number") return `_${args[0]}`;
   if (name === "Subscript" && args.length === 2 && isPlain(args[0]) && isPlain(args[1])) {
