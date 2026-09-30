@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 4753, disagree 389, inconclusive 42, error 4
+## wolfram — agree 4766, disagree 390, inconclusive 43, error 4
 
 | example                                                                       | kind           | ours                                                                                         | theirs                                                                                       |
 | ----------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -104,6 +104,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Erfc/erfc-complexinfinity-is-indeterminate-inheriting`                       | domain         | `Indeterminate`                                                                              | `Erfc[ComplexInfinity]`                                                                      |
 | `Erfc/interval-arithmetic-erfc-is-decreasing-so-the`                          | precision      | `["Interval",0.6713732405408726,0.7772974107895215]`                                         | `Interval[{0.6694415493984706, 0.7779056702856907}]`                                         |
 | `Erfc/uncertainty-propagation`                                                | precision      | `["Around",0.004677734981047266,0.00020666985354092054]`                                     | `Around[0.0046777349810472645, 0.00020666985354092054]`                                      |
+| `Erfi/erfi-complexinfinity-is-indeterminate-inheriting`                       | domain         | `Indeterminate`                                                                              | `Erfi[ComplexInfinity]`                                                                      |
 | `ErfInv/interval-arithmetic-the-inverse-is-increasing-so`                     | precision      | `["Interval",0.4769362762044699,0.5951160814499948]`                                         | `Interval[{0.4233192432438954, 0.6449989321408794}]`                                         |
 | `ErfInv/uncertainty-propagation`                                              | precision      | `["Around",0.4769362762044699,0.011125848189719498]`                                         | `Around[0.47693627620446993, 0.011125848189719498]`                                          |
 | `Exp/interval-arithmetic-exp-1-ln-2-e-1-2`                                    | shape          | `["Interval",["Divide",1,"ExponentialE"],2]`                                                 | `Interval[{E^(-1), 2}]`                                                                      |

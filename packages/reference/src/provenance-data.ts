@@ -6451,6 +6451,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "Erfi",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "Erfi",
+    elsewhere: [],
+  },
+  {
     name: "EulerGamma",
     provenance: "unknown",
     declared: null,
@@ -6746,7 +6753,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Power",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: "Power",
     elsewhere: ["wolfram", "mpmath"],

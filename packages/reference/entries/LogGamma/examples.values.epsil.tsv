@@ -20,3 +20,4 @@ a-pole-of-gamma	LogGamma(0)	positiveInfinity
 on-the-negative-axis-gamma-frac-32-frac-43-sqrt	LogGamma(-1.5)	0.860_047_015_376_479_7 - 6.283_185_307_179_586i
 half-integers-past-frac-12-ln-gamma-frac-32-ln	LogGamma(3 / 2)	ln(1 / 2 * sqrt(pi))
 off-the-positive-axis-this-is-the-continuation	LogGamma(-2.5 + 1.5i)	-3.717_513_451_191_792 - 7.713_065_525_834_192_5i
+log-gamma-negativeinfinity-is-indeterminate	LogGamma(negativeInfinity)	Indeterminate

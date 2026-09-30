@@ -20,3 +20,4 @@ a-pole-of-gamma	LogGamma[0]	Infinity		\text{log$\Gamma $}(0)	\infty
 on-the-negative-axis-gamma-frac-32-frac-43-sqrt	LogGamma[-1.5]	0.860047015376481 - 6.283185307179586*I		\text{log$\Gamma $}(-1.5)	0.860047\, -6.28319 i	
 half-integers-past-frac-12-ln-gamma-frac-32-ln	LogGamma[Rational[3, 2]]	Log[Sqrt[Pi]/2]		\text{log$\Gamma $}\left(\frac{3}{2}\right)	\log \left(\frac{\sqrt{\pi }}{2}\right)	
 off-the-positive-axis-this-is-the-continuation	LogGamma[Complex[-2.5, 1.5]]	-3.7175134511917927 - 7.7130655258341925*I		\text{log$\Gamma $}(-2.5+1.5 i)	-3.71751-7.71307 i	
+log-gamma-negativeinfinity-is-indeterminate	LogGamma[-Infinity]	Indeterminate		\text{log$\Gamma $}(-\infty )	\text{Indeterminate}	

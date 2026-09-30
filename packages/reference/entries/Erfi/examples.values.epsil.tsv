@@ -1,0 +1,7 @@
+id	in	out
+erfi-0	erfi(0)	0
+erfi-0p5	erfi(0.5)	0.614_952_094_696_510_980_84
+erfi-1	N(erfi(1))	1.650_425_758_797_542_876_03
+threads-element-wise-over-a-list	erfi([0, 1])	[0, erfi(1)]
+listable-threads-over-its-limits-at-pm-infty	erfi([positiveInfinity, negativeInfinity])	[positiveInfinity, negativeInfinity]
+erfi-complexinfinity-is-indeterminate-inheriting	erfi(complexInfinity)	Indeterminate

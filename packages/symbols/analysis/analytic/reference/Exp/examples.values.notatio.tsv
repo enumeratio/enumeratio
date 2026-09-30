@@ -39,3 +39,4 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig	<ExpToTrig><Exp><Multiply>Imagi
 exp-ln-of-a-negative-real-is-left-unevaluated	<Exp><Ln>-2</Ln></Exp>	<Power>ExponentialE <Add><Multiply><Complex>0 1</Complex> Pi</Multiply> <Ln>2</Ln></Add></Power>
 a-lone-exp-factor-is-untouched	<Multiply><Exp>x</Exp> y</Multiply>	<Multiply>y <Power>ExponentialE x</Power></Multiply>
 same-base-non-e-powers-are-left-alone	<Multiply><Power>2 x</Power> <Power>2 y</Power></Multiply>	<Multiply><Power>2 x</Power> <Power>2 y</Power></Multiply>
+exp-complexinfinity-is-indeterminate-via	<Exp>ComplexInfinity</Exp>	<Indeterminate />

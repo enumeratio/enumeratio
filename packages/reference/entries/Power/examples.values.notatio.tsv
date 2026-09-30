@@ -1,0 +1,6 @@
+id	in	out
+power-2-complexinfinity-is-indeterminate-same	<Power>2 ComplexInfinity</Power>	<Indeterminate />
+power-half-complexinfinity-is-indeterminate	<Power><Rational>1 2</Rational> ComplexInfinity</Power>	<Indeterminate />
+power-x-complexinfinity-is-left-unevaluated	<Power>x ComplexInfinity</Power>	<Power>x ComplexInfinity</Power>
+power-1-complexinfinity-is-indeterminate	<Power>1 ComplexInfinity</Power>	<Indeterminate />
+power-e-complexinfinity-is-indeterminate-exp	<Power>ExponentialE ComplexInfinity</Power>	<Indeterminate />

@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[
 x-cdot-sign-x-x-here-at-x-5	Equal[Times[-5, Sign[-5]], Abs[-5]]	
 the-sign-of-a-nonzero-complex-number-lies-on-the	Equal[Abs[Sign[Complex[3, 4]]], 1]	
 nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	[Sign, Indeterminate]
+sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]	

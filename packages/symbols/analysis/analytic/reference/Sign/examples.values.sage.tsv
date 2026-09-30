@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))	True
 x-cdot-sign-x-x-here-at-x-5	bool((-5 * sign(-5)) == abs(-5))	True	
 the-sign-of-a-nonzero-complex-number-lies-on-the	bool(abs(sign((3 + 4*I))) == 1)	True	
 nan-propagates-rather-than-being-treated-as-0	sign(NaN)		
+sign-complexinfinity-is-indeterminate-no	sign(unsigned_infinity)		

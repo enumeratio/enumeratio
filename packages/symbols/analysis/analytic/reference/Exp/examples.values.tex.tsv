@@ -39,3 +39,4 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig	\mathrm{ExpToTrig}(\exp(i x))	i
 exp-ln-of-a-negative-real-is-left-unevaluated	\exp(\ln(-2))	e^{i\pi+\ln(2)}
 a-lone-exp-factor-is-untouched	e^{x}y	ye^{x}
 same-base-non-e-powers-are-left-alone	2^{x}\times2^{y}	2^{x}\times2^{y}
+exp-complexinfinity-is-indeterminate-via	e^{\tilde\infty}	\operatorname{Indeterminate}

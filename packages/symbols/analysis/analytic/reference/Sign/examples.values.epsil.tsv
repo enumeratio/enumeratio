@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	sign(3 + 4i) == (3 + 4i) / abs(3 + 4i)	True
 x-cdot-sign-x-x-here-at-x-5	-5 * sign(-5) == abs(-5)	True
 the-sign-of-a-nonzero-complex-number-lies-on-the	abs(sign(3 + 4i)) == 1	True
 nan-propagates-rather-than-being-treated-as-0	sign(`NaN`)	`NaN`
+sign-complexinfinity-is-indeterminate-no	sign(complexInfinity)	Indeterminate

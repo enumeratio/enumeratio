@@ -1045,6 +1045,20 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "19.2",
     },
   ],
+  Erfi: [
+    {
+      system: "wikipedia",
+      identity: "Error function",
+    },
+    {
+      system: "mathworld",
+      identity: "Erfi",
+    },
+    {
+      system: "dlmf",
+      identity: "7.2",
+    },
+  ],
   EulerGamma: [
     {
       system: "wikipedia",
@@ -2568,6 +2582,7 @@ export const DLMF_NAMES: Readonly<Record<string, string>> = {
   EllipticE: "Legendre's complete elliptic integral of the second kind",
   EllipticK: "Legendre's complete elliptic integral of the first kind",
   EllipticPi: "Legendre's complete elliptic integral of the third kind",
+  Erfi: "alternative notation for Dawson's integral",
   EulerGamma: "Euler's constant",
   ExponentialE: "base of natural logarithm",
   Trigamma: "polygamma functions",

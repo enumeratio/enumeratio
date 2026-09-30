@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out	verdict
+erfi-0	Erfi[0]	0	\text{erfi}(0)	0	
+erfi-0p5	Erfi[0.5]	0.614952094696511	\text{erfi}(0.5)	0.614952	
+erfi-1	N[Erfi[1]]	1.6504257587975428	N[\text{erfi}(1)]	1.65043	
+threads-element-wise-over-a-list	Erfi[List[0, 1]]	{0, Erfi[1]}	\text{erfi}(\{0,1\})	\{0,\text{erfi}(1)\}	
+listable-threads-over-its-limits-at-pm-infty	Erfi[List[Infinity, -Infinity]]	{Infinity, -Infinity}	\text{erfi}(\{\infty ,-\infty \})	\{\infty ,-\infty \}	
+erfi-complexinfinity-is-indeterminate-inheriting	Erfi[ComplexInfinity]	Erfi[ComplexInfinity]	\text{erfi}(\text{ComplexInfinity})	\text{erfi}(\text{ComplexInfinity})	disagree

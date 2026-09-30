@@ -1,0 +1,6 @@
+id	in	out
+power-2-complexinfinity-is-indeterminate-same	2 ^ complexInfinity	Indeterminate
+power-half-complexinfinity-is-indeterminate	(1 / 2) ^ complexInfinity	Indeterminate
+power-x-complexinfinity-is-left-unevaluated	x ^ complexInfinity	x ^ complexInfinity
+power-1-complexinfinity-is-indeterminate	1 ^ complexInfinity	Indeterminate
+power-e-complexinfinity-is-indeterminate-exp	exponentialE ^ complexInfinity	Indeterminate

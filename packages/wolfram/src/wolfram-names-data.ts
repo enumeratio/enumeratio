@@ -174,6 +174,7 @@ export const WOLFRAM_NAMES: Readonly<Record<string, string>> = {
   Erf: "Erf",
   ErfInv: "InverseErf",
   Erfc: "Erfc",
+  Erfi: "Erfi",
   ErlangDistribution: "ErlangDistribution",
   ErrorBox: "ErrorBox",
   EulerE: "EulerE",

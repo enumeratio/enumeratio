@@ -1,0 +1,6 @@
+id	in
+power-2-complexinfinity-is-indeterminate-same	((2)^unsigned_infinity)
+power-half-complexinfinity-is-indeterminate	(((1/2))^unsigned_infinity)
+power-x-complexinfinity-is-left-unevaluated	((SR.var("x"))^unsigned_infinity)
+power-1-complexinfinity-is-indeterminate	((1)^unsigned_infinity)
+power-e-complexinfinity-is-indeterminate-exp	((e)^unsigned_infinity)

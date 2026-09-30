@@ -9,12 +9,8 @@ signatures:
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-analytic
-    type: (complex | infinity, complex | signed_infinity) -> number
+    type: (complex | infinity, complex | signed_infinity | ~oo) -> Indeterminate | number
     overrides: compute-engine
-    on:
-      - Around
-      - CenteredInterval
-      - Interval
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-hypercomplex
