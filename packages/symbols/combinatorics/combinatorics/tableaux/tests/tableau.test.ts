@@ -12,6 +12,8 @@ const contents = (expr: unknown): unknown => {
   const evaluated = ce.box(expr as never).evaluate();
   return (evaluated as unknown as { ops?: { json: unknown }[] }).ops?.[0]?.json;
 };
+/** `rows` as `StandardTableau`'s own MathJSON encoding: nested, one List per row. */
+const rowsMJ = (rows: readonly (readonly number[])[]): unknown => ["List", ...rows.map((row) => ["List", ...row])];
 
 function permutations(n: number): number[][] {
   if (n === 0) return [[]];
@@ -57,10 +59,10 @@ function rskTableaux(p: number[]): { insertion: number[][]; recording: number[][
 }
 const insertionTableau = (p: number[]): number[][] => rskTableaux(p).insertion;
 
-test("RskInsertion is the row word of the insertion tableau", () => {
+test("RskInsertion is the insertion tableau, as rows", () => {
   for (const p of ALL) {
     const rows = insertionTableau(p);
-    expect(contents(["RskInsertion", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...rows.flat()]);
+    expect(contents(["RskInsertion", perm(...p)]), `[${p.join(", ")}]`).toEqual(rowsMJ(rows));
   }
 });
 
@@ -99,15 +101,15 @@ test("RskInsertion and RskShape are typed by carrier", () => {
   const p = perm(3, 1, 4, 2);
   expect(String(ce.box(["RskInsertion", p] as never).evaluate().type)).toBe("standard_tableau");
   expect(String(ce.box(["RskShape", p] as never).evaluate().type)).toBe("integer_partition");
-  // A standard tableau is a ROW WORD, not a nested list — the carrier shape says so, and a
-  // nested result would be rejected by the type rather than quietly accepted.
-  expect(CARRIERS.find((c) => c.name === "StandardTableau")?.shape).toBe("list<integer>");
+  // A standard tableau is its ROWS, not a flattened word — a word alone doesn't always
+  // determine a shape (two different tableaux can share one), so the carrier holds the rows.
+  expect(CARRIERS.find((c) => c.name === "StandardTableau")?.shape).toBe("list<list<integer>>");
 });
 
 test("RskRecording records where each insertion landed", () => {
   for (const p of ALL) {
     const { recording } = rskTableaux(p);
-    expect(contents(["RskRecording", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...recording.flat()]);
+    expect(contents(["RskRecording", perm(...p)]), `[${p.join(", ")}]`).toEqual(rowsMJ(recording));
   }
 });
 
@@ -120,7 +122,10 @@ test("the RSK pair is a composite carrier, and both halves share a shape", () =>
     expect(String(pair.type), `[${p.join(", ")}]`).toBe("standard_tableau_pair");
 
     const { insertion, recording } = rskTableaux(p);
-    expect(JSON.stringify(pair.json), `[${p.join(", ")}]`).toContain(JSON.stringify(insertion.flat()).slice(1, -1));
+    expect(pair.json, `[${p.join(", ")}]`).toEqual([
+      "StandardTableauPair",
+      ["Tuple", ["StandardTableau", rowsMJ(insertion)], ["StandardTableau", rowsMJ(recording)]],
+    ]);
     // Same shape is the content of the correspondence: Q is P's shape filled with positions.
     expect(insertion.map((row) => row.length)).toEqual(recording.map((row) => row.length));
   }

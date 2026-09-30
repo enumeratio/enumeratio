@@ -4820,7 +4820,7 @@ export const MAPS: readonly CatalogOverload[] = [
   {
     name: "RskRecording",
     on: ["Permutation"],
-    description: "The recording tableau of the RSK correspondence, as a row word.",
+    description: "The recording tableau of the RSK correspondence, as its rows.",
   },
   {
     name: "RskShape",

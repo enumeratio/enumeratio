@@ -48,6 +48,16 @@ test("a carrier constructor reduces to its contents, same as List vs. Tuple leni
   expect(reduce(nested, symbolic)).toEqual(reduce(["List", 1, 2] as MathJSON, symbolic));
 });
 
+test("a composite carrier (carrierElements) reduces both slots, not just the last", () => {
+  // StandardTableauPair(Tuple(StandardTableau(P), StandardTableau(Q))): every slot of the
+  // packed Tuple is itself a carrier call, unlike a `carrierParams` pack (Tournament(n,
+  // edges)) where only the trailing element matters — both P and Q have to survive.
+  const p: MathJSON = ["List", ["List", 1, 3], ["List", 2]];
+  const q: MathJSON = ["List", ["List", 1, 2], ["List", 3]];
+  const pair: MathJSON = ["StandardTableauPair", ["Tuple", ["StandardTableau", p], ["StandardTableau", q]]];
+  expect(reduce(pair, symbolic)).toEqual(reduce(["List", p, q] as MathJSON, symbolic));
+});
+
 test("truth values reduce to booleans whichever evaluator reads the rest", () => {
   expect(reduce("True", symbolic)).toBe(true);
   expect(reduce(["List", "True", "False"], valuesOnly(symbolic))).toEqual([true, false]);

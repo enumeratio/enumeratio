@@ -78,11 +78,10 @@ interface Family {
   /** For a "nested" element that is itself a fixed-length tuple of sub-elements (`[P, Q]`), the
    *  sub-carrier each slot is wrapped in before the whole tuple is packed into the family's own
    *  carrier -- `StandardTableauPair([P, Q])` becomes
-   *  `StandardTableauPair(Tuple(StandardTableau(P), StandardTableau(Q)))`. Each slot is
-   *  FLATTENED to its leaves first (`StandardTableau`'s own shape is a row word, `list<integer>`,
-   *  not a nested list a "blocks"-shaped carrier would need) -- a shape a flat word alone can't
-   *  always be inverted back to, which is `valid()`'s problem to solve, not this encoding's.
-   *  Mutually exclusive with `carrierParams` (which packs raw params instead of sub-elements). */
+   *  `StandardTableauPair(Tuple(StandardTableau(P), StandardTableau(Q)))`. Each slot is encoded
+   *  the same way the element's own kind already does (rows, not a flattened word -- a word
+   *  alone doesn't always determine a shape). Mutually exclusive with `carrierParams` (which
+   *  packs raw params instead of sub-elements). */
   readonly carrierElements?: readonly string[];
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";

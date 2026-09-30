@@ -2,16 +2,14 @@
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible):
 // it now carries "StandardTableauPair" (tuple<standard_tableau, standard_tableau>). Its element
 // (kind "nested", `[P, Q]`, each a tableau's rows) doesn't pack into that tuple as-is -- CE's
-// tuple type doesn't structurally accept a plain nested List, and StandardTableau's own shape is
-// a row word (`list<integer>`, matching how src/maps.ts's `Rsk` already builds one), not rows.
-// So each slot is FLATTENED and wrapped in its own StandardTableau(...) first (`carrierElements`,
-// declare.ts) -- the same idea as `carrierParams` (#437-style packs raw params instead), applied
-// to a sub-element rather than a param. See IsStandardTableauPairOf below for what that costs on
-// the way back (a row word alone doesn't always determine a shape).
+// tuple type doesn't structurally accept a plain nested List -- so each slot is wrapped in its
+// own StandardTableau(...) first (`carrierElements`, declare.ts), holding its rows exactly as
+// the kernel already has them (StandardTableau's shape is `list<list<integer>>`, matching
+// src/maps.ts's Rsk/RskInsertion/RskRecording) -- the same idea as `carrierParams` (#437-style
+// packs raw params instead), applied to a sub-element rather than a param.
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { Factorial, PermutationRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import { IsStandardTableauOf } from "../../../collections/src/families/tableaux-trees.ts";
-import { PartitionsP, IntegerPartitionUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -88,49 +86,9 @@ export function StandardTableauPairsRank(pair: [number[][], number[][]], n: numb
   void n;
   return PermutationRank(rskInverse(pair[0], pair[1]));
 }
-// A row word alone doesn't determine a shape (word "1,2,3,4" is both the single row [1,2,3,4]
-// and the two rows [1,2],[3,4] -- both genuine SYT): the carrier only ever holds the word, so a
-// value that arrives through it (declare.ts's `contains`, decoding a StandardTableauPair back
-// off the engine) needs a shape reconstructed from context. Two words sharing a shape is exactly
-// the constraint that disambiguates most of the time -- try every shape of n, largest-part-first
-// (the same order StandardTableauxUnrank enumerates), first one both words split into validly.
-// Collisions this can't resolve (two different pairs sharing both row words) are the carrier's
-// own limitation, already accepted for the `Rsk` map (src/maps.ts): "the pair plus RskShape
-// determines them."
-function rowsFromWord(word: readonly number[], shape: readonly number[]): number[][] | undefined {
-  const rows: number[][] = [];
-  let at = 0;
-  for (const len of shape) {
-    rows.push(word.slice(at, at + len));
-    at += len;
-  }
-  return at === word.length ? rows : undefined;
-}
-function standardTableauPairFromWords(
-  wordP: readonly number[],
-  wordQ: readonly number[],
-  n: number,
-): [number[][], number[][]] | undefined {
-  if (wordP.length !== n || wordQ.length !== n) return undefined;
-  for (let idx = 0; idx < PartitionsP(n); idx++) {
-    const shape = IntegerPartitionUnrank(n, idx);
-    const rowsP = rowsFromWord(wordP, shape);
-    const rowsQ = rowsFromWord(wordQ, shape);
-    if (rowsP && rowsQ && IsStandardTableauOf(rowsP, n) && IsStandardTableauOf(rowsQ, n)) return [rowsP, rowsQ];
-  }
-  return undefined;
-}
 export function IsStandardTableauPairOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e) || e.length !== 2) return false;
-  const [a, b] = e as [unknown, unknown];
-  // A flat row word (declare.ts's decode) is an array of numbers; nested rows (the kernel's own
-  // unrank/rank contract) is an array of arrays.
-  const isFlatWord = Array.isArray(a) && (a.length === 0 || typeof a[0] === "number");
-  const pair = isFlatWord
-    ? standardTableauPairFromWords(a as number[], b as number[], n)
-    : ([a, b] as [number[][], number[][]]);
-  if (pair === undefined) return false;
-  const [P, Q] = pair;
+  const [P, Q] = e as [number[][], number[][]];
   if (!IsStandardTableauOf(P, n) || !IsStandardTableauOf(Q, n)) return false;
   const shapeOf = (t: number[][]) => t.map((row) => row.length).join(",");
   return shapeOf(P) === shapeOf(Q);

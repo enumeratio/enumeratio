@@ -39,7 +39,7 @@ test("a StandardTableauPair comes out typed, its two slots each a StandardTablea
   expect(pair.operator).toEqual("StandardTableauPair");
   expect(pair.json).toEqual([
     "StandardTableauPair",
-    ["Tuple", ["StandardTableau", ["List", 1, 2, 3, 4]], ["StandardTableau", ["List", 1, 2, 3, 4]]],
+    ["Tuple", ["StandardTableau", ["List", ["List", 1, 2, 3, 4]]], ["StandardTableau", ["List", ["List", 1, 2, 3, 4]]]],
   ]);
 });
 

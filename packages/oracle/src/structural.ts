@@ -93,10 +93,21 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   // mapping), so this comparison has to reduce to that same last element or a genuine
   // agreement would register as a shape mismatch (`[n, edges]` vs. the other system's bare
   // `edges`).
+  //
+  // A COMPOSITE carrier (`carrierElements`, e.g. `StandardTableauPair`) packs the same
+  // shape, but every slot is itself a sub-carrier call, not a leading param then the element
+  // -- reducing to only the last slot would compare `Q` alone and silently ignore `P`.
+  // Matched the same way `emit.ts` does: every slot a carrier call means the whole tuple
+  // carries meaning.
   if (Array.isArray(expr) && typeof expr[0] === "string" && CARRIER_NAMES.has(expr[0]) && expr.length === 2) {
     const contents = expr[1] as MathJSON;
     const packed = Array.isArray(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
-    return reduce(packed === undefined ? contents : (packed[packed.length - 1] as MathJSON), evaluate);
+    if (packed === undefined) return reduce(contents, evaluate);
+    const packedOperands = packed.slice(1) as MathJSON[];
+    const composite = packedOperands.every(
+      (op) => Array.isArray(op) && typeof op[0] === "string" && CARRIER_NAMES.has(op[0]),
+    );
+    return reduce(composite ? packed : (packedOperands[packedOperands.length - 1] as MathJSON), evaluate);
   }
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an

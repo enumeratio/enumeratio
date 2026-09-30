@@ -31,5 +31,5 @@ carrier: StandardTableauPair
 ---
 
 - A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].
-- Each element is a `StandardTableauPair`, its two same-shape tableaux each a `StandardTableau` (a row word); unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
+- Each element is a `StandardTableauPair`, its two same-shape tableaux each a `StandardTableau`, as rows; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
 - Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.

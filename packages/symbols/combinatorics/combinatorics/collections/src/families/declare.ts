@@ -66,17 +66,16 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   // is just the element's own shape (`Permutation([2, 1])`).
   const carrierParams = family.carrierParams ?? 0;
   const carrierElements = family.carrierElements;
-  // A nested sub-element's own carrier holds its LEAVES, flattened -- `StandardTableau`'s shape
-  // is `list<integer>` (a row word), not a nested `list<list<integer>>` (which the type system
-  // rejects, and CE has no carrier for anyway). The shape a flat word came from isn't always
-  // recoverable from the word alone -- decode below hands the flat sequence on as-is, and it's
-  // `valid()`'s job to re-derive a shape when it can (see IsStandardTableauPairOf).
-  const flattenLeaves = (t: unknown): number[] =>
-    Array.isArray(t) ? t.flatMap((x) => flattenLeaves(x)) : [t as number];
-  // A carrier's elements are its values, `Permutation([2, 1])`; membership takes either form.
+  // A nested sub-element's own carrier holds it the same way the element's own kind already
+  // encodes it (bareEncode/bareDecode) -- e.g. `StandardTableauPair`'s two slots are each a
+  // `StandardTableau`, holding its rows, not a flattened word (a word alone doesn't determine
+  // a shape: two different tableaux can share one).
   const encode = (p: number[], value: unknown): unknown => {
     if (carrier !== undefined && carrierElements !== undefined) {
-      const parts = (value as readonly unknown[]).map((v, i) => [carrierElements[i], listMJ(flattenLeaves(v))]);
+      const parts = (value as readonly unknown[]).map((v, i) => [
+        carrierElements[i],
+        (bareEncode as (x: never) => unknown)(v as never),
+      ]);
       return [carrier, ["Tuple", ...parts]];
     }
     const encoded = (bareEncode as (x: never) => unknown)(value as never);

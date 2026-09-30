@@ -44,10 +44,10 @@ import {
 } from "../trees/src/increasing-binary-tree.ts";
 import {
   insertionReadingWord,
-  insertionRowWord,
+  insertionRows,
   insertionShape,
-  recordingRowWord,
-  rskRowWords,
+  recordingRows,
+  rskRows,
 } from "../tableaux/src/tableau.ts";
 
 export interface CombinatorialMap {
@@ -553,9 +553,9 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "RskInsertion",
     from: "permutation",
     to: "standard_tableau",
-    body: insertionRowWord,
+    body: insertionRows,
     summary: "The insertion tableau of the RSK correspondence.",
-    note: "Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau. Emitted as a ROW WORD because that is what the carrier is; with RskShape it determines the tableau. See tableau.ts for the indexing rule that makes it evaluate at all.",
+    note: "Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau, emitted as its rows. See tableau.ts for the indexing rule that makes it evaluate at all.",
   },
   {
     name: "RskShape",
@@ -569,17 +569,17 @@ export const MAPS: readonly CombinatorialMap[] = [
     name: "RskRecording",
     from: "permutation",
     to: "standard_tableau",
-    body: recordingRowWord,
-    summary: "The recording tableau of the RSK correspondence, as a row word.",
+    body: recordingRows,
+    summary: "The recording tableau of the RSK correspondence, as its rows.",
     note: "Records WHERE each insertion landed. The insertion logic is untouched — comparing row lengths before and after says which row grew, which is less work than instrumenting the bumping to report it.",
   },
   {
     name: "Rsk",
     from: "permutation",
     to: "standard_tableau_pair",
-    body: rskRowWords,
+    body: rskRows,
     summary: "The RSK correspondence: the insertion and recording tableaux, as a pair.",
-    note: "Both tableaux share a shape, so the pair plus RskShape determines them. A standard_tableau_pair is a tuple of two carriers — the first composite carrier anything here constructs.",
+    note: "Both tableaux share a shape (RskShape reads it off either), and each carries its own rows, so the pair alone determines them. A standard_tableau_pair is a tuple of two carriers — the first composite carrier anything here constructs.",
   },
   {
     name: "CyclePartition",

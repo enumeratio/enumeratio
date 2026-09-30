@@ -49,8 +49,12 @@ export const TABLEAUX_CARRIERS: readonly Carrier[] = [
   },
   {
     name: "StandardTableau",
+    // Rows, not a flattened row word: a row word alone doesn't determine a shape (two
+    // different tableaux can share one, e.g. [[1,2],[3,4]] and [[1,2,3,4]] both flatten to
+    // [1,2,3,4]), so it can't stand for the tableau on its own -- fixed alongside
+    // StandardTableauPairs (§4 step 5), and src/maps.ts's Rsk/RskInsertion/RskRecording.
     type: "standard_tableau",
-    shape: "list<integer>",
+    shape: "list<list<integer>>",
     id: "standard_tableau",
     plural: "StandardTableaux",
   },

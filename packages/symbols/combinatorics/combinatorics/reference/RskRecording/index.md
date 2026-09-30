@@ -2,7 +2,7 @@
 name: RskRecording
 domain: Combinatorial maps
 signature: RskRecording(Permutation)
-summary: The recording tableau of the RSK correspondence, as a row word.
+summary: The recording tableau of the RSK correspondence, as its rows.
 references:
   - system: wikipedia
     identity: Robinson–Schensted correspondence
@@ -15,7 +15,7 @@ mapOn:
   - Permutation
 signatures:
   - call: RskRecording(Permutation)
-    description: The recording tableau of the RSK correspondence, as a row word.
+    description: The recording tableau of the RSK correspondence, as its rows.
     library: enumeratio-combinatorics
     type: (permutation) -> standard_tableau
 ---

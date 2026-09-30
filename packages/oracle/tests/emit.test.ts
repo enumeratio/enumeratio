@@ -321,6 +321,20 @@ test("a two-argument graph carrier (carrierParams) unwraps to the edge list, not
   expect(emit(["LabeledGraph", ["Tuple", 4, edges]], "sage")).toEqual({ ok: true, source: "[[1, 2], [2, 1]]" });
 });
 
+// A composite carrier (`carrierElements`, StandardTableauPair) packs the same shape -- a
+// multi-arg Tuple -- but every slot is itself a sub-carrier call, not a param then the
+// element. It must NOT collapse to the last slot the way `carrierParams` does above, or `P`
+// would silently disappear from the comparison.
+test("a composite carrier (carrierElements) unwraps to both slots, not just the last", () => {
+  const p = ["List", ["List", 1, 3], ["List", 2]];
+  const q = ["List", ["List", 1, 2], ["List", 3]];
+  const pair = ["StandardTableauPair", ["Tuple", ["StandardTableau", p], ["StandardTableau", q]]];
+  expect(emit(pair, "wolfram")).toEqual({
+    ok: true,
+    source: "List[List[List[1, 3], List[2]], List[List[1, 2], List[3]]]",
+  });
+});
+
 test("an algebra element compares as a combination, whatever order its terms are in", () => {
   const ours = ["Add", ["GroupBasis", "'1'"], ["Multiply", 2, ["GroupBasis", `'"s0"'`]]];
   expect(linearCombination(ours)).toEqual(
