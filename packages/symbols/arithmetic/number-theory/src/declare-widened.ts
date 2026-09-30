@@ -210,8 +210,27 @@ export function declareWidened(ce: ComputeEngine): void {
     },
     () => (ops) => {
       const [num, den] = bigRationalAt(ops[0])!;
-      const squareFree = isSquareFreeInteger(num) && isSquareFreeInteger(den);
-      return ce.symbol(squareFree ? "True" : "False");
+      const numSquareFree = isSquareFreeInteger(num);
+      const denSquareFree = isSquareFreeInteger(den);
+      if (numSquareFree === undefined || denSquareFree === undefined) return undefined; // decline
+      return ce.symbol(numSquareFree && denSquareFree ? "True" : "False");
+    },
+    1,
+  );
+
+  // IsSquareFree of a plain integer: compute-engine's own native handler answers False —
+  // wrongly — once its factoring gives up on a large cofactor (e.g. the density sweep
+  // Length(Filter(Range(1, 100000), IsSquareFree)) silently collapses to ~2 instead of
+  // ~60794). Route every plain integer through the same `factorInteger` this file already
+  // trusts for the rational case above, and decline (stay unevaluated) rather than answer
+  // wrong when it can't factor the cofactor within budget.
+  wrapOperator(
+    ce,
+    ["IsSquareFree", 1],
+    (ops) => ops.length === 1 && bigIntegerAt(ops[0]) !== undefined,
+    () => (ops) => {
+      const squareFree = isSquareFreeInteger(bigIntegerAt(ops[0])!);
+      return squareFree === undefined ? undefined : ce.symbol(squareFree ? "True" : "False");
     },
     1,
   );
@@ -280,7 +299,9 @@ export function declareWidened(ce: ComputeEngine): void {
   // fixed: GCD(12, {3,7,40}) is {3,1,4}. `threadOverLists` doesn't fit — it only widens a
   // head that otherwise rejects or ignores a list, and GCD/LCM already answer one by
   // flattening it into more arguments (kept, elsewhere, as a documented divergence); this
-  // only takes over the one-list-argument shape, which nothing else already answers.
+  // only takes over the one-list-argument shape, which nothing else already answers. The
+  // broadcast also fires with nothing else to hold fixed — GCD/LCM of a single number is
+  // that number, so GCD({3,7,40}) alone is {3,7,40}, not the GCD of the list's elements.
   for (const head of ["GCD", "LCM"] as const) {
     wrapOperator(
       ce,
@@ -301,7 +322,7 @@ export function declareWidened(ce: ComputeEngine): void {
           ),
         );
       },
-      { min: 2 },
+      { min: 1 },
     );
   }
 
@@ -322,16 +343,20 @@ export function declareWidened(ce: ComputeEngine): void {
   );
 
   // compute-engine already has CarmichaelLambda and IsPerfect, undocumented here — the gaps
-  // are Wolfram's λ(-n)=λ(n) and PerfectNumberQ's "no negative number is perfect", both of
-  // which the native handlers currently leave unevaluated.
+  // are Wolfram's λ(-n)=λ(n), λ(0)=0, and PerfectNumberQ's "no negative number is perfect",
+  // all of which the native handlers currently leave unevaluated.
   wrapOperator(
     ce,
     ["CarmichaelLambda", 1],
     (ops) => {
       const n = bigIntegerAt(ops[0]);
-      return n !== undefined && n < 0n;
+      return n !== undefined && n <= 0n;
     },
-    (native) => (ops, options) => native?.([ce.number(-bigIntegerAt(ops[0])!)], options),
+    (native) => (ops, options) => {
+      const n = bigIntegerAt(ops[0])!;
+      if (n === 0n) return ce.number(0);
+      return native?.([ce.number(-n)], options);
+    },
     1,
   );
   wrapOperator(

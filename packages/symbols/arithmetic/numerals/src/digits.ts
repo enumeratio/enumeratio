@@ -125,6 +125,27 @@ export function realDigitsOfRational(
   return { digits, exponent };
 }
 
+/**
+ * `RealDigits[p/q, base, len]`: `realDigitsOfRational`'s compact `{digits…, {period…}}`
+ * form flattened to exactly `len` plain digits — the periodic block (if any) repeated as
+ * many times as needed and the result truncated, or zero-padded when the expansion
+ * terminates before `len` digits. An explicit `len` asks Wolfram for `len` literal
+ * digits, never the compact periodic notation.
+ */
+export function flattenRealDigits(digits: readonly RealDigit[], len: number): bigint[] {
+  const flat: bigint[] = [];
+  for (const d of digits) {
+    if (typeof d === "bigint") {
+      flat.push(d);
+    } else if (d.length > 0) {
+      while (flat.length < len) flat.push(...d);
+    }
+  }
+  if (flat.length > len) return flat.slice(0, len);
+  while (flat.length < len) flat.push(0n);
+  return flat;
+}
+
 const ROMAN_TABLE: readonly (readonly [number, string])[] = [
   [1000, "M"],
   [900, "CM"],

@@ -416,6 +416,8 @@ export function declareBacklog(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined) return undefined;
+      // τ is only defined on the positive integers; Wolfram's TAU[n] is 0 off that domain.
+      if (n <= 0n) return ce.number(0);
       const tau = ramanujanTau(n);
       return tau === undefined ? undefined : ce.number(tau);
     },
