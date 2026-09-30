@@ -29,6 +29,7 @@ an-integer-power-negative-argument	\ln(-2)	i\pi+\ln(2)
 n-of-a-negative-integer-argument	N(\ln(-2), 10)	0.693\,147\,180\,6+3.141\,592\,654i
 ln-neg-6	\ln(-6)	i\pi+\ln(6)
 n-of-a-negative-rational-argument	N(\ln(-\frac{1}{2}))	-0.693\,147\,180\,559\,945\,3+3.141\,592\,653\,589\,793i
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	\ln(-\infty)	\infty
 inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\top
 product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\top
 powerexpand-splits-a-logarithm-of-a-product	\mathrm{PowerExpand}(\ln(xy))	\ln(x)+\ln(y)

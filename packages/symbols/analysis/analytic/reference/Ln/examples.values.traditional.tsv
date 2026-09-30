@@ -29,6 +29,7 @@ an-integer-power-negative-argument
 n-of-a-negative-integer-argument		
 ln-neg-6		
 n-of-a-negative-rational-argument		
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the		
 inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\mathrm{True}
 product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\mathrm{True}
 powerexpand-splits-a-logarithm-of-a-product		

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	source	caption
+arsinh-complexinfinity-is-indeterminate-the-real	Possible issues		[Arsinh, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.37.16	Arsinh(ComplexInfinity) is Indeterminate -- the real +Infinity and -Infinity directions disagree

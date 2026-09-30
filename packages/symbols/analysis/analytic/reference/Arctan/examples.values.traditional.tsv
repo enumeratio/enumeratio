@@ -23,6 +23,7 @@ to-30-significant-digits-every-one-correctly
 tan-arctan-x-x	\tan(\arctan(1))=1	\mathrm{True}
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2		
 compute-engine-s-arctan-takes-only-one-argument		
+arctan-complexinfinity-is-indeterminate-z-re-i		
 the-horizontal-asymptote-as-x-to-infty		
 and-as-x-to-infty		
 euler-s-machin-like-identity-arctan-frac-12		

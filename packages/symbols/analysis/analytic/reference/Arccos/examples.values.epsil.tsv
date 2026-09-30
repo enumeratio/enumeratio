@@ -16,6 +16,9 @@ uncertainty-propagation-arccos-0-9-pm-0-1-approx	arccos(Around(0.9, 0.1))	Around
 derivative-frac-1-sqrt-1-x-2	D(arccos(x), x)	-1 / sqrt(-x ^ 2 + 1)
 antiderivative	integrate(arccos(x), x)	x * arccos(x) - sqrt(-x ^ 2 + 1)
 not-simply-4-4-is-outside-the-principal-range-0	arccos(cos(4))	-4 + 2Pi
+arccos-infinity-is-a-directed-infinity-along-the	arccos(positiveInfinity)	DirectedInfinity(i)
+arccos-infinity-is-the-opposite-directed	arccos(negativeInfinity)	DirectedInfinity(-i)
 cos-arccos-x-x-on-the-principal-branch	cos(arccos(1 / 2)) == 1 / 2	True
 reflection-arccos-x-pi-arccos-x	arccos(-x)	-arccos(x) + pi
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	arccos(2)	arccos(2)
+arccos-complexinfinity-is-indeterminate-for-the	arccos(complexInfinity)	Indeterminate

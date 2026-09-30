@@ -23,3 +23,4 @@ derivative-csc-x-cot-x	D(csc(x), x)	-(csc(x) * cot(x))
 antiderivative-ln-csc-x-cot-x	integrate(csc(x), x)	-ln(abs(csc(x) + cot(x)))
 reciprocal-of-sin-csc-x-frac-1-sin-x	csc(pi / 6) == 1 / sin(pi / 6)	True
 a-pole-sin-0-0	csc(0)	complexInfinity
+csc-complexinfinity-is-indeterminate-for-the	csc(complexInfinity)	Indeterminate

@@ -29,6 +29,7 @@ an-integer-power-negative-argument	log(-2)	I*pi + log(2)
 n-of-a-negative-integer-argument	N(log(-2))	0.693147180559945 + 3.14159265358979*I	
 ln-neg-6	log(-6)	I*pi + log(6)	
 n-of-a-negative-rational-argument	N(log((-1/2)))	-0.693147180559945 + 3.14159265358979*I	
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
 inverse-of-exp-ln-e-x-x	bool(log(exp(5)) == 5)	True	
 product-rule-ln-ab-ln-a-ln-b	bool((log(2) + log(3)) == log(6))	False	disagree
 powerexpand-splits-a-logarithm-of-a-product			

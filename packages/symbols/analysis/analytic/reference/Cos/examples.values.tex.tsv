@@ -45,4 +45,5 @@ power-reduction-cos-2-x-frac-1-cos-2x-2	\mathrm{TrigReduce}(\cos(x)^2)	\frac{\co
 euler-s-formula-cos-x-frac-e-ix-e-ix-2	\mathrm{TrigToExp}(\cos(x))	\frac{1}{2}(\exp(i x)+\exp(-i x))
 as-with-sin-a-non-special-numeric-argument-stays	\cos(2)	\cos(2)
 pi-24-is-past-the-automatic-special-angle-table	\cos(\frac{\pi}{24})	\cos(\frac{\pi}{24})
+cos-complexinfinity-is-indeterminate-for-the	\cos(\tilde\infty)	\operatorname{Indeterminate}
 cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	\cos(\frac{\pi}{5})	\frac{1}{4}+\frac{\sqrt{5}}{4}

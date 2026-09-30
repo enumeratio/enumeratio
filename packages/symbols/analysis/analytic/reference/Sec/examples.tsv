@@ -25,3 +25,4 @@ antiderivative-ln-sec-x-tan-x	Scope		[Integrate, [Sec, x], x]	[Ln, [Abs, [Add, [
 reciprocal-of-cos-sec-x-frac-1-cos-x	Properties		[Equal, [Sec, [Divide, Pi, 3]], [Divide, 1, [Cos, [Divide, Pi, 3]]]]	True			Reciprocal of [[Cos]]: $\sec(x) = \frac{1}{\cos(x)}$		
 pythagorean-identity-1-tan-2-x-sec-2-x	Properties		[Equal, [Add, 1, [Power, [Tan, [Divide, Pi, 6]], 2]], [Power, [Sec, [Divide, Pi, 6]], 2]]	True			Pythagorean identity: $1 + \tan^2 x = \sec^2 x$		
 a-pole-cos-pi-2-0	Possible issues		[Sec, [Divide, Pi, 2]]	ComplexInfinity			A pole: $\cos(\pi/2) = 0$		
+sec-complexinfinity-is-indeterminate-for-the	Possible issues		[Sec, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.14.10	Sec(ComplexInfinity) is Indeterminate, for the same recurring poles as Tan		

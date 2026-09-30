@@ -16,6 +16,9 @@ uncertainty-propagation-arccos-0-9-pm-0-1-approx	\arccos(\mathrm{Around}(0.9, 0.
 derivative-frac-1-sqrt-1-x-2	\frac{\mathrm{d}\arccos(x)}{\mathrm{d}x}	-\frac{1}{\sqrt{1-x^2}}
 antiderivative	\int\!\arccos(x)\, \mathrm{d}x	x\arccos(x)-\sqrt{1-x^2}
 not-simply-4-4-is-outside-the-principal-range-0	\arccos(\cos(4))	2\pi-4
+arccos-infinity-is-a-directed-infinity-along-the	\arccos(\infty)	\mathrm{DirectedInfinity}(i)
+arccos-infinity-is-the-opposite-directed	\arccos(-\infty)	\mathrm{DirectedInfinity}(-i)
 cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\top
 reflection-arccos-x-pi-arccos-x	\arccos(-x)	\pi-\arccos(x)
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	\arccos(2)	\arccos(2)
+arccos-complexinfinity-is-indeterminate-for-the	\arccos(\tilde\infty)	\operatorname{Indeterminate}

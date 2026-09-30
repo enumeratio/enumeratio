@@ -25,3 +25,4 @@ reciprocal-of-tan-cot-x-frac-1-tan-x	Properties		[Equal, [Cot, [Divide, Pi, 4]],
 pythagorean-identity-1-cot-2-x-csc-2-x	Properties		[Equal, [Add, 1, [Power, [Cot, [Divide, Pi, 6]], 2]], [Power, [Csc, [Divide, Pi, 6]], 2]]	True			Pythagorean identity: $1 + \cot^2 x = \csc^2 x$		
 a-pole-sin-0-0	Possible issues		[Cot, 0]	ComplexInfinity			A pole: $\sin(0) = 0$		
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Possible issues		[Cot, [Divide, Pi, 2]]	0			Not a pole here -- [[Tan]]'s pole at $\pi/2$ is [[Cot]]'s zero instead		
+cot-complexinfinity-is-indeterminate-for-the	Possible issues		[Cot, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.14.10	Cot(ComplexInfinity) is Indeterminate, for the same recurring poles as Tan		

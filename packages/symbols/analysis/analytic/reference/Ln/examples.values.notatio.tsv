@@ -29,6 +29,7 @@ an-integer-power-negative-argument	<Ln>-2</Ln>	<Add><Multiply><Complex>0 1</Comp
 n-of-a-negative-integer-argument	<N><Ln>-2</Ln> 10</N>	<Complex>0.6931471806 3.141592654</Complex>
 ln-neg-6	<Ln>-6</Ln>	<Add><Multiply><Complex>0 1</Complex> Pi</Multiply> <Ln>6</Ln></Add>
 n-of-a-negative-rational-argument	<N><Ln><Rational>-1 2</Rational></Ln></N>	<Complex>-0.6931471805599453 3.141592653589793</Complex>
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	<Ln>NegativeInfinity</Ln>	<PositiveInfinity />
 inverse-of-exp-ln-e-x-x	<Equal><Ln><Exp>5</Exp></Ln> 5</Equal>	<True />
 product-rule-ln-ab-ln-a-ln-b	<Equal><Add><Ln>2</Ln> <Ln>3</Ln></Add> <Ln>6</Ln></Equal>	<True />
 powerexpand-splits-a-logarithm-of-a-product	<PowerExpand><Ln><Multiply>x y</Multiply></Ln></PowerExpand>	<Add><Ln>x</Ln> <Ln>y</Ln></Add>

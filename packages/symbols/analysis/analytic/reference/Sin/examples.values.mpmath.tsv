@@ -66,5 +66,6 @@ sin-x-plus-y-stays-symbolic
 pi-15-has-a-radical-form-but-like-wolfram-s		
 a-huge-exact-argument-is-reduced-modulo-2-pi	(sin(((10)**20)))	-0.645251285265780844205811711313
 an-even-huger-argument-11-38	(sin(((11)**38)))	0.867534193184863032081750429728
+sin-complexinfinity-is-indeterminate-off-the		
 the-special-angle-table-reaches-past-30-45-60		
 functionexpand-gives-the-nested-radical-form		

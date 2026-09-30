@@ -25,3 +25,4 @@ reciprocal-of-tan-cot-x-frac-1-tan-x	cot(pi / 4) == 1 / tan(pi / 4)	True
 pythagorean-identity-1-cot-2-x-csc-2-x	1 + cot(pi / 6) ^ 2 == csc(pi / 6) ^ 2	True
 a-pole-sin-0-0	cot(0)	complexInfinity
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	cot(pi / 2)	0
+cot-complexinfinity-is-indeterminate-for-the	cot(complexInfinity)	Indeterminate

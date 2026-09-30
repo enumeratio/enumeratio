@@ -10,3 +10,4 @@ derivative-frac-1-1-x-2	D[Subtract[Divide[Pi, 2], ArcTan[x]], x]	[D, [Subtract, 
 arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored	Subtract[Divide[Pi, 2], ArcTan[Minus[Sqrt[3]]]]	[Subtract, [Divide, Pi, 2], [Arctan, [Negate, [Sqrt, 3]]]]
 undoes-cot-cot-arccot-x-x	Equal[Cot[Subtract[Divide[Pi, 2], ArcTan[1]]], 1]	[Equal, [Cot, [Subtract, [Divide, Pi, 2], [Arctan, 1]]], 1]
 a-generic-rational-with-no-exact-fold-stays	Subtract[Divide[Pi, 2], ArcTan[2]]	[Subtract, [Divide, Pi, 2], [Arctan, 2]]
+arccot-complexinfinity-is-indeterminate-by	Subtract[Divide[Pi, 2], ArcTan[ComplexInfinity]]	[Subtract, [Divide, Pi, 2], [Arctan, ComplexInfinity]]

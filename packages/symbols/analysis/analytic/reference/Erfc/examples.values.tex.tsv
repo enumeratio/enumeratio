@@ -17,4 +17,5 @@ frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{\mathrm{d}\mathrm{Erfc}(x)}{\mathrm{
 an-exact-integer-argument-is-left-unevaluated	\mathrm{Erfc}(1)	\mathrm{Erfc}(1)
 far-in-the-tail-erfc-keeps-full-relative	\mathrm{Erfc}(9.5)	3.769\,214\,485\,654\,879\,941\,68\cdot10^{-41}
 whereas-1-erf-9-5-cancels-to-exactly-0-in	1-\operatorname{erf}(9.5)	0.0
+erfc-complexinfinity-is-indeterminate-inheriting	\mathrm{Erfc}(\tilde\infty)	\operatorname{Indeterminate}
 the-gaussian-tail-shrinks-fast-only-about-7	\mathrm{Erfc}(3.5)	0.000\,000\,743\,098\,372\,341\,412\,745\,524

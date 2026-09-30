@@ -29,6 +29,7 @@ an-integer-power-negative-argument	ln(-2)	i * pi + ln(2)
 n-of-a-negative-integer-argument	N(ln(-2), 10)	0.693_147_180_6 + 3.141_592_654i
 ln-neg-6	ln(-6)	i * pi + ln(6)
 n-of-a-negative-rational-argument	N(ln(-1 / 2))	-0.693_147_180_559_945_3 + 3.141_592_653_589_793i
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	ln(negativeInfinity)	positiveInfinity
 inverse-of-exp-ln-e-x-x	ln(exp(5)) == 5	True
 product-rule-ln-ab-ln-a-ln-b	ln(2) + ln(3) == ln(6)	True
 powerexpand-splits-a-logarithm-of-a-product	PowerExpand(ln(x * y))	ln(x) + ln(y)

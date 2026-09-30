@@ -41,3 +41,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	<Tan><Divide>Pi 2</Divide></Tan>	<Comple
 same-rule-as-sin-and-cos-a-non-special-numeric	<Tan>1</Tan>	<Tan>1</Tan>
 a-pole-at-negative-pi-over-2-too	<Tan><Divide>Pi -2</Divide></Tan>	<ComplexInfinity />
 a-pole-reached-through-periodicity-unreduced	<Tan><Add><Divide>Pi -2</Divide> Pi</Add></Tan>	<ComplexInfinity />
+tan-complexinfinity-is-indeterminate-poles-recur	<Tan>ComplexInfinity</Tan>	<Indeterminate />

@@ -16,6 +16,9 @@ uncertainty-propagation-arccos-0-9-pm-0-1-approx	<Arccos><Around>0.9 0.1</Around
 derivative-frac-1-sqrt-1-x-2	<D><Arccos>x</Arccos> x</D>	<Divide>-1 <Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Divide>
 antiderivative	<Integrate><Arccos>x</Arccos> x</Integrate>	<Add><Multiply>x <Arccos>x</Arccos></Multiply> <Negate><Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Negate></Add>
 not-simply-4-4-is-outside-the-principal-range-0	<Arccos><Cos>4</Cos></Arccos>	<Add>-4 <Multiply>2 Pi</Multiply></Add>
+arccos-infinity-is-a-directed-infinity-along-the	<Arccos>PositiveInfinity</Arccos>	<DirectedInfinity><Complex>0 1</Complex></DirectedInfinity>
+arccos-infinity-is-the-opposite-directed	<Arccos>NegativeInfinity</Arccos>	<DirectedInfinity><Complex>0 -1</Complex></DirectedInfinity>
 cos-arccos-x-x-on-the-principal-branch	<Equal><Cos><Arccos><Rational>1 2</Rational></Arccos></Cos> <Rational>1 2</Rational></Equal>	<True />
 reflection-arccos-x-pi-arccos-x	<Arccos><Negate>x</Negate></Arccos>	<Add><Negate><Arccos>x</Arccos></Negate> Pi</Add>
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	<Arccos>2</Arccos>	<Arccos>2</Arccos>
+arccos-complexinfinity-is-indeterminate-for-the	<Arccos>ComplexInfinity</Arccos>	<Indeterminate />

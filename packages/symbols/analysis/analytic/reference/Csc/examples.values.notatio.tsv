@@ -23,3 +23,4 @@ derivative-csc-x-cot-x	<D><Csc>x</Csc> x</D>	<Negate><Multiply><Csc>x</Csc> <Cot
 antiderivative-ln-csc-x-cot-x	<Integrate><Csc>x</Csc> x</Integrate>	<Negate><Ln><Abs><Add><Csc>x</Csc> <Cot>x</Cot></Add></Abs></Ln></Negate>
 reciprocal-of-sin-csc-x-frac-1-sin-x	<Equal><Csc><Divide>Pi 6</Divide></Csc> <Divide>1 <Sin><Divide>Pi 6</Divide></Sin></Divide></Equal>	<True />
 a-pole-sin-0-0	<Csc>0</Csc>	<ComplexInfinity />
+csc-complexinfinity-is-indeterminate-for-the	<Csc>ComplexInfinity</Csc>	<Indeterminate />
