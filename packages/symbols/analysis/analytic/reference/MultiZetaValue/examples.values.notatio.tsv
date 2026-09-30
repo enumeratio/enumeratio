@@ -1,11 +1,11 @@
 id	in	out
 zeta-2-2-frac-34-zeta-4	<N><MultiZetaValue>2 2</MultiZetaValue></N>	<ToExpression>0.8117424252833536</ToExpression>
 zeta-3-3-frac-12-zeta-3-2-zeta-6	<N><MultiZetaValue>3 3</MultiZetaValue></N>	<ToExpression>0.2137988682245925</ToExpression>
-zeta-2-3	<N><MultiZetaValue>2 3</MultiZetaValue></N>	<ToExpression>0.711566197550413</ToExpression>
-zeta-3-2	<N><MultiZetaValue>3 2</MultiZetaValue></N>	<ToExpression>0.2288103976028497</ToExpression>
-zeta-4-2	<N><MultiZetaValue>4 2</MultiZetaValue></N>	<ToExpression>0.08848338245475296</ToExpression>
-zeta-2-4	<N><MultiZetaValue>2 4</MultiZetaValue></N>	<ToExpression>0.674523914033936</ToExpression>
-zeta-5-2	<N><MultiZetaValue>5 2</MultiZetaValue></N>	<ToExpression>0.038575124342795405</ToExpression>
-zeta-3-4	<N><MultiZetaValue>3 4</MultiZetaValue></N>	<ToExpression>0.20750501461558057</ToExpression>
+zeta-2-3	<N><MultiZetaValue>2 3</MultiZetaValue></N>	<ToExpression>0.7115661975505727</ToExpression>
+zeta-3-2	<N><MultiZetaValue>3 2</MultiZetaValue></N>	<ToExpression>0.22881039760335486</ToExpression>
+zeta-4-2	<N><MultiZetaValue>4 2</MultiZetaValue></N>	<ToExpression>0.08848338245436914</ToExpression>
+zeta-2-4	<N><MultiZetaValue>2 4</MultiZetaValue></N>	<ToExpression>0.6745239140339683</ToExpression>
+zeta-5-2	<N><MultiZetaValue>5 2</MultiZetaValue></N>	<ToExpression>0.03857512434275102</ToExpression>
+zeta-3-4	<N><MultiZetaValue>3 4</MultiZetaValue></N>	<ToExpression>0.20750501461573193</ToExpression>
 zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	<Chop><Subtract><N><MultiZetaValue>2 2</MultiZetaValue></N> <Multiply>0.75 <N><Zeta>4</Zeta></N></Multiply></Subtract></Chop>	<ToExpression>0.0</ToExpression>
 s-1-2-stays-symbolic-outside-the-depth-2-both	<MultiZetaValue>1 2</MultiZetaValue>	<MultiZetaValue>1 2</MultiZetaValue>

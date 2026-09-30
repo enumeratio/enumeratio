@@ -13,7 +13,7 @@ import {
   sub,
   hurwitzZeta,
   logGamma,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // The Keiper–Li coefficients λₙ (Fungrim, "riemann_zeta" topic; Keiper 1992). Fungrim
 // states two closed forms — λ₀ = 0 and λ₁ = 1 + γ/2 − ½ln(4π) — plus the general

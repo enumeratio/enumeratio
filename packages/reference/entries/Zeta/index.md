@@ -7,7 +7,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/hurwitz-zeta.ts
+    source: packages/ce-patches/src/compute-engine/numerics/hurwitz-zeta.ts
     note: Riemann ζ is the m = 1 case of the Hurwitz implementation.
   - origin: compiled
     form: wgsl

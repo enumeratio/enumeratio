@@ -43,7 +43,7 @@ export interface WorkspacePackage {
 }
 
 // The workspace globs, less web/ itself.
-const packageGlobs = ["packages/*", "packages/symbols/*/*", "tools/*", "upstream/*"];
+const packageGlobs = ["packages/*", "packages/symbols/*/*", "tools/*"];
 
 /** The /docs groups, in page order. The symbol packages go by their `symbols/<group>` folder. */
 export const groups = [

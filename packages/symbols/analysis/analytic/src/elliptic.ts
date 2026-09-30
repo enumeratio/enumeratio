@@ -12,7 +12,7 @@ import {
   mul,
   scale,
   sub,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 
 // The incomplete Legendre elliptic integrals, and one precision fix for the native

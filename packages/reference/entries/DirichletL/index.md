@@ -22,7 +22,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/dirichlet-l.ts
+    source: packages/ce-patches/src/compute-engine/numerics/dirichlet-l.ts
   - origin: mapped
     form: wolfram / mpmath
     environment: external

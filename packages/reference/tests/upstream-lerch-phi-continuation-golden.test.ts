@@ -1,14 +1,14 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { type Cx, applyAllPatches, cx, lerchContinued } from "@enumeratio/for-compute-engine/src";
+import { type Cx, applyAllPatches, cx, lerchContinued } from "@enumeratio/ce-patches/src";
 
 // The full oracle comparison for LerchPhi past |z| = 1, via the Hermite-type integral in
 // numerics/lerch-phi-continuation.ts -- mpmath.lerchphi at 30 digits
 // (golden/upstream/lerch-continuation.golden.json), checked against the internal
 // `lerchContinued` kernel directly. A curated handful of these points (plus the branch-cut
 // and closed-form checks) lives beside the code, in
-// upstream/compute-engine/tests/lerch-phi-continuation.test.ts.
+// packages/ce-patches/tests/lerch-phi-continuation.test.ts.
 //
 // Several rows are marked `declines: true` -- their x = -log(z)·(shifted a) sits where
 // compute-engine's Gamma(s, x) has lost too many digits to trust (Re(x) < 0, |x| > 2.5).

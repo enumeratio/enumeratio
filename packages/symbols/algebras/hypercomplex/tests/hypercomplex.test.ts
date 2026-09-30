@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
-import { FAMILIES, generatorOf } from "../src/units.ts";
+import { FAMILIES, GENERATOR_SYMBOLS, generatorOf } from "../src/units.ts";
 
 const ce = new ComputeEngine();
 declareHypercomplex(ce);
@@ -252,4 +252,14 @@ test("the blade product is associative across mixed families", () => {
 test("a unit under an opaque head stays symbolic", () => {
   expect(ce.parse("\\sin(i_1)").evaluate().operator).toBe("Sin");
   expect(ce.box(["Power", "i_1", "n"]).evaluate().operator).toBe("Power");
+});
+
+test("GENERATOR_SYMBOLS matches every generator's name, and ordinary subscripted variables don't", () => {
+  // The resolver loads this package only for an expression naming a symbol it matches.
+  const matches = new RegExp(GENERATOR_SYMBOLS, "u");
+  for (const name of ["i_1", "j_2", "epsilon_3", "e_10", "f_1", "theta_2", "varepsilon_1", "vartheta_4"]) {
+    expect(generatorOf(name)).toBeDefined();
+    expect(matches.test(name)).toBe(true);
+  }
+  for (const name of ["x_1", "a_2", "e", "i", "ExponentialE"]) expect(matches.test(name)).toBe(false);
 });

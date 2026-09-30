@@ -70,11 +70,15 @@ so a page reads the same on GitHub and on the site.
 ## Upstream candidates
 
 - A head or fix compute-engine would plausibly take (Wolfram or mpmath has it, or it fixes or
-  widens a native head) is written in `upstream/compute-engine/` as a patch, not in a symbol
+  widens a native head) is written in `packages/ce-patches/` as a patch, not in a symbol
   package, even before anything is proposed upstream. Its code is laid out as in
-  compute-engine (`src/compute-engine/{numerics,library,compilation}`); its reference entries
-  live in `packages/reference/entries/` and never go upstream. See the wiki's
-  [Upstreaming](https://github.com/enumeratio/enumeratio/wiki/Upstreaming) §10.
+  compute-engine (`src/compute-engine/{numerics,library,compilation}`).
+- A patch applies at run time and is retired once `tests/landed.test.ts` says compute-engine
+  ships it natively. Some patches may never land upstream and just stay ours.
+- `~/Playground/@enumeratio/compute-engine` is the local compute-engine branch: it holds only
+  commits for PRs we've sent that aren't merged yet.
+- A patch's reference entries live in `packages/reference/entries/` and never go upstream. See the
+  wiki's [Upstreaming](https://github.com/enumeratio/enumeratio/wiki/Upstreaming) §10.
 
 ## Reference entries
 
@@ -125,8 +129,8 @@ so a page reads the same on GitHub and on the site.
   isn't set up under `vp run`.
 - **Cross-check the routes.** Where a fix can differ by route, the same inputs go through
   `evaluate()`, `.N()`, the parse route and the compiled code, and agree.
-- **Patches in `upstream/` test the way their upstream does**, snapshots included, so a test
-  can go upstream with its code.
+- **Patches in `packages/ce-patches/` test the way their upstream does**, snapshots included, so
+  a test can go upstream with its code.
 - **Long sweeps run nightly; the standard run stays fast.** A test that samples or enumerates
   takes a small budget by default and its full one under `DEEP_TESTS=1`, which `nightly.yml`'s
   `deep-tests` job sets (give the package a filter there). Keep the important cases in the

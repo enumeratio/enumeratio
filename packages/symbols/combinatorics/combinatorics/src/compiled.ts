@@ -10,6 +10,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compileTyped,
   definitionHash,
+  inlineCalls,
   fromJs,
   type GeneratedRun,
   isCacheableDefinition,
@@ -18,6 +19,7 @@ import {
   runtimeHelpers,
   toJs,
 } from "@enumeratio/engine/compiled";
+import { operationEpsil } from "@enumeratio/structures";
 
 export { compileTyped, freshen, fromJs, toJs } from "@enumeratio/engine/compiled";
 
@@ -58,10 +60,13 @@ export function fastDefinition(options: {
       };
     }
     if (from === undefined || to === undefined) return null;
-    const main = compileTyped(ce, body, { _raw: from });
+    // Calls to our other definitions are expanded, so the compiler sees them too.
+    const expand = (expression: unknown): unknown =>
+      inlineCalls(expression, (carrier, head) => operationEpsil(ce, carrier, head));
+    const main = compileTyped(ce, expand(body), { _raw: from });
     if (main === undefined) return null;
     if (guard === undefined) return { body: main };
-    const check = compileTyped(ce, guard, { _raw: from, _image: to });
+    const check = compileTyped(ce, expand(guard), { _raw: from, _image: to });
     return check === undefined ? null : { body: main, guard: check };
   };
   const evaluate = (contents: unknown): MathJSON | undefined => {

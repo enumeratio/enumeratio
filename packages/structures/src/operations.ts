@@ -22,12 +22,28 @@ export interface Operation {
   readonly definition?: (subject: BoxedExpression) => BoxedExpression | undefined;
   /** A fast path, preferred when present; the definition then checks it. */
   readonly kernel?: (subject: BoxedExpression) => BoxedExpression | undefined;
+  /** The Epsil the definition evaluates, over `subject` (the placeholder for the carrier
+   *  value's contents), so a definition that calls this operation can be compiled through it.
+   *  `wrap` names the constructor a map's answer is wrapped in. Absent when the definition
+   *  isn't one closed expression (a map with a guard, or a composition). */
+  readonly epsil?: OperationEpsil;
+}
+
+export interface OperationEpsil {
+  readonly expression: unknown;
+  readonly subject: string;
+  readonly wrap?: string;
 }
 
 /** A minimal carrier registration: its constructor head (`Permutation`) and, when minted, its type (`permutation`). */
 export interface CarrierRegistration {
   readonly name: string;
   readonly type?: string;
+  /** How many leading slots of a packed multi-arg operand are params, not the element(s) --
+   *  see `Carrier.carrierParams` (`./carriers.ts`) for the full story. Undefined (not just 0)
+   *  when the owning `Carrier` record never declared one -- `allCarrierParams` only bakes in
+   *  carriers that did. */
+  readonly carrierParams?: number;
 }
 
 interface Entry {
@@ -36,6 +52,7 @@ interface Entry {
   type?: string;
   definition?: Operation["definition"];
   kernel?: Operation["kernel"];
+  epsil?: OperationEpsil;
 }
 
 interface Table {
@@ -174,6 +191,19 @@ export function allCarrierNames(ce: ComputeEngine): readonly string[] {
   return [...registryOf(ce).carriers.keys()];
 }
 
+/** Every carrier that declared a `carrierParams` count (`registerCarrier`/`declareCarriers`,
+ *  from the owning `Carrier` record's own field), by name — the oracle's generated data bakes
+ *  this in alongside `allCarrierNames`, so `emit`/`structural` can unwrap a packed multi-arg
+ *  operand by declared count instead of guessing from its shape. A carrier absent here packs
+ *  no leading params (the default, 0). */
+export function allCarrierParams(ce: ComputeEngine): ReadonlyMap<string, number> {
+  const map = new Map<string, number>();
+  for (const carrier of registryOf(ce).carriers.values()) {
+    if (carrier.carrierParams !== undefined) map.set(carrier.name, carrier.carrierParams);
+  }
+  return map;
+}
+
 /**
  * Add `operation` to `carrier`'s table for `head`. A kernel and a definition from different
  * packages meet in one entry; the same part twice is an `OperationCollisionError`.
@@ -191,6 +221,7 @@ export function registerOperation(ce: ComputeEngine, head: OperationHead, carrie
     entry[part] = operation[part];
   }
   if (operation.type !== undefined) entry.type = operation.type;
+  if (operation.epsil !== undefined) entry.epsil ??= operation.epsil;
 
   const byId = table.findstat.get(carrier) ?? new Map<string, Entry>();
   table.findstat.set(carrier, byId);
@@ -209,6 +240,15 @@ export function operationOf(
 ): Readonly<Entry> | undefined {
   const table = registryOf(ce).tables[head];
   return table.operations.get(carrier)?.get(key) ?? table.findstat.get(carrier)?.get(key);
+}
+
+/** The Epsil of the statistic or map `name` on `carrier`, for compiling a definition that calls
+ *  it (`inlineCalls` in @enumeratio/engine/compiled). */
+export function operationEpsil(ce: ComputeEngine, carrier: string, name: string): OperationEpsil | undefined {
+  return (
+    operationOf(ce, "CombinatorialStat", carrier, name)?.epsil ??
+    operationOf(ce, "CombinatorialMap", carrier, name)?.epsil
+  );
 }
 
 /** The carrier `subject` is a value of: its type matched as protocol dispatch matches it. */

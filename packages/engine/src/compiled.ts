@@ -46,7 +46,7 @@ export function fromJs(value: unknown): MathJSON | undefined {
 /** Every `Function`'s parameters renamed to fresh `_vN`, consistently within its body. The
  *  compiler's generated loops name their own variables (`i`, `_e`), and a parameter of ours with
  *  the same name is captured by them (cortex-js/compute-engine#367). Fresh names can't collide. */
-export function freshen(expression: unknown): unknown {
+export function freshen(expression: unknown, prefix = "_v"): unknown {
   let next = 0;
   const walk = (node: unknown, names: ReadonlyMap<string, string>): unknown => {
     if (typeof node === "string") return names.get(node) ?? node;
@@ -54,7 +54,7 @@ export function freshen(expression: unknown): unknown {
     if (node[0] === "Function" && node.length >= 2) {
       const params = node.slice(2).filter((p): p is string => typeof p === "string");
       const inner = new Map(names);
-      for (const param of params) inner.set(param, `_v${++next}`);
+      for (const param of params) inner.set(param, `${prefix}${++next}`);
       return ["Function", walk(node[1], inner), ...params.map((param) => inner.get(param)!)];
     }
     return node.map((child) => walk(child, names));
@@ -170,4 +170,44 @@ export function pureResult(hash: string, input: unknown, compute: () => MathJSON
   }
   results.set(key, answer ?? null);
   return answer;
+}
+
+/** The Epsil a call expands to, over `subject`; `wrap` names the constructor its answer wears. */
+export interface CallEpsil {
+  readonly expression: unknown;
+  readonly subject: string;
+  readonly wrap?: string;
+}
+
+/**
+ * `expression` with every call to one of our own definitions expanded into that definition, so
+ * the compiler sees only compute-engine heads and can optimise across the call. A call is
+ * `[head, [Carrier, contents]]`, a definition applied to a carrier value, and `lookup(carrier,
+ * head)` says what it expands to; the contents are substituted for its subject. Expansion
+ * recurses into what it produces, `depth` levels deep, which also stops a definition that calls
+ * itself.
+ */
+export function inlineCalls(
+  expression: unknown,
+  lookup: (carrier: string, head: string) => CallEpsil | undefined,
+  depth = 8,
+): unknown {
+  const substitute = (node: unknown, name: string, value: unknown): unknown =>
+    node === name ? value : Array.isArray(node) ? node.map((child) => substitute(child, name, value)) : node;
+  let expansions = 0;
+  const walk = (node: unknown, remaining: number): unknown => {
+    if (!Array.isArray(node)) return node;
+    const expanded = node.map((child) => walk(child, remaining));
+    const [head, argument] = expanded;
+    if (remaining === 0 || expanded.length !== 2 || typeof head !== "string") return expanded;
+    if (!Array.isArray(argument) || argument.length !== 2 || typeof argument[0] !== "string") return expanded;
+    const definition = lookup(argument[0], head);
+    if (definition === undefined) return expanded;
+    // The definition's own bound variables are renamed first, so the argument's free variables
+    // can't be captured by them.
+    const own = freshen(definition.expression, `_c${++expansions}_`);
+    const body = walk(substitute(own, definition.subject, argument[1]), remaining - 1);
+    return definition.wrap === undefined ? body : [definition.wrap, body];
+  };
+  return walk(expression, depth);
 }

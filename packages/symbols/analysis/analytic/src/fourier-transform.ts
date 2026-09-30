@@ -11,7 +11,7 @@ import {
   type BoxInput,
   isFiniteNum,
   numberResult,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // Fourier(list) / InverseFourier(list): the numeric discrete Fourier transform of a
 // list, or of a rectangular matrix (a 2D DFT is separable -- apply the 1D transform

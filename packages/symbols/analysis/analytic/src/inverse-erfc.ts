@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
-import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patches";
 
 // InverseErfc(s): compute-engine has no such head. Wolfram's InverseErf is native here as
 // `ErfInv` and accurate, but computing 1 − s as a plain double loses precision exactly where

@@ -24,7 +24,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/clausen.ts
+    source: packages/ce-patches/src/compute-engine/numerics/clausen.ts
   - origin: mapped
     form: wolfram
     template: ResourceFunction["ClausenCl"][$1, $2]

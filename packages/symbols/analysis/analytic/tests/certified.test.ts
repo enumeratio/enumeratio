@@ -13,7 +13,7 @@ import {
   rational,
   upper,
   atDigits,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 import { CERTIFIED_HEADS, enclosure } from "../src/certified.ts";
 import { declareAnalytic, enclosureOf } from "../src/index.ts";
 

@@ -13,11 +13,12 @@
 //   vp node packages/reference/scripts/collect-carrier-names.ts
 
 import { writeFormatted } from "@enumeratio/entry/node";
-import { allCarrierNames } from "@enumeratio/structures/src";
+import { allCarrierNames, allCarrierParams } from "@enumeratio/structures/src";
 import { declaredEngine } from "./engines.ts";
 
 const ce = declaredEngine();
 const names = [...allCarrierNames(ce)].toSorted();
+const params = [...allCarrierParams(ce)].toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
 
 await writeFormatted(
   new URL("../../oracle/src/carrier-names-data.ts", import.meta.url),
@@ -32,6 +33,13 @@ await writeFormatted(
 //   vp node packages/reference/scripts/collect-carrier-names.ts
 
 export const CARRIER_NAMES: ReadonlySet<string> = new Set(${JSON.stringify(names, null, 2)});
+
+// How many of a packed multi-arg operand's LEADING slots are params, not the element(s) --
+// \`@enumeratio/structures\`' \`allCarrierParams\`, from each carrier's own declared
+// \`carrierParams\` (TQ-5: replaces the old "every slot is a carrier call" heuristic). A carrier
+// absent here packs no leading params (0): its operand's slots, when there is more than one,
+// are all elements (e.g. StandardTableauPair's carrierElements).
+export const CARRIER_PARAMS: ReadonlyMap<string, number> = new Map(${JSON.stringify(params, null, 2)});
 `,
 );
 

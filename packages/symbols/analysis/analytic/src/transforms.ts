@@ -419,14 +419,18 @@ function matchInverseFourier(
   ce: ComputeEngine,
   expr: BoxedExpression,
   w: BoxedExpression,
-  _t: BoxedExpression,
+  t: BoxedExpression,
 ): BoxedExpression | undefined {
   const wName = symbolNameOf(w);
   if (wName === undefined) return undefined;
   if (expr.operator === "DiracDelta" && operandsOf(expr).length === 1 && isSym(opAt(expr, 0), wName)) {
     return ce.function("Divide", [ce.One, sqrt2pi(ce)]).evaluate();
   }
-  if (!hasVar(expr, wName)) return ce.function("Multiply", [expr, sqrt2pi(ce)]).evaluate();
+  // A w-free F is the transform of an impulse: matches matchFourier's constant case,
+  // mirrored (w ↔ t) -- confirmed against wolframscript.
+  if (!hasVar(expr, wName)) {
+    return ce.function("Multiply", [expr, sqrt2pi(ce), ce.function("DiracDelta", [t])]).evaluate();
+  }
   return undefined;
 }
 

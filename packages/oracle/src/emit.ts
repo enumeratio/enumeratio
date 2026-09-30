@@ -5,7 +5,7 @@
 // that counts those is a work queue rather than a verdict.
 
 import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
-import { CARRIER_NAMES } from "./carrier-names-data.ts";
+import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
@@ -217,24 +217,25 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // A family with `carrierParams` (e.g. `Tournament(n, edges)`) packs its leading params and
     // its element into that one operand as a `Tuple` — `n` has no counterpart in the systems
     // we oracle against (there's no bare `Tuple/2` mapping, and never will be: a fixed arity
-    // depends on which family built it), so unwrap ONE level further, to the Tuple's LAST
-    // element -- the element itself (`edges`), which every system already has a plain
-    // list/tuple encoding for. A single-param carrier's operand is never itself a multi-arg
-    // Tuple built this way, so this never fires for one.
+    // depends on which family built it), so unwrap ONE level further, past the carrier's own
+    // declared `carrierParams` count (`CARRIER_PARAMS`, TQ-5), to what's left -- the element
+    // itself (`edges`), which every system already has a plain list/tuple encoding for.
     //
     // A COMPOSITE carrier (`carrierElements`, e.g. `StandardTableauPair`) packs the same
-    // shape -- a multi-arg Tuple -- but every slot is itself a sub-carrier constructor call,
-    // not a leading param then the element. Discarding all but the last slot there would
-    // silently drop `P` and compare only `Q`. Distinguish by that: if every slot is a
-    // carrier call, the whole tuple carries meaning and walks like any other Tuple (missing,
-    // for a system with no bare-Tuple mapping, rather than a wrong answer).
+    // shape -- a multi-arg Tuple -- but declares no `carrierParams` (0 leading slots to drop),
+    // and more than one slot is left over: `P` and `Q`, both sub-carrier calls. Discarding all
+    // but the last there would silently drop `P`. Since 0 leading params leaves every slot
+    // in place, this falls out of the same rule rather than a separate "every slot is a
+    // carrier call" heuristic: what's left after dropping the declared count of leading
+    // params is either one element (unwrap to it) or several (the whole tuple carries
+    // meaning, missing for a system with no bare-Tuple mapping, rather than a wrong answer).
     if (CARRIER_NAMES.has(head) && operands.length === 1) {
       const contents = operands[0] as MathJSON;
       const packed = isCall(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
       if (packed === undefined) return walk(contents);
       const packedOperands = packed.slice(1);
-      if (packedOperands.every((op) => isCall(op) && CARRIER_NAMES.has(op[0] as string))) return walk(packed);
-      return walk(packedOperands[packedOperands.length - 1] as MathJSON);
+      const rest = packedOperands.slice(CARRIER_PARAMS.get(head) ?? 0);
+      return rest.length === 1 ? walk(rest[0] as MathJSON) : walk(["Tuple", ...rest] as MathJSON);
     }
     // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
     // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an

@@ -1,7 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { aroundResolvers, declareAround } from "./around.ts";
 import { centeredIntervalResolvers, declareCenteredInterval } from "./centered-interval.ts";
-import { expCombineResolvers, hasTwoExpPowers } from "./exp-combine.ts";
+import { expCombineResolvers, EXP_SYMBOLS, hasTwoExpPowers } from "./exp-combine.ts";
 import { intervalResolvers } from "./interval.ts";
 import { registerTaggedHeads } from "./tagged-arithmetic.ts";
 
@@ -75,7 +75,7 @@ export function declareTaggedArithmetic(ce: ComputeEngine): void {
       "LerchPhi",
       "Multinomial",
     ],
-    { Multiply: hasTwoExpPowers },
+    { Multiply: { gate: hasTwoExpPowers, symbols: EXP_SYMBOLS } },
     interval,
     centered,
     around,

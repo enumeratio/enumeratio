@@ -1,6 +1,6 @@
 import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/engine";
-import { type EvalOptions, wantsNumber, DOUBLE_DIGITS } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, wantsNumber, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
 
 // N(Sin(24^40)) used to come back as -0.0585563790319129867708 (Wolfram: 0.40008315271976604707).
 // The cause: to numerically evaluate a non-lazy call, compute-engine evaluates its operand with

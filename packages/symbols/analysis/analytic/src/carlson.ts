@@ -14,7 +14,7 @@ import {
   mul,
   scale,
   sub,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // Carlson symmetric elliptic integrals RF, RD, RJ, RC, RG (Carlson 1995, "Numerical
 // computation of real or complex elliptic integrals"; DLMF §19.16, §19.36). These are

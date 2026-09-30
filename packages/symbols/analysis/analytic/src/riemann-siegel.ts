@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt, wantsNumber, logGamma, zetaGeneralized } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isRealInt, wantsNumber, logGamma, zetaGeneralized } from "@enumeratio/ce-patches";
 
 // RiemannSiegelTheta(t), RiemannSiegelZ(t), and RiemannZetaZero(k) — reusing the
 // existing log-gamma continuation (loggamma.ts) and generalized zeta kernel

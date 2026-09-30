@@ -33,7 +33,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/barnes-g.ts
+    source: packages/ce-patches/src/compute-engine/numerics/barnes-g.ts
 seeAlso:
   - BarnesG
   - LogGamma

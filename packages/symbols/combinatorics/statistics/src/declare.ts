@@ -177,6 +177,7 @@ export function declareStatistics(
     registerOperation(ce, "CombinatorialStat", definition.on, {
       name: definition.head,
       findstat: findstatIds(definition),
+      epsil: { expression: definition.expr, subject: SUBJECT },
       definition: (subject) =>
         applyDefinition(
           ce,

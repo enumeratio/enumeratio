@@ -20,6 +20,8 @@ signatures:
     library: enumeratio-hypercomplex
     type: (value+) -> value
     overrides: enumeratio-analytic
+    symbols:
+      - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Add(value+) -> value
     description: Sum of two or more values.
     library: enumeratio-residues

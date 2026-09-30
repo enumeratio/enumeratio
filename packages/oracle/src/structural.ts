@@ -11,7 +11,7 @@
 // Reducing a leaf needs an evaluator, which is the caller's compute-engine; this module
 // stays engine-free so it can be tested on plain trees.
 
-import { CARRIER_NAMES } from "./carrier-names-data.ts";
+import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import type { MathJSON } from "./emit.ts";
 import type { Verdict } from "./compare.ts";
 
@@ -89,25 +89,22 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   //
   // A family with `carrierParams` (`Tournament(n, edges)`) packs its leading params and its
   // element into that one operand as a `Tuple`; `emit.ts` never hands the other system `n`
-  // (unwrapping to the Tuple's LAST element instead, since no system has a bare `Tuple/2`
-  // mapping), so this comparison has to reduce to that same last element or a genuine
-  // agreement would register as a shape mismatch (`[n, edges]` vs. the other system's bare
-  // `edges`).
+  // (unwrapping past the carrier's own declared `carrierParams` count, `CARRIER_PARAMS`,
+  // TQ-5), so this comparison has to reduce to that same remainder or a genuine agreement
+  // would register as a shape mismatch (`[n, edges]` vs. the other system's bare `edges`).
   //
   // A COMPOSITE carrier (`carrierElements`, e.g. `StandardTableauPair`) packs the same
-  // shape, but every slot is itself a sub-carrier call, not a leading param then the element
-  // -- reducing to only the last slot would compare `Q` alone and silently ignore `P`.
-  // Matched the same way `emit.ts` does: every slot a carrier call means the whole tuple
-  // carries meaning.
+  // shape, but declares no `carrierParams` (0 leading slots to drop) -- reducing to only the
+  // last slot would compare `Q` alone and silently ignore `P`. Falls out of the same rule as
+  // `emit.ts`: what's left after dropping the declared leading-param count is either one
+  // element (reduce to it) or the whole tuple, which carries meaning.
   if (Array.isArray(expr) && typeof expr[0] === "string" && CARRIER_NAMES.has(expr[0]) && expr.length === 2) {
     const contents = expr[1] as MathJSON;
     const packed = Array.isArray(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
     if (packed === undefined) return reduce(contents, evaluate);
     const packedOperands = packed.slice(1) as MathJSON[];
-    const composite = packedOperands.every(
-      (op) => Array.isArray(op) && typeof op[0] === "string" && CARRIER_NAMES.has(op[0]),
-    );
-    return reduce(composite ? packed : (packedOperands[packedOperands.length - 1] as MathJSON), evaluate);
+    const rest = packedOperands.slice(CARRIER_PARAMS.get(expr[0]) ?? 0);
+    return reduce(rest.length === 1 ? (rest[0] as MathJSON) : (["Tuple", ...rest] as MathJSON), evaluate);
   }
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an

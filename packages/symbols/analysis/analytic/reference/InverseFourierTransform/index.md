@@ -2,7 +2,7 @@
 name: InverseFourierTransform
 domain: Transforms
 signature: InverseFourierTransform(F, w, t)
-summary: The inverse Fourier transform under Wolfram's default convention — the two closed forms it documents unconditionally ($\delta(w) \to 1/\sqrt{2\pi}$ and a constant $\to$ a scaled constant), nothing more.
+summary: The inverse Fourier transform under Wolfram's default convention — the two closed forms it documents unconditionally ($\delta(w) \to 1/\sqrt{2\pi}$ and a constant $\to$ a scaled $\delta(t)$), nothing more.
 signatures:
   - call: InverseFourierTransform(F, w, t)
     description: $f(t)$ such that $\mathcal{F}\{f\}(w) = F(w)$, for the two forms below.
@@ -21,5 +21,5 @@ names:
   wolframIdentity: true
 ---
 
-- Covered: `DiracDelta(w)` $\to 1/\sqrt{2\pi}$, and a `w`-free constant $c \to c\sqrt{2\pi}$ (the inverse of `FourierTransform`'s own constant rule).
+- Covered: `DiracDelta(w)` $\to 1/\sqrt{2\pi}$, and a `w`-free constant $c \to c\sqrt{2\pi}\,\delta(t)$ (the inverse of `FourierTransform`'s own constant rule).
 - Declined: everything else — no rational-function or trig table the way `InverseLaplaceTransform` has one, since the corresponding `FourierTransform` images are themselves distributional (a sum of `DiracDelta`s) rather than an algebraic shape to invert termwise here.

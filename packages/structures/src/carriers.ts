@@ -40,6 +40,14 @@ export interface Carrier {
   readonly restricts?: string;
   /** The membership predicate, as a head taking a value of the parent carrier. */
   readonly predicate?: string;
+  /** How many of a packed multi-arg operand's LEADING slots are params, not the element(s) --
+   *  the same count a family with this carrier declares as its own `carrierParams`
+   *  (`@enumeratio/combinatorics/collections`'s `families/declare.ts`, e.g. `Tournament(n,
+   *  edges)`: `carrierParams: 1` for `n`). Default 0: no leading params, the operand's slots
+   *  (one or more) are all element(s). The oracle's `emit`/`structural` (packages/oracle) read
+   *  this to unwrap a packed `Tuple` operand to the system-comparable part, rather than
+   *  guessing from whether every slot happens to be a carrier call. */
+  readonly carrierParams?: number;
 }
 
 /**
@@ -85,7 +93,12 @@ export function declareCarriers(
 
   for (const carrier of ordered) ce.declareType(carrier.type, carrier.shape, { mint: true });
   for (const carrier of ordered) declareConstructor(ce, carrier);
-  for (const carrier of ordered) registerCarrier(ce, { name: carrier.name, type: carrier.type });
+  for (const carrier of ordered)
+    registerCarrier(ce, {
+      name: carrier.name,
+      type: carrier.type,
+      ...(carrier.carrierParams === undefined ? {} : { carrierParams: carrier.carrierParams }),
+    });
 
   if (options?.plurals !== false) {
     declareCarrierPlurals(ce, ordered);

@@ -1,14 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import {
-  type EvalOptions,
-  isFiniteNum,
-  numberResult,
-  wantsNumber,
-  add,
-  cx,
-  type Cx,
-} from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isFiniteNum, numberResult, wantsNumber, add, cx, type Cx } from "@enumeratio/ce-patches";
 import { meijerGSeriesBig } from "./meijer-g-big.ts";
 
 // MeijerG[{{a1,…,an},{a(n+1),…,ap}}, {{b1,…,bm},{b(m+1),…,bq}}, z]: numeric evaluation

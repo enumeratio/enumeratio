@@ -1,6 +1,6 @@
 import { BigDecimal } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { barnesGBig, lerchPhiBig, stieltjesGammaBig } from "@enumeratio/for-compute-engine";
+import { barnesGBig, lerchPhiBig, stieltjesGammaBig } from "@enumeratio/ce-patches";
 
 // The arbitrary-precision kernels behind LerchPhi, PolyLog, BarnesG and StieltjesGamma, each
 // against mpmath at 60 digits (mp.dps = 60; decimal arguments given to mpmath as strings, so
