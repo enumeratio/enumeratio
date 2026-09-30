@@ -287,13 +287,18 @@ export function declareNumerals(ce: ComputeEngine): void {
   extend("IntegerDigits", ["IntegerDigits", 10, 2], "(integer, any?, integer?) -> list<integer>", (ops, system) => {
     const n = integerAt(ops[0]);
     if (n === undefined) return undefined;
-    const digits = system.toDigits(n);
+    const raw = system.toDigits(n);
     // No numeral for this integer in this system — decline, and say which ones have one.
-    if (digits === undefined) {
+    if (raw === undefined) {
       const hint = `${formatArgument(ops[1])} spells ${rangeText(system.shape.range)}.`;
       emit(ce, "IntegerDigits", "nonum", [n, ops[1]], hint);
       return undefined;
     }
+    // A system whose leading place is a standing overflow slot (MixedRadixNumerals) hides
+    // it when nothing overflowed, same as native IntegerDigits drops any other leading zero
+    // (IntegerDigits(571, MixedRadix({12, 9, 6})) has 3 digits, not 4) — every other system's
+    // width is fixed and its leading zeros are part of the numeral (AdicNumerals' padding).
+    const digits = system.leadingPlaceIsOverflow && raw.length > 1 && raw[0] === 0 ? raw.slice(1) : raw;
     // The third operand pads on the left, as it does natively. It is what makes the
     // factoradic digits of n line up with the Lehmer code of the n-th permutation of
     // a FIXED size: the code needs one digit per position, leading zeros included.
@@ -604,16 +609,37 @@ export function declareNumerals(ce: ComputeEngine): void {
   });
 
   ce.declare("IntegerReverse", {
-    signature: "(integer, integer?, integer?) -> integer",
-    broadcastable: true,
+    signature: "(integer, any?, integer?) -> integer",
     evaluate: (ops: readonly BoxedExpression[]) => {
-      const n = bigIntegerAt(ops[0]);
+      const n = integerAt(ops[0]);
+      // A numeral system in the base slot (MixedRadix, FactorialNumerals, …): reverse its
+      // digit string and read it back, same as the plain-base path does for base 10.
+      const system = ops[1] === undefined ? undefined : systemOf(ops[1]);
+      if (system !== undefined) {
+        if (n === undefined) return undefined;
+        const digits = system.toDigits(n);
+        if (digits === undefined) return undefined;
+        const reversed = digits.toReversed();
+        const strict = system.fromDigits(reversed);
+        if (strict !== undefined) return ce.number(strict);
+        // Reversed digits can land outside their new place's bound -- an asymmetric system
+        // like MixedRadixNumerals(24, 60, 60) has no digit string for {4, 3, 2, 1} even
+        // though {1, 2, 3, 4} is its own. Wolfram still answers: recover each place's
+        // weight from `fromDigits` on a one-hot digit string (valid for every positional
+        // system here — the bound only ever binds the DIGIT, never a lone 1 there) and sum
+        // reversed digit × weight directly, skipping the canonical-numeral bound check.
+        const weights = digits.map((_, i) => system.fromDigits(digits.map((_, j) => (j === i ? 1 : 0))));
+        if (weights.some((w) => w === undefined)) return undefined;
+        const value = reversed.reduce((acc, d, i) => acc + d * (weights[i] as number), 0);
+        return ce.number(value);
+      }
+      const bn = bigIntegerAt(ops[0]);
       const base = baseArg(ops[1]);
       const width = ops[2] === undefined ? undefined : integerAt(ops[2]);
-      if (n === undefined || base < 2n || (ops[2] !== undefined && width === undefined)) {
+      if (bn === undefined || base < 2n || (ops[2] !== undefined && width === undefined)) {
         return undefined;
       }
-      return ce.number(integerReverse(n, base, width));
+      return ce.number(integerReverse(bn, base, width));
     },
   });
 

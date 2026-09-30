@@ -10,13 +10,32 @@ import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } fro
 // that definition in place rather than redeclaring it, per the rule for a head CE already
 // has under the same name.
 
+/** Compute-engine answers a handful of heads (`Most`, `Rest`, `Take`, `Drop`, `Range`, …)
+ *  entirely through the operator's lazy COLLECTION protocol, never through a value-returning
+ *  `evaluate` — `.json` on the result of `Most(list).evaluate()` is still the unevaluated
+ *  `Most(list)` call, even though it iterates, counts and prints correctly on its own.
+ *  Reusing such a result as an operand of a NEW `ce.function`/`ce.box` call (exactly what
+ *  `nestValue`/`nestListValues` below do, feeding one step's answer into the next, or into
+ *  the accumulated `List`) rebuilds from that stale `.json` and reverts it right back to the
+ *  unevaluated call. Forcing materialization here is the fix — bounded by the collection's
+ *  own count so a small, known-size intermediate (an `n`-step Nest never produces more than
+ *  a handful) never falls back to the elided ten-then-placeholder display form. */
+const MATERIALIZE_LIMIT = 10_000;
+function materialize(result: BoxedExpression): BoxedExpression {
+  if (!result.isLazyCollection) return result;
+  const count = result.count;
+  const budget =
+    count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT ? Math.max(count, 1) : true;
+  return result.evaluate({ materialization: budget } as never);
+}
+
 /** `f(args...)`, via compute-engine's own `Apply` head — which, unlike Wolfram's `Apply`,
  *  treats every trailing operand as its own positional argument rather than unpacking a
  *  single list: `Apply(f, a, b)` is `f(a, b)`, not `f @@ {a, b}`. Works for an undeclared
  *  symbol `f` too (stays an unevaluated call), a `Function` literal, or anything else
  *  `Apply` already knows how to invoke. */
 const applyFn = (ce: ComputeEngine, fn: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
-  ce.function("Apply", [fn, ...args]).evaluate();
+  materialize(ce.function("Apply", [fn, ...args]).evaluate());
 
 function nestValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
   let current = x;

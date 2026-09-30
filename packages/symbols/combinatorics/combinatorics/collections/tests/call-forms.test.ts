@@ -252,6 +252,22 @@ test("Count(Subsets(list)) is 2^n for an n-element list", () => {
   }
 });
 
+// Regression for A-129/farm: Subsets(list, k) and Subsets(list, {k, …}) used to fall through
+// to the n-is-an-integer branch (`integerAt(ops[0])` on the LIST itself, which is undefined)
+// and decline entirely, so every size-restricted call over an explicit list came back empty.
+test("Subsets(list, k) and Subsets(list, {k}) size-restrict over the list's own elements", () => {
+  const list = ["List", "a", "b", "c", "d"];
+  expect(elementsOf(["Subsets", list, ["List", 2]])).toEqual([
+    ["a", "b"],
+    ["a", "c"],
+    ["b", "c"],
+    ["a", "d"],
+    ["b", "d"],
+    ["c", "d"],
+  ]);
+  expect(countOf(["Subsets", list, 2])).toBe(1 + 4 + 6); // {}, singles, pairs
+});
+
 test("Subsets(collection) also takes a lazy collection, not just a List literal", () => {
   // Range(1, 10) is itself a lazy indexed collection, never materialized into a List --
   // elementsOf() has to read it through .each(), not by assuming operator === "List".

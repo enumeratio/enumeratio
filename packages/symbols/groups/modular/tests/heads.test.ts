@@ -15,6 +15,18 @@ test("Dot leaves a non-matrix operand paired with a ModularMatrix unevaluated", 
   expect(ce.box(["Dot", ["Tuple", 1, 2], M(1, 1, 0, 1)]).evaluate().operator).toBe("Dot");
 });
 
+// Regression for A-129/farm: IsQuadraticIrrational wasn't threaded, so
+// QuadraticIrrationalQ({Sqrt(2), Sqrt(3), 2}) answered a single False instead of {True,
+// True, False} — matching Wolfram's Listable QuadraticIrrationalQ.
+test("IsQuadraticIrrational threads over a list", () => {
+  expect(ce.box(["IsQuadraticIrrational", ["List", ["Sqrt", 2], ["Sqrt", 3], 2]]).evaluate().json).toEqual([
+    "List",
+    "True",
+    "True",
+    "False",
+  ]);
+});
+
 test("the S/T factorisation round-trips: Abs of the negated trace", () => {
   // Equal in PSL(2,Z) — which is to say up to an overall sign, and the rebuilt matrix
   // really does come back negated. That sign IS the ±I being quotiented out. The trace
