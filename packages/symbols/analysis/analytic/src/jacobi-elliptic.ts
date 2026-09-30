@@ -229,6 +229,13 @@ const isOneExpr = (x: BoxedExpression): boolean => x.re === 1 && x.im === 0;
  */
 function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): SCDN<BoxedExpression> | undefined {
   if (isZeroExpr(u)) return { S: ce.Zero, C: ce.One, D: ce.One, N: ce.One };
+  // The quarter period u = EllipticK(m) is checked before m = 0/1 below: at m = 0 it
+  // coincides with u = EllipticK(0) = π/2, where cn is the pole (0), not cos(EllipticK(0))
+  // left symbolic — the more specific identity wins when both apply.
+  const uOps = operandsOf(u);
+  if (u.operator === "EllipticK" && uOps.length === 1 && uOps[0]!.isSame(m)) {
+    return { S: ce.One, C: ce.Zero, D: ce.function("Sqrt", [ce.function("Subtract", [1, m])]), N: ce.One };
+  }
   if (isZeroExpr(m)) return { S: ce.function("Sin", [u]), C: ce.function("Cos", [u]), D: ce.One, N: ce.One };
   if (isOneExpr(m)) {
     // sn/cn/dn degenerate to tanh(u)/sech(u)/sech(u) at m=1, but building each ratio as
@@ -239,10 +246,6 @@ function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): S
     // N = Cosh(u)) keeps every ratio that doesn't touch N a single elementary function
     // with no ∞/∞ cancellation to resolve: sc = sd = Sinh(u), cs = ds = 1/Sinh(u).
     return { S: ce.function("Sinh", [u]), C: ce.One, D: ce.One, N: ce.function("Cosh", [u]) };
-  }
-  const uOps = operandsOf(u);
-  if (u.operator === "EllipticK" && uOps.length === 1 && uOps[0]!.isSame(m)) {
-    return { S: ce.One, C: ce.Zero, D: ce.function("Sqrt", [ce.function("Subtract", [1, m])]), N: ce.One };
   }
   return undefined;
 }

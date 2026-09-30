@@ -1,3 +1,4 @@
-id	section	role	expr	expected	caption
-quadratic			[DifferenceDelta, [Power, n, 2], n]	[Add, [Multiply, 2, n], 1]	$(n+1)^2 - n^2 = 2n + 1$
-linear			[DifferenceDelta, [Add, [Multiply, 3, n], 5], n]	3	The forward difference of a linear function is its slope, everywhere
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+quadratic			[DifferenceDelta, [Power, n, 2], n]	[Add, [Multiply, 2, n], 1]	$(n+1)^2 - n^2 = 2n + 1$		
+linear			[DifferenceDelta, [Add, [Multiply, 3, n], 5], n]	3	The forward difference of a linear function is its slope, everywhere		
+shift-var-named-i	Scope		[DifferenceDelta, [a, i], i]	[Add, [Negate, [a, [Complex, 0, 1]]], [a, [Complex, 1, 1]]]	Naming the index $i$ resolves it to the imaginary unit first, not a fresh bound variable	convention	Wolfram's `{i, ...}` binds `i` as a local dummy that shadows the built-in `I`; ours has no such shadowing, so a Wolfram example naming its index `i` collides with our imaginary unit. Renaming the index avoids it.

@@ -1,3 +1,4 @@
 id	in	out
 quadratic	DifferenceDelta(n ^ 2, n)	2n + 1
 linear	DifferenceDelta(3n + 5, n)	3
+shift-var-named-i	DifferenceDelta(a(i), i)	-a(i) + a(1 + i)
