@@ -10,6 +10,7 @@ import { portableTeX } from "@enumeratio/formats/tex";
 import { referenceData } from "@enumeratio/reference/node";
 import katex from "katex";
 import { expect, test } from "vite-plus/test";
+import { repoRoot, workspacePackages } from "./data/repo-docs.ts";
 
 test("every example's TeX typesets in KaTeX", { timeout: 60_000 }, () => {
   const failed: string[] = [];
@@ -37,12 +38,21 @@ test("every example's TeX typesets in KaTeX", { timeout: 60_000 }, () => {
 const WEB = fileURLToPath(new URL("..", import.meta.url));
 
 /** The site's hand-written markdown pages (not the generated reference ones). */
-function* pages(dir = WEB): Generator<string> {
+function* webPages(dir = WEB): Generator<string> {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith(".") || entry.name === "node_modules" || entry.name === "public") continue;
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) yield* pages(path);
+    if (entry.isDirectory()) yield* webPages(path);
     else if (entry.name.endsWith(".md")) yield path;
+  }
+}
+
+/** Those, and the package docs the site serves under /docs. */
+function* pages(): Generator<string> {
+  yield* webPages();
+  for (const pkg of workspacePackages()) {
+    if (pkg.readme) yield pkg.readme;
+    for (const page of pkg.pages) yield join(repoRoot, page.file);
   }
 }
 
@@ -69,7 +79,7 @@ test("every formula in the site's markdown typesets in KaTeX", () => {
       try {
         katex.renderToString(latex, { displayMode: display, throwOnError: true, strict: false });
       } catch (e) {
-        failed.push(`${path.slice(WEB.length)}: $${latex}$ -- ${(e as Error).message.split("\n")[0]}`);
+        failed.push(`${path.slice(repoRoot.length + 1)}: $${latex}$ -- ${(e as Error).message.split("\n")[0]}`);
       }
     }
   }

@@ -6,9 +6,9 @@ an interactive terminal, a plain command line, and — thanks to a browser-safe 
 a **real terminal emulator in the browser**.
 
 ::: tip Try it live
-The [**live REPL**](/docs/cli/repl) is a real terminal running this exact
+The [**live REPL**](https://enumeratio.dev/docs/cli/repl) is a real terminal running this exact
 CLI logic in your browser — pick an example from the dropdown or type your own.
-The [**live command line**](/docs/cli/command-line) does the same for scriptable
+The [**live command line**](https://enumeratio.dev/docs/cli/command-line) does the same for scriptable
 `notatio` invocations.
 :::
 
@@ -88,7 +88,7 @@ Out[4]= 60
 A line with controls in it is committed the same way: **Enter** ends the strip and what you
 left on screen becomes `Out[n]`, so a later line reading `Out[n]` gets the state you stopped
 at — the session is Wolfram-style, one committed cell at a time, not a sheet that keeps
-re-running (that is a [worksheet](/worksheet/)).
+re-running (that is a [worksheet](https://enumeratio.dev/worksheet/)).
 
 - `let name = <expr>` binds a variable the engine remembers; later lines resolve
   it, and `:vars` lists the bindings.
@@ -109,7 +109,7 @@ Out[3]= 30
 `composition`, `subset`, `dyck`). In the browser terminal the figure appears beside
 it; the Node CLI writes an SVG to a temp file (and shows it inline on iTerm2 /
 kitty). Try `:glyph partition [5,3,3,1]` or `:plot Sin(x)` in the
-[live REPL](/docs/cli/repl).
+[live REPL](https://enumeratio.dev/docs/cli/repl).
 
 ## Environments
 
@@ -142,14 +142,14 @@ the reduction and hands back the expression whole. In the REPL, `:env <name>` do
 same for every result until `:env auto`. The expression can ask for a reading itself with
 a trailing rule — `Static -> "Pin"`, `Static -> "Sample"`, or `Static -> 3` for a sample
 count. The same rewrite runs on the site, where printing a page turns its sliders into
-grids: see [the Environments playground](/playground/environments) and
+grids: see [the Environments playground](https://enumeratio.dev/playground/environments) and
 `https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments`.
 
 ## Command line
 
 Outside the browser, `notatio` is also a plain command: give it an expression and
 it prints the result and exits — ideal for scripts and pipes. Try it in the
-[live command line](/docs/cli/command-line).
+[live command line](https://enumeratio.dev/docs/cli/command-line).
 
 ```bash
 notatio "Binomial(10, 3)"        # 120

@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # Numeral Systems
 
 A number and its digits are different things. `IntegerDigits(10, 2)` is `[1,0,1,0]`, but
@@ -37,7 +41,7 @@ a _forbidden pattern_ instead of a per-place bound, the residue system has _no p
 values_, and two of them represent negative integers with _no sign_. The last one is
 base b read in the other direction — digits that stop on the right and never on the
 left — and it comes with a value type and arithmetic of its own:
-[b-adic numbers](./adic).
+[b-adic numbers](adic.md).
 
 <Story title="The base slot is a system">
 <template #description>93 784 seconds is 1 day, 2 hours, 3 minutes, 4 seconds.</template>
@@ -130,7 +134,7 @@ package checks the two against each other rather than taking that on trust.
 The last cell declines: the middle digit is already at its ceiling, so nothing below it
 may be non-zero. Which continued fraction you pick changes the arithmetic completely —
 this is the same $[a_0; a_1, \ldots]$ that names elements of
-[the modular group](/guide/modular/), wearing a different hat.
+[the modular group](../../../groups/modular/docs/modular-group.md), wearing a different hat.
 
 ## No place values at all
 
@@ -150,10 +154,10 @@ inconsistent.
 </Story>
 
 These are the same CRT channels the [hypercomplex
-page](/guide/hypercomplex/finite) uses to find split units: a residue numeral and a
+page](../../../algebras/hypercomplex/docs/finite.md) uses to find split units: a residue numeral and a
 spectral sign vector are the same object, read for different purposes.
 
-Each digit is a residue class — an [`IntegerMod`](/reference/symbol/IntegerMod), an element of
+Each digit is a residue class — an [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod), an element of
 ℤ/mᵢ that arithmetic stays inside — and reading the numeral back is the Chinese remainder
 theorem applied to those classes.
 

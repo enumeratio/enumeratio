@@ -112,9 +112,9 @@ so the order has to be stated. `KSubsets` is **colexicographic** — the 4th 3-s
 Unranking is the same operation as writing a number in a numeral system whose places are
 combinatorial rather than geometric — the factoradic digits of $n$ _are_ the Lehmer code
 of the $n$-th permutation, and the combinatorial number system's digits _are_ the
-$n$-th k-subset. [Numeral systems](/guide/numerals/) makes that identification properly.
+$n$-th k-subset. [Numeral systems](../../../arithmetic/numerals/docs/numeral-systems.md) makes that identification properly.
 
 Every family here is catalogued, with its order and its counting sequence, in the
-[symbol reference](/reference/symbol/). The glyphs are
-[`<Figure>`](/reference/component/Figure) and the slider is
-[`<Manipulate>`](/reference/component/Manipulate).
+[symbol reference](https://enumeratio.dev/reference/symbol/). The glyphs are
+[`<Figure>`](https://enumeratio.dev/reference/component/Figure) and the slider is
+[`<Manipulate>`](https://enumeratio.dev/reference/component/Manipulate).

@@ -91,6 +91,6 @@ each one reads and prints its own.
 
 **Not built yet.** The partition lattice — whose Möbius function is $(-1)^{k-1}(k-1)!$,
 and which would connect this page to the [diagram
-algebras](/guide/diagram-algebras/) and set partitions. Also the characteristic
+algebras](../../diagram/docs/diagram-algebras.md) and set partitions. Also the characteristic
 polynomial, and general element arithmetic: only the interval basis and the two named
 functions $\zeta$ and $\mu$ are here, not arbitrary elements of the algebra.

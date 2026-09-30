@@ -1,3 +1,7 @@
+---
+order: 2
+---
+
 # b-adic Numbers
 
 Positional notation writes a number as digits that stop on the left and may run forever

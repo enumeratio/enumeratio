@@ -41,7 +41,7 @@ which do not meet each other.
 
 By the Chinese remainder theorem, knowing $x \bmod 288 = 2^5 \cdot 3^2$ is knowing
 $x \bmod 2^5$ and $x \bmod 3^2$ separately: $\hat{\mathbb{Z}} = \prod_p \mathbb{Z}_p$. The
-$p$-adic components are the [b-adic numbers](../numerals/adic) the numerals package
+$p$-adic components are the [b-adic numbers](../../numerals/docs/adic.md) the numerals package
 already has, so `AdicNumeral(p, z)` projects, and `ProfiniteNumber` of a list of them
 glues back.
 

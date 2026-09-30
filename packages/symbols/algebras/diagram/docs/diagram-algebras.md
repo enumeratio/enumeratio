@@ -22,7 +22,7 @@ symbol here unless you give it a value.
 
 ## The lattice of subalgebras
 
-Where the [hypercomplex families](/guide/hypercomplex/) differed only in a square and
+Where the [hypercomplex families](../../hypercomplex/docs/hypercomplex-algebras.md) differed only in a square and
 a commutation rule, these differ only in **which diagrams are admitted** — and each
 restriction is closed under stacking, so each one is a subalgebra. That is the whole
 parameterisation:
@@ -75,7 +75,7 @@ $e_1^2 = \delta e_1$, the defining relation of the Temperley–Lieb algebra.
 The product is the **ordered** one — `NonCommutativeMultiply`, or infix `⊗`, the same
 head the hypercomplex units use. A diagram algebra is not commutative, so `×` is the
 wrong home for it, for exactly the reason set out
-[there](/guide/hypercomplex/#design-considerations-recorded).
+[there](../../hypercomplex/docs/hypercomplex-algebras.md#design-considerations-recorded).
 
 The other Temperley–Lieb relations fall out of the same stacking:
 
@@ -144,7 +144,7 @@ $$
 $$
 
 with $k_B$ the number of $\lambda$-blocks inside the block $B$. That is worth setting beside
-the [Hopf-algebra bases](/guide/hopf/), which come from the same kind of inversion over
+the [Hopf-algebra bases](../../hopf/docs/hopf-algebras.md), which come from the same kind of inversion over
 the **Boolean** lattice, where the Möbius function is only a sign. The factorials here are
 the difference between merging any set of blocks and merging only adjacent ones — and they
 are checked against the recursion $\sum_{\lambda \le \nu \le \mu} \mu_\Pi(\lambda,\nu) = 0$

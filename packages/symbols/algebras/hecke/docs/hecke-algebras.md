@@ -2,8 +2,8 @@
 
 The [Iwahori–Hecke algebra](https://en.wikipedia.org/wiki/Iwahori%E2%80%93Hecke_algebra)
 $H_n(q)$ is parameterised differently from every other family here. The
-[hypercomplex units](/guide/hypercomplex/) vary their _generators_; the
-[diagram algebras](/guide/diagram-algebras/) vary _which diagrams are admitted_.
+[hypercomplex units](../../hypercomplex/docs/hypercomplex-algebras.md) vary their _generators_; the
+[diagram algebras](../../diagram/docs/diagram-algebras.md) vary _which diagrams are admitted_.
 $H_n(q)$ keeps the basis of the symmetric group algebra **exactly** — one element $T_w$
 per permutation, so the dimension is $n!$ — and deforms the **multiplication** by a
 parameter $q$.
@@ -58,7 +58,7 @@ for **every** pair — checked exhaustively across $S_2$, $S_3$ and $S_4$.
 </Story>
 
 So $H_n(1) = \mathbb{Z}S_n$, and the [symmetric group
-algebra](/guide/diagram-algebras/) reached as a diagram algebra is the same object by
+algebra](../../diagram/docs/diagram-algebras.md) reached as a diagram algebra is the same object by
 another route. Everything interesting — Kazhdan–Lusztig bases, the Jones polynomial via
 the Temperley–Lieb quotient, the representation theory at roots of unity — lives at
 $q \ne 1$.
@@ -78,6 +78,6 @@ dimension still answers from the closed form.
 
 **Not built yet.** The Kazhdan–Lusztig basis and the KL polynomials — the real reason
 anyone builds $H_n(q)$ — and the Temperley–Lieb quotient, which would connect this page
-directly to the [diagram algebras](/guide/diagram-algebras/) and to the Jones
+directly to the [diagram algebras](../../diagram/docs/diagram-algebras.md) and to the Jones
 polynomial. Also only type A: the same rule works for any Coxeter system given its
 length function.

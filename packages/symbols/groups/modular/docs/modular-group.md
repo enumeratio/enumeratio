@@ -244,7 +244,7 @@ which is an independent enough statement to catch any slip in the sawtooth.
 
 ## What this connects to
 
-- **[Numeral systems](/guide/numerals/)** — the continued fraction here _is_ a numeral system,
+- **[Numeral systems](../../../arithmetic/numerals/docs/numeral-systems.md)** — the continued fraction here _is_ a numeral system,
   and the Stern–Brocot path is its digit string.
 - **Binary necklaces and Lyndon words** in the enumeratio catalogue count the closed geodesics
   exactly.

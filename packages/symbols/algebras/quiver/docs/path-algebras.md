@@ -8,7 +8,7 @@ concatenation:
 
 $$p \cdot q = \begin{cases} pq & \text{if } q \text{ starts where } p \text{ ends} \\ 0 & \text{otherwise}\end{cases}$$
 
-Like the [incidence algebra](/guide/incidence/), most products are zero. Unlike every
+Like the [incidence algebra](../../incidence/docs/incidence-algebras.md), most products are zero. Unlike every
 other family here, this one **need not be finite-dimensional**.
 
 ## One loop and the algebra is infinite
@@ -34,7 +34,7 @@ is no answer" is a _structural_ fact about the input rather than a missing featu
 
 The linear quiver $1 \to 2 \to \ldots \to n$ has exactly one path from $i$ to $j$ when
 $i \le j$, and none otherwise. So its paths are the **intervals of a chain**, and $kA_n$
-is the [incidence algebra](/guide/incidence/) of `Chain(n)` — same dimension
+is the [incidence algebra](../../incidence/docs/incidence-algebras.md) of `Chain(n)` — same dimension
 $\binom{n+1}{2}$, same product, two libraries describing one object from different
 directions.
 

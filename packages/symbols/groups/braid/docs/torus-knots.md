@@ -1,3 +1,7 @@
+---
+order: 2
+---
+
 # Torus Knots
 
 The simplest infinite family of knots, and the one you can draw without lifting the pen.
@@ -219,4 +223,4 @@ The Jones polynomials of T(7,3) and T(5,4) differ, which is one way to see the k
 Every torus knot is a **Lorenz knot** — a periodic orbit of the flow on the next page —
 because $(\sigma_1 \cdots \sigma_{p-1})^q$ is a positive braid, and positive braids are
 exactly what the Lorenz template produces. The trefoil is the first of both families, and
-it is also the knot whose complement is [the modular surface](/guide/modular/).
+it is also the knot whose complement is [the modular surface](../../modular/docs/modular-group.md).

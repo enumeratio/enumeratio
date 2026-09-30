@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # Hypercomplex Algebras
 
 A [hypercomplex number](https://en.wikipedia.org/wiki/Hypercomplex_number) is an element
@@ -40,7 +44,7 @@ Everything else is untouched: `x_1` is still a variable, `e` is still Euler's nu
 and compute-engine's own `i` is still its native complex unit.
 
 > These units are not only formal — ℤ/m is full of them, one per CRT channel.
-> [**Finite: ℤ/m and the places**](/guide/hypercomplex/finite) follows that all the
+> [**Finite: ℤ/m and the places**](finite.md) follows that all the
 > way down.
 
 ## Multicomplex: the commuting tower
@@ -263,7 +267,7 @@ prime power has exactly the two roots ±1. So for odd m the roots of 1 are the
 Sending `j_1 ↦ 4` is a ring homomorphism ℝ[j]/(j²−1) → ℤ/15, so the identities the
 symbolic algebra proves come back as facts about ℤ/15. That, and the place-by-place
 story behind it, is the subject of
-[**Finite: ℤ/m and the places**](/guide/hypercomplex/finite).
+[**Finite: ℤ/m and the places**](finite.md).
 
 ## Things worth knowing
 

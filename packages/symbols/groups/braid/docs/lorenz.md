@@ -1,3 +1,7 @@
+---
+order: 3
+---
+
 # The Lorenz Flow
 
 In 1963 Edward Lorenz cut a weather model down to three equations:
@@ -45,7 +49,7 @@ and $R$. Periodic orbits are periodic words, read up to rotation, because there 
 distinguished starting point on a loop.
 
 That is the whole reduction: **a knot becomes a cyclic word**, and the braid comes out of
-the word by the recipe on [the previous page](/guide/braid/) — order the rotations
+the word by the recipe on [the previous page](knots-and-braids.md) — order the rotations
 lexicographically, see where the flow sends each, take the positive permutation braid of
 that permutation.
 
@@ -76,7 +80,7 @@ g_3(L) = 140\!\!\sum_{\omega \in L \setminus 0}\!\! \omega^{-6},$$
 and the discriminant $\Delta = g_2^3 - 27 g_3^2$ vanishes exactly where the lattice
 degenerates. The set where it vanishes, inside the three-sphere of normalised lattices,
 is a **trefoil** — so the space of genuine lattices is a trefoil complement, which is to
-say the unit tangent bundle of [the modular surface](/guide/modular/).
+say the unit tangent bundle of [the modular surface](../../modular/docs/modular-group.md).
 
 Let the flow be $\varphi_t(L) = e^t L$, stretching one direction and squeezing the other.
 Its closed orbits correspond to conjugacy classes of hyperbolic matrices in
@@ -129,7 +133,7 @@ them further.
 
 - **Every torus knot is a Lorenz knot.** $(\sigma_1 \cdots \sigma_{p-1})^q$ is positive,
   and the template realises every positive braid of that shape — see
-  [torus knots](/guide/braid/torus-knots).
+  [torus knots](torus-knots.md).
 - **Lorenz knots are fibred**, with genus fixed by the braid, because a positive braid
   closure always is.
 - **Trip number is braid index.** The number of $LR$ corners in the cyclic word is the
@@ -139,8 +143,8 @@ them further.
 
 ## What this connects to
 
-[The modular group](/guide/modular/) supplies the words and the arithmetic;
-[knots and braids](/guide/braid/) supplies the braid machinery. This page is the claim
+[The modular group](../../modular/docs/modular-group.md) supplies the words and the arithmetic;
+[knots and braids](knots-and-braids.md) supplies the braid machinery. This page is the claim
 that those are one subject, which is Ghys's theorem, and the trefoil is where all three
 meet: the discriminant locus, the first torus knot, and the first Lorenz knot.
 $$

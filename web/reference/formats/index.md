@@ -41,5 +41,5 @@ output cell), including code forms whose translations carry footguns.
 
 These pages are about representing an **expression** — the syntax it is written in and
 the forms it comes back out in. Representing a **number** is a different question with
-its own guide: [numeral systems](/guide/numerals/) covers what goes in the base slot of
+its own guide: [numeral systems](/docs/numerals/numeral-systems) covers what goes in the base slot of
 `IntegerDigits`, from mixed radix to Zeckendorf to residue systems.

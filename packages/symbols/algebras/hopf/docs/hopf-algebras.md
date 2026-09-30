@@ -106,7 +106,7 @@ written in come from summing over that lattice and inverting.
 
 Those signed sums are **Möbius inversion** over the Boolean lattice, whose Möbius function
 is $(-1)^{|\text{difference}|}$ — the same inversion
-[the incidence algebras](/guide/incidence/) compute in general, here in closed form
+[the incidence algebras](../../incidence/docs/incidence-algebras.md) compute in general, here in closed form
 because the lattice is known.
 
 The two directions are opposite — coarsen for NSym, refine for QSym — and that is not a

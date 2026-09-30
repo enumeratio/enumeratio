@@ -1,6 +1,10 @@
+---
+order: 2
+---
+
 # Finite: ℤ/m and the places
 
-[Hypercomplex algebras](/guide/hypercomplex/) introduces `i_k`, `j_k` and `ε_k` as formal
+[Hypercomplex algebras](hypercomplex-algebras.md) introduces `i_k`, `j_k` and `ε_k` as formal
 generators with a square attached. But you do not have to adjoin them — **ℤ/m already
 contains them**, and which ones it contains is decided one prime at a time. This page
 follows that all the way down.
@@ -125,7 +129,7 @@ decomposition of the ring into independent channels.
 
 ## Split, inert, degenerate — the square as a local invariant
 
-Step back and the three columns of the [grid](/guide/hypercomplex/) stop looking like
+Step back and the three columns of the [grid](hypercomplex-algebras.md) stop looking like
 three arbitrary choices. Over a field, the quadratic algebra $K[x]/(x^2-d)$ has
 discriminant $4d$, and exactly three things can happen:
 

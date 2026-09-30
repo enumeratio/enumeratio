@@ -45,8 +45,8 @@ $n$ classes for $\mathbb{Z}_n$, $(n+3)/2$ for $D_n$ with $n$ odd, $(n+6)/2$ for 
 For a cyclic group the product just adds indices mod $n$ — so $k[\mathbb{Z}_n]$ is a
 polynomial ring modulo a single relation. When the base field has $n$-th roots of unity
 it splits into $n$ copies of the field, which is the same CRT-flavoured splitting the
-[finite hypercomplex page](/guide/hypercomplex/finite) and the
-[residue numerals](/guide/numerals/) keep running into.
+[finite hypercomplex page](../../hypercomplex/docs/finite.md) and the
+[residue numerals](../../../arithmetic/numerals/docs/numeral-systems.md) keep running into.
 
 <Story title="Adding indices">
 <template #description>2 + 5 = 7 ≡ 1. And (1 + x)(1 + x⁵) = 2 + x + x⁵.</template>
@@ -76,8 +76,8 @@ associativity, an identity, inverses, and the Latin-square property on every gro
 because everything downstream rests on them being groups at all.
 
 **Several routes to the same algebra.** $k[S_n]$ is also the
-[symmetric-group diagram algebra](/guide/diagram-algebras/), and also
-[$H_n(q)$ at $q = 1$](/guide/hecke/). Three libraries, one object.
+[symmetric-group diagram algebra](../../diagram/docs/diagram-algebras.md), and also
+[$H_n(q)$ at $q = 1$](../../hecke/docs/hecke-algebras.md). Three libraries, one object.
 
 **`GroupProduct` takes its group**, since a basis element carries no reference to the
 group it came from — the same shape as `QuiverCompose`.

@@ -1,3 +1,7 @@
+---
+order: 1
+---
+
 # Knots and Braids
 
 A [braid](https://en.wikipedia.org/wiki/Braid_group) on $n$ strands is exactly what it
@@ -89,7 +93,7 @@ integral domain, and $\mathbb{Z}[t,t^{-1}]$ is one.
 ## The Jones polynomial, from diagrams rather than matrices
 
 Alexander came out of a **linear** representation. Jones comes out of a **diagram** one —
-and the diagrams are the [Temperley–Lieb](/guide/diagram-algebras/) ones from the
+and the diagrams are the [Temperley–Lieb](../../../algebras/diagram/docs/diagram-algebras.md) ones from the
 previous section, not a lookalike. Send each generator to a combination of the identity and
 a TL diagram:
 
@@ -141,7 +145,7 @@ $A$, is still perfectly well defined and is what to ask for instead.
 
 ## The knots the modular flow draws
 
-Now the bridge back to [the modular group](/guide/modular/). A hyperbolic conjugacy class
+Now the bridge back to [the modular group](../../modular/docs/modular-group.md). A hyperbolic conjugacy class
 there is an $LR$ word up to rotation; it is a closed geodesic on the modular surface; and
 because the unit tangent bundle of that surface is the complement of a trefoil in $S^3$, it
 is a **knot**. Ghys's theorem identifies those modular knots with the periodic orbits of the
@@ -198,19 +202,19 @@ Alexander polynomial on every word at once.
 
 ## Going further
 
-- [**Torus knots**](/guide/braid/torus-knots) — the family you can draw on a doughnut,
+- [**Torus knots**](torus-knots.md) — the family you can draw on a doughnut,
   where $T(p,q)$ is a braid you can read off the two winding numbers.
-- [**The Lorenz flow**](/guide/braid/lorenz) — the same knots, as trajectories of a
+- [**The Lorenz flow**](lorenz.md) — the same knots, as trajectories of a
   differential equation, and why those two facts are the same fact.
 
 ## What this connects to
 
-- **[The modular group](/guide/modular/)** — where the words come from, and where the
+- **[The modular group](../../modular/docs/modular-group.md)** — where the words come from, and where the
   other half of the story lives: the linking number of these knots with the trefoil is the
   Rademacher symbol, read off by counting letters.
-- **[Hecke algebras](/guide/hecke/)** — the Iwahori–Hecke algebra is a quotient of the
+- **[Hecke algebras](../../../algebras/hecke/docs/hecke-algebras.md)** — the Iwahori–Hecke algebra is a quotient of the
   braid group's algebra, so the same $\sigma_i$ appear there with one extra relation.
-- **[Diagram algebras](/guide/diagram-algebras/)** — the Temperley–Lieb diagrams the
+- **[Diagram algebras](../../../algebras/diagram/docs/diagram-algebras.md)** — the Temperley–Lieb diagrams the
   Jones polynomial is computed in are the same ones catalogued there, with the same
   product.
 - **Permutations, inversions and Lyndon words** in the enumeratio catalogue: a positive
