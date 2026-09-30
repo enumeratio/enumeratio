@@ -13,7 +13,6 @@ export {
   type CarrierRegistration,
   carrierNameForType,
   carrierTypeForName,
-  collectionCarrierOf,
   ensureOperationHeads,
   type Operation,
   OperationCollisionError,

@@ -2,7 +2,7 @@ import type { BoxedExpression, BoxedType } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { toInputForm } from "@enumeratio/formats/inputform";
-import { collectionCarrierOf } from "@enumeratio/structures";
+import { carrierTypeForName } from "@enumeratio/structures";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
@@ -115,14 +115,14 @@ export class NotatioCollectionTable extends LitElement {
     page: { type: Number, reflect: true },
     /**
      * The carrier its rows inhabit -- the constructor head from `@enumeratio/combinatorics`,
-     * e.g. `Permutation`. Auto-derived from the collection's own head (`SymmetricGroup` ->
-     * `Permutation`) via `@enumeratio/structures`' collection→carrier registry, so this is
-     * an OVERRIDE, needed only when the collection isn't registered or a story wants a
-     * different reading. Whichever carrier is in play, each column and the filter wrap the
-     * row in it only where the statistic actually declares that carrier as its argument
-     * type -- never a blanket wrap, since a bare-list function (`Length`, `Max`, a
-     * `Descents`-style word statistic) answers a different, wrong question over the
-     * carrier than over the row itself.
+     * e.g. `Permutation`. Auto-derived from the first row's own operator: every carrier-bearing
+     * family yields values of its carrier directly (`SymmetricGroup`'s elements are already
+     * `Permutation(...)`), so this attribute is an OVERRIDE, needed only when a story wants a
+     * different reading than the collection's own. Whichever carrier is in play, each column and
+     * the filter address the row in it only where the statistic actually declares that carrier
+     * as its argument type -- never a blanket wrap, since a bare-list function (`Length`, `Max`,
+     * a `Descents`-style word statistic) answers a different, wrong question over the carrier
+     * than over the row itself.
      */
     carrier: { type: String },
     /** Draw each row as a glyph too: `permutation`, `subset`, `partition`, `dyck`, … */
@@ -330,16 +330,19 @@ export class NotatioCollectionTable extends LitElement {
   }
 
   /**
-   * The carrier in play for this collection: the `carrier` attribute if set, else derived
-   * from the collection's own head via `@enumeratio/structures`' registry (`SymmetricGroup`
-   * -> `Permutation`). Resets the per-(head, argument) wrap decisions and the probed types,
-   * both of which are stale once the carrier changes.
+   * The carrier in play for this collection: the `carrier` attribute if set, else read off the
+   * first row's own operator, when it names a registered carrier (`@enumeratio/structures`'
+   * `carrierTypeForName`) -- every carrier-bearing family yields carrier values directly, so
+   * this is a probe of the value itself, not a lookup from the collection's head. Resets the
+   * per-(head, argument) wrap decisions and the probed types, both of which are stale once the
+   * carrier changes.
    */
   #resolveCarrier(): void {
     const engine = this.#engine;
-    const coll = this.#coll;
-    const head = coll?.operator;
-    this.#carrierName = this.carrier || (engine && head ? collectionCarrierOf(engine, head) : undefined) || undefined;
+    const first = engine ? this.#element(1) : undefined;
+    const op = first?.operator;
+    const derived = engine && op !== undefined && carrierTypeForName(engine, op) !== undefined ? op : undefined;
+    this.#carrierName = this.carrier || derived || undefined;
     this.#bareType = undefined;
     this.#carrierType = undefined;
     this.#wrapCache.clear();
@@ -348,19 +351,19 @@ export class NotatioCollectionTable extends LitElement {
 
   /**
    * `elt` as the columns and the filter see it, two ways: the bare list, and the row wrapped
-   * in its carrier. A family may already yield carrier VALUES (`SymmetricGroup`'s elements are
-   * `Permutation(...)`, not bare lists, once it is declared with a carrier type) -- then the
-   * bare form is the carrier's own single argument, unwrapped, rather than a fresh wrap on
-   * top, so neither reading ever double-wraps or fabricates a wrapper the source never had.
+   * in its carrier. A family on a carrier yields carrier VALUES directly (`SymmetricGroup`'s
+   * elements are `Permutation(...)`), so the bare form is always that carrier's own single
+   * argument, unwrapped -- never a wrap fabricated here. When `elt` isn't already a value of
+   * `#carrierName` (no carrier in play, or a `carrier` override that doesn't match what the
+   * source actually yields), both readings fall back to the row as-is.
    */
   #representations(elt: BoxedExpression): { bare: MathJsonExpression; wrapped: MathJsonExpression } {
     const name = this.#carrierName;
-    if (!name) return { bare: elt.json, wrapped: elt.json };
     const json = elt.json;
-    if (elt.operator === name && Array.isArray(json) && json.length === 2) {
-      return { bare: json[1] as MathJsonExpression, wrapped: json };
+    if (!name || elt.operator !== name || !Array.isArray(json) || json.length !== 2) {
+      return { bare: json, wrapped: json };
     }
-    return { bare: json, wrapped: [name, json] as MathJsonExpression };
+    return { bare: json[1] as MathJsonExpression, wrapped: json };
   }
 
   /** The bare list's and the carrier's own boxed types, each probed once from the first row

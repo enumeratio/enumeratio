@@ -140,7 +140,12 @@ function smallestNonEmptyParams(family: FamilyKernel): number[] | undefined {
   return undefined;
 }
 
-test("every carrier-bearing family yields its carrier's type on a fully declared engine", () => {
+// A-107 (§4 step 7): this is the guard that replaces the two retired bridges -- #389's
+// `collectionCarrierOf` wrap in the collection table, and `laws.ts`'s kernel-to-carrier table.
+// Both existed only because a family could still yield a bare kernel element; now every route a
+// caller reaches an element through -- unranking (`At`), `Random`, and plain iteration -- has to
+// answer with the carrier's own type, not just the one this file used to spot-check.
+test("every carrier-bearing family yields its carrier's type through At, Random and iteration", () => {
   const ce = new ComputeEngine();
   declareCombinatorics(ce);
   const skipped: string[] = [];
@@ -153,8 +158,19 @@ test("every carrier-bearing family yields its carrier's type on a fully declared
       continue;
     }
     const call = p.length === 0 ? family.head : [family.head, ...p];
-    const element = ce.box(["At", call, 1] as never).evaluate();
-    expect(element.operator, `${family.head}(${p.join(", ")})`).toEqual(family.carrier);
+    const label = `${family.head}(${p.join(", ")})`;
+
+    const at = ce.box(["At", call, 1] as never).evaluate();
+    expect(at.operator, `At(${label}, 1)`).toEqual(family.carrier);
+
+    const random = ce.box(["Random", call] as never).evaluate();
+    expect(random.operator, `Random(${label})`).toEqual(family.carrier);
+
+    const first = ce
+      .box(call as never)
+      .each()
+      .next().value;
+    expect(first?.operator, `first element of ${label}`).toEqual(family.carrier);
   }
   expect(skipped, "families this search found no non-empty instance for").toEqual([]);
 });

@@ -167,13 +167,6 @@ function implementationOf(ce: ComputeEngine, head: OperationHead, carrier: strin
   return undefined;
 }
 
-/** The carrier a collection HEAD's elements inhabit (`SymmetricGroup` -> `Permutation`), as
- *  registered by `registerCollectionCarrier`. Undefined when `collection` isn't one, or has no
- *  registered carrier -- its elements are bare lists. */
-export function collectionCarrierOf(ce: ComputeEngine, collection: string): string | undefined {
-  return registryOf(ce).collections.get(collection);
-}
-
 /** The carrier CONSTRUCTOR name whose minted type is `type` (`permutation` -> `Permutation`),
  *  as registered by `registerCarrier`/`declareCarriers`. Undefined when no registered carrier
  *  has that type. */

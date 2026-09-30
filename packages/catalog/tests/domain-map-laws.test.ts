@@ -10,16 +10,13 @@
 // domains/tests/map-helpers.ts's, inlined since that helper was package-internal.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { COLLECTIONS } from "../src/index.ts";
 import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 import { sampleable } from "@enumeratio/combinatorics/collections/sampleable";
 import {
-  ALL_STATISTICS,
   CARRIERS,
   checkLaws,
-  declareCombinatoricsCarriers,
+  declareCombinatorics,
   declareMaps,
-  declareStatistics,
   type LawFailure,
   MAPS,
 } from "@enumeratio/combinatorics/src";
@@ -28,53 +25,43 @@ import { expect, test } from "vite-plus/test";
 
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 const ce = new ComputeEngine();
-declareCombinatoricsCarriers(ce);
-// `domainTypes` reads back from the registry `declareCombinatoricsCarriers` just populated —
-// no map to build by hand (step 6b, #458).
-declareStatistics(ce, ALL_STATISTICS);
+// Carriers, families (typed) and statistics, area by area (step 6b/A-94); `declareMaps` stays
+// out of `declareCombinatorics` and runs last (see `src/index.ts`'s file comment).
+declareCombinatorics(ce);
 declareMaps(ce, constructorFor);
 
 const SAMPLES = 24;
 const MAX_SIZE = 6;
 const BUDGET = 5_000n;
 
-const catalogCarrier = new Map(COLLECTIONS.map((c) => [c.name, c.carrier]));
-const carrierOf = (f: FamilyKernel): string | undefined =>
-  f.carrier ?? f.declared?.carrier ?? catalogCarrier.get(f.head);
-
-/** How a family's kernel element becomes a value of its carrier. Carriers whose storage differs
- *  from the kernel's (SetPartition is a growth string, the kernel's blocks) join as they're
- *  written. */
-const nested = (tree: unknown): unknown => (Array.isArray(tree) ? ["List", ...tree.map(nested)] : tree);
-
-const CONSTRUCT: Record<string, (element: unknown) => unknown> = {
-  Permutation: (element) => ["Permutation", ["List", ...(element as number[])]],
-  RestrictedGrowthString: (element) => ["RestrictedGrowthString", ["List", ...(element as number[])]],
-  SetPartition: (element) => ["SetPartition", ["List", ...(element as number[][]).map((block) => ["List", ...block])]],
-  SetComposition: (element) => [
-    "SetComposition",
-    ["List", ...(element as number[][]).map((block) => ["List", ...block])],
-  ],
-  Surjection: (element) => ["Surjection", ["List", ...(element as number[])]],
-  Composition: (element) => ["Composition", ["List", ...(element as number[])]],
-  BinaryWord: (element) => ["BinaryWord", ["List", ...(element as number[])]],
-  BinaryTree: (element) => ["BinaryTree", nested(element)],
-  BinaryTreeParentArray: (element) => ["BinaryTreeParentArray", ["List", ...(element as number[])]],
-  DyckPath: (element) => ["DyckPath", ["List", ...(element as number[])]],
-  CycleDecomposition: (element) => [
-    "CycleDecomposition",
-    ["List", ...(element as number[][]).map((cycle) => ["List", ...cycle])],
-  ],
-};
+/** A family's carrier, when it's actually declared typed by one -- the same test
+ *  `carrier-family-types.test.ts` uses, not the catalog's own (possibly stale) `carrier`
+ *  label: a family the engine doesn't yet type has no carrier value for this test to draw. */
+const carrierOf = (f: FamilyKernel): string | undefined => f.carrier ?? f.declared?.carrier;
 
 const constructorOf = new Map(CARRIERS.map((c) => [c.type, c.name]));
 
+/** The families over `carrier`, whose sampled elements this test can draw from `ce`. */
+const familiesOver = (carrier: string | undefined): FamilyKernel[] =>
+  allEntries.filter((f) => f.kind !== "scalar" && carrierOf(f) === carrier);
+
+/** The element `family(...params)`'s `rank`-th member, read straight off `ce` -- every
+ *  carrier-bearing family is declared typed (§4 step 5, A-94), so this IS a carrier value
+ *  already, with no kernel-to-carrier table to rebuild it. `undefined` past the collection's
+ *  enumeration limit (`Head::toobig`) or out of range. */
+const elementAt = (family: FamilyKernel, params: number[], rank: bigint): unknown => {
+  const index = rank + 1n;
+  if (index > BigInt(Number.MAX_SAFE_INTEGER)) return undefined;
+  const call = params.length === 0 ? family.head : [family.head, ...params];
+  const element = ce.box(["At", call, Number(index)] as never).evaluate();
+  return element.json === "Missing" || element.operator === "Error" ? undefined : element.json;
+};
+
 for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== undefined)) {
   const carrier = constructorOf.get(map.from) as string;
-  const construct = CONSTRUCT[carrier];
-  const families = allEntries.filter((f) => f.kind !== "scalar" && carrierOf(f) === carrier);
+  const families = familiesOver(carrier);
 
-  test.skipIf(construct === undefined || families.length === 0)(
+  test.skipIf(carrier === undefined || families.length === 0)(
     `${map.name} keeps its laws over ${carrier}`,
     () => {
       const rng = streamFor("laws", map.name);
@@ -86,8 +73,9 @@ for (const map of MAPS.filter((m) => m.body !== undefined || m.composedOf !== un
         if ("untestable" in instance) continue;
         const draw = instance.draw(rng, 1 + (i % MAX_SIZE), BUDGET);
         if (!("address" in draw)) continue;
-        const element = family.unrank(draw.address.params, draw.address.rank);
-        const failure = checkLaws(ce, map, (construct as (e: unknown) => unknown)(element));
+        const subject = elementAt(family, draw.address.params, draw.address.rank);
+        if (subject === undefined) continue;
+        const failure = checkLaws(ce, map, subject);
         checked++;
         if (failure !== undefined)
           failures.push({ ...failure, detail: `${failure.detail} (from ${instance.show(draw.address)})` });
@@ -108,7 +96,7 @@ test("the empty permutation is a Permutation value, and its own image under each
 
 test("every map that declares laws gets them checked", () => {
   const unchecked = MAPS.filter((m) => (m.laws ?? []).length > 0)
-    .filter((m) => CONSTRUCT[constructorOf.get(m.from) as string] === undefined)
+    .filter((m) => familiesOver(constructorOf.get(m.from)).length === 0)
     .map((m) => m.name);
   expect(unchecked).toEqual([]);
 });
