@@ -32,6 +32,14 @@ test("DivisorSum: brute force over the divisors", () => {
   }
 });
 
+// A-126 farm scan: `DivisorSum(10, f, g)`, `f`/`g` free, answered `0` — undetermined divisors
+// (a `cond` that never resolves to `True` or `False`) silently read as "none pass" instead of
+// "can't tell", so the sum stayed at its zero seed the whole loop. Neither `f` nor `g` is
+// declared here, so `cond` can never resolve; the call must decline (stay unevaluated).
+test("DivisorSum: a free (undetermined) condition declines rather than answering 0", () => {
+  expect(run(["DivisorSum", 10, "f", "g"])).toEqual(["DivisorSum", 10, "f", "g"]);
+});
+
 test("IsCoprime: brute force pairwise gcd", () => {
   const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
   for (let a = 1; a <= 20; a++) {

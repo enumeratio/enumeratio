@@ -20,17 +20,30 @@ import { emit, type MathJSON } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
 
-/** Heads whose VALUE is a structure, not a scalar — a list, an association, a set of rules.
- * "Is the difference zero" is nonsense for these: subtracting two lists (or a `Rule`, which
- * isn't a number at all) doesn't test the thing this module exists to test, and every one of
- * these found scanning #A-72 phase 2's newly-emitting rows came back `Indeterminate` — not a
- * kernel quirk, a category error in asking the question at all. Checked at the top level of
- * both `expr` and `expected`, which is where every case found so far showed it (`Append`
- * returns the whole list, `Maximize` its `{value, {x -> argmax}}` pair, and so on) — a
- * structure nested deeper inside an otherwise scalar answer is not this module's problem. */
-const STRUCTURED_HEADS = new Set(["List", "Tuple", "Set", "Association", "Rule", "KeyValuePair", "Missing"]);
-const isStructured = (expr: MathJSON): boolean =>
-  Array.isArray(expr) && typeof expr[0] === "string" && STRUCTURED_HEADS.has(expr[0]);
+/** Heads whose VALUE carries something other than plain numbers/expressions — an association,
+ * a set of rules, a substitution pair. "Is the difference zero" is nonsense for these: a `Rule`
+ * isn't a number at all, so subtracting two of them doesn't test the thing this module exists
+ * to test, and every one of these found scanning #A-72 phase 2's newly-emitting rows came back
+ * `Indeterminate` — not a kernel quirk, a category error in asking the question at all
+ * (`Maximize`'s `{value, {x -> argmax}}` pair, and so on). */
+const STRUCTURED_HEADS = new Set(["Set", "Association", "Rule", "KeyValuePair", "Missing"]);
+
+/**
+ * Whether `expr`'s value is a structure "is the difference zero" can't meaningfully ask about.
+ * A bare `STRUCTURED_HEADS` call always is. A `List`/`Tuple` is NOT, on its own (BL-25): a list
+ * or matrix answer's elements are ordinarily plain numbers/expressions, so "the difference is
+ * zero" is exactly the right question, just asked elementwise — `wolfram`'s branch below does
+ * that with `Flatten`, rather than expecting `FullSimplify` of a list difference to collapse to
+ * the bare scalar `0` it never will. But `Maximize`'s `{value, {x -> argmax}}` is ALSO a `List`
+ * at the top, one that happens to carry a `Rule` a level down — recursing into a `List`/`Tuple`
+ * catches that: any genuinely non-arithmetic content anywhere in the nesting still bails,
+ * exactly as a bare `Rule`/`Association` at the top would. */
+const isStructured = (expr: MathJSON): boolean => {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return false;
+  if (STRUCTURED_HEADS.has(expr[0])) return true;
+  if (expr[0] === "List" || expr[0] === "Tuple") return expr.slice(1).some((e) => isStructured(e as MathJSON));
+  return false;
+};
 
 /** Small fixed rationals, none of them 0/1/-1 and no two equal, so a substitution steers
  * past the roots and poles a real identity is more likely to trip on at a "nice" point.
@@ -124,9 +137,16 @@ export function symbolicAgreementSource(
     // 10s and reports $Aborted rather than eating the item's whole 30s budget (run.ts,
     // ITEM_SECONDS) — an aborted simplification isn't `0` either, so it falls straight
     // through to the substitution trials, same as any other non-zero result.
+    //
+    // `d` is a scalar `0` for an ordinary answer, but a `List`/matrix answer's difference is
+    // itself a list (BL-25) — `FullSimplify` never collapses `{0, 0}` to the bare number `0`,
+    // so testing `d === 0` read every equal array as a disagreement. `Flatten[{d}]` reads the
+    // same for both shapes: `{0}` for a scalar, the fully-flattened elementwise differences
+    // for a list or nested matrix — `AllTrue[…, # === 0 &]` over that is the one check that
+    // means "the difference vanishes" in both cases.
     return (
       `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirs.source}) - (${ours.source})], 10, $Aborted]]}, ` +
-      `If[d === 0, True, Module[{s = {${points.join(", ")}}}, ` +
+      `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {${points.join(", ")}}}, ` +
       `If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
     );
   }

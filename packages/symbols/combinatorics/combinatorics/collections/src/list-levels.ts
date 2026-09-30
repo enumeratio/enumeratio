@@ -345,7 +345,10 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Flatten", 1, 1],
-    (ops) => ops.length === 1 && ops[0].operator !== "List",
+    // A bare symbol's `.operator` is the pseudo-head `"Symbol"` too — excluded so
+    // `Flatten(array)`, for a free `array`, stays unevaluated (see `Accumulate`'s note in
+    // list-frontier.ts).
+    (ops) => ops.length === 1 && ops[0].operator !== "List" && symbolNameOf(ops[0]) === undefined,
     () => (ops) => flattenSameHead(ce, ops[0]),
   );
 

@@ -11,7 +11,7 @@ const expected = ["Multiply", 2, "x"];
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
     "Module[{d = Quiet[TimeConstrained[FullSimplify[(Plus[x, x]) - (Times[2, x])], 10, $Aborted]]}, " +
-      "If[d === 0, True, Module[{s = {Chop[N[(Plus[Rational[7, 3], Rational[7, 3]]) - (Times[2, Rational[7, 3]])]], " +
+      "If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {Chop[N[(Plus[Rational[7, 3], Rational[7, 3]]) - (Times[2, Rational[7, 3]])]], " +
       "Chop[N[(Plus[Rational[-11, 5], Rational[-11, 5]]) - (Times[2, Rational[-11, 5]])]], " +
       "Chop[N[(Plus[Rational[13, 4], Rational[13, 4]]) - (Times[2, Rational[13, 4]])]]}}, " +
       "If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
@@ -51,16 +51,22 @@ test("undefined when `expected` doesn't emit for the system — falls back to th
 // is not a meaningful question (arithmetic on a non-numeric marker), and wrongly disagreed
 // even though Wolfram's own FunctionConvexity genuinely answers `Indeterminate` too — the
 // plain structural comparison (compareTrees) gets that right without this module.
-// Found scanning the newly-emitting rows against real kernels (#A-72 phase 2): `Append({a,b,c,d},
-// x)` is free in every one of a,b,c,d,x, and its expected `List(a,b,c,d,x)` shares all of
-// them — so the old gate let it through, and `FullSimplify[list - list]` (or a `Rule`,
-// `Missing`, `Association`) isn't a question that has a zero/nonzero answer; every such case
-// bottomed out at a false `Indeterminate` instead of falling back to the (correct) structural
-// comparison. Same story for `Maximize`'s `{value, {x -> argmax}}` pair.
-test("undefined when either side is a structure (List, Association, Rule, …), not a scalar", () => {
-  expect(
-    symbolicAgreementSource("wolfram", ["Append", ["List", "a"], "x"], ["List", "a", "x"], ["a", "x"]),
-  ).toBeUndefined();
+//
+// `Append({a}, x)` against `List(a, x)` — a `List` of plain expressions both sides — IS a
+// meaningful "is the difference zero" question (BL-25): both denote the same list, and the
+// elementwise check (the `wolfram` branch's `Flatten`) proves it.
+test("a List of plain expressions goes through the agreement check, not a bail", () => {
+  expect(symbolicAgreementSource("wolfram", ["Append", ["List", "a"], "x"], ["List", "a", "x"], ["a", "x"])).toContain(
+    "AllTrue[Flatten[{d}], # === 0 &]",
+  );
+});
+
+// `Maximize`'s `{value, {x -> argmax}}` is a `List` too, but one that carries a `Rule` a level
+// down — `FullSimplify[list - list]` where an element is a `Rule` isn't a question that has a
+// zero/nonzero answer, so this still bails to the (correct) structural comparison, exactly as
+// a bare `Rule`/`Association`/`Missing` at the top would (found scanning the newly-emitting
+// rows against real kernels, #A-72 phase 2).
+test("undefined when either side is a structure (Association, Rule, …) or nests one, not a scalar", () => {
   expect(
     symbolicAgreementSource(
       "wolfram",
