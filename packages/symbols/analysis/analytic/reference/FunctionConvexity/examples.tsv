@@ -1,5 +1,5 @@
-id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
-a-parabola-is-convex			[FunctionConvexity, [Power, x, 2], x]	1	1	Wolfram 15.0.0, hand cross-checked	A parabola is convex everywhere		
-a-cubic-has-an-inflection-point			[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	Wolfram 15.0.0, hand cross-checked	A cubic's second derivative changes sign at the inflection point	unevaluated	Wolfram's own FunctionConvexity answers Indeterminate, an exact indeterminate form; we decline to reduce past the bare call instead of picking a value.
-exp-is-always-convex			[FunctionConvexity, [Exp, x], x]	1	1	Wolfram 15.0.0, hand cross-checked	Exp is always convex		
-a-restricted-domain-answers-indeterminate	Properties		[FunctionConvexity, [Divide, 1, x], x]	[FunctionConvexity, [Divide, 1, x], x]			1/x's domain isn't all of R, so we decline rather than guess about its (genuinely mixed) shape	unevaluated	Wolfram's own FunctionConvexity answers Indeterminate, an exact indeterminate form; we decline to reduce past the bare call instead of picking a value.
+id	section	role	expr	expected	known	source	caption
+a-parabola-is-convex			[FunctionConvexity, [Power, x, 2], x]	1	1	Wolfram 15.0.0, hand cross-checked	A parabola is convex everywhere
+a-cubic-has-an-inflection-point			[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	[FunctionConvexity, [Power, x, 3], x]	Wolfram 15.0.0, hand cross-checked	A cubic's second derivative changes sign at the inflection point
+exp-is-always-convex			[FunctionConvexity, [Exp, x], x]	1	1	Wolfram 15.0.0, hand cross-checked	Exp is always convex
+a-restricted-domain-answers-indeterminate	Properties		[FunctionConvexity, [Divide, 1, x], x]	[FunctionConvexity, [Divide, 1, x], x]			1/x's domain isn't all of R, so we decline rather than guess about its (genuinely mixed) shape
