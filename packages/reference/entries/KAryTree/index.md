@@ -9,5 +9,5 @@ signatures:
   - call: KAryTree(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (list<integer>) -> k_ary_tree
+    type: (integer | list<any>) -> k_ary_tree
 ---

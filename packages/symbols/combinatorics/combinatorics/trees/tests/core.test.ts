@@ -8,6 +8,8 @@ import { entries } from "../src/families/core.ts";
 const PARAMS: Record<string, number[]> = {
   BinaryTrees: [4],
   BinaryTreeParentArrays: [4],
+  KAryTrees: [4, 2],
+  OrderedTrees: [4],
 };
 
 const byHead = new Map(entries.map((e) => [e.head, e]));

@@ -32,16 +32,6 @@ import {
   IsFibonacciWord,
   GrayCodeSubsetUnrank,
   GrayCodeSubsetRank,
-  OrderedTreeCount,
-  OrderedTreeUnrank,
-  OrderedTreeRank,
-  IsOrderedTree,
-  type OrdTree,
-  KAryTreeCount,
-  KAryTreeUnrank,
-  KAryTreeRank,
-  IsKAryTree,
-  type KTree,
   BinaryStringCount,
   BinaryStringUnrank,
   BinaryStringRank,
@@ -196,26 +186,9 @@ export const entriesBeforeTrees: NumberKernel[] = [
   },
 ];
 
-// BinaryTrees/BinaryTreeParentArrays moved to trees/src/families/core.ts -- §4 step 5, the only
-// two families in this section carrying a `carrier`. KAryTrees/OrderedTrees below declare none
-// and stay here per step 5 rule 4.
-export const entries: NumberKernel[] = [
-  {
-    head: "KAryTrees",
-    paramCount: 2,
-    kind: "nested",
-    count: ([n, k]) => KAryTreeCount(n, k),
-    unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
-    valid: (e, [n, k]) => IsKAryTree(e, n, k),
-    rank: (e, [, k]) => KAryTreeRank(e as KTree, k),
-  },
-  {
-    head: "OrderedTrees",
-    paramCount: 1,
-    kind: "nested",
-    count: ([n]) => OrderedTreeCount(n),
-    unrank: ([n], r) => OrderedTreeUnrank(n, r),
-    valid: (e, [n]) => IsOrderedTree(e, n),
-    rank: (e) => OrderedTreeRank(e as OrdTree),
-  },
-];
+// BinaryTrees/BinaryTreeParentArrays/KAryTrees/OrderedTrees moved to trees/src/families/core.ts
+// -- §4 step 5, every family in this section carrying a `carrier` (KAryTrees/OrderedTrees'
+// carriers wired lane A-92, matching BinaryTree's own nested shape per #401). Nothing left here
+// with no carrier at this position, but the export stays (splice position, and the general
+// `entries` name other tooling reads) as an empty array.
+export const entries: NumberKernel[] = [];

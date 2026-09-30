@@ -21,5 +21,5 @@ signatures:
   - call: OrderedTrees(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in oeis, sage; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<any>
+    type: (integer<0..>) -> indexed_collection<ordered_tree>
 ---

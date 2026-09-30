@@ -36,7 +36,7 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "KAryTree",
     type: "k_ary_tree",
-    shape: "list<integer>",
+    shape: "integer | list<any>",
     id: "k_ary_tree",
     plural: "KAryTrees",
   },
@@ -57,7 +57,7 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "OrderedTree",
     type: "ordered_tree",
-    shape: "list<integer>",
+    shape: "integer | list<any>",
     id: "ordered_tree",
     plural: "OrderedTrees",
   },
