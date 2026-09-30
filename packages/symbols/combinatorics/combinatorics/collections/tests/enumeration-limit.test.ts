@@ -62,7 +62,10 @@ test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements in
     "Permutation",
     ["List", ...Array.from({ length: 20 }, (_, i) => i + 1)],
   ]);
-  const last = run(["At", ["SymmetricGroup", 20], Number.MAX_SAFE_INTEGER]).json as ["Permutation", ["List", ...number[]]];
+  const last = run(["At", ["SymmetricGroup", 20], Number.MAX_SAFE_INTEGER]).json as [
+    "Permutation",
+    ["List", ...number[]],
+  ];
   const [, word] = last;
   expect(word.length).toBe(21);
   expect(symmetricGroup.rank(word.slice(1), [20])).toBe(BigInt(Number.MAX_SAFE_INTEGER - 1));

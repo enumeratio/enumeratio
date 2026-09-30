@@ -1,7 +1,7 @@
 // Shard of map.test.ts: CycleType and CyclePartition — the two priciest carrier-crossing maps
 // besides the conjugation family. See map-helpers.ts for shared setup.
 import { expect, test } from "vite-plus/test";
-import { ALL, ce, perm, result } from "./domains-map-helpers.ts";
+import { ALL, ce, perm, result } from "./maps-helpers.ts";
 
 test("CycleType crosses carriers and partitions n", () => {
   const cycleLengths = (p: number[]): number[] => {

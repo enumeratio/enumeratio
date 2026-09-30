@@ -23,7 +23,12 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics";
 import { substituteRowPerHead, wantsCarrier } from "@enumeratio/frontend";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
-import { collectionCarrierOf, declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
+import {
+  collectionCarrierOf,
+  declareCarrierElement,
+  declareCarrierPlurals,
+  declareStructures,
+} from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 
 function productionEngine(): ComputeEngine {

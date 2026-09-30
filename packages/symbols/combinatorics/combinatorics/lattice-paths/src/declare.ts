@@ -4,7 +4,11 @@ import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
 import { LATTICE_PATHS_CARRIERS } from "./carrier-data.ts";
-import { coreEntries, pathsPartitionsBeforeDyckPathsByHeightEntries, pathsPartitionsEntries } from "./families/index.ts";
+import {
+  coreEntries,
+  pathsPartitionsBeforeDyckPathsByHeightEntries,
+  pathsPartitionsEntries,
+} from "./families/index.ts";
 
 export function declareLatticePaths(ce: ComputeEngine): void {
   declareCarriers(ce, LATTICE_PATHS_CARRIERS, { plurals: false });

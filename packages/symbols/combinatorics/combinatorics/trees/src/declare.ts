@@ -20,8 +20,12 @@ export function declareTrees(ce: ComputeEngine): void {
   declareLabeledTreeFromPruferSequence(ce);
   declareFamilies(
     ce,
-    [...labeledEntries, ...rootedForestsEntries, ...coreEntries, ...pruferSequencesEntries, ...unlabeledTreesEntries].map(
-      numberKernel,
-    ),
+    [
+      ...labeledEntries,
+      ...rootedForestsEntries,
+      ...coreEntries,
+      ...pruferSequencesEntries,
+      ...unlabeledTreesEntries,
+    ].map(numberKernel),
   );
 }

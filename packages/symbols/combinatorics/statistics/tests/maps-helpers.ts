@@ -1,4 +1,4 @@
-// Shared setup and reference helpers for the map.test.ts shards (domains-map-*.test.ts). Pulled
+// Shared setup and reference helpers for the map.test.ts shards (maps-*.test.ts). Pulled
 // out so each shard pays for its own engine instance without duplicating the reference
 // algorithms. Lives in @enumeratio/statistics (moved from combinatorics' domains area) because
 // it wires declareStatistics into the shared engine: keeping it in combinatorics would devDep
