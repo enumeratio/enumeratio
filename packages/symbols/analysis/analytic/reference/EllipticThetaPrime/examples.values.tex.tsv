@@ -29,4 +29,4 @@ theta1-prime-0-q-matches-the-classical	N(\mathrm{EllipticThetaPrime}(1, 0.3, 0.2
 a-complex-argument-u	N(\mathrm{EllipticThetaPrime}(3, 0.3+0.1i, 0.2))	-0.473\,682\,807\,676\,938\,2-0.134\,840\,072\,893\,700\,92i
 q-1-is-declined-the-series-diverges	N(\mathrm{EllipticThetaPrime}(3, 0.3, 1))	\mathrm{EllipticThetaPrime}(3, 0.3, 1)
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{EllipticThetaPrime}(3, u, q)	\mathrm{EllipticThetaPrime}(3, u, q)
-u-1e16-argument-reduction-not-implemented	N(\mathrm{EllipticThetaPrime}(1, 10^{30}, \frac{1}{\pi}))	-1.063\,161\,854\,033\,081\,498\,7
+u-1e30-declines-rather-than-answering-wrong	N(\mathrm{EllipticThetaPrime}(1, 10^{30}, \frac{1}{\pi}))	\mathrm{EllipticThetaPrime}(1, 1.0\cdot10^{30}, 0.318\,309\,886\,183\,790\,671\,538)

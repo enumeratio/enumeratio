@@ -4,4 +4,4 @@ m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiSD}(1.1, 0.9))	1.267
 u-0-is-0-for-any-m	\mathrm{JacobiSD}(0, m)	0
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiSD}(u, m)	\mathrm{JacobiSD}(u, m)
 m-1-at-a-shared-pole-of-sn-and-cn	N(\mathrm{JacobiSD}(\frac{i\pi}{2}, 1))	1.0i
-u-1e16-argument-reduction-not-implemented	N(\mathrm{JacobiSD}(10^{16}, \frac{1}{5}))	-1.110\,048\,444\,631\,548\,445\,6
+u-1e16-declines-rather-than-answering-wrong	N(\mathrm{JacobiSD}(10^{16}, \frac{1}{5}))	\mathrm{JacobiSD}(10\,000\,000\,000\,000\,000.0, 0.2)
