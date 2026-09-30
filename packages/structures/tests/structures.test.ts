@@ -73,9 +73,10 @@ describe("a type the engine has never seen", () => {
     PartialOrder: { Compare: (a, b) => ce.number(Math.sign(amount(a).re - amount(b).re)) },
     LinearOrder: {},
     FloorOrder: { LowerTick: (m) => money(real("Floor")(m)), UpperTick: (m) => money(real("Ceil")(m)) },
-    MidpointOrder: {
+    AffineMidpoint: {
       Midpoint: (a, b) => money(ce.function("Divide", [ce.function("Add", [amount(a), amount(b)]), 2]).evaluate()),
     },
+    MidpointOrder: {},
     TickParity: { IsEvenTick: (m) => real("IsEven")(m) },
   });
 

@@ -1,0 +1,7 @@
+id	section	role	expr	expected	caption
+of-two-numbers	Basic		[Midpoint, 1, 2]	[Rational, 3, 2]	Between two numbers
+of-two-points-in-the-plane	Basic		[Midpoint, [List, 1, 1], [List, 2, 3]]	[List, [Rational, 3, 2], 2]	Between two points given by their coordinates, componentwise
+in-three-dimensions	Basic		[Midpoint, [List, 1, 2, 3], [List, 4, 5, 6]]	[List, [Rational, 5, 2], [Rational, 7, 2], [Rational, 9, 2]]	In any dimension
+of-two-point-primitives	Basic		[Midpoint, [Point, [List, 1, 1]], [Point, [List, 2, 3]]]	[Point, [List, [Rational, 3, 2], 2]]	A `Point` keeps its head
+of-two-matrices	Properties		[Midpoint, [List, [List, 1, 1], [List, 0, 2]], [List, [List, 3, 3], [List, 4, 0]]]	[List, [List, 2, 2], [List, 2, 1]]	Entry by entry, since a matrix is a list of vectors
+of-two-complex-numbers	Properties		[Midpoint, [Complex, 1, 2], [Complex, 3, 0]]	[Complex, 2, 1]	In the complex plane

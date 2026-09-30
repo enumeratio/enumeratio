@@ -11,13 +11,15 @@ const sign = (x: number): number => (Number.isNaN(x) ? Number.NaN : Math.sign(x)
 
 export function conformNumbers(ce: ComputeEngine): void {
   const call = (head: string, ...args: BoxedExpression[]) => ce.function(head, args).evaluate();
+  const half = (a: BoxedExpression, b: BoxedExpression) => call("Divide", call("Add", a, b), ce.number(2));
 
   conform(ce, "real", {
     PartialOrder: { Compare: (a, b) => ce.number(sign(call("Subtract", a, b).N().re)) },
     LinearOrder: {},
     Lattice: { GreatestLowerBound: (a, b) => call("Min", a, b), LeastUpperBound: (a, b) => call("Max", a, b) },
     FloorOrder: { LowerTick: (x) => call("Floor", x), UpperTick: (x) => call("Ceil", x) },
-    MidpointOrder: { Midpoint: (a, b) => call("Divide", call("Add", a, b), ce.number(2)) },
+    AffineMidpoint: { Midpoint: half },
+    MidpointOrder: {},
     TickParity: { IsEvenTick: (x) => call("IsEven", x) },
     Ring: {},
     FloorRing: { IntegerFloor: (x) => call("Floor", x), IntegerCeil: (x) => call("Ceil", x) },
@@ -51,5 +53,24 @@ export function conformNumbers(ce: ComputeEngine): void {
       Coordinates: (z) => ce.function("List", parts(z)),
       WithCoordinates: (_z, list) => call("Complex", ...operandsOf(list)),
     },
+    AffineMidpoint: { Midpoint: half },
   });
+
+  // Vectors, matrices and points: the midpoint componentwise, each component by its own type's
+  // Midpoint, so a matrix is a list of vectors and a point keeps its head (Wolfram's
+  // `Midpoint[{{1, 1}, {2, 3}}]`, `Midpoint[{Point[…], Point[…]}]`). Lists of different shapes
+  // have no midpoint and stay as written.
+  const componentwise = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+    if (a.operator === "Point" && b.operator === "Point") {
+      const inner = componentwise(operandsOf(a)[0]!, operandsOf(b)[0]!);
+      return inner === undefined ? undefined : ce.function("Point", [inner]);
+    }
+    const [xs, ys] = [operandsOf(a), operandsOf(b)];
+    if (a.operator !== "List" || b.operator !== "List" || xs.length !== ys.length) return undefined;
+    return ce.function(
+      "List",
+      xs.map((x, i) => call("Midpoint", x, ys[i]!)),
+    );
+  };
+  conform(ce, "list<any>", { AffineMidpoint: { Midpoint: componentwise } });
 }

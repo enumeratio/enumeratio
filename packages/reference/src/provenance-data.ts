@@ -10351,7 +10351,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Midpoint",
-    provenance: "unknown",
+    provenance: "extension",
     declared: "enumeratio-structures",
     wolframAlias: "Midpoint",
     elsewhere: ["wolfram"],

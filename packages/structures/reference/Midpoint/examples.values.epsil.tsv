@@ -1,0 +1,7 @@
+id	in	out
+of-two-numbers	Midpoint(1, 2)	3 / 2
+of-two-points-in-the-plane	Midpoint([1, 1], [2, 3])	[3 / 2, 2]
+in-three-dimensions	Midpoint([1, 2, 3], [4, 5, 6])	[5 / 2, 7 / 2, 9 / 2]
+of-two-point-primitives	Midpoint(Point([1, 1]), Point([2, 3]))	Point([3 / 2, 2])
+of-two-matrices	Midpoint([[1, 1], [0, 2]], [[3, 3], [4, 0]])	[[2, 2], [2, 1]]
+of-two-complex-numbers	Midpoint(1 + 2i, 3 + 0i)	2 + i

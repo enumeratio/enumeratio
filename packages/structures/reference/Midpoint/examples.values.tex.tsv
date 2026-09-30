@@ -1,0 +1,7 @@
+id	in	out
+of-two-numbers	\mathrm{Midpoint}(1, 2)	\frac{3}{2}
+of-two-points-in-the-plane	\mathrm{Midpoint}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack)	\bigl\lbrack\frac{3}{2}, 2\bigr\rbrack
+in-three-dimensions	\mathrm{Midpoint}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack)	\bigl\lbrack\frac{5}{2}, \frac{7}{2}, \frac{9}{2}\bigr\rbrack
+of-two-point-primitives	\mathrm{Midpoint}(\mathrm{Point}(\bigl\lbrack1, 1\bigr\rbrack), \mathrm{Point}(\bigl\lbrack2, 3\bigr\rbrack))	\mathrm{Point}(\bigl\lbrack\frac{3}{2}, 2\bigr\rbrack)
+of-two-matrices	\mathrm{Midpoint}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack4, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack
+of-two-complex-numbers	\mathrm{Midpoint}(1+2i, 3)	2+i
