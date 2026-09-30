@@ -92,10 +92,11 @@ describe("BinormalDistribution", () => {
       ["List", 1, ["Rational", 1, 2]],
       ["List", ["Rational", 1, 2], 1],
     ]);
+    // A float rho makes the covariance a float, `3.0`.
     expect(evalOf(["Variance", ["BinormalDistribution", ["List", 2, 3], 0.5]]).json).toEqual([
       "List",
-      ["List", 4, 3],
-      ["List", 3, 9],
+      ["List", 4, { num: "3.0" }],
+      ["List", { num: "3.0" }, 9],
     ]);
   });
 
