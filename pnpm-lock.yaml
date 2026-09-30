@@ -390,6 +390,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/cli':
         specifier: workspace:*
         version: link:../cli
@@ -537,6 +540,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine

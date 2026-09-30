@@ -424,6 +424,8 @@ export interface BrowserSessionEvaluateResult {
    * unaffected). Either way, bindings made before it are gone for the caller of THIS
    * session. `false` whenever a cooperative stop landed in time. */
   readonly reset: boolean;
+  /** The answer's display, when the worker is a kernel with a `display` (boxes, by form). */
+  readonly boxes?: unknown;
 }
 
 export interface BrowserSession {
@@ -566,6 +568,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
           kind?: "started" | "result";
           ok?: boolean;
           json?: unknown;
+          boxes?: unknown;
         };
         if (m.id !== id || settled) return;
         if (m.kind === "started") {
@@ -580,7 +583,11 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         // A cooperative stop (m.json === "Aborted") arrives over THIS message path too --
         // the worker survived, so no reset either way.
-        resolve({ value: m.ok ? m.json : ABORTED, reset: false });
+        resolve({
+          value: m.ok ? m.json : ABORTED,
+          reset: false,
+          ...(m.ok && m.boxes !== undefined ? { boxes: m.boxes } : {}),
+        });
       };
 
       dispatchers.set(id, onMessage);

@@ -211,12 +211,16 @@ export class NotatioDynamicModule extends LitElement {
    * the session is hard-killed and respawned, same outcome (and notice) as a
    * `TimeConstraint` deadline's own hard kill.
    */
-  evaluateRemote(json: unknown, options: { signal?: AbortSignal } = {}): Promise<{ value: unknown; reset: boolean }> {
+  evaluateRemote(
+    json: unknown,
+    options: { signal?: AbortSignal } = {},
+  ): Promise<{ value: unknown; reset: boolean; boxes?: unknown }> {
     const session = (this.#session ??= this.#openSession());
     // Wolfram's own unit (`TimeConstraint`, `VerificationTest`) is seconds; evaluation's
     // session API wants ms.
     const timeMs = this.timeConstraint > 0 ? this.timeConstraint * 1000 : undefined;
-    const attempt = (): Promise<{ value: unknown; reset: boolean }> => session.evaluate(json, { timeMs });
+    const attempt = (): Promise<{ value: unknown; reset: boolean; boxes?: unknown }> =>
+      session.evaluate(json, { timeMs });
 
     // `reset: true` here is never a user-requested stop (that path is the `signal`
     // branch below, which resolves its own `Aborted` directly) -- it's the session's
@@ -225,7 +229,7 @@ export class NotatioDynamicModule extends LitElement {
     // this promise settles, so give THIS call one more try on it before reporting
     // anything to the reader as `$Aborted` -- a worker that merely needed a second
     // attempt is not the same failure as one the reader actually asked to stop.
-    const runWithRetry = async (): Promise<{ value: unknown; reset: boolean }> => {
+    const runWithRetry = async (): Promise<{ value: unknown; reset: boolean; boxes?: unknown }> => {
       const first = await attempt();
       if (!first.reset) {
         this.#clearSessionResetNotice();

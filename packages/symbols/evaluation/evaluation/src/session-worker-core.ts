@@ -25,7 +25,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { Library } from "@enumeratio/manifest";
 import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareEvaluation } from "./declare.ts";
-import { createKernel, type Kernel } from "./kernel.ts";
+import { createKernel, type Kernel, type KernelOptions } from "./kernel.ts";
 
 /** Declares whatever libraries the host's own engine has, into the session's. */
 export type ConfigureFn = (ce: ComputeEngine) => void | Promise<void>;
@@ -62,6 +62,17 @@ export interface EvaluateResponse {
    *  catalogue doesn't offer. */
   readonly declared?: readonly string[];
   readonly missing?: readonly string[];
+  /** With a `display`: the answer's boxes, by form. */
+  readonly boxes?: unknown;
+}
+
+/** A worker that is a kernel (`./kernel.ts`). */
+export interface KernelWorkerOptions extends KernelOptions {
+  /** The libraries it may declare, each when a call first needs it. */
+  readonly catalogue: readonly Library<ComputeEngine>[];
+  /** Its engine, before any library: where the host's notation goes (a LaTeX dictionary is
+   *  fixed at construction). */
+  readonly createEngine?: () => ComputeEngine;
 }
 
 /** The subset of `MessagePort` (a `SharedWorker` connection) or `self` (a dedicated
@@ -74,8 +85,8 @@ export interface PortLike {
 
 /** Builds the session's one persistent engine: evaluation's own declarations, then
  * `configure`'s (the host's own libraries), if given. */
-async function buildEngine(configure?: ConfigureFn): Promise<ComputeEngine> {
-  const ce = new ComputeEngine();
+async function buildEngine(configure?: ConfigureFn, create = () => new ComputeEngine()): Promise<ComputeEngine> {
+  const ce = create();
   declareEvaluation(ce);
   if (configure) await configure(ce);
   return ce;
@@ -96,11 +107,12 @@ function urlConfigure(setup: string): ConfigureFn {
  * runs standalone, factored out so a consumer can call this from its OWN bundled worker
  * entry instead (this module's own comment explains why).
  *
- * With a `catalogue` the worker is a kernel: its engine starts with evaluation's heads (and
+ * With `kernel` options the worker is a kernel: its engine starts with evaluation's heads (and
  * `configure`'s) only, and declares each library a call needs as it arrives
  * (`./kernel.ts`).
  */
-export function startSessionWorker(configure?: ConfigureFn, catalogue?: readonly Library<ComputeEngine>[]): void {
+export function startSessionWorker(configure?: ConfigureFn, options?: KernelWorkerOptions): void {
+  const catalogue = options?.catalogue;
   let engine: Promise<ComputeEngine> | undefined;
   let kernel: Kernel | undefined;
 
@@ -117,7 +129,7 @@ export function startSessionWorker(configure?: ConfigureFn, catalogue?: readonly
             port.postMessage({ id, kind: "result", ...evaluateCooperatively(ce, json, timeMs) });
             return;
           }
-          kernel ??= createKernel(ce, catalogue);
+          kernel ??= createKernel(ce, catalogue, options);
           port.postMessage({ id, kind: "result", ...(await kernel.evaluate(json, timeMs)) });
         },
         (error: unknown) => {
@@ -144,7 +156,7 @@ export function startSessionWorker(configure?: ConfigureFn, catalogue?: readonly
       // A catalogue replaces `setup`: the kernel declares from it, and a second, eager
       // declare of the same libraries would throw.
       const fromSetup = catalogue === undefined && setup !== undefined ? urlConfigure(setup) : undefined;
-      engine ??= buildEngine(configure ?? fromSetup);
+      engine ??= buildEngine(configure ?? fromSetup, options?.createEngine);
       attachEvaluateHandler(port);
     };
     port.start?.();

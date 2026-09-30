@@ -4,9 +4,9 @@ import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
 import { COMPOSITIONS_CARRIERS } from "./carrier-data.ts";
-import { compositionsEntries, coreEntries } from "./families/index.ts";
+import { compositionsEntries, coreFamilies } from "./families/index.ts";
 
 export function declareCompositions(ce: ComputeEngine): void {
   declareCarriers(ce, COMPOSITIONS_CARRIERS, { plurals: false });
-  declareFamilies(ce, [...coreEntries, ...compositionsEntries].map(numberKernel));
+  declareFamilies(ce, [...coreFamilies, ...compositionsEntries.map(numberKernel)]);
 }

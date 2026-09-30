@@ -19,7 +19,7 @@ import {
   tableauxPlaneEntries as partitionsTableauxPlaneEntries,
 } from "../../../partitions/src/families/index.ts";
 import {
-  coreEntries as compositionsCoreEntries,
+  coreFamilies as compositionsCoreFamilies,
   compositionsEntries,
 } from "../../../compositions/src/families/index.ts";
 import {
@@ -70,7 +70,6 @@ export * from "./epsil.ts";
 // Every `<area>...Entries` group below keeps the exact interior position its source file held
 // before that area's move -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
 const numberEntries = [
-  ...compositionsCoreEntries,
   ...partitionsCoreEntries,
   ...coreBeforeSurjections,
   ...setPartitionsSurjectionsEntries,
@@ -120,7 +119,11 @@ const numberEntries = [
 // order only -- since https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 5's `carrierTypes` removal (A-94), nothing declares this list as one call any more;
 // see `collectionsEntries` below and each area's own `declare<Area>` for what does.
-export const allFamilies: readonly AnyFamily[] = [...permutationsCoreFamilies, ...numberEntries];
+export const allFamilies: readonly AnyFamily[] = [
+  ...permutationsCoreFamilies,
+  ...compositionsCoreFamilies,
+  ...numberEntries,
+];
 
 /** Every family's kernel on `ce`. */
 export const allKernels = (ce: ComputeEngine): FamilyKernel[] => kernelsOn(ce, allFamilies);
