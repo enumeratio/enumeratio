@@ -610,6 +610,7 @@ export function declareNumerals(ce: ComputeEngine): void {
 
   ce.declare("IntegerReverse", {
     signature: "(integer, any?, integer?) -> integer",
+    broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
       const n = integerAt(ops[0]);
       // A numeral system in the base slot (MixedRadix, FactorialNumerals, …): reverse its

@@ -63,6 +63,14 @@ test("MixedRadixNumerals: IntegerDigits drops an unused overflow place, IntegerR
   expect(value(["IntegerReverse", 1024, ["MixedRadixNumerals", L(6, 4, 2)]])).toBe(25);
 });
 
+// Regression for a CI break in #492: routing the base slot through `systemOf` dropped
+// `broadcastable: true` from IntegerReverse's declare, so the plain one-arg listable form
+// (no base given, threaded over a list of integers) stopped threading and answered an Error
+// per element instead of reversing each integer's own decimal digits.
+test("IntegerReverse(list) still threads over a list with no base argument", () => {
+  expect(value(["IntegerReverse", L(12, 345)])).toEqual(L(21, 543));
+});
+
 test("a system that declines says why", () => {
   const said = (input: Expr): string[] => collectMessages(ce, () => ce.box(input).evaluate()).messages.map(messageLine);
   expect(said(["IntegerDigits", -3, "FactorialNumerals"])).toEqual([
