@@ -68,6 +68,22 @@ test("⊗ is total, not Clifford-only: it works on scalars and commuting units",
   same(["CircleTimes", ["Add", 1, "i_1"], ["Add", 1, "i_2"]], ["Multiply", ["Add", 1, "i_1"], ["Add", 1, "i_2"]]);
 });
 
+test("NonCommutativeMultiply/GeometricProduct decline a generator-free product, unlike ⊗", () => {
+  // No generator on either side: this isn't a Clifford product at all, so we must not fold
+  // it into commutative Multiply — that would silently grant commutativity the caller never
+  // declared. It stays unevaluated, same as real Wolfram's uninterpreted NonCommutativeMultiply.
+  expect(ce.box(["NonCommutativeMultiply", "a", "b"]).evaluate().json).toEqual(["NonCommutativeMultiply", "a", "b"]);
+  expect(ce.box(["GeometricProduct", "a", "b"]).evaluate().json).toEqual(["GeometricProduct", "a", "b"]);
+  // Order is preserved too — nothing here should sort the operands the way Multiply would.
+  expect(ce.box(["NonCommutativeMultiply", "b", "a"]).evaluate().json).toEqual(["NonCommutativeMultiply", "b", "a"]);
+  // As soon as one side carries a generator it IS ours, and folds as a Clifford product.
+  same(["NonCommutativeMultiply", "a", "i_1"], ["Multiply", "a", "i_1"]);
+  // CircleTimes is exempt: it's declared total and commutative on scalars by design.
+  same(["CircleTimes", "a", "b"], ["Multiply", "a", "b"]);
+  // A single generator-free operand has nothing to commute, so it still reduces to itself.
+  same(["NonCommutativeMultiply", "a"], "a");
+});
+
 test("the named algebras are the literature's names for fixed sizes", () => {
   same(["AlgebraSignature", "BicomplexNumbers"], ["List", -1, -1]);
   same(["Basis", "BicomplexNumbers"], ["Basis", ["MulticomplexAlgebra", 2]]);

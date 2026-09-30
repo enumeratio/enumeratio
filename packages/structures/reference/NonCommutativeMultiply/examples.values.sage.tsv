@@ -7,6 +7,6 @@ the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	((1 + (2 * SR.var("f_1")) + (3 * S
 reversing-the-operands-flips-the-sign	(SR.var("e_2") * SR.var("e_1"))	False	disagree
 e-1e-2-2-1	(SR.var("e_1") * SR.var("e_2") * SR.var("e_1") * SR.var("e_2"))	e_1^2*e_2^2	inconclusive
 associative-nested-products-flatten	(SR.var("a") * (SR.var("b") * SR.var("c")))	True	
-plain-times-declines-both-orders-arrive	(SR.var("e_2") * SR.var("e_1"))	True	
 undeclared-symbols-are-taken-to-commute-so-the	(SR.var("b") * SR.var("a"))	True	
+plain-times-declines-both-orders-arrive	(SR.var("e_2") * SR.var("e_1"))	True	
 noncommutativemultiply-a	(SR.var("a"))		

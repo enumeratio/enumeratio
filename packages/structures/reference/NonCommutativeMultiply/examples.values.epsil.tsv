@@ -6,7 +6,7 @@ commuting-units-agrees-with-times	CircleTimes(i_2, i_1)	i_1 * i_2
 the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	"NonCommutativeMultiply(\n                        1 + 2f_1 + 3f_2 + 4 * f_1 * f_2,\n                        2 - f_1 + f_2 - 3 * f_1 * f_2,\n                      )"	10 * f_1 * f_2 - 10f_1 + 9f_2 + 13
 reversing-the-operands-flips-the-sign	NonCommutativeMultiply(e_2, e_1)	-(e_1 * e_2)
 e-1e-2-2-1	NonCommutativeMultiply(e_1, e_2, e_1, e_2)	-1
-associative-nested-products-flatten	NonCommutativeMultiply(a, NonCommutativeMultiply(b, c))	a * b * c
+associative-nested-products-flatten	NonCommutativeMultiply(a, NonCommutativeMultiply(b, c))	NonCommutativeMultiply(a, b, c)
+undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply(b, a)	NonCommutativeMultiply(b, a)
 plain-times-declines-both-orders-arrive	e_2 * e_1	e_1 * e_2
-undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply(b, a)	a * b
 noncommutativemultiply-a	NonCommutativeMultiply(a)	a
