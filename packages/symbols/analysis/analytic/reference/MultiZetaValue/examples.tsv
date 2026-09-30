@@ -1,11 +1,11 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 zeta-2-2-frac-34-zeta-4			[N, [MultiZetaValue, 2, 2]]	0.8117424252833536	$\zeta(2,2) = \tfrac34\zeta(4)$		
 zeta-3-3-frac-12-zeta-3-2-zeta-6			[N, [MultiZetaValue, 3, 3]]	0.2137988682245925	$\zeta(3,3) = \tfrac12(\zeta(3)^2-\zeta(6))$		
-zeta-2-3		test	[N, [MultiZetaValue, 2, 3]]	0.711566197550413			
-zeta-3-2		test	[N, [MultiZetaValue, 3, 2]]	0.2288103976028497			
-zeta-4-2		test	[N, [MultiZetaValue, 4, 2]]	0.08848338245475296			
-zeta-2-4		test	[N, [MultiZetaValue, 2, 4]]	0.674523914033936			
-zeta-5-2		test	[N, [MultiZetaValue, 5, 2]]	0.038575124342795405			
-zeta-3-4		test	[N, [MultiZetaValue, 3, 4]]	0.20750501461558057			
+zeta-2-3		test	[N, [MultiZetaValue, 2, 3]]	0.7115661975505727			
+zeta-3-2		test	[N, [MultiZetaValue, 3, 2]]	0.22881039760335486			
+zeta-4-2		test	[N, [MultiZetaValue, 4, 2]]	0.08848338245436914			
+zeta-2-4		test	[N, [MultiZetaValue, 2, 4]]	0.6745239140339683			
+zeta-5-2		test	[N, [MultiZetaValue, 5, 2]]	0.03857512434275102			
+zeta-3-4		test	[N, [MultiZetaValue, 3, 4]]	0.20750501461573193			
 zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	Properties		[Chop, [Subtract, [N, [MultiZetaValue, 2, 2]], [Multiply, 0.75, [N, [Zeta, 4]]]]]	{num: "0.0"}	$\zeta(2, 2) = \tfrac34\zeta(4)$, one of Fungrim's exact closed forms		
 s-1-2-stays-symbolic-outside-the-depth-2-both	Possible issues		[MultiZetaValue, 1, 2]	[MultiZetaValue, 1, 2]	$s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\ge2$ scope	domain	Expected: s1=1 is outside our depth-2, both-weights->=2 scope, so ours stays symbolic by design (see this entry's own details). The wolfram row's fixed Sum template has no scope gate, so Wolfram happily returns a concrete (if not absolutely-convergent-by-our-standard) number for the same expression.
