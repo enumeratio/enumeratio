@@ -27,9 +27,29 @@ test("m = 0: sn = Sin(u), cn = Cos(u), dn = 1, for symbolic u", () => {
 });
 
 test("m = 1: sn = Tanh(u), cn = dn = Sech(u), for symbolic u", () => {
-  expect(ce.box(["JacobiSN", "u", 1]).evaluate().json).toEqual(["Tanh", "u"]);
+  // sn built on Cosh(u) rather than Sech(u) directly (see jacobi-elliptic.ts's exactSCDN):
+  // equal to Tanh(u), but sharing the pq family's one denominator so sc/sd/cs/ds don't
+  // divide two things that both blow up at u = iπ/2 + ikπ.
+  expect(ce.box(["JacobiSN", "u", 1]).evaluate().json).toEqual(["Divide", ["Sinh", "u"], ["Cosh", "u"]]);
   expect(ce.box(["JacobiCN", "u", 1]).evaluate().json).toEqual(["Divide", 1, ["Cosh", "u"]]);
   expect(ce.box(["JacobiCN", "u", 1]).evaluate().json).toEqual(ce.box(["JacobiDN", "u", 1]).evaluate().json);
+});
+
+test("m = 1, complex u at a pole of sn/cn individually: sc/sd/cs/ds stay finite", () => {
+  // u = iπ/2: sn(u,1) = tanh(u) and cn(u,1) = dn(u,1) = sech(u) are each ComplexInfinity
+  // (cosh(u) = 0 there), but sc = sn/cn = sinh(u) and cs = 1/sinh(u) are finite — the whole
+  // point of exactSCDN sharing Cosh(u) as the pq family's one denominator.
+  const u = ["Multiply", ["Rational", 1, 2], "ImaginaryUnit", "Pi"];
+  for (const head of ["JacobiSC", "JacobiSD"]) {
+    const r = ce.box([head, u, 1] as never).N();
+    expect(r.re).toBeCloseTo(0, 12);
+    expect(r.im).toBeCloseTo(1, 12);
+  }
+  for (const head of ["JacobiCS", "JacobiDS"]) {
+    const r = ce.box([head, u, 1] as never).N();
+    expect(r.re).toBeCloseTo(0, 12);
+    expect(r.im).toBeCloseTo(-1, 12);
+  }
 });
 
 test("m = 1, concrete u: sn/cn/dn reduce to a decimal matching tanh/sech directly", () => {

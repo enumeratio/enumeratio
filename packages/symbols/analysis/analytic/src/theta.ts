@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
   wantsNumber,
@@ -117,6 +118,9 @@ function declareOne(ce: ComputeEngine, head: string, derivative: boolean): void 
       const [a, u, q] = ops;
       if (a === undefined || u === undefined || q === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(u) || !isFiniteNum(q)) return undefined;
+      // The q-series below is plain-double: N(…, d) past what a double carries would
+      // otherwise silently hand back ~17 correct digits dressed as d of them.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       if (!isValidOrder(a)) return undefined; // a must be a concrete integer 1..4
       const result = theta(a.re as 1 | 2 | 3 | 4, cxOf(u), cxOf(q), derivative);
       return result === undefined ? undefined : numberResult(ce, result);

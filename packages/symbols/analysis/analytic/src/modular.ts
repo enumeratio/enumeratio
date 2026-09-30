@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  exceedsDoublePrecision,
   isFiniteNum,
   isRealInt,
   numberResult,
@@ -158,6 +159,9 @@ function declareKleinInvariantJ(ce: ComputeEngine): void {
       if (tau === undefined || !isFiniteNum(tau)) return undefined;
       if (tau.re === 0 && tau.im === 1) return ce.One; // j(i) = 1728 exactly
       if (!wantsNumber(ops, options)) return undefined;
+      // The SL2(Z) reduction and its q-series below are plain-double: N(…, d) past what a
+      // double carries would otherwise silently hand back ~17 correct digits as if they were d.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       return numberResult(ce, scale(modularJ(ce, cx(tau.re, tau.im)), 1 / 1728));
     },
   });
@@ -177,6 +181,7 @@ export function declareModular(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       return numberResult(ce, modularJ(ce, cx(tau.re, tau.im)));
     },
   });
@@ -186,6 +191,7 @@ export function declareModular(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [tau] = ops;
       if (tau === undefined || !wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       return numberResult(ce, modularLambda(ce, cx(tau.re, tau.im)));
     },
   });
@@ -199,6 +205,7 @@ export function declareModular(ce: ComputeEngine): void {
       if (k === undefined || tau === undefined) return undefined;
       if (!isRealInt(k) || k.re < 4 || k.re % 2 !== 0) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(tau)) return undefined;
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       return numberResult(ce, eisensteinG(ce, k.re, cx(tau.re, tau.im)));
     },
   });

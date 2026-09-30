@@ -3,6 +3,25 @@ import { type BigDecimal, type BoxedExpression, type ComputeEngine, isNumber } f
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
 
+/** `N(expr, d)`'s own Ziv refinement loop calls `evaluate` twice, at `d + 20` then `d + 10`
+ * (checked empirically: `N(x, 15)` calls in at precision 35 then 25, `N(x, 50)` at 70 then
+ * 60) — and a decline on EITHER pass aborts the whole `N()` symbolic, so the binding
+ * constraint is the higher of the two, `d + 20`. A plain `N(expr)` (no explicit digit
+ * count) runs once, at the engine's own configured precision, well under that. */
+const REQUESTED_DIGITS_GUARD = 20;
+
+/**
+ * A kernel with no bignum companion should decline (stay symbolic under `N()`, per
+ * "decline rather than answer wrong") once more digits than a double can supply were
+ * explicitly asked for — printing a double's ~17 correct digits as if they were the 50
+ * requested is silently wrong, not merely imprecise. A plain `N(expr)` at the engine's own
+ * default precision (which already exceeds `DOUBLE_DIGITS` on its own) is unaffected: only
+ * an explicit `N(expr, d)` with `d > DOUBLE_DIGITS` pushes `ce.precision` past the guard
+ * band this checks.
+ */
+export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: boolean | undefined): boolean =>
+  (numericApproximation ?? false) && ce.precision > DOUBLE_DIGITS + REQUESTED_DIGITS_GUARD;
+
 /**
  * `value` rounded to the digits the engine was actually asked for, or undefined if it is not
  * a number at all.

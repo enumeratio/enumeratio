@@ -145,7 +145,14 @@ export {
   bernoulliPolyExpr,
 } from "./compute-engine/numerics/bernoulli-rational.ts";
 export { evaluateBernoulliPolynomial } from "./support/bernoulli-polynomial.ts";
-export { DOUBLE_DIGITS, atEnginePrecision, withGuardDigits, bigRealOperand, bigResult } from "./support/precise.ts";
+export {
+  DOUBLE_DIGITS,
+  atEnginePrecision,
+  withGuardDigits,
+  bigRealOperand,
+  bigResult,
+  exceedsDoublePrecision,
+} from "./support/precise.ts";
 export {
   type Ball,
   certify,

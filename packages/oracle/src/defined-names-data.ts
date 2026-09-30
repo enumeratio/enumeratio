@@ -258,6 +258,8 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "EigenvectorCentrality",
   "EisensteinG",
   "Element",
+  "EllipticE",
+  "EllipticF",
   "EllipticK",
   "EllipticTheta",
   "EllipticThetaPrime",
