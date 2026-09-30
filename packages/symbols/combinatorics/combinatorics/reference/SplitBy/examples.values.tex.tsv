@@ -1,5 +1,4 @@
 id	in	out
 runs-of-the-same-parity	\mathrm{SplitBy}(\bigl\lbrack1, 3, 5, 2, 4, 7, 9\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2)	\bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack7, 9\bigr\rbrack\bigr\rbrack
 runs-with-the-same-value-of-lfloor-x-4-rfloor	\mathrm{SplitBy}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8, 9, 10\bigr\rbrack, ()\mapsto\lfloor\frac{\operatorname{\_1}}{4}\rfloor)	\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6, 7\bigr\rbrack, \bigl\lbrack8, 9, 10\bigr\rbrack\bigr\rbrack
-splitby-range-1-5-1-over-2-integerpart	\mathrm{SplitBy}(1..(1+\frac{1}{2})..5, \mathrm{IntegerPart})	\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack5\bigr\rbrack, \bigl\lbrack\frac{1}{2}\bigr\rbrack\bigr\rbrack
 splitby-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5	\mathrm{SplitBy}(\bigl\lbrack3, 0, -4, 3, 3, -2, 0, -3, -4, 5\bigr\rbrack, \mathrm{Sign})	\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack0\bigr\rbrack, \bigl\lbrack-4\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack-2\bigr\rbrack, \bigl\lbrack0\bigr\rbrack, \bigl\lbrack-3, -4\bigr\rbrack, \bigl\lbrack5\bigr\rbrack\bigr\rbrack
