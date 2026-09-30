@@ -7,7 +7,7 @@ signatures:
   - call: LucasStrings(n)
     description: CIRCULAR binary words of length $n$ with no two consecutive ones, wraparound included
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - FibStrings
 references:

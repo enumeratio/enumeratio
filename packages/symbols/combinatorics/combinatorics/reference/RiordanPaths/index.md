@@ -7,7 +7,7 @@ signatures:
   - call: RiordanPaths(n)
     description: Motzkin paths of length $n$ with no level step taken at height $0$
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<motzkin_path>
 seeAlso:
   - DyckPaths
 references:

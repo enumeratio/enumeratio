@@ -388,61 +388,79 @@ export const entries: NumberKernel[] = [
     carrier: "BinaryWord",
   },
   // BinaryWordsByWeight(n, k): length-n binary words of Hamming weight k.
-  ints(
-    "BinaryWordsByWeight",
-    2,
-    ([n, k]) => byWeightCount(n, k),
-    ([n, k], r) => byWeightUnrank(n, k, r),
-    (a, [n, k]) => byWeightValid(a, n, k),
-    (a, [n, k]) => byWeightRank(a, n, k),
-  ),
+  {
+    ...ints(
+      "BinaryWordsByWeight",
+      2,
+      ([n, k]) => byWeightCount(n, k),
+      ([n, k], r) => byWeightUnrank(n, k, r),
+      (a, [n, k]) => byWeightValid(a, n, k),
+      (a, [n, k]) => byWeightRank(a, n, k),
+    ),
+    carrier: "BinaryWord",
+  },
   // Words(size, base): strings over a size-b alphabet — Tuples(base, size) with the two grades
   // (size axis, base param) reordered to match the catalog's declared grade order.
-  ints(
-    "Words",
-    2,
-    ([size, base]) => TupleCount(base, size),
-    ([size, base], r) => TupleUnrank(base, size, r),
-    (a, [size, base]) => IsTupleOf(a, base, size),
-    (a, [, base]) => TupleRank(a, base),
-  ),
+  {
+    ...ints(
+      "Words",
+      2,
+      ([size, base]) => TupleCount(base, size),
+      ([size, base], r) => TupleUnrank(base, size, r),
+      (a, [size, base]) => IsTupleOf(a, base, size),
+      (a, [, base]) => TupleRank(a, base),
+    ),
+    carrier: "Word",
+  },
   // FibStrings(n): binary words with no two consecutive 1s — F(n+2). Same family as the already
   // declared FibonacciWords head; reuses its kernels under the catalogued name.
-  ints(
-    "FibStrings",
-    1,
-    ([n]) => FibonacciWordCount(n),
-    ([n], r) => FibonacciWordUnrank(n, r),
-    (a, [n]) => IsFibonacciWord(a, n),
-    (a) => FibonacciWordRank(a),
-  ),
+  {
+    ...ints(
+      "FibStrings",
+      1,
+      ([n]) => FibonacciWordCount(n),
+      ([n], r) => FibonacciWordUnrank(n, r),
+      (a, [n]) => IsFibonacciWord(a, n),
+      (a) => FibonacciWordRank(a),
+    ),
+    carrier: "BinaryWord",
+  },
   // LucasStrings(n): circular no-two-consecutive-1s binary words — the Lucas numbers.
-  ints(
-    "LucasStrings",
-    1,
-    ([n]) => lucasCount(n),
-    ([n], r) => lucasStringsUnrank(n, r),
-    (a, [n]) => lucasStringsValid(a, n),
-    (a, [n]) => lucasStringsRank(a, n),
-  ),
+  {
+    ...ints(
+      "LucasStrings",
+      1,
+      ([n]) => lucasCount(n),
+      ([n], r) => lucasStringsUnrank(n, r),
+      (a, [n]) => lucasStringsValid(a, n),
+      (a, [n]) => lucasStringsRank(a, n),
+    ),
+    carrier: "BinaryWord",
+  },
   // GrayCodes(n): binary words in reflected Gray-code order.
-  ints(
-    "GrayCodes",
-    1,
-    ([n]) => grayCodeCount(n),
-    ([n], r) => grayCodeUnrank(n, r),
-    (a, [n]) => a.length === n && a.every((b) => b === 0 || b === 1),
-    (a) => grayCodeRank(a),
-  ),
+  {
+    ...ints(
+      "GrayCodes",
+      1,
+      ([n]) => grayCodeCount(n),
+      ([n], r) => grayCodeUnrank(n, r),
+      (a, [n]) => a.length === n && a.every((b) => b === 0 || b === 1),
+      (a) => grayCodeRank(a),
+    ),
+    carrier: "BinaryWord",
+  },
   // BinaryPalindromes(n): binary words that read the same reversed.
-  ints(
-    "BinaryPalindromes",
-    1,
-    ([n]) => palindromeCount(n),
-    ([n], r) => palindromeUnrank(n, r),
-    (a, [n]) => palindromeValid(a, n),
-    (a, [n]) => palindromeRank(a, n),
-  ),
+  {
+    ...ints(
+      "BinaryPalindromes",
+      1,
+      ([n]) => palindromeCount(n),
+      ([n], r) => palindromeUnrank(n, r),
+      (a, [n]) => palindromeValid(a, n),
+      (a, [n]) => palindromeRank(a, n),
+    ),
+    carrier: "BinaryWord",
+  },
   // BinaryNecklaces(n): binary words up to rotation (lex-least reps) — KNecklaces(n, 2), remapped
   // from 1-indexed {1,2} letters to {0,1}.
   {

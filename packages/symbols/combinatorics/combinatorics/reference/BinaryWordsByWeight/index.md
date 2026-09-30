@@ -7,7 +7,7 @@ signatures:
   - call: BinaryWordsByWeight(n, k)
     description: the binary strings of length $n$ with exactly $k$ ones
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - BinaryWords
   - Binomial

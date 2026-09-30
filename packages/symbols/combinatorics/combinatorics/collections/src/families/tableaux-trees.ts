@@ -330,6 +330,7 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => RecursiveTreeUnrank(n, r),
     valid: (e, [n]) => IsRecursiveTreeOf(e, n),
     rank: (e, [n]) => RecursiveTreeRank(e as number[], n),
+    carrier: "RootedLabeledTree",
   },
   {
     head: "IncreasingBinaryTrees",
@@ -339,6 +340,11 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => IncreasingBinaryTreeUnrank(n, r),
     valid: (e, [n]) => IsIncreasingBinaryTree(e, n),
     rank: (e) => IncreasingBinaryTreeRank(e as LabTree),
+    // Not yet carrier-typed: the catalog's IncreasingBinaryTree carrier declares
+    // `tuple<integer, list<integer>, list<integer>>`, but this family's "nested" kind encodes
+    // its [label, left, right] LabTree recursively (left/right are themselves LabTree, not
+    // flat integer lists) -- `nestMJ` produces e.g. [1,0,[2,0,0]] for n=2, which fails the
+    // carrier's declared type check. Reported, not forced (see A-113).
   },
   {
     head: "StandardTableaux",
@@ -348,6 +354,7 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => StandardTableauxUnrank(n, r),
     valid: (e, [n]) => IsStandardTableauOf(e, n),
     rank: (e, [n]) => StandardTableauxRank(e as number[][], n),
+    carrier: "StandardTableau",
   },
   {
     head: "SytHookShape",
@@ -357,6 +364,7 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => SytHookShapeUnrank(n, r),
     valid: (e, [n]) => IsSytHookShapeOf(e, n),
     rank: (e, [n]) => SytHookShapeRank(e as number[][], n),
+    carrier: "StandardTableau",
   },
   {
     head: "SytTwoRow",
@@ -366,6 +374,7 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => SytTwoRowUnrank(n, r),
     valid: (e, [n]) => IsSytTwoRowOf(e, n),
     rank: (e, [n]) => SytTwoRowRank(e as number[][], n),
+    carrier: "StandardTableau",
   },
   {
     // The transpose of SytTwoRow: swap "row" for "column" throughout — same sequences, same DP.
@@ -376,5 +385,6 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     unrank: ([n], r) => SytTwoRowUnrank(n, r),
     valid: (e, [n]) => IsSytTwoRowOf(e, n),
     rank: (e, [n]) => SytTwoRowRank(e as number[][], n),
+    carrier: "StandardTableau",
   },
 ];

@@ -1,4 +1,4 @@
 id	in	out
 count-granddyckpaths-3	count(GrandDyckPaths(3))	20
-first-element-of-granddyckpaths-3	GrandDyckPaths(3)[1]	[1, 1, 1, 0, 0, 0]
-every-element-of-granddyckpaths-3	take(GrandDyckPaths(3), 5)	"[\n  [1, 1, 1, 0, 0, 0],\n  [1, 1, 0, 1, 0, 0],\n  [1, 0, 1, 1, 0, 0],\n  [0, 1, 1, 1, 0, 0],\n  [1, 1, 0, 0, 1, 0],\n]"
+first-element-of-granddyckpaths-3	GrandDyckPaths(3)[1]	DyckPath([1, 1, 1, 0, 0, 0])
+every-element-of-granddyckpaths-3	take(GrandDyckPaths(3), 5)	"[\n  DyckPath([1, 1, 1, 0, 0, 0]),\n  DyckPath([1, 1, 0, 1, 0, 0]),\n  DyckPath([1, 0, 1, 1, 0, 0]),\n  DyckPath([0, 1, 1, 1, 0, 0]),\n  DyckPath([1, 1, 0, 0, 1, 0]),\n]"

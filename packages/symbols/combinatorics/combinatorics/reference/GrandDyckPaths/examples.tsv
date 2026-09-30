@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-granddyckpaths-3	Basic		[Count, [GrandDyckPaths, 3]]	20	$Count(GrandDyckPaths(3)) = 20$
-first-element-of-granddyckpaths-3	Basic		[At, [GrandDyckPaths, 3], 1]	[List, 1, 1, 1, 0, 0, 0]	The first element in enumeration order
-every-element-of-granddyckpaths-3		test	[Take, [GrandDyckPaths, 3], 5]	[List, [List, 1, 1, 1, 0, 0, 0], [List, 1, 1, 0, 1, 0, 0], [List, 1, 0, 1, 1, 0, 0], [List, 0, 1, 1, 1, 0, 0], [List, 1, 1, 0, 0, 1, 0]]	
+first-element-of-granddyckpaths-3	Basic		[At, [GrandDyckPaths, 3], 1]	[DyckPath, [List, 1, 1, 1, 0, 0, 0]]	The first element in enumeration order
+every-element-of-granddyckpaths-3		test	[Take, [GrandDyckPaths, 3], 5]	[List, [DyckPath, [List, 1, 1, 1, 0, 0, 0]], [DyckPath, [List, 1, 1, 0, 1, 0, 0]], [DyckPath, [List, 1, 0, 1, 1, 0, 0]], [DyckPath, [List, 0, 1, 1, 1, 0, 0]], [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	

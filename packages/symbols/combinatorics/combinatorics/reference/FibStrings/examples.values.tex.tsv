@@ -1,4 +1,4 @@
 id	in	out
 count-fibstrings-4	\mathrm{Count}(\mathrm{FibStrings}(4))	8
-first-element-of-fibstrings-4	\mathrm{FibStrings}(4)[1]	\bigl\lbrack0, 0, 0, 0\bigr\rbrack
-every-element-of-fibstrings-4	\mathrm{Take}(\mathrm{FibStrings}(4), 8)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack\bigr\rbrack
+first-element-of-fibstrings-4	\mathrm{FibStrings}(4)[1]	\mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack)
+every-element-of-fibstrings-4	\mathrm{Take}(\mathrm{FibStrings}(4), 8)	\bigl\lbrack\mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 0, 1, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 1, 0\bigr\rbrack)\bigr\rbrack

@@ -1,4 +1,4 @@
 id	in	out
 count-riordanpaths-6	<Count><RiordanPaths>6</RiordanPaths></Count>	<ToExpression>15</ToExpression>
-first-element-of-riordanpaths-6	<At><RiordanPaths>6</RiordanPaths> 1</At>	<List>1 1 1 -1 -1 -1</List>
-every-element-of-riordanpaths-6	<Take><RiordanPaths>6</RiordanPaths> 5</Take>	<List><List>1 1 1 -1 -1 -1</List> <List>1 1 0 0 -1 -1</List> <List>1 1 0 -1 0 -1</List> <List>1 1 -1 1 -1 -1</List> <List>1 1 -1 0 0 -1</List></List>
+first-element-of-riordanpaths-6	<At><RiordanPaths>6</RiordanPaths> 1</At>	<MotzkinPath><List>1 1 1 -1 -1 -1</List></MotzkinPath>
+every-element-of-riordanpaths-6	<Take><RiordanPaths>6</RiordanPaths> 5</Take>	<List><MotzkinPath><List>1 1 1 -1 -1 -1</List></MotzkinPath> <MotzkinPath><List>1 1 0 0 -1 -1</List></MotzkinPath> <MotzkinPath><List>1 1 0 -1 0 -1</List></MotzkinPath> <MotzkinPath><List>1 1 -1 1 -1 -1</List></MotzkinPath> <MotzkinPath><List>1 1 -1 0 0 -1</List></MotzkinPath></List>

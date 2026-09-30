@@ -7,7 +7,7 @@ signatures:
   - call: PrimitiveBinaryStrings(n)
     library: enumeratio-combinatorics
     description: the length-$n$ binary strings that are not themselves a shorter word repeated.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 enumerate:
   expr: PrimitiveBinaryStrings(6)
   columns: Descents, Ascents

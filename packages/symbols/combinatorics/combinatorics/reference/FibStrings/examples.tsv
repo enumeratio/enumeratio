@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-fibstrings-4	Basic		[Count, [FibStrings, 4]]	8	$Count(FibStrings(4)) = 8$
-first-element-of-fibstrings-4	Basic		[At, [FibStrings, 4], 1]	[List, 0, 0, 0, 0]	The first element in enumeration order
-every-element-of-fibstrings-4		test	[Take, [FibStrings, 4], 8]	[List, [List, 0, 0, 0, 0], [List, 0, 0, 0, 1], [List, 0, 0, 1, 0], [List, 0, 1, 0, 0], [List, 0, 1, 0, 1], [List, 1, 0, 0, 0], [List, 1, 0, 0, 1], [List, 1, 0, 1, 0]]	
+first-element-of-fibstrings-4	Basic		[At, [FibStrings, 4], 1]	[BinaryWord, [List, 0, 0, 0, 0]]	The first element in enumeration order
+every-element-of-fibstrings-4		test	[Take, [FibStrings, 4], 8]	[List, [BinaryWord, [List, 0, 0, 0, 0]], [BinaryWord, [List, 0, 0, 0, 1]], [BinaryWord, [List, 0, 0, 1, 0]], [BinaryWord, [List, 0, 1, 0, 0]], [BinaryWord, [List, 0, 1, 0, 1]], [BinaryWord, [List, 1, 0, 0, 0]], [BinaryWord, [List, 1, 0, 0, 1]], [BinaryWord, [List, 1, 0, 1, 0]]]	

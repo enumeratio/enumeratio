@@ -7,7 +7,7 @@ signatures:
   - call: FibStrings(n)
     description: Binary words of length $n$ with no two consecutive ones
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - LucasStrings
   - BinaryWords

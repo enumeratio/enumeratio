@@ -7,7 +7,7 @@ signatures:
   - call: Words(size, base)
     description: the strings of length $size$ over a $base$-letter alphabet $\{1, …, base\}$
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<word>
 seeAlso:
   - Tuples
   - BinaryWords

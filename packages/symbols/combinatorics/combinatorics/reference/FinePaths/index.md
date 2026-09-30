@@ -7,7 +7,7 @@ signatures:
   - call: FinePaths(n)
     description: Dyck paths of semilength $n$ with no hills — an elementary up/down step touching the ground on both sides
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<dyck_path>
 seeAlso:
   - DyckPaths
 references:

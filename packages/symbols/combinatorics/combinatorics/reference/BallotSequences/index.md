@@ -7,7 +7,7 @@ signatures:
   - call: BallotSequences(n)
     description: "Ballot sequences of length $2n$: 0/1 words where every prefix has at least as many 1s as 0s"
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<dyck_path>
 seeAlso:
   - DyckPaths
 references:

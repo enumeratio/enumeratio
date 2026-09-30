@@ -7,7 +7,7 @@ signatures:
   - call: BinaryPalindromes(n)
     description: the binary words of length $n$ that read the same reversed
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - BinaryWords
   - PalindromicCompositions
