@@ -2,6 +2,7 @@ id	in	out
 erf-0	erf(0)	0
 erf-infinity	erf(`Infinity`)	1
 erf-negativeinfinity	erf(negativeInfinity)	-1
+erf-complexinfinity	erf(complexInfinity)	Indeterminate
 a-floating-point-argument-evaluates-directly-to	erf(0.5)	0.520_499_877_813_046_537_683
 a-machine-precision-argument	erf(0.95)	0.820_890_807_273_277_941_908
 threads-element-wise-over-a-list-as-wolfram-s	erf([0, 1])	[0, erf(1)]

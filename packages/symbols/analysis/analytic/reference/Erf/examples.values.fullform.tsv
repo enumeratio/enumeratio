@@ -2,6 +2,7 @@ id	in	back
 erf-0	Erf[0]	
 erf-infinity	Erf[Infinity]	[Erf, PositiveInfinity]
 erf-negativeinfinity	Erf[-Infinity]	
+erf-complexinfinity	Erf[ComplexInfinity]	
 a-floating-point-argument-evaluates-directly-to	Erf[0.5]	
 a-machine-precision-argument	Erf[0.95]	
 threads-element-wise-over-a-list-as-wolfram-s	Erf[List[0, 1]]	

@@ -2,6 +2,7 @@ id	in	out
 erf-0		
 erf-infinity		
 erf-negativeinfinity		
+erf-complexinfinity		
 a-floating-point-argument-evaluates-directly-to		
 a-machine-precision-argument		
 threads-element-wise-over-a-list-as-wolfram-s		
