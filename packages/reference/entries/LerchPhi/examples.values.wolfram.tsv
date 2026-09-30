@@ -1,403 +1,403 @@
-id	in	out	tex.in	tex.out	verdict
-phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	LerchPhi[1, 2, 1]	Pi^2/6	\Phi (1,2,1)	\frac{\pi ^2}{6}	
-phi-1-2-2-zeta-2-2-pi-2-6-1	LerchPhi[1, 2, 2]	-1 + Pi^2/6	\Phi (1,2,2)	\frac{\pi ^2}{6}-1	
-n-lerchphi-0p5-2-1	N[LerchPhi[0.5, 2, 1]]	1.1644810529300254	N[\Phi (0.5,2,1)]	1.16448	
-n-lerchphi-0p5-2-2	N[LerchPhi[0.5, 2, 2]]	0.32896210586005004	N[\Phi (0.5,2,2)]	0.328962	
-n-lerchphi-0p5-2-0p5	N[LerchPhi[0.5, 2, 0.5]]	4.27714550058095	N[\Phi (0.5,2,0.5)]	4.27715	
-n-lerchphi-0p5-2-5-over-2	N[LerchPhi[0.5, 2, Rational[5, 2]]]	0.21969311343491024	N\left[\Phi \left(0.5,2,\frac{5}{2}\right)\right]	0.219693	
-n-lerchphi-0p5-3-1	N[LerchPhi[0.5, 3, 1]]	1.0744263872160806	N[\Phi (0.5,3,1)]	1.07443	
-n-lerchphi-0p5-3-2	N[LerchPhi[0.5, 3, 2]]	0.1488527744321608	N[\Phi (0.5,3,2)]	0.148853	
-n-lerchphi-0p5-3-0p5	N[LerchPhi[0.5, 3, 0.5]]	8.16802272614035	N[\Phi (0.5,3,0.5)]	8.16802	
-n-lerchphi-0p5-3-5-over-2	N[LerchPhi[0.5, 3, Rational[5, 2]]]	0.07949831196880994	N\left[\Phi \left(0.5,3,\frac{5}{2}\right)\right]	0.0794983	
-n-lerchphi-0p5-0p5-1	N[LerchPhi[0.5, 0.5, 1]]	1.6122534460857043	N[\Phi (0.5,0.5,1)]	1.61225	
-n-lerchphi-0p5-0p5-2	N[LerchPhi[0.5, 0.5, 2]]	1.224506892171409	N[\Phi (0.5,0.5,2)]	1.22451	
-n-lerchphi-0p5-0p5-0p5	N[LerchPhi[0.5, 0.5, 0.5]]	2.1017124624893517	N[\Phi (0.5,0.5,0.5)]	2.10171	
-n-lerchphi-0p5-0p5-5-over-2	N[LerchPhi[0.5, 0.5, Rational[5, 2]]]	1.1170024386095745	N\left[\Phi \left(0.5,0.5,\frac{5}{2}\right)\right]	1.117	
-n-lerchphi-0p5-neg-1-1	N[LerchPhi[0.5, -1, 1]]	4.	N[\Phi (0.5,-1,1)]	4.	
-n-lerchphi-0p5-neg-1-2	N[LerchPhi[0.5, -1, 2]]	6.	N[\Phi (0.5,-1,2)]	6.	
-n-lerchphi-0p5-neg-1-0p5	N[LerchPhi[0.5, -1, 0.5]]	3.	N[\Phi (0.5,-1,0.5)]	3.	
-n-lerchphi-0p5-neg-1-5-over-2	N[LerchPhi[0.5, -1, Rational[5, 2]]]	7.	N\left[\Phi \left(0.5,-1,\frac{5}{2}\right)\right]	7.	
-n-lerchphi-0p5-2-plus-i-1	N[LerchPhi[0.5, Complex[2, 1], 1]]	1.1097070907066406 - 0.1160991235833943*I	N[\Phi (0.5,2+i,1)]	1.10971\, -0.116099 i	
-n-lerchphi-0p5-2-plus-i-2	N[LerchPhi[0.5, Complex[2, 1], 2]]	0.21941418141328128 - 0.2321982471667886*I	N[\Phi (0.5,2+i,2)]	0.219414\, -0.232198 i	
-n-lerchphi-0p5-2-plus-i-0p5	N[LerchPhi[0.5, Complex[2, 1], 0.5]]	3.308545670420986 + 2.4221096114212624*I	N[\Phi (0.5,2+i,0.5)]	3.30855\, +2.42211 i	
-n-lerchphi-0p5-2-plus-i-5-over-2	N[LerchPhi[0.5, Complex[2, 1], Rational[5, 2]]]	0.1095433385808339 - 0.18432313114256374*I	N\left[\Phi \left(0.5,2+i,\frac{5}{2}\right)\right]	0.109543\, -0.184323 i	
-n-lerchphi-neg-0p5-2-1	N[LerchPhi[-0.5, 2, 1]]	0.8968284138472924	N[\Phi (-0.5,2,1)]	0.896828	
-n-lerchphi-neg-0p5-2-2	N[LerchPhi[-0.5, 2, 2]]	0.2063431723054152	N[\Phi (-0.5,2,2)]	0.206343	
-n-lerchphi-neg-0p5-2-0p5	N[LerchPhi[-0.5, 2, 0.5]]	3.809896676518156	N[\Phi (-0.5,2,0.5)]	3.8099	
-n-lerchphi-neg-0p5-2-5-over-2	N[LerchPhi[-0.5, 2, Rational[5, 2]]]	0.1284755949615131	N\left[\Phi \left(-0.5,2,\frac{5}{2}\right)\right]	0.128476	
-n-lerchphi-neg-0p5-3-1	N[LerchPhi[-0.5, 3, 1]]	0.9451956893177937	N[\Phi (-0.5,3,1)]	0.945196	
-n-lerchphi-neg-0p5-3-2	N[LerchPhi[-0.5, 3, 2]]	0.1096086213644125	N[\Phi (-0.5,3,2)]	0.109609	
-n-lerchphi-neg-0p5-3-0p5	N[LerchPhi[-0.5, 3, 0.5]]	7.8654775143533815	N[\Phi (-0.5,3,0.5)]	7.86548	
-n-lerchphi-neg-0p5-3-5-over-2	N[LerchPhi[-0.5, 3, Rational[5, 2]]]	0.05450265000611884	N\left[\Phi \left(-0.5,3,\frac{5}{2}\right)\right]	0.0545027	
-n-lerchphi-neg-0p5-0p5-1	N[LerchPhi[-0.5, 0.5, 1]]	0.7475044759619461	N[\Phi (-0.5,0.5,1)]	0.747504	
-n-lerchphi-neg-0p5-0p5-2	N[LerchPhi[-0.5, 0.5, 2]]	0.5049910480761078	N[\Phi (-0.5,0.5,2)]	0.504991	
-n-lerchphi-neg-0p5-0p5-0p5	N[LerchPhi[-0.5, 0.5, 0.5]]	1.1175876689096342	N[\Phi (-0.5,0.5,0.5)]	1.11759	
-n-lerchphi-neg-0p5-0p5-5-over-2	N[LerchPhi[-0.5, 0.5, Rational[5, 2]]]	0.44648958800160854	N\left[\Phi \left(-0.5,0.5,\frac{5}{2}\right)\right]	0.44649	
-n-lerchphi-neg-0p5-neg-1-1	N[LerchPhi[-0.5, -1, 1]]	0.4444444444444444	N[\Phi (-0.5,-1,1)]	0.444444	
-n-lerchphi-neg-0p5-neg-1-2	N[LerchPhi[-0.5, -1, 2]]	1.1111111111111112	N[\Phi (-0.5,-1,2)]	1.11111	
-n-lerchphi-neg-0p5-neg-1-0p5	N[LerchPhi[-0.5, -1, 0.5]]	0.1111111111111111	N[\Phi (-0.5,-1,0.5)]	0.111111	
-n-lerchphi-neg-0p5-neg-1-5-over-2	N[LerchPhi[-0.5, -1, Rational[5, 2]]]	1.4444444444444444	N\left[\Phi \left(-0.5,-1,\frac{5}{2}\right)\right]	1.44444	
-n-lerchphi-neg-0p5-2-plus-i-1	N[LerchPhi[-0.5, Complex[2, 1], 1]]	0.9150630921511703 + 0.06094203933961422*I	N[\Phi (-0.5,2+i,1)]	0.915063\, +0.060942 i	
-n-lerchphi-neg-0p5-2-plus-i-2	N[LerchPhi[-0.5, Complex[2, 1], 2]]	0.16987381569765908 - 0.12188407867922846*I	N[\Phi (-0.5,2+i,2)]	0.169874\, -0.121884 i	
-n-lerchphi-neg-0p5-2-plus-i-0p5	N[LerchPhi[-0.5, Complex[2, 1], 0.5]]	2.8941852028913386 + 2.6191414085812714*I	N[\Phi (-0.5,2+i,0.5)]	2.89419\, +2.61914 i	
-n-lerchphi-neg-0p5-2-plus-i-5-over-2	N[LerchPhi[-0.5, Complex[2, 1], Rational[5, 2]]]	0.085735311021356 - 0.0974336308836124*I	N\left[\Phi \left(-0.5,2+i,\frac{5}{2}\right)\right]	0.0857353\, -0.0974336 i	
-n-lerchphi-neg-0p9-2-1	N[LerchPhi[-0.9, 2, 1]]	0.8357368657969576	N[\Phi (-0.9,2,1)]	0.835737	
-n-lerchphi-neg-0p9-2-2	N[LerchPhi[-0.9, 2, 2]]	0.1825145935589363	N[\Phi (-0.9,2,2)]	0.182515	
-n-lerchphi-neg-0p9-2-0p5	N[LerchPhi[-0.9, 2, 0.5]]	3.6905224756933057	N[\Phi (-0.9,2,0.5)]	3.69052	
-n-lerchphi-neg-0p9-2-5-over-2	N[LerchPhi[-0.9, 2, Rational[5, 2]]]	0.11175614283124169	N\left[\Phi \left(-0.9,2,\frac{5}{2}\right)\right]	0.111756	
-n-lerchphi-neg-0p9-3-1	N[LerchPhi[-0.9, 3, 1]]	0.9095980017159598	N[\Phi (-0.9,3,1)]	0.909598	
-n-lerchphi-neg-0p9-3-2	N[LerchPhi[-0.9, 3, 2]]	0.10044666476004464	N[\Phi (-0.9,3,2)]	0.100447	
-n-lerchphi-neg-0p9-3-0p5	N[LerchPhi[-0.9, 3, 0.5]]	7.773051219077413	N[\Phi (-0.9,3,0.5)]	7.77305	
-n-lerchphi-neg-0p9-3-5-over-2	N[LerchPhi[-0.9, 3, Rational[5, 2]]]	0.04903442684454213	N\left[\Phi \left(-0.9,3,\frac{5}{2}\right)\right]	0.0490344	
-n-lerchphi-neg-0p9-0p5-1	N[LerchPhi[-0.9, 0.5, 1]]	0.628362164954058 - 6.167905692361981*^-17*I	N[\Phi (-0.9,0.5,1)]	0.628362\, -\text{6.167905692361981$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-0p9-0p5-2	N[LerchPhi[-0.9, 0.5, 2]]	0.41293092782882385	N[\Phi (-0.9,0.5,2)]	0.412931	
-n-lerchphi-neg-0p9-0p5-0p5	N[LerchPhi[-0.9, 0.5, 0.5]]	0.9731467834139054	N[\Phi (-0.9,0.5,0.5)]	0.973147	
-n-lerchphi-neg-0p9-0p5-5-over-2	N[LerchPhi[-0.9, 0.5, Rational[5, 2]]]	0.362691535649091	N\left[\Phi \left(-0.9,0.5,\frac{5}{2}\right)\right]	0.362692	
-n-lerchphi-neg-0p9-neg-1-1	N[LerchPhi[-0.9, -1, 1]]	0.2770083102493075	N[\Phi (-0.9,-1,1)]	0.277008	
-n-lerchphi-neg-0p9-neg-1-2	N[LerchPhi[-0.9, -1, 2]]	0.8033240997229917	N[\Phi (-0.9,-1,2)]	0.803324	
-n-lerchphi-neg-0p9-neg-1-0p5	N[LerchPhi[-0.9, -1, 0.5]]	0.01385041551246563	N[\Phi (-0.9,-1,0.5)]	0.0138504	
-n-lerchphi-neg-0p9-neg-1-5-over-2	N[LerchPhi[-0.9, -1, Rational[5, 2]]]	1.0664819944598336	N\left[\Phi \left(-0.9,-1,\frac{5}{2}\right)\right]	1.06648	
-n-lerchphi-neg-0p9-2-plus-i-1	N[LerchPhi[-0.9, Complex[2, 1], 1]]	0.8600491653125407 + 0.09203457470000208*I	N[\Phi (-0.9,2+i,1)]	0.860049\, +0.0920346 i	
-n-lerchphi-neg-0p9-2-plus-i-2	N[LerchPhi[-0.9, Complex[2, 1], 2]]	0.15550092742921662 - 0.10226063855725132*I	N[\Phi (-0.9,2+i,2)]	0.155501\, -0.102261 i	
-n-lerchphi-neg-0p9-2-plus-i-0p5	N[LerchPhi[-0.9, Complex[2, 1], 0.5]]	2.772631950915933 + 2.646993091751075*I	N[\Phi (-0.9,2+i,0.5)]	2.77263\, +2.64699 i	
-n-lerchphi-neg-0p9-2-plus-i-5-over-2	N[LerchPhi[-0.9, Complex[2, 1], Rational[5, 2]]]	0.07807896300721556 - 0.08225986838173877*I	N\left[\Phi \left(-0.9,2+i,\frac{5}{2}\right)\right]	0.078079\, -0.0822599 i	
-n-lerchphi-neg-1-2-1	N[LerchPhi[-1, 2, 1]]	0.8224670334241131	N[\Phi (-1,2,1)]	0.822467	
-n-lerchphi-neg-1-2-2	N[LerchPhi[-1, 2, 2]]	0.1775329665758869	N[\Phi (-1,2,2)]	0.177533	
-n-lerchphi-neg-1-2-0p5	N[LerchPhi[-1, 2, 0.5]]	3.6638623767088756	N[\Phi (-1,2,0.5)]	3.66386	
-n-lerchphi-neg-1-2-5-over-2	N[LerchPhi[-1, 2, Rational[5, 2]]]	0.1083068211533206	N\left[\Phi \left(-1,2,\frac{5}{2}\right)\right]	0.108307	
-n-lerchphi-neg-1-3-1	N[LerchPhi[-1, 3, 1]]	0.9015426773696957	N[\Phi (-1,3,1)]	0.901543	
-n-lerchphi-neg-1-3-2	N[LerchPhi[-1, 3, 2]]	0.09845732263030427	N[\Phi (-1,3,2)]	0.0984573	
-n-lerchphi-neg-1-3-0p5	N[LerchPhi[-1, 3, 0.5]]	7.751569170074954	N[\Phi (-1,3,0.5)]	7.75157	
-n-lerchphi-neg-1-3-5-over-2	N[LerchPhi[-1, 3, Rational[5, 2]]]	0.047865466371250776	N\left[\Phi \left(-1,3,\frac{5}{2}\right)\right]	0.0478655	
-n-lerchphi-neg-1-0p5-1	N[LerchPhi[-1, 0.5, 1]]	0.604898643421631	N[\Phi (-1,0.5,1)]	0.604899	
-n-lerchphi-neg-1-0p5-2	N[LerchPhi[-1, 0.5, 2]]	0.3951013565783689	N[\Phi (-1,0.5,2)]	0.395101	
-n-lerchphi-neg-1-0p5-0p5	N[LerchPhi[-1, 0.5, 0.5]]	0.9442583142382012	N[\Phi (-1,0.5,0.5)]	0.944258	
-n-lerchphi-neg-1-0p5-5-over-2	N[LerchPhi[-1, 0.5, Rational[5, 2]]]	0.34654133279283267	N\left[\Phi \left(-1,0.5,\frac{5}{2}\right)\right]	0.346541	
-n-lerchphi-neg-1-neg-1-1	N[LerchPhi[-1, -1, 1]]	0.25	N[\Phi (-1,-1,1)]	0.25	
-n-lerchphi-neg-1-neg-1-2	N[LerchPhi[-1, -1, 2]]	0.75	N[\Phi (-1,-1,2)]	0.75	
-n-lerchphi-neg-1-neg-1-0p5	N[LerchPhi[-1, -1, 0.5]]	0.	N[\Phi (-1,-1,0.5)]	0.	
-n-lerchphi-neg-1-neg-1-5-over-2	N[LerchPhi[-1, -1, Rational[5, 2]]]	1.	N\left[\Phi \left(-1,-1,\frac{5}{2}\right)\right]	1.	
-n-lerchphi-neg-1-2-plus-i-1	N[LerchPhi[-1, Complex[2, 1], 1]]	0.8476891648374136 + 0.09826838957001616*I	N[\Phi (-1,2+i,1)]	0.847689\, +0.0982684 i	
-n-lerchphi-neg-1-2-plus-i-2	N[LerchPhi[-1, Complex[2, 1], 2]]	0.15231083516258653 - 0.09826838957001621*I	N[\Phi (-1,2+i,2)]	0.152311\, -0.0982684 i	
-n-lerchphi-neg-1-2-plus-i-0p5	N[LerchPhi[-1, Complex[2, 1], 0.5]]	2.7449197230143407 + 2.6519729447382767*I	N[\Phi (-1,2+i,0.5)]	2.74492\, +2.65197 i	
-n-lerchphi-neg-1-2-plus-i-5-over-2	N[LerchPhi[-1, Complex[2, 1], Rational[5, 2]]]	0.07637257819822993 - 0.07918158261153377*I	N\left[\Phi \left(-1,2+i,\frac{5}{2}\right)\right]	0.0763726\, -0.0791816 i	
-n-lerchphi-0p25-2-1	N[LerchPhi[0.25, 2, 1]]	1.0706105563309305	N[\Phi (0.25,2,1)]	1.07061	
-n-lerchphi-0p25-2-2	N[LerchPhi[0.25, 2, 2]]	0.2824422253237217	N[\Phi (0.25,2,2)]	0.282442	
-n-lerchphi-0p25-2-0p5	N[LerchPhi[0.25, 2, 0.5]]	4.122618933554635	N[\Phi (0.25,2,0.5)]	4.12262	
-n-lerchphi-0p25-2-5-over-2	N[LerchPhi[0.25, 2, Rational[5, 2]]]	0.18412515909637955	N\left[\Phi \left(0.25,2,\frac{5}{2}\right)\right]	0.184125	
-n-lerchphi-0p25-3-1	N[LerchPhi[0.25, 3, 1]]	1.0338455831862932	N[\Phi (0.25,3,1)]	1.03385	
-n-lerchphi-0p25-3-2	N[LerchPhi[0.25, 3, 2]]	0.1353823327451729	N[\Phi (0.25,3,2)]	0.135382	
-n-lerchphi-0p25-3-0p5	N[LerchPhi[0.25, 3, 0.5]]	8.078488306135496	N[\Phi (0.25,3,0.5)]	8.07849	
-n-lerchphi-0p25-3-5-over-2	N[LerchPhi[0.25, 3, Rational[5, 2]]]	0.0706277129827605	N\left[\Phi \left(0.25,3,\frac{5}{2}\right)\right]	0.0706277	
-n-lerchphi-0p25-0p5-1	N[LerchPhi[0.25, 0.5, 1]]	1.2229397215971856	N[\Phi (0.25,0.5,1)]	1.22294	
-n-lerchphi-0p25-0p5-2	N[LerchPhi[0.25, 0.5, 2]]	0.8917588863887421	N[\Phi (0.25,0.5,2)]	0.891759	
-n-lerchphi-0p25-0p5-0p5	N[LerchPhi[0.25, 0.5, 0.5]]	1.6686008286385703	N[\Phi (0.25,0.5,0.5)]	1.6686	
-n-lerchphi-0p25-0p5-5-over-2	N[LerchPhi[0.25, 0.5, Rational[5, 2]]]	0.8042099365366978	N\left[\Phi \left(0.25,0.5,\frac{5}{2}\right)\right]	0.80421	
-n-lerchphi-0p25-neg-1-1	N[LerchPhi[0.25, -1, 1]]	1.7777777777777777	N[\Phi (0.25,-1,1)]	1.77778	
-n-lerchphi-0p25-neg-1-2	N[LerchPhi[0.25, -1, 2]]	3.1111111111111107	N[\Phi (0.25,-1,2)]	3.11111	
-n-lerchphi-0p25-neg-1-0p5	N[LerchPhi[0.25, -1, 0.5]]	1.1111111111111112	N[\Phi (0.25,-1,0.5)]	1.11111	
-n-lerchphi-0p25-neg-1-5-over-2	N[LerchPhi[0.25, -1, Rational[5, 2]]]	3.7777777777777777	N\left[\Phi \left(0.25,-1,\frac{5}{2}\right)\right]	3.77778	
-n-lerchphi-0p25-2-plus-i-1	N[LerchPhi[0.25, Complex[2, 1], 1]]	1.0514007321089447 - 0.04726788767721024*I	N[\Phi (0.25,2+i,1)]	1.0514\, -0.0472679 i	
-n-lerchphi-0p25-2-plus-i-2	N[LerchPhi[0.25, Complex[2, 1], 2]]	0.2056029284357786 - 0.18907155070884096*I	N[\Phi (0.25,2+i,2)]	0.205603\, -0.189072 i	
-n-lerchphi-0p25-2-plus-i-0p5	N[LerchPhi[0.25, Complex[2, 1], 0.5]]	3.185550463844432 + 2.502641530788986*I	N[\Phi (0.25,2+i,0.5)]	3.18555\, +2.50264 i	
-n-lerchphi-0p25-2-plus-i-5-over-2	N[LerchPhi[0.25, Complex[2, 1], Rational[5, 2]]]	0.10388389165758394 - 0.15001950306775727*I	N\left[\Phi \left(0.25,2+i,\frac{5}{2}\right)\right]	0.103884\, -0.15002 i	
-n-lerchphi-0p9-2-1	N[LerchPhi[0.9, 2, 1]]	1.4441274700055098	N[\Phi (0.9,2,1)]	1.44413	
-n-lerchphi-0p9-2-2	N[LerchPhi[0.9, 2, 2]]	0.49347496667278856	N[\Phi (0.9,2,2)]	0.493475	
-n-lerchphi-0p9-2-0p5	N[LerchPhi[0.9, 2, 0.5]]	4.686783273082931	N[\Phi (0.9,2,0.5)]	4.68678	
-n-lerchphi-0p9-2-5-over-2	N[LerchPhi[0.9, 2, Rational[5, 2]]]	0.35405342355917346	N\left[\Phi \left(0.9,2,\frac{5}{2}\right)\right]	0.354053	
-n-lerchphi-0p9-3-1	N[LerchPhi[0.9, 3, 1]]	1.1662877224293777	N[\Phi (0.9,3,1)]	1.16629	
-n-lerchphi-0p9-3-2	N[LerchPhi[0.9, 3, 2]]	0.1847641360326418	N[\Phi (0.9,3,2)]	0.184764	
-n-lerchphi-0p9-3-0p5	N[LerchPhi[0.9, 3, 0.5]]	8.351549851360653	N[\Phi (0.9,3,0.5)]	8.35155	
-n-lerchphi-0p9-3-5-over-2	N[LerchPhi[0.9, 3, Rational[5, 2]]]	0.1047940551777609	N\left[\Phi \left(0.9,3,\frac{5}{2}\right)\right]	0.104794	
-n-lerchphi-0p9-0p5-1	N[LerchPhi[0.9, 0.5, 1]]	4.468833808303736 - 4.934324553889585*^-16*I	N[\Phi (0.9,0.5,1)]	4.46883\, -\text{4.934324553889585$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-0p9-0p5-2	N[LerchPhi[0.9, 0.5, 2]]	3.8542597870041493	N[\Phi (0.9,0.5,2)]	3.85426	
-n-lerchphi-0p9-0p5-0p5	N[LerchPhi[0.9, 0.5, 0.5]]	5.11163624496335	N[\Phi (0.9,0.5,0.5)]	5.11164	
-n-lerchphi-0p9-0p5-5-over-2	N[LerchPhi[0.9, 0.5, Rational[5, 2]]]	3.657500937969508	N\left[\Phi \left(0.9,0.5,\frac{5}{2}\right)\right]	3.6575	
-n-lerchphi-0p9-neg-1-1	N[LerchPhi[0.9, -1, 1]]	100.00000000000006	N[\Phi (0.9,-1,1)]	100.	
-n-lerchphi-0p9-neg-1-2	N[LerchPhi[0.9, -1, 2]]	110.00000000000006	N[\Phi (0.9,-1,2)]	110.	
-n-lerchphi-0p9-neg-1-0p5	N[LerchPhi[0.9, -1, 0.5]]	95.00000000000006	N[\Phi (0.9,-1,0.5)]	95.	
-n-lerchphi-0p9-neg-1-5-over-2	N[LerchPhi[0.9, -1, Rational[5, 2]]]	115.00000000000006	N\left[\Phi \left(0.9,-1,\frac{5}{2}\right)\right]	115.	
-n-lerchphi-0p9-2-plus-i-1	N[LerchPhi[0.9, Complex[2, 1], 1]]	1.1929287758658524 - 0.3405562463411231*I	N[\Phi (0.9,2+i,1)]	1.19293\, -0.340556 i	
-n-lerchphi-0p9-2-plus-i-2	N[LerchPhi[0.9, Complex[2, 1], 2]]	0.2143653065174925 - 0.37839582926534543*I	N[\Phi (0.9,2+i,2)]	0.214365\, -0.378396 i	
-n-lerchphi-0p9-2-plus-i-0p5	N[LerchPhi[0.9, Complex[2, 1], 0.5]]	3.5161916619091267 + 2.1522546812749344*I	N[\Phi (0.9,2+i,0.5)]	3.51619\, +2.15225 i	
-n-lerchphi-0p9-2-plus-i-5-over-2	N[LerchPhi[0.9, Complex[2, 1], Rational[5, 2]]]	0.08847955787338081 - 0.3034715359183458*I	N\left[\Phi \left(0.9,2+i,\frac{5}{2}\right)\right]	0.0884796\, -0.303472 i	
-n-lerchphi-1-over-3-2-1	N[LerchPhi[Rational[1, 3], 2, 1]]	1.0986396899311903	N\left[\Phi \left(\frac{1}{3},2,1\right)\right]	1.09864	
-n-lerchphi-1-over-3-2-2	N[LerchPhi[Rational[1, 3], 2, 2]]	0.29591906979357097	N\left[\Phi \left(\frac{1}{3},2,2\right)\right]	0.295919	
-n-lerchphi-1-over-3-2-0p5	N[LerchPhi[Rational[1, 3], 2, 0.5]]	4.169738543014327	N\left[\Phi \left(\frac{1}{3},2,0.5\right)\right]	4.16974	
-n-lerchphi-1-over-3-2-5-over-2	N[LerchPhi[Rational[1, 3], 2, Rational[5, 2]]]	0.19431355379560272	N\left[\Phi \left(\frac{1}{3},2,\frac{5}{2}\right)\right]	0.194314	
-n-lerchphi-1-over-3-3-1	N[LerchPhi[Rational[1, 3], 3, 1]]	1.04648358346452	N\left[\Phi \left(\frac{1}{3},3,1\right)\right]	1.04648	
-n-lerchphi-1-over-3-3-2	N[LerchPhi[Rational[1, 3], 3, 2]]	0.13945075039356025	N\left[\Phi \left(\frac{1}{3},3,2\right)\right]	0.139451	
-n-lerchphi-1-over-3-3-0p5	N[LerchPhi[Rational[1, 3], 3, 0.5]]	8.106907002058712	N\left[\Phi \left(\frac{1}{3},3,0.5\right)\right]	8.10691	
-n-lerchphi-1-over-3-3-5-over-2	N[LerchPhi[Rational[1, 3], 3, Rational[5, 2]]]	0.07327412963951406	N\left[\Phi \left(\frac{1}{3},3,\frac{5}{2}\right)\right]	0.0732741	
-n-lerchphi-1-over-3-0p5-1	N[LerchPhi[Rational[1, 3], 0.5, 1]]	1.3263265058420262	N\left[\Phi \left(\frac{1}{3},0.5,1\right)\right]	1.32633	
-n-lerchphi-1-over-3-0p5-2	N[LerchPhi[Rational[1, 3], 0.5, 2]]	0.978979517526079	N\left[\Phi \left(\frac{1}{3},0.5,2\right)\right]	0.97898	
-n-lerchphi-1-over-3-0p5-0p5	N[LerchPhi[Rational[1, 3], 0.5, 0.5]]	1.7848050437257634	N\left[\Phi \left(\frac{1}{3},0.5,0.5\right)\right]	1.78481	
-n-lerchphi-1-over-3-0p5-5-over-2	N[LerchPhi[Rational[1, 3], 0.5, Rational[5, 2]]]	0.8858335893908362	N\left[\Phi \left(\frac{1}{3},0.5,\frac{5}{2}\right)\right]	0.885834	
-n-lerchphi-1-over-3-neg-1-1	N[LerchPhi[Rational[1, 3], -1, 1]]	2.25	N\left[\Phi \left(\frac{1}{3},-1,1\right)\right]	2.25	
-n-lerchphi-1-over-3-neg-1-2	N[LerchPhi[Rational[1, 3], -1, 2]]	3.75	N\left[\Phi \left(\frac{1}{3},-1,2\right)\right]	3.75	
-n-lerchphi-1-over-3-neg-1-0p5	N[LerchPhi[Rational[1, 3], -1, 0.5]]	1.5	N\left[\Phi \left(\frac{1}{3},-1,0.5\right)\right]	1.5	
-n-lerchphi-1-over-3-neg-1-5-over-2	N[LerchPhi[Rational[1, 3], -1, Rational[5, 2]]]	4.5	N\left[\Phi \left(\frac{1}{3},-1,\frac{5}{2}\right)\right]	4.5	
-n-lerchphi-1-over-3-2-plus-i-1	N[LerchPhi[Rational[1, 3], Complex[2, 1], 1]]	1.0700836686021404 - 0.06715638695388618*I	N\left[\Phi \left(\frac{1}{3},2+i,1\right)\right]	1.07008\, -0.0671564 i	
-n-lerchphi-1-over-3-2-plus-i-2	N[LerchPhi[Rational[1, 3], Complex[2, 1], 2]]	0.21025100580642175 - 0.20146916086165853*I	N\left[\Phi \left(\frac{1}{3},2+i,2\right)\right]	0.210251\, -0.201469 i	
-n-lerchphi-1-over-3-2-plus-i-0p5	N[LerchPhi[Rational[1, 3], Complex[2, 1], 0.5]]	3.224867422277603 + 2.47964899897459*I	N\left[\Phi \left(\frac{1}{3},2+i,0.5\right)\right]	3.22487\, +2.47965 i	
-n-lerchphi-1-over-3-2-plus-i-5-over-2	N[LerchPhi[Rational[1, 3], Complex[2, 1], Rational[5, 2]]]	0.10598096947609492 - 0.15983669023372948*I	N\left[\Phi \left(\frac{1}{3},2+i,\frac{5}{2}\right)\right]	0.105981\, -0.159837 i	
-n-lerchphi-0p4-plus-0p3i-2-1	N[LerchPhi[Complex[0.4, 0.3], 2, 1]]	1.1018365887408403 + 0.10988045400413204*I	N[\Phi (0.4\, +0.3 i,2,1)]	1.10184\, +0.10988 i	
-n-lerchphi-0p4-plus-0p3i-2-2	N[LerchPhi[Complex[0.4, 0.3], 2, 2]]	0.2947950867903031 + 0.053604819917602735*I	N[\Phi (0.4\, +0.3 i,2,2)]	0.294795\, +0.0536048 i	
-n-lerchphi-0p4-plus-0p3i-2-0p5	N[LerchPhi[Complex[0.4, 0.3], 2, 0.5]]	4.1814992436363365 + 0.18243256267398955*I	N[\Phi (0.4\, +0.3 i,2,0.5)]	4.1815\, +0.182433 i	
-n-lerchphi-0p4-plus-0p3i-2-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 2, Rational[5, 2]]]	0.1927090824297056 + 0.04070070796466971*I	N\left[\Phi \left(0.4\, +0.3 i,2,\frac{5}{2}\right)\right]	0.192709\, +0.0407007 i	
-n-lerchphi-0p4-plus-0p3i-3-1	N[LerchPhi[Complex[0.4, 0.3], 3, 1]]	1.0513066923524605 + 0.0484245770703553*I	N[\Phi (0.4\, +0.3 i,3,1)]	1.05131\, +0.0484246 i	
-n-lerchphi-0p4-plus-0p3i-3-2	N[LerchPhi[Complex[0.4, 0.3], 3, 2]]	0.1402002002483636 + 0.01591129248961566*I	N[\Phi (0.4\, +0.3 i,3,2)]	0.1402\, +0.0159113 i	
-n-lerchphi-0p4-plus-0p3i-3-0p5	N[LerchPhi[Complex[0.4, 0.3], 3, 0.5]]	8.12116576184306 + 0.10727030391186279*I	N[\Phi (0.4\, +0.3 i,3,0.5)]	8.12117\, +0.10727 i	
-n-lerchphi-0p4-plus-0p3i-3-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 3, Rational[5, 2]]]	0.07354954621170498 + 0.010421770459496023*I	N\left[\Phi \left(0.4\, +0.3 i,3,\frac{5}{2}\right)\right]	0.0735495\, +0.0104218 i	
-n-lerchphi-0p4-plus-0p3i-0p5-1	N[LerchPhi[Complex[0.4, 0.3], 0.5, 1]]	1.261409136988255 + 0.4154287853084414*I	N[\Phi (0.4\, +0.3 i,0.5,1)]	1.26141\, +0.415429 i	
-n-lerchphi-0p4-plus-0p3i-0p5-2	N[LerchPhi[Complex[0.4, 0.3], 0.5, 2]]	0.9167691615513378 + 0.3509950921076002*I	N[\Phi (0.4\, +0.3 i,0.5,2)]	0.916769\, +0.350995 i	
-n-lerchphi-0p4-plus-0p3i-0p5-0p5	N[LerchPhi[Complex[0.4, 0.3], 0.5, 0.5]]	1.7197286399191294 + 0.4660076436992483*I	N[\Phi (0.4\, +0.3 i,0.5,0.5)]	1.71973\, +0.466008 i	
-n-lerchphi-0p4-plus-0p3i-0p5-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 0.5, Rational[5, 2]]]	0.8252517091723102 + 0.3285465602796579*I	N\left[\Phi \left(0.4\, +0.3 i,0.5,\frac{5}{2}\right)\right]	0.825252\, +0.328547 i	
-n-lerchphi-0p4-plus-0p3i-neg-1-1	N[LerchPhi[Complex[0.4, 0.3], -1, 1]]	1.3333333333333333 + 1.7777777777777777*I	N[\Phi (0.4\, +0.3 i,-1,1)]	1.33333\, +1.77778 i	
-n-lerchphi-0p4-plus-0p3i-neg-1-2	N[LerchPhi[Complex[0.4, 0.3], -1, 2]]	2.666666666666666 + 2.444444444444444*I	N[\Phi (0.4\, +0.3 i,-1,2)]	2.66667\, +2.44444 i	
-n-lerchphi-0p4-plus-0p3i-neg-1-0p5	N[LerchPhi[Complex[0.4, 0.3], -1, 0.5]]	0.6666666666666669 + 1.4444444444444446*I	N[\Phi (0.4\, +0.3 i,-1,0.5)]	0.666667\, +1.44444 i	
-n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2	N[LerchPhi[Complex[0.4, 0.3], -1, Rational[5, 2]]]	3.3333333333333335 + 2.7777777777777777*I	N\left[\Phi \left(0.4\, +0.3 i,-1,\frac{5}{2}\right)\right]	3.33333\, +2.77778 i	
-n-lerchphi-0p4-plus-0p3i-2-plus-i-1	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 1]]	1.1600967534137012 + 0.006328927692369479*I	N[\Phi (0.4\, +0.3 i,2+i,1)]	1.1601\, +0.00632893 i	
-n-lerchphi-0p4-plus-0p3i-2-plus-i-2	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 2]]	0.26374951869276547 - 0.1819898197886505*I	N[\Phi (0.4\, +0.3 i,2+i,2)]	0.26375\, -0.18199 i	
-n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 0.5]]	3.3393475090828915 + 2.6332805602247045*I	N[\Phi (0.4\, +0.3 i,2+i,0.5)]	3.33935\, +2.63328 i	
-n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], Rational[5, 2]]]	0.14814884863835964 - 0.15027197224093874*I	N\left[\Phi \left(0.4\, +0.3 i,2+i,\frac{5}{2}\right)\right]	0.148149\, -0.150272 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-1	N[LerchPhi[Complex[-0.3, 0.5], 2, 1]]	0.9167986759971547 + 0.09467911486749003*I	N[\Phi (-0.3+0.5 i,2,1)]	0.916799\, +0.0946791 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-2	N[LerchPhi[Complex[-0.3, 0.5], 2, 2]]	0.2126469253958784 + 0.03881449276816393*I	N[\Phi (-0.3+0.5 i,2,2)]	0.212647\, +0.0388145 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-0p5	N[LerchPhi[Complex[-0.3, 0.5], 2, 0.5]]	3.853772051558023 + 0.1780414386292791*I	N[\Phi (-0.3+0.5 i,2,0.5)]	3.85377\, +0.178041 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 2, Rational[5, 2]]]	0.1325032309279059 + 0.027686339466071092*I	N\left[\Phi \left(-0.3+0.5 i,2,\frac{5}{2}\right)\right]	0.132503\, +0.0276863 i	
-n-lerchphi-neg-0p3-plus-0p5i-3-1	N[LerchPhi[Complex[-0.3, 0.5], 3, 1]]	0.9591056061308405 + 0.052063804773611055*I	N[\Phi (-0.3+0.5 i,3,1)]	0.959106\, +0.0520638 i	
-n-lerchphi-neg-0p3-plus-0p5i-3-2	N[LerchPhi[Complex[-0.3, 0.5], 3, 2]]	0.1126477074928041 + 0.014200163242636777*I	N[\Phi (-0.3+0.5 i,3,2)]	0.112648\, +0.0142002 i	
-n-lerchphi-neg-0p3-plus-0p5i-3-0p5	N[LerchPhi[Complex[-0.3, 0.5], 3, 0.5]]	7.904718153248673 + 0.12990910279935874*I	N[\Phi (-0.3+0.5 i,3,0.5)]	7.90472\, +0.129909 i	
-n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 3, Rational[5, 2]]]	0.05618154725455815 + 0.008653632327637262*I	N\left[\Phi \left(-0.3+0.5 i,3,\frac{5}{2}\right)\right]	0.0561815\, +0.00865363 i	
-n-lerchphi-neg-0p3-plus-0p5i-0p5-1	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 1]]	0.7637974549105835 + 0.20811582103519072*I	N[\Phi (-0.3+0.5 i,0.5,1)]	0.763797\, +0.208116 i	
-n-lerchphi-neg-0p3-plus-0p5i-0p5-2	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 2]]	0.5144666883659423 + 0.16372507715926804*I	N[\Phi (-0.3+0.5 i,0.5,2)]	0.514467\, +0.163725 i	
-n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 0.5]]	1.141526793353947 + 0.24801149986829357*I	N[\Phi (-0.3+0.5 i,0.5,0.5)]	1.14153\, +0.248011 i	
-n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 0.5, Rational[5, 2]]]	0.4542308333668138 + 0.14979712865953318*I	N\left[\Phi \left(-0.3+0.5 i,0.5,\frac{5}{2}\right)\right]	0.454231\, +0.149797 i	
-n-lerchphi-neg-0p3-plus-0p5i-neg-1-1	N[LerchPhi[Complex[-0.3, 0.5], -1, 1]]	0.3826123923902647 + 0.3454139653523222*I	N[\Phi (-0.3+0.5 i,-1,1)]	0.382612\, +0.345414 i	
-n-lerchphi-neg-0p3-plus-0p5i-neg-1-2	N[LerchPhi[Complex[-0.3, 0.5], -1, 2]]	1.0527154851737697 + 0.6031459241152088*I	N[\Phi (-0.3+0.5 i,-1,2)]	1.05272\, +0.603146 i	
-n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5	N[LerchPhi[Complex[-0.3, 0.5], -1, 0.5]]	0.047560845998512125 + 0.21654798597087893*I	N[\Phi (-0.3+0.5 i,-1,0.5)]	0.0475608\, +0.216548 i	
-n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], -1, Rational[5, 2]]]	1.3877670315655224 + 0.7320119034966522*I	N\left[\Phi \left(-0.3+0.5 i,-1,\frac{5}{2}\right)\right]	1.38777\, +0.732012 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 1]]	0.989784607429556 + 0.13562877409833596*I	N[\Phi (-0.3+0.5 i,2+i,1)]	0.989785\, +0.135629 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 2]]	0.20846766123618016 - 0.10464981160081954*I	N[\Phi (-0.3+0.5 i,2+i,2)]	0.208468\, -0.10465 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 0.5]]	2.996994256247417 + 2.7925848156947635*I	N[\Phi (-0.3+0.5 i,2+i,0.5)]	2.99699\, +2.79258 i	
-n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], Rational[5, 2]]]	0.1144651166327124 - 0.08926367800980031*I	N\left[\Phi \left(-0.3+0.5 i,2+i,\frac{5}{2}\right)\right]	0.114465\, -0.0892637 i	
-n-lerchphi-2-2-1	N[LerchPhi[2, 2, 1]]	1.2337005501361697 - 1.088793045151801*I	N[\Phi (2,2,1)]	1.2337\, -1.08879 i	
-n-lerchphi-2-2-2	N[LerchPhi[2, 2, 2]]	0.11685027506808487 - 0.5443965225759005*I	N[\Phi (2,2,2)]	0.11685\, -0.544397 i	
-n-lerchphi-2-2-0p5	N[LerchPhi[2, 2, 0.5]]	4.840291449348403 - 1.5397858910711801*I	N[\Phi (2,2,0.5)]	4.84029\, -1.53979 i	
-n-lerchphi-2-2-5-over-2	N[LerchPhi[2, 2, Rational[5, 2]]]	-0.012149359885121669 - 0.38494647276779503*I	N\left[\Phi \left(2,2,\frac{5}{2}\right)\right]	-0.0121494-0.384946 i	
-n-lerchphi-2-2-neg-2p5	N[LerchPhi[2, 2, -2.5]]	55.77122048367611 - 12.318287128569441*I	N[\Phi (2,2,-2.5)]	55.7712\, -12.3183 i	
-n-lerchphi-2-3-1	N[LerchPhi[2, 3, 1]]	1.3810359531144623 - 0.3773469147301234*I	N[\Phi (2,3,1)]	1.38104\, -0.377347 i	
-n-lerchphi-2-3-2	N[LerchPhi[2, 3, 2]]	0.19051797655723113 - 0.1886734573650617*I	N[\Phi (2,3,2)]	0.190518\, -0.188673 i	
-n-lerchphi-2-3-0p5	N[LerchPhi[2, 3, 0.5]]	8.921391406560598 - 0.5336491245309867*I	N[\Phi (2,3,0.5)]	8.92139\, -0.533649 i	
-n-lerchphi-2-3-5-over-2	N[LerchPhi[2, 3, Rational[5, 2]]]	0.08219970349200167 - 0.13341228113274667*I	N\left[\Phi \left(2,3,\frac{5}{2}\right)\right]	0.0821997\, -0.133412 i	
-n-lerchphi-2-3-neg-2p5	N[LerchPhi[2, 3, -2.5]]	104.02772384507739 - 4.269192996247893*I	N[\Phi (2,3,-2.5)]	104.028\, -4.26919 i	disagree
-n-lerchphi-2-0p5-1	N[LerchPhi[2, 0.5, 1]]	-0.8050307649337431 - 1.0644670194312265*I	N[\Phi (2,0.5,1)]	-0.805031-1.06447 i	
-n-lerchphi-2-0p5-2	N[LerchPhi[2, 0.5, 2]]	-0.9025153824668711 - 0.532233509715613*I	N[\Phi (2,0.5,2)]	-0.902515-0.532234 i	
-n-lerchphi-2-0p5-0p5	N[LerchPhi[2, 0.5, 0.5]]	-0.39538588823194476 - 1.5053836955785047*I	N[\Phi (2,0.5,0.5)]	-0.395386-1.50538 i	
-n-lerchphi-2-0p5-5-over-2	N[LerchPhi[2, 0.5, Rational[5, 2]]]	-0.8606481531151231 - 0.3763459238946262*I	N\left[\Phi \left(2,0.5,\frac{5}{2}\right)\right]	-0.860648-0.376346 i	
-n-lerchphi-2-0p5-neg-2p5	N[LerchPhi[2, 0.5, -2.5]]	4.75921583752595 - 12.043069564628038*I	N[\Phi (2,0.5,-2.5)]	4.75922\, -12.0431 i	disagree
-n-lerchphi-2-2-plus-i-1	N[LerchPhi[2, Complex[2, 1], 1]]	0.7821035196370021 - 0.5898143877849428*I	N[\Phi (2,2+i,1)]	0.782104\, -0.589814 i	
-n-lerchphi-2-2-plus-i-2	N[LerchPhi[2, Complex[2, 1], 2]]	-0.10894824018083943 - 0.2949071938925386*I	N[\Phi (2,2+i,2)]	-0.108948-0.294907 i	
-n-lerchphi-2-2-plus-i-0p5	N[LerchPhi[2, Complex[2, 1], 0.5]]	3.2663465887755443 + 1.5814239980763367*I	N[\Phi (2,2+i,0.5)]	3.26635\, +1.58142 i	
-n-lerchphi-2-2-plus-i-5-over-2	N[LerchPhi[2, Complex[2, 1], Rational[5, 2]]]	-0.1568564844899748 - 0.1559505657469148*I	N\left[\Phi \left(2,2+i,\frac{5}{2}\right)\right]	-0.156856-0.155951 i	
-n-lerchphi-2-2-plus-i-neg-2p5	N[LerchPhi[2, Complex[2, 1], -2.5]]	39.35281478642287 + 22.39721772102415*I	N[\Phi (2,2+i,-2.5)]	39.3528\, +22.3972 i	disagree
-n-lerchphi-neg-2-2-1	N[LerchPhi[-2, 2, 1]]	0.7183731834418405	N[\Phi (-2,2,1)]	0.718373	
-n-lerchphi-neg-2-2-2	N[LerchPhi[-2, 2, 2]]	0.14081340827907973	N[\Phi (-2,2,2)]	0.140813	
-n-lerchphi-neg-2-2-0p5	N[LerchPhi[-2, 2, 0.5]]	3.4447342293302547 - 2.0380094546286109*^-16*I	N[\Phi (-2,2,0.5)]	3.44473\, -\text{2.0380094546286109$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-2-2-5-over-2	N[LerchPhi[-2, 2, Rational[5, 2]]]	0.0834057795547859 - 5.095023636571527*^-17*I	N\left[\Phi \left(-2,2,\frac{5}{2}\right)\right]	0.0834058\, -\text{5.095023636571527$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-2-2-neg-2p5	N[LerchPhi[-2, 2, -2.5]]	-12.286762723530927 + 1.6304075637028887*^-15*I	N[\Phi (-2,2,-2.5)]	-12.2868+\text{1.6304075637028887$\grave{ }$*${}^{\wedge}$-15} i	
-n-lerchphi-neg-2-3-1	N[LerchPhi[-2, 3, 1]]	0.8341416819832856	N[\Phi (-2,3,1)]	0.834142	
-n-lerchphi-neg-2-3-2	N[LerchPhi[-2, 3, 2]]	0.08292915900835718	N[\Phi (-2,3,2)]	0.0829292	
-n-lerchphi-neg-2-3-0p5	N[LerchPhi[-2, 3, 0.5]]	7.563284617347448 + 1.3824347500011768*^-15*I	N[\Phi (-2,3,0.5)]	7.56328\, +\text{1.3824347500011768$\grave{ }$*${}^{\wedge}$-15} i	
-n-lerchphi-neg-2-3-5-over-2	N[LerchPhi[-2, 3, Rational[5, 2]]]	0.03896930248501018 + 3.456086875002942*^-16*I	N\left[\Phi \left(-2,3,\frac{5}{2}\right)\right]	0.0389693\, +\text{3.456086875002942$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-2-3-neg-2p5	N[LerchPhi[-2, 3, -2.5]]	-29.034869531372177 - 1.1059478000009414*^-14*I	N[\Phi (-2,3,-2.5)]	-29.0349-\text{1.1059478000009414$\grave{ }$*${}^{\wedge}$-14} i	disagree
-n-lerchphi-neg-2-0p5-1	N[LerchPhi[-2, 0.5, 1]]	0.4456443557760621 - 4.163336342344337*^-17*I	N[\Phi (-2,0.5,1)]	0.445644\, -\text{4.163336342344337$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-2-0p5-2	N[LerchPhi[-2, 0.5, 2]]	0.2771778221119691 + 5.68356755158503*^-18*I	N[\Phi (-2,0.5,2)]	0.277178\, +\text{5.68356755158503$\grave{ }$*${}^{\wedge}$-18} i	
-n-lerchphi-neg-2-0p5-0p5	N[LerchPhi[-2, 0.5, 0.5]]	0.7431924320288356 - 2.4228238315063152*^-17*I	N[\Phi (-2,0.5,0.5)]	0.743192\, -\text{2.4228238315063152$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-2-0p5-5-over-2	N[LerchPhi[-2, 0.5, Rational[5, 2]]]	0.24049300787779812 - 6.057059578765788*^-18*I	N\left[\Phi \left(-2,0.5,\frac{5}{2}\right)\right]	0.240493\, -\text{6.057059578765788$\grave{ }$*${}^{\wedge}$-18} i	
-n-lerchphi-neg-2-0p5-neg-2p5	N[LerchPhi[-2, 0.5, -2.5]]	-1.2892228365600795 + 1.9382590652050522*^-16*I	N[\Phi (-2,0.5,-2.5)]	-1.28922+\text{1.9382590652050522$\grave{ }$*${}^{\wedge}$-16} i	disagree
-n-lerchphi-neg-2-2-plus-i-1	N[LerchPhi[-2, Complex[2, 1], 1]]	0.7462766702242207 + 0.14040868638886603*I	N[\Phi (-2,2+i,1)]	0.746277\, +0.140409 i	
-n-lerchphi-neg-2-2-plus-i-2	N[LerchPhi[-2, Complex[2, 1], 2]]	0.1268616648883305 - 0.0702043431947064*I	N[\Phi (-2,2+i,2)]	0.126862\, -0.0702043 i	
-n-lerchphi-neg-2-2-plus-i-0p5	N[LerchPhi[-2, Complex[2, 1], 0.5]]	2.51118300287403 + 2.6760511428484572*I	N[\Phi (-2,2+i,0.5)]	2.51118\, +2.67605 i	
-n-lerchphi-neg-2-2-plus-i-5-over-2	N[LerchPhi[-2, Complex[2, 1], Rational[5, 2]]]	0.06276107967442413 - 0.05760320164915622*I	N\left[\Phi \left(-2,2+i,\frac{5}{2}\right)\right]	0.0627611\, -0.0576032 i	
-n-lerchphi-neg-2-2-plus-i-neg-2p5	N[LerchPhi[-2, Complex[2, 1], -2.5]]	-8.501055789332833 - 10.961345717993117*I	N[\Phi (-2,2+i,-2.5)]	-8.50106-10.9613 i	disagree
-n-lerchphi-3-2-1	N[LerchPhi[3, 2, 1]]	0.7733934744376993 - 1.1504640984077343*I	N[\Phi (3,2,1)]	0.773393\, -1.15046 i	
-n-lerchphi-3-2-2	N[LerchPhi[3, 2, 2]]	-0.07553550852076688 - 0.3834880328025781*I	N[\Phi (3,2,2)]	-0.0755355-0.383488 i	
-n-lerchphi-3-2-0p5	N[LerchPhi[3, 2, 0.5]]	4.308305910092614 - 1.9926622707261177*I	N[\Phi (3,2,0.5)]	4.30831\, -1.99266 i	
-n-lerchphi-3-2-5-over-2	N[LerchPhi[3, 2, Rational[5, 2]]]	-0.1138919359156354 - 0.22140691896956863*I	N\left[\Phi \left(3,2,\frac{5}{2}\right)\right]	-0.113892-0.221407 i	
-n-lerchphi-3-2-neg-2p5	N[LerchPhi[3, 2, -2.5]]	153.81759290583392 - 53.80188130960518*I	N[\Phi (3,2,-2.5)]	153.818\, -53.8019 i	
-n-lerchphi-3-3-1	N[LerchPhi[3, 3, 1]]	1.2473741980802437 - 0.6319569980911073*I	N[\Phi (3,3,1)]	1.24737\, -0.631957 i	
-n-lerchphi-3-3-2	N[LerchPhi[3, 3, 2]]	0.0824580660267479 - 0.21065233269703576*I	N[\Phi (3,3,2)]	0.0824581\, -0.210652 i	
-n-lerchphi-3-3-0p5	N[LerchPhi[3, 3, 0.5]]	8.962435484818286 - 1.0945816288925072*I	N[\Phi (3,3,0.5)]	8.96244\, -1.09458 i	
-n-lerchphi-3-3-5-over-2	N[LerchPhi[3, 3, Rational[5, 2]]]	0.008171843992155203 - 0.12162018098805635*I	N\left[\Phi \left(3,3,\frac{5}{2}\right)\right]	0.00817184\, -0.12162 i	
-n-lerchphi-3-3-neg-2p5	N[LerchPhi[3, 3, -2.5]]	314.9386469789826 - 29.553703980097694*I	N[\Phi (3,3,-2.5)]	314.939\, -29.5537 i	disagree
-n-lerchphi-3-0p5-1	N[LerchPhi[3, 0.5, 1]]	-0.5673384497546596 - 0.5636784807928212*I	N[\Phi (3,0.5,1)]	-0.567338-0.563678 i	
-n-lerchphi-3-0p5-2	N[LerchPhi[3, 0.5, 2]]	-0.5224461499182197 - 0.18789282693094045*I	N[\Phi (3,0.5,2)]	-0.522446-0.187893 i	
-n-lerchphi-3-0p5-0p5	N[LerchPhi[3, 0.5, 0.5]]	-0.305888418127714 - 0.976319767866404*I	N[\Phi (3,0.5,0.5)]	-0.305888-0.97632 i	
-n-lerchphi-3-0p5-5-over-2	N[LerchPhi[3, 0.5, Rational[5, 2]]]	-0.4632879692537763 - 0.1084799742073782*I	N\left[\Phi \left(3,0.5,\frac{5}{2}\right)\right]	-0.463288-0.10848 i	
-n-lerchphi-3-0p5-neg-2p5	N[LerchPhi[3, 0.5, -2.5]]	7.550880046726434 - 26.360633732392905*I	N[\Phi (3,0.5,-2.5)]	7.55088\, -26.3606 i	disagree
-n-lerchphi-3-2-plus-i-1	N[LerchPhi[3, Complex[2, 1], 1]]	0.6014155729902452 - 0.5726915889959069*I	N[\Phi (3,2+i,1)]	0.601416\, -0.572692 i	
-n-lerchphi-3-2-plus-i-2	N[LerchPhi[3, Complex[2, 1], 2]]	-0.13286147566971163 - 0.1908971963319649*I	N[\Phi (3,2+i,2)]	-0.132861-0.190897 i	
-n-lerchphi-3-2-plus-i-0p5	N[LerchPhi[3, Complex[2, 1], 0.5]]	3.07433014627917 + 1.3820906569318034*I	N[\Phi (3,2+i,0.5)]	3.07433\, +1.38209 i	
-n-lerchphi-3-2-plus-i-5-over-2	N[LerchPhi[3, Complex[2, 1], Rational[5, 2]]]	-0.13642787123289463 - 0.07198068689299125*I	N\left[\Phi \left(3,2+i,\frac{5}{2}\right)\right]	-0.136428-0.0719807 i	
-n-lerchphi-3-2-plus-i-neg-2p5	N[LerchPhi[3, Complex[2, 1], -2.5]]	112.02214251367533 + 59.66618957774957*I	N[\Phi (3,2+i,-2.5)]	112.022\, +59.6662 i	disagree
-n-lerchphi-1p5-2-1	N[LerchPhi[1.5, 2, 1]]	1.582930180181653 - 0.8492041366130669*I	N[\Phi (1.5,2,1)]	1.58293\, -0.849204 i	
-n-lerchphi-1p5-2-2	N[LerchPhi[1.5, 2, 2]]	0.38862012012110325 - 0.5661360910753768*I	N[\Phi (1.5,2,2)]	0.38862\, -0.566136 i	
-n-lerchphi-1p5-2-0p5	N[LerchPhi[1.5, 2, 0.5]]	5.118490668726073 - 1.040058411081378*I	N[\Phi (1.5,2,0.5)]	5.11849\, -1.04006 i	
-n-lerchphi-1p5-2-5-over-2	N[LerchPhi[1.5, 2, Rational[5, 2]]]	0.2008106675819583 - 0.46224818270283463*I	N\left[\Phi \left(1.5,2,\frac{5}{2}\right)\right]	0.200811\, -0.462248 i	
-n-lerchphi-1p5-2-neg-2p5	N[LerchPhi[1.5, 2, -2.5]]	27.101572673617163 - 3.5101971373996506*I	N[\Phi (1.5,2,-2.5)]	27.1016\, -3.5102 i	
-n-lerchphi-1p5-3-1	N[LerchPhi[1.5, 3, 1]]	1.3739183382135203 - 0.17216132352885852*I	N[\Phi (1.5,3,1)]	1.37392\, -0.172161 i	
-n-lerchphi-1p5-3-2	N[LerchPhi[1.5, 3, 2]]	0.24927889214235632 - 0.11477421568590564*I	N[\Phi (1.5,3,2)]	0.249279\, -0.114774 i	
-n-lerchphi-1p5-3-0p5	N[LerchPhi[1.5, 3, 0.5]]	8.75839228129124 - 0.21085369804395912*I	N[\Phi (1.5,3,0.5)]	8.75839\, -0.210854 i	
-n-lerchphi-1p5-3-5-over-2	N[LerchPhi[1.5, 3, Rational[5, 2]]]	0.13953237193190896 - 0.09371275468620405*I	N\left[\Phi \left(1.5,3,\frac{5}{2}\right)\right]	0.139532\, -0.0937128 i	
-n-lerchphi-1p5-3-neg-2p5	N[LerchPhi[1.5, 3, -2.5]]	48.068018393802376 - 0.711631230898362*I	N[\Phi (1.5,3,-2.5)]	48.068\, -0.711631 i	disagree
-n-lerchphi-1p5-0p5-1	N[LerchPhi[1.5, 0.5, 1]]	-1.0310938016261078 - 1.8556964357740162*I	N[\Phi (1.5,0.5,1)]	-1.03109-1.8557 i	
-n-lerchphi-1p5-0p5-2	N[LerchPhi[1.5, 0.5, 2]]	-1.3540625344174047 - 1.2371309571826772*I	N[\Phi (1.5,0.5,2)]	-1.35406-1.23713 i	
-n-lerchphi-1p5-0p5-0p5	N[LerchPhi[1.5, 0.5, 0.5]]	-0.4727012388667613 - 2.2727546925738773*I	N[\Phi (1.5,0.5,0.5)]	-0.472701-2.27275 i	
-n-lerchphi-1p5-0p5-5-over-2	N[LerchPhi[1.5, 0.5, Rational[5, 2]]]	-1.3829598545028647 - 1.010113196699501*I	N\left[\Phi \left(1.5,0.5,\frac{5}{2}\right)\right]	-1.38296-1.01011 i	
-n-lerchphi-1p5-0p5-neg-2p5	N[LerchPhi[1.5, 0.5, -2.5]]	3.44381423758941 - 7.6705470874368356*I	N[\Phi (1.5,0.5,-2.5)]	3.44381\, -7.67055 i	disagree
-n-lerchphi-1p5-2-plus-i-1	N[LerchPhi[1.5, Complex[2, 1], 1]]	0.9288306730428874 - 0.5652075721952401*I	N[\Phi (1.5,2+i,1)]	0.928831\, -0.565208 i	
-n-lerchphi-1p5-2-plus-i-2	N[LerchPhi[1.5, Complex[2, 1], 2]]	-0.04744621797176318 - 0.37680504812909255*I	N[\Phi (1.5,2+i,2)]	-0.0474462-0.376805 i	
-n-lerchphi-1p5-2-plus-i-0p5	N[LerchPhi[1.5, Complex[2, 1], 0.5]]	3.3830483897788204 + 1.7479834843533162*I	N[\Phi (1.5,2+i,0.5)]	3.38305\, +1.74798 i	
-n-lerchphi-1p5-2-plus-i-5-over-2	N[LerchPhi[1.5, Complex[2, 1], Rational[5, 2]]]	-0.13623106961632636 - 0.24217666122591808*I	N\left[\Phi \left(1.5,2+i,\frac{5}{2}\right)\right]	-0.136231-0.242177 i	
-n-lerchphi-1p5-2-plus-i-neg-2p5	N[LerchPhi[1.5, Complex[2, 1], -2.5]]	19.05095385185434 + 11.260195772958092*I	N[\Phi (1.5,2+i,-2.5)]	19.051\, +11.2602 i	disagree
-n-lerchphi-neg-1p5-2-1	N[LerchPhi[-1.5, 2, 1]]	0.7649204402503804	N[\Phi (-1.5,2,1)]	0.76492	
-n-lerchphi-neg-1p5-2-2	N[LerchPhi[-1.5, 2, 2]]	0.1567197064997469 + 5.721258238267586*^-16*I	N[\Phi (-1.5,2,2)]	0.15672\, +\text{5.721258238267586$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-1p5-2-0p5	N[LerchPhi[-1.5, 2, 0.5]]	3.545004558874938 - 5.748616730151821*^-17*I	N[\Phi (-1.5,2,0.5)]	3.545\, -\text{5.748616730151821$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-1p5-2-5-over-2	N[LerchPhi[-1.5, 2, Rational[5, 2]]]	0.09407610024071308 - 2.5549407689563645*^-17*I	N\left[\Phi \left(-1.5,2,\frac{5}{2}\right)\right]	0.0940761\, -\text{2.5549407689563645$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-1p5-2-neg-2p5	N[LerchPhi[-1.5, 2, -2.5]]	-3.4710570528695808 + 1.9401581464262396*^-16*I	N[\Phi (-1.5,2,-2.5)]	-3.47106+\text{1.9401581464262396$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-1p5-3-1	N[LerchPhi[-1.5, 3, 1]]	0.8652249667708333	N[\Phi (-1.5,3,1)]	0.865225	
-n-lerchphi-neg-1p5-3-2	N[LerchPhi[-1.5, 3, 2]]	0.0898500221527776 + 2.6738770253614813*^-16*I	N[\Phi (-1.5,3,2)]	0.08985\, +\text{2.6738770253614813$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-1p5-3-0p5	N[LerchPhi[-1.5, 3, 0.5]]	7.652044367963561 + 1.513727336795356*^-15*I	N[\Phi (-1.5,3,0.5)]	7.65204\, +\text{1.513727336795356$\grave{ }$*${}^{\wedge}$-15} i	
-n-lerchphi-neg-1p5-3-5-over-2	N[LerchPhi[-1.5, 3, Rational[5, 2]]]	0.04288391662578029 + 6.727677052423805*^-16*I	N\left[\Phi \left(-1.5,3,\frac{5}{2}\right)\right]	0.0428839\, +\text{6.727677052423805$\grave{ }$*${}^{\wedge}$-16} i	
-n-lerchphi-neg-1p5-3-neg-2p5	N[LerchPhi[-1.5, 3, -2.5]]	-8.206094186321462 - 5.108829761684327*^-15*I	N[\Phi (-1.5,3,-2.5)]	-8.20609-\text{5.108829761684327$\grave{ }$*${}^{\wedge}$-15} i	disagree
-n-lerchphi-neg-1p5-0p5-1	N[LerchPhi[-1.5, 0.5, 1]]	0.5118021812475765 - 3.700743415417188*^-17*I	N[\Phi (-1.5,0.5,1)]	0.511802\, -\text{3.700743415417188$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-1p5-0p5-2	N[LerchPhi[-1.5, 0.5, 2]]	0.3254652125016162 + 1.9987578825705452*^-18*I	N[\Phi (-1.5,0.5,2)]	0.325465\, +\text{1.9987578825705452$\grave{ }$*${}^{\wedge}$-18} i	
-n-lerchphi-neg-1p5-0p5-0p5	N[LerchPhi[-1.5, 0.5, 0.5]]	0.8278942319491788 + 1.134070298867023*^-17*I	N[\Phi (-1.5,0.5,0.5)]	0.827894\, +\text{1.134070298867023$\grave{ }$*${}^{\wedge}$-17} i	
-n-lerchphi-neg-1p5-0p5-5-over-2	N[LerchPhi[-1.5, 0.5, Rational[5, 2]]]	0.28374468487452115 + 5.040312439408991*^-18*I	N\left[\Phi \left(-1.5,0.5,\frac{5}{2}\right)\right]	0.283745\, +\text{5.040312439408991$\grave{ }$*${}^{\wedge}$-18} i	
-n-lerchphi-neg-1p5-0p5-neg-2p5	N[LerchPhi[-1.5, 0.5, -2.5]]	-0.2044518568469269 - 3.827487258676203*^-17*I	N[\Phi (-1.5,0.5,-2.5)]	-0.204452-\text{3.827487258676203$\grave{ }$*${}^{\wedge}$-17} i	disagree
-n-lerchphi-neg-1p5-2-plus-i-1	N[LerchPhi[-1.5, Complex[2, 1], 1]]	0.7925489657208953 + 0.1230745464694305*I	N[\Phi (-1.5,2+i,1)]	0.792549\, +0.123075 i	
-n-lerchphi-neg-1p5-2-plus-i-2	N[LerchPhi[-1.5, Complex[2, 1], 2]]	0.13830068951857172 - 0.08204969764635209*I	N[\Phi (-1.5,2+i,2)]	0.138301\, -0.0820497 i	
-n-lerchphi-neg-1p5-2-plus-i-0p5	N[LerchPhi[-1.5, Complex[2, 1], 0.5]]	2.619306075593197 + 2.6687326314578925*I	N[\Phi (-1.5,2+i,0.5)]	2.61931\, +2.66873 i	
-n-lerchphi-neg-1p5-2-plus-i-5-over-2	N[LerchPhi[-1.5, Complex[2, 1], Rational[5, 2]]]	0.06887251604309992 - 0.06670071419535716*I	N\left[\Phi \left(-1.5,2+i,\frac{5}{2}\right)\right]	0.0688725\, -0.0667007 i	
-n-lerchphi-neg-1p5-2-plus-i-neg-2p5	N[LerchPhi[-1.5, Complex[2, 1], -2.5]]	-2.4322178506955483 - 3.1202928516189257*I	N[\Phi (-1.5,2+i,-2.5)]	-2.43222-3.12029 i	disagree
-n-lerchphi-1-plus-2i-2-1	N[LerchPhi[Complex[1, 2], 2, 1]]	0.8171642289751408 + 0.4383195138244753*I	N[\Phi (1+2 i,2,1)]	0.817164\, +0.43832 i	
-n-lerchphi-1-plus-2i-2-2	N[LerchPhi[Complex[1, 2], 2, 2]]	0.1387606513248183 + 0.16079821117483872*I	N[\Phi (1+2 i,2,2)]	0.138761\, +0.160798 i	
-n-lerchphi-1-plus-2i-2-0p5	N[LerchPhi[Complex[1, 2], 2, 0.5]]	3.7921142608467884 + 0.8560748069785487*I	N[\Phi (1+2 i,2,0.5)]	3.79211\, +0.856075 i	
-n-lerchphi-1-plus-2i-2-5-over-2	N[LerchPhi[Complex[1, 2], 2, Rational[5, 2]]]	0.07302936892606432 + 0.10831051920486583*I	N\left[\Phi \left(1+2 i,2,\frac{5}{2}\right)\right]	0.0730294\, +0.108311 i	
-n-lerchphi-1-plus-2i-2-neg-2p5	N[LerchPhi[Complex[1, 2], 2, -2.5]]	-51.39666281091313 - 0.11216250956872287*I	N[\Phi (1+2 i,2,-2.5)]	-51.3967-0.112163 i	
-n-lerchphi-1-plus-2i-3-1	N[LerchPhi[Complex[1, 2], 3, 1]]	0.9605393291259242 + 0.26202376061325094*I	N[\Phi (1+2 i,3,1)]	0.960539\, +0.262024 i	
-n-lerchphi-1-plus-2i-3-2	N[LerchPhi[Complex[1, 2], 3, 2]]	0.09691737007048523 + 0.06818902047228051*I	N[\Phi (1+2 i,3,2)]	0.0969174\, +0.068189 i	
-n-lerchphi-1-plus-2i-3-0p5	N[LerchPhi[Complex[1, 2], 3, 0.5]]	8.006976954441555 + 0.6457371392370719*I	N[\Phi (1+2 i,3,0.5)]	8.00698\, +0.645737 i	
-n-lerchphi-1-plus-2i-3-5-over-2	N[LerchPhi[Complex[1, 2], 3, Rational[5, 2]]]	0.04322144848568559 + 0.03991374909942102*I	N\left[\Phi \left(1+2 i,3,\frac{5}{2}\right)\right]	0.0432214\, +0.0399137 i	
-n-lerchphi-1-plus-2i-3-neg-2p5	N[LerchPhi[Complex[1, 2], 3, -2.5]]	-110.42497592408667 + 9.475530152101694*I	N[\Phi (1+2 i,3,-2.5)]	-110.425+9.47553 i	disagree
-n-lerchphi-1-plus-2i-0p5-1	N[LerchPhi[Complex[1, 2], 0.5, 1]]	0.2518733705484466 + 0.5942372440727623*I	N[\Phi (1+2 i,0.5,1)]	0.251873\, +0.594237 i	
-n-lerchphi-1-plus-2i-0p5-2	N[LerchPhi[Complex[1, 2], 0.5, 2]]	0.0880695717387942 + 0.41809810059517355*I	N[\Phi (1+2 i,0.5,2)]	0.0880696\, +0.418098 i	
-n-lerchphi-1-plus-2i-0p5-0p5	N[LerchPhi[Complex[1, 2], 0.5, 0.5]]	0.5773820436149286 + 0.7684091077547667*I	N[\Phi (1+2 i,0.5,0.5)]	0.577382\, +0.768409 i	
-n-lerchphi-1-plus-2i-0p5-5-over-2	N[LerchPhi[Complex[1, 2], 0.5, Rational[5, 2]]]	0.06006592330619742 + 0.36828258244182505*I	N\left[\Phi \left(1+2 i,0.5,\frac{5}{2}\right)\right]	0.0600659\, +0.368283 i	
-n-lerchphi-1-plus-2i-0p5-neg-2p5	N[LerchPhi[Complex[1, 2], 0.5, -2.5]]	-7.608072838412566 - 2.3174168611844586*I	N[\Phi (1+2 i,0.5,-2.5)]	-7.60807-2.31742 i	disagree
-n-lerchphi-1-plus-2i-2-plus-i-1	N[LerchPhi[Complex[1, 2], Complex[2, 1], 1]]	1.1260285363141571 + 0.6413553659598815*I	N[\Phi (1+2 i,2+i,1)]	1.12603\, +0.641355 i	
-n-lerchphi-1-plus-2i-2-plus-i-2	N[LerchPhi[Complex[1, 2], Complex[2, 1], 2]]	0.2817478536462949 + 0.07785965866667141*I	N[\Phi (1+2 i,2+i,2)]	0.281748\, +0.0778597 i	
-n-lerchphi-1-plus-2i-2-plus-i-0p5	N[LerchPhi[Complex[1, 2], Complex[2, 1], 0.5]]	3.1929058347983257 + 3.7884971130059726*I	N[\Phi (1+2 i,2+i,0.5)]	3.19291\, +3.7885 i	
-n-lerchphi-1-plus-2i-2-plus-i-5-over-2	N[LerchPhi[Complex[1, 2], Complex[2, 1], Rational[5, 2]]]	0.1717523704292899 + 0.03195499105000332*I	N\left[\Phi \left(1+2 i,2+i,\frac{5}{2}\right)\right]	0.171752\, +0.031955 i	
-n-lerchphi-1-plus-2i-2-plus-i-neg-2p5	N[LerchPhi[Complex[1, 2], Complex[2, 1], -2.5]]	-46.142787156209735 - 42.90442114783229*I	N[\Phi (1+2 i,2+i,-2.5)]	-46.1428-42.9044 i	disagree
-n-lerchphi-neg-1p5-plus-i-2-1	N[LerchPhi[Complex[-1.5, 1], 2, 1]]	0.744689766677463 + 0.09767689334428953*I	N[\Phi (-1.5+i,2,1)]	0.74469\, +0.0976769 i	
-n-lerchphi-neg-1p5-plus-i-2-2	N[LerchPhi[Complex[-1.5, 1], 2, 2]]	0.14788992102403 + 0.03347535178649232*I	N[\Phi (-1.5+i,2,2)]	0.14789\, +0.0334754 i	
-n-lerchphi-neg-1p5-plus-i-2-0p5	N[LerchPhi[Complex[-1.5, 1], 2, 0.5]]	3.510343411491001 + 0.20933833108241506*I	N[\Phi (-1.5+i,2,0.5)]	3.51034\, +0.209338 i	
-n-lerchphi-neg-1p5-plus-i-2-5-over-2	N[LerchPhi[Complex[-1.5, 1], 2, Rational[5, 2]]]	0.08772363908006367 + 0.022451843102529324*I	N\left[\Phi \left(-1.5+i,2,\frac{5}{2}\right)\right]	0.0877236\, +0.0224518 i	
-n-lerchphi-neg-1p5-plus-i-2-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 2, -2.5]]	7.238774267536822 + 8.864424682985417*I	N[\Phi (-1.5+i,2,-2.5)]	7.23877\, +8.86442 i	
-n-lerchphi-neg-1p5-plus-i-3-1	N[LerchPhi[Complex[-1.5, 1], 3, 1]]	0.8553387457226986 + 0.0648929890181541*I	N[\Phi (-1.5+i,3,1)]	0.855339\, +0.064893 i	
-n-lerchphi-neg-1p5-plus-i-3-2	N[LerchPhi[Complex[-1.5, 1], 3, 2]]	0.08673380628741625 + 0.014560544846175878*I	N[\Phi (-1.5+i,3,2)]	0.0867338\, +0.0145605 i	
-n-lerchphi-neg-1p5-plus-i-3-0p5	N[LerchPhi[Complex[-1.5, 1], 3, 0.5]]	7.631459552290881 + 0.1838129938214179*I	N[\Phi (-1.5+i,3,0.5)]	7.63146\, +0.183813 i	
-n-lerchphi-neg-1p5-plus-i-3-5-over-2	N[LerchPhi[Complex[-1.5, 1], 3, Rational[5, 2]]]	0.04093064173669038 + 0.008246898188154227*I	N\left[\Phi \left(-1.5+i,3,\frac{5}{2}\right)\right]	0.0409306\, +0.0082469 i	
-n-lerchphi-neg-1p5-plus-i-3-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 3, -2.5]]	17.14802283740964 + 20.383978340017954*I	N[\Phi (-1.5+i,3,-2.5)]	17.148\, +20.384 i	disagree
-n-lerchphi-neg-1p5-plus-i-0p5-1	N[LerchPhi[Complex[-1.5, 1], 0.5, 1]]	0.4655388056711063 + 0.13821464441436465*I	N[\Phi (-1.5+i,0.5,1)]	0.465539\, +0.138215 i	
-n-lerchphi-neg-1p5-plus-i-0p5-2	N[LerchPhi[Complex[-1.5, 1], 0.5, 2]]	0.2892019802792936 + 0.1006582239099534*I	N[\Phi (-1.5+i,0.5,2)]	0.289202\, +0.100658 i	
-n-lerchphi-neg-1p5-plus-i-0p5-0p5	N[LerchPhi[Complex[-1.5, 1], 0.5, 0.5]]	0.7730363447556265 + 0.17710899785682885*I	N[\Phi (-1.5+i,0.5,0.5)]	0.773036\, +0.177109 i	
-n-lerchphi-neg-1p5-plus-i-0p5-5-over-2	N[LerchPhi[Complex[-1.5, 1], 0.5, Rational[5, 2]]]	0.2506624678277247 + 0.09007985632982152*I	N\left[\Phi \left(-1.5+i,0.5,\frac{5}{2}\right)\right]	0.250662\, +0.0900799 i	
-n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 0.5, -2.5]]	1.02676676378177 + 1.218062498742225*I	N[\Phi (-1.5+i,0.5,-2.5)]	1.02677\, +1.21806 i	disagree
-n-lerchphi-neg-1p5-plus-i-2-plus-i-1	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 1]]	0.8125648486732331 + 0.2335637047053423*I	N[\Phi (-1.5+i,2+i,1)]	0.812565\, +0.233564 i	
-n-lerchphi-neg-1p5-plus-i-2-plus-i-2	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 2]]	0.15837428667606762 - 0.05012627868621951*I	N[\Phi (-1.5+i,2+i,2)]	0.158374\, -0.0501263 i	
-n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 0.5]]	2.6030184823997473 + 2.9114183984878212*I	N[\Phi (-1.5+i,2+i,0.5)]	2.60302\, +2.91142 i	
-n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], Rational[5, 2]]]	0.08535910853571833 - 0.047777579953797944*I	N\left[\Phi \left(-1.5+i,2+i,\frac{5}{2}\right)\right]	0.0853591\, -0.0477776 i	
-n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], -2.5]]	-2.6384307117707664 + 12.751078290666381*I	N[\Phi (-1.5+i,2+i,-2.5)]	-2.63843+12.7511 i	disagree
-n-lerchphi-0p8-plus-0p9i-2-1	N[LerchPhi[Complex[0.8, 0.9], 2, 1]]	1.0512753535586397 + 0.3523401982517351*I	N[\Phi (0.8\, +0.9 i,2,1)]	1.05128\, +0.35234 i	
-n-lerchphi-0p8-plus-0p9i-2-2	N[LerchPhi[Complex[0.8, 0.9], 2, 2]]	0.24698376639549652 + 0.16256851061973213*I	N[\Phi (0.8\, +0.9 i,2,2)]	0.246984\, +0.162569 i	
-n-lerchphi-0p8-plus-0p9i-2-0p5	N[LerchPhi[Complex[0.8, 0.9], 2, 0.5]]	4.15740696830278 + 0.5964288969053877*I	N[\Phi (0.8\, +0.9 i,2,0.5)]	4.15741\, +0.596429 i	
-n-lerchphi-0p8-plus-0p9i-2-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 2, Rational[5, 2]]]	0.15055546795563854 + 0.11982927618077534*I	N\left[\Phi \left(0.8\, +0.9 i,2,\frac{5}{2}\right)\right]	0.150555\, +0.119829 i	
-n-lerchphi-0p8-plus-0p9i-2-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 2, -2.5]]	-6.713683691062508 + 9.459163380965965*I	N[\Phi (0.8\, +0.9 i,2,-2.5)]	-6.71368+9.45916 i	
-n-lerchphi-0p8-plus-0p9i-3-1	N[LerchPhi[Complex[0.8, 0.9], 3, 1]]	1.0600183930694893 + 0.16372732384786187*I	N[\Phi (0.8\, +0.9 i,3,1)]	1.06002\, +0.163727 i	
-n-lerchphi-0p8-plus-0p9i-3-2	N[LerchPhi[Complex[0.8, 0.9], 3, 2]]	0.13473745235769796 + 0.053079520907414544*I	N[\Phi (0.8\, +0.9 i,3,2)]	0.134737\, +0.0530795 i	
-n-lerchphi-0p8-plus-0p9i-3-0p5	N[LerchPhi[Complex[0.8, 0.9], 3, 0.5]]	8.176233084955848 + 0.358637797014532*I	N[\Phi (0.8\, +0.9 i,3,0.5)]	8.17623\, +0.358638 i	
-n-lerchphi-0p8-plus-0p9i-3-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 3, Rational[5, 2]]]	0.06790730062056038 + 0.034208132622009495*I	N\left[\Phi \left(0.8\, +0.9 i,3,\frac{5}{2}\right)\right]	0.0679073\, +0.0342081 i	
-n-lerchphi-0p8-plus-0p9i-3-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 3, -2.5]]	-13.125607899837256 + 19.441154193212753*I	N[\Phi (0.8\, +0.9 i,3,-2.5)]	-13.1256+19.4412 i	disagree
-n-lerchphi-0p8-plus-0p9i-0p5-1	N[LerchPhi[Complex[0.8, 0.9], 0.5, 1]]	0.6468487828189047 + 0.9042982627040894*I	N[\Phi (0.8\, +0.9 i,0.5,1)]	0.646849\, +0.904298 i	
-n-lerchphi-0p8-plus-0p9i-0p5-2	N[LerchPhi[Complex[0.8, 0.9], 0.5, 2]]	0.36644652599227817 + 0.7181204866387976*I	N[\Phi (0.8\, +0.9 i,0.5,2)]	0.366447\, +0.71812 i	
-n-lerchphi-0p8-plus-0p9i-0p5-0p5	N[LerchPhi[Complex[0.8, 0.9], 0.5, 0.5]]	1.0703168525560955 + 1.0583232775276143*I	N[\Phi (0.8\, +0.9 i,0.5,0.5)]	1.07032\, +1.05832 i	
-n-lerchphi-0p8-plus-0p9i-0p5-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 0.5, Rational[5, 2]]]	0.3021697628691996 + 0.6567535519940392*I	N\left[\Phi \left(0.8\, +0.9 i,0.5,\frac{5}{2}\right)\right]	0.30217\, +0.656754 i	
-n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 0.5, -2.5]]	-1.5447221959379853 + 2.3250420549362065*I	N[\Phi (0.8\, +0.9 i,0.5,-2.5)]	-1.54472+2.32504 i	disagree
-n-lerchphi-0p8-plus-0p9i-2-plus-i-1	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 1]]	1.362388391030724 + 0.2862397322626977*I	N[\Phi (0.8\, +0.9 i,2+i,1)]	1.36239\, +0.28624 i	
-n-lerchphi-0p8-plus-0p9i-2-plus-i-2	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 2]]	0.3776044633523324 - 0.06700535594249588*I	N[\Phi (0.8\, +0.9 i,2+i,2)]	0.377604\, -0.0670054 i	
-n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 0.5]]	3.6223281025197647 + 3.1374223913038373*I	N[\Phi (0.8\, +0.9 i,2+i,0.5)]	3.62233\, +3.13742 i	
-n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], Rational[5, 2]]]	0.2377088936515187 - 0.07033177818546382*I	N\left[\Phi \left(0.8\, +0.9 i,2+i,\frac{5}{2}\right)\right]	0.237709\, -0.0703318 i	
-n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], -2.5]]	-11.9430502347019 + 3.2226235505187835*I	N[\Phi (0.8\, +0.9 i,2+i,-2.5)]	-11.9431+3.22262 i	disagree
-phi-0p3-3-2-off-the-grid-sample	LerchPhi[0.3, 3, 2]				
-n-lerchphi-2p809-2-2-on-the-cut-real-z-1	N[LerchPhi[2.809, 2, 2]]				
-n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up	N[LerchPhi[-2, 2, -2.5]]				
-n-lerchphi-10-10-10-cancels-below-precision	N[LerchPhi[10, 10, 10]]				
-n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], -0.5, 2]]				
-lerchphi-rim-theta-0p5-s-0-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0, 1]]				
-lerchphi-rim-theta-0p5-s-0p5-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0.5, 1]]				
-lerchphi-rim-theta-0p5-s-1-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1, 1]]				
-lerchphi-rim-theta-0p5-s-1p5-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1.5, 1]]				
-lerchphi-rim-theta-1p7-s-0-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0, 1]]				
-lerchphi-rim-theta-1p7-s-0p5-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0.5, 1]]				
-lerchphi-rim-theta-1p7-s-1-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1, 1]]				
-lerchphi-rim-theta-1p7-s-1p5-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1.5, 1]]				
-lerchphi-rim-theta-2p4-s-0-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0, 1]]				
-lerchphi-rim-theta-2p4-s-0p5-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0.5, 1]]				
-lerchphi-rim-theta-2p4-s-1-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1, 1]]				
-lerchphi-rim-theta-2p4-s-1p5-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1.5, 1]]				
-lerch-continuation-z3-s2p5-a1p5	N[LerchPhi[3, 2.5, 1.5]]				
-lerch-continuation-zneg5-s2-a1	N[LerchPhi[-5, 2, 1]]				
-lerch-continuation-z2p3i-s1neg2i-a3	N[LerchPhi[Complex[2, 3], Complex[1, -2], 3]]				
-lerch-continuation-zneg3p0p5i-s1p5-a2	N[LerchPhi[Complex[-3, 0.5], 1.5, 2]]				
-lerch-continuation-z10-s0p5-a3	N[LerchPhi[10, 0.5, 3]]				
-lerch-continuation-z4-s3-a0p3	N[LerchPhi[4, 3, 0.3]]				
-lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N[LerchPhi[Complex[-1.5, 2.5], Complex[2, -1], 0.7]]				
-lerch-continuation-z100-sneg2-a1	N[LerchPhi[100, -2, 1]]				
-lerch-continuation-z1p0001-s2-a1	N[LerchPhi[1.0001, 2, 1]]				
-lerch-continuation-declines-neg2p54-0p1i	N[LerchPhi[Complex[-2.54, 0.1], 4.157, 4.724]]				
-lerch-continuation-declines-neg1p564-neg0p05i	N[LerchPhi[Complex[-1.564, -0.05], 5.785, 4.791]]				
-lerch-continuation-declines-neg1p939-0p5i	N[LerchPhi[Complex[-1.939, 0.5], 2.976, 3.846]]				
-lerch-continuation-declines-z-neg3-s3p118-a2p864	N[LerchPhi[-3, 3.118, 2.864]]				
-lerch-continuation-declines-complex-s-z-neg4-1i	N[LerchPhi[Complex[-4, 1], Complex[3, 1], 2]]				
-lerch-continuation-declines-z-neg6-s2-a0p5	N[LerchPhi[-6, 2, 0.5]]				
-past-the-unit-disk-by-the-integral	N[LerchPhi[Complex[1, 2], Complex[3, -1], Complex[4, 2]]]	0.0020250151909632203 + 0.003327898913888968*I	N[\Phi (1+2 i,3-i,4+2 i)]	0.00202502\, +0.0033279 i	disagree
-inexact-arguments-should-evaluate-numerically	LerchPhi[0.5, 2, 3.5]				
-s-0-far-outside-the-unit-disk-1-1-49-5	LerchPhi[49.5, 0, 2]				
-z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z	LerchPhi[7.5, 1, 2]				
-uncertainty-in-z	LerchPhi[Around[0.5, 0.01], 1, 2]				
-to-30-significant-digits-not-yet-the-requested	N[LerchPhi[Rational[1, 2], 2, Rational[1, 3]], 30]				
-past-z-1-it-is-continued-on-the-cut-real-z-1-it	N[LerchPhi[2.809, 2, 2]]				
-phi-1-3-1-zeta-3-apery-s-constant	(LerchPhi[1, 3, 1] == Zeta[3])	True	\Phi (1,3,1)=\zeta (3)	\text{True}	
-phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via	(LerchPhi[-1, 2, 1] == Divide[Power[Pi, 2], 12])	True	\Phi (-1,2,1)=\frac{\pi ^2}{12}	\text{True}	
-phi-1-2-2-1-2-li-2-1-2	N[LerchPhi[Rational[1, 2], 2, 1]]				
-certified-digits-phi-1-2-1-2-1-3	N[LerchPhi[Rational[1, 2], Rational[1, 2], Rational[1, 3]], 40]				
-phi-1-4-1-zeta-4-pi-4-90	LerchPhi[1, 4, 1]	Pi^4/90	\Phi (1,4,1)	\frac{\pi ^4}{90}	
-phi-1-1-1-zeta-1-1-12	LerchPhi[1, -1, 1]	ComplexInfinity	\Phi (1,-1,1)	\text{ComplexInfinity}	disagree
-phi-1-s-a-zeta-s-a-for-symbolic-s-a	LerchPhi[1, s, a]	Indeterminate	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Phi (1,s,a)-\zeta (s,a)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(1,-\frac{11}{5},\frac{7}{3}\right)-\zeta \left(-\frac{11}{5},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Phi \left(1,-\frac{17}{6},\frac{13}{4}\right)-\zeta \left(-\frac{17}{6},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\Phi \left(1,-\frac{23}{9},\frac{19}{8}\right)-\zeta \left(-\frac{23}{9},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
-phi-z-0-a-1-1-z-independent-of-a	LerchPhi[z, 0, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,0,a)-\frac{1}{-z+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},0,\frac{7}{3}\right)-\frac{1}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{17}{6},0,\frac{13}{4}\right)-\frac{1}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{23}{9},0,\frac{19}{8}\right)-\frac{1}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past	LerchPhi[2, 0, 7]	-1	\Phi (2,0,7)	-1	
-phi-0-s-a-a-s-only-the-n-0-term-survives	LerchPhi[0, s, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (0,s,a)-a^{-s}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(0,-\frac{11}{5},\frac{7}{3}\right)-\left(\frac{7}{3}\right)^{-\left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\Phi \left(0,-\frac{17}{6},\frac{13}{4}\right)-\left(\frac{13}{4}\right)^{-\left(-\frac{17}{6}\right)}\right]\right],\text{Chop}\left[N\left[\Phi \left(0,-\frac{23}{9},\frac{19}{8}\right)-\left(\frac{19}{8}\right)^{-\left(-\frac{23}{9}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-phi-z-s-1-li-s-z-z-symbolically-see-polylog	LerchPhi[z, s, 1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,s,1)-\frac{\text{Li}_s(z)}{z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},\frac{7}{3},1\right)--\frac{\text{Li}_{\frac{7}{3}}\left(-\frac{11}{5}\right)}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{17}{6},\frac{13}{4},1\right)--\frac{\text{Li}_{\frac{13}{4}}\left(-\frac{17}{6}\right)}{\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{23}{9},\frac{19}{8},1\right)--\frac{\text{Li}_{\frac{19}{8}}\left(-\frac{23}{9}\right)}{\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1	LerchPhi[z, 1, 1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,1,1)--\frac{\log (-z+1)}{z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(\frac{7}{3},1,1\right)--\frac{\log \left(-\frac{7}{3}+1\right)}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},1,1\right)-\frac{-\log \left(-\left(-\frac{11}{5}\right)+1\right)}{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\Phi \left(\frac{13}{4},1,1\right)--\frac{\log \left(-\frac{13}{4}+1\right)}{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through	LerchPhi[1, 2, Rational[1, 4]]				
-phi-1-1-1-eta-1-ln-2-the-alternating-harmonic	LerchPhi[-1, 1, 1]				
-phi-1-2-1-1-2-ln-2	LerchPhi[Rational[1, 2], 1, 1]				
-phi-1-2-1-2i-2-1-via-1	LerchPhi[Complex[Rational[1, 2], Rational[-1, 2]], 2, 1]	(1 - I) (Catalan - Pi Log[2]/8 - I Log[2]^2/8 + 5 I Pi^2/96)			disagree
-phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and	LerchPhi[-1, 2, Rational[1, 2]]				
-though-n-gets-4g-3-66386	N[LerchPhi[-1, 2, Rational[1, 2]]]				
-phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet	LerchPhi[-1, 3, Rational[1, 2]]				
-phi-1-3-1-eta-3-frac-34-zeta-3	(LerchPhi[-1, 3, 1] == Times[Rational[3, 4], Zeta[3]])				
-where-the-continuation-s-terms-cancel-below	N[LerchPhi[10, 10, 10]]				
+id	in	out	shown	tex.in	tex.out	verdict
+phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary	LerchPhi[1, 2, 1]	Pi^2/6		\Phi (1,2,1)	\frac{\pi ^2}{6}	
+phi-1-2-2-zeta-2-2-pi-2-6-1	LerchPhi[1, 2, 2]	-1 + Pi^2/6		\Phi (1,2,2)	\frac{\pi ^2}{6}-1	
+n-lerchphi-0p5-2-1	N[LerchPhi[0.5, 2, 1]]	1.1644810529300254		N[\Phi (0.5,2,1)]	1.16448	
+n-lerchphi-0p5-2-2	N[LerchPhi[0.5, 2, 2]]	0.32896210586005004		N[\Phi (0.5,2,2)]	0.328962	
+n-lerchphi-0p5-2-0p5	N[LerchPhi[0.5, 2, 0.5]]	4.27714550058095		N[\Phi (0.5,2,0.5)]	4.27715	
+n-lerchphi-0p5-2-5-over-2	N[LerchPhi[0.5, 2, Rational[5, 2]]]	0.21969311343491024		N\left[\Phi \left(0.5,2,\frac{5}{2}\right)\right]	0.219693	
+n-lerchphi-0p5-3-1	N[LerchPhi[0.5, 3, 1]]	1.0744263872160806		N[\Phi (0.5,3,1)]	1.07443	
+n-lerchphi-0p5-3-2	N[LerchPhi[0.5, 3, 2]]	0.1488527744321608		N[\Phi (0.5,3,2)]	0.148853	
+n-lerchphi-0p5-3-0p5	N[LerchPhi[0.5, 3, 0.5]]	8.16802272614035		N[\Phi (0.5,3,0.5)]	8.16802	
+n-lerchphi-0p5-3-5-over-2	N[LerchPhi[0.5, 3, Rational[5, 2]]]	0.07949831196880994		N\left[\Phi \left(0.5,3,\frac{5}{2}\right)\right]	0.0794983	
+n-lerchphi-0p5-0p5-1	N[LerchPhi[0.5, 0.5, 1]]	1.6122534460857043		N[\Phi (0.5,0.5,1)]	1.61225	
+n-lerchphi-0p5-0p5-2	N[LerchPhi[0.5, 0.5, 2]]	1.224506892171409		N[\Phi (0.5,0.5,2)]	1.22451	
+n-lerchphi-0p5-0p5-0p5	N[LerchPhi[0.5, 0.5, 0.5]]	2.1017124624893517		N[\Phi (0.5,0.5,0.5)]	2.10171	
+n-lerchphi-0p5-0p5-5-over-2	N[LerchPhi[0.5, 0.5, Rational[5, 2]]]	1.1170024386095745		N\left[\Phi \left(0.5,0.5,\frac{5}{2}\right)\right]	1.117	
+n-lerchphi-0p5-neg-1-1	N[LerchPhi[0.5, -1, 1]]	4.		N[\Phi (0.5,-1,1)]	4.	
+n-lerchphi-0p5-neg-1-2	N[LerchPhi[0.5, -1, 2]]	6.		N[\Phi (0.5,-1,2)]	6.	
+n-lerchphi-0p5-neg-1-0p5	N[LerchPhi[0.5, -1, 0.5]]	3.		N[\Phi (0.5,-1,0.5)]	3.	
+n-lerchphi-0p5-neg-1-5-over-2	N[LerchPhi[0.5, -1, Rational[5, 2]]]	7.		N\left[\Phi \left(0.5,-1,\frac{5}{2}\right)\right]	7.	
+n-lerchphi-0p5-2-plus-i-1	N[LerchPhi[0.5, Complex[2, 1], 1]]	1.1097070907066406 - 0.1160991235833943*I		N[\Phi (0.5,2+i,1)]	1.10971\, -0.116099 i	
+n-lerchphi-0p5-2-plus-i-2	N[LerchPhi[0.5, Complex[2, 1], 2]]	0.21941418141328128 - 0.2321982471667886*I		N[\Phi (0.5,2+i,2)]	0.219414\, -0.232198 i	
+n-lerchphi-0p5-2-plus-i-0p5	N[LerchPhi[0.5, Complex[2, 1], 0.5]]	3.308545670420986 + 2.4221096114212624*I		N[\Phi (0.5,2+i,0.5)]	3.30855\, +2.42211 i	
+n-lerchphi-0p5-2-plus-i-5-over-2	N[LerchPhi[0.5, Complex[2, 1], Rational[5, 2]]]	0.1095433385808339 - 0.18432313114256374*I		N\left[\Phi \left(0.5,2+i,\frac{5}{2}\right)\right]	0.109543\, -0.184323 i	
+n-lerchphi-neg-0p5-2-1	N[LerchPhi[-0.5, 2, 1]]	0.8968284138472924		N[\Phi (-0.5,2,1)]	0.896828	
+n-lerchphi-neg-0p5-2-2	N[LerchPhi[-0.5, 2, 2]]	0.2063431723054152		N[\Phi (-0.5,2,2)]	0.206343	
+n-lerchphi-neg-0p5-2-0p5	N[LerchPhi[-0.5, 2, 0.5]]	3.809896676518156		N[\Phi (-0.5,2,0.5)]	3.8099	
+n-lerchphi-neg-0p5-2-5-over-2	N[LerchPhi[-0.5, 2, Rational[5, 2]]]	0.1284755949615131		N\left[\Phi \left(-0.5,2,\frac{5}{2}\right)\right]	0.128476	
+n-lerchphi-neg-0p5-3-1	N[LerchPhi[-0.5, 3, 1]]	0.9451956893177937		N[\Phi (-0.5,3,1)]	0.945196	
+n-lerchphi-neg-0p5-3-2	N[LerchPhi[-0.5, 3, 2]]	0.1096086213644125		N[\Phi (-0.5,3,2)]	0.109609	
+n-lerchphi-neg-0p5-3-0p5	N[LerchPhi[-0.5, 3, 0.5]]	7.8654775143533815		N[\Phi (-0.5,3,0.5)]	7.86548	
+n-lerchphi-neg-0p5-3-5-over-2	N[LerchPhi[-0.5, 3, Rational[5, 2]]]	0.05450265000611884		N\left[\Phi \left(-0.5,3,\frac{5}{2}\right)\right]	0.0545027	
+n-lerchphi-neg-0p5-0p5-1	N[LerchPhi[-0.5, 0.5, 1]]	0.7475044759619461		N[\Phi (-0.5,0.5,1)]	0.747504	
+n-lerchphi-neg-0p5-0p5-2	N[LerchPhi[-0.5, 0.5, 2]]	0.5049910480761078		N[\Phi (-0.5,0.5,2)]	0.504991	
+n-lerchphi-neg-0p5-0p5-0p5	N[LerchPhi[-0.5, 0.5, 0.5]]	1.1175876689096342		N[\Phi (-0.5,0.5,0.5)]	1.11759	
+n-lerchphi-neg-0p5-0p5-5-over-2	N[LerchPhi[-0.5, 0.5, Rational[5, 2]]]	0.44648958800160854		N\left[\Phi \left(-0.5,0.5,\frac{5}{2}\right)\right]	0.44649	
+n-lerchphi-neg-0p5-neg-1-1	N[LerchPhi[-0.5, -1, 1]]	0.4444444444444444		N[\Phi (-0.5,-1,1)]	0.444444	
+n-lerchphi-neg-0p5-neg-1-2	N[LerchPhi[-0.5, -1, 2]]	1.1111111111111112		N[\Phi (-0.5,-1,2)]	1.11111	
+n-lerchphi-neg-0p5-neg-1-0p5	N[LerchPhi[-0.5, -1, 0.5]]	0.1111111111111111		N[\Phi (-0.5,-1,0.5)]	0.111111	
+n-lerchphi-neg-0p5-neg-1-5-over-2	N[LerchPhi[-0.5, -1, Rational[5, 2]]]	1.4444444444444444		N\left[\Phi \left(-0.5,-1,\frac{5}{2}\right)\right]	1.44444	
+n-lerchphi-neg-0p5-2-plus-i-1	N[LerchPhi[-0.5, Complex[2, 1], 1]]	0.9150630921511703 + 0.06094203933961422*I		N[\Phi (-0.5,2+i,1)]	0.915063\, +0.060942 i	
+n-lerchphi-neg-0p5-2-plus-i-2	N[LerchPhi[-0.5, Complex[2, 1], 2]]	0.16987381569765908 - 0.12188407867922846*I		N[\Phi (-0.5,2+i,2)]	0.169874\, -0.121884 i	
+n-lerchphi-neg-0p5-2-plus-i-0p5	N[LerchPhi[-0.5, Complex[2, 1], 0.5]]	2.8941852028913386 + 2.6191414085812714*I		N[\Phi (-0.5,2+i,0.5)]	2.89419\, +2.61914 i	
+n-lerchphi-neg-0p5-2-plus-i-5-over-2	N[LerchPhi[-0.5, Complex[2, 1], Rational[5, 2]]]	0.085735311021356 - 0.0974336308836124*I		N\left[\Phi \left(-0.5,2+i,\frac{5}{2}\right)\right]	0.0857353\, -0.0974336 i	
+n-lerchphi-neg-0p9-2-1	N[LerchPhi[-0.9, 2, 1]]	0.8357368657969576		N[\Phi (-0.9,2,1)]	0.835737	
+n-lerchphi-neg-0p9-2-2	N[LerchPhi[-0.9, 2, 2]]	0.1825145935589363		N[\Phi (-0.9,2,2)]	0.182515	
+n-lerchphi-neg-0p9-2-0p5	N[LerchPhi[-0.9, 2, 0.5]]	3.6905224756933057		N[\Phi (-0.9,2,0.5)]	3.69052	
+n-lerchphi-neg-0p9-2-5-over-2	N[LerchPhi[-0.9, 2, Rational[5, 2]]]	0.11175614283124169		N\left[\Phi \left(-0.9,2,\frac{5}{2}\right)\right]	0.111756	
+n-lerchphi-neg-0p9-3-1	N[LerchPhi[-0.9, 3, 1]]	0.9095980017159598		N[\Phi (-0.9,3,1)]	0.909598	
+n-lerchphi-neg-0p9-3-2	N[LerchPhi[-0.9, 3, 2]]	0.10044666476004464		N[\Phi (-0.9,3,2)]	0.100447	
+n-lerchphi-neg-0p9-3-0p5	N[LerchPhi[-0.9, 3, 0.5]]	7.773051219077413		N[\Phi (-0.9,3,0.5)]	7.77305	
+n-lerchphi-neg-0p9-3-5-over-2	N[LerchPhi[-0.9, 3, Rational[5, 2]]]	0.04903442684454213		N\left[\Phi \left(-0.9,3,\frac{5}{2}\right)\right]	0.0490344	
+n-lerchphi-neg-0p9-0p5-1	N[LerchPhi[-0.9, 0.5, 1]]	0.628362164954058 - 6.167905692361981*^-17*I		N[\Phi (-0.9,0.5,1)]	0.628362\, -\text{6.167905692361981$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-0p9-0p5-2	N[LerchPhi[-0.9, 0.5, 2]]	0.41293092782882385		N[\Phi (-0.9,0.5,2)]	0.412931	
+n-lerchphi-neg-0p9-0p5-0p5	N[LerchPhi[-0.9, 0.5, 0.5]]	0.9731467834139054		N[\Phi (-0.9,0.5,0.5)]	0.973147	
+n-lerchphi-neg-0p9-0p5-5-over-2	N[LerchPhi[-0.9, 0.5, Rational[5, 2]]]	0.362691535649091		N\left[\Phi \left(-0.9,0.5,\frac{5}{2}\right)\right]	0.362692	
+n-lerchphi-neg-0p9-neg-1-1	N[LerchPhi[-0.9, -1, 1]]	0.2770083102493075		N[\Phi (-0.9,-1,1)]	0.277008	
+n-lerchphi-neg-0p9-neg-1-2	N[LerchPhi[-0.9, -1, 2]]	0.8033240997229917		N[\Phi (-0.9,-1,2)]	0.803324	
+n-lerchphi-neg-0p9-neg-1-0p5	N[LerchPhi[-0.9, -1, 0.5]]	0.01385041551246563		N[\Phi (-0.9,-1,0.5)]	0.0138504	
+n-lerchphi-neg-0p9-neg-1-5-over-2	N[LerchPhi[-0.9, -1, Rational[5, 2]]]	1.0664819944598336		N\left[\Phi \left(-0.9,-1,\frac{5}{2}\right)\right]	1.06648	
+n-lerchphi-neg-0p9-2-plus-i-1	N[LerchPhi[-0.9, Complex[2, 1], 1]]	0.8600491653125407 + 0.09203457470000208*I		N[\Phi (-0.9,2+i,1)]	0.860049\, +0.0920346 i	
+n-lerchphi-neg-0p9-2-plus-i-2	N[LerchPhi[-0.9, Complex[2, 1], 2]]	0.15550092742921662 - 0.10226063855725132*I		N[\Phi (-0.9,2+i,2)]	0.155501\, -0.102261 i	
+n-lerchphi-neg-0p9-2-plus-i-0p5	N[LerchPhi[-0.9, Complex[2, 1], 0.5]]	2.772631950915933 + 2.646993091751075*I		N[\Phi (-0.9,2+i,0.5)]	2.77263\, +2.64699 i	
+n-lerchphi-neg-0p9-2-plus-i-5-over-2	N[LerchPhi[-0.9, Complex[2, 1], Rational[5, 2]]]	0.07807896300721556 - 0.08225986838173877*I		N\left[\Phi \left(-0.9,2+i,\frac{5}{2}\right)\right]	0.078079\, -0.0822599 i	
+n-lerchphi-neg-1-2-1	N[LerchPhi[-1, 2, 1]]	0.8224670334241131		N[\Phi (-1,2,1)]	0.822467	
+n-lerchphi-neg-1-2-2	N[LerchPhi[-1, 2, 2]]	0.1775329665758869		N[\Phi (-1,2,2)]	0.177533	
+n-lerchphi-neg-1-2-0p5	N[LerchPhi[-1, 2, 0.5]]	3.6638623767088756		N[\Phi (-1,2,0.5)]	3.66386	
+n-lerchphi-neg-1-2-5-over-2	N[LerchPhi[-1, 2, Rational[5, 2]]]	0.1083068211533206		N\left[\Phi \left(-1,2,\frac{5}{2}\right)\right]	0.108307	
+n-lerchphi-neg-1-3-1	N[LerchPhi[-1, 3, 1]]	0.9015426773696957		N[\Phi (-1,3,1)]	0.901543	
+n-lerchphi-neg-1-3-2	N[LerchPhi[-1, 3, 2]]	0.09845732263030427		N[\Phi (-1,3,2)]	0.0984573	
+n-lerchphi-neg-1-3-0p5	N[LerchPhi[-1, 3, 0.5]]	7.751569170074954		N[\Phi (-1,3,0.5)]	7.75157	
+n-lerchphi-neg-1-3-5-over-2	N[LerchPhi[-1, 3, Rational[5, 2]]]	0.047865466371250776		N\left[\Phi \left(-1,3,\frac{5}{2}\right)\right]	0.0478655	
+n-lerchphi-neg-1-0p5-1	N[LerchPhi[-1, 0.5, 1]]	0.604898643421631		N[\Phi (-1,0.5,1)]	0.604899	
+n-lerchphi-neg-1-0p5-2	N[LerchPhi[-1, 0.5, 2]]	0.3951013565783689		N[\Phi (-1,0.5,2)]	0.395101	
+n-lerchphi-neg-1-0p5-0p5	N[LerchPhi[-1, 0.5, 0.5]]	0.9442583142382012		N[\Phi (-1,0.5,0.5)]	0.944258	
+n-lerchphi-neg-1-0p5-5-over-2	N[LerchPhi[-1, 0.5, Rational[5, 2]]]	0.34654133279283267		N\left[\Phi \left(-1,0.5,\frac{5}{2}\right)\right]	0.346541	
+n-lerchphi-neg-1-neg-1-1	N[LerchPhi[-1, -1, 1]]	0.25		N[\Phi (-1,-1,1)]	0.25	
+n-lerchphi-neg-1-neg-1-2	N[LerchPhi[-1, -1, 2]]	0.75		N[\Phi (-1,-1,2)]	0.75	
+n-lerchphi-neg-1-neg-1-0p5	N[LerchPhi[-1, -1, 0.5]]	0.		N[\Phi (-1,-1,0.5)]	0.	
+n-lerchphi-neg-1-neg-1-5-over-2	N[LerchPhi[-1, -1, Rational[5, 2]]]	1.		N\left[\Phi \left(-1,-1,\frac{5}{2}\right)\right]	1.	
+n-lerchphi-neg-1-2-plus-i-1	N[LerchPhi[-1, Complex[2, 1], 1]]	0.8476891648374136 + 0.09826838957001616*I		N[\Phi (-1,2+i,1)]	0.847689\, +0.0982684 i	
+n-lerchphi-neg-1-2-plus-i-2	N[LerchPhi[-1, Complex[2, 1], 2]]	0.15231083516258653 - 0.09826838957001621*I		N[\Phi (-1,2+i,2)]	0.152311\, -0.0982684 i	
+n-lerchphi-neg-1-2-plus-i-0p5	N[LerchPhi[-1, Complex[2, 1], 0.5]]	2.7449197230143407 + 2.6519729447382767*I		N[\Phi (-1,2+i,0.5)]	2.74492\, +2.65197 i	
+n-lerchphi-neg-1-2-plus-i-5-over-2	N[LerchPhi[-1, Complex[2, 1], Rational[5, 2]]]	0.07637257819822993 - 0.07918158261153377*I		N\left[\Phi \left(-1,2+i,\frac{5}{2}\right)\right]	0.0763726\, -0.0791816 i	
+n-lerchphi-0p25-2-1	N[LerchPhi[0.25, 2, 1]]	1.0706105563309305		N[\Phi (0.25,2,1)]	1.07061	
+n-lerchphi-0p25-2-2	N[LerchPhi[0.25, 2, 2]]	0.2824422253237217		N[\Phi (0.25,2,2)]	0.282442	
+n-lerchphi-0p25-2-0p5	N[LerchPhi[0.25, 2, 0.5]]	4.122618933554635		N[\Phi (0.25,2,0.5)]	4.12262	
+n-lerchphi-0p25-2-5-over-2	N[LerchPhi[0.25, 2, Rational[5, 2]]]	0.18412515909637955		N\left[\Phi \left(0.25,2,\frac{5}{2}\right)\right]	0.184125	
+n-lerchphi-0p25-3-1	N[LerchPhi[0.25, 3, 1]]	1.0338455831862932		N[\Phi (0.25,3,1)]	1.03385	
+n-lerchphi-0p25-3-2	N[LerchPhi[0.25, 3, 2]]	0.1353823327451729		N[\Phi (0.25,3,2)]	0.135382	
+n-lerchphi-0p25-3-0p5	N[LerchPhi[0.25, 3, 0.5]]	8.078488306135496		N[\Phi (0.25,3,0.5)]	8.07849	
+n-lerchphi-0p25-3-5-over-2	N[LerchPhi[0.25, 3, Rational[5, 2]]]	0.0706277129827605		N\left[\Phi \left(0.25,3,\frac{5}{2}\right)\right]	0.0706277	
+n-lerchphi-0p25-0p5-1	N[LerchPhi[0.25, 0.5, 1]]	1.2229397215971856		N[\Phi (0.25,0.5,1)]	1.22294	
+n-lerchphi-0p25-0p5-2	N[LerchPhi[0.25, 0.5, 2]]	0.8917588863887421		N[\Phi (0.25,0.5,2)]	0.891759	
+n-lerchphi-0p25-0p5-0p5	N[LerchPhi[0.25, 0.5, 0.5]]	1.6686008286385703		N[\Phi (0.25,0.5,0.5)]	1.6686	
+n-lerchphi-0p25-0p5-5-over-2	N[LerchPhi[0.25, 0.5, Rational[5, 2]]]	0.8042099365366978		N\left[\Phi \left(0.25,0.5,\frac{5}{2}\right)\right]	0.80421	
+n-lerchphi-0p25-neg-1-1	N[LerchPhi[0.25, -1, 1]]	1.7777777777777777		N[\Phi (0.25,-1,1)]	1.77778	
+n-lerchphi-0p25-neg-1-2	N[LerchPhi[0.25, -1, 2]]	3.1111111111111107		N[\Phi (0.25,-1,2)]	3.11111	
+n-lerchphi-0p25-neg-1-0p5	N[LerchPhi[0.25, -1, 0.5]]	1.1111111111111112		N[\Phi (0.25,-1,0.5)]	1.11111	
+n-lerchphi-0p25-neg-1-5-over-2	N[LerchPhi[0.25, -1, Rational[5, 2]]]	3.7777777777777777		N\left[\Phi \left(0.25,-1,\frac{5}{2}\right)\right]	3.77778	
+n-lerchphi-0p25-2-plus-i-1	N[LerchPhi[0.25, Complex[2, 1], 1]]	1.0514007321089447 - 0.04726788767721024*I		N[\Phi (0.25,2+i,1)]	1.0514\, -0.0472679 i	
+n-lerchphi-0p25-2-plus-i-2	N[LerchPhi[0.25, Complex[2, 1], 2]]	0.2056029284357786 - 0.18907155070884096*I		N[\Phi (0.25,2+i,2)]	0.205603\, -0.189072 i	
+n-lerchphi-0p25-2-plus-i-0p5	N[LerchPhi[0.25, Complex[2, 1], 0.5]]	3.185550463844432 + 2.502641530788986*I		N[\Phi (0.25,2+i,0.5)]	3.18555\, +2.50264 i	
+n-lerchphi-0p25-2-plus-i-5-over-2	N[LerchPhi[0.25, Complex[2, 1], Rational[5, 2]]]	0.10388389165758394 - 0.15001950306775727*I		N\left[\Phi \left(0.25,2+i,\frac{5}{2}\right)\right]	0.103884\, -0.15002 i	
+n-lerchphi-0p9-2-1	N[LerchPhi[0.9, 2, 1]]	1.4441274700055098		N[\Phi (0.9,2,1)]	1.44413	
+n-lerchphi-0p9-2-2	N[LerchPhi[0.9, 2, 2]]	0.49347496667278856		N[\Phi (0.9,2,2)]	0.493475	
+n-lerchphi-0p9-2-0p5	N[LerchPhi[0.9, 2, 0.5]]	4.686783273082931		N[\Phi (0.9,2,0.5)]	4.68678	
+n-lerchphi-0p9-2-5-over-2	N[LerchPhi[0.9, 2, Rational[5, 2]]]	0.35405342355917346		N\left[\Phi \left(0.9,2,\frac{5}{2}\right)\right]	0.354053	
+n-lerchphi-0p9-3-1	N[LerchPhi[0.9, 3, 1]]	1.1662877224293777		N[\Phi (0.9,3,1)]	1.16629	
+n-lerchphi-0p9-3-2	N[LerchPhi[0.9, 3, 2]]	0.1847641360326418		N[\Phi (0.9,3,2)]	0.184764	
+n-lerchphi-0p9-3-0p5	N[LerchPhi[0.9, 3, 0.5]]	8.351549851360653		N[\Phi (0.9,3,0.5)]	8.35155	
+n-lerchphi-0p9-3-5-over-2	N[LerchPhi[0.9, 3, Rational[5, 2]]]	0.1047940551777609		N\left[\Phi \left(0.9,3,\frac{5}{2}\right)\right]	0.104794	
+n-lerchphi-0p9-0p5-1	N[LerchPhi[0.9, 0.5, 1]]	4.468833808303736 - 4.934324553889585*^-16*I		N[\Phi (0.9,0.5,1)]	4.46883\, -\text{4.934324553889585$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-0p9-0p5-2	N[LerchPhi[0.9, 0.5, 2]]	3.8542597870041493		N[\Phi (0.9,0.5,2)]	3.85426	
+n-lerchphi-0p9-0p5-0p5	N[LerchPhi[0.9, 0.5, 0.5]]	5.11163624496335		N[\Phi (0.9,0.5,0.5)]	5.11164	
+n-lerchphi-0p9-0p5-5-over-2	N[LerchPhi[0.9, 0.5, Rational[5, 2]]]	3.657500937969508		N\left[\Phi \left(0.9,0.5,\frac{5}{2}\right)\right]	3.6575	
+n-lerchphi-0p9-neg-1-1	N[LerchPhi[0.9, -1, 1]]	100.00000000000006		N[\Phi (0.9,-1,1)]	100.	
+n-lerchphi-0p9-neg-1-2	N[LerchPhi[0.9, -1, 2]]	110.00000000000006		N[\Phi (0.9,-1,2)]	110.	
+n-lerchphi-0p9-neg-1-0p5	N[LerchPhi[0.9, -1, 0.5]]	95.00000000000006		N[\Phi (0.9,-1,0.5)]	95.	
+n-lerchphi-0p9-neg-1-5-over-2	N[LerchPhi[0.9, -1, Rational[5, 2]]]	115.00000000000006		N\left[\Phi \left(0.9,-1,\frac{5}{2}\right)\right]	115.	
+n-lerchphi-0p9-2-plus-i-1	N[LerchPhi[0.9, Complex[2, 1], 1]]	1.1929287758658524 - 0.3405562463411231*I		N[\Phi (0.9,2+i,1)]	1.19293\, -0.340556 i	
+n-lerchphi-0p9-2-plus-i-2	N[LerchPhi[0.9, Complex[2, 1], 2]]	0.2143653065174925 - 0.37839582926534543*I		N[\Phi (0.9,2+i,2)]	0.214365\, -0.378396 i	
+n-lerchphi-0p9-2-plus-i-0p5	N[LerchPhi[0.9, Complex[2, 1], 0.5]]	3.5161916619091267 + 2.1522546812749344*I		N[\Phi (0.9,2+i,0.5)]	3.51619\, +2.15225 i	
+n-lerchphi-0p9-2-plus-i-5-over-2	N[LerchPhi[0.9, Complex[2, 1], Rational[5, 2]]]	0.08847955787338081 - 0.3034715359183458*I		N\left[\Phi \left(0.9,2+i,\frac{5}{2}\right)\right]	0.0884796\, -0.303472 i	
+n-lerchphi-1-over-3-2-1	N[LerchPhi[Rational[1, 3], 2, 1]]	1.0986396899311903		N\left[\Phi \left(\frac{1}{3},2,1\right)\right]	1.09864	
+n-lerchphi-1-over-3-2-2	N[LerchPhi[Rational[1, 3], 2, 2]]	0.29591906979357097		N\left[\Phi \left(\frac{1}{3},2,2\right)\right]	0.295919	
+n-lerchphi-1-over-3-2-0p5	N[LerchPhi[Rational[1, 3], 2, 0.5]]	4.169738543014327		N\left[\Phi \left(\frac{1}{3},2,0.5\right)\right]	4.16974	
+n-lerchphi-1-over-3-2-5-over-2	N[LerchPhi[Rational[1, 3], 2, Rational[5, 2]]]	0.19431355379560272		N\left[\Phi \left(\frac{1}{3},2,\frac{5}{2}\right)\right]	0.194314	
+n-lerchphi-1-over-3-3-1	N[LerchPhi[Rational[1, 3], 3, 1]]	1.04648358346452		N\left[\Phi \left(\frac{1}{3},3,1\right)\right]	1.04648	
+n-lerchphi-1-over-3-3-2	N[LerchPhi[Rational[1, 3], 3, 2]]	0.13945075039356025		N\left[\Phi \left(\frac{1}{3},3,2\right)\right]	0.139451	
+n-lerchphi-1-over-3-3-0p5	N[LerchPhi[Rational[1, 3], 3, 0.5]]	8.106907002058712		N\left[\Phi \left(\frac{1}{3},3,0.5\right)\right]	8.10691	
+n-lerchphi-1-over-3-3-5-over-2	N[LerchPhi[Rational[1, 3], 3, Rational[5, 2]]]	0.07327412963951406		N\left[\Phi \left(\frac{1}{3},3,\frac{5}{2}\right)\right]	0.0732741	
+n-lerchphi-1-over-3-0p5-1	N[LerchPhi[Rational[1, 3], 0.5, 1]]	1.3263265058420262		N\left[\Phi \left(\frac{1}{3},0.5,1\right)\right]	1.32633	
+n-lerchphi-1-over-3-0p5-2	N[LerchPhi[Rational[1, 3], 0.5, 2]]	0.978979517526079		N\left[\Phi \left(\frac{1}{3},0.5,2\right)\right]	0.97898	
+n-lerchphi-1-over-3-0p5-0p5	N[LerchPhi[Rational[1, 3], 0.5, 0.5]]	1.7848050437257634		N\left[\Phi \left(\frac{1}{3},0.5,0.5\right)\right]	1.78481	
+n-lerchphi-1-over-3-0p5-5-over-2	N[LerchPhi[Rational[1, 3], 0.5, Rational[5, 2]]]	0.8858335893908362		N\left[\Phi \left(\frac{1}{3},0.5,\frac{5}{2}\right)\right]	0.885834	
+n-lerchphi-1-over-3-neg-1-1	N[LerchPhi[Rational[1, 3], -1, 1]]	2.25		N\left[\Phi \left(\frac{1}{3},-1,1\right)\right]	2.25	
+n-lerchphi-1-over-3-neg-1-2	N[LerchPhi[Rational[1, 3], -1, 2]]	3.75		N\left[\Phi \left(\frac{1}{3},-1,2\right)\right]	3.75	
+n-lerchphi-1-over-3-neg-1-0p5	N[LerchPhi[Rational[1, 3], -1, 0.5]]	1.5		N\left[\Phi \left(\frac{1}{3},-1,0.5\right)\right]	1.5	
+n-lerchphi-1-over-3-neg-1-5-over-2	N[LerchPhi[Rational[1, 3], -1, Rational[5, 2]]]	4.5		N\left[\Phi \left(\frac{1}{3},-1,\frac{5}{2}\right)\right]	4.5	
+n-lerchphi-1-over-3-2-plus-i-1	N[LerchPhi[Rational[1, 3], Complex[2, 1], 1]]	1.0700836686021404 - 0.06715638695388618*I		N\left[\Phi \left(\frac{1}{3},2+i,1\right)\right]	1.07008\, -0.0671564 i	
+n-lerchphi-1-over-3-2-plus-i-2	N[LerchPhi[Rational[1, 3], Complex[2, 1], 2]]	0.21025100580642175 - 0.20146916086165853*I		N\left[\Phi \left(\frac{1}{3},2+i,2\right)\right]	0.210251\, -0.201469 i	
+n-lerchphi-1-over-3-2-plus-i-0p5	N[LerchPhi[Rational[1, 3], Complex[2, 1], 0.5]]	3.224867422277603 + 2.47964899897459*I		N\left[\Phi \left(\frac{1}{3},2+i,0.5\right)\right]	3.22487\, +2.47965 i	
+n-lerchphi-1-over-3-2-plus-i-5-over-2	N[LerchPhi[Rational[1, 3], Complex[2, 1], Rational[5, 2]]]	0.10598096947609492 - 0.15983669023372948*I		N\left[\Phi \left(\frac{1}{3},2+i,\frac{5}{2}\right)\right]	0.105981\, -0.159837 i	
+n-lerchphi-0p4-plus-0p3i-2-1	N[LerchPhi[Complex[0.4, 0.3], 2, 1]]	1.1018365887408403 + 0.10988045400413204*I		N[\Phi (0.4\, +0.3 i,2,1)]	1.10184\, +0.10988 i	
+n-lerchphi-0p4-plus-0p3i-2-2	N[LerchPhi[Complex[0.4, 0.3], 2, 2]]	0.2947950867903031 + 0.053604819917602735*I		N[\Phi (0.4\, +0.3 i,2,2)]	0.294795\, +0.0536048 i	
+n-lerchphi-0p4-plus-0p3i-2-0p5	N[LerchPhi[Complex[0.4, 0.3], 2, 0.5]]	4.1814992436363365 + 0.18243256267398955*I		N[\Phi (0.4\, +0.3 i,2,0.5)]	4.1815\, +0.182433 i	
+n-lerchphi-0p4-plus-0p3i-2-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 2, Rational[5, 2]]]	0.1927090824297056 + 0.04070070796466971*I		N\left[\Phi \left(0.4\, +0.3 i,2,\frac{5}{2}\right)\right]	0.192709\, +0.0407007 i	
+n-lerchphi-0p4-plus-0p3i-3-1	N[LerchPhi[Complex[0.4, 0.3], 3, 1]]	1.0513066923524605 + 0.0484245770703553*I		N[\Phi (0.4\, +0.3 i,3,1)]	1.05131\, +0.0484246 i	
+n-lerchphi-0p4-plus-0p3i-3-2	N[LerchPhi[Complex[0.4, 0.3], 3, 2]]	0.1402002002483636 + 0.01591129248961566*I		N[\Phi (0.4\, +0.3 i,3,2)]	0.1402\, +0.0159113 i	
+n-lerchphi-0p4-plus-0p3i-3-0p5	N[LerchPhi[Complex[0.4, 0.3], 3, 0.5]]	8.12116576184306 + 0.10727030391186279*I		N[\Phi (0.4\, +0.3 i,3,0.5)]	8.12117\, +0.10727 i	
+n-lerchphi-0p4-plus-0p3i-3-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 3, Rational[5, 2]]]	0.07354954621170498 + 0.010421770459496023*I		N\left[\Phi \left(0.4\, +0.3 i,3,\frac{5}{2}\right)\right]	0.0735495\, +0.0104218 i	
+n-lerchphi-0p4-plus-0p3i-0p5-1	N[LerchPhi[Complex[0.4, 0.3], 0.5, 1]]	1.261409136988255 + 0.4154287853084414*I		N[\Phi (0.4\, +0.3 i,0.5,1)]	1.26141\, +0.415429 i	
+n-lerchphi-0p4-plus-0p3i-0p5-2	N[LerchPhi[Complex[0.4, 0.3], 0.5, 2]]	0.9167691615513378 + 0.3509950921076002*I		N[\Phi (0.4\, +0.3 i,0.5,2)]	0.916769\, +0.350995 i	
+n-lerchphi-0p4-plus-0p3i-0p5-0p5	N[LerchPhi[Complex[0.4, 0.3], 0.5, 0.5]]	1.7197286399191294 + 0.4660076436992483*I		N[\Phi (0.4\, +0.3 i,0.5,0.5)]	1.71973\, +0.466008 i	
+n-lerchphi-0p4-plus-0p3i-0p5-5-over-2	N[LerchPhi[Complex[0.4, 0.3], 0.5, Rational[5, 2]]]	0.8252517091723102 + 0.3285465602796579*I		N\left[\Phi \left(0.4\, +0.3 i,0.5,\frac{5}{2}\right)\right]	0.825252\, +0.328547 i	
+n-lerchphi-0p4-plus-0p3i-neg-1-1	N[LerchPhi[Complex[0.4, 0.3], -1, 1]]	1.3333333333333333 + 1.7777777777777777*I		N[\Phi (0.4\, +0.3 i,-1,1)]	1.33333\, +1.77778 i	
+n-lerchphi-0p4-plus-0p3i-neg-1-2	N[LerchPhi[Complex[0.4, 0.3], -1, 2]]	2.666666666666666 + 2.444444444444444*I		N[\Phi (0.4\, +0.3 i,-1,2)]	2.66667\, +2.44444 i	
+n-lerchphi-0p4-plus-0p3i-neg-1-0p5	N[LerchPhi[Complex[0.4, 0.3], -1, 0.5]]	0.6666666666666669 + 1.4444444444444446*I		N[\Phi (0.4\, +0.3 i,-1,0.5)]	0.666667\, +1.44444 i	
+n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2	N[LerchPhi[Complex[0.4, 0.3], -1, Rational[5, 2]]]	3.3333333333333335 + 2.7777777777777777*I		N\left[\Phi \left(0.4\, +0.3 i,-1,\frac{5}{2}\right)\right]	3.33333\, +2.77778 i	
+n-lerchphi-0p4-plus-0p3i-2-plus-i-1	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 1]]	1.1600967534137012 + 0.006328927692369479*I		N[\Phi (0.4\, +0.3 i,2+i,1)]	1.1601\, +0.00632893 i	
+n-lerchphi-0p4-plus-0p3i-2-plus-i-2	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 2]]	0.26374951869276547 - 0.1819898197886505*I		N[\Phi (0.4\, +0.3 i,2+i,2)]	0.26375\, -0.18199 i	
+n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 0.5]]	3.3393475090828915 + 2.6332805602247045*I		N[\Phi (0.4\, +0.3 i,2+i,0.5)]	3.33935\, +2.63328 i	
+n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2	N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], Rational[5, 2]]]	0.14814884863835964 - 0.15027197224093874*I		N\left[\Phi \left(0.4\, +0.3 i,2+i,\frac{5}{2}\right)\right]	0.148149\, -0.150272 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-1	N[LerchPhi[Complex[-0.3, 0.5], 2, 1]]	0.9167986759971547 + 0.09467911486749003*I		N[\Phi (-0.3+0.5 i,2,1)]	0.916799\, +0.0946791 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-2	N[LerchPhi[Complex[-0.3, 0.5], 2, 2]]	0.2126469253958784 + 0.03881449276816393*I		N[\Phi (-0.3+0.5 i,2,2)]	0.212647\, +0.0388145 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-0p5	N[LerchPhi[Complex[-0.3, 0.5], 2, 0.5]]	3.853772051558023 + 0.1780414386292791*I		N[\Phi (-0.3+0.5 i,2,0.5)]	3.85377\, +0.178041 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 2, Rational[5, 2]]]	0.1325032309279059 + 0.027686339466071092*I		N\left[\Phi \left(-0.3+0.5 i,2,\frac{5}{2}\right)\right]	0.132503\, +0.0276863 i	
+n-lerchphi-neg-0p3-plus-0p5i-3-1	N[LerchPhi[Complex[-0.3, 0.5], 3, 1]]	0.9591056061308405 + 0.052063804773611055*I		N[\Phi (-0.3+0.5 i,3,1)]	0.959106\, +0.0520638 i	
+n-lerchphi-neg-0p3-plus-0p5i-3-2	N[LerchPhi[Complex[-0.3, 0.5], 3, 2]]	0.1126477074928041 + 0.014200163242636777*I		N[\Phi (-0.3+0.5 i,3,2)]	0.112648\, +0.0142002 i	
+n-lerchphi-neg-0p3-plus-0p5i-3-0p5	N[LerchPhi[Complex[-0.3, 0.5], 3, 0.5]]	7.904718153248673 + 0.12990910279935874*I		N[\Phi (-0.3+0.5 i,3,0.5)]	7.90472\, +0.129909 i	
+n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 3, Rational[5, 2]]]	0.05618154725455815 + 0.008653632327637262*I		N\left[\Phi \left(-0.3+0.5 i,3,\frac{5}{2}\right)\right]	0.0561815\, +0.00865363 i	
+n-lerchphi-neg-0p3-plus-0p5i-0p5-1	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 1]]	0.7637974549105835 + 0.20811582103519072*I		N[\Phi (-0.3+0.5 i,0.5,1)]	0.763797\, +0.208116 i	
+n-lerchphi-neg-0p3-plus-0p5i-0p5-2	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 2]]	0.5144666883659423 + 0.16372507715926804*I		N[\Phi (-0.3+0.5 i,0.5,2)]	0.514467\, +0.163725 i	
+n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5	N[LerchPhi[Complex[-0.3, 0.5], 0.5, 0.5]]	1.141526793353947 + 0.24801149986829357*I		N[\Phi (-0.3+0.5 i,0.5,0.5)]	1.14153\, +0.248011 i	
+n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], 0.5, Rational[5, 2]]]	0.4542308333668138 + 0.14979712865953318*I		N\left[\Phi \left(-0.3+0.5 i,0.5,\frac{5}{2}\right)\right]	0.454231\, +0.149797 i	
+n-lerchphi-neg-0p3-plus-0p5i-neg-1-1	N[LerchPhi[Complex[-0.3, 0.5], -1, 1]]	0.3826123923902647 + 0.3454139653523222*I		N[\Phi (-0.3+0.5 i,-1,1)]	0.382612\, +0.345414 i	
+n-lerchphi-neg-0p3-plus-0p5i-neg-1-2	N[LerchPhi[Complex[-0.3, 0.5], -1, 2]]	1.0527154851737697 + 0.6031459241152088*I		N[\Phi (-0.3+0.5 i,-1,2)]	1.05272\, +0.603146 i	
+n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5	N[LerchPhi[Complex[-0.3, 0.5], -1, 0.5]]	0.047560845998512125 + 0.21654798597087893*I		N[\Phi (-0.3+0.5 i,-1,0.5)]	0.0475608\, +0.216548 i	
+n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], -1, Rational[5, 2]]]	1.3877670315655224 + 0.7320119034966522*I		N\left[\Phi \left(-0.3+0.5 i,-1,\frac{5}{2}\right)\right]	1.38777\, +0.732012 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 1]]	0.989784607429556 + 0.13562877409833596*I		N[\Phi (-0.3+0.5 i,2+i,1)]	0.989785\, +0.135629 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 2]]	0.20846766123618016 - 0.10464981160081954*I		N[\Phi (-0.3+0.5 i,2+i,2)]	0.208468\, -0.10465 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 0.5]]	2.996994256247417 + 2.7925848156947635*I		N[\Phi (-0.3+0.5 i,2+i,0.5)]	2.99699\, +2.79258 i	
+n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2	N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], Rational[5, 2]]]	0.1144651166327124 - 0.08926367800980031*I		N\left[\Phi \left(-0.3+0.5 i,2+i,\frac{5}{2}\right)\right]	0.114465\, -0.0892637 i	
+n-lerchphi-2-2-1	N[LerchPhi[2, 2, 1]]	1.2337005501361697 - 1.088793045151801*I		N[\Phi (2,2,1)]	1.2337\, -1.08879 i	
+n-lerchphi-2-2-2	N[LerchPhi[2, 2, 2]]	0.11685027506808487 - 0.5443965225759005*I		N[\Phi (2,2,2)]	0.11685\, -0.544397 i	
+n-lerchphi-2-2-0p5	N[LerchPhi[2, 2, 0.5]]	4.840291449348403 - 1.5397858910711801*I		N[\Phi (2,2,0.5)]	4.84029\, -1.53979 i	
+n-lerchphi-2-2-5-over-2	N[LerchPhi[2, 2, Rational[5, 2]]]	-0.012149359885121669 - 0.38494647276779503*I		N\left[\Phi \left(2,2,\frac{5}{2}\right)\right]	-0.0121494-0.384946 i	
+n-lerchphi-2-2-neg-2p5	N[LerchPhi[2, 2, -2.5]]	55.77122048367611 - 12.318287128569441*I		N[\Phi (2,2,-2.5)]	55.7712\, -12.3183 i	
+n-lerchphi-2-3-1	N[LerchPhi[2, 3, 1]]	1.3810359531144623 - 0.3773469147301234*I		N[\Phi (2,3,1)]	1.38104\, -0.377347 i	
+n-lerchphi-2-3-2	N[LerchPhi[2, 3, 2]]	0.19051797655723113 - 0.1886734573650617*I		N[\Phi (2,3,2)]	0.190518\, -0.188673 i	
+n-lerchphi-2-3-0p5	N[LerchPhi[2, 3, 0.5]]	8.921391406560598 - 0.5336491245309867*I		N[\Phi (2,3,0.5)]	8.92139\, -0.533649 i	
+n-lerchphi-2-3-5-over-2	N[LerchPhi[2, 3, Rational[5, 2]]]	0.08219970349200167 - 0.13341228113274667*I		N\left[\Phi \left(2,3,\frac{5}{2}\right)\right]	0.0821997\, -0.133412 i	
+n-lerchphi-2-3-neg-2p5	N[LerchPhi[2, 3, -2.5]]	104.02772384507739 - 4.269192996247893*I		N[\Phi (2,3,-2.5)]	104.028\, -4.26919 i	disagree
+n-lerchphi-2-0p5-1	N[LerchPhi[2, 0.5, 1]]	-0.8050307649337431 - 1.0644670194312265*I		N[\Phi (2,0.5,1)]	-0.805031-1.06447 i	
+n-lerchphi-2-0p5-2	N[LerchPhi[2, 0.5, 2]]	-0.9025153824668711 - 0.532233509715613*I		N[\Phi (2,0.5,2)]	-0.902515-0.532234 i	
+n-lerchphi-2-0p5-0p5	N[LerchPhi[2, 0.5, 0.5]]	-0.39538588823194476 - 1.5053836955785047*I		N[\Phi (2,0.5,0.5)]	-0.395386-1.50538 i	
+n-lerchphi-2-0p5-5-over-2	N[LerchPhi[2, 0.5, Rational[5, 2]]]	-0.8606481531151231 - 0.3763459238946262*I		N\left[\Phi \left(2,0.5,\frac{5}{2}\right)\right]	-0.860648-0.376346 i	
+n-lerchphi-2-0p5-neg-2p5	N[LerchPhi[2, 0.5, -2.5]]	4.75921583752595 - 12.043069564628038*I		N[\Phi (2,0.5,-2.5)]	4.75922\, -12.0431 i	disagree
+n-lerchphi-2-2-plus-i-1	N[LerchPhi[2, Complex[2, 1], 1]]	0.7821035196370021 - 0.5898143877849428*I		N[\Phi (2,2+i,1)]	0.782104\, -0.589814 i	
+n-lerchphi-2-2-plus-i-2	N[LerchPhi[2, Complex[2, 1], 2]]	-0.10894824018083943 - 0.2949071938925386*I		N[\Phi (2,2+i,2)]	-0.108948-0.294907 i	
+n-lerchphi-2-2-plus-i-0p5	N[LerchPhi[2, Complex[2, 1], 0.5]]	3.2663465887755443 + 1.5814239980763367*I		N[\Phi (2,2+i,0.5)]	3.26635\, +1.58142 i	
+n-lerchphi-2-2-plus-i-5-over-2	N[LerchPhi[2, Complex[2, 1], Rational[5, 2]]]	-0.1568564844899748 - 0.1559505657469148*I		N\left[\Phi \left(2,2+i,\frac{5}{2}\right)\right]	-0.156856-0.155951 i	
+n-lerchphi-2-2-plus-i-neg-2p5	N[LerchPhi[2, Complex[2, 1], -2.5]]	39.35281478642287 + 22.39721772102415*I		N[\Phi (2,2+i,-2.5)]	39.3528\, +22.3972 i	disagree
+n-lerchphi-neg-2-2-1	N[LerchPhi[-2, 2, 1]]	0.7183731834418405		N[\Phi (-2,2,1)]	0.718373	
+n-lerchphi-neg-2-2-2	N[LerchPhi[-2, 2, 2]]	0.14081340827907973		N[\Phi (-2,2,2)]	0.140813	
+n-lerchphi-neg-2-2-0p5	N[LerchPhi[-2, 2, 0.5]]	3.4447342293302547 - 2.0380094546286109*^-16*I		N[\Phi (-2,2,0.5)]	3.44473\, -\text{2.0380094546286109$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-2-2-5-over-2	N[LerchPhi[-2, 2, Rational[5, 2]]]	0.0834057795547859 - 5.095023636571527*^-17*I		N\left[\Phi \left(-2,2,\frac{5}{2}\right)\right]	0.0834058\, -\text{5.095023636571527$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-2-2-neg-2p5	N[LerchPhi[-2, 2, -2.5]]	-12.286762723530927 + 1.6304075637028887*^-15*I		N[\Phi (-2,2,-2.5)]	-12.2868+\text{1.6304075637028887$\grave{ }$*${}^{\wedge}$-15} i	
+n-lerchphi-neg-2-3-1	N[LerchPhi[-2, 3, 1]]	0.8341416819832856		N[\Phi (-2,3,1)]	0.834142	
+n-lerchphi-neg-2-3-2	N[LerchPhi[-2, 3, 2]]	0.08292915900835718		N[\Phi (-2,3,2)]	0.0829292	
+n-lerchphi-neg-2-3-0p5	N[LerchPhi[-2, 3, 0.5]]	7.563284617347448 + 1.3824347500011768*^-15*I		N[\Phi (-2,3,0.5)]	7.56328\, +\text{1.3824347500011768$\grave{ }$*${}^{\wedge}$-15} i	
+n-lerchphi-neg-2-3-5-over-2	N[LerchPhi[-2, 3, Rational[5, 2]]]	0.03896930248501018 + 3.456086875002942*^-16*I		N\left[\Phi \left(-2,3,\frac{5}{2}\right)\right]	0.0389693\, +\text{3.456086875002942$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-2-3-neg-2p5	N[LerchPhi[-2, 3, -2.5]]	-29.034869531372177 - 1.1059478000009414*^-14*I		N[\Phi (-2,3,-2.5)]	-29.0349-\text{1.1059478000009414$\grave{ }$*${}^{\wedge}$-14} i	disagree
+n-lerchphi-neg-2-0p5-1	N[LerchPhi[-2, 0.5, 1]]	0.4456443557760621 - 4.163336342344337*^-17*I		N[\Phi (-2,0.5,1)]	0.445644\, -\text{4.163336342344337$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-2-0p5-2	N[LerchPhi[-2, 0.5, 2]]	0.2771778221119691 + 5.68356755158503*^-18*I		N[\Phi (-2,0.5,2)]	0.277178\, +\text{5.68356755158503$\grave{ }$*${}^{\wedge}$-18} i	
+n-lerchphi-neg-2-0p5-0p5	N[LerchPhi[-2, 0.5, 0.5]]	0.7431924320288356 - 2.4228238315063152*^-17*I		N[\Phi (-2,0.5,0.5)]	0.743192\, -\text{2.4228238315063152$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-2-0p5-5-over-2	N[LerchPhi[-2, 0.5, Rational[5, 2]]]	0.24049300787779812 - 6.057059578765788*^-18*I		N\left[\Phi \left(-2,0.5,\frac{5}{2}\right)\right]	0.240493\, -\text{6.057059578765788$\grave{ }$*${}^{\wedge}$-18} i	
+n-lerchphi-neg-2-0p5-neg-2p5	N[LerchPhi[-2, 0.5, -2.5]]	-1.2892228365600795 + 1.9382590652050522*^-16*I		N[\Phi (-2,0.5,-2.5)]	-1.28922+\text{1.9382590652050522$\grave{ }$*${}^{\wedge}$-16} i	disagree
+n-lerchphi-neg-2-2-plus-i-1	N[LerchPhi[-2, Complex[2, 1], 1]]	0.7462766702242207 + 0.14040868638886603*I		N[\Phi (-2,2+i,1)]	0.746277\, +0.140409 i	
+n-lerchphi-neg-2-2-plus-i-2	N[LerchPhi[-2, Complex[2, 1], 2]]	0.1268616648883305 - 0.0702043431947064*I		N[\Phi (-2,2+i,2)]	0.126862\, -0.0702043 i	
+n-lerchphi-neg-2-2-plus-i-0p5	N[LerchPhi[-2, Complex[2, 1], 0.5]]	2.51118300287403 + 2.6760511428484572*I		N[\Phi (-2,2+i,0.5)]	2.51118\, +2.67605 i	
+n-lerchphi-neg-2-2-plus-i-5-over-2	N[LerchPhi[-2, Complex[2, 1], Rational[5, 2]]]	0.06276107967442413 - 0.05760320164915622*I		N\left[\Phi \left(-2,2+i,\frac{5}{2}\right)\right]	0.0627611\, -0.0576032 i	
+n-lerchphi-neg-2-2-plus-i-neg-2p5	N[LerchPhi[-2, Complex[2, 1], -2.5]]	-8.501055789332833 - 10.961345717993117*I		N[\Phi (-2,2+i,-2.5)]	-8.50106-10.9613 i	disagree
+n-lerchphi-3-2-1	N[LerchPhi[3, 2, 1]]	0.7733934744376993 - 1.1504640984077343*I		N[\Phi (3,2,1)]	0.773393\, -1.15046 i	
+n-lerchphi-3-2-2	N[LerchPhi[3, 2, 2]]	-0.07553550852076688 - 0.3834880328025781*I		N[\Phi (3,2,2)]	-0.0755355-0.383488 i	
+n-lerchphi-3-2-0p5	N[LerchPhi[3, 2, 0.5]]	4.308305910092614 - 1.9926622707261177*I		N[\Phi (3,2,0.5)]	4.30831\, -1.99266 i	
+n-lerchphi-3-2-5-over-2	N[LerchPhi[3, 2, Rational[5, 2]]]	-0.1138919359156354 - 0.22140691896956863*I		N\left[\Phi \left(3,2,\frac{5}{2}\right)\right]	-0.113892-0.221407 i	
+n-lerchphi-3-2-neg-2p5	N[LerchPhi[3, 2, -2.5]]	153.81759290583392 - 53.80188130960518*I		N[\Phi (3,2,-2.5)]	153.818\, -53.8019 i	
+n-lerchphi-3-3-1	N[LerchPhi[3, 3, 1]]	1.2473741980802437 - 0.6319569980911073*I		N[\Phi (3,3,1)]	1.24737\, -0.631957 i	
+n-lerchphi-3-3-2	N[LerchPhi[3, 3, 2]]	0.0824580660267479 - 0.21065233269703576*I		N[\Phi (3,3,2)]	0.0824581\, -0.210652 i	
+n-lerchphi-3-3-0p5	N[LerchPhi[3, 3, 0.5]]	8.962435484818286 - 1.0945816288925072*I		N[\Phi (3,3,0.5)]	8.96244\, -1.09458 i	
+n-lerchphi-3-3-5-over-2	N[LerchPhi[3, 3, Rational[5, 2]]]	0.008171843992155203 - 0.12162018098805635*I		N\left[\Phi \left(3,3,\frac{5}{2}\right)\right]	0.00817184\, -0.12162 i	
+n-lerchphi-3-3-neg-2p5	N[LerchPhi[3, 3, -2.5]]	314.9386469789826 - 29.553703980097694*I		N[\Phi (3,3,-2.5)]	314.939\, -29.5537 i	disagree
+n-lerchphi-3-0p5-1	N[LerchPhi[3, 0.5, 1]]	-0.5673384497546596 - 0.5636784807928212*I		N[\Phi (3,0.5,1)]	-0.567338-0.563678 i	
+n-lerchphi-3-0p5-2	N[LerchPhi[3, 0.5, 2]]	-0.5224461499182197 - 0.18789282693094045*I		N[\Phi (3,0.5,2)]	-0.522446-0.187893 i	
+n-lerchphi-3-0p5-0p5	N[LerchPhi[3, 0.5, 0.5]]	-0.305888418127714 - 0.976319767866404*I		N[\Phi (3,0.5,0.5)]	-0.305888-0.97632 i	
+n-lerchphi-3-0p5-5-over-2	N[LerchPhi[3, 0.5, Rational[5, 2]]]	-0.4632879692537763 - 0.1084799742073782*I		N\left[\Phi \left(3,0.5,\frac{5}{2}\right)\right]	-0.463288-0.10848 i	
+n-lerchphi-3-0p5-neg-2p5	N[LerchPhi[3, 0.5, -2.5]]	7.550880046726434 - 26.360633732392905*I		N[\Phi (3,0.5,-2.5)]	7.55088\, -26.3606 i	disagree
+n-lerchphi-3-2-plus-i-1	N[LerchPhi[3, Complex[2, 1], 1]]	0.6014155729902452 - 0.5726915889959069*I		N[\Phi (3,2+i,1)]	0.601416\, -0.572692 i	
+n-lerchphi-3-2-plus-i-2	N[LerchPhi[3, Complex[2, 1], 2]]	-0.13286147566971163 - 0.1908971963319649*I		N[\Phi (3,2+i,2)]	-0.132861-0.190897 i	
+n-lerchphi-3-2-plus-i-0p5	N[LerchPhi[3, Complex[2, 1], 0.5]]	3.07433014627917 + 1.3820906569318034*I		N[\Phi (3,2+i,0.5)]	3.07433\, +1.38209 i	
+n-lerchphi-3-2-plus-i-5-over-2	N[LerchPhi[3, Complex[2, 1], Rational[5, 2]]]	-0.13642787123289463 - 0.07198068689299125*I		N\left[\Phi \left(3,2+i,\frac{5}{2}\right)\right]	-0.136428-0.0719807 i	
+n-lerchphi-3-2-plus-i-neg-2p5	N[LerchPhi[3, Complex[2, 1], -2.5]]	112.02214251367533 + 59.66618957774957*I		N[\Phi (3,2+i,-2.5)]	112.022\, +59.6662 i	disagree
+n-lerchphi-1p5-2-1	N[LerchPhi[1.5, 2, 1]]	1.582930180181653 - 0.8492041366130669*I		N[\Phi (1.5,2,1)]	1.58293\, -0.849204 i	
+n-lerchphi-1p5-2-2	N[LerchPhi[1.5, 2, 2]]	0.38862012012110325 - 0.5661360910753768*I		N[\Phi (1.5,2,2)]	0.38862\, -0.566136 i	
+n-lerchphi-1p5-2-0p5	N[LerchPhi[1.5, 2, 0.5]]	5.118490668726073 - 1.040058411081378*I		N[\Phi (1.5,2,0.5)]	5.11849\, -1.04006 i	
+n-lerchphi-1p5-2-5-over-2	N[LerchPhi[1.5, 2, Rational[5, 2]]]	0.2008106675819583 - 0.46224818270283463*I		N\left[\Phi \left(1.5,2,\frac{5}{2}\right)\right]	0.200811\, -0.462248 i	
+n-lerchphi-1p5-2-neg-2p5	N[LerchPhi[1.5, 2, -2.5]]	27.101572673617163 - 3.5101971373996506*I		N[\Phi (1.5,2,-2.5)]	27.1016\, -3.5102 i	
+n-lerchphi-1p5-3-1	N[LerchPhi[1.5, 3, 1]]	1.3739183382135203 - 0.17216132352885852*I		N[\Phi (1.5,3,1)]	1.37392\, -0.172161 i	
+n-lerchphi-1p5-3-2	N[LerchPhi[1.5, 3, 2]]	0.24927889214235632 - 0.11477421568590564*I		N[\Phi (1.5,3,2)]	0.249279\, -0.114774 i	
+n-lerchphi-1p5-3-0p5	N[LerchPhi[1.5, 3, 0.5]]	8.75839228129124 - 0.21085369804395912*I		N[\Phi (1.5,3,0.5)]	8.75839\, -0.210854 i	
+n-lerchphi-1p5-3-5-over-2	N[LerchPhi[1.5, 3, Rational[5, 2]]]	0.13953237193190896 - 0.09371275468620405*I		N\left[\Phi \left(1.5,3,\frac{5}{2}\right)\right]	0.139532\, -0.0937128 i	
+n-lerchphi-1p5-3-neg-2p5	N[LerchPhi[1.5, 3, -2.5]]	48.068018393802376 - 0.711631230898362*I		N[\Phi (1.5,3,-2.5)]	48.068\, -0.711631 i	disagree
+n-lerchphi-1p5-0p5-1	N[LerchPhi[1.5, 0.5, 1]]	-1.0310938016261078 - 1.8556964357740162*I		N[\Phi (1.5,0.5,1)]	-1.03109-1.8557 i	
+n-lerchphi-1p5-0p5-2	N[LerchPhi[1.5, 0.5, 2]]	-1.3540625344174047 - 1.2371309571826772*I		N[\Phi (1.5,0.5,2)]	-1.35406-1.23713 i	
+n-lerchphi-1p5-0p5-0p5	N[LerchPhi[1.5, 0.5, 0.5]]	-0.4727012388667613 - 2.2727546925738773*I		N[\Phi (1.5,0.5,0.5)]	-0.472701-2.27275 i	
+n-lerchphi-1p5-0p5-5-over-2	N[LerchPhi[1.5, 0.5, Rational[5, 2]]]	-1.3829598545028647 - 1.010113196699501*I		N\left[\Phi \left(1.5,0.5,\frac{5}{2}\right)\right]	-1.38296-1.01011 i	
+n-lerchphi-1p5-0p5-neg-2p5	N[LerchPhi[1.5, 0.5, -2.5]]	3.44381423758941 - 7.6705470874368356*I		N[\Phi (1.5,0.5,-2.5)]	3.44381\, -7.67055 i	disagree
+n-lerchphi-1p5-2-plus-i-1	N[LerchPhi[1.5, Complex[2, 1], 1]]	0.9288306730428874 - 0.5652075721952401*I		N[\Phi (1.5,2+i,1)]	0.928831\, -0.565208 i	
+n-lerchphi-1p5-2-plus-i-2	N[LerchPhi[1.5, Complex[2, 1], 2]]	-0.04744621797176318 - 0.37680504812909255*I		N[\Phi (1.5,2+i,2)]	-0.0474462-0.376805 i	
+n-lerchphi-1p5-2-plus-i-0p5	N[LerchPhi[1.5, Complex[2, 1], 0.5]]	3.3830483897788204 + 1.7479834843533162*I		N[\Phi (1.5,2+i,0.5)]	3.38305\, +1.74798 i	
+n-lerchphi-1p5-2-plus-i-5-over-2	N[LerchPhi[1.5, Complex[2, 1], Rational[5, 2]]]	-0.13623106961632636 - 0.24217666122591808*I		N\left[\Phi \left(1.5,2+i,\frac{5}{2}\right)\right]	-0.136231-0.242177 i	
+n-lerchphi-1p5-2-plus-i-neg-2p5	N[LerchPhi[1.5, Complex[2, 1], -2.5]]	19.05095385185434 + 11.260195772958092*I		N[\Phi (1.5,2+i,-2.5)]	19.051\, +11.2602 i	disagree
+n-lerchphi-neg-1p5-2-1	N[LerchPhi[-1.5, 2, 1]]	0.7649204402503804		N[\Phi (-1.5,2,1)]	0.76492	
+n-lerchphi-neg-1p5-2-2	N[LerchPhi[-1.5, 2, 2]]	0.1567197064997469 + 5.721258238267586*^-16*I		N[\Phi (-1.5,2,2)]	0.15672\, +\text{5.721258238267586$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-1p5-2-0p5	N[LerchPhi[-1.5, 2, 0.5]]	3.545004558874938 - 5.748616730151821*^-17*I		N[\Phi (-1.5,2,0.5)]	3.545\, -\text{5.748616730151821$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-1p5-2-5-over-2	N[LerchPhi[-1.5, 2, Rational[5, 2]]]	0.09407610024071308 - 2.5549407689563645*^-17*I		N\left[\Phi \left(-1.5,2,\frac{5}{2}\right)\right]	0.0940761\, -\text{2.5549407689563645$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-1p5-2-neg-2p5	N[LerchPhi[-1.5, 2, -2.5]]	-3.4710570528695808 + 1.9401581464262396*^-16*I		N[\Phi (-1.5,2,-2.5)]	-3.47106+\text{1.9401581464262396$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-1p5-3-1	N[LerchPhi[-1.5, 3, 1]]	0.8652249667708333		N[\Phi (-1.5,3,1)]	0.865225	
+n-lerchphi-neg-1p5-3-2	N[LerchPhi[-1.5, 3, 2]]	0.0898500221527776 + 2.6738770253614813*^-16*I		N[\Phi (-1.5,3,2)]	0.08985\, +\text{2.6738770253614813$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-1p5-3-0p5	N[LerchPhi[-1.5, 3, 0.5]]	7.652044367963561 + 1.513727336795356*^-15*I		N[\Phi (-1.5,3,0.5)]	7.65204\, +\text{1.513727336795356$\grave{ }$*${}^{\wedge}$-15} i	
+n-lerchphi-neg-1p5-3-5-over-2	N[LerchPhi[-1.5, 3, Rational[5, 2]]]	0.04288391662578029 + 6.727677052423805*^-16*I		N\left[\Phi \left(-1.5,3,\frac{5}{2}\right)\right]	0.0428839\, +\text{6.727677052423805$\grave{ }$*${}^{\wedge}$-16} i	
+n-lerchphi-neg-1p5-3-neg-2p5	N[LerchPhi[-1.5, 3, -2.5]]	-8.206094186321462 - 5.108829761684327*^-15*I		N[\Phi (-1.5,3,-2.5)]	-8.20609-\text{5.108829761684327$\grave{ }$*${}^{\wedge}$-15} i	disagree
+n-lerchphi-neg-1p5-0p5-1	N[LerchPhi[-1.5, 0.5, 1]]	0.5118021812475765 - 3.700743415417188*^-17*I		N[\Phi (-1.5,0.5,1)]	0.511802\, -\text{3.700743415417188$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-1p5-0p5-2	N[LerchPhi[-1.5, 0.5, 2]]	0.3254652125016162 + 1.9987578825705452*^-18*I		N[\Phi (-1.5,0.5,2)]	0.325465\, +\text{1.9987578825705452$\grave{ }$*${}^{\wedge}$-18} i	
+n-lerchphi-neg-1p5-0p5-0p5	N[LerchPhi[-1.5, 0.5, 0.5]]	0.8278942319491788 + 1.134070298867023*^-17*I		N[\Phi (-1.5,0.5,0.5)]	0.827894\, +\text{1.134070298867023$\grave{ }$*${}^{\wedge}$-17} i	
+n-lerchphi-neg-1p5-0p5-5-over-2	N[LerchPhi[-1.5, 0.5, Rational[5, 2]]]	0.28374468487452115 + 5.040312439408991*^-18*I		N\left[\Phi \left(-1.5,0.5,\frac{5}{2}\right)\right]	0.283745\, +\text{5.040312439408991$\grave{ }$*${}^{\wedge}$-18} i	
+n-lerchphi-neg-1p5-0p5-neg-2p5	N[LerchPhi[-1.5, 0.5, -2.5]]	-0.2044518568469269 - 3.827487258676203*^-17*I		N[\Phi (-1.5,0.5,-2.5)]	-0.204452-\text{3.827487258676203$\grave{ }$*${}^{\wedge}$-17} i	disagree
+n-lerchphi-neg-1p5-2-plus-i-1	N[LerchPhi[-1.5, Complex[2, 1], 1]]	0.7925489657208953 + 0.1230745464694305*I		N[\Phi (-1.5,2+i,1)]	0.792549\, +0.123075 i	
+n-lerchphi-neg-1p5-2-plus-i-2	N[LerchPhi[-1.5, Complex[2, 1], 2]]	0.13830068951857172 - 0.08204969764635209*I		N[\Phi (-1.5,2+i,2)]	0.138301\, -0.0820497 i	
+n-lerchphi-neg-1p5-2-plus-i-0p5	N[LerchPhi[-1.5, Complex[2, 1], 0.5]]	2.619306075593197 + 2.6687326314578925*I		N[\Phi (-1.5,2+i,0.5)]	2.61931\, +2.66873 i	
+n-lerchphi-neg-1p5-2-plus-i-5-over-2	N[LerchPhi[-1.5, Complex[2, 1], Rational[5, 2]]]	0.06887251604309992 - 0.06670071419535716*I		N\left[\Phi \left(-1.5,2+i,\frac{5}{2}\right)\right]	0.0688725\, -0.0667007 i	
+n-lerchphi-neg-1p5-2-plus-i-neg-2p5	N[LerchPhi[-1.5, Complex[2, 1], -2.5]]	-2.4322178506955483 - 3.1202928516189257*I		N[\Phi (-1.5,2+i,-2.5)]	-2.43222-3.12029 i	disagree
+n-lerchphi-1-plus-2i-2-1	N[LerchPhi[Complex[1, 2], 2, 1]]	0.8171642289751408 + 0.4383195138244753*I		N[\Phi (1+2 i,2,1)]	0.817164\, +0.43832 i	
+n-lerchphi-1-plus-2i-2-2	N[LerchPhi[Complex[1, 2], 2, 2]]	0.1387606513248183 + 0.16079821117483872*I		N[\Phi (1+2 i,2,2)]	0.138761\, +0.160798 i	
+n-lerchphi-1-plus-2i-2-0p5	N[LerchPhi[Complex[1, 2], 2, 0.5]]	3.7921142608467884 + 0.8560748069785487*I		N[\Phi (1+2 i,2,0.5)]	3.79211\, +0.856075 i	
+n-lerchphi-1-plus-2i-2-5-over-2	N[LerchPhi[Complex[1, 2], 2, Rational[5, 2]]]	0.07302936892606432 + 0.10831051920486583*I		N\left[\Phi \left(1+2 i,2,\frac{5}{2}\right)\right]	0.0730294\, +0.108311 i	
+n-lerchphi-1-plus-2i-2-neg-2p5	N[LerchPhi[Complex[1, 2], 2, -2.5]]	-51.39666281091313 - 0.11216250956872287*I		N[\Phi (1+2 i,2,-2.5)]	-51.3967-0.112163 i	
+n-lerchphi-1-plus-2i-3-1	N[LerchPhi[Complex[1, 2], 3, 1]]	0.9605393291259242 + 0.26202376061325094*I		N[\Phi (1+2 i,3,1)]	0.960539\, +0.262024 i	
+n-lerchphi-1-plus-2i-3-2	N[LerchPhi[Complex[1, 2], 3, 2]]	0.09691737007048523 + 0.06818902047228051*I		N[\Phi (1+2 i,3,2)]	0.0969174\, +0.068189 i	
+n-lerchphi-1-plus-2i-3-0p5	N[LerchPhi[Complex[1, 2], 3, 0.5]]	8.006976954441555 + 0.6457371392370719*I		N[\Phi (1+2 i,3,0.5)]	8.00698\, +0.645737 i	
+n-lerchphi-1-plus-2i-3-5-over-2	N[LerchPhi[Complex[1, 2], 3, Rational[5, 2]]]	0.04322144848568559 + 0.03991374909942102*I		N\left[\Phi \left(1+2 i,3,\frac{5}{2}\right)\right]	0.0432214\, +0.0399137 i	
+n-lerchphi-1-plus-2i-3-neg-2p5	N[LerchPhi[Complex[1, 2], 3, -2.5]]	-110.42497592408667 + 9.475530152101694*I		N[\Phi (1+2 i,3,-2.5)]	-110.425+9.47553 i	disagree
+n-lerchphi-1-plus-2i-0p5-1	N[LerchPhi[Complex[1, 2], 0.5, 1]]	0.2518733705484466 + 0.5942372440727623*I		N[\Phi (1+2 i,0.5,1)]	0.251873\, +0.594237 i	
+n-lerchphi-1-plus-2i-0p5-2	N[LerchPhi[Complex[1, 2], 0.5, 2]]	0.0880695717387942 + 0.41809810059517355*I		N[\Phi (1+2 i,0.5,2)]	0.0880696\, +0.418098 i	
+n-lerchphi-1-plus-2i-0p5-0p5	N[LerchPhi[Complex[1, 2], 0.5, 0.5]]	0.5773820436149286 + 0.7684091077547667*I		N[\Phi (1+2 i,0.5,0.5)]	0.577382\, +0.768409 i	
+n-lerchphi-1-plus-2i-0p5-5-over-2	N[LerchPhi[Complex[1, 2], 0.5, Rational[5, 2]]]	0.06006592330619742 + 0.36828258244182505*I		N\left[\Phi \left(1+2 i,0.5,\frac{5}{2}\right)\right]	0.0600659\, +0.368283 i	
+n-lerchphi-1-plus-2i-0p5-neg-2p5	N[LerchPhi[Complex[1, 2], 0.5, -2.5]]	-7.608072838412566 - 2.3174168611844586*I		N[\Phi (1+2 i,0.5,-2.5)]	-7.60807-2.31742 i	disagree
+n-lerchphi-1-plus-2i-2-plus-i-1	N[LerchPhi[Complex[1, 2], Complex[2, 1], 1]]	1.1260285363141571 + 0.6413553659598815*I		N[\Phi (1+2 i,2+i,1)]	1.12603\, +0.641355 i	
+n-lerchphi-1-plus-2i-2-plus-i-2	N[LerchPhi[Complex[1, 2], Complex[2, 1], 2]]	0.2817478536462949 + 0.07785965866667141*I		N[\Phi (1+2 i,2+i,2)]	0.281748\, +0.0778597 i	
+n-lerchphi-1-plus-2i-2-plus-i-0p5	N[LerchPhi[Complex[1, 2], Complex[2, 1], 0.5]]	3.1929058347983257 + 3.7884971130059726*I		N[\Phi (1+2 i,2+i,0.5)]	3.19291\, +3.7885 i	
+n-lerchphi-1-plus-2i-2-plus-i-5-over-2	N[LerchPhi[Complex[1, 2], Complex[2, 1], Rational[5, 2]]]	0.1717523704292899 + 0.03195499105000332*I		N\left[\Phi \left(1+2 i,2+i,\frac{5}{2}\right)\right]	0.171752\, +0.031955 i	
+n-lerchphi-1-plus-2i-2-plus-i-neg-2p5	N[LerchPhi[Complex[1, 2], Complex[2, 1], -2.5]]	-46.142787156209735 - 42.90442114783229*I		N[\Phi (1+2 i,2+i,-2.5)]	-46.1428-42.9044 i	disagree
+n-lerchphi-neg-1p5-plus-i-2-1	N[LerchPhi[Complex[-1.5, 1], 2, 1]]	0.744689766677463 + 0.09767689334428953*I		N[\Phi (-1.5+i,2,1)]	0.74469\, +0.0976769 i	
+n-lerchphi-neg-1p5-plus-i-2-2	N[LerchPhi[Complex[-1.5, 1], 2, 2]]	0.14788992102403 + 0.03347535178649232*I		N[\Phi (-1.5+i,2,2)]	0.14789\, +0.0334754 i	
+n-lerchphi-neg-1p5-plus-i-2-0p5	N[LerchPhi[Complex[-1.5, 1], 2, 0.5]]	3.510343411491001 + 0.20933833108241506*I		N[\Phi (-1.5+i,2,0.5)]	3.51034\, +0.209338 i	
+n-lerchphi-neg-1p5-plus-i-2-5-over-2	N[LerchPhi[Complex[-1.5, 1], 2, Rational[5, 2]]]	0.08772363908006367 + 0.022451843102529324*I		N\left[\Phi \left(-1.5+i,2,\frac{5}{2}\right)\right]	0.0877236\, +0.0224518 i	
+n-lerchphi-neg-1p5-plus-i-2-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 2, -2.5]]	7.238774267536822 + 8.864424682985417*I		N[\Phi (-1.5+i,2,-2.5)]	7.23877\, +8.86442 i	
+n-lerchphi-neg-1p5-plus-i-3-1	N[LerchPhi[Complex[-1.5, 1], 3, 1]]	0.8553387457226986 + 0.0648929890181541*I		N[\Phi (-1.5+i,3,1)]	0.855339\, +0.064893 i	
+n-lerchphi-neg-1p5-plus-i-3-2	N[LerchPhi[Complex[-1.5, 1], 3, 2]]	0.08673380628741625 + 0.014560544846175878*I		N[\Phi (-1.5+i,3,2)]	0.0867338\, +0.0145605 i	
+n-lerchphi-neg-1p5-plus-i-3-0p5	N[LerchPhi[Complex[-1.5, 1], 3, 0.5]]	7.631459552290881 + 0.1838129938214179*I		N[\Phi (-1.5+i,3,0.5)]	7.63146\, +0.183813 i	
+n-lerchphi-neg-1p5-plus-i-3-5-over-2	N[LerchPhi[Complex[-1.5, 1], 3, Rational[5, 2]]]	0.04093064173669038 + 0.008246898188154227*I		N\left[\Phi \left(-1.5+i,3,\frac{5}{2}\right)\right]	0.0409306\, +0.0082469 i	
+n-lerchphi-neg-1p5-plus-i-3-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 3, -2.5]]	17.14802283740964 + 20.383978340017954*I		N[\Phi (-1.5+i,3,-2.5)]	17.148\, +20.384 i	disagree
+n-lerchphi-neg-1p5-plus-i-0p5-1	N[LerchPhi[Complex[-1.5, 1], 0.5, 1]]	0.4655388056711063 + 0.13821464441436465*I		N[\Phi (-1.5+i,0.5,1)]	0.465539\, +0.138215 i	
+n-lerchphi-neg-1p5-plus-i-0p5-2	N[LerchPhi[Complex[-1.5, 1], 0.5, 2]]	0.2892019802792936 + 0.1006582239099534*I		N[\Phi (-1.5+i,0.5,2)]	0.289202\, +0.100658 i	
+n-lerchphi-neg-1p5-plus-i-0p5-0p5	N[LerchPhi[Complex[-1.5, 1], 0.5, 0.5]]	0.7730363447556265 + 0.17710899785682885*I		N[\Phi (-1.5+i,0.5,0.5)]	0.773036\, +0.177109 i	
+n-lerchphi-neg-1p5-plus-i-0p5-5-over-2	N[LerchPhi[Complex[-1.5, 1], 0.5, Rational[5, 2]]]	0.2506624678277247 + 0.09007985632982152*I		N\left[\Phi \left(-1.5+i,0.5,\frac{5}{2}\right)\right]	0.250662\, +0.0900799 i	
+n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5	N[LerchPhi[Complex[-1.5, 1], 0.5, -2.5]]	1.02676676378177 + 1.218062498742225*I		N[\Phi (-1.5+i,0.5,-2.5)]	1.02677\, +1.21806 i	disagree
+n-lerchphi-neg-1p5-plus-i-2-plus-i-1	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 1]]	0.8125648486732331 + 0.2335637047053423*I		N[\Phi (-1.5+i,2+i,1)]	0.812565\, +0.233564 i	
+n-lerchphi-neg-1p5-plus-i-2-plus-i-2	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 2]]	0.15837428667606762 - 0.05012627868621951*I		N[\Phi (-1.5+i,2+i,2)]	0.158374\, -0.0501263 i	
+n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 0.5]]	2.6030184823997473 + 2.9114183984878212*I		N[\Phi (-1.5+i,2+i,0.5)]	2.60302\, +2.91142 i	
+n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], Rational[5, 2]]]	0.08535910853571833 - 0.047777579953797944*I		N\left[\Phi \left(-1.5+i,2+i,\frac{5}{2}\right)\right]	0.0853591\, -0.0477776 i	
+n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5	N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], -2.5]]	-2.6384307117707664 + 12.751078290666381*I		N[\Phi (-1.5+i,2+i,-2.5)]	-2.63843+12.7511 i	disagree
+n-lerchphi-0p8-plus-0p9i-2-1	N[LerchPhi[Complex[0.8, 0.9], 2, 1]]	1.0512753535586397 + 0.3523401982517351*I		N[\Phi (0.8\, +0.9 i,2,1)]	1.05128\, +0.35234 i	
+n-lerchphi-0p8-plus-0p9i-2-2	N[LerchPhi[Complex[0.8, 0.9], 2, 2]]	0.24698376639549652 + 0.16256851061973213*I		N[\Phi (0.8\, +0.9 i,2,2)]	0.246984\, +0.162569 i	
+n-lerchphi-0p8-plus-0p9i-2-0p5	N[LerchPhi[Complex[0.8, 0.9], 2, 0.5]]	4.15740696830278 + 0.5964288969053877*I		N[\Phi (0.8\, +0.9 i,2,0.5)]	4.15741\, +0.596429 i	
+n-lerchphi-0p8-plus-0p9i-2-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 2, Rational[5, 2]]]	0.15055546795563854 + 0.11982927618077534*I		N\left[\Phi \left(0.8\, +0.9 i,2,\frac{5}{2}\right)\right]	0.150555\, +0.119829 i	
+n-lerchphi-0p8-plus-0p9i-2-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 2, -2.5]]	-6.713683691062508 + 9.459163380965965*I		N[\Phi (0.8\, +0.9 i,2,-2.5)]	-6.71368+9.45916 i	
+n-lerchphi-0p8-plus-0p9i-3-1	N[LerchPhi[Complex[0.8, 0.9], 3, 1]]	1.0600183930694893 + 0.16372732384786187*I		N[\Phi (0.8\, +0.9 i,3,1)]	1.06002\, +0.163727 i	
+n-lerchphi-0p8-plus-0p9i-3-2	N[LerchPhi[Complex[0.8, 0.9], 3, 2]]	0.13473745235769796 + 0.053079520907414544*I		N[\Phi (0.8\, +0.9 i,3,2)]	0.134737\, +0.0530795 i	
+n-lerchphi-0p8-plus-0p9i-3-0p5	N[LerchPhi[Complex[0.8, 0.9], 3, 0.5]]	8.176233084955848 + 0.358637797014532*I		N[\Phi (0.8\, +0.9 i,3,0.5)]	8.17623\, +0.358638 i	
+n-lerchphi-0p8-plus-0p9i-3-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 3, Rational[5, 2]]]	0.06790730062056038 + 0.034208132622009495*I		N\left[\Phi \left(0.8\, +0.9 i,3,\frac{5}{2}\right)\right]	0.0679073\, +0.0342081 i	
+n-lerchphi-0p8-plus-0p9i-3-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 3, -2.5]]	-13.125607899837256 + 19.441154193212753*I		N[\Phi (0.8\, +0.9 i,3,-2.5)]	-13.1256+19.4412 i	disagree
+n-lerchphi-0p8-plus-0p9i-0p5-1	N[LerchPhi[Complex[0.8, 0.9], 0.5, 1]]	0.6468487828189047 + 0.9042982627040894*I		N[\Phi (0.8\, +0.9 i,0.5,1)]	0.646849\, +0.904298 i	
+n-lerchphi-0p8-plus-0p9i-0p5-2	N[LerchPhi[Complex[0.8, 0.9], 0.5, 2]]	0.36644652599227817 + 0.7181204866387976*I		N[\Phi (0.8\, +0.9 i,0.5,2)]	0.366447\, +0.71812 i	
+n-lerchphi-0p8-plus-0p9i-0p5-0p5	N[LerchPhi[Complex[0.8, 0.9], 0.5, 0.5]]	1.0703168525560955 + 1.0583232775276143*I		N[\Phi (0.8\, +0.9 i,0.5,0.5)]	1.07032\, +1.05832 i	
+n-lerchphi-0p8-plus-0p9i-0p5-5-over-2	N[LerchPhi[Complex[0.8, 0.9], 0.5, Rational[5, 2]]]	0.3021697628691996 + 0.6567535519940392*I		N\left[\Phi \left(0.8\, +0.9 i,0.5,\frac{5}{2}\right)\right]	0.30217\, +0.656754 i	
+n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], 0.5, -2.5]]	-1.5447221959379853 + 2.3250420549362065*I		N[\Phi (0.8\, +0.9 i,0.5,-2.5)]	-1.54472+2.32504 i	disagree
+n-lerchphi-0p8-plus-0p9i-2-plus-i-1	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 1]]	1.362388391030724 + 0.2862397322626977*I		N[\Phi (0.8\, +0.9 i,2+i,1)]	1.36239\, +0.28624 i	
+n-lerchphi-0p8-plus-0p9i-2-plus-i-2	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 2]]	0.3776044633523324 - 0.06700535594249588*I		N[\Phi (0.8\, +0.9 i,2+i,2)]	0.377604\, -0.0670054 i	
+n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 0.5]]	3.6223281025197647 + 3.1374223913038373*I		N[\Phi (0.8\, +0.9 i,2+i,0.5)]	3.62233\, +3.13742 i	
+n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], Rational[5, 2]]]	0.2377088936515187 - 0.07033177818546382*I		N\left[\Phi \left(0.8\, +0.9 i,2+i,\frac{5}{2}\right)\right]	0.237709\, -0.0703318 i	
+n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5	N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], -2.5]]	-11.9430502347019 + 3.2226235505187835*I		N[\Phi (0.8\, +0.9 i,2+i,-2.5)]	-11.9431+3.22262 i	disagree
+phi-0p3-3-2-off-the-grid-sample	LerchPhi[0.3, 3, 2]	0.13777975436547357		\Phi (0.3,3,2)	0.13778	
+n-lerchphi-2p809-2-2-on-the-cut-real-z-1	N[LerchPhi[2.809, 2, 2]]	-0.056587701973222666 - 0.4112203779716621*I		N[\Phi (2.809,2,2)]	-0.0565877-0.41122 i	
+n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up	N[LerchPhi[-2, 2, -2.5]]	-12.286762723530927 + 1.6304075637028887*^-15*I		N[\Phi (-2,2,-2.5)]	-12.2868+\text{1.6304075637028887$\grave{ }$*${}^{\wedge}$-15} i	
+n-lerchphi-10-10-10-cancels-below-precision	N[LerchPhi[10, 10, 10]]	-4.4621307271021316*^-11 - 1.5751721989808609*^-12*I		N[\Phi (10,10,10)]	-\text{4.4621307271021316$\grave{ }$*${}^{\wedge}$-11}-\text{1.5751721989808609$\grave{ }$*${}^{\wedge}$-12} i	
+n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], -0.5, 2]]	-0.4674769533712888 + 3.097452599485969*I		N[\Phi (0.877583\, +0.479426 i,-0.5,2)]	-0.467477+3.09745 i	
+lerchphi-rim-theta-0p5-s-0-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0, 1]]	0.4999999999999998 + 1.9581586823229702*I		N[\Phi (0.877583\, +0.479426 i,0,1)]	0.5\, +1.95816 i	
+lerchphi-rim-theta-0p5-s-0p5-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 0.5, 1]]	1.0765400158387601 + 1.312938253458853*I		N[\Phi (0.877583\, +0.479426 i,0.5,1)]	1.07654\, +1.31294 i	
+lerchphi-rim-theta-0p5-s-1-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1, 1]]	1.2506779745536312 + 0.8217909021239181*I		N[\Phi (0.877583\, +0.479426 i,1,1)]	1.25068\, +0.821791 i	
+lerchphi-rim-theta-0p5-s-1p5-a-1	N[LerchPhi[Complex[0.8775825618903728, 0.479425538604203], 1.5, 1]]	1.259873771125625 + 0.5000020016787825*I		N[\Phi (0.877583\, +0.479426 i,1.5,1)]	1.25987\, +0.500002 i	
+lerchphi-rim-theta-1p7-s-0-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0, 1]]	0.5 + 0.4392388922760058*I		N[\Phi (-0.128844+0.991665 i,0,1)]	0.5\, +0.439239 i	
+lerchphi-rim-theta-1p7-s-0p5-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 0.5, 1]]	0.6548235477912738 + 0.37943145038884607*I		N[\Phi (-0.128844+0.991665 i,0.5,1)]	0.654824\, +0.379431 i	
+lerchphi-rim-theta-1p7-s-1-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1, 1]]	0.7672500762495273 + 0.3109063748339331*I		N[\Phi (-0.128844+0.991665 i,1,1)]	0.76725\, +0.310906 i	
+lerchphi-rim-theta-1p7-s-1p5-a-1	N[LerchPhi[Complex[-0.12884449429552464, 0.9916648104524686], 1.5, 1]]	0.8457350392736397 + 0.24547768624100708*I		N[\Phi (-0.128844+0.991665 i,1.5,1)]	0.845735\, +0.245478 i	
+lerchphi-rim-theta-2p4-s-0-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0, 1]]	0.5 + 0.19438978468410248*I		N[\Phi (-0.737394+0.675463 i,0,1)]	0.5\, +0.19439 i	
+lerchphi-rim-theta-2p4-s-0p5-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 0.5, 1]]	0.6156643947703366 + 0.17322669966779328*I		N[\Phi (-0.737394+0.675463 i,0.5,1)]	0.615664\, +0.173227 i	
+lerchphi-rim-theta-2p4-s-1-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1, 1]]	0.7096834824907785 + 0.1472330631313456*I		N[\Phi (-0.737394+0.675463 i,1,1)]	0.709683\, +0.147233 i	
+lerchphi-rim-theta-2p4-s-1p5-a-1	N[LerchPhi[Complex[-0.7373937155412454, 0.675463180551151], 1.5, 1]]	0.7837313313578997 + 0.12075792141288133*I		N[\Phi (-0.737394+0.675463 i,1.5,1)]	0.783731\, +0.120758 i	
+lerch-continuation-z3-s2p5-a1p5	N[LerchPhi[3, 2.5, 1.5]]	0.25904319399390374 - 0.5237191685542847*I		N[\Phi (3,2.5,1.5)]	0.259043\, -0.523719 i	
+lerch-continuation-zneg5-s2-a1	N[LerchPhi[-5, 2, 1]]	0.5498558252121617		N[\Phi (-5,2,1)]	0.549856	
+lerch-continuation-z2p3i-s1neg2i-a3	N[LerchPhi[Complex[2, 3], Complex[1, -2], 3]]	-0.10814776760778329 - 0.01314341062689748*I		N[\Phi (2+3 i,1-2 i,3)]	-0.108148-0.0131434 i	
+lerch-continuation-zneg3p0p5i-s1p5-a2	N[LerchPhi[Complex[-3, 0.5], 1.5, 2]]	0.145493815105338 + 0.013071247988385598*I		N[\Phi (-3+0.5 i,1.5,2)]	0.145494\, +0.0130712 i	
+lerch-continuation-z10-s0p5-a3	N[LerchPhi[10, 0.5, 3]]	-0.0826967336410127 - 0.0011680652181457341*I		N[\Phi (10,0.5,3)]	-0.0826967-0.00116807 i	
+lerch-continuation-z4-s3-a0p3	N[LerchPhi[4, 3, 0.3]]	38.689235424245936 - 1.9916489563685698*I		N[\Phi (4,3,0.3)]	38.6892\, -1.99165 i	
+lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N[LerchPhi[Complex[-1.5, 2.5], Complex[2, -1], 0.7]]	1.4129936470544922 - 0.5583053344512656*I		N[\Phi (-1.5+2.5 i,2-i,0.7)]	1.41299\, -0.558305 i	
+lerch-continuation-z100-sneg2-a1	N[LerchPhi[100, -2, 1]]	-0.00010409162536496483		N[\Phi (100,-2,1)]	-0.000104092	
+lerch-continuation-z1p0001-s2-a1	N[LerchPhi[1.0001, 2, 1]]	1.6457904732895736 - 0.00031411214722807296*I		N[\Phi (1.0001,2,1)]	1.64579\, -0.000314112 i	
+lerch-continuation-declines-neg2p54-0p1i	N[LerchPhi[Complex[-2.54, 0.1], 4.157, 4.724]]	0.0007647158632672073 + 0.000014822574454261396*I		N[\Phi (-2.54+0.1 i,4.157,4.724)]	0.000764716\, +0.0000148226 i	
+lerch-continuation-declines-neg1p564-neg0p05i	N[LerchPhi[Complex[-1.564, -0.05], 5.785, 4.791]]	0.00007775867112857785 - 7.801005563000752*^-7*I		N[\Phi (-1.564-0.05 i,5.785,4.791)]	0.0000777587\, -\text{7.801005563000752$\grave{ }$*${}^{\wedge}$-7} i	
+lerch-continuation-declines-neg1p939-0p5i	N[LerchPhi[Complex[-1.939, 0.5], 2.976, 3.846]]	0.009394281835190822 + 0.0010997065767645265*I		N[\Phi (-1.939+0.5 i,2.976,3.846)]	0.00939428\, +0.00109971 i	
+lerch-continuation-declines-z-neg3-s3p118-a2p864	N[LerchPhi[-3, 3.118, 2.864]]	0.018570430819233645 + 7.049410037575429*^-16*I		N[\Phi (-3,3.118,2.864)]	0.0185704\, +\text{7.049410037575429$\grave{ }$*${}^{\wedge}$-16} i	
+lerch-continuation-declines-complex-s-z-neg4-1i	N[LerchPhi[Complex[-4, 1], Complex[3, 1], 2]]	0.06270683719835293 - 0.025392002466696918*I		N[\Phi (-4+i,3+i,2)]	0.0627068\, -0.025392 i	
+lerch-continuation-declines-z-neg6-s2-a0p5	N[LerchPhi[-6, 2, 0.5]]	2.9530252604775074 - 6.543354017627408*^-18*I		N[\Phi (-6,2,0.5)]	2.95303\, -\text{6.543354017627408$\grave{ }$*${}^{\wedge}$-18} i	
+past-the-unit-disk-by-the-integral	N[LerchPhi[Complex[1, 2], Complex[3, -1], Complex[4, 2]]]	0.0020250151909632203 + 0.003327898913888968*I		N[\Phi (1+2 i,3-i,4+2 i)]	0.00202502\, +0.0033279 i	disagree
+inexact-arguments-should-evaluate-numerically	LerchPhi[0.5, 2, 3.5]	0.11938622686982046		\Phi (0.5,2,3.5)	0.119386	
+s-0-far-outside-the-unit-disk-1-1-49-5	LerchPhi[49.5, 0, 2]	-0.020618556701030927		\Phi (49.5,0,2)	-0.0206186	
+z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z	LerchPhi[7.5, 1, 2]	-0.16660981647825052 - 0.05585053606381854*I		\Phi (7.5,1,2)	-0.16661-0.0558505 i	
+uncertainty-in-z	LerchPhi[Around[0.5, 0.01], 1, 2]	Around[0.7725887222397811, 0.09855788462913218]		\Phi (0.500\pm 0.010,1,2)	0.77\pm 0.10	disagree
+to-30-significant-digits-not-yet-the-requested	N[LerchPhi[Rational[1, 2], 2, Rational[1, 3]], 30]	9.3434746593759395185555496580352932655194073204281682189409`30.	9.34347465937593951855554965804	N\left[\Phi \left(\frac{1}{2},2,\frac{1}{3}\right),30\right]	9.34347465937593951855554965804	
+past-z-1-it-is-continued-on-the-cut-real-z-1-it	N[LerchPhi[2.809, 2, 2]]	-0.056587701973222666 - 0.4112203779716621*I		N[\Phi (2.809,2,2)]	-0.0565877-0.41122 i	
+phi-1-3-1-zeta-3-apery-s-constant	(LerchPhi[1, 3, 1] == Zeta[3])	True		\Phi (1,3,1)=\zeta (3)	\text{True}	
+phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via	(LerchPhi[-1, 2, 1] == Divide[Power[Pi, 2], 12])	True		\Phi (-1,2,1)=\frac{\pi ^2}{12}	\text{True}	
+phi-1-2-2-1-2-li-2-1-2	N[LerchPhi[Rational[1, 2], 2, 1]]	1.1644810529300247		N\left[\Phi \left(\frac{1}{2},2,1\right)\right]	1.16448	
+certified-digits-phi-1-2-1-2-1-3	N[LerchPhi[Rational[1, 2], Rational[1, 2], Rational[1, 3]], 40]	2.4524171454815261117421441565268182922261391872452438617825`40.	2.452417145481526111742144156526818292226	N\left[\Phi \left(\frac{1}{2},\frac{1}{2},\frac{1}{3}\right),40\right]	2.452417145481526111742144156526818292226	
+phi-1-4-1-zeta-4-pi-4-90	LerchPhi[1, 4, 1]	Pi^4/90		\Phi (1,4,1)	\frac{\pi ^4}{90}	
+phi-1-1-1-zeta-1-1-12	LerchPhi[1, -1, 1]	ComplexInfinity		\Phi (1,-1,1)	\text{ComplexInfinity}	disagree
+phi-1-s-a-zeta-s-a-for-symbolic-s-a	LerchPhi[1, s, a]					
+phi-z-0-a-1-1-z-independent-of-a	LerchPhi[z, 0, a]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,0,a)-\frac{1}{-z+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},0,\frac{7}{3}\right)-\frac{1}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{17}{6},0,\frac{13}{4}\right)-\frac{1}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{23}{9},0,\frac{19}{8}\right)-\frac{1}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past	LerchPhi[2, 0, 7]	-1		\Phi (2,0,7)	-1	
+phi-0-s-a-a-s-only-the-n-0-term-survives						
+phi-z-s-1-li-s-z-z-symbolically-see-polylog						
+phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1	LerchPhi[z, 1, 1]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Phi (z,1,1)--\frac{\log (-z+1)}{z}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Phi \left(\frac{7}{3},1,1\right)--\frac{\log \left(-\frac{7}{3}+1\right)}{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[\Phi \left(-\frac{11}{5},1,1\right)-\frac{-\log \left(-\left(-\frac{11}{5}\right)+1\right)}{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\Phi \left(\frac{13}{4},1,1\right)--\frac{\log \left(-\frac{13}{4}+1\right)}{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through	LerchPhi[1, 2, Rational[1, 4]]	8*Catalan + Pi^2		\Phi \left(1,2,\frac{1}{4}\right)	8 C+\pi ^2	
+phi-1-1-1-eta-1-ln-2-the-alternating-harmonic	LerchPhi[-1, 1, 1]	Log[2]		\Phi (-1,1,1)	\log (2)	
+phi-1-2-1-1-2-ln-2	LerchPhi[Rational[1, 2], 1, 1]	2*Log[2]		\Phi \left(\frac{1}{2},1,1\right)	2 \log (2)	
+phi-1-2-1-2i-2-1-via-1	LerchPhi[Complex[Rational[1, 2], Rational[-1, 2]], 2, 1]	(1 + I)*PolyLog[2, 1/2 - I/2]		\Phi (\text{Rational}[1,2]+\text{Rational}[-1,2] i,2,1)	(1+i) \text{Li}_2\left(\frac{1}{2}-\frac{i}{2}\right)	
+phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and	LerchPhi[-1, 2, Rational[1, 2]]	4*Catalan		\Phi \left(-1,2,\frac{1}{2}\right)	4 C	
+though-n-gets-4g-3-66386	N[LerchPhi[-1, 2, Rational[1, 2]]]	3.663862376708876		N\left[\Phi \left(-1,2,\frac{1}{2}\right)\right]	3.66386	
+phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet	LerchPhi[-1, 3, Rational[1, 2]]	Pi^3/4		\Phi \left(-1,3,\frac{1}{2}\right)	\frac{\pi ^3}{4}	
+phi-1-3-1-eta-3-frac-34-zeta-3	(LerchPhi[-1, 3, 1] == Times[Rational[3, 4], Zeta[3]])	True		\Phi (-1,3,1)=\frac{3}{4} \zeta (3)	\text{True}	
+where-the-continuation-s-terms-cancel-below	N[LerchPhi[10, 10, 10]]	-4.4621307271021316*^-11 - 1.5751721989808609*^-12*I		N[\Phi (10,10,10)]	-\text{4.4621307271021316$\grave{ }$*${}^{\wedge}$-11}-\text{1.5751721989808609$\grave{ }$*${}^{\wedge}$-12} i	

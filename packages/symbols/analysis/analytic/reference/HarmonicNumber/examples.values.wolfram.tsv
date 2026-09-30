@@ -1,49 +1,49 @@
-id	in	out	tex.in	tex.out
-h-10-frac-7381-2520	HarmonicNumber[10]	7381/2520	H_{10}	\frac{7381}{2520}
-h-0-0-the-empty-sum	HarmonicNumber[0]	0	H_0	0
-h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	HarmonicNumber[5, -1]	15	H_5^{(-1)}	15
-a-floating-point-argument-evaluates-via-psi-z-1	HarmonicNumber[2.5]	1.680372305546776	H_{2.5}	1.68037
-h-10-2-sum-k-1-10-k-2-exact	HarmonicNumber[10, 2]			
-h-1-the-first-term	HarmonicNumber[1]			
-h-10-3-exact-generalized-sum	HarmonicNumber[10, 3]			
-h-5-0-sum-k-1-5-1-5	HarmonicNumber[5, 0]			
-h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber[0, 3]			
-h-0-2-the-empty-sum-at-order-2	HarmonicNumber[0, 2]			
-no-sum-below-n-0-one-argument-form	HarmonicNumber[-1]			
-no-sum-below-n-0-two-argument-form	HarmonicNumber[-2, 3]			
-symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n-H_n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}-H_{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}-H_{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}-H_{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-n-harmonicnumber-0p5	N[HarmonicNumber[0.5]]			
-n-harmonicnumber-complex-3-plus-2i	N[HarmonicNumber[Complex[3, 2]]]			
-n-harmonicnumber-1-over-2-order-2	N[HarmonicNumber[Rational[1, 2], 2]]			
-n-harmonicnumber-5-order-1-over-2	N[HarmonicNumber[5, Rational[1, 2]]]			
-n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]			
-h-10-1-order-1-reduces-to-the-plain-h-10	HarmonicNumber[10, 1]			
-h-2-is-three-halves	HarmonicNumber[2]			
-h-neg0-5	HarmonicNumber[-0.5]			
-h-neg2-5	HarmonicNumber[-2.5]			
-h-10-5	HarmonicNumber[10.5]			
-n-harmonicnumber-7-3-rational	N[HarmonicNumber[Rational[7, 3]]]			
-h-complex-neg1-5-plus-4i	HarmonicNumber[Complex[-1.5, 4]]			
-h-complex-0-2-minus-3i	HarmonicNumber[Complex[0.2, -3]]			
-h-2-5-order-2	HarmonicNumber[2.5, 2]			
-h-0-5-order-3	HarmonicNumber[0.5, 3]			
-n-harmonicnumber-complex-3-plus-2i-order-2	N[HarmonicNumber[Complex[3, 2], 2]]			
-h-complex-neg1-5-plus-4i-order-3-2	HarmonicNumber[Complex[-1.5, 4], Rational[3, 2]]			
-non-integer-arguments-via-psi-z-1-gamma	HarmonicNumber[0.33]			
-the-generalized-form-off-the-integers-via-zeta-r	HarmonicNumber[0.8, 3]			
-complex-arguments	HarmonicNumber[Complex[1.5, 2]]			
-order-r-1-off-the-integers-is-plain-h-z-h-e-1	N[HarmonicNumber[E, 1]]			
-listable-threads-over-a-list	HarmonicNumber[List[2, 3, 5, 7, 11]]			
-threads-elementwise-over-an-array-of-orders-and	HarmonicNumber[2, List[List[Rational[1, 2], 2], List[2, Rational[1, 2]]]]			
-interval-arithmetic-in-the-order	HarmonicNumber[0.2, Interval[List[2.1, 2.2]]]			
-uncertainty-propagation-in-the-order	HarmonicNumber[Rational[3, 2], Around[2.1, 0.01]]			
-to-exactly-30-significant-digits-not-yet-31-come	N[HarmonicNumber[Rational[1, 2]], 30]			
-order-1-gives-h-z-itself-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]			
-at-an-integer-order-1-agrees-exactly-with-the	HarmonicNumber[10, 1]			
-no-sum-below-n-0	HarmonicNumber[-3]	ComplexInfinity	H_{-3}	\text{ComplexInfinity}
-h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber[Rational[1, 2]]			
-h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber[Rational[1, 4]]			
-symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	HarmonicNumber[n, -1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n^{(-1)}-\left(\frac{1}{2} n^2+\frac{1}{2} n\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}^{(-1)}-\left(\frac{1}{2} \left(\frac{7}{3}\right)^2+\frac{1}{2} \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}^{(-1)}-\left(\frac{1}{2} \left(-\frac{11}{5}\right)^2+\frac{1}{2} \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}^{(-1)}-\left(\frac{1}{2} \left(\frac{13}{4}\right)^2+\frac{1}{2} \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-the-harmonic-series-diverges	HarmonicNumber[Infinity]			
-h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber[Infinity, 2]			
-a-non-integer-order-stays-symbolic-under-plain	HarmonicNumber[5, Rational[1, 2]]	HarmonicNumber[5, 1/2]	H_5^{\left(\frac{1}{2}\right)}	H_5^{\left(\frac{1}{2}\right)}
+id	in	out	shown	tex.in	tex.out	verdict
+h-10-frac-7381-2520	HarmonicNumber[10]	7381/2520		H_{10}	\frac{7381}{2520}	
+h-0-0-the-empty-sum	HarmonicNumber[0]	0		H_0	0	
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	HarmonicNumber[5, -1]	15		H_5^{(-1)}	15	
+a-floating-point-argument-evaluates-via-psi-z-1	HarmonicNumber[2.5]	1.680372305546776		H_{2.5}	1.68037	
+h-10-2-sum-k-1-10-k-2-exact	HarmonicNumber[10, 2]	1968329/1270080		H_{10}^{(2)}	\frac{1968329}{1270080}	
+h-1-the-first-term	HarmonicNumber[1]	1		H_1	1	
+h-10-3-exact-generalized-sum	HarmonicNumber[10, 3]	19164113947/16003008000		H_{10}^{(3)}	\frac{19164113947}{16003008000}	
+h-5-0-sum-k-1-5-1-5	HarmonicNumber[5, 0]	5		H_5^{(0)}	5	
+h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber[0, 3]	0		H_0^{(3)}	0	
+h-0-2-the-empty-sum-at-order-2	HarmonicNumber[0, 2]	0		H_0^{(2)}	0	
+no-sum-below-n-0-one-argument-form	HarmonicNumber[-1]	ComplexInfinity		H_{-1}	\text{ComplexInfinity}	
+no-sum-below-n-0-two-argument-form	HarmonicNumber[-2, 3]	ComplexInfinity		H_{-2}^{(3)}	\text{ComplexInfinity}	
+symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n-H_n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}-H_{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}-H_{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}-H_{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+n-harmonicnumber-0p5	N[HarmonicNumber[0.5]]	0.6137056388801094		N\left[H_{0.5}\right]	0.613706	
+n-harmonicnumber-complex-3-plus-2i	N[HarmonicNumber[Complex[3, 2]]]	1.9725764110447406 + 0.5169611287960764*I		N\left[H_{3+2 i}\right]	1.97258\, +0.516961 i	
+n-harmonicnumber-1-over-2-order-2	N[HarmonicNumber[Rational[1, 2], 2]]	0.7101318663035471		N\left[H_{\frac{1}{2}}^{(2)}\right]	0.710132	
+n-harmonicnumber-5-order-1-over-2	N[HarmonicNumber[5, Rational[1, 2]]]	3.2316706458761297		N\left[H_5^{\left(\frac{1}{2}\right)}\right]	3.23167	
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]	1.680372305546776		N\left[H_{2.5}^{(1)}\right]	1.68037	
+h-10-1-order-1-reduces-to-the-plain-h-10	HarmonicNumber[10, 1]	7381/2520		H_{10}^{(1)}	\frac{7381}{2520}	
+h-2-is-three-halves	HarmonicNumber[2]	3/2		H_2	\frac{3}{2}	
+h-neg0-5	HarmonicNumber[-0.5]	-1.3862943611198908		H_{-0.5}	-1.38629	
+h-neg2-5	HarmonicNumber[-2.5]	1.2803723055467762		H_{-2.5}	1.28037	
+h-10-5	HarmonicNumber[10.5]	2.9754547944373138		H_{10.5}	2.97545	
+n-harmonicnumber-7-3-rational	N[HarmonicNumber[Rational[7, 3]]]	1.6237533134521551		N\left[H_{\frac{7}{3}}\right]	1.62375	
+h-complex-neg1-5-plus-4i	HarmonicNumber[Complex[-1.5, 4]]	1.9916455964528281 + 1.8169501729105362*I		H_{-1.5+4 i}	1.99165\, +1.81695 i	
+h-complex-0-2-minus-3i	HarmonicNumber[Complex[0.2, -3]]	1.6983479033451565 - 1.3395520039987703*I		H_{0.2\, -3 i}	1.69835\, -1.33955 i	
+h-2-5-order-2	HarmonicNumber[2.5, 2]	1.3145763107479913		H_{2.5}^{(2)}	1.31458	
+h-0-5-order-3	HarmonicNumber[0.5, 3]	0.7876585810424341		H_{0.5}^{(3)}	0.787659	
+n-harmonicnumber-complex-3-plus-2i-order-2	N[HarmonicNumber[Complex[3, 2], 2]]	1.42958870352385 + 0.12181963298746644*I		N\left[H_{3+2 i}^{(2)}\right]	1.42959\, +0.12182 i	
+h-complex-neg1-5-plus-4i-order-3-2	HarmonicNumber[Complex[-1.5, 4], Rational[3, 2]]	2.0059178209155903 + 0.7781594851952996*I		H_{-1.5+4 i}^{\left(\frac{3}{2}\right)}	2.00592\, +0.778159 i	
+non-integer-arguments-via-psi-z-1-gamma	HarmonicNumber[0.33]	0.44152364693736357		H_{0.33}	0.441524	
+the-generalized-form-off-the-integers-via-zeta-r	HarmonicNumber[0.8, 3]	0.9401240489487769		H_{0.8}^{(3)}	0.940124	
+complex-arguments	HarmonicNumber[Complex[1.5, 2]]	1.6170494230744867 + 0.7801971357298587*I		H_{1.5\, +2 i}	1.61705\, +0.780197 i	
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	N[HarmonicNumber[E, 1]]	1.7500213805365417		N\left[H_e^{(1)}\right]	1.75002	
+listable-threads-over-a-list	HarmonicNumber[List[2, 3, 5, 7, 11]]	{3/2, 11/6, 137/60, 363/140, 83711/27720}		H_{\{2,3,5,7,11\}}	\left\{\frac{3}{2},\frac{11}{6},\frac{137}{60},\frac{363}{140},\frac{83711}{27720}\right\}	
+threads-elementwise-over-an-array-of-orders-and	HarmonicNumber[2, List[List[Rational[1, 2], 2], List[2, Rational[1, 2]]]]	{{1 + 1/Sqrt[2], 5/4}, {5/4, 1 + 1/Sqrt[2]}}		H_2^{\left(\left( \begin{array}{cc}  \frac{1}{2} & 2 \\  2 & \frac{1}{2} \\ \end{array} \right)\right)}	\left( \begin{array}{cc}  1+\frac{1}{\sqrt{2}} & \frac{5}{4} \\  \frac{5}{4} & 1+\frac{1}{\sqrt{2}} \\ \end{array} \right)	
+interval-arithmetic-in-the-order	HarmonicNumber[0.2, Interval[List[2.1, 2.2]]]	Interval[{0.31615808408241713, 0.4647680466296152}]		H_{0.2}^{(\text{Interval}[\{2.1,2.2\}])}	\text{Interval}[\{0.316158,0.464768\}]	disagree
+uncertainty-propagation-in-the-order	HarmonicNumber[Rational[3, 2], Around[2.1, 0.01]]	Around[1.1455164340491326, 0.0008799826466981109]		H_{\frac{3}{2}}^{(2.100\pm 0.010)}	1.1455\pm 0.0009	disagree
+to-exactly-30-significant-digits-not-yet-31-come	N[HarmonicNumber[Rational[1, 2]], 30]	0.613705638880109381165535757083646863848999729235540442883`30.	0.613705638880109381165535757084	N\left[H_{\frac{1}{2}},30\right]	0.613705638880109381165535757084	
+order-1-gives-h-z-itself-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]	1.680372305546776		N\left[H_{2.5}^{(1)}\right]	1.68037	
+at-an-integer-order-1-agrees-exactly-with-the	HarmonicNumber[10, 1]	7381/2520		H_{10}^{(1)}	\frac{7381}{2520}	
+no-sum-below-n-0	HarmonicNumber[-3]	ComplexInfinity		H_{-3}	\text{ComplexInfinity}	
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber[Rational[1, 2]]	HarmonicNumber[1/2]		H_{\frac{1}{2}}	H_{\frac{1}{2}}	
+h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber[Rational[1, 4]]	HarmonicNumber[1/4]		H_{\frac{1}{4}}	H_{\frac{1}{4}}	
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	HarmonicNumber[n, -1]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n^{(-1)}-\left(\frac{1}{2} n^2+\frac{1}{2} n\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}^{(-1)}-\left(\frac{1}{2} \left(\frac{7}{3}\right)^2+\frac{1}{2} \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}^{(-1)}-\left(\frac{1}{2} \left(-\frac{11}{5}\right)^2+\frac{1}{2} \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}^{(-1)}-\left(\frac{1}{2} \left(\frac{13}{4}\right)^2+\frac{1}{2} \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+the-harmonic-series-diverges	HarmonicNumber[Infinity]	Infinity		H_{\infty }	\infty	
+h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber[Infinity, 2]	Pi^2/6		H_{\infty }^{(2)}	\frac{\pi ^2}{6}	
+a-non-integer-order-stays-symbolic-under-plain	HarmonicNumber[5, Rational[1, 2]]	HarmonicNumber[5, 1/2]		H_5^{\left(\frac{1}{2}\right)}	H_5^{\left(\frac{1}{2}\right)}	

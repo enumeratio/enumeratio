@@ -1,38 +1,38 @@
-id	section	role	expr	expected	known	source	caption	rust.kind	rust.note
-sqrt-16			[Sqrt, 16]	4					
-stays-symbolic-when-the-radicand-isn-t-a-perfect			[Sqrt, 2]	[Sqrt, 2]			Stays symbolic when the radicand isn't a perfect square		
-sqrt-4-over-9			[Sqrt, [Rational, 4, 9]]	[Rational, 2, 3]					
-sqrt-0			[Sqrt, 0]	0					
-a-perfect-square-radicand-evaluates-exactly-even			[Sqrt, -4]	[Complex, 0, 2]			A perfect square radicand evaluates exactly, even when negative	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-an-approximate-number-gives-an-approximate-root			[Sqrt, 3.5]	{num: "1.87082869338697069279"}			An approximate number gives an approximate root		
-pulls-perfect-square-factors-out-of-the-radical			[Sqrt, 200]	[Multiply, 10, [Sqrt, 2]]			Pulls perfect-square factors out of the radical		
-sqrt-neg-25			[Sqrt, -25]	[Complex, 0, 5]				domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
-sqrt-8	Scope		[Sqrt, 8]	[Multiply, 2, [Sqrt, 2]]					
-rationalizes-the-denominator	Scope		[Sqrt, [Rational, 1, 2]]	[Divide, [Sqrt, 2], 2]			Rationalizes the denominator		
-sqrt-12-over-5	Scope		[Sqrt, [Rational, 12, 5]]	[Multiply, [Rational, 2, 5], [Sqrt, 15]]					
-sqrt-neg-2p5	Scope		[Sqrt, -2.5]	[Complex, 0, 1.5811388300841898]				domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
-an-exact-complex-square-2-i-2-3-4i	Scope		[Sqrt, [Complex, 3, 4]]	[Complex, 2, 1]			An exact complex square: $(2+i)^2 = 3+4i$		
-sqrt-positiveinfinity	Scope		[Sqrt, PositiveInfinity]	PositiveInfinity					
-sqrt-negativeinfinity	Scope		[Sqrt, NegativeInfinity]	[DirectedInfinity, [Complex, 0, 1]]	[DirectedInfinity, [Complex, 0, 1]]	Wolfram MathematicalFunctionData, Sqrt	Sqrt(-Infinity) = i Infinity, the principal branch's direction as the radicand goes to -Infinity (DLMF 4.2.2)		
-threads-element-wise-over-a-list	Scope		[Sqrt, [List, 1, 4, 9]]	[List, 1, 2, 3]			Threads element-wise over a list	threading	compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
-threads-over-a-matrix-entry-by-entry-this-is-not	Scope		[Sqrt, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]			Threads over a matrix entry by entry -- this is not the matrix square root	threading	compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
-interval-arithmetic-sqrt-is-increasing-so-sqrt-1	Scope		[Sqrt, [Interval, 1, 8]]	[Interval, 1, [Multiply, 2, [Sqrt, 2]]]			Interval arithmetic: $\sqrt{}$ is increasing, so $\sqrt{[1,8]} = [1, 2\sqrt2]$		
-uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1	Scope	test	[Sqrt, [Around, 4, 0.4]]	[Around, 2, 0.1]			Uncertainty propagation: $\sqrt{4 \pm 0.4} = 2 \pm 0.1$		
-to-45-significant-digits-every-one-correctly	Scope		[N, [Sqrt, 2], 45]	{num: "1.41421356237309504880168872420969807856967188"}			To 45 significant digits, every one correctly rounded		
-an-approximate-negative-radicand-stays-complex	Scope	test	[Sqrt, -2.875]	[Complex, 0, 1.695582495781317]			An approximate negative radicand still gives a complex root	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-neg-4-over-9	Scope	test	[Sqrt, [Rational, -4, 9]]	[Complex, 0, [Rational, 2, 3]]				domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-neg-1-half	Scope	test	[Sqrt, [Rational, -1, 2]]	[Complex, 0, [Divide, [Sqrt, 2], 2]]			A negative unit fraction also rationalizes the denominator	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-neg-1	Scope	test	[Sqrt, -1]	[Complex, 0, 1]				domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-neg-12-over-5	Scope	test	[Sqrt, [Rational, -12, 5]]	[Complex, 0, [Multiply, [Rational, 2, 5], [Sqrt, 15]]]				domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-the-pythagorean-hypotenuse-of-a-3-4-5-triangle	Applications		[Sqrt, [Add, [Square, 3], [Square, 4]]]	5			The Pythagorean hypotenuse of a 3-4-5 triangle		
-sqrt-x-2-x-for-a-perfect-square-see-square	Properties		[Equal, [Square, [Sqrt, 16]], 16]	True			$(\sqrt{x})^2 = x$ for a perfect square. See [[Square]]		
-sqrt-x-x-1-2	Properties		[Equal, [Sqrt, 16], [Power, 16, [Rational, 1, 2]]]	True			$\sqrt{x} = x^{1/2}$		
-sqrt-x-2-x-for-every-x	Properties		[Power, [Sqrt, x], 2]	x			$(\sqrt{x})^2 = x$ for every x		
-negative-but-not-a-perfect-square-stays-symbolic	Possible issues		[Sqrt, -2]	[Sqrt, -2]			Negative but not a perfect square: stays symbolic rather than reducing to an exact complex value	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-a-negative-rational-still-evaluates-exactly-when	Possible issues		[Sqrt, [Rational, -4, 9]]	[Complex, 0, [Rational, 2, 3]]			A negative rational still evaluates exactly when both numerator and denominator are perfect squares	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-x-2-is-not-simplified-to-x-which-would-be	Possible issues		[Sqrt, [Power, x, 2]]	[Sqrt, [Power, x, 2]]			$\sqrt{x^2}$ is not simplified to x, which would be wrong for negative x		
-at-x-1-sqrt-x-2-1-not-1	Possible issues		[Sqrt, [Power, -1, 2]]	1			...at $x = -1$, $\sqrt{x^2} = 1$, not $-1$		
-sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	Possible issues		[Multiply, [Sqrt, -1], [Sqrt, -1]]	-1			$\sqrt{a}\sqrt{b} = \sqrt{ab}$ fails for negative a and b: $\sqrt{-1}\sqrt{-1} = -1$...	domain	Rust's f64 sqrt is real-only (NaN); compute-engine gives i · i = -1.
-while-sqrt-1-1-1	Possible issues		[Sqrt, [Multiply, -1, -1]]	1			...while $\sqrt{(-1)(-1)} = 1$		
-sqrt-36-negative	Possible issues	test	[Sqrt, -36]	[Complex, 0, 6]				domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
-sqrt-2-times-sqrt-neg-1	Possible issues	test	[Multiply, [Sqrt, 1], [Sqrt, -1]]	[Complex, 0, 1]			$\sqrt{1}\sqrt{-1} = i$, oracle edge case of the a·b identity above	domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note	rust.kind	rust.note
+sqrt-16			[Sqrt, 16]	4							
+stays-symbolic-when-the-radicand-isn-t-a-perfect			[Sqrt, 2]	[Sqrt, 2]			Stays symbolic when the radicand isn't a perfect square				
+sqrt-4-over-9			[Sqrt, [Rational, 4, 9]]	[Rational, 2, 3]							
+sqrt-0			[Sqrt, 0]	0							
+a-perfect-square-radicand-evaluates-exactly-even			[Sqrt, -4]	[Complex, 0, 2]			A perfect square radicand evaluates exactly, even when negative			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+an-approximate-number-gives-an-approximate-root			[Sqrt, 3.5]	{num: "1.87082869338697069279"}			An approximate number gives an approximate root				
+pulls-perfect-square-factors-out-of-the-radical			[Sqrt, 200]	[Multiply, 10, [Sqrt, 2]]			Pulls perfect-square factors out of the radical				
+sqrt-neg-25			[Sqrt, -25]	[Complex, 0, 5]						domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+sqrt-8	Scope		[Sqrt, 8]	[Multiply, 2, [Sqrt, 2]]							
+rationalizes-the-denominator	Scope		[Sqrt, [Rational, 1, 2]]	[Divide, [Sqrt, 2], 2]			Rationalizes the denominator				
+sqrt-12-over-5	Scope		[Sqrt, [Rational, 12, 5]]	[Multiply, [Rational, 2, 5], [Sqrt, 15]]							
+sqrt-neg-2p5	Scope		[Sqrt, -2.5]	[Complex, 0, 1.5811388300841898]						domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
+an-exact-complex-square-2-i-2-3-4i	Scope		[Sqrt, [Complex, 3, 4]]	[Complex, 2, 1]			An exact complex square: $(2+i)^2 = 3+4i$				
+sqrt-positiveinfinity	Scope		[Sqrt, PositiveInfinity]	PositiveInfinity							
+sqrt-negativeinfinity	Scope		[Sqrt, NegativeInfinity]	[DirectedInfinity, [Complex, 0, 1]]	[DirectedInfinity, [Complex, 0, 1]]	Wolfram MathematicalFunctionData, Sqrt	Sqrt(-Infinity) = i Infinity, the principal branch's direction as the radicand goes to -Infinity (DLMF 4.2.2)				
+threads-element-wise-over-a-list	Scope		[Sqrt, [List, 1, 4, 9]]	[List, 1, 2, 3]			Threads element-wise over a list			threading	compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
+threads-over-a-matrix-entry-by-entry-this-is-not	Scope		[Sqrt, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]			Threads over a matrix entry by entry -- this is not the matrix square root			threading	compute-engine's Sqrt is Listable and threads over the list; the Rust crates take scalars only.
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1	Scope		[Sqrt, [Interval, 1, 8]]	[Interval, 1, [Multiply, 2, [Sqrt, 2]]]			Interval arithmetic: $\sqrt{}$ is increasing, so $\sqrt{[1,8]} = [1, 2\sqrt2]$	unclassified	""		
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1	Scope	test	[Sqrt, [Around, 4, 0.4]]	[Around, 2, 0.1]			Uncertainty propagation: $\sqrt{4 \pm 0.4} = 2 \pm 0.1$				
+to-45-significant-digits-every-one-correctly	Scope		[N, [Sqrt, 2], 45]	{num: "1.41421356237309504880168872420969807856967188"}			To 45 significant digits, every one correctly rounded				
+an-approximate-negative-radicand-stays-complex	Scope	test	[Sqrt, -2.875]	[Complex, 0, 1.695582495781317]			An approximate negative radicand still gives a complex root			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-4-over-9	Scope	test	[Sqrt, [Rational, -4, 9]]	[Complex, 0, [Rational, 2, 3]]						domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-1-half	Scope	test	[Sqrt, [Rational, -1, 2]]	[Complex, 0, [Divide, [Sqrt, 2], 2]]			A negative unit fraction also rationalizes the denominator			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-1	Scope	test	[Sqrt, -1]	[Complex, 0, 1]						domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-neg-12-over-5	Scope	test	[Sqrt, [Rational, -12, 5]]	[Complex, 0, [Multiply, [Rational, 2, 5], [Sqrt, 15]]]						domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle	Applications		[Sqrt, [Add, [Square, 3], [Square, 4]]]	5			The Pythagorean hypotenuse of a 3-4-5 triangle				
+sqrt-x-2-x-for-a-perfect-square-see-square	Properties		[Equal, [Square, [Sqrt, 16]], 16]	True			$(\sqrt{x})^2 = x$ for a perfect square. See [[Square]]				
+sqrt-x-x-1-2	Properties		[Equal, [Sqrt, 16], [Power, 16, [Rational, 1, 2]]]	True			$\sqrt{x} = x^{1/2}$				
+sqrt-x-2-x-for-every-x	Properties		[Power, [Sqrt, x], 2]	x			$(\sqrt{x})^2 = x$ for every x				
+negative-but-not-a-perfect-square-stays-symbolic	Possible issues		[Sqrt, -2]	[Sqrt, -2]			Negative but not a perfect square: stays symbolic rather than reducing to an exact complex value			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+a-negative-rational-still-evaluates-exactly-when	Possible issues		[Sqrt, [Rational, -4, 9]]	[Complex, 0, [Rational, 2, 3]]			A negative rational still evaluates exactly when both numerator and denominator are perfect squares			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-x-2-is-not-simplified-to-x-which-would-be	Possible issues		[Sqrt, [Power, x, 2]]	[Sqrt, [Power, x, 2]]			$\sqrt{x^2}$ is not simplified to x, which would be wrong for negative x				
+at-x-1-sqrt-x-2-1-not-1	Possible issues		[Sqrt, [Power, -1, 2]]	1			...at $x = -1$, $\sqrt{x^2} = 1$, not $-1$				
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	Possible issues		[Multiply, [Sqrt, -1], [Sqrt, -1]]	-1			$\sqrt{a}\sqrt{b} = \sqrt{ab}$ fails for negative a and b: $\sqrt{-1}\sqrt{-1} = -1$...			domain	Rust's f64 sqrt is real-only (NaN); compute-engine gives i · i = -1.
+while-sqrt-1-1-1	Possible issues		[Sqrt, [Multiply, -1, -1]]	1			...while $\sqrt{(-1)(-1)} = 1$				
+sqrt-36-negative	Possible issues	test	[Sqrt, -36]	[Complex, 0, 6]						domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-2-times-sqrt-neg-1	Possible issues	test	[Multiply, [Sqrt, 1], [Sqrt, -1]]	[Complex, 0, 1]			$\sqrt{1}\sqrt{-1} = i$, oracle edge case of the a·b identity above			domain	Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.

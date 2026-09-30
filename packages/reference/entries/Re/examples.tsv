@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-re-of-3-plus-4i-is-3	Basic		[Re, [Complex, 3, 4]]	3	$\mathrm{Re}(3+4i) = 3$
-re-of-a-real-number-is-itself	Basic		[Re, 5]	5	Re of a real number is itself
-re-of-pi-is-pi-a-real-symbolic-constant	Basic		[Re, Pi]	Pi	Re of $\pi$ is $\pi$, a real symbolic constant
-re-of-a-symbolic-value-stays-unevaluated	Properties		[Re, x]	[Real, x]	Re of a symbolic value stays unevaluated
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+re-of-3-plus-4i-is-3	Basic		[Re, [Complex, 3, 4]]	3	$\mathrm{Re}(3+4i) = 3$		
+re-of-a-real-number-is-itself	Basic		[Re, 5]	5	Re of a real number is itself		
+re-of-pi-is-pi-a-real-symbolic-constant	Basic		[Re, Pi]	Pi	Re of $\pi$ is $\pi$, a real symbolic constant		
+re-of-a-symbolic-value-stays-unevaluated	Properties		[Re, x]	[Real, x]	Re of a symbolic value stays unevaluated	unclassified	""

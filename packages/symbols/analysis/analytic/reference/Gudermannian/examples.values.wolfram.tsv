@@ -1,10 +1,10 @@
 id	in	out	tex.in	tex.out	verdict
-gudermannian-0	Gudermannian[0]				
-at-a-machine-precision-argument	Gudermannian[1.5]				
-gudermannian-0-5	Gudermannian[0.5]				
-gudermannian-3	N[Gudermannian[3]]				
-gudermannian-neg-2-25	Gudermannian[-2.25]				
-horizontal-asymptote-pi-2	Gudermannian[Infinity]				
+gudermannian-0	Gudermannian[0]	0	\text{gd}(0)	0	
+at-a-machine-precision-argument	Gudermannian[1.5]	1.1317283452505091	\text{gd}(1.5)	1.13173	
+gudermannian-0-5	Gudermannian[0.5]	0.48038107913372946	\text{gd}(0.5)	0.480381	
+gudermannian-3	N[Gudermannian[3]]	1.4713043411171927	N[\text{gd}(3)]	1.4713	
+gudermannian-neg-2-25	Gudermannian[-2.25]	-1.3607733020976116	\text{gd}(-2.25)	-1.36077	
+horizontal-asymptote-pi-2	Gudermannian[Infinity]	Pi/2	\text{gd}(\infty )	\frac{\pi }{2}	
 gd-x-sech-x	D[Gudermannian[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{gd}(x)}{\partial x}-\text{sech}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{gd}\left(\frac{7}{3}\right)-\text{sech}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{gd}\left(-\frac{11}{5}\right)-\text{sech}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{gd}\left(\frac{13}{4}\right)-\text{sech}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 an-odd-function	Gudermannian[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{gd}(-x)--\text{gd}(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{gd}\left(-\frac{7}{3}\right)--\text{gd}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{gd}\left(-\left(-\frac{11}{5}\right)\right)--\text{gd}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{gd}\left(-\frac{13}{4}\right)--\text{gd}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-gudermannian-ln-i-a-complex-pole	Gudermannian[Log[I]]	DirectedInfinity[I]			disagree
+gudermannian-ln-i-a-complex-pole	Gudermannian[Log[I]]	DirectedInfinity[I]	\text{gd}(\log (i))	i \infty	disagree

@@ -1,10 +1,10 @@
-id	in
-1-1-2-2-3-3-4-4	Hyperfactorial[4]
-the-empty-product	Hyperfactorial[0]
-hyperfactorial-1-5	Hyperfactorial[1.5]
-hyperfactorial-2-5	Hyperfactorial[2.5]
-hyperfactorial-6-25	Hyperfactorial[6.25]
-listable	Hyperfactorial[List[1, 2, 3, 4, 5, 6]]
-continued-off-the-integers	Hyperfactorial[0.5]
-h-10-well-past-double-range-exact-bigint	Hyperfactorial[10]
-hyperfactorial-one-half-stays-exact	Hyperfactorial[Rational[1, 2]]
+id	in	out	tex.in	tex.out	verdict
+1-1-2-2-3-3-4-4	Hyperfactorial[4]	27648	H(4)	27648	
+the-empty-product	Hyperfactorial[0]	1	H(0)	1	
+hyperfactorial-1-5	Hyperfactorial[1.5]	1.6174885279489442	H(1.5)	1.61749	
+hyperfactorial-2-5	Hyperfactorial[2.5]	15.98421199222368	H(2.5)	15.9842	
+hyperfactorial-6-25	Hyperfactorial[6.25]	9.22297455404826*^13	H(6.25)	9.22297\times 10^{13}	
+listable	Hyperfactorial[List[1, 2, 3, 4, 5, 6]]	{1, 4, 108, 27648, 86400000, 4031078400000}	H(\{1,2,3,4,5,6\})	\{1,4,108,27648,86400000,4031078400000\}	
+continued-off-the-integers	Hyperfactorial[0.5]	0.8804492351734247	H(0.5)	0.880449	
+h-10-well-past-double-range-exact-bigint	Hyperfactorial[10]	215779412229418562091680268288000000000000000	H(10)	215779412229418562091680268288000000000000000	
+hyperfactorial-one-half-stays-exact	Hyperfactorial[Rational[1, 2]]	Glaisher^(3/2)/(2^(13/24)*E^(1/8))	H\left(\frac{1}{2}\right)	\frac{A^{3/2}}{2^{13/24} \sqrt[8]{e}}	disagree

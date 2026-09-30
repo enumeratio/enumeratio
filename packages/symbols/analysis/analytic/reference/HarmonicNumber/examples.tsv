@@ -1,49 +1,49 @@
-id	section	role	group	expr	expected	caption
-h-10-frac-7381-2520				[HarmonicNumber, 10]	[Rational, 7381, 2520]	$H_{10} = \tfrac{7381}{2520}$
-h-0-0-the-empty-sum				[HarmonicNumber, 0]	0	$H_0 = 0$, the empty sum
-h-5-1-sum-k-1-5-k-15-a-negative-order-is-still				[HarmonicNumber, 5, -1]	15	$H_5^{(-1)} = \sum_{k=1}^5 k = 15$ — a negative order is still exact
-a-floating-point-argument-evaluates-via-psi-z-1				[HarmonicNumber, 2.5]	{num: "1.680372305546776047837"}	A floating-point argument evaluates via $\psi(z+1) + \gamma$
-h-10-2-sum-k-1-10-k-2-exact				[HarmonicNumber, 10, 2]	[Rational, 1968329, 1270080]	$H_{10}^{(2)} = \sum_{k=1}^{10} k^{-2}$, exact
-h-1-the-first-term		test		[HarmonicNumber, 1]	1	
-h-10-3-exact-generalized-sum		test		[HarmonicNumber, 10, 3]	[Rational, 19164113947, 16003008000]	
-h-5-0-sum-k-1-5-1-5		test		[HarmonicNumber, 5, 0]	5	$H_5^{(0)} = \sum_{k=1}^5 1 = 5$
-h-0-3-the-empty-sum-at-a-nonzero-order		test		[HarmonicNumber, 0, 3]	0	
-h-0-2-the-empty-sum-at-order-2		test		[HarmonicNumber, 0, 2]	0	
-no-sum-below-n-0-one-argument-form		test		[HarmonicNumber, -1]	ComplexInfinity	
-no-sum-below-n-0-two-argument-form		test		[HarmonicNumber, -2, 3]	ComplexInfinity	
-symbolic-n-one-argument-form-stays-symbolic		test		[HarmonicNumber, n]	[HarmonicNumber, n]	
-n-harmonicnumber-0p5		test		[N, [HarmonicNumber, 0.5]]	{num: "0.613705638880109381166"}	
-n-harmonicnumber-complex-3-plus-2i		test		[N, [HarmonicNumber, [Complex, 3, 2]]]	[Complex, 1.9725764110447408, 0.5169611287960764]	
-n-harmonicnumber-1-over-2-order-2		test		[N, [HarmonicNumber, [Rational, 1, 2], 2]]	{num: "0.710131866303547127053"}	
-n-harmonicnumber-5-order-1-over-2		test		[N, [HarmonicNumber, 5, [Rational, 1, 2]]]	{num: "3.231670645876131228192"}	
-n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole		test		[N, [HarmonicNumber, 2.5, 1]]	{num: "1.680372305546776047837"}	Order $r = 1$ given explicitly is still routed to $\psi(z+1) + \gamma$, not $\zeta(1) - \zeta(1, z+1)$'s pole
-h-10-1-order-1-reduces-to-the-plain-h-10		test		[HarmonicNumber, 10, 1]	[Rational, 7381, 2520]	Order 1 given explicitly reduces to the exact plain $H_{10}$
-h-2-is-three-halves		test		[HarmonicNumber, 2]	[Rational, 3, 2]	
-h-neg0-5		test		[HarmonicNumber, -0.5]	{num: "-1.3862943611198906188344642429163531361508"}	
-h-neg2-5		test		[HarmonicNumber, -2.5]	{num: "1.2803723055467760478322024237503135305157"}	
-h-10-5		test		[HarmonicNumber, 10.5]	{num: "2.9754547944373144739743437361702637213642"}	
-n-harmonicnumber-7-3-rational		test		[N, [HarmonicNumber, [Rational, 7, 3]]]	{num: "1.6237533134521551090386644443665621483152"}	
-h-complex-neg1-5-plus-4i		test		[HarmonicNumber, [Complex, -1.5, 4]]	[Complex, {num: "1.9916455964528293606065120900824024310422"}, 1.816950172910536]	
-h-complex-0-2-minus-3i		test		[HarmonicNumber, [Complex, 0.2, -3]]	[Complex, {num: "1.6983479033451581606065120900824024310422"}, -1.3395520039987705]	
-h-2-5-order-2		test		[HarmonicNumber, 2.5, 2]	{num: "1.3145763107479915714996141111523940660066"}	
-h-0-5-order-3		test		[HarmonicNumber, 0.5, 3]	{num: "0.7876585810424342876015710309313000554101"}	
-n-harmonicnumber-complex-3-plus-2i-order-2		test		[N, [HarmonicNumber, [Complex, 3, 2], 2]]	[Complex, {num: "1.429588703523849896472415166646025189219"}, 0.12181963298746644]	
-h-complex-neg1-5-plus-4i-order-3-2		test		[HarmonicNumber, [Complex, -1.5, 4], [Rational, 3, 2]]	[Complex, {num: "2.005917820915590443348567567924071630571"}, 0.7781594851952996]	
-non-integer-arguments-via-psi-z-1-gamma	Scope			[HarmonicNumber, 0.33]	{num: "0.441523646937363528111"}	Non-integer arguments via $\psi(z+1) + \gamma$
-the-generalized-form-off-the-integers-via-zeta-r	Scope			[HarmonicNumber, 0.8, 3]	{num: "0.940124048948776980484"}	The generalized form off the integers, via $\zeta(r) - \zeta(r, z+1)$
-complex-arguments	Scope			[HarmonicNumber, [Complex, 1.5, 2]]	[Complex, 1.6170494230744863, 0.7801971357298588]	Complex arguments
-order-r-1-off-the-integers-is-plain-h-z-h-e-1	Scope			[N, [HarmonicNumber, ExponentialE, 1]]	1.7500213805365417	Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\ldots$ — routed to the one-argument form directly rather than through $\zeta(1) - \zeta(1, z+1)$, which is a pole at every $z$
-listable-threads-over-a-list	Scope			[HarmonicNumber, [List, 2, 3, 5, 7, 11]]	[List, [Rational, 3, 2], [Rational, 11, 6], [Rational, 137, 60], [Rational, 363, 140], [Rational, 83711, 27720]]	Listable: threads over a list
-threads-elementwise-over-an-array-of-orders-and	Scope			[HarmonicNumber, 2, [List, [List, [Rational, 1, 2], 2], [List, 2, [Rational, 1, 2]]]]	[List, [List, [Add, 1, [Divide, [Sqrt, 2], 2]], [Rational, 5, 4]], [List, [Rational, 5, 4], [Add, 1, [Divide, [Sqrt, 2], 2]]]]	Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum
-interval-arithmetic-in-the-order	Scope			[HarmonicNumber, 0.2, [Interval, 2.1, 2.2]]	[Interval, 0.3863469411841759, 0.3950923922402868]	Interval arithmetic in the order
-uncertainty-propagation-in-the-order	Scope			[HarmonicNumber, [Rational, 3, 2], [Around, 2.1, 0.01]]	[Around, 1.1455164340491326, 0.0008799826466981091]	Uncertainty propagation in the order
-to-exactly-30-significant-digits-not-yet-31-come	Scope			[N, [HarmonicNumber, [Rational, 1, 2]], 30]	{num: "0.613705638880109381165535757084"}	To exactly 30 significant digits, the last one correctly rounded
-order-1-gives-h-z-itself-not-the-zeta-1-pole	Scope		harmonic-order-one	[N, [HarmonicNumber, 2.5, 1]]	{num: "1.680372305546776047837"}	Order 1 gives $H_z$ itself, not the $\zeta(1)$ pole another order's formula would hit.
-at-an-integer-order-1-agrees-exactly-with-the	Scope		harmonic-order-one	[HarmonicNumber, 10, 1]	[Rational, 7381, 2520]	At an integer, order 1 agrees exactly with the one-argument $H_{10}$.
-no-sum-below-n-0	Properties			[HarmonicNumber, -3]	ComplexInfinity	No sum below $n = 0$
-h-1-2-2-2-ln-2-exact-at-rational-arguments-by	Properties			[HarmonicNumber, [Rational, 1, 2]]	[Add, 2, [Multiply, -2, [Ln, 2]]]	$H_{1/2} = 2 - 2\ln 2$: exact at rational arguments by Gauss's digamma theorem
-h-1-4-4-frac-pi-2-3-ln-2	Properties			[HarmonicNumber, [Rational, 1, 4]]	[Add, 4, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi]]	$H_{1/4} = 4 - \tfrac{\pi}{2} - 3\ln 2$
-symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	Properties			[HarmonicNumber, n, -1]	[Add, [Multiply, [Rational, 1, 2], [Power, n, 2]], [Multiply, [Rational, 1, 2], n]]	Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum, expanded as Wolfram does
-the-harmonic-series-diverges	Properties			[HarmonicNumber, PositiveInfinity]	PositiveInfinity	The harmonic series diverges
-h-infty-r-zeta-r-for-r-1-the-basel-sum	Properties			[HarmonicNumber, PositiveInfinity, 2]	[Multiply, [Rational, 1, 6], [Power, Pi, 2]]	$H_\infty^{(r)} = \zeta(r)$ for $r > 1$: the Basel sum
-a-non-integer-order-stays-symbolic-under-plain	Possible issues			[HarmonicNumber, 5, [Rational, 1, 2]]	[HarmonicNumber, 5, [Rational, 1, 2]]	A non-integer order stays symbolic under plain evaluation, even at an exact $n$; N() gives $3.23167\ldots$
+id	section	role	group	expr	expected	caption	wolfram.kind	wolfram.note
+h-10-frac-7381-2520				[HarmonicNumber, 10]	[Rational, 7381, 2520]	$H_{10} = \tfrac{7381}{2520}$		
+h-0-0-the-empty-sum				[HarmonicNumber, 0]	0	$H_0 = 0$, the empty sum		
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still				[HarmonicNumber, 5, -1]	15	$H_5^{(-1)} = \sum_{k=1}^5 k = 15$ — a negative order is still exact		
+a-floating-point-argument-evaluates-via-psi-z-1				[HarmonicNumber, 2.5]	{num: "1.680372305546776047837"}	A floating-point argument evaluates via $\psi(z+1) + \gamma$		
+h-10-2-sum-k-1-10-k-2-exact				[HarmonicNumber, 10, 2]	[Rational, 1968329, 1270080]	$H_{10}^{(2)} = \sum_{k=1}^{10} k^{-2}$, exact		
+h-1-the-first-term		test		[HarmonicNumber, 1]	1			
+h-10-3-exact-generalized-sum		test		[HarmonicNumber, 10, 3]	[Rational, 19164113947, 16003008000]			
+h-5-0-sum-k-1-5-1-5		test		[HarmonicNumber, 5, 0]	5	$H_5^{(0)} = \sum_{k=1}^5 1 = 5$		
+h-0-3-the-empty-sum-at-a-nonzero-order		test		[HarmonicNumber, 0, 3]	0			
+h-0-2-the-empty-sum-at-order-2		test		[HarmonicNumber, 0, 2]	0			
+no-sum-below-n-0-one-argument-form		test		[HarmonicNumber, -1]	ComplexInfinity			
+no-sum-below-n-0-two-argument-form		test		[HarmonicNumber, -2, 3]	ComplexInfinity			
+symbolic-n-one-argument-form-stays-symbolic		test		[HarmonicNumber, n]	[HarmonicNumber, n]			
+n-harmonicnumber-0p5		test		[N, [HarmonicNumber, 0.5]]	{num: "0.613705638880109381166"}			
+n-harmonicnumber-complex-3-plus-2i		test		[N, [HarmonicNumber, [Complex, 3, 2]]]	[Complex, 1.9725764110447408, 0.5169611287960764]			
+n-harmonicnumber-1-over-2-order-2		test		[N, [HarmonicNumber, [Rational, 1, 2], 2]]	{num: "0.710131866303547127053"}			
+n-harmonicnumber-5-order-1-over-2		test		[N, [HarmonicNumber, 5, [Rational, 1, 2]]]	{num: "3.231670645876131228192"}			
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole		test		[N, [HarmonicNumber, 2.5, 1]]	{num: "1.680372305546776047837"}	Order $r = 1$ given explicitly is still routed to $\psi(z+1) + \gamma$, not $\zeta(1) - \zeta(1, z+1)$'s pole		
+h-10-1-order-1-reduces-to-the-plain-h-10		test		[HarmonicNumber, 10, 1]	[Rational, 7381, 2520]	Order 1 given explicitly reduces to the exact plain $H_{10}$		
+h-2-is-three-halves		test		[HarmonicNumber, 2]	[Rational, 3, 2]			
+h-neg0-5		test		[HarmonicNumber, -0.5]	{num: "-1.3862943611198906188344642429163531361508"}			
+h-neg2-5		test		[HarmonicNumber, -2.5]	{num: "1.2803723055467760478322024237503135305157"}			
+h-10-5		test		[HarmonicNumber, 10.5]	{num: "2.9754547944373144739743437361702637213642"}			
+n-harmonicnumber-7-3-rational		test		[N, [HarmonicNumber, [Rational, 7, 3]]]	{num: "1.6237533134521551090386644443665621483152"}			
+h-complex-neg1-5-plus-4i		test		[HarmonicNumber, [Complex, -1.5, 4]]	[Complex, {num: "1.9916455964528293606065120900824024310422"}, 1.816950172910536]			
+h-complex-0-2-minus-3i		test		[HarmonicNumber, [Complex, 0.2, -3]]	[Complex, {num: "1.6983479033451581606065120900824024310422"}, -1.3395520039987705]			
+h-2-5-order-2		test		[HarmonicNumber, 2.5, 2]	{num: "1.3145763107479915714996141111523940660066"}			
+h-0-5-order-3		test		[HarmonicNumber, 0.5, 3]	{num: "0.7876585810424342876015710309313000554101"}			
+n-harmonicnumber-complex-3-plus-2i-order-2		test		[N, [HarmonicNumber, [Complex, 3, 2], 2]]	[Complex, {num: "1.429588703523849896472415166646025189219"}, 0.12181963298746644]			
+h-complex-neg1-5-plus-4i-order-3-2		test		[HarmonicNumber, [Complex, -1.5, 4], [Rational, 3, 2]]	[Complex, {num: "2.005917820915590443348567567924071630571"}, 0.7781594851952996]			
+non-integer-arguments-via-psi-z-1-gamma	Scope			[HarmonicNumber, 0.33]	{num: "0.441523646937363528111"}	Non-integer arguments via $\psi(z+1) + \gamma$		
+the-generalized-form-off-the-integers-via-zeta-r	Scope			[HarmonicNumber, 0.8, 3]	{num: "0.940124048948776980484"}	The generalized form off the integers, via $\zeta(r) - \zeta(r, z+1)$		
+complex-arguments	Scope			[HarmonicNumber, [Complex, 1.5, 2]]	[Complex, 1.6170494230744863, 0.7801971357298588]	Complex arguments		
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	Scope			[N, [HarmonicNumber, ExponentialE, 1]]	1.7500213805365417	Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\ldots$ — routed to the one-argument form directly rather than through $\zeta(1) - \zeta(1, z+1)$, which is a pole at every $z$		
+listable-threads-over-a-list	Scope			[HarmonicNumber, [List, 2, 3, 5, 7, 11]]	[List, [Rational, 3, 2], [Rational, 11, 6], [Rational, 137, 60], [Rational, 363, 140], [Rational, 83711, 27720]]	Listable: threads over a list		
+threads-elementwise-over-an-array-of-orders-and	Scope			[HarmonicNumber, 2, [List, [List, [Rational, 1, 2], 2], [List, 2, [Rational, 1, 2]]]]	[List, [List, [Add, 1, [Divide, [Sqrt, 2], 2]], [Rational, 5, 4]], [List, [Rational, 5, 4], [Add, 1, [Divide, [Sqrt, 2], 2]]]]	Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum		
+interval-arithmetic-in-the-order	Scope			[HarmonicNumber, 0.2, [Interval, 2.1, 2.2]]	[Interval, 0.3863469411841759, 0.3950923922402868]	Interval arithmetic in the order	unclassified	""
+uncertainty-propagation-in-the-order	Scope			[HarmonicNumber, [Rational, 3, 2], [Around, 2.1, 0.01]]	[Around, 1.1455164340491326, 0.0008799826466981091]	Uncertainty propagation in the order	unclassified	""
+to-exactly-30-significant-digits-not-yet-31-come	Scope			[N, [HarmonicNumber, [Rational, 1, 2]], 30]	{num: "0.613705638880109381165535757084"}	To exactly 30 significant digits, the last one correctly rounded		
+order-1-gives-h-z-itself-not-the-zeta-1-pole	Scope		harmonic-order-one	[N, [HarmonicNumber, 2.5, 1]]	{num: "1.680372305546776047837"}	Order 1 gives $H_z$ itself, not the $\zeta(1)$ pole another order's formula would hit.		
+at-an-integer-order-1-agrees-exactly-with-the	Scope		harmonic-order-one	[HarmonicNumber, 10, 1]	[Rational, 7381, 2520]	At an integer, order 1 agrees exactly with the one-argument $H_{10}$.		
+no-sum-below-n-0	Properties			[HarmonicNumber, -3]	ComplexInfinity	No sum below $n = 0$		
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	Properties			[HarmonicNumber, [Rational, 1, 2]]	[Add, 2, [Multiply, -2, [Ln, 2]]]	$H_{1/2} = 2 - 2\ln 2$: exact at rational arguments by Gauss's digamma theorem		
+h-1-4-4-frac-pi-2-3-ln-2	Properties			[HarmonicNumber, [Rational, 1, 4]]	[Add, 4, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi]]	$H_{1/4} = 4 - \tfrac{\pi}{2} - 3\ln 2$		
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	Properties			[HarmonicNumber, n, -1]	[Add, [Multiply, [Rational, 1, 2], [Power, n, 2]], [Multiply, [Rational, 1, 2], n]]	Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum, expanded as Wolfram does		
+the-harmonic-series-diverges	Properties			[HarmonicNumber, PositiveInfinity]	PositiveInfinity	The harmonic series diverges		
+h-infty-r-zeta-r-for-r-1-the-basel-sum	Properties			[HarmonicNumber, PositiveInfinity, 2]	[Multiply, [Rational, 1, 6], [Power, Pi, 2]]	$H_\infty^{(r)} = \zeta(r)$ for $r > 1$: the Basel sum		
+a-non-integer-order-stays-symbolic-under-plain	Possible issues			[HarmonicNumber, 5, [Rational, 1, 2]]	[HarmonicNumber, 5, [Rational, 1, 2]]	A non-integer order stays symbolic under plain evaluation, even at an exact $n$; N() gives $3.23167\ldots$		

@@ -1,16 +1,16 @@
-id	in
-e-0-5-0-3	N[EllipticE[0.5, 0.3]]
-e-1-2-0-7	N[EllipticE[1.2, 0.7]]
-e-0-8-0-4	N[EllipticE[-0.8, 0.4]]
-e-2-5-0-3	N[EllipticE[2.5, 0.3]]
-e-3-0-6	N[EllipticE[-3, 0.6]]
-e-0-3-0-4i-0-5	N[EllipticE[Complex[0.3, 0.4], 0.5]]
-e-1-0-5i-0-2	N[EllipticE[Complex[1, -0.5], 0.2]]
-e-0-6-0-57-0-23i	N[EllipticE[0.6, Complex[0.57, 0.23]]]
-e-1-1-0-1-0-9i	N[EllipticE[1.1, Complex[0.1, 0.9]]]
-e-3-711592653589793-0-57-0-23i	N[EllipticE[3.711592653589793, Complex[0.57, 0.23]]]
-e-3-711592653589793-0-23i-0-57-0-23i	N[EllipticE[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
-e-3-0-57-0-23i	N[EllipticE[-3, Complex[0.57, 0.23]]]
-e-4-5-0-1-0-9i	N[EllipticE[4.5, Complex[0.1, 0.9]]]
-e-phi-arccsc-0-m-0	EllipticE[ArcCsc[0], 0]
-e-phi-pi-plus-arccsc-0-m-0	EllipticE[Plus[Pi, ArcCsc[0]], 0]
+id	in	out	tex.in	tex.out	verdict
+e-0-5-0-3	N[EllipticE[0.5, 0.3]]	0.49399114472896827	N[E(0.5|0.3)]	0.493991	
+e-1-2-0-7	N[EllipticE[1.2, 0.7]]	1.0284551860949596	N[E(1.2|0.7)]	1.02846	
+e-0-8-0-4	N[EllipticE[-0.8, 0.4]]	-0.7689319158352617	N[E(-0.8|0.4)]	-0.768932	
+e-2-5-0-3	N[EllipticE[2.5, 0.3]]	2.261502532164161	N[E(2.5|0.3)]	2.2615	
+e-3-0-6	N[EllipticE[-3, 0.6]]	-2.4555466616972317	N[E(-3|0.6)]	-2.45555	
+e-0-3-0-4i-0-5	N[EllipticE[Complex[0.3, 0.4], 0.5]]	0.309727411389329 + 0.3960091785913277*I	N[E(0.3\, +0.4 i|0.5)]	0.309727\, +0.396009 i	
+e-1-0-5i-0-2	N[EllipticE[Complex[1, -0.5], 0.2]]	0.9854785558781258 - 0.4615403385835279*I	N[E(1-0.5 i|0.2)]	0.985479\, -0.46154 i	
+e-0-6-0-57-0-23i	N[EllipticE[0.6, Complex[0.57, 0.23]]]	0.5804446088026283 - 0.008177903914977632*I	N[E(0.6|0.57\, +0.23 i)]	0.580445\, -0.0081779 i	
+e-1-1-0-1-0-9i	N[EllipticE[1.1, Complex[0.1, 0.9]]]	1.100584508345572 - 0.15580692573345203*I	N[E(1.1|0.1\, +0.9 i)]	1.10058\, -0.155807 i	
+e-3-711592653589793-0-57-0-23i	N[EllipticE[3.711592653589793, Complex[0.57, 0.23]]]	3.2027674410692124 - 0.24648025423098197*I	N[E(3.71159|0.57\, +0.23 i)]	3.20277\, -0.24648 i	
+e-3-711592653589793-0-23i-0-57-0-23i	N[EllipticE[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]	3.218263851154938 - 0.0322662883214223*I	N[E(3.71159\, +0.23 i|0.57\, +0.23 i)]	3.21826\, -0.0322663 i	
+e-3-0-57-0-23i	N[EllipticE[-3, Complex[0.57, 0.23]]]	-2.508291874968778 + 0.2393501372573978*I	N[E(-3|0.57\, +0.23 i)]	-2.50829+0.23935 i	
+e-4-5-0-1-0-9i	N[EllipticE[4.5, Complex[0.1, 0.9]]]	4.542280198856441 - 0.9475220342366326*I	N[E(4.5|0.1\, +0.9 i)]	4.54228\, -0.947522 i	
+e-phi-arccsc-0-m-0	EllipticE[ArcCsc[0], 0]	ComplexInfinity	E\left(\left.\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree
+e-phi-pi-plus-arccsc-0-m-0	EllipticE[Plus[Pi, ArcCsc[0]], 0]	ComplexInfinity	E\left(\left.\pi +\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree

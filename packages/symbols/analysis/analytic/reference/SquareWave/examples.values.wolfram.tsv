@@ -1,7 +1,7 @@
-id	in	verdict
-squarewave-zero	SquareWave[0]	
-squarewave-half	SquareWave[Rational[1, 2]]	
-squarewave-neg-quarter	SquareWave[Rational[-1, 4]]	
-squarewave-ranged	SquareWave[List[0, 10], 0]	
-squarewave-periodic	(SquareWave[Rational[1, 4]] == SquareWave[Plus[Rational[1, 4], 2]])	
-squarewave-one	SquareWave[1]	disagree
+id	in	out	tex.in	tex.out
+squarewave-zero	SquareWave[0]	1	\text{SquareWave}[0]	1
+squarewave-half	SquareWave[Rational[1, 2]]	-1	\text{SquareWave}\left[\frac{1}{2}\right]	-1
+squarewave-neg-quarter	SquareWave[Rational[-1, 4]]	-1	\text{SquareWave}\left[-\frac{1}{4}\right]	-1
+squarewave-ranged	SquareWave[List[0, 10], 0]	10	\text{SquareWave}[\{0,10\},0]	10
+squarewave-periodic	(SquareWave[Rational[1, 4]] == SquareWave[Plus[Rational[1, 4], 2]])	True	\text{SquareWave}\left[\frac{1}{4}\right]=\text{SquareWave}\left[\frac{1}{4}+2\right]	\text{True}
+squarewave-one	SquareWave[1]	1	\text{SquareWave}[1]	1

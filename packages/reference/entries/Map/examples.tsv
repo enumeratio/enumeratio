@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption
-map-square-over-1-2-3-4	Basic		[Map, Square, [List, 1, 2, 3, 4]]	[List, 1, 4, 9, 16]	Map Square over $[1,2,3,4]$
-map-a-lambda-adding-1-to-each-element	Basic		[Map, [Function, [Add, _, 1]], [List, 1, 2, 3]]	[List, 2, 3, 4]	Map a lambda adding 1 to each element
-map-add-over-two-collections-zips-them	Basic		[Map, Add, [List, 1, 2, 3], [List, 10, 20, 30]]	[List, 11, 22, 33]	Map Add over two collections zips them
-mapping-over-an-empty-collection-returns-empty	Properties		[Map, Square, [List]]	[List]	Mapping over an empty collection returns empty
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+map-square-over-1-2-3-4	Basic		[Map, Square, [List, 1, 2, 3, 4]]	[List, 1, 4, 9, 16]	Map Square over $[1,2,3,4]$		
+map-a-lambda-adding-1-to-each-element	Basic		[Map, [Function, [Add, _, 1]], [List, 1, 2, 3]]	[List, 2, 3, 4]	Map a lambda adding 1 to each element		
+map-add-over-two-collections-zips-them	Basic		[Map, Add, [List, 1, 2, 3], [List, 10, 20, 30]]	[List, 11, 22, 33]	Map Add over two collections zips them	unclassified	""
+mapping-over-an-empty-collection-returns-empty	Properties		[Map, Square, [List]]	[List]	Mapping over an empty collection returns empty		

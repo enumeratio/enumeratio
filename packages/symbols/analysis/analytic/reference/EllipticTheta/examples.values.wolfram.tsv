@@ -1,33 +1,33 @@
-id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[EllipticTheta[3, 0.3, 0.2]]			
-theta2-0-3-0-2	N[EllipticTheta[2, 0.3, 0.2]]			
-theta4-0-3-0-2	N[EllipticTheta[4, 0.3, 0.2]]			
-theta2-0-0-5	N[EllipticTheta[2, 0, 0.5]]			
-theta3-0-0-5	N[EllipticTheta[3, 0, 0.5]]			
-theta4-0-0-5	N[EllipticTheta[4, 0, 0.5]]			
-theta1-1-0-3	N[EllipticTheta[1, 1, -0.3]]			
-theta2-1-0-3	N[EllipticTheta[2, 1, -0.3]]			
-theta4-1-0-3	N[EllipticTheta[4, 1, -0.3]]			
-theta1-0-3-0-1i-0-2	N[EllipticTheta[1, Complex[0.3, 0.1], 0.2]]			
-theta2-0-3-0-1i-0-2	N[EllipticTheta[2, Complex[0.3, 0.1], 0.2]]			
-theta4-0-3-0-1i-0-2	N[EllipticTheta[4, Complex[0.3, 0.1], 0.2]]			
-theta1-0-5-0-5i-0-1-0-2i	N[EllipticTheta[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta3-0-5-0-5i-0-1-0-2i	N[EllipticTheta[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta4-0-5-0-5i-0-1-0-2i	N[EllipticTheta[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta1-2-0-6	N[EllipticTheta[1, 2, 0.6]]			
-theta2-2-0-6	N[EllipticTheta[2, 2, 0.6]]			
-theta3-2-0-6	N[EllipticTheta[3, 2, 0.6]]			
-theta4-2-0-6	N[EllipticTheta[4, 2, 0.6]]			
-theta1-0-4-0-85	N[EllipticTheta[1, 0.4, 0.85]]			
-theta2-0-4-0-85	N[EllipticTheta[2, 0.4, 0.85]]			
-theta3-0-4-0-85	N[EllipticTheta[3, 0.4, 0.85]]			
-theta4-0-4-0-85	N[EllipticTheta[4, 0.4, 0.85]]			
-each-of-the-four-theta-functions-a-1	N[EllipticTheta[1, 0.3, 0.2]]			
-a-complex-argument-u	N[EllipticTheta[3, Complex[0.3, 0.1], 0.2]]			
-a-negative-real-nome-q	N[EllipticTheta[3, 1, -0.3]]			
-a-complex-nome-q	N[EllipticTheta[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta1-0-q-is-0-for-any-q-an-odd	N[EllipticTheta[1, 0, 0.5]]			
-q-1-is-declined-the-series-diverges	N[EllipticTheta[3, 0.3, 1]]			
-symbolic-arguments-are-left-unevaluated-rather	EllipticTheta[3, u, q]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\vartheta _3(u,q)-\vartheta _3(u,q)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\vartheta _3\left(-\frac{11}{5},\frac{7}{3}\right)-\vartheta _3\left(-\frac{11}{5},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3\left(-\frac{17}{6},\frac{13}{4}\right)-\vartheta _3\left(-\frac{17}{6},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3\left(-\frac{23}{9},\frac{19}{8}\right)-\vartheta _3\left(-\frac{23}{9},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-u-1e30-declines-rather-than-answering-wrong	N[EllipticTheta[1, Power[10, 30], Rational[1, 2]]]			
-u-1e30-mpmath-true-value	N[EllipticTheta[1, Power[10, 30], Rational[1, 2]]]			
+id	in	out	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[EllipticTheta[3, 0.3, 0.2]]	1.3312935581135867	N[\vartheta _3(0.3,0.2)]	1.33129	
+theta2-0-3-0-2	N[EllipticTheta[2, 0.3, 0.2]]	1.3110057336174996	N[\vartheta _2(0.3,0.2)]	1.31101	
+theta4-0-3-0-2	N[EllipticTheta[4, 0.3, 0.2]]	0.6710255314957337	N[\vartheta _4(0.3,0.2)]	0.671026	
+theta2-0-0-5	N[EllipticTheta[2, 0, 0.5]]	2.128931250513028	N[\vartheta _2(0,0.5)]	2.12893	
+theta3-0-0-5	N[EllipticTheta[3, 0, 0.5]]	2.128936827211877	N[\vartheta _3(0,0.5)]	2.12894	
+theta4-0-0-5	N[EllipticTheta[4, 0, 0.5]]	0.1211242080025805	N[\vartheta _4(0,0.5)]	0.121124	
+theta1-1-0-3	N[EllipticTheta[1, 1, -0.3]]	0.866687975363272 + 0.866687975363272*I	N[\vartheta _1(1,-0.3)]	0.866688\, +0.866688 i	
+theta2-1-0-3	N[EllipticTheta[2, 1, -0.3]]	0.4724617478024218 + 0.4724617478024218*I	N[\vartheta _2(1,-0.3)]	0.472462\, +0.472462 i	
+theta4-1-0-3	N[EllipticTheta[4, 1, -0.3]]	0.7397606682244261	N[\vartheta _4(1,-0.3)]	0.739761	
+theta1-0-3-0-1i-0-2	N[EllipticTheta[1, Complex[0.3, 0.1], 0.2]]	0.35351933152868914 + 0.1178636035434598*I	N[\vartheta _1(0.3\, +0.1 i,0.2)]	0.353519\, +0.117864 i	
+theta2-0-3-0-1i-0-2	N[EllipticTheta[2, Complex[0.3, 0.1], 0.2]]	1.3189083133593862 - 0.05239730825753652*I	N[\vartheta _2(0.3\, +0.1 i,0.2)]	1.31891\, -0.0523973 i	
+theta4-0-3-0-1i-0-2	N[EllipticTheta[4, Complex[0.3, 0.1], 0.2]]	0.6644948584549781 + 0.0442486991477543*I	N[\vartheta _4(0.3\, +0.1 i,0.2)]	0.664495\, +0.0442487 i	
+theta1-0-5-0-5i-0-1-0-2i	N[EllipticTheta[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	0.679025732824592 + 0.7184037505217498*I	N[\vartheta _1(0.5\, +0.5 i,0.1\, +0.2 i)]	0.679026\, +0.718404 i	
+theta3-0-5-0-5i-0-1-0-2i	N[EllipticTheta[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	1.5486889397050436 + 0.14786223021467199*I	N[\vartheta _3(0.5\, +0.5 i,0.1\, +0.2 i)]	1.54869\, +0.147862 i	
+theta4-0-5-0-5i-0-1-0-2i	N[EllipticTheta[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	0.42403502395402 - 0.12359811276367867*I	N[\vartheta _4(0.5\, +0.5 i,0.1\, +0.2 i)]	0.424035\, -0.123598 i	
+theta1-2-0-6	N[EllipticTheta[1, 2, 0.6]]	1.72910512646587	N[\vartheta _1(2,0.6)]	1.72911	
+theta2-2-0-6	N[EllipticTheta[2, 2, 0.6]]	-0.19241299560138178	N[\vartheta _2(2,0.6)]	-0.192413	
+theta3-2-0-6	N[EllipticTheta[3, 2, 0.6]]	0.1943842501024081	N[\vartheta _3(2,0.6)]	0.194384	
+theta4-2-0-6	N[EllipticTheta[4, 2, 0.6]]	1.7291078848127142	N[\vartheta _4(2,0.6)]	1.72911	
+theta1-0-4-0-85	N[EllipticTheta[1, 0.4, 0.85]]	0.0009551488811005307	N[\vartheta _1(0.4,0.85)]	0.000955149	
+theta2-0-4-0-85	N[EllipticTheta[2, 0.4, 0.85]]	1.6427056013700838	N[\vartheta _2(0.4,0.85)]	1.64271	
+theta3-0-4-0-85	N[EllipticTheta[3, 0.4, 0.85]]	1.6427056013700838	N[\vartheta _3(0.4,0.85)]	1.64271	
+theta4-0-4-0-85	N[EllipticTheta[4, 0.4, 0.85]]	0.0009551492483435876	N[\vartheta _4(0.4,0.85)]	0.000955149	
+each-of-the-four-theta-functions-a-1	N[EllipticTheta[1, 0.3, 0.2]]	0.35343054374762445	N[\vartheta _1(0.3,0.2)]	0.353431	
+a-complex-argument-u	N[EllipticTheta[3, Complex[0.3, 0.1], 0.2]]	1.3380122452445202 - 0.046698857386200956*I	N[\vartheta _3(0.3\, +0.1 i,0.2)]	1.33801\, -0.0466989 i	
+a-negative-real-nome-q	N[EllipticTheta[3, 1, -0.3]]	1.239061275954273	N[\vartheta _3(1,-0.3)]	1.23906	
+a-complex-nome-q	N[EllipticTheta[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	1.4821118035830818 + 0.1635542495976559*I	N[\vartheta _2(0.5\, +0.5 i,0.1\, +0.2 i)]	1.48211\, +0.163554 i	
+theta1-0-q-is-0-for-any-q-an-odd	N[EllipticTheta[1, 0, 0.5]]	0.	N[\vartheta _1(0,0.5)]	0.	
+q-1-is-declined-the-series-diverges	N[EllipticTheta[3, 0.3, 1]]	EllipticTheta[3, 0.3, 1.]	N[\vartheta _3(0.3,1)]	\vartheta _3(0.3,1.)	
+symbolic-arguments-are-left-unevaluated-rather					
+u-1e30-declines-rather-than-answering-wrong	N[EllipticTheta[1, Power[10, 30], Rational[1, 2]]]	0.005123734170741451	N\left[\vartheta _1\left(10^{30},\frac{1}{2}\right)\right]	0.00512373	disagree
+u-1e30-mpmath-true-value					

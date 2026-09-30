@@ -1,6 +1,6 @@
-id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiND[0.3, -2]]			
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiND[0.3, 1.5]]			
-u-0-is-1-for-any-m	JacobiND[0, m]	1	\text{nd}(0|m)	1
-symbolic-arguments-are-left-unevaluated-rather	JacobiND[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{nd}(u|m)-\text{nd}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{nd}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{nd}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{nd}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{nd}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{nd}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{nd}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-more-digits-than-a-double-holds-declines	N[JacobiND[3, Rational[1, 3]], 50]			
+id	in	out	shown	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[JacobiND[0.3, -2]]	0.9186845256345043		N[\text{nd}(0.3|-2)]	0.918685	
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiND[0.3, 1.5]]	1.069333535737141		N[\text{nd}(0.3|1.5)]	1.06933	
+u-0-is-1-for-any-m						
+symbolic-arguments-are-left-unevaluated-rather						
+more-digits-than-a-double-holds-declines	N[JacobiND[3, Rational[1, 3]], 50]	1.03491486901670005309693547863593906841779652785865317418741995307681319006773`50.	1.0349148690167000530969354786359390684177965278587	N\left[\text{nd}\left(3\left|\frac{1}{3}\right.\right),50\right]	1.0349148690167000530969354786359390684177965278587	disagree

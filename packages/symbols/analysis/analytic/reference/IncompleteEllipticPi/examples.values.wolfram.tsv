@@ -1,21 +1,21 @@
-id	in	out	tex.in	tex.out
-pi-n-0-m-0	EllipticPi[0.5, 0, 0.3]			
-a-floating-point-argument-evaluates-directly-to	N[EllipticPi[0.5, 0.4, 0.3]]			
-pi-0-5-0-4-0-3	N[EllipticPi[0.5, -0.4, 0.3]]			
-pi-0-5-1-9-0-3	N[EllipticPi[0.5, 1.9, 0.3]]			
-pi-2-0-4-0-3	N[EllipticPi[2, 0.4, 0.3]]			
-pi-0-5-3-5-0-3	N[EllipticPi[0.5, 3.5, 0.3]]			
-pi-0-2-2-0-5	N[EllipticPi[0.2, 2, 0.5]]			
-pi-0-5-0-4-0-7-0-2i	N[EllipticPi[0.5, 0.4, Complex[0.7, 0.2]]]			
-pi-0-5-0-2i-0-4-0-3	N[EllipticPi[Complex[0.5, 0.2], 0.4, 0.3]]			
-pi-0-5-0-4-0-3i-0-6-0-1i	N[EllipticPi[0.5, Complex[0.4, 0.3], Complex[0.6, 0.1]]]			
-pi-0-2-2-0-5i-0-3	N[EllipticPi[0.2, Complex[2, 0.5], 0.3]]			
-pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	N[EllipticPi[Complex[1.17, 0.45], Complex[10.59477796076938, 0.45], Complex[1.17, 0.45]]]			
-pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	N[EllipticPi[Complex[1.17, 0.45], Complex[-5.113185307179586, 0.45], Complex[1.17, 0.45]]]			
-a-complex-amplitude-phi-where-native-ellipticpi	N[EllipticPi[0.2, Complex[1.2, 0.5], 0.3]]			
-all-three-arguments-complex-matches-mpmath-s	N[EllipticPi[Complex[1.17, 0.45], Complex[1.17, 0.45], Complex[1.17, 0.45]]]			
-characteristic-n-1	N[EllipticPi[0.3, 1.1, 0.4]]			
-n-0-reduces-to-the-incomplete-elliptic-integral	N[EllipticPi[0, 0.4, 0.3]]			
-symbolic-arguments-are-left-unevaluated-rather	EllipticPi[n, phi, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Pi (n;\phi |m)-\Pi (n;\phi |m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)-\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Pi \left(\frac{19}{8};-\frac{23}{9}|-\frac{17}{6}\right)-\Pi \left(\frac{19}{8};-\frac{23}{9}|-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)-\Pi \left(-\frac{11}{5};\frac{13}{4}|\frac{7}{3}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-n-0-phi-arccsc-0-m-0	EllipticPi[0, ArcCsc[0], 0]			
-n-0-phi-pi-plus-arccsc-0-m-0	EllipticPi[0, Plus[Pi, ArcCsc[0]], 0]			
+id	in	out	tex.in	tex.out	verdict
+pi-n-0-m-0	EllipticPi[0.5, 0, 0.3]	0.	\Pi (0.5;0|0.3)	0.	
+a-floating-point-argument-evaluates-directly-to	N[EllipticPi[0.5, 0.4, 0.3]]	0.4141517368244767	N[\Pi (0.5;0.4|0.3)]	0.414152	
+pi-0-5-0-4-0-3	N[EllipticPi[0.5, -0.4, 0.3]]	-0.4141517368244767	N[\Pi (0.5;-0.4|0.3)]	-0.414152	
+pi-0-5-1-9-0-3	N[EllipticPi[0.5, 1.9, 0.3]]	3.2165165370151176	N[\Pi (0.5;1.9|0.3)]	3.21652	
+pi-2-0-4-0-3	N[EllipticPi[2, 0.4, 0.3]]	0.4550047490928081	N[\Pi (2;0.4|0.3)]	0.455005	
+pi-0-5-3-5-0-3	N[EllipticPi[0.5, 3.5, 0.3]]	5.291058653963574	N[\Pi (0.5;3.5|0.3)]	5.29106	
+pi-0-2-2-0-5	N[EllipticPi[0.2, 2, 0.5]]	2.8204255409214865	N[\Pi (0.2;2|0.5)]	2.82043	
+pi-0-5-0-4-0-7-0-2i	N[EllipticPi[0.5, 0.4, Complex[0.7, 0.2]]]	0.4187724726590352 + 0.0023988666579406463*I	N[\Pi (0.5;0.4|0.7\, +0.2 i)]	0.418772\, +0.00239887 i	
+pi-0-5-0-2i-0-4-0-3	N[EllipticPi[Complex[0.5, 0.2], 0.4, 0.3]]	0.4140603198080959 + 0.004608575942138107*I	N[\Pi (0.5\, +0.2 i;0.4|0.3)]	0.41406\, +0.00460858 i	
+pi-0-5-0-4-0-3i-0-6-0-1i	N[EllipticPi[0.5, Complex[0.4, 0.3], Complex[0.6, 0.1]]]	0.38471135810732693 + 0.32999674097180604*I	N[\Pi (0.5;0.4\, +0.3 i|0.6\, +0.1 i)]	0.384711\, +0.329997 i	
+pi-0-2-2-0-5i-0-3	N[EllipticPi[0.2, Complex[2, 0.5], 0.3]]	2.615928301488492 + 0.7015631769930673*I	N[\Pi (0.2;2+0.5 i|0.3)]	2.61593\, +0.701563 i	
+pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	N[EllipticPi[Complex[1.17, 0.45], Complex[10.59477796076938, 0.45], Complex[1.17, 0.45]]]	-0.10348082334067632 + 15.113381465309946*I	N[\Pi (1.17\, +0.45 i;10.5948\, +0.45 i|1.17\, +0.45 i)]	-0.103481+15.1134 i	
+pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	N[EllipticPi[Complex[1.17, 0.45], Complex[-5.113185307179586, 0.45], Complex[1.17, 0.45]]]	0.6406773186066792 - 8.277778194614969*I	N[\Pi (1.17\, +0.45 i;-5.11319+0.45 i|1.17\, +0.45 i)]	0.640677\, -8.27778 i	
+a-complex-amplitude-phi-where-native-ellipticpi	N[EllipticPi[0.2, Complex[1.2, 0.5], 0.3]]	1.3214153761171172 + 0.7186657188751802*I	N[\Pi (0.2;1.2\, +0.5 i|0.3)]	1.32142\, +0.718666 i	
+all-three-arguments-complex-matches-mpmath-s	N[EllipticPi[Complex[1.17, 0.45], Complex[1.17, 0.45], Complex[1.17, 0.45]]]	0.34301406182773675 + 1.0786856693549958*I	N[\Pi (1.17\, +0.45 i;1.17\, +0.45 i|1.17\, +0.45 i)]	0.343014\, +1.07869 i	
+characteristic-n-1	N[EllipticPi[0.3, 1.1, 0.4]]	1.3238008150474934	N[\Pi (0.3;1.1|0.4)]	1.3238	
+n-0-reduces-to-the-incomplete-elliptic-integral	N[EllipticPi[0, 0.4, 0.3]]	0.40316499194713923	N[\Pi (0;0.4|0.3)]	0.403165	
+symbolic-arguments-are-left-unevaluated-rather					
+n-0-phi-arccsc-0-m-0	EllipticPi[0, ArcCsc[0], 0]	ComplexInfinity	\Pi \left(0;\left.\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree
+n-0-phi-pi-plus-arccsc-0-m-0	EllipticPi[0, Plus[Pi, ArcCsc[0]], 0]	ComplexInfinity	\Pi \left(0;\left.\pi +\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree

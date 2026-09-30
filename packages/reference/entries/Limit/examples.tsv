@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-lim-x-to-0-sin-x-x-1	Basic		[Limit, [Function, [Divide, [Sin, _1], _1]], 0]	1	$\lim_{x \to 0} \frac{\sin x}{x} = 1$
-right-hand-limit-of-1-x-at-0-is-infinity	Basic		[Limit, [Function, [Divide, 1, _1]], 0, 1]	PositiveInfinity	Right-hand limit of $1/x$ at 0 is $+\infty$
-limit-of-1-x-as-x-to-infinity-is-0	Basic		[Limit, [Function, [Divide, 1, _1]], PositiveInfinity]	0	Limit of $1/x$ as $x \to \infty$ is 0
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+lim-x-to-0-sin-x-x-1	Basic		[Limit, [Function, [Divide, [Sin, _1], _1]], 0]	1	$\lim_{x \to 0} \frac{\sin x}{x} = 1$	unclassified	""
+right-hand-limit-of-1-x-at-0-is-infinity	Basic		[Limit, [Function, [Divide, 1, _1]], 0, 1]	PositiveInfinity	Right-hand limit of $1/x$ at 0 is $+\infty$	unclassified	""
+limit-of-1-x-as-x-to-infinity-is-0	Basic		[Limit, [Function, [Divide, 1, _1]], PositiveInfinity]	0	Limit of $1/x$ as $x \to \infty$ is 0	unclassified	""

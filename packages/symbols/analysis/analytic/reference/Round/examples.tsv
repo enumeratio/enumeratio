@@ -22,4 +22,4 @@ rounding-to-0-decimal-places-matches-the-1	Properties		[Equal, [Round, 3.14159, 
 rounds-half-away-from-zero-not-banker-s-rounding	Possible issues		[Round, 2.5]	3	Rounds half away from zero, not banker's rounding: 2.5 rounds to 3, not 2	rounding-mode	Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
 and-by-the-same-convention-2-5-rounds-to-3-not-2	Possible issues		[Round, -2.5]	-3	...and by the same convention, -2.5 rounds to -3, not -2	rounding-mode	Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
 round-5-over-2-exact-rational-tie	Possible issues		[Round, [Rational, 5, 2]]	3	The same tie-breaking rule on an exact rational, not just a float: 5/2 rounds to 3	rounding-mode	Wolfram round-half-to-even gives Round[5/2] = 2.
-an-exact-half-rounds-away-from-zero-as-well	Possible issues		[Round, [Rational, 1, 2]]	1	An exact half rounds away from zero as well		Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.
+an-exact-half-rounds-away-from-zero-as-well	Possible issues		[Round, [Rational, 1, 2]]	1	An exact half rounds away from zero as well	unclassified	Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.
