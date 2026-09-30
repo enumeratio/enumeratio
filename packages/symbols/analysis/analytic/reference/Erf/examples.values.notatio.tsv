@@ -2,6 +2,7 @@ id	in	out
 erf-0	<Erf>0</Erf>	<ToExpression>0</ToExpression>
 erf-infinity	<Erf>Infinity</Erf>	<ToExpression>1</ToExpression>
 erf-negativeinfinity	<Erf>NegativeInfinity</Erf>	<ToExpression>-1</ToExpression>
+erf-complexinfinity	<Erf>ComplexInfinity</Erf>	<Indeterminate />
 a-floating-point-argument-evaluates-directly-to	<Erf>0.5</Erf>	<ToExpression>0.520499877813046537683</ToExpression>
 a-machine-precision-argument	<Erf>0.95</Erf>	<ToExpression>0.820890807273277941908</ToExpression>
 threads-element-wise-over-a-list-as-wolfram-s	<Erf><List>0 1</List></Erf>	<List>0 <Erf>1</Erf></List>

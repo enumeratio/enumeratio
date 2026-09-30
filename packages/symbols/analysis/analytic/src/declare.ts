@@ -14,6 +14,7 @@ import {
   logGammaPatch,
   stieltjes,
   gammaInfinity,
+  sqrtInfinity,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
@@ -185,6 +186,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, dirichlet);
   applyPatch(ce, stieltjes);
   applyPatch(ce, gammaInfinity);
+  applyPatch(ce, sqrtInfinity);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

@@ -173,6 +173,11 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
       }
       const [x] = ops;
       if (x === undefined) return undefined;
+      // erf(z) as z -> ComplexInfinity depends on the direction of approach (1 along the
+      // positive real axis, i*Infinity along the imaginary axis, ...) -- undirected
+      // ComplexInfinity has no limit, so decline exactly, rather than let the widened
+      // signature hand it to nativeErf, which has no ComplexInfinity case of its own.
+      if (x.json === "ComplexInfinity") return ce.symbol("Indeterminate");
       if (x.operator === "Negate") {
         const inner = operandsOf(x)[0];
         if (inner !== undefined) {

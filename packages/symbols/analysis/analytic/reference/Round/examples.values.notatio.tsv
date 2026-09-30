@@ -21,4 +21,5 @@ a-negative-second-argument-rounds-to-the-nearest	<Equal><Round>1234 -2</Round> 1
 rounding-to-0-decimal-places-matches-the-1	<Equal><Round>3.14159 0</Round> <Round>3.14159</Round></Equal>	<True />
 rounds-half-away-from-zero-not-banker-s-rounding	<Round>2.5</Round>	<ToExpression>3</ToExpression>
 and-by-the-same-convention-2-5-rounds-to-3-not-2	<Round>-2.5</Round>	<ToExpression>-3</ToExpression>
+round-5-over-2-exact-rational-tie	<Round><Rational>5 2</Rational></Round>	<ToExpression>3</ToExpression>
 an-exact-half-rounds-away-from-zero-as-well	<Round><Rational>1 2</Rational></Round>	<ToExpression>1</ToExpression>

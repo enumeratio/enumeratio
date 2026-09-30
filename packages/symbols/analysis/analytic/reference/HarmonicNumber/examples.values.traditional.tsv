@@ -8,6 +8,7 @@ h-1-the-first-term	H_{1}	1
 h-10-3-exact-generalized-sum	H_{10}^{(3)}	\frac{19\,164\,113\,947}{16\,003\,008\,000}
 h-5-0-sum-k-1-5-1-5	H_{5}^{(0)}	5
 h-0-3-the-empty-sum-at-a-nonzero-order	H_{0}^{(3)}	0
+h-0-2-the-empty-sum-at-order-2	H_{0}^{(2)}	0
 no-sum-below-n-0-one-argument-form	H_{-1}	\tilde\infty
 no-sum-below-n-0-two-argument-form	H_{-2}^{(3)}	\tilde\infty
 symbolic-n-one-argument-form-stays-symbolic	H_{n}	H_{n}

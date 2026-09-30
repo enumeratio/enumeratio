@@ -13,6 +13,7 @@ sqrt-12-over-5
 sqrt-neg-2p5		
 an-exact-complex-square-2-i-2-3-4i		
 sqrt-positiveinfinity		
+sqrt-negativeinfinity		
 threads-element-wise-over-a-list		
 threads-over-a-matrix-entry-by-entry-this-is-not		
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1		

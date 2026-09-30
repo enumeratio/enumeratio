@@ -8,6 +8,7 @@ h-1-the-first-term	<HarmonicNumber>1</HarmonicNumber>	<ToExpression>1</ToExpress
 h-10-3-exact-generalized-sum	<HarmonicNumber>10 3</HarmonicNumber>	<Rational>19164113947 16003008000</Rational>
 h-5-0-sum-k-1-5-1-5	<HarmonicNumber>5 0</HarmonicNumber>	<ToExpression>5</ToExpression>
 h-0-3-the-empty-sum-at-a-nonzero-order	<HarmonicNumber>0 3</HarmonicNumber>	<ToExpression>0</ToExpression>
+h-0-2-the-empty-sum-at-order-2	<HarmonicNumber>0 2</HarmonicNumber>	<ToExpression>0</ToExpression>
 no-sum-below-n-0-one-argument-form	<HarmonicNumber>-1</HarmonicNumber>	<ComplexInfinity />
 no-sum-below-n-0-two-argument-form	<HarmonicNumber>-2 3</HarmonicNumber>	<ComplexInfinity />
 symbolic-n-one-argument-form-stays-symbolic	<HarmonicNumber>n</HarmonicNumber>	<HarmonicNumber>n</HarmonicNumber>

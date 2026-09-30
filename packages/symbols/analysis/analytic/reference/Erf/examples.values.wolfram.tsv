@@ -1,23 +1,24 @@
-id	in	out	tex.in	tex.out
-erf-0	Erf[0]	0	\text{erf}(0)	0
-erf-infinity	Erf[Infinity]	1	\text{erf}(\infty )	1
-erf-negativeinfinity	Erf[-Infinity]	-1	\text{erf}(-\infty )	-1
-a-floating-point-argument-evaluates-directly-to	Erf[0.5]	0.5204998778130465	\text{erf}(0.5)	0.5205
-a-machine-precision-argument	Erf[0.95]			
-threads-element-wise-over-a-list-as-wolfram-s	Erf[List[0, 1]]	{0, Erf[1]}	\text{erf}(\{0,1\})	\{0,\text{erf}(1)\}
-complex-arguments-evaluate-directly	Erf[Complex[1.5, -1]]			
-two-arguments-the-generalized-erf-z-0-z-1-erf-z	Erf[0.5, 1.5]			
-which-with-exact-arguments-is-the-difference-erf	Erf[1, 2]			
-interval-arithmetic-erf-is-increasing-so-the	Erf[Interval[List[-2.1, -1.9]]]			
-uncertainty-propagation-with-slope-frac-2-sqrt	Erf[Around[2, 0.01]]			
-to-40-significant-digits-every-one-correctly	N[Erf[1], 40]			
-erf-1-sqrt-2-approx-0-6827-the-68-in-the	Erf[0.7071067811865476]	0.6826894921370861	\text{erf}(0.707107)	0.682689
-the-standard-normal-cdf-phi-x-frac-12-1-erf-x	Times[0.5, Plus[1, Erf[Divide[1.96, Sqrt[2]]]]]			
-odd-function-erf-z-erf-z-here-at-z-2	(Plus[Erf[2], Erf[-2]] == 0)	True	\text{erf}(2)+\text{erf}(-2)=0	\text{True}
-complementary-with-erfc-erf-z-erfc-z-1-see-erfc	(Plus[Erf[2], Erfc[2]] == 1)	Erf[2] + Erfc[2] == 1	\text{erf}(2)+\text{erfc}(2)=1	\text{erf}(2)+\text{erfc}(2)=1
-oddness-applied-symbolically-erf-x-erf-x	Erf[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{erf}(-x)--\text{erf}(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(-\frac{7}{3}\right)--\text{erf}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\left(-\frac{11}{5}\right)\right)--\text{erf}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\frac{13}{4}\right)--\text{erf}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-erf-erfinv-x-x-symbolically-see-erfinv	Erf[InverseErf[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erf}\left(\text{erf}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-on-the-imaginary-axis-erf-i-i-erfi-1	Erf[I]			
-frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	D[Erf[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{erf}(x)}{\partial x}-\frac{2 e^{-x^2}}{\sqrt{\pi }}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{erf}\left(\frac{7}{3}\right)-\frac{2 e^{-\left(\frac{7}{3}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{erf}\left(-\frac{11}{5}\right)-\frac{2 e^{-\left(-\frac{11}{5}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{erf}\left(\frac{13}{4}\right)-\frac{2 e^{-\left(\frac{13}{4}\right)^2}}{\sqrt{\pi }}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-an-exact-integer-argument-is-left-unevaluated	Erf[1]	Erf[1]	\text{erf}(1)	\text{erf}(1)
-by-z-3-5-erf-is-already-within-10-6-of-its-limit	Erf[3.5]	0.9999992569016276	\text{erf}(3.5)	0.999999
+id	in	out	tex.in	tex.out	verdict
+erf-0	Erf[0]	0	\text{erf}(0)	0	
+erf-infinity	Erf[Infinity]	1	\text{erf}(\infty )	1	
+erf-negativeinfinity	Erf[-Infinity]	-1	\text{erf}(-\infty )	-1	
+erf-complexinfinity	Erf[ComplexInfinity]	NaN			disagree
+a-floating-point-argument-evaluates-directly-to	Erf[0.5]	0.5204998778130465	\text{erf}(0.5)	0.5205	
+a-machine-precision-argument	Erf[0.95]				
+threads-element-wise-over-a-list-as-wolfram-s	Erf[List[0, 1]]	{0, Erf[1]}	\text{erf}(\{0,1\})	\{0,\text{erf}(1)\}	
+complex-arguments-evaluate-directly	Erf[Complex[1.5, -1]]				
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	Erf[0.5, 1.5]				
+which-with-exact-arguments-is-the-difference-erf	Erf[1, 2]				
+interval-arithmetic-erf-is-increasing-so-the	Erf[Interval[List[-2.1, -1.9]]]				
+uncertainty-propagation-with-slope-frac-2-sqrt	Erf[Around[2, 0.01]]				
+to-40-significant-digits-every-one-correctly	N[Erf[1], 40]				
+erf-1-sqrt-2-approx-0-6827-the-68-in-the	Erf[0.7071067811865476]	0.6826894921370861	\text{erf}(0.707107)	0.682689	
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x	Times[0.5, Plus[1, Erf[Divide[1.96, Sqrt[2]]]]]				
+odd-function-erf-z-erf-z-here-at-z-2	(Plus[Erf[2], Erf[-2]] == 0)	True	\text{erf}(2)+\text{erf}(-2)=0	\text{True}	
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	(Plus[Erf[2], Erfc[2]] == 1)	Erf[2] + Erfc[2] == 1	\text{erf}(2)+\text{erfc}(2)=1	\text{erf}(2)+\text{erfc}(2)=1	
+oddness-applied-symbolically-erf-x-erf-x	Erf[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{erf}(-x)--\text{erf}(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(-\frac{7}{3}\right)--\text{erf}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\left(-\frac{11}{5}\right)\right)--\text{erf}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{erf}\left(-\frac{13}{4}\right)--\text{erf}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+erf-erfinv-x-x-symbolically-see-erfinv	Erf[InverseErf[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erf}\left(\text{erf}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erf}\left(\text{erf}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+on-the-imaginary-axis-erf-i-i-erfi-1	Erf[I]				
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	D[Erf[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{erf}(x)}{\partial x}-\frac{2 e^{-x^2}}{\sqrt{\pi }}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{erf}\left(\frac{7}{3}\right)-\frac{2 e^{-\left(\frac{7}{3}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{erf}\left(-\frac{11}{5}\right)-\frac{2 e^{-\left(-\frac{11}{5}\right)^2}}{\sqrt{\pi }}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{erf}\left(\frac{13}{4}\right)-\frac{2 e^{-\left(\frac{13}{4}\right)^2}}{\sqrt{\pi }}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+an-exact-integer-argument-is-left-unevaluated	Erf[1]	Erf[1]	\text{erf}(1)	\text{erf}(1)	
+by-z-3-5-erf-is-already-within-10-6-of-its-limit	Erf[3.5]	0.9999992569016276	\text{erf}(3.5)	0.999999	

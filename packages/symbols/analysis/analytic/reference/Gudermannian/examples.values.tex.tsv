@@ -7,3 +7,4 @@ gudermannian-neg-2-25	\mathrm{Gudermannian}(-2.25)	-1.360\,773\,302\,097\,611\,8
 horizontal-asymptote-pi-2	\mathrm{Gudermannian}(\infty)	\frac{\pi}{2}
 gd-x-sech-x	\frac{\mathrm{d}\mathrm{Gudermannian}(x)}{\mathrm{d}x}	\mathrm{sech}(x)
 an-odd-function	\mathrm{Gudermannian}(-x)	-\mathrm{Gudermannian}(x)
+gudermannian-ln-i-a-complex-pole	\mathrm{Gudermannian}(\ln(i))	\mathrm{Gudermannian}((\frac{1}{2}i)\pi)

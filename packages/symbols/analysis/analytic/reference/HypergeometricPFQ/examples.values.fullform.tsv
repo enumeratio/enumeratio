@@ -5,3 +5,7 @@ id	in
 3f-2	HypergeometricPFQ[List[1, 2, 3], List[4, 5], 0.5]
 0f-0-z-e-z	HypergeometricPFQ[List[], List[], z]
 1f-0-a-z-1-z-a	HypergeometricPFQ[List[a], List[], z]
+pfq-2f3-degenerate-1	HypergeometricPFQ[List[2, Rational[1, 2]], List[1, 2, 3], 0]
+pfq-2f3-degenerate-2	HypergeometricPFQ[List[-1, Rational[-1, 2]], List[Rational[3, 2], -2, Rational[-5, 2]], 0]
+pfq-2f3-degenerate-3	HypergeometricPFQ[List[-1, Rational[-3, 2]], List[Rational[3, 2], Rational[-7, 2], -3], 0]
+pfq-2f3-degenerate-4	HypergeometricPFQ[List[Rational[-1, 2], 0], List[Rational[1, 2], -1, Rational[-1, 2]], 0]

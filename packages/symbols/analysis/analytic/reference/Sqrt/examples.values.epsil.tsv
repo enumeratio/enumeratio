@@ -13,6 +13,7 @@ sqrt-12-over-5	sqrt(12 / 5)	2 / 5 * sqrt(15)
 sqrt-neg-2p5	sqrt(-2.5)	1.581_138_830_084_189_8i
 an-exact-complex-square-2-i-2-3-4i	sqrt(3 + 4i)	2 + i
 sqrt-positiveinfinity	sqrt(positiveInfinity)	positiveInfinity
+sqrt-negativeinfinity	sqrt(negativeInfinity)	DirectedInfinity(i)
 threads-element-wise-over-a-list	sqrt([1, 4, 9])	[1, 2, 3]
 threads-over-a-matrix-entry-by-entry-this-is-not	sqrt([[1 / 2, -1], [0, 1 / 2]])	[[sqrt(2) / 2, i], [0, sqrt(2) / 2]]
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1	sqrt(interval(1, 8))	interval(1, 2 * sqrt(2))

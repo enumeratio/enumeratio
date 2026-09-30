@@ -8,6 +8,7 @@ h-1-the-first-term	HarmonicNumber[1]
 h-10-3-exact-generalized-sum	HarmonicNumber[10, 3]			
 h-5-0-sum-k-1-5-1-5	HarmonicNumber[5, 0]			
 h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber[0, 3]			
+h-0-2-the-empty-sum-at-order-2	HarmonicNumber[0, 2]			
 no-sum-below-n-0-one-argument-form	HarmonicNumber[-1]			
 no-sum-below-n-0-two-argument-form	HarmonicNumber[-2, 3]			
 symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n-H_n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}-H_{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}-H_{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}-H_{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

@@ -7,3 +7,4 @@ gudermannian-neg-2-25	<Gudermannian>-2.25</Gudermannian>	<ToExpression>-1.360773
 horizontal-asymptote-pi-2	<Gudermannian>PositiveInfinity</Gudermannian>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
 gd-x-sech-x	<D><Gudermannian>x</Gudermannian> x</D>	<Sech>x</Sech>
 an-odd-function	<Gudermannian><Negate>x</Negate></Gudermannian>	<Negate><Gudermannian>x</Gudermannian></Negate>
+gudermannian-ln-i-a-complex-pole	<Gudermannian><Ln>ImaginaryUnit</Ln></Gudermannian>	<Gudermannian><Multiply><Complex>0 <Rational>1 2</Rational></Complex> Pi</Multiply></Gudermannian>

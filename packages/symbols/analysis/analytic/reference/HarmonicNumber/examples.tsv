@@ -8,6 +8,7 @@ h-1-the-first-term		test		[HarmonicNumber, 1]	1
 h-10-3-exact-generalized-sum		test		[HarmonicNumber, 10, 3]	[Rational, 19164113947, 16003008000]	
 h-5-0-sum-k-1-5-1-5		test		[HarmonicNumber, 5, 0]	5	$H_5^{(0)} = \sum_{k=1}^5 1 = 5$
 h-0-3-the-empty-sum-at-a-nonzero-order		test		[HarmonicNumber, 0, 3]	0	
+h-0-2-the-empty-sum-at-order-2		test		[HarmonicNumber, 0, 2]	0	
 no-sum-below-n-0-one-argument-form		test		[HarmonicNumber, -1]	ComplexInfinity	
 no-sum-below-n-0-two-argument-form		test		[HarmonicNumber, -2, 3]	ComplexInfinity	
 symbolic-n-one-argument-form-stays-symbolic		test		[HarmonicNumber, n]	[HarmonicNumber, n]	

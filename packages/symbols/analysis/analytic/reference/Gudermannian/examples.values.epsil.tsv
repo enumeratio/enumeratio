@@ -7,3 +7,4 @@ gudermannian-neg-2-25	Gudermannian(-2.25)	-1.360_773_302_097_611_8
 horizontal-asymptote-pi-2	Gudermannian(positiveInfinity)	1 / 2 * pi
 gd-x-sech-x	D(Gudermannian(x), x)	sech(x)
 an-odd-function	Gudermannian(-x)	-Gudermannian(x)
+gudermannian-ln-i-a-complex-pole	Gudermannian(ln(imaginaryUnit))	Gudermannian(1 / 2 * i * pi)

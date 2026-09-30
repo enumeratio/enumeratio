@@ -8,6 +8,7 @@ h-1-the-first-term	\mathrm{HarmonicNumber}(1)	1
 h-10-3-exact-generalized-sum	\mathrm{HarmonicNumber}(10, 3)	\frac{19\,164\,113\,947}{16\,003\,008\,000}
 h-5-0-sum-k-1-5-1-5	\mathrm{HarmonicNumber}(5, 0)	5
 h-0-3-the-empty-sum-at-a-nonzero-order	\mathrm{HarmonicNumber}(0, 3)	0
+h-0-2-the-empty-sum-at-order-2	\mathrm{HarmonicNumber}(0, 2)	0
 no-sum-below-n-0-one-argument-form	\mathrm{HarmonicNumber}(-1)	\tilde\infty
 no-sum-below-n-0-two-argument-form	\mathrm{HarmonicNumber}(-2, 3)	\tilde\infty
 symbolic-n-one-argument-form-stays-symbolic	\mathrm{HarmonicNumber}(n)	\mathrm{HarmonicNumber}(n)

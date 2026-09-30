@@ -642,7 +642,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 13,
-      "disagree": 0
+      "disagree": 1
     }
   ],
   "Erfc": [
@@ -1122,7 +1122,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 2,
-      "disagree": 0
+      "disagree": 1
     }
   ],
   "HankelTransform": [
@@ -1176,7 +1176,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 2,
-      "disagree": 0
+      "disagree": 4
     }
   ],
   "Idele": [
@@ -1570,7 +1570,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 326,
-      "disagree": 26
+      "disagree": 27
     }
   ],
   "Ln": [
@@ -2370,7 +2370,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 10,
-      "disagree": 2
+      "disagree": 3
     }
   ],
   "Scan": [

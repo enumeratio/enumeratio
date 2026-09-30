@@ -21,4 +21,5 @@ a-negative-second-argument-rounds-to-the-nearest	(Round[1234, Power[10, Minus[-2
 rounding-to-0-decimal-places-matches-the-1	(Round[3.14159, Power[10, Minus[0]]] == Round[3.14159])	True	\text{Round}\left[3.14159,10^{-0}\right]=\text{Round}[3.14159]	\text{True}	
 rounds-half-away-from-zero-not-banker-s-rounding	Round[2.5]	2	\text{Round}[2.5]	2	disagree
 and-by-the-same-convention-2-5-rounds-to-3-not-2	Round[-2.5]	-2	\text{Round}[-2.5]	-2	disagree
+round-5-over-2-exact-rational-tie	Round[Rational[5, 2]]	2			disagree
 an-exact-half-rounds-away-from-zero-as-well	Round[Rational[1, 2]]				

@@ -21,4 +21,5 @@ a-negative-second-argument-rounds-to-the-nearest	\mathrm{round}(1\,234, -2)=1\,2
 rounding-to-0-decimal-places-matches-the-1	\mathrm{round}(3.141\,59, 0)=\mathrm{round}(3.141\,59)	\mathrm{True}
 rounds-half-away-from-zero-not-banker-s-rounding		
 and-by-the-same-convention-2-5-rounds-to-3-not-2		
+round-5-over-2-exact-rational-tie		
 an-exact-half-rounds-away-from-zero-as-well		
