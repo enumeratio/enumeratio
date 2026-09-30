@@ -17,7 +17,7 @@ import { readEntries } from "@enumeratio/entry/node";
 import { validRange } from "semver";
 import type { Definition, Example } from "../src/registry.ts";
 import { entryOf } from "./library-entry.ts";
-import { type LibraryField, libraryIndexOf } from "../src/libraries/format.ts";
+import { type LibraryField, type LibraryIndex, libraryIndexOf } from "../src/libraries/format.ts";
 
 /** Pack the package at `dir`: its index, written and returned. */
 export async function packLibrary(dir: string): Promise<string> {
@@ -49,7 +49,6 @@ export async function packLibrary(dir: string): Promise<string> {
     definitions[name] = { ...definition, examples };
   }
   const index = await libraryIndexOf(pkg.enumeratio.namespace, definitions);
-  writeFileSync(indexPath, `${JSON.stringify(index, null, 2)}\n`);
   // A namespace another package serves is its scope's: `ada.*` from the `@ada/…` dependency.
   const packages: Record<string, string> = {};
   for (const dependency of Object.keys(pkg.dependencies ?? {})) {
@@ -58,12 +57,50 @@ export async function packLibrary(dir: string): Promise<string> {
     if (scope in packages) throw new Error(`${dir}: two dependencies are in the scope ${scope}`);
     packages[scope] = dependency;
   }
+  const unresolved = unresolvedPins(dir, index, packages);
+  if (unresolved.length > 0) throw new Error(`${dir}: pins that don't resolve\n  ${unresolved.join("\n  ")}`);
+  writeFileSync(indexPath, `${JSON.stringify(index, null, 2)}\n`);
   const { js, dts } = await entryOf({ index, definitions, packages });
   mkdirSync(join(dir, "dist"), { recursive: true });
   writeFileSync(join(dir, "dist/index.js"), js);
   writeFileSync(join(dir, "dist/index.d.ts"), dts);
   return indexPath;
 }
+
+/**
+ * Each pin no version this library can see has: its own symbols, and those of the dependencies
+ * installed beside it. A dependency that isn't installed can't be checked here; the resolver
+ * reports its unresolved pins when it declares the library.
+ */
+function unresolvedPins(dir: string, index: LibraryIndex, packages: Readonly<Record<string, string>>): string[] {
+  const indexes = new Map<string, LibraryIndex>([[index.namespace, index]]);
+  const indexOf = (namespace: string): LibraryIndex | undefined => {
+    if (indexes.has(namespace)) return indexes.get(namespace);
+    const pkg = packages[namespace];
+    const root = pkg === undefined ? undefined : join(dir, "node_modules", pkg);
+    const field =
+      root === undefined ? undefined : readJson<{ enumeratio?: LibraryField }>(join(root, "package.json"))?.enumeratio;
+    const found = field === undefined ? undefined : readJson<LibraryIndex>(join(root!, field.index));
+    if (found !== undefined) indexes.set(namespace, found);
+    return found;
+  };
+  const out: string[] = [];
+  for (const [name, entry] of Object.entries(index.symbols))
+    for (const [used, pin] of Object.entries(entry.requires ?? {})) {
+      const [namespace, member] = used.split(".") as [string, string];
+      const serving = indexOf(namespace);
+      if (serving === undefined) continue;
+      const has = serving.symbols[member]?.pin;
+      if (has !== pin)
+        out.push(
+          `${index.namespace}.${name} pins ${used}@${pin}, and ${has === undefined ? "there's no such symbol" : `it's ${has}`}`,
+        );
+    }
+  return out;
+}
+
+const readJson = <T>(path: string): T | undefined =>
+  existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as T) : undefined;
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const [dir, flag, previous] = process.argv.slice(2);

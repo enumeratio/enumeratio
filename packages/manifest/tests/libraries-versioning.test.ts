@@ -6,6 +6,7 @@ import { expect, test } from "vite-plus/test";
 import { checkVersion } from "../scripts/check-version.ts";
 import { packLibrary } from "../scripts/pack-library.ts";
 import type { LibrarySnapshot } from "../src/libraries/versioning.ts";
+import { type Definition, pinOf } from "../src/registry.ts";
 import { changesOf, levelOf, versionSays } from "../src/libraries/versioning.ts";
 
 const ce = new ComputeEngine();
@@ -63,16 +64,30 @@ test("what a version number says, as a caret range reads it", () => {
 
 const FIXTURE = new URL("./fixtures/npm/ada-primes", import.meta.url).pathname;
 
-/** The fixture library packed at `version`, with the bodies in `bodies` replaced. */
-async function packed(version: string, bodies: Record<string, unknown> = {}): Promise<string> {
+/**
+ * The fixture library at `version`, with the bodies in `bodies` replaced and, as its author
+ * would, each of its own pins moved to the new definitions (unless `repin` is false); packed.
+ */
+async function packed(version: string, bodies: Record<string, unknown> = {}, repin = true): Promise<string> {
   const dir = join(mkdtempSync(join(tmpdir(), "version-")), "ada-primes");
   cpSync(FIXTURE, dir, { recursive: true });
   const pkgPath = join(dir, "package.json");
   writeFileSync(pkgPath, JSON.stringify({ ...JSON.parse(readFileSync(pkgPath, "utf8")), version }));
-  for (const [symbol, body] of Object.entries(bodies)) {
-    const path = join(dir, `symbols/${symbol}/definition.json`);
-    writeFileSync(path, JSON.stringify({ ...JSON.parse(readFileSync(path, "utf8")), body }));
-  }
+  const path = (symbol: string): string => join(dir, `symbols/${symbol}/definition.json`);
+  const read = (symbol: string): Definition => JSON.parse(readFileSync(path(symbol), "utf8")) as Definition;
+  for (const [symbol, body] of Object.entries(bodies))
+    writeFileSync(path(symbol), JSON.stringify({ ...read(symbol), body }));
+  // Twice before Quad, which pins it.
+  if (repin)
+    for (const symbol of ["Twice", "Quad"]) {
+      const definition = read(symbol);
+      const requires = Object.fromEntries(
+        await Promise.all(
+          Object.keys(definition.requires ?? {}).map(async (used) => [used, await pinOf(read(used.split(".")[1]!))]),
+        ),
+      );
+      writeFileSync(path(symbol), JSON.stringify({ ...definition, ...(definition.requires ? { requires } : {}) }));
+    }
   await packLibrary(dir);
   return dir;
 }
@@ -84,14 +99,19 @@ test("a definition whose old examples now fail is a break, and needs a major ver
   expect(patched.level).toBe("major");
   expect(patched.says).toBe(false);
   expect(patched.changes.filter((c) => c.what.startsWith("example")).map((c) => c.what)).toEqual([
-    // Quad still pins the Twice this version no longer has.
-    "example quad-3: ada.Quad: ada.Twice@sha256-a6ca5cce8d3e17fc60c7e9298332578c8a551ba47d71bbb8c10ec667a46acc45 doesn't resolve",
+    "example quad-3: now 27",
     "example twice-3: now 9",
     "example twice-half: now 0.75",
   ]);
   expect((await checkVersion(await packed("2.0.0", { Twice: thrice }), previous)).says).toBe(true);
-  // Quad as 4x rather than Twice of Twice: a new pin, every old example met, a patch. (Twice
-  // itself can't change so quietly: Quad pins it.)
+  // Quad as 4x rather than Twice of Twice: a new pin, every old example met, a patch.
   const same = await checkVersion(await packed("1.0.1", { Quad: ["Function", ["Multiply", 4, "x"], "x"] }), previous);
   expect([same.level, same.says]).toEqual(["patch", true]);
+});
+
+test("packing refuses a pin its library doesn't have", async () => {
+  // Twice rewritten, and Quad left pinning the old one.
+  await expect(packed("1.0.1", { Twice: ["Function", ["Multiply", 3, "x"], "x"] }, false)).rejects.toThrow(
+    /ada\.Quad pins ada\.Twice@sha256-a6ca5cce[0-9a-f]+, and it's sha256-/,
+  );
 });
