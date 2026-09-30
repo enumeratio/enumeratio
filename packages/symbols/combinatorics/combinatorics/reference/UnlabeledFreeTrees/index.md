@@ -7,7 +7,7 @@ signatures:
   - call: UnlabeledFreeTrees(n)
     library: enumeratio-combinatorics
     description: every tree on $n$ unlabelled nodes with no distinguished root, one per isomorphism class.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<unlabeled_free_tree>
 enumerate:
   expr: UnlabeledFreeTrees(7)
   columns: Max

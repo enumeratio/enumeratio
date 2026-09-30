@@ -7,7 +7,7 @@ signatures:
   - call: PhylogeneticTrees(n)
     library: enumeratio-combinatorics
     description: every rooted binary tree with leaves labeled $1, …, n$ and unlabeled internal nodes.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<phylogenetic_tree>
 enumerate:
   expr: PhylogeneticTrees(5)
   columns: Max

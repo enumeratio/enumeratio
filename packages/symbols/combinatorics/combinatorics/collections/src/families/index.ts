@@ -42,6 +42,7 @@ import {
   coreEntries as treesCoreEntries,
   labeledEntries as treesLabeledEntries,
   rootedForestsEntries as treesRootedForestsEntries,
+  unlabeledTreesEntries as treesUnlabeledTreesEntries,
 } from "../../../trees/src/families/index.ts";
 import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
@@ -62,7 +63,6 @@ import { entries as numericClosedForm } from "./numeric-closed-form.ts";
 import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
-import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
 import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
@@ -113,7 +113,7 @@ const numberEntries = [
   ...numericRecurrence,
   ...numericDivisor,
   ...numericDigitsPrimes,
-  ...unlabeledTrees,
+  ...treesUnlabeledTreesEntries,
 ].map(numberKernel);
 
 // Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
