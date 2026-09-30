@@ -33,17 +33,30 @@ function negativeLiteral(node: unknown): number | undefined {
   return Number.isFinite(value) && value < 0 ? value : undefined;
 }
 
+/**
+ * Negate a node `negativeLiteral` found negative, without narrowing a
+ * high-precision `{num: "-3.14159…"}` string through a JS double — `-negative`
+ * would round it to ~17 digits.
+ */
+function negateLiteral(node: unknown): MathJsonExpression {
+  if (typeof node === "number") return -node as MathJsonExpression;
+  const s = (node as { num: string }).num;
+  return (s.startsWith("-") ? { num: s.slice(1) } : { num: `-${s}` }) as MathJsonExpression;
+}
+
 /** The term a trailing `Add` operand subtracts, or undefined if it adds. */
 function subtracted(node: unknown): MathJsonExpression | undefined {
   const negative = negativeLiteral(node);
-  if (negative !== undefined) return -negative as MathJsonExpression;
+  if (negative !== undefined) return negateLiteral(node);
   if (headOf(node) === "Negate") return opsOf(node)[0] as MathJsonExpression;
   // A product with a negative leading coefficient subtracts the rest of the product.
   if (headOf(node) === "Multiply") {
     const [first, ...rest] = opsOf(node);
     const negative = negativeLiteral(first);
     if (negative === undefined || rest.length === 0) return undefined;
-    return (negative === -1 && rest.length === 1 ? rest[0] : ["Multiply", -negative, ...rest]) as MathJsonExpression;
+    return (
+      negative === -1 && rest.length === 1 ? rest[0] : ["Multiply", negateLiteral(first), ...rest]
+    ) as MathJsonExpression;
   }
   return undefined;
 }
@@ -132,9 +145,53 @@ export function normalizeInputForm(json: MathJsonExpression): MathJsonExpression
   return rewrite(json);
 }
 
+/**
+ * compute-engine's Epsil formatter rebuilds each operand's line-vs-wrap layout
+ * from scratch on every `serialize`/`nextCol`/`cost` call instead of caching it
+ * once per node (`FormattingBlock` in `@cortex-js/compute-engine`'s
+ * `epsil/formatter.ts`), so printing time multiplies roughly 5-10x per extra
+ * level of operator nesting -- a chain of nested `Add`/`Multiply`/`Power`/…
+ * only 10-12 deep (a closed form out of `FunctionExpand`, say) never returns.
+ * `renderSafely` keeps every `serializeEpsil` call shallow: a subtree past
+ * `SAFE_DEPTH` is printed on its own, recursively, and spliced back in as a
+ * placeholder symbol. A compound splice is parenthesized unconditionally --
+ * extra parens are harmless (Epsil reads them off again), a hang is not.
+ */
+const SAFE_DEPTH = 5;
+
+function nodeDepth(node: unknown): number {
+  const ops = opsOf(node);
+  return ops.length === 0 ? 1 : 1 + Math.max(...ops.map(nodeDepth));
+}
+
+function isAtomic(node: unknown): boolean {
+  return headOf(node) === undefined;
+}
+
+function renderSafely(node: MathJsonExpression): string {
+  if (nodeDepth(node) <= SAFE_DEPTH) return serializeEpsil(node);
+
+  // Depth > 1 here always means a headed (array/`fn`) node -- `nodeDepth` is 1
+  // for anything `opsOf` can't descend into.
+  const head = headOf(node)!;
+  const ops = opsOf(node);
+  const placeholders: { name: string; text: string }[] = [];
+  const shallowOps = ops.map((op) => {
+    if (nodeDepth(op) <= SAFE_DEPTH - 1) return op;
+    const rendered = renderSafely(op as MathJsonExpression);
+    const name = `InputFormPlaceholder${placeholders.length}`;
+    placeholders.push({ name, text: isAtomic(op) ? rendered : `(${rendered})` });
+    return name;
+  });
+
+  let text = serializeEpsil([head, ...shallowOps] as MathJsonExpression);
+  for (const { name, text: sub } of placeholders) text = text.split(name).join(sub);
+  return text;
+}
+
 /** Print `json` as InputForm: Epsil you could type back in. */
 export function toInputForm(json: MathJsonExpression): string {
-  return serializeEpsil(normalizeInputForm(json));
+  return renderSafely(normalizeInputForm(json));
 }
 
 /** `BINDERS` is exported for the tests, which assert the unwrapping round-trips. */
