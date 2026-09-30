@@ -14,6 +14,7 @@ import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
 import { exactRounding } from "./patches/exact-rounding.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { infinityArgs } from "./patches/infinity-args.ts";
+import { rangeRationalStep } from "./patches/range-rational-step.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -97,6 +98,7 @@ export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
 export { exactRounding, evaluateRoundingOnExactRationals, roundExactRational } from "./patches/exact-rounding.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
+export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/range-rational-step.ts";
 export {
   infinityArgs,
   evaluateArcsinArccosAtInfinity,
@@ -214,6 +216,7 @@ export const PATCHES: readonly Patch[] = [
   exactRounding,
   multiplyDirectedInfinity,
   infinityArgs,
+  rangeRationalStep,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

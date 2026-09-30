@@ -104,6 +104,9 @@ const config = defineConfig({
   metaChunk: true,
   vite: {
     resolve: { alias: srcAliases },
+    // Module workers: a session kernel imports each library as its own chunk, which the
+    // default (IIFE) worker bundle can't split.
+    worker: { format: "es" },
     // Review mode: a dev-server-only REST API over a markdown backlog file, for
     // working through shipped features. `apply: "serve"` on the plugin itself
     // keeps it out of `vitepress build`/`preview`; gating it here too means the
