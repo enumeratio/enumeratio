@@ -32,6 +32,7 @@ export {
   type Ensured,
   manifestRegistry,
   namespaceOf,
+  pinnedHead,
   pinOf,
   qualifiedNamesOf,
   type Registry,
@@ -43,3 +44,11 @@ export {
   type SearchPathOptions,
   searchPath,
 } from "./registry.ts";
+export {
+  type FetchJson,
+  npmRegistry,
+  type NpmRegistryOptions,
+  type SymbolIndex,
+  symbolIndexOf,
+  type SymbolPackageField,
+} from "./npm-registry.ts";

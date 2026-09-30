@@ -1,0 +1,113 @@
+// Symbol packages on npm, read the way a page reads them from jsDelivr, but served from
+// tests/fixtures/npm by an injected fetch: @ada/primes, and @bob/extra, which pins two of
+// ada's symbols and uses a system one unpinned.
+
+import { cpSync, mkdtempSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { expect, test } from "vite-plus/test";
+import { packSymbols } from "../scripts/pack-symbols.ts";
+import {
+  combineRegistries,
+  createRegistryResolver,
+  type FetchJson,
+  type Library,
+  manifestRegistry,
+  npmRegistry,
+  searchPath,
+} from "../src/index.ts";
+
+const FIXTURES = new URL("./fixtures/npm/", import.meta.url).pathname;
+const CDN = "https://cdn.jsdelivr.net/npm";
+const PACKAGES: Readonly<Record<string, string>> = {
+  "@ada/primes@1.0.0": "ada-primes",
+  "@bob/extra@2.0.0": "bob-extra",
+};
+const SPECS = Object.keys(PACKAGES);
+
+/** jsDelivr, as far as these packages go: each URL a fixture file, and every read logged. */
+function cdn(edit: (url: string, json: unknown) => unknown = (_url, json) => json) {
+  const log: string[] = [];
+  const fetch: FetchJson = async (url) => {
+    log.push(url.slice(CDN.length + 1));
+    const spec = SPECS.find((s) => url.startsWith(`${CDN}/${s}/`));
+    if (spec === undefined) throw new Error(`${url}: 404`);
+    const file = join(FIXTURES, PACKAGES[spec]!, url.slice(`${CDN}/${spec}/`.length));
+    return edit(url, JSON.parse(readFileSync(file, "utf8")));
+  };
+  return { fetch, log };
+}
+
+type Engine = InstanceType<typeof ComputeEngine>;
+const evaluate = (ce: Engine, json: unknown): unknown => ce.box(json as never).evaluate().json;
+
+test("the fixtures' indexes are what packing their definitions writes", async () => {
+  for (const dir of Object.values(PACKAGES)) {
+    const copy = join(mkdtempSync(join(tmpdir(), "pack-")), dir);
+    cpSync(join(FIXTURES, dir), copy, { recursive: true });
+    const index = (path: string) => readFileSync(path, "utf8");
+    expect(index(await packSymbols(copy))).toBe(index(join(FIXTURES, dir, "symbols/index.json")));
+  }
+});
+
+test("a package's symbols evaluate at their pins, fetching only what the expression uses", async () => {
+  const { fetch, log } = cdn();
+  const npm = npmRegistry<Engine>(SPECS, { fetch });
+  const ce = new ComputeEngine();
+  const octuple = ["MemberCall", "bob", "'Octuple'", 1];
+  const ensured = await createRegistryResolver(npm).ensure(ce, octuple);
+  expect(ensured.errors).toEqual([]);
+  expect(evaluate(ce, octuple)).toBe(8);
+  expect(log.toSorted()).toEqual([
+    "@ada/primes@1.0.0/package.json",
+    "@ada/primes@1.0.0/symbols/Quad/definition.json",
+    "@ada/primes@1.0.0/symbols/Twice/definition.json",
+    "@ada/primes@1.0.0/symbols/index.json",
+    "@bob/extra@2.0.0/package.json",
+    "@bob/extra@2.0.0/symbols/Octuple/definition.json",
+    "@bob/extra@2.0.0/symbols/index.json",
+  ]);
+});
+
+test("a definition that doesn't hash to its pin isn't served", async () => {
+  const { fetch } = cdn((url, json) =>
+    url.endsWith("Twice/definition.json")
+      ? { ...(json as object), body: ["Function", ["Multiply", 3, "x"], "x"] }
+      : json,
+  );
+  const ensured = await createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch })).ensure(new ComputeEngine(), [
+    "MemberCall",
+    "ada",
+    "'Twice'",
+    1,
+  ]);
+  expect(ensured.unresolved).toEqual(["ada.Twice"]);
+});
+
+test("a scoped package's namespace is its scope", async () => {
+  const { fetch } = cdn((url, json) =>
+    url.endsWith("@bob/extra@2.0.0/package.json")
+      ? { ...(json as object), enumeratio: { namespace: "ada", index: "./symbols/index.json" } }
+      : json,
+  );
+  await expect(npmRegistry<Engine>(SPECS, { fetch }).names!("bob")).rejects.toThrow(
+    "@bob/extra@2.0.0 claims the namespace ada, not its scope bob",
+  );
+  expect(() => npmRegistry<Engine>(["@ada/primes"], { fetch })).toThrow("needs a version");
+});
+
+test("beside the system: a search path over npm namespaces, and system names unpinned", async () => {
+  const log: string[] = [];
+  const analytic: Library<Engine> = { name: "analytic", declare: () => void log.push("analytic") };
+  const registry = combineRegistries(manifestRegistry([analytic]), npmRegistry<Engine>(SPECS, cdn()));
+  const path = await searchPath(registry, { use: ["ada", "bob"] });
+  const ensured = await createRegistryResolver(registry, { path }).ensure(new ComputeEngine(), [
+    "Add",
+    ["Quad", 1],
+    ["Zh", 2],
+  ]);
+  expect(ensured.errors).toEqual([]);
+  expect(ensured.expression).toEqual(["Add", ["MemberCall", "ada", "'Quad'", 1], ["MemberCall", "bob", "'Zh'", 2]]);
+  expect(log).toEqual(["analytic"]);
+});

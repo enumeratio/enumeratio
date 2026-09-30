@@ -95,10 +95,17 @@ export async function pinOf(definition: Definition): Promise<string> {
 }
 
 /**
+ * The head a pinned definition is declared as: `ns_Name_` and the pin's first hex digits
+ * (never written by anyone: `.` isn't legal in an engine's symbol name, and two versions need
+ * two heads).
+ */
+export const pinnedHead = (namespace: string, member: string, pin: string): string =>
+  `${namespace}_${member}_${pin.slice(7, 15)}`;
+
+/**
  * Epsil definitions as a registry, under one namespace: each name's versions, oldest first.
- * `ns.Name` resolves to the latest, `ns.Name` with a pin to that version, and the head is
- * `ns_Name_` and the pin's first hex digits (never written by anyone: `.` isn't legal in an
- * engine's symbol name, and two versions need two heads).
+ * `ns.Name` resolves to the latest, `ns.Name` with a pin to that version, each under its
+ * `pinnedHead`.
  */
 export function definitionRegistry<Engine extends object>(
   namespace: string,
@@ -124,7 +131,7 @@ export function definitionRegistry<Engine extends object>(
       const all = await versions(member);
       const found = pin === undefined ? all.at(-1) : all.find((v) => v.pin === pin);
       if (found === undefined) return undefined;
-      return { head: `${namespace}_${member}_${found.pin.slice(7, 15)}`, ...found };
+      return { head: pinnedHead(namespace, member, found.pin), ...found };
     },
   };
 }
@@ -168,11 +175,14 @@ export interface SearchPathConflict {
 }
 
 export class SearchPathError extends Error {
-  constructor(readonly conflicts: readonly SearchPathConflict[]) {
+  readonly conflicts: readonly SearchPathConflict[];
+
+  constructor(conflicts: readonly SearchPathConflict[]) {
     const lines = conflicts.map(
       (c) => `${c.name}: ${[...(c.system ? ["the system"] : []), ...c.namespaces].join(", ")}`,
     );
     super(`search path: ${conflicts.length} name(s) need prefer or exclude\n  ${lines.join("\n  ")}`);
+    this.conflicts = conflicts;
   }
 }
 

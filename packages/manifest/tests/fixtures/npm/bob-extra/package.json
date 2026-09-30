@@ -1,0 +1,14 @@
+{
+  "name": "@bob/extra",
+  "version": "2.0.0",
+  "keywords": [
+    "enumeratio-symbols"
+  ],
+  "dependencies": {
+    "@ada/primes": "1.0.0"
+  },
+  "enumeratio": {
+    "namespace": "bob",
+    "index": "./symbols/index.json"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "namespace": "bob",
+  "symbols": {
+    "Octuple": {
+      "signature": "(number) -> number",
+      "pin": "sha256-063fb1e590d68e17a590e5edc9fa09ee097d112b13f930f42844d86906862c57",
+      "requires": {
+        "ada.Quad": "sha256-244facbb10e78c5d1afe0fa151e80c0c67104542e21bcf1b4ba9ca08a33ab920",
+        "ada.Twice": "sha256-a6ca5cce8d3e17fc60c7e9298332578c8a551ba47d71bbb8c10ec667a46acc45"
+      }
+    },
+    "Zh": {
+      "signature": "(number) -> number",
+      "pin": "sha256-06ba181ba221e7d4e5398f542ee4c1298cae163d400425e042dd68ca658ab1f8"
+    }
+  }
+}
