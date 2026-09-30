@@ -6,5 +6,5 @@ the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	"NonCommutativeMultiply(\n        
 reversing-the-operands-flips-the-sign	NonCommutativeMultiply(e_2, e_1)	-(e_1 * e_2)
 e-1e-2-2-1	NonCommutativeMultiply(e_1, e_2, e_1, e_2)	-1
 associative-nested-products-flatten	NonCommutativeMultiply(a, NonCommutativeMultiply(b, c))	a * b * c
-plain-times-declines-both-orders-arrive	e_2 * e_1	e_1 * e_2
 undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply(b, a)	a * b
+plain-times-declines-both-orders-arrive	e_2 * e_1	e_1 * e_2
