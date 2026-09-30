@@ -12,6 +12,7 @@ export {
   allCarrierParams,
   type CarrierRegistration,
   carrierNameForType,
+  carrierTypeForName,
   collectionCarrierOf,
   ensureOperationHeads,
   type Operation,

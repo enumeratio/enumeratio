@@ -307,13 +307,21 @@ export function declareRestrictions(ce: ComputeEngine, restrictions: readonly Re
       evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
         const size = ops[0];
         if (size === undefined) return undefined;
+        // `_x` is the bound element as Filter hands it back — carrier-typed when `carrier` is
+        // defined. `_raw` is its CONTENTS: for a carrier-typed element that is always
+        // `Carrier(contents)` (one operand — see collections' `declareFamilies`/`handlersOf`),
+        // so `First` reads it back out; untyped, the element already IS its own contents.
+        // Bound via `Assign` rather than substituted inline: `First(_e)` substituted directly
+        // into the predicate tree doesn't get re-reduced once `Function` binds `_e` (a
+        // compute-engine quirk with a call nested under another lazy head, `All` here) --
+        // `Block`+`Assign` forces it to a concrete value before the predicate ever sees it.
+        const rawInit = carrier === undefined ? "_e" : ["First", "_e"];
+        const filled = fillPredicate(restriction.predicate, "_e", "_raw");
+        const body = ["Block", ["Assign", "_raw", rawInit], filled];
         return ce
           .function("Filter", [
             ce.function(restriction.base, [size]),
-            ce.function("Function", [
-              ce.box(fillPredicate(restriction.predicate, "_e", "_e") as never),
-              ce.symbol("_e"),
-            ]),
+            ce.function("Function", [ce.box(body as never), ce.symbol("_e")]),
           ])
           .evaluate();
       },

@@ -1,11 +1,11 @@
-// Write combinatorics' domains-area generated map entries (domains-entries.ts) into its
+// Write combinatorics' generated map entries (map-entries.ts) into its
 // reference/. Lives in statistics/scripts/, not combinatorics/, so the generator can import
-// declareStatistics without cycling (see domains-entries.ts).
+// declareStatistics without cycling (see map-entries.ts).
 //
-//   vp node packages/symbols/combinatorics/statistics/scripts/collect-domains-entries.ts
+//   vp node packages/symbols/combinatorics/statistics/scripts/collect-map-entries.ts
 
 import { writeEntries } from "@enumeratio/entry/node";
-import { generated } from "./domains-entries.ts";
+import { generated } from "./map-entries.ts";
 
 await writeEntries(new URL("../../combinatorics/reference/", import.meta.url), generated);
 process.stdout.write(`wrote ${generated.entries.length} entries\n`);

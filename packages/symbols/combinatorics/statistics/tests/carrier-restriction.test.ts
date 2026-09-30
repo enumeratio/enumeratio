@@ -1,19 +1,22 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics/src";
 import {
+  carrierNameForType,
   declareRestricted,
   declareRestrictions,
   fillPredicate,
   RESTRICTIONS,
   RestrictionCollisionError,
+  type Restriction,
 } from "@enumeratio/structures";
 
 const ce = new ComputeEngine();
-declareCollections(ce);
-declareCombinatoricsCarriers(ce);
+// A-94: declareCombinatorics (each area's own carriers + families) replaces the old bare
+// declareCollections + declareCombinatoricsCarriers pair -- the restriction bases below
+// (SymmetricGroup, IntegerCompositions, IntegerPartitions, ...) live in their own areas now.
+declareCombinatorics(ce);
 // collections ships its own fast permutation statistics under several of these names; the
 // definitions go into the same table and leave collections' heads to it.
 declareStatistics(ce, ALL_STATISTICS);
@@ -22,12 +25,27 @@ declareRestrictions(ce, RESTRICTIONS);
 
 const count = (expr: unknown): number => ce.box(["Count", expr] as never).evaluate().re;
 
+/** `_x` is the bound (possibly carrier-typed) element; `_raw` is its CONTENTS -- for a
+ *  carrier-typed element that is always `Carrier(contents)` (one operand), so `First` reads
+ *  it back out. Bound via `Assign` rather than substituted inline, same fix (and same reason)
+ *  as `declareRestrictions` itself now applies (A-94 typed every carrier-bearing family,
+ *  which this differential test exercises directly -- see that function's own comment). */
+const fillRestriction = (restriction: Restriction): unknown => {
+  const carrier = carrierNameForType(ce, restriction.on);
+  const rawInit = carrier === undefined ? "_e" : ["First", "_e"];
+  return ["Block", ["Assign", "_raw", rawInit], fillPredicate(restriction.predicate, "_e", "_raw")];
+};
+
 test("an anonymous restriction is a lazy sub-collection", () => {
   // No new machinery: Restricted delegates to Filter, and Filter over a lazy collection stays
   // lazy — counting the derangements of 5 never materialises the 120 permutations.
   const derangements = ["Restricted", ["SymmetricGroup", 5], ["Function", ["Equal", ["FixedPoints", "p"], 0], "p"]];
   expect(count(derangements)).toBe(44);
-  expect(ce.box(["Element", ["List", 2, 1, 4, 5, 3], derangements] as never).evaluate().json).toBe("True");
+  // SymmetricGroup's elements come out typed (A-94) -- `Element` needs the same shape it hands
+  // back, `Permutation([...])`, not the bare list.
+  expect(ce.box(["Element", ["Permutation", ["List", 2, 1, 4, 5, 3]], derangements] as never).evaluate().json).toBe(
+    "True",
+  );
 });
 
 test("a named restriction is an anonymous one that earned a name", () => {
@@ -73,11 +91,7 @@ test("the specification agrees with the fast kernel — as a SET", () => {
   for (const restriction of RESTRICTIONS) {
     if (!ce.lookupDefinition(restriction.name)) continue;
     for (let n = 0; n <= 5; n++) {
-      const specified = [
-        "Restricted",
-        [restriction.base, n],
-        ["Function", fillPredicate(restriction.predicate, "_e", "_e"), "_e"],
-      ];
+      const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
       expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
@@ -106,11 +120,7 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
     if (!COMPOSITION_RESTRICTION_NAMES.has(restriction.name)) continue;
     if (!ce.lookupDefinition(restriction.name)) continue;
     for (let n = 0; n <= 8; n++) {
-      const specified = [
-        "Restricted",
-        [restriction.base, n],
-        ["Function", fillPredicate(restriction.predicate, "_e", "_e"), "_e"],
-      ];
+      const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
       expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
@@ -132,11 +142,7 @@ test("partition restrictions agree with their kernels for n = 0..8", () => {
     if (!PARTITION_RESTRICTION_NAMES.has(restriction.name)) continue;
     if (!ce.lookupDefinition(restriction.name)) continue;
     for (let n = 0; n <= 8; n++) {
-      const specified = [
-        "Restricted",
-        [restriction.base, n],
-        ["Function", fillPredicate(restriction.predicate, "_e", "_e"), "_e"],
-      ];
+      const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
       expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());

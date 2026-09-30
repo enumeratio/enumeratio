@@ -2,16 +2,13 @@
 // wrapping by the caller, on an engine that declares carriers before collections (the real
 // shape every production engine uses — cli, web, census, reference/scripts/engines.ts).
 import { ComputeEngine } from "@cortex-js/compute-engine";
-// Buildless src subpaths: this test runs without a prior `vp pack`.
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics/src";
 
 const ce = new ComputeEngine();
-declareCombinatoricsCarriers(ce);
+declareCombinatorics(ce);
 const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
-declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 
 test("CycleCount(At(Permutations(5), 3)) evaluates directly, no wrapping", () => {

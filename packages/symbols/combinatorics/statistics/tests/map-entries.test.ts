@@ -1,9 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-// Buildless src subpaths: the entry tests must run without a prior `vp pack`.
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatoricsCarriers, declareMaps } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
 import { readEntries } from "@enumeratio/entry/node";
 
 const entries = [
@@ -19,11 +17,11 @@ const entries = [
   ),
 ];
 
-// The same stack both engines declare, in the same order.
+// The same stack both engines declare, in the same order (A-94: declareCombinatorics is now
+// the one call -- each area mints its own carriers alongside its own families).
 const ce = new ComputeEngine();
-declareCombinatoricsCarriers(ce);
+declareCombinatorics(ce);
 const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
-declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 

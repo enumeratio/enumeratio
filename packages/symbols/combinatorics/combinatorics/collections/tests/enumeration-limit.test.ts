@@ -7,12 +7,14 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { bigintEntries } from "../../permutations/src/families/core.ts";
-import { declareCollections } from "../src/library.ts";
+import { declareCombinatorics } from "../../src/index.ts";
 
 const [symmetricGroup] = bigintEntries;
 
+// A-94: SymmetricGroup and BoxedPlanePartitions carry their own carriers now, so a bare
+// declareCollections(ce) no longer declares them at all -- declareCombinatorics does, typed.
 const ce = new ComputeEngine();
-declareCollections(ce);
+declareCombinatorics(ce);
 
 const run = (expr: unknown) => {
   const { value, messages } = collectMessages(ce, () => ce.box(expr as never).evaluate());
@@ -55,8 +57,16 @@ test("a count past 2^53 in a plain-number kernel is unknown, not an internal err
 
 test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements index", () => {
   expect(run(["Count", ["SymmetricGroup", 20]]).json).toEqual({ num: "2432902008176640000" });
-  expect(run(["At", ["SymmetricGroup", 20], 1]).json).toEqual(["List", ...Array.from({ length: 20 }, (_, i) => i + 1)]);
-  const last = run(["At", ["SymmetricGroup", 20], Number.MAX_SAFE_INTEGER]).json as ["List", ...number[]];
-  expect(last.length).toBe(21);
-  expect(symmetricGroup.rank(last.slice(1), [20])).toBe(BigInt(Number.MAX_SAFE_INTEGER - 1));
+  // Typed by its carrier now that declareCombinatorics declares Permutation too (A-94).
+  expect(run(["At", ["SymmetricGroup", 20], 1]).json).toEqual([
+    "Permutation",
+    ["List", ...Array.from({ length: 20 }, (_, i) => i + 1)],
+  ]);
+  const last = run(["At", ["SymmetricGroup", 20], Number.MAX_SAFE_INTEGER]).json as [
+    "Permutation",
+    ["List", ...number[]],
+  ];
+  const [, word] = last;
+  expect(word.length).toBe(21);
+  expect(symmetricGroup.rank(word.slice(1), [20])).toBe(BigInt(Number.MAX_SAFE_INTEGER - 1));
 });

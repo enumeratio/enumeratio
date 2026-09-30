@@ -1,9 +1,10 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareCollections } from "../src/library.ts";
+import { declareCombinatorics } from "../../src/index.ts";
 
+// DyckPaths lives in lattice-paths now (A-94) -- declareCollections alone no longer declares it.
 const ce = new ComputeEngine();
-declareCollections(ce);
+declareCombinatorics(ce);
 
 const evalMJ = (mathjson: unknown) => ce.box(mathjson as Parameters<ComputeEngine["box"]>[0]).evaluate();
 

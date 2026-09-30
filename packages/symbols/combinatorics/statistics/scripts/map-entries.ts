@@ -2,7 +2,7 @@
 // retired domains area) — one per combinatorial map, plus one per undefined map on the
 // frontier. Same shape and the same reason as the statistics entries: the map data carries a
 // signature and a summary but no worked example, so this evaluates each map at a fixed subject
-// and pins the answer. scripts/collect-domains-entries.ts writes them; tests/domains-
+// and pins the answer. scripts/collect-map-entries.ts writes them; tests/map-
 // generated.test.ts checks they're current.
 //
 // Lives here, not in combinatorics, because it needs declareStatistics: combinatorics already

@@ -2,7 +2,7 @@
 // (rather than only the reference reading). See map-helpers.ts for shared setup, and
 // map-foata.test.ts for the reference-algorithm-only extension of this property to n <= 7.
 import { expect, test } from "vite-plus/test";
-import { cyclesOf, leftToRightMaxima, perm, permutations, result } from "./domains-map-helpers.ts";
+import { cyclesOf, leftToRightMaxima, perm, permutations, result } from "./maps-helpers.ts";
 
 test("Foata (via the engine) is a bijection on S_n for n <= 5, sending k cycles to k left-to-right maxima", () => {
   // The defining property of the first fundamental transformation, checked against the

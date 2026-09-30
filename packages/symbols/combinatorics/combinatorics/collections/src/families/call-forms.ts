@@ -25,6 +25,7 @@
 // for, confined to the one file that needs it.
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf, widenSignature } from "@enumeratio/engine";
+import { carrierTypeForName } from "@enumeratio/structures";
 import {
   BellB,
   IsSetPartitionOf,
@@ -349,10 +350,13 @@ function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHand
 }
 
 /** Declare the widened call forms. Call AFTER declareFamilies (IntegerPartitions,
- *  SetPartitions and Subsets must already be declared) -- declareCollections does. */
-export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Record<string, string>> = {}): void {
+ *  SetPartitions and Subsets must already be declared) -- declareCollections does. Each
+ *  widened head's carrier type, when it has one, is read back from `ce`'s own registry
+ *  (`carrierTypeForName`) rather than passed in -- self-contained per head, since
+ *  IntegerPartitions/SetPartitions/Subsets are each declared, and typed, before this runs. */
+export function declareCallForms(ce: ComputeEngine): void {
   // Typed by its carrier when it has one: `IntegerPartition([3, 1])`, as the plain family is.
-  const partition = carrierTypes.IntegerPartition;
+  const partition = carrierTypeForName(ce, "IntegerPartition");
   widenSignature(ce, "IntegerPartitions", `(integer, any?, any?) -> list<${partition ?? "list<integer>"}>`);
   setCollection(
     ce,
@@ -372,7 +376,7 @@ export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Recor
   // plain integer form; resolveSetPartitions/resolveSubsets dispatch on which it got.
   // Over 1..n, typed by its carrier when it has one; over an explicit list, blocks of those
   // elements, which no carrier holds.
-  const setPartition = carrierTypes.SetPartition;
+  const setPartition = carrierTypeForName(ce, "SetPartition");
   widenSignature(
     ce,
     "SetPartitions",
@@ -404,7 +408,7 @@ export function declareCallForms(ce: ComputeEngine, carrierTypes: Readonly<Recor
   if (permutations !== undefined) {
     const native = permutations.evaluate;
     const signature = `${permutations.signature as unknown as string}`;
-    const permutationType = carrierTypes.Permutation;
+    const permutationType = carrierTypeForName(ce, "Permutation");
     (permutations as { signature: unknown }).signature = ce.type(
       `${signature} & ((integer<0..>) -> indexed_collection<${permutationType ?? "list<integer>"}>)`,
     );

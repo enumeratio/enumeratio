@@ -184,6 +184,13 @@ export function carrierNameForType(ce: ComputeEngine, type: string): string | un
   return undefined;
 }
 
+/** The type a registered carrier CONSTRUCTOR name mints (`Permutation` -> `permutation`), the
+ *  reverse of `carrierNameForType` — what a family typed by that carrier reads. Undefined when
+ *  `name` isn't a registered carrier, or was registered with no type yet. */
+export function carrierTypeForName(ce: ComputeEngine, name: string): string | undefined {
+  return registryOf(ce).carriers.get(name)?.type;
+}
+
 /** Every carrier constructor name registered on `ce` (`registerCarrier`/`declareCarriers`),
  *  across every owning package — the list oracle's engine-free `emit`/`structural` modules
  *  bake into a generated data file, since they cannot hold a live engine themselves. */
