@@ -1,2 +1,2 @@
 id	in	out
-the-one-line-word-231	<RskRecording><Permutation><List>2 3 1</List></Permutation></RskRecording>	<StandardTableau><List>1 2 3</List></StandardTableau>
+the-one-line-word-231	<RskRecording><Permutation><List>2 3 1</List></Permutation></RskRecording>	<StandardTableau><List><List>1 2</List> <List>3</List></List></StandardTableau>
