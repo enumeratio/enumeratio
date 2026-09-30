@@ -1,8 +1,8 @@
 // The components' attribute tables, read straight out of the element sources. Nothing
 // is generated into the repo: a table is derived from each element's own `static
 // properties`, `declare` types and constructor defaults, so it cannot drift from the
-// source. The reference reads it for its pages, the Vue and React packages for their
-// wrappers -- one reading, three uses. Node only (it reads files); a subpath export.
+// source. The reference reads it for its pages. Node only (it reads files); a subpath
+// export.
 //
 // What a component author controls:
 //   * the JSDoc block on the exported class becomes the component's summary;
@@ -185,20 +185,13 @@ export function collectComponents(srcDir: string): ComponentDoc[] {
     .toSorted((a, b) => a.tag.localeCompare(b.tag));
 }
 
-/** `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: a wrapper's name. */
-export function wrapperName(tag: string): string {
+/** `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: `tagOf` backwards. */
+export function headOfTag(tag: string): string {
   return tag
     .replace(/^notatio-/, "")
     .split("-")
     .map((part) => (/^\d/.test(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
     .join("");
-}
-
-/** The TypeScript type a wrapper prop takes, from the element's declared property type. */
-export function propType(a: AttributeDoc): "boolean" | "number" | "string" {
-  if (/\bboolean\b/.test(a.type)) return "boolean";
-  if (/\bnumber\b/.test(a.type)) return "number";
-  return "string";
 }
 
 const escapeAttribute = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
@@ -215,7 +208,7 @@ function printAttributes(attributes: Readonly<Record<string, string>>): string {
 
 /**
  * A structural tree (`structuralOf`) as the markup a person would author by hand
- * (https://github.com/enumeratio/enumeratio/wiki/Vdom): lit tags renamed to their Vue/React wrapper (`notatio-bar-chart-3d` ->
+ * (https://github.com/enumeratio/enumeratio/wiki/Vdom): lit tags renamed to their head (`notatio-bar-chart-3d` ->
  * `BarChart3D`), attributes as-is (`structuralOf` already lowers options into kebab-case
  * attributes), and a run of leaf children collapsed to their comma-joined `value`s
  * (`<Tuple>x, 0, 10</Tuple>`) rather than one nested atom tag each -- the "short spelling" the
@@ -223,7 +216,7 @@ function printAttributes(attributes: Readonly<Record<string, string>>): string {
  */
 export function structuralMarkupOf(rendering: Rendering, depth = 0): string {
   const pad = "  ".repeat(depth);
-  const name = wrapperName(rendering.tag);
+  const name = headOfTag(rendering.tag);
   const attrs = printAttributes(rendering.attributes);
   if (isLeaf(rendering)) return `${pad}<${name}${attrs} />`;
   const open = `${pad}<${name}${attrs}`;

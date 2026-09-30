@@ -10,17 +10,15 @@ plot on paper is rasterized; a `Row` in a narrow column stacks. The web and a te
 have an engine and a way in, so there the expression is left alone. See
 `https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments`.
 
-Every `<Notatio>` on the site reduces for the page's own environment as it changes --
-print it (or open the print preview) and the sliders become grids; narrow the window and
-the rows stack. The cards below let you pick the environment instead.
+Each card below reduces its expression for the environment you pick, and for the page's
+own when it prints.
 
 ## Kick the tires
 
 Three ways in, and all of them read the same `reduce`:
 
-- **Print this page.** ⌘P (or the browser's print preview) and every `<Notatio>` on the
-  site — here, on [Controls](/playground/controls), anywhere — re-renders for `print`:
-  the sliders become grids of small multiples, the readouts are evaluated once, a
+- **Print this page.** ⌘P (or the browser's print preview) and every card re-renders for
+  `print`: the sliders become grids of small multiples, the readouts are evaluated once, a
   WebGPU portrait rasterizes.
 - **Narrow the window** past 640px (or open the site on a phone). `Row` becomes
   `Column`; the controls stay live, because a phone can still drive them.
