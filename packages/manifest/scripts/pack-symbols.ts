@@ -11,6 +11,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { readEntries } from "@enumeratio/entry/node";
+import { validRange } from "semver";
 import type { Definition, Example } from "../src/registry.ts";
 import { entryOf } from "./symbol-entry.ts";
 import { type SymbolPackageField, symbolIndexOf } from "../src/npm-registry.ts";
@@ -22,6 +23,8 @@ export async function packSymbols(dir: string): Promise<string> {
     dependencies?: Record<string, string>;
   };
   if (pkg.enumeratio === undefined) throw new Error(`${dir}: package.json has no "enumeratio" field`);
+  if (pkg.enumeratio.system !== undefined && validRange(pkg.enumeratio.system) === null)
+    throw new Error(`${dir}: "system" is ${pkg.enumeratio.system}, which isn't a version range`);
   const indexPath = join(dir, pkg.enumeratio.index);
   const symbolsDir = dirname(indexPath);
   const records = new Map(readEntries(symbolsDir).map((entry) => [entry.name, entry]));

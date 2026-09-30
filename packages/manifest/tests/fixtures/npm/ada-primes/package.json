@@ -15,6 +15,6 @@
   "enumeratio": {
     "namespace": "ada",
     "index": "./symbols/index.json",
-    "system": ">=0.1"
+    "system": "0.x"
   }
 }

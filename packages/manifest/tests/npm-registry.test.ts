@@ -184,3 +184,11 @@ test("from ranges: lock the versions, then read them", async () => {
   ]);
   expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 1])).toBe(8);
 });
+
+test("a package whose system range doesn't admit the system's version isn't read", async () => {
+  const { fetch } = cdn();
+  expect(await npmRegistry<Engine>(SPECS, { fetch, system: "0.9.0" }).names!("ada")).toContain("Twice");
+  await expect(npmRegistry<Engine>(SPECS, { fetch, system: "1.0.0" }).names!("ada")).rejects.toThrow(
+    "npm registry: @ada/primes@1.0.0 is for the system 0.x, not 1.0.0",
+  );
+});

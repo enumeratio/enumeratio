@@ -2,12 +2,14 @@ import { expect, test } from "vite-plus/test";
 import { type FetchJson, lockPackages, specsOf } from "../src/index.ts";
 
 // A small npm: each package's versions and what each version's package.json says.
-const symbols = (namespace: string, dependencies: Record<string, string> = {}) => ({
-  enumeratio: { namespace, index: "./symbols/index.json" },
+const symbols = (namespace: string, dependencies: Record<string, string> = {}, system?: string) => ({
+  enumeratio: { namespace, index: "./symbols/index.json", ...(system === undefined ? {} : { system }) },
   dependencies,
 });
 const WORLD: Readonly<Record<string, Readonly<Record<string, object>>>> = {
   "@ada/primes": { "1.0.0": symbols("ada"), "1.1.0": symbols("ada"), "1.2.0": symbols("ada"), "2.0.0": symbols("ada") },
+  // 1.1.0 runs on any 0.x system, 1.2.0 needs 0.2.
+  "@dee/sieve": { "1.1.0": symbols("dee", {}, "0.x"), "1.2.0": symbols("dee", {}, ">=0.2.0 <1") },
   "@bob/extra": {
     "2.0.0": symbols("bob", { "@ada/primes": "^1.0.0", "left-pad": "^1.0.0" }),
     "2.1.0": symbols("bob", { "@ada/primes": "~1.1.0", "left-pad": "^1.0.0" }),
@@ -60,4 +62,17 @@ test("ranges no one version meets throw, naming who asked", async () => {
   );
   await expect(lockPackages(["@ada/primes@banana"], npm())).rejects.toThrow("isn't a version range");
   await expect(lockPackages(["left-pad@^1.0.0"], npm())).rejects.toThrow("left-pad@1.3.0 isn't a symbol package");
+});
+
+test("the highest version whose system range admits the system's version", async () => {
+  expect(await lockPackages(["@dee/sieve@^1.0.0"], { ...npm(), system: "0.2.0" })).toEqual({ "@dee/sieve": "1.2.0" });
+  expect(await lockPackages(["@dee/sieve@^1.0.0"], { ...npm(), system: "0.1.0" })).toEqual({ "@dee/sieve": "1.1.0" });
+  // A lock the system can't run moves.
+  const lock = { "@dee/sieve": "1.2.0" };
+  expect(await lockPackages(["@dee/sieve@^1.0.0"], { ...npm(), lock, system: "0.1.0" })).toEqual({
+    "@dee/sieve": "1.1.0",
+  });
+  await expect(lockPackages(["@dee/sieve@1.2.0"], { ...npm(), system: "0.1.0" })).rejects.toThrow(
+    "no version of @dee/sieve satisfies 1.2.0 (the host) and runs on the system 0.1.0",
+  );
 });

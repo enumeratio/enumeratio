@@ -36,7 +36,9 @@ the resolver possible (below).
 - **`lockPackages` / `specsOf`** (`src/npm-lock.ts`) — symbol packages asked for by range
   (`@ada/primes@^1.0.0`) to the exact versions `npmRegistry` reads, closed over the symbol
   packages they depend on: per package, the highest version every range asking for it
-  admits (`semver`); a lock's version holds while every range still admits it. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  admits (`semver`) and whose `system` range admits the system's version
+  (`SYSTEM_VERSION`, the repository's own); a lock's version holds while both still do.
+  `npmRegistry` refuses a package whose `system` range doesn't admit it. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 

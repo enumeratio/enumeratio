@@ -4,8 +4,9 @@
 // chosen: a locked version stays while every range asking for it still admits it, so a page
 // means at run time what it meant when it was locked.
 
-import { maxSatisfying, satisfies, validRange } from "semver";
-import { type FetchJson, fetchJson, type SymbolPackageField } from "./npm-registry.ts";
+import { maxSatisfying, rsort, satisfies, validRange } from "semver";
+import { admitsSystem, type FetchJson, fetchJson, type SymbolPackageField } from "./npm-registry.ts";
+import { SYSTEM_VERSION } from "./system.ts";
 
 /** The exact version chosen for each package, by name. */
 export type PackageLock = Readonly<Record<string, string>>;
@@ -24,6 +25,8 @@ export const jsdelivrVersions =
   };
 
 export interface LockOptions {
+  /** The system's version, which a chosen version's `system` range must admit: ours by default. */
+  readonly system?: string;
   /** What was chosen before: kept where every range still admits it. */
   readonly lock?: PackageLock;
   readonly listVersions?: ListVersions;
@@ -42,11 +45,12 @@ function parseWanted(spec: string): { name: string; range: string } {
 /**
  * Exact versions for `wanted` (`name@range`), and for every symbol package they depend on,
  * transitively: a dependency is a symbol package when its `package.json` has an `enumeratio`
- * field. One version per package, the highest every range asking for it admits; a range
+ * field. One version per package, the highest every range asking for it admits and whose
+ * `system` range admits the system's version; a range
  * nothing satisfies, or two ranges no one version meets, throws, naming them.
  */
 export async function lockPackages(wanted: readonly string[], options: LockOptions = {}): Promise<PackageLock> {
-  const { lock = {}, cdn = "https://cdn.jsdelivr.net/npm", fetch = fetchJson } = options;
+  const { lock = {}, cdn = "https://cdn.jsdelivr.net/npm", fetch = fetchJson, system = SYSTEM_VERSION } = options;
   const listVersions = options.listVersions ?? jsdelivrVersions(fetch);
   const versionLists = new Map<string, Promise<readonly string[]>>();
   const versionsOf = (name: string): Promise<readonly string[]> => {
@@ -60,6 +64,23 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
   const highest = async (name: string, range: string): Promise<string | null> =>
     maxSatisfying([...(await versionsOf(name))], range);
 
+  type PackageJson = { enumeratio?: SymbolPackageField; dependencies?: Record<string, string> };
+  const manifests = new Map<string, Promise<PackageJson>>();
+  const packageJson = (name: string, version: string): Promise<PackageJson> => {
+    const key = `${name}@${version}`;
+    let found = manifests.get(key);
+    if (found === undefined) {
+      found = fetch(`${cdn}/${key}/package.json`) as Promise<PackageJson>;
+      manifests.set(key, found);
+    }
+    return found;
+  };
+  /** A version the system can run: its `system` range admits the system's version. */
+  const runs = async (name: string, version: string): Promise<boolean> => {
+    const { enumeratio } = await packageJson(name, version);
+    return enumeratio === undefined || admitsSystem(enumeratio, system);
+  };
+
   type Ask = { readonly name: string; readonly range: string; readonly by: string };
   const host: Ask[] = wanted.map((spec) => ({ ...parseWanted(spec), by: "the host" }));
   // What each package version asks of the symbol packages it depends on, read once.
@@ -69,10 +90,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
     let found = asksOf.get(key);
     if (found === undefined) {
       found = (async () => {
-        const pkg = (await fetch(`${cdn}/${key}/package.json`)) as {
-          enumeratio?: SymbolPackageField;
-          dependencies?: Record<string, string>;
-        };
+        const pkg = await packageJson(name, version);
         if (pkg.enumeratio === undefined) throw new Error(`${key} isn't a symbol package`);
         const asks: Ask[] = [];
         for (const [dependency, range] of Object.entries(pkg.dependencies ?? {})) {
@@ -80,7 +98,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
           const locked = lock[dependency];
           const any = locked !== undefined && satisfies(locked, range) ? locked : await highest(dependency, range);
           if (any === null) throw new Error(`no version of ${dependency} satisfies ${range} (${key})`);
-          const dependencyPkg = (await fetch(`${cdn}/${dependency}@${any}/package.json`)) as { enumeratio?: unknown };
+          const dependencyPkg = await packageJson(dependency, any);
           if (dependencyPkg.enumeratio !== undefined) asks.push({ name: dependency, range, by: key });
         }
         return asks;
@@ -105,16 +123,24 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
     }
     const next = new Map<string, string>();
     for (const [name, asked] of byName) {
+      const admitted = (version: string): boolean => asked.every(({ range }) => satisfies(version, range));
       const locked = lock[name];
-      if (locked !== undefined && asked.every(({ range }) => satisfies(locked, range))) {
+      if (locked !== undefined && admitted(locked) && (await runs(name, locked))) {
         next.set(name, locked);
         continue;
       }
-      const found = await highest(name, asked.map(({ range }) => range).join(" "));
-      if (found === null)
-        throw new Error(
-          `no version of ${name} satisfies ${asked.map(({ range, by }) => `${range} (${by})`).join(", ")}`,
-        );
+      // Highest first, the first the system can run.
+      let found: string | undefined;
+      for (const version of rsort((await versionsOf(name)).filter(admitted)))
+        if (await runs(name, version)) {
+          found = version;
+          break;
+        }
+      if (found === undefined) {
+        const asks = asked.map(({ range, by }) => `${range} (${by})`).join(", ");
+        const any = (await versionsOf(name)).some(admitted);
+        throw new Error(`no version of ${name} satisfies ${asks}${any ? ` and runs on the system ${system}` : ""}`);
+      }
       next.set(name, found);
     }
     const settled = next.size === chosen.size && [...next].every(([name, version]) => chosen.get(name) === version);

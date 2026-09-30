@@ -48,6 +48,7 @@ export {
   withHeads,
 } from "./registry.ts";
 export {
+  admitsSystem,
   type FetchJson,
   npmRegistry,
   type NpmRegistryOptions,
@@ -63,3 +64,4 @@ export {
   type PackageLock,
   specsOf,
 } from "./npm-lock.ts";
+export { SYSTEM_VERSION } from "./system.ts";
