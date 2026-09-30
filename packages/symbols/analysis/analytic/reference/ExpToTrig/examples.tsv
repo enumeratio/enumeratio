@@ -1,13 +1,14 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-euler-s-formula			[ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]	[Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]	Euler's formula		
-a-real-exponential-splits-into-hyperbolic-parts			[ExpToTrig, [Exp, x]]	[Add, [Sinh, x], [Cosh, x]]	A real exponential splits into hyperbolic parts		
-recognizes-cosh	Scope		[ExpToTrig, [Divide, [Add, [Exp, x], [Exp, [Negate, x]]], 2]]	[Cosh, x]	Recognizes [[Cosh]]		
-recognizes-sin	Scope		[ExpToTrig, [Divide, [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]], [Multiply, 2, ImaginaryUnit]]]	[Sin, x]	Recognizes [[Sin]]		
-exptotrig-2-pow-i-times-x	Scope		[ExpToTrig, [Power, 2, [Multiply, [Complex, 0, 1], x]]]	[Power, 2, [Multiply, [Complex, 0, 1], x]]			
-exptotrig-neg-3-pow-neg-x-plus-3-pow-x	Scope		[ExpToTrig, [Add, [Negate, [Power, 3, [Negate, x]]], [Power, 3, x]]]	[Add, [Negate, [Power, 3, [Negate, x]]], [Power, 3, x]]			
-exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	Scope		[ExpToTrig, [Add, [Negate, [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]]]	[Add, [Negate, [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]]			
-exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	Scope		[ExpToTrig, [And, [LessEqual, [Power, ExponentialE, x], 11], [Equal, [Power, 3, [Multiply, [Complex, 0, 1], x]], 7]]]	[And, [LessEqual, [Add, [Sinh, x], [Cosh, x]], 11], [Equal, [Power, 3, [Multiply, [Complex, 0, 1], x]], 7]]			
-exptotrig-neg-1-pow-5-over-7	Scope		[ExpToTrig, [Power, -1, [Rational, 5, 7]]]	-1		convention	Power(-1, 5/7) with an odd-denominator rational exponent: ours takes the real odd-root convention (-1), Wolfram the principal complex branch (cos+i sin). Same root cause as the List row below.
-exptotrig-list-exponentiale-pow-i-times-x-eq-neg	Scope		[ExpToTrig, [List, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1], [Root, -1, 11]]]	[List, [Equal, [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]], -1], -1]		convention	Same odd-denominator real-root-vs-principal-branch convention as Power(-1,5/7) above — Root(-1,11) here is Power(-1,1/11), same divergence.
-exptotrig-root-neg-1-16	Properties		[ExpToTrig, [Root, -1, 16]]	[Root, -1, 16]			
-exptotrig-exponentiale-pow-i-times-x-eq-neg-1	Properties		[ExpToTrig, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1]]	[Equal, [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]], -1]			
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+euler-s-formula			[ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]	[Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]	Euler's formula			
+a-real-exponential-splits-into-hyperbolic-parts			[ExpToTrig, [Exp, x]]	[Add, [Sinh, x], [Cosh, x]]	A real exponential splits into hyperbolic parts			
+recognizes-cosh	Scope		[ExpToTrig, [Divide, [Add, [Exp, x], [Exp, [Negate, x]]], 2]]	[Cosh, x]	Recognizes [[Cosh]]			
+recognizes-sin	Scope		[ExpToTrig, [Divide, [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]], [Multiply, 2, ImaginaryUnit]]]	[Sin, x]	Recognizes [[Sin]]			
+exptotrig-2-pow-i-times-x	Scope		[ExpToTrig, [Power, 2, [Multiply, [Complex, 0, 1], x]]]	[Power, 2, [Multiply, [Complex, 0, 1], x]]				
+exptotrig-neg-3-pow-neg-x-plus-3-pow-x	Scope		[ExpToTrig, [Add, [Negate, [Power, 3, [Negate, x]]], [Power, 3, x]]]	[Add, [Negate, [Power, 3, [Negate, x]]], [Power, 3, x]]				
+exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	Scope		[ExpToTrig, [Add, [Negate, [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]]]	[Add, [Negate, [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]]				
+exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	Scope		[ExpToTrig, [And, [LessEqual, [Power, ExponentialE, x], 11], [Equal, [Power, 3, [Multiply, [Complex, 0, 1], x]], 7]]]	[And, [LessEqual, [Add, [Sinh, x], [Cosh, x]], 11], [Equal, [Power, 3, [Multiply, [Complex, 0, 1], x]], 7]]				
+exptotrig-neg-1-pow-5-over-7	Scope		[ExpToTrig, [Power, -1, [Rational, 5, 7]]]	-1			convention	Power(-1, 5/7) with an odd-denominator rational exponent: ours takes the real odd-root convention (-1), Wolfram the principal complex branch (cos+i sin). Same root cause as the List row below.
+exptotrig-list-exponentiale-pow-i-times-x-eq-neg	Scope		[ExpToTrig, [List, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1], [Root, -1, 11]]]	[List, [Equal, [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]], -1], -1]			convention	Same odd-denominator real-root-vs-principal-branch convention as Power(-1,5/7) above — Root(-1,11) here is Power(-1,1/11), same divergence.
+exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2	Scope	triage	[ExpToTrig, [Add, [Negate, [Ln, [Add, [Negate, x], 2]]], [Ln, [Add, x, 2]]]]	[Ln, [Divide, [Add, x, 2], [Add, [Negate, x], 2]]]		ours?		Wolfram's False is the symbolic-agreement check: FullSimplify of ours minus theirs isn't 0. Ours merges -Ln(2-x) + Ln(2+x) into Ln((x+2)/(2-x)), which holds only on part of the domain; Wolfram keeps the logs apart.
+exptotrig-root-neg-1-16	Properties		[ExpToTrig, [Root, -1, 16]]	[Root, -1, 16]				
+exptotrig-exponentiale-pow-i-times-x-eq-neg-1	Properties		[ExpToTrig, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1]]	[Equal, [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]], -1]				

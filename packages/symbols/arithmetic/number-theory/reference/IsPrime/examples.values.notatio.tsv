@@ -52,6 +52,9 @@ isprime-list-7-11	<IsPrime><List>7 11</List></IsPrime>	<List>True True</List>
 isprime-list-5-7-2	<IsPrime><List>5 7 2</List></IsPrime>	<List>True True True</List>
 isprime-19	<IsPrime>19</IsPrime>	<True />
 divisorsum-19-function-1-1-isprime	<DivisorSum>19 <Function><Block>_1</Block> _1</Function> IsPrime</DivisorSum>	<ToExpression>19</ToExpression>
+filter-divisors-625-isprime		
+filter-divisors-2-434-500-isprime		
+filter-divisors-65-isprime		
 non-integers-are-not-prime	<IsPrime><Rational>1 2</Rational></IsPrime>	<False />
 another-non-integer-3-halves	<IsPrime><Rational>3 2</Rational></IsPrime>	<False />
 a-symbol-stays-unevaluated	<IsPrime>x</IsPrime>	<IsPrime>x</IsPrime>

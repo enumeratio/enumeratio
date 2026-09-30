@@ -19,6 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1	<MatrixFunction>Ceil <List><List><R
 ceil-0	<Ceil>0</Ceil>	<ToExpression>0</ToExpression>
 ceil-positiveinfinity	<Ceil>PositiveInfinity</Ceil>	<PositiveInfinity />
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4	<PiecewiseExpand><Ceil>x 2</Ceil> <Less>0 x 4</Less></PiecewiseExpand>	<Ceil>x 2</Ceil>
+d-ceil-x-x		
 how-many-5-seat-vans-are-needed-to-carry-17	<Ceil><Divide>17 5</Divide></Ceil>	<ToExpression>4</ToExpression>
 ten-bits-are-enough-to-number-1000-items-lceil	<Ceil><Log>1000 2</Log></Ceil>	<ToExpression>10</ToExpression>
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	<Equal><Ceil><Rational>7 2</Rational></Ceil> <Add><Floor><Rational>7 2</Rational></Floor> 1</Add></Equal>	<True />

@@ -3,3 +3,4 @@ repeat-c-10	ConstantArray[c, 10]
 repeat-0-10	ConstantArray[0, 10]
 repeat-1-10	ConstantArray[1, 10]
 dot-list-repeat-1-length-list	Dot[list, ConstantArray[1, Length[list]]]
+shape-repeat-c-dims	

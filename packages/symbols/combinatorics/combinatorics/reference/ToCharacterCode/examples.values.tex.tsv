@@ -1,3 +1,4 @@
 id	in	out
 reads-ascii-code-points	\mathrm{ToCharacterCode}(\text{ABC})	\bigl\lbrack65, 66, 67\bigr\rbrack
+tocharactercode-factorial-mod-times-plus-neg		
 tocharactercode-a	\mathrm{ToCharacterCode}(\text{a})	\bigl\lbrack97\bigr\rbrack

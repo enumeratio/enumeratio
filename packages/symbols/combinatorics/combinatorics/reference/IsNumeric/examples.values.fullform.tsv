@@ -6,3 +6,4 @@ isnumeric-plain-symbol	NumericQ[x]
 isnumeric-sqrt-2	NumericQ[Sqrt[2]]
 isnumeric-expr	NumericQ[expr]
 isnumeric-exponentiale	NumericQ[E]
+ismatrix-m-isnumeric	

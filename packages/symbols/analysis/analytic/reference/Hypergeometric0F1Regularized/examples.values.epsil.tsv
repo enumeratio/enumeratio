@@ -12,4 +12,7 @@ order-0	Hypergeometric0F1Regularized(0, 0.5)	0.635_861_728_156_068_6
 order-neg-2-at-0-7	Hypergeometric0F1Regularized(-2, 0.7)	0.067_899_051_474_626_27
 order-0-at-a-complex-argument	N(Hypergeometric0F1Regularized(0, 0.3 + 0.4i))	0.254_883_343_005_815_44 + 0.523_422_395_184_101_5i
 order-neg-1-at-a-complex-argument	N(Hypergeometric0F1Regularized(-1, -0.5 + 0.2i))	0.094_271_666_089_704_03 - 0.078_024_919_432_037_83i
+n-hypergeometric0f1regularized-0-neg-48-50		
+n-hypergeometric0f1regularized-4-0-25		
+matrixfunction-function		
 exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized(-1, 2)	Hypergeometric0F1Regularized(-1, 2)

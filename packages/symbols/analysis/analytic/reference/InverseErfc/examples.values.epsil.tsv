@@ -13,4 +13,6 @@ sqrt-2-times-this-2-5758-is-the-two-sided-99	InverseErfc(0.01)	1.821_386_367_718
 erfc-erfc-1-x-x	erfc(InverseErfc(x))	x
 list-erfc-inverseerfc-z-inverseerfc-erfc-z	[erfc(InverseErfc(z)), InverseErfc(erfc(z))]	[z, InverseErfc(erfc(z))]
 isnumeric-inverseerfc-1-over-2	IsNumeric(InverseErfc(1 / 2))	True
+solve-inverseerfc-x-pow-2-plus-inverseerfc-x-eq		
+attributes-inverseerfc		
 deep-in-the-tail-it-keeps-full-precision-where	InverseErfc(1.0e-10)	4.572_824_967_389_485

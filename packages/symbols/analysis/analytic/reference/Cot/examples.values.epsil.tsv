@@ -23,6 +23,9 @@ derivative-csc-2-x	D(cot(x), x)	-csc(x) ^ 2
 antiderivative-ln-sin-x	integrate(cot(x), x)	ln(abs(sin(x)))	
 n-cot-6-over-5-50	N(cot(6 / 5), 50)	0.388_779_569_368_204_911_634_191_504_971_903_409_594_984_925_940_98	
 matrixfunction-function-cot-1-1-list-list-5-over	"MatrixFunction(\n                Function(cot(_1), _1),\n                [[5 / 6 * pi, 1 / 2 * pi], [3 / 2 * pi, -1 / 6 * pi]],\n              )"	[[sqrt(3) / 3, 0], [0, sqrt(3) / 3]]	Unreadable
+assuming-m-in-integers-refine-cot-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cot			
+cot-positiveinfinity			
 reciprocal-of-tan-cot-x-frac-1-tan-x	cot(pi / 4) == 1 / tan(pi / 4)	True	
 pythagorean-identity-1-cot-2-x-csc-2-x	1 + cot(pi / 6) ^ 2 == csc(pi / 6) ^ 2	True	
 cot-1-over-10-times-pi	cot(1 / 10 * pi)	sqrt(5 + 2 * sqrt(5))	

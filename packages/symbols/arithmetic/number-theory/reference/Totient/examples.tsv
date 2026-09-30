@@ -1,34 +1,35 @@
-id	section	role	expr	expected	known	source	caption	sage.kind	sage.note	sympy.kind	sympy.note	oscar.kind	oscar.note	julia.kind	julia.note
-totient-12			[Totient, 12]	4											
-totient-36			[Totient, 36]	12											
-totient-1			[Totient, 1]	1											
-totient-10			[Totient, 10]	4											
-varphi-0-0-as-in-wolfram	Scope		[Totient, 0]	0			$\varphi(0) = 0$, as in Wolfram			domain	compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines.	domain	compute-engine's Totient answers at 0, following Wolfram's convention EulerPhi(0) = 0; Oscar's euler_phi declines n ≤ 0.	domain	Nemo's euler_phi declines n ≤ 0; ours follows Wolfram's convention EulerPhi(0) = 0.
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[Totient, [List, 2, 4, 6]]	[List, 1, 2, 2]			Threads element-wise over a list, as Wolfram's Listable heads do					threading	compute-engine's Totient is Listable and threads over the list; Oscar's euler_phi takes scalars only.		
-large-integers-varphi-50	Scope		[Totient, [Factorial, 50]]	{num: "42185592008858390426793121078167038417888549535744e+14"}			Large integers: $\varphi(50!)$								
-negative-n-varphi-n-varphi-n	Scope		[Totient, -10]	4			Negative $n$: $\varphi(-n)=\varphi(n)$	domain	compute-engine takes phi(-n) = phi(n), as Wolfram does; Sage's euler_phi() declines a negative n and answers 0.	domain	compute-engine takes φ(-n) = φ(n), as Wolfram does; SymPy's totient requires a positive argument.	domain	compute-engine takes φ(-n) = φ(n), as Wolfram does; Oscar's euler_phi declines a negative n.	domain	Nemo's euler_phi declines a negative n; ours follows Wolfram's convention Totient(-n) = Totient(n).
-rsa-key-setup-varphi-17-times-23-16-times-22-352	Applications		[Totient, 391]	352			RSA key setup: $\varphi(17\times23)=16\times22=352$								
-euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	Applications		[PowerMod, 7, [Totient, 10], 10]	1			Euler's theorem: $a^{\varphi(n)}\equiv1\pmod n$ when $\gcd(a,n)=1$. See [[PowerMod]]								
-sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Properties		[Add, [Totient, 1], [Totient, 2], [Totient, 3], [Totient, 4], [Totient, 6], [Totient, 12]]	12			$\sum_{d\mid n}\varphi(d)=n$, checked over the divisors of 12								
-multiplicative-varphi-mn-varphi-m-varphi-n-when	Properties		[Equal, [Totient, 12], [Multiply, [Totient, 4], [Totient, 3]]]	True			Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ when $\gcd(m,n)=1$, here for $4$ and $3$								
-varphi-p-p-1-for-a-prime-p	Properties		[Totient, 17]	16			$\varphi(p)=p-1$ for a prime $p$								
-varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	Properties		[Totient, 81]	54			$\varphi(p^k)=p^{k-1}(p-1)$: $3^3\cdot2=54$								
-totient-100	Properties		[Totient, 100]	40											
-totient-35	Properties		[Totient, 35]	24											
-divides-carmichaellambda-8-totient-8	Properties		[Divides, [CarmichaelLambda, 8], [Totient, 8]]	True											
-list-totient-25-carmichaellambda-25	Properties		[List, [Totient, 25], [CarmichaelLambda, 25]]	[List, 20, 20]											
-divisorsum-15-totient-eq-15	Properties		[Equal, [DivisorSum, 15, Totient], 15]	True											
-totient-1-023-eq-totient-3-times-totient-11	Properties		[Equal, [Totient, 1023], [Multiply, [Totient, 3], [Totient, 11], [Totient, 31]]]	True											
-totient-2	Properties		[Totient, 2]	1	1	Wolfram MathematicalFunctionData, EulerPhi									
-totient-3	Properties		[Totient, 3]	2	2	Wolfram MathematicalFunctionData, EulerPhi									
-totient-4	Properties		[Totient, 4]	2	2	Wolfram MathematicalFunctionData, EulerPhi									
-totient-5	Properties		[Totient, 5]	4	4	Wolfram MathematicalFunctionData, EulerPhi									
-totient-6	Properties		[Totient, 6]	2	2	Wolfram MathematicalFunctionData, EulerPhi									
-totient-7	Properties		[Totient, 7]	6	6	Wolfram MathematicalFunctionData, EulerPhi									
-totient-8	Properties		[Totient, 8]	4	4	Wolfram MathematicalFunctionData, EulerPhi									
-totient-9	Properties		[Totient, 9]	6	6	Wolfram MathematicalFunctionData, EulerPhi									
-totient-11	Properties		[Totient, 11]	10	10	Wolfram MathematicalFunctionData, EulerPhi									
-totient-13	Properties		[Totient, 13]	12	12	Wolfram MathematicalFunctionData, EulerPhi									
-totient-14	Properties		[Totient, 14]	6	6	Wolfram MathematicalFunctionData, EulerPhi									
-totient-15	Properties		[Totient, 15]	8	8	Wolfram MathematicalFunctionData, EulerPhi									
-totient-16	Properties		[Totient, 16]	8	8	Wolfram MathematicalFunctionData, EulerPhi									
+id	section	role	expr	expected	known	source	caption	triage	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	oscar.kind	oscar.note	julia.kind	julia.note
+totient-12			[Totient, 12]	4													
+totient-36			[Totient, 36]	12													
+totient-1			[Totient, 1]	1													
+totient-10			[Totient, 10]	4													
+varphi-0-0-as-in-wolfram	Scope		[Totient, 0]	0			$\varphi(0) = 0$, as in Wolfram					domain	compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines.	domain	compute-engine's Totient answers at 0, following Wolfram's convention EulerPhi(0) = 0; Oscar's euler_phi declines n ≤ 0.	domain	Nemo's euler_phi declines n ≤ 0; ours follows Wolfram's convention EulerPhi(0) = 0.
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Totient, [List, 2, 4, 6]]	[List, 1, 2, 2]			Threads element-wise over a list, as Wolfram's Listable heads do							threading	compute-engine's Totient is Listable and threads over the list; Oscar's euler_phi takes scalars only.		
+large-integers-varphi-50	Scope		[Totient, [Factorial, 50]]	{num: "42185592008858390426793121078167038417888549535744e+14"}			Large integers: $\varphi(50!)$										
+negative-n-varphi-n-varphi-n	Scope		[Totient, -10]	4			Negative $n$: $\varphi(-n)=\varphi(n)$			domain	compute-engine takes phi(-n) = phi(n), as Wolfram does; Sage's euler_phi() declines a negative n and answers 0.	domain	compute-engine takes φ(-n) = φ(n), as Wolfram does; SymPy's totient requires a positive argument.	domain	compute-engine takes φ(-n) = φ(n), as Wolfram does; Oscar's euler_phi declines a negative n.	domain	Nemo's euler_phi declines a negative n; ours follows Wolfram's convention Totient(-n) = Totient(n).
+rsa-key-setup-varphi-17-times-23-16-times-22-352	Applications		[Totient, 391]	352			RSA key setup: $\varphi(17\times23)=16\times22=352$										
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	Applications		[PowerMod, 7, [Totient, 10], 10]	1			Euler's theorem: $a^{\varphi(n)}\equiv1\pmod n$ when $\gcd(a,n)=1$. See [[PowerMod]]										
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Properties		[Add, [Totient, 1], [Totient, 2], [Totient, 3], [Totient, 4], [Totient, 6], [Totient, 12]]	12			$\sum_{d\mid n}\varphi(d)=n$, checked over the divisors of 12										
+multiplicative-varphi-mn-varphi-m-varphi-n-when	Properties		[Equal, [Totient, 12], [Multiply, [Totient, 4], [Totient, 3]]]	True			Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ when $\gcd(m,n)=1$, here for $4$ and $3$										
+varphi-p-p-1-for-a-prime-p	Properties		[Totient, 17]	16			$\varphi(p)=p-1$ for a prime $p$										
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	Properties		[Totient, 81]	54			$\varphi(p^k)=p^{k-1}(p-1)$: $3^3\cdot2=54$										
+totient-100	Properties		[Totient, 100]	40													
+totient-35	Properties		[Totient, 35]	24													
+divides-carmichaellambda-8-totient-8	Properties		[Divides, [CarmichaelLambda, 8], [Totient, 8]]	True													
+list-totient-25-carmichaellambda-25	Properties		[List, [Totient, 25], [CarmichaelLambda, 25]]	[List, 20, 20]													
+divisorsum-15-totient-eq-15	Properties		[Equal, [DivisorSum, 15, Totient], 15]	True													
+totient-1-023-eq-totient-3-times-totient-11	Properties		[Equal, [Totient, 1023], [Multiply, [Totient, 3], [Totient, 11], [Totient, 31]]]	True													
+totient-2	Properties		[Totient, 2]	1	1	Wolfram MathematicalFunctionData, EulerPhi											
+totient-3	Properties		[Totient, 3]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
+totient-4	Properties		[Totient, 4]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
+totient-5	Properties		[Totient, 5]	4	4	Wolfram MathematicalFunctionData, EulerPhi											
+totient-6	Properties		[Totient, 6]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
+totient-7	Properties		[Totient, 7]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
+totient-8	Properties		[Totient, 8]	4	4	Wolfram MathematicalFunctionData, EulerPhi											
+totient-9	Properties		[Totient, 9]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
+totient-11	Properties		[Totient, 11]	10	10	Wolfram MathematicalFunctionData, EulerPhi											
+totient-13	Properties		[Totient, 13]	12	12	Wolfram MathematicalFunctionData, EulerPhi											
+totient-14	Properties		[Totient, 14]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
+totient-15	Properties		[Totient, 15]	8	8	Wolfram MathematicalFunctionData, EulerPhi											
+totient-16	Properties		[Totient, 16]	8	8	Wolfram MathematicalFunctionData, EulerPhi											
+assuming-p-in-primes-r-in-integers-r-gt-0	Properties	triage	[Assuming, [And, [Element, p, Primes], [Element, r, Integers], [Greater, r, 0]], [FunctionExpand, [Totient, [Power, p, r]]]]	[Totient, [Power, p, r]]				gap	Same Assuming/FunctionExpand/FullSimplify gap as CatalanNumber/Divides above: reducing Totient(p^r) to (p-1)*p^(r-1) needs the assumption p in Primes, which we have no channel to carry into the Totient evaluator.								

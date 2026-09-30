@@ -52,6 +52,9 @@ isprime-list-7-11	PrimeQ[List[7, 11]]
 isprime-list-5-7-2	PrimeQ[List[5, 7, 2]]	
 isprime-19	PrimeQ[19]	
 divisorsum-19-function-1-1-isprime	DivisorSum[19, Function[Slot[1]], PrimeQ]	[DivisorSum, 19, [Function, _1], IsPrime]
+filter-divisors-625-isprime		
+filter-divisors-2-434-500-isprime		
+filter-divisors-65-isprime		
 non-integers-are-not-prime	PrimeQ[Rational[1, 2]]	
 another-non-integer-3-halves	PrimeQ[Rational[3, 2]]	
 a-symbol-stays-unevaluated	PrimeQ[x]	

@@ -62,13 +62,11 @@ export interface ReferenceExample {
    */
   readonly category?: string;
   /**
-   * When true, `expected` is a result we claim compute-engine ought to produce
-   * eventually but does NOT yet -- the reference doubles as a capability map. The
-   * page shows the actual result with a "not yet implemented" badge and surfaces
-   * the claimed `expected` via the assertion; the test asserts the gap still
-   * exists (so we notice when CE closes it).
+   * The Wolfram mismatch this row waits on, when its `role` is `triage`: where the mismatch most
+   * likely comes from (`bucketOf` in the reference scripts), for a lane to settle. The reason
+   * a lane gives stays in the Wolfram row's `note`.
    */
-  readonly aspirational?: boolean;
+  readonly triage?: TriageBucket;
   /**
    * Derived by the loader, never written in a record: Wolfram's `note` from the head's
    * implementations record, where our result deliberately differs from Wolfram's. The
@@ -92,7 +90,13 @@ export interface ReferenceExample {
    * What the example is FOR (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §5). `demo` (the default) is shown
    * on the reference page; `test` runs in the evaluation test and the scans like any other
    * example but is skipped by the page (a deep link still shows one): an edge case or a grid
-   * point, too many or too minor to render.
+   * point, too many or too minor to render. `aspirational`: `expected` is a result we claim
+   * compute-engine ought to produce but does NOT yet (the reference doubles as a capability
+   * map); the page shows the actual result with a "not yet implemented" badge, and the test
+   * asserts the gap still exists, so we notice when it closes. `triage`: an example Wolfram
+   * disagrees with, waiting for a lane to classify or fix it (`triage` says where the mismatch
+   * likely comes from); `expected` is our current answer, not a claim, so tests, scans and the
+   * page leave it out.
    */
   readonly role?: ExampleRole;
   /** Derived by the loader: each scanned system's run of this example, from the implementations record. */
@@ -100,7 +104,10 @@ export interface ReferenceExample {
 }
 
 /** What an example is for (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §5). */
-export type ExampleRole = "demo" | "test";
+export type ExampleRole = "demo" | "test" | "aspirational" | "triage";
+
+/** Where a Wolfram mismatch most likely comes from (see `ReferenceExample.triage`). */
+export type TriageBucket = "adapt" | "emit" | "compare" | "ours?" | "wolfram?" | "unscanned" | "gap" | "print";
 
 /** One call signature the head accepts, with a short explanation. */
 export interface ReferenceSignature {

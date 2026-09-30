@@ -1,3 +1,4 @@
 id	in
 reads-ascii-code-points	ToCharacterCode[String[ABC]]
+tocharactercode-factorial-mod-times-plus-neg	
 tocharactercode-a	ToCharacterCode["a"]

@@ -7,3 +7,4 @@ list-numberq-c-numberq-d	[NumberQ(c), NumberQ(d)]	[False, False]
 list-numberq-o-numberq-u	[NumberQ(o), NumberQ(u)]	[False, False]
 numberq-sqrt-2	NumberQ(sqrt(2))	True
 numberq-positiveinfinity	NumberQ(positiveInfinity)	True
+ismatrix-m-numberq		

@@ -18,8 +18,11 @@ sort-join-ln-range-1-10-sqrt-range-1-10-less
 sort-list-aa-abb-ba-b-aaa		
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt		
 sort-join-ln-range-1-10-sqrt-range-1-10		
+sort-list-i-1-plus-i-1-minus-i-2-plus-3i		
+sort-list-aa-abb-ba-b-aaa-function-stringlength		
 sort-is-idempotent-sorting-an-already-sorted	\mathrm{Sort}(\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}
 sort-c-at-c-ordering-c-see-ordering-and-at	\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\bigl\lbrack3, 1, 2\bigr\rbrack[\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)]	\mathrm{True}
 the-result-doesn-t-depend-on-the-input-order	\mathrm{Sort}(\mathrm{Reverse}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}
+sort-list		
 the-empty-list-sorts-to-itself		
 sort-list-positiveinfinity-sqrt-2-1-2		

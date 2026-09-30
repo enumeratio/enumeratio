@@ -24,6 +24,9 @@ derivative-sec-x-tan-x	\frac{\mathrm{d}\sec(x)}{\mathrm{d}x}	\tan(x)\sec(x)
 antiderivative-ln-sec-x-tan-x	\int\!\sec(x)\, \mathrm{d}x	\ln(\vert\tan(x)+\sec(x)\vert)
 n-sec-6-over-5-50	N(\sec(\frac{6}{5}), 50)	2.759\,703\,601\,332\,406\,456\,88
 matrixfunction-function-sec-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\sec(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{\pi}{6}, -\frac{\pi}{4}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\frac{2\sqrt{3}}{3}, 0\bigr\rbrack, \bigl\lbrack-\frac{2\sqrt{2}}{13}-\frac{4\sqrt{3}}{39}, \sqrt{2}\bigr\rbrack\bigr\rbrack
+assuming-m-in-integers-refine-sec-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-sec		
+sec-positiveinfinity		
 reciprocal-of-cos-sec-x-frac-1-cos-x	\sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}	\top
 pythagorean-identity-1-tan-2-x-sec-2-x	1+\tan(\pi/6)^2=\sec(\pi/6)^2	\top
 sec-1-over-10-times-pi	\sec(\frac{\pi}{10})	\frac{1}{5}(\sqrt{10}\sqrt{5-\sqrt{5}})

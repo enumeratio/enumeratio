@@ -4,4 +4,5 @@ the-smallest-number-that-is-a-sum-of-two	<PowersRepresentations>50 2 2</PowersRe
 powersrepresentations-100-3-2	<PowersRepresentations>100 3 2</PowersRepresentations>	<List><List>0 0 10</List> <List>0 6 8</List></List>
 powersrepresentations-87-539-319-2-3	<PowersRepresentations>87539319 2 3</PowersRepresentations>	<List><List>167 436</List> <List>228 423</List> <List>255 414</List></List>
 powersrepresentations-102-3-2	<PowersRepresentations>102 3 2</PowersRepresentations>	<List><List>1 1 10</List> <List>2 7 7</List></List>
+filter-powersrepresentations-7-3-1-function		
 the-taxicab-number-1729-1-3-12-3-9-3-10-3	<PowersRepresentations>1729 2 3</PowersRepresentations>	<List><List>1 12</List> <List>9 10</List></List>

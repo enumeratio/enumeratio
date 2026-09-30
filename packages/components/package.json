@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/cli": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",

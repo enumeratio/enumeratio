@@ -2,3 +2,4 @@ id	in	out
 adds-attributes	Attributes(Add)	[Flat, HoldAll, Listable, Orderless]
 attributes-f	Attributes(f)	[]
 attributes-syms	Attributes(syms)	[]
+attributes-attributes		

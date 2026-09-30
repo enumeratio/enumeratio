@@ -18,6 +18,8 @@ x-3-y-3-has-no-repeated-factor	isSquareFree(x ^ 3 - y ^ 3)	True
 issquarefree-3-plus-10-pow-70	isSquareFree(3 + 10 ^ 70)	True	
 issquarefree-2	isSquareFree(2)	True	
 issquarefree-x-pow-2-minus-3	isSquareFree(x ^ 2 - 3)	True	
+n-1-over-100-000-times-length-filter-range-1-100			
+issquarefree-q			
 n-is-squarefree-exactly-when-mu-n-neq-0-see	isSquareFree(10) == !(moebiusMu(10) == 0)	True	
 issquarefree-210	isSquareFree(210)	True	
 issquarefree-14	isSquareFree(14)	True	

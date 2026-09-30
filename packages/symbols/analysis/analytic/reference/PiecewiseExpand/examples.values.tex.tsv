@@ -12,4 +12,9 @@ assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	\mathrm{Assuming}(x^2\lt3, \mathrm
 piecewiseexpand-pw	\mathrm{PiecewiseExpand}(\mathrm{pw})	\mathrm{pw}
 piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	\mathrm{PiecewiseExpand}(-1\le\max(x, y)\le1)	-1\le\max(x, y)\le1
 piecewiseexpand-max-abs-x-abs-y-realnumbers	\mathrm{PiecewiseExpand}(\max(\vert x\vert, \vert y\vert), \mathbb{R})	\max(\vert x\vert, \vert y\vert)
+map-piecewiseexpand-list-min-x-y-max-x-y-z		
+assuming-list-0-lt-eq-x-lt-eq-3-map		
+assuming-0-lt-eq-k-lt-eq-3m-map-piecewiseexpand		
+map-piecewiseexpand-list-unitbox-x-unittriangle		
+assuming-list-0-lt-eq-x-lt-eq-3-map-2		
 without-a-realness-assumption-it-declines	\mathrm{PiecewiseExpand}(\vert x\vert)	\vert x\vert

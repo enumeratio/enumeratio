@@ -10,3 +10,7 @@ sortby-list-exponentiale-pi-sin-1-sqrt-2-n	\mathrm{SortBy}(\bigl\lbrack e, \pi, 
 sortby-list-dog-zebra-donkey-anteater-fish	\mathrm{SortBy}(\bigl\lbrack\text{dog}, \text{zebra}, \text{donkey}, \text{anteater}, \text{fish}\bigr\rbrack, \mathrm{StringLength})	\bigl\lbrack\text{dog}, \text{fish}, \text{zebra}, \text{donkey}, \text{anteater}\bigr\rbrack
 sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	\mathrm{SortBy}(\bigl\lbrack1, \sqrt{1+e^{-10}}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, ()\mapsto N(\vert\operatorname{\_1}\vert))	\bigl\lbrack\exp(-1+2i), 1, i\sin(1)+\cos(1), \sqrt{1+e^{-10}}, \exp(2+i)\bigr\rbrack
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	\mathrm{SortBy}(\bigl\lbrack\sqrt{1+\exp(-10i)}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, \mathrm{Abs})	\bigl\lbrack\exp(-1+2i), \sqrt{1+i\sin(-10)+\cos(-10)}, i\sin(1)+\cos(1), \exp(2+i)\bigr\rbrack
+sortby-tab-function-slot-age		
+sortby-exprs-err		
+sortby-list-first		
+sortby-list-abs		

@@ -1,3 +1,4 @@
 id	in	out
 2-3	\mathrm{Count}(\mathrm{Tuples}(2, 3))	8
 tuples-2-3-list-1	\mathrm{Tuples}(2, 3)[1]	\bigl\lbrack1, 1, 1\bigr\rbrack
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30		

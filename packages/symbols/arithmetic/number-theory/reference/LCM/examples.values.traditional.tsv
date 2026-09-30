@@ -35,10 +35,13 @@ lcm-of-two-composites-sharing-the-prime-above-13
 lcm-of-a-lazy-range-1-10-not-a-materialised-list		
 the-smallest-number-divisible-by-each-of-1		
 lcm-10-15		
+foldlist-lcm-1-range-2-10		
+ln-lcm-range-1-10		
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	\gcd(27, 81)\operatorname{lcm}(27, 81)=27\times81	\mathrm{True}
 lcm-27-81		
 lcm-6-11-25-eq-1-650	\operatorname{lcm}(6, 11, 25)=1\,650	\mathrm{True}
 lcm-5-7-2-eq-70	\operatorname{lcm}(5, 7, 2)=70	\mathrm{True}
+ln-1-over-lcm-range-1-4-times-lcm-range-1-5		
 a-single-argument-is-returned-unchanged		
 0-absorbs-the-lcm-with-0-is-0		
 signs-are-discarded-before-computing-the-lcm		

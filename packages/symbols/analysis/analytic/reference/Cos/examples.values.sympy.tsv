@@ -46,6 +46,8 @@ functionsurjective-cos-x-x
 functionsingularities-cos-x-x			
 functiondiscontinuities-cos-x-x			
 matrixfunction-function-cos-1-1-list-list-5-over			
+assuming-m-in-integers-refine-cos-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cos			
 threads-element-wise-over-a-list	[cos(0), cos((S(pi) / 2)), cos(pi)]	[1, 0, -1]	
 even-function-cos-x-cos-x	enumeratio_equal(cos((-(S(pi) / 3))), cos((S(pi) / 3)))	True	
 co-function-identity-cos-x-sin-pi-2-x	enumeratio_equal(cos((S(pi) / 6)), sin(((S(pi) / 2) - (S(pi) / 6))))	True	

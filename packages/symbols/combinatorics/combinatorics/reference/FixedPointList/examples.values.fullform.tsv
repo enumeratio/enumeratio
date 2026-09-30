@@ -2,3 +2,4 @@ id	in
 halve-and-floor-down-to-the-fixed-point	FixedPointList[Function[Floor[Divide[Slot[1], 2]]], 10]
 fixedpointlist-function-1-plus-floor-1-times-2	FixedPointList[Function[Plus[1, Floor[Times[Slot[1], Power[2, -1]]]]], 1000]
 fixedpointlist-function-11-times-primepi-1-plus	FixedPointList[Function[Plus[Times[11, PrimePi[Slot[1]]], 1]], 2]
+fixedpointlist-function-d-1-x-x-pow-10	

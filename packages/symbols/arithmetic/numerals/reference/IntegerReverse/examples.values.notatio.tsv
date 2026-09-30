@@ -7,6 +7,7 @@ integerreverse-1-234-10-6	<IntegerReverse>1234 10 6</IntegerReverse>	<ToExpressi
 padded-to-5-digits-first-00123-reversed	<IntegerReverse>123 10 5</IntegerReverse>	<ToExpression>32100</ToExpression>
 listable	<IntegerReverse><List>12 345</List></IntegerReverse>	<List>21 543</List>
 integerreverse-list-123-234-345-456	<IntegerReverse><List>123 234 345 456</List></IntegerReverse>	<List>321 432 543 654</List>
+integerreverse-1-234-mixedradixnumerals-list-7		
 a-palindrome-is-its-own-reversal	<IntegerReverse>12321</IntegerReverse>	<ToExpression>12321</ToExpression>
 integerreverse-842	<IntegerReverse>842</IntegerReverse>	<ToExpression>248</ToExpression>
 integerreverse-84-200	<IntegerReverse>84200</IntegerReverse>	<ToExpression>248</ToExpression>

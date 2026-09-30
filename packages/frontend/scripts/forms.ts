@@ -160,14 +160,16 @@ export function withForms(
 
 /** A head's record as the forms make it, from the record it has. */
 export function recordWithForms(
-  examples: readonly { id: string; expr: unknown; expected: unknown }[],
+  examples: readonly { id: string; expr: unknown; expected: unknown; role?: string }[],
   record: HeadImplementations | undefined,
 ): HeadImplementations {
   const next: Record<string, ExampleImplementations> = {};
+  // A row in triage isn't on the page and its `expected` isn't settled: it gets no forms.
   for (const example of examples)
-    next[example.id] = withForms(record?.[example.id], formsOf(example.expr as never, example.expected as never));
-  // Rows for an example that's gone: what the forms wrote goes; a kernel's answer or a note
-  // stays for the scan (or a person) to deal with.
+    if (example.role !== "triage")
+      next[example.id] = withForms(record?.[example.id], formsOf(example.expr as never, example.expected as never));
+  // Rows for an example that's gone, or in triage: what the forms wrote goes; a kernel's
+  // answer or a note stays for the scan (or a person) to deal with.
   for (const [id, rows] of Object.entries(record ?? {})) {
     if (id in next) continue;
     const kept = Object.fromEntries(

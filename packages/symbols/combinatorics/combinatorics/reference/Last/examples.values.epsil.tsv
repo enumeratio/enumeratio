@@ -12,6 +12,7 @@ of-a-matrix-the-last-row	last([[a, b], [c, d], [f, g]])	[f, g]
 a-lazy-range-works-too	last(Range(5, 10))	10
 any-expression-not-just-a-list-the-last-term-of	last(a ^ 2 + b ^ 2)	b ^ 2
 a-default-is-ignored-when-the-collection-has-a	last([a, b], x)	b
+last-sparsearray-range-1-100		
 last-c-at-c-1-see-at	last([1, 2, 3]) == [1, 2, 3][-1]	True
 an-empty-collection-has-no-last-element-compute	last([])	missing
 last-1-over-b	last(1 / b)	b

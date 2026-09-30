@@ -10,6 +10,7 @@ array-nthprime-100-mod-10	<Mod><Array>NthPrime 100</Array> 10</Mod>	<List>2 3 5 
 n-100-times-last-foldlist-multiply-1-1-plus-neg	<N><Multiply>100 <Last><FoldList>Multiply 1 <Add>1 <Divide>-1 <NthPrime><Range>1 25</Range></NthPrime></Divide></Add></FoldList></Last></Multiply></N>	<ToExpression>12.0317290474935188450463777499160024475175470799073086119929575589597740394678139316347543373629931036639116323237411425605253687875356022154375132803637403732670634237805048070340487413638928157755127949850202451197436821568569057451493657450470583184058262054404101704406716674294588217739009601393323348242978147276061308652118518085202135246963485714099918756321910699826587150938643637042862870767866970267026668174768993804753052463646547648567051503940090255295944697663573816741481016424448</ToExpression>
 ismersenneprimeexponent-nthprime-4	<IsMersennePrimeExponent><NthPrime>4</NthPrime></IsMersennePrimeExponent>	<True />
 isprime-neg-1-plus-2-pow-nthprime-4	<IsPrime><Add>-1 <Power>2 <NthPrime>4</NthPrime></Power></Add></IsPrime>	<True />
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n		
 primepi-and-nthprime-are-inverses-pi-p-n-n	<Equal><PrimePi><NthPrime>100</NthPrime></PrimePi> 100</Equal>	<True />
 primepi-nthprime-100	<PrimePi><NthPrime>100</NthPrime></PrimePi>	<ToExpression>100</ToExpression>
 nthprime-1-plus-primepi-30	<NthPrime><Add>1 <PrimePi>30</PrimePi></Add></NthPrime>	<ToExpression>31</ToExpression>

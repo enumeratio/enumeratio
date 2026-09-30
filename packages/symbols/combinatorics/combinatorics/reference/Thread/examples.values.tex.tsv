@@ -7,3 +7,4 @@ custom-head	\mathrm{Thread}(f(g(1, 2), g(3, 4)), g)	g(f(1, 3), f(2, 4))
 thread-list-list-a-b-c-0	\mathrm{Thread}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, 0\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, 0\bigr\rbrack, \bigl\lbrack b, 0\bigr\rbrack, \bigl\lbrack c, 0\bigr\rbrack\bigr\rbrack
 thread-list-a-b-c-neg-gt-list-1-2-3	\mathrm{Thread}(\mathrm{KeyValuePair}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack))	\bigl\lbrack(a,1), (b,2), (c,3)\bigr\rbrack
 thread-list-list-a-b-c-list-x-y-z	\mathrm{Thread}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack, \bigl\lbrack c, z\bigr\rbrack\bigr\rbrack
+thread-d-list-x-x-times-y-x-times-z-list-x-y-z		

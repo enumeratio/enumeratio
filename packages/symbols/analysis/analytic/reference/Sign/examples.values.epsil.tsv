@@ -23,6 +23,8 @@ sign-123-minus-456i	sign(123 - 456i)	41 / 24_785 * sqrt(24_785) + -152 / 24_785 
 fullsimplify-matrixfunction-sign-list-list-1	FullSimplify(MatrixFunction(sign, [[1 / 2, -1], [-5 / 3, 1 / 2]]))	[[0, -(sqrt(15) / 5)], [-(sqrt(15) / 3), 0]]
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2	PiecewiseExpand(sign(x), -2 < x < 2)	Piecewise([[-1, x < 0], [1, 0 < x]], 0)
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	sign(conjugate(1 + 2i)) == conjugate(sign(1 + 2i))	True
+d-sign-x-x		
+sign-positiveinfinity-times-i		
 tells-you-the-temperature-dropped-but-not-by-how	sign(70 - 95)	-1
 sign-z-z-z-see-abs	sign(3 + 4i) == (3 + 4i) / abs(3 + 4i)	True
 x-cdot-sign-x-x-here-at-x-5	-5 * sign(-5) == abs(-5)	True

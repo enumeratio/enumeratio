@@ -1,6 +1,7 @@
 id	in	out
 sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y	<ComplexExpand><Sin><Add>x <Multiply>ImaginaryUnit y</Multiply></Add></Sin></ComplexExpand>	<Add><Multiply><Complex>0 1</Complex> <Cos>x</Cos> <Sinh>y</Sinh></Multiply> <Multiply><Sin>x</Sin> <Cosh>y</Cosh></Multiply></Add>
 polar-form-of-a-complex-exponential	<ComplexExpand><Exp><Add>x <Multiply>ImaginaryUnit y</Multiply></Add></Exp></ComplexExpand>	<Add><Multiply><Complex>0 1</Complex> <Sin>y</Sin> <Power>ExponentialE x</Power></Multiply> <Multiply><Cos>y</Cos> <Power>ExponentialE x</Power></Multiply></Add>
+complexexpand-reim-cos-i-pow-x		
 complexexpand-x-plus-imaginaryunit-times-y-pow-2	<ComplexExpand><Power><Add>x <Multiply>ImaginaryUnit y</Multiply></Add> 2</Power></ComplexExpand>	<Add><Power>x 2</Power> <Negate><Power>y 2</Power></Negate> <Multiply><Complex>0 2</Complex> x y</Multiply></Add>
 complexexpand-abs-x-plus-imaginaryunit-times-y	<ComplexExpand><Abs><Add>x <Multiply>ImaginaryUnit y</Multiply></Add></Abs></ComplexExpand>	<Sqrt><Add><Power>x 2</Power> <Power>y 2</Power></Add></Sqrt>
 wolfram-leaves-e-i-pi-5-alone-until-asked-this	<ComplexExpand><Exp><Multiply>ImaginaryUnit <Divide>Pi 5</Divide></Multiply></Exp></ComplexExpand>	<Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide> <Multiply><Complex>0 <Divide><Sqrt>2</Sqrt> 4</Divide></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Add>

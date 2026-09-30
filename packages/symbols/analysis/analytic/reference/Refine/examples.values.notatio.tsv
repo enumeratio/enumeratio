@@ -28,3 +28,4 @@ refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	<Refine><Ln><Power>x y</Power></Ln> <A
 refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	<Refine><Sqrt><Add><Power>x 2</Power> <Multiply>2 x y</Multiply> <Power>y 2</Power></Add></Sqrt> <GreaterEqual><Add>x y</Add> 0</GreaterEqual></Refine>	<Abs><Add>x y</Add></Abs>
 an-undecidable-inequality-is-left-alone	<Refine><Greater><Power>x 2</Power> 0</Greater></Refine>	<Less>0 <Power>x 2</Power></Less>
 refine-x-in-realnumbers-x-pow-2-lt-1	<Refine><Element>x RealNumbers</Element> <Less><Power>x 2</Power> 1</Less></Refine>	<Element>x RealNumbers</Element>
+refine-neg-1-lt-x-lt-1-x-pow-2-lt-1		

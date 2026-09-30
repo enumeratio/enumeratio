@@ -3,6 +3,8 @@ accumulate-1-2-3-4	\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl
 accumulate-list-a-b-c-d	\mathrm{Accumulate}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack a, a+b, a+b+c, a+b+c+d\bigr\rbrack
 accumulate-list-list-a-b-list-c-d-list	\mathrm{Accumulate}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack e, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack a+c, b+d\bigr\rbrack, \bigl\lbrack a+c+e, b+d+f\bigr\rbrack\bigr\rbrack
 accumulate-empty	\mathrm{Accumulate}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
+accumulate-v		
+accumulate-data		
 accumulate-range-1-10	\mathrm{Accumulate}(1..10)	\bigl\lbrack1, 3, 6, 10, 15, 21, 28, 36, 45, 55\bigr\rbrack
 accumulate-last-is-total	\mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5	\top
 transpose-nestlist-accumulate-range-1-5-5	\mathrm{NestList}(\mathrm{Accumulate}, 1..5, 5)^T	\bigl\lbrack\bigl\lbrack1, 1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack2, 3, 4, 5, 6, 7\bigr\rbrack, \bigl\lbrack3, 6, 10, 15, 21, 28\bigr\rbrack, \bigl\lbrack4, 10, 20, 35, 56, 84\bigr\rbrack, \bigl\lbrack5, 15, 35, 70, 126, 210\bigr\rbrack\bigr\rbrack

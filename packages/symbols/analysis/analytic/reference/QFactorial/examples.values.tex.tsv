@@ -7,5 +7,6 @@ qfactorial-3-1-2	N(\mathrm{QFactorial}(3, \frac{1}{2}))	2.625
 qfactorial-6-3	N(\mathrm{QFactorial}(6, 3))	91\,611\,520
 qfactorial-3-1-over-2	\mathrm{QFactorial}(3, \frac{1}{2})	\frac{21}{8}
 matrixfunction-function-1-pow-2-plus-1-plus-1	\mathrm{MatrixFunction}(()\mapsto(\operatorname{\_1}^2+\operatorname{\_1}+1)(\operatorname{\_1}+1), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 186\bigr\rbrack\bigr\rbrack
+n-qfactorial-1-over-3-6-50		
 the-inversion-generating-function-of	\mathrm{Expand}(\mathrm{QFactorial}(3, q))	q^3+2q^2+2q+1
 at-q-1-it-is-the-ordinary-factorial	\mathrm{QFactorial}(5, 1)	120

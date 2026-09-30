@@ -4,3 +4,9 @@ derangements	ExponentialGeneratingFunction[Subfactorial[n], n, x]
 bell-numbers	ExponentialGeneratingFunction[BellB[n], n, x]
 fibonacci	ExponentialGeneratingFunction[Fibonacci[n], n, x]
 exponentialgeneratingfunction-1-n-x	ExponentialGeneratingFunction[1, n, x]
+list-exponentialgeneratingfunction-unitstep-n-n	
+list-exponentialgeneratingfunction-n-times	
+list-exponentialgeneratingfunction-n-n-z	
+exponentialgeneratingfunction-1-n-1-times-z-pow	ExponentialGeneratingFunction[1, n, Times[1, Power[z, -1]]]
+exponentialgeneratingfunction-fibonacci-n-n-z	ExponentialGeneratingFunction[Fibonacci[n], n, z]
+list-exponentialgeneratingfunction-n-n-z-2	

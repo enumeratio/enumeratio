@@ -7,3 +7,4 @@ list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]
 list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]
 numberq-sqrt-2	NumberQ[Sqrt[2]]
 numberq-positiveinfinity	NumberQ[Infinity]
+ismatrix-m-numberq	

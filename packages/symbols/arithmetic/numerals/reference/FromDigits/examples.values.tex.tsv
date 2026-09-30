@@ -35,4 +35,5 @@ two-adjacent-ones-is-not-a-numeral-so-it-denotes	\mathrm{FromDigits}(\bigl\lbrac
 ostrowski-declines-a-string-past-its-ceiling	\mathrm{FromDigits}(\bigl\lbrack1, 2, 1\bigr\rbrack, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))	\mathrm{FromDigits}(\bigl\lbrack1, 2, 1\bigr\rbrack, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
 non-coprime-residues-an-inconsistent-string	\mathrm{FromDigits}(\bigl\lbrack1, 2\bigr\rbrack, \mathrm{ResidueNumerals}(\bigl\lbrack4, 6\bigr\rbrack))	\mathrm{FromDigits}(\bigl\lbrack1, 2\bigr\rbrack, \mathrm{ResidueNumerals}(\bigl\lbrack4, 6\bigr\rbrack))
 a-malformed-roman-numeral-declines	\mathrm{FromDigits}(\text{IIII}, \text{Roman})	\mathrm{FromDigits}(\text{IIII}, \text{Roman})
+map-fromdigits-list-7-8-9-a-b-c-d		
 digits-the-base-carry-into-higher-place-values-7	\mathrm{FromDigits}(\bigl\lbrack7, 11, 0, 0, 0, 122\bigr\rbrack)	810\,122

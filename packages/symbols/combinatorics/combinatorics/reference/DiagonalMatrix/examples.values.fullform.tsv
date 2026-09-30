@@ -3,3 +3,4 @@ main-diagonal	DiagonalMatrix[List[1, 2, 3]]
 super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]
 sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]
 diagonalmatrix-list-a-b-c-d	DiagonalMatrix[List[a, b, c, d]]
+thread-shape-diagonalmatrix-list-k-eq-length	

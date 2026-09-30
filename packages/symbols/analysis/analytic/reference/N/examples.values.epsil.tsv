@@ -22,8 +22,16 @@ n-exponentiale	N(exponentialE)	2.718_281_828_459_045_235_36
 n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(-2 * pit + pi, [positiveInfinity, 20])	-2 * pit + 3.141_592_653_589_793_238_462_643
 n-crt	N(crt)	crt
 n-crt-47	N(crt, 47)	crt
+n-2-pow-1-000-000		
+n-m		
+n-pi-pow-10-list-positiveinfinity-5		
+n-pi-pow-10-list-positiveinfinity-1		
 n-exponentiale-pow-sin-1-000	N(exponentialE ^ sin(1_000))	2.286_173_685_812_171_102_23
 n-exponentiale-pow-sin-1-000-47	N(exponentialE ^ sin(1_000), 47)	2.286_173_685_812_171_102_225_890_854_533_061_221_871_278_512
+n-1-minus-goldenratio-plus-1-over-goldenratio-20		
+n-1-minus-goldenratio-plus-1-over-goldenratio		
+n-exponentiale-pow-100-list-positiveinfinity-neg		
+n-10-000-000-000-times-neg-exponentiale-pow-999		
 an-exact-tie-rounds-to-the-even-digit-0-125	N(1 / 8, 2)	0.12
 and-0-375-to-0-38	N(3 / 8, 2)	0.38
 n-pi-1-digit	N(pi, 1)	3

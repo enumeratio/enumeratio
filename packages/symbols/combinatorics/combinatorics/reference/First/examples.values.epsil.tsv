@@ -12,6 +12,7 @@ of-a-matrix-the-first-row	first([[a, b], [c, d]])	[a, b]
 a-lazy-range-works-too	first(Range(5, 10))	5
 any-expression-not-just-a-list-the-first-term-of	first(a ^ 2 + b ^ 2)	a ^ 2
 a-default-is-ignored-when-the-collection-has-a	first([a, b], x)	a
+first-sparsearray-range-1-100		
 first-c-at-c-1-see-at	first([1, 2, 3]) == [1, 2, 3][1]	True
 an-empty-collection-has-no-first-element-compute	first([])	missing
 first-a-pow-neg-2	first(a ^ -2)	a

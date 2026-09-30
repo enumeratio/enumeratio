@@ -1,0 +1,3 @@
+id	section	role	expr	expected	triage
+sum-i-pow-neg-6-i-1-positiveinfinity		triage	[Sum, [Power, i, -6], [Limits, i, 1, PositiveInfinity]]	[Divide, [Power, Pi, 6], 945]	unscanned
+sum-i-pow-2-i-nothing-10		triage	[Sum, [Power, i, 2], [Limits, i, Nothing, 10]]	385	unscanned

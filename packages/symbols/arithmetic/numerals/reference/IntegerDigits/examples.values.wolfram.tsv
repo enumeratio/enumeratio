@@ -32,6 +32,7 @@ ostrowski-9-over-2-2-2-is-1-2-0
 bijective-base-26-27-is-aa					
 bijective-base-26-702-is-zz					
 integerdigits-137-mixedradixnumerals-list-3-12	IntegerDigits[137, MixedRadix[List[3, 12]]]	{3, 2, 5}	\text{IntegerDigits}[137,\text{MixedRadix}[\{3,12\}]]	\{3,2,5\}	
+integerdigits-1-084-mixedradixnumerals-list-17	IntegerDigits[1084, MixedRadix[List[17, 15, 11]], 2]	{8, 6}			disagree
 the-3-argument-form-keeps-only-the-4-least	IntegerDigits[6345354, 10, 4]	{5, 3, 5, 4}	\text{IntegerDigits}[6345354,10,4]	\{5,3,5,4\}	
 all-3-bit-words-by-threading-a-padded-form-over	IntegerDigits[Range[0, 7], 2, 3]	{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1}, {1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}}	\text{IntegerDigits}[\text{Range}[0,7],2,3]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  0 & 0 & 1 \\  0 & 1 & 0 \\  0 & 1 & 1 \\  1 & 0 & 0 \\  1 & 0 & 1 \\  1 & 1 & 0 \\  1 & 1 & 1 \\ \end{array} \right)	
 the-lehmer-code-of-the-6th-permutation-of-four					

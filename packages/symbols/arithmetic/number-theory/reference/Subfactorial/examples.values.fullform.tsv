@@ -11,6 +11,7 @@ complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[Complex[1.6, 1]]
 threads-over-a-matrix-element-wise	Subfactorial[List[List[2, 0], List[0, 2]]]	
 subfactorial-list-5-10-20	Subfactorial[List[5, 10, 20]]	
 matrixfunction-function-subfactorial-1-1-list	MatrixFunction[Function[Subfactorial[Slot[1]]], List[List[2, 0], List[0, 2]]]	[MatrixFunction, [Function, [Subfactorial, _1]], [List, [List, 2, 0], [List, 0, 2]]]
+n-subfactorial-1-over-3-50		
 the-hat-check-problem-the-number-of-ways-6	Subfactorial[6]	
 recurrence-d-n-n-d-n-1-1-n	Equal[Subfactorial[4], Plus[Times[4, Subfactorial[3]], Power[-1, 4]]]	
 d-n-is-frac-n-e-rounded-to-the-nearest-integer	Equal[Subfactorial[10], Round[Divide[Factorial[10], E]]]	

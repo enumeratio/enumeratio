@@ -12,6 +12,8 @@ a-jordan-block-e-i-n-e-i-n	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 1\bigr\
 applied-to-a-vector-e-a-v-computed-as-e-a-via	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack)	\bigl\lbrack2, 1\bigr\rbrack
 a-3-times-3-nilpotent-generator-the-exponential	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 1, \frac{1}{2}\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack\bigr\rbrack
 a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack e^{2}, e^{2}\bigr\rbrack, \bigl\lbrack0, e^{2}\bigr\rbrack\bigr\rbrack
+matrixexp-list-list-a-b-list-0-c		
+matrixexp-diagonalmatrix-list-a-b-c		
 a-skew-symmetric-generator-gives-a-rotation	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack-1, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\cos(1), \sin(1)\bigr\rbrack, \bigl\lbrack-\sin(1), \cos(1)\bigr\rbrack\bigr\rbrack
 matrixexp-a-eq-matrixfunction-exp-a	\mathrm{MatrixExp}(a)=\mathrm{MatrixFunction}(\mathrm{Exp}, a)	\top
 rejects-a-non-square-argument	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack)	{\text{[[1,2,3],[4,5,6]]}}

@@ -4,4 +4,7 @@ n-riemannzetazero-2	<N><RiemannZetaZero>2</RiemannZetaZero></N>	<Complex>0.5 21.
 n-riemannzetazero-50	<N><RiemannZetaZero>50</RiemannZetaZero></N>	<Complex>0.5 143.11184580762063</Complex>
 n-riemannzetazero-10	<N><RiemannZetaZero>10</RiemannZetaZero></N>	<Complex>0.5 49.7738324776723</Complex>
 n-list-riemannzetazero-1-riemannzetazero-2	<N><List><RiemannZetaZero>1</RiemannZetaZero> <RiemannZetaZero>2</RiemannZetaZero> <RiemannZetaZero>3</RiemannZetaZero></List></N>	<List><Complex>0.5 14.134725141734695</Complex> <Complex>0.5 21.022039638771552</Complex> <Complex>0.5 25.01085758014569</Complex></List>
+n-riemannzetazero-54-50		
+n-riemannzetazero-46-20		
+n-riemannzetazero-neg-1-eq-conjugate		
 n-riemannzetazero-0	<N><RiemannZetaZero>0</RiemannZetaZero></N>	<RiemannZetaZero>0</RiemannZetaZero>

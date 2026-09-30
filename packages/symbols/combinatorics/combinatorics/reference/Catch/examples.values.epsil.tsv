@@ -4,3 +4,4 @@ tag-matched-catch-recovers-the-value	Catch(Throw(ok, done), done)	ok
 catch-list-a-throw-b-c	Catch([a, Throw(b), c])	b
 catch-list-throw-a-throw-b-throw-c	Catch([Throw(a), Throw(b), Throw(c)])	a
 catch-throw-a-u-u	Catch(Throw(a, u), u)	a
+catch-list-catch-list-a-throw-b-c-d-e		

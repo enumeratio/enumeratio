@@ -2,3 +2,5 @@ id	in
 2-times-list-x-y-z	Times[2, List[x, y, z]]
 list-list-a-b-list-c-d-times-list-x-y	Times[List[List[a, b], List[c, d]], List[x, y]]
 interval-neg-1-2-times-interval-2-3	Times[Interval[List[-1, 2]], Interval[List[2, 3]]]
+product-1-over-i-plus-2-times-i-plus-1-i-1-n	
+neg-noncommutativemultiply-b-a-plus	

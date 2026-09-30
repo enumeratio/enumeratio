@@ -26,6 +26,7 @@ a-real-composite-5-squared	<Divisors Over="GaussianIntegers">25</Divisors>	<List
 a-negative-real-composite	<Divisors Over="GaussianIntegers">-15</Divisors>	<List>1 <Complex>1 2</Complex> <Complex>2 1</Complex> 3 <Complex>3 6</Complex> 5 <Complex>6 3</Complex> 15</List>
 divisors-3	<Divisors>3</Divisors>	<List>1 3</List>
 8-times-sum-filter-divisors-20-function	<Multiply>8 <Sum><Filter><Divisors>20</Divisors> <Function><Block><Not><Divides>4 _1</Divides></Not></Block> _1</Function></Filter></Sum></Multiply>	<ToExpression>144</ToExpression>
+filter-range-1-9-999-function-sum-divisors-1-eq		
 the-divisor-count-d-n-equals-sigma-0-n-see	<Equal><Length><Divisors>20</Divisors></Length> <DivisorSigma>0 20</DivisorSigma></Equal>	<True />
 divisors-2	<Divisors>2</Divisors>	<List>1 2</List>
 divisors-4	<Divisors>4</Divisors>	<List>1 2 4</List>

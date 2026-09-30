@@ -12,6 +12,7 @@ caputod-x-pow-2-list-x-1-times-2-pow-neg-1	CaputoD[Power[x, 2], List[x, Times[1,
 caputod-c-list-x-2-times-3-pow-neg-1	CaputoD[c, List[x, Times[2, Power[3, -1]]]]
 polynomial-linearity	CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, 0.5]]
 exact-order-polynomial-half	CaputoD[Plus[Power[x, 2], Times[3, x], 1], List[x, Rational[1, 2]]]
+fullsimplify-laplacetransform-caputod-sin-t-list	
 caputod-x-pow-3-list-x-1-times-2-pow-neg-1	CaputoD[Power[x, 3], List[x, Times[1, Power[2, -1]]]]
 caputod-x-pow-2-list-x-4-times-5-pow-neg-1	CaputoD[Power[x, 2], List[x, Times[4, Power[5, -1]]]]
 caputod-c-list-x-1-times-2-pow-neg-1	CaputoD[c, List[x, Times[1, Power[2, -1]]]]

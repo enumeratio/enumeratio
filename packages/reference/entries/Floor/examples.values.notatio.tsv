@@ -21,6 +21,7 @@ matrixfunction-floor-list-list-1-over-2-neg-1	<MatrixFunction>Floor <List><List>
 floor-0	<Floor>0</Floor>	<ToExpression>0</ToExpression>
 floor-positiveinfinity	<Floor>PositiveInfinity</Floor>	<PositiveInfinity />
 piecewiseexpand-floor-x-2-0-lt-x-lt-4	<PiecewiseExpand><Floor>x 2</Floor> <Less>0 x 4</Less></PiecewiseExpand>	<Floor>x 2</Floor>
+d-floor-x-x		
 how-many-full-5-item-packs-fit-in-17-items	<Floor><Divide>17 5</Divide></Floor>	<ToExpression>3</ToExpression>
 legendre-s-formula-100-ends-in-lfloor-100-5	<Add><Floor><Divide>100 5</Divide></Floor> <Floor><Divide>100 25</Divide></Floor></Add>	<ToExpression>24</ToExpression>
 the-number-of-decimal-digits-of-n-is-lfloor-log	<Add><Floor><Log>12345</Log></Floor> 1</Add>	<ToExpression>5</ToExpression>

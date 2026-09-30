@@ -5,6 +5,7 @@ inversegammaregularized-2p5-0p3	\mathrm{InverseGammaRegularized}(2.5, 0.3)	3.032
 qinv-5-0-1	\mathrm{InverseGammaRegularized}(5, 0.1)	7.993\,589\,586\,052\,63
 qinv-0-5-0-9	\mathrm{InverseGammaRegularized}(0.5, 0.9)	0.007\,895\,387\,046\,715\,613
 fullsimplify-matrixfunction-function	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(()\mapsto\mathrm{InverseGammaRegularized}(1, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1/2, 1/5\bigr\rbrack, \bigl\lbrack1/3, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack-\frac{1}{2}(\ln((1-(2\times15^{1/2})/15)/2))-\frac{1}{2}(\ln((1+(2\times15^{1/2})/15)/2)), \frac{1}{10}(\sqrt{15}\ln((1-(2\times15^{1/2})/15)/2))-\frac{1}{10}(\sqrt{15}\ln((1+(2\times15^{1/2})/15)/2))\bigr\rbrack, \bigl\lbrack\frac{1}{6}(\sqrt{15}\ln((1-(2\times15^{1/2})/15)/2))-\frac{1}{6}(\sqrt{15}\ln((1+(2\times15^{1/2})/15)/2)), -\frac{1}{2}(\ln((1-(2\times15^{1/2})/15)/2))-\frac{1}{2}(\ln((1+(2\times15^{1/2})/15)/2))\bigr\rbrack\bigr\rbrack
+n-inversegammaregularized-2-33-over-100-50		
 q-a-0-1	\mathrm{InverseGammaRegularized}(a, 1)	0
 q-a-infty-0	\mathrm{InverseGammaRegularized}(a, 0)	\infty
 order-1-inverts-e-z	\mathrm{InverseGammaRegularized}(1, s)	-\ln(s)

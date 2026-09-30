@@ -10,6 +10,7 @@ qpochhammer-3-5-9	QPochhammer[3, 5, 9]
 functionexpand-qpochhammer-a-2-1	FunctionExpand[QPochhammer[a, 2, 1]]	
 qpochhammer-1-over-2-plus-1-over-2-times-i-1	QPochhammer[Complex[Rational[1, 2], Rational[1, 2]], Complex[Rational[1, 2], Rational[-1, 2]], 10]	
 matrixfunction-function-qpochhammer-3-1-5-1-list	MatrixFunction[Function[QPochhammer[3, Slot[1], 5]], List[List[-1, 0], List[0, 5]]]	[MatrixFunction, [Function, [QPochhammer, 3, _1, 5]], [List, [List, -1, 0], [List, 0, 5]]]
+functionexpand-qpochhammer-2-q-5		
 the-empty-product	QPochhammer[a, q, 0]	
 qpochhammer-0-0-0	QPochhammer[0, 0, 0]	
 qpochhammer-0-0-1	QPochhammer[0, 0, 1]	

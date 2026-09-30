@@ -1,12 +1,13 @@
-id	section	role	expr	expected	known	tolerance	source
-rd-1-2-3		test	[N, [CarlsonRD, 1, 2, 3]]	0.2904602810289906	{num: "0.29046028102899063"}	1e-11	mpmath 1.3.0 elliprd
-rd-1-1-1		test	[N, [CarlsonRD, 1, 1, 1]]	1	{num: "1"}	1e-11	mpmath 1.3.0 elliprd
-rd-2-2-2		test	[N, [CarlsonRD, 2, 2, 2]]	0.3535533905932738	{num: "0.3535533905932738"}	1e-11	mpmath 1.3.0 elliprd
-rd-0-1-2		test	[N, [CarlsonRD, 0, 1, 2]]	1.0679379896673955	{num: "1.0679379896673957"}	1e-11	mpmath 1.3.0 elliprd
-rd-0-2-3		test	[N, [CarlsonRD, 0, 2, 3]]	0.525853445105089	{num: "0.5258534451050891"}	1e-11	mpmath 1.3.0 elliprd
-rd-0-5-1-1-5		test	[N, [CarlsonRD, 0.5, 1, 1.5]]	0.8215457375237984	{num: "0.8215457375237983"}	1e-11	mpmath 1.3.0 elliprd
-rd-1-4-4		test	[N, [CarlsonRD, 1, 4, 4]]	0.17729989403903626	{num: "0.17729989403903632"}	1e-11	mpmath 1.3.0 elliprd
-rd-1-1i-2-3		test	[N, [CarlsonRD, [Complex, 1, 1], 2, 3]]	[Complex, 0.26735426118069666, -0.05423751991867177]	[Complex, 0.2673542611806967, -0.054237519918671755]	1e-11	mpmath 1.3.0 elliprd
-rd-3-2i-1-1i-5		test	[N, [CarlsonRD, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.14256827575652475, 0.0008428574064519433]	[Complex, 0.1425682757565248, 0.0008428574064519467]	1e-11	mpmath 1.3.0 elliprd
-rd-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRD, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.6592440083528994	{num: "0.6592440083528995"}	1e-11	mpmath 1.3.0 elliprd
-rd-1-3-2-5-2		test	[N, [CarlsonRD, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.4335667291403934	{num: "0.43356672914039335"}	1e-11	mpmath 1.3.0 elliprd
+id	section	role	expr	expected	known	tolerance	source	triage
+rd-1-2-3		test	[N, [CarlsonRD, 1, 2, 3]]	0.2904602810289906	{num: "0.29046028102899063"}	1e-11	mpmath 1.3.0 elliprd	
+rd-1-1-1		test	[N, [CarlsonRD, 1, 1, 1]]	1	{num: "1"}	1e-11	mpmath 1.3.0 elliprd	
+rd-2-2-2		test	[N, [CarlsonRD, 2, 2, 2]]	0.3535533905932738	{num: "0.3535533905932738"}	1e-11	mpmath 1.3.0 elliprd	
+rd-0-1-2		test	[N, [CarlsonRD, 0, 1, 2]]	1.0679379896673955	{num: "1.0679379896673957"}	1e-11	mpmath 1.3.0 elliprd	
+rd-0-2-3		test	[N, [CarlsonRD, 0, 2, 3]]	0.525853445105089	{num: "0.5258534451050891"}	1e-11	mpmath 1.3.0 elliprd	
+rd-0-5-1-1-5		test	[N, [CarlsonRD, 0.5, 1, 1.5]]	0.8215457375237984	{num: "0.8215457375237983"}	1e-11	mpmath 1.3.0 elliprd	
+rd-1-4-4		test	[N, [CarlsonRD, 1, 4, 4]]	0.17729989403903626	{num: "0.17729989403903632"}	1e-11	mpmath 1.3.0 elliprd	
+rd-1-1i-2-3		test	[N, [CarlsonRD, [Complex, 1, 1], 2, 3]]	[Complex, 0.26735426118069666, -0.05423751991867177]	[Complex, 0.2673542611806967, -0.054237519918671755]	1e-11	mpmath 1.3.0 elliprd	
+rd-3-2i-1-1i-5		test	[N, [CarlsonRD, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.14256827575652475, 0.0008428574064519433]	[Complex, 0.1425682757565248, 0.0008428574064519467]	1e-11	mpmath 1.3.0 elliprd	
+rd-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRD, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.6592440083528994	{num: "0.6592440083528995"}	1e-11	mpmath 1.3.0 elliprd	
+rd-1-3-2-5-2		test	[N, [CarlsonRD, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.4335667291403934	{num: "0.43356672914039335"}	1e-11	mpmath 1.3.0 elliprd	
+n-carlsonrd-1-7-11-50	Scope	triage	[N, [CarlsonRD, 1, 7, 11], 50]	0.05367385963401343				compare

@@ -46,6 +46,8 @@ functionsurjective-cos-x-x	\mathrm{FunctionSurjective}(\cos(x), x)	\mathrm{False
 functionsingularities-cos-x-x	\mathrm{FunctionSingularities}(\cos(x), x)	\mathrm{False}
 functiondiscontinuities-cos-x-x	\mathrm{FunctionDiscontinuities}(\cos(x), x)	\mathrm{False}
 matrixfunction-function-cos-1-1-list-list-5-over		
+assuming-m-in-integers-refine-cos-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cos		
 threads-element-wise-over-a-list		
 even-function-cos-x-cos-x	\cos(-\frac{\pi}{3})=\cos(\frac{\pi}{3})	\mathrm{True}
 co-function-identity-cos-x-sin-pi-2-x	\cos(\frac{\pi}{6})=\sin(\frac{\pi}{2}-\frac{\pi}{6})	\mathrm{True}

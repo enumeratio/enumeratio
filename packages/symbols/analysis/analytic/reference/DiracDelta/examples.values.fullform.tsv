@@ -8,6 +8,8 @@ diracdelta-neg-1	DiracDelta[-1]
 diracdelta-pi-8-1-over-3	DiracDelta[Pi, 8, Rational[1, 3]]
 fouriertransform-diracdelta-x-x-t	FourierTransform[DiracDelta[x], x, t]
 fouriertransform-diracdelta-neg-a-plus-x-x-t	FourierTransform[DiracDelta[Plus[Minus[a], x]], x, t]
+integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	
 fouriertransform-diracdelta-y-y-x	FourierTransform[DiracDelta[y], y, x]
 diracdelta-1	DiracDelta[1]
+laplacetransform-diracdelta-x-x-s	
 diracdelta-neg-1-minus-2-times-exponentiale	DiracDelta[Plus[-1, Times[-2, E], Minus[Power[E, 2]], Power[E, Minus[Power[E, Times[2, E]]]], Power[Plus[1, E], 2]]]

@@ -4,6 +4,7 @@ iscomposite-13	CompositeQ[13]
 iscomposite-1-plus-10-pow-3-000	CompositeQ[Plus[1, Power[10, 3000]]]
 iscomposite-list-1-2-3-4-5-6	CompositeQ[List[1, 2, 3, 4, 5, 6]]
 iscomposite-5	CompositeQ[5]
+iscomposite-3-plus-i	
 iscomposite-8	CompositeQ[8]
 iscomposite-12	CompositeQ[12]
 iscomposite-67	CompositeQ[67]

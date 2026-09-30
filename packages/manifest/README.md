@@ -32,7 +32,11 @@ the resolver possible (below).
   before declaring it, once per pin: a failure refuses it, or with `mode: "flag"` is reported.
   Packing also writes the package's JavaScript entry (`scripts/symbol-entry.ts`), so it works
   as a plain library: `declare(ce)`, and each definition that compiles to self-contained
-  JavaScript as a plain function, checked against its examples. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  JavaScript as a plain function, checked against its examples.
+- **`lockPackages` / `specsOf`** (`src/npm-lock.ts`) — symbol packages asked for by range
+  (`@ada/primes@^1.0.0`) to the exact versions `npmRegistry` reads, closed over the symbol
+  packages they depend on: per package, the highest version every range asking for it
+  admits (`semver`); a lock's version holds while every range still admits it. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 

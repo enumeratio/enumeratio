@@ -11,5 +11,6 @@ interval-1-over-3-2-pow-3	\mathrm{Interval}(\frac{1}{3}, 2)^3	\mathrm{Interval}(
 fullsimplify-functioncontinuous-list-x-pow-n-x	\mathrm{FullSimplify}(\mathrm{FunctionContinuous}(\bigl\lbrack x^{n}, x\ge0\bigr\rbrack, x))	\mathrm{FunctionContinuous}(\bigl\lbrack x^{n}, 0\le x\bigr\rbrack, x)
 d-x-pow-n-x	\frac{\mathrm{d}x^{n}}{\mathrm{d}x}	nx^{n-1}
 root-neg-1-3	\sqrt[3]{-1}	-1
+fullsimplify-matrixfunction-function-2-pow-1-1		
 power-1-complexinfinity-is-indeterminate	1^{\tilde\infty}	\operatorname{Indeterminate}
 power-e-complexinfinity-is-indeterminate-exp	e^{\tilde\infty}	\operatorname{Indeterminate}

@@ -22,8 +22,16 @@ n-exponentiale	N(e)
 n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * SR.var("pit")) + pi))		
 n-crt	N(SR.var("crt"))		
 n-crt-47	N(SR.var("crt"))		
+n-2-pow-1-000-000			
+n-m			
+n-pi-pow-10-list-positiveinfinity-5			
+n-pi-pow-10-list-positiveinfinity-1			
 n-exponentiale-pow-sin-1-000	N(((e)^sin(1000)))		
 n-exponentiale-pow-sin-1-000-47	N(((e)^sin(1000)))		
+n-1-minus-goldenratio-plus-1-over-goldenratio-20			
+n-1-minus-goldenratio-plus-1-over-goldenratio			
+n-exponentiale-pow-100-list-positiveinfinity-neg			
+n-10-000-000-000-times-neg-exponentiale-pow-999			
 an-exact-tie-rounds-to-the-even-digit-0-125	N((1/8))	0.125000000000000	disagree
 and-0-375-to-0-38	N((3/8))	0.375000000000000	disagree
 n-pi-1-digit	N(pi)	3.14159265358979	disagree

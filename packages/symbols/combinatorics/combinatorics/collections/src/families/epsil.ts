@@ -1,8 +1,9 @@
 // A family defined in Epsil: its count, unrank, rank and membership are expressions, and the
 // kernel that runs them belongs to an engine. Compiled code (generated ahead of time by
 // scripts/compile-families.ts, else compiled on first use) answers while the fiber's count is a
-// safe integer, since it computes in doubles; past that, or where the compiler declines, the
-// interpreter answers with compute-engine's exact integers.
+// safe integer, since it computes in doubles; past that, where the compiler declines, or where
+// its code disagreed with the interpreter when generated, the interpreter answers with
+// compute-engine's exact integers.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
@@ -36,6 +37,9 @@ export interface GeneratedFamily {
   readonly unrank?: GeneratedRun;
   readonly rank?: GeneratedRun;
   readonly valid?: GeneratedRun;
+  /** Operations whose compiled code disagreed with the interpreter when generated: they are
+   *  interpreted, never compiled on first use. */
+  readonly interpreted?: readonly Operation[];
 }
 
 export type AnyFamily = FamilyKernel | EpsilFamily;
@@ -85,13 +89,14 @@ function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
   }
 }
 
-const elementJson = (value: unknown): unknown => (Array.isArray(value) ? ["List", ...value.map(elementJson)] : value);
+export const elementJson = (value: unknown): unknown =>
+  Array.isArray(value) ? ["List", ...value.map(elementJson)] : value;
 
 const bigintJson = (value: bigint): unknown =>
   value <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(value) : { num: value.toString() };
 
 /** An interpreted integer result, exactly; undefined for anything else. */
-function integerOf(json: unknown): bigint | undefined {
+export function integerOf(json: unknown): bigint | undefined {
   if (isInteger(json)) return BigInt(json);
   // compute-engine writes a big integer as digits and an exponent: {num: "15511210043330985984e+6"}.
   const num = typeof json === "object" && json !== null ? (json as { num?: unknown }).num : undefined;
@@ -100,7 +105,7 @@ function integerOf(json: unknown): bigint | undefined {
 }
 
 /** An interpreted element as plain JS; undefined when it isn't one. */
-function elementOf(json: unknown): Element | undefined {
+export function elementOf(json: unknown): Element | undefined {
   if (isInteger(json)) return json;
   if (!Array.isArray(json) || json[0] !== "List") return undefined;
   const items = json.slice(1).map(elementOf);
@@ -124,7 +129,8 @@ export function kernelOn(
   const compiled = (operation: Operation): ((vars: Record<string, unknown>) => unknown) | null => {
     if (!runs.has(operation)) {
       const code = current?.[operation];
-      if (code !== undefined) {
+      if (current?.interpreted?.includes(operation) === true) runs.set(operation, null);
+      else if (code !== undefined) {
         const sys = runtimeHelpers(ce);
         runs.set(operation, (vars) => code(sys, vars));
       } else {

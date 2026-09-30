@@ -1,7 +1,9 @@
 id	in	out
 drop-list-a-b-c-d-exponentiale-f-2	\mathrm{Drop}(\bigl\lbrack a, b, c, d, e, f\bigr\rbrack, 2)	\bigl\lbrack c, d, e, f\bigr\rbrack
+drop-list-a-b-c-d-exponentiale-f-neg-3		
 drop-list-list-11-12-13-list-21-22-23-list-31-32	\mathrm{Drop}(\bigl\lbrack\bigl\lbrack11, 12, 13\bigr\rbrack, \bigl\lbrack21, 22, 23\bigr\rbrack, \bigl\lbrack31, 32, 33\bigr\rbrack\bigr\rbrack, 1)	\bigl\lbrack\bigl\lbrack21, 22, 23\bigr\rbrack, \bigl\lbrack31, 32, 33\bigr\rbrack\bigr\rbrack
 drop-list-1-2-3-4-5-negative-2	\mathrm{Drop}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, -2)	\bigl\lbrack1, 2, 3\bigr\rbrack
 drop-list-a-b-c-d-exponentiale-1	\mathrm{Drop}(\bigl\lbrack a, b, c, d, e\bigr\rbrack, 1)	\bigl\lbrack b, c, d, e\bigr\rbrack
+drop-list-a-b-c-d-exponentiale-neg-1		
 drop-list-a-b-c-d-exponentiale-4	\mathrm{Drop}(\bigl\lbrack a, b, c, d, e\bigr\rbrack, 4)	\bigl\lbrack e\bigr\rbrack
 drop-list-1-2-negative-5-overflow-declines	\mathrm{Drop}(\bigl\lbrack1, 2\bigr\rbrack, -5)	\mathrm{Drop}(\bigl\lbrack1, 2\bigr\rbrack, -5)

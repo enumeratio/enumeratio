@@ -6,3 +6,4 @@ map-function-vertexeccentricity-cyclegraph-5-1-1	<Map><Function><Block><VertexEc
 isacyclicgraph-cyclegraph-5	<IsAcyclicGraph><CycleGraph>5</CycleGraph></IsAcyclicGraph>	<False />
 vertexdegree-cyclegraph-7	<VertexDegree><CycleGraph>7</CycleGraph></VertexDegree>	<List>2 2 2 2 2 2 2</List>
 cyclegraph-4	<CycleGraph>4</CycleGraph>	<Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge> <UndirectedEdge>4 1</UndirectedEdge></List></Graph>
+ispathgraph-cyclegraph-5		

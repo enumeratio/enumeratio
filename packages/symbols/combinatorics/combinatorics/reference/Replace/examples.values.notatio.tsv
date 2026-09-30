@@ -1,7 +1,10 @@
 id	in	out
 rewrites-the-whole-expr-matches-top-level	<Replace><Add>x 1</Add> <Rule><Add>_a 1</Add> <Multiply>_a 100</Multiply></Rule></Replace>	<Multiply>100 x</Multiply>
 replace-1-plus-x-pow-2-x-pow-2-neg-gt-a-plus-b	<Replace><Add>1 <Power>x 2</Power></Add> <KeyValuePair><Power>x 2</Power> <Add>a b</Add></KeyValuePair></Replace>	<Add><Power>x 2</Power> 1</Add>
+replace-x-pow-2-x-pow-2-neg-gt-a-plus-b		
+replace-x-list-list-x-neg-gt-a-list-x-neg-gt-b		
 tries-a-list-of-rules-in-order	<Replace>b <List><Rule>a 1</Rule> <Rule>b 2</Rule></List></Replace>	<ToExpression>2</ToExpression>
 replace-x-list-y-neg-gt-2-z-neg-gt-3	<Replace>x <List><KeyValuePair>y 2</KeyValuePair> <KeyValuePair>z 3</KeyValuePair></List></Replace>	<x />
 replace-x-list	<Replace>x <Apply>List</Apply></Replace>	<x />
+replace-x-list-list-x-neg-gt-1-list-y-neg-gt-2		
 leaves-expr-untouched-when-only-subexpr-matches	<Replace><List><Add>x 1</Add></List> <Rule><Add>_a 1</Add> <Multiply>_a 100</Multiply></Rule></Replace>	<List><Add>x 1</Add></List>

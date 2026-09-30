@@ -1,17 +1,18 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-first-list-1-2-3			[First, [List, 1, 2, 3]]	1			
-first-list-10-20-30			[First, [List, 10, 20, 30]]	10			
-first-list-a-b-c			[First, [List, a, b, c]]	a			
-first-default-ignored-when-nonempty		test	[First, [List, 1, 2, 3], 99]	1			
-first-of-association-is-first-value		test	[First, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	a			
-first-of-empty-association-falls-through		test	[First, [Association], 99]	99			
-first-of-nonempty-association-ignores-default		test	[First, [Association, [Rule, 1, a], [Rule, 2, b]], 99]	a			
-first-list-x			[First, [List], x]	x			
-a-second-argument-supplies-a-default-for-an	Scope		[First, [List], 99]	99	A second argument supplies a default for an empty collection		
-of-a-matrix-the-first-row	Scope		[First, [List, [List, a, b], [List, c, d]]]	[List, a, b]	Of a matrix, the first row		
-a-lazy-range-works-too	Scope		[First, [Range, 5, 10]]	5	A lazy [[Range]] works too		
-any-expression-not-just-a-list-the-first-term-of	Scope		[First, [Add, [Power, a, 2], [Power, b, 2]]]	[Power, a, 2]	Any expression, not just a list: the first term of a sum		
-a-default-is-ignored-when-the-collection-has-a	Scope		[First, [List, a, b], x]	a	A default is ignored when the collection has a first element		
-first-c-at-c-1-see-at	Properties		[Equal, [First, [List, 1, 2, 3]], [At, [List, 1, 2, 3], 1]]	True	$First(c) = At(c, 1)$. See [[At]]		
-an-empty-collection-has-no-first-element-compute	Possible issues		[First, [List]]	Missing	An empty collection has no first element; compute-engine returns the symbol $Missing$	undefined-form	First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).
-first-a-pow-neg-2	Possible issues		[First, [Power, a, -2]]	a			
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+first-list-1-2-3			[First, [List, 1, 2, 3]]	1				
+first-list-10-20-30			[First, [List, 10, 20, 30]]	10				
+first-list-a-b-c			[First, [List, a, b, c]]	a				
+first-default-ignored-when-nonempty		test	[First, [List, 1, 2, 3], 99]	1				
+first-of-association-is-first-value		test	[First, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	a				
+first-of-empty-association-falls-through		test	[First, [Association], 99]	99				
+first-of-nonempty-association-ignores-default		test	[First, [Association, [Rule, 1, a], [Rule, 2, b]], 99]	a				
+first-list-x			[First, [List], x]	x				
+a-second-argument-supplies-a-default-for-an	Scope		[First, [List], 99]	99	A second argument supplies a default for an empty collection			
+of-a-matrix-the-first-row	Scope		[First, [List, [List, a, b], [List, c, d]]]	[List, a, b]	Of a matrix, the first row			
+a-lazy-range-works-too	Scope		[First, [Range, 5, 10]]	5	A lazy [[Range]] works too			
+any-expression-not-just-a-list-the-first-term-of	Scope		[First, [Add, [Power, a, 2], [Power, b, 2]]]	[Power, a, 2]	Any expression, not just a list: the first term of a sum			
+a-default-is-ignored-when-the-collection-has-a	Scope		[First, [List, a, b], x]	a	A default is ignored when the collection has a first element			
+first-sparsearray-range-1-100	Scope	triage	[First, [SparseArray, [Range, 1, 100]]]	[List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]		gap		First[SparseArray[...]] returns the un-indexed Range argument instead of indexing into the dense array — SparseArray isn't unwrapped by First/Last; a documented Wolfram-frontier limitation (list-frontier.ts's own doc names SparseArray as a partial-coverage head)
+first-c-at-c-1-see-at	Properties		[Equal, [First, [List, 1, 2, 3]], [At, [List, 1, 2, 3], 1]]	True	$First(c) = At(c, 1)$. See [[At]]			
+an-empty-collection-has-no-first-element-compute	Possible issues		[First, [List]]	Missing	An empty collection has no first element; compute-engine returns the symbol $Missing$		undefined-form	First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).
+first-a-pow-neg-2	Possible issues		[First, [Power, a, -2]]	a				

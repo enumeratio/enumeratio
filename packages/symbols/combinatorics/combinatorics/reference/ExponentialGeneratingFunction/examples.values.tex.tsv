@@ -4,3 +4,9 @@ derangements	\mathrm{ExponentialGeneratingFunction}(\mathrm{Subfactorial}(n), n,
 bell-numbers	\mathrm{ExponentialGeneratingFunction}(\mathrm{BellNumber}(n), n, x)	e^{e^{x}-1}
 fibonacci	\mathrm{ExponentialGeneratingFunction}(\mathrm{Fibonacci}(n), n, x)	\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))
 exponentialgeneratingfunction-1-n-x	\mathrm{ExponentialGeneratingFunction}(1, n, x)	e^{x}
+list-exponentialgeneratingfunction-unitstep-n-n		
+list-exponentialgeneratingfunction-n-times		
+list-exponentialgeneratingfunction-n-n-z		
+exponentialgeneratingfunction-1-n-1-times-z-pow	\mathrm{ExponentialGeneratingFunction}(1, n, \frac{1}{z})	\sqrt[z]{e}
+exponentialgeneratingfunction-fibonacci-n-n-z	\mathrm{ExponentialGeneratingFunction}(\mathrm{Fibonacci}(n), n, z)	\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(z\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(z\times(1-5^{1/2}))))
+list-exponentialgeneratingfunction-n-n-z-2		

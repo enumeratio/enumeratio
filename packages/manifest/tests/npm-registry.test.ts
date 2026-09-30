@@ -13,9 +13,11 @@ import {
   createRegistryResolver,
   type FetchJson,
   type Library,
+  lockPackages,
   manifestRegistry,
   npmRegistry,
   searchPath,
+  specsOf,
 } from "../src/index.ts";
 
 const FIXTURES = new URL("./fixtures/npm/", import.meta.url).pathname;
@@ -165,4 +167,20 @@ test("a packed package is a plain library too: declare(ce), and compiled functio
   expect(readFileSync(join(root, "node_modules/@ada/primes/dist/index.d.ts"), "utf8")).toContain(
     "export declare const Twice: (x0: number) => number;",
   );
+});
+
+test("from ranges: lock the versions, then read them", async () => {
+  const { fetch } = cdn();
+  const listVersions = async (name: string) =>
+    SPECS.filter((spec) => spec.startsWith(`${name}@`)).map((spec) => spec.slice(name.length + 1));
+  const lock = await lockPackages(["@bob/extra@^2.0.0"], { fetch, listVersions });
+  expect(lock).toEqual({ "@ada/primes": "1.0.0", "@bob/extra": "2.0.0" });
+  const ce = new ComputeEngine();
+  await createRegistryResolver(npmRegistry<Engine>(specsOf(lock), { fetch })).ensure(ce, [
+    "MemberCall",
+    "bob",
+    "'Octuple'",
+    1,
+  ]);
+  expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 1])).toBe(8);
 });

@@ -52,6 +52,9 @@ isprime-list-7-11	is_prime(list(vec![n(7), n(11)]))
 isprime-list-5-7-2	is_prime(list(vec![n(5), n(7), n(2)]))		
 isprime-19	is_prime(n(19))		
 divisorsum-19-function-1-1-isprime			
+filter-divisors-625-isprime			
+filter-divisors-2-434-500-isprime			
+filter-divisors-65-isprime			
 non-integers-are-not-prime	is_prime(rational(n(1), n(2)))	panic: an integer, not 1/2	error
 another-non-integer-3-halves	is_prime(rational(n(3), n(2)))	panic: an integer, not 3/2	error
 a-symbol-stays-unevaluated			

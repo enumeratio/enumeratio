@@ -13,6 +13,7 @@ n-dirichletl-4-2-1p0001-near-the-removable-point	N(\mathrm{DirichletL}(4, 2, 1.0
 complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i	N(\mathrm{DirichletL}(2, 1, 1+i))	0.654\,358\,917\,407\,233\,1-0.384\,376\,350\,214\,799\,6i
 listable-in-s-threads-over-a-list	\mathrm{DirichletL}(1, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack\tilde\infty, \frac{\pi^2}{6}, \zeta(3), \frac{\pi^4}{90}\bigr\rbrack
 interval-arithmetic-in-s-decreasing-here	\mathrm{DirichletL}(5, 1, \mathrm{Interval}(1.23, 1.24))	\mathrm{Interval}(4.113\,958\,567\,039\,058, 4.258\,988\,950\,108\,49)
+n-dirichletl-3-2-1-over-2-50		
 a-principal-character-drops-the-euler-factors-at	\mathrm{DirichletL}(12, 1, s)	(1-2^{-s})(1-3^{-s})\zeta(s)
 and-keeps-zeta-s-pole-a-non-principal-l-is	\mathrm{DirichletL}(12, 1, 1)	\tilde\infty
 l-0-chi-frac-35-frac-15-i-exact-from-the	\mathrm{DirichletL}(5, 2, 0)	\frac{3}{5}+\frac{1}{5}i

@@ -1,4 +1,5 @@
 id	in	out
 path-4-matches-wolfram	<EigenvectorCentrality><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></EigenvectorCentrality>	<List>0.190983005625053 0.309016994374947 0.309016994374947 0.190983005625053</List>
 star-4-hub-is-most-central	<EigenvectorCentrality><StarGraph>4</StarGraph></EigenvectorCentrality>	<List>0.366025403784439 0.211324865405187 0.211324865405187 0.211324865405187</List>
+reverse-sortby-transpose-list-vertexlist-g		
 1-over-neg-length-connectedcomponents-g-plus	<Multiply><Divide>1 <Add><Negate><Length><ConnectedComponents>g</ConnectedComponents></Length></Negate> <VertexCount>g</VertexCount></Add></Divide> <Add><VertexCount>h</VertexCount> -1</Add> <EigenvectorCentrality>h</EigenvectorCentrality></Multiply>	<Divide><Multiply><Add><VertexCount>h</VertexCount> -1</Add> <EigenvectorCentrality>h</EigenvectorCentrality></Multiply> <Add><VertexCount>g</VertexCount> -1</Add></Divide>

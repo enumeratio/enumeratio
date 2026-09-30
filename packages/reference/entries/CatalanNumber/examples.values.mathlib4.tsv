@@ -15,6 +15,7 @@ c-1-2-frac-8-3-pi-by-analytic-continuation	(catalan ((1 : ℚ) / 2))
 an-interval-argument-should-give-an-enclosing		
 the-5-ways-to-balance-3-pairs-of-parentheses	(catalan 3)	5
 the-14-triangulations-of-a-hexagon-and-the-14	(catalan 4)	14
+assuming-n-in-integers-n-gt-eq-0-fullsimplify		
 closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(((Nat.choose (2 * 5) 5) : ℚ) / (5 + 1))	42
 the-closed-form-through-a-negative-n-in-binomial	(((Nat.choose (2 * (-13)) 5) : ℚ) / (4 + 1))	
 equivalently-c-n-binom-2n-n-binom-2n-n-1	((Nat.choose 10 5) - (Nat.choose 10 6))	42

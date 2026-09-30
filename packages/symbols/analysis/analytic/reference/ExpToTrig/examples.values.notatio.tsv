@@ -9,5 +9,6 @@ exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	<ExpToTrig><Add><Negate><Ln><Add
 exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	<ExpToTrig><And><LessEqual><Power>ExponentialE x</Power> 11</LessEqual> <Equal><Power>3 <Multiply><Complex>0 1</Complex> x</Multiply></Power> 7</Equal></And></ExpToTrig>	<And><LessEqual><Add><Sinh>x</Sinh> <Cosh>x</Cosh></Add> 11</LessEqual> <Equal><Power>3 <Multiply><Complex>0 1</Complex> x</Multiply></Power> 7</Equal></And>
 exptotrig-neg-1-pow-5-over-7	<ExpToTrig><Power>-1 <Rational>5 7</Rational></Power></ExpToTrig>	<ToExpression>-1</ToExpression>
 exptotrig-list-exponentiale-pow-i-times-x-eq-neg	<ExpToTrig><List><Equal><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> -1</Equal> <Root>-1 11</Root></List></ExpToTrig>	<List><Equal><Add><Multiply><Complex>0 1</Complex> <Sin>x</Sin></Multiply> <Cos>x</Cos></Add> -1</Equal> -1</List>
+exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2		
 exptotrig-root-neg-1-16	<ExpToTrig><Root>-1 16</Root></ExpToTrig>	<Root>-1 16</Root>
 exptotrig-exponentiale-pow-i-times-x-eq-neg-1	<ExpToTrig><Equal><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> -1</Equal></ExpToTrig>	<Equal><Add><Multiply><Complex>0 1</Complex> <Sin>x</Sin></Multiply> <Cos>x</Cos></Add> -1</Equal>

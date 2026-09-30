@@ -5,3 +5,5 @@ a-branch-point-is-not-a-pole	\mathrm{FunctionMeromorphic}(\ln(x), x)	\mathrm{Fal
 polynomials-are-meromorphic	\mathrm{FunctionMeromorphic}(x^2, x)	\mathrm{True}
 functionmeromorphic-sqrt-z-z	\mathrm{FunctionMeromorphic}(\sqrt{z}, z)	\mathrm{False}
 functionmeromorphic-ln-z-z	\mathrm{FunctionMeromorphic}(\ln(z), z)	\mathrm{False}
+list-functionmeromorphic-x-times-x-pow-2-plus-1		
+list-functionmeromorphic-tan-x-x		

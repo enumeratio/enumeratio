@@ -52,6 +52,9 @@ isprime-list-7-11	is_prime([7, 11])
 isprime-list-5-7-2	is_prime([5, 7, 2])		
 isprime-19	is_prime(19)		
 divisorsum-19-function-1-1-isprime			
+filter-divisors-625-isprime			
+filter-divisors-2-434-500-isprime			
+filter-divisors-65-isprime			
 non-integers-are-not-prime	is_prime((1/2))	False	
 another-non-integer-3-halves	is_prime((3/2))	False	
 a-symbol-stays-unevaluated	is_prime(SR.var("x"))	TypeError: unable to convert x to an integer	error

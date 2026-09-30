@@ -3,3 +3,4 @@ repeat-c-10	\mathrm{Repeat}(c, 10)	\bigl\lbrack c, c, c, c, c, c, c, c, c, c\big
 repeat-0-10	\mathrm{Repeat}(0, 10)	\bigl\lbrack0, 0, 0, 0, 0, 0, 0, 0, 0, 0\bigr\rbrack
 repeat-1-10	\mathrm{Repeat}(1, 10)	\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack
 dot-list-repeat-1-length-list	\mathrm{Dot}(\mathrm{list}, \mathrm{Repeat}(1, \mathrm{Length}(\mathrm{list})))	\mathrm{Dot}(\mathrm{list}, \bigl\lbrack\bigr\rbrack)
+shape-repeat-c-dims		

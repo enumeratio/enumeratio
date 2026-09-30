@@ -1,4 +1,5 @@
 id	in	out
 path-4-matches-wolfram	"EigenvectorCentrality(Graph([1, 2, 3, 4], [\n                                            UndirectedEdge(1, 2),\n                                            UndirectedEdge(2, 3),\n                                            UndirectedEdge(3, 4),\n                                          ]))"	"[\n  0.190_983_005_625_053,\n  0.309_016_994_374_947,\n  0.309_016_994_374_947,\n  0.190_983_005_625_053,\n]"
 star-4-hub-is-most-central	EigenvectorCentrality(StarGraph(4))	"[\n  0.366_025_403_784_439,\n  0.211_324_865_405_187,\n  0.211_324_865_405_187,\n  0.211_324_865_405_187,\n]"
+reverse-sortby-transpose-list-vertexlist-g		
 1-over-neg-length-connectedcomponents-g-plus	"1 / (-length(ConnectedComponents(g)) + VertexCount(g)) * (VertexCount(h) - 1) *\nEigenvectorCentrality(h)"	(VertexCount(h) - 1) * EigenvectorCentrality(h) / (VertexCount(g) - 1)

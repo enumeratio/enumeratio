@@ -12,4 +12,9 @@ assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	Assuming[Less[Power[x, 2], 3], Pie
 piecewiseexpand-pw	PiecewiseExpand[pw]	
 piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	PiecewiseExpand[LessEqual[-1, Max[x, y], 1]]	
 piecewiseexpand-max-abs-x-abs-y-realnumbers	PiecewiseExpand[Max[Abs[x], Abs[y]], Reals]	
+map-piecewiseexpand-list-min-x-y-max-x-y-z		
+assuming-list-0-lt-eq-x-lt-eq-3-map		
+assuming-0-lt-eq-k-lt-eq-3m-map-piecewiseexpand		
+map-piecewiseexpand-list-unitbox-x-unittriangle		
+assuming-list-0-lt-eq-x-lt-eq-3-map-2		
 without-a-realness-assumption-it-declines	PiecewiseExpand[Abs[x]]	

@@ -7,6 +7,7 @@ integerreverse-1-234-10-6	IntegerReverse[1234, 10, 6]
 padded-to-5-digits-first-00123-reversed	IntegerReverse[123, 10, 5]
 listable	IntegerReverse[List[12, 345]]
 integerreverse-list-123-234-345-456	IntegerReverse[List[123, 234, 345, 456]]
+integerreverse-1-234-mixedradixnumerals-list-7	
 a-palindrome-is-its-own-reversal	IntegerReverse[12321]
 integerreverse-842	IntegerReverse[842]
 integerreverse-84-200	IntegerReverse[84200]

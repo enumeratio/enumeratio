@@ -58,6 +58,8 @@ functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\mathrm{False
 functionsingularities-sin-x-x	\mathrm{FunctionSingularities}(\sin(x), x)	\mathrm{False}
 functiondiscontinuities-sin-x-x	\mathrm{FunctionDiscontinuities}(\sin(x), x)	\mathrm{False}
 matrixfunction-function-sin-1-1-list-list-5-over		
+assuming-m-in-integers-refine-sin-pi-times-m		
+assuming-m-in-integers-fullsimplify-sin-pi-times		
 threads-element-wise-over-a-list		
 degrees-d-converts-a-degree-measure-to-radians		
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x		

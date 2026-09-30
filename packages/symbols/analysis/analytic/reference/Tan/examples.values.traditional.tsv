@@ -40,6 +40,9 @@ functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\mathrm{True}
 functionsingularities-tan-x-x		
 functiondiscontinuities-tan-x-x		
 matrixfunction-function-tan-1-1-list-list-5-over		
+assuming-m-in-integers-refine-tan-pi-times-m		
+assuming-m-in-integers-fullsimplify-refine-tan		
+tan-positiveinfinity		
 threads-element-wise-over-a-list		
 tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\mathrm{True}
 odd-function-tan-x-tan-x		

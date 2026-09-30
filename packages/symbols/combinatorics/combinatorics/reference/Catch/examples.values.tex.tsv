@@ -4,3 +4,4 @@ tag-matched-catch-recovers-the-value	\mathrm{Catch}(\mathrm{Throw}(\mathrm{ok}, 
 catch-list-a-throw-b-c	\mathrm{Catch}(\bigl\lbrack a, \mathrm{Throw}(b), c\bigr\rbrack)	b
 catch-list-throw-a-throw-b-throw-c	\mathrm{Catch}(\bigl\lbrack\mathrm{Throw}(a), \mathrm{Throw}(b), \mathrm{Throw}(c)\bigr\rbrack)	a
 catch-throw-a-u-u	\mathrm{Catch}(\mathrm{Throw}(a, u), u)	a
+catch-list-catch-list-a-throw-b-c-d-e		

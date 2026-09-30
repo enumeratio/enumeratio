@@ -7,3 +7,5 @@ rc-0-1i-0-1i	<N><CarlsonRC><Complex>0 1</Complex> <Complex>0 -1</Complex></Carls
 rc-1-1-2	<N><CarlsonRC>1 -1</CarlsonRC></N>	<ToExpression>0.6232252401402307</ToExpression>
 rc-4-3	<N><CarlsonRC>4 -3</CarlsonRC></N>	<ToExpression>0.3729174986774664</ToExpression>
 rc-2-0-5	<N><CarlsonRC>2 -0.5</CarlsonRC></N>	<ToExpression>0.913035242516903</ToExpression>
+n-carlsonrc-sqrt-3-neg-2-50		
+carlsonrc-exponentiale-pow-1-over-7-times-i		

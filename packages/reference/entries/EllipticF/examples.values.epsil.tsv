@@ -1,7 +1,10 @@
 id	in	out	back
 ellipticf-list-list-1-0-list-0-1-0	ellipticF([[1, 0], [0, 1]], 0)	[[ellipticF(1, 0), 0], [0, ellipticF(1, 0)]]	
 matrixfunction-function-ellipticf-1-0-1-list	MatrixFunction(Function(ellipticF(_1, 0), _1), [[1, 0], [0, 1]])	[[ellipticF(1, 0), 0], [0, ellipticF(1, 0)]]	Unreadable
+n-ellipticf-12-over-5-3-50			
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m			
 ellipticf-0-1	ellipticF(0, 1)	0	
 ellipticf-0-0	ellipticF(0, 0)	0	
 ellipticf-jacobiamplitude-0-0-0	ellipticF(JacobiAmplitude(0, 0), 0)	0	
 ellipticf-jacobiamplitude-0-1-1	ellipticF(JacobiAmplitude(0, 1), 1)	0	
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq			

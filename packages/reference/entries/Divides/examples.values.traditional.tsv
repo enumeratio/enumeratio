@@ -8,3 +8,4 @@ divides-11-918-082	11\mid918\,082	\mathrm{True}
 list-isinteger-5-divides-2-10	\bigl\lbrack\mathrm{IsInteger}(5), 2\mid10\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
 divides-8-48	8\mid48	\mathrm{True}
 divides-12-25	12\mid25	\mathrm{False}
+simplify-divides-a-b-times-a-list-a-b-in		

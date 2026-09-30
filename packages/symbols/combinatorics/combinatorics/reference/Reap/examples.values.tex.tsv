@@ -1,5 +1,6 @@
 id	in	out
 collect-everything-sown	\mathrm{Reap}(\mathrm{Last}(\bigl\lbrack\mathrm{Sow}(1), \mathrm{Sow}(2), 3\bigr\rbrack))	\bigl\lbrack3, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
 nothing-sown-gives-an-empty-group-list	\mathrm{Reap}(5)	\bigl\lbrack5, \bigl\lbrack\bigr\rbrack\bigr\rbrack
+reap-sum-sow-i-pow-2-plus-1-i-10		
 reap-only-a-matching-tag	\mathrm{Reap}(\mathrm{Last}(\bigl\lbrack\mathrm{Sow}(1, a), \mathrm{Sow}(2, b), \mathrm{Sow}(3, a), 0\bigr\rbrack), a)	\bigl\lbrack0, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
 reap-x	\mathrm{Reap}(x)	\bigl\lbrack x, \bigl\lbrack\bigr\rbrack\bigr\rbrack

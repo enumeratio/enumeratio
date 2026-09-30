@@ -14,5 +14,10 @@ cuberoot-x-eq-surd-x-3	CubeRoot(x) == Surd(x, 3)	True
 fullsimplify-d-integrate-cuberoot-x-x-nothing	FullSimplify(D(integrate(CubeRoot(x), (x, Nothing, Nothing)), x) == CubeRoot(x))	True
 fullsimplify-integrate-sin-x-times-cuberoot-x-x	FullSimplify(integrate(sin(x) * CubeRoot(x), (x, 0, 5)))	integrate(sin(x) * root(x, 3), (x, 0, 5))
 d-cuberoot-x-x	D(CubeRoot(x), x)	1 / (3 * x ^ (2 / 3))
+solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
+fullsimplify-d-cuberoot-x-list-x-k		
+seriescoefficient-cuberoot-x-list-x-1-n		
+fullsimplify-fourierseries-cuberoot-x-x-1		
+fullsimplify-integrate-cuberoot-x-times		
 the-same-as-root-with-index-3	CubeRoot(-64) == root(-64, 3)	True
 cuberoot-neg-8	CubeRoot(-8)	-2

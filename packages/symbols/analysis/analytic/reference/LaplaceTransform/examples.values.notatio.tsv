@@ -4,3 +4,15 @@ exp-at	<LaplaceTransform><Power>ExponentialE <Multiply>2 t</Multiply></Power> t 
 sin-at	<LaplaceTransform><Sin><Multiply>3 t</Multiply></Sin> t s</LaplaceTransform>	<Divide>3 <Add><Power>s 2</Power> 9</Add></Divide>
 t-cubed-exp-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Power>t 3</Power></Multiply> t s</LaplaceTransform>	<Divide>6 <Power><Add>s -2</Add> 4</Power></Divide>
 exp-sin-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Sin><Multiply>3 t</Multiply></Sin></Multiply> t s</LaplaceTransform>	<Divide>3 <Add><Power><Add>s -2</Add> 2</Power> 9</Add></Divide>
+laplacetransform-1-t-s		
+laplacetransform-3-times-t-pow-2-plus-5t-minus-7		
+laplacetransform-exponentiale-pow-neg-a-times-t		
+simplify-laplacetransform-b-times-sinh-a-times-t		
+laplacetransform-1-over-t-times-exponentiale-pow		
+laplacetransform-1-over-sqrt-t-times-chebyshevt		
+laplacetransform-gamma-nu-a-times-1-over-t-t-s		
+laplacetransform-diracdelta-t-minus-1-t-s		
+laplacetransform-1-over-gamma-m-plus-1-times		
+laplacetransform-1-over-sqrt-x-times-y-times-cos		
+laplacetransform-1-over-t-times-sin-3t-t-s		
+fullsimplify-laplacetransform-realabs-sin-t-t-s		

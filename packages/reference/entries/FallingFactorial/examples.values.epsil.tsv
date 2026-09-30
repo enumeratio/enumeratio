@@ -7,5 +7,6 @@ falling-factorial-half-2-neg-1-4	FallingFactorial(1 / 2, 2)	-1 / 4
 fallingfactorial-4-2	FallingFactorial(4, 2)	12
 functionexpand-fallingfactorial-x-4	FunctionExpand(FallingFactorial(x, 4))	-x * (-x + 1) * (-x + 2) * (-x + 3)
 fallingfactorial-n-0	FallingFactorial(n, 0)	1
+fallingfactorial-x-plus-bigo-x-pow-5-10		
 fallingfactorial-10-3	FallingFactorial(10, 3)	720
 differencedelta-fallingfactorial-x-n-x	DifferenceDelta(FallingFactorial(x, n), x)	-FallingFactorial(x, n) + FallingFactorial(x + 1, n)

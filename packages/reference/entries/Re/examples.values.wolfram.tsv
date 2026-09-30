@@ -2,6 +2,18 @@ id	in	out	tex.in	tex.out	verdict
 re-of-3-plus-4i-is-3	Re[Complex[3, 4]]	3	\Re(3+4 i)	3	
 re-of-a-real-number-is-itself	Re[5]	5	\Re(5)	5	
 re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]	Pi	\Re(\pi )	\pi	
+real-2-plus-3i					
+real-2-times-exponentiale-pow-1-over-3-times-i					
+real-3-over-2-plus-4-over-5-times-i					
+n-real-exponentiale-plus-i-times-pi-25					
+real-41-over-25-minus-2i					
+real-list-list-1-u-list-v-neg-i					
+real-0					
+real-positiveinfinity					
+real-positiveinfinity-times-i					
+real-complexinfinity					
+piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	-Im[x]	\text{PiecewiseExpand}[\Re(i x),-2<x<2]	-\Im(x)	disagree
+simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	x	\text{Simplify}[\Re(x),x>0]	x	disagree
 re-of-a-symbolic-value-stays-unevaluated	Re[x]	Re[x]	\Re(x)	\Re(x)	disagree
 real-1					
 real-neg-1					
@@ -15,3 +27,9 @@ real-sqrt-3-plus-i
 real-1-plus-sqrt-3-times-i					
 real-neg-1-plus-sqrt-3-times-i					
 real-neg-sqrt-3-plus-i					
+list-real-x-times-exponentiale-pow-1-over-5					
+real-neg-sqrt-3-minus-i					
+real-neg-1-plus-neg-sqrt-3-times-i					
+real-1-plus-neg-sqrt-3-times-i					
+real-sqrt-3-minus-i					
+real-2					

@@ -1,3 +1,5 @@
 id	in
 adjacency-matrix-of-k4	AdjacencyMatrix[CompleteGraph[4]]
 a-directed-edge-is-asymmetric	AdjacencyMatrix[Graph[List[1, 2], List[DirectedEdge[1, 2]]]]
+shape-adjacencymatrix-g	
+adjacencymatrix-graph-list-list	

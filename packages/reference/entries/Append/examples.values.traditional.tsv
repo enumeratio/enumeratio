@@ -6,6 +6,7 @@ onto-the-empty-list
 a-lazy-range-is-materialised-first		
 any-head-not-just-a-list		
 adding-a-row-to-a-matrix		
+nestlist-function-symbol-x-1-list-a-5		
 append-c-x-join-c-x-see-join	\mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4)=\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4\bigr\rbrack)	\mathrm{True}
 appending-adds-exactly-one-element-see-length	\mathrm{Length}(\mathrm{Append}(\bigl\lbrack1, 2, 3\bigr\rbrack, 4))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+1	\mathrm{True}
 appending-a-list-nests-it-as-a-single-element		

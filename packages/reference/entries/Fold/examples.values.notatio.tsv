@@ -3,12 +3,28 @@ fold-add-0-list-1-2-3-4	<Fold>Add 0 <List>1 2 3 4</List></Fold>	<ToExpression>10
 fold-multiply-1-list-1-2-3-4	<Fold>Multiply 1 <List>1 2 3 4</List></Fold>	<ToExpression>24</ToExpression>
 the-shape-of-a-left-fold	<Fold>f x <List>a b c</List></Fold>	<f><f><f>x a</f> b</f> c</f>
 fold-max-0-list-3-1-4-1-5	<Fold>Max 0 <List>3 1 4 1 5</List></Fold>	<ToExpression>5</ToExpression>
+reduce-list-a-b-c-d-f-x		
+reduce-list-a-b-c-d-list-x		
+reduce-list-a-b-c-d-multiply-1		
+reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d		
 symbolic-elements	<Fold>Add 0 <List>a b c</List></Fold>	<Add>a b c</Add>
 any-two-argument-function-here-one-that-nests	<Fold><Function><List>_1 _2</List></Function> x <List>a b</List></Fold>	<List><List>x a</List> b</List>
 without-a-seed-folding-starts-from-the-first	<Fold>f <List>a b c</List></Fold>	<f><f>a b</f> c</f>
+reduce-rest-list-a-b-c-d-power-first-list-a-b-c		
+reduce-list-list-1-4-3-2-list-3-2-4-1-permute		
+reduce-list-a-b-c-d-function-list-2-times-1-3		
 assemble-a-number-from-its-decimal-digits	<Fold><Function><Add><Multiply>10 _1</Multiply> _2</Add></Function> 0 <List>1 2 3 4</List></Fold>	<ToExpression>1234</ToExpression>
 or-from-its-binary-digits-1011-2-11	<Fold><Function><Add><Multiply>2 _1</Multiply> _2</Add></Function> 0 <List>1 0 1 1</List></Fold>	<ToExpression>11</ToExpression>
 horner-s-rule-for-ax-2-bx-c	<Fold><Function><Add><Multiply>x _1</Multiply> _2</Add></Function> 0 <List>a b c</List></Fold>	<Add><Multiply>x <Add><Multiply>a x</Multiply> b</Add></Multiply> c</Add>
 evaluate-the-continued-fraction-1-2-2-2-from-the	<Fold><Function><Add>_2 <Divide>1 _1</Divide></Add></Function> 2 <List>2 2 1</List></Fold>	<Rational>17 12</Rational>
+reduce-list-2-4-3-partition-range-1-30		
+reduce-list-a-b-c-d-exponentiale-function-1		
+reduce-list-4-5-1-6-7-8-function-10-times-1-plus		
+reduce-list-a-b-c-d-function-list-2-1-1-2-x		
 folding-an-empty-list-returns-the-seed	<Fold>f x <Apply>List</Apply></Fold>	<x />
 folding-with-add-is-a-sum-1-2-100	<Fold>Add 0 <Range>100</Range></Fold>	<ToExpression>5050</ToExpression>
+reduce-rest-list-a-f-first-list-a		
+reduce-list-a-b-c-d-g-x		
+reduce-list-1-2-3-4-5-append-list		
+reduce-rest-list-f-first-list		
+reduce-list-a-b-c-function-join-s-map-function		

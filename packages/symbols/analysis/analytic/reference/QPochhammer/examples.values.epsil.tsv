@@ -10,6 +10,7 @@ qpochhammer-3-5-9	QPochhammer(3, 5, 9)	-175_258_163_137_268_414_822_846_915_072
 functionexpand-qpochhammer-a-2-1	FunctionExpand(QPochhammer(a, 2, 1))	-a + 1	
 qpochhammer-1-over-2-plus-1-over-2-times-i-1	QPochhammer(1 / 2 + 1 / 2 * i, 1 / 2 + -1 / 2 * i, 10)	95_264_271 / 268_435_456 + -25_488_603 / 268_435_456 * i	
 matrixfunction-function-qpochhammer-3-1-5-1-list	MatrixFunction(Function(QPochhammer(3, _1, 5), _1), [[-1, 0], [0, 5]])	[[-128, 0], [0, -1_452_215_072]]	Unreadable
+functionexpand-qpochhammer-2-q-5			
 the-empty-product	QPochhammer(a, q, 0)	1	
 qpochhammer-0-0-0	QPochhammer(0, 0, 0)	1	
 qpochhammer-0-0-1	QPochhammer(0, 0, 1)	1	

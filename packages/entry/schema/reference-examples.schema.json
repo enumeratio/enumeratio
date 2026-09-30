@@ -62,10 +62,10 @@
           "type": "string"
         },
         "role": {
-          "enum": ["demo", "test"]
+          "enum": ["demo", "test", "aspirational", "triage"]
         },
-        "aspirational": {
-          "type": "boolean"
+        "triage": {
+          "enum": ["adapt", "emit", "compare", "ours?", "wolfram?", "unscanned", "gap", "print"]
         },
         "volatile": {
           "type": "array",
@@ -129,7 +129,8 @@
       "dependentRequired": {
         "known": ["source"],
         "source": ["known"],
-        "tolerance": ["known"]
+        "tolerance": ["known"],
+        "triage": ["role"]
       },
       "additionalProperties": false
     },

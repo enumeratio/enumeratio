@@ -12,6 +12,8 @@ a-jordan-block-e-i-n-e-i-n	MatrixExp[List[List[1, 1], List[0, 1]]]
 applied-to-a-vector-e-a-v-computed-as-e-a-via	MatrixExp[List[List[0, 1], List[0, 0]], List[1, 1]]
 a-3-times-3-nilpotent-generator-the-exponential	MatrixExp[List[List[0, 1, 0], List[0, 0, 1], List[0, 0, 0]]]
 a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	MatrixExp[List[List[2, 1], List[0, 2]]]
+matrixexp-list-list-a-b-list-0-c	
+matrixexp-diagonalmatrix-list-a-b-c	
 a-skew-symmetric-generator-gives-a-rotation	MatrixExp[List[List[0, 1], List[-1, 0]]]
 matrixexp-a-eq-matrixfunction-exp-a	Equal[MatrixExp[a], MatrixFunction[Exp, a]]
 rejects-a-non-square-argument	MatrixExp[List[List[1, 2, 3], List[4, 5, 6]]]

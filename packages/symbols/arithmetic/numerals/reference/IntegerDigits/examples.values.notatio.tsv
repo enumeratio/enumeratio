@@ -32,6 +32,7 @@ ostrowski-9-over-2-2-2-is-1-2-0	<IntegerDigits>9 <OstrowskiNumerals><List>2 2 2<
 bijective-base-26-27-is-aa	<IntegerDigits>27 <BijectiveNumerals>26</BijectiveNumerals></IntegerDigits>	<List>1 1</List>
 bijective-base-26-702-is-zz	<IntegerDigits>702 <BijectiveNumerals>26</BijectiveNumerals></IntegerDigits>	<List>26 26</List>
 integerdigits-137-mixedradixnumerals-list-3-12	<IntegerDigits>137 <MixedRadixNumerals><List>3 12</List></MixedRadixNumerals></IntegerDigits>	<List>3 2 5</List>
+integerdigits-1-084-mixedradixnumerals-list-17		
 the-3-argument-form-keeps-only-the-4-least	<IntegerDigits>6345354 10 4</IntegerDigits>	<List>5 3 5 4</List>
 all-3-bit-words-by-threading-a-padded-form-over	<IntegerDigits><Range>0 7</Range> 2 3</IntegerDigits>	<List><List>0 0 0</List> <List>0 0 1</List> <List>0 1 0</List> <List>0 1 1</List> <List>1 0 0</List> <List>1 0 1</List> <List>1 1 0</List> <List>1 1 1</List></List>
 the-lehmer-code-of-the-6th-permutation-of-four	<IntegerDigits>5 FactorialNumerals 4</IntegerDigits>	<List>0 2 1 0</List>

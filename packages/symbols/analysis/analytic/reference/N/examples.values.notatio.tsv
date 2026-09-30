@@ -22,8 +22,16 @@ n-exponentiale	<N>ExponentialE</N>	<ToExpression>2.71828182845904523536</ToExpre
 n-neg-2-times-pit-plus-pi-list-positiveinfinity	<N><Add><Multiply>-2 pit</Multiply> Pi</Add> <List>PositiveInfinity 20</List></N>	<Add><Multiply>-2 pit</Multiply> 3.141592653589793238462643</Add>
 n-crt	<N>crt</N>	<crt />
 n-crt-47	<N>crt 47</N>	<crt />
+n-2-pow-1-000-000		
+n-m		
+n-pi-pow-10-list-positiveinfinity-5		
+n-pi-pow-10-list-positiveinfinity-1		
 n-exponentiale-pow-sin-1-000	<N><Power>ExponentialE <Sin>1000</Sin></Power></N>	<ToExpression>2.28617368581217110223</ToExpression>
 n-exponentiale-pow-sin-1-000-47	<N><Power>ExponentialE <Sin>1000</Sin></Power> 47</N>	<ToExpression>2.286173685812171102225890854533061221871278512</ToExpression>
+n-1-minus-goldenratio-plus-1-over-goldenratio-20		
+n-1-minus-goldenratio-plus-1-over-goldenratio		
+n-exponentiale-pow-100-list-positiveinfinity-neg		
+n-10-000-000-000-times-neg-exponentiale-pow-999		
 an-exact-tie-rounds-to-the-even-digit-0-125	<N><Rational>1 8</Rational> 2</N>	<ToExpression>0.12</ToExpression>
 and-0-375-to-0-38	<N><Rational>3 8</Rational> 2</N>	<ToExpression>0.38</ToExpression>
 n-pi-1-digit	<N>Pi 1</N>	<ToExpression>3</ToExpression>

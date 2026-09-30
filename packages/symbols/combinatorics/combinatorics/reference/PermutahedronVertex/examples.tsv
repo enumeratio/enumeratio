@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption	aspirational
-the-one-line-word-231-once-there-is-a-definition			[PermutahedronVertex, [Permutation, [List, 2, 3, 1]]]	[List]	the one-line word $231$ — once there is a definition to evaluate	true
+id	section	role	expr	expected	caption
+the-one-line-word-231-once-there-is-a-definition		aspirational	[PermutahedronVertex, [Permutation, [List, 2, 3, 1]]]	[List]	the one-line word $231$ — once there is a definition to evaluate

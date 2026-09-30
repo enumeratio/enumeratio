@@ -5,3 +5,4 @@ mapindexed-f-list-list-a-b-list-c-d-exponentiale	MapIndexed(f, [[a, b], [c, d, e
 mapindexed-f-list-list-list-list-list-a	MapIndexed(f, [[[[[a]]]]])	[f([[[[a]]]], [1])]	
 mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	MapIndexed(Labeled, [x ^ 2, x + y, y ^ 2, y ^ 3])	"[\n  Labeled(x ^ 2, [1]),\n  Labeled(x + y, [2]),\n  Labeled(y ^ 2, [3]),\n  Labeled(y ^ 3, [4]),\n]"	
 sum-mapindexed-function-1-times-x-pow-first-2-1	sum(MapIndexed(Function(_1 * x ^ first(_2), _1, _2), [a, b, c, d, exponentialE]))	exponentialE * x ^ 5 + d * x ^ 4 + c * x ^ 3 + b * x ^ 2 + a * x	Unreadable
+first-last-reap-mapindexed-function-sow-2-list			

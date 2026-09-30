@@ -1,3 +1,5 @@
 id	in
+cdf-weibulldistribution-2-5-n-4-25	
+cdf-negativebinomialdistribution-20-n-1-over-3	
 cdf-normaldistribution-negativeinfinity	CDF[NormalDistribution[], -Infinity]
 cdf-normaldistribution-positiveinfinity	CDF[NormalDistribution[], Infinity]

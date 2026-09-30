@@ -5,3 +5,5 @@ a-branch-point-is-not-a-pole	<FunctionMeromorphic><Ln>x</Ln> x</FunctionMeromorp
 polynomials-are-meromorphic	<FunctionMeromorphic><Power>x 2</Power> x</FunctionMeromorphic>	<True />
 functionmeromorphic-sqrt-z-z	<FunctionMeromorphic><Sqrt>z</Sqrt> z</FunctionMeromorphic>	<False />
 functionmeromorphic-ln-z-z	<FunctionMeromorphic><Ln>z</Ln> z</FunctionMeromorphic>	<False />
+list-functionmeromorphic-x-times-x-pow-2-plus-1		
+list-functionmeromorphic-tan-x-x		

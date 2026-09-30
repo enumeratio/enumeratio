@@ -11,10 +11,26 @@
 // `video/mp2t`, which a worker's `import()` then refuses outright).
 //
 // This file sidesteps the whole problem: it imports BOTH the worker's message loop
-// (`startSessionWorker`) and this site's own `configure` (`./worker-engine-setup.ts`,
-// the ~20-library declare list) statically, so Vite bundles the two together into one
-// self-contained worker chunk -- no runtime `import()` of a separate URL at all.
+// (`startSessionWorker`) and this site's catalogue (`./worker-catalogue.ts`) statically, so
+// Vite bundles them into the worker, each library a chunk of its own -- no runtime
+// `import()` of a URL the build never emitted.
 import { startSessionWorker } from "../../../packages/symbols/evaluation/evaluation/src/session-worker-core.ts";
-import { configure } from "./worker-engine-setup.ts";
+import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { BOXES_LATEX } from "@enumeratio/boxes";
+import { displayBoxes, displayDictionary } from "@enumeratio/frontend/display";
+import { RESIDUES_LATEX } from "@enumeratio/residues";
+import { CATALOGUE } from "./worker-catalogue.ts";
 
-startSessionWorker(configure);
+// A kernel: no libraries up front, each one declared when a call first needs it. It writes
+// each answer's display (boxes) itself, with the page's notation: a dictionary is fixed at
+// construction, so the notation is the host's, up front.
+startSessionWorker(undefined, {
+  catalogue: CATALOGUE,
+  createEngine: () =>
+    new ComputeEngine({
+      latexSyntax: new LatexSyntax({
+        dictionary: displayDictionary(LATEX_DICTIONARY, [...RESIDUES_LATEX, ...BOXES_LATEX]),
+      }),
+    }),
+  display: displayBoxes,
+});

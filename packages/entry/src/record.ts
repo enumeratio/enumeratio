@@ -48,7 +48,7 @@ const EXAMPLE_COLUMNS: readonly (readonly [column: string, field: string, cell: 
   ["tolerance", "tolerance", "flow"],
   ["source", "source", "text"],
   ["caption", "caption", "text"],
-  ["aspirational", "aspirational", "flow"],
+  ["triage", "triage", "text"],
   ["volatile", "volatile", "flow"],
 ];
 

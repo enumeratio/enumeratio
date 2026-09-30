@@ -59,7 +59,8 @@ export async function symbolIndexOf(
 /** Reads a URL as JSON; `fetch` by default, anything else in a test or a build cache. */
 export type FetchJson = (url: string) => Promise<unknown>;
 
-const fetchJson: FetchJson = async (url) => {
+/** `fetch`, as JSON. */
+export const fetchJson: FetchJson = async (url) => {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`${url}: ${response.status}`);
   return response.json();

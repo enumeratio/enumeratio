@@ -46,6 +46,8 @@ functionsurjective-cos-x-x	FunctionSurjective(cos(x), x)	False
 functionsingularities-cos-x-x	FunctionSingularities(cos(x), x)	False	
 functiondiscontinuities-cos-x-x	FunctionDiscontinuities(cos(x), x)	False	
 matrixfunction-function-cos-1-1-list-list-5-over	"MatrixFunction(\n                Function(cos(_1), _1),\n                [[5 / 6 * pi, 0], [3 / 2 * pi, -1 / 2 * pi]],\n              )"	[[-(sqrt(3) / 2), 0], [-9 / 16 * sqrt(3), 0]]	Unreadable
+assuming-m-in-integers-refine-cos-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cos			
 threads-element-wise-over-a-list	cos([0, pi / 2, pi])	[1, 0, -1]	
 even-function-cos-x-cos-x	cos(-(pi / 3)) == cos(pi / 3)	True	
 co-function-identity-cos-x-sin-pi-2-x	cos(pi / 6) == sin(pi / 2 - pi / 6)	True	

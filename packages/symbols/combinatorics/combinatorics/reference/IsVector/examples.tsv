@@ -1,11 +1,13 @@
-id	section	role	expr	expected
-a-flat-list-is-a-vector			[IsVector, [List, 1, 2, 3]]	True
-isvector-list-a-b-c			[IsVector, [List, a, b, c]]	True
-isvector-list-list-1-list-2			[IsVector, [List, [List, 1], [List, 2]]]	False
-isvector-vector			[IsVector, vector]	False
-a-list-of-lists-is-not-a-vector	Scope		[IsVector, [List, [List, 1, 2], [List, 3, 4]]]	False
-a-non-list-is-not-a-vector	Scope		[IsVector, 3]	False
-a-test-function-must-hold-of-every-element	Scope		[IsVector, [List, 2, 4, 6], IsEven]	True
-a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven]	False
-isvector-range-1-10-ismachinenumber	Scope		[IsVector, [Range, 1, 10], IsMachineNumber]	False
-list-isvector-vec-isvector-expr	Properties		[List, [IsVector, vec], [IsVector, expr]]	[List, False, False]
+id	section	role	expr	expected	triage	wolfram.note
+a-flat-list-is-a-vector			[IsVector, [List, 1, 2, 3]]	True		
+isvector-list-a-b-c			[IsVector, [List, a, b, c]]	True		
+isvector-list-list-1-list-2			[IsVector, [List, [List, 1], [List, 2]]]	False		
+isvector-vector			[IsVector, vector]	False		
+a-list-of-lists-is-not-a-vector	Scope		[IsVector, [List, [List, 1, 2], [List, 3, 4]]]	False		
+a-non-list-is-not-a-vector	Scope		[IsVector, 3]	False		
+a-test-function-must-hold-of-every-element	Scope		[IsVector, [List, 2, 4, 6], IsEven]	True		
+a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven]	False		
+isvector-range-1-10-ismachinenumber	Scope		[IsVector, [Range, 1, 10], IsMachineNumber]	False		
+isvector-range-1-10-isinteger	Scope	triage	[IsVector, [Range, 1, 10], IsInteger]	False	gap	VectorQ[Range[1,10], IntegerQ] returns False instead of True — VectorQ likely materializes the collection but the per-element IntegerQ test itself, or the Range-as-vector check, is declining; not root-caused further in this lane's budget
+isvector-n-range-1-10-ismachinenumber	Scope	triage	[IsVector, [N, [Range, 1, 10]], IsMachineNumber]	False	gap	same VectorQ-returns-False-when-it-should-be-True issue, with N[Range[1,10]] and MachineNumberQ
+list-isvector-vec-isvector-expr	Properties		[List, [IsVector, vec], [IsVector, expr]]	[List, False, False]		

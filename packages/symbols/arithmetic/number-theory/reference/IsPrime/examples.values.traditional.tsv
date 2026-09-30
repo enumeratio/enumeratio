@@ -52,6 +52,9 @@ isprime-list-7-11	\mathrm{IsPrime}(\bigl\lbrack7, 11\bigr\rbrack)	\bigl\lbrack\m
 isprime-list-5-7-2	\mathrm{IsPrime}(\bigl\lbrack5, 7, 2\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{True}\bigr\rbrack
 isprime-19	\mathrm{IsPrime}(19)	\mathrm{True}
 divisorsum-19-function-1-1-isprime		
+filter-divisors-625-isprime		
+filter-divisors-2-434-500-isprime		
+filter-divisors-65-isprime		
 non-integers-are-not-prime	\mathrm{IsPrime}(\frac{1}{2})	\mathrm{False}
 another-non-integer-3-halves	\mathrm{IsPrime}(\frac{3}{2})	\mathrm{False}
 a-symbol-stays-unevaluated		

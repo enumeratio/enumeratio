@@ -15,8 +15,11 @@ import { repoRoot, workspacePackages } from "./data/repo-docs.ts";
 test("every example's TeX typesets in KaTeX", { timeout: 60_000 }, () => {
   const failed: string[] = [];
   let typeset = 0;
-  for (const { head, implementations } of referenceData().heads) {
+  for (const { head, entry, implementations } of referenceData().heads) {
+    // A row in triage isn't on the page, so its TeX isn't typeset there.
+    const triage = new Set(entry.examples.filter((e) => e.role === "triage").map((e) => e.id));
     for (const [id, forms] of Object.entries(implementations ?? {})) {
+      if (triage.has(id)) continue;
       for (const system of ["tex", "traditional"] as const) {
         const form = forms[system];
         for (const latex of [form?.in, form?.out]) {

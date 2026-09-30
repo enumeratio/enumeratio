@@ -1,5 +1,6 @@
 id	in
 discreteshift-one-step	DiscreteShift[a[n], n]
+discreteshift-sin-neg-2-over-7-times-i-times-pi	
 discreteshift-h-step	DiscreteShift[a[n], List[n, 2]]
 discreteshift-floor-i-i	DiscreteShift[Floor[Complex[0, 1]], Complex[0, 1]]
 discreteshift-round-i-list-i-3	DiscreteShift[Round[Complex[0, 1]], List[Complex[0, 1], 3]]

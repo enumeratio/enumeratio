@@ -18,4 +18,5 @@ rank-reim-mat	\mathrm{Rank}(\mathrm{ReIm}(\mathrm{mat}))	1
 reim-i	\mathrm{ReIm}(i)	\bigl\lbrack0, 1\bigr\rbrack
 reim-5-times-exponentiale-pow-3-over-4-times-i	\mathrm{ReIm}(5\exp((\frac{3}{4}i)\pi))	\bigl\lbrack-\frac{5\sqrt{2}}{2}, \frac{5\sqrt{2}}{2}\bigr\rbrack
 reim-2x-plus-i	\mathrm{ReIm}(2x+i)	\bigl\lbrack\Re(2x+i), \Im(2x+i)\bigr\rbrack
+shape-reim-mat		
 reim-list-i-neg-i-0	\mathrm{ReIm}(\bigl\lbrack i, -i, 0\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, -1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack

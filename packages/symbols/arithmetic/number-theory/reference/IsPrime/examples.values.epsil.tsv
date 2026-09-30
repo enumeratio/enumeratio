@@ -52,6 +52,9 @@ isprime-list-7-11	isPrime([7, 11])	[True, True]
 isprime-list-5-7-2	isPrime([5, 7, 2])	[True, True, True]	
 isprime-19	isPrime(19)	True	
 divisorsum-19-function-1-1-isprime	DivisorSum(19, Function(_1, _1), isPrime)	19	Unreadable
+filter-divisors-625-isprime			
+filter-divisors-2-434-500-isprime			
+filter-divisors-65-isprime			
 non-integers-are-not-prime	isPrime(1 / 2)	False	
 another-non-integer-3-halves	isPrime(3 / 2)	False	
 a-symbol-stays-unevaluated	isPrime(x)	isPrime(x)	

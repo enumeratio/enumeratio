@@ -128,7 +128,7 @@ interface Example {
   expr: unknown;
   expected: unknown;
   caption?: string;
-  aspirational?: boolean;
+  role?: "aspirational";
 }
 
 /** Ids for a head's examples, from their captions (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §3). */
@@ -238,7 +238,7 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
               // answer, and the test asserts the gap is still open.
               expected: 0,
               caption: `${sample.caption} — once there is a definition to evaluate`,
-              aspirational: true,
+              role: "aspirational",
             },
           ];
     return {

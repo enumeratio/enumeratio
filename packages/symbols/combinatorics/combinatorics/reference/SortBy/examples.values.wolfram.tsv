@@ -10,3 +10,7 @@ sortby-list-exponentiale-pi-sin-1-sqrt-2-n	SortBy[List[E, Pi, Sin[1], Sqrt[2]], 
 sortby-list-dog-zebra-donkey-anteater-fish	SortBy[List["dog", "zebra", "donkey", "anteater", "fish"], StringLength]	{"dog", "fish", "zebra", "donkey", "anteater"}	\text{SortBy}[\{\text{dog},\text{zebra},\text{donkey},\text{anteater},\text{fish}\},\text{StringLength}]	\{\text{dog},\text{fish},\text{zebra},\text{donkey},\text{anteater}\}	
 sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	SortBy[List[1, Sqrt[Plus[1, Power[E, -10]]], Power[E, Complex[2, 1]], Power[E, Complex[-1, 2]], Power[E, Complex[0, 1]]], Function[N[Abs[Slot[1]]]]]	{E^(-1 + 2*I), 1, E^I, Sqrt[1 + E^(-10)], E^(2 + I)}	\text{SortBy}\left[\left\{1,\sqrt{1+\frac{1}{e^{10}}},e^{2+i},e^{-1+2 i},e^i\right\},N[| \text{$\#$1}| ]\&\right]	\left\{e^{-1+2 i},1,e^i,\sqrt{1+\frac{1}{e^{10}}},e^{2+i}\right\}	
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	SortBy[List[Sqrt[Plus[1, Power[E, Complex[0, -10]]]], Power[E, Complex[2, 1]], Power[E, Complex[-1, 2]], Power[E, Complex[0, 1]]], Abs]	{E^I, E^(-1 + 2*I), E^(2 + I), Sqrt[1 + E^(-10*I)]}			disagree
+sortby-tab-function-slot-age	SortBy[tab, Function[Slot["age"]]]	SortBy[tab, #age & ]			disagree
+sortby-exprs-err	SortBy[exprs, err]	SortBy[exprs, err]			disagree
+sortby-list-first	SortBy[list, First]	SortBy[list, First]			disagree
+sortby-list-abs	SortBy[list, Abs]	SortBy[list, Abs]			disagree

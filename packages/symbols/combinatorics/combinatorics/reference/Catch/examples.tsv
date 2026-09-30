@@ -1,6 +1,7 @@
-id	section	role	expr	expected	caption
-no-throw-evaluates-normally			[Catch, [Add, 1, 2]]	3	with no Throw inside, Catch just returns the value
-tag-matched-catch-recovers-the-value			[Catch, [Throw, ok, done], done]	ok	Catch(expr, tag) recovers a Throw with a matching tag
-catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b	
-catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a	
-catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a	
+id	section	role	expr	expected	caption	triage
+no-throw-evaluates-normally			[Catch, [Add, 1, 2]]	3	with no Throw inside, Catch just returns the value	
+tag-matched-catch-recovers-the-value			[Catch, [Throw, ok, done], done]	ok	Catch(expr, tag) recovers a Throw with a matching tag	
+catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b		
+catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a		
+catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a		
+catch-list-catch-list-a-throw-b-c-d-e	Scope	triage	[Catch, [List, [Catch, [List, a, [Throw, b], c]], d, e]]	[List, b, d, ExponentialE]		unscanned

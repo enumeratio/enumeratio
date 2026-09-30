@@ -5,5 +5,7 @@ qbinomial-6-3-1	N(\mathrm{QBinomial}(6, 3, 1))	20
 qbinomial-5-2-3	N(\mathrm{QBinomial}(5, 2, 3))	1\,210
 qbinomial-8-3-2	N(\mathrm{QBinomial}(8, 3, 2))	97\,155
 a-polynomial-in-q-whose-coefficients-count	\mathrm{Expand}(\mathrm{QBinomial}(4, 2, q))	q^4+q^3+2q^2+q+1
+n-qbinomial-15-over-17-5-1-50		
+n-qbinomial-23-over-47-5-minus-i-2		
 the-number-of-2-dimensional-subspaces-of-f-3-5	\mathrm{QBinomial}(5, 2, 3)	1\,210
 at-q-1-it-is-binomial-6-3	\mathrm{QBinomial}(6, 3, 1)	20

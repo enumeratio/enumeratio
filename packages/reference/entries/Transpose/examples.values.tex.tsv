@@ -1,4 +1,10 @@
 id	in	out
 transpose-list-list-a-x-list-b-y-list-c-z	\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack, \bigl\lbrack c, z\bigr\rbrack\bigr\rbrack^T	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack\bigr\rbrack
+transpose-m		
+transpose-s		
 chop-dot-u-transpose-u	\mathrm{chop}(\mathrm{Dot}(u, u^T))	\mathrm{chop}(u \cdot u^T)
 chop-dot-v-transpose-v	\mathrm{chop}(\mathrm{Dot}(v, v^T))	\mathrm{chop}(v \cdot v^T)
+s-eq-transpose-s		
+transpose-s-eq-s		
+conjugate-transpose-m		
+shape-transpose-a-perm		

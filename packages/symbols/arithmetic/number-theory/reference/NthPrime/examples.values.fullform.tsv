@@ -10,6 +10,7 @@ array-nthprime-100-mod-10	Mod[Array[Prime, 100], 10]
 n-100-times-last-foldlist-multiply-1-1-plus-neg	N[Times[100, Last[FoldList[Times, 1, Plus[1, Divide[-1, Prime[Range[1, 25]]]]]]]]
 ismersenneprimeexponent-nthprime-4	MersennePrimeExponentQ[Prime[4]]
 isprime-neg-1-plus-2-pow-nthprime-4	PrimeQ[Plus[-1, Power[2, Prime[4]]]]
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n	
 primepi-and-nthprime-are-inverses-pi-p-n-n	Equal[PrimePi[Prime[100]], 100]
 primepi-nthprime-100	PrimePi[Prime[100]]
 nthprime-1-plus-primepi-30	Prime[Plus[1, PrimePi[30]]]

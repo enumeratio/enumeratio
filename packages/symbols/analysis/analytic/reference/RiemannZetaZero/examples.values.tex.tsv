@@ -4,4 +4,7 @@ n-riemannzetazero-2	N(\mathrm{RiemannZetaZero}(2))	0.5+21.022\,039\,638\,771\,55
 n-riemannzetazero-50	N(\mathrm{RiemannZetaZero}(50))	0.5+143.111\,845\,807\,620\,63i
 n-riemannzetazero-10	N(\mathrm{RiemannZetaZero}(10))	0.5+49.773\,832\,477\,672\,3i
 n-list-riemannzetazero-1-riemannzetazero-2	N(\bigl\lbrack\mathrm{RiemannZetaZero}(1), \mathrm{RiemannZetaZero}(2), \mathrm{RiemannZetaZero}(3)\bigr\rbrack)	\bigl\lbrack0.5+14.134\,725\,141\,734\,695i, 0.5+21.022\,039\,638\,771\,552i, 0.5+25.010\,857\,580\,145\,69i\bigr\rbrack
+n-riemannzetazero-54-50		
+n-riemannzetazero-46-20		
+n-riemannzetazero-neg-1-eq-conjugate		
 n-riemannzetazero-0	N(\mathrm{RiemannZetaZero}(0))	\mathrm{RiemannZetaZero}(0)

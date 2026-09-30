@@ -13,3 +13,4 @@ split-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5-2	"Split(\n       [3, 0, -4, 3, 3
 split-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5-3	"Split(\n       [3, 0, -4, 3, 3, -2, 0, -3, -4, 5],\n       Function(!(0 < sign(_1) && sign(_2) < 0), _1, _2),\n     )"	[[3, 0, -4, 3, 3], [-2, 0, -3, -4, 5]]	Unreadable
 map-function-list-first-1-length-1-1-split-list	"map(\n     Function([first(_1), length(_1)], _1),\n     Split([a, a, a, b, b, a, a, c, c, c]),\n   )"	[[a, 3], [b, 2], [a, 2], [c, 3]]	Unreadable
 split-list-a-a-a-b-b-a-a-c-c-c	Split([a, a, a, b, b, a, a, c, c, c])	[[a, a, a], [b, b], [a, a], [c, c, c]]	
+nestlist-function-flatten-map-function-list			

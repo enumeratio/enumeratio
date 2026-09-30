@@ -1,3 +1,5 @@
 id	in	out
+cdf-weibulldistribution-2-5-n-4-25		
+cdf-negativebinomialdistribution-20-n-1-over-3		
 cdf-normaldistribution-negativeinfinity	cdf(normalDistribution(), negativeInfinity)	0
 cdf-normaldistribution-positiveinfinity	cdf(normalDistribution(), positiveInfinity)	1

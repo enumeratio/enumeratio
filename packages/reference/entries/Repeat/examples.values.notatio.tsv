@@ -3,3 +3,4 @@ repeat-c-10	<Repeat>c 10</Repeat>	<List>c c c c c c c c c c</List>
 repeat-0-10	<Repeat>0 10</Repeat>	<List>0 0 0 0 0 0 0 0 0 0</List>
 repeat-1-10	<Repeat>1 10</Repeat>	<List>1 1 1 1 1 1 1 1 1 1</List>
 dot-list-repeat-1-length-list	<Dot>list <Repeat>1 <Length>list</Length></Repeat></Dot>	<Dot>list <Apply>List</Apply></Dot>
+shape-repeat-c-dims		

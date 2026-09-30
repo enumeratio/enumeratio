@@ -6,4 +6,6 @@ complex-order-1-plus-i-at-0-5	<N><Hypergeometric0F1><Complex>1 1</Complex> 0.5</
 order-2-at-a-complex-argument	<N><Hypergeometric0F1>2 <Complex>0.5 0.5</Complex></Hypergeometric0F1></N>	<Complex>1.248175636885929 0.2934012962643341</Complex>
 negative-order-neg-0-5-at-0-3	<Hypergeometric0F1>-0.5 0.3</Hypergeometric0F1>	<ToExpression>0.2076337594625808</ToExpression>
 complex-order-and-argument	<N><Hypergeometric0F1><Complex>-2.5 1.5</Complex> <Complex>1.2 -0.8</Complex></Hypergeometric0F1></N>	<Complex>0.6321864778017546 0.02255319254721493</Complex>
+n-hypergeometric0f1-1-neg-2-50		
+matrixfunction-function-hypergeometric0f1-1-over		
 b-0-is-a-pole-stays-symbolic	<Hypergeometric0F1>0 0.5</Hypergeometric0F1>	<Hypergeometric0F1>0 0.5</Hypergeometric0F1>

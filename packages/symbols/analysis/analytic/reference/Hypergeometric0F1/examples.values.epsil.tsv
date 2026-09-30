@@ -6,4 +6,6 @@ complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1(1 + i, 0.5))	1.262_484_141_307
 order-2-at-a-complex-argument	N(Hypergeometric0F1(2, 0.5 + 0.5i))	1.248_175_636_885_929 + 0.293_401_296_264_334_1i
 negative-order-neg-0-5-at-0-3	Hypergeometric0F1(-0.5, 0.3)	0.207_633_759_462_580_8
 complex-order-and-argument	N(Hypergeometric0F1(-2.5 + 1.5i, 1.2 - 0.8i))	0.632_186_477_801_754_6 + 0.022_553_192_547_214_93i
+n-hypergeometric0f1-1-neg-2-50		
+matrixfunction-function-hypergeometric0f1-1-over		
 b-0-is-a-pole-stays-symbolic	Hypergeometric0F1(0, 0.5)	Hypergeometric0F1(0, 0.5)

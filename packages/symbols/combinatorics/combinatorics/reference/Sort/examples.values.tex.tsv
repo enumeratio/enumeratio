@@ -18,8 +18,11 @@ sort-join-ln-range-1-10-sqrt-range-1-10-less	\mathrm{Sort}(\mathrm{Join}(\ln(1..
 sort-list-aa-abb-ba-b-aaa	\mathrm{Sort}(\bigl\lbrack\text{aa}, \text{abb}, \text{ba}, \text{b}, \text{aaa}\bigr\rbrack)	\bigl\lbrack\text{aa}, \text{aaa}, \text{abb}, \text{b}, \text{ba}\bigr\rbrack
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt	\mathrm{Sort}(\bigl\lbrack-11, 10, 2, 1, -4\bigr\rbrack, ()\mapsto\vert\operatorname{\_1}\vert\lt\vert\operatorname{\_2}\vert)	\bigl\lbrack1, 2, -4, 10, -11\bigr\rbrack
 sort-join-ln-range-1-10-sqrt-range-1-10	\mathrm{Sort}(\mathrm{Join}(\ln(1..10), \sqrt{1..10}))	\bigl\lbrack0, \ln(2), 1, \ln(3), 2\ln(2), \sqrt{2}, \ln(5), \sqrt{3}, \ln(6), \ln(7), 2, 3\ln(2), 2\ln(3), \sqrt{5}, \ln(10), \sqrt{6}, \sqrt{7}, 2\sqrt{2}, 3, \sqrt{10}\bigr\rbrack
+sort-list-i-1-plus-i-1-minus-i-2-plus-3i		
+sort-list-aa-abb-ba-b-aaa-function-stringlength		
 sort-is-idempotent-sorting-an-already-sorted	\mathrm{Sort}(\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\top
 sort-c-at-c-ordering-c-see-ordering-and-at	\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\bigl\lbrack3, 1, 2\bigr\rbrack[\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)]	\top
 the-result-doesn-t-depend-on-the-input-order	\mathrm{Sort}(\mathrm{Reverse}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\top
+sort-list		
 the-empty-list-sorts-to-itself	\mathrm{Sort}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
 sort-list-positiveinfinity-sqrt-2-1-2	\mathrm{Sort}(\bigl\lbrack\infty, \sqrt{2}, 1, 2, -\infty, \frac{\sqrt{2}}{2}\bigr\rbrack)	\bigl\lbrack-\infty, \frac{\sqrt{2}}{2}, 1, \sqrt{2}, 2, \infty\bigr\rbrack

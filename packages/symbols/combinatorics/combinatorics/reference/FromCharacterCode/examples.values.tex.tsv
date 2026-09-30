@@ -4,3 +4,6 @@ fromcharactercode-list-97-98-99	\mathrm{FromCharacterCode}(\bigl\lbrack97, 98, 9
 inverts-tocharactercode	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{hello}))	\text{hello}
 round-trips-a-non-ascii-string-emoji-astral	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))	\text{a😀b→c}
 fromcharactercode-97	\mathrm{FromCharacterCode}(97)	\text{a}
+fromcharactercode-list-61-726-62-520-62-521-62		
+fromcharactercode-list-128-512-128-513-128-514		
+fromcharactercode-list-128-105-127-997-8-205-127		

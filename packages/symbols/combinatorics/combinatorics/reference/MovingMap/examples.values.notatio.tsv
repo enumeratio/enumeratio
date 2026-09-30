@@ -1,3 +1,6 @@
 id	in	out
 length-of-window	<MovingMap>Length <List>1 2 3 4</List> 1</MovingMap>	<List>2 2 2</List>
 movingmap-mean-list-x-1-x-2-x-3-x-4-x-5-2	<MovingMap>Mean <List>x_1 x_2 x_3 x_4 x_5</List> 2</MovingMap>	<List><Multiply><Rational>1 3</Rational> <Add>x_1 x_2 x_3</Add></Multiply> <Multiply><Rational>1 3</Rational> <Add>x_2 x_3 x_4</Add></Multiply> <Multiply><Rational>1 3</Rational> <Add>x_3 x_4 x_5</Add></Multiply></List>
+movingmap-f-data-2		
+movingmap-f-v-2		
+movingmap-function-last-1-minus-first-1-data-1		

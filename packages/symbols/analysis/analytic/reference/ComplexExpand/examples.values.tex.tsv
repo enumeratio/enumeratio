@@ -1,6 +1,7 @@
 id	in	out
 sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y	\mathrm{ComplexExpand}(\sin(x+i y))	i\cos(x)\sinh(y)+\sin(x)\cosh(y)
 polar-form-of-a-complex-exponential	\mathrm{ComplexExpand}(\exp(x+i y))	i\sin(y)e^{x}+\cos(y)e^{x}
+complexexpand-reim-cos-i-pow-x		
 complexexpand-x-plus-imaginaryunit-times-y-pow-2	\mathrm{ComplexExpand}((x+i y)^2)	x^2-y^2+2i xy
 complexexpand-abs-x-plus-imaginaryunit-times-y	\mathrm{ComplexExpand}(\vert x+i y\vert)	\sqrt{x^2+y^2}
 wolfram-leaves-e-i-pi-5-alone-until-asked-this	\mathrm{ComplexExpand}(\exp(\frac{i\pi}{5}))	\frac{1}{4}+\frac{\sqrt{5}}{4}+(\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}}

@@ -8,4 +8,5 @@ unittriangle-1-3	<UnitTriangle><Rational>1 3</Rational></UnitTriangle>	<Rational
 unittriangle-1-2	<UnitTriangle><Rational>1 2</Rational></UnitTriangle>	<Rational>1 2</Rational>
 unittriangle-1-over-4	<UnitTriangle><Rational>1 4</Rational></UnitTriangle>	<Rational>3 4</Rational>
 piecewiseexpand-unittriangle-x-0-lt-x-lt-2	<PiecewiseExpand><UnitTriangle>x</UnitTriangle> <Less>0 x 2</Less></PiecewiseExpand>	<UnitTriangle>x</UnitTriangle>
+n-unittriangle-neg-1-over-7-50		
 unittriangle-same-as-heavisidelambda	<Equal><UnitTriangle><Rational>1 4</Rational></UnitTriangle> <HeavisideLambda><Rational>1 4</Rational></HeavisideLambda></Equal>	<True />
