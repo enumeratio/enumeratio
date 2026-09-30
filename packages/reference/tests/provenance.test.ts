@@ -345,6 +345,7 @@ const OVERRIDDEN = [
   "Tanh",
   "Totient",
   "TrigToExp",
+  "Truncate",
   "Union",
   "Unique",
   "Zeta",

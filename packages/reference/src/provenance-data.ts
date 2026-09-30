@@ -228,6 +228,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "Truncate",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "IntegerPart",
+    elsewhere: [],
+  },
+  {
     name: "ButtonBox",
     provenance: "unknown",
     declared: "enumeratio-boxes",

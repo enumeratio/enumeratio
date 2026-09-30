@@ -6332,6 +6332,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "True",
   },
   {
+    name: "Truncate",
+    wolfram: "IntegerPart",
+  },
+  {
     name: "Tuple",
     wolfram: "List",
   },

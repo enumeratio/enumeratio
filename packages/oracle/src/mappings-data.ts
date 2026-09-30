@@ -1062,6 +1062,13 @@ export const MAPPINGS_DATA: readonly Mapping[] = [
     threadArg: 1,
   },
   {
+    head: "Truncate",
+    arity: 1,
+    emit: {
+      wolfram: "IntegerPart[$1]",
+    },
+  },
+  {
     head: "Zeta",
     arity: 1,
     emit: {

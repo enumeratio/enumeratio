@@ -85,6 +85,12 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
       identity: "SquareRoot",
     },
   ],
+  Truncate: [
+    {
+      system: "wikipedia",
+      identity: "Truncation",
+    },
+  ],
   AlexanderPolynomial: [
     {
       system: "wikipedia",
