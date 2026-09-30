@@ -12,7 +12,7 @@ any-exact-numeric-expression-to-any-tolerance	rationalize(exp(sqrt(2)), 2 ^ -12)
 rationalize-sqrt-2-0p001	rationalize(sqrt(2), 0.001)	41 / 29
 rationalize-neg-0p125	rationalize(-0.125)	-1 / 8
 the-rational-with-the-smallest-denominator	rationalize(pi, 0.001)	201 / 64
-a-tolerance-finer-than-a-double	rationalize(pi, 10e-17)	245_850_922 / 78_256_779
+a-tolerance-finer-than-a-double	rationalize(pi, 1.0e-16)	245_850_922 / 78_256_779
 rationalizes-every-approximate-number-inside-an	rationalize(1.2 + 6.7x)	67 / 10 * x + 6 / 5
 threads-element-wise-over-a-list-compute-engine	rationalize([0.5, 0.25, 0.2])	[1 / 2, 1 / 4, 1 / 5]
 a-zero-tolerance-gives-the-exact-rational-the	rationalize(N(pi), 0)	884_279_719_003_555 / 281_474_976_710_656

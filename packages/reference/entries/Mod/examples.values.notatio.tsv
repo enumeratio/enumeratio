@@ -35,7 +35,7 @@ reducing-a-large-norm-gaussian-by-a-small-unit	<Mod><Complex>1000 1</Complex> <C
 reducing-by-1-a-unit-is-always-0	<Mod><Complex>2 1</Complex> -1</Mod>	<ToExpression>0</ToExpression>
 reducing-by-i-a-unit-is-always-0	<Mod><Complex>5 5</Complex> <Complex>0 -1</Complex></Mod>	<ToExpression>0</ToExpression>
 a-negative-real-dividend-gaussian-modulus	<Mod><Complex>-5 -5</Complex> <Complex>2 1</Complex></Mod>	<ToExpression>0</ToExpression>
-reducing-0-by-0-is-undefined-like-the-rational	<Mod>0 0</Mod>	<NaN />
+reducing-0-by-0-is-undefined-like-the-rational	<Mod>0 0</Mod>	<Indeterminate />
 reducing-by-an-associate-times-1	<Mod><Complex>8 2</Complex> <Complex>-3 -4</Complex></Mod>	<Complex>1 1</Complex>
 reducing-by-an-associate-times-i	<Mod><Complex>8 2</Complex> <Complex>4 -3</Complex></Mod>	<Complex>1 1</Complex>
 reducing-by-the-other-prime-above-13	<Mod><Complex>6 8</Complex> <Complex>2 3</Complex></Mod>	<Complex>0 -1</Complex>
@@ -47,7 +47,7 @@ reducing-by-a-real-prime-19	<Mod><Complex>123 456</Complex> 19</Mod>	<ToExpressi
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	<Equal><Mod>17 5</Mod> <Mod><Add>17 <Multiply>3 5</Multiply></Add> 5</Mod></Equal>	<True />
 a-negative-modulus-gives-a-result-in-n-0	<Mod>-5 -3</Mod>	<ToExpression>-2</ToExpression>
 the-remainder-of-quotient	<Equal><Mod><Complex>7 5</Complex> <Complex>2 1</Complex></Mod> <Subtract><Complex>7 5</Complex> <Multiply><Complex>2 1</Complex> <Quotient><Complex>7 5</Complex> <Complex>2 1</Complex></Quotient></Multiply></Subtract></Equal>	<True />
-division-by-a-0-modulus-yields-nan-rather-than	<Mod>5 0</Mod>	<NaN />
+division-by-a-0-modulus-yields-nan-rather-than	<Mod>5 0</Mod>	<Indeterminate />
 periodicity-with-a-zero-modulus-on-one-side	<Equal><Mod>35 13</Mod> <Mod><Add>17 <Multiply>3 5</Multiply></Add> 0</Mod></Equal>	<False />
 rounding-ties-to-even-means-1-and-1-both-appear	<List><Mod><Complex>1 2</Complex> 2</Mod> <Mod><Complex>3 2</Complex> 2</Mod></List>	<List>1 -1</List>
 a-free-symbol-is-untouched	<Mod>x 2</Mod>	<Mod>x 2</Mod>

@@ -24,7 +24,7 @@ complex-arguments-evaluate-directly	\Gamma(2.3+i)	0.719\,140\,936\,537\,281\,1+0
 half-integers-have-closed-forms-gamma-7-2-frac	\Gamma(\frac{7}{2})	\frac{15\sqrt{\pi}}{8}
 including-negative-half-integers-gamma-3-2-frac	\Gamma(-\frac{3}{2})	\frac{4\sqrt{\pi}}{3}
 gamma-infty-infty	\Gamma(\infty)	\infty
-values-far-past-the-double-range-gamma-200-5	\Gamma(200.5)	5\,573\,168\,944\,801\,379\,133\,643\,202\,962\,906\,591\,494\,178\cdot10^{334}
+values-far-past-the-double-range-gamma-200-5	\Gamma(200.5)	5.573\,168\,944\,801\,379\,133\,64\cdot10^{373}
 two-arguments-the-upper-incomplete-gamma-gamma-5	\Gamma(2.5, 1.5)	0.930\,519\,442\,786\,793\,1
 an-integer-order-reduces-to-a-closed-form-gamma	\Gamma(2, x)	(x+1)\exp(-x)
 gamma-2-1-2-e-the-same-closed-form-at-an-exact	\Gamma(2, 1)	\frac{2}{e}

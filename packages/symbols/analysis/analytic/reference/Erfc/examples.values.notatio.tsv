@@ -16,5 +16,5 @@ erfc-x-2-erfc-x-applied-symbolically	<Erfc><Negate>x</Negate></Erfc>	<Add><Negat
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	<D><Erfc>x</Erfc> x</D>	<Divide><Multiply>-2 <Power>ExponentialE <Negate><Power>x 2</Power></Negate></Power></Multiply> <Sqrt>Pi</Sqrt></Divide>
 an-exact-integer-argument-is-left-unevaluated	<Erfc>1</Erfc>	<Erfc>1</Erfc>
 far-in-the-tail-erfc-keeps-full-relative	<Erfc>9.5</Erfc>	<ToExpression>3.76921448565487994168e-41</ToExpression>
-whereas-1-erf-9-5-cancels-to-exactly-0-in	<Subtract>1 <Erf>9.5</Erf></Subtract>	<ToExpression>0</ToExpression>
+whereas-1-erf-9-5-cancels-to-exactly-0-in	<Subtract>1 <Erf>9.5</Erf></Subtract>	<ToExpression>0.0</ToExpression>
 the-gaussian-tail-shrinks-fast-only-about-7	<Erfc>3.5</Erfc>	<ToExpression>7.43098372341412745524e-7</ToExpression>

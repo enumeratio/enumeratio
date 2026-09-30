@@ -14,5 +14,5 @@ interval-arithmetic-log-10-frac-13-2-log-10-3	log10(interval(1 / 3, 2))	interval
 uncertainty-propagation-log-10-frac-1-101-pm-0	log10(Around(1 / 101, 0.01))	Around(-2.004_321_373_782_642_6, 0.438_637_426_722_284_34)
 derivative-frac-1-x-ln-10	D(log10(x), x)	1 / (x * ln(10))
 to-30-significant-digits-every-one-correctly	N(log10(7), 30)	0.845_098_040_014_256_830_712_216_258_593
-a-float-argument-folds-even-for-a-fractional	log10(0.001)	-3
+a-float-argument-folds-even-for-a-fractional	log10(0.001)	-3.0
 same-as-compute-engine-s-default-base-log	log10(1_000) == log(1_000)	True

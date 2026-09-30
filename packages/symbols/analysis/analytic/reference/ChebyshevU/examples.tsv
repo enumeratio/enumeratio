@@ -8,7 +8,7 @@ at-u5-0-7		test	[N, [ChebyshevU, 5, 0.7]]	-1.39776
 at-u-1-0-7		test	[N, [ChebyshevU, -1, 0.7]]	0	
 at-u-2-0-7		test	[N, [ChebyshevU, -2, 0.7]]	-1	
 at-u-5-0-7		test	[N, [ChebyshevU, -5, 0.7]]	0.05600000000000027	
-at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, -1843, -2064]	
+at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, {num: "-1843.0"}, {num: "-2064.0"}]	
 at-a-rational	Scope		[ChebyshevU, 3, [Rational, 1, 2]]	-1	At a rational $x$ the value is exact
 at-a-complex-argument	Scope		[ChebyshevU, 4, [Complex, 2, 3]]	[Complex, -1843, -2064]	At a Gaussian integer
 a-symbolic-order-stays-unevaluated	Scope		[ChebyshevU, n, x]	[ChebyshevU, n, x]	A symbolic order stays unevaluated

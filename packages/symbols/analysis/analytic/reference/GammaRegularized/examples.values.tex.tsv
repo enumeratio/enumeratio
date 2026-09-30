@@ -11,7 +11,7 @@ q-3-1-7-all-integers	N(\operatorname{GammaRegularized}(3, 1, 7))	0.890\,062\,439
 q-2-5-0-complex-1-5-plus-i	\operatorname{GammaRegularized}(2.5, 0, 1.5+i)	0.311\,826\,994\,456\,123\,800\,388+0.341\,188\,770\,924\,759\,24i
 q-complex-2-plus-i-0-1-5	N(\operatorname{GammaRegularized}(2+i, 0, 1.5))	0.382\,347\,768\,954\,935\,868\,975-0.333\,481\,540\,658\,552\,23i
 q-three-complex-arguments	N(\operatorname{GammaRegularized}(2+i, 0.5-i, 1.5+i))	1.509\,764\,918\,616\,015\,852\,28+0.956\,382\,909\,213\,873\,6i
-q-0-1-4-all-integers	N(\operatorname{GammaRegularized}(0, 1, 4))	0
+q-0-1-4-all-integers	N(\operatorname{GammaRegularized}(0, 1, 4))	0.0
 threads-element-wise-over-a-list-as-wolfram-s	\operatorname{GammaRegularized}(\bigl\lbrack1, 2\bigr\rbrack, 1)	\bigl\lbrack\frac{1}{e}, \frac{2}{e}\bigr\rbrack
 complex-order-under-n	N(\operatorname{GammaRegularized}(1+i, 2.5))	0.007\,947\,060\,620\,119\,186\,222\,37+0.152\,536\,778\,541\,018\,44i
 three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	\operatorname{GammaRegularized}(2.5, 0.5, 1.5)	0.262\,579\,937\,368\,668\,97

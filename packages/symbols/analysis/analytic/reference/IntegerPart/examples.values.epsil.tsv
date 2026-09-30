@@ -5,5 +5,5 @@ integerpart-7-over-2	IntegerPart(7 / 2)	3
 integerpart-neg-7-over-2	IntegerPart(-7 / 2)	-3
 exact-numeric-arguments-stay-exact	IntegerPart(pi)	3
 threads-element-wise-over-a-list	IntegerPart([2.5, -2.5])	[2, -2]
-complex-numbers-real-and-imaginary-parts	IntegerPart(2.5 + 3.7i)	2 + 3i
+complex-numbers-real-and-imaginary-parts	IntegerPart(2.5 + 3.7i)	2.0 + 3.0i
 x-integerpart-x-fractionalpart-x	IntegerPart(-7 / 2) + FractionalPart(-7 / 2) == -7 / 2	True

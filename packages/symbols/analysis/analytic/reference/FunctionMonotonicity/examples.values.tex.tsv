@@ -1,5 +1,5 @@
 id	in	out
 a-cubic-is-increasing-everywhere	\mathrm{FunctionMonotonicity}(x^3, x)	1
-a-parabola-is-not-globally-monotonic	\mathrm{FunctionMonotonicity}(x^2, x)	\mathrm{Indeterminate}
+a-parabola-is-not-globally-monotonic	\mathrm{FunctionMonotonicity}(x^2, x)	\operatorname{Indeterminate}
 exp-of-an-affine-argument-is-always-monotonic	\mathrm{FunctionMonotonicity}(e^{x}, x)	1
-a-restricted-domain-answers-indeterminate	\mathrm{FunctionMonotonicity}(\sqrt{x}, x)	\mathrm{Indeterminate}
+a-restricted-domain-answers-indeterminate	\mathrm{FunctionMonotonicity}(\sqrt{x}, x)	\operatorname{Indeterminate}

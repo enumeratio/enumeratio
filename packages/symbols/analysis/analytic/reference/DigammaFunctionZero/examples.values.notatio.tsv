@@ -4,8 +4,8 @@ the-zero-in-1-0	<N><DigammaFunctionZero>1</DigammaFunctionZero></N>	<ToExpressio
 the-zero-in-2-1	<N><DigammaFunctionZero>2</DigammaFunctionZero></N>	<ToExpression>-1.5734984731623904</ToExpression>
 the-zero-in-3-2	<N><DigammaFunctionZero>3</DigammaFunctionZero></N>	<ToExpression>-2.6107208684441447</ToExpression>
 the-zero-in-4-3	<N><DigammaFunctionZero>4</DigammaFunctionZero></N>	<ToExpression>-3.635293366436901</ToExpression>
-psi-vanishes-exactly-there-by-construction	<Chop><N><Digamma><DigammaFunctionZero>2</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0</ToExpression>
-psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	<Chop><N><Digamma><DigammaFunctionZero>0</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0</ToExpression>
-psi-x-n-0-at-n-1	<Chop><N><Digamma><DigammaFunctionZero>1</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0</ToExpression>
-psi-x-n-0-at-n-3	<Chop><N><Digamma><DigammaFunctionZero>3</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0</ToExpression>
-psi-x-n-0-at-n-4	<Chop><N><Digamma><DigammaFunctionZero>4</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0</ToExpression>
+psi-vanishes-exactly-there-by-construction	<Chop><N><Digamma><DigammaFunctionZero>2</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0.0</ToExpression>
+psi-x-n-0-exactly-at-digamma-s-own-claimed-zero	<Chop><N><Digamma><DigammaFunctionZero>0</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0.0</ToExpression>
+psi-x-n-0-at-n-1	<Chop><N><Digamma><DigammaFunctionZero>1</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0.0</ToExpression>
+psi-x-n-0-at-n-3	<Chop><N><Digamma><DigammaFunctionZero>3</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0.0</ToExpression>
+psi-x-n-0-at-n-4	<Chop><N><Digamma><DigammaFunctionZero>4</DigammaFunctionZero></Digamma></N></Chop>	<ToExpression>0.0</ToExpression>

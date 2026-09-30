@@ -15,6 +15,6 @@ definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\operatorname{erfc}(2)=1
 erfc-x-2-erfc-x-applied-symbolically	\operatorname{erfc}(-x)	2-\operatorname{erfc}(x)
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{\mathrm{d}\operatorname{erfc}(x)}{\mathrm{d}x}	(-\frac{2}{e^{x^2}})/\sqrt{\pi}
 an-exact-integer-argument-is-left-unevaluated	\operatorname{erfc}(1)	\operatorname{erfc}(1)
-far-in-the-tail-erfc-keeps-full-relative	\operatorname{erfc}(9.5)	376\,921\,448\,565\,487\,994\,168\cdot10^{-61}
+far-in-the-tail-erfc-keeps-full-relative	\operatorname{erfc}(9.5)	3.769\,214\,485\,654\,879\,941\,68\cdot10^{-41}
 whereas-1-erf-9-5-cancels-to-exactly-0-in		
 the-gaussian-tail-shrinks-fast-only-about-7	\operatorname{erfc}(3.5)	0.000\,000\,743\,098\,372\,341\,412\,745\,524

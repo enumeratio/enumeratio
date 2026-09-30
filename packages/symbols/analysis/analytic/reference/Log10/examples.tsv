@@ -14,5 +14,5 @@ interval-arithmetic-log-10-frac-13-2-log-10-3	Scope		[Log10, [Interval, [Rationa
 uncertainty-propagation-log-10-frac-1-101-pm-0	Scope		[Log10, [Around, [Rational, 1, 101], 0.01]]	[Around, -2.0043213737826426, 0.43863742672228434]	Uncertainty propagation, to first order: $\log_{10}(\tfrac1{101} \pm 0.01) \approx -2.00 \pm 0.44$	
 derivative-frac-1-x-ln-10	Scope		[D, [Log10, x], x]	[Divide, 1, [Multiply, x, [Ln, 10]]]	Derivative: $\frac{1}{x\ln 10}$	
 to-30-significant-digits-every-one-correctly	Scope		[N, [Log10, 7], 30]	{num: "0.845098040014256830712216258593"}	To 30 significant digits, every one correctly rounded	
-a-float-argument-folds-even-for-a-fractional	Applications		[Log10, 0.001]	-3	A float argument folds even for a fractional power of 10	
+a-float-argument-folds-even-for-a-fractional	Applications		[Log10, 0.001]	{num: "-3.0"}	A float argument folds even for a fractional power of 10	
 same-as-compute-engine-s-default-base-log	Properties		[Equal, [Log10, 1000], [Log, 1000]]	True	Same as compute-engine's default-base [[Log]]	

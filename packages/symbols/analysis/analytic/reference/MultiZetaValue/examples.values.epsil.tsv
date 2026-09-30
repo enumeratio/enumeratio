@@ -7,5 +7,5 @@ zeta-4-2	N(MultiZetaValue(4, 2))	0.088_483_382_454_752_96
 zeta-2-4	N(MultiZetaValue(2, 4))	0.674_523_914_033_936
 zeta-5-2	N(MultiZetaValue(5, 2))	0.038_575_124_342_795_405
 zeta-3-4	N(MultiZetaValue(3, 4))	0.207_505_014_615_580_57
-zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	chop(N(MultiZetaValue(2, 2)) - 0.75 * N(zeta(4)))	0
+zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	chop(N(MultiZetaValue(2, 2)) - 0.75 * N(zeta(4)))	0.0
 s-1-2-stays-symbolic-outside-the-depth-2-both	MultiZetaValue(1, 2)	MultiZetaValue(1, 2)

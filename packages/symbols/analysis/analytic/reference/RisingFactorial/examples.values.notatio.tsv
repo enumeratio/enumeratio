@@ -9,4 +9,4 @@ complex-base-and-order	<N><RisingFactorial><Complex>2 5</Complex> <Complex>3 2</
 agrees-with-pochhammer	<Equal><RisingFactorial>4 3</RisingFactorial> <Pochhammer>4 3</Pochhammer></Equal>	<True />
 negative-order	<RisingFactorial>5 -2</RisingFactorial>	<Rational>1 12</Rational>
 a-zero-factor	<RisingFactorial>-3 4</RisingFactorial>	<ToExpression>0</ToExpression>
-a-pole-of-gamma-a	<N><RisingFactorial>-2 <Complex>1 1</Complex></RisingFactorial></N>	<ToExpression>0</ToExpression>
+a-pole-of-gamma-a	<N><RisingFactorial>-2 <Complex>1 1</Complex></RisingFactorial></N>	<ToExpression>0.0</ToExpression>

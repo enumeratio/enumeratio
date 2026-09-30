@@ -11,7 +11,7 @@ q-3-1-7-all-integers	N(gammaRegularized(3, 1, 7))	0.890_062_439_048_084_027_228_
 q-2-5-0-complex-1-5-plus-i	gammaRegularized(2.5, 0, 1.5 + i)	"0.311_826_994_456_123_800_387_767_818_958_477_786_856_190_725_271_369_139_601_696_933_010_652_517_165_035_6 +\n0.341_188_770_924_759_24i"
 q-complex-2-plus-i-0-1-5	N(gammaRegularized(2 + i, 0, 1.5))	"0.382_347_768_954_935_868_974_732_975_688_471_475_129_969_902_289_332_079_8 -\n0.333_481_540_658_552_23i"
 q-three-complex-arguments	N(gammaRegularized(2 + i, 0.5 - i, 1.5 + i))	"1.509_764_918_616_015_852_275_665_995_948_099_244_935_101_301_100_757_506 +\n0.956_382_909_213_873_6i"
-q-0-1-4-all-integers	N(gammaRegularized(0, 1, 4))	0
+q-0-1-4-all-integers	N(gammaRegularized(0, 1, 4))	0.0
 threads-element-wise-over-a-list-as-wolfram-s	gammaRegularized([1, 2], 1)	[1 / exponentialE, 2 / exponentialE]
 complex-order-under-n	N(gammaRegularized(1 + i, 2.5))	0.007_947_060_620_119_186_222_373_870_025_622_117_84 + 0.152_536_778_541_018_44i
 three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	gammaRegularized(2.5, 0.5, 1.5)	0.262_579_937_368_668_97

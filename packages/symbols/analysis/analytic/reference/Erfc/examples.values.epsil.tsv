@@ -15,6 +15,6 @@ definition-erf-z-erfc-z-1-see-erf	erf(2) + erfc(2) == 1	True
 erfc-x-2-erfc-x-applied-symbolically	erfc(-x)	-erfc(x) + 2
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D(erfc(x), x)	-2 * exponentialE ^ (-x ^ 2) / sqrt(pi)
 an-exact-integer-argument-is-left-unevaluated	erfc(1)	erfc(1)
-far-in-the-tail-erfc-keeps-full-relative	erfc(9.5)	376_921_448_565_487_994_168e-61
-whereas-1-erf-9-5-cancels-to-exactly-0-in	1 - erf(9.5)	0
+far-in-the-tail-erfc-keeps-full-relative	erfc(9.5)	3.769_214_485_654_879_941_68e-41
+whereas-1-erf-9-5-cancels-to-exactly-0-in	1 - erf(9.5)	0.0
 the-gaussian-tail-shrinks-fast-only-about-7	erfc(3.5)	0.000_000_743_098_372_341_412_745_524

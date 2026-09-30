@@ -24,7 +24,7 @@ complex-arguments-evaluate-directly	<Gamma><Complex>2.3 1</Complex></Gamma>	<Com
 half-integers-have-closed-forms-gamma-7-2-frac	<Gamma><Rational>7 2</Rational></Gamma>	<Multiply><Rational>15 8</Rational> <Sqrt>Pi</Sqrt></Multiply>
 including-negative-half-integers-gamma-3-2-frac	<Gamma><Rational>-3 2</Rational></Gamma>	<Multiply><Rational>4 3</Rational> <Sqrt>Pi</Sqrt></Multiply>
 gamma-infty-infty	<Gamma>PositiveInfinity</Gamma>	<PositiveInfinity />
-values-far-past-the-double-range-gamma-200-5	<Gamma>200.5</Gamma>	<ToExpression>5.573168944801379133643202962906591494178e+373</ToExpression>
+values-far-past-the-double-range-gamma-200-5	<Gamma>200.5</Gamma>	<ToExpression>5.57316894480137913364e+373</ToExpression>
 two-arguments-the-upper-incomplete-gamma-gamma-5	<Gamma>2.5 1.5</Gamma>	<ToExpression>0.9305194427867931</ToExpression>
 an-integer-order-reduces-to-a-closed-form-gamma	<Gamma>2 x</Gamma>	<Multiply><Add>x 1</Add> <Power>ExponentialE <Negate>x</Negate></Power></Multiply>
 gamma-2-1-2-e-the-same-closed-form-at-an-exact	<Gamma>2 1</Gamma>	<Divide>2 ExponentialE</Divide>

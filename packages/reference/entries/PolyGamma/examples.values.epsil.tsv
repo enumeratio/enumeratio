@@ -48,9 +48,9 @@ n-polygamma-neg1-1-over-2	N(polyGamma(-1, 1 / 2))	0.572_364_942_924_699_5
 n-polygamma-neg1-1-plus-i	N(polyGamma(-1, 1 + i))	-0.650_923_199_301_855_6 - 0.301_640_320_467_532_64i
 n-polygamma-neg1-neg0p5	N(polyGamma(-1, -0.5))	1.265_512_123_484_645_1 - 3.141_592_653_589_793i
 n-polygamma-neg2-stays-unevaluated	N(polyGamma(-2, 2))	polyGamma(-2, 2)
-n-polygamma-8-cancellation-region	N(polyGamma(8, -48.445_348_956_457_586 + 7.047_151_294_800_014i))	-5_802_709_982_602_873e-26 - 12_898_930_277_153_784e-26 * i
-n-polygamma-8-cancellation-region-nearby-im	N(polyGamma(8, -48.445_348_956_457_586 + 10i))	53_221_571_369_366_035e-28 - 12_967_382_759_551_942e-26 * i
-n-polygamma-5-cancellation-region	N(polyGamma(5, -48.987_654_321_098_766 + 9.5i))	-43_059_101_024_050_936e-24 - 5_997_407_236_454_179e-23 * i
+n-polygamma-8-cancellation-region	N(polyGamma(8, -48.445_348_956_457_586 + 7.047_151_294_800_014i))	-5.802_709_982_602_873e-11 - 1.289_893_027_715_378_4e-10 * i
+n-polygamma-8-cancellation-region-nearby-im	N(polyGamma(8, -48.445_348_956_457_586 + 10i))	5.322_157_136_936_603_5e-12 - 1.296_738_275_955_194_2e-10 * i
+n-polygamma-5-cancellation-region	N(polyGamma(5, -48.987_654_321_098_766 + 9.5i))	-4.305_910_102_405_093_6e-8 - 5.997_407_236_454_179e-8 * i
 threads-over-a-list-each-element-exact-so-each	polyGamma(1, [1, 2])	[polyGamma(1, 1), polyGamma(1, 2)]
 one-argument-digamma-at-a-machine-precision	polyGamma(100.5)	4.605_174_352_581_845
 one-argument-digamma-at-a-complex-point	polyGamma(2.5 + 3i)	1.281_273_919_066_231_4 + 0.979_805_315_344_559_6i

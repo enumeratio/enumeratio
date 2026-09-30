@@ -11,7 +11,7 @@ complex-arguments	\mathrm{LogGamma}(2.5+3i)	-1.470\,954\,610\,348\,840\,7+2.822\
 threads-elementwise-over-an-array	\mathrm{LogGamma}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\ln(\pi)}{2}, \infty\bigr\rbrack, \bigl\lbrack\infty, \frac{\ln(\pi)}{2}\bigr\rbrack\bigr\rbrack
 exact-negative-half-integers-ln-gamma-frac-32-ln	\mathrm{LogGamma}(-\frac{3}{2})	\ln(\frac{4\sqrt{\pi}}{3})-2i\pi
 ln-gamma-infty-infty	\mathrm{LogGamma}(\infty)	\infty
-huge-arguments-ln-gamma-10-300-approx-6-898	N(\mathrm{LogGamma}(10^{300}))	6\,897\,755\,278\,982\,137\cdot10^{287}
+huge-arguments-ln-gamma-10-300-approx-6-898	N(\mathrm{LogGamma}(10^{300}))	6.897\,755\,278\,982\,137\cdot10^{302}
 interval-arithmetic-decreasing-here-so-the	\mathrm{LogGamma}(\mathrm{Interval}(0.41, 0.42))	\mathrm{Interval}(0.746\,863\,727\,128\,014\,2, 0.771\,422\,463\,394\,746\,8)
 uncertainty-propagation-with-psi-1-2-as-the	\mathrm{LogGamma}(\mathrm{Around}(1.2, 0.01))	\mathrm{Around}(-0.085\,374\,090\,003\,315\,85, 0.002\,890\,398\,965\,921\,883)
 to-30-significant-digits-not-yet-the-last-digit	N(\mathrm{LogGamma}(\frac{1}{3}), 30)	0.985\,420\,646\,927\,767\,069\,187

@@ -24,7 +24,7 @@ complex-arguments-evaluate-directly	Scope		[Gamma, [Complex, 2.3, 1]]	[Complex, 
 half-integers-have-closed-forms-gamma-7-2-frac	Scope		[Gamma, [Rational, 7, 2]]	[Multiply, [Rational, 15, 8], [Sqrt, Pi]]	Half-integers have closed forms: $\Gamma(7/2) = \frac{15}{8}\sqrt{\pi}$								
 including-negative-half-integers-gamma-3-2-frac	Scope		[Gamma, [Rational, -3, 2]]	[Multiply, [Rational, 4, 3], [Sqrt, Pi]]	...including negative half-integers: $\Gamma(-3/2) = \frac{4}{3}\sqrt{\pi}$								
 gamma-infty-infty	Scope		[Gamma, PositiveInfinity]	PositiveInfinity	$\Gamma(\infty) = \infty$								
-values-far-past-the-double-range-gamma-200-5	Scope		[Gamma, 200.5]	{num: "5.573168944801379133643202962906591494178e+373"}	Values far past the double range: $\Gamma(200.5) \approx 5.57 \times 10^{373}$							precision	statrs computes in f64, which overflows past 1.8e308; compute-engine's value is exact to its digits.
+values-far-past-the-double-range-gamma-200-5	Scope		[Gamma, 200.5]	{num: "5.57316894480137913364e+373"}	Values far past the double range: $\Gamma(200.5) \approx 5.57 \times 10^{373}$							precision	statrs computes in f64, which overflows past 1.8e308; compute-engine's value is exact to its digits.
 two-arguments-the-upper-incomplete-gamma-gamma-5	Scope		[Gamma, 2.5, 1.5]	0.9305194427867931	Two arguments: the upper incomplete gamma $\Gamma(5/2, 3/2)$								
 an-integer-order-reduces-to-a-closed-form-gamma	Scope		[Gamma, 2, x]	[Multiply, [Add, x, 1], [Power, ExponentialE, [Negate, x]]]	An integer order reduces to a closed form: $\Gamma(2, x) = (1 + x)e^{-x}$								
 gamma-2-1-2-e-the-same-closed-form-at-an-exact	Scope		[Gamma, 2, 1]	[Divide, 2, ExponentialE]	$\Gamma(2, 1) = 2/e$, the same closed form at an exact argument								

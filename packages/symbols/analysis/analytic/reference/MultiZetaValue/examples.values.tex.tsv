@@ -7,5 +7,5 @@ zeta-4-2	N(\mathrm{MultiZetaValue}(4, 2))	0.088\,483\,382\,454\,752\,96
 zeta-2-4	N(\mathrm{MultiZetaValue}(2, 4))	0.674\,523\,914\,033\,936
 zeta-5-2	N(\mathrm{MultiZetaValue}(5, 2))	0.038\,575\,124\,342\,795\,405
 zeta-3-4	N(\mathrm{MultiZetaValue}(3, 4))	0.207\,505\,014\,615\,580\,57
-zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	\mathrm{chop}(N(\mathrm{MultiZetaValue}(2, 2))-0.75N(\zeta(4)))	0
+zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	\mathrm{chop}(N(\mathrm{MultiZetaValue}(2, 2))-0.75N(\zeta(4)))	0.0
 s-1-2-stays-symbolic-outside-the-depth-2-both	\mathrm{MultiZetaValue}(1, 2)	\mathrm{MultiZetaValue}(1, 2)

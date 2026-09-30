@@ -21,5 +21,5 @@ n-keiperlilambda-17	<N><KeiperLiLambda>17</KeiperLiLambda></N>	<ToExpression>6.4
 n-keiperlilambda-18	<N><KeiperLiLambda>18</KeiperLiLambda></N>	<ToExpression>7.172480938298763</ToExpression>
 n-keiperlilambda-19	<N><KeiperLiLambda>19</KeiperLiLambda></N>	<ToExpression>7.953743094287197</ToExpression>
 n-keiperlilambda-20	<N><KeiperLiLambda>20</KeiperLiLambda></N>	<ToExpression>8.769276872071474</ToExpression>
-lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	<Chop><Subtract><N><KeiperLiLambda>1</KeiperLiLambda></N> <N><Subtract><Add>1 <Divide>EulerGamma 2</Divide></Add> <Multiply><Rational>1 2</Rational> <Ln><Multiply>4 Pi</Multiply></Ln></Multiply></Subtract></N></Subtract></Chop>	<ToExpression>0</ToExpression>
+lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	<Chop><Subtract><N><KeiperLiLambda>1</KeiperLiLambda></N> <N><Subtract><Add>1 <Divide>EulerGamma 2</Divide></Add> <Multiply><Rational>1 2</Rational> <Ln><Multiply>4 Pi</Multiply></Ln></Multiply></Subtract></N></Subtract></Chop>	<ToExpression>0.0</ToExpression>
 declines-past-n-20-rather-than-returning-a-value	<KeiperLiLambda>21</KeiperLiLambda>	<KeiperLiLambda>21</KeiperLiLambda>

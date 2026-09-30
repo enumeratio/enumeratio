@@ -24,7 +24,7 @@ complex-arguments-evaluate-directly	gamma(2.3 + i)	0.719_140_936_537_281_1 + 0.5
 half-integers-have-closed-forms-gamma-7-2-frac	gamma(7 / 2)	15 / 8 * sqrt(pi)
 including-negative-half-integers-gamma-3-2-frac	gamma(-3 / 2)	4 / 3 * sqrt(pi)
 gamma-infty-infty	gamma(positiveInfinity)	positiveInfinity
-values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5_573_168_944_801_379_133_643_202_962_906_591_494_178e334
+values-far-past-the-double-range-gamma-200-5	gamma(200.5)	5.573_168_944_801_379_133_64e373
 two-arguments-the-upper-incomplete-gamma-gamma-5	gamma(2.5, 1.5)	0.930_519_442_786_793_1
 an-integer-order-reduces-to-a-closed-form-gamma	gamma(2, x)	(x + 1) * exponentialE ^ (-x)
 gamma-2-1-2-e-the-same-closed-form-at-an-exact	gamma(2, 1)	2 / exponentialE

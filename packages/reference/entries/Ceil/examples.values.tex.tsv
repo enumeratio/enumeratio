@@ -11,7 +11,7 @@ stays-symbolic	\lceil x\rceil	\lceil x\rceil
 exact-radicals-are-decided-numerically	\lceil\sqrt{50}\rceil	8
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	\lceil\pi\rceil	4
 a-second-argument-rounds-up-to-a-multiple-of-it	\lceil226\rceil	230
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	\lceil-10.3\rceil	-7
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	\lceil-10.3\rceil	-7.0
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	\lceil2\pi-e\rceil	\frac{15}{4}
 rounds-the-real-and-imaginary-parts-up	\lceil5.37-1.3i\rceil	6-i
 how-many-5-seat-vans-are-needed-to-carry-17	\lceil\frac{17}{5}\rceil	4

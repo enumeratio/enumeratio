@@ -12,7 +12,7 @@ any-exact-numeric-expression-to-any-tolerance	\mathrm{Rationalize}(\exp(\sqrt{2}
 rationalize-sqrt-2-0p001	\mathrm{Rationalize}(\sqrt{2}, 0.001)	\frac{41}{29}
 rationalize-neg-0p125	\mathrm{Rationalize}(-0.125)	-\frac{1}{8}
 the-rational-with-the-smallest-denominator	\mathrm{Rationalize}(\pi, 0.001)	\frac{201}{64}
-a-tolerance-finer-than-a-double	\mathrm{Rationalize}(\pi, 10^{-16})	\frac{245\,850\,922}{78\,256\,779}
+a-tolerance-finer-than-a-double	\mathrm{Rationalize}(\pi, 1.0\cdot10^{-16})	\frac{245\,850\,922}{78\,256\,779}
 rationalizes-every-approximate-number-inside-an	\mathrm{Rationalize}(1.2+6.7x)	\frac{67x}{10}+\frac{6}{5}
 threads-element-wise-over-a-list-compute-engine	\mathrm{Rationalize}(\bigl\lbrack0.5, 0.25, 0.2\bigr\rbrack)	\bigl\lbrack\frac{1}{2}, \frac{1}{4}, \frac{1}{5}\bigr\rbrack
 a-zero-tolerance-gives-the-exact-rational-the	\mathrm{Rationalize}(N(\pi), 0)	\frac{884\,279\,719\,003\,555}{281\,474\,976\,710\,656}
