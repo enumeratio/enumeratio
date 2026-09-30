@@ -1,4 +1,7 @@
 id	in	out
 a-dihedral-group	<GroupOrder><DihedralGroup>100</DihedralGroup></GroupOrder>	<ToExpression>200</ToExpression>
+grouporder-permutationgroup-list-cycles-list	<GroupOrder><PermutationGroup><List><Cycles><List><List>2 10</List> <List>4 11</List> <List>5 7</List> <List>8 9</List></List></Cycles> <Cycles><List><List>1 4 3 8</List> <List>2 5 6 7</List></List></Cycles></List></PermutationGroup></GroupOrder>	<ToExpression>2880</ToExpression>
 a-permutation-group	<GroupOrder><PermutationGroup><List><Cycles><List><List>1 9 6</List> <List>3 7</List></List></Cycles></List></PermutationGroup></GroupOrder>	<ToExpression>6</ToExpression>
 the-symmetric-group	<GroupOrder><SymmetricGroup>4</SymmetricGroup></GroupOrder>	<ToExpression>24</ToExpression>
+grouporder-permutationgroup-list	<GroupOrder><PermutationGroup><Apply>List</Apply></PermutationGroup></GroupOrder>	<ToExpression>1</ToExpression>
+grouporder-permutationgroup-list-cycles-list-2	<GroupOrder><PermutationGroup><List><Cycles><Apply>List</Apply></Cycles></List></PermutationGroup></GroupOrder>	<ToExpression>1</ToExpression>

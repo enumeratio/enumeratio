@@ -44,6 +44,12 @@ negative-a-odd-square-n-9	KroneckerSymbol(-10, 9)	1
 threads-element-wise-over-a-list-as-wolfram-s	KroneckerSymbol([2, 3, 5, 7, 11], 6)	[0, 0, 1, 1, 1]
 larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol(10 ^ 11 + 1, nthPrime(2_000))	-1
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol(7, 6)	1
+generatingfunction-kroneckersymbol-n-7-n-x	GeneratingFunction(KroneckerSymbol(n, 7), n, x)	"(x ^ 5 + 2 * x ^ 4 + x ^ 3 + 2 * x ^ 2 + x) / (x ^ 6 + x ^ 5 + x ^ 4 + x ^ 3 + x ^\n                                                                               2 +\n                                               x + 1)"
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol(-4, 7)	-1
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	KroneckerSymbol(2, 7) == KroneckerSymbol(23, 7)	True
+kroneckersymbol-neg-4-list-1-5-7-11	KroneckerSymbol(-4, [1, 5, 7, 11])	[1, 1, -1, -1]
 completely-multiplicative-in-n	KroneckerSymbol(7, 3 * 5) == KroneckerSymbol(7, 3) * KroneckerSymbol(7, 5)	True
+kroneckersymbol-9-12	KroneckerSymbol(9, 12)	0
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	KroneckerSymbol(12, 7) == KroneckerSymbol(3, 7) * KroneckerSymbol(4, 7)	True
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	KroneckerSymbol(3, 63) == KroneckerSymbol(3, 9) * KroneckerSymbol(3, 7)	True
 a-0-1-for-a-pm-1	KroneckerSymbol(-1, 0)	1

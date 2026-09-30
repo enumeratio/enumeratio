@@ -1,5 +1,13 @@
 id	in	out	tex.in	tex.out
 7-is-a-mersenne-prime-exponent	MersennePrimeExponentQ[7]	True	\text{MersennePrimeExponentQ}[7]	\text{True}
+ismersenneprimeexponent-5	MersennePrimeExponentQ[5]	True	\text{MersennePrimeExponentQ}[5]	\text{True}
+ismersenneprimeexponent-8	MersennePrimeExponentQ[8]	False	\text{MersennePrimeExponentQ}[8]	\text{False}
 11-is-prime-but-not-a-mersenne-prime-exponent	MersennePrimeExponentQ[11]	False	\text{MersennePrimeExponentQ}[11]	\text{False}
 9-is-not-even-prime	MersennePrimeExponentQ[9]	False	\text{MersennePrimeExponentQ}[9]	\text{False}
 2-31-1-is-the-8th-mersenne-prime	MersennePrimeExponentQ[31]	True	\text{MersennePrimeExponentQ}[31]	\text{True}
+ismersenneprimeexponent-neg-5	MersennePrimeExponentQ[-5]	False	\text{MersennePrimeExponentQ}[-5]	\text{False}
+ismersenneprimeexponent-89	MersennePrimeExponentQ[89]	True	\text{MersennePrimeExponentQ}[89]	\text{True}
+ismersenneprimeexponent-12	MersennePrimeExponentQ[12]	False	\text{MersennePrimeExponentQ}[12]	\text{False}
+ismersenneprimeexponent-2	MersennePrimeExponentQ[2]	True	\text{MersennePrimeExponentQ}[2]	\text{True}
+ismersenneprimeexponent-fullsimplify-x	MersennePrimeExponentQ[FullSimplify[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{MersennePrimeExponentQ}[\text{FullSimplify}[x]]-\text{MersennePrimeExponentQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{MersennePrimeExponentQ}\left[\text{FullSimplify}\left[\frac{7}{3}\right]\right]-\text{MersennePrimeExponentQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{MersennePrimeExponentQ}\left[\text{FullSimplify}\left[-\frac{11}{5}\right]\right]-\text{MersennePrimeExponentQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{MersennePrimeExponentQ}\left[\text{FullSimplify}\left[\frac{13}{4}\right]\right]-\text{MersennePrimeExponentQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+ismersenneprimeexponent-13	MersennePrimeExponentQ[13]	True	\text{MersennePrimeExponentQ}[13]	\text{True}

@@ -8,5 +8,24 @@ rational-arguments-the-primes-up-to-7-2-are-2	prime_pi((7/2))	2
 real-arguments	prime_pi(15.25)	6
 the-primes-below-a-million	prime_pi(1000000)	78498
 listable-threads-over-a-list	[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(25)]	[2, 3, 7, 9]
+nthprime-range-1-primepi-100		
+primepi-5-000	prime_pi(5000)	
 same-inverse-relation-viewed-from-primepi-s-side		
+primepi-nthprime-100		
+primepi-1-000	prime_pi(1000)	
+primepi-3	prime_pi(3)	
+primepi-4	prime_pi(4)	
+primepi-5	prime_pi(5)	
+primepi-6	prime_pi(6)	
+primepi-7	prime_pi(7)	
+primepi-8	prime_pi(8)	
+primepi-9	prime_pi(9)	
+primepi-10	prime_pi(10)	
+primepi-11	prime_pi(11)	
+primepi-12	prime_pi(12)	
+primepi-13	prime_pi(13)	
+primepi-14	prime_pi(14)	
+primepi-16	prime_pi(16)	
+primepi-17	prime_pi(17)	
+primepi-18	prime_pi(18)	
 no-primes-are-a-negative-number	prime_pi(-1)	0

@@ -4,3 +4,9 @@ level-expr-0-is-just-expr-itself	Scope		[Level, [List, 1, [List, 2, 3]], [List, 
 level-expr-2-gives-levels-1-and-2-together	Scope		[Level, [List, 1, [List, 2, 3], 4], 2]	[List, 1, 2, 3, [List, 2, 3], 4]	post-order: {2, 3} prints after its own parts 2 and 3
 level-expr-1-gives-every-leaf	Scope		[Level, [List, 1, [List, 2, 3], 4], [List, -1]]	[List, 1, 2, 3, 4]	{-1} is Wolfram's own leaves shorthand
 level-expr-infinity-reaches-every-level	Scope		[Level, [List, 1, [List, 2, [List, 3]]], PositiveInfinity]	[List, 1, 2, 3, [List, 3], [List, 2, [List, 3]]]	
+level-list-list-list-list-a-1	Scope		[Level, [List, [List, [List, [List, a]]]], 1]	[List, [List, [List, [List, a]]]]	
+level-list-list-list-list-a-2	Scope		[Level, [List, [List, [List, [List, a]]]], 2]	[List, [List, [List, a]], [List, [List, [List, a]]]]	
+level-list-list-list-list-a-3	Scope		[Level, [List, [List, [List, [List, a]]]], 3]	[List, [List, a], [List, [List, a]], [List, [List, [List, a]]]]	
+level-list-list-list-list-a-4	Scope		[Level, [List, [List, [List, [List, a]]]], 4]	[List, a, [List, a], [List, [List, a]], [List, [List, [List, a]]]]	
+level-list-list-list-list-a-5	Scope		[Level, [List, [List, [List, [List, a]]]], 5]	[List, a, [List, a], [List, [List, a]], [List, [List, [List, a]]]]	
+level-list-list-list-list-a-list-2-3	Scope		[Level, [List, [List, [List, [List, a]]]], [List, 2, 3]]	[List, [List, a], [List, [List, a]]]	

@@ -2,6 +2,7 @@ id	in
 a-downward-parabola-s-vertex	Maximize[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
 unbounded-above-reports-positive-infinity	Maximize[Power[x, 3], x]
 a-bounded-interval-constraint	Maximize[List[Plus[Minus[Power[x, 2]], Times[4, x], -1], And[GreaterEqual[x, 0], LessEqual[x, 1]]], x]
+maximize-neg-2-times-x-pow-2-minus-3x-plus-5-x	Maximize[Plus[Times[-2, Power[x, 2]], Times[-1, Times[3, x]], 5], x]
 exp-of-a-negated-argument-is-unbounded-above	Maximize[Exp[Minus[x]], x]
 a-downward-quadratic-radicand	Maximize[Sqrt[Subtract[4, Power[x, 2]]], x]
 declines-more-than-one-variable	Maximize[Minus[Plus[Power[x, 2], Power[y, 2]]], List[x, y]]

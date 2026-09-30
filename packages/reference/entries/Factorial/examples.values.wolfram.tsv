@@ -4,7 +4,7 @@ id	in	out	tex.in	tex.out
 the-empty-product-is-1-by-convention	Factorial[0]	1	0!	1
 10-factorial	Factorial[10]	3628800	10!	3628800
 threads-element-wise-over-a-list	Factorial[List[1, 2, 3, 4]]	{1, 2, 6, 24}	\{1,2,3,4\}!	\{1,2,6,24\}
-frac-n-n-1-simplifies-to-n-under-simplify-plain				
+frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]			
 real-arguments-evaluate-as-gamma-n-1	Factorial[3.5]	11.631728396567448	3.5!	11.6317
 negative-non-integers-are-defined-too-2-5-gamma	Factorial[-2.5]	2.363271801207355	(-2.5)!	2.36327
 complex-arguments-1-i-gamma-2-i	Factorial[Complex[1, 1]]	(1 + I)!	(1+i)!	(1+i)!

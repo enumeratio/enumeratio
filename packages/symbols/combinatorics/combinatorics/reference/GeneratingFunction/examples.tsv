@@ -4,4 +4,5 @@ catalan-numbers			[GeneratingFunction, [CatalanNumber, n], n, x]	[Divide, [Add, 
 dyck-paths-via-count			[GeneratingFunction, [Count, [DyckPaths, n]], n, x]	[Divide, [Add, [Negate, [Sqrt, [Add, [Multiply, -4, x], 1]]], 1], [Multiply, 2, x]]	the same Catalan generating function, reached through a collection's cardinality rather than CatalanNumber directly
 fixed-k-binomial			[GeneratingFunction, [Binomial, n, 3], n, x]	[Divide, [Power, x, 3], [Add, [Power, x, 4], [Multiply, -4, [Power, x, 3]], [Multiply, 6, [Power, x, 2]], [Multiply, -4, x], 1]]	$x^3/(1-x)^4$
 geometric			[GeneratingFunction, [Power, 2, n], n, x]	[Divide, 1, [Add, [Multiply, -2, x], 1]]	$1/(1-2x)$
+generatingfunction-1-n-x			[GeneratingFunction, 1, n, x]	[Divide, 1, [Add, [Negate, x], 1]]	
 no-closed-form	Scope		[GeneratingFunction, [Factorial, n], n, x]	[GeneratingFunction, [Factorial, n], n, x]	$n!$ has no elementary ordinary generating function -- stays unevaluated, as Wolfram does too

@@ -1,4 +1,9 @@
 id	in	out
 equal-over-lists	<Thread><Equal><List>1 2 3</List> <List>1 5 3</List></Equal></Thread>	<List><Equal>1 1</Equal> <Equal>2 5</Equal> <Equal>3 3</Equal></List>
+thread-list-a-b-c-eq-list-x-y-z	<Thread><Equal><List>a b c</List> <List>x y z</List></Equal></Thread>	<List><Equal>a x</Equal> <Equal>b y</Equal> <Equal>c z</Equal></List>
+thread-ln-x-eq-y-equal	<Thread><Ln><Equal>x y</Equal></Ln> Equal</Thread>	<Equal><Ln>x</Ln> <Ln>y</Ln></Equal>
 scalar-broadcast	<Thread><Equal><List>1 2 3</List> 1</Equal></Thread>	<List><Equal>1 1</Equal> <Equal>2 1</Equal> <Equal>3 1</Equal></List>
 custom-head	<Thread><f><g>1 2</g> <g>3 4</g></f> g</Thread>	<g><f>1 3</f> <f>2 4</f></g>
+thread-list-list-a-b-c-0	<Thread><List><List>a b c</List> 0</List></Thread>	<List><List>a 0</List> <List>b 0</List> <List>c 0</List></List>
+thread-list-a-b-c-neg-gt-list-1-2-3	<Thread><KeyValuePair><List>a b c</List> <List>1 2 3</List></KeyValuePair></Thread>	<List><Tuple>a 1</Tuple> <Tuple>b 2</Tuple> <Tuple>c 3</Tuple></List>
+thread-list-list-a-b-c-list-x-y-z	<Thread><List><List>a b c</List> <List>x y z</List></List></Thread>	<List><List>a x</List> <List>b y</List> <List>c z</List></List>

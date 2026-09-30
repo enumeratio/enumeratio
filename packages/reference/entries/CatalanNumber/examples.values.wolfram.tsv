@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial	Divide[Binomial[Times[2, -13], 
 equivalently-c-n-binom-2n-n-binom-2n-n-1	Subtract[Binomial[10, 5], Binomial[10, 6]]	42	\binom{10}{5}-\binom{10}{6}	42	
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	Divide[CatalanNumber[6], CatalanNumber[5]]	22/7	\frac{C_6}{C_5}	\frac{22}{7}	
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	(CatalanNumber[4] == Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]])	True	C_4=\sum _{i=0}^3 C_i C_{3-i}	\text{True}	
+generatingfunction-catalannumber-n-n-x	GeneratingFunction[CatalanNumber[n], n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{G}_n\left[C_n\right](x)-\frac{-\sqrt{-4 x+1}+1}{2 x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{G}_{\frac{7}{3}}\left[C_{\frac{7}{3}}\right]\left(-\frac{11}{5}\right)-\frac{-\sqrt{-4 \left(-\frac{11}{5}\right)+1}+1}{2 \left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{13}{4}}\left[C_{\frac{13}{4}}\right]\left(-\frac{17}{6}\right)-\frac{-\sqrt{-4 \left(-\frac{17}{6}\right)+1}+1}{2 \left(-\frac{17}{6}\right)}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{19}{8}}\left[C_{\frac{19}{8}}\right]\left(-\frac{23}{9}\right)-\frac{-\sqrt{-4 \left(-\frac{23}{9}\right)+1}+1}{2 \left(-\frac{23}{9}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+catalannumber-neg-10	CatalanNumber[-10]	0	C_{-10}	0	
+catalannumber-neg-9	CatalanNumber[-9]	0	C_{-9}	0	
+catalannumber-neg-8	CatalanNumber[-8]	0	C_{-8}	0	
+catalannumber-neg-7	CatalanNumber[-7]	0	C_{-7}	0	
+catalannumber-neg-6	CatalanNumber[-6]	0	C_{-6}	0	
+catalannumber-neg-4	CatalanNumber[-4]	0	C_{-4}	0	
+catalannumber-neg-3	CatalanNumber[-3]	0	C_{-3}	0	
 they-grow-fast-c-15-already-passes-nine-million	CatalanNumber[15]	9694845	C_{15}	9694845	

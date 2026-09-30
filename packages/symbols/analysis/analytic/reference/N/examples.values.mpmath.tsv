@@ -2,6 +2,28 @@ id	in	out	verdict
 n-pi-30	(pi)	3.14159265358979323846264338328	
 the-last-digit-correctly-rounded-computing-at-30			
 a-list-number-by-number	([pi, e, sqrt(2)])	[<pi: 3.14159~>, <e = exp(1): 2.71828~>, mpf('1.41421356237309504880168872420977')]	disagree
+n-1-over-7	((mpf(1)/7))		
+n-1-over-7-50	((mpf(1)/7))		
+n-gamma-33-over-10-50	(gamma((mpf(33)/10)))		
+n-pi-50	(pi)		
+n-khinchin-50	(khinchin)		
+n-arcsin-3			
+n-c			
+n-c-47			
+n-1-over-neg-x-plus-exponentiale-times-2x-plus			
+n-poly			
+n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	((1 + (-sqrt((1 + (-((e)**-1000)))))))		
+n-exponentiale-25	(e)		
+n-x-pow-3-over-2			
+n-pi-pow-x			
+n-exponentiale-pow-x-plus-pi			
+n-int			
+n-exponentiale	(e)		
+n-neg-2-times-pit-plus-pi-list-positiveinfinity			
+n-crt			
+n-crt-47			
+n-exponentiale-pow-sin-1-000	(((e)**sin(1000)))		
+n-exponentiale-pow-sin-1-000-47	(((e)**sin(1000)))		
 an-exact-tie-rounds-to-the-even-digit-0-125	((mpf(1)/8))	0.125	disagree
 and-0-375-to-0-38	((mpf(3)/8))	0.375	disagree
 n-pi-1-digit	(pi)	3.14159265358979323846264338328	disagree

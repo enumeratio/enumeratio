@@ -4,3 +4,5 @@ cnf-distributes-or-over-and	\mathrm{BooleanConvert}(p\lor b\land r, \text{CNF})	
 nnf-pushes-not-to-the-leaves-not-distributed	\mathrm{BooleanConvert}(p\implies b, \text{NNF})	b\lor\lnot p
 a-tautological-clause-drops-out-of-cnf	\mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})	\top
 an-unimplemented-form-stays-unevaluated	\mathrm{BooleanConvert}(p, \text{ESOP})	\mathrm{BooleanConvert}(p, \text{ESOP})
+booleanconvert-f	\mathrm{BooleanConvert}(f)	f
+booleanconvert-f-cnf	\mathrm{BooleanConvert}(f, \text{CNF})	f

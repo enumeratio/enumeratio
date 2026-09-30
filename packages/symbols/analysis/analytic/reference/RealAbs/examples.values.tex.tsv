@@ -1,6 +1,16 @@
 id	in	out
 the-absolute-value-of-a-real-number	\mathrm{RealAbs}(-2.5)	2.5
 realabs-neg-7-over-2	\mathrm{RealAbs}(-\frac{7}{2})	\frac{7}{2}
+realabs-2	\mathrm{RealAbs}(2)	2
+d-realabs-x-x	\frac{\mathrm{d}\mathrm{RealAbs}(x)}{\mathrm{d}x}	\mathrm{sgn}(x)
 threads-element-wise-over-a-list	\mathrm{RealAbs}(\bigl\lbrack-1, 2, -3\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
 exact-numeric-arguments	\mathrm{RealAbs}(-\pi)	\pi
+n-realabs-pi-minus-catalan-50	N(\mathrm{RealAbs}(\pi-\mathrm{Catalan}), 50)	2.225\,627\,059\,412\,574\,223\,41
+realabs-list-list-1-over-2-neg-1-list-0-neg-1	\mathrm{RealAbs}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, -\frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack
+matrixfunction-realabs-list-list-1-over-2-neg-1	\mathrm{MatrixFunction}(\mathrm{RealAbs}, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, -\frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack
+realabs-interval-neg-5-3	\mathrm{RealAbs}(\mathrm{Interval}(-5, 3))	\mathrm{Interval}(0, 5)
+realabs-0	\mathrm{RealAbs}(0)	0
+realabs-positiveinfinity	\mathrm{RealAbs}(\infty)	\infty
+realabs-negativeinfinity	\mathrm{RealAbs}(-\infty)	\infty
+piecewiseexpand-realabs-x	\mathrm{PiecewiseExpand}(\mathrm{RealAbs}(x))	\vert x\vert
 agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\top

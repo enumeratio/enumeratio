@@ -1,5 +1,6 @@
 id	in	out
 primitiverootlist-7	\mathrm{PrimitiveRootList}(7)	\bigl\lbrack3, 5\bigr\rbrack
+primitiverootlist-9	\mathrm{PrimitiveRootList}(9)	\bigl\lbrack2, 5\bigr\rbrack
 10-2-cdot-5-is-of-the-form-2p	\mathrm{PrimitiveRootList}(10)	\bigl\lbrack3, 7\bigr\rbrack
 an-odd-prime-power-varphi-varphi-25-8-generators	\mathrm{PrimitiveRootList}(25)	\bigl\lbrack2, 3, 8, 12, 13, 17, 22, 23\bigr\rbrack
 n-4-is-one-of-the-small-cyclic-cases	\mathrm{PrimitiveRootList}(4)	\bigl\lbrack3\bigr\rbrack

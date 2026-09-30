@@ -1,3 +1,5 @@
 id	in	out
 keeps-elements-where-sel-is-true	<Pick><List>a b c</List> <List>True False True</List></Pick>	<List>a c</List>
+pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1	<Pick><List>a b c d ExponentialE</List> <List>1 0 1 0 0</List> 1</Pick>	<List>a c</List>
 an-explicit-pattern-keeps-elements-matching	<Pick><List>a b c d</List> <List>1 0 1 0</List> 1</Pick>	<List>a c</List>
+pick-list-a-b-c-d-list-true-false-false-true	<Pick><List>a b c d</List> <List>True False False True</List></Pick>	<List>a d</List>

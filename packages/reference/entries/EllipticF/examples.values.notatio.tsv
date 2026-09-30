@@ -1,0 +1,7 @@
+id	in	out
+ellipticf-list-list-1-0-list-0-1-0	<EllipticF><List><List>1 0</List> <List>0 1</List></List> 0</EllipticF>	<List><List><EllipticF>1 0</EllipticF> 0</List> <List>0 <EllipticF>1 0</EllipticF></List></List>
+matrixfunction-function-ellipticf-1-0-1-list	<MatrixFunction><Function><Block><EllipticF>_1 0</EllipticF></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List><EllipticF>1 0</EllipticF> 0</List> <List>0 <EllipticF>1 0</EllipticF></List></List>
+ellipticf-0-1	<EllipticF>0 1</EllipticF>	<ToExpression>0</ToExpression>
+ellipticf-0-0	<EllipticF>0 0</EllipticF>	<ToExpression>0</ToExpression>
+ellipticf-jacobiamplitude-0-0-0	<EllipticF><JacobiAmplitude>0 0</JacobiAmplitude> 0</EllipticF>	<ToExpression>0</ToExpression>
+ellipticf-jacobiamplitude-0-1-1	<EllipticF><JacobiAmplitude>0 1</JacobiAmplitude> 1</EllipticF>	<ToExpression>0</ToExpression>

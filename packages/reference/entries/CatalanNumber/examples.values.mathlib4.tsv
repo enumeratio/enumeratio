@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial	(((Nat.choose (2 * (-13)) 5) : 
 equivalently-c-n-binom-2n-n-binom-2n-n-1	((Nat.choose 10 5) - (Nat.choose 10 6))	42
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(((catalan 6) : ℚ) / (catalan 5))	22/7
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i		
+generatingfunction-catalannumber-n-n-x		
+catalannumber-neg-10	(catalan (-10))	
+catalannumber-neg-9	(catalan (-9))	
+catalannumber-neg-8	(catalan (-8))	
+catalannumber-neg-7	(catalan (-7))	
+catalannumber-neg-6	(catalan (-6))	
+catalannumber-neg-4	(catalan (-4))	
+catalannumber-neg-3	(catalan (-3))	
 they-grow-fast-c-15-already-passes-nine-million	(catalan 15)	9694845

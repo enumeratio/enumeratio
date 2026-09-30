@@ -11,4 +11,6 @@ signatures:
     overrides: compute-engine
 attributes:
   - HoldAll
+names:
+  wolfram: Simplify
 ---

@@ -1,2 +1,6 @@
-id	in
-turan-6-3-is-k222	EdgeCount[TuranGraph[6, 3]]
+id	in	back
+turan-6-3-is-k222	EdgeCount[TuranGraph[6, 3]]	
+turangraph-5-3	TuranGraph[5, 3]	
+list-turangraph-4-2-turangraph-6-3	List[TuranGraph[4, 2], TuranGraph[6, 3]]	
+map-function-vertexeccentricity-turangraph-5-3-1	Map[Function[VertexEccentricity[TuranGraph[5, 3], Slot[1]]], VertexList[CycleGraph[5]]]	[Map, [Function, [VertexEccentricity, [TuranGraph, 5, 3], _1]], [VertexList, [CycleGraph, 5]]]
+turangraph-7-2	TuranGraph[7, 2]	

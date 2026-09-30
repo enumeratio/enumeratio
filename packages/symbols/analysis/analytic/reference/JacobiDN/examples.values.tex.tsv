@@ -26,7 +26,13 @@ dn-0-5-0-3i-3-2	N(\mathrm{JacobiDN}(0.5-0.3i, -3))	1.266\,235\,954\,829\,551\,2-
 m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiDN}(0.3, 1.5))	0.935\,161\,917\,755\,299\,8
 m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiDN}(0.3, -2))	1.088\,512\,946\,606\,272\,4
 a-complex-argument-u	N(\mathrm{JacobiDN}(0.3+0.4i, 0.5))	1.012\,262\,082\,212\,854-0.062\,849\,685\,024\,787\,7i
+matrixfunction-function-jacobidn-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiDN}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack
+list-jacobidn-z-0-jacobidn-z-1	\bigl\lbrack\mathrm{JacobiDN}(z, 0), \mathrm{JacobiDN}(z, 1)\bigr\rbrack	\bigl\lbrack1, \frac{1}{\cosh(z)}\bigr\rbrack
 u-0-is-1-for-any-m	\mathrm{JacobiDN}(0, m)	1
 m-0-is-1-for-any-u	\mathrm{JacobiDN}(u, 0)	1
 the-quarter-period-u-elliptick-m-is-sqrt	\mathrm{JacobiDN}(\mathrm{EllipticK}(m), m)	\sqrt{1-m}
+jacobidn-0-1	\mathrm{JacobiDN}(0, 1)	1
+jacobidn-1-over-2-times-i-times-pi-1	\mathrm{JacobiDN}((\frac{1}{2}i)\pi, 1)	\tilde\infty
+jacobidn-i-times-elliptick-1-0	\mathrm{JacobiDN}(i\mathrm{EllipticK}(1), 0)	1
+jacobidn-3i-times-elliptick-1-0	\mathrm{JacobiDN}(3i\mathrm{EllipticK}(1), 0)	1
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiDN}(u, m)	\mathrm{JacobiDN}(u, m)

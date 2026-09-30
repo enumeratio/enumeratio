@@ -1,5 +1,8 @@
 id	in
 isnumeric-pi	NumericQ[Pi]
 isnumeric-literal	NumericQ[5]
+isnumeric-sin-sqrt-2	NumericQ[Sin[Sqrt[2]]]
 isnumeric-plain-symbol	NumericQ[x]
 isnumeric-sqrt-2	NumericQ[Sqrt[2]]
+isnumeric-expr	NumericQ[expr]
+isnumeric-exponentiale	NumericQ[E]

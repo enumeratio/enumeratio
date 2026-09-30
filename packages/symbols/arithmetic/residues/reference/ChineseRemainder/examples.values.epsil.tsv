@@ -8,4 +8,5 @@ over-classes-the-answer-is-a-class-and-reading	chineseRemainder(IntegerMod(2, 3)
 a-third-argument-asks-for-the-smallest-solution	chineseRemainder([1, 2], [3, 5], 100)	112
 recover-123456-bmod-1001-from-its-residues-mod-7	chineseRemainder(123_456 % [7, 11, 13], [7, 11, 13])	333
 verifies-the-solution-satisfies-both-congruences	"chineseRemainder([3, 4], [4, 5]) % 4 == 3 && chineseRemainder([3, 4], [4, 5]) %\n                                             5 == 4"	True
+chineseremainder-list-1-2-list-3-5	chineseRemainder([1, 2], [3, 5])	7
 no-solution-exists-when-the-remainders-are	chineseRemainder([1, 2], [6, 10])	chineseRemainder([1, 2], [6, 10])

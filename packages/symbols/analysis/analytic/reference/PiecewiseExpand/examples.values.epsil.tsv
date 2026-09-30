@@ -3,4 +3,13 @@ abs-of-a-real-variable	PiecewiseExpand(abs(x), x in realNumbers)	Piecewise([[-x,
 sign-of-a-real-variable	PiecewiseExpand(sign(x), x in realNumbers)	Piecewise([[-1, x < 0], [1, 0 < x]], 0)
 clip-of-a-real-variable	PiecewiseExpand(Clip(x, [-1, 1]), x in realNumbers)	Piecewise([[-1, x < -1], [1, 1 < x]], x)
 max-of-two-real-variables	PiecewiseExpand(max(x, y), x in realNumbers && y in realNumbers)	Piecewise([[x, y <= x]], y)
+piecewiseexpand-max-a-b-c-d	PiecewiseExpand(max(a, b, c, d))	max(a, b, c, d)
+piecewiseexpand-floor-x-0-lt-x-lt-4	PiecewiseExpand(floor(x), 0 < x < 4)	floor(x)
+piecewiseexpand-primepi-x-0-lt-x-lt-6	PiecewiseExpand(primePi(x), 0 < x < 6)	primePi(x)
+piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2	PiecewiseExpand(0 < floor(x + round(x ^ 2)) - x < 4)	0 < -x + floor(x + round(x ^ 2)) < 4
+assuming-0-lt-x-lt-3-piecewiseexpand-floor-x	Assuming(0 < x < 3, PiecewiseExpand(floor(x)))	floor(x)
+assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	Assuming(x ^ 2 < 3, PiecewiseExpand(floor(x) + round(y), y ^ 2 < 2))	floor(x) + round(y)
+piecewiseexpand-pw	PiecewiseExpand(pw)	pw
+piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	PiecewiseExpand(-1 <= max(x, y) <= 1)	-1 <= max(x, y) <= 1
+piecewiseexpand-max-abs-x-abs-y-realnumbers	PiecewiseExpand(max(abs(x), abs(y)), realNumbers)	max(abs(x), abs(y))
 without-a-realness-assumption-it-declines	PiecewiseExpand(abs(x))	abs(x)

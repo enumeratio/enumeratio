@@ -1,4 +1,7 @@
 id	in	out	tex.in	tex.out
 halving-and-flooring-until-nothing-changes	FixedPoint[Function[Floor[Divide[Slot[1], 2]]], 100]	0	\text{FixedPoint}\left[\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,100\right]	0
 the-dottie-number-the-fixed-point-of-cos	FixedPoint[Cos, 0.5]	0.7390851332151607	\text{FixedPoint}[\text{Cos},0.5]	0.739085
+fixedpoint-function-1-plus-floor-1-times-2-pow	FixedPoint[Function[Plus[1, Floor[Times[Slot[1], Power[2, -1]]]]], 1000]	2	\text{FixedPoint}\left[1+\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,1000\right]	2
+fixedpoint-function-1-plus-floor-1-times-2-pow-2	FixedPoint[Function[Plus[1, Floor[Times[Slot[1], Power[2, -1]]]]], Power[10, 6]]	2	\text{FixedPoint}\left[1+\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,10^6\right]	2
 newton-s-method-for-sqrt-2-run-to-this-engine-s	FixedPoint[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1.5]	1.414213562373095	\text{FixedPoint}\left[\frac{\text{$\#$1}+\frac{2}{\text{$\#$1}}}{2}\&,1.5\right]	1.41421
+fixedpoint-function-d-1-x-x-pow-10	FixedPoint[Function[D[Slot[1], x]], Power[x, 10]]	0	\text{FixedPoint}\left[\frac{\partial \text{$\#$1}}{\partial x}\&,x^{10}\right]	0

@@ -1,3 +1,16 @@
 id	section	role	expr	expected
 real-and-imaginary-parts			[ReIm, [Complex, 3, 4]]	[List, 3, 4]
+reim-5-plus-12i			[ReIm, [Complex, 5, 12]]	[List, 5, 12]
+reim-3			[ReIm, 3]	[List, 3, 0]
+reim-list-i-neg-1-neg-i-1			[ReIm, [List, [Complex, 0, 1], -1, [Complex, 0, -1], 1]]	[List, [List, 0, 1], [List, -1, 0], [List, 0, -1], [List, 1, 0]]
 threads-over-a-list	Scope		[ReIm, [List, [Complex, 1, 2], [Complex, 3, 4]]]	[List, [List, 1, 2], [List, 3, 4]]
+reim-neg-3	Scope		[ReIm, -3]	[List, -3, 0]
+reim-3-over-5	Scope		[ReIm, [Rational, 3, 5]]	[List, [Rational, 3, 5], 0]
+reim-root-neg-17-4	Scope		[ReIm, [Root, -17, 4]]	[List, [Real, [Root, -17, 4]], [Imaginary, [Root, -17, 4]]]
+reim-exponentiale-pow-2-over-3-times-i-times-pi	Scope		[ReIm, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 2, 3]], Pi]]]	[List, [Rational, -1, 2], [Divide, [Sqrt, 3], 2]]
+reim-gamma-neg-1-over-2	Scope		[ReIm, [Gamma, [Rational, -1, 2]]]	[List, [Multiply, -2, [Sqrt, Pi]], 0]
+reim-list-list-1-neg-1-0-list-0-1	Scope		[ReIm, [List, [List, 1, -1, 0], [List, 0, 1]]]	[List, [List, [List, 1, 0], [List, -1, 0], [List, 0, 0]], [List, [List, 0, 0], [List, 1, 0]]]
+rank-reim-mat	Properties		[Rank, [ReIm, mat]]	1
+reim-i	Properties		[ReIm, [Complex, 0, 1]]	[List, 0, 1]
+reim-5-times-exponentiale-pow-3-over-4-times-i	Properties		[ReIm, [Multiply, 5, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 3, 4]], Pi]]]]	[List, [Multiply, [Rational, -5, 2], [Sqrt, 2]], [Multiply, [Rational, 5, 2], [Sqrt, 2]]]
+reim-list-i-neg-i-0	Possible issues		[ReIm, [List, [Complex, 0, 1], [Complex, 0, -1], 0]]	[List, [List, 0, 1], [List, 0, -1], [List, 0, 0]]

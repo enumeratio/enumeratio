@@ -1,4 +1,10 @@
 id	in	out	tex.in	tex.out	verdict
 ismachinenumber-ordinary-float	MachineNumberQ[2.5]	True	\text{MachineNumberQ}[2.5]	\text{True}	
+ismachinenumber-sin-1-000	MachineNumberQ[Sin[1000]]	False	\text{MachineNumberQ}[\sin (1000)]	\text{False}	
+ismachinenumber-exponentiale-pow-1-000	MachineNumberQ[Power[E, 1000]]	False	\text{MachineNumberQ}\left[e^{1000}\right]	\text{False}	
 ismachinenumber-exact-integer	MachineNumberQ[2]	False	\text{MachineNumberQ}[2]	\text{False}	
+ismachinenumber-1	MachineNumberQ[1]	False	\text{MachineNumberQ}[1]	\text{False}	
+ismachinenumber-1-plus-i-times-10-pow-1-000	MachineNumberQ[Plus[1, Times[Complex[0, 1], Power[10, 1000]]]]	False	\text{MachineNumberQ}\left[1+i 10^{1000}\right]	\text{False}	
+map-ismachinenumber-list-r-i	Map[MachineNumberQ, List[r, Complex[0, 1]]]	{False, False}	\text{MachineNumberQ}\text{/@}\{r,i\}	\{\text{False},\text{False}\}	
 ismachinenumber-extended-precision	MachineNumberQ[3.141592653589793]	True	\text{MachineNumberQ}[3.14159]	\text{True}	disagree
+ismachinenumber-x	MachineNumberQ[x]	False	\text{MachineNumberQ}[x]	\text{False}	

@@ -16,3 +16,4 @@ a-row-missing-from-the-shorter-array-simply-isn	Join[List[List[x]], List[List[1,
 any-head-as-long-as-all-the-arguments-share-it	Join[f[a], f[b]]	
 join-a-b-flatten-a-b-1-see-flatten	Equal[Join[List[1, 2], List[3, 4]], Flatten[List[List[1, 2], List[3, 4]], 1]]	
 join-is-associative	Equal[Join[Join[List[a, b, c], List[x, y]], List[u, v, w]], Join[List[a, b, c], Join[List[x, y], List[u, v, w]]]]	
+nestlist-function-join-1-1-1-list-x-4	NestList[Function[Join[Slot[1], Slot[1]]], List[x], 4]	[NestList, [Function, [Join, _1, _1]], [List, x], 4]

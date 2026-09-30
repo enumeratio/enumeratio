@@ -5,6 +5,34 @@ nthprime-100	<NthPrime>100</NthPrime>	<ToExpression>541</ToExpression>
 threads-element-wise-over-a-list-as-wolfram-s	<NthPrime><List>1 3 4 10</List></NthPrime>	<List>2 5 7 29</List>
 the-millionth-prime	<NthPrime>1000000</NthPrime>	<ToExpression>15485863</ToExpression>
 a-prime-gap-p-31-p-30-127-113	<Subtract><NthPrime>31</NthPrime> <NthPrime>30</NthPrime></Subtract>	<ToExpression>14</ToExpression>
+nthprime-25	<NthPrime>25</NthPrime>	<ToExpression>97</ToExpression>
+array-nthprime-100-mod-10	<Mod><Array>NthPrime 100</Array> 10</Mod>	<List>2 3 5 7 1 3 7 9 3 9 1 7 1 3 7 3 9 1 7 1 3 9 3 9 7 1 3 7 9 3 7 1 7 9 9 1 7 3 7 3 9 1 1 3 7 9 1 3 7 9 3 9 1 1 7 3 9 1 7 1 3 3 7 1 3 7 1 7 7 9 3 9 7 3 9 3 9 7 1 9 9 1 1 3 9 3 9 7 1 3 7 9 7 1 9 3 9 1 3 1</List>
+n-100-times-last-foldlist-multiply-1-1-plus-neg	<N><Multiply>100 <Last><FoldList>Multiply 1 <Add>1 <Divide>-1 <NthPrime><Range>1 25</Range></NthPrime></Divide></Add></FoldList></Last></Multiply></N>	<ToExpression>12.0317290474935188450463777499160024475175470799073086119929575589597740394678139316347543373629931036639116323237411425605253687875356022154375132803637403732670634237805048070340487413638928157755127949850202451197436821568569057451493657450470583184058262054404101704406716674294588217739009601393323348242978147276061308652118518085202135246963485714099918756321910699826587150938643637042862870767866970267026668174768993804753052463646547648567051503940090255295944697663573816741481016424448</ToExpression>
+ismersenneprimeexponent-nthprime-4	<IsMersennePrimeExponent><NthPrime>4</NthPrime></IsMersennePrimeExponent>	<True />
+isprime-neg-1-plus-2-pow-nthprime-4	<IsPrime><Add>-1 <Power>2 <NthPrime>4</NthPrime></Power></Add></IsPrime>	<True />
 primepi-and-nthprime-are-inverses-pi-p-n-n	<Equal><PrimePi><NthPrime>100</NthPrime></PrimePi> 100</Equal>	<True />
+primepi-nthprime-100	<PrimePi><NthPrime>100</NthPrime></PrimePi>	<ToExpression>100</ToExpression>
+nthprime-1-plus-primepi-30	<NthPrime><Add>1 <PrimePi>30</PrimePi></Add></NthPrime>	<ToExpression>31</ToExpression>
+primeomega-nthprime-5	<PrimeOmega><NthPrime>5</NthPrime></PrimeOmega>	<ToExpression>1</ToExpression>
+divisors-nthprime-5	<Divisors><NthPrime>5</NthPrime></Divisors>	<List>1 11</List>
+totient-nthprime-10	<Totient><NthPrime>10</NthPrime></Totient>	<ToExpression>28</ToExpression>
+nthprime-2	<NthPrime>2</NthPrime>	<ToExpression>3</ToExpression>
+nthprime-3	<NthPrime>3</NthPrime>	<ToExpression>5</ToExpression>
+nthprime-4	<NthPrime>4</NthPrime>	<ToExpression>7</ToExpression>
+nthprime-5	<NthPrime>5</NthPrime>	<ToExpression>11</ToExpression>
+nthprime-6	<NthPrime>6</NthPrime>	<ToExpression>13</ToExpression>
+nthprime-7	<NthPrime>7</NthPrime>	<ToExpression>17</ToExpression>
+nthprime-30-in-primes	<Element><NthPrime>30</NthPrime> Primes</Element>	<True />
+neg-1-plus-nthprime-10	<Add>-1 <NthPrime>10</NthPrime></Add>	<ToExpression>28</ToExpression>
+nthprime-8	<NthPrime>8</NthPrime>	<ToExpression>19</ToExpression>
+nthprime-9	<NthPrime>9</NthPrime>	<ToExpression>23</ToExpression>
+nthprime-11	<NthPrime>11</NthPrime>	<ToExpression>31</ToExpression>
+nthprime-12	<NthPrime>12</NthPrime>	<ToExpression>37</ToExpression>
+nthprime-13	<NthPrime>13</NthPrime>	<ToExpression>41</ToExpression>
+nthprime-14	<NthPrime>14</NthPrime>	<ToExpression>43</ToExpression>
+nthprime-15	<NthPrime>15</NthPrime>	<ToExpression>47</ToExpression>
+nthprime-16	<NthPrime>16</NthPrime>	<ToExpression>53</ToExpression>
+nthprime-17	<NthPrime>17</NthPrime>	<ToExpression>59</ToExpression>
+nthprime-18	<NthPrime>18</NthPrime>	<ToExpression>61</ToExpression>
 n-must-be-a-positive-integer-compute-engine	<NthPrime>0</NthPrime>	<NthPrime>0</NthPrime>
 the-1000th-prime	<NthPrime>1000</NthPrime>	<ToExpression>7919</ToExpression>

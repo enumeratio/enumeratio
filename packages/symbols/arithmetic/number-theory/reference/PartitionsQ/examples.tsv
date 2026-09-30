@@ -1,7 +1,24 @@
-id	section	role	expr	expected	caption
-the-partitions-of-10-into-distinct-parts			[PartitionsQ, 10]	10	The partitions of 10 into distinct parts
-the-empty-partition			[PartitionsQ, 0]	1	The empty partition
-exact-for-large-n	Scope		[PartitionsQ, 100]	444793	Exact for large n
-threads-over-a-list	Scope		[PartitionsQ, [List, 1, 2, 3, 4, 5, 6, 7, 8]]	[List, 1, 1, 2, 2, 3, 4, 5, 6]	Threads over a list
-counts-the-distinctpartitions-family	Properties		[Equal, [PartitionsQ, 10], [Count, [DistinctPartitions, 10]]]	True	Counts the DistinctPartitions family
-euler-as-many-partitions-into-odd-parts-as-into	Properties		[Equal, [PartitionsQ, 12], [Count, [IntegerPartitions, 12, All, [List, 1, 3, 5, 7, 9, 11]]]]	True	Euler: as many partitions into odd parts as into distinct parts, counted with [[IntegerPartitions]]' part restriction
+id	section	role	expr	expected	known	source	caption
+the-partitions-of-10-into-distinct-parts			[PartitionsQ, 10]	10			The partitions of 10 into distinct parts
+the-empty-partition			[PartitionsQ, 0]	1			The empty partition
+exact-for-large-n	Scope		[PartitionsQ, 100]	444793			Exact for large n
+threads-over-a-list	Scope		[PartitionsQ, [List, 1, 2, 3, 4, 5, 6, 7, 8]]	[List, 1, 1, 2, 2, 3, 4, 5, 6]			Threads over a list
+partitionsq-list-2-4-6	Scope		[PartitionsQ, [List, 2, 4, 6]]	[List, 1, 2, 4]			
+counts-the-distinctpartitions-family	Properties		[Equal, [PartitionsQ, 10], [Count, [DistinctPartitions, 10]]]	True			Counts the DistinctPartitions family
+euler-as-many-partitions-into-odd-parts-as-into	Properties		[Equal, [PartitionsQ, 12], [Count, [IntegerPartitions, 12, All, [List, 1, 3, 5, 7, 9, 11]]]]	True			Euler: as many partitions into odd parts as into distinct parts, counted with [[IntegerPartitions]]' part restriction
+partitionsq-5	Properties		[PartitionsQ, 5]	3			
+partitionsq-1	Properties		[PartitionsQ, 1]	1	1	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-2	Properties		[PartitionsQ, 2]	1	1	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-3	Properties		[PartitionsQ, 3]	2	2	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-4	Properties		[PartitionsQ, 4]	2	2	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-6	Properties		[PartitionsQ, 6]	4	4	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-7	Properties		[PartitionsQ, 7]	5	5	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-8	Properties		[PartitionsQ, 8]	6	6	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-9	Properties		[PartitionsQ, 9]	8	8	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-11	Properties		[PartitionsQ, 11]	12	12	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-12	Properties		[PartitionsQ, 12]	15	15	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-13	Properties		[PartitionsQ, 13]	18	18	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-14	Properties		[PartitionsQ, 14]	22	22	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-15	Properties		[PartitionsQ, 15]	27	27	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-16	Properties		[PartitionsQ, 16]	32	32	Wolfram MathematicalFunctionData, PartitionsQ	
+partitionsq-17	Properties		[PartitionsQ, 17]	38	38	Wolfram MathematicalFunctionData, PartitionsQ	

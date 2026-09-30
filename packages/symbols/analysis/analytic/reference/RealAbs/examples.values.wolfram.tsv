@@ -1,6 +1,16 @@
-id	in	out	tex.in	tex.out
-the-absolute-value-of-a-real-number	RealAbs[-2.5]	2.5	| -2.5|	2.5
-realabs-neg-7-over-2	RealAbs[Rational[-7, 2]]	7/2	\left| -\frac{7}{2}\right|	\frac{7}{2}
-threads-element-wise-over-a-list	RealAbs[List[-1, 2, -3]]	{1, 2, 3}	| \{-1,2,-3\}|	\{1,2,3\}
-exact-numeric-arguments	RealAbs[Minus[Pi]]	Pi	| -\pi |	\pi
-agrees-with-abs-on-the-reals	(RealAbs[-5] == Abs[-5])	True	| -5| =| -5|	\text{True}
+id	in	out	shown	tex.in	tex.out	verdict
+the-absolute-value-of-a-real-number	RealAbs[-2.5]	2.5		| -2.5|	2.5	
+realabs-neg-7-over-2	RealAbs[Rational[-7, 2]]	7/2		\left| -\frac{7}{2}\right|	\frac{7}{2}	
+realabs-2	RealAbs[2]	2		| 2|	2	
+d-realabs-x-x	D[RealAbs[x], x]	Indeterminate				inconclusive
+threads-element-wise-over-a-list	RealAbs[List[-1, 2, -3]]	{1, 2, 3}		| \{-1,2,-3\}|	\{1,2,3\}	
+exact-numeric-arguments	RealAbs[Minus[Pi]]	Pi		| -\pi |	\pi	
+n-realabs-pi-minus-catalan-50	N[RealAbs[Plus[Pi, Minus[Catalan]]], 50]	2.22562705941257422340803986834711877342302002509343363641072425842713741734105`50.	2.2256270594125742234080398683471187734230200250934	N[| \pi -C| ,50]	2.2256270594125742234080398683471187734230200250934	
+realabs-list-list-1-over-2-neg-1-list-0-neg-1	RealAbs[List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	{{1/2, 1}, {0, 1/2}}		\left| \left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & -\frac{1}{2} \\ \end{array} \right)\right|	\left( \begin{array}{cc}  \frac{1}{2} & 1 \\  0 & \frac{1}{2} \\ \end{array} \right)	
+matrixfunction-realabs-list-list-1-over-2-neg-1	MatrixFunction[RealAbs, List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	{{1/2, 0}, {0, 1/2}}		\text{MatrixFunction}\left[\text{RealAbs},\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & -\frac{1}{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)	
+realabs-interval-neg-5-3	RealAbs[Interval[List[-5, 3]]]	Interval[{0, 5}]		| \text{Interval}[\{-5,3\}]|	\text{Interval}[\{0,5\}]	
+realabs-0	RealAbs[0]	0		| 0|	0	
+realabs-positiveinfinity	RealAbs[Infinity]	Infinity		| \infty |	\infty	
+realabs-negativeinfinity	RealAbs[-Infinity]	Infinity		| -\infty |	\infty	
+piecewiseexpand-realabs-x	PiecewiseExpand[RealAbs[x]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PiecewiseExpand}[| x| ]-| x| ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| \frac{7}{3}\right| \right]-\left| \frac{7}{3}\right| \right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| -\frac{11}{5}\right| \right]-\left| -\frac{11}{5}\right| \right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\left| \frac{13}{4}\right| \right]-\left| \frac{13}{4}\right| \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+agrees-with-abs-on-the-reals	(RealAbs[-5] == Abs[-5])	True		| -5| =| -5|	\text{True}	

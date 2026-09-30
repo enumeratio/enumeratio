@@ -1,0 +1,12 @@
+id	in	out	tex.in	tex.out
+iscomposite-4	CompositeQ[4]	True	\text{CompositeQ}[4]	\text{True}
+iscomposite-13	CompositeQ[13]	False	\text{CompositeQ}[13]	\text{False}
+iscomposite-1-plus-10-pow-3-000	CompositeQ[Plus[1, Power[10, 3000]]]	True	\text{CompositeQ}\left[1+10^{3000}\right]	\text{True}
+iscomposite-list-1-2-3-4-5-6	CompositeQ[List[1, 2, 3, 4, 5, 6]]	{False, False, False, True, False, True}	\text{CompositeQ}[\{1,2,3,4,5,6\}]	\{\text{False},\text{False},\text{False},\text{True},\text{False},\text{True}\}
+iscomposite-5	CompositeQ[5]	False	\text{CompositeQ}[5]	\text{False}
+iscomposite-8	CompositeQ[8]	True	\text{CompositeQ}[8]	\text{True}
+iscomposite-12	CompositeQ[12]	True	\text{CompositeQ}[12]	\text{True}
+iscomposite-67	CompositeQ[67]	False	\text{CompositeQ}[67]	\text{False}
+iscomposite-28	CompositeQ[28]	True	\text{CompositeQ}[28]	\text{True}
+iscomposite-60	CompositeQ[60]	True	\text{CompositeQ}[60]	\text{True}
+iscomposite-48-828-125	CompositeQ[48828125]	True	\text{CompositeQ}[48828125]	\text{True}

@@ -1,5 +1,8 @@
 id	in
 frobeniussolve-list-2-3-7	FrobeniusSolve[List[2, 3], 7]
 frobeniussolve-list-2-3-5-10	FrobeniusSolve[List[2, 3, 5], 10]
+frobeniussolve-list-12-16-20-27-123	FrobeniusSolve[List[12, 16, 20, 27], 123]
 frobeniussolve-list-12-16-20-27-117	FrobeniusSolve[List[12, 16, 20, 27], 117]
+frobeniussolve-list-6-9-20-44	FrobeniusSolve[List[6, 9, 20], 44]
 43-is-the-frobenius-number-of-6-9-20-so-it-has	FrobeniusSolve[List[6, 9, 20], 43]
+frobeniussolve-list-6-9-20-24	FrobeniusSolve[List[6, 9, 20], 24]

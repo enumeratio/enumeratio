@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n	\sum_{k=0}^4\vert s(4, k)\vert=4!	\mathrm{
 the-signed-row-sum-vanishes-for-n-ge-2	\sum_{k=0}^6s(6, k)	0
 s-n-n-1-binom-n-2	s(6, 5)=-\binom{6}{2}	\mathrm{True}
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	\sum_{k=0}^4s(4, k)x^{k}=\mathrm{Expand}(x\times(x-1)(x-2)(x-3))	\mathrm{True}
+n-stirlings1-100-11	N(s(100, 11))	-390\,376\,773\,476\,389\,796\,543\,585\,013\,048\,065\,552\,669\,095\,304\,773\,071\,088\,642\,650\,967\,777\,941\,539\,595\,016\,786\,090\,531\,126\,519\,978\,928\,664\,992\,958\,028\,261\,781\,883\,437\,197\,859\,800\,964\,094\,681\,415\,680\,000\,000\,000
+stirlings1-0-1	s(0, 1)	0
+stirlings1-1-0	s(1, 0)	0
+stirlings1-1-1	s(1, 1)	1
+stirlings1-1-2	s(1, 2)	0
+stirlings1-2-0	s(2, 0)	0
+stirlings1-2-1	s(2, 1)	-1
+stirlings1-2-2	s(2, 2)	1
+stirlings1-2-3	s(2, 3)	0
+stirlings1-3-0	s(3, 0)	0
+stirlings1-3-1	s(3, 1)	2
+stirlings1-3-2	s(3, 2)	-3
+stirlings1-3-4	s(3, 4)	0
+stirlings1-4-0	s(4, 0)	0
+stirlings1-4-1	s(4, 1)	-6
+stirlings1-4-3	s(4, 3)	-6
 the-empty-case-s-0-0-1-by-convention-distinct	s(0, 0)	1
 k-n-is-0	s(5, 6)	0
 a-negative-k-stays-symbolic	s(4, -1)	s(4, -1)

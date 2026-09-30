@@ -4,6 +4,8 @@ id	in	out	verdict
 the-result-takes-the-sign-of-the-modulus	(((-7) : ℤ) % 3)	2	
 threads-element-wise-over-a-list	(([1, 2, 3, 4, 5] : ℤ) % 3)	Type mismatch	error
 mod-7-3	((7 : ℤ) % 3)		
+5-mod-3	((5 : ℤ) % 3)		
+1-plus-4-mod-3	(1 + ((4 : ℤ) % 3))		
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	((((5 : ℚ) / 2) : ℤ) % 2)		
@@ -44,9 +46,31 @@ reducing-a-real-prime-s-associate-by-the-unit-i
 reducing-by-a-real-composite-5-squared			
 a-negative-associate-as-the-modulus			
 reducing-by-a-real-prime-19			
+1-plus-16-mod-5	(1 + ((16 : ℤ) % 5))		
+generatingfunction-n-mod-4-n-x			
+282-475-249-mod-11	((282475249 : ℤ) % 11)		
+7-pow-totient-12-mod-12	(((7 ^ (Nat.totient 12)) : ℤ) % 12)		
+list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	(decide (((17 : ℤ) % 5) = (((17 + (3 * 5)) : ℤ) % 5)))	true	
 a-negative-modulus-gives-a-result-in-n-0	(((-5) : ℤ) % (-3))		
 the-remainder-of-quotient			
+5-mod-3-eq-2-mod-3	(decide (((5 : ℤ) % 3) = ((2 : ℤ) % 3)))		
+2-mod-3-eq-8-mod-3	(decide (((2 : ℤ) % 3) = ((8 : ℤ) % 3)))		
+0-mod-1	((0 : ℤ) % 1)		
+1-mod-2	((1 : ℤ) % 2)		
+1-mod-3	((1 : ℤ) % 3)		
+2-mod-3	((2 : ℤ) % 3)		
+3-mod-3	((3 : ℤ) % 3)		
+4-mod-3	((4 : ℤ) % 3)		
+8-mod-3-eq-5-mod-3	(decide (((8 : ℤ) % 3) = ((5 : ℤ) % 3)))		
+8-mod-2	((8 : ℤ) % 2)		
+17-mod-6	((17 : ℤ) % 6)		
+12-mod-8	((12 : ℤ) % 8)		
+neg-3-mod-neg-2	(((-3) : ℤ) % (-2))		
+neg-27-over-10-mod-23-over-5	(((((-27) : ℚ) / 10) : ℤ) % ((23 : ℚ) / 5))		
+pi-mod-exponentiale			
+0-mod-2	((0 : ℤ) % 2)		
+1-mod-1	((1 : ℤ) % 1)		
 division-by-a-0-modulus-yields-nan-rather-than	((5 : ℤ) % 0)	5	inconclusive
 periodicity-with-a-zero-modulus-on-one-side	(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))		
 rounding-ties-to-even-means-1-and-1-both-appear			

@@ -1,0 +1,8 @@
+id	in
+2-times-list-1-2-3	(2 * [1, 2, 3])
+a-times-list-list-1-2-list-3-4	(Symbol("a") * [[1, 2], [3, 4]])
+exponentiale-pow-list-list-1-2-3-list-4-5-6	(S(E)**[[1, 2, 3], [4, 5, 6]])
+outer-f-list-1-2-list-a-b-c	
+prepend-list-1-2-3-list-a-b-c	
+flatten-list-list-1-2-list-a-b-c	
+map-f-list-1-2-3-4	

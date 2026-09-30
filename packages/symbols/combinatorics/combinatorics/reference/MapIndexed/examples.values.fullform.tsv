@@ -1,2 +1,7 @@
-id	in
-pairs-each-element-with-its-1-based-index	MapIndexed[f, List[a, b, c]]
+id	in	back
+pairs-each-element-with-its-1-based-index	MapIndexed[f, List[a, b, c]]	
+mapindexed-f-list-a-b-c-d	MapIndexed[f, List[a, b, c, d]]	
+mapindexed-f-list-list-a-b-list-c-d-exponentiale	MapIndexed[f, List[List[a, b], List[c, d, E]]]	
+mapindexed-f-list-list-list-list-list-a	MapIndexed[f, List[List[List[List[List[a]]]]]]	
+mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	MapIndexed[Labeled, List[Power[x, 2], Plus[x, y], Power[y, 2], Power[y, 3]]]	
+sum-mapindexed-function-1-times-x-pow-first-2-1	Total[MapIndexed[Function[Times[Slot[1], Power[x, First[Slot[2]]]]], List[a, b, c, d, E]]]	[Sum, [MapIndexed, [Function, [Multiply, _1, [Power, x, [First, _2]]]], [List, a, b, c, d, ExponentialE]]]

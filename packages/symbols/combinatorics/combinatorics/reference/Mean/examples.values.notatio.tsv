@@ -8,6 +8,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac	<Mean><List>a b c d</List></Mean
 exact-constants-give-an-exact-mean-frac-2-e-pi-3	<Mean><List>Pi ExponentialE 2</List></Mean>	<Multiply><Rational>1 3</Rational> <Add>2 ExponentialE Pi</Add></Multiply>
 of-a-matrix-of-symbols-the-exact-mean-of-each	<Mean><List><List>a u</List> <List>b v</List> <List>c w</List></List></Mean>	<List><Multiply><Rational>1 3</Rational> <Add>a b c</Add></Multiply> <Multiply><Rational>1 3</Rational> <Add>u v w</Add></Multiply></List>
 the-mean-of-a-lazy-range-exactly	<Mean><Range>1 100</Range></Mean>	<Rational>101 2</Rational>
+mean-n-list-1-2-3-4-30	<Mean><N><List>1 2 3 4</List> 30</N></Mean>	<Rational>5 2</Rational>
+n-mean-ts	<N><Mean>ts</Mean></N>	<Mean>ts</Mean>
+mean-binomialdistribution-n-p	<Mean><BinomialDistribution>n p</BinomialDistribution></Mean>	<Multiply>n p</Multiply>
+mean-probabilitydistribution-sqrt-2-times-1-over	<Mean><ProbabilityDistribution><Multiply><Sqrt>2</Sqrt> <Divide>1 Pi</Divide> <Divide>1 <Add><Power><Add>x -2</Add> 4</Power> 1</Add></Divide></Multiply> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></Mean>	<Mean><ProbabilityDistribution><Divide><Sqrt>2</Sqrt> <Add><Multiply>Pi <Power><Add>x -2</Add> 4</Power></Multiply> Pi</Add></Divide> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></Mean>
 mean-is-total-divided-by-count-mean-c-frac-sum-c	<Equal><Mean><List>1 2 3 4</List></Mean> <Divide><Add>1 2 3 4</Add> <Length><List>1 2 3 4</List></Length></Divide></Equal>	<True />
+n-mean-list-1-2-3-4-4-3-1-1	<N><Mean><List>1 2 3 4 4 3 1 1</List></Mean></N>	<ToExpression>2.375</ToExpression>
+mean-ln-list-a-b-c-d	<Mean><Ln><List>a b c d</List></Ln></Mean>	<Multiply><Rational>1 4</Rational> <Add><Ln>a</Ln> <Ln>b</Ln> <Ln>c</Ln> <Ln>d</Ln></Add></Multiply>
 a-single-outlier-drags-the-mean-far-from-the	<Mean><List>-100 1 1 1 1 20</List></Mean>	<Rational>-38 3</Rational>
 the-mean-of-no-data-is-nan	<Mean><Apply>List</Apply></Mean>	<NaN />

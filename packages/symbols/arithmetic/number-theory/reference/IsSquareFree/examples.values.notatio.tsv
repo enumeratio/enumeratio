@@ -15,5 +15,14 @@ but-not-in-y-alone-y-appears-squared	<IsSquareFree><Multiply>x <Power>y 2</Power
 a-non-squarefree-rational	<IsSquareFree><Rational>4 3</Rational></IsSquareFree>	<False />
 x-1-2-has-a-repeated-root	<IsSquareFree><Add><Power>x 2</Power> <Multiply>-2 x</Multiply> 1</Add></IsSquareFree>	<False />
 x-3-y-3-has-no-repeated-factor	<IsSquareFree><Subtract><Power>x 3</Power> <Power>y 3</Power></Subtract></IsSquareFree>	<True />
+issquarefree-3-plus-10-pow-70	<IsSquareFree><Add>3 <Power>10 70</Power></Add></IsSquareFree>	<True />
+issquarefree-2	<IsSquareFree>2</IsSquareFree>	<True />
+issquarefree-x-pow-2-minus-3	<IsSquareFree><Add><Power>x 2</Power> -3</Add></IsSquareFree>	<True />
 n-is-squarefree-exactly-when-mu-n-neq-0-see	<Equal><IsSquareFree>10</IsSquareFree> <Not><Equal><MoebiusMu>10</MoebiusMu> 0</Equal></Not></Equal>	<True />
+issquarefree-210	<IsSquareFree>210</IsSquareFree>	<True />
+issquarefree-14	<IsSquareFree>14</IsSquareFree>	<True />
+isprimepower-17-issquarefree-17	<And><IsPrimePower>17</IsPrimePower> <IsSquareFree>17</IsSquareFree></And>	<True />
+issquarefree-x-pow-2-minus-2x-plus-1-x	<IsSquareFree><Add><Power>x 2</Power> <Multiply>-2 x</Multiply> 1</Add> x</IsSquareFree>	<False />
+simplify-issquarefree-a-pow-2-a-in-integers	<Simplify><IsSquareFree><Power>a 2</Power></IsSquareFree> <Element>a Integers</Element></Simplify>	<False />
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	<IsSquareFree><Expand><Multiply><Power><Add>x 1</Add> 3</Power> <Power><Add>x 2</Add> 2</Power> <Power><Add>x 3</Add> 2</Power></Multiply></Expand></IsSquareFree>	<False />
 1-is-vacuously-squarefree-it-has-no-repeated	<IsSquareFree>1</IsSquareFree>	<True />

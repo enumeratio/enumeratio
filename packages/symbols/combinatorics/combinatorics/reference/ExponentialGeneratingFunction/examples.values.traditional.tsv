@@ -3,3 +3,4 @@ factorial
 derangements	\mathrm{ExponentialGeneratingFunction}({!}n, n, x)	\frac{\exp(-x)}{1-x}
 bell-numbers	\mathrm{ExponentialGeneratingFunction}(B_{n}, n, x)	e^{e^{x}-1}
 fibonacci	\mathrm{ExponentialGeneratingFunction}(F_{n}, n, x)	\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))
+exponentialgeneratingfunction-1-n-x		

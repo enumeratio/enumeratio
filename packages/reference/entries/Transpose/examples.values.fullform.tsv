@@ -1,0 +1,4 @@
+id	in
+transpose-list-list-a-x-list-b-y-list-c-z	Transpose[List[List[a, x], List[b, y], List[c, z]]]
+chop-dot-u-transpose-u	Chop[Dot[u, Transpose[u]]]
+chop-dot-v-transpose-v	Chop[Dot[v, Transpose[v]]]

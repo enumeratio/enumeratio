@@ -21,6 +21,10 @@ uncertainty-propagation-csc-2-pm-0-01-approx-1	<Csc><Around>2 0.01</Around></Csc
 oddness-pulls-the-sign-out-of-a-symbolic	<Csc><Negate>x</Negate></Csc>	<Negate><Csc>x</Csc></Negate>
 derivative-csc-x-cot-x	<D><Csc>x</Csc> x</D>	<Negate><Multiply><Csc>x</Csc> <Cot>x</Cot></Multiply></Negate>
 antiderivative-ln-csc-x-cot-x	<Integrate><Csc>x</Csc> x</Integrate>	<Negate><Ln><Abs><Add><Csc>x</Csc> <Cot>x</Cot></Add></Abs></Ln></Negate>
+n-csc-6-over-5-50	<N><Csc><Rational>6 5</Rational></Csc> 50</N>	<ToExpression>1.0729163777098972287051169224352391548376390066978</ToExpression>
+matrixfunction-function-csc-1-1-list-list-1-over	<MatrixFunction><Function><Block><Csc>_1</Csc></Block> _1</Function> <List><List><Multiply><Rational>1 3</Rational> Pi</Multiply> Pi</List> <List><Multiply><Rational>1 6</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Add><Rational>6 7</Rational> <Multiply><Rational>-2 21</Rational> <Sqrt>3</Sqrt></Multiply></Add> <Add><Rational>6 7</Rational> <Multiply><Rational>4 7</Rational> <Sqrt>3</Sqrt></Multiply></Add></List> <List><Add><Rational>1 7</Rational> <Multiply><Rational>2 21</Rational> <Sqrt>3</Sqrt></Multiply></Add> <Add><Rational>1 7</Rational> <Multiply><Rational>-4 7</Rational> <Sqrt>3</Sqrt></Multiply></Add></List></List>
 reciprocal-of-sin-csc-x-frac-1-sin-x	<Equal><Csc><Divide>Pi 6</Divide></Csc> <Divide>1 <Sin><Divide>Pi 6</Divide></Sin></Divide></Equal>	<True />
+csc-1-over-8-times-pi	<Csc><Multiply><Rational>1 8</Rational> Pi</Multiply></Csc>	<Sqrt><Add>4 <Multiply>2 <Sqrt>2</Sqrt></Multiply></Add></Sqrt>
+csc-3-over-10-times-pi	<Csc><Multiply><Rational>3 10</Rational> Pi</Multiply></Csc>	<Add>-1 <Sqrt>5</Sqrt></Add>
 a-pole-sin-0-0	<Csc>0</Csc>	<ComplexInfinity />
 csc-complexinfinity-is-indeterminate-for-the	<Csc>ComplexInfinity</Csc>	<Indeterminate />

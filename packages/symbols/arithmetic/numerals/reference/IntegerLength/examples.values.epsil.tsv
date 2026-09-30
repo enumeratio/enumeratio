@@ -1,5 +1,7 @@
 id	in	out
 integerlength-12-345	IntegerLength(12_345)	5
+integerlength-123-456-789	IntegerLength(123_456_789)	9
+integerlength-100-factorial-2	IntegerLength(100!, 2)	525
 integerlength-2-pow-100	IntegerLength(2 ^ 100)	31
 255-ff-16	IntegerLength(255, 16)	2
 listable	IntegerLength([1, 10, 100])	[1, 2, 3]

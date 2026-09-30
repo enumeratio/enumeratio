@@ -3,3 +3,6 @@ power
 evaluates-first		
 binomial	\mathrm{ToBoxes}(\binom{n}{k})	\mathrm{RowBox}(\bigl\lbrack\text{(}, \mathrm{FractionBox}(\text{n}, \text{k}, (\mathrm{FractionLine},\mathrm{False})), \text{)}\bigr\rbrack)
 square-root-over-y		
+map-toboxes-list-i-pi-exponentiale		
+toboxes-list-list-a-b-c-list-d-exponentiale-f		
+toboxes-1-over-10		

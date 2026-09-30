@@ -6,6 +6,8 @@ gamma-3-frac-12-0-66742			[StieltjesGamma, 3, 0.5]	-0.6674242737113798	$\gamma_3
 gamma-2-frac-32			[StieltjesGamma, 2, 1.5]	0.007958447383888047	$\gamma_2(\tfrac32)$		
 gamma-1-0-0728158-under-n			[N, [StieltjesGamma, 1]]	-0.07281584548367652	$\gamma_1 = -0.0728158\ldots$ under N()		
 gamma-2-0-00969036-under-n		test	[N, [StieltjesGamma, 2]]	{num: "-0.00969036319287231848453"}	$\gamma_2 = -0.0096903\ldots$ under N()		
+n-stieltjesgamma-1-50			[N, [StieltjesGamma, 1], 50]	{num: "-0.072815845483676724860586375874901319137736338334338"}			
+n-stieltjesgamma-2-1-over-2-50			[N, [StieltjesGamma, 2, [Rational, 1, 2]], 50]	{num: "0.96886447522029071142171106232378065418259804476042"}			
 complex-a	Scope		[N, [StieltjesGamma, 2, [Complex, 1, 1]]]	[Complex, 0.1703042014685879, 0.37317719575749525]	Complex $a$		
 listable-in-the-order-n-threads-over-a-list	Scope		[StieltjesGamma, [List, 1, 2, 3], 0.5]	[List, -1.3534596808049415, 0.9688644752202907, -0.6674242737113807]	Listable in the order $n$: threads over a list		
 interval-arithmetic-in-a	Scope		[StieltjesGamma, 2, [Interval, 2.34, 2.35]]	[Interval, -0.06724128035508715, -0.06514040366307242]	Interval arithmetic in $a$	precision	Wolfram's interval evaluation of StieltjesGamma over-widens the enclosure; ours is tight.
@@ -17,5 +19,9 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	Properties		[StieltjesGamma, 1, 
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	Properties		[StieltjesGamma, 0, 1]	EulerGamma	$\gamma_0(1) = -\psi(1) = \gamma$ -- PolyGamma(0, z) routes through Digamma(z) (#113), which has $\psi(1) = -\gamma$ exactly		
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	Properties		[StieltjesGamma, 0, [Rational, 1, 2]]	[Add, EulerGamma, [Multiply, 2, [Ln, 2]]]	$\gamma_0(\tfrac12) = -\psi(\tfrac12) = \gamma + 2\ln 2$, now that $\psi(\tfrac12)$ itself has a closed form		
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	Properties		[StieltjesGamma, 3, 1]	[StieltjesGamma, 3]	$\gamma_3(1) = \gamma_3$ — order 1 at $a=1$ is just the ordinary Stieltjes constant.		
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	Properties		[Less, 0, [StieltjesGamma, 10], [Power, 10, -3]]	True			
 gamma-n-a-has-poles-at-the-nonpositive-integers	Possible issues		[StieltjesGamma, 2, -1]	ComplexInfinity	$\gamma_n(a)$ has poles at the nonpositive integers, like $\zeta(s, a)$		
 orders-past-30-stay-unevaluated-even-under-n-the	Possible issues		[StieltjesGamma, 40]	[StieltjesGamma, 40]	Orders past 30 stay unevaluated even under N(): the double-precision kernel cannot be trusted there		
+stieltjesgamma-2-1	Possible issues		[StieltjesGamma, 2, 1]	[StieltjesGamma, 2]			
+n-stieltjesgamma-2n	Possible issues		[N, [StieltjesGamma, [Multiply, 2, n]]]	[StieltjesGamma, [Multiply, 2, n]]			
+n-stieltjesgamma-2n-3-over-2	Possible issues		[N, [StieltjesGamma, [Multiply, 2, n], [Rational, 3, 2]]]	[StieltjesGamma, [Multiply, 2, n], 1.5]			

@@ -2,4 +2,13 @@ id	in	out
 map-square-over-1-2-3-4	<Map>Square <List>1 2 3 4</List></Map>	<List>1 4 9 16</List>
 map-a-lambda-adding-1-to-each-element	<Map><Function><Add>_ 1</Add></Function> <List>1 2 3</List></Map>	<List>2 3 4</List>
 map-add-over-two-collections-zips-them	<Map>Add <List>1 2 3</List> <List>10 20 30</List></Map>	<List>11 22 33</List>
+map-f-list-a-b-c-d-exponentiale	<Map>f <List>a b c d ExponentialE</List></Map>	<List><f>a</f> <f>b</f> <f>c</f> <f>d</f> <f>ExponentialE</f></List>
+map-f-list-list-a-b-list-c-d-exponentiale	<Map>f <List><List>a b</List> <List>c d ExponentialE</List></List></Map>	<List><f><List>a b</List></f> <f><List>c d ExponentialE</List></f></List>
+map-function-x-pow-2-x-list-1-2-3-4	<Map><Function><Block><Power>x 2</Power></Block> x</Function> <List>1 2 3 4</List></Map>	<List>1 4 9 16</List>
+map-f-list-list-list-list-list-a	<Map>f <List><List><List><List><List>a</List></List></List></List></List></Map>	<List><f><List><List><List><List>a</List></List></List></List></f></List>
+map-f-list-a-b-c	<Map>f <List>a b c</List></Map>	<List><f>a</f> <f>b</f> <f>c</f></List>
+map-f-list-list-list-list-list-a-list-2	<Map>f <List><List><List><List><List>a</List></List></List></List></List> <List>2</List></Map>	<List><f><List><List><List><List>a</List></List></List></List> 2</f></List>
+map-reverse-list-list-a-b-list-c-d-list	<Map>Reverse <List><List>a b</List> <List>c d</List> <List>ExponentialE f</List></List></Map>	<List><List>b a</List> <List>d c</List> <List>f ExponentialE</List></List>
 mapping-over-an-empty-collection-returns-empty	<Map>Square <Apply>List</Apply></Map>	<Apply>List</Apply>
+map-sqrt-list-1-2-3-4	<Map>Sqrt <List>1 2 3 4</List></Map>	<List>1 <Sqrt>2</Sqrt> <Sqrt>3</Sqrt> 2</List>
+map-f-list-x-y-z	<Map>f <List>x y z</List></Map>	<List><f>x</f> <f>y</f> <f>z</f></List>

@@ -1,6 +1,9 @@
 id	in	out	tex.in	tex.out
 a-rectangular-nesting-is-an-array	ArrayQ[List[List[1, 2], List[3, 4]]]	True	\text{ArrayQ}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	\text{True}
+isarray-list-1-2-3-4	ArrayQ[List[1, 2, 3, 4]]	True	\text{ArrayQ}[\{1,2,3,4\}]	\text{True}
+isarray-list-1-2-list-3-4	ArrayQ[List[1, 2, List[3], 4]]	False	\text{ArrayQ}[\{1,2,\{3\},4\}]	\text{False}
 a-ragged-nesting-is-not-an-array	ArrayQ[List[List[1, 2], List[3]]]	False	\text{ArrayQ}[\{\{1,2\},\{3\}\}]	\text{False}
 a-flat-list-is-a-rank-1-array	ArrayQ[List[1, 2, 3]]	True	\text{ArrayQ}[\{1,2,3\}]	\text{True}
 a-non-list-is-not-an-array	ArrayQ[3]	False	\text{ArrayQ}[3]	\text{False}
 a-test-function-must-hold-of-every-leaf	ArrayQ[List[List[2, 4], List[6, 8]], Blank[], EvenQ]	True	\text{ArrayQ}\left[\left( \begin{array}{cc}  2 & 4 \\  6 & 8 \\ \end{array} \right),\_,\text{EvenQ}\right]	\text{True}
+list-isarray-mat-isarray-expr	List[ArrayQ[mat], ArrayQ[expr]]	{False, False}	\{\text{ArrayQ}[\text{mat}],\text{ArrayQ}[\text{expr}]\}	\{\text{False},\text{False}\}

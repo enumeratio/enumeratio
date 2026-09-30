@@ -1,0 +1,7 @@
+id	in
+0-lt-1	Less[0, 1]
+4-over-3-lt-3-over-2	Less[Rational[4, 3], Rational[3, 2]]
+1-minus-128-times-10-pow-neg-16-lt-1	Less[Plus[1, Times[-128, Power[10, -16]]], 1]
+1-minus-256-times-10-pow-neg-16-lt-1	Less[Plus[1, Times[-256, Power[10, -16]]], 1]
+pi-pow-exponentiale-lt-exponentiale-pow-pi	Less[Power[Pi, E], Power[E, Pi]]
+refine-sqrt-x-pow-2-x-gt-0	Refine[Sqrt[Power[x, 2]], Greater[x, 0]]

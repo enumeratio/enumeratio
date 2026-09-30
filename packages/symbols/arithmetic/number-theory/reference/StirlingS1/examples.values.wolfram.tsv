@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n	(Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]]
 the-signed-row-sum-vanishes-for-n-ge-2	Sum[StirlingS1[6, k], List[k, 0, 6]]	0	\sum _{k=0}^6 S_6^{(k)}	0
 s-n-n-1-binom-n-2	(StirlingS1[6, 5] == Minus[Binomial[6, 2]])	True	S_6^{(5)}=-\binom{6}{2}	\text{True}
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	(Sum[Times[StirlingS1[4, k], Power[x, k]], List[k, 0, 4]] == Expand[Times[x, Subtract[x, 1], Subtract[x, 2], Subtract[x, 3]]])	True	\sum _{k=0}^4 S_4^{(k)} x^k=\text{Expand}[x (x-1) (x-2) (x-3)]	\text{True}
+n-stirlings1-100-11	N[StirlingS1[100, 11]]	-3.903767734763898*^155	N\left[S_{100}^{(11)}\right]	-3.90377\times 10^{155}
+stirlings1-0-1	StirlingS1[0, 1]	0	S_0^{(1)}	0
+stirlings1-1-0	StirlingS1[1, 0]	0	S_1^{(0)}	0
+stirlings1-1-1	StirlingS1[1, 1]	1	S_1^{(1)}	1
+stirlings1-1-2	StirlingS1[1, 2]	0	S_1^{(2)}	0
+stirlings1-2-0	StirlingS1[2, 0]	0	S_2^{(0)}	0
+stirlings1-2-1	StirlingS1[2, 1]	-1	S_2^{(1)}	-1
+stirlings1-2-2	StirlingS1[2, 2]	1	S_2^{(2)}	1
+stirlings1-2-3	StirlingS1[2, 3]	0	S_2^{(3)}	0
+stirlings1-3-0	StirlingS1[3, 0]	0	S_3^{(0)}	0
+stirlings1-3-1	StirlingS1[3, 1]	2	S_3^{(1)}	2
+stirlings1-3-2	StirlingS1[3, 2]	-3	S_3^{(2)}	-3
+stirlings1-3-4	StirlingS1[3, 4]	0	S_3^{(4)}	0
+stirlings1-4-0	StirlingS1[4, 0]	0	S_4^{(0)}	0
+stirlings1-4-1	StirlingS1[4, 1]	-6	S_4^{(1)}	-6
+stirlings1-4-3	StirlingS1[4, 3]	-6	S_4^{(3)}	-6
 the-empty-case-s-0-0-1-by-convention-distinct	StirlingS1[0, 0]	1	S_0^{(0)}	1
 k-n-is-0	StirlingS1[5, 6]	0	S_5^{(6)}	0
 a-negative-k-stays-symbolic	StirlingS1[4, -1]	StirlingS1[4, -1]	S_4^{(-1)}	S_4^{(-1)}

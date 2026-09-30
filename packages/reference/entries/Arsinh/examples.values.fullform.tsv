@@ -1,2 +1,9 @@
 id	in
+n-arsinh-1-100	N[ArcSinh[1], 100]
+arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	ArcSinh[List[List[Complex[0, 1], Complex[0, Divide[Sqrt[2], 2]]], List[0, Complex[0, Minus[Divide[Sqrt[2], 2]]]]]]
+arsinh-positiveinfinity	ArcSinh[Infinity]
+arsinh-0	ArcSinh[0]
+d-arsinh-x-x	D[ArcSinh[x], x]
+arsinh-1-over-2-times-i-times-sqrt-1-over-2	ArcSinh[Times[Complex[0, Rational[1, 2]], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]
+arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	ArcSinh[Times[Complex[0, Rational[-1, 2]], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]
 arsinh-complexinfinity-is-complexinfinity	ArcSinh[ComplexInfinity]

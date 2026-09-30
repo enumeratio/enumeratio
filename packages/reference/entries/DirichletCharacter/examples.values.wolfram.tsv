@@ -7,4 +7,9 @@ listable-in-n-the-nontrivial-character-mod-3	DirichletCharacter[3, 2, List[1, 2,
 a-character-vanishes-where-gcd-n-k-1	DirichletCharacter[5, 2, 5]	0	\chi _{5,2}(5)	0
 chi-3-mod-5-is-the-quadratic-character-its	DirichletCharacter[5, 3, 2]	-1	\chi _{5,3}(2)	-1
 the-trivial-character-mod-1-is-1-everywhere-its	DirichletCharacter[1, 1, 7]	1	\chi _{1,1}(7)	1
+dirichletcharacter-7-3-20	DirichletCharacter[7, 3, 20]	1	\chi _{7,3}(20)	1
+dirichletcharacter-7-3-4-times	Times[DirichletCharacter[7, 3, 4], DirichletCharacter[7, 3, 5]]	1	\chi _{7,3}(4) \chi _{7,3}(5)	1
+dirichletcharacter-12-3-list-1-5-7-11	DirichletCharacter[12, 3, List[1, 5, 7, 11]]	{1, 1, -1, -1}	\chi _{12,3}(\{1,5,7,11\})	\{1,1,-1,-1\}
+dirichletcharacter-45-8-7	DirichletCharacter[45, 8, 7]	(-I)/E^(((2*I)/3)*Pi)	\chi _{45,8}(7)	-i e^{-\frac{2 i \pi }{3}}
+dirichletcharacter-9-2-7-times	Times[DirichletCharacter[9, 2, 7], DirichletCharacter[5, 4, 2]]	(-I)/E^(((2*I)/3)*Pi)	\chi _{9,2}(7) \chi _{5,4}(2)	-i e^{-\frac{2 i \pi }{3}}
 j-must-be-at-most-varphi-k-4-out-of-range-names	DirichletCharacter[5, 9, 2]	DirichletCharacter[5, 9, 2]	\chi _{5,9}(2)	\chi _{5,9}(2)

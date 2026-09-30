@@ -1,4 +1,7 @@
 id	in	out
 the-first-occurrence-of-b-nested-inside-the	\mathrm{FirstPosition}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, \bigl\lbrack b, a, a\bigr\rbrack, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b)	\bigl\lbrack1, 3\bigr\rbrack
 the-empty-list-when-the-value-isn-t-found	\mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, c\bigr\rbrack\bigr\rbrack, b)	\bigl\lbrack\bigr\rbrack
+firstposition-list-a-b-a-a-b-c-b-b	\mathrm{FirstPosition}(\bigl\lbrack a, b, a, a, b, c, b\bigr\rbrack, b)	\bigl\lbrack2\bigr\rbrack
+firstposition-list-list-1-2-list-2-3-list-3-1-3	\mathrm{FirstPosition}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack3, 1\bigr\rbrack\bigr\rbrack, 3)	\bigl\lbrack2, 2\bigr\rbrack
 a-match-nested-inside-an-earlier-sublist-beats-a	\mathrm{FirstPosition}(\bigl\lbrack a, \bigl\lbrack a, b\bigr\rbrack, b\bigr\rbrack, b)	\bigl\lbrack2, 2\bigr\rbrack
+firstposition-list-a-b-b-a-a-c-a	\mathrm{FirstPosition}(\bigl\lbrack a, b, b, a, a, c\bigr\rbrack, a)	\bigl\lbrack1\bigr\rbrack

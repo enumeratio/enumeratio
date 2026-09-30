@@ -1,0 +1,8 @@
+id	section	role	expr	expected
+variance-list-1-2-3-4	Scope		[Variance, [List, 1, 2, 3, 4]]	[Rational, 5, 3]
+variance-n-list-1-2-3-4-30	Scope		[Variance, [N, [List, 1, 2, 3, 4], 30]]	[Rational, 5, 3]
+n-variance-ts	Scope		[N, [Variance, ts]]	[Variance, ts]
+variance-binomialdistribution-n-p	Scope		[Variance, [BinomialDistribution, n, p]]	[Multiply, n, p, [Add, [Negate, p], 1]]
+variance-probabilitydistribution-sqrt-2-times-1	Scope		[Variance, [ProbabilityDistribution, [Multiply, [Sqrt, 2], [Divide, 1, Pi], [Divide, 1, [Add, [Power, [Add, x, -2], 4], 1]]], [List, x, NegativeInfinity, PositiveInfinity]]]	[Variance, [ProbabilityDistribution, [Divide, [Sqrt, 2], [Add, [Multiply, Pi, [Power, [Add, x, -2], 4]], Pi]], [List, x, NegativeInfinity, PositiveInfinity]]]
+n-list-mean-data-variance-data	Applications		[N, [List, [Mean, data], [Variance, data]]]	[List, [Mean, data], [Variance, data]]
+n-variance-heights	Applications		[N, [Variance, heights]]	[Variance, heights]

@@ -1,0 +1,4 @@
+id	section	role	expr	expected
+1-lt-2-3-lt-pi			[And, [Less, 1, 2], [Less, 3, Pi]]	True
+refine-a-pow-b-pow-c-a-gt-eq-0-b-in-realnumbers	Applications		[Refine, [Power, [Power, a, b], c], [And, [GreaterEqual, a, 0], [Element, b, RealNumbers]]]	[Power, a, [Multiply, b, c]]
+booleanconvert-factorial-a-b	Properties		[BooleanConvert, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]

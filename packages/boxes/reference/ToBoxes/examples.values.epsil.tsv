@@ -3,3 +3,6 @@ power	ToBoxes(x ^ 2)	SuperscriptBox("x", "2")
 evaluates-first	ToBoxes(2 + 3)	"\"5\""
 binomial	ToBoxes(binomial(n, k))	RowBox(["(", FractionBox("n", "k", (FractionLine, False)), ")"])
 square-root-over-y	ToBoxes(sqrt(x) / y)	FractionBox(SqrtBox("x"), "y")
+map-toboxes-list-i-pi-exponentiale	map(ToBoxes, [i, pi, exponentialE])	["i", "π", "e"]
+toboxes-list-list-a-b-c-list-d-exponentiale-f	ToBoxes([[a, b, c], [d, exponentialE, f]])	"RowBox([\n         \"[\",\n         RowBox([\"[\", \"a\", \",\", \"b\", \",\", \"c\", \"]\"]),\n         \",\",\n         RowBox([\"[\", \"d\", \",\", \"e\", \",\", \"f\", \"]\"]),\n         \"]\",\n       ])"
+toboxes-1-over-10	ToBoxes(1 / 10)	FractionBox("1", "10")

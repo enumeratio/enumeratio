@@ -1,7 +1,13 @@
 id	in	out
 the-base-10-digits-reversed	\mathrm{IntegerReverse}(1\,234)	4\,321
+integerreverse-123-456	\mathrm{IntegerReverse}(123\,456)	654\,321
+integerreverse-2-015-2	\mathrm{IntegerReverse}(2\,015, 2)	2\,015
+integerreverse-1-234-10-6	\mathrm{IntegerReverse}(1\,234, 10, 6)	432\,100
 1234-10011010010-2-reversed-is-1001011001-2-601	\mathrm{IntegerReverse}(1\,234, 2)	601
 padded-to-5-digits-first-00123-reversed	\mathrm{IntegerReverse}(123, 10, 5)	32\,100
 listable	\mathrm{IntegerReverse}(\bigl\lbrack12, 345\bigr\rbrack)	\bigl\lbrack21, 543\bigr\rbrack
+integerreverse-list-123-234-345-456	\mathrm{IntegerReverse}(\bigl\lbrack123, 234, 345, 456\bigr\rbrack)	\bigl\lbrack321, 432, 543, 654\bigr\rbrack
 a-palindrome-is-its-own-reversal	\mathrm{IntegerReverse}(12\,321)	12\,321
+integerreverse-842	\mathrm{IntegerReverse}(842)	248
+integerreverse-84-200	\mathrm{IntegerReverse}(84\,200)	248
 trailing-zeros-become-leading-zeros-and-vanish	\mathrm{IntegerReverse}(1\,200)	21

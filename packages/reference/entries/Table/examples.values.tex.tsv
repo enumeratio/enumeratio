@@ -1,5 +1,6 @@
 id	in	out
 table-of-i-2-for-i-from-1-to-5	\mathrm{Table}(i^2, \lbrace i, 1, 5\rbrace)	\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack
 odd-numbers-from-1-to-9-stepping-by-2	\mathrm{Table}(i, \lbrace i, 1, 10, 2\rbrace)	\bigl\lbrack1, 3, 5, 7, 9\bigr\rbrack
+tabulate-x-10	\mathrm{Tabulate}(x, 10)	\bigl\lbrack x(1), x(2), x(3), x(4), x(5), x(6), x(7), x(8), x(9), x(10)\bigr\rbrack
 the-same-shape-of-table-with-a-plain-function	\mathrm{Table}(()\mapsto\operatorname{\_1}^2, 5)	\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack
 a-constant-body-is-still-evaluated-once-per	\mathrm{Table}(0, \lbrace i, 1, 3\rbrace)	\bigl\lbrack0, 0, 0\bigr\rbrack

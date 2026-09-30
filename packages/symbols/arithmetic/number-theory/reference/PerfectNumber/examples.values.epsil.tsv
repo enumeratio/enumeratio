@@ -3,3 +3,4 @@ perfectnumber-1	PerfectNumber(1)	6
 perfectnumber-3	PerfectNumber(3)	496
 perfectnumber-5	PerfectNumber(5)	33_550_336
 listable	PerfectNumber([1, 2, 3, 4])	[6, 28, 496, 8_128]
+perfectnumber-range-1-10	PerfectNumber(Range(1, 10))	"[\n  6,\n  28,\n  496,\n  8_128,\n  33_550_336,\n  8_589_869_056,\n  137_438_691_328,\n  2_305_843_008_139_952_128,\n  2_658_455_991_569_831_744_654_692_615_953_842_176,\n  191_561_942_608_236_107_294_793_378_084_303_638_130_997_321_548_169_216,\n]"

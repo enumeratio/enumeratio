@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	powerMod(7i, 3, 3 + 2i)	1
 modulus-a-real-composite-5-squared	powerMod(1 + i, 4, 25)	21
 a-negative-unit-exponent-is-its-own-inverse	powerMod(i, -1, 7)	-i
 modulus-a-negative-associate	powerMod(2 + i, 5, -2 - 3i)	-1 - i
+sum-powermod-a-2-7-a-nothing-7	sum(powerMod(a, 2, 7), (a, Nothing, 7))	14
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	"FindInstance(\n              powerMod(a, b, 17) == 1 && 0 < a < 17 && 0 < b < 17,\n              [a, b],\n              integers,\n              2,\n            )"	[[Rule(a, 1), Rule(b, 1)], [Rule(a, 1), Rule(b, 2)]]
 one-step-of-rsa-style-modular-exponentiation-7	powerMod(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	powerMod(2, 340, 341)	1
 diffie-hellman-both-parties-reach-the-shared-key	powerMod(powerMod(5, 6, 23), 15, 23) == powerMod(powerMod(5, 15, 23), 6, 23)	True
+powermod-tocharactercode-rsa-in-mathematica	powerMod(ToCharacterCode("RSA in Mathematica"), exponentialE, n)	"[\n  powerMod(82, exponentialE, n),\n  powerMod(83, exponentialE, n),\n  powerMod(65, exponentialE, n),\n  powerMod(32, exponentialE, n),\n  powerMod(105, exponentialE, n),\n  powerMod(110, exponentialE, n),\n  powerMod(32, exponentialE, n),\n  powerMod(77, exponentialE, n),\n  powerMod(97, exponentialE, n),\n  powerMod(116, exponentialE, n),\n  powerMod(104, exponentialE, n),\n  powerMod(101, exponentialE, n),\n  powerMod(109, exponentialE, n),\n  powerMod(97, exponentialE, n),\n  powerMod(116, exponentialE, n),\n  powerMod(105, exponentialE, n),\n  powerMod(99, exponentialE, n),\n  powerMod(97, exponentialE, n),\n]"
 by-definition-a-b-bmod-m-computed-without-ever	powerMod(2, 10, 3) == 2 ^ 10 % 3	True
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	powerMod(7, totient(19), 19)	1
+list-powermod-7-2-5-powermod-12-2-5	[powerMod(7, 2, 5), powerMod(12, 2, 5)]	[4, 4]
+list-powermod-2-3-5-8-mod-5	[powerMod(2, 3, 5), 8 % 5]	[3, 3]
+list-powermod-2-neg-1-5-modularinverse-2-5	[powerMod(2, -1, 5), modularInverse(2, 5)]	[3, 3]
+list-divides-2-8-powermod-8-3-2-eq-0	[divides(2, 8), powerMod(8, 3, 2) == 0]	[True, True]
+powermod-7-totient-19-19-eq-1	powerMod(7, totient(19), 19) == 1	True
+powermod-2-16-17	powerMod(2, 16, 17)	1
+powermod-list-5-neg-5-2-3	powerMod([5, -5], 2, 3)	[1, 1]
+powermod-list-5-neg-5-2-neg-3	powerMod([5, -5], 2, -3)	[powerMod(5, 2, -3), powerMod(-5, 2, -3)]
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	powerMod(2, -1, 4)	powerMod(2, -1, 4)
 a-nonzero-exponent-at-the-same-negative-modulus	powerMod(-2, 3, -14)	powerMod(-2, 3, -14)
 2-is-not-a-square-mod-5-so-there-is-no-root	powerMod(2, 1 / 2, 5)	powerMod(2, 1 / 2, 5)

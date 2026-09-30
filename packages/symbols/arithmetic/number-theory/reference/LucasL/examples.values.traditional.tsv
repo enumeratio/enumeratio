@@ -12,10 +12,26 @@ special-value-of-the-lucas-polynomial-l-1-0-0	L_{1}(0)	0
 special-value-of-the-lucas-polynomial-l-0-0-2	L_{0}(0)	2
 l-2-x-x-2-2-threads-element-wise-over-a-matrix		
 threads-element-wise-over-a-list-as-wolfram-s		
+n-lucasl-11-over-3-50	N(L_{\frac{11}{3}}, 50)	5.923\,962\,652\,961\,955\,410\,14
+n-lucasl-1-plus-1-over-2-times-i	N(L_{1+\frac{1}{2}i})	0.065\,338\,425\,470\,823\,424\,320\,4+0.755\,094\,920\,107\,233\,972\,743i
+lucasl-1-neg-x-eq-neg-lucasl-1-x	L_{1}(-x)=-L_{1}(x)	\mathrm{True}
+lucasl-2-neg-x-eq-lucasl-2-x	L_{2}(-x)=L_{2}(x)	\mathrm{True}
+lucasl-list-1-2-3-4-5		
+generatingfunction-lucasl-n-n-x	\mathrm{GeneratingFunction}(L_{n}, n, x)	\frac{2-x}{-x^2-x+1}
+lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z	L_{1}(\overline{z})=\overline{L_{1}(z)}	\mathrm{True}
+fullsimplify-matrixfunction-function-lucasl-2-1	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(()\mapsto L_{2}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack1/2, -1\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{9}{4}, -1\bigr\rbrack, \bigl\lbrack0, \frac{9}{4}\bigr\rbrack\bigr\rbrack
 consecutive-ratios-l-n-1-l-n-converge-to-the	\frac{L_{15}}{L_{14}}	\frac{1\,364}{843}
+nestwhile-function-1-plus-1-1-function-lucasl-1	\mathrm{NestWhile}(()\mapsto\operatorname{\_1}+1, 1, ()\mapsto L_{\operatorname{\_1}}\le10^6)	29
 l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	L_{10}^2-5F_{10}^2	4
 l-n-f-n-1-f-n-1-here-at-n-6	L_{6}=F_{5}+F_{7}	\mathrm{True}
 conversely-f-n-frac-l-n-1-l-n-1-5	F_{6}=\frac{L_{5}+L_{7}}{5}	\mathrm{True}
 a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	L_{4}L_{6}-L_{5}^2	5
 negative-indices-are-supported-via-l-n-1-n-l-n	L_{-1}	-1
+lucasl-2	L_{2}	3
+lucasl-3	L_{3}	4
+lucasl-4	L_{4}	7
+lucasl-6	L_{6}	18
+lucasl-7	L_{7}	29
+lucasl-8	L_{8}	47
+lucasl-9	L_{9}	76
 l-30-already-tops-1-8-million-growing-at-the	L_{30}	1\,860\,498

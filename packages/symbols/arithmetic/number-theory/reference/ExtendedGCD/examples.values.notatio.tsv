@@ -36,6 +36,7 @@ with-a-negative-associate	<ExtendedGCD><Complex>6 8</Complex> <Complex>-2 -3</Co
 a-large-norm-gaussian-and-a-real-prime-19	<ExtendedGCD><Complex>123 456</Complex> 19</ExtendedGCD>	<Tuple>1 -2 <Complex>13 48</Complex></Tuple>
 the-modular-inverse-of-3-mod-11-is-4-since-3	<ExtendedGCD>3 11</ExtendedGCD>	<Tuple>1 4 -1</Tuple>
 confirms-the-coefficients-above-satisfy-2x-3y	<Add><Multiply>2 -1</Multiply> <Multiply>3 1</Multiply></Add>	<ToExpression>1</ToExpression>
+extendedgcd-6-21	<ExtendedGCD>6 21</ExtendedGCD>	<Tuple>3 -3 1</Tuple>
 bezout-coefficients-when-a-0-0-times-0-5-times-1	<ExtendedGCD>0 5</ExtendedGCD>	<Tuple>5 0 1</Tuple>
 a-real-two-argument-case-stays-unevaluated	<ExtendedGCD>2.5 3</ExtendedGCD>	<ExtendedGCD>2.5 3</ExtendedGCD>
 a-gaussian-third-argument-past-two-declines	<ExtendedGCD><Complex>3 1</Complex> 5 2</ExtendedGCD>	<ExtendedGCD><Complex>3 1</Complex> 5 2</ExtendedGCD>

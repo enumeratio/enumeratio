@@ -36,6 +36,16 @@ taylor-series-about-0-only-even-powers-appear
 to-30-significant-digits-every-one-correctly	N(cos(1))	0.540302305868140	
 to-1-significant-digit	N(cos(1))	0.540302305868140	disagree
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	N(cos(((10)^100)))	0.924724238751934	disagree
+n-cos-6-over-5-50	N(cos((6/5)))		
+functiondomain-cos-x-x			
+functionrange-cos-x-x-y			
+functionperiod-cos-x-x			
+functionanalytic-cos-x-x			
+functioninjective-cos-x-x			
+functionsurjective-cos-x-x			
+functionsingularities-cos-x-x			
+functiondiscontinuities-cos-x-x			
+matrixfunction-function-cos-1-1-list-list-5-over			
 threads-element-wise-over-a-list	[cos(0), cos((pi / 2)), cos(pi)]	[1, 0, -1]	
 even-function-cos-x-cos-x	bool(cos((-(pi / 3))) == cos((pi / 3)))	True	
 co-function-identity-cos-x-sin-pi-2-x	bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))	True	
@@ -43,6 +53,7 @@ double-angle-formula-cos-2x-cos-2-x-sin-2-x
 angle-addition-formula			
 power-reduction-cos-2-x-frac-1-cos-2x-2			
 euler-s-formula-cos-x-frac-e-ix-e-ix-2			
+cos-3-over-10-times-pi	cos(((3/10) * pi))		
 as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)	
 pi-24-is-past-the-automatic-special-angle-table	cos(((1/24) * pi))	1/4*sqrt(2*sqrt(6) + 2*sqrt(2) + 8)	
 cos-complexinfinity-is-indeterminate-for-the	cos(unsigned_infinity)		

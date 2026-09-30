@@ -15,6 +15,10 @@ a-sum-of-surds-still-a-quadratic-irrational	continuedFraction(1 + sqrt(2), 5)	[2
 a-cube-root-algebraic-degree-3-not-periodic-so-a	continuedFraction(2 ^ (1 / 3), 10)	[1, 3, 1, 5, 1, 1, 4, 1, 1, 8]
 symbolic-terms-build-the-nested-fraction-left	fromContinuedFraction([a, b, c])	a + 1 / (b + 1 / c)
 25-terms-past-the-double-precision-wall	continuedFraction(goldenRatio, 25)	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+continuedfraction-n-pi	continuedFraction(N(pi))	[3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14]
+continuedfraction-sqrt-exponentiale-25	continuedFraction(sqrt(exponentialE), 25)	[1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1]
+n-root-product-continuedfraction-pi-1-000-1-000	N(root(product(continuedFraction(pi, 1_000)), 1_000))	2.665_625_529_320_168_601_49
+continuedfraction-exponentiale-pow-sqrt-163	continuedFraction(exponentialE ^ (sqrt(163) * pi), 10)	[262_537_412_640_768_743, 1, 1_333_462_407_511, 1, 8, 1, 1, 5, 1, 4]
 and-back-again	FromSternBrocotPath("RLR")	5 / 3
 1-cdot-2-3-cdot-1-1	FareyNeighbours(1, 3, 1, 2)	True
 fromcontinuedfraction-inverts-it	fromContinuedFraction(continuedFraction(47 / 17))	47 / 17
@@ -24,5 +28,7 @@ a-plain-finite-list-inverts-continuedfraction	fromContinuedFraction([3, 7, 16])	
 the-golden-ratio-s-convergents-alternate	SternBrocotPath(13, 8)	"\"RLRLR\""
 not-farey-neighbours	FareyNeighbours(1, 3, 2, 3)	False
 a-multi-term-pre-period-folds-too	fromContinuedFraction(continuedFraction(2 - sqrt(3)))	2 - sqrt(3)
+continuedfraction-pi-21	continuedFraction(pi, 21)	[3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2, 1]
 negative-a-floor-for-a-0-then-positive-terms-3-1	continuedFraction(-47 / 17)	[-3, 4, 4]
 the-two-arg-native-form-means-n-terms	continuedFraction(355, 113)	[355]
+continuedfraction-coth-1-20	continuedFraction(coth(1), 20)	[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39]

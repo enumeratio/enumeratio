@@ -21,6 +21,10 @@ uncertainty-propagation-csc-2-pm-0-01-approx-1	Scope		[Csc, [Around, 2, 0.01]]	[
 oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Csc, [Negate, x]]	[Negate, [Csc, x]]			Oddness pulls the sign out of a symbolic argument: $\csc(-x) = -\csc x$		
 derivative-csc-x-cot-x	Scope		[D, [Csc, x], x]	[Negate, [Multiply, [Csc, x], [Cot, x]]]			Derivative: $-\csc x \cot x$		
 antiderivative-ln-csc-x-cot-x	Scope		[Integrate, [Csc, x], x]	[Negate, [Ln, [Abs, [Add, [Csc, x], [Cot, x]]]]]			Antiderivative: $-\ln|\csc x + \cot x|$	unevaluated	Same as Cot — an antiderivative identity FullSimplify doesn't confirm automatically, and the substitution fallback doesn't settle it either.
+n-csc-6-over-5-50	Scope		[N, [Csc, [Rational, 6, 5]], 50]	{num: "1.0729163777098972287051169224352391548376390066978"}					
+matrixfunction-function-csc-1-1-list-list-1-over	Scope		[MatrixFunction, [Function, [Block, [Csc, _1]], _1], [List, [List, [Multiply, [Rational, 1, 3], Pi], Pi], [List, [Multiply, [Rational, 1, 6], Pi], [Multiply, [Rational, -1, 2], Pi]]]]	[List, [List, [Add, [Rational, 6, 7], [Multiply, [Rational, -2, 21], [Sqrt, 3]]], [Add, [Rational, 6, 7], [Multiply, [Rational, 4, 7], [Sqrt, 3]]]], [List, [Add, [Rational, 1, 7], [Multiply, [Rational, 2, 21], [Sqrt, 3]]], [Add, [Rational, 1, 7], [Multiply, [Rational, -4, 7], [Sqrt, 3]]]]]					
 reciprocal-of-sin-csc-x-frac-1-sin-x	Properties		[Equal, [Csc, [Divide, Pi, 6]], [Divide, 1, [Sin, [Divide, Pi, 6]]]]	True			Reciprocal of [[Sin]]: $\csc(x) = \frac{1}{\sin(x)}$		
+csc-1-over-8-times-pi	Properties		[Csc, [Multiply, [Rational, 1, 8], Pi]]	[Sqrt, [Add, 4, [Multiply, 2, [Sqrt, 2]]]]	[Sqrt, [Multiply, 2, [Add, 2, [Sqrt, 2]]]]	Wolfram MathematicalFunctionData, Csc			
+csc-3-over-10-times-pi	Properties		[Csc, [Multiply, [Rational, 3, 10], Pi]]	[Add, -1, [Sqrt, 5]]	[Add, -1, [Sqrt, 5]]	Wolfram MathematicalFunctionData, Csc			
 a-pole-sin-0-0	Possible issues		[Csc, 0]	ComplexInfinity			A pole: $\sin(0) = 0$		
 csc-complexinfinity-is-indeterminate-for-the	Possible issues		[Csc, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.14.10	Csc(ComplexInfinity) is Indeterminate, for the same recurring poles as Tan		

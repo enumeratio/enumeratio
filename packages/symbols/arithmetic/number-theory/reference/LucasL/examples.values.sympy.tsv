@@ -12,10 +12,26 @@ special-value-of-the-lucas-polynomial-l-1-0-0
 special-value-of-the-lucas-polynomial-l-0-0-2			
 l-2-x-x-2-2-threads-element-wise-over-a-matrix			
 threads-element-wise-over-a-list-as-wolfram-s	[lucas(1), lucas(2), lucas(3), lucas(4)]	[1, 3, 4, 7]	
+n-lucasl-11-over-3-50	N(lucas(Rational(11, 3)), 30)		
+n-lucasl-1-plus-1-over-2-times-i	N(lucas((1 + Rational(1, 2)*I)), 30)		
+lucasl-1-neg-x-eq-neg-lucasl-1-x			
+lucasl-2-neg-x-eq-lucasl-2-x			
+lucasl-list-1-2-3-4-5	[lucas(1), lucas(2), lucas(3), lucas(4), lucas(5)]		
+generatingfunction-lucasl-n-n-x			
+lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z			
+fullsimplify-matrixfunction-function-lucasl-2-1			
 consecutive-ratios-l-n-1-l-n-converge-to-the	(S(lucas(15)) / lucas(14))	1364/843	
+nestwhile-function-1-plus-1-1-function-lucasl-1			
 l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	((S(lucas(10))**2) - (5 * (S(fibonacci(10))**2)))	4	
 l-n-f-n-1-f-n-1-here-at-n-6	enumeratio_equal(lucas(6), (fibonacci(5) + fibonacci(7)))	True	
 conversely-f-n-frac-l-n-1-l-n-1-5	enumeratio_equal(fibonacci(6), (S((lucas(5) + lucas(7))) / 5))	True	
 a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	((lucas(4) * lucas(6)) - (S(lucas(5))**2))	5	
 negative-indices-are-supported-via-l-n-1-n-l-n	lucas(-1)	-1	
+lucasl-2	lucas(2)		
+lucasl-3	lucas(3)		
+lucasl-4	lucas(4)		
+lucasl-6	lucas(6)		
+lucasl-7	lucas(7)		
+lucasl-8	lucas(8)		
+lucasl-9	lucas(9)		
 l-30-already-tops-1-8-million-growing-at-the	lucas(30)	1860498	

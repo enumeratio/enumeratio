@@ -288,6 +288,27 @@ export function emit(expr: MathJSON, system: System): Emitted {
           : rewriteBinding(vars);
       return `${head}[${varsSource}, ${walk(body)}]`;
     }
+    // compute-engine's canonical Function wraps its body in a scoping Block, which Wolfram's
+    // has no counterpart for: `Function(Block(f(_1)), _1)` is `Function[f[#]]`.
+    if (system === "wolfram" && head === "Function" && isCall(operands[0]) && operands[0][0] === "Block") {
+      return walk([head, ...operands[0].slice(1), ...operands.slice(1)] as MathJSON);
+    }
+    // An integrand, summand or factor is canonically a Function of the iteration variable;
+    // Wolfram takes the body itself, over its iterator.
+    if (system === "wolfram" && ["Integrate", "Sum", "Product"].includes(head) && isCall(operands[0])) {
+      const [f, ...rest] = operands;
+      if (f[0] === "Function") {
+        const body = isCall(f[1]) && f[1][0] === "Block" ? f[1][1] : f[1];
+        return walk([head, body, ...rest] as MathJSON);
+      }
+    }
+    // An iterator: `Limits(x, a, b)` is `{x, a, b}`; `Limits(x, Nothing, b)`, a sum from 1,
+    // is `{x, b}`; `Limits(x, Nothing, Nothing)`, an indefinite integral's, is `x` alone.
+    if (system === "wolfram" && head === "Limits" && operands.length === 3) {
+      const [x, a, b] = operands;
+      if (a === "Nothing" && b === "Nothing") return walk(x!);
+      return `List[${(a === "Nothing" ? [x!, b!] : [x!, a!, b!]).map(walk).join(", ")}]`;
+    }
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare
     // symbol through verbatim, so handing them back as symbols yields the head's shape.

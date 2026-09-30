@@ -1,4 +1,10 @@
 id	in	out
 numberexpand-1-234	NumberExpand(1_234)	[1_000, 200, 30, 4]
+numberexpand-157	NumberExpand(157)	[100, 50, 7]
+numberexpand-157-2	NumberExpand(157, 2)	[128, 0, 0, 16, 8, 4, 0, 1]
 base-2-zero-terms-kept	NumberExpand(10, 2)	[8, 0, 2, 0]
 every-term-carries-the-sign	NumberExpand(-123)	[-100, -20, -3]
+numberexpand-1-437	NumberExpand(1_437)	[1_000, 400, 30, 7]
+numberexpand-neg-14-379	NumberExpand(-14_379)	[-10_000, -4_000, -300, -70, -9]
+numberexpand-1-532	NumberExpand(1_532)	[1_000, 500, 30, 2]
+numberexpand-1-532-10	NumberExpand(1_532, 10)	[1_000, 500, 30, 2]

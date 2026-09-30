@@ -1,6 +1,16 @@
 id	in	out
 the-absolute-value-of-a-real-number	<RealAbs>-2.5</RealAbs>	<ToExpression>2.5</ToExpression>
 realabs-neg-7-over-2	<RealAbs><Rational>-7 2</Rational></RealAbs>	<Rational>7 2</Rational>
+realabs-2	<RealAbs>2</RealAbs>	<ToExpression>2</ToExpression>
+d-realabs-x-x	<D><RealAbs>x</RealAbs> x</D>	<Sign>x</Sign>
 threads-element-wise-over-a-list	<RealAbs><List>-1 2 -3</List></RealAbs>	<List>1 2 3</List>
 exact-numeric-arguments	<RealAbs><Negate>Pi</Negate></RealAbs>	<Pi />
+n-realabs-pi-minus-catalan-50	<N><RealAbs><Add>Pi <Negate>Catalan</Negate></Add></RealAbs> 50</N>	<ToExpression>2.2256270594125742234080398683471187734230200250934</ToExpression>
+realabs-list-list-1-over-2-neg-1-list-0-neg-1	<RealAbs><List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>-1 2</Rational></List></List></RealAbs>	<List><List><Rational>1 2</Rational> 1</List> <List>0 <Rational>1 2</Rational></List></List>
+matrixfunction-realabs-list-list-1-over-2-neg-1	<MatrixFunction>RealAbs <List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>-1 2</Rational></List></List></MatrixFunction>	<List><List><Rational>1 2</Rational> 0</List> <List>0 <Rational>1 2</Rational></List></List>
+realabs-interval-neg-5-3	<RealAbs><Interval>-5 3</Interval></RealAbs>	<Interval>0 5</Interval>
+realabs-0	<RealAbs>0</RealAbs>	<ToExpression>0</ToExpression>
+realabs-positiveinfinity	<RealAbs>PositiveInfinity</RealAbs>	<PositiveInfinity />
+realabs-negativeinfinity	<RealAbs>NegativeInfinity</RealAbs>	<PositiveInfinity />
+piecewiseexpand-realabs-x	<PiecewiseExpand><RealAbs>x</RealAbs></PiecewiseExpand>	<Abs>x</Abs>
 agrees-with-abs-on-the-reals	<Equal><RealAbs>-5</RealAbs> <Abs>-5</Abs></Equal>	<True />

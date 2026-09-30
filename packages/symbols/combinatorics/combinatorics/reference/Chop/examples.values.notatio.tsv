@@ -16,3 +16,4 @@ cleans-up-the-floating-point-residue-from	<Chop><Subtract><Multiply>3 <N><Divide
 only-the-value-s-own-magnitude-matters-this	<Chop><Add>1 1e-12</Add></Chop>	<ToExpression>1.000000000001</ToExpression>
 a-hard-cutoff-at-about-10-10-a-value-just-above	<Chop>1.0000000001e-10</Chop>	<ToExpression>1.0000000001e-10</ToExpression>
 an-exact-small-number-is-chopped-too	<Chop><Power>10 -20</Power></Chop>	<ToExpression>0</ToExpression>
+chop-2-plus-i-times-10-pow-neg-12	<Chop><Add>2 <Multiply><Complex>0 1</Complex> <Power>10 -12</Power></Multiply></Add></Chop>	<ToExpression>2</ToExpression>

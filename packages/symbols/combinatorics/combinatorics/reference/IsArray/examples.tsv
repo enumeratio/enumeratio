@@ -1,6 +1,9 @@
 id	section	role	expr	expected
 a-rectangular-nesting-is-an-array			[IsArray, [List, [List, 1, 2], [List, 3, 4]]]	True
+isarray-list-1-2-3-4			[IsArray, [List, 1, 2, 3, 4]]	True
+isarray-list-1-2-list-3-4			[IsArray, [List, 1, 2, [List, 3], 4]]	False
 a-ragged-nesting-is-not-an-array	Scope		[IsArray, [List, [List, 1, 2], [List, 3]]]	False
 a-flat-list-is-a-rank-1-array	Scope		[IsArray, [List, 1, 2, 3]]	True
 a-non-list-is-not-an-array	Scope		[IsArray, 3]	False
 a-test-function-must-hold-of-every-leaf	Scope		[IsArray, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True
+list-isarray-mat-isarray-expr	Properties		[List, [IsArray, mat], [IsArray, expr]]	[List, False, False]

@@ -1,3 +1,9 @@
 id	in	out	tex.in	tex.out	verdict
+isperfect-6	PerfectNumberQ[6]	True	\text{PerfectNumberQ}[6]	\text{True}	
+isperfect-12	PerfectNumberQ[12]	False	\text{PerfectNumberQ}[12]	\text{False}	
 listable	PerfectNumberQ[List[6, 28, 12]]	False	\text{PerfectNumberQ}[\{6,28,12\}]	\text{False}	disagree
+isperfect-496	PerfectNumberQ[496]	True	\text{PerfectNumberQ}[496]	\text{True}	
+isperfect-28	PerfectNumberQ[28]	True	\text{PerfectNumberQ}[28]	\text{True}	
 negative-numbers-are-not-perfect	PerfectNumberQ[-6]	False	\text{PerfectNumberQ}[-6]	\text{False}	
+isperfect-1-234-121	PerfectNumberQ[1234121]	False	\text{PerfectNumberQ}[1234121]	\text{False}	
+isperfect-simplify-x	PerfectNumberQ[Simplify[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PerfectNumberQ}[\text{Simplify}[x]]-\text{PerfectNumberQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PerfectNumberQ}\left[\text{Simplify}\left[\frac{7}{3}\right]\right]-\text{PerfectNumberQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{PerfectNumberQ}\left[\text{Simplify}\left[-\frac{11}{5}\right]\right]-\text{PerfectNumberQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{PerfectNumberQ}\left[\text{Simplify}\left[\frac{13}{4}\right]\right]-\text{PerfectNumberQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	

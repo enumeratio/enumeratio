@@ -1,0 +1,10 @@
+id	in
+divides-2-10	Divisible[10, 2]
+divides-2-5	Divisible[5, 2]
+divides-3-6	Divisible[6, 3]
+divides-16-001-1-plus-10-pow-3-000	Divisible[Plus[1, Power[10, 3000]], 16001]
+divides-3-2-895	Divisible[2895, 3]
+divides-11-918-082	Divisible[918082, 11]
+list-isinteger-5-divides-2-10	List[IntegerQ[5], Divisible[10, 2]]
+divides-8-48	Divisible[48, 8]
+divides-12-25	Divisible[25, 12]

@@ -5,6 +5,9 @@ every-element-tied-for-most-frequent-symbols-and			[Commonest, [List, b, a, c, 2
 a-single-most-frequent-element-still-comes-back			[Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]	[List, 3]	A single most-frequent element still comes back in a list		
 all-distinct-all-tie	Scope		[Commonest, [List, 1, 2, 3]]	[List, 1, 2, 3]	All distinct: all tie		
 the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 3, 2]	The $n$ commonest, most frequent first	convention	compute-engine orders the n commonest elements strictly most-frequent-first (3 before 2); the scanned Wolfram result came back as {2, 3} for this list — a secondary-ordering difference in Commonest's tie/output convention.
+commonest-list-a-exponentiale-sin-y-exponentiale	Scope		[Commonest, [List, a, ExponentialE, [Sin, y], ExponentialE, a, 7]]	[List, a, ExponentialE]			
+commonest-n-list-1-2-2-3-3-3-4	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4]]]	[List, 3]			
+commonest-n-list-1-2-2-3-3-3-4-30	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4], 30]]	[List, 3]			
 with-a-unique-mode-commonest-c-mode-c-see-mode	Properties		[First, [Commonest, [List, 1, 2, 2, 3]]]	2	With a unique mode, $Commonest(c) = \{Mode(c)\}$. See [[Mode]]		
 without-a-tie-the-single-commonest-element-is	Properties		[Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [Mode, [List, 1, 2, 2, 3, 3, 3, 4]]]	True	Without a tie, the single commonest element is the [[Mode]]		
 a-frequency-tie-between-4-and-1-is-broken-by	Properties		[Commonest, [List, 4, 1, 1, 4], 1]	[List, 4]	A frequency tie between $4$ and $1$ is broken by first appearance in the list.		

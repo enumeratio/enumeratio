@@ -18,7 +18,22 @@ antiderivative
 not-simply-4-4-is-outside-the-principal-range-0		
 arccos-infinity-is-a-directed-infinity-along-the		
 arccos-infinity-is-the-opposite-directed		
+n-arccos-1-over-3-50		
+integrate-arccos-x-x-neg-1-1		
 cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
 reflection-arccos-x-pi-arccos-x		
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3		
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3		
+arccos-1-over-4-times-neg-1-plus-sqrt-5		
+arccos-1-over-4-times-1-minus-sqrt-5		
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2		
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2		
+arccos-neg-1-over-2		
+arccos-1-over-2-times-sqrt-1-over-2-times-5		
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5		
+arccos-sqrt-2-over-2		
+arccos-1-over-4-times-neg-1-minus-sqrt-5		
+arccos-neg-sqrt-3-over-2		
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2		
 outside-1-1-this-stays-symbolic-same-as-arcsin-n		
 arccos-complexinfinity-is-complexinfinity		

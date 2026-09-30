@@ -1,5 +1,7 @@
 id	in	out
 padded-with-zeros-on-the-left	PadLeft([1, 2, 3], 5)	[0, 0, 1, 2, 3]
 a-padding-element	PadLeft([1, 2, 3], 5, x)	[x, x, 1, 2, 3]
+padleft-list-a-b-c-10	PadLeft([a, b, c], 10)	[0, 0, 0, 0, 0, 0, 0, a, b, c]
+padleft-list-a-b-c-10-x	PadLeft([a, b, c], 10, x)	[x, x, x, x, x, x, x, a, b, c]
 a-shorter-length-drops-elements-from-the-left	PadLeft([1, 2, 3, 4, 5], 3)	[3, 4, 5]
 with-no-length-a-ragged-array-is-padded-to-a	PadLeft([[1], [2, 3]])	[[0, 1], [2, 3]]

@@ -5,6 +5,9 @@ every-element-tied-for-most-frequent-symbols-and	<Commonest><List>b a c 2 a b 1 
 a-single-most-frequent-element-still-comes-back	<Commonest><List>1 2 2 3 3 3 4</List></Commonest>	<List>3</List>
 all-distinct-all-tie	<Commonest><List>1 2 3</List></Commonest>	<List>1 2 3</List>
 the-n-commonest-most-frequent-first	<Commonest><List>1 2 2 3 3 3 4</List> 2</Commonest>	<List>3 2</List>
+commonest-list-a-exponentiale-sin-y-exponentiale	<Commonest><List>a ExponentialE <Sin>y</Sin> ExponentialE a 7</List></Commonest>	<List>a ExponentialE</List>
+commonest-n-list-1-2-2-3-3-3-4	<Commonest><N><List>1 2 2 3 3 3 4</List></N></Commonest>	<List>3</List>
+commonest-n-list-1-2-2-3-3-3-4-30	<Commonest><N><List>1 2 2 3 3 3 4</List> 30</N></Commonest>	<List>3</List>
 with-a-unique-mode-commonest-c-mode-c-see-mode	<First><Commonest><List>1 2 2 3</List></Commonest></First>	<ToExpression>2</ToExpression>
 without-a-tie-the-single-commonest-element-is	<Equal><First><Commonest><List>1 2 2 3 3 3 4</List></Commonest></First> <Mode><List>1 2 2 3 3 3 4</List></Mode></Equal>	<True />
 a-frequency-tie-between-4-and-1-is-broken-by	<Commonest><List>4 1 1 4</List> 1</Commonest>	<List>4</List>

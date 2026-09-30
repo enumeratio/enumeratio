@@ -3,6 +3,7 @@ fromdigits-list-5-1-2-8			[FromDigits, [List, 5, 1, 2, 8]]	5128
 fromdigits-list-1-0-1-1-0-1-1-2			[FromDigits, [List, 1, 0, 1, 1, 0, 1, 1], 2]	91			
 1d-2h-3m-4s-back-to-seconds			[FromDigits, [List, 1, 2, 3, 4], [MixedRadixNumerals, [List, 24, 60, 60]]]	93784	1d 2h 3m 4s back to seconds		
 crt-reconstruction			[FromDigits, [List, 2, 3, 2], [ResidueNumerals, [List, 3, 5, 7]]]	23	CRT reconstruction		
+fromdigits-list-1-4-25-41-mixedradixnumerals			[FromDigits, [List, 1, 4, 25, 41], [MixedRadixNumerals, [List, 24, 60, 60]]]	102341			
 the-digits-can-be-given-as-a-string-0-9-then-a-z	Scope		[FromDigits, "'1923'"]	1923	The digits can be given as a string, 0-9 then a-z		
 a-digit-string-in-a-given-base	Scope		[FromDigits, "'1011011'", 2]	91	a digit string in a given base		
 roman-numerals-with-the-base-roman	Scope		[FromDigits, "'XVII'", "'Roman'"]	17	Roman numerals, with the base `"Roman"`		
@@ -24,9 +25,11 @@ a-negative-base-minus-3-1-0-1	Scope	test	[FromDigits, [List, 1, 0, 1], -3]	10
 a-negative-base-minus-4-3-2-1	Scope	test	[FromDigits, [List, 3, 2, 1], -4]	41			
 a-digits-exponent-pair-exponent-3-is-an-exact	Scope	test	[FromDigits, [List, [List, 1, 2, 3], 3]]	123	exponent equal to the digit count leaves no fractional part		
 a-digits-exponent-pair-exponent-5-is-12-300	Scope	test	[FromDigits, [List, [List, 1, 2, 3], 5]]	12300	an exponent past the digit count is an exact integer too		
+fromdigits-list-3-2-5-mixedradixnumerals-list-3	Scope		[FromDigits, [List, 3, 2, 5], [MixedRadixNumerals, [List, 3, 12]]]	137			
 a-lehmer-code-back-to-its-rank	Applications		[FromDigits, [List, 0, 2, 1, 0], FactorialNumerals]	5	a Lehmer code back to its rank		
 fromdigits-inverts-integerdigits	Properties		[Equal, [FromDigits, [IntegerDigits, 58127]], 58127]	True	FromDigits inverts [[IntegerDigits]]		
 the-round-trip-holds-in-any-base	Properties		[FromDigits, [IntegerDigits, 58127, 2], 2]	58127	the round trip holds in any base		
+fromdigits-list-1-3-22-14-mixedradixnumerals	Properties		[FromDigits, [List, 1, 3, 22, 14], [MixedRadixNumerals, [List, 24, 60, 60]]]	98534			
 an-empty-digit-list-is-left-unevaluated-rather	Possible issues		[FromDigits, [List]]	[FromDigits, [List]]	An empty digit list is left unevaluated rather than treated as 0	domain	An empty digit list is left unevaluated here; Wolfram reads it as 0.
 two-adjacent-ones-is-not-a-numeral-so-it-denotes	Possible issues		[FromDigits, [List, 1, 1], ZeckendorfNumerals]	[FromDigits, [List, 1, 1], ZeckendorfNumerals]	two adjacent ones is not a numeral, so it denotes nothing		
 ostrowski-declines-a-string-past-its-ceiling	Possible issues	test	[FromDigits, [List, 1, 2, 1], [OstrowskiNumerals, [List, 2, 2, 2]]]	[FromDigits, [List, 1, 2, 1], [OstrowskiNumerals, [List, 2, 2, 2]]]	the middle digit is at its ceiling, so nothing below it may be non-zero		

@@ -1,0 +1,10 @@
+id	in	out
+divides-2-10	2\mid10	\top
+divides-2-5	2\mid5	\bot
+divides-3-6	3\mid6	\top
+divides-16-001-1-plus-10-pow-3-000	16\,001\mid1+10^{3\,000}	\top
+divides-3-2-895	3\mid2\,895	\top
+divides-11-918-082	11\mid918\,082	\top
+list-isinteger-5-divides-2-10	\bigl\lbrack\mathrm{IsInteger}(5), 2\mid10\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
+divides-8-48	8\mid48	\top
+divides-12-25	12\mid25	\bot

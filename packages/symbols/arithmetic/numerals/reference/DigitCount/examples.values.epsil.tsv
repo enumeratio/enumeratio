@@ -10,5 +10,25 @@ a-list-of-digit-values-gives-one-count-each	digitCount(242_442_422, 3, [1, 2])	[
 counts-over-the-12-least-significant-base-3	digitCount(242_442_422, 3, [1, 2], 12)	[4, 4]
 threads-element-wise-over-a-list-as-wolfram-s	digitCount([23, 45])	[[0, 1, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]]
 the-3-argument-form-isolates-a-single-digit-s	digitCount(2_147, 10, 1)	1
+digitcount-242-442-422-3-0-eq-count	digitCount(242_442_422, 3, 0) == count(integerDigits(242_442_422, 3), 0)	True
+digitcount-242-442-422-3-0-20-eq-count-padleft	"digitCount(242_442_422, 3, 0, 20) == count(PadLeft(\n                                                    integerDigits(\n                                                                   242_442_422,\n                                                                   3,\n                                                                 ),\n                                                    20,\n                                                  ), 0)"	True
+digitcount-0-2	digitCount(0, 2)	[0, 1]
+digitcount-1-2	digitCount(1, 2)	[1, 0]
+digitcount-2-2	digitCount(2, 2)	[1, 1]
+digitcount-3-2	digitCount(3, 2)	[2, 0]
+digitcount-4-2	digitCount(4, 2)	[1, 2]
+digitcount-5-2	digitCount(5, 2)	[2, 1]
+digitcount-6-2	digitCount(6, 2)	[2, 1]
+digitcount-7-2	digitCount(7, 2)	[3, 0]
+digitcount-8-2	digitCount(8, 2)	[1, 3]
+digitcount-9-2	digitCount(9, 2)	[2, 2]
+digitcount-10-2	digitCount(10, 2)	[2, 2]
+digitcount-0-3	digitCount(0, 3)	[0, 0, 1]
+digitcount-1-3	digitCount(1, 3)	[1, 0, 0]
+digitcount-2-3	digitCount(2, 3)	[0, 1, 0]
+digitcount-3-3	digitCount(3, 3)	[1, 0, 1]
+digitcount-4-3	digitCount(4, 3)	[2, 0, 0]
+digitcount-5-3	digitCount(5, 3)	[1, 1, 0]
+digitcount-6-3	digitCount(6, 3)	[0, 1, 1]
 three-trailing-zeros-not-four-122000-has-digits	digitCount(122_000, 10, 0)	3
 0-has-one-digit-a-zero	digitCount(0)	[0, 0, 0, 0, 0, 0, 0, 0, 0, 1]

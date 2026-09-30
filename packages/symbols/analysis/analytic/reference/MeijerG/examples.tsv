@@ -32,3 +32,4 @@ small-z		test	[MeijerG, [List, [List, 0.5], [List]], [List, [List, 0.2, 0.9], [L
 m-2-spread-b		test	[MeijerG, [List, [List], [List]], [List, [List, -1.3, 2.6], [List]], 0.9]	4.543274438127216	{num: "4.543274438127216"}	4e-16	mpmath 1.3.0 meijerg	
 mixed-a-and-b	Scope		[MeijerG, [List, [List, 0.7], [List]], [List, [List, 0.3], [List]], 0.4]	0.9244681281245817	{num: "0.9244681281245817"}	4e-16	mpmath 1.3.0 meijerg	a case with both an $a$- and a $b$-parameter
 two-b-terms	Scope		[MeijerG, [List, [List], [List]], [List, [List, 0, [Rational, 1, 2]], [List]], 1.3]	0.18123044018823334	{num: "0.18123044018823334"}	4e-16	mpmath 1.3.0 meijerg	$m = 2$, two poles summed
+chop-n-meijerg-list-list-1-list-2-list-list-2	Scope		[Chop, [N, [MeijerG, [List, [List, 1], [List, 2]], [List, [List, [Rational, 2, 3], [Rational, 1, 5]], [List, 4]], 3], 50]]	-1.1162735082412942				

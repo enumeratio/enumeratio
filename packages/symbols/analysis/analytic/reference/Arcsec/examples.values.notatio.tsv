@@ -8,4 +8,17 @@ inside-1-1-the-value-is-purely-imaginary	<Arcsec>0.5</Arcsec>	<Complex>0 1.31695
 arcsec-positiveinfinity	<Arcsec>PositiveInfinity</Arcsec>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
 a-pole-arcsec-0-is-complex-infinity	<Arcsec>0</Arcsec>	<ComplexInfinity />
 derivative-for-real-x-1	<D><Arcsec>x</Arcsec> x</D>	<Divide>1 <Multiply><Abs>x</Abs> <Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt></Multiply></Divide>
+n-arcsec-5-50	<N><Arcsec>5</Arcsec> 50</N>	<ToExpression>1.3694384060045658277761961394221280318585466182853</ToExpression>
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	<Arcsec><List><List><Sqrt>2</Sqrt> <Negate><Sqrt>2</Sqrt></Negate></List> <List>0 <Negate><Sqrt>2</Sqrt></Negate></List></List></Arcsec>	<List><List><Multiply><Rational>1 4</Rational> Pi</Multiply> <Multiply><Rational>3 4</Rational> Pi</Multiply></List> <List>ComplexInfinity <Multiply><Rational>3 4</Rational> Pi</Multiply></List></List>
+arcsec-2-over-3-times-sqrt-3	<Arcsec><Multiply><Rational>2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arcsec>	<Multiply><Rational>1 6</Rational> Pi</Multiply>
+arcsec-complexinfinity	<Arcsec>ComplexInfinity</Arcsec>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
+matrixfunction-function-arcsec-1-1-list-list	<MatrixFunction><Function><Block><Arcsec>_1</Arcsec></Block> _1</Function> <List><List><Sqrt>2</Sqrt> <Negate><Sqrt>2</Sqrt></Negate></List> <List>0 <Negate><Sqrt>2</Sqrt></Negate></List></List></MatrixFunction>	<List><List><Multiply><Rational>1 4</Rational> Pi</Multiply> <Multiply><Rational>1 4</Rational> Pi</Multiply></List> <List>0 <Multiply><Rational>3 4</Rational> Pi</Multiply></List></List>
 undoes-sec-sec-arcsec-x-x	<Equal><Sec><Arcsec>2</Arcsec></Sec> 2</Equal>	<True />
+arcsec-neg-sqrt-2-plus-sqrt-6	<Arcsec><Add><Negate><Sqrt>2</Sqrt></Negate> <Sqrt>6</Sqrt></Add></Arcsec>	<Multiply><Rational>1 12</Rational> Pi</Multiply>
+arcsec-neg-sqrt-6-plus-sqrt-2	<Arcsec><Add><Negate><Sqrt>6</Sqrt></Negate> <Sqrt>2</Sqrt></Add></Arcsec>	<Multiply><Rational>11 12</Rational> Pi</Multiply>
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	<Arcsec><Multiply>2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arcsec>	<Arcsec><Divide>2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arcsec>
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	<Arcsec><Multiply>-2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arcsec>	<Arcsec><Divide>-2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arcsec>
+arcsec-neg-2-over-3-times-sqrt-3	<Arcsec><Multiply><Rational>-2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arcsec>	<Multiply><Rational>5 6</Rational> Pi</Multiply>
+arcsec-neg-1-plus-sqrt-5	<Arcsec><Add>-1 <Sqrt>5</Sqrt></Add></Arcsec>	<Multiply><Rational>1 5</Rational> Pi</Multiply>
+arcsec-1-minus-sqrt-5	<Arcsec><Add>1 <Negate><Sqrt>5</Sqrt></Negate></Add></Arcsec>	<Multiply><Rational>4 5</Rational> Pi</Multiply>
+arcsec-neg-sqrt-2	<Arcsec><Negate><Sqrt>2</Sqrt></Negate></Arcsec>	<Multiply><Rational>3 4</Rational> Pi</Multiply>

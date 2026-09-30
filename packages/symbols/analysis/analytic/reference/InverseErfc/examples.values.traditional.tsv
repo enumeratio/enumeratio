@@ -7,6 +7,10 @@ erfc-1-0-infty
 erfc-1-2-infty		
 arguments-in-1-2-give-negative-values		
 listable		
+n-inverseerfc-33-over-100-50		
+functionexpand-matrixfunction-inverseerfc-list		
 sqrt-2-times-this-2-5758-is-the-two-sided-99		
 erfc-erfc-1-x-x	\operatorname{erfc}(\mathrm{InverseErfc}(x))	x
+list-erfc-inverseerfc-z-inverseerfc-erfc-z	\bigl\lbrack\operatorname{erfc}(\mathrm{InverseErfc}(z)), \mathrm{InverseErfc}(\operatorname{erfc}(z))\bigr\rbrack	\bigl\lbrack z, \mathrm{InverseErfc}(\operatorname{erfc}(z))\bigr\rbrack
+isnumeric-inverseerfc-1-over-2	\mathrm{IsNumeric}(\mathrm{InverseErfc}(\frac{1}{2}))	\mathrm{True}
 deep-in-the-tail-it-keeps-full-precision-where		

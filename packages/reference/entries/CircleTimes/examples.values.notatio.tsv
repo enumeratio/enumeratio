@@ -1,0 +1,3 @@
+id	in	out
+circletimes-x-y-z	<CircleTimes>x y z</CircleTimes>	<Multiply>x y z</Multiply>
+circletimes-a-b-c-plus-circletimes-x-y-z	<Add><CircleTimes>a b c</CircleTimes> <CircleTimes>x y z</CircleTimes></Add>	<Add><Multiply>a b c</Multiply> <Multiply>x y z</Multiply></Add>

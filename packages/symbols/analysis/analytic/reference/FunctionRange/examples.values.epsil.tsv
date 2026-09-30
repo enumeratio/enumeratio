@@ -3,4 +3,7 @@ a-parabola-s-range-is-bounded-below	FunctionRange(x ^ 2, x, y)	0 <= y
 a-reciprocal-never-reaches-zero	FunctionRange(1 / x, x, y)	y < 0 || 0 < y
 sine-s-range-is-the-unit-interval	FunctionRange(sin(x), x, y)	-1 <= y <= 1
 exp-s-range-is-the-positive-reals	FunctionRange(exp(x), x, y)	0 < y
+functionrange-x-pow-2-minus-1-x-y	FunctionRange(x ^ 2 - 1, x, y)	-1 <= y
+functionrange-x-pow-2-minus-4-x-y	FunctionRange(x ^ 2 - 4, x, y)	-4 <= y
+functionrange-tan-x-x-y	FunctionRange(tan(x), x, y)	True
 a-quadratic-denominator-is-declined	FunctionRange(1 / (x ^ 2 - 1), x, y)	FunctionRange(1 / (x ^ 2 - 1), x, y)

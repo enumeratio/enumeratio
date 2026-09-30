@@ -8,5 +8,24 @@ rational-arguments-the-primes-up-to-7-2-are-2	prime_pi(rational(n(7), n(2)))	pan
 real-arguments	prime_pi(x(15.25))	panic: an integer, not 15.25	error
 the-primes-below-a-million	prime_pi(n(1000000))	78498	
 listable-threads-over-a-list	prime_pi(list(vec![n(3), n(5), n(17), n(25)]))	panic: threading: a list where the crate takes a scalar	error
+nthprime-range-1-primepi-100			
+primepi-5-000	prime_pi(n(5000))		
 same-inverse-relation-viewed-from-primepi-s-side			
+primepi-nthprime-100			
+primepi-1-000	prime_pi(n(1000))		
+primepi-3	prime_pi(n(3))		
+primepi-4	prime_pi(n(4))		
+primepi-5	prime_pi(n(5))		
+primepi-6	prime_pi(n(6))		
+primepi-7	prime_pi(n(7))		
+primepi-8	prime_pi(n(8))		
+primepi-9	prime_pi(n(9))		
+primepi-10	prime_pi(n(10))		
+primepi-11	prime_pi(n(11))		
+primepi-12	prime_pi(n(12))		
+primepi-13	prime_pi(n(13))		
+primepi-14	prime_pi(n(14))		
+primepi-16	prime_pi(n(16))		
+primepi-17	prime_pi(n(17))		
+primepi-18	prime_pi(n(18))		
 no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer	error

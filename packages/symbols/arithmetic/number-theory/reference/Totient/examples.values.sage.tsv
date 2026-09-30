@@ -13,3 +13,22 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors	(euler_phi(1) + euler_phi(2) + 
 multiplicative-varphi-mn-varphi-m-varphi-n-when	bool(euler_phi(12) == (euler_phi(4) * euler_phi(3)))	True	
 varphi-p-p-1-for-a-prime-p	euler_phi(17)	16	
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	euler_phi(81)	54	
+totient-100	euler_phi(100)		
+totient-35	euler_phi(35)		
+divides-carmichaellambda-8-totient-8			
+list-totient-25-carmichaellambda-25			
+divisorsum-15-totient-eq-15			
+totient-1-023-eq-totient-3-times-totient-11	bool(euler_phi(1023) == (euler_phi(3) * euler_phi(11) * euler_phi(31)))		
+totient-2	euler_phi(2)		
+totient-3	euler_phi(3)		
+totient-4	euler_phi(4)		
+totient-5	euler_phi(5)		
+totient-6	euler_phi(6)		
+totient-7	euler_phi(7)		
+totient-8	euler_phi(8)		
+totient-9	euler_phi(9)		
+totient-11	euler_phi(11)		
+totient-13	euler_phi(13)		
+totient-14	euler_phi(14)		
+totient-15	euler_phi(15)		
+totient-16	euler_phi(16)		

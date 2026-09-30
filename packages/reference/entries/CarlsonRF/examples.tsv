@@ -10,3 +10,5 @@ rf-1-1i-2-3		test	[N, [CarlsonRF, [Complex, 1, 1], 2, 3]]	[Complex, 0.6984564628
 rf-3-2i-1-1i-5		test	[N, [CarlsonRF, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.5835452640550799, 0.007015540406256118]	[Complex, 0.5835452640550797, 0.00701554040625612]	1e-12	mpmath 1.3.0 elliprf
 rf-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRF, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	1.014900023903115	{num: "1.0149000239031147"}	1e-12	mpmath 1.3.0 elliprf
 rf-1-3-2-5-2		test	[N, [CarlsonRF, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.8506573005609459	{num: "0.8506573005609459"}	1e-12	mpmath 1.3.0 elliprf
+n-carlsonrf-4-6-8	Scope		[N, [CarlsonRF, 4, 6, 8]]	0.4130089381246227			
+n-carlsonrf-4-neg-6-8	Scope		[N, [CarlsonRF, 4, -6, 8]]	[Complex, 0.45584813574900485, -0.2610176497773252]			

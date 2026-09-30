@@ -1,6 +1,7 @@
 id	in	out
 3-cdot-5-15-equiv-1	\left(3^{-1}\bmod 7\right)	5
 modularinverse-2-11	\left(2^{-1}\bmod 11\right)	6
+modularinverse-3-5	\left(3^{-1}\bmod 5\right)	2
 a-negative-argument-3-cdot-2-6-equiv-1	\left((-3)^{-1}\bmod 7\right)	2
 a-21-digit-modulus	\left(3^{-1}\bmod 10^{20}+1\right)	33\,333\,333\,333\,333\,333\,334
 listable-threads-over-a-list		
@@ -27,6 +28,16 @@ inverse-of-a-real-prime-s-associate-by-i-mod-a	\left((7i)^{-1}\bmod 3+2i\right)	
 inverse-mod-a-real-prime-19	\left((2+i)^{-1}\bmod 19\right)	8+15i
 no-inverse-mod-0	\left((2+i)^{-1}\bmod 0\right)	\left((2+i)^{-1}\bmod 0\right)
 a-real-base-with-no-inverse-mod-a-shared-factor	\left(5^{-1}\bmod 5+5i\right)	\left(5^{-1}\bmod 5+5i\right)
+modularinverse-neg-5-7	\left((-5)^{-1}\bmod 7\right)	4
+modularinverse-10-pow-100-000-nextprime-1-000	\left((10^{100\,000})^{-1}\bmod \mathrm{NextPrime}(1\,000)\right)	942
 the-same-as-powermod-with-exponent-1	\left(3^{-1}\bmod 7\right)=\left(\frac{1}{3}\bmod 7\right)	\mathrm{True}
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	12\,345\left(12\,345^{-1}\bmod 2^{61}-1\right)\bmod(2^{61}-1)	1
+list-modularinverse-2-5-modularinverse-7-5	\bigl\lbrack\left(2^{-1}\bmod 5\right), \left(7^{-1}\bmod 5\right)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
+list-modularinverse-3-5-powermod-3-neg-1-5	\bigl\lbrack\left(3^{-1}\bmod 5\right), \left(\frac{1}{3}\bmod 5\right)\bigr\rbrack	\bigl\lbrack2, 2\bigr\rbrack
+modularinverse-5-7	\left(5^{-1}\bmod 7\right)	3
+modularinverse-5-neg-7	\left(5^{-1}\bmod -7\right)	-4
+modularinverse-7-12	\left(7^{-1}\bmod 12\right)	7
+modularinverse-modularinverse-7-9-9	\left((\left(7^{-1}\bmod 9\right))^{-1}\bmod 9\right)	7
 gcd-2-4-2-no-inverse	\left(2^{-1}\bmod 4\right)	\left(2^{-1}\bmod 4\right)
+modularinverse-10-21	\left(10^{-1}\bmod 21\right)	19
+modularinverse-21-10	\left(21^{-1}\bmod 10\right)	1

@@ -2,7 +2,10 @@ id	in	out
 unittriangle-peak	\mathrm{UnitTriangle}(0)	1
 unittriangle-endpoint	\mathrm{UnitTriangle}(1)	0
 unittriangle-neg-endpoint	\mathrm{UnitTriangle}(-1)	0
+piecewiseexpand-unittriangle-x	\mathrm{PiecewiseExpand}(\mathrm{UnitTriangle}(x))	\mathrm{UnitTriangle}(x)
 unittriangle-outside	\mathrm{UnitTriangle}(2)	0
 unittriangle-1-3	\mathrm{UnitTriangle}(\frac{1}{3})	\frac{2}{3}
 unittriangle-1-2	\mathrm{UnitTriangle}(\frac{1}{2})	\frac{1}{2}
+unittriangle-1-over-4	\mathrm{UnitTriangle}(\frac{1}{4})	\frac{3}{4}
+piecewiseexpand-unittriangle-x-0-lt-x-lt-2	\mathrm{PiecewiseExpand}(\mathrm{UnitTriangle}(x), 0\lt x\lt2)	\mathrm{UnitTriangle}(x)
 unittriangle-same-as-heavisidelambda	\mathrm{UnitTriangle}(\frac{1}{4})=\mathrm{HeavisideLambda}(\frac{1}{4})	\top

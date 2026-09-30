@@ -12,5 +12,11 @@ likewise-a-list-mixing-scalars-and-lists	ArrayDepth[List[1, List[2, 3]]]	1	\text
 the-empty-list-is-still-a-vector-of-length-0	ArrayDepth[List[]]	1	\text{ArrayDepth}[\{\}]	1
 and-a-1-0-matrix	ArrayDepth[List[List[]]]	2	\text{ArrayDepth}[\{\{\}\}]	2
 a-2-3-grid-of-unevaluated-calls-still-reads-as-a	ArrayDepth[Array[f, List[2, 3]]]	2	\text{ArrayDepth}[\text{Array}[f,\{2,3\}]]	2
+rank-list-list-a-b-list-c	ArrayDepth[List[List[a, b], List[c]]]	1	\text{ArrayDepth}[\{\{a,b\},\{c\}\}]	1
 the-length-of-the-array-s-shape	(ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]] == Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]])	True	\text{ArrayDepth}\left[\left( \begin{array}{cc}  \{1,2\} & \{3,4\} \\  \{5,6\} & \{7,8\} \\ \end{array} \right)\right]=\text{Length}\left[\text{Dimensions}\left[\left( \begin{array}{cc}  \{1,2\} & \{3,4\} \\  \{5,6\} & \{7,8\} \\ \end{array} \right)\right]\right]	\text{True}
+rank-list-list-a-b-list-c-d-eq-length-shape-list	(ArrayDepth[List[List[a, b], List[c, d]]] == Length[Dimensions[List[List[a, b], List[c, d]]]])	True	\text{ArrayDepth}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]=\text{Length}\left[\text{Dimensions}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]\right]	\text{True}
+rank-1	ArrayDepth[1]	0	\text{ArrayDepth}[1]	0
+rank-list-1-2	ArrayDepth[List[1, 2]]	1	\text{ArrayDepth}[\{1,2\}]	1
+rank-list-list-1-2	ArrayDepth[List[List[1, 2]]]	2	\text{ArrayDepth}\left[\left( \begin{array}{cc}  1 & 2 \\ \end{array} \right)\right]	2
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	(ArrayDepth[Array[a, List[2, 1, 4, 3]]] == Length[List[2, 1, 4, 3]])	True	\text{ArrayDepth}[\text{Array}[a,\{2,1,4,3\}]]=\text{Length}[\{2,1,4,3\}]	\text{True}
 a-singular-2-2-matrix-still-has-rank-2-its	ArrayDepth[List[List[1, 2], List[2, 4]]]	2	\text{ArrayDepth}\left[\left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\ \end{array} \right)\right]	2

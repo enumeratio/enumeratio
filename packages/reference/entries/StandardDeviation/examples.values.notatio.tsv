@@ -1,0 +1,6 @@
+id	in	out
+standarddeviation-list-1-2-3-4	<StandardDeviation><List>1 2 3 4</List></StandardDeviation>	<Divide><Sqrt>15</Sqrt> 3</Divide>
+standarddeviation-n-list-1-2-3-4-30	<StandardDeviation><N><List>1 2 3 4</List> 30</N></StandardDeviation>	<Divide><Sqrt>15</Sqrt> 3</Divide>
+n-standarddeviation-ts	<N><StandardDeviation>ts</StandardDeviation></N>	<StandardDeviation>ts</StandardDeviation>
+standarddeviation-binomialdistribution-n-p	<StandardDeviation><BinomialDistribution>n p</BinomialDistribution></StandardDeviation>	<Sqrt><Multiply>n p <Add><Negate>p</Negate> 1</Add></Multiply></Sqrt>
+standarddeviation-probabilitydistribution-sqrt-2	<StandardDeviation><ProbabilityDistribution><Multiply><Sqrt>2</Sqrt> <Divide>1 Pi</Divide> <Divide>1 <Add><Power><Add>x -2</Add> 4</Power> 1</Add></Divide></Multiply> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></StandardDeviation>	<StandardDeviation><ProbabilityDistribution><Divide><Sqrt>2</Sqrt> <Add><Multiply>Pi <Power><Add>x -2</Add> 4</Power></Multiply> Pi</Add></Divide> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></StandardDeviation>

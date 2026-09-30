@@ -1,4 +1,10 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 ismachinenumber-ordinary-float			[IsMachineNumber, 2.5]	True			
+ismachinenumber-sin-1-000			[IsMachineNumber, [Sin, 1000]]	False			
+ismachinenumber-exponentiale-pow-1-000			[IsMachineNumber, [Power, ExponentialE, 1000]]	False			
 ismachinenumber-exact-integer	Scope		[IsMachineNumber, 2]	False	Exact numbers are never machine numbers		
+ismachinenumber-1	Scope		[IsMachineNumber, 1]	False			
+ismachinenumber-1-plus-i-times-10-pow-1-000	Scope		[IsMachineNumber, [Add, 1, [Multiply, [Complex, 0, 1], [Power, 10, 1000]]]]	False			
+map-ismachinenumber-list-r-i	Scope		[Map, IsMachineNumber, [List, r, [Complex, 0, 1]]]	[List, False, False]			
 ismachinenumber-extended-precision	Possible issues		[IsMachineNumber, 3.141592653589793]	False	A literal with more digits than a double can hold rounds to about 16 — over the machine-precision cutoff	convention	compute-engine tracks this literal as carrying extended precision internally (per this example's name) even though it prints like a double; Wolfram's MachineNumberQ only looks at the literal's face value and answers True.
+ismachinenumber-x	Possible issues		[IsMachineNumber, x]	False			

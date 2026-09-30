@@ -2,3 +2,4 @@ id	in
 collect-everything-sown	Reap[Last[List[Sow[1], Sow[2], 3]]]
 nothing-sown-gives-an-empty-group-list	Reap[5]
 reap-only-a-matching-tag	Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]
+reap-x	Reap[x]

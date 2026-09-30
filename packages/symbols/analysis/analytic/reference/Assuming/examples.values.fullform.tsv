@@ -1,4 +1,6 @@
 id	in
 abs-resolves-once-the-sign-is-known	Assuming[Greater[x, 0], Abs[x]]
 sign-of-x-plus-sign-of-y-under-opposite-signs	Assuming[List[Greater[x, 0], Less[y, 0]], Plus[Sign[x], Sign[y]]]
+assuming-n-in-integers-p-in-primes-n-gt-0	Assuming[And[Element[n, Integers], Element[p, Primes], Greater[n, 0]], operations]
 the-assumption-does-not-leak	List[Assuming[Greater[z, 0], Sign[z]], Sign[z]]
+assuming-x-gt-eq-0-assuming-y-lt-0-refine-sqrt-x	Assuming[GreaterEqual[x, 0], Assuming[Less[y, 0], Refine[Sqrt[Times[Power[x, 2], Power[y, 2]]]]]]

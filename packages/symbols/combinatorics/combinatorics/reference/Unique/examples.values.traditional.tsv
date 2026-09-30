@@ -1,0 +1,13 @@
+id	in	out
+unique-list-1-2-2-3-1		
+unique-list-a-b-a-c-b		
+keeps-first-occurrence-order-without-sorting		
+unique-list-1-7-8-4-3-4-1-9-9-2		
+elements-can-themselves-be-lists		
+unique-list		
+a-second-argument-says-when-two-elements-count		
+unique-list-1-7-8-4-3-4-1-9-8-9-2-greater		
+count-the-distinct-elements		
+the-residues-mod-3-that-occur-in-order-of-first		
+idempotent		
+unique-list-3-3-3-function-false	\mathrm{Unique}(\bigl\lbrack3, 3, 3\bigr\rbrack, ()\mapsto\mathrm{False})	\bigl\lbrack3, 3, 3\bigr\rbrack

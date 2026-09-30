@@ -2,9 +2,12 @@ id	in	out	tex.in	tex.out
 unique-list-1-2-2-3-1	DeleteDuplicates[List[1, 2, 2, 3, 1]]	{1, 2, 3}	\text{DeleteDuplicates}[\{1,2,2,3,1\}]	\{1,2,3\}
 unique-list-a-b-a-c-b	DeleteDuplicates[List[a, b, a, c, b]]	{a, b, c}	\text{DeleteDuplicates}[\{a,b,a,c,b\}]	\{a,b,c\}
 keeps-first-occurrence-order-without-sorting	DeleteDuplicates[List[1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1]]	{1, 7, 8, 4, 3, 9, 2}	\text{DeleteDuplicates}[\{1,7,8,4,3,4,1,9,9,2,1\}]	\{1,7,8,4,3,9,2\}
+unique-list-1-7-8-4-3-4-1-9-9-2	DeleteDuplicates[List[1, 7, 8, 4, 3, 4, 1, 9, 9, 2]]	{1, 7, 8, 4, 3, 9, 2}	\text{DeleteDuplicates}[\{1,7,8,4,3,4,1,9,9,2\}]	\{1,7,8,4,3,9,2\}
 elements-can-themselves-be-lists	DeleteDuplicates[List[List[1, 2], List[1, 2], List[3]]]	{{1, 2}, {3}}	\text{DeleteDuplicates}[\{\{1,2\},\{1,2\},\{3\}\}]	\{\{1,2\},\{3\}\}
 unique-list	DeleteDuplicates[List[]]	{}	\text{DeleteDuplicates}[\{\}]	\{\}
 a-second-argument-says-when-two-elements-count	DeleteDuplicates[List[1, 2, 3, 4, 5, 6], Function[Less[Abs[Subtract[Slot[1], Slot[2]]], 2]]]	{1, 3, 5}	\text{DeleteDuplicates}[\{1,2,3,4,5,6\},| \text{$\#$1}-\text{$\#$2}| <2\&]	\{1,3,5\}
+unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	DeleteDuplicates[List[1, 7, 8, 4, 3, 4, 1, 9, 8, 9, 2], Greater]	{1, 7, 8, 9, 9}	\text{DeleteDuplicates}[\{1,7,8,4,3,4,1,9,8,9,2\},\text{Greater}]	\{1,7,8,9,9\}
 count-the-distinct-elements	Length[DeleteDuplicates[List[1, 2, 2, 3, 3, 3]]]	3	\text{Length}[\text{DeleteDuplicates}[\{1,2,2,3,3,3\}]]	3
 the-residues-mod-3-that-occur-in-order-of-first	DeleteDuplicates[Mod[Range[10], 3]]	{1, 2, 0}	\text{DeleteDuplicates}[(\text{Range}[10] \bmod 3)]	\{1,2,0\}
 idempotent	DeleteDuplicates[DeleteDuplicates[List[1, 1, 2]]]	{1, 2}	\text{DeleteDuplicates}[\text{DeleteDuplicates}[\{1,1,2\}]]	\{1,2\}
+unique-list-3-3-3-function-false	DeleteDuplicates[List[3, 3, 3], Function[False]]	{3, 3, 3}	\text{DeleteDuplicates}[\{3,3,3\},\text{False}\&]	\{3,3,3\}

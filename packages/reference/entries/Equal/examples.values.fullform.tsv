@@ -1,0 +1,8 @@
+id	in
+4-eq-4	Equal[4, 4]
+n-pi-20-eq-pi	Equal[N[Pi, 20], Pi]
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	Equal[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]
+x-eq-x	Equal[x, x]
+3-eq-3-eq-3	Equal[3, 3, 3]
+list-1-2-eq-list-1-2	Equal[List[1, 2], List[1, 2]]
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	List[Equal[x, x], Equal[x, y], Equal[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]], Equal[Pi, N[Pi]]]

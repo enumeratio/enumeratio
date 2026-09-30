@@ -1,2 +1,4 @@
 id	section	role	expr	expected	wolfram.kind	wolfram.note
 counts-code-points-not-utf-16-units			[StringLength, [String, a😀b]]	3	convention	compute-engine's StringLength counts Unicode code points (per this example's name); Wolfram counts UTF-16 code units, so a surrogate-pair emoji counts differently.
+stringlength-tiger			[StringLength, "'tiger'"]	5		
+stringlength	Properties		[StringLength, "''"]	0		

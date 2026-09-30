@@ -5,3 +5,8 @@ folds-the-double-angle-product	FullSimplify(2 * sin(x) * cos(x))	sin(2x)
 the-functional-equation-of-gamma	FullSimplify(gamma(x + 1) / gamma(x))	x
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	FullSimplify(sqrt(2) + sqrt(3) - sqrt(5 + 2 * sqrt(6)))	0
 the-hyperbolic-pythagorean-identity	FullSimplify(cosh(x) ^ 2 - sinh(x) ^ 2)	1
+fullsimplify-x-pow-10-minus-1-times-x-pow-10	FullSimplify((x ^ 10 - 1) * (x ^ 10 + 1))	x ^ 20 - 1
+fullsimplify-1-minus-i-times-exponentiale-pow-i	"FullSimplify((1 - i) * exponentialE ^ (i * x) + (1 + i) * exponentialE ^\n                                                          (-i * x))"	2 * sin(x) + 2 * cos(x)
+fullsimplify-neg-4-times-arctan-1-over-239-plus	FullSimplify(-4 * arctan(1 / 239) + 16 * arctan(1 / 5))	pi
+fullsimplify-4-times-sin-x-times-cos-x-plus-4	FullSimplify(4 * sin(x) * cos(x) + 4 * sin(x) ^ 2 * cos(x) ^ 2 + 1)	2 * sin(2x) + 4 * sin(x) ^ 2 * cos(x) ^ 2 + 1
+assuming-re-x-gt-0-fullsimplify-exponentiale-pow	Assuming(re(x) > 0, FullSimplify(exponentialE ^ gammaLn(x)))	sinh(gammaLn(x)) + cosh(gammaLn(x))

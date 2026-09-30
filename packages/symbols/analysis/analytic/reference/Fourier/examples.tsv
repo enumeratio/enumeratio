@@ -3,4 +3,5 @@ dft-of-1-2-3-4			[Fourier, [List, 1, 2, 3, 4]]	[List, 5, [Complex, {num: "-1.0"}
 round-trips-through-inversefourier			[InverseFourier, [Fourier, [List, 1, 2, 3, 4]]]	[List, 1, 2, 3, 4]	Round-trips exactly through [[InverseFourier]]	
 a-2x2-matrix-the-separable-2d-transform	Scope		[Fourier, [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, 5, -1], [List, -2, 0]]	A $2\times2$ matrix — the separable 2D transform	
 a-custom-fourierparameters	Scope		[Fourier, [List, 1, 2, 3, 4], [KeyValuePair, FourierParameters, [List, 1, -1]]]	[List, 10, [Complex, {num: "-2.0"}, {num: "2.0"}], -2, [Complex, {num: "-2.0"}, {num: "-2.0"}]]	A custom `FourierParameters -> {1, -1}`	
+fourier-n-x-24	Scope		[Fourier, [N, x, 24]]	[Fourier, x]		
 declines-a-symbolic-list	Possible issues		[Fourier, [List, a, b]]	[Fourier, [List, a, b]]	Declines a symbolic list, as Wolfram's `Fourier::fftl` does	Wolfram raises `Fourier::fftl` ("... is not a nonempty list or rectangular array of numeric quantities") and returns the call unevaluated -- the same decline we make.

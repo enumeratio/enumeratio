@@ -3,6 +3,8 @@ a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiZN}(0.3, 0.5))	0
 zn-0-7-0-2	N(\mathrm{JacobiZN}(-0.7, 0.2))	-0.051\,550\,286\,367\,310\,294
 zn-2-5-0-3	N(\mathrm{JacobiZN}(2.5, 0.3))	-0.080\,518\,503\,671\,937\,58
 a-parameter-close-to-its-m-1-boundary	N(\mathrm{JacobiZN}(1.1, 0.9))	0.354\,712\,200\,199\,871\,26
+matrixfunction-function-jacobizn-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiZN}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\sqrt{3}i, 0\bigr\rbrack, \bigl\lbrack0, -\sqrt{3}i\bigr\rbrack\bigr\rbrack
+list-jacobizn-u-0-jacobizn-u-1	\bigl\lbrack\mathrm{JacobiZN}(u, 0), \mathrm{JacobiZN}(u, 1)\bigr\rbrack	\bigl\lbrack0, \tanh(u)\bigr\rbrack
 u-0-is-0-for-any-m	\mathrm{JacobiZN}(0, m)	0
 m-0-is-0-for-any-u	\mathrm{JacobiZN}(u, 0)	0
 m-outside-0-1-is-declined	N(\mathrm{JacobiZN}(0.3, -0.5))	\mathrm{JacobiZN}(0.3, -0.5)

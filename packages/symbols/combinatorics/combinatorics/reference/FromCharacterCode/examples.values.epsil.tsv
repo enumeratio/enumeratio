@@ -1,4 +1,6 @@
 id	in	out	back
 from-character-code-of-a-single-code-point	FromCharacterCode(65)	"\"A\""	
+fromcharactercode-list-97-98-99	FromCharacterCode([97, 98, 99])	"\"abc\""	
 inverts-tocharactercode	FromCharacterCode(ToCharacterCode("\(hello)"))	"\"hello\""	[FromCharacterCode, [ToCharacterCode, [String, "''", hello]]]
 round-trips-a-non-ascii-string-emoji-astral	FromCharacterCode(ToCharacterCode("a😀b→c"))	"\"a😀b→c\""	[FromCharacterCode, [ToCharacterCode, "'a😀b→c'"]]
+fromcharactercode-97	FromCharacterCode(97)	"\"a\""	

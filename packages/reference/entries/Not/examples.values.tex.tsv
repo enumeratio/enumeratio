@@ -1,0 +1,3 @@
+id	in	out
+booleanconvert-factorial-a-b	\mathrm{BooleanConvert}(\lnot(a\land b))	\lnot a\lor\lnot b
+booleanconvert-factorial-a-b-c	\mathrm{BooleanConvert}(\lnot(a\lor b\lor c))	\lnot a\land\lnot b\land\lnot c

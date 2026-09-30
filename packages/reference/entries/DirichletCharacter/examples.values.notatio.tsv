@@ -7,4 +7,9 @@ listable-in-n-the-nontrivial-character-mod-3	<DirichletCharacter>3 2 <List>1 2 3
 a-character-vanishes-where-gcd-n-k-1	<DirichletCharacter>5 2 5</DirichletCharacter>	<ToExpression>0</ToExpression>
 chi-3-mod-5-is-the-quadratic-character-its	<DirichletCharacter>5 3 2</DirichletCharacter>	<ToExpression>-1</ToExpression>
 the-trivial-character-mod-1-is-1-everywhere-its	<DirichletCharacter>1 1 7</DirichletCharacter>	<ToExpression>1</ToExpression>
+dirichletcharacter-7-3-20	<DirichletCharacter>7 3 20</DirichletCharacter>	<ToExpression>1</ToExpression>
+dirichletcharacter-7-3-4-times	<Multiply><DirichletCharacter>7 3 4</DirichletCharacter> <DirichletCharacter>7 3 5</DirichletCharacter></Multiply>	<Multiply><Add><Rational>-1 2</Rational> <Complex>0 <Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate></Complex></Add> <Add><Rational>-1 2</Rational> <Complex>0 <Divide><Sqrt>3</Sqrt> 2</Divide></Complex></Add></Multiply>
+dirichletcharacter-12-3-list-1-5-7-11	<DirichletCharacter>12 3 <List>1 5 7 11</List></DirichletCharacter>	<List>1 1 -1 -1</List>
+dirichletcharacter-45-8-7	<DirichletCharacter>45 8 7</DirichletCharacter>	<Add><Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate> <Complex>0 <Rational>1 2</Rational></Complex></Add>
+dirichletcharacter-9-2-7-times	<Multiply><DirichletCharacter>9 2 7</DirichletCharacter> <DirichletCharacter>5 4 2</DirichletCharacter></Multiply>	<Multiply><Complex>0 -1</Complex> <Add><Rational>-1 2</Rational> <Complex>0 <Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate></Complex></Add></Multiply>
 j-must-be-at-most-varphi-k-4-out-of-range-names	<DirichletCharacter>5 9 2</DirichletCharacter>	<DirichletCharacter>5 9 2</DirichletCharacter>

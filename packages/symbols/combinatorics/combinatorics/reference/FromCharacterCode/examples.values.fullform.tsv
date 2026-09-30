@@ -1,4 +1,6 @@
 id	in	back
 from-character-code-of-a-single-code-point	FromCharacterCode[65]	
+fromcharactercode-list-97-98-99	FromCharacterCode[List[97, 98, 99]]	
 inverts-tocharactercode	FromCharacterCode[ToCharacterCode[String[hello]]]	
 round-trips-a-non-ascii-string-emoji-astral	FromCharacterCode[ToCharacterCode[String[a😀b→c]]]	Unreadable
+fromcharactercode-97	FromCharacterCode[97]	

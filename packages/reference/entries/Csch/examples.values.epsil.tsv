@@ -1,0 +1,8 @@
+id	in	out	back
+n-csch-9-over-5-50	N(csch(9 / 5), 50)	0.339_884_691_415_493_707_140_758_149_466_532_117_984_776_132_436_71	
+csch-list-list-1-over-3-times-i-times-pi-neg-1	csch([[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]])	"[\n  [csch(1 / 3 * i * pi), csch(-1 / 3 * i * pi)],\n  [complexInfinity, csch(-1 / 6 * i * pi)],\n]"	
+csch-positiveinfinity	csch(positiveInfinity)	0	
+csch-0	csch(0)	complexInfinity	
+d-csch-x-x	D(csch(x), x)	-(csch(x) * coth(x))	
+matrixfunction-function-csch-1-1-list-list-1	"MatrixFunction(\n                Function(csch(_1), _1),\n                [[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]],\n              )"	"[[\n   csch(1 / 3 * i * pi),\n   -2 / 3 * csch(1 / 3 * i * pi) + 2 / 3 * csch(-1 / 6 * i * pi),\n ], [0, csch(-1 / 6 * i * pi)]]"	Unreadable
+integrate-csch-x-x-nothing-nothing	integrate(csch(x), (x, Nothing, Nothing))	-ln(coth(1 / 2 * abs(x)))	

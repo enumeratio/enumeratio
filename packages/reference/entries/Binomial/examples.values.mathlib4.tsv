@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12			
 complex-n-and-k-evaluate-through-the-gamma			
 interval-arithmetic-in-k-binom-1-2-k-is			
+n-binomial-7-over-3-1-over-5-20			
+binomial-n-4			
+matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	(Nat.choose 52 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(((Nat.choose 10 3) : ℚ) / (2 ^ 10))	15/128	
 symmetry-binom-n-k-binom-n-n-k	(decide ((Nat.choose 10 3) = (Nat.choose 10 7)))	true	

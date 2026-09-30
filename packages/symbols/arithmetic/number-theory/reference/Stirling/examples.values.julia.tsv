@@ -12,6 +12,24 @@ two-blocks-s-n-2-2-n-1-1	(Combinatorics.stirlings2(big(10), 2) == ((big(2)^9) - 
 s-n-n-1-binom-n-2-one-block-is-a-pair	(Combinatorics.stirlings2(big(6), 5) == binomial(ZZ(6), ZZ(2)))	true	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+n-stirling-120-10	(Combinatorics.stirlings2(big(120), 10))		
+stirling-10-4	Combinatorics.stirlings2(big(10), 4)		
+stirling-1-0	Combinatorics.stirlings2(big(1), 0)		
+stirling-1-1	Combinatorics.stirlings2(big(1), 1)		
+stirling-1-2	Combinatorics.stirlings2(big(1), 2)		
+stirling-2-0	Combinatorics.stirlings2(big(2), 0)		
+stirling-2-1	Combinatorics.stirlings2(big(2), 1)		
+stirling-2-2	Combinatorics.stirlings2(big(2), 2)		
+stirling-2-3	Combinatorics.stirlings2(big(2), 3)		
+stirling-3-0	Combinatorics.stirlings2(big(3), 0)		
+stirling-3-1	Combinatorics.stirlings2(big(3), 1)		
+stirling-3-2	Combinatorics.stirlings2(big(3), 2)		
+stirling-3-3	Combinatorics.stirlings2(big(3), 3)		
+stirling-3-4	Combinatorics.stirlings2(big(3), 4)		
+stirling-4-0	Combinatorics.stirlings2(big(4), 0)		
+stirling-4-1	Combinatorics.stirlings2(big(4), 1)		
+stirling-4-2	Combinatorics.stirlings2(big(4), 2)		
+stirling-4-3	Combinatorics.stirlings2(big(4), 3)		
 the-empty-set-has-one-partition-into-no-blocks	Combinatorics.stirlings2(big(0), 0)	1	
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Combinatorics.stirlings2(big(5), 0)	0	
 k-n-is-0	Combinatorics.stirlings2(big(3), 5)	0	

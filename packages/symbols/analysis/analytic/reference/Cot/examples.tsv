@@ -21,8 +21,13 @@ uncertainty-propagation-near-a-pole-grows-fast	Scope		[Cot, [Around, 3, 0.01]]	[
 oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Cot, [Negate, x]]	[Negate, [Cot, x]]			Oddness pulls the sign out of a symbolic argument: $\cot(-x) = -\cot x$		
 derivative-csc-2-x	Scope		[D, [Cot, x], x]	[Negate, [Power, [Csc, x], 2]]			Derivative: $-\csc^2 x$		
 antiderivative-ln-sin-x	Scope		[Integrate, [Cot, x], x]	[Ln, [Abs, [Sin, x]]]			Antiderivative: $\ln|\sin x|$	unevaluated	An antiderivative identity FullSimplify doesn't confirm automatically (branch/log-form rewriting), and the 3 fixed-rational substitution points don't settle it either. We believe the closed form is correct; Wolfram just doesn't auto-verify it.
+n-cot-6-over-5-50	Scope		[N, [Cot, [Rational, 6, 5]], 50]	{num: "0.38877956936820491163419150497190340959498492594098"}					
+matrixfunction-function-cot-1-1-list-list-5-over	Scope		[MatrixFunction, [Function, [Block, [Cot, _1]], _1], [List, [List, [Multiply, [Rational, 5, 6], Pi], [Multiply, [Rational, 1, 2], Pi]], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 6], Pi]]]]	[List, [List, [Divide, [Sqrt, 3], 3], 0], [List, 0, [Divide, [Sqrt, 3], 3]]]					
 reciprocal-of-tan-cot-x-frac-1-tan-x	Properties		[Equal, [Cot, [Divide, Pi, 4]], [Divide, 1, [Tan, [Divide, Pi, 4]]]]	True			Reciprocal of [[Tan]]: $\cot(x) = \frac{1}{\tan(x)}$		
 pythagorean-identity-1-cot-2-x-csc-2-x	Properties		[Equal, [Add, 1, [Power, [Cot, [Divide, Pi, 6]], 2]], [Power, [Csc, [Divide, Pi, 6]], 2]]	True			Pythagorean identity: $1 + \cot^2 x = \csc^2 x$		
+cot-1-over-10-times-pi	Properties		[Cot, [Multiply, [Rational, 1, 10], Pi]]	[Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 5]]]]	[Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 5]]]]	Wolfram MathematicalFunctionData, Cot			
+cot-3-over-10-times-pi	Properties		[Cot, [Multiply, [Rational, 3, 10], Pi]]	[Sqrt, [Add, 5, [Multiply, -2, [Sqrt, 5]]]]	[Sqrt, [Add, 5, [Multiply, -2, [Sqrt, 5]]]]	Wolfram MathematicalFunctionData, Cot			
+cot-3-over-8-times-pi	Properties		[Cot, [Multiply, [Rational, 3, 8], Pi]]	[Add, -1, [Sqrt, 2]]	[Add, -1, [Sqrt, 2]]	Wolfram MathematicalFunctionData, Cot			
 a-pole-sin-0-0	Possible issues		[Cot, 0]	ComplexInfinity			A pole: $\sin(0) = 0$		
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Possible issues		[Cot, [Divide, Pi, 2]]	0			Not a pole here -- [[Tan]]'s pole at $\pi/2$ is [[Cot]]'s zero instead		
 cot-complexinfinity-is-indeterminate-for-the	Possible issues		[Cot, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.14.10	Cot(ComplexInfinity) is Indeterminate, for the same recurring poles as Tan		

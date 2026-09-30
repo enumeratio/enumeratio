@@ -3,10 +3,12 @@ iseven-4	EvenQ[4]	True	\text{EvenQ}[4]	\text{True}
 iseven-3	EvenQ[3]	False	\text{EvenQ}[3]	\text{False}
 zero-is-even	EvenQ[0]	True	\text{EvenQ}[0]	\text{True}
 negative-integers-count-too	EvenQ[-4]	True	\text{EvenQ}[-4]	\text{True}
+iseven-8	EvenQ[8]	True	\text{EvenQ}[8]	\text{True}
 a-non-integer-is-not-even	EvenQ[2.5]	False	\text{EvenQ}[2.5]	\text{False}
 big-integers	EvenQ[Power[2, 100]]	True	\text{EvenQ}\left[2^{100}\right]	\text{True}
 iseven-10-factorial	EvenQ[Factorial[10]]	True	\text{EvenQ}[10!]	\text{True}
 threads-element-wise-over-a-list	EvenQ[List[1, 2, 3]]	{False, True, False}	\text{EvenQ}[\{1,2,3\}]	\{\text{False},\text{True},\text{False}\}
 select-the-even-numbers-up-to-10	Select[Range[10], EvenQ]	{2, 4, 6, 8, 10}	\text{Select}[\text{Range}[10],\text{EvenQ}]	\{2,4,6,8,10\}
 every-integer-is-exactly-one-of-odd-and-even-see				
+iseven-12	EvenQ[12]	True	\text{EvenQ}[12]	\text{True}
 a-symbol-stays-undecided-rather-than-false	EvenQ[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{EvenQ}[x]-\text{EvenQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{EvenQ}\left[\frac{7}{3}\right]-\text{EvenQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{EvenQ}\left[-\frac{11}{5}\right]-\text{EvenQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{EvenQ}\left[\frac{13}{4}\right]-\text{EvenQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

@@ -8,4 +8,5 @@ over-classes-the-answer-is-a-class-and-reading
 a-third-argument-asks-for-the-smallest-solution		
 recover-123456-bmod-1001-from-its-residues-mod-7		
 verifies-the-solution-satisfies-both-congruences	\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod4=3\land\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod5=4	\mathrm{True}
+chineseremainder-list-1-2-list-3-5		
 no-solution-exists-when-the-remainders-are		

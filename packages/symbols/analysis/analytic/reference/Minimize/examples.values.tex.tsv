@@ -3,6 +3,7 @@ a-quadratic-s-vertex	\mathrm{Minimize}(x^2, x)	\bigl\lbrack0, \bigl\lbrack\mathr
 unbounded-below-reports-negative-infinity	\mathrm{Minimize}(x^3, x)	\bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
 a-simple-interval-constraint	\mathrm{Minimize}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)	\bigl\lbrack1, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
 the-variable-as-a-one-element-list	\mathrm{Minimize}(x^2, \bigl\lbrack x\bigr\rbrack)	\bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
+minimize-2-times-x-pow-2-minus-3x-plus-5-x	\mathrm{Minimize}(2x^2-3x+5, x)	\bigl\lbrack\frac{31}{8}, \bigl\lbrack\mathrm{Rule}(x, \frac{3}{4})\bigr\rbrack\bigr\rbrack
 a-rational-function-s-irrational-point	\mathrm{Minimize}(\frac{x-1}{x^2+1}, x)	\bigl\lbrack-(\sqrt{2})(1+(1-2^{1/2})^2)^{-1}, \bigl\lbrack\mathrm{Rule}(x, 1-2^{1/2})\bigr\rbrack\bigr\rbrack
 log-s-minimum-is-at-its-domain-edge	\mathrm{Minimize}(\ln(x), x)	\bigl\lbrack-\infty, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
 exp-s-infimum-is-not-attained	\mathrm{Minimize}(e^{x}, x)	\bigl\lbrack0, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack

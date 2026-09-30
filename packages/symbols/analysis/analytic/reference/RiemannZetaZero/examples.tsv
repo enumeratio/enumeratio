@@ -3,3 +3,5 @@ the-first-nontrivial-zero-frac-12-14-1347-i			[N, [RiemannZetaZero, 1]]	[Complex
 n-riemannzetazero-2			[N, [RiemannZetaZero, 2]]	[Complex, 0.5, 21.022039638771556]	
 n-riemannzetazero-50		test	[N, [RiemannZetaZero, 50]]	[Complex, 0.5, 143.11184580762063]	
 n-riemannzetazero-10	Scope		[N, [RiemannZetaZero, 10]]	[Complex, 0.5, 49.7738324776723]	
+n-list-riemannzetazero-1-riemannzetazero-2	Scope		[N, [List, [RiemannZetaZero, 1], [RiemannZetaZero, 2], [RiemannZetaZero, 3]]]	[List, [Complex, 0.5, 14.134725141734695], [Complex, 0.5, 21.022039638771552], [Complex, 0.5, 25.01085758014569]]	
+n-riemannzetazero-0	Possible issues		[N, [RiemannZetaZero, 0]]	[RiemannZetaZero, 0]	

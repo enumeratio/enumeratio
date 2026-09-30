@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n	sum(abs(stirlingS1(4, k)), (k, 0, 4)) == 4
 the-signed-row-sum-vanishes-for-n-ge-2	sum(stirlingS1(6, k), (k, 0, 6))	0	
 s-n-n-1-binom-n-2	stirlingS1(6, 5) == -binomial(6, 2)	True	
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	"sum(stirlingS1(4, k) * x ^ k, (k, 0, 4)) == expand(x * (x - 1) * (x - 2) * (x -\n                                                                            3))"	True	[Equal, [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]], [Expand, [Multiply, [Multiply, [Multiply, x, [Subtract, x, 1]], [Subtract, x, 2]], [Subtract, x, 3]]]]
+n-stirlings1-100-11	N(stirlingS1(100, 11))	-390_376_773_476_389_796_543_585_013_048_065_552_669_095_304_773_071_088_642_650_967_777_941_539_595_016_786_090_531_126_519_978_928_664_992_958_028_261_781_883_437_197_859_800_964_094_681_415_680_000_000_000	
+stirlings1-0-1	stirlingS1(0, 1)	0	
+stirlings1-1-0	stirlingS1(1, 0)	0	
+stirlings1-1-1	stirlingS1(1, 1)	1	
+stirlings1-1-2	stirlingS1(1, 2)	0	
+stirlings1-2-0	stirlingS1(2, 0)	0	
+stirlings1-2-1	stirlingS1(2, 1)	-1	
+stirlings1-2-2	stirlingS1(2, 2)	1	
+stirlings1-2-3	stirlingS1(2, 3)	0	
+stirlings1-3-0	stirlingS1(3, 0)	0	
+stirlings1-3-1	stirlingS1(3, 1)	2	
+stirlings1-3-2	stirlingS1(3, 2)	-3	
+stirlings1-3-4	stirlingS1(3, 4)	0	
+stirlings1-4-0	stirlingS1(4, 0)	0	
+stirlings1-4-1	stirlingS1(4, 1)	-6	
+stirlings1-4-3	stirlingS1(4, 3)	-6	
 the-empty-case-s-0-0-1-by-convention-distinct	stirlingS1(0, 0)	1	
 k-n-is-0	stirlingS1(5, 6)	0	
 a-negative-k-stays-symbolic	stirlingS1(4, -1)	stirlingS1(4, -1)	

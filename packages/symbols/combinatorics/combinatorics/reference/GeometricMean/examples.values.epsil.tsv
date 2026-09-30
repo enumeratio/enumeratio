@@ -2,6 +2,13 @@ id	in	out
 sqrt-2-cdot-8-4	GeometricMean([2, 8])	4
 sqrt-3-1-cdot-2-cdot-4-2	GeometricMean([1, 2, 4])	2
 geometricmean-of-equal-values	GeometricMean([7, 7, 7])	7
+geometricmean-list-a-b-c-d	GeometricMean([a, b, c, d])	root(a * b * c * d, 4)
+geometricmean-list-list-5-10-list-2-1-list-4-3	GeometricMean([[5, 10], [2, 1], [4, 3], [12, 15]])	[root(480, 4), root(450, 4)]
 an-exact-irrational-result	GeometricMean([2, 3])	sqrt(6)
 sqrt-3-6	GeometricMean([1, 2, 3])	root(6, 3)
 symbolic-data	GeometricMean([a, b])	sqrt(a * b)
+geometricmean-list-1-2-3-4	GeometricMean([1, 2, 3, 4])	root(24, 4)
+geometricmean-list-pi-exponentiale-2	GeometricMean([pi, exponentialE, 2])	root(2 * exponentialE * pi, 3)
+geometricmean-n-list-1-2-3-4-30	GeometricMean(N([1, 2, 3, 4], 30))	root(24, 4)
+powerexpand-ln-geometricmean-list-a-b-c-d	PowerExpand(ln(GeometricMean([a, b, c, d])))	1 / 4 * (ln(a) + ln(b) + ln(c) + ln(d))
+powerexpand-1-over-ln-geometricmean-list-a-b-c-d	PowerExpand(1 / ln(GeometricMean([a, b, c, d])))	4 / (ln(a) + ln(b) + ln(c) + ln(d))

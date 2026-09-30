@@ -1,6 +1,12 @@
 id	in	out
 a-floating-point-argument-evaluates-directly-to	<N><JacobiND>0.3 -2</JacobiND></N>	<ToExpression>0.9186845256345044</ToExpression>
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiND>0.3 1.5</JacobiND></N>	<ToExpression>1.0693335357371407</ToExpression>
+list-jacobind-z-0-jacobind-z-1	<List><JacobiND>z 0</JacobiND> <JacobiND>z 1</JacobiND></List>	<List>1 <Cosh>z</Cosh></List>
+matrixfunction-function-jacobind-neg-1-over-3	<MatrixFunction><Function><Block><JacobiND><Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply> _1</JacobiND></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List><Rational>1 2</Rational> 0</List> <List>0 <Rational>1 2</Rational></List></List>
 u-0-is-1-for-any-m	<JacobiND>0 m</JacobiND>	<ToExpression>1</ToExpression>
+jacobind-0-1	<JacobiND>0 1</JacobiND>	<ToExpression>1</ToExpression>
+jacobind-1-over-2-times-i-times-pi-1	<JacobiND><Multiply><Complex>0 <Rational>1 2</Rational></Complex> Pi</Multiply> 1</JacobiND>	<ToExpression>0</ToExpression>
+jacobind-i-times-elliptick-1-plus-elliptick-0-0	<JacobiND><Add><Multiply><Complex>0 1</Complex> <EllipticK>1</EllipticK></Multiply> <EllipticK>0</EllipticK></Add> 0</JacobiND>	<ToExpression>1</ToExpression>
+jacobind-3i-times-elliptick-1-plus-elliptick-0-0	<JacobiND><Add><Multiply><Complex>0 3</Complex> <EllipticK>1</EllipticK></Multiply> <EllipticK>0</EllipticK></Add> 0</JacobiND>	<ToExpression>1</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiND>u m</JacobiND>	<JacobiND>u m</JacobiND>
 more-digits-than-a-double-holds-declines	<N><JacobiND>3 <Rational>1 3</Rational></JacobiND> 50</N>	<JacobiND>3 0.33333333333333333333333333333333333333333333333333</JacobiND>

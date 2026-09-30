@@ -1,4 +1,11 @@
 id	in	out
 falling-factorial-5-3-60	\mathrm{FallingFactorial}(5, 3)	60
+fallingfactorial-10-2	\mathrm{FallingFactorial}(10, 2)	90
+fallingfactorial-x-8	\mathrm{FallingFactorial}(x, 8)	-x\times(1-x)(2-x)(3-x)(4-x)(5-x)(6-x)(7-x)
 falling-factorial-3-5-0	\mathrm{FallingFactorial}(3, 5)	0
 falling-factorial-half-2-neg-1-4	\mathrm{FallingFactorial}(\frac{1}{2}, 2)	-\frac{1}{4}
+fallingfactorial-4-2	\mathrm{FallingFactorial}(4, 2)	12
+functionexpand-fallingfactorial-x-4	\mathrm{FunctionExpand}(\mathrm{FallingFactorial}(x, 4))	-x\times(1-x)(2-x)(3-x)
+fallingfactorial-n-0	\mathrm{FallingFactorial}(n, 0)	1
+fallingfactorial-10-3	\mathrm{FallingFactorial}(10, 3)	720
+differencedelta-fallingfactorial-x-n-x	\mathrm{DifferenceDelta}(\mathrm{FallingFactorial}(x, n), x)	\mathrm{FallingFactorial}(x+1, n)-\mathrm{FallingFactorial}(x, n)

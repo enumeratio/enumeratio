@@ -1,7 +1,24 @@
 id	in	out
 foldlist-add-0-1-2-3		
+foldlist-f-x-list-a-b-c-d		
+foldlist-add-0-list-a-b-c-d		
+foldlist-f-list-a-b-c-d		
+foldlist-function-1-pow-2-1-2-x-list-a-b-c-d		
 foldlist-add-1-2-3		
 foldlist-multiply-1-1-2-3-4		
 foldlist-lcm-1-range-2-10-lazy-not-list		
+foldlist-permute-list-a-b-c-d-list-list-1-4-3-2		
+foldlist-multiply-1-array-nthprime-10		
+foldlist-max-0-list-1-3-1-2-4-1-5-3-6-2-8-11		
+foldlist-at-a-plus-b-times-x-pow-2-plus-y-pow-2		
+foldlist-append-list-x-list-a-b-c-d		
+foldlist-list-x-list-a-b-c-d		
+foldlist-function-10-times-1-plus-2-1-2-0-list-4		
+foldlist-function-1-list-2-1-2-a-plus-b-times-x		
 foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\mathrm{True}
 foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}
+rest-foldlist-add-0-list-a-b-c-d-exponentiale		
+foldlist-f-x-list		
+foldlist-f-x-list-a-b-c		
+foldlist-add-list-a-b-c-d		
+foldlist-f-list		

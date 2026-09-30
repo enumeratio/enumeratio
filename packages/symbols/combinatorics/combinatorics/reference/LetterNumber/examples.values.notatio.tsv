@@ -1,3 +1,5 @@
 id	in	out
 single-letter	<LetterNumber>"d"</LetterNumber>	<ToExpression>4</ToExpression>
+letternumber-d	<LetterNumber>"D"</LetterNumber>	<ToExpression>4</ToExpression>
 string	<LetterNumber>"cab"</LetterNumber>	<List>3 1 2</List>
+letternumber-c	<LetterNumber>"c"</LetterNumber>	<ToExpression>3</ToExpression>

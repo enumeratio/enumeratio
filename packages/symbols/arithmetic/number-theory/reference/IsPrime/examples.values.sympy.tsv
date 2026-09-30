@@ -38,7 +38,20 @@ a-real-composite-5-squared-is-not-prime
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
 a-common-choice-of-prime-modulus-for-hashing	isprime(1000000007)	True	
+isprime-257	isprime(257)		
+isprime-1-plus-2-pow-128	isprime((1 + (S(2)**128)))		
+filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
+isprime-37	isprime(37)		
+isprime-29	isprime(29)		
+isprime-17	isprime(17)		
+isprime-12	isprime(12)		
+isprime-23	isprime(23)		
+isprime-24	isprime(24)		
+isprime-list-7-11	isprime([7, 11])		
+isprime-list-5-7-2	isprime([5, 7, 2])		
+isprime-19	isprime(19)		
+divisorsum-19-function-1-1-isprime			
 non-integers-are-not-prime	isprime(Rational(1, 2))	ValueError: 1/2 is not an integer	error
 another-non-integer-3-halves	isprime(Rational(3, 2))	ValueError: 3/2 is not an integer	error
 a-symbol-stays-unevaluated	isprime(Symbol("x"))	ValueError: x is not an integer	error

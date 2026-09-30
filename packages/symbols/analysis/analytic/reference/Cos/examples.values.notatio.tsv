@@ -36,6 +36,16 @@ taylor-series-about-0-only-even-powers-appear	<Series><Cos>x</Cos> x 0 6</Series
 to-30-significant-digits-every-one-correctly	<N><Cos>1</Cos> 30</N>	<ToExpression>0.540302305868139717400936607443</ToExpression>
 to-1-significant-digit	<N><Cos>1</Cos> 1</N>	<ToExpression>0.5</ToExpression>
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	<N><Cos><Power>10 100</Power></Cos></N>	<ToExpression>-0.928081905074655343456</ToExpression>
+n-cos-6-over-5-50	<N><Cos><Rational>6 5</Rational></Cos> 50</N>	<ToExpression>0.36235775447667357763837335562307602033994778557665</ToExpression>
+functiondomain-cos-x-x	<FunctionDomain><Cos>x</Cos> x</FunctionDomain>	<True />
+functionrange-cos-x-x-y	<FunctionRange><Cos>x</Cos> x y</FunctionRange>	<LessEqual>-1 y 1</LessEqual>
+functionperiod-cos-x-x	<FunctionPeriod><Cos>x</Cos> x</FunctionPeriod>	<Multiply>2 Pi</Multiply>
+functionanalytic-cos-x-x	<FunctionAnalytic><Cos>x</Cos> x</FunctionAnalytic>	<True />
+functioninjective-cos-x-x	<FunctionInjective><Cos>x</Cos> x</FunctionInjective>	<False />
+functionsurjective-cos-x-x	<FunctionSurjective><Cos>x</Cos> x</FunctionSurjective>	<False />
+functionsingularities-cos-x-x	<FunctionSingularities><Cos>x</Cos> x</FunctionSingularities>	<False />
+functiondiscontinuities-cos-x-x	<FunctionDiscontinuities><Cos>x</Cos> x</FunctionDiscontinuities>	<False />
+matrixfunction-function-cos-1-1-list-list-5-over	<MatrixFunction><Function><Block><Cos>_1</Cos></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> 0</List> <List><Multiply><Rational>3 2</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate> 0</List> <List><Multiply><Rational>-9 16</Rational> <Sqrt>3</Sqrt></Multiply> 0</List></List>
 threads-element-wise-over-a-list	<Cos><List>0 <Divide>Pi 2</Divide> Pi</List></Cos>	<List>1 0 -1</List>
 even-function-cos-x-cos-x	<Equal><Cos><Negate><Divide>Pi 3</Divide></Negate></Cos> <Cos><Divide>Pi 3</Divide></Cos></Equal>	<True />
 co-function-identity-cos-x-sin-pi-2-x	<Equal><Cos><Divide>Pi 6</Divide></Cos> <Sin><Subtract><Divide>Pi 2</Divide> <Divide>Pi 6</Divide></Subtract></Sin></Equal>	<True />
@@ -43,6 +53,7 @@ double-angle-formula-cos-2x-cos-2-x-sin-2-x	<TrigExpand><Cos><Multiply>2 x</Mult
 angle-addition-formula	<TrigExpand><Cos><Add>x y</Add></Cos></TrigExpand>	<Add><Multiply><Cos>x</Cos> <Cos>y</Cos></Multiply> <Negate><Multiply><Sin>x</Sin> <Sin>y</Sin></Multiply></Negate></Add>
 power-reduction-cos-2-x-frac-1-cos-2x-2	<TrigReduce><Power><Cos>x</Cos> 2</Power></TrigReduce>	<Add><Multiply><Rational>1 2</Rational> <Cos><Multiply>2 x</Multiply></Cos></Multiply> <Rational>1 2</Rational></Add>
 euler-s-formula-cos-x-frac-e-ix-e-ix-2	<TrigToExp><Cos>x</Cos></TrigToExp>	<Multiply><Rational>1 2</Rational> <Add><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> <Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Add></Multiply>
+cos-3-over-10-times-pi	<Cos><Multiply><Rational>3 10</Rational> Pi</Multiply></Cos>	<Multiply><Divide><Sqrt>2</Sqrt> 4</Divide> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply>
 as-with-sin-a-non-special-numeric-argument-stays	<Cos>2</Cos>	<Cos>2</Cos>
 pi-24-is-past-the-automatic-special-angle-table	<Cos><Multiply><Rational>1 24</Rational> Pi</Multiply></Cos>	<Cos><Multiply><Rational>1 24</Rational> Pi</Multiply></Cos>
 cos-complexinfinity-is-indeterminate-for-the	<Cos>ComplexInfinity</Cos>	<Indeterminate />

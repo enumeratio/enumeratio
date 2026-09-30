@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out
+ellipticf-list-list-1-0-list-0-1-0	EllipticF[List[List[1, 0], List[0, 1]], 0]	{{1, 0}, {0, 1}}	F\left(\left.\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right|0\right)	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)
+matrixfunction-function-ellipticf-1-0-1-list	MatrixFunction[Function[EllipticF[Slot[1], 0]], List[List[1, 0], List[0, 1]]]	{{1, 0}, {0, 1}}	\text{MatrixFunction}\left[F(\text{$\#$1}|0)\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)
+ellipticf-0-1	EllipticF[0, 1]	0	F(0|1)	0
+ellipticf-0-0	EllipticF[0, 0]	0	F(0|0)	0
+ellipticf-jacobiamplitude-0-0-0	EllipticF[JacobiAmplitude[0, 0], 0]	0	F(\text{am}(0|0)|0)	0
+ellipticf-jacobiamplitude-0-1-1	EllipticF[JacobiAmplitude[0, 1], 1]	0	F(\text{am}(0|1)|1)	0

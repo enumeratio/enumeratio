@@ -1,0 +1,8 @@
+id	in	out
+2-times-list-1-2-3	<Multiply>2 <List>1 2 3</List></Multiply>	<List>2 4 6</List>
+a-times-list-list-1-2-list-3-4	<Multiply>a <List><List>1 2</List> <List>3 4</List></List></Multiply>	<List><List>a <Multiply>2 a</Multiply></List> <List><Multiply>3 a</Multiply> <Multiply>4 a</Multiply></List></List>
+exponentiale-pow-list-list-1-2-3-list-4-5-6	<Power>ExponentialE <List><List>1 2 3</List> <List>4 5 6</List></List></Power>	<List><List>ExponentialE <Power>ExponentialE 2</Power> <Power>ExponentialE 3</Power></List> <List><Power>ExponentialE 4</Power> <Power>ExponentialE 5</Power> <Power>ExponentialE 6</Power></List></List>
+outer-f-list-1-2-list-a-b-c	<Outer>f <List>1 2</List> <List>a b c</List></Outer>	<List><List><f>1 a</f> <f>1 b</f> <f>1 c</f></List> <List><f>2 a</f> <f>2 b</f> <f>2 c</f></List></List>
+prepend-list-1-2-3-list-a-b-c	<Prepend><List>1 2 3</List> <List>a b c</List></Prepend>	<List><List>a b c</List> 1 2 3</List>
+flatten-list-list-1-2-list-a-b-c	<Flatten><List><List>1 2</List> <List>a b c</List></List></Flatten>	<List>1 2 a b c</List>
+map-f-list-1-2-3-4	<Map>f <List>1 2 3 4</List></Map>	<List><f>1</f> <f>2</f> <f>3</f> <f>4</f></List>

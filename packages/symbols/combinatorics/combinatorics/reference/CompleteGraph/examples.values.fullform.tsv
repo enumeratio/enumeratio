@@ -1,2 +1,9 @@
-id	in
-k4	EdgeCount[CompleteGraph[4]]
+id	in	back
+k4	EdgeCount[CompleteGraph[4]]	
+completegraph-4	CompleteGraph[4]	
+completegraph-5	CompleteGraph[5]	
+map-function-vertexeccentricity-completegraph-5	Map[Function[VertexEccentricity[CompleteGraph[5], Slot[1]]], VertexList[CompleteGraph[5]]]	[Map, [Function, [VertexEccentricity, [CompleteGraph, 5], _1]], [VertexList, [CompleteGraph, 5]]]
+completegraph-6	CompleteGraph[6]	
+list-completegraph-3-cyclegraph-3	List[CompleteGraph[3], CycleGraph[3]]	
+list-completegraph-4-wheelgraph-4	List[CompleteGraph[4], WheelGraph[4]]	
+list-completegraph-6-linegraph-stargraph-7	List[CompleteGraph[6], LineGraph[StarGraph[7]]]	

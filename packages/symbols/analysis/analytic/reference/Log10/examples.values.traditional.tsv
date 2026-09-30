@@ -4,6 +4,7 @@ log10-1
 log10-100-000		
 log10-1-000-000		
 n-for-a-decimal-value		
+log-2		
 an-exact-negative-power-of-10-folds-too-log-10		
 a-symbolic-argument-becomes-compute-engine-s		
 log10-5p5		
@@ -14,5 +15,11 @@ interval-arithmetic-log-10-frac-13-2-log-10-3
 uncertainty-propagation-log-10-frac-1-101-pm-0		
 derivative-frac-1-x-ln-10		
 to-30-significant-digits-every-one-correctly		
+log-5		
+n-log-45-100		
+n-log-4-plus-i		
+fullsimplify-matrixfunction-log10-list-list-1		
+log-positiveinfinity		
+log-0		
 a-float-argument-folds-even-for-a-fractional		
 same-as-compute-engine-s-default-base-log	\log_{10}(1\,000)=\log_{10}(1\,000)	\mathrm{True}

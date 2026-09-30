@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+booleanconvert-factorial-a-b	Properties		[BooleanConvert, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]
+booleanconvert-factorial-a-b-c	Properties		[BooleanConvert, [Not, [Or, a, b, c]]]	[And, [Not, a], [Not, b], [Not, c]]

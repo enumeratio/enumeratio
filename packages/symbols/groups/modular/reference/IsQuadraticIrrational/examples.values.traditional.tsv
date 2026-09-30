@@ -2,9 +2,12 @@ id	in	out
 isquadraticirrational-sqrt-2	\mathrm{IsQuadraticIrrational}(\sqrt{2})	\mathrm{True}
 the-golden-ratio	\mathrm{IsQuadraticIrrational}(\frac{1+\sqrt{5}}{2})	\mathrm{True}
 a-cube-root-is-algebraic-of-degree-3	\mathrm{IsQuadraticIrrational}(\sqrt[3]{2})	\mathrm{False}
+isquadraticirrational-1-plus-sqrt-2	\mathrm{IsQuadraticIrrational}(1+\sqrt{2})	\mathrm{True}
+isquadraticirrational-sqrt-2-plus-sqrt-3	\mathrm{IsQuadraticIrrational}(\sqrt{2}+\sqrt{3})	\mathrm{False}
 transcendental	\mathrm{IsQuadraticIrrational}(\pi)	\mathrm{False}
 sqrt-4-is-rational-once-simplified	\mathrm{IsQuadraticIrrational}(\sqrt{4})	\mathrm{False}
 a-plain-integer	\mathrm{IsQuadraticIrrational}(5)	\mathrm{False}
 a-rational-multiple-of-a-surd	\mathrm{IsQuadraticIrrational}(3\sqrt{2})	\mathrm{True}
 a-surd-subtracted-from-a-rational	\mathrm{IsQuadraticIrrational}(1-\sqrt{3})	\mathrm{True}
+isquadraticirrational-3-over-2	\mathrm{IsQuadraticIrrational}(\frac{3}{2})	\mathrm{False}
 a-rational-is-not-irrational	\mathrm{IsQuadraticIrrational}(\frac{3}{4})	\mathrm{False}

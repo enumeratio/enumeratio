@@ -4,6 +4,8 @@ id	in	out
 the-result-takes-the-sign-of-the-modulus		
 threads-element-wise-over-a-list		
 mod-7-3		
+5-mod-3		
+1-plus-4-mod-3		
 a-third-argument-offsets-the-range-the-result		
 with-offset-1-the-residues-run-1-2-3-rather-than		
 rationals-are-reduced-exactly		
@@ -44,9 +46,31 @@ reducing-a-real-prime-s-associate-by-the-unit-i
 reducing-by-a-real-composite-5-squared		
 a-negative-associate-as-the-modulus		
 reducing-by-a-real-prime-19		
+1-plus-16-mod-5		
+generatingfunction-n-mod-4-n-x		
+282-475-249-mod-11		
+7-pow-totient-12-mod-12	7^{\varphi(12)}\bmod12	1
+list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod		
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	17\bmod5=(17+3\times5)\bmod5	\mathrm{True}
 a-negative-modulus-gives-a-result-in-n-0		
 the-remainder-of-quotient	(7+5i)\bmod(2+i)=(7+5i)-(2+i)\mathrm{Quotient}(7+5i, 2+i)	\mathrm{True}
+5-mod-3-eq-2-mod-3	5\bmod3=2\bmod3	\mathrm{True}
+2-mod-3-eq-8-mod-3	2\bmod3=8\bmod3	\mathrm{True}
+0-mod-1		
+1-mod-2		
+1-mod-3		
+2-mod-3		
+3-mod-3		
+4-mod-3		
+8-mod-3-eq-5-mod-3	8\bmod3=5\bmod3	\mathrm{True}
+8-mod-2		
+17-mod-6		
+12-mod-8		
+neg-3-mod-neg-2		
+neg-27-over-10-mod-23-over-5		
+pi-mod-exponentiale		
+0-mod-2		
+1-mod-1		
 division-by-a-0-modulus-yields-nan-rather-than		
 periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\mathrm{False}
 rounding-ties-to-even-means-1-and-1-both-appear		

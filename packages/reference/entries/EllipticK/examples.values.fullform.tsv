@@ -1,0 +1,3 @@
+id	in
+elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	EllipticK[Power[Plus[1, Sqrt[2], Minus[Sqrt[Times[2, Plus[1, Sqrt[2]]]]]], 4]]
+elliptick-1	EllipticK[1]

@@ -1,0 +1,11 @@
+id	in	out
+trigtoexp-cos-x	\mathrm{TrigToExp}(\cos(x))	\frac{1}{2}(\exp(i x)+\exp(-i x))
+trigtoexp-sinh-x	\mathrm{TrigToExp}(\sinh(x))	\frac{1}{2}(e^{x}-\exp(-x))
+trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	\mathrm{TrigToExp}(\cos(x)+i\sin(x))	\frac{1}{2}(\exp(i x)+\exp(-i x))+i((-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x))
+trigtoexp-tanh-x	\mathrm{TrigToExp}(\tanh(x))	\frac{e^{x}-\exp(-x)}{e^{x}+\exp(-x)}
+trigtoexp-arcsin-x	\mathrm{TrigToExp}(\arcsin(x))	-i\ln(i x+\sqrt{1-x^2})
+trigtoexp-arcoth-x	\mathrm{TrigToExp}(\mathrm{arcoth}(x))	\frac{1}{2}(\ln(x+1)-\ln(x-1))
+trigtoexp-sinh-x-lt-eq-11-arctan-x-eq-7	\mathrm{TrigToExp}(\sinh(x)\le11\land\arctan(x)=7)	\frac{1}{2}(e^{x}-\exp(-x))\le11\land\arctan(x)=7
+trigtoexp-sin-5-times-arcsin-x	\mathrm{TrigToExp}(\sin(5\arcsin(x)))	(-\frac{1}{2}i)\exp(5i\arcsin(x))+(\frac{1}{2}i)\exp(-5i\arcsin(x))
+trigtoexp-sin-x-lt-x-lt-tan-x	\mathrm{TrigToExp}(\sin(x)\lt x\lt\tan(x))	(-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)\lt x\lt\frac{-i(\exp(i x)-\exp(-i x))}{\exp(i x)+\exp(-i x)}
+trigtoexp-sin-x-eq-pi-times-3-pow-neg-1	\mathrm{TrigToExp}(\sin(x)=\frac{\pi}{3})	(-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)=\frac{\pi}{3}

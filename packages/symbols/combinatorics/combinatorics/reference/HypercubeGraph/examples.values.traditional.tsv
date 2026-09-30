@@ -1,0 +1,6 @@
+id	in	out
+q3-has-8-vertices-12-edges		
+hypercubegraph-3		
+map-function-vertexeccentricity-hypercubegraph-3		
+isbipartitegraph-hypercubegraph-3	\mathrm{IsBipartiteGraph}(\mathrm{HypercubeGraph}(3))	\mathrm{True}
+hypercubegraph-2		

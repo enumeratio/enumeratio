@@ -2,6 +2,9 @@ id	in	out	tex.in	tex.out
 pm-1-2-pm-2-2-in-either-order	SquaresR[2, 5]	8	r_2(5)	8
 squaresr-2-25	SquaresR[2, 25]	12	r_2(25)	12
 no-n-equiv-3-pmod-4-is-a-sum-of-two-squares	SquaresR[2, 3]	0	r_2(3)	0
+squaresr-2-45	SquaresR[2, 45]	8	r_2(45)	8
 squaresr-3-6	SquaresR[3, 6]	24	r_3(6)	24
 squaresr-8-3	SquaresR[8, 3]	448	r_8(3)	448
+sum-squaresr-2-k-k-0-400	Sum[SquaresR[2, k], List[k, 0, 400]]	1257	\sum _{k=0}^{400} r_2(k)	1257
 jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n	SquaresR[4, 10]	144	r_4(10)	144
+squaresr-2-100	SquaresR[2, 100]	12	r_2(100)	12

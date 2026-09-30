@@ -3,3 +3,5 @@ a-rational-function-is-meromorphic			[FunctionMeromorphic, [Divide, 1, x], x]	Tr
 tangent-is-a-ratio-of-entire-functions			[FunctionMeromorphic, [Tan, x], x]	True	True	Wolfram 15.0.0, hand cross-checked	Tangent is sine over cosine, a ratio of entire functions
 a-branch-point-is-not-a-pole			[FunctionMeromorphic, [Ln, x], x]	False	False	Wolfram 15.0.0, hand cross-checked	A branch point disqualifies log even though it has no poles
 polynomials-are-meromorphic			[FunctionMeromorphic, [Power, x, 2], x]	True			Polynomials are entire, hence meromorphic
+functionmeromorphic-sqrt-z-z	Scope		[FunctionMeromorphic, [Sqrt, z], z]	False			
+functionmeromorphic-ln-z-z	Applications		[FunctionMeromorphic, [Ln, z], z]	False			

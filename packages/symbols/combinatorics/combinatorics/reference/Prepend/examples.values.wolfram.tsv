@@ -5,4 +5,6 @@ prepend-single-element-list	Prepend[List[5], 10]	{10, 5}	\text{Prepend}[\{5\},10
 prepend-empty-list	Prepend[List[], 42]	{42}	\text{Prepend}[\{\},42]	\{42\}	
 a-rule-inserted-at-the-front-of-an-association	Prepend[Association[Rule[1, a], Rule[2, b]], Rule[3, d]]	<|3 -> d, 1 -> a, 2 -> b|>	\text{Prepend}[\text{Association}[1\to a,2\to b],3\to d]	\unicode{f113}3\to d,1\to a,2\to b\unicode{f114}	disagree
 several-rules-prepended-at-once					
+nestlist-function-prepend-1-x-1-list-a-5	NestList[Function[Prepend[Slot[1], x]], List[a], 5]	{{a}, {x, a}, {x, x, a}, {x, x, x, a}, {x, x, x, x, a}, {x, x, x, x, x, a}}	\text{NestList}[\text{Prepend}[\text{$\#$1},x]\&,\{a\},5]	\{\{a\},\{x,a\},\{x,x,a\},\{x,x,x,a\},\{x,x,x,x,a\},\{x,x,x,x,x,a\}\}	
 prepend-c-x-join-x-c-see-join	(Prepend[List[1, 2, 3], 0] == Join[List[0], List[1, 2, 3]])	True	\text{Prepend}[\{1,2,3\},0]=\text{Join}[\{0\},\{1,2,3\}]	\text{True}	
+prepend-list-a-b-c-list-x-y	Prepend[List[a, b, c], List[x, y]]	{{x, y}, a, b, c}	\text{Prepend}[\{a,b,c\},\{x,y\}]	\{\{x,y\},a,b,c\}	

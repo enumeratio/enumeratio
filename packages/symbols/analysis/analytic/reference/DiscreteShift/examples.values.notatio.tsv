@@ -1,3 +1,5 @@
 id	in	out
 discreteshift-one-step	<DiscreteShift><a>n</a> n</DiscreteShift>	<a><Add>n 1</Add></a>
 discreteshift-h-step	<DiscreteShift><a>n</a> <List>n 2</List></DiscreteShift>	<a><Add>n 2</Add></a>
+discreteshift-floor-i-i	<DiscreteShift><Floor><Complex>0 1</Complex></Floor> <Complex>0 1</Complex></DiscreteShift>	<DiscreteShift><Complex>0 1</Complex> <Complex>0 1</Complex></DiscreteShift>
+discreteshift-round-i-list-i-3	<DiscreteShift><Round><Complex>0 1</Complex></Round> <List><Complex>0 1</Complex> 3</List></DiscreteShift>	<DiscreteShift><Complex>0 1</Complex> <List><Complex>0 1</Complex> 3</List></DiscreteShift>

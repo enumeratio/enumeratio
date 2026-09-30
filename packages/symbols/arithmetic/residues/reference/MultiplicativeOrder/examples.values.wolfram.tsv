@@ -13,5 +13,11 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1	MultiplicativeOrder[3, Subtract[Pow
 1-is-the-only-element-of-order-1	MultiplicativeOrder[1, 7]	1	\text{ord}_7(1)	1	
 the-multiplicative-order-always-divides-varphi-n	(Mod[EulerPhi[7], MultiplicativeOrder[3, 7]] == 0)	True	(\phi (7) \bmod \text{ord}_7(3))=0	\text{True}	
 the-discrete-log-inverts-powermod	PowerMod[3, MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]], Subtract[Power[2, 61], 1]]	$Aborted			error
+divides-multiplicativeorder-5-12-totient-12	Divisible[EulerPhi[12], MultiplicativeOrder[5, 12]]	True	\text{ord}_{12}(5)|\phi (12)	\text{True}	
+multiplicativeorder-5-3	MultiplicativeOrder[5, 3]	2	\text{ord}_3(5)	2	
+multiplicativeorder-neg-5-3	MultiplicativeOrder[-5, 3]	1	\text{ord}_3(-5)	1	
+multiplicativeorder-5-7-list-4	MultiplicativeOrder[5, 7, List[4]]	2	\text{MultiplicativeOrder}[5,7,\{4\}]	2	
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	MultiplicativeOrder[10, 22]	MultiplicativeOrder[10, 22]	\text{ord}_{22}(10)	\text{ord}_{22}(10)	
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	MultiplicativeOrder[2, 7, List[3]]	MultiplicativeOrder[2, 7, {3}]	\text{MultiplicativeOrder}[2,7,\{3\}]	\text{MultiplicativeOrder}[2,7,\{3\}]	
+multiplicativeorder-10-21	MultiplicativeOrder[10, 21]	6	\text{ord}_{21}(10)	6	
+multiplicativeorder-21-10	MultiplicativeOrder[21, 10]	1	\text{ord}_{10}(21)	1	

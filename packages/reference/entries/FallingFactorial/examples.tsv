@@ -1,4 +1,11 @@
 id	section	role	expr	expected	caption
 falling-factorial-5-3-60			[FallingFactorial, 5, 3]	60	$5 \cdot 4 \cdot 3 = 60$
+fallingfactorial-10-2			[FallingFactorial, 10, 2]	90	
+fallingfactorial-x-8			[FallingFactorial, x, 8]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3], [Add, [Negate, x], 4], [Add, [Negate, x], 5], [Add, [Negate, x], 6], [Add, [Negate, x], 7]]	
 falling-factorial-3-5-0	Scope		[FallingFactorial, 3, 5]	0	A factor of $0$ appears once $n$ exceeds $x$
 falling-factorial-half-2-neg-1-4	Scope		[FallingFactorial, [Rational, 1, 2], 2]	[Rational, -1, 4]	$\tfrac12 \cdot (-\tfrac12) = -\tfrac14$
+fallingfactorial-4-2	Scope		[FallingFactorial, 4, 2]	12	
+functionexpand-fallingfactorial-x-4	Scope		[FunctionExpand, [FallingFactorial, x, 4]]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3]]	
+fallingfactorial-n-0	Scope		[FallingFactorial, n, 0]	1	
+fallingfactorial-10-3	Applications		[FallingFactorial, 10, 3]	720	
+differencedelta-fallingfactorial-x-n-x	Properties		[DifferenceDelta, [FallingFactorial, x, n], x]	[Add, [Negate, [FallingFactorial, x, n]], [FallingFactorial, [Add, x, 1], n]]	

@@ -1,4 +1,31 @@
 id	in	out
+carmichaellambda-10	\mathrm{CarmichaelLambda}(10)	4
 listable	\mathrm{CarmichaelLambda}(\bigl\lbrack8, 15\bigr\rbrack)	\bigl\lbrack2, 4\bigr\rbrack
 negative-n-lambda-n-lambda-n	\mathrm{CarmichaelLambda}(-100)	20
 listable-over-a-range	\mathrm{CarmichaelLambda}(1..10)	\bigl\lbrack1, 1, 2, 2, 4, 2, 6, 2, 6, 4\bigr\rbrack
+carmichaellambda-neg-10	\mathrm{CarmichaelLambda}(-10)	4
+carmichaellambda-list-2-4-7	\mathrm{CarmichaelLambda}(\bigl\lbrack2, 4, 7\bigr\rbrack)	\bigl\lbrack1, 2, 6\bigr\rbrack
+561-mod-carmichaellambda-561	561\bmod\mathrm{CarmichaelLambda}(561)	1
+carmichaellambda-12	\mathrm{CarmichaelLambda}(12)	2
+list-divides-8-24-divides-carmichaellambda-8	\bigl\lbrack8\mid24, \mathrm{CarmichaelLambda}(8)\mid\mathrm{CarmichaelLambda}(24)\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
+3-pow-1-plus-carmichaellambda-17-mod-17	3^{1+\mathrm{CarmichaelLambda}(17)}\bmod17	3
+divides-multiplicativeorder-4-9-carmichaellambda	\mathrm{MultiplicativeOrder}(4, 9)\mid\mathrm{CarmichaelLambda}(9)	\top
+carmichaellambda-1	\mathrm{CarmichaelLambda}(1)	1
+carmichaellambda-2	\mathrm{CarmichaelLambda}(2)	1
+carmichaellambda-3	\mathrm{CarmichaelLambda}(3)	2
+carmichaellambda-4	\mathrm{CarmichaelLambda}(4)	2
+carmichaellambda-5	\mathrm{CarmichaelLambda}(5)	4
+carmichaellambda-6	\mathrm{CarmichaelLambda}(6)	2
+divides-carmichaellambda-8-totient-8	\mathrm{CarmichaelLambda}(8)\mid\mathrm{Totient}(8)	\top
+carmichaellambda-7	\mathrm{CarmichaelLambda}(7)	6
+carmichaellambda-8	\mathrm{CarmichaelLambda}(8)	2
+carmichaellambda-9	\mathrm{CarmichaelLambda}(9)	6
+carmichaellambda-11	\mathrm{CarmichaelLambda}(11)	10
+carmichaellambda-13	\mathrm{CarmichaelLambda}(13)	12
+carmichaellambda-14	\mathrm{CarmichaelLambda}(14)	6
+carmichaellambda-15	\mathrm{CarmichaelLambda}(15)	4
+carmichaellambda-16	\mathrm{CarmichaelLambda}(16)	4
+carmichaellambda-17	\mathrm{CarmichaelLambda}(17)	16
+carmichaellambda-list-neg-2-neg-1-0-1-2	\mathrm{CarmichaelLambda}(\bigl\lbrack-2, -1, 0, 1, 2\bigr\rbrack)	\bigl\lbrack1, 1, 0, 1, 1\bigr\rbrack
+list-lcm-carmichaellambda-list-3-8	\bigl\lbrack\operatorname{lcm}(\mathrm{CarmichaelLambda}(\bigl\lbrack3, 8\bigr\rbrack)), \mathrm{CarmichaelLambda}(\operatorname{lcm}(3, 8))\bigr\rbrack	\bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, 2\bigr\rbrack
+carmichaellambda-0	\mathrm{CarmichaelLambda}(0)	0

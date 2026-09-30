@@ -31,6 +31,12 @@ zeta-2-1-2-3-zeta-2-pi-2-2	\zeta(2, \frac{1}{2})	\frac{\pi^2}{2}
 interval-arithmetic-zeta-is-decreasing-on-1	\zeta(\mathrm{Interval}(1.1, 1.2))	\mathrm{Interval}(5.591\,582\,441\,177\,75, 10.584\,448\,464\,950\,812)
 uncertainty-in-a-propagated-with-partial-a-zeta	\zeta(\frac{1}{2}, \mathrm{Around}(0.5, 0.01))	\mathrm{Around}(-0.604\,898\,643\,421\,630\,4, 0.023\,882\,689\,737\,774\,167)
 to-40-significant-digits-every-one-correctly	N(\zeta(3), 40)	1.202\,056\,903\,159\,594\,285\,4
+n-zeta-5-over-4-50	N(\zeta(\frac{5}{4}), 50)	4.595\,111\,825\,842\,943\,380\,69
+n-zeta-3-2-50	N(\zeta(3, 2), 50)	0.202\,056\,903\,159\,594\,285\,4
+zeta-2-list-list-1-over-2-0-list-0-3-over-2	\zeta(2, \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{3}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi^2}{2}, \frac{\pi^2}{6}\bigr\rbrack, \bigl\lbrack\frac{\pi^2}{6}, \zeta(2, \frac{3}{2})\bigr\rbrack\bigr\rbrack
+zeta-4-5	\zeta(4, 5)	\frac{\pi^4}{90}-\frac{22\,369}{20\,736}
+zeta-list-1-2-3-4	\zeta(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack\tilde\infty, \frac{\pi^2}{6}, \zeta(3), \frac{\pi^4}{90}\bigr\rbrack
+matrixfunction-function-zeta-2-1-1-list-list-1	\mathrm{MatrixFunction}(()\mapsto\zeta(2, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{3}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi^2}{2}, 0\bigr\rbrack, \bigl\lbrack0, \zeta(2, \frac{3}{2})\bigr\rbrack\bigr\rbrack
 the-probability-that-two-random-positive	\frac{1}{\zeta(2)}=\frac{6}{\pi^2}	\top
 certified-digits-zeta-3	N(\zeta(3), 40)	1.202\,056\,903\,159\,594\,285\,4
 zeta-0-1-2	\zeta(0)	-\frac{1}{2}
@@ -38,6 +44,20 @@ trivial-zero-zeta-2n-0-for-positive-integer-n	\zeta(-2)	0
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	\zeta(-3)	\frac{1}{120}
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges	\zeta(1)	\tilde\infty
 zeta-s-1-zeta-s-for-symbolic-s	\zeta(s, 1)	\zeta(s)
+zeta-0-1	\zeta(0, 1)	-\frac{1}{2}
+zeta-neg-1-1	\zeta(-1, 1)	-\frac{1}{12}
+zeta-0-1-over-4	\zeta(0, \frac{1}{4})	\frac{1}{4}
+zeta-neg-1-1-over-4	\zeta(-1, \frac{1}{4})	\frac{1}{96}
+zeta-2-3	\zeta(2, 3)	\frac{\pi^2}{6}-\frac{5}{4}
+zeta-2-4	\zeta(2, 4)	\frac{\pi^2}{6}-\frac{49}{36}
+zeta-2-5	\zeta(2, 5)	\frac{\pi^2}{6}-\frac{205}{144}
+zeta-2-6	\zeta(2, 6)	\frac{\pi^2}{6}-\frac{5\,269}{3\,600}
+zeta-2-7	\zeta(2, 7)	\frac{\pi^2}{6}-\frac{5\,369}{3\,600}
+zeta-2-8	\zeta(2, 8)	\frac{\pi^2}{6}-\frac{266\,681}{176\,400}
+zeta-2-9	\zeta(2, 9)	\frac{\pi^2}{6}-\frac{1\,077\,749}{705\,600}
+zeta-2-10	\zeta(2, 10)	\frac{\pi^2}{6}-\frac{9\,778\,141}{6\,350\,400}
+zeta-4-1	\zeta(4, 1)	\frac{\pi^4}{90}
+zeta-4-2	\zeta(4, 2)	\frac{\pi^4}{90}-1
 odd-integers-geq-3-have-no-known-closed-form	\zeta(3)	\zeta(3)
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N(\zeta(3, -\frac{1}{2}))	16.414\,398\,322\,117\,159\,997\,8
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N(\zeta(-1, -2))	2.91\overline{6}

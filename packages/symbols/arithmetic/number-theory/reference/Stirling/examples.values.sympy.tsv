@@ -12,6 +12,24 @@ two-blocks-s-n-2-2-n-1-1	enumeratio_equal(stirling(10, 2), ((S(2)**9) - 1))	True
 s-n-n-1-binom-n-2-one-block-is-a-pair	enumeratio_equal(stirling(6, 5), binomial(6, 2))	True	
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j			
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m			
+n-stirling-120-10	N(stirling(120, 10), 30)		
+stirling-10-4	stirling(10, 4)		
+stirling-1-0	stirling(1, 0)		
+stirling-1-1	stirling(1, 1)		
+stirling-1-2	stirling(1, 2)		
+stirling-2-0	stirling(2, 0)		
+stirling-2-1	stirling(2, 1)		
+stirling-2-2	stirling(2, 2)		
+stirling-2-3	stirling(2, 3)		
+stirling-3-0	stirling(3, 0)		
+stirling-3-1	stirling(3, 1)		
+stirling-3-2	stirling(3, 2)		
+stirling-3-3	stirling(3, 3)		
+stirling-3-4	stirling(3, 4)		
+stirling-4-0	stirling(4, 0)		
+stirling-4-1	stirling(4, 1)		
+stirling-4-2	stirling(4, 2)		
+stirling-4-3	stirling(4, 3)		
 the-empty-set-has-one-partition-into-no-blocks	stirling(0, 0)	1	
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	stirling(5, 0)	0	
 k-n-is-0	stirling(3, 5)	0	

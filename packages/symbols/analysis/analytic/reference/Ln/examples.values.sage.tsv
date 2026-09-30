@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	N(log(-2))	0.693147180559945 + 3.14159265358979
 ln-neg-6	log(-6)	I*pi + log(6)	
 n-of-a-negative-rational-argument	N(log((-1/2)))	-0.693147180559945 + 3.14159265358979*I	
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
+n-ln-5-over-2-50	N(log((5/2)))		
+functiondomain-ln-x-x			
+functionrange-ln-x-x-y			
+functionanalytic-ln-x-x			
+functionmeromorphic-ln-x-x			
+functioninjective-ln-x-x			
+functionsurjective-ln-x-x			
+d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))		
+d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))		
+ln-exponentiale-pow-n	log(((e)^SR.var("n")))		
 inverse-of-exp-ln-e-x-x	bool(log(exp(5)) == 5)	True	
 product-rule-ln-ab-ln-a-ln-b	bool((log(2) + log(3)) == log(6))	False	disagree
 powerexpand-splits-a-logarithm-of-a-product			

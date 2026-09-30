@@ -2,6 +2,28 @@ id	in	out
 n-pi-30	<N>Pi 30</N>	<ToExpression>3.14159265358979323846264338328</ToExpression>
 the-last-digit-correctly-rounded-computing-at-30	<N><Sinh>1</Sinh> 30</N>	<ToExpression>1.17520119364380145688238185060</ToExpression>
 a-list-number-by-number	<N><List>Pi ExponentialE <Sqrt>2</Sqrt></List> 5</N>	<List>3.1416 2.7183 1.4142</List>
+n-1-over-7	<N><Rational>1 7</Rational></N>	<ToExpression>0.142857142857142857143</ToExpression>
+n-1-over-7-50	<N><Rational>1 7</Rational> 50</N>	<ToExpression>0.14285714285714285714285714285714285714285714285714</ToExpression>
+n-gamma-33-over-10-50	<N><Gamma><Rational>33 10</Rational></Gamma> 50</N>	<ToExpression>2.6834373819557687935963273147667112586281870043548</ToExpression>
+n-pi-50	<N>Pi 50</N>	<ToExpression>3.1415926535897932384626433832795028841971693993751</ToExpression>
+n-khinchin-50	<N>Khinchin 50</N>	<ToExpression>2.6854520010653064453097148354817956938203822939945</ToExpression>
+n-arcsin-3	<N><Arcsin>3</Arcsin></N>	<Complex>1.5707963267948966192313215 -1.76274717403908605047</Complex>
+n-c	<N>c</N>	<c />
+n-c-47	<N>c 47</N>	<c />
+n-1-over-neg-x-plus-exponentiale-times-2x-plus	<N><Multiply><Divide>1 <Add><Negate>x</Negate> ExponentialE</Add></Divide> <Add><Multiply>2 x</Multiply> Pi</Add></Multiply> 20</N>	<Divide><Add><Multiply>2 x</Multiply> 3.1415926535897932385</Add> <Add><Negate>x</Negate> 2.7182818284590452354</Add></Divide>
+n-poly	<N>poly</N>	<poly />
+n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	<N><Add>1 <Negate><Sqrt><Add>1 <Negate><Power>ExponentialE -1000</Power></Negate></Add></Sqrt></Negate></Add> 20</N>	<ToExpression>0.0</ToExpression>
+n-exponentiale-25	<N>ExponentialE 25</N>	<ToExpression>2.718281828459045235360287</ToExpression>
+n-x-pow-3-over-2	<N><Power>x <Rational>3 2</Rational></Power></N>	<Power>x 1.5</Power>
+n-pi-pow-x	<N><Power>Pi x</Power></N>	<Power>3.141592653589793238462643 x</Power>
+n-exponentiale-pow-x-plus-pi	<N><Power>ExponentialE <Add>x Pi</Add></Power></N>	<Power>2.71828182845904523536 <Add>x 3.141592653589793238462643</Add></Power>
+n-int	<N>int</N>	<int />
+n-exponentiale	<N>ExponentialE</N>	<ToExpression>2.71828182845904523536</ToExpression>
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	<N><Add><Multiply>-2 pit</Multiply> Pi</Add> <List>PositiveInfinity 20</List></N>	<Add><Multiply>-2 pit</Multiply> 3.141592653589793238462643</Add>
+n-crt	<N>crt</N>	<crt />
+n-crt-47	<N>crt 47</N>	<crt />
+n-exponentiale-pow-sin-1-000	<N><Power>ExponentialE <Sin>1000</Sin></Power></N>	<ToExpression>2.28617368581217110223</ToExpression>
+n-exponentiale-pow-sin-1-000-47	<N><Power>ExponentialE <Sin>1000</Sin></Power> 47</N>	<ToExpression>2.286173685812171102225890854533061221871278512</ToExpression>
 an-exact-tie-rounds-to-the-even-digit-0-125	<N><Rational>1 8</Rational> 2</N>	<ToExpression>0.12</ToExpression>
 and-0-375-to-0-38	<N><Rational>3 8</Rational> 2</N>	<ToExpression>0.38</ToExpression>
 n-pi-1-digit	<N>Pi 1</N>	<ToExpression>3</ToExpression>

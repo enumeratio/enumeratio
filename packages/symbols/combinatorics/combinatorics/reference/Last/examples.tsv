@@ -5,6 +5,8 @@ last-list-a-b-c			[Last, [List, a, b, c]]	c
 last-default-ignored-when-nonempty		test	[Last, [List, 1, 2, 3], 99]	3			
 last-of-association-is-last-value		test	[Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	c			
 last-of-empty-association-falls-through		test	[Last, [Association], 99]	99			
+last-list-list-a-b-list-c-d-list-exponentiale-f			[Last, [List, [List, a, b], [List, c, d], [List, ExponentialE, f]]]	[List, ExponentialE, f]			
+last-list-x			[Last, [List], x]	x			
 a-second-argument-supplies-a-default-for-an	Scope		[Last, [List], 99]	99	A second argument supplies a default for an empty collection		
 of-a-matrix-the-last-row	Scope		[Last, [List, [List, a, b], [List, c, d], [List, f, g]]]	[List, f, g]	Of a matrix, the last row		
 a-lazy-range-works-too	Scope		[Last, [Range, 5, 10]]	10	A lazy [[Range]] works too		
@@ -12,3 +14,4 @@ any-expression-not-just-a-list-the-last-term-of	Scope		[Last, [Add, [Power, a, 2
 a-default-is-ignored-when-the-collection-has-a	Scope		[Last, [List, a, b], x]	b	A default is ignored when the collection has a last element		
 last-c-at-c-1-see-at	Properties		[Equal, [Last, [List, 1, 2, 3]], [At, [List, 1, 2, 3], -1]]	True	$Last(c) = At(c, -1)$. See [[At]]		
 an-empty-collection-has-no-last-element-compute	Possible issues		[Last, [List]]	Missing	An empty collection has no last element; compute-engine returns the symbol $Missing$	undefined-form	Both decline on an empty collection: compute-engine answers Missing, Wolfram's Last[{}] stays unevaluated.
+last-1-over-b	Possible issues		[Last, [Divide, 1, b]]	b		convention	Last[1/b]: Wolfram's FullForm of 1/b is Power[b,-1], so Last gives -1 (the exponent). Our canonical form for division is a genuine Divide(1,b) with operands [1,b], so Last gives b. Both are internally consistent with their own canonical representation of division; structure-sensitive heads like Last necessarily disagree as a result.

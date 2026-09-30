@@ -9,7 +9,16 @@ threads-element-wise-over-a-list-as-wolfram-s	<NextPrime><List>1 5 10 15</List><
 large-integers-the-first-prime-past-a-googol-is	<NextPrime><Power>10 100</Power></NextPrime>	<ToExpression>10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267</ToExpression>
 rational-n-the-next-prime-above-7-2	<NextPrime><Rational>7 2</Rational></NextPrime>	<ToExpression>5</ToExpression>
 real-n-the-next-prime-above-100-5	<NextPrime>100.5</NextPrime>	<ToExpression>101</ToExpression>
+findinstance-nextprime-p-eq-p-plus-1-0-lt-p-lt	<FindInstance><And><Equal><NextPrime>p</NextPrime> <Add>p 1</Add></Equal> <Less>0 p 10</Less></And> p Integers</FindInstance>	<List><List><Rule>p 1</Rule></List></List>
+nextprime-1-25	<NextPrime>1 25</NextPrime>	<ToExpression>97</ToExpression>
+array-nextprime-100-mod-10	<Mod><Array>NextPrime 100</Array> 10</Mod>	<List>2 3 5 5 7 7 1 1 1 1 3 3 7 7 7 7 9 9 3 3 3 3 9 9 9 9 9 9 1 1 7 7 7 7 7 7 1 1 1 1 3 3 7 7 7 7 3 3 3 3 3 3 9 9 9 9 9 9 1 1 7 7 7 7 7 7 1 1 1 1 3 3 9 9 9 9 9 9 3 3 3 3 9 9 9 9 9 9 7 7 7 7 7 7 7 7 1 1 1 1</List>
+filter-range-1-100-function-isprime-1-nextprime	<Filter><Range>1 100</Range> <Function><Block><And><IsPrime>_1</IsPrime> <Equal><NextPrime>_1</NextPrime> <Add>_1 2</Add></Equal></And></Block> _1</Function></Filter>	<List>3 5 11 17 29 41 59 71</List>
+map-function-nextprime-10-pow-1-1-range-0-20	<Map><Function><Block><NextPrime><Power>10 _1</Power></NextPrime></Block> _1</Function> <Range>0 20</Range></Map>	<List>2 11 101 1009 10007 100003 1000003 10000019 100000007 1000000007 10000000019 100000000003 1000000000039 10000000000037 100000000000031 1000000000000037 10000000000000061 100000000000000003 1000000000000000003 10000000000000000051 100000000000000000039</List>
+map-function-neg-10-pow-1-plus-nextprime-10-pow	<Map><Function><Block><Add><Negate><Power>10 _1</Power></Negate> <NextPrime><Power>10 _1</Power></NextPrime></Add></Block> _1</Function> <Range>0 20</Range></Map>	<List>1 1 1 9 7 3 3 19 7 7 19 3 39 37 31 37 61 3 3 51 39</List>
 nextprime-steps-from-p-n-to-p-n-1-see-nthprime	<Equal><NextPrime><NthPrime>20</NthPrime></NextPrime> <NthPrime>21</NthPrime></Equal>	<True />
+nextprime-1-39	<NextPrime>1 39</NextPrime>	<ToExpression>167</ToExpression>
+nextprime-15	<NextPrime>15</NextPrime>	<ToExpression>17</ToExpression>
+nextprime-30-in-primes	<Element><NextPrime>30</NextPrime> Primes</Element>	<True />
 a-negative-k-walks-backward-giving-the-prime	<NextPrime>10 -1</NextPrime>	<ToExpression>7</ToExpression>
 negative-n-wolfram-counts-7-as-prime-and-returns	<NextPrime>-10</NextPrime>	<ToExpression>-7</ToExpression>
 nextprime-neg-2	<NextPrime>-2</NextPrime>	<ToExpression>2</ToExpression>

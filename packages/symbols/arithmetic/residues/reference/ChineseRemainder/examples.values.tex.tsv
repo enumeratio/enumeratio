@@ -8,4 +8,5 @@ over-classes-the-answer-is-a-class-and-reading	\mathrm{ChineseRemainder}(\mathrm
 a-third-argument-asks-for-the-smallest-solution	\mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 5\bigr\rbrack, 100)	112
 recover-123456-bmod-1001-from-its-residues-mod-7	\mathrm{ChineseRemainder}(123\,456\bmod\bigl\lbrack7, 11, 13\bigr\rbrack, \bigl\lbrack7, 11, 13\bigr\rbrack)	333
 verifies-the-solution-satisfies-both-congruences	\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod4=3\land\mathrm{ChineseRemainder}(\bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack)\bmod5=4	\top
+chineseremainder-list-1-2-list-3-5	\mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 5\bigr\rbrack)	7
 no-solution-exists-when-the-remainders-are	\mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack6, 10\bigr\rbrack)	\mathrm{ChineseRemainder}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack6, 10\bigr\rbrack)

@@ -1,6 +1,12 @@
 id	in	out	tex.in	tex.out
 string-take-s-n-takes-the-first-n-characters	StringTake["hello world", 5]	"\"hello\""	\text{StringTake}[\text{hello world},5]	\text{hello}
+stringtake-abcdefghijklm-6	StringTake["abcdefghijklm", 6]	"\"abcdef\""	\text{StringTake}[\text{abcdefghijklm},6]	\text{abcdef}
+stringtake-abcdefghijklm-neg-4	StringTake["abcdefghijklm", -4]	"\"jklm\""	\text{StringTake}[\text{abcdefghijklm},-4]	\text{jklm}
+stringtake-abcdefghijklm-list-5-10	StringTake["abcdefghijklm", List[5, 10]]	"\"efghij\""	\text{StringTake}[\text{abcdefghijklm},\{5,10\}]	\text{efghij}
 string-take-s-negative-n-takes-last-n-chars	StringTake["hello world", -5]	"\"world\""	\text{StringTake}[\text{hello world},-5]	\text{world}
 string-take-s-n-takes-the-nth-character-alone	StringTake["hello", List[2]]	"\"e\""	\text{StringTake}[\text{hello},\{2\}]	\text{e}
 string-take-s-m-n-takes-an-inclusive-range	StringTake["hello world", List[1, 5]]	"\"hello\""	\text{StringTake}[\text{hello world},\{1,5\}]	\text{hello}
 string-take-s-m-negative-n-counts-from-end	StringTake["hello world", List[1, -7]]	"\"hello\""	\text{StringTake}[\text{hello world},\{1,-7\}]	\text{hello}
+stringtake-abcdefghijklm-list-6	StringTake["abcdefghijklm", List[6]]	"\"f\""	\text{StringTake}[\text{abcdefghijklm},\{6\}]	\text{f}
+stringtake-abc-ndef-5	StringTake["abc\ndef", 5]	"\"abc\\nd\""	\text{StringTake}[\text{abc$\backslash $ndef},5]	\text{abc$\backslash $nd}
+stringtake-abcdefghijklm-list-5-neg-4	StringTake["abcdefghijklm", List[5, -4]]	"\"efghij\""	\text{StringTake}[\text{abcdefghijklm},\{5,-4\}]	\text{efghij}

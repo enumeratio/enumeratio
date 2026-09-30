@@ -1,6 +1,12 @@
 id	in	out
 string-take-s-n-takes-the-first-n-characters	<StringTake><String>`hello world`</String> 5</StringTake>	<ToExpression>"hello"</ToExpression>
+stringtake-abcdefghijklm-6	<StringTake>"abcdefghijklm" 6</StringTake>	<ToExpression>"abcdef"</ToExpression>
+stringtake-abcdefghijklm-neg-4	<StringTake>"abcdefghijklm" -4</StringTake>	<ToExpression>"jklm"</ToExpression>
+stringtake-abcdefghijklm-list-5-10	<StringTake>"abcdefghijklm" <List>5 10</List></StringTake>	<ToExpression>"efghij"</ToExpression>
 string-take-s-negative-n-takes-last-n-chars	<StringTake><String>`hello world`</String> -5</StringTake>	<ToExpression>"world"</ToExpression>
 string-take-s-n-takes-the-nth-character-alone	<StringTake><String>hello</String> <List>2</List></StringTake>	<ToExpression>"e"</ToExpression>
 string-take-s-m-n-takes-an-inclusive-range	<StringTake><String>`hello world`</String> <List>1 5</List></StringTake>	<ToExpression>"hello"</ToExpression>
 string-take-s-m-negative-n-counts-from-end	<StringTake><String>`hello world`</String> <List>1 -7</List></StringTake>	<ToExpression>"hello"</ToExpression>
+stringtake-abcdefghijklm-list-6	<StringTake>"abcdefghijklm" <List>6</List></StringTake>	<ToExpression>"f"</ToExpression>
+stringtake-abc-ndef-5	<StringTake>"abc\ndef" 5</StringTake>	<ToExpression>"abc\nd"</ToExpression>
+stringtake-abcdefghijklm-list-5-neg-4	<StringTake>"abcdefghijklm" <List>5 -4</List></StringTake>	<ToExpression>"efghij"</ToExpression>

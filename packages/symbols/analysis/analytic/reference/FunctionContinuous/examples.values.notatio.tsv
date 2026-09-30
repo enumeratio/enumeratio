@@ -11,5 +11,8 @@ sqrt-restricted-past-its-own-domain	<FunctionContinuous><Sqrt>x</Sqrt> x <Greate
 log-restricted-to-its-own-domain	<FunctionContinuous><Ln>x</Ln> x <Greater>x 0</Greater></FunctionContinuous>	<True />
 log-restricted-includes-its-singular-boundary	<FunctionContinuous><Ln>x</Ln> x <GreaterEqual>x 0</GreaterEqual></FunctionContinuous>	<False />
 reciprocal-restricted-below-its-pole	<FunctionContinuous><Power>x -1</Power> x <Less>x 0</Less></FunctionContinuous>	<True />
+functioncontinuous-sin-x-x	<FunctionContinuous><Sin>x</Sin> x</FunctionContinuous>	<True />
 reciprocal-restricted-domain	<FunctionContinuous><Power>x -1</Power> x <Greater>x 0</Greater></FunctionContinuous>	<True />
 sqrt-closed-boundary	<FunctionContinuous><Sqrt>x</Sqrt> x <GreaterEqual>x 0</GreaterEqual></FunctionContinuous>	<True />
+list-functioncontinuous-x-x-functioncontinuous-x	<List><FunctionContinuous>x x</FunctionContinuous> <FunctionContinuous><Add><Power>x 2</Power> 1</Add> x</FunctionContinuous> <FunctionContinuous><Add><Power>x 3</Power> <Multiply>-1 <Multiply>2 <Power>x 2</Power></Multiply></Multiply> <Multiply>-1 <Multiply>5 x</Multiply></Multiply> 6</Add> x</FunctionContinuous></List>	<List>True True True</List>
+list-functioncontinuous-sin-x-x	<List><FunctionContinuous><Sin>x</Sin> x</FunctionContinuous> <FunctionContinuous><Cos>x</Cos> x</FunctionContinuous> <FunctionContinuous><Exp>x</Exp> x</FunctionContinuous></List>	<List>True True True</List>

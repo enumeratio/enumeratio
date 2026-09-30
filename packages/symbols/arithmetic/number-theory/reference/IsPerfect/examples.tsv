@@ -1,3 +1,9 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+isperfect-6			[IsPerfect, 6]	True			
+isperfect-12			[IsPerfect, 12]	False			
 listable	Scope		[IsPerfect, [List, 6, 28, 12]]	[List, True, True, False]	Listable	threading	compute-engine threads IsPerfect (Listable) over the list; Wolfram's PerfectNumberQ isn't Listable and tests the whole list as one object, giving False.
+isperfect-496	Applications		[IsPerfect, 496]	True			
+isperfect-28	Applications		[IsPerfect, 28]	True			
 negative-numbers-are-not-perfect	Possible issues		[IsPerfect, -6]	False	Negative numbers are not perfect		
+isperfect-1-234-121	Possible issues		[IsPerfect, 1234121]	False			
+isperfect-simplify-x	Possible issues		[IsPerfect, [Simplify, x]]	[IsPerfect, x]			

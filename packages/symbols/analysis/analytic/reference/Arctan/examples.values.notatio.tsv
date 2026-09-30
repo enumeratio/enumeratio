@@ -20,8 +20,19 @@ antiderivative	<Integrate><Arctan>x</Arctan> x</Integrate>	<Add><Multiply>x <Arc
 gregory-s-series-about-0	<Series><Arctan>x</Arctan> x 0 7</Series>	<Add><Multiply><Rational>-1 7</Rational> <Power>x 7</Power></Multiply> <Multiply><Rational>1 5</Rational> <Power>x 5</Power></Multiply> <Multiply><Rational>-1 3</Rational> <Power>x 3</Power></Multiply> x <BigO><Power>x 9</Power></BigO></Add>
 the-limit-at-infty	<Limit><Function><Arctan>x</Arctan> x</Function> PositiveInfinity</Limit>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
 to-30-significant-digits-every-one-correctly	<N><Arctan><Rational>1 2</Rational></Arctan> 30</N>	<ToExpression>0.463647609000806116214256231461</ToExpression>
+n-arctan-1-over-2-50	<N><Arctan><Rational>1 2</Rational></Arctan> 50</N>	<ToExpression>0.46364760900080611621425623146121440202853705428612</ToExpression>
+arctan-list-list-1-sqrt-3-list-0-sqrt-3	<Arctan><List><List>1 <Sqrt>3</Sqrt></List> <List>0 <Sqrt>3</Sqrt></List></List></Arctan>	<List><List><Multiply><Rational>1 4</Rational> Pi</Multiply> <Multiply><Rational>1 3</Rational> Pi</Multiply></List> <List>0 <Multiply><Rational>1 3</Rational> Pi</Multiply></List></List>
 tan-arctan-x-x	<Equal><Tan><Arctan>1</Arctan></Tan> 1</Equal>	<True />
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	<TrigToExp><Arctan>x</Arctan></TrigToExp>	<Add><Multiply><Complex>0 <Rational>-1 2</Rational></Complex> <Ln><Add><Multiply><Complex>0 1</Complex> x</Multiply> 1</Add></Ln></Multiply> <Multiply><Complex>0 <Rational>1 2</Rational></Complex> <Ln><Add><Multiply><Complex>0 -1</Complex> x</Multiply> 1</Add></Ln></Multiply></Add>
+arctan-neg-2-plus-sqrt-3	<Arctan><Add>-2 <Sqrt>3</Sqrt></Add></Arctan>	<Multiply><Rational>-1 12</Rational> Pi</Multiply>
+arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	<Arctan><Negate><Sqrt><Add>1 <Multiply><Rational>-2 5</Rational> <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Negate></Arctan>	<Negate><Arctan><Sqrt><Add>1 <Multiply><Rational>-2 5</Rational> <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Arctan></Negate>
+arctan-1-minus-sqrt-2	<Arctan><Add>1 <Negate><Sqrt>2</Sqrt></Negate></Add></Arctan>	<Multiply><Rational>-1 8</Rational> Pi</Multiply>
+arctan-neg-sqrt-3-over-3	<Arctan><Negate><Divide><Sqrt>3</Sqrt> 3</Divide></Negate></Arctan>	<Multiply><Rational>-1 6</Rational> Pi</Multiply>
+arctan-sqrt-5-minus-2-times-sqrt-5	<Arctan><Sqrt><Add>5 <Multiply>-2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Arctan>	<Multiply><Rational>1 5</Rational> Pi</Multiply>
+arctan-neg-sqrt-5-minus-2-times-sqrt-5	<Arctan><Negate><Sqrt><Add>5 <Multiply>-2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Negate></Arctan>	<Multiply><Rational>-1 5</Rational> Pi</Multiply>
+arctan-neg-sqrt-1-plus-2-over-5-times-sqrt-5	<Arctan><Negate><Sqrt><Add>1 <Multiply><Rational>2 5</Rational> <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Negate></Arctan>	<Negate><Arctan><Sqrt><Add>1 <Multiply><Rational>2 5</Rational> <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Arctan></Negate>
+arctan-neg-sqrt-3	<Arctan><Negate><Sqrt>3</Sqrt></Negate></Arctan>	<Multiply><Rational>-1 3</Rational> Pi</Multiply>
+arctan-1-plus-sqrt-2	<Arctan><Add>1 <Sqrt>2</Sqrt></Add></Arctan>	<Multiply><Rational>3 8</Rational> Pi</Multiply>
 compute-engine-s-arctan-takes-only-one-argument	<Arctan>1 1</Arctan>	<Error>"unexpected-argument" "1" <ErrorTrace><ErrorFrame>"Arctan" 2</ErrorFrame></ErrorTrace></Error>
 arctan-complexinfinity-is-indeterminate-z-re-i	<Arctan>ComplexInfinity</Arctan>	<Indeterminate />
 the-horizontal-asymptote-as-x-to-infty	<Arctan>PositiveInfinity</Arctan>	<Multiply><Rational>1 2</Rational> Pi</Multiply>

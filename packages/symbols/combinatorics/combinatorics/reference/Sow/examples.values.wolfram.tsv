@@ -1,3 +1,4 @@
 id	in	out	tex.in	tex.out
 sow-feeds-the-nearest-reap	Reap[Sow[5]]	{5, {{5}}}	\text{Reap}[\text{Sow}[5]]	\left\{5,\left( \begin{array}{c}  5 \\ \end{array} \right)\right\}
 sow-outside-any-reap-is-a-no-op	Sow[7]	7	\text{Sow}[7]	7
+sow-x	Sow[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sow}[x]-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sow}\left[\frac{7}{3}\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Sow}\left[-\frac{11}{5}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Sow}\left[\frac{13}{4}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

@@ -1,5 +1,9 @@
-id	in
-nonetrue-list-1-3-5-iseven	NoneTrue[List[1, 3, 5], EvenQ]
-nonetrue-list-1-2-3-iseven	NoneTrue[List[1, 2, 3], EvenQ]
-vacuously-true-on-an-empty-list	NoneTrue[List[], EvenQ]
-the-negation-of-any	Equal[NoneTrue[List[4, 6, 9], PrimeQ], Not[AnyTrue[List[4, 6, 9], PrimeQ]]]
+id	in	back
+nonetrue-list-1-3-5-iseven	NoneTrue[List[1, 3, 5], EvenQ]	
+nonetrue-list-1-2-3-iseven	NoneTrue[List[1, 2, 3], EvenQ]	
+nonetrue-list-1-2-3-4-5-6-iseven	NoneTrue[List[1, 2, 3, 4, 5, 6], EvenQ]	
+nonetrue-list-1-3-5-7-9-iseven	NoneTrue[List[1, 3, 5, 7, 9], EvenQ]	
+nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1	NoneTrue[List[12, 16, x, 8, 14, y], Function[Less[Slot[1], 10]]]	[NoneTrue, [List, 12, 16, x, 8, 14, y], [Function, [Less, _1, 10]]]
+nonetrue-list-12-16-x-14-y-function-istrue-1-lt	NoneTrue[List[12, 16, x, 14, y], Function[TrueQ[Less[Slot[1], 10]]]]	[NoneTrue, [List, 12, 16, x, 14, y], [Function, [IsTrue, [Less, _1, 10]]]]
+vacuously-true-on-an-empty-list	NoneTrue[List[], EvenQ]	
+the-negation-of-any	Equal[NoneTrue[List[4, 6, 9], PrimeQ], Not[AnyTrue[List[4, 6, 9], PrimeQ]]]	

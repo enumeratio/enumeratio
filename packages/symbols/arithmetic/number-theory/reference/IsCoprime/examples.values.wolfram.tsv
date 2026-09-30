@@ -2,6 +2,21 @@ id	in	out	tex.in	tex.out
 iscoprime-4-9	CoprimeQ[4, 9]	True	\text{CoprimeQ}[4,9]	\text{True}
 both-are-divisible-by-3	CoprimeQ[6, 9]	False	\text{CoprimeQ}[6,9]	\text{False}
 several-arguments-every-pair-must-be-coprime	CoprimeQ[2, 3, 5]	True	\text{CoprimeQ}[2,3,5]	\text{True}
+iscoprime-8-11	CoprimeQ[8, 11]	True	\text{CoprimeQ}[8,11]	\text{True}
+iscoprime-2-4	CoprimeQ[2, 4]	False	\text{CoprimeQ}[2,4]	\text{False}
 gaussian-integers-2-i-and-2-i-are-non-associate	CoprimeQ[Complex[2, 1], Complex[2, -1]]	True	\text{CoprimeQ}[2+i,2-i]	\text{True}
 listable	CoprimeQ[3, List[4, 6]]	{True, False}	\text{CoprimeQ}[3,\{4,6\}]	\{\text{True},\text{False}\}
+iscoprime-2-3-neg-5-7	CoprimeQ[2, 3, -5, 7]	True	\text{CoprimeQ}[2,3,-5,7]	\text{True}
+iscoprime-5-plus-i-1-minus-i	CoprimeQ[Complex[5, 1], Complex[1, -1]]	False	\text{CoprimeQ}[5+i,1-i]	\text{False}
+iscoprime-neg-1-plus-2-pow-100-neg-1-plus-3-pow	CoprimeQ[Plus[-1, Power[2, 100]], Plus[-1, Power[3, 100]]]	False	\text{CoprimeQ}\left[-1+2^{100},-1+3^{100}\right]	\text{False}
+iscoprime-list-1-2-3-4-5-6	CoprimeQ[List[1, 2, 3, 4, 5], 6]	{True, False, False, False, True}	\text{CoprimeQ}[\{1,2,3,4,5\},6]	\{\text{True},\text{False},\text{False},\text{False},\text{True}\}
+iscoprime-2-3	CoprimeQ[2, 3]	True	\text{CoprimeQ}[2,3]	\text{True}
+iscoprime-5-6	CoprimeQ[5, 6]	True	\text{CoprimeQ}[5,6]	\text{True}
+iscoprime-5-3	CoprimeQ[5, 3]	True	\text{CoprimeQ}[5,3]	\text{True}
+iscoprime-8-9	CoprimeQ[8, 9]	True	\text{CoprimeQ}[8,9]	\text{True}
+iscoprime-6-11	CoprimeQ[6, 11]	True	\text{CoprimeQ}[6,11]	\text{True}
+iscoprime-5-12	CoprimeQ[5, 12]	True	\text{CoprimeQ}[5,12]	\text{True}
+iscoprime-a-b	CoprimeQ[a, b]	False	\text{CoprimeQ}[a,b]	\text{False}
+iscoprime-nthprime-10-nthprime-15-nthprime-20	CoprimeQ[Prime[10], Prime[15], Prime[20], Prime[25]]	True	\text{CoprimeQ}\left[p_{10},p_{15},p_{20},p_{25}\right]	\text{True}
+iscoprime-7-10	CoprimeQ[7, 10]	True	\text{CoprimeQ}[7,10]	\text{True}
 pairwise-not-collectively-gcd-6-10-15-1-yet-no	CoprimeQ[6, 10, 15]	False	\text{CoprimeQ}[6,10,15]	\text{False}

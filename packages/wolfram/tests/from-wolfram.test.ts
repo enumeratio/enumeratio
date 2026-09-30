@@ -133,6 +133,14 @@ test("structural forms with an unambiguous shape are reversed", () => {
   expect(fromWolfram("Slot[1]")).toBe("_1");
   expect(fromWolfram(toWolfram(["Function", ["Power", "_", 2]]))).toEqual(["Function", ["Power", "_1", 2]]);
   expect(fromWolfram("Function[Greater[Slot[1], Slot[2]]]")).toEqual(["Function", ["Greater", "_1", "_2"]]);
+  expect(fromWolfram("Function[x, Plus[x, 1]]")).toEqual(["Function", ["Add", "x", 1], "x"]);
+  expect(fromWolfram("Function[List[x, y], Times[x, y]]")).toEqual(["Function", ["Multiply", "x", "y"], "x", "y"]);
+  expect(fromWolfram(toWolfram(["Function", ["Multiply", "x", "y"], "x", "y"]))).toEqual([
+    "Function",
+    ["Multiply", "x", "y"],
+    "x",
+    "y",
+  ]);
   expect(fromWolfram("Clip[5, List[0, 3]]")).toEqual(["Clamp", 5, 0, 3]);
   expect(fromWolfram("Clip[1.5]")).toEqual(["Clamp", 1.5]);
   expect(fromWolfram("Total[List[1, 2]]")).toEqual(["Sum", ["List", 1, 2]]);
@@ -245,4 +253,13 @@ test("a bare Wolfram base in IntegerDigits/FromDigits stays bare, not rewrapped 
 test("a rule written infix reads back as a Rule call", () => {
   expect(fromWolfram('{GraphLayout -> "StarEmbedding"}')).toEqual(fromWolfram('{Rule[GraphLayout, "StarEmbedding"]}'));
   expect(fromWolfram("x -> y -> z")).toEqual(fromWolfram("Rule[x, Rule[y, z]]"));
+});
+
+test("Midpoint's two points travel as Wolfram's list of two", () => {
+  expect(toWolfram(["Midpoint", ["List", 1, 1], ["List", 2, 3]])).toBe("Midpoint[List[List[1, 1], List[2, 3]]]");
+  expect(fromWolfram("Midpoint[List[List[1, 1], List[2, 3]]]")).toEqual(["Midpoint", ["List", 1, 1], ["List", 2, 3]]);
+});
+
+test("a Function of slot parameters is Wolfram's anonymous one", () => {
+  expect(toWolfram(["Function", ["Block", ["Power", "_1", 2]], "_1"])).toBe("Function[Power[Slot[1], 2]]");
 });

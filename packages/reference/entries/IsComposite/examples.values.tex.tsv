@@ -1,0 +1,12 @@
+id	in	out
+iscomposite-4	\mathrm{IsComposite}(4)	\top
+iscomposite-13	\mathrm{IsComposite}(13)	\bot
+iscomposite-1-plus-10-pow-3-000	\mathrm{IsComposite}(1+10^{3\,000})	\top
+iscomposite-list-1-2-3-4-5-6	\mathrm{IsComposite}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack\bot, \bot, \bot, \top, \bot, \top\bigr\rbrack
+iscomposite-5	\mathrm{IsComposite}(5)	\bot
+iscomposite-8	\mathrm{IsComposite}(8)	\top
+iscomposite-12	\mathrm{IsComposite}(12)	\top
+iscomposite-67	\mathrm{IsComposite}(67)	\bot
+iscomposite-28	\mathrm{IsComposite}(28)	\top
+iscomposite-60	\mathrm{IsComposite}(60)	\top
+iscomposite-48-828-125	\mathrm{IsComposite}(48\,828\,125)	\top

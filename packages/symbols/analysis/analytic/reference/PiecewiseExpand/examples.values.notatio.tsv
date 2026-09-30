@@ -3,4 +3,13 @@ abs-of-a-real-variable	<PiecewiseExpand><Abs>x</Abs> <Element>x RealNumbers</Ele
 sign-of-a-real-variable	<PiecewiseExpand><Sign>x</Sign> <Element>x RealNumbers</Element></PiecewiseExpand>	<Piecewise><List><List>-1 <Less>x 0</Less></List> <List>1 <Less>0 x</Less></List></List> 0</Piecewise>
 clip-of-a-real-variable	<PiecewiseExpand><Clip>x <List>-1 1</List></Clip> <Element>x RealNumbers</Element></PiecewiseExpand>	<Piecewise><List><List>-1 <Less>x -1</Less></List> <List>1 <Less>1 x</Less></List></List> x</Piecewise>
 max-of-two-real-variables	<PiecewiseExpand><Max>x y</Max> <And><Element>x RealNumbers</Element> <Element>y RealNumbers</Element></And></PiecewiseExpand>	<Piecewise><List><List>x <LessEqual>y x</LessEqual></List></List> y</Piecewise>
+piecewiseexpand-max-a-b-c-d	<PiecewiseExpand><Max>a b c d</Max></PiecewiseExpand>	<Max>a b c d</Max>
+piecewiseexpand-floor-x-0-lt-x-lt-4	<PiecewiseExpand><Floor>x</Floor> <Less>0 x 4</Less></PiecewiseExpand>	<Floor>x</Floor>
+piecewiseexpand-primepi-x-0-lt-x-lt-6	<PiecewiseExpand><PrimePi>x</PrimePi> <Less>0 x 6</Less></PiecewiseExpand>	<PrimePi>x</PrimePi>
+piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2	<PiecewiseExpand><Less>0 <Add><Floor><Add>x <Round><Power>x 2</Power></Round></Add></Floor> <Multiply>-1 x</Multiply></Add> 4</Less></PiecewiseExpand>	<Less>0 <Add><Negate>x</Negate> <Floor><Add>x <Round><Power>x 2</Power></Round></Add></Floor></Add> 4</Less>
+assuming-0-lt-x-lt-3-piecewiseexpand-floor-x	<Assuming><Less>0 x 3</Less> <PiecewiseExpand><Floor>x</Floor></PiecewiseExpand></Assuming>	<Floor>x</Floor>
+assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	<Assuming><Less><Power>x 2</Power> 3</Less> <PiecewiseExpand><Add><Floor>x</Floor> <Round>y</Round></Add> <Less><Power>y 2</Power> 2</Less></PiecewiseExpand></Assuming>	<Add><Floor>x</Floor> <Round>y</Round></Add>
+piecewiseexpand-pw	<PiecewiseExpand>pw</PiecewiseExpand>	<pw />
+piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	<PiecewiseExpand><LessEqual>-1 <Max>x y</Max> 1</LessEqual></PiecewiseExpand>	<LessEqual>-1 <Max>x y</Max> 1</LessEqual>
+piecewiseexpand-max-abs-x-abs-y-realnumbers	<PiecewiseExpand><Max><Abs>x</Abs> <Abs>y</Abs></Max> RealNumbers</PiecewiseExpand>	<Max><Abs>x</Abs> <Abs>y</Abs></Max>
 without-a-realness-assumption-it-declines	<PiecewiseExpand><Abs>x</Abs></PiecewiseExpand>	<Abs>x</Abs>

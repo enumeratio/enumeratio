@@ -12,10 +12,26 @@ special-value-of-the-lucas-polynomial-l-1-0-0
 special-value-of-the-lucas-polynomial-l-0-0-2			
 l-2-x-x-2-2-threads-element-wise-over-a-matrix			
 threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4)]	[1, 3, 4, 7]	
+n-lucasl-11-over-3-50	(Combinatorics.lucasnum((11 // 3)))		
+n-lucasl-1-plus-1-over-2-times-i	(Combinatorics.lucasnum(complex(1, (1 // 2))))		
+lucasl-1-neg-x-eq-neg-lucasl-1-x			
+lucasl-2-neg-x-eq-lucasl-2-x			
+lucasl-list-1-2-3-4-5	[Combinatorics.lucasnum(1), Combinatorics.lucasnum(2), Combinatorics.lucasnum(3), Combinatorics.lucasnum(4), Combinatorics.lucasnum(5)]		
+generatingfunction-lucasl-n-n-x			
+lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z			
+fullsimplify-matrixfunction-function-lucasl-2-1			
 consecutive-ratios-l-n-1-l-n-converge-to-the	(Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))	1.6180308422301304	
+nestwhile-function-1-plus-1-1-function-lucasl-1			
 l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	((big(Combinatorics.lucasnum(10))^2) - (5 * (big(BigInt(fibonacci(ZZ(10))))^2)))	4	
 l-n-f-n-1-f-n-1-here-at-n-6	(Combinatorics.lucasnum(6) == (BigInt(fibonacci(ZZ(5))) + BigInt(fibonacci(ZZ(7)))))	true	
 conversely-f-n-frac-l-n-1-l-n-1-5	(BigInt(fibonacci(ZZ(6))) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))	true	
 a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))	5	
 negative-indices-are-supported-via-l-n-1-n-l-n	Combinatorics.lucasnum(-1)	DomainError with -1: n must be nonnegative	error
+lucasl-2	Combinatorics.lucasnum(2)		
+lucasl-3	Combinatorics.lucasnum(3)		
+lucasl-4	Combinatorics.lucasnum(4)		
+lucasl-6	Combinatorics.lucasnum(6)		
+lucasl-7	Combinatorics.lucasnum(7)		
+lucasl-8	Combinatorics.lucasnum(8)		
+lucasl-9	Combinatorics.lucasnum(9)		
 l-30-already-tops-1-8-million-growing-at-the	Combinatorics.lucasnum(30)	1860498	

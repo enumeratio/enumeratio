@@ -4,3 +4,4 @@ tangent-s-period-is-pi	\mathrm{FunctionPeriod}(\tan(x), x)	\pi
 scaling-the-argument-scales-the-period	\mathrm{FunctionPeriod}(\sin(2x), x)	\pi
 exp-is-not-periodic	\mathrm{FunctionPeriod}(e^{x}, x)	0
 a-polynomial-is-not-periodic	\mathrm{FunctionPeriod}(x^2, x)	0
+assuming-a-gt-0-functionperiod-sin-a-times-x-x	\mathrm{Assuming}(a\gt0, \mathrm{FunctionPeriod}(\sin(ax), x))	\mathrm{FunctionPeriod}(\sin(ax), x)

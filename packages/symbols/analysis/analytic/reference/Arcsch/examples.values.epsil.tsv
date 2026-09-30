@@ -1,8 +1,20 @@
-id	in	out
-n-arcsch-2	N(arcsch(2))	0.481_211_825_059_603_447_495
-a-pole-at-0	arcsch(0)	complexInfinity
-arcsch-positiveinfinity	arcsch(positiveInfinity)	0
-a-float-argument-evaluates-directly	arcsch(1.5)	0.625_145_117_250_416_687_636
-as-a-logarithm-arcsch-1-ln-1-sqrt-2	trigToExp(arcsch(1))	ln(1 + sqrt(2))
-oddness-pulls-the-sign-out-of-a-symbolic	arcsch(-x)	-arcsch(x)
-derivative-for-real-x-ne-0	D(arcsch(x), x)	-1 / (abs(x) * sqrt(x ^ 2 + 1))
+id	in	out	back
+n-arcsch-2	N(arcsch(2))	0.481_211_825_059_603_447_495	
+a-pole-at-0	arcsch(0)	complexInfinity	
+arcsch-positiveinfinity	arcsch(positiveInfinity)	0	
+a-float-argument-evaluates-directly	arcsch(1.5)	0.625_145_117_250_416_687_636	
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	trigToExp(arcsch(1))	ln(1 + sqrt(2))	
+oddness-pulls-the-sign-out-of-a-symbolic	arcsch(-x)	-arcsch(x)	
+derivative-for-real-x-ne-0	D(arcsch(x), x)	-1 / (abs(x) * sqrt(x ^ 2 + 1))	
+n-arcsch-5-50	N(arcsch(5), 50)	0.198_690_110_349_241_406_474_636_915_950_206_968_221_308_794_224_45	
+arcsch-list-list-2i-0-list-i-neg-2-times-i	arcsch([[2i, 0], [i, -2 * i]])	[[arcsch(2i), complexInfinity], [arcsch(i), arcsch(-2 * i)]]	
+arcsch-complexinfinity	arcsch(complexInfinity)	0	
+matrixfunction-function-arcsch-1-1-list-list-2i	MatrixFunction(Function(arcsch(_1), _1), [[2i, 0], [i, -2 * i]])	"[\n  [arcsch(2i), 0],\n  [-1 / 4 * arcsch(-2 * i) + 1 / 4 * arcsch(2i), arcsch(-2 * i)],\n]"	Unreadable
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6	arcsch(i * (-sqrt(2) + sqrt(6)))	arcsch(sqrt(2) * i * (-1 + sqrt(3)))	
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2	arcsch(i * (-sqrt(6) + sqrt(2)))	arcsch(sqrt(2) * i * (1 - sqrt(3)))	
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	arcsch(i * sqrt(2 + -2 / 5 * sqrt(5)))	arcsch(sqrt(10) / 5 * i * sqrt(5 - sqrt(5)))	
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	arcsch(-i * sqrt(2 + -2 / 5 * sqrt(5)))	arcsch(-(sqrt(10) / 5) * i * sqrt(5 - sqrt(5)))	
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	arcsch(2i * sqrt(1 / (2 + sqrt(2))))	arcsch(2i / sqrt(2 + sqrt(2)))	
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	arcsch(-2 * i * sqrt(1 / (2 + sqrt(2))))	arcsch(-2 * i / sqrt(2 + sqrt(2)))	
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	arcsch(i * sqrt(2 + 2 / 5 * sqrt(5)))	arcsch(sqrt(10) / 5 * i * sqrt(5 + sqrt(5)))	
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	arcsch(-i * sqrt(2 + 2 / 5 * sqrt(5)))	arcsch(-(sqrt(10) / 5) * i * sqrt(5 + sqrt(5)))	

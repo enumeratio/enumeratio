@@ -16,13 +16,29 @@ a-second-argument-floors-to-a-multiple-of-it-the
 the-step-needn-t-be-an-integer-3-5-cdot-lfloor			
 nor-rational-2-pi-e-approx-3-57-floors-to-the			
 floors-the-real-and-imaginary-parts-separately	floor((5.37 + -1.3*I))	floor(5.37000000000000 - 1.30000000000000*I)	disagree
+floor-list-list-1-over-2-neg-1-list-0-neg-1-over	floor([[(1/2), -1], [0, (-1/2)]])		
+matrixfunction-floor-list-list-1-over-2-neg-1			
+floor-0	floor(0)		
+floor-positiveinfinity	floor(oo)		
+piecewiseexpand-floor-x-2-0-lt-x-lt-4			
 how-many-full-5-item-packs-fit-in-17-items	floor((17 / 5))	3	
 legendre-s-formula-100-ends-in-lfloor-100-5	(floor((100 / 5)) + floor((100 / 25)))	24	
 the-number-of-decimal-digits-of-n-is-lfloor-log			
 the-first-four-digits-of-e	floor((1000 * e))	2718	
+floor-10-over-997-times-powermod-10-999-999-997	floor(((10/997) * (power_mod(10, 999999, 997) % 997)))		
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	bool((floor((7/2)) + 1) == ceil((7/2)))	True	
 lfloor-x-rfloor-lceil-x-rceil	bool(floor((-7/2)) == (-ceil((7/2))))	True	
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	floor(floor(SR.var("x")))	True	
+floor-16-3			
+piecewiseexpand-floor-x-pow-2-0-lt-x-lt-2			
+piecewiseexpand-floor-x-plus-1-times-3-pow-neg-1			
+floor-1	floor(1)		
+floor-neg-1	floor(-1)		
+floor-neg-i	floor((0 + -1*I))		
+floor-23-over-10	floor((23/10))		
+floor-neg-3	floor(-3)		
+floor-neg-27-over-10	floor((-27/10))		
+floor-23-over-10-plus-neg-i-times-exponentiale	floor(((23/10) + ((0 + -1*I) * e)))		
 a-zero-divisor-inside-floor	floor((17 / 0))	ZeroDivisionError: rational division by zero	error
 rounds-toward-infty-not-toward-0-floor-3-2-is-4	floor(-3.2)	-4	
 infinities-pass-through-unchanged	floor(-oo)		

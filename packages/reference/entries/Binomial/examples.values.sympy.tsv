@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m	binomial(Symbol("m"), Symbol("m"))	binomial(m, m)	inc
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial((1 + 1*I), 5)	-1/12 - I/12	
 complex-n-and-k-evaluate-through-the-gamma	binomial((2 + 1*I), (7 + -3*I))	gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))	
 interval-arithmetic-in-k-binom-1-2-k-is			
+n-binomial-7-over-3-1-over-5-20	N(binomial(Rational(7, 3), Rational(1, 5)), 30)		
+binomial-n-4	binomial(Symbol("n"), 4)		
+matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(52, 5)	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(S(binomial(10, 3)) / (S(2)**10))	15/128	
 symmetry-binom-n-k-binom-n-n-k	enumeratio_equal(binomial(10, 3), binomial(10, 7))	True	

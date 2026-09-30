@@ -1,3 +1,9 @@
 id	in
+isperfect-6	PerfectNumberQ[6]
+isperfect-12	PerfectNumberQ[12]
 listable	PerfectNumberQ[List[6, 28, 12]]
+isperfect-496	PerfectNumberQ[496]
+isperfect-28	PerfectNumberQ[28]
 negative-numbers-are-not-perfect	PerfectNumberQ[-6]
+isperfect-1-234-121	PerfectNumberQ[1234121]
+isperfect-simplify-x	PerfectNumberQ[Simplify[x]]

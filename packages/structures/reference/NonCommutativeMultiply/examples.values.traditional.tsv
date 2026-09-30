@@ -1,0 +1,12 @@
+id	in	out
+the-canonical-order		
+noncommutativemultiply-a-b-c-eq	\mathrm{NonCommutativeMultiply}(a, b, c)=\mathrm{NonCommutativeMultiply}(a, b, c)	\mathrm{True}
+scalars-the-implied-identity-factor		
+commuting-units-agrees-with-times		
+the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13		
+reversing-the-operands-flips-the-sign		
+e-1e-2-2-1		
+associative-nested-products-flatten		
+plain-times-declines-both-orders-arrive		
+undeclared-symbols-are-taken-to-commute-so-the		
+noncommutativemultiply-a		

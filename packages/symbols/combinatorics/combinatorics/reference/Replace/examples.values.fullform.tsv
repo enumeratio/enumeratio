@@ -1,4 +1,7 @@
 id	in	back
 rewrites-the-whole-expr-matches-top-level	Replace[Plus[x, 1], Rule[Plus[_a, 1], Times[_a, 100]]]	[Replace, [Add, x, 1], [KeyValuePair, [Add, _a, 1], [Multiply, _a, 100]]]
+replace-1-plus-x-pow-2-x-pow-2-neg-gt-a-plus-b	Replace[Plus[1, Power[x, 2]], Rule[Power[x, 2], Plus[a, b]]]	
 tries-a-list-of-rules-in-order	Replace[b, List[Rule[a, 1], Rule[b, 2]]]	[Replace, b, [List, [KeyValuePair, a, 1], [KeyValuePair, b, 2]]]
+replace-x-list-y-neg-gt-2-z-neg-gt-3	Replace[x, List[Rule[y, 2], Rule[z, 3]]]	
+replace-x-list	Replace[x, List[]]	
 leaves-expr-untouched-when-only-subexpr-matches	Replace[List[Plus[x, 1]], Rule[Plus[_a, 1], Times[_a, 100]]]	[Replace, [List, [Add, x, 1]], [KeyValuePair, [Add, _a, 1], [Multiply, _a, 100]]]

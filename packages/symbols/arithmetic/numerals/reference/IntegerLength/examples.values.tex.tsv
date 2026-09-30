@@ -1,5 +1,7 @@
 id	in	out
 integerlength-12-345	\mathrm{IntegerLength}(12\,345)	5
+integerlength-123-456-789	\mathrm{IntegerLength}(123\,456\,789)	9
+integerlength-100-factorial-2	\mathrm{IntegerLength}(100!, 2)	525
 integerlength-2-pow-100	\mathrm{IntegerLength}(2^{100})	31
 255-ff-16	\mathrm{IntegerLength}(255, 16)	2
 listable	\mathrm{IntegerLength}(\bigl\lbrack1, 10, 100\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack

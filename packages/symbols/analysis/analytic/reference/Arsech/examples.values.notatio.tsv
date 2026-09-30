@@ -5,4 +5,12 @@ a-logarithmic-singularity-at-0	<Arsech>0</Arsech>	<PositiveInfinity />
 a-float-argument-evaluates-directly	<Arsech>0.25</Arsech>	<ToExpression>2.06343706889556054673</ToExpression>
 past-1-the-value-is-imaginary-arsech-2-arcosh	<Arsech>2</Arsech>	<Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply>
 derivative-frac-1-x-sqrt-1-x-2	<D><Arsech>x</Arsech> x</D>	<Divide>-1 <Multiply>x <Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Multiply></Divide>
+n-arsech-1-over-3-50	<N><Arsech><Rational>1 3</Rational></Arsech> 50</N>	<ToExpression>1.7627471740390860504652186499595846180563206565233</ToExpression>
+arsech-list-list-2-0-list-1-neg-2	<Arsech><List><List>2 0</List> <List>1 -2</List></List></Arsech>	<List><List><Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply> PositiveInfinity</List> <List>0 <Arsech>-2</Arsech></List></List>
+arsech-positiveinfinity	<Arsech>PositiveInfinity</Arsech>	<Multiply><Complex>0 <Rational>1 2</Rational></Complex> Pi</Multiply>
+trigtoexp-arsech-z	<TrigToExp><Arsech>z</Arsech></TrigToExp>	<Arsech>z</Arsech>
+matrixfunction-function-arsech-1-1-list-list-2-0	<MatrixFunction><Function><Block><Arsech>_1</Arsech></Block> _1</Function> <List><List>2 0</List> <List>1 -2</List></List></MatrixFunction>	<List><List><Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply> 0</List> <List><Add><Multiply><Rational>-1 4</Rational> <Arsech>-2</Arsech></Multiply> <Multiply><Complex>0 <Rational>1 12</Rational></Complex> Pi</Multiply></Add> <Arsech>-2</Arsech></List></List>
+integrate-arsech-x-x-nothing-nothing	<Integrate><Function><Block><Arsech>x</Arsech></Block> x</Function> <Limits>x Nothing Nothing</Limits></Integrate>	<Add><Multiply>x <Arsech>x</Arsech></Multiply> <Arcsin>x</Arcsin></Add>
+arsech-2-times-sqrt-1-over-2-plus-sqrt-2	<Arsech><Multiply>2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arsech>	<Arsech><Divide>2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arsech>
+arsech-neg-2-times-sqrt-1-over-2-plus-sqrt-2	<Arsech><Multiply>-2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arsech>	<Arsech><Divide>-2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arsech>
 arsech-complexinfinity-is-indeterminate-by	<Arsech>ComplexInfinity</Arsech>	<Indeterminate />

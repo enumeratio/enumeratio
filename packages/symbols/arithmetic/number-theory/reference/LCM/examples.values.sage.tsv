@@ -34,7 +34,11 @@ lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm((123 + 456*I), 19)
 lcm-of-two-composites-sharing-the-prime-above-13	lcm((6 + 8*I), (9 + 6*I))		
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 the-smallest-number-divisible-by-each-of-1			
+lcm-10-15	lcm(10, 15)		
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))	True	
+lcm-27-81	lcm(27, 81)		
+lcm-6-11-25-eq-1-650			
+lcm-5-7-2-eq-70			
 a-single-argument-is-returned-unchanged			
 0-absorbs-the-lcm-with-0-is-0	lcm(0, 5)	0	
 signs-are-discarded-before-computing-the-lcm	lcm(-3, 7)	21	

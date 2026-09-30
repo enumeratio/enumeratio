@@ -2,3 +2,7 @@ id	in
 rescale-list	Rescale[List[1, 2, 3, 4]]
 rescale-with-range	Rescale[5, List[0, 10]]
 rescale-with-target	Rescale[5, List[0, 10], List[100, 200]]
+rescale-neg-3-over-2-list-neg-2-2	Rescale[Rational[-3, 2], List[-2, 2]]
+rescale-3-list-neg-9-7-list-11-28	Rescale[3, List[-9, 7], List[11, 28]]
+rescale-list-neg-2-0-2	Rescale[List[-2, 0, 2]]
+piecewiseexpand-d-rescale-x-list-a-b-list-x-k	PiecewiseExpand[D[Rescale[x, List[a, b]], List[x, k]]]

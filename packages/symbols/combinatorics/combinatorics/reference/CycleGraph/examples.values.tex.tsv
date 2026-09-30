@@ -1,3 +1,8 @@
 id	in	out
 c5-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))	\bot
 c6-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))	\top
+cyclegraph-3	\mathrm{CycleGraph}(3)	\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1)\bigr\rbrack)
+map-function-vertexeccentricity-cyclegraph-5-1-1	\mathrm{Map}(()\mapsto\mathrm{VertexEccentricity}(\mathrm{CycleGraph}(5), \operatorname{\_1}), \mathrm{VertexList}(\mathrm{CycleGraph}(5)))	\bigl\lbrack2, 2, 2, 2, 2\bigr\rbrack
+isacyclicgraph-cyclegraph-5	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(5))	\bot
+vertexdegree-cyclegraph-7	\mathrm{VertexDegree}(\mathrm{CycleGraph}(7))	\bigl\lbrack2, 2, 2, 2, 2, 2, 2\bigr\rbrack
+cyclegraph-4	\mathrm{CycleGraph}(4)	\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(4, 1)\bigr\rbrack)

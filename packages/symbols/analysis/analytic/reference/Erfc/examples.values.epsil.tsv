@@ -10,6 +10,9 @@ listable-threads-over-its-limits-at-pm-infty	erfc([positiveInfinity, negativeInf
 interval-arithmetic-erfc-is-decreasing-so-the	erfc(interval(0.2, 0.3))	interval(0.671_373_240_540_872_6, 0.777_297_410_789_521_5)
 uncertainty-propagation	erfc(Around(2, 0.01))	Around(0.004_677_734_981_047_266, 0.000_206_669_853_540_920_54)
 to-30-significant-digits-every-one-correctly	N(erfc(2), 30)	0.004_677_734_981_047_265_837_930_743_632_75
+n-erfc-3-over-2-50	N(erfc(3 / 2), 50)	0.033_894_853_524_689_272_933_023_738_354_052_141_318_589_520_742_363
+functionexpand-matrixfunction-erfc-list-list-0-1	FunctionExpand(MatrixFunction(erfc, [[0, 1 / 2 * i * pi], [pi, 0]]))	"[[\n  1 / 2 * erfc((-1 / 2 + -1 / 2 * i) * pi) + 1 / 2 * erfc((1 / 2 + 1 / 2 * i) *\n                                                          pi),\n  (-1 / 4 + -1 / 4 * i) * erfc((-1 / 2 + -1 / 2 * i) * pi) + (1 / 4 + 1 / 4 * i) *\n                                                             erfc((1 / 2 + 1 / 2 *\n                                                                           i) *\n                                                                  pi),\n], [\n  (1 / 2 + -1 / 2 * i) * erfc((1 / 2 + 1 / 2 * i) * pi) + (-1 / 2 + 1 / 2 * i) *\n                                                          erfc((-1 / 2 + -1 / 2 *\n                                                                         i) * pi),\n  1 / 2 * erfc((-1 / 2 + -1 / 2 * i) * pi) + 1 / 2 * erfc((1 / 2 + 1 / 2 * i) *\n                                                          pi),\n]]"
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	FullSimplify(erfc(-z) == -erfc(z) + 2)	True
 erfc-z-2-erfc-z-here-at-z-1	erfc(-1) + erfc(1) == 2	True
 definition-erf-z-erfc-z-1-see-erf	erf(2) + erfc(2) == 1	True
 erfc-x-2-erfc-x-applied-symbolically	erfc(-x)	-erfc(x) + 2

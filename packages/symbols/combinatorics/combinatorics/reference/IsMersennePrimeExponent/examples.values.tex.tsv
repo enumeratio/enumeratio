@@ -1,5 +1,13 @@
 id	in	out
 7-is-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(7)	\top
+ismersenneprimeexponent-5	\mathrm{IsMersennePrimeExponent}(5)	\top
+ismersenneprimeexponent-8	\mathrm{IsMersennePrimeExponent}(8)	\bot
 11-is-prime-but-not-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(11)	\bot
 9-is-not-even-prime	\mathrm{IsMersennePrimeExponent}(9)	\bot
 2-31-1-is-the-8th-mersenne-prime	\mathrm{IsMersennePrimeExponent}(31)	\top
+ismersenneprimeexponent-neg-5	\mathrm{IsMersennePrimeExponent}(-5)	\bot
+ismersenneprimeexponent-89	\mathrm{IsMersennePrimeExponent}(89)	\top
+ismersenneprimeexponent-12	\mathrm{IsMersennePrimeExponent}(12)	\bot
+ismersenneprimeexponent-2	\mathrm{IsMersennePrimeExponent}(2)	\top
+ismersenneprimeexponent-fullsimplify-x	\mathrm{IsMersennePrimeExponent}(\mathrm{FullSimplify}(x))	\mathrm{IsMersennePrimeExponent}(x)
+ismersenneprimeexponent-13	\mathrm{IsMersennePrimeExponent}(13)	\top

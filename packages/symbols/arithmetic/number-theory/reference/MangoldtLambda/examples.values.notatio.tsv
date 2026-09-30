@@ -3,7 +3,28 @@ id	in	out
 6-is-not-a-prime-power	<MangoldtLambda>6</MangoldtLambda>	<ToExpression>0</ToExpression>
 mangoldtlambda-7	<MangoldtLambda>7</MangoldtLambda>	<Ln>7</Ln>
 mangoldtlambda-9	<MangoldtLambda>9</MangoldtLambda>	<Ln>3</Ln>
+mangoldtlambda-25	<MangoldtLambda>25</MangoldtLambda>	<Ln>5</Ln>
 numerically-ln-3	<N><MangoldtLambda>9</MangoldtLambda></N>	<ToExpression>1.0986122886681098</ToExpression>
 listable	<MangoldtLambda><List>2 4 6 25</List></MangoldtLambda>	<List><Ln>2</Ln> <Ln>2</Ln> 0 <Ln>5</Ln></List>
 n-of-a-zero-result-is-still-0	<N><MangoldtLambda>6</MangoldtLambda></N>	<ToExpression>0</ToExpression>
+mangoldtlambda-125	<MangoldtLambda>125</MangoldtLambda>	<Ln>5</Ln>
+mangoldtlambda-7-pow-300	<MangoldtLambda><Power>7 300</Power></MangoldtLambda>	<Ln>7</Ln>
+mangoldtlambda-list-2-6-9-8-15	<MangoldtLambda><List>2 6 9 8 15</List></MangoldtLambda>	<List><Ln>2</Ln> 0 <Ln>3</Ln> <Ln>2</Ln> 0</List>
+mangoldtlambda-81-factorial-eq-0	<NotEqual><MangoldtLambda>81</MangoldtLambda> 0</NotEqual>	<True />
+list-mangoldtlambda-6-mangoldtlambda-2-plus	<List><MangoldtLambda>6</MangoldtLambda> <Add><MangoldtLambda>2</MangoldtLambda> <MangoldtLambda>3</MangoldtLambda></Add></List>	<List>0 <Add><Ln>2</Ln> <Ln>3</Ln></Add></List>
+list-mangoldtlambda-6-mangoldtlambda-2-times	<List><MangoldtLambda>6</MangoldtLambda> <Multiply><MangoldtLambda>2</MangoldtLambda> <MangoldtLambda>3</MangoldtLambda></Multiply></List>	<List>0 <Multiply><Ln>2</Ln> <Ln>3</Ln></Multiply></List>
+mangoldtlambda-5	<MangoldtLambda>5</MangoldtLambda>	<Ln>5</Ln>
+mangoldtlambda-2	<MangoldtLambda>2</MangoldtLambda>	<Ln>2</Ln>
+mangoldtlambda-3	<MangoldtLambda>3</MangoldtLambda>	<Ln>3</Ln>
+mangoldtlambda-4	<MangoldtLambda>4</MangoldtLambda>	<Ln>2</Ln>
+mangoldtlambda-10	<MangoldtLambda>10</MangoldtLambda>	<ToExpression>0</ToExpression>
+mangoldtlambda-11	<MangoldtLambda>11</MangoldtLambda>	<Ln>11</Ln>
+mangoldtlambda-12	<MangoldtLambda>12</MangoldtLambda>	<ToExpression>0</ToExpression>
+simplify-sum-mangoldtlambda-n-n-20	<Simplify><Sum><MangoldtLambda>n</MangoldtLambda> <Tuple>n 20</Tuple></Sum></Simplify>	<Add><Multiply>2 <Ln>3</Ln></Multiply> <Multiply>4 <Ln>2</Ln></Multiply> <Ln>1616615</Ln></Add>
+mangoldtlambda-13	<MangoldtLambda>13</MangoldtLambda>	<Ln>13</Ln>
+mangoldtlambda-14	<MangoldtLambda>14</MangoldtLambda>	<ToExpression>0</ToExpression>
+mangoldtlambda-15	<MangoldtLambda>15</MangoldtLambda>	<ToExpression>0</ToExpression>
+mangoldtlambda-16	<MangoldtLambda>16</MangoldtLambda>	<Ln>2</Ln>
+mangoldtlambda-17	<MangoldtLambda>17</MangoldtLambda>	<Ln>17</Ln>
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	<Equal><Ln>16</Ln> <DivisorSum>16 <Function><Block><MangoldtLambda>_1</MangoldtLambda></Block> _1</Function></DivisorSum></Equal>	<True />
 lambda-1-0	<MangoldtLambda>1</MangoldtLambda>	<ToExpression>0</ToExpression>

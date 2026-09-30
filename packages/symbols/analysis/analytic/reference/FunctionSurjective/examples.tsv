@@ -4,3 +4,9 @@ exp-misses-the-non-positive-reals			[FunctionSurjective, [Exp, x], x, Reals]	Fal
 log-is-onto-the-reals			[FunctionSurjective, [Ln, x], x, Reals]	True			Log is onto R even though its domain is only the positive reals
 a-reciprocal-never-hits-zero			[FunctionSurjective, [Divide, 1, x], x, Reals]	False			A reciprocal never takes the value 0
 an-unsupported-codomain-declines		test	[FunctionSurjective, [Power, x, 3], x, Integers]	[FunctionSurjective, [Power, x, 3], x, Integers]	[FunctionSurjective, [Power, x, 3], x, Integers]	Wolfram 15.0.0, hand cross-checked	
+functionsurjective-tan-x-x			[FunctionSurjective, [Tan, x], x]	True			
+functionsurjective-x-pow-3-minus-x-x	Scope		[FunctionSurjective, [Add, [Power, x, 3], [Multiply, -1, x]], x]	True			
+functionsurjective-sqrt-x-x	Applications		[FunctionSurjective, [Sqrt, x], x]	False			
+functionsurjective-sin-x-x	Applications		[FunctionSurjective, [Sin, x], x]	False			
+functionsurjective-x-pow-2-plus-x-plus-1-x	Properties		[FunctionSurjective, [Add, [Power, x, 2], x, 1], x]	False			
+functionsurjective-x-pow-3-plus-x-plus-1-x	Properties		[FunctionSurjective, [Add, [Power, x, 3], x, 1], x]	True			

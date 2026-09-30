@@ -1,0 +1,11 @@
+id	in
+trigtoexp-cos-x	TrigToExp[Cos[x]]
+trigtoexp-sinh-x	TrigToExp[Sinh[x]]
+trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	TrigToExp[Plus[Cos[x], Times[I, Sin[x]]]]
+trigtoexp-tanh-x	TrigToExp[Tanh[x]]
+trigtoexp-arcsin-x	TrigToExp[ArcSin[x]]
+trigtoexp-arcoth-x	TrigToExp[ArcCoth[x]]
+trigtoexp-sinh-x-lt-eq-11-arctan-x-eq-7	TrigToExp[And[LessEqual[Sinh[x], 11], Equal[ArcTan[x], 7]]]
+trigtoexp-sin-5-times-arcsin-x	TrigToExp[Sin[Times[5, ArcSin[x]]]]
+trigtoexp-sin-x-lt-x-lt-tan-x	TrigToExp[Less[Sin[x], x, Tan[x]]]
+trigtoexp-sin-x-eq-pi-times-3-pow-neg-1	TrigToExp[Equal[Sin[x], Times[Pi, Power[3, -1]]]]

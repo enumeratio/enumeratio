@@ -1,0 +1,9 @@
+id	in	out
+n-elliptice-1-over-3-50	N(ellipticE(1 / 3), 50)	1.430_315_257_172_219_723_922_528_414_532_283_730_294_450_907_408_9
+elliptice-list-list-1-0-list-0-1	ellipticE([[1, 0], [0, 1]])	[[1, ellipticE(0)], [ellipticE(0), 1]]
+matrixfunction-elliptice-list-list-1-0-list-0-1	MatrixFunction(ellipticE, [[1, 0], [0, 1]])	[[1, 0], [0, 1]]
+list-elliptice-0-elliptice-1	[ellipticE(0), ellipticE(1)]	[ellipticE(0), 1]
+list-elliptice-positiveinfinity-elliptice	[ellipticE(positiveInfinity), ellipticE(complexInfinity)]	[complexInfinity, complexInfinity]
+elliptice-0-1	ellipticE(0, 1)	0
+elliptice-0-0	ellipticE(0, 0)	0
+elliptice-1	ellipticE(1)	1

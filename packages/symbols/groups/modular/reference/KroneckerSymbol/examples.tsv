@@ -44,6 +44,12 @@ negative-a-odd-square-n-9		test	[KroneckerSymbol, -10, 9]	1	negative a, odd squa
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[KroneckerSymbol, [List, 2, 3, 5, 7, 11], 6]	[List, 0, 0, 1, 1, 1]	Threads element-wise over a list, as Wolfram's Listable heads do
 larger-arguments-10-11-1-against-the-2000th	Scope		[KroneckerSymbol, [Add, [Power, 10, 11], 1], [NthPrime, 2000]]	-1	Larger arguments: $10^{11}+1$ against the 2000th prime, 17389
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	Scope		[KroneckerSymbol, 7, 6]	1	Even $n$, where [[JacobiSymbol]] is undefined: $(7/2)(7/3)=1\cdot1$
+generatingfunction-kroneckersymbol-n-7-n-x	Scope		[GeneratingFunction, [KroneckerSymbol, n, 7], n, x]	[Divide, [Add, [Power, x, 5], [Multiply, 2, [Power, x, 4]], [Power, x, 3], [Multiply, 2, [Power, x, 2]], x], [Add, [Power, x, 6], [Power, x, 5], [Power, x, 4], [Power, x, 3], [Power, x, 2], x, 1]]	
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	Applications		[KroneckerSymbol, -4, 7]	-1	The character mod 4: $(-4/p)=-1$ for primes $p\equiv3\pmod4$
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	Applications		[Equal, [KroneckerSymbol, 2, 7], [KroneckerSymbol, 23, 7]]	True	
+kroneckersymbol-neg-4-list-1-5-7-11	Applications		[KroneckerSymbol, -4, [List, 1, 5, 7, 11]]	[List, 1, 1, -1, -1]	
 completely-multiplicative-in-n	Properties		[Equal, [KroneckerSymbol, 7, [Multiply, 3, 5]], [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]]]	True	Completely multiplicative in n
+kroneckersymbol-9-12	Properties		[KroneckerSymbol, 9, 12]	0	
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	Properties		[Equal, [KroneckerSymbol, 12, 7], [Multiply, [KroneckerSymbol, 3, 7], [KroneckerSymbol, 4, 7]]]	True	
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	Properties		[Equal, [KroneckerSymbol, 3, 63], [Multiply, [KroneckerSymbol, 3, 9], [KroneckerSymbol, 3, 7]]]	True	
 a-0-1-for-a-pm-1	Possible issues		[KroneckerSymbol, -1, 0]	1	$(a/0)=1$ for $a=\pm1$

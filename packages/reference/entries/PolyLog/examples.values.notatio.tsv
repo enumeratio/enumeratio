@@ -91,6 +91,12 @@ image-order-0p5-over-neg-0p5-to-0p95	<PolyLog>0.5 <Interval>-0.5 0.95</Interval>
 image-order-neg-1p5-over-neg-0p3-to-0p3	<PolyLog>-1.5 <Interval>-0.3 0.3</Interval></PolyLog>	<Interval>-0.140350469986165 0.803887928285341</Interval>
 image-order-neg-3-over-neg-0p5-to-0p2	<PolyLog>-3 <Interval>-0.5 0.2</Interval></PolyLog>	<Interval>-0.0416666666668334 0.898437500000001</Interval>
 image-order-5-over-neg-0p99-to-0p99	<PolyLog>5 <Interval>-0.99 0.99</Interval></PolyLog>	<Interval>-0.962647165657348 1.02611047710131</Interval>
+polylog-0-5	<PolyLog>0 5</PolyLog>	<Rational>-5 4</Rational>
+n-polylog-1-1-over-3-50	<N><PolyLog>1 <Rational>1 3</Rational></PolyLog> 50</N>	<ToExpression>0.40546510810816438197801311546434913657199042346249</ToExpression>
+polylog-2-list-list-1-over-2-0-list-0-1-over-2	<PolyLog>2 <List><List><Rational>1 2</Rational> 0</List> <List>0 <Rational>1 2</Rational></List></List></PolyLog>	<List><List><PolyLog>2 <Rational>1 2</Rational></PolyLog> 0</List> <List>0 <PolyLog>2 <Rational>1 2</Rational></PolyLog></List></List>
+polylog-1-0	<PolyLog>1 0</PolyLog>	<ToExpression>0</ToExpression>
+d-polylog-n-z-z	<D><PolyLog>n z</PolyLog> z</D>	<Divide><PolyLog><Add>n -1</Add> z</PolyLog> z</Divide>
+matrixfunction-function-polylog-2-1-1-list-list	<MatrixFunction><Function><Block><PolyLog>2 _1</PolyLog></Block> _1</Function> <List><List><Rational>1 2</Rational> 0</List> <List>0 <Rational>1 2</Rational></List></List></MatrixFunction>	<List><List><PolyLog>2 <Rational>1 2</Rational></PolyLog> 0</List> <List>0 <PolyLog>2 <Rational>1 2</Rational></PolyLog></List></List>
 li-1-2-1-zeta-1-2-a-non-integer-order-from	<PolyLog>0.5 1</PolyLog>	<ToExpression>-1.46035450880958681289</ToExpression>
 li-1-2-1-2-0-80612672-via-the-lerch-series	<PolyLog>0.5 0.5</PolyLog>	<ToExpression>0.8061267230428522</ToExpression>
 li-5-2-1-2-0-46229778-the-alternating-side-euler	<PolyLog>2.5 -0.5</PolyLog>	<ToExpression>-0.46229778219006346</ToExpression>
@@ -101,4 +107,8 @@ li-1-z-z-1-z-2-negative-orders-are-rational	<PolyLog>-1 z</PolyLog>	<Divide>z <P
 li-2-1-2-pi-2-12-ln-2-2-2	<Equal><Add><PolyLog>2 0.5</PolyLog> <Multiply>0.5 <Power><Ln>2</Ln> 2</Power></Multiply></Add> <Divide><Power>Pi 2</Power> 12</Divide></Equal>	<True />
 li-s-1-zeta-s-for-symbolic-s	<PolyLog>s 1</PolyLog>	<Zeta>s</Zeta>
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	<D><PolyLog>n x</PolyLog> x</D>	<Divide><PolyLog><Add>n -1</Add> x</PolyLog> x</Divide>
+functionexpand-polylog-2-exponentiale-pow-1-over	<FunctionExpand><PolyLog>2 <Power>ExponentialE <Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply></Power></PolyLog></FunctionExpand>	<PolyLog>2 <Add><Rational>1 2</Rational> <Complex>0 <Divide><Sqrt>3</Sqrt> 2</Divide></Complex></Add></PolyLog>
+polylog-3-exponentiale-pow-1-over-3-times-i	<PolyLog>3 <Power>ExponentialE <Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply></Power></PolyLog>	<PolyLog>3 <Add><Rational>1 2</Rational> <Complex>0 <Divide><Sqrt>3</Sqrt> 2</Divide></Complex></Add></PolyLog>
+polylog-3-exponentiale-pow-neg-1-over-3-times-i	<PolyLog>3 <Power>ExponentialE <Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply></Power></PolyLog>	<PolyLog>3 <Add><Rational>1 2</Rational> <Complex>0 <Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate></Complex></Add></PolyLog>
+polylog-3-exponentiale-pow-2-over-3-times-i	<PolyLog>3 <Power>ExponentialE <Multiply><Complex>0 <Rational>2 3</Rational></Complex> Pi</Multiply></Power></PolyLog>	<PolyLog>3 <Add><Rational>-1 2</Rational> <Complex>0 <Divide><Sqrt>3</Sqrt> 2</Divide></Complex></Add></PolyLog>
 an-exact-argument-stays-symbolic-under-plain	<PolyLog>2 <Rational>1 2</Rational></PolyLog>	<PolyLog>2 <Rational>1 2</Rational></PolyLog>

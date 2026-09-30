@@ -21,8 +21,13 @@ uncertainty-propagation-near-a-pole-grows-fast	\cot(\mathrm{Around}(3, 0.01))	\m
 oddness-pulls-the-sign-out-of-a-symbolic	\cot(-x)	-\cot(x)
 derivative-csc-2-x	\frac{\mathrm{d}\cot(x)}{\mathrm{d}x}	-\csc(x)^2
 antiderivative-ln-sin-x	\int\!\cot(x)\, \mathrm{d}x	\ln(\vert\sin(x)\vert)
+n-cot-6-over-5-50	N(\cot(\frac{6}{5}), 50)	0.388\,779\,569\,368\,204\,911\,634
+matrixfunction-function-cot-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\cot(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \frac{\pi}{2}\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{6}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\sqrt{3}}{3}, 0\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{3}}{3}\bigr\rbrack\bigr\rbrack
 reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\top
 pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\top
+cot-1-over-10-times-pi	\cot(\frac{\pi}{10})	\sqrt{5+2\sqrt{5}}
+cot-3-over-10-times-pi	\cot(\frac{3\pi}{10})	\sqrt{5-2\sqrt{5}}
+cot-3-over-8-times-pi	\cot(\frac{3\pi}{8})	\sqrt{2}-1
 a-pole-sin-0-0	\cot(0)	\tilde\infty
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	\cot(\frac{\pi}{2})	0
 cot-complexinfinity-is-indeterminate-for-the	\cot(\tilde\infty)	\operatorname{Indeterminate}

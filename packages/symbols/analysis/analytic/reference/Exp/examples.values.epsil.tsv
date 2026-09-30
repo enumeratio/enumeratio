@@ -26,6 +26,22 @@ n-decimalizes-a-combined-product	N(exp(1) * exp(2))	20.085_536_923_187_668
 agrees-numerically-at-a-complex-point	N(exp(1.3 + 0.7i) * exp(-0.4 + 2.1i))	-2.317_493_000_510_215 + 0.823_937_896_324_175_7i
 to-50-significant-digits-every-one-correctly	N(exp(1), 50)	2.718_281_828_459_045_235_360_287_471_352_662_497_757_247_093_700_0
 to-1-significant-digit	N(exp(1), 1)	3
+n-exponentiale-pow-8-over-5-50	N(exponentialE ^ (8 / 5), 50)	4.953_032_424_395_114_803_654_286_356_423_964_256_413_031_123_556_6
+matrixfunction-exp-list-list-1-1-over-2-times-i	MatrixFunction(exp, [[1, 1 / 2 * i * pi], [0, 1]])	[[exponentialE, 1 / 2 * i * exponentialE * pi], [0, exponentialE]]
+exponentiale-pow-9-over-2-times-i-times-pi	exponentialE ^ (9 / 2 * i * pi)	i
+exptotrig-exponentiale-pow-1-over-5-times-i	ExpToTrig(exponentialE ^ (1 / 5 * i * pi))	1 / 4 + sqrt(5) / 4 + sqrt(2) / 4 * i * sqrt(5 - sqrt(5))
+functiondomain-exp-x-x	FunctionDomain(exp(x), x)	True
+functionrange-exp-x-x-y	FunctionRange(exp(x), x, y)	0 < y
+functionanalytic-exp-x-x	FunctionAnalytic(exp(x), x)	True
+functionmonotonicity-exp-x-x	FunctionMonotonicity(exp(x), x)	1
+functioninjective-exp-x-x	FunctionInjective(exp(x), x)	True
+functionsurjective-exp-x-x	FunctionSurjective(exp(x), x)	False
+assuming-n-in-integers-refine-exp-2-times-pi	Assuming(n in integers, Refine(exp(2 * pi * imaginaryUnit * n)))	exponentialE ^ (2i * pi * n)
+assuming-n-in-integers-refine-exp-2-times-pi-2	Assuming(n in integers, Refine(exp(2 * pi * imaginaryUnit * (n + 1 * 2 ^ -1))))	exponentialE ^ (2i * pi * (n + 1 / 2))
+functionsign-exp-x-x	FunctionSign(exp(x), x)	1
+functionsingularities-exp-x-x	FunctionSingularities(exp(x), x)	False
+functiondiscontinuities-exp-x-x	FunctionDiscontinuities(exp(x), x)	False
+functionconvexity-exp-x-x	FunctionConvexity(exp(x), x)	1
 threads-element-wise-over-a-list	exp([0, 1])	[1, exponentialE]
 inverse-of-ln-e-ln-x-x	exp(ln(5)) == 5	True
 e-a-e-b-e-a-b	exp(2) * exp(3) == exp(5)	True

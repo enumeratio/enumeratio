@@ -1,4 +1,6 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 from-character-code-of-a-single-code-point			[FromCharacterCode, 65]	"'A'"			
+fromcharactercode-list-97-98-99			[FromCharacterCode, [List, 97, 98, 99]]	"'abc'"			
 inverts-tocharactercode	Scope		[FromCharacterCode, [ToCharacterCode, [String, hello]]]	"'hello'"			
 round-trips-a-non-ascii-string-emoji-astral	Scope		[FromCharacterCode, [ToCharacterCode, [String, a😀b→c]]]	"'a😀b→c'"	round-trips an emoji (astral) and an arrow (BMP) through code points	convention	Wolfram's character codes for an astral character come back through the kernel pipe as its UTF-8 bytes
+fromcharactercode-97	Scope		[FromCharacterCode, 97]	"'a'"			

@@ -1,0 +1,5 @@
+id	in	out
+const-glaisher-numeric-value		
+n-constglaisher-50		
+round-constglaisher-pow-100		
+1-lt-constglaisher-lt-2	1\lt\mathrm{ConstGlaisher}\lt2	\mathrm{True}

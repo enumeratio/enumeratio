@@ -38,7 +38,20 @@ a-real-composite-5-squared-is-not-prime
 1-is-not-prime-gaussian-or-not			
 0-is-not-prime-gaussian-or-not			
 a-common-choice-of-prime-modulus-for-hashing	(decide (Nat.Prime 1000000007))	true	
+isprime-257	(decide (Nat.Prime 257))		
+isprime-1-plus-2-pow-128	(decide (Nat.Prime (1 + (2 ^ 128))))		
+filter-range-1-100-function-isprimepower-1			
 an-odd-prime-stays-prime-in-z-i-exactly-when-p			
+isprime-37	(decide (Nat.Prime 37))		
+isprime-29	(decide (Nat.Prime 29))		
+isprime-17	(decide (Nat.Prime 17))		
+isprime-12	(decide (Nat.Prime 12))		
+isprime-23	(decide (Nat.Prime 23))		
+isprime-24	(decide (Nat.Prime 24))		
+isprime-list-7-11	(decide (Nat.Prime [7, 11]))		
+isprime-list-5-7-2	(decide (Nat.Prime [5, 7, 2]))		
+isprime-19	(decide (Nat.Prime 19))		
+divisorsum-19-function-1-1-isprime			
 non-integers-are-not-prime	(decide (Nat.Prime ((1 : ℚ) / 2)))	Type mismatch	error
 another-non-integer-3-halves	(decide (Nat.Prime ((3 : ℚ) / 2)))	Type mismatch	error
 a-symbol-stays-unevaluated			

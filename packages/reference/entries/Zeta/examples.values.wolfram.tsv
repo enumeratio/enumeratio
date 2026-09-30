@@ -31,6 +31,12 @@ zeta-2-1-2-3-zeta-2-pi-2-2	Zeta[2, Rational[1, 2]]	Pi^2/2		\zeta \left(2,\frac{1
 interval-arithmetic-zeta-is-decreasing-on-1	Zeta[Interval[List[1.1, 1.2]]]	Interval[{5.587162344294683, 10.584470307963986}]		\zeta (\text{Interval}[\{1.1,1.2\}])	\text{Interval}[\{5.58716,10.5845\}]	disagree
 uncertainty-in-a-propagated-with-partial-a-zeta	Zeta[Rational[1, 2], Around[0.5, 0.01]]	Around[-0.6048986434216284, 0.023882689737774163]		\zeta \left(\frac{1}{2},0.500\pm 0.010\right)	-0.605\pm 0.024	disagree
 to-40-significant-digits-every-one-correctly	N[Zeta[3], 40]	1.202056903159594285399738161511449990764986292340211366009`40.	1.202056903159594285399738161511449990765	N[\zeta (3),40]	1.202056903159594285399738161511449990765	
+n-zeta-5-over-4-50	N[Zeta[Rational[5, 4]], 50]	4.59511182584294338068537803969462565228102978060480484610195795975102644036169`50.	4.5951118258429433806853780396946256522810297806048	N\left[\zeta \left(\frac{5}{4}\right),50\right]	4.5951118258429433806853780396946256522810297806048	
+n-zeta-3-2-50	N[Zeta[3, 2], 50]	0.20205690315959428539973816151144999076498629234049888179227131961408879133033`50.	0.20205690315959428539973816151144999076498629234050	N[\zeta (3,2),50]	0.20205690315959428539973816151144999076498629234050	
+zeta-2-list-list-1-over-2-0-list-0-3-over-2	Zeta[2, List[List[Rational[1, 2], 0], List[0, Rational[3, 2]]]]	{{Pi^2/2, Pi^2/6}, {Pi^2/6, -4 + Pi^2/2}}		\zeta \left(2,\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{3}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  \frac{\pi ^2}{2} & \frac{\pi ^2}{6} \\  \frac{\pi ^2}{6} & \frac{\pi ^2}{2}-4 \\ \end{array} \right)	
+zeta-4-5	Zeta[4, 5]	-22369/20736 + Pi^4/90		\zeta (4,5)	\frac{\pi ^4}{90}-\frac{22369}{20736}	
+zeta-list-1-2-3-4	Zeta[List[1, 2, 3, 4]]	{ComplexInfinity, Pi^2/6, Zeta[3], Pi^4/90}		\zeta (\{1,2,3,4\})	\left\{\text{ComplexInfinity},\frac{\pi ^2}{6},\zeta (3),\frac{\pi ^4}{90}\right\}	
+matrixfunction-function-zeta-2-1-1-list-list-1	MatrixFunction[Function[Zeta[2, Slot[1]]], List[List[Rational[1, 2], 0], List[0, Rational[3, 2]]]]	{{Pi^2/2, 0}, {0, -4 + Pi^2/2}}		\text{MatrixFunction}\left[\zeta (2,\text{$\#$1})\&,\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{3}{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{\pi ^2}{2} & 0 \\  0 & \frac{\pi ^2}{2}-4 \\ \end{array} \right)	
 the-probability-that-two-random-positive	(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])	True		\frac{1}{\zeta (2)}=\frac{6}{\pi ^2}	\text{True}	
 certified-digits-zeta-3	N[Zeta[3], 40]	1.202056903159594285399738161511449990764986292340211366009`40.	1.202056903159594285399738161511449990765	N[\zeta (3),40]	1.202056903159594285399738161511449990765	
 zeta-0-1-2	Zeta[0]	-1/2		\zeta (0)	-\frac{1}{2}	
@@ -38,6 +44,20 @@ trivial-zero-zeta-2n-0-for-positive-integer-n	Zeta[-2]	0		\zeta (-2)	0
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	Zeta[-3]	1/120		\zeta (-3)	\frac{1}{120}	
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges	Zeta[1]	ComplexInfinity		\zeta (1)	\text{ComplexInfinity}	
 zeta-s-1-zeta-s-for-symbolic-s						
+zeta-0-1	Zeta[0, 1]	-1/2		\zeta (0,1)	-\frac{1}{2}	
+zeta-neg-1-1	Zeta[-1, 1]	-1/12		\zeta (-1,1)	-\frac{1}{12}	
+zeta-0-1-over-4	Zeta[0, Rational[1, 4]]	1/4		\zeta \left(0,\frac{1}{4}\right)	\frac{1}{4}	
+zeta-neg-1-1-over-4	Zeta[-1, Rational[1, 4]]	Zeta[-1, 1/4]		\zeta \left(-1,\frac{1}{4}\right)	\zeta \left(-1,\frac{1}{4}\right)	
+zeta-2-3	Zeta[2, 3]	-5/4 + Pi^2/6		\zeta (2,3)	\frac{\pi ^2}{6}-\frac{5}{4}	
+zeta-2-4	Zeta[2, 4]	-49/36 + Pi^2/6		\zeta (2,4)	\frac{\pi ^2}{6}-\frac{49}{36}	
+zeta-2-5	Zeta[2, 5]	-205/144 + Pi^2/6		\zeta (2,5)	\frac{\pi ^2}{6}-\frac{205}{144}	
+zeta-2-6	Zeta[2, 6]	-5269/3600 + Pi^2/6		\zeta (2,6)	\frac{\pi ^2}{6}-\frac{5269}{3600}	
+zeta-2-7	Zeta[2, 7]	-5369/3600 + Pi^2/6		\zeta (2,7)	\frac{\pi ^2}{6}-\frac{5369}{3600}	
+zeta-2-8	Zeta[2, 8]	-266681/176400 + Pi^2/6		\zeta (2,8)	\frac{\pi ^2}{6}-\frac{266681}{176400}	
+zeta-2-9	Zeta[2, 9]	-1077749/705600 + Pi^2/6		\zeta (2,9)	\frac{\pi ^2}{6}-\frac{1077749}{705600}	
+zeta-2-10	Zeta[2, 10]	-9778141/6350400 + Pi^2/6		\zeta (2,10)	\frac{\pi ^2}{6}-\frac{9778141}{6350400}	
+zeta-4-1	Zeta[4, 1]	Pi^4/90		\zeta (4,1)	\frac{\pi ^4}{90}	
+zeta-4-2	Zeta[4, 2]	-1 + Pi^4/90		\zeta (4,2)	\frac{\pi ^4}{90}-1	
 odd-integers-geq-3-have-no-known-closed-form	Zeta[3]	Zeta[3]		\zeta (3)	\zeta (3)	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N[Zeta[3, Rational[-1, 2]]]	16.414398322117158		N\left[\zeta \left(3,-\frac{1}{2}\right)\right]	16.4144	
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N[Zeta[-1, -2]]	2.9166666666666665		N[\zeta (-1,-2)]	2.91667	

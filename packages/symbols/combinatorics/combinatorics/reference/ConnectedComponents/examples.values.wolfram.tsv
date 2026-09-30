@@ -1,2 +1,5 @@
 id	in	out	tex.in	tex.out	verdict
 a-2-cycle-and-a-downstream-only-vertex	ConnectedComponents[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]	{{3}, {1, 2}}	\text{ConnectedComponents}[]	\{\{3\},\{1,2\}\}	disagree
+length-first-connectedcomponents-g	Length[First[ConnectedComponents[g]]]	0	\text{Length}[\text{First}[\text{ConnectedComponents}[g]]]	0	
+length-connectedcomponents-g-minus-1	Plus[Length[ConnectedComponents[g]], -1]	0	\text{Length}[\text{ConnectedComponents}[g]]-1	0	
+length-connectedcomponents-g	Length[ConnectedComponents[g]]	1	\text{Length}[\text{ConnectedComponents}[g]]	1	

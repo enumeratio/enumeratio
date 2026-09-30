@@ -21,4 +21,14 @@ the-principal-character-mod-2-removes-the-euler	DirichletL(2, 1, s)	(-2 ^ (-s) +
 l-2-chi-2-bmod-4-beta-2-g	DirichletL(4, 2, 2)	Catalan
 l-0-chi-3-frac-13-the-class-number-formula-s-2h	DirichletL(3, 2, 0)	1 / 3
 l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic	DirichletL(3, 2, 1)	sqrt(3) / 9 * pi
+dirichletl-2-1-2	DirichletL(2, 1, 2)	1 / 8 * pi ^ 2
+dirichletl-2-1-3	DirichletL(2, 1, 3)	7 / 8 * zeta(3)
+dirichletl-2-1-4	DirichletL(2, 1, 4)	1 / 96 * pi ^ 4
+dirichletl-3-1-2	DirichletL(3, 1, 2)	4 / 27 * pi ^ 2
+dirichletl-3-1-3	DirichletL(3, 1, 3)	26 / 27 * zeta(3)
+dirichletl-3-1-4	DirichletL(3, 1, 4)	8 / 729 * pi ^ 4
+dirichletl-3-1-5	DirichletL(3, 1, 5)	242 / 243 * zeta(5)
+dirichletl-5-1-2	DirichletL(5, 1, 2)	4 / 25 * pi ^ 2
+dirichletl-5-1-3	DirichletL(5, 1, 3)	124 / 125 * zeta(3)
+dirichletl-6-1-2	DirichletL(6, 1, 2)	1 / 9 * pi ^ 2
 no-closed-form-at-positive-integer-s-in-general	DirichletL(5, 2, 2)	DirichletL(5, 2, 2)

@@ -48,6 +48,16 @@ taylor-series-about-0-only-odd-powers-appear
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1		
 to-30-significant-digits-every-one-correctly		
 a-huge-24-40-argument-reduces-exactly-mod-2-pi		
+n-sin-6-over-5-50		
+functiondomain-sin-x-x	\mathrm{FunctionDomain}(\sin(x), x)	\mathrm{True}
+functionrange-sin-x-x-y		
+functionperiod-sin-x-x		
+functionanalytic-sin-x-x	\mathrm{FunctionAnalytic}(\sin(x), x)	\mathrm{True}
+functioninjective-sin-x-x	\mathrm{FunctionInjective}(\sin(x), x)	\mathrm{False}
+functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\mathrm{False}
+functionsingularities-sin-x-x	\mathrm{FunctionSingularities}(\sin(x), x)	\mathrm{False}
+functiondiscontinuities-sin-x-x	\mathrm{FunctionDiscontinuities}(\sin(x), x)	\mathrm{False}
+matrixfunction-function-sin-1-1-list-list-5-over		
 threads-element-wise-over-a-list		
 degrees-d-converts-a-degree-measure-to-radians		
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x		
@@ -60,6 +70,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i		
 simplify-knows-the-pythagorean-identity		
 the-same-through-fullsimplify		
+sin-3-over-10-times-pi		
 1-radian-isn-t-a-recognized-special-angle-so		
 sin-2-a-generic-argument-stays-symbolic		
 sin-x-plus-y-stays-symbolic		

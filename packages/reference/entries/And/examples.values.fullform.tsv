@@ -1,0 +1,4 @@
+id	in
+1-lt-2-3-lt-pi	And[Less[1, 2], Less[3, Pi]]
+refine-a-pow-b-pow-c-a-gt-eq-0-b-in-realnumbers	Refine[Power[Power[a, b], c], And[GreaterEqual[a, 0], Element[b, Reals]]]
+booleanconvert-factorial-a-b	BooleanConvert[Not[And[a, b]]]

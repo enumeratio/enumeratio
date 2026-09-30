@@ -1,0 +1,8 @@
+id	in	out
+1-factorial-eq-2	1\ne2	\mathrm{True}
+3-over-2-factorial-eq-5-over-3	\frac{3}{2}\ne\frac{5}{3}	\mathrm{True}
+pi-pow-exponentiale-factorial-eq-exponentiale	\pi^{e}\ne e^{\pi}	\mathrm{True}
+3-factorial-eq-4-4-factorial-eq-5	3\ne4\land4\ne5	\mathrm{True}
+list-a-b-c-factorial-eq-list-d-exponentiale	\bigl\lbrack a, b, c\bigr\rbrack\ne\bigl\lbrack d, e\bigr\rbrack	\mathrm{True}
+abc-factorial-eq-abc	\text{abc}\ne\text{ABC}	\mathrm{True}
+list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	\begin{cases}x\ne x\\x\ne y\\\sqrt{2}+\sqrt{3}\ne\sqrt{5+2\sqrt{6}}\\\pi\ne N(\pi)\end{cases}	\bigl\lbrack\mathrm{False}, x\ne y, \mathrm{False}, \mathrm{False}\bigr\rbrack

@@ -3,6 +3,10 @@ all-list-2-4-6-function-1-mod-2-eq-0	AllTrue[List[2, 4, 6], Function[(Mod[Slot[1
 all-list-2-4-5-function-1-mod-2-eq-0	AllTrue[List[2, 4, 5], Function[(Mod[Slot[1], 2] == 0)]]	False	\text{AllTrue}[\{2,4,5\},(\text{$\#$1} \bmod 2)=0\&]	\text{False}	
 a-named-predicate	AllTrue[List[2, 3, 5, 7], PrimeQ]	True	\text{AllTrue}[\{2,3,5,7\},\text{PrimeQ}]	\text{True}	
 all-list-1-2-3-function-1-gt-0	AllTrue[List[1, 2, 3], Function[Greater[Slot[1], 0]]]	True	\text{AllTrue}[\{1,2,3\},\text{$\#$1}>0\&]	\text{True}	
+all-list-2-3-4-6-8-iseven	AllTrue[List[2, 3, 4, 6, 8], EvenQ]	False	\text{AllTrue}[\{2,3,4,6,8\},\text{EvenQ}]	\text{False}	
+all-list-2-4-6-8-iseven	AllTrue[List[2, 4, 6, 8], EvenQ]	True	\text{AllTrue}[\{2,4,6,8\},\text{EvenQ}]	\text{True}	
+all-list-2-6-x-4-y-15-function-1-lt-10-1	AllTrue[List[2, 6, x, 4, y, 15], Function[Less[Slot[1], 10]]]	False	\text{AllTrue}[\{2,6,x,4,y,15\},\text{$\#$1}<10\&]	\text{False}	
+all-list-2-6-x-4-y-function-istrue-1-lt-10-1	AllTrue[List[2, 6, x, 4, y], Function[TrueQ[Less[Slot[1], 10]]]]	False	\text{AllTrue}[\{2,6,x,4,y\},\text{TrueQ}[\text{$\#$1}<10]\&]	\text{False}	
 one-definite-failure-decides-the-answer-even	AllTrue[List[1, x], EvenQ]	False	\text{AllTrue}[\{1,x\},\text{EvenQ}]	\text{False}	
 without-a-predicate-tests-the-elements	AllTrue[List[True, True]]	AllTrue[{True, True}]	\text{AllTrue}[\{\text{True},\text{True}\}]	\text{AllTrue}[\{\text{True},\text{True}\}]	disagree
 a-level-argument-tests-the-elements-at-depth-2	AllTrue[List[List[1, 2], List[3, 4]], Function[Greater[Slot[1], 0]], 2]	True	\text{AllTrue}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right),\text{$\#$1}>0\&,2\right]	\text{True}	

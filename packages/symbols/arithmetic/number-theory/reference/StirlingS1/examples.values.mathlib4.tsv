@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n
 the-signed-row-sum-vanishes-for-n-ge-2			
 s-n-n-1-binom-n-2	(decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))		
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+n-stirlings1-100-11			
+stirlings1-0-1	(Nat.stirlingFirst 0 1)		
+stirlings1-1-0	(Nat.stirlingFirst 1 0)		
+stirlings1-1-1	(Nat.stirlingFirst 1 1)		
+stirlings1-1-2	(Nat.stirlingFirst 1 2)		
+stirlings1-2-0	(Nat.stirlingFirst 2 0)		
+stirlings1-2-1	(Nat.stirlingFirst 2 1)		
+stirlings1-2-2	(Nat.stirlingFirst 2 2)		
+stirlings1-2-3	(Nat.stirlingFirst 2 3)		
+stirlings1-3-0	(Nat.stirlingFirst 3 0)		
+stirlings1-3-1	(Nat.stirlingFirst 3 1)		
+stirlings1-3-2	(Nat.stirlingFirst 3 2)		
+stirlings1-3-4	(Nat.stirlingFirst 3 4)		
+stirlings1-4-0	(Nat.stirlingFirst 4 0)		
+stirlings1-4-1	(Nat.stirlingFirst 4 1)		
+stirlings1-4-3	(Nat.stirlingFirst 4 3)		
 the-empty-case-s-0-0-1-by-convention-distinct	(Nat.stirlingFirst 0 0)	1	
 k-n-is-0	(Nat.stirlingFirst 5 6)		
 a-negative-k-stays-symbolic	(Nat.stirlingFirst 4 (-1))		

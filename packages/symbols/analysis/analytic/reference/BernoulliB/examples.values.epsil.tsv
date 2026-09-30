@@ -16,6 +16,18 @@ von-staudt-clausen-the-denominator-of-b-2n-is	denominator(bernoulliB(12))	2_730
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	zeta(-3) == -(bernoulliB(4) / 4)	True
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	"binomial(5, 0) * bernoulliB(0) + binomial(5, 1) * bernoulliB(1) + binomial(5, 2) *\n                                                                  bernoulliB(2) + binomial(5, 3) *\n                                                                     bernoulliB(3) + binomial(5, 4) *\n                                                                        bernoulliB(4)"	0
 b-n-0-for-every-odd-n-1	bernoulliB(5) == 0	True
+bernoullib-3	bernoulliB(3)	0
+bernoullib-5	bernoulliB(5)	0
+bernoullib-6	bernoulliB(6)	1 / 42
+bernoullib-7	bernoulliB(7)	0
+bernoullib-8	bernoulliB(8)	-1 / 30
+bernoullib-9	bernoulliB(9)	0
+bernoullib-2-0	bernoulliB(2, 0)	1 / 6
+bernoullib-3-0	bernoulliB(3, 0)	0
+bernoullib-2-1	bernoulliB(2, 1)	1 / 6
+bernoullib-3-1	bernoulliB(3, 1)	0
+bernoullib-0-1-over-6	bernoulliB(0, 1 / 6)	1
 b-1-1-frac-12-is-the-other-convention-for-b-1	bernoulliB(1, 1)	1 / 2
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	bernoulliB(-1)	bernoulliB(-1)
 numerators-and-denominators-grow-quickly-b-20	bernoulliB(20)	-174_611 / 330
+bernoullib-12-x	bernoulliB(12, x)	"x ^ 12 - 6 * x ^ 11 + 11 * x ^ 10 + -33 / 2 * x ^ 8 + 22 * x ^ 6 + -33 / 2 * x ^\n                                                                             4 + 5 *\n                                                                                x ^ 2 + -691 / 2_730"

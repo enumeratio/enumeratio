@@ -3,3 +3,6 @@ heavisidepi-inside	\mathrm{HeavisidePi}(0)	1
 heavisidepi-boundary-unevaluated	\mathrm{HeavisidePi}(\frac{1}{2})	\mathrm{HeavisidePi}(\frac{1}{2})
 heavisidepi-neg-boundary-unevaluated	\mathrm{HeavisidePi}(-\frac{1}{2})	\mathrm{HeavisidePi}(-\frac{1}{2})
 heavisidepi-outside	\mathrm{HeavisidePi}(1)	0
+heavisidepi-neg-1	\mathrm{HeavisidePi}(-1)	0
+heavisidepi-1-over-4	\mathrm{HeavisidePi}(\frac{1}{4})	1
+matrixfunction-heavisidepi-list-list-neg-1-0	\mathrm{MatrixFunction}(\mathrm{HeavisidePi}, \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack

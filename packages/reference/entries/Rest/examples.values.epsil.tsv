@@ -1,0 +1,2 @@
+id	in	out
+rest-list-a-b-c-d	rest([a, b, c, d])	[b, c, d]

@@ -7,5 +7,26 @@ threads-element-wise-over-a-list-as-wolfram-s	(ArithmeticFunction.moebius [1, 2,
 gaussian-integers-5-6i-is-a-gaussian-prime-norm			
 listable-threads-over-a-list	(ArithmeticFunction.moebius [4, 10, 17, 20])		
 listable-over-a-range			
+moebiusmu-15-factorial-eq-0			
+divisorsum-1-function-moebiusmu-1-1			
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))	0	
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	(decide ((ArithmeticFunction.moebius 253) = ((ArithmeticFunction.moebius 11) * (ArithmeticFunction.moebius 23))))		
+moebiusmu-5-187	(ArithmeticFunction.moebius 5187)		
+moebiusmu-32-538	(ArithmeticFunction.moebius 32538)		
+moebiusmu-1-440	(ArithmeticFunction.moebius 1440)		
+list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprime-11-moebiusmu-11	[(decide (Nat.Prime 11)), (ArithmeticFunction.moebius 11)]		
+moebiusmu-2	(ArithmeticFunction.moebius 2)		
+moebiusmu-3	(ArithmeticFunction.moebius 3)		
+moebiusmu-4	(ArithmeticFunction.moebius 4)		
+moebiusmu-5	(ArithmeticFunction.moebius 5)		
+moebiusmu-6	(ArithmeticFunction.moebius 6)		
+moebiusmu-7	(ArithmeticFunction.moebius 7)		
+moebiusmu-8	(ArithmeticFunction.moebius 8)		
+moebiusmu-9	(ArithmeticFunction.moebius 9)		
+moebiusmu-13	(ArithmeticFunction.moebius 13)		
+moebiusmu-14	(ArithmeticFunction.moebius 14)		
+moebiusmu-15	(ArithmeticFunction.moebius 15)		
+moebiusmu-16	(ArithmeticFunction.moebius 16)		
+moebiusmu-17	(ArithmeticFunction.moebius 17)		
 mu-is-only-defined-for-positive-integers-compute	(ArithmeticFunction.moebius 0)	0	inconclusive

@@ -35,9 +35,15 @@ gcd-with-a-negative-associate
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19			
 gcd-of-two-composites-sharing-the-prime-above-13			
 reduce-12-18-to-lowest-terms-by-dividing-out-the	(n(12) / gcd(n(12), n(18)))	2	
+gcd-14-105	gcd(n(14), n(105))		
+gcd-24-12	gcd(n(24), n(12))		
+gcd-6-21	gcd(n(6), n(21))		
+gcd-6-3-mod-3-eq-0	equal(mod_floor(gcd(n(6), n(3)), n(3)), n(0))		
 commutative-gcd-a-b-gcd-b-a	equal(gcd(n(12), n(18)), gcd(n(18), n(12)))	true	
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm	equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))	true	
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci			
+gcd-7-11-29			
+gcd-5-6-eq-1	equal(gcd(n(5), n(6)), n(1))		
 a-single-argument-is-returned-unchanged			
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(n(0), n(5))	5	
@@ -45,3 +51,4 @@ signs-are-discarded-before-computing-the-gcd
 lists-aren-t-threaded-element-wise-they-re	gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))	panic: threading: a list where the crate takes a scalar	error
 gcd-0-0-0-by-convention	gcd(n(0), n(0))	0	
 symbolic-arguments-stay-unevaluated			
+gcd-neg-3-9	gcd(n(-3), n(9))		

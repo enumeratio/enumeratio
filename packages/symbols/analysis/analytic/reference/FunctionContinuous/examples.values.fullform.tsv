@@ -11,5 +11,8 @@ sqrt-restricted-past-its-own-domain	FunctionContinuous[List[Sqrt[x], Greater[x, 
 log-restricted-to-its-own-domain	FunctionContinuous[List[Log[x], Greater[x, 0]], x]	[FunctionContinuous, [List, [Ln, x], [Greater, x, 0]], x]
 log-restricted-includes-its-singular-boundary	FunctionContinuous[List[Log[x], GreaterEqual[x, 0]], x]	[FunctionContinuous, [List, [Ln, x], [GreaterEqual, x, 0]], x]
 reciprocal-restricted-below-its-pole	FunctionContinuous[List[Power[x, -1], Less[x, 0]], x]	[FunctionContinuous, [List, [Power, x, -1], [Less, x, 0]], x]
+functioncontinuous-sin-x-x	FunctionContinuous[Sin[x], x]	
 reciprocal-restricted-domain	FunctionContinuous[List[Power[x, -1], Greater[x, 0]], x]	[FunctionContinuous, [List, [Power, x, -1], [Greater, x, 0]], x]
 sqrt-closed-boundary	FunctionContinuous[List[Sqrt[x], GreaterEqual[x, 0]], x]	[FunctionContinuous, [List, [Sqrt, x], [GreaterEqual, x, 0]], x]
+list-functioncontinuous-x-x-functioncontinuous-x	List[FunctionContinuous[x, x], FunctionContinuous[Plus[Power[x, 2], 1], x], FunctionContinuous[Plus[Power[x, 3], Times[-1, Times[2, Power[x, 2]]], Times[-1, Times[5, x]], 6], x]]	
+list-functioncontinuous-sin-x-x	List[FunctionContinuous[Sin[x], x], FunctionContinuous[Cos[x], x], FunctionContinuous[Exp[x], x]]	

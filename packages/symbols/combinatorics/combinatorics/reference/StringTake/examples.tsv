@@ -1,6 +1,12 @@
 id	section	role	expr	expected	caption
 string-take-s-n-takes-the-first-n-characters			[StringTake, [String, hello world], 5]	"'hello'"	
+stringtake-abcdefghijklm-6			[StringTake, "'abcdefghijklm'", 6]	"'abcdef'"	
+stringtake-abcdefghijklm-neg-4			[StringTake, "'abcdefghijklm'", -4]	"'jklm'"	
+stringtake-abcdefghijklm-list-5-10			[StringTake, "'abcdefghijklm'", [List, 5, 10]]	"'efghij'"	
 string-take-s-negative-n-takes-last-n-chars	Scope		[StringTake, [String, hello world], -5]	"'world'"	
 string-take-s-n-takes-the-nth-character-alone	Scope		[StringTake, [String, hello], [List, 2]]	"'e'"	
 string-take-s-m-n-takes-an-inclusive-range	Scope		[StringTake, [String, hello world], [List, 1, 5]]	"'hello'"	
 string-take-s-m-negative-n-counts-from-end	Scope		[StringTake, [String, hello world], [List, 1, -7]]	"'hello'"	-7 counts back from the end, landing on the same range as {1, 5}
+stringtake-abcdefghijklm-list-6	Scope		[StringTake, "'abcdefghijklm'", [List, 6]]	"'f'"	
+stringtake-abc-ndef-5	Properties		[StringTake, "'abc\ndef'", 5]	"'abc\nd'"	
+stringtake-abcdefghijklm-list-5-neg-4	Properties		[StringTake, "'abcdefghijklm'", [List, 5, -4]]	"'efghij'"	

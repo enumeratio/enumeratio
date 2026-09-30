@@ -2,6 +2,7 @@ id	in	out	tex.in	tex.out	verdict
 union-list-1-2-3-list-3-4	Union[List[1, 2, 3], List[3, 4]]	{1, 2, 3, 4}	\{1,2,3\}\cup \{3,4\}	\{1,2,3,4\}	
 union-list-1-2-list-2-3-list-3-4	Union[List[1, 2], List[2, 3], List[3, 4]]	{1, 2, 3, 4}	\{1,2\}\cup \{2,3\}\cup \{3,4\}	\{1,2,3,4\}	
 union-list-a-b-c-list-b-c-d	Union[List[a, b, c], List[b, c, d]]	{a, b, c, d}	\{a,b,c\}\cup \{b,c,d\}	\{a,b,c,d\}	
+union-list-a-b-a-c-list-d-a-exponentiale-b-list	Union[List[a, b, a, c], List[d, a, E, b], List[c, a]]	{a, b, c, d, E}	\{a,b,a,c\}\cup \{d,a,e,b\}\cup \{c,a\}	\{a,b,c,d,e\}	
 a-single-list-is-de-duplicated	Union[List[1, 2, 1, 3, 6, 2, 2]]	{1, 2, 3, 6}	\text{Union}[\{1,2,1,3,6,2,2\}]	\{1,2,3,6\}	
 symbolic-elements-merged-across-three-lists	Union[List[a, b, a, c], List[d, a, f, b], List[c, a]]	{a, b, c, d, f}	\{a,b,a,c\}\cup \{d,a,f,b\}\cup \{c,a\}	\{a,b,c,d,f\}	
 elements-can-themselves-be-lists-1-2-and-2-1	Union[List[List[1, 2], List[1, 2, 3]], List[List[2, 1], List[1, 2]], List[List[3, 2, 1], List[1, 2, 3]]]	{{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}	\{\{1,2\},\{1,2,3\}\}\cup \left( \begin{array}{cc}  2 & 1 \\  1 & 2 \\ \end{array} \right)\cup \left( \begin{array}{ccc}  3 & 2 & 1 \\  1 & 2 & 3 \\ \end{array} \right)	\{\{1,2\},\{2,1\},\{1,2,3\},\{3,2,1\}\}	disagree
@@ -9,6 +10,7 @@ with-no-arguments-the-union-is-empty	Union[]	{}	\text{Union}[]	\{\}	disagree
 combining-the-divisors-of-10-and-15-into-one-set	Union[Divisors[10], Divisors[15]]	{1, 2, 3, 5, 10, 15}	\text{Divisors}[10]\cup \text{Divisors}[15]	\{1,2,3,5,10,15\}	
 combining-the-divisors-of-10-12-and-20-into-one	Union[Divisors[10], Divisors[12], Divisors[20]]	{1, 2, 3, 4, 5, 6, 10, 12, 20}	\text{Divisors}[10]\cup \text{Divisors}[12]\cup \text{Divisors}[20]	\{1,2,3,4,5,6,10,12,20\}	
 counting-the-distinct-values-in-a-list-see	Length[Union[List[1, 2, 1, 3, 6, 2, 2]]]	4	\text{Length}[\text{Union}[\{1,2,1,3,6,2,2\}]]	4	
+union-partition-integerdigits-10-factorial-2-3-1	Union[Partition[IntegerDigits[Factorial[10], 2], 3, 1]]	{{0, 0, 0}, {0, 1, 0}, {0, 1, 1}, {1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}}	\text{Union}[\text{Partition}[\text{IntegerDigits}[10!,2],3,1]]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  0 & 1 & 0 \\  0 & 1 & 1 \\  1 & 0 & 0 \\  1 & 0 & 1 \\  1 & 1 & 0 \\  1 & 1 & 1 \\ \end{array} \right)	
 union-is-commutative-argument-order-doesn-t	(Union[List[1, 2, 3], List[2, 3, 4]] == Union[List[2, 3, 4], List[1, 2, 3]])	True	\{1,2,3\}\cup \{2,3,4\}=\{2,3,4\}\cup \{1,2,3\}	\text{True}	
 inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	(Length[Union[List[1, 2, 3], List[2, 3, 4]]] == Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])	True	\text{Length}[\{1,2,3\}\cup \{2,3,4\}]=(\text{Length}[\{1,2,3\}]+\text{Length}[\{2,3,4\}])-\text{Length}[\{1,2,3\}\cap \{2,3,4\}]	\text{True}	
 the-empty-set-is-the-identity-for-union-a-cup					

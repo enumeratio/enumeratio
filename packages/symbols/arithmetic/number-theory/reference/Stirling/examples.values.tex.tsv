@@ -12,6 +12,24 @@ two-blocks-s-n-2-2-n-1-1	\mathrm{Stirling}(10, 2)=2^9-1	\top
 s-n-n-1-binom-n-2-one-block-is-a-pair	\mathrm{Stirling}(6, 5)=\binom{6}{2}	\top
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	\mathrm{Stirling}(6, 3)=\frac{1}{3!}(\sum_{j=0}^3(-1)^{3-j}\binom{3}{j}j^6)	\top
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	\sum_{k=0}^4\mathrm{StirlingS1}(4, k)\mathrm{Stirling}(k, 2)	0
+n-stirling-120-10	N(\mathrm{Stirling}(120, 10))	275\,564\,293\,332\,645\,612\,796\,076\,533\,812\,387\,578\,132\,055\,070\,471\,681\,207\,862\,920\,555\,299\,757\,965\,212\,186\,923\,458\,011\,526\,847\,229\,561\,561\,721\,294\,169\,780
+stirling-10-4	\mathrm{Stirling}(10, 4)	34\,105
+stirling-1-0	\mathrm{Stirling}(1, 0)	0
+stirling-1-1	\mathrm{Stirling}(1, 1)	1
+stirling-1-2	\mathrm{Stirling}(1, 2)	0
+stirling-2-0	\mathrm{Stirling}(2, 0)	0
+stirling-2-1	\mathrm{Stirling}(2, 1)	1
+stirling-2-2	\mathrm{Stirling}(2, 2)	1
+stirling-2-3	\mathrm{Stirling}(2, 3)	0
+stirling-3-0	\mathrm{Stirling}(3, 0)	0
+stirling-3-1	\mathrm{Stirling}(3, 1)	1
+stirling-3-2	\mathrm{Stirling}(3, 2)	3
+stirling-3-3	\mathrm{Stirling}(3, 3)	1
+stirling-3-4	\mathrm{Stirling}(3, 4)	0
+stirling-4-0	\mathrm{Stirling}(4, 0)	0
+stirling-4-1	\mathrm{Stirling}(4, 1)	1
+stirling-4-2	\mathrm{Stirling}(4, 2)	7
+stirling-4-3	\mathrm{Stirling}(4, 3)	6
 the-empty-set-has-one-partition-into-no-blocks	\mathrm{Stirling}(0, 0)	1
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	\mathrm{Stirling}(5, 0)	0
 k-n-is-0	\mathrm{Stirling}(3, 5)	0

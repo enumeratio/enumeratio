@@ -1,15 +1,24 @@
-id	in	out
-nextprime-10	nextPrime(10)	11
-nextprime-100	nextPrime(100)	101
-the-second-prime-after-10	nextPrime(10, 2)	13
-nextprime-6	nextPrime(6)	7
-the-second-prime-after-50	nextPrime(50, 2)	59
-the-largest-prime-below-50	nextPrime(50, -1)	47
-threads-element-wise-over-a-list-as-wolfram-s	nextPrime([1, 5, 10, 15])	[2, 7, 11, 17]
-large-integers-the-first-prime-past-a-googol-is	nextPrime(10 ^ 100)	10_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_267
-rational-n-the-next-prime-above-7-2	nextPrime(7 / 2)	5
-real-n-the-next-prime-above-100-5	nextPrime(100.5)	101
-nextprime-steps-from-p-n-to-p-n-1-see-nthprime	nextPrime(nthPrime(20)) == nthPrime(21)	True
-a-negative-k-walks-backward-giving-the-prime	nextPrime(10, -1)	7
-negative-n-wolfram-counts-7-as-prime-and-returns	nextPrime(-10)	-7
-nextprime-neg-2	nextPrime(-2)	2
+id	in	out	back
+nextprime-10	nextPrime(10)	11	
+nextprime-100	nextPrime(100)	101	
+the-second-prime-after-10	nextPrime(10, 2)	13	
+nextprime-6	nextPrime(6)	7	
+the-second-prime-after-50	nextPrime(50, 2)	59	
+the-largest-prime-below-50	nextPrime(50, -1)	47	
+threads-element-wise-over-a-list-as-wolfram-s	nextPrime([1, 5, 10, 15])	[2, 7, 11, 17]	
+large-integers-the-first-prime-past-a-googol-is	nextPrime(10 ^ 100)	10_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_267	
+rational-n-the-next-prime-above-7-2	nextPrime(7 / 2)	5	
+real-n-the-next-prime-above-100-5	nextPrime(100.5)	101	
+findinstance-nextprime-p-eq-p-plus-1-0-lt-p-lt	FindInstance(nextPrime(p) == p + 1 && 0 < p < 10, p, integers)	[[Rule(p, 1)]]	
+nextprime-1-25	nextPrime(1, 25)	97	
+array-nextprime-100-mod-10	Array(nextPrime, 100) % 10	"[\n  2,\n  3,\n  5,\n  5,\n  7,\n  7,\n  1,\n  1,\n  1,\n  1,\n  3,\n  3,\n  7,\n  7,\n  7,\n  7,\n  9,\n  9,\n  3,\n  3,\n  3,\n  3,\n  9,\n  9,\n  9,\n  9,\n  9,\n  9,\n  1,\n  1,\n  7,\n  7,\n  7,\n  7,\n  7,\n  7,\n  1,\n  1,\n  1,\n  1,\n  3,\n  3,\n  7,\n  7,\n  7,\n  7,\n  3,\n  3,\n  3,\n  3,\n  3,\n  3,\n  9,\n  9,\n  9,\n  9,\n  9,\n  9,\n  1,\n  1,\n  7,\n  7,\n  7,\n  7,\n  7,\n  7,\n  1,\n  1,\n  1,\n  1,\n  3,\n  3,\n  9,\n  9,\n  9,\n  9,\n  9,\n  9,\n  3,\n  3,\n  3,\n  3,\n  9,\n  9,\n  9,\n  9,\n  9,\n  9,\n  7,\n  7,\n  7,\n  7,\n  7,\n  7,\n  7,\n  7,\n  1,\n  1,\n  1,\n  1,\n]"	
+filter-range-1-100-function-isprime-1-nextprime	filter(Range(1, 100), Function(isPrime(_1) && nextPrime(_1) == _1 + 2, _1))	[3, 5, 11, 17, 29, 41, 59, 71]	Unreadable
+map-function-nextprime-10-pow-1-1-range-0-20	map(Function(nextPrime(10 ^ _1), _1), Range(0, 20))	"[\n  2,\n  11,\n  101,\n  1_009,\n  10_007,\n  100_003,\n  1_000_003,\n  10_000_019,\n  100_000_007,\n  1_000_000_007,\n  10_000_000_019,\n  100_000_000_003,\n  1_000_000_000_039,\n  10_000_000_000_037,\n  100_000_000_000_031,\n  1_000_000_000_000_037,\n  10_000_000_000_000_061,\n  100_000_000_000_000_003,\n  1_000_000_000_000_000_003,\n  10_000_000_000_000_000_051,\n  100_000_000_000_000_000_039,\n]"	Unreadable
+map-function-neg-10-pow-1-plus-nextprime-10-pow	map(Function(-10 ^ _1 + nextPrime(10 ^ _1), _1), Range(0, 20))	[1, 1, 1, 9, 7, 3, 3, 19, 7, 7, 19, 3, 39, 37, 31, 37, 61, 3, 3, 51, 39]	Unreadable
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	nextPrime(nthPrime(20)) == nthPrime(21)	True	
+nextprime-1-39	nextPrime(1, 39)	167	
+nextprime-15	nextPrime(15)	17	
+nextprime-30-in-primes	nextPrime(30) in primes	True	
+a-negative-k-walks-backward-giving-the-prime	nextPrime(10, -1)	7	
+negative-n-wolfram-counts-7-as-prime-and-returns	nextPrime(-10)	-7	
+nextprime-neg-2	nextPrime(-2)	2	

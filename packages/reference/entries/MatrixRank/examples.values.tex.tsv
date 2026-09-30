@@ -5,6 +5,7 @@ matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	\operatorname{rank}(\bigl\lbrac
 non-square-matrices-too	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack)	1
 matrixrank-list-list-0-0-list-0-0	\operatorname{rank}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)	0
 a-matrix-of-pairwise-distinct-symbols-has-full	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	2
+matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	\operatorname{rank}(\bigl\lbrack\bigl\lbrack0, 5, 2, 4, 4\bigr\rbrack, \bigl\lbrack2, 5, 0, 4, 0\bigr\rbrack, \bigl\lbrack5, 1, 5, 4, 5\bigr\rbrack\bigr\rbrack)	3
 approximate-entries	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2.5\bigr\rbrack, \bigl\lbrack3.5, 4\bigr\rbrack\bigr\rbrack)	2
 complex-entries-the-second-row-is-i-times-the	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, i\bigr\rbrack, \bigl\lbrack i, -1\bigr\rbrack\bigr\rbrack)	1
 exact-numeric-entries	\operatorname{rank}(\bigl\lbrack\bigl\lbrack\pi, e\bigr\rbrack, \bigl\lbrack2\pi, 2e\bigr\rbrack\bigr\rbrack)	1
@@ -12,6 +13,8 @@ the-second-row-is-sqrt-2-times-the-first	\operatorname{rank}(\bigl\lbrack\bigl\l
 a-3-4-matrix-with-one-dependent-row	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack2, 4, 6, 8\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack\bigr\rbrack)	2
 matrixrank-identitymatrix-5	\operatorname{rank}(\mathrm{IdentityMatrix}(5))	5
 a-3-times-3-matrix-of-pairwise-distinct-symbols	\operatorname{rank}(\bigl\lbrack\bigl\lbrack p, q, r\bigr\rbrack, \bigl\lbrack s, t, u\bigr\rbrack, \bigl\lbrack v, w, x\bigr\rbrack\bigr\rbrack)	3
+matrixrank-list-list-a-b-list-2a-2b	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack2a, 2b\bigr\rbrack\bigr\rbrack)	1
+matrixrank-hilbertmatrix-3	\operatorname{rank}(\mathrm{HilbertMatrix}(3))	3
 the-4-4-hilbert-matrix-is-badly-conditioned-but	\operatorname{rank}(\mathrm{Tabulate}(()\mapsto\frac{1}{(\operatorname{\_1}+\operatorname{\_2})-1}, 4, 4))	4
 row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\top
 rank-nullity-the-rank-plus-the-dimension-of-the	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)+\mathrm{Length}(\ker\left(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack\right))	3

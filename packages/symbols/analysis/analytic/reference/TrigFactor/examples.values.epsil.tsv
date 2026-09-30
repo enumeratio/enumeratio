@@ -3,3 +3,5 @@ sin-a-plus-sin-b	TrigFactor(sin(a) + sin(b))	2 * sin(1 / 2 * (a + b)) * cos(1 / 
 cos-a-minus-cos-b	TrigFactor(cos(a) - cos(b))	-2 * sin(1 / 2 * (a + b)) * sin(1 / 2 * (a - b))
 one-minus-cos-x	TrigFactor(1 - cos(x))	2 * sin(1 / 2 * x) ^ 2
 poly-in-sin-cos	TrigFactor(sin(x) ^ 2 + 2 * sin(x) * cos(x) + cos(x) ^ 2)	(sin(x) + cos(x)) ^ 2
+trigfactor-neg-cos-x-pow-2-plus-sin-x-pow-2	TrigFactor(-cos(x) ^ 2 + sin(x) ^ 2)	(-cos(x) + sin(x)) * (sin(x) + cos(x))
+trigfactor-1-over-sinh-x-plus-1-over-neg-cos-x	TrigFactor(1 / sinh(x) + 1 / (-cos(x) ^ 2 + sin(x) ^ 2) * cosh(x + y))	TrigFactor(1 / sinh(x) + cosh(x + y) / (-cos(x) ^ 2 + sin(x) ^ 2))

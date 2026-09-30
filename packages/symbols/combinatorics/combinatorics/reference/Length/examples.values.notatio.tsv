@@ -4,6 +4,7 @@ length-list-1-2-3-4-5	<Length><List>1 2 3 4 5</List></Length>	<ToExpression>5</T
 works-on-any-collection-not-just-list	<Length><Set>1 2 3</Set></Length>	<ToExpression>3</ToExpression>
 length-list-a-b-c-d	<Length><List>a b c d</List></Length>	<ToExpression>4</ToExpression>
 length-of-association-counts-values	<Length><Association><Rule>1 a</Rule> <Rule>2 b</Rule> <Rule>3 c</Rule></Association></Length>	<ToExpression>3</ToExpression>
+length-association	<Length><Apply>Association</Apply></Length>	<ToExpression>0</ToExpression>
 an-atom-has-no-parts-so-its-length-is-0	<Length>5</Length>	<ToExpression>0</ToExpression>
 the-empty-list-has-length-0	<Length><Apply>List</Apply></Length>	<ToExpression>0</ToExpression>
 of-a-matrix-the-number-of-rows	<Length><List><List>1 2</List> <List>3 4</List> <List>5 6</List></List></Length>	<ToExpression>3</ToExpression>
@@ -12,5 +13,16 @@ any-expression-the-number-of-terms-in-a-sum	<Length><Add>a b c d</Add></Length>	
 the-number-of-arguments-of-a-call-counting-only	<Length><f><g>x y</g> z</f></Length>	<ToExpression>2</ToExpression>
 a-symbol-such-as-pi-is-an-atom-of-length-0	<Length>Pi</Length>	<ToExpression>0</ToExpression>
 a-lazy-range-is-counted-without-being	<Length><Range>1 20</Range></Length>	<ToExpression>20</ToExpression>
+length-x	<Length>x</Length>	<ToExpression>0</ToExpression>
+length-123-456	<Length>123456</Length>	<ToExpression>0</ToExpression>
+length-1-over-10	<Length><Rational>1 10</Rational></Length>	<ToExpression>0</ToExpression>
+length-3-plus-i	<Length><Complex>3 1</Complex></Length>	<ToExpression>0</ToExpression>
+length-list-list-a-b-c-list-d-exponentiale-f	<Length><List><List>a b c</List> <List>d ExponentialE f</List></List></Length>	<ToExpression>2</ToExpression>
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1	<Length><Add><Power>x 9</Power> <Power>x 2</Power> x 1</Add></Length>	<ToExpression>4</ToExpression>
+length-integerdigits-1-000-factorial	<Length><IntegerDigits><Factorial>1000</Factorial></IntegerDigits></Length>	<ToExpression>2568</ToExpression>
+map-length-list-list-a-b-list-a-b-c-list-x	<Map>Length <List><List>a b</List> <List>a b c</List> <List>x</List></List></Map>	<List>2 3 1</List>
 length-join-a-b-length-a-length-b-see-join	<Equal><Length><Join><List>1 2 3</List> <List>4 5</List></Join></Length> <Add><Length><List>1 2 3</List></Length> <Length><List>4 5</List></Length></Add></Equal>	<True />
 length-filter-issquarefree-past-iteration-budget	<Length><Filter><Range>1 1679</Range> IsSquareFree</Filter></Length>	<Length><Filter><Range>1 1679</Range> IsSquareFree</Filter></Length>
+length-1-over-3	<Length><Rational>1 3</Rational></Length>	<ToExpression>0</ToExpression>
+length-2-plus-i	<Length><Complex>2 1</Complex></Length>	<ToExpression>0</ToExpression>
+length-7	<Length>7</Length>	<ToExpression>0</ToExpression>

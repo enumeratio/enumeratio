@@ -1,3 +1,5 @@
 id	in
 rule-30-single-seed	CellularAutomaton[30, List[List[1], 0], 3]
 rule-90-explicit-init	CellularAutomaton[90, List[List[1, 0, 0], 0], 2]
+cellularautomaton-30-list-list-1-0-2	CellularAutomaton[30, List[List[1], 0], 2]
+cellularautomaton-90-list-list-1-0-2	CellularAutomaton[90, List[List[1], 0], 2]

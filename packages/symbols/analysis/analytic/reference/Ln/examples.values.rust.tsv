@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	nf(ln(n(-2)))	NaN	disagree
 ln-neg-6	ln(n(-6))	NaN	disagree
 n-of-a-negative-rational-argument	nf(ln(rational(n(-1), n(2))))	NaN	disagree
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the			
+n-ln-5-over-2-50	nf(ln(rational(n(5), n(2))))		
+functiondomain-ln-x-x			
+functionrange-ln-x-x-y			
+functionanalytic-ln-x-x			
+functionmeromorphic-ln-x-x			
+functioninjective-ln-x-x			
+functionsurjective-ln-x-x			
+d-ln-z-z			
+d-ln-ln-x-x			
+ln-exponentiale-pow-n			
 inverse-of-exp-ln-e-x-x	equal(ln(exp(n(5))), n(5))	true	
 product-rule-ln-ab-ln-a-ln-b	equal((ln(n(2)) + ln(n(3))), ln(n(6)))	true	
 powerexpand-splits-a-logarithm-of-a-product			

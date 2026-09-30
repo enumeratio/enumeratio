@@ -1,0 +1,8 @@
+id	section	role	expr	expected
+2-times-list-1-2-3	Scope		[Multiply, 2, [List, 1, 2, 3]]	[List, 2, 4, 6]
+a-times-list-list-1-2-list-3-4	Scope		[Multiply, a, [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, a, [Multiply, 2, a]], [List, [Multiply, 3, a], [Multiply, 4, a]]]
+exponentiale-pow-list-list-1-2-3-list-4-5-6	Scope		[Power, ExponentialE, [List, [List, 1, 2, 3], [List, 4, 5, 6]]]	[List, [List, ExponentialE, [Power, ExponentialE, 2], [Power, ExponentialE, 3]], [List, [Power, ExponentialE, 4], [Power, ExponentialE, 5], [Power, ExponentialE, 6]]]
+outer-f-list-1-2-list-a-b-c	Scope		[Outer, f, [List, 1, 2], [List, a, b, c]]	[List, [List, [f, 1, a], [f, 1, b], [f, 1, c]], [List, [f, 2, a], [f, 2, b], [f, 2, c]]]
+prepend-list-1-2-3-list-a-b-c	Scope		[Prepend, [List, 1, 2, 3], [List, a, b, c]]	[List, [List, a, b, c], 1, 2, 3]
+flatten-list-list-1-2-list-a-b-c	Scope		[Flatten, [List, [List, 1, 2], [List, a, b, c]]]	[List, 1, 2, a, b, c]
+map-f-list-1-2-3-4	Scope		[Map, f, [List, 1, 2, 3, 4]]	[List, [f, 1], [f, 2], [f, 3], [f, 4]]

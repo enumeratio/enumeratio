@@ -4,4 +4,5 @@ catalan-numbers	\mathrm{GeneratingFunction}(\mathrm{CatalanNumber}(n), n, x)	\fr
 dyck-paths-via-count	\mathrm{GeneratingFunction}(\mathrm{Count}(\mathrm{DyckPaths}(n)), n, x)	\frac{1-\sqrt{1-4x}}{2x}
 fixed-k-binomial	\mathrm{GeneratingFunction}(\binom{n}{3}, n, x)	\frac{x^3}{x^4-4x^3+6x^2-4x+1}
 geometric	\mathrm{GeneratingFunction}(2^{n}, n, x)	\frac{1}{1-2x}
+generatingfunction-1-n-x	\mathrm{GeneratingFunction}(1, n, x)	\frac{1}{1-x}
 no-closed-form	\mathrm{GeneratingFunction}(n!, n, x)	\mathrm{GeneratingFunction}(n!, n, x)

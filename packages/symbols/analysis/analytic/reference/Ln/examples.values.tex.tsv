@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	N(\ln(-2), 10)	0.693\,147\,180\,6+3.141\,592\,6
 ln-neg-6	\ln(-6)	i\pi+\ln(6)
 n-of-a-negative-rational-argument	N(\ln(-\frac{1}{2}))	-0.693\,147\,180\,559\,945\,3+3.141\,592\,653\,589\,793i
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	\ln(-\infty)	\infty
+n-ln-5-over-2-50	N(\ln(\frac{5}{2}), 50)	0.916\,290\,731\,874\,155\,065\,184
+functiondomain-ln-x-x	\mathrm{FunctionDomain}(\ln(x), x)	0\lt x
+functionrange-ln-x-x-y	\mathrm{FunctionRange}(\ln(x), x, y)	\top
+functionanalytic-ln-x-x	\mathrm{FunctionAnalytic}(\ln(x), x)	\bot
+functionmeromorphic-ln-x-x	\mathrm{FunctionMeromorphic}(\ln(x), x)	\bot
+functioninjective-ln-x-x	\mathrm{FunctionInjective}(\ln(x), x)	\top
+functionsurjective-ln-x-x	\mathrm{FunctionSurjective}(\ln(x), x)	\top
+d-ln-z-z	\frac{\mathrm{d}\ln(z)}{\mathrm{d}z}	\frac{1}{z}
+d-ln-ln-x-x	\frac{\mathrm{d}\ln(\ln(x))}{\mathrm{d}x}	\frac{1}{x\ln(x)}
+ln-exponentiale-pow-n	\ln(e^{n})	n
 inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\top
 product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\top
 powerexpand-splits-a-logarithm-of-a-product	\mathrm{PowerExpand}(\ln(xy))	\ln(x)+\ln(y)

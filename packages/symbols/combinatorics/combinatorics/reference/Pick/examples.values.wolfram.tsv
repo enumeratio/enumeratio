@@ -1,3 +1,5 @@
 id	in	out	tex.in	tex.out
 keeps-elements-where-sel-is-true	Pick[List[a, b, c], List[True, False, True]]	{a, c}	\text{Pick}[\{a,b,c\},\{\text{True},\text{False},\text{True}\}]	\{a,c\}
+pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1	Pick[List[a, b, c, d, E], List[1, 0, 1, 0, 0], 1]	{a, c}	\text{Pick}[\{a,b,c,d,e\},\{1,0,1,0,0\},1]	\{a,c\}
 an-explicit-pattern-keeps-elements-matching	Pick[List[a, b, c, d], List[1, 0, 1, 0], 1]	{a, c}	\text{Pick}[\{a,b,c,d\},\{1,0,1,0\},1]	\{a,c\}
+pick-list-a-b-c-d-list-true-false-false-true	Pick[List[a, b, c, d], List[True, False, False, True]]	{a, d}	\text{Pick}[\{a,b,c,d\},\{\text{True},\text{False},\text{False},\text{True}\}]	\{a,d\}

@@ -1,0 +1,3 @@
+id	in
+integerlength-1-024-mixedradixnumerals-list-6-4	IntegerLength[1024, MixedRadix[List[6, 4, 2]]]
+integerdigits-100-000-mixedradixnumerals-list-10	IntegerDigits[100000, MixedRadix[List[10, 9, 8, 7]]]

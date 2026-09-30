@@ -36,6 +36,7 @@ with-a-negative-associate	ExtendedGCD[Complex[6, 8], Complex[-2, -3]]	{1, {I, 3*
 a-large-norm-gaussian-and-a-real-prime-19	ExtendedGCD[Complex[123, 456], 19]	{1, {-2, 13 + 48*I}}	\text{ExtendedGCD}[123+456 i,19]	\{1,\{-2,13+48 i\}\}	disagree
 the-modular-inverse-of-3-mod-11-is-4-since-3	ExtendedGCD[3, 11]	{1, {4, -1}}	\text{ExtendedGCD}[3,11]	\{1,\{4,-1\}\}	disagree
 confirms-the-coefficients-above-satisfy-2x-3y	Plus[Times[2, -1], Times[3, 1]]	1	2 (-1)+3\ 1	1	
+extendedgcd-6-21	ExtendedGCD[6, 21]	{3, {-3, 1}}			disagree
 bezout-coefficients-when-a-0-0-times-0-5-times-1	ExtendedGCD[0, 5]	{5, {0, 1}}	\text{ExtendedGCD}[0,5]	\{5,\{0,1\}\}	disagree
 a-real-two-argument-case-stays-unevaluated	ExtendedGCD[2.5, 3]	ExtendedGCD[2.5, 3]	\text{ExtendedGCD}[2.5,3]	\text{ExtendedGCD}[2.5,3]	
 a-gaussian-third-argument-past-two-declines	ExtendedGCD[Complex[3, 1], 5, 2]	{1, {2, -1, -I}}	\text{ExtendedGCD}[3+i,5,2]	\{1,\{2,-1,-i\}\}	disagree

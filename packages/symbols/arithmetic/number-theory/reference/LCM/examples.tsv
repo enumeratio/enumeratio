@@ -34,7 +34,11 @@ lcm-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[LCM, [Complex, 123,
 lcm-of-two-composites-sharing-the-prime-above-13	Scope	test	[LCM, [Complex, 6, 8], [Complex, 9, 6]]	[Complex, 6, 108]			lcm of two composites sharing the prime above 13												
 lcm-of-a-lazy-range-1-10-not-a-materialised-list	Scope		[LCM, [Range, 1, 10]]	2520	2520	Hand-computed: the smallest number divisible by each of 1 through 10 (same fact as the Applications row below, over List) -- an independent check that a lazy [[Range]] argument is walked element by element	A lazy [[Range]], not a materialised [[List]]												
 the-smallest-number-divisible-by-each-of-1	Applications		[LCM, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	2520			The smallest number divisible by each of 1 through 10												
+lcm-10-15	Applications		[LCM, 10, 15]	30															
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	Properties		[Equal, [Multiply, [GCD, 27, 81], [LCM, 27, 81]], [Multiply, 27, 81]]	True			$\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[GCD]]												
+lcm-27-81	Properties		[LCM, 27, 81]	81															
+lcm-6-11-25-eq-1-650	Properties		[Equal, [LCM, 6, 11, 25], 1650]	True															
+lcm-5-7-2-eq-70	Properties		[Equal, [LCM, 5, 7, 2], 70]	True															
 a-single-argument-is-returned-unchanged	Possible issues		[LCM, 5]	5			A single argument is returned unchanged												
 0-absorbs-the-lcm-with-0-is-0	Possible issues		[LCM, 0, 5]	0			0 absorbs: the LCM with 0 is 0												
 signs-are-discarded-before-computing-the-lcm	Possible issues		[LCM, -3, 7]	21			Signs are discarded before computing the LCM												

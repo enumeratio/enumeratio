@@ -1,3 +1,8 @@
-id	in
-c5-is-not-bipartite	BipartiteGraphQ[CycleGraph[5]]
-c6-is-bipartite	BipartiteGraphQ[CycleGraph[6]]
+id	in	back
+c5-is-not-bipartite	BipartiteGraphQ[CycleGraph[5]]	
+c6-is-bipartite	BipartiteGraphQ[CycleGraph[6]]	
+cyclegraph-3	CycleGraph[3]	
+map-function-vertexeccentricity-cyclegraph-5-1-1	Map[Function[VertexEccentricity[CycleGraph[5], Slot[1]]], VertexList[CycleGraph[5]]]	[Map, [Function, [VertexEccentricity, [CycleGraph, 5], _1]], [VertexList, [CycleGraph, 5]]]
+isacyclicgraph-cyclegraph-5	AcyclicGraphQ[CycleGraph[5]]	
+vertexdegree-cyclegraph-7	VertexDegree[CycleGraph[7]]	
+cyclegraph-4	CycleGraph[4]	

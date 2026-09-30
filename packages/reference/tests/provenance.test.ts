@@ -224,6 +224,9 @@ const OVERRIDDEN = [
   "Divisors",
   "Dot",
   "Element",
+  // Not itself overridden -- Wolfram's documented identities compare our heads
+  // (Fibonacci(2, -x) == -Fibonacci(2, x)); Equal is the corpus expression's outer head.
+  "Equal",
   "Erf",
   "ErfInv",
   "Erfc",
@@ -269,6 +272,12 @@ const OVERRIDDEN = [
   "LegendreSymbol",
   "Length",
   "LerchPhi",
+  // Not itself overridden -- a chain like 2 < Khinchin < 3 compares a constant only we
+  // declare.
+  "Less",
+  // Not itself overridden -- Wolfram's CarmichaelLambda/LCM identity lists two of our
+  // heads' answers in a bare List, the same reason Add is here.
+  "List",
   "Ln",
   "Log10",
   "Log2",
@@ -307,6 +316,9 @@ const OVERRIDDEN = [
   "QuotientRing",
   "Rank",
   "Rationalize",
+  // Not itself overridden -- the Khinchin example takes the 1000th root of a product of
+  // our ContinuedFraction's terms.
+  "Root",
   "Round",
   "Sec",
   "SetMinus",
@@ -546,6 +558,7 @@ const NOVEL = [
   "LyndonWords",
   "MajorIndex",
   "MinorIndex",
+  "MixedRadixNumerals",
   "ModularClasses",
   "ModularJ",
   "ModularMatrix",
@@ -690,6 +703,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "CharacterRange",
     "ChebyshevT",
     "ChebyshevU",
+    "CircleTimes",
     "CirculantGraph",
     "ClosenessCentrality",
     "Commonest",
@@ -703,12 +717,14 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "CubeRoot",
     "CycleGraph",
     "Cycles",
+    "CyclicGroup",
     "DSolveValue",
     "DeleteCases",
     "DiagonalMatrix",
     "DifferenceDelta",
     "DifferenceRootReduce",
     "DifferentialRootReduce",
+    "DihedralGroup",
     "DiracDelta",
     "DirectedEdge",
     "DirichletBeta",
@@ -734,6 +750,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "Extract",
     "FactorialPower",
     "FallingFactorial",
+    "FareySequence",
     "FindInstance",
     "FindSequenceFunction",
     "FindShortestPath",
@@ -908,6 +925,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "RandomComplex",
     "RandomGraph",
     "RandomInteger",
+    "RawBoxes",
     "ReIm",
     "RealAbs",
     "RealDigits",

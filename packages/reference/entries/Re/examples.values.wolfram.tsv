@@ -3,3 +3,15 @@ re-of-3-plus-4i-is-3	Re[Complex[3, 4]]	3	\Re(3+4 i)	3
 re-of-a-real-number-is-itself	Re[5]	5	\Re(5)	5	
 re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]	Pi	\Re(\pi )	\pi	
 re-of-a-symbolic-value-stays-unevaluated	Re[x]	Re[x]	\Re(x)	\Re(x)	disagree
+real-1					
+real-neg-1					
+real-i					
+real-neg-i					
+real-1-plus-i					
+real-neg-1-plus-i					
+real-neg-1-minus-i					
+real-1-minus-i					
+real-sqrt-3-plus-i					
+real-1-plus-sqrt-3-times-i					
+real-neg-1-plus-sqrt-3-times-i					
+real-neg-sqrt-3-plus-i					

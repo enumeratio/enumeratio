@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m	\binom{m}{m}	1
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	\binom{1+i}{5}	-\frac{1}{12}-\frac{1}{12}i
 complex-n-and-k-evaluate-through-the-gamma	\binom{2+i}{7-3i}	-75.468\,347\,382\,223\,04+106.815\,265\,970\,790\,55i
 interval-arithmetic-in-k-binom-1-2-k-is	\binom{\frac{1}{2}}{\mathrm{Interval}(0.5, 0.6)}	\mathrm{Interval}(0.928\,145\,553\,850\,705\,4, 1)
+n-binomial-7-over-3-1-over-5-20	N(\binom{\frac{7}{3}}{\frac{1}{5}}, 20)	1.333\,125\,424\,465\,028\,652\,2
+binomial-n-4	\binom{n}{4}	\frac{1}{24}(n\times(n-1)(n-2)(n-3))
+matrixfunction-function-binomial-1-2-1-list-list	\mathrm{MatrixFunction}(()\mapsto\binom{\operatorname{\_1}}{2}, \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{72}(5\pi(5\pi-6)), 0\bigr\rbrack, \bigl\lbrack\frac{1}{64}(5\pi(5\pi-6))-\frac{1}{64}(9\pi(2+\pi)), \frac{\pi(2+\pi)}{8}\bigr\rbrack\bigr\rbrack
 the-number-of-distinct-5-card-hands-dealt-from-a	\binom{52}{5}	2\,598\,960
 the-probability-of-exactly-3-heads-in-10-fair	\frac{\binom{10}{3}}{2^{10}}	\frac{15}{128}
 symmetry-binom-n-k-binom-n-n-k	\binom{10}{3}=\binom{10}{7}	\top

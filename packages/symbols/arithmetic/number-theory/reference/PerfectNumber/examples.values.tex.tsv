@@ -3,3 +3,4 @@ perfectnumber-1	\mathrm{PerfectNumber}(1)	6
 perfectnumber-3	\mathrm{PerfectNumber}(3)	496
 perfectnumber-5	\mathrm{PerfectNumber}(5)	33\,550\,336
 listable	\mathrm{PerfectNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack6, 28, 496, 8\,128\bigr\rbrack
+perfectnumber-range-1-10	\mathrm{PerfectNumber}(1..10)	\bigl\lbrack6, 28, 496, 8\,128, 33\,550\,336, 8\,589\,869\,056, 137\,438\,691\,328, 2\,305\,843\,008\,139\,952\,128, 2\,658\,455\,991\,569\,831\,744\,654\,692\,615\,953\,842\,176, 191\,561\,942\,608\,236\,107\,294\,793\,378\,084\,303\,638\,130\,997\,321\,548\,169\,216\bigr\rbrack

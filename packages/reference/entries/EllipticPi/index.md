@@ -7,6 +7,7 @@ signatures:
   - call: EllipticPi(complex | infinity, complex | infinity, (complex | infinity)?) -> number
     description: as compute-engine declares it
 names:
+  wolfram: EllipticPi
   dlmf: Legendre's complete elliptic integral of the third kind
   wikidata: Q109753363
 stub: engine

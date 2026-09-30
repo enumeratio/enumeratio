@@ -1,3 +1,4 @@
 id	in	out
 sow-feeds-the-nearest-reap	Reap(Sow(5))	[5, [[5]]]
 sow-outside-any-reap-is-a-no-op	Sow(7)	7
+sow-x	Sow(x)	x

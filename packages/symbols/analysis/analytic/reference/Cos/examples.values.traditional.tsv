@@ -36,6 +36,16 @@ taylor-series-about-0-only-even-powers-appear
 to-30-significant-digits-every-one-correctly		
 to-1-significant-digit		
 a-huge-10-100-argument-reduces-exactly-mod-2-pi		
+n-cos-6-over-5-50		
+functiondomain-cos-x-x	\mathrm{FunctionDomain}(\cos(x), x)	\mathrm{True}
+functionrange-cos-x-x-y		
+functionperiod-cos-x-x		
+functionanalytic-cos-x-x	\mathrm{FunctionAnalytic}(\cos(x), x)	\mathrm{True}
+functioninjective-cos-x-x	\mathrm{FunctionInjective}(\cos(x), x)	\mathrm{False}
+functionsurjective-cos-x-x	\mathrm{FunctionSurjective}(\cos(x), x)	\mathrm{False}
+functionsingularities-cos-x-x	\mathrm{FunctionSingularities}(\cos(x), x)	\mathrm{False}
+functiondiscontinuities-cos-x-x	\mathrm{FunctionDiscontinuities}(\cos(x), x)	\mathrm{False}
+matrixfunction-function-cos-1-1-list-list-5-over		
 threads-element-wise-over-a-list		
 even-function-cos-x-cos-x	\cos(-\frac{\pi}{3})=\cos(\frac{\pi}{3})	\mathrm{True}
 co-function-identity-cos-x-sin-pi-2-x	\cos(\frac{\pi}{6})=\sin(\frac{\pi}{2}-\frac{\pi}{6})	\mathrm{True}
@@ -43,6 +53,7 @@ double-angle-formula-cos-2x-cos-2-x-sin-2-x
 angle-addition-formula		
 power-reduction-cos-2-x-frac-1-cos-2x-2		
 euler-s-formula-cos-x-frac-e-ix-e-ix-2		
+cos-3-over-10-times-pi		
 as-with-sin-a-non-special-numeric-argument-stays		
 pi-24-is-past-the-automatic-special-angle-table		
 cos-complexinfinity-is-indeterminate-for-the		

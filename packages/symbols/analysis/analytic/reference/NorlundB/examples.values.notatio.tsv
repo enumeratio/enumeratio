@@ -7,3 +7,20 @@ norlundb-6-4	<NorlundB>6 4</NorlundB>	<Rational>221 42</Rational>
 norlundb-5-3	<NorlundB>5 3</NorlundB>	<Rational>-3 4</Rational>
 norlundb-7-2	<NorlundB>7 2</NorlundB>	<Rational>-1 6</Rational>
 a-polynomial-in-a	<NorlundB>1 a</NorlundB>	<Multiply><Rational>-1 2</Rational> a</Multiply>
+norlundb-0-0	<NorlundB>0 0</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-0	<NorlundB>1 0</NorlundB>	<ToExpression>0</ToExpression>
+norlundb-2-0	<NorlundB>2 0</NorlundB>	<ToExpression>0</ToExpression>
+norlundb-0-2	<NorlundB>0 2</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-2	<NorlundB>1 2</NorlundB>	<ToExpression>-1</ToExpression>
+norlundb-0-3	<NorlundB>0 3</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-3	<NorlundB>1 3</NorlundB>	<Rational>-3 2</Rational>
+norlundb-0-4	<NorlundB>0 4</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-4	<NorlundB>1 4</NorlundB>	<ToExpression>-2</ToExpression>
+norlundb-0-5	<NorlundB>0 5</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-5	<NorlundB>1 5</NorlundB>	<Rational>-5 2</Rational>
+norlundb-0-6	<NorlundB>0 6</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-6	<NorlundB>1 6</NorlundB>	<ToExpression>-3</ToExpression>
+norlundb-0-7	<NorlundB>0 7</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-7	<NorlundB>1 7</NorlundB>	<Rational>-7 2</Rational>
+norlundb-0-8	<NorlundB>0 8</NorlundB>	<ToExpression>1</ToExpression>
+norlundb-1-8	<NorlundB>1 8</NorlundB>	<ToExpression>-4</ToExpression>

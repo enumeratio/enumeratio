@@ -21,4 +21,14 @@ the-principal-character-mod-2-removes-the-euler	<DirichletL>2 1 s</DirichletL>	<
 l-2-chi-2-bmod-4-beta-2-g	<DirichletL>4 2 2</DirichletL>	<Catalan />
 l-0-chi-3-frac-13-the-class-number-formula-s-2h	<DirichletL>3 2 0</DirichletL>	<Rational>1 3</Rational>
 l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic	<DirichletL>3 2 1</DirichletL>	<Multiply><Divide><Sqrt>3</Sqrt> 9</Divide> Pi</Multiply>
+dirichletl-2-1-2	<DirichletL>2 1 2</DirichletL>	<Multiply><Rational>1 8</Rational> <Power>Pi 2</Power></Multiply>
+dirichletl-2-1-3	<DirichletL>2 1 3</DirichletL>	<Multiply><Rational>7 8</Rational> <Zeta>3</Zeta></Multiply>
+dirichletl-2-1-4	<DirichletL>2 1 4</DirichletL>	<Multiply><Rational>1 96</Rational> <Power>Pi 4</Power></Multiply>
+dirichletl-3-1-2	<DirichletL>3 1 2</DirichletL>	<Multiply><Rational>4 27</Rational> <Power>Pi 2</Power></Multiply>
+dirichletl-3-1-3	<DirichletL>3 1 3</DirichletL>	<Multiply><Rational>26 27</Rational> <Zeta>3</Zeta></Multiply>
+dirichletl-3-1-4	<DirichletL>3 1 4</DirichletL>	<Multiply><Rational>8 729</Rational> <Power>Pi 4</Power></Multiply>
+dirichletl-3-1-5	<DirichletL>3 1 5</DirichletL>	<Multiply><Rational>242 243</Rational> <Zeta>5</Zeta></Multiply>
+dirichletl-5-1-2	<DirichletL>5 1 2</DirichletL>	<Multiply><Rational>4 25</Rational> <Power>Pi 2</Power></Multiply>
+dirichletl-5-1-3	<DirichletL>5 1 3</DirichletL>	<Multiply><Rational>124 125</Rational> <Zeta>3</Zeta></Multiply>
+dirichletl-6-1-2	<DirichletL>6 1 2</DirichletL>	<Multiply><Rational>1 9</Rational> <Power>Pi 2</Power></Multiply>
 no-closed-form-at-positive-integer-s-in-general	<DirichletL>5 2 2</DirichletL>	<DirichletL>5 2 2</DirichletL>

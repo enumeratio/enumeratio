@@ -13,3 +13,22 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Plus[EulerPhi[1], EulerPhi[2], 
 multiplicative-varphi-mn-varphi-m-varphi-n-when	(EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])	True	\phi (12)=\phi (4) \phi (3)	\text{True}
 varphi-p-p-1-for-a-prime-p	EulerPhi[17]	16	\phi (17)	16
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	EulerPhi[81]	54	\phi (81)	54
+totient-100	EulerPhi[100]	40	\phi (100)	40
+totient-35	EulerPhi[35]	24	\phi (35)	24
+divides-carmichaellambda-8-totient-8	Divisible[EulerPhi[8], CarmichaelLambda[8]]	True	\lambda (8)|\phi (8)	\text{True}
+list-totient-25-carmichaellambda-25	List[EulerPhi[25], CarmichaelLambda[25]]	{20, 20}	\{\phi (25),\lambda (25)\}	\{20,20\}
+divisorsum-15-totient-eq-15	(DivisorSum[15, EulerPhi] == 15)	True	\sum _{\unicode{f80d}|15} \phi (\unicode{f80d})=15	\text{True}
+totient-1-023-eq-totient-3-times-totient-11	(EulerPhi[1023] == Times[EulerPhi[3], EulerPhi[11], EulerPhi[31]])	True	\phi (1023)=\phi (3) \phi (11) \phi (31)	\text{True}
+totient-2	EulerPhi[2]	1	\phi (2)	1
+totient-3	EulerPhi[3]	2	\phi (3)	2
+totient-4	EulerPhi[4]	2	\phi (4)	2
+totient-5	EulerPhi[5]	4	\phi (5)	4
+totient-6	EulerPhi[6]	2	\phi (6)	2
+totient-7	EulerPhi[7]	6	\phi (7)	6
+totient-8	EulerPhi[8]	4	\phi (8)	4
+totient-9	EulerPhi[9]	6	\phi (9)	6
+totient-11	EulerPhi[11]	10	\phi (11)	10
+totient-13	EulerPhi[13]	12	\phi (13)	12
+totient-14	EulerPhi[14]	6	\phi (14)	6
+totient-15	EulerPhi[15]	8	\phi (15)	8
+totient-16	EulerPhi[16]	8	\phi (16)	8

@@ -1,3 +1,4 @@
 id	in	out	tex.in	tex.out
 3-4-5	Normalize[List[3, 4]]	{3/5, 4/5}	\text{Normalize}[\{3,4\}]	\left\{\frac{3}{5},\frac{4}{5}\right\}
+normalize-list-1-5-1	Normalize[List[1, 5, 1]]	{1/(3*Sqrt[3]), 5/(3*Sqrt[3]), 1/(3*Sqrt[3])}	\text{Normalize}[\{1,5,1\}]	\left\{\frac{1}{3 \sqrt{3}},\frac{5}{3 \sqrt{3}},\frac{1}{3 \sqrt{3}}\right\}
 zero-vector	Normalize[List[0, 0]]	{0, 0}	\text{Normalize}[\{0,0\}]	\{0,0\}

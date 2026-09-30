@@ -6,5 +6,6 @@ qfactorial-4-2-2	<N><QFactorial>4 2</QFactorial></N>	<ToExpression>315</ToExpres
 qfactorial-3-1-2	<N><QFactorial>3 <Rational>1 2</Rational></QFactorial></N>	<ToExpression>2.625</ToExpression>
 qfactorial-6-3	<N><QFactorial>6 3</QFactorial></N>	<ToExpression>91611520</ToExpression>
 qfactorial-3-1-over-2	<QFactorial>3 <Rational>1 2</Rational></QFactorial>	<Rational>21 8</Rational>
+matrixfunction-function-1-pow-2-plus-1-plus-1	<MatrixFunction><Function><Block><Multiply><Add><Power>_1 2</Power> _1 1</Add> <Add>_1 1</Add></Multiply></Block> _1</Function> <List><List>-1 0</List> <List>0 5</List></List></MatrixFunction>	<List><List>0 0</List> <List>0 186</List></List>
 the-inversion-generating-function-of	<Expand><QFactorial>3 q</QFactorial></Expand>	<Add><Power>q 3</Power> <Multiply>2 <Power>q 2</Power></Multiply> <Multiply>2 q</Multiply> 1</Add>
 at-q-1-it-is-the-ordinary-factorial	<QFactorial>5 1</QFactorial>	<ToExpression>120</ToExpression>

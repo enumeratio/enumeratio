@@ -1,9 +1,12 @@
 id	in	out	tex.in	tex.out
 the-repeating-block-of-1-7-0-overline-142857	RealDigits[Rational[1, 7]]	{{{1, 4, 2, 8, 5, 7}}, 0}	\text{RealDigits}\left[\frac{1}{7}\right]	\left\{\left( \begin{array}{cccccc}  1 & 4 & 2 & 8 & 5 & 7 \\ \end{array} \right),0\right\}
 the-first-10-digits-of-pi-truncated-not-rounded	RealDigits[Pi, 10, 10]	{{3, 1, 4, 1, 5, 9, 2, 6, 5, 3}, 1}	\text{RealDigits}[\pi ,10,10]	\{\{3,1,4,1,5,9,2,6,5,3\},1\}
+realdigits-pi-10-25	RealDigits[Pi, 10, 25]	{{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3}, 1}	\text{RealDigits}[\pi ,10,25]	\{\{3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4,6,2,6,4,3\},1\}
+realdigits-19-over-7-10-25	RealDigits[Rational[19, 7], 10, 25]	{{2, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5}, 1}	\text{RealDigits}\left[\frac{19}{7},10,25\right]	\{\{2,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5,7,1,4,2,8,5\},1\}
 19-7-2-overline-714285-one-digit-before-the	RealDigits[Rational[19, 7]]	{{2, {7, 1, 4, 2, 8, 5}}, 1}	\text{RealDigits}\left[\frac{19}{7}\right]	\{\{2,\{7,1,4,2,8,5\}\},1\}
 a-terminating-rational	RealDigits[Rational[5, 4]]	{{1, 2, 5}, 1}	\text{RealDigits}\left[\frac{5}{4}\right]	\{\{1,2,5\},1\}
 1-8-0-001-2	RealDigits[Rational[1, 8], 2]	{{1}, -2}	\text{RealDigits}\left[\frac{1}{8},2\right]	\{\{1\},-2\}
 realdigits-sqrt-2-10-5	RealDigits[Sqrt[2], 10, 5]	{{1, 4, 1, 4, 2}, 1}	\text{RealDigits}\left[\sqrt{2},10,5\right]	\{\{1,4,1,4,2\},1\}
 realdigits-exponentiale-10-5	RealDigits[E, 10, 5]	{{2, 7, 1, 8, 2}, 1}	\text{RealDigits}[e,10,5]	\{\{2,7,1,8,2\},1\}
 an-integer-six-digits-before-the-point	RealDigits[123456]	{{1, 2, 3, 4, 5, 6}, 6}	\text{RealDigits}[123456]	\{\{1,2,3,4,5,6\},6\}
+realdigits-pi-10-20	RealDigits[Pi, 10, 20]	{{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4}, 1}	\text{RealDigits}[\pi ,10,20]	\{\{3,1,4,1,5,9,2,6,5,3,5,8,9,7,9,3,2,3,8,4\},1\}

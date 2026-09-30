@@ -15,3 +15,4 @@ through-an-elementary-function-delta-cdot-e-2	Scope		[Exp, [Around, 2, 0.01]]	[A
 through-a-special-function-with-its-derivative	Scope		[Erf, [Around, 2, 0.01]]	[Around, 0.9953222650189527, 0.00020666985354092054]	Through a special function, with its derivative as slope		
 first-order-propagation-the-uncertainty-scales	Scope		[N, [Sin, [Around, 1, 0.1]]]	[Around, 0.8414709848078965, 0.05403023058681398]	First-order propagation: the uncertainty scales by $|\cos 1|$		
 ln-around-2-0p01	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.005]			
+around-10-1-pow-2	Properties		[Power, [Around, 10, 1], 2]	[Around, 100, 20]			

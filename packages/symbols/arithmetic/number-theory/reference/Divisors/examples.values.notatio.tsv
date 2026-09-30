@@ -24,7 +24,23 @@ a-real-composite-5-squared	<Divisors Over="GaussianIntegers">25</Divisors>	<List
 2-ramifies-divisors-run-through-1-i	<Divisors Over="GaussianIntegers">2</Divisors>	<List>1 <Complex>1 1</Complex> 2</List>
 19-3-mod-4-has-the-same-divisors-as-in-z	<Divisors Over="GaussianIntegers">19</Divisors>	<List>1 19</List>
 a-negative-real-composite	<Divisors Over="GaussianIntegers">-15</Divisors>	<List>1 <Complex>1 2</Complex> <Complex>2 1</Complex> 3 <Complex>3 6</Complex> 5 <Complex>6 3</Complex> 15</List>
+divisors-3	<Divisors>3</Divisors>	<List>1 3</List>
+8-times-sum-filter-divisors-20-function	<Multiply>8 <Sum><Filter><Divisors>20</Divisors> <Function><Block><Not><Divides>4 _1</Divides></Not></Block> _1</Function></Filter></Sum></Multiply>	<ToExpression>144</ToExpression>
 the-divisor-count-d-n-equals-sigma-0-n-see	<Equal><Length><Divisors>20</Divisors></Length> <DivisorSigma>0 20</DivisorSigma></Equal>	<True />
+divisors-2	<Divisors>2</Divisors>	<List>1 2</List>
+divisors-4	<Divisors>4</Divisors>	<List>1 2 4</List>
+divisors-5	<Divisors>5</Divisors>	<List>1 5</List>
+divisors-7	<Divisors>7</Divisors>	<List>1 7</List>
+divisors-8	<Divisors>8</Divisors>	<List>1 2 4 8</List>
+divisors-9	<Divisors>9</Divisors>	<List>1 3 9</List>
+divisors-10	<Divisors>10</Divisors>	<List>1 2 5 10</List>
+divisors-11	<Divisors>11</Divisors>	<List>1 11</List>
+divisors-12	<Divisors>12</Divisors>	<List>1 2 3 4 6 12</List>
+divisors-14	<Divisors>14</Divisors>	<List>1 2 7 14</List>
+divisors-15	<Divisors>15</Divisors>	<List>1 3 5 15</List>
+divisors-16	<Divisors>16</Divisors>	<List>1 2 4 8 16</List>
+divisors-17	<Divisors>17</Divisors>	<List>1 17</List>
+divisors-18	<Divisors>18</Divisors>	<List>1 2 3 6 9 18</List>
 1-has-exactly-one-divisor-itself	<Divisors>1</Divisors>	<List>1</List>
 only-positive-divisors-even-for-negative-n	<Divisors>-6</Divisors>	<List>1 2 3 6</List>
 divisors-neg-12	<Divisors>-12</Divisors>	<List>1 2 3 4 6 12</List>

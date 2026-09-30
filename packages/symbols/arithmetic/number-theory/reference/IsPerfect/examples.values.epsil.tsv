@@ -1,3 +1,9 @@
 id	in	out
+isperfect-6	isPerfect(6)	True
+isperfect-12	isPerfect(12)	False
 listable	isPerfect([6, 28, 12])	[True, True, False]
+isperfect-496	isPerfect(496)	True
+isperfect-28	isPerfect(28)	True
 negative-numbers-are-not-perfect	isPerfect(-6)	False
+isperfect-1-234-121	isPerfect(1_234_121)	False
+isperfect-simplify-x	isPerfect(simplify(x))	isPerfect(x)

@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument
 ln-neg-6		
 n-of-a-negative-rational-argument		
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the		
+n-ln-5-over-2-50		
+functiondomain-ln-x-x		
+functionrange-ln-x-x-y	\mathrm{FunctionRange}(\ln(x), x, y)	\mathrm{True}
+functionanalytic-ln-x-x	\mathrm{FunctionAnalytic}(\ln(x), x)	\mathrm{False}
+functionmeromorphic-ln-x-x	\mathrm{FunctionMeromorphic}(\ln(x), x)	\mathrm{False}
+functioninjective-ln-x-x	\mathrm{FunctionInjective}(\ln(x), x)	\mathrm{True}
+functionsurjective-ln-x-x	\mathrm{FunctionSurjective}(\ln(x), x)	\mathrm{True}
+d-ln-z-z		
+d-ln-ln-x-x		
+ln-exponentiale-pow-n		
 inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\mathrm{True}
 product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\mathrm{True}
 powerexpand-splits-a-logarithm-of-a-product		

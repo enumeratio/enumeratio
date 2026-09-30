@@ -1,0 +1,5 @@
+id	in	out	tex.in	tex.out
+take-list-a-b-c-d-exponentiale-f-4	Take[List[a, b, c, d, E, f], 4]	{a, b, c, d}	\text{Take}[\{a,b,c,d,e,f\},4]	\{a,b,c,d\}
+take-list-list-11-12-13-list-21-22-23-list-31-32	Take[List[List[11, 12, 13], List[21, 22, 23], List[31, 32, 33]], 2]	{{11, 12, 13}, {21, 22, 23}}	\text{Take}\left[\left( \begin{array}{ccc}  11 & 12 & 13 \\  21 & 22 & 23 \\  31 & 32 & 33 \\ \end{array} \right),2\right]	\left( \begin{array}{ccc}  11 & 12 & 13 \\  21 & 22 & 23 \\ \end{array} \right)
+take-list-a-b-c-upto-4	Take[List[a, b, c], UpTo[4]]	{a, b, c}	\text{Take}[\{a,b,c\},\text{UpTo}[4]]	\{a,b,c\}
+take-list-a-b-c-d-exponentiale-f-g-h-4	Take[List[a, b, c, d, E, f, g, h], 4]	{a, b, c, d}	\text{Take}[\{a,b,c,d,e,f,g,h\},4]	\{a,b,c,d\}

@@ -1,3 +1,5 @@
 id	in
 vertices-of-a-path	VertexList[Graph[List[UndirectedEdge[3, 1], UndirectedEdge[1, 2]]]]
 declared-vertices-come-before-edge-endpoints	VertexList[Graph[List[5, 1], List[UndirectedEdge[1, 2]]]]
+length-vertexlist-g	Length[VertexList[g]]
+position-vertexlist-g-c	Position[VertexList[g], "c"]

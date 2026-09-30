@@ -1,0 +1,7 @@
+id	in
+dot-list-a-b-c-list-x-y-z	Dot[List[a, b, c], List[x, y, z]]
+dot-list-list-a-b-list-c-d-list-x-y	Dot[List[List[a, b], List[c, d]], List[x, y]]
+dot-list-x-y-list-list-a-b-list-c-d	Dot[List[x, y], List[List[a, b], List[c, d]]]
+dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	Dot[List[1, 2, 3, 4, 5], List[1, 8, 9, 0, -1]]
+dot-list-a-b-c-list-0-b-d-plus-exponentiale	Dot[List[a, b, c], List[0, b, Plus[d, E]]]
+dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	Dot[List[List[2, 0, 0], List[0, 0, Rational[35, 2]], List[0, Rational[35, 2], 0]], List[List[8, 0, 0], List[0, 0, 10], List[0, 10, 0]]]

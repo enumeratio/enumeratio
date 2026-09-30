@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+grouporder-dihedralgroup-10			[GroupOrder, [DihedralGroup, 10]]	20

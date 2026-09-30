@@ -1,2 +1,8 @@
-id	in
-wheel-6-edge-count	EdgeCount[WheelGraph[6]]
+id	in	back
+wheel-6-edge-count	EdgeCount[WheelGraph[6]]	
+wheelgraph-8	WheelGraph[8]	
+wheelgraph-5	WheelGraph[5]	
+wheelgraph-6	WheelGraph[6]	
+map-function-vertexeccentricity-wheelgraph-6-1-1	Map[Function[VertexEccentricity[WheelGraph[6], Slot[1]]], VertexList[WheelGraph[6]]]	[Map, [Function, [VertexEccentricity, [WheelGraph, 6], _1]], [VertexList, [WheelGraph, 6]]]
+wheelgraph-4	WheelGraph[4]	
+list-wheelgraph-4-completegraph-4	List[WheelGraph[4], CompleteGraph[4]]	

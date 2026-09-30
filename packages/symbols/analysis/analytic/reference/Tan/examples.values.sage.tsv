@@ -31,12 +31,23 @@ derivative-sec-2-x	diff(tan(SR.var("x")), SR.var("x"))
 antiderivative-ln-sec-x			
 taylor-series-about-0			
 to-30-significant-digits-every-one-correctly	N(tan(1))	1.55740772465490	
+n-tan-6-over-5-50	N(tan((6/5)))		
+functionrange-tan-x-x-y			
+functionperiod-tan-x-x			
+functionanalytic-tan-x-x			
+functionmeromorphic-tan-x-x			
+functionsurjective-tan-x-x			
+functionsingularities-tan-x-x			
+functiondiscontinuities-tan-x-x			
+matrixfunction-function-tan-1-1-list-list-5-over			
 threads-element-wise-over-a-list	[tan(0), tan((pi / 4))]	[0, 1]	
 tan-x-frac-sin-x-cos-x	bool(tan((pi / 4)) == (sin((pi / 4)) / cos((pi / 4))))	True	
 odd-function-tan-x-tan-x	tan((-(pi / 4)))	-1	
 period-pi-not-2-pi-adding-a-half-turn-doesn-t	tan(((pi / 4) + pi))	1	
 sin-x-cos-x-should-simplify-to-tan-x-simplify			
 rewritten-in-exponentials			
+tan-3-over-10-times-pi	tan(((3/10) * pi))		
+tan-3-over-8-times-pi	tan(((3/8) * pi))		
 a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((pi / 2))	Infinity	disagree
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	tan(1)	
 a-pole-at-negative-pi-over-2-too	tan((pi / -2))	Infinity	disagree

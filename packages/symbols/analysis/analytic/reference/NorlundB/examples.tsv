@@ -7,3 +7,20 @@ norlundb-6-4		test	[NorlundB, 6, 4]	[Rational, 221, 42]	{num: "5.261904761904762
 norlundb-5-3		test	[NorlundB, 5, 3]	[Rational, -3, 4]	{num: "-0.75"}	1e-9	Wolfram 15.0.0 NorlundB	
 norlundb-7-2		test	[NorlundB, 7, 2]	[Rational, -1, 6]	{num: "-0.16666666666666666"}	1e-9	Wolfram 15.0.0 NorlundB	
 a-polynomial-in-a	Scope		[NorlundB, 1, a]	[Multiply, [Rational, -1, 2], a]				A polynomial in a
+norlundb-0-0	Properties		[NorlundB, 0, 0]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-0	Properties		[NorlundB, 1, 0]	0	0		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-2-0	Properties		[NorlundB, 2, 0]	0	0		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-2	Properties		[NorlundB, 0, 2]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-2	Properties		[NorlundB, 1, 2]	-1	-1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-3	Properties		[NorlundB, 0, 3]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-3	Properties		[NorlundB, 1, 3]	[Rational, -3, 2]	[Rational, -3, 2]		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-4	Properties		[NorlundB, 0, 4]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-4	Properties		[NorlundB, 1, 4]	-2	-2		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-5	Properties		[NorlundB, 0, 5]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-5	Properties		[NorlundB, 1, 5]	[Rational, -5, 2]	[Rational, -5, 2]		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-6	Properties		[NorlundB, 0, 6]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-6	Properties		[NorlundB, 1, 6]	-3	-3		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-7	Properties		[NorlundB, 0, 7]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-7	Properties		[NorlundB, 1, 7]	[Rational, -7, 2]	[Rational, -7, 2]		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-0-8	Properties		[NorlundB, 0, 8]	1	1		Wolfram MathematicalFunctionData, NorlundB	
+norlundb-1-8	Properties		[NorlundB, 1, 8]	-4	-4		Wolfram MathematicalFunctionData, NorlundB	

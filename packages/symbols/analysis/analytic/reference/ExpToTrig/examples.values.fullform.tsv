@@ -1,5 +1,13 @@
-id	in
-euler-s-formula	ExpToTrig[Exp[Times[I, x]]]
-a-real-exponential-splits-into-hyperbolic-parts	ExpToTrig[Exp[x]]
-recognizes-cosh	ExpToTrig[Divide[Plus[Exp[x], Exp[Minus[x]]], 2]]
-recognizes-sin	ExpToTrig[Divide[Subtract[Exp[Times[I, x]], Exp[Minus[Times[I, x]]]], Times[2, I]]]
+id	in	back
+euler-s-formula	ExpToTrig[Exp[Times[I, x]]]	
+a-real-exponential-splits-into-hyperbolic-parts	ExpToTrig[Exp[x]]	
+recognizes-cosh	ExpToTrig[Divide[Plus[Exp[x], Exp[Minus[x]]], 2]]	
+recognizes-sin	ExpToTrig[Divide[Subtract[Exp[Times[I, x]], Exp[Minus[Times[I, x]]]], Times[2, I]]]	
+exptotrig-2-pow-i-times-x	ExpToTrig[Power[2, Times[Complex[0, 1], x]]]	
+exptotrig-neg-3-pow-neg-x-plus-3-pow-x	ExpToTrig[Plus[Minus[Power[3, Minus[x]]], Power[3, x]]]	
+exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	ExpToTrig[Plus[Minus[Log[Plus[Times[Complex[0, -1], x], 1]]], Log[Plus[Times[Complex[0, 1], x], 1]]]]	
+exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	ExpToTrig[And[LessEqual[Power[E, x], 11], Equal[Power[3, Times[Complex[0, 1], x]], 7]]]	
+exptotrig-neg-1-pow-5-over-7	ExpToTrig[Power[-1, Rational[5, 7]]]	
+exptotrig-list-exponentiale-pow-i-times-x-eq-neg	ExpToTrig[List[Equal[Power[E, Times[Complex[0, 1], x]], -1], Power[-1, Divide[1, 11]]]]	[ExpToTrig, [List, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1], [Power, -1, [Divide, 1, 11]]]]
+exptotrig-root-neg-1-16	ExpToTrig[Power[-1, Divide[1, 16]]]	[ExpToTrig, [Power, -1, [Divide, 1, 16]]]
+exptotrig-exponentiale-pow-i-times-x-eq-neg-1	ExpToTrig[Equal[Power[E, Times[Complex[0, 1], x]], -1]]	

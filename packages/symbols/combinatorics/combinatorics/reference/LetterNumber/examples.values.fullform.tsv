@@ -1,3 +1,5 @@
 id	in
 single-letter	LetterNumber["d"]
+letternumber-d	LetterNumber["D"]
 string	LetterNumber["cab"]
+letternumber-c	LetterNumber["c"]

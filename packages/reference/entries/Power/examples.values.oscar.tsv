@@ -1,0 +1,14 @@
+id	in
+power-2-complexinfinity-is-indeterminate-same	
+2-pow-100	(big(2)^100)
+power-half-complexinfinity-is-indeterminate	
+power-x-complexinfinity-is-left-unevaluated	
+n-248-832-over-1-419-857-50	((248832 // 1419857))
+n-2-pow-i	((big(2)^complex(0, 1)))
+2-pow-list-1-2-3	(big(2)^[1, 2, 3])
+interval-1-over-3-2-pow-3	
+2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	(big(2)^[[(1 // 2), -1], [(-5 // 3), (1 // 2)]])
+fullsimplify-functioncontinuous-list-x-pow-n-x	
+d-x-pow-n-x	
+power-1-complexinfinity-is-indeterminate	
+power-e-complexinfinity-is-indeterminate-exp	

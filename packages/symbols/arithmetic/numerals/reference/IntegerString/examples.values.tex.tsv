@@ -9,5 +9,7 @@ roman-numerals-with-the-base-roman	\mathrm{IntegerString}(1\,988, \text{Roman})	
 a-width-pads-with-leading-zeros	\mathrm{IntegerString}(255, 16, 4)	ff
 a-width-shorter-than-the-numeral-keeps-the-least	\mathrm{IntegerString}(1\,234\,567, 10, 3)	\text{567}
 a-third-argument-pads-with-leading-zeros-to-that	\mathrm{IntegerString}(5, 2, 8)	101
+integerstring-50-factorial-36	\mathrm{IntegerString}(50!, 36)	4q7eyp9zizmtqt0\,648txt4fm720cc1s00\,000\,000\,000
+integerstring-2-046-2	\mathrm{IntegerString}(2\,046, 2)	\text{11111111110}
 integerstring-0	\mathrm{IntegerString}(0)	\text{0}
 compute-engine-keeps-the-sign	\mathrm{IntegerString}(-42)	\text{-42}

@@ -184,6 +184,11 @@ far-left-of-the-strip-all-40-digits-agree-with	(zeta((mpf(-41)/2), (mpf(3)/10)))
 left-of-the-strip-at-a-non-integer-a	(zeta(-20, 0.7))	-80.0909738762535840749199398913	
 left-of-the-strip-at-a-non-integer-a-and-s	(zeta(-40.5, 0.4))	7724997484091588.58607882278333	
 a-negative-a-frac-12-5-is-real-and-so-is-the	(zeta(5, (mpf(-1)/2)))	0.144760409444467716272330080168	
+n-hurwitzzeta-1-over-3-8-over-7-50	(zeta((mpf(1)/3), (mpf(8)/7)))		
+hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	zeta(-1, [[(mpf(1)/2), 1], [1, (mpf(1)/2)]])		
+functionexpand-hurwitzzeta-neg-2-a			
+functionexpand-hurwitzzeta-0-a			
+fullsimplify-matrixfunction-function-hurwitzzeta			
 certified-digits-zeta-1-2-1-3	(zeta((mpf(1)/2), (mpf(1)/3)))	-0.118083327934221719094454170794	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a			
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1			
@@ -194,6 +199,20 @@ zeta-0-a-frac-12-a-holds-at-a-0-too	zeta(0, 0)	0.5
 zeta-2-a-b-3-a-3			
 partial-a-zeta-s-a-s-zeta-s-1-a			
 zeta-4-2-pi-4-90-1	zeta(4, 2)	0.0823232337111381915160036965412	
+hurwitzzeta-0-1	zeta(0, 1)		
+hurwitzzeta-neg-1-1	zeta(-1, 1)		
+hurwitzzeta-0-1-over-4	zeta(0, (mpf(1)/4))		
+hurwitzzeta-neg-1-1-over-4	zeta(-1, (mpf(1)/4))		
+hurwitzzeta-2-3	zeta(2, 3)		
+hurwitzzeta-2-4	zeta(2, 4)		
+hurwitzzeta-2-5	zeta(2, 5)		
+hurwitzzeta-2-6	zeta(2, 6)		
+hurwitzzeta-2-7	zeta(2, 7)		
+hurwitzzeta-2-8	zeta(2, 8)		
+hurwitzzeta-2-9	zeta(2, 9)		
+hurwitzzeta-2-10	zeta(2, 10)		
+hurwitzzeta-4-1	zeta(4, 1)		
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	zeta(-3, (mpf(7)/3))	-2.41141975308641975308641975309	
 re-s-0-a-0-is-indeterminate	(zeta(mpc(0, -1), 0))	(1.00330022368532410287421711421 + 0.418155449141321676689274239843j)	disagree
 re-s-negative-a-drops-the-term-cleanly	(zeta(mpc(-1.5, 0.5), -2))	(nan + nanj)	disagree
+hurwitzzeta-2-neg-2	zeta(2, -2)		

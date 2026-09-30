@@ -14,10 +14,29 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
 rounds-the-real-and-imaginary-parts-up			
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	ceil(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(-1), n(2))])]))		
+matrixfunction-ceil-list-list-1-over-2-neg-1			
+ceil-0	ceil(n(0))		
+ceil-positiveinfinity			
+piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
 how-many-5-seat-vans-are-needed-to-carry-17	ceil((n(17) / n(5)))	4	
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))	true	
 floor-and-ceil-agree-exactly-on-integers	equal(ceil(n(5)), floor(n(5)))	true	
+ceil-16-3			
+piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2			
+generatingfunction-ceil-n-4-n-x			
+ceil-1	ceil(n(1))		
+ceil-neg-1	ceil(n(-1))		
+ceil-i			
+ceil-neg-i			
+ceil-23-over-10	ceil(rational(n(23), n(10)))		
+ceil-neg-3	ceil(n(-3))		
+piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
+ceil-neg-pi	ceil((-(x(std::f64::consts::PI))))		
+ceil-neg-27-over-10	ceil(rational(n(-27), n(10)))		
+ceil-23-over-10-plus-neg-i-times-exponentiale			
+ceil-negativeinfinity			
 a-zero-divisor-inside-ceil	ceil((n(16) / n(0)))	panic: denominator == 0	error
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(x(-3.7))	-3.0	
 nan-propagates-rather-than-erroring			

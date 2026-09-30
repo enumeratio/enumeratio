@@ -36,6 +36,16 @@ taylor-series-about-0-only-even-powers-appear
 to-30-significant-digits-every-one-correctly	N(cos(1), 30)	0.540302305868139717400936607443	
 to-1-significant-digit	N(cos(1), 30)	0.540302305868139717400936607443	disagree
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	N(cos((S(10)**100)), 30)	-0.928081905074655343456194643777	
+n-cos-6-over-5-50	N(cos(Rational(6, 5)), 30)		
+functiondomain-cos-x-x			
+functionrange-cos-x-x-y			
+functionperiod-cos-x-x			
+functionanalytic-cos-x-x			
+functioninjective-cos-x-x			
+functionsurjective-cos-x-x			
+functionsingularities-cos-x-x			
+functiondiscontinuities-cos-x-x			
+matrixfunction-function-cos-1-1-list-list-5-over			
 threads-element-wise-over-a-list	[cos(0), cos((S(pi) / 2)), cos(pi)]	[1, 0, -1]	
 even-function-cos-x-cos-x	enumeratio_equal(cos((-(S(pi) / 3))), cos((S(pi) / 3)))	True	
 co-function-identity-cos-x-sin-pi-2-x	enumeratio_equal(cos((S(pi) / 6)), sin(((S(pi) / 2) - (S(pi) / 6))))	True	
@@ -43,6 +53,7 @@ double-angle-formula-cos-2x-cos-2-x-sin-2-x
 angle-addition-formula			
 power-reduction-cos-2-x-frac-1-cos-2x-2			
 euler-s-formula-cos-x-frac-e-ix-e-ix-2			
+cos-3-over-10-times-pi	cos((Rational(3, 10) * pi))		
 as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)	
 pi-24-is-past-the-automatic-special-angle-table	cos((Rational(1, 24) * pi))	sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2	
 cos-complexinfinity-is-indeterminate-for-the	cos(zoo)		

@@ -6,3 +6,8 @@ a-float-argument-evaluates-directly	<Arcoth>3.5</Arcoth>	<ToExpression>0.2938933
 as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	<TrigToExp><Arcoth>2</Arcoth></TrigToExp>	<Multiply><Rational>1 2</Rational> <Ln>3</Ln></Multiply>
 oddness-pulls-the-sign-out-of-a-symbolic	<Arcoth><Negate>x</Negate></Arcoth>	<Negate><Arcoth>x</Arcoth></Negate>
 derivative-frac-1-1-x-2	<D><Arcoth>x</Arcoth> x</D>	<Divide>1 <Add><Negate><Power>x 2</Power></Negate> 1</Add></Divide>
+n-arcoth-2-50	<N><Arcoth>2</Arcoth> 50</N>	<ToExpression>0.54930614433405484569762261846126285232374527891137</ToExpression>
+arcoth-list-list-i-neg-i-list-0-neg-i	<Arcoth><List><List><Complex>0 1</Complex> <Complex>0 -1</Complex></List> <List>0 <Complex>0 -1</Complex></List></List></Arcoth>	<List><List><Arcoth><Complex>0 1</Complex></Arcoth> <Arcoth><Complex>0 -1</Complex></Arcoth></List> <List><Arcoth>0</Arcoth> <Arcoth><Complex>0 -1</Complex></Arcoth></List></List>
+arcoth-complexinfinity	<Arcoth>ComplexInfinity</Arcoth>	<ToExpression>0</ToExpression>
+arcoth-neg-1	<Arcoth>-1</Arcoth>	<NegativeInfinity />
+matrixfunction-function-arcoth-1-1-list-list-i	<MatrixFunction><Function><Block><Arcoth>_1</Arcoth></Block> _1</Function> <List><List><Complex>0 1</Complex> <Complex>0 -1</Complex></List> <List>0 <Complex>0 -1</Complex></List></List></MatrixFunction>	<List><List><Arcoth><Complex>0 1</Complex></Arcoth> <Add><Multiply><Rational>-1 2</Rational> <Arcoth><Complex>0 1</Complex></Arcoth></Multiply> <Multiply><Rational>1 2</Rational> <Arcoth><Complex>0 -1</Complex></Arcoth></Multiply></Add></List> <List>0 <Arcoth><Complex>0 -1</Complex></Arcoth></List></List>

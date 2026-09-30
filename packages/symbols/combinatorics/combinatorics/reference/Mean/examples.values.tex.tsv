@@ -8,6 +8,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac	\mathrm{mean}(\bigl\lbrack a, b,
 exact-constants-give-an-exact-mean-frac-2-e-pi-3	\mathrm{mean}(\bigl\lbrack\pi, e, 2\bigr\rbrack)	\frac{2+e+\pi}{3}
 of-a-matrix-of-symbols-the-exact-mean-of-each	\mathrm{mean}(\bigl\lbrack\bigl\lbrack a, u\bigr\rbrack, \bigl\lbrack b, v\bigr\rbrack, \bigl\lbrack c, w\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\frac{a+b+c}{3}, \frac{u+v+w}{3}\bigr\rbrack
 the-mean-of-a-lazy-range-exactly	\mathrm{mean}(1..100)	\frac{101}{2}
+mean-n-list-1-2-3-4-30	\mathrm{mean}(N(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, 30))	\frac{5}{2}
+n-mean-ts	N(\mathrm{mean}(\mathrm{ts}))	\mathrm{mean}(\mathrm{ts})
+mean-binomialdistribution-n-p	\mathrm{mean}(\operatorname{BinomialDistribution}(n, p))	np
+mean-probabilitydistribution-sqrt-2-times-1-over	\mathrm{mean}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi((x-2)^4+1))^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))	\mathrm{mean}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi(x-2)^4+\pi)^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))
 mean-is-total-divided-by-count-mean-c-frac-sum-c	\mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}	\top
+n-mean-list-1-2-3-4-4-3-1-1	N(\mathrm{mean}(\bigl\lbrack1, 2, 3, 4, 4, 3, 1, 1\bigr\rbrack))	2.375
+mean-ln-list-a-b-c-d	\mathrm{mean}(\ln(\bigl\lbrack a, b, c, d\bigr\rbrack))	\frac{1}{4}(\ln(a)+\ln(b)+\ln(c)+\ln(d))
 a-single-outlier-drags-the-mean-far-from-the	\mathrm{mean}(\bigl\lbrack-100, 1, 1, 1, 1, 20\bigr\rbrack)	-\frac{38}{3}
 the-mean-of-no-data-is-nan	\mathrm{mean}(\bigl\lbrack\bigr\rbrack)	\operatorname{NaN}

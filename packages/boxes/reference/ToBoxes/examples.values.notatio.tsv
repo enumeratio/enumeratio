@@ -3,3 +3,6 @@ power	<ToBoxes><Power>x 2</Power></ToBoxes>	<SuperscriptBox>"x" "2"</Superscript
 evaluates-first	<ToBoxes><Add>2 3</Add></ToBoxes>	<ToExpression>"5"</ToExpression>
 binomial	<ToBoxes><Binomial>n k</Binomial></ToBoxes>	<RowBox><List>"(" <FractionBox>"n" "k" <Tuple>FractionLine False</Tuple></FractionBox> ")"</List></RowBox>
 square-root-over-y	<ToBoxes><Divide><Sqrt>x</Sqrt> y</Divide></ToBoxes>	<FractionBox><SqrtBox>"x"</SqrtBox> "y"</FractionBox>
+map-toboxes-list-i-pi-exponentiale	<Map>ToBoxes <List><Complex>0 1</Complex> Pi ExponentialE</List></Map>	<List>"i" "π" "e"</List>
+toboxes-list-list-a-b-c-list-d-exponentiale-f	<ToBoxes><List><List>a b c</List> <List>d ExponentialE f</List></List></ToBoxes>	<RowBox><List>"[" <RowBox><List>"[" "a" "," "b" "," "c" "]"</List></RowBox> "," <RowBox><List>"[" "d" "," "e" "," "f" "]"</List></RowBox> "]"</List></RowBox>
+toboxes-1-over-10	<ToBoxes><Rational>1 10</Rational></ToBoxes>	<FractionBox>"1" "10"</FractionBox>

@@ -1,0 +1,8 @@
+id	in	out
+centre-degree-of-a-6-vertex-star		
+stargraph-8		
+stargraph-6		
+map-function-vertexeccentricity-stargraph-6-1-1		
+istreegraph-stargraph-5	\mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))	\mathrm{True}
+isbipartitegraph-stargraph-5	\mathrm{IsBipartiteGraph}(\mathrm{StarGraph}(5))	\mathrm{True}
+stargraph-7		

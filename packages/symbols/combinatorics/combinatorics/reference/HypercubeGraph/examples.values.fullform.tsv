@@ -1,2 +1,6 @@
-id	in
-q3-has-8-vertices-12-edges	List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]
+id	in	back
+q3-has-8-vertices-12-edges	List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]	
+hypercubegraph-3	HypercubeGraph[3]	
+map-function-vertexeccentricity-hypercubegraph-3	Map[Function[VertexEccentricity[HypercubeGraph[3], Slot[1]]], VertexList[HypercubeGraph[3]]]	[Map, [Function, [VertexEccentricity, [HypercubeGraph, 3], _1]], [VertexList, [HypercubeGraph, 3]]]
+isbipartitegraph-hypercubegraph-3	BipartiteGraphQ[HypercubeGraph[3]]	
+hypercubegraph-2	HypercubeGraph[2]	

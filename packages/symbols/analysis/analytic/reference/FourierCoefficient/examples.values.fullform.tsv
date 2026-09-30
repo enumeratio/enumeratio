@@ -1,9 +1,13 @@
 id	in
 c-2-of-x	FourierCoefficient[x, x, 2]
+fouriercoefficient-t-pow-2-plus-t-t-5	FourierCoefficient[Plus[Power[t, 2], t], t, 5]
 c-2-of-cos-squared	FourierCoefficient[Power[Cos[x], 2], x, 2]
 c-0-of-x-squared-is-the-average	FourierCoefficient[Power[x, 2], x, 0]
 c-0-of-abs-x	FourierCoefficient[Abs[x], x, 0]
 c-1-of-abs-x	FourierCoefficient[Abs[x], x, 1]
 c-1-of-exp-x	FourierCoefficient[Exp[x], x, 1]
+fouriercoefficient-exponentiale-pow-neg-t-t-3	FourierCoefficient[Power[E, Minus[t]], t, 3]
+fouriercoefficient-t-pow-2-plus-t-t-3	FourierCoefficient[Plus[Power[t, 2], t], t, 3]
+sum-fouriercoefficient-t-pow-2-plus-t-t-n-times	Sum[Times[FourierCoefficient[Plus[Power[t, 2], t], t, n], Power[E, Times[Complex[0, 1], n, t]]], Limits[n, -2, 2]]
 declines-a-symbolic-order	FourierCoefficient[x, x, n]
 declines-tan-x-no-closed-form-here	FourierCoefficient[Tan[x], x, 1]

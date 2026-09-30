@@ -1,0 +1,15 @@
+id	in	out
+abs-of-a-real-variable		
+sign-of-a-real-variable		
+clip-of-a-real-variable		
+max-of-two-real-variables		
+piecewiseexpand-max-a-b-c-d		
+piecewiseexpand-floor-x-0-lt-x-lt-4		
+piecewiseexpand-primepi-x-0-lt-x-lt-6	\mathrm{PiecewiseExpand}(\pi(x), 0\lt x\lt6)	\pi(x)
+piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2		
+assuming-0-lt-x-lt-3-piecewiseexpand-floor-x		
+assuming-x-pow-2-lt-3-piecewiseexpand-floor-x		
+piecewiseexpand-pw		
+piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1		
+piecewiseexpand-max-abs-x-abs-y-realnumbers		
+without-a-realness-assumption-it-declines		

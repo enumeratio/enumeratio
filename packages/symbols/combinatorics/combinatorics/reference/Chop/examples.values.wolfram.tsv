@@ -16,3 +16,4 @@ cleans-up-the-floating-point-residue-from	Chop[Subtract[Times[3, N[Divide[1, 3]]
 only-the-value-s-own-magnitude-matters-this	Chop[Plus[1, 1*^-12]]	1000000000001/1000000000000	\text{Chop}\left[1+\frac{1}{1000000000000}\right]	\frac{1000000000001}{1000000000000}
 a-hard-cutoff-at-about-10-10-a-value-just-above	Chop[1.0000000001*^-10]	1.0000000001*^-10	\text{Chop}[\text{1.0000000001$\grave{ }$*${}^{\wedge}$-10}]	\text{1.0000000001$\grave{ }$*${}^{\wedge}$-10}
 an-exact-small-number-is-chopped-too	Chop[Power[10, -20]]	1/100000000000000000000	\text{Chop}\left[\frac{1}{10^{20}}\right]	\frac{1}{100000000000000000000}
+chop-2-plus-i-times-10-pow-neg-12	Chop[Plus[2, Times[Complex[0, 1], Power[10, -12]]]]	2 + I/1000000000000	\text{Chop}\left[2+\frac{i}{10^{12}}\right]	2+\frac{i}{1000000000000}

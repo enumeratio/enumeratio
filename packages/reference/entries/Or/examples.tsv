@@ -1,0 +1,5 @@
+id	section	role	expr	expected
+2-lt-1-3-lt-pi			[Or, [Less, 2, 1], [Less, 3, Pi]]	True
+x-true-z	Scope		[Or, x, True, z]	True
+refine-sqrt-x-pow-2-minus-1-pow-2-x-lt-eq-neg-1	Applications		[Refine, [Sqrt, [Power, [Add, [Power, x, 2], -1], 2]], [Or, [LessEqual, x, -1], [GreaterEqual, x, 1]]]	[Abs, [Add, [Power, x, 2], -1]]
+booleanconvert-factorial-a-b-c	Properties		[BooleanConvert, [Not, [Or, a, b, c]]]	[And, [Not, a], [Not, b], [Not, c]]

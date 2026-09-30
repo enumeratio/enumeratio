@@ -3,3 +3,6 @@ power	\mathrm{ToBoxes}(x^2)	\mathrm{SuperscriptBox}(\text{x}, \text{2})
 evaluates-first	\mathrm{ToBoxes}(2+3)	\text{5}
 binomial	\mathrm{ToBoxes}(\binom{n}{k})	\mathrm{RowBox}(\bigl\lbrack\text{(}, \mathrm{FractionBox}(\text{n}, \text{k}, (\mathrm{FractionLine},\bot)), \text{)}\bigr\rbrack)
 square-root-over-y	\mathrm{ToBoxes}(\frac{\sqrt{x}}{y})	\mathrm{FractionBox}(\mathrm{SqrtBox}(\text{x}), \text{y})
+map-toboxes-list-i-pi-exponentiale	\mathrm{Map}(\mathrm{ToBoxes}, \bigl\lbrack i, \pi, e\bigr\rbrack)	\bigl\lbrack\text{i}, \text{π}, \text{e}\bigr\rbrack
+toboxes-list-list-a-b-c-list-d-exponentiale-f	\mathrm{ToBoxes}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack\bigr\rbrack)	\mathrm{RowBox}(\bigl\lbrack\text{[}, \mathrm{RowBox}(\bigl\lbrack\text{[}, \text{a}, \text{,}, \text{b}, \text{,}, \text{c}, \text{]}\bigr\rbrack), \text{,}, \mathrm{RowBox}(\bigl\lbrack\text{[}, \text{d}, \text{,}, \text{e}, \text{,}, \text{f}, \text{]}\bigr\rbrack), \text{]}\bigr\rbrack)
+toboxes-1-over-10	\mathrm{ToBoxes}(\frac{1}{10})	\mathrm{FractionBox}(\text{1}, \text{10})

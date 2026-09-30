@@ -184,6 +184,11 @@ far-left-of-the-strip-all-40-digits-agree-with	N(hurwitz_zeta((-41/2), (3/10)))	
 left-of-the-strip-at-a-non-integer-a	N(hurwitz_zeta(-20, 0.7))	-80.0909738762536	
 left-of-the-strip-at-a-non-integer-a-and-s	N(hurwitz_zeta(-40.5, 0.4))	7.72499748409159e15	
 a-negative-a-frac-12-5-is-real-and-so-is-the	N(hurwitz_zeta(5, (-1/2)))	0.144760409444473	
+n-hurwitzzeta-1-over-3-8-over-7-50	N(hurwitz_zeta((1/3), (8/7)))		
+hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	hurwitz_zeta(-1, [[(1/2), 1], [1, (1/2)]])		
+functionexpand-hurwitzzeta-neg-2-a			
+functionexpand-hurwitzzeta-0-a			
+fullsimplify-matrixfunction-function-hurwitzzeta			
 certified-digits-zeta-1-2-1-3	N(hurwitz_zeta((1/2), (1/3)))	-0.118083327934222	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a	hurwitz_zeta(0, SR.var("a"))	True	
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	hurwitz_zeta(-1, SR.var("a"))	True	
@@ -194,6 +199,20 @@ zeta-0-a-frac-12-a-holds-at-a-0-too	hurwitz_zeta(0, 0)	1/2
 zeta-2-a-b-3-a-3	hurwitz_zeta(-2, SR.var("a"))	True	
 partial-a-zeta-s-a-s-zeta-s-1-a			
 zeta-4-2-pi-4-90-1	hurwitz_zeta(4, 2)	1/90*pi^4 - 1	
+hurwitzzeta-0-1	hurwitz_zeta(0, 1)		
+hurwitzzeta-neg-1-1	hurwitz_zeta(-1, 1)		
+hurwitzzeta-0-1-over-4	hurwitz_zeta(0, (1/4))		
+hurwitzzeta-neg-1-1-over-4	hurwitz_zeta(-1, (1/4))		
+hurwitzzeta-2-3	hurwitz_zeta(2, 3)		
+hurwitzzeta-2-4	hurwitz_zeta(2, 4)		
+hurwitzzeta-2-5	hurwitz_zeta(2, 5)		
+hurwitzzeta-2-6	hurwitz_zeta(2, 6)		
+hurwitzzeta-2-7	hurwitz_zeta(2, 7)		
+hurwitzzeta-2-8	hurwitz_zeta(2, 8)		
+hurwitzzeta-2-9	hurwitz_zeta(2, 9)		
+hurwitzzeta-2-10	hurwitz_zeta(2, 10)		
+hurwitzzeta-4-1	hurwitz_zeta(4, 1)		
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	hurwitz_zeta(-3, (7/3))	-7813/3240	
 re-s-0-a-0-is-indeterminate	N(hurwitz_zeta((0 + -1*I), 0))	1.00330022368532 + 0.418155449141322*I	disagree
 re-s-negative-a-drops-the-term-cleanly	N(hurwitz_zeta((-1.5 + 0.5*I), -2))	ValueError: Hurwitz zeta complex infinity	error
+hurwitzzeta-2-neg-2	hurwitz_zeta(2, -2)		

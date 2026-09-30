@@ -1,2 +1,9 @@
 id	in	out
+n-arsinh-1-100	N(\mathrm{arsinh}(1), 100)	0.881\,373\,587\,019\,543\,025\,233
+arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	\mathrm{arsinh}(\bigl\lbrack\bigl\lbrack i, 2^{1/2}/2i\bigr\rbrack, \bigl\lbrack0, -2^{1/2}/2i\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{arsinh}(i), \mathrm{arsinh}(2^{1/2}/2i)\bigr\rbrack, \bigl\lbrack0, \mathrm{arsinh}(-2^{1/2}/2i)\bigr\rbrack\bigr\rbrack
+arsinh-positiveinfinity	\mathrm{arsinh}(\infty)	\infty
+arsinh-0	\mathrm{arsinh}(0)	0
+d-arsinh-x-x	\frac{\mathrm{d}\mathrm{arsinh}(x)}{\mathrm{d}x}	\frac{1}{\sqrt{x^2+1}}
+arsinh-1-over-2-times-i-times-sqrt-1-over-2	\mathrm{arsinh}((\frac{1}{2}i)\sqrt{\frac{5-5^{1/2}}{2}})	\mathrm{arsinh}((\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}})
+arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	\mathrm{arsinh}((-\frac{1}{2}i)\sqrt{\frac{5-5^{1/2}}{2}})	\mathrm{arsinh}((-\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}})
 arsinh-complexinfinity-is-complexinfinity	\mathrm{arsinh}(\tilde\infty)	\tilde\infty

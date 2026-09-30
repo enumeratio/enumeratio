@@ -4,4 +4,8 @@ heavisidetheta-positive	HeavisideTheta(1)	1
 heavisidetheta-zero-unevaluated	HeavisideTheta(0)	HeavisideTheta(0)
 heavisidetheta-product-both-positive	HeavisideTheta(1, 2)	1
 heavisidetheta-product-one-negative	HeavisideTheta(1, -1)	0
+matrixfunction-heavisidetheta-list-list-neg-1	MatrixFunction(HeavisideTheta, [[-1, -1 / 2], [-1 / 2, 1 / 2]])	"[\n  [sqrt(13) / 26 * (-3 + sqrt(13)), -(sqrt(13) / 13)],\n  [-(sqrt(13) / 13), sqrt(13) / 26 * (3 + sqrt(13))],\n]"
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	Assuming(a > 0, Refine(HeavisideTheta(a, a, a, a)))	HeavisideTheta(a, a, a, a)
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	Assuming(a < 0, Refine(HeavisideTheta(a, a, a, a)))	HeavisideTheta(a, a, a, a)
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	Assuming(a < 0 && b > 0, Refine(HeavisideTheta(b, b, a)))	HeavisideTheta(b, b, a)
 heavisidetheta-derivative	D(HeavisideTheta(x), x)	DiracDelta(x)

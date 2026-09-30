@@ -38,7 +38,20 @@ a-real-composite-5-squared-is-not-prime	\mathrm{IsPrime}(25, \mathrm{KeyValuePai
 1-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(1, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\mathrm{False}
 0-is-not-prime-gaussian-or-not	\mathrm{IsPrime}(0, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\mathrm{False}
 a-common-choice-of-prime-modulus-for-hashing	\mathrm{IsPrime}(1\,000\,000\,007)	\mathrm{True}
+isprime-257	\mathrm{IsPrime}(257)	\mathrm{True}
+isprime-1-plus-2-pow-128	\mathrm{IsPrime}(1+2^{128})	\mathrm{False}
+filter-range-1-100-function-isprimepower-1		
 an-odd-prime-stays-prime-in-z-i-exactly-when-p	\mathrm{IsPrime}(\bigl\lbrack2, 3, 5, 7, 11, 13\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
+isprime-37	\mathrm{IsPrime}(37)	\mathrm{True}
+isprime-29	\mathrm{IsPrime}(29)	\mathrm{True}
+isprime-17	\mathrm{IsPrime}(17)	\mathrm{True}
+isprime-12	\mathrm{IsPrime}(12)	\mathrm{False}
+isprime-23	\mathrm{IsPrime}(23)	\mathrm{True}
+isprime-24	\mathrm{IsPrime}(24)	\mathrm{False}
+isprime-list-7-11	\mathrm{IsPrime}(\bigl\lbrack7, 11\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
+isprime-list-5-7-2	\mathrm{IsPrime}(\bigl\lbrack5, 7, 2\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{True}\bigr\rbrack
+isprime-19	\mathrm{IsPrime}(19)	\mathrm{True}
+divisorsum-19-function-1-1-isprime		
 non-integers-are-not-prime	\mathrm{IsPrime}(\frac{1}{2})	\mathrm{False}
 another-non-integer-3-halves	\mathrm{IsPrime}(\frac{3}{2})	\mathrm{False}
 a-symbol-stays-unevaluated		

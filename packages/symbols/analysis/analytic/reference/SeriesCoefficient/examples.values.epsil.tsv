@@ -3,6 +3,11 @@ exp-about-a-nonzero-point	SeriesCoefficient(exp(x), [x, 1, 2])	1 / 2 * exponenti
 sin-about-zero	SeriesCoefficient(sin(x), [x, 0, 5])	1 / 120
 geometric-series	SeriesCoefficient(1 / (1 - x), [x, 0, 10])	1
 log-series	SeriesCoefficient(ln(1 + x), [x, 0, 4])	-1 / 4
+seriescoefficient-x-times-1-over-x-minus-5-list	SeriesCoefficient(x * (1 / (x - 5)), [x, 0, n])	SeriesCoefficient(x / (x - 5), [x, 0, n])
+seriescoefficient-1-over-x-minus-3-times-x-minus	SeriesCoefficient(1 / ((x - 3) * (x - 2) * (x - 1)) * x ^ 3, [x, 0, n])	SeriesCoefficient(x ^ 3 / ((x - 3) * (x - 2) * (x - 1)), [x, 0, n])
+seriescoefficient-1-over-neg-x-plus-1-times	SeriesCoefficient(1 / (-x + 1) * exponentialE ^ x, [x, 0, n])	SeriesCoefficient(exponentialE ^ x / (-x + 1), [x, 0, n])
+seriescoefficient-ln-1-over-sqrt-neg-5-times-x	SeriesCoefficient(ln(1 / sqrt(-5 * x ^ 2 + 1)), [x, 0, n])	SeriesCoefficient(-1 / 2 * ln(-5 * x ^ 2 + 1), [x, 0, n])
+seriescoefficient-ln-1-over-sqrt-5-times-x-pow-2	SeriesCoefficient(ln(1 / sqrt(5 * x ^ 2 + 1)), [x, 0, n])	SeriesCoefficient(-1 / 2 * ln(5 * x ^ 2 + 1), [x, 0, n])
 a-puiseux-half-integer-order-declines	SeriesCoefficient(sqrt(x), [x, 0, 1 / 2])	SeriesCoefficient(sqrt(x), [x, 0, 1 / 2])
 a-negative-order-laurent-coefficient-declines	SeriesCoefficient(1 / x, [x, 0, -1])	SeriesCoefficient(1 / x, [x, 0, -1])
 a-removable-singularity-declines	SeriesCoefficient(sin(x) / x, [x, 0, 0])	SeriesCoefficient(sin(x) / x, [x, 0, 0])

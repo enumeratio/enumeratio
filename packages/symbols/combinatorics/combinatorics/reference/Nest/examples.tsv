@@ -1,6 +1,16 @@
 id	section	role	expr	expected	caption
 nest-f-x-3			[Nest, f, x, 3]	[f, [f, [f, x]]]	
 repeated-squaring-2-2-2-2			[Nest, [Function, [Power, _1, 2]], 2, 3]	256	Repeated squaring: $((2^2)^2)^2$
+nest-f-x-4			[Nest, f, x, 4]	[f, [f, [f, [f, x]]]]	
+nest-function-1-plus-1-pow-2-1-1-3			[Nest, [Function, [Block, [Power, [Add, _1, 1], 2]], _1], 1, 3]	676	
 zero-applications-leave-x-alone	Scope		[Nest, f, x, 0]	x	Zero applications leave x alone
 nest-function-2-times-1-1-10	Scope		[Nest, [Function, [Multiply, 2, _1]], 1, 10]	1024	
+nest-sqrt-100-4	Scope		[Nest, Sqrt, 100, 4]	[Sqrt, [Sqrt, [Sqrt, 10]]]	
+nest-function-1-plus-1-pow-2-1-x-5	Scope		[Nest, [Function, [Block, [Power, [Add, _1, 1], 2]], _1], x, 5]	[Power, [Add, [Power, [Add, [Power, [Add, [Power, [Add, [Power, [Add, x, 1], 2], 1], 2], 1], 2], 1], 2], 1], 2]	
 three-newton-steps-toward-sqrt-2	Applications		[Nest, [Function, [Divide, [Add, _1, [Divide, 2, _1]], 2]], 1, 3]	[Rational, 577, 408]	Three Newton steps toward $\sqrt{2}$
+nest-function-1-over-1-plus-1-1-x-5	Applications		[Nest, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1], x, 5]	[Divide, 1, [Add, [Divide, 1, [Add, [Divide, 1, [Add, [Divide, 1, [Add, [Divide, 1, [Add, x, 1]], 1]], 1]], 1]], 1]]	
+nest-function-x-pow-1-1-x-6	Applications		[Nest, [Function, [Block, [Power, x, _1]], _1], x, 6]	[Power, x, [Power, x, [Power, x, [Power, x, [Power, x, [Power, x, x]]]]]]	
+nest-function-1-over-2-times-1-plus-2-times-1	Applications		[Nest, [Function, [Block, [Multiply, [Rational, 1, 2], [Add, _1, [Multiply, 2, [Divide, 1, _1]]]]], _1], 1, 5]	[Rational, 886731088897, 627013566048]	
+nest-function-floor-1-over-2-times-1-1-20-6	Properties		[Nest, [Function, [Block, [Floor, [Multiply, [Rational, 1, 2], _1]]], _1], 20, 6]	0	
+nest-function-list-1-1-1-x-3	Neat examples		[Nest, [Function, [Block, [List, _1, _1]], _1], x, 3]	[List, [List, [List, x, x], [List, x, x]], [List, [List, x, x], [List, x, x]]]	
+nest-function-join-1-length-1-plus-reverse-1-1	Neat examples		[Nest, [Function, [Block, [Join, _1, [Add, [Length, _1], [Reverse, _1]]]], _1], [List, 0], 4]	[List, 0, 1, 3, 2, 6, 7, 5, 4, 12, 13, 15, 14, 10, 11, 9, 8]	

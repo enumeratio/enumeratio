@@ -1,0 +1,12 @@
+id	in	out
+the-pythagorean-identity		
+recognizes-the-definition-of-sinh		
+folds-the-double-angle-product		
+the-functional-equation-of-gamma		
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3		
+the-hyperbolic-pythagorean-identity		
+fullsimplify-x-pow-10-minus-1-times-x-pow-10		
+fullsimplify-1-minus-i-times-exponentiale-pow-i		
+fullsimplify-neg-4-times-arctan-1-over-239-plus		
+fullsimplify-4-times-sin-x-times-cos-x-plus-4		
+assuming-re-x-gt-0-fullsimplify-exponentiale-pow	\mathrm{Assuming}(\mathrm{Re}(x)\gt0, \mathrm{FullSimplify}(\exp(\log\Gamma(x))))	\sinh(\log\Gamma(x))+\cosh(\log\Gamma(x))

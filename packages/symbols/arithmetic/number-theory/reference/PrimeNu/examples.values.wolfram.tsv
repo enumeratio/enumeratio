@@ -7,6 +7,20 @@ large-integers-the-15-primes-up-to-50-divide-50	PrimeNu[Factorial[50]]	15	\nu (5
 gaussian-integers-3-i-1-i-2-i	PrimeNu[Complex[3, 1]]	2	\nu (3+i)	2
 gaussianintegers-true-5-splits-so-105-has-4	PrimeNu[105, Rule[GaussianIntegers, True]]	4	\text{PrimeNu}[105,\text{GaussianIntegers}\to \text{True}]	4
 listable-over-a-range	PrimeNu[Range[20]]	{0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2}	\nu (\text{Range}[20])	\{0,1,1,1,1,2,1,1,1,2,1,2,1,2,2,1,1,2,1,2\}
+primenu-30	PrimeNu[30]	3	\nu (30)	3
+moebiusmu-42-eq-neg-1-pow-primenu-42	(MoebiusMu[42] == Power[-1, PrimeNu[42]])	True	\mu (42)=(-1)^{\nu (42)}	\text{True}
+liouvillelambda-42-eq-neg-1-pow-primenu-42	(LiouvilleLambda[42] == Power[-1, PrimeNu[42]])	True	\lambda (42)=(-1)^{\nu (42)}	\text{True}
 primenu-n-is-the-length-of-factorinteger-n	(PrimeNu[50] == Length[FactorInteger[50]])	True	\nu (50)=\text{Length}[\text{FactorInteger}[50]]	\text{True}
+primenu-50	PrimeNu[50]	2	\nu (50)	2
+primenu-360-eq-primenu-9-plus-primenu-40	(PrimeNu[360] == Plus[PrimeNu[9], PrimeNu[40]])	True	\nu (360)=\nu (9)+\nu (40)	\text{True}
+primenu-49	PrimeNu[49]	1	\nu (49)	1
+primenu-210-eq-primeomega-210	(PrimeNu[210] == PrimeOmega[210])	True	\nu (210)=\Omega (210)	\text{True}
+moebiusmu-33-eq-neg-1-pow-primenu-33	(MoebiusMu[33] == Power[-1, PrimeNu[33]])	True	\mu (33)=(-1)^{\nu (33)}	\text{True}
+liouvillelambda-33-eq-neg-1-pow-primenu-33	(LiouvilleLambda[33] == Power[-1, PrimeNu[33]])	True	\lambda (33)=(-1)^{\nu (33)}	\text{True}
+primenu-2	PrimeNu[2]	1	\nu (2)	1
+primenu-3	PrimeNu[3]	1	\nu (3)	1
+primenu-6	PrimeNu[6]	2	\nu (6)	2
+primenu-4	PrimeNu[4]	1	\nu (4)	1
+all-range-1-100-function-primenu-1-lt-eq	AllTrue[Range[1, 100], Function[LessEqual[PrimeNu[Slot[1]], PrimeOmega[Slot[1]]]]]	True	\text{AllTrue}[\text{Range}[1,100],\nu (\text{$\#$1})\leq \Omega (\text{$\#$1})\&]	\text{True}
 32-2-5-has-just-one-distinct-prime-factor	PrimeNu[32]	1	\nu (32)	1
 1-has-no-prime-factors	PrimeNu[1]	0	\nu (1)	0

@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial	(binomial(ZZ((2 * -13)), ZZ(5))
 equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))	42	
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	(Combinatorics.catalannum(6) // Combinatorics.catalannum(5))	3.142857142857143	
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i			
+generatingfunction-catalannumber-n-n-x			
+catalannumber-neg-10	Combinatorics.catalannum(-10)		
+catalannumber-neg-9	Combinatorics.catalannum(-9)		
+catalannumber-neg-8	Combinatorics.catalannum(-8)		
+catalannumber-neg-7	Combinatorics.catalannum(-7)		
+catalannumber-neg-6	Combinatorics.catalannum(-6)		
+catalannumber-neg-4	Combinatorics.catalannum(-4)		
+catalannumber-neg-3	Combinatorics.catalannum(-3)		
 they-grow-fast-c-15-already-passes-nine-million	Combinatorics.catalannum(15)	9694845	

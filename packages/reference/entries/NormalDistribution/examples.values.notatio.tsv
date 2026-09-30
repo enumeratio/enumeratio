@@ -1,0 +1,3 @@
+id	in	out
+pdf-normaldistribution-0-1-x	<PDF><NormalDistribution>0 1</NormalDistribution> x</PDF>	<Divide><Multiply><Sqrt>2</Sqrt> <Power>ExponentialE <Multiply><Rational>-1 2</Rational> <Power>x 2</Power></Multiply></Power></Multiply> <Multiply>2 <Sqrt>Pi</Sqrt></Multiply></Divide>
+transformeddistribution-u-times-1-over-v	<TransformedDistribution><Multiply>u <Divide>1 v</Divide></Multiply> <Distributed><List>u v</List> <ProductDistribution><List><Apply>NormalDistribution</Apply> 2</List></ProductDistribution></Distributed></TransformedDistribution>	<TransformedDistribution><Divide>u v</Divide> <Distributed><List>u v</List> <ProductDistribution><List><Apply>NormalDistribution</Apply> 2</List></ProductDistribution></Distributed></TransformedDistribution>

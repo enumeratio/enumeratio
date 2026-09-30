@@ -26,6 +26,22 @@ n-decimalizes-a-combined-product
 agrees-numerically-at-a-complex-point		
 to-50-significant-digits-every-one-correctly		
 to-1-significant-digit		
+n-exponentiale-pow-8-over-5-50		
+matrixfunction-exp-list-list-1-1-over-2-times-i		
+exponentiale-pow-9-over-2-times-i-times-pi		
+exptotrig-exponentiale-pow-1-over-5-times-i		
+functiondomain-exp-x-x	\mathrm{FunctionDomain}(e^{x}, x)	\mathrm{True}
+functionrange-exp-x-x-y		
+functionanalytic-exp-x-x	\mathrm{FunctionAnalytic}(e^{x}, x)	\mathrm{True}
+functionmonotonicity-exp-x-x		
+functioninjective-exp-x-x	\mathrm{FunctionInjective}(e^{x}, x)	\mathrm{True}
+functionsurjective-exp-x-x	\mathrm{FunctionSurjective}(e^{x}, x)	\mathrm{False}
+assuming-n-in-integers-refine-exp-2-times-pi		
+assuming-n-in-integers-refine-exp-2-times-pi-2		
+functionsign-exp-x-x		
+functionsingularities-exp-x-x	\mathrm{FunctionSingularities}(e^{x}, x)	\mathrm{False}
+functiondiscontinuities-exp-x-x	\mathrm{FunctionDiscontinuities}(e^{x}, x)	\mathrm{False}
+functionconvexity-exp-x-x		
 threads-element-wise-over-a-list		
 inverse-of-ln-e-ln-x-x	\exp(\ln(5))=5	\mathrm{True}
 e-a-e-b-e-a-b	e^{2}e^{3}=e^{5}	\mathrm{True}

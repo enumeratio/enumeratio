@@ -16,6 +16,18 @@ von-staudt-clausen-the-denominator-of-b-2n-is
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	(Zeta[-3] == Minus[Divide[BernoulliB[4], 4]])	True	\zeta (-3)=-\frac{B_4}{4}	\text{True}
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	Plus[Times[Binomial[5, 0], BernoulliB[0]], Times[Binomial[5, 1], BernoulliB[1]], Times[Binomial[5, 2], BernoulliB[2]], Times[Binomial[5, 3], BernoulliB[3]], Times[Binomial[5, 4], BernoulliB[4]]]	0	\binom{5}{0} B_0+\binom{5}{1} B_1+\binom{5}{2} B_2+\binom{5}{3} B_3+\binom{5}{4} B_4	0
 b-n-0-for-every-odd-n-1	(BernoulliB[5] == 0)	True	B_5=0	\text{True}
+bernoullib-3	BernoulliB[3]	0	B_3	0
+bernoullib-5	BernoulliB[5]	0	B_5	0
+bernoullib-6	BernoulliB[6]	1/42	B_6	\frac{1}{42}
+bernoullib-7	BernoulliB[7]	0	B_7	0
+bernoullib-8	BernoulliB[8]	-1/30	B_8	-\frac{1}{30}
+bernoullib-9	BernoulliB[9]	0	B_9	0
+bernoullib-2-0	BernoulliB[2, 0]	1/6	B_2(0)	\frac{1}{6}
+bernoullib-3-0	BernoulliB[3, 0]	0	B_3(0)	0
+bernoullib-2-1	BernoulliB[2, 1]	1/6	B_2(1)	\frac{1}{6}
+bernoullib-3-1	BernoulliB[3, 1]	0	B_3(1)	0
+bernoullib-0-1-over-6	BernoulliB[0, Rational[1, 6]]	1	B_0\left(\frac{1}{6}\right)	1
 b-1-1-frac-12-is-the-other-convention-for-b-1	BernoulliB[1, 1]	1/2	B_1(1)	\frac{1}{2}
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	BernoulliB[-1]	BernoulliB[-1]	B_{-1}	B_{-1}
 numerators-and-denominators-grow-quickly-b-20	BernoulliB[20]	-174611/330	B_{20}	-\frac{174611}{330}
+bernoullib-12-x	BernoulliB[12, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_{12}(x)-\left(x^{12}-6 x^{11}+11 x^{10}-\frac{33}{2} x^8+22 x^6-\frac{33}{2} x^4+5 x^2-\frac{691}{2730}\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_{12}\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^{12}-6 \left(\frac{7}{3}\right)^{11}+11 \left(\frac{7}{3}\right)^{10}-\frac{33}{2} \left(\frac{7}{3}\right)^8+22 \left(\frac{7}{3}\right)^6-\frac{33}{2} \left(\frac{7}{3}\right)^4+5 \left(\frac{7}{3}\right)^2-\frac{691}{2730}\right)\right]\right],\text{Chop}\left[N\left[B_{12}\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^{12}-6 \left(-\frac{11}{5}\right)^{11}+11 \left(-\frac{11}{5}\right)^{10}-\frac{33}{2} \left(-\frac{11}{5}\right)^8+22 \left(-\frac{11}{5}\right)^6-\frac{33}{2} \left(-\frac{11}{5}\right)^4+5 \left(-\frac{11}{5}\right)^2-\frac{691}{2730}\right)\right]\right],\text{Chop}\left[N\left[B_{12}\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^{12}-6 \left(\frac{13}{4}\right)^{11}+11 \left(\frac{13}{4}\right)^{10}-\frac{33}{2} \left(\frac{13}{4}\right)^8+22 \left(\frac{13}{4}\right)^6-\frac{33}{2} \left(\frac{13}{4}\right)^4+5 \left(\frac{13}{4}\right)^2-\frac{691}{2730}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

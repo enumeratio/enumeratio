@@ -48,6 +48,16 @@ taylor-series-about-0-only-odd-powers-appear	\operatorname{Series}(\sin(x), x, 0
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	\lim_{x\to0}\frac{\sin(x)}{x}	1
 to-30-significant-digits-every-one-correctly	N(\sin(1), 30)	0.841\,470\,984\,807\,896\,506\,653
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(\sin(24^{40}))	0.400\,083\,152\,719\,766\,047\,071
+n-sin-6-over-5-50	N(\sin(\frac{6}{5}), 50)	0.932\,039\,085\,967\,226\,349\,67
+functiondomain-sin-x-x	\mathrm{FunctionDomain}(\sin(x), x)	\top
+functionrange-sin-x-x-y	\mathrm{FunctionRange}(\sin(x), x, y)	-1\le y\le1
+functionperiod-sin-x-x	\mathrm{FunctionPeriod}(\sin(x), x)	2\pi
+functionanalytic-sin-x-x	\mathrm{FunctionAnalytic}(\sin(x), x)	\top
+functioninjective-sin-x-x	\mathrm{FunctionInjective}(\sin(x), x)	\bot
+functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\bot
+functionsingularities-sin-x-x	\mathrm{FunctionSingularities}(\sin(x), x)	\bot
+functiondiscontinuities-sin-x-x	\mathrm{FunctionDiscontinuities}(\sin(x), x)	\bot
+matrixfunction-function-sin-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\sin(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack\frac{27}{16}, -1\bigr\rbrack\bigr\rbrack
 threads-element-wise-over-a-list	\sin(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)	\bigl\lbrack0, 1, 0\bigr\rbrack
 degrees-d-converts-a-degree-measure-to-radians	\sin(30^{\circ})	\frac{1}{2}
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	\sin(\frac{\pi}{6})^2+\cos(\frac{\pi}{6})^2	1
@@ -60,6 +70,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2	\mathrm{TrigReduce}(\sin(x)^2)	\frac{1}{
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i	\mathrm{TrigToExp}(\sin(x))	(-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
 simplify-knows-the-pythagorean-identity	\mathrm{Simplify}(\sin(x)^2+\cos(x)^2)	1
 the-same-through-fullsimplify	\mathrm{FullSimplify}(\sin(x)^2+\cos(x)^2)	1
+sin-3-over-10-times-pi	\sin(\frac{3\pi}{10})	\frac{1}{4}+\frac{\sqrt{5}}{4}
 1-radian-isn-t-a-recognized-special-angle-so	\sin(1)	\sin(1)
 sin-2-a-generic-argument-stays-symbolic	\sin(2)	\sin(2)
 sin-x-plus-y-stays-symbolic	\sin(x+y)	\sin(x+y)

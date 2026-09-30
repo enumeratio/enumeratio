@@ -1,0 +1,17 @@
+id	in	out
+expand-x-1-2-into-x-2-2x-1		
+expand-x-1-x-1-into-the-difference-of-squares		
+expand-x-plus-3-times-x-plus-2		
+expand-1-plus-x-pow-3-times-5-times-x-pow-2-plus		
+expand-x-plus-y-pow-5-minus-x-pow-5-plus-y-pow-5		
+expand-x-y-3-a-two-variable-binomial-power		
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2		
+expand-x-plus-y-pow-2-times-x-minus-y-pow-2-pow		
+expand-sin-x-plus-cos-x-pow-2		
+expand-sqrt-1-plus-x-pow-2		
+expand-x-plus-y-pow-2-times-z-plus-y-pow-2-pow		
+x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	x^5+5x^4+10x^3+10x^2+5x+1=\mathrm{Expand}((x+1)^5)	\mathrm{True}
+expand-x-plus-imaginaryunit-times-x-minus		
+expand-1-minus-x-times-neg-1-minus-x-times-1		
+expand-1-plus-x-plus-y-times-2-minus-x-pow-3		
+expand-1-plus-x-times-2-plus-x-times-3-plus-x		

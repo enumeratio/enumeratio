@@ -26,6 +26,22 @@ n-decimalizes-a-combined-product	nf((exp(n(1)) * exp(n(2))))
 agrees-numerically-at-a-complex-point			
 to-50-significant-digits-every-one-correctly	nf(exp(n(1)))	2.718281828459045	
 to-1-significant-digit	nf(exp(n(1)))	2.718281828459045	disagree
+n-exponentiale-pow-8-over-5-50	nf(power(x(std::f64::consts::E), rational(n(8), n(5))))		
+matrixfunction-exp-list-list-1-1-over-2-times-i			
+exponentiale-pow-9-over-2-times-i-times-pi			
+exptotrig-exponentiale-pow-1-over-5-times-i			
+functiondomain-exp-x-x			
+functionrange-exp-x-x-y			
+functionanalytic-exp-x-x			
+functionmonotonicity-exp-x-x			
+functioninjective-exp-x-x			
+functionsurjective-exp-x-x			
+assuming-n-in-integers-refine-exp-2-times-pi			
+assuming-n-in-integers-refine-exp-2-times-pi-2			
+functionsign-exp-x-x			
+functionsingularities-exp-x-x			
+functiondiscontinuities-exp-x-x			
+functionconvexity-exp-x-x			
 threads-element-wise-over-a-list	exp(list(vec![n(0), n(1)]))	panic: threading: a list where the crate takes a scalar	error
 inverse-of-ln-e-ln-x-x	equal(exp(ln(n(5))), n(5))	true	
 e-a-e-b-e-a-b	equal((exp(n(2)) * exp(n(3))), exp(n(5)))	true	

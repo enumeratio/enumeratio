@@ -2,6 +2,13 @@ id	in	out
 sqrt-2-cdot-8-4	<GeometricMean><List>2 8</List></GeometricMean>	<ToExpression>4</ToExpression>
 sqrt-3-1-cdot-2-cdot-4-2	<GeometricMean><List>1 2 4</List></GeometricMean>	<ToExpression>2</ToExpression>
 geometricmean-of-equal-values	<GeometricMean><List>7 7 7</List></GeometricMean>	<ToExpression>7</ToExpression>
+geometricmean-list-a-b-c-d	<GeometricMean><List>a b c d</List></GeometricMean>	<Root><Multiply>a b c d</Multiply> 4</Root>
+geometricmean-list-list-5-10-list-2-1-list-4-3	<GeometricMean><List><List>5 10</List> <List>2 1</List> <List>4 3</List> <List>12 15</List></List></GeometricMean>	<List><Root>480 4</Root> <Root>450 4</Root></List>
 an-exact-irrational-result	<GeometricMean><List>2 3</List></GeometricMean>	<Sqrt>6</Sqrt>
 sqrt-3-6	<GeometricMean><List>1 2 3</List></GeometricMean>	<Root>6 3</Root>
 symbolic-data	<GeometricMean><List>a b</List></GeometricMean>	<Sqrt><Multiply>a b</Multiply></Sqrt>
+geometricmean-list-1-2-3-4	<GeometricMean><List>1 2 3 4</List></GeometricMean>	<Root>24 4</Root>
+geometricmean-list-pi-exponentiale-2	<GeometricMean><List>Pi ExponentialE 2</List></GeometricMean>	<Root><Multiply>2 ExponentialE Pi</Multiply> 3</Root>
+geometricmean-n-list-1-2-3-4-30	<GeometricMean><N><List>1 2 3 4</List> 30</N></GeometricMean>	<Root>24 4</Root>
+powerexpand-ln-geometricmean-list-a-b-c-d	<PowerExpand><Ln><GeometricMean><List>a b c d</List></GeometricMean></Ln></PowerExpand>	<Multiply><Rational>1 4</Rational> <Add><Ln>a</Ln> <Ln>b</Ln> <Ln>c</Ln> <Ln>d</Ln></Add></Multiply>
+powerexpand-1-over-ln-geometricmean-list-a-b-c-d	<PowerExpand><Divide>1 <Ln><GeometricMean><List>a b c d</List></GeometricMean></Ln></Divide></PowerExpand>	<Divide>4 <Add><Ln>a</Ln> <Ln>b</Ln> <Ln>c</Ln> <Ln>d</Ln></Add></Divide>

@@ -13,3 +13,22 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors	(totient(1) + totient(2) + toti
 multiplicative-varphi-mn-varphi-m-varphi-n-when	enumeratio_equal(totient(12), (totient(4) * totient(3)))	True	
 varphi-p-p-1-for-a-prime-p	totient(17)	16	
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	totient(81)	54	
+totient-100	totient(100)		
+totient-35	totient(35)		
+divides-carmichaellambda-8-totient-8			
+list-totient-25-carmichaellambda-25			
+divisorsum-15-totient-eq-15			
+totient-1-023-eq-totient-3-times-totient-11	enumeratio_equal(totient(1023), (totient(3) * totient(11) * totient(31)))		
+totient-2	totient(2)		
+totient-3	totient(3)		
+totient-4	totient(4)		
+totient-5	totient(5)		
+totient-6	totient(6)		
+totient-7	totient(7)		
+totient-8	totient(8)		
+totient-9	totient(9)		
+totient-11	totient(11)		
+totient-13	totient(13)		
+totient-14	totient(14)		
+totient-15	totient(15)		
+totient-16	totient(16)		

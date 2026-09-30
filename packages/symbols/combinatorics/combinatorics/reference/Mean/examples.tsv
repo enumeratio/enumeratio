@@ -8,6 +8,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac	Scope		[Mean, [List, a, b, c, d]
 exact-constants-give-an-exact-mean-frac-2-e-pi-3	Scope		[Mean, [List, Pi, ExponentialE, 2]]	[Multiply, [Rational, 1, 3], [Add, 2, ExponentialE, Pi]]	Exact constants give an exact mean $\frac{2+e+\pi}{3}$, not a numeric approximation		
 of-a-matrix-of-symbols-the-exact-mean-of-each	Scope		[Mean, [List, [List, a, u], [List, b, v], [List, c, w]]]	[List, [Multiply, [Rational, 1, 3], [Add, a, b, c]], [Multiply, [Rational, 1, 3], [Add, u, v, w]]]	Of a matrix of symbols, the exact mean of each column		
 the-mean-of-a-lazy-range-exactly	Scope		[Mean, [Range, 1, 100]]	[Rational, 101, 2]	The mean of a lazy [[Range]], exactly		
+mean-n-list-1-2-3-4-30	Scope		[Mean, [N, [List, 1, 2, 3, 4], 30]]	[Rational, 5, 2]			
+n-mean-ts	Scope		[N, [Mean, ts]]	[Mean, ts]			
+mean-binomialdistribution-n-p	Scope		[Mean, [BinomialDistribution, n, p]]	[Multiply, n, p]			
+mean-probabilitydistribution-sqrt-2-times-1-over	Scope		[Mean, [ProbabilityDistribution, [Multiply, [Sqrt, 2], [Divide, 1, Pi], [Divide, 1, [Add, [Power, [Add, x, -2], 4], 1]]], [List, x, NegativeInfinity, PositiveInfinity]]]	[Mean, [ProbabilityDistribution, [Divide, [Sqrt, 2], [Add, [Multiply, Pi, [Power, [Add, x, -2], 4]], Pi]], [List, x, NegativeInfinity, PositiveInfinity]]]			
 mean-is-total-divided-by-count-mean-c-frac-sum-c	Properties		[Equal, [Mean, [List, 1, 2, 3, 4]], [Divide, [Add, 1, 2, 3, 4], [Length, [List, 1, 2, 3, 4]]]]	True	Mean is total divided by count: $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]]		
+n-mean-list-1-2-3-4-4-3-1-1	Properties		[N, [Mean, [List, 1, 2, 3, 4, 4, 3, 1, 1]]]	2.375			
+mean-ln-list-a-b-c-d	Properties		[Mean, [Ln, [List, a, b, c, d]]]	[Multiply, [Rational, 1, 4], [Add, [Ln, a], [Ln, b], [Ln, c], [Ln, d]]]			
 a-single-outlier-drags-the-mean-far-from-the	Possible issues		[Mean, [List, -100, 1, 1, 1, 1, 20]]	[Rational, -38, 3]	A single outlier drags the mean far from the rest of the data, here to $-\frac{38}{3} \approx -12.67$. See [[Median]] for a more robust alternative		
 the-mean-of-no-data-is-nan	Possible issues		[Mean, [List]]	NaN	The mean of no data is $NaN$	undefined-form	Both decline on empty data: compute-engine answers NaN, Wolfram's Mean[{}] stays unevaluated.

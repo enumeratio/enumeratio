@@ -4,6 +4,8 @@ id	in	out	verdict
 the-result-takes-the-sign-of-the-modulus	mod_floor(n(-7), n(3))	2	
 threads-element-wise-over-a-list	mod_floor(list(vec![n(1), n(2), n(3), n(4), n(5)]), n(3))	panic: threading: a list where the crate takes a scalar	error
 mod-7-3	mod_floor(n(7), n(3))	1	
+5-mod-3	mod_floor(n(5), n(3))		
+1-plus-4-mod-3	(n(1) + mod_floor(n(4), n(3)))		
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	mod_floor(rational(n(5), n(2)), n(2))	panic: an integer, not 5/2	error
@@ -44,9 +46,31 @@ reducing-a-real-prime-s-associate-by-the-unit-i
 reducing-by-a-real-composite-5-squared			
 a-negative-associate-as-the-modulus			
 reducing-by-a-real-prime-19			
+1-plus-16-mod-5	(n(1) + mod_floor(n(16), n(5)))		
+generatingfunction-n-mod-4-n-x			
+282-475-249-mod-11	mod_floor(n(282475249), n(11))		
+7-pow-totient-12-mod-12			
+list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))	true	
 a-negative-modulus-gives-a-result-in-n-0	mod_floor(n(-5), n(-3))	-2	
 the-remainder-of-quotient			
+5-mod-3-eq-2-mod-3	equal(mod_floor(n(5), n(3)), mod_floor(n(2), n(3)))		
+2-mod-3-eq-8-mod-3	equal(mod_floor(n(2), n(3)), mod_floor(n(8), n(3)))		
+0-mod-1	mod_floor(n(0), n(1))		
+1-mod-2	mod_floor(n(1), n(2))		
+1-mod-3	mod_floor(n(1), n(3))		
+2-mod-3	mod_floor(n(2), n(3))		
+3-mod-3	mod_floor(n(3), n(3))		
+4-mod-3	mod_floor(n(4), n(3))		
+8-mod-3-eq-5-mod-3	equal(mod_floor(n(8), n(3)), mod_floor(n(5), n(3)))		
+8-mod-2	mod_floor(n(8), n(2))		
+17-mod-6	mod_floor(n(17), n(6))		
+12-mod-8	mod_floor(n(12), n(8))		
+neg-3-mod-neg-2	mod_floor(n(-3), n(-2))		
+neg-27-over-10-mod-23-over-5	mod_floor(rational(n(-27), n(10)), rational(n(23), n(5)))		
+pi-mod-exponentiale	mod_floor(x(std::f64::consts::PI), x(std::f64::consts::E))		
+0-mod-2	mod_floor(n(0), n(2))		
+1-mod-1	mod_floor(n(1), n(1))		
 division-by-a-0-modulus-yields-nan-rather-than	mod_floor(n(5), n(0))	panic: attempt to divide by zero	error
 periodicity-with-a-zero-modulus-on-one-side	equal(mod_floor(n(35), n(13)), mod_floor((n(17) + (n(3) * n(5))), n(0)))	panic: attempt to divide by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear			

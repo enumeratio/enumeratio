@@ -12,6 +12,24 @@ two-blocks-s-n-2-2-n-1-1	<Equal><Stirling>10 2</Stirling> <Subtract><Power>2 9</
 s-n-n-1-binom-n-2-one-block-is-a-pair	<Equal><Stirling>6 5</Stirling> <Binomial>6 2</Binomial></Equal>	<True />
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	<Equal><Stirling>6 3</Stirling> <Divide><Sum><Multiply><Power>-1 <Subtract>3 j</Subtract></Power> <Binomial>3 j</Binomial> <Power>j 6</Power></Multiply> <Tuple>j 0 3</Tuple></Sum> <Factorial>3</Factorial></Divide></Equal>	<True />
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	<Sum><Multiply><StirlingS1>4 k</StirlingS1> <Stirling>k 2</Stirling></Multiply> <Tuple>k 0 4</Tuple></Sum>	<ToExpression>0</ToExpression>
+n-stirling-120-10	<N><Stirling>120 10</Stirling></N>	<ToExpression>275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780</ToExpression>
+stirling-10-4	<Stirling>10 4</Stirling>	<ToExpression>34105</ToExpression>
+stirling-1-0	<Stirling>1 0</Stirling>	<ToExpression>0</ToExpression>
+stirling-1-1	<Stirling>1 1</Stirling>	<ToExpression>1</ToExpression>
+stirling-1-2	<Stirling>1 2</Stirling>	<ToExpression>0</ToExpression>
+stirling-2-0	<Stirling>2 0</Stirling>	<ToExpression>0</ToExpression>
+stirling-2-1	<Stirling>2 1</Stirling>	<ToExpression>1</ToExpression>
+stirling-2-2	<Stirling>2 2</Stirling>	<ToExpression>1</ToExpression>
+stirling-2-3	<Stirling>2 3</Stirling>	<ToExpression>0</ToExpression>
+stirling-3-0	<Stirling>3 0</Stirling>	<ToExpression>0</ToExpression>
+stirling-3-1	<Stirling>3 1</Stirling>	<ToExpression>1</ToExpression>
+stirling-3-2	<Stirling>3 2</Stirling>	<ToExpression>3</ToExpression>
+stirling-3-3	<Stirling>3 3</Stirling>	<ToExpression>1</ToExpression>
+stirling-3-4	<Stirling>3 4</Stirling>	<ToExpression>0</ToExpression>
+stirling-4-0	<Stirling>4 0</Stirling>	<ToExpression>0</ToExpression>
+stirling-4-1	<Stirling>4 1</Stirling>	<ToExpression>1</ToExpression>
+stirling-4-2	<Stirling>4 2</Stirling>	<ToExpression>7</ToExpression>
+stirling-4-3	<Stirling>4 3</Stirling>	<ToExpression>6</ToExpression>
 the-empty-set-has-one-partition-into-no-blocks	<Stirling>0 0</Stirling>	<ToExpression>1</ToExpression>
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	<Stirling>5 0</Stirling>	<ToExpression>0</ToExpression>
 k-n-is-0	<Stirling>3 5</Stirling>	<ToExpression>0</ToExpression>

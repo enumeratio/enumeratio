@@ -9,7 +9,16 @@ threads-element-wise-over-a-list-as-wolfram-s
 large-integers-the-first-prime-past-a-googol-is		
 rational-n-the-next-prime-above-7-2		
 real-n-the-next-prime-above-100-5		
+findinstance-nextprime-p-eq-p-plus-1-0-lt-p-lt		
+nextprime-1-25		
+array-nextprime-100-mod-10		
+filter-range-1-100-function-isprime-1-nextprime		
+map-function-nextprime-10-pow-1-1-range-0-20		
+map-function-neg-10-pow-1-plus-nextprime-10-pow		
 nextprime-steps-from-p-n-to-p-n-1-see-nthprime	\mathrm{NextPrime}(p_{20})=p_{21}	\mathrm{True}
+nextprime-1-39		
+nextprime-15		
+nextprime-30-in-primes	\mathrm{NextPrime}(30)\in\mathbb{P}	\mathrm{True}
 a-negative-k-walks-backward-giving-the-prime		
 negative-n-wolfram-counts-7-as-prime-and-returns		
 nextprime-neg-2		

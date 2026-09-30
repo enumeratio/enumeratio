@@ -4,6 +4,8 @@ id	in	out	tex.in	tex.out	verdict
 the-result-takes-the-sign-of-the-modulus	Mod[-7, 3]	2	((-7) \bmod 3)	2	
 threads-element-wise-over-a-list	Mod[List[1, 2, 3, 4, 5], 3]	{1, 2, 0, 1, 2}	(\{1,2,3,4,5\} \bmod 3)	\{1,2,0,1,2\}	
 mod-7-3	Mod[7, 3]	1	(7 \bmod 3)	1	
+5-mod-3	Mod[5, 3]	2	(5 \bmod 3)	2	
+1-plus-4-mod-3	Plus[1, Mod[4, 3]]	2	1+(4 \bmod 3)	2	
 a-third-argument-offsets-the-range-the-result	Mod[17, 5, 1]	2	\text{Mod}[17,5,1]	2	
 with-offset-1-the-residues-run-1-2-3-rather-than	Mod[5, 3, 1]	2	\text{Mod}[5,3,1]	2	
 rationals-are-reduced-exactly	Mod[Rational[5, 2], 2]	1/2	(\frac{5}{2} \bmod 2)	\frac{1}{2}	
@@ -44,9 +46,31 @@ reducing-a-real-prime-s-associate-by-the-unit-i	Mod[Complex[3, 4], Complex[0, 7]
 reducing-by-a-real-composite-5-squared	Mod[Complex[3, 4], 25]	3 + 4*I	((3+4 i) \bmod 25)	3+4 i	
 a-negative-associate-as-the-modulus	Mod[Complex[6, 8], Complex[-2, -3]]	-I	((6+8 i) \bmod (-2-3 i))	-i	
 reducing-by-a-real-prime-19	Mod[Complex[123, 456], 19]	9	((123+456 i) \bmod 19)	9	
+1-plus-16-mod-5	Plus[1, Mod[16, 5]]	2	1+(16 \bmod 5)	2	
+generatingfunction-n-mod-4-n-x	GeneratingFunction[Mod[n, 4], n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{G}_n[(n \bmod 4)](x)-\frac{3 x^3+2 x^2+x}{-x^4+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{G}_{\frac{7}{3}}\left[(\frac{7}{3} \bmod 4)\right]\left(-\frac{11}{5}\right)-\frac{3 \left(-\frac{11}{5}\right)^3+2 \left(-\frac{11}{5}\right)^2-\frac{11}{5}}{-\left(-\frac{11}{5}\right)^4+1}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{13}{4}}\left[(\frac{13}{4} \bmod 4)\right]\left(-\frac{17}{6}\right)-\frac{3 \left(-\frac{17}{6}\right)^3+2 \left(-\frac{17}{6}\right)^2-\frac{17}{6}}{-\left(-\frac{17}{6}\right)^4+1}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{19}{8}}\left[(\frac{19}{8} \bmod 4)\right]\left(-\frac{23}{9}\right)-\frac{3 \left(-\frac{23}{9}\right)^3+2 \left(-\frac{23}{9}\right)^2-\frac{23}{9}}{-\left(-\frac{23}{9}\right)^4+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+282-475-249-mod-11	Mod[282475249, 11]	1	(282475249 \bmod 11)	1	
+7-pow-totient-12-mod-12	Mod[Power[7, EulerPhi[12]], 12]	1	(7^{\phi (12)} \bmod 12)	1	
+list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod	Part[List[a, b, c], Plus[1, Mod[Plus[-1, Range[1, 10]], 3]]]	{a, b, c, a, b, c, a, b, c, a}	\{a,b,c\}[[1+((-1+\text{Range}[1,10]) \bmod 3)]]	\{a,b,c,a,b,c,a,b,c,a\}	
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	(Mod[17, 5] == Mod[Plus[17, Times[3, 5]], 5])	True	(17 \bmod 5)=((17+3\ 5) \bmod 5)	\text{True}	
 a-negative-modulus-gives-a-result-in-n-0	Mod[-5, -3]	-2	((-5) \bmod (-3))	-2	
 the-remainder-of-quotient	(Mod[Complex[7, 5], Complex[2, 1]] == Subtract[Complex[7, 5], Times[Complex[2, 1], Quotient[Complex[7, 5], Complex[2, 1]]]])	True	((7+5 i) \bmod (2+i))=(7+5 i)-(2+i) \text{Quotient}[7+5 i,2+i]	\text{True}	
+5-mod-3-eq-2-mod-3	(Mod[5, 3] == Mod[2, 3])	True	(5 \bmod 3)=(2 \bmod 3)	\text{True}	
+2-mod-3-eq-8-mod-3	(Mod[2, 3] == Mod[8, 3])	True	(2 \bmod 3)=(8 \bmod 3)	\text{True}	
+0-mod-1	Mod[0, 1]	0	(0 \bmod 1)	0	
+1-mod-2	Mod[1, 2]	1	(1 \bmod 2)	1	
+1-mod-3	Mod[1, 3]	1	(1 \bmod 3)	1	
+2-mod-3	Mod[2, 3]	2	(2 \bmod 3)	2	
+3-mod-3	Mod[3, 3]	0	(3 \bmod 3)	0	
+4-mod-3	Mod[4, 3]	1	(4 \bmod 3)	1	
+8-mod-3-eq-5-mod-3	(Mod[8, 3] == Mod[5, 3])	True	(8 \bmod 3)=(5 \bmod 3)	\text{True}	
+8-mod-2	Mod[8, 2]	0	(8 \bmod 2)	0	
+17-mod-6	Mod[17, 6]	5	(17 \bmod 6)	5	
+12-mod-8	Mod[12, 8]	4	(12 \bmod 8)	4	
+neg-3-mod-neg-2	Mod[-3, -2]	-1	((-3) \bmod (-2))	-1	
+neg-27-over-10-mod-23-over-5	Mod[Rational[-27, 10], Rational[23, 5]]	19/10	(\left(-\frac{27}{10}\right) \bmod \frac{23}{5})	\frac{19}{10}	
+pi-mod-exponentiale	Mod[Pi, E]	-E + Pi	(\pi  \bmod e)	\pi -e	
+0-mod-2	Mod[0, 2]	0	(0 \bmod 2)	0	
+1-mod-1	Mod[1, 1]	0	(1 \bmod 1)	0	
 division-by-a-0-modulus-yields-nan-rather-than	Mod[5, 0]	Indeterminate	(5 \bmod 0)	\text{Indeterminate}	
 periodicity-with-a-zero-modulus-on-one-side	(Mod[35, 13] == Mod[Plus[17, Times[3, 5]], 0])	9 == Indeterminate	(35 \bmod 13)=((17+3\ 5) \bmod 0)	9=\text{Indeterminate}	disagree
 rounding-ties-to-even-means-1-and-1-both-appear	List[Mod[Complex[1, 2], 2], Mod[Complex[3, 2], 2]]	{1, -1}	\{((1+2 i) \bmod 2),((3+2 i) \bmod 2)\}	\{1,-1\}	

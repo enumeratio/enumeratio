@@ -8,10 +8,20 @@ threads-element-wise-over-a-list-as-wolfram-s	BellB[List[1, 2, 3, 4]]	{1, 2, 5, 
 exact-for-large-n	BellB[30]	846749014511809332450147	B_{30}	846749014511809332450147	
 the-two-argument-form-gives-the-bell-touchard	BellB[5, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_5(x)-\left(x^5+10 x^4+25 x^3+15 x^2+x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_5\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^5+10 \left(\frac{7}{3}\right)^4+25 \left(\frac{7}{3}\right)^3+15 \left(\frac{7}{3}\right)^2+\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^5+10 \left(-\frac{11}{5}\right)^4+25 \left(-\frac{11}{5}\right)^3+15 \left(-\frac{11}{5}\right)^2-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^5+10 \left(\frac{13}{4}\right)^4+25 \left(\frac{13}{4}\right)^3+15 \left(\frac{13}{4}\right)^2+\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 the-bell-polynomial-at-a-real-point-b-20-0-5	BellB[20, 0.5]	2.701901319401519*^11	B_{20}(0.5)	2.7019\times 10^{11}	
+bellnumber-list-1-2-3-4-5-6	BellB[List[1, 2, 3, 4, 5, 6]]	{1, 2, 5, 15, 52, 203}	B_{\{1,2,3,4,5,6\}}	\{1,2,5,15,52,203\}	
 the-number-of-ways-to-partition-a-4-element-set	BellB[4]	15	B_4	15	
 recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])	True	B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4	\text{True}	
 the-bell-polynomial-at-1-is-the-bell-number-b-n	BellB[5, 1]	52	B_5(1)	52	
 dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]	52	\frac{\sum _{k=0}^{\infty } \frac{k^5}{k!}}{e}	52	
 touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])	True	(B_9 \bmod 7)=(\left(B_2+B_3\right) \bmod 7)	\text{True}	
+exponentialgeneratingfunction-bellnumber-n-n-x	ExponentialGeneratingFunction[BellB[n], n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}\left[B_n,n,x\right]-e^{e^x-1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{7}{3}},\frac{7}{3},-\frac{11}{5}\right]-e^{e^{-\frac{11}{5}}-1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{13}{4}},\frac{13}{4},-\frac{17}{6}\right]-e^{e^{-\frac{17}{6}}-1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[B_{\frac{19}{8}},\frac{19}{8},-\frac{23}{9}\right]-e^{e^{-\frac{23}{9}}-1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+bellnumber-2	BellB[2]	2	B_2	2	
+bellnumber-6	BellB[6]	203	B_6	203	
+bellnumber-7	BellB[7]	877	B_7	877	
+bellnumber-8	BellB[8]	4140	B_8	4140	
+bellnumber-9	BellB[9]	21147	B_9	21147	
+bellnumber-1-0	BellB[1, 0]	0	B_1(0)	0	
+bellnumber-2-0	BellB[2, 0]	0	B_2(0)	0	
 a-negative-argument-is-left-unevaluated	BellB[-1]	BellB[-1]	B_{-1}	B_{-1}	
 a-zero-modulus-inside-a-congruence-check-is-nan	(Mod[BellB[9], 23] == Mod[Plus[BellB[4], BellB[5]], 0])	10 == Indeterminate	(B_9 \bmod 23)=(\left(B_4+B_5\right) \bmod 0)	10=\text{Indeterminate}	disagree
+bellnumber-range-1-10	BellB[Range[1, 10]]	{1, 2, 5, 15, 52, 203, 877, 4140, 21147, 115975}	B_{\text{Range}[1,10]}	\{1,2,5,15,52,203,877,4140,21147,115975\}	

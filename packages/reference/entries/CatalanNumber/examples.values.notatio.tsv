@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial	<Divide><Binomial><Multiply>2 -
 equivalently-c-n-binom-2n-n-binom-2n-n-1	<Subtract><Binomial>10 5</Binomial> <Binomial>10 6</Binomial></Subtract>	<ToExpression>42</ToExpression>
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	<Divide><CatalanNumber>6</CatalanNumber> <CatalanNumber>5</CatalanNumber></Divide>	<Rational>22 7</Rational>
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	<Equal><CatalanNumber>4</CatalanNumber> <Sum><Multiply><CatalanNumber>i</CatalanNumber> <CatalanNumber><Subtract>3 i</Subtract></CatalanNumber></Multiply> <Tuple>i 0 3</Tuple></Sum></Equal>	<True />
+generatingfunction-catalannumber-n-n-x	<GeneratingFunction><CatalanNumber>n</CatalanNumber> n x</GeneratingFunction>	<Divide><Add><Negate><Sqrt><Add><Multiply>-4 x</Multiply> 1</Add></Sqrt></Negate> 1</Add> <Multiply>2 x</Multiply></Divide>
+catalannumber-neg-10	<CatalanNumber>-10</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-9	<CatalanNumber>-9</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-8	<CatalanNumber>-8</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-7	<CatalanNumber>-7</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-6	<CatalanNumber>-6</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-4	<CatalanNumber>-4</CatalanNumber>	<ToExpression>0</ToExpression>
+catalannumber-neg-3	<CatalanNumber>-3</CatalanNumber>	<ToExpression>0</ToExpression>
 they-grow-fast-c-15-already-passes-nine-million	<CatalanNumber>15</CatalanNumber>	<ToExpression>9694845</ToExpression>

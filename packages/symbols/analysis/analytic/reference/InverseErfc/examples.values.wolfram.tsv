@@ -1,12 +1,16 @@
-id	in	out	tex.in	tex.out
-erfc-1-1-2-erf-1-1-2	InverseErfc[0.5]	0.47693627620446993	\text{erfc}^{-1}(0.5)	0.476936
-erfc-1-1-0	InverseErfc[1]	0	\text{erfc}^{-1}(1)	0
-argument-1-7	InverseErfc[1.7]	-0.732869077959217	\text{erfc}^{-1}(1.7)	-0.732869
-deep-tail-0-001	InverseErfc[0.001]	2.3267537655135246	\text{erfc}^{-1}(0.001)	2.32675
-erfc-1-0-infty	InverseErfc[0]	Infinity	\text{erfc}^{-1}(0)	\infty
-erfc-1-2-infty	InverseErfc[2]	-Infinity	\text{erfc}^{-1}(2)	-\infty
-arguments-in-1-2-give-negative-values	InverseErfc[1.5]	-0.47693627620446993	\text{erfc}^{-1}(1.5)	-0.476936
-listable	InverseErfc[List[0, 1]]	{Infinity, 0}	\text{erfc}^{-1}(\{0,1\})	\{\infty ,0\}
-sqrt-2-times-this-2-5758-is-the-two-sided-99	InverseErfc[0.01]	1.8213863677184499	\text{erfc}^{-1}(0.01)	1.82139
-erfc-erfc-1-x-x	Erfc[InverseErfc[x]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erfc}\left(\text{erfc}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-deep-in-the-tail-it-keeps-full-precision-where	InverseErfc[1*^-10]	InverseErfc[1/10000000000]	\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)	\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)
+id	in	out	shown	tex.in	tex.out	verdict
+erfc-1-1-2-erf-1-1-2	InverseErfc[0.5]	0.47693627620446993		\text{erfc}^{-1}(0.5)	0.476936	
+erfc-1-1-0	InverseErfc[1]	0		\text{erfc}^{-1}(1)	0	
+argument-1-7	InverseErfc[1.7]	-0.732869077959217		\text{erfc}^{-1}(1.7)	-0.732869	
+deep-tail-0-001	InverseErfc[0.001]	2.3267537655135246		\text{erfc}^{-1}(0.001)	2.32675	
+erfc-1-0-infty	InverseErfc[0]	Infinity		\text{erfc}^{-1}(0)	\infty	
+erfc-1-2-infty	InverseErfc[2]	-Infinity		\text{erfc}^{-1}(2)	-\infty	
+arguments-in-1-2-give-negative-values	InverseErfc[1.5]	-0.47693627620446993		\text{erfc}^{-1}(1.5)	-0.476936	
+listable	InverseErfc[List[0, 1]]	{Infinity, 0}		\text{erfc}^{-1}(\{0,1\})	\{\infty ,0\}	
+n-inverseerfc-33-over-100-50	N[InverseErfc[Rational[33, 100]], 50]	0.68880252811655645040250472890525783544948992349370899285875926416589828645856`50.	0.68880252811655645040250472890525783544948992349371	N\left[\text{erfc}^{-1}\left(\frac{33}{100}\right),50\right]	0.68880252811655645040250472890525783544948992349371	
+functionexpand-matrixfunction-inverseerfc-list	FunctionExpand[MatrixFunction[InverseErfc, List[List[0, Rational[1, 2]], List[1, 0]]]]	{{InverseErfc[-(1/Sqrt[2])]/2 + InverseErfc[1/Sqrt[2]]/2, -1/2*InverseErfc[-(1/Sqrt[2])]/Sqrt[2] + InverseErfc[1/Sqrt[2]]/(2*Sqrt[2])}, {-(InverseErfc[-(1/Sqrt[2])]/Sqrt[2]) + InverseErfc[1/Sqrt[2]]/Sqrt[2], InverseErfc[-(1/Sqrt[2])]/2 + InverseErfc[1/Sqrt[2]]/2}}				disagree
+sqrt-2-times-this-2-5758-is-the-two-sided-99	InverseErfc[0.01]	1.8213863677184499		\text{erfc}^{-1}(0.01)	1.82139	
+erfc-erfc-1-x-x	Erfc[InverseErfc[x]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{erfc}\left(\text{erfc}^{-1}(x)\right)-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{7}{3}\right)\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(-\frac{11}{5}\right)\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{erfc}\left(\text{erfc}^{-1}\left(\frac{13}{4}\right)\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+list-erfc-inverseerfc-z-inverseerfc-erfc-z	List[Erfc[InverseErfc[z]], InverseErfc[Erfc[z]]]	{z, InverseErfc[Erfc[z]]}		\left\{\text{erfc}\left(\text{erfc}^{-1}(z)\right),\text{erfc}^{-1}(\text{erfc}(z))\right\}	\left\{z,\text{erfc}^{-1}(\text{erfc}(z))\right\}	
+isnumeric-inverseerfc-1-over-2	NumericQ[InverseErfc[Rational[1, 2]]]	True		\text{NumericQ}\left[\text{erfc}^{-1}\left(\frac{1}{2}\right)\right]	\text{True}	
+deep-in-the-tail-it-keeps-full-precision-where	InverseErfc[1*^-10]	InverseErfc[1/10000000000]		\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)	\text{erfc}^{-1}\left(\frac{1}{10000000000}\right)	

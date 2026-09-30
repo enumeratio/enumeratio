@@ -1,4 +1,6 @@
 id	in	out
 accumulate-1-2-3-4	<Accumulate><List>1 2 3 4</List></Accumulate>	<List>1 3 6 10</List>
+accumulate-list-a-b-c-d	<Accumulate><List>a b c d</List></Accumulate>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add></List>
+accumulate-list-list-a-b-list-c-d-list	<Accumulate><List><List>a b</List> <List>c d</List> <List>ExponentialE f</List></List></Accumulate>	<List><List>a b</List> <List><Add>a c</Add> <Add>b d</Add></List> <List><Add>a c ExponentialE</Add> <Add>b d f</Add></List></List>
 accumulate-empty	<Accumulate><Apply>List</Apply></Accumulate>	<Apply>List</Apply>
 accumulate-last-is-total	<Equal><Last><Accumulate><List>1 2 3 4 5</List></Accumulate></Last> <Add>1 2 3 4 5</Add></Equal>	<True />

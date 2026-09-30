@@ -3,4 +3,21 @@ ramanujantau-2	RamanujanTau[2]	-24	\tau (2)	-24
 ramanujantau-5	RamanujanTau[5]	4830	\tau (5)	4830
 listable	RamanujanTau[List[1, 2, 3, 4, 5, 6]]	{1, -24, 252, -1472, 4830, -6048}	\tau (\{1,2,3,4,5,6\})	\{1,-24,252,-1472,4830,-6048\}
 ramanujantau-12	RamanujanTau[12]	-370944	\tau (12)	-370944
+ramanujantau-485	RamanujanTau[485]	362315536077180	\tau (485)	362315536077180
+fullsimplify-matrixfunction-ramanujantau-list	FullSimplify[MatrixFunction[RamanujanTau, List[List[1, 0], List[-1, 2]]]]	{{1, 0}, {25, -24}}	\text{FullSimplify}\left[\text{MatrixFunction}\left[\text{RamanujanTau},\left( \begin{array}{cc}  1 & 0 \\  -1 & 2 \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  1 & 0 \\  25 & -24 \\ \end{array} \right)
+ramanujantau-list-2-3-5-7-11	RamanujanTau[List[2, 3, 5, 7, 11]]	{-24, 252, 4830, -16744, 534612}	\tau (\{2,3,5,7,11\})	\{-24,252,4830,-16744,534612\}
+ramanujantau-list-list-1-0-list-neg-1-2	RamanujanTau[List[List[1, 0], List[-1, 2]]]	{{1, 0}, {0, -24}}	\tau \left(\left( \begin{array}{cc}  1 & 0 \\  -1 & 2 \\ \end{array} \right)\right)	\left( \begin{array}{cc}  1 & 0 \\  0 & -24 \\ \end{array} \right)
+ramanujantau-0	RamanujanTau[0]	0	\tau (0)	0
 multiplicative-tau-6-tau-2-tau-3	Times[RamanujanTau[2], RamanujanTau[3]]	-6048	\tau (2) \tau (3)	-6048
+ramanujantau-range-1-10	RamanujanTau[Range[1, 10]]	{1, -24, 252, -1472, 4830, -6048, -16744, 84480, -113643, -115920}	\tau (\text{Range}[1,10])	\{1,-24,252,-1472,4830,-6048,-16744,84480,-113643,-115920\}
+ramanujantau-35	RamanujanTau[35]	-80873520	\tau (35)	-80873520
+ramanujantau-5-times-ramanujantau-7	Times[RamanujanTau[5], RamanujanTau[7]]	-80873520	\tau (5) \tau (7)	-80873520
+ramanujantau-1	RamanujanTau[1]	1	\tau (1)	1
+ramanujantau-3	RamanujanTau[3]	252	\tau (3)	252
+ramanujantau-4	RamanujanTau[4]	-1472	\tau (4)	-1472
+ramanujantau-6	RamanujanTau[6]	-6048	\tau (6)	-6048
+ramanujantau-7	RamanujanTau[7]	-16744	\tau (7)	-16744
+ramanujantau-8	RamanujanTau[8]	84480	\tau (8)	84480
+ramanujantau-9	RamanujanTau[9]	-113643	\tau (9)	-113643
+ramanujantau-10	RamanujanTau[10]	-115920	\tau (10)	-115920
+ramanujantau-6-plus-ramanujantau-14-plus	Plus[RamanujanTau[6], RamanujanTau[14], RamanujanTau[29], RamanujanTau[41], RamanujanTau[42], RamanujanTau[44], RamanujanTau[48]]	0	\tau (6)+\tau (14)+\tau (29)+\tau (41)+\tau (42)+\tau (44)+\tau (48)	0

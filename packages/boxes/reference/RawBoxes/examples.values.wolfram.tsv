@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+makeboxes-rawboxes-rowbox-list-1-plus-2	MakeBoxes[RawBoxes[RowBox[List["1", "+", "2"]]]]	RowBox[{"1", "+", "2"}]	\text{MakeBoxes}[1+2]	\text{RowBox}[\{1,+,2\}]

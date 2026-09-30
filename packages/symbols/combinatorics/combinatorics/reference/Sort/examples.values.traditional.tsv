@@ -11,6 +11,11 @@ less-as-the-ordering-function-sorts-by-numeric
 a-named-ordering-function-greater-sorts-in		
 sorting-pairs-by-their-second-element-with-a		
 sorts-the-arguments-of-any-head-not-just-a-list		
+sort-list-x-1-z-5-a-2-exponentiale-p		
+sort-list-neg-11-10-2-1-neg-4		
+sort-join-ln-range-1-10-sqrt-range-1-10-less		
+sort-list-aa-abb-ba-b-aaa		
+sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt		
 sort-is-idempotent-sorting-an-already-sorted	\mathrm{Sort}(\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}
 sort-c-at-c-ordering-c-see-ordering-and-at	\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\bigl\lbrack3, 1, 2\bigr\rbrack[\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)]	\mathrm{True}
 the-result-doesn-t-depend-on-the-input-order	\mathrm{Sort}(\mathrm{Reverse}(\bigl\lbrack3, 1, 2\bigr\rbrack))=\mathrm{Sort}(\bigl\lbrack3, 1, 2\bigr\rbrack)	\mathrm{True}

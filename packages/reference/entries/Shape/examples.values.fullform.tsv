@@ -1,0 +1,6 @@
+id	in
+shape-list-list-list-list-a-b	Dimensions[List[List[List[List[a, b]]]]]
+shape-1	Dimensions[1]
+shape-list-1-2	Dimensions[List[1, 2]]
+shape-list-list-1-2	Dimensions[List[List[1, 2]]]
+length-shape-list-list-a-b-list-c-d-eq-rank-list	Equal[Length[Dimensions[List[List[a, b], List[c, d]]]], ArrayDepth[List[List[a, b], List[c, d]]]]

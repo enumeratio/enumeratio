@@ -1,2 +1,6 @@
 id	in
 halve-while-even-collecting-every-step	NestWhileList[Function[Divide[Slot[1], 2]], 96, Function[Equal[Mod[Slot[1], 2], 0]]]
+nestwhilelist-function-1-times-2-pow-neg-1-123	NestWhileList[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ]
+nestwhilelist-ln-100-function-1-gt-0	NestWhileList[Log, 100, Function[Greater[Slot[1], 0]]]
+nestwhilelist-function-1-plus-1-899-function	NestWhileList[Function[Plus[Slot[1], 1]], 899, Function[Not[PrimeQ[Slot[1]]]]]
+nestwhilelist-function-2-times-1-mod-19-2	NestWhileList[Function[Mod[Times[2, Slot[1]], 19]], 2, Function[Unequal[Slot[1], 1]]]

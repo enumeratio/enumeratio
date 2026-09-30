@@ -3,4 +3,5 @@ dft-of-1-2-3-4	<Fourier><List>1 2 3 4</List></Fourier>	<List>5 <Complex>-1.0 -1.
 round-trips-through-inversefourier	<InverseFourier><Fourier><List>1 2 3 4</List></Fourier></InverseFourier>	<List>1 2 3 4</List>
 a-2x2-matrix-the-separable-2d-transform	<Fourier><List><List>1 2</List> <List>3 4</List></List></Fourier>	<List><List>5 -1</List> <List>-2 0</List></List>
 a-custom-fourierparameters	<Fourier><List>1 2 3 4</List> <KeyValuePair>FourierParameters <List>1 -1</List></KeyValuePair></Fourier>	<List>10 <Complex>-2.0 2.0</Complex> -2 <Complex>-2.0 -2.0</Complex></List>
+fourier-n-x-24	<Fourier><N>x 24</N></Fourier>	<Fourier>x</Fourier>
 declines-a-symbolic-list	<Fourier><List>a b</List></Fourier>	<Fourier><List>a b</List></Fourier>

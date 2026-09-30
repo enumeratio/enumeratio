@@ -7,6 +7,7 @@ signatures:
   - call: EllipticF(complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
 names:
+  wolfram: EllipticF
   wikidata: Q109752309
 stub: engine
 ---
