@@ -86,3 +86,28 @@ export function canonicalNames(libraries: readonly Library<ComputeEngine>[]): Re
   }
   return out;
 }
+
+/** Each carrier type a library mints (`ce.declareType`), with the libraries that do, found as
+ *  `declarers` finds names: each library into a fresh engine over what it requires. */
+export function carrierTypes(
+  libraries: readonly Library<ComputeEngine>[],
+  plan: typeof Plan,
+): Record<string, string[]> {
+  const table: Record<string, string[]> = {};
+  for (const library of libraries) {
+    const ce = new ComputeEngine();
+    for (const dep of plan([library.name], libraries).libraries) if (dep !== library) void dep.declare(ce);
+    const declareType = ce.declareType.bind(ce);
+    ce.declareType = (name, ...rest) => {
+      const at = (table[name] ??= []);
+      if (!at.includes(library.name)) at.push(library.name);
+      return declareType(name, ...rest);
+    };
+    void library.declare(ce);
+  }
+  return Object.fromEntries(
+    Object.keys(table)
+      .toSorted(cmp)
+      .map((name) => [name, table[name]!]),
+  );
+}

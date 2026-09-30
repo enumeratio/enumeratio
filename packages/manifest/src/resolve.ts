@@ -3,7 +3,7 @@
 // packages' own dependencies, declared into an engine in the host's order. Loads nothing
 // itself: a host lists its libraries and how to declare each.
 
-import { CANONICAL, DECLARERS } from "./declarers-data.ts";
+import { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
 import { PACKAGES } from "./generated/packages.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { Overload, SymbolInfo } from "./types.ts";
@@ -61,8 +61,15 @@ export function reachedNames(json: unknown, canonical = CANONICAL): Set<string> 
  * counts: general ones (structures' `Floor(x, m)`, number-theory's `Fibonacci(1.5)`). Rows on a
  * carrier someone else declares (analytic's on compute-engine's `Interval`) count where the
  * expression names it, and rows on symbols (hypercomplex's `Add` on `i_1`) where it names one.
+ * Rows on carrier types (combinatorics' `Inverse` on `permutation`) are like rows on carriers,
+ * except that a type is never named: a row on a type the package doesn't mint always counts.
  */
-export function packagesFor(json: unknown, lookup: Lookup = manifest, declarers = DECLARERS): Set<string> {
+export function packagesFor(
+  json: unknown,
+  lookup: Lookup = manifest,
+  declarers = DECLARERS,
+  carrierTypes = CARRIER_TYPES,
+): Set<string> {
   const packages = new Set<string>();
   const names = reachedNames(json);
   const named = (pattern: string): boolean => {
@@ -79,10 +86,13 @@ export function packagesFor(json: unknown, lookup: Lookup = manifest, declarers 
       // A carrier of its own brings the package with whatever makes one; someone else's
       // (compute-engine's `Interval`) has to be named.
       const triggered = (carrier: string): boolean => declarers[carrier]?.includes(pkg) !== true && names.has(carrier);
+      // A carrier type is never named, so only the package's own (it mints it) can wait.
+      const foreign = (type: string): boolean => carrierTypes[type]?.includes(pkg) !== true;
       const applies = (overload: Overload): boolean =>
-        (overload.on === undefined && overload.symbols === undefined) ||
+        (overload.on === undefined && overload.symbols === undefined && overload.types === undefined) ||
         overload.on?.some(triggered) === true ||
-        overload.symbols?.some(named) === true;
+        overload.symbols?.some(named) === true ||
+        overload.types?.some(foreign) === true;
       if (own.length > 0 && !own.some(applies)) continue;
       packages.add(pkg);
     }

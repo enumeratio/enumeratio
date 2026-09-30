@@ -10,7 +10,7 @@ export { SYMBOLS };
 /** The head called `name`, or undefined. */
 export const symbolInfo = (name: string): SymbolInfo | undefined =>
   Object.hasOwn(SYMBOLS, name) ? SYMBOLS[name] : undefined;
-export { CANONICAL, DECLARERS } from "./declarers-data.ts";
+export { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
 export { PACKAGES } from "./generated/packages.ts";
 export {
   createResolver,

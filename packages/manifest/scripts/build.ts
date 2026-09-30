@@ -148,6 +148,7 @@ for (const { package: pkg, record } of ranked) {
       ...(row.overrides !== undefined ? { overrides: packageOf(row.overrides) } : {}),
       ...(row.on !== undefined ? { on: row.on } : {}),
       ...(row.symbols !== undefined ? { symbols: row.symbols } : {}),
+      ...(row.types !== undefined ? { types: row.types } : {}),
     });
   }
 }

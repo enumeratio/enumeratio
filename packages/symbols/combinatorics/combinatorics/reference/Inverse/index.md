@@ -25,6 +25,8 @@ signatures:
     library: enumeratio-combinatorics
     type: (permutation) -> permutation
     overrides: enumeratio-modular
+    types:
+      - permutation
 laws:
   - involution
 ---

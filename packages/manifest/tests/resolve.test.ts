@@ -25,6 +25,18 @@ test("packages: what the manifest says declares each name", () => {
   expect([...packagesFor(["Add", ["Interval", 1, 2], 1])]).toContain("analytic");
   expect(sum).not.toContain("hypercomplex");
   expect([...packagesFor(["Add", "i_1", 1])]).toContain("hypercomplex");
+  // Rows on carrier types: skipped where the package mints them, counted where it doesn't.
+  const lookup = (name: string) =>
+    name === "Sign"
+      ? {
+          name,
+          documented: [],
+          overloads: [{ package: "paths", type: "(lattice_path) -> integer", types: ["lattice_path"] }],
+        }
+      : undefined;
+  expect([...packagesFor(["Sign", -3], lookup, { Sign: ["paths"] }, { lattice_path: ["paths"] })]).toEqual([]);
+  expect([...packagesFor(["Sign", -3], lookup, { Sign: ["paths"] }, { lattice_path: ["walks"] })]).toEqual(["paths"]);
+  expect([...packagesFor(["Inverse", "x"])]).not.toContain("combinatorics");
   // What a head canonicalises to: Lb(x) is Log(x, 2).
   expect([...packagesFor(["Lb", "x"])]).toEqual([...packagesFor(["Log", "x"])]);
   expect([...packagesFor(["Hold", 1])]).toEqual([]);
