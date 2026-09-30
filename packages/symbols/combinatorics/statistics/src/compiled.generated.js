@@ -76,9 +76,32 @@ export const COMPILED = {
               ).length
           : NaN)(_._x.length),
   },
+  "BlockSizeSpan@SetPartition": {
+    hash: "b19c05bd",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.max(_a, _b), -Infinity)))(
+                ((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.length),
+              ) +
+              -((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.min(_a, _b), Infinity)))(
+                ((_f) => _._x.map((_x) => _f(_x)))((_v2) => _v2.length),
+              )
+          : NaN)(_._x.length),
+  },
   "Blocks@SetPartition": {
     hash: "fe6cad06",
     run: (_SYS, _) => _._x.length,
+  },
+  "BlocksAtLeastTwo@SetPartition": {
+    hash: "0bc242bf",
+    run: (_SYS, _) => ((_f) => _._x.filter((_x) => _f(_x)))((_v1) => 2 <= _v1.length).length,
+  },
+  "BlocksSizeTwo@SetPartition": {
+    hash: "71d31093",
+    run: (_SYS, _) => ((_f) => _._x.filter((_x) => _f(_x)))((_v1) => _v1.length === 2).length,
   },
   "Bounce@DyckPath": {
     hash: "bd1fa911",
@@ -485,68 +508,848 @@ export const COMPILED = {
               })()
           : NaN)(_._x.length),
   },
+  "CrossingNestingTotal@SetPartition": {
+    hash: "76cf1a42",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 2
+            ? 0
+            : ((_f) =>
+                Array.from(
+                  {
+                    length: _SYS.rangeCount(
+                      1,
+                      ((_f) => _._x.map((_x) => _f(_x)))((_v61) => _v61.slice(0, -1)).flat(Infinity).length,
+                      1,
+                    ),
+                  },
+                  (_e, i) => 1 + i * 1,
+                ).map((_x) => _f(_x)))(
+                (
+                  (_tv54) => (_tv55) =>
+                    Array.isArray(_tv55) ? _SYS.bcastFn(_tv54, _tv55) : _tv54(_tv55)
+                )(
+                  (_v2) =>
+                    ((_f) =>
+                      Array.from(
+                        {
+                          length: _SYS.rangeCount(
+                            _v2 + 1,
+                            ((_f) => _._x.map((_x) => _f(_x)))((_v3) => _v3.slice(0, -1)).flat(Infinity).length,
+                            1,
+                          ),
+                        },
+                        (_e, i) => _v2 + 1 + i * 1,
+                      ).filter((_x) => _f(_x)))(
+                      (
+                        (_tv52) => (_tv53) =>
+                          Array.isArray(_tv53) ? _SYS.bcastFn(_tv52, _tv53) : _tv52(_tv53)
+                      )((_v4) =>
+                        _SYS.bcast(
+                          (_tv2, _tv3) =>
+                            _tv2 === true || _tv3 === true ? true : _tv2 !== _tv2 || _tv3 !== _tv3 ? NaN : _tv2 || _tv3,
+                          ((_v) => (typeof _v === "number" && Number.isNaN(_v) ? undefined : _v))(
+                            _SYS.at(
+                              [
+                                _SYS.bcast(
+                                  (_tv4, _tv5) =>
+                                    _tv4 === false || _tv5 === false
+                                      ? false
+                                      : _tv4 !== _tv4 || _tv5 !== _tv5
+                                        ? NaN
+                                        : _tv4 && _tv5,
+                                  _SYS.bcast(
+                                    (_tv6, _tv7) => _tv6 < _tv7,
+                                    Math.max(
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v5) => _v5.slice(0, -1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v6) => _v6.slice(0, -1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv8, _tv9) => _tv8 < _tv9,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v7) => _v7.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v8) => _v8.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v9) => _v9.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v10) => _v10.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                  _SYS.bcast(
+                                    (_tv10, _tv11) => _tv10 < _tv11,
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv12, _tv13) => _tv12 < _tv13,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v11) => _v11.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v12) => _v12.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v13) => _v13.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v14) => _v14.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv14, _tv15) => _tv14 < _tv15,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v15) => _v15.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v16) => _v16.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v17) => _v17.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v18) => _v18.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                    ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv16, _tv17) =>
+                                    _tv16 === false || _tv17 === false
+                                      ? false
+                                      : _tv16 !== _tv16 || _tv17 !== _tv17
+                                        ? NaN
+                                        : _tv16 && _tv17,
+                                  _SYS.bcast(
+                                    (_tv18, _tv19) => _tv18 < _tv19,
+                                    Math.max(
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v19) => _v19.slice(0, -1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v20) => _v20.slice(0, -1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv20, _tv21) => _tv20 < _tv21,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v21) => _v21.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v22) => _v22.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v23) => _v23.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v24) => _v24.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                  _SYS.bcast(
+                                    (_tv22, _tv23) => _tv22 < _tv23,
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv24, _tv25) => _tv24 < _tv25,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v25) => _v25.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v26) => _v26.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v27) => _v27.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v28) => _v28.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv26, _tv27) => _tv26 < _tv27,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v29) => _v29.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v30) => _v30.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v31) => _v31.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v32) => _v32.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              1,
+                            ),
+                          ),
+                          ((_v) => (typeof _v === "number" && Number.isNaN(_v) ? undefined : _v))(
+                            _SYS.at(
+                              [
+                                _SYS.bcast(
+                                  (_tv28, _tv29) =>
+                                    _tv28 === false || _tv29 === false
+                                      ? false
+                                      : _tv28 !== _tv28 || _tv29 !== _tv29
+                                        ? NaN
+                                        : _tv28 && _tv29,
+                                  _SYS.bcast(
+                                    (_tv30, _tv31) => _tv30 < _tv31,
+                                    Math.max(
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v33) => _v33.slice(0, -1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v34) => _v34.slice(0, -1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv32, _tv33) => _tv32 < _tv33,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v35) => _v35.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v36) => _v36.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v37) => _v37.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v38) => _v38.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                  _SYS.bcast(
+                                    (_tv34, _tv35) => _tv34 < _tv35,
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv36, _tv37) => _tv36 < _tv37,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v39) => _v39.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v40) => _v40.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v41) => _v41.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v42) => _v42.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv38, _tv39) => _tv38 < _tv39,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v43) => _v43.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v44) => _v44.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v45) => _v45.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v46) => _v46.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                    ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv40, _tv41) =>
+                                    _tv40 === false || _tv41 === false
+                                      ? false
+                                      : _tv40 !== _tv40 || _tv41 !== _tv41
+                                        ? NaN
+                                        : _tv40 && _tv41,
+                                  _SYS.bcast(
+                                    (_tv42, _tv43) => _tv42 < _tv43,
+                                    Math.max(
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v47) => _v47.slice(0, -1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v48) => _v48.slice(0, -1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv44, _tv45) => _tv44 < _tv45,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v49) => _v49.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v50) => _v50.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v51) => _v51.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v52) => _v52.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                  _SYS.bcast(
+                                    (_tv46, _tv47) => _tv46 < _tv47,
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv48, _tv49) => _tv48 < _tv49,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v53) => _v53.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v54) => _v54.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v55) => _v55.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v56) => _v56.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                    ),
+                                    _SYS.select(
+                                      () =>
+                                        _SYS.bcast(
+                                          (_tv50, _tv51) => _tv50 < _tv51,
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v57) => _v57.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v2,
+                                          ),
+                                          _SYS.at(
+                                            ((_f) => _._x.map((_x) => _f(_x)))((_v58) => _v58.slice(0, -1)).flat(
+                                              Infinity,
+                                            ),
+                                            _v4,
+                                          ),
+                                        ),
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v59) => _v59.slice(1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                      () => true,
+                                      () =>
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v60) => _v60.slice(1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ).length,
+                ),
+              ).reduce((_a, _b) => _a + _b, 0)
+          : NaN)(((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.slice(0, -1)).flat(Infinity).length),
+  },
+  "Crossings@SetPartition": {
+    hash: "c51721ac",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 2
+            ? 0
+            : ((_f) =>
+                Array.from(
+                  {
+                    length: _SYS.rangeCount(
+                      1,
+                      ((_f) => _._x.map((_x) => _f(_x)))((_v33) => _v33.slice(0, -1)).flat(Infinity).length,
+                      1,
+                    ),
+                  },
+                  (_e, i) => 1 + i * 1,
+                ).map((_x) => _f(_x)))(
+                (
+                  (_tv28) => (_tv29) =>
+                    Array.isArray(_tv29) ? _SYS.bcastFn(_tv28, _tv29) : _tv28(_tv29)
+                )(
+                  (_v2) =>
+                    ((_f) =>
+                      Array.from(
+                        {
+                          length: _SYS.rangeCount(
+                            _v2 + 1,
+                            ((_f) => _._x.map((_x) => _f(_x)))((_v3) => _v3.slice(0, -1)).flat(Infinity).length,
+                            1,
+                          ),
+                        },
+                        (_e, i) => _v2 + 1 + i * 1,
+                      ).filter((_x) => _f(_x)))(
+                      (
+                        (_tv26) => (_tv27) =>
+                          Array.isArray(_tv27) ? _SYS.bcastFn(_tv26, _tv27) : _tv26(_tv27)
+                      )((_v4) =>
+                        ((_v) => (typeof _v === "number" && Number.isNaN(_v) ? undefined : _v))(
+                          _SYS.at(
+                            [
+                              _SYS.bcast(
+                                (_tv2, _tv3) =>
+                                  _tv2 === false || _tv3 === false
+                                    ? false
+                                    : _tv2 !== _tv2 || _tv3 !== _tv3
+                                      ? NaN
+                                      : _tv2 && _tv3,
+                                _SYS.bcast(
+                                  (_tv4, _tv5) => _tv4 < _tv5,
+                                  Math.max(
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v5) => _v5.slice(0, -1)).flat(Infinity),
+                                      _v2,
+                                    ),
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v6) => _v6.slice(0, -1)).flat(Infinity),
+                                      _v4,
+                                    ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv6, _tv7) => _tv6 < _tv7,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v7) => _v7.slice(0, -1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v8) => _v8.slice(0, -1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v9) => _v9.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v10) => _v10.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv8, _tv9) => _tv8 < _tv9,
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv10, _tv11) => _tv10 < _tv11,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v11) => _v11.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v12) => _v12.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v13) => _v13.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v14) => _v14.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv12, _tv13) => _tv12 < _tv13,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v15) => _v15.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v16) => _v16.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v17) => _v17.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v18) => _v18.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.bcast(
+                                (_tv14, _tv15) =>
+                                  _tv14 === false || _tv15 === false
+                                    ? false
+                                    : _tv14 !== _tv14 || _tv15 !== _tv15
+                                      ? NaN
+                                      : _tv14 && _tv15,
+                                _SYS.bcast(
+                                  (_tv16, _tv17) => _tv16 < _tv17,
+                                  Math.max(
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v19) => _v19.slice(0, -1)).flat(Infinity),
+                                      _v2,
+                                    ),
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v20) => _v20.slice(0, -1)).flat(Infinity),
+                                      _v4,
+                                    ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv18, _tv19) => _tv18 < _tv19,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v21) => _v21.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v22) => _v22.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v23) => _v23.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v24) => _v24.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv20, _tv21) => _tv20 < _tv21,
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv22, _tv23) => _tv22 < _tv23,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v25) => _v25.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v26) => _v26.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v27) => _v27.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v28) => _v28.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv24, _tv25) => _tv24 < _tv25,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v29) => _v29.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v30) => _v30.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v31) => _v31.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v32) => _v32.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                            1,
+                          ),
+                        ),
+                      ),
+                    ).length,
+                ),
+              ).reduce((_a, _b) => _a + _b, 0)
+          : NaN)(((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.slice(0, -1)).flat(Infinity).length),
+  },
   "CycleCount@Permutation": {
-    hash: "d4e03a6c",
+    hash: "94291fc1",
     run: (_SYS, _) =>
       ((_tv1) =>
         _tv1 === _tv1
           ? _tv1 < 1
             ? 0
             : ((_f) =>
-                ((_a, _b) =>
-                  Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                    _b >= _a ? _a + _i : _a - _i,
-                  ))(1, _._x.length).filter((_x) => _f(_x)))(
+                Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                  _f(_x),
+                ))(
                 (() => {
-                  let _tv10 = false;
+                  let _tv12 = false;
                   let _tv2;
-                  let _tv11;
+                  let _tv13;
                   _js1: {
                     const _js2 = (_v1) =>
-                      _v1 ===
-                      ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.min(_a, _b), Infinity)))(
-                        ((_f) => _tv2.map((_x) => _f(_x)))(
+                      _SYS.eq(
+                        _tv2.reduce(
                           (
-                            (_tv6) => (_tv7) =>
-                              Array.isArray(_tv7) ? _SYS.bcastFn(_tv6, _tv7) : _tv6(_tv7)
-                          )((_v2) =>
-                            ((_a, _b) =>
-                              Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                                _b >= _a ? _a + _i : _a - _i,
-                              ))(1, _v2).reduce(
-                              (
-                                (_f) => (_a, _b) =>
-                                  _f(_a, _b)
-                              )(
-                                (
-                                  (_tv3) => (_tv4, _tv5) =>
-                                    Array.isArray(_tv4) || Array.isArray(_tv5)
-                                      ? _SYS.bcastFn(_tv3, _tv4, _tv5)
-                                      : _tv3(_tv4, _tv5)
-                                )((_v3, _v4) => _SYS.atNumeric(_._x, _v3, "integer")),
+                            (_f) => (_a, _b) =>
+                              _f(_a, _b)
+                          )(
+                            (
+                              (_tv7) => (_tv8, _tv9) =>
+                                Array.isArray(_tv8) || Array.isArray(_tv9)
+                                  ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                  : _tv7(_tv8, _tv9)
+                            )((_v2, _v3) =>
+                              _SYS.select(
+                                () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v2, 0),
+                                () => _v2,
+                                () => true,
+                                () =>
+                                  _SYS.select(
+                                    () => _SYS.eq(_v2, _v1),
+                                    () => 0,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v2, _v1),
+                                        () => -1,
+                                        () => true,
+                                        () => _SYS.atNumeric(_._x, _v2, "integer"),
+                                      ),
+                                  ),
                               ),
-                              _v1,
                             ),
                           ),
+                          _SYS.atNumeric(_._x, _v1, "integer"),
                         ),
+                        0,
                       );
                     {
-                      const _tv8 = _js2;
+                      const _tv10 = _js2;
                       {
-                        _tv11 = (_tv9) => (Array.isArray(_tv9) ? _SYS.bcastFn(_tv8, _tv9) : _tv8(_tv9));
+                        _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
                         break _js1;
                       }
                     }
                   }
-                  return (_tv12) => {
-                    if (!_tv10) {
-                      _tv10 = true;
-                      _tv2 = ((_a, _b) =>
-                        Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                          _b >= _a ? _a + _i : _a - _i,
-                        ))(1, _._x.length);
+                  return (_tv14) => {
+                    if (!_tv12) {
+                      _tv12 = true;
+                      _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
                     }
-                    return _tv11(_tv12);
+                    return _tv13(_tv14);
                   };
                 })(),
               ).length
@@ -932,6 +1735,113 @@ export const COMPILED = {
                   };
                 })(),
               ).reduce((_a, _b) => _a + _b, 0)
+          : NaN)(_._x.length),
+  },
+  "DistinctCycleLengths@Permutation": {
+    hash: "18f322c4",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : (() => {
+                const _cse2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                return ((_f) => _cse2.filter((_x) => _f(_x)))(
+                  (
+                    (_tv23) => (_tv24) =>
+                      Array.isArray(_tv24) ? _SYS.bcastFn(_tv23, _tv24) : _tv23(_tv24)
+                  )(
+                    (_v1) =>
+                      0 <
+                      ((_f) =>
+                        ((_f) =>
+                          ((_f) => _cse2.filter((_x) => _f(_x)))(
+                            (
+                              (_tv10) => (_tv11) =>
+                                Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11)
+                            )((_v5) =>
+                              _SYS.eq(
+                                _cse2.reduce(
+                                  (
+                                    (_f) => (_a, _b) =>
+                                      _f(_a, _b)
+                                  )(
+                                    (
+                                      (_tv7) => (_tv8, _tv9) =>
+                                        Array.isArray(_tv8) || Array.isArray(_tv9)
+                                          ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                          : _tv7(_tv8, _tv9)
+                                    )((_v6, _v7) =>
+                                      _SYS.select(
+                                        () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v6, 0),
+                                        () => _v6,
+                                        () => true,
+                                        () =>
+                                          _SYS.select(
+                                            () => _SYS.eq(_v6, _v5),
+                                            () => 0,
+                                            () => true,
+                                            () =>
+                                              _SYS.select(
+                                                () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v6, _v5),
+                                                () => -1,
+                                                () => true,
+                                                () => _SYS.atNumeric(_._x, _v6, "integer"),
+                                              ),
+                                          ),
+                                      ),
+                                    ),
+                                  ),
+                                  _SYS.atNumeric(_._x, _v5, "integer"),
+                                ),
+                                0,
+                              ),
+                            ),
+                          ).map((_x) => _f(_x)))(
+                          (
+                            (_tv19) => (_tv20) =>
+                              Array.isArray(_tv20) ? _SYS.bcastFn(_tv19, _tv20) : _tv19(_tv20)
+                          )((_v2) =>
+                            _SYS.bcast(
+                              (_tv12) => -_tv12,
+                              _cse2.reduce(
+                                (
+                                  (_f) => (_a, _b) =>
+                                    _f(_a, _b)
+                                )(
+                                  (
+                                    (_tv16) => (_tv17, _tv18) =>
+                                      Array.isArray(_tv17) || Array.isArray(_tv18)
+                                        ? _SYS.bcastFn(_tv16, _tv17, _tv18)
+                                        : _tv16(_tv17, _tv18)
+                                  )((_v3, _v4) =>
+                                    _SYS.select(
+                                      () => _SYS.bcast((_tv13, _tv14) => _tv13 <= _tv14, _v3, 0),
+                                      () => _v3,
+                                      () => true,
+                                      () =>
+                                        ((_tv15) =>
+                                          _tv15 === _tv15 && _v2 === _v2
+                                            ? typeof _tv15 === "number" && _tv15 === _v2
+                                              ? -_v4
+                                              : _SYS.atNumeric(_._x, _v3, "integer")
+                                            : NaN)(_SYS.atNumeric(_._x, _v3, "integer")),
+                                    ),
+                                  ),
+                                ),
+                                _v2,
+                              ),
+                            ),
+                          ),
+                        ).filter((_x) => _f(_x)))(
+                        (
+                          (_tv21) => (_tv22) =>
+                            Array.isArray(_tv22) ? _SYS.bcastFn(_tv21, _tv22) : _tv21(_tv22)
+                        )((_v8) => typeof _v8 === "number" && _v8 === _v1),
+                      ).length,
+                  ),
+                ).length;
+              })()
           : NaN)(_._x.length),
   },
   "DistinctParts@IntegerPartition": {
@@ -1567,6 +2477,146 @@ export const COMPILED = {
               })()
           : NaN)(_._x.length),
   },
+  "LargestBlock@SetPartition": {
+    hash: "65495ed0",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.max(_a, _b), -Infinity)))(
+                ((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.length),
+              )
+          : NaN)(_._x.length),
+  },
+  "LargestCycleLength@Permutation": {
+    hash: "4d9e9d4a",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.max(_a, _b), -Infinity)))(
+                ((_f) =>
+                  ((_f) =>
+                    Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                      _f(_x),
+                    ))(
+                    (() => {
+                      let _tv12 = false;
+                      let _tv2;
+                      let _tv13;
+                      _js1: {
+                        const _js2 = (_v4) =>
+                          _SYS.eq(
+                            _tv2.reduce(
+                              (
+                                (_f) => (_a, _b) =>
+                                  _f(_a, _b)
+                              )(
+                                (
+                                  (_tv7) => (_tv8, _tv9) =>
+                                    Array.isArray(_tv8) || Array.isArray(_tv9)
+                                      ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                      : _tv7(_tv8, _tv9)
+                                )((_v5, _v6) =>
+                                  _SYS.select(
+                                    () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v5, 0),
+                                    () => _v5,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.eq(_v5, _v4),
+                                        () => 0,
+                                        () => true,
+                                        () =>
+                                          _SYS.select(
+                                            () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v5, _v4),
+                                            () => -1,
+                                            () => true,
+                                            () => _SYS.atNumeric(_._x, _v5, "integer"),
+                                          ),
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.atNumeric(_._x, _v4, "integer"),
+                            ),
+                            0,
+                          );
+                        {
+                          const _tv10 = _js2;
+                          {
+                            _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
+                            break _js1;
+                          }
+                        }
+                      }
+                      return (_tv14) => {
+                        if (!_tv12) {
+                          _tv12 = true;
+                          _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                        }
+                        return _tv13(_tv14);
+                      };
+                    })(),
+                  ).map((_x) => _f(_x)))(
+                  (() => {
+                    let _tv25 = false;
+                    let _tv15;
+                    let _tv26;
+                    _js3: {
+                      const _js4 = (_v1) =>
+                        _SYS.bcast(
+                          (_tv16) => -_tv16,
+                          _tv15.reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv20) => (_tv21, _tv22) =>
+                                  Array.isArray(_tv21) || Array.isArray(_tv22)
+                                    ? _SYS.bcastFn(_tv20, _tv21, _tv22)
+                                    : _tv20(_tv21, _tv22)
+                              )((_v2, _v3) =>
+                                _SYS.select(
+                                  () => _SYS.bcast((_tv17, _tv18) => _tv17 <= _tv18, _v2, 0),
+                                  () => _v2,
+                                  () => true,
+                                  () =>
+                                    ((_tv19) =>
+                                      _tv19 === _tv19 && _v1 === _v1
+                                        ? typeof _tv19 === "number" && _tv19 === _v1
+                                          ? -_v3
+                                          : _SYS.atNumeric(_._x, _v2, "integer")
+                                        : NaN)(_SYS.atNumeric(_._x, _v2, "integer")),
+                                ),
+                              ),
+                            ),
+                            _v1,
+                          ),
+                        );
+                      {
+                        const _tv23 = _js4;
+                        {
+                          _tv26 = (_tv24) => (Array.isArray(_tv24) ? _SYS.bcastFn(_tv23, _tv24) : _tv23(_tv24));
+                          break _js3;
+                        }
+                      }
+                    }
+                    return (_tv27) => {
+                      if (!_tv25) {
+                        _tv25 = true;
+                        _tv15 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                      }
+                      return _tv26(_tv27);
+                    };
+                  })(),
+                ),
+              )
+          : NaN)(_._x.length),
+  },
   "LargestPart@IntegerPartition": {
     hash: "49d5007e",
     run: (_SYS, _) =>
@@ -1615,6 +2665,19 @@ export const COMPILED = {
                 ),
                 1,
                 "number",
+              )
+          : NaN)(_._x.length),
+  },
+  "LastBlockSize@SetPartition": {
+    hash: "71448848",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : _SYS.at(
+                ((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.length),
+                -1,
               )
           : NaN)(_._x.length),
   },
@@ -1808,6 +2871,134 @@ export const COMPILED = {
               )
           : NaN)(_._x.length),
   },
+  "LongestCycleLength@Permutation": {
+    hash: "4d9e9d4a",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.max(_a, _b), -Infinity)))(
+                ((_f) =>
+                  ((_f) =>
+                    Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                      _f(_x),
+                    ))(
+                    (() => {
+                      let _tv12 = false;
+                      let _tv2;
+                      let _tv13;
+                      _js1: {
+                        const _js2 = (_v4) =>
+                          _SYS.eq(
+                            _tv2.reduce(
+                              (
+                                (_f) => (_a, _b) =>
+                                  _f(_a, _b)
+                              )(
+                                (
+                                  (_tv7) => (_tv8, _tv9) =>
+                                    Array.isArray(_tv8) || Array.isArray(_tv9)
+                                      ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                      : _tv7(_tv8, _tv9)
+                                )((_v5, _v6) =>
+                                  _SYS.select(
+                                    () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v5, 0),
+                                    () => _v5,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.eq(_v5, _v4),
+                                        () => 0,
+                                        () => true,
+                                        () =>
+                                          _SYS.select(
+                                            () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v5, _v4),
+                                            () => -1,
+                                            () => true,
+                                            () => _SYS.atNumeric(_._x, _v5, "integer"),
+                                          ),
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.atNumeric(_._x, _v4, "integer"),
+                            ),
+                            0,
+                          );
+                        {
+                          const _tv10 = _js2;
+                          {
+                            _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
+                            break _js1;
+                          }
+                        }
+                      }
+                      return (_tv14) => {
+                        if (!_tv12) {
+                          _tv12 = true;
+                          _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                        }
+                        return _tv13(_tv14);
+                      };
+                    })(),
+                  ).map((_x) => _f(_x)))(
+                  (() => {
+                    let _tv25 = false;
+                    let _tv15;
+                    let _tv26;
+                    _js3: {
+                      const _js4 = (_v1) =>
+                        _SYS.bcast(
+                          (_tv16) => -_tv16,
+                          _tv15.reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv20) => (_tv21, _tv22) =>
+                                  Array.isArray(_tv21) || Array.isArray(_tv22)
+                                    ? _SYS.bcastFn(_tv20, _tv21, _tv22)
+                                    : _tv20(_tv21, _tv22)
+                              )((_v2, _v3) =>
+                                _SYS.select(
+                                  () => _SYS.bcast((_tv17, _tv18) => _tv17 <= _tv18, _v2, 0),
+                                  () => _v2,
+                                  () => true,
+                                  () =>
+                                    ((_tv19) =>
+                                      _tv19 === _tv19 && _v1 === _v1
+                                        ? typeof _tv19 === "number" && _tv19 === _v1
+                                          ? -_v3
+                                          : _SYS.atNumeric(_._x, _v2, "integer")
+                                        : NaN)(_SYS.atNumeric(_._x, _v2, "integer")),
+                                ),
+                              ),
+                            ),
+                            _v1,
+                          ),
+                        );
+                      {
+                        const _tv23 = _js4;
+                        {
+                          _tv26 = (_tv24) => (Array.isArray(_tv24) ? _SYS.bcastFn(_tv23, _tv24) : _tv23(_tv24));
+                          break _js3;
+                        }
+                      }
+                    }
+                    return (_tv27) => {
+                      if (!_tv25) {
+                        _tv25 = true;
+                        _tv15 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                      }
+                      return _tv26(_tv27);
+                    };
+                  })(),
+                ),
+              )
+          : NaN)(_._x.length),
+  },
   "LongestDescent@DyckPath": {
     hash: "502af5ad",
     run: (_SYS, _) =>
@@ -1978,6 +3169,275 @@ export const COMPILED = {
                 })(),
               ).length
           : NaN)(_._x.length),
+  },
+  "Nestings@SetPartition": {
+    hash: "37f23f05",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 2
+            ? 0
+            : ((_f) =>
+                Array.from(
+                  {
+                    length: _SYS.rangeCount(
+                      1,
+                      ((_f) => _._x.map((_x) => _f(_x)))((_v33) => _v33.slice(0, -1)).flat(Infinity).length,
+                      1,
+                    ),
+                  },
+                  (_e, i) => 1 + i * 1,
+                ).map((_x) => _f(_x)))(
+                (
+                  (_tv28) => (_tv29) =>
+                    Array.isArray(_tv29) ? _SYS.bcastFn(_tv28, _tv29) : _tv28(_tv29)
+                )(
+                  (_v2) =>
+                    ((_f) =>
+                      Array.from(
+                        {
+                          length: _SYS.rangeCount(
+                            _v2 + 1,
+                            ((_f) => _._x.map((_x) => _f(_x)))((_v3) => _v3.slice(0, -1)).flat(Infinity).length,
+                            1,
+                          ),
+                        },
+                        (_e, i) => _v2 + 1 + i * 1,
+                      ).filter((_x) => _f(_x)))(
+                      (
+                        (_tv26) => (_tv27) =>
+                          Array.isArray(_tv27) ? _SYS.bcastFn(_tv26, _tv27) : _tv26(_tv27)
+                      )((_v4) =>
+                        ((_v) => (typeof _v === "number" && Number.isNaN(_v) ? undefined : _v))(
+                          _SYS.at(
+                            [
+                              _SYS.bcast(
+                                (_tv2, _tv3) =>
+                                  _tv2 === false || _tv3 === false
+                                    ? false
+                                    : _tv2 !== _tv2 || _tv3 !== _tv3
+                                      ? NaN
+                                      : _tv2 && _tv3,
+                                _SYS.bcast(
+                                  (_tv4, _tv5) => _tv4 < _tv5,
+                                  Math.max(
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v5) => _v5.slice(0, -1)).flat(Infinity),
+                                      _v2,
+                                    ),
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v6) => _v6.slice(0, -1)).flat(Infinity),
+                                      _v4,
+                                    ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv6, _tv7) => _tv6 < _tv7,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v7) => _v7.slice(0, -1)).flat(Infinity),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v8) => _v8.slice(0, -1)).flat(Infinity),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v9) => _v9.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v10) => _v10.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv8, _tv9) => _tv8 < _tv9,
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv10, _tv11) => _tv10 < _tv11,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v11) => _v11.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v12) => _v12.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v13) => _v13.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v14) => _v14.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv12, _tv13) => _tv12 < _tv13,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v15) => _v15.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v16) => _v16.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v17) => _v17.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v18) => _v18.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.bcast(
+                                (_tv14, _tv15) =>
+                                  _tv14 === false || _tv15 === false
+                                    ? false
+                                    : _tv14 !== _tv14 || _tv15 !== _tv15
+                                      ? NaN
+                                      : _tv14 && _tv15,
+                                _SYS.bcast(
+                                  (_tv16, _tv17) => _tv16 < _tv17,
+                                  Math.max(
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v19) => _v19.slice(0, -1)).flat(Infinity),
+                                      _v2,
+                                    ),
+                                    _SYS.at(
+                                      ((_f) => _._x.map((_x) => _f(_x)))((_v20) => _v20.slice(0, -1)).flat(Infinity),
+                                      _v4,
+                                    ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv18, _tv19) => _tv18 < _tv19,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v21) => _v21.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v22) => _v22.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v23) => _v23.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v24) => _v24.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                                _SYS.bcast(
+                                  (_tv20, _tv21) => _tv20 < _tv21,
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv22, _tv23) => _tv22 < _tv23,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v25) => _v25.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v26) => _v26.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v27) => _v27.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v28) => _v28.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                  ),
+                                  _SYS.select(
+                                    () =>
+                                      _SYS.bcast(
+                                        (_tv24, _tv25) => _tv24 < _tv25,
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v29) => _v29.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v2,
+                                        ),
+                                        _SYS.at(
+                                          ((_f) => _._x.map((_x) => _f(_x)))((_v30) => _v30.slice(0, -1)).flat(
+                                            Infinity,
+                                          ),
+                                          _v4,
+                                        ),
+                                      ),
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v31) => _v31.slice(1)).flat(Infinity),
+                                        _v2,
+                                      ),
+                                    () => true,
+                                    () =>
+                                      _SYS.at(
+                                        ((_f) => _._x.map((_x) => _f(_x)))((_v32) => _v32.slice(1)).flat(Infinity),
+                                        _v4,
+                                      ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                            2,
+                          ),
+                        ),
+                      ),
+                    ).length,
+                ),
+              ).reduce((_a, _b) => _a + _b, 0)
+          : NaN)(((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.slice(0, -1)).flat(Infinity).length),
   },
   "OccurrencesOf123@Permutation": {
     hash: "dc33316b",
@@ -2230,6 +3690,143 @@ export const COMPILED = {
               ).length
           : NaN)(_._x.length),
   },
+  "Order@Permutation": {
+    hash: "8927f629",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 1
+            : ((_f) =>
+                ((_f) =>
+                  Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                    _f(_x),
+                  ))(
+                  (() => {
+                    let _tv15 = false;
+                    let _tv5;
+                    let _tv16;
+                    _js1: {
+                      const _js2 = (_v6) =>
+                        _SYS.eq(
+                          _tv5.reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv10) => (_tv11, _tv12) =>
+                                  Array.isArray(_tv11) || Array.isArray(_tv12)
+                                    ? _SYS.bcastFn(_tv10, _tv11, _tv12)
+                                    : _tv10(_tv11, _tv12)
+                              )((_v7, _v8) =>
+                                _SYS.select(
+                                  () => _SYS.bcast((_tv6, _tv7) => _tv6 <= _tv7, _v7, 0),
+                                  () => _v7,
+                                  () => true,
+                                  () =>
+                                    _SYS.select(
+                                      () => _SYS.eq(_v7, _v6),
+                                      () => 0,
+                                      () => true,
+                                      () =>
+                                        _SYS.select(
+                                          () => _SYS.bcast((_tv8, _tv9) => _tv8 < _tv9, _v7, _v6),
+                                          () => -1,
+                                          () => true,
+                                          () => _SYS.atNumeric(_._x, _v7, "integer"),
+                                        ),
+                                    ),
+                                ),
+                              ),
+                            ),
+                            _SYS.atNumeric(_._x, _v6, "integer"),
+                          ),
+                          0,
+                        );
+                      {
+                        const _tv13 = _js2;
+                        {
+                          _tv16 = (_tv14) => (Array.isArray(_tv14) ? _SYS.bcastFn(_tv13, _tv14) : _tv13(_tv14));
+                          break _js1;
+                        }
+                      }
+                    }
+                    return (_tv17) => {
+                      if (!_tv15) {
+                        _tv15 = true;
+                        _tv5 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                      }
+                      return _tv16(_tv17);
+                    };
+                  })(),
+                ).map((_x) => _f(_x)))(
+                (() => {
+                  let _tv28 = false;
+                  let _tv18;
+                  let _tv29;
+                  _js3: {
+                    const _js4 = (_v3) =>
+                      _SYS.bcast(
+                        (_tv19) => -_tv19,
+                        _tv18.reduce(
+                          (
+                            (_f) => (_a, _b) =>
+                              _f(_a, _b)
+                          )(
+                            (
+                              (_tv23) => (_tv24, _tv25) =>
+                                Array.isArray(_tv24) || Array.isArray(_tv25)
+                                  ? _SYS.bcastFn(_tv23, _tv24, _tv25)
+                                  : _tv23(_tv24, _tv25)
+                            )((_v4, _v5) =>
+                              _SYS.select(
+                                () => _SYS.bcast((_tv20, _tv21) => _tv20 <= _tv21, _v4, 0),
+                                () => _v4,
+                                () => true,
+                                () =>
+                                  ((_tv22) =>
+                                    _tv22 === _tv22 && _v3 === _v3
+                                      ? typeof _tv22 === "number" && _tv22 === _v3
+                                        ? -_v5
+                                        : _SYS.atNumeric(_._x, _v4, "integer")
+                                      : NaN)(_SYS.atNumeric(_._x, _v4, "integer")),
+                              ),
+                            ),
+                          ),
+                          _v3,
+                        ),
+                      );
+                    {
+                      const _tv26 = _js4;
+                      {
+                        _tv29 = (_tv27) => (Array.isArray(_tv27) ? _SYS.bcastFn(_tv26, _tv27) : _tv26(_tv27));
+                        break _js3;
+                      }
+                    }
+                  }
+                  return (_tv30) => {
+                    if (!_tv28) {
+                      _tv28 = true;
+                      _tv18 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                    }
+                    return _tv29(_tv30);
+                  };
+                })(),
+              ).reduce(
+                (
+                  (_f) => (_a, _b) =>
+                    _f(_a, _b)
+                )(
+                  (
+                    (_tv2) => (_tv3, _tv4) =>
+                      Array.isArray(_tv3) || Array.isArray(_tv4) ? _SYS.bcastFn(_tv2, _tv3, _tv4) : _tv2(_tv3, _tv4)
+                  )((_v1, _v2) => ((_a) => (_a.length ? _a.reduce((_x, _y) => _SYS.lcm(_x, _y)) : 1))([_v1, _v2])),
+                ),
+                1,
+              )
+          : NaN)(_._x.length),
+  },
   "PartsAtLeastTwo@IntegerPartition": {
     hash: "ee0850b3",
     run: (_SYS, _) =>
@@ -2323,67 +3920,72 @@ export const COMPILED = {
           : NaN)(_._x.length),
   },
   "ReflectionLength@Permutation": {
-    hash: "2ffbb9b3",
+    hash: "093cf264",
     run: (_SYS, _) =>
       ((_tv1) =>
         _tv1 === _tv1
           ? _tv1 < 1
             ? 0
             : -((_f) =>
-                ((_a, _b) =>
-                  Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                    _b >= _a ? _a + _i : _a - _i,
-                  ))(1, _._x.length).filter((_x) => _f(_x)))(
+                Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                  _f(_x),
+                ))(
                 (() => {
-                  let _tv10 = false;
+                  let _tv12 = false;
                   let _tv2;
-                  let _tv11;
+                  let _tv13;
                   _js1: {
                     const _js2 = (_v1) =>
-                      _v1 ===
-                      ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.min(_a, _b), Infinity)))(
-                        ((_f) => _tv2.map((_x) => _f(_x)))(
+                      _SYS.eq(
+                        _tv2.reduce(
                           (
-                            (_tv6) => (_tv7) =>
-                              Array.isArray(_tv7) ? _SYS.bcastFn(_tv6, _tv7) : _tv6(_tv7)
-                          )((_v2) =>
-                            ((_a, _b) =>
-                              Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                                _b >= _a ? _a + _i : _a - _i,
-                              ))(1, _v2).reduce(
-                              (
-                                (_f) => (_a, _b) =>
-                                  _f(_a, _b)
-                              )(
-                                (
-                                  (_tv3) => (_tv4, _tv5) =>
-                                    Array.isArray(_tv4) || Array.isArray(_tv5)
-                                      ? _SYS.bcastFn(_tv3, _tv4, _tv5)
-                                      : _tv3(_tv4, _tv5)
-                                )((_v3, _v4) => _SYS.atNumeric(_._x, _v3, "integer")),
+                            (_f) => (_a, _b) =>
+                              _f(_a, _b)
+                          )(
+                            (
+                              (_tv7) => (_tv8, _tv9) =>
+                                Array.isArray(_tv8) || Array.isArray(_tv9)
+                                  ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                  : _tv7(_tv8, _tv9)
+                            )((_v2, _v3) =>
+                              _SYS.select(
+                                () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v2, 0),
+                                () => _v2,
+                                () => true,
+                                () =>
+                                  _SYS.select(
+                                    () => _SYS.eq(_v2, _v1),
+                                    () => 0,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v2, _v1),
+                                        () => -1,
+                                        () => true,
+                                        () => _SYS.atNumeric(_._x, _v2, "integer"),
+                                      ),
+                                  ),
                               ),
-                              _v1,
                             ),
                           ),
+                          _SYS.atNumeric(_._x, _v1, "integer"),
                         ),
+                        0,
                       );
                     {
-                      const _tv8 = _js2;
+                      const _tv10 = _js2;
                       {
-                        _tv11 = (_tv9) => (Array.isArray(_tv9) ? _SYS.bcastFn(_tv8, _tv9) : _tv8(_tv9));
+                        _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
                         break _js1;
                       }
                     }
                   }
-                  return (_tv12) => {
-                    if (!_tv10) {
-                      _tv10 = true;
-                      _tv2 = ((_a, _b) =>
-                        Array.from({ length: _SYS.rangeCount(_a, _b, _b >= _a ? 1 : -1) }, (_e, _i) =>
-                          _b >= _a ? _a + _i : _a - _i,
-                        ))(1, _._x.length);
+                  return (_tv14) => {
+                    if (!_tv12) {
+                      _tv12 = true;
+                      _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
                     }
-                    return _tv11(_tv12);
+                    return _tv13(_tv14);
                   };
                 })(),
               ).length + _._x.length
@@ -2612,6 +4214,22 @@ export const COMPILED = {
               )
           : NaN)(_._x.length),
   },
+  "SingletonBlocks@SetPartition": {
+    hash: "f2dad55e",
+    run: (_SYS, _) => ((_f) => _._x.filter((_x) => _f(_x)))((_v1) => _v1.length === 1).length,
+  },
+  "SmallestBlock@SetPartition": {
+    hash: "83c43072",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_l) => (_l.length === 0 ? NaN : _l.reduce((_a, _b) => Math.min(_a, _b), Infinity)))(
+                ((_f) => _._x.map((_x) => _f(_x)))((_v1) => _v1.length),
+              )
+          : NaN)(_._x.length),
+  },
   "StackSortable@Permutation": {
     hash: "215f92bf",
     run: (_SYS, _) =>
@@ -2792,6 +4410,138 @@ export const COMPILED = {
               ).reduce((_a, _b) => _a + _b, 0)
           : NaN)(_._x.length),
   },
+  "ThreeCycleCount@Permutation": {
+    hash: "db73a8f6",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_f) =>
+                ((_f) =>
+                  ((_f) =>
+                    Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                      _f(_x),
+                    ))(
+                    (() => {
+                      let _tv12 = false;
+                      let _tv2;
+                      let _tv13;
+                      _js1: {
+                        const _js2 = (_v4) =>
+                          _SYS.eq(
+                            _tv2.reduce(
+                              (
+                                (_f) => (_a, _b) =>
+                                  _f(_a, _b)
+                              )(
+                                (
+                                  (_tv7) => (_tv8, _tv9) =>
+                                    Array.isArray(_tv8) || Array.isArray(_tv9)
+                                      ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                      : _tv7(_tv8, _tv9)
+                                )((_v5, _v6) =>
+                                  _SYS.select(
+                                    () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v5, 0),
+                                    () => _v5,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.eq(_v5, _v4),
+                                        () => 0,
+                                        () => true,
+                                        () =>
+                                          _SYS.select(
+                                            () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v5, _v4),
+                                            () => -1,
+                                            () => true,
+                                            () => _SYS.atNumeric(_._x, _v5, "integer"),
+                                          ),
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.atNumeric(_._x, _v4, "integer"),
+                            ),
+                            0,
+                          );
+                        {
+                          const _tv10 = _js2;
+                          {
+                            _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
+                            break _js1;
+                          }
+                        }
+                      }
+                      return (_tv14) => {
+                        if (!_tv12) {
+                          _tv12 = true;
+                          _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                        }
+                        return _tv13(_tv14);
+                      };
+                    })(),
+                  ).map((_x) => _f(_x)))(
+                  (() => {
+                    let _tv25 = false;
+                    let _tv15;
+                    let _tv26;
+                    _js3: {
+                      const _js4 = (_v1) =>
+                        _SYS.bcast(
+                          (_tv16) => -_tv16,
+                          _tv15.reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv20) => (_tv21, _tv22) =>
+                                  Array.isArray(_tv21) || Array.isArray(_tv22)
+                                    ? _SYS.bcastFn(_tv20, _tv21, _tv22)
+                                    : _tv20(_tv21, _tv22)
+                              )((_v2, _v3) =>
+                                _SYS.select(
+                                  () => _SYS.bcast((_tv17, _tv18) => _tv17 <= _tv18, _v2, 0),
+                                  () => _v2,
+                                  () => true,
+                                  () =>
+                                    ((_tv19) =>
+                                      _tv19 === _tv19 && _v1 === _v1
+                                        ? typeof _tv19 === "number" && _tv19 === _v1
+                                          ? -_v3
+                                          : _SYS.atNumeric(_._x, _v2, "integer")
+                                        : NaN)(_SYS.atNumeric(_._x, _v2, "integer")),
+                                ),
+                              ),
+                            ),
+                            _v1,
+                          ),
+                        );
+                      {
+                        const _tv23 = _js4;
+                        {
+                          _tv26 = (_tv24) => (Array.isArray(_tv24) ? _SYS.bcastFn(_tv23, _tv24) : _tv23(_tv24));
+                          break _js3;
+                        }
+                      }
+                    }
+                    return (_tv27) => {
+                      if (!_tv25) {
+                        _tv25 = true;
+                        _tv15 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                      }
+                      return _tv26(_tv27);
+                    };
+                  })(),
+                ).filter((_x) => _f(_x)))(
+                (
+                  (_tv28) => (_tv29) =>
+                    Array.isArray(_tv29) ? _SYS.bcastFn(_tv28, _tv29) : _tv28(_tv29)
+                )((_v7) => _v7 === 3),
+              ).length
+          : NaN)(_._x.length),
+  },
   "TouchPointCount@DyckPath": {
     hash: "20ce0d93",
     run: (_SYS, _) =>
@@ -2820,6 +4570,138 @@ export const COMPILED = {
                       )((_v2) => 2 * _SYS.atNumeric(_._x, _v2, "integer") + -1),
                     ) === 0,
                 ),
+              ).length
+          : NaN)(_._x.length),
+  },
+  "TwoCycleCount@Permutation": {
+    hash: "8a49b3db",
+    run: (_SYS, _) =>
+      ((_tv1) =>
+        _tv1 === _tv1
+          ? _tv1 < 1
+            ? 0
+            : ((_f) =>
+                ((_f) =>
+                  ((_f) =>
+                    Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                      _f(_x),
+                    ))(
+                    (() => {
+                      let _tv12 = false;
+                      let _tv2;
+                      let _tv13;
+                      _js1: {
+                        const _js2 = (_v4) =>
+                          _SYS.eq(
+                            _tv2.reduce(
+                              (
+                                (_f) => (_a, _b) =>
+                                  _f(_a, _b)
+                              )(
+                                (
+                                  (_tv7) => (_tv8, _tv9) =>
+                                    Array.isArray(_tv8) || Array.isArray(_tv9)
+                                      ? _SYS.bcastFn(_tv7, _tv8, _tv9)
+                                      : _tv7(_tv8, _tv9)
+                                )((_v5, _v6) =>
+                                  _SYS.select(
+                                    () => _SYS.bcast((_tv3, _tv4) => _tv3 <= _tv4, _v5, 0),
+                                    () => _v5,
+                                    () => true,
+                                    () =>
+                                      _SYS.select(
+                                        () => _SYS.eq(_v5, _v4),
+                                        () => 0,
+                                        () => true,
+                                        () =>
+                                          _SYS.select(
+                                            () => _SYS.bcast((_tv5, _tv6) => _tv5 < _tv6, _v5, _v4),
+                                            () => -1,
+                                            () => true,
+                                            () => _SYS.atNumeric(_._x, _v5, "integer"),
+                                          ),
+                                      ),
+                                  ),
+                                ),
+                              ),
+                              _SYS.atNumeric(_._x, _v4, "integer"),
+                            ),
+                            0,
+                          );
+                        {
+                          const _tv10 = _js2;
+                          {
+                            _tv13 = (_tv11) => (Array.isArray(_tv11) ? _SYS.bcastFn(_tv10, _tv11) : _tv10(_tv11));
+                            break _js1;
+                          }
+                        }
+                      }
+                      return (_tv14) => {
+                        if (!_tv12) {
+                          _tv12 = true;
+                          _tv2 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                        }
+                        return _tv13(_tv14);
+                      };
+                    })(),
+                  ).map((_x) => _f(_x)))(
+                  (() => {
+                    let _tv25 = false;
+                    let _tv15;
+                    let _tv26;
+                    _js3: {
+                      const _js4 = (_v1) =>
+                        _SYS.bcast(
+                          (_tv16) => -_tv16,
+                          _tv15.reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv20) => (_tv21, _tv22) =>
+                                  Array.isArray(_tv21) || Array.isArray(_tv22)
+                                    ? _SYS.bcastFn(_tv20, _tv21, _tv22)
+                                    : _tv20(_tv21, _tv22)
+                              )((_v2, _v3) =>
+                                _SYS.select(
+                                  () => _SYS.bcast((_tv17, _tv18) => _tv17 <= _tv18, _v2, 0),
+                                  () => _v2,
+                                  () => true,
+                                  () =>
+                                    ((_tv19) =>
+                                      _tv19 === _tv19 && _v1 === _v1
+                                        ? typeof _tv19 === "number" && _tv19 === _v1
+                                          ? -_v3
+                                          : _SYS.atNumeric(_._x, _v2, "integer")
+                                        : NaN)(_SYS.atNumeric(_._x, _v2, "integer")),
+                                ),
+                              ),
+                            ),
+                            _v1,
+                          ),
+                        );
+                      {
+                        const _tv23 = _js4;
+                        {
+                          _tv26 = (_tv24) => (Array.isArray(_tv24) ? _SYS.bcastFn(_tv23, _tv24) : _tv23(_tv24));
+                          break _js3;
+                        }
+                      }
+                    }
+                    return (_tv27) => {
+                      if (!_tv25) {
+                        _tv25 = true;
+                        _tv15 = Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1);
+                      }
+                      return _tv26(_tv27);
+                    };
+                  })(),
+                ).filter((_x) => _f(_x)))(
+                (
+                  (_tv28) => (_tv29) =>
+                    Array.isArray(_tv29) ? _SYS.bcastFn(_tv28, _tv29) : _tv28(_tv29)
+                )((_v7) => _v7 === 2),
               ).length
           : NaN)(_._x.length),
   },

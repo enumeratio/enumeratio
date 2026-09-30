@@ -30,7 +30,6 @@ const CORE = [
   "Divide",
   "Equal",
   "Filter",
-  // Entered with the set-partition arc representation: the arcs of every block, as one list.
   "Flatten",
   "Fold",
   "Greater",
@@ -38,6 +37,7 @@ const CORE = [
   "If",
   "Join",
   "LCM",
+  "Last",
   "Length",
   "Less",
   "LessEqual",
@@ -46,15 +46,16 @@ const CORE = [
   "Max",
   "Min",
   "Mod",
+  "Most",
   "Multiply",
+  "Negate",
   "Or",
   "Power",
   "Product",
   "Range",
+  "Rest",
   "Subtract",
   "Sum",
-  "Typed",
-  "Union",
 ];
 
 test("every definition rests on exactly the core", () => {
