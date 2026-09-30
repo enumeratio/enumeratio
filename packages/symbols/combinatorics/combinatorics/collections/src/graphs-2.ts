@@ -423,6 +423,11 @@ function adjacencyGraph(
   const edgeExprs: BoxedExpression[] = [];
   if (symmetric) {
     for (let i = 0; i < n; i++) {
+      // A 1 on the diagonal is its own self-loop, not half of an off-diagonal pair — Wolfram
+      // reads it that way too (an undirected `AdjacencyGraph` with `matrix[[i,i]] != 0` gets
+      // a self-loop at vertex `i`). `j = i + 1` below (correctly) skips the diagonal for
+      // every OTHER pair, so the loop is handled once here rather than falling out of it.
+      if (matrix[i]![i] !== 0) edgeExprs.push(ce.function("UndirectedEdge", [vertexExprs[i]!, vertexExprs[i]!]));
       for (let j = i + 1; j < n; j++) {
         if (matrix[i]![j] !== 0) edgeExprs.push(ce.function("UndirectedEdge", [vertexExprs[i]!, vertexExprs[j]!]));
       }

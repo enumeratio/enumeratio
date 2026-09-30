@@ -25,8 +25,13 @@ function nestValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n
 }
 
 function nestListValues(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
-  const items: BoxedExpression[] = [x];
-  let current = x;
+  // Materialize a lazy seed (e.g. `Range`) before it goes in the list — otherwise the
+  // first element stays a `Range` recipe (`.ops` = its bounds) while every later element,
+  // built by evaluating `fn`, is a real `List`, and anything reading the whole result
+  // (`Transpose`, …) sees a ragged/mixed shape and bails.
+  const seed = x.evaluate({ materialization: true });
+  const items: BoxedExpression[] = [seed];
+  let current = seed;
   for (let i = 0; i < n; i++) {
     current = applyFn(ce, fn, [current]);
     items.push(current);

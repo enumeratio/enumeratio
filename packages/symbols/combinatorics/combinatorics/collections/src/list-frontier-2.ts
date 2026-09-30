@@ -100,14 +100,30 @@ function declareMapAt(ce: ComputeEngine): void {
 // --- Normalize -----------------------------------------------------------------------------
 
 /** `Normalize[v]`: `v / Norm(v)` (Euclidean norm), the zero vector unchanged.
- *  `Normalize[v, f]`: `v / f(v)` for a custom norm function `f`. */
+ *  `Normalize[v, f]`: `v / f(v)` for a custom norm function `f`.
+ *
+ *  `v` need not be a `List` — Wolfram's own `Normalize` accepts any expression, dividing
+ *  it (as a WHOLE) by its norm rather than requiring vector components. A `List` still
+ *  gets the familiar per-component divide (with the default norm summing `Abs^2` over its
+ *  elements); anything else is divided once by `f(v)` (or, with no `f`, `Sqrt(Abs(v)^2)`,
+ *  which is `v`'s own sign/phase). Reading a non-`List`'s `Add` operands as if they were
+ *  vector components — dividing each TERM of a polynomial separately — was the previous
+ *  bug here. */
 function declareNormalize(ce: ComputeEngine): void {
   ce.declare("Normalize", {
-    signature: "(collection<any>, ((any) -> any)?) -> collection<any>",
+    signature: "(any, ((any) -> any)?) -> any",
     lazy: true,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const v = ops[0]?.evaluate();
       if (v === undefined) return undefined;
+      if (v.operator !== "List") {
+        const norm =
+          ops[1] !== undefined
+            ? invoke(ce, ops[1], [v])
+            : ce.function("Sqrt", [ce.function("Power", [ce.function("Abs", [v]), ce.number(2)])]).evaluate();
+        if (norm.isEqual(ce.Zero) === true) return v;
+        return ce.function("Divide", [v, norm]).evaluate();
+      }
       const items = operandsOf(v);
       if (items.length === 0) return v;
       const norm =
@@ -326,42 +342,60 @@ function declarePascalBinomial(ce: ComputeEngine): void {
 // --- CellularAutomaton -----------------------------------------------------------------------
 
 /** One elementary-rule (`k = 2` colors, radius 1) step: `next[i]` is bit
- *  `4·row[i-1] + 2·row[i] + row[i+1]` of `rule`, out-of-range neighbors reading as
- *  `background`. */
-function elementaryStep(rule: number, row: readonly number[], background: number): number[] {
-  const at = (i: number): number => (i < 0 || i >= row.length ? background : row[i]!);
+ *  `4·row[i-1] + 2·row[i] + row[i+1]` of `rule`. A GROWING window reads an out-of-range
+ *  neighbor as `background`; a FIXED window (a bare `{list}` init, no explicit background —
+ *  see `CAInit.grows`) wraps CYCLICALLY instead — confirmed against Wolfram by example
+ *  (`CellularAutomaton[30, {1, 0, 0, 0, 0, 0}, 2]`'s first step sets position 5, which a
+ *  fixed background of 0 at the edges could never do; only wraparound reaches it from
+ *  position 0's seed). */
+function elementaryStep(rule: number, row: readonly number[], background: number, cyclic: boolean): number[] {
+  const at = (i: number): number => {
+    if (i >= 0 && i < row.length) return row[i]!;
+    return cyclic ? row[((i % row.length) + row.length) % row.length]! : background;
+  };
   return row.map((_, i) => (rule >> ((at(i - 1) << 2) | (at(i) << 1) | at(i + 1))) & 1);
 }
 
 interface CAInit {
   readonly cells: number[];
   readonly background: number;
+  // Whether the displayed window WIDENS by one cell per side per generation (an infinite
+  // background around a finite seed, `1` or `{list, background}`) or stays fixed at
+  // `cells.length` (a bare `{list}` with no explicit background — Wolfram treats every
+  // cell outside it as an IMPLICIT 0, but the window itself never grows past `list`'s own
+  // extent, unlike the explicit-background form).
+  readonly grows: boolean;
 }
 
-/** The two initial-condition forms covered: a single seed cell (`1`, Wolfram's shorthand for
- *  one black cell on an otherwise-0 background) or an explicit `{list}` / `{list, background}`. */
+/** The three initial-condition forms covered: a single seed cell (`1`, Wolfram's shorthand
+ *  for one black cell on an otherwise-0 background, window growing), an explicit
+ *  `{list, background}` pair (window growing), or a bare `{list}` (fixed window, implicit
+ *  0 background). */
 function parseCAInit(initExpr: BoxedExpression): CAInit | undefined {
-  if (integerAt(initExpr) === 1) return { cells: [1], background: 0 };
+  if (integerAt(initExpr) === 1) return { cells: [1], background: 0, grows: true };
   if (initExpr.operator !== "List") return undefined;
   const parts = operandsOf(initExpr);
   if (parts.length === 2 && parts[0]!.operator === "List") {
     const cells = operandsOf(parts[0]!).map(integerAt);
     const background = integerAt(parts[1]!);
     if (background === undefined || cells.some((c) => c === undefined)) return undefined;
-    return { cells: cells as number[], background };
+    return { cells: cells as number[], background, grows: true };
   }
   const cells = parts.map(integerAt);
   if (cells.some((c) => c === undefined)) return undefined;
-  return { cells: cells as number[], background: 0 };
+  return { cells: cells as number[], background: 0, grows: false };
 }
 
 /** `CellularAutomaton[rule, init, t]`: `t+1` generations of the elementary (`k = 2`, radius 1)
- *  rule numbered `rule` (0–255, Wolfram's convention) starting from `init`. Every generation
- *  is the SAME fixed width — `init`'s non-background cells span `[minPos, maxPos]`, and the
- *  displayed window is `[minPos - t, maxPos + t]`, the widest region `t` steps could possibly
- *  reach from there; positions outside `init`'s cells read as `background`. (Cells of `init`
- *  that already equal `background` don't widen that span — a `{{1, 0, 0}, 0}` seed behaves
- *  exactly like a single seed cell at position 0, not like a 3-wide active region.)
+ *  rule numbered `rule` (0–255, Wolfram's convention) starting from `init`. A GROWING
+ *  `init` (`1`, or an explicit `{list, background}`) shows the widest region `t` steps
+ *  could possibly reach: `init`'s non-background cells span `[minPos, maxPos]`, and the
+ *  displayed window is `[minPos - t, maxPos + t]`, everything past that reading as
+ *  `background`. (Cells of `init` that already equal `background` don't widen that span —
+ *  a `{{1, 0, 0}, 0}` seed behaves exactly like a single seed cell at position 0, not like
+ *  a 3-wide active region.) A bare `{list}`, with no explicit background, keeps the SAME
+ *  fixed width (`list`'s own) at every generation instead — positions outside it still
+ *  read as an implicit 0 while computing each step, they just never enter the window.
  *  Totalistic/multi-color rule specs and nested-list `{{rule, k, r}, …}` forms are left
  *  unevaluated. */
 function declareCellularAutomaton(ce: ComputeEngine): void {
@@ -376,17 +410,24 @@ function declareCellularAutomaton(ce: ComputeEngine): void {
       if (initExpr === undefined || t === undefined || t < 0) return undefined;
       const parsed = parseCAInit(initExpr);
       if (parsed === undefined) return undefined;
-      const { cells, background } = parsed;
-      const activePositions = cells.map((c, i) => (c !== background ? i : -1)).filter((i) => i >= 0);
-      const minPos = activePositions.length > 0 ? Math.min(...activePositions) : 0;
-      const maxPos = activePositions.length > 0 ? Math.max(...activePositions) : cells.length - 1;
-      const left = minPos - t;
-      const right = maxPos + t;
+      const { cells, background, grows } = parsed;
+      let left: number;
+      let right: number;
+      if (grows) {
+        const activePositions = cells.map((c, i) => (c !== background ? i : -1)).filter((i) => i >= 0);
+        const minPos = activePositions.length > 0 ? Math.min(...activePositions) : 0;
+        const maxPos = activePositions.length > 0 ? Math.max(...activePositions) : cells.length - 1;
+        left = minPos - t;
+        right = maxPos + t;
+      } else {
+        left = 0;
+        right = cells.length - 1;
+      }
       const at0 = (p: number): number => (p >= 0 && p < cells.length ? cells[p]! : background);
       let row = Array.from({ length: right - left + 1 }, (_, k) => at0(left + k));
       const history: number[][] = [row.slice()];
       for (let step = 0; step < t; step++) {
-        row = elementaryStep(rule, row, background);
+        row = elementaryStep(rule, row, background, !grows);
         history.push(row.slice());
       }
       return ce.function(

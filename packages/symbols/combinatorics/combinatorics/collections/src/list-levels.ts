@@ -1,5 +1,12 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import {
+  collectionElements,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 
 // Level-aware and structural list operations compute-engine doesn't answer yet: Partition's
 // multi-dimensional block form and its wraparound/padded overhangs, Flatten's infinite
@@ -185,10 +192,14 @@ const partitionBlocks = (
  *  of length `n`. */
 const sublistIndex = (k: number, n: number): number => (k > 0 ? k : n + k + 1);
 
+/** Non-negative `a mod m` (JS `%` can return negative for a negative dividend). */
+const mathMod = (a: number, m: number): number => ((a % m) + m) % m;
+
 /** `Partition(list, n, d, {kL, kR}, pad?)`: sliding windows whose overhang past either end
- *  of `list` either wraps cyclically (no `pad`) or is filled with `pad`. `kL` pins where
- *  the first window starts relative to `list`'s first element; `kR` pins where the last
- *  window ends relative to `list`'s last element — see `sublistIndex`. */
+ *  of `list` either wraps cyclically (no `pad`), is filled with `pad`, or — `pad` given as
+ *  `{}`, the empty list — is simply dropped, shortening that boundary window. `kL` pins
+ *  where the first window starts relative to `list`'s first element; `kR` pins where the
+ *  last window ends relative to `list`'s last element — see `sublistIndex`. */
 const overhangWindows = (
   ce: ComputeEngine,
   items: readonly BoxedExpression[],
@@ -201,16 +212,24 @@ const overhangWindows = (
   const len = items.length;
   const firstStart = 2 - sublistIndex(kL, n);
   const lastStart = len - sublistIndex(kR, n) + 1;
-  const valueAt = (index: number): BoxedExpression => {
+  // A list `pad` is a cyclic FILL PATTERN, not one value repeated — same convention as
+  // `PadLeft`/`PadRight`'s list padding (see `list-ops-wolfram.ts`'s `cyclicFillAt` doc).
+  // By example, both overhangs read the SAME formula `pad[(index - 1) mod m]`: it's the
+  // pattern's phase as if it extended `items`' own 1-based indexing in both directions.
+  const padList = pad !== undefined && pad.operator === "List" ? operandsOf(pad) : undefined;
+  const valueAt = (index: number): BoxedExpression | undefined => {
     if (index >= 1 && index <= len) return items[index - 1];
+    if (padList !== undefined) return padList.length === 0 ? undefined : padList[mathMod(index - 1, padList.length)];
     if (pad !== undefined) return pad;
-    const wrapped = (((index - 1) % len) + len) % len;
-    return items[wrapped];
+    return items[mathMod(index - 1, len)];
   };
   const windows: BoxedExpression[] = [];
   for (let start = firstStart; start <= lastStart; start += d) {
     const window: BoxedExpression[] = [];
-    for (let k = 0; k < n; k++) window.push(valueAt(start + k));
+    for (let k = 0; k < n; k++) {
+      const value = valueAt(start + k);
+      if (value !== undefined) window.push(value);
+    }
     windows.push(ce.function("List", window));
   }
   return ce.function("List", windows);
@@ -269,7 +288,15 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
   );
 
   // Partition(list, n, d, {kL, kR}, pad?): wraparound (no pad) or padded overhangs — see
-  // `overhangWindows`.
+  // `overhangWindows`. The offset may also be a single integer `k`, shorthand for `{k, k}`
+  // — the same overhang on both ends.
+  const overhangKs = (op: BoxedExpression): readonly [number, number] | undefined => {
+    const scalar = integerAt(op);
+    if (scalar !== undefined) return [scalar, scalar];
+    if (op.operator !== "List" || operandsOf(op).length !== 2) return undefined;
+    const [kL, kR] = operandsOf(op).map((o) => integerAt(o));
+    return kL === undefined || kR === undefined ? undefined : [kL, kR];
+  };
   wrapOperator(
     ce,
     ["Partition", 1, 1],
@@ -277,14 +304,13 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
       (ops.length === 4 || ops.length === 5) &&
       integerAt(ops[1]) !== undefined &&
       integerAt(ops[2]) !== undefined &&
-      ops[3].operator === "List" &&
-      operandsOf(ops[3]).length === 2 &&
-      operandsOf(ops[3]).every((op) => integerAt(op) !== undefined),
+      overhangKs(ops[3]) !== undefined,
     () => (ops) => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const n = integerAt(ops[1])!;
       const d = integerAt(ops[2])!;
-      const [kL, kR] = operandsOf(ops[3]).map((op) => integerAt(op)!);
+      const [kL, kR] = overhangKs(ops[3])!;
       return overhangWindows(ce, items, n, d, kL, kR, ops[4]);
     },
   );

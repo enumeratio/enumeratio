@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import { collectionElements, integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // A second wave of Wolfram list heads compute-engine doesn't have at all (Riffle, Gather,
 // GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue), plus two heads that exist
@@ -65,7 +65,8 @@ const partWithSpecs = (
 ): BoxedExpression | undefined => {
   if (specs.length === 0) return expr;
   const [spec, ...rest] = specs;
-  const items = operandsOf(expr);
+  const items = collectionElements(expr);
+  if (items === undefined) return undefined;
   if (spec.operator === "Span") {
     const indices = spanIndices(spec, items.length);
     if (indices === undefined) return undefined;
@@ -84,18 +85,25 @@ const partWithSpecs = (
   return element === undefined ? undefined : partWithSpecs(ce, element, rest);
 };
 
-/** `Riffle(list, x)` where `x` is a list: pair `list[i]` with `x[i]`, dropping whichever runs out. */
-const riffleZip = (
+/**
+ * `Riffle(list, xs)` — `xs` a LIST, no explicit period: a separator after every element of
+ * `list`, drawn cyclically from `xs` (`xs[i % xs.length]`) — EXCEPT the very last element,
+ * which gets a trailing separator only when `xs` has at least as many elements as `list`
+ * (`Riffle({1..10}, -{1..10})` ends in `-10`; `Riffle({1..9}, {x, y})`, `xs` too short to
+ * reach that far, ends on `9` with no trailing separator). Confirmed against both shapes by
+ * example — Wolfram's own docs state the cycling but not this asymmetry at the tail. */
+const riffleList = (
   ce: ComputeEngine,
   items: readonly BoxedExpression[],
   xs: readonly BoxedExpression[],
-): BoxedExpression => {
+): BoxedExpression | undefined => {
+  if (xs.length === 0) return undefined;
   const result: BoxedExpression[] = [];
-  const length = Math.max(items.length, xs.length);
-  for (let i = 0; i < length; i++) {
-    if (i < items.length) result.push(items[i]);
-    if (i < xs.length) result.push(xs[i]);
-  }
+  items.forEach((item, i) => {
+    result.push(item);
+    const isLast = i === items.length - 1;
+    if (!isLast || xs.length >= items.length) result.push(xs[i % xs.length]!);
+  });
   return ce.box(["List", ...result]);
 };
 
@@ -165,20 +173,40 @@ const padRagged = (
   return ce.box(["List", ...padded]);
 };
 
-/** `PadLeft`/`PadRight(list, n, x?)`: pad to length `n`, or truncate to the nearer `n` elements. */
+/** `PadLeft`/`PadRight(list, n, x?)`: pad to length `n` (`fillAt(i)` gives the `i`-th
+ *  filler element, `i` counting outward from the list), or truncate to the nearer `n`. */
 const padTo = (
   ce: ComputeEngine,
   items: readonly BoxedExpression[],
   n: number,
-  fill: BoxedExpression,
+  fillAt: (i: number) => BoxedExpression,
   side: "left" | "right",
 ): BoxedExpression => {
   if (n >= items.length) {
-    const filler = Array.from({ length: n - items.length }, () => fill);
+    const filler = Array.from({ length: n - items.length }, (_, i) => fillAt(i));
     return ce.box(["List", ...(side === "left" ? [...filler, ...items] : [...items, ...filler])]);
   }
   const kept = side === "left" ? items.slice(items.length - n) : items.slice(0, n);
   return ce.box(["List", ...kept]);
+};
+
+/** Non-negative `a mod m` (JS `%` can return negative for a negative dividend). */
+const mathMod = (a: number, m: number): number => ((a % m) + m) % m;
+
+/**
+ * `PadLeft`/`PadRight(list, n, {e1, …, em})`: cyclically repeat the pattern's elements,
+ * NOT starting over at `e1` at the boundary — matched against Wolfram by example, since
+ * its docs state the cycling but not the phase. For `PadRight`, filler index `i` (0 =
+ * adjacent to `list`) sits at absolute position `list.length + i` in the final array and
+ * reads `pad[(list.length + i) mod m]` — the pattern is phase-locked to the START of the
+ * whole array, so it "continues" the indexing `list` itself would have occupied.
+ * `PadLeft` has no such anchor to its left, and empirically keys off `pad[(i - 1) mod m]`
+ * instead — i.e. the element immediately before the boundary is `pad[m - 1]`, the LAST
+ * pattern element, one whole pass short of restarting at `pad[0]`.
+ */
+const cyclicFillAt = (pad: readonly BoxedExpression[], side: "left" | "right", listLength: number) => {
+  const m = pad.length;
+  return (i: number): BoxedExpression => pad[side === "left" ? mathMod(i - 1, m) : mathMod(listLength + i, m)];
 };
 
 /** Declare Riffle, Span, UpTo, Gather, GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue. */
@@ -223,7 +251,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
     () => (ops) => {
       const n = integerAt(operandsOf(ops[1])[0]);
       if (n === undefined || n <= 0) return undefined;
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const chunks: BoxedExpression[] = [];
       for (let i = 0; i < items.length; i += n) {
         chunks.push(ce.box(["List", ...items.slice(i, i + n)]));
@@ -255,17 +284,25 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const list = ops[0];
       const x = ops[1];
-      if (list === undefined || x === undefined || list.operator !== "List") return undefined;
-      const items = operandsOf(list);
+      if (list === undefined || x === undefined) return undefined;
+      // Materialize before reading either operand's `.operator`: a lazy `Range` reads as
+      // head "Range", not "List", and would otherwise bail here or be riffled by its own
+      // two bounds instead of its elements (see `collectionElements`'s doc in
+      // @enumeratio/engine — used elsewhere in this file; inlined here since Riffle needs
+      // the materialized `.operator` itself, not just the elements).
+      const materializedList = list.evaluate({ materialization: true });
+      if (materializedList.operator !== "List") return undefined;
+      const items = operandsOf(materializedList);
       const n = ops[2] === undefined ? undefined : integerAt(ops[2]);
       if (ops[2] !== undefined && n === undefined) return undefined;
-      if (x.operator === "List" && n === undefined) return riffleZip(ce, items, operandsOf(x));
+      const materializedX = x.evaluate({ materialization: true });
       const groupSize = n === undefined ? 1 : Math.max(1, n - 1);
-      if (x.operator === "List") {
-        const xs = operandsOf(x);
+      if (materializedX.operator === "List" && n === undefined) return riffleList(ce, items, operandsOf(materializedX));
+      if (materializedX.operator === "List") {
+        const xs = operandsOf(materializedX);
         return rifflePeriodic(ce, items, (i) => xs[i], groupSize);
       }
-      return rifflePeriodic(ce, items, () => x, groupSize);
+      return rifflePeriodic(ce, items, () => materializedX, groupSize);
     },
   });
 
@@ -274,7 +311,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("Gather", {
     signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const test = ops[1];
       const sameGroup =
         test === undefined
@@ -289,7 +327,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("GatherBy", {
     signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const f = ops[1];
       if (f === undefined) return undefined;
       const groups: { key: BoxedExpression; members: BoxedExpression[] }[] = [];
@@ -307,7 +346,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("Split", {
     signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const test = ops[1];
       const same =
         test === undefined
@@ -322,7 +362,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("SplitBy", {
     signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const f = ops[1];
       if (f === undefined) return undefined;
       const keys = items.map((item) => invoke(ce, f, [item]));
@@ -345,7 +386,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("SortBy", {
     signature: "(collection<T>, (T) any -> any) -> collection<T> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const items = operandsOf(ops[0]);
+      const items = collectionElements(ops[0]);
+      if (items === undefined) return undefined;
       const f = ops[1];
       if (f === undefined) return undefined;
       const keyed = items.map((item, index) => ({ item, key: invoke(ce, f, [item]), index }));
@@ -367,9 +409,23 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
         if (list === undefined || list.operator !== "List") return undefined;
         const items = operandsOf(list);
         if (ops[1] === undefined) return padRagged(ce, items, side);
-        const n = integerAt(ops[1]);
-        if (n === undefined) return undefined;
-        return padTo(ce, items, n, ops[2] ?? ce.Zero, side);
+        const nRaw = integerAt(ops[1]);
+        if (nRaw === undefined) return undefined;
+        // A negative n keeps |n| as the target length but pads (or truncates from) the
+        // OTHER side — Wolfram's own way of asking PadLeft for a right pad and vice versa,
+        // rather than a separate argument.
+        const n = Math.abs(nRaw);
+        const effectiveSide = nRaw < 0 ? (side === "left" ? "right" : "left") : side;
+        const fill = ops[2];
+        if (fill !== undefined && fill.operator === "List") {
+          // Already confirmed literally `List`-headed above, not a lazy collection — a
+          // plain `operandsOf` is its elements already.
+          const pad = operandsOf(fill);
+          if (pad.length === 0) return undefined;
+          return padTo(ce, items, n, cyclicFillAt(pad, effectiveSide, items.length), effectiveSide);
+        }
+        const scalar = fill ?? ce.Zero;
+        return padTo(ce, items, n, () => scalar, effectiveSide);
       },
     });
   }

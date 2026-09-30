@@ -325,16 +325,32 @@ export function declareListHeads(ce: ComputeEngine): void {
 
   // Union(...): Wolfram's Union sorts; compute-engine keeps first-seen order. Variadic —
   // any non-empty call is in scope, so the guard is a floor, not an exact count.
+  //
+  // compute-engine's own native declines eagerly past `MAX_SIZE_EAGER_COLLECTION` (100)
+  // elements total, a generic safety cap against unbounded/lazy collections — but every
+  // operand here is already a materialized, finite `List`, so there's nothing unbounded to
+  // guard against; falls back to computing the union directly rather than inheriting a
+  // cap Wolfram itself doesn't have.
   wrapOperator(
     ce,
     ["Union", 1],
     () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
-      if (result === undefined || result.operator !== "Set") return result;
-      const sorted = [...operandsOf(result)];
-      sorted.sort(naturalCompare);
-      return ce.box(["Set", ...sorted]);
+      if (result !== undefined && result.operator === "Set") {
+        const sorted = [...operandsOf(result)];
+        sorted.sort(naturalCompare);
+        return ce.box(["Set", ...sorted]);
+      }
+      if (!ops.every((op) => op.operator === "List")) return result;
+      const elements: BoxedExpression[] = [];
+      for (const op of ops) {
+        for (const element of operandsOf(op)) {
+          if (elements.every((e) => e.isEqual(element) !== true)) elements.push(element);
+        }
+      }
+      elements.sort(naturalCompare);
+      return ce.box(["Set", ...elements]);
     },
     { min: 1 },
   );
@@ -357,6 +373,12 @@ export function declareListHeads(ce: ComputeEngine): void {
     ["Length", 1],
     () => true,
     (native) => (ops, options) => {
+      // A string is atomic to Length (0), same as any other atom — Wolfram's
+      // Length["string"] is 0, not its character count. Checked before the native
+      // call: compute-engine's own Length declines on a String argument (an Error),
+      // which fell through to `operandsOf`, and a String's `.ops` enumerates its
+      // characters.
+      if (stringAt(ops[0]) !== undefined) return ce.Zero;
       const result = native?.(ops, options);
       if (result !== undefined && result.operator !== "Error") return result;
       return ops[0].isCollection ? undefined : ce.number(operandsOf(ops[0]).length);
