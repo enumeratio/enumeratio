@@ -7,3 +7,4 @@ drop-list-a-b-c-d-exponentiale-1	Drop[List[a, b, c, d, E], 1]	{b, c, d, E}	\text
 drop-list-a-b-c-d-exponentiale-neg-1	Drop[List[a, b, c, d, E], -1]	{a, b, c, d}			disagree
 drop-list-a-b-c-d-exponentiale-4	Drop[List[a, b, c, d, E], 4]	{E}	\text{Drop}[\{a,b,c,d,e\},4]	\{e\}	
 drop-list-1-2-negative-5-overflow-declines	Drop[List[1, 2], -5]				
+drop-list-1-2-5-overflow-declines	Drop[List[1, 2], 5]				

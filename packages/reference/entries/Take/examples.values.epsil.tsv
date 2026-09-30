@@ -7,3 +7,4 @@ take-list-1-2-3-4-5-negative-2	take([1, 2, 3, 4, 5], -2)	[4, 5]
 take-list-a-b-c-d-exponentiale-f-g-h-4	take([a, b, c, d, exponentialE, f, g, h], 4)	[a, b, c, d]
 take-list-1-2-negative-5-overflow-declines	take([1, 2], -5)	take([1, 2], -5)
 take-list-a-b-c-d-exponentiale-neg-1		
+take-list-1-2-5-overflow-declines	take([1, 2], 5)	take([1, 2], 5)

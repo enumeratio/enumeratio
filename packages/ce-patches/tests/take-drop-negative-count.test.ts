@@ -33,12 +33,20 @@ test("a negative count past the source length declines (stays unevaluated), as W
   expect([...take.each()]).toEqual([]);
 });
 
-// Positive overflow (`Take(list, 10)` on a 5-element list) still CLAMPS on a bare engine --
-// unlike the negative direction, that is native's existing behaviour, untouched by this
-// patch (out of scope here; reported, not fixed).
-test("positive overflow is untouched -- native still clamps, unlike the negative direction", () => {
-  expect(materialized(["Take", list, 10])).toEqual(["List", 1, 2, 3, 4, 5]);
-  expect(materialized(["Drop", list, 10])).toEqual(["List"]);
+test("a positive count past the source length declines too, not native's clamp", () => {
+  expect(materialized(["Take", list, 10])).toEqual(["Take", list, 10]);
+  expect(materialized(["Drop", list, 10])).toEqual(["Drop", list, 10]);
+  const drop = ce.box(["Drop", list, 10]);
+  expect(drop.count).toBeUndefined();
+  expect(drop.at(1)).toBeUndefined();
+  expect([...drop.each()]).toEqual([]);
+});
+
+test("a count of exactly the source length still works, either sign", () => {
+  expect(materialized(["Take", list, 5])).toEqual(["List", 1, 2, 3, 4, 5]);
+  expect(materialized(["Take", list, -5])).toEqual(["List", 1, 2, 3, 4, 5]);
+  expect(materialized(["Drop", list, 5])).toEqual(["List"]);
+  expect(materialized(["Drop", list, -5])).toEqual(["List"]);
 });
 
 test("Take(l, -n) on a lazy source (Range) stays exact, not just the materialized List case", () => {
@@ -77,6 +85,10 @@ test("a compiled negative count past the source length throws -- a compiled func
   };
   expect(() => compile(takeFn)(-10)).toThrow();
   expect(() => compile(dropFn)(-10)).toThrow();
+  expect(() => compile(takeFn)(10)).toThrow();
+  expect(() => compile(dropFn)(10)).toThrow();
+  expect(compile(takeFn)(5)).toEqual([1, 2, 3, 4, 5]);
+  expect(compile(dropFn)(5)).toEqual([]);
   // Not a clamp, and not thrown, for a count within range.
   expect(compile(takeFn)(-2)).toEqual([4, 5]);
 });
