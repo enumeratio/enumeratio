@@ -31,3 +31,16 @@ test("calls queue behind a library still declaring", async () => {
   expect([a.json, b.json]).toEqual([2, 4]);
   expect(log).toEqual(["doubling"]);
 });
+
+test("an answer carries the display the host builds, and none when building it fails", async () => {
+  const shown = createKernel(new ComputeEngine(), [], { display: (_ce, json) => ({ StandardForm: String(json) }) });
+  expect(await shown.evaluate(["Add", 1, 2])).toMatchObject({ ok: true, json: 3, boxes: { StandardForm: "3" } });
+  const failing = createKernel(new ComputeEngine(), [], {
+    display: () => {
+      throw new Error("no display");
+    },
+  });
+  const answer = await failing.evaluate(["Add", 1, 2]);
+  expect(answer).toMatchObject({ ok: true, json: 3 });
+  expect(answer.boxes).toBeUndefined();
+});
