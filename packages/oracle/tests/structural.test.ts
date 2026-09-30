@@ -64,6 +64,24 @@ test("truth values reduce to booleans whichever evaluator reads the rest", () =>
   expect(compareTrees(reduce("True", symbolic), reduce("True", symbolic))).toBe("agree");
 });
 
+test("Rule and KeyValuePair compare by their two operands, not their head", () => {
+  // `fromWolfram` reads a scanned `Rule[x, 2]` back as `KeyValuePair` (the ambiguous reverse
+  // of `HEADS`, kept for the `Over` option's own round trip in from-wolfram.test.ts), while
+  // Maximize/FindInstance bindings and Association entries are built as `Rule` directly — so
+  // this pair has to compare equal, the same List vs. Tuple leniency `SEQUENCE_HEADS` gives.
+  const ours = ["Rule", "x", 2] as MathJSON;
+  const theirs = ["KeyValuePair", "x", 2] as MathJSON;
+  expect(reduce(ours, symbolic)).toEqual(reduce(theirs, symbolic));
+  expect(compareTrees(reduce(ours, symbolic), reduce(theirs, symbolic))).toBe("agree");
+  // Nested inside a List, as Maximize's `{value, {x -> argmax}}` answer shape does.
+  const wrapped = ["List", 3, ["List", ours]] as MathJSON;
+  const wrappedTheirs = ["List", 3, ["List", theirs]] as MathJSON;
+  expect(compareTrees(reduce(wrapped, symbolic), reduce(wrappedTheirs, symbolic))).toBe("agree");
+  // A genuine value difference on either side still disagrees.
+  const different = ["KeyValuePair", "x", 3] as MathJSON;
+  expect(compareTrees(reduce(ours, symbolic), reduce(different, symbolic))).toBe("disagree");
+});
+
 describe("comparison past the double range and of exact rationals", () => {
   test("decimals too large for a double still compare by their digits", () => {
     expect(compare("5.57316894480137913364e+373", "5.57316894480137913364320296291e+373")).toBe("agree");

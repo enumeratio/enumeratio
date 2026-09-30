@@ -22,6 +22,14 @@ export type Tree = Leaf | readonly Tree[];
 /** Heads whose operands are compared element-wise. `Set` is reduced order-free. */
 const SEQUENCE_HEADS = new Set(["List", "Tuple", "Set"]);
 
+/** A key/value pair, compared by its two operands, not its head — `fromWolfram` reads a
+ * Wolfram `Rule[k, v]` back as `KeyValuePair` (`REVERSE_HEADS`'s ambiguity, resolved for the
+ * `Over` option's own round trip), while our own kernels build `Rule` directly for a binding
+ * or an `Association` entry (optimize.ts, find-instance.ts, expression-ops.ts,
+ * list-functional.ts). Without this, an otherwise-agreeing `Maximize`/`FindInstance`/
+ * `Association` answer reads as a false disagreement on head spelling alone. */
+const PAIR_HEADS = new Set(["Rule", "KeyValuePair"]);
+
 /** Numbers by value, everything else by its text — a stable order for a Set. */
 const byValue = (a: Tree, b: Tree): number =>
   typeof a === "number" && typeof b === "number" ? a - b : JSON.stringify(a).localeCompare(JSON.stringify(b));
@@ -78,6 +86,9 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   if (Array.isArray(expr) && typeof expr[0] === "string" && SEQUENCE_HEADS.has(expr[0])) {
     const items = expr.slice(1).map((item) => reduce(item, evaluate));
     return expr[0] === "Set" ? [...items].toSorted(byValue) : items;
+  }
+  if (Array.isArray(expr) && typeof expr[0] === "string" && PAIR_HEADS.has(expr[0]) && expr.length === 3) {
+    return expr.slice(1).map((item) => reduce(item, evaluate));
   }
   // A carrier CONSTRUCTOR call (`Permutation([2, 1, 3])`) reduces to its contents, exactly
   // like `emit.ts` unwraps it for an external system — we decide what counts as equivalent,
