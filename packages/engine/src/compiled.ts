@@ -117,10 +117,22 @@ export function definitionHash(expression: unknown): string {
   return hash.toString(16).padStart(8, "0");
 }
 
-/** Whether evaluating `expression` is pure, by compute-engine's effect system, with its free
- *  variables typed. A pure definition's answer depends on nothing but the definition and its
- *  input, so it can be cached across engines (`pureResult`). */
-export function isPureDefinition(
+/**
+ * compute-engine's effects that can't change what a definition answers, so an answer computed
+ * with them may be reused (`pureResult`). Of its effect labels:
+ *
+ * - `console`: output only; a reused answer just doesn't log again.
+ * - `fs_write`: the write is the point, so skipping it changes the world. Not cacheable.
+ * - `random`, `entropy`: the answer differs by design. (A seeded draw could be keyed by its seed.)
+ * - `time`, `network`, `fs_read`, `environment`: the answer depends on outside state.
+ * - `scope`, `state`: the answer depends on bindings or mutable state.
+ */
+export const CACHEABLE_EFFECTS: ReadonlySet<string> = new Set(["console"]);
+
+/** Whether a definition's answer depends only on the definition and its input, by compute-
+ *  engine's effect system with its free variables typed: pure, or with only effects in
+ *  `CACHEABLE_EFFECTS`. Such an answer can be shared across engines (`pureResult`). */
+export function isCacheableDefinition(
   ce: ComputeEngine,
   expression: unknown,
   types: Readonly<Record<string, string>>,
@@ -128,7 +140,8 @@ export function isPureDefinition(
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
-    return ce.box(expression as never).isPure;
+    const effects = ce.box(expression as never).effects;
+    return effects === undefined || (effects !== "any" && effects.every((label) => CACHEABLE_EFFECTS.has(label)));
   } catch {
     return false;
   } finally {

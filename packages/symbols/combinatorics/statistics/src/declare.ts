@@ -4,7 +4,7 @@
 // to drift from; what runs fast is compiled from the definition itself (compiled.ts). Where a fast path does exist (the permutation statistics already in
 // @enumeratio/combinatorics/collections), the two are held together by a differential test instead.
 
-import { definitionHash, isPureDefinition, type MathJSON, pureResult } from "@enumeratio/engine/compiled";
+import { definitionHash, isCacheableDefinition, type MathJSON, pureResult } from "@enumeratio/engine/compiled";
 import { compiledStatistic } from "./compiled.ts";
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
@@ -32,7 +32,8 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
   // A pure definition's answer depends only on the definition and the subject, so it is shared
   // by every engine.
   let pure = purity.get(definition);
-  if (pure === undefined) purity.set(definition, (pure = isPureDefinition(ce, definition.expr, { [SUBJECT]: "any" })));
+  if (pure === undefined)
+    purity.set(definition, (pure = isCacheableDefinition(ce, definition.expr, { [SUBJECT]: "any" })));
   const answer = pure ? pureResult(definitionHash(definition.expr), subject.json, compute) : compute();
   return ce.box((answer ?? "Nothing") as never);
 }

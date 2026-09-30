@@ -9,7 +9,7 @@ import {
   compileTyped,
   definitionHash,
   fromJs,
-  isPureDefinition,
+  isCacheableDefinition,
   type MathJSON,
   pureResult,
   toJs,
@@ -65,8 +65,8 @@ export function fastDefinition(options: {
     pure ??=
       cache &&
       from !== undefined &&
-      isPureDefinition(ce, body, { _raw: from }) &&
-      (guard === undefined || (to !== undefined && isPureDefinition(ce, guard, { _raw: from, _image: to })));
+      isCacheableDefinition(ce, body, { _raw: from }) &&
+      (guard === undefined || (to !== undefined && isCacheableDefinition(ce, guard, { _raw: from, _image: to })));
     return pure ? pureResult(hash, contents, () => evaluate(contents)) : evaluate(contents);
   };
 }
