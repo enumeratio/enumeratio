@@ -298,20 +298,11 @@ export const lerchPhiLibrary: LibraryRecord = {
   },
 };
 
-// --- PolyLog and LerchPhi past a double's digits ------------------------------------
-// compute-engine evaluates both natively, in doubles only. At real arguments inside the
-// Lerch series' disk of convergence these answer to the engine's precision on the
+// --- PolyLog past a double's digits ------------------------------------
+// compute-engine evaluates PolyLog natively, in doubles only. At real arguments inside the
+// Lerch series' disk of convergence this answers to the engine's precision on the
 // arbitrary-precision series (lerch-phi-big.ts); everything else is the native handler's.
-// Upstream this is a branch at the top of each native `evaluate`.
-
-/** Φ(z, s, a) to `ce.precision` digits for real z, s and a where the series converges;
- * `undefined` anywhere else, for the native handler to answer. */
-export function lerchPhiPrecise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
-  if (ops.length !== 3) return undefined;
-  const [zb, sb, ab] = ops.map((x) => bigRealOperand(ce, x));
-  const phi = zb && sb && ab ? lerchPhiBig(zb, sb, ab, ce.precision) : undefined;
-  return phi === undefined ? undefined : bigResult(ce, phi);
-}
+// Upstream this is a branch at the top of the native `evaluate`.
 
 /** Liₛ(z) = z·Φ(z, s, 1) to `ce.precision` digits for real s and z where the series
  * converges; `undefined` anywhere else. */

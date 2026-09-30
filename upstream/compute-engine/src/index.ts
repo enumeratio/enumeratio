@@ -1,6 +1,8 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { polylogPrecision } from "./patches/polylog-precision.ts";
+import { hurwitzZetaForms } from "./patches/hurwitz-zeta-forms.ts";
+import { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 import { dirichlet } from "./patches/dirichlet.ts";
 import { barnesGPatch } from "./patches/barnes-g.ts";
 import { logGammaPatch } from "./patches/log-gamma.ts";
@@ -50,6 +52,8 @@ export {
   round as bigRound,
 } from "./compute-engine/numerics/hurwitz-zeta-big.ts";
 export { polylogPrecision, polyLogPrecise } from "./patches/polylog-precision.ts";
+export { hurwitzZetaForms } from "./patches/hurwitz-zeta-forms.ts";
+export { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 export {
   lerchPhiPatch,
   lerchPhi,
@@ -166,6 +170,8 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 export const PATCHES: readonly Patch[] = [
   lerchPhiPatch,
   polylogPrecision,
+  hurwitzZetaForms,
+  polygammaLogGamma,
   dirichlet,
   barnesGPatch,
   logGammaPatch,
