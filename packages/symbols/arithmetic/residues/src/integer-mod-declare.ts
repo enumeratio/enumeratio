@@ -7,7 +7,6 @@ import {
   emit,
   operandsOf,
   symbolNameOf,
-  widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
 import { gcd, mod } from "./arith.ts";
@@ -21,7 +20,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 //   IntegerModRing(m)   ℤ/m itself, as a finite collection of those elements
 //
 // As with AdicNumeral there is no number-type extension point, so `Add`, `Multiply`,
-// `Negate`, `Divide` and `Power` are wrapped to answer when an IntegerMod shows up.
+// `Negate`, `Divide` and `Power` get rows to answer when an IntegerMod shows up.
 
 export const INTEGER_MOD = "IntegerMod";
 export const INTEGER_MOD_RING = "IntegerModRing";
@@ -134,13 +133,13 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   // compute-engine's QuotientRing(Integers, m) — what `\mathbb{Z}/m\mathbb{Z}` parses to — is
   // inert; over the integers it specialises to IntegerModRing(m).
-  wrapOperator(
-    ce,
-    ["QuotientRing", "Integers", 2],
-    (ops) => ops[0] !== undefined && symbolNameOf(ops[0]) === "Integers" && (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
-    () => (ops) => ce.function(INTEGER_MOD_RING, [ops[1]!]),
-    2,
-  );
+  defineOverload(ce, "QuotientRing", {
+    package: "residues",
+    symbols: "^Integers$",
+    arity: 2,
+    when: (ops) => ops[0] !== undefined && symbolNameOf(ops[0]) === "Integers" && (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
+    evaluate: (ops) => ce.function(INTEGER_MOD_RING, [ops[1]!]),
+  });
 
   /** Every operand as an element of the ring the IntegerMod operands meet in. */
   const lift = (ops: readonly BoxedExpression[]): IntegerMod[] | undefined => {
@@ -200,19 +199,18 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   // ChineseRemainder(IntegerMod(r₁, m₁), …): the class mod lcm(mᵢ) reducing to each — the
   // native (residues, moduli) form is untouched.
-  widenSignature(ce, "ChineseRemainder", "(any+) -> integer | value", (op) => op.operator === "List");
-  wrapOperator(
-    ce,
-    ["ChineseRemainder", "x", "y"],
-    // `ops.every` is vacuously true on an empty call — guard the arity explicitly rather
-    // than let a zero-argument ChineseRemainder() slip through as "every IntegerMod".
-    (ops) => ops.length > 0 && ops.every(isIntegerMod),
-    () => (ops) => {
+  defineOverload(ce, "ChineseRemainder", {
+    package: "residues",
+    signature: "(value+) -> value",
+    on: [INTEGER_MOD],
+    native: (op) => op.operator === "List",
+    when: (ops) => ops.every(isIntegerMod),
+    evaluate: (ops) => {
       const xs = ops.map(integerModOf);
       if (!xs.every((x) => x !== undefined)) return undefined;
       return write(Z.chineseRemainder(xs)) ?? inconsistent(xs.map((x) => [x.residue, x.modulus]));
     },
-  );
+  });
   // The native (residues, moduli) form declines an inconsistent system silently.
   const integers = (op: BoxedExpression | undefined): bigint[] | undefined => {
     if (op?.operator !== "List") return undefined;

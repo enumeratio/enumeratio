@@ -9,6 +9,8 @@ signatures:
     library: enumeratio-residues
     type: (set<any>, any) -> set
     overrides: compute-engine
+    symbols:
+      - ^Integers$
 seeAlso:
   - IntegerModRing
   - IntegerMod
