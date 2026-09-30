@@ -76,7 +76,7 @@ n-lerchphi-neg-1-0p5-5-over-2	N(\mathrm{LerchPhi}(-1, 0.5, \frac{5}{2}))	0.346\,
 n-lerchphi-neg-1-neg-1-1	N(\mathrm{LerchPhi}(-1, -1, 1))	0.25
 n-lerchphi-neg-1-neg-1-2	N(\mathrm{LerchPhi}(-1, -1, 2))	0.75
 n-lerchphi-neg-1-neg-1-0p5	N(\mathrm{LerchPhi}(-1, -1, 0.5))	0
-n-lerchphi-neg-1-neg-1-5-over-2	N(\mathrm{LerchPhi}(-1, -1, \frac{5}{2}))	1.0
+n-lerchphi-neg-1-neg-1-5-over-2	N(\mathrm{LerchPhi}(-1, -1, \frac{5}{2}))	1
 n-lerchphi-neg-1-2-plus-i-1	N(\mathrm{LerchPhi}(-1, 2+i, 1))	0.847\,689\,164\,837\,414+0.098\,268\,389\,570\,016\,2i
 n-lerchphi-neg-1-2-plus-i-2	N(\mathrm{LerchPhi}(-1, 2+i, 2))	0.152\,310\,835\,162\,586\,56-0.098\,268\,389\,570\,016\,2i
 n-lerchphi-neg-1-2-plus-i-0p5	N(\mathrm{LerchPhi}(-1, 2+i, 0.5))	2.744\,919\,723\,014\,342\,5+2.651\,972\,944\,738\,276\,3i

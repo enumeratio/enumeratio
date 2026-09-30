@@ -14,8 +14,14 @@ export const hurwitzZetaForms: Patch = {
   heads: ["HurwitzZeta"],
 
   fixed: (ce) => {
-    const closed = ce.box(["HurwitzZeta", -1, "a"]).evaluate();
-    if (closed.operator === "HurwitzZeta") return false;
+    // In a scope of its own: boxing the free `a` would otherwise declare it on the live
+    // engine this check runs on.
+    ce.pushScope();
+    try {
+      if (ce.box(["HurwitzZeta", -1, "a"]).evaluate().operator === "HurwitzZeta") return false;
+    } finally {
+      ce.popScope();
+    }
     // ζ(−3, 1 + i) = −B₄(1 + i)/4 = 1/120 + i/2 exactly.
     const r = ce.box(["HurwitzZeta", -3, ["Complex", 1, 1]]).N();
     return Math.abs(r.re - 1 / 120) < 1e-15 && Math.abs(r.im - 0.5) < 1e-15;

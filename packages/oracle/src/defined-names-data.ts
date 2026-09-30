@@ -404,6 +404,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "IncompleteEllipticE",
   "IncompleteEllipticF",
   "IncompleteEllipticPi",
+  "Indeterminate",
   "IndexOf",
   "Inequality",
   "IntegerCompositions",

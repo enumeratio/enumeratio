@@ -638,7 +638,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Coalesce",
     kind: "operator",
     description:
-      "Return the first operand that is not ABSENT (`Missing`, `Undefined` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent).",
+      "Return the first operand that is not ABSENT (`Missing`, `Undefined` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent). `Indeterminate` is a value and is not absent.",
     signature: "(any+) -> unknown",
   },
   {
@@ -1838,6 +1838,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     wikidata: "Q7881229",
   },
   {
+    name: "Indeterminate",
+    kind: "constant",
+    description:
+      "Indeterminate, the exact answer to an indeterminate form such as 0/0: a number with no value. Its numeric approximation is NaN.",
+    signature: "number",
+  },
+  {
     name: "IndexOf",
     kind: "operator",
     description:
@@ -2035,7 +2042,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "IsMissing",
     kind: "operator",
     description:
-      "True if the value is ABSENT — the `Missing` or `Undefined` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`).",
+      "True if the value is ABSENT — the `Missing` or `Undefined` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`). `Indeterminate`, the exact answer to an indeterminate form such as `0/0`, is a value and is not absent.",
     signature: "(any) -> boolean",
   },
   {
@@ -2267,6 +2274,12 @@ export const engineSymbols: readonly EngineSymbol[] = [
     keywords: ["size"],
   },
   {
+    name: "LerchPhi",
+    kind: "operator",
+    description: "Lerch transcendent Φ(z,s,a) = Σ_{k=0}^∞ zᵏ(k+a)^{-s}",
+    signature: "(complex, complex, complex) -> number",
+  },
+  {
     name: "Less",
     kind: "operator",
     description: "Less-than comparison (strictly less than).",
@@ -2328,6 +2341,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Create a list from the elements of a collection.",
     signature: "(value*) -> list",
+  },
+  {
+    name: "ListJoin",
+    kind: "operator",
+    description:
+      "Join the elements of some collections into a list. This is the canonical form of a list literal with a spread: `[...a, 0]` is `ListJoin(a, [0])`. The result is a list whatever the kind of the operands: the elements of a set operand are included in the iteration order of the set, without deduplication. A tuple operand is included as a single element, and so is a scalar operand.",
+    signature: "(collection<any>*) -> list",
   },
   {
     name: "Ln",
@@ -2628,7 +2648,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "NaN",
     kind: "constant",
-    description: "Not a Number, the result of an undefined or unrepresentable numeric operation.",
+    description:
+      "Not a Number, the result of a floating-point operation that is undefined or unrepresentable, such as 0.0/0.0. An exact form with no value, such as 0/0, is Indeterminate.",
     signature: "number",
   },
   {
@@ -2873,7 +2894,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "NumberFrom",
     kind: "operator",
     description:
-      'NumberFrom(s): the number the string `s` denotes — optional surrounding whitespace, an optional sign, then ASCII digits with an optional "." fraction and an optional e/E exponent, or one of "oo", "+oo", "-oo", "NaN". The integer part may be omitted before a fraction (".5" is 0.5); a trailing "." with no fraction digits ("5.") is not accepted. Any other text, including "", is an error value (never NaN). NumberFrom(s, base): the integer `s` denotes in `base` (2 to 36); only integer numerals are accepted.',
+      'NumberFrom(s): the number the string `s` denotes — optional surrounding whitespace, an optional sign, then ASCII digits with an optional "." fraction and an optional e/E exponent, or one of "oo", "+oo", "-oo", "NaN", "Indeterminate". The integer part may be omitted before a fraction (".5" is 0.5); a trailing "." with no fraction digits ("5.") is not accepted. Any other text, including "", is an error value (never NaN). NumberFrom(s, base): the integer `s` denotes in `base` (2 to 36); only integer numerals are accepted.',
     signature: "(string, base: (integer | string)?) -> number",
   },
   {
@@ -3094,7 +3115,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "PolyLog",
     kind: "operator",
-    description: "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ.",
+    description: "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ, at any real or complex order s.",
     signature: "(complex | infinity, complex | infinity) -> number",
     wikidata: "Q320067",
   },
