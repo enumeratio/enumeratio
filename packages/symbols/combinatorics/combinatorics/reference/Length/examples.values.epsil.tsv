@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only	length(f(g(x, y), z))	2
 a-symbol-such-as-pi-is-an-atom-of-length-0	length(pi)	0
 a-lazy-range-is-counted-without-being	length(Range(1, 20))	20
 length-join-a-b-length-a-length-b-see-join	length(join([1, 2, 3], [4, 5])) == length([1, 2, 3]) + length([4, 5])	True
+length-filter-issquarefree-past-iteration-budget	length(filter(Range(1, 1_679), isSquareFree))	length(filter(Range(1, 1_679), isSquareFree))

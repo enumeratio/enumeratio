@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only	<Length><f><g>x y</g> z</f></Len
 a-symbol-such-as-pi-is-an-atom-of-length-0	<Length>Pi</Length>	<ToExpression>0</ToExpression>
 a-lazy-range-is-counted-without-being	<Length><Range>1 20</Range></Length>	<ToExpression>20</ToExpression>
 length-join-a-b-length-a-length-b-see-join	<Equal><Length><Join><List>1 2 3</List> <List>4 5</List></Join></Length> <Add><Length><List>1 2 3</List></Length> <Length><List>4 5</List></Length></Add></Equal>	<True />
+length-filter-issquarefree-past-iteration-budget	<Length><Filter><Range>1 1679</Range> IsSquareFree</Filter></Length>	<Length><Filter><Range>1 1679</Range> IsSquareFree</Filter></Length>

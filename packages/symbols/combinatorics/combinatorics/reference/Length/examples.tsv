@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only	Scope		[Length, [f, [g, x, y], z
 a-symbol-such-as-pi-is-an-atom-of-length-0	Scope		[Length, Pi]	0	A symbol such as $\pi$ is an atom, of length 0
 a-lazy-range-is-counted-without-being	Scope		[Length, [Range, 1, 20]]	20	A lazy [[Range]] is counted without being materialised
 length-join-a-b-length-a-length-b-see-join	Properties		[Equal, [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]], [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]]]	True	$Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]
+length-filter-issquarefree-past-iteration-budget	Possible issues		[Length, [Filter, [Range, 1, 1679], IsSquareFree]]	[Length, [Filter, [Range, 1, 1679], IsSquareFree]]	1679 has 1025 squarefree numbers below it, one past compute-engine's own iteration budget (1024) for counting a lazy collection element by element -- this declines rather than silently answer a wrong, short count; see [[IsSquareFree]]

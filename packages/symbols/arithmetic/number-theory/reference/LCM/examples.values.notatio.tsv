@@ -32,6 +32,7 @@ lcm-with-a-real-composite-5-squared	<LCM><Complex>3 4</Complex> 25</LCM>	<ToExpr
 lcm-with-a-negative-associate	<LCM><Complex>6 8</Complex> <Complex>-2 -3</Complex></LCM>	<Complex>34 12</Complex>
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19	<LCM><Complex>123 456</Complex> 19</LCM>	<Complex>2337 8664</Complex>
 lcm-of-two-composites-sharing-the-prime-above-13	<LCM><Complex>6 8</Complex> <Complex>9 6</Complex></LCM>	<Complex>6 108</Complex>
+lcm-of-a-lazy-range-1-10-not-a-materialised-list	<LCM><Range>1 10</Range></LCM>	<ToExpression>2520</ToExpression>
 the-smallest-number-divisible-by-each-of-1	<LCM>1 2 3 4 5 6 7 8 9 10</LCM>	<ToExpression>2520</ToExpression>
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	<Equal><Multiply><GCD>27 81</GCD> <LCM>27 81</LCM></Multiply> <Multiply>27 81</Multiply></Equal>	<True />
 a-single-argument-is-returned-unchanged	<LCM>5</LCM>	<ToExpression>5</ToExpression>

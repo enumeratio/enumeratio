@@ -9,10 +9,41 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 // typed route from the union to any of them. Read each through one checked accessor
 // instead of casting at every use.
 
-/** An expression's operands, or `[]` if it has none. */
+/** An expression's operands, or `[]` if it has none.
+ *
+ * For a genuine collection (`Range(1, 10)`, `Filter(...)`, ...) `.ops` is the call's own
+ * CONSTRUCTOR arguments -- for `Range(1, 10)` that is `[1, 10]`, two operands, not the ten
+ * elements the range denotes. Reaching for the actual elements of something that may be a
+ * collection is `collectionElements`, not this. */
 export const operandsOf = (expr: BoxedExpression | undefined): readonly BoxedExpression[] => {
   const ops = (expr as { ops?: unknown } | undefined)?.ops;
   return Array.isArray(ops) ? (ops as readonly BoxedExpression[]) : [];
+};
+
+/**
+ * The actual elements of `expr`: for a collection (`expr.isCollection`), every element
+ * walked through compute-engine's own `each()` -- the same iterator `.at()`-based code
+ * elsewhere in this codebase already uses, so a lazy `Range`/`Filter`/... is walked
+ * element-by-element rather than read through `.ops` (its constructor arguments, e.g. `[1,
+ * 10]` for `Range(1, 10)` -- two operands, not ten elements: see `operandsOf`). For anything
+ * that is not a collection, `.ops` already ARE its elements in the sense every caller here
+ * wants (`List(a, b, c)`, an `Association`'s `Rule` pairs, ...), so this is just `operandsOf`.
+ *
+ * `each()` enforces compute-engine's own iteration budget and throws once walking the
+ * collection would exceed it (`iterationLimit`, default 1024) -- past that point there is no
+ * way to answer exactly, so this DECLINES (returns `undefined`) rather than hand back a
+ * partial walk silently passed off as the whole collection. Callers must propagate that
+ * decline (leave their own call unevaluated), never fall back to `operandsOf` on a decline --
+ * that reads as "the answer is this short list", which is exactly the wrong answer this
+ * function exists to avoid.
+ */
+export const collectionElements = (expr: BoxedExpression): readonly BoxedExpression[] | undefined => {
+  if (!expr.isCollection) return operandsOf(expr);
+  try {
+    return [...expr.each()];
+  } catch {
+    return undefined;
+  }
 };
 
 /** The symbol an expression names, or `undefined` if it is not a symbol. */

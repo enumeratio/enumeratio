@@ -32,6 +32,7 @@ lcm-with-a-real-composite-5-squared	lcm(ZZ(complex(3, 4)), ZZ(25))
 lcm-with-a-negative-associate	lcm(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))		
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm(ZZ(complex(123, 456)), ZZ(19))		
 lcm-of-two-composites-sharing-the-prime-above-13	lcm(ZZ(complex(6, 8)), ZZ(complex(9, 6)))		
+lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 the-smallest-number-divisible-by-each-of-1			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))	true	
 a-single-argument-is-returned-unchanged			

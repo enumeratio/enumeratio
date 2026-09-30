@@ -32,6 +32,7 @@ lcm-with-a-real-composite-5-squared
 lcm-with-a-negative-associate			
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19			
 lcm-of-two-composites-sharing-the-prime-above-13			
+lcm-of-a-lazy-range-1-10-not-a-materialised-list			
 the-smallest-number-divisible-by-each-of-1			
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))	true	
 a-single-argument-is-returned-unchanged			

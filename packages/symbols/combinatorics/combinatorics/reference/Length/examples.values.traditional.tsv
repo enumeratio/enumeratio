@@ -13,3 +13,4 @@ the-number-of-arguments-of-a-call-counting-only
 a-symbol-such-as-pi-is-an-atom-of-length-0		
 a-lazy-range-is-counted-without-being		
 length-join-a-b-length-a-length-b-see-join	\mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)	\mathrm{True}
+length-filter-issquarefree-past-iteration-budget		

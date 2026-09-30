@@ -1,6 +1,7 @@
-id	section	role	expr	expected	caption
-foldlist-add-0-1-2-3			[FoldList, Add, 0, [List, 1, 2, 3]]	[List, 0, 1, 3, 6]	
-foldlist-add-1-2-3	Scope		[FoldList, Add, [List, 1, 2, 3]]	[List, 1, 3, 6]	With no seed, the first element of the list is the seed
-foldlist-multiply-1-1-2-3-4	Scope		[FoldList, Multiply, 1, [List, 1, 2, 3, 4]]	[List, 1, 1, 2, 6, 24]	Running products, via Multiply instead of Add
-foldlist-length-is-one-more	Properties		[Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]	True	One longer than the input list
-foldlist-last-is-fold	Properties		[Equal, [Last, [FoldList, Add, 0, [List, 1, 2, 3]]], [Fold, Add, 0, [List, 1, 2, 3]]]	True	The last element is what Fold alone would give
+id	section	role	expr	expected	known	source	caption
+foldlist-add-0-1-2-3			[FoldList, Add, 0, [List, 1, 2, 3]]	[List, 0, 1, 3, 6]			
+foldlist-add-1-2-3	Scope		[FoldList, Add, [List, 1, 2, 3]]	[List, 1, 3, 6]			With no seed, the first element of the list is the seed
+foldlist-multiply-1-1-2-3-4	Scope		[FoldList, Multiply, 1, [List, 1, 2, 3, 4]]	[List, 1, 1, 2, 6, 24]			Running products, via Multiply instead of Add
+foldlist-lcm-1-range-2-10-lazy-not-list	Scope		[FoldList, LCM, 1, [Range, 2, 10]]	[List, 1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520]	[List, 1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520]	Hand-computed by iterated pairwise LCM of 2..10 (lcm(1,2)=2, lcm(2,3)=6, lcm(6,4)=12, ..., lcm(840,9)=2520, lcm(2520,10)=2520) -- an independent check that a lazy [[Range]] argument is walked element by element, not read off its own two constructor arguments (2 and 10)	A lazy [[Range]], not a materialised [[List]] -- see [[Length]]'s own note on the same distinction
+foldlist-length-is-one-more	Properties		[Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]	True			One longer than the input list
+foldlist-last-is-fold	Properties		[Equal, [Last, [FoldList, Add, 0, [List, 1, 2, 3]]], [Fold, Add, 0, [List, 1, 2, 3]]]	True			The last element is what Fold alone would give
