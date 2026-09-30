@@ -3,6 +3,7 @@ import {
   bigIntegerAt,
   bigRationalAt,
   defineMessages,
+  defineOverload,
   emit,
   operandsOf,
   symbolNameOf,
@@ -154,8 +155,6 @@ export function declareIntegerMod(ce: ComputeEngine): void {
     return values.every((v) => v !== undefined) ? values : undefined;
   };
 
-  const anyIntegerMod = (ops: readonly BoxedExpression[]): boolean => ops.some(isIntegerMod);
-
   const fold =
     (step: (x: IntegerMod, y: IntegerMod) => IntegerMod | undefined) =>
     (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
@@ -166,41 +165,38 @@ export function declareIntegerMod(ce: ComputeEngine): void {
       return write(acc);
     };
 
-  wrapOperator(ce, ["Add", "x", "y"], anyIntegerMod, () => fold(Z.add));
-  wrapOperator(ce, ["Multiply", "x", "y"], anyIntegerMod, () => fold(Z.multiply));
-  wrapOperator(
-    ce,
-    ["Divide", "x", "y"],
-    anyIntegerMod,
-    () =>
-      fold((x, y) => {
-        const q = Z.divide(x, y);
-        return q ?? notUnit(y.residue, gcd(x.modulus, y.modulus));
-      }),
-    2,
-  );
-  wrapOperator(
-    ce,
-    ["Negate", "x"],
-    anyIntegerMod,
-    () => (ops) => {
+  defineOverload(ce, "Add", { package: "residues", on: [INTEGER_MOD], evaluate: fold(Z.add) });
+  defineOverload(ce, "Multiply", { package: "residues", on: [INTEGER_MOD], evaluate: fold(Z.multiply) });
+  defineOverload(ce, "Divide", {
+    package: "residues",
+    on: [INTEGER_MOD],
+    arity: 2,
+    evaluate: fold((x, y) => {
+      const q = Z.divide(x, y);
+      return q ?? notUnit(y.residue, gcd(x.modulus, y.modulus));
+    }),
+  });
+  defineOverload(ce, "Negate", {
+    package: "residues",
+    on: [INTEGER_MOD],
+    arity: 1,
+    evaluate: (ops) => {
       const x = integerModOf(ops[0]);
       return write(x === undefined ? undefined : Z.negate(x));
     },
-    1,
-  );
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    (ops) => isIntegerMod(ops[0]),
-    () => (ops) => {
+  });
+  defineOverload(ce, "Power", {
+    package: "residues",
+    on: [INTEGER_MOD],
+    arity: 2,
+    when: (ops) => isIntegerMod(ops[0]),
+    evaluate: (ops) => {
       const x = integerModOf(ops[0]);
       const e = bigIntegerAt(ops[1]);
       if (x === undefined || e === undefined) return undefined;
       return write(Z.power(x, e) ?? notUnit(x.residue, x.modulus));
     },
-    2,
-  );
+  });
 
   // ChineseRemainder(IntegerMod(r₁, m₁), …): the class mod lcm(mᵢ) reducing to each — the
   // native (residues, moduli) form is untouched.

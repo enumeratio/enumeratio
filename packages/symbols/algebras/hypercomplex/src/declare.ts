@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { wrapOperator } from "@enumeratio/engine";
+import { defineOverload, wrapOperator } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { HYPERCOMPLEX_CARRIERS } from "./carrier-data.ts";
 import {
@@ -134,22 +134,20 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     return combine(parts);
   };
 
-  wrapOperator(
-    ce,
-    ["Add", "x", "y"],
-    reachesAnyGenerator,
-    () => (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
-  );
+  defineOverload(ce, "Add", {
+    package: "hypercomplex",
+    when: reachesAnyGenerator,
+    evaluate: (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
+  });
 
   // Declines a product whose operands do not commute — written `e_2 \times e_1` rather
   // than juxtaposed, so `declareOrderedJuxtaposition` never saw it and the sort has
   // already taken the sign. Leaving it inert says "no answer" instead of asserting a
   // sign we cannot justify; `NonCommutativeMultiply` is where such a product belongs.
-  wrapOperator(
-    ce,
-    ["Multiply", "x", "y"],
-    reachesAnyGenerator,
-    () => (ops) =>
+  defineOverload(ce, "Multiply", {
+    package: "hypercomplex",
+    when: reachesAnyGenerator,
+    evaluate: (ops) =>
       productIsOrderable(ops)
         ? linear(ops, (parts) =>
             toExpression(
@@ -158,22 +156,21 @@ export function declareHypercomplex(ce: ComputeEngine): void {
             ),
           )
         : undefined,
-  );
+  });
 
-  wrapOperator(
-    ce,
-    ["Negate", "x"],
-    hasGenerator,
-    () => (ops) =>
+  defineOverload(ce, "Negate", {
+    package: "hypercomplex",
+    arity: 1,
+    when: hasGenerator,
+    evaluate: (ops) =>
       linear(ops, ([mv]) => (mv === undefined ? undefined : toExpression(ce, scaleMultivector(ce, mv, ce.number(-1))))),
-    1,
-  );
+  });
 
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    hasGenerator,
-    () => (ops) => {
+  defineOverload(ce, "Power", {
+    package: "hypercomplex",
+    arity: 2,
+    when: hasGenerator,
+    evaluate: (ops) => {
       const base = ops[0];
       const exponent = ops[1];
       if (base === undefined || exponent === undefined) return undefined;
@@ -184,20 +181,18 @@ export function declareHypercomplex(ce: ComputeEngine): void {
       const raised = powerMultivector(ce, mv, exponent.re);
       return raised === undefined ? undefined : toExpression(ce, raised);
     },
-    2,
-  );
+  });
 
-  wrapOperator(
-    ce,
-    ["Divide", "x", "y"],
-    hasGenerator,
-    () => (ops) =>
+  defineOverload(ce, "Divide", {
+    package: "hypercomplex",
+    arity: 2,
+    when: hasGenerator,
+    evaluate: (ops) =>
       linear(ops, (parts) => {
         const inverse = invertMultivector(ce, parts[1]!);
         return inverse === undefined ? undefined : toExpression(ce, multiplyMultivectors(ce, parts[0]!, inverse));
       }),
-    2,
-  );
+  });
 
   wrapOperator(
     ce,

@@ -1,6 +1,7 @@
 // Which library declares each name: see collect-declarers.ts. Shared with its drift test.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { overloadTable } from "@enumeratio/engine";
 import type { Library, plan as Plan } from "@enumeratio/manifest";
 
 interface Scope {
@@ -28,6 +29,11 @@ function snapshot(ce: ComputeEngine): Map<string, readonly unknown[]> {
 const changed = (before: readonly unknown[] | undefined, after: readonly unknown[]): boolean =>
   before === undefined || before.some((x, i) => x !== after[i]);
 
+/** How many rows `pkg` has in `name`'s table: a row added to a table already in place changes
+ *  neither the head's handler nor (without a shape of its own) its signature. */
+const rowsOf = (ce: ComputeEngine, name: string, pkg: string): number =>
+  overloadTable(ce, name)?.rows.filter((row) => row.package === pkg).length ?? 0;
+
 /** Each name, the libraries that declare or redefine it, in `libraries`' order. */
 export function declarers(libraries: readonly Library<ComputeEngine>[], plan: typeof Plan): Record<string, string[]> {
   const table: Record<string, string[]> = {};
@@ -36,9 +42,12 @@ export function declarers(libraries: readonly Library<ComputeEngine>[], plan: ty
     const needed = plan([library.name], libraries).libraries;
     for (const dep of needed) if (dep !== library) void dep.declare(ce);
     const before = snapshot(ce);
+    const rowsBefore = new Map([...before.keys()].map((name) => [name, rowsOf(ce, name, library.name)]));
     void library.declare(ce);
     for (const [name, after] of snapshot(ce)) {
-      if (!/^[A-Za-z]/.test(name) || !changed(before.get(name), after)) continue;
+      if (!/^[A-Za-z]/.test(name)) continue;
+      const added = rowsOf(ce, name, library.name) > (rowsBefore.get(name) ?? 0);
+      if (!added && !changed(before.get(name), after)) continue;
       (table[name] ??= []).push(library.name);
     }
   }

@@ -152,11 +152,6 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   // ── the arithmetic heads ──────────────────────────────────────────────────────
 
-  const has =
-    (head: string) =>
-    (ops: readonly BoxedExpression[]): boolean =>
-      ops.some((op) => op.operator === head);
-
   /** Fold a variadic head over values read by `read`, with `step` combining two. */
   function fold<T>(
     read: (e: BoxedExpression) => T | undefined,
@@ -176,40 +171,52 @@ export function declareAdeles(ce: ComputeEngine): void {
   }
 
   const writeProfinite = (x: Profinite): BoxedExpression => profiniteExpression(ce, x);
-  const onProfinite = has(PROFINITE);
-  // Adèles and idèles never mix with each other or with a bare profinite number.
-  const onlyProfinite = (ops: readonly BoxedExpression[]): boolean =>
-    onProfinite(ops) && !has(ADELE)(ops) && !has(IDELE)(ops);
+  // Rows in each arithmetic head's table, by the carrier among the operands. Adèles and idèles
+  // never mix with each other or with a bare profinite number, hence each row's `unless`.
 
-  wrapOperator(ce, ["Add", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.add, writeProfinite));
-  wrapOperator(ce, ["Multiply", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.multiply, writeProfinite));
-  wrapOperator(ce, ["Divide", "x", "y"], onlyProfinite, () => fold(profiniteOf, P.divide, writeProfinite), 2);
-  wrapOperator(
-    ce,
-    ["Negate", "x"],
-    onlyProfinite,
-    () => (ops) => {
+  defineOverload(ce, "Add", {
+    package: "adeles",
+    on: [PROFINITE],
+    unless: [ADELE, IDELE],
+    evaluate: fold(profiniteOf, P.add, writeProfinite),
+  });
+  defineOverload(ce, "Multiply", {
+    package: "adeles",
+    on: [PROFINITE],
+    unless: [ADELE, IDELE],
+    evaluate: fold(profiniteOf, P.multiply, writeProfinite),
+  });
+  defineOverload(ce, "Divide", {
+    package: "adeles",
+    on: [PROFINITE],
+    unless: [ADELE, IDELE],
+    arity: 2,
+    evaluate: fold(profiniteOf, P.divide, writeProfinite),
+  });
+  defineOverload(ce, "Negate", {
+    package: "adeles",
+    on: [PROFINITE],
+    unless: [ADELE, IDELE],
+    arity: 1,
+    evaluate: (ops) => {
       const x = profiniteOf(ops[0]);
       return x === undefined ? undefined : writeProfinite(P.negate(x));
     },
-    1,
-  );
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    (ops) => ops[0]?.operator === PROFINITE,
-    () => (ops) => {
+  });
+  defineOverload(ce, "Power", {
+    package: "adeles",
+    on: [PROFINITE],
+    arity: 2,
+    when: (ops) => ops[0]?.operator === PROFINITE,
+    evaluate: (ops) => {
       const x = profiniteOf(ops[0]);
       const n = bigIntegerAt(ops[1]);
       const result = x === undefined || n === undefined ? undefined : P.power(x, n);
       return result === undefined ? undefined : writeProfinite(result);
     },
-    2,
-  );
+  });
 
   // Adèles: componentwise; a rational beside an adèle is the diagonal adèle.
-  const onAdele = (ops: readonly BoxedExpression[]): boolean =>
-    has(ADELE)(ops) && !has(IDELE)(ops) && !onProfinite(ops);
   const writeAdele = (x: Adele): BoxedExpression => adeleExpression(ce, x);
   const adeleStep =
     (head: string, finite: (x: Profinite, y: Profinite) => Profinite | undefined) =>
@@ -217,24 +224,41 @@ export function declareAdeles(ce: ComputeEngine): void {
       const z = finite(x.finite, y.finite);
       return z === undefined ? undefined : { real: real(head, x.real, y.real), finite: z };
     };
-  wrapOperator(ce, ["Add", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Add", P.add), writeAdele));
-  wrapOperator(ce, ["Multiply", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Multiply", P.multiply), writeAdele));
-  wrapOperator(ce, ["Divide", "x", "y"], onAdele, () => fold(adeleOf, adeleStep("Divide", P.divide), writeAdele), 2);
-  wrapOperator(
-    ce,
-    ["Negate", "x"],
-    onAdele,
-    () => (ops) => {
+  defineOverload(ce, "Add", {
+    package: "adeles",
+    on: [ADELE],
+    unless: [IDELE, PROFINITE],
+    evaluate: fold(adeleOf, adeleStep("Add", P.add), writeAdele),
+  });
+  defineOverload(ce, "Multiply", {
+    package: "adeles",
+    on: [ADELE],
+    unless: [IDELE, PROFINITE],
+    evaluate: fold(adeleOf, adeleStep("Multiply", P.multiply), writeAdele),
+  });
+  defineOverload(ce, "Divide", {
+    package: "adeles",
+    on: [ADELE],
+    unless: [IDELE, PROFINITE],
+    arity: 2,
+    evaluate: fold(adeleOf, adeleStep("Divide", P.divide), writeAdele),
+  });
+  defineOverload(ce, "Negate", {
+    package: "adeles",
+    on: [ADELE],
+    unless: [IDELE, PROFINITE],
+    arity: 1,
+    evaluate: (ops) => {
       const x = ops[0] === undefined ? undefined : adeleOf(ops[0]);
       return x === undefined ? undefined : writeAdele({ real: real("Negate", x.real), finite: P.negate(x.finite) });
     },
-    1,
-  );
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    (ops) => ops[0]?.operator === ADELE,
-    () => (ops) => {
+  });
+  defineOverload(ce, "Power", {
+    package: "adeles",
+    on: [ADELE],
+    arity: 2,
+    when: (ops) => ops[0]?.operator === ADELE,
+    evaluate: (ops) => {
       const x = ops[0] === undefined ? undefined : adeleOf(ops[0]);
       const n = bigIntegerAt(ops[1]);
       const finite = x === undefined || n === undefined ? undefined : P.power(x.finite, n);
@@ -242,12 +266,9 @@ export function declareAdeles(ce: ComputeEngine): void {
         ? undefined
         : writeAdele({ real: real("Power", x.real, ops[1]!), finite });
     },
-    2,
-  );
+  });
 
   // Idèles form a group: multiplication, division, integer powers.
-  const onIdele = (ops: readonly BoxedExpression[]): boolean =>
-    has(IDELE)(ops) && !has(ADELE)(ops) && !onProfinite(ops);
   const writeIdele = (x: Idele): BoxedExpression => ideleExpression(ce, x);
   const ideleStep =
     (head: string, finite: (x: IdeleFinite, y: IdeleFinite) => IdeleFinite | undefined) =>
@@ -259,13 +280,25 @@ export function declareAdeles(ce: ComputeEngine): void {
     const inverse = I.invert(y);
     return inverse === undefined ? undefined : I.multiply(x, inverse);
   };
-  wrapOperator(ce, ["Multiply", "x", "y"], onIdele, () => fold(ideleOf, ideleStep("Multiply", I.multiply), writeIdele));
-  wrapOperator(ce, ["Divide", "x", "y"], onIdele, () => fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele), 2);
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    (ops) => ops[0]?.operator === IDELE,
-    () => (ops) => {
+  defineOverload(ce, "Multiply", {
+    package: "adeles",
+    on: [IDELE],
+    unless: [ADELE, PROFINITE],
+    evaluate: fold(ideleOf, ideleStep("Multiply", I.multiply), writeIdele),
+  });
+  defineOverload(ce, "Divide", {
+    package: "adeles",
+    on: [IDELE],
+    unless: [ADELE, PROFINITE],
+    arity: 2,
+    evaluate: fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele),
+  });
+  defineOverload(ce, "Power", {
+    package: "adeles",
+    on: [IDELE],
+    arity: 2,
+    when: (ops) => ops[0]?.operator === IDELE,
+    evaluate: (ops) => {
       const x = ops[0] === undefined ? undefined : ideleOf(ops[0]);
       const n = bigIntegerAt(ops[1]);
       const finite = x === undefined || n === undefined ? undefined : I.power(x.finite, n);
@@ -273,8 +306,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         ? undefined
         : writeIdele({ real: real("Power", x.real, ops[1]!), finite });
     },
-    2,
-  );
+  });
 
   // Hertogh's equality — the represented sets meet — for all three.
   const equalValues = (a: BoxedExpression, b: BoxedExpression): boolean | undefined => {
