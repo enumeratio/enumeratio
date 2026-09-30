@@ -6,7 +6,7 @@
 // Run with: pnpm --filter @enumeratio/web run test:stories
 
 import type { Locator } from "@playwright/test";
-import { collectComponents, wrapperName } from "@enumeratio/frontend/reflect";
+import { collectComponents, headOfTag } from "@enumeratio/frontend/reflect";
 import { expect, test } from "@playwright/test";
 import { STORIES_DATA } from "../../../packages/components/src/stories-data.ts";
 
@@ -15,7 +15,7 @@ const srcDir = new URL("../../../packages/components/src/", import.meta.url).pat
 // STORIES_DATA is keyed by the Vue/React wrapper name (`BarChart3D`); the page route is the
 // custom-element tag (`notatio-bar-chart-3d`) -- the same rule ComponentPage.vue's `wrapper`
 // computed applies the other way.
-const tagByName = new Map(collectComponents(srcDir).map((c) => [wrapperName(c.tag), c.tag]));
+const tagByName = new Map(collectComponents(srcDir).map((c) => [headOfTag(c.tag), c.tag]));
 
 // What "drew something" means, per tag -- most of these elements paint plain SVG into light
 // DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a data table

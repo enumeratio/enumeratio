@@ -2,7 +2,7 @@
   "name": "@enumeratio/frontend",
   "version": "0.0.0",
   "private": true,
-  "description": "The base of the interface: the symbol-to-component map and its lowering, the AST as a vdom, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers; and the framework glue (`./vue`, `./react`) over the elements. No UI framework of its own.",
+  "description": "The base of the interface: the symbol-to-component map and its lowering, the AST as a vdom, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers. No UI framework.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -12,20 +12,16 @@
     ".": "./dist/index.mjs",
     "./conventional-latex": "./dist/conventional-latex.mjs",
     "./declare-carriers": "./dist/declare-carriers.mjs",
-    "./generate": "./dist/generate.mjs",
-    "./react": "./dist/react.mjs",
     "./reflect": "./dist/reflect.mjs",
     "./symbols": "./dist/symbols.mjs",
     "./vdom": "./dist/vdom.mjs",
-    "./vue": "./dist/vue.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node --experimental-strip-types src/generate.ts && vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts src/vue.ts src/react.ts src/generate.ts src/conventional-latex.ts src/declare-carriers.ts",
+    "build": "vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
-    "check": "vp check",
-    "generate": "node --experimental-strip-types src/generate.ts"
+    "check": "vp check"
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
@@ -44,25 +40,12 @@
     "@enumeratio/reference": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@types/node": "catalog:",
-    "@types/react": "^19.1.0",
     "@webgpu/types": "^0.1.60",
-    "react": "^19.1.0",
     "typescript": "^7.0.2",
     "vite": "catalog:",
-    "vite-plus": "catalog:",
-    "vue": "^3.5.42"
+    "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.140.0",
-    "react": ">=18",
-    "vue": "^3.5.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "vue": {
-      "optional": true
-    }
+    "@cortex-js/compute-engine": "^0.140.0"
   }
 }

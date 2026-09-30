@@ -34,20 +34,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "BarChart3D([[1, 2, 3], [2, 4, 3], [3, 1, 5]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D data="[[1,2,3],[2,4,3],[3,1,5]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D data="[[1,2,3],[2,4,3],[3,1,5]]" />',
         },
         {
           id: "html",
@@ -73,20 +61,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'BarChart3D([3, 1, 4, 1, 5, 9, 2, 6], (Label, "digits of π"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D data="[3,1,4,1,5,9,2,6]" label="digits of π" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D data="[3,1,4,1,5,9,2,6]" label="digits of π" />',
         },
         {
           id: "html",
@@ -117,20 +93,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'BarChart3D([[4, 2, 3], [1, 5, 2]], (ColLabels, "a,b,c"), (RowLabels, "x,y"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D data="[[4,2,3],[1,5,2]]" colLabels="a,b,c" rowLabels="x,y" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D data="[[4,2,3],[1,5,2]]" colLabels="a,b,c" rowLabels="x,y" />',
         },
         {
           id: "html",
@@ -162,20 +126,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "BarChart3D(\n            [[1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6, 7]],\n            (Gap, 0.05),\n            (Elevation, 45),\n            (Azimuth, 40),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D\n  data="[[1,2,3,4],[2,3,4,5],[3,4,5,6],[4,5,6,7]]"\n  :gap="0.05"\n  :elevation="45"\n  :azimuth="40"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D\n  data="[[1,2,3,4],[2,3,4,5],[3,4,5,6],[4,5,6,7]]"\n  gap={0.05}\n  elevation={45}\n  azimuth={40}\n/>',
         },
         {
           id: "html",
@@ -201,20 +153,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "BarChart3D([[-2, 1, 3], [2, -1, 1]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D data="[[-2,1,3],[2,-1,1]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D data="[[-2,1,3],[2,-1,1]]" />',
         },
         {
           id: "html",
@@ -246,20 +186,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'BarChart3D([[1, 2], [2, 3]], (ZRange, "0,10"), (Axes, "false"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart3D data="[[1,2],[2,3]]" zrange="0,10" axes="false" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart3D data="[[1,2],[2,3]]" zrange="0,10" axes="false" />',
         },
         {
           id: "html",
@@ -287,20 +215,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPlot([3, 1, 4, 1, 5, 9, 2, 6])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot data="[3,1,4,1,5,9,2,6]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot data="[3,1,4,1,5,9,2,6]" />',
         },
         {
           id: "html",
@@ -325,20 +241,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListLinePlot([3, 1, 4, 1, 5, 9, 2, 6])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListLinePlot data="[3,1,4,1,5,9,2,6]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListLinePlot data="[3,1,4,1,5,9,2,6]" />',
         },
         {
           id: "html",
@@ -367,20 +271,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPlot([(1, 1), (2, 4), (3, 9), (4, 16), (5, 25)])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot data="[[1,1],[2,4],[3,9],[4,16],[5,25]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot data="[[1,1],[2,4],[3,9],[4,16],[5,25]]" />',
         },
         {
           id: "html",
@@ -410,20 +302,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'BarChart(\n          [12, 19, 7, 15, 10],\n          (Labels, ["Mon", "Tue", "Wed", "Thu", "Fri"]),\n          (Label, "Daily commits"),\n        )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart\n  data="[12,19,7,15,10]"\n  labels="[&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;]"\n  label="Daily commits"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart\n  data="[12,19,7,15,10]"\n  labels="[&quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;, &quot;Thu&quot;, &quot;Fri&quot;]"\n  label="Daily commits"\n/>',
         },
         {
           id: "html",
@@ -448,20 +328,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "BarChart([3, -2, 5, -1, 4])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BarChart data="[3,-2,5,-1,4]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BarChart data="[3,-2,5,-1,4]" />',
         },
         {
           id: "html",
@@ -487,20 +355,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "histogram([1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Histogram data="[1,2,2,3,3,3,4,4,4,4,5,5,5,6,6,7]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Histogram data="[1,2,2,3,3,3,4,4,4,4,5,5,5,6,6,7]" />',
         },
         {
           id: "html",
@@ -525,20 +381,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "histogram([1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 7], (Bins, 4))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Histogram data="[1,2,2,3,3,3,4,4,4,4,5,5,5,6,6,7]" :bins="4" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Histogram data="[1,2,2,3,3,3,4,4,4,4,5,5,5,6,6,7]" bins={4} />',
         },
         {
           id: "html",
@@ -563,20 +407,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'PieChart([35, 25, 20, 20], (Labels, ["A", "B", "C", "D"]))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PieChart\n  data="[35,25,20,20]"\n  labels="[&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;]"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PieChart\n  data="[35,25,20,20]"\n  labels="[&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;]"\n/>',
         },
         {
           id: "html",
@@ -607,20 +439,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'BoxWhiskerChart(\n                 [[2, 4, 4, 4, 5, 5, 7, 9], [1, 2, 3, 3, 3, 4, 4, 10]],\n                 (Labels, ["A", "B"]),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<BoxWhiskerChart\n  data="[[2,4,4,4,5,5,7,9],[1,2,3,3,3,4,4,10]]"\n  labels="[&quot;A&quot;, &quot;B&quot;]"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<BoxWhiskerChart\n  data="[[2,4,4,4,5,5,7,9],[1,2,3,3,3,4,4,10]]"\n  labels="[&quot;A&quot;, &quot;B&quot;]"\n/>',
         },
         {
           id: "html",
@@ -650,20 +470,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ArrayPlot([[0, 1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ArrayPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ArrayPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" />',
         },
         {
           id: "html",
@@ -702,20 +510,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ArrayPlot([\n            [1, 0, 0, 0, 0, 0, 0, 0],\n            [0, 1, 0, 0, 0, 0, 0, 0],\n            [1, 0, 1, 0, 0, 0, 0, 0],\n            [0, 0, 0, 1, 0, 0, 0, 0],\n            [1, 1, 0, 0, 1, 0, 0, 0],\n            [0, 0, 0, 0, 0, 1, 0, 0],\n            [1, 0, 1, 0, 0, 0, 1, 0],\n            [0, 0, 0, 0, 0, 0, 0, 1],\n          ])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ArrayPlot data="[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],[1,1,0,0,1,0,0,0],[0,0,0,0,0,1,0,0],[1,0,1,0,0,0,1,0],[0,0,0,0,0,0,0,1]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ArrayPlot data="[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],[1,1,0,0,1,0,0,0],[0,0,0,0,0,1,0,0],[1,0,1,0,0,0,1,0],[0,0,0,0,0,0,0,1]]" />',
         },
         {
           id: "html",
@@ -740,20 +536,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ArrayPlot([[0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ArrayPlot data="[[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ArrayPlot data="[[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]]" />',
         },
         {
           id: "html",
@@ -779,20 +563,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "DiscretePlot([1, -2, 3, 4, -1, 2])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DiscretePlot data="[1,-2,3,4,-1,2]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DiscretePlot data="[1,-2,3,4,-1,2]" />',
         },
         {
           id: "html",
@@ -819,20 +591,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Chart([3, 1, 4, 1, 5])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Chart data="[3,1,4,1,5]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Chart data="[3,1,4,1,5]" />',
         },
         {
           id: "html",
@@ -857,20 +617,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Chart([\n        5,\n        3,\n        8,\n        1,\n        9,\n        2,\n        7,\n        4,\n        6,\n        3,\n        5,\n        8,\n        2,\n        9,\n        1,\n        4,\n        7,\n        3,\n        6,\n        5,\n        2,\n        8,\n        4,\n        1,\n        9,\n      ])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Chart data="[5,3,8,1,9,2,7,4,6,3,5,8,2,9,1,4,7,3,6,5,2,8,4,1,9]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Chart data="[5,3,8,1,9,2,7,4,6,3,5,8,2,9,1,4,7,3,6,5,2,8,4,1,9]" />',
         },
         {
           id: "html",
@@ -895,20 +643,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Chart([[0, 1], [1, 3], [2, 2], [3, 5]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Chart data="[[0,1],[1,3],[2,2],[3,5]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Chart data="[[0,1],[1,3],[2,2],[3,5]]" />',
         },
         {
           id: "html",
@@ -933,20 +669,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Chart([[1, 0, 2], [0, 3, 1], [2, 1, 0]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Chart data="[[1,0,2],[0,3,1],[2,1,0]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Chart data="[[1,0,2],[0,3,1],[2,1,0]]" />',
         },
         {
           id: "html",
@@ -981,20 +705,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 Subsets(4),\n                 (Columns, "Length, Sum"),\n                 (Glyph, "subset"),\n                 (PageSize, 10),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable expr="Subsets(4)" columns="Length, Sum" glyph="subset" :pageSize="10" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable expr="Subsets(4)" columns="Length, Sum" glyph="subset" pageSize={10} />',
         },
         {
           id: "html",
@@ -1027,20 +739,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 SymmetricGroup(5),\n                 (\n                   Columns,\n                   "Descents, MajorIndex, Inversions, CycleCount, FixedPoints",\n                 ),\n                 (Glyph, "permutation"),\n                 (filter, "FixedPoints(_) == 0"),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="SymmetricGroup(5)"\n  columns="Descents, MajorIndex, Inversions, CycleCount, FixedPoints"\n  glyph="permutation"\n  filter="FixedPoints(_) == 0"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="SymmetricGroup(5)"\n  columns="Descents, MajorIndex, Inversions, CycleCount, FixedPoints"\n  glyph="permutation"\n  filter="FixedPoints(_) == 0"\n/>',
         },
         {
           id: "html",
@@ -1074,20 +774,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 SymmetricGroup(12),\n                 (Columns, "Descents, Inversions"),\n                 (Glyph, "permutation"),\n                 (Page, "1000000"),\n                 (PageSize, 10),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="SymmetricGroup(12)"\n  columns="Descents, Inversions"\n  glyph="permutation"\n  :page="1000000"\n  :pageSize="10"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="SymmetricGroup(12)"\n  columns="Descents, Inversions"\n  glyph="permutation"\n  page={1000000}\n  pageSize={10}\n/>',
         },
         {
           id: "html",
@@ -1120,20 +808,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 SymmetricGroup(20),\n                 (Columns, "Descents, CycleCount"),\n                 (PageSize, 10),\n                 (Readonly, True),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="SymmetricGroup(20)"\n  columns="Descents, CycleCount"\n  :pageSize="10"\n  :readonly="true"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="SymmetricGroup(20)"\n  columns="Descents, CycleCount"\n  pageSize={10}\n  readonly={true}\n/>',
         },
         {
           id: "html",
@@ -1166,20 +842,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 IntegerPartitions(8),\n                 (\n                   Columns,\n                   "Length, LargestPart, DistinctParts, DurfeeSquare, Crank",\n                 ),\n                 (Glyph, "partition"),\n                 (PageSize, 10),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="IntegerPartitions(8)"\n  columns="Length, LargestPart, DistinctParts, DurfeeSquare, Crank"\n  glyph="partition"\n  :pageSize="10"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="IntegerPartitions(8)"\n  columns="Length, LargestPart, DistinctParts, DurfeeSquare, Crank"\n  glyph="partition"\n  pageSize={10}\n/>',
         },
         {
           id: "html",
@@ -1212,20 +876,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 DyckPaths(4),\n                 (Columns, "Height, Area, Returns, Hills"),\n                 (Glyph, "dyck"),\n                 (PageSize, 14),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="DyckPaths(4)"\n  columns="Height, Area, Returns, Hills"\n  glyph="dyck"\n  :pageSize="14"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="DyckPaths(4)"\n  columns="Height, Area, Returns, Hills"\n  glyph="dyck"\n  pageSize={14}\n/>',
         },
         {
           id: "html",
@@ -1258,20 +910,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'CollectionTable(\n                 SetPartitions(4),\n                 (Columns, "Length, Max(Map(Length, _))"),\n                 (Glyph, "set-partition"),\n                 (PageSize, 15),\n               )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<CollectionTable\n  expr="SetPartitions(4)"\n  columns="Length, Max(Map(Length, _))"\n  glyph="set-partition"\n  :pageSize="15"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<CollectionTable\n  expr="SetPartitions(4)"\n  columns="Length, Max(Map(Length, _))"\n  glyph="set-partition"\n  pageSize={15}\n/>',
         },
         {
           id: "html",
@@ -1305,20 +945,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot((z ^ 3 - 1) / (z ^ 2 + 1), (Extent, 4), (Height, 380))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot value="(z ^ 3 - 1) / (z ^ 2 + 1)" :extent="4" :height="380" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot value="(z ^ 3 - 1) / (z ^ 2 + 1)" extent={4} height={380} />',
         },
         {
           id: "html",
@@ -1344,20 +972,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot(exp(1 / z), (Extent, 1.2), (Height, 380))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot value="exp(1 / z)" :extent="1.2" :height="380" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot value="exp(1 / z)" extent={1.2} height={380} />',
         },
         {
           id: "html",
@@ -1384,20 +1000,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot(zeta(z), (Extent, 40), (Height, 380))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot value="zeta(z)" :extent="40" :height="380" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot value="zeta(z)" extent={40} height={380} />',
         },
         {
           id: "html",
@@ -1424,20 +1028,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot(polyLog(2, z), (Mask, 1), (Height, 380))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot value="polyLog(2, z)" :mask="1" :height="380" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot value="polyLog(2, z)" mask={1} height={380} />',
         },
         {
           id: "html",
@@ -1469,20 +1061,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            ComplexPlot(polyLog(s, z), (Mask, 1), (Height, 380)),\n            (s, 0.25, 6, 0.05),\n            (Fps, True),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{s, 0.25, 6, 0.05}" :fps="true">\n  <ComplexPlot value="polyLog(_s, z)" :mask="1" :height="380" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{s, 0.25, 6, 0.05}" fps={true}>\n  <ComplexPlot value="polyLog(_s, z)" mask={1} height={380} />\n</Manipulate>',
         },
         {
           id: "html",
@@ -1520,20 +1100,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(ComplexPlot(\n                        polyGamma(m, z),\n                        (Center, [c, 0]),\n                        (Extent, 6),\n                        (Height, 380),\n                      ), (m, 1, 12, 1), (c, -4, 1, 0.1))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{m, 1, 12, 1}; {c, -4, 1, 0.1}">\n  <ComplexPlot value="polyGamma(_m, z)" center="[_c, 0]" :extent="6" :height="380" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{m, 1, 12, 1}; {c, -4, 1, 0.1}">\n  <ComplexPlot value="polyGamma(_m, z)" center="[_c, 0]" extent={6} height={380} />\n</Manipulate>',
         },
         {
           id: "html",
@@ -1561,20 +1129,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(1 / (z ^ 2 + 1))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="1 / (z ^ 2 + 1)" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="1 / (z ^ 2 + 1)" />',
         },
         {
           id: "html",
@@ -1606,20 +1162,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D((z ^ 3 - 1) / (z ^ 2 + 1), (z, -2 - 2i, 2 + 2i), (Samples, 60))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="(z ^ 3 + -1) / (z ^ 2 + 1)" var="z" domain="-2,2,-2,2" :samples="60" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="(z ^ 3 + -1) / (z ^ 2 + 1)" var="z" domain="-2,2,-2,2" samples={60} />',
         },
         {
           id: "html",
@@ -1651,20 +1195,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(gamma(z), (z, -4 - 3i, 4 + 3i), (Samples, 60), (MaxHeight, 6))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="gamma(z)" var="z" domain="-4,4,-3,3" :samples="60" :maxHeight="6" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="gamma(z)" var="z" domain="-4,4,-3,3" samples={60} maxHeight={6} />',
         },
         {
           id: "html",
@@ -1697,20 +1229,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(zeta(z), (z, -2, 3 + 30i), (Samples, 70), (MaxHeight, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="zeta(z)" var="z" domain="-2,3,0,30" :samples="70" :maxHeight="3" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="zeta(z)" var="z" domain="-2,3,0,30" samples={70} maxHeight={3} />',
         },
         {
           id: "html",
@@ -1742,20 +1262,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D((z ^ 3 - 1) / (z ^ 2 + 1), (Gpu, 160), (MaxHeight, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="(z ^ 3 + -1) / (z ^ 2 + 1)" gpu="160" :maxHeight="3" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="(z ^ 3 + -1) / (z ^ 2 + 1)" gpu="160" maxHeight={3} />',
         },
         {
           id: "html",
@@ -1789,20 +1297,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(\n               exponentialE ^ (1 / z),\n               (z, -1 - i, 1 + i),\n               (Gpu, 200),\n               (MaxHeight, 3),\n               (Elevation, 30),\n             )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D\n  value="exponentialE ^ (1 / z)"\n  var="z"\n  domain="-1,1,-1,1"\n  gpu="200"\n  :maxHeight="3"\n  :elevation="30"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D\n  value="exponentialE ^ (1 / z)"\n  var="z"\n  domain="-1,1,-1,1"\n  gpu="200"\n  maxHeight={3}\n  elevation={30}\n/>',
         },
         {
           id: "html",
@@ -1835,20 +1331,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(polyGamma(1, z), (z, -4 - 2i, 2 + 2i), (Gpu, 160), (MaxHeight, 5))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="polyGamma(1, z)" var="z" domain="-4,2,-2,2" gpu="160" :maxHeight="5" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="polyGamma(1, z)" var="z" domain="-4,2,-2,2" gpu="160" maxHeight={5} />',
         },
         {
           id: "html",
@@ -1879,20 +1363,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ComplexPlot3D(1 / (z ^ 2 + 1), (z, -2 - 2i, 2 + 2i))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ComplexPlot3D value="1 / (z ^ 2 + 1)" var="z" domain="-2,2,-2,2" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ComplexPlot3D value="1 / (z ^ 2 + 1)" var="z" domain="-2,2,-2,2" />',
         },
         {
           id: "html",
@@ -1925,20 +1397,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ContourPlot(x ^ 2 - y ^ 2, (x, -3, 3), (y, -3, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot expr="x ^ 2 + -y ^ 2" xvar="x" xrange="-3,3" yvar="y" yrange="-3,3" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot expr="x ^ 2 + -y ^ 2" xvar="x" xrange="-3,3" yvar="y" yrange="-3,3" />',
         },
         {
           id: "html",
@@ -1968,20 +1428,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ContourPlot(sin(x) + cos(y), (x, -6.283, 6.283), (y, -6.283, 6.283))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot expr="sin(x) + cos(y)" xvar="x" xrange="-6.283,6.283" yvar="y" yrange="-6.283,6.283" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot expr="sin(x) + cos(y)" xvar="x" xrange="-6.283,6.283" yvar="y" yrange="-6.283,6.283" />',
         },
         {
           id: "html",
@@ -2013,20 +1461,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ContourPlot(x ^ 2 + y ^ 2, (x, -3, 3), (y, -3, 3), (Levels, [1, 2, 4, 6, 8]))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  levels="[1, 2, 4, 6, 8]"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  levels="[1, 2, 4, 6, 8]"\n/>',
         },
         {
           id: "html",
@@ -2060,20 +1496,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ContourPlot(\n             sin(x * y),\n             (x, -3, 3),\n             (y, -3, 3),\n             (Levels, 12),\n             (N, 60),\n             (Label, "sin(xy)"),\n           )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot\n  expr="sin(x * y)"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  levels="12"\n  :n="60"\n  label="sin(xy)"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot\n  expr="sin(x * y)"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  levels="12"\n  n={60}\n  label="sin(xy)"\n/>',
         },
         {
           id: "html",
@@ -2105,20 +1529,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ContourPlot(x ^ 2 - y ^ 2, (x, -3, 3), (y, -3, 3), (Filled, True))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot expr="x ^ 2 + -y ^ 2" xvar="x" xrange="-3,3" yvar="y" yrange="-3,3" filled="true" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot expr="x ^ 2 + -y ^ 2" xvar="x" xrange="-3,3" yvar="y" yrange="-3,3" filled="true" />',
         },
         {
           id: "html",
@@ -2152,20 +1564,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ContourPlot(\n             x ^ 2 + y ^ 2,\n             (x, -3, 3),\n             (y, -3, 3),\n             (Filled, True),\n             (XLabel, "x"),\n             (YLabel, "y"),\n             (Label, "x² + y²"),\n           )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  filled="true"\n  xLabel="x"\n  yLabel="y"\n  label="x² + y²"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  filled="true"\n  xLabel="x"\n  yLabel="y"\n  label="x² + y²"\n/>',
         },
         {
           id: "html",
@@ -2195,20 +1595,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListContourPlot([[0, 1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ContourPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ContourPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" />',
         },
         {
           id: "html",
@@ -2240,20 +1628,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "DensityPlot(sin(x) * cos(y), (x, -3.14, 3.14), (y, -3.14, 3.14))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DensityPlot expr="sin(x) * cos(y)" xvar="x" xrange="-3.14,3.14" yvar="y" yrange="-3.14,3.14" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DensityPlot expr="sin(x) * cos(y)" xvar="x" xrange="-3.14,3.14" yvar="y" yrange="-3.14,3.14" />',
         },
         {
           id: "html",
@@ -2286,20 +1662,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'DensityPlot(\n             x ^ 2 - y ^ 2,\n             (x, -3, 3),\n             (y, -3, 3),\n             (Legend, True),\n             (Label, "x² − y²"),\n           )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DensityPlot\n  expr="x ^ 2 + -y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  legend="true"\n  label="x² − y²"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DensityPlot\n  expr="x ^ 2 + -y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  legend="true"\n  label="x² − y²"\n/>',
         },
         {
           id: "html",
@@ -2333,20 +1697,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "DensityPlot(sin(x * y), (x, -4, 4), (y, -4, 4), (N, 80), (Legend, True))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DensityPlot\n  expr="sin(x * y)"\n  xvar="x"\n  xrange="-4,4"\n  yvar="y"\n  yrange="-4,4"\n  :n="80"\n  legend="true"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DensityPlot expr="sin(x * y)" xvar="x" xrange="-4,4" yvar="y" yrange="-4,4" n={80} legend="true" />',
         },
         {
           id: "html",
@@ -2382,20 +1734,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'DensityPlot(\n             x ^ 2 + y ^ 2,\n             (x, -3, 3),\n             (y, -3, 3),\n             (ZRange, "0,30"),\n             (Legend, True),\n             (XLabel, "x"),\n             (YLabel, "y"),\n           )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DensityPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  zrange="0,30"\n  legend="true"\n  xLabel="x"\n  yLabel="y"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DensityPlot\n  expr="x ^ 2 + y ^ 2"\n  xvar="x"\n  xrange="-3,3"\n  yvar="y"\n  yrange="-3,3"\n  zrange="0,30"\n  legend="true"\n  xLabel="x"\n  yLabel="y"\n/>',
         },
         {
           id: "html",
@@ -2426,20 +1766,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListDensityPlot(\n                 [[0, 1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6]],\n                 (Legend, True),\n               )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<DensityPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" legend="true" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<DensityPlot data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" legend="true" />',
         },
         {
           id: "html",
@@ -2500,20 +1828,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'TreeGraph({\n            "label" -> "\\\'root\\\'",\n            "children" -> ["List", {\n                                     "label" -> "\\\'a\\\'",\n                                     "children" -> [\n                                                     "List",\n                                                     {"label" -> "\\\'a1\\\'"},\n                                                     {"label" -> "\\\'a2\\\'"},\n                                                   ],\n                                   }, {"label" -> "\\\'b\\\'"}],\n          })',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<TreeGraph data="{&quot;label&quot;:&quot;root&quot;,&quot;children&quot;:[{&quot;label&quot;:&quot;a&quot;,&quot;children&quot;:[{&quot;label&quot;:&quot;a1&quot;},{&quot;label&quot;:&quot;a2&quot;}]},{&quot;label&quot;:&quot;b&quot;}]}" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<TreeGraph data="{&quot;label&quot;:&quot;root&quot;,&quot;children&quot;:[{&quot;label&quot;:&quot;a&quot;,&quot;children&quot;:[{&quot;label&quot;:&quot;a1&quot;},{&quot;label&quot;:&quot;a2&quot;}]},{&quot;label&quot;:&quot;b&quot;}]}" />',
         },
         {
           id: "html",
@@ -2553,20 +1869,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'GraphPlot({"edges" -> [\n                        "List",\n                        ["List", "\\\'a\\\'", "\\\'b\\\'"],\n                        ["List", "\\\'b\\\'", "\\\'c\\\'"],\n                        ["List", "\\\'c\\\'", "\\\'d\\\'"],\n                        ["List", "\\\'d\\\'", "\\\'a\\\'"],\n                        ["List", "\\\'a\\\'", "\\\'c\\\'"],\n                      ]})',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<GraphPlot data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;d&quot;],[&quot;d&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;c&quot;]]}" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<GraphPlot data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;d&quot;],[&quot;d&quot;,&quot;a&quot;],[&quot;a&quot;,&quot;c&quot;]]}" />',
         },
         {
           id: "html",
@@ -2599,20 +1903,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'GraphPlot({"edges" -> [\n                        "List",\n                        ["List", "\\\'a\\\'", "\\\'b\\\'"],\n                        ["List", "\\\'b\\\'", "\\\'c\\\'"],\n                        ["List", "\\\'c\\\'", "\\\'a\\\'"],\n                      ]}, (Directed, True))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<GraphPlot\n  data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;a&quot;]]}"\n  :directed="true"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<GraphPlot\n  data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;b&quot;,&quot;c&quot;],[&quot;c&quot;,&quot;a&quot;]]}"\n  directed={true}\n/>',
         },
         {
           id: "html",
@@ -2653,20 +1945,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'LayeredGraphPlot({"edges" -> [\n                               "List",\n                               ["List", "\\\'a\\\'", "\\\'b\\\'"],\n                               ["List", "\\\'a\\\'", "\\\'c\\\'"],\n                               ["List", "\\\'b\\\'", "\\\'d\\\'"],\n                               ["List", "\\\'c\\\'", "\\\'d\\\'"],\n                               ["List", "\\\'d\\\'", "\\\'e\\\'"],\n                             ]})',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<LayeredGraphPlot data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;a&quot;,&quot;c&quot;],[&quot;b&quot;,&quot;d&quot;],[&quot;c&quot;,&quot;d&quot;],[&quot;d&quot;,&quot;e&quot;]]}" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<LayeredGraphPlot data="{&quot;edges&quot;:[[&quot;a&quot;,&quot;b&quot;],[&quot;a&quot;,&quot;c&quot;],[&quot;b&quot;,&quot;d&quot;],[&quot;c&quot;,&quot;d&quot;],[&quot;d&quot;,&quot;e&quot;]]}" />',
         },
         {
           id: "html",
@@ -2739,20 +2019,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Dendrogram({\n             "height" -> 3,\n             "children" -> ["List", {\n                                      "height" -> 1,\n                                      "children" -> [\n                                                      "List",\n                                                      {"label" -> "\\\'x\\\'"},\n                                                      {"label" -> "\\\'y\\\'"},\n                                                    ],\n                                    }, {\n                                        "height" -> 2,\n                                        "children" -> [\n                                                        "List",\n                                                        {"label" -> "\\\'z\\\'"},\n                                                        {"label" -> "\\\'w\\\'"},\n                                                      ],\n                                      }],\n           })',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Dendrogram data="{&quot;height&quot;:3,&quot;children&quot;:[{&quot;height&quot;:1,&quot;children&quot;:[{&quot;label&quot;:&quot;x&quot;},{&quot;label&quot;:&quot;y&quot;}]},{&quot;height&quot;:2,&quot;children&quot;:[{&quot;label&quot;:&quot;z&quot;},{&quot;label&quot;:&quot;w&quot;}]}]}" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Dendrogram data="{&quot;height&quot;:3,&quot;children&quot;:[{&quot;height&quot;:1,&quot;children&quot;:[{&quot;label&quot;:&quot;x&quot;},{&quot;label&quot;:&quot;y&quot;}]},{&quot;height&quot;:2,&quot;children&quot;:[{&quot;label&quot;:&quot;z&quot;},{&quot;label&quot;:&quot;w&quot;}]}]}" />',
         },
         {
           id: "html",
@@ -2784,20 +2052,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPlot3D([[0, 1, 2, 3], [1, 3, 4, 3], [2, 4, 6, 4], [1, 2, 3, 2]])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D data="[[0,1,2,3],[1,3,4,3],[2,4,6,4],[1,2,3,2]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D data="[[0,1,2,3],[1,3,4,3],[2,4,6,4],[1,2,3,2]]" />',
         },
         {
           id: "html",
@@ -2836,20 +2092,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ListPlot3D([\n             [0, 0, 0, 0, 0],\n             [0, 1, 2, 1, 0],\n             [0, 2, 5, 2, 0],\n             [0, 1, 2, 1, 0],\n             [0, 0, 0, 0, 0],\n           ], (Azimuth, 55), (Elevation, 35), (Label, "a ridge"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D\n  data="[[0,0,0,0,0],[0,1,2,1,0],[0,2,5,2,0],[0,1,2,1,0],[0,0,0,0,0]]"\n  :azimuth="55"\n  :elevation="35"\n  label="a ridge"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D\n  data="[[0,0,0,0,0],[0,1,2,1,0],[0,2,5,2,0],[0,1,2,1,0],[0,0,0,0,0]]"\n  azimuth={55}\n  elevation={35}\n  label="a ridge"\n/>',
         },
         {
           id: "html",
@@ -2879,20 +2123,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPlot3D(\n            [[0, 1, 2, 3], [1, 3, 4, 3], [2, 4, 6, 4], [1, 2, 3, 2]],\n            (Wireframe, True),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D data="[[0,1,2,3],[1,3,4,3],[2,4,6,4],[1,2,3,2]]" wireframe="true" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D data="[[0,1,2,3],[1,3,4,3],[2,4,6,4],[1,2,3,2]]" wireframe="true" />',
         },
         {
           id: "html",
@@ -2929,20 +2161,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ListPlot3D([\n             [0, 0, 0, 0, 0],\n             [0, 1, 2, 1, 0],\n             [0, 2, "", 2, 0],\n             [0, 1, 2, 1, 0],\n             [0, 0, 0, 0, 0],\n           ])',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D data="[[0,0,0,0,0],[0,1,2,1,0],[0,2,&quot;&quot;,2,0],[0,1,2,1,0],[0,0,0,0,0]]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D data="[[0,0,0,0,0],[0,1,2,1,0],[0,2,&quot;&quot;,2,0],[0,1,2,1,0],[0,0,0,0,0]]" />',
         },
         {
           id: "html",
@@ -2982,20 +2202,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ListPlot3D([\n             [0, 0, 0],\n             [1, 0, 1],\n             [0, 1, 1],\n             [1, 1, 0],\n             [0.5, 0.5, 2],\n             [0.2, 0.8, 0.4],\n             [0.8, 0.2, 1.6],\n           ], (type, "points"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D\n  data="[[0,0,0],[1,0,1],[0,1,1],[1,1,0],[0.5,0.5,2],[0.2,0.8,0.4],[0.8,0.2,1.6]]"\n  type="points"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D\n  data="[[0,0,0],[1,0,1],[0,1,1],[1,1,0],[0.5,0.5,2],[0.2,0.8,0.4],[0.8,0.2,1.6]]"\n  type="points"\n/>',
         },
         {
           id: "html",
@@ -3036,20 +2244,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'ListPlot3D([\n             [0, 0, 0],\n             [1, 0, 1],\n             [0, 1, 1],\n             [1, 1, 0],\n             [0.5, 0.5, 2],\n             [0.2, 0.8, 0.4],\n             [0.8, 0.2, 1.6],\n           ], (type, "points"), (DepthCue, 0), (Size, 5))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D\n  data="[[0,0,0],[1,0,1],[0,1,1],[1,1,0],[0.5,0.5,2],[0.2,0.8,0.4],[0.8,0.2,1.6]]"\n  type="points"\n  :depthCue="0"\n  :size="5"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D\n  data="[[0,0,0],[1,0,1],[0,1,1],[1,1,0],[0.5,0.5,2],[0.2,0.8,0.4],[0.8,0.2,1.6]]"\n  type="points"\n  depthCue={0}\n  size={5}\n/>',
         },
         {
           id: "html",
@@ -3093,20 +2289,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPlot3D([\n             [0, 0, 1],\n             [1, 0, 2],\n             [2, 0, 1],\n             [0, 1, 2],\n             [1, 1, 4],\n             [2, 1, 2],\n             [0, 2, 1],\n             [1, 2, 2],\n             [2, 2, 1],\n             [0.4, 0.4, 1.5],\n             [1.6, 1.4, 3],\n           ], (N, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ListPlot3D\n  data="[[0,0,1],[1,0,2],[2,0,1],[0,1,2],[1,1,4],[2,1,2],[0,2,1],[1,2,2],[2,2,1],[0.4,0.4,1.5],[1.6,1.4,3]]"\n  :n="3"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ListPlot3D\n  data="[[0,0,1],[1,0,2],[2,0,1],[0,1,2],[1,1,4],[2,1,2],[0,2,1],[1,2,2],[2,2,1],[0.4,0.4,1.5],[1.6,1.4,3]]"\n  n={3}\n/>',
         },
         {
           id: "html",
@@ -3133,20 +2317,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot(sin(x), (x, -6.283, 6.283))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" />',
         },
         {
           id: "html",
@@ -3171,20 +2343,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot(x ^ 3 - 3x, (x, -3, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="x ^ 3 - 3x" var="x" domain="-3,3" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="x ^ 3 - 3x" var="x" domain="-3,3" />',
         },
         {
           id: "html",
@@ -3211,20 +2371,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot(1 / x, (x, -3, 3))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="1 / x" var="x" domain="-3,3" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="1 / x" var="x" domain="-3,3" />',
         },
         {
           id: "html",
@@ -3251,20 +2399,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot(x * sin(x), (x, -12.566, 12.566), (PlotPoints, 240))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="x * sin(x)" var="x" domain="-12.566,12.566" :samples="240" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="x * sin(x)" var="x" domain="-12.566,12.566" samples={240} />',
         },
         {
           id: "html",
@@ -3291,20 +2427,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot(exp(x), (x, 0, 5), (ScalingFunctions, "Log"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="exp(x)" var="x" domain="0,5" yScale="log" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="exp(x)" var="x" domain="0,5" yScale="log" />',
         },
         {
           id: "html",
@@ -3335,20 +2459,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot([sin(x), cos(x), sin(x) * cos(x)], (x, -6.283, 6.283))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="[sin(x), cos(x), sin(x) * cos(x)]" var="x" domain="-6.283,6.283" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="[sin(x), cos(x), sin(x) * cos(x)]" var="x" domain="-6.283,6.283" />',
         },
         {
           id: "html",
@@ -3380,20 +2492,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ParametricPlot((sin(3t), sin(4t)), (t, 0, 6.283), (PlotPoints, 400))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<ParametricPlot value="(sin(3t), sin(4t))" var="t" domain="0,6.283" :samples="400" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<ParametricPlot value="(sin(3t), sin(4t))" var="t" domain="0,6.283" samples={400} />',
         },
         {
           id: "html",
@@ -3424,20 +2524,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot(sin(x), (x, 0, 6.283), (mode, "points"), (PlotPoints, 40))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="sin(x)" var="x" domain="0,6.283" mode="points" :samples="40" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="sin(x)" var="x" domain="0,6.283" mode="points" samples={40} />',
         },
         {
           id: "html",
@@ -3474,20 +2562,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot(\n      [sin(x), cos(x)],\n      (x, -6.283, 6.283),\n      (GridLines, True),\n      (Filling, True),\n      (PlotLegends, True),\n      (AxesLabel, "x"),\n      (PlotRange, (-1.2, 1.2)),\n      (PlotLabel, "sin & cos"),\n    )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot\n  value="[sin(x), cos(x)]"\n  var="x"\n  domain="-6.283,6.283"\n  grid="true"\n  fill="true"\n  legend="true"\n  xLabel="x"\n  plotRange="-1.2,1.2"\n  label="sin &amp; cos"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot\n  value="[sin(x), cos(x)]"\n  var="x"\n  domain="-6.283,6.283"\n  grid="true"\n  fill="true"\n  legend="true"\n  xLabel="x"\n  plotRange="-1.2,1.2"\n  label="sin &amp; cos"\n/>',
         },
         {
           id: "html",
@@ -3514,20 +2590,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot(sin(x), (x, -6.283, 6.283), (ColorFunction, "y"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" colorBy="y" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" colorBy="y" />',
         },
         {
           id: "html",
@@ -3552,20 +2616,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot(sin(x), (x, -6.283, 6.283), (Axes, "false"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" axes="false" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot value="sin(x)" var="x" domain="-6.283,6.283" axes="false" />',
         },
         {
           id: "html",
@@ -3597,20 +2649,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(Plot(sin(a * x + b), (x, -6.283, 6.283)), (a, 1, 5), (b, 0, 6.283))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{a, 1, 5}; {b, 0, 6.283}">\n  <Plot value="sin(_a * x + _b)" var="x" domain="-6.283,6.283" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{a, 1, 5}; {b, 0, 6.283}">\n  <Plot value="sin(_a * x + _b)" var="x" domain="-6.283,6.283" />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3647,20 +2687,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            Plot(A * sin(w * x + p), (x, -6.283, 6.283), (PlotRange, (-2, 2))),\n            ((A, 1), 0, 2),\n            ((w, 2), 0.5, 6),\n            (p, 0, 6.283),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{{A, 1}, 0, 2}; {{w, 2}, 0.5, 6}; {p, 0, 6.283}">\n  <Plot value="_A * sin(_w * x + _p)" var="x" domain="-6.283,6.283" plotRange="-2,2" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{{A, 1}, 0, 2}; {{w, 2}, 0.5, 6}; {p, 0, 6.283}">\n  <Plot value="_A * sin(_w * x + _p)" var="x" domain="-6.283,6.283" plotRange="-2,2" />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3690,20 +2718,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(Plot(sin(x - t), (x, -6.283, 6.283)), (t, 0, 6.283))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{t, 0, 6.283}">\n  <Plot value="sin(x - _t)" var="x" domain="-6.283,6.283" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{t, 0, 6.283}">\n  <Plot value="sin(x - _t)" var="x" domain="-6.283,6.283" />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3740,20 +2756,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(Plot(\n                 exp(-((x - c) ^ 2 / s)),\n                 (x, -6.283, 6.283),\n                 (PlotRange, (0, 1.1)),\n                 (Filling, True),\n               ), ((c, 0), -5, 5), ((s, 1), 0.2, 4))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{{c, 0}, -5, 5}; {{s, 1}, 0.2, 4}">\n  <Plot\n    value="exp(-((x - _c) ^ 2 / _s))"\n    var="x"\n    domain="-6.283,6.283"\n    plotRange="0,1.1"\n    fill="true"\n  />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{{c, 0}, -5, 5}; {{s, 1}, 0.2, 4}">\n  <Plot\n    value="exp(-((x - _c) ^ 2 / _s))"\n    var="x"\n    domain="-6.283,6.283"\n    plotRange="0,1.1"\n    fill="true"\n  />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3783,20 +2787,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            Plot(sin(n * x), (x, -6.283, 6.283), (GridLines, True)),\n            ((n, 1), 1, 8, 1),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{{n, 1}, 1, 8, 1}">\n  <Plot value="sin(_n * x)" var="x" domain="-6.283,6.283" grid="true" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{{n, 1}, 1, 8, 1}">\n  <Plot value="sin(_n * x)" var="x" domain="-6.283,6.283" grid="true" />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3826,20 +2818,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            Plot(sin(k * x), (x, -6.283, 6.283), (GridLines, True)),\n            (k, [1, 2, 3, 5]),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{k, {1, 2, 3, 5}}">\n  <Plot value="sin(_k * x)" var="x" domain="-6.283,6.283" grid="true" />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{k, {1, 2, 3, 5}}">\n  <Plot value="sin(_k * x)" var="x" domain="-6.283,6.283" grid="true" />\n</Manipulate>',
         },
         {
           id: "html",
@@ -3871,20 +2851,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(x ^ 2 - y ^ 2, (x, -2, 2), (y, -2, 2))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D value="x ^ 2 - y ^ 2" xvar="x" xDomain="-2,2" yvar="y" yDomain="-2,2" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D value="x ^ 2 - y ^ 2" xvar="x" xDomain="-2,2" yvar="y" yDomain="-2,2" />',
         },
         {
           id: "html",
@@ -3914,20 +2882,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(sin(x) * cos(y), (x, -3.14, 3.14), (y, -3.14, 3.14))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D value="sin(x) * cos(y)" xvar="x" xDomain="-3.14,3.14" yvar="y" yDomain="-3.14,3.14" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D value="sin(x) * cos(y)" xvar="x" xDomain="-3.14,3.14" yvar="y" yDomain="-3.14,3.14" />',
         },
         {
           id: "html",
@@ -3959,20 +2915,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(sin(x) * cos(y), (x, -3.14, 3.14), (y, -3.14, 3.14), (Spin, True))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  spin="true"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  spin="true"\n/>',
         },
         {
           id: "html",
@@ -4006,20 +2950,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot3D(\n        exp(-((x ^ 2 + y ^ 2) / 4)),\n        (x, -4, 4),\n        (y, -4, 4),\n        (PlotLabel, "Gaussian"),\n        (ColorLegend, True),\n      )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D\n  value="exp(-((x ^ 2 + y ^ 2) / 4))"\n  xvar="x"\n  xDomain="-4,4"\n  yvar="y"\n  yDomain="-4,4"\n  label="Gaussian"\n  colorLegend="true"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D\n  value="exp(-((x ^ 2 + y ^ 2) / 4))"\n  xvar="x"\n  xDomain="-4,4"\n  yvar="y"\n  yDomain="-4,4"\n  label="Gaussian"\n  colorLegend="true"\n/>',
         },
         {
           id: "html",
@@ -4053,20 +2985,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(\n        sin(x) * cos(y),\n        (x, -3.14, 3.14),\n        (y, -3.14, 3.14),\n        (Azimuth, 200),\n        (Elevation, 40),\n        (Zoom, 0.8),\n      )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  :azimuth="200"\n  :elevation="40"\n  :zoom="0.8"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  azimuth={200}\n  elevation={40}\n  zoom={0.8}\n/>',
         },
         {
           id: "html",
@@ -4102,20 +3022,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(\n        [sin(x) * cos(y) + 2.5, cos(x) * sin(y) - 2.5],\n        (x, -3.14, 3.14),\n        (y, -3.14, 3.14),\n      )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D\n  value="[sin(x) * cos(y) + 2.5, cos(x) * sin(y) - 2.5]"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D\n  value="[sin(x) * cos(y) + 2.5, cos(x) * sin(y) - 2.5]"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n/>',
         },
         {
           id: "html",
@@ -4146,20 +3054,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'Plot3D(x ^ 2 - y ^ 2, (x, -2, 2), (y, -2, 2), (Axes, "false"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D value="x ^ 2 - y ^ 2" xvar="x" xDomain="-2,2" yvar="y" yDomain="-2,2" axes="false" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D value="x ^ 2 - y ^ 2" xvar="x" xDomain="-2,2" yvar="y" yDomain="-2,2" axes="false" />',
         },
         {
           id: "html",
@@ -4194,20 +3090,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            Plot3D(sin(k * x) * cos(k * y), (x, -3.14, 3.14), (y, -3.14, 3.14)),\n            (k, 0.5, 3),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{k, 0.5, 3}">\n  <Plot3D\n    value="sin(_k * x) * cos(_k * y)"\n    xvar="x"\n    xDomain="-3.14,3.14"\n    yvar="y"\n    yDomain="-3.14,3.14"\n  />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{k, 0.5, 3}">\n  <Plot3D\n    value="sin(_k * x) * cos(_k * y)"\n    xvar="x"\n    xDomain="-3.14,3.14"\n    yvar="y"\n    yDomain="-3.14,3.14"\n  />\n</Manipulate>',
         },
         {
           id: "html",
@@ -4246,20 +3130,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(Plot3D(\n                   (1 - t) * (x ^ 2 - y ^ 2) + t * sin(x) * cos(y) * 4,\n                   (x, -2, 2),\n                   (y, -2, 2),\n                 ), (t, 0, 1))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{t, 0, 1}">\n  <Plot3D\n    value="(1 - _t) * (x ^ 2 - y ^ 2) + _t * sin(x) * cos(y) * 4"\n    xvar="x"\n    xDomain="-2,2"\n    yvar="y"\n    yDomain="-2,2"\n  />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{t, 0, 1}">\n  <Plot3D\n    value="(1 - _t) * (x ^ 2 - y ^ 2) + _t * sin(x) * cos(y) * 4"\n    xvar="x"\n    xDomain="-2,2"\n    yvar="y"\n    yDomain="-2,2"\n  />\n</Manipulate>',
         },
         {
           id: "html",
@@ -4294,20 +3166,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Manipulate(\n            Plot3D(sin(2 * sqrt(x ^ 2 + y ^ 2) - p), (x, -4, 4), (y, -4, 4)),\n            (p, 0, 6.283),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Manipulate params="{p, 0, 6.283}">\n  <Plot3D\n    value="sin(2 * sqrt(x ^ 2 + y ^ 2) - _p)"\n    xvar="x"\n    xDomain="-4,4"\n    yvar="y"\n    yDomain="-4,4"\n  />\n</Manipulate>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Manipulate params="{p, 0, 6.283}">\n  <Plot3D\n    value="sin(2 * sqrt(x ^ 2 + y ^ 2) - _p)"\n    xvar="x"\n    xDomain="-4,4"\n    yvar="y"\n    yDomain="-4,4"\n  />\n</Manipulate>',
         },
         {
           id: "html",
@@ -4340,20 +3200,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "Plot3D(sin(x) * cos(y), (x, -3.14, 3.14), (y, -3.14, 3.14), (Gpu, 100))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  gpu="100"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<Plot3D\n  value="sin(x) * cos(y)"\n  xvar="x"\n  xDomain="-3.14,3.14"\n  yvar="y"\n  yDomain="-3.14,3.14"\n  gpu="100"\n/>',
         },
         {
           id: "html",
@@ -4381,20 +3229,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "PolarPlot(cos(theta) + 1)",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot expr="cos(theta) + 1" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot expr="cos(theta) + 1" />',
         },
         {
           id: "html",
@@ -4426,20 +3262,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'PolarPlot(cos(2theta), (Filled, True), (Label, "r = cos 2θ"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot expr="cos(2theta)" filled="true" label="r = cos 2θ" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot expr="cos(2theta)" filled="true" label="r = cos 2θ" />',
         },
         {
           id: "html",
@@ -4466,20 +3290,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "PolarPlot(theta, (theta, 0, 18.85), (N, 600))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot expr="theta" tvar="theta" trange="0,18.85" :n="600" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot expr="theta" tvar="theta" trange="0,18.85" n={600} />',
         },
         {
           id: "html",
@@ -4504,20 +3316,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'PolarPlot(2 * cos(theta) + 1, (Axes, "false"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot expr="2 * cos(theta) + 1" axes="false" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot expr="2 * cos(theta) + 1" axes="false" />',
         },
         {
           id: "html",
@@ -4547,20 +3347,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPolarPlot([[0, 1], [1.57, 2], [3.14, 1], [4.71, 2]], (closed, True))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot data="[[0,1],[1.57,2],[3.14,1],[4.71,2]]" closed="true" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot data="[[0,1],[1.57,2],[3.14,1],[4.71,2]]" closed="true" />',
         },
         {
           id: "html",
@@ -4585,20 +3373,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "ListPolarPlot([1, 1.5, 2, 1.5, 1, 1.5, 2, 1.5, 1])",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<PolarPlot data="[1,1.5,2,1.5,1,1.5,2,1.5,1]" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<PolarPlot data="[1,1.5,2,1.5,1,1.5,2,1.5,1]" />',
         },
         {
           id: "html",
@@ -4626,20 +3402,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<VectorPlot u="-y" v="x" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<VectorPlot u="-y" v="x" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" />',
         },
         {
           id: "html",
@@ -4672,20 +3436,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'VectorPlot((x, -y), (x, -2, 2), (y, -2, 2), (Label, "(x, −y)"))',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<VectorPlot u="x" v="-y" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" label="(x, −y)" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<VectorPlot u="x" v="-y" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" label="(x, −y)" />',
         },
         {
           id: "html",
@@ -4717,20 +3469,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "VectorPlot((sin(y), cos(x)), (x, -3.14, 3.14), (y, -3.14, 3.14), (N, 16))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<VectorPlot\n  u="sin(y)"\n  v="cos(x)"\n  xvar="x"\n  xrange="-3.14,3.14"\n  yvar="y"\n  yrange="-3.14,3.14"\n  :n="16"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<VectorPlot\n  u="sin(y)"\n  v="cos(x)"\n  xvar="x"\n  xrange="-3.14,3.14"\n  yvar="y"\n  yrange="-3.14,3.14"\n  n={16}\n/>',
         },
         {
           id: "html",
@@ -4756,20 +3496,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<StreamPlot u="-y" v="x" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" />',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<StreamPlot u="-y" v="x" xvar="x" xrange="-2,2" yvar="y" yrange="-2,2" />',
         },
         {
           id: "html",
@@ -4803,20 +3531,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: "StreamPlot(\n            (x ^ 2 - y ^ 2, 2 * x * y),\n            (x, -2, 2),\n            (y, -2, 2),\n            (N, 11),\n            (Steps, 80),\n          )",
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<StreamPlot\n  u="x ^ 2 + -y ^ 2"\n  v="2 * x * y"\n  xvar="x"\n  xrange="-2,2"\n  yvar="y"\n  yrange="-2,2"\n  :n="11"\n  :steps="80"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<StreamPlot\n  u="x ^ 2 + -y ^ 2"\n  v="2 * x * y"\n  xvar="x"\n  xrange="-2,2"\n  yvar="y"\n  yrange="-2,2"\n  n={11}\n  steps={80}\n/>',
         },
         {
           id: "html",
@@ -4849,20 +3565,8 @@ export const STORIES_DATA: Readonly<Record<string, readonly StoryData[]>> = {
         {
           id: "epsil",
           label: "Epsil",
-          caption: "notebook cells, the CLI, <Notatio expr>",
+          caption: "notebook cells, the CLI",
           text: 'StreamPlot(\n            (y, sin(x)),\n            (x, -3.14, 3.14),\n            (y, -2, 2),\n            (N, 10),\n            (XLabel, "x"),\n            (YLabel, "y"),\n          )',
-        },
-        {
-          id: "vue",
-          label: "Vue",
-          caption: "VitePress, Vue SFCs, Nuxt",
-          text: '<StreamPlot\n  u="y"\n  v="sin(x)"\n  xvar="x"\n  xrange="-3.14,3.14"\n  yvar="y"\n  yrange="-2,2"\n  :n="10"\n  xLabel="x"\n  yLabel="y"\n/>',
-        },
-        {
-          id: "react",
-          label: "React",
-          caption: "MDX, Next, any React",
-          text: '<StreamPlot\n  u="y"\n  v="sin(x)"\n  xvar="x"\n  xrange="-3.14,3.14"\n  yvar="y"\n  yrange="-2,2"\n  n={10}\n  xLabel="x"\n  yLabel="y"\n/>',
         },
         {
           id: "html",

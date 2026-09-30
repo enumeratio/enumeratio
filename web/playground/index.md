@@ -40,23 +40,6 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 Somebody else's idea, taken seriously enough to build — see
 [Inspirations](/playground/inspirations/).
 
-## As Vue components
-
-Every component is also a Vue component named for its **symbol** — `<Plot>`, `<Plot3D>`,
-`<Cell>`, `<Manipulate>` — with the element's attributes as typed props, so a page gets a
-compile-time check on the spelling and never writes `<ClientOnly>` itself. The family
-components come with one wrapper per member too: `<Histogram>`, `<BarChart>`, `<PieChart>`
-are `<Chart>` with `type` fixed, `<StreamPlot>` is `<VectorPlot>`, `<TreeGraph>` is
-`<GraphPlot>`. They are generated from the element sources when the site builds
-(`web/.vitepress/data/wrappers.ts`), so an attribute added to an element is a prop the
-same day.
-
-<Story
-  title="The symbols, as tags">
-<Plot value="Sin(x)" domain="0,10" />
-<Histogram data="[1,2,2,3,3,3,4,4,5]" />
-</Story>
-
 ## Symbols that draw
 
 The other direction: a head that draws _is_ its component. `Plot`, `Histogram`,
