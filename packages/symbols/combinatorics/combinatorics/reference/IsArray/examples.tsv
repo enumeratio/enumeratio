@@ -1,6 +1,6 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-a-rectangular-nesting-is-an-array			[IsArray, [List, [List, 1, 2], [List, 3, 4]]]	True		
-a-ragged-nesting-is-not-an-array	Scope		[IsArray, [List, [List, 1, 2], [List, 3]]]	False		
-a-flat-list-is-a-rank-1-array	Scope		[IsArray, [List, 1, 2, 3]]	True		
-a-non-list-is-not-an-array	Scope		[IsArray, 3]	False		
-a-test-function-must-hold-of-every-leaf	Scope		[IsArray, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True	unclassified	""
+id	section	role	expr	expected
+a-rectangular-nesting-is-an-array			[IsArray, [List, [List, 1, 2], [List, 3, 4]]]	True
+a-ragged-nesting-is-not-an-array	Scope		[IsArray, [List, [List, 1, 2], [List, 3]]]	False
+a-flat-list-is-a-rank-1-array	Scope		[IsArray, [List, 1, 2, 3]]	True
+a-non-list-is-not-an-array	Scope		[IsArray, 3]	False
+a-test-function-must-hold-of-every-leaf	Scope		[IsArray, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True

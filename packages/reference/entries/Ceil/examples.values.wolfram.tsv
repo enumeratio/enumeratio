@@ -18,6 +18,6 @@ how-many-5-seat-vans-are-needed-to-carry-17	Ceiling[Divide[17, 5]]	4	\left\lceil
 ten-bits-are-enough-to-number-1000-items-lceil	Ceiling[Log[2, 1000]]	10	\left\lceil \log _2(1000)\right\rceil	10	
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])	True	\left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1	\text{True}	
 floor-and-ceil-agree-exactly-on-integers	(Ceiling[5] == Floor[5])	True	\lceil 5\rceil =\lfloor 5\rfloor	\text{True}	
-a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	disagree
+a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	-3	\lceil -3.7\rceil	-3	
 nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	Indeterminate	\lceil \text{Indeterminate}\rceil	\text{Indeterminate}	disagree

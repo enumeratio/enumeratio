@@ -1,2 +1,2 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-star-hub-is-maximally-close			[ClosenessCentrality, [StarGraph, 5], 1]	1	unclassified	""
+id	section	role	expr	expected
+star-hub-is-maximally-close			[ClosenessCentrality, [StarGraph, 5], 1]	1

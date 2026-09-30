@@ -23,7 +23,7 @@ negative-indices-inside-an-index-list	Scope		[At, [List, a, b, c, d, f], [List, 
 a-stepped-range-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Range, 1, 5, 2]]	[List, a, c, f]	A stepped [[Range]] takes every other element		
 negative-bounds-count-from-the-end-the-last	Scope		[At, [List, a, b, c, d, f], [Range, -3, -1]]	[List, c, d, f]	Negative bounds count from the end: the last three elements		
 a-lazy-range-is-indexed-directly	Scope		[At, [Range, 5, 10], 2]	6	A lazy [[Range]] is indexed directly		
-all-at-the-first-level-should-take-a-whole	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], All, 2]	[List, 2, 5]	$All$ at the first level takes a whole column	unclassified	""
+all-at-the-first-level-should-take-a-whole	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], All, 2]	[List, 2, 5]	$All$ at the first level takes a whole column		
 index-lists-at-two-levels-extract-a-submatrix	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]	[List, [List, 2, 3], [List, 8, 9]]	Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)		
 a-span-2-4-in-wolfram-takes-a-contiguous-slice	Scope		[At, [List, a, b, c, d, f], [Span, 2, 4]]	[List, b, c, d]	A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice		
 a-stepped-span-1-1-2-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Span, 1, -1, 2]]	[List, a, c, f]	A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end		
