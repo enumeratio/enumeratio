@@ -21,6 +21,9 @@ top of this one — it has no workspace dependencies of its own.
   ([Random](https://github.com/enumeratio/enumeratio/wiki/Random)); Wolfram's `RandomInteger` / `RandomVariate` rewrite to it.
 - **`src/latex.ts`** — the `Power` LaTeX dictionary entry every host dictionary should use in
   place of compute-engine's native one (correct parenthesisation of the base).
+- **`src/inputform.ts`** — `toInputForm`: an expression printed as Epsil you could retype,
+  over compute-engine's `serializeEpsil`. Here so `ToString` needs no format registry;
+  `@enumeratio/formats/inputform` re-exports it.
 - **`./compiled` (`src/compiled.ts`)** — a separate entry so only packages that actually
   compile Epsil to JavaScript pull in compute-engine's compiler.
 

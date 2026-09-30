@@ -5,7 +5,7 @@ signature: ToString(expr)
 summary: expr printed as a string — of Epsil, this repo's own syntax, not Wolfram InputForm.
 signatures:
   - call: ToString(expr)
-    description: expr printed as Epsil source, via @enumeratio/formats's toInputForm
+    description: expr printed as Epsil source, via @enumeratio/engine's toInputForm
     library: enumeratio-combinatorics
     type: (any) -> string
 seeAlso:

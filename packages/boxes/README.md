@@ -12,10 +12,14 @@ inline math in prose.
 - `makeBoxes(json)` — `MakeBoxes`: an expression's traditional notation, as boxes. Pure
   function of the MathJSON tree (no engine, no canonicalization); parenthesization is
   precedence-driven, every node reporting how tightly it binds.
-- `toLatex`, `toMathML`/`parseMathML`, `toText`/`toAscii` — boxes to LaTeX (for MathLive
+  The main entry is base (the box tree, `makeBoxes`, the notation registry and
+  `declareBoxes`), what every symbol package's notation builds on. The serialisers and
+  readers are presentation, at `@enumeratio/boxes/render`.
+
+- `toLatex`, `toMathML`/`parseMathML`, `toText`/`toAscii` (`/render`) — boxes to LaTeX (for MathLive
   and KaTeX), to and from presentation MathML, to plain text and AsciiMath.
 - `toMathJson`/`fromMathJson` — boxes as MathJSON, round-tripping.
-- `readMarkdown`/`toMarkdown`, `texSource`, `closeDollar` — a small Markdown-as-prose-boxes
+- `readMarkdown`/`toMarkdown`, `texSource`, `closeDollar` (`/render`) — a small Markdown-as-prose-boxes
   pass: a `$…$` island held as `FormBox(tex, "TeXForm")`, `${…}` holes found by scanning
   running text and TeX alike.
 - `declareBoxes` — declares the box heads (`RowBox`, `FractionBox`, `SuperscriptBox`, …)
@@ -25,7 +29,8 @@ inline math in prose.
 ## Usage
 
 ```ts
-import { makeBoxes, toAscii, toLatex, toText } from "@enumeratio/boxes";
+import { makeBoxes } from "@enumeratio/boxes";
+import { toAscii, toLatex, toText } from "@enumeratio/boxes/render";
 
 const boxes = makeBoxes(["Power", "x", 2]); // ["SuperscriptBox", "x", "2"]
 toLatex(boxes); // "x^2"

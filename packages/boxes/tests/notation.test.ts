@@ -1,5 +1,6 @@
 import { expect, test } from "vite-plus/test";
-import { indexed, makeBoxes, notationOf, registerNotation, toLatex } from "../src/index.ts";
+import { indexed, makeBoxes, notationOf, registerNotation } from "../src/index.ts";
+import { toLatex } from "../src/render/index.ts";
 
 const tex = (json: unknown, notation = {}): string => toLatex(makeBoxes(json as never, notation));
 

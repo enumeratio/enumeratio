@@ -5,7 +5,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { closeDollar } from "@enumeratio/boxes";
+import { closeDollar } from "@enumeratio/boxes/render";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { referenceData } from "@enumeratio/reference/node";
 import katex from "katex";

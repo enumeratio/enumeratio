@@ -28,7 +28,7 @@ import {
   tokenClass,
   underoverscript,
   underscript,
-} from "./box.ts";
+} from "../box.ts";
 import { texSource } from "./markdown.ts";
 
 export interface MathMLOptions {

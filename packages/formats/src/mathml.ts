@@ -6,14 +6,8 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import {
-  type Box,
-  makeBoxes,
-  type MathMLOptions,
-  parseMathML,
-  toLatex,
-  toMathML as boxesToMathML,
-} from "@enumeratio/boxes";
+import { type Box, makeBoxes } from "@enumeratio/boxes";
+import { type MathMLOptions, parseMathML, toLatex, toMathML as boxesToMathML } from "@enumeratio/boxes/render";
 
 export type { MathMLOptions };
 

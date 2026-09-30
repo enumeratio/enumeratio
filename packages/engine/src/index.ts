@@ -230,3 +230,4 @@ export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== f
 export { collectMessages, defineMessages, emit, formatArgument, type Message, messageLine } from "./messages.ts";
 export { POWER_LATEX } from "./latex.ts";
 export { addRandomArm, ensureRandom, registerSampler, type Sampler, sample, seedRandom, uniform01 } from "./random.ts";
+export { normalizeInputForm, toInputForm } from "./inputform.ts";

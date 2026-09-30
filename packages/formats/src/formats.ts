@@ -6,10 +6,11 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { compile, GLSLTarget, PythonTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
-import { MATHJSON_MIME } from "@enumeratio/boxes";
+import { MATHJSON_MIME } from "@enumeratio/boxes/render";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { toInputForm } from "./inputform.ts";
-import { makeBoxes, toText } from "@enumeratio/boxes";
+import { makeBoxes } from "@enumeratio/boxes";
+import { toText } from "@enumeratio/boxes/render";
 import { fromAsciiMath, toAsciiMath } from "./asciimath.ts";
 import { fromMathML, type MathMLOptions, toMathML } from "./mathml.ts";
 import { parseExpression } from "./expression.ts";

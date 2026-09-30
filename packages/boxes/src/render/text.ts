@@ -4,7 +4,7 @@
 // wherever the linear form would misread. `toText` writes glyphs, `toAscii` spells them as
 // AsciiMath does (linear.ts).
 
-import { type Box, type BoxNode, isNode, optionsOfBox } from "./box.ts";
+import { type Box, type BoxNode, isNode, optionsOfBox } from "../box.ts";
 import { type Alphabet, joinSpelled, scriptChars, spell } from "./linear.ts";
 import { texToAlphabet } from "./tex-text.ts";
 
