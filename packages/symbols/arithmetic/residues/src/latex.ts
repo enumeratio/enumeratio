@@ -1,6 +1,5 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
-import { POWER_LATEX } from "@enumeratio/engine";
 import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
@@ -13,11 +12,6 @@ import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
 //   \mathbb{Z}/m\mathbb{Z} IntegerModRing(m) -- written here; it parses to CE's
 //                          QuotientRing(Integers, m), which evaluates to it
 //
-// `Power` is here too (boxed's `POWER_LATEX`): compute-engine parenthesises a base from a
-// fixed list of heads, so `(3 \pmod{7})^6` would print as `3\pmod{7}^{6}`. The entry
-// replaces the native one by name -- a host merging these must drop the default entry for a
-// name it redefines.
-
 // compute-engine's own infix `\pmod`, just under the relations (245), so `a + b \pmod{n}`
 // takes the whole sum. `a \equiv b \pmod{n}` never reaches it: `\equiv` reads its
 // `\pmod` through the separate prefix entry, which this leaves alone.
@@ -45,7 +39,6 @@ export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
     serialize: (serializer, expr) =>
       `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`,
   },
-  POWER_LATEX,
   {
     name: INTEGER_MOD_RING,
     serialize: (serializer, expr) => `\\mathbb{Z}/${serializer.wrapShort(operand(expr, 1))}\\mathbb{Z}`,
