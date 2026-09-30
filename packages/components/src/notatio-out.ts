@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import { type Box, toLatex } from "@enumeratio/boxes";
 import { collectMessages, type Message } from "@enumeratio/engine";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
@@ -29,6 +30,12 @@ import {
   type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/frontend";
+
+/** A kernel's display of an answer, by form (`@enumeratio/frontend/display`). */
+type Displayed = Partial<Record<"StandardForm" | "TraditionalForm" | "MatrixForm", Box>>;
+
+/** A displayed form as TeX, for the typesetter; `undefined` when there's none. */
+const texOf = (box: Box | undefined): string | undefined => (box === undefined ? undefined : toLatex(box));
 
 /**
  * Typeset markup by the LaTeX that produced it, shared by every `<Out>` on the
@@ -169,7 +176,10 @@ interface TranscriptHost extends Element {
    * abort can promise). `reset: true` means the session was hard-killed and
    * restarted -- earlier bindings are gone, surfaced by the module itself.
    */
-  evaluateRemote?(json: unknown, options?: { signal?: AbortSignal }): Promise<{ value: unknown; reset: boolean }>;
+  evaluateRemote?(
+    json: unknown,
+    options?: { signal?: AbortSignal },
+  ): Promise<{ value: unknown; reset: boolean; boxes?: unknown }>;
 }
 
 /**
@@ -506,6 +516,8 @@ export class NotatioOut extends LitElement {
     /** The bound symbol, when the input is an assignment (`a := …`). */
     name?: string;
     plot?: PlotInfo;
+    /** The display a kernel built for the answer, by form: rendered as it is. */
+    boxes?: Displayed;
   }> {
     const source = this.value ?? "";
     if (!source.trim()) return { latex: "", json: undefined, messages: [] };
@@ -541,16 +553,18 @@ export class NotatioOut extends LitElement {
       this.#abort = new AbortController();
       try {
         let resultJson: unknown;
+        let boxes: Displayed | undefined;
         try {
-          ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
-            signal: this.#abort.signal,
-          }));
+          const remote = await host.evaluateRemote(boxed.json, { signal: this.#abort.signal });
+          resultJson = remote.value;
+          boxes = remote.boxes as Displayed | undefined;
         } finally {
           this.#abort = undefined;
         }
         const value = transcript.run(() => engine.box(resultJson as never));
         this.#historyN = transcript.record(input, boxed, value);
-        return { latex: latexOf(engine, value), json: value.json, messages: [] };
+        const shown = texOf(boxes?.StandardForm);
+        return { latex: shown ?? latexOf(engine, value), json: value.json, messages: [], boxes };
       } catch (err) {
         // No worker could ever be started for this session (not a user "stop" --
         // that resolves normally with `$Aborted` rather than throwing) --
@@ -758,7 +772,7 @@ export class NotatioOut extends LitElement {
   // so a slow earlier evaluation can't overwrite it when it finally lands.
   async #compute(run: number): Promise<void> {
     try {
-      const { latex, json, messages, name, plot } = await this.#evaluate();
+      const { latex, json, messages, name, plot, boxes } = await this.#evaluate();
       const convert = await loadMarkup();
       if (run !== this.#runs) return;
       this._messages = messages;
@@ -786,7 +800,7 @@ export class NotatioOut extends LitElement {
       } else {
         const engine = await loadEngine();
         if (run !== this.#runs) return;
-        const traditional = toTraditionalLatex(json, engine);
+        const traditional = texOf(boxes?.TraditionalForm) ?? toTraditionalLatex(json, engine);
         this._traditional = convert(traditional);
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
         this._tex = portableTeX(traditional);
@@ -795,7 +809,8 @@ export class NotatioOut extends LitElement {
         // Only a List has a matrix form; anything else falls back to standard.
         this._canMatrix = Array.isArray(json) && json[0] === "List";
         const matrixExpr = ["Matrix", json] as unknown as Parameters<typeof engine.box>[0];
-        this._matrix = this._canMatrix ? convert(engine.box(matrixExpr).latex) : this._markup;
+        const matrix = texOf(boxes?.MatrixForm) ?? (this._canMatrix ? engine.box(matrixExpr).latex : undefined);
+        this._matrix = matrix === undefined ? this._markup : convert(matrix);
         // AsciiMathForm: compute-engine's toString() is an ASCIIMath rendering.
         this._ascii = engine.box(json as Parameters<typeof engine.box>[0]).toString();
         this._code = await this.#codeSources(engine, json);
