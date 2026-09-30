@@ -1,3 +1,3 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-dirac-delta			[InverseFourierTransform, [DiracDelta, w], w, t]	[Sqrt, [Divide, 1, [Multiply, 2, Pi]]]	$\mathcal{F}^{-1}\{\delta(w)\} = 1/\sqrt{2\pi}$		
-constant			[InverseFourierTransform, 1, w, t]	[Sqrt, [Multiply, 2, Pi]]	$\mathcal{F}^{-1}\{1\} = \sqrt{2\pi}$	convention	Wolfram's InverseFourierTransform[1,w,t] answers the full distribution sqrt(2 pi)*DiracDelta(t); our pinned expected is just sqrt(2 pi), missing the DiracDelta(t) factor. Worth a second look/an issue rather than assuming Wolfram's convention differs.
+id	section	role	expr	expected	caption
+dirac-delta			[InverseFourierTransform, [DiracDelta, w], w, t]	[Sqrt, [Divide, 1, [Multiply, 2, Pi]]]	$\mathcal{F}^{-1}\{\delta(w)\} = 1/\sqrt{2\pi}$
+constant			[InverseFourierTransform, 1, w, t]	[Multiply, [Sqrt, 2], [DiracDelta, t], [Sqrt, Pi]]	$\mathcal{F}^{-1}\{1\} = \sqrt{2\pi}\,\delta(t)$
