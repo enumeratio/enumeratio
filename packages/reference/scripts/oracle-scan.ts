@@ -23,6 +23,8 @@
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 //   vp node packages/reference/scripts/oracle-scan.ts --head Foo,Bar,Baz     # several heads, one kernel process
+//   vp node packages/reference/scripts/oracle-scan.ts --ids Foo/a,Bar/b     # only these example ids
+//   vp node packages/reference/scripts/oracle-scan.ts --new-only            # skip rows already answered per system
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
@@ -75,6 +77,10 @@ const requested = args.filter(
 );
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
 const digestOnly = args.includes("--digest");
+// `--new-only` skips a case (per system) that already has a committed answer for it — a fast
+// pass over the gaps a `--head`/`--ids` run just widened, without re-asking a kernel about
+// rows it's already answered.
+const newOnly = args.includes("--new-only");
 // Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
 // goes into the records, and the digest follows. The explicit write is what a fixup PR carries.
 const accept = args.includes("--accept");
@@ -119,10 +125,16 @@ const missingBySystem: Record<string, Record<string, number>> = {};
 //
 // One `<Head>/examples.values.*.tsv` beside each `<Head>/index.md`, keyed by example id then
 // system. A scan of a system rewrites only that system's rows (`in`, `out`, `tex`, `shown`,
-// `verdict`) for the heads touched this run, keeps every other system's, carries the hand
-// classification (`kind`, `note`, `issue`, `tolerance`) forward while the verdict holds, and
-// drops rows for examples that no longer exist. A row with only a note (prose about a system
-// the scan can't reach) stays until someone removes it.
+// `verdict`) for the heads touched this run, keeps every other system's, and drops rows for
+// examples that no longer exist. A row with only a note (prose about a system the scan can't
+// reach) stays until someone removes it.
+//
+// The hand columns (`kind`, `note`, `issue`, `tolerance`) are NEVER cleared by a scan — they
+// are a person's classification, and a rescan is not a review. When a row's verdict and input
+// are unchanged, they carry forward untouched. When the verdict moves, the OLD note and kind
+// still carry forward (a scan doesn't get to invalidate someone's classification), and the
+// only thing that changes is: a row with no prior classification gets `kind: "unclassified"`
+// so it surfaces, and the move is reported on stderr for a person to re-review.
 
 type Record_ = Record<string, Record<string, SystemImplementation>>;
 const dirOf = new Map<string, string>();
@@ -139,8 +151,18 @@ for (const h of data.heads) {
 }
 const loaded = new Map([...records].map(([head, record]) => [head, structuredClone(record)]));
 
+// Which cases were actually asked of each system this run — every one, unless `--new-only`
+// narrows it to cases with no committed answer for that system yet. The write-out loop below
+// needs this to leave an unscanned row alone rather than reading its absence from `report` as
+// "gone".
+const scannedIdsBySystem = new Map<System, Set<string>>();
+
 for (const system of systems) {
-  const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
+  const casesForSystem = newOnly
+    ? cases.filter((item) => records.get(item.head)?.[item.key]?.[system] === undefined)
+    : cases;
+  scannedIdsBySystem.set(system, new Set(casesForSystem.map((item) => item.id)));
+  const emitted = casesForSystem.map((item) => ({ item, out: emit(item.expr, system) }));
   const runnable = emitted.filter((row) => row.out.ok);
   // A free symbol on a symbolic system (wolfram, sympy, sage) is checked as an identity —
   // does the difference vanish? — rather than compared value-for-value, since two closed
@@ -163,7 +185,7 @@ for (const system of systems) {
     return plainSources[index] as string;
   });
   const symbolicMode = runnable.map((_row, index) => sources[index] !== plainSources[index]);
-  process.stderr.write(`${system}: ${runnable.length}/${cases.length} emit — running…\n`);
+  process.stderr.write(`${system}: ${runnable.length}/${casesForSystem.length} emit — running…\n`);
   const results = await runIn(system, sources);
 
   const outcomes: Outcome[] = [];
@@ -248,6 +270,9 @@ const kernels: Record<string, string> = { ...data.kernels };
 for (const [system, version] of Object.entries(kernelOf)) kernels[system] = version as string;
 
 const headsThisRun = new Set(cases.map((c) => c.head));
+// `id (system): from -> to`, one per row whose verdict moved from its committed value — the
+// row keeps its old classification (never cleared), but a moved verdict needs a person's eyes.
+const changedVerdicts: string[] = [];
 for (const system of systems) {
   const outcomeByCaseId = new Map((report[system] ?? []).map((o) => [o.id, o]));
   for (const head of headsThisRun) {
@@ -264,7 +289,11 @@ for (const system of systems) {
     };
     // A row for an example that's gone, or aspirational now, goes.
     for (const id of Object.keys(record)) if (!current.has(id) && record[id]?.[system]) put(id, undefined);
+    const scanned = scannedIdsBySystem.get(system);
     for (const item of ofHead) {
+      // `--new-only` didn't ask this system about this case — its absence from `report` means
+      // "not scanned", not "unmapped", so leave whatever row is already there untouched.
+      if (newOnly && !scanned?.has(item.id)) continue;
       const outcome = outcomeByCaseId.get(item.id);
       const prior = record[item.key]?.[system];
       if (outcome === undefined || outcome.verdict === "unmapped") {
@@ -272,26 +301,30 @@ for (const system of systems) {
         put(item.key, prior?.note ? { in: prior.in, note: prior.note } : undefined);
         continue;
       }
-      // Anything but agreement needs a classification: one carries forward while the verdict
-      // holds, and a verdict that moves is reviewed afresh. A tolerance is a property of the
-      // example, so it carries forward regardless.
       const verdict = outcome.verdict;
-      const same = prior?.out !== undefined && (prior.verdict ?? "agree") === verdict;
+      const priorVerdict = prior?.verdict ?? "agree";
+      const verdictMoved = prior?.out !== undefined && priorVerdict !== verdict;
+      if (verdictMoved) changedVerdicts.push(`${item.id} (${system}): ${priorVerdict} -> ${verdict}`);
       put(item.key, {
         in: outcome.source,
         out: outcome.display,
         ...(outcome.shown === undefined ? {} : { shown: outcome.shown }),
         ...(outcome.tex === undefined ? {} : { tex: { in: outcome.tex.input, out: outcome.tex.output } }),
         ...(verdict === "agree" ? {} : { verdict }),
+        // A hand classification is never cleared by a rescan. Unchanged verdict or not, the
+        // old note (and issue) carry forward as-is; a verdict that moved just gets reported
+        // (changedVerdicts, below) for a person to re-review. Only a row with no prior
+        // classification at all picks up "unclassified".
         ...(verdict === "agree"
-          ? same && prior?.note
+          ? prior?.note
             ? { note: prior.note }
             : {}
           : {
-              kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
-              note: same ? (prior?.note ?? "") : "",
-              ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
+              kind: prior?.kind ?? "unclassified",
+              note: prior?.note ?? "",
+              ...(prior?.issue !== undefined ? { issue: prior.issue } : {}),
             }),
+        // A tolerance is a property of the example, so it carries forward regardless.
         ...(prior?.tolerance === undefined ? {} : { tolerance: prior.tolerance, note: prior.note ?? "" }),
       });
     }
@@ -335,6 +368,10 @@ const fresh = [...records].flatMap(([head, record]) =>
 );
 if (fresh.length > 0) {
   process.stderr.write(`\nunclassified divergences: ${[...new Set(fresh)].join(", ")}\n`);
+}
+if (changedVerdicts.length > 0) {
+  process.stderr.write(`\nverdict changed (classification kept, please re-review):\n`);
+  for (const line of changedVerdicts) process.stderr.write(`  ${line}\n`);
 }
 
 // A readable digest of the disagreements, COMMITTED — the records are regenerated per

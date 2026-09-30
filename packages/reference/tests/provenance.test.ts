@@ -6,9 +6,12 @@ import { referenceEntries } from "../src/node.ts";
 const entries = referenceEntries();
 import { provenance } from "../src/provenance-data.ts";
 import { declaredEngine } from "../scripts/engines.ts";
-import { collect, divergences, divergingHeads, provenanceLedger } from "../scripts/provenance.ts";
-import type { MathJSON } from "../src/types.ts";
+import { classify, collect, divergences, divergingHeads, provenanceLedger } from "../scripts/provenance.ts";
+import type { MathJSON, ReferenceEntry } from "../src/types.ts";
 
+// One shared pair for the whole file — `divergences`/`provenanceLedger` isolate each
+// example's own free symbols as they go (see `isolateFreeSymbols`'s comment in
+// provenance.ts), so reusing one engine across the whole catalogue here is safe.
 const bare = new ComputeEngine();
 const ours = declaredEngine();
 const ledger = provenanceLedger(bare, ours, entries);
@@ -306,11 +309,6 @@ const OVERRIDDEN = [
   "Simplify",
   "Sin",
   "Sinh",
-  // Not itself overridden -- an assumption an earlier corpus example leaves on `x`
-  // (added for A-109's new Solve record) carries into Solve's own examples and the two
-  // engines' accumulated state no longer agrees bit-for-bit by the time Solve's turn
-  // comes up in the shared-engine sweep, same as Add/Sum/Take above.
-  "Solve",
   "Sort",
   "Sqrt",
   "Stirling",
@@ -348,9 +346,9 @@ test("the committed provenance data is still what the engines say", () => {
   // means a head moved between compute-engine's and ours, which is worth noticing.
   // Coverage comes from an external kernel, so it is carried forward rather than re-derived
   // here — this check is about the offline columns, which CI can always compute.
-  // Fresh engines, as the collector uses: the ledger above has evaluated every example on
-  // `bare` and `ours`, and an example can leave engine state behind (a precision) that
-  // tips a head like `N` between compute-engine's and an override.
+  // Fresh engines, as the collector uses: not because reusing `bare`/`ours` from the ledger
+  // above would be wrong (it wouldn't — see `isolateFreeSymbols`), just to check `collect`
+  // does the same thing collect-provenance.ts does, starting from the same blank state.
   expect(collect(new ComputeEngine(), declaredEngine(), entries, HEADS, provenance)).toEqual(
     provenance.map((record) => ({ ...record })),
   );
@@ -970,4 +968,43 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "While",
     "With",
   ]);
+});
+
+// Regression for the free-symbol leak `isolateFreeSymbols` (provenance.ts) guards against:
+// `Sqrt(x^2)` types its free symbol `x` as `number`; `Or(x, True, z)` short-circuits to
+// `True` while `x` is untyped, but THROWS an incompatible-type error once something else
+// has typed `x` first on the SAME engine — measured directly in `.scratch` while building
+// this fix; `pushScope()`/`popScope()` alone does not undo the typing, only redeclaring the
+// symbol does. Two entries whose examples hit exactly this, sharing one engine pair — the
+// normal way `provenanceLedger`/`collect` run the whole catalogue.
+const typesXAsNumber: ReferenceEntry = {
+  name: "Sqrt",
+  domain: "arithmetic",
+  signature: "Sqrt(x)",
+  summary: "",
+  examples: [{ id: "types-x", expr: ["Sqrt", ["Power", "x", 2]], expected: ["Sqrt", ["Power", "x", 2]] }],
+};
+const usesXInOr: ReferenceEntry = {
+  name: "Or",
+  domain: "logic",
+  signature: "Or(a, b, c)",
+  summary: "",
+  examples: [{ id: "uses-x", expr: ["Or", "x", true, "z"], expected: "True" }],
+};
+
+test("classifying one entry does not change how a later entry classifies, on a shared engine", () => {
+  const isolated = classify(new ComputeEngine(), declaredEngine(), usesXInOr);
+
+  // `Or` classified right after `Sqrt`, reusing the SAME engine pair — without
+  // `isolateFreeSymbols`, `x`'s type would still be `number` here and `Or`'s divergence
+  // check would throw instead of matching `isolated`.
+  const sharedBare = new ComputeEngine();
+  const sharedOurs = declaredEngine();
+  classify(sharedBare, sharedOurs, typesXAsNumber);
+  const afterSqrt = classify(sharedBare, sharedOurs, usesXInOr);
+  expect(afterSqrt).toEqual(isolated);
+
+  // Order shouldn't matter either.
+  const [viaLedgerReversed] = provenanceLedger(new ComputeEngine(), declaredEngine(), [usesXInOr, typesXAsNumber]);
+  expect(viaLedgerReversed).toEqual(isolated);
 });
