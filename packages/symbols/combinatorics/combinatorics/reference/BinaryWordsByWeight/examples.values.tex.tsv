@@ -1,4 +1,4 @@
 id	in	out
 count-binarywordsbyweight-4-2	\mathrm{Count}(\mathrm{BinaryWordsByWeight}(4, 2))	6
-first-element-of-binarywordsbyweight-4-2	\mathrm{BinaryWordsByWeight}(4, 2)[1]	\bigl\lbrack0, 0, 1, 1\bigr\rbrack
-every-element-of-binarywordsbyweight-4-2	\mathrm{Take}(\mathrm{BinaryWordsByWeight}(4, 2), 6)	\bigl\lbrack\bigl\lbrack0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 0\bigr\rbrack, \bigl\lbrack1, 0, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 0, 0\bigr\rbrack\bigr\rbrack
+first-element-of-binarywordsbyweight-4-2	\mathrm{BinaryWordsByWeight}(4, 2)[1]	\mathrm{BinaryWord}(\bigl\lbrack0, 0, 1, 1\bigr\rbrack)
+every-element-of-binarywordsbyweight-4-2	\mathrm{Take}(\mathrm{BinaryWordsByWeight}(4, 2), 6)	\bigl\lbrack\mathrm{BinaryWord}(\bigl\lbrack0, 0, 1, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 1, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 1, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 1, 0, 0\bigr\rbrack)\bigr\rbrack

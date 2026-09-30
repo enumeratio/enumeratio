@@ -1,4 +1,4 @@
 id	in	out
 count-lucasstrings-4	\mathrm{Count}(\mathrm{LucasStrings}(4))	7
-first-element-of-lucasstrings-4	\mathrm{LucasStrings}(4)[1]	\bigl\lbrack0, 0, 0, 0\bigr\rbrack
-every-element-of-lucasstrings-4	\mathrm{Take}(\mathrm{LucasStrings}(4), 7)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 0\bigr\rbrack, \bigl\lbrack0, 1, 0, 1\bigr\rbrack, \bigl\lbrack1, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1, 0\bigr\rbrack\bigr\rbrack
+first-element-of-lucasstrings-4	\mathrm{LucasStrings}(4)[1]	\mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack)
+every-element-of-lucasstrings-4	\mathrm{Take}(\mathrm{LucasStrings}(4), 7)	\bigl\lbrack\mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 0, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 0, 1, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack0, 1, 0, 1\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 0, 0\bigr\rbrack), \mathrm{BinaryWord}(\bigl\lbrack1, 0, 1, 0\bigr\rbrack)\bigr\rbrack

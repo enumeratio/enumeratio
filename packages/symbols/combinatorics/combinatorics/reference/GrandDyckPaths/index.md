@@ -7,7 +7,7 @@ signatures:
   - call: GrandDyckPaths(n)
     description: Free $\pm 1$-step paths of length $2n$ starting and ending at height $0$, with no non-negativity constraint
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<dyck_path>
 seeAlso:
   - DyckPaths
 references:

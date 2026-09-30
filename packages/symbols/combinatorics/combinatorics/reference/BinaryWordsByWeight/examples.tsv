@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-binarywordsbyweight-4-2	Basic		[Count, [BinaryWordsByWeight, 4, 2]]	6	$Count(BinaryWordsByWeight(4, 2)) = 6$
-first-element-of-binarywordsbyweight-4-2	Basic		[At, [BinaryWordsByWeight, 4, 2], 1]	[List, 0, 0, 1, 1]	The first element in enumeration order
-every-element-of-binarywordsbyweight-4-2		test	[Take, [BinaryWordsByWeight, 4, 2], 6]	[List, [List, 0, 0, 1, 1], [List, 0, 1, 0, 1], [List, 0, 1, 1, 0], [List, 1, 0, 0, 1], [List, 1, 0, 1, 0], [List, 1, 1, 0, 0]]	
+first-element-of-binarywordsbyweight-4-2	Basic		[At, [BinaryWordsByWeight, 4, 2], 1]	[BinaryWord, [List, 0, 0, 1, 1]]	The first element in enumeration order
+every-element-of-binarywordsbyweight-4-2		test	[Take, [BinaryWordsByWeight, 4, 2], 6]	[List, [BinaryWord, [List, 0, 0, 1, 1]], [BinaryWord, [List, 0, 1, 0, 1]], [BinaryWord, [List, 0, 1, 1, 0]], [BinaryWord, [List, 1, 0, 0, 1]], [BinaryWord, [List, 1, 0, 1, 0]], [BinaryWord, [List, 1, 1, 0, 0]]]	

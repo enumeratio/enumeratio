@@ -218,6 +218,7 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
       for (let i = 0; i < path.length; i++) if (path[i] === 1) ups.push(i + 1);
       return KSubsetRank(ups);
     },
+    carrier: "DyckPath",
   },
   {
     head: "RiordanPaths",
@@ -227,6 +228,7 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
     unrank: ([n], r) => RiordanPathUnrank(n, r),
     valid: (e, [n]) => isRiordanPathOf(e, n),
     rank: (e) => RiordanPathRank(e as number[]),
+    carrier: "MotzkinPath",
   },
   {
     head: "FinePaths",
@@ -236,6 +238,7 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
     unrank: ([n], r) => FinePathUnrank(n, r),
     valid: (e, [n]) => isFinePathOf(e, n),
     rank: (e) => FinePathRank(e as number[]),
+    carrier: "DyckPath",
   },
   {
     head: "BallotSequences",
@@ -245,5 +248,6 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
     unrank: ([n], r) => DyckPathUnrank(n, r),
     valid: (e, [n]) => IsDyckPath(e as number[], n),
     rank: (e) => DyckPathRank(e as number[]),
+    carrier: "DyckPath",
   },
 ];
