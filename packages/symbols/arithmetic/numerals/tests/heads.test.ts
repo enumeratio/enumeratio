@@ -48,6 +48,29 @@ test("PositionalNumerals agrees with the native fixed-radix handler for b ≥ 2"
   expect(value(["FromDigits", digits, ["PositionalNumerals", 2]])).toBe(value(["FromDigits", digits, 2]));
 });
 
+// Regression for A-129/farm: IntegerDigits(n, MixedRadix(bases)) used to always print
+// bases.length + 1 digits (the overflow place shown even at 0), and IntegerReverse never
+// recognised a numeral system in its base slot at all (silently defaulting to base 10).
+// Pinned against Wolfram's own IntegerDigits/IntegerReverse documentation examples.
+test("MixedRadixNumerals: IntegerDigits drops an unused overflow place, IntegerReverse reads the system", () => {
+  expect(value(["IntegerDigits", 571, ["MixedRadixNumerals", L(12, 9, 6)]])).toEqual(L(10, 5, 1));
+  expect(value(["IntegerDigits", 534, ["MixedRadixNumerals", L(15, 10, 5)]])).toEqual(L(10, 6, 4));
+  expect(value(["IntegerDigits", 1000000, ["MixedRadixNumerals", L(19, 17, 13, 11, 7, 5, 3, 2)]])).toEqual(
+    L(1, 16, 3, 9, 6, 1, 2, 0),
+  );
+  // An overflowing n still shows the (now nonzero) leading place.
+  expect(value(["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]])).toEqual(L(1, 2, 3, 4));
+  expect(value(["IntegerReverse", 1024, ["MixedRadixNumerals", L(6, 4, 2)]])).toBe(25);
+});
+
+// Regression for a CI break in #492: routing the base slot through `systemOf` dropped
+// `broadcastable: true` from IntegerReverse's declare, so the plain one-arg listable form
+// (no base given, threaded over a list of integers) stopped threading and answered an Error
+// per element instead of reversing each integer's own decimal digits.
+test("IntegerReverse(list) still threads over a list with no base argument", () => {
+  expect(value(["IntegerReverse", L(12, 345)])).toEqual(L(21, 543));
+});
+
 test("a system that declines says why", () => {
   const said = (input: Expr): string[] => collectMessages(ce, () => ce.box(input).evaluate()).messages.map(messageLine);
   expect(said(["IntegerDigits", -3, "FactorialNumerals"])).toEqual([

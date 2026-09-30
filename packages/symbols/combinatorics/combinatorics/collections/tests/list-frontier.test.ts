@@ -12,6 +12,29 @@ test("Normal of a plain list is unchanged (no distinct sparse type is kept)", ()
   expect(run(["Normal", ["List", 1, 2, 3]])).toEqual(["List", 1, 2, 3]);
 });
 
+// Regression for A-129/farm: FoldList/Accumulate read a collection argument through
+// `operandsOf`, which is `.ops` -- correct for an already-materialized `List(...)` but wrong
+// for a lazy collection, whose `.ops` are its own CALL arguments (`Range(1, 10).ops ===
+// [1, 10]`, not the ten elements). `FoldList(Divide, 1, Range(1, 10))` folded over those two
+// call arguments instead of the ten elements, stopping after two steps.
+test("FoldList/Accumulate walk a lazy collection's actual elements, not its call arguments", () => {
+  expect(run(["FoldList", "Divide", 1, ["Range", 1, 10]])).toEqual([
+    "List",
+    1,
+    1,
+    ["Rational", 1, 2],
+    ["Rational", 1, 6],
+    ["Rational", 1, 24],
+    ["Rational", 1, 120],
+    ["Rational", 1, 720],
+    ["Rational", 1, 5040],
+    ["Rational", 1, 40320],
+    ["Rational", 1, 362880],
+    ["Rational", 1, 3628800],
+  ]);
+  expect(run(["Accumulate", ["Range", 1, 5]])).toEqual(["List", 1, 3, 6, 10, 15]);
+});
+
 // RandomInteger: seeded, so the shape and reproducibility are what's tested.
 test("SeedRandom pins RandomInteger to a reproducible sequence", () => {
   ce.box(["SeedRandom", 7]).evaluate();

@@ -6,6 +6,7 @@ import {
   integerAt,
   operandsOf,
   stringAt,
+  threadOverLists,
   widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
@@ -405,6 +406,9 @@ export function declareModular(ce: ComputeEngine): void {
       return x === undefined ? undefined : ce.symbol(quadraticIrrational(x) ? "True" : "False");
     },
   });
+  // QuadraticIrrationalQ({Sqrt(2), Sqrt(3), 2}) threads to {True, True, False}, same as any
+  // other Wolfram *Q predicate over a list.
+  threadOverLists(ce, ["IsQuadraticIrrational"]);
 
   // ── ContinuedFraction / FromContinuedFraction, extended in place ────────────
   //

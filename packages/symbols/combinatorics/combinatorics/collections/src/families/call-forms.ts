@@ -288,14 +288,21 @@ function resolveSubsets(
   ops: readonly BoxedExpression[],
   wrapElement: (n: number, idxs: number[]) => unknown,
 ): Resolved<number[]> | undefined {
+  const elements = elementsOf(ops[0]);
   if (ops.length === 1) {
-    const elements = elementsOf(ops[0]);
     if (elements !== undefined) return resolveSubsetsOfList(elements);
   }
 
-  const n = integerAt(ops[0]);
+  // `Subsets(list, k)` / `Subsets(list, {k, …})`: same size-restricted kernels below, but
+  // over the list's own n positions, printed as the list's elements (elements[i-1]!.json)
+  // rather than bare integers -- the size arg never reaches `resolveSubsetsOfList`, which
+  // only handles the one-arg form.
+  const n = elements !== undefined ? elements.length : integerAt(ops[0]);
   if (n === undefined) return undefined;
-  const encode = (idxs: number[]) => wrapElement(n, idxs);
+  const encode =
+    elements !== undefined
+      ? (idxs: number[]) => ["List", ...idxs.map((i) => elements[i - 1]!.json)]
+      : (idxs: number[]) => wrapElement(n, idxs);
 
   if (ops.length <= 1) {
     return {

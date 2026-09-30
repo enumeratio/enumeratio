@@ -16,6 +16,30 @@ test("Nest agrees with the last entry of NestList", () => {
   expect(nested).toEqual(list[list.length - 1]);
 });
 
+// Regression for A-129/farm: Most/Rest/Take/Drop answer entirely through compute-engine's
+// lazy collection protocol, never a value-returning `evaluate` -- `.json` on the RESULT of
+// `Most(list).evaluate()` was still the unevaluated call. Nest/NestList's accumulator feeds
+// one step's result into the next `Apply`/`List` call, which rebuilds from that stale
+// `.json` and silently reverts the step right back to `Most(...)`, unevaluated -- NestList
+// never got past its first entry. See `materialize` in list-functional.ts.
+test("NestList(Most/Rest, list, n) fully evaluates every entry, not just the first", () => {
+  const list = ["List", "a", "b", "c", "d"];
+  expect(run(["NestList", "Most", list, 3])).toEqual([
+    "List",
+    ["List", "a", "b", "c", "d"],
+    ["List", "a", "b", "c"],
+    ["List", "a", "b"],
+    ["List", "a"],
+  ]);
+  expect(run(["NestList", "Rest", list, 3])).toEqual([
+    "List",
+    ["List", "a", "b", "c", "d"],
+    ["List", "b", "c", "d"],
+    ["List", "c", "d"],
+    ["List", "d"],
+  ]);
+});
+
 // FixedPoint
 
 test("FixedPoint is idempotent once reached: one more f does nothing", () => {

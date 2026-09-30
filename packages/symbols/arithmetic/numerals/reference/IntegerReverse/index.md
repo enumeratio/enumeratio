@@ -7,7 +7,7 @@ signatures:
   - call: IntegerReverse(n)
     description: the base-10 digits of $n$, reversed
     library: enumeratio-numerals
-    type: (integer, integer?, integer?) -> integer
+    type: (integer, any?, integer?) -> integer
   - call: IntegerReverse(n, base)
     description: reversed in the given base
   - call: IntegerReverse(n, base, len)

@@ -22,6 +22,14 @@ export interface NumeralSystem {
   fromDigits(digits: readonly number[]): number | undefined;
   /** What its numerals look like. */
   readonly shape: Shape;
+  /**
+   * `toDigits`'s leading place is a standing overflow slot (0 whenever `n` fits the places
+   * it names) rather than a fixed width -- `IntegerDigits` (declare.ts) drops it when it is
+   * 0, the way native `IntegerDigits` drops any other leading zero. Unset (or false) for
+   * every FIXED-width system (`AdicNumerals`'s padding is part of the numeral, not overflow):
+   * only `MixedRadixNumerals` sets it.
+   */
+  readonly leadingPlaceIsOverflow?: boolean;
 }
 
 /** A digit's bounds, inclusive; an absent upper bound is unbounded. */
@@ -162,8 +170,14 @@ export function bijectiveRadix(k: number): NumeralSystem | undefined {
 /**
  * Mixed radix over `bases`, listed most-significant-place-first, as in Wolfram's
  * `MixedRadix`. The weight of a place is the product of every base AFTER it, so
- * `MixedRadix([24,60,60])` reads a second count as days, hours, minutes, seconds. The
- * leading digit is unbounded; digit i is bounded by `bases[i]`.
+ * `MixedRadix([24,60,60])` reads a second count as days, hours, minutes, seconds: `bases`
+ * bounds every place it names, and there is one more, UNBOUNDED place ahead of them (days,
+ * here) for whatever doesn't fit. `IntegerDigits` (declare.ts) drops that leading place from
+ * its output when it is 0, same as it drops any other leading zero — `bases.length` digits
+ * print for a small `n` (`IntegerDigits[571, MixedRadix[{12, 9, 6}]] === {10, 5, 1}`), and
+ * `bases.length + 1` once `n` overflows the named places (`93784` in `{24, 60, 60}` prints as
+ * the 4-digit `{1, 2, 3, 4}` — 1 day). `fromDigits` accepts either width, reading a short one
+ * as having an implicit leading 0.
  */
 export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined {
   if (bases.length === 0 || !bases.every((b) => isInt(b) && b >= 1)) return undefined;
@@ -171,6 +185,7 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
   const total = bases.reduce((a, b) => a * b, 1);
   return {
     name: `MixedRadixNumerals(${bases.join(",")})`,
+    leadingPlaceIsOverflow: true,
     shape: {
       bijective: true,
       range: NATURALS,
@@ -188,10 +203,13 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
       return digits;
     },
     fromDigits: (digits) => {
-      if (digits.length !== bases.length + 1) return undefined;
-      if (!digits.every((d) => isInt(d) && d >= 0)) return undefined;
-      if (digits.slice(1).some((d, i) => d >= bases[i]!)) return undefined;
-      return digits.slice(1).reduce((acc, d, i) => acc + d * weights[i]!, digits[0]! * total);
+      // A digit string one place short of the full width is read as having an implicit
+      // leading 0 — the mirror of `IntegerDigits` dropping that same leading zero.
+      const full = digits.length === bases.length ? [0, ...digits] : digits;
+      if (full.length !== bases.length + 1) return undefined;
+      if (!full.every((d) => isInt(d) && d >= 0)) return undefined;
+      if (full.slice(1).some((d, i) => d >= bases[i]!)) return undefined;
+      return full.slice(1).reduce((acc, d, i) => acc + d * weights[i]!, full[0]! * total);
     },
   };
 }
