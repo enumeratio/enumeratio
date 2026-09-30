@@ -10,9 +10,9 @@ import { declareCombinatorics } from "../src/index.ts";
 import { numberKernel } from "../collections/src/families/types.ts";
 import type { FamilyKernel } from "../collections/src/families/types.ts";
 import { collectionsEntries } from "../collections/src/families/index.ts";
+import { kernelsOn } from "../collections/src/families/epsil.ts";
 import {
-  bigintEntries as permutationsBigintEntries,
-  coreEntries as permutationsCoreEntries,
+  coreFamilies as permutationsCoreFamilies,
   permutationClassesEntries,
   permutationsEntries,
 } from "../permutations/src/families/index.ts";
@@ -58,11 +58,11 @@ import {
 // Every family declared by `declareCombinatorics`, exactly as each area's own declare.ts
 // assembles it (see that file), so this list is the union `declareCombinatorics` actually runs.
 // Each area maps its own NumberKernel entries into the bigint contract exactly as that area's
-// own declare.ts does (permutationsBigintEntries and collectionsEntries are FamilyKernel
-// already) -- see each `declare<Area>` for the grouping this mirrors.
+// own declare.ts does (permutations' Epsil families get their kernels on an engine;
+// collectionsEntries are FamilyKernel already) -- see each `declare<Area>` for the grouping this mirrors.
 const allFamilies: readonly FamilyKernel[] = [
-  ...permutationsBigintEntries,
-  ...[...permutationsCoreEntries, ...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
+  ...kernelsOn(new ComputeEngine(), permutationsCoreFamilies),
+  ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
   ...[...compositionsCoreEntries, ...compositionsEntries].map(numberKernel),
   ...[...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(

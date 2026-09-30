@@ -14,6 +14,6 @@
 // `declareCollections(ce)` caller that doesn't mint the carrier type first (24 of this
 // package's own test suites), since the map lookup is what lets an untyped caller keep
 // getting the bare-list collection it always got.
-export { bigintEntries, entries as coreEntries } from "./core.ts";
+export { families as coreFamilies } from "./core.ts";
 export { entries as permutationsEntries } from "./permutations.ts";
 export { entries as permutationClassesEntries } from "./permutation-classes.ts";

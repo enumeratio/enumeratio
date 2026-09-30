@@ -4,7 +4,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { COLLECTIONS } from "@enumeratio/catalog/src";
-import { allEntries } from "@enumeratio/combinatorics/collections/src";
+import { allFamilies as allEntries } from "@enumeratio/combinatorics/collections/src";
 import { PRIVATE_SUFFIX, publicName } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { bindings, fullEngine } from "../src/engine.ts";

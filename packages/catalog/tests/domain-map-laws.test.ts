@@ -10,7 +10,7 @@
 // domains/tests/map-helpers.ts's, inlined since that helper was package-internal.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
+import { allKernels, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 import { sampleable } from "@enumeratio/combinatorics/collections/sampleable";
 import {
   CARRIERS,
@@ -29,6 +29,7 @@ const ce = new ComputeEngine();
 // out of `declareCombinatorics` and runs last (see `src/index.ts`'s file comment).
 declareCombinatorics(ce);
 declareMaps(ce, constructorFor);
+const allEntries = allKernels(ce);
 
 const SAMPLES = 24;
 const MAX_SIZE = 6;

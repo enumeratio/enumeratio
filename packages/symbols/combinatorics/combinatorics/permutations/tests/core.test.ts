@@ -1,5 +1,7 @@
 import { expect, test } from "vite-plus/test";
-import { bigintEntries, entries } from "../src/families/core.ts";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { kernelsOn } from "../../collections/src/families/epsil.ts";
+import { entries, epsilEntries } from "../src/families/core.ts";
 
 // Self-cert the permutation-area families split out of collections/src/families/core.ts --
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
@@ -25,7 +27,7 @@ for (const [head, p] of Object.entries(PARAMS)) {
   });
 }
 
-for (const entry of bigintEntries) {
+for (const entry of kernelsOn(new ComputeEngine(), epsilEntries)) {
   const p = [4];
   test(`${entry.head}(4) round-trips`, () => {
     const total = entry.count(p) as bigint;

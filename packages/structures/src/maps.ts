@@ -74,6 +74,19 @@ export function evaluateDefinition(
   return main.json;
 }
 
+/** What `expression` evaluates to with each name in `bindings` replaced by its MathJSON value,
+ *  materialised. A definition's free variables are its inputs: a map's `_raw`, a family's
+ *  params. */
+export function evaluateEpsil(
+  ce: ComputeEngine,
+  expression: unknown,
+  bindings: Readonly<Record<string, unknown>>,
+): unknown {
+  let filled = expression;
+  for (const [name, value] of Object.entries(bindings)) filled = fill(filled, value, name);
+  return materialise(ce, ce.box(filled as never).evaluate()).json;
+}
+
 /** Force a lazy result into a concrete List.
  *
  *  `Map` and `Filter` over a `Range` stay lazy — `Range(1, 3)` does not even evaluate to a
