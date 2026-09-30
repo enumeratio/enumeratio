@@ -13,6 +13,7 @@ sqrt-12-over-5	sqrt(rational(n(12), n(5)))	1.5491933384829668
 sqrt-neg-2p5	sqrt(x(-2.5))	NaN	disagree
 an-exact-complex-square-2-i-2-3-4i			
 sqrt-positiveinfinity			
+sqrt-negativeinfinity			
 threads-element-wise-over-a-list	sqrt(list(vec![n(1), n(4), n(9)]))	panic: threading: a list where the crate takes a scalar	error
 threads-over-a-matrix-entry-by-entry-this-is-not	sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))	panic: threading: a list where the crate takes a scalar	error
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1			

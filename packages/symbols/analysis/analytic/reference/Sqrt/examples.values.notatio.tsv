@@ -13,6 +13,7 @@ sqrt-12-over-5	<Sqrt><Rational>12 5</Rational></Sqrt>	<Multiply><Rational>2 5</R
 sqrt-neg-2p5	<Sqrt>-2.5</Sqrt>	<Complex>0 1.5811388300841898</Complex>
 an-exact-complex-square-2-i-2-3-4i	<Sqrt><Complex>3 4</Complex></Sqrt>	<Complex>2 1</Complex>
 sqrt-positiveinfinity	<Sqrt>PositiveInfinity</Sqrt>	<PositiveInfinity />
+sqrt-negativeinfinity	<Sqrt>NegativeInfinity</Sqrt>	<DirectedInfinity><Complex>0 1</Complex></DirectedInfinity>
 threads-element-wise-over-a-list	<Sqrt><List>1 4 9</List></Sqrt>	<List>1 2 3</List>
 threads-over-a-matrix-entry-by-entry-this-is-not	<Sqrt><List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>1 2</Rational></List></List></Sqrt>	<List><List><Divide><Sqrt>2</Sqrt> 2</Divide> <Complex>0 1</Complex></List> <List>0 <Divide><Sqrt>2</Sqrt> 2</Divide></List></List>
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1	<Sqrt><Interval>1 8</Interval></Sqrt>	<Interval>1 <Multiply>2 <Sqrt>2</Sqrt></Multiply></Interval>

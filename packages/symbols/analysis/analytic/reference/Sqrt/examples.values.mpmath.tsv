@@ -13,6 +13,7 @@ sqrt-12-over-5	sqrt((mpf(12)/5))	1.54919333848296675407170615991
 sqrt-neg-2p5	sqrt(-2.5)	(0.0 + 1.58113883008418966599944677222j)
 an-exact-complex-square-2-i-2-3-4i	sqrt(mpc(3, 4))	(2.0 + 1.0j)
 sqrt-positiveinfinity	sqrt(inf)	
+sqrt-negativeinfinity	sqrt(-inf)	
 threads-element-wise-over-a-list	[sqrt(1), sqrt(4), sqrt(9)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]
 threads-over-a-matrix-entry-by-entry-this-is-not	[[sqrt((mpf(1)/2)), sqrt(-1)], [sqrt(0), sqrt((mpf(1)/2))]]	[[mpf('0.707106781186547524400844362104884'), mpc(real='0.0', imag='1.0')], [mpf('0.0'), mpf('0.707106781186547524400844362104884')]]
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1		

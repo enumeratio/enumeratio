@@ -13,6 +13,7 @@ sqrt-12-over-5	\sqrt{\frac{12}{5}}	\frac{2\sqrt{15}}{5}
 sqrt-neg-2p5	\sqrt{-2.5}	1.581\,138\,830\,084\,189\,8i
 an-exact-complex-square-2-i-2-3-4i	\sqrt{3+4i}	2+i
 sqrt-positiveinfinity	\sqrt{\infty}	\infty
+sqrt-negativeinfinity	\sqrt{-\infty}	\mathrm{DirectedInfinity}(i)
 threads-element-wise-over-a-list	\sqrt{\bigl\lbrack1, 4, 9\bigr\rbrack}	\bigl\lbrack1, 2, 3\bigr\rbrack
 threads-over-a-matrix-entry-by-entry-this-is-not	\sqrt{\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack}	\bigl\lbrack\bigl\lbrack\frac{\sqrt{2}}{2}, i\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{2}}{2}\bigr\rbrack\bigr\rbrack
 interval-arithmetic-sqrt-is-increasing-so-sqrt-1	\sqrt{\mathrm{Interval}(1, 8)}	\mathrm{Interval}(1, 2\sqrt{2})
