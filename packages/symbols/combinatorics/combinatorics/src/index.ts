@@ -45,6 +45,40 @@ export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
 export { checkLaws, type LawFailure } from "./laws.ts";
 export { type CombinatorialMap, declareMaps, evaluateDefinition, type Law, MAPS } from "./maps.ts";
 
+// The combinatorial statistics' generic machinery (step 6b: moved here from
+// @enumeratio/statistics, one kernel per area — see each area's own `declare<Area>`).
+export {
+  applyDefinition,
+  type DeclareOptions,
+  declareStatistics,
+  interpretDefinition,
+  StatisticCollisionError,
+} from "./statistics/declare.ts";
+export { compiledStatistic } from "./statistics/compiled.ts";
+export { ALL_FRONTIER, ALL_STATISTICS } from "./statistics/all.ts";
+export { core, cycles, headUsage, tower } from "./statistics/core.ts";
+export { blessedName } from "./statistics/naming.ts";
+export {
+  bySignature,
+  type Definition,
+  type FrontierEntry,
+  headsOf,
+  type MathJSON,
+  signatureOf,
+  SUBJECT,
+} from "./statistics/types.ts";
+// `generate-entries.ts` is Node-only (`@enumeratio/entry/node`) and script-only — each area's
+// own `scripts/entries.ts` imports it directly by relative path, never through this runtime
+// barrel (the same reason `MathJSON` above is declared locally rather than imported from
+// `@enumeratio/entry`).
+export { PERMUTATION_STATISTICS } from "../permutations/src/statistics.ts";
+export { PARTITION_STATISTICS } from "../partitions/src/statistics.ts";
+export { DYCK_STATISTICS } from "../lattice-paths/src/statistics.ts";
+export { SET_PARTITION_STATISTICS } from "../set-partitions/src/statistics.ts";
+export { CARDINALITIES, type Cardinality } from "../partitions/src/cardinalities.ts";
+export { NATIVE_TO_ENGINE, type NativeStatistic } from "../partitions/src/native-statistics.ts";
+export { findstat, type FindStatMatch } from "../findstat/src/findstat-data.ts";
+
 /**
  * Declares the carriers and the families typed by them on `ce`: each area's own `declare<Area>`,
  * then `declareCollections` for the carrier-less families. A host no longer builds or passes
@@ -67,6 +101,7 @@ export function declareCombinatorics(ce: ComputeEngine): void {
   declareTableaux(ce);
   declareGraphsArea(ce);
   declareFindStat(ce);
-  // A combinatorial statistic is a function of a carrier, so that is what these heads take.
-  declareCollections(ce, { permutationType: "permutation" });
+  // The carrier-less families — permutations' own fast statistic kernels already ran inside
+  // `declarePermutations`, above (step 6b).
+  declareCollections(ce);
 }

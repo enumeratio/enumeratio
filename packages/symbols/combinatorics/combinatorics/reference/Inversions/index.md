@@ -34,3 +34,5 @@ statOn:
 - Generating function over $S_n$ is the q-factorial $[n]_q! = \prod_{i=1}^{n} \frac{1 - q^i}{1 - q}$
 - Equidistributed with [[MajorIndex]] on $S_n$ (MacMahon), so both are Mahonian statistics
 - Aggregates over a whole collection compose from built-ins: $\mathrm{Sum}(\mathrm{Map}(\mathrm{Inversions}, \mathrm{SymmetricGroup}(n)))$ folds the stat over the lazy family
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.

@@ -3,12 +3,14 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
+import { declareStatistics } from "../../src/statistics/declare.ts";
 import { LATTICE_PATHS_CARRIERS } from "./carrier-data.ts";
 import {
   coreEntries,
   pathsPartitionsBeforeDyckPathsByHeightEntries,
   pathsPartitionsEntries,
 } from "./families/index.ts";
+import { DYCK_STATISTICS } from "./statistics.ts";
 
 export function declareLatticePaths(ce: ComputeEngine): void {
   declareCarriers(ce, LATTICE_PATHS_CARRIERS, { plurals: false });
@@ -16,4 +18,6 @@ export function declareLatticePaths(ce: ComputeEngine): void {
     ce,
     [...coreEntries, ...pathsPartitionsBeforeDyckPathsByHeightEntries, ...pathsPartitionsEntries].map(numberKernel),
   );
+  // Its statistics, after its own carriers and families (step 6b).
+  declareStatistics(ce, DYCK_STATISTICS);
 }

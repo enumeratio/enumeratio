@@ -20,7 +20,7 @@ import { crosswalkFor, crosswalkForCollection, crosswalkForStatistic, hrefOf } f
 import { inventoryEntry } from "../src/crosswalk/inventory.ts";
 import { SOURCES } from "../src/crosswalk/sources.ts";
 import { engineEntries } from "../src/engine-entries.ts";
-import { findstat } from "@enumeratio/statistics/src";
+import { findstat } from "@enumeratio/combinatorics/src";
 import { fungrimVerified } from "../src/fungrim-verified-data.ts";
 import { KNOWN_CAUSES } from "../src/crosswalk/fungrim.ts";
 import { oeis } from "../src/oeis-data.ts";

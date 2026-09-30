@@ -27,3 +27,5 @@ statOn:
 
 - Equidistributed with [[Descents]] over $S_n$: both are Eulerian statistics
 - A fixed point is neither an excedance nor an antiexcedance, so $\mathrm{Excedances} + \mathrm{Antiexcedances} + \mathrm{FixedPoints} = n$
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

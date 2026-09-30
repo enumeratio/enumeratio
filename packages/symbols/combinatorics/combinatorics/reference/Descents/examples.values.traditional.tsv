@@ -1,4 +1,7 @@
 id	in	out
 only-3-1		
 every-step-falls		
+the-one-line-word-312		
+the-one-line-word-312-as-a-plain-list		
+the-one-line-word-2413		
 descents-and-ascents-partition-the-n-1-steps	\mathrm{Descents}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{Ascents}(\bigl\lbrack3, 1, 2\bigr\rbrack)=2	\mathrm{True}

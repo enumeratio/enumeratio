@@ -15,16 +15,11 @@ signatures:
       - Around
       - CenteredInterval
       - Interval
-  - call: Sign(x)
-    description: "The sign of x: -1, 0, or 1 for negative, zero, or positive x."
-    library: enumeratio-combinatorics
-    type: (complex | signed_infinity) -> complex
-    overrides: enumeratio-analytic
   - call: Sign(p)
     description: "A permutation's sign: 1 when it has an even number of inversions, -1 when odd (FindStat St000037)."
-    library: enumeratio-statistics
+    library: enumeratio-combinatorics
     type: (complex | permutation | signed_infinity) -> complex | number
-    overrides: enumeratio-combinatorics
+    overrides: enumeratio-analytic
 seeAlso:
   - Abs
   - Negate

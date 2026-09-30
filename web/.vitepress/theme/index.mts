@@ -63,7 +63,6 @@ export default {
         const [
           { configureEngine, configureLatex },
           { CARRIERS, declareCombinatorics, declareMaps },
-          { ALL_STATISTICS, declareStatistics },
           { declareFrontendCarriers },
           { declareAnalytic, declareFractals },
           { declareGraphics },
@@ -87,7 +86,6 @@ export default {
         ] = await Promise.all([
           import("@enumeratio/components"),
           import("@enumeratio/combinatorics"),
-          import("@enumeratio/statistics"),
           import("@enumeratio/frontend/declare-carriers"),
           import("@enumeratio/analytic"),
           import("@enumeratio/formats"),
@@ -114,8 +112,6 @@ export default {
         configureLatex(BOXES_LATEX);
         applyEngineLibraries(configureEngine, {
           declareCombinatorics,
-          declareStatistics,
-          ALL_STATISTICS,
           declareCarrierPlurals,
           declareCarrierElement,
           declareFrontendCarriers,

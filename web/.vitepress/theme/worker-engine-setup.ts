@@ -42,14 +42,11 @@ import { declareNumberTheory } from "@enumeratio/number-theory";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareQuiver } from "@enumeratio/quiver";
 import { declareResidues } from "@enumeratio/residues";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 import { applyEngineLibraries } from "./engine-libraries.ts";
 
 export function configure(ce: ComputeEngine): void {
   applyEngineLibraries((fn) => fn(ce), {
     declareCombinatorics,
-    declareStatistics,
-    ALL_STATISTICS,
     declareCarrierPlurals,
     declareCarrierElement,
     declareFrontendCarriers,

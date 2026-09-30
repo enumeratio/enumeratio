@@ -9,7 +9,7 @@ import {
   crosswalkForStatistic,
   type ResolvedReference,
 } from "@enumeratio/reference";
-import { ALL_STATISTICS } from "@enumeratio/statistics/src";
+import { ALL_STATISTICS } from "@enumeratio/combinatorics/src";
 import { getEntry } from "./reference.ts";
 
 export interface CatalogRow {

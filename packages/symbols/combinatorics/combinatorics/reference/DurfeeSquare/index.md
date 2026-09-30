@@ -1,0 +1,27 @@
+---
+name: DurfeeSquare
+domain: Partition statistics
+signature: DurfeeSquare(partition)
+summary: "The side of the Durfee square: the largest d with at least d parts of size at least d."
+references:
+  - system: wikipedia
+    identity: Durfee square
+  - system: mathworld
+    identity: DurfeeSquare
+catalog:
+  - system: findstat
+    identity: St000183
+    url: https://www.findstat.org/St000183
+    on: IntegerPartition
+statOn:
+  - CorePartition
+  - IntegerPartition
+signatures:
+  - call: DurfeeSquare(partition)
+    description: "The side of the Durfee square: the largest d with at least d parts of size at least d."
+    library: enumeratio-combinatorics
+    type: (integer_partition) -> number
+---
+
+- Defined over `IntegerPartition` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `IntegerPartition` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

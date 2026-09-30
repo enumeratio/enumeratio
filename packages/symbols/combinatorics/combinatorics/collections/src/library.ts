@@ -21,24 +21,26 @@ import { declareListStats } from "./list-stats.ts";
 import { declareLogicFrontier } from "./logic-frontier.ts";
 import { declareMiscFrontier } from "./misc-frontier.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
-import { declareStats, type StatsOptions } from "./stats.ts";
 
 /**
  * Declare the enumeratio combinatorial collection heads on `ce` (SymmetricGroup,
  * Derangements, IntegerPartitions, KSubsets, DyckPaths, SetPartitions, BinaryTrees,
- * and many more), plus the permutation-statistic heads (Inversions, Descents,
- * MajorIndex, …). Each collection is a lazy indexed family answered by unranking,
- * so `Count`/`At` work without materialising it.
- *
- * Pass `permutationType` to declare the statistics over the minted carrier rather than over
- * a bare list — see `StatsOptions`. The carrier types have to exist on `ce` already.
+ * and many more). Each collection is a lazy indexed family answered by unranking, so
+ * `Count`/`At` work without materialising it.
  *
  * Declares only the families with NO carrier (`Subsets`, `Tuples`, `Multisets`, the numeric
  * families, …) — every carrier-bearing family lives in, and is declared by, its own
  * `@enumeratio/combinatorics` area (`declare<Area>`); `declareCombinatorics` calls both. A test
  * that only needs the carrier-less heads may still call this alone.
+ *
+ * The fast permutation-statistic heads (Inversions, Descents, MajorIndex, …) moved out of
+ * this bundle (step 6b): `declarePermutations` calls `stats.ts`'s `declareStats` itself, right
+ * after its own carriers, so the fast kernel wins the name before `@enumeratio/combinatorics`'
+ * own expr-based `PERMUTATION_STATISTICS` gets a turn (`declareStatistics`'s existing "a kernel
+ * already claims this head" skip, unchanged). `declareStats`'s own isolated callers
+ * (`collections/tests/definitions-helpers.ts`) are unaffected — they never call this function.
  */
-export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
+export function declareCollections(ce: ComputeEngine): void {
   declareFamilies(ce, collectionsEntries);
   declareCallForms(ce);
   declareListOps(ce);
@@ -55,7 +57,6 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareRoundingHeads(ce);
   declareArithHeads(ce);
   declareExpressionOps(ce);
-  declareStats(ce, options);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);

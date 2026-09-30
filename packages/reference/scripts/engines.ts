@@ -11,7 +11,6 @@ import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -60,14 +59,13 @@ const LIBRARY_DECLARATIONS = [
   declareAdeles,
   declareBraid,
   declareNumberTheory,
-  // The statistics and maps, as the site has them, so `CombinatorialStat` and
-  // `CombinatorialMap` answer here too (a collection's distributions are its examples).
-  // `declareMaps` stays out of `declareCombinatorics` and here, LAST: it widens `Inverse`
-  // rather than minting it, and has to run after structures/groupalgebra/modular declare
-  // their own `Inverse` so its permutation-carrier overload is the one left standing (see
+  // Maps, as the site has them, so `CombinatorialMap` answers here too (the combinatorial
+  // statistics are declared inside `declareCombinatorics` itself now, step 6b). `declareMaps`
+  // stays out of `declareCombinatorics` and here, LAST: it widens `Inverse` rather than
+  // minting it, and has to run after structures/groupalgebra/modular declare their own
+  // `Inverse` so its permutation-carrier overload is the one left standing (see
   // @enumeratio/combinatorics' src/index.ts).
   (ce: ComputeEngine) => {
-    declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])) });
     declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
   },
   // Combinatorics' own carriers mint their plural type-space names and `Element` membership
@@ -104,6 +102,11 @@ export const LIBRARIES: readonly Library<ComputeEngine>[] = [
   { name: "diagram", declare: declareDiagrams },
   {
     name: "combinatorics",
+    // `CombinatorialStat`'s table is a registry `declareCombinatorics` adds entries to
+    // (each area's own `declareStatistics`) without redeclaring it, which declaring can't
+    // see on its own — see `Library.names`. (Moved here from a separate "statistics" entry,
+    // step 6b: the combinatorial statistics are declared inside `declareCombinatorics` now.)
+    names: ["CombinatorialStat", "Tally"],
     declare: (ce) => {
       declareCombinatorics(ce);
       declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
@@ -123,13 +126,6 @@ export const LIBRARIES: readonly Library<ComputeEngine>[] = [
   { name: "adeles", declare: declareAdeles },
   { name: "braid", declare: declareBraid },
   { name: "number-theory", declare: declareNumberTheory },
-  {
-    name: "statistics",
-    requires: ["combinatorics"],
-    names: ["CombinatorialStat", "Tally"],
-    declare: (ce) =>
-      declareStatistics(ce, ALL_STATISTICS, { domainTypes: Object.fromEntries(CARRIERS.map((c) => [c.name, c.type])) }),
-  },
 ];
 
 export const declaredEngine = (): ComputeEngine => {

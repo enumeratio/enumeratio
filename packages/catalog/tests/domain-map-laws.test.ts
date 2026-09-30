@@ -14,22 +14,24 @@ import { COLLECTIONS } from "../src/index.ts";
 import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 import { sampleable } from "@enumeratio/combinatorics/collections/sampleable";
 import {
+  ALL_STATISTICS,
   CARRIERS,
   checkLaws,
   declareCombinatoricsCarriers,
   declareMaps,
+  declareStatistics,
   type LawFailure,
   MAPS,
 } from "@enumeratio/combinatorics/src";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { streamFor } from "@enumeratio/plausible";
 import { expect, test } from "vite-plus/test";
 
-const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 const ce = new ComputeEngine();
 declareCombinatoricsCarriers(ce);
-declareStatistics(ce, ALL_STATISTICS, { domainTypes });
+// `domainTypes` reads back from the registry `declareCombinatoricsCarriers` just populated —
+// no map to build by hand (step 6b, #458).
+declareStatistics(ce, ALL_STATISTICS);
 declareMaps(ce, constructorFor);
 
 const SAMPLES = 24;
