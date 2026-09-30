@@ -10,6 +10,7 @@ import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
 import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
+import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -90,6 +91,7 @@ export {
 export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } from "./patches/log-gamma.ts";
 export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
+export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export { clausenPatch, evaluateClausen, clausen } from "./patches/clausen.ts";
 export {
   stieltjes,
@@ -194,6 +196,7 @@ export const PATCHES: readonly Patch[] = [
   stieltjes,
   gammaInfinity,
   sqrtInfinity,
+  multiplyDirectedInfinity,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
