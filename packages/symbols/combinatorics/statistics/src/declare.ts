@@ -4,6 +4,7 @@
 // to drift from; what runs fast is compiled from the definition itself (compiled.ts). Where a fast path does exist (the permutation statistics already in
 // @enumeratio/combinatorics/collections), the two are held together by a differential test instead.
 
+import { definitionHash, isCacheableDefinition, type MathJSON, pureResult } from "@enumeratio/engine/compiled";
 import { compiledStatistic } from "./compiled.ts";
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
@@ -19,14 +20,22 @@ type BoxInput = Parameters<ComputeEngine["box"]>[0];
  * because it is also how the tests and the reduction analysis reach a definition.
  */
 const compiledCache = new WeakMap<Definition, ReturnType<typeof compiledStatistic> | null>();
+const purity = new WeakMap<Definition, boolean>();
 
 export function applyDefinition(ce: ComputeEngine, definition: Definition, subject: BoxedExpression): BoxedExpression {
-  // Compiled ahead of time where it could be; the interpreter below is the definition itself.
-  let compiled = compiledCache.get(definition);
-  if (compiled === undefined) compiledCache.set(definition, (compiled = compiledStatistic(ce, definition) ?? null));
-  const answer = compiled?.(subject.json);
-  if (answer !== undefined) return ce.box(answer as never);
-  return interpretDefinition(ce, definition, subject);
+  const compute = (): MathJSON | undefined => {
+    // Compiled ahead of time where it could be; the interpreter is the definition itself.
+    let compiled = compiledCache.get(definition);
+    if (compiled === undefined) compiledCache.set(definition, (compiled = compiledStatistic(ce, definition) ?? null));
+    return compiled?.(subject.json) ?? (interpretDefinition(ce, definition, subject).json as MathJSON);
+  };
+  // A pure definition's answer depends only on the definition and the subject, so it is shared
+  // by every engine.
+  let pure = purity.get(definition);
+  if (pure === undefined)
+    purity.set(definition, (pure = isCacheableDefinition(ce, definition.expr, { [SUBJECT]: "any" })));
+  const answer = pure ? pureResult(definitionHash(definition.expr), subject.json, compute) : compute();
+  return ce.box((answer ?? "Nothing") as never);
 }
 
 /** The definition evaluated by the interpreter alone: what the compiled code is held to. */

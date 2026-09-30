@@ -3,7 +3,7 @@
 // fast. A separate entry (`@enumeratio/engine/compiled`), so only what compiles pulls in the
 // compiler.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, version } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
@@ -115,4 +115,59 @@ export function definitionHash(expression: unknown): string {
     hash = Math.imul(hash, 0x01000193) >>> 0;
   }
   return hash.toString(16).padStart(8, "0");
+}
+
+/**
+ * compute-engine's effects that can't change what a definition answers, so an answer computed
+ * with them may be reused (`pureResult`). Of its effect labels:
+ *
+ * - `console`: output only; a reused answer just doesn't log again.
+ * - `fs_write`: the write is the point, so skipping it changes the world. Not cacheable.
+ * - `random`, `entropy`: the answer differs by design. (A seeded draw could be keyed by its seed.)
+ * - `time`, `network`, `fs_read`, `environment`: the answer depends on outside state.
+ * - `scope`, `state`: the answer depends on bindings or mutable state.
+ */
+export const CACHEABLE_EFFECTS: ReadonlySet<string> = new Set(["console"]);
+
+/** Whether a definition's answer depends only on the definition and its input, by compute-
+ *  engine's effect system with its free variables typed: pure, or with only effects in
+ *  `CACHEABLE_EFFECTS`. Such an answer can be shared across engines (`pureResult`). */
+export function isCacheableDefinition(
+  ce: ComputeEngine,
+  expression: unknown,
+  types: Readonly<Record<string, string>>,
+): boolean {
+  ce.pushScope();
+  try {
+    for (const [name, type] of Object.entries(types)) ce.declare(name, type);
+    const effects = ce.box(expression as never).effects;
+    return effects === undefined || (effects !== "any" && effects.every((label) => CACHEABLE_EFFECTS.has(label)));
+  } catch {
+    return false;
+  } finally {
+    ce.popScope();
+  }
+}
+
+const RESULTS_LIMIT = 200_000;
+const results = new Map<string, MathJSON | null>();
+
+/** A pure definition's answer for an input, shared by every engine: keyed by compute-engine's
+ *  version (for now; strictly it is this library's version that the answer depends on), the
+ *  definition's hash and the input. `null` records a declined answer. Bounded: when full, the
+ *  oldest half is dropped. */
+export function pureResult(hash: string, input: unknown, compute: () => MathJSON | undefined): MathJSON | undefined {
+  const key = `${version}|${hash}|${JSON.stringify(input)}`;
+  const known = results.get(key);
+  if (known !== undefined) return known ?? undefined;
+  const answer = compute();
+  if (results.size >= RESULTS_LIMIT) {
+    let drop = RESULTS_LIMIT / 2;
+    for (const old of results.keys()) {
+      if (drop-- === 0) break;
+      results.delete(old);
+    }
+  }
+  results.set(key, answer ?? null);
+  return answer;
 }

@@ -5,14 +5,24 @@
 // holds the two to the same answers.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { compileTyped, fromJs, type MathJSON, toJs } from "@enumeratio/engine/compiled";
+import {
+  compileTyped,
+  definitionHash,
+  fromJs,
+  isCacheableDefinition,
+  type MathJSON,
+  pureResult,
+  toJs,
+} from "@enumeratio/engine/compiled";
 
 export { compileTyped, freshen, fromJs, toJs } from "@enumeratio/engine/compiled";
 
 type Compiled = NonNullable<ReturnType<typeof compileTyped>>;
 
 /** One map's definition as a function of its argument's contents: compiled where it compiles,
- *  interpreted otherwise, memoized either way. `undefined` declines (the guard failed). */
+ *  interpreted otherwise. A pure definition's answers are cached across engines (`pureResult`);
+ *  `cache: false` computes afresh, as a test comparing the two paths must. `undefined` declines
+ *  (the guard failed). */
 export function fastDefinition(options: {
   ce: ComputeEngine;
   body: unknown;
@@ -20,8 +30,9 @@ export function fastDefinition(options: {
   from?: string;
   to?: string;
   interpret: (contents: unknown) => unknown;
+  cache?: boolean;
 }): (contents: unknown) => MathJSON | undefined {
-  const { ce, body, guard, from, to, interpret } = options;
+  const { ce, body, guard, from, to, interpret, cache = true } = options;
   let compiled: { body: Compiled; guard?: Compiled } | null | undefined;
   const compile = (): { body: Compiled; guard?: Compiled } | null => {
     if (from === undefined || to === undefined) return null;
@@ -31,32 +42,31 @@ export function fastDefinition(options: {
     const check = compileTyped(ce, guard, { _raw: from, _image: to });
     return check === undefined ? null : { body: main, guard: check };
   };
-  const memo = new Map<string, MathJSON | null>();
-  return (contents) => {
-    const key = JSON.stringify(contents);
-    const known = memo.get(key);
-    if (known !== undefined) return known ?? undefined;
+  const evaluate = (contents: unknown): MathJSON | undefined => {
     compiled ??= compile();
     const raw = compiled === null ? undefined : toJs(contents);
-    let answer: MathJSON | undefined;
-    let answered = false;
     if (compiled !== null && raw !== undefined) {
       try {
         const image = compiled.body.run({ _raw: raw });
         const json = fromJs(image);
-        if (json !== undefined) {
-          answered = true;
-          if (compiled.guard !== undefined && compiled.guard.run({ _raw: raw, _image: image }) !== true)
-            answer = undefined;
-          else answer = json;
-        }
+        if (json !== undefined)
+          return compiled.guard !== undefined && compiled.guard.run({ _raw: raw, _image: image }) !== true
+            ? undefined
+            : json;
       } catch {
-        answered = false;
+        // The interpreter answers below.
       }
     }
-    if (!answered) answer = interpret(contents) as MathJSON | undefined;
-    if (memo.size > 50_000) memo.clear();
-    memo.set(key, answer ?? null);
-    return answer;
+    return interpret(contents) as MathJSON | undefined;
+  };
+  const hash = definitionHash({ body, guard });
+  let pure: boolean | undefined;
+  return (contents) => {
+    pure ??=
+      cache &&
+      from !== undefined &&
+      isCacheableDefinition(ce, body, { _raw: from }) &&
+      (guard === undefined || (to !== undefined && isCacheableDefinition(ce, guard, { _raw: from, _image: to })));
+    return pure ? pureResult(hash, contents, () => evaluate(contents)) : evaluate(contents);
   };
 }

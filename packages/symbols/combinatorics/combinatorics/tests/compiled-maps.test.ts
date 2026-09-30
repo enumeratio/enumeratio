@@ -49,6 +49,7 @@ for (const map of MAPS.filter((m) => m.body !== undefined && m.extra === undefin
       guard: map.guard,
       from: from.shape,
       to: to.shape,
+      cache: false,
       interpret: (contents) => {
         fallbacks++;
         return evaluateDefinition(ce, map, contents);
