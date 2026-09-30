@@ -8,10 +8,12 @@ catalogMode: prefer
 
 catalog:
   "@types/node": ^24
+  "@types/semver": ^7.8.0
   ajv: ^8.20.0
   asciimath2tex: ^1.5.0
   katex: ^0.16.47
   oxfmt: 0.66.0 # the version vite-plus pins, so records match `vp fmt`
+  semver: ^7.8.5
   ts-morph: ^28.0.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@0.3.1
