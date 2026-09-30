@@ -154,6 +154,12 @@ test("Outer(f, xs, ys) agrees with applying f to every pair by hand", () => {
   expect(outer).toEqual(byHand);
 });
 
+// A free symbol has no `.ops`, same as an empty `List` — must not read as "cross an empty
+// pair of lists" and answer List() (A-126 farm scan; see list-frontier.ts's Accumulate note).
+test("Outer(f, s1, s2) stays unevaluated for free s1/s2, rather than answering List()", () => {
+  expect(run(["Outer", "f", "s1", "s2"])).toEqual(["Outer", "f", "s1", "s2"]);
+});
+
 // GeometricMean / HarmonicMean
 test("GeometricMean squared equals the product, for two values", () => {
   const gm = run(["GeometricMean", ["List", 2, 3]]);

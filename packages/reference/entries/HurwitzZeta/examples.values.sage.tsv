@@ -197,7 +197,7 @@ zeta-s-1-2-2-s-1-zeta-s-for-symbolic-s	hurwitz_zeta(SR.var("s"), (1/2))	True
 zeta-s-1-zeta-s-for-symbolic-s	hurwitz_zeta(SR.var("s"), 1)	True	
 zeta-0-a-frac-12-a-holds-at-a-0-too	hurwitz_zeta(0, 0)	1/2	
 zeta-2-a-b-3-a-3	hurwitz_zeta(-2, SR.var("a"))	True	
-partial-a-zeta-s-a-s-zeta-s-1-a			
+partial-a-zeta-s-a-s-zeta-s-1-a	diff(hurwitz_zeta(SR.var("s"), SR.var("a")), SR.var("a"))		
 zeta-4-2-pi-4-90-1	hurwitz_zeta(4, 2)	1/90*pi^4 - 1	
 hurwitzzeta-0-1	hurwitz_zeta(0, 1)		
 hurwitzzeta-neg-1-1	hurwitz_zeta(-1, 1)		

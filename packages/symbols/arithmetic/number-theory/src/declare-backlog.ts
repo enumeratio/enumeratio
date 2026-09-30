@@ -72,6 +72,7 @@ const applyFn = (ce: ComputeEngine, fn: BoxedExpression, arg: BoxedExpression): 
   ce.box([fn.json, arg.json] as never).evaluate();
 
 const isTrue = (expr: BoxedExpression): boolean => symbolNameOf(expr) === "True";
+const isFalse = (expr: BoxedExpression): boolean => symbolNameOf(expr) === "False";
 
 /** The Euler numbers E₀..E_n. Odd-indexed ones past E₀ are 0; the even ones come from
  *  ∑_{k=0}^{n/2} C(n,2k) Eₖ = 0 (n ≥ 2 even), the recurrence behind sech's series. */
@@ -279,7 +280,15 @@ export function declareBacklog(ce: ComputeEngine): void {
       let sum: BoxedExpression = ce.Zero;
       for (const d of divisors) {
         const dExpr = ce.number(d);
-        if (cond !== undefined && !isTrue(applyFn(ce, cond, dExpr))) continue;
+        if (cond !== undefined) {
+          const test = applyFn(ce, cond, dExpr);
+          // Neither True nor False (a free `cond`, e.g. `DivisorSum(10, f, g)`) means we can't
+          // tell which divisors pass — declining the whole call, not treating "undetermined"
+          // as "excluded", is what kept a free condition from silently reducing to 0 (A-126
+          // farm scan: `DivisorSum(10, f, g)` answered 0 instead of staying unevaluated).
+          if (!isTrue(test) && !isFalse(test)) return undefined;
+          if (isFalse(test)) continue;
+        }
         sum = ce.function("Add", [sum, applyFn(ce, f, dExpr)]).evaluate();
       }
       return sum;

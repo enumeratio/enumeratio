@@ -3,7 +3,7 @@ beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15	DirichletBeta[1]	Pi/4		\beta (1)	
 beta-2-g-catalan-s-constant	DirichletBeta[2]	Catalan		\beta (2)	C	
 beta-3-pi-3-32	DirichletBeta[3]	Pi^3/32		\beta (3)	\frac{\pi ^3}{32}	
 numeric-for-a-floating-point-argument-through-4	DirichletBeta[2.5]	0.948622174037055		\beta (2.5)	0.948622	
-a-symbolic-argument-stays-symbolic						
+a-symbolic-argument-stays-symbolic	DirichletBeta[s]					
 beta-neg-6-e-6-2	DirichletBeta[-6]	-61/2		\beta (-6)	-\frac{61}{2}	
 n-dirichletbeta-4	N[DirichletBeta[4]]	0.9889445517411053		N[\beta (4)]	0.988945	
 map-dirichletbeta-list-2-3	Map[DirichletBeta, List[2, 3]]	{Catalan, Pi^3/32}				disagree

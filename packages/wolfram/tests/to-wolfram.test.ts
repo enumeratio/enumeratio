@@ -135,6 +135,41 @@ test("special forms lowered to a Wolfram expression with no head of its own", ()
   expect(toWolfram(["Mode", ["List", 1, 2, 2]])).toBe("First[Commonest[List[1, 2, 2]]]");
 });
 
+// A-126 farm scan: compute-engine's own `Reduce(collection, f, x0)` is a fold (`Reduce([1,2,3,4],
+// Add, 0)` evaluates to 10, same as `Fold(Add, 0, [1,2,3,4])`) — an unrelated name collision
+// with Wolfram's OWN `Reduce` (equation/inequality solving). Passed through unchanged it isn't
+// even the right call shape for Wolfram's Reduce, let alone the right answer.
+test("Reduce(collection, f, x0) — our fold, not Wolfram's equation solver — maps to Fold", () => {
+  expect(toWolfram(["Reduce", ["List", "a", "b", "c", "d"], "List", "x"])).toBe("Fold[List, x, List[a, b, c, d]]");
+});
+// Wolfram's own Reduce (a system list, `isWolframHead`) still passes through at any OTHER
+// arity — the SPECIAL case only intercepts the exact 3-ary fold shape.
+test("Reduce at another arity is left as Wolfram's own Reduce", () => {
+  expect(toWolfram(["Reduce", ["Equal", "x", 1]])).toBe("Reduce[Equal[x, 1]]");
+});
+
+// A-126 head survey, #495: `Sign` is overloaded over `complex | permutation` — a `Permutation`
+// argument is our permutation-parity statistic (Wolfram's `Signature`), not Wolfram's own
+// numeric `Sign`. `Order` is the identical trap (found in the same survey) but has no clean
+// single-arity Wolfram rename, so it stays isolated via `FOREIGN` (`enumeratio\`Order[...]`)
+// rather than remapped here.
+test("Sign(Permutation(...)) — permutation parity, not Wolfram's numeric Sign — maps to Signature", () => {
+  expect(toWolfram(["Sign", ["Permutation", ["List", 2, 3, 1]]])).toBe("Signature[List[2, 3, 1]]");
+});
+// The composed cycle-notation form (`Permutation(CycleDecomposition(...))`) needs the same
+// Cycles[...] conversion the Permutation/CycleDecomposition SPECIAL cases already do —
+// Wolfram's Signature takes either representation.
+test("Sign(Permutation(CycleDecomposition(...))) converts to Signature[Cycles[...]]", () => {
+  expect(toWolfram(["Sign", ["Permutation", ["CycleDecomposition", ["List", ["List", 1, 2, 3]]]]])).toBe(
+    "Signature[Cycles[List[List[1, 2, 3]]]]",
+  );
+});
+// A numeric/complex argument is Wolfram's own Sign — untouched.
+test("Sign of a number or symbol is left as Wolfram's own Sign", () => {
+  expect(toWolfram(["Sign", -5])).toBe("Sign[-5]");
+  expect(toWolfram(["Sign", "x"])).toBe("Sign[x]");
+});
+
 test("nested expressions compose", () => {
   expect(toWolfram(["Equal", ["Binomial", 10, 3], ["Binomial", 10, 7]])).toBe(
     "Equal[Binomial[10, 3], Binomial[10, 7]]",

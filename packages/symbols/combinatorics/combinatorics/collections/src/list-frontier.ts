@@ -291,6 +291,16 @@ const declareNumericPredicates = (ce: ComputeEngine): void => {
   });
 };
 
+// A bare (undefined) symbol isn't `isCollection`, so `collectionElements` falls back to
+// `operandsOf`, which reads `[]` off it same as a genuinely empty `List` (see that helper's
+// own doc in @enumeratio/engine) -- neither reading distinguishes "a free variable, stay
+// unevaluated" from "an empty collection, answer List()". Checked first, everywhere
+// `collectionElements`/`operandsOf` would otherwise be asked to materialise a bare operand
+// (`Accumulate`/`FoldList` below; `Sort`/`Join`/`Flatten`/`Gather`/`SortBy`/`Commonest`/
+// `Outer` elsewhere in this package share the same guard for the same reason).
+const isFreeSymbol = (expr: BoxedExpression | undefined): boolean =>
+  expr !== undefined && symbolNameOf(expr) !== undefined;
+
 /** Declare the Wolfram-frontier list/array heads: Array, Accumulate, FoldList, Cases,
  *  SparseArray, seeded RandomInteger (+ SeedRandom), and the IsNumeric/IsMachineNumber/
  *  Precision trio. */
@@ -322,7 +332,7 @@ export function declareListFrontier(ce: ComputeEngine): void {
   ce.declare("Accumulate", {
     signature: "(collection<any>) -> collection",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      if (ops[0] === undefined) return undefined;
+      if (ops[0] === undefined || isFreeSymbol(ops[0])) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
       if (items.length === 0) return ce.function("List", []);
@@ -337,10 +347,11 @@ export function declareListFrontier(ce: ComputeEngine): void {
       const f = ops[0];
       if (f === undefined) return undefined;
       if (ops.length >= 3 && ops[2] !== undefined) {
+        if (isFreeSymbol(ops[2])) return undefined;
         const items = collectionElements(ops[2]);
         return items === undefined ? undefined : foldListFrom(ce, f, ops[1], items);
       }
-      if (ops[1] === undefined) return undefined;
+      if (ops[1] === undefined || isFreeSymbol(ops[1])) return undefined;
       const items = collectionElements(ops[1]);
       if (items === undefined) return undefined;
       if (items.length === 0) return ce.function("List", []);

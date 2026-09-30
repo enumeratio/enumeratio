@@ -311,6 +311,10 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("Gather", {
     signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      // A free `data` isn't `isCollection`, so `collectionElements` falls back to
+      // `operandsOf`, which reads `[]` off it same as an empty `List` — must not read as
+      // "empty collection" (`List()`); same trap as `Accumulate` (list-frontier.ts).
+      if (ops[0] === undefined || symbolNameOf(ops[0]) !== undefined) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
       const test = ops[1];
@@ -327,10 +331,10 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("GatherBy", {
     signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      const f = ops[1];
+      if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const f = ops[1];
-      if (f === undefined) return undefined;
       const groups: { key: BoxedExpression; members: BoxedExpression[] }[] = [];
       for (const item of items) {
         const key = invoke(ce, f, [item]);
@@ -386,10 +390,10 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ce.declare("SortBy", {
     signature: "(collection<T>, (T) any -> any) -> collection<T> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      const f = ops[1];
+      if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const f = ops[1];
-      if (f === undefined) return undefined;
       const keyed = items.map((item, index) => ({ item, key: invoke(ce, f, [item]), index }));
       keyed.sort((a, b) => naturalCompare(a.key, b.key) || a.index - b.index);
       return ce.box(["List", ...keyed.map((entry) => entry.item)]);

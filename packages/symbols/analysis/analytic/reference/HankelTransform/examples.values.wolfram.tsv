@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out
 exp-neg-ar-order0	Assuming[Greater[a, 0], FullSimplify[HankelTransform[Exp[Minus[Times[a, r]]], r, s]]]			
-one-over-r				
+one-over-r	HankelTransform[Divide[1, r], r, s]			
 one-over-sqrt-r2-a2	Assuming[Greater[a, 0], FullSimplify[HankelTransform[Divide[1, Sqrt[Plus[Power[r, 2], Power[a, 2]]]], r, s]]]			
 hankeltransform-exponentiale-pow-neg-r-r-s				
 hankeltransform-1-over-r-pow-2-plus-1-times-cos				
