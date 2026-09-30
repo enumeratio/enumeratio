@@ -7,7 +7,8 @@ signatures:
   - call: LerchPhi(z, s, a)
     description: the Lerch transcendent $\Phi(z, s, a)$.
     library: enumeratio-analytic
-    type: (number, number, number) -> number
+    type: (complex, complex, complex) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio
