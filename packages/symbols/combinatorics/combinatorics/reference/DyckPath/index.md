@@ -14,4 +14,6 @@ signatures:
     description: The singular-inhabitant constructor for a Dyck path, as its up/down steps.
     library: enumeratio-combinatorics
     type: ((list<integer>) -> dyck_path) & ((binary_tree) -> dyck_path)
+laws:
+  - inverse: BinaryTree
 ---

@@ -16,8 +16,6 @@ export const TREES_MAPS: readonly CombinatorialMap[] = [
     summary:
       "A binary tree as its parent array: its nodes numbered in order, entry k the number of the k-th node's parent, 0 at the root.",
     note: "An order isomorphism: the k-th tree BinaryTrees lists goes to the k-th array BinaryTreeParentArrays lists.",
-    laws: [{ inverse: "BinaryTree" }],
-    orderIsomorphism: { from: "BinaryTrees", to: "BinaryTreeParentArrays" },
   },
   {
     name: "BinaryTree",
@@ -28,8 +26,6 @@ export const TREES_MAPS: readonly CombinatorialMap[] = [
     guard: treeOfParentArrayGuard,
     summary: "The binary tree an in-order parent array describes: a node below its parent goes left, above it right.",
     note: "Declines an array that isn't one: two roots, two left children, a cycle, or labels out of order.",
-    laws: [{ inverse: "BinaryTreeParentArray" }],
-    orderIsomorphism: { from: "BinaryTreeParentArrays", to: "BinaryTrees" },
   },
   {
     name: "DyckPath",
@@ -40,6 +36,5 @@ export const TREES_MAPS: readonly CombinatorialMap[] = [
     summary: "A binary tree [L, R] as the Dyck path U φ(L) D φ(R).",
     note: "FindStat's Mp00012. A bijection, so every Dyck path statistic answers on a tree; not order-preserving between BinaryTrees and DyckPaths, which list in different orders.",
     findstat: ["Mp00012"],
-    laws: [{ inverse: "BinaryTree" }],
   },
 ];

@@ -253,7 +253,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, at(["Subtract", ["Add", ["Length", "_raw"], 1], "i"])),
     summary: "The word read backwards.",
-    laws: ["involution"],
   },
   {
     name: "Complement",
@@ -261,7 +260,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, ["Subtract", ["Add", ["Length", "_raw"], 1], at("i")]),
     summary: "Each entry replaced by n + 1 minus itself.",
-    laws: ["involution"],
   },
   {
     name: "Inverse",
@@ -270,7 +268,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     // The inverse sends i to the POSITION of i, which is what IndexOf reads off directly.
     body: forEach(positions, ["IndexOf", "_raw", "i"]),
     summary: "The inverse permutation: position of each value.",
-    laws: ["involution"],
   },
   {
     name: "DescentSet",
@@ -317,7 +314,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     composedOf: ["Complement", "Reverse"],
     summary: "Reverse, then complement.",
     note: "A thin alias over Compose(Complement, Reverse). The catalog has the name, so we keep it — but the name is not what makes it work, and nothing stops a reader writing the composition directly.",
-    laws: ["involution"],
   },
   {
     name: "InverseAfterComplementAfterReverse",
@@ -333,7 +329,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(positions, at(["Add", ["Mod", "i", ["Length", "_raw"]], 1])),
     summary: "Rotate the word one place to the left.",
-    laws: [{ inverse: "InverseCyclicShift" }],
   },
   {
     name: "InverseCyclicShift",
@@ -344,7 +339,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
       at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
     ),
     summary: "Rotate the word one place to the right.",
-    laws: [{ inverse: "CyclicShift" }],
   },
   {
     name: "PeakSet",
@@ -433,7 +427,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     body: cycleDecompositionBody,
     summary:
       "A permutation in cycle notation, fixed points kept: each cycle from its least point, cycles in order of those points.",
-    laws: [{ inverse: "Permutation" }],
   },
   {
     name: "Permutation",
@@ -444,6 +437,8 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     guard: permutationOfCycleDecompositionGuard,
     summary: "The permutation a cycle decomposition describes.",
     note: "Declines a decomposition that isn't canonical: a point missing or repeated, a cycle not starting at its least point, or cycles out of order.",
+    // No reference/Permutation/ record exists yet (a pre-existing gap) to hold this map's
+    // laws, so it stays inline here rather than through maps-laws.generated.ts.
     laws: [{ inverse: "CycleDecomposition" }],
   },
   {
@@ -472,7 +467,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     body: insertionReadingWord,
     summary: "The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.",
     note: "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing.",
-    laws: ["idempotent"],
   },
   {
     name: "KrewerasComplement",
@@ -498,7 +492,6 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     body: conjugacyClassRepresentative,
     summary: "The canonical permutation with the same cycle type.",
     note: "FindStat does not fix an ordering for this map. Convention used here: cycles in decreasing length, filled with consecutive integers, each cycle (a a+1 … a+len-1) written as the one-line word a+1, …, a+len-1, a.",
-    laws: ["idempotent"],
   },
   {
     name: "Foata",

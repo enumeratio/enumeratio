@@ -14,4 +14,9 @@ signatures:
     description: The singular-inhabitant constructor for a partition of a set, as its blocks.
     library: enumeratio-combinatorics
     type: ((list<list<integer>>) -> set_partition) & ((restricted_growth_string) -> set_partition)
+laws:
+  - inverse: RestrictedGrowthString
+  - orderIsomorphism:
+      from: RestrictedGrowthStrings
+      to: SetPartitions
 ---

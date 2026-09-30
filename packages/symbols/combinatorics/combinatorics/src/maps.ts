@@ -1,8 +1,8 @@
 // Every combinatorics map, declared typed by carrier (step 6c: each map's data now lives in the
 // area owning its `from` carrier — see `map-helpers.ts` for the shared pieces and each area's
 // own `src/maps.ts` for its data). This file is the thin composition point: it concatenates
-// every area's own map array into `MAPS`, and keeps `declareMaps`'s call site exactly where it
-// was.
+// every area's own map array into `MAPS`, merges in each map's laws (step 6c part 2 — see
+// below), and keeps `declareMaps`'s call site exactly where it was.
 //
 // `declareMaps` stays OUT of `declareCombinatorics`/each area's own `declare<Area>` on purpose:
 // it extends shared names (`Inverse`, `Reverse`) other packages also widen, rather than minting
@@ -19,6 +19,7 @@ import { CARRIERS } from "./carriers.ts";
 import { COMPILED_MAPS } from "./compiled-maps.generated.js";
 import { fastDefinition } from "./compiled.ts";
 import type { CombinatorialMap } from "./map-helpers.ts";
+import { MAP_LAWS } from "./maps-laws.generated.ts";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
@@ -30,6 +31,13 @@ export type { CombinatorialMap } from "./map-helpers.ts";
 export type { Law };
 export { evaluateDefinition };
 
+// A map's `laws`/`orderIsomorphism` come from its own record's `laws:` front matter (step 6c
+// part 2, design §6), generated ahead of time into `maps-laws.generated.ts` by
+// `scripts/generate-map-laws.ts` -- no YAML parsing at runtime. An area's own literal only
+// still carries `laws` inline for a map with no record to hold it (`Permutation`, see
+// `permutations/src/maps.ts`), which this merge leaves alone since `MAP_LAWS` has no entry for it.
+const withLaws = (map: CombinatorialMap): CombinatorialMap => ({ ...map, ...MAP_LAWS[`${map.name}@${map.from}`] });
+
 export const MAPS: readonly CombinatorialMap[] = [
   ...PERMUTATIONS_MAPS,
   ...TREES_MAPS,
@@ -37,7 +45,7 @@ export const MAPS: readonly CombinatorialMap[] = [
   ...SET_PARTITIONS_MAPS,
   ...COMPOSITIONS_MAPS,
   ...WORDS_MAPS,
-];
+].map(withLaws);
 
 /** Declare every combinatorics map, typed by carrier, via @enumeratio/structures' generic
  *  `declareMaps`: combinatorics supplies the fast (compiled) definition and the FindStat ids,

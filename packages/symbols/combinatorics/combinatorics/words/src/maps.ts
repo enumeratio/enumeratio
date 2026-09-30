@@ -45,7 +45,5 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     body: compositionOfCutWord("_raw"),
     summary: "The composition of m + 1 a binary word of length m cuts out.",
     note: "The inverse of CutWord, and order-preserving in the same way.",
-    laws: [{ inverse: "CutWord" }],
-    orderIsomorphism: { from: "BinaryWords", to: "IntegerCompositions", sizeOffset: 1 },
   },
 ];

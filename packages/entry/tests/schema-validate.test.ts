@@ -43,6 +43,21 @@ test("rejects an unknown property (typo guard)", () => {
   ]);
 });
 
+test("a map's laws pass, shorthand and parameterized", () => {
+  expect(
+    validateSchema(REFERENCE_ENTRY_SCHEMA, {
+      ...MINIMAL_ENTRY,
+      laws: ["involution", { inverse: "Mod" }, { orderIsomorphism: { from: "A", to: "B", sizeOffset: 1 } }],
+    }),
+  ).toEqual([]);
+});
+
+test("rejects an unknown law", () => {
+  expect(validateSchema(REFERENCE_ENTRY_SCHEMA, { ...MINIMAL_ENTRY, laws: ["reflexive"] })).toEqual([
+    "$.laws[0]: matches none of 3 allowed shapes",
+  ]);
+});
+
 test("rejects a malformed id", () => {
   expect(validateSchema(REFERENCE_EXAMPLES_SCHEMA, [{ ...EXAMPLE, id: "Not_Valid" }])).toEqual([
     "$[0].id: does not match /^[a-z0-9]+(-[a-z0-9]+)*$/",

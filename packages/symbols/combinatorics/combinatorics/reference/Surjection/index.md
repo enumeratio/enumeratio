@@ -9,4 +9,6 @@ signatures:
     description: The singular-inhabitant constructor for a surjection from positions onto 1..k, as its word.
     library: enumeratio-combinatorics
     type: ((list<integer>) -> surjection) & ((set_composition) -> surjection)
+laws:
+  - inverse: SetComposition
 ---
