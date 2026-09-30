@@ -2,6 +2,7 @@ import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js
 import {
   bigIntegerAt,
   bigRationalAt,
+  defineOverload,
   integerAt,
   operandsOf,
   stringAt,
@@ -180,22 +181,18 @@ export function declareModular(ce: ComputeEngine): void {
     2,
   );
 
-  widenSignature(
-    ce,
-    "Inverse",
-    "(matrix | expression<ModularMatrix> | string) -> matrix | expression<ModularMatrix>",
-    (op) => op.type.matches(matrixType),
-  );
-  wrapOperator(
-    ce,
-    ["Inverse", 1],
-    (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
-    () => (ops) => {
+  // A row in Inverse's table, beside combinatorics' permutation one, whoever declares first.
+  defineOverload(ce, "Inverse", {
+    package: "modular",
+    signature: "(matrix | expression<ModularMatrix> | string) -> matrix | expression<ModularMatrix>",
+    arity: 1,
+    when: (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
+    native: (op) => op.type.matches(matrixType),
+    evaluate: (ops) => {
       const inverse = invert(matrixOf(ops[0])!);
       return inverse === undefined ? undefined : matrixExpression(inverse);
     },
-    1,
-  );
+  });
 
   const matrixLike = "expression<ModularMatrix> | string | list";
 

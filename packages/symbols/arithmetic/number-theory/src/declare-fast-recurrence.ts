@@ -5,7 +5,7 @@
 // (falls through to the native handler) past a documented size rather than pretend a budget
 // it doesn't have.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
+import { bigIntegerAt, defineOverload } from "@enumeratio/engine";
 import { fibonacci, lucasL } from "./fast-recurrence.ts";
 
 /** Above this, F(n)/L(n) would run past ~2M decimal digits — plenty past the bench range
@@ -23,21 +23,19 @@ export function declareFastRecurrence(ce: ComputeEngine): void {
     return magnitude <= FAST_RECURRENCE_LIMIT ? n : undefined;
   };
 
-  wrapOperator(
-    ce,
-    ["Fibonacci", 100000],
-    (ops) => fitsFastRange(ops[0]) !== undefined,
-    () => (ops) => ce.number(fibonacci(fitsFastRange(ops[0])!)),
-    1,
-  );
-
-  wrapOperator(
-    ce,
-    ["LucasL", 100000],
-    (ops) => fitsFastRange(ops[0]) !== undefined,
-    () => (ops) => ce.number(lucasL(fitsFastRange(ops[0])!)),
-    1,
-  );
+  // Rows beside the others in each head's table (declare.ts): fast doubling for the plain
+  // integer the native recurrence would take in O(n).
+  for (const [head, kernel] of [
+    ["Fibonacci", fibonacci],
+    ["LucasL", lucasL],
+  ] as const) {
+    defineOverload(ce, head, {
+      package: "number-theory",
+      arity: 1,
+      when: (ops) => fitsFastRange(ops[0]!) !== undefined,
+      evaluate: (ops) => ce.number(kernel(fitsFastRange(ops[0]!)!)),
+    });
+  }
 
   // `Mod(Fibonacci(n), p)` gets its speedup for free: Fibonacci/LucasL's own evaluate
   // (above) already answers in O(log n) via fast doubling, so Mod only ever reduces an

@@ -897,6 +897,7 @@ export function declareMaps(
     // rather than replacing keeps every overload they had — see extend.ts for why that is
     // possible even for the collection-backed ones.
     const extended = extendBuiltin(ce, {
+      package: "combinatorics",
       head: map.name,
       on: map.from,
       returns: map.to,

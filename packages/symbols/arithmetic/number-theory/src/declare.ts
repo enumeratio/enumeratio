@@ -2,11 +2,13 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
+  defineOverload,
   integerAt,
   operandsOf,
   threadOverLists,
   widenSignature,
   wrapOperator,
+  type Overload,
 } from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
@@ -407,16 +409,19 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     );
   }
 
-  // Widen Fibonacci and LucasL to a real index and an optional second (polynomial)
-  // argument; gated so the native integer recurrence still only ever runs on the single
-  // integer argument it already handled. Also accepts a `ProfiniteNumber` operand,
-  // untouched here, so @enumeratio/adeles' own Fibonacci/LucasL extension (Lenstra's
-  // profinite Fibonacci, chained in ahead of this one -- see engines.ts) still reaches it,
-  // rather than this gate silently swallowing the call first.
-  const acceptsIntegerOrProfinite = (op: BoxedExpression): boolean =>
-    integerAt(op) !== undefined || op.operator === "ProfiniteNumber";
-  widenSignature(ce, "Fibonacci", "(number | value, any?) -> any", acceptsIntegerOrProfinite);
-  widenSignature(ce, "LucasL", "(number | value, any?) -> any", acceptsIntegerOrProfinite);
+  // Fibonacci and LucasL at a real index and with a second (polynomial) argument: rows in
+  // their tables (defineOverload), beside adeles' profinite one, so which package declared
+  // first doesn't matter. The native integer recurrence only ever sees the one integer it took.
+  const integerOnly = (op: BoxedExpression): boolean => integerAt(op) !== undefined;
+  const sequence = (head: string, row: Pick<Overload, "arity" | "when" | "evaluate">): void => {
+    defineOverload(ce, head, {
+      package: "number-theory",
+      signature: "(number, any?) -> any",
+      unless: ["ProfiniteNumber"],
+      native: integerOnly,
+      ...row,
+    });
+  };
   widenSignature(ce, "BellNumber", "(integer, any?) -> any", isInteger);
 
   // Fibonacci and Lucas at a real (non-integer) index, via Binet's formula: with
@@ -428,32 +433,23 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       ce.function("Power", [goldenRatio(), ce.function("Negate", [nu])]),
     );
 
-  // @enumeratio/adeles also extends Fibonacci/LucasL, for a `ProfiniteNumber` argument
-  // (Lenstra's profinite Fibonacci) -- excluded here by head, defensively, on top of
-  // `declareNumberTheory` running after `declareAdeles` in packages/reference/scripts/engines.ts.
-  const isProfinite = (op: BoxedExpression): boolean => op.operator === "ProfiniteNumber";
-
-  wrapOperator(
-    ce,
-    ["Fibonacci", 1.5],
-    (ops) => inexactNumber(ops[0]) && !isProfinite(ops[0]),
-    () => (ops) => {
+  sequence("Fibonacci", {
+    arity: 1,
+    when: (ops) => inexactNumber(ops[0]),
+    evaluate: (ops) => {
       const nu = ops[0];
       return div(sub(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)), ce.function("Sqrt", [5])).N();
     },
-    1,
-  );
+  });
 
-  wrapOperator(
-    ce,
-    ["LucasL", 2.5],
-    (ops) => inexactNumber(ops[0]) && !isProfinite(ops[0]),
-    () => (ops) => {
+  sequence("LucasL", {
+    arity: 1,
+    when: (ops) => inexactNumber(ops[0]),
+    evaluate: (ops) => {
       const nu = ops[0];
       return add(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)).N();
     },
-    1,
-  );
+  });
 
   // Fibonacci(n, x), LucasL(n, x) and BellNumber(n, x): the polynomial families, exact for
   // a nonnegative integer order n and any exact x. Built by running each recurrence up to
@@ -461,15 +457,13 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   const notMatrix = (op: BoxedExpression): boolean => op.operator !== "List";
   const expand = (expr: BoxedExpression): BoxedExpression => ce.function("Expand", [expr]).evaluate();
 
-  wrapOperator(
-    ce,
-    ["Fibonacci", 7, "x"],
-    (ops) => {
-      if (isProfinite(ops[0])) return false;
+  sequence("Fibonacci", {
+    arity: 2,
+    when: (ops) => {
       const n = integerAt(ops[0]);
       return n !== undefined && n >= 0 && notMatrix(ops[1]);
     },
-    () => (ops) => {
+    evaluate: (ops) => {
       const n = integerAt(ops[0])!;
       const x = ops[1];
       let prev = ce.Zero; // F_0(x)
@@ -481,8 +475,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return n === 0 ? prev : curr;
     },
-    2,
-  );
+  });
 
   // Fibonacci(nu, x) at a real (non-integer, or negative-integer) order nu: the
   // two-variable Binet formula. t^2 - x*t - 1 = 0 has roots r, -1/r with
@@ -490,15 +483,14 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // branch choice the single-argument Fibonacci(nu) rule above makes),
   // F_nu(x) = (r^nu - cos(pi*nu) * r^-nu) / sqrt(x^2+4). At x = 1 this is exactly the
   // single-argument formula above (r = phi, sqrt(x^2+4) = sqrt(5)).
-  wrapOperator(
-    ce,
-    ["Fibonacci", 5.8, 3],
-    (ops) => {
-      if (ops.length !== 2 || isProfinite(ops[0]) || !notMatrix(ops[1])) return false;
+  sequence("Fibonacci", {
+    arity: 2,
+    when: (ops) => {
+      if (!notMatrix(ops[1])) return false;
       const n = integerAt(ops[0]);
       return n === undefined || n < 0;
     },
-    () => (ops) => {
+    evaluate: (ops) => {
       const [nu, x] = ops;
       const discriminant = ce.function("Sqrt", [add(mul(x, x), 4)]);
       const root = div(add(x, discriminant), 2);
@@ -508,17 +500,15 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       );
       return div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant).N();
     },
-  );
+  });
 
-  wrapOperator(
-    ce,
-    ["LucasL", 7, "x"],
-    (ops) => {
-      if (isProfinite(ops[0])) return false;
+  sequence("LucasL", {
+    arity: 2,
+    when: (ops) => {
       const n = integerAt(ops[0]);
       return n !== undefined && n >= 0 && notMatrix(ops[1]);
     },
-    () => (ops) => {
+    evaluate: (ops) => {
       const n = integerAt(ops[0])!;
       const x = ops[1];
       let prev = ce.number(2); // L_0(x)
@@ -530,8 +520,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return n === 0 ? prev : curr;
     },
-    2,
-  );
+  });
 
   wrapOperator(
     ce,
