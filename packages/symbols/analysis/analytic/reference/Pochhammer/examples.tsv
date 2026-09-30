@@ -5,19 +5,21 @@ an-empty-product-is-1			[Pochhammer, 2, 0]	1	An empty product is 1
 pochhammer-3-4			[Pochhammer, 3, 4]	360	
 10-11-12-13-14-15			[Pochhammer, 10, 6]	3603600	10 × 11 × 12 × 13 × 14 × 15
 at-pochhammer-3-2		test	[N, [Pochhammer, 3, 2]]	12	
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[Pochhammer, [List, 2, 3, 4], 2]	[List, 6, 12, 20]	Threads element-wise over a list, as Wolfram's Listable heads do
-a-symbolic-base-with-integer-order-expands-to	Scope		[Pochhammer, n, 5]	[Multiply, n, [Add, n, 1], [Add, n, 2], [Add, n, 3], [Add, n, 4]]	A symbolic base with integer order expands to the product
-a-negative-order-expands-to-the-reciprocal	Scope		[Pochhammer, n, -5]	[Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]	A negative order expands to the reciprocal falling product
-real-base-and-order-evaluate-as-frac-gamma-a-n	Scope		[Pochhammer, 2.4, 8.5]	{num: "2310224.67324070778057"}	Real base and order evaluate as $\frac{\Gamma(a+n)}{\Gamma(a)}$
-a-zero-base-gives-0-for-any-positive-order	Scope		[Pochhammer, 0, 1285]	0	A zero base gives 0 for any positive order
-a-rational-base-frac-12-cdot-frac-32-cdot-frac	Scope		[Pochhammer, [Rational, 1, 2], 3]	[Rational, 15, 8]	A rational base: $\frac12 \cdot \frac32 \cdot \frac52$
-a-rational-order-evaluates-through-gamma-exactly	Scope		[Pochhammer, [Rational, 3, 2], [Rational, 1, 2]]	[Divide, 2, [Sqrt, Pi]]	A rational order evaluates through Gamma, exactly: $\left(\frac32\right)_{1/2} = \frac{\Gamma(2)}{\Gamma(3/2)} = \frac{2}{\sqrt\pi}$
-complex-base-and-order-evaluate-through-gamma	Scope		[Pochhammer, [Complex, 2, 5], [Complex, 0, 8]]	[Complex, 0.0000021386822918680963, -0.000014218737711709974]	Complex base and order evaluate through Gamma
-dividing-by-k-counts-multisets-binom-n-k-1-k	Applications		[Divide, [Pochhammer, 5, 3], [Factorial, 3]]	35	Dividing by $k!$ counts multisets: $\binom{n+k-1}{k} = \frac{(n)_k}{k!}$, here choosing 3 items from 5 types with repetition
-1-n-n-since-the-rising-factorial-from-1-just	Properties		[Equal, [Pochhammer, 1, 5], [Factorial, 5]]	True	$(1)_n = n!$, since the rising factorial from 1 just counts up to n
-negative-order-gives-the-reciprocal-a-n-frac-1-a	Properties		[Pochhammer, 5, -2]	[Rational, 1, 12]	Negative order gives the reciprocal: $(a)_{-n} = \frac{1}{(a-1)(a-2)\cdots(a-n)}$, so $(5)_{-2} = \frac{1}{4\cdot3}$
-order-0-is-the-empty-product-a-0-1	Properties		[Pochhammer, a, 0]	1	Order 0 is the empty product: $(a)_0 = 1$
-a-1-a	Properties		[Pochhammer, a, 1]	a	$(a)_1 = a$
-the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	Properties		[Equal, [Pochhammer, 4, 3], [Divide, [Gamma, 7], [Gamma, 4]]]	True	The Gamma form $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$. See [[Gamma]]
-rising-and-falling-factorials-x-underline-n-1-n	Properties		[Equal, [FallingFactorial, 5, 3], [Multiply, -1, [Pochhammer, -5, 3]]]	True	Rising and falling factorials: $x^{\underline{n}} = (-1)^n\,(-x)_n$
-if-a-is-a-non-positive-integer-with-a-n-the	Possible issues		[Pochhammer, -3, 4]	0	If a is a non-positive integer with $|a| < n$, the product picks up a zero factor: $(-3)(-2)(-1)(0)$
+threads-element-wise-over-a-list-as-wolfram-s			[Pochhammer, [List, 2, 3, 4], 2]	[List, 6, 12, 20]	Threads element-wise over a list, as Wolfram's Listable heads do
+a-symbolic-base-with-integer-order-expands-to			[Pochhammer, n, 5]	[Multiply, n, [Add, n, 1], [Add, n, 2], [Add, n, 3], [Add, n, 4]]	A symbolic base with integer order expands to the product
+a-negative-order-expands-to-the-reciprocal			[Pochhammer, n, -5]	[Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]	A negative order expands to the reciprocal falling product
+real-base-and-order-evaluate-as-frac-gamma-a-n			[Pochhammer, 2.4, 8.5]	{num: "2310224.67324070778057"}	Real base and order evaluate as $\frac{\Gamma(a+n)}{\Gamma(a)}$
+a-zero-base-gives-0-for-any-positive-order			[Pochhammer, 0, 1285]	0	A zero base gives 0 for any positive order
+a-rational-base-frac-12-cdot-frac-32-cdot-frac			[Pochhammer, [Rational, 1, 2], 3]	[Rational, 15, 8]	A rational base: $\frac12 \cdot \frac32 \cdot \frac52$
+a-rational-order-evaluates-through-gamma-exactly			[Pochhammer, [Rational, 3, 2], [Rational, 1, 2]]	[Divide, 2, [Sqrt, Pi]]	A rational order evaluates through Gamma, exactly: $\left(\frac32\right)_{1/2} = \frac{\Gamma(2)}{\Gamma(3/2)} = \frac{2}{\sqrt\pi}$
+complex-base-and-order-evaluate-through-gamma			[Pochhammer, [Complex, 2, 5], [Complex, 0, 8]]	[Complex, 0.0000021386822918680963, -0.000014218737711709974]	Complex base and order evaluate through Gamma
+dividing-by-k-counts-multisets-binom-n-k-1-k			[Divide, [Pochhammer, 5, 3], [Factorial, 3]]	35	Dividing by $k!$ counts multisets: $\binom{n+k-1}{k} = \frac{(n)_k}{k!}$, here choosing 3 items from 5 types with repetition
+1-n-n-since-the-rising-factorial-from-1-just			[Equal, [Pochhammer, 1, 5], [Factorial, 5]]	True	$(1)_n = n!$, since the rising factorial from 1 just counts up to n
+negative-order-gives-the-reciprocal-a-n-frac-1-a			[Pochhammer, 5, -2]	[Rational, 1, 12]	Negative order gives the reciprocal: $(a)_{-n} = \frac{1}{(a-1)(a-2)\cdots(a-n)}$, so $(5)_{-2} = \frac{1}{4\cdot3}$
+order-0-is-the-empty-product-a-0-1			[Pochhammer, a, 0]	1	Order 0 is the empty product: $(a)_0 = 1$
+a-1-a			[Pochhammer, a, 1]	a	$(a)_1 = a$
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see			[Equal, [Pochhammer, 4, 3], [Divide, [Gamma, 7], [Gamma, 4]]]	True	The Gamma form $(a)_n = \frac{\Gamma(a+n)}{\Gamma(a)}$. See [[Gamma]]
+rising-and-falling-factorials-x-underline-n-1-n			[Equal, [FallingFactorial, 5, 3], [Multiply, -1, [Pochhammer, -5, 3]]]	True	Rising and falling factorials: $x^{\underline{n}} = (-1)^n\,(-x)_n$
+if-a-is-a-non-positive-integer-with-a-n-the			[Pochhammer, -3, 4]	0	If a is a non-positive integer with $|a| < n$, the product picks up a zero factor: $(-3)(-2)(-1)(0)$
+pochhammer-0-negative-1-is-exact	Scope		[Pochhammer, 0, -1]	-1	$(0)_{-1} = 1/(0-1) = -1$ — exact for any $a \le 0$ and negative integer $n$ (DLMF 5.2.vi)
+pochhammer-0-negative-2-is-exact	Scope		[Pochhammer, 0, -2]	[Rational, 1, 2]	$(0)_{-2} = 1/[(0-1)(0-2)] = 1/2$

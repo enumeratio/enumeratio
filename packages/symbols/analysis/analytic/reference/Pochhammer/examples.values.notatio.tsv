@@ -21,3 +21,5 @@ a-1-a	<Pochhammer>a 1</Pochhammer>	<a />
 the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	<Equal><Pochhammer>4 3</Pochhammer> <Divide><Gamma>7</Gamma> <Gamma>4</Gamma></Divide></Equal>	<True />
 rising-and-falling-factorials-x-underline-n-1-n	<Equal><FallingFactorial>5 3</FallingFactorial> <Multiply>-1 <Pochhammer>-5 3</Pochhammer></Multiply></Equal>	<True />
 if-a-is-a-non-positive-integer-with-a-n-the	<Pochhammer>-3 4</Pochhammer>	<ToExpression>0</ToExpression>
+pochhammer-0-negative-1-is-exact	<Pochhammer>0 -1</Pochhammer>	<ToExpression>-1</ToExpression>
+pochhammer-0-negative-2-is-exact	<Pochhammer>0 -2</Pochhammer>	<Rational>1 2</Rational>
