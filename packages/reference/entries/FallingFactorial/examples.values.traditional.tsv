@@ -1,12 +1,12 @@
 id	in	out
 falling-factorial-5-3-60	5^{\underline{3}}	60
 fallingfactorial-10-2	10^{\underline{2}}	90
-fallingfactorial-x-8	x^{\underline{8}}	-x\times(1-x)(2-x)(3-x)(4-x)(5-x)(6-x)(7-x)
+fallingfactorial-x-8	x^{\underline{8}}	-x(-x+1)(-x+2)(-x+3)(-x+4)(-x+5)(-x+6)(-x+7)
 falling-factorial-3-5-0	3^{\underline{5}}	0
-falling-factorial-half-2-neg-1-4	(\frac{1}{2})^{\underline{2}}	-\frac{1}{4}
+falling-factorial-half-2-neg-1-4	(\frac{1}{2})^{\underline{2}}	\frac{-1}{4}
 fallingfactorial-4-2	4^{\underline{2}}	12
-functionexpand-fallingfactorial-x-4	\mathrm{FunctionExpand}(x^{\underline{4}})	-x\times(1-x)(2-x)(3-x)
+functionexpand-fallingfactorial-x-4	\operatorname{FunctionExpand}(x^{\underline{4}})	-x(-x+1)(-x+2)(-x+3)
 fallingfactorial-n-0	n^{\underline{0}}	1
 fallingfactorial-x-plus-bigo-x-pow-5-10		
 fallingfactorial-10-3	10^{\underline{3}}	720
-differencedelta-fallingfactorial-x-n-x	\mathrm{DifferenceDelta}(x^{\underline{n}}, x)	(x+1)^{\underline{n}}-x^{\underline{n}}
+differencedelta-fallingfactorial-x-n-x	\operatorname{DifferenceDelta}(x^{\underline{n}},x)	-x^{\underline{n}}+(x+1)^{\underline{n}}

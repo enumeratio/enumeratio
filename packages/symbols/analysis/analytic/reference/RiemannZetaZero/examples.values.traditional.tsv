@@ -1,0 +1,10 @@
+id	in	out
+the-first-nontrivial-zero-frac-12-14-1347-i	N(\operatorname{RiemannZetaZero}(1))	0.5+14.134725141734693i
+n-riemannzetazero-2	N(\operatorname{RiemannZetaZero}(2))	0.5+21.022039638771556i
+n-riemannzetazero-50	N(\operatorname{RiemannZetaZero}(50))	0.5+143.11184580762063i
+n-riemannzetazero-10	N(\operatorname{RiemannZetaZero}(10))	0.5+49.7738324776723i
+n-list-riemannzetazero-1-riemannzetazero-2	N([\operatorname{RiemannZetaZero}(1),\operatorname{RiemannZetaZero}(2),\operatorname{RiemannZetaZero}(3)])	[0.5+14.134725141734695i,0.5+21.022039638771552i,0.5+25.01085758014569i]
+n-riemannzetazero-54-50		
+n-riemannzetazero-46-20		
+n-riemannzetazero-neg-1-eq-conjugate		
+n-riemannzetazero-0	N(\operatorname{RiemannZetaZero}(0))	\operatorname{RiemannZetaZero}(0)

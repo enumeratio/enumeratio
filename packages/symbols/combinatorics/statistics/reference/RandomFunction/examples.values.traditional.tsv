@@ -1,5 +1,5 @@
 id	in	out
-randomfunction-poisson-counts-nondecreasing		
-randomfunction-default-grid-length		
-randomfunction-wiener-path-starts-at-zero		
-randomfunction-reproducible-for-a-fixed-seed	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomFunction}(\mathrm{PoissonProcess}(4), \bigl\lbrack0, 2, 0.5\bigr\rbrack), \mathrm{SeedRandom}(42)\bigr\rbrack)	\mathrm{True}
+randomfunction-poisson-counts-nondecreasing	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])	[[0,0],[0.5,0],[1,0],[1.5,4],[2,5]]
+randomfunction-default-grid-length	\operatorname{Last}([\operatorname{Length}(\operatorname{RandomFunction}(\operatorname{WienerProcess}(0,1),[0,1])),\operatorname{SeedRandom}(42)])	101
+randomfunction-wiener-path-starts-at-zero	\operatorname{First}(\operatorname{Last}([\operatorname{SeedRandom}(3),\operatorname{RandomFunction}(\operatorname{WienerProcess}(0,1),[0,1,0.5]),\operatorname{SeedRandom}(42)]))	[0,0]
+randomfunction-reproducible-for-a-fixed-seed	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])=\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])	\operatorname{True}

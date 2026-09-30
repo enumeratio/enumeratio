@@ -1,68 +1,68 @@
 id	in	out
-powermod-2-10-3	\left(2^{10}\bmod 3\right)	1
-powermod-3-50-11	\left(3^{50}\bmod 11\right)	1
-powermod-3-2-7	\left(3^2\bmod 7\right)	2
-a-negative-exponent-gives-the-modular-inverse	\left(\frac{1}{2}\bmod 7\right)	4
-3-1-equiv-5-and-5-2-25-equiv-4	\left(\frac{1}{3^2}\bmod 7\right)	4
-a-square-root-of-3-equiv-1-pmod-2	\left(\sqrt{3}\bmod 2\right)	1
-threads-over-a-list-of-bases		
-exponent-0-evaluates-even-at-a-negative-modulus	\left((-2)^0\bmod -14\right)	-13
-a-rational-exponent-is-a-modular-root-the-least	\left(\sqrt{4}\bmod 7\right)	2
-threads-over-lists-the-period-is-the-order-of-2		
-a-301-digit-base	\left((10^{300}+1)^7\bmod 5\right)	1
-a-square-root-of-3-modulo-the-prime-10-30-57	\left(\sqrt{3}\bmod 10^{30}+57\right)	492\,767\,688\,934\,650\,018\,614\,948\,489\,645
-a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	\left((\frac{2}{3})^1\bmod 7\right)	3
-gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	\left((2+i)^2\bmod 3\right)	i
-a-gaussian-modulus-and-an-exponent-of-10-30	\left((1+2i)^{10^{30}}\bmod 7+2i\right)	1+2i
-11-7i-is-a-unit-mod-7-4i-so-it-has-negative	\left(\frac{1}{(11-7i)^4}\bmod 7+4i\right)	-2-i
-a-square-root-of-3-mod-2-is-1-trivially	\left(\sqrt{3}\bmod 2\right)	1
-exponent-0-base-minus-4-modulus-minus-2	\left((-4)^0\bmod -2\right)	-1
-exponent-0-base-5-modulus-minus-7	\left(5^0\bmod -7\right)	-6
-exponent-0-with-a-positive-modulus	\left(2^0\bmod 14\right)	1
-base-a-unit-any-exponent	\left(i^5\bmod 3+4i\right)	i
-exponent-0-is-always-1	\left((2+i)^0\bmod 7\right)	1
-a-negative-exponent-inverts-first	\left(\frac{1}{2+i}\bmod 2-i\right)	-1
-a-negative-exponent-past-the-first-power	\left(\frac{1}{(2+i)^3}\bmod 2-i\right)	-1
-modulus-a-real-prime-3-mod-4	\left((3+4i)^4\bmod 3\right)	1
-modulus-a-negative-real-prime	\left((3+4i)^3\bmod -7\right)	\left((3+4i)^3\bmod -7\right)
-modulus-a-composite-gaussian-norm-25	\left((1+i)^6\bmod 3+4i\right)	-1-i
-no-inverse-for-a-negative-exponent-when-the-base	\left(\frac{1}{(3+4i)^2}\bmod 2+i\right)	\left(\frac{1}{(3+4i)^2}\bmod 2+i\right)
-a-bignum-exponent-base-and-modulus-small	\left((2+i)^{100\,000\,000\,000\,000\,000\,000}\bmod 7\right)	4
-a-negative-bignum-exponent	\left(\frac{1}{(1+i)^{123\,456\,789\,012\,345\,680\,000.0}}\bmod 11\right)	5-5i
-modulus-past-2-53	\left((4+i)^{10}\bmod 100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i\right)	-1\,093\,425+905\,768i
-a-real-base-and-modulus-need-no-gaussian	\left(5^5\bmod 7\right)	3
-result-comes-out-real-reduced-into-0-m-like-an	\left((1+i)^4\bmod 5\right)	1
-modulus-1-4i-the-other-prime-above-17	\left((8+2i)^3\bmod 1+4i\right)	-1
-large-norm-base-and-modulus	\left((123+456i)^7\bmod 1\,000+i\right)	292+118i
-base-an-associate-times-1	\left((-3-4i)^5\bmod 7\right)	-1+i
-base-an-associate-times-i	\left((4-3i)^5\bmod 7\right)	-1-i
-modulus-a-prime-above-13	\left((6+8i)^3\bmod 3+2i\right)	i
-modulus-the-other-prime-above-13	\left((6+8i)^3\bmod 2+3i\right)	i
-base-a-real-prime-s-associate-by-the-unit-i	\left((7i)^3\bmod 3+2i\right)	1
-modulus-a-real-composite-5-squared	\left((1+i)^4\bmod 25\right)	21
-a-negative-unit-exponent-is-its-own-inverse	\left(\frac{1}{i}\bmod 7\right)	-i
-modulus-a-negative-associate	\left((2+i)^5\bmod -2-3i\right)	-1-i
-sum-powermod-a-2-7-a-nothing-7	\sum_{a}^7\left(a^2\bmod 7\right)	14
-findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\mathrm{FindInstance}(\left(a^{b}\bmod 17\right)=1\land0\lt a\lt17\land0\lt b\lt17, \bigl\lbrack a, b\bigr\rbrack, \mathbb{Z}, 2)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack\bigr\rbrack
-one-step-of-rsa-style-modular-exponentiation-7	\left(7^{13}\bmod 33\right)	13
-341-11-cdot-31-passes-fermat-s-test-to-base-2	\left(2^{340}\bmod 341\right)	1
-diffie-hellman-both-parties-reach-the-shared-key	\left(\left(5^6\bmod 23\right)^{15}\bmod 23\right)=\left(\left(5^{15}\bmod 23\right)^6\bmod 23\right)	\mathrm{True}
-powermod-tocharactercode-rsa-in-mathematica	\left(\mathrm{ToCharacterCode}(\text{RSA in Mathematica})^{e}\bmod n\right)	\bigl\lbrack\left(82^{e}\bmod n\right), \left(83^{e}\bmod n\right), \left(65^{e}\bmod n\right), \left(32^{e}\bmod n\right), \left(105^{e}\bmod n\right), \left(110^{e}\bmod n\right), \left(32^{e}\bmod n\right), \left(77^{e}\bmod n\right), \left(97^{e}\bmod n\right), \left(116^{e}\bmod n\right), \left(104^{e}\bmod n\right), \left(101^{e}\bmod n\right), \left(109^{e}\bmod n\right), \left(97^{e}\bmod n\right), \left(116^{e}\bmod n\right), \left(105^{e}\bmod n\right), \left(99^{e}\bmod n\right), \left(97^{e}\bmod n\right)\bigr\rbrack
-by-definition-a-b-bmod-m-computed-without-ever	\left(2^{10}\bmod 3\right)=2^{10}\bmod3	\mathrm{True}
-euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	\left(7^{\varphi(19)}\bmod 19\right)	1
-list-powermod-7-2-5-powermod-12-2-5	\bigl\lbrack\left(7^2\bmod 5\right), \left(12^2\bmod 5\right)\bigr\rbrack	\bigl\lbrack4, 4\bigr\rbrack
-list-powermod-2-3-5-8-mod-5	\bigl\lbrack\left(2^3\bmod 5\right), 8\bmod5\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
-list-powermod-2-neg-1-5-modularinverse-2-5	\bigl\lbrack\left(\frac{1}{2}\bmod 5\right), \left(2^{-1}\bmod 5\right)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
-list-divides-2-8-powermod-8-3-2-eq-0	\bigl\lbrack2\mid8, \left(8^3\bmod 2\right)=0\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
-powermod-7-totient-19-19-eq-1	\left(7^{\varphi(19)}\bmod 19\right)=1	\mathrm{True}
-powermod-2-16-17	\left(2^{16}\bmod 17\right)	1
-powermod-list-5-neg-5-2-3		
-powermod-list-5-neg-5-2-neg-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, -3)	\bigl\lbrack\left(5^2\bmod -3\right), \left((-5)^2\bmod -3\right)\bigr\rbrack
-no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	\left(\frac{1}{2}\bmod 4\right)	\left(\frac{1}{2}\bmod 4\right)
-a-nonzero-exponent-at-the-same-negative-modulus	\left((-2)^3\bmod -14\right)	\left((-2)^3\bmod -14\right)
-2-is-not-a-square-mod-5-so-there-is-no-root	\left(\sqrt{2}\bmod 5\right)	\left(\sqrt{2}\bmod 5\right)
-a-positive-exponent-at-a-negative-modulus-1-2	\left(1^2\bmod -2\right)	\left(1^2\bmod -2\right)
-a-positive-exponent-at-a-negative-modulus-3-2-7	\left(3^2\bmod -7\right)	\left(3^2\bmod -7\right)
-a-positive-exponent-at-a-negative-modulus-341	\left((-1)^{340}\bmod -2\right)	\left((-1)^{340}\bmod -2\right)
-a-positive-exponent-at-a-negative-modulus-5-1-7	\left(5^1\bmod -7\right)	\left(5^1\bmod -7\right)
-a-negative-exponent-at-a-negative-modulus-2-1-5	\left(\frac{1}{2}\bmod -5\right)	\left(\frac{1}{2}\bmod -5\right)
+powermod-2-10-3	(2^{10}\bmod3)	1
+powermod-3-50-11	(3^{50}\bmod11)	1
+powermod-3-2-7	(3^2\bmod7)	2
+a-negative-exponent-gives-the-modular-inverse	(2^{-1}\bmod7)	4
+3-1-equiv-5-and-5-2-25-equiv-4	(3^{-2}\bmod7)	4
+a-square-root-of-3-equiv-1-pmod-2	(3^{\frac{1}{2}}\bmod2)	1
+threads-over-a-list-of-bases	\operatorname{PowerMod}([2,3,4],2,5)	[4,4,1]
+exponent-0-evaluates-even-at-a-negative-modulus	((-2)^0\bmod-14)	-13
+a-rational-exponent-is-a-modular-root-the-least	(4^{\frac{1}{2}}\bmod7)	2
+threads-over-lists-the-period-is-the-order-of-2	\operatorname{PowerMod}(2,[10,11,12,13,14],5)	[4,3,1,2,4]
+a-301-digit-base	((10^{300}+1)^7\bmod5)	1
+a-square-root-of-3-modulo-the-prime-10-30-57	(3^{\frac{1}{2}}\bmod10^{30}+57)	492767688934650018614948489645
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod	((\frac{2}{3})^1\bmod7)	3
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3	((2+i)^2\bmod3)	i
+a-gaussian-modulus-and-an-exponent-of-10-30	((1+2i)^{10^{30}}\bmod7+2i)	1+2i
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative	((11-7i)^{-4}\bmod7+4i)	-2-i
+a-square-root-of-3-mod-2-is-1-trivially	(3^{\frac{1}{2}}\bmod2)	1
+exponent-0-base-minus-4-modulus-minus-2	((-4)^0\bmod-2)	-1
+exponent-0-base-5-modulus-minus-7	(5^0\bmod-7)	-6
+exponent-0-with-a-positive-modulus	(2^0\bmod14)	1
+base-a-unit-any-exponent	(i^5\bmod3+4i)	i
+exponent-0-is-always-1	((2+i)^0\bmod7)	1
+a-negative-exponent-inverts-first	((2+i)^{-1}\bmod2-i)	-1
+a-negative-exponent-past-the-first-power	((2+i)^{-3}\bmod2-i)	-1
+modulus-a-real-prime-3-mod-4	((3+4i)^4\bmod3)	1
+modulus-a-negative-real-prime	((3+4i)^3\bmod-7)	((3+4i)^3\bmod-7)
+modulus-a-composite-gaussian-norm-25	((1+i)^6\bmod3+4i)	-1-i
+no-inverse-for-a-negative-exponent-when-the-base	((3+4i)^{-2}\bmod2+i)	((3+4i)^{-2}\bmod2+i)
+a-bignum-exponent-base-and-modulus-small	((2+i)^{100000000000000000000}\bmod7)	4
+a-negative-bignum-exponent	((1+i)^{-123456789012345678901}\bmod11)	5-5i
+modulus-past-2-53	((4+i)^{10}\bmod100000000000000000001+9007199254740993i)	-1093425+905768i
+a-real-base-and-modulus-need-no-gaussian	(5^5\bmod7)	3
+result-comes-out-real-reduced-into-0-m-like-an	((1+i)^4\bmod5)	1
+modulus-1-4i-the-other-prime-above-17	((8+2i)^3\bmod1+4i)	-1
+large-norm-base-and-modulus	((123+456i)^7\bmod1000+i)	292+118i
+base-an-associate-times-1	((-3-4i)^5\bmod7)	-1+i
+base-an-associate-times-i	((4-3i)^5\bmod7)	-1-i
+modulus-a-prime-above-13	((6+8i)^3\bmod3+2i)	i
+modulus-the-other-prime-above-13	((6+8i)^3\bmod2+3i)	i
+base-a-real-prime-s-associate-by-the-unit-i	((7i)^3\bmod3+2i)	1
+modulus-a-real-composite-5-squared	((1+i)^4\bmod25)	21
+a-negative-unit-exponent-is-its-own-inverse	(i^{-1}\bmod7)	-i
+modulus-a-negative-associate	((2+i)^5\bmod-2-3i)	-1-i
+sum-powermod-a-2-7-a-nothing-7	\sum_{a=\operatorname{}}^7(a^2\bmod7)	14
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\operatorname{FindInstance}((a^b\bmod17)=1\land0<a<17\land0<b<17,[a,b],\mathbb{Z},2)	[[\operatorname{Rule}(a,1),\operatorname{Rule}(b,1)],[\operatorname{Rule}(a,1),\operatorname{Rule}(b,2)]]
+one-step-of-rsa-style-modular-exponentiation-7	(7^{13}\bmod33)	13
+341-11-cdot-31-passes-fermat-s-test-to-base-2	(2^{340}\bmod341)	1
+diffie-hellman-both-parties-reach-the-shared-key	((5^6\bmod23)^{15}\bmod23)=((5^{15}\bmod23)^6\bmod23)	\operatorname{True}
+powermod-tocharactercode-rsa-in-mathematica	({\operatorname{ToCharacterCode}(\text{“RSA in Mathematica”})}^e\bmod n)	[(82^e\bmod n),(83^e\bmod n),(65^e\bmod n),(32^e\bmod n),(105^e\bmod n),(110^e\bmod n),(32^e\bmod n),(77^e\bmod n),(97^e\bmod n),(116^e\bmod n),(104^e\bmod n),(101^e\bmod n),(109^e\bmod n),(97^e\bmod n),(116^e\bmod n),(105^e\bmod n),(99^e\bmod n),(97^e\bmod n)]
+by-definition-a-b-bmod-m-computed-without-ever	(2^{10}\bmod3)=\bmod(2^{10},3)	\operatorname{True}
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	(7^{\varphi(19)}\bmod19)	1
+list-powermod-7-2-5-powermod-12-2-5	[(7^2\bmod5),(12^2\bmod5)]	[4,4]
+list-powermod-2-3-5-8-mod-5	[(2^3\bmod5),\bmod(8,5)]	[3,3]
+list-powermod-2-neg-1-5-modularinverse-2-5	[(2^{-1}\bmod5),(2^{-1}\bmod5)]	[3,3]
+list-divides-2-8-powermod-8-3-2-eq-0	[\operatorname{Divides}(2,8),(8^3\bmod2)=0]	[\operatorname{True},\operatorname{True}]
+powermod-7-totient-19-19-eq-1	(7^{\varphi(19)}\bmod19)=1	\operatorname{True}
+powermod-2-16-17	(2^{16}\bmod17)	1
+powermod-list-5-neg-5-2-3	\operatorname{PowerMod}([5,-5],2,3)	[1,1]
+powermod-list-5-neg-5-2-neg-3	\operatorname{PowerMod}([5,-5],2,-3)	[(5^2\bmod-3),((-5)^2\bmod-3)]
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	(2^{-1}\bmod4)	(2^{-1}\bmod4)
+a-nonzero-exponent-at-the-same-negative-modulus	((-2)^3\bmod-14)	((-2)^3\bmod-14)
+2-is-not-a-square-mod-5-so-there-is-no-root	(2^{\frac{1}{2}}\bmod5)	(2^{\frac{1}{2}}\bmod5)
+a-positive-exponent-at-a-negative-modulus-1-2	(1^2\bmod-2)	(1^2\bmod-2)
+a-positive-exponent-at-a-negative-modulus-3-2-7	(3^2\bmod-7)	(3^2\bmod-7)
+a-positive-exponent-at-a-negative-modulus-341	((-1)^{340}\bmod-2)	((-1)^{340}\bmod-2)
+a-positive-exponent-at-a-negative-modulus-5-1-7	(5^1\bmod-7)	(5^1\bmod-7)
+a-negative-exponent-at-a-negative-modulus-2-1-5	(2^{-1}\bmod-5)	(2^{-1}\bmod-5)

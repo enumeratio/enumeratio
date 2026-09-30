@@ -1,5 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
   completeToRibbon,
@@ -25,6 +26,7 @@ import {
   type Tensor,
   tensorKey,
 } from "./hopf.ts";
+import { HOPF_NOTATION } from "./notation.ts";
 
 // Wiring NSym and QSym to compute-engine.
 //
@@ -67,6 +69,7 @@ const ALGEBRA_HEADS: Record<string, { algebra: HopfAlgebra; basisHead: string }>
 };
 
 export function declareHopf(ce: ComputeEngine): void {
+  registerNotation(ce, HOPF_NOTATION);
   for (const head of Object.keys(BASIS_HEADS)) {
     ce.declare(head, { signature: "(list<integer>) -> number" });
   }

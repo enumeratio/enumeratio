@@ -1,0 +1,2 @@
+id	in	out
+an-edge-from-1-to-2	\operatorname{DirectedEdge}(1,2)	\operatorname{DirectedEdge}(1,2)

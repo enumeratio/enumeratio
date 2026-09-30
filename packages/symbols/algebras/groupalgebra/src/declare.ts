@@ -1,5 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
 import {
   basisElement,
@@ -29,6 +30,7 @@ import {
   permutationGroupClosure,
   permutationToCycles,
 } from "./permutations.ts";
+import { GROUPALGEBRA_NOTATION } from "./notation.ts";
 
 // Wiring k[G] to compute-engine.
 //
@@ -172,6 +174,7 @@ const algebraOf = (expr: BoxedExpression): Group | undefined =>
     : undefined;
 
 export function declareGroupAlgebra(ce: ComputeEngine): void {
+  registerNotation(ce, GROUPALGEBRA_NOTATION);
   /** A group, as `groupOf` reads it: one of the Cayley-table carriers, nested. */
   const groupLike = "expression<CyclicGroup> | expression<DihedralGroup> | expression<GroupDirectProduct>";
   /** Every carrier `GroupOrder` answers, including the lazy families with no Cayley table --

@@ -2,25 +2,25 @@ id	in	out
 primenu-24	\omega(24)	2
 primenu-360	\omega(360)	3
 primenu-105	\omega(105)	3
-threads-element-wise-over-a-list-as-wolfram-s		
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{PrimeNu}([4,28,180])	[1,2,3]
 large-integers-the-15-primes-up-to-50-divide-50	\omega(50!)	15
 gaussian-integers-3-i-1-i-2-i	\omega(3+i)	2
-gaussianintegers-true-5-splits-so-105-has-4		
-listable-over-a-range	\omega(1..20)	\bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
+gaussianintegers-true-5-splits-so-105-has-4	\operatorname{PrimeNu}(105,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	4
+listable-over-a-range	\omega(\operatorname{Range}(20))	[0,1,1,1,1,2,1,1,1,2,1,2,1,2,2,1,1,2,1,2]
 primenu-30	\omega(30)	3
-moebiusmu-42-eq-neg-1-pow-primenu-42	\mu(42)=(-1)^{\omega(42)}	\mathrm{True}
-liouvillelambda-42-eq-neg-1-pow-primenu-42	\mathrm{LiouvilleLambda}(42)=(-1)^{\omega(42)}	\mathrm{True}
-primenu-n-is-the-length-of-factorinteger-n	\omega(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))	\mathrm{True}
+moebiusmu-42-eq-neg-1-pow-primenu-42	\mu(42)=(-1)^{\omega(42)}	\operatorname{True}
+liouvillelambda-42-eq-neg-1-pow-primenu-42	\operatorname{LiouvilleLambda}(42)=(-1)^{\omega(42)}	\operatorname{True}
+primenu-n-is-the-length-of-factorinteger-n	\omega(50)=\operatorname{Length}(\operatorname{FactorInteger}(50))	\operatorname{True}
 primenu-50	\omega(50)	2
-primenu-360-eq-primenu-9-plus-primenu-40	\omega(360)=\omega(9)+\omega(40)	\mathrm{True}
+primenu-360-eq-primenu-9-plus-primenu-40	\omega(360)=\omega(9)+\omega(40)	\operatorname{True}
 primenu-49	\omega(49)	1
-primenu-210-eq-primeomega-210	\omega(210)=\Omega(210)	\mathrm{True}
-moebiusmu-33-eq-neg-1-pow-primenu-33	\mu(33)=(-1)^{\omega(33)}	\mathrm{True}
-liouvillelambda-33-eq-neg-1-pow-primenu-33	\mathrm{LiouvilleLambda}(33)=(-1)^{\omega(33)}	\mathrm{True}
+primenu-210-eq-primeomega-210	\omega(210)=\Omega(210)	\operatorname{True}
+moebiusmu-33-eq-neg-1-pow-primenu-33	\mu(33)=(-1)^{\omega(33)}	\operatorname{True}
+liouvillelambda-33-eq-neg-1-pow-primenu-33	\operatorname{LiouvilleLambda}(33)=(-1)^{\omega(33)}	\operatorname{True}
 primenu-2	\omega(2)	1
 primenu-3	\omega(3)	1
 primenu-6	\omega(6)	2
 primenu-4	\omega(4)	1
-all-range-1-100-function-primenu-1-lt-eq	\mathrm{All}(1..100, ()\mapsto\omega(\operatorname{\_1})\le\Omega(\operatorname{\_1}))	\mathrm{True}
+all-range-1-100-function-primenu-1-lt-eq	\operatorname{All}(\operatorname{Range}(1,100),\operatorname{Function}(\operatorname{Block}(\omega(\_1)\le\Omega(\_1)),\_1))	\operatorname{True}
 32-2-5-has-just-one-distinct-prime-factor	\omega(32)	1
 1-has-no-prime-factors	\omega(1)	0

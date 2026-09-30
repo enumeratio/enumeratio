@@ -1,39 +1,39 @@
 id	in	out
 arccos-1		
-arccos-1-over-2		
-arccos-0		
+arccos-1-over-2	\arccos(\frac{1}{2})	\frac{1}{3}\pi
+arccos-0	\arccos(0)	\frac{1}{2}\pi
 the-top-of-the-principal-range		
-a-machine-precision-argument-evaluates		
-outside-1-1-the-value-is-purely-imaginary		
-arbitrary-precision-via-n		
-evaluates-at-a-complex-argument		
-threads-element-wise-over-a-matrix		
-exact-inverse-of-a-special-value		
-arccos-neg-sqrt-2-over-2		
-recognizes-cos-pi-5-frac-1-sqrt-5-4		
-interval-arithmetic-decreasing-so-arccos-frac-13		
-uncertainty-propagation-arccos-0-9-pm-0-1-approx		
-derivative-frac-1-sqrt-1-x-2		
-antiderivative		
-not-simply-4-4-is-outside-the-principal-range-0		
-arccos-infinity-is-a-directed-infinity-along-the		
-arccos-infinity-is-the-opposite-directed		
-n-arccos-1-over-3-50		
-integrate-arccos-x-x-neg-1-1		
-cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
-reflection-arccos-x-pi-arccos-x		
-arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3		
-arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3		
-arccos-1-over-4-times-neg-1-plus-sqrt-5		
-arccos-1-over-4-times-1-minus-sqrt-5		
-arccos-1-over-2-times-sqrt-2-minus-sqrt-2		
-arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2		
-arccos-neg-1-over-2		
-arccos-1-over-2-times-sqrt-1-over-2-times-5		
-arccos-neg-1-over-2-times-sqrt-1-over-2-times-5		
-arccos-sqrt-2-over-2		
-arccos-1-over-4-times-neg-1-minus-sqrt-5		
-arccos-neg-sqrt-3-over-2		
-arccos-1-over-2-times-sqrt-2-plus-sqrt-2		
+a-machine-precision-argument-evaluates	\arccos(0.4)	1.15927948072740859985
+outside-1-1-the-value-is-purely-imaginary	\arccos(1.5)	0.9624236501192069i
+arbitrary-precision-via-n	N(\arccos(\frac{1}{3}))	1.23095941734077468214
+evaluates-at-a-complex-argument	\arccos(2.5+i)	0.40617281650551185-1.6586932988564347i
+threads-element-wise-over-a-matrix	\arccos([[1,\frac{1}{\sqrt{2}}],[0,\frac{1}{\sqrt{2}}]])	[[0,\frac{1}{4}\pi],[\frac{1}{2}\pi,\frac{1}{4}\pi]]
+exact-inverse-of-a-special-value	\arccos(\frac{\sqrt{3}}{2})	\frac{1}{6}\pi
+arccos-neg-sqrt-2-over-2	\arccos(-\frac{\sqrt{2}}{2})	\frac{3}{4}\pi
+recognizes-cos-pi-5-frac-1-sqrt-5-4	\arccos(\frac{1+\sqrt{5}}{4})	\frac{1}{5}\pi
+interval-arithmetic-decreasing-so-arccos-frac-13	\arccos([\frac{1}{3},\frac{1}{2}])	[\frac{1}{3}\pi,\arccos(\frac{1}{3})]
+uncertainty-propagation-arccos-0-9-pm-0-1-approx	\arccos(\operatorname{Around}(0.9,0.1))	\operatorname{Around}(0.45102681179626236,0.2294157338705618)
+derivative-frac-1-sqrt-1-x-2	\frac{d}{dx}\arccos(x)	\frac{-1}{\sqrt{-x^2+1}}
+antiderivative	\int\arccos(x)dx	x\arccos(x)-\sqrt{-x^2+1}
+not-simply-4-4-is-outside-the-principal-range-0	\arccos(\cos(4))	-4+2\pi
+arccos-infinity-is-a-directed-infinity-along-the	\arccos(\infty)	\operatorname{DirectedInfinity}(i)
+arccos-infinity-is-the-opposite-directed	\arccos(-\infty)	\operatorname{DirectedInfinity}(-i)
+n-arccos-1-over-3-50	N(\arccos(\frac{1}{3}),50)	1.2309594173407746821349291782479873757103400093551
+integrate-arccos-x-x-neg-1-1	\int_{-1}^1\arccos(x)dx	\pi
+cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\operatorname{True}
+reflection-arccos-x-pi-arccos-x	\arccos(-x)	-\arccos(x)+\pi
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	\arccos(\frac{\sqrt{2}}{4}(-1+\sqrt{3}))	\frac{5}{12}\pi
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	\arccos(-\frac{\sqrt{2}}{4}(-1+\sqrt{3}))	\frac{7}{12}\pi
+arccos-1-over-4-times-neg-1-plus-sqrt-5	\arccos(\frac{1}{4}(-1+\sqrt{5}))	\frac{2}{5}\pi
+arccos-1-over-4-times-1-minus-sqrt-5	\arccos(\frac{1}{4}(1-\sqrt{5}))	\frac{3}{5}\pi
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	\arccos(\frac{1}{2}\sqrt{2-\sqrt{2}})	\frac{3}{8}\pi
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	\arccos(\frac{-1}{2}\sqrt{2-\sqrt{2}})	\frac{5}{8}\pi
+arccos-neg-1-over-2	\arccos(\frac{-1}{2})	\frac{2}{3}\pi
+arccos-1-over-2-times-sqrt-1-over-2-times-5	\arccos(\frac{1}{2}\sqrt{\frac{1}{2}(5-\sqrt{5})})	\arccos(\frac{\sqrt{2}}{4}\sqrt{5-\sqrt{5}})
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	\arccos(\frac{-1}{2}\sqrt{\frac{1}{2}(5-\sqrt{5})})	\arccos(-\frac{\sqrt{2}}{4}\sqrt{5-\sqrt{5}})
+arccos-sqrt-2-over-2	\arccos(\frac{\sqrt{2}}{2})	\frac{1}{4}\pi
+arccos-1-over-4-times-neg-1-minus-sqrt-5	\arccos(\frac{1}{4}(-1-\sqrt{5}))	\frac{4}{5}\pi
+arccos-neg-sqrt-3-over-2	\arccos(-\frac{\sqrt{3}}{2})	\frac{5}{6}\pi
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	\arccos(\frac{1}{2}\sqrt{2+\sqrt{2}})	\frac{1}{8}\pi
 outside-1-1-this-stays-symbolic-same-as-arcsin-n		
 arccos-complexinfinity-is-complexinfinity		

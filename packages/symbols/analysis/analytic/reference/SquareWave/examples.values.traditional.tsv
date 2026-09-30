@@ -1,8 +1,8 @@
 id	in	out
-squarewave-zero		
-squarewave-half		
-squarewave-neg-quarter		
-squarewave-ranged		
-squarewave-negative-pi-exact		
-squarewave-periodic	\mathrm{SquareWave}(\frac{1}{4})=\mathrm{SquareWave}(2\frac{1}{4})	\mathrm{True}
-squarewave-one		
+squarewave-zero	\operatorname{SquareWave}(0)	1
+squarewave-half	\operatorname{SquareWave}(\frac{1}{2})	-1
+squarewave-neg-quarter	\operatorname{SquareWave}(\frac{-1}{4})	-1
+squarewave-ranged	\operatorname{SquareWave}([0,10],0)	10
+squarewave-negative-pi-exact	\operatorname{SquareWave}(-\pi)	-1
+squarewave-periodic	\operatorname{SquareWave}(\frac{1}{4})=\operatorname{SquareWave}(\frac{1}{4}+2)	\operatorname{True}
+squarewave-one	\operatorname{SquareWave}(1)	1

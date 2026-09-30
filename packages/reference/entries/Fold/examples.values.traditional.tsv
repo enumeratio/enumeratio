@@ -1,0 +1,30 @@
+id	in	out
+fold-add-0-list-1-2-3-4	\operatorname{Fold}(\operatorname{Add},0,[1,2,3,4])	10
+fold-multiply-1-list-1-2-3-4	\operatorname{Fold}(\operatorname{Multiply},1,[1,2,3,4])	24
+the-shape-of-a-left-fold	\operatorname{Fold}(f,x,[a,b,c])	f(f(f(x,a),b),c)
+fold-max-0-list-3-1-4-1-5	\operatorname{Fold}(\operatorname{Max},0,[3,1,4,1,5])	5
+reduce-list-a-b-c-d-f-x		
+reduce-list-a-b-c-d-list-x		
+reduce-list-a-b-c-d-multiply-1		
+reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d		
+symbolic-elements	\operatorname{Fold}(\operatorname{Add},0,[a,b,c])	a+b+c
+any-two-argument-function-here-one-that-nests	\operatorname{Fold}(\operatorname{Function}([\_1,\_2]),x,[a,b])	[[x,a],b]
+without-a-seed-folding-starts-from-the-first	\operatorname{Fold}(f,[a,b,c])	f(f(a,b),c)
+reduce-rest-list-a-b-c-d-power-first-list-a-b-c		
+reduce-list-list-1-4-3-2-list-3-2-4-1-permute		
+reduce-list-a-b-c-d-function-list-2-times-1-3		
+assemble-a-number-from-its-decimal-digits	\operatorname{Fold}(\operatorname{Function}(10\_1+\_2),0,[1,2,3,4])	1234
+or-from-its-binary-digits-1011-2-11	\operatorname{Fold}(\operatorname{Function}(2\_1+\_2),0,[1,0,1,1])	11
+horner-s-rule-for-ax-2-bx-c	\operatorname{Fold}(\operatorname{Function}(x\_1+\_2),0,[a,b,c])	x(ax+b)+c
+evaluate-the-continued-fraction-1-2-2-2-from-the	\operatorname{Fold}(\operatorname{Function}(\_2+\frac{1}{\_1}),2,[2,2,1])	\frac{17}{12}
+reduce-list-2-4-3-partition-range-1-30		
+reduce-list-a-b-c-d-exponentiale-function-1		
+reduce-list-4-5-1-6-7-8-function-10-times-1-plus		
+reduce-list-a-b-c-d-function-list-2-1-1-2-x		
+folding-an-empty-list-returns-the-seed	\operatorname{Fold}(f,x,[])	x
+folding-with-add-is-a-sum-1-2-100	\operatorname{Fold}(\operatorname{Add},0,\operatorname{Range}(100))	5050
+reduce-rest-list-a-f-first-list-a		
+reduce-list-a-b-c-d-g-x		
+reduce-list-1-2-3-4-5-append-list		
+reduce-rest-list-f-first-list		
+reduce-list-a-b-c-function-join-s-map-function		

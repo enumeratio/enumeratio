@@ -1,0 +1,2 @@
+id	in	out
+the-composition-2-1-3	\operatorname{CutWord}(\operatorname{Composition}([2,1,3]))	\operatorname{BinaryWord}([0,0,1,1,0])

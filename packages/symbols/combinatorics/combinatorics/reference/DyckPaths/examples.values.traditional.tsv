@@ -1,0 +1,7 @@
+id	in	out
+c-3	\operatorname{Count}(\operatorname{DyckPaths}(3))	5
+three-ups-then-three-downs	\operatorname{At}(\operatorname{DyckPaths}(3),1)	\operatorname{DyckPath}([1,1,1,0,0,0])
+by-height	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{DyckPaths}(4),\text{“Height”}))	([4,3,2,1],[1,5,7,1])
+returns-are-the-catalan-triangle	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{DyckPaths}(4),\text{“Returns”}))	([1,2,3,4],[5,5,3,1])
+peaks-are-narayana	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{DyckPaths}(4),\text{“Peaks”}))	([1,2,3,4],[1,6,6,1])
+area-is-carlitz-q-catalan	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{DyckPaths}(4),\text{“Area”}))	([16,14,12,10,8,6,4],[1,1,2,3,3,3,1])

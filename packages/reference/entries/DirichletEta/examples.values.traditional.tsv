@@ -1,16 +1,16 @@
 id	in	out
 eta-1-ln-2-the-alternating-harmonic-series	\eta(1)	\ln(2)
-eta-2-pi-2-12	\eta(2)	\frac{\pi^2}{12}
-eta-3-frac-34-zeta-3-no-closed-form-beyond-apery	\eta(3)	\frac{3\zeta(3)}{4}
-on-the-critical-line-through-1-2-1-s-zeta-s-so	\eta(0.5)	0.604\,898\,643\,421\,630\,370\,245
-numeric-for-a-floating-point-argument	\eta(1.5)	0.765\,147\,024\,625\,407\,945\,367
-complex-arguments	\eta(3.5+2.5i)	1.000\,109\,727\,804\,697\,8+0.078\,128\,912\,041\,483\,16i
-threads-elementwise-over-an-array	\mathrm{DirichletEta}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\eta(\frac{1}{2}), \frac{1}{4}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \eta(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+eta-2-pi-2-12	\eta(2)	\frac{1}{12}\pi^2
+eta-3-frac-34-zeta-3-no-closed-form-beyond-apery	\eta(3)	\frac{3}{4}\operatorname{Zeta}(3)
+on-the-critical-line-through-1-2-1-s-zeta-s-so	\eta(0.5)	0.604898643421630370245
+numeric-for-a-floating-point-argument	\eta(1.5)	0.765147024625407945367
+complex-arguments	\eta(3.5+2.5i)	1.0001097278046978+0.07812891204148316i
+threads-elementwise-over-an-array	\operatorname{DirichletEta}([[\frac{1}{2},-1],[0,\frac{1}{2}]])	[[\eta(\frac{1}{2}),\frac{1}{4}],[\frac{1}{2},\eta(\frac{1}{2})]]
 eta-s-to-1-as-s-to-infty	\eta(\infty)	1
-interval-arithmetic-over-an-increasing-stretch	\eta(\mathrm{Interval}(1.5, 1.6))	\mathrm{Interval}(0.765\,147\,024\,625\,407\,8, 0.777\,722\,726\,661\,128\,8)
-uncertainty-propagation-eta-2-pm-0-01-0-82247-pm	\eta(\mathrm{Around}(2, 0.01))	\mathrm{Around}(0.822\,467\,033\,424\,113\,2, 0.001\,013\,165\,781\,635\,045)
-to-30-significant-digits-not-yet-the-last-digit	N(\eta(\frac{1}{2}), 30)	0.604\,898\,643\,421\,630\,370\,247
-nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1		
-eta-4-frac-78-zeta-4-7-pi-4-720	\eta(4)	\frac{7\pi^4}{720}
-rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s	\mathrm{FunctionExpand}(\eta(s))	(1-2^{1-s})\zeta(s)
+interval-arithmetic-over-an-increasing-stretch	\eta([1.5,1.6])	[0.7651470246254078,0.7777227266611288]
+uncertainty-propagation-eta-2-pm-0-01-0-82247-pm	\eta(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.8224670334241132,0.001013165781635045)
+to-30-significant-digits-not-yet-the-last-digit	N(\eta(\frac{1}{2}),30)	0.604898643421630370247265914236
+nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1	\operatorname{DirichletEta}([0,-1,-2,-3])	[\frac{1}{2},\frac{1}{4},0,\frac{-1}{8}]
+eta-4-frac-78-zeta-4-7-pi-4-720	\eta(4)	\frac{7}{720}\pi^4
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s	\operatorname{FunctionExpand}(\eta(s))	(-2^{-s+1}+1)\operatorname{Zeta}(s)
 an-exact-non-integer-argument-stays-symbolic	\eta(\frac{1}{2})	\eta(\frac{1}{2})

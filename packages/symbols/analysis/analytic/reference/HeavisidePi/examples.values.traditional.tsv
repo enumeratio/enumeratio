@@ -1,0 +1,8 @@
+id	in	out
+heavisidepi-inside	\operatorname{HeavisidePi}(0)	1
+heavisidepi-boundary-unevaluated	\operatorname{HeavisidePi}(\frac{1}{2})	\operatorname{HeavisidePi}(\frac{1}{2})
+heavisidepi-neg-boundary-unevaluated	\operatorname{HeavisidePi}(\frac{-1}{2})	\operatorname{HeavisidePi}(\frac{-1}{2})
+heavisidepi-outside	\operatorname{HeavisidePi}(1)	0
+heavisidepi-neg-1	\operatorname{HeavisidePi}(-1)	0
+heavisidepi-1-over-4	\operatorname{HeavisidePi}(\frac{1}{4})	1
+matrixfunction-heavisidepi-list-list-neg-1-0	\operatorname{MatrixFunction}(\operatorname{HeavisidePi},[[-1,0],[0,1]])	[[0,0],[0,0]]

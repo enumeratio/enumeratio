@@ -1,6 +1,8 @@
 import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf } from "@enumeratio/engine";
+import { INCIDENCE_NOTATION } from "./notation.ts";
 import {
   booleanLattice,
   chain,
@@ -92,6 +94,7 @@ const incidenceOf = (expr: BoxedExpression): Presented | undefined =>
     : undefined;
 
 export function declareIncidence(ce: ComputeEngine): void {
+  registerNotation(ce, INCIDENCE_NOTATION);
   ce.declare("Chain", { signature: "(integer) -> expression<Chain>" });
   ce.declare("BooleanLattice", { signature: "(integer) -> expression<BooleanLattice>" });
   ce.declare("DivisorLattice", { signature: "(integer) -> expression<DivisorLattice>" });

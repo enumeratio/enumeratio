@@ -1,0 +1,3 @@
+id	in	out
+a-5-vertex-path	\operatorname{VertexDegree}(\operatorname{PathGraph}(5))	[1,2,2,2,1]
+a-path-along-named-vertices	\operatorname{PathGraph}([a,b,c])	\operatorname{Graph}([a,b,c],[\operatorname{UndirectedEdge}(a,b),\operatorname{UndirectedEdge}(b,c)])

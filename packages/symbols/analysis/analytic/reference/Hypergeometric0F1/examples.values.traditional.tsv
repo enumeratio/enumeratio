@@ -1,0 +1,11 @@
+id	in	out
+a-generic-point-checked-against-mpmath-s-hyp0f1	\operatorname{Hypergeometric0F1}(2,0.5)	1.271723456312137
+b-1-5-at-neg-0-7	\operatorname{Hypergeometric0F1}(1.5,-0.7)	0.5944762586327997
+rational-order-7-3-at-2-5	\operatorname{Hypergeometric0F1}(\frac{7}{3},2.5)	2.5602926939199744
+complex-order-1-plus-i-at-0-5	N(\operatorname{Hypergeometric0F1}(1+i,0.5))	1.262484141307633-0.28964574134091187i
+order-2-at-a-complex-argument	N(\operatorname{Hypergeometric0F1}(2,0.5+0.5i))	1.248175636885929+0.2934012962643341i
+negative-order-neg-0-5-at-0-3	\operatorname{Hypergeometric0F1}(-0.5,0.3)	0.2076337594625808
+complex-order-and-argument	N(\operatorname{Hypergeometric0F1}(-2.5+1.5i,1.2-0.8i))	0.6321864778017546+0.02255319254721493i
+n-hypergeometric0f1-1-neg-2-50		
+matrixfunction-function-hypergeometric0f1-1-over		
+b-0-is-a-pole-stays-symbolic	\operatorname{Hypergeometric0F1}(0,0.5)	\operatorname{Hypergeometric0F1}(0,0.5)

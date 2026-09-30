@@ -1,0 +1,12 @@
+id	in	out
+arcosh-infinity-is-infinity-not-infinity-the	\operatorname{arcosh}(-\infty)	\infty
+n-arcosh-5-50	N(\operatorname{arcosh}(5),50)	2.2924316695611776878007873113480154316218682400157
+arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	\operatorname{arcosh}([[1,\frac{\sqrt{2}}{2}],[0,-\frac{\sqrt{2}}{2}]])	[[0,\operatorname{arcosh}(\frac{\sqrt{2}}{2})],[\operatorname{arcosh}(0),\operatorname{arcosh}(-\frac{\sqrt{2}}{2})]]
+arcosh-positiveinfinity	\operatorname{arcosh}(\infty)	\infty
+arcosh-1	\operatorname{arcosh}(1)	0
+integrate-arcosh-x-x-0-1	\int_0^1\operatorname{arcosh}(x)dx	i
+d-arcosh-x-x	\frac{d}{dx}\operatorname{arcosh}(x)	\frac{1}{\sqrt{x^2-1}}
+integrate-arcosh-x-x-nothing-nothing	\int_{\operatorname{}}^{\operatorname{}}\operatorname{arcosh}(x)dx	x\operatorname{arcosh}(x)-\sqrt{x^2-1}
+arcosh-complexinfinity		
+arcosh-1-over-2-times-sqrt-1-over-2-times-5	\operatorname{arcosh}(\frac{1}{2}\sqrt{\frac{1}{2}(5-\sqrt{5})})	\operatorname{arcosh}(\frac{\sqrt{2}}{4}\sqrt{5-\sqrt{5}})
+arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	\operatorname{arcosh}(\frac{-1}{2}\sqrt{\frac{1}{2}(5-\sqrt{5})})	\operatorname{arcosh}(-\frac{\sqrt{2}}{4}\sqrt{5-\sqrt{5}})

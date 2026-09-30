@@ -1,4 +1,4 @@
 id	in	out
-algebrasignature-quaternions		
-cl-2-1	\mathrm{AlgebraSignature}(\operatorname{Cl}_{2,1}(\mathbb{R}))	\bigl\lbrack1, 1, -1\bigr\rbrack
-nilpotent		
+algebrasignature-quaternions	\operatorname{AlgebraSignature}(\operatorname{Quaternions})	[-1,-1]
+cl-2-1	\operatorname{AlgebraSignature}(\operatorname{Cl}_{2,1}(\mathbb{R}))	[1,1,-1]
+nilpotent	\operatorname{AlgebraSignature}(\operatorname{DualNumbers})	[0]

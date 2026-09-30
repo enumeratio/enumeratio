@@ -1,40 +1,40 @@
 id	in	out
-sign-neg-3		
-sign-3		
-zero-is-its-own-sign		
-sign-neg-1-over-2		
-the-unit-complex-number-pointing-the-same		
-threads-element-wise-over-a-list		
-sign-neg-2p5		
-sign-3p14		
-a-complex-number-with-approximate-parts		
-an-exact-complex-argument-comes-back-exact-sign		
-threads-over-a-matrix-entry-by-entry		
-exact-numeric-constants		
-sign-neg-exponentiale		
-sign-imaginaryunit		
-sign-positiveinfinity		
-an-interval-entirely-above-0-has-sign-1		
-decides-the-sign-of-the-exact-number-sqrt-2-2-by		
-2-sqrt-2-is-the-same-certified-decision-the		
-n-sign-exponentiale-plus-i-times-pi-20		
-sign-123		
-sign-123-minus-456i		
-fullsimplify-matrixfunction-sign-list-list-1		
-piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
-sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\mathrm{sgn}(\overline{1+2i})=\overline{\mathrm{sgn}(1+2i)}	\mathrm{True}
+sign-neg-3	\operatorname{sgn}(-3)	-1
+sign-3	\operatorname{sgn}(3)	1
+zero-is-its-own-sign	\operatorname{sgn}(0)	0
+sign-neg-1-over-2	\operatorname{sgn}(\frac{-1}{2})	-1
+the-unit-complex-number-pointing-the-same	\operatorname{sgn}(3+4i)	\frac{3}{5}+\frac{4}{5}i
+threads-element-wise-over-a-list	\operatorname{sgn}([-3,0,7])	[-1,0,1]
+sign-neg-2p5	\operatorname{sgn}(-2.5)	-1
+sign-3p14	\operatorname{sgn}(3.14)	1
+a-complex-number-with-approximate-parts	\operatorname{sgn}(1.4+2.3i)	0.5199469468957452168102+0.8541985556144385i
+an-exact-complex-argument-comes-back-exact-sign	\operatorname{sgn}(1+i)	\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+threads-over-a-matrix-entry-by-entry	\operatorname{sgn}([[\frac{1}{2},-1],[\frac{-5}{3},\frac{1}{2}]])	[[1,-1],[-1,1]]
+exact-numeric-constants	\operatorname{sgn}(\pi)	1
+sign-neg-exponentiale	\operatorname{sgn}(-e)	-1
+sign-imaginaryunit	\operatorname{sgn}(i)	i
+sign-positiveinfinity	\operatorname{sgn}(\infty)	1
+an-interval-entirely-above-0-has-sign-1	\operatorname{sgn}([1,3])	1
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	\operatorname{sgn}(\sqrt{2}-2)	-1
+2-sqrt-2-is-the-same-certified-decision-the	\operatorname{sgn}(2-\sqrt{2})	1
+n-sign-exponentiale-plus-i-times-pi-20	N(\operatorname{sgn}(e+i\pi),20)	0.65432112073668902819+0.75621681478123932247i
+sign-123	\operatorname{sgn}(123)	1
+sign-123-minus-456i	\operatorname{sgn}(123-456i)	\frac{41}{24785}\sqrt{24785}+\frac{-152}{24785}\sqrt{24785}i
+fullsimplify-matrixfunction-sign-list-list-1	\operatorname{FullSimplify}(\operatorname{MatrixFunction}(\operatorname{Sign},[[\frac{1}{2},-1],[\frac{-5}{3},\frac{1}{2}]]))	[[0,-\frac{\sqrt{15}}{5}],[-\frac{\sqrt{15}}{3},0]]
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2	\operatorname{PiecewiseExpand}(\operatorname{sgn}(x),-2<x<2)	\operatorname{Piecewise}([[-1,x<0],[1,0<x]],0)
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\operatorname{sgn}(\operatorname{Conjugate}(1+2i))=\operatorname{Conjugate}(\operatorname{sgn}(1+2i))	\operatorname{True}
 d-sign-x-x		
 sign-positiveinfinity-times-i		
-tells-you-the-temperature-dropped-but-not-by-how		
-sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\mathrm{True}
-x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\mathrm{True}
-the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\mathrm{True}
-sign-1		
-sign-neg-1		
-sign-neg-i		
-sign-neg-1-plus-i		
-sign-neg-1-minus-i		
-sign-1-minus-i		
-sign-2		
-nan-propagates-rather-than-being-treated-as-0		
-sign-complexinfinity-is-indeterminate-no		
+tells-you-the-temperature-dropped-but-not-by-how	\operatorname{sgn}(70-95)	-1
+sign-z-z-z-see-abs	\operatorname{sgn}(3+4i)=\frac{3+4i}{|3+4i|}	\operatorname{True}
+x-cdot-sign-x-x-here-at-x-5	-5\operatorname{sgn}(-5)=|-5|	\operatorname{True}
+the-sign-of-a-nonzero-complex-number-lies-on-the	|\operatorname{sgn}(3+4i)|=1	\operatorname{True}
+sign-1	\operatorname{sgn}(1)	1
+sign-neg-1	\operatorname{sgn}(-1)	-1
+sign-neg-i	\operatorname{sgn}(-i)	-i
+sign-neg-1-plus-i	\operatorname{sgn}(-1+i)	-\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+sign-neg-1-minus-i	\operatorname{sgn}(-1-i)	-\frac{\sqrt{2}}{2}+(-\frac{\sqrt{2}}{2}i)
+sign-1-minus-i	\operatorname{sgn}(1-i)	\frac{\sqrt{2}}{2}+(-\frac{\sqrt{2}}{2}i)
+sign-2	\operatorname{sgn}(2)	1
+nan-propagates-rather-than-being-treated-as-0	\operatorname{sgn}(\operatorname{NaN})	\operatorname{NaN}
+sign-complexinfinity-is-indeterminate-no	\operatorname{sgn}(\tilde\infty)	\operatorname{Indeterminate}

@@ -1,4 +1,5 @@
 import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -11,6 +12,7 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { continuedFractionKOf, convergentsOf } from "./convergents.ts";
+import { MODULAR_NOTATION } from "./notation.ts";
 import { pqaExpansion } from "./continued-fraction.ts";
 import { kroneckerSymbol } from "./kronecker.ts";
 import {
@@ -101,6 +103,7 @@ function wordOf(expr: BoxedExpression | undefined): string | undefined {
 }
 
 export function declareModular(ce: ComputeEngine): void {
+  registerNotation(ce, MODULAR_NOTATION);
   const matrixExpression = (m: Matrix): BoxedExpression =>
     ce.function(
       "ModularMatrix",

@@ -1,0 +1,4 @@
+id	in	out
+every-element-of-a-permutation-group	\operatorname{GroupElements}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])]))	[\operatorname{Cycles}([]),\operatorname{Cycles}([[3,7]]),\operatorname{Cycles}([[1,6,9]]),\operatorname{Cycles}([[1,6,9],[3,7]]),\operatorname{Cycles}([[1,9,6]]),\operatorname{Cycles}([[1,9,6],[3,7]])]
+the-first-three-elements	\operatorname{GroupElements}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])]),[1,2,3])	[\operatorname{Cycles}([]),\operatorname{Cycles}([[3,7]]),\operatorname{Cycles}([[1,6,9]])]
+the-last-element	\operatorname{GroupElements}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])]),[-1])	[\operatorname{Cycles}([[1,9,6],[3,7]])]

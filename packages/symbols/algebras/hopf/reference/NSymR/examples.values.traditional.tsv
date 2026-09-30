@@ -1,5 +1,5 @@
 id	in	out
-r-1-1-h-1-1-h-2	\mathrm{InCompleteBasis}(R_{(1,1)})	H_{(1,1)}-H_{(2)}
-the-fundamental-basis-sums-over-refinements	\mathrm{InMonomialBasis}(F_{(2)})	M_{(2)}+M_{(1,1)}
+r-1-1-h-1-1-h-2	\operatorname{InCompleteBasis}(R_{(1,1)})	-H_{(2)}+H_{(1,1)}
+the-fundamental-basis-sums-over-refinements	\operatorname{InMonomialBasis}(F_{(2)})	M_{(2)}+M_{(1,1)}
 one-signed-term	S(R_{(3)})	-R_{(1,1,1)}
-self-conjugate-the-convention-is-settled-by-the		
+self-conjugate-the-convention-is-settled-by-the	\operatorname{ConjugateComposition}([2,1])	[2,1]

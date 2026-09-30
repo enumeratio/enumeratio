@@ -1,0 +1,4 @@
+id	in	out
+count-words-3-2	\operatorname{Count}(\operatorname{Words}(3,2))	8
+first-element-of-words-3-2	\operatorname{At}(\operatorname{Words}(3,2),1)	\operatorname{Word}([1,1,1])
+every-element-of-words-3-2	\operatorname{Take}(\operatorname{Words}(3,2),8)	[\operatorname{Word}([1,1,1]),\operatorname{Word}([1,1,2]),\operatorname{Word}([1,2,1]),\operatorname{Word}([1,2,2]),\operatorname{Word}([2,1,1]),\operatorname{Word}([2,1,2]),\operatorname{Word}([2,2,1]),\operatorname{Word}([2,2,2])]

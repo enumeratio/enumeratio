@@ -1,6 +1,6 @@
 id	in	out
-keeps-elements-where-sel-is-true	\mathrm{Pick}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack)	\bigl\lbrack a, c\bigr\rbrack
-pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1		
+keeps-elements-where-sel-is-true	\operatorname{Pick}([a,b,c],[\operatorname{True},\operatorname{False},\operatorname{True}])	[a,c]
+pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1	\operatorname{Pick}([a,b,c,d,e],[1,0,1,0,0],1)	[a,c]
 pick-list-list-a-b-c-list-d-exponentiale-f-list		
-an-explicit-pattern-keeps-elements-matching		
-pick-list-a-b-c-d-list-true-false-false-true	\mathrm{Pick}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{False}, \mathrm{True}\bigr\rbrack)	\bigl\lbrack a, d\bigr\rbrack
+an-explicit-pattern-keeps-elements-matching	\operatorname{Pick}([a,b,c,d],[1,0,1,0],1)	[a,c]
+pick-list-a-b-c-d-list-true-false-false-true	\operatorname{Pick}([a,b,c,d],[\operatorname{True},\operatorname{False},\operatorname{False},\operatorname{True}])	[a,d]

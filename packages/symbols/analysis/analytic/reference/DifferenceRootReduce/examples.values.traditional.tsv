@@ -1,12 +1,12 @@
 id	in	out
-fibonacci-order-2	\mathrm{DifferenceRootReduce}(F_{n}, n)	\mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=0\\y(1)=1\end{cases})\lhd n
-factorial-order-1		
-binomial-anchors-either-side-of-the-pole		
-catalannumber-order-1	\mathrm{DifferenceRootReduce}(C_{n}, n)	\mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+2)y(\mathrm{n2}+1)-2(2\mathrm{n2}+1)y(\mathrm{n2})=0\\y(0)=1\end{cases})\lhd n
-lucasl-order-2	\mathrm{DifferenceRootReduce}(L_{n}, n)	\mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}-y(\mathrm{n2})-y(\mathrm{n2}+1)+y(\mathrm{n2}+2)=0\\y(0)=2\\y(1)=1\end{cases})\lhd n
-evaluated-at-a-concrete-n-runs-the-recurrence	N(\mathrm{DifferenceRootReduce}(F_{n}, n)\lhd20)	6\,765
-a-symbolic-order-declines		
+fibonacci-order-2	\operatorname{DifferenceRootReduce}(F_n,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([-y(\operatorname{n2})-y(\operatorname{n2}+1)+y(\operatorname{n2}+2)=0,y(0)=0,y(1)=1]),y,\operatorname{n2}))(n)
+factorial-order-1	\operatorname{DifferenceRootReduce}(n!,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([(-\operatorname{n2}-1)y(\operatorname{n2})+y(\operatorname{n2}+1)=0,y(0)=1]),y,\operatorname{n2}))(n)
+binomial-anchors-either-side-of-the-pole	\operatorname{DifferenceRootReduce}(\binom{n}{3},n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([(\operatorname{n2}-2)y(\operatorname{n2}+1)+(-\operatorname{n2}-1)y(\operatorname{n2})=0,y(-1)=-1,y(3)=1]),y,\operatorname{n2}))(n)
+catalannumber-order-1	\operatorname{DifferenceRootReduce}(C_n,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([-2(2\operatorname{n2}+1)y(\operatorname{n2})+(\operatorname{n2}+2)y(\operatorname{n2}+1)=0,y(0)=1]),y,\operatorname{n2}))(n)
+lucasl-order-2	\operatorname{DifferenceRootReduce}(L_n,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([-y(\operatorname{n2})-y(\operatorname{n2}+1)+y(\operatorname{n2}+2)=0,y(0)=2,y(1)=1]),y,\operatorname{n2}))(n)
+evaluated-at-a-concrete-n-runs-the-recurrence	N(\textcolor{red}{\text{[["DifferenceRootReduce",["Fibonacci","n"],"n"],20]}})	6765
+a-symbolic-order-declines	\operatorname{DifferenceRootReduce}(\binom{n}{k},n)	\operatorname{DifferenceRootReduce}(\binom{n}{k},n)
 differencerootreduce-fibonacci-k-k		
-harmonicnumber-order-1-inhomogeneous	\mathrm{DifferenceRootReduce}(H_{n}, n)	\mathrm{DifferenceRoot}((y, \mathrm{n2})\mapsto\begin{cases}(\mathrm{n2}+1)y(\mathrm{n2}+1)+((-1)-\mathrm{n2})y(\mathrm{n2})-1=0\\y(0)=0\end{cases})\lhd n
-sum-of-two-hypergeometric-terms		
+harmonicnumber-order-1-inhomogeneous	\operatorname{DifferenceRootReduce}(H_n,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([(\operatorname{n2}+1)y(\operatorname{n2}+1)+(-\operatorname{n2}-1)y(\operatorname{n2})-1=0,y(0)=0]),y,\operatorname{n2}))(n)
+sum-of-two-hypergeometric-terms	\operatorname{DifferenceRootReduce}(2^n+3^n,n)	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([-5y(\operatorname{n2}+1)+6y(\operatorname{n2})+y(\operatorname{n2}+2)=0,y(0)=2,y(1)=5]),y,\operatorname{n2}))(n)
 differencerootreduce-n-pow-2-plus-1-n		

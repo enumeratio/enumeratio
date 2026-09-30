@@ -4,21 +4,21 @@ totient-36	\varphi(36)	12
 totient-1	\varphi(1)	1
 totient-10	\varphi(10)	4
 varphi-0-0-as-in-wolfram	\varphi(0)	0
-threads-element-wise-over-a-list-as-wolfram-s		
-large-integers-varphi-50	\varphi(50!)	4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{Totient}([2,4,6])	[1,2,2]
+large-integers-varphi-50	\varphi(50!)	42185592008858390426793121078167038417888549535744\times10^{14}
 negative-n-varphi-n-varphi-n	\varphi(-10)	4
 rsa-key-setup-varphi-17-times-23-16-times-22-352	\varphi(391)	352
-euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	\left(7^{\varphi(10)}\bmod 10\right)	1
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	(7^{\varphi(10)}\bmod10)	1
 sum-d-mid-n-varphi-d-n-checked-over-the-divisors	\varphi(1)+\varphi(2)+\varphi(3)+\varphi(4)+\varphi(6)+\varphi(12)	12
-multiplicative-varphi-mn-varphi-m-varphi-n-when	\varphi(12)=\varphi(4)\varphi(3)	\mathrm{True}
+multiplicative-varphi-mn-varphi-m-varphi-n-when	\varphi(12)=\varphi(4)\varphi(3)	\operatorname{True}
 varphi-p-p-1-for-a-prime-p	\varphi(17)	16
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	\varphi(81)	54
 totient-100	\varphi(100)	40
 totient-35	\varphi(35)	24
-divides-carmichaellambda-8-totient-8	\lambda(8)\mid\varphi(8)	\mathrm{True}
-list-totient-25-carmichaellambda-25	\bigl\lbrack\varphi(25), \lambda(25)\bigr\rbrack	\bigl\lbrack20, 20\bigr\rbrack
-divisorsum-15-totient-eq-15	\mathrm{DivisorSum}(15, \mathrm{Totient})=15	\mathrm{True}
-totient-1-023-eq-totient-3-times-totient-11	\varphi(1\,023)=\varphi(3)\varphi(11)\varphi(31)	\mathrm{True}
+divides-carmichaellambda-8-totient-8	\operatorname{Divides}(\lambda(8),\varphi(8))	\operatorname{True}
+list-totient-25-carmichaellambda-25	[\varphi(25),\lambda(25)]	[20,20]
+divisorsum-15-totient-eq-15	\operatorname{DivisorSum}(15,\operatorname{Totient})=15	\operatorname{True}
+totient-1-023-eq-totient-3-times-totient-11	\varphi(1023)=\varphi(3)\varphi(11)\varphi(31)	\operatorname{True}
 totient-2	\varphi(2)	1
 totient-3	\varphi(3)	2
 totient-4	\varphi(4)	2

@@ -1,6 +1,6 @@
 id	in	out
-grouporder-cyclicgroup-10	\left|C_{10}\right|	10
-groupelements-cyclicgroup-10	\mathrm{GroupElements}(C_{10})	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1}), \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{3}), \mathrm{GroupBasis}(\text{4}), \mathrm{GroupBasis}(\text{5}), \mathrm{GroupBasis}(\text{6}), \mathrm{GroupBasis}(\text{7}), \mathrm{GroupBasis}(\text{8}), \mathrm{GroupBasis}(\text{9})\bigr\rbrack
-groupelements-cyclicgroup-1	\mathrm{GroupElements}(C_{1})	\bigl\lbrack\mathrm{GroupBasis}(\text{0})\bigr\rbrack
-groupelements-cyclicgroup-2	\mathrm{GroupElements}(C_{2})	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1})\bigr\rbrack
-groupelements-cyclicgroup-3	\mathrm{GroupElements}(C_{3})	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1}), \mathrm{GroupBasis}(\text{2})\bigr\rbrack
+grouporder-cyclicgroup-10	|C_{10}|	10
+groupelements-cyclicgroup-10	\operatorname{GroupElements}(C_{10})	[\operatorname{GroupBasis}(\text{“0”}),\operatorname{GroupBasis}(\text{“1”}),\operatorname{GroupBasis}(\text{“2”}),\operatorname{GroupBasis}(\text{“3”}),\operatorname{GroupBasis}(\text{“4”}),\operatorname{GroupBasis}(\text{“5”}),\operatorname{GroupBasis}(\text{“6”}),\operatorname{GroupBasis}(\text{“7”}),\operatorname{GroupBasis}(\text{“8”}),\operatorname{GroupBasis}(\text{“9”})]
+groupelements-cyclicgroup-1	\operatorname{GroupElements}(C_1)	[\operatorname{GroupBasis}(\text{“0”})]
+groupelements-cyclicgroup-2	\operatorname{GroupElements}(C_2)	[\operatorname{GroupBasis}(\text{“0”}),\operatorname{GroupBasis}(\text{“1”})]
+groupelements-cyclicgroup-3	\operatorname{GroupElements}(C_3)	[\operatorname{GroupBasis}(\text{“0”}),\operatorname{GroupBasis}(\text{“1”}),\operatorname{GroupBasis}(\text{“2”})]

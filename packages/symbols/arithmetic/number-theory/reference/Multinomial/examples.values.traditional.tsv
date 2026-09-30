@@ -1,18 +1,18 @@
 id	in	out
 multinomial-1-2-1	\binom{4}{1,2,1}	12
-multinomial-2-3-4	\binom{9}{2,3,4}	1\,260
-threads-element-wise-over-a-list-as-wolfram-s		
+multinomial-2-3-4	\binom{9}{2,3,4}	1260
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{Multinomial}([2,3,5],3)	[10,20,56]
 zero-parts-contribute-0-1	\binom{1}{0,0,1}	1
-real-arguments-evaluate-via-the-gamma-function	\binom{7.2}{2,0.2,5}	34.317\,803\,519\,999\,95
-complex-arguments-evaluate-via-the-gamma	\binom{1+i+0.2+4}{1+i,0.2,4}	2.894\,060\,302\,449\,624+9.104\,625\,875\,691\,285i
-an-around-argument-should-propagate-its	\binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}	\mathrm{Around}(6, 0.035)
-the-number-of-distinct-letter-arrangements-of	\binom{11}{1,4,4,2}	34\,650
+real-arguments-evaluate-via-the-gamma-function	\binom{7.2}{2,0.2,5}	34.31780351999995
+complex-arguments-evaluate-via-the-gamma	\binom{1+i+0.2+4}{1+i,0.2,4}	2.894060302449624+9.104625875691285i
+an-around-argument-should-propagate-its	\binom{\operatorname{Around}(2,0.01)+2}{\operatorname{Around}(2,0.01),2}	\operatorname{Around}(6,0.035)
+the-number-of-distinct-letter-arrangements-of	\binom{11}{1,4,4,2}	34650
 the-coefficient-of-a-2-b-3-c-in-a-b-c-6	\binom{6}{2,3,1}	60
-with-two-arguments-it-reduces-to-binomial-binom	\binom{10}{7,3}=\binom{10}{3}	\mathrm{True}
-orderless-permuting-the-arguments-doesn-t-change	\binom{6}{1,2,3}=\binom{6}{3,1,2}	\mathrm{True}
-the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	\binom{12}{3,4,5}=(12!)(3!\times4!\times5!)^{-1}	\mathrm{True}
+with-two-arguments-it-reduces-to-binomial-binom	\binom{10}{7,3}=\binom{10}{3}	\operatorname{True}
+orderless-permuting-the-arguments-doesn-t-change	\binom{6}{1,2,3}=\binom{6}{3,1,2}	\operatorname{True}
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	\binom{12}{3,4,5}=\frac{12!}{3!4!5!}	\operatorname{True}
 all-ones-parts-give-n-every-part-is-a-single	\binom{4}{1,1,1,1}	24
 all-zero-arguments-still-give-the-empty-product	\binom{0}{0,0,0}	1
-a-single-argument-is-always-1-there-s-only-one		
-a-single-symbolic-argument-is-also-1		
-with-no-arguments-it-is-the-empty-product-1		
+a-single-argument-is-always-1-there-s-only-one	\operatorname{Multinomial}(5)	1
+a-single-symbolic-argument-is-also-1	\operatorname{Multinomial}(n)	1
+with-no-arguments-it-is-the-empty-product-1	\operatorname{Multinomial}()	1

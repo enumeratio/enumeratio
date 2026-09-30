@@ -1,0 +1,3 @@
+id	in	out
+two-trig-terms-on-a-bounded-interval	\operatorname{NMaximize}([\sin(x)+\cos(2x),x\ge0\land x\le6],x)	[1.125,[\operatorname{Rule}(x,2.8889124061210176)]]
+declines-without-a-bounded-constraint	\operatorname{NMaximize}(-x^2,x)	\operatorname{NMaximize}(-x^2,x)

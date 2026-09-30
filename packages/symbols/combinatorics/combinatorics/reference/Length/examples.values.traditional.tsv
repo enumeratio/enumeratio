@@ -1,30 +1,30 @@
 id	in	out
-length-list-1-2-3-4		
-length-list-1-2-3-4-5		
-works-on-any-collection-not-just-list		
-length-list-a-b-c-d		
-length-of-association-counts-values		
-length-association		
-an-atom-has-no-parts-so-its-length-is-0		
-the-empty-list-has-length-0		
-of-a-matrix-the-number-of-rows		
-a-set-holds-each-element-once-so-a-repeated		
-any-expression-the-number-of-terms-in-a-sum		
-the-number-of-arguments-of-a-call-counting-only		
-a-symbol-such-as-pi-is-an-atom-of-length-0		
-a-lazy-range-is-counted-without-being		
-length-x		
-length-123-456		
-length-1-over-10		
-length-3-plus-i		
-length-string		
-length-list-list-a-b-c-list-d-exponentiale-f		
-length-x-pow-9-plus-x-pow-2-plus-x-plus-1		
-length-integerdigits-1-000-factorial		
-map-length-list-list-a-b-list-a-b-c-list-x		
-length-join-a-b-length-a-length-b-see-join	\mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)	\mathrm{True}
-length-filter-issquarefree-past-iteration-budget		
-length-1-over-3		
-length-2-plus-i		
-length-7		
-length-sqrt-7		
+length-list-1-2-3-4	\operatorname{Length}([1,2,3,4])	4
+length-list-1-2-3-4-5	\operatorname{Length}([1,2,3,4,5])	5
+works-on-any-collection-not-just-list	\operatorname{Length}(\{1,2,3\})	3
+length-list-a-b-c-d	\operatorname{Length}([a,b,c,d])	4
+length-of-association-counts-values	\operatorname{Length}(\operatorname{Association}(\operatorname{Rule}(1,a),\operatorname{Rule}(2,b),\operatorname{Rule}(3,c)))	3
+length-association	\operatorname{Length}(\operatorname{Association}())	0
+an-atom-has-no-parts-so-its-length-is-0	\operatorname{Length}(5)	0
+the-empty-list-has-length-0	\operatorname{Length}([])	0
+of-a-matrix-the-number-of-rows	\operatorname{Length}([[1,2],[3,4],[5,6]])	3
+a-set-holds-each-element-once-so-a-repeated	\operatorname{Length}(\{1,1,2\})	2
+any-expression-the-number-of-terms-in-a-sum	\operatorname{Length}(a+b+c+d)	4
+the-number-of-arguments-of-a-call-counting-only	\operatorname{Length}(f(g(x,y),z))	2
+a-symbol-such-as-pi-is-an-atom-of-length-0	\operatorname{Length}(\pi)	0
+a-lazy-range-is-counted-without-being	\operatorname{Length}(\operatorname{Range}(1,20))	20
+length-x	\operatorname{Length}(x)	0
+length-123-456	\operatorname{Length}(123456)	0
+length-1-over-10	\operatorname{Length}(\frac{1}{10})	0
+length-3-plus-i	\operatorname{Length}(3+i)	0
+length-string	\operatorname{Length}(\text{“string”})	0
+length-list-list-a-b-c-list-d-exponentiale-f	\operatorname{Length}([[a,b,c],[d,e,f]])	2
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1	\operatorname{Length}(x^9+x^2+x+1)	4
+length-integerdigits-1-000-factorial	\operatorname{Length}(\operatorname{IntegerDigits}(1000!))	2568
+map-length-list-list-a-b-list-a-b-c-list-x	\operatorname{Map}(\operatorname{Length},[[a,b],[a,b,c],[x]])	[2,3,1]
+length-join-a-b-length-a-length-b-see-join	\operatorname{Length}(\operatorname{Join}([1,2,3],[4,5]))=\operatorname{Length}([1,2,3])+\operatorname{Length}([4,5])	\operatorname{True}
+length-filter-issquarefree-past-iteration-budget	\operatorname{Length}(\operatorname{Filter}(\operatorname{Range}(1,1679),\operatorname{IsSquareFree}))	\operatorname{Length}(\operatorname{Filter}(\operatorname{Range}(1,1679),\operatorname{IsSquareFree}))
+length-1-over-3	\operatorname{Length}(\frac{1}{3})	0
+length-2-plus-i	\operatorname{Length}(2+i)	0
+length-7	\operatorname{Length}(7)	0
+length-sqrt-7	\operatorname{Length}(\sqrt{7})	0

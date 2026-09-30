@@ -1,6 +1,6 @@
 id	in	out
-randomvariate-default-seed-is-reproducible		
-randomvariate-n-draws		
-randomvariate-discrete-draw		
-randomvariate-empirical-resamples-the-data		
-randomvariate-is-random-over-a-distribution	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{RandomVariate}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)=\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(5), \mathrm{Random}(\operatorname{NormalDistribution}(0, 1))\bigr\rbrack)	\mathrm{True}
+randomvariate-default-seed-is-reproducible	\operatorname{RandomVariate}(\operatorname{NormalDistribution}(0,1))	-0.956162229384149
+randomvariate-n-draws	\operatorname{Last}([\operatorname{SeedRandom}(1),\operatorname{RandomVariate}(\operatorname{UniformDistribution}([0,1]),3)])	[0.6270739405881613,0.002735721180215478,0.5274470399599522]
+randomvariate-discrete-draw	\operatorname{Last}([\operatorname{SeedRandom}(1),\operatorname{RandomVariate}(\operatorname{PoissonDistribution}(4))])	1
+randomvariate-empirical-resamples-the-data	\operatorname{Last}([\operatorname{SeedRandom}(2),\operatorname{RandomVariate}(\operatorname{EmpiricalDistribution}([a,b,c]))])	c
+randomvariate-is-random-over-a-distribution	\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{RandomVariate}(\operatorname{NormalDistribution}(0,1))])=\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{Random}(\operatorname{NormalDistribution}(0,1))])	\operatorname{True}

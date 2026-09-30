@@ -1,4 +1,4 @@
 id	in	out
-the-first-25-terms		
-36-is-powerful	36\in\mathrm{PowerfulNumbers}	\mathrm{True}
-12-is-not-powerful	12\in\mathrm{PowerfulNumbers}	\mathrm{False}
+the-first-25-terms	\operatorname{Take}(\operatorname{PowerfulNumbers},25)	[1,4,8,9,16,25,27,32,36,49,64,72,81,100,108,121,125,128,144,169,196,200,216,225,243]
+36-is-powerful	36\in\operatorname{PowerfulNumbers}	\operatorname{True}
+12-is-not-powerful	12\in\operatorname{PowerfulNumbers}	\operatorname{False}

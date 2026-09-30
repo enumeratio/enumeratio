@@ -1,0 +1,10 @@
+id	in	out
+asking-for-up-to-5-of-3-elements-takes-all-3	\operatorname{Take}([1,2,3],\operatorname{UpTo}(5))	[1,2,3]
+when-enough-elements-are-available-exactly-n-is	\operatorname{Take}([1,2,3,4,5,6],\operatorname{UpTo}(2))	[1,2]
+take-list-a-b-c-d-upto-6	\operatorname{Take}([a,b,c,d],\operatorname{UpTo}(6))	[a,b,c,d]
+take-list-a-b-c-d-upto-2	\operatorname{Take}([a,b,c,d],\operatorname{UpTo}(2))	[a,b]
+partition-range-1-10-upto-3	\operatorname{Partition}(\operatorname{Range}(1,10),\operatorname{UpTo}(3))	[[1,2,3],[4,5,6],[7,8,9],[10]]
+in-partition-a-shorter-final-chunk-is-allowed	\operatorname{Partition}([1,2,3,4,5,6],\operatorname{UpTo}(4))	[[1,2,3,4],[5,6]]
+in-ordering-at-most-6-positions-of-a-5-element	\operatorname{Ordering}([2,6,1,9,2],\operatorname{UpTo}(6))	[3,1,5,2,4]
+partition-list-a-b-c-d-exponentiale-f-g-upto-3	\operatorname{Partition}([a,b,c,d,e,f,g],\operatorname{UpTo}(3))	[[a,b,c],[d,e,f],[g]]
+commonest-list-b-a-c-2-a-b-1-2-upto-6		

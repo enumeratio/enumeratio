@@ -1,0 +1,3 @@
+id	in	out
+substitute-a-fixed-value	\operatorname{With}([x=3],xx)	9
+several-bindings-at-once	\operatorname{With}([x=2,y=5],x+y)	7

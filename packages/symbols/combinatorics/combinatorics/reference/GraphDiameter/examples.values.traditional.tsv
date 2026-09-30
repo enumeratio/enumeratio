@@ -1,0 +1,3 @@
+id	in	out
+path-5-has-diameter-4	\operatorname{GraphDiameter}(\operatorname{Graph}([1,2,3,4,5],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4),\operatorname{UndirectedEdge}(4,5)]))	4
+disconnected-graph-has-infinite-diameter	\operatorname{GraphDiameter}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]))	\infty

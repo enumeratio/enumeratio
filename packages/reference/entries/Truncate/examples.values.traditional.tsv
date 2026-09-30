@@ -1,0 +1,5 @@
+id	in	out
+truncate-7-over-2	\operatorname{Truncate}(\frac{7}{2})	3
+truncate-neg-7-over-2	\operatorname{Truncate}(\frac{-7}{2})	-3
+truncate-neg-3p7	\operatorname{Truncate}(-3.7)	-3
+truncate-big-rational	\operatorname{Truncate}(\frac{15511210043330985983999999}{24!})	24

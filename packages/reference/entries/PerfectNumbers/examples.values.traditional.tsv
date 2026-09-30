@@ -1,0 +1,2 @@
+id	in	out
+the-first-7-terms	\operatorname{Take}(\operatorname{PerfectNumbers},7)	[6,28,496,8128,33550336,8589869056,137438691328]

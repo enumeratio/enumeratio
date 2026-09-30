@@ -1,4 +1,4 @@
 id	in	out
-deconcatenation-cut-at-each-gap	\Delta(M_{(1,2)})	M_{\varnothing}\otimes M_{(1,2)}+M_{(1,2)}\otimes M_{\varnothing}+M_{(1)}\otimes M_{(2)}
-delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	\Delta(H_{(2)})	H_{\varnothing}\otimes H_{(2)}+H_{(2)}\otimes H_{\varnothing}+H_{(1)}\otimes H_{(1)}
-the-counit-picks-out-the-constant-term	\varepsilon(H_{\varnothing})	1
+deconcatenation-cut-at-each-gap	\Delta(M_{(1,2)})	M_{\emptyset}\otimes M_{(1,2)}+M_{(1,2)}\otimes M_{\emptyset}+M_{(1)}\otimes M_{(2)}
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	\Delta(H_{(2)})	H_{\emptyset}\otimes H_{(2)}+H_{(2)}\otimes H_{\emptyset}+H_{(1)}\otimes H_{(1)}
+the-counit-picks-out-the-constant-term	\varepsilon(H_{\emptyset})	1

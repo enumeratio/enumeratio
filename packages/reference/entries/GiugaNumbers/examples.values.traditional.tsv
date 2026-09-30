@@ -1,0 +1,2 @@
+id	in	out
+the-first-4-terms	\operatorname{Take}(\operatorname{GiugaNumbers},4)	[30,858,1722,66198]

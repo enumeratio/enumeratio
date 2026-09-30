@@ -1,13 +1,13 @@
 id	in	out
-7-is-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(7)	\mathrm{True}
-ismersenneprimeexponent-5	\mathrm{IsMersennePrimeExponent}(5)	\mathrm{True}
-ismersenneprimeexponent-8	\mathrm{IsMersennePrimeExponent}(8)	\mathrm{False}
-11-is-prime-but-not-a-mersenne-prime-exponent	\mathrm{IsMersennePrimeExponent}(11)	\mathrm{False}
-9-is-not-even-prime	\mathrm{IsMersennePrimeExponent}(9)	\mathrm{False}
-2-31-1-is-the-8th-mersenne-prime	\mathrm{IsMersennePrimeExponent}(31)	\mathrm{True}
-ismersenneprimeexponent-neg-5	\mathrm{IsMersennePrimeExponent}(-5)	\mathrm{False}
-ismersenneprimeexponent-89	\mathrm{IsMersennePrimeExponent}(89)	\mathrm{True}
-ismersenneprimeexponent-12	\mathrm{IsMersennePrimeExponent}(12)	\mathrm{False}
-ismersenneprimeexponent-2	\mathrm{IsMersennePrimeExponent}(2)	\mathrm{True}
-ismersenneprimeexponent-fullsimplify-x		
-ismersenneprimeexponent-13	\mathrm{IsMersennePrimeExponent}(13)	\mathrm{True}
+7-is-a-mersenne-prime-exponent	\operatorname{IsMersennePrimeExponent}(7)	\operatorname{True}
+ismersenneprimeexponent-5	\operatorname{IsMersennePrimeExponent}(5)	\operatorname{True}
+ismersenneprimeexponent-8	\operatorname{IsMersennePrimeExponent}(8)	\operatorname{False}
+11-is-prime-but-not-a-mersenne-prime-exponent	\operatorname{IsMersennePrimeExponent}(11)	\operatorname{False}
+9-is-not-even-prime	\operatorname{IsMersennePrimeExponent}(9)	\operatorname{False}
+2-31-1-is-the-8th-mersenne-prime	\operatorname{IsMersennePrimeExponent}(31)	\operatorname{True}
+ismersenneprimeexponent-neg-5	\operatorname{IsMersennePrimeExponent}(-5)	\operatorname{False}
+ismersenneprimeexponent-89	\operatorname{IsMersennePrimeExponent}(89)	\operatorname{True}
+ismersenneprimeexponent-12	\operatorname{IsMersennePrimeExponent}(12)	\operatorname{False}
+ismersenneprimeexponent-2	\operatorname{IsMersennePrimeExponent}(2)	\operatorname{True}
+ismersenneprimeexponent-fullsimplify-x	\operatorname{IsMersennePrimeExponent}(\operatorname{FullSimplify}(x))	\operatorname{IsMersennePrimeExponent}(x)
+ismersenneprimeexponent-13	\operatorname{IsMersennePrimeExponent}(13)	\operatorname{True}

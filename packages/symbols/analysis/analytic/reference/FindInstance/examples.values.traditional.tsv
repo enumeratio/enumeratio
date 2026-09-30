@@ -1,0 +1,12 @@
+id	in	out
+a-quadratic-with-two-real-roots	\operatorname{FindInstance}(x^2=4,x,\operatorname{Reals})	[[\operatorname{Rule}(x,2)]]
+both-roots-with-an-explicit-count	\operatorname{FindInstance}(x^2=4,x,\operatorname{Reals},2)	[[\operatorname{Rule}(x,2)],[\operatorname{Rule}(x,-2)]]
+an-irrational-root-is-exact	\operatorname{FindInstance}(x^2=2,x,\operatorname{Reals})	[[\operatorname{Rule}(x,\sqrt{2})]]
+a-linear-equation	\operatorname{FindInstance}(2x+3=7,x,\operatorname{Reals})	[[\operatorname{Rule}(x,2)]]
+no-real-root-is-a-proven-empty-result	\operatorname{FindInstance}(x^2=-1,x,\operatorname{Reals})	[]
+a-non-integer-root-is-also-proven-empty	\operatorname{FindInstance}(x^2=2,x,\mathbb{Z})	[]
+a-bounded-integer-search	\operatorname{FindInstance}(x>0\land x<10,x,\mathbb{Z},3)	[[\operatorname{Rule}(x,1)],[\operatorname{Rule}(x,2)],[\operatorname{Rule}(x,3)]]
+a-multivariate-bounded-integer-search	\operatorname{FindInstance}(x+y=5\land x>0\land x<10\land y>0\land y<10,[x,y],\mathbb{Z},3)	[[\operatorname{Rule}(x,1),\operatorname{Rule}(y,4)],[\operatorname{Rule}(x,2),\operatorname{Rule}(y,3)],[\operatorname{Rule}(x,3),\operatorname{Rule}(y,2)]]
+findinstance-x-pow-5-minus-2x-plus-1-eq-0-x	\operatorname{FindInstance}(x^5-2x+1=0,x,\mathbb{R})	[[\operatorname{Rule}(x,1)]]
+declines-without-an-explicit-domain	\operatorname{FindInstance}(x>0,x)	\operatorname{FindInstance}(x>0,x)
+declines-on-a-pure-inequality-over-reals	\operatorname{FindInstance}(x>0,x,\operatorname{Reals})	\operatorname{FindInstance}(x>0,x,\operatorname{Reals})

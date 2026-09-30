@@ -1,6 +1,6 @@
 id	in	out
-a-plain-integer	\mathrm{IsInteger}(4)	\mathrm{True}
-isinteger-x-plus-4	\mathrm{IsInteger}(x+4)	\mathrm{False}
-a-rational-is-not-an-integer	\mathrm{IsInteger}(\frac{1}{2})	\mathrm{False}
-a-free-symbol-is-false	\mathrm{IsInteger}(x)	\mathrm{False}
-a-negative-integer	\mathrm{IsInteger}(-3)	\mathrm{True}
+a-plain-integer	\operatorname{IsInteger}(4)	\operatorname{True}
+isinteger-x-plus-4	\operatorname{IsInteger}(x+4)	\operatorname{False}
+a-rational-is-not-an-integer	\operatorname{IsInteger}(\frac{1}{2})	\operatorname{False}
+a-free-symbol-is-false	\operatorname{IsInteger}(x)	\operatorname{False}
+a-negative-integer	\operatorname{IsInteger}(-3)	\operatorname{True}

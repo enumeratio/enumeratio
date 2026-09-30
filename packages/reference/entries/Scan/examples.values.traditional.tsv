@@ -1,0 +1,10 @@
+id	in	out
+scan-list-1-2-3-4-add	\operatorname{Scan}([1,2,3,4],\operatorname{Add})	[1,3,6,10]
+the-shape-of-a-running-fold	\operatorname{Scan}([a,b,c],f)	[a,f(a,b),f(f(a,b),c)]
+the-running-maximum	\operatorname{Scan}([1,2,3,4],\operatorname{Max})	[1,2,3,4]
+running-products-the-factorials	\operatorname{Scan}([1,2,3,4,5],\operatorname{Multiply})	[1,2,6,24,120]
+running-sums-of-symbolic-elements-wolfram-s	\operatorname{Scan}([a,b,c],\operatorname{Add})	[a,a+b,a+b+c]
+the-running-minimum	\operatorname{Scan}([3,1,4,1,5],\operatorname{Min})	[3,1,1,1,1]
+an-empty-list-scans-to-an-empty-list	\operatorname{Scan}([],\operatorname{Add})	[]
+the-values-of-every-prefix-of-the-binary-digits	\operatorname{Scan}([1,0,1,1],\operatorname{Function}(2\_1+\_2))	[1,2,5,11]
+the-seeded-form-is-still-the-same-length-as-xs	\operatorname{Scan}([1,2,3],\operatorname{Add},10)	[11,13,16]

@@ -1,8 +1,8 @@
 id	in	out
-default-form-is-dnf		
-cnf-distributes-or-over-and		
-nnf-pushes-not-to-the-leaves-not-distributed		
-a-tautological-clause-drops-out-of-cnf	\mathrm{BooleanConvert}(p\lor\lnot p, \text{CNF})	\mathrm{True}
-an-unimplemented-form-stays-unevaluated		
-booleanconvert-f		
-booleanconvert-f-cnf		
+default-form-is-dnf	\operatorname{BooleanConvert}(p\land(b\lor r))	b\land p\lor p\land r
+cnf-distributes-or-over-and	\operatorname{BooleanConvert}(p\lor b\land r,\text{“CNF”})	(b\lor p)\land(p\lor r)
+nnf-pushes-not-to-the-leaves-not-distributed	\operatorname{BooleanConvert}(p\Rightarrow b,\text{“NNF”})	b\lor\lnot p
+a-tautological-clause-drops-out-of-cnf	\operatorname{BooleanConvert}(p\lor\lnot p,\text{“CNF”})	\operatorname{True}
+an-unimplemented-form-stays-unevaluated	\operatorname{BooleanConvert}(p,\text{“ESOP”})	\operatorname{BooleanConvert}(p,\text{“ESOP”})
+booleanconvert-f	\operatorname{BooleanConvert}(f)	f
+booleanconvert-f-cnf	\operatorname{BooleanConvert}(f,\text{“CNF”})	f

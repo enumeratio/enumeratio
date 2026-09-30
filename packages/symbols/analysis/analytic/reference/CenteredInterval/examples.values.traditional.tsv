@@ -1,0 +1,5 @@
+id	in	out
+centers-add-and-radii-add	\operatorname{CenteredInterval}(1,\frac{1}{2})+\operatorname{CenteredInterval}(2,\frac{1}{4})	\operatorname{CenteredInterval}(3,\frac{3}{4})
+an-exact-factor-scales-center-and-radius	2\operatorname{CenteredInterval}(2,\frac{1}{2})	\operatorname{CenteredInterval}(4,1)
+converts-an-interval-to-center-radius-form	\operatorname{CenteredInterval}([1,3])	\operatorname{CenteredInterval}(2,1)
+radii-add-under-subtraction-too	\operatorname{CenteredInterval}(5,\frac{1}{4})-\operatorname{CenteredInterval}(1,\frac{1}{4})	\operatorname{CenteredInterval}(4,\frac{1}{2})

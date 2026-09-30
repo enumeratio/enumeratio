@@ -1,20 +1,20 @@
 id	in	out
-abs-of-a-real-variable		
-sign-of-a-real-variable		
-clip-of-a-real-variable		
-max-of-two-real-variables		
-piecewiseexpand-max-a-b-c-d		
-piecewiseexpand-floor-x-0-lt-x-lt-4		
-piecewiseexpand-primepi-x-0-lt-x-lt-6	\mathrm{PiecewiseExpand}(\pi(x), 0\lt x\lt6)	\pi(x)
-piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2		
-assuming-0-lt-x-lt-3-piecewiseexpand-floor-x		
-assuming-x-pow-2-lt-3-piecewiseexpand-floor-x		
-piecewiseexpand-pw		
-piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1		
-piecewiseexpand-max-abs-x-abs-y-realnumbers		
+abs-of-a-real-variable	\operatorname{PiecewiseExpand}(|x|,x\in\mathbb{R})	\operatorname{Piecewise}([[-x,x<0]],x)
+sign-of-a-real-variable	\operatorname{PiecewiseExpand}(\operatorname{sgn}(x),x\in\mathbb{R})	\operatorname{Piecewise}([[-1,x<0],[1,0<x]],0)
+clip-of-a-real-variable	\operatorname{PiecewiseExpand}(\operatorname{Clip}(x,[-1,1]),x\in\mathbb{R})	\operatorname{Piecewise}([[-1,x<-1],[1,1<x]],x)
+max-of-two-real-variables	\operatorname{PiecewiseExpand}(\max(x,y),x\in\mathbb{R}\land y\in\mathbb{R})	\operatorname{Piecewise}([[x,y\le x]],y)
+piecewiseexpand-max-a-b-c-d	\operatorname{PiecewiseExpand}(\max(a,b,c,d))	\max(a,b,c,d)
+piecewiseexpand-floor-x-0-lt-x-lt-4	\operatorname{PiecewiseExpand}(\lfloor x\rfloor,0<x<4)	\lfloor x\rfloor
+piecewiseexpand-primepi-x-0-lt-x-lt-6	\operatorname{PiecewiseExpand}(\pi(x),0<x<6)	\pi(x)
+piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2	\operatorname{PiecewiseExpand}(0<\lfloor x+\operatorname{Round}(x^2)\rfloor-x<4)	0<-x+\lfloor x+\operatorname{Round}(x^2)\rfloor<4
+assuming-0-lt-x-lt-3-piecewiseexpand-floor-x	\operatorname{Assuming}(0<x<3,\operatorname{PiecewiseExpand}(\lfloor x\rfloor))	\lfloor x\rfloor
+assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	\operatorname{Assuming}(x^2<3,\operatorname{PiecewiseExpand}(\lfloor x\rfloor+\operatorname{Round}(y),y^2<2))	\lfloor x\rfloor+\operatorname{Round}(y)
+piecewiseexpand-pw	\operatorname{PiecewiseExpand}(\operatorname{pw})	\operatorname{pw}
+piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	\operatorname{PiecewiseExpand}(-1\le\max(x,y)\le1)	-1\le\max(x,y)\le1
+piecewiseexpand-max-abs-x-abs-y-realnumbers	\operatorname{PiecewiseExpand}(\max(|x|,|y|),\mathbb{R})	\max(|x|,|y|)
 map-piecewiseexpand-list-min-x-y-max-x-y-z		
 assuming-list-0-lt-eq-x-lt-eq-3-map		
 assuming-0-lt-eq-k-lt-eq-3m-map-piecewiseexpand		
 map-piecewiseexpand-list-unitbox-x-unittriangle		
 assuming-list-0-lt-eq-x-lt-eq-3-map-2		
-without-a-realness-assumption-it-declines		
+without-a-realness-assumption-it-declines	\operatorname{PiecewiseExpand}(|x|)	|x|

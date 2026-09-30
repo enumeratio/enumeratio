@@ -1,0 +1,5 @@
+id	in	out
+hypergeometric-pdf-exact	\operatorname{PDF}(\operatorname{HypergeometricDistribution}(20,50,100),10)	\frac{10272278170}{52177653441}
+hypergeometric-cdf-exact-sum	\operatorname{CDF}(\operatorname{HypergeometricDistribution}(3,5,10),2)	\frac{11}{12}
+hypergeometric-mean-exact	\operatorname{Mean}(\operatorname{HypergeometricDistribution}(20,50,100))	10
+hypergeometric-variance-exact	\operatorname{Variance}(\operatorname{HypergeometricDistribution}(20,50,100))	\frac{400}{99}

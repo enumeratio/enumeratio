@@ -1,0 +1,8 @@
+id	in	out
+a-downward-parabola-s-vertex	\operatorname{Maximize}(-x^2+4x-1,x)	[3,[\operatorname{Rule}(x,2)]]
+unbounded-above-reports-positive-infinity	\operatorname{Maximize}(x^3,x)	[\infty,[\operatorname{Rule}(x,\infty)]]
+a-bounded-interval-constraint	\operatorname{Maximize}([-x^2+4x-1,x\ge0\land x\le1],x)	[2,[\operatorname{Rule}(x,1)]]
+maximize-neg-2-times-x-pow-2-minus-3x-plus-5-x	\operatorname{Maximize}(-2x^2-3x+5,x)	[\frac{49}{8},[\operatorname{Rule}(x,\frac{-3}{4})]]
+exp-of-a-negated-argument-is-unbounded-above	\operatorname{Maximize}(e^{-x},x)	[\infty,[\operatorname{Rule}(x,-\infty)]]
+a-downward-quadratic-radicand	\operatorname{Maximize}(\sqrt{4-x^2},x)	[2,[\operatorname{Rule}(x,0)]]
+declines-more-than-one-variable	\operatorname{Maximize}(-(x^2+y^2),[x,y])	\operatorname{Maximize}(-(x^2+y^2),[x,y])

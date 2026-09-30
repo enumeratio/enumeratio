@@ -1,0 +1,7 @@
+id	in	out
+no-throw-evaluates-normally	\operatorname{Catch}(1+2)	3
+tag-matched-catch-recovers-the-value	\operatorname{Catch}(\operatorname{Throw}(\operatorname{ok},\operatorname{done}),\operatorname{done})	\operatorname{ok}
+catch-list-a-throw-b-c	\operatorname{Catch}([a,\operatorname{Throw}(b),c])	b
+catch-list-throw-a-throw-b-throw-c	\operatorname{Catch}([\operatorname{Throw}(a),\operatorname{Throw}(b),\operatorname{Throw}(c)])	a
+catch-throw-a-u-u	\operatorname{Catch}(\operatorname{Throw}(a,u),u)	a
+catch-list-catch-list-a-throw-b-c-d-e		

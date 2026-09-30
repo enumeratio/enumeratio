@@ -1,0 +1,5 @@
+id	in	out
+erlang-pdf-exact	\operatorname{PDF}(\operatorname{ErlangDistribution}(3,2),1)	\frac{8}{\Gamma(3)e^2}
+erlang-cdf-exact	\operatorname{CDF}(\operatorname{ErlangDistribution}(3,2),1)	1+\frac{-5}{e^2}
+erlang-mean-exact	\operatorname{Mean}(\operatorname{ErlangDistribution}(3,2))	\frac{3}{2}
+erlang-variance-exact	\operatorname{Variance}(\operatorname{ErlangDistribution}(3,2))	\frac{3}{4}

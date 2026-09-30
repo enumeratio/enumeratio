@@ -1,0 +1,4 @@
+id	in	out
+count-propercompositions-6	\operatorname{Count}(\operatorname{ProperCompositions}(6))	5
+first-element-of-propercompositions-6	\operatorname{At}(\operatorname{ProperCompositions}(6),1)	\operatorname{Composition}([2,2,2])
+every-element-of-propercompositions-6	\operatorname{Take}(\operatorname{ProperCompositions}(6),5)	[\operatorname{Composition}([2,2,2]),\operatorname{Composition}([2,4]),\operatorname{Composition}([3,3]),\operatorname{Composition}([4,2]),\operatorname{Composition}([6])]

@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -24,6 +25,7 @@ import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { hermiteDecomposition } from "./hermite.ts";
+import { NUMBER_THEORY_NOTATION } from "./notation.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
@@ -32,6 +34,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: ComputeEngine): void {
+  registerNotation(ce, NUMBER_THEORY_NOTATION);
   // This package's own carriers — see carrier-data.ts for why they sit here rather than in
   // numerals, and why the ordering this runs at (after numerals, after modular) is
   // load-bearing. Types, constructor, plural type-space names and `Element` membership, all

@@ -1,4 +1,4 @@
 id	in	out
-the-first-five-primes		
-11-is-prime	11\in\mathbb{P}	\mathrm{True}
-9-is-not-prime	9\in\mathbb{P}	\mathrm{False}
+the-first-five-primes	\operatorname{Take}(\operatorname{Primes},5)	[2,3,5,7,11]
+11-is-prime	11\in\operatorname{Primes}	\operatorname{True}
+9-is-not-prime	9\in\operatorname{Primes}	\operatorname{False}

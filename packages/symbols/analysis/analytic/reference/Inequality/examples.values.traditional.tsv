@@ -1,8 +1,8 @@
 id	in	out
-a-numeric-chain-that-holds	\mathrm{Inequality}(0, \mathrm{LessEqual}, 2, \mathrm{Less}, 5)	\mathrm{True}
-a-numeric-chain-that-fails	\mathrm{Inequality}(0, \mathrm{LessEqual}, 5, \mathrm{Less}, 5)	\mathrm{False}
-a-symbolic-mixed-chain-partially-simplifies		
-a-three-link-chain	\mathrm{Inequality}(1, \mathrm{Less}, 2, \mathrm{LessEqual}, 2, \mathrm{Less}, 10)	\mathrm{True}
-equal-and-notequal-are-valid-links-too		
-a-homogeneous-chain-still-goes-through-and		
-declines-on-a-non-relation-link		
+a-numeric-chain-that-holds	\operatorname{Inequality}(0,\operatorname{LessEqual},2,\operatorname{Less},5)	\operatorname{True}
+a-numeric-chain-that-fails	\operatorname{Inequality}(0,\operatorname{LessEqual},5,\operatorname{Less},5)	\operatorname{False}
+a-symbolic-mixed-chain-partially-simplifies	\operatorname{Inequality}(0,\operatorname{LessEqual},x,\operatorname{Less},5)	0\le x\land x<5
+a-three-link-chain	\operatorname{Inequality}(1,\operatorname{Less},2,\operatorname{LessEqual},2,\operatorname{Less},10)	\operatorname{True}
+equal-and-notequal-are-valid-links-too	\operatorname{Inequality}(0,\operatorname{Less},x,\operatorname{NotEqual},3)	0<x\land x\ne3
+a-homogeneous-chain-still-goes-through-and	\operatorname{Inequality}(0,\operatorname{Less},x,\operatorname{Less},5)	0<x\land x<5
+declines-on-a-non-relation-link	\operatorname{Inequality}(0,\operatorname{Add},5)	\operatorname{Inequality}(0,\operatorname{Add},5)

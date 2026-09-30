@@ -1,0 +1,7 @@
+id	in	out
+precision-exact-integer	\operatorname{Precision}(2)	\infty
+precision-6-over-5	\operatorname{Precision}(\frac{6}{5})	\infty
+precision-rational	\operatorname{Precision}(\frac{1}{3})	\infty
+precision-inexact-literal	\operatorname{Precision}(2.5)	2
+precision-extended	\operatorname{Precision}(3.141592653589793)	16
+precision-5-times-x-pow-2-plus-3	\operatorname{Precision}(5x^2+3)	\infty

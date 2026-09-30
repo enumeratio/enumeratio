@@ -1,0 +1,6 @@
+id	in	out
+harmonic-oscillator	\operatorname{DSolveValue}(Y''(x)+Y(x)=0,Y(x),x)	\sin(x)C(2)+\cos(x)C(1)
+with-initial-conditions	\operatorname{DSolveValue}([Y''(x)+Y(x)=0,Y(0)=1,Y'(0)=0],Y(x),x)	\cos(x)
+distinct-real-roots	\operatorname{DSolveValue}(Y''(x)-3Y'(x)+2Y(x)=0,Y(x),x)	C(1)e^{2x}+C(2)e^x
+repeated-root	\operatorname{DSolveValue}(Y''(x)-4Y'(x)+4Y(x)=0,Y(x),x)	(xC(2)+C(1))e^{2x}
+resonance-sine-forcing	\operatorname{DSolveValue}(Y''(x)+Y(x)=\sin(x),Y(x),x)	\frac{-1}{2}x\cos(x)+\sin(x)C(2)+\cos(x)C(1)

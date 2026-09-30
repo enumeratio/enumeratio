@@ -1,22 +1,22 @@
 id	in	out
 carmichaellambda-10	\lambda(10)	4
-listable		
+listable	\operatorname{CarmichaelLambda}([8,15])	[2,4]
 negative-n-lambda-n-lambda-n	\lambda(-100)	20
-listable-over-a-range	\lambda(1..10)	\bigl\lbrack1, 1, 2, 2, 4, 2, 6, 2, 6, 4\bigr\rbrack
+listable-over-a-range	\lambda(\operatorname{Range}(10))	[1,1,2,2,4,2,6,2,6,4]
 carmichaellambda-neg-10	\lambda(-10)	4
-carmichaellambda-list-2-4-7		
-561-mod-carmichaellambda-561	561\bmod\lambda(561)	1
+carmichaellambda-list-2-4-7	\operatorname{CarmichaelLambda}([2,4,7])	[1,2,6]
+561-mod-carmichaellambda-561	\bmod(561,\lambda(561))	1
 carmichaellambda-12	\lambda(12)	2
-list-divides-8-24-divides-carmichaellambda-8	\bigl\lbrack8\mid24, \lambda(8)\mid\lambda(24)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
-3-pow-1-plus-carmichaellambda-17-mod-17	3^{1+\lambda(17)}\bmod17	3
-divides-multiplicativeorder-4-9-carmichaellambda	\operatorname{ord}_{9}(4)\mid\lambda(9)	\mathrm{True}
+list-divides-8-24-divides-carmichaellambda-8	[\operatorname{Divides}(8,24),\operatorname{Divides}(\lambda(8),\lambda(24))]	[\operatorname{True},\operatorname{True}]
+3-pow-1-plus-carmichaellambda-17-mod-17	\bmod(3^{1+\lambda(17)},17)	3
+divides-multiplicativeorder-4-9-carmichaellambda	\operatorname{Divides}(\operatorname{ord}_9(4),\lambda(9))	\operatorname{True}
 carmichaellambda-1	\lambda(1)	1
 carmichaellambda-2	\lambda(2)	1
 carmichaellambda-3	\lambda(3)	2
 carmichaellambda-4	\lambda(4)	2
 carmichaellambda-5	\lambda(5)	4
 carmichaellambda-6	\lambda(6)	2
-divides-carmichaellambda-8-totient-8	\lambda(8)\mid\varphi(8)	\mathrm{True}
+divides-carmichaellambda-8-totient-8	\operatorname{Divides}(\lambda(8),\varphi(8))	\operatorname{True}
 carmichaellambda-7	\lambda(7)	6
 carmichaellambda-8	\lambda(8)	2
 carmichaellambda-9	\lambda(9)	6
@@ -26,6 +26,6 @@ carmichaellambda-14	\lambda(14)	6
 carmichaellambda-15	\lambda(15)	4
 carmichaellambda-16	\lambda(16)	4
 carmichaellambda-17	\lambda(17)	16
-carmichaellambda-list-neg-2-neg-1-0-1-2		
-list-lcm-carmichaellambda-list-3-8	\bigl\lbrack\operatorname{lcm}(\mathrm{CarmichaelLambda}(\bigl\lbrack3, 8\bigr\rbrack)), \lambda(\operatorname{lcm}(3, 8))\bigr\rbrack	\bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, 2\bigr\rbrack
+carmichaellambda-list-neg-2-neg-1-0-1-2	\operatorname{CarmichaelLambda}([-2,-1,0,1,2])	[1,1,0,1,1]
+list-lcm-carmichaellambda-list-3-8	[\operatorname{LCM}(\operatorname{CarmichaelLambda}([3,8])),\lambda(\operatorname{LCM}(3,8))]	[[2,2],2]
 carmichaellambda-0	\lambda(0)	0

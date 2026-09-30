@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -17,6 +18,7 @@ import { gcd } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareAdic } from "./adic-declare.ts";
 import { NUMERALS_CARRIERS } from "./carrier-data.ts";
+import { NUMERALS_NOTATION } from "./notation.ts";
 import {
   bigIntToBaseString,
   digitLength,
@@ -202,6 +204,7 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
 }
 
 export function declareNumerals(ce: ComputeEngine): void {
+  registerNotation(ce, NUMERALS_NOTATION);
   // This package's own carriers — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructors, plural type-space names and `Element` membership, all in one call.
   declareCarriers(ce, NUMERALS_CARRIERS);

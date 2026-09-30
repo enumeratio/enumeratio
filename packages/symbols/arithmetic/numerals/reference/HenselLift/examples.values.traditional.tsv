@@ -1,0 +1,8 @@
+id	in	out
+sqrt-2-in-z-7-from-3-2-2-pmod-7	\operatorname{HenselLift}(x^2-2,3,7,6)	\operatorname{AdicNumeral}(7,38181,6)
+and-squaring-it-gives-2-back-to-the-same	{\operatorname{AdicSqrt}(\operatorname{AdicNumeral}(7,2),6)}^2	\operatorname{AdicNumeral}(7,2,6)
+a-10-adic-idempotent-e-2-e-and-e-0-1	\operatorname{AdicExpansion}(\operatorname{HenselLift}(x^2-x,5,10,8))	\text{“…12890625 + O(10\^8)”}
+3-is-not-a-square-mod-7-so-it-has-no-7-adic	\operatorname{AdicSqrt}(\operatorname{AdicNumeral}(7,3))	\operatorname{AdicSqrt}(\operatorname{AdicNumeral}(7,3))
+declines-at-a-non-simple-root-f-1-2-is-not-a	\operatorname{HenselLift}(x^3-x,1,2,6)	\operatorname{HenselLift}(x^3-x,1,2,6)
+the-two-roots-of-x-2-x-lifted-in-z-10-are	\operatorname{HenselLift}(x^2-x,5,10,8)\operatorname{HenselLift}(x^2-x,6,10,8)	\operatorname{AdicNumeral}(10,0,8)
+and-they-sum-to-1-splitting-z-10-via-z-10-cong-z	\operatorname{HenselLift}(x^2-x,5,10,8)+\operatorname{HenselLift}(x^2-x,6,10,8)	\operatorname{AdicNumeral}(10,1,8)

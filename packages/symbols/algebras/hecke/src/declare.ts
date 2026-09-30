@@ -1,5 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
   add,
@@ -13,6 +14,7 @@ import {
   permutations,
   scale,
 } from "./hecke.ts";
+import { HECKE_NOTATION } from "./notation.ts";
 
 // Wiring H_n(q) to compute-engine. Two things are new here relative to the earlier
 // algebra libraries:
@@ -49,6 +51,7 @@ function basisPermutation(expr: BoxedExpression): Permutation | undefined {
 }
 
 export function declareHecke(ce: ComputeEngine): void {
+  registerNotation(ce, HECKE_NOTATION);
   // `q` becomes a session-wide free symbol, because every coefficient this package
   // produces is a polynomial in it and those outlive any scope we could push. Declaring
   // it explicitly says so; `ce.symbol` would bind it anyway, just silently and untyped.

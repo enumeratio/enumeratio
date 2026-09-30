@@ -1,13 +1,13 @@
 id	in	out
-power		
-evaluates-first		
-binomial	\mathrm{ToBoxes}(\binom{n}{k})	\mathrm{RowBox}(\bigl\lbrack\text{(}, \mathrm{FractionBox}(\text{n}, \text{k}, (\mathrm{FractionLine},\mathrm{False})), \text{)}\bigr\rbrack)
-square-root-over-y		
-toboxes-b-pow-2-plus-a		
-toboxes-beta-a-b		
-map-toboxes-list-i-pi-exponentiale		
-toboxes-list-list-a-b-c-list-d-exponentiale-f		
-map-toboxes-n-list-10-over-3-10-over-3-times-i		
-map-toboxes-list-a-pow-x-a-pow-x-sqrt-a-sqrt-a		
-toboxes-list-1-2-3		
-toboxes-1-over-10		
+power	\operatorname{ToBoxes}(x^2)	\operatorname{SuperscriptBox}(\text{“x”},\text{“2”})
+evaluates-first	\operatorname{ToBoxes}(2+3)	\text{“5”}
+binomial	\operatorname{ToBoxes}(\binom{n}{k})	\operatorname{RowBox}([\text{“(”},\operatorname{FractionBox}(\text{“n”},\text{“k”},(\operatorname{FractionLine},\operatorname{False})),\text{“)”}])
+square-root-over-y	\operatorname{ToBoxes}(\frac{\sqrt{x}}{y})	\operatorname{FractionBox}(\operatorname{SqrtBox}(\text{“x”}),\text{“y”})
+toboxes-b-pow-2-plus-a	\operatorname{ToBoxes}(b^2+a)	\operatorname{RowBox}([\operatorname{SuperscriptBox}(\text{“b”},\text{“2”}),\text{“+”},\text{“a”}])
+toboxes-beta-a-b	\operatorname{ToBoxes}(\operatorname{Beta}(a,b))	\operatorname{RowBox}([\text{“Beta”},\text{“⁡”},\operatorname{RowBox}([\text{“(”},\text{“a”},\text{“,”},\text{“b”},\text{“)”}])])
+map-toboxes-list-i-pi-exponentiale	\operatorname{Map}(\operatorname{ToBoxes},[i,\pi,e])	[\text{“i”},\text{“π”},\text{“e”}]
+toboxes-list-list-a-b-c-list-d-exponentiale-f	\operatorname{ToBoxes}([[a,b,c],[d,e,f]])	\operatorname{RowBox}([\text{“[”},\operatorname{RowBox}([\text{“[”},\text{“a”},\text{“,”},\text{“b”},\text{“,”},\text{“c”},\text{“]”}]),\text{“,”},\operatorname{RowBox}([\text{“[”},\text{“d”},\text{“,”},\text{“e”},\text{“,”},\text{“f”},\text{“]”}]),\text{“]”}])
+map-toboxes-n-list-10-over-3-10-over-3-times-i	\operatorname{Map}(\operatorname{ToBoxes},N([\frac{10}{3},\frac{10}{3}i],20))	[\text{“3.3333333333333333333”},\operatorname{RowBox}([\text{“3.3333333333333333333”},\text{“⁢”},\text{“i”}])]
+map-toboxes-list-a-pow-x-a-pow-x-sqrt-a-sqrt-a	\operatorname{Map}(\operatorname{ToBoxes},[a^x,a^x,\sqrt{a},\sqrt{a},\sqrt[3]{a},e^x,\frac{1}{x},\frac{1}{x}])	[\operatorname{SuperscriptBox}(\text{“a”},\text{“x”}),\operatorname{SuperscriptBox}(\text{“a”},\text{“x”}),\operatorname{SqrtBox}(\text{“a”}),\operatorname{SqrtBox}(\text{“a”}),\operatorname{RadicalBox}(\text{“a”},\text{“3”}),\operatorname{SuperscriptBox}(\text{“e”},\text{“x”}),\operatorname{FractionBox}(\text{“1”},\text{“x”}),\operatorname{FractionBox}(\text{“1”},\text{“x”})]
+toboxes-list-1-2-3	\operatorname{ToBoxes}([1,2,3])	\operatorname{RowBox}([\text{“[”},\text{“1”},\text{“,”},\text{“2”},\text{“,”},\text{“3”},\text{“]”}])
+toboxes-1-over-10	\operatorname{ToBoxes}(\frac{1}{10})	\operatorname{FractionBox}(\text{“1”},\text{“10”})

@@ -1,0 +1,4 @@
+id	in	out
+count-zigzagcomposition-6	\operatorname{Count}(\operatorname{ZigzagCompositions}(6))	12
+first-element-of-zigzagcomposition-6	\operatorname{At}(\operatorname{ZigzagCompositions}(6),1)	\operatorname{Composition}([1,2,1,2])
+every-element-of-zigzagcomposition-6	\operatorname{Take}(\operatorname{ZigzagCompositions}(6),12)	[\operatorname{Composition}([1,2,1,2]),\operatorname{Composition}([1,3,2]),\operatorname{Composition}([1,4,1]),\operatorname{Composition}([1,5]),\operatorname{Composition}([2,1,2,1]),\operatorname{Composition}([2,1,3]),\operatorname{Composition}([2,3,1]),\operatorname{Composition}([2,4]),\operatorname{Composition}([3,1,2]),\operatorname{Composition}([4,2]),\operatorname{Composition}([5,1]),\operatorname{Composition}([6])]

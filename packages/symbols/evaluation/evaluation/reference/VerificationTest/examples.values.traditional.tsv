@@ -1,13 +1,13 @@
 id	in	out
-input-matches-expected		
-input-evaluates-but-does-not-match-expected		
-one-argument-a-predicate-that-evaluates-to-true	\mathrm{VerificationTest}(2\gt1)	\mathrm{TestResultObject}((\text{Outcome},\text{Success}), (\text{Input},1\lt2), (\text{ExpectedOutput},\mathrm{Missing}), (\text{ActualOutput},\mathrm{True}), (\text{AbsoluteTimeUsed},0))
-verificationtest-2-plus-2-3		
-verificationtest-1-times-0-pow-neg-1		
-a-symbolic-computation-checked-against-its		
-a-testid-is-carried-into-the-result		
-a-sametest-with-a-tolerance-22-7-3-14-0-01		
-memoryconstraint-in-process-is-an-error-not-a		
-one-argument-succeeds-whenever-input-evaluates		
-the-default-comparison-is-structural		
-verificationtest-complexinfinity-1-times-0-pow		
+input-matches-expected	\operatorname{VerificationTest}(2+3,5)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},5),(\text{“ExpectedOutput”},5),(\text{“ActualOutput”},5),(\text{“AbsoluteTimeUsed”},0))
+input-evaluates-but-does-not-match-expected	\operatorname{VerificationTest}(2+3,6)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Failure”}),(\text{“Input”},5),(\text{“ExpectedOutput”},6),(\text{“ActualOutput”},5),(\text{“AbsoluteTimeUsed”},0))
+one-argument-a-predicate-that-evaluates-to-true	\operatorname{VerificationTest}(2>1)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},1<2),(\text{“ExpectedOutput”},\operatorname{Missing}),(\text{“ActualOutput”},\operatorname{True}),(\text{“AbsoluteTimeUsed”},0))
+verificationtest-2-plus-2-3	\operatorname{VerificationTest}(2+2,3)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Failure”}),(\text{“Input”},4),(\text{“ExpectedOutput”},3),(\text{“ActualOutput”},4),(\text{“AbsoluteTimeUsed”},0))
+verificationtest-1-times-0-pow-neg-1	\operatorname{VerificationTest}(10^{-1},\tilde\infty)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},\tilde\infty),(\text{“ExpectedOutput”},\tilde\infty),(\text{“ActualOutput”},\tilde\infty),(\text{“AbsoluteTimeUsed”},0))
+a-symbolic-computation-checked-against-its	\operatorname{VerificationTest}(\operatorname{Expand}((x+1)^2),x^2+2x+1)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},\operatorname{Expand}((x+1)^2)),(\text{“ExpectedOutput”},x^2+2x+1),(\text{“ActualOutput”},x^2+2x+1),(\text{“AbsoluteTimeUsed”},0))
+a-testid-is-carried-into-the-result	\operatorname{VerificationTest}(\frac{1}{0},\tilde\infty,\operatorname{KeyValuePair}(\operatorname{TestID},\text{“pole”}))	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},\tilde\infty),(\text{“ExpectedOutput”},\tilde\infty),(\text{“ActualOutput”},\tilde\infty),(\text{“AbsoluteTimeUsed”},0),(\text{“TestID”},\text{“pole”}))
+a-sametest-with-a-tolerance-22-7-3-14-0-01	\operatorname{VerificationTest}(\frac{22}{7},3.14,\operatorname{KeyValuePair}(\operatorname{SameTest},\operatorname{Function}(|a-b|<0.01,a,b)))	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},\frac{22}{7}),(\text{“ExpectedOutput”},3.14),(\text{“ActualOutput”},\frac{22}{7}),(\text{“AbsoluteTimeUsed”},0))
+memoryconstraint-in-process-is-an-error-not-a	\operatorname{VerificationTest}(2+3,5,\operatorname{KeyValuePair}(\operatorname{MemoryConstraint},1000000))	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Error”}),(\text{“Input”},5),(\text{“ExpectedOutput”},5),(\text{“ActualOutput”},\operatorname{Missing}),(\text{“AbsoluteTimeUsed”},0))
+one-argument-succeeds-whenever-input-evaluates	\operatorname{VerificationTest}(1+1)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},2),(\text{“ExpectedOutput”},\operatorname{Missing}),(\text{“ActualOutput”},2),(\text{“AbsoluteTimeUsed”},0))
+the-default-comparison-is-structural	\operatorname{VerificationTest}(x^2+2x+1,(x+1)^2)	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Failure”}),(\text{“Input”},x^2+2x+1),(\text{“ExpectedOutput”},(x+1)^2),(\text{“ActualOutput”},x^2+2x+1),(\text{“AbsoluteTimeUsed”},0))
+verificationtest-complexinfinity-1-times-0-pow	\operatorname{VerificationTest}(\tilde\infty,10^{-1})	\operatorname{TestResultObject}((\text{“Outcome”},\text{“Success”}),(\text{“Input”},\tilde\infty),(\text{“ExpectedOutput”},\tilde\infty),(\text{“ActualOutput”},\tilde\infty),(\text{“AbsoluteTimeUsed”},0))

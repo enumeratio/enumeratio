@@ -1,0 +1,5 @@
+id	in	out
+multivariate-poisson-mean	\operatorname{Mean}(\operatorname{MultivariatePoissonDistribution}(1,[2,3]))	[3,4]
+multivariate-poisson-variance	\operatorname{Variance}(\operatorname{MultivariatePoissonDistribution}(1,[2,3]))	[3,4]
+multivariate-poisson-covariance	\operatorname{Covariance}(\operatorname{MultivariatePoissonDistribution}(1,[2,3]))	[[3,1],[1,4]]
+multivariate-poisson-pdf	\operatorname{PDF}(\operatorname{MultivariatePoissonDistribution}(1,[2,3]),[1,1])	\frac{7}{e^6}

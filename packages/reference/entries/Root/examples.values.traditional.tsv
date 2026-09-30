@@ -6,9 +6,9 @@ stays-symbolic-when-x-isn-t-a-perfect-power
 a-negative-index-gives-the-reciprocal-root-x-1-n		
 the-real-cube-root-wolfram-s-surd-27-3		
 any-odd-root-of-a-negative-number-is-real		
-approximate-negative-radicands-stay-real-too		
-threads-element-wise-over-a-list		
-the-edge-length-of-a-cube-with-volume-1000		
-sqrt-n-x-n-x-for-a-perfect-nth-power	\sqrt[3]{8}^3=8	\mathrm{True}
-root-x-2-agrees-with-sqrt	\sqrt{16}=\sqrt{16}	\mathrm{True}
-an-even-root-of-a-negative-non-perfect-power		
+approximate-negative-radicands-stay-real-too	\sqrt[5]{-3.5}	-1.28473515712343933868
+threads-element-wise-over-a-list	\sqrt[3]{[-8,27]}	[-2,3]
+the-edge-length-of-a-cube-with-volume-1000	\sqrt[3]{1000}	10
+sqrt-n-x-n-x-for-a-perfect-nth-power	{\sqrt[3]{8}}^3=8	\operatorname{True}
+root-x-2-agrees-with-sqrt	\sqrt[2]{16}=\sqrt{16}	\operatorname{True}
+an-even-root-of-a-negative-non-perfect-power	\sqrt[2]{-8}	\sqrt{-8}

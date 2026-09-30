@@ -1,0 +1,9 @@
+id	in	out
+abs-resolves-once-the-sign-is-known	\operatorname{Assuming}(x>0,|x|)	x
+sign-of-x-plus-sign-of-y-under-opposite-signs	\operatorname{Assuming}([x>0,y<0],\operatorname{sgn}(x)+\operatorname{sgn}(y))	0
+assuming-a-gt-0-list-refine-sqrt-a-pow-2		
+assuming-n-in-integers-p-in-primes-n-gt-0	\operatorname{Assuming}(n\in\mathbb{Z}\land p\in\operatorname{Primes}\land n>0,\operatorname{operations})	\operatorname{operations}
+assuming-a-gt-0-list-integrate-1-times-x-plus-a		
+the-assumption-does-not-leak	[\operatorname{Assuming}(z>0,\operatorname{sgn}(z)),\operatorname{sgn}(z)]	[1,\operatorname{sgn}(z)]
+assuming-x-gt-eq-0-assuming-y-lt-0-refine-sqrt-x	\operatorname{Assuming}(x\ge0,\operatorname{Assuming}(y<0,\operatorname{Refine}(\sqrt{x^2y^2})))	-xy
+assuming-m-mod-2-eq-0-simplify-cos-k-times-pi		

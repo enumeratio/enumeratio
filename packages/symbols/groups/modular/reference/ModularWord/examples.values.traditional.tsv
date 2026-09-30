@@ -1,14 +1,14 @@
 id	in	out
-the-shortest-geodesic	\mathrm{ModularWord}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{LR}
-a-word-evaluates-as-its-matrix		
-the-s-t-exponents-are-a-continued-fraction	\mathrm{ModularSTWord}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	\bigl\lbrack5\bigr\rbrack
-the-identity-matrix	\mathrm{ModularKind}(\begin{pmatrix}1&0\\0&1\end{pmatrix})	\text{Identity}
-s-is-elliptic	\mathrm{ModularKind}(\begin{pmatrix}0&-1\\1&0\end{pmatrix})	\text{Elliptic}
-t-is-parabolic	\mathrm{ModularKind}(\begin{pmatrix}1&1\\0&1\end{pmatrix})	\text{Parabolic}
-lr-is-hyperbolic	\mathrm{ModularKind}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{Hyperbolic}
-the-trace-of-a-plain-matrix	\mathrm{ModularTrace}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	3
-the-trace-of-a-bare-word		
-a-word-wrapped-as-modularmatrix		
-a-nested-list-matrix-works-too		
-t-5-fixes-a-cusp	\mathrm{ModularKind}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	\text{Parabolic}
-the-s-t-round-trip-can-negate	\mathrm{ModularTrace}(\mathrm{ModularFromSTWord}(\mathrm{ModularSTWord}(\begin{pmatrix}3&2\\4&3\end{pmatrix})))	-6
+the-shortest-geodesic	\operatorname{ModularWord}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{“LR”}
+a-word-evaluates-as-its-matrix	\operatorname{ModularTrace}(\text{“LRLR”})	7
+the-s-t-exponents-are-a-continued-fraction	\operatorname{ModularSTWord}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	[5]
+the-identity-matrix	\operatorname{ModularKind}(\begin{pmatrix}1&0\\0&1\end{pmatrix})	\text{“Identity”}
+s-is-elliptic	\operatorname{ModularKind}(\begin{pmatrix}0&-1\\1&0\end{pmatrix})	\text{“Elliptic”}
+t-is-parabolic	\operatorname{ModularKind}(\begin{pmatrix}1&1\\0&1\end{pmatrix})	\text{“Parabolic”}
+lr-is-hyperbolic	\operatorname{ModularKind}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	\text{“Hyperbolic”}
+the-trace-of-a-plain-matrix	\operatorname{ModularTrace}(\begin{pmatrix}1&1\\1&2\end{pmatrix})	3
+the-trace-of-a-bare-word	\operatorname{ModularTrace}(\text{“LR”})	3
+a-word-wrapped-as-modularmatrix	\operatorname{ModularTrace}(\operatorname{ModularMatrix}(\text{“LRLR”}))	7
+a-nested-list-matrix-works-too	\operatorname{ModularTrace}([[1,1],[1,2]])	3
+t-5-fixes-a-cusp	\operatorname{ModularKind}(\begin{pmatrix}1&5\\0&1\end{pmatrix})	\text{“Parabolic”}
+the-s-t-round-trip-can-negate	\operatorname{ModularTrace}(\operatorname{ModularFromSTWord}(\operatorname{ModularSTWord}(\begin{pmatrix}3&2\\4&3\end{pmatrix})))	-6

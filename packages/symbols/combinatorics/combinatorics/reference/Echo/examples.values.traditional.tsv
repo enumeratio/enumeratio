@@ -1,0 +1,2 @@
+id	in	out
+echo-returns-its-argument	\operatorname{Echo}(42)	42

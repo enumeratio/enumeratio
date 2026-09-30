@@ -1,0 +1,4 @@
+id	in	out
+count-fibstrings-4	\operatorname{Count}(\operatorname{FibStrings}(4))	8
+first-element-of-fibstrings-4	\operatorname{At}(\operatorname{FibStrings}(4),1)	\operatorname{BinaryWord}([0,0,0,0])
+every-element-of-fibstrings-4	\operatorname{Take}(\operatorname{FibStrings}(4),8)	[\operatorname{BinaryWord}([0,0,0,0]),\operatorname{BinaryWord}([0,0,0,1]),\operatorname{BinaryWord}([0,0,1,0]),\operatorname{BinaryWord}([0,1,0,0]),\operatorname{BinaryWord}([0,1,0,1]),\operatorname{BinaryWord}([1,0,0,0]),\operatorname{BinaryWord}([1,0,0,1]),\operatorname{BinaryWord}([1,0,1,0])]

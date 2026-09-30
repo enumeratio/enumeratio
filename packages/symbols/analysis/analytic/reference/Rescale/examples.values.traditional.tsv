@@ -1,0 +1,9 @@
+id	in	out
+rescale-list	\operatorname{Rescale}([1,2,3,4])	[0,\frac{1}{3},\frac{2}{3},1]
+rescale-with-range	\operatorname{Rescale}(5,[0,10])	\frac{1}{2}
+rescale-with-target	\operatorname{Rescale}(5,[0,10],[100,200])	150
+rescale-neg-3-over-2-list-neg-2-2	\operatorname{Rescale}(\frac{-3}{2},[-2,2])	\frac{1}{8}
+rescale-3-list-neg-9-7-list-11-28	\operatorname{Rescale}(3,[-9,7],[11,28])	\frac{95}{4}
+rescale-list-neg-2-0-2	\operatorname{Rescale}([-2,0,2])	[0,\frac{1}{2},1]
+piecewiseexpand-d-rescale-x-list-a-b-list-x-k	\operatorname{PiecewiseExpand}(\frac{d}{d[x,k]}\operatorname{Rescale}(x,[a,b]))	\frac{d}{d[x,k]}\operatorname{Rescale}(x,[a,b])
+n-rescale-1-over-11-list-1-over-7-5-50		

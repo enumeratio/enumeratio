@@ -1,0 +1,5 @@
+id	in	out
+a-2-cycle-and-a-downstream-only-vertex	\operatorname{ConnectedComponents}(\operatorname{Graph}([1,2,3],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1),\operatorname{DirectedEdge}(2,3)]))	[[1,2],[3]]
+length-first-connectedcomponents-g	\operatorname{Length}(\operatorname{First}(\operatorname{ConnectedComponents}(g)))	0
+length-connectedcomponents-g-minus-1	\operatorname{Length}(\operatorname{ConnectedComponents}(g))-1	0
+length-connectedcomponents-g	\operatorname{Length}(\operatorname{ConnectedComponents}(g))	1

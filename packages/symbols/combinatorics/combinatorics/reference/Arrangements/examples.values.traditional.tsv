@@ -1,0 +1,4 @@
+id	in	out
+count-arrangements-4-2	\operatorname{Count}(\operatorname{Arrangements}(4,2))	12
+first-element-of-arrangements-4-2	\operatorname{At}(\operatorname{Arrangements}(4,2),1)	\operatorname{Arrangement}([1,2])
+every-element-of-arrangements-4-2	\operatorname{Take}(\operatorname{Arrangements}(4,2),12)	[\operatorname{Arrangement}([1,2]),\operatorname{Arrangement}([1,3]),\operatorname{Arrangement}([1,4]),\operatorname{Arrangement}([2,1]),\operatorname{Arrangement}([2,3]),\operatorname{Arrangement}([2,4]),\operatorname{Arrangement}([3,1]),\operatorname{Arrangement}([3,2]),\operatorname{Arrangement}([3,4]),\operatorname{Arrangement}([4,1]),\operatorname{Arrangement}([4,2]),\operatorname{Arrangement}([4,3])]

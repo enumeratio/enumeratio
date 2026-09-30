@@ -1,0 +1,4 @@
+id	in	out
+the-first-20-terms	\operatorname{Take}(\operatorname{NarcissisticNumbers},20)	[1,2,3,4,5,6,7,8,9,153,370,371,407,1634,8208,9474,54748,92727,93084,548834]
+the-88th-and-largest-term-is-exact	\operatorname{At}(\operatorname{NarcissisticNumbers},88)	115132219018763992565095597973971522401
+narcissistic-armstrong-numbers-are-proven-finite	\operatorname{Count}(\operatorname{NarcissisticNumbers})	88

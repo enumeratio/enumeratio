@@ -1,0 +1,10 @@
+id	in	out
+rule-30-single-seed	\operatorname{CellularAutomaton}(30,[[1],0],3)	[[0,0,0,1,0,0,0],[0,0,1,1,1,0,0],[0,1,1,0,0,1,0],[1,1,0,1,1,1,1]]
+cellularautomaton-30-list-0-0-0-1-0-0-0-2	\operatorname{CellularAutomaton}(30,[0,0,0,1,0,0,0],2)	[[0,0,0,1,0,0,0],[0,0,1,1,1,0,0],[0,1,1,0,0,1,0]]
+rule-90-explicit-init	\operatorname{CellularAutomaton}(90,[[1,0,0],0],2)	[[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]]
+cellularautomaton-30-list-list-1-0-2	\operatorname{CellularAutomaton}(30,[[1],0],2)	[[0,0,1,0,0],[0,1,1,1,0],[1,1,0,0,1]]
+cellularautomaton-30-list-1-0-0-0-0-0-2	\operatorname{CellularAutomaton}(30,[1,0,0,0,0,0],2)	[[1,0,0,0,0,0],[1,1,0,0,0,1],[0,0,1,0,1,1]]
+grid-cellularautomaton-73-list-list-1-0-4		
+grid-cellularautomaton-30-list-1-0-0-0-0-0-2		
+cellularautomaton-30-list-1-0-1-1-3	\operatorname{CellularAutomaton}(30,[1,0,1,1],3)	[[1,0,1,1],[0,0,1,0],[0,1,1,1],[0,1,0,0]]
+cellularautomaton-90-list-list-1-0-2	\operatorname{CellularAutomaton}(90,[[1],0],2)	[[0,0,1,0,0],[0,1,0,1,0],[1,0,0,0,1]]

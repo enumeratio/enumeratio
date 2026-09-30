@@ -1,0 +1,15 @@
+id	in	out
+integerstring-42	\operatorname{IntegerString}(42)	\text{“42”}
+integerstring-17-651-2	\operatorname{IntegerString}(17651,2)	\text{“100010011110011”}
+bases-above-10-use-letters-a-z	\operatorname{IntegerString}(255,16)	\text{“ff”}
+base-36-is-the-largest-with-digit-values-up-to-z	\operatorname{IntegerString}(35,36)	\text{“z”}
+threads-over-a-list	\operatorname{IntegerString}([1,2,3])	[\text{“1”},\text{“2”},\text{“3”}]
+50-in-hexadecimal-exact-past-double-precision	\operatorname{IntegerString}(50!,16)	\text{“49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000”}
+roman-numerals-with-the-base-roman	\operatorname{IntegerString}(1988,\text{“Roman”})	\text{“MCMLXXXVIII”}
+a-width-pads-with-leading-zeros	\operatorname{IntegerString}(255,16,4)	\text{“00ff”}
+a-width-shorter-than-the-numeral-keeps-the-least	\operatorname{IntegerString}(1234567,10,3)	\text{“567”}
+a-third-argument-pads-with-leading-zeros-to-that	\operatorname{IntegerString}(5,2,8)	\text{“00000101”}
+integerstring-50-factorial-36	\operatorname{IntegerString}(50!,36)	\text{“4q7eyp9zizmtqt0648txt4fm720cc1s00000000000”}
+integerstring-2-046-2	\operatorname{IntegerString}(2046,2)	\text{“11111111110”}
+integerstring-0	\operatorname{IntegerString}(0)	\text{“0”}
+compute-engine-keeps-the-sign	\operatorname{IntegerString}(-42)	\text{“-42”}

@@ -1,0 +1,4 @@
+id	in	out
+the-one-line-word-312	\operatorname{OccurrencesOf123}(\operatorname{Permutation}([3,1,2]))	0
+the-one-line-word-312-as-a-plain-list	\operatorname{OccurrencesOf123}([3,1,2])	0
+the-one-line-word-2413	\operatorname{OccurrencesOf123}(\operatorname{Permutation}([2,4,1,3]))	0

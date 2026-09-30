@@ -1,0 +1,4 @@
+id	in	out
+count-squarepartitions-12	\operatorname{Count}(\operatorname{SquarePartitions}(12))	5
+first-element-of-squarepartitions-12	\operatorname{At}(\operatorname{SquarePartitions}(12),1)	\operatorname{IntegerPartition}([9,1,1,1])
+every-element-of-squarepartitions-12	\operatorname{Take}(\operatorname{SquarePartitions}(12),5)	[\operatorname{IntegerPartition}([9,1,1,1]),\operatorname{IntegerPartition}([4,4,4]),\operatorname{IntegerPartition}([4,4,1,1,1,1]),\operatorname{IntegerPartition}([4,1,1,1,1,1,1,1,1]),\operatorname{IntegerPartition}([1,1,1,1,1,1,1,1,1,1,1,1])]

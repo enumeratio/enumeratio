@@ -2,16 +2,16 @@ id	in	out
 primeomega-30	\Omega(30)	3
 primeomega-360	\Omega(360)	6
 primeomega-12	\Omega(12)	3
-threads-element-wise-over-a-list-as-wolfram-s		
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{PrimeOmega}([4,12,24])	[2,3,4]
 large-integers	\Omega(30!)	59
 gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	\Omega(5+9i)	2
-gaussianintegers-true-12-1-i-4-cdot-3		
-listable-over-a-range	\Omega(1..20)	\bigl\lbrack0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3\bigr\rbrack
+gaussianintegers-true-12-1-i-4-cdot-3	\operatorname{PrimeOmega}(12,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	5
+listable-over-a-range	\Omega(\operatorname{Range}(20))	[0,1,1,2,1,2,1,3,2,2,1,3,1,2,2,4,1,3,1,3]
 primeomega-28	\Omega(28)	3
-completely-additive-omega-mn-omega-m-omega-n-for	\Omega(24\times40)=\Omega(24)+\Omega(40)	\mathrm{True}
-omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	\Omega(8)\ge\omega(8)	\mathrm{True}
+completely-additive-omega-mn-omega-m-omega-n-for	\Omega(24\cdot40)=\Omega(24)+\Omega(40)	\operatorname{True}
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	\Omega(8)\ge\omega(8)	\operatorname{True}
 primeomega-100	\Omega(100)	4
-primeomega-16-807	\Omega(16\,807)	5
-primeomega-165-eq-primenu-165	\Omega(165)=\omega(165)	\mathrm{True}
-all-range-1-100-function-primenu-1-lt-eq	\mathrm{All}(1..100, ()\mapsto\omega(\operatorname{\_1})\le\Omega(\operatorname{\_1}))	\mathrm{True}
+primeomega-16-807	\Omega(16807)	5
+primeomega-165-eq-primenu-165	\Omega(165)=\omega(165)	\operatorname{True}
+all-range-1-100-function-primenu-1-lt-eq	\operatorname{All}(\operatorname{Range}(1,100),\operatorname{Function}(\operatorname{Block}(\omega(\_1)\le\Omega(\_1)),\_1))	\operatorname{True}
 1-has-no-prime-factors	\Omega(1)	0

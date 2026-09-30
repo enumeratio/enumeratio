@@ -1,21 +1,21 @@
 id	in	out
-join-list-1-2-list-3-4		
-join-list-1-2-list-3-4-list-5		
-join-list-a-b-c-list-x-y-list-u-v-w		
-join-tolerates-shorter-array-second		
-join-splices-any-shared-head		
-join-associations-first-seen-order		
-a-trailing-integer-argument-joins-at-that-level		
-joining-matrices-stacks-their-rows		
-sets-as-well-as-lists-as-long-as-all-arguments		
-a-lazy-range-is-spliced-in		
-with-no-arguments-the-empty-list		
-at-level-2-matrices-are-joined-side-by-side		
-ragged-rows-join-at-level-2-too		
-a-row-missing-from-the-shorter-array-simply-isn		
-any-head-as-long-as-all-the-arguments-share-it		
+join-list-1-2-list-3-4	\operatorname{Join}([1,2],[3,4])	[1,2,3,4]
+join-list-1-2-list-3-4-list-5	\operatorname{Join}([1,2],[3,4],[5])	[1,2,3,4,5]
+join-list-a-b-c-list-x-y-list-u-v-w	\operatorname{Join}([a,b,c],[x,y],[u,v,w])	[a,b,c,x,y,u,v,w]
+join-tolerates-shorter-array-second	\operatorname{Join}([[1,2],[3,4]],[[x]],2)	[[1,2,x],[3,4]]
+join-splices-any-shared-head	\operatorname{Join}(f(a),f(b),f(c))	f(a,b,c)
+join-associations-first-seen-order	\operatorname{Join}(\operatorname{Association}(\operatorname{Rule}(a,b)),\operatorname{Association}(\operatorname{Rule}(c,d),\operatorname{Rule}(a,f)))	\operatorname{Association}(\operatorname{Rule}(a,f),\operatorname{Rule}(c,d))
+a-trailing-integer-argument-joins-at-that-level	\operatorname{Join}([[1,2],[3,4]],[[5,6],[7,8]],2)	[[1,2,5,6],[3,4,7,8]]
+joining-matrices-stacks-their-rows	\operatorname{Join}([[a,b],[c,d]],[[1,2],[3,4]])	[[a,b],[c,d],[1,2],[3,4]]
+sets-as-well-as-lists-as-long-as-all-arguments	\operatorname{Join}(\{1,2\},\{3\})	\{1,2,3\}
+a-lazy-range-is-spliced-in	\operatorname{Join}([1,2],\operatorname{Range}(3,5))	[1,2,3,4,5]
+with-no-arguments-the-empty-list	\operatorname{Join}()	[]
+at-level-2-matrices-are-joined-side-by-side	\operatorname{Join}([[a,b],[c,d]],[[1,2],[3,4]],2)	[[a,b,1,2],[c,d,3,4]]
+ragged-rows-join-at-level-2-too	\operatorname{Join}([[1],[5,6]],[[2,3],[7]],[[4],[8]],2)	[[1,2,3,4],[5,6,7,8]]
+a-row-missing-from-the-shorter-array-simply-isn	\operatorname{Join}([[x]],[[1,2],[3,4]],2)	[[x,1,2],[3,4]]
+any-head-as-long-as-all-the-arguments-share-it	\operatorname{Join}(f(a),f(b))	f(a,b)
 join-aa-bb		
-join-a-b-flatten-a-b-1-see-flatten	\mathrm{Join}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)=\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, 1)	\mathrm{True}
-join-is-associative	\mathrm{Join}(\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack), \bigl\lbrack u, v, w\bigr\rbrack)=\mathrm{Join}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Join}(\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack u, v, w\bigr\rbrack))	\mathrm{True}
-nestlist-function-join-1-1-1-list-x-4		
+join-a-b-flatten-a-b-1-see-flatten	\operatorname{Join}([1,2],[3,4])=\operatorname{Flatten}([[1,2],[3,4]],1)	\operatorname{True}
+join-is-associative	\operatorname{Join}(\operatorname{Join}([a,b,c],[x,y]),[u,v,w])=\operatorname{Join}([a,b,c],\operatorname{Join}([x,y],[u,v,w]))	\operatorname{True}
+nestlist-function-join-1-1-1-list-x-4	\operatorname{NestList}(\operatorname{Function}(\operatorname{Block}(\operatorname{Join}(\_1,\_1)),\_1),[x],4)	[[x],[x,x],[x,x,x,x],[x,x,x,x,x,x,x,x],[x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
 nestlist-function-list-1-neg-1-plus-1-1-list-1-5		

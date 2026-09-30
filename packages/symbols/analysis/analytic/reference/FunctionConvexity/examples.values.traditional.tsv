@@ -1,0 +1,7 @@
+id	in	out
+a-parabola-is-convex	\operatorname{FunctionConvexity}(x^2,x)	1
+a-cubic-has-an-inflection-point	\operatorname{FunctionConvexity}(x^3,x)	\operatorname{FunctionConvexity}(x^3,x)
+exp-is-always-convex	\operatorname{FunctionConvexity}(e^x,x)	1
+map-function-functionconvexity-1-list-x-y-1-list		
+functionconvexity-x-pow-2-minus-1-x	\operatorname{FunctionConvexity}(x^2-1,x)	1
+a-restricted-domain-answers-indeterminate	\operatorname{FunctionConvexity}(\frac{1}{x},x)	\operatorname{FunctionConvexity}(\frac{1}{x},x)

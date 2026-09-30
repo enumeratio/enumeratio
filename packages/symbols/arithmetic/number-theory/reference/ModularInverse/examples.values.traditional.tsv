@@ -1,43 +1,43 @@
 id	in	out
-3-cdot-5-15-equiv-1	\left(3^{-1}\bmod 7\right)	5
-modularinverse-2-11	\left(2^{-1}\bmod 11\right)	6
-modularinverse-3-5	\left(3^{-1}\bmod 5\right)	2
-a-negative-argument-3-cdot-2-6-equiv-1	\left((-3)^{-1}\bmod 7\right)	2
-a-21-digit-modulus	\left(3^{-1}\bmod 10^{20}+1\right)	33\,333\,333\,333\,333\,333\,334
-listable-threads-over-a-list		
-2-i-6-4i-8-14i-equiv-1-pmod-7	\left((2+i)^{-1}\bmod 7\right)	6+4i
-modularinverse-11-plus-neg-7-times-i-7-plus-4i	\left((11-7i)^{-1}\bmod 7+4i\right)	-1+2i
-a-gaussian-base-and-a-gaussian-modulus	\left((3-i)^{-1}\bmod 5+2i\right)	-1-i
-inverse-mod-a-unit-is-always-0	\left((3+4i)^{-1}\bmod 1\right)	0
-inverse-mod-i-is-always-0	\left((3+4i)^{-1}\bmod i\right)	0
-a-unit-is-its-own-inverse-mod-anything-it-s-a	\left((i)^{-1}\bmod 2+i\right)	-i
-inverse-of-a-gaussian-prime-mod-a-coprime	\left((2+i)^{-1}\bmod 2-i\right)	-1
-inverse-mod-a-real-prime-3-mod-4	\left((2+i)^{-1}\bmod 3\right)	1+i
-no-inverse-when-the-gcd-isn-t-a-unit-shared	\left((3+4i)^{-1}\bmod 2+i\right)	\left((3+4i)^{-1}\bmod 2+i\right)
-inverse-mod-a-negative-real-prime	\left((2+i)^{-1}\bmod -7\right)	-1-3i
-inverse-mod-a-composite-gaussian-modulus-norm-25	\left((1+i)^{-1}\bmod 3+4i\right)	3i
-inverse-mod-a-modulus-past-2-53	\left((4+i)^{-1}\bmod 100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i\right)	-47\,059\,883\,199\,912\,322\,470+11\,760\,467\,200\,350\,710\,121i
-inverse-mod-1-4i-the-other-prime-above-17	\left((8+2i)^{-1}\bmod 1+4i\right)	-1
-a-real-base-inverted-mod-a-gaussian-modulus	\left(5^{-1}\bmod 2+i\right)	\left(5^{-1}\bmod 2+i\right)
-inverse-mod-a-large-norm-gaussian	\left((1+i)^{-1}\bmod 123+456i\right)	-166+289i
-inverse-mod-a-negative-real-composite-has-none	\left((5+5i)^{-1}\bmod -15\right)	\left((5+5i)^{-1}\bmod -15\right)
-inverse-of-a-prime-above-13-mod-the-other-prime	\left((3+2i)^{-1}\bmod 2+3i\right)	-2
-inverse-mod-a-negative-associate	\left((2+i)^{-1}\bmod -2-3i\right)	-1-i
-inverse-mod-a-real-composite-5-squared-has-none	\left((5+5i)^{-1}\bmod 25\right)	\left((5+5i)^{-1}\bmod 25\right)
-inverse-of-a-real-prime-s-associate-by-i-mod-a	\left((7i)^{-1}\bmod 3+2i\right)	-2i
-inverse-mod-a-real-prime-19	\left((2+i)^{-1}\bmod 19\right)	8+15i
-no-inverse-mod-0	\left((2+i)^{-1}\bmod 0\right)	\left((2+i)^{-1}\bmod 0\right)
-a-real-base-with-no-inverse-mod-a-shared-factor	\left(5^{-1}\bmod 5+5i\right)	\left(5^{-1}\bmod 5+5i\right)
-modularinverse-neg-5-7	\left((-5)^{-1}\bmod 7\right)	4
-modularinverse-10-pow-100-000-nextprime-1-000	\left((10^{100\,000})^{-1}\bmod \mathrm{NextPrime}(1\,000)\right)	942
-the-same-as-powermod-with-exponent-1	\left(3^{-1}\bmod 7\right)=\left(\frac{1}{3}\bmod 7\right)	\mathrm{True}
-a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	12\,345\left(12\,345^{-1}\bmod 2^{61}-1\right)\bmod(2^{61}-1)	1
-list-modularinverse-2-5-modularinverse-7-5	\bigl\lbrack\left(2^{-1}\bmod 5\right), \left(7^{-1}\bmod 5\right)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
-list-modularinverse-3-5-powermod-3-neg-1-5	\bigl\lbrack\left(3^{-1}\bmod 5\right), \left(\frac{1}{3}\bmod 5\right)\bigr\rbrack	\bigl\lbrack2, 2\bigr\rbrack
-modularinverse-5-7	\left(5^{-1}\bmod 7\right)	3
-modularinverse-5-neg-7	\left(5^{-1}\bmod -7\right)	-4
-modularinverse-7-12	\left(7^{-1}\bmod 12\right)	7
-modularinverse-modularinverse-7-9-9	\left((\left(7^{-1}\bmod 9\right))^{-1}\bmod 9\right)	7
-gcd-2-4-2-no-inverse	\left(2^{-1}\bmod 4\right)	\left(2^{-1}\bmod 4\right)
-modularinverse-10-21	\left(10^{-1}\bmod 21\right)	19
-modularinverse-21-10	\left(21^{-1}\bmod 10\right)	1
+3-cdot-5-15-equiv-1	(3^{-1}\bmod7)	5
+modularinverse-2-11	(2^{-1}\bmod11)	6
+modularinverse-3-5	(3^{-1}\bmod5)	2
+a-negative-argument-3-cdot-2-6-equiv-1	((-3)^{-1}\bmod7)	2
+a-21-digit-modulus	(3^{-1}\bmod10^{20}+1)	33333333333333333334
+listable-threads-over-a-list	\operatorname{ModularInverse}([2,3,4],11)	[6,4,3]
+2-i-6-4i-8-14i-equiv-1-pmod-7	((2+i)^{-1}\bmod7)	6+4i
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	((11-7i)^{-1}\bmod7+4i)	-1+2i
+a-gaussian-base-and-a-gaussian-modulus	((3-i)^{-1}\bmod5+2i)	-1-i
+inverse-mod-a-unit-is-always-0	((3+4i)^{-1}\bmod1)	0
+inverse-mod-i-is-always-0	((3+4i)^{-1}\bmod i)	0
+a-unit-is-its-own-inverse-mod-anything-it-s-a	(i^{-1}\bmod2+i)	-i
+inverse-of-a-gaussian-prime-mod-a-coprime	((2+i)^{-1}\bmod2-i)	-1
+inverse-mod-a-real-prime-3-mod-4	((2+i)^{-1}\bmod3)	1+i
+no-inverse-when-the-gcd-isn-t-a-unit-shared	((3+4i)^{-1}\bmod2+i)	((3+4i)^{-1}\bmod2+i)
+inverse-mod-a-negative-real-prime	((2+i)^{-1}\bmod-7)	-1-3i
+inverse-mod-a-composite-gaussian-modulus-norm-25	((1+i)^{-1}\bmod3+4i)	3i
+inverse-mod-a-modulus-past-2-53	((4+i)^{-1}\bmod100000000000000000001+9007199254740993i)	-47059883199912322470+11760467200350710121i
+inverse-mod-1-4i-the-other-prime-above-17	((8+2i)^{-1}\bmod1+4i)	-1
+a-real-base-inverted-mod-a-gaussian-modulus	(5^{-1}\bmod2+i)	(5^{-1}\bmod2+i)
+inverse-mod-a-large-norm-gaussian	((1+i)^{-1}\bmod123+456i)	-166+289i
+inverse-mod-a-negative-real-composite-has-none	((5+5i)^{-1}\bmod-15)	((5+5i)^{-1}\bmod-15)
+inverse-of-a-prime-above-13-mod-the-other-prime	((3+2i)^{-1}\bmod2+3i)	-2
+inverse-mod-a-negative-associate	((2+i)^{-1}\bmod-2-3i)	-1-i
+inverse-mod-a-real-composite-5-squared-has-none	((5+5i)^{-1}\bmod25)	((5+5i)^{-1}\bmod25)
+inverse-of-a-real-prime-s-associate-by-i-mod-a	((7i)^{-1}\bmod3+2i)	-2i
+inverse-mod-a-real-prime-19	((2+i)^{-1}\bmod19)	8+15i
+no-inverse-mod-0	((2+i)^{-1}\bmod0)	((2+i)^{-1}\bmod0)
+a-real-base-with-no-inverse-mod-a-shared-factor	(5^{-1}\bmod5+5i)	(5^{-1}\bmod5+5i)
+modularinverse-neg-5-7	((-5)^{-1}\bmod7)	4
+modularinverse-10-pow-100-000-nextprime-1-000	({10^{100000}}^{-1}\bmod\operatorname{NextPrime}(1000))	942
+the-same-as-powermod-with-exponent-1	(3^{-1}\bmod7)=(3^{-1}\bmod7)	\operatorname{True}
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	\bmod(12345(12345^{-1}\bmod2^{61}-1),2^{61}-1)	1
+list-modularinverse-2-5-modularinverse-7-5	[(2^{-1}\bmod5),(7^{-1}\bmod5)]	[3,3]
+list-modularinverse-3-5-powermod-3-neg-1-5	[(3^{-1}\bmod5),(3^{-1}\bmod5)]	[2,2]
+modularinverse-5-7	(5^{-1}\bmod7)	3
+modularinverse-5-neg-7	(5^{-1}\bmod-7)	-4
+modularinverse-7-12	(7^{-1}\bmod12)	7
+modularinverse-modularinverse-7-9-9	((7^{-1}\bmod9)^{-1}\bmod9)	7
+gcd-2-4-2-no-inverse	(2^{-1}\bmod4)	(2^{-1}\bmod4)
+modularinverse-10-21	(10^{-1}\bmod21)	19
+modularinverse-21-10	(21^{-1}\bmod10)	1

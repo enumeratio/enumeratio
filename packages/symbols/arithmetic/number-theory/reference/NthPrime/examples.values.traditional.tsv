@@ -1,32 +1,32 @@
 id	in	out
-the-first-prime-is-2	p_{1}	2
+the-first-prime-is-2	p_1	2
 nthprime-10	p_{10}	29
 nthprime-100	p_{100}	541
-threads-element-wise-over-a-list-as-wolfram-s		
-the-millionth-prime	p_{1\,000\,000}	15\,485\,863
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{NthPrime}([1,3,4,10])	[2,5,7,29]
+the-millionth-prime	p_{1000000}	15485863
 a-prime-gap-p-31-p-30-127-113	p_{31}-p_{30}	14
 nthprime-25	p_{25}	97
-array-nthprime-100-mod-10		
-n-100-times-last-foldlist-multiply-1-1-plus-neg	N(100\mathrm{Last}(\mathrm{FoldList}(\mathrm{Multiply}, 1, 1-\frac{1}{p_{1..25}})))	12.031\,729\,047\,493\,518\,845
-ismersenneprimeexponent-nthprime-4	\mathrm{IsMersennePrimeExponent}(p_{4})	\mathrm{True}
-isprime-neg-1-plus-2-pow-nthprime-4	\mathrm{IsPrime}(2^{p_{4}}-1)	\mathrm{True}
+array-nthprime-100-mod-10	\bmod(\operatorname{Array}(\operatorname{NthPrime},100),10)	[2,3,5,7,1,3,7,9,3,9,1,7,1,3,7,3,9,1,7,1,3,9,3,9,7,1,3,7,9,3,7,1,7,9,9,1,7,3,7,3,9,1,1,3,7,9,1,3,7,9,3,9,1,1,7,3,9,1,7,1,3,3,7,1,3,7,1,7,7,9,3,9,7,3,9,3,9,7,1,9,9,1,1,3,9,3,9,7,1,3,7,9,7,1,9,3,9,1,3,1]
+n-100-times-last-foldlist-multiply-1-1-plus-neg	N(100\operatorname{Last}(\operatorname{FoldList}(\operatorname{Multiply},1,1+\frac{-1}{p_{\operatorname{Range}(1,25)}})))	12.0317290474935188450463777499160024475175470799073086119929575589597740394678139316347543373629931036639116323237411425605253687875356022154375132803637403732670634237805048070340487413638928157755127949850202451197436821568569057451493657450470583184058262054404101704406716674294588217739009601393323348242978147276061308652118518085202135246963485714099918756321910699826587150938643637042862870767866970267026668174768993804753052463646547648567051503940090255295944697663573816741481016424448
+ismersenneprimeexponent-nthprime-4	\operatorname{IsMersennePrimeExponent}(p_4)	\operatorname{True}
+isprime-neg-1-plus-2-pow-nthprime-4	\operatorname{IsPrime}(-1+2^{p_4})	\operatorname{True}
 1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n		
-primepi-and-nthprime-are-inverses-pi-p-n-n	\pi(p_{100})=100	\mathrm{True}
+primepi-and-nthprime-are-inverses-pi-p-n-n	\pi(p_{100})=100	\operatorname{True}
 primepi-nthprime-100	\pi(p_{100})	100
 nthprime-1-plus-primepi-30	p_{1+\pi(30)}	31
-primeomega-nthprime-5	\Omega(p_{5})	1
-divisors-nthprime-5	\mathrm{Divisors}(p_{5})	\bigl\lbrack1, 11\bigr\rbrack
+primeomega-nthprime-5	\Omega(p_5)	1
+divisors-nthprime-5	\operatorname{Divisors}(p_5)	[1,11]
 totient-nthprime-10	\varphi(p_{10})	28
-nthprime-2	p_{2}	3
-nthprime-3	p_{3}	5
-nthprime-4	p_{4}	7
-nthprime-5	p_{5}	11
-nthprime-6	p_{6}	13
-nthprime-7	p_{7}	17
-nthprime-30-in-primes	p_{30}\in\mathbb{P}	\mathrm{True}
-neg-1-plus-nthprime-10	p_{10}-1	28
-nthprime-8	p_{8}	19
-nthprime-9	p_{9}	23
+nthprime-2	p_2	3
+nthprime-3	p_3	5
+nthprime-4	p_4	7
+nthprime-5	p_5	11
+nthprime-6	p_6	13
+nthprime-7	p_7	17
+nthprime-30-in-primes	p_{30}\in\operatorname{Primes}	\operatorname{True}
+neg-1-plus-nthprime-10	-1+p_{10}	28
+nthprime-8	p_8	19
+nthprime-9	p_9	23
 nthprime-11	p_{11}	31
 nthprime-12	p_{12}	37
 nthprime-13	p_{13}	41
@@ -35,5 +35,5 @@ nthprime-15	p_{15}	47
 nthprime-16	p_{16}	53
 nthprime-17	p_{17}	59
 nthprime-18	p_{18}	61
-n-must-be-a-positive-integer-compute-engine	p_{0}	p_{0}
-the-1000th-prime	p_{1\,000}	7\,919
+n-must-be-a-positive-integer-compute-engine	p_0	p_0
+the-1000th-prime	p_{1000}	7919

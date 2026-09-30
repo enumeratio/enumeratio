@@ -1,9 +1,9 @@
 id	in	out
-nonetrue-list-1-3-5-iseven	\mathrm{NoneTrue}(\bigl\lbrack1, 3, 5\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-nonetrue-list-1-2-3-iseven	\mathrm{NoneTrue}(\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
-nonetrue-list-1-2-3-4-5-6-iseven	\mathrm{NoneTrue}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
-nonetrue-list-1-3-5-7-9-iseven	\mathrm{NoneTrue}(\bigl\lbrack1, 3, 5, 7, 9\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1	\mathrm{NoneTrue}(\bigl\lbrack12, 16, x, 8, 14, y\bigr\rbrack, ()\mapsto\operatorname{\_1}\lt10)	\mathrm{False}
-nonetrue-list-12-16-x-14-y-function-istrue-1-lt	\mathrm{NoneTrue}(\bigl\lbrack12, 16, x, 14, y\bigr\rbrack, ()\mapsto\mathrm{IsTrue}(\operatorname{\_1}\lt10))	\mathrm{True}
-vacuously-true-on-an-empty-list	\mathrm{NoneTrue}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-the-negation-of-any	\mathrm{NoneTrue}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})=\lnot\mathrm{Any}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})	\mathrm{True}
+nonetrue-list-1-3-5-iseven	\operatorname{NoneTrue}([1,3,5],\operatorname{IsEven})	\operatorname{True}
+nonetrue-list-1-2-3-iseven	\operatorname{NoneTrue}([1,2,3],\operatorname{IsEven})	\operatorname{False}
+nonetrue-list-1-2-3-4-5-6-iseven	\operatorname{NoneTrue}([1,2,3,4,5,6],\operatorname{IsEven})	\operatorname{False}
+nonetrue-list-1-3-5-7-9-iseven	\operatorname{NoneTrue}([1,3,5,7,9],\operatorname{IsEven})	\operatorname{True}
+nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1	\operatorname{NoneTrue}([12,16,x,8,14,y],\operatorname{Function}(\operatorname{Block}(\_1<10),\_1))	\operatorname{False}
+nonetrue-list-12-16-x-14-y-function-istrue-1-lt	\operatorname{NoneTrue}([12,16,x,14,y],\operatorname{Function}(\operatorname{Block}(\operatorname{IsTrue}(\_1<10)),\_1))	\operatorname{True}
+vacuously-true-on-an-empty-list	\operatorname{NoneTrue}([],\operatorname{IsEven})	\operatorname{True}
+the-negation-of-any	\operatorname{NoneTrue}([4,6,9],\operatorname{IsPrime})=(\lnot\operatorname{Any}([4,6,9],\operatorname{IsPrime}))	\operatorname{True}

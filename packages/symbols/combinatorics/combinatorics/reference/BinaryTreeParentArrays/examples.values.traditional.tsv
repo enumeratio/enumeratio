@@ -1,0 +1,4 @@
+id	in	out
+c-4	\operatorname{Count}(\operatorname{BinaryTreeParentArrays}(4))	14
+first-element-of-binarytreeparentarrays-3	\operatorname{At}(\operatorname{BinaryTreeParentArrays}(3),1)	\operatorname{BinaryTreeParentArray}([0,1,2])
+returns-are-the-catalan-triangle	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{BinaryTreeParentArrays}(3),\text{“Returns”}))	([3,2,1],[1,2,2])

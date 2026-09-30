@@ -1,7 +1,7 @@
 id	in	out
-a-dihedral-group	\left|D_{100}\right|	200
-grouporder-permutationgroup-list-cycles-list	\left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack2, 10\bigr\rbrack, \bigl\lbrack4, 11\bigr\rbrack, \bigl\lbrack5, 7\bigr\rbrack, \bigl\lbrack8, 9\bigr\rbrack\bigr\rbrack), \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 4, 3, 8\bigr\rbrack, \bigl\lbrack2, 5, 6, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|	2\,880
-a-permutation-group	\left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 9, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|	6
-the-symmetric-group	\left|\mathrm{SymmetricGroup}(4)\right|	24
-grouporder-permutationgroup-list	\left|\mathrm{PermutationGroup}(\bigl\lbrack\bigr\rbrack)\right|	1
-grouporder-permutationgroup-list-cycles-list-2	\left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigr\rbrack)\bigr\rbrack)\right|	1
+a-dihedral-group	|D_{100}|	200
+grouporder-permutationgroup-list-cycles-list	|\operatorname{PermutationGroup}([\operatorname{Cycles}([[2,10],[4,11],[5,7],[8,9]]),\operatorname{Cycles}([[1,4,3,8],[2,5,6,7]])])|	2880
+a-permutation-group	|\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])])|	6
+the-symmetric-group	|\operatorname{SymmetricGroup}(4)|	24
+grouporder-permutationgroup-list	|\operatorname{PermutationGroup}([])|	1
+grouporder-permutationgroup-list-cycles-list-2	|\operatorname{PermutationGroup}([\operatorname{Cycles}([])])|	1

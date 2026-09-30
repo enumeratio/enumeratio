@@ -1,7 +1,7 @@
 id	in	out
-0-lt-1	0\lt1	\mathrm{True}
-4-over-3-lt-3-over-2	\frac{4}{3}\lt\frac{3}{2}	\mathrm{True}
-1-minus-128-times-10-pow-neg-16-lt-1	1-\frac{128}{10^{16}}\lt1	\mathrm{True}
-1-minus-256-times-10-pow-neg-16-lt-1	1-\frac{256}{10^{16}}\lt1	\mathrm{True}
-pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^{e}\lt e^{\pi}	\mathrm{True}
-refine-sqrt-x-pow-2-x-gt-0		
+0-lt-1	0<1	\operatorname{True}
+4-over-3-lt-3-over-2	\frac{4}{3}<\frac{3}{2}	\operatorname{True}
+1-minus-128-times-10-pow-neg-16-lt-1	1-12810^{-16}<1	\operatorname{True}
+1-minus-256-times-10-pow-neg-16-lt-1	1-25610^{-16}<1	\operatorname{True}
+pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^e<e^{\pi}	\operatorname{True}
+refine-sqrt-x-pow-2-x-gt-0	\operatorname{Refine}(\sqrt{x^2},x>0)	x

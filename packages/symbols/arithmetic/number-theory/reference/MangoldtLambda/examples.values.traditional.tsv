@@ -1,30 +1,30 @@
 id	in	out
-8-2-3		
-6-is-not-a-prime-power		
-mangoldtlambda-7		
-mangoldtlambda-9		
-mangoldtlambda-25		
-numerically-ln-3		
-listable		
-n-of-a-zero-result-is-still-0		
-mangoldtlambda-125		
-mangoldtlambda-7-pow-300		
-mangoldtlambda-list-2-6-9-8-15		
-mangoldtlambda-81-factorial-eq-0	\mathrm{MangoldtLambda}(81)\ne0	\mathrm{True}
-list-mangoldtlambda-6-mangoldtlambda-2-plus		
-list-mangoldtlambda-6-mangoldtlambda-2-times		
-mangoldtlambda-5		
-mangoldtlambda-2		
-mangoldtlambda-3		
-mangoldtlambda-4		
-mangoldtlambda-10		
-mangoldtlambda-11		
-mangoldtlambda-12		
-simplify-sum-mangoldtlambda-n-n-20		
-mangoldtlambda-13		
-mangoldtlambda-14		
-mangoldtlambda-15		
-mangoldtlambda-16		
-mangoldtlambda-17		
-ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\mathrm{DivisorSum}(16, ()\mapsto\mathrm{MangoldtLambda}(\operatorname{\_1}))	\mathrm{True}
-lambda-1-0		
+8-2-3	\operatorname{MangoldtLambda}(8)	\ln(2)
+6-is-not-a-prime-power	\operatorname{MangoldtLambda}(6)	0
+mangoldtlambda-7	\operatorname{MangoldtLambda}(7)	\ln(7)
+mangoldtlambda-9	\operatorname{MangoldtLambda}(9)	\ln(3)
+mangoldtlambda-25	\operatorname{MangoldtLambda}(25)	\ln(5)
+numerically-ln-3	N(\operatorname{MangoldtLambda}(9))	1.0986122886681098
+listable	\operatorname{MangoldtLambda}([2,4,6,25])	[\ln(2),\ln(2),0,\ln(5)]
+n-of-a-zero-result-is-still-0	N(\operatorname{MangoldtLambda}(6))	0
+mangoldtlambda-125	\operatorname{MangoldtLambda}(125)	\ln(5)
+mangoldtlambda-7-pow-300	\operatorname{MangoldtLambda}(7^{300})	\ln(7)
+mangoldtlambda-list-2-6-9-8-15	\operatorname{MangoldtLambda}([2,6,9,8,15])	[\ln(2),0,\ln(3),\ln(2),0]
+mangoldtlambda-81-factorial-eq-0	\operatorname{MangoldtLambda}(81)\ne0	\operatorname{True}
+list-mangoldtlambda-6-mangoldtlambda-2-plus	[\operatorname{MangoldtLambda}(6),\operatorname{MangoldtLambda}(2)+\operatorname{MangoldtLambda}(3)]	[0,\ln(2)+\ln(3)]
+list-mangoldtlambda-6-mangoldtlambda-2-times	[\operatorname{MangoldtLambda}(6),\operatorname{MangoldtLambda}(2)\operatorname{MangoldtLambda}(3)]	[0,\ln(2)\ln(3)]
+mangoldtlambda-5	\operatorname{MangoldtLambda}(5)	\ln(5)
+mangoldtlambda-2	\operatorname{MangoldtLambda}(2)	\ln(2)
+mangoldtlambda-3	\operatorname{MangoldtLambda}(3)	\ln(3)
+mangoldtlambda-4	\operatorname{MangoldtLambda}(4)	\ln(2)
+mangoldtlambda-10	\operatorname{MangoldtLambda}(10)	0
+mangoldtlambda-11	\operatorname{MangoldtLambda}(11)	\ln(11)
+mangoldtlambda-12	\operatorname{MangoldtLambda}(12)	0
+simplify-sum-mangoldtlambda-n-n-20	\operatorname{Simplify}(\sum_{n=20}\operatorname{MangoldtLambda}(n))	2\ln(3)+4\ln(2)+\ln(1616615)
+mangoldtlambda-13	\operatorname{MangoldtLambda}(13)	\ln(13)
+mangoldtlambda-14	\operatorname{MangoldtLambda}(14)	0
+mangoldtlambda-15	\operatorname{MangoldtLambda}(15)	0
+mangoldtlambda-16	\operatorname{MangoldtLambda}(16)	\ln(2)
+mangoldtlambda-17	\operatorname{MangoldtLambda}(17)	\ln(17)
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\operatorname{DivisorSum}(16,\operatorname{Function}(\operatorname{Block}(\operatorname{MangoldtLambda}(\_1)),\_1))	\operatorname{True}
+lambda-1-0	\operatorname{MangoldtLambda}(1)	0

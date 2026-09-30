@@ -1,10 +1,10 @@
 id	in	out
-ismachinenumber-ordinary-float	\mathrm{IsMachineNumber}(2.5)	\mathrm{True}
-ismachinenumber-sin-1-000	\mathrm{IsMachineNumber}(\sin(1\,000))	\mathrm{False}
-ismachinenumber-exponentiale-pow-1-000	\mathrm{IsMachineNumber}(e^{1\,000})	\mathrm{False}
-ismachinenumber-exact-integer	\mathrm{IsMachineNumber}(2)	\mathrm{False}
-ismachinenumber-1	\mathrm{IsMachineNumber}(1)	\mathrm{False}
-ismachinenumber-1-plus-i-times-10-pow-1-000	\mathrm{IsMachineNumber}(1+i\times10^{1\,000})	\mathrm{False}
-map-ismachinenumber-list-r-i	\mathrm{Map}(\mathrm{IsMachineNumber}, \bigl\lbrack r, i\bigr\rbrack)	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack
-ismachinenumber-extended-precision	\mathrm{IsMachineNumber}(3.141\,592\,653\,589\,793)	\mathrm{False}
-ismachinenumber-x	\mathrm{IsMachineNumber}(x)	\mathrm{False}
+ismachinenumber-ordinary-float	\operatorname{IsMachineNumber}(2.5)	\operatorname{True}
+ismachinenumber-sin-1-000	\operatorname{IsMachineNumber}(\sin(1000))	\operatorname{False}
+ismachinenumber-exponentiale-pow-1-000	\operatorname{IsMachineNumber}(e^{1000})	\operatorname{False}
+ismachinenumber-exact-integer	\operatorname{IsMachineNumber}(2)	\operatorname{False}
+ismachinenumber-1	\operatorname{IsMachineNumber}(1)	\operatorname{False}
+ismachinenumber-1-plus-i-times-10-pow-1-000	\operatorname{IsMachineNumber}(1+i10^{1000})	\operatorname{False}
+map-ismachinenumber-list-r-i	\operatorname{Map}(\operatorname{IsMachineNumber},[r,i])	[\operatorname{False},\operatorname{False}]
+ismachinenumber-extended-precision	\operatorname{IsMachineNumber}(3.141592653589793)	\operatorname{False}
+ismachinenumber-x	\operatorname{IsMachineNumber}(x)	\operatorname{False}

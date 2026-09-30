@@ -1,9 +1,9 @@
 id	in	out
-c5-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
-c6-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))	\mathrm{True}
-cyclegraph-3		
-map-function-vertexeccentricity-cyclegraph-5-1-1		
-isacyclicgraph-cyclegraph-5	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
-vertexdegree-cyclegraph-7		
-cyclegraph-4		
+c5-is-not-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(5))	\operatorname{False}
+c6-is-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(6))	\operatorname{True}
+cyclegraph-3	\operatorname{CycleGraph}(3)	\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,1)])
+map-function-vertexeccentricity-cyclegraph-5-1-1	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(\operatorname{VertexEccentricity}(\operatorname{CycleGraph}(5),\_1)),\_1),\operatorname{VertexList}(\operatorname{CycleGraph}(5)))	[2,2,2,2,2]
+isacyclicgraph-cyclegraph-5	\operatorname{IsAcyclicGraph}(\operatorname{CycleGraph}(5))	\operatorname{False}
+vertexdegree-cyclegraph-7	\operatorname{VertexDegree}(\operatorname{CycleGraph}(7))	[2,2,2,2,2,2,2]
+cyclegraph-4	\operatorname{CycleGraph}(4)	\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4),\operatorname{UndirectedEdge}(4,1)])
 ispathgraph-cyclegraph-5		

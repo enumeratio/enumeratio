@@ -1,0 +1,4 @@
+id	in	out
+count-noncrossingmatchings-4	\operatorname{Count}(\operatorname{NonCrossingMatchings}(4))	14
+first-element-of-noncrossingmatchings-4	\operatorname{At}(\operatorname{NonCrossingMatchings}(4),1)	\operatorname{SetPartition}([[1,8],[2,7],[3,6],[4,5]])
+every-element-of-noncrossingmatchings-4	\operatorname{Take}(\operatorname{NonCrossingMatchings}(4),5)	[\operatorname{SetPartition}([[1,8],[2,7],[3,6],[4,5]]),\operatorname{SetPartition}([[1,8],[2,7],[3,4],[5,6]]),\operatorname{SetPartition}([[1,8],[2,5],[3,4],[6,7]]),\operatorname{SetPartition}([[1,6],[2,5],[3,4],[7,8]]),\operatorname{SetPartition}([[1,8],[2,3],[4,7],[5,6]])]

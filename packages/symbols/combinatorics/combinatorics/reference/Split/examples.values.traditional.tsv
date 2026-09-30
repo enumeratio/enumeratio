@@ -1,0 +1,16 @@
+id	in	out
+runs-not-groups-the-two-runs-of-1-stay-apart	\operatorname{Split}([1,1,2,2,2,3,1,1])	[[1,1],[2,2,2],[3],[1,1]]
+symbolic-elements	\operatorname{Split}([a,a,b,b,b,a])	[[a,a],[b,b,b],[a]]
+split-list-a-a-a-b-b-a-a-c	\operatorname{Split}([a,a,a,b,b,a,a,c])	[[a,a,a],[b,b],[a,a],[c]]
+a-test-between-neighbours-split-into-increasing	\operatorname{Split}([1,2,3,5,4,6],\operatorname{Less})	[[1,2,3,5],[4,6]]
+the-empty-list	\operatorname{Split}([])	[]
+split-list-1-2-3-4-3-2-1-5-6-7-4-3-less	\operatorname{Split}([1,2,3,4,3,2,1,5,6,7,4,3],\operatorname{Less})	[[1,2,3,4],[3],[2],[1,5,6,7],[4],[3]]
+split-list-1-2-3-4-3-2-1-5-6-7-4-3-greater	\operatorname{Split}([1,2,3,4,3,2,1,5,6,7,4,3],\operatorname{Greater})	[[1],[2],[3],[4,3,2,1],[5],[6],[7,4,3]]
+split-array-nthprime-20-function-neg-1-plus-2-lt	\operatorname{Split}(\operatorname{Array}(\operatorname{NthPrime},20),\operatorname{Function}(\operatorname{Block}(-\_1+\_2<4),\_1,\_2))	[[2,3,5,7],[11,13],[17,19],[23],[29,31],[37],[41,43],[47],[53],[59,61],[67],[71]]
+split-sort-list-a-a-a-b-b-a-a-c-c-c	\operatorname{Split}(\operatorname{Sort}([a,a,a,b,b,a,a,c,c,c]))	[[a,a,a,a,a],[b,b],[c,c,c]]
+split-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5	\operatorname{Split}([3,0,-4,3,3,-2,0,-3,-4,5],\operatorname{Function}(\operatorname{Block}(\operatorname{sgn}(\_1)=\operatorname{sgn}(\_2)),\_1,\_2))	[[3],[0],[-4],[3,3],[-2],[0],[-3,-4],[5]]
+split-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5-2	\operatorname{Split}([3,0,-4,3,3,-2,0,-3,-4,5],\operatorname{Function}(\operatorname{Block}(\lnot(\operatorname{sgn}(\_1)<0\land0<\operatorname{sgn}(\_2))),\_1,\_2))	[[3,0,-4],[3,3,-2,0,-3,-4],[5]]
+split-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5-3	\operatorname{Split}([3,0,-4,3,3,-2,0,-3,-4,5],\operatorname{Function}(\operatorname{Block}(\lnot(0<\operatorname{sgn}(\_1)\land\operatorname{sgn}(\_2)<0)),\_1,\_2))	[[3,0,-4,3,3],[-2,0,-3,-4,5]]
+map-function-list-first-1-length-1-1-split-list	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}([\operatorname{First}(\_1),\operatorname{Length}(\_1)]),\_1),\operatorname{Split}([a,a,a,b,b,a,a,c,c,c]))	[[a,3],[b,2],[a,2],[c,3]]
+split-list-a-a-a-b-b-a-a-c-c-c	\operatorname{Split}([a,a,a,b,b,a,a,c,c,c])	[[a,a,a],[b,b],[a,a],[c,c,c]]
+nestlist-function-flatten-map-function-list		

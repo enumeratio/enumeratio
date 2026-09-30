@@ -1,0 +1,13 @@
+id	in	out
+symmetric-matrix-is-undirected	\operatorname{EdgeList}(\operatorname{AdjacencyGraph}([[0,1,1],[1,0,0],[1,0,0]]))	[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(1,3)]
+asymmetric-matrix-is-directed	\operatorname{EdgeList}(\operatorname{AdjacencyGraph}([[0,1],[0,0]]))	[\operatorname{DirectedEdge}(1,2)]
+adjacencygraph-list-list-0-1-1-list-1-0-1-list-1	\operatorname{AdjacencyGraph}([[0,1,1],[1,0,1],[1,1,0]])	\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(1,3),\operatorname{UndirectedEdge}(2,3)])
+adjacencygraph-list-list-0-1-0-list-0-0-1-list-1		
+vertexlist-adjacencygraph-list-list-1-1-1-0-list	\operatorname{VertexList}(\operatorname{AdjacencyGraph}([[1,1,1,0],[1,0,1,1],[1,1,0,1],[0,1,1,0]]))	[1,2,3,4]
+vertexlist-adjacencygraph-list-a-b-c-d-list-list	\operatorname{VertexList}(\operatorname{AdjacencyGraph}([a,b,c,d],[[1,1,1,0],[1,0,1,1],[1,1,0,1],[0,1,1,0]]))	[a,b,c,d]
+adjacencygraph-list-list-0-1-1-0-list-1-0-1-1	\operatorname{AdjacencyGraph}([[0,1,1,0],[1,0,1,1],[1,1,0,1],[0,1,1,0]])	\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(1,3),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(2,4),\operatorname{UndirectedEdge}(3,4)])
+adjacencygraph-list-list-0-1-1-1-1-list-1-0-1-1	\operatorname{AdjacencyGraph}([[0,1,1,1,1],[1,0,1,1,1],[1,1,0,1,1],[1,1,1,0,1],[1,1,1,1,0]])	\operatorname{Graph}([1,2,3,4,5],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(1,3),\operatorname{UndirectedEdge}(1,4),\operatorname{UndirectedEdge}(1,5),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(2,4),\operatorname{UndirectedEdge}(2,5),\operatorname{UndirectedEdge}(3,4),\operatorname{UndirectedEdge}(3,5),\operatorname{UndirectedEdge}(4,5)])
+adjacencygraph-list-list-0-1-0-0-list-1-0-0-0		
+list-adjacencygraph-list-list-1-1-1-0-list-1-0-1		
+adjacencygraph-list-list-0-1-1-1-1-list-0-0-0-0		
+adjacencygraph-list-list-1-1-1-list-1-0-1-list-1	\operatorname{AdjacencyGraph}([[1,1,1],[1,0,1],[1,1,1]])	\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,1),\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(1,3),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,3)])

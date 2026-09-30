@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { threadOverLists } from "@enumeratio/engine";
 import {
   applyPatch,
@@ -24,6 +25,7 @@ import {
   logCombinationSign,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
+import { ANALYTIC_NOTATION } from "./notation.ts";
 import { declareWidened } from "./widened.ts";
 import { declareBetaContinuation } from "./beta-continuation.ts";
 import { declareComplexArguments } from "./complex-arguments.ts";
@@ -157,6 +159,7 @@ import { declareNSum } from "./nsum.ts";
  * round to a machine double (or to `ce.precision`, under `N()`).
  */
 export function declareAnalytic(ce: ComputeEngine): void {
+  registerNotation(ce, ANALYTIC_NOTATION);
   applyPatch(ce, lerchPhiPatch);
   applyPatch(ce, polylogPrecision);
   applyPatch(ce, hurwitzZetaForms);

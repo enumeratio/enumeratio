@@ -1,19 +1,19 @@
 id	in	out
-independent-uncertainties-add-in-quadrature		
-scaling-scales-the-uncertainty		
-independent-uncertainties-add-in-quadrature-2		
-3-times-around-2-0p01		
-independent-uncertainties-add-in-quadrature-sqrt		
-relative-uncertainties-combine-6-sqrt-0-1-2-2-0		
-through-a-function-f-x-delta-x		
-sqrt-around-4-0p4		
-through-a-function-f-2-3-5-not-yet-multinomial	\binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}	\mathrm{Around}(6, 0.035)
-a-power-scales-the-uncertainty-by-the-derivative		
-frac-0-2-2-sqrt-4		
-an-exact-factor-scales-the-uncertainty		
-through-an-elementary-function-delta-cdot-e-2		
-through-a-special-function-with-its-derivative		
-first-order-propagation-the-uncertainty-scales		
-ln-around-2-0p01		
+independent-uncertainties-add-in-quadrature	\operatorname{Around}(1,0.1)+\operatorname{Around}(2,0.2)	\operatorname{Around}(3,0.223606797749979)
+scaling-scales-the-uncertainty	3\operatorname{Around}(2,0.1)	\operatorname{Around}(6,0.3)
+independent-uncertainties-add-in-quadrature-2	\operatorname{Around}(2,0.01)+\operatorname{Around}(3,0.02)	\operatorname{Around}(5,0.022360679774997897)
+3-times-around-2-0p01	3\operatorname{Around}(2,0.01)	\operatorname{Around}(6,0.03)
+independent-uncertainties-add-in-quadrature-sqrt	\operatorname{Around}(5,0.1)+\operatorname{Around}(3,0.2)	\operatorname{Around}(8,0.223606797749979)
+relative-uncertainties-combine-6-sqrt-0-1-2-2-0	\operatorname{Around}(2,0.1)\operatorname{Around}(3,0.2)	\operatorname{Around}(6,0.5)
+through-a-function-f-x-delta-x	{\operatorname{Around}(2,0.1)}^2	\operatorname{Around}(4,0.4)
+sqrt-around-4-0p4	\sqrt{\operatorname{Around}(4,0.4)}	\operatorname{Around}(2,0.1)
+through-a-function-f-2-3-5-not-yet-multinomial	\binom{\operatorname{Around}(2,0.01)+2}{\operatorname{Around}(2,0.01),2}	\operatorname{Around}(6,0.035)
+a-power-scales-the-uncertainty-by-the-derivative	{\operatorname{Around}(3,0.1)}^2	\operatorname{Around}(9,0.6000000000000001)
+frac-0-2-2-sqrt-4	\sqrt{\operatorname{Around}(4,0.2)}	\operatorname{Around}(2,0.05)
+an-exact-factor-scales-the-uncertainty	10\operatorname{Around}(1.5,0.02)	\operatorname{Around}(15,0.2)
+through-an-elementary-function-delta-cdot-e-2	e^{\operatorname{Around}(2,0.01)}	\operatorname{Around}(7.38905609893065,0.0738905609893065)
+through-a-special-function-with-its-derivative	\operatorname{Erf}(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.9953222650189527,0.00020666985354092054)
+first-order-propagation-the-uncertainty-scales	N(\sin(\operatorname{Around}(1,0.1)))	\operatorname{Around}(0.8414709848078965,0.05403023058681398)
+ln-around-2-0p01	\ln(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.6931471805599453,0.005)
 around-21-pow-21-19-pow-19		
-around-10-1-pow-2		
+around-10-1-pow-2	{\operatorname{Around}(10,1)}^2	\operatorname{Around}(100,20)

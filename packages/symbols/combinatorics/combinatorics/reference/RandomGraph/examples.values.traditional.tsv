@@ -1,0 +1,2 @@
+id	in	out
+vertex-and-edge-count	\operatorname{Last}([\operatorname{SeedRandom}(9),\operatorname{VertexCount}(\operatorname{RandomGraph}([6,8]))])	6

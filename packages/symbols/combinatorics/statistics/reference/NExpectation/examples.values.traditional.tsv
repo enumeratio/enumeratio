@@ -1,0 +1,5 @@
+id	in	out
+nexpectation-sin-of-normal	\operatorname{NExpectation}(\sin(x),\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))	0.010101381966839188
+nexpectation-cube-of-exponential	\operatorname{NExpectation}(x^3,\operatorname{Distributed}(x,\operatorname{ExponentialDistribution}(2)))	0.7500000000000001
+nexpectation-poisson-reciprocal	\operatorname{NExpectation}((x+1)^{-1},\operatorname{Distributed}(x,\operatorname{PoissonDistribution}(3)))	0.3167376438773777
+nexpectation-binomial-cube-finite-sum	\operatorname{NExpectation}(x^3,\operatorname{Distributed}(x,\operatorname{BinomialDistribution}(5,\frac{2}{5})))	15.44

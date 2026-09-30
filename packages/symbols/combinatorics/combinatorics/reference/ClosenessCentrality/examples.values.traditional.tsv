@@ -1,0 +1,3 @@
+id	in	out
+star-hub-is-maximally-close	\operatorname{ClosenessCentrality}(\operatorname{StarGraph}(5),1)	1
+reverse-sortby-transpose-list-vertexlist-g		

@@ -1,44 +1,44 @@
 id	in	out
-factorinteger-360		
-factorinteger-84		
-factorinteger-120		
-factorinteger-36		
-threads-element-wise-over-a-list-as-wolfram-s		
-5-i-1-2i-2-i		
-3-4i-2-i-2		
-a-21-digit-gaussian-integer-through-its-norm		
-rationals-the-denominator-s-primes-get-negative		
-9-12i-3-2-i-2		
-36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime		
-listable-threads-over-a-list		
-a-21-digit-prime-cubed-factors-at-once		
-factorinteger-of-a-negative-rational		
-a-unit-factors-as-itself		
-the-ramified-prime-above-2-factors-as-itself		
-a-prime-above-5-factors-as-itself		
-a-composite-of-norm-25-2-i-2		
-a-composite-of-norm-25-the-conjugate-family		
-an-associate-carries-its-normalising-unit-in		
-a-composite-with-a-real-and-a-gaussian-factor		
-a-large-norm-composite		
-an-associate-carries-its-unit-times-i		
-a-prime-above-13-factors-as-itself		
-a-real-prime-s-associate-by-the-unit-i-factors		
-a-negative-real-prime-complex-argument-form		
-a-composite-past-2-53-through-its-norm		
-7-3-mod-4-factors-as-itself-in-z-i		
-a-negative-prime-3-mod-4		
-13-1-mod-4-splits-into-two-gaussian-primes		
-a-real-composite-5-squared-factors-through-its		
-a-negative-real-composite		
-19-3-mod-4-factors-as-itself		
-2-ramifies-as-i-1-i-2		
-4-factors-through-the-ramified-prime		
-multiplying-the-p-e-factors-back-together	2^3\times3^2\times5=360	\mathrm{True}
-compute-engine-returns-the-trivial-factor-1-1		
-0-is-represented-as-0-1		
-negative-numbers-carry-an-explicit-1-unit-factor		
-1-is-a-unit-and-factors-as-itself		
-factorinteger-neg-12		
-a-non-integer-real-stays-unevaluated		
-the-hardy-ramanujan-taxicab-number-7-times-13		
+factorinteger-360	\operatorname{FactorInteger}(360)	[(2,3),(3,2),(5,1)]
+factorinteger-84	\operatorname{FactorInteger}(84)	[(2,2),(3,1),(7,1)]
+factorinteger-120	\operatorname{FactorInteger}(120)	[(2,3),(3,1),(5,1)]
+factorinteger-36	\operatorname{FactorInteger}(36)	[(2,2),(3,2)]
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{FactorInteger}([12,18])	[[(2,2),(3,1)],[(2,1),(3,2)]]
+5-i-1-2i-2-i	\operatorname{FactorInteger}(5,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-i,1),(1+2i,1),(2+i,1)]
+3-4i-2-i-2	\operatorname{FactorInteger}(3+4i)	[(2+i,2)]
+a-21-digit-gaussian-integer-through-its-norm	\operatorname{FactorInteger}(100000000000000000039+100000000000000000129i)	[(-i,1),(1+i,1),(99+34i,1),(1538+213i,1),(277789996706096+549000467740335i,1)]
+rationals-the-denominator-s-primes-get-negative	\operatorname{FactorInteger}(\frac{3}{8})	[(2,-3),(3,1)]
+9-12i-3-2-i-2	\operatorname{FactorInteger}(9+12i)	[(2+i,2),(3,1)]
+36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime	\operatorname{FactorInteger}(36,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-1,1),(1+i,4),(3,2)]
+listable-threads-over-a-list	\operatorname{FactorInteger}([11,101,1001])	[[(11,1)],[(101,1)],[(7,1),(11,1),(13,1)]]
+a-21-digit-prime-cubed-factors-at-once	\operatorname{FactorInteger}(100000000000000000039^3)	[(100000000000000000039,3)]
+factorinteger-of-a-negative-rational	\operatorname{FactorInteger}(\frac{-3}{8})	[(-1,1),(2,-3),(3,1)]
+a-unit-factors-as-itself	\operatorname{FactorInteger}(i)	[(i,1)]
+the-ramified-prime-above-2-factors-as-itself	\operatorname{FactorInteger}(1+i)	[(1+i,1)]
+a-prime-above-5-factors-as-itself	\operatorname{FactorInteger}(2+i)	[(2+i,1)]
+a-composite-of-norm-25-2-i-2	\operatorname{FactorInteger}(3+4i)	[(2+i,2)]
+a-composite-of-norm-25-the-conjugate-family	\operatorname{FactorInteger}(4+3i)	[(-i,1),(1+2i,2)]
+an-associate-carries-its-normalising-unit-in	\operatorname{FactorInteger}(-3-4i)	[(-1,1),(2+i,2)]
+a-composite-with-a-real-and-a-gaussian-factor	\operatorname{FactorInteger}(6+8i)	[(-i,1),(1+i,2),(2+i,2)]
+a-large-norm-composite	\operatorname{FactorInteger}(123+456i)	[(1+2i,1),(3,1),(69+14i,1)]
+an-associate-carries-its-unit-times-i	\operatorname{FactorInteger}(4-3i)	[(-i,1),(2+i,2)]
+a-prime-above-13-factors-as-itself	\operatorname{FactorInteger}(3+2i)	[(3+2i,1)]
+a-real-prime-s-associate-by-the-unit-i-factors	\operatorname{FactorInteger}(7i)	[(i,1),(7,1)]
+a-negative-real-prime-complex-argument-form	\operatorname{FactorInteger}(-7)	[(-1,1),(7,1)]
+a-composite-past-2-53-through-its-norm	\operatorname{FactorInteger}(100000000000000000001+9007199254740993i)	[(i,1),(1+i,1),(2+i,2),(14+i,1),(2051+260i,1),(3540+4951i,1),(15605+48328i,1),(1306794+882271i,1)]
+7-3-mod-4-factors-as-itself-in-z-i	\operatorname{FactorInteger}(7,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(7,1)]
+a-negative-prime-3-mod-4	\operatorname{FactorInteger}(-7,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-1,1),(7,1)]
+13-1-mod-4-splits-into-two-gaussian-primes	\operatorname{FactorInteger}(13,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-i,1),(2+3i,1),(3+2i,1)]
+a-real-composite-5-squared-factors-through-its	\operatorname{FactorInteger}(25,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-1,1),(1+2i,2),(2+i,2)]
+a-negative-real-composite	\operatorname{FactorInteger}(-15,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(i,1),(1+2i,1),(2+i,1),(3,1)]
+19-3-mod-4-factors-as-itself	\operatorname{FactorInteger}(19,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(19,1)]
+2-ramifies-as-i-1-i-2	\operatorname{FactorInteger}(2,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-i,1),(1+i,2)]
+4-factors-through-the-ramified-prime	\operatorname{FactorInteger}(4,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	[(-1,1),(1+i,4)]
+multiplying-the-p-e-factors-back-together	2^33^25=360	\operatorname{True}
+compute-engine-returns-the-trivial-factor-1-1	\operatorname{FactorInteger}(1)	[(1,1)]
+0-is-represented-as-0-1	\operatorname{FactorInteger}(0)	[(0,1)]
+negative-numbers-carry-an-explicit-1-unit-factor	\operatorname{FactorInteger}(-60)	[(-1,1),(2,2),(3,1),(5,1)]
+1-is-a-unit-and-factors-as-itself	\operatorname{FactorInteger}(-1)	[(-1,1)]
+factorinteger-neg-12	\operatorname{FactorInteger}(-12)	[(-1,1),(2,2),(3,1)]
+a-non-integer-real-stays-unevaluated	\operatorname{FactorInteger}(2.5)	\operatorname{FactorInteger}(2.5)
+the-hardy-ramanujan-taxicab-number-7-times-13	\operatorname{FactorInteger}(1729)	[(7,1),(13,1),(19,1)]
