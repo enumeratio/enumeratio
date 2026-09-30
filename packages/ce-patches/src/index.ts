@@ -11,6 +11,7 @@ import { stieltjes } from "./patches/stieltjes.ts";
 import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
+import { exactRounding } from "./patches/exact-rounding.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { infinityArgs } from "./patches/infinity-args.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
@@ -94,6 +95,7 @@ export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } 
 export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
+export { exactRounding, evaluateRoundingOnExactRationals, roundExactRational } from "./patches/exact-rounding.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export {
   infinityArgs,
@@ -209,6 +211,7 @@ export const PATCHES: readonly Patch[] = [
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
+  exactRounding,
   multiplyDirectedInfinity,
   infinityArgs,
 ];

@@ -1013,6 +1013,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "Trigamma",
   "TripNumber",
   "True",
+  "Truncate",
   "Tuple",
   "Tuples",
   "TuranGraph",

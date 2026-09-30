@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { defineOverload, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: Sqrt(-Infinity) collapses to the undirected ComplexInfinity. The
@@ -166,4 +166,75 @@ export function evaluateLnAtNegativeInfinity(ce: ComputeEngine): void {
     () => () => ce.symbol("PositiveInfinity"),
     1,
   );
+}
+
+// --- Rounding an exact rational ------------------------------------------------------------
+// cortex-js/compute-engine#382: Floor, Ceil, Round and Truncate round the operand's numeric
+// value and make the result exact afterwards, so an exact rational past a double's digits is
+// rounded wrong: Floor((25! − 1)/24!) is 25, where the value is just below 25. On the exact
+// numerator and denominator the rounding is bigint division. Round breaks a tie away from
+// zero, as compute-engine's own Round does (Round(5/2) = 3, Round(−5/2) = −3). Under `.N()`
+// the operand is already a float when the head runs, so `N(Floor((25! − 1)/24!))` is still
+// 25; only `evaluate()` sees the exact rational.
+
+type Rounding = "Floor" | "Ceil" | "Round" | "Truncate";
+
+/** An exact integer or rational literal's numerator and denominator, else `undefined`. */
+function exactRational(op: BoxedExpression): [bigint, bigint] | undefined {
+  if (!isNumber(op) || op.isExact !== true) return undefined;
+  const integer = (j: unknown): bigint | undefined => {
+    if (typeof j === "number") return Number.isSafeInteger(j) ? BigInt(j) : undefined;
+    const num = typeof j === "object" && j !== null && "num" in j ? String(j.num) : undefined;
+    // A long integer may be written with an exponent: `{ num: "1e+30" }`.
+    const m = num === undefined ? null : /^(-?)(\d+)(?:\.(\d+))?(?:e([+-]?\d+))?$/.exec(num);
+    if (m === null) return undefined;
+    const [, sign, whole, fraction = "", exponent = "0"] = m;
+    const shift = Number(exponent) - fraction.length;
+    let digits = whole + fraction;
+    if (shift < 0) {
+      if (!/^0*$/.test(digits.slice(shift))) return undefined; // not an integer
+      digits = digits.slice(0, shift) || "0";
+    }
+    const value = BigInt(digits) * 10n ** BigInt(Math.max(shift, 0));
+    return sign === "-" ? -value : value;
+  };
+  const json = op.json as unknown;
+  if (Array.isArray(json)) {
+    if (json[0] !== "Rational" || json.length !== 3) return undefined;
+    const [n, d] = [integer(json[1]), integer(json[2])];
+    return n !== undefined && d !== undefined && d !== 0n ? [n, d] : undefined;
+  }
+  const n = integer(json);
+  return n === undefined ? undefined : [n, 1n];
+}
+
+/** ⌊n/d⌋ for d ≠ 0. */
+function floorDiv(n: bigint, d: bigint): bigint {
+  const q = n / d; // truncates toward zero
+  return n % d !== 0n && n < 0n !== d < 0n ? q - 1n : q;
+}
+
+export function roundExactRational(head: Rounding, [n, d]: [bigint, bigint]): bigint {
+  if (d < 0n) [n, d] = [-n, -d];
+  if (head === "Floor") return floorDiv(n, d);
+  if (head === "Ceil") return -floorDiv(-n, d);
+  if (head === "Truncate") return n / d;
+  // Round: half away from zero, ⌊(2|n| + d) / 2d⌋ with the sign of n.
+  const magnitude = floorDiv(2n * (n < 0n ? -n : n) + d, 2n * d);
+  return n < 0n ? -magnitude : magnitude;
+}
+
+export function evaluateRoundingOnExactRationals(ce: ComputeEngine): void {
+  for (const head of ["Floor", "Ceil", "Round", "Truncate"] as const) {
+    wrapOperator(
+      ce,
+      [head],
+      (ops: readonly BoxedExpression[]) => ops.length === 1 && exactRational(ops[0]!) !== undefined,
+      () => (ops, options) => {
+        const value = ce.number(roundExactRational(head, exactRational(ops[0]!)!));
+        return options?.numericApproximation ? value.N() : value;
+      },
+      1,
+    );
+  }
 }

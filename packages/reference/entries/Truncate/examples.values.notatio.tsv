@@ -1,0 +1,5 @@
+id	in	out
+truncate-7-over-2	<Truncate><Rational>7 2</Rational></Truncate>	<ToExpression>3</ToExpression>
+truncate-neg-7-over-2	<Truncate><Rational>-7 2</Rational></Truncate>	<ToExpression>-3</ToExpression>
+truncate-neg-3p7	<Truncate>-3.7</Truncate>	<ToExpression>-3</ToExpression>
+truncate-big-rational	<Truncate><Divide>15511210043330985983999999 <Factorial>24</Factorial></Divide></Truncate>	<ToExpression>24</ToExpression>

@@ -649,6 +649,7 @@ export const WOLFRAM_NAMES: Readonly<Record<string, string>> = {
   TriangularDistribution: "TriangularDistribution",
   TrigFactor: "TrigFactor",
   TrigToExp: "TrigToExp",
+  Truncate: "IntegerPart",
   TruncatedDistribution: "TruncatedDistribution",
   Tuple: "List",
   Tuples: "Tuples",
