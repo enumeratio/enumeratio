@@ -1,0 +1,39 @@
+# @enumeratio/manifest
+
+Every head we know — its packages, overloads and their types, parameter names, attributes
+and summary — assembled at build time from the reference records and a bare compute-engine
+([Manifest](https://github.com/enumeratio/enumeratio/wiki/Manifest)). It loads no package's own code: everything here is
+knowable about a head without importing the package that declares it, which is what makes
+the resolver possible (below).
+
+## Entry points
+
+- **`.` (`src/index.ts`)** — `SYMBOLS`, `symbolInfo(name)`: every declared head, by name.
+  `PACKAGES` (which package declares what), `DECLARERS` (each package's `declare` function,
+  by name), `canonicalOrder`.
+- **`./package/*`** — one generated module per package under `src/generated/package/`.
+- **`createResolver` / `Resolver` / `plan` / `packagesFor` / `packagesNeeded` / `namesOf`**
+  (`src/resolve.ts`) — given an expression and a `Library` per package (host-supplied: the
+  manifest doesn't know how to import anything), resolves the heads and symbols it names to
+  the packages that declare them, widens to those packages' own dependencies, and declares
+  them into an engine in dependency order. See [Speculative Lazy Engine](https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Engine).
+
+## Commands
+
+```sh
+node scripts/build.ts   # regenerate src/generated/{symbols,packages}.ts from the records
+vp pack                  # or: vp run build (build.ts then vp pack)
+vp check
+vp test
+```
+
+`scripts/build.ts` reads every package's records and a bare compute-engine and sits at the
+bottom of the build graph — it loads no package's code, only its records
+(`@enumeratio/entry/node`). Run it after adding or changing a head; `vp run build` chains it
+into the pack step.
+
+## Next
+
+[Manifest](https://github.com/enumeratio/enumeratio/wiki/Manifest) has the design and what tightening a signature's types
+taught along the way. [`census`](../census/README.md) cross-checks the resulting namespace against
+Wolfram's.
