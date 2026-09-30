@@ -41,6 +41,7 @@ import {
 import {
   coreEntries as treesCoreEntries,
   labeledEntries as treesLabeledEntries,
+  rootedForestsEntries as treesRootedForestsEntries,
 } from "../../../trees/src/families/index.ts";
 import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
@@ -52,6 +53,7 @@ import {
 import {
   tableauxPlaneBeforeSkewStandardTableauxEntries,
   tableauxPlaneSkewStandardTableauxEntries,
+  tableauxPlaneShiftedStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
 } from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
@@ -79,6 +81,7 @@ const numberEntries = [
   ...coreBeforeSetPartitions,
   ...setPartitionsCoreEntries,
   ...treesLabeledEntries,
+  ...treesRootedForestsEntries,
   ...coreBeforeTrees,
   ...treesCoreEntries,
   ...core,
@@ -96,6 +99,7 @@ const numberEntries = [
   ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
   ...tableauxPlaneSkewStandardTableauxEntries,
+  ...tableauxPlaneShiftedStandardTableauxEntries,
   ...tableauxPlane,
   ...tableauxPlanePlanePartitionsEntries,
   ...permutationsEntries,

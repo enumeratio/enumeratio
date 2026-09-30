@@ -41,6 +41,13 @@ export const TABLEAUX_CARRIERS: readonly Carrier[] = [
     plural: "SkewTableaux",
   },
   {
+    name: "ShiftedStandardTableau",
+    type: "shifted_standard_tableau",
+    shape: "list<list<integer>>",
+    id: "shifted_standard_tableau",
+    plural: "ShiftedStandardTableaux",
+  },
+  {
     name: "StandardTableau",
     type: "standard_tableau",
     shape: "list<integer>",

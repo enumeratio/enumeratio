@@ -201,6 +201,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     name: "RookPlacement",
   },
   {
+    name: "RootedForest",
+  },
+  {
     name: "RootedLabeledTree",
   },
   {
@@ -217,6 +220,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
   },
   {
     name: "SetPartition",
+  },
+  {
+    name: "ShiftedStandardTableau",
   },
   {
     name: "SignedPermutation",
@@ -244,6 +250,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
   },
   {
     name: "StandardTableauPair",
+  },
+  {
+    name: "StirlingPermutation",
   },
   {
     name: "SubexcedantSeq",
@@ -2489,6 +2498,18 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     description: "Catalogued in the enumeratio database, with crosswalk rows in oeis; not yet written up here.",
   },
   {
+    name: "RootedForests",
+    carrier: "RootedForest",
+    grades: [
+      {
+        name: "n",
+        role: "axis",
+      },
+    ],
+    description:
+      "The forests of rooted labeled trees on $\\{1, \\dots, n\\}$, each element a length-$n$ parent array (entry $0$ marks a root). Count $(n+1)^{n-1}$.",
+  },
+  {
     name: "RootedUnlabeledTrees",
     carrier: "RootedUnlabeledTree",
     grades: [
@@ -2654,7 +2675,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "ShiftedStandardTableaux",
-    carrier: "StandardTableau",
+    carrier: "ShiftedStandardTableau",
     grades: [
       {
         name: "size",
@@ -2929,7 +2950,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "StirlingPermutations",
-    carrier: "Word",
+    carrier: "StirlingPermutation",
     grades: [
       {
         name: "n",

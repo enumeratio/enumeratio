@@ -4,3 +4,4 @@
 // -- `referenceData()`'s family order is unchanged.
 export { entries as coreEntries } from "./core.ts";
 export { entries as labeledEntries } from "./labeled.ts";
+export { entries as rootedForestsEntries } from "./rooted-forests.ts";

@@ -76,6 +76,13 @@ export const TREES_CARRIERS: readonly Carrier[] = [
     plural: "PlaneTrees",
   },
   {
+    name: "RootedForest",
+    type: "rooted_forest",
+    shape: "list<integer>",
+    id: "rooted_forest",
+    plural: "RootedForests",
+  },
+  {
     name: "RootedLabeledTree",
     type: "rooted_labeled_tree",
     shape: "list<integer>",

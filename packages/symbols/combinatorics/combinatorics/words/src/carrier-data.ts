@@ -48,6 +48,13 @@ export const WORDS_CARRIERS: readonly Carrier[] = [
     plural: "ParkingFunctions",
   },
   {
+    name: "StirlingPermutation",
+    type: "stirling_permutation",
+    shape: "list<integer>",
+    id: "stirling_permutation",
+    plural: "StirlingPermutations",
+  },
+  {
     name: "TernaryGrayCode",
     type: "ternary_gray_code",
     shape: "list<integer>",

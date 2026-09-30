@@ -32,10 +32,6 @@ import {
   BinaryStringUnrank,
   BinaryStringRank,
   IsBinaryString,
-  RootedForestCount,
-  RootedForestUnrank,
-  RootedForestRank,
-  IsRootedForest,
 } from "./kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; casts the unknown element once here,
@@ -161,18 +157,10 @@ export const entriesBeforeSetPartitions: NumberKernel[] = [
 // resolved: pairs are its blocks, a restriction rather than the "PerfectMatching" carrier,
 // whose shape is list<integer> and does not match). LabeledTrees moved to
 // trees/src/families/labeled.ts (wire-carriers lane A-92): it now carries "LabeledTree" (the
-// edge set). RootedForests below still declares no carrier and stays here per step 5 rule 4.
-export const entriesBeforeTrees: NumberKernel[] = [
-  {
-    head: "RootedForests",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => RootedForestCount(n),
-    unrank: ([n], r) => RootedForestUnrank(n, r),
-    valid: (a, [n]) => IsRootedForest(a, n),
-    rank: (a, [n]) => RootedForestRank(a as number[], n),
-  },
-];
+// edge set). RootedForests joined it there (same lane), now carrying the new "RootedForest"
+// carrier. Nothing left here at this splice position, but the export stays (splice position,
+// and the general `entriesBeforeTrees` name other tooling reads) as an empty array.
+export const entriesBeforeTrees: NumberKernel[] = [];
 
 // BinaryTrees/BinaryTreeParentArrays/KAryTrees/OrderedTrees moved to trees/src/families/core.ts
 // -- §4 step 5, every family in this section carrying a `carrier` (KAryTrees/OrderedTrees'
