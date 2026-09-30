@@ -4,6 +4,12 @@
 // or an Epsil definition to declare. Qualified names (`Statistics.Mean`) are namespaces: a
 // namespace is a record of functions, so `Statistics.Mean(x)` evaluates as the field call
 // Epsil already parses it to, and nothing about `.` changes.
+//
+// System symbols (our packages, compute-engine's) are unpinned: they move with the system.
+// A definition is identified by its content hash, its pin; what its body uses beyond the
+// system it names qualified and pinned (`requires`), so a dependency can't change under it.
+// Its body is declared against those pins, not against whatever a namespace holds, so two
+// versions of one name can live in one engine.
 
 import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
 
@@ -14,21 +20,28 @@ export interface DeclaringEngine {
   lookupDefinition(name: string): unknown;
 }
 
-/** An Epsil definition: a head, its signature, and a `Function` its calls evaluate. */
+/**
+ * An Epsil definition: its signature, a `Function` its calls evaluate (array-form MathJSON),
+ * and the pin of every non-system name its body uses, by qualified name.
+ */
 export interface Definition {
   readonly signature: string;
   readonly body: unknown;
+  readonly requires?: Readonly<Record<string, string>>;
 }
 
 /** What declares a name: `head` is what the name refers to once declared. */
 export type Resolution<Engine extends object> = { readonly head: string } & (
   | { readonly libraries: readonly Library<Engine>[] }
-  | { readonly definition: Definition }
+  | { readonly definition: Definition; readonly pin: string }
 );
 
 export interface Registry<Engine extends object> {
-  /** What declares `name` (`Mean`, or qualified `Statistics.Mean`), or undefined. */
-  resolve(name: string): Resolution<Engine> | undefined | Promise<Resolution<Engine> | undefined>;
+  /**
+   * What declares `name` (`Mean`, or qualified `Statistics.Mean`), or undefined. With a `pin`,
+   * only the definition with that pin; without, the latest. Libraries have no pin.
+   */
+  resolve(name: string, pin?: string): Resolution<Engine> | undefined | Promise<Resolution<Engine> | undefined>;
 }
 
 /** A package's namespace: `number-theory` is `NumberTheory`. */
@@ -62,20 +75,52 @@ export function manifestRegistry<Engine extends object>(
   };
 }
 
+/** JSON with object keys sorted, so equal content hashes equally. */
+const canonicalJson = (value: unknown): string =>
+  JSON.stringify(value, (_key, v: unknown) =>
+    v !== null && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.entries(v).toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
+      : v,
+  );
+
+/** A definition's pin: `sha256-` and the hex digest of its signature, body and requires. */
+export async function pinOf(definition: Definition): Promise<string> {
+  const { signature, body, requires = {} } = definition;
+  const bytes = new TextEncoder().encode(canonicalJson({ signature, body, requires }));
+  const digest = new Uint8Array(await globalThis.crypto.subtle.digest("SHA-256", bytes));
+  return `sha256-${Array.from(digest, (b) => b.toString(16).padStart(2, "0")).join("")}`;
+}
+
 /**
- * Epsil definitions as a registry, under one namespace: `ns.Name` resolves to the head
- * `ns_Name` (never written by anyone: `.` isn't legal in an engine's symbol name).
+ * Epsil definitions as a registry, under one namespace: each name's versions, oldest first.
+ * `ns.Name` resolves to the latest, `ns.Name` with a pin to that version, and the head is
+ * `ns_Name_` and the pin's first hex digits (never written by anyone: `.` isn't legal in an
+ * engine's symbol name, and two versions need two heads).
  */
 export function definitionRegistry<Engine extends object>(
   namespace: string,
-  definitions: Readonly<Record<string, Definition>>,
+  definitions: Readonly<Record<string, Definition | readonly Definition[]>>,
 ): Registry<Engine> {
+  const pinned = new Map<string, Promise<{ definition: Definition; pin: string }[]>>();
+  const versions = (member: string) => {
+    let found = pinned.get(member);
+    if (found === undefined) {
+      const list = definitions[member]!;
+      const all = Array.isArray(list) ? (list as readonly Definition[]) : [list as Definition];
+      found = Promise.all(all.map(async (definition) => ({ definition, pin: await pinOf(definition) })));
+      pinned.set(member, found);
+    }
+    return found;
+  };
   return {
-    resolve(name) {
+    async resolve(name, pin) {
       const [ns, member, ...rest] = name.split(".");
       if (ns !== namespace || member === undefined || rest.length > 0 || !Object.hasOwn(definitions, member))
         return undefined;
-      return { head: `${namespace}_${member}`, definition: definitions[member]! };
+      const all = await versions(member);
+      const found = pin === undefined ? all.at(-1) : all.find((v) => v.pin === pin);
+      if (found === undefined) return undefined;
+      return { head: `${namespace}_${member}_${found.pin.slice(7, 15)}`, ...found };
     },
   };
 }
@@ -83,9 +128,9 @@ export function definitionRegistry<Engine extends object>(
 /** Registries in search-path order: the first that resolves a name has it. */
 export function searchPath<Engine extends object>(...registries: readonly Registry<Engine>[]): Registry<Engine> {
   return {
-    async resolve(name) {
+    async resolve(name, pin) {
       for (const registry of registries) {
-        const found = await registry.resolve(name);
+        const found = await registry.resolve(name, pin);
         if (found !== undefined) return found;
       }
       return undefined;
@@ -108,14 +153,22 @@ function pathOf(json: unknown): string | undefined {
   return undefined;
 }
 
-/** Every qualified name `json` uses: `MemberCall(N, "m", …)` and `Field(N, "m")` over a chain of names. */
-export function qualifiedNamesOf(json: unknown, into: Set<string> = new Set()): Set<string> {
-  if (!Array.isArray(json)) return into;
+/** `MemberCall(N, "m", …)` / `Field(N, "m")` over a chain of names, as `N.m`. */
+function qualifiedNameAt(json: unknown): string | undefined {
+  if (!Array.isArray(json)) return undefined;
   if ((json[0] === "MemberCall" && json.length >= 3) || (json[0] === "Field" && json.length === 3)) {
     const base = pathOf(json[1]);
     const member = memberOf(json[2]);
-    if (base !== undefined && member !== undefined) into.add(`${base}.${member}`);
+    if (base !== undefined && member !== undefined) return `${base}.${member}`;
   }
+  return undefined;
+}
+
+/** Every qualified name `json` uses: `MemberCall(N, "m", …)` and `Field(N, "m")` over a chain of names. */
+export function qualifiedNamesOf(json: unknown, into: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(json)) return into;
+  const name = qualifiedNameAt(json);
+  if (name !== undefined) into.add(name);
   for (const item of json) qualifiedNamesOf(item, into);
   return into;
 }
@@ -133,66 +186,132 @@ function plainNamesOf(json: unknown, into: Set<string>): Set<string> {
   return into;
 }
 
+/** `json` with each qualified name `heads` has replaced by its head: a call by a call of it. */
+function withHeads(json: unknown, heads: ReadonlyMap<string, string>): unknown {
+  if (!Array.isArray(json)) return json;
+  const name = qualifiedNameAt(json);
+  const head = name === undefined ? undefined : heads.get(name);
+  if (head !== undefined) return json[0] === "Field" ? head : [head, ...json.slice(3).map((a) => withHeads(a, heads))];
+  return json.map((item) => withHeads(item, heads));
+}
+
 export interface Ensured {
   /** Libraries and definitions newly declared, in order. */
   readonly declared: readonly string[];
   /** Qualified names nothing resolved, or whose namespace is taken: held, not thrown. */
   readonly unresolved: readonly string[];
+  /** The pin each qualified name the expression itself used resolved to: its lock entries. */
+  readonly pins: Readonly<Record<string, string>>;
+  /** Definitions refused, and why: a dependency not pinned, or its pin not found. */
+  readonly errors: readonly string[];
 }
 
 /** Declares into an engine what its expressions name, through a registry. */
 export interface RegistryResolver<Engine extends DeclaringEngine> {
-  ensure(ce: Engine, json: unknown): Promise<Ensured>;
+  /** `lock` pins the expression's own qualified names; unpinned ones take the latest. */
+  ensure(ce: Engine, json: unknown, lock?: Readonly<Record<string, string>>): Promise<Ensured>;
 }
 
 interface EngineState {
   readonly asked: Set<string>;
   readonly libraries: Set<string>;
+  /** Heads declared from definitions, by pin: `false` while its dependencies are resolving. */
+  readonly definitions: Map<string, boolean>;
   readonly namespaces: Map<string, Map<string, string>>;
 }
 
 /**
- * Resolve every name `json` uses, declare what resolves, and close over the names each
- * declared definition's body uses in turn. A definition never replaces a head the engine
- * already has; a namespace is declared once and reassigned as members join it.
+ * Resolve every name `json` uses and declare what resolves. A definition's body is declared
+ * against its own pins: each qualified name it uses is resolved at the pin it `requires` (a
+ * system name needs none) and replaced by that version's head, so what it calls can't change
+ * under it. A definition never replaces a head the engine already has; a namespace is
+ * declared once and reassigned as members join.
  */
 export function createRegistryResolver<Engine extends DeclaringEngine>(
   registry: Registry<Engine>,
 ): RegistryResolver<Engine> {
   const states = new WeakMap<Engine, EngineState>();
+
   return {
-    async ensure(ce, json) {
-      const state = states.get(ce) ?? { asked: new Set(), libraries: new Set(), namespaces: new Map() };
+    async ensure(ce, json, lock = {}) {
+      const state = states.get(ce) ?? {
+        asked: new Set(),
+        libraries: new Set(),
+        definitions: new Map(),
+        namespaces: new Map(),
+      };
       states.set(ce, state);
       const declared: string[] = [];
       const unresolved: string[] = [];
-      const queue = [...qualifiedNamesOf(json), ...plainNamesOf(json, new Set())];
-      while (queue.length > 0) {
-        const name = queue.shift()!;
-        if (state.asked.has(name)) continue;
-        state.asked.add(name);
-        const qualified = name.includes(".");
-        const found = await registry.resolve(name);
+      const errors: string[] = [];
+      const pins: Record<string, string> = {};
+
+      const declareLibraries = async (libraries: readonly Library<Engine>[]): Promise<void> => {
+        for (const library of libraries) {
+          if (state.libraries.has(library.name)) continue;
+          state.libraries.add(library.name);
+          await library.declare(ce);
+          declared.push(library.name);
+        }
+      };
+
+      /** Declare a definition after what its body uses; false if a dependency failed. */
+      const declareDefinition = async (
+        name: string,
+        found: Resolution<Engine> & { definition: Definition; pin: string },
+      ): Promise<boolean> => {
+        const done = state.definitions.get(found.pin);
+        if (done !== undefined) return true;
+        if (ce.lookupDefinition(found.head) !== undefined) return true;
+        state.definitions.set(found.pin, false);
+        const { signature, body, requires = {} } = found.definition;
+        const heads = new Map<string, string>();
+        for (const used of qualifiedNamesOf(body)) {
+          const pin = requires[used];
+          const dependency = await registry.resolve(used, pin);
+          if (dependency === undefined) {
+            errors.push(`${name}: ${used}${pin === undefined ? "" : `@${pin}`} doesn't resolve`);
+            return false;
+          }
+          if ("libraries" in dependency) await declareLibraries(dependency.libraries);
+          else if (pin === undefined) {
+            errors.push(`${name}: ${used} isn't a system name, and has no pin in requires`);
+            return false;
+          } else if (!(await declareDefinition(used, dependency))) return false;
+          heads.set(used, dependency.head);
+        }
+        for (const used of plainNamesOf(body, new Set())) {
+          const dependency = await registry.resolve(used);
+          if (dependency !== undefined && "libraries" in dependency) await declareLibraries(dependency.libraries);
+        }
+        ce.declare(found.head, { signature, evaluate: withHeads(body, heads) } as never);
+        state.definitions.set(found.pin, true);
+        declared.push(found.head);
+        return true;
+      };
+
+      for (const name of qualifiedNamesOf(json)) {
+        if (state.namespaces.get(name.slice(0, name.lastIndexOf(".")))?.has(name.slice(name.lastIndexOf(".") + 1)))
+          continue;
+        const found = await registry.resolve(name, lock[name]);
         if (found === undefined) {
-          if (qualified) unresolved.push(name);
+          unresolved.push(name);
           continue;
         }
-        if ("libraries" in found) {
-          for (const library of found.libraries) {
-            if (state.libraries.has(library.name)) continue;
-            state.libraries.add(library.name);
-            await library.declare(ce);
-            declared.push(library.name);
-          }
-        } else if (ce.lookupDefinition(found.head) === undefined) {
-          const { signature, body } = found.definition;
-          ce.declare(found.head, { signature, evaluate: body } as never);
-          declared.push(found.head);
-          queue.push(...qualifiedNamesOf(body), ...plainNamesOf(body, new Set()));
+        if ("libraries" in found) await declareLibraries(found.libraries);
+        else {
+          if (!(await declareDefinition(name, found))) continue;
+          pins[name] = found.pin;
         }
-        if (qualified && !bind(ce, state, name, found.head)) unresolved.push(name);
+        if (!bind(ce, state, name, found.head)) unresolved.push(name);
       }
-      return { declared, unresolved };
+      for (const name of plainNamesOf(json, new Set())) {
+        if (state.asked.has(name)) continue;
+        state.asked.add(name);
+        const found = await registry.resolve(name);
+        if (found !== undefined && "libraries" in found) await declareLibraries(found.libraries);
+      }
+      return { declared, unresolved, pins, errors };
     },
   };
 }
