@@ -39,6 +39,11 @@ export interface OperationEpsil {
 export interface CarrierRegistration {
   readonly name: string;
   readonly type?: string;
+  /** How many leading slots of a packed multi-arg operand are params, not the element(s) --
+   *  see `Carrier.carrierParams` (`./carriers.ts`) for the full story. Undefined (not just 0)
+   *  when the owning `Carrier` record never declared one -- `allCarrierParams` only bakes in
+   *  carriers that did. */
+  readonly carrierParams?: number;
 }
 
 interface Entry {
@@ -184,6 +189,19 @@ export function carrierNameForType(ce: ComputeEngine, type: string): string | un
  *  bake into a generated data file, since they cannot hold a live engine themselves. */
 export function allCarrierNames(ce: ComputeEngine): readonly string[] {
   return [...registryOf(ce).carriers.keys()];
+}
+
+/** Every carrier that declared a `carrierParams` count (`registerCarrier`/`declareCarriers`,
+ *  from the owning `Carrier` record's own field), by name — the oracle's generated data bakes
+ *  this in alongside `allCarrierNames`, so `emit`/`structural` can unwrap a packed multi-arg
+ *  operand by declared count instead of guessing from its shape. A carrier absent here packs
+ *  no leading params (the default, 0). */
+export function allCarrierParams(ce: ComputeEngine): ReadonlyMap<string, number> {
+  const map = new Map<string, number>();
+  for (const carrier of registryOf(ce).carriers.values()) {
+    if (carrier.carrierParams !== undefined) map.set(carrier.name, carrier.carrierParams);
+  }
+  return map;
 }
 
 /**

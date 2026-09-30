@@ -147,6 +147,49 @@ async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
+/** The Python source for one batch scan, as a pure string build — split out from `runPython`
+ * so its shape (the per-item namespace, below) can be asserted on without a kernel.
+ *
+ * `for i, src in enumerate(sources)` at module level used to make `i` and `src` plain globals —
+ * the same bug class #352 fixed for Wolfram's `Do` loop (wolframBatchCode): a batched item's
+ * own bare name (a symbol literally named `i`, or a walrus target it assigns) landed in that
+ * same shared namespace, visible to, and overwritable by, every item after it. Each item now
+ * evaluates in its own copy (`_enumeratio_ns`) of a base namespace snapshotted right after the
+ * preamble runs (`_enumeratio_base_ns`, before the loop's own bookkeeping names exist), so an
+ * item's `eval`/`sage_eval` can neither read the loop's names nor leak one of its own into a
+ * later item. */
+export function pythonBatchCode(
+  sources: readonly string[],
+  preamble: string,
+  evalExpr: (src: string, ns: string) => string = (src, ns) => `eval(${src}, ${ns})`,
+  valueOf?: string,
+): string {
+  // With `valueOf`, the value line is that helper's rendering (compared) and a second
+  // `|`-marked line carries the kernel's own form (displayed), as for Wolfram.
+  const print = valueOf
+    ? `v = ${evalExpr("_enumeratio_src", "_enumeratio_ns")}
+        print("<<%d>>%s" % (_enumeratio_i + 1, ${valueOf}(v)), flush=True)
+        print("<<%d|>>%s" % (_enumeratio_i + 1, str(v)), flush=True)`
+    : `print("<<%d>>%s" % (_enumeratio_i + 1, str(${evalExpr("_enumeratio_src", "_enumeratio_ns")})), flush=True)`;
+  return `${preamble}
+_enumeratio_base_ns = dict(globals())
+import json, signal, sys
+def _timeout(signum, frame):
+    raise TimeoutError("over ${ITEM_SECONDS}s")
+signal.signal(signal.SIGALRM, _timeout)
+_enumeratio_sources = json.loads(${JSON.stringify(JSON.stringify(sources))})
+for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
+    signal.alarm(${ITEM_SECONDS})
+    _enumeratio_ns = dict(_enumeratio_base_ns)
+    try:
+        ${print}
+    except BaseException as exc:
+        print("<<%d>>!!%s" % (_enumeratio_i + 1, type(exc).__name__ + ": " + str(exc)[:100]), flush=True)
+    finally:
+        signal.alarm(0)
+`;
+}
+
 /** SymPy / mpmath / Sage all evaluate Python, differing only in the preamble, binary and
  * evaluator. Sage's own preparser (which turns an integer division like `2/3` into an exact
  * `Rational`, not a float) only runs on the program `sage -c` is handed, not on a string
@@ -157,31 +200,10 @@ async function runPython(
   binary: string,
   preamble: string,
   args: readonly string[] = ["-c"],
-  evalExpr = (src: string) => `eval(${src})`,
+  evalExpr?: (src: string, ns: string) => string,
   valueOf?: string,
 ): Promise<Result[]> {
-  // With `valueOf`, the value line is that helper's rendering (compared) and a second
-  // `|`-marked line carries the kernel's own form (displayed), as for Wolfram.
-  const print = valueOf
-    ? `v = ${evalExpr("src")}
-        print("<<%d>>%s" % (i + 1, ${valueOf}(v)), flush=True)
-        print("<<%d|>>%s" % (i + 1, str(v)), flush=True)`
-    : `print("<<%d>>%s" % (i + 1, str(${evalExpr("src")})), flush=True)`;
-  const program = `${preamble}
-import json, signal, sys
-def _timeout(signum, frame):
-    raise TimeoutError("over ${ITEM_SECONDS}s")
-signal.signal(signal.SIGALRM, _timeout)
-sources = json.loads(${JSON.stringify(JSON.stringify(sources))})
-for i, src in enumerate(sources):
-    signal.alarm(${ITEM_SECONDS})
-    try:
-        ${print}
-    except BaseException as exc:
-        print("<<%d>>!!%s" % (i + 1, type(exc).__name__ + ": " + str(exc)[:100]), flush=True)
-    finally:
-        signal.alarm(0)
-`;
+  const program = pythonBatchCode(sources, preamble, evalExpr, valueOf);
   const run = await transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), binary, ...args, program]);
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
@@ -793,14 +815,16 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         "enumeratio_value",
       );
     case "sage":
-      // `sage -c` takes one program string, like python3 -c. `locals=globals()` is what
-      // lets `sage_eval` see SAGE_PREAMBLE's helpers — by default it only sees `sage.all`.
+      // `sage -c` takes one program string, like python3 -c. `locals=<per-item ns>` is what
+      // lets `sage_eval` see SAGE_PREAMBLE's helpers (copied into that namespace from the
+      // module globals snapshotted right after the preamble runs) without also seeing the
+      // batch loop's own bookkeeping names.
       return runPython(
         sources,
         "sage",
         `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}`,
         ["-c"],
-        (src) => `sage_eval(${src}, locals=globals())`,
+        (src, ns) => `sage_eval(${src}, locals=${ns})`,
         "enumeratio_value",
       );
     case "oscar":
