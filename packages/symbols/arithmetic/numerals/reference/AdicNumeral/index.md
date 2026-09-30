@@ -16,6 +16,8 @@ signatures:
     library: enumeratio-adeles
     type: (integer, rational | value, integer?) -> value
     overrides: enumeratio-numerals
+    on:
+      - ProfiniteNumber
 seeAlso:
   - AdicExpansion
   - AdicValuation

@@ -9,8 +9,10 @@ signatures:
   - call: Numerator(number) -> nothing | number
     description: Numerator of an expression
     library: enumeratio-adeles
-    type: (number | value) -> nothing | number | value
+    type: (value) -> value
     overrides: compute-engine
+    on:
+      - ProfiniteNumber
 statOn:
   - BinaryWord
   - RationalNumber

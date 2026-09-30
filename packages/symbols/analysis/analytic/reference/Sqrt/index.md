@@ -11,10 +11,6 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> complex | infinity
     overrides: compute-engine
-    on:
-      - Around
-      - CenteredInterval
-      - Interval
 seeAlso:
   - Root
   - Square
