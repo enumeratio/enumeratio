@@ -7,6 +7,7 @@
 // area's core.ts for the pattern): count, unrank, rank and valid are closed expressions, no list
 // built up along the way.
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { guardedBinomial } from "../../../collections/src/families/shared.ts";
 
 type MathJSON = unknown;
 
@@ -25,7 +26,7 @@ const fold = (body: MathJSON, accumulator: string, variable: string, init: MathJ
 /** ⌊a / b⌋ for integers, exactly: compute-engine's `Floor` of a big rational rounds through a
  *  double, so ⌊(25! − 1) / 24!⌋ would be 25. */
 const quotient = (a: MathJSON, b: MathJSON): MathJSON => ["Divide", sub(a, ["Mod", a, b]), b];
-const binom = (n: MathJSON, k: MathJSON): MathJSON => ["Binomial", n, k];
+const binom = guardedBinomial;
 const element = (j: MathJSON): MathJSON => at("_x", j);
 const lengthOf = (x: MathJSON): MathJSON => ["Length", x];
 
@@ -87,12 +88,13 @@ const integerCompositions: EpsilFamily = {
 // names -- a fold's variable/accumulator must not collide with one from an outer or sibling fold
 // in the same expression tree.
 //
-// compute-engine's JS compiler currently miscompiles the resulting nested Fold-in-If-in-Map for
-// `count`/`unrank`/`rank` (confirmed wrong on some inputs, `valid` unaffected); scripts/compile-
-// families.ts checks compiled code against the interpreter and leaves a disagreeing operation
-// interpreted (compiled-families.generated.js's `interpreted: [...]`) rather than shipping a wrong
-// answer below 2^53. The interpreter alone runs ~30ms/element here -- far under the ~1s/element a
-// recursive definition costs -- so both families stay in Epsil.
+// Every Binomial here goes through `guardedBinomial` (shared.ts), not a bare `["Binomial", n, k]`:
+// compute-engine's compiled `_SYS.binomial` returns undefined for k < 0 or k > n, and throws for
+// n < 0, where the interpreter returns 0 -- and this digit search calls Binomial(c, i) at
+// c = i − 1 (k = n + 1) on every step, `count` calls Binomial(n − 1, −1) at k = 0, and so on.
+// Unguarded, that looked like a compiler miscompile (scripts/compile-families.ts's #503 guard
+// caught it and left count/unrank/rank interpreted); guarded, compiled code agrees with the
+// interpreter.
 const digitAt = (i: MathJSON, rIn: MathJSON, universe: MathJSON, tag: string): MathJSON => {
   const c = `c_${tag}`;
   const best = `best_${tag}`;
