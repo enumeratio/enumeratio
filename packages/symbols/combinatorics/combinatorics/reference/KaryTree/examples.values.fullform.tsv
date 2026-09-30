@@ -1,3 +1,12 @@
-id	in
-binary-tree-on-seven-vertices	KaryTree[7, 2]
-default-k-is-2	KaryTree[5]
+id	in	back
+binary-tree-on-seven-vertices	KaryTree[7, 2]	
+karytree-10	KaryTree[10]	
+karytree-15-3	KaryTree[15, 3]	
+default-k-is-2	KaryTree[5]	
+karytree-6	KaryTree[6]	
+karytree-4-3	KaryTree[4, 3]	
+map-function-vertexeccentricity-karytree-8-3-1-1	Map[Function[VertexEccentricity[KaryTree[8, 3], Slot[1]]], VertexList[KaryTree[8, 3]]]	[Map, [Function, [VertexEccentricity, [KaryTree, 8, 3], _1]], [VertexList, [KaryTree, 8, 3]]]
+isbipartitegraph-karytree-10-3	BipartiteGraphQ[KaryTree[10, 3]]	
+isacyclicgraph-karytree-7-3	AcyclicGraphQ[KaryTree[7, 3]]	
+isloopfreegraph-karytree-10-3	LoopFreeGraphQ[KaryTree[10, 3]]	
+karytree-8-4	KaryTree[8, 4]	

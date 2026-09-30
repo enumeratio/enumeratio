@@ -1,0 +1,8 @@
+id	in	out
+2-times-list-1-2-3	2 * [1, 2, 3]	[2, 4, 6]
+a-times-list-list-1-2-list-3-4	a * [[1, 2], [3, 4]]	[[a, 2a], [3a, 4a]]
+exponentiale-pow-list-list-1-2-3-list-4-5-6	exponentialE ^ [[1, 2, 3], [4, 5, 6]]	"[\n  [exponentialE, exponentialE ^ 2, exponentialE ^ 3],\n  [exponentialE ^ 4, exponentialE ^ 5, exponentialE ^ 6],\n]"
+outer-f-list-1-2-list-a-b-c	Outer(f, [1, 2], [a, b, c])	[[f(1, a), f(1, b), f(1, c)], [f(2, a), f(2, b), f(2, c)]]
+prepend-list-1-2-3-list-a-b-c	Prepend([1, 2, 3], [a, b, c])	[[a, b, c], 1, 2, 3]
+flatten-list-list-1-2-list-a-b-c	flatten([[1, 2], [a, b, c]])	[1, 2, a, b, c]
+map-f-list-1-2-3-4	map(f, [1, 2, 3, 4])	[f(1), f(2), f(3), f(4)]

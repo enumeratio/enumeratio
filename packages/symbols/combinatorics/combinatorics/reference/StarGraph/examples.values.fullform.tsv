@@ -1,2 +1,8 @@
-id	in
-centre-degree-of-a-6-vertex-star	VertexDegree[StarGraph[6], 1]
+id	in	back
+centre-degree-of-a-6-vertex-star	VertexDegree[StarGraph[6], 1]	
+stargraph-8	StarGraph[8]	
+stargraph-6	StarGraph[6]	
+map-function-vertexeccentricity-stargraph-6-1-1	Map[Function[VertexEccentricity[StarGraph[6], Slot[1]]], VertexList[StarGraph[6]]]	[Map, [Function, [VertexEccentricity, [StarGraph, 6], _1]], [VertexList, [StarGraph, 6]]]
+istreegraph-stargraph-5	TreeGraphQ[StarGraph[5]]	
+isbipartitegraph-stargraph-5	BipartiteGraphQ[StarGraph[5]]	
+stargraph-7	StarGraph[7]	

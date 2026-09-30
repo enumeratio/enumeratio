@@ -1,0 +1,12 @@
+id	in	out
+binary-tree-on-seven-vertices		
+karytree-10		
+karytree-15-3		
+default-k-is-2		
+karytree-6		
+karytree-4-3		
+map-function-vertexeccentricity-karytree-8-3-1-1		
+isbipartitegraph-karytree-10-3	\mathrm{IsBipartiteGraph}(\mathrm{KaryTree}(10, 3))	\mathrm{True}
+isacyclicgraph-karytree-7-3	\mathrm{IsAcyclicGraph}(\mathrm{KaryTree}(7, 3))	\mathrm{True}
+isloopfreegraph-karytree-10-3	\mathrm{IsLoopFreeGraph}(\mathrm{KaryTree}(10, 3))	\mathrm{True}
+karytree-8-4		

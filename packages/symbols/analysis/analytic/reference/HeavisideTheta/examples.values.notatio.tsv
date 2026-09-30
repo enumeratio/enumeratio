@@ -4,4 +4,8 @@ heavisidetheta-positive	<HeavisideTheta>1</HeavisideTheta>	<ToExpression>1</ToEx
 heavisidetheta-zero-unevaluated	<HeavisideTheta>0</HeavisideTheta>	<HeavisideTheta>0</HeavisideTheta>
 heavisidetheta-product-both-positive	<HeavisideTheta>1 2</HeavisideTheta>	<ToExpression>1</ToExpression>
 heavisidetheta-product-one-negative	<HeavisideTheta>1 -1</HeavisideTheta>	<ToExpression>0</ToExpression>
+matrixfunction-heavisidetheta-list-list-neg-1	<MatrixFunction>HeavisideTheta <List><List>-1 <Rational>-1 2</Rational></List> <List><Rational>-1 2</Rational> <Rational>1 2</Rational></List></List></MatrixFunction>	<List><List><Multiply><Divide><Sqrt>13</Sqrt> 26</Divide> <Add>-3 <Sqrt>13</Sqrt></Add></Multiply> <Negate><Divide><Sqrt>13</Sqrt> 13</Divide></Negate></List> <List><Negate><Divide><Sqrt>13</Sqrt> 13</Divide></Negate> <Multiply><Divide><Sqrt>13</Sqrt> 26</Divide> <Add>3 <Sqrt>13</Sqrt></Add></Multiply></List></List>
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	<Assuming><Greater>a 0</Greater> <Refine><HeavisideTheta>a a a a</HeavisideTheta></Refine></Assuming>	<HeavisideTheta>a a a a</HeavisideTheta>
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	<Assuming><Less>a 0</Less> <Refine><HeavisideTheta>a a a a</HeavisideTheta></Refine></Assuming>	<HeavisideTheta>a a a a</HeavisideTheta>
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	<Assuming><And><Less>a 0</Less> <Greater>b 0</Greater></And> <Refine><HeavisideTheta>b b a</HeavisideTheta></Refine></Assuming>	<HeavisideTheta>b b a</HeavisideTheta>
 heavisidetheta-derivative	<D><HeavisideTheta>x</HeavisideTheta> x</D>	<DiracDelta>x</DiracDelta>

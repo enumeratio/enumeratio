@@ -1,2 +1,3 @@
 id	in
 reads-ascii-code-points	ToCharacterCode[String[ABC]]
+tocharactercode-a	ToCharacterCode["a"]

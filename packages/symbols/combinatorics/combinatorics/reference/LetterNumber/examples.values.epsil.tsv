@@ -1,3 +1,5 @@
 id	in	out
 single-letter	LetterNumber("d")	4
+letternumber-d	LetterNumber("D")	4
 string	LetterNumber("cab")	[3, 1, 2]
+letternumber-c	LetterNumber("c")	3

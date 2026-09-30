@@ -10,12 +10,26 @@ at-t5-0-7
 at-t5-2		
 at-t-5-0-7		
 at-t4-2-3i		
+chebyshevt-2-3		
+chebyshevt-10-x		
 at-a-rational		
 at-a-complex-argument		
 a-symbolic-order-stays-unevaluated		
+chebyshevt-2-5		
+chebyshevt-0-0		
+chebyshevt-0-positiveinfinity		
+chebyshevt-7-x		
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\mathrm{ChebyshevT}(1, -x)=-\mathrm{ChebyshevT}(1, x)	\mathrm{True}
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	\mathrm{ChebyshevT}(2, -x)=\mathrm{ChebyshevT}(2, x)	\mathrm{True}
+matrixfunction-function-chebyshevt-2-1-1-list		
 cos-n-theta	\mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})	\mathrm{True}
 at-1		
 at-minus-1		
 parity	\mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})	\mathrm{True}
 negative-order		
 pell-identity		
+chebyshevt-0-1		
+chebyshevt-1-positiveinfinity		
+chebyshevt-1-negativeinfinity		
+chebyshevt-2-positiveinfinity		
+chebyshevt-2-negativeinfinity		

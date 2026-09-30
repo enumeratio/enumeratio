@@ -1,0 +1,18 @@
+id	in	out
+factorial-ratio		
+geometric-ratio		
+discreteratio-x-pow-2-x		
+discreteratio-x-minus-r-1-times-x-minus-r-2-x		
+discreteratio-1-plus-x-times-1-plus-x-pow-2-pow		
+discreteratio-x-minus-r-1-times-x-minus-r-2		
+discreteratio-fallingfactorial-a-x-x	\mathrm{DiscreteRatio}(a^{\underline{x}}, x)	\frac{a^{\underline{x+1}}}{a^{\underline{x}}}
+discreteratio-pochhammer-a-x-x	\mathrm{DiscreteRatio}(\left(a\right)_{x}, x)	\frac{\left(a\right)_{x+1}}{\left(a\right)_{x}}
+discreteratio-x-factorial-x		
+discreteratio-gamma-x-x		
+discreteratio-binomial-x-k-x		
+discreteratio-binomial-n-x-x		
+discreteratio-r-pow-x-x		
+discreteratio-fallingfactorial-x-a-1-times	\mathrm{DiscreteRatio}(\frac{x^{\underline{a_1}}\binom{x}{a_2}r^{x}}{\left(x\right)_{b_1}x!}, x)	\frac{x!\left(x\right)_{b_1}(x+1)^{\underline{a_1}}\binom{x+1}{a_2}r^{x+1}}{(x+1)!\left(x+1\right)_{b_1}x^{\underline{a_1}}\binom{x}{a_2}r^{x}}
+discreteratio-catalannumber-x-x	\mathrm{DiscreteRatio}(C_{x}, x)	\frac{C_{x+1}}{C_{x}}
+list-discreteratio-f-n-discreteratio-f-k		
+discreteratio-gammaregularized-n-z-n	\mathrm{DiscreteRatio}(Q(n, z), n)	\frac{Q(n+1, z)}{Q(n, z)}

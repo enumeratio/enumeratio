@@ -14,4 +14,10 @@ to-exactly-40-significant-digits-not-yet-85-come	<N><DirichletBeta>2</DirichletB
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	<DirichletBeta>7</DirichletBeta>	<Multiply><Rational>61 184320</Rational> <Power>Pi 7</Power></Multiply>
 beta-2k-e-2k-2-and-beta-2k-1-0	<DirichletBeta><List>0 -1 -2 -3 -4</List></DirichletBeta>	<List><Rational>1 2</Rational> 0 <Rational>-1 2</Rational> 0 <Rational>5 2</Rational></List>
 beta-5-5-pi-5-1536	<DirichletBeta>5</DirichletBeta>	<Multiply><Rational>5 1536</Rational> <Power>Pi 5</Power></Multiply>
+dirichletbeta-neg-5	<DirichletBeta>-5</DirichletBeta>	<ToExpression>0</ToExpression>
+dirichletbeta-neg-4	<DirichletBeta>-4</DirichletBeta>	<Rational>5 2</Rational>
+dirichletbeta-neg-3	<DirichletBeta>-3</DirichletBeta>	<ToExpression>0</ToExpression>
+dirichletbeta-neg-2	<DirichletBeta>-2</DirichletBeta>	<Rational>-1 2</Rational>
+dirichletbeta-neg-1	<DirichletBeta>-1</DirichletBeta>	<ToExpression>0</ToExpression>
+dirichletbeta-0	<DirichletBeta>0</DirichletBeta>	<Rational>1 2</Rational>
 even-s-ge-4-has-no-closed-form-and-stays	<DirichletBeta>4</DirichletBeta>	<DirichletBeta>4</DirichletBeta>

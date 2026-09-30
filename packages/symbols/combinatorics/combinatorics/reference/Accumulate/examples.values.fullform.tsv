@@ -1,4 +1,6 @@
 id	in
 accumulate-1-2-3-4	Accumulate[List[1, 2, 3, 4]]
+accumulate-list-a-b-c-d	Accumulate[List[a, b, c, d]]
+accumulate-list-list-a-b-list-c-d-list	Accumulate[List[List[a, b], List[c, d], List[E, f]]]
 accumulate-empty	Accumulate[List[]]
 accumulate-last-is-total	Equal[Last[Accumulate[List[1, 2, 3, 4, 5]]], Plus[1, 2, 3, 4, 5]]

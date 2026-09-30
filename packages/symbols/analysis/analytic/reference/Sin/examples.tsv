@@ -48,6 +48,16 @@ taylor-series-about-0-only-odd-powers-appear	Scope		[Series, [Sin, x], x, 0, 10]
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Scope		[Limit, [Function, [Divide, [Sin, x], x], x], 0]	1			The fundamental limit $\lim_{x\to0} \frac{\sin x}{x} = 1$								
 to-30-significant-digits-every-one-correctly	Scope		[N, [Sin, 1], 30]	{num: "0.841470984807896506652502321630"}			To 30 significant digits, every one correctly rounded								
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	Scope		[N, [Sin, [Power, 24, 40]]]	{num: "0.400083152719766047071"}	{num: "0.4000831527197660470709419158482646956061055971916011789753"}	Wolfram 15.0.0 Sin	$24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\pi$ before Sin sees it, not rounded to working precision first	precision	Wolfram reduces the huge argument in machine precision and loses it; ours reduces it exactly	precision	Sage's N(sin(...)) reduces the huge argument in double precision, which cannot hold 24^40 exactly; compute-engine reduces it exactly.			precision	Rust reduces the argument in f64, which can't hold 24^40 exactly; compute-engine reduces it exactly.
+n-sin-6-over-5-50	Scope		[N, [Sin, [Rational, 6, 5]], 50]	{num: "0.93203908596722634967013443549482599541507058820873"}											
+functiondomain-sin-x-x	Scope		[FunctionDomain, [Sin, x], x]	True											
+functionrange-sin-x-x-y	Scope		[FunctionRange, [Sin, x], x, y]	[LessEqual, -1, y, 1]											
+functionperiod-sin-x-x	Scope		[FunctionPeriod, [Sin, x], x]	[Multiply, 2, Pi]											
+functionanalytic-sin-x-x	Scope		[FunctionAnalytic, [Sin, x], x]	True											
+functioninjective-sin-x-x	Scope		[FunctionInjective, [Sin, x], x]	False											
+functionsurjective-sin-x-x	Scope		[FunctionSurjective, [Sin, x], x]	False											
+functionsingularities-sin-x-x	Scope		[FunctionSingularities, [Sin, x], x]	False											
+functiondiscontinuities-sin-x-x	Scope		[FunctionDiscontinuities, [Sin, x], x]	False											
+matrixfunction-function-sin-1-1-list-list-5-over	Scope		[MatrixFunction, [Function, [Block, [Sin, _1]], _1], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]	[List, [List, [Rational, 1, 2], 0], [List, [Rational, 27, 16], -1]]											
 threads-element-wise-over-a-list	Applications		[Sin, [List, 0, [Divide, Pi, 2], Pi]]	[List, 0, 1, 0]			Threads element-wise over a list							threading	compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars.
 degrees-d-converts-a-degree-measure-to-radians	Applications		[Sin, [Degrees, 30]]	[Rational, 1, 2]			Degrees(d) converts a degree measure to radians, so familiar degree angles still evaluate exactly								
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Properties		[Add, [Power, [Sin, [Divide, Pi, 6]], 2], [Power, [Cos, [Divide, Pi, 6]], 2]]	1			Pythagorean identity $\sin^2 x + \cos^2 x = 1$, here at $x = \pi/6$								
@@ -60,6 +70,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2	Properties		[TrigReduce, [Power, [Sin, x
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i	Properties		[TrigToExp, [Sin, x]]	[Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]			Euler's formula: $\sin x = \frac{e^{ix} - e^{-ix}}{2i}$								
 simplify-knows-the-pythagorean-identity	Properties		[Simplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]	1			Simplify knows the Pythagorean identity symbolically								
 the-same-through-fullsimplify	Properties		[FullSimplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]	1			The same through [[FullSimplify]]								
+sin-3-over-10-times-pi	Properties		[Sin, [Multiply, [Rational, 3, 10], Pi]]	[Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4]]	[Multiply, [Rational, 1, 4], [Add, 1, [Sqrt, 5]]]	Wolfram MathematicalFunctionData, Sin									
 1-radian-isn-t-a-recognized-special-angle-so	Possible issues		[Sin, 1]	[Sin, 1]			1 radian isn't a recognized special angle, so this stays symbolic; wrap in N(...) or pass 1.0 for ≈ 0.841								
 sin-2-a-generic-argument-stays-symbolic	Possible issues		[Sin, 2]	[Sin, 2]			$\sin(2)$, a generic argument, stays symbolic -- not a recognized special angle								
 sin-x-plus-y-stays-symbolic	Possible issues		[Sin, [Add, x, y]]	[Sin, [Add, x, y]]			A generic symbolic sum stays symbolic								

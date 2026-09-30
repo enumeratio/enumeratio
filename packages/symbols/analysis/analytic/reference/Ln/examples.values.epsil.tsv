@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	N(ln(-2), 10)	0.693_147_180_6 + 3.141_592_654i
 ln-neg-6	ln(-6)	i * pi + ln(6)
 n-of-a-negative-rational-argument	N(ln(-1 / 2))	-0.693_147_180_559_945_3 + 3.141_592_653_589_793i
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	ln(negativeInfinity)	positiveInfinity
+n-ln-5-over-2-50	N(ln(5 / 2), 50)	0.916_290_731_874_155_065_183_527_211_768_011_071_450_101_219_908_26
+functiondomain-ln-x-x	FunctionDomain(ln(x), x)	0 < x
+functionrange-ln-x-x-y	FunctionRange(ln(x), x, y)	True
+functionanalytic-ln-x-x	FunctionAnalytic(ln(x), x)	False
+functionmeromorphic-ln-x-x	FunctionMeromorphic(ln(x), x)	False
+functioninjective-ln-x-x	FunctionInjective(ln(x), x)	True
+functionsurjective-ln-x-x	FunctionSurjective(ln(x), x)	True
+d-ln-z-z	D(ln(z), z)	1 / z
+d-ln-ln-x-x	D(ln(ln(x)), x)	1 / (x * ln(x))
+ln-exponentiale-pow-n	ln(exponentialE ^ n)	n
 inverse-of-exp-ln-e-x-x	ln(exp(5)) == 5	True
 product-rule-ln-ab-ln-a-ln-b	ln(2) + ln(3) == ln(6)	True
 powerexpand-splits-a-logarithm-of-a-product	PowerExpand(ln(x * y))	ln(x) + ln(y)

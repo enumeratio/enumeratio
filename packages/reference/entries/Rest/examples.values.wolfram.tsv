@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+rest-list-a-b-c-d	Rest[List[a, b, c, d]]	{b, c, d}	\text{Rest}[\{a,b,c,d\}]	\{b,c,d\}

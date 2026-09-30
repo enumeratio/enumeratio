@@ -1,0 +1,2 @@
+id	in	out
+most-list-a-b-c-d	most([a, b, c, d])	[a, b, c]

@@ -1,7 +1,24 @@
 id	in	out
 foldlist-add-0-1-2-3	<FoldList>Add 0 <List>1 2 3</List></FoldList>	<List>0 1 3 6</List>
+foldlist-f-x-list-a-b-c-d	<FoldList>f x <List>a b c d</List></FoldList>	<List>x <f>x a</f> <f><f>x a</f> b</f> <f><f><f>x a</f> b</f> c</f> <f><f><f><f>x a</f> b</f> c</f> d</f></List>
+foldlist-add-0-list-a-b-c-d	<FoldList>Add 0 <List>a b c d</List></FoldList>	<List>0 a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add></List>
+foldlist-f-list-a-b-c-d	<FoldList>f <List>a b c d</List></FoldList>	<List>a <f>a b</f> <f><f>a b</f> c</f> <f><f><f>a b</f> c</f> d</f></List>
+foldlist-function-1-pow-2-1-2-x-list-a-b-c-d	<FoldList><Function><Block><Power>_1 _2</Power></Block> _1 _2</Function> x <List>a b c d</List></FoldList>	<List>x <Power>x a</Power> <Power><Power>x a</Power> b</Power> <Power><Power><Power>x a</Power> b</Power> c</Power> <Power><Power><Power><Power>x a</Power> b</Power> c</Power> d</Power></List>
 foldlist-add-1-2-3	<FoldList>Add <List>1 2 3</List></FoldList>	<List>1 3 6</List>
 foldlist-multiply-1-1-2-3-4	<FoldList>Multiply 1 <List>1 2 3 4</List></FoldList>	<List>1 1 2 6 24</List>
 foldlist-lcm-1-range-2-10-lazy-not-list	<FoldList>LCM 1 <Range>2 10</Range></FoldList>	<List>1 2 6 12 60 60 420 840 2520 2520</List>
+foldlist-permute-list-a-b-c-d-list-list-1-4-3-2	<FoldList>Permute <List>a b c d</List> <List><List>1 4 3 2</List> <List>3 2 4 1</List></List></FoldList>	<List><List>a b c d</List> <List>a d c b</List> <List>b d a c</List></List>
+foldlist-multiply-1-array-nthprime-10	<FoldList>Multiply 1 <Array>NthPrime 10</Array></FoldList>	<List>1 2 6 30 210 2310 30030 510510 9699690 223092870 6469693230</List>
+foldlist-max-0-list-1-3-1-2-4-1-5-3-6-2-8-11	<FoldList>Max 0 <List>1 3 1 2 4 1 5 3 6 2 8 11</List></FoldList>	<List>0 1 3 3 3 4 4 5 5 6 6 8 11</List>
+foldlist-at-a-plus-b-times-x-pow-2-plus-y-pow-2	<FoldList>At <Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <List>2 1 1</List></FoldList>	<List><Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <Add><Power>x 2</Power> <Power>y 2</Power></Add> <Power>x 2</Power> x</List>
+foldlist-append-list-x-list-a-b-c-d	<FoldList>Append <List>x</List> <List>a b c d</List></FoldList>	<List><List>x</List> <List>x a</List> <List>x a b</List> <List>x a b c</List> <List>x a b c d</List></List>
+foldlist-list-x-list-a-b-c-d	<FoldList>List x <List>a b c d</List></FoldList>	<List>x <List>x a</List> <List><List>x a</List> b</List> <List><List><List>x a</List> b</List> c</List> <List><List><List><List>x a</List> b</List> c</List> d</List></List>
+foldlist-function-10-times-1-plus-2-1-2-0-list-4	<FoldList><Function><Block><Add><Multiply>10 _1</Multiply> _2</Add></Block> _1 _2</Function> 0 <List>4 5 1 6 7 8</List></FoldList>	<List>0 4 45 451 4516 45167 451678</List>
+foldlist-function-1-list-2-1-2-a-plus-b-times-x	<FoldList><Function><Block><At>_1 _2</At></Block> _1 _2</Function> <Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <List>2 1 1</List></FoldList>	<List><Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <Add><Power>x 2</Power> <Power>y 2</Power></Add> <Power>x 2</Power> x</List>
 foldlist-length-is-one-more	<Equal><Length><FoldList>Add 0 <List>1 2 3 4 5</List></FoldList></Length> <Add><Length><List>1 2 3 4 5</List></Length> 1</Add></Equal>	<True />
 foldlist-last-is-fold	<Equal><Last><FoldList>Add 0 <List>1 2 3</List></FoldList></Last> <Fold>Add 0 <List>1 2 3</List></Fold></Equal>	<True />
+rest-foldlist-add-0-list-a-b-c-d-exponentiale	<Rest><FoldList>Add 0 <List>a b c d ExponentialE</List></FoldList></Rest>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add> <Add>a b c d ExponentialE</Add></List>
+foldlist-f-x-list	<FoldList>f x <Apply>List</Apply></FoldList>	<List>x</List>
+foldlist-f-x-list-a-b-c	<FoldList>f x <List>a b c</List></FoldList>	<List>x <f>x a</f> <f><f>x a</f> b</f> <f><f><f>x a</f> b</f> c</f></List>
+foldlist-add-list-a-b-c-d	<FoldList>Add <List>a b c d</List></FoldList>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add></List>
+foldlist-f-list	<FoldList>f <Apply>List</Apply></FoldList>	<Apply>List</Apply>

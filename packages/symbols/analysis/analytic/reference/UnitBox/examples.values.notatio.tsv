@@ -2,9 +2,15 @@ id	in	out
 unitbox-inside-the-box	<UnitBox>0</UnitBox>	<ToExpression>1</ToExpression>
 unitbox-boundary-1-2	<UnitBox><Rational>1 2</Rational></UnitBox>	<ToExpression>1</ToExpression>
 unitbox-boundary-neg-1-2	<UnitBox><Rational>-1 2</Rational></UnitBox>	<ToExpression>1</ToExpression>
+piecewiseexpand-unitbox-x	<PiecewiseExpand><UnitBox>x</UnitBox></PiecewiseExpand>	<UnitBox>x</UnitBox>
 unitbox-outside-the-box	<UnitBox>1</UnitBox>	<ToExpression>0</ToExpression>
 unitbox-product-of-two-boxes	<UnitBox>0 0</UnitBox>	<ToExpression>1</ToExpression>
 unitbox-product-second-at-its-boundary	<UnitBox>0 <Rational>1 2</Rational></UnitBox>	<ToExpression>1</ToExpression>
 unitbox-pi-over-4-outside-exact	<UnitBox><Divide>Pi 4</Divide></UnitBox>	<ToExpression>0</ToExpression>
 unitbox-sqrt2-over-4-inside-exact	<UnitBox><Divide><Sqrt>2</Sqrt> 4</Divide></UnitBox>	<ToExpression>1</ToExpression>
+unitbox-neg-1	<UnitBox>-1</UnitBox>	<ToExpression>0</ToExpression>
+unitbox-1-over-4	<UnitBox><Rational>1 4</Rational></UnitBox>	<ToExpression>1</ToExpression>
+fullsimplify-matrixfunction-unitbox-list-list-1	<FullSimplify><MatrixFunction>UnitBox <List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>1 3</Rational></List></List></MatrixFunction></FullSimplify>	<List><List>1 0</List> <List>0 1</List></List>
+piecewiseexpand-unitbox-x-0-lt-x-lt-2	<PiecewiseExpand><UnitBox>x</UnitBox> <Less>0 x 2</Less></PiecewiseExpand>	<UnitBox>x</UnitBox>
 unitbox-derivative-away-from-the-jump	<D><UnitBox>x</UnitBox> x</D>	<Piecewise><List><List>Indeterminate <Or><Equal>x <Rational>1 2</Rational></Equal> <Equal>x <Rational>-1 2</Rational></Equal></Or></List></List> 0</Piecewise>
+unitbox-2	<UnitBox>2</UnitBox>	<ToExpression>0</ToExpression>

@@ -5,12 +5,16 @@ trailing-zeros-in-base-10
 integerexponent-2-pow-10-times-3-pow-4-2	multiplicity(2, ((S(2)**10) * (S(3)**4)))	10	
 integerexponent-1000-base-10			
 integerexponent-1024-base-4	multiplicity(4, 1024)	5	
+integerexponent-1-152-2	multiplicity(2, 1152)		
+integerexponent-144-2	multiplicity(2, 144)		
 composite-base-1728-2-6-3-3-so-6-3-divides-it	multiplicity(6, 1728)	3	
 negative-integers			
 threads-over-a-list			
 gaussian-integers-8i-i-cdot-i-3-1-i-6	multiplicity((1 + 1*I), (0 + 8*I))	ValueError: expecting ints or fractions, got 1 + I and 8*I	error
 negative-integers-base-2	multiplicity(2, -24)	3	
 the-trailing-zeros-of-100			
+integerexponent-range-1-50-2			
 legendre-s-formula-lfloor-100-7-rfloor-lfloor	multiplicity(7, factorial(100))	16	
+integerexponent-2-524-2	multiplicity(2, 2524)		
 integerexponent-0-5	multiplicity(5, 0)	ValueError: no such integer exists: multiplicity of 0 is not-defined	error
 base-1-has-no-well-defined-p-adic-valuation-so	multiplicity(1, 10)	ValueError: factor must be > 1	error

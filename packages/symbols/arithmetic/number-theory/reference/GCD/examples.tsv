@@ -35,9 +35,15 @@ gcd-with-a-negative-associate	Scope	test	[GCD, [Complex, 6, 8], [Complex, -2, -3
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[GCD, [Complex, 123, 456], 19]	1	gcd of a large-norm Gaussian and a real prime, 19														
 gcd-of-two-composites-sharing-the-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 9, 6]]	1	gcd of two composites sharing the prime above 13														
 reduce-12-18-to-lowest-terms-by-dividing-out-the	Applications		[Divide, 12, [GCD, 12, 18]]	2	Reduce $12/18$ to lowest terms by dividing out the GCD														
+gcd-14-105	Applications		[GCD, 14, 105]	7															
+gcd-24-12	Applications		[GCD, 24, 12]	12															
+gcd-6-21	Applications		[GCD, 6, 21]	3															
+gcd-6-3-mod-3-eq-0	Applications		[Equal, [Mod, [GCD, 6, 3], 3], 0]	True															
 commutative-gcd-a-b-gcd-b-a	Properties		[Equal, [GCD, 12, 18], [GCD, 18, 12]]	True	Commutative: $\gcd(a,b)=\gcd(b,a)$														
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm	Properties		[Equal, [Multiply, [GCD, 12, 18], [LCM, 12, 18]], [Multiply, 12, 18]]	True	$\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[LCM]]														
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	Properties		[GCD, [Fibonacci, 12], [Fibonacci, 18]]	8	$\gcd(F_m,F_n)=F_{\gcd(m,n)}$: here $F_6=8$. See [[Fibonacci]]														
+gcd-7-11-29	Properties		[GCD, 7, 11, 29]	1															
+gcd-5-6-eq-1	Properties		[Equal, [GCD, 5, 6], 1]	True															
 a-single-argument-is-returned-unchanged	Possible issues		[GCD, 4]	4	A single argument is returned unchanged														
 with-no-arguments-compute-engine-returns-0-the	Possible issues		[GCD]	0	With no arguments compute-engine returns 0, the identity element														
 0-is-absorbed-every-integer-divides-it-so-gcd-0	Possible issues		[GCD, 0, 5]	5	0 is absorbed: every integer divides it, so $\gcd(0,n)=n$														
@@ -45,3 +51,4 @@ signs-are-discarded-before-computing-the-gcd	Possible issues		[GCD, -12, 9, 57]	
 lists-aren-t-threaded-element-wise-they-re	Possible issues		[GCD, [List, 2, 4], [List, 6, 8]]	2	Lists aren't threaded element-wise; they're flattened into extra arguments, so this equals $\gcd(2,4,6,8)$	convention	Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8).	threading	compute-engine's GCD pools the elements of list arguments; Sage's gcd takes scalars only.	threading	compute-engine's GCD threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's GCD pools the elements of list arguments; Mathlib's gcd takes scalars only.	threading	compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.	threading	compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.	threading	compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars.
 gcd-0-0-0-by-convention	Possible issues		[GCD, 0, 0]	0	$\gcd(0,0)=0$ by convention														
 symbolic-arguments-stay-unevaluated	Possible issues		[GCD, x, y]	[GCD, x, y]	Symbolic arguments stay unevaluated														
+gcd-neg-3-9	Possible issues		[GCD, -3, 9]	3															

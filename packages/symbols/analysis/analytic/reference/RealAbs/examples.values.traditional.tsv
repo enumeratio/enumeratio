@@ -1,6 +1,16 @@
 id	in	out
 the-absolute-value-of-a-real-number		
 realabs-neg-7-over-2		
+realabs-2		
+d-realabs-x-x		
 threads-element-wise-over-a-list		
 exact-numeric-arguments		
+n-realabs-pi-minus-catalan-50		
+realabs-list-list-1-over-2-neg-1-list-0-neg-1		
+matrixfunction-realabs-list-list-1-over-2-neg-1		
+realabs-interval-neg-5-3		
+realabs-0		
+realabs-positiveinfinity		
+realabs-negativeinfinity		
+piecewiseexpand-realabs-x		
 agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\mathrm{True}

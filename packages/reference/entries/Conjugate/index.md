@@ -30,4 +30,6 @@ mapOn:
   - Composition
   - CorePartition
   - IntegerPartition
+names:
+  wolfram: Conjugate
 ---

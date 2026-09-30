@@ -1,4 +1,11 @@
 id	in	out
 falling-factorial-5-3-60	<FallingFactorial>5 3</FallingFactorial>	<ToExpression>60</ToExpression>
+fallingfactorial-10-2	<FallingFactorial>10 2</FallingFactorial>	<ToExpression>90</ToExpression>
+fallingfactorial-x-8	<FallingFactorial>x 8</FallingFactorial>	<Multiply><Negate>x</Negate> <Add><Negate>x</Negate> 1</Add> <Add><Negate>x</Negate> 2</Add> <Add><Negate>x</Negate> 3</Add> <Add><Negate>x</Negate> 4</Add> <Add><Negate>x</Negate> 5</Add> <Add><Negate>x</Negate> 6</Add> <Add><Negate>x</Negate> 7</Add></Multiply>
 falling-factorial-3-5-0	<FallingFactorial>3 5</FallingFactorial>	<ToExpression>0</ToExpression>
 falling-factorial-half-2-neg-1-4	<FallingFactorial><Rational>1 2</Rational> 2</FallingFactorial>	<Rational>-1 4</Rational>
+fallingfactorial-4-2	<FallingFactorial>4 2</FallingFactorial>	<ToExpression>12</ToExpression>
+functionexpand-fallingfactorial-x-4	<FunctionExpand><FallingFactorial>x 4</FallingFactorial></FunctionExpand>	<Multiply><Negate>x</Negate> <Add><Negate>x</Negate> 1</Add> <Add><Negate>x</Negate> 2</Add> <Add><Negate>x</Negate> 3</Add></Multiply>
+fallingfactorial-n-0	<FallingFactorial>n 0</FallingFactorial>	<ToExpression>1</ToExpression>
+fallingfactorial-10-3	<FallingFactorial>10 3</FallingFactorial>	<ToExpression>720</ToExpression>
+differencedelta-fallingfactorial-x-n-x	<DifferenceDelta><FallingFactorial>x n</FallingFactorial> x</DifferenceDelta>	<Add><Negate><FallingFactorial>x n</FallingFactorial></Negate> <FallingFactorial><Add>x 1</Add> n</FallingFactorial></Add>

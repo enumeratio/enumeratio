@@ -1,3 +1,5 @@
 id	in	out
 vertices-of-a-path	<VertexList><Graph><List><UndirectedEdge>3 1</UndirectedEdge> <UndirectedEdge>1 2</UndirectedEdge></List></Graph></VertexList>	<List>3 1 2</List>
 declared-vertices-come-before-edge-endpoints	<VertexList><Graph><List>5 1</List> <List><UndirectedEdge>1 2</UndirectedEdge></List></Graph></VertexList>	<List>5 1 2</List>
+length-vertexlist-g	<Length><VertexList>g</VertexList></Length>	<ToExpression>1</ToExpression>
+position-vertexlist-g-c	<Position><VertexList>g</VertexList> "c"</Position>	<Apply>List</Apply>

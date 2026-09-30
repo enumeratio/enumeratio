@@ -1,3 +1,5 @@
 id	section	role	expr	expected	caption
 vertices-of-a-path			[VertexList, [Graph, [List, [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 2]]]]	[List, 3, 1, 2]	Vertices of a path, in first-appearance order
 declared-vertices-come-before-edge-endpoints		test	[VertexList, [Graph, [List, 5, 1], [List, [UndirectedEdge, 1, 2]]]]	[List, 5, 1, 2]	Declared vertices come first, then each edge's endpoints in first-appearance order
+length-vertexlist-g	Properties		[Length, [VertexList, g]]	1	
+position-vertexlist-g-c	Properties		[Position, [VertexList, g], "'c'"]	[List]	

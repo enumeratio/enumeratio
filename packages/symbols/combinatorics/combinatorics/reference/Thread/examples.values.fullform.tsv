@@ -1,4 +1,9 @@
 id	in	back
 equal-over-lists	Thread[Unevaluated[Equal[List[1, 2, 3], List[1, 5, 3]]]]	[Thread, [Unevaluated, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]]
+thread-list-a-b-c-eq-list-x-y-z	Thread[Unevaluated[Equal[List[a, b, c], List[x, y, z]]]]	[Thread, [Unevaluated, [Equal, [List, a, b, c], [List, x, y, z]]]]
+thread-ln-x-eq-y-equal	Thread[Log[Equal[x, y]], Equal]	
 scalar-broadcast	Thread[Unevaluated[Equal[List[1, 2, 3], 1]]]	[Thread, [Unevaluated, [Equal, [List, 1, 2, 3], 1]]]
 custom-head	Thread[f[g[1, 2], g[3, 4]], g]	
+thread-list-list-a-b-c-0	Thread[List[List[a, b, c], 0]]	
+thread-list-a-b-c-neg-gt-list-1-2-3	Thread[Rule[List[a, b, c], List[1, 2, 3]]]	
+thread-list-list-a-b-c-list-x-y-z	Thread[List[List[a, b, c], List[x, y, z]]]	

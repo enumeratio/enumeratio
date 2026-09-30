@@ -1,0 +1,35 @@
+id	in	out
+the-quadratic		
+the-cubic		
+at-a-real		
+at-u0-0-7		
+at-u1-0-7		
+at-u5-0-7		
+at-u-1-0-7		
+at-u-2-0-7		
+at-u-5-0-7		
+at-u4-2-3i		
+chebyshevu-2-3		
+chebyshevu-10-x		
+at-a-rational		
+at-a-complex-argument		
+a-symbolic-order-stays-unevaluated		
+chebyshevu-2-5		
+chebyshevu-0-0		
+chebyshevu-0-positiveinfinity		
+chebyshevu-7-x		
+chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x	\mathrm{ChebyshevU}(1, -x)=-\mathrm{ChebyshevU}(1, x)	\mathrm{True}
+chebyshevu-2-neg-x-eq-chebyshevu-2-x	\mathrm{ChebyshevU}(2, -x)=\mathrm{ChebyshevU}(2, x)	\mathrm{True}
+matrixfunction-function-chebyshevu-2-1-1-list		
+at-1		
+at-minus-1		
+recurrence		
+order-minus-1		
+negative-order		
+chebyshevu-0-1		
+chebyshevu-0-neg-1-over-2-times-i		
+chebyshevu-1-neg-1-over-2-times-i		
+chebyshevu-1-positiveinfinity		
+chebyshevu-1-negativeinfinity		
+chebyshevu-2-positiveinfinity		
+chebyshevu-2-negativeinfinity		

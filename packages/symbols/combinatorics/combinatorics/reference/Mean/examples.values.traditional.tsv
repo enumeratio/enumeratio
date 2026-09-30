@@ -8,6 +8,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac
 exact-constants-give-an-exact-mean-frac-2-e-pi-3		
 of-a-matrix-of-symbols-the-exact-mean-of-each		
 the-mean-of-a-lazy-range-exactly		
+mean-n-list-1-2-3-4-30		
+n-mean-ts		
+mean-binomialdistribution-n-p		
+mean-probabilitydistribution-sqrt-2-times-1-over		
 mean-is-total-divided-by-count-mean-c-frac-sum-c	\mathrm{mean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)=\frac{1+2+3+4}{\mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)}	\mathrm{True}
+n-mean-list-1-2-3-4-4-3-1-1		
+mean-ln-list-a-b-c-d		
 a-single-outlier-drags-the-mean-far-from-the		
 the-mean-of-no-data-is-nan		

@@ -3,7 +3,28 @@ id	in	out
 6-is-not-a-prime-power	\mathrm{MangoldtLambda}(6)	0
 mangoldtlambda-7	\mathrm{MangoldtLambda}(7)	\ln(7)
 mangoldtlambda-9	\mathrm{MangoldtLambda}(9)	\ln(3)
+mangoldtlambda-25	\mathrm{MangoldtLambda}(25)	\ln(5)
 numerically-ln-3	N(\mathrm{MangoldtLambda}(9))	1.098\,612\,288\,668\,109\,8
 listable	\mathrm{MangoldtLambda}(\bigl\lbrack2, 4, 6, 25\bigr\rbrack)	\bigl\lbrack\ln(2), \ln(2), 0, \ln(5)\bigr\rbrack
 n-of-a-zero-result-is-still-0	N(\mathrm{MangoldtLambda}(6))	0
+mangoldtlambda-125	\mathrm{MangoldtLambda}(125)	\ln(5)
+mangoldtlambda-7-pow-300	\mathrm{MangoldtLambda}(7^{300})	\ln(7)
+mangoldtlambda-list-2-6-9-8-15	\mathrm{MangoldtLambda}(\bigl\lbrack2, 6, 9, 8, 15\bigr\rbrack)	\bigl\lbrack\ln(2), 0, \ln(3), \ln(2), 0\bigr\rbrack
+mangoldtlambda-81-factorial-eq-0	\mathrm{MangoldtLambda}(81)\ne0	\top
+list-mangoldtlambda-6-mangoldtlambda-2-plus	\bigl\lbrack\mathrm{MangoldtLambda}(6), \mathrm{MangoldtLambda}(2)+\mathrm{MangoldtLambda}(3)\bigr\rbrack	\bigl\lbrack0, \ln(2)+\ln(3)\bigr\rbrack
+list-mangoldtlambda-6-mangoldtlambda-2-times	\bigl\lbrack\mathrm{MangoldtLambda}(6), \mathrm{MangoldtLambda}(2)\mathrm{MangoldtLambda}(3)\bigr\rbrack	\bigl\lbrack0, \ln(2)\ln(3)\bigr\rbrack
+mangoldtlambda-5	\mathrm{MangoldtLambda}(5)	\ln(5)
+mangoldtlambda-2	\mathrm{MangoldtLambda}(2)	\ln(2)
+mangoldtlambda-3	\mathrm{MangoldtLambda}(3)	\ln(3)
+mangoldtlambda-4	\mathrm{MangoldtLambda}(4)	\ln(2)
+mangoldtlambda-10	\mathrm{MangoldtLambda}(10)	0
+mangoldtlambda-11	\mathrm{MangoldtLambda}(11)	\ln(11)
+mangoldtlambda-12	\mathrm{MangoldtLambda}(12)	0
+simplify-sum-mangoldtlambda-n-n-20	\mathrm{Simplify}(\sum_{n=20}\mathrm{MangoldtLambda}(n))	2\ln(3)+4\ln(2)+\ln(1\,616\,615)
+mangoldtlambda-13	\mathrm{MangoldtLambda}(13)	\ln(13)
+mangoldtlambda-14	\mathrm{MangoldtLambda}(14)	0
+mangoldtlambda-15	\mathrm{MangoldtLambda}(15)	0
+mangoldtlambda-16	\mathrm{MangoldtLambda}(16)	\ln(2)
+mangoldtlambda-17	\mathrm{MangoldtLambda}(17)	\ln(17)
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\mathrm{DivisorSum}(16, ()\mapsto\mathrm{MangoldtLambda}(\operatorname{\_1}))	\top
 lambda-1-0	\mathrm{MangoldtLambda}(1)	0

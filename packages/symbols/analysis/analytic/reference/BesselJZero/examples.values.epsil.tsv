@@ -5,4 +5,6 @@ the-third-zero-of-j-0	N(BesselJZero(0, 3))	8.653_727_912_911_013
 j-3-2-2	N(BesselJZero(3 / 2, 2))	7.725_251_836_937_707
 j-1-2	N(BesselJZero(1, 2))	7.015_586_669_815_619
 j-5-2-1	N(BesselJZero(5 / 2, 1))	5.763_459_196_894_55
+n-list-besseljzero-0-1-besseljzero-0-2	N([BesselJZero(0, 1), BesselJZero(0, 2), BesselJZero(0, 3)])	[2.404_825_557_695_772_4, 5.520_078_110_286_311_5, 8.653_727_912_910_991]
+n-1-over-pi-times-besseljzero-1-1	N(1 / pi * BesselJZero(1, 1))	1.219_669_891_266_504_513_619_177_543_587_529_225
 tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	chop(tan(N(BesselJZero(3 / 2, 1))) - N(BesselJZero(3 / 2, 1)))	0.0

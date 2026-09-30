@@ -1,2 +1,9 @@
 id	in	out
+n-artanh-1-over-2-50	N(artanh(1 / 2), 50)	0.549_306_144_334_054_845_697_622_618_461_262_852_323_745_278_911_37
+artanh-positiveinfinity	artanh(positiveInfinity)	-1 / 2 * i * pi
+artanh-0	artanh(0)	0
+d-artanh-x-x	D(artanh(x), x)	1 / (-x ^ 2 + 1)
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x	FullSimplify(-(1 / (x * y + 1) * (x + y)) + tanh(artanh(x) + artanh(y)))	(-x - y) / (x * y + 1) + tanh(artanh(x) + artanh(y))
+trigtoexp-artanh-z	trigToExp(artanh(z))	artanh(z)
+integrate-artanh-x-x-nothing-nothing	integrate(artanh(x), (x, Nothing, Nothing))	x * artanh(x) + 1 / 2 * ln(-x ^ 2 + 1)
 artanh-complexinfinity-is-indeterminate-the-sign	artanh(complexInfinity)	Indeterminate

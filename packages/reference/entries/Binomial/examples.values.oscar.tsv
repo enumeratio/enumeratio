@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	binomial(ZZ(complex(1, 1)), ZZ(5))	MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but	error
 complex-n-and-k-evaluate-through-the-gamma	binomial(ZZ(complex(2, 1)), ZZ(complex(7, -3)))	MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but	error
 interval-arithmetic-in-k-binom-1-2-k-is			
+n-binomial-7-over-3-1-over-5-20	(binomial(ZZ((7 // 3)), ZZ((1 // 5))))		
+binomial-n-4			
+matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(ZZ(52), ZZ(5))	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(binomial(ZZ(10), ZZ(3)) // (big(2)^10))	0.1171875	
 symmetry-binom-n-k-binom-n-n-k	(binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))	true	

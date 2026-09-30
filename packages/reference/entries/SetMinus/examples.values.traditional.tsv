@@ -3,10 +3,12 @@ setminus-1-2-3-2
 setminus-1-2-3-4-2-4		
 removing-elements-that-aren-t-present-leaves-the		
 several-sets-can-be-removed-at-once		
+setminus-a-b-c-d-exponentiale-a-c-d		
 lists-as-well-as-sets-as-wolfram-s-complement		
 a-range-as-the-universe-to-remove-from-compute		
 a-setminus-a-setminus-b-a-cap-b-see-intersection	\lbrace1, 2, 3, 4\rbrace\setminus(\lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace)=\lbrace1, 2, 3, 4\rbrace\cap\lbrace2, 4\rbrace	\mathrm{True}
 removing-the-empty-set-changes-nothing-a		
 a-setminus-a-varnothing		
+setminus-b-exponentiale-d-a-c-b-c		
 setminus-is-not-commutative-b-setminus-a-can		
 the-result-keeps-the-first-set-s-order-rather		

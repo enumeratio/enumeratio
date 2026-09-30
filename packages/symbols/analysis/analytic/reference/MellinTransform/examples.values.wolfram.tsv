@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out
+exp-neg-x-gamma				
+one-over-one-plus-x				
+gaussian				
+log-one-plus-x				
+power-shift-x-c-exp				
+mellintransform-1-over-x-plus-1-x-1-over-2	MellinTransform[Divide[1, Plus[x, 1]], x, Rational[1, 2]]	Pi	\mathcal{M}_x\left[\frac{1}{x+1}\right]\left(\frac{1}{2}\right)	\pi

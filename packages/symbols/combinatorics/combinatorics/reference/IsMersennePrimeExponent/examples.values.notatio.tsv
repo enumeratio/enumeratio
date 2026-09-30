@@ -1,5 +1,13 @@
 id	in	out
 7-is-a-mersenne-prime-exponent	<IsMersennePrimeExponent>7</IsMersennePrimeExponent>	<True />
+ismersenneprimeexponent-5	<IsMersennePrimeExponent>5</IsMersennePrimeExponent>	<True />
+ismersenneprimeexponent-8	<IsMersennePrimeExponent>8</IsMersennePrimeExponent>	<False />
 11-is-prime-but-not-a-mersenne-prime-exponent	<IsMersennePrimeExponent>11</IsMersennePrimeExponent>	<False />
 9-is-not-even-prime	<IsMersennePrimeExponent>9</IsMersennePrimeExponent>	<False />
 2-31-1-is-the-8th-mersenne-prime	<IsMersennePrimeExponent>31</IsMersennePrimeExponent>	<True />
+ismersenneprimeexponent-neg-5	<IsMersennePrimeExponent>-5</IsMersennePrimeExponent>	<False />
+ismersenneprimeexponent-89	<IsMersennePrimeExponent>89</IsMersennePrimeExponent>	<True />
+ismersenneprimeexponent-12	<IsMersennePrimeExponent>12</IsMersennePrimeExponent>	<False />
+ismersenneprimeexponent-2	<IsMersennePrimeExponent>2</IsMersennePrimeExponent>	<True />
+ismersenneprimeexponent-fullsimplify-x	<IsMersennePrimeExponent><FullSimplify>x</FullSimplify></IsMersennePrimeExponent>	<IsMersennePrimeExponent>x</IsMersennePrimeExponent>
+ismersenneprimeexponent-13	<IsMersennePrimeExponent>13</IsMersennePrimeExponent>	<True />

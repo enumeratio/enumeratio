@@ -12,5 +12,11 @@ likewise-a-list-mixing-scalars-and-lists	rank([1, [2, 3]])	1
 the-empty-list-is-still-a-vector-of-length-0	rank([])	1
 and-a-1-0-matrix	rank([[]])	2
 a-2-3-grid-of-unevaluated-calls-still-reads-as-a	rank(tabulate(f, 2, 3))	2
+rank-list-list-a-b-list-c	rank([[a, b], [c]])	1
 the-length-of-the-array-s-shape	"rank([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]) == length(shape([\n                                                             [[1, 2], [3, 4]],\n                                                             [[5, 6], [7, 8]],\n                                                           ]))"	True
+rank-list-list-a-b-list-c-d-eq-length-shape-list	rank([[a, b], [c, d]]) == length(shape([[a, b], [c, d]]))	True
+rank-1	rank(1)	0
+rank-list-1-2	rank([1, 2])	1
+rank-list-list-1-2	rank([[1, 2]])	2
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	rank(Array(a, [2, 1, 4, 3])) == length([2, 1, 4, 3])	True
 a-singular-2-2-matrix-still-has-rank-2-its	rank([[1, 2], [2, 4]])	2

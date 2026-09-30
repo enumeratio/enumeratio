@@ -1,6 +1,12 @@
 id	in	back
 string-take-s-n-takes-the-first-n-characters	StringTake[String[hello world], 5]	Unreadable
+stringtake-abcdefghijklm-6	StringTake["abcdefghijklm", 6]	
+stringtake-abcdefghijklm-neg-4	StringTake["abcdefghijklm", -4]	
+stringtake-abcdefghijklm-list-5-10	StringTake["abcdefghijklm", List[5, 10]]	
 string-take-s-negative-n-takes-last-n-chars	StringTake[String[hello world], -5]	Unreadable
 string-take-s-n-takes-the-nth-character-alone	StringTake[String[hello], List[2]]	
 string-take-s-m-n-takes-an-inclusive-range	StringTake[String[hello world], List[1, 5]]	Unreadable
 string-take-s-m-negative-n-counts-from-end	StringTake[String[hello world], List[1, -7]]	Unreadable
+stringtake-abcdefghijklm-list-6	StringTake["abcdefghijklm", List[6]]	
+stringtake-abc-ndef-5	StringTake["abc\ndef", 5]	
+stringtake-abcdefghijklm-list-5-neg-4	StringTake["abcdefghijklm", List[5, -4]]	

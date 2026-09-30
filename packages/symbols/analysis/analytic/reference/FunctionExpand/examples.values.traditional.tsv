@@ -6,4 +6,7 @@ radicals-past-the-automatic-special-angle-table
 half-angle-radicals-cos-frac-pi-24-frac-12-sqrt		
 a-rising-factorial-with-an-integer-length	\mathrm{FunctionExpand}(\left(x\right)_{3})	x\times(x+1)(x+2)
 binom-n2-frac-n-n-1-2		
+functionexpand-1-over-sqrt-x-pow-2-times-sin		
+functionexpand-1-over-zeta-z-times-zeta-neg-z		
+functionexpand-polylog-2-z-plus-polylog-2-neg-z		
 a-generic-cos-argument-passes-through-unchanged		

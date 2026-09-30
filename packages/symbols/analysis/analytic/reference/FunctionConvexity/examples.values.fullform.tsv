@@ -2,4 +2,5 @@ id	in
 a-parabola-is-convex	FunctionConvexity[Power[x, 2], x]
 a-cubic-has-an-inflection-point	FunctionConvexity[Power[x, 3], x]
 exp-is-always-convex	FunctionConvexity[Exp[x], x]
+functionconvexity-x-pow-2-minus-1-x	FunctionConvexity[Plus[Power[x, 2], -1], x]
 a-restricted-domain-answers-indeterminate	FunctionConvexity[Divide[1, x], x]

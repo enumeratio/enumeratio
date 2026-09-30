@@ -38,7 +38,20 @@ a-real-composite-5-squared-is-not-prime	PrimeQ[25, Rule[GaussianIntegers, True]]
 1-is-not-prime-gaussian-or-not	PrimeQ[1, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[1,\text{GaussianIntegers}\to \text{True}]	\text{False}
 0-is-not-prime-gaussian-or-not	PrimeQ[0, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[0,\text{GaussianIntegers}\to \text{True}]	\text{False}
 a-common-choice-of-prime-modulus-for-hashing	PrimeQ[1000000007]	True	\text{PrimeQ}[1000000007]	\text{True}
+isprime-257	PrimeQ[257]	True	\text{PrimeQ}[257]	\text{True}
+isprime-1-plus-2-pow-128	PrimeQ[Plus[1, Power[2, 128]]]	False	\text{PrimeQ}\left[1+2^{128}\right]	\text{False}
+filter-range-1-100-function-isprimepower-1	Select[Range[1, 100], Function[And[PrimePowerQ[Slot[1]], Not[PrimeQ[Slot[1]]]]]]	{4, 8, 9, 16, 25, 27, 32, 49, 64, 81}	\text{Select}[\text{Range}[1,100],\text{PrimePowerQ}[\text{$\#$1}]\land \neg \text{PrimeQ}[\text{$\#$1}]\&]	\{4,8,9,16,25,27,32,49,64,81\}
 an-odd-prime-stays-prime-in-z-i-exactly-when-p	PrimeQ[List[2, 3, 5, 7, 11, 13], Rule[GaussianIntegers, True]]	{False, True, False, True, True, False}	\text{PrimeQ}[\{2,3,5,7,11,13\},\text{GaussianIntegers}\to \text{True}]	\{\text{False},\text{True},\text{False},\text{True},\text{True},\text{False}\}
+isprime-37	PrimeQ[37]	True	\text{PrimeQ}[37]	\text{True}
+isprime-29	PrimeQ[29]	True	\text{PrimeQ}[29]	\text{True}
+isprime-17	PrimeQ[17]	True	\text{PrimeQ}[17]	\text{True}
+isprime-12	PrimeQ[12]	False	\text{PrimeQ}[12]	\text{False}
+isprime-23	PrimeQ[23]	True	\text{PrimeQ}[23]	\text{True}
+isprime-24	PrimeQ[24]	False	\text{PrimeQ}[24]	\text{False}
+isprime-list-7-11	PrimeQ[List[7, 11]]	{True, True}	\text{PrimeQ}[\{7,11\}]	\{\text{True},\text{True}\}
+isprime-list-5-7-2	PrimeQ[List[5, 7, 2]]	{True, True, True}	\text{PrimeQ}[\{5,7,2\}]	\{\text{True},\text{True},\text{True}\}
+isprime-19	PrimeQ[19]	True	\text{PrimeQ}[19]	\text{True}
+divisorsum-19-function-1-1-isprime	DivisorSum[19, Function[Slot[1]], PrimeQ]	19	\sum _{\unicode{f80d}|19\land \text{PrimeQ}[\unicode{f80d}]} \unicode{f80d}	19
 non-integers-are-not-prime	PrimeQ[Rational[1, 2]]	False	\text{PrimeQ}\left[\frac{1}{2}\right]	\text{False}
 another-non-integer-3-halves	PrimeQ[Rational[3, 2]]	False	\text{PrimeQ}\left[\frac{3}{2}\right]	\text{False}
 a-symbol-stays-unevaluated	PrimeQ[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PrimeQ}[x]-\text{PrimeQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PrimeQ}\left[\frac{7}{3}\right]-\text{PrimeQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{PrimeQ}\left[-\frac{11}{5}\right]-\text{PrimeQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{PrimeQ}\left[\frac{13}{4}\right]-\text{PrimeQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

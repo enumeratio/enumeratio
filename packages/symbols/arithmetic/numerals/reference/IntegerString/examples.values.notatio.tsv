@@ -9,5 +9,7 @@ roman-numerals-with-the-base-roman	<IntegerString>1988 "Roman"</IntegerString>	<
 a-width-pads-with-leading-zeros	<IntegerString>255 16 4</IntegerString>	<ToExpression>"00ff"</ToExpression>
 a-width-shorter-than-the-numeral-keeps-the-least	<IntegerString>1234567 10 3</IntegerString>	<ToExpression>"567"</ToExpression>
 a-third-argument-pads-with-leading-zeros-to-that	<IntegerString>5 2 8</IntegerString>	<ToExpression>"00000101"</ToExpression>
+integerstring-50-factorial-36	<IntegerString><Factorial>50</Factorial> 36</IntegerString>	<ToExpression>"4q7eyp9zizmtqt0648txt4fm720cc1s00000000000"</ToExpression>
+integerstring-2-046-2	<IntegerString>2046 2</IntegerString>	<ToExpression>"11111111110"</ToExpression>
 integerstring-0	<IntegerString>0</IntegerString>	<ToExpression>"0"</ToExpression>
 compute-engine-keeps-the-sign	<IntegerString>-42</IntegerString>	<ToExpression>"-42"</ToExpression>

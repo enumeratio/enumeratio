@@ -31,12 +31,23 @@ derivative-sec-2-x	<D><Tan>x</Tan> x</D>	<Power><Sec>x</Sec> 2</Power>
 antiderivative-ln-sec-x	<Integrate><Tan>x</Tan> x</Integrate>	<Ln><Abs><Sec>x</Sec></Abs></Ln>
 taylor-series-about-0	<Series><Tan>x</Tan> x 0 7</Series>	<Add><Multiply><Rational>17 315</Rational> <Power>x 7</Power></Multiply> <Multiply><Rational>2 15</Rational> <Power>x 5</Power></Multiply> <Multiply><Rational>1 3</Rational> <Power>x 3</Power></Multiply> x <BigO><Power>x 9</Power></BigO></Add>
 to-30-significant-digits-every-one-correctly	<N><Tan>1</Tan> 30</N>	<ToExpression>1.55740772465490223050697480746</ToExpression>
+n-tan-6-over-5-50	<N><Tan><Rational>6 5</Rational></Tan> 50</N>	<ToExpression>2.5721516221263189354099942360333639565294093060434</ToExpression>
+functionrange-tan-x-x-y	<FunctionRange><Tan>x</Tan> x y</FunctionRange>	<True />
+functionperiod-tan-x-x	<FunctionPeriod><Tan>x</Tan> x</FunctionPeriod>	<Pi />
+functionanalytic-tan-x-x	<FunctionAnalytic><Tan>x</Tan> x</FunctionAnalytic>	<False />
+functionmeromorphic-tan-x-x	<FunctionMeromorphic><Tan>x</Tan> x</FunctionMeromorphic>	<True />
+functionsurjective-tan-x-x	<FunctionSurjective><Tan>x</Tan> x</FunctionSurjective>	<True />
+functionsingularities-tan-x-x	<FunctionSingularities><Tan>x</Tan> x</FunctionSingularities>	<Equal><Cos>x</Cos> 0</Equal>
+functiondiscontinuities-tan-x-x	<FunctionDiscontinuities><Tan>x</Tan> x</FunctionDiscontinuities>	<Equal><Cos>x</Cos> 0</Equal>
+matrixfunction-function-tan-1-1-list-list-5-over	<MatrixFunction><Function><Block><Tan>_1</Tan></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> Pi</List> <List><Multiply><Rational>1 3</Rational> Pi</Multiply> <Negate>Pi</Negate></List></List></MatrixFunction>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 39</Divide></Negate> <Multiply><Rational>2 13</Rational> <Sqrt>3</Sqrt></Multiply></List> <List><Multiply><Rational>2 39</Rational> <Sqrt>3</Sqrt></Multiply> <Multiply><Rational>-4 13</Rational> <Sqrt>3</Sqrt></Multiply></List></List>
 threads-element-wise-over-a-list	<Tan><List>0 <Divide>Pi 4</Divide></List></Tan>	<List>0 1</List>
 tan-x-frac-sin-x-cos-x	<Equal><Tan><Divide>Pi 4</Divide></Tan> <Divide><Sin><Divide>Pi 4</Divide></Sin> <Cos><Divide>Pi 4</Divide></Cos></Divide></Equal>	<True />
 odd-function-tan-x-tan-x	<Tan><Negate><Divide>Pi 4</Divide></Negate></Tan>	<ToExpression>-1</ToExpression>
 period-pi-not-2-pi-adding-a-half-turn-doesn-t	<Tan><Add><Divide>Pi 4</Divide> Pi</Add></Tan>	<ToExpression>1</ToExpression>
 sin-x-cos-x-should-simplify-to-tan-x-simplify	<Simplify><Divide><Sin>x</Sin> <Cos>x</Cos></Divide></Simplify>	<Tan>x</Tan>
 rewritten-in-exponentials	<TrigToExp><Tan>x</Tan></TrigToExp>	<Multiply><Complex>0 -1</Complex> <Divide><Add><Negate><Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Negate> <Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power></Add> <Add><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> <Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Add></Divide></Multiply>
+tan-3-over-10-times-pi	<Tan><Multiply><Rational>3 10</Rational> Pi</Multiply></Tan>	<Multiply><Divide><Sqrt>5</Sqrt> 5</Divide> <Sqrt><Add>5 <Multiply>2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Multiply>
+tan-3-over-8-times-pi	<Tan><Multiply><Rational>3 8</Rational> Pi</Multiply></Tan>	<Add>1 <Sqrt>2</Sqrt></Add>
 a-pole-cos-pi-2-0-so-the-ratio-blows-up	<Tan><Divide>Pi 2</Divide></Tan>	<ComplexInfinity />
 same-rule-as-sin-and-cos-a-non-special-numeric	<Tan>1</Tan>	<Tan>1</Tan>
 a-pole-at-negative-pi-over-2-too	<Tan><Divide>Pi -2</Divide></Tan>	<ComplexInfinity />

@@ -1,5 +1,12 @@
 id	in
 3-1-frac-12-frac-14-frac-12-7	HarmonicMean[List[1, 2, 4]]
 frac-12-5	HarmonicMean[List[2, 3]]
+harmonicmean-list-a-b-c-d	HarmonicMean[List[a, b, c, d]]
+harmonicmean-list-list-1-2-list-5-10-list-5-2	HarmonicMean[List[List[1, 2], List[5, 10], List[5, 2], List[4, 8]]]
+harmonicmean-list-1-2-3-4	HarmonicMean[List[1, 2, 3, 4]]
+harmonicmean-list-pi-exponentiale-2	HarmonicMean[List[Pi, E, 2]]
+harmonicmean-n-list-1-2-3-4-30	HarmonicMean[N[List[1, 2, 3, 4], 30]]
+n-harmonicmean-ts	N[HarmonicMean[ts]]
 driving-equal-distances-at-40-and-60-averages-48	HarmonicMean[List[40, 60]]
 equal-values-are-their-own-harmonic-mean	HarmonicMean[List[5, 5, 5]]
+harmonicmean-1-over-ln-list-a-b-c-d	HarmonicMean[Divide[1, Log[List[a, b, c, d]]]]

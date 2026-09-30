@@ -4,3 +4,9 @@ exp-misses-the-non-positive-reals	FunctionSurjective(exp(x), x, Reals)	False
 log-is-onto-the-reals	FunctionSurjective(ln(x), x, Reals)	True
 a-reciprocal-never-hits-zero	FunctionSurjective(1 / x, x, Reals)	False
 an-unsupported-codomain-declines	FunctionSurjective(x ^ 3, x, integers)	FunctionSurjective(x ^ 3, x, integers)
+functionsurjective-tan-x-x	FunctionSurjective(tan(x), x)	True
+functionsurjective-x-pow-3-minus-x-x	FunctionSurjective(x ^ 3 - x, x)	True
+functionsurjective-sqrt-x-x	FunctionSurjective(sqrt(x), x)	False
+functionsurjective-sin-x-x	FunctionSurjective(sin(x), x)	False
+functionsurjective-x-pow-2-plus-x-plus-1-x	FunctionSurjective(x ^ 2 + x + 1, x)	False
+functionsurjective-x-pow-3-plus-x-plus-1-x	FunctionSurjective(x ^ 3 + x + 1, x)	True

@@ -1,6 +1,10 @@
 id	in	out
 x-between-consecutive-elements	Riffle([a, b, c], x)	[a, x, b, x, c]
 interleave-two-lists-of-the-same-length	Riffle([a, b, c], [x, y, z])	[a, x, b, y, c, z]
+riffle-list-1-2-3-4-5-6-7-8-9-x	Riffle([1, 2, 3, 4, 5, 6, 7, 8, 9], x)	[1, x, 2, x, 3, x, 4, x, 5, x, 6, x, 7, x, 8, x, 9]
+riffle-list-1-2-3-4-5-6-7-8-9-x-3	Riffle([1, 2, 3, 4, 5, 6, 7, 8, 9], x, 3)	[1, 2, x, 3, 4, x, 5, 6, x, 7, 8, x, 9]
 a-list-one-shorter-goes-strictly-between-the	Riffle([a, b, c], [x, y])	[a, x, b, y, c]
 every-3rd-element-of-the-result-is-x	Riffle([1, 2, 3, 4, 5, 6, 7], x, 3)	[1, 2, x, 3, 4, x, 5, 6, x, 7]
 a-single-element-has-nothing-to-separate	Riffle([a], x)	[a]
+riffle-list-a-b-c-d-list-x-y-z-w	Riffle([a, b, c, d], [x, y, z, w])	[a, x, b, y, c, z, d, w]
+riffle-list-a-b-c-d-x	Riffle([a, b, c, d], x)	[a, x, b, x, c, x, d]

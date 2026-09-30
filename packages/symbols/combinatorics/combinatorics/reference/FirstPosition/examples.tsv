@@ -1,4 +1,7 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 the-first-occurrence-of-b-nested-inside-the			[FirstPosition, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b]	[List, 1, 3]	The first occurrence of $b$, nested inside the first sublist		
 the-empty-list-when-the-value-isn-t-found			[FirstPosition, [List, a, [List, a, c]], b]	[List]	The empty list when the value isn't found anywhere	convention	Ours returns the empty list when nothing matches (no default given); Wolfram's own FirstPosition returns Missing["NotFound"] in that case. Different not-found sentinels, same search.
+firstposition-list-a-b-a-a-b-c-b-b			[FirstPosition, [List, a, b, a, a, b, c, b], b]	[List, 2]			
+firstposition-list-list-1-2-list-2-3-list-3-1-3	Scope		[FirstPosition, [List, [List, 1, 2], [List, 2, 3], [List, 3, 1]], 3]	[List, 2, 2]			
 a-match-nested-inside-an-earlier-sublist-beats-a	Properties		[FirstPosition, [List, a, [List, a, b], b], b]	[List, 2, 2]	A match nested inside an earlier sublist beats a plain match later at the top level: depth-first, outer to inner, left to right		
+firstposition-list-a-b-b-a-a-c-a	Properties		[FirstPosition, [List, a, b, b, a, a, c], a]	[List, 1]			

@@ -1,0 +1,2 @@
+id	in	out
+most-list-a-b-c-d	\mathrm{Most}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack a, b, c\bigr\rbrack

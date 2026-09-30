@@ -15,5 +15,14 @@ but-not-in-y-alone-y-appears-squared	SquareFreeQ[Times[x, Power[y, 2]], y]	False
 a-non-squarefree-rational	SquareFreeQ[Rational[4, 3]]	False	\text{SquareFreeQ}\left[\frac{4}{3}\right]	\text{False}	
 x-1-2-has-a-repeated-root	SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1]]	False	\text{SquareFreeQ}\left[x^2-2 x+1\right]	\text{False}	
 x-3-y-3-has-no-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Power[y, 3]]]	True	\text{SquareFreeQ}\left[x^3-y^3\right]	\text{True}	
+issquarefree-3-plus-10-pow-70	SquareFreeQ[Plus[3, Power[10, 70]]]	True	\text{SquareFreeQ}\left[3+10^{70}\right]	\text{True}	
+issquarefree-2	SquareFreeQ[2]	True	\text{SquareFreeQ}[2]	\text{True}	
+issquarefree-x-pow-2-minus-3	SquareFreeQ[Plus[Power[x, 2], -3]]	True	\text{SquareFreeQ}\left[x^2-3\right]	\text{True}	
 n-is-squarefree-exactly-when-mu-n-neq-0-see	(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])	True	\text{SquareFreeQ}[10]=(\neg \mu (10)=0)	\text{True}	
+issquarefree-210	SquareFreeQ[210]	True	\text{SquareFreeQ}[210]	\text{True}	
+issquarefree-14	SquareFreeQ[14]	True	\text{SquareFreeQ}[14]	\text{True}	
+isprimepower-17-issquarefree-17	And[PrimePowerQ[17], SquareFreeQ[17]]	True	\text{PrimePowerQ}[17]\land \text{SquareFreeQ}[17]	\text{True}	
+issquarefree-x-pow-2-minus-2x-plus-1-x	SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1], x]	False	\text{SquareFreeQ}\left[x^2-2 x+1,x\right]	\text{False}	
+simplify-issquarefree-a-pow-2-a-in-integers	Simplify[SquareFreeQ[Power[a, 2]], Element[a, Integers]]	False	\text{Simplify}\left[\text{SquareFreeQ}\left[a^2\right],a\in \mathbb{Z}\right]	\text{False}	
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	SquareFreeQ[Expand[Times[Power[Plus[x, 1], 3], Power[Plus[x, 2], 2], Power[Plus[x, 3], 2]]]]	False	\text{SquareFreeQ}\left[\text{Expand}\left[(x+1)^3 (x+2)^2 (x+3)^2\right]\right]	\text{False}	
 1-is-vacuously-squarefree-it-has-no-repeated	SquareFreeQ[1]	True	\text{SquareFreeQ}[1]	\text{True}	

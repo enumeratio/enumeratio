@@ -26,6 +26,22 @@ n-decimalizes-a-combined-product	((exp(1) * exp(2)))	20.085536923187667740928529
 agrees-numerically-at-a-complex-point	((exp(mpc(1.3, 0.7)) * exp(mpc(-0.4, 2.1))))	(-2.31749300051021497993976567217 + 0.823937896324175068051995907358j)	
 to-50-significant-digits-every-one-correctly	(exp(1))	2.71828182845904523536028747135	
 to-1-significant-digit	(exp(1))	2.71828182845904523536028747135	disagree
+n-exponentiale-pow-8-over-5-50	(((e)**(mpf(8)/5)))		
+matrixfunction-exp-list-list-1-1-over-2-times-i			
+exponentiale-pow-9-over-2-times-i-times-pi	((e)**(mpc(0, (mpf(9)/2)) * pi))		
+exptotrig-exponentiale-pow-1-over-5-times-i			
+functiondomain-exp-x-x			
+functionrange-exp-x-x-y			
+functionanalytic-exp-x-x			
+functionmonotonicity-exp-x-x			
+functioninjective-exp-x-x			
+functionsurjective-exp-x-x			
+assuming-n-in-integers-refine-exp-2-times-pi			
+assuming-n-in-integers-refine-exp-2-times-pi-2			
+functionsign-exp-x-x			
+functionsingularities-exp-x-x			
+functiondiscontinuities-exp-x-x			
+functionconvexity-exp-x-x			
 threads-element-wise-over-a-list	[exp(0), exp(1)]	[mpf('1.0'), mpf('2.71828182845904523536028747135281')]	
 inverse-of-ln-e-ln-x-x	almosteq(exp(log(5)), 5, 1e-20)	True	
 e-a-e-b-e-a-b	almosteq((exp(2) * exp(3)), exp(5), 1e-20)	True	

@@ -31,12 +31,23 @@ derivative-sec-2-x
 antiderivative-ln-sec-x			
 taylor-series-about-0			
 to-30-significant-digits-every-one-correctly	nf(tan(n(1)))	1.5574077246549023	
+n-tan-6-over-5-50	nf(tan(rational(n(6), n(5))))		
+functionrange-tan-x-x-y			
+functionperiod-tan-x-x			
+functionanalytic-tan-x-x			
+functionmeromorphic-tan-x-x			
+functionsurjective-tan-x-x			
+functionsingularities-tan-x-x			
+functiondiscontinuities-tan-x-x			
+matrixfunction-function-tan-1-1-list-list-5-over			
 threads-element-wise-over-a-list	tan(list(vec![n(0), (x(std::f64::consts::PI) / n(4))]))	panic: threading: a list where the crate takes a scalar	error
 tan-x-frac-sin-x-cos-x	equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))	true	
 odd-function-tan-x-tan-x	tan((-((x(std::f64::consts::PI) / n(4)))))	-0.9999999999999999	
 period-pi-not-2-pi-adding-a-half-turn-doesn-t	tan(((x(std::f64::consts::PI) / n(4)) + x(std::f64::consts::PI)))	0.9999999999999997	
 sin-x-cos-x-should-simplify-to-tan-x-simplify			
 rewritten-in-exponentials			
+tan-3-over-10-times-pi	tan((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
+tan-3-over-8-times-pi	tan((rational(n(3), n(8)) * x(std::f64::consts::PI)))		
 a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((x(std::f64::consts::PI) / n(2)))	1.633123935319537e16	inconclusive
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(n(1))	1.5574077246549023	
 a-pole-at-negative-pi-over-2-too	tan((x(std::f64::consts::PI) / n(-2)))	-1.633123935319537e16	inconclusive

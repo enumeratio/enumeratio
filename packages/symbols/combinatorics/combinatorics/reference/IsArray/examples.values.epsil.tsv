@@ -1,6 +1,9 @@
 id	in	out
 a-rectangular-nesting-is-an-array	IsArray([[1, 2], [3, 4]])	True
+isarray-list-1-2-3-4	IsArray([1, 2, 3, 4])	True
+isarray-list-1-2-list-3-4	IsArray([1, 2, [3], 4])	False
 a-ragged-nesting-is-not-an-array	IsArray([[1, 2], [3]])	False
 a-flat-list-is-a-rank-1-array	IsArray([1, 2, 3])	True
 a-non-list-is-not-an-array	IsArray(3)	False
 a-test-function-must-hold-of-every-leaf	IsArray([[2, 4], [6, 8]], isEven)	True
+list-isarray-mat-isarray-expr	[IsArray(mat), IsArray(expr)]	[False, False]

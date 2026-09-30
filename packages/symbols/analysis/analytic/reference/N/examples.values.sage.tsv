@@ -2,6 +2,28 @@ id	in	out	verdict
 n-pi-30	N(pi)	3.14159265358979	
 the-last-digit-correctly-rounded-computing-at-30			
 a-list-number-by-number	N([pi, e, sqrt(2)])	ValueError: too many values to unpack (expected 2)	error
+n-1-over-7	N((1/7))		
+n-1-over-7-50	N((1/7))		
+n-gamma-33-over-10-50	N(gamma((33/10)))		
+n-pi-50	N(pi)		
+n-khinchin-50	N(khinchin)		
+n-arcsin-3			
+n-c	N(SR.var("c"))		
+n-c-47	N(SR.var("c"))		
+n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((1 / ((-SR.var("x")) + e)) * ((2 * SR.var("x")) + pi)))		
+n-poly	N(SR.var("poly"))		
+n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	N((1 + (-sqrt((1 + (-((e)^-1000)))))))		
+n-exponentiale-25	N(e)		
+n-x-pow-3-over-2	N(((SR.var("x"))^(3/2)))		
+n-pi-pow-x	N(((pi)^SR.var("x")))		
+n-exponentiale-pow-x-plus-pi	N(((e)^(SR.var("x") + pi)))		
+n-int	N(SR.var("int"))		
+n-exponentiale	N(e)		
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * SR.var("pit")) + pi))		
+n-crt	N(SR.var("crt"))		
+n-crt-47	N(SR.var("crt"))		
+n-exponentiale-pow-sin-1-000	N(((e)^sin(1000)))		
+n-exponentiale-pow-sin-1-000-47	N(((e)^sin(1000)))		
 an-exact-tie-rounds-to-the-even-digit-0-125	N((1/8))	0.125000000000000	disagree
 and-0-375-to-0-38	N((3/8))	0.375000000000000	disagree
 n-pi-1-digit	N(pi)	3.14159265358979	disagree

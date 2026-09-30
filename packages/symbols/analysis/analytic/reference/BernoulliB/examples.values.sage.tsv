@@ -16,6 +16,18 @@ von-staudt-clausen-the-denominator-of-b-2n-is	(bernoulli(12)).denominator()
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	bool(zeta(-3) == (-(bernoulli(4) / 4)))	True	
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	((binomial(5, 0) * bernoulli(0)) + (binomial(5, 1) * bernoulli(1)) + (binomial(5, 2) * bernoulli(2)) + (binomial(5, 3) * bernoulli(3)) + (binomial(5, 4) * bernoulli(4)))	0	
 b-n-0-for-every-odd-n-1	bool(bernoulli(5) == 0)	True	
+bernoullib-3	bernoulli(3)		
+bernoullib-5	bernoulli(5)		
+bernoullib-6	bernoulli(6)		
+bernoullib-7	bernoulli(7)		
+bernoullib-8	bernoulli(8)		
+bernoullib-9	bernoulli(9)		
+bernoullib-2-0			
+bernoullib-3-0			
+bernoullib-2-1			
+bernoullib-3-1			
+bernoullib-0-1-over-6			
 b-1-1-frac-12-is-the-other-convention-for-b-1			
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	bernoulli(-1)	OverflowError: can't convert negative value to unsigned long	error
 numerators-and-denominators-grow-quickly-b-20	bernoulli(20)	-174611/330	
+bernoullib-12-x			

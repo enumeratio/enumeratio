@@ -5,6 +5,7 @@ integerdigits-58-127	<IntegerDigits>58127</IntegerDigits>	<List>5 8 1 2 7</List>
 integerdigits-58-127-2	<IntegerDigits>58127 2</IntegerDigits>	<List>1 1 1 0 0 0 1 1 0 0 0 0 1 1 1 1</List>
 93-784-seconds-as-days-hours-minutes-seconds	<IntegerDigits>93784 <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></IntegerDigits>	<List>1 2 3 4</List>
 100-89-8-3-with-no-two-adjacent-ones	<IntegerDigits>100 ZeckendorfNumerals</IntegerDigits>	<List>1 0 0 0 0 1 0 1 0 0</List>
+integerdigits-102-341-mixedradixnumerals-list-24	<IntegerDigits>102341 <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></IntegerDigits>	<List>1 4 25 41</List>
 digits-past-9-are-plain-integers-58127-e30f-16	<IntegerDigits>58127 16</IntegerDigits>	<List>14 3 0 15</List>
 a-mixed-radix-spelled-mixedradix-102-341-seconds	<IntegerDigits>102341 <MixedRadix><List>24 60 60</List></MixedRadix></IntegerDigits>	<List>1 4 25 41</List>
 the-leading-digit-is-unbounded-137-3-cdot-3-2	<IntegerDigits>137 <MixedRadix><List>3 12</List></MixedRadix></IntegerDigits>	<List>3 2 5</List>
@@ -30,10 +31,12 @@ zeckendorf-12-is-8-3-1	<IntegerDigits>12 ZeckendorfNumerals</IntegerDigits>	<Lis
 ostrowski-9-over-2-2-2-is-1-2-0	<IntegerDigits>9 <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></IntegerDigits>	<List>1 2 0</List>
 bijective-base-26-27-is-aa	<IntegerDigits>27 <BijectiveNumerals>26</BijectiveNumerals></IntegerDigits>	<List>1 1</List>
 bijective-base-26-702-is-zz	<IntegerDigits>702 <BijectiveNumerals>26</BijectiveNumerals></IntegerDigits>	<List>26 26</List>
+integerdigits-137-mixedradixnumerals-list-3-12	<IntegerDigits>137 <MixedRadixNumerals><List>3 12</List></MixedRadixNumerals></IntegerDigits>	<List>3 2 5</List>
 the-3-argument-form-keeps-only-the-4-least	<IntegerDigits>6345354 10 4</IntegerDigits>	<List>5 3 5 4</List>
 all-3-bit-words-by-threading-a-padded-form-over	<IntegerDigits><Range>0 7</Range> 2 3</IntegerDigits>	<List><List>0 0 0</List> <List>0 0 1</List> <List>0 1 0</List> <List>0 1 1</List> <List>1 0 0</List> <List>1 0 1</List> <List>1 1 0</List> <List>1 1 1</List></List>
 the-lehmer-code-of-the-6th-permutation-of-four	<IntegerDigits>5 FactorialNumerals 4</IntegerDigits>	<List>0 2 1 0</List>
 an-integer-base-is-still-the-native-handler	<IntegerDigits>255 16</IntegerDigits>	<List>15 15</List>
+integerdigits-98-534-mixedradixnumerals-list-24	<IntegerDigits>98534 <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></IntegerDigits>	<List>1 3 22 14</List>
 unlike-integerstring-there-s-always-at-least-one	<IntegerDigits>0</IntegerDigits>	<List>0</List>
 the-sign-is-discarded	<IntegerDigits>-3134</IntegerDigits>	<List>3 1 3 4</List>
 no-numeral-for-a-negative-in-a-system-that	<IntegerDigits>-3 FactorialNumerals</IntegerDigits>	<IntegerDigits>-3 FactorialNumerals</IntegerDigits>

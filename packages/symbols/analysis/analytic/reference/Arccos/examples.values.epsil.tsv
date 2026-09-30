@@ -18,7 +18,22 @@ antiderivative	integrate(arccos(x), x)	x * arccos(x) - sqrt(-x ^ 2 + 1)
 not-simply-4-4-is-outside-the-principal-range-0	arccos(cos(4))	-4 + 2Pi
 arccos-infinity-is-a-directed-infinity-along-the	arccos(positiveInfinity)	DirectedInfinity(i)
 arccos-infinity-is-the-opposite-directed	arccos(negativeInfinity)	DirectedInfinity(-i)
+n-arccos-1-over-3-50	N(arccos(1 / 3), 50)	1.230_959_417_340_774_682_134_929_178_247_987_375_710_340_009_355_1
+integrate-arccos-x-x-neg-1-1	integrate(arccos(x), (x, -1, 1))	pi
 cos-arccos-x-x-on-the-principal-branch	cos(arccos(1 / 2)) == 1 / 2	True
 reflection-arccos-x-pi-arccos-x	arccos(-x)	-arccos(x) + pi
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccos(sqrt(2) / 4 * (-1 + sqrt(3)))	5 / 12 * pi
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	arccos(-(sqrt(2) / 4) * (-1 + sqrt(3)))	7 / 12 * pi
+arccos-1-over-4-times-neg-1-plus-sqrt-5	arccos(1 / 4 * (-1 + sqrt(5)))	2 / 5 * pi
+arccos-1-over-4-times-1-minus-sqrt-5	arccos(1 / 4 * (1 - sqrt(5)))	3 / 5 * pi
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	arccos(1 / 2 * sqrt(2 - sqrt(2)))	3 / 8 * pi
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	arccos(-1 / 2 * sqrt(2 - sqrt(2)))	5 / 8 * pi
+arccos-neg-1-over-2	arccos(-1 / 2)	2 / 3 * pi
+arccos-1-over-2-times-sqrt-1-over-2-times-5	arccos(1 / 2 * sqrt(1 / 2 * (5 - sqrt(5))))	arccos(sqrt(2) / 4 * sqrt(5 - sqrt(5)))
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	arccos(-1 / 2 * sqrt(1 / 2 * (5 - sqrt(5))))	arccos(-(sqrt(2) / 4) * sqrt(5 - sqrt(5)))
+arccos-sqrt-2-over-2	arccos(sqrt(2) / 2)	1 / 4 * pi
+arccos-1-over-4-times-neg-1-minus-sqrt-5	arccos(1 / 4 * (-1 - sqrt(5)))	4 / 5 * pi
+arccos-neg-sqrt-3-over-2	arccos(-(sqrt(3) / 2))	5 / 6 * pi
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	arccos(1 / 2 * sqrt(2 + sqrt(2)))	1 / 8 * pi
 outside-1-1-this-stays-symbolic-same-as-arcsin-n	arccos(2)	arccos(2)
 arccos-complexinfinity-is-complexinfinity	arccos(complexInfinity)	complexInfinity

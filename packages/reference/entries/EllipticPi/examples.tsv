@@ -1,0 +1,5 @@
+id	section	role	expr	expected	known	source
+functionexpand-ellipticpi-list-list-neg-1-0-list	Scope		[FunctionExpand, [EllipticPi, [List, [List, -1, 0], [List, 0, [Rational, 1, 2]]], 0]]	[List, [List, [EllipticPi, -1, 0], [EllipticPi, 0, 0]], [List, [EllipticPi, 0, 0], [EllipticPi, [Rational, 1, 2], 0]]]		
+functionexpand-matrixfunction-function	Scope		[FunctionExpand, [MatrixFunction, [Function, [Block, [EllipticPi, _1, 0]], _1], [List, [List, -1, 0], [List, 0, [Rational, 1, 2]]]]]	[List, [List, [EllipticPi, -1, 0], 0], [List, 0, [EllipticPi, [Rational, 1, 2], 0]]]		
+ellipticpi-0-0-1	Properties		[EllipticPi, 0, 0, 1]	0	0	Wolfram MathematicalFunctionData, EllipticPi
+ellipticpi-0-0-0	Properties		[EllipticPi, 0, 0, 0]	0	0	Wolfram MathematicalFunctionData, EllipticPi

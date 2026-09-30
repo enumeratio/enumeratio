@@ -1,0 +1,2 @@
+id	in	out
+array-divide-list-4-4	<Array>Divide <List>4 4</List></Array>	<List><List>1 <Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 4</Rational></List> <List>2 1 <Rational>2 3</Rational> <Rational>1 2</Rational></List> <List>3 <Rational>3 2</Rational> 1 <Rational>3 4</Rational></List> <List>4 2 <Rational>4 3</Rational> 1</List></List>

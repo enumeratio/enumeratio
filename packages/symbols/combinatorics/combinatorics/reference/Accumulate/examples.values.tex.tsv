@@ -1,4 +1,6 @@
 id	in	out
 accumulate-1-2-3-4	\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 3, 6, 10\bigr\rbrack
+accumulate-list-a-b-c-d	\mathrm{Accumulate}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack a, a+b, a+b+c, a+b+c+d\bigr\rbrack
+accumulate-list-list-a-b-list-c-d-list	\mathrm{Accumulate}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack e, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack a+c, b+d\bigr\rbrack, \bigl\lbrack a+c+e, b+d+f\bigr\rbrack\bigr\rbrack
 accumulate-empty	\mathrm{Accumulate}(\bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
 accumulate-last-is-total	\mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5	\top

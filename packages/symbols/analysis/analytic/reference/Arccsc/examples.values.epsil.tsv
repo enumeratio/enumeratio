@@ -1,10 +1,26 @@
-id	in	out
-arccsc-1	arccsc(1)	1 / 2 * pi
-arccsc-2	arccsc(2)	1 / 6 * pi
-arccsc-sqrt-2-pi-4	arccsc(sqrt(2))	1 / 4 * pi
-an-odd-function	arccsc(-2)	-1 / 6 * pi
-inside-1-1-the-value-is-complex	arccsc(0.5)	1.570_796_326_794_896_6 - 1.316_957_896_924_816_6i
-arccsc-positiveinfinity	arccsc(positiveInfinity)	0
-a-pole-arccsc-0-is-complex-infinity	arccsc(0)	complexInfinity
-derivative-for-real-x-1	D(arccsc(x), x)	-1 / (abs(x) * sqrt(x ^ 2 - 1))
-undoes-csc-csc-arccsc-x-x	csc(arccsc(2)) == 2	True
+id	in	out	back
+arccsc-1	arccsc(1)	1 / 2 * pi	
+arccsc-2	arccsc(2)	1 / 6 * pi	
+arccsc-sqrt-2-pi-4	arccsc(sqrt(2))	1 / 4 * pi	
+an-odd-function	arccsc(-2)	-1 / 6 * pi	
+inside-1-1-the-value-is-complex	arccsc(0.5)	1.570_796_326_794_896_6 - 1.316_957_896_924_816_6i	
+arccsc-positiveinfinity	arccsc(positiveInfinity)	0	
+a-pole-arccsc-0-is-complex-infinity	arccsc(0)	complexInfinity	
+derivative-for-real-x-1	D(arccsc(x), x)	-1 / (abs(x) * sqrt(x ^ 2 - 1))	
+n-arccsc-5-50	N(arccsc(5), 50)	0.201_357_920_790_330_791_455_125_552_217_623_410_240_038_081_402_23	
+arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	arccsc([[sqrt(2), -sqrt(2)], [0, -sqrt(2)]])	[[1 / 4 * pi, -1 / 4 * pi], [complexInfinity, -1 / 4 * pi]]	
+list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	"[\n  arccsc(-sqrt(2)),\n  arccsc(-2 / 3 * sqrt(3)),\n  arccsc(2 / 3 * sqrt(3)),\n  arccsc(sqrt(2)),\n]"	[-1 / 4 * pi, -1 / 3 * pi, 1 / 3 * pi, 1 / 4 * pi]	
+arccsc-complexinfinity	arccsc(complexInfinity)	0	
+arccsc-list-1-neg-1-0	arccsc([1, -1, 0])	[1 / 2 * pi, -1 / 2 * pi, complexInfinity]	
+matrixfunction-function-arccsc-1-1-list-list	MatrixFunction(Function(arccsc(_1), _1), [[sqrt(2), -sqrt(2)], [0, -sqrt(2)]])	[[1 / 4 * pi, -1 / 4 * pi], [0, -1 / 4 * pi]]	Unreadable
+undoes-csc-csc-arccsc-x-x	csc(arccsc(2)) == 2	True	
+arccsc-neg-1	arccsc(-1)	-1 / 2 * pi	
+arccsc-neg-sqrt-2-plus-sqrt-6	arccsc(-sqrt(2) + sqrt(6))	5 / 12 * pi	
+arccsc-neg-sqrt-6-plus-sqrt-2	arccsc(-sqrt(6) + sqrt(2))	-5 / 12 * pi	
+arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	arccsc(2 * sqrt(1 / (2 + sqrt(2))))	arccsc(2 / sqrt(2 + sqrt(2)))	
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	arccsc(-2 * sqrt(1 / (2 + sqrt(2))))	arccsc(-2 / sqrt(2 + sqrt(2)))	
+arccsc-2-over-3-times-sqrt-3	arccsc(2 / 3 * sqrt(3))	1 / 3 * pi	
+arccsc-neg-2-over-3-times-sqrt-3	arccsc(-2 / 3 * sqrt(3))	-1 / 3 * pi	
+arccsc-neg-1-plus-sqrt-5	arccsc(-1 + sqrt(5))	3 / 10 * pi	
+arccsc-1-minus-sqrt-5	arccsc(1 - sqrt(5))	-3 / 10 * pi	
+arccsc-neg-sqrt-2	arccsc(-sqrt(2))	-1 / 4 * pi	

@@ -1,4 +1,31 @@
 id	in	out
+carmichaellambda-10	<CarmichaelLambda>10</CarmichaelLambda>	<ToExpression>4</ToExpression>
 listable	<CarmichaelLambda><List>8 15</List></CarmichaelLambda>	<List>2 4</List>
 negative-n-lambda-n-lambda-n	<CarmichaelLambda>-100</CarmichaelLambda>	<ToExpression>20</ToExpression>
 listable-over-a-range	<CarmichaelLambda><Range>10</Range></CarmichaelLambda>	<List>1 1 2 2 4 2 6 2 6 4</List>
+carmichaellambda-neg-10	<CarmichaelLambda>-10</CarmichaelLambda>	<ToExpression>4</ToExpression>
+carmichaellambda-list-2-4-7	<CarmichaelLambda><List>2 4 7</List></CarmichaelLambda>	<List>1 2 6</List>
+561-mod-carmichaellambda-561	<Mod>561 <CarmichaelLambda>561</CarmichaelLambda></Mod>	<ToExpression>1</ToExpression>
+carmichaellambda-12	<CarmichaelLambda>12</CarmichaelLambda>	<ToExpression>2</ToExpression>
+list-divides-8-24-divides-carmichaellambda-8	<List><Divides>8 24</Divides> <Divides><CarmichaelLambda>8</CarmichaelLambda> <CarmichaelLambda>24</CarmichaelLambda></Divides></List>	<List>True True</List>
+3-pow-1-plus-carmichaellambda-17-mod-17	<Mod><Power>3 <Add>1 <CarmichaelLambda>17</CarmichaelLambda></Add></Power> 17</Mod>	<ToExpression>3</ToExpression>
+divides-multiplicativeorder-4-9-carmichaellambda	<Divides><MultiplicativeOrder>4 9</MultiplicativeOrder> <CarmichaelLambda>9</CarmichaelLambda></Divides>	<True />
+carmichaellambda-1	<CarmichaelLambda>1</CarmichaelLambda>	<ToExpression>1</ToExpression>
+carmichaellambda-2	<CarmichaelLambda>2</CarmichaelLambda>	<ToExpression>1</ToExpression>
+carmichaellambda-3	<CarmichaelLambda>3</CarmichaelLambda>	<ToExpression>2</ToExpression>
+carmichaellambda-4	<CarmichaelLambda>4</CarmichaelLambda>	<ToExpression>2</ToExpression>
+carmichaellambda-5	<CarmichaelLambda>5</CarmichaelLambda>	<ToExpression>4</ToExpression>
+carmichaellambda-6	<CarmichaelLambda>6</CarmichaelLambda>	<ToExpression>2</ToExpression>
+divides-carmichaellambda-8-totient-8	<Divides><CarmichaelLambda>8</CarmichaelLambda> <Totient>8</Totient></Divides>	<True />
+carmichaellambda-7	<CarmichaelLambda>7</CarmichaelLambda>	<ToExpression>6</ToExpression>
+carmichaellambda-8	<CarmichaelLambda>8</CarmichaelLambda>	<ToExpression>2</ToExpression>
+carmichaellambda-9	<CarmichaelLambda>9</CarmichaelLambda>	<ToExpression>6</ToExpression>
+carmichaellambda-11	<CarmichaelLambda>11</CarmichaelLambda>	<ToExpression>10</ToExpression>
+carmichaellambda-13	<CarmichaelLambda>13</CarmichaelLambda>	<ToExpression>12</ToExpression>
+carmichaellambda-14	<CarmichaelLambda>14</CarmichaelLambda>	<ToExpression>6</ToExpression>
+carmichaellambda-15	<CarmichaelLambda>15</CarmichaelLambda>	<ToExpression>4</ToExpression>
+carmichaellambda-16	<CarmichaelLambda>16</CarmichaelLambda>	<ToExpression>4</ToExpression>
+carmichaellambda-17	<CarmichaelLambda>17</CarmichaelLambda>	<ToExpression>16</ToExpression>
+carmichaellambda-list-neg-2-neg-1-0-1-2	<CarmichaelLambda><List>-2 -1 0 1 2</List></CarmichaelLambda>	<List>1 1 0 1 1</List>
+list-lcm-carmichaellambda-list-3-8	<List><LCM><CarmichaelLambda><List>3 8</List></CarmichaelLambda></LCM> <CarmichaelLambda><LCM>3 8</LCM></CarmichaelLambda></List>	<List><List>2 2</List> 2</List>
+carmichaellambda-0	<CarmichaelLambda>0</CarmichaelLambda>	<ToExpression>0</ToExpression>

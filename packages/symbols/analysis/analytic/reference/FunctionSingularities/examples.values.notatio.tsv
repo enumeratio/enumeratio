@@ -3,3 +3,4 @@ a-pole-at-the-origin	<FunctionSingularities><Divide>1 x</Divide> x</FunctionSing
 sqrt-is-singular-at-its-own-boundary	<FunctionSingularities><Sqrt>x</Sqrt> x</FunctionSingularities>	<LessEqual>x 0</LessEqual>
 a-polynomial-has-no-singularities	<FunctionSingularities><Power>x 2</Power> x</FunctionSingularities>	<False />
 log-s-branch-cut	<FunctionSingularities><Ln>x</Ln> x</FunctionSingularities>	<LessEqual>x 0</LessEqual>
+functionsingularities-tan-x-x	<FunctionSingularities><Tan>x</Tan> x</FunctionSingularities>	<Equal><Cos>x</Cos> 0</Equal>

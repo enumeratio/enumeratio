@@ -17,9 +17,22 @@ sign-positiveinfinity	sign(inf)
 an-interval-entirely-above-0-has-sign-1		
 decides-the-sign-of-the-exact-number-sqrt-2-2-by	sign((sqrt(2) - 2))	-1.0
 2-sqrt-2-is-the-same-certified-decision-the	sign((2 - sqrt(2)))	1.0
+n-sign-exponentiale-plus-i-times-pi-20	(sign((e + (mpc(0, 1) * pi))))	
+sign-123	sign(123)	
+sign-123-minus-456i	sign(mpc(123, -456))	
+fullsimplify-matrixfunction-sign-list-list-1		
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1		
 tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1.0
 sign-z-z-z-see-abs		
 x-cdot-sign-x-x-here-at-x-5	almosteq((-5 * sign(-5)), fabs(-5), 1e-20)	True
 the-sign-of-a-nonzero-complex-number-lies-on-the	almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)	True
+sign-1	sign(1)	
+sign-neg-1	sign(-1)	
+sign-neg-i	sign(mpc(0, -1))	
+sign-neg-1-plus-i	sign(mpc(-1, 1))	
+sign-neg-1-minus-i	sign(mpc(-1, -1))	
+sign-1-minus-i	sign(mpc(1, -1))	
+sign-2	sign(2)	
 nan-propagates-rather-than-being-treated-as-0	sign(nan)	
 sign-complexinfinity-is-indeterminate-no		

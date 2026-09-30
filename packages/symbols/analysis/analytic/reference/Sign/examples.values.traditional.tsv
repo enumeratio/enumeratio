@@ -17,9 +17,22 @@ sign-positiveinfinity
 an-interval-entirely-above-0-has-sign-1		
 decides-the-sign-of-the-exact-number-sqrt-2-2-by		
 2-sqrt-2-is-the-same-certified-decision-the		
+n-sign-exponentiale-plus-i-times-pi-20		
+sign-123		
+sign-123-minus-456i		
+fullsimplify-matrixfunction-sign-list-list-1		
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\mathrm{sgn}(\overline{1+2i})=\overline{\mathrm{sgn}(1+2i)}	\mathrm{True}
 tells-you-the-temperature-dropped-but-not-by-how		
 sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\mathrm{True}
 x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\mathrm{True}
 the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\mathrm{True}
+sign-1		
+sign-neg-1		
+sign-neg-i		
+sign-neg-1-plus-i		
+sign-neg-1-minus-i		
+sign-1-minus-i		
+sign-2		
 nan-propagates-rather-than-being-treated-as-0		
 sign-complexinfinity-is-indeterminate-no		

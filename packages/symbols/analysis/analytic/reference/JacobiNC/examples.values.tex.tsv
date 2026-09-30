@@ -2,5 +2,11 @@ id	in	out
 a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiNC}(0.3, 1.5))	1.044\,645\,321\,516\,758\,4
 m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiNC}(0.3, -2))	1.049\,687\,404\,895\,594\,6
 the-quarter-period-is-a-pole-even-when-m-is-0	\mathrm{JacobiNC}(\mathrm{EllipticK}(0), 0)	\tilde\infty
+matrixfunction-function-jacobinc-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiNC}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack
+list-jacobinc-z-0-jacobinc-z-1	\bigl\lbrack\mathrm{JacobiNC}(z, 0), \mathrm{JacobiNC}(z, 1)\bigr\rbrack	\bigl\lbrack\frac{1}{\cos(z)}, \cosh(z)\bigr\rbrack
 u-0-is-1-for-any-m	\mathrm{JacobiNC}(0, m)	1
+jacobinc-0-0	\mathrm{JacobiNC}(0, 0)	1
+jacobinc-1-over-2-times-pi-0	\mathrm{JacobiNC}(\frac{\pi}{2}, 0)	\tilde\infty
+jacobinc-0-1	\mathrm{JacobiNC}(0, 1)	1
+jacobinc-1-over-2-times-i-times-pi-1	\mathrm{JacobiNC}((\frac{1}{2}i)\pi, 1)	0
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiNC}(u, m)	\mathrm{JacobiNC}(u, m)

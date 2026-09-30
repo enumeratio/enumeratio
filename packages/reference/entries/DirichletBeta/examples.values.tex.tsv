@@ -14,4 +14,10 @@ to-exactly-40-significant-digits-not-yet-85-come	N(\mathrm{DirichletBeta}(2), 40
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	\mathrm{DirichletBeta}(7)	\frac{61\pi^7}{184\,320}
 beta-2k-e-2k-2-and-beta-2k-1-0	\mathrm{DirichletBeta}(\bigl\lbrack0, -1, -2, -3, -4\bigr\rbrack)	\bigl\lbrack\frac{1}{2}, 0, -\frac{1}{2}, 0, \frac{5}{2}\bigr\rbrack
 beta-5-5-pi-5-1536	\mathrm{DirichletBeta}(5)	\frac{5\pi^5}{1\,536}
+dirichletbeta-neg-5	\mathrm{DirichletBeta}(-5)	0
+dirichletbeta-neg-4	\mathrm{DirichletBeta}(-4)	\frac{5}{2}
+dirichletbeta-neg-3	\mathrm{DirichletBeta}(-3)	0
+dirichletbeta-neg-2	\mathrm{DirichletBeta}(-2)	-\frac{1}{2}
+dirichletbeta-neg-1	\mathrm{DirichletBeta}(-1)	0
+dirichletbeta-0	\mathrm{DirichletBeta}(0)	\frac{1}{2}
 even-s-ge-4-has-no-closed-form-and-stays	\mathrm{DirichletBeta}(4)	\mathrm{DirichletBeta}(4)

@@ -1,5 +1,6 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
 primitiverootlist-7			[PrimitiveRootList, 7]	[List, 3, 5]					
+primitiverootlist-9			[PrimitiveRootList, 9]	[List, 2, 5]					
 10-2-cdot-5-is-of-the-form-2p	Scope		[PrimitiveRootList, 10]	[List, 3, 7]	$10 = 2 \cdot 5$ is of the form $2p$				
 an-odd-prime-power-varphi-varphi-25-8-generators	Scope		[PrimitiveRootList, 25]	[List, 2, 3, 8, 12, 13, 17, 22, 23]	an odd prime power: $\varphi(\varphi(25)) = 8$ generators				
 n-4-is-one-of-the-small-cyclic-cases	Scope		[PrimitiveRootList, 4]	[List, 3]	$n = 4$ is one of the small cyclic cases				

@@ -7,3 +7,20 @@ norlundb-6-4	NorlundB[6, 4]	221/42	B_6^{(4)}	\frac{221}{42}
 norlundb-5-3	NorlundB[5, 3]	-3/4	B_5^{(3)}	-\frac{3}{4}
 norlundb-7-2	NorlundB[7, 2]	-1/6	B_7^{(2)}	-\frac{1}{6}
 a-polynomial-in-a	NorlundB[1, a]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_1^{(a)}--\frac{1}{2} a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_1^{\left(\frac{7}{3}\right)}--\frac{1}{2} \frac{7}{3}\right]\right],\text{Chop}\left[N\left[B_1^{\left(-\frac{11}{5}\right)}--\frac{1}{2} \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_1^{\left(\frac{13}{4}\right)}--\frac{1}{2} \frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+norlundb-0-0	NorlundB[0, 0]	1	B_0^{(0)}	1
+norlundb-1-0	NorlundB[1, 0]	0	B_1^{(0)}	0
+norlundb-2-0	NorlundB[2, 0]	0	B_2^{(0)}	0
+norlundb-0-2	NorlundB[0, 2]	1	B_0^{(2)}	1
+norlundb-1-2	NorlundB[1, 2]	-1	B_1^{(2)}	-1
+norlundb-0-3	NorlundB[0, 3]	1	B_0^{(3)}	1
+norlundb-1-3	NorlundB[1, 3]	-3/2	B_1^{(3)}	-\frac{3}{2}
+norlundb-0-4	NorlundB[0, 4]	1	B_0^{(4)}	1
+norlundb-1-4	NorlundB[1, 4]	-2	B_1^{(4)}	-2
+norlundb-0-5	NorlundB[0, 5]	1	B_0^{(5)}	1
+norlundb-1-5	NorlundB[1, 5]	-5/2	B_1^{(5)}	-\frac{5}{2}
+norlundb-0-6	NorlundB[0, 6]	1	B_0^{(6)}	1
+norlundb-1-6	NorlundB[1, 6]	-3	B_1^{(6)}	-3
+norlundb-0-7	NorlundB[0, 7]	1	B_0^{(7)}	1
+norlundb-1-7	NorlundB[1, 7]	-7/2	B_1^{(7)}	-\frac{7}{2}
+norlundb-0-8	NorlundB[0, 8]	1	B_0^{(8)}	1
+norlundb-1-8	NorlundB[1, 8]	-4	B_1^{(8)}	-4

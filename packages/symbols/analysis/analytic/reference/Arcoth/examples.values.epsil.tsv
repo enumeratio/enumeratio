@@ -1,8 +1,13 @@
-id	in	out
-n-arcoth-2	N(arcoth(2))	0.549_306_144_334_054_845_7
-a-logarithmic-singularity-at-1	arcoth(1)	positiveInfinity
-arcoth-positiveinfinity	arcoth(positiveInfinity)	0
-a-float-argument-evaluates-directly	arcoth(3.5)	0.293_893_332_451_059_504_095
-as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	trigToExp(arcoth(2))	1 / 2 * ln(3)
-oddness-pulls-the-sign-out-of-a-symbolic	arcoth(-x)	-arcoth(x)
-derivative-frac-1-1-x-2	D(arcoth(x), x)	1 / (-x ^ 2 + 1)
+id	in	out	back
+n-arcoth-2	N(arcoth(2))	0.549_306_144_334_054_845_7	
+a-logarithmic-singularity-at-1	arcoth(1)	positiveInfinity	
+arcoth-positiveinfinity	arcoth(positiveInfinity)	0	
+a-float-argument-evaluates-directly	arcoth(3.5)	0.293_893_332_451_059_504_095	
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	trigToExp(arcoth(2))	1 / 2 * ln(3)	
+oddness-pulls-the-sign-out-of-a-symbolic	arcoth(-x)	-arcoth(x)	
+derivative-frac-1-1-x-2	D(arcoth(x), x)	1 / (-x ^ 2 + 1)	
+n-arcoth-2-50	N(arcoth(2), 50)	0.549_306_144_334_054_845_697_622_618_461_262_852_323_745_278_911_37	
+arcoth-list-list-i-neg-i-list-0-neg-i	arcoth([[i, -i], [0, -i]])	[[arcoth(i), arcoth(-i)], [arcoth(0), arcoth(-i)]]	
+arcoth-complexinfinity	arcoth(complexInfinity)	0	
+arcoth-neg-1	arcoth(-1)	negativeInfinity	
+matrixfunction-function-arcoth-1-1-list-list-i	MatrixFunction(Function(arcoth(_1), _1), [[i, -i], [0, -i]])	[[arcoth(i), -1 / 2 * arcoth(i) + 1 / 2 * arcoth(-i)], [0, arcoth(-i)]]	Unreadable

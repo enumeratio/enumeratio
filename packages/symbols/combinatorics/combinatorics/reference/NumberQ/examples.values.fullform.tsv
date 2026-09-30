@@ -2,3 +2,6 @@ id	in
 an-integer-literal	NumberQ[2]
 a-symbolic-constant-is-not-numberq	NumberQ[Pi]
 a-plain-symbol-is-not-numberq	NumberQ[x]
+numberq-n-sqrt-2	NumberQ[N[Sqrt[2]]]
+list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]
+list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]

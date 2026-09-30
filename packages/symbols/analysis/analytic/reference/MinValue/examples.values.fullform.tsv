@@ -1,5 +1,7 @@
 id	in
 a-quadratic-s-minimum-value	MinValue[Plus[Power[x, 2], Times[-4, x], 3], x]
 a-simple-interval-constraint	MinValue[List[Power[x, 2], GreaterEqual[x, 1]], x]
+minvalue-2-times-x-pow-2-minus-3x-plus-5-x	MinValue[Plus[Times[2, Power[x, 2]], Times[-1, Times[3, x]], 5], x]
 the-amplitude-of-cosine-alone-is-exact	MinValue[Cos[Subtract[Times[3, x], 1]], x]
 exp-s-infimum	MinValue[Exp[x], x]
+timeconstrained-minvalue-list-x-pow-2-plus-y-pow	TimeConstrained[MinValue[List[Plus[Power[x, 2], Power[y, 2], Power[z, 2]], And[Equal[Plus[Power[x, 2], Times[-1, Times[3, x, y, z]], Times[9, Power[z, 2]], Power[y, 2]], E], LessEqual[Times[x, y, z], Pi]]], List[x, y, z]], 60]

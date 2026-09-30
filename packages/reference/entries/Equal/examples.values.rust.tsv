@@ -1,0 +1,8 @@
+id	in
+4-eq-4	equal(n(4), n(4))
+n-pi-20-eq-pi	equal(nf(x(std::f64::consts::PI)), x(std::f64::consts::PI))
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	equal((sqrt(n(2)) + sqrt(n(3))), sqrt((n(5) + (n(2) * sqrt(n(6))))))
+x-eq-x	
+3-eq-3-eq-3	
+list-1-2-eq-list-1-2	equal(list(vec![n(1), n(2)]), list(vec![n(1), n(2)]))
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	

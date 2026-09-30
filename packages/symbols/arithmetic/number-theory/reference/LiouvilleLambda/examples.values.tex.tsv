@@ -2,5 +2,20 @@ id	in	out
 omega-12-3	\mathrm{LiouvilleLambda}(12)	-1
 liouvillelambda-10	\mathrm{LiouvilleLambda}(10)	1
 liouvillelambda-1	\mathrm{LiouvilleLambda}(1)	1
+liouvillelambda-8	\mathrm{LiouvilleLambda}(8)	-1
+liouvillelambda-9	\mathrm{LiouvilleLambda}(9)	1
 listable	\mathrm{LiouvilleLambda}(1..10)	\bigl\lbrack1, -1, -1, 1, -1, 1, -1, -1, 1, 1\bigr\rbrack
+liouvillelambda-1-plus-10-pow-30	\mathrm{LiouvilleLambda}(1+10^{30})	-1
+liouvillelambda-list-1-2-3-4-5-6	\mathrm{LiouvilleLambda}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack1, -1, -1, 1, -1, 1\bigr\rbrack
 lambda-n-1-omega-n-see-primeomega	\mathrm{LiouvilleLambda}(360)=(-1)^{\mathrm{PrimeOmega}(360)}	\top
+liouvillelambda-162-eq-liouvillelambda-6-times	\mathrm{LiouvilleLambda}(162)=\mathrm{LiouvilleLambda}(6)\mathrm{LiouvilleLambda}(27)	\top
+liouvillelambda-60	\mathrm{LiouvilleLambda}(60)	1
+liouvillelambda-30	\mathrm{LiouvilleLambda}(30)	-1
+liouvillelambda-120	\mathrm{LiouvilleLambda}(120)	-1
+liouvillelambda-25	\mathrm{LiouvilleLambda}(25)	1
+liouvillelambda-2	\mathrm{LiouvilleLambda}(2)	-1
+liouvillelambda-3	\mathrm{LiouvilleLambda}(3)	-1
+liouvillelambda-4	\mathrm{LiouvilleLambda}(4)	1
+liouvillelambda-6	\mathrm{LiouvilleLambda}(6)	1
+divisorsum-64-function-liouvillelambda-1-1	\mathrm{DivisorSum}(64, ()\mapsto\mathrm{LiouvilleLambda}(\operatorname{\_1}))	1
+divisorsum-7-function-liouvillelambda-1-1	\mathrm{DivisorSum}(7, ()\mapsto\mathrm{LiouvilleLambda}(\operatorname{\_1}))	0

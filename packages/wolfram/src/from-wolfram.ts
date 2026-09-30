@@ -200,6 +200,15 @@ function applyHead(name: string, args: MathJson[]): MathJson {
   if (name === "Divisible" && args.length === 2) return ["Divides", args[1], args[0]];
   // Digamma is the 1-arg PolyGamma; the 2-arg form is compute-engine's PolyGamma too.
   if (name === "PolyGamma") return [args.length === 1 ? "Digamma" : "PolyGamma", ...args];
+  // `Function[x, body]` and `Function[{x, y}, body]` put the parameters first; compute-engine's
+  // `Function` is `[body, ...params]`. Read the other way, `x` is taken for the body.
+  if (name === "Function" && args.length === 2) {
+    return ["Function", args[1], ...(isList(args[0]) ? args[0].slice(1) : [args[0]])];
+  }
+  // Midpoint[{p, q}] is our Midpoint(p, q).
+  if (name === "Midpoint" && args.length === 1 && isList(args[0]) && args[0].length === 3) {
+    return ["Midpoint", args[0][1], args[0][2]];
+  }
   // Always `_n`, so compute-engine's bare `_` comes back as `_1`.
   if (name === "Slot" && args.length === 1 && typeof args[0] === "number") return `_${args[0]}`;
   if (name === "Subscript" && args.length === 2 && isPlain(args[0]) && isPlain(args[1])) {

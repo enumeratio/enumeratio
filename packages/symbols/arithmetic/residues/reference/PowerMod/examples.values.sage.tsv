@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	power_mod((0 + 7*I), 3, (3 + 2*I))
 modulus-a-real-composite-5-squared	power_mod((1 + 1*I), 4, 25)		
 a-negative-unit-exponent-is-its-own-inverse	power_mod((0 + 1*I), -1, 7)		
 modulus-a-negative-associate	power_mod((2 + 1*I), 5, (-2 + -3*I))		
+sum-powermod-a-2-7-a-nothing-7			
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0			
 one-step-of-rsa-style-modular-exponentiation-7	power_mod(7, 13, 33)	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	power_mod(2, 340, 341)	1	
 diffie-hellman-both-parties-reach-the-shared-key	bool(power_mod(power_mod(5, 6, 23), 15, 23) == power_mod(power_mod(5, 15, 23), 6, 23))	True	
+powermod-tocharactercode-rsa-in-mathematica			
 by-definition-a-b-bmod-m-computed-without-ever	bool(power_mod(2, 10, 3) == (((2)^10) % 3))	True	
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	power_mod(7, euler_phi(19), 19)	1	
+list-powermod-7-2-5-powermod-12-2-5	[power_mod(7, 2, 5), power_mod(12, 2, 5)]		
+list-powermod-2-3-5-8-mod-5	[power_mod(2, 3, 5), (8 % 5)]		
+list-powermod-2-neg-1-5-modularinverse-2-5	[power_mod(2, -1, 5), inverse_mod(2, 5)]		
+list-divides-2-8-powermod-8-3-2-eq-0			
+powermod-7-totient-19-19-eq-1	bool(power_mod(7, euler_phi(19), 19) == 1)		
+powermod-2-16-17	power_mod(2, 16, 17)		
+powermod-list-5-neg-5-2-3	power_mod([5, -5], 2, 3)		
+powermod-list-5-neg-5-2-neg-3	power_mod([5, -5], 2, -3)		
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	power_mod(2, -1, 4)	ZeroDivisionError: inverse of Mod(2, 4) does not exist	error
 a-nonzero-exponent-at-the-same-negative-modulus	power_mod(-2, 3, -14)	-8	inconclusive
 2-is-not-a-square-mod-5-so-there-is-no-root	power_mod(2, (1/2), 5)	TypeError: no conversion of this rational to integer	error

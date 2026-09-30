@@ -11,5 +11,8 @@ sqrt-restricted-past-its-own-domain	FunctionContinuous(sqrt(x), x, x > -5)	False
 log-restricted-to-its-own-domain	FunctionContinuous(ln(x), x, x > 0)	True
 log-restricted-includes-its-singular-boundary	FunctionContinuous(ln(x), x, x >= 0)	False
 reciprocal-restricted-below-its-pole	FunctionContinuous(x ^ -1, x, x < 0)	True
+functioncontinuous-sin-x-x	FunctionContinuous(sin(x), x)	True
 reciprocal-restricted-domain	FunctionContinuous(x ^ -1, x, x > 0)	True
 sqrt-closed-boundary	FunctionContinuous(sqrt(x), x, x >= 0)	True
+list-functioncontinuous-x-x-functioncontinuous-x	"[\n  FunctionContinuous(x, x),\n  FunctionContinuous(x ^ 2 + 1, x),\n  FunctionContinuous(x ^ 3 - 2 * x ^ 2 - 5x + 6, x),\n]"	[True, True, True]
+list-functioncontinuous-sin-x-x	"[\n  FunctionContinuous(sin(x), x),\n  FunctionContinuous(cos(x), x),\n  FunctionContinuous(exp(x), x),\n]"	[True, True, True]

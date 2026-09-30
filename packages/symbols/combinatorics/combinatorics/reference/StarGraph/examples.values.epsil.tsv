@@ -1,2 +1,8 @@
-id	in	out
-centre-degree-of-a-6-vertex-star	VertexDegree(StarGraph(6), 1)	5
+id	in	out	back
+centre-degree-of-a-6-vertex-star	VertexDegree(StarGraph(6), 1)	5	
+stargraph-8	StarGraph(8)	"Graph([1, 2, 3, 4, 5, 6, 7, 8], [\n                                  UndirectedEdge(1, 2),\n                                  UndirectedEdge(1, 3),\n                                  UndirectedEdge(1, 4),\n                                  UndirectedEdge(1, 5),\n                                  UndirectedEdge(1, 6),\n                                  UndirectedEdge(1, 7),\n                                  UndirectedEdge(1, 8),\n                                ])"	
+stargraph-6	StarGraph(6)	"Graph([1, 2, 3, 4, 5, 6], [\n                            UndirectedEdge(1, 2),\n                            UndirectedEdge(1, 3),\n                            UndirectedEdge(1, 4),\n                            UndirectedEdge(1, 5),\n                            UndirectedEdge(1, 6),\n                          ])"	
+map-function-vertexeccentricity-stargraph-6-1-1	"map(\n     Function(VertexEccentricity(StarGraph(6), _1), _1),\n     VertexList(StarGraph(6)),\n   )"	[1, 2, 2, 2, 2, 2]	Unreadable
+istreegraph-stargraph-5	IsTreeGraph(StarGraph(5))	True	
+isbipartitegraph-stargraph-5	IsBipartiteGraph(StarGraph(5))	True	
+stargraph-7	StarGraph(7)	"Graph([1, 2, 3, 4, 5, 6, 7], [\n                               UndirectedEdge(1, 2),\n                               UndirectedEdge(1, 3),\n                               UndirectedEdge(1, 4),\n                               UndirectedEdge(1, 5),\n                               UndirectedEdge(1, 6),\n                               UndirectedEdge(1, 7),\n                             ])"	

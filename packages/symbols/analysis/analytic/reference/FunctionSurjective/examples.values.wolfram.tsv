@@ -3,4 +3,10 @@ an-odd-degree-polynomial-is-onto	FunctionSurjective[Power[x, 3], x, Reals]	True	
 exp-misses-the-non-positive-reals	FunctionSurjective[Exp[x], x, Reals]	False	\text{FunctionSurjective}[\exp (x),x,\mathbb{R}]	\text{False}
 log-is-onto-the-reals	FunctionSurjective[Log[x], x, Reals]	True	\text{FunctionSurjective}[\log (x),x,\mathbb{R}]	\text{True}
 a-reciprocal-never-hits-zero	FunctionSurjective[Divide[1, x], x, Reals]	False	\text{FunctionSurjective}\left[\frac{1}{x},x,\mathbb{R}\right]	\text{False}
-an-unsupported-codomain-declines				
+an-unsupported-codomain-declines	FunctionSurjective[Power[x, 3], x, Integers]			
+functionsurjective-tan-x-x	FunctionSurjective[Tan[x], x]	True	\text{FunctionSurjective}[\tan (x),x]	\text{True}
+functionsurjective-x-pow-3-minus-x-x	FunctionSurjective[Plus[Power[x, 3], Times[-1, x]], x]	True	\text{FunctionSurjective}\left[x^3-x,x\right]	\text{True}
+functionsurjective-sqrt-x-x	FunctionSurjective[Sqrt[x], x]	False	\text{FunctionSurjective}\left[\sqrt{x},x\right]	\text{False}
+functionsurjective-sin-x-x	FunctionSurjective[Sin[x], x]	False	\text{FunctionSurjective}[\sin (x),x]	\text{False}
+functionsurjective-x-pow-2-plus-x-plus-1-x	FunctionSurjective[Plus[Power[x, 2], x, 1], x]	False	\text{FunctionSurjective}\left[x^2+x+1,x\right]	\text{False}
+functionsurjective-x-pow-3-plus-x-plus-1-x	FunctionSurjective[Plus[Power[x, 3], x, 1], x]	True	\text{FunctionSurjective}\left[x^3+x+1,x\right]	\text{True}

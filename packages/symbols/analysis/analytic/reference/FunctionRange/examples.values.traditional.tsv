@@ -1,0 +1,9 @@
+id	in	out
+a-parabola-s-range-is-bounded-below		
+a-reciprocal-never-reaches-zero		
+sine-s-range-is-the-unit-interval		
+exp-s-range-is-the-positive-reals		
+functionrange-x-pow-2-minus-1-x-y		
+functionrange-x-pow-2-minus-4-x-y		
+functionrange-tan-x-x-y	\mathrm{FunctionRange}(\tan(x), x, y)	\mathrm{True}
+a-quadratic-denominator-is-declined		

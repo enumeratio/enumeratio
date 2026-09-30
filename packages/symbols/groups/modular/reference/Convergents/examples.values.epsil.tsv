@@ -1,5 +1,11 @@
 id	in	out
 from-a-list-of-terms	Convergents([3, 7, 15, 1])	[3, 22 / 7, 333 / 106, 355 / 113]
 the-first-five-convergents-of-pi	Convergents(pi, 5)	[3, 22 / 7, 333 / 106, 355 / 113, 103_993 / 33_102]
+convergents-goldenratio-10	Convergents(goldenRatio, 10)	[1, 2, 3 / 2, 5 / 3, 8 / 5, 13 / 8, 21 / 13, 34 / 21, 55 / 34, 89 / 55]
+convergents-list-1-1-1-1-1	Convergents([1, 1, 1, 1, 1])	[1, 2, 3 / 2, 5 / 3, 8 / 5]
 a-rational-the-last-convergent-is-the-number	Convergents(47 / 17)	[2, 3, 11 / 4, 47 / 17]
+convergents-pi-10	Convergents(pi, 10)	"[\n  3,\n  22 / 7,\n  333 / 106,\n  355 / 113,\n  103_993 / 33_102,\n  104_348 / 33_215,\n  208_341 / 66_317,\n  312_689 / 99_532,\n  833_719 / 265_381,\n  1_146_408 / 364_913,\n]"
+convergents-sqrt-7-10	Convergents(sqrt(7), 10)	[2, 3, 5 / 2, 8 / 3, 37 / 14, 45 / 17, 82 / 31, 127 / 48, 590 / 223, 717 / 271]
+convergents-7-over-17	Convergents(7 / 17)	[0, 1 / 2, 2 / 5, 7 / 17]
 convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents(sqrt(2), 5)	[1, 3 / 2, 7 / 5, 17 / 12, 41 / 29]
+neg-n-pi-plus-convergents-pi-10	-N(pi) + Convergents(pi, 10)	"[\n  -0.141_592_653_589_793_238_462_643,\n  0.001_264_489_267_349_618_677_357,\n  -0.000_083_219_627_529_087_522_643,\n  0.000_000_266_764_189_062_417_357,\n  -5.778_906_343_926_43e-10,\n  3.316_278_062_473_57e-10,\n  -1.223_565_329_426_43e-10,\n  2.914_338_493_735_7e-11,\n  -8.715_467_262_643e-12,\n  1.610_740_017_357e-12,\n]"

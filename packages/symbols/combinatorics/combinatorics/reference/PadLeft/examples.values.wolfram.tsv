@@ -1,5 +1,7 @@
 id	in	out	tex.in	tex.out
 padded-with-zeros-on-the-left	PadLeft[List[1, 2, 3], 5]	{0, 0, 1, 2, 3}	\text{PadLeft}[\{1,2,3\},5]	\{0,0,1,2,3\}
 a-padding-element	PadLeft[List[1, 2, 3], 5, x]	{x, x, 1, 2, 3}	\text{PadLeft}[\{1,2,3\},5,x]	\{x,x,1,2,3\}
+padleft-list-a-b-c-10	PadLeft[List[a, b, c], 10]	{0, 0, 0, 0, 0, 0, 0, a, b, c}	\text{PadLeft}[\{a,b,c\},10]	\{0,0,0,0,0,0,0,a,b,c\}
+padleft-list-a-b-c-10-x	PadLeft[List[a, b, c], 10, x]	{x, x, x, x, x, x, x, a, b, c}	\text{PadLeft}[\{a,b,c\},10,x]	\{x,x,x,x,x,x,x,a,b,c\}
 a-shorter-length-drops-elements-from-the-left	PadLeft[List[1, 2, 3, 4, 5], 3]	{3, 4, 5}	\text{PadLeft}[\{1,2,3,4,5\},3]	\{3,4,5\}
 with-no-length-a-ragged-array-is-padded-to-a	PadLeft[List[List[1], List[2, 3]]]	{{0, 1}, {2, 3}}	\text{PadLeft}[\{\{1\},\{2,3\}\}]	\left( \begin{array}{cc}  0 & 1 \\  2 & 3 \\ \end{array} \right)

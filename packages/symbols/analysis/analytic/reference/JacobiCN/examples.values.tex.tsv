@@ -26,7 +26,13 @@ cn-0-5-0-3i-3-2	N(\mathrm{JacobiCN}(0.5-0.3i, -3))	0.949\,629\,189\,769\,531\,1+
 m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiCN}(0.3, 1.5))	0.957\,262\,699\,025\,984\,9
 m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiCN}(0.3, -2))	0.952\,664\,569\,791\,101\,9
 a-complex-argument-u	N(\mathrm{JacobiCN}(0.3+0.4i, 0.5))	1.027\,992\,872\,007\,962\,7-0.123\,775\,864\,136\,771\,64i
+matrixfunction-function-jacobicn-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiCN}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack
+list-jacobicn-z-0-jacobicn-z-1	\bigl\lbrack\mathrm{JacobiCN}(z, 0), \mathrm{JacobiCN}(z, 1)\bigr\rbrack	\bigl\lbrack\cos(z), \frac{1}{\cosh(z)}\bigr\rbrack
 u-0-is-1-for-any-m	\mathrm{JacobiCN}(0, m)	1
 m-0-reduces-to-cos-u	\mathrm{JacobiCN}(u, 0)	\cos(u)
 the-quarter-period-u-elliptick-m-is-0	\mathrm{JacobiCN}(\mathrm{EllipticK}(m), m)	0
+jacobicn-0-0	\mathrm{JacobiCN}(0, 0)	1
+jacobicn-1-over-2-times-pi-0	\mathrm{JacobiCN}(\frac{\pi}{2}, 0)	0
+jacobicn-0-1	\mathrm{JacobiCN}(0, 1)	1
+jacobicn-1-over-2-times-i-times-pi-1	\mathrm{JacobiCN}((\frac{1}{2}i)\pi, 1)	\tilde\infty
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiCN}(u, m)	\mathrm{JacobiCN}(u, m)

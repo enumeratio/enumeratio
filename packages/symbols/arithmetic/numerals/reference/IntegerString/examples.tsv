@@ -9,5 +9,7 @@ roman-numerals-with-the-base-roman	Scope		[IntegerString, 1988, "'Roman'"]	"'MCM
 a-width-pads-with-leading-zeros	Scope		[IntegerString, 255, 16, 4]	"'00ff'"	a width pads with leading zeros		
 a-width-shorter-than-the-numeral-keeps-the-least	Scope		[IntegerString, 1234567, 10, 3]	"'567'"	a width shorter than the numeral keeps the least-significant digits		
 a-third-argument-pads-with-leading-zeros-to-that	Scope		[IntegerString, 5, 2, 8]	"'00000101'"	A third argument pads with leading zeros to that length (or keeps only the last that many digits)		
+integerstring-50-factorial-36	Scope		[IntegerString, [Factorial, 50], 36]	"'4q7eyp9zizmtqt0648txt4fm720cc1s00000000000'"			
+integerstring-2-046-2	Properties		[IntegerString, 2046, 2]	"'11111111110'"			
 integerstring-0	Possible issues		[IntegerString, 0]	"'0'"			
 compute-engine-keeps-the-sign	Possible issues		[IntegerString, -42]	"'-42'"	compute-engine keeps the sign	convention	compute-engine keeps the sign; Wolfram's IntegerString drops it.

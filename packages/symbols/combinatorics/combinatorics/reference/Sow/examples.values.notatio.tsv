@@ -1,3 +1,4 @@
 id	in	out
 sow-feeds-the-nearest-reap	<Reap><Sow>5</Sow></Reap>	<List>5 <List><List>5</List></List></List>
 sow-outside-any-reap-is-a-no-op	<Sow>7</Sow>	<ToExpression>7</ToExpression>
+sow-x	<Sow>x</Sow>	<x />

@@ -45,3 +45,6 @@ catalog-dump.json
 
 # VitePress writes these beside a data loader while resolving it.
 *.timestamp-*.mjs
+
+# Farmed third-party data (packages/reference/scripts/farm-wolfram-data.ts)
+.cache/

@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+most-list-a-b-c-d			[Most, [List, a, b, c, d]]	[List, a, b, c]

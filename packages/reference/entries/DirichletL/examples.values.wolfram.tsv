@@ -21,4 +21,14 @@ the-principal-character-mod-2-removes-the-euler
 l-2-chi-2-bmod-4-beta-2-g	DirichletL[4, 2, 2]	DirichletL[4, 2, 2]	L_{4,2}(2)	L_{4,2}(2)	disagree
 l-0-chi-3-frac-13-the-class-number-formula-s-2h	DirichletL[3, 2, 0]	1/3	L_{3,2}(0)	\frac{1}{3}	
 l-1-chi-3-pi-3-sqrt-3-s-1-for-a-real-quadratic	DirichletL[3, 2, 1]	Pi/(3*Sqrt[3])	L_{3,2}(1)	\frac{\pi }{3 \sqrt{3}}	
+dirichletl-2-1-2	DirichletL[2, 1, 2]	DirichletL[2, 1, 2]	L_{2,1}(2)	L_{2,1}(2)	
+dirichletl-2-1-3	DirichletL[2, 1, 3]	DirichletL[2, 1, 3]	L_{2,1}(3)	L_{2,1}(3)	
+dirichletl-2-1-4	DirichletL[2, 1, 4]	DirichletL[2, 1, 4]	L_{2,1}(4)	L_{2,1}(4)	
+dirichletl-3-1-2	DirichletL[3, 1, 2]	DirichletL[3, 1, 2]	L_{3,1}(2)	L_{3,1}(2)	
+dirichletl-3-1-3	DirichletL[3, 1, 3]	DirichletL[3, 1, 3]	L_{3,1}(3)	L_{3,1}(3)	
+dirichletl-3-1-4	DirichletL[3, 1, 4]	DirichletL[3, 1, 4]	L_{3,1}(4)	L_{3,1}(4)	
+dirichletl-3-1-5	DirichletL[3, 1, 5]	DirichletL[3, 1, 5]	L_{3,1}(5)	L_{3,1}(5)	
+dirichletl-5-1-2	DirichletL[5, 1, 2]	DirichletL[5, 1, 2]	L_{5,1}(2)	L_{5,1}(2)	
+dirichletl-5-1-3	DirichletL[5, 1, 3]	DirichletL[5, 1, 3]	L_{5,1}(3)	L_{5,1}(3)	
+dirichletl-6-1-2	DirichletL[6, 1, 2]	DirichletL[6, 1, 2]	L_{6,1}(2)	L_{6,1}(2)	
 no-closed-form-at-positive-integer-s-in-general	DirichletL[5, 2, 2]	DirichletL[5, 2, 2]	L_{5,2}(2)	L_{5,2}(2)	

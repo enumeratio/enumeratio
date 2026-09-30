@@ -1,4 +1,6 @@
 id	in	out
 from-character-code-of-a-single-code-point	<FromCharacterCode>65</FromCharacterCode>	<ToExpression>"A"</ToExpression>
+fromcharactercode-list-97-98-99	<FromCharacterCode><List>97 98 99</List></FromCharacterCode>	<ToExpression>"abc"</ToExpression>
 inverts-tocharactercode	<FromCharacterCode><ToCharacterCode><String>hello</String></ToCharacterCode></FromCharacterCode>	<ToExpression>"hello"</ToExpression>
 round-trips-a-non-ascii-string-emoji-astral	<FromCharacterCode><ToCharacterCode><String>`a😀b→c`</String></ToCharacterCode></FromCharacterCode>	<ToExpression>"a😀b→c"</ToExpression>
+fromcharactercode-97	<FromCharacterCode>97</FromCharacterCode>	<ToExpression>"a"</ToExpression>

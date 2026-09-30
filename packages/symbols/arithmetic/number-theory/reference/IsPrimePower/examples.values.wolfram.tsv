@@ -2,6 +2,21 @@ id	in	out	tex.in	tex.out
 8-2-3	PrimePowerQ[8]	True	\text{PrimePowerQ}[8]	\text{True}
 12-2-2-cdot-3-has-two-distinct-primes	PrimePowerQ[12]	False	\text{PrimePowerQ}[12]	\text{False}
 a-prime-is-its-own-first-power	PrimePowerQ[7]	True	\text{PrimePowerQ}[7]	\text{True}
+isprimepower-6	PrimePowerQ[6]	False	\text{PrimePowerQ}[6]	\text{False}
 listable	PrimePowerQ[List[2, 4, 6, 9, 10, 16]]	{True, True, False, True, False, True}	\text{PrimePowerQ}[\{2,4,6,9,10,16\}]	\{\text{True},\text{True},\text{False},\text{True},\text{False},\text{True}\}
 large-integers	PrimePowerQ[Power[3, 40]]	True	\text{PrimePowerQ}\left[3^{40}\right]	\text{True}
+isprimepower-9	PrimePowerQ[9]	True	\text{PrimePowerQ}[9]	\text{True}
+isprimepower-list-1-2-3-4-5-6-7	PrimePowerQ[List[1, 2, 3, 4, 5, 6, 7]]	{False, True, True, True, True, False, True}	\text{PrimePowerQ}[\{1,2,3,4,5,6,7\}]	\{\text{False},\text{True},\text{True},\text{True},\text{True},\text{False},\text{True}\}
+filter-range-1-100-function-isprimepower-1	Select[Range[1, 100], Function[And[PrimePowerQ[Slot[1]], Not[PrimeQ[Slot[1]]]]]]	{4, 8, 9, 16, 25, 27, 32, 49, 64, 81}	\text{Select}[\text{Range}[1,100],\text{PrimePowerQ}[\text{$\#$1}]\land \neg \text{PrimeQ}[\text{$\#$1}]\&]	\{4,8,9,16,25,27,32,49,64,81\}
+isprimepower-625	PrimePowerQ[625]	True	\text{PrimePowerQ}[625]	\text{True}
+isprimepower-53	PrimePowerQ[53]	True	\text{PrimePowerQ}[53]	\text{True}
+list-isprimepower-27-issquarefree-27	List[PrimePowerQ[27], SquareFreeQ[27]]	{True, False}	\{\text{PrimePowerQ}[27],\text{SquareFreeQ}[27]\}	\{\text{True},\text{False}\}
+list-isprimepower-3-issquarefree-3	List[PrimePowerQ[3], SquareFreeQ[3]]	{True, True}	\{\text{PrimePowerQ}[3],\text{SquareFreeQ}[3]\}	\{\text{True},\text{True}\}
+isprimepower-25	PrimePowerQ[25]	True	\text{PrimePowerQ}[25]	\text{True}
+isprimepower-16-807	PrimePowerQ[16807]	True	\text{PrimePowerQ}[16807]	\text{True}
+list-isprimepower-121-iscomposite-121-moebiusmu	List[PrimePowerQ[121], CompositeQ[121], MoebiusMu[121]]	{True, True, 0}	\{\text{PrimePowerQ}[121],\text{CompositeQ}[121],\mu (121)\}	\{\text{True},\text{True},0\}
+list-isprimepower-11-isprime-11-moebiusmu-11	List[PrimePowerQ[11], PrimeQ[11], MoebiusMu[11]]	{True, True, -1}	\{\text{PrimePowerQ}[11],\text{PrimeQ}[11],\mu (11)\}	\{\text{True},\text{True},-1\}
+isprimepower-2-401	PrimePowerQ[2401]	True	\text{PrimePowerQ}[2401]	\text{True}
+isprimepower-121	PrimePowerQ[121]	True	\text{PrimePowerQ}[121]	\text{True}
+map-function-divisorsigma-1-1-lt-2-times-1-1	Map[Function[Less[DivisorSigma[1, Slot[1]], Times[2, Slot[1]]]], Select[Range[1, 100], PrimePowerQ]]	{True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True}	(\sigma _1(\text{$\#$1})<2 \text{$\#$1}\&)\text{/@}\text{Select}[\text{Range}[1,100],\text{PrimePowerQ}]	\{\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True},\text{True}\}
 1-is-p-0-which-does-not-count	PrimePowerQ[1]	False	\text{PrimePowerQ}[1]	\text{False}

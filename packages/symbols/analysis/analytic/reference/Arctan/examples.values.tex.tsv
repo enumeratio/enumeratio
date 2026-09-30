@@ -20,8 +20,19 @@ antiderivative	\int\!\arctan(x)\, \mathrm{d}x	x\arctan(x)-\frac{1}{2}(\ln(x^2+1)
 gregory-s-series-about-0	\operatorname{Series}(\arctan(x), x, 0, 7)	x-\frac{x^3}{3}+\frac{x^5}{5}-\frac{x^7}{7}+O\left(x^9\right)
 the-limit-at-infty	\lim_{x\to\infty}\arctan(x)	\frac{\pi}{2}
 to-30-significant-digits-every-one-correctly	N(\arctan(\frac{1}{2}), 30)	0.463\,647\,609\,000\,806\,116\,214
+n-arctan-1-over-2-50	N(\arctan(\frac{1}{2}), 50)	0.463\,647\,609\,000\,806\,116\,214
+arctan-list-list-1-sqrt-3-list-0-sqrt-3	\arctan(\bigl\lbrack\bigl\lbrack1, \sqrt{3}\bigr\rbrack, \bigl\lbrack0, \sqrt{3}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi}{4}, \frac{\pi}{3}\bigr\rbrack, \bigl\lbrack0, \frac{\pi}{3}\bigr\rbrack\bigr\rbrack
 tan-arctan-x-x	\tan(\arctan(1))=1	\top
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	\mathrm{TrigToExp}(\arctan(x))	(-\frac{1}{2}i)\ln(i x+1)+(\frac{1}{2}i)\ln(1-i x)
+arctan-neg-2-plus-sqrt-3	\arctan(\sqrt{3}-2)	-\frac{\pi}{12}
+arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	\arctan(-\sqrt{1-\frac{2\times5^{1/2}}{5}})	-\arctan(\sqrt{1-\frac{2\times5^{1/2}}{5}})
+arctan-1-minus-sqrt-2	\arctan(1-\sqrt{2})	-\frac{\pi}{8}
+arctan-neg-sqrt-3-over-3	\arctan(-\frac{\sqrt{3}}{3})	-\frac{\pi}{6}
+arctan-sqrt-5-minus-2-times-sqrt-5	\arctan(\sqrt{5-2\sqrt{5}})	\frac{\pi}{5}
+arctan-neg-sqrt-5-minus-2-times-sqrt-5	\arctan(-\sqrt{5-2\sqrt{5}})	-\frac{\pi}{5}
+arctan-neg-sqrt-1-plus-2-over-5-times-sqrt-5	\arctan(-\sqrt{1+\frac{2\times5^{1/2}}{5}})	-\arctan(\sqrt{1+\frac{2\times5^{1/2}}{5}})
+arctan-neg-sqrt-3	\arctan(-\sqrt{3})	-\frac{\pi}{3}
+arctan-1-plus-sqrt-2	\arctan(1+\sqrt{2})	\frac{3\pi}{8}
 compute-engine-s-arctan-takes-only-one-argument	\arctan(1, 1)	{\text{1}}
 arctan-complexinfinity-is-indeterminate-z-re-i	\arctan(\tilde\infty)	\operatorname{Indeterminate}
 the-horizontal-asymptote-as-x-to-infty	\arctan(\infty)	\frac{\pi}{2}

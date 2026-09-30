@@ -7,6 +7,10 @@ erfc-1-0-infty	\mathrm{InverseErfc}(0)	\infty
 erfc-1-2-infty	\mathrm{InverseErfc}(2)	-\infty
 arguments-in-1-2-give-negative-values	\mathrm{InverseErfc}(1.5)	-0.476\,936\,276\,204\,469\,9
 listable	\mathrm{InverseErfc}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack\infty, 0\bigr\rbrack
+n-inverseerfc-33-over-100-50	N(\mathrm{InverseErfc}(\frac{33}{100}), 50)	0.688\,802\,528\,116\,556\,450\,403
+functionexpand-matrixfunction-inverseerfc-list	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(\mathrm{InverseErfc}, \bigl\lbrack\bigl\lbrack0, 1/2\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\mathrm{InverseErfc}(-2^{1/2}/2))+\frac{\mathrm{InverseErfc}(2^{1/2}/2)}{2}, \frac{1}{4}(\sqrt{2}\mathrm{InverseErfc}(2^{1/2}/2))-\frac{1}{4}(\sqrt{2}\mathrm{InverseErfc}(-2^{1/2}/2))\bigr\rbrack, \bigl\lbrack\frac{1}{2}(\sqrt{2}\mathrm{InverseErfc}(2^{1/2}/2))-\frac{1}{2}(\sqrt{2}\mathrm{InverseErfc}(-2^{1/2}/2)), \frac{1}{2}(\mathrm{InverseErfc}(-2^{1/2}/2))+\frac{\mathrm{InverseErfc}(2^{1/2}/2)}{2}\bigr\rbrack\bigr\rbrack
 sqrt-2-times-this-2-5758-is-the-two-sided-99	\mathrm{InverseErfc}(0.01)	1.821\,386\,367\,718\,449\,6
 erfc-erfc-1-x-x	\mathrm{Erfc}(\mathrm{InverseErfc}(x))	x
+list-erfc-inverseerfc-z-inverseerfc-erfc-z	\bigl\lbrack\mathrm{Erfc}(\mathrm{InverseErfc}(z)), \mathrm{InverseErfc}(\mathrm{Erfc}(z))\bigr\rbrack	\bigl\lbrack z, \mathrm{InverseErfc}(\mathrm{Erfc}(z))\bigr\rbrack
+isnumeric-inverseerfc-1-over-2	\mathrm{IsNumeric}(\mathrm{InverseErfc}(\frac{1}{2}))	\top
 deep-in-the-tail-it-keeps-full-precision-where	\mathrm{InverseErfc}(1.0\cdot10^{-10})	4.572\,824\,967\,389\,485

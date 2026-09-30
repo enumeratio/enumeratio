@@ -12,6 +12,24 @@ two-blocks-s-n-2-2-n-1-1	\left\lbrace\begin{matrix}10\\2\end{matrix}\right\rbrac
 s-n-n-1-binom-n-2-one-block-is-a-pair	\left\lbrace\begin{matrix}6\\5\end{matrix}\right\rbrace=\binom{6}{2}	\mathrm{True}
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	\left\lbrace\begin{matrix}6\\3\end{matrix}\right\rbrace=\frac{1}{3!}(\sum_{j=0}^3(-1)^{3-j}\binom{3}{j}j^6)	\mathrm{True}
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	\sum_{k=0}^4s(4, k)\left\lbrace\begin{matrix}k\\2\end{matrix}\right\rbrace	0
+n-stirling-120-10	N(\left\lbrace\begin{matrix}120\\10\end{matrix}\right\rbrace)	275\,564\,293\,332\,645\,612\,796\,076\,533\,812\,387\,578\,132\,055\,070\,471\,681\,207\,862\,920\,555\,299\,757\,965\,212\,186\,923\,458\,011\,526\,847\,229\,561\,561\,721\,294\,169\,780
+stirling-10-4	\left\lbrace\begin{matrix}10\\4\end{matrix}\right\rbrace	34\,105
+stirling-1-0	\left\lbrace\begin{matrix}1\\0\end{matrix}\right\rbrace	0
+stirling-1-1	\left\lbrace\begin{matrix}1\\1\end{matrix}\right\rbrace	1
+stirling-1-2	\left\lbrace\begin{matrix}1\\2\end{matrix}\right\rbrace	0
+stirling-2-0	\left\lbrace\begin{matrix}2\\0\end{matrix}\right\rbrace	0
+stirling-2-1	\left\lbrace\begin{matrix}2\\1\end{matrix}\right\rbrace	1
+stirling-2-2	\left\lbrace\begin{matrix}2\\2\end{matrix}\right\rbrace	1
+stirling-2-3	\left\lbrace\begin{matrix}2\\3\end{matrix}\right\rbrace	0
+stirling-3-0	\left\lbrace\begin{matrix}3\\0\end{matrix}\right\rbrace	0
+stirling-3-1	\left\lbrace\begin{matrix}3\\1\end{matrix}\right\rbrace	1
+stirling-3-2	\left\lbrace\begin{matrix}3\\2\end{matrix}\right\rbrace	3
+stirling-3-3	\left\lbrace\begin{matrix}3\\3\end{matrix}\right\rbrace	1
+stirling-3-4	\left\lbrace\begin{matrix}3\\4\end{matrix}\right\rbrace	0
+stirling-4-0	\left\lbrace\begin{matrix}4\\0\end{matrix}\right\rbrace	0
+stirling-4-1	\left\lbrace\begin{matrix}4\\1\end{matrix}\right\rbrace	1
+stirling-4-2	\left\lbrace\begin{matrix}4\\2\end{matrix}\right\rbrace	7
+stirling-4-3	\left\lbrace\begin{matrix}4\\3\end{matrix}\right\rbrace	6
 the-empty-set-has-one-partition-into-no-blocks	\left\lbrace\begin{matrix}0\\0\end{matrix}\right\rbrace	1
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	\left\lbrace\begin{matrix}5\\0\end{matrix}\right\rbrace	0
 k-n-is-0	\left\lbrace\begin{matrix}3\\5\end{matrix}\right\rbrace	0

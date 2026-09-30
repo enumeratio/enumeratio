@@ -1,0 +1,5 @@
+id	in	out
+take-list-a-b-c-d-exponentiale-f-4	<Take><List>a b c d ExponentialE f</List> 4</Take>	<List>a b c d</List>
+take-list-list-11-12-13-list-21-22-23-list-31-32	<Take><List><List>11 12 13</List> <List>21 22 23</List> <List>31 32 33</List></List> 2</Take>	<List><List>11 12 13</List> <List>21 22 23</List></List>
+take-list-a-b-c-upto-4	<Take><List>a b c</List> <UpTo>4</UpTo></Take>	<List>a b c</List>
+take-list-a-b-c-d-exponentiale-f-g-h-4	<Take><List>a b c d ExponentialE f g h</List> 4</Take>	<List>a b c d</List>

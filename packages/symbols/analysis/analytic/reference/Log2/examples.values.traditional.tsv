@@ -15,5 +15,9 @@ interval-arithmetic-log-2-frac-13-2-log-2-3-1
 uncertainty-propagation-log-2-frac-15-pm-0-01		
 derivative-frac-1-x-ln-2		
 to-30-significant-digits-every-one-correctly		
+n-log-45-2-100		
+n-log-2-plus-i-2		
+fullsimplify-matrixfunction-log2-list-list-2-1		
+log-positiveinfinity-2		
 a-float-argument-folds-even-for-a-fractional		
 same-as-log-z-2	\log_{2}(8)=\log_{2}(8)	\mathrm{True}

@@ -1,0 +1,7 @@
+id	in	out
+0-lt-1	0\lt1	\top
+4-over-3-lt-3-over-2	\frac{4}{3}\lt\frac{3}{2}	\top
+1-minus-128-times-10-pow-neg-16-lt-1	1-\frac{128}{10^{16}}\lt1	\top
+1-minus-256-times-10-pow-neg-16-lt-1	1-\frac{256}{10^{16}}\lt1	\top
+pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^{e}\lt e^{\pi}	\top
+refine-sqrt-x-pow-2-x-gt-0	\mathrm{Refine}(\sqrt{x^2}, x\gt0)	x

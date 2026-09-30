@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m	<Binomial>m m</Binomial>	<ToExpression>1</ToExpressio
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	<Binomial><Complex>1 1</Complex> 5</Binomial>	<Complex><Rational>-1 12</Rational> <Rational>-1 12</Rational></Complex>
 complex-n-and-k-evaluate-through-the-gamma	<Binomial><Complex>2 1</Complex> <Complex>7 -3</Complex></Binomial>	<Complex>-75.46834738222304 106.81526597079055</Complex>
 interval-arithmetic-in-k-binom-1-2-k-is	<Binomial><Rational>1 2</Rational> <Interval>0.5 0.6</Interval></Binomial>	<Interval>0.9281455538507054 1</Interval>
+n-binomial-7-over-3-1-over-5-20	<N><Binomial><Rational>7 3</Rational> <Rational>1 5</Rational></Binomial> 20</N>	<ToExpression>1.3331254244650286522</ToExpression>
+binomial-n-4	<Binomial>n 4</Binomial>	<Divide><Multiply>n <Subtract>n 1</Subtract> <Subtract>n 2</Subtract> <Subtract>n 3</Subtract></Multiply> 24</Divide>
+matrixfunction-function-binomial-1-2-1-list-list	<MatrixFunction><Function><Block><Binomial>_1 2</Binomial></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> 0</List> <List><Multiply><Rational>3 2</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Multiply><Rational>5 72</Rational> Pi <Add>-6 <Multiply>5 Pi</Multiply></Add></Multiply> 0</List> <List><Add><Multiply><Rational>-9 64</Rational> Pi <Add>2 Pi</Add></Multiply> <Multiply><Rational>5 64</Rational> Pi <Add>-6 <Multiply>5 Pi</Multiply></Add></Multiply></Add> <Multiply><Rational>1 8</Rational> Pi <Add>2 Pi</Add></Multiply></List></List>
 the-number-of-distinct-5-card-hands-dealt-from-a	<Binomial>52 5</Binomial>	<ToExpression>2598960</ToExpression>
 the-probability-of-exactly-3-heads-in-10-fair	<Divide><Binomial>10 3</Binomial> <Power>2 10</Power></Divide>	<Rational>15 128</Rational>
 symmetry-binom-n-k-binom-n-n-k	<Equal><Binomial>10 3</Binomial> <Binomial>10 7</Binomial></Equal>	<True />

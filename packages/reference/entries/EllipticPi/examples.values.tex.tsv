@@ -1,0 +1,5 @@
+id	in	out
+functionexpand-ellipticpi-list-list-neg-1-0-list	\mathrm{FunctionExpand}(\mathrm{EllipticPi}(\bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack, 0))	\bigl\lbrack\bigl\lbrack\mathrm{EllipticPi}(-1, 0), \mathrm{EllipticPi}(0, 0)\bigr\rbrack, \bigl\lbrack\mathrm{EllipticPi}(0, 0), \mathrm{EllipticPi}(\frac{1}{2}, 0)\bigr\rbrack\bigr\rbrack
+functionexpand-matrixfunction-function	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(()\mapsto\mathrm{EllipticPi}(\operatorname{\_1}, 0), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\mathrm{EllipticPi}(-1, 0), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{EllipticPi}(\frac{1}{2}, 0)\bigr\rbrack\bigr\rbrack
+ellipticpi-0-0-1	\mathrm{EllipticPi}(0, 0, 1)	0
+ellipticpi-0-0-0	\mathrm{EllipticPi}(0, 0, 0)	0

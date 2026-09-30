@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+most-list-a-b-c-d	Most[List[a, b, c, d]]	{a, b, c}	\text{Most}[\{a,b,c,d\}]	\{a,b,c\}

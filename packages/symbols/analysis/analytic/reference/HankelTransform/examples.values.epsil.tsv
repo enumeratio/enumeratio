@@ -3,3 +3,4 @@ exp-neg-ar-order0	Assuming(a > 0, HankelTransform(exp(-(a * r)), r, s))	a / (a ^
 one-over-r	HankelTransform(1 / r, r, s)	1 / s
 one-over-sqrt-r2-a2	Assuming(a > 0, HankelTransform(1 / sqrt(r ^ 2 + a ^ 2), r, s))	exponentialE ^ (-(a * s)) / s
 exp-neg-ar-order1	Assuming(a > 0, HankelTransform(exp(-(a * r)), r, s, 1))	s / (a ^ 2 + s ^ 2) ^ (3 / 2)
+hankeltransform-1-over-r-times-sin-r-r-1-over-3	HankelTransform(1 / r * sin(r), r, 1 / 3)	HankelTransform(sin(r) / r, r, 1 / 3)

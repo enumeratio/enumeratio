@@ -1,5 +1,7 @@
 id	in	out
 a-quadratic-s-minimum-value	\mathrm{MinValue}(x^2-4x+3, x)	-1
 a-simple-interval-constraint	\mathrm{MinValue}(\bigl\lbrack x^2, x\ge1\bigr\rbrack, x)	1
+minvalue-2-times-x-pow-2-minus-3x-plus-5-x	\mathrm{MinValue}(2x^2-3x+5, x)	\frac{31}{8}
 the-amplitude-of-cosine-alone-is-exact	\mathrm{MinValue}(\cos(3x-1), x)	-1
 exp-s-infimum	\mathrm{MinValue}(e^{x}, x)	0
+timeconstrained-minvalue-list-x-pow-2-plus-y-pow	\mathrm{TimeConstrained}(\mathrm{MinValue}(\bigl\lbrack x^2+y^2+z^2, x^2-3xyz+9z^2+y^2=e\land xyz\le\pi\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack), 60)	\mathrm{MinValue}(\bigl\lbrack x^2+y^2+z^2, x^2-3xyz+9z^2+y^2=e\land xyz\le\pi\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)

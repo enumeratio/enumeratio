@@ -3,4 +3,5 @@ inverse-dft-of-1-2-3-4	InverseFourier([1, 2, 3, 4])	[5, -1.0 + i, -1, -1.0 - i]
 round-trips-through-fourier	Fourier(InverseFourier([1, 2, 3, 4]))	[1, 2, 3, 4]
 a-2x2-matrix	InverseFourier([[5, -1], [-2, 0]])	[[1, 2], [3, 4]]
 a-custom-fourierparameters	InverseFourier([1, 2, 3, 4], FourierParameters -> [1, -1])	[2.5, -0.5 - 0.5i, -0.5, -0.5 + 0.5i]
+inversefourier-n-x-24	InverseFourier(N(x, 24))	InverseFourier(x)
 declines-a-symbolic-list	InverseFourier([a, b])	InverseFourier([a, b])

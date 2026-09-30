@@ -1,0 +1,2 @@
+id	in	out
+rest-list-a-b-c-d	\mathrm{Rest}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack b, c, d\bigr\rbrack

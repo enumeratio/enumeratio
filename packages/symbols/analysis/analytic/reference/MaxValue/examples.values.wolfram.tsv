@@ -1,4 +1,5 @@
 id	in	out	tex.in	tex.out
 a-downward-parabola-s-maximum-value	MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]	3	\text{MaxValue}\left[-x^2+4 x-1,x\right]	3
+maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	MaxValue[Plus[Times[-2, Power[x, 2]], Times[-1, Times[3, x]], 5], x]	49/8	\text{MaxValue}\left[-2 x^2-3 x+5,x\right]	\frac{49}{8}
 the-amplitude-of-sine-alone-is-exact	MaxValue[Sin[x], x]	1	\text{MaxValue}[\sin (x),x]	1
 an-unbounded-cubic	MaxValue[Power[x, 3], x]	Infinity	\text{MaxValue}\left[x^3,x\right]	\infty

@@ -2,4 +2,13 @@ id	in	out	back
 map-square-over-1-2-3-4	map(Square, [1, 2, 3, 4])	[1, 4, 9, 16]	
 map-a-lambda-adding-1-to-each-element	map(Function(_ + 1), [1, 2, 3])	[2, 3, 4]	Unreadable
 map-add-over-two-collections-zips-them	map(Add, [1, 2, 3], [10, 20, 30])	[11, 22, 33]	
+map-f-list-a-b-c-d-exponentiale	map(f, [a, b, c, d, exponentialE])	[f(a), f(b), f(c), f(d), f(exponentialE)]	
+map-f-list-list-a-b-list-c-d-exponentiale	map(f, [[a, b], [c, d, exponentialE]])	[f([a, b]), f([c, d, exponentialE])]	
+map-function-x-pow-2-x-list-1-2-3-4	map(Function(x ^ 2, x), [1, 2, 3, 4])	[1, 4, 9, 16]	Unreadable
+map-f-list-list-list-list-list-a	map(f, [[[[[a]]]]])	[f([[[[a]]]])]	
+map-f-list-a-b-c	map(f, [a, b, c])	[f(a), f(b), f(c)]	
+map-f-list-list-list-list-list-a-list-2	map(f, [[[[[a]]]]], [2])	[f([[[[a]]]], 2)]	
+map-reverse-list-list-a-b-list-c-d-list	map(reverse, [[a, b], [c, d], [exponentialE, f]])	[[b, a], [d, c], [f, exponentialE]]	
 mapping-over-an-empty-collection-returns-empty	map(Square, [])	[]	
+map-sqrt-list-1-2-3-4	map(sqrt, [1, 2, 3, 4])	[1, sqrt(2), sqrt(3), 2]	
+map-f-list-x-y-z	map(f, [x, y, z])	[f(x), f(y), f(z)]	

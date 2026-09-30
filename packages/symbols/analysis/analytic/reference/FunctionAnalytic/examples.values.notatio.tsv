@@ -3,3 +3,6 @@ polynomials-are-entire	<FunctionAnalytic><Power>x 2</Power> x</FunctionAnalytic>
 a-pole-anywhere-in-the-plane-disqualifies-it	<FunctionAnalytic><Divide>1 x</Divide> x</FunctionAnalytic>	<False />
 sqrt-has-a-branch-point	<FunctionAnalytic><Sqrt>x</Sqrt> x</FunctionAnalytic>	<False />
 sine-is-entire	<FunctionAnalytic><Sin>x</Sin> x</FunctionAnalytic>	<True />
+functionanalytic-tan-x-x	<FunctionAnalytic><Tan>x</Tan> x</FunctionAnalytic>	<False />
+list-functionanalytic-x-x-functionanalytic-x-pow	<List><FunctionAnalytic>x x</FunctionAnalytic> <FunctionAnalytic><Add><Power>x 2</Power> 1</Add> x</FunctionAnalytic> <FunctionAnalytic><Add><Power>x 3</Power> <Multiply>-1 <Multiply>2 <Power>x 2</Power></Multiply></Multiply> <Multiply>-1 <Multiply>5 x</Multiply></Multiply> 6</Add> x</FunctionAnalytic></List>	<List>True True True</List>
+list-functionanalytic-sin-x-x-functionanalytic	<List><FunctionAnalytic><Sin>x</Sin> x</FunctionAnalytic> <FunctionAnalytic><Cos>x</Cos> x</FunctionAnalytic> <FunctionAnalytic><Exp>x</Exp> x</FunctionAnalytic></List>	<List>True True True</List>

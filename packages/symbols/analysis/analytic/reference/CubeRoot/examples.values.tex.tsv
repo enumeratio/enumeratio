@@ -3,4 +3,16 @@ the-cube-root-of-a-perfect-cube	\mathrm{CubeRoot}(8)	2
 the-real-root-of-a-negative-number-not-a-complex	\mathrm{CubeRoot}(-27)	-3
 at-a-non-perfect-cube-n-forces-the-numeric	N(\mathrm{CubeRoot}(2))	1.259\,921\,049\,894\,873\,2
 threads-element-wise-over-a-list	\mathrm{CubeRoot}(\bigl\lbrack-8, 27\bigr\rbrack)	\bigl\lbrack-2, 3\bigr\rbrack
+cuberoot-128	\mathrm{CubeRoot}(128)	4\sqrt[3]{2}
+n-cuberoot-18-100	N(\mathrm{CubeRoot}(18), 100)	2.620\,741\,394\,208\,896\,607\,14
+cuberoot-list-list-1-over-2-neg-1-list-neg-5	\mathrm{CubeRoot}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\sqrt[3]{\frac{1}{2}}, -1\bigr\rbrack, \bigl\lbrack\sqrt[3]{-\frac{5}{3}}, \sqrt[3]{\frac{1}{2}}\bigr\rbrack\bigr\rbrack
+matrixfunction-cuberoot-list-list-1-over-2-neg-1	\mathrm{MatrixFunction}(\mathrm{CubeRoot}, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\sqrt[3]{1/2}\sqrt[3]{1-(2\times15^{1/2})/3})+\frac{1}{2}(\sqrt[3]{(1+(2\times15^{1/2})/3)/2}), \frac{1}{10}(\sqrt{15}\sqrt[3]{1/2}\sqrt[3]{1-(2\times15^{1/2})/3})-\frac{1}{10}(\sqrt{15}\sqrt[3]{(1+(2\times15^{1/2})/3)/2})\bigr\rbrack, \bigl\lbrack\frac{1}{6}(\sqrt{15}\sqrt[3]{1/2}\sqrt[3]{1-(2\times15^{1/2})/3})-\frac{1}{6}(\sqrt{15}\sqrt[3]{(1+(2\times15^{1/2})/3)/2}), \frac{1}{2}(\sqrt[3]{1/2}\sqrt[3]{1-(2\times15^{1/2})/3})+\frac{1}{2}(\sqrt[3]{(1+(2\times15^{1/2})/3)/2})\bigr\rbrack\bigr\rbrack
+cuberoot-0	\mathrm{CubeRoot}(0)	0
+cuberoot-positiveinfinity	\mathrm{CubeRoot}(\infty)	\infty
+cuberoot-negativeinfinity	\mathrm{CubeRoot}(-\infty)	-\infty
+cuberoot-x-eq-surd-x-3	\mathrm{CubeRoot}(x)=\mathrm{Surd}(x, 3)	\top
+fullsimplify-d-integrate-cuberoot-x-x-nothing	\mathrm{FullSimplify}(\frac{\mathrm{d}\int\!\mathrm{CubeRoot}(x)\, \mathrm{d}x}{\mathrm{d}x}=\mathrm{CubeRoot}(x))	\top
+fullsimplify-integrate-sin-x-times-cuberoot-x-x	\mathrm{FullSimplify}(\int_{0}^{5}\!\sin(x)\mathrm{CubeRoot}(x)\, \mathrm{d}x)	\int_{0}^{5}\!\sin(x)\sqrt[3]{x}\, \mathrm{d}x
+d-cuberoot-x-x	\frac{\mathrm{d}\mathrm{CubeRoot}(x)}{\mathrm{d}x}	(3x^{\frac{2}{3}})^{-1}
 the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\top
+cuberoot-neg-8	\mathrm{CubeRoot}(-8)	-2

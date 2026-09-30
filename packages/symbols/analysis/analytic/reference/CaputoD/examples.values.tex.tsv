@@ -8,5 +8,11 @@ exact-order-x-vanishes	\mathrm{CaputoD}(x, \bigl\lbrack x, \frac{3}{2}\bigr\rbra
 exact-order-power-x2-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}
 exact-order-power-x2-three-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{3}{2}\bigr\rbrack)	\frac{4\sqrt{x}}{\sqrt{\pi}}
 exact-order-power-x2-third	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{3}\bigr\rbrack)	\frac{2x^{\frac{5}{3}}}{\Gamma(\frac{8}{3})}
+caputod-x-pow-2-list-x-1-times-2-pow-neg-1	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}
+caputod-c-list-x-2-times-3-pow-neg-1	\mathrm{CaputoD}(c, \bigl\lbrack x, \frac{2}{3}\bigr\rbrack)	0
 polynomial-linearity	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7x^{0.5}
 exact-order-polynomial-half	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{6\sqrt{x}}{\sqrt{\pi}}+\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}
+caputod-x-pow-3-list-x-1-times-2-pow-neg-1	\mathrm{CaputoD}(x^3, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{16\sqrt{x}^{5}}{5\sqrt{\pi}}
+caputod-x-pow-2-list-x-4-times-5-pow-neg-1	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{4}{5}\bigr\rbrack)	\frac{2x^{\frac{6}{5}}}{\Gamma(\frac{11}{5})}
+caputod-c-list-x-1-times-2-pow-neg-1	\mathrm{CaputoD}(c, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	0
+caputod-x-pow-1-times-3-pow-neg-1-list-x-2-times	\mathrm{CaputoD}(\sqrt[3]{x}, \bigl\lbrack x, \frac{2}{3}\bigr\rbrack)	\frac{\Gamma(\frac{4}{3})}{\Gamma(\frac{2}{3})\sqrt[3]{x}}

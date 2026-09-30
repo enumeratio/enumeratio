@@ -4,3 +4,4 @@ one-over-one-plus-x	\mathrm{MellinTransform}(\frac{1}{1+x}, x, s)	\pi\csc(\pi s)
 gaussian	\mathrm{MellinTransform}(\exp(-x^2), x, s)	\frac{\Gamma(\frac{s}{2})}{2}
 log-one-plus-x	\mathrm{MellinTransform}(\ln(1+x), x, s)	\frac{1}{s}(\pi\csc(\pi s))
 power-shift-x-c-exp	\mathrm{MellinTransform}(x^{a}\exp(-x), x, s)	\Gamma(a+s)
+mellintransform-1-over-x-plus-1-x-1-over-2	\mathrm{MellinTransform}(\frac{1}{x+1}, x, \frac{1}{2})	\pi

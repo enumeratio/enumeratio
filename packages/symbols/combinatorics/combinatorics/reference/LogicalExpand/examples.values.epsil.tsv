@@ -3,3 +3,9 @@ implies-becomes-or-not	LogicalExpand(implies(p, b))	b || !p
 distributes-and-over-or	LogicalExpand(p && (b || r))	b && p || p && r
 xor-eliminated-into-dnf	LogicalExpand(xor(p, b))	b && !p || p && !b
 a-contradictory-term-drops-out	LogicalExpand(p && !p)	False
+logicalexpand-a-factorial-a	LogicalExpand(a || !a)	a || !a
+logicalexpand-a-factorial-a-2	LogicalExpand(a && !a)	False
+logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	LogicalExpand(x == a && y == b || x == a || y == b)	x == a || x == a && y == b || y == b
+logicalexpand-t	LogicalExpand(t)	t
+logicalexpand-factorial-a-b	LogicalExpand(!(a || b))	!a && !b
+logicalexpand-factorial-a-b-2	LogicalExpand(!(a && b))	!a || !b

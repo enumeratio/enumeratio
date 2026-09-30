@@ -14,6 +14,7 @@ references:
   - system: dlmf
     identity: "19.2"
 names:
+  wolfram: EllipticE
   dlmf: Legendre's complete elliptic integral of the second kind
   wikidata: Q109753012
 stub: engine

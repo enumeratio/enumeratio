@@ -4,3 +4,5 @@ cnf-distributes-or-over-and	<BooleanConvert><Or>p <And>b r</And></Or> "CNF"</Boo
 nnf-pushes-not-to-the-leaves-not-distributed	<BooleanConvert><Implies>p b</Implies> "NNF"</BooleanConvert>	<Or>b <Not>p</Not></Or>
 a-tautological-clause-drops-out-of-cnf	<BooleanConvert><Or>p <Not>p</Not></Or> "CNF"</BooleanConvert>	<True />
 an-unimplemented-form-stays-unevaluated	<BooleanConvert>p "ESOP"</BooleanConvert>	<BooleanConvert>p "ESOP"</BooleanConvert>
+booleanconvert-f	<BooleanConvert>f</BooleanConvert>	<f />
+booleanconvert-f-cnf	<BooleanConvert>f "CNF"</BooleanConvert>	<f />

@@ -1,0 +1,7 @@
+id	in	out	back
+n-sech-9-over-5-50	N(sech(9 / 5), 50)	0.321_804_869_506_587_868_350_220_885_541_608_016_744_096_112_598_73	
+sech-list-list-1-over-3-times-i-times-pi-neg-1	sech([[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]])	[[sech(1 / 3 * i * pi), sech(-1 / 3 * i * pi)], [1, sech(-1 / 6 * i * pi)]]	
+sech-positiveinfinity	sech(positiveInfinity)	0	
+sech-0	sech(0)	1	
+d-sech-x-x	D(sech(x), x)	-(tanh(x) * sech(x))	
+matrixfunction-function-sech-1-1-list-list-1	"MatrixFunction(\n                Function(sech(_1), _1),\n                [[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]],\n              )"	"[[\n   sech(1 / 3 * i * pi),\n   -2 / 3 * sech(1 / 3 * i * pi) + 2 / 3 * sech(-1 / 6 * i * pi),\n ], [0, sech(-1 / 6 * i * pi)]]"	Unreadable

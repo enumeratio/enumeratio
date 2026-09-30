@@ -1,5 +1,7 @@
 id	in
 padded-with-zeros-on-the-right	PadRight[List[1, 2, 3], 5]
 a-padding-element	PadRight[List[1, 2, 3], 5, x]
+padright-list-a-b-c-10	PadRight[List[a, b, c], 10]
+padright-list-a-b-c-10-x	PadRight[List[a, b, c], 10, x]
 a-shorter-length-drops-elements-from-the-right	PadRight[List[1, 2, 3, 4, 5], 3]
 with-no-length-a-ragged-array-is-padded-to-a	PadRight[List[List[1], List[2, 3]]]

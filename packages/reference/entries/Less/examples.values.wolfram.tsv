@@ -1,0 +1,7 @@
+id	in	out	tex.in	tex.out
+2-over-17-lt-1-over-5-lt-1-over-10-times-pi	Less[Rational[2, 17], Rational[1, 5], Times[Rational[1, 10], Pi]]	True	\frac{2}{17}<\frac{1}{5}<\frac{1}{10} \pi	\text{True}
+3-over-2-lt-5-over-3	Less[Rational[3, 2], Rational[5, 3]]	True	\frac{3}{2}<\frac{5}{3}	\text{True}
+1-lt-1-plus-128-times-10-pow-neg-16	Less[1, Plus[1, Times[128, Power[10, -16]]]]	True	1<1+\frac{128}{10^{16}}	\text{True}
+1-lt-1-plus-256-times-10-pow-neg-16	Less[1, Plus[1, Times[256, Power[10, -16]]]]	True	1<1+\frac{256}{10^{16}}	\text{True}
+pi-pow-exponentiale-lt-exponentiale-pow-pi	Less[Power[Pi, E], Power[E, Pi]]	True	\pi ^e<e^{\pi }	\text{True}
+refine-sqrt-x-pow-2-x-lt-0	Refine[Sqrt[Power[x, 2]], Less[x, 0]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Refine}\left[\sqrt{x^2},x<0\right]--x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{7}{3}\right)^2},\frac{7}{3}<0\right]--\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(-\frac{11}{5}\right)^2},-\frac{11}{5}<0\right]--\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{13}{4}\right)^2},\frac{13}{4}<0\right]--\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

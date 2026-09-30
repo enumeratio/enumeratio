@@ -1,4 +1,31 @@
-id	section	role	expr	expected	caption
-listable	Scope		[CarmichaelLambda, [List, 8, 15]]	[List, 2, 4]	Listable
-negative-n-lambda-n-lambda-n	Scope		[CarmichaelLambda, -100]	20	Negative n: $\lambda(-n)=\lambda(n)$
-listable-over-a-range	Scope		[CarmichaelLambda, [Range, 10]]	[List, 1, 1, 2, 2, 4, 2, 6, 2, 6, 4]	Listable over a Range
+id	section	role	expr	expected	known	source	caption
+carmichaellambda-10			[CarmichaelLambda, 10]	4			
+listable	Scope		[CarmichaelLambda, [List, 8, 15]]	[List, 2, 4]			Listable
+negative-n-lambda-n-lambda-n	Scope		[CarmichaelLambda, -100]	20			Negative n: $\lambda(-n)=\lambda(n)$
+listable-over-a-range	Scope		[CarmichaelLambda, [Range, 10]]	[List, 1, 1, 2, 2, 4, 2, 6, 2, 6, 4]			Listable over a Range
+carmichaellambda-neg-10	Scope		[CarmichaelLambda, -10]	4			
+carmichaellambda-list-2-4-7	Scope		[CarmichaelLambda, [List, 2, 4, 7]]	[List, 1, 2, 6]			
+561-mod-carmichaellambda-561	Applications		[Mod, 561, [CarmichaelLambda, 561]]	1			
+carmichaellambda-12	Applications		[CarmichaelLambda, 12]	2			
+list-divides-8-24-divides-carmichaellambda-8	Properties		[List, [Divides, 8, 24], [Divides, [CarmichaelLambda, 8], [CarmichaelLambda, 24]]]	[List, True, True]			
+3-pow-1-plus-carmichaellambda-17-mod-17	Properties		[Mod, [Power, 3, [Add, 1, [CarmichaelLambda, 17]]], 17]	3			
+divides-multiplicativeorder-4-9-carmichaellambda	Properties		[Divides, [MultiplicativeOrder, 4, 9], [CarmichaelLambda, 9]]	True			
+carmichaellambda-1	Properties		[CarmichaelLambda, 1]	1	1	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-2	Properties		[CarmichaelLambda, 2]	1	1	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-3	Properties		[CarmichaelLambda, 3]	2	2	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-4	Properties		[CarmichaelLambda, 4]	2	2	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-5	Properties		[CarmichaelLambda, 5]	4	4	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-6	Properties		[CarmichaelLambda, 6]	2	2	Wolfram MathematicalFunctionData, CarmichaelLambda	
+divides-carmichaellambda-8-totient-8	Properties		[Divides, [CarmichaelLambda, 8], [Totient, 8]]	True			
+carmichaellambda-7	Properties		[CarmichaelLambda, 7]	6	6	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-8	Properties		[CarmichaelLambda, 8]	2	2	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-9	Properties		[CarmichaelLambda, 9]	6	6	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-11	Properties		[CarmichaelLambda, 11]	10	10	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-13	Properties		[CarmichaelLambda, 13]	12	12	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-14	Properties		[CarmichaelLambda, 14]	6	6	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-15	Properties		[CarmichaelLambda, 15]	4	4	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-16	Properties		[CarmichaelLambda, 16]	4	4	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-17	Properties		[CarmichaelLambda, 17]	16	16	Wolfram MathematicalFunctionData, CarmichaelLambda	
+carmichaellambda-list-neg-2-neg-1-0-1-2	Properties		[CarmichaelLambda, [List, -2, -1, 0, 1, 2]]	[List, 1, 1, 0, 1, 1]			
+list-lcm-carmichaellambda-list-3-8	Properties		[List, [LCM, [CarmichaelLambda, [List, 3, 8]]], [CarmichaelLambda, [LCM, 3, 8]]]	[List, [List, 2, 2], 2]			
+carmichaellambda-0	Properties		[CarmichaelLambda, 0]	0	0	Wolfram MathematicalFunctionData, CarmichaelLambda	

@@ -36,6 +36,7 @@ with-a-negative-associate	\mathrm{ExtendedGCD}(6+8i, -2-3i)	(1,i,3i)
 a-large-norm-gaussian-and-a-real-prime-19	\mathrm{ExtendedGCD}(123+456i, 19)	(1,-2,13+48i)
 the-modular-inverse-of-3-mod-11-is-4-since-3	\mathrm{ExtendedGCD}(3, 11)	(1,4,-1)
 confirms-the-coefficients-above-satisfy-2x-3y	-2\times1+3\times1	1
+extendedgcd-6-21	\mathrm{ExtendedGCD}(6, 21)	(3,-3,1)
 bezout-coefficients-when-a-0-0-times-0-5-times-1	\mathrm{ExtendedGCD}(0, 5)	(5,0,1)
 a-real-two-argument-case-stays-unevaluated	\mathrm{ExtendedGCD}(2.5, 3)	\mathrm{ExtendedGCD}(2.5, 3)
 a-gaussian-third-argument-past-two-declines	\mathrm{ExtendedGCD}(3+i, 5, 2)	\mathrm{ExtendedGCD}(3+i, 5, 2)

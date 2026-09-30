@@ -1,9 +1,15 @@
-id	in	out
-1-2-1-6-1-18-85	QPochhammer(2, 3, 3)	-85
-exact-rational-arithmetic-no-n-needed	QPochhammer(1 / 2, 1 / 2, 3)	21 / 64
-qpochhammer-2-3-3	N(QPochhammer(2, 3, 3))	-85
-qpochhammer-1-2-1-2-3	N(QPochhammer(1 / 2, 1 / 2, 3))	0.328_125
-qpochhammer-3-2-4	N(QPochhammer(3, 2, 4))	2_530
-qpochhammer-1-3-2	N(QPochhammer(-1, 3, 2))	8
-the-infinite-product-euler-s-function-at-q-frac	QPochhammer(0.5, 0.5, positiveInfinity)	0.288_788_095_086_602_4
-the-empty-product	QPochhammer(a, q, 0)	1
+id	in	out	back
+1-2-1-6-1-18-85	QPochhammer(2, 3, 3)	-85	
+exact-rational-arithmetic-no-n-needed	QPochhammer(1 / 2, 1 / 2, 3)	21 / 64	
+qpochhammer-2-3-3	N(QPochhammer(2, 3, 3))	-85	
+qpochhammer-1-2-1-2-3	N(QPochhammer(1 / 2, 1 / 2, 3))	0.328_125	
+qpochhammer-3-2-4	N(QPochhammer(3, 2, 4))	2_530	
+qpochhammer-1-3-2	N(QPochhammer(-1, 3, 2))	8	
+the-infinite-product-euler-s-function-at-q-frac	QPochhammer(0.5, 0.5, positiveInfinity)	0.288_788_095_086_602_4	
+qpochhammer-3-5-9	QPochhammer(3, 5, 9)	-175_258_163_137_268_414_822_846_915_072	
+functionexpand-qpochhammer-a-2-1	FunctionExpand(QPochhammer(a, 2, 1))	-a + 1	
+qpochhammer-1-over-2-plus-1-over-2-times-i-1	QPochhammer(1 / 2 + 1 / 2 * i, 1 / 2 + -1 / 2 * i, 10)	95_264_271 / 268_435_456 + -25_488_603 / 268_435_456 * i	
+matrixfunction-function-qpochhammer-3-1-5-1-list	MatrixFunction(Function(QPochhammer(3, _1, 5), _1), [[-1, 0], [0, 5]])	[[-128, 0], [0, -1_452_215_072]]	Unreadable
+the-empty-product	QPochhammer(a, q, 0)	1	
+qpochhammer-0-0-0	QPochhammer(0, 0, 0)	1	
+qpochhammer-0-0-1	QPochhammer(0, 0, 1)	1	

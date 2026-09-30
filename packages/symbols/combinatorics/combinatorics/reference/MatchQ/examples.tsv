@@ -1,4 +1,5 @@
 id	section	role	expr	expected	caption
 add-of-two-wildcards-matches-an-add			[MatchQ, [Add, x, 1], [Add, _a, _b]]	True	
+matchq-1-plus-1-times-goldenratio-pow-neg-1			[MatchQ, [Add, 1, [Multiply, 1, [Power, GoldenRatio, -1]], [Multiply, -1, GoldenRatio]], 0]	False	
 a-product-does-not-match-an-add-pattern	Scope		[MatchQ, [Multiply, x, y], [Add, _a, _b]]	False	
 a-sequence-wildcard-matches-the-rest-of-a-list	Scope		[MatchQ, [List, 1, 2, 3], [List, _a, __rest]]	True	`__rest` (a sequence wildcard) absorbs one or more trailing elements

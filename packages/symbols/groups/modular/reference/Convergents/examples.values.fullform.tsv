@@ -1,5 +1,11 @@
 id	in
 from-a-list-of-terms	Convergents[List[3, 7, 15, 1]]
 the-first-five-convergents-of-pi	Convergents[Pi, 5]
+convergents-goldenratio-10	Convergents[GoldenRatio, 10]
+convergents-list-1-1-1-1-1	Convergents[List[1, 1, 1, 1, 1]]
 a-rational-the-last-convergent-is-the-number	Convergents[Rational[47, 17]]
+convergents-pi-10	Convergents[Pi, 10]
+convergents-sqrt-7-10	Convergents[Sqrt[7], 10]
+convergents-7-over-17	Convergents[Rational[7, 17]]
 convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents[Sqrt[2], 5]
+neg-n-pi-plus-convergents-pi-10	Plus[Minus[N[Pi]], Convergents[Pi, 10]]

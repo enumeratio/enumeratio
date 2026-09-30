@@ -2,6 +2,13 @@ id	section	role	expr	expected	caption
 sqrt-2-cdot-8-4			[GeometricMean, [List, 2, 8]]	4	$\sqrt{2 \cdot 8} = 4$
 sqrt-3-1-cdot-2-cdot-4-2			[GeometricMean, [List, 1, 2, 4]]	2	$\sqrt[3]{1 \cdot 2 \cdot 4} = 2$
 geometricmean-of-equal-values		test	[GeometricMean, [List, 7, 7, 7]]	7	
+geometricmean-list-a-b-c-d			[GeometricMean, [List, a, b, c, d]]	[Root, [Multiply, a, b, c, d], 4]	
+geometricmean-list-list-5-10-list-2-1-list-4-3			[GeometricMean, [List, [List, 5, 10], [List, 2, 1], [List, 4, 3], [List, 12, 15]]]	[List, [Root, 480, 4], [Root, 450, 4]]	
 an-exact-irrational-result	Scope		[GeometricMean, [List, 2, 3]]	[Sqrt, 6]	An exact irrational result
 sqrt-3-6	Scope		[GeometricMean, [List, 1, 2, 3]]	[Root, 6, 3]	$\sqrt[3]{6}$
 symbolic-data	Scope		[GeometricMean, [List, a, b]]	[Sqrt, [Multiply, a, b]]	Symbolic data
+geometricmean-list-1-2-3-4	Scope		[GeometricMean, [List, 1, 2, 3, 4]]	[Root, 24, 4]	
+geometricmean-list-pi-exponentiale-2	Scope		[GeometricMean, [List, Pi, ExponentialE, 2]]	[Root, [Multiply, 2, ExponentialE, Pi], 3]	
+geometricmean-n-list-1-2-3-4-30	Scope		[GeometricMean, [N, [List, 1, 2, 3, 4], 30]]	[Root, 24, 4]	
+powerexpand-ln-geometricmean-list-a-b-c-d	Properties		[PowerExpand, [Ln, [GeometricMean, [List, a, b, c, d]]]]	[Multiply, [Rational, 1, 4], [Add, [Ln, a], [Ln, b], [Ln, c], [Ln, d]]]	
+powerexpand-1-over-ln-geometricmean-list-a-b-c-d	Properties		[PowerExpand, [Divide, 1, [Ln, [GeometricMean, [List, a, b, c, d]]]]]	[Divide, 4, [Add, [Ln, a], [Ln, b], [Ln, c], [Ln, d]]]	

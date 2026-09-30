@@ -3,11 +3,16 @@ isodd-3	OddQ[3]	True	\text{OddQ}[3]	\text{True}
 isodd-4	OddQ[4]	False	\text{OddQ}[4]	\text{False}
 negative-integers-count-too	OddQ[-7]	True	\text{OddQ}[-7]	\text{True}
 isodd-0	OddQ[0]	False	\text{OddQ}[0]	\text{False}
+isodd-9	OddQ[9]	True	\text{OddQ}[9]	\text{True}
 a-non-integer-is-not-odd	OddQ[3.5]	False	\text{OddQ}[3.5]	\text{False}
 isodd-1-over-3	OddQ[Rational[1, 3]]	False	\text{OddQ}\left[\frac{1}{3}\right]	\text{False}
 big-integers	OddQ[Plus[Power[2, 100], 1]]	True	\text{OddQ}\left[2^{100}+1\right]	\text{True}
 pi-is-known-not-to-be-an-integer-so-it-is	OddQ[Pi]	False	\text{OddQ}[\pi ]	\text{False}
 threads-element-wise-over-a-list	OddQ[List[1, 2, 3]]	{True, False, True}	\text{OddQ}[\{1,2,3\}]	\{\text{True},\text{False},\text{True}\}
 select-the-odd-numbers-up-to-10	Select[Range[10], OddQ]	{1, 3, 5, 7, 9}	\text{Select}[\text{Range}[10],\text{OddQ}]	\{1,3,5,7,9\}
+isvector-list-1-5-7-11-isodd	VectorQ[List[1, 5, 7, 11], OddQ]	True	\text{VectorQ}[\{1,5,7,11\},\text{OddQ}]	\text{True}
+isvector-list-2-5-7-11-isodd	VectorQ[List[2, 5, 7, 11], OddQ]	False	\text{VectorQ}[\{2,5,7,11\},\text{OddQ}]	\text{False}
 an-integer-is-odd-exactly-when-it-is-not-even	(OddQ[7] == Not[EvenQ[7]])	True	\text{OddQ}[7]=(\neg \text{EvenQ}[7])	\text{True}
+isodd-2	OddQ[2]	False	\text{OddQ}[2]	\text{False}
+isodd-15	OddQ[15]	True	\text{OddQ}[15]	\text{True}
 a-symbol-stays-undecided-rather-than-false	OddQ[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{OddQ}[x]-\text{OddQ}[x]],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{OddQ}\left[\frac{7}{3}\right]-\text{OddQ}\left[\frac{7}{3}\right]\right]\right],\text{Chop}\left[N\left[\text{OddQ}\left[-\frac{11}{5}\right]-\text{OddQ}\left[-\frac{11}{5}\right]\right]\right],\text{Chop}\left[N\left[\text{OddQ}\left[\frac{13}{4}\right]-\text{OddQ}\left[\frac{13}{4}\right]\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}

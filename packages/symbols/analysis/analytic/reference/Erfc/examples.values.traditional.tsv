@@ -10,6 +10,9 @@ listable-threads-over-its-limits-at-pm-infty
 interval-arithmetic-erfc-is-decreasing-so-the	\operatorname{erfc}(\mathrm{Interval}(0.2, 0.3))	\mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)
 uncertainty-propagation	\operatorname{erfc}(\mathrm{Around}(2, 0.01))	\mathrm{Around}(0.004\,677\,734\,981\,047\,266, 0.000\,206\,669\,853\,540\,920\,54)
 to-30-significant-digits-every-one-correctly	N(\operatorname{erfc}(2), 30)	0.004\,677\,734\,981\,047\,265\,837\,93
+n-erfc-3-over-2-50	N(\operatorname{erfc}(\frac{3}{2}), 50)	0.033\,894\,853\,524\,689\,272\,933
+functionexpand-matrixfunction-erfc-list-list-0-1	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(\mathrm{Erfc}, \bigl\lbrack\bigl\lbrack0, (1/2i)\pi\bigr\rbrack, \bigl\lbrack\pi, 0\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\operatorname{erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\operatorname{erfc}((1/2+1/2i)\pi)), (-\frac{1}{4}-\frac{1}{4}i)\operatorname{erfc}((-1/2-1/2i)\pi)+(\frac{1}{4}+\frac{1}{4}i)\operatorname{erfc}((1/2+1/2i)\pi)\bigr\rbrack, \bigl\lbrack(\frac{1}{2}-\frac{1}{2}i)\operatorname{erfc}((1/2+1/2i)\pi)+(-\frac{1}{2}+\frac{1}{2}i)\operatorname{erfc}((-1/2-1/2i)\pi), \frac{1}{2}(\operatorname{erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\operatorname{erfc}((1/2+1/2i)\pi))\bigr\rbrack\bigr\rbrack
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	\mathrm{FullSimplify}(\operatorname{erfc}(-z)=2-\operatorname{erfc}(z))	\mathrm{True}
 erfc-z-2-erfc-z-here-at-z-1	\operatorname{erfc}(-1)+\operatorname{erfc}(1)=2	\mathrm{True}
 definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\operatorname{erfc}(2)=1	\mathrm{True}
 erfc-x-2-erfc-x-applied-symbolically	\operatorname{erfc}(-x)	2-\operatorname{erfc}(x)

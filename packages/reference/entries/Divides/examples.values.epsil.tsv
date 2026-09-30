@@ -1,0 +1,10 @@
+id	in	out
+divides-2-10	divides(2, 10)	True
+divides-2-5	divides(2, 5)	False
+divides-3-6	divides(3, 6)	True
+divides-16-001-1-plus-10-pow-3-000	divides(16_001, 1 + 10 ^ 3_000)	True
+divides-3-2-895	divides(3, 2_895)	True
+divides-11-918-082	divides(11, 918_082)	True
+list-isinteger-5-divides-2-10	[IsInteger(5), divides(2, 10)]	[True, True]
+divides-8-48	divides(8, 48)	True
+divides-12-25	divides(12, 25)	False

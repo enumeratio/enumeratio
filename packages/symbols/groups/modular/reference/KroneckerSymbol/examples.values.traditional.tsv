@@ -44,6 +44,12 @@ negative-a-odd-square-n-9	\left(\frac{-10}{9}\right)	1
 threads-element-wise-over-a-list-as-wolfram-s		
 larger-arguments-10-11-1-against-the-2000th	\left(\frac{10^{11}+1}{p_{2\,000}}\right)	-1
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	\left(\frac{7}{6}\right)	1
+generatingfunction-kroneckersymbol-n-7-n-x	\mathrm{GeneratingFunction}(\left(\frac{n}{7}\right), n, x)	\frac{x^5+2x^4+x^3+2x^2+x}{x^6+x^5+x^4+x^3+x^2+x+1}
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	\left(\frac{-4}{7}\right)	-1
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	\left(\frac{2}{7}\right)=\left(\frac{23}{7}\right)	\mathrm{True}
+kroneckersymbol-neg-4-list-1-5-7-11		
 completely-multiplicative-in-n	\left(\frac{7}{3\times5}\right)=\left(\frac{7}{3}\right)\left(\frac{7}{5}\right)	\mathrm{True}
+kroneckersymbol-9-12	\left(\frac{9}{12}\right)	0
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	\left(\frac{12}{7}\right)=\left(\frac{3}{7}\right)\left(\frac{4}{7}\right)	\mathrm{True}
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	\left(\frac{3}{63}\right)=\left(\frac{3}{9}\right)\left(\frac{3}{7}\right)	\mathrm{True}
 a-0-1-for-a-pm-1	\left(\frac{-1}{0}\right)	1

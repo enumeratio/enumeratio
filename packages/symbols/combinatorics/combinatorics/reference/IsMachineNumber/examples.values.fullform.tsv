@@ -1,4 +1,10 @@
 id	in
 ismachinenumber-ordinary-float	MachineNumberQ[2.5]
+ismachinenumber-sin-1-000	MachineNumberQ[Sin[1000]]
+ismachinenumber-exponentiale-pow-1-000	MachineNumberQ[Power[E, 1000]]
 ismachinenumber-exact-integer	MachineNumberQ[2]
+ismachinenumber-1	MachineNumberQ[1]
+ismachinenumber-1-plus-i-times-10-pow-1-000	MachineNumberQ[Plus[1, Times[Complex[0, 1], Power[10, 1000]]]]
+map-ismachinenumber-list-r-i	Map[MachineNumberQ, List[r, Complex[0, 1]]]
 ismachinenumber-extended-precision	MachineNumberQ[3.141592653589793]
+ismachinenumber-x	MachineNumberQ[x]

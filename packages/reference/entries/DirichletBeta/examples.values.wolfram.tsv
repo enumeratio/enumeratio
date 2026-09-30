@@ -14,4 +14,10 @@ to-exactly-40-significant-digits-not-yet-85-come	N[DirichletBeta[2], 40]	0.91596
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	DirichletBeta[7]	(61*Pi^7)/184320		\beta (7)	\frac{61 \pi ^7}{184320}	
 beta-2k-e-2k-2-and-beta-2k-1-0	DirichletBeta[List[0, -1, -2, -3, -4]]	{1/2, 0, -1/2, 0, 5/2}		\beta (\{0,-1,-2,-3,-4\})	\left\{\frac{1}{2},0,-\frac{1}{2},0,\frac{5}{2}\right\}	
 beta-5-5-pi-5-1536	DirichletBeta[5]	(5*Pi^5)/1536		\beta (5)	\frac{5 \pi ^5}{1536}	
+dirichletbeta-neg-5	DirichletBeta[-5]	0		\beta (-5)	0	
+dirichletbeta-neg-4	DirichletBeta[-4]	5/2		\beta (-4)	\frac{5}{2}	
+dirichletbeta-neg-3	DirichletBeta[-3]	0		\beta (-3)	0	
+dirichletbeta-neg-2	DirichletBeta[-2]	-1/2		\beta (-2)	-\frac{1}{2}	
+dirichletbeta-neg-1	DirichletBeta[-1]	0		\beta (-1)	0	
+dirichletbeta-0	DirichletBeta[0]	1/2		\beta (0)	\frac{1}{2}	
 even-s-ge-4-has-no-closed-form-and-stays	DirichletBeta[4]	(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16		\beta (4)	\frac{1}{16} \left(\frac{\zeta \left(4,\frac{1}{4}\right)}{16}-\frac{\zeta \left(4,\frac{3}{4}\right)}{16}\right)	disagree

@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+rest-list-a-b-c-d			[Rest, [List, a, b, c, d]]	[List, b, c, d]

@@ -18,10 +18,32 @@ an-interval-maps-to-the-interval-of-absolute	\vert\mathrm{Interval}(-3, 5)\vert	
 an-interval-straddling-0-maps-to-0-the-larger	\vert\mathrm{Interval}(-3, 2)\vert	\mathrm{Interval}(0, 3)
 decides-the-sign-of-an-exact-numeric-expression	\vert\sqrt{2}-2\vert	2-\sqrt{2}
 a-complex-radicand-inside-the-subtraction	\vert\sqrt{-10}-2\vert	\sqrt{14}
+n-abs-pi-plus-i-times-catalan-25	N(\vert\pi+i\mathrm{Catalan}\vert, 25)	3.272\,399\,329\,361\,528\,960\,35
+fullsimplify-matrixfunction-abs-list-list-1-over	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(\mathrm{Abs}, \bigl\lbrack\bigl\lbrack1/2, -1\bigr\rbrack, \bigl\lbrack-5/3, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{\sqrt{15}}{3}, -\frac{15^{1/2}}{10}\bigr\rbrack, \bigl\lbrack-\frac{15^{1/2}}{6}, \frac{\sqrt{15}}{3}\bigr\rbrack\bigr\rbrack
+abs-positiveinfinity	\vert\infty\vert	\infty
+abs-positiveinfinity-times-i	\vert\infty i\vert	\infty
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2	\mathrm{PiecewiseExpand}(\vert i x\vert, -2\lt x\lt2)	\vert i x\vert
+complexexpand-abs-x	\mathrm{ComplexExpand}(\vert x\vert)	\sqrt{x^2}
+complexexpand-abs-x-plus-i-times-y	\mathrm{ComplexExpand}(\vert x+i y\vert)	\sqrt{x^2+y^2}
 the-gap-between-two-temperatures-70-and-95	\vert70-95\vert	25
 the-distance-between-the-points-1-i-and-4-5i-of	\vert(1+i)-(4+5i)\vert	5
 even-function-x-x	\vert-8\vert=\vert8\vert	\top
 triangle-inequality-a-b-le-a-b	\vert3-8\vert\le\vert3\vert+\vert-8\vert	\top
 z-2-z-bar-z	\vert3+4i\vert^2=(3+4i)\overline{3+4i}	\top
 multiplicative-ab-a-b	\vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert	\top
+abs-1	\vert1\vert	1
+abs-neg-1	\vert-1\vert	1
+abs-neg-i	\vert-i\vert	1
+abs-neg-1-plus-i	\vert-1+i\vert	\sqrt{2}
+abs-neg-1-minus-i	\vert-1-i\vert	\sqrt{2}
+abs-1-minus-i	\vert1-i\vert	\sqrt{2}
+abs-sqrt-3-plus-i	\vert\sqrt{3}+i\vert	2
+abs-1-plus-sqrt-3-times-i	\vert1+\sqrt{3}i\vert	2
+abs-neg-1-plus-sqrt-3-times-i	\vert\sqrt{3}i-1\vert	2
+abs-neg-sqrt-3-plus-i	\vert i-\sqrt{3}\vert	2
+abs-neg-sqrt-3-minus-i	\vert-i-\sqrt{3}\vert	2
+abs-neg-1-plus-neg-sqrt-3-times-i	\vert-\sqrt{3}i-1\vert	2
+abs-1-plus-neg-sqrt-3-times-i	\vert1-\sqrt{3}i\vert	2
+abs-sqrt-3-minus-i	\vert\sqrt{3}-i\vert	2
+abs-2	\vert2\vert	2
 doesn-t-factor-constants-out-of-a-symbolic	\vert-3x\vert	\vert-3x\vert

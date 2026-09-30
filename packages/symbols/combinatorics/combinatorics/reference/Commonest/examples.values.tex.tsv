@@ -5,6 +5,9 @@ every-element-tied-for-most-frequent-symbols-and	\mathrm{Commonest}(\bigl\lbrack
 a-single-most-frequent-element-still-comes-back	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\bigl\lbrack3\bigr\rbrack
 all-distinct-all-tie	\mathrm{Commonest}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
 the-n-commonest-most-frequent-first	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 2)	\bigl\lbrack3, 2\bigr\rbrack
+commonest-list-a-exponentiale-sin-y-exponentiale	\mathrm{Commonest}(\bigl\lbrack a, e, \sin(y), e, a, 7\bigr\rbrack)	\bigl\lbrack a, e\bigr\rbrack
+commonest-n-list-1-2-2-3-3-3-4	\mathrm{Commonest}(N(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))	\bigl\lbrack3\bigr\rbrack
+commonest-n-list-1-2-2-3-3-3-4-30	\mathrm{Commonest}(N(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 30))	\bigl\lbrack3\bigr\rbrack
 with-a-unique-mode-commonest-c-mode-c-see-mode	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))	2
 without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\top
 a-frequency-tie-between-4-and-1-is-broken-by	\mathrm{Commonest}(\bigl\lbrack4, 1, 1, 4\bigr\rbrack, 1)	\bigl\lbrack4\bigr\rbrack

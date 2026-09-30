@@ -4,3 +4,4 @@ odd-cycle-is-not	BipartiteGraphQ[CycleGraph[5]]	False	\text{BipartiteGraphQ}[\te
 a-self-loop-is-never-bipartite	BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]	False	\text{BipartiteGraphQ}[]	\text{False}
 a-4-cycle-is-bipartite	BipartiteGraphQ[CycleGraph[4]]	True	\text{BipartiteGraphQ}[\text{CycleGraph}[4]]	\text{True}
 a-path-is-always-bipartite				
+isbipartitegraph-cyclegraph-3	BipartiteGraphQ[CycleGraph[3]]	False	\text{BipartiteGraphQ}[\text{CycleGraph}[3]]	\text{False}

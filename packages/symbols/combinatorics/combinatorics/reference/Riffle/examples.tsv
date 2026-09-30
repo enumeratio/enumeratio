@@ -1,6 +1,10 @@
 id	section	role	expr	expected	caption
 x-between-consecutive-elements			[Riffle, [List, a, b, c], x]	[List, a, x, b, x, c]	$x$ between consecutive elements
 interleave-two-lists-of-the-same-length			[Riffle, [List, a, b, c], [List, x, y, z]]	[List, a, x, b, y, c, z]	Interleave two lists of the same length
+riffle-list-1-2-3-4-5-6-7-8-9-x			[Riffle, [List, 1, 2, 3, 4, 5, 6, 7, 8, 9], x]	[List, 1, x, 2, x, 3, x, 4, x, 5, x, 6, x, 7, x, 8, x, 9]	
+riffle-list-1-2-3-4-5-6-7-8-9-x-3			[Riffle, [List, 1, 2, 3, 4, 5, 6, 7, 8, 9], x, 3]	[List, 1, 2, x, 3, 4, x, 5, 6, x, 7, 8, x, 9]	
 a-list-one-shorter-goes-strictly-between-the	Scope		[Riffle, [List, a, b, c], [List, x, y]]	[List, a, x, b, y, c]	A list one shorter goes strictly between the elements
 every-3rd-element-of-the-result-is-x	Scope		[Riffle, [List, 1, 2, 3, 4, 5, 6, 7], x, 3]	[List, 1, 2, x, 3, 4, x, 5, 6, x, 7]	Every 3rd element of the result is x
 a-single-element-has-nothing-to-separate	Scope		[Riffle, [List, a], x]	[List, a]	A single element has nothing to separate
+riffle-list-a-b-c-d-list-x-y-z-w	Scope		[Riffle, [List, a, b, c, d], [List, x, y, z, w]]	[List, a, x, b, y, c, z, d, w]	
+riffle-list-a-b-c-d-x	Properties		[Riffle, [List, a, b, c, d], x]	[List, a, x, b, x, c, x, d]	

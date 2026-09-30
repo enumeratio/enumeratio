@@ -7,4 +7,9 @@ listable-in-n-the-nontrivial-character-mod-3
 a-character-vanishes-where-gcd-n-k-1	\chi_{5,2}(5)	0
 chi-3-mod-5-is-the-quadratic-character-its	\chi_{5,3}(2)	-1
 the-trivial-character-mod-1-is-1-everywhere-its	\chi_{1,1}(7)	1
+dirichletcharacter-7-3-20	\chi_{7,3}(20)	1
+dirichletcharacter-7-3-4-times	\chi_{7,3}(4)\chi_{7,3}(5)	(-\frac{\sqrt{3}}{2}i-\frac{1}{2})(\frac{\sqrt{3}}{2}i-\frac{1}{2})
+dirichletcharacter-12-3-list-1-5-7-11		
+dirichletcharacter-45-8-7	\chi_{45,8}(7)	\frac{1}{2}i-\frac{\sqrt{3}}{2}
+dirichletcharacter-9-2-7-times	\chi_{9,2}(7)\chi_{5,4}(2)	-i(-\frac{\sqrt{3}}{2}i-\frac{1}{2})
 j-must-be-at-most-varphi-k-4-out-of-range-names	\chi_{5,9}(2)	\chi_{5,9}(2)

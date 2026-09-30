@@ -11,5 +11,8 @@ sqrt-restricted-past-its-own-domain	\mathrm{FunctionContinuous}(\sqrt{x}, x, x\g
 log-restricted-to-its-own-domain	\mathrm{FunctionContinuous}(\ln(x), x, x\gt0)	\top
 log-restricted-includes-its-singular-boundary	\mathrm{FunctionContinuous}(\ln(x), x, x\ge0)	\bot
 reciprocal-restricted-below-its-pole	\mathrm{FunctionContinuous}(\frac{1}{x}, x, x\lt0)	\top
+functioncontinuous-sin-x-x	\mathrm{FunctionContinuous}(\sin(x), x)	\top
 reciprocal-restricted-domain	\mathrm{FunctionContinuous}(\frac{1}{x}, x, x\gt0)	\top
 sqrt-closed-boundary	\mathrm{FunctionContinuous}(\sqrt{x}, x, x\ge0)	\top
+list-functioncontinuous-x-x-functioncontinuous-x	\bigl\lbrack\mathrm{FunctionContinuous}(x, x), \mathrm{FunctionContinuous}(x^2+1, x), \mathrm{FunctionContinuous}(x^3-2x^2-5x+6, x)\bigr\rbrack	\bigl\lbrack\top, \top, \top\bigr\rbrack
+list-functioncontinuous-sin-x-x	\bigl\lbrack\mathrm{FunctionContinuous}(\sin(x), x), \mathrm{FunctionContinuous}(\cos(x), x), \mathrm{FunctionContinuous}(e^{x}, x)\bigr\rbrack	\bigl\lbrack\top, \top, \top\bigr\rbrack

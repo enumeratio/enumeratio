@@ -1,20 +1,32 @@
-id	in	out
-n-forces-the-numeric-result-that-plain	N(tanh(0))	0
-n-tanh-1	N(tanh(1))	0.761_594_155_955_764_888_119
-stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(0)	0
-a-float-argument-evaluates-directly-no-n-needed	tanh(2.2)	0.975_743_130_031_451_520_414
-arbitrary-precision-via-n	N(tanh(11 / 5))	0.975_743_130_031_451_520_414
-evaluates-at-a-complex-argument	tanh(2.5 + i)	1.005_548_011_895_06 + 0.012_322_138_255_828_353i
-interval-arithmetic-tanh-is-increasing-so-tanh-0	tanh(interval(0, ln(2)))	interval(0, 3 / 5)
-uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	tanh(Around(2 / sqrt(3), 0.1))	Around(0.819_305_290_078_300_8, 0.032_873_884_164_971_15)
-the-horizontal-asymptote-at-infty	tanh(positiveInfinity)	1
-tanh-i-pi-4-i-tan-pi-4-i	tanh(imaginaryUnit * (pi / 4))	i
-oddness-pulls-the-sign-out-of-a-symbolic	tanh(-x)	-tanh(x)
-tanh-artanh-x-x-for-every-x	tanh(artanh(x))	x
-tanh-artanh-2-2-past-the-real-domain	tanh(artanh(2))	2
-derivative-sech-2-x	D(tanh(x), x)	sech(x) ^ 2
-antiderivative-ln-cosh-x	integrate(tanh(x), x)	ln(cosh(x))
-tanh-has-no-limit-at-complex-infinity-undefined	tanh(complexInfinity)	`NaN`
-to-30-significant-digits-every-one-correctly	N(tanh(1), 30)	0.761_594_155_955_764_888_119_458_282_605
-tanh-x-frac-sinh-x-cosh-x	tanh(1) == sinh(1) / cosh(1)	True
-in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	trigToExp(tanh(x))	"(-exponentialE ^ (-x) + exponentialE ^ x) / (exponentialE ^ x + exponentialE ^\n                                                                (-x))"
+id	in	out	back
+n-forces-the-numeric-result-that-plain	N(tanh(0))	0	
+n-tanh-1	N(tanh(1))	0.761_594_155_955_764_888_119	
+stays-symbolic-even-at-0-same-as-sinh-and-cosh	tanh(0)	0	
+a-float-argument-evaluates-directly-no-n-needed	tanh(2.2)	0.975_743_130_031_451_520_414	
+arbitrary-precision-via-n	N(tanh(11 / 5))	0.975_743_130_031_451_520_414	
+evaluates-at-a-complex-argument	tanh(2.5 + i)	1.005_548_011_895_06 + 0.012_322_138_255_828_353i	
+interval-arithmetic-tanh-is-increasing-so-tanh-0	tanh(interval(0, ln(2)))	interval(0, 3 / 5)	
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	tanh(Around(2 / sqrt(3), 0.1))	Around(0.819_305_290_078_300_8, 0.032_873_884_164_971_15)	
+the-horizontal-asymptote-at-infty	tanh(positiveInfinity)	1	
+tanh-i-pi-4-i-tan-pi-4-i	tanh(imaginaryUnit * (pi / 4))	i	
+oddness-pulls-the-sign-out-of-a-symbolic	tanh(-x)	-tanh(x)	
+tanh-artanh-x-x-for-every-x	tanh(artanh(x))	x	
+tanh-artanh-2-2-past-the-real-domain	tanh(artanh(2))	2	
+derivative-sech-2-x	D(tanh(x), x)	sech(x) ^ 2	
+antiderivative-ln-cosh-x	integrate(tanh(x), x)	ln(cosh(x))	
+tanh-has-no-limit-at-complex-infinity-undefined	tanh(complexInfinity)	`NaN`	
+to-30-significant-digits-every-one-correctly	N(tanh(1), 30)	0.761_594_155_955_764_888_119_458_282_605	
+n-tanh-11-over-5-50	N(tanh(11 / 5), 50)	0.975_743_130_031_451_520_414_306_668_030_114_652_781_305_034_057_99	
+tanh-list-list-1-over-3-times-i-times-pi-neg-1	tanh([[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]])	[[sqrt(3) * i, -sqrt(3) * i], [0, -(sqrt(3) / 3) * i]]	
+tanh-1-over-5-times-i-times-pi	tanh(1 / 5 * i * pi)	i * sqrt(5 - 2 * sqrt(5))	
+tanh-1-over-24-times-i-times-pi	tanh(1 / 24 * i * pi)	i * tan(1 / 24 * pi)	
+matrixfunction-function-tanh-1-1-list-list-1	"MatrixFunction(\n                Function(tanh(_1), _1),\n                [[1 / 3 * i * pi, -1 / 3 * i * pi], [0, -1 / 6 * i * pi]],\n              )"	[[sqrt(3) * i, -8 / 9 * sqrt(3) * i], [0, -(sqrt(3) / 3) * i]]	Unreadable
+tanh-x-frac-sinh-x-cosh-x	tanh(1) == sinh(1) / cosh(1)	True	
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	trigToExp(tanh(x))	"(-exponentialE ^ (-x) + exponentialE ^ x) / (exponentialE ^ x + exponentialE ^\n                                                                (-x))"	
+tanh-1-over-12-times-i-times-pi	tanh(1 / 12 * i * pi)	i * (2 - sqrt(3))	
+tanh-1-over-10-times-i-times-pi	tanh(1 / 10 * i * pi)	sqrt(5) / 5 * i * sqrt(5 - 2 * sqrt(5))	
+tanh-1-over-9-times-i-times-pi	tanh(1 / 9 * i * pi)	i * tan(1 / 9 * pi)	
+tanh-1-over-8-times-i-times-pi	tanh(1 / 8 * i * pi)	i * (-1 + sqrt(2))	
+tanh-1-over-7-times-i-times-pi	tanh(1 / 7 * i * pi)	i * tan(1 / 7 * pi)	
+tanh-1-over-6-times-i-times-pi	tanh(1 / 6 * i * pi)	sqrt(3) / 3 * i	
+tanh-2-over-9-times-i-times-pi	tanh(2 / 9 * i * pi)	i * tan(2 / 9 * pi)	

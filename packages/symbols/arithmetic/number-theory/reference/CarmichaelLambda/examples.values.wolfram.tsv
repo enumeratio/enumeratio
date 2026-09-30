@@ -1,4 +1,31 @@
 id	in	out	tex.in	tex.out
+carmichaellambda-10	CarmichaelLambda[10]	4	\lambda (10)	4
 listable	CarmichaelLambda[List[8, 15]]	{2, 4}	\lambda (\{8,15\})	\{2,4\}
 negative-n-lambda-n-lambda-n	CarmichaelLambda[-100]	20	\lambda (-100)	20
 listable-over-a-range	CarmichaelLambda[Range[10]]	{1, 1, 2, 2, 4, 2, 6, 2, 6, 4}	\lambda (\text{Range}[10])	\{1,1,2,2,4,2,6,2,6,4\}
+carmichaellambda-neg-10	CarmichaelLambda[-10]	4	\lambda (-10)	4
+carmichaellambda-list-2-4-7	CarmichaelLambda[List[2, 4, 7]]	{1, 2, 6}	\lambda (\{2,4,7\})	\{1,2,6\}
+561-mod-carmichaellambda-561	Mod[561, CarmichaelLambda[561]]	1	(561 \bmod \lambda (561))	1
+carmichaellambda-12	CarmichaelLambda[12]	2	\lambda (12)	2
+list-divides-8-24-divides-carmichaellambda-8	List[Divisible[24, 8], Divisible[CarmichaelLambda[24], CarmichaelLambda[8]]]	{True, True}	\{8|24,\lambda (8)|\lambda (24)\}	\{\text{True},\text{True}\}
+3-pow-1-plus-carmichaellambda-17-mod-17	Mod[Power[3, Plus[1, CarmichaelLambda[17]]], 17]	3	(3^{1+\lambda (17)} \bmod 17)	3
+divides-multiplicativeorder-4-9-carmichaellambda	Divisible[CarmichaelLambda[9], MultiplicativeOrder[4, 9]]	True	\text{ord}_9(4)|\lambda (9)	\text{True}
+carmichaellambda-1	CarmichaelLambda[1]	1	\lambda (1)	1
+carmichaellambda-2	CarmichaelLambda[2]	1	\lambda (2)	1
+carmichaellambda-3	CarmichaelLambda[3]	2	\lambda (3)	2
+carmichaellambda-4	CarmichaelLambda[4]	2	\lambda (4)	2
+carmichaellambda-5	CarmichaelLambda[5]	4	\lambda (5)	4
+carmichaellambda-6	CarmichaelLambda[6]	2	\lambda (6)	2
+divides-carmichaellambda-8-totient-8	Divisible[EulerPhi[8], CarmichaelLambda[8]]	True	\lambda (8)|\phi (8)	\text{True}
+carmichaellambda-7	CarmichaelLambda[7]	6	\lambda (7)	6
+carmichaellambda-8	CarmichaelLambda[8]	2	\lambda (8)	2
+carmichaellambda-9	CarmichaelLambda[9]	6	\lambda (9)	6
+carmichaellambda-11	CarmichaelLambda[11]	10	\lambda (11)	10
+carmichaellambda-13	CarmichaelLambda[13]	12	\lambda (13)	12
+carmichaellambda-14	CarmichaelLambda[14]	6	\lambda (14)	6
+carmichaellambda-15	CarmichaelLambda[15]	4	\lambda (15)	4
+carmichaellambda-16	CarmichaelLambda[16]	4	\lambda (16)	4
+carmichaellambda-17	CarmichaelLambda[17]	16	\lambda (17)	16
+carmichaellambda-list-neg-2-neg-1-0-1-2	CarmichaelLambda[List[-2, -1, 0, 1, 2]]	{1, 1, 0, 1, 1}	\lambda (\{-2,-1,0,1,2\})	\{1,1,0,1,1\}
+list-lcm-carmichaellambda-list-3-8	List[LCM[CarmichaelLambda[List[3, 8]]], CarmichaelLambda[LCM[3, 8]]]	{{2, 2}, 2}	\{\text{lcm}(\lambda (\{3,8\})),\lambda (\text{lcm}(3,8))\}	\{\{2,2\},2\}
+carmichaellambda-0	CarmichaelLambda[0]	0	\lambda (0)	0

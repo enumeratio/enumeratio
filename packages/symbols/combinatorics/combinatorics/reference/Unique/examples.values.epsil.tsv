@@ -2,9 +2,12 @@ id	in	out	back
 unique-list-1-2-2-3-1	unique([1, 2, 2, 3, 1])	[1, 2, 3]	
 unique-list-a-b-a-c-b	unique([a, b, a, c, b])	[a, b, c]	
 keeps-first-occurrence-order-without-sorting	unique([1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1])	[1, 7, 8, 4, 3, 9, 2]	
+unique-list-1-7-8-4-3-4-1-9-9-2	unique([1, 7, 8, 4, 3, 4, 1, 9, 9, 2])	[1, 7, 8, 4, 3, 9, 2]	
 elements-can-themselves-be-lists	unique([[1, 2], [1, 2], [3]])	[[1, 2], [3]]	
 unique-list	unique([])	[]	
 a-second-argument-says-when-two-elements-count	unique([1, 2, 3, 4, 5, 6], Function(abs(_1 - _2) < 2))	[1, 3, 5]	Unreadable
+unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	unique([1, 7, 8, 4, 3, 4, 1, 9, 8, 9, 2], Greater)	[1, 7, 8, 9, 9]	
 count-the-distinct-elements	length(unique([1, 2, 2, 3, 3, 3]))	3	
 the-residues-mod-3-that-occur-in-order-of-first	unique(Range(10) % 3)	[1, 2, 0]	
 idempotent	unique(unique([1, 1, 2]))	[1, 2]	
+unique-list-3-3-3-function-false	unique([3, 3, 3], Function(False))	[3, 3, 3]	Unreadable

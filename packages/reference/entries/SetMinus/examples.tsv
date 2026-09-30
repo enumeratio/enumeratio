@@ -3,10 +3,12 @@ setminus-1-2-3-2			[SetMinus, [Set, 1, 2, 3], [Set, 2]]	[Set, 1, 3]
 setminus-1-2-3-4-2-4			[SetMinus, [Set, 1, 2, 3, 4], [Set, 2, 4]]	[Set, 1, 3]			
 removing-elements-that-aren-t-present-leaves-the			[SetMinus, [Set, 1, 2, 3], [Set, 9]]	[Set, 1, 2, 3]	Removing elements that aren't present leaves the set unchanged		
 several-sets-can-be-removed-at-once			[SetMinus, [Set, a, b, c, d, f], [Set, a, c], [Set, d]]	[Set, b, f]	Several sets can be removed at once		
+setminus-a-b-c-d-exponentiale-a-c-d			[SetMinus, [Set, a, b, c, d, ExponentialE], [Set, a, c], [Set, d]]	[Set, b, ExponentialE]			
 lists-as-well-as-sets-as-wolfram-s-complement	Scope		[SetMinus, [List, a, b, c, d, f], [List, a, c], [List, d]]	[Set, b, f]	Lists as well as sets, as Wolfram's $Complement$ takes		
 a-range-as-the-universe-to-remove-from-compute	Scope		[SetMinus, [Range, 1, 10], [Set, 2, 3]]	[Set, 1, 4, 5, 6, 7, 8, 9, 10]	A [[Range]] as the universe to remove from		
 a-setminus-a-setminus-b-a-cap-b-see-intersection	Properties		[Equal, [SetMinus, [Set, 1, 2, 3, 4], [SetMinus, [Set, 1, 2, 3, 4], [Set, 2, 4]]], [Intersection, [Set, 1, 2, 3, 4], [Set, 2, 4]]]	True	$A \setminus (A \setminus B) = A \cap B$. See [[Intersection]]		
 removing-the-empty-set-changes-nothing-a	Properties		[SetMinus, [Set, 1, 2, 3], EmptySet]	[Set, 1, 2, 3]	Removing the empty set changes nothing: $A \setminus \varnothing = A$		
 a-setminus-a-varnothing	Properties		[SetMinus, [Set, 1, 2, 3], [Set, 1, 2, 3]]	EmptySet	$A \setminus A = \varnothing$	shape	Same empty result; ours prints the canonical EmptySet symbol, Wolfram's Complement returns a literal empty list.
+setminus-b-exponentiale-d-a-c-b-c	Properties		[SetMinus, [Set, b, ExponentialE, d, a, c], [Set, b, c]]	[Set, ExponentialE, d, a]			
 setminus-is-not-commutative-b-setminus-a-can	Possible issues		[SetMinus, [Set, 2, 4], [Set, 1, 2, 3, 4]]	EmptySet	$SetMinus$ is not commutative: $B \setminus A$ can differ wildly from $A \setminus B$	shape	An empty result is the symbol EmptySet here and the empty list {} in Wolfram.
 the-result-keeps-the-first-set-s-order-rather	Possible issues		[SetMinus, [Set, 5, 4, 3, 2, 1], [Set, 2]]	[Set, 5, 4, 3, 1]	The result keeps the first set's order rather than sorting it		Wolfram's Complement sorts its result: Complement[{5, 4, 3, 2, 1}, {2}] is {1, 3, 4, 5}.

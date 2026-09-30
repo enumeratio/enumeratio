@@ -1,5 +1,6 @@
-id	in
-a-perfect-square-is-never-negative	FunctionSign[Power[x, 2], x]
-a-sum-of-a-square-and-a-positive-constant	FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]
-exp-is-always-positive	FunctionSign[Exp[x], x]
-a-cubic-changes-sign	FunctionSign[Power[x, 3], x]
+id	in	back
+a-perfect-square-is-never-negative	FunctionSign[Power[x, 2], x]	
+a-sum-of-a-square-and-a-positive-constant	FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]	
+exp-is-always-positive	FunctionSign[Exp[x], x]	
+map-function-functionsign-1-x-1-list-x-pow-2-x	Map[Function[FunctionSign[Slot[1], x]], List[Power[x, 2], Plus[Power[x, 2], 1]]]	[Map, [Function, [FunctionSign, _1, x]], [List, [Power, x, 2], [Add, [Power, x, 2], 1]]]
+a-cubic-changes-sign	FunctionSign[Power[x, 3], x]	

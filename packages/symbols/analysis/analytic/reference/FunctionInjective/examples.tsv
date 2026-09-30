@@ -3,3 +3,6 @@ a-reciprocal-is-injective-on-its-own-domain			[FunctionInjective, [Divide, 1, x]
 a-cubic-is-injective			[FunctionInjective, [Power, x, 3], x]	True			A cubic is injective (its derivative never goes negative)
 a-parabola-is-not-injective			[FunctionInjective, [Power, x, 2], x]	False	False	Wolfram 15.0.0, hand cross-checked	A parabola gives the same value at x and -x
 an-affine-function-is-injective			[FunctionInjective, [Add, [Multiply, 2, x], 1], x]	True	True	Wolfram 15.0.0, hand cross-checked	A nonzero-slope affine function is injective
+functioninjective-x-pow-3-minus-x-x	Scope		[FunctionInjective, [Add, [Power, x, 3], [Multiply, -1, x]], x]	False			
+functioninjective-cos-x-x	Applications		[FunctionInjective, [Cos, x], x]	False			
+functioninjective-sqrt-x-x	Applications		[FunctionInjective, [Sqrt, x], x]	True			

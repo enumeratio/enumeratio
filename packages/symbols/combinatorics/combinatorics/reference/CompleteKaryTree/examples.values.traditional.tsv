@@ -6,3 +6,11 @@ root-degree-of-a-ternary-tree
 a-3-level-ternary-tree-has-13-vertices		
 the-1-arg-form-defaults-to-binary		
 edge-list-of-a-3-level-binary-tree		
+completekarytree-5		
+completekarytree-3-3		
+completekarytree-2-3		
+map-function-vertexeccentricity-completekarytree		
+isbipartitegraph-completekarytree-3-3	\mathrm{IsBipartiteGraph}(\mathrm{CompleteKaryTree}(3, 3))	\mathrm{True}
+isacyclicgraph-completekarytree-3-3	\mathrm{IsAcyclicGraph}(\mathrm{CompleteKaryTree}(3, 3))	\mathrm{True}
+isloopfreegraph-completekarytree-3-3	\mathrm{IsLoopFreeGraph}(\mathrm{CompleteKaryTree}(3, 3))	\mathrm{True}
+completekarytree-3-4		

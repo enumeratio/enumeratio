@@ -38,7 +38,20 @@ a-real-composite-5-squared-is-not-prime	<IsPrime Over="GaussianIntegers">25</IsP
 1-is-not-prime-gaussian-or-not	<IsPrime Over="GaussianIntegers">1</IsPrime>	<False />
 0-is-not-prime-gaussian-or-not	<IsPrime Over="GaussianIntegers">0</IsPrime>	<False />
 a-common-choice-of-prime-modulus-for-hashing	<IsPrime>1000000007</IsPrime>	<True />
+isprime-257	<IsPrime>257</IsPrime>	<True />
+isprime-1-plus-2-pow-128	<IsPrime><Add>1 <Power>2 128</Power></Add></IsPrime>	<False />
+filter-range-1-100-function-isprimepower-1	<Filter><Range>1 100</Range> <Function><Block><And><IsPrimePower>_1</IsPrimePower> <Not><IsPrime>_1</IsPrime></Not></And></Block> _1</Function></Filter>	<List>4 8 9 16 25 27 32 49 64 81</List>
 an-odd-prime-stays-prime-in-z-i-exactly-when-p	<IsPrime Over="GaussianIntegers"><List>2 3 5 7 11 13</List></IsPrime>	<List>False True False True True False</List>
+isprime-37	<IsPrime>37</IsPrime>	<True />
+isprime-29	<IsPrime>29</IsPrime>	<True />
+isprime-17	<IsPrime>17</IsPrime>	<True />
+isprime-12	<IsPrime>12</IsPrime>	<False />
+isprime-23	<IsPrime>23</IsPrime>	<True />
+isprime-24	<IsPrime>24</IsPrime>	<False />
+isprime-list-7-11	<IsPrime><List>7 11</List></IsPrime>	<List>True True</List>
+isprime-list-5-7-2	<IsPrime><List>5 7 2</List></IsPrime>	<List>True True True</List>
+isprime-19	<IsPrime>19</IsPrime>	<True />
+divisorsum-19-function-1-1-isprime	<DivisorSum>19 <Function><Block>_1</Block> _1</Function> IsPrime</DivisorSum>	<ToExpression>19</ToExpression>
 non-integers-are-not-prime	<IsPrime><Rational>1 2</Rational></IsPrime>	<False />
 another-non-integer-3-halves	<IsPrime><Rational>3 2</Rational></IsPrime>	<False />
 a-symbol-stays-unevaluated	<IsPrime>x</IsPrime>	<IsPrime>x</IsPrime>

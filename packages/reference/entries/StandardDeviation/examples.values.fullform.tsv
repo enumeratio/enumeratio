@@ -1,0 +1,6 @@
+id	in
+standarddeviation-list-1-2-3-4	StandardDeviation[List[1, 2, 3, 4]]
+standarddeviation-n-list-1-2-3-4-30	StandardDeviation[N[List[1, 2, 3, 4], 30]]
+n-standarddeviation-ts	N[StandardDeviation[ts]]
+standarddeviation-binomialdistribution-n-p	StandardDeviation[BinomialDistribution[n, p]]
+standarddeviation-probabilitydistribution-sqrt-2	StandardDeviation[ProbabilityDistribution[Times[Sqrt[2], Divide[1, Pi], Divide[1, Plus[Power[Plus[x, -2], 4], 1]]], List[x, -Infinity, Infinity]]]

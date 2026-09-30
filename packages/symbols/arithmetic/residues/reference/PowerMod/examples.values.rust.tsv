@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i
 modulus-a-real-composite-5-squared			
 a-negative-unit-exponent-is-its-own-inverse			
 modulus-a-negative-associate			
+sum-powermod-a-2-7-a-nothing-7			
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0			
 one-step-of-rsa-style-modular-exponentiation-7	powermod(n(7), n(13), n(33))	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	powermod(n(2), n(340), n(341))	1	
 diffie-hellman-both-parties-reach-the-shared-key	equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))	true	
+powermod-tocharactercode-rsa-in-mathematica			
 by-definition-a-b-bmod-m-computed-without-ever	equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))	true	
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime			
+list-powermod-7-2-5-powermod-12-2-5	list(vec![powermod(n(7), n(2), n(5)), powermod(n(12), n(2), n(5))])		
+list-powermod-2-3-5-8-mod-5	list(vec![powermod(n(2), n(3), n(5)), mod_floor(n(8), n(5))])		
+list-powermod-2-neg-1-5-modularinverse-2-5			
+list-divides-2-8-powermod-8-3-2-eq-0			
+powermod-7-totient-19-19-eq-1			
+powermod-2-16-17	powermod(n(2), n(16), n(17))		
+powermod-list-5-neg-5-2-3	powermod(list(vec![n(5), n(-5)]), n(2), n(3))		
+powermod-list-5-neg-5-2-neg-3	powermod(list(vec![n(5), n(-5)]), n(2), n(-3))		
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	powermod(n(2), n(-1), n(4))	panic: no modular inverse: base and modulus share a factor	error
 a-nonzero-exponent-at-the-same-negative-modulus	powermod(n(-2), n(3), n(-14))	-8	inconclusive
 2-is-not-a-square-mod-5-so-there-is-no-root	powermod(n(2), rational(n(1), n(2)), n(5))	panic: an integer, not 1/2	error

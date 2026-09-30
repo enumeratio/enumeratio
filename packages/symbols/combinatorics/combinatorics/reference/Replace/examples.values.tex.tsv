@@ -1,4 +1,7 @@
 id	in	out
 rewrites-the-whole-expr-matches-top-level	\mathrm{Replace}(x+1, \mathrm{Rule}(\operatorname{\_a}+1, 100\operatorname{\_a}))	100x
+replace-1-plus-x-pow-2-x-pow-2-neg-gt-a-plus-b	\mathrm{Replace}(1+x^2, \mathrm{KeyValuePair}(x^2, a+b))	x^2+1
 tries-a-list-of-rules-in-order	\mathrm{Replace}(b, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack)	2
+replace-x-list-y-neg-gt-2-z-neg-gt-3	\mathrm{Replace}(x, \bigl\lbrack\mathrm{KeyValuePair}(y, 2), \mathrm{KeyValuePair}(z, 3)\bigr\rbrack)	x
+replace-x-list	\mathrm{Replace}(x, \bigl\lbrack\bigr\rbrack)	x
 leaves-expr-untouched-when-only-subexpr-matches	\mathrm{Replace}(\bigl\lbrack x+1\bigr\rbrack, \mathrm{Rule}(\operatorname{\_a}+1, 100\operatorname{\_a}))	\bigl\lbrack x+1\bigr\rbrack

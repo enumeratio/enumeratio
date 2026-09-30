@@ -1,0 +1,5 @@
+id	in	out	back
+functionexpand-ellipticpi-list-list-neg-1-0-list	FunctionExpand(ellipticPi([[-1, 0], [0, 1 / 2]], 0))	"[\n  [ellipticPi(-1, 0), ellipticPi(0, 0)],\n  [ellipticPi(0, 0), ellipticPi(1 / 2, 0)],\n]"	
+functionexpand-matrixfunction-function	"FunctionExpand(MatrixFunction(\n                               Function(ellipticPi(_1, 0), _1),\n                               [[-1, 0], [0, 1 / 2]],\n                             ))"	[[ellipticPi(-1, 0), 0], [0, ellipticPi(1 / 2, 0)]]	Unreadable
+ellipticpi-0-0-1	ellipticPi(0, 0, 1)	0	
+ellipticpi-0-0-0	ellipticPi(0, 0, 0)	0	

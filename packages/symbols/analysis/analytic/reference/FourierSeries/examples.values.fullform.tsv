@@ -1,6 +1,9 @@
 id	in
 order-2-series-of-x	FourierSeries[x, x, 2]
+fourierseries-1-over-2-times-t-t-3	FourierSeries[Times[Rational[1, 2], t], t, 3]
 order-3-series-of-sin-is-itself	FourierSeries[Sin[x], x, 3]
 cos-squared-a-sin-cos-polynomial	FourierSeries[Power[Cos[x], 2], x, 2]
 order-0-series-of-x-squared-is-its-average	FourierSeries[Power[x, 2], x, 0]
+fourierseries-exponentiale-pow-neg-t-t-3	FourierSeries[Power[E, Minus[t]], t, 3]
+fourierseries-abs-t-t-2	FourierSeries[Abs[t], t, 2]
 declines-a-mixed-polynomial-trig-product	FourierSeries[Times[x, Cos[x]], x, 1]

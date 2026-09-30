@@ -20,6 +20,9 @@ binom-m-m-1-for-symbolic-m
 a-gaussian-integer-n-binom-1-i-5-frac-1-i-12			
 complex-n-and-k-evaluate-through-the-gamma			
 interval-arithmetic-in-k-binom-1-2-k-is			
+n-binomial-7-over-3-1-over-5-20	nf(binomial(rational(n(7), n(3)), rational(n(1), n(5))))		
+binomial-n-4			
+matrixfunction-function-binomial-1-2-1-list-list			
 the-number-of-distinct-5-card-hands-dealt-from-a	binomial(n(52), n(5))	2598960	
 the-probability-of-exactly-3-heads-in-10-fair	(binomial(n(10), n(3)) / power(n(2), n(10)))	15/128	
 symmetry-binom-n-k-binom-n-n-k	equal(binomial(n(10), n(3)), binomial(n(10), n(7)))	true	

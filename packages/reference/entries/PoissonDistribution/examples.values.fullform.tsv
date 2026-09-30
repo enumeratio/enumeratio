@@ -1,0 +1,5 @@
+id	in
+standarddeviation-poissondistribution-100	StandardDeviation[PoissonDistribution[100]]
+n-probability-x-eq-0-distributed-x	N[Probability[Equal[x, 0], Distributed[x, PoissonDistribution[Rational[16, 25]]]]]
+probability-n-eq-0-distributed-n	Probability[Equal[n, 0], Distributed[n, PoissonDistribution[Times[10000, Power[10, -3]]]]]
+nprobability-n-lt-eq-15-distributed-n	NProbability[LessEqual[n, 15], Distributed[n, PoissonDistribution[Times[10368000, Power[10, -6]]]]]

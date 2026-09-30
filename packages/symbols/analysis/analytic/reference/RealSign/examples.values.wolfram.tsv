@@ -2,5 +2,10 @@ id	in	out	tex.in	tex.out
 realsign-neg-3	RealSign[-3]	-1	\text{sgn}(-3)	-1
 realsign-0	RealSign[0]	0	\text{sgn}(0)	0
 realsign-2p5	RealSign[2.5]	1	\text{sgn}(2.5)	1
+realsign-2	RealSign[2]	1	\text{sgn}(2)	1
 threads-element-wise-over-a-list	RealSign[List[-2, 0, 5]]	{-1, 0, 1}	\text{sgn}(\{-2,0,5\})	\{-1,0,1\}
 decides-the-sign-of-an-exact-numeric-expression	RealSign[Subtract[Sqrt[2], 2]]	-1	\text{sgn}\left(\sqrt{2}-2\right)	-1
+realsign-list-list-1-over-2-neg-1-list-0-neg-1	RealSign[List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	{{1, -1}, {0, -1}}	\text{sgn}\left(\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & -\frac{1}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  1 & -1 \\  0 & -1 \\ \end{array} \right)
+matrixfunction-realsign-list-list-1-over-2-neg-1	MatrixFunction[RealSign, List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	{{1, -2}, {0, -1}}	\text{MatrixFunction}\left[\text{RealSign},\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & -\frac{1}{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & -2 \\  0 & -1 \\ \end{array} \right)
+piecewiseexpand-realsign-x	PiecewiseExpand[RealSign[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PiecewiseExpand}[\text{sgn}(x)]-\text{sgn}(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\text{sgn}\left(\frac{7}{3}\right)\right]-\text{sgn}\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\text{sgn}\left(-\frac{11}{5}\right)\right]-\text{sgn}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\text{sgn}\left(\frac{13}{4}\right)\right]-\text{sgn}\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+realsign-list-3-neg-5-2-plus-5i	RealSign[List[3, -5, Complex[2, 5]]]	{1, -1, RealSign[2 + 5*I]}	\text{sgn}(\{3,-5,2+5 i\})	\{1,-1,\text{sgn}(2+5 i)\}

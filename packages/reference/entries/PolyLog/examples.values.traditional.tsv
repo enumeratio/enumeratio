@@ -91,6 +91,12 @@ image-order-0p5-over-neg-0p5-to-0p95
 image-order-neg-1p5-over-neg-0p3-to-0p3		
 image-order-neg-3-over-neg-0p5-to-0p2		
 image-order-5-over-neg-0p99-to-0p99		
+polylog-0-5		
+n-polylog-1-1-over-3-50		
+polylog-2-list-list-1-over-2-0-list-0-1-over-2		
+polylog-1-0		
+d-polylog-n-z-z		
+matrixfunction-function-polylog-2-1-1-list-list		
 li-1-2-1-zeta-1-2-a-non-integer-order-from		
 li-1-2-1-2-0-80612672-via-the-lerch-series		
 li-5-2-1-2-0-46229778-the-alternating-side-euler		
@@ -101,4 +107,8 @@ li-1-z-z-1-z-2-negative-orders-are-rational
 li-2-1-2-pi-2-12-ln-2-2-2	\operatorname{Li}_{2}(0.5)+0.5\ln(2)^2=\frac{\pi^2}{12}	\mathrm{True}
 li-s-1-zeta-s-for-symbolic-s		
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative		
+functionexpand-polylog-2-exponentiale-pow-1-over		
+polylog-3-exponentiale-pow-1-over-3-times-i		
+polylog-3-exponentiale-pow-neg-1-over-3-times-i		
+polylog-3-exponentiale-pow-2-over-3-times-i		
 an-exact-argument-stays-symbolic-under-plain		

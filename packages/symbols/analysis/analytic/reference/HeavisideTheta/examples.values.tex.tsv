@@ -4,4 +4,8 @@ heavisidetheta-positive	\mathrm{HeavisideTheta}(1)	1
 heavisidetheta-zero-unevaluated	\mathrm{HeavisideTheta}(0)	\mathrm{HeavisideTheta}(0)
 heavisidetheta-product-both-positive	\mathrm{HeavisideTheta}(1, 2)	1
 heavisidetheta-product-one-negative	\mathrm{HeavisideTheta}(1, -1)	0
+matrixfunction-heavisidetheta-list-list-neg-1	\mathrm{MatrixFunction}(\mathrm{HeavisideTheta}, \bigl\lbrack\bigl\lbrack-1, -\frac{1}{2}\bigr\rbrack, \bigl\lbrack-\frac{1}{2}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{26}(\sqrt{13}(13^{1/2}-3)), -\frac{13^{1/2}}{13}\bigr\rbrack, \bigl\lbrack-\frac{13^{1/2}}{13}, \frac{1}{26}(\sqrt{13}(3+\sqrt{13}))\bigr\rbrack\bigr\rbrack
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	\mathrm{Assuming}(a\gt0, \mathrm{Refine}(\mathrm{HeavisideTheta}(a, a, a, a)))	\mathrm{HeavisideTheta}(a, a, a, a)
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	\mathrm{Assuming}(a\lt0, \mathrm{Refine}(\mathrm{HeavisideTheta}(a, a, a, a)))	\mathrm{HeavisideTheta}(a, a, a, a)
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	\mathrm{Assuming}(a\lt0\land b\gt0, \mathrm{Refine}(\mathrm{HeavisideTheta}(b, b, a)))	\mathrm{HeavisideTheta}(b, b, a)
 heavisidetheta-derivative	\frac{\mathrm{d}\mathrm{HeavisideTheta}(x)}{\mathrm{d}x}	\mathrm{DiracDelta}(x)

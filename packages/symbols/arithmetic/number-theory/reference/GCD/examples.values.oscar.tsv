@@ -35,9 +35,15 @@ gcd-with-a-negative-associate	gcd(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	gcd(ZZ(complex(123, 456)), ZZ(19))		
 gcd-of-two-composites-sharing-the-prime-above-13	gcd(ZZ(complex(6, 8)), ZZ(complex(9, 6)))		
 reduce-12-18-to-lowest-terms-by-dividing-out-the	(12 // gcd(ZZ(12), ZZ(18)))	2.0	
+gcd-14-105	gcd(ZZ(14), ZZ(105))		
+gcd-24-12	gcd(ZZ(24), ZZ(12))		
+gcd-6-21	gcd(ZZ(6), ZZ(21))		
+gcd-6-3-mod-3-eq-0	(mod(gcd(ZZ(6), ZZ(3)), 3) == 0)		
 commutative-gcd-a-b-gcd-b-a	(gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))	true	
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm	((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))	true	
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18)))	8	
+gcd-7-11-29			
+gcd-5-6-eq-1	(gcd(ZZ(5), ZZ(6)) == 1)		
 a-single-argument-is-returned-unchanged			
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(ZZ(0), ZZ(5))	5	
@@ -45,3 +51,4 @@ signs-are-discarded-before-computing-the-gcd
 lists-aren-t-threaded-element-wise-they-re	gcd(ZZ([2, 4]), ZZ([6, 8]))	MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but 	error
 gcd-0-0-0-by-convention	gcd(ZZ(0), ZZ(0))	0	
 symbolic-arguments-stay-unevaluated			
+gcd-neg-3-9	gcd(ZZ(-3), ZZ(9))		

@@ -11,5 +11,8 @@ sqrt-restricted-past-its-own-domain	FunctionContinuous[List[Sqrt[x], Greater[x, 
 log-restricted-to-its-own-domain	FunctionContinuous[List[Log[x], Greater[x, 0]], x]	True	\text{FunctionContinuous}[\{\log (x),x>0\},x]	\text{True}
 log-restricted-includes-its-singular-boundary	FunctionContinuous[List[Log[x], GreaterEqual[x, 0]], x]	False	\text{FunctionContinuous}[\{\log (x),x\geq 0\},x]	\text{False}
 reciprocal-restricted-below-its-pole	FunctionContinuous[List[Power[x, -1], Less[x, 0]], x]	True	\text{FunctionContinuous}\left[\left\{\frac{1}{x},x<0\right\},x\right]	\text{True}
+functioncontinuous-sin-x-x	FunctionContinuous[Sin[x], x]	True	\text{FunctionContinuous}[\sin (x),x]	\text{True}
 reciprocal-restricted-domain	FunctionContinuous[List[Power[x, -1], Greater[x, 0]], x]	True	\text{FunctionContinuous}\left[\left\{\frac{1}{x},x>0\right\},x\right]	\text{True}
 sqrt-closed-boundary	FunctionContinuous[List[Sqrt[x], GreaterEqual[x, 0]], x]	True	\text{FunctionContinuous}\left[\left\{\sqrt{x},x\geq 0\right\},x\right]	\text{True}
+list-functioncontinuous-x-x-functioncontinuous-x	List[FunctionContinuous[x, x], FunctionContinuous[Plus[Power[x, 2], 1], x], FunctionContinuous[Plus[Power[x, 3], Times[-1, Times[2, Power[x, 2]]], Times[-1, Times[5, x]], 6], x]]	{True, True, True}	\left\{\text{FunctionContinuous}[x,x],\text{FunctionContinuous}\left[x^2+1,x\right],\text{FunctionContinuous}\left[x^3-2 x^2-5 x+6,x\right]\right\}	\{\text{True},\text{True},\text{True}\}
+list-functioncontinuous-sin-x-x	List[FunctionContinuous[Sin[x], x], FunctionContinuous[Cos[x], x], FunctionContinuous[Exp[x], x]]	{True, True, True}	\{\text{FunctionContinuous}[\sin (x),x],\text{FunctionContinuous}[\cos (x),x],\text{FunctionContinuous}[\exp (x),x]\}	\{\text{True},\text{True},\text{True}\}

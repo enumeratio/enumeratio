@@ -48,6 +48,16 @@ taylor-series-about-0-only-odd-powers-appear
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	nf(sin(n(1)))	0.8414709848078965	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	nf(sin(power(n(24), n(40))))	-0.5897765161315717	disagree
+n-sin-6-over-5-50	nf(sin(rational(n(6), n(5))))		
+functiondomain-sin-x-x			
+functionrange-sin-x-x-y			
+functionperiod-sin-x-x			
+functionanalytic-sin-x-x			
+functioninjective-sin-x-x			
+functionsurjective-sin-x-x			
+functionsingularities-sin-x-x			
+functiondiscontinuities-sin-x-x			
+matrixfunction-function-sin-1-1-list-list-5-over			
 threads-element-wise-over-a-list	sin(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
 degrees-d-converts-a-degree-measure-to-radians			
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))	1.0	
@@ -60,6 +70,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
 simplify-knows-the-pythagorean-identity			
 the-same-through-fullsimplify			
+sin-3-over-10-times-pi	sin((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
 1-radian-isn-t-a-recognized-special-angle-so	sin(n(1))	0.8414709848078965	
 sin-2-a-generic-argument-stays-symbolic	sin(n(2))	0.9092974268256817	
 sin-x-plus-y-stays-symbolic			

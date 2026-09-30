@@ -17,9 +17,22 @@ sign-positiveinfinity	\mathrm{sgn}(\infty)	1
 an-interval-entirely-above-0-has-sign-1	\mathrm{sgn}(\mathrm{Interval}(1, 3))	1
 decides-the-sign-of-the-exact-number-sqrt-2-2-by	\mathrm{sgn}(\sqrt{2}-2)	-1
 2-sqrt-2-is-the-same-certified-decision-the	\mathrm{sgn}(2-\sqrt{2})	1
+n-sign-exponentiale-plus-i-times-pi-20	N(\mathrm{sgn}(e+i\pi), 20)	0.654\,321\,120\,736\,689\,028\,19+0.756\,216\,814\,781\,239\,322\,47i
+sign-123	\mathrm{sgn}(123)	1
+sign-123-minus-456i	\mathrm{sgn}(123-456i)	\frac{41\sqrt{24\,785}}{24\,785}+-\frac{152\sqrt{24\,785}}{24\,785}i
+fullsimplify-matrixfunction-sign-list-list-1	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(\mathrm{Sign}, \bigl\lbrack\bigl\lbrack1/2, -1\bigr\rbrack, \bigl\lbrack-5/3, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack0, -\frac{15^{1/2}}{5}\bigr\rbrack, \bigl\lbrack-\frac{15^{1/2}}{3}, 0\bigr\rbrack\bigr\rbrack
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2	\mathrm{PiecewiseExpand}(\mathrm{sgn}(x), -2\lt x\lt2)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, 0)
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\mathrm{sgn}(\overline{1+2i})=\overline{\mathrm{sgn}(1+2i)}	\top
 tells-you-the-temperature-dropped-but-not-by-how	\mathrm{sgn}(70-95)	-1
 sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\top
 x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\top
 the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\top
+sign-1	\mathrm{sgn}(1)	1
+sign-neg-1	\mathrm{sgn}(-1)	-1
+sign-neg-i	\mathrm{sgn}(-i)	-i
+sign-neg-1-plus-i	\mathrm{sgn}(-1+i)	-\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+sign-neg-1-minus-i	\mathrm{sgn}(-1-i)	-\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i
+sign-1-minus-i	\mathrm{sgn}(1-i)	\frac{\sqrt{2}}{2}-\frac{\sqrt{2}}{2}i
+sign-2	\mathrm{sgn}(2)	1
 nan-propagates-rather-than-being-treated-as-0	\mathrm{sgn}(\operatorname{NaN})	\operatorname{NaN}
 sign-complexinfinity-is-indeterminate-no	\mathrm{sgn}(\tilde\infty)	\operatorname{Indeterminate}

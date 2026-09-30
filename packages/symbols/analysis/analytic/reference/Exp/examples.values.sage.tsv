@@ -26,6 +26,22 @@ n-decimalizes-a-combined-product	N((exp(1) * exp(2)))
 agrees-numerically-at-a-complex-point	N((exp((1.3 + 0.7*I)) * exp((-0.4 + 2.1*I))))		
 to-50-significant-digits-every-one-correctly	N(exp(1))	2.71828182845905	
 to-1-significant-digit	N(exp(1))	2.71828182845905	disagree
+n-exponentiale-pow-8-over-5-50	N(((e)^(8/5)))		
+matrixfunction-exp-list-list-1-1-over-2-times-i			
+exponentiale-pow-9-over-2-times-i-times-pi	((e)^((0 + (9/2)*I) * pi))		
+exptotrig-exponentiale-pow-1-over-5-times-i			
+functiondomain-exp-x-x			
+functionrange-exp-x-x-y			
+functionanalytic-exp-x-x			
+functionmonotonicity-exp-x-x			
+functioninjective-exp-x-x			
+functionsurjective-exp-x-x			
+assuming-n-in-integers-refine-exp-2-times-pi			
+assuming-n-in-integers-refine-exp-2-times-pi-2			
+functionsign-exp-x-x			
+functionsingularities-exp-x-x			
+functiondiscontinuities-exp-x-x			
+functionconvexity-exp-x-x			
 threads-element-wise-over-a-list	[exp(0), exp(1)]	[1, e]	
 inverse-of-ln-e-ln-x-x	bool(exp(log(5)) == 5)	True	
 e-a-e-b-e-a-b	bool((exp(2) * exp(3)) == exp(5))	True	

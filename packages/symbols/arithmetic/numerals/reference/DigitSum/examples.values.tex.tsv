@@ -6,7 +6,24 @@ threads-element-wise-over-a-list-as-wolfram-s	\mathrm{DigitSum}(\bigl\lbrack12, 
 just-the-first-4-digits-6-3-4-5-18-not-the-full	\mathrm{DigitSum}(6\,345\,354, 10, 4)	18
 a-negative-k-sums-the-last-3-digits-instead	\mathrm{DigitSum}(6\,345\,354, 10, -3)	12
 k-at-least-the-digit-count-is-the-plain-sum	\mathrm{DigitSum}(6\,345\,354, 10, 7)	30
+digitsum-1-plus-9-pow-1-000	\mathrm{DigitSum}(1+9^{1\,000})	4\,339
+digitsum-58-127-16	\mathrm{DigitSum}(58\,127, 16)	32
+digitsum-list-6-7-2-2	\mathrm{DigitSum}(\bigl\lbrack6, 7, 2\bigr\rbrack, 2)	\bigl\lbrack2, 3, 1\bigr\rbrack
+digitsum-7-list-2-3-4	\mathrm{DigitSum}(7, \bigl\lbrack2, 3, 4\bigr\rbrack)	\bigl\lbrack3, 3, 4\bigr\rbrack
+digitsum-6-345-354-10-neg-4	\mathrm{DigitSum}(6\,345\,354, 10, -4)	17
+digitsum-35-297	\mathrm{DigitSum}(35\,297)	26
 digit-sum-n-mod-9-the-basis-of-the-classic	\mathrm{DigitSum}(58\,127)\bmod9=58\,127\bmod9	\top
+digitsum-37-103	\mathrm{DigitSum}(37\,103)	14
+digitsum-143-2	\mathrm{DigitSum}(143, 2)	5
+digitsum-123-000-10-neg-3	\mathrm{DigitSum}(123\,000, 10, -3)	0
+digitsum-0-10-neg-3	\mathrm{DigitSum}(0, 10, -3)	0
+digitsum-2-147-2	\mathrm{DigitSum}(2\,147, 2)	5
+digitsum-2-147	\mathrm{DigitSum}(2\,147)	14
+digitsum-1-over-9-times-neg-1-plus-10-pow-17	\mathrm{DigitSum}(\frac{10^{17}-1}{9})	17
+digitsum-123-456-10-7	\mathrm{DigitSum}(123\,456, 10, 7)	21
+digitsum-263-5	\mathrm{DigitSum}(263, 5)	7
+digitsum-integerreverse-263-5-5	\mathrm{DigitSum}(\mathrm{IntegerReverse}(263, 5), 5)	7
+digitsum-neg-3-134	\mathrm{DigitSum}(-3\,134)	11
 digitsum-0	\mathrm{DigitSum}(0)	0
 the-sign-is-discarded	\mathrm{DigitSum}(-123)	6
 sign-is-discarded-in-the-3-argument-form-too	\mathrm{DigitSum}(-6\,345\,354, 10, 4)	18

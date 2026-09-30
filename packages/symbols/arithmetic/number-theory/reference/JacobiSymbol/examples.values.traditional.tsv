@@ -4,8 +4,26 @@ id	in	out
 jacobisymbol-1-001-9-907	\left(\frac{1\,001}{9\,907}\right)	-1
 threads-element-wise-over-a-list-as-wolfram-s		
 larger-arguments-10-10-1-against-the-1000th	\left(\frac{10^{10}+1}{p_{1\,000}}\right)	1
+jacobisymbol-neg-3-list-1-3-5-7		
 completely-multiplicative-in-the-top-argument-a	\left(\frac{3}{7}\right)\left(\frac{5}{7}\right)=\left(\frac{3\times5}{7}\right)	\mathrm{True}
 quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	\left(\frac{3}{7}\right)\left(\frac{7}{3}\right)	-1
 1-m-1-m-1-2	\left(\frac{-1}{7}\right)	-1
+jacobisymbol-neg-5-3	\left(\frac{-5}{3}\right)	1
+jacobisymbol-neg-4-3	\left(\frac{-4}{3}\right)	-1
+jacobisymbol-neg-3-3	\left(\frac{-3}{3}\right)	0
+jacobisymbol-neg-2-3	\left(\frac{-2}{3}\right)	1
+jacobisymbol-neg-1-3	\left(\frac{-1}{3}\right)	-1
+jacobisymbol-0-3	\left(\frac{0}{3}\right)	0
+jacobisymbol-1-3	\left(\frac{1}{3}\right)	1
+jacobisymbol-2-3	\left(\frac{2}{3}\right)	-1
+jacobisymbol-3-3	\left(\frac{3}{3}\right)	0
+jacobisymbol-4-3	\left(\frac{4}{3}\right)	1
+jacobisymbol-5-3	\left(\frac{5}{3}\right)	-1
+jacobisymbol-6-3	\left(\frac{6}{3}\right)	0
+jacobisymbol-7-3	\left(\frac{7}{3}\right)	1
+jacobisymbol-8-3	\left(\frac{8}{3}\right)	-1
+jacobisymbol-9-3	\left(\frac{9}{3}\right)	0
+jacobisymbol-10-3	\left(\frac{10}{3}\right)	1
+jacobisymbol-neg-5-5	\left(\frac{-5}{5}\right)	0
 by-convention-the-symbol-is-1-whenever-m-1	\left(\frac{0}{1}\right)	1
 2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	\left(\frac{2}{15}\right)	1

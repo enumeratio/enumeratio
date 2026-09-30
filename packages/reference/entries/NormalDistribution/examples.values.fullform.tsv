@@ -1,0 +1,3 @@
+id	in
+pdf-normaldistribution-0-1-x	PDF[NormalDistribution[0, 1], x]
+transformeddistribution-u-times-1-over-v	TransformedDistribution[Times[u, Divide[1, v]], Distributed[List[u, v], ProductDistribution[List[NormalDistribution[], 2]]]]

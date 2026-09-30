@@ -2,6 +2,9 @@ id	in	out
 pm-1-2-pm-2-2-in-either-order	<SquaresR>2 5</SquaresR>	<ToExpression>8</ToExpression>
 squaresr-2-25	<SquaresR>2 25</SquaresR>	<ToExpression>12</ToExpression>
 no-n-equiv-3-pmod-4-is-a-sum-of-two-squares	<SquaresR>2 3</SquaresR>	<ToExpression>0</ToExpression>
+squaresr-2-45	<SquaresR>2 45</SquaresR>	<ToExpression>8</ToExpression>
 squaresr-3-6	<SquaresR>3 6</SquaresR>	<ToExpression>24</ToExpression>
 squaresr-8-3	<SquaresR>8 3</SquaresR>	<ToExpression>448</ToExpression>
+sum-squaresr-2-k-k-0-400	<Sum><SquaresR>2 k</SquaresR> <Limits>k 0 400</Limits></Sum>	<ToExpression>1257</ToExpression>
 jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n	<SquaresR>4 10</SquaresR>	<ToExpression>144</ToExpression>
+squaresr-2-100	<SquaresR>2 100</SquaresR>	<ToExpression>12</ToExpression>

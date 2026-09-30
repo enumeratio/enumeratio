@@ -1,0 +1,8 @@
+id	in
+4-eq-4	almosteq(4, 4, 1e-20)
+n-pi-20-eq-pi	almosteq((pi), pi, 1e-20)
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	almosteq((sqrt(2) + sqrt(3)), sqrt((5 + (2 * sqrt(6)))), 1e-20)
+x-eq-x	
+3-eq-3-eq-3	
+list-1-2-eq-list-1-2	almosteq([1, 2], [1, 2], 1e-20)
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	

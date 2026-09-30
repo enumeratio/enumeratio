@@ -1,4 +1,6 @@
 id	in	out
 from-character-code-of-a-single-code-point	\mathrm{FromCharacterCode}(65)	\text{A}
+fromcharactercode-list-97-98-99	\mathrm{FromCharacterCode}(\bigl\lbrack97, 98, 99\bigr\rbrack)	\text{abc}
 inverts-tocharactercode	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{hello}))	\text{hello}
 round-trips-a-non-ascii-string-emoji-astral	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))	\text{a😀b→c}
+fromcharactercode-97	\mathrm{FromCharacterCode}(97)	\text{a}

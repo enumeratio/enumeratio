@@ -17,7 +17,18 @@ cosh-arcosh-of-a-complex-argument	<Cosh><Arcosh><Complex>0 3</Complex></Arcosh><
 derivative-sinh-x	<D><Cosh>x</Cosh> x</D>	<Sinh>x</Sinh>
 antiderivative	<Integrate><Cosh>x</Cosh> x</Integrate>	<Sinh>x</Sinh>
 to-30-significant-digits-every-one-correctly	<N><Cosh>1</Cosh> 30</N>	<ToExpression>1.54308063481524377847790562076</ToExpression>
+n-cosh-6-over-5-50	<N><Cosh><Rational>6 5</Rational></Cosh> 50</N>	<ToExpression>1.81065556732437479308787251834243339002242802785</ToExpression>
+cosh-1-over-5-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 5</Rational></Complex> Pi</Multiply></Cosh>	<Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide></Add>
+cosh-1-over-24-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 24</Rational></Complex> Pi</Multiply></Cosh>	<Cos><Multiply><Rational>1 24</Rational> Pi</Multiply></Cos>
+matrixfunction-function-cosh-1-1-list-list-1	<MatrixFunction><Function><Block><Cosh>_1</Cosh></Block> _1</Function> <List><List><Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply> <Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply></List> <List>0 <Multiply><Complex>0 <Rational>-1 6</Rational></Complex> Pi</Multiply></List></List></MatrixFunction>	<List><List><Rational>1 2</Rational> <Add><Rational>-1 3</Rational> <Divide><Sqrt>3</Sqrt> 3</Divide></Add></List> <List>0 <Divide><Sqrt>3</Sqrt> 2</Divide></List></List>
 even-function-cosh-x-cosh-x	<Equal><Cosh><Negate>1</Negate></Cosh> <Cosh>1</Cosh></Equal>	<True />
 hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	<Equal><Subtract><Power><Cosh>1</Cosh> 2</Power> <Power><Sinh>1</Sinh> 2</Power></Subtract> 1</Equal>	<True />
 the-definition-cosh-x-frac-e-x-e-x-2	<TrigToExp><Cosh>x</Cosh></TrigToExp>	<Multiply><Rational>1 2</Rational> <Add><Power>ExponentialE x</Power> <Power>ExponentialE <Negate>x</Negate></Power></Add></Multiply>
 cosh-2-x-sinh-2-x-should-simplify-to-1	<Simplify><Subtract><Power><Cosh>x</Cosh> 2</Power> <Power><Sinh>x</Sinh> 2</Power></Subtract></Simplify>	<ToExpression>1</ToExpression>
+cosh-1-over-12-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 12</Rational></Complex> Pi</Multiply></Cosh>	<Add><Divide><Sqrt>2</Sqrt> 4</Divide> <Divide><Sqrt>6</Sqrt> 4</Divide></Add>
+cosh-1-over-10-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 10</Rational></Complex> Pi</Multiply></Cosh>	<Multiply><Divide><Sqrt>2</Sqrt> 4</Divide> <Sqrt><Add>5 <Sqrt>5</Sqrt></Add></Sqrt></Multiply>
+cosh-1-over-9-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 9</Rational></Complex> Pi</Multiply></Cosh>	<Cos><Multiply><Rational>1 9</Rational> Pi</Multiply></Cos>
+cosh-1-over-8-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 8</Rational></Complex> Pi</Multiply></Cosh>	<Multiply><Rational>1 2</Rational> <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Multiply>
+cosh-1-over-7-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 7</Rational></Complex> Pi</Multiply></Cosh>	<Cos><Multiply><Rational>1 7</Rational> Pi</Multiply></Cos>
+cosh-1-over-6-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>1 6</Rational></Complex> Pi</Multiply></Cosh>	<Divide><Sqrt>3</Sqrt> 2</Divide>
+cosh-2-over-9-times-i-times-pi	<Cosh><Multiply><Complex>0 <Rational>2 9</Rational></Complex> Pi</Multiply></Cosh>	<Cos><Multiply><Rational>2 9</Rational> Pi</Multiply></Cos>

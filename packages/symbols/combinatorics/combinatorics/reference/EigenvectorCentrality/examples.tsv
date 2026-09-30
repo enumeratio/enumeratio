@@ -1,3 +1,4 @@
 id	section	role	expr	expected
 path-4-matches-wolfram			[EigenvectorCentrality, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]]]	[List, 0.190983005625053, 0.309016994374947, 0.309016994374947, 0.190983005625053]
 star-4-hub-is-most-central			[EigenvectorCentrality, [StarGraph, 4]]	[List, 0.366025403784439, 0.211324865405187, 0.211324865405187, 0.211324865405187]
+1-over-neg-length-connectedcomponents-g-plus	Properties		[Multiply, [Divide, 1, [Add, [Negate, [Length, [ConnectedComponents, g]]], [VertexCount, g]]], [Add, [VertexCount, h], -1], [EigenvectorCentrality, h]]	[Divide, [Multiply, [Add, [VertexCount, h], -1], [EigenvectorCentrality, h]], [Add, [VertexCount, g], -1]]

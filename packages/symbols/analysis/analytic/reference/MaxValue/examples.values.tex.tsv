@@ -1,4 +1,5 @@
 id	in	out
 a-downward-parabola-s-maximum-value	\mathrm{MaxValue}(-x^2+4x-1, x)	3
+maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	\mathrm{MaxValue}(-2x^2-3x+5, x)	\frac{49}{8}
 the-amplitude-of-sine-alone-is-exact	\mathrm{MaxValue}(\sin(x), x)	1
 an-unbounded-cubic	\mathrm{MaxValue}(x^3, x)	\infty

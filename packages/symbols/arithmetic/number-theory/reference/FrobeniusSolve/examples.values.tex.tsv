@@ -1,5 +1,8 @@
 id	in	out
 frobeniussolve-list-2-3-7	\mathrm{FrobeniusSolve}(\bigl\lbrack2, 3\bigr\rbrack, 7)	\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack
 frobeniussolve-list-2-3-5-10	\mathrm{FrobeniusSolve}(\bigl\lbrack2, 3, 5\bigr\rbrack, 10)	\bigl\lbrack\bigl\lbrack0, 0, 2\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 0\bigr\rbrack, \bigl\lbrack5, 0, 0\bigr\rbrack\bigr\rbrack
+frobeniussolve-list-12-16-20-27-123	\mathrm{FrobeniusSolve}(\bigl\lbrack12, 16, 20, 27\bigr\rbrack, 123)	\bigl\lbrack\bigl\lbrack0, 1, 4, 1\bigr\rbrack, \bigl\lbrack0, 6, 0, 1\bigr\rbrack, \bigl\lbrack1, 4, 1, 1\bigr\rbrack, \bigl\lbrack2, 2, 2, 1\bigr\rbrack, \bigl\lbrack3, 0, 3, 1\bigr\rbrack, \bigl\lbrack4, 3, 0, 1\bigr\rbrack, \bigl\lbrack5, 1, 1, 1\bigr\rbrack, \bigl\lbrack8, 0, 0, 1\bigr\rbrack\bigr\rbrack
 frobeniussolve-list-12-16-20-27-117	\mathrm{FrobeniusSolve}(\bigl\lbrack12, 16, 20, 27\bigr\rbrack, 117)	\bigl\lbrack\bigl\lbrack0, 1, 1, 3\bigr\rbrack, \bigl\lbrack3, 0, 0, 3\bigr\rbrack\bigr\rbrack
+frobeniussolve-list-6-9-20-44	\mathrm{FrobeniusSolve}(\bigl\lbrack6, 9, 20\bigr\rbrack, 44)	\bigl\lbrack\bigl\lbrack1, 2, 1\bigr\rbrack, \bigl\lbrack4, 0, 1\bigr\rbrack\bigr\rbrack
 43-is-the-frobenius-number-of-6-9-20-so-it-has	\mathrm{FrobeniusSolve}(\bigl\lbrack6, 9, 20\bigr\rbrack, 43)	\bigl\lbrack\bigr\rbrack
+frobeniussolve-list-6-9-20-24	\mathrm{FrobeniusSolve}(\bigl\lbrack6, 9, 20\bigr\rbrack, 24)	\bigl\lbrack\bigl\lbrack1, 2, 0\bigr\rbrack, \bigl\lbrack4, 0, 0\bigr\rbrack\bigr\rbrack

@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial
 equivalently-c-n-binom-2n-n-binom-2n-n-1		
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	\frac{C_{6}}{C_{5}}	\frac{22}{7}
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	C_{4}=\sum_{i=0}^3C_{i}C_{3-i}	\mathrm{True}
+generatingfunction-catalannumber-n-n-x	\mathrm{GeneratingFunction}(C_{n}, n, x)	\frac{1-\sqrt{1-4x}}{2x}
+catalannumber-neg-10	C_{-10}	0
+catalannumber-neg-9	C_{-9}	0
+catalannumber-neg-8	C_{-8}	0
+catalannumber-neg-7	C_{-7}	0
+catalannumber-neg-6	C_{-6}	0
+catalannumber-neg-4	C_{-4}	0
+catalannumber-neg-3	C_{-3}	0
 they-grow-fast-c-15-already-passes-nine-million	C_{15}	9\,694\,845

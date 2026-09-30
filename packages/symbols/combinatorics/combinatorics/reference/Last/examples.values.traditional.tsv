@@ -5,6 +5,8 @@ last-list-a-b-c
 last-default-ignored-when-nonempty		
 last-of-association-is-last-value		
 last-of-empty-association-falls-through		
+last-list-list-a-b-list-c-d-list-exponentiale-f		
+last-list-x		
 a-second-argument-supplies-a-default-for-an		
 of-a-matrix-the-last-row		
 a-lazy-range-works-too		
@@ -12,3 +14,4 @@ any-expression-not-just-a-list-the-last-term-of
 a-default-is-ignored-when-the-collection-has-a		
 last-c-at-c-1-see-at	\mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[-1]	\mathrm{True}
 an-empty-collection-has-no-last-element-compute		
+last-1-over-b		

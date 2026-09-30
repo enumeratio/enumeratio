@@ -1265,6 +1265,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ComplexInfinity",
   },
   {
+    name: "ComplexNumbers",
+    wolfram: "Complexes",
+  },
+  {
     name: "ComplexPlot",
     wolfram: "ComplexPlot",
   },
@@ -1314,6 +1318,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f1a29b",
       "fe1b96",
     ],
+    wolfram: "Conjugate",
   },
   {
     name: "ConnectedComponents",
@@ -2027,6 +2032,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Element",
+    wolfram: "Element",
     oracle: [
       {
         system: "sage",
@@ -2067,6 +2073,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "eba27c",
       "f0bcb5",
     ],
+    wolfram: "EllipticE",
+  },
+  {
+    name: "EllipticF",
+    wolfram: "EllipticF",
   },
   {
     name: "EllipticK",
@@ -2109,6 +2120,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "eba27c",
       "f0bcb5",
     ],
+    wolfram: "EllipticK",
   },
   {
     name: "EllipticPi",
@@ -2127,6 +2139,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dd67fb",
       "e9c797",
     ],
+    wolfram: "EllipticPi",
   },
   {
     name: "EllipticTheta",
@@ -3535,6 +3548,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IntegerString",
     wolfram: "IntegerString",
+  },
+  {
+    name: "Integers",
+    wolfram: "Integers",
   },
   {
     name: "Integrate",
@@ -5301,6 +5318,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Primes",
     fungrimEntries: ["04427b"],
+    wolfram: "Primes",
   },
   {
     name: "PrimitiveRootList",
@@ -5420,6 +5438,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "RationalNumbers",
+    wolfram: "Rationals",
+  },
+  {
     name: "RationalReconstruction",
     oracle: [
       {
@@ -5481,6 +5503,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "RealDigits",
     wolfram: "RealDigits",
+  },
+  {
+    name: "RealNumbers",
+    wolfram: "Reals",
   },
   {
     name: "RealSign",
@@ -5682,6 +5708,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "Simplify",
+    wolfram: "Simplify",
   },
   {
     name: "Sin",

@@ -1,5 +1,6 @@
 id	in	out	verdict
 primitiverootlist-7	enumeratio_primitive_root_list(7)	[3, 5]	
+primitiverootlist-9	enumeratio_primitive_root_list(9)		
 10-2-cdot-5-is-of-the-form-2p	enumeratio_primitive_root_list(10)	[3, 7]	
 an-odd-prime-power-varphi-varphi-25-8-generators	enumeratio_primitive_root_list(25)	[2, 3, 8, 12, 13, 17, 22, 23]	
 n-4-is-one-of-the-small-cyclic-cases	enumeratio_primitive_root_list(4)	[3]	

@@ -1,2 +1,5 @@
 id	in
 khinchin-s-constant	N[Khinchin]
+n-khinchin-50	N[Khinchin, 50]
+round-khinchin-pow-100	Round[Power[Khinchin, 100]]
+2-lt-khinchin-lt-3	Less[2, Khinchin, 3]

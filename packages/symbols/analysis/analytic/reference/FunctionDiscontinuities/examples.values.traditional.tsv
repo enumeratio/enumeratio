@@ -2,3 +2,4 @@ id	in	out
 a-pole-is-a-discontinuity		
 tangent-s-poles		
 a-polynomial-is-continuous-everywhere	\mathrm{FunctionDiscontinuities}(x^2, x)	\mathrm{False}
+functiondiscontinuities-sqrt-x-x		

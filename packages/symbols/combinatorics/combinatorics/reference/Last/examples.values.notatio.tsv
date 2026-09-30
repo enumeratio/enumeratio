@@ -5,6 +5,8 @@ last-list-a-b-c	<Last><List>a b c</List></Last>	<c />
 last-default-ignored-when-nonempty	<Last><List>1 2 3</List> 99</Last>	<ToExpression>3</ToExpression>
 last-of-association-is-last-value	<Last><Association><Rule>1 a</Rule> <Rule>2 b</Rule> <Rule>3 c</Rule></Association></Last>	<c />
 last-of-empty-association-falls-through	<Last><Apply>Association</Apply> 99</Last>	<ToExpression>99</ToExpression>
+last-list-list-a-b-list-c-d-list-exponentiale-f	<Last><List><List>a b</List> <List>c d</List> <List>ExponentialE f</List></List></Last>	<List>ExponentialE f</List>
+last-list-x	<Last><Apply>List</Apply> x</Last>	<x />
 a-second-argument-supplies-a-default-for-an	<Last><Apply>List</Apply> 99</Last>	<ToExpression>99</ToExpression>
 of-a-matrix-the-last-row	<Last><List><List>a b</List> <List>c d</List> <List>f g</List></List></Last>	<List>f g</List>
 a-lazy-range-works-too	<Last><Range>5 10</Range></Last>	<ToExpression>10</ToExpression>
@@ -12,3 +14,4 @@ any-expression-not-just-a-list-the-last-term-of	<Last><Add><Power>a 2</Power> <P
 a-default-is-ignored-when-the-collection-has-a	<Last><List>a b</List> x</Last>	<b />
 last-c-at-c-1-see-at	<Equal><Last><List>1 2 3</List></Last> <At><List>1 2 3</List> -1</At></Equal>	<True />
 an-empty-collection-has-no-last-element-compute	<Last><Apply>List</Apply></Last>	<Missing />
+last-1-over-b	<Last><Divide>1 b</Divide></Last>	<b />

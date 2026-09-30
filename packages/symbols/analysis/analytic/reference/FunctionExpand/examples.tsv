@@ -6,4 +6,7 @@ radicals-past-the-automatic-special-angle-table			[FunctionExpand, [Sin, [Divide
 half-angle-radicals-cos-frac-pi-24-frac-12-sqrt			[FunctionExpand, [Cos, [Divide, Pi, 24]]]	[Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 4, [Sqrt, 2], [Sqrt, 6]]]]	Half-angle radicals: $\cos\frac{\pi}{24} = \tfrac12\sqrt{2 + \tfrac{\sqrt2 + \sqrt6}{2}}$		
 a-rising-factorial-with-an-integer-length	Scope		[FunctionExpand, [Pochhammer, x, 3]]	[Multiply, x, [Add, x, 1], [Add, x, 2]]	A rising factorial with an integer length becomes a polynomial		
 binom-n2-frac-n-n-1-2	Scope		[FunctionExpand, [Binomial, n, 2]]	[Divide, [Multiply, n, [Subtract, n, 1]], 2]	$\binom n2 = \frac{n(n-1)}{2}$		
+functionexpand-1-over-sqrt-x-pow-2-times-sin	Scope		[FunctionExpand, [Multiply, [Divide, 1, [Sqrt, [Power, x, 2]]], [Sin, [Sqrt, [Power, x, 2]]]]]	[Divide, [Sin, [Sqrt, [Power, x, 2]]], [Sqrt, [Power, x, 2]]]			
+functionexpand-1-over-zeta-z-times-zeta-neg-z	Scope		[FunctionExpand, [Multiply, [Divide, 1, [Zeta, z]], [Zeta, [Add, [Negate, z], 1]]]]	[Divide, [Zeta, [Add, [Negate, z], 1]], [Zeta, z]]			
+functionexpand-polylog-2-z-plus-polylog-2-neg-z	Properties		[FunctionExpand, [Add, [PolyLog, 2, z], [PolyLog, 2, [Add, [Negate, z], 1]], [Negate, [Zeta, 2]]]]	[Add, [PolyLog, 2, z], [PolyLog, 2, [Add, [Negate, z], 1]], [Multiply, [Rational, -1, 6], [Power, Pi, 2]]]			
 a-generic-cos-argument-passes-through-unchanged	Possible issues	test	[FunctionExpand, [Cos, theta]]	[Cos, theta]	A generic [[Cos]] argument outside the special-angle table passes through unchanged		

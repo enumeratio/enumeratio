@@ -1,0 +1,6 @@
+id	in	out
+shape-list-list-list-list-a-b	\mathrm{Shape}(\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack)	(1,1,1,2)
+shape-1	\mathrm{Shape}(1)	()
+shape-list-1-2	\mathrm{Shape}(\bigl\lbrack1, 2\bigr\rbrack)	(2,)
+shape-list-list-1-2	\mathrm{Shape}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)	(1,2)
+length-shape-list-list-a-b-list-c-d-eq-rank-list	\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))=\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	\top

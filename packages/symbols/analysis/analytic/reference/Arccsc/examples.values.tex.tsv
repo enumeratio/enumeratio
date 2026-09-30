@@ -7,4 +7,20 @@ inside-1-1-the-value-is-complex	\mathrm{arccsc}(0.5)	1.570\,796\,326\,794\,896\,
 arccsc-positiveinfinity	\mathrm{arccsc}(\infty)	0
 a-pole-arccsc-0-is-complex-infinity	\mathrm{arccsc}(0)	\tilde\infty
 derivative-for-real-x-1	\frac{\mathrm{d}\mathrm{arccsc}(x)}{\mathrm{d}x}	-(\vert x\vert\sqrt{x^2-1})^{-1}
+n-arccsc-5-50	N(\mathrm{arccsc}(5), 50)	0.201\,357\,920\,790\,330\,791\,455
+arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	\mathrm{arccsc}(\bigl\lbrack\bigl\lbrack\sqrt{2}, -2^{1/2}\bigr\rbrack, \bigl\lbrack0, -2^{1/2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi}{4}, -\frac{\pi}{4}\bigr\rbrack, \bigl\lbrack\tilde\infty, -\frac{\pi}{4}\bigr\rbrack\bigr\rbrack
+list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	\bigl\lbrack\mathrm{arccsc}(-\sqrt{2}), \mathrm{arccsc}(-\frac{2\sqrt{3}}{3}), \mathrm{arccsc}(\frac{2\sqrt{3}}{3}), \mathrm{arccsc}(\sqrt{2})\bigr\rbrack	\bigl\lbrack-\frac{\pi}{4}, -\frac{\pi}{3}, \frac{\pi}{3}, \frac{\pi}{4}\bigr\rbrack
+arccsc-complexinfinity	\mathrm{arccsc}(\tilde\infty)	0
+arccsc-list-1-neg-1-0	\mathrm{arccsc}(\bigl\lbrack1, -1, 0\bigr\rbrack)	\bigl\lbrack\frac{\pi}{2}, -\frac{\pi}{2}, \tilde\infty\bigr\rbrack
+matrixfunction-function-arccsc-1-1-list-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{arccsc}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\sqrt{2}, -2^{1/2}\bigr\rbrack, \bigl\lbrack0, -2^{1/2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi}{4}, -\frac{\pi}{4}\bigr\rbrack, \bigl\lbrack0, -\frac{\pi}{4}\bigr\rbrack\bigr\rbrack
 undoes-csc-csc-arccsc-x-x	\csc(\mathrm{arccsc}(2))=2	\top
+arccsc-neg-1	\mathrm{arccsc}(-1)	-\frac{\pi}{2}
+arccsc-neg-sqrt-2-plus-sqrt-6	\mathrm{arccsc}(\sqrt{6}-\sqrt{2})	\frac{5\pi}{12}
+arccsc-neg-sqrt-6-plus-sqrt-2	\mathrm{arccsc}(\sqrt{2}-\sqrt{6})	-\frac{5\pi}{12}
+arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	\mathrm{arccsc}(2\sqrt{\frac{1}{2+\sqrt{2}}})	\mathrm{arccsc}(\frac{2}{\sqrt{2+\sqrt{2}}})
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	\mathrm{arccsc}(-2\sqrt{\frac{1}{2+\sqrt{2}}})	\mathrm{arccsc}(-\frac{2}{\sqrt{2+\sqrt{2}}})
+arccsc-2-over-3-times-sqrt-3	\mathrm{arccsc}(\frac{2\sqrt{3}}{3})	\frac{\pi}{3}
+arccsc-neg-2-over-3-times-sqrt-3	\mathrm{arccsc}(-\frac{2\sqrt{3}}{3})	-\frac{\pi}{3}
+arccsc-neg-1-plus-sqrt-5	\mathrm{arccsc}(\sqrt{5}-1)	\frac{3\pi}{10}
+arccsc-1-minus-sqrt-5	\mathrm{arccsc}(1-\sqrt{5})	-\frac{3\pi}{10}
+arccsc-neg-sqrt-2	\mathrm{arccsc}(-\sqrt{2})	-\frac{\pi}{4}

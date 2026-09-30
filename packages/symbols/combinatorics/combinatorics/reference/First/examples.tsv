@@ -6,6 +6,7 @@ first-default-ignored-when-nonempty		test	[First, [List, 1, 2, 3], 99]	1
 first-of-association-is-first-value		test	[First, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	a			
 first-of-empty-association-falls-through		test	[First, [Association], 99]	99			
 first-of-nonempty-association-ignores-default		test	[First, [Association, [Rule, 1, a], [Rule, 2, b]], 99]	a			
+first-list-x			[First, [List], x]	x			
 a-second-argument-supplies-a-default-for-an	Scope		[First, [List], 99]	99	A second argument supplies a default for an empty collection		
 of-a-matrix-the-first-row	Scope		[First, [List, [List, a, b], [List, c, d]]]	[List, a, b]	Of a matrix, the first row		
 a-lazy-range-works-too	Scope		[First, [Range, 5, 10]]	5	A lazy [[Range]] works too		
@@ -13,3 +14,4 @@ any-expression-not-just-a-list-the-first-term-of	Scope		[First, [Add, [Power, a,
 a-default-is-ignored-when-the-collection-has-a	Scope		[First, [List, a, b], x]	a	A default is ignored when the collection has a first element		
 first-c-at-c-1-see-at	Properties		[Equal, [First, [List, 1, 2, 3]], [At, [List, 1, 2, 3], 1]]	True	$First(c) = At(c, 1)$. See [[At]]		
 an-empty-collection-has-no-first-element-compute	Possible issues		[First, [List]]	Missing	An empty collection has no first element; compute-engine returns the symbol $Missing$	undefined-form	First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).
+first-a-pow-neg-2	Possible issues		[First, [Power, a, -2]]	a			

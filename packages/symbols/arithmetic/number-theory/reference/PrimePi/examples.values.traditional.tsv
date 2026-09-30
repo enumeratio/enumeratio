@@ -8,5 +8,24 @@ rational-arguments-the-primes-up-to-7-2-are-2	\pi(\frac{7}{2})	2
 real-arguments	\pi(15.25)	6
 the-primes-below-a-million	\pi(1\,000\,000)	78\,498
 listable-threads-over-a-list		
+nthprime-range-1-primepi-100	p_{1..\pi(100)}	\bigl\lbrack2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97\bigr\rbrack
+primepi-5-000	\pi(5\,000)	669
 same-inverse-relation-viewed-from-primepi-s-side	\pi(p_{50})=50	\mathrm{True}
+primepi-nthprime-100	\pi(p_{100})	100
+primepi-1-000	\pi(1\,000)	168
+primepi-3	\pi(3)	2
+primepi-4	\pi(4)	2
+primepi-5	\pi(5)	3
+primepi-6	\pi(6)	3
+primepi-7	\pi(7)	4
+primepi-8	\pi(8)	4
+primepi-9	\pi(9)	4
+primepi-10	\pi(10)	4
+primepi-11	\pi(11)	5
+primepi-12	\pi(12)	5
+primepi-13	\pi(13)	6
+primepi-14	\pi(14)	6
+primepi-16	\pi(16)	6
+primepi-17	\pi(17)	7
+primepi-18	\pi(18)	7
 no-primes-are-a-negative-number	\pi(-1)	0

@@ -21,6 +21,10 @@ uncertainty-propagation-csc-2-pm-0-01-approx-1	\csc(\mathrm{Around}(2, 0.01))	\m
 oddness-pulls-the-sign-out-of-a-symbolic	\csc(-x)	-\csc(x)
 derivative-csc-x-cot-x	\frac{\mathrm{d}\csc(x)}{\mathrm{d}x}	-(\csc(x)\cot(x))
 antiderivative-ln-csc-x-cot-x	\int\!\csc(x)\, \mathrm{d}x	-\ln(\vert\csc(x)+\cot(x)\vert)
+n-csc-6-over-5-50	N(\csc(\frac{6}{5}), 50)	1.072\,916\,377\,709\,897\,228\,71
+matrixfunction-function-csc-1-1-list-list-1-over	\mathrm{MatrixFunction}(()\mapsto\csc(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{\pi}{3}, \pi\bigr\rbrack, \bigl\lbrack\frac{\pi}{6}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{6}{7}-\frac{2\sqrt{3}}{21}, \frac{6}{7}+\frac{4\sqrt{3}}{7}\bigr\rbrack, \bigl\lbrack\frac{1}{7}+\frac{2\sqrt{3}}{21}, \frac{1}{7}-\frac{4\sqrt{3}}{7}\bigr\rbrack\bigr\rbrack
 reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\top
+csc-1-over-8-times-pi	\csc(\frac{\pi}{8})	\sqrt{4+2\sqrt{2}}
+csc-3-over-10-times-pi	\csc(\frac{3\pi}{10})	\sqrt{5}-1
 a-pole-sin-0-0	\csc(0)	\tilde\infty
 csc-complexinfinity-is-indeterminate-for-the	\csc(\tilde\infty)	\operatorname{Indeterminate}

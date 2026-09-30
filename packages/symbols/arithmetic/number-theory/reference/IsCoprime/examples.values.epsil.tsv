@@ -2,6 +2,21 @@ id	in	out
 iscoprime-4-9	IsCoprime(4, 9)	True
 both-are-divisible-by-3	IsCoprime(6, 9)	False
 several-arguments-every-pair-must-be-coprime	IsCoprime(2, 3, 5)	True
+iscoprime-8-11	IsCoprime(8, 11)	True
+iscoprime-2-4	IsCoprime(2, 4)	False
 gaussian-integers-2-i-and-2-i-are-non-associate	IsCoprime(2 + i, 2 - i)	True
 listable	IsCoprime(3, [4, 6])	[True, False]
+iscoprime-2-3-neg-5-7	IsCoprime(2, 3, -5, 7)	True
+iscoprime-5-plus-i-1-minus-i	IsCoprime(5 + i, 1 - i)	False
+iscoprime-neg-1-plus-2-pow-100-neg-1-plus-3-pow	IsCoprime(-1 + 2 ^ 100, -1 + 3 ^ 100)	False
+iscoprime-list-1-2-3-4-5-6	IsCoprime([1, 2, 3, 4, 5], 6)	[True, False, False, False, True]
+iscoprime-2-3	IsCoprime(2, 3)	True
+iscoprime-5-6	IsCoprime(5, 6)	True
+iscoprime-5-3	IsCoprime(5, 3)	True
+iscoprime-8-9	IsCoprime(8, 9)	True
+iscoprime-6-11	IsCoprime(6, 11)	True
+iscoprime-5-12	IsCoprime(5, 12)	True
+iscoprime-a-b	IsCoprime(a, b)	False
+iscoprime-nthprime-10-nthprime-15-nthprime-20	IsCoprime(nthPrime(10), nthPrime(15), nthPrime(20), nthPrime(25))	True
+iscoprime-7-10	IsCoprime(7, 10)	True
 pairwise-not-collectively-gcd-6-10-15-1-yet-no	IsCoprime(6, 10, 15)	False

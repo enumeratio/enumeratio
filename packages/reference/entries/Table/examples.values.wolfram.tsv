@@ -1,5 +1,6 @@
 id	in	out	tex.in	tex.out
 table-of-i-2-for-i-from-1-to-5				
 odd-numbers-from-1-to-9-stepping-by-2				
+tabulate-x-10	Array[x, 10]	{x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10]}	\text{Array}[x,10]	\{x(1),x(2),x(3),x(4),x(5),x(6),x(7),x(8),x(9),x(10)\}
 the-same-shape-of-table-with-a-plain-function	Table[Power[i, 2], List[i, 5]]	{1, 4, 9, 16, 25}	\text{Table}\left[i^2,\{i,5\}\right]	\{1,4,9,16,25\}
 a-constant-body-is-still-evaluated-once-per				

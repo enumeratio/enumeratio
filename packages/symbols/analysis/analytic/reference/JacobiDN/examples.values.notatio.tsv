@@ -26,7 +26,13 @@ dn-0-5-0-3i-3-2	<N><JacobiDN><Complex>0.5 -0.3</Complex> -3</JacobiDN></N>	<Comp
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiDN>0.3 1.5</JacobiDN></N>	<ToExpression>0.9351619177552998</ToExpression>
 m-less-than-0-via-the-imaginary-modulus	<N><JacobiDN>0.3 -2</JacobiDN></N>	<ToExpression>1.0885129466062724</ToExpression>
 a-complex-argument-u	<N><JacobiDN><Complex>0.3 0.4</Complex> 0.5</JacobiDN></N>	<Complex>1.012262082212854 -0.0628496850247877</Complex>
+matrixfunction-function-jacobidn-neg-1-over-3	<MatrixFunction><Function><Block><JacobiDN><Multiply><Complex>0 <Rational>-1 3</Rational></Complex> Pi</Multiply> _1</JacobiDN></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List>2 0</List> <List>0 2</List></List>
+list-jacobidn-z-0-jacobidn-z-1	<List><JacobiDN>z 0</JacobiDN> <JacobiDN>z 1</JacobiDN></List>	<List>1 <Divide>1 <Cosh>z</Cosh></Divide></List>
 u-0-is-1-for-any-m	<JacobiDN>0 m</JacobiDN>	<ToExpression>1</ToExpression>
 m-0-is-1-for-any-u	<JacobiDN>u 0</JacobiDN>	<ToExpression>1</ToExpression>
 the-quarter-period-u-elliptick-m-is-sqrt	<JacobiDN><EllipticK>m</EllipticK> m</JacobiDN>	<Sqrt><Add><Negate>m</Negate> 1</Add></Sqrt>
+jacobidn-0-1	<JacobiDN>0 1</JacobiDN>	<ToExpression>1</ToExpression>
+jacobidn-1-over-2-times-i-times-pi-1	<JacobiDN><Multiply><Complex>0 <Rational>1 2</Rational></Complex> Pi</Multiply> 1</JacobiDN>	<ComplexInfinity />
+jacobidn-i-times-elliptick-1-0	<JacobiDN><Multiply><Complex>0 1</Complex> <EllipticK>1</EllipticK></Multiply> 0</JacobiDN>	<ToExpression>1</ToExpression>
+jacobidn-3i-times-elliptick-1-0	<JacobiDN><Multiply><Complex>0 3</Complex> <EllipticK>1</EllipticK></Multiply> 0</JacobiDN>	<ToExpression>1</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiDN>u m</JacobiDN>	<JacobiDN>u m</JacobiDN>

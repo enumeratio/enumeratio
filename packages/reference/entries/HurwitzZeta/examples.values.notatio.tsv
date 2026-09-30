@@ -184,6 +184,11 @@ far-left-of-the-strip-all-40-digits-agree-with	<N><HurwitzZeta><Rational>-41 2</
 left-of-the-strip-at-a-non-integer-a	<N><HurwitzZeta>-20 0.7</HurwitzZeta></N>	<ToExpression>-80.0909738762535913363158842634494985634654608317388</ToExpression>
 left-of-the-strip-at-a-non-integer-a-and-s	<N><HurwitzZeta>-40.5 0.4</HurwitzZeta></N>	<ToExpression>7724997484091588.75678</ToExpression>
 a-negative-a-frac-12-5-is-real-and-so-is-the	<N><HurwitzZeta>5 <Rational>-1 2</Rational></HurwitzZeta></N>	<ToExpression>0.144760409444467716272</ToExpression>
+n-hurwitzzeta-1-over-3-8-over-7-50	<N><HurwitzZeta><Rational>1 3</Rational> <Rational>8 7</Rational></HurwitzZeta> 50</N>	<ToExpression>-1.1389367444490991746548674334535727810961919460755</ToExpression>
+hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	<HurwitzZeta>-1 <List><List><Rational>1 2</Rational> 1</List> <List>1 <Rational>1 2</Rational></List></List></HurwitzZeta>	<List><List><Rational>1 24</Rational> <Rational>-1 12</Rational></List> <List><Rational>-1 12</Rational> <Rational>1 24</Rational></List></List>
+functionexpand-hurwitzzeta-neg-2-a	<FunctionExpand><HurwitzZeta>-2 a</HurwitzZeta></FunctionExpand>	<Multiply><Rational>-1 3</Rational> <Add><Power>a 3</Power> <Multiply><Rational>-3 2</Rational> <Power>a 2</Power></Multiply> <Multiply><Rational>1 2</Rational> a</Multiply></Add></Multiply>
+functionexpand-hurwitzzeta-0-a	<FunctionExpand><HurwitzZeta>0 a</HurwitzZeta></FunctionExpand>	<Add><Negate>a</Negate> <Rational>1 2</Rational></Add>
+fullsimplify-matrixfunction-function-hurwitzzeta	<FullSimplify><MatrixFunction><Function><Block><HurwitzZeta>-1 _1</HurwitzZeta></Block> _1</Function> <List><List><Rational>1 2</Rational> 1</List> <List>1 <Rational>1 2</Rational></List></List></MatrixFunction></FullSimplify>	<List><List><Rational>-11 24</Rational> 0</List> <List>0 <Rational>-11 24</Rational></List></List>
 certified-digits-zeta-1-2-1-3	<N><HurwitzZeta><Rational>1 2</Rational> <Rational>1 3</Rational></HurwitzZeta> 40</N>	<ToExpression>-0.1180833279342217190944541707941027331459</ToExpression>
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a	<HurwitzZeta>0 a</HurwitzZeta>	<Add><Negate>a</Negate> <Rational>1 2</Rational></Add>
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	<HurwitzZeta>-1 a</HurwitzZeta>	<Multiply><Rational>-1 2</Rational> <Add><Power>a 2</Power> <Negate>a</Negate> <Rational>1 6</Rational></Add></Multiply>
@@ -194,6 +199,20 @@ zeta-0-a-frac-12-a-holds-at-a-0-too	<HurwitzZeta>0 0</HurwitzZeta>	<Rational>1 2
 zeta-2-a-b-3-a-3	<HurwitzZeta>-2 a</HurwitzZeta>	<Multiply><Rational>-1 3</Rational> <Add><Power>a 3</Power> <Multiply><Rational>-3 2</Rational> <Power>a 2</Power></Multiply> <Multiply><Rational>1 2</Rational> a</Multiply></Add></Multiply>
 partial-a-zeta-s-a-s-zeta-s-1-a	<D><HurwitzZeta>s a</HurwitzZeta> a</D>	<Negate><Multiply>s <HurwitzZeta><Add>s 1</Add> a</HurwitzZeta></Multiply></Negate>
 zeta-4-2-pi-4-90-1	<HurwitzZeta>4 2</HurwitzZeta>	<Add>-1 <Multiply><Rational>1 90</Rational> <Power>Pi 4</Power></Multiply></Add>
+hurwitzzeta-0-1	<HurwitzZeta>0 1</HurwitzZeta>	<Rational>-1 2</Rational>
+hurwitzzeta-neg-1-1	<HurwitzZeta>-1 1</HurwitzZeta>	<Rational>-1 12</Rational>
+hurwitzzeta-0-1-over-4	<HurwitzZeta>0 <Rational>1 4</Rational></HurwitzZeta>	<Rational>1 4</Rational>
+hurwitzzeta-neg-1-1-over-4	<HurwitzZeta>-1 <Rational>1 4</Rational></HurwitzZeta>	<Rational>1 96</Rational>
+hurwitzzeta-2-3	<HurwitzZeta>2 3</HurwitzZeta>	<Add><Rational>-5 4</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-4	<HurwitzZeta>2 4</HurwitzZeta>	<Add><Rational>-49 36</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-5	<HurwitzZeta>2 5</HurwitzZeta>	<Add><Rational>-205 144</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-6	<HurwitzZeta>2 6</HurwitzZeta>	<Add><Rational>-5269 3600</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-7	<HurwitzZeta>2 7</HurwitzZeta>	<Add><Rational>-5369 3600</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-8	<HurwitzZeta>2 8</HurwitzZeta>	<Add><Rational>-266681 176400</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-9	<HurwitzZeta>2 9</HurwitzZeta>	<Add><Rational>-1077749 705600</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-2-10	<HurwitzZeta>2 10</HurwitzZeta>	<Add><Rational>-9778141 6350400</Rational> <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+hurwitzzeta-4-1	<HurwitzZeta>4 1</HurwitzZeta>	<Multiply><Rational>1 90</Rational> <Power>Pi 4</Power></Multiply>
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	<HurwitzZeta>-3 <Rational>7 3</Rational></HurwitzZeta>	<Rational>-7813 3240</Rational>
 re-s-0-a-0-is-indeterminate	<N><HurwitzZeta><Complex>0 -1</Complex> 0</HurwitzZeta></N>	<NaN />
 re-s-negative-a-drops-the-term-cleanly	<N><HurwitzZeta><Complex>-1.5 0.5</Complex> -2</HurwitzZeta></N>	<Complex>-4.632252692594817 -17.64247080748051</Complex>
+hurwitzzeta-2-neg-2	<HurwitzZeta>2 -2</HurwitzZeta>	<ComplexInfinity />

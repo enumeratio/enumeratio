@@ -1,5 +1,13 @@
 id	in
 7-is-a-mersenne-prime-exponent	MersennePrimeExponentQ[7]
+ismersenneprimeexponent-5	MersennePrimeExponentQ[5]
+ismersenneprimeexponent-8	MersennePrimeExponentQ[8]
 11-is-prime-but-not-a-mersenne-prime-exponent	MersennePrimeExponentQ[11]
 9-is-not-even-prime	MersennePrimeExponentQ[9]
 2-31-1-is-the-8th-mersenne-prime	MersennePrimeExponentQ[31]
+ismersenneprimeexponent-neg-5	MersennePrimeExponentQ[-5]
+ismersenneprimeexponent-89	MersennePrimeExponentQ[89]
+ismersenneprimeexponent-12	MersennePrimeExponentQ[12]
+ismersenneprimeexponent-2	MersennePrimeExponentQ[2]
+ismersenneprimeexponent-fullsimplify-x	MersennePrimeExponentQ[FullSimplify[x]]
+ismersenneprimeexponent-13	MersennePrimeExponentQ[13]

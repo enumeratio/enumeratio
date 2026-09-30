@@ -3,3 +3,6 @@ polynomials-are-entire	FunctionAnalytic[Power[x, 2], x]	True	\text{FunctionAnaly
 a-pole-anywhere-in-the-plane-disqualifies-it	FunctionAnalytic[Divide[1, x], x]	False	\text{FunctionAnalytic}\left[\frac{1}{x},x\right]	\text{False}
 sqrt-has-a-branch-point	FunctionAnalytic[Sqrt[x], x]	False	\text{FunctionAnalytic}\left[\sqrt{x},x\right]	\text{False}
 sine-is-entire	FunctionAnalytic[Sin[x], x]	True	\text{FunctionAnalytic}[\sin (x),x]	\text{True}
+functionanalytic-tan-x-x	FunctionAnalytic[Tan[x], x]	False	\text{FunctionAnalytic}[\tan (x),x]	\text{False}
+list-functionanalytic-x-x-functionanalytic-x-pow	List[FunctionAnalytic[x, x], FunctionAnalytic[Plus[Power[x, 2], 1], x], FunctionAnalytic[Plus[Power[x, 3], Times[-1, Times[2, Power[x, 2]]], Times[-1, Times[5, x]], 6], x]]	{True, True, True}	\left\{\text{FunctionAnalytic}[x,x],\text{FunctionAnalytic}\left[x^2+1,x\right],\text{FunctionAnalytic}\left[x^3-2 x^2-5 x+6,x\right]\right\}	\{\text{True},\text{True},\text{True}\}
+list-functionanalytic-sin-x-x-functionanalytic	List[FunctionAnalytic[Sin[x], x], FunctionAnalytic[Cos[x], x], FunctionAnalytic[Exp[x], x]]	{True, True, True}	\{\text{FunctionAnalytic}[\sin (x),x],\text{FunctionAnalytic}[\cos (x),x],\text{FunctionAnalytic}[\exp (x),x]\}	\{\text{True},\text{True},\text{True}\}

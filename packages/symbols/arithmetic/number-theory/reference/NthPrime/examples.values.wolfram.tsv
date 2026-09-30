@@ -5,6 +5,34 @@ nthprime-100	Prime[100]	541	p_{100}	541
 threads-element-wise-over-a-list-as-wolfram-s	Prime[List[1, 3, 4, 10]]	{2, 5, 7, 29}	p_{\{1,3,4,10\}}	\{2,5,7,29\}
 the-millionth-prime	Prime[1000000]	15485863	p_{1000000}	15485863
 a-prime-gap-p-31-p-30-127-113	Subtract[Prime[31], Prime[30]]	14	p_{31}-p_{30}	14
+nthprime-25	Prime[25]	97	p_{25}	97
+array-nthprime-100-mod-10	Mod[Array[Prime, 100], 10]	{2, 3, 5, 7, 1, 3, 7, 9, 3, 9, 1, 7, 1, 3, 7, 3, 9, 1, 7, 1, 3, 9, 3, 9, 7, 1, 3, 7, 9, 3, 7, 1, 7, 9, 9, 1, 7, 3, 7, 3, 9, 1, 1, 3, 7, 9, 1, 3, 7, 9, 3, 9, 1, 1, 7, 3, 9, 1, 7, 1, 3, 3, 7, 1, 3, 7, 1, 7, 7, 9, 3, 9, 7, 3, 9, 3, 9, 7, 1, 9, 9, 1, 1, 3, 9, 3, 9, 7, 1, 3, 7, 9, 7, 1, 9, 3, 9, 1, 3, 1}	(\text{Array}[\text{Prime},100] \bmod 10)	\{2,3,5,7,1,3,7,9,3,9,1,7,1,3,7,3,9,1,7,1,3,9,3,9,7,1,3,7,9,3,7,1,7,9,9,1,7,3,7,3,9,1,1,3,7,9,1,3,7,9,3,9,1,1,7,3,9,1,7,1,3,3,7,1,3,7,1,7,7,9,3,9,7,3,9,3,9,7,1,9,9,1,1,3,9,3,9,7,1,3,7,9,7,1,9,3,9,1,3,1\}
+n-100-times-last-foldlist-multiply-1-1-plus-neg	N[Times[100, Last[FoldList[Times, 1, Plus[1, Divide[-1, Prime[Range[1, 25]]]]]]]]	12.031729047493519	N\left[100 \text{Last}\left[\text{FoldList}\left[\text{Times},1,1-\frac{1}{p_{\text{Range}[1,25]}}\right]\right]\right]	12.0317
+ismersenneprimeexponent-nthprime-4	MersennePrimeExponentQ[Prime[4]]	True	\text{MersennePrimeExponentQ}\left[p_4\right]	\text{True}
+isprime-neg-1-plus-2-pow-nthprime-4	PrimeQ[Plus[-1, Power[2, Prime[4]]]]	True	\text{PrimeQ}\left[-1+2^{p_4}\right]	\text{True}
 primepi-and-nthprime-are-inverses-pi-p-n-n	(PrimePi[Prime[100]] == 100)	True	\pi \left(p_{100}\right)=100	\text{True}
+primepi-nthprime-100	PrimePi[Prime[100]]	100	\pi \left(p_{100}\right)	100
+nthprime-1-plus-primepi-30	Prime[Plus[1, PrimePi[30]]]	31	p_{1+\pi (30)}	31
+primeomega-nthprime-5	PrimeOmega[Prime[5]]	1	\Omega \left(p_5\right)	1
+divisors-nthprime-5	Divisors[Prime[5]]	{1, 11}	\text{Divisors}\left[p_5\right]	\{1,11\}
+totient-nthprime-10	EulerPhi[Prime[10]]	28	\phi \left(p_{10}\right)	28
+nthprime-2	Prime[2]	3	p_2	3
+nthprime-3	Prime[3]	5	p_3	5
+nthprime-4	Prime[4]	7	p_4	7
+nthprime-5	Prime[5]	11	p_5	11
+nthprime-6	Prime[6]	13	p_6	13
+nthprime-7	Prime[7]	17	p_7	17
+nthprime-30-in-primes	Element[Prime[30], Primes]	True	p_{30}\in \mathbb{P}	\text{True}
+neg-1-plus-nthprime-10	Plus[-1, Prime[10]]	28	-1+p_{10}	28
+nthprime-8	Prime[8]	19	p_8	19
+nthprime-9	Prime[9]	23	p_9	23
+nthprime-11	Prime[11]	31	p_{11}	31
+nthprime-12	Prime[12]	37	p_{12}	37
+nthprime-13	Prime[13]	41	p_{13}	41
+nthprime-14	Prime[14]	43	p_{14}	43
+nthprime-15	Prime[15]	47	p_{15}	47
+nthprime-16	Prime[16]	53	p_{16}	53
+nthprime-17	Prime[17]	59	p_{17}	59
+nthprime-18	Prime[18]	61	p_{18}	61
 n-must-be-a-positive-integer-compute-engine	Prime[0]	Prime[0]	p_0	p_0
 the-1000th-prime	Prime[1000]	7919	p_{1000}	7919

@@ -3,11 +3,16 @@ isodd-3	\mathrm{IsOdd}(3)	\mathrm{True}
 isodd-4	\mathrm{IsOdd}(4)	\mathrm{False}
 negative-integers-count-too	\mathrm{IsOdd}(-7)	\mathrm{True}
 isodd-0	\mathrm{IsOdd}(0)	\mathrm{False}
+isodd-9	\mathrm{IsOdd}(9)	\mathrm{True}
 a-non-integer-is-not-odd	\mathrm{IsOdd}(3.5)	\mathrm{False}
 isodd-1-over-3	\mathrm{IsOdd}(\frac{1}{3})	\mathrm{False}
 big-integers	\mathrm{IsOdd}(2^{100}+1)	\mathrm{True}
 pi-is-known-not-to-be-an-integer-so-it-is	\mathrm{IsOdd}(\pi)	\mathrm{False}
 threads-element-wise-over-a-list	\mathrm{IsOdd}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
 select-the-odd-numbers-up-to-10		
+isvector-list-1-5-7-11-isodd	\mathrm{IsVector}(\bigl\lbrack1, 5, 7, 11\bigr\rbrack, \mathrm{IsOdd})	\mathrm{True}
+isvector-list-2-5-7-11-isodd	\mathrm{IsVector}(\bigl\lbrack2, 5, 7, 11\bigr\rbrack, \mathrm{IsOdd})	\mathrm{False}
 an-integer-is-odd-exactly-when-it-is-not-even	\mathrm{IsOdd}(7)=\lnot\mathrm{IsEven}(7)	\mathrm{True}
+isodd-2	\mathrm{IsOdd}(2)	\mathrm{False}
+isodd-15	\mathrm{IsOdd}(15)	\mathrm{True}
 a-symbol-stays-undecided-rather-than-false		

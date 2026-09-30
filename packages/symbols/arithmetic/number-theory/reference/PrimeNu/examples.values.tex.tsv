@@ -7,6 +7,20 @@ large-integers-the-15-primes-up-to-50-divide-50	\mathrm{PrimeNu}(50!)	15
 gaussian-integers-3-i-1-i-2-i	\mathrm{PrimeNu}(3+i)	2
 gaussianintegers-true-5-splits-so-105-has-4	\mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	4
 listable-over-a-range	\mathrm{PrimeNu}(1..20)	\bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
+primenu-30	\mathrm{PrimeNu}(30)	3
+moebiusmu-42-eq-neg-1-pow-primenu-42	\mathrm{MoebiusMu}(42)=(-1)^{\mathrm{PrimeNu}(42)}	\top
+liouvillelambda-42-eq-neg-1-pow-primenu-42	\mathrm{LiouvilleLambda}(42)=(-1)^{\mathrm{PrimeNu}(42)}	\top
 primenu-n-is-the-length-of-factorinteger-n	\mathrm{PrimeNu}(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))	\top
+primenu-50	\mathrm{PrimeNu}(50)	2
+primenu-360-eq-primenu-9-plus-primenu-40	\mathrm{PrimeNu}(360)=\mathrm{PrimeNu}(9)+\mathrm{PrimeNu}(40)	\top
+primenu-49	\mathrm{PrimeNu}(49)	1
+primenu-210-eq-primeomega-210	\mathrm{PrimeNu}(210)=\mathrm{PrimeOmega}(210)	\top
+moebiusmu-33-eq-neg-1-pow-primenu-33	\mathrm{MoebiusMu}(33)=(-1)^{\mathrm{PrimeNu}(33)}	\top
+liouvillelambda-33-eq-neg-1-pow-primenu-33	\mathrm{LiouvilleLambda}(33)=(-1)^{\mathrm{PrimeNu}(33)}	\top
+primenu-2	\mathrm{PrimeNu}(2)	1
+primenu-3	\mathrm{PrimeNu}(3)	1
+primenu-6	\mathrm{PrimeNu}(6)	2
+primenu-4	\mathrm{PrimeNu}(4)	1
+all-range-1-100-function-primenu-1-lt-eq	\mathrm{All}(1..100, ()\mapsto\mathrm{PrimeNu}(\operatorname{\_1})\le\mathrm{PrimeOmega}(\operatorname{\_1}))	\top
 32-2-5-has-just-one-distinct-prime-factor	\mathrm{PrimeNu}(32)	1
 1-has-no-prime-factors	\mathrm{PrimeNu}(1)	0

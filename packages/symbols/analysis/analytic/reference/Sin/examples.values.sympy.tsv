@@ -48,6 +48,16 @@ taylor-series-about-0-only-odd-powers-appear
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1			
 to-30-significant-digits-every-one-correctly	N(sin(1), 30)	0.841470984807896506652502321630	
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(sin((S(24)**40)), 30)	0.400083152719766047070941915848	
+n-sin-6-over-5-50	N(sin(Rational(6, 5)), 30)		
+functiondomain-sin-x-x			
+functionrange-sin-x-x-y			
+functionperiod-sin-x-x			
+functionanalytic-sin-x-x			
+functioninjective-sin-x-x			
+functionsurjective-sin-x-x			
+functionsingularities-sin-x-x			
+functiondiscontinuities-sin-x-x			
+matrixfunction-function-sin-1-1-list-list-5-over			
 threads-element-wise-over-a-list	[sin(0), sin((S(pi) / 2)), sin(pi)]	[0, 1, 0]	
 degrees-d-converts-a-degree-measure-to-radians			
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	((S(sin((S(pi) / 6)))**2) + (S(cos((S(pi) / 6)))**2))	1	
@@ -60,6 +70,7 @@ power-reduction-sin-2-x-frac-1-cos-2x-2
 euler-s-formula-sin-x-frac-e-ix-e-ix-2i			
 simplify-knows-the-pythagorean-identity			
 the-same-through-fullsimplify			
+sin-3-over-10-times-pi	sin((Rational(3, 10) * pi))		
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)	
 sin-2-a-generic-argument-stays-symbolic	sin(2)	sin(2)	
 sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	True	

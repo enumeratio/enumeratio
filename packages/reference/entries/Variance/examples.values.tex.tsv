@@ -1,0 +1,8 @@
+id	in	out
+variance-list-1-2-3-4	\mathrm{Variance}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\frac{5}{3}
+variance-n-list-1-2-3-4-30	\mathrm{Variance}(N(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, 30))	\frac{5}{3}
+n-variance-ts	N(\mathrm{Variance}(\mathrm{ts}))	\mathrm{Variance}(\mathrm{ts})
+variance-binomialdistribution-n-p	\mathrm{Variance}(\operatorname{BinomialDistribution}(n, p))	np\times(1-p)
+variance-probabilitydistribution-sqrt-2-times-1	\mathrm{Variance}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi((x-2)^4+1))^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))	\mathrm{Variance}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi(x-2)^4+\pi)^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))
+n-list-mean-data-variance-data	N(\bigl\lbrack\mathrm{mean}(\mathrm{data}), \mathrm{Variance}(\mathrm{data})\bigr\rbrack)	\bigl\lbrack\mathrm{mean}(\mathrm{data}), \mathrm{Variance}(\mathrm{data})\bigr\rbrack
+n-variance-heights	N(\mathrm{Variance}(\mathrm{heights}))	\mathrm{Variance}(\mathrm{heights})

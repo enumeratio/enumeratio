@@ -36,6 +36,16 @@ taylor-series-about-0-only-even-powers-appear
 to-30-significant-digits-every-one-correctly	nf(cos(n(1)))	0.5403023058681398	
 to-1-significant-digit	nf(cos(n(1)))	0.5403023058681398	disagree
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	nf(cos(power(n(10), n(100))))	0.9247242387519338	disagree
+n-cos-6-over-5-50	nf(cos(rational(n(6), n(5))))		
+functiondomain-cos-x-x			
+functionrange-cos-x-x-y			
+functionperiod-cos-x-x			
+functionanalytic-cos-x-x			
+functioninjective-cos-x-x			
+functionsurjective-cos-x-x			
+functionsingularities-cos-x-x			
+functiondiscontinuities-cos-x-x			
+matrixfunction-function-cos-1-1-list-list-5-over			
 threads-element-wise-over-a-list	cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
 even-function-cos-x-cos-x	equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))	true	
 co-function-identity-cos-x-sin-pi-2-x	equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))	true	
@@ -43,6 +53,7 @@ double-angle-formula-cos-2x-cos-2-x-sin-2-x
 angle-addition-formula			
 power-reduction-cos-2-x-frac-1-cos-2x-2			
 euler-s-formula-cos-x-frac-e-ix-e-ix-2			
+cos-3-over-10-times-pi	cos((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
 as-with-sin-a-non-special-numeric-argument-stays	cos(n(2))	-0.4161468365471424	
 pi-24-is-past-the-automatic-special-angle-table	cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))	0.9914448613738104	
 cos-complexinfinity-is-indeterminate-for-the			

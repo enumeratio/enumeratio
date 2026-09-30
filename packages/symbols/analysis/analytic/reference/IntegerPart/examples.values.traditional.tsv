@@ -6,4 +6,18 @@ integerpart-neg-7-over-2
 exact-numeric-arguments-stay-exact		
 threads-element-wise-over-a-list		
 complex-numbers-real-and-imaginary-parts		
+integerpart-neg-5-over-4		
+integerpart-exponentiale-plus-pi		
+integerpart-0		
+piecewiseexpand-integerpart-x-0-lt-x-lt-4		
 x-integerpart-x-fractionalpart-x	\mathrm{IntegerPart}(-\frac{7}{2})+\mathrm{FractionalPart}(-\frac{7}{2})=-\frac{7}{2}	\mathrm{True}
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x		
+integerpart-1		
+integerpart-neg-1		
+integerpart-23-over-10		
+integerpart-neg-3		
+integerpart-neg-pi		
+integerpart-neg-27-over-10		
+simplify-integerpart-x-plus-1-minus-integerpart		
+piecewiseexpand-integerpart-x-plus-1-times-3-pow		
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2		

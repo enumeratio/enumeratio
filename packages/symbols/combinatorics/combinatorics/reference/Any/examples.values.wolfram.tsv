@@ -3,6 +3,9 @@ any-list-1-3-5-function-1-mod-2-eq-0	AnyTrue[List[1, 3, 5], Function[(Mod[Slot[1
 any-list-1-3-6-function-1-mod-2-eq-0	AnyTrue[List[1, 3, 6], Function[(Mod[Slot[1], 2] == 0)]]	True	\text{AnyTrue}[\{1,3,6\},(\text{$\#$1} \bmod 2)=0\&]	\text{True}	
 a-named-predicate	AnyTrue[List[4, 6, 7], PrimeQ]	True	\text{AnyTrue}[\{4,6,7\},\text{PrimeQ}]	\text{True}	
 any-list-1-2-3-function-1-gt-2	AnyTrue[List[1, 2, 3], Function[Greater[Slot[1], 2]]]	True	\text{AnyTrue}[\{1,2,3\},\text{$\#$1}>2\&]	\text{True}	
+any-list-1-2-3-4-5-6-iseven	AnyTrue[List[1, 2, 3, 4, 5, 6], EvenQ]	True	\text{AnyTrue}[\{1,2,3,4,5,6\},\text{EvenQ}]	\text{True}	
+any-list-1-3-5-7-9-iseven	AnyTrue[List[1, 3, 5, 7, 9], EvenQ]	False	\text{AnyTrue}[\{1,3,5,7,9\},\text{EvenQ}]	\text{False}	
+any-list-12-16-x-14-y-function-istrue-1-lt-10-1	AnyTrue[List[12, 16, x, 14, y], Function[TrueQ[Less[Slot[1], 10]]]]	False	\text{AnyTrue}[\{12,16,x,14,y\},\text{TrueQ}[\text{$\#$1}<10]\&]	\text{False}	
 without-a-predicate-tests-the-elements	AnyTrue[List[False, True]]	AnyTrue[{False, True}]	\text{AnyTrue}[\{\text{False},\text{True}\}]	\text{AnyTrue}[\{\text{False},\text{True}\}]	disagree
 a-level-argument-tests-the-elements-at-depth-2	AnyTrue[List[List[1, 2], List[3, -4]], Function[Less[Slot[1], 0]], 2]	True	\text{AnyTrue}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & -4 \\ \end{array} \right),\text{$\#$1}<0\&,2\right]	\text{True}	
 always-false-on-an-empty-list	AnyTrue[List[], EvenQ]	False	\text{AnyTrue}[\{\},\text{EvenQ}]	\text{False}	

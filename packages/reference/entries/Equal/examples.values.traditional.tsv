@@ -1,0 +1,8 @@
+id	in	out
+4-eq-4	4=4	\mathrm{True}
+n-pi-20-eq-pi	N(\pi, 20)=\pi	\mathrm{True}
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}	\mathrm{True}
+x-eq-x	x=x	\mathrm{True}
+3-eq-3-eq-3	3=3=3	\mathrm{True}
+list-1-2-eq-list-1-2	\bigl\lbrack1, 2\bigr\rbrack=\bigl\lbrack1, 2\bigr\rbrack	\mathrm{True}
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	\begin{cases}x=x\\x=y\\\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}\\\pi=N(\pi)\end{cases}	\bigl\lbrack\mathrm{True}, x=y, \mathrm{True}, \mathrm{True}\bigr\rbrack

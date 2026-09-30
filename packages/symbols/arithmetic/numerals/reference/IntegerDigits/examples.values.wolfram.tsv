@@ -5,6 +5,7 @@ integerdigits-58-127	IntegerDigits[58127]	{5, 8, 1, 2, 7}	\text{IntegerDigits}[5
 integerdigits-58-127-2	IntegerDigits[58127, 2]	{1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1}	\text{IntegerDigits}[58127,2]	\{1,1,1,0,0,0,1,1,0,0,0,0,1,1,1,1\}	
 93-784-seconds-as-days-hours-minutes-seconds	IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]	{1, 2, 3, 4}	\text{IntegerDigits}[93784,\text{MixedRadix}[\{24,60,60\}]]	\{1,2,3,4\}	
 100-89-8-3-with-no-two-adjacent-ones					
+integerdigits-102-341-mixedradixnumerals-list-24	IntegerDigits[102341, MixedRadix[List[24, 60, 60]]]	{1, 4, 25, 41}	\text{IntegerDigits}[102341,\text{MixedRadix}[\{24,60,60\}]]	\{1,4,25,41\}	
 digits-past-9-are-plain-integers-58127-e30f-16	IntegerDigits[58127, 16]	{14, 3, 0, 15}	\text{IntegerDigits}[58127,16]	\{14,3,0,15\}	
 a-mixed-radix-spelled-mixedradix-102-341-seconds	IntegerDigits[102341, MixedRadix[List[24, 60, 60]]]	{1, 4, 25, 41}	\text{IntegerDigits}[102341,\text{MixedRadix}[\{24,60,60\}]]	\{1,4,25,41\}	
 the-leading-digit-is-unbounded-137-3-cdot-3-2	IntegerDigits[137, MixedRadix[List[3, 12]]]	{3, 2, 5}	\text{IntegerDigits}[137,\text{MixedRadix}[\{3,12\}]]	\{3,2,5\}	
@@ -30,10 +31,12 @@ zeckendorf-12-is-8-3-1
 ostrowski-9-over-2-2-2-is-1-2-0					
 bijective-base-26-27-is-aa					
 bijective-base-26-702-is-zz					
+integerdigits-137-mixedradixnumerals-list-3-12	IntegerDigits[137, MixedRadix[List[3, 12]]]	{3, 2, 5}	\text{IntegerDigits}[137,\text{MixedRadix}[\{3,12\}]]	\{3,2,5\}	
 the-3-argument-form-keeps-only-the-4-least	IntegerDigits[6345354, 10, 4]	{5, 3, 5, 4}	\text{IntegerDigits}[6345354,10,4]	\{5,3,5,4\}	
 all-3-bit-words-by-threading-a-padded-form-over	IntegerDigits[Range[0, 7], 2, 3]	{{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1}, {1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}}	\text{IntegerDigits}[\text{Range}[0,7],2,3]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  0 & 0 & 1 \\  0 & 1 & 0 \\  0 & 1 & 1 \\  1 & 0 & 0 \\  1 & 0 & 1 \\  1 & 1 & 0 \\  1 & 1 & 1 \\ \end{array} \right)	
 the-lehmer-code-of-the-6th-permutation-of-four					
 an-integer-base-is-still-the-native-handler	IntegerDigits[255, 16]	{15, 15}	\text{IntegerDigits}[255,16]	\{15,15\}	
+integerdigits-98-534-mixedradixnumerals-list-24	IntegerDigits[98534, MixedRadix[List[24, 60, 60]]]	{1, 3, 22, 14}	\text{IntegerDigits}[98534,\text{MixedRadix}[\{24,60,60\}]]	\{1,3,22,14\}	
 unlike-integerstring-there-s-always-at-least-one	IntegerDigits[0]	{0}	\text{IntegerDigits}[0]	\{0\}	
 the-sign-is-discarded	IntegerDigits[-3134]	{3, 1, 3, 4}	\text{IntegerDigits}[-3134]	\{3,1,3,4\}	
 no-numeral-for-a-negative-in-a-system-that					

@@ -4,8 +4,26 @@ id	in	out
 jacobisymbol-1-001-9-907	\mathrm{JacobiSymbol}(1\,001, 9\,907)	-1
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{JacobiSymbol}(\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack, 3)	\bigl\lbrack-1, 0, -1, 1, -1\bigr\rbrack
 larger-arguments-10-10-1-against-the-1000th	\mathrm{JacobiSymbol}(10^{10}+1, \mathrm{NthPrime}(1\,000))	1
+jacobisymbol-neg-3-list-1-3-5-7	\mathrm{JacobiSymbol}(-3, \bigl\lbrack1, 3, 5, 7\bigr\rbrack)	\bigl\lbrack1, 0, -1, 1\bigr\rbrack
 completely-multiplicative-in-the-top-argument-a	\mathrm{JacobiSymbol}(3, 7)\mathrm{JacobiSymbol}(5, 7)=\mathrm{JacobiSymbol}(3\times5, 7)	\top
 quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	\mathrm{JacobiSymbol}(3, 7)\mathrm{JacobiSymbol}(7, 3)	-1
 1-m-1-m-1-2	\mathrm{JacobiSymbol}(-1, 7)	-1
+jacobisymbol-neg-5-3	\mathrm{JacobiSymbol}(-5, 3)	1
+jacobisymbol-neg-4-3	\mathrm{JacobiSymbol}(-4, 3)	-1
+jacobisymbol-neg-3-3	\mathrm{JacobiSymbol}(-3, 3)	0
+jacobisymbol-neg-2-3	\mathrm{JacobiSymbol}(-2, 3)	1
+jacobisymbol-neg-1-3	\mathrm{JacobiSymbol}(-1, 3)	-1
+jacobisymbol-0-3	\mathrm{JacobiSymbol}(0, 3)	0
+jacobisymbol-1-3	\mathrm{JacobiSymbol}(1, 3)	1
+jacobisymbol-2-3	\mathrm{JacobiSymbol}(2, 3)	-1
+jacobisymbol-3-3	\mathrm{JacobiSymbol}(3, 3)	0
+jacobisymbol-4-3	\mathrm{JacobiSymbol}(4, 3)	1
+jacobisymbol-5-3	\mathrm{JacobiSymbol}(5, 3)	-1
+jacobisymbol-6-3	\mathrm{JacobiSymbol}(6, 3)	0
+jacobisymbol-7-3	\mathrm{JacobiSymbol}(7, 3)	1
+jacobisymbol-8-3	\mathrm{JacobiSymbol}(8, 3)	-1
+jacobisymbol-9-3	\mathrm{JacobiSymbol}(9, 3)	0
+jacobisymbol-10-3	\mathrm{JacobiSymbol}(10, 3)	1
+jacobisymbol-neg-5-5	\mathrm{JacobiSymbol}(-5, 5)	0
 by-convention-the-symbol-is-1-whenever-m-1	\mathrm{JacobiSymbol}(0, 1)	1
 2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	\mathrm{JacobiSymbol}(2, 15)	1

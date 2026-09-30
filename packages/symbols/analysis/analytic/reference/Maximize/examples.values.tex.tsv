@@ -2,6 +2,7 @@ id	in	out
 a-downward-parabola-s-vertex	\mathrm{Maximize}(-x^2+4x-1, x)	\bigl\lbrack3, \bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
 unbounded-above-reports-positive-infinity	\mathrm{Maximize}(x^3, x)	\bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, \infty)\bigr\rbrack\bigr\rbrack
 a-bounded-interval-constraint	\mathrm{Maximize}(\bigl\lbrack-x^2+4x-1, x\ge0\land x\le1\bigr\rbrack, x)	\bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack\bigr\rbrack
+maximize-neg-2-times-x-pow-2-minus-3x-plus-5-x	\mathrm{Maximize}(-2x^2-3x+5, x)	\bigl\lbrack\frac{49}{8}, \bigl\lbrack\mathrm{Rule}(x, -\frac{3}{4})\bigr\rbrack\bigr\rbrack
 exp-of-a-negated-argument-is-unbounded-above	\mathrm{Maximize}(\exp(-x), x)	\bigl\lbrack\infty, \bigl\lbrack\mathrm{Rule}(x, -\infty)\bigr\rbrack\bigr\rbrack
 a-downward-quadratic-radicand	\mathrm{Maximize}(\sqrt{4-x^2}, x)	\bigl\lbrack2, \bigl\lbrack\mathrm{Rule}(x, 0)\bigr\rbrack\bigr\rbrack
 declines-more-than-one-variable	\mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)	\mathrm{Maximize}(-(x^2+y^2), \bigl\lbrack x, y\bigr\rbrack)

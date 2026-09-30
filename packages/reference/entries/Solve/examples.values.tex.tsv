@@ -3,4 +3,5 @@ solve-x-2-1-for-x	\mathrm{Solve}(x^2=1, x)	\bigl\lbrack1, -1\bigr\rbrack
 solve-x-2-4-0-a-bare-expression-reads-as-0	\mathrm{Solve}(x^2-4, x)	\bigl\lbrack2, -2\bigr\rbrack
 solve-x-1-0-a-single-real-root	\mathrm{Solve}(x+1=0, x)	\bigl\lbrack-1\bigr\rbrack
 solve-x-2-1-0-yields-complex-roots	\mathrm{Solve}(x^2+1=0, x)	\bigl\lbrack i, -i\bigr\rbrack
+solve-x-eq-1-x-eq-2-x	\mathrm{Solve}(x=1\land x=2, x)	\bigl\lbrack\bigr\rbrack
 a-2-2-linear-system-each-solution-is-a-tuple	\mathrm{Solve}(\begin{cases}x+y=3\\x-y=1\end{cases}, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack(2,1)\bigr\rbrack

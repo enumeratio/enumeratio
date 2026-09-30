@@ -1,4 +1,4 @@
-export { fromWolfram } from "./from-wolfram.ts";
+export { fromWolfram, REVERSE_HEADS } from "./from-wolfram.ts";
 // The head and symbol maps are the package's useful DATA, not just its plumbing: anything
 // that wants to know what a compute-engine head means in Wolfram can read them here rather
 // than write the correspondence out a second time.

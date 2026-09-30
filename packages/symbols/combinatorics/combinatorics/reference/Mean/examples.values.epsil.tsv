@@ -8,6 +8,12 @@ symbolic-data-gives-an-exact-symbolic-mean-frac	mean([a, b, c, d])	1 / 4 * (a + 
 exact-constants-give-an-exact-mean-frac-2-e-pi-3	mean([pi, exponentialE, 2])	1 / 3 * (2 + exponentialE + pi)
 of-a-matrix-of-symbols-the-exact-mean-of-each	mean([[a, u], [b, v], [c, w]])	[1 / 3 * (a + b + c), 1 / 3 * (u + v + w)]
 the-mean-of-a-lazy-range-exactly	mean(Range(1, 100))	101 / 2
+mean-n-list-1-2-3-4-30	mean(N([1, 2, 3, 4], 30))	5 / 2
+n-mean-ts	N(mean(ts))	mean(ts)
+mean-binomialdistribution-n-p	mean(binomialDistribution(n, p))	n * p
+mean-probabilitydistribution-sqrt-2-times-1-over	"mean(ProbabilityDistribution(\n                              sqrt(2) * (1 / pi) * (1 / ((x - 2) ^ 4 + 1)),\n                              [x, negativeInfinity, positiveInfinity],\n                            ))"	"mean(ProbabilityDistribution(\n                              sqrt(2) / (pi * (x - 2) ^ 4 + pi),\n                              [x, negativeInfinity, positiveInfinity],\n                            ))"
 mean-is-total-divided-by-count-mean-c-frac-sum-c	mean([1, 2, 3, 4]) == (1 + 2 + 3 + 4) / length([1, 2, 3, 4])	True
+n-mean-list-1-2-3-4-4-3-1-1	N(mean([1, 2, 3, 4, 4, 3, 1, 1]))	2.375
+mean-ln-list-a-b-c-d	mean(ln([a, b, c, d]))	1 / 4 * (ln(a) + ln(b) + ln(c) + ln(d))
 a-single-outlier-drags-the-mean-far-from-the	mean([-100, 1, 1, 1, 1, 20])	-38 / 3
 the-mean-of-no-data-is-nan	mean([])	`NaN`

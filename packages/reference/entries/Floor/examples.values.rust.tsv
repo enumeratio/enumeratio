@@ -16,13 +16,29 @@ a-second-argument-floors-to-a-multiple-of-it-the
 the-step-needn-t-be-an-integer-3-5-cdot-lfloor			
 nor-rational-2-pi-e-approx-3-57-floors-to-the			
 floors-the-real-and-imaginary-parts-separately			
+floor-list-list-1-over-2-neg-1-list-0-neg-1-over	floor(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(-1), n(2))])]))		
+matrixfunction-floor-list-list-1-over-2-neg-1			
+floor-0	floor(n(0))		
+floor-positiveinfinity			
+piecewiseexpand-floor-x-2-0-lt-x-lt-4			
 how-many-full-5-item-packs-fit-in-17-items	floor((n(17) / n(5)))	3	
 legendre-s-formula-100-ends-in-lfloor-100-5	(floor((n(100) / n(5))) + floor((n(100) / n(25))))	24	
 the-number-of-decimal-digits-of-n-is-lfloor-log			
 the-first-four-digits-of-e	floor((n(1000) * x(std::f64::consts::E)))	2718.0	
+floor-10-over-997-times-powermod-10-999-999-997	floor((rational(n(10), n(997)) * mod_floor(powermod(n(10), n(999999), n(997)), n(997))))		
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))	true	
 lfloor-x-rfloor-lceil-x-rceil	equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))	true	
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor			
+floor-16-3			
+piecewiseexpand-floor-x-pow-2-0-lt-x-lt-2			
+piecewiseexpand-floor-x-plus-1-times-3-pow-neg-1			
+floor-1	floor(n(1))		
+floor-neg-1	floor(n(-1))		
+floor-neg-i			
+floor-23-over-10	floor(rational(n(23), n(10)))		
+floor-neg-3	floor(n(-3))		
+floor-neg-27-over-10	floor(rational(n(-27), n(10)))		
+floor-23-over-10-plus-neg-i-times-exponentiale			
 a-zero-divisor-inside-floor	floor((n(17) / n(0)))	panic: denominator == 0	error
 rounds-toward-infty-not-toward-0-floor-3-2-is-4	floor(x(-3.2))	-4.0	
 infinities-pass-through-unchanged			

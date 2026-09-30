@@ -1,0 +1,8 @@
+id	in	out
+halve-while-even		
+nestwhile-function-1-times-2-pow-neg-1-123-456		
+nestwhile-ln-100-function-1-gt-0		
+nestwhile-function-1-times-2-pow-neg-1-123-456-2		
+nestwhile-function-1-plus-1-888-function		
+nestwhile-function-1-plus-1-1-function-fibonacci	\mathrm{NestWhile}(()\mapsto\operatorname{\_1}+1, 1, ()\mapsto F_{\operatorname{\_1}}\le10^6)	31
+nestwhile-function-floor-1-times-2-pow-neg-1-10		

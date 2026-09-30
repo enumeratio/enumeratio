@@ -1,6 +1,7 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note
 3-cdot-5-15-equiv-1			[ModularInverse, 3, 7]	5	$3 \cdot 5 = 15 \equiv 1$				
 modularinverse-2-11			[ModularInverse, 2, 11]	6					
+modularinverse-3-5			[ModularInverse, 3, 5]	2					
 a-negative-argument-3-cdot-2-6-equiv-1	Scope		[ModularInverse, -3, 7]	2	a negative argument: $-3 \cdot 2 = -6 \equiv 1$				
 a-21-digit-modulus	Scope		[ModularInverse, 3, [Add, [Power, 10, 20], 1]]	{num: "33333333333333333334"}	a 21-digit modulus				
 listable-threads-over-a-list	Scope		[ModularInverse, [List, 2, 3, 4], 11]	[List, 6, 4, 3]	Listable: threads over a list	threading	compute-engine threads ModularInverse (Listable) over the list of bases; Wolfram's ModularInverse isn't Listable and leaves the call unevaluated.	threading	compute-engine's ModularInverse is Listable and threads over the list; Sage's inverse_mod() takes a scalar only and raises a TypeError trying to coerce the list.
@@ -27,6 +28,16 @@ inverse-of-a-real-prime-s-associate-by-i-mod-a	Scope	test	[ModularInverse, [Comp
 inverse-mod-a-real-prime-19	Scope	test	[ModularInverse, [Complex, 2, 1], 19]	[Complex, 8, 15]	inverse mod a real prime, 19				
 no-inverse-mod-0	Scope	test	[ModularInverse, [Complex, 2, 1], 0]	[ModularInverse, [Complex, 2, 1], 0]	no inverse mod 0				
 a-real-base-with-no-inverse-mod-a-shared-factor	Scope	test	[ModularInverse, 5, [Complex, 5, 5]]	[ModularInverse, 5, [Complex, 5, 5]]	a real base with no inverse mod a shared-factor composite				
+modularinverse-neg-5-7	Scope		[ModularInverse, -5, 7]	4					
+modularinverse-10-pow-100-000-nextprime-1-000	Scope		[ModularInverse, [Power, 10, 100000], [NextPrime, 1000]]	942					
 the-same-as-powermod-with-exponent-1	Properties		[Equal, [ModularInverse, 3, 7], [PowerMod, 3, -1, 7]]	True	the same as [[PowerMod]] with exponent $-1$				
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	Properties		[Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]	1	$a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$				
+list-modularinverse-2-5-modularinverse-7-5	Properties		[List, [ModularInverse, 2, 5], [ModularInverse, 7, 5]]	[List, 3, 3]					
+list-modularinverse-3-5-powermod-3-neg-1-5	Properties		[List, [ModularInverse, 3, 5], [PowerMod, 3, -1, 5]]	[List, 2, 2]					
+modularinverse-5-7	Properties		[ModularInverse, 5, 7]	3					
+modularinverse-5-neg-7	Properties		[ModularInverse, 5, -7]	-4					
+modularinverse-7-12	Properties		[ModularInverse, 7, 12]	7					
+modularinverse-modularinverse-7-9-9	Properties		[ModularInverse, [ModularInverse, 7, 9], 9]	7					
 gcd-2-4-2-no-inverse	Possible issues		[ModularInverse, 2, 4]	[ModularInverse, 2, 4]	$\gcd(2, 4) = 2$: no inverse			undefined-form	Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.
+modularinverse-10-21	Possible issues		[ModularInverse, 10, 21]	19					
+modularinverse-21-10	Possible issues		[ModularInverse, 21, 10]	1					

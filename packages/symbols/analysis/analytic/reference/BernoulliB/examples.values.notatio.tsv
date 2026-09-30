@@ -16,6 +16,18 @@ von-staudt-clausen-the-denominator-of-b-2n-is	<Denominator><BernoulliB>12</Berno
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	<Equal><Zeta>-3</Zeta> <Negate><Divide><BernoulliB>4</BernoulliB> 4</Divide></Negate></Equal>	<True />
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	<Add><Multiply><Binomial>5 0</Binomial> <BernoulliB>0</BernoulliB></Multiply> <Multiply><Binomial>5 1</Binomial> <BernoulliB>1</BernoulliB></Multiply> <Multiply><Binomial>5 2</Binomial> <BernoulliB>2</BernoulliB></Multiply> <Multiply><Binomial>5 3</Binomial> <BernoulliB>3</BernoulliB></Multiply> <Multiply><Binomial>5 4</Binomial> <BernoulliB>4</BernoulliB></Multiply></Add>	<ToExpression>0</ToExpression>
 b-n-0-for-every-odd-n-1	<Equal><BernoulliB>5</BernoulliB> 0</Equal>	<True />
+bernoullib-3	<BernoulliB>3</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-5	<BernoulliB>5</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-6	<BernoulliB>6</BernoulliB>	<Rational>1 42</Rational>
+bernoullib-7	<BernoulliB>7</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-8	<BernoulliB>8</BernoulliB>	<Rational>-1 30</Rational>
+bernoullib-9	<BernoulliB>9</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-2-0	<BernoulliB>2 0</BernoulliB>	<Rational>1 6</Rational>
+bernoullib-3-0	<BernoulliB>3 0</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-2-1	<BernoulliB>2 1</BernoulliB>	<Rational>1 6</Rational>
+bernoullib-3-1	<BernoulliB>3 1</BernoulliB>	<ToExpression>0</ToExpression>
+bernoullib-0-1-over-6	<BernoulliB>0 <Rational>1 6</Rational></BernoulliB>	<ToExpression>1</ToExpression>
 b-1-1-frac-12-is-the-other-convention-for-b-1	<BernoulliB>1 1</BernoulliB>	<Rational>1 2</Rational>
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	<BernoulliB>-1</BernoulliB>	<BernoulliB>-1</BernoulliB>
 numerators-and-denominators-grow-quickly-b-20	<BernoulliB>20</BernoulliB>	<Rational>-174611 330</Rational>
+bernoullib-12-x	<BernoulliB>12 x</BernoulliB>	<Add><Power>x 12</Power> <Multiply>-6 <Power>x 11</Power></Multiply> <Multiply>11 <Power>x 10</Power></Multiply> <Multiply><Rational>-33 2</Rational> <Power>x 8</Power></Multiply> <Multiply>22 <Power>x 6</Power></Multiply> <Multiply><Rational>-33 2</Rational> <Power>x 4</Power></Multiply> <Multiply>5 <Power>x 2</Power></Multiply> <Rational>-691 2730</Rational></Add>

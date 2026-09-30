@@ -1,2 +1,5 @@
-id	in	out	tex.in	tex.out
-const-glaisher-numeric-value	N[Glaisher]	1.2824271291006226	N[A]	1.28243
+id	in	out	shown	tex.in	tex.out
+const-glaisher-numeric-value	N[Glaisher]	1.2824271291006226		N[A]	1.28243
+n-constglaisher-50	N[Glaisher, 50]	1.28242712910062263687534256886979172776768892732500119211620855281283363706656`50.	1.2824271291006226368753425688697917277676889273250	N[A,50]	1.2824271291006226368753425688697917277676889273250
+round-constglaisher-pow-100	Round[Power[Glaisher, 100]]	63572555914		\text{Round}\left[A^{100}\right]	63572555914
+1-lt-constglaisher-lt-2	Less[1, Glaisher, 2]	True		1<A<2	\text{True}

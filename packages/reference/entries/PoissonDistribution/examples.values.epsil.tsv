@@ -1,0 +1,5 @@
+id	in	out
+standarddeviation-poissondistribution-100	standardDeviation(poissonDistribution(100))	10
+n-probability-x-eq-0-distributed-x	N(Probability(x == 0, Distributed(x, poissonDistribution(16 / 25))))	Probability(x == 0, Distributed(x, poissonDistribution(0.64)))
+probability-n-eq-0-distributed-n	Probability(n == 0, Distributed(n, poissonDistribution(10_000 * 10 ^ -3)))	Probability(n == 0, Distributed(n, poissonDistribution(10)))
+nprobability-n-lt-eq-15-distributed-n	NProbability(n <= 15, Distributed(n, poissonDistribution(10_368_000 * 10 ^ -6)))	NProbability(n <= 15, Distributed(n, poissonDistribution(1_296 / 125)))

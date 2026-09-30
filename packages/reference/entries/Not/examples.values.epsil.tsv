@@ -1,0 +1,3 @@
+id	in	out
+booleanconvert-factorial-a-b	BooleanConvert(!(a && b))	!a || !b
+booleanconvert-factorial-a-b-c	BooleanConvert(!(a || b || c))	!a && !b && !c

@@ -14,10 +14,29 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
 rounds-the-real-and-imaginary-parts-up	ceil(mpc(5.37, -1.3))	(6.0 - 1.0j)	
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	ceil([[(mpf(1)/2), -1], [0, (mpf(-1)/2)]])		
+matrixfunction-ceil-list-list-1-over-2-neg-1			
+ceil-0	ceil(0)		
+ceil-positiveinfinity	ceil(inf)		
+piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
 how-many-5-seat-vans-are-needed-to-carry-17			
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	almosteq(ceil((mpf(7)/2)), (floor((mpf(7)/2)) + 1), 1e-20)	True	
 floor-and-ceil-agree-exactly-on-integers	almosteq(ceil(5), floor(5), 1e-20)	True	
+ceil-16-3			
+piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2			
+generatingfunction-ceil-n-4-n-x			
+ceil-1	ceil(1)		
+ceil-neg-1	ceil(-1)		
+ceil-i	ceil(mpc(0, 1))		
+ceil-neg-i	ceil(mpc(0, -1))		
+ceil-23-over-10	ceil((mpf(23)/10))		
+ceil-neg-3	ceil(-3)		
+piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
+ceil-neg-pi	ceil((-pi))		
+ceil-neg-27-over-10	ceil((mpf(-27)/10))		
+ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((mpf(23)/10) + (mpc(0, -1) * e)))		
+ceil-negativeinfinity	ceil(-inf)		
 a-zero-divisor-inside-ceil			
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3.0	
 nan-propagates-rather-than-erroring	ceil(nan)		

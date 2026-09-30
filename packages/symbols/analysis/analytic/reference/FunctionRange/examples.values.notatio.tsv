@@ -3,4 +3,7 @@ a-parabola-s-range-is-bounded-below	<FunctionRange><Power>x 2</Power> x y</Funct
 a-reciprocal-never-reaches-zero	<FunctionRange><Divide>1 x</Divide> x y</FunctionRange>	<Or><Less>y 0</Less> <Less>0 y</Less></Or>
 sine-s-range-is-the-unit-interval	<FunctionRange><Sin>x</Sin> x y</FunctionRange>	<LessEqual>-1 y 1</LessEqual>
 exp-s-range-is-the-positive-reals	<FunctionRange><Exp>x</Exp> x y</FunctionRange>	<Less>0 y</Less>
+functionrange-x-pow-2-minus-1-x-y	<FunctionRange><Add><Power>x 2</Power> -1</Add> x y</FunctionRange>	<LessEqual>-1 y</LessEqual>
+functionrange-x-pow-2-minus-4-x-y	<FunctionRange><Add><Power>x 2</Power> -4</Add> x y</FunctionRange>	<LessEqual>-4 y</LessEqual>
+functionrange-tan-x-x-y	<FunctionRange><Tan>x</Tan> x y</FunctionRange>	<True />
 a-quadratic-denominator-is-declined	<FunctionRange><Divide>1 <Add><Power>x 2</Power> -1</Add></Divide> x y</FunctionRange>	<FunctionRange><Divide>1 <Add><Power>x 2</Power> -1</Add></Divide> x y</FunctionRange>

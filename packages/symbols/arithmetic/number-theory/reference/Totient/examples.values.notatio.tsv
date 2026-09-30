@@ -13,3 +13,22 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors	<Add><Totient>1</Totient> <Toti
 multiplicative-varphi-mn-varphi-m-varphi-n-when	<Equal><Totient>12</Totient> <Multiply><Totient>4</Totient> <Totient>3</Totient></Multiply></Equal>	<True />
 varphi-p-p-1-for-a-prime-p	<Totient>17</Totient>	<ToExpression>16</ToExpression>
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	<Totient>81</Totient>	<ToExpression>54</ToExpression>
+totient-100	<Totient>100</Totient>	<ToExpression>40</ToExpression>
+totient-35	<Totient>35</Totient>	<ToExpression>24</ToExpression>
+divides-carmichaellambda-8-totient-8	<Divides><CarmichaelLambda>8</CarmichaelLambda> <Totient>8</Totient></Divides>	<True />
+list-totient-25-carmichaellambda-25	<List><Totient>25</Totient> <CarmichaelLambda>25</CarmichaelLambda></List>	<List>20 20</List>
+divisorsum-15-totient-eq-15	<Equal><DivisorSum>15 Totient</DivisorSum> 15</Equal>	<True />
+totient-1-023-eq-totient-3-times-totient-11	<Equal><Totient>1023</Totient> <Multiply><Totient>3</Totient> <Totient>11</Totient> <Totient>31</Totient></Multiply></Equal>	<True />
+totient-2	<Totient>2</Totient>	<ToExpression>1</ToExpression>
+totient-3	<Totient>3</Totient>	<ToExpression>2</ToExpression>
+totient-4	<Totient>4</Totient>	<ToExpression>2</ToExpression>
+totient-5	<Totient>5</Totient>	<ToExpression>4</ToExpression>
+totient-6	<Totient>6</Totient>	<ToExpression>2</ToExpression>
+totient-7	<Totient>7</Totient>	<ToExpression>6</ToExpression>
+totient-8	<Totient>8</Totient>	<ToExpression>4</ToExpression>
+totient-9	<Totient>9</Totient>	<ToExpression>6</ToExpression>
+totient-11	<Totient>11</Totient>	<ToExpression>10</ToExpression>
+totient-13	<Totient>13</Totient>	<ToExpression>12</ToExpression>
+totient-14	<Totient>14</Totient>	<ToExpression>6</ToExpression>
+totient-15	<Totient>15</Totient>	<ToExpression>8</ToExpression>
+totient-16	<Totient>16</Totient>	<ToExpression>8</ToExpression>

@@ -43,6 +43,12 @@ export const SYMBOLS: Record<string, string> = {
   NegativeInfinity: "-Infinity",
   ComplexInfinity: "ComplexInfinity",
   Nothing: "Null",
+  // The number sets, as `Element(x, …)` and assumptions name them.
+  Integers: "Integers",
+  RationalNumbers: "Rationals",
+  RealNumbers: "Reals",
+  ComplexNumbers: "Complexes",
+  Primes: "Primes",
   // @enumeratio/evaluation's own marker, under Wolfram's `$`-prefixed spelling — compute-engine's
   // symbol grammar rejects a leading `$` (see evaluation/src/declare.ts).
   Aborted: "$Aborted",
@@ -241,6 +247,9 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Wolfram's own FunctionContinuous[{f, domain}, x] embeds it in a list alongside f
   // instead (confirmed directly: `FunctionContinuous[f, cond]` itself errors
   // `isvar`) — a restructuring, not a rename. The 2-arg form (no domain) is a plain call.
+  // Midpoint(p, q) takes the two points; Wolfram's Midpoint[{p, q}] takes them as a list
+  // (`Midpoint[p, q]` stays unevaluated there).
+  Midpoint: (a) => (a.length === 2 ? `Midpoint[List[${toWolfram(a[0]!)}, ${toWolfram(a[1]!)}]]` : call("Midpoint", a)),
   FunctionContinuous: (a) =>
     a.length === 3
       ? `FunctionContinuous[List[${toWolfram(a[0])}, ${toWolfram(a[2])}], ${toWolfram(a[1])}]`
@@ -256,7 +265,10 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   Function: (a) => {
     const [rawBody, ...params] = a;
     const body = Array.isArray(rawBody) && rawBody[0] === "Block" ? rawBody[1] : rawBody;
-    if (params.length === 0) return `Function[${toWolfram(body)}]`;
+    // Slot parameters (`_1`, or `Slot[1]` from an emitter that has already written them) are
+    // the anonymous form: `Function[f[#]]`, not `Function[#, f[#]]`.
+    if (params.every((p) => typeof p === "string" && /^(_\d*|Slot\[\d+\])$/.test(p)))
+      return `Function[${toWolfram(body)}]`;
     if (params.length === 1) return `Function[${toWolfram(params[0])}, ${toWolfram(body)}]`;
     return `Function[List[${params.map((p) => toWolfram(p)).join(", ")}], ${toWolfram(body)}]`;
   },

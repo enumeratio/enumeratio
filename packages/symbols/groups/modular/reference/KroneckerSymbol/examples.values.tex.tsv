@@ -44,6 +44,12 @@ negative-a-odd-square-n-9	\mathrm{KroneckerSymbol}(-10, 9)	1
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{KroneckerSymbol}(\bigl\lbrack2, 3, 5, 7, 11\bigr\rbrack, 6)	\bigl\lbrack0, 0, 1, 1, 1\bigr\rbrack
 larger-arguments-10-11-1-against-the-2000th	\mathrm{KroneckerSymbol}(10^{11}+1, \mathrm{NthPrime}(2\,000))	-1
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	\mathrm{KroneckerSymbol}(7, 6)	1
+generatingfunction-kroneckersymbol-n-7-n-x	\mathrm{GeneratingFunction}(\mathrm{KroneckerSymbol}(n, 7), n, x)	\frac{x^5+2x^4+x^3+2x^2+x}{x^6+x^5+x^4+x^3+x^2+x+1}
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	\mathrm{KroneckerSymbol}(-4, 7)	-1
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	\mathrm{KroneckerSymbol}(2, 7)=\mathrm{KroneckerSymbol}(23, 7)	\top
+kroneckersymbol-neg-4-list-1-5-7-11	\mathrm{KroneckerSymbol}(-4, \bigl\lbrack1, 5, 7, 11\bigr\rbrack)	\bigl\lbrack1, 1, -1, -1\bigr\rbrack
 completely-multiplicative-in-n	\mathrm{KroneckerSymbol}(7, 3\times5)=\mathrm{KroneckerSymbol}(7, 3)\mathrm{KroneckerSymbol}(7, 5)	\top
+kroneckersymbol-9-12	\mathrm{KroneckerSymbol}(9, 12)	0
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	\mathrm{KroneckerSymbol}(12, 7)=\mathrm{KroneckerSymbol}(3, 7)\mathrm{KroneckerSymbol}(4, 7)	\top
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	\mathrm{KroneckerSymbol}(3, 63)=\mathrm{KroneckerSymbol}(3, 9)\mathrm{KroneckerSymbol}(3, 7)	\top
 a-0-1-for-a-pm-1	\mathrm{KroneckerSymbol}(-1, 0)	1

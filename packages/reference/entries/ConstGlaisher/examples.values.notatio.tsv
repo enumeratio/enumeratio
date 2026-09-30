@@ -1,2 +1,5 @@
 id	in	out
 const-glaisher-numeric-value	<N>ConstGlaisher</N>	<ToExpression>1.2824271291006226</ToExpression>
+n-constglaisher-50	<N>ConstGlaisher 50</N>	<ToExpression>1.282427129100622636875342568869791727767688927325</ToExpression>
+round-constglaisher-pow-100	<Round><Power>ConstGlaisher 100</Power></Round>	<ToExpression>63572555914</ToExpression>
+1-lt-constglaisher-lt-2	<Less>1 ConstGlaisher 2</Less>	<True />

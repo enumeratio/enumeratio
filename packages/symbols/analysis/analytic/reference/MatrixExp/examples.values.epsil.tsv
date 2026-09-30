@@ -13,6 +13,7 @@ applied-to-a-vector-e-a-v-computed-as-e-a-via	MatrixExp([[0, 1], [0, 0]], [1, 1]
 a-3-times-3-nilpotent-generator-the-exponential	MatrixExp([[0, 1, 0], [0, 0, 1], [0, 0, 0]])	[[1, 1, 1 / 2], [0, 1, 1], [0, 0, 1]]
 a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	MatrixExp([[2, 1], [0, 2]])	[[exponentialE ^ 2, exponentialE ^ 2], [0, exponentialE ^ 2]]
 a-skew-symmetric-generator-gives-a-rotation	MatrixExp([[0, 1], [-1, 0]])	[[cos(1), sin(1)], [-sin(1), cos(1)]]
+matrixexp-a-eq-matrixfunction-exp-a	MatrixExp(a) == MatrixFunction(exp, a)	True
 rejects-a-non-square-argument	MatrixExp([[1, 2, 3], [4, 5, 6]])	error("expected-square-matrix", "[[1,2,3],[4,5,6]]")
 a-generic-matrix-with-no-closed-form-stays	MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])	MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
 euler-s-identity-for-matrices-rotation-by-pi-is	MatrixExp([[0, -pi], [pi, 0]])	[[-1, 0], [0, -1]]

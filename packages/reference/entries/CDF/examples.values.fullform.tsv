@@ -1,0 +1,3 @@
+id	in
+cdf-normaldistribution-negativeinfinity	CDF[NormalDistribution[], -Infinity]
+cdf-normaldistribution-positiveinfinity	CDF[NormalDistribution[], Infinity]

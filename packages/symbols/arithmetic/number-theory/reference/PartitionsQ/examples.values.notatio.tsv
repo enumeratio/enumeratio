@@ -3,5 +3,22 @@ the-partitions-of-10-into-distinct-parts	<PartitionsQ>10</PartitionsQ>	<ToExpres
 the-empty-partition	<PartitionsQ>0</PartitionsQ>	<ToExpression>1</ToExpression>
 exact-for-large-n	<PartitionsQ>100</PartitionsQ>	<ToExpression>444793</ToExpression>
 threads-over-a-list	<PartitionsQ><List>1 2 3 4 5 6 7 8</List></PartitionsQ>	<List>1 1 2 2 3 4 5 6</List>
+partitionsq-list-2-4-6	<PartitionsQ><List>2 4 6</List></PartitionsQ>	<List>1 2 4</List>
 counts-the-distinctpartitions-family	<Equal><PartitionsQ>10</PartitionsQ> <Count><DistinctPartitions>10</DistinctPartitions></Count></Equal>	<True />
 euler-as-many-partitions-into-odd-parts-as-into	<Equal><PartitionsQ>12</PartitionsQ> <Count><IntegerPartitions>12 All <List>1 3 5 7 9 11</List></IntegerPartitions></Count></Equal>	<True />
+partitionsq-5	<PartitionsQ>5</PartitionsQ>	<ToExpression>3</ToExpression>
+partitionsq-1	<PartitionsQ>1</PartitionsQ>	<ToExpression>1</ToExpression>
+partitionsq-2	<PartitionsQ>2</PartitionsQ>	<ToExpression>1</ToExpression>
+partitionsq-3	<PartitionsQ>3</PartitionsQ>	<ToExpression>2</ToExpression>
+partitionsq-4	<PartitionsQ>4</PartitionsQ>	<ToExpression>2</ToExpression>
+partitionsq-6	<PartitionsQ>6</PartitionsQ>	<ToExpression>4</ToExpression>
+partitionsq-7	<PartitionsQ>7</PartitionsQ>	<ToExpression>5</ToExpression>
+partitionsq-8	<PartitionsQ>8</PartitionsQ>	<ToExpression>6</ToExpression>
+partitionsq-9	<PartitionsQ>9</PartitionsQ>	<ToExpression>8</ToExpression>
+partitionsq-11	<PartitionsQ>11</PartitionsQ>	<ToExpression>12</ToExpression>
+partitionsq-12	<PartitionsQ>12</PartitionsQ>	<ToExpression>15</ToExpression>
+partitionsq-13	<PartitionsQ>13</PartitionsQ>	<ToExpression>18</ToExpression>
+partitionsq-14	<PartitionsQ>14</PartitionsQ>	<ToExpression>22</ToExpression>
+partitionsq-15	<PartitionsQ>15</PartitionsQ>	<ToExpression>27</ToExpression>
+partitionsq-16	<PartitionsQ>16</PartitionsQ>	<ToExpression>32</ToExpression>
+partitionsq-17	<PartitionsQ>17</PartitionsQ>	<ToExpression>38</ToExpression>

@@ -1,2 +1,9 @@
 id	in	out
+n-arsinh-1-100	N(arsinh(1), 100)	0.881_373_587_019_543_025_232_609_324_979_792_309_028_160_328_261_635_410_753_295_608_653_377_184_222_026_087_833_706_891_910_256_042_9
+arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	arsinh([[i, sqrt(2) / 2 * i], [0, -(sqrt(2) / 2) * i]])	[[arsinh(i), arsinh(sqrt(2) / 2 * i)], [0, arsinh(-(sqrt(2) / 2) * i)]]
+arsinh-positiveinfinity	arsinh(positiveInfinity)	positiveInfinity
+arsinh-0	arsinh(0)	0
+d-arsinh-x-x	D(arsinh(x), x)	1 / sqrt(x ^ 2 + 1)
+arsinh-1-over-2-times-i-times-sqrt-1-over-2	arsinh(1 / 2 * i * sqrt(1 / 2 * (5 - sqrt(5))))	arsinh(sqrt(2) / 4 * i * sqrt(5 - sqrt(5)))
+arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	arsinh(-1 / 2 * i * sqrt(1 / 2 * (5 - sqrt(5))))	arsinh(-(sqrt(2) / 4) * i * sqrt(5 - sqrt(5)))
 arsinh-complexinfinity-is-complexinfinity	arsinh(complexInfinity)	complexInfinity

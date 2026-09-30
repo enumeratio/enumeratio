@@ -1,4 +1,9 @@
 id	section	role	expr	expected	caption
 equal-over-lists			[Thread, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]	[List, [Equal, 1, 1], [Equal, 2, 5], [Equal, 3, 3]]	
+thread-list-a-b-c-eq-list-x-y-z			[Thread, [Equal, [List, a, b, c], [List, x, y, z]]]	[List, [Equal, a, x], [Equal, b, y], [Equal, c, z]]	
+thread-ln-x-eq-y-equal			[Thread, [Ln, [Equal, x, y]], Equal]	[Equal, [Ln, x], [Ln, y]]	
 scalar-broadcast	Scope		[Thread, [Equal, [List, 1, 2, 3], 1]]	[List, [Equal, 1, 1], [Equal, 2, 1], [Equal, 3, 1]]	A non-list operand is broadcast to every threaded call
 custom-head	Scope		[Thread, [f, [g, 1, 2], [g, 3, 4]], g]	[g, [f, 1, 3], [f, 2, 4]]	A second argument threads over a head other than List
+thread-list-list-a-b-c-0	Applications		[Thread, [List, [List, a, b, c], 0]]	[List, [List, a, 0], [List, b, 0], [List, c, 0]]	
+thread-list-a-b-c-neg-gt-list-1-2-3	Applications		[Thread, [KeyValuePair, [List, a, b, c], [List, 1, 2, 3]]]	[List, [Tuple, a, 1], [Tuple, b, 2], [Tuple, c, 3]]	
+thread-list-list-a-b-c-list-x-y-z	Properties		[Thread, [List, [List, a, b, c], [List, x, y, z]]]	[List, [List, a, x], [List, b, y], [List, c, z]]	

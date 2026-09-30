@@ -20,4 +20,12 @@ the-closed-form-through-a-negative-n-in-binomial	binomial(2 * -13, 5) / (4 + 1)	
 equivalently-c-n-binom-2n-n-binom-2n-n-1	binomial(10, 5) - binomial(10, 6)	42	
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	catalanNumber(6) / catalanNumber(5)	22 / 7	
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	catalanNumber(4) == sum(catalanNumber(i) * catalanNumber(3 - i), (i, 0, 3))	True	[Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]
+generatingfunction-catalannumber-n-n-x	GeneratingFunction(catalanNumber(n), n, x)	(-sqrt(-4 * x + 1) + 1) / (2x)	
+catalannumber-neg-10	catalanNumber(-10)	0	
+catalannumber-neg-9	catalanNumber(-9)	0	
+catalannumber-neg-8	catalanNumber(-8)	0	
+catalannumber-neg-7	catalanNumber(-7)	0	
+catalannumber-neg-6	catalanNumber(-6)	0	
+catalannumber-neg-4	catalanNumber(-4)	0	
+catalannumber-neg-3	catalanNumber(-3)	0	
 they-grow-fast-c-15-already-passes-nine-million	catalanNumber(15)	9_694_845	

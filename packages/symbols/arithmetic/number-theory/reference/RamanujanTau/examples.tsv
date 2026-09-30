@@ -1,6 +1,23 @@
-id	section	role	expr	expected	caption
-ramanujantau-2			[RamanujanTau, 2]	-24	
-ramanujantau-5			[RamanujanTau, 5]	4830	
-listable	Scope		[RamanujanTau, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, -24, 252, -1472, 4830, -6048]	Listable
-ramanujantau-12	Scope		[RamanujanTau, 12]	-370944	
-multiplicative-tau-6-tau-2-tau-3	Properties		[Multiply, [RamanujanTau, 2], [RamanujanTau, 3]]	-6048	Multiplicative: $\tau(6) = \tau(2)\tau(3)$
+id	section	role	expr	expected	known	source	caption
+ramanujantau-2			[RamanujanTau, 2]	-24			
+ramanujantau-5			[RamanujanTau, 5]	4830			
+listable	Scope		[RamanujanTau, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, -24, 252, -1472, 4830, -6048]			Listable
+ramanujantau-12	Scope		[RamanujanTau, 12]	-370944			
+ramanujantau-485	Scope		[RamanujanTau, 485]	362315536077180			
+fullsimplify-matrixfunction-ramanujantau-list	Scope		[FullSimplify, [MatrixFunction, RamanujanTau, [List, [List, 1, 0], [List, -1, 2]]]]	[List, [List, 1, 0], [List, 25, -24]]			
+ramanujantau-list-2-3-5-7-11	Scope		[RamanujanTau, [List, 2, 3, 5, 7, 11]]	[List, -24, 252, 4830, -16744, 534612]			
+ramanujantau-list-list-1-0-list-neg-1-2	Scope		[RamanujanTau, [List, [List, 1, 0], [List, -1, 2]]]	[List, [List, 1, 0], [List, 0, -24]]			
+ramanujantau-0	Scope		[RamanujanTau, 0]	0			
+multiplicative-tau-6-tau-2-tau-3	Properties		[Multiply, [RamanujanTau, 2], [RamanujanTau, 3]]	-6048			Multiplicative: $\tau(6) = \tau(2)\tau(3)$
+ramanujantau-range-1-10	Properties		[RamanujanTau, [Range, 1, 10]]	[List, 1, -24, 252, -1472, 4830, -6048, -16744, 84480, -113643, -115920]			
+ramanujantau-35	Properties		[RamanujanTau, 35]	-80873520			
+ramanujantau-5-times-ramanujantau-7	Properties		[Multiply, [RamanujanTau, 5], [RamanujanTau, 7]]	-80873520			
+ramanujantau-1	Properties		[RamanujanTau, 1]	1	1	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-3	Properties		[RamanujanTau, 3]	252	252	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-4	Properties		[RamanujanTau, 4]	-1472	-1472	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-6	Properties		[RamanujanTau, 6]	-6048	-6048	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-7	Properties		[RamanujanTau, 7]	-16744	-16744	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-8	Properties		[RamanujanTau, 8]	84480	84480	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-9	Properties		[RamanujanTau, 9]	-113643	-113643	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-10	Properties		[RamanujanTau, 10]	-115920	-115920	Wolfram MathematicalFunctionData, RamanujanTau	
+ramanujantau-6-plus-ramanujantau-14-plus	Neat examples		[Add, [RamanujanTau, 6], [RamanujanTau, 14], [RamanujanTau, 29], [RamanujanTau, 41], [RamanujanTau, 42], [RamanujanTau, 44], [RamanujanTau, 48]]	0			

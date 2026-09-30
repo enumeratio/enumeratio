@@ -1,4 +1,11 @@
 id	in
 applies-f-across-corresponding-elements	MapThread[f, List[List[a, b], List[c, d]]]
+mapthread-f-list-list-a-b-c-list-x-y-z	MapThread[f, List[List[a, b, c], List[x, y, z]]]
 add-rows-agrees-with-add-computed-pairwise	MapThread[Plus, List[List[1, 2, 3], List[10, 20, 30]]]
+mapthread-f-list-list-list-a-b-list-c-d-list	MapThread[f, List[List[List[a, b], List[c, d]], List[List[u, v], List[w, x]]]]
+mapthread-f-list-list-1-2-3-list-4-5-6-list-7-8	MapThread[f, List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9], List[10, 11, 12]]]
+mapthread-add-list-list-a-b-c-list-u-v-w-list-x	MapThread[Plus, List[List[a, b, c], List[u, v, w], List[x, y, z]]]
+mapthread-list-list-list-a-b-c-list-u-v-w-list-x	MapThread[List, List[List[a, b, c], List[u, v, w], List[x, y, z]]]
+mapthread-d-list-list-x-x-times-y-x-times-z-list	MapThread[D, List[List[x, Times[x, y], Times[x, z]], List[x, y, z]]]
+mapthread-f-list-list-a-b-c	MapThread[f, List[List[a, b, c]]]
 rejects-ragged-rows	MapThread[f, List[List[1, 2], List[3]]]

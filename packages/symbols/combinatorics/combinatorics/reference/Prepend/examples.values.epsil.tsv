@@ -1,8 +1,10 @@
-id	in	out
-prepend-list-a-b-c-d-x	Prepend([a, b, c, d], x)	[x, a, b, c, d]
-prepend-front-of-list	Prepend([1, 2, 3], 0)	[0, 1, 2, 3]
-prepend-single-element-list	Prepend([5], 10)	[10, 5]
-prepend-empty-list	Prepend([], 42)	[42]
-a-rule-inserted-at-the-front-of-an-association	Prepend(Association(Rule(1, a), Rule(2, b)), Rule(3, d))	Association(Rule(3, d), Rule(1, a), Rule(2, b))
-several-rules-prepended-at-once	Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])	Association(Rule(3, d), Rule(4, e), Rule(1, a), Rule(2, b))
-prepend-c-x-join-x-c-see-join	Prepend([1, 2, 3], 0) == join([0], [1, 2, 3])	True
+id	in	out	back
+prepend-list-a-b-c-d-x	Prepend([a, b, c, d], x)	[x, a, b, c, d]	
+prepend-front-of-list	Prepend([1, 2, 3], 0)	[0, 1, 2, 3]	
+prepend-single-element-list	Prepend([5], 10)	[10, 5]	
+prepend-empty-list	Prepend([], 42)	[42]	
+a-rule-inserted-at-the-front-of-an-association	Prepend(Association(Rule(1, a), Rule(2, b)), Rule(3, d))	Association(Rule(3, d), Rule(1, a), Rule(2, b))	
+several-rules-prepended-at-once	Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])	Association(Rule(3, d), Rule(4, e), Rule(1, a), Rule(2, b))	
+nestlist-function-prepend-1-x-1-list-a-5	NestList(Function(Prepend(_1, x), _1), [a], 5)	[[a], [x, a], [x, x, a], [x, x, x, a], [x, x, x, x, a], [x, x, x, x, x, a]]	Unreadable
+prepend-c-x-join-x-c-see-join	Prepend([1, 2, 3], 0) == join([0], [1, 2, 3])	True	
+prepend-list-a-b-c-list-x-y	Prepend([a, b, c], [x, y])	[[x, y], a, b, c]	

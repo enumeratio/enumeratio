@@ -1,0 +1,7 @@
+id	in	out
+determinant-list-list-a-1-a-1-list-a-2-a-2	determinant([[a_1, a_1], [a_2, a_2]])	0
+determinant-list-list-1-2-3-list-4-5-6-list-7-8	determinant([[1, 2, 3], [4, 5, 6], [7, 8, 9]])	0
+determinant-list-list-1-plus-i-2-3-minus-2i-list	determinant([[1 + i, 2, 3 - 2i], [0, 4Pi, 5i], [3, 0, 6]])	30i + (-12 + 48i) * pi
+determinant-list-list-1-2-4-list-5-4-5-list-9-2	determinant([[1, 2, 4], [5, 4, 5], [9, 2, 7]])	-66
+determinant-list-list-a-b-c-list-d-exponentiale	determinant([[a, b, c], [d, exponentialE, f], [g, h, i]])	"b * f * g + c * d * h - a * f * h + -i * b * d - exponentialE * c * g + i *\n                                                                        exponentialE *\n                                                                        a"
+neg-determinant-list-list-1-3-4-list-5-7-8-list	-determinant([[1, 3, 4], [5, 7, 8], [5, 2, 1]])	4

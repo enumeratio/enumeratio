@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	PowerMod[Complex[0, 7], 3, Complex[3
 modulus-a-real-composite-5-squared	PowerMod[Complex[1, 1], 4, 25]	21	((1+i)^4 \bmod 25)	21	
 a-negative-unit-exponent-is-its-own-inverse	PowerMod[Complex[0, 1], -1, 7]	6*I	(i^{-1} \bmod 7)	6 i	disagree
 modulus-a-negative-associate	PowerMod[Complex[2, 1], 5, Complex[-2, -3]]	-1 - I	((2+i)^5 \bmod (-2-3 i))	-1-i	
+sum-powermod-a-2-7-a-nothing-7	Sum[PowerMod[a, 2, 7], List[a, 7]]	14	\sum _a^7 (a^2 \bmod 7)	14	
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	FindInstance[And[(PowerMod[a, b, 17] == 1), Less[0, a, 17], Less[0, b, 17]], List[a, b], Integers, 2]	{{a -> 1, b -> 7}, {a -> 14, b -> 16}}			disagree
 one-step-of-rsa-style-modular-exponentiation-7	PowerMod[7, 13, 33]	13	(7^{13} \bmod 33)	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	PowerMod[2, 340, 341]	1	(2^{340} \bmod 341)	1	
 diffie-hellman-both-parties-reach-the-shared-key	(PowerMod[PowerMod[5, 6, 23], 15, 23] == PowerMod[PowerMod[5, 15, 23], 6, 23])	True	((5^6 \bmod 23)^{15} \bmod 23)=((5^{15} \bmod 23)^6 \bmod 23)	\text{True}	
+powermod-tocharactercode-rsa-in-mathematica	PowerMod[ToCharacterCode["RSA in Mathematica"], E, n]	{PowerMod[82, E, n], PowerMod[83, E, n], PowerMod[65, E, n], PowerMod[32, E, n], PowerMod[105, E, n], PowerMod[110, E, n], PowerMod[32, E, n], PowerMod[77, E, n], PowerMod[97, E, n], PowerMod[116, E, n], PowerMod[104, E, n], PowerMod[101, E, n], PowerMod[109, E, n], PowerMod[97, E, n], PowerMod[116, E, n], PowerMod[105, E, n], PowerMod[99, E, n], PowerMod[97, E, n]}	(\text{ToCharacterCode}[\text{RSA in Mathematica}]^e \bmod n)	\{(82^e \bmod n),(83^e \bmod n),(65^e \bmod n),(32^e \bmod n),(105^e \bmod n),(110^e \bmod n),(32^e \bmod n),(77^e \bmod n),(97^e \bmod n),(116^e \bmod n),(104^e \bmod n),(101^e \bmod n),(109^e \bmod n),(97^e \bmod n),(116^e \bmod n),(105^e \bmod n),(99^e \bmod n),(97^e \bmod n)\}	
 by-definition-a-b-bmod-m-computed-without-ever	(PowerMod[2, 10, 3] == Mod[Power[2, 10], 3])	True	(2^{10} \bmod 3)=(2^{10} \bmod 3)	\text{True}	
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	PowerMod[7, EulerPhi[19], 19]	1	(7^{\phi (19)} \bmod 19)	1	
+list-powermod-7-2-5-powermod-12-2-5	List[PowerMod[7, 2, 5], PowerMod[12, 2, 5]]	{4, 4}	\{(7^2 \bmod 5),(12^2 \bmod 5)\}	\{4,4\}	
+list-powermod-2-3-5-8-mod-5	List[PowerMod[2, 3, 5], Mod[8, 5]]	{3, 3}	\{(2^3 \bmod 5),(8 \bmod 5)\}	\{3,3\}	
+list-powermod-2-neg-1-5-modularinverse-2-5	List[PowerMod[2, -1, 5], ModularInverse[2, 5]]	{3, 3}	\{(2^{-1} \bmod 5),\text{ModularInverse}[2,5]\}	\{3,3\}	
+list-divides-2-8-powermod-8-3-2-eq-0	List[Divisible[8, 2], (PowerMod[8, 3, 2] == 0)]	{True, True}	\{2|8,(8^3 \bmod 2)=0\}	\{\text{True},\text{True}\}	
+powermod-7-totient-19-19-eq-1	(PowerMod[7, EulerPhi[19], 19] == 1)	True	(7^{\phi (19)} \bmod 19)=1	\text{True}	
+powermod-2-16-17	PowerMod[2, 16, 17]	1	(2^{16} \bmod 17)	1	
+powermod-list-5-neg-5-2-3	PowerMod[List[5, -5], 2, 3]	{1, 1}	(\{5,-5\}^2 \bmod 3)	\{1,1\}	
+powermod-list-5-neg-5-2-neg-3	PowerMod[List[5, -5], 2, -3]	{PowerMod[5, 2, -3], PowerMod[-5, 2, -3]}	(\{5,-5\}^2 \bmod (-3))	\{(5^2 \bmod (-3)),((-5)^2 \bmod (-3))\}	
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	PowerMod[2, -1, 4]	PowerMod[2, -1, 4]	(2^{-1} \bmod 4)	(2^{-1} \bmod 4)	
 a-nonzero-exponent-at-the-same-negative-modulus	PowerMod[-2, 3, -14]	PowerMod[-2, 3, -14]	((-2)^3 \bmod (-14))	((-2)^3 \bmod (-14))	
 2-is-not-a-square-mod-5-so-there-is-no-root	PowerMod[2, Rational[1, 2], 5]	PowerMod[2, 1/2, 5]	(2^{\frac{1}{2}} \bmod 5)	(2^{\frac{1}{2}} \bmod 5)	

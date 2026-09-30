@@ -1,2 +1,4 @@
 id	in	out
 counts-code-points-not-utf-16-units	\mathrm{StringLength}(\text{\text{a😀b}})	3
+stringlength-tiger	\mathrm{StringLength}(\text{tiger})	5
+stringlength	\mathrm{StringLength}(\text{})	0

@@ -1,0 +1,2 @@
+id	in	out
+makeboxes-rawboxes-rowbox-list-1-plus-2	\mathrm{MakeBoxes}(\mathrm{RawBoxes}(\mathrm{RowBox}(\bigl\lbrack\text{1}, \text{+}, \text{2}\bigr\rbrack)))	\mathrm{RowBox}(\bigl\lbrack\text{1}, \text{+}, \text{2}\bigr\rbrack)

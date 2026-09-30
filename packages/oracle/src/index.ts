@@ -27,3 +27,16 @@ export {
 } from "./compare.ts";
 export { compareTrees, isNumericValue, type Leaf, reduce, symbolic, type Tree, valuesOnly } from "./structural.ts";
 export { DIVERGENCE_KINDS, type Divergence, type DivergenceKind } from "./divergence.ts";
+export {
+  collectRecords,
+  type DocumentationGroup,
+  fetchWolframData,
+  FUNCTION_PROPERTIES,
+  type FormulaRecord,
+  type FunctionRecord,
+  type IdentityInstance,
+  type LanguageRecord,
+  type WolframDataRecord,
+  type WolframDataSource,
+  wolframDataNames,
+} from "./wolfram-data.ts";

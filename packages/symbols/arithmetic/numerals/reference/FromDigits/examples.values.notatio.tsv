@@ -3,6 +3,7 @@ fromdigits-list-5-1-2-8	<FromDigits><List>5 1 2 8</List></FromDigits>	<ToExpress
 fromdigits-list-1-0-1-1-0-1-1-2	<FromDigits><List>1 0 1 1 0 1 1</List> 2</FromDigits>	<ToExpression>91</ToExpression>
 1d-2h-3m-4s-back-to-seconds	<FromDigits><List>1 2 3 4</List> <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></FromDigits>	<ToExpression>93784</ToExpression>
 crt-reconstruction	<FromDigits><List>2 3 2</List> <ResidueNumerals><List>3 5 7</List></ResidueNumerals></FromDigits>	<ToExpression>23</ToExpression>
+fromdigits-list-1-4-25-41-mixedradixnumerals	<FromDigits><List>1 4 25 41</List> <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></FromDigits>	<ToExpression>102341</ToExpression>
 the-digits-can-be-given-as-a-string-0-9-then-a-z	<FromDigits>"1923"</FromDigits>	<ToExpression>1923</ToExpression>
 a-digit-string-in-a-given-base	<FromDigits>"1011011" 2</FromDigits>	<ToExpression>91</ToExpression>
 roman-numerals-with-the-base-roman	<FromDigits>"XVII" "Roman"</FromDigits>	<ToExpression>17</ToExpression>
@@ -24,9 +25,11 @@ a-negative-base-minus-3-1-0-1	<FromDigits><List>1 0 1</List> -3</FromDigits>	<To
 a-negative-base-minus-4-3-2-1	<FromDigits><List>3 2 1</List> -4</FromDigits>	<ToExpression>41</ToExpression>
 a-digits-exponent-pair-exponent-3-is-an-exact	<FromDigits><List><List>1 2 3</List> 3</List></FromDigits>	<ToExpression>123</ToExpression>
 a-digits-exponent-pair-exponent-5-is-12-300	<FromDigits><List><List>1 2 3</List> 5</List></FromDigits>	<ToExpression>12300</ToExpression>
+fromdigits-list-3-2-5-mixedradixnumerals-list-3	<FromDigits><List>3 2 5</List> <MixedRadixNumerals><List>3 12</List></MixedRadixNumerals></FromDigits>	<ToExpression>137</ToExpression>
 a-lehmer-code-back-to-its-rank	<FromDigits><List>0 2 1 0</List> FactorialNumerals</FromDigits>	<ToExpression>5</ToExpression>
 fromdigits-inverts-integerdigits	<Equal><FromDigits><IntegerDigits>58127</IntegerDigits></FromDigits> 58127</Equal>	<True />
 the-round-trip-holds-in-any-base	<FromDigits><IntegerDigits>58127 2</IntegerDigits> 2</FromDigits>	<ToExpression>58127</ToExpression>
+fromdigits-list-1-3-22-14-mixedradixnumerals	<FromDigits><List>1 3 22 14</List> <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></FromDigits>	<ToExpression>98534</ToExpression>
 an-empty-digit-list-is-left-unevaluated-rather	<FromDigits><Apply>List</Apply></FromDigits>	<FromDigits><Apply>List</Apply></FromDigits>
 two-adjacent-ones-is-not-a-numeral-so-it-denotes	<FromDigits><List>1 1</List> ZeckendorfNumerals</FromDigits>	<FromDigits><List>1 1</List> ZeckendorfNumerals</FromDigits>
 ostrowski-declines-a-string-past-its-ceiling	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>

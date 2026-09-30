@@ -3,3 +3,6 @@ polynomials-are-entire	FunctionAnalytic(x ^ 2, x)	True
 a-pole-anywhere-in-the-plane-disqualifies-it	FunctionAnalytic(1 / x, x)	False
 sqrt-has-a-branch-point	FunctionAnalytic(sqrt(x), x)	False
 sine-is-entire	FunctionAnalytic(sin(x), x)	True
+functionanalytic-tan-x-x	FunctionAnalytic(tan(x), x)	False
+list-functionanalytic-x-x-functionanalytic-x-pow	"[\n  FunctionAnalytic(x, x),\n  FunctionAnalytic(x ^ 2 + 1, x),\n  FunctionAnalytic(x ^ 3 - 2 * x ^ 2 - 5x + 6, x),\n]"	[True, True, True]
+list-functionanalytic-sin-x-x-functionanalytic	"[\n  FunctionAnalytic(sin(x), x),\n  FunctionAnalytic(cos(x), x),\n  FunctionAnalytic(exp(x), x),\n]"	[True, True, True]

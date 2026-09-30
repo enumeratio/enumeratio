@@ -2,6 +2,28 @@ id	in	out	verdict
 n-pi-30	N(pi, 30)	3.14159265358979323846264338328	
 the-last-digit-correctly-rounded-computing-at-30			
 a-list-number-by-number	N([pi, E, sqrt(2)], 30)	AttributeError: 'list' object has no attribute 'evalf'	error
+n-1-over-7	N(Rational(1, 7), 30)		
+n-1-over-7-50	N(Rational(1, 7), 30)		
+n-gamma-33-over-10-50	N(gamma(Rational(33, 10)), 30)		
+n-pi-50	N(pi, 30)		
+n-khinchin-50			
+n-arcsin-3			
+n-c	N(Symbol("c"), 30)		
+n-c-47	N(Symbol("c"), 30)		
+n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((S(1) / ((-Symbol("x")) + E)) * ((2 * Symbol("x")) + pi)), 30)		
+n-poly	N(Symbol("poly"), 30)		
+n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	N((1 + (-sqrt((1 + (-(S(E)**-1000)))))), 30)		
+n-exponentiale-25	N(E, 30)		
+n-x-pow-3-over-2	N((S(Symbol("x"))**Rational(3, 2)), 30)		
+n-pi-pow-x	N((S(pi)**Symbol("x")), 30)		
+n-exponentiale-pow-x-plus-pi	N((S(E)**(Symbol("x") + pi)), 30)		
+n-int	N(Symbol("int"), 30)		
+n-exponentiale	N(E, 30)		
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * Symbol("pit")) + pi), 30)		
+n-crt	N(Symbol("crt"), 30)		
+n-crt-47	N(Symbol("crt"), 30)		
+n-exponentiale-pow-sin-1-000	N((S(E)**sin(1000)), 30)		
+n-exponentiale-pow-sin-1-000-47	N((S(E)**sin(1000)), 30)		
 an-exact-tie-rounds-to-the-even-digit-0-125	N(Rational(1, 8), 30)	0.125000000000000000000000000000	disagree
 and-0-375-to-0-38	N(Rational(3, 8), 30)	0.375000000000000000000000000000	disagree
 n-pi-1-digit	N(pi, 30)	3.14159265358979323846264338328	disagree

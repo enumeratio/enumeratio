@@ -7,4 +7,20 @@ inside-1-1-the-value-is-complex	<Arccsc>0.5</Arccsc>	<Complex>1.5707963267948966
 arccsc-positiveinfinity	<Arccsc>PositiveInfinity</Arccsc>	<ToExpression>0</ToExpression>
 a-pole-arccsc-0-is-complex-infinity	<Arccsc>0</Arccsc>	<ComplexInfinity />
 derivative-for-real-x-1	<D><Arccsc>x</Arccsc> x</D>	<Divide>-1 <Multiply><Abs>x</Abs> <Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt></Multiply></Divide>
+n-arccsc-5-50	<N><Arccsc>5</Arccsc> 50</N>	<ToExpression>0.20135792079033079145512555221762341024003808140223</ToExpression>
+arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	<Arccsc><List><List><Sqrt>2</Sqrt> <Negate><Sqrt>2</Sqrt></Negate></List> <List>0 <Negate><Sqrt>2</Sqrt></Negate></List></List></Arccsc>	<List><List><Multiply><Rational>1 4</Rational> Pi</Multiply> <Multiply><Rational>-1 4</Rational> Pi</Multiply></List> <List>ComplexInfinity <Multiply><Rational>-1 4</Rational> Pi</Multiply></List></List>
+list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	<List><Arccsc><Negate><Sqrt>2</Sqrt></Negate></Arccsc> <Arccsc><Multiply><Rational>-2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arccsc> <Arccsc><Multiply><Rational>2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arccsc> <Arccsc><Sqrt>2</Sqrt></Arccsc></List>	<List><Multiply><Rational>-1 4</Rational> Pi</Multiply> <Multiply><Rational>-1 3</Rational> Pi</Multiply> <Multiply><Rational>1 3</Rational> Pi</Multiply> <Multiply><Rational>1 4</Rational> Pi</Multiply></List>
+arccsc-complexinfinity	<Arccsc>ComplexInfinity</Arccsc>	<ToExpression>0</ToExpression>
+arccsc-list-1-neg-1-0	<Arccsc><List>1 -1 0</List></Arccsc>	<List><Multiply><Rational>1 2</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply> ComplexInfinity</List>
+matrixfunction-function-arccsc-1-1-list-list	<MatrixFunction><Function><Block><Arccsc>_1</Arccsc></Block> _1</Function> <List><List><Sqrt>2</Sqrt> <Negate><Sqrt>2</Sqrt></Negate></List> <List>0 <Negate><Sqrt>2</Sqrt></Negate></List></List></MatrixFunction>	<List><List><Multiply><Rational>1 4</Rational> Pi</Multiply> <Multiply><Rational>-1 4</Rational> Pi</Multiply></List> <List>0 <Multiply><Rational>-1 4</Rational> Pi</Multiply></List></List>
 undoes-csc-csc-arccsc-x-x	<Equal><Csc><Arccsc>2</Arccsc></Csc> 2</Equal>	<True />
+arccsc-neg-1	<Arccsc>-1</Arccsc>	<Multiply><Rational>-1 2</Rational> Pi</Multiply>
+arccsc-neg-sqrt-2-plus-sqrt-6	<Arccsc><Add><Negate><Sqrt>2</Sqrt></Negate> <Sqrt>6</Sqrt></Add></Arccsc>	<Multiply><Rational>5 12</Rational> Pi</Multiply>
+arccsc-neg-sqrt-6-plus-sqrt-2	<Arccsc><Add><Negate><Sqrt>6</Sqrt></Negate> <Sqrt>2</Sqrt></Add></Arccsc>	<Multiply><Rational>-5 12</Rational> Pi</Multiply>
+arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	<Arccsc><Multiply>2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arccsc>	<Arccsc><Divide>2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arccsc>
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	<Arccsc><Multiply>-2 <Sqrt><Divide>1 <Add>2 <Sqrt>2</Sqrt></Add></Divide></Sqrt></Multiply></Arccsc>	<Arccsc><Divide>-2 <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Divide></Arccsc>
+arccsc-2-over-3-times-sqrt-3	<Arccsc><Multiply><Rational>2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arccsc>	<Multiply><Rational>1 3</Rational> Pi</Multiply>
+arccsc-neg-2-over-3-times-sqrt-3	<Arccsc><Multiply><Rational>-2 3</Rational> <Sqrt>3</Sqrt></Multiply></Arccsc>	<Multiply><Rational>-1 3</Rational> Pi</Multiply>
+arccsc-neg-1-plus-sqrt-5	<Arccsc><Add>-1 <Sqrt>5</Sqrt></Add></Arccsc>	<Multiply><Rational>3 10</Rational> Pi</Multiply>
+arccsc-1-minus-sqrt-5	<Arccsc><Add>1 <Negate><Sqrt>5</Sqrt></Negate></Add></Arccsc>	<Multiply><Rational>-3 10</Rational> Pi</Multiply>
+arccsc-neg-sqrt-2	<Arccsc><Negate><Sqrt>2</Sqrt></Negate></Arccsc>	<Multiply><Rational>-1 4</Rational> Pi</Multiply>

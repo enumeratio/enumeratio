@@ -1,9 +1,9 @@
-id	in	back
-3-1-and-3-2	Inversions[List[3, 1, 2]]	
-the-identity-has-none	Inversions[List[1, 2, 3]]	
-the-one-line-word-312	Inversions[Permutation[List[3, 1, 2]]]	
-the-one-line-word-312-as-a-plain-list	Inversions[List[3, 1, 2]]	
-the-one-line-word-2413	Inversions[Permutation[List[2, 4, 1, 3]]]	
-the-inversion-distribution-over-s-3-mapped	ListFrom[Map[Function[p, Inversions[p]], SymmetricGroup[3]]]	[ListFrom, [Map, [Function, p, [Inversions, p]], [SymmetricGroup, 3]]]
-total-inversions-over-all-of-s-4-folded-with-sum	Total[Map[Function[p, Inversions[p]], SymmetricGroup[4]]]	[Sum, [Map, [Function, p, [Inversions, p]], [SymmetricGroup, 4]]]
-the-reversal-attains-the-maximum-binom-4-2	Inversions[List[4, 3, 2, 1]]	
+id	in
+3-1-and-3-2	Inversions[List[3, 1, 2]]
+the-identity-has-none	Inversions[List[1, 2, 3]]
+the-one-line-word-312	Inversions[Permutation[List[3, 1, 2]]]
+the-one-line-word-312-as-a-plain-list	Inversions[List[3, 1, 2]]
+the-one-line-word-2413	Inversions[Permutation[List[2, 4, 1, 3]]]
+the-inversion-distribution-over-s-3-mapped	ListFrom[Map[Function[p, Inversions[p]], SymmetricGroup[3]]]
+total-inversions-over-all-of-s-4-folded-with-sum	Total[Map[Function[p, Inversions[p]], SymmetricGroup[4]]]
+the-reversal-attains-the-maximum-binom-4-2	Inversions[List[4, 3, 2, 1]]

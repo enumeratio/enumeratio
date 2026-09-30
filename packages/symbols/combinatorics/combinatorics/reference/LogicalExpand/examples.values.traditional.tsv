@@ -3,3 +3,9 @@ implies-becomes-or-not
 distributes-and-over-or		
 xor-eliminated-into-dnf		
 a-contradictory-term-drops-out	\mathrm{LogicalExpand}(p\land\lnot p)	\mathrm{False}
+logicalexpand-a-factorial-a		
+logicalexpand-a-factorial-a-2	\mathrm{LogicalExpand}(a\land\lnot a)	\mathrm{False}
+logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b		
+logicalexpand-t		
+logicalexpand-factorial-a-b		
+logicalexpand-factorial-a-b-2		

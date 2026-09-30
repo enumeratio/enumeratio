@@ -91,6 +91,12 @@ image-order-0p5-over-neg-0p5-to-0p95
 image-order-neg-1p5-over-neg-0p3-to-0p3			
 image-order-neg-3-over-neg-0p5-to-0p2			
 image-order-5-over-neg-0p99-to-0p99			
+polylog-0-5	polylog(0, 5)		
+n-polylog-1-1-over-3-50	N(polylog(1, Rational(1, 3)), 30)		
+polylog-2-list-list-1-over-2-0-list-0-1-over-2	polylog(2, [[Rational(1, 2), 0], [0, Rational(1, 2)]])		
+polylog-1-0	polylog(1, 0)		
+d-polylog-n-z-z	diff(polylog(Symbol("n"), Symbol("z")), Symbol("z"))		
+matrixfunction-function-polylog-2-1-1-list-list			
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	
@@ -101,4 +107,8 @@ li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, Symbol("z"))	True
 li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * (S(log(2))**2))), (S((S(pi)**2)) / 12))	True	
 li-s-1-zeta-s-for-symbolic-s	polylog(Symbol("s"), 1)	True	
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(Symbol("n"), Symbol("x")), Symbol("x"))		
+functionexpand-polylog-2-exponentiale-pow-1-over			
+polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(1, 3)*I) * pi)))		
+polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(-1, 3)*I) * pi)))		
+polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, (S(E)**((0 + Rational(2, 3)*I) * pi)))		
 an-exact-argument-stays-symbolic-under-plain	polylog(2, Rational(1, 2))	-log(2)**2/2 + pi**2/12	

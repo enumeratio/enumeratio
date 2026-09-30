@@ -3,3 +3,6 @@ a-reciprocal-is-injective-on-its-own-domain	FunctionInjective(1 / x, x)	True
 a-cubic-is-injective	FunctionInjective(x ^ 3, x)	True
 a-parabola-is-not-injective	FunctionInjective(x ^ 2, x)	False
 an-affine-function-is-injective	FunctionInjective(2x + 1, x)	True
+functioninjective-x-pow-3-minus-x-x	FunctionInjective(x ^ 3 - x, x)	False
+functioninjective-cos-x-x	FunctionInjective(cos(x), x)	False
+functioninjective-sqrt-x-x	FunctionInjective(sqrt(x), x)	True

@@ -3,4 +3,7 @@ a-parabola-s-range-is-bounded-below	\mathrm{FunctionRange}(x^2, x, y)	0\le y
 a-reciprocal-never-reaches-zero	\mathrm{FunctionRange}(\frac{1}{x}, x, y)	y\lt0\lor0\lt y
 sine-s-range-is-the-unit-interval	\mathrm{FunctionRange}(\sin(x), x, y)	-1\le y\le1
 exp-s-range-is-the-positive-reals	\mathrm{FunctionRange}(e^{x}, x, y)	0\lt y
+functionrange-x-pow-2-minus-1-x-y	\mathrm{FunctionRange}(x^2-1, x, y)	-1\le y
+functionrange-x-pow-2-minus-4-x-y	\mathrm{FunctionRange}(x^2-4, x, y)	-4\le y
+functionrange-tan-x-x-y	\mathrm{FunctionRange}(\tan(x), x, y)	\top
 a-quadratic-denominator-is-declined	\mathrm{FunctionRange}(\frac{1}{x^2-1}, x, y)	\mathrm{FunctionRange}(\frac{1}{x^2-1}, x, y)

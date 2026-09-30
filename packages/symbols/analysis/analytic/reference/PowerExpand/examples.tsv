@@ -1,6 +1,12 @@
 id	section	role	expr	expected	caption
 sqrt-x-2-x-for-positive-x			[PowerExpand, [Sqrt, [Power, x, 2]]]	x	$\sqrt{x^2} = x$ for positive $x$
 splits-a-logarithm-of-a-product			[PowerExpand, [Ln, [Multiply, x, y]]]	[Add, [Ln, x], [Ln, y]]	Splits a logarithm of a product
+powerexpand-sqrt-x-times-y			[PowerExpand, [Sqrt, [Multiply, x, y]]]	[Multiply, [Sqrt, x], [Sqrt, y]]	
 pulls-out-an-exponent	Scope		[PowerExpand, [Ln, [Power, x, n]]]	[Multiply, n, [Ln, x]]	Pulls out an exponent
 distributes-a-power-over-a-product	Scope		[PowerExpand, [Power, [Multiply, a, b], c]]	[Multiply, [Power, a, c], [Power, b, c]]	Distributes a power over a product
 powerexpand-sqrt-a-times-b	Scope		[PowerExpand, [Sqrt, [Multiply, a, b]]]	[Multiply, [Sqrt, a], [Sqrt, b]]	
+powerexpand-x-times-y-pow-a	Scope		[PowerExpand, [Power, [Multiply, x, y], a]]	[Multiply, [Power, x, a], [Power, y, a]]	
+powerexpand-sqrt-z-pow-2	Scope		[PowerExpand, [Sqrt, [Power, z, 2]]]	z	
+powerexpand-ln-1-over-z	Scope		[PowerExpand, [Ln, [Divide, 1, z]]]	[Negate, [Ln, z]]	
+powerexpand-ln-z-pow-a	Scope		[PowerExpand, [Ln, [Power, z, a]]]	[Multiply, a, [Ln, z]]	
+powerexpand-sqrt-x-minus-y-pow-2-plus-sqrt-neg-x	Possible issues		[PowerExpand, [Add, [Sqrt, [Power, [Add, x, [Negate, y]], 2]], [Sqrt, [Power, [Add, [Negate, x], y], 2]]]]	0	

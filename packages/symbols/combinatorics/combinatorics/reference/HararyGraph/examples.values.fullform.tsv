@@ -1,3 +1,5 @@
-id	in
-harary-4-7-edge-count-and-min-degree	EdgeCount[HararyGraph[4, 7]]
-harary-3-7-exact-edges	EdgeList[HararyGraph[3, 7]]
+id	in	back
+harary-4-7-edge-count-and-min-degree	EdgeCount[HararyGraph[4, 7]]	
+harary-3-7-exact-edges	EdgeList[HararyGraph[3, 7]]	
+hararygraph-3-5	HararyGraph[3, 5]	
+map-function-vertexeccentricity-hararygraph-4-6	Map[Function[VertexEccentricity[HararyGraph[4, 6], Slot[1]]], VertexList[HararyGraph[4, 6]]]	[Map, [Function, [VertexEccentricity, [HararyGraph, 4, 6], _1]], [VertexList, [HararyGraph, 4, 6]]]

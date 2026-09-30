@@ -1,0 +1,8 @@
+id	in	out
+list-10-20-30-plus-list-1-2-3	<Add><List>10 20 30</List> <List>1 2 3</List></Add>	<List>11 22 33</List>
+list-a-b-plus-list-c-d	<Add><List>a b</List> <List>c d</List></Add>	<List><Add>a c</Add> <Add>b d</Add></List>
+x-plus-list-a-b-c	<Add>x <List>a b c</List></Add>	<List><Add>a x</Add> <Add>b x</Add> <Add>c x</Add></List>
+x-plus-list-list-a-b-list-c-d	<Add>x <List><List>a b</List> <List>c d</List></List></Add>	<List><List><Add>a x</Add> <Add>b x</Add></List> <List><Add>c x</Add> <Add>d x</Add></List></List>
+interval-0-1-plus-interval-neg-1-1	<Add><Interval>0 1</Interval> <Interval>-1 1</Interval></Add>	<Interval>-1 2</Interval>
+length-a-plus-b-plus-c-plus-d	<Length><Add>a b c d</Add></Length>	<ToExpression>4</ToExpression>
+foldlist-add-0-list-a-b-c	<FoldList>Add 0 <List>a b c</List></FoldList>	<List>0 a <Add>a b</Add> <Add>a b c</Add></List>

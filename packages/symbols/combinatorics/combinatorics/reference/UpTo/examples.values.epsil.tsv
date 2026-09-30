@@ -1,5 +1,8 @@
 id	in	out
 asking-for-up-to-5-of-3-elements-takes-all-3	take([1, 2, 3], UpTo(5))	[1, 2, 3]
 when-enough-elements-are-available-exactly-n-is	take([1, 2, 3, 4, 5, 6], UpTo(2))	[1, 2]
+take-list-a-b-c-d-upto-6	take([a, b, c, d], UpTo(6))	[a, b, c, d]
+take-list-a-b-c-d-upto-2	take([a, b, c, d], UpTo(2))	[a, b]
 in-partition-a-shorter-final-chunk-is-allowed	partition([1, 2, 3, 4, 5, 6], UpTo(4))	[[1, 2, 3, 4], [5, 6]]
 in-ordering-at-most-6-positions-of-a-5-element	ordering([2, 6, 1, 9, 2], UpTo(6))	[3, 1, 5, 2, 4]
+partition-list-a-b-c-d-exponentiale-f-g-upto-3	partition([a, b, c, d, exponentialE, f, g], UpTo(3))	[[a, b, c], [d, exponentialE, f], [g]]

@@ -1,5 +1,8 @@
 id	in	out	tex.in	tex.out
 frobeniussolve-list-2-3-7	FrobeniusSolve[List[2, 3], 7]	{{2, 1}}	\text{FrobeniusSolve}[\{2,3\},7]	\left( \begin{array}{cc}  2 & 1 \\ \end{array} \right)
 frobeniussolve-list-2-3-5-10	FrobeniusSolve[List[2, 3, 5], 10]	{{0, 0, 2}, {1, 1, 1}, {2, 2, 0}, {5, 0, 0}}	\text{FrobeniusSolve}[\{2,3,5\},10]	\left( \begin{array}{ccc}  0 & 0 & 2 \\  1 & 1 & 1 \\  2 & 2 & 0 \\  5 & 0 & 0 \\ \end{array} \right)
+frobeniussolve-list-12-16-20-27-123	FrobeniusSolve[List[12, 16, 20, 27], 123]	{{0, 1, 4, 1}, {0, 6, 0, 1}, {1, 4, 1, 1}, {2, 2, 2, 1}, {3, 0, 3, 1}, {4, 3, 0, 1}, {5, 1, 1, 1}, {8, 0, 0, 1}}	\text{FrobeniusSolve}[\{12,16,20,27\},123]	\left( \begin{array}{cccc}  0 & 1 & 4 & 1 \\  0 & 6 & 0 & 1 \\  1 & 4 & 1 & 1 \\  2 & 2 & 2 & 1 \\  3 & 0 & 3 & 1 \\  4 & 3 & 0 & 1 \\  5 & 1 & 1 & 1 \\  8 & 0 & 0 & 1 \\ \end{array} \right)
 frobeniussolve-list-12-16-20-27-117	FrobeniusSolve[List[12, 16, 20, 27], 117]	{{0, 1, 1, 3}, {3, 0, 0, 3}}	\text{FrobeniusSolve}[\{12,16,20,27\},117]	\left( \begin{array}{cccc}  0 & 1 & 1 & 3 \\  3 & 0 & 0 & 3 \\ \end{array} \right)
+frobeniussolve-list-6-9-20-44	FrobeniusSolve[List[6, 9, 20], 44]	{{1, 2, 1}, {4, 0, 1}}	\text{FrobeniusSolve}[\{6,9,20\},44]	\left( \begin{array}{ccc}  1 & 2 & 1 \\  4 & 0 & 1 \\ \end{array} \right)
 43-is-the-frobenius-number-of-6-9-20-so-it-has	FrobeniusSolve[List[6, 9, 20], 43]	{}	\text{FrobeniusSolve}[\{6,9,20\},43]	\{\}
+frobeniussolve-list-6-9-20-24	FrobeniusSolve[List[6, 9, 20], 24]	{{1, 2, 0}, {4, 0, 0}}	\text{FrobeniusSolve}[\{6,9,20\},24]	\left( \begin{array}{ccc}  1 & 2 & 0 \\  4 & 0 & 0 \\ \end{array} \right)

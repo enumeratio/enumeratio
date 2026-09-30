@@ -9,8 +9,14 @@ exact-for-large-n	{!}48	4\,566\,824\,330\,931\,624\,695\,767\,452\,273\,778\,667
 real-arguments-evaluate-as-frac-gamma-n-1-1-e	{!}(4.5)	19.255\,831\,840\,742\,534+0.157\,179\,122\,964\,615\,25i
 complex-arguments-evaluate-as-frac-gamma-n-1-1-e	{!}(1.6+i)	0.296\,830\,458\,177\,711\,8+0.284\,208\,547\,251\,969\,9i
 threads-over-a-matrix-element-wise		
+subfactorial-list-5-10-20		
+matrixfunction-function-subfactorial-1-1-list	\mathrm{MatrixFunction}(()\mapsto{!}\operatorname{\_1}, \bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
 the-hat-check-problem-the-number-of-ways-6	{!}6	265
 recurrence-d-n-n-d-n-1-1-n	{!}4=4{!}3+(-1)^4	\mathrm{True}
 d-n-is-frac-n-e-rounded-to-the-nearest-integer	{!}10=\mathrm{round}(\frac{10!}{e})	\mathrm{True}
 two-term-recurrence-d-n-1-n-d-n-d-n-1	{!}6=5({!}5+{!}4)	\mathrm{True}
+exponentialgeneratingfunction-subfactorial-n-n-x	\mathrm{ExponentialGeneratingFunction}({!}n, n, x)	\frac{\exp(-x)}{1-x}
+subfactorial-2	{!}2	1
+subfactorial-3	{!}3	2
 a-negative-argument-is-left-unevaluated	{!}(-1)	{!}(-1)
+148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	148\,349=\sum\mathrm{Subfactorial}(\bigl\lbrack1, 4, 8, 3, 4, 9\bigr\rbrack)	\mathrm{True}

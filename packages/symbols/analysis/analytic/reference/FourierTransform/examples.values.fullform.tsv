@@ -2,3 +2,5 @@ id	in
 dirac-delta-at-origin	FourierTransform[DiracDelta[t], t, w]
 gaussian	FourierTransform[Power[E, Minus[Power[t, 2]]], t, w]
 cosine	FourierTransform[Cos[Times[a, t]], t, w]
+fouriertransform-x-times-y-times-z-pow-3-times	FourierTransform[Times[Power[Times[x, y, z], 3], Power[E, Plus[Minus[Power[x, 2]], Minus[Power[y, 2]], Minus[Power[z, 2]]]]], List[x, y, z], List[u, v, w]]
+fouriertransform-squarewave-y-times-1-over-2pi	FourierTransform[Times[SquareWave[Times[y, Divide[1, Times[2, Pi]]]], Power[E, Minus[Abs[x]]]], List[x, y], List[u, v]]

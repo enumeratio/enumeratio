@@ -1,4 +1,6 @@
 id	in
 standard-range	PascalBinomial[5, 2]
 pascalbinomial-negative-n-case-2	PascalBinomial[-1, 4]
+pascalbinomial-10-3	PascalBinomial[10, 3]
 negative-n	PascalBinomial[-1, 3]
+pascalbinomial-8-4	PascalBinomial[8, 4]

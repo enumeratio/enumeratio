@@ -1,4 +1,7 @@
 id	section	role	expr	expected
 nested-path-drills-in			[Extract, [List, [List, a, b], [List, c, d]], [List, 2, 1]]	c
+extract-list-1-2-3-4-list-2			[Extract, [List, 1, 2, 3, 4], [List, 2]]	2
 negative-position-counts-from-the-end	Scope		[Extract, [List, a, b, c], -1]	c
 list-of-paths-extracts-several-parts	Scope		[Extract, [List, [List, a, b], [List, c, d]], [List, [List, 1, 1], [List, 2, 2]]]	[List, a, d]
+extract-list-a-b-c-d-exponentiale-list-3	Scope		[Extract, [List, a, b, c, d, ExponentialE], [List, 3]]	c
+extract-list-a-b-c-d-exponentiale-list-list-1	Scope		[Extract, [List, a, b, c, d, ExponentialE], [List, [List, 1], [List, 4], [List, 3]]]	[List, a, d, c]

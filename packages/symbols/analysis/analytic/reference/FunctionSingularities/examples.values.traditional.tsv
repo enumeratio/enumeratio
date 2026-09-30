@@ -3,3 +3,4 @@ a-pole-at-the-origin
 sqrt-is-singular-at-its-own-boundary		
 a-polynomial-has-no-singularities	\mathrm{FunctionSingularities}(x^2, x)	\mathrm{False}
 log-s-branch-cut		
+functionsingularities-tan-x-x		

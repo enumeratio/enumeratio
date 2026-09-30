@@ -1,3 +1,5 @@
 id	in	out	tex.in	tex.out
 single-letter	LetterNumber["d"]	4	\text{LetterNumber}[\text{d}]	4
+letternumber-d	LetterNumber["D"]	4	\text{LetterNumber}[\text{D}]	4
 string	LetterNumber["cab"]	{3, 1, 2}	\text{LetterNumber}[\text{cab}]	\{3,1,2\}
+letternumber-c	LetterNumber["c"]	3	\text{LetterNumber}[\text{c}]	3

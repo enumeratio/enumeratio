@@ -1,3 +1,6 @@
 id	in	out
 no-throw-evaluates-normally	<Catch><Add>1 2</Add></Catch>	<ToExpression>3</ToExpression>
 tag-matched-catch-recovers-the-value	<Catch><Throw>ok done</Throw> done</Catch>	<ok />
+catch-list-a-throw-b-c	<Catch><List>a <Throw>b</Throw> c</List></Catch>	<b />
+catch-list-throw-a-throw-b-throw-c	<Catch><List><Throw>a</Throw> <Throw>b</Throw> <Throw>c</Throw></List></Catch>	<a />
+catch-throw-a-u-u	<Catch><Throw>a u</Throw> u</Catch>	<a />

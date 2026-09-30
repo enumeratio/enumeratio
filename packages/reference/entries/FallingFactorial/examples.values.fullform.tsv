@@ -1,4 +1,11 @@
 id	in
 falling-factorial-5-3-60	FactorialPower[5, 3]
+fallingfactorial-10-2	FactorialPower[10, 2]
+fallingfactorial-x-8	FactorialPower[x, 8]
 falling-factorial-3-5-0	FactorialPower[3, 5]
 falling-factorial-half-2-neg-1-4	FactorialPower[Rational[1, 2], 2]
+fallingfactorial-4-2	FactorialPower[4, 2]
+functionexpand-fallingfactorial-x-4	FunctionExpand[FactorialPower[x, 4]]
+fallingfactorial-n-0	FactorialPower[n, 0]
+fallingfactorial-10-3	FactorialPower[10, 3]
+differencedelta-fallingfactorial-x-n-x	DifferenceDelta[FactorialPower[x, n], x]

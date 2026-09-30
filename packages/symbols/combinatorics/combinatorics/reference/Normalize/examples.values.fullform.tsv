@@ -1,3 +1,4 @@
 id	in
 3-4-5	Normalize[List[3, 4]]
+normalize-list-1-5-1	Normalize[List[1, 5, 1]]
 zero-vector	Normalize[List[0, 0]]

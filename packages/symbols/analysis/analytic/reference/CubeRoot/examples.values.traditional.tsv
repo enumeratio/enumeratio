@@ -3,4 +3,16 @@ the-cube-root-of-a-perfect-cube
 the-real-root-of-a-negative-number-not-a-complex		
 at-a-non-perfect-cube-n-forces-the-numeric		
 threads-element-wise-over-a-list		
+cuberoot-128		
+n-cuberoot-18-100		
+cuberoot-list-list-1-over-2-neg-1-list-neg-5		
+matrixfunction-cuberoot-list-list-1-over-2-neg-1		
+cuberoot-0		
+cuberoot-positiveinfinity		
+cuberoot-negativeinfinity		
+cuberoot-x-eq-surd-x-3	\mathrm{CubeRoot}(x)=\mathrm{Surd}(x, 3)	\mathrm{True}
+fullsimplify-d-integrate-cuberoot-x-x-nothing	\mathrm{FullSimplify}(\frac{\mathrm{d}\int\!\mathrm{CubeRoot}(x)\, \mathrm{d}x}{\mathrm{d}x}=\mathrm{CubeRoot}(x))	\mathrm{True}
+fullsimplify-integrate-sin-x-times-cuberoot-x-x		
+d-cuberoot-x-x		
 the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\mathrm{True}
+cuberoot-neg-8		

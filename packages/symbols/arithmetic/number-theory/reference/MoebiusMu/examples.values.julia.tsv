@@ -7,5 +7,26 @@ threads-element-wise-over-a-list-as-wolfram-s	[moebius_mu(1), moebius_mu(2), moe
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	moebius_mu(complex(5, 6))	MethodError: no method matching moebius_mu(::Complex{Int64}) The function `moebius_mu` exists, but n	error
 listable-threads-over-a-list	[moebius_mu(4), moebius_mu(10), moebius_mu(17), moebius_mu(20)]	[0, 1, -1, 0]	
 listable-over-a-range			
+moebiusmu-15-factorial-eq-0			
+divisorsum-1-function-moebiusmu-1-1			
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))	0	
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	(moebius_mu(253) == (moebius_mu(11) * moebius_mu(23)))		
+moebiusmu-5-187	moebius_mu(5187)		
+moebiusmu-32-538	moebius_mu(32538)		
+moebiusmu-1-440	moebius_mu(1440)		
+list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprime-11-moebiusmu-11	[is_prime(ZZ(11)), moebius_mu(11)]		
+moebiusmu-2	moebius_mu(2)		
+moebiusmu-3	moebius_mu(3)		
+moebiusmu-4	moebius_mu(4)		
+moebiusmu-5	moebius_mu(5)		
+moebiusmu-6	moebius_mu(6)		
+moebiusmu-7	moebius_mu(7)		
+moebiusmu-8	moebius_mu(8)		
+moebiusmu-9	moebius_mu(9)		
+moebiusmu-13	moebius_mu(13)		
+moebiusmu-14	moebius_mu(14)		
+moebiusmu-15	moebius_mu(15)		
+moebiusmu-16	moebius_mu(16)		
+moebiusmu-17	moebius_mu(17)		
 mu-is-only-defined-for-positive-integers-compute	moebius_mu(0)	DomainError with 0: Argument must be positive	error

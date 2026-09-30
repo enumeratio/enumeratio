@@ -3,6 +3,7 @@ fromdigits-list-5-1-2-8
 fromdigits-list-1-0-1-1-0-1-1-2		
 1d-2h-3m-4s-back-to-seconds		
 crt-reconstruction		
+fromdigits-list-1-4-25-41-mixedradixnumerals		
 the-digits-can-be-given-as-a-string-0-9-then-a-z		
 a-digit-string-in-a-given-base		
 roman-numerals-with-the-base-roman		
@@ -24,9 +25,11 @@ a-negative-base-minus-3-1-0-1
 a-negative-base-minus-4-3-2-1		
 a-digits-exponent-pair-exponent-3-is-an-exact		
 a-digits-exponent-pair-exponent-5-is-12-300		
+fromdigits-list-3-2-5-mixedradixnumerals-list-3		
 a-lehmer-code-back-to-its-rank		
 fromdigits-inverts-integerdigits	\mathrm{FromDigits}(\mathrm{IntegerDigits}(58\,127))=58\,127	\mathrm{True}
 the-round-trip-holds-in-any-base		
+fromdigits-list-1-3-22-14-mixedradixnumerals		
 an-empty-digit-list-is-left-unevaluated-rather		
 two-adjacent-ones-is-not-a-numeral-so-it-denotes		
 ostrowski-declines-a-string-past-its-ceiling		

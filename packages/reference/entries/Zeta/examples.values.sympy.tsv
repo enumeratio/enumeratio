@@ -31,6 +31,12 @@ zeta-2-1-2-3-zeta-2-pi-2-2	zeta(2, Rational(1, 2))	zeta(2, 1/2)
 interval-arithmetic-zeta-is-decreasing-on-1			
 uncertainty-in-a-propagated-with-partial-a-zeta			
 to-40-significant-digits-every-one-correctly	N(zeta(3), 30)	1.20205690315959428539973816151	
+n-zeta-5-over-4-50	N(zeta(Rational(5, 4)), 30)		
+n-zeta-3-2-50	N(zeta(3, 2), 30)		
+zeta-2-list-list-1-over-2-0-list-0-3-over-2	zeta(2, [[Rational(1, 2), 0], [0, Rational(3, 2)]])		
+zeta-4-5	zeta(4, 5)		
+zeta-list-1-2-3-4	zeta([1, 2, 3, 4])		
+matrixfunction-function-zeta-2-1-1-list-list-1			
 the-probability-that-two-random-positive	enumeratio_equal((S(1) / zeta(2)), (S(6) / (S(pi)**2)))	True	
 certified-digits-zeta-3	N(zeta(3), 30)	1.20205690315959428539973816151	
 zeta-0-1-2	zeta(0)	-1/2	
@@ -38,6 +44,20 @@ trivial-zero-zeta-2n-0-for-positive-integer-n	zeta(-2)	0
 zeta-3-b-4-4-1-120-via-the-bernoulli-number	zeta(-3)	1/120	
 pole-at-s-1-the-harmonic-series-sum-1-n-diverges	zeta(1)	zoo	
 zeta-s-1-zeta-s-for-symbolic-s	zeta(Symbol("s"), 1)	True	
+zeta-0-1	zeta(0, 1)		
+zeta-neg-1-1	zeta(-1, 1)		
+zeta-0-1-over-4	zeta(0, Rational(1, 4))		
+zeta-neg-1-1-over-4	zeta(-1, Rational(1, 4))		
+zeta-2-3	zeta(2, 3)		
+zeta-2-4	zeta(2, 4)		
+zeta-2-5	zeta(2, 5)		
+zeta-2-6	zeta(2, 6)		
+zeta-2-7	zeta(2, 7)		
+zeta-2-8	zeta(2, 8)		
+zeta-2-9	zeta(2, 9)		
+zeta-2-10	zeta(2, 10)		
+zeta-4-1	zeta(4, 1)		
+zeta-4-2	zeta(4, 2)		
 odd-integers-geq-3-have-no-known-closed-form	zeta(3)	zeta(3)	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N(zeta(3, Rational(-1, 2)), 30)	0.414398322117159997798167130580	disagree
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N(zeta(-1, -2), 30)	-3.08333333333333333333333333333	disagree

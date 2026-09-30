@@ -1,2 +1,5 @@
 id	in	out
 a-2-cycle-and-a-downstream-only-vertex	\mathrm{ConnectedComponents}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
+length-first-connectedcomponents-g	\mathrm{Length}(\mathrm{First}(\mathrm{ConnectedComponents}(g)))	0
+length-connectedcomponents-g-minus-1	\mathrm{Length}(\mathrm{ConnectedComponents}(g))-1	0
+length-connectedcomponents-g	\mathrm{Length}(\mathrm{ConnectedComponents}(g))	1

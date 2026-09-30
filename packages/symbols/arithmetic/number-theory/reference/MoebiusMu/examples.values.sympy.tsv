@@ -7,5 +7,26 @@ threads-element-wise-over-a-list-as-wolfram-s	[mobius(1), mobius(2), mobius(3), 
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	mobius((5 + 6*I))	TypeError: n should be an integer	error
 listable-threads-over-a-list	[mobius(4), mobius(10), mobius(17), mobius(20)]	[0, 1, -1, 0]	
 listable-over-a-range			
+moebiusmu-15-factorial-eq-0			
+divisorsum-1-function-moebiusmu-1-1			
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	(mobius(1) + mobius(2) + mobius(3) + mobius(4) + mobius(6) + mobius(12))	0	
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	enumeratio_equal(mobius(253), (mobius(11) * mobius(23)))		
+moebiusmu-5-187	mobius(5187)		
+moebiusmu-32-538	mobius(32538)		
+moebiusmu-1-440	mobius(1440)		
+list-isprimepower-121-iscomposite-121-moebiusmu			
+list-isprime-11-moebiusmu-11	[isprime(11), mobius(11)]		
+moebiusmu-2	mobius(2)		
+moebiusmu-3	mobius(3)		
+moebiusmu-4	mobius(4)		
+moebiusmu-5	mobius(5)		
+moebiusmu-6	mobius(6)		
+moebiusmu-7	mobius(7)		
+moebiusmu-8	mobius(8)		
+moebiusmu-9	mobius(9)		
+moebiusmu-13	mobius(13)		
+moebiusmu-14	mobius(14)		
+moebiusmu-15	mobius(15)		
+moebiusmu-16	mobius(16)		
+moebiusmu-17	mobius(17)		
 mu-is-only-defined-for-positive-integers-compute	mobius(0)	ValueError: n should be a positive integer	error

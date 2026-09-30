@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	\mathrm{PowerMod}(7i, 3, 3+2i)	1
 modulus-a-real-composite-5-squared	\mathrm{PowerMod}(1+i, 4, 25)	21
 a-negative-unit-exponent-is-its-own-inverse	\mathrm{PowerMod}(i, -1, 7)	-i
 modulus-a-negative-associate	\mathrm{PowerMod}(2+i, 5, -2-3i)	-1-i
+sum-powermod-a-2-7-a-nothing-7	\sum_{a}^7\mathrm{PowerMod}(a, 2, 7)	14
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\mathrm{FindInstance}(\mathrm{PowerMod}(a, b, 17)=1\land0\lt a\lt17\land0\lt b\lt17, \bigl\lbrack a, b\bigr\rbrack, \mathbb{Z}, 2)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack\bigr\rbrack
 one-step-of-rsa-style-modular-exponentiation-7	\mathrm{PowerMod}(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	\mathrm{PowerMod}(2, 340, 341)	1
 diffie-hellman-both-parties-reach-the-shared-key	\mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)	\top
+powermod-tocharactercode-rsa-in-mathematica	\mathrm{PowerMod}(\mathrm{ToCharacterCode}(\text{RSA in Mathematica}), e, n)	\bigl\lbrack\mathrm{PowerMod}(82, e, n), \mathrm{PowerMod}(83, e, n), \mathrm{PowerMod}(65, e, n), \mathrm{PowerMod}(32, e, n), \mathrm{PowerMod}(105, e, n), \mathrm{PowerMod}(110, e, n), \mathrm{PowerMod}(32, e, n), \mathrm{PowerMod}(77, e, n), \mathrm{PowerMod}(97, e, n), \mathrm{PowerMod}(116, e, n), \mathrm{PowerMod}(104, e, n), \mathrm{PowerMod}(101, e, n), \mathrm{PowerMod}(109, e, n), \mathrm{PowerMod}(97, e, n), \mathrm{PowerMod}(116, e, n), \mathrm{PowerMod}(105, e, n), \mathrm{PowerMod}(99, e, n), \mathrm{PowerMod}(97, e, n)\bigr\rbrack
 by-definition-a-b-bmod-m-computed-without-ever	\mathrm{PowerMod}(2, 10, 3)=2^{10}\bmod3	\top
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)	1
+list-powermod-7-2-5-powermod-12-2-5	\bigl\lbrack\mathrm{PowerMod}(7, 2, 5), \mathrm{PowerMod}(12, 2, 5)\bigr\rbrack	\bigl\lbrack4, 4\bigr\rbrack
+list-powermod-2-3-5-8-mod-5	\bigl\lbrack\mathrm{PowerMod}(2, 3, 5), 8\bmod5\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
+list-powermod-2-neg-1-5-modularinverse-2-5	\bigl\lbrack\mathrm{PowerMod}(2, -1, 5), \mathrm{ModularInverse}(2, 5)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
+list-divides-2-8-powermod-8-3-2-eq-0	\bigl\lbrack2\mid8, \mathrm{PowerMod}(8, 3, 2)=0\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
+powermod-7-totient-19-19-eq-1	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)=1	\top
+powermod-2-16-17	\mathrm{PowerMod}(2, 16, 17)	1
+powermod-list-5-neg-5-2-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, 3)	\bigl\lbrack1, 1\bigr\rbrack
+powermod-list-5-neg-5-2-neg-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, -3)	\bigl\lbrack\mathrm{PowerMod}(5, 2, -3), \mathrm{PowerMod}(-5, 2, -3)\bigr\rbrack
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	\mathrm{PowerMod}(2, -1, 4)	\mathrm{PowerMod}(2, -1, 4)
 a-nonzero-exponent-at-the-same-negative-modulus	\mathrm{PowerMod}(-2, 3, -14)	\mathrm{PowerMod}(-2, 3, -14)
 2-is-not-a-square-mod-5-so-there-is-no-root	\mathrm{PowerMod}(2, \frac{1}{2}, 5)	\mathrm{PowerMod}(2, \frac{1}{2}, 5)

@@ -1,5 +1,7 @@
 id	in	out
 padded-with-zeros-on-the-left	<PadLeft><List>1 2 3</List> 5</PadLeft>	<List>0 0 1 2 3</List>
 a-padding-element	<PadLeft><List>1 2 3</List> 5 x</PadLeft>	<List>x x 1 2 3</List>
+padleft-list-a-b-c-10	<PadLeft><List>a b c</List> 10</PadLeft>	<List>0 0 0 0 0 0 0 a b c</List>
+padleft-list-a-b-c-10-x	<PadLeft><List>a b c</List> 10 x</PadLeft>	<List>x x x x x x x a b c</List>
 a-shorter-length-drops-elements-from-the-left	<PadLeft><List>1 2 3 4 5</List> 3</PadLeft>	<List>3 4 5</List>
 with-no-length-a-ragged-array-is-padded-to-a	<PadLeft><List><List>1</List> <List>2 3</List></List></PadLeft>	<List><List>0 1</List> <List>2 3</List></List>

@@ -3,3 +3,5 @@ the-first-nontrivial-zero-frac-12-14-1347-i	N[ZetaZero[1]]	0.5 + 14.134725141734
 n-riemannzetazero-2	N[ZetaZero[2]]	0.5 + 21.022039638771556*I	N\left[\rho _2\right]	0.5\, +21.022 i
 n-riemannzetazero-50	N[ZetaZero[50]]	0.5 + 143.11184580762063*I	N\left[\rho _{50}\right]	0.5\, +143.112 i
 n-riemannzetazero-10	N[ZetaZero[10]]	0.5 + 49.7738324776723*I	N\left[\rho _{10}\right]	0.5\, +49.7738 i
+n-list-riemannzetazero-1-riemannzetazero-2	N[List[ZetaZero[1], ZetaZero[2], ZetaZero[3]]]	{0.5 + 14.134725141734695*I, 0.5 + 21.022039638771556*I, 0.5 + 25.01085758014569*I}	N\left[\left\{\rho _1,\rho _2,\rho _3\right\}\right]	\{0.5\, +14.1347 i,0.5\, +21.022 i,0.5\, +25.0109 i\}
+n-riemannzetazero-0	N[ZetaZero[0]]	ZetaZero[0]	N\left[\rho _0\right]	\rho _0

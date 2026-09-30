@@ -6,6 +6,8 @@ gamma-3-frac-12-0-66742	StieltjesGamma(3, 0.5)	-0.667_424_273_711_379_8
 gamma-2-frac-32	StieltjesGamma(2, 1.5)	0.007_958_447_383_888_047
 gamma-1-0-0728158-under-n	N(StieltjesGamma(1))	-0.072_815_845_483_676_52
 gamma-2-0-00969036-under-n	N(StieltjesGamma(2))	-0.009_690_363_192_872_318_484_53
+n-stieltjesgamma-1-50	N(StieltjesGamma(1), 50)	-0.072_815_845_483_676_724_860_586_375_874_901_319_137_736_338_334_338
+n-stieltjesgamma-2-1-over-2-50	N(StieltjesGamma(2, 1 / 2), 50)	0.968_864_475_220_290_711_421_711_062_323_780_654_182_598_044_760_42
 complex-a	N(StieltjesGamma(2, 1 + i))	0.170_304_201_468_587_9 + 0.373_177_195_757_495_25i
 listable-in-the-order-n-threads-over-a-list	StieltjesGamma([1, 2, 3], 0.5)	[-1.353_459_680_804_941_5, 0.968_864_475_220_290_7, -0.667_424_273_711_380_7]
 interval-arithmetic-in-a	StieltjesGamma(2, interval(2.34, 2.35))	interval(-0.067_241_280_355_087_15, -0.065_140_403_663_072_42)
@@ -17,5 +19,9 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	StieltjesGamma(1, 1)	StieltjesGa
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	StieltjesGamma(0, 1)	eulerGamma
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	StieltjesGamma(0, 1 / 2)	eulerGamma + 2 * ln(2)
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	StieltjesGamma(3, 1)	StieltjesGamma(3)
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0 < StieltjesGamma(10) < 10 ^ -3	True
 gamma-n-a-has-poles-at-the-nonpositive-integers	StieltjesGamma(2, -1)	complexInfinity
 orders-past-30-stay-unevaluated-even-under-n-the	StieltjesGamma(40)	StieltjesGamma(40)
+stieltjesgamma-2-1	StieltjesGamma(2, 1)	StieltjesGamma(2)
+n-stieltjesgamma-2n	N(StieltjesGamma(2n))	StieltjesGamma(2n)
+n-stieltjesgamma-2n-3-over-2	N(StieltjesGamma(2n, 3 / 2))	StieltjesGamma(2n, 1.5)

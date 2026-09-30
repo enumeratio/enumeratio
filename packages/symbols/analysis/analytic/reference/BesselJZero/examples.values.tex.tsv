@@ -5,4 +5,6 @@ the-third-zero-of-j-0	N(\mathrm{BesselJZero}(0, 3))	8.653\,727\,912\,911\,013
 j-3-2-2	N(\mathrm{BesselJZero}(\frac{3}{2}, 2))	7.725\,251\,836\,937\,707
 j-1-2	N(\mathrm{BesselJZero}(1, 2))	7.015\,586\,669\,815\,619
 j-5-2-1	N(\mathrm{BesselJZero}(\frac{5}{2}, 1))	5.763\,459\,196\,894\,55
+n-list-besseljzero-0-1-besseljzero-0-2	N(\bigl\lbrack\mathrm{BesselJZero}(0, 1), \mathrm{BesselJZero}(0, 2), \mathrm{BesselJZero}(0, 3)\bigr\rbrack)	\bigl\lbrack2.404\,825\,557\,695\,772\,4, 5.520\,078\,110\,286\,311\,5, 8.653\,727\,912\,910\,991\bigr\rbrack
+n-1-over-pi-times-besseljzero-1-1	N(\frac{\mathrm{BesselJZero}(1, 1)}{\pi})	1.219\,669\,891\,266\,504\,513\,62
 tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	\mathrm{chop}(\tan(N(\mathrm{BesselJZero}(3/2, 1)))-N(\mathrm{BesselJZero}(3/2, 1)))	0.0

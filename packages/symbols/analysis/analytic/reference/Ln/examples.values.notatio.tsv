@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	<N><Ln>-2</Ln> 10</N>	<Complex>0.6931471806 3.1
 ln-neg-6	<Ln>-6</Ln>	<Add><Multiply><Complex>0 1</Complex> Pi</Multiply> <Ln>6</Ln></Add>
 n-of-a-negative-rational-argument	<N><Ln><Rational>-1 2</Rational></Ln></N>	<Complex>-0.6931471805599453 3.141592653589793</Complex>
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	<Ln>NegativeInfinity</Ln>	<PositiveInfinity />
+n-ln-5-over-2-50	<N><Ln><Rational>5 2</Rational></Ln> 50</N>	<ToExpression>0.91629073187415506518352721176801107145010121990826</ToExpression>
+functiondomain-ln-x-x	<FunctionDomain><Ln>x</Ln> x</FunctionDomain>	<Less>0 x</Less>
+functionrange-ln-x-x-y	<FunctionRange><Ln>x</Ln> x y</FunctionRange>	<True />
+functionanalytic-ln-x-x	<FunctionAnalytic><Ln>x</Ln> x</FunctionAnalytic>	<False />
+functionmeromorphic-ln-x-x	<FunctionMeromorphic><Ln>x</Ln> x</FunctionMeromorphic>	<False />
+functioninjective-ln-x-x	<FunctionInjective><Ln>x</Ln> x</FunctionInjective>	<True />
+functionsurjective-ln-x-x	<FunctionSurjective><Ln>x</Ln> x</FunctionSurjective>	<True />
+d-ln-z-z	<D><Ln>z</Ln> z</D>	<Divide>1 z</Divide>
+d-ln-ln-x-x	<D><Ln><Ln>x</Ln></Ln> x</D>	<Divide>1 <Multiply>x <Ln>x</Ln></Multiply></Divide>
+ln-exponentiale-pow-n	<Ln><Power>ExponentialE n</Power></Ln>	<n />
 inverse-of-exp-ln-e-x-x	<Equal><Ln><Exp>5</Exp></Ln> 5</Equal>	<True />
 product-rule-ln-ab-ln-a-ln-b	<Equal><Add><Ln>2</Ln> <Ln>3</Ln></Add> <Ln>6</Ln></Equal>	<True />
 powerexpand-splits-a-logarithm-of-a-product	<PowerExpand><Ln><Multiply>x y</Multiply></Ln></PowerExpand>	<Add><Ln>x</Ln> <Ln>y</Ln></Add>

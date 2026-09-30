@@ -1,0 +1,19 @@
+id	in	out
+the-2-2-closed-form-exact-not-decimalized		
+the-exponential-of-the-zero-matrix-is-the		
+a-diagonal-matrix-exponentiates-entry-by-entry		
+a-generic-2-2-matrix-no-special-structure		
+an-upper-triangular-3-3-matrix-numeric-path		
+a-nilpotent-4-4-generator-numeric-path		
+a-nilpotent-matrix-i-a-since-a-2-0		
+a-diagonal-matrix-exp-of-each-diagonal-entry		
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2		
+a-jordan-block-e-i-n-e-i-n		
+applied-to-a-vector-e-a-v-computed-as-e-a-via		
+a-3-times-3-nilpotent-generator-the-exponential		
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not		
+a-skew-symmetric-generator-gives-a-rotation		
+matrixexp-a-eq-matrixfunction-exp-a	\mathrm{MatrixExp}(a)=\mathrm{MatrixFunction}(\mathrm{Exp}, a)	\mathrm{True}
+rejects-a-non-square-argument		
+a-generic-matrix-with-no-closed-form-stays		
+euler-s-identity-for-matrices-rotation-by-pi-is		

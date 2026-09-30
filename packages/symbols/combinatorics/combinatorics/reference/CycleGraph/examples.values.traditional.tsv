@@ -1,3 +1,8 @@
 id	in	out
 c5-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
 c6-is-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))	\mathrm{True}
+cyclegraph-3		
+map-function-vertexeccentricity-cyclegraph-5-1-1		
+isacyclicgraph-cyclegraph-5	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
+vertexdegree-cyclegraph-7		
+cyclegraph-4		

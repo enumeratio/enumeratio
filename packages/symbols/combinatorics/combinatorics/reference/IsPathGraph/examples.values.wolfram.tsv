@@ -1,3 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 an-actual-path-is-a-path	PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]	True	\text{PathGraphQ}[]	\text{True}	
 a-cycle-is-not-a-path	PathGraphQ[CycleGraph[4]]	True	\text{PathGraphQ}[\text{CycleGraph}[4]]	\text{True}	disagree
+ispathgraph-graph-list-1-list	PathGraphQ[Graph[List[1], List[]]]	True	\text{PathGraphQ}[]	\text{True}	
+ispathgraph-gridgraph-list-1-4	PathGraphQ[GridGraph[List[1, 4]]]	True	\text{PathGraphQ}[\text{GridGraph}[\{1,4\}]]	\text{True}	
+ispathgraph-gridgraph-list-4-1	PathGraphQ[GridGraph[List[4, 1]]]	True	\text{PathGraphQ}[\text{GridGraph}[\{4,1\}]]	\text{True}	
+ispathgraph-gridgraph-list-1-4-1	PathGraphQ[GridGraph[List[1, 4, 1]]]	True	\text{PathGraphQ}[\text{GridGraph}[\{1,4,1\}]]	\text{True}	

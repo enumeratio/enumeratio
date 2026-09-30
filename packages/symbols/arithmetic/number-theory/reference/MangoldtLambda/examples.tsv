@@ -1,9 +1,30 @@
-id	section	role	expr	expected	caption
-8-2-3			[MangoldtLambda, 8]	[Ln, 2]	$8=2^3$
-6-is-not-a-prime-power			[MangoldtLambda, 6]	0	6 is not a prime power
-mangoldtlambda-7			[MangoldtLambda, 7]	[Ln, 7]	
-mangoldtlambda-9		test	[MangoldtLambda, 9]	[Ln, 3]	
-numerically-ln-3	Scope		[N, [MangoldtLambda, 9]]	1.0986122886681098	Numerically, $\ln3$
-listable	Scope		[MangoldtLambda, [List, 2, 4, 6, 25]]	[List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]	Listable
-n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	0	N of a zero result is still 0
-lambda-1-0	Possible issues		[MangoldtLambda, 1]	0	$\Lambda(1)=0$
+id	section	role	expr	expected	known	source	caption
+8-2-3			[MangoldtLambda, 8]	[Ln, 2]			$8=2^3$
+6-is-not-a-prime-power			[MangoldtLambda, 6]	0			6 is not a prime power
+mangoldtlambda-7			[MangoldtLambda, 7]	[Ln, 7]			
+mangoldtlambda-9		test	[MangoldtLambda, 9]	[Ln, 3]			
+mangoldtlambda-25			[MangoldtLambda, 25]	[Ln, 5]			
+numerically-ln-3	Scope		[N, [MangoldtLambda, 9]]	1.0986122886681098			Numerically, $\ln3$
+listable	Scope		[MangoldtLambda, [List, 2, 4, 6, 25]]	[List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]			Listable
+n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	0			N of a zero result is still 0
+mangoldtlambda-125	Scope		[MangoldtLambda, 125]	[Ln, 5]			
+mangoldtlambda-7-pow-300	Scope		[MangoldtLambda, [Power, 7, 300]]	[Ln, 7]			
+mangoldtlambda-list-2-6-9-8-15	Scope		[MangoldtLambda, [List, 2, 6, 9, 8, 15]]	[List, [Ln, 2], 0, [Ln, 3], [Ln, 2], 0]			
+mangoldtlambda-81-factorial-eq-0	Applications		[NotEqual, [MangoldtLambda, 81], 0]	True			
+list-mangoldtlambda-6-mangoldtlambda-2-plus	Properties		[List, [MangoldtLambda, 6], [Add, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Add, [Ln, 2], [Ln, 3]]]			
+list-mangoldtlambda-6-mangoldtlambda-2-times	Properties		[List, [MangoldtLambda, 6], [Multiply, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Multiply, [Ln, 2], [Ln, 3]]]			
+mangoldtlambda-5	Properties		[MangoldtLambda, 5]	[Ln, 5]			
+mangoldtlambda-2	Properties		[MangoldtLambda, 2]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-3	Properties		[MangoldtLambda, 3]	[Ln, 3]	[Ln, 3]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-4	Properties		[MangoldtLambda, 4]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-10	Properties		[MangoldtLambda, 10]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-11	Properties		[MangoldtLambda, 11]	[Ln, 11]	[Ln, 11]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-12	Properties		[MangoldtLambda, 12]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	
+simplify-sum-mangoldtlambda-n-n-20	Properties		[Simplify, [Sum, [MangoldtLambda, n], [Tuple, n, 20]]]	[Add, [Multiply, 2, [Ln, 3]], [Multiply, 4, [Ln, 2]], [Ln, 1616615]]			
+mangoldtlambda-13	Properties		[MangoldtLambda, 13]	[Ln, 13]	[Ln, 13]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-14	Properties		[MangoldtLambda, 14]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-15	Properties		[MangoldtLambda, 15]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-16	Properties		[MangoldtLambda, 16]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	
+mangoldtlambda-17	Properties		[MangoldtLambda, 17]	[Ln, 17]	[Ln, 17]	Wolfram MathematicalFunctionData, MangoldtLambda	
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	Properties		[Equal, [Ln, 16], [DivisorSum, 16, [Function, [Block, [MangoldtLambda, _1]], _1]]]	True			
+lambda-1-0	Possible issues		[MangoldtLambda, 1]	0			$\Lambda(1)=0$

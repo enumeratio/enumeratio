@@ -1,6 +1,12 @@
 id	in	out
 romannumeral-1-988	\mathrm{RomanNumeral}(1\,988)	\text{MCMLXXXVIII}
 romannumeral-2-024	\mathrm{RomanNumeral}(2\,024)	\text{MMXXIV}
+romannumeral-2-023	\mathrm{RomanNumeral}(2\,023)	\text{MMXXIII}
 the-largest-with-standard-symbols	\mathrm{RomanNumeral}(3\,999)	\text{MMMCMXCIX}
 listable-4-is-written-subtractively	\mathrm{RomanNumeral}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack\text{I}, \text{II}, \text{III}, \text{IV}\bigr\rbrack
+romannumeral-list-1-2-3-4-5-10-50-60-100-250-500	\mathrm{RomanNumeral}(\bigl\lbrack1, 2, 3, 4, 5, 10, 50, 60, 100, 250, 500, 1\,000, 1\,500, 2\,600\bigr\rbrack)	\bigl\lbrack\text{I}, \text{II}, \text{III}, \text{IV}, \text{V}, \text{X}, \text{L}, \text{LX}, \text{C}, \text{CCL}, \text{D}, \text{M}, \text{MD}, \text{MMDC}\bigr\rbrack
+romannumeral-range-1-10	\mathrm{RomanNumeral}(1..10)	\bigl\lbrack\text{I}, \text{II}, \text{III}, \text{IV}, \text{V}, \text{VI}, \text{VII}, \text{VIII}, \text{IX}, \text{X}\bigr\rbrack
+romannumeral-3-749	\mathrm{RomanNumeral}(3\,749)	\text{MMMDCCXLIX}
+romannumeral-1-234	\mathrm{RomanNumeral}(1\,234)	\text{MCCXXXIV}
+romannumeral-3-748	\mathrm{RomanNumeral}(3\,748)	\text{MMMDCCXLVIII}
 zero-is-written-n-for-nulla	\mathrm{RomanNumeral}(0)	\text{N}

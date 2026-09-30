@@ -5,12 +5,16 @@ trailing-zeros-in-base-10	<IntegerExponent>1230000</IntegerExponent>	<ToExpressi
 integerexponent-2-pow-10-times-3-pow-4-2	<IntegerExponent><Multiply><Power>2 10</Power> <Power>3 4</Power></Multiply> 2</IntegerExponent>	<ToExpression>10</ToExpression>
 integerexponent-1000-base-10	<IntegerExponent>1000</IntegerExponent>	<ToExpression>3</ToExpression>
 integerexponent-1024-base-4	<IntegerExponent>1024 4</IntegerExponent>	<ToExpression>5</ToExpression>
+integerexponent-1-152-2	<IntegerExponent>1152 2</IntegerExponent>	<ToExpression>7</ToExpression>
+integerexponent-144-2	<IntegerExponent>144 2</IntegerExponent>	<ToExpression>4</ToExpression>
 composite-base-1728-2-6-3-3-so-6-3-divides-it	<IntegerExponent>1728 6</IntegerExponent>	<ToExpression>3</ToExpression>
 negative-integers	<IntegerExponent>-1000</IntegerExponent>	<ToExpression>3</ToExpression>
 threads-over-a-list	<IntegerExponent><List>10 100 1000</List></IntegerExponent>	<List>1 2 3</List>
 gaussian-integers-8i-i-cdot-i-3-1-i-6	<IntegerExponent><Complex>0 8</Complex> <Complex>1 1</Complex></IntegerExponent>	<ToExpression>6</ToExpression>
 negative-integers-base-2	<IntegerExponent>-24 2</IntegerExponent>	<ToExpression>3</ToExpression>
 the-trailing-zeros-of-100	<IntegerExponent><Factorial>100</Factorial></IntegerExponent>	<ToExpression>24</ToExpression>
+integerexponent-range-1-50-2	<IntegerExponent><Range>1 50</Range> 2</IntegerExponent>	<List>0 1 0 2 0 1 0 3 0 1 0 2 0 1 0 4 0 1 0 2 0 1 0 3 0 1 0 2 0 1 0 5 0 1 0 2 0 1 0 3 0 1 0 2 0 1 0 4 0 1</List>
 legendre-s-formula-lfloor-100-7-rfloor-lfloor	<IntegerExponent><Factorial>100</Factorial> 7</IntegerExponent>	<ToExpression>16</ToExpression>
+integerexponent-2-524-2	<IntegerExponent>2524 2</IntegerExponent>	<ToExpression>2</ToExpression>
 integerexponent-0-5	<IntegerExponent>0 5</IntegerExponent>	<PositiveInfinity />
 base-1-has-no-well-defined-p-adic-valuation-so	<IntegerExponent>10 1</IntegerExponent>	<IntegerExponent>10 1</IntegerExponent>

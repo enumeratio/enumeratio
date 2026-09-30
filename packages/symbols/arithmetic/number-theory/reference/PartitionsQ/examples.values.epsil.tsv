@@ -3,5 +3,22 @@ the-partitions-of-10-into-distinct-parts	PartitionsQ(10)	10
 the-empty-partition	PartitionsQ(0)	1
 exact-for-large-n	PartitionsQ(100)	444_793
 threads-over-a-list	PartitionsQ([1, 2, 3, 4, 5, 6, 7, 8])	[1, 1, 2, 2, 3, 4, 5, 6]
+partitionsq-list-2-4-6	PartitionsQ([2, 4, 6])	[1, 2, 4]
 counts-the-distinctpartitions-family	PartitionsQ(10) == count(DistinctPartitions(10))	True
 euler-as-many-partitions-into-odd-parts-as-into	PartitionsQ(12) == count(IntegerPartitions(12, all, [1, 3, 5, 7, 9, 11]))	True
+partitionsq-5	PartitionsQ(5)	3
+partitionsq-1	PartitionsQ(1)	1
+partitionsq-2	PartitionsQ(2)	1
+partitionsq-3	PartitionsQ(3)	2
+partitionsq-4	PartitionsQ(4)	2
+partitionsq-6	PartitionsQ(6)	4
+partitionsq-7	PartitionsQ(7)	5
+partitionsq-8	PartitionsQ(8)	6
+partitionsq-9	PartitionsQ(9)	8
+partitionsq-11	PartitionsQ(11)	12
+partitionsq-12	PartitionsQ(12)	15
+partitionsq-13	PartitionsQ(13)	18
+partitionsq-14	PartitionsQ(14)	22
+partitionsq-15	PartitionsQ(15)	27
+partitionsq-16	PartitionsQ(16)	32
+partitionsq-17	PartitionsQ(17)	38

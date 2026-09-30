@@ -8,5 +8,10 @@ unsorted-data-is-sorted-first-the-middle-pair-3
 exact-rationals		
 exact-constants-are-ordered-by-value-putting-e		
 the-median-of-a-lazy-range-of-even-length-is-the		
+median-n-list-1-2-3-4-30		
+median-list-list-list-3-7-list-2-1-list-list-5		
 the-same-outlier-laden-data-as-in-mean-s-example		
+median-list-1-5-2-6-10-100-000-5-4		
 for-an-odd-length-list-the-median-is-the-middle	\mathrm{median}(\bigl\lbrack5, 3, 1, 4, 2\bigr\rbrack)=\mathrm{Sort}(\bigl\lbrack5, 3, 1, 4, 2\bigr\rbrack)[3]	\mathrm{True}
+n-median-list-1-2-3-4-4-3-1-1		
+median-list-1-2-3-4-4-3-1-1		

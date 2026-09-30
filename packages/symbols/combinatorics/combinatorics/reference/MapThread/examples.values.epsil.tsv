@@ -1,4 +1,11 @@
 id	in	out
 applies-f-across-corresponding-elements	MapThread(f, [[a, b], [c, d]])	[f(a, c), f(b, d)]
+mapthread-f-list-list-a-b-c-list-x-y-z	MapThread(f, [[a, b, c], [x, y, z]])	[f(a, x), f(b, y), f(c, z)]
 add-rows-agrees-with-add-computed-pairwise	MapThread(Add, [[1, 2, 3], [10, 20, 30]])	[11, 22, 33]
+mapthread-f-list-list-list-a-b-list-c-d-list	MapThread(f, [[[a, b], [c, d]], [[u, v], [w, x]]])	[f([a, b], [u, v]), f([c, d], [w, x])]
+mapthread-f-list-list-1-2-3-list-4-5-6-list-7-8	MapThread(f, [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])	[f(1, 4, 7, 10), f(2, 5, 8, 11), f(3, 6, 9, 12)]
+mapthread-add-list-list-a-b-c-list-u-v-w-list-x	MapThread(Add, [[a, b, c], [u, v, w], [x, y, z]])	[a + u + x, b + v + y, c + w + z]
+mapthread-list-list-list-a-b-c-list-u-v-w-list-x	MapThread(List, [[a, b, c], [u, v, w], [x, y, z]])	[[a, u, x], [b, v, y], [c, w, z]]
+mapthread-d-list-list-x-x-times-y-x-times-z-list	MapThread(D, [[x, x * y, x * z], [x, y, z]])	[1, x, x]
+mapthread-f-list-list-a-b-c	MapThread(f, [[a, b, c]])	[f(a), f(b), f(c)]
 rejects-ragged-rows	MapThread(f, [[1, 2], [3]])	MapThread(f, [[1, 2], [3]])

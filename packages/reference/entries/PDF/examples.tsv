@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+pdf-normaldistribution-0-1-x			[PDF, [NormalDistribution, 0, 1], x]	[Divide, [Multiply, [Sqrt, 2], [Power, ExponentialE, [Multiply, [Rational, -1, 2], [Power, x, 2]]]], [Multiply, 2, [Sqrt, Pi]]]

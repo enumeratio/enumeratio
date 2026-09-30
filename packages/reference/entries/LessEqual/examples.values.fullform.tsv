@@ -1,0 +1,7 @@
+id	in
+2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times	LessEqual[Rational[2, 17], Rational[1, 5], Times[Rational[1, 10], Pi]]
+3-over-2-lt-eq-5-over-3	LessEqual[Rational[3, 2], Rational[5, 3]]
+n-pi-20-lt-eq-pi	LessEqual[N[Pi, 20], Pi]
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]
+sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	LessEqual[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]
+refine-sqrt-x-pow-2-x-lt-eq-0	Refine[Sqrt[Power[x, 2]], LessEqual[x, 0]]

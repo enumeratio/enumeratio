@@ -1,3 +1,18 @@
 id	in	out
 factorial-ratio	DiscreteRatio(n!, n)	n + 1
 geometric-ratio	DiscreteRatio(2 ^ n, n)	2
+discreteratio-x-pow-2-x	DiscreteRatio(x ^ 2, x)	(x + 1) ^ 2 / x ^ 2
+discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio((x - r_1) * (x - r_2), x)	(-r_1 + x + 1) * (-r_2 + x + 1) / ((-r_1 + x) * (-r_2 + x))
+discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio((1 + x) * (1 + x ^ 2) ^ -1, x)	(x ^ 3 + 2 * x ^ 2 + x + 2) / ((x + 1) * ((x + 1) ^ 2 + 1))
+discreteratio-x-minus-r-1-times-x-minus-r-2	DiscreteRatio((x - r_1) * (x - r_2) * ((x - p_1) * (x - p_2)) ^ -1, x)	"(-r_1 + x + 1) * (-r_2 + x + 1) * (-p_1 + x) * (-p_2 + x) / ((-p_1 + x + 1) *\n                                                             (-p_2 + x + 1) *\n                                                             (-r_1 + x) * (-r_2 +\n                                                                           x))"
+discreteratio-fallingfactorial-a-x-x	DiscreteRatio(FallingFactorial(a, x), x)	FallingFactorial(a, x + 1) / FallingFactorial(a, x)
+discreteratio-pochhammer-a-x-x	DiscreteRatio(pochhammer(a, x), x)	pochhammer(a, x + 1) / pochhammer(a, x)
+discreteratio-x-factorial-x	DiscreteRatio(x!, x)	x + 1
+discreteratio-gamma-x-x	DiscreteRatio(gamma(x), x)	gamma(x + 1) / gamma(x)
+discreteratio-binomial-x-k-x	DiscreteRatio(binomial(x, k), x)	binomial(x + 1, k) / binomial(x, k)
+discreteratio-binomial-n-x-x	DiscreteRatio(binomial(n, x), x)	binomial(n, x + 1) / binomial(n, x)
+discreteratio-r-pow-x-x	DiscreteRatio(r ^ x, x)	r
+discreteratio-fallingfactorial-x-a-1-times	"DiscreteRatio(FallingFactorial(x, a_1) * binomial(x, a_2) * (pochhammer(x, b_1) *\n                                                             x!) ^ -1 * r ^ x, x)"	"x! * pochhammer(x, b_1) * FallingFactorial(x + 1, a_1) * binomial(x + 1, a_2) * r ^\n                                                                                (x + 1) /\n((x + 1)! * pochhammer(x + 1, b_1) * FallingFactorial(x, a_1) *\n binomial(x, a_2) * r ^ x)"
+discreteratio-catalannumber-x-x	DiscreteRatio(catalanNumber(x), x)	catalanNumber(x + 1) / catalanNumber(x)
+list-discreteratio-f-n-discreteratio-f-k	[DiscreteRatio(f, n), DiscreteRatio(f, k)]	[1, 1]
+discreteratio-gammaregularized-n-z-n	DiscreteRatio(gammaRegularized(n, z), n)	gammaRegularized(n + 1, z) / gammaRegularized(n, z)

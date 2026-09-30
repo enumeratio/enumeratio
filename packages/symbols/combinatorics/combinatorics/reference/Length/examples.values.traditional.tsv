@@ -4,6 +4,7 @@ length-list-1-2-3-4-5
 works-on-any-collection-not-just-list		
 length-list-a-b-c-d		
 length-of-association-counts-values		
+length-association		
 an-atom-has-no-parts-so-its-length-is-0		
 the-empty-list-has-length-0		
 of-a-matrix-the-number-of-rows		
@@ -12,5 +13,16 @@ any-expression-the-number-of-terms-in-a-sum
 the-number-of-arguments-of-a-call-counting-only		
 a-symbol-such-as-pi-is-an-atom-of-length-0		
 a-lazy-range-is-counted-without-being		
+length-x		
+length-123-456		
+length-1-over-10		
+length-3-plus-i		
+length-list-list-a-b-c-list-d-exponentiale-f		
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1		
+length-integerdigits-1-000-factorial		
+map-length-list-list-a-b-list-a-b-c-list-x		
 length-join-a-b-length-a-length-b-see-join	\mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)	\mathrm{True}
 length-filter-issquarefree-past-iteration-budget		
+length-1-over-3		
+length-2-plus-i		
+length-7		

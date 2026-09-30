@@ -1,6 +1,16 @@
 id	in	out	back
 sigma-2-20-see-divisorsigma	DivisorSum(20, Function(d ^ 2, d))	546	Unreadable
 only-the-odd-divisors-1-3-5-15	DivisorSum(30, Function(d, d), Function(isOdd(d), d))	24	Unreadable
+divisorsum-30-function-1-1	DivisorSum(30, Function(_1, _1))	72	Unreadable
+divisorsum-20-f	DivisorSum(20, f)	f(1) + f(2) + f(4) + f(5) + f(10) + f(20)	
+divisorsum-20-f-isprime	DivisorSum(20, f, isPrime)	f(2) + f(5)	
+divisorsum-20-function-1-1	DivisorSum(20, Function(_1, _1))	42	Unreadable
+divisorsum-20-function-1-1-function-1-lt-5-1	DivisorSum(20, Function(_1, _1), Function(_1 < 5, _1))	7	Unreadable
 sum-d-mid-n-mu-d-0-for-n-1	DivisorSum(12, Function(moebiusMu(d), d))	0	Unreadable
 sum-d-mid-n-varphi-d-n	DivisorSum(36, Function(totient(d), d))	36	Unreadable
+divisorsum-1-000-function-1-pow-2-1	DivisorSum(1_000, Function(_1 ^ 2, _1))	1_383_460	Unreadable
+divisorsum-15-function-1-pow-4-1	DivisorSum(15, Function(_1 ^ 4, _1))	51_332	Unreadable
+divisorsum-11-function-1-1-isprime	DivisorSum(11, Function(_1, _1), isPrime)	11	Unreadable
 1-has-one-divisor	DivisorSum(1, Function(d, d))	1	Unreadable
+n-divisorsum-n-function-1-over-1-plus-1-1	N(DivisorSum(n, Function(1 / (_1 + 1), _1)))	DivisorSum(n, Function(1 / (_1 + 1), _1))	Unreadable
+n-divisorsum-9-function-1-over-1-plus-1-1	N(DivisorSum(9, Function(1 / (_1 + 1), _1)))	17 / 20	Unreadable

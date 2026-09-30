@@ -1,4 +1,11 @@
 id	in	out
 falling-factorial-5-3-60	FallingFactorial(5, 3)	60
+fallingfactorial-10-2	FallingFactorial(10, 2)	90
+fallingfactorial-x-8	FallingFactorial(x, 8)	-x * (-x + 1) * (-x + 2) * (-x + 3) * (-x + 4) * (-x + 5) * (-x + 6) * (-x + 7)
 falling-factorial-3-5-0	FallingFactorial(3, 5)	0
 falling-factorial-half-2-neg-1-4	FallingFactorial(1 / 2, 2)	-1 / 4
+fallingfactorial-4-2	FallingFactorial(4, 2)	12
+functionexpand-fallingfactorial-x-4	FunctionExpand(FallingFactorial(x, 4))	-x * (-x + 1) * (-x + 2) * (-x + 3)
+fallingfactorial-n-0	FallingFactorial(n, 0)	1
+fallingfactorial-10-3	FallingFactorial(10, 3)	720
+differencedelta-fallingfactorial-x-n-x	DifferenceDelta(FallingFactorial(x, n), x)	-FallingFactorial(x, n) + FallingFactorial(x + 1, n)

@@ -3,3 +3,6 @@ power	ToBoxes[Power[x, 2]]	SuperscriptBox["x", "2"]	\text{ToBoxes}\left[x^2\righ
 evaluates-first	ToBoxes[Plus[2, 3]]	"\"5\""	\text{ToBoxes}[2+3]	5	
 binomial	ToBoxes[Binomial[n, k]]	RowBox[{"Binomial", "[", RowBox[{"n", ",", "k"}], "]"}]	\text{ToBoxes}[\binom{n}{k}]	\text{RowBox}[\{\text{Binomial},[,\text{RowBox}[\{\text{n},,,\text{k}\}],]\}]	disagree
 square-root-over-y	ToBoxes[Divide[Sqrt[x], y]]	FractionBox[SqrtBox["x"], "y"]	\text{ToBoxes}\left[\frac{\sqrt{x}}{y}\right]	\text{FractionBox}[\text{SqrtBox}[\text{x}],\text{y}]	
+map-toboxes-list-i-pi-exponentiale	Map[ToBoxes, List[Complex[0, 1], Pi, E]]	{"I", "\[Pi]", "E"}			inconclusive
+toboxes-list-list-a-b-c-list-d-exponentiale-f	ToBoxes[List[List[a, b, c], List[d, E, f]]]	RowBox[{"{", RowBox[{RowBox[{"{", RowBox[{"a", ",", "b", ",", "c"}], "}"}], ",", RowBox[{"{", RowBox[{"d", ",", "E", ",", "f"}], "}"}]}], "}"}]			inconclusive
+toboxes-1-over-10	ToBoxes[Rational[1, 10]]	FractionBox["1", "10"]	\text{ToBoxes}\left[\frac{1}{10}\right]	\text{FractionBox}[1,10]	

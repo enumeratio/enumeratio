@@ -3,3 +3,8 @@ discretedelta-zero			[DiscreteDelta, 0]	1
 discretedelta-nonzero			[DiscreteDelta, 1]	0	
 discretedelta-multi-all-zero	Scope		[DiscreteDelta, 0, 0]	1	Multi-argument -- 1 only when every argument is 0
 discretedelta-multi-one-nonzero	Scope		[DiscreteDelta, 1, 0]	0	
+discretedelta-exponentiale-catalan-1-over-2	Scope		[DiscreteDelta, ExponentialE, Catalan, [Rational, 1, 2]]	0	
+discretedelta-0-0-0	Scope		[DiscreteDelta, 0, 0, 0]	1	
+discretedelta-0-0-0-0	Scope		[DiscreteDelta, 0, 0, 0, 0]	1	
+assuming-x-lt-0-y-gt-0-refine-discretedelta-x-x	Scope		[Assuming, [And, [Less, x, 0], [Greater, y, 0]], [Refine, [DiscreteDelta, x, x, y]]]	[DiscreteDelta, x, x, y]	
+discretedelta-1-over-2-times-sqrt-2-minus-sqrt-2	Possible issues		[DiscreteDelta, [Add, [Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Negate, [Sqrt, [Add, 2, [Sqrt, 2]]]]]]], [Negate, [Sin, [Multiply, [Rational, 1, 16], Pi]]]]]	0	

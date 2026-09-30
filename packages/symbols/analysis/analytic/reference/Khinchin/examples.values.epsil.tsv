@@ -1,2 +1,5 @@
 id	in	out
 khinchin-s-constant	N(Khinchin)	2.685_452_001_065_306_2
+n-khinchin-50	N(Khinchin, 50)	2.685_452_001_065_306_445_309_714_835_481_795_693_820_382_293_994_5
+round-khinchin-pow-100	round(Khinchin ^ 100)	7.975_160_530_073_655e42
+2-lt-khinchin-lt-3	2 < Khinchin < 3	True

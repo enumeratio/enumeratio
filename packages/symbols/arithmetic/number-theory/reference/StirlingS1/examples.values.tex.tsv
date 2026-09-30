@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n	\sum_{k=0}^4\vert\mathrm{StirlingS1}(4, k)
 the-signed-row-sum-vanishes-for-n-ge-2	\sum_{k=0}^6\mathrm{StirlingS1}(6, k)	0
 s-n-n-1-binom-n-2	\mathrm{StirlingS1}(6, 5)=-\binom{6}{2}	\top
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	\sum_{k=0}^4\mathrm{StirlingS1}(4, k)x^{k}=\mathrm{Expand}(x\times(x-1)(x-2)(x-3))	\top
+n-stirlings1-100-11	N(\mathrm{StirlingS1}(100, 11))	-390\,376\,773\,476\,389\,796\,543\,585\,013\,048\,065\,552\,669\,095\,304\,773\,071\,088\,642\,650\,967\,777\,941\,539\,595\,016\,786\,090\,531\,126\,519\,978\,928\,664\,992\,958\,028\,261\,781\,883\,437\,197\,859\,800\,964\,094\,681\,415\,680\,000\,000\,000
+stirlings1-0-1	\mathrm{StirlingS1}(0, 1)	0
+stirlings1-1-0	\mathrm{StirlingS1}(1, 0)	0
+stirlings1-1-1	\mathrm{StirlingS1}(1, 1)	1
+stirlings1-1-2	\mathrm{StirlingS1}(1, 2)	0
+stirlings1-2-0	\mathrm{StirlingS1}(2, 0)	0
+stirlings1-2-1	\mathrm{StirlingS1}(2, 1)	-1
+stirlings1-2-2	\mathrm{StirlingS1}(2, 2)	1
+stirlings1-2-3	\mathrm{StirlingS1}(2, 3)	0
+stirlings1-3-0	\mathrm{StirlingS1}(3, 0)	0
+stirlings1-3-1	\mathrm{StirlingS1}(3, 1)	2
+stirlings1-3-2	\mathrm{StirlingS1}(3, 2)	-3
+stirlings1-3-4	\mathrm{StirlingS1}(3, 4)	0
+stirlings1-4-0	\mathrm{StirlingS1}(4, 0)	0
+stirlings1-4-1	\mathrm{StirlingS1}(4, 1)	-6
+stirlings1-4-3	\mathrm{StirlingS1}(4, 3)	-6
 the-empty-case-s-0-0-1-by-convention-distinct	\mathrm{StirlingS1}(0, 0)	1
 k-n-is-0	\mathrm{StirlingS1}(5, 6)	0
 a-negative-k-stays-symbolic	\mathrm{StirlingS1}(4, -1)	\mathrm{StirlingS1}(4, -1)

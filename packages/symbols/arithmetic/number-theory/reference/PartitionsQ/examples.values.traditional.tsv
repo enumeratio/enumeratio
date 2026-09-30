@@ -3,5 +3,22 @@ the-partitions-of-10-into-distinct-parts
 the-empty-partition		
 exact-for-large-n		
 threads-over-a-list		
+partitionsq-list-2-4-6		
 counts-the-distinctpartitions-family	\mathrm{PartitionsQ}(10)=\mathrm{Count}(\mathrm{DistinctPartitions}(10))	\mathrm{True}
 euler-as-many-partitions-into-odd-parts-as-into	\mathrm{PartitionsQ}(12)=\mathrm{Count}(\mathrm{IntegerPartitions}(12, \mathrm{All}, \bigl\lbrack1, 3, 5, 7, 9, 11\bigr\rbrack))	\mathrm{True}
+partitionsq-5		
+partitionsq-1		
+partitionsq-2		
+partitionsq-3		
+partitionsq-4		
+partitionsq-6		
+partitionsq-7		
+partitionsq-8		
+partitionsq-9		
+partitionsq-11		
+partitionsq-12		
+partitionsq-13		
+partitionsq-14		
+partitionsq-15		
+partitionsq-16		
+partitionsq-17		

@@ -7,5 +7,26 @@ threads-element-wise-over-a-list-as-wolfram-s
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	\mu(5+6i)	-1
 listable-threads-over-a-list		
 listable-over-a-range	\mu(1..20)	\bigl\lbrack1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0\bigr\rbrack
+moebiusmu-15-factorial-eq-0	\mu(15)\ne0	\mathrm{True}
+divisorsum-1-function-moebiusmu-1-1	\mathrm{DivisorSum}(1, ()\mapsto\mu(\operatorname{\_1}))	1
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	\mu(1)+\mu(2)+\mu(3)+\mu(4)+\mu(6)+\mu(12)	0
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	\mu(253)=\mu(11)\mu(23)	\mathrm{True}
+moebiusmu-5-187	\mu(5\,187)	1
+moebiusmu-32-538	\mu(32\,538)	-1
+moebiusmu-1-440	\mu(1\,440)	0
+list-isprimepower-121-iscomposite-121-moebiusmu	\bigl\lbrack\mathrm{IsPrimePower}(121)\land\mathrm{IsComposite}(121), \mu(121)\bigr\rbrack	\bigl\lbrack\mathrm{True}, 0\bigr\rbrack
+list-isprime-11-moebiusmu-11	\bigl\lbrack\mathrm{IsPrime}(11), \mu(11)\bigr\rbrack	\bigl\lbrack\mathrm{True}, -1\bigr\rbrack
+moebiusmu-2	\mu(2)	-1
+moebiusmu-3	\mu(3)	-1
+moebiusmu-4	\mu(4)	0
+moebiusmu-5	\mu(5)	-1
+moebiusmu-6	\mu(6)	1
+moebiusmu-7	\mu(7)	-1
+moebiusmu-8	\mu(8)	0
+moebiusmu-9	\mu(9)	0
+moebiusmu-13	\mu(13)	-1
+moebiusmu-14	\mu(14)	1
+moebiusmu-15	\mu(15)	1
+moebiusmu-16	\mu(16)	0
+moebiusmu-17	\mu(17)	-1
 mu-is-only-defined-for-positive-integers-compute	\mu(0)	\mu(0)

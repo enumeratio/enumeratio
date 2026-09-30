@@ -1,4 +1,6 @@
 id	in	out	tex.in	tex.out
 accumulate-1-2-3-4	Accumulate[List[1, 2, 3, 4]]	{1, 3, 6, 10}	\text{Accumulate}[\{1,2,3,4\}]	\{1,3,6,10\}
+accumulate-list-a-b-c-d	Accumulate[List[a, b, c, d]]	{a, a + b, a + b + c, a + b + c + d}	\text{Accumulate}[\{a,b,c,d\}]	\{a,a+b,a+b+c,a+b+c+d\}
+accumulate-list-list-a-b-list-c-d-list	Accumulate[List[List[a, b], List[c, d], List[E, f]]]	{{a, b}, {a + c, b + d}, {a + c + E, b + d + f}}	\text{Accumulate}\left[\left( \begin{array}{cc}  a & b \\  c & d \\  e & f \\ \end{array} \right)\right]	\left( \begin{array}{cc}  a & b \\  a+c & b+d \\  a+c+e & b+d+f \\ \end{array} \right)
 accumulate-empty	Accumulate[List[]]	{}	\text{Accumulate}[\{\}]	\{\}
 accumulate-last-is-total	(Last[Accumulate[List[1, 2, 3, 4, 5]]] == Plus[1, 2, 3, 4, 5])	True	\text{Last}[\text{Accumulate}[\{1,2,3,4,5\}]]=1+2+3+4+5	\text{True}

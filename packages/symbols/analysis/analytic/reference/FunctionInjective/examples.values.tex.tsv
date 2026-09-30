@@ -3,3 +3,6 @@ a-reciprocal-is-injective-on-its-own-domain	\mathrm{FunctionInjective}(\frac{1}{
 a-cubic-is-injective	\mathrm{FunctionInjective}(x^3, x)	\top
 a-parabola-is-not-injective	\mathrm{FunctionInjective}(x^2, x)	\bot
 an-affine-function-is-injective	\mathrm{FunctionInjective}(2x+1, x)	\top
+functioninjective-x-pow-3-minus-x-x	\mathrm{FunctionInjective}(x^3-x, x)	\bot
+functioninjective-cos-x-x	\mathrm{FunctionInjective}(\cos(x), x)	\bot
+functioninjective-sqrt-x-x	\mathrm{FunctionInjective}(\sqrt{x}, x)	\top

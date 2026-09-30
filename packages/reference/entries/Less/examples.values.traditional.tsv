@@ -1,0 +1,7 @@
+id	in	out
+2-over-17-lt-1-over-5-lt-1-over-10-times-pi	\frac{2}{17}\lt\frac{1}{5}\lt\frac{\pi}{10}	\mathrm{True}
+3-over-2-lt-5-over-3	\frac{3}{2}\lt\frac{5}{3}	\mathrm{True}
+1-lt-1-plus-128-times-10-pow-neg-16	1\lt1+\frac{128}{10^{16}}	\mathrm{True}
+1-lt-1-plus-256-times-10-pow-neg-16	1\lt1+\frac{256}{10^{16}}	\mathrm{True}
+pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^{e}\lt e^{\pi}	\mathrm{True}
+refine-sqrt-x-pow-2-x-lt-0		

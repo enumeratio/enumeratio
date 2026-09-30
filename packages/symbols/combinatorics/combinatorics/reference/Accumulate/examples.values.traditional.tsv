@@ -1,4 +1,6 @@
 id	in	out
 accumulate-1-2-3-4		
+accumulate-list-a-b-c-d		
+accumulate-list-list-a-b-list-c-d-list		
 accumulate-empty		
 accumulate-last-is-total	\mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5	\mathrm{True}

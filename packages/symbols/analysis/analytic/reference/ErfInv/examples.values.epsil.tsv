@@ -9,9 +9,16 @@ two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	erfInv(0.4, 0.2)	0.631_775_903_055
 interval-arithmetic-the-inverse-is-increasing-so	erfInv(interval(0.5, 0.6))	interval(0.476_936_276_204_469_9, 0.595_116_081_449_994_8)
 uncertainty-propagation	erfInv(Around(0.5, 0.01))	Around(0.476_936_276_204_469_9, 0.011_125_848_189_719_498)
 to-30-significant-digits-every-one-correctly	N(erfInv(1 / 2), 30)	0.476_936_276_204_469_873_381_418_353_643
+n-erfinv-33-over-100-50	N(erfInv(33 / 100), 50)	0.301_332_146_133_705_826_128_502_718_158_394_773_965_824_282_828_53
+functionexpand-matrixfunction-erfinv-list-list-0	FunctionExpand(MatrixFunction(erfInv, [[0, 1 / 2], [1, 0]]))	"[[\n   1 / 2 * erfInv(-(sqrt(2) / 2)) + 1 / 2 * erfInv(sqrt(2) / 2),\n   -(sqrt(2) / 4) * erfInv(-(sqrt(2) / 2)) + sqrt(2) / 4 * erfInv(sqrt(2) / 2),\n ], [\n     -(sqrt(2) / 2) * erfInv(-(sqrt(2) / 2)) + sqrt(2) / 2 * erfInv(sqrt(2) / 2),\n     1 / 2 * erfInv(-(sqrt(2) / 2)) + 1 / 2 * erfInv(sqrt(2) / 2),\n   ]]"
+erfinv-a-erf-a-z	erfInv(a, erf(a, z))	erfInv(erf(z))
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	sqrt(2) * erfInv(0.95)	1.959_963_984_540_054_235_527_460_400_177_851_935_713_577_92
 inverse-of-erf-erf-erfinv-x-x-see-erf	erf(erfInv(0.5)) == 0.5	True
 odd-erfinv-x-erfinv-x-applied-symbolically	erfInv(-x)	-erfInv(x)
 frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	D(erfInv(x), x)	1 / 2 * exponentialE ^ erfInv(x) ^ 2 * sqrt(pi)
+isnumeric-erfinv-1-over-pi-1-over-2	IsNumeric(erfInv(1 / pi, 1 / 2))	True
+erfinv-0-0	erfInv(0, 0)	0
+erfinv-0-1	erfInv(0, 1)	positiveInfinity
+erfinv-1-0	erfInv(1, 0)	erfInv(erf(1))
 outside-its-real-domain-1-1-compute-engine	erfInv(2)	erfInv(2)
 blows-up-near-the-boundary-erfinv-0-9999-is	erfInv(0.999_9)	2.751_063_905_712_060_796_15

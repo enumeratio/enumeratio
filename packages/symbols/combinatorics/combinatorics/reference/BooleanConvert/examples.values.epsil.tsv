@@ -4,3 +4,5 @@ cnf-distributes-or-over-and	BooleanConvert(p || b && r, "CNF")	(b || p) && (p ||
 nnf-pushes-not-to-the-leaves-not-distributed	BooleanConvert(implies(p, b), "NNF")	b || !p
 a-tautological-clause-drops-out-of-cnf	BooleanConvert(p || !p, "CNF")	True
 an-unimplemented-form-stays-unevaluated	BooleanConvert(p, "ESOP")	BooleanConvert(p, "ESOP")
+booleanconvert-f	BooleanConvert(f)	f
+booleanconvert-f-cnf	BooleanConvert(f, "CNF")	f

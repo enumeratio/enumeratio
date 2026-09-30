@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	<PowerMod><Complex>0 7</Complex> 3 <
 modulus-a-real-composite-5-squared	<PowerMod><Complex>1 1</Complex> 4 25</PowerMod>	<ToExpression>21</ToExpression>
 a-negative-unit-exponent-is-its-own-inverse	<PowerMod><Complex>0 1</Complex> -1 7</PowerMod>	<Complex>0 -1</Complex>
 modulus-a-negative-associate	<PowerMod><Complex>2 1</Complex> 5 <Complex>-2 -3</Complex></PowerMod>	<Complex>-1 -1</Complex>
+sum-powermod-a-2-7-a-nothing-7	<Sum><PowerMod>a 2 7</PowerMod> <Limits>a Nothing 7</Limits></Sum>	<ToExpression>14</ToExpression>
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	<FindInstance><And><Equal><PowerMod>a b 17</PowerMod> 1</Equal> <Less>0 a 17</Less> <Less>0 b 17</Less></And> <List>a b</List> Integers 2</FindInstance>	<List><List><Rule>a 1</Rule> <Rule>b 1</Rule></List> <List><Rule>a 1</Rule> <Rule>b 2</Rule></List></List>
 one-step-of-rsa-style-modular-exponentiation-7	<PowerMod>7 13 33</PowerMod>	<ToExpression>13</ToExpression>
 341-11-cdot-31-passes-fermat-s-test-to-base-2	<PowerMod>2 340 341</PowerMod>	<ToExpression>1</ToExpression>
 diffie-hellman-both-parties-reach-the-shared-key	<Equal><PowerMod><PowerMod>5 6 23</PowerMod> 15 23</PowerMod> <PowerMod><PowerMod>5 15 23</PowerMod> 6 23</PowerMod></Equal>	<True />
+powermod-tocharactercode-rsa-in-mathematica	<PowerMod><ToCharacterCode>"RSA in Mathematica"</ToCharacterCode> ExponentialE n</PowerMod>	<List><PowerMod>82 ExponentialE n</PowerMod> <PowerMod>83 ExponentialE n</PowerMod> <PowerMod>65 ExponentialE n</PowerMod> <PowerMod>32 ExponentialE n</PowerMod> <PowerMod>105 ExponentialE n</PowerMod> <PowerMod>110 ExponentialE n</PowerMod> <PowerMod>32 ExponentialE n</PowerMod> <PowerMod>77 ExponentialE n</PowerMod> <PowerMod>97 ExponentialE n</PowerMod> <PowerMod>116 ExponentialE n</PowerMod> <PowerMod>104 ExponentialE n</PowerMod> <PowerMod>101 ExponentialE n</PowerMod> <PowerMod>109 ExponentialE n</PowerMod> <PowerMod>97 ExponentialE n</PowerMod> <PowerMod>116 ExponentialE n</PowerMod> <PowerMod>105 ExponentialE n</PowerMod> <PowerMod>99 ExponentialE n</PowerMod> <PowerMod>97 ExponentialE n</PowerMod></List>
 by-definition-a-b-bmod-m-computed-without-ever	<Equal><PowerMod>2 10 3</PowerMod> <Mod><Power>2 10</Power> 3</Mod></Equal>	<True />
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	<PowerMod>7 <Totient>19</Totient> 19</PowerMod>	<ToExpression>1</ToExpression>
+list-powermod-7-2-5-powermod-12-2-5	<List><PowerMod>7 2 5</PowerMod> <PowerMod>12 2 5</PowerMod></List>	<List>4 4</List>
+list-powermod-2-3-5-8-mod-5	<List><PowerMod>2 3 5</PowerMod> <Mod>8 5</Mod></List>	<List>3 3</List>
+list-powermod-2-neg-1-5-modularinverse-2-5	<List><PowerMod>2 -1 5</PowerMod> <ModularInverse>2 5</ModularInverse></List>	<List>3 3</List>
+list-divides-2-8-powermod-8-3-2-eq-0	<List><Divides>2 8</Divides> <Equal><PowerMod>8 3 2</PowerMod> 0</Equal></List>	<List>True True</List>
+powermod-7-totient-19-19-eq-1	<Equal><PowerMod>7 <Totient>19</Totient> 19</PowerMod> 1</Equal>	<True />
+powermod-2-16-17	<PowerMod>2 16 17</PowerMod>	<ToExpression>1</ToExpression>
+powermod-list-5-neg-5-2-3	<PowerMod><List>5 -5</List> 2 3</PowerMod>	<List>1 1</List>
+powermod-list-5-neg-5-2-neg-3	<PowerMod><List>5 -5</List> 2 -3</PowerMod>	<List><PowerMod>5 2 -3</PowerMod> <PowerMod>-5 2 -3</PowerMod></List>
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	<PowerMod>2 -1 4</PowerMod>	<PowerMod>2 -1 4</PowerMod>
 a-nonzero-exponent-at-the-same-negative-modulus	<PowerMod>-2 3 -14</PowerMod>	<PowerMod>-2 3 -14</PowerMod>
 2-is-not-a-square-mod-5-so-there-is-no-root	<PowerMod>2 <Rational>1 2</Rational> 5</PowerMod>	<PowerMod>2 <Rational>1 2</Rational> 5</PowerMod>

@@ -1,0 +1,12 @@
+id	in	out
+iscomposite-4	<IsComposite>4</IsComposite>	<True />
+iscomposite-13	<IsComposite>13</IsComposite>	<False />
+iscomposite-1-plus-10-pow-3-000	<IsComposite><Add>1 <Power>10 3000</Power></Add></IsComposite>	<True />
+iscomposite-list-1-2-3-4-5-6	<IsComposite><List>1 2 3 4 5 6</List></IsComposite>	<List>False False False True False True</List>
+iscomposite-5	<IsComposite>5</IsComposite>	<False />
+iscomposite-8	<IsComposite>8</IsComposite>	<True />
+iscomposite-12	<IsComposite>12</IsComposite>	<True />
+iscomposite-67	<IsComposite>67</IsComposite>	<False />
+iscomposite-28	<IsComposite>28</IsComposite>	<True />
+iscomposite-60	<IsComposite>60</IsComposite>	<True />
+iscomposite-48-828-125	<IsComposite>48828125</IsComposite>	<True />

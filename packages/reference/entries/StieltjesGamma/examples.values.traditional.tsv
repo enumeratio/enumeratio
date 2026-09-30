@@ -6,6 +6,8 @@ gamma-3-frac-12-0-66742	\gamma_{3}(0.5)	-0.667\,424\,273\,711\,379\,8
 gamma-2-frac-32	\gamma_{2}(1.5)	0.007\,958\,447\,383\,888\,047
 gamma-1-0-0728158-under-n	N(\gamma_{1})	-0.072\,815\,845\,483\,676\,52
 gamma-2-0-00969036-under-n	N(\gamma_{2})	-0.009\,690\,363\,192\,872\,318\,484\,53
+n-stieltjesgamma-1-50	N(\gamma_{1}, 50)	-0.072\,815\,845\,483\,676\,724\,860\,6
+n-stieltjesgamma-2-1-over-2-50	N(\gamma_{2}(\frac{1}{2}), 50)	0.968\,864\,475\,220\,290\,711\,422
 complex-a	N(\gamma_{2}(1+i))	0.170\,304\,201\,468\,587\,9+0.373\,177\,195\,757\,495\,25i
 listable-in-the-order-n-threads-over-a-list		
 interval-arithmetic-in-a	\gamma_{2}(\mathrm{Interval}(2.34, 2.35))	\mathrm{Interval}(-0.067\,241\,280\,355\,087\,15, -0.065\,140\,403\,663\,072\,42)
@@ -17,5 +19,9 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	\gamma_{1}(1)	\gamma_{1}
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	\gamma_{0}(1)	\gamma
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	\gamma_{0}(\frac{1}{2})	\gamma+2\ln(2)
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	\gamma_{3}(1)	\gamma_{3}
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0\lt\gamma_{10}\lt\frac{1}{1\,000}	\mathrm{True}
 gamma-n-a-has-poles-at-the-nonpositive-integers	\gamma_{2}(-1)	\tilde\infty
 orders-past-30-stay-unevaluated-even-under-n-the	\gamma_{40}	\gamma_{40}
+stieltjesgamma-2-1	\gamma_{2}(1)	\gamma_{2}
+n-stieltjesgamma-2n	N(\gamma_{2n})	\gamma_{2n}
+n-stieltjesgamma-2n-3-over-2	N(\gamma_{2n}(\frac{3}{2}))	\gamma_{2n}(1.5)

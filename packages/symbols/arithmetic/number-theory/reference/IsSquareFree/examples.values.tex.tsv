@@ -15,5 +15,14 @@ but-not-in-y-alone-y-appears-squared	\mathrm{IsSquareFree}(xy^2, y)	\bot
 a-non-squarefree-rational	\mathrm{IsSquareFree}(\frac{4}{3})	\bot
 x-1-2-has-a-repeated-root	\mathrm{IsSquareFree}(x^2-2x+1)	\bot
 x-3-y-3-has-no-repeated-factor	\mathrm{IsSquareFree}(x^3-y^3)	\top
+issquarefree-3-plus-10-pow-70	\mathrm{IsSquareFree}(3+10^{70})	\top
+issquarefree-2	\mathrm{IsSquareFree}(2)	\top
+issquarefree-x-pow-2-minus-3	\mathrm{IsSquareFree}(x^2-3)	\top
 n-is-squarefree-exactly-when-mu-n-neq-0-see	\mathrm{IsSquareFree}(10)=\lnot(\mathrm{MoebiusMu}(10)=0)	\top
+issquarefree-210	\mathrm{IsSquareFree}(210)	\top
+issquarefree-14	\mathrm{IsSquareFree}(14)	\top
+isprimepower-17-issquarefree-17	\mathrm{IsPrimePower}(17)\land\mathrm{IsSquareFree}(17)	\top
+issquarefree-x-pow-2-minus-2x-plus-1-x	\mathrm{IsSquareFree}(x^2-2x+1, x)	\bot
+simplify-issquarefree-a-pow-2-a-in-integers	\mathrm{Simplify}(\mathrm{IsSquareFree}(a^2), a\in\mathbb{Z})	\bot
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	\mathrm{IsSquareFree}(\mathrm{Expand}((x+1)^3(x+2)^2(x+3)^2))	\bot
 1-is-vacuously-squarefree-it-has-no-repeated	\mathrm{IsSquareFree}(1)	\top

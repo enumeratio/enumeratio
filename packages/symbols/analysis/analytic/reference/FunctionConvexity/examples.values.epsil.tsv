@@ -2,4 +2,5 @@ id	in	out
 a-parabola-is-convex	FunctionConvexity(x ^ 2, x)	1
 a-cubic-has-an-inflection-point	FunctionConvexity(x ^ 3, x)	FunctionConvexity(x ^ 3, x)
 exp-is-always-convex	FunctionConvexity(exp(x), x)	1
+functionconvexity-x-pow-2-minus-1-x	FunctionConvexity(x ^ 2 - 1, x)	1
 a-restricted-domain-answers-indeterminate	FunctionConvexity(1 / x, x)	FunctionConvexity(1 / x, x)

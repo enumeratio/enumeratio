@@ -3,7 +3,28 @@ id	in	out	tex.in	tex.out
 6-is-not-a-prime-power	MangoldtLambda[6]	0	\Lambda (6)	0
 mangoldtlambda-7	MangoldtLambda[7]	Log[7]	\Lambda (7)	\log (7)
 mangoldtlambda-9	MangoldtLambda[9]	Log[3]	\Lambda (9)	\log (3)
+mangoldtlambda-25	MangoldtLambda[25]	Log[5]	\Lambda (25)	\log (5)
 numerically-ln-3	N[MangoldtLambda[9]]	1.0986122886681098	N[\Lambda (9)]	1.09861
 listable	MangoldtLambda[List[2, 4, 6, 25]]	{Log[2], Log[2], 0, Log[5]}	\Lambda (\{2,4,6,25\})	\{\log (2),\log (2),0,\log (5)\}
 n-of-a-zero-result-is-still-0	N[MangoldtLambda[6]]	0.	N[\Lambda (6)]	0.
+mangoldtlambda-125	MangoldtLambda[125]	Log[5]	\Lambda (125)	\log (5)
+mangoldtlambda-7-pow-300	MangoldtLambda[Power[7, 300]]	Log[7]	\Lambda \left(7^{300}\right)	\log (7)
+mangoldtlambda-list-2-6-9-8-15	MangoldtLambda[List[2, 6, 9, 8, 15]]	{Log[2], 0, Log[3], Log[2], 0}	\Lambda (\{2,6,9,8,15\})	\{\log (2),0,\log (3),\log (2),0\}
+mangoldtlambda-81-factorial-eq-0	Unequal[MangoldtLambda[81], 0]	True	\Lambda (81)\neq 0	\text{True}
+list-mangoldtlambda-6-mangoldtlambda-2-plus	List[MangoldtLambda[6], Plus[MangoldtLambda[2], MangoldtLambda[3]]]	{0, Log[2] + Log[3]}	\{\Lambda (6),\Lambda (2)+\Lambda (3)\}	\{0,\log (2)+\log (3)\}
+list-mangoldtlambda-6-mangoldtlambda-2-times	List[MangoldtLambda[6], Times[MangoldtLambda[2], MangoldtLambda[3]]]	{0, Log[2]*Log[3]}	\{\Lambda (6),\Lambda (2) \Lambda (3)\}	\{0,\log (2) \log (3)\}
+mangoldtlambda-5	MangoldtLambda[5]	Log[5]	\Lambda (5)	\log (5)
+mangoldtlambda-2	MangoldtLambda[2]	Log[2]	\Lambda (2)	\log (2)
+mangoldtlambda-3	MangoldtLambda[3]	Log[3]	\Lambda (3)	\log (3)
+mangoldtlambda-4	MangoldtLambda[4]	Log[2]	\Lambda (4)	\log (2)
+mangoldtlambda-10	MangoldtLambda[10]	0	\Lambda (10)	0
+mangoldtlambda-11	MangoldtLambda[11]	Log[11]	\Lambda (11)	\log (11)
+mangoldtlambda-12	MangoldtLambda[12]	0	\Lambda (12)	0
+simplify-sum-mangoldtlambda-n-n-20	Simplify[Sum[MangoldtLambda[n], List[n, 20]]]	Log[232792560]	\text{Simplify}\left[\sum _n^{20} \Lambda (n)\right]	\log (232792560)
+mangoldtlambda-13	MangoldtLambda[13]	Log[13]	\Lambda (13)	\log (13)
+mangoldtlambda-14	MangoldtLambda[14]	0	\Lambda (14)	0
+mangoldtlambda-15	MangoldtLambda[15]	0	\Lambda (15)	0
+mangoldtlambda-16	MangoldtLambda[16]	Log[2]	\Lambda (16)	\log (2)
+mangoldtlambda-17	MangoldtLambda[17]	Log[17]	\Lambda (17)	\log (17)
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	(Log[16] == DivisorSum[16, Function[MangoldtLambda[Slot[1]]]])	True	\log (16)=\sum _{\unicode{f80d}|16} \Lambda (\unicode{f80d})	\text{True}
 lambda-1-0	MangoldtLambda[1]	0	\Lambda (1)	0

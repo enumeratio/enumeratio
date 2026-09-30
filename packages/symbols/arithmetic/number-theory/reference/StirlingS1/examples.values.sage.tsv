@@ -12,6 +12,22 @@ the-unsigned-values-in-a-row-sum-to-n
 the-signed-row-sum-vanishes-for-n-ge-2			
 s-n-n-1-binom-n-2	bool(stirling_number1(6, 5) == (-binomial(6, 2)))	False	disagree
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x			
+n-stirlings1-100-11	N(stirling_number1(100, 11))		
+stirlings1-0-1	stirling_number1(0, 1)		
+stirlings1-1-0	stirling_number1(1, 0)		
+stirlings1-1-1	stirling_number1(1, 1)		
+stirlings1-1-2	stirling_number1(1, 2)		
+stirlings1-2-0	stirling_number1(2, 0)		
+stirlings1-2-1	stirling_number1(2, 1)		
+stirlings1-2-2	stirling_number1(2, 2)		
+stirlings1-2-3	stirling_number1(2, 3)		
+stirlings1-3-0	stirling_number1(3, 0)		
+stirlings1-3-1	stirling_number1(3, 1)		
+stirlings1-3-2	stirling_number1(3, 2)		
+stirlings1-3-4	stirling_number1(3, 4)		
+stirlings1-4-0	stirling_number1(4, 0)		
+stirlings1-4-1	stirling_number1(4, 1)		
+stirlings1-4-3	stirling_number1(4, 3)		
 the-empty-case-s-0-0-1-by-convention-distinct	stirling_number1(0, 0)	1	
 k-n-is-0	stirling_number1(5, 6)	0	
 a-negative-k-stays-symbolic	stirling_number1(4, -1)	0	inconclusive

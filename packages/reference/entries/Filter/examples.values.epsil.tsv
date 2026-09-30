@@ -1,0 +1,8 @@
+id	in	out	back
+filter-list-1-2-4-7-6-2-iseven	filter([1, 2, 4, 7, 6, 2], isEven)	[2, 4, 6, 2]	
+filter-list-1-2-4-7-6-2-isodd	filter([1, 2, 4, 7, 6, 2], isOdd)	[1, 7]	
+filter-list-list-1-y-list-2-x-list-3-x-list-4-z	"filter(\n        [[1, y], [2, x], [3, x], [4, z], [5, x], [6, y]],\n        Function(contains(_1, x), _1),\n      )"	[[2, x], [3, x], [5, x]]	Unreadable
+filter-list-list-1-y-list-2-x-list-3-x-list-4-2	"filter(\n        [[1, y], [2, x], [3, x], [4, z], [5, x], [6, y]],\n        Function(contains(_1, z), _1),\n      )"	[[4, z]]	Unreadable
+filter-list-1-2-4-7-6-2-function-2-lt-1-1	filter([1, 2, 4, 7, 6, 2], Function(2 < _1, _1))	[4, 7, 6]	Unreadable
+filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	filter(Range(1, 100), Function(_1 % 3 == 1 && _1 % 5 == 1, _1))	[1, 16, 31, 46, 61, 76, 91]	Unreadable
+filter-range-1-10-iseven	filter(Range(1, 10), isEven)	[2, 4, 6, 8, 10]	

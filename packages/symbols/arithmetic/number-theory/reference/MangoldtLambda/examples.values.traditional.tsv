@@ -1,0 +1,30 @@
+id	in	out
+8-2-3		
+6-is-not-a-prime-power		
+mangoldtlambda-7		
+mangoldtlambda-9		
+mangoldtlambda-25		
+numerically-ln-3		
+listable		
+n-of-a-zero-result-is-still-0		
+mangoldtlambda-125		
+mangoldtlambda-7-pow-300		
+mangoldtlambda-list-2-6-9-8-15		
+mangoldtlambda-81-factorial-eq-0	\mathrm{MangoldtLambda}(81)\ne0	\mathrm{True}
+list-mangoldtlambda-6-mangoldtlambda-2-plus		
+list-mangoldtlambda-6-mangoldtlambda-2-times		
+mangoldtlambda-5		
+mangoldtlambda-2		
+mangoldtlambda-3		
+mangoldtlambda-4		
+mangoldtlambda-10		
+mangoldtlambda-11		
+mangoldtlambda-12		
+simplify-sum-mangoldtlambda-n-n-20		
+mangoldtlambda-13		
+mangoldtlambda-14		
+mangoldtlambda-15		
+mangoldtlambda-16		
+mangoldtlambda-17		
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\mathrm{DivisorSum}(16, ()\mapsto\mathrm{MangoldtLambda}(\operatorname{\_1}))	\mathrm{True}
+lambda-1-0		

@@ -1,28 +1,32 @@
-id	in	out
-sec-0	sec(0)	1
-sec-pi-over-4	sec(pi / 4)	sqrt(2)
-sec-pi-over-3	sec(pi / 3)	2
-sec-pi	sec(pi)	-1
-sec-30-circ-frac-2-sqrt-3-3-exactly	sec(degrees(30))	2 / 3 * sqrt(3)
-a-machine-precision-argument-evaluates	sec(1.2)	2.759_703_601_332_406_456_89
-a-huge-24-40-argument	N(sec(24 ^ 40))	1.091_132_661_597_017_500_545_567
-a-huge-10-100-argument	N(sec(10 ^ 100))	-1.077_491_107_769_803_497_330_819
-a-huge-3-200-argument	N(sec(3 ^ 200))	-2.901_504_568_450_503_094_879_764
-a-huge-neg-7-60-argument	N(sec(-7 ^ 60))	-1.074_160_195_683_123_091_990_666
-a-huge-10-80-plus-1-over-3-argument	N(sec((10 ^ 80 + 1) / 3))	5.863_239_831_165_696_429_804_646
-sec-3-under-n	N(sec(3))	-1.010_108_665_907_993_9
-n-of-an-exact-argument-gives-an-arbitrary	N(sec(6 / 5))	2.759_703_601_332_406_456_89
-evaluates-at-a-complex-argument	sec(2.5 + i)	-0.611_108_564_155_231_6 + 0.347_676_660_710_495_97i
-threads-element-wise-over-a-matrix	sec([[5 * (pi / 6), 0], [pi / 6, -(pi / 4)]])	[[-2 / 3 * sqrt(3), 1], [2 / 3 * sqrt(3), sqrt(2)]]
-sec-pi-12-sqrt-6-sqrt-2	sec(pi / 12)	-sqrt(2) + sqrt(6)
-sec-pi-5-sqrt-5-1	sec(pi / 5)	-1 + sqrt(5)
-sec-pi-8-sqrt-4-2-sqrt-2	sec(pi / 8)	sqrt(4 - 2 * sqrt(2))
-interval-arithmetic-the-image-of-pi-6-pi-3-is	sec(interval(pi / 6, pi / 3))	interval(2 / 3 * sqrt(3), 2)
-uncertainty-propagation-sec-2-pm-0-01-approx-2	sec(Around(2, 0.01))	Around(-2.402_997_961_722_381, 0.052_506_463_376_995_806)
-evenness-drops-the-sign-of-a-symbolic-argument	sec(-x)	sec(x)
-derivative-sec-x-tan-x	D(sec(x), x)	tan(x) * sec(x)
-antiderivative-ln-sec-x-tan-x	integrate(sec(x), x)	ln(abs(tan(x) + sec(x)))
-reciprocal-of-cos-sec-x-frac-1-cos-x	sec(pi / 3) == 1 / cos(pi / 3)	True
-pythagorean-identity-1-tan-2-x-sec-2-x	1 + tan(pi / 6) ^ 2 == sec(pi / 6) ^ 2	True
-a-pole-cos-pi-2-0	sec(pi / 2)	complexInfinity
-sec-complexinfinity-is-indeterminate-for-the	sec(complexInfinity)	Indeterminate
+id	in	out	back
+sec-0	sec(0)	1	
+sec-pi-over-4	sec(pi / 4)	sqrt(2)	
+sec-pi-over-3	sec(pi / 3)	2	
+sec-pi	sec(pi)	-1	
+sec-30-circ-frac-2-sqrt-3-3-exactly	sec(degrees(30))	2 / 3 * sqrt(3)	
+a-machine-precision-argument-evaluates	sec(1.2)	2.759_703_601_332_406_456_89	
+a-huge-24-40-argument	N(sec(24 ^ 40))	1.091_132_661_597_017_500_545_567	
+a-huge-10-100-argument	N(sec(10 ^ 100))	-1.077_491_107_769_803_497_330_819	
+a-huge-3-200-argument	N(sec(3 ^ 200))	-2.901_504_568_450_503_094_879_764	
+a-huge-neg-7-60-argument	N(sec(-7 ^ 60))	-1.074_160_195_683_123_091_990_666	
+a-huge-10-80-plus-1-over-3-argument	N(sec((10 ^ 80 + 1) / 3))	5.863_239_831_165_696_429_804_646	
+sec-3-under-n	N(sec(3))	-1.010_108_665_907_993_9	
+n-of-an-exact-argument-gives-an-arbitrary	N(sec(6 / 5))	2.759_703_601_332_406_456_89	
+evaluates-at-a-complex-argument	sec(2.5 + i)	-0.611_108_564_155_231_6 + 0.347_676_660_710_495_97i	
+threads-element-wise-over-a-matrix	sec([[5 * (pi / 6), 0], [pi / 6, -(pi / 4)]])	[[-2 / 3 * sqrt(3), 1], [2 / 3 * sqrt(3), sqrt(2)]]	
+sec-pi-12-sqrt-6-sqrt-2	sec(pi / 12)	-sqrt(2) + sqrt(6)	
+sec-pi-5-sqrt-5-1	sec(pi / 5)	-1 + sqrt(5)	
+sec-pi-8-sqrt-4-2-sqrt-2	sec(pi / 8)	sqrt(4 - 2 * sqrt(2))	
+interval-arithmetic-the-image-of-pi-6-pi-3-is	sec(interval(pi / 6, pi / 3))	interval(2 / 3 * sqrt(3), 2)	
+uncertainty-propagation-sec-2-pm-0-01-approx-2	sec(Around(2, 0.01))	Around(-2.402_997_961_722_381, 0.052_506_463_376_995_806)	
+evenness-drops-the-sign-of-a-symbolic-argument	sec(-x)	sec(x)	
+derivative-sec-x-tan-x	D(sec(x), x)	tan(x) * sec(x)	
+antiderivative-ln-sec-x-tan-x	integrate(sec(x), x)	ln(abs(tan(x) + sec(x)))	
+n-sec-6-over-5-50	N(sec(6 / 5), 50)	2.759_703_601_332_406_456_883_432_939_237_783_860_073_115_323_011	
+matrixfunction-function-sec-1-1-list-list-5-over	"MatrixFunction(\n                Function(sec(_1), _1),\n                [[5 / 6 * pi, 0], [1 / 6 * pi, -1 / 4 * pi]],\n              )"	[[-2 / 3 * sqrt(3), 0], [-2 / 13 * sqrt(2) + -4 / 39 * sqrt(3), sqrt(2)]]	Unreadable
+reciprocal-of-cos-sec-x-frac-1-cos-x	sec(pi / 3) == 1 / cos(pi / 3)	True	
+pythagorean-identity-1-tan-2-x-sec-2-x	1 + tan(pi / 6) ^ 2 == sec(pi / 6) ^ 2	True	
+sec-1-over-10-times-pi	sec(1 / 10 * pi)	sqrt(10) / 5 * sqrt(5 - sqrt(5))	
+sec-3-over-10-times-pi	sec(3 / 10 * pi)	sqrt(10) / 5 * sqrt(5 + sqrt(5))	
+a-pole-cos-pi-2-0	sec(pi / 2)	complexInfinity	
+sec-complexinfinity-is-indeterminate-for-the	sec(complexInfinity)	Indeterminate	

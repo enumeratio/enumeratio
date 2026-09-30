@@ -1,0 +1,10 @@
+id	in	out
+selects-the-second-branch		
+evaluated-at-a-concrete-point-below-zero		
+evaluated-at-a-concrete-point-at-or-above-zero		
+falls-through-to-the-explicit-default		
+every-clause-eliminated-falls-through-to-default		
+piecewise-list-list-e1-true-list-e2-d2-list-e3	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{e1}, \mathrm{True}\bigr\rbrack, \bigl\lbrack\mathrm{e2}, \mathrm{d2}\bigr\rbrack, \bigl\lbrack\mathrm{e3}, \mathrm{d3}\bigr\rbrack\bigr\rbrack, e)	\mathrm{e1}
+piecewise-list-list-e1-d1-list-e2-d2-list-e3	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{e1}, \mathrm{d1}\bigr\rbrack, \bigl\lbrack\mathrm{e2}, \mathrm{d2}\bigr\rbrack, \bigl\lbrack\mathrm{e3}, \mathrm{True}\bigr\rbrack, \bigl\lbrack\mathrm{e4}, \mathrm{d4}\bigr\rbrack, \bigl\lbrack\mathrm{e5}, \mathrm{d5}\bigr\rbrack\bigr\rbrack, e)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{e1}, \mathrm{d1}\bigr\rbrack, \bigl\lbrack\mathrm{e2}, \mathrm{d2}\bigr\rbrack, \bigl\lbrack\mathrm{e3}, \mathrm{True}\bigr\rbrack\bigr\rbrack, e)
+piecewise-list-list-e1-d1-list-e2-d2-list-e3-2	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{e1}, \mathrm{d1}\bigr\rbrack, \bigl\lbrack\mathrm{e2}, \mathrm{d2}\bigr\rbrack, \bigl\lbrack\mathrm{e3}, \mathrm{False}\bigr\rbrack, \bigl\lbrack\mathrm{e4}, \mathrm{d4}\bigr\rbrack, \bigl\lbrack\mathrm{e5}, \mathrm{d5}\bigr\rbrack\bigr\rbrack, e)	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\mathrm{e1}, \mathrm{d1}\bigr\rbrack, \bigl\lbrack\mathrm{e2}, \mathrm{d2}\bigr\rbrack, \bigl\lbrack\mathrm{e4}, \mathrm{d4}\bigr\rbrack, \bigl\lbrack\mathrm{e5}, \mathrm{d5}\bigr\rbrack\bigr\rbrack, e)
+integrate-piecewise-list-list-1-x-pow-2-plus-y		

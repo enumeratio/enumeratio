@@ -1,3 +1,7 @@
 id	in
 an-actual-path-is-a-path	PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
 a-cycle-is-not-a-path	PathGraphQ[CycleGraph[4]]
+ispathgraph-graph-list-1-list	PathGraphQ[Graph[List[1], List[]]]
+ispathgraph-gridgraph-list-1-4	PathGraphQ[GridGraph[List[1, 4]]]
+ispathgraph-gridgraph-list-4-1	PathGraphQ[GridGraph[List[4, 1]]]
+ispathgraph-gridgraph-list-1-4-1	PathGraphQ[GridGraph[List[1, 4, 1]]]

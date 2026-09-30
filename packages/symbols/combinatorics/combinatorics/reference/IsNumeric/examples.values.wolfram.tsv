@@ -1,5 +1,8 @@
 id	in	out	tex.in	tex.out
 isnumeric-pi	NumericQ[Pi]	True	\text{NumericQ}[\pi ]	\text{True}
 isnumeric-literal	NumericQ[5]	True	\text{NumericQ}[5]	\text{True}
+isnumeric-sin-sqrt-2	NumericQ[Sin[Sqrt[2]]]	True	\text{NumericQ}\left[\sin \left(\sqrt{2}\right)\right]	\text{True}
 isnumeric-plain-symbol	NumericQ[x]	False	\text{NumericQ}[x]	\text{False}
 isnumeric-sqrt-2	NumericQ[Sqrt[2]]	True	\text{NumericQ}\left[\sqrt{2}\right]	\text{True}
+isnumeric-expr	NumericQ[expr]	False	\text{NumericQ}[\text{expr}]	\text{False}
+isnumeric-exponentiale	NumericQ[E]	True	\text{NumericQ}[e]	\text{True}

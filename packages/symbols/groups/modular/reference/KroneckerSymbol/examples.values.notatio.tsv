@@ -44,6 +44,12 @@ negative-a-odd-square-n-9	<KroneckerSymbol>-10 9</KroneckerSymbol>	<ToExpression
 threads-element-wise-over-a-list-as-wolfram-s	<KroneckerSymbol><List>2 3 5 7 11</List> 6</KroneckerSymbol>	<List>0 0 1 1 1</List>
 larger-arguments-10-11-1-against-the-2000th	<KroneckerSymbol><Add><Power>10 11</Power> 1</Add> <NthPrime>2000</NthPrime></KroneckerSymbol>	<ToExpression>-1</ToExpression>
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	<KroneckerSymbol>7 6</KroneckerSymbol>	<ToExpression>1</ToExpression>
+generatingfunction-kroneckersymbol-n-7-n-x	<GeneratingFunction><KroneckerSymbol>n 7</KroneckerSymbol> n x</GeneratingFunction>	<Divide><Add><Power>x 5</Power> <Multiply>2 <Power>x 4</Power></Multiply> <Power>x 3</Power> <Multiply>2 <Power>x 2</Power></Multiply> x</Add> <Add><Power>x 6</Power> <Power>x 5</Power> <Power>x 4</Power> <Power>x 3</Power> <Power>x 2</Power> x 1</Add></Divide>
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	<KroneckerSymbol>-4 7</KroneckerSymbol>	<ToExpression>-1</ToExpression>
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	<Equal><KroneckerSymbol>2 7</KroneckerSymbol> <KroneckerSymbol>23 7</KroneckerSymbol></Equal>	<True />
+kroneckersymbol-neg-4-list-1-5-7-11	<KroneckerSymbol>-4 <List>1 5 7 11</List></KroneckerSymbol>	<List>1 1 -1 -1</List>
 completely-multiplicative-in-n	<Equal><KroneckerSymbol>7 <Multiply>3 5</Multiply></KroneckerSymbol> <Multiply><KroneckerSymbol>7 3</KroneckerSymbol> <KroneckerSymbol>7 5</KroneckerSymbol></Multiply></Equal>	<True />
+kroneckersymbol-9-12	<KroneckerSymbol>9 12</KroneckerSymbol>	<ToExpression>0</ToExpression>
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	<Equal><KroneckerSymbol>12 7</KroneckerSymbol> <Multiply><KroneckerSymbol>3 7</KroneckerSymbol> <KroneckerSymbol>4 7</KroneckerSymbol></Multiply></Equal>	<True />
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	<Equal><KroneckerSymbol>3 63</KroneckerSymbol> <Multiply><KroneckerSymbol>3 9</KroneckerSymbol> <KroneckerSymbol>3 7</KroneckerSymbol></Multiply></Equal>	<True />
 a-0-1-for-a-pm-1	<KroneckerSymbol>-1 0</KroneckerSymbol>	<ToExpression>1</ToExpression>

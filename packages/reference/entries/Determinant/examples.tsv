@@ -1,0 +1,7 @@
+id	section	role	expr	expected
+determinant-list-list-a-1-a-1-list-a-2-a-2			[Determinant, [List, [List, a_1, a_1], [List, a_2, a_2]]]	0
+determinant-list-list-1-2-3-list-4-5-6-list-7-8			[Determinant, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]	0
+determinant-list-list-1-plus-i-2-3-minus-2i-list	Scope		[Determinant, [List, [List, [Complex, 1, 1], 2, [Complex, 3, -2]], [List, 0, [Multiply, 4, Pi], [Complex, 0, 5]], [List, 3, 0, 6]]]	[Add, [Complex, 0, 30], [Multiply, [Complex, -12, 48], Pi]]
+determinant-list-list-1-2-4-list-5-4-5-list-9-2	Scope		[Determinant, [List, [List, 1, 2, 4], [List, 5, 4, 5], [List, 9, 2, 7]]]	-66
+determinant-list-list-a-b-c-list-d-exponentiale	Scope		[Determinant, [List, [List, a, b, c], [List, d, ExponentialE, f], [List, g, h, [Complex, 0, 1]]]]	[Add, [Multiply, b, f, g], [Multiply, c, d, h], [Negate, [Multiply, a, f, h]], [Multiply, [Complex, 0, -1], b, d], [Negate, [Multiply, ExponentialE, c, g]], [Multiply, [Complex, 0, 1], ExponentialE, a]]
+neg-determinant-list-list-1-3-4-list-5-7-8-list	Applications		[Negate, [Determinant, [List, [List, 1, 3, 4], [List, 5, 7, 8], [List, 5, 2, 1]]]]	4

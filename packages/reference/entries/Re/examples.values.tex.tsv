@@ -3,3 +3,15 @@ re-of-3-plus-4i-is-3	\mathrm{Re}(3+4i)	3
 re-of-a-real-number-is-itself	\mathrm{Re}(5)	5
 re-of-pi-is-pi-a-real-symbolic-constant	\mathrm{Re}(\pi)	\pi
 re-of-a-symbolic-value-stays-unevaluated	\mathrm{Re}(x)	\Re(x)
+real-1	\Re(1)	1
+real-neg-1	\Re(-1)	-1
+real-i	\Re(i)	0
+real-neg-i	\Re(-i)	0
+real-1-plus-i	\Re(1+i)	1
+real-neg-1-plus-i	\Re(-1+i)	-1
+real-neg-1-minus-i	\Re(-1-i)	-1
+real-1-minus-i	\Re(1-i)	1
+real-sqrt-3-plus-i	\Re(\sqrt{3}+i)	\sqrt{3}
+real-1-plus-sqrt-3-times-i	\Re(1+\sqrt{3}i)	1
+real-neg-1-plus-sqrt-3-times-i	\Re(\sqrt{3}i-1)	-1
+real-neg-sqrt-3-plus-i	\Re(i-\sqrt{3})	-\sqrt{3}

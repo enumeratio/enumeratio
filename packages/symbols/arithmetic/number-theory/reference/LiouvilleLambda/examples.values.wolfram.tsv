@@ -2,5 +2,20 @@ id	in	out	tex.in	tex.out
 omega-12-3	LiouvilleLambda[12]	-1	\lambda (12)	-1
 liouvillelambda-10	LiouvilleLambda[10]	1	\lambda (10)	1
 liouvillelambda-1	LiouvilleLambda[1]	1	\lambda (1)	1
+liouvillelambda-8	LiouvilleLambda[8]	-1	\lambda (8)	-1
+liouvillelambda-9	LiouvilleLambda[9]	1	\lambda (9)	1
 listable	LiouvilleLambda[Range[10]]	{1, -1, -1, 1, -1, 1, -1, -1, 1, 1}	\lambda (\text{Range}[10])	\{1,-1,-1,1,-1,1,-1,-1,1,1\}
+liouvillelambda-1-plus-10-pow-30	LiouvilleLambda[Plus[1, Power[10, 30]]]	-1	\lambda \left(1+10^{30}\right)	-1
+liouvillelambda-list-1-2-3-4-5-6	LiouvilleLambda[List[1, 2, 3, 4, 5, 6]]	{1, -1, -1, 1, -1, 1}	\lambda (\{1,2,3,4,5,6\})	\{1,-1,-1,1,-1,1\}
 lambda-n-1-omega-n-see-primeomega	(LiouvilleLambda[360] == Power[-1, PrimeOmega[360]])	True	\lambda (360)=(-1)^{\Omega (360)}	\text{True}
+liouvillelambda-162-eq-liouvillelambda-6-times	(LiouvilleLambda[162] == Times[LiouvilleLambda[6], LiouvilleLambda[27]])	True	\lambda (162)=\lambda (6) \lambda (27)	\text{True}
+liouvillelambda-60	LiouvilleLambda[60]	1	\lambda (60)	1
+liouvillelambda-30	LiouvilleLambda[30]	-1	\lambda (30)	-1
+liouvillelambda-120	LiouvilleLambda[120]	-1	\lambda (120)	-1
+liouvillelambda-25	LiouvilleLambda[25]	1	\lambda (25)	1
+liouvillelambda-2	LiouvilleLambda[2]	-1	\lambda (2)	-1
+liouvillelambda-3	LiouvilleLambda[3]	-1	\lambda (3)	-1
+liouvillelambda-4	LiouvilleLambda[4]	1	\lambda (4)	1
+liouvillelambda-6	LiouvilleLambda[6]	1	\lambda (6)	1
+divisorsum-64-function-liouvillelambda-1-1	DivisorSum[64, Function[LiouvilleLambda[Slot[1]]]]	1	\sum _{\unicode{f80d}|64} \lambda (\unicode{f80d})	1
+divisorsum-7-function-liouvillelambda-1-1	DivisorSum[7, Function[LiouvilleLambda[Slot[1]]]]	0	\sum _{\unicode{f80d}|7} \lambda (\unicode{f80d})	0

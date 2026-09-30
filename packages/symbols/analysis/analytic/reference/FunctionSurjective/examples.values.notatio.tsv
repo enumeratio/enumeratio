@@ -4,3 +4,9 @@ exp-misses-the-non-positive-reals	<FunctionSurjective><Exp>x</Exp> x Reals</Func
 log-is-onto-the-reals	<FunctionSurjective><Ln>x</Ln> x Reals</FunctionSurjective>	<True />
 a-reciprocal-never-hits-zero	<FunctionSurjective><Divide>1 x</Divide> x Reals</FunctionSurjective>	<False />
 an-unsupported-codomain-declines	<FunctionSurjective><Power>x 3</Power> x Integers</FunctionSurjective>	<FunctionSurjective><Power>x 3</Power> x Integers</FunctionSurjective>
+functionsurjective-tan-x-x	<FunctionSurjective><Tan>x</Tan> x</FunctionSurjective>	<True />
+functionsurjective-x-pow-3-minus-x-x	<FunctionSurjective><Add><Power>x 3</Power> <Multiply>-1 x</Multiply></Add> x</FunctionSurjective>	<True />
+functionsurjective-sqrt-x-x	<FunctionSurjective><Sqrt>x</Sqrt> x</FunctionSurjective>	<False />
+functionsurjective-sin-x-x	<FunctionSurjective><Sin>x</Sin> x</FunctionSurjective>	<False />
+functionsurjective-x-pow-2-plus-x-plus-1-x	<FunctionSurjective><Add><Power>x 2</Power> x 1</Add> x</FunctionSurjective>	<False />
+functionsurjective-x-pow-3-plus-x-plus-1-x	<FunctionSurjective><Add><Power>x 3</Power> x 1</Add> x</FunctionSurjective>	<True />

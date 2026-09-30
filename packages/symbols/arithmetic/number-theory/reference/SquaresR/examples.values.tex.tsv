@@ -2,6 +2,9 @@ id	in	out
 pm-1-2-pm-2-2-in-either-order	\mathrm{SquaresR}(2, 5)	8
 squaresr-2-25	\mathrm{SquaresR}(2, 25)	12
 no-n-equiv-3-pmod-4-is-a-sum-of-two-squares	\mathrm{SquaresR}(2, 3)	0
+squaresr-2-45	\mathrm{SquaresR}(2, 45)	8
 squaresr-3-6	\mathrm{SquaresR}(3, 6)	24
 squaresr-8-3	\mathrm{SquaresR}(8, 3)	448
+sum-squaresr-2-k-k-0-400	\sum_{k=0}^{400}\mathrm{SquaresR}(2, k)	1\,257
 jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n	\mathrm{SquaresR}(4, 10)	144
+squaresr-2-100	\mathrm{SquaresR}(2, 100)	12

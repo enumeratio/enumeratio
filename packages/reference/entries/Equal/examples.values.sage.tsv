@@ -1,0 +1,8 @@
+id	in
+4-eq-4	bool(4 == 4)
+n-pi-20-eq-pi	bool(N(pi) == pi)
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	bool((sqrt(2) + sqrt(3)) == sqrt((5 + (2 * sqrt(6)))))
+x-eq-x	bool(SR.var("x") == SR.var("x"))
+3-eq-3-eq-3	
+list-1-2-eq-list-1-2	bool([1, 2] == [1, 2])
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	[bool(SR.var("x") == SR.var("x")), bool(SR.var("x") == SR.var("y")), bool((sqrt(2) + sqrt(3)) == sqrt((5 + (2 * sqrt(6))))), bool(pi == N(pi))]

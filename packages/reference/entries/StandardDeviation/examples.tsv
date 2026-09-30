@@ -1,0 +1,6 @@
+id	section	role	expr	expected
+standarddeviation-list-1-2-3-4	Scope		[StandardDeviation, [List, 1, 2, 3, 4]]	[Divide, [Sqrt, 15], 3]
+standarddeviation-n-list-1-2-3-4-30	Scope		[StandardDeviation, [N, [List, 1, 2, 3, 4], 30]]	[Divide, [Sqrt, 15], 3]
+n-standarddeviation-ts	Scope		[N, [StandardDeviation, ts]]	[StandardDeviation, ts]
+standarddeviation-binomialdistribution-n-p	Scope		[StandardDeviation, [BinomialDistribution, n, p]]	[Sqrt, [Multiply, n, p, [Add, [Negate, p], 1]]]
+standarddeviation-probabilitydistribution-sqrt-2	Scope		[StandardDeviation, [ProbabilityDistribution, [Multiply, [Sqrt, 2], [Divide, 1, Pi], [Divide, 1, [Add, [Power, [Add, x, -2], 4], 1]]], [List, x, NegativeInfinity, PositiveInfinity]]]	[StandardDeviation, [ProbabilityDistribution, [Divide, [Sqrt, 2], [Add, [Multiply, Pi, [Power, [Add, x, -2], 4]], Pi]], [List, x, NegativeInfinity, PositiveInfinity]]]

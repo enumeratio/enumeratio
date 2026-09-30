@@ -1,4 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 from-character-code-of-a-single-code-point	FromCharacterCode[65]	"\"A\""	\text{FromCharacterCode}[65]	\text{A}	
+fromcharactercode-list-97-98-99	FromCharacterCode[List[97, 98, 99]]	"\"abc\""	\text{FromCharacterCode}[\{97,98,99\}]	\text{abc}	
 inverts-tocharactercode	FromCharacterCode[ToCharacterCode["hello"]]	"\"hello\""	\text{FromCharacterCode}[\text{ToCharacterCode}[\text{hello}]]	\text{hello}	
 round-trips-a-non-ascii-string-emoji-astral	FromCharacterCode[ToCharacterCode["a😀b→c"]]	"\"aeth\\237\\230\\200ba^\\206\\222c\""	\text{FromCharacterCode}[\text{ToCharacterCode}[\text{a$\eth \unicode{009f}\unicode{0098}\unicode{0080}$b{\^ a}$\unicode{0086}\unicode{0092}$c}]]	\text{a$\eth \unicode{009f}\unicode{0098}\unicode{0080}$b{\^ a}$\unicode{0086}\unicode{0092}$c}	inconclusive
+fromcharactercode-97	FromCharacterCode[97]	"\"a\""	\text{FromCharacterCode}[97]	\text{a}	

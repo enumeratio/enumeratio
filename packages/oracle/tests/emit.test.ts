@@ -402,3 +402,25 @@ test("an algebra element compares as a combination, whatever order its terms are
   expect(compareCombination(ours, 'combination:{"GroupBasis(1)":1}')).toBe("disagree");
   expect(compareCombination("x", 'combination:{"GroupBasis(1)":1}')).toBe("inconclusive");
 });
+
+test("compute-engine's canonical Function and iterator forms emit as Wolfram writes them", () => {
+  const wolfram = (expr: unknown) => emit(expr as never, "wolfram");
+  expect(wolfram(["Map", ["Function", ["Block", ["Power", "_1", 2]], "_1"], ["List", 1, 2]])).toMatchObject({
+    ok: true,
+    source: "Map[Function[Power[Slot[1], 2]], List[1, 2]]",
+  });
+  expect(
+    wolfram(["Integrate", ["Function", ["Block", ["Sin", "x"]], "x"], ["Limits", "x", "Nothing", "Nothing"]]),
+  ).toMatchObject({
+    ok: true,
+    source: "Integrate[Sin[x], x]",
+  });
+  expect(wolfram(["Integrate", ["Function", ["Block", ["Sin", "x"]], "x"], ["Limits", "x", 0, 1]])).toMatchObject({
+    ok: true,
+    source: "Integrate[Sin[x], List[x, 0, 1]]",
+  });
+  expect(wolfram(["Sum", ["Power", "k", 2], ["Limits", "k", "Nothing", 7]])).toMatchObject({
+    ok: true,
+    source: "Sum[Power[k, 2], List[k, 7]]",
+  });
+});

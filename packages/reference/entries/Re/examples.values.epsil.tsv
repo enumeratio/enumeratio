@@ -3,3 +3,15 @@ re-of-3-plus-4i-is-3	re(3 + 4i)	3
 re-of-a-real-number-is-itself	re(5)	5
 re-of-pi-is-pi-a-real-symbolic-constant	re(pi)	pi
 re-of-a-symbolic-value-stays-unevaluated	re(x)	real(x)
+real-1	real(1)	1
+real-neg-1	real(-1)	-1
+real-i	real(i)	0
+real-neg-i	real(-i)	0
+real-1-plus-i	real(1 + i)	1
+real-neg-1-plus-i	real(-1 + i)	-1
+real-neg-1-minus-i	real(-1 - i)	-1
+real-1-minus-i	real(1 - i)	1
+real-sqrt-3-plus-i	real(sqrt(3) + i)	sqrt(3)
+real-1-plus-sqrt-3-times-i	real(1 + sqrt(3) * i)	1
+real-neg-1-plus-sqrt-3-times-i	real(-1 + sqrt(3) * i)	-1
+real-neg-sqrt-3-plus-i	real(-sqrt(3) + i)	-sqrt(3)

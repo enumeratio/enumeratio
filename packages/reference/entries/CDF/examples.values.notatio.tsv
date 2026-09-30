@@ -1,0 +1,3 @@
+id	in	out
+cdf-normaldistribution-negativeinfinity	<CDF><Apply>NormalDistribution</Apply> NegativeInfinity</CDF>	<ToExpression>0</ToExpression>
+cdf-normaldistribution-positiveinfinity	<CDF><Apply>NormalDistribution</Apply> PositiveInfinity</CDF>	<ToExpression>1</ToExpression>

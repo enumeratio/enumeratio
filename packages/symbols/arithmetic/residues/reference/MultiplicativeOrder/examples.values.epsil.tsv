@@ -13,5 +13,11 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1	multiplicativeOrder(3, 2 ^ 61 - 1, 
 1-is-the-only-element-of-order-1	multiplicativeOrder(1, 7)	1
 the-multiplicative-order-always-divides-varphi-n	totient(7) % multiplicativeOrder(3, 7) == 0	True
 the-discrete-log-inverts-powermod	powerMod(3, multiplicativeOrder(3, 2 ^ 61 - 1, [2]), 2 ^ 61 - 1)	2
+divides-multiplicativeorder-5-12-totient-12	divides(multiplicativeOrder(5, 12), totient(12))	True
+multiplicativeorder-5-3	multiplicativeOrder(5, 3)	2
+multiplicativeorder-neg-5-3	multiplicativeOrder(-5, 3)	1
+multiplicativeorder-5-7-list-4	multiplicativeOrder(5, 7, [4])	2
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	multiplicativeOrder(10, 22)	multiplicativeOrder(10, 22)
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	multiplicativeOrder(2, 7, [3])	multiplicativeOrder(2, 7, [3])
+multiplicativeorder-10-21	multiplicativeOrder(10, 21)	6
+multiplicativeorder-21-10	multiplicativeOrder(21, 10)	1

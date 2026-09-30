@@ -4,3 +4,4 @@ odd-cycle-is-not	<IsBipartiteGraph><CycleGraph>5</CycleGraph></IsBipartiteGraph>
 a-self-loop-is-never-bipartite	<IsBipartiteGraph><Graph><List><UndirectedEdge>1 1</UndirectedEdge></List></Graph></IsBipartiteGraph>	<False />
 a-4-cycle-is-bipartite	<IsBipartiteGraph><CycleGraph>4</CycleGraph></IsBipartiteGraph>	<True />
 a-path-is-always-bipartite	<IsBipartiteGraph><PathGraph>7</PathGraph></IsBipartiteGraph>	<True />
+isbipartitegraph-cyclegraph-3	<IsBipartiteGraph><CycleGraph>3</CycleGraph></IsBipartiteGraph>	<False />

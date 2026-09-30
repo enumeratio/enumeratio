@@ -1,0 +1,2 @@
+id	in	out
+pdf-normaldistribution-0-1-x	pdf(normalDistribution(0, 1), x)	sqrt(2) * exponentialE ^ (-1 / 2 * x ^ 2) / (2 * sqrt(pi))

@@ -1,6 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 3-cdot-5-15-equiv-1	ModularInverse[3, 7]	5	\text{ModularInverse}[3,7]	5	
 modularinverse-2-11	ModularInverse[2, 11]	6	\text{ModularInverse}[2,11]	6	
+modularinverse-3-5	ModularInverse[3, 5]	2	\text{ModularInverse}[3,5]	2	
 a-negative-argument-3-cdot-2-6-equiv-1	ModularInverse[-3, 7]	2	\text{ModularInverse}[-3,7]	2	
 a-21-digit-modulus	ModularInverse[3, Plus[Power[10, 20], 1]]	33333333333333333334	\text{ModularInverse}\left[3,10^{20}+1\right]	33333333333333333334	
 listable-threads-over-a-list	ModularInverse[List[2, 3, 4], 11]	ModularInverse[{2, 3, 4}, 11]	\text{ModularInverse}[\{2,3,4\},11]	\text{ModularInverse}[\{2,3,4\},11]	disagree
@@ -27,6 +28,16 @@ inverse-of-a-real-prime-s-associate-by-i-mod-a	ModularInverse[Complex[0, 7], Com
 inverse-mod-a-real-prime-19	ModularInverse[Complex[2, 1], 19]	8 + 15*I	\text{ModularInverse}[2+i,19]	8+15 i	
 no-inverse-mod-0	ModularInverse[Complex[2, 1], 0]	ModularInverse[2 + I, 0]	\text{ModularInverse}[2+i,0]	\text{ModularInverse}[2+i,0]	
 a-real-base-with-no-inverse-mod-a-shared-factor	ModularInverse[5, Complex[5, 5]]	ModularInverse[5, 5 + 5*I]	\text{ModularInverse}[5,5+5 i]	\text{ModularInverse}[5,5+5 i]	
+modularinverse-neg-5-7	ModularInverse[-5, 7]	4	\text{ModularInverse}[-5,7]	4	
+modularinverse-10-pow-100-000-nextprime-1-000	ModularInverse[Power[10, 100000], NextPrime[1000]]	942	\text{ModularInverse}\left[10^{100000},\text{NextPrime}[1000]\right]	942	
 the-same-as-powermod-with-exponent-1	(ModularInverse[3, 7] == PowerMod[3, -1, 7])	True	\text{ModularInverse}[3,7]=(3^{-1} \bmod 7)	\text{True}	
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]	1	(\left(12345 \text{ModularInverse}\left[12345,2^{61}-1\right]\right) \bmod \left(2^{61}-1\right))	1	
+list-modularinverse-2-5-modularinverse-7-5	List[ModularInverse[2, 5], ModularInverse[7, 5]]	{3, 3}	\{\text{ModularInverse}[2,5],\text{ModularInverse}[7,5]\}	\{3,3\}	
+list-modularinverse-3-5-powermod-3-neg-1-5	List[ModularInverse[3, 5], PowerMod[3, -1, 5]]	{2, 2}	\{\text{ModularInverse}[3,5],(3^{-1} \bmod 5)\}	\{2,2\}	
+modularinverse-5-7	ModularInverse[5, 7]	3	\text{ModularInverse}[5,7]	3	
+modularinverse-5-neg-7	ModularInverse[5, -7]	-4	\text{ModularInverse}[5,-7]	-4	
+modularinverse-7-12	ModularInverse[7, 12]	7	\text{ModularInverse}[7,12]	7	
+modularinverse-modularinverse-7-9-9	ModularInverse[ModularInverse[7, 9], 9]	7	\text{ModularInverse}[\text{ModularInverse}[7,9],9]	7	
 gcd-2-4-2-no-inverse	ModularInverse[2, 4]	ModularInverse[2, 4]	\text{ModularInverse}[2,4]	\text{ModularInverse}[2,4]	
+modularinverse-10-21	ModularInverse[10, 21]	19	\text{ModularInverse}[10,21]	19	
+modularinverse-21-10	ModularInverse[21, 10]	1	\text{ModularInverse}[21,10]	1	

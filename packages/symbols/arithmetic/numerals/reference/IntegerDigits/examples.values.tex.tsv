@@ -5,6 +5,7 @@ integerdigits-58-127	\mathrm{IntegerDigits}(58\,127)	\bigl\lbrack5, 8, 1, 2, 7\b
 integerdigits-58-127-2	\mathrm{IntegerDigits}(58\,127, 2)	\bigl\lbrack1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1\bigr\rbrack
 93-784-seconds-as-days-hours-minutes-seconds	\mathrm{IntegerDigits}(93\,784, \mathrm{MixedRadixNumerals}(\bigl\lbrack24, 60, 60\bigr\rbrack))	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
 100-89-8-3-with-no-two-adjacent-ones	\mathrm{IntegerDigits}(100, \mathrm{ZeckendorfNumerals})	\bigl\lbrack1, 0, 0, 0, 0, 1, 0, 1, 0, 0\bigr\rbrack
+integerdigits-102-341-mixedradixnumerals-list-24	\mathrm{IntegerDigits}(102\,341, \mathrm{MixedRadixNumerals}(\bigl\lbrack24, 60, 60\bigr\rbrack))	\bigl\lbrack1, 4, 25, 41\bigr\rbrack
 digits-past-9-are-plain-integers-58127-e30f-16	\mathrm{IntegerDigits}(58\,127, 16)	\bigl\lbrack14, 3, 0, 15\bigr\rbrack
 a-mixed-radix-spelled-mixedradix-102-341-seconds	\mathrm{IntegerDigits}(102\,341, \mathrm{MixedRadix}(\bigl\lbrack24, 60, 60\bigr\rbrack))	\bigl\lbrack1, 4, 25, 41\bigr\rbrack
 the-leading-digit-is-unbounded-137-3-cdot-3-2	\mathrm{IntegerDigits}(137, \mathrm{MixedRadix}(\bigl\lbrack3, 12\bigr\rbrack))	\bigl\lbrack3, 2, 5\bigr\rbrack
@@ -30,10 +31,12 @@ zeckendorf-12-is-8-3-1	\mathrm{IntegerDigits}(12, \mathrm{ZeckendorfNumerals})	\
 ostrowski-9-over-2-2-2-is-1-2-0	\mathrm{IntegerDigits}(9, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))	\bigl\lbrack1, 2, 0\bigr\rbrack
 bijective-base-26-27-is-aa	\mathrm{IntegerDigits}(27, \mathrm{BijectiveNumerals}(26))	\bigl\lbrack1, 1\bigr\rbrack
 bijective-base-26-702-is-zz	\mathrm{IntegerDigits}(702, \mathrm{BijectiveNumerals}(26))	\bigl\lbrack26, 26\bigr\rbrack
+integerdigits-137-mixedradixnumerals-list-3-12	\mathrm{IntegerDigits}(137, \mathrm{MixedRadixNumerals}(\bigl\lbrack3, 12\bigr\rbrack))	\bigl\lbrack3, 2, 5\bigr\rbrack
 the-3-argument-form-keeps-only-the-4-least	\mathrm{IntegerDigits}(6\,345\,354, 10, 4)	\bigl\lbrack5, 3, 5, 4\bigr\rbrack
 all-3-bit-words-by-threading-a-padded-form-over	\mathrm{IntegerDigits}(0..7, 2, 3)	\bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack, \bigl\lbrack1, 1, 1\bigr\rbrack\bigr\rbrack
 the-lehmer-code-of-the-6th-permutation-of-four	\mathrm{IntegerDigits}(5, \mathrm{FactorialNumerals}, 4)	\bigl\lbrack0, 2, 1, 0\bigr\rbrack
 an-integer-base-is-still-the-native-handler	\mathrm{IntegerDigits}(255, 16)	\bigl\lbrack15, 15\bigr\rbrack
+integerdigits-98-534-mixedradixnumerals-list-24	\mathrm{IntegerDigits}(98\,534, \mathrm{MixedRadixNumerals}(\bigl\lbrack24, 60, 60\bigr\rbrack))	\bigl\lbrack1, 3, 22, 14\bigr\rbrack
 unlike-integerstring-there-s-always-at-least-one	\mathrm{IntegerDigits}(0)	\bigl\lbrack0\bigr\rbrack
 the-sign-is-discarded	\mathrm{IntegerDigits}(-3\,134)	\bigl\lbrack3, 1, 3, 4\bigr\rbrack
 no-numeral-for-a-negative-in-a-system-that	\mathrm{IntegerDigits}(-3, \mathrm{FactorialNumerals})	\mathrm{IntegerDigits}(-3, \mathrm{FactorialNumerals})

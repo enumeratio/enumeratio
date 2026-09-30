@@ -1,5 +1,6 @@
 id	section	role	expr	expected
 an-interior-point			[IsIntervalMember, [Interval, 1, 5], 3]	True
+isintervalmember-interval-2-5-pi			[IsIntervalMember, [Interval, 2, 5], Pi]	True
 a-closed-endpoint-is-a-member	Scope		[IsIntervalMember, [Interval, 1, 5], 5]	True
 an-open-endpoint-is-not-a-member	Scope		[IsIntervalMember, [Interval, [Open, 1], 5], 1]	False
 outside-the-interval	Scope		[IsIntervalMember, [Interval, 1, 5], 6]	False

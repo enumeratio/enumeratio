@@ -1,18 +1,19 @@
-id	in	out
-join-list-1-2-list-3-4	join([1, 2], [3, 4])	[1, 2, 3, 4]
-join-list-1-2-list-3-4-list-5	join([1, 2], [3, 4], [5])	[1, 2, 3, 4, 5]
-join-list-a-b-c-list-x-y-list-u-v-w	join([a, b, c], [x, y], [u, v, w])	[a, b, c, x, y, u, v, w]
-join-tolerates-shorter-array-second	join([[1, 2], [3, 4]], [[x]], 2)	[[1, 2, x], [3, 4]]
-join-splices-any-shared-head	join(f(a), f(b), f(c))	f(a, b, c)
-join-associations-first-seen-order	join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))	Association(Rule(a, f), Rule(c, d))
-a-trailing-integer-argument-joins-at-that-level	join([[1, 2], [3, 4]], [[5, 6], [7, 8]], 2)	[[1, 2, 5, 6], [3, 4, 7, 8]]
-joining-matrices-stacks-their-rows	join([[a, b], [c, d]], [[1, 2], [3, 4]])	[[a, b], [c, d], [1, 2], [3, 4]]
-sets-as-well-as-lists-as-long-as-all-arguments	join({1, 2}, {3})	{1, 2, 3}
-a-lazy-range-is-spliced-in	join([1, 2], Range(3, 5))	[1, 2, 3, 4, 5]
-with-no-arguments-the-empty-list	join()	[]
-at-level-2-matrices-are-joined-side-by-side	join([[a, b], [c, d]], [[1, 2], [3, 4]], 2)	[[a, b, 1, 2], [c, d, 3, 4]]
-ragged-rows-join-at-level-2-too	join([[1], [5, 6]], [[2, 3], [7]], [[4], [8]], 2)	[[1, 2, 3, 4], [5, 6, 7, 8]]
-a-row-missing-from-the-shorter-array-simply-isn	join([[x]], [[1, 2], [3, 4]], 2)	[[x, 1, 2], [3, 4]]
-any-head-as-long-as-all-the-arguments-share-it	join(f(a), f(b))	f(a, b)
-join-a-b-flatten-a-b-1-see-flatten	join([1, 2], [3, 4]) == flatten([[1, 2], [3, 4]], 1)	True
-join-is-associative	"join(join([a, b, c], [x, y]), [u, v, w]) == join(\n                                                  [a, b, c],\n                                                  join([x, y], [u, v, w]),\n                                                )"	True
+id	in	out	back
+join-list-1-2-list-3-4	join([1, 2], [3, 4])	[1, 2, 3, 4]	
+join-list-1-2-list-3-4-list-5	join([1, 2], [3, 4], [5])	[1, 2, 3, 4, 5]	
+join-list-a-b-c-list-x-y-list-u-v-w	join([a, b, c], [x, y], [u, v, w])	[a, b, c, x, y, u, v, w]	
+join-tolerates-shorter-array-second	join([[1, 2], [3, 4]], [[x]], 2)	[[1, 2, x], [3, 4]]	
+join-splices-any-shared-head	join(f(a), f(b), f(c))	f(a, b, c)	
+join-associations-first-seen-order	join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))	Association(Rule(a, f), Rule(c, d))	
+a-trailing-integer-argument-joins-at-that-level	join([[1, 2], [3, 4]], [[5, 6], [7, 8]], 2)	[[1, 2, 5, 6], [3, 4, 7, 8]]	
+joining-matrices-stacks-their-rows	join([[a, b], [c, d]], [[1, 2], [3, 4]])	[[a, b], [c, d], [1, 2], [3, 4]]	
+sets-as-well-as-lists-as-long-as-all-arguments	join({1, 2}, {3})	{1, 2, 3}	
+a-lazy-range-is-spliced-in	join([1, 2], Range(3, 5))	[1, 2, 3, 4, 5]	
+with-no-arguments-the-empty-list	join()	[]	
+at-level-2-matrices-are-joined-side-by-side	join([[a, b], [c, d]], [[1, 2], [3, 4]], 2)	[[a, b, 1, 2], [c, d, 3, 4]]	
+ragged-rows-join-at-level-2-too	join([[1], [5, 6]], [[2, 3], [7]], [[4], [8]], 2)	[[1, 2, 3, 4], [5, 6, 7, 8]]	
+a-row-missing-from-the-shorter-array-simply-isn	join([[x]], [[1, 2], [3, 4]], 2)	[[x, 1, 2], [3, 4]]	
+any-head-as-long-as-all-the-arguments-share-it	join(f(a), f(b))	f(a, b)	
+join-a-b-flatten-a-b-1-see-flatten	join([1, 2], [3, 4]) == flatten([[1, 2], [3, 4]], 1)	True	
+join-is-associative	"join(join([a, b, c], [x, y]), [u, v, w]) == join(\n                                                  [a, b, c],\n                                                  join([x, y], [u, v, w]),\n                                                )"	True	
+nestlist-function-join-1-1-1-list-x-4	NestList(Function(join(_1, _1), _1), [x], 4)	"[\n  [x],\n  [x, x],\n  [x, x, x, x],\n  [x, x, x, x, x, x, x, x],\n  [x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x],\n]"	Unreadable

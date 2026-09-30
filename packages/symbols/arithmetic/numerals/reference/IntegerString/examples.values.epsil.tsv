@@ -9,5 +9,7 @@ roman-numerals-with-the-base-roman	integerString(1_988, "Roman")	"\"MCMLXXXVIII\
 a-width-pads-with-leading-zeros	integerString(255, 16, 4)	"\"00ff\""
 a-width-shorter-than-the-numeral-keeps-the-least	integerString(1_234_567, 10, 3)	"\"567\""
 a-third-argument-pads-with-leading-zeros-to-that	integerString(5, 2, 8)	"\"00000101\""
+integerstring-50-factorial-36	integerString(50!, 36)	"\"4q7eyp9zizmtqt0648txt4fm720cc1s00000000000\""
+integerstring-2-046-2	integerString(2_046, 2)	"\"11111111110\""
 integerstring-0	integerString(0)	"\"0\""
 compute-engine-keeps-the-sign	integerString(-42)	"\"-42\""

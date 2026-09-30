@@ -30,6 +30,16 @@ n-of-a-negative-integer-argument	N(log(-2), 30)	0.693147180559945309417232121458
 ln-neg-6	log(-6)	log(6) + I*pi	
 n-of-a-negative-rational-argument	N(log(Rational(-1, 2)), 30)	-0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
+n-ln-5-over-2-50	N(log(Rational(5, 2)), 30)		
+functiondomain-ln-x-x			
+functionrange-ln-x-x-y			
+functionanalytic-ln-x-x			
+functionmeromorphic-ln-x-x			
+functioninjective-ln-x-x			
+functionsurjective-ln-x-x			
+d-ln-z-z	diff(log(Symbol("z")), Symbol("z"))		
+d-ln-ln-x-x	diff(log(log(Symbol("x"))), Symbol("x"))		
+ln-exponentiale-pow-n	log((S(E)**Symbol("n")))		
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			

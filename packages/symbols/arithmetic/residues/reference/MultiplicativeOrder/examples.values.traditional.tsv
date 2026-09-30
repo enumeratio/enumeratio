@@ -13,5 +13,11 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1
 1-is-the-only-element-of-order-1	\operatorname{ord}_{7}(1)	1
 the-multiplicative-order-always-divides-varphi-n	\varphi(7)\bmod\operatorname{ord}_{7}(3)=0	\mathrm{True}
 the-discrete-log-inverts-powermod	\left(3^{\mathrm{MultiplicativeOrder}(3, 2^{61}-1, \bigl\lbrack2\bigr\rbrack)}\bmod 2^{61}-1\right)	2
+divides-multiplicativeorder-5-12-totient-12	\operatorname{ord}_{12}(5)\mid\varphi(12)	\mathrm{True}
+multiplicativeorder-5-3	\operatorname{ord}_{3}(5)	2
+multiplicativeorder-neg-5-3	\operatorname{ord}_{3}(-5)	1
+multiplicativeorder-5-7-list-4		
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	\operatorname{ord}_{22}(10)	\operatorname{ord}_{22}(10)
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4		
+multiplicativeorder-10-21	\operatorname{ord}_{21}(10)	6
+multiplicativeorder-21-10	\operatorname{ord}_{10}(21)	1

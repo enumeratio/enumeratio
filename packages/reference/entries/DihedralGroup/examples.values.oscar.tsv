@@ -1,0 +1,2 @@
+id	in
+grouporder-dihedralgroup-10	order((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 10), 10)).G)

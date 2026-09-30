@@ -3,3 +3,5 @@ a-rational-function-is-meromorphic	FunctionMeromorphic[Divide[1, x], x]	True	\te
 tangent-is-a-ratio-of-entire-functions	FunctionMeromorphic[Tan[x], x]	True	\text{FunctionMeromorphic}[\tan (x),x]	\text{True}
 a-branch-point-is-not-a-pole	FunctionMeromorphic[Log[x], x]	False	\text{FunctionMeromorphic}[\log (x),x]	\text{False}
 polynomials-are-meromorphic	FunctionMeromorphic[Power[x, 2], x]	True	\text{FunctionMeromorphic}\left[x^2,x\right]	\text{True}
+functionmeromorphic-sqrt-z-z	FunctionMeromorphic[Sqrt[z], z]	False	\text{FunctionMeromorphic}\left[\sqrt{z},z\right]	\text{False}
+functionmeromorphic-ln-z-z	FunctionMeromorphic[Log[z], z]	False	\text{FunctionMeromorphic}[\log (z),z]	\text{False}

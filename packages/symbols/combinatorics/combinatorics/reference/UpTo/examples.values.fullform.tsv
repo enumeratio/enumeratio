@@ -1,5 +1,8 @@
 id	in
 asking-for-up-to-5-of-3-elements-takes-all-3	Take[List[1, 2, 3], UpTo[5]]
 when-enough-elements-are-available-exactly-n-is	Take[List[1, 2, 3, 4, 5, 6], UpTo[2]]
+take-list-a-b-c-d-upto-6	Take[List[a, b, c, d], UpTo[6]]
+take-list-a-b-c-d-upto-2	Take[List[a, b, c, d], UpTo[2]]
 in-partition-a-shorter-final-chunk-is-allowed	Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]
 in-ordering-at-most-6-positions-of-a-5-element	Ordering[List[2, 6, 1, 9, 2], UpTo[6]]
+partition-list-a-b-c-d-exponentiale-f-g-upto-3	Partition[List[a, b, c, d, E, f, g], UpTo[3]]

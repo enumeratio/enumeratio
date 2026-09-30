@@ -1,6 +1,10 @@
 id	in	out
 x-between-consecutive-elements	<Riffle><List>a b c</List> x</Riffle>	<List>a x b x c</List>
 interleave-two-lists-of-the-same-length	<Riffle><List>a b c</List> <List>x y z</List></Riffle>	<List>a x b y c z</List>
+riffle-list-1-2-3-4-5-6-7-8-9-x	<Riffle><List>1 2 3 4 5 6 7 8 9</List> x</Riffle>	<List>1 x 2 x 3 x 4 x 5 x 6 x 7 x 8 x 9</List>
+riffle-list-1-2-3-4-5-6-7-8-9-x-3	<Riffle><List>1 2 3 4 5 6 7 8 9</List> x 3</Riffle>	<List>1 2 x 3 4 x 5 6 x 7 8 x 9</List>
 a-list-one-shorter-goes-strictly-between-the	<Riffle><List>a b c</List> <List>x y</List></Riffle>	<List>a x b y c</List>
 every-3rd-element-of-the-result-is-x	<Riffle><List>1 2 3 4 5 6 7</List> x 3</Riffle>	<List>1 2 x 3 4 x 5 6 x 7</List>
 a-single-element-has-nothing-to-separate	<Riffle><List>a</List> x</Riffle>	<List>a</List>
+riffle-list-a-b-c-d-list-x-y-z-w	<Riffle><List>a b c d</List> <List>x y z w</List></Riffle>	<List>a x b y c z d w</List>
+riffle-list-a-b-c-d-x	<Riffle><List>a b c d</List> x</Riffle>	<List>a x b x c x d</List>

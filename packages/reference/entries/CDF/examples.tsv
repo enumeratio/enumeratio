@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+cdf-normaldistribution-negativeinfinity	Properties		[CDF, [NormalDistribution], NegativeInfinity]	0
+cdf-normaldistribution-positiveinfinity	Properties		[CDF, [NormalDistribution], PositiveInfinity]	1

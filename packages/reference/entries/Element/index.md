@@ -135,4 +135,6 @@ bindings:
     template: enumeratio_element($1, $2)
     arity: 2
 stub: engine
+names:
+  wolfram: Element
 ---

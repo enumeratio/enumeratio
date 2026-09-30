@@ -1,0 +1,8 @@
+id	in	out
+4-eq-4	<Equal>4 4</Equal>	<True />
+n-pi-20-eq-pi	<Equal><N>Pi 20</N> Pi</Equal>	<True />
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	<Equal><Add><Sqrt>2</Sqrt> <Sqrt>3</Sqrt></Add> <Sqrt><Add>5 <Multiply>2 <Sqrt>6</Sqrt></Multiply></Add></Sqrt></Equal>	<True />
+x-eq-x	<Equal>x x</Equal>	<True />
+3-eq-3-eq-3	<Equal>3 3 3</Equal>	<True />
+list-1-2-eq-list-1-2	<Equal><List>1 2</List> <List>1 2</List></Equal>	<True />
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	<List><Equal>x x</Equal> <Equal>x y</Equal> <Equal><Add><Sqrt>2</Sqrt> <Sqrt>3</Sqrt></Add> <Sqrt><Add>5 <Multiply>2 <Sqrt>6</Sqrt></Multiply></Add></Sqrt></Equal> <Equal>Pi <N>Pi</N></Equal></List>	<List>True <Equal>x y</Equal> True True</List>

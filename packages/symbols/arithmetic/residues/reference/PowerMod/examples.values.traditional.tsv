@@ -42,11 +42,22 @@ base-a-real-prime-s-associate-by-the-unit-i	\left((7i)^3\bmod 3+2i\right)	1
 modulus-a-real-composite-5-squared	\left((1+i)^4\bmod 25\right)	21
 a-negative-unit-exponent-is-its-own-inverse	\left(\frac{1}{i}\bmod 7\right)	-i
 modulus-a-negative-associate	\left((2+i)^5\bmod -2-3i\right)	-1-i
+sum-powermod-a-2-7-a-nothing-7	\sum_{a}^7\left(a^2\bmod 7\right)	14
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\mathrm{FindInstance}(\left(a^{b}\bmod 17\right)=1\land0\lt a\lt17\land0\lt b\lt17, \bigl\lbrack a, b\bigr\rbrack, \mathbb{Z}, 2)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack\bigr\rbrack
 one-step-of-rsa-style-modular-exponentiation-7	\left(7^{13}\bmod 33\right)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	\left(2^{340}\bmod 341\right)	1
 diffie-hellman-both-parties-reach-the-shared-key	\left(\left(5^6\bmod 23\right)^{15}\bmod 23\right)=\left(\left(5^{15}\bmod 23\right)^6\bmod 23\right)	\mathrm{True}
+powermod-tocharactercode-rsa-in-mathematica	\left(\mathrm{ToCharacterCode}(\text{RSA in Mathematica})^{e}\bmod n\right)	\bigl\lbrack\left(82^{e}\bmod n\right), \left(83^{e}\bmod n\right), \left(65^{e}\bmod n\right), \left(32^{e}\bmod n\right), \left(105^{e}\bmod n\right), \left(110^{e}\bmod n\right), \left(32^{e}\bmod n\right), \left(77^{e}\bmod n\right), \left(97^{e}\bmod n\right), \left(116^{e}\bmod n\right), \left(104^{e}\bmod n\right), \left(101^{e}\bmod n\right), \left(109^{e}\bmod n\right), \left(97^{e}\bmod n\right), \left(116^{e}\bmod n\right), \left(105^{e}\bmod n\right), \left(99^{e}\bmod n\right), \left(97^{e}\bmod n\right)\bigr\rbrack
 by-definition-a-b-bmod-m-computed-without-ever	\left(2^{10}\bmod 3\right)=2^{10}\bmod3	\mathrm{True}
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	\left(7^{\varphi(19)}\bmod 19\right)	1
+list-powermod-7-2-5-powermod-12-2-5	\bigl\lbrack\left(7^2\bmod 5\right), \left(12^2\bmod 5\right)\bigr\rbrack	\bigl\lbrack4, 4\bigr\rbrack
+list-powermod-2-3-5-8-mod-5	\bigl\lbrack\left(2^3\bmod 5\right), 8\bmod5\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
+list-powermod-2-neg-1-5-modularinverse-2-5	\bigl\lbrack\left(\frac{1}{2}\bmod 5\right), \left(2^{-1}\bmod 5\right)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
+list-divides-2-8-powermod-8-3-2-eq-0	\bigl\lbrack2\mid8, \left(8^3\bmod 2\right)=0\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
+powermod-7-totient-19-19-eq-1	\left(7^{\varphi(19)}\bmod 19\right)=1	\mathrm{True}
+powermod-2-16-17	\left(2^{16}\bmod 17\right)	1
+powermod-list-5-neg-5-2-3		
+powermod-list-5-neg-5-2-neg-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, -3)	\bigl\lbrack\left(5^2\bmod -3\right), \left((-5)^2\bmod -3\right)\bigr\rbrack
 no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2	\left(\frac{1}{2}\bmod 4\right)	\left(\frac{1}{2}\bmod 4\right)
 a-nonzero-exponent-at-the-same-negative-modulus	\left((-2)^3\bmod -14\right)	\left((-2)^3\bmod -14\right)
 2-is-not-a-square-mod-5-so-there-is-no-root	\left(\sqrt{2}\bmod 5\right)	\left(\sqrt{2}\bmod 5\right)
