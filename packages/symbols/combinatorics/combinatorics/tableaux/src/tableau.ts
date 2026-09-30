@@ -136,28 +136,23 @@ const withInsertionTableau = (body: MathJSON): MathJSON => bind("tab", insertion
 const shapeOf = (tableau: MathJSON): MathJSON =>
   overRange(count(tableau), ["List"], ["Join", "sacc", ["List", count(at(tableau, "s"))]], "sacc", "s");
 
-/** `tableau` as a ROW WORD — its rows concatenated. */
-const rowWordOf = (tableau: MathJSON): MathJSON =>
-  overRange(count(tableau), ["List"], ["Join", "wacc", at(tableau, "w")], "wacc", "w");
-
 /** The shape of that tableau — the row lengths, as a partition. */
 export const insertionShape: MathJSON = withInsertionTableau(shapeOf("tab"));
 
 /**
- * The insertion tableau as a ROW WORD — its rows concatenated.
- *
- * That is how enumeratio stores a standard tableau (`standard_tableau AS (row_word int[])`),
- * and it is the right call: the rows are recoverable from the word plus the shape, so the
- * carrier holds one array instead of a ragged nested one. A nested list is REJECTED by the
- * type, which is the extracted carrier shapes earning their keep for the third time.
+ * The insertion tableau, as its rows — `StandardTableau`'s carrier shape is
+ * `list<list<integer>>`, not a flattened row word: a row word alone doesn't determine a shape
+ * (two different tableaux can share one), so it can't stand for the tableau by itself. Rows
+ * are exactly what `insertionTableau` already builds, so this is just naming it for export.
  */
-export const insertionRowWord: MathJSON = withInsertionTableau(rowWordOf("tab"));
+export const insertionRows: MathJSON = insertionTableau;
 
 /**
  * The insertion tableau's READING WORD: rows read bottom to top, each left to right — the
  * standard reading word, and the one Knuth equivalence is stated in terms of. Row `w` here
- * (1 at the bottom) is row `count + 1 - w` of the tableau as stored (1 at the top), which is
- * the whole difference from `insertionRowWord` above.
+ * (1 at the bottom) is row `count + 1 - w` of the tableau as stored (1 at the top). (Unrelated
+ * to `insertionRows` above beyond sharing the same underlying tableau: this is a permutation,
+ * not a `StandardTableau`.)
  */
 export const insertionReadingWord: MathJSON = withInsertionTableau(
   overRange(
@@ -222,13 +217,13 @@ export const rskPair: MathJSON = [
   ["Range", 1, ["Count", "_raw"], 1],
 ];
 
-/** The recording tableau alone, as a row word. */
-export const recordingRowWord: MathJSON = bind("pq", rskPair, rowWordOf(at("pq", 2)));
+/** The recording tableau alone, as its rows. */
+export const recordingRows: MathJSON = bind("pq", rskPair, at("pq", 2));
 
-/** Both tableaux as row words, ready for the `standard_tableau_pair` constructor — one RSK
- *  run for the pair, not one per half. */
-export const rskRowWords: MathJSON = bind("pq", rskPair, [
+/** Both tableaux as rows, ready for the `standard_tableau_pair` constructor — one RSK run for
+ *  the pair, not one per half. */
+export const rskRows: MathJSON = bind("pq", rskPair, [
   "Tuple",
-  ["StandardTableau", rowWordOf(at("pq", 1))],
-  ["StandardTableau", rowWordOf(at("pq", 2))],
+  ["StandardTableau", at("pq", 1)],
+  ["StandardTableau", at("pq", 2)],
 ]);

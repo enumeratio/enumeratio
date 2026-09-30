@@ -76,6 +76,15 @@ export const TREES_CARRIERS: readonly Carrier[] = [
     plural: "PlaneTrees",
   },
   {
+    name: "PruferSequence",
+    // A word, not an edge list -- counted in its own right (n^(n-2)), and the Prüfer bijection
+    // to LabeledTree is a conversion (LabeledTree(PruferSequence(...))), not this carrier's shape.
+    type: "prufer_sequence",
+    shape: "list<integer>",
+    id: "prufer_sequence",
+    plural: "PruferSequences",
+  },
+  {
     name: "RootedForest",
     type: "rooted_forest",
     shape: "list<integer>",

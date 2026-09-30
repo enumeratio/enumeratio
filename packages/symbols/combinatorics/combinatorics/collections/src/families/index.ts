@@ -7,11 +7,7 @@ import {
 } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
 import { entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight } from "./paths-partitions.ts";
-import {
-  entriesBeforeParkingFunctions as tableauxTreesBeforeParkingFunctions,
-  entriesAfterNonDecreasingParkingFunctions as tableauxTreesAfterNonDecreasingParkingFunctions,
-} from "./tableaux-trees.ts";
-import { entries as tableauxPlane } from "./tableaux-plane.ts";
+import { entriesAfterNonDecreasingParkingFunctions as tableauxTreesAfterNonDecreasingParkingFunctions } from "./tableaux-trees.ts";
 import {
   bigintEntries as permutationsBigintEntries,
   coreEntries as permutationsCoreEntries,
@@ -43,6 +39,7 @@ import {
   labeledEntries as treesLabeledEntries,
   rootedForestsEntries as treesRootedForestsEntries,
   unlabeledTreesEntries as treesUnlabeledTreesEntries,
+  pruferSequencesEntries as treesPruferSequencesEntries,
 } from "../../../trees/src/families/index.ts";
 import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
@@ -56,6 +53,7 @@ import {
   tableauxPlaneSkewStandardTableauxEntries,
   tableauxPlaneShiftedStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
+  standardTableauPairsEntries,
 } from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
@@ -92,7 +90,7 @@ const numberEntries = [
   ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
   ...pathsPartitionsBeforeDyckPathsByHeight,
   ...latticePathsPathsPartitionsEntries,
-  ...tableauxTreesBeforeParkingFunctions,
+  ...treesPruferSequencesEntries,
   ...wordsTableauxTreesEntries,
   ...graphsCoreEntries,
   ...tableauxTreesAfterNonDecreasingParkingFunctions,
@@ -100,7 +98,7 @@ const numberEntries = [
   ...partitionsTableauxPlaneEntries,
   ...tableauxPlaneSkewStandardTableauxEntries,
   ...tableauxPlaneShiftedStandardTableauxEntries,
-  ...tableauxPlane,
+  ...standardTableauPairsEntries,
   ...tableauxPlanePlanePartitionsEntries,
   ...permutationsEntries,
   ...permutationClassesEntries,

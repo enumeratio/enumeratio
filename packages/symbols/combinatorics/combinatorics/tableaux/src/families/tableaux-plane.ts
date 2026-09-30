@@ -5,8 +5,8 @@
 // §4 step 5 -- every family in that file carrying a `declared.carrier` (all six do; none has a
 // top-level `carrier` yet). ShiftedStandardTableaux joined them (wire-carriers lane A-92): it
 // now carries the new "ShiftedStandardTableau" carrier (its element already is one, kind
-// "blocks" = rows). StandardTableauPairs still declares no carrier and stays in collections --
-// see collections/src/families/tableaux-plane.ts for why (decision 5, this same lane).
+// "blocks" = rows). StandardTableauPairs now carries "StandardTableauPair" too, wired via
+// `carrierElements` (declare.ts) -- see ./standard-tableau-pairs.ts.
 // `normRank`, `cmpNumArrays`, `cmpRowsShapeThenEntries`, `keyOf`, `indexedFamily`, `axis`,
 // `enumerated` are small local helpers duplicated from the source file (mirrors the permutations
 // pilot's `ints`); `factorialBig` is used ONLY by SkewStandardTableaux and moved outright.

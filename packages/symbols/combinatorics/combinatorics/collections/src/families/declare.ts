@@ -65,8 +65,19 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   // Tuple, alongside the element -- e.g. Tournament(n, edges). 0 for every carrier whose shape
   // is just the element's own shape (`Permutation([2, 1])`).
   const carrierParams = family.carrierParams ?? 0;
-  // A carrier's elements are its values, `Permutation([2, 1])`; membership takes either form.
+  const carrierElements = family.carrierElements;
+  // A nested sub-element's own carrier holds it the same way the element's own kind already
+  // encodes it (bareEncode/bareDecode) -- e.g. `StandardTableauPair`'s two slots are each a
+  // `StandardTableau`, holding its rows, not a flattened word (a word alone doesn't determine
+  // a shape: two different tableaux can share one).
   const encode = (p: number[], value: unknown): unknown => {
+    if (carrier !== undefined && carrierElements !== undefined) {
+      const parts = (value as readonly unknown[]).map((v, i) => [
+        carrierElements[i],
+        (bareEncode as (x: never) => unknown)(v as never),
+      ]);
+      return [carrier, ["Tuple", ...parts]];
+    }
     const encoded = (bareEncode as (x: never) => unknown)(value as never);
     if (carrier === undefined) return encoded;
     if (carrierParams === 0) return [carrier, encoded];
@@ -75,6 +86,10 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   const decode = (b: Boxed): unknown => {
     if (carrier === undefined || (b as unknown as BoxedExpression).operator !== carrier) return bareDecode(b as never);
     const inner = b.ops?.[0];
+    if (carrierElements !== undefined) {
+      const tupleOps = inner?.ops ?? [];
+      return tupleOps.map((sub) => bareDecode((sub.ops?.[0] ?? sub) as never));
+    }
     if (carrierParams === 0) return bareDecode(inner as never);
     const tupleOps = inner?.ops;
     return bareDecode(tupleOps?.[tupleOps.length - 1] as never);

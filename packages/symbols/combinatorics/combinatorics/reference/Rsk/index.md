@@ -16,4 +16,4 @@ signatures:
 ---
 
 - Takes a `Permutation` and returns a `StandardTableauPair` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- Both tableaux share a shape, so the pair plus RskShape determines them. A standard_tableau_pair is a tuple of two carriers — the first composite carrier anything here constructs.
+- Both tableaux share a shape (RskShape reads it off either), and each carries its own rows, so the pair alone determines them. A standard_tableau_pair is a tuple of two carriers — the first composite carrier anything here constructs.

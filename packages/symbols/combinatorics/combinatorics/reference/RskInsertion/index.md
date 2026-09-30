@@ -16,4 +16,4 @@ signatures:
 ---
 
 - Takes a `Permutation` and returns a `StandardTableau` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau. Emitted as a ROW WORD because that is what the carrier is; with RskShape it determines the tableau. See tableau.ts for the indexing rule that makes it evaluate at all.
+- Row insertion with bumping, as a fold over the word whose accumulator is the growing tableau, emitted as its rows. See tableau.ts for the indexing rule that makes it evaluate at all.

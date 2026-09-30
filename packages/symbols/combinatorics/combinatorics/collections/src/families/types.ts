@@ -75,6 +75,14 @@ interface Family {
    *  packed as one `Tuple` argument -- the constructor's declared shape (a Carrier's own
    *  `tuple<...>`) still takes exactly one operand (`declareConstructor`'s `(shape) -> type`). */
   readonly carrierParams?: number;
+  /** For a "nested" element that is itself a fixed-length tuple of sub-elements (`[P, Q]`), the
+   *  sub-carrier each slot is wrapped in before the whole tuple is packed into the family's own
+   *  carrier -- `StandardTableauPair([P, Q])` becomes
+   *  `StandardTableauPair(Tuple(StandardTableau(P), StandardTableau(Q)))`. Each slot is encoded
+   *  the same way the element's own kind already does (rows, not a flattened word -- a word
+   *  alone doesn't always determine a shape). Mutually exclusive with `carrierParams` (which
+   *  packs raw params instead of sub-elements). */
+  readonly carrierElements?: readonly string[];
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly valid: (element: unknown, p: number[]) => boolean;
@@ -119,6 +127,7 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     valid: k.valid,
     ...(k.carrier === undefined ? {} : { carrier: k.carrier }),
     ...(k.carrierParams === undefined ? {} : { carrierParams: k.carrierParams }),
+    ...(k.carrierElements === undefined ? {} : { carrierElements: k.carrierElements }),
     ...(k.declared === undefined ? {} : { declared: k.declared }),
     count: (p) => {
       const c = k.count(p);

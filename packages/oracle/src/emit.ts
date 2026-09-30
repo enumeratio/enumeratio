@@ -217,10 +217,20 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // element -- the element itself (`edges`), which every system already has a plain
     // list/tuple encoding for. A single-param carrier's operand is never itself a multi-arg
     // Tuple built this way, so this never fires for one.
+    //
+    // A COMPOSITE carrier (`carrierElements`, e.g. `StandardTableauPair`) packs the same
+    // shape -- a multi-arg Tuple -- but every slot is itself a sub-carrier constructor call,
+    // not a leading param then the element. Discarding all but the last slot there would
+    // silently drop `P` and compare only `Q`. Distinguish by that: if every slot is a
+    // carrier call, the whole tuple carries meaning and walks like any other Tuple (missing,
+    // for a system with no bare-Tuple mapping, rather than a wrong answer).
     if (CARRIER_NAMES.has(head) && operands.length === 1) {
       const contents = operands[0] as MathJSON;
       const packed = isCall(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
-      return walk(packed === undefined ? contents : (packed[packed.length - 1] as MathJSON));
+      if (packed === undefined) return walk(contents);
+      const packedOperands = packed.slice(1);
+      if (packedOperands.every((op) => isCall(op) && CARRIER_NAMES.has(op[0] as string))) return walk(packed);
+      return walk(packedOperands[packedOperands.length - 1] as MathJSON);
     }
     // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
     // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an

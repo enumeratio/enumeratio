@@ -1,20 +1,15 @@
-// StandardTableauPairs: catalogued (packages/reference/entries/) but never wired to a kernel,
-// kept here because it declares no carrier -- checked against StandardTableauPair's shape
-// (tuple<standard_tableau, standard_tableau>): a "nested" element ([P, Q]) encodes as a plain
-// List, and CE's tuple type does not structurally accept one (verified interactively), so
-// there's nothing here yet to wire without a conversion this decision is out of scope to add
-// (wire-carriers lane A-92, decision 5). ShiftedStandardTableaux moved to
-// tableaux/src/families/tableaux-plane.ts (same lane): it now carries the new
-// "ShiftedStandardTableau" carrier. SemistandardTableaux, GelfandTsetlin,
-// AlternatingSignMatrices, SkewStandardTableaux, PlanePartitions and BoxedPlanePartitions moved
-// there earlier -- every one of them carries a `declared.carrier`. SkewPartitions moved earlier
-// to partitions/src/families/tableaux-plane.ts.
-//
-// StandardTableauPairs' two same-shape tableaux don't share a row count with anything else and
-// so use kind "nested" as `[P, Q]`.
-import type { NumberKernel } from "./types.ts";
-import { Factorial, PermutationRank, PermutationUnrank } from "./kernels.ts";
-import { IsStandardTableauOf } from "./tableaux-trees.ts";
+// StandardTableauPairs moved out of collections/src/families/tableaux-plane.ts (§4 step 5,
+// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible):
+// it now carries "StandardTableauPair" (tuple<standard_tableau, standard_tableau>). Its element
+// (kind "nested", `[P, Q]`, each a tableau's rows) doesn't pack into that tuple as-is -- CE's
+// tuple type doesn't structurally accept a plain nested List -- so each slot is wrapped in its
+// own StandardTableau(...) first (`carrierElements`, declare.ts), holding its rows exactly as
+// the kernel already has them (StandardTableau's shape is `list<list<integer>>`, matching
+// src/maps.ts's Rsk/RskInsertion/RskRecording) -- the same idea as `carrierParams` (#437-style
+// packs raw params instead), applied to a sub-element rather than a param.
+import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import { Factorial, PermutationRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
+import { IsStandardTableauOf } from "../../../collections/src/families/tableaux-trees.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -104,6 +99,8 @@ export const entries: NumberKernel[] = [
     head: "StandardTableauPairs",
     paramCount: 1,
     kind: "nested",
+    carrier: "StandardTableauPair",
+    carrierElements: ["StandardTableau", "StandardTableau"],
     count: ([n]) => Factorial(n),
     unrank: ([n], r) => StandardTableauPairsUnrank(n, r),
     valid: (e, [n]) => IsStandardTableauPairOf(e, n),

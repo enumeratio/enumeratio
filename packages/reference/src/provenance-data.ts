@@ -5226,6 +5226,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "PruferSequence",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "PruferSequences",
     provenance: "unknown",
     declared: "enumeratio-combinatorics",

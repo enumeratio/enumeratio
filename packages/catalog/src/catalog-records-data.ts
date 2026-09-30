@@ -189,6 +189,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     name: "PlaneTree",
   },
   {
+    name: "PruferSequence",
+  },
+  {
     name: "PythagoreanTriple",
   },
   {
@@ -2410,7 +2413,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "PruferSequences",
-    carrier: "LabeledTree",
+    carrier: "PruferSequence",
     grades: [
       {
         name: "n",
@@ -4817,7 +4820,7 @@ export const MAPS: readonly CatalogOverload[] = [
   {
     name: "RskRecording",
     on: ["Permutation"],
-    description: "The recording tableau of the RSK correspondence, as a row word.",
+    description: "The recording tableau of the RSK correspondence, as its rows.",
   },
   {
     name: "RskShape",
