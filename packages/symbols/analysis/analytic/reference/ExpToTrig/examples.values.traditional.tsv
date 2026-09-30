@@ -9,6 +9,6 @@ exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	\operatorname{ExpToTrig}(-\ln(-i
 exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	\operatorname{ExpToTrig}(e^x\le11\land3^{ix}=7)	\sinh(x)+\cosh(x)\le11\land3^{ix}=7
 exptotrig-neg-1-pow-5-over-7	\operatorname{ExpToTrig}((-1)^{\frac{5}{7}})	-1
 exptotrig-list-exponentiale-pow-i-times-x-eq-neg	\operatorname{ExpToTrig}([e^{ix}=-1,\sqrt[11]{-1}])	[i\sin(x)+\cos(x)=-1,-1]
-exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2		
+exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2	\operatorname{ExpToTrig}(-\ln(-x+2)+\ln(x+2))	-\ln(-x+2)+\ln(x+2)
 exptotrig-root-neg-1-16	\operatorname{ExpToTrig}(\sqrt[16]{-1})	\sqrt[16]{-1}
 exptotrig-exponentiale-pow-i-times-x-eq-neg-1	\operatorname{ExpToTrig}(e^{ix}=-1)	i\sin(x)+\cos(x)=-1

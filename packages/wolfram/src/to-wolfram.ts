@@ -280,6 +280,15 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Midpoint(p, q) takes the two points; Wolfram's Midpoint[{p, q}] takes them as a list
   // (`Midpoint[p, q]` stays unevaluated there).
   Midpoint: (a) => (a.length === 2 ? `Midpoint[List[${toWolfram(a[0]!)}, ${toWolfram(a[1]!)}]]` : call("Midpoint", a)),
+  // Solve(eqs, x, y, z) solves for several unknowns; Wolfram takes them as one list
+  // (`Solve[eqs, x, y, z]` reads y and z as options and stays unevaluated).
+  Solve: (a) =>
+    a.length > 2
+      ? `Solve[${toWolfram(a[0]!)}, List[${a
+          .slice(1)
+          .map((x) => toWolfram(x))
+          .join(", ")}]]`
+      : call("Solve", a),
   FunctionContinuous: (a) =>
     a.length === 3
       ? `FunctionContinuous[List[${toWolfram(a[0])}, ${toWolfram(a[2])}], ${toWolfram(a[1])}]`

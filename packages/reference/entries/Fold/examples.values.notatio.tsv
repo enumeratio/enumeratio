@@ -3,21 +3,20 @@ fold-add-0-list-1-2-3-4	<Fold>Add 0 <List>1 2 3 4</List></Fold>	<ToExpression>10
 fold-multiply-1-list-1-2-3-4	<Fold>Multiply 1 <List>1 2 3 4</List></Fold>	<ToExpression>24</ToExpression>
 the-shape-of-a-left-fold	<Fold>f x <List>a b c</List></Fold>	<f><f><f>x a</f> b</f> c</f>
 fold-max-0-list-3-1-4-1-5	<Fold>Max 0 <List>3 1 4 1 5</List></Fold>	<ToExpression>5</ToExpression>
-reduce-list-a-b-c-d-f-x		
-reduce-list-a-b-c-d-multiply-1		
-reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d		
 reduce-list-a-b-c-d-list-x	<Reduce><List>a b c d</List> List x</Reduce>	<List><List><List><List>x a</List> b</List> c</List> d</List>
+reduce-list-a-b-c-d-f-x	<Reduce><List>a b c d</List> f x</Reduce>	<f><f><f><f>x a</f> b</f> c</f> d</f>
+reduce-list-a-b-c-d-multiply-1	<Reduce><List>a b c d</List> Multiply 1</Reduce>	<Multiply>a b c d</Multiply>
+reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d	<Reduce><Rest><List>a b c d</List></Rest> f <First><List>a b c d</List></First></Reduce>	<f><f><f>a b</f> c</f> d</f>
 symbolic-elements	<Fold>Add 0 <List>a b c</List></Fold>	<Add>a b c</Add>
 any-two-argument-function-here-one-that-nests	<Fold><Function><List>_1 _2</List></Function> x <List>a b</List></Fold>	<List><List>x a</List> b</List>
 without-a-seed-folding-starts-from-the-first	<Fold>f <List>a b c</List></Fold>	<f><f>a b</f> c</f>
-reduce-rest-list-a-b-c-d-power-first-list-a-b-c		
 reduce-list-a-b-c-d-function-list-2-times-1-3	<Reduce><List>a b c d</List> <Function><Block><List><Multiply>2 _1</Multiply> <Multiply>3 _2</Multiply></List></Block> _1 _2</Function> x</Reduce>	<List><List><List><List><Multiply>16 x</Multiply> <Multiply>24 a</Multiply></List> <Multiply>12 b</Multiply></List> <Multiply>6 c</Multiply></List> <Multiply>3 d</Multiply></List>
 reduce-list-list-1-4-3-2-list-3-2-4-1-permute	<Reduce><List><List>1 4 3 2</List> <List>3 2 4 1</List></List> Permute <List>a b c d</List></Reduce>	<List>b d a c</List>
+reduce-rest-list-a-b-c-d-power-first-list-a-b-c	<Reduce><Rest><List>a b c d</List></Rest> Power <First><List>a b c d</List></First></Reduce>	<Power><Power><Power>a b</Power> c</Power> d</Power>
 assemble-a-number-from-its-decimal-digits	<Fold><Function><Add><Multiply>10 _1</Multiply> _2</Add></Function> 0 <List>1 2 3 4</List></Fold>	<ToExpression>1234</ToExpression>
 or-from-its-binary-digits-1011-2-11	<Fold><Function><Add><Multiply>2 _1</Multiply> _2</Add></Function> 0 <List>1 0 1 1</List></Fold>	<ToExpression>11</ToExpression>
 horner-s-rule-for-ax-2-bx-c	<Fold><Function><Add><Multiply>x _1</Multiply> _2</Add></Function> 0 <List>a b c</List></Fold>	<Add><Multiply>x <Add><Multiply>a x</Multiply> b</Add></Multiply> c</Add>
 evaluate-the-continued-fraction-1-2-2-2-from-the	<Fold><Function><Add>_2 <Divide>1 _1</Divide></Add></Function> 2 <List>2 2 1</List></Fold>	<Rational>17 12</Rational>
-reduce-list-a-b-c-d-exponentiale-function-1		
 reduce-reverse-list-a-b-c-d-function-1-over-1	<Reduce><Reverse><List>a b c d</List></Reverse> <Function><Block><Divide>1 <Add>_1 _2</Add></Divide></Block> _1 _2</Function> x</Reduce>	<Divide>1 <Add>a <Divide>1 <Add>b <Divide>1 <Add>c <Divide>1 <Add>d x</Add></Divide></Add></Divide></Add></Divide></Add></Divide>
 reduce-list-4-5-1-6-7-8-function-10-times-1-plus	<Reduce><List>4 5 1 6 7 8</List> <Function><Block><Add><Multiply>10 _1</Multiply> _2</Add></Block> _1 _2</Function> 0</Reduce>	<ToExpression>451678</ToExpression>
 reduce-reverse-list-a-b-c-d-exponentiale	<Reduce><Reverse><List>a b c d ExponentialE</List></Reverse> <Function><Block><Add><Negate>_1</Negate> _2</Add></Block> _1 _2</Function> 0</Reduce>	<Add>a <Negate>b</Negate> c <Negate>d</Negate> ExponentialE</Add>
@@ -27,9 +26,9 @@ reduce-list-a-b-c-d-k-function-1-times-x-plus-2	<Reduce><List>a b c d k</List> <
 reduce-reverse-list-a-b-c-d-k-function-neg-1	<Reduce><Reverse><List>a b c d k</List></Reverse> <Function><Block><Add><Negate>_1</Negate> _2</Add></Block> _1 _2</Function> 0</Reduce>	<Add>a <Negate>b</Negate> c <Negate>d</Negate> k</Add>
 folding-an-empty-list-returns-the-seed	<Fold>f x <Apply>List</Apply></Fold>	<x />
 folding-with-add-is-a-sum-1-2-100	<Fold>Add 0 <Range>100</Range></Fold>	<ToExpression>5050</ToExpression>
-reduce-rest-list-a-f-first-list-a		
-reduce-list-a-b-c-d-g-x		
 reduce-reverse-list-a-b-c-d-g-x	<Reduce><Reverse><List>a b c d</List></Reverse> g x</Reduce>	<g><g><g><g>x d</g> c</g> b</g> a</g>
 reduce-list-1-2-3-4-5-append-list	<Reduce><List>1 2 3 4 5</List> Append <Apply>List</Apply></Reduce>	<List>1 2 3 4 5</List>
+reduce-rest-list-a-f-first-list-a	<Reduce><Rest><List>a</List></Rest> f <First><List>a</List></First></Reduce>	<First><List>a</List></First>
+reduce-list-a-b-c-d-g-x	<Reduce><List>a b c d</List> g x</Reduce>	<g><g><g><g>x a</g> b</g> c</g> d</g>
 reduce-rest-list-f-first-list		
 reduce-list-a-b-c-function-join-s-map-function		

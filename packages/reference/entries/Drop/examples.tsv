@@ -1,10 +1,13 @@
-id	section	role	expr	expected	known	source	caption	triage	wolfram.note
-drop-list-a-b-c-d-exponentiale-f-2			[Drop, [List, a, b, c, d, ExponentialE, f], 2]	[List, c, d, ExponentialE, f]					
-drop-list-a-b-c-d-exponentiale-f-neg-3		triage	[Drop, [List, a, b, c, d, ExponentialE, f], -3]	[List, a, b, c, d, ExponentialE, f]				gap	compute-engine's own native Drop with a negative count is a no-op (confirmed on a bare, undeclared ComputeEngine) -- Drop(xs, -3) returns xs unchanged instead of dropping the last 3. Answered entirely through Drop's native collection protocol (.at/.count/.iterator), not a value-returning evaluate, so it can't be patched the way an ordinary head is; needs a new packages/ce-patches file that rewrites a negative Drop/Take count into the other head's positive form (Drop(xs, -n) = Take(xs, Max(Length(xs)-n, 0)), and vice versa), mirroring list-stats.ts's existing UpTo-rewrite trick for Take. Too much surgery for this lane's budget.
-drop-list-list-11-12-13-list-21-22-23-list-31-32	Scope		[Drop, [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]], 1]	[List, [List, 21, 22, 23], [List, 31, 32, 33]]					
-drop-list-1-2-3-4-5-negative-2	Scope	test	[Drop, [List, 1, 2, 3, 4, 5], -2]	[List, 1, 2, 3]	[List, 1, 2, 3]	Wolfram: Drop[l, -n] drops the last n elements	Drop the last 2 elements with a negative count		
-drop-list-a-b-c-d-exponentiale-1	Properties		[Drop, [List, a, b, c, d, ExponentialE], 1]	[List, b, c, d, ExponentialE]					
-drop-list-a-b-c-d-exponentiale-neg-1	Properties	triage	[Drop, [List, a, b, c, d, ExponentialE], -1]	[List, a, b, c, d, ExponentialE]				gap	Same cause as drop-list-a-b-c-d-exponentiale-f-neg-3: native Drop(xs, negative) is a no-op.
-drop-list-a-b-c-d-exponentiale-4	Possible issues		[Drop, [List, a, b, c, d, ExponentialE], 4]	[List, ExponentialE]					
-drop-list-1-2-negative-5-overflow-declines	Possible issues	test	[Drop, [List, 1, 2], -5]	[Drop, [List, 1, 2], -5]	[Drop, [List, 1, 2], -5]	Wolfram: Drop[{1,2},-5] raises Drop::drop (only 2 elements, 5 requested) and leaves the expression unevaluated -- not a clamp.	A negative count past the source's length declines, rather than clamp		
-drop-list-1-2-5-overflow-declines	Possible issues	test	[Drop, [List, 1, 2], 5]	[Drop, [List, 1, 2], 5]	[Drop, [List, 1, 2], 5]	Wolfram: Drop[{1,2},5] raises Drop::drop (Cannot drop positions 1 through 5 in {1, 2}) and leaves the expression unevaluated -- not a clamp.	A count past the source's length declines, rather than clamp		
+id	section	role	expr	expected	known	source	caption
+drop-list-a-b-c-d-exponentiale-f-2			[Drop, [List, a, b, c, d, ExponentialE, f], 2]	[List, c, d, ExponentialE, f]			
+drop-list-a-b-c-d-k-f-2			[Drop, [List, a, b, c, d, k, f], 2]	[List, c, d, k, f]			
+drop-list-a-b-c-d-k-f-neg-3			[Drop, [List, a, b, c, d, k, f], -3]	[List, a, b, c]			
+drop-list-list-11-12-13-list-21-22-23-list-31-32	Scope		[Drop, [List, [List, 11, 12, 13], [List, 21, 22, 23], [List, 31, 32, 33]], 1]	[List, [List, 21, 22, 23], [List, 31, 32, 33]]			
+drop-list-1-2-3-4-5-negative-2	Scope	test	[Drop, [List, 1, 2, 3, 4, 5], -2]	[List, 1, 2, 3]	[List, 1, 2, 3]	Wolfram: Drop[l, -n] drops the last n elements	Drop the last 2 elements with a negative count
+drop-list-a-b-c-d-exponentiale-1	Properties		[Drop, [List, a, b, c, d, ExponentialE], 1]	[List, b, c, d, ExponentialE]			
+drop-list-a-b-c-d-k-1	Properties		[Drop, [List, a, b, c, d, k], 1]	[List, b, c, d, k]			
+drop-list-a-b-c-d-k-neg-1	Properties		[Drop, [List, a, b, c, d, k], -1]	[List, a, b, c, d]			
+drop-list-a-b-c-d-exponentiale-4	Possible issues		[Drop, [List, a, b, c, d, ExponentialE], 4]	[List, ExponentialE]			
+drop-list-1-2-negative-5-overflow-declines	Possible issues	test	[Drop, [List, 1, 2], -5]	[Drop, [List, 1, 2], -5]	[Drop, [List, 1, 2], -5]	Wolfram: Drop[{1,2},-5] raises Drop::drop (only 2 elements, 5 requested) and leaves the expression unevaluated -- not a clamp.	A negative count past the source's length declines, rather than clamp
+drop-list-1-2-5-overflow-declines	Possible issues	test	[Drop, [List, 1, 2], 5]	[Drop, [List, 1, 2], 5]	[Drop, [List, 1, 2], 5]	Wolfram: Drop[{1,2},5] raises Drop::drop (Cannot drop positions 1 through 5 in {1, 2}) and leaves the expression unevaluated -- not a clamp.	A count past the source's length declines, rather than clamp
+drop-list-a-b-c-d-k-4	Possible issues		[Drop, [List, a, b, c, d, k], 4]	[List, k]			

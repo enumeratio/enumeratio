@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 7000, disagree 475, inconclusive 63, error 6
+## wolfram — agree 7016, disagree 475, inconclusive 63, error 6
 
 | example                                                                       | kind           | ours                                                                                         | theirs                                                                                       |
 | ----------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -303,8 +303,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `LinearRecurrence/linearrecurrence-list-a-b-list-1-1-5`                       | convention     | `[1, 1, ["Add","a","b"], ["Add",["Multiply","a",["Add","a","b"]],"b"], ["Add",["Multiply","` | `{1, 1, a + b, b + a*(a + b), b*(a + b) + a*(b + a*(a + b))}`                                |
 | `LinearRecurrence/linearrecurrence-list-a-b-list-c-d-5`                       | convention     | `[c, d, ["Add",["Multiply","b","c"],["Multiply","a","d"]], ["Add",["Multiply","a",["Add",["` | `{c, d, b*c + a*d, a*b*c + a^2*d + b*d, a^2*b*c + b^2*c + a^3*d + 2*a*b*d}`                  |
 | `List/list-a-b-c-plus-list-1-2-3`                                             | convention     | `[["Add","a",1], ["Add","b",2], ["Add","c",3]]`                                              | `{1 + a, 2 + b, 3 + c}`                                                                      |
-| `List/solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y`                            | convention     | `[["Tuple",["Rational",1,2],["Rational",-1,2]]]`                                             | `{{x -> 1/2}}`                                                                               |
-| `List/solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y`                        | convention     | `[["Tuple",-2,3,-1]]`                                                                        | `Solve[{x + y + z == 0, x + y == 1, y + z == 2}, x, y, z]`                                   |
+| `List/solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y`                            | convention     | `[["Tuple",["Rational",1,2],["Rational",-1,2]]]`                                             | `{{x -> 1/2, y -> -1/2}}`                                                                    |
+| `List/solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y`                        | convention     | `[["Tuple",-2,3,-1]]`                                                                        | `{{x -> -2, y -> 3, z -> -1}}`                                                               |
 | `List/subsets-list-1-2-3`                                                     | shape          | `[[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]`                                     | `{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}`                                     |
 | `Ln/interval-arithmetic-ln-is-increasing-so-ln-frac`                          | shape          | `["Interval",["Negate",["Ln",3]],1]`                                                         | `Interval[{-Log[3], 1}]`                                                                     |
 | `Log10/interval-arithmetic-log-10-frac-13-2-log-10-3`                         | shape          | `["Interval",["Log",["Rational",1,3],10],["Log",2,10]]`                                      | `Interval[{-(Log[3]/Log[10]), Log[2]/Log[10]}]`                                              |

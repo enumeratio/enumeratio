@@ -260,6 +260,19 @@ test("Midpoint's two points travel as Wolfram's list of two", () => {
   expect(fromWolfram("Midpoint[List[List[1, 1], List[2, 3]]]")).toEqual(["Midpoint", ["List", 1, 1], ["List", 2, 3]]);
 });
 
+test("Solve's several unknowns travel as Wolfram's one list", () => {
+  expect(toWolfram(["Solve", ["List", ["Equal", "x", 1], ["Equal", "y", 2]], "x", "y"])).toBe(
+    "Solve[List[Equal[x, 1], Equal[y, 2]], List[x, y]]",
+  );
+  expect(toWolfram(["Solve", ["Equal", "x", 1], "x"])).toBe("Solve[Equal[x, 1], x]");
+  expect(fromWolfram("Solve[List[Equal[x, 1], Equal[y, 2]], List[x, y]]")).toEqual([
+    "Solve",
+    ["List", ["Equal", "x", 1], ["Equal", "y", 2]],
+    "x",
+    "y",
+  ]);
+});
+
 test("a Function of slot parameters is Wolfram's anonymous one", () => {
   expect(toWolfram(["Function", ["Block", ["Power", "_1", 2]], "_1"])).toBe("Function[Power[Slot[1], 2]]");
 });
