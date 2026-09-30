@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt } from "@enumeratio/engine";
-import { logBarnesG, cx, logGamma } from "@enumeratio/ce-patches";
+import { logBarnesG, cx, logGamma, wantsNumber, type EvalOptions } from "@enumeratio/ce-patches";
 
 // Hyperfactorial H(n) = ∏_{k=1}^n k^k, continued off the integers by
 // H(z) = Γ(z+1)^z / G(z+1) (G = Barnes G) — checked at n = 1..4 against the exact
@@ -22,11 +22,20 @@ function hyperfactorialReal(z: number): number {
   return Math.exp(z * lg - lbg);
 }
 
-function evaluateHyperfactorial(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
+function evaluateHyperfactorial(
+  ce: ComputeEngine,
+  x: BoxedExpression | undefined,
+  ops: readonly BoxedExpression[],
+  options: EvalOptions,
+): BoxedExpression | undefined {
   if (x === undefined) return undefined;
   const n = bigIntegerAt(x);
   if (n !== undefined && n >= 0n) return ce.number(hyperfactorialExact(n));
-  if (x.im === 0 && Number.isFinite(x.re) && x.re >= 0) return ce.number(hyperfactorialReal(x.re));
+  // A non-integer real: only a numeric request (N(), or a float operand) gets the log-form
+  // float — an exact operand like 1/2 stays symbolic, same as PolyLog(2, 1/2) declining.
+  if (x.im === 0 && Number.isFinite(x.re) && x.re >= 0 && wantsNumber(ops, options)) {
+    return ce.number(hyperfactorialReal(x.re));
+  }
   return undefined; // stay symbolic — negative/complex continuation is unverified
 }
 
@@ -34,6 +43,7 @@ export function declareHyperfactorial(ce: ComputeEngine): void {
   ce.declare("Hyperfactorial", {
     signature: "(number) -> number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateHyperfactorial(ce, ops[0]),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
+      evaluateHyperfactorial(ce, ops[0], ops, options),
   });
 }

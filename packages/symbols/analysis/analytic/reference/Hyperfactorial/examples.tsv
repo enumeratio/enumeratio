@@ -4,6 +4,7 @@ the-empty-product			[Hyperfactorial, 0]	1	The empty product
 hyperfactorial-1-5		test	[Hyperfactorial, 1.5]	1.6174885279489126	
 hyperfactorial-2-5		test	[Hyperfactorial, 2.5]	15.984211992223353	
 hyperfactorial-6-25		test	[Hyperfactorial, 6.25]	92229745540487.84	
-listable	Scope		[Hyperfactorial, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, 4, 108, 27648, 86400000, 4031078400000]	Listable
-continued-off-the-integers	Scope		[Hyperfactorial, 0.5]	0.8804492351734234	Continued off the integers
-h-10-well-past-double-range-exact-bigint	Scope		[Hyperfactorial, 10]	{num: "215779412229418562091680268288e+15"}	$H(10)$, well past double range — exact bigint arithmetic, not a rounded double.
+listable			[Hyperfactorial, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, 4, 108, 27648, 86400000, 4031078400000]	Listable
+continued-off-the-integers			[Hyperfactorial, 0.5]	0.8804492351734234	Continued off the integers
+h-10-well-past-double-range-exact-bigint			[Hyperfactorial, 10]	{num: "215779412229418562091680268288e+15"}	$H(10)$, well past double range — exact bigint arithmetic, not a rounded double.
+hyperfactorial-one-half-stays-exact	Scope		[Hyperfactorial, [Rational, 1, 2]]	[Hyperfactorial, [Rational, 1, 2]]	An exact non-integer argument stays symbolic — `N()` gives the float continuation
