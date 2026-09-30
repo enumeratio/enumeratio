@@ -16,6 +16,6 @@ array-f-list-4-3-2-list-0-neg-1-neg-2	Array[f, List[4, 3, 2], List[0, -1, -2]]
 array-f-list-3-3-1-g	Array[f, List[3, 3], 1, g]	
 array-function-1-over-1-plus-2-minus-1-1-2-list	Array[Function[Divide[1, Plus[Slot[1], Slot[2], -1]]], List[3, 3]]	[Array, [Function, [Divide, 1, [Add, _1, _2, -1]]], [List, 3, 3]]
 array-function-x-list-5-5	Array[Function[x], List[5, 5]]	[Array, [Function, x], [List, 5, 5]]
-array-function-1-over-i-plus-j-minus-1-i-j-list		
+array-function-1-over-j-plus-k-minus-1-k-j-list	Array[Function[List[k, j], Divide[1, Plus[j, k, -1]]], List[3, 3]]	[Array, [Function, [Divide, 1, [Add, j, k, -1]], k, j], [List, 3, 3]]
 array-power-list-5-5	Array[Power, List[5, 5]]	
 array-function-array-function-x-1-1-list-6	Array[Function[Array[Function[x], Slot[1]]], List[6]]	[Array, [Function, [Array, [Function, x], _1]], [List, 6]]

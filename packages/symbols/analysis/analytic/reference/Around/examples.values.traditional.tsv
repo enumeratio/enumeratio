@@ -15,5 +15,5 @@ through-an-elementary-function-delta-cdot-e-2	e^{\operatorname{Around}(2,0.01)}	
 through-a-special-function-with-its-derivative	\operatorname{Erf}(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.9953222650189527,0.00020666985354092054)
 first-order-propagation-the-uncertainty-scales	N(\sin(\operatorname{Around}(1,0.1)))	\operatorname{Around}(0.8414709848078965,0.05403023058681398)
 ln-around-2-0p01	\ln(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.6931471805599453,0.005)
-around-21-pow-21-19-pow-19		
+around-21-pow-21-19-pow-19	\operatorname{Around}(21^{21},19^{19})	\operatorname{Around}(5842587018385982521381124421,1978419655660313589123979)
 around-10-1-pow-2	{\operatorname{Around}(10,1)}^2	\operatorname{Around}(100,20)

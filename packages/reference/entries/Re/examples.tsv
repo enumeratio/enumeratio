@@ -2,16 +2,16 @@ id	section	role	expr	expected	known	source	caption	triage	wolfram.kind	wolfram.n
 re-of-3-plus-4i-is-3	Basic		[Re, [Complex, 3, 4]]	3			$\mathrm{Re}(3+4i) = 3$			
 re-of-a-real-number-is-itself	Basic		[Re, 5]	5			Re of a real number is itself			
 re-of-pi-is-pi-a-real-symbolic-constant	Basic		[Re, Pi]	Pi			Re of $\pi$ is $\pi$, a real symbolic constant			
-real-2-plus-3i		triage	[Real, [Complex, 2, 3]]	2				unscanned		
-real-2-times-exponentiale-pow-1-over-3-times-i		triage	[Real, [Multiply, 2, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 3]], Pi]]]]	1				unscanned		
-real-3-over-2-plus-4-over-5-times-i	Scope	triage	[Real, [Complex, [Rational, 3, 2], [Rational, 4, 5]]]	[Rational, 3, 2]				unscanned		
-n-real-exponentiale-plus-i-times-pi-25	Scope	triage	[N, [Real, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 25]	{num: "2.718281828459045235360287"}				unscanned		
-real-41-over-25-minus-2i	Scope	triage	[Real, [Complex, [Rational, 41, 25], -2]]	[Rational, 41, 25]				unscanned		
-real-list-list-1-u-list-v-neg-i	Scope	triage	[Real, [List, [List, 1, u], [List, v, [Complex, 0, -1]]]]	[List, [List, 1, [Real, u]], [List, [Real, v], 0]]				unscanned		
-real-0	Scope	triage	[Real, 0]	0				unscanned		
-real-positiveinfinity	Scope	triage	[Real, PositiveInfinity]	PositiveInfinity				unscanned		
-real-positiveinfinity-times-i	Scope	triage	[Real, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate				unscanned		
-real-complexinfinity	Scope	triage	[Real, ComplexInfinity]	Indeterminate				unscanned		
+real-2-plus-3i		triage	[Real, [Complex, 2, 3]]	2				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-2-times-exponentiale-pow-1-over-3-times-i		triage	[Real, [Multiply, 2, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 3]], Pi]]]]	1				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-3-over-2-plus-4-over-5-times-i	Scope	triage	[Real, [Complex, [Rational, 3, 2], [Rational, 4, 5]]]	[Rational, 3, 2]				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+n-real-exponentiale-plus-i-times-pi-25	Scope	triage	[N, [Real, [Add, ExponentialE, [Multiply, [Complex, 0, 1], Pi]]], 25]	{num: "2.718281828459045235360287"}				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-41-over-25-minus-2i	Scope	triage	[Real, [Complex, [Rational, 41, 25], -2]]	[Rational, 41, 25]				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-list-list-1-u-list-v-neg-i	Scope	triage	[Real, [List, [List, 1, u], [List, v, [Complex, 0, -1]]]]	[List, [List, 1, [Real, u]], [List, [Real, v], 0]]				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-0	Scope	triage	[Real, 0]	0				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-positiveinfinity	Scope	triage	[Real, PositiveInfinity]	PositiveInfinity				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-positiveinfinity-times-i	Scope	triage	[Real, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
+real-complexinfinity	Scope	triage	[Real, ComplexInfinity]	Indeterminate				gap		Real/1 (our own head, distinct from Re) has no Wolfram emit mapping — needs its own crosswalk entry.
 piecewiseexpand-re-imaginaryunit-times-x-neg-2	Scope	triage	[PiecewiseExpand, [Re, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Real, [Multiply, [Complex, 0, 1], x]]				ours?	unclassified	""
 simplify-re-x-x-gt-0	Scope	triage	[Simplify, [Re, x], [Greater, x, 0]]	[Real, x]				ours?	unclassified	""
 re-of-a-symbolic-value-stays-unevaluated	Properties		[Re, x]	[Real, x]			Re of a symbolic value stays unevaluated		convention	Both leave it symbolic; we name the stuck head Real, Wolfram spells its own Re[x].

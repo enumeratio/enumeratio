@@ -1,7 +1,8 @@
 id	in	out
 factorial-ratio	DiscreteRatio(n!, n)	n + 1
 geometric-ratio	DiscreteRatio(2 ^ n, n)	2
-discreteratio-r-pow-i-i		
+discreteratio-r-pow-k-k	DiscreteRatio(r ^ k, k)	r
+discreteratio-pochhammer-x-k-k	DiscreteRatio(pochhammer(x, k), k)	pochhammer(x, k + 1) / pochhammer(x, k)
 discreteratio-x-pow-2-x	DiscreteRatio(x ^ 2, x)	(x + 1) ^ 2 / x ^ 2
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio((x - r_1) * (x - r_2), x)	(-r_1 + x + 1) * (-r_2 + x + 1) / ((-r_1 + x) * (-r_2 + x))
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio((1 + x) * (1 + x ^ 2) ^ -1, x)	(x ^ 3 + 2 * x ^ 2 + x + 2) / ((x + 1) * ((x + 1) ^ 2 + 1))

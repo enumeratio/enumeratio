@@ -2,8 +2,8 @@ id	in
 halving-and-flooring-until-nothing-changes	FixedPoint[Function[Floor[Divide[Slot[1], 2]]], 100]
 the-dottie-number-the-fixed-point-of-cos	FixedPoint[Cos, 0.5]
 fixedpoint-function-1-plus-floor-1-times-2-pow	FixedPoint[Function[Plus[1, Floor[Times[Slot[1], Power[2, -1]]]]], 1000]
-fixedpoint-function-1-plus-2-times-1-pow-neg-1	
+fixedpoint-function-1-plus-2-times-1-pow-neg-1	FixedPoint[Function[Times[Plus[Slot[1], Times[2, Power[Slot[1], -1]]], Power[2, -1]]], 1]
 fixedpoint-function-1-plus-floor-1-times-2-pow-2	FixedPoint[Function[Plus[1, Floor[Times[Slot[1], Power[2, -1]]]]], Power[10, 6]]
 newton-s-method-for-sqrt-2-run-to-this-engine-s	FixedPoint[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1.5]
 fixedpoint-function-d-1-x-x-pow-10	FixedPoint[Function[D[Slot[1], x]], Power[x, 10]]
-fixedpoint-function-x-plus-2-times-x-pow-neg-1	
+fixedpoint-function-x-plus-2-times-x-pow-neg-1	FixedPoint[Function[x, Times[Plus[x, Times[2, Power[x, -1]]], Power[2, -1]]], 1]

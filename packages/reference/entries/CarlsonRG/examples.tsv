@@ -1,14 +1,14 @@
-id	section	role	expr	expected	known	tolerance	source	triage
-rg-1-2-3		test	[N, [CarlsonRG, 1, 2, 3]]	1.4018470999908952	{num: "1.4018470999908952"}	1e-11	mpmath 1.3.0 elliprg	
-rg-1-1-1		test	[N, [CarlsonRG, 1, 1, 1]]	1	{num: "1"}	1e-11	mpmath 1.3.0 elliprg	
-rg-2-2-2		test	[N, [CarlsonRG, 2, 2, 2]]	1.4142135623730951	{num: "1.4142135623730951"}	1e-11	mpmath 1.3.0 elliprg	
-rg-0-1-2		test	[N, [CarlsonRG, 0, 1, 2]]	0.9550494472569284	{num: "0.955049447256928"}	1e-11	mpmath 1.3.0 elliprg	
-rg-0-2-3		test	[N, [CarlsonRG, 0, 2, 3]]	1.2386893481316148	{num: "1.2386893481316148"}	1e-11	mpmath 1.3.0 elliprg	
-rg-0-5-1-1-5		test	[N, [CarlsonRG, 0.5, 1, 1.5]]	0.9912555905902579	{num: "0.991255590590258"}	1e-11	mpmath 1.3.0 elliprg	
-rg-1-4-4		test	[N, [CarlsonRG, 1, 4, 4]]	1.7091995761561454	{num: "1.7091995761561452"}	1e-11	mpmath 1.3.0 elliprg	
-rg-1-1i-2-3		test	[N, [CarlsonRG, [Complex, 1, 1], 2, 3]]	[Complex, 1.4161421049284, 0.1309718448424377]	[Complex, 1.4161421049283998, 0.1309718448424378]	1e-11	mpmath 1.3.0 elliprg	
-rg-3-2i-1-1i-5		test	[N, [CarlsonRG, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 1.7245616145696896, -0.07667991249655379]	[Complex, 1.7245616145696891, -0.07667991249655384]	1e-11	mpmath 1.3.0 elliprg	
-rg-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRG, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.9902150204227402	{num: "0.99021502042274"}	1e-11	mpmath 1.3.0 elliprg	
-rg-1-3-2-5-2		test	[N, [CarlsonRG, [Rational, 1, 3], 2, [Rational, 5, 2]]]	1.2432376337979947	{num: "1.2432376337979947"}	1e-11	mpmath 1.3.0 elliprg	
-rg-0-0-0		test	[N, [CarlsonRG, 0, 0, 0]]	0	{num: "0"}	1e-13	mpmath 1.3.0 elliprg	
-n-carlsonrg-3-over-4-4-5-50	Scope	triage	[N, [CarlsonRG, [Rational, 3, 4], 4, 5], 50]	1.768356917200761				compare
+id	section	role	expr	expected	known	tolerance	source	triage	wolfram.note
+rg-1-2-3		test	[N, [CarlsonRG, 1, 2, 3]]	1.4018470999908952	{num: "1.4018470999908952"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-1-1		test	[N, [CarlsonRG, 1, 1, 1]]	1	{num: "1"}	1e-11	mpmath 1.3.0 elliprg		
+rg-2-2-2		test	[N, [CarlsonRG, 2, 2, 2]]	1.4142135623730951	{num: "1.4142135623730951"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-1-2		test	[N, [CarlsonRG, 0, 1, 2]]	0.9550494472569284	{num: "0.955049447256928"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-2-3		test	[N, [CarlsonRG, 0, 2, 3]]	1.2386893481316148	{num: "1.2386893481316148"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-5-1-1-5		test	[N, [CarlsonRG, 0.5, 1, 1.5]]	0.9912555905902579	{num: "0.991255590590258"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-4-4		test	[N, [CarlsonRG, 1, 4, 4]]	1.7091995761561454	{num: "1.7091995761561452"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-1i-2-3		test	[N, [CarlsonRG, [Complex, 1, 1], 2, 3]]	[Complex, 1.4161421049284, 0.1309718448424377]	[Complex, 1.4161421049283998, 0.1309718448424378]	1e-11	mpmath 1.3.0 elliprg		
+rg-3-2i-1-1i-5		test	[N, [CarlsonRG, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 1.7245616145696896, -0.07667991249655379]	[Complex, 1.7245616145696891, -0.07667991249655384]	1e-11	mpmath 1.3.0 elliprg		
+rg-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRG, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	0.9902150204227402	{num: "0.99021502042274"}	1e-11	mpmath 1.3.0 elliprg		
+rg-1-3-2-5-2		test	[N, [CarlsonRG, [Rational, 1, 3], 2, [Rational, 5, 2]]]	1.2432376337979947	{num: "1.2432376337979947"}	1e-11	mpmath 1.3.0 elliprg		
+rg-0-0-0		test	[N, [CarlsonRG, 0, 0, 0]]	0	{num: "0"}	1e-13	mpmath 1.3.0 elliprg		
+n-carlsonrg-3-over-4-4-5-50	Scope	triage	[N, [CarlsonRG, [Rational, 3, 4], 4, 5], 50]	1.768356917200761				gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.

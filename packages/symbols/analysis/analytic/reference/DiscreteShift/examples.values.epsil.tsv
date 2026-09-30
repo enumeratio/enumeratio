@@ -1,6 +1,6 @@
 id	in	out
 discreteshift-one-step	DiscreteShift(a(n), n)	a(n + 1)
-discreteshift-sin-neg-2-over-7-times-i-times-pi		
+discreteshift-sin-neg-2-over-7-times-i-times-pi	DiscreteShift(sin(-2 / 7 * i * pi), [i, 10])	DiscreteShift(i * sinh(-2 / 7 * pi), [i, 10])
 discreteshift-h-step	DiscreteShift(a(n), [n, 2])	a(n + 2)
 discreteshift-floor-i-i	DiscreteShift(floor(i), i)	DiscreteShift(i, i)
 discreteshift-round-i-list-i-3	DiscreteShift(round(i), [i, 3])	DiscreteShift(i, [i, 3])

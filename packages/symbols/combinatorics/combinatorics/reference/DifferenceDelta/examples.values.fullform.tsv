@@ -1,17 +1,19 @@
 id	in
 quadratic	DifferenceDelta[Power[n, 2], n]
 linear	DifferenceDelta[Plus[Times[3, n], 5], n]
-differencedelta-fallingfactorial-i-n-i	
+differencedelta-fallingfactorial-k-n-k	DifferenceDelta[FactorialPower[k, n], k]
 shift-var-named-i	DifferenceDelta[a[i], i]
-differencedelta-i-pow-3-i	
-differencedelta-i-plus-1-times-i-plus-3-pow-neg	
-differencedelta-zeta-2-i-i	
-differencedelta-a-pow-i-i	
-differencedelta-2-pow-i-i	
-differencedelta-i-pow-2-plus-i-plus-1-times-2	
-differencedelta-i-plus-1-times-i-plus-3-pow-ne-2	
-differencedelta-sin-a-times-i-plus-b-i	
-differencedelta-sinh-a-times-i-plus-b-i	
 differencedelta-binomial-i-plus-n-n-i	
 differencedelta-gamma-i-i	
 differencedelta-beta-i-n-i	
+differencedelta-k-pow-3-k	DifferenceDelta[Power[k, 3], k]
+differencedelta-fallingfactorial-k-3-k	DifferenceDelta[FactorialPower[k, 3], k]
+differencedelta-k-plus-1-times-k-plus-3-pow-neg	DifferenceDelta[Times[Plus[k, 1], Power[Plus[k, 3], -1]], k]
+differencedelta-fallingfactorial-k-neg-3-k	DifferenceDelta[FactorialPower[k, -3], k]
+differencedelta-zeta-2-k-k	DifferenceDelta[Zeta[2, k], k]
+differencedelta-a-pow-k-k	DifferenceDelta[Power[a, k], k]
+differencedelta-2-pow-k-k	DifferenceDelta[Power[2, k], k]
+differencedelta-k-pow-2-plus-k-plus-1-times-2	DifferenceDelta[Times[Plus[Power[k, 2], k, 1], Power[2, k]], k]
+differencedelta-k-plus-1-times-k-plus-3-pow-ne-2	DifferenceDelta[Times[Times[Plus[k, 1], Power[Plus[k, 3], -1]], Power[2, k]], k]
+differencedelta-sin-a-times-i-plus-b-i	
+differencedelta-sinh-a-times-i-plus-b-i	

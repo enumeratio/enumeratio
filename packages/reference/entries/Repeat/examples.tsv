@@ -3,4 +3,4 @@ repeat-c-10			[Repeat, c, 10]	[List, c, c, c, c, c, c, c, c, c, c]
 repeat-0-10	Scope		[Repeat, 0, 10]	[List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]		
 repeat-1-10	Scope		[Repeat, 1, 10]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]		
 dot-list-repeat-1-length-list	Applications		[Dot, list, [Repeat, 1, [Length, list]]]	[Dot, list, [List]]		
-shape-repeat-c-dims	Properties	triage	[Shape, [Repeat, c, dims]]	[Tuple]	adapt	Dimensions(ConstantArray(c, dims)) -- `dims` is a free, unbound symbol in the adapted expression, yet Wolfram's shown answer ({2}) implies it was bound to a concrete value earlier in the original doc page's session. The adaptation lost that prior binding; not reproducible as adapted. For the row-adaptation owner (A-126).
+shape-repeat-c-dims	Properties	triage	[Shape, [Repeat, c, dims]]	[Tuple]	wolfram?	Wolfram's Dimensions reads any expression as an array of its arguments: Dimensions[Power[2, 1/2]] and an unevaluated two-argument call are {2}. Ours takes a scalar or an unevaluated call as having no dimensions. A convention, not a bug.

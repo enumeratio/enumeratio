@@ -10,8 +10,8 @@ the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 
 commonest-list-a-exponentiale-sin-y-exponentiale	Scope		[Commonest, [List, a, ExponentialE, [Sin, y], ExponentialE, a, 7]]	[List, a, ExponentialE]				
 commonest-n-list-1-2-2-3-3-3-4	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4]]]	[List, 3]				
 commonest-n-list-1-2-2-3-3-3-4-30	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4], 30]]	[List, 3]				
-commonest-data	Scope	triage	[Commonest, data]	[List]		emit		
-commonest-heights	Applications	triage	[Commonest, heights]	[List]		emit		
+commonest-data	Scope	triage	[Commonest, data]	[List]		ours?		Lane marked it fixed (our bug: a free symbol where a collection was expected answered List()/Nothing/a bogus fold instead of staying unevaluated — operandsOf()/a bare symbol's pseudo), but re-adopting it on main, ours isn't a settled answer: canonical form: incompatible-type.
+commonest-heights	Applications	triage	[Commonest, heights]	[List]		ours?		Lane marked it fixed (our bug: a free symbol where a collection was expected answered List()/Nothing/a bogus fold instead of staying unevaluated — operandsOf()/a bare symbol's pseudo), but re-adopting it on main, ours isn't a settled answer: canonical form: incompatible-type.
 with-a-unique-mode-commonest-c-mode-c-see-mode	Properties		[First, [Commonest, [List, 1, 2, 2, 3]]]	2	With a unique mode, $Commonest(c) = \{Mode(c)\}$. See [[Mode]]			
 without-a-tie-the-single-commonest-element-is	Properties		[Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [Mode, [List, 1, 2, 2, 3, 3, 3, 4]]]	True	Without a tie, the single commonest element is the [[Mode]]			
 a-frequency-tie-between-4-and-1-is-broken-by	Properties		[Commonest, [List, 4, 1, 1, 4], 1]	[List, 4]	A frequency tie between $4$ and $1$ is broken by first appearance in the list.			

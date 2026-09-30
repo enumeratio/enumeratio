@@ -9,7 +9,7 @@ n-expintegrale-1-plus-i-2-plus-3i	Scope		[N, [ExpIntegralE, [Complex, 1, 1], [Co
 expintegrale-0-z	Scope		[ExpIntegralE, 0, z]	[Divide, [Power, ExponentialE, [Negate, z]], z]						
 seriescoefficient-expintegrale-0-x-list-x-0-n	Scope		[SeriesCoefficient, [ExpIntegralE, 0, x], [List, x, 0, n]]	[SeriesCoefficient, [Divide, [Power, ExponentialE, [Negate, x]], x], [List, x, 0, n]]						
 expintegrale-0-positiveinfinity	Scope		[ExpIntegralE, 0, PositiveInfinity]	0						
-n-expintegrale-3-11-over-5-50	Scope	triage	[N, [ExpIntegralE, 3, [Rational, 11, 5]], 50]	0.023520656648276496					compare	
+n-expintegrale-3-11-over-5-50	Scope	triage	[N, [ExpIntegralE, 3, [Rational, 11, 5]], 50]	0.023520656648276496					gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.
 simplify-functionexpand-list-expintegrale-5	Scope	triage	[Simplify, [FunctionExpand, [List, [ExpIntegralE, [Multiply, 5, [Power, 2, -1]], z], [ExpIntegralE, 4, z], [ExpIntegralE, -4, z]]]]	[List, [ExpIntegralE, [Rational, 5, 2], z], [ExpIntegralE, 4, z], [ExpIntegralE, -4, z]]					gap	FunctionExpand doesn't reduce ExpIntegralE at half-integer/negative-integer order to its elementary (Erf/Ei) closed forms; a real feature gap.
 e-n-0-1-n-1-for-n-1	Properties		[ExpIntegralE, 2, 0]	1				$E_n(0) = 1/(n-1)$ for $n > 1$		
 e-0-x-e-x-x	Properties		[ExpIntegralE, 0, x]	[Divide, [Power, ExponentialE, [Negate, x]], x]				$E_0(x) = e^{-x}/x$		

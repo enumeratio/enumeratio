@@ -41,7 +41,7 @@ gcd-a-b-cdot-lcm-a-b-ab-see-gcd	Properties		[Equal, [Multiply, [GCD, 27, 81], [L
 lcm-27-81	Properties		[LCM, 27, 81]	81																	
 lcm-6-11-25-eq-1-650	Properties		[Equal, [LCM, 6, 11, 25], 1650]	True																	
 lcm-5-7-2-eq-70	Properties		[Equal, [LCM, 5, 7, 2], 70]	True																	
-ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Properties	triage	[Ln, [Multiply, [Divide, 1, [LCM, [Range, 1, 4]]], [LCM, [Range, 1, 5]]]]	[Ln, 5]				emit													
+ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Properties	triage	[Ln, [Multiply, [Divide, 1, [LCM, [Range, 1, 4]]], [LCM, [Range, 1, 5]]]]	[Ln, 5]				gap	Log(1/LCM(Range(1,4)) * LCM(Range(1,5))) reduces to Log(5) on our side (LCM(1..4)=12, LCM(1..5)=60, 60/12=5) — plausibly correct — but the row's Wolfram side never ran (this was an emit-bucket bracket-notation row, not a real oracle value); needs a real oracle rescan to confirm, not a code fix from this lane.												
 a-single-argument-is-returned-unchanged	Possible issues		[LCM, 5]	5			A single argument is returned unchanged														
 0-absorbs-the-lcm-with-0-is-0	Possible issues		[LCM, 0, 5]	0			0 absorbs: the LCM with 0 is 0														
 signs-are-discarded-before-computing-the-lcm	Possible issues		[LCM, -3, 7]	21			Signs are discarded before computing the LCM														

@@ -12,5 +12,5 @@ sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	<SortBy><List>1 <Sqrt><Add>1 <Pow
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	<SortBy><List><Sqrt><Add>1 <Power>ExponentialE <Complex>0 -10</Complex></Power></Add></Sqrt> <Power>ExponentialE <Complex>2 1</Complex></Power> <Power>ExponentialE <Complex>-1 2</Complex></Power> <Power>ExponentialE <Complex>0 1</Complex></Power></List> Abs</SortBy>	<List><Power>ExponentialE <Complex>-1 2</Complex></Power> <Sqrt><Add>1 <Multiply><Complex>0 1</Complex> <Sin>-10</Sin></Multiply> <Cos>-10</Cos></Add></Sqrt> <Add><Multiply><Complex>0 1</Complex> <Sin>1</Sin></Multiply> <Cos>1</Cos></Add> <Power>ExponentialE <Complex>2 1</Complex></Power></List>
 sortby-tab-function-slot-age		
 sortby-exprs-err		
-sortby-list-first		
 sortby-list-abs		
+sortby-list-first		

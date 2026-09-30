@@ -2,4 +2,4 @@ id	in	out
 adjacency-matrix-of-k4	AdjacencyMatrix(CompleteGraph(4))	[[0, 1, 1, 1], [1, 0, 1, 1], [1, 1, 0, 1], [1, 1, 1, 0]]
 a-directed-edge-is-asymmetric	AdjacencyMatrix(Graph([1, 2], [DirectedEdge(1, 2)]))	[[0, 1], [0, 0]]
 shape-adjacencymatrix-g		
-adjacencymatrix-graph-list-list		
+adjacencymatrix-graph-list-list	AdjacencyMatrix(Graph([], []))	[]

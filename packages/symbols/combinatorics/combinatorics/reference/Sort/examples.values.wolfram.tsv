@@ -18,7 +18,7 @@ sort-join-ln-range-1-10-sqrt-range-1-10-less	Sort[Join[Log[Range[1, 10]], Sqrt[R
 sort-list-aa-abb-ba-b-aaa	Sort[List["aa", "abb", "ba", "b", "aaa"]]	{"aa", "aaa", "abb", "b", "ba"}	\text{Sort}[\{\text{aa},\text{abb},\text{ba},\text{b},\text{aaa}\}]	\{\text{aa},\text{aaa},\text{abb},\text{b},\text{ba}\}	
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt	Sort[List[-11, 10, 2, 1, -4], Function[Less[Abs[Slot[1]], Abs[Slot[2]]]]]	{1, 2, -4, 10, -11}	\text{Sort}[\{-11,10,2,1,-4\},| \text{$\#$1}| <| \text{$\#$2}| \&]	\{1,2,-4,10,-11\}	
 sort-join-ln-range-1-10-sqrt-range-1-10	Sort[Join[Log[Range[1, 10]], Sqrt[Range[1, 10]]]]	{0, 1, 2, 3, Sqrt[2], 2*Sqrt[2], Sqrt[3], Sqrt[5], Sqrt[6], Sqrt[7], Sqrt[10], Log[2], Log[3], Log[4], Log[5], Log[6], Log[7], Log[8], Log[9], Log[10]}			disagree
-sort-list-i-1-plus-i-1-minus-i-2-plus-3i					
+sort-list-i-1-plus-i-1-minus-i-2-plus-3i	""				
 sort-list-aa-abb-ba-b-aaa-function-stringlength	Sort[List["aa", "abb", "ba", "b", "aaa"], Function[Less[StringLength[Slot[1]], StringLength[Slot[2]]]]]	{"b", "ba", "aa", "aaa", "abb"}			disagree
 sort-is-idempotent-sorting-an-already-sorted	(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Sort}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}	
 sort-c-at-c-ordering-c-see-ordering-and-at	(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])	True	\text{Sort}[\{3,1,2\}]=\{3,1,2\}[[\text{Ordering}[\{3,1,2\}]]]	\text{True}	

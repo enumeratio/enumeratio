@@ -8,7 +8,6 @@ solve-a-times-x-plus-y-eq-7-b-times-x-minus-y-eq
 solve-x-2-1-0-yields-complex-roots	\operatorname{Solve}(x^2+1=0,x)	[i,-i]
 solve-x-eq-1-x-eq-2-x	\operatorname{Solve}(x=1\land x=2,x)	[]
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	\operatorname{Solve}(ax^2+bx+c=0,x)	[\frac{-b+\sqrt{b^2-4ac}}{2a},\frac{-b-\sqrt{b^2-4ac}}{2a}]
-solve-x-eq-x-x		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-0		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3		

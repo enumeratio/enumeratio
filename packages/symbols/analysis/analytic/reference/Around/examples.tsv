@@ -1,19 +1,19 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-independent-uncertainties-add-in-quadrature			[Add, [Around, 1, 0.1], [Around, 2, 0.2]]	[Around, 3, 0.223606797749979]	Independent uncertainties add in quadrature			
-scaling-scales-the-uncertainty			[Multiply, 3, [Around, 2, 0.1]]	[Around, 6, 0.3]	Scaling scales the uncertainty		precision	3*0.1 hits the classic double-rounding artifact (0.30000000000000004) on Wolfram's side; compute-engine's path lands on exact 0.3.
-independent-uncertainties-add-in-quadrature-2			[Add, [Around, 2, 0.01], [Around, 3, 0.02]]	[Around, 5, 0.022360679774997897]	Independent uncertainties add in quadrature			
-3-times-around-2-0p01			[Multiply, 3, [Around, 2, 0.01]]	[Around, 6, 0.03]				
-independent-uncertainties-add-in-quadrature-sqrt			[Add, [Around, 5, 0.1], [Around, 3, 0.2]]	[Around, 8, 0.223606797749979]	Independent uncertainties add in quadrature: $\sqrt{0.1^2 + 0.2^2}$			
-relative-uncertainties-combine-6-sqrt-0-1-2-2-0			[Multiply, [Around, 2, 0.1], [Around, 3, 0.2]]	[Around, 6, 0.5]	Relative uncertainties combine: $6\sqrt{(0.1/2)^2 + (0.2/3)^2} = 0.5$			
-through-a-function-f-x-delta-x	Scope		[Power, [Around, 2, 0.1], 2]	[Around, 4, 0.4]	Through a function: $|f'(x)|\,\delta x$			
-sqrt-around-4-0p4	Scope		[Sqrt, [Around, 4, 0.4]]	[Around, 2, 0.1]				
-through-a-function-f-2-3-5-not-yet-multinomial	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	Through a function, to first order: $f'(2) = 3.5$, so $\mathrm{Multinomial}(2 \pm 0.01, 2) = 6 \pm 0.035$		precision	Same float64 last-bit rounding as the scaling example, propagated through the derivative.
-a-power-scales-the-uncertainty-by-the-derivative	Scope		[Power, [Around, 3, 0.1], 2]	[Around, 9, 0.6000000000000001]	A power scales the uncertainty by the derivative, $2 \cdot 3 \cdot 0.1$			
-frac-0-2-2-sqrt-4	Scope		[Sqrt, [Around, 4, 0.2]]	[Around, 2, 0.05]	$\frac{0.2}{2\sqrt4}$			
-an-exact-factor-scales-the-uncertainty	Scope		[Multiply, 10, [Around, 1.5, 0.02]]	[Around, 15, 0.2]	An exact factor scales the uncertainty			
-through-an-elementary-function-delta-cdot-e-2	Scope		[Exp, [Around, 2, 0.01]]	[Around, 7.38905609893065, 0.0738905609893065]	Through an elementary function: $\delta \cdot e^2$			
-through-a-special-function-with-its-derivative	Scope		[Erf, [Around, 2, 0.01]]	[Around, 0.9953222650189527, 0.00020666985354092054]	Through a special function, with its derivative as slope			
-first-order-propagation-the-uncertainty-scales	Scope		[N, [Sin, [Around, 1, 0.1]]]	[Around, 0.8414709848078965, 0.05403023058681398]	First-order propagation: the uncertainty scales by $|\cos 1|$			
-ln-around-2-0p01	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.005]				
-around-21-pow-21-19-pow-19	Scope	triage	[Around, [Power, 21, 21], [Power, 19, 19]]	[Around, {num: "5842587018385982521381124421"}, {num: "1978419655660313589123979"}]		emit		
-around-10-1-pow-2	Properties		[Power, [Around, 10, 1], 2]	[Around, 100, 20]				
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+independent-uncertainties-add-in-quadrature			[Add, [Around, 1, 0.1], [Around, 2, 0.2]]	[Around, 3, 0.223606797749979]	Independent uncertainties add in quadrature		
+scaling-scales-the-uncertainty			[Multiply, 3, [Around, 2, 0.1]]	[Around, 6, 0.3]	Scaling scales the uncertainty	precision	3*0.1 hits the classic double-rounding artifact (0.30000000000000004) on Wolfram's side; compute-engine's path lands on exact 0.3.
+independent-uncertainties-add-in-quadrature-2			[Add, [Around, 2, 0.01], [Around, 3, 0.02]]	[Around, 5, 0.022360679774997897]	Independent uncertainties add in quadrature		
+3-times-around-2-0p01			[Multiply, 3, [Around, 2, 0.01]]	[Around, 6, 0.03]			
+independent-uncertainties-add-in-quadrature-sqrt			[Add, [Around, 5, 0.1], [Around, 3, 0.2]]	[Around, 8, 0.223606797749979]	Independent uncertainties add in quadrature: $\sqrt{0.1^2 + 0.2^2}$		
+relative-uncertainties-combine-6-sqrt-0-1-2-2-0			[Multiply, [Around, 2, 0.1], [Around, 3, 0.2]]	[Around, 6, 0.5]	Relative uncertainties combine: $6\sqrt{(0.1/2)^2 + (0.2/3)^2} = 0.5$		
+through-a-function-f-x-delta-x	Scope		[Power, [Around, 2, 0.1], 2]	[Around, 4, 0.4]	Through a function: $|f'(x)|\,\delta x$		
+sqrt-around-4-0p4	Scope		[Sqrt, [Around, 4, 0.4]]	[Around, 2, 0.1]			
+through-a-function-f-2-3-5-not-yet-multinomial	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	Through a function, to first order: $f'(2) = 3.5$, so $\mathrm{Multinomial}(2 \pm 0.01, 2) = 6 \pm 0.035$	precision	Same float64 last-bit rounding as the scaling example, propagated through the derivative.
+a-power-scales-the-uncertainty-by-the-derivative	Scope		[Power, [Around, 3, 0.1], 2]	[Around, 9, 0.6000000000000001]	A power scales the uncertainty by the derivative, $2 \cdot 3 \cdot 0.1$		
+frac-0-2-2-sqrt-4	Scope		[Sqrt, [Around, 4, 0.2]]	[Around, 2, 0.05]	$\frac{0.2}{2\sqrt4}$		
+an-exact-factor-scales-the-uncertainty	Scope		[Multiply, 10, [Around, 1.5, 0.02]]	[Around, 15, 0.2]	An exact factor scales the uncertainty		
+through-an-elementary-function-delta-cdot-e-2	Scope		[Exp, [Around, 2, 0.01]]	[Around, 7.38905609893065, 0.0738905609893065]	Through an elementary function: $\delta \cdot e^2$		
+through-a-special-function-with-its-derivative	Scope		[Erf, [Around, 2, 0.01]]	[Around, 0.9953222650189527, 0.00020666985354092054]	Through a special function, with its derivative as slope		
+first-order-propagation-the-uncertainty-scales	Scope		[N, [Sin, [Around, 1, 0.1]]]	[Around, 0.8414709848078965, 0.05403023058681398]	First-order propagation: the uncertainty scales by $|\cos 1|$		
+ln-around-2-0p01	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.005]			
+around-21-pow-21-19-pow-19	Scope		[Around, [Power, 21, 21], [Power, 19, 19]]	[Around, {num: "5842587018385982521381124421"}, {num: "1978419655660313589123979"}]		convention	both right: Around coerces its arguments to machine floats in Wolfram (an uncertain quantity is inherently approximate) while we keep the exact big integers 21^21 and 19^19 — same value, exact vs float-coerced representation.
+around-10-1-pow-2	Properties		[Power, [Around, 10, 1], 2]	[Around, 100, 20]			

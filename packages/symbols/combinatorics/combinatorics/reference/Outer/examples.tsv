@@ -8,8 +8,8 @@ outer-multiply-list-list-1-2-list-3-4-list-list		triage	[Outer, Multiply, [List,
 any-binary-function-an-addition-table	Scope		[Outer, Add, [List, 1, 2], [List, 10, 20]]	[List, [List, 11, 21], [List, 12, 22]]	Any binary function: an addition table		
 a-table-of-powers	Scope		[Outer, Power, [List, 2, 3], [List, 1, 2, 3]]	[List, [List, 2, 4, 8], [List, 3, 9, 27]]	A table of powers		
 list-gives-every-pair-like-a-cartesian-product	Scope		[Outer, List, [List, a, b], [List, x, y]]	[List, [List, [List, a, x], [List, a, y]], [List, [List, b, x], [List, b, y]]]	$List$ gives every pair, like a Cartesian product		
-outer-multiply-s1-s2	Scope	triage	[Outer, Multiply, s1, s2]	[List]		emit	
+outer-multiply-s1-s2	Scope	triage	[Outer, Multiply, s1, s2]	[List]		ours?	Lane marked it fixed (our bug: a free symbol where a collection was expected answered List()/Nothing/a bogus fold instead of staying unevaluated — operandsOf()/a bare symbol's pseudo), but re-adopting it on main, ours isn't a settled answer: canonical form: error.
 outer-f-list-x-x-x-list-x-x-x-x	Properties		[Outer, f, [List, x, x, x], [List, x, x, x, x]]	[List, [List, [f, x, x], [f, x, x], [f, x, x], [f, x, x]], [List, [f, x, x], [f, x, x], [f, x, x], [f, x, x]], [List, [f, x, x], [f, x, x], [f, x, x], [f, x, x]]]			
 outer-list-list-a-b-c-list-x-y	Properties		[Outer, List, [List, a, b, c], [List, x, y]]	[List, [List, [List, a, x], [List, a, y]], [List, [List, b, x], [List, b, y]], [List, [List, c, x], [List, c, y]]]			
-outer-f-l1-l2	Properties	triage	[Outer, f, l1, l2]	[List]		emit	
-outer-f-s1-s2	Possible issues	triage	[Outer, f, s1, s2]	[List]		emit	
+outer-f-l1-l2	Properties	triage	[Outer, f, l1, l2]	[List]		ours?	Lane marked it fixed (our bug: a free symbol where a collection was expected answered List()/Nothing/a bogus fold instead of staying unevaluated — operandsOf()/a bare symbol's pseudo), but re-adopting it on main, ours isn't a settled answer: canonical form: error.
+outer-f-s1-s2	Possible issues	triage	[Outer, f, s1, s2]	[List]		ours?	Lane marked it fixed (our bug: a free symbol where a collection was expected answered List()/Nothing/a bogus fold instead of staying unevaluated — operandsOf()/a bare symbol's pseudo), but re-adopting it on main, ours isn't a settled answer: canonical form: error.

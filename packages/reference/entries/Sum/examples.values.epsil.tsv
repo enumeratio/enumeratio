@@ -1,0 +1,3 @@
+id	in	out
+sum-k-pow-2-k-nothing-10	sum(k ^ 2, (k, Nothing, 10))	385
+sum-k-pow-neg-6-k-1-positiveinfinity	sum(k ^ -6, (k, 1, PositiveInfinity))	pi ^ 6 / 945

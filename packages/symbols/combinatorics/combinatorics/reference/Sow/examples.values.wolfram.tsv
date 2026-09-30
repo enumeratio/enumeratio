@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 sow-feeds-the-nearest-reap	Reap[Sow[5]]	{5, {{5}}}	\text{Reap}[\text{Sow}[5]]	\left\{5,\left( \begin{array}{c}  5 \\ \end{array} \right)\right\}	
 sow-outside-any-reap-is-a-no-op	Sow[7]	7	\text{Sow}[7]	7	
-reap-sum-sow-i-pow-2-plus-1-i-10	Reap[Sum[Plus[Sow[Power[i, 2]], 1], List[i, 10]]]	{395, {{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}}}			disagree
-reap-do-sow-i-i-pow-2-mod-10-list-i-20					
+reap-sum-sow-k-pow-2-plus-1-k-10	Reap[Sum[Plus[Sow[Power[k, 2]], 1], List[k, 10]]]	{395, {{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}}}	\text{Reap}\left[\sum _k^{10} \left(\text{Sow}\left[k^2\right]+1\right)\right]	\left\{395,\left( \begin{array}{cccccccccc}  1 & 4 & 9 & 16 & 25 & 36 & 49 & 64 & 81 & 100 \\ \end{array} \right)\right\}	disagree
+reap-do-sow-k-k-pow-2-mod-10-list-k-20	Reap[Do[Sow[k, Mod[Power[k, 2], 10]], List[k, 20]]]	{Null, {{1, 9, 11, 19}, {2, 8, 12, 18}, {3, 7, 13, 17}, {4, 6, 14, 16}, {5, 15}, {10, 20}}}	\text{Reap}\left[\text{Do}\left[\text{Sow}\left[k,(k^2 \bmod 10)\right],\{k,20\}\right]\right]	\{\text{Null},\{\{1,9,11,19\},\{2,8,12,18\},\{3,7,13,17\},\{4,6,14,16\},\{5,15\},\{10,20\}\}\}	disagree
 sow-x	Sow[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sow}[x]-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sow}\left[\frac{7}{3}\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Sow}\left[-\frac{11}{5}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Sow}\left[\frac{13}{4}\right]-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	

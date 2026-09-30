@@ -12,5 +12,5 @@ sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	SortBy[List[1, Sqrt[Plus[1, Power
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	SortBy[List[Sqrt[Plus[1, Power[E, Complex[0, -10]]]], Power[E, Complex[2, 1]], Power[E, Complex[-1, 2]], Power[E, Complex[0, 1]]], Abs]	
 sortby-tab-function-slot-age		
 sortby-exprs-err		
-sortby-list-first		
 sortby-list-abs		
+sortby-list-first		

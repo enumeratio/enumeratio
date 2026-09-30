@@ -15,4 +15,4 @@ divisorsum-11-function-1-1-isprime	Properties		[DivisorSum, 11, [Function, [Bloc
 1-has-one-divisor	Possible issues		[DivisorSum, 1, [Function, d, d]]	1	1 has one divisor		
 n-divisorsum-n-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]			
 n-divisorsum-9-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, 9, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[Rational, 17, 20]			
-divisorsum-10-f-g	Possible issues	triage	[DivisorSum, 10, f, g]	0		emit	
+divisorsum-10-f-g	Possible issues	triage	[DivisorSum, 10, f, g]	0		ours?	Lane marked it fixed (our bug: DivisorSum(10, f, g) with a free g answered 0 — an undetermined cond (never resolves to True or False) was treated as 'excluded' instead of 'can't tell), but re-adopting it on main, ours isn't a settled answer: canonical form: incompatible-type.
