@@ -47,3 +47,19 @@ export function bigRealOperand(ce: ComputeEngine, x: BoxedExpression): BigDecima
 /** An arbitrary-precision kernel's value, boxed at the engine's precision. */
 export const bigResult = (ce: ComputeEngine, value: BigDecimal): BoxedExpression =>
   ce.number(value.toPrecision(ce.precision));
+
+/**
+ * Does `ce` evaluate `expr` numerically to more than a double's digits? Asked at precision
+ * 30, restoring the engine's own precision after: a patch's `fixed` runs on the live engine.
+ */
+export function answersPastDouble(ce: ComputeEngine, expr: unknown): boolean {
+  const saved = ce.precision;
+  try {
+    ce.precision = 30;
+    const json = ce.box(expr as never).N().json as unknown;
+    const text = typeof json === "object" && json !== null && "num" in json ? String(json.num) : "";
+    return text.replace(/^-?0*\.?0*/, "").replace(/\D/g, "").length > DOUBLE_DIGITS + 2;
+  } finally {
+    ce.precision = saved;
+  }
+}

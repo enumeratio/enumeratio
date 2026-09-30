@@ -10,6 +10,10 @@ import { PATCHES, patchSymbols, symbols } from "../src/index.ts";
 test("a function-form patch's `heads` matches the keys its library function actually returns", () => {
   const ce = new ComputeEngine();
   for (const patch of PATCHES) {
+    if (patch.library === undefined) {
+      expect(patch.heads, patch.id).toBeDefined();
+      continue;
+    }
     if (typeof patch.library !== "function") continue;
     expect(patch.heads, patch.id).toBeDefined();
     const returned = Object.keys(patch.library(ce)).toSorted();

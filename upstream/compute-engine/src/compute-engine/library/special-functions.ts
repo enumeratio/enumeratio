@@ -9,7 +9,7 @@
 // kernels below stay: @enumeratio/analytic still calls them directly for certified-
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
-import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
+import { BigDecimal, type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
 import {
@@ -297,6 +297,30 @@ export const lerchPhiLibrary: LibraryRecord = {
     compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi" }),
   },
 };
+
+// --- PolyLog and LerchPhi past a double's digits ------------------------------------
+// compute-engine evaluates both natively, in doubles only. At real arguments inside the
+// Lerch series' disk of convergence these answer to the engine's precision on the
+// arbitrary-precision series (lerch-phi-big.ts); everything else is the native handler's.
+// Upstream this is a branch at the top of each native `evaluate`.
+
+/** Φ(z, s, a) to `ce.precision` digits for real z, s and a where the series converges;
+ * `undefined` anywhere else, for the native handler to answer. */
+export function lerchPhiPrecise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  if (ops.length !== 3) return undefined;
+  const [zb, sb, ab] = ops.map((x) => bigRealOperand(ce, x));
+  const phi = zb && sb && ab ? lerchPhiBig(zb, sb, ab, ce.precision) : undefined;
+  return phi === undefined ? undefined : bigResult(ce, phi);
+}
+
+/** Liₛ(z) = z·Φ(z, s, 1) to `ce.precision` digits for real s and z where the series
+ * converges; `undefined` anywhere else. */
+export function polyLogPrecise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  if (ops.length !== 2) return undefined;
+  const [sb, zb] = ops.map((x) => bigRealOperand(ce, x));
+  const phi = sb && zb ? lerchPhiBig(zb, sb, BigDecimal.ONE, ce.precision) : undefined;
+  return phi === undefined ? undefined : bigResult(ce, zb!.mul(phi));
+}
 
 // --- HurwitzZeta, and Zeta widened to complex s / two-argument form -------------------
 // cortex-js/compute-engine#340, offered as PR #350: the complex Riemann zeta ζ(s), the

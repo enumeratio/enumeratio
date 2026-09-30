@@ -8,6 +8,7 @@ import {
   clausenPatch,
   dirichlet,
   lerchPhiPatch,
+  polylogPrecision,
   logGammaPatch,
   stieltjes,
 } from "@enumeratio/for-compute-engine";
@@ -146,6 +147,7 @@ import { declareNSum } from "./nsum.ts";
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, lerchPhiPatch);
+  applyPatch(ce, polylogPrecision);
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
   // whose z₀ = 0 case is the lower incomplete gamma. Native for one and two arguments.

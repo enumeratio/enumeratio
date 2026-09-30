@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs";
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
-import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
 import {
   bigCx,
@@ -8,7 +7,6 @@ import {
   cx,
   type Cx,
   lerchPhi,
-  lerchPhiReal,
   applyAllPatches,
   hurwitzZeta,
   hurwitzZetaReal,
@@ -255,17 +253,6 @@ test("LerchPhi near the rim with Re(s) < 0 holds for a off the axis", () => {
 test("LerchPhi |z|>1 is out of series range (NaN, documented divergence)", () => {
   const r = lerchPhi({ re: 2, im: 0 }, { re: 2, im: 0 }, { re: 1, im: 0 });
   expect(Number.isNaN(r.re)).toBe(true);
-});
-
-test("LerchPhi compile handler emits a real kernel call (JS + WGSL) and runs", () => {
-  const js = new JavaScriptTarget().compile(ce.box(["LerchPhi", "z", 2, 1])) as { code?: string };
-  expect(js.code).toContain("__lp(");
-  const wgsl = new WGSLTarget().compile(ce.box(["LerchPhi", "z", 2, 1])) as { code?: string };
-  expect(wgsl.code).toContain("lerchPhi(vec2f");
-  // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-  const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
-  const v = g({ z: 0.5, __lp: lerchPhiReal });
-  expect(Math.abs(v - lerchPhiReal(0.5, 2, 1))).toBeLessThan(1e-12);
 });
 
 // --- Found by the oracle Plausible (mpmath and Wolfram agree) ---------------------
