@@ -6,6 +6,7 @@ import "./notatio-in.ts";
 import { type HeadInfo, transcriptHostOf } from "./notatio-out.ts";
 import "./notatio-out.ts";
 import { latexForText, pastedFrom } from "./clipboard.ts";
+import { translate } from "./kernel-client.ts";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 
@@ -55,11 +56,21 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
     case "wolfram":
       return fromWolfram(text);
     case "latex": {
+      // The page's kernel reads it, when there is one, so the page needn't load an engine.
+      const read = await translate({ source: { text, format: "latex" }, raw: true, write: "mathjson" });
+      if (read !== undefined) return read.json;
       const engine = await loadEngine();
       return engine.parse(text, { form: "raw" }).json;
     }
     case "epsil":
     default: {
+      try {
+        const read = await translate({ source: { text, format: "epsil" }, write: "mathjson" });
+        if (read !== undefined) return read.json;
+      } catch (err) {
+        const range = (err as { range?: readonly [number, number] }).range;
+        throw new SyntaxProblem(err instanceof Error ? err.message : String(err), range);
+      }
       const engine = await loadEngine();
       // `Assign` is otherwise a statement Epsil rejects outside a notebook -- a cell IS
       // a notebook line (`a := 5`, then `a^2` reads it back), whether or not it sits in a
@@ -84,6 +95,10 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
     case "wolfram":
       return toWolfram(json as Parameters<typeof toWolfram>[0]);
     case "latex": {
+      if (engine === undefined) {
+        const written = (await translate({ json, write: "latex" }))?.written;
+        if (written !== undefined) return written;
+      }
       const e = engine ?? (await loadEngine());
       return e.box(json as Parameters<Engine["box"]>[0], { form: "raw" }).latex;
     }

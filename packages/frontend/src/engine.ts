@@ -48,18 +48,22 @@ export function configureEngine(fn: (ce: ComputeEngine) => void): void {
 
 /**
  * A host may set `globalThis.__notatioEngineReady` to a promise that resolves once
- * it has declared all its extension libraries (via `configureEngine`). The shared
+ * it has declared all its extension libraries (via `configureEngine`), or to a function
+ * returning one, called when the engine is first wanted. The shared
  * engine then waits for it before it is created, so the first evaluation already
  * sees every registered head — without this, a host that declares libraries from an
  * async import can lose the race and render before they land. Absent (tests, CLI,
  * plain hosts), engine creation proceeds immediately.
  */
-type EngineGate = { __notatioEngineReady?: Promise<unknown> };
+type EngineGate = { __notatioEngineReady?: Promise<unknown> | (() => Promise<unknown>) };
 
 /** The shared compute-engine instance, created and configured on first use. */
 export function loadEngine(): Promise<ComputeEngine> {
   enginePromise ??= (async () => {
-    const gate = (globalThis as EngineGate).__notatioEngineReady;
+    // A function gate is called only now: a page that never needs this engine never loads
+    // the libraries it would declare.
+    const ready = (globalThis as EngineGate).__notatioEngineReady;
+    const gate = typeof ready === "function" ? ready() : ready;
     if (gate) await gate.catch(() => {});
     const { ComputeEngine, LatexSyntax, LATEX_DICTIONARY } = await import("@cortex-js/compute-engine");
     engine = new ComputeEngine({

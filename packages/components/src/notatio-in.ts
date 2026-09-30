@@ -19,6 +19,7 @@ import {
   wrapHead,
 } from "@enumeratio/frontend";
 import { Sweep } from "./sweep.ts";
+import { translate } from "./kernel-client.ts";
 
 /** The subset of MathLive's `<math-field>` this element drives. */
 interface MathField extends HTMLElement {
@@ -434,8 +435,13 @@ export class NotatioIn extends LitElement {
       return;
     }
     try {
-      const engine = (NotatioIn.#engine ??= await loadEngine());
-      const next = toInputForm(engine.parse(latex, { form: "raw" }).json);
+      // The page's kernel translates it, when there is one, so the page needn't load an engine.
+      const translated = await translate({ source: { text: latex, format: "latex" }, raw: true, write: "epsil" });
+      let next = translated?.written;
+      if (next === undefined) {
+        const engine = (NotatioIn.#engine ??= await loadEngine());
+        next = toInputForm(engine.parse(latex, { form: "raw" }).json);
+      }
       if (this.value === latex) this.inputForm = next;
     } catch {
       // keep the previous InputForm

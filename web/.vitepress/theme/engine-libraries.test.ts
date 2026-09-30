@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { createKernel, declareEvaluation } from "@enumeratio/evaluation";
 import { expect, test } from "vite-plus/test";
+import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import { CATALOGUE } from "./worker-catalogue.ts";
 import { configure } from "./worker-engine-setup.ts";
 
@@ -33,18 +34,38 @@ test("a kernel over the site's catalogue answers as the site's engine does, decl
   declareEvaluation(ce);
   const kernel = createKernel(ce, CATALOGUE);
   const eager = siteEngine();
-  const sum = await kernel.evaluate(["Add", 1, 1]);
+  const sum = await kernel.evaluate({ json: ["Add", 1, 1] });
   expect(sum).toMatchObject({ ok: true, json: 2, declared: [] });
   // Analytic only where a call needs it.
-  const cycles = await kernel.evaluate(["PermutationCycles", ["List", 2, 1, 3]]);
+  const cycles = await kernel.evaluate({ json: ["PermutationCycles", ["List", 2, 1, 3]] });
   expect(cycles.declared).not.toContain("analytic");
   expect(cycles.json).toEqual(eager.box(["PermutationCycles", ["List", 2, 1, 3]] as never).evaluate().json);
   for (const json of [
     ["Add", ["IntegerMod", 3, 5], 4],
     ["Multiply", "i_1", "i_1"],
   ]) {
-    const lazy = await kernel.evaluate(json);
+    const lazy = await kernel.evaluate({ json });
     expect(lazy.ok).toBe(true);
     expect(lazy.json).toEqual(eager.box(json as never).evaluate().json);
   }
+});
+
+test("a notebook's kernel reads Epsil, keeps each session's bindings and history, and shows the answer", async () => {
+  const ce = new ComputeEngine();
+  declareEvaluation(ce);
+  const kernel = createKernel(ce, CATALOGUE, NOTEBOOK_KERNEL);
+  const cell = (text: string, session = "notebook") => kernel.evaluate({ source: { text, format: "epsil" }, session });
+  expect(await cell("a := 5")).toMatchObject({ ok: true, line: 1 });
+  expect(await cell("a^2")).toMatchObject({ ok: true, json: 25, line: 2 });
+  expect(await cell("Out(2) + 1")).toMatchObject({ ok: true, json: 26, line: 3 });
+  // Another session has its own scope.
+  expect((await cell("a^2", "other")).json).toEqual(["Power", "a", 2]);
+  const shown = await cell("Fibonacci(n)");
+  const display = shown.boxes as { boxes: { TraditionalForm: unknown }; text: { asciimath?: string } };
+  expect(display.boxes.TraditionalForm).toEqual(["SubscriptBox", "F", "n"]);
+  expect(display.text.asciimath).toBeDefined();
+  expect(await kernel.evaluate({ source: { text: "1 +", format: "epsil" } })).toMatchObject({ ok: false });
+  expect(
+    await kernel.evaluate({ source: { text: "3 + 4", format: "latex" }, raw: true, write: "latex" }),
+  ).toMatchObject({ written: "3+4" });
 });

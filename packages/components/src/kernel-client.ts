@@ -1,0 +1,107 @@
+// A cell's side of a kernel (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends):
+// it sends text and renders what comes back -- the value, its display as boxes, the parsed
+// input, its history line and its messages -- with no engine of its own. A `<DynamicModule
+// Evaluator -> Worker>` has a kernel of its own; every other cell on the page shares the
+// page's kernel, when the host provides one.
+
+import {
+  type BrowserSession,
+  openSession,
+  type SharedWorkerFactory,
+  type WorkerFactory,
+} from "@enumeratio/evaluation/browser";
+import type { Message } from "@enumeratio/engine";
+import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
+
+export interface RemoteRequest {
+  /** MathJSON, or `source` for the kernel to parse. */
+  readonly json?: unknown;
+  readonly source?: { readonly text: string; readonly format: string };
+  /** False to parse and display without evaluating. */
+  readonly evaluate?: boolean;
+  /** Keep the tree as written, not canonical. */
+  readonly raw?: boolean;
+  /** Only translate, into this syntax. */
+  readonly write?: string;
+}
+
+export interface RemoteAnswer {
+  readonly value: unknown;
+  /** The kernel was hard-killed and restarted: earlier bindings are gone. */
+  readonly reset: boolean;
+  /** The answer's display (`@enumeratio/frontend/kernel-host`'s `Display`). */
+  readonly boxes?: unknown;
+  readonly input?: unknown;
+  readonly line?: number;
+  readonly messages?: readonly Message[];
+  /** Why the kernel couldn't answer: a syntax error, a library that failed to declare. */
+  readonly error?: string;
+  /** Where in the source a syntax error is. */
+  readonly range?: unknown;
+  /** A translation's text. */
+  readonly written?: string;
+}
+
+/** The session a page's loose cells share (`@enumeratio/frontend/kernel-host`'s `PAGE_SESSION`). */
+const PAGE_SESSION = "page";
+
+type WorkerSetupGate = { __notatioWorkerSetup?: string };
+type WorkerFactoriesGate = {
+  __notatioWorkerFactories?: {
+    readonly createWorker?: WorkerFactory;
+    readonly createSharedWorker?: SharedWorkerFactory;
+  };
+};
+
+/** A private session with the host's kernel worker, or `undefined` when the host has none. */
+export function openKernelSession(setup?: string): BrowserSession | undefined {
+  const factories = (globalThis as WorkerFactoriesGate).__notatioWorkerFactories;
+  if (factories === undefined) return undefined;
+  return openSession({
+    setup: setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup,
+    createWorker: factories.createWorker,
+    createSharedWorker: factories.createSharedWorker,
+  });
+}
+
+let page: BrowserSession | null | undefined;
+let pageUnavailable = false;
+
+/** The page's kernel, for a cell outside any module (the page's session) or in a notebook with
+ *  no worker of its own (the notebook's); `undefined` when the host has none, or it couldn't
+ *  start (the cell then evaluates on the page itself). */
+export function pageKernel(
+  sessionId: string = PAGE_SESSION,
+): ((request: RemoteRequest, options?: { signal?: AbortSignal }) => Promise<RemoteAnswer>) | undefined {
+  if (pageUnavailable) return undefined;
+  if (page === undefined) page = openKernelSession() ?? null;
+  const session = page;
+  if (session === null) return undefined;
+  return async (request, options = {}) => {
+    const ask = () =>
+      session.evaluate(request.json, { ...request, ...options, session: sessionId }) as Promise<RemoteAnswer>;
+    // A worker that never started gets one more try on its replacement, as a module's does.
+    const first = await ask();
+    if (!first.reset) return first;
+    const second = await ask();
+    if (!second.reset) return second;
+    pageUnavailable = true;
+    throw new WorkerUnavailableError();
+  };
+}
+
+/** `request`'s translation by the page's kernel: the MathJSON read, and the text written if
+ *  it asked for one. `undefined` without a kernel; a syntax error throws, with its `range`. */
+export async function translate(request: RemoteRequest): Promise<{ json: unknown; written?: string } | undefined> {
+  const ask = pageKernel();
+  if (ask === undefined) return undefined;
+  let answer: RemoteAnswer;
+  try {
+    answer = await ask(request);
+  } catch (err) {
+    if (err instanceof WorkerUnavailableError) return undefined;
+    throw err;
+  }
+  if (answer.error !== undefined) throw Object.assign(new Error(answer.error), { range: answer.range });
+  return { json: answer.value, ...(answer.written !== undefined ? { written: answer.written } : {}) };
+}

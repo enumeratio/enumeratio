@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
-import { type Box, makeBoxes, notationOf, toLatex } from "@enumeratio/boxes";
+import { makeBoxes, notationOf, toAscii, toLatex } from "@enumeratio/boxes";
+import type { Display } from "@enumeratio/frontend/kernel-host";
 import { collectMessages, type Message } from "@enumeratio/engine";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
@@ -10,6 +11,7 @@ import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
+import { pageKernel, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
 import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -30,11 +32,26 @@ import {
   watchPageEnvironment,
 } from "@enumeratio/frontend";
 
-/** A kernel's display of an answer, by form (`@enumeratio/frontend/display`). */
-type Displayed = Partial<Record<"StandardForm" | "TraditionalForm" | "MatrixForm", Box>>;
+/** A stable id per module, naming its session in the page's kernel. */
+const moduleIds = new WeakMap<Element, number>();
+let nextModuleId = 1;
+const sessionIdOf = (host: Element): number => {
+  let id = moduleIds.get(host);
+  if (id === undefined) moduleIds.set(host, (id = nextModuleId++));
+  return id;
+};
 
-/** A displayed form as TeX, for the typesetter; `undefined` when there's none. */
-const texOf = (box: Box | undefined): string | undefined => (box === undefined ? undefined : toLatex(box));
+/** A cell's answer, as `#evaluate` gives it to `#compute`. */
+interface Evaluated {
+  latex: string;
+  json: unknown;
+  messages: readonly Message[];
+  /** The bound symbol, when the input is an assignment (`a := …`). */
+  name?: string;
+  plot?: PlotInfo;
+  /** The display a kernel built for the answer: rendered as it is, with no engine here. */
+  display?: Display;
+}
 
 /**
  * Typeset markup by the LaTeX that produced it, shared by every `<Out>` on the
@@ -168,17 +185,14 @@ interface TranscriptHost extends Element {
    */
   readonly evaluatorKind?: "Local" | "Worker";
   /**
-   * Runs `json` in the module's worker session rather than this page's engine --
+   * Runs a cell's request in the module's kernel rather than this page's engine --
    * only present, and only called, when `evaluatorKind` is `"Worker"`. `signal`
    * aborts THIS call (the module's "stop" control / Escape); the worker itself may
    * keep running in the background (https://github.com/enumeratio/enumeratio/wiki/Computation §5.3's own limit on what an
    * abort can promise). `reset: true` means the session was hard-killed and
    * restarted -- earlier bindings are gone, surfaced by the module itself.
    */
-  evaluateRemote?(
-    json: unknown,
-    options?: { signal?: AbortSignal },
-  ): Promise<{ value: unknown; reset: boolean; boxes?: unknown }>;
+  evaluateRemote?(request: RemoteRequest, options?: { signal?: AbortSignal }): Promise<RemoteAnswer>;
 }
 
 /**
@@ -508,16 +522,7 @@ export class NotatioOut extends LitElement {
     }
   }
 
-  async #evaluate(): Promise<{
-    latex: string;
-    json: unknown;
-    messages: readonly Message[];
-    /** The bound symbol, when the input is an assignment (`a := …`). */
-    name?: string;
-    plot?: PlotInfo;
-    /** The display a kernel built for the answer, by form: rendered as it is. */
-    boxes?: Displayed;
-  }> {
+  async #evaluate(): Promise<Evaluated> {
     const source = this.value ?? "";
     if (!source.trim()) return { latex: "", json: undefined, messages: [] };
     // Fast path: render given LaTeX as-is, no engine, when nothing needs it.
@@ -531,6 +536,8 @@ export class NotatioOut extends LitElement {
         messages: [],
       };
     }
+    const answered = await this.#askKernel(source);
+    if (answered !== undefined) return answered;
     const engine = await loadEngine();
     // `raw` keeps the authored tree; evaluation canonicalises regardless, so it wins.
     const form = this.raw && !this.evaluate ? { form: "raw" as const } : undefined;
@@ -539,41 +546,6 @@ export class NotatioOut extends LitElement {
     const parseText = (): BoxedExpression =>
       this.format === "latex" ? engine.parse(source, form) : engine.box(this.#json(engine), form);
 
-    // `Evaluator -> "Worker"`: this cell's own evaluation happens off-thread, in the
-    // module's evaluation session -- not inside `transcript.run()` (that scope is a
-    // LOCAL engine's; the worker holds its own persistent one, per
-    // https://github.com/enumeratio/enumeratio/wiki/Computation). Only parsing and the result's re-boxing (for typesetting)
-    // touch the local scope. Messages (`collectMessages`) don't cross the worker
-    // boundary yet -- deferred, see this package's PR description.
-    if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
-      log("worker-evaluate", this.value);
-      const input = this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
-      const boxed = transcript.run(() => parseText());
-      this.#abort = new AbortController();
-      try {
-        let resultJson: unknown;
-        let boxes: Displayed | undefined;
-        try {
-          const remote = await host.evaluateRemote(boxed.json, { signal: this.#abort.signal });
-          resultJson = remote.value;
-          boxes = remote.boxes as Displayed | undefined;
-        } finally {
-          this.#abort = undefined;
-        }
-        const value = transcript.run(() => engine.box(resultJson as never));
-        this.#historyN = transcript.record(input, boxed, value);
-        const shown = texOf(boxes?.StandardForm);
-        return { latex: shown ?? latexOf(engine, value), json: value.json, messages: [], boxes };
-      } catch (err) {
-        // No worker could ever be started for this session (not a user "stop" --
-        // that resolves normally with `$Aborted` rather than throwing) --
-        // `host.evaluatorKind` has already flipped to `"Local"` for every cell after
-        // this one; fall through to the LOCAL path below for this one too, rather
-        // than showing `$Aborted` for a failure the reader never asked for.
-        if (!(err instanceof WorkerUnavailableError)) throw err;
-        log("worker-evaluate: no worker could start -- evaluating this cell locally", err);
-      }
-    }
     // A host in Worker mode but missing `evaluateRemote` would otherwise fall through to
     // the LOCAL evaluation below without a trace -- exactly the failure mode that let
     // `Notebook(cells, Evaluator -> Worker)` silently run every cell on the page's own
@@ -627,6 +599,65 @@ export class NotatioOut extends LitElement {
     const latex =
       this.elideAbove > 0 ? (elideResult(result, this.elideAbove) ?? latexOf(engine, result)) : latexOf(engine, result);
     return { latex, json: result.json, messages, name, plot: plotInfo };
+  }
+
+  /**
+   * This cell through a kernel, when one takes it: its module's (`Evaluator -> Worker`), or
+   * the page's for a cell outside any module. The kernel parses the text, runs it in the
+   * module's (or page's) session, and returns the answer with its display, so nothing here
+   * needs an engine. A plot, a `raw` tree or an elided result reads the page engine's own
+   * boxed values, so those stay local; so does a cell whose kernel never started.
+   */
+  async #askKernel(source: string): Promise<Evaluated | undefined> {
+    if (this.raw || this.plot || this.elideAbove > 0) return undefined;
+    if (!["epsil", "latex", "mathjson"].includes(this.format)) return undefined;
+    const host = transcriptHostOf(this);
+    // A reactive module (`TrackedSymbols`) schedules its cells on the page, so stays local.
+    const tracked = host === undefined ? "" : ((host as { trackedSymbols?: string }).trackedSymbols ?? "");
+    const reactive = tracked.trim() !== "";
+    const ask =
+      host === undefined
+        ? pageKernel()
+        : host.evaluatorKind === "Worker" && host.evaluateRemote
+          ? host.evaluateRemote.bind(host)
+          : reactive
+            ? undefined
+            : pageKernel(`notebook:${sessionIdOf(host)}`);
+    if (ask === undefined) return undefined;
+    log("kernel-evaluate", this.value);
+    this.#abort = new AbortController();
+    let answer: RemoteAnswer;
+    try {
+      answer = await ask(
+        { source: { text: source, format: this.format }, evaluate: this.evaluate },
+        {
+          signal: this.#abort.signal,
+        },
+      );
+    } catch (err) {
+      // A stop on the page's kernel abandons the call (the worker may finish it anyway).
+      if (err instanceof DOMException && err.name === "AbortError") {
+        return { latex: "\\mathrm{Aborted}", json: "Aborted", messages: [] };
+      }
+      // No kernel could start (not a user "stop": that answers `Aborted`), so this cell
+      // evaluates here; later cells in a module know from its `evaluatorKind`.
+      if (!(err instanceof WorkerUnavailableError)) throw err;
+      log("kernel-evaluate: no kernel could start -- evaluating this cell locally", err);
+      return undefined;
+    } finally {
+      this.#abort = undefined;
+    }
+    if (answer.error !== undefined) throw new Error(answer.error);
+    this.#historyN = answer.line;
+    const display = answer.boxes as Display | undefined;
+    const standard = display?.boxes.StandardForm;
+    return {
+      latex: standard === undefined ? "" : toLatex(standard),
+      json: answer.value,
+      messages: answer.messages ?? [],
+      name: boundName(answer.input),
+      display,
+    };
   }
 
   /** `value` as MathJSON, for the two encodings that are not LaTeX. An Epsil diagnostic throws. */
@@ -771,7 +802,7 @@ export class NotatioOut extends LitElement {
   // so a slow earlier evaluation can't overwrite it when it finally lands.
   async #compute(run: number): Promise<void> {
     try {
-      const { latex, json, messages, name, plot, boxes } = await this.#evaluate();
+      const { latex, json, messages, name, plot, display } = await this.#evaluate();
       const convert = await loadMarkup();
       if (run !== this.#runs) return;
       this._messages = messages;
@@ -796,12 +827,21 @@ export class NotatioOut extends LitElement {
         this._tex = portableTeX(latex);
         this._matrix = this._markup;
         this._canMatrix = false;
+      } else if (display !== undefined) {
+        // A kernel's answer: every form comes with it, so no engine loads here.
+        const traditional = toLatex(display.boxes.TraditionalForm ?? makeBoxes(json as MathJsonExpression));
+        this._traditional = convert(traditional);
+        this._tex = portableTeX(traditional);
+        this._canMatrix = Array.isArray(json) && json[0] === "List";
+        const matrix = display.boxes.MatrixForm;
+        this._matrix = matrix === undefined ? this._markup : convert(toLatex(matrix));
+        this._ascii = display.text.asciimath ?? "";
+        const { asciimath: _, ...code } = display.text;
+        this._code = code;
       } else {
         const engine = await loadEngine();
         if (run !== this.#runs) return;
-        const traditional = toLatex(
-          boxes?.TraditionalForm ?? makeBoxes(json as MathJsonExpression, notationOf(engine)),
-        );
+        const traditional = toLatex(makeBoxes(json as MathJsonExpression, notationOf(engine)));
         this._traditional = convert(traditional);
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
         this._tex = portableTeX(traditional);
@@ -810,10 +850,9 @@ export class NotatioOut extends LitElement {
         // Only a List has a matrix form; anything else falls back to standard.
         this._canMatrix = Array.isArray(json) && json[0] === "List";
         const matrixExpr = ["Matrix", json] as unknown as Parameters<typeof engine.box>[0];
-        const matrix = texOf(boxes?.MatrixForm) ?? (this._canMatrix ? engine.box(matrixExpr).latex : undefined);
-        this._matrix = matrix === undefined ? this._markup : convert(matrix);
-        // AsciiMathForm: compute-engine's toString() is an ASCIIMath rendering.
-        this._ascii = engine.box(json as Parameters<typeof engine.box>[0]).toString();
+        this._matrix = this._canMatrix ? convert(engine.box(matrixExpr).latex) : this._markup;
+        // AsciiMathForm: the traditional boxes, as AsciiMath spells them.
+        this._ascii = toAscii(makeBoxes(json as MathJsonExpression, notationOf(engine)));
         this._code = await this.#codeSources(engine, json);
       }
       if (json === undefined) {
