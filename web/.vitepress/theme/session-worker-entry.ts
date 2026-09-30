@@ -17,13 +17,15 @@
 import { startSessionWorker } from "../../../packages/symbols/evaluation/evaluation/src/session-worker-core.ts";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import { BOXES_LATEX } from "@enumeratio/boxes";
-import { displayBoxes, displayDictionary } from "@enumeratio/frontend/display";
+import { displayDictionary } from "@enumeratio/frontend/display";
+import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import { RESIDUES_LATEX } from "@enumeratio/residues";
 import { CATALOGUE } from "./worker-catalogue.ts";
 
-// A kernel: no libraries up front, each one declared when a call first needs it. It writes
-// each answer's display (boxes) itself, with the page's notation: a dictionary is fixed at
-// construction, so the notation is the host's, up front.
+// A kernel: no libraries up front, each one declared when a call first needs it. It reads a
+// cell's text, keeps each notebook's session, and writes each answer's display itself, with
+// the page's notation: a dictionary is fixed at construction, so the notation is the host's,
+// up front.
 startSessionWorker(undefined, {
   catalogue: CATALOGUE,
   createEngine: () =>
@@ -32,5 +34,5 @@ startSessionWorker(undefined, {
         dictionary: displayDictionary(LATEX_DICTIONARY, [...RESIDUES_LATEX, ...BOXES_LATEX]),
       }),
     }),
-  display: displayBoxes,
+  ...NOTEBOOK_KERNEL,
 });

@@ -139,21 +139,18 @@ export default {
         });
         configureEngine(declareEvaluation);
       };
-      // The promise is assigned synchronously (any element's loadEngine awaits it), but
-      // the heavy 15-package source import is deferred to browser idle, so the initial
-      // page shell paints before ~all of the monorepo source is transformed.
-      (globalThis as { __notatioEngineReady?: Promise<unknown> }).__notatioEngineReady = new Promise<void>(
-        (resolve, reject) => {
-          const kick = (): void => void startEngine().then(resolve, reject);
-          const ric = (
-            globalThis as {
-              requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void;
-            }
-          ).requestIdleCallback;
-          if (ric) ric(kick, { timeout: 2000 });
-          else setTimeout(kick, 0);
-        },
-      );
+      // Called by the first `loadEngine` (a plot, a cell whose kernel can't start), not at
+      // startup: cells go through the kernel worker, so most pages never load the libraries
+      // on the page at all.
+      let ready: Promise<void> | undefined;
+      (globalThis as { __notatioEngineReady?: () => Promise<unknown> }).__notatioEngineReady = () =>
+        (ready ??= startEngine());
+      // The elements themselves load at idle, so the page paints first.
+      const define = (): void => void import("@enumeratio/components");
+      const idle = (globalThis as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void })
+        .requestIdleCallback;
+      if (idle) idle(define, { timeout: 2000 });
+      else setTimeout(define, 0);
       // Points an `Evaluator -> "Worker"` `<notatio-dynamic-module>` at the module
       // whose `configure(ce)` declares this page's own libraries into its
       // `@enumeratio/evaluation/browser` session -- `notatio-dynamic-module.ts`'s own

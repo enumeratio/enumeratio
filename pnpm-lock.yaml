@@ -552,6 +552,9 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats

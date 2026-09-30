@@ -25,7 +25,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { Library } from "@enumeratio/manifest";
 import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareEvaluation } from "./declare.ts";
-import { createKernel, type Kernel, type KernelOptions } from "./kernel.ts";
+import { createKernel, type Kernel, type KernelOptions, type KernelSource } from "./kernel.ts";
 
 /** Declares whatever libraries the host's own engine has, into the session's. */
 export type ConfigureFn = (ce: ComputeEngine) => void | Promise<void>;
@@ -41,7 +41,14 @@ export interface HandshakeRequest {
 }
 export interface EvaluateRequest {
   readonly id: number;
-  readonly json: unknown;
+  readonly json?: unknown;
+  /** With a kernel: text to parse, the session it runs in, and whether to evaluate
+   *  (`./kernel.ts`'s `KernelRequest`). */
+  readonly source?: KernelSource;
+  readonly session?: string;
+  readonly evaluate?: boolean;
+  readonly raw?: boolean;
+  readonly write?: string;
   /** The host's `timeMs`, tried cooperatively here first — see ./cooperative-evaluate.ts.
    * A call that stops this way keeps every port's bindings, including a SharedWorker's
    * other tabs'; only an uncooperative loop needs the host's own hard kill. */
@@ -62,8 +69,13 @@ export interface EvaluateResponse {
    *  catalogue doesn't offer. */
   readonly declared?: readonly string[];
   readonly missing?: readonly string[];
-  /** With a `display`: the answer's boxes, by form. */
+  /** With a kernel: the rest of its answer (`./kernel.ts`'s `KernelResult`). */
   readonly boxes?: unknown;
+  readonly input?: unknown;
+  readonly line?: number;
+  readonly messages?: readonly unknown[];
+  readonly written?: string;
+  readonly range?: unknown;
 }
 
 /** A worker that is a kernel (`./kernel.ts`). */
@@ -121,7 +133,7 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
       const request = event.data as EvaluateRequest;
       void (engine as Promise<ComputeEngine>).then(
         async (ce) => {
-          const { id, json, timeMs } = request;
+          const { id, json, timeMs, source, session, evaluate, raw, write } = request;
           port.postMessage({ id, kind: "started" });
           // Bound to the session's one persistent `ce`: a `:=` here is visible to the
           // next call, on this port and (on a SharedWorker) any other tab's port too.
@@ -130,7 +142,8 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
             return;
           }
           kernel ??= createKernel(ce, catalogue, options);
-          port.postMessage({ id, kind: "result", ...(await kernel.evaluate(json, timeMs)) });
+          const answer = await kernel.evaluate({ json, source, session, evaluate, raw, write, timeMs });
+          port.postMessage({ id, kind: "result", ...answer });
         },
         (error: unknown) => {
           // `configure` itself failed (a bad `setup` import, a declare that threw) --

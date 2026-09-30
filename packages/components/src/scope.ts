@@ -72,6 +72,8 @@ export class Scope {
     customElements.upgrade(this.root);
     const controls = this.controls;
     await Promise.all([...new Set(controls.map((el) => el.localName))].map((tag) => customElements.whenDefined(tag)));
+    // No control, no template to fill: a page without one never loads the engine for it.
+    if (controls.length === 0 && this.#templates.length === 0) return;
     const engine = (this.#engine ??= await loadEngine());
     for (const el of controls) this.#read(el);
     // A re-read MERGES: a template already applied has its result where the wildcard

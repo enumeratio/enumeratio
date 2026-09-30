@@ -414,6 +414,13 @@ export interface BrowserEvaluateSessionOptions {
   readonly timeMs?: number;
   /** Aborting rejects this call without touching the worker. */
   readonly signal?: AbortSignal;
+  /** For a kernel worker: text to parse in place of `json`, the session to run in, and
+   *  whether to evaluate (`./kernel.ts`'s `KernelRequest`). */
+  readonly source?: { readonly text: string; readonly format: string };
+  readonly session?: string;
+  readonly evaluate?: boolean;
+  readonly raw?: boolean;
+  readonly write?: string;
 }
 
 export interface BrowserSessionEvaluateResult {
@@ -424,8 +431,18 @@ export interface BrowserSessionEvaluateResult {
    * unaffected). Either way, bindings made before it are gone for the caller of THIS
    * session. `false` whenever a cooperative stop landed in time. */
   readonly reset: boolean;
-  /** The answer's display, when the worker is a kernel with a `display` (boxes, by form). */
+  /** A kernel worker's answer beyond the value: its display (boxes, by form), the input as
+   *  parsed, its history line, and its messages. */
   readonly boxes?: unknown;
+  readonly input?: unknown;
+  readonly line?: number;
+  readonly messages?: readonly unknown[];
+  /** A translation's text (a request with `write`). */
+  readonly written?: string;
+  /** Where in the source a syntax error is. */
+  readonly range?: unknown;
+  /** Why a kernel couldn't answer (a syntax error, a failed declare); `value` is `Aborted`. */
+  readonly error?: string;
 }
 
 export interface BrowserSession {
@@ -568,7 +585,13 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
           kind?: "started" | "result";
           ok?: boolean;
           json?: unknown;
+          error?: string;
           boxes?: unknown;
+          input?: unknown;
+          line?: number;
+          messages?: readonly unknown[];
+          written?: string;
+          range?: unknown;
         };
         if (m.id !== id || settled) return;
         if (m.kind === "started") {
@@ -583,11 +606,11 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         // A cooperative stop (m.json === "Aborted") arrives over THIS message path too --
         // the worker survived, so no reset either way.
-        resolve({
-          value: m.ok ? m.json : ABORTED,
-          reset: false,
-          ...(m.ok && m.boxes !== undefined ? { boxes: m.boxes } : {}),
-        });
+        const { boxes, input, line, messages, error, written, range } = m;
+        const extra = Object.entries({ boxes, input, line, messages, error, written, range }).filter(
+          ([, v]) => v !== undefined,
+        );
+        resolve({ value: m.ok ? m.json : ABORTED, reset: false, ...Object.fromEntries(extra) });
       };
 
       dispatchers.set(id, onMessage);
@@ -605,7 +628,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       // hanging forever against a session that never actually started.
       spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
-      currentPort.postMessage({ id, json, timeMs });
+      const { source, session, evaluate, raw, write } = callOptions;
+      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write });
     });
   }
 
