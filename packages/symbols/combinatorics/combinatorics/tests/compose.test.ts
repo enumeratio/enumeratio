@@ -40,10 +40,19 @@ test("a composition of one step is that step", () => {
 
 test("a private name is one character from its public spelling", () => {
   // The marker is a TRAILING underscore: legal in a symbol, never at the end of a real head,
-  // and one character to strip when emitting an AST for a reader.
+  // and one character to strip when emitting an AST for a reader -- `publicName` is a no-op
+  // on a name that was never private in the first place.
   expect(publicName("Complement_")).toBe("Complement");
   expect(publicName("Complement")).toBe("Complement");
-  expect(JSON.stringify(ce.box(["Complement", ["Set", 1, 2]]).evaluate().json)).toContain("Complement_");
+});
+
+test("extending a collection-backed head never leaks a private name into a result", () => {
+  // `Complement` is collection-backed; a `Set` operand is not the carrier our combinatorics
+  // extension handles, so the call stays genuinely unevaluated -- under its own name, not a
+  // private duplicate (see @enumeratio/structures' extend.ts).
+  const result = ce.box(["Complement", ["Set", 1, 2]]).evaluate();
+  expect(result.operator).toBe("Complement");
+  expect(JSON.stringify(result.json)).not.toContain("Complement_");
 });
 
 test("every composed map lists steps that exist", () => {

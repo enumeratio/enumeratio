@@ -5,7 +5,7 @@ recognizes-cosh	\mathrm{ExpToTrig}(\frac{1}{2}(e^{x}+\exp(-x)))	\cosh(x)
 recognizes-sin	\mathrm{ExpToTrig}(\frac{\exp(i x)-\exp(-(i x))}{2i})	\sin(x)
 exptotrig-2-pow-i-times-x	\mathrm{ExpToTrig}(2^{i x})	2^{i x}
 exptotrig-neg-3-pow-neg-x-plus-3-pow-x	\mathrm{ExpToTrig}(3^{x}-3^{-x})	3^{x}-3^{-x}
-exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	\mathrm{ExpToTrig}(\ln(i x+1)-\ln(1-i x))	\ln(\frac{i x+1}{1-i x})
+exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	\mathrm{ExpToTrig}(\ln(i x+1)-\ln(1-i x))	\ln(i x+1)-\ln(1-i x)
 exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	\mathrm{ExpToTrig}(e^{x}\le11\land3^{i x}=7)	\sinh(x)+\cosh(x)\le11\land3^{i x}=7
 exptotrig-neg-1-pow-5-over-7	\mathrm{ExpToTrig}((-1)^{\frac{5}{7}})	-1
 exptotrig-list-exponentiale-pow-i-times-x-eq-neg	\mathrm{ExpToTrig}(\bigl\lbrack\exp(i x)=-1, \sqrt[11]{-1}\bigr\rbrack)	\bigl\lbrack i\sin(x)+\cos(x)=-1, -1\bigr\rbrack

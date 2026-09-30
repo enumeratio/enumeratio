@@ -326,6 +326,7 @@ const OVERRIDDEN = [
   "Simplify",
   "Sin",
   "Sinh",
+  "Solve",
   "Sort",
   "Sqrt",
   "Stirling",

@@ -1,25 +1,18 @@
 // Extending a compute-engine built-in with a case of our own, without losing what it did.
 //
-// Three mechanisms exist, and which applies depends on how the built-in is implemented:
+// `declareProtocol` / `declareProtocolImplementation` is real typeclass dispatch, one
+// implementation per (type, protocol) — but only for NEW names. A protocol member named
+// `Reverse` does not extend compute-engine's `Reverse`; the built-in still wins.
 //
-//   1. `declareProtocol` / `declareProtocolImplementation` is real typeclass dispatch, one
-//      implementation per (type, protocol) — but only for NEW names. A protocol member named
-//      `Reverse` does not extend compute-engine's `Reverse`; the built-in still wins.
-//
-//   2. A signature is already an INTERSECTION of overloads, so compute-engine HAS
-//      overloading — it simply has no way to add a clause to a head you did not declare.
-//      Appending one by re-declaring the head is that missing way.
-//
-//   3. The handlers have to come with it. An `evaluate`-backed head (`Sign`, `Inverse`,
-//      `Sort`) carries its behaviour in `evaluate`; a COLLECTION-backed head (`Reverse`,
-//      `Complement`) carries it in `collection` handlers and has no `evaluate` at all.
-//      Copying whichever it has onto the new definition is what preserves it.
-//
-// The two kinds of head take different routes, and the reason is worth knowing. An
-// evaluate-backed head needs no second symbol at all. A collection-backed head does, because
-// its handlers cannot sit on a definition whose clause returns a nominal carrier — and the
-// obvious way out (declaring the clause `-> collection`) silently breaks written composition,
-// which is the whole reason maps are typed. See the comment at that branch.
+// `defineOverload` (`@enumeratio/engine`) is the way that works for an EXISTING head: a row in
+// its table, attached to the operator object already on `ce` IN PLACE — `operator.evaluate`
+// becomes a dispatcher over the rows and the head's own handler, `operator.signature` gains our
+// clause — rather than `ce.declare`-ing a second definition. That is what preserves an
+// `evaluate`-backed head (`Sign`, `Inverse`, `Sort`) AND a COLLECTION-backed one (`Reverse`,
+// `Complement`, whose behaviour lives in `collection` handlers, with no `evaluate` of its own)
+// the same way: `.collection` sits untouched on that same object, so a call that stays
+// unevaluated (`Reverse([1,2,3])`, genuinely lazy) is still the ORIGINAL call, under its own
+// name — nothing was ever re-declared for it to leak a private spelling out of.
 //
 // Verified to preserve laziness and every original overload, with nothing leaking:
 //
@@ -29,16 +22,23 @@
 //   Reverse("abc")                  'cba'                  string overload intact
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineOverload } from "@enumeratio/engine";
+import { defineOverload, overloadTable, type EvaluateOptions } from "@enumeratio/engine";
 
-/** The marker that makes a name private. A TRAILING underscore, because it is legal in a
- *  compute-engine symbol, never appears at the end of a real head, and is one character to
- *  strip when emitting. A LEADING underscore would collide with the pattern-wildcard
- *  convention (`_x`), so it is not available. */
+/** Operators whose `evaluate` has already had the materialization fallback below layered on
+ *  -- so a second `extendBuiltin` call for another carrier on the same collection-backed head
+ *  doesn't stack a second, redundant layer. */
+const materializes = new WeakSet<object>();
+
+/** The marker that once made a name private, for a mechanism this file no longer uses (see the
+ *  top of the file) — kept for the two things still spelled against it: a stray `<Head>_` a
+ *  reader may still meet from before this changed, and `publicName`, a generically useful "drop
+ *  a trailing underscore" a caller may still want regardless. A TRAILING underscore, because it
+ *  is legal in a compute-engine symbol, never appears at the end of a real head, and is one
+ *  character to strip when emitting. A LEADING underscore would collide with the
+ *  pattern-wildcard convention (`_x`), so it was never available either way. */
 export const PRIVATE_SUFFIX = "_";
 
-/** Where a collection-backed original is kept. It shows up in a held result, so the
- *  spelling is chosen to be patchable rather than pretty — see `publicName`. */
+/** Where a collection-backed original was once kept, under the mechanism above. */
 export const privateNameFor = (head: string): string => `${head}${PRIVATE_SUFFIX}`;
 
 /** The public spelling of a name that may be private. Emitting an AST for a reader — a
@@ -46,18 +46,6 @@ export const privateNameFor = (head: string): string => `${head}${PRIVATE_SUFFIX
  *  the whole point of marking privacy with one strippable character. */
 export const publicName = (name: string): string =>
   name.endsWith(PRIVATE_SUFFIX) ? name.slice(0, -PRIVATE_SUFFIX.length) : name;
-
-/** The original signature with our clause appended as one more overload.
- *
- *  Two shapes to handle. A signature that is ALREADY an intersection
- *  (`((T) -> T where T: string) & …`) takes the extra clause directly — wrapping the whole
- *  thing in parentheses breaks the `where` clauses inside it. A single signature
- *  (`(set<any>+) -> set`) has to be parenthesised first, or `& …` reads as part of its
- *  return type rather than as a second overload. */
-function overloaded(signature: string, on: string, returns: string): string {
-  const base = signature.includes("&") ? signature : `(${signature})`;
-  return `${base} & ((${on}) -> ${returns})`;
-}
 
 export interface Extension {
   /** The package extending it, as the manifest names it. */
@@ -84,45 +72,66 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
     : undefined;
   if (!operator) return false;
 
-  const handlers = operator.collection;
-  const signature = overloaded(String(operator.signature), extension.on, extension.returns);
+  const signature = `(${extension.on}) -> ${extension.returns}`;
+  // Idempotent: a second call for the same (package, carrier) pair is a no-op, not a second
+  // row. `defineOverload` itself does not dedupe (a caller legitimately wants several rows
+  // from the same package for different carriers) -- but two IDENTICAL rows, from a caller
+  // (`declareMaps`, here) that runs more than once over the same engine, join into a
+  // signature with the same type parameter bound twice, which `ce.type()` refuses to parse
+  // ("declared more than once"), and `operator.signature` is left on whatever it was before
+  // the throw -- silently dropping the extension's `collection` behaviour along with it.
+  if (
+    overloadTable(ce, extension.head)?.rows.some(
+      (row) => row.package === extension.package && row.signature === signature,
+    )
+  )
+    return true;
 
-  // An EVALUATE-backed head (Sign, Inverse, Sort) is the easy case: a row in its table
-  // (defineOverload), with its honest return type; anything not ours goes on to the next row
-  // or the head's own handler, whoever declared first.
-  if (handlers === undefined) {
-    return defineOverload(ce, extension.head, {
-      package: extension.package,
-      signature: `(${extension.on}) -> ${extension.returns}`,
-      arity: 1,
-      types: [extension.on],
-      evaluate: (ops) => extension.handle(ops[0]!, ce),
-    });
-  }
-
-  // A COLLECTION-backed head (Reverse, Complement) has no evaluate to delegate to, and its
-  // handlers cannot be carried onto a definition whose clause returns a nominal carrier —
-  // the engine refuses that pairing, since a minted type is not a collection.
-  //
-  // Declaring the clause as `-> collection` to satisfy that check does work, and costs more
-  // than it looks: the head's DECLARED return type is then `collection`, so a written
-  // composition like `Complement(Reverse(p))` fails to type-check even though it evaluates
-  // fine. Composition is the whole reason maps are typed, so the honest return type wins and
-  // the original definition is kept, whole, under a private name instead.
-  //
-  // The cost is cosmetic and narrow: a built-in result that stays UNEVALUATED prints under
-  // the private name — `Complement_(Set(1,2))`. The trailing underscore is deliberate: it is
-  // one character to strip when emitting an AST for a reader, which `publicName` does.
-  const primitive = privateNameFor(extension.head);
-  if (!ce.lookupDefinition(primitive)) ce.declare(primitive, operator);
-
-  ce.declare(extension.head, {
+  // See the top of the file: one row, for either kind of head, no second definition.
+  const added = defineOverload(ce, extension.head, {
+    package: extension.package,
     signature,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      const subject = ops[0];
-      if (subject !== undefined && String(subject.type) === extension.on) return extension.handle(subject, ce);
-      return ce.function(primitive, ops).evaluate();
-    },
+    arity: 1,
+    types: [extension.on],
+    evaluate: (ops) => extension.handle(ops[0]!, ce),
   });
-  return true;
+  if (added) restoreMaterialization(operator);
+  return added;
+}
+
+/**
+ * `defineOverload` gives a collection-backed head (`Reverse`, `Complement`, …) a real
+ * `operator.evaluate` where it had none -- and compute-engine's own materialization step
+ * (`expr.evaluate({materialization})`, what `Map`/reference examples use for a lazy result)
+ * only walks a call's `collection` handlers when its operator has NO `evaluate` at all; one
+ * that merely declines (returns `undefined`, our dispatcher's fallback for an operand that
+ * isn't ours) still counts as having one, and materialization stops cold -- `Map(Reverse,
+ * xs)` stayed `[Reverse(a, b), …]`, unmaterialized, instead of `[[b, a], …]`. Layered back on
+ * here: when the dispatcher declines AND materialization was asked for, walk
+ * `options.expression`'s own `.each()` by hand, the same elements the untouched `collection`
+ * handlers would give a direct caller.
+ */
+function restoreMaterialization(operator: { evaluate?: unknown; collection?: unknown }): void {
+  if (operator.collection === undefined || materializes.has(operator)) return;
+  materializes.add(operator);
+  const dispatched = operator.evaluate as (
+    ops: readonly BoxedExpression[],
+    options: EvaluateOptions,
+  ) => BoxedExpression | undefined;
+  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    const result = dispatched(ops, options);
+    if (result !== undefined) return result;
+    // `materialization` is `boolean | number | [number, number]` (a real caller -- a
+    // cooperative-evaluate.ts worker -- passes a COUNT, not `true`); anything but `false`
+    // or absent asks for it.
+    const materialization = options.materialization as boolean | number | readonly number[] | undefined;
+    if (materialization === undefined || materialization === false) return undefined;
+    const expr = (options as { expression?: BoxedExpression }).expression;
+    if (expr === undefined || !expr.isCollection) return undefined;
+    try {
+      return expr.engine.function("List", [...expr.each()]);
+    } catch {
+      return undefined;
+    }
+  };
 }
