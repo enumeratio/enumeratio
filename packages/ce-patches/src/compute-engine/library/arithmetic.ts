@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { widenSignature, wrapOperator } from "@enumeratio/engine";
+import { defineOverload, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: Sqrt(-Infinity) collapses to the undirected ComplexInfinity. The
 // principal branch (Sqrt(-x) = i*Sqrt(x) for real x > 0, DLMF 4.2.2) gives an exact direction
@@ -32,6 +32,37 @@ export function evaluateCeilFloorAtComplexInfinity(ce: ComputeEngine): void {
       1,
     );
   }
+}
+
+// Round's declared carrier is `real | signed_infinity, integer?` -- the same boxing gap as
+// Ceil/Floor above, and the same answer: rounding an infinite magnitude with no direction
+// is still that magnitude (Wolfram: Round[ComplexInfinity] = ComplexInfinity). The optional
+// digits argument doesn't change that -- the handler ignores it, same as native Round
+// ignores it once the value itself is already an integer or an infinity.
+export function evaluateRoundAtComplexInfinity(ce: ComputeEngine): void {
+  widenSignature(ce, "Round", "(real | signed_infinity | ~oo, integer?) -> real | signed_infinity | ~oo", () => true);
+  wrapOperator(
+    ce,
+    ["Round"],
+    (ops: readonly BoxedExpression[]) => ops[0]?.json === "ComplexInfinity",
+    () => () => ce.symbol("ComplexInfinity"),
+    { min: 1, max: 2 },
+  );
+}
+
+// Sign(z) = z/|z| needs a direction to answer with; the undirected ComplexInfinity has
+// none, unlike the real signed infinities (Sign(+-Infinity) = +-1, already native) -- same
+// direction-dependence as Arctan/Erfc's ComplexInfinity case elsewhere in this patch.
+// Wolfram: Sign[ComplexInfinity] = Indeterminate.
+export function evaluateSignAtComplexInfinity(ce: ComputeEngine): void {
+  widenSignature(ce, "Sign", "(complex | signed_infinity | ~oo) -> complex | Indeterminate", () => true);
+  wrapOperator(
+    ce,
+    ["Sign"],
+    (ops: readonly BoxedExpression[]) => ops[0]?.json === "ComplexInfinity",
+    () => () => ce.symbol("Indeterminate"),
+    1,
+  );
 }
 
 // --- Multiply at the infinities ----------------------------------------------------------
@@ -82,17 +113,44 @@ export function evaluateMultiplyDirectedInfinity(ce: ComputeEngine): void {
   );
 }
 
-// --- Ln at the infinities --------------------------------------------------------------
+// --- Power(a, ComplexInfinity), and Exp(ComplexInfinity) through it ---------------------
+// `Exp(z)` canonicalizes to `Power(ExponentialE, z)` at BOXING time, before any
+// `Exp`-headed wrapper ever runs (see complex-expand.ts's own comment on the same quirk),
+// so the fix has to sit on `Power`'s own exponent side. `Power` is shared and heavily
+// overloaded -- hypercomplex, residues, numerals and adeles each already carry a `Power`
+// row of their own (`defineOverload`, `@enumeratio/engine`), and so does this package's own
+// tagged-arithmetic gate (declare-tagged-arithmetic.ts) -- but `defineOverload`'s table
+// exists precisely so a new row doesn't disturb any of those: each row's `signature` only
+// ever widens the head's overall type by union (`joinSignatures` intersects call SHAPES,
+// the same trick TypeScript's overloaded functions use, not operand types), and every
+// existing row keeps its own `on`/`when` gate untouched. So this widens narrowly rather
+// than replacing compute-engine's own `(complex | infinity, complex | signed_infinity) ->
+// number` outright, and declines (via `native`) rather than letting the native handler's
+// own case-less branch answer an `incompatible-type` Error for any base this doesn't cover.
+//
+// a^z = e^(z ln a) for a real and positive: bounded and equal to a itself along Re(z) = 0,
+// but unbounded as Re(z) -> +-Infinity in whichever direction ln(a) has the same sign as --
+// direction-dependent, so no limit, at the one exception of a = 1 (1^z is identically the
+// constant 1 for every z, decidable without any limit at all). Negative, complex or
+// unit-modulus bases besides 1 are left alone: (-1)^z or i^z oscillate around the unit
+// circle without a bounded direction-free magnitude either way, a different (and murkier)
+// case this patch doesn't attempt.
+const isPositiveRealConstant = (op: BoxedExpression | undefined): boolean =>
+  op !== undefined && op.im === 0 && Number.isFinite(op.re) && op.re > 0;
 
-// Exp(ComplexInfinity) is left OUT of this patch, deliberately: `Exp(z)` canonicalizes to
-// `Power(ExponentialE, z)` at BOXING time, before any `Exp`-headed wrapper ever runs (see
-// complex-expand.ts's own comment on the same quirk), so the fix would really have to widen
-// `Power`'s own exponent signature. `Power` is a shared, heavily-overloaded head -- five
-// packages besides compute-engine itself already carry their own manifest row for it
-// (hypercomplex, residues, numerals, adeles, this package's own tagged-arithmetic gate),
-// each keyed to the exact signature string in place when their row was written -- widening
-// it here risks a manifest another lane owns going stale in a way this lane can't fully
-// verify. Left for the coordinator: see the report.
+export function evaluatePowerAtComplexInfinity(ce: ComputeEngine): void {
+  defineOverload(ce, "Power", {
+    package: "analytic",
+    signature: "(complex | infinity, complex | signed_infinity | ~oo) -> number | Indeterminate",
+    arity: 2,
+    when: (ops) => ops[1]?.json === "ComplexInfinity" && isPositiveRealConstant(ops[0]),
+    // Declines the native handler for any OTHER base beside a ComplexInfinity exponent --
+    // it has no case for `~oo` and would otherwise answer its own incompatible-type Error,
+    // now that boxing itself accepts the call. Leaves it correctly unevaluated instead.
+    native: (op) => op.json !== "ComplexInfinity",
+    evaluate: (ops) => (ops[0]!.re === 1 ? ce.number(1) : ce.symbol("Indeterminate")),
+  });
+}
 
 // ln(-x) = ln(x) + i*Pi (principal branch, approached from above the (-Infinity, 0] cut):
 // the magnitude diverges as x -> +Infinity while the imaginary part stays at the bounded

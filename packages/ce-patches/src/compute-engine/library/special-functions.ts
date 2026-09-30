@@ -10,7 +10,7 @@
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
 import { BigDecimal, type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
 import {
@@ -522,6 +522,22 @@ export function evaluateGammaAtInfinity(
   if (direction === undefined || !isPureImaginaryDirection(direction)) return r;
 
   return ce.number(0);
+}
+
+// --- LogGamma at -Infinity ---------------------------------------------------------------
+// LogGamma's branch cut runs along (-Infinity, 0], so a real negative argument sits ON the
+// cut: Gamma(x) there oscillates in sign between poles at every negative integer, and
+// Gamma(NegativeInfinity) is already Indeterminate natively for exactly that reason (no
+// single limit, not just an unbounded one). ln of a quantity with no limit has none either
+// -- Indeterminate, not the +Infinity the poles themselves give (isNonPosInt, above).
+export function evaluateLogGammaAtNegativeInfinity(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["LogGamma"],
+    (ops: readonly BoxedExpression[]) => ops[0]?.json === "NegativeInfinity",
+    () => () => ce.symbol("Indeterminate"),
+    1,
+  );
 }
 
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "../numerics/barnes-g.ts";

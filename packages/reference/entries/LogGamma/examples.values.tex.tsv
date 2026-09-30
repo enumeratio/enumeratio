@@ -20,3 +20,4 @@ a-pole-of-gamma	\mathrm{LogGamma}(0)	\infty
 on-the-negative-axis-gamma-frac-32-frac-43-sqrt	\mathrm{LogGamma}(-1.5)	0.860\,047\,015\,376\,479\,7-6.283\,185\,307\,179\,586i
 half-integers-past-frac-12-ln-gamma-frac-32-ln	\mathrm{LogGamma}(\frac{3}{2})	\ln(\frac{\sqrt{\pi}}{2})
 off-the-positive-axis-this-is-the-continuation	\mathrm{LogGamma}(-2.5+1.5i)	-3.717\,513\,451\,191\,792-7.713\,065\,525\,834\,192\,5i
+log-gamma-negativeinfinity-is-indeterminate	\mathrm{LogGamma}(-\infty)	\operatorname{Indeterminate}

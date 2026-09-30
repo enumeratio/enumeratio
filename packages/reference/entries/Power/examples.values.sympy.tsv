@@ -1,0 +1,6 @@
+id	in
+power-2-complexinfinity-is-indeterminate-same	(S(2)**zoo)
+power-half-complexinfinity-is-indeterminate	(S(Rational(1, 2))**zoo)
+power-x-complexinfinity-is-left-unevaluated	(S(Symbol("x"))**zoo)
+power-1-complexinfinity-is-1-1-to-any	(S(1)**zoo)
+power-e-complexinfinity-is-indeterminate-exp	(S(E)**zoo)

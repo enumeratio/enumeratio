@@ -1,0 +1,7 @@
+id	in
+erfi-0	Erfi[0]
+erfi-0p5	Erfi[0.5]
+erfi-1	N[Erfi[1]]
+threads-element-wise-over-a-list	Erfi[List[0, 1]]
+listable-threads-over-its-limits-at-pm-infty	Erfi[List[Infinity, -Infinity]]
+erfi-complexinfinity-is-indeterminate-inheriting	Erfi[ComplexInfinity]

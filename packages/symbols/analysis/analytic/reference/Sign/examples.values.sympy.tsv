@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*
 x-cdot-sign-x-x-here-at-x-5	enumeratio_equal((-5 * sign(-5)), Abs(-5))	True
 the-sign-of-a-nonzero-complex-number-lies-on-the	enumeratio_equal(Abs(sign((3 + 4*I))), 1)	True
 nan-propagates-rather-than-being-treated-as-0	sign(nan)	
+sign-complexinfinity-is-indeterminate-no	sign(zoo)	

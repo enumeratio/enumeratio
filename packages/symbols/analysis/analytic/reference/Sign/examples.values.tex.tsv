@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\top
 x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\top
 the-sign-of-a-nonzero-complex-number-lies-on-the	\vert\mathrm{sgn}(3+4i)\vert=1	\top
 nan-propagates-rather-than-being-treated-as-0	\mathrm{sgn}(\operatorname{NaN})	\operatorname{NaN}
+sign-complexinfinity-is-indeterminate-no	\mathrm{sgn}(\tilde\infty)	\operatorname{Indeterminate}

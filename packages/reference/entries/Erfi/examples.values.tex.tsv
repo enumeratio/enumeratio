@@ -1,0 +1,7 @@
+id	in	out
+erfi-0	\mathrm{Erfi}(0)	0
+erfi-0p5	\mathrm{Erfi}(0.5)	0.614\,952\,094\,696\,510\,980\,84
+erfi-1	N(\mathrm{Erfi}(1))	1.650\,425\,758\,797\,542\,876\,03
+threads-element-wise-over-a-list	\mathrm{Erfi}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack0, \mathrm{Erfi}(1)\bigr\rbrack
+listable-threads-over-its-limits-at-pm-infty	\mathrm{Erfi}(\bigl\lbrack\infty, -\infty\bigr\rbrack)	\bigl\lbrack\infty, -\infty\bigr\rbrack
+erfi-complexinfinity-is-indeterminate-inheriting	\mathrm{Erfi}(\tilde\infty)	\operatorname{Indeterminate}

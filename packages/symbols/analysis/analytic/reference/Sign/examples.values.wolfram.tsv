@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 
 x-cdot-sign-x-x-here-at-x-5	(Times[-5, Sign[-5]] == Abs[-5])	True	-5 \text{sgn}(-5)=| -5|	\text{True}	
 the-sign-of-a-nonzero-complex-number-lies-on-the	(Abs[Sign[Complex[3, 4]]] == 1)	True	| \text{sgn}(3+4 i)| =1	\text{True}	
 nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	Indeterminate	\text{sgn}(\text{Indeterminate})	\text{Indeterminate}	disagree
+sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]				

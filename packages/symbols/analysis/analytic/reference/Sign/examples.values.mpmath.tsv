@@ -22,3 +22,4 @@ sign-z-z-z-see-abs
 x-cdot-sign-x-x-here-at-x-5	almosteq((-5 * sign(-5)), fabs(-5), 1e-20)	True
 the-sign-of-a-nonzero-complex-number-lies-on-the	almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)	True
 nan-propagates-rather-than-being-treated-as-0	sign(nan)	
+sign-complexinfinity-is-indeterminate-no		

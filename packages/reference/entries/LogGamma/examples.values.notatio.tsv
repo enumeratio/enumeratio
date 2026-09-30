@@ -20,3 +20,4 @@ a-pole-of-gamma	<LogGamma>0</LogGamma>	<PositiveInfinity />
 on-the-negative-axis-gamma-frac-32-frac-43-sqrt	<LogGamma>-1.5</LogGamma>	<Complex>0.8600470153764797 -6.283185307179586</Complex>
 half-integers-past-frac-12-ln-gamma-frac-32-ln	<LogGamma><Rational>3 2</Rational></LogGamma>	<Ln><Multiply><Rational>1 2</Rational> <Sqrt>Pi</Sqrt></Multiply></Ln>
 off-the-positive-axis-this-is-the-continuation	<LogGamma><Complex>-2.5 1.5</Complex></LogGamma>	<Complex>-3.717513451191792 -7.7130655258341925</Complex>
+log-gamma-negativeinfinity-is-indeterminate	<LogGamma>NegativeInfinity</LogGamma>	<Indeterminate />

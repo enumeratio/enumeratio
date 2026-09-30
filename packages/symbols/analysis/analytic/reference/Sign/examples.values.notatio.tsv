@@ -22,3 +22,4 @@ sign-z-z-z-see-abs	<Equal><Sign><Complex>3 4</Complex></Sign> <Divide><Complex>3
 x-cdot-sign-x-x-here-at-x-5	<Equal><Multiply>-5 <Sign>-5</Sign></Multiply> <Abs>-5</Abs></Equal>	<True />
 the-sign-of-a-nonzero-complex-number-lies-on-the	<Equal><Abs><Sign><Complex>3 4</Complex></Sign></Abs> 1</Equal>	<True />
 nan-propagates-rather-than-being-treated-as-0	<Sign>NaN</Sign>	<NaN />
+sign-complexinfinity-is-indeterminate-no	<Sign>ComplexInfinity</Sign>	<Indeterminate />

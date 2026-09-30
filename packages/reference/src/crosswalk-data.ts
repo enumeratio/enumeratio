@@ -2179,6 +2179,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Erfi",
     fungrimEntries: ["01440f", "603a49"],
+    wolfram: "Erfi",
   },
   {
     name: "ErrorBox",

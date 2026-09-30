@@ -1,0 +1,7 @@
+id	section	role	expr	expected	known	source	caption
+erfi-0			[Erfi, 0]	0			
+erfi-0p5			[Erfi, 0.5]	{num: "0.61495209469651098084"}			A floating-point argument evaluates directly to a high-precision decimal
+erfi-1		test	[N, [Erfi, 1]]	{num: "1.65042575879754287603"}			
+threads-element-wise-over-a-list	Scope		[Erfi, [List, 0, 1]]	[List, 0, [Erfi, 1]]			Threads element-wise over a list, as Wolfram's Listable heads do
+listable-threads-over-its-limits-at-pm-infty	Scope		[Erfi, [List, PositiveInfinity, NegativeInfinity]]	[List, PositiveInfinity, NegativeInfinity]			Listable: threads over its limits at $\pm\infty$, unbounded unlike Erfc's saturating 0/2
+erfi-complexinfinity-is-indeterminate-inheriting	Possible issues		[Erfi, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 7.2.2	Erfi(ComplexInfinity) is Indeterminate, inheriting Erf's direction-dependent growth off the real axis

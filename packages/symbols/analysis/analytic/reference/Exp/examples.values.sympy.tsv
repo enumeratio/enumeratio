@@ -39,3 +39,4 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig
 exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	-2	
 a-lone-exp-factor-is-untouched	(exp(Symbol("x")) * Symbol("y"))	True	
 same-base-non-e-powers-are-left-alone	((S(2)**Symbol("x")) * (S(2)**Symbol("y")))	True	
+exp-complexinfinity-is-indeterminate-via	exp(zoo)		

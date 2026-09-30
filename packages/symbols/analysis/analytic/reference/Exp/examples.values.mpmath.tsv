@@ -39,3 +39,4 @@ euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig
 exp-ln-of-a-negative-real-is-left-unevaluated	exp(log(-2))	(-2.0 + 3.39137106414755985758348058775e-31j)	
 a-lone-exp-factor-is-untouched			
 same-base-non-e-powers-are-left-alone			
+exp-complexinfinity-is-indeterminate-via			

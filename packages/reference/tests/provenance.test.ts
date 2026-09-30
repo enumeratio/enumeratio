@@ -227,6 +227,7 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "Erfi",
   "Exp",
   "ExtendedGCD",
   "FactorInteger",

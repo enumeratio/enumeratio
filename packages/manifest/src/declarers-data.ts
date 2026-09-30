@@ -308,6 +308,7 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   Erf: ["analytic"],
   ErfInv: ["analytic"],
   Erfc: ["analytic"],
+  Erfi: ["analytic"],
   ErrorBox: ["boxes"],
   EulerE: ["number-theory"],
   EvaluateForm: ["modular"],

@@ -1,0 +1,6 @@
+id	in	out
+power-2-complexinfinity-is-indeterminate-same	2^{\tilde\infty}	\operatorname{Indeterminate}
+power-half-complexinfinity-is-indeterminate	(\frac{1}{2})^{\tilde\infty}	\operatorname{Indeterminate}
+power-x-complexinfinity-is-left-unevaluated	x^{\tilde\infty}	x^{\tilde\infty}
+power-1-complexinfinity-is-1-1-to-any	1^{\tilde\infty}	1
+power-e-complexinfinity-is-indeterminate-exp	e^{\tilde\infty}	\operatorname{Indeterminate}

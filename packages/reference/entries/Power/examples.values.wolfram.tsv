@@ -1,0 +1,6 @@
+id	in
+power-2-complexinfinity-is-indeterminate-same	Power[2, ComplexInfinity]
+power-half-complexinfinity-is-indeterminate	Power[Rational[1, 2], ComplexInfinity]
+power-x-complexinfinity-is-left-unevaluated	Power[x, ComplexInfinity]
+power-1-complexinfinity-is-1-1-to-any	Power[1, ComplexInfinity]
+power-e-complexinfinity-is-indeterminate-exp	Power[E, ComplexInfinity]
