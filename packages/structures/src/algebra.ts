@@ -10,8 +10,14 @@ import { ensureProtocols } from "./protocols.ts";
 // of their own to dispatch on. Until they do, each library registers a product that declines
 // what isn't its own, and the first answer wins.
 
-/** The ordered product of `operands`, or undefined when they aren't this library's. */
-export type Product = (operands: readonly BoxedExpression[]) => BoxedExpression | undefined;
+/**
+ * The ordered product of `operands` under `head`, or undefined when they aren't this
+ * library's. `head` distinguishes `CircleTimes` — total, and commutative once neither side
+ * carries a generator — from `NonCommutativeMultiply`/`GeometricProduct`, which must decline
+ * a generator-free product rather than fold it into `Multiply`: that would silently assume
+ * commutativity the caller never granted.
+ */
+export type Product = (operands: readonly BoxedExpression[], head: string) => BoxedExpression | undefined;
 
 const PRODUCT_HEADS = ["NonCommutativeMultiply", "GeometricProduct", "CircleTimes"];
 
@@ -38,7 +44,7 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
       associative: true,
       evaluate: (ops: readonly BoxedExpression[]) => {
         for (const product of products.values()) {
-          const answer = product(ops);
+          const answer = product(ops, head);
           if (answer !== undefined) return answer;
         }
         return undefined;

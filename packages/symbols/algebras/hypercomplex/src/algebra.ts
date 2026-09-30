@@ -174,12 +174,20 @@ export function declareAlgebras(ce: ComputeEngine): void {
       const verdict = containsIn(algebra, element);
       return verdict === undefined ? undefined : ce.symbol(verdict ? "True" : "False");
     },
-    product: (ops) => {
+    product: (ops, head) => {
       // Decline anything that is not ours. `toMultivector` reads ANY generator-free
       // expression as a scalar coefficient, which is right inside a multivector and
       // wrong at the seam: without this guard a product of two `Diagram`s would be
       // claimed here and multiplied as if the diagrams were opaque numbers.
       if (!ops.every(isScalarLike)) return undefined;
+      // A generator-free `NonCommutativeMultiply`/`GeometricProduct` of two or more operands
+      // isn't a Clifford product at all — it's some other library's non-commutative operation
+      // on plain scalars. Claiming it here folded it straight into commutative `Multiply`
+      // (every operand read as a scalar coefficient), silently discarding the caller's
+      // non-commutativity. A single operand has nothing to commute, so it still reduces to
+      // itself below. `CircleTimes` is exempt throughout: it is total and commutative on
+      // scalars by definition (see algebra.test.ts's "⊗ is total, not Clifford-only").
+      if (head !== "CircleTimes" && ops.length > 1 && !ops.some(containsGenerator)) return undefined;
       const parts = ops.map((op) => toMultivector(ce, op));
       if (!parts.every((p): p is NonNullable<typeof p> => p !== undefined)) return undefined;
       if (parts.length === 0) return ce.number(1);
