@@ -1202,9 +1202,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.141.0
         version: 0.141.0
-      '@enumeratio/combinatorics':
-        specifier: workspace:*
-        version: link:../combinatorics
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry

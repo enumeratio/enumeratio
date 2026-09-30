@@ -2,7 +2,7 @@
   "name": "@enumeratio/statistics",
   "version": "0.0.0",
   "private": true,
-  "description": "Combinatorial statistics and maps, defined as Epsil expressions over their carriers — one definition per signature, evaluated directly.",
+  "description": "Probability distributions and random processes, defined as Epsil expressions.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.141.0",
-    "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
