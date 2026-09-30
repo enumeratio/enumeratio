@@ -3,28 +3,28 @@ fold-add-0-list-1-2-3-4	\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4\bi
 fold-multiply-1-list-1-2-3-4	\mathrm{Fold}(\mathrm{Multiply}, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	24
 the-shape-of-a-left-fold	\mathrm{Fold}(f, x, \bigl\lbrack a, b, c\bigr\rbrack)	f(f(f(x, a), b), c)
 fold-max-0-list-3-1-4-1-5	\mathrm{Fold}(\mathrm{Max}, 0, \bigl\lbrack3, 1, 4, 1, 5\bigr\rbrack)	5
-reduce-list-a-b-c-d-f-x	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d\bigr\rbrack, f\right)	f(f(f(f(x, a), b), c), d)
-reduce-list-a-b-c-d-list-x	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{List}\right)	\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack, c\bigr\rbrack, d\bigr\rbrack
-reduce-list-a-b-c-d-multiply-1	\prod \bigl\lbrack a, b, c, d\bigr\rbrack	abcd
-reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d	\operatorname{Reduce}\left(\mathrm{Rest}(\bigl\lbrack a, b, c, d\bigr\rbrack), f\right)	f(f(f(a, b), c), d)
+reduce-list-a-b-c-d-f-x		
+reduce-list-a-b-c-d-list-x		
+reduce-list-a-b-c-d-multiply-1		
+reduce-rest-list-a-b-c-d-f-first-list-a-b-c-d		
 symbolic-elements	\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack a, b, c\bigr\rbrack)	a+b+c
 any-two-argument-function-here-one-that-nests	\mathrm{Fold}(()\mapsto\bigl\lbrack\operatorname{\_1}, \operatorname{\_2}\bigr\rbrack, x, \bigl\lbrack a, b\bigr\rbrack)	\bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack
 without-a-seed-folding-starts-from-the-first	\mathrm{Fold}(f, \bigl\lbrack a, b, c\bigr\rbrack)	f(f(a, b), c)
-reduce-rest-list-a-b-c-d-power-first-list-a-b-c	\operatorname{Reduce}\left(\mathrm{Rest}(\bigl\lbrack a, b, c, d\bigr\rbrack), \mathrm{Power}\right)	((a^{b})^{c})^{d}
-reduce-list-list-1-4-3-2-list-3-2-4-1-permute	\operatorname{Reduce}\left(\bigl\lbrack\bigl\lbrack1, 4, 3, 2\bigr\rbrack, \bigl\lbrack3, 2, 4, 1\bigr\rbrack\bigr\rbrack, \mathrm{Permute}\right)	\bigl\lbrack b, d, a, c\bigr\rbrack
-reduce-list-a-b-c-d-function-list-2-times-1-3	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d\bigr\rbrack, ()\mapsto\bigl\lbrack2\operatorname{\_1}, 3\operatorname{\_2}\bigr\rbrack\right)	\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack16x, 24a\bigr\rbrack, 12b\bigr\rbrack, 6c\bigr\rbrack, 3d\bigr\rbrack
+reduce-rest-list-a-b-c-d-power-first-list-a-b-c		
+reduce-list-list-1-4-3-2-list-3-2-4-1-permute		
+reduce-list-a-b-c-d-function-list-2-times-1-3		
 assemble-a-number-from-its-decimal-digits	\mathrm{Fold}(()\mapsto10\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	1\,234
 or-from-its-binary-digits-1011-2-11	\mathrm{Fold}(()\mapsto2\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 0, 1, 1\bigr\rbrack)	11
 horner-s-rule-for-ax-2-bx-c	\mathrm{Fold}(()\mapsto x\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack a, b, c\bigr\rbrack)	x\times(ax+b)+c
 evaluate-the-continued-fraction-1-2-2-2-from-the	\mathrm{Fold}(()\mapsto\operatorname{\_2}+\frac{1}{\operatorname{\_1}}, 2, \bigl\lbrack2, 2, 1\bigr\rbrack)	\frac{17}{12}
-reduce-list-2-4-3-partition-range-1-30	\operatorname{Reduce}\left(\bigl\lbrack2, 4, 3\bigr\rbrack, \mathrm{Partition}\right)	\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack9, 10\bigr\rbrack, \bigl\lbrack11, 12\bigr\rbrack, \bigl\lbrack13, 14\bigr\rbrack, \bigl\lbrack15, 16\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack17, 18\bigr\rbrack, \bigl\lbrack19, 20\bigr\rbrack, \bigl\lbrack21, 22\bigr\rbrack, \bigl\lbrack23, 24\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack
-reduce-list-a-b-c-d-exponentiale-function-1	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d, e\bigr\rbrack, ()\mapsto\operatorname{\_1}x+\operatorname{\_2}\right)	x\times(x\times(x\times(ax+b)+c)+d)+e
-reduce-list-4-5-1-6-7-8-function-10-times-1-plus	\operatorname{Reduce}\left(\bigl\lbrack4, 5, 1, 6, 7, 8\bigr\rbrack, ()\mapsto10\operatorname{\_1}+\operatorname{\_2}\right)	451\,678
-reduce-list-a-b-c-d-function-list-2-1-1-2-x	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d\bigr\rbrack, ()\mapsto\bigl\lbrack\operatorname{\_2}, \operatorname{\_1}\bigr\rbrack\right)	\bigl\lbrack d, \bigl\lbrack c, \bigl\lbrack b, \bigl\lbrack a, x\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack
+reduce-list-2-4-3-partition-range-1-30		
+reduce-list-a-b-c-d-exponentiale-function-1		
+reduce-list-4-5-1-6-7-8-function-10-times-1-plus		
+reduce-list-a-b-c-d-function-list-2-1-1-2-x		
 folding-an-empty-list-returns-the-seed	\mathrm{Fold}(f, x, \bigl\lbrack\bigr\rbrack)	x
 folding-with-add-is-a-sum-1-2-100	\mathrm{Fold}(\mathrm{Add}, 0, 1..100)	5\,050
-reduce-rest-list-a-f-first-list-a	\operatorname{Reduce}\left(\mathrm{Rest}(\bigl\lbrack a\bigr\rbrack), f\right)	\mathrm{First}(\bigl\lbrack a\bigr\rbrack)
-reduce-list-a-b-c-d-g-x	\operatorname{Reduce}\left(\bigl\lbrack a, b, c, d\bigr\rbrack, g\right)	g(g(g(g(x, a), b), c), d)
-reduce-list-1-2-3-4-5-append-list	\operatorname{Reduce}\left(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \mathrm{Append}\right)	\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack
-reduce-rest-list-f-first-list	\operatorname{Reduce}\left(\mathrm{Rest}(\bigl\lbrack\bigr\rbrack), f\right)	\mathrm{First}(\bigl\lbrack\bigr\rbrack)
-reduce-list-a-b-c-function-join-s-map-function	\operatorname{Reduce}\left(\bigl\lbrack a, b, c\bigr\rbrack, (s, e)\mapsto\mathrm{Join}(s, \mathrm{Map}(\operatorname{\_1}\mapsto\mathrm{Symbol}(e), s))\right)	\bigl\lbrack\bigl\lbrack\bigr\rbrack, a, b, b, c, c, c, c\bigr\rbrack
+reduce-rest-list-a-f-first-list-a		
+reduce-list-a-b-c-d-g-x		
+reduce-list-1-2-3-4-5-append-list		
+reduce-rest-list-f-first-list		
+reduce-list-a-b-c-function-join-s-map-function		

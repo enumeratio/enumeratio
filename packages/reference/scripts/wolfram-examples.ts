@@ -81,14 +81,19 @@ export function adaptInput(held: string): Adapted {
   if (code.includes("\\[")) return fail("named character");
   // `2`100` is 2 to 100 digits; `fromWolfram` would drop the mark and change the question.
   if (/\d`/.test(code)) return fail("precision mark");
-  // Every unmapped name, sorted, so a report can tell which one alone would unlock an input.
+  // Every unmapped built-in, sorted, so a report can tell which one alone would unlock an input.
+  // A name that isn't a Wolfram built-in is the example's own: a free symbol (`x`, `A`), or,
+  // called, a function it leaves undefined (`f[x]`, `F[x]`), which no mapping would unlock.
   const unmapped = new Set<string>();
+  const userFunctions = new Set<string>();
   for (const [, name, call] of code.matchAll(/([A-Za-z$][A-Za-z0-9$]*(?:`[A-Za-z$][A-Za-z0-9$]*)*)(\s*\[)?/g)) {
     if (EFFECTS.has(name!) || NOT_A_VALUE.test(name!)) return fail(`effect ${name}`);
     const ours = name! in REVERSE_HEADS || STRUCTURAL.has(name!) || MAPPED_SYMBOLS.has(name!);
     if (ours) continue;
-    if (isSystemName(name!) || call !== undefined || !/^[a-z][A-Za-z0-9]*$/.test(name!)) unmapped.add(name!);
+    if (isSystemName(name!) || !/^[A-Za-z][A-Za-z0-9]*$/.test(name!)) unmapped.add(name!);
+    else if (call !== undefined) userFunctions.add(name!);
   }
+  if (userFunctions.size > 0) return fail(`user function ${[...userFunctions].toSorted().join(" ")}`);
   if (unmapped.size > 0) return fail(`unmapped ${[...unmapped].toSorted().join(" ")}`);
   try {
     return { ok: true, expr: fromWolfram(text) };

@@ -14,10 +14,10 @@ cuberoot-x-eq-surd-x-3	Equal[CubeRoot[x], Surd[x, 3]]
 fullsimplify-d-integrate-cuberoot-x-x-nothing	FullSimplify[Equal[D[Integrate[Function[x, CubeRoot[x]], List[x, Null, Null]], x], CubeRoot[x]]]	[FullSimplify, [Equal, [D, [Integrate, [Function, [CubeRoot, x], x], [Limits, x, Nothing, Nothing]], x], [CubeRoot, x]]]
 fullsimplify-integrate-sin-x-times-cuberoot-x-x	FullSimplify[Integrate[Function[x, Times[Sin[x], CubeRoot[x]]], List[x, 0, 5]]]	[FullSimplify, [Integrate, [Function, [Multiply, [Sin, x], [CubeRoot, x]], x], [Limits, x, 0, 5]]]
 d-cuberoot-x-x	D[CubeRoot[x], x]	
-solve-cuberoot-x-eq-3-times-2-pow-neg-1-x	Solve[Equal[CubeRoot[x], Times[3, Power[2, -1]]], x]	
-fullsimplify-d-cuberoot-x-list-x-k	FullSimplify[D[CubeRoot[x], List[x, k]]]	
-seriescoefficient-cuberoot-x-list-x-1-n	SeriesCoefficient[CubeRoot[x], List[x, 1, n]]	
-fullsimplify-fourierseries-cuberoot-x-x-1	FullSimplify[FourierSeries[CubeRoot[x], x, 1]]	
-fullsimplify-integrate-cuberoot-x-times	FullSimplify[Integrate[Function[x, Times[CubeRoot[x], Power[E, x]]], List[x, Null, Null]]]	[FullSimplify, [Integrate, [Function, [Multiply, [CubeRoot, x], [Power, ExponentialE, x]], x], [Limits, x, Nothing, Nothing]]]
+solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
+fullsimplify-d-cuberoot-x-list-x-k		
+seriescoefficient-cuberoot-x-list-x-1-n		
+fullsimplify-fourierseries-cuberoot-x-x-1		
+fullsimplify-integrate-cuberoot-x-times		
 the-same-as-root-with-index-3	Equal[CubeRoot[-64], Power[-64, Divide[1, 3]]]	[Equal, [CubeRoot, -64], [Power, -64, [Divide, 1, 3]]]
 cuberoot-neg-8	CubeRoot[-8]	

@@ -3,4 +3,4 @@ id	in
 list-list-a-b-list-c-d-times-list-x-y	([[SR.var("a"), SR.var("b")], [SR.var("c"), SR.var("d")]] * [SR.var("x"), SR.var("y")])
 interval-neg-1-2-times-interval-2-3	
 product-1-over-i-plus-2-times-i-plus-1-i-1-n	
-neg-noncommutativemultiply-b-a-plus	((-(SR.var("b") * SR.var("a"))) + (SR.var("a") * SR.var("b")))
+neg-noncommutativemultiply-b-a-plus	

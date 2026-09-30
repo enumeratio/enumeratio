@@ -6,7 +6,7 @@ divisorsum-20-f	<DivisorSum>20 f</DivisorSum>	<Add><f>1</f> <f>2</f> <f>4</f> <f
 divisorsum-20-f-isprime	<DivisorSum>20 f IsPrime</DivisorSum>	<Add><f>2</f> <f>5</f></Add>
 divisorsum-20-function-1-1	<DivisorSum>20 <Function><Block>_1</Block> _1</Function></DivisorSum>	<ToExpression>42</ToExpression>
 divisorsum-20-function-1-1-function-1-lt-5-1	<DivisorSum>20 <Function><Block>_1</Block> _1</Function> <Function><Block><Less>_1 5</Less></Block> _1</Function></DivisorSum>	<ToExpression>7</ToExpression>
-divisorsum-1-plus-10-pow-50-function-1-1	<DivisorSum><Add>1 <Power>10 50</Power></Add> <Function><Block>_1</Block> _1</Function></DivisorSum>	<DivisorSum>100000000000000000000000000000000000000000000000001 <Function><Block>_1</Block> _1</Function></DivisorSum>
+divisorsum-1-plus-10-pow-50-function-1-1		
 sum-d-mid-n-mu-d-0-for-n-1	<DivisorSum>12 <Function><MoebiusMu>d</MoebiusMu> d</Function></DivisorSum>	<ToExpression>0</ToExpression>
 sum-d-mid-n-varphi-d-n	<DivisorSum>36 <Function><Totient>d</Totient> d</Function></DivisorSum>	<ToExpression>36</ToExpression>
 divisorsum-1-000-function-1-pow-2-1	<DivisorSum>1000 <Function><Block><Power>_1 2</Power></Block> _1</Function></DivisorSum>	<ToExpression>1383460</ToExpression>
@@ -15,4 +15,4 @@ divisorsum-11-function-1-1-isprime	<DivisorSum>11 <Function><Block>_1</Block> _1
 1-has-one-divisor	<DivisorSum>1 <Function>d d</Function></DivisorSum>	<ToExpression>1</ToExpression>
 n-divisorsum-n-function-1-over-1-plus-1-1	<N><DivisorSum>n <Function><Block><Divide>1 <Add>_1 1</Add></Divide></Block> _1</Function></DivisorSum></N>	<DivisorSum>n <Function><Block><Divide>1 <Add>_1 1</Add></Divide></Block> _1</Function></DivisorSum>
 n-divisorsum-9-function-1-over-1-plus-1-1	<N><DivisorSum>9 <Function><Block><Divide>1 <Add>_1 1</Add></Divide></Block> _1</Function></DivisorSum></N>	<Rational>17 20</Rational>
-divisorsum-10-f-g	<DivisorSum>10 f g</DivisorSum>	<ToExpression>0</ToExpression>
+divisorsum-10-f-g		

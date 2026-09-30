@@ -2,11 +2,11 @@ id	in	out
 numberexpand-1-234	<NumberExpand>1234</NumberExpand>	<List>1000 200 30 4</List>
 numberexpand-157	<NumberExpand>157</NumberExpand>	<List>100 50 7</List>
 numberexpand-157-2	<NumberExpand>157 2</NumberExpand>	<List>128 0 0 16 8 4 0 1</List>
-numberexpand-157-2-3	<NumberExpand>157 2 3</NumberExpand>	<List>128 0 0 16 8 4 0 1</List>
+numberexpand-157-2-3		
 base-2-zero-terms-kept	<NumberExpand>10 2</NumberExpand>	<List>8 0 2 0</List>
 every-term-carries-the-sign	<NumberExpand>-123</NumberExpand>	<List>-100 -20 -3</List>
 numberexpand-1-437	<NumberExpand>1437</NumberExpand>	<List>1000 400 30 7</List>
 numberexpand-neg-14-379	<NumberExpand>-14379</NumberExpand>	<List>-10000 -4000 -300 -70 -9</List>
 numberexpand-1-532	<NumberExpand>1532</NumberExpand>	<List>1000 500 30 2</List>
 numberexpand-1-532-10	<NumberExpand>1532 10</NumberExpand>	<List>1000 500 30 2</List>
-numberexpand-1-437-10-8	<NumberExpand>1437 10 8</NumberExpand>	<List>0 0 0 0 1000 400 30 7</List>
+numberexpand-1-437-10-8		

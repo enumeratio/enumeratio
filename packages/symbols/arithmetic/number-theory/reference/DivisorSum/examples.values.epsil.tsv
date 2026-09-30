@@ -6,7 +6,7 @@ divisorsum-20-f	DivisorSum(20, f)	f(1) + f(2) + f(4) + f(5) + f(10) + f(20)
 divisorsum-20-f-isprime	DivisorSum(20, f, isPrime)	f(2) + f(5)	
 divisorsum-20-function-1-1	DivisorSum(20, Function(_1, _1))	42	Unreadable
 divisorsum-20-function-1-1-function-1-lt-5-1	DivisorSum(20, Function(_1, _1), Function(_1 < 5, _1))	7	Unreadable
-divisorsum-1-plus-10-pow-50-function-1-1	DivisorSum(1 + 10 ^ 50, Function(_1, _1))	"DivisorSum(\n            100_000_000_000_000_000_000_000_000_000_000_000_000_000_000_000_001,\n            Function(_1, _1),\n          )"	Unreadable
+divisorsum-1-plus-10-pow-50-function-1-1			
 sum-d-mid-n-mu-d-0-for-n-1	DivisorSum(12, Function(moebiusMu(d), d))	0	Unreadable
 sum-d-mid-n-varphi-d-n	DivisorSum(36, Function(totient(d), d))	36	Unreadable
 divisorsum-1-000-function-1-pow-2-1	DivisorSum(1_000, Function(_1 ^ 2, _1))	1_383_460	Unreadable
@@ -15,4 +15,4 @@ divisorsum-11-function-1-1-isprime	DivisorSum(11, Function(_1, _1), isPrime)	11	
 1-has-one-divisor	DivisorSum(1, Function(d, d))	1	Unreadable
 n-divisorsum-n-function-1-over-1-plus-1-1	N(DivisorSum(n, Function(1 / (_1 + 1), _1)))	DivisorSum(n, Function(1 / (_1 + 1), _1))	Unreadable
 n-divisorsum-9-function-1-over-1-plus-1-1	N(DivisorSum(9, Function(1 / (_1 + 1), _1)))	17 / 20	Unreadable
-divisorsum-10-f-g	DivisorSum(10, f, g)	0	
+divisorsum-10-f-g			

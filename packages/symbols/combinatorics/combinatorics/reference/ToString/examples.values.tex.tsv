@@ -1,7 +1,7 @@
 id	in	out
 prints-a-list-as-notatio-source	\mathrm{ToString}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\text{[1, 2, 3]}
-tostring-x-pow-2	\mathrm{ToString}(x^2)	\text{x \textasciicircum{} 2}
+tostring-x-pow-2		
 prints-an-arithmetic-expression	\mathrm{ToString}(x+1)	\text{x + 1}
-tostring-exponentiale-pow-x	\mathrm{ToString}(e^{x})	\text{exponentialE \textasciicircum{} x}
-tostring-cos-x-plus-cos-y	\mathrm{ToString}(\cos(x)+\cos(y))	\text{cos(x) + cos(y)}
+tostring-exponentiale-pow-x		
+tostring-cos-x-plus-cos-y		
 tostring-kappa	\mathrm{ToString}(\kappa)	\text{kappa}

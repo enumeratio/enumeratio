@@ -1,7 +1,7 @@
 id	in	out
 drop-list-a-b-c-d-exponentiale-f-2	drop([a, b, c, d, exponentialE, f], 2)	[c, d, exponentialE, f]
-drop-list-a-b-c-d-exponentiale-f-neg-3	drop([a, b, c, d, exponentialE, f], -3)	[a, b, c, d, exponentialE, f]
+drop-list-a-b-c-d-exponentiale-f-neg-3		
 drop-list-list-11-12-13-list-21-22-23-list-31-32	drop([[11, 12, 13], [21, 22, 23], [31, 32, 33]], 1)	[[21, 22, 23], [31, 32, 33]]
 drop-list-a-b-c-d-exponentiale-1	drop([a, b, c, d, exponentialE], 1)	[b, c, d, exponentialE]
-drop-list-a-b-c-d-exponentiale-neg-1	drop([a, b, c, d, exponentialE], -1)	[a, b, c, d, exponentialE]
+drop-list-a-b-c-d-exponentiale-neg-1		
 drop-list-a-b-c-d-exponentiale-4	drop([a, b, c, d, exponentialE], 4)	[exponentialE]

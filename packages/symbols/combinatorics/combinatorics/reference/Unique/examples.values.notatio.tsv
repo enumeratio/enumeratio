@@ -10,5 +10,5 @@ unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	<Unique><List>1 7 8 4 3 4 1 9 8 9 2</L
 count-the-distinct-elements	<Length><Unique><List>1 2 2 3 3 3</List></Unique></Length>	<ToExpression>3</ToExpression>
 the-residues-mod-3-that-occur-in-order-of-first	<Unique><Mod><Range>10</Range> 3</Mod></Unique>	<List>1 2 0</List>
 idempotent	<Unique><Unique><List>1 1 2</List></Unique></Unique>	<List>1 2</List>
-unique-list-function-sum-1-eq-sum-2-1-2	<Unique>list <Function><Block><Equal><Sum>_1</Sum> <Sum>_2</Sum></Equal></Block> _1 _2</Function></Unique>	<Apply>List</Apply>
+unique-list-function-sum-1-eq-sum-2-1-2		
 unique-list-3-3-3-function-false	<Unique><List>3 3 3</List> <Function><Block>False</Block></Function></Unique>	<List>3 3 3</List>

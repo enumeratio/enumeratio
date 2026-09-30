@@ -28,4 +28,4 @@ refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	Refine[Log[Power[x, y]], And[Greater[x
 refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	Refine[Sqrt[Plus[Power[x, 2], Times[2, x, y], Power[y, 2]]], GreaterEqual[Plus[x, y], 0]]
 an-undecidable-inequality-is-left-alone	Refine[Greater[Power[x, 2], 0]]
 refine-x-in-realnumbers-x-pow-2-lt-1	Refine[Element[x, Reals], Less[Power[x, 2], 1]]
-refine-neg-1-lt-x-lt-1-x-pow-2-lt-1	Refine[Less[-1, x, 1], Less[Power[x, 2], 1]]
+refine-neg-1-lt-x-lt-1-x-pow-2-lt-1	

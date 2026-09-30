@@ -6,4 +6,4 @@ map-function-vertexeccentricity-cyclegraph-5-1-1	Map[Function[VertexEccentricity
 isacyclicgraph-cyclegraph-5	AcyclicGraphQ[CycleGraph[5]]	
 vertexdegree-cyclegraph-7	VertexDegree[CycleGraph[7]]	
 cyclegraph-4	CycleGraph[4]	
-ispathgraph-cyclegraph-5	PathGraphQ[CycleGraph[5]]	
+ispathgraph-cyclegraph-5		

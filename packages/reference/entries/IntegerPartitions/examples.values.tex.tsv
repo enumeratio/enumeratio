@@ -3,11 +3,11 @@ the-partitions-of-8-into-at-most-3-parts	\mathrm{IntegerPartitions}(8, 3)	\bigl\
 integerpartitions-5	\mathrm{IntegerPartitions}(5)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack5\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1, 1, 1\bigr\rbrack)\bigr\rbrack
 exactly-3-parts	\mathrm{IntegerPartitions}(8, \bigl\lbrack3\bigr\rbrack)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack6, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 2, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 3, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 2, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 3, 2\bigr\rbrack)\bigr\rbrack
 parts-restricted-to-1-2-5	\mathrm{IntegerPartitions}(8, \mathrm{All}, \bigl\lbrack1, 2, 5\bigr\rbrack)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack5, 2, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2, 2, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2, 2, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 1, 1, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack)\bigr\rbrack
-integerpartitions-6-list-2-positiveinfinity-2	\mathrm{IntegerPartitions}(6, \bigl\lbrack2, \infty, 2\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
-integerpartitions-3-10-list-1-1-over-3-3-over-4	\mathrm{IntegerPartitions}(3, 10, \bigl\lbrack1, \frac{1}{3}, \frac{3}{4}\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
-integerpartitions-5-10-list-1-neg-1	\mathrm{IntegerPartitions}(5, 10, \bigl\lbrack1, -1\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
+integerpartitions-6-list-2-positiveinfinity-2		
+integerpartitions-3-10-list-1-1-over-3-3-over-4		
+integerpartitions-5-10-list-1-neg-1		
 the-ways-to-make-change-for-a-dollar-from-1-5-10	\mathrm{Count}(\mathrm{IntegerPartitions}(100, \mathrm{All}, \bigl\lbrack1, 5, 10, 25, 50\bigr\rbrack))	292
-integerpartitions-156-10-list-1-5-10-25	\mathrm{IntegerPartitions}(156, 10, \bigl\lbrack1, 5, 10, 25\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
+integerpartitions-156-10-list-1-5-10-25		
 the-family-has-p-8-22-members-compute-engine-s	\mathrm{NPartition}(8)	22
 integerpartitions-4	\mathrm{IntegerPartitions}(4)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack4\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1, 1\bigr\rbrack)\bigr\rbrack
 length-integerpartitions-10	\mathrm{Length}(\mathrm{IntegerPartitions}(10))	42

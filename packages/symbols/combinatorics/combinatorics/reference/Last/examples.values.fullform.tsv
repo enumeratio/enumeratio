@@ -12,7 +12,7 @@ of-a-matrix-the-last-row	Last[List[List[a, b], List[c, d], List[f, g]]]
 a-lazy-range-works-too	Last[Range[5, 10]]	
 any-expression-not-just-a-list-the-last-term-of	Last[Plus[Power[a, 2], Power[b, 2]]]	
 a-default-is-ignored-when-the-collection-has-a	Last[List[a, b], x]	
-last-sparsearray-range-1-100	Last[SparseArray[Range[1, 100]]]	
+last-sparsearray-range-1-100		
 last-c-at-c-1-see-at	Equal[Last[List[1, 2, 3]], Part[List[1, 2, 3], -1]]	
 an-empty-collection-has-no-last-element-compute	Last[List[]]	
 last-1-over-b	Last[Divide[1, b]]	

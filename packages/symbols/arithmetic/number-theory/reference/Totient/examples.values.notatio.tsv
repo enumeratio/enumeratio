@@ -32,4 +32,4 @@ totient-13	<Totient>13</Totient>	<ToExpression>12</ToExpression>
 totient-14	<Totient>14</Totient>	<ToExpression>6</ToExpression>
 totient-15	<Totient>15</Totient>	<ToExpression>8</ToExpression>
 totient-16	<Totient>16</Totient>	<ToExpression>8</ToExpression>
-assuming-p-in-primes-r-in-integers-r-gt-0	<Assuming><And><Element>p Primes</Element> <Element>r Integers</Element> <Greater>r 0</Greater></And> <FunctionExpand><Totient><Power>p r</Power></Totient></FunctionExpand></Assuming>	<Totient><Power>p r</Power></Totient>
+assuming-p-in-primes-r-in-integers-r-gt-0		

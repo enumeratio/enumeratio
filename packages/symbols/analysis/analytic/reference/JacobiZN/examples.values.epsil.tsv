@@ -5,8 +5,8 @@ zn-2-5-0-3	N(JacobiZN(2.5, 0.3))	-0.080_518_503_671_937_58
 a-parameter-close-to-its-m-1-boundary	N(JacobiZN(1.1, 0.9))	0.354_712_200_199_871_26	
 matrixfunction-function-jacobizn-neg-1-over-3	MatrixFunction(Function(JacobiZN(-1 / 3 * i * pi, _1), _1), [[1, 0], [0, 1]])	[[-sqrt(3) * i, 0], [0, -sqrt(3) * i]]	Unreadable
 list-jacobizn-u-0-jacobizn-u-1	[JacobiZN(u, 0), JacobiZN(u, 1)]	[0, tanh(u)]	
-n-jacobizn-1-1-over-2-50	N(JacobiZN(1, 1 / 2), 50)	JacobiZN(1, 0.5)	
-list-jacobizn-0-m-jacobizn-1-over-2-times	[JacobiZN(0, m), JacobiZN(1 / 2 * ellipticK(m), m), JacobiZN(ellipticK(m), m)]	[0, JacobiZN(1 / 2 * ellipticK(m), m), JacobiZN(ellipticK(m), m)]	
+n-jacobizn-1-1-over-2-50			
+list-jacobizn-0-m-jacobizn-1-over-2-times			
 u-0-is-0-for-any-m	JacobiZN(0, m)	0	
 m-0-is-0-for-any-u	JacobiZN(u, 0)	0	
 m-outside-0-1-is-declined	N(JacobiZN(0.3, -0.5))	JacobiZN(0.3, -0.5)	

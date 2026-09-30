@@ -1,7 +1,7 @@
 id	in	out
 factorial-ratio	<DiscreteRatio><Factorial>n</Factorial> n</DiscreteRatio>	<Add>n 1</Add>
 geometric-ratio	<DiscreteRatio><Power>2 n</Power> n</DiscreteRatio>	<ToExpression>2</ToExpression>
-discreteratio-r-pow-i-i	<DiscreteRatio><Power>r i</Power> i</DiscreteRatio>	<r />
+discreteratio-r-pow-i-i		
 discreteratio-x-pow-2-x	<DiscreteRatio><Power>x 2</Power> x</DiscreteRatio>	<Divide><Power><Add>x 1</Add> 2</Power> <Power>x 2</Power></Divide>
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	<DiscreteRatio><Multiply><Add>x <Multiply>-1 r_1</Multiply></Add> <Add>x <Multiply>-1 r_2</Multiply></Add></Multiply> x</DiscreteRatio>	<Divide><Multiply><Add><Negate>r_1</Negate> x 1</Add> <Add><Negate>r_2</Negate> x 1</Add></Multiply> <Multiply><Add><Negate>r_1</Negate> x</Add> <Add><Negate>r_2</Negate> x</Add></Multiply></Divide>
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	<DiscreteRatio><Multiply><Add>1 x</Add> <Power><Add>1 <Power>x 2</Power></Add> -1</Power></Multiply> x</DiscreteRatio>	<Divide><Add><Power>x 3</Power> <Multiply>2 <Power>x 2</Power></Multiply> x 2</Add> <Multiply><Add>x 1</Add> <Add><Power><Add>x 1</Add> 2</Power> 1</Add></Multiply></Divide>
@@ -18,11 +18,13 @@ discreteratio-catalannumber-x-x	<DiscreteRatio><CatalanNumber>x</CatalanNumber> 
 list-discreteratio-f-n-discreteratio-f-k	<List><DiscreteRatio>f n</DiscreteRatio> <DiscreteRatio>f k</DiscreteRatio></List>	<List>1 1</List>
 discreteratio-gammaregularized-n-z-n	<DiscreteRatio><GammaRegularized>n z</GammaRegularized> n</DiscreteRatio>	<Divide><GammaRegularized><Add>n 1</Add> z</GammaRegularized> <GammaRegularized>n z</GammaRegularized></Divide>
 list-discreteratio-binomial-n-k-n-discreteratio	<List><DiscreteRatio><Binomial>n k</Binomial> n</DiscreteRatio> <DiscreteRatio><Binomial>n k</Binomial> k</DiscreteRatio></List>	<List><Divide><Binomial><Add>n 1</Add> k</Binomial> <Binomial>n k</Binomial></Divide> <Divide><Binomial>n <Add>k 1</Add></Binomial> <Binomial>n k</Binomial></Divide></List>
-discreteratio-a-times-q-pow-x-plus-b-times-q-pow	<DiscreteRatio><Add><Multiply>a <Power>q x</Power></Multiply> <Multiply>b <Power>q <Multiply>2 x</Multiply></Power></Multiply></Add> x</DiscreteRatio>	<Divide><Add><Multiply>a <Power>q <Add>x 1</Add></Power></Multiply> <Multiply>b <Power>q <Multiply>2 <Add>x 1</Add></Multiply></Power></Multiply></Add> <Add><Multiply>a <Power>q x</Power></Multiply> <Multiply>b <Power>q <Multiply>2 x</Multiply></Power></Multiply></Add></Divide>
-discreteratio-q-pow-x-minus-r-1-times-q-pow-x	<DiscreteRatio><Multiply><Add><Power>q x</Power> <Multiply>-1 r_1</Multiply></Add> <Add><Power>q x</Power> <Multiply>-1 r_2</Multiply></Add></Multiply> x</DiscreteRatio>	<Divide><Multiply><Add><Negate>r_1</Negate> <Power>q <Add>x 1</Add></Power></Add> <Add><Negate>r_2</Negate> <Power>q <Add>x 1</Add></Power></Add></Multiply> <Multiply><Add><Negate>r_1</Negate> <Power>q x</Power></Add> <Add><Negate>r_2</Negate> <Power>q x</Power></Add></Multiply></Divide>
-discreteratio-a-times-q-pow-x-plus-b-times-q-p-2	<DiscreteRatio><Multiply><Add><Multiply>a <Power>q x</Power></Multiply> <Multiply>b <Power>q <Multiply>2 x</Multiply></Power></Multiply></Add> <Power><Add>1 <Power>q x</Power></Add> -1</Power></Multiply> x</DiscreteRatio>	<Divide><Multiply><Add><Multiply>a <Power>q <Add>x 1</Add></Power></Multiply> <Multiply>b <Power>q <Multiply>2 <Add>x 1</Add></Multiply></Power></Multiply></Add> <Add><Power>q x</Power> 1</Add></Multiply> <Multiply><Add><Multiply>a <Power>q x</Power></Multiply> <Multiply>b <Power>q <Multiply>2 x</Multiply></Power></Multiply></Add> <Add><Power>q <Add>x 1</Add></Power> 1</Add></Multiply></Divide>
-discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2	<DiscreteRatio><Multiply><Add><Power>q x</Power> <Multiply>-1 r_1</Multiply></Add> <Add><Power>q x</Power> <Multiply>-1 r_2</Multiply></Add> <Power><Multiply><Add><Power>q x</Power> <Multiply>-1 p_1</Multiply></Add> <Add><Power>q x</Power> <Multiply>-1 p_2</Multiply></Add></Multiply> -1</Power></Multiply> x</DiscreteRatio>	<Divide><Multiply><Add><Negate>p_1</Negate> <Power>q x</Power></Add> <Add><Negate>p_2</Negate> <Power>q x</Power></Add> <Add><Negate>r_1</Negate> <Power>q <Add>x 1</Add></Power></Add> <Add><Negate>r_2</Negate> <Power>q <Add>x 1</Add></Power></Add></Multiply> <Multiply><Add><Negate>p_1</Negate> <Power>q <Add>x 1</Add></Power></Add> <Add><Negate>p_2</Negate> <Power>q <Add>x 1</Add></Power></Add> <Add><Negate>r_1</Negate> <Power>q x</Power></Add> <Add><Negate>r_2</Negate> <Power>q x</Power></Add></Multiply></Divide>
-discreteratio-qpochhammer-a-q-x-x	<DiscreteRatio><QPochhammer>a q x</QPochhammer> x</DiscreteRatio>	<Divide><QPochhammer>a q <Add>x 1</Add></QPochhammer> <QPochhammer>a q x</QPochhammer></Divide>
-discreteratio-qbinomial-a-x-q-times-qfactorial-x	<DiscreteRatio><Multiply><QBinomial>a x q</QBinomial> <QFactorial>x q</QFactorial> <Power><QPochhammer>b q x</QPochhammer> -1</Power></Multiply> x</DiscreteRatio>	<Divide><Multiply><QPochhammer>b q x</QPochhammer> <QFactorial><Add>x 1</Add> q</QFactorial> <QBinomial>a <Add>x 1</Add> q</QBinomial></Multiply> <Multiply><QPochhammer>b q <Add>x 1</Add></QPochhammer> <QFactorial>x q</QFactorial> <QBinomial>a x q</QBinomial></Multiply></Divide>
-discreteratio-barnesg-x-x	<DiscreteRatio><BarnesG>x</BarnesG> x</DiscreteRatio>	<Divide><BarnesG><Add>x 1</Add></BarnesG> <BarnesG>x</BarnesG></Divide>
-discreteratio-hyperfactorial-x-x	<DiscreteRatio><Hyperfactorial>x</Hyperfactorial> x</DiscreteRatio>	<Divide><Hyperfactorial><Add>x 1</Add></Hyperfactorial> <Hyperfactorial>x</Hyperfactorial></Divide>
+discreteratio-a-times-q-pow-x-plus-b-times-q-pow		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x		
+discreteratio-a-times-q-pow-x-plus-b-times-q-p-2		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2		
+discreteratio-qpochhammer-a-q-x-x		
+discreteratio-qbinomial-a-x-q-times-qfactorial-x		
+discreteratio-barnesg-x-x		
+discreteratio-hyperfactorial-x-x		
+discreteratio-betaregularized-z-n-m-m		
+discreteratio-c-pow-a-times-k-plus-b-k	<DiscreteRatio><Power>c <Add><Multiply>a k</Multiply> b</Add></Power> k</DiscreteRatio>	<Power>c a</Power>

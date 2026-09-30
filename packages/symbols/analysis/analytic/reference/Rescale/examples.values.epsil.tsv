@@ -6,4 +6,4 @@ rescale-neg-3-over-2-list-neg-2-2	Rescale(-3 / 2, [-2, 2])	1 / 8
 rescale-3-list-neg-9-7-list-11-28	Rescale(3, [-9, 7], [11, 28])	95 / 4
 rescale-list-neg-2-0-2	Rescale([-2, 0, 2])	[0, 1 / 2, 1]
 piecewiseexpand-d-rescale-x-list-a-b-list-x-k	PiecewiseExpand(D(Rescale(x, [a, b]), [x, k]))	D(Rescale(x, [a, b]), [x, k])
-n-rescale-1-over-11-list-1-over-7-5-50	N(Rescale(1 / 11, [1 / 7, 5]), 50)	-0.010_695_187_165_775_4
+n-rescale-1-over-11-list-1-over-7-5-50		

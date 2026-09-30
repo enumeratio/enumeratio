@@ -1,30 +1,30 @@
-id	in	out	back
-product-list-1-2-3-4	product([1, 2, 3, 4])	24	
-the-empty-product-is-1-by-convention-matching	product([])	1	
-prod-i-1-6-i-2-6-2	product(i ^ 2, (i, 1, 6))	518_400	
-a-symbolic-upper-limit-prod-i-1-n-i-2-n-2	product(i ^ 2, (i, 1, n))	n! ^ 2	
-a-symbolic-upper-limit-prod-k-1-n-k-n-see	product(k, (k, 1, n))	n!	
-exponents-add-prod-k-1-n-x-k-x-n-n-1-2	product(x ^ k, (k, 1, n))	x ^ (1 / 2 * n * (n + 1))	
-a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	product((k + 1) / k, (k, 1, n))	n + 1	
-an-undefined-function-expanded-term-by-term	product(f(i), (i, 1, 4))	f(1) * f(2) * f(3) * f(4)	
-a-step-of-2-takes-every-other-index	product(f(i), (i, 1, 4, 2))	f(1) * f(3)	
-over-an-explicit-list-of-values	product(f(i), i in [a, b, c])	f(a) * f(b) * f(c)	
-a-polynomial-with-roots-1-2-and-3	product(x - k, (k, 1, 3))	(x - 3) * (x - 2) * (x - 1)	
-a-double-product-over-a-3-times-3-grid	product(i + j, (i, 1, 3), (j, 1, 3))	172_800	
-an-inner-limit-that-depends-on-the-outer-index-a	product(i + j, (i, 1, 3), (j, 1, i))	2_880	
-a-symbolic-triangular-product-prod-i-1-p-prod-j	product(2 ^ (i + j), (i, 1, p), (j, 1, i))	2 ^ (1 / 2 * p * (p + 1) ^ 2)	
-an-infinite-product-with-a-closed-form-prod-k-1	product(1 + 1 / k ^ 2, (k, 1, PositiveInfinity))	sinh(pi) / pi	
-an-infinite-telescoping-product-prod-k-2-infty-1	product(1 - 1 / k ^ 2, (k, 2, PositiveInfinity))	1 / 2	
-prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	product(1 - 1 / i ^ 4, (i, 2, PositiveInfinity))	sinh(pi) / (4Pi)	
-exact-rationals-in-a-collection	product([1 / 2, 2 / 3, 3 / 4])	1 / 4	
-symbolic-elements	product([a, b, c])	a * b * c	
-product-a-pow-i-i-nothing-n	product(a ^ i, (i, Nothing, n))	a ^ (1 / 2 * (n - 1) * (n + 2))	
-product-a-pow-i-j-nothing-m-i-nothing-j	product(a ^ i, (j, Nothing, m), (i, Nothing, j))	a ^ (1 / 6 * m * (m - 1) * (m + 4))	
-product-i-times-j-i-nothing-nothing-j-nothing	product(i * j, (i, Nothing, Nothing), (j, Nothing, Nothing))	product(product(i * j, (j, Nothing, Nothing)), (i, Nothing, Nothing))	
-product-i-times-j-i-1-n-j-nothing-nothing	product(i * j, (i, 1, n), (j, Nothing, Nothing))	product(product(i * j, (j, Nothing, Nothing)), (i, 1, n))	
-product-3-times-q-pow-2i-plus-5-i-nothing	product(3 * q ^ (2i) + 5, (i, Nothing, Nothing))	3 * q ^ 2 + 5	[Product, [Add, [Multiply, 3, [Power, q, [Multiply, 2, i]]], 5], [Tuple, i, Nothing, Nothing]]
-product-1-over-q-pow-8i-plus-11-times-q-pow-8	product(1 / (q ^ (8i) + 11) * (q ^ (8 * (i + 1)) + 11), (i, Nothing, Nothing))	1	[Product, [Multiply, [Divide, 1, [Add, [Power, q, [Multiply, 8, i]], 11]], [Add, [Power, q, [Multiply, 8, [Add, i, 1]]], 11]], [Tuple, i, Nothing, Nothing]]
-range-stays-lazy-on-its-own-but-product-forces	product(Range(1, 6))	720	
-the-product-of-1-through-n-is-n-see-factorial	product([1, 2, 3, 4]) == 4!	True	
-the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	product(4 * k ^ 2 / (4 * k ^ 2 - 1), (k, 1, PositiveInfinity))	1 / 2 * pi	
-an-asymmetric-infinite-product-n-n-3-n-1-n-2	product(n * (n + 3) / ((n + 1) * (n + 2)), (n, 1, PositiveInfinity))	1 / 3	
+id	in	out
+product-list-1-2-3-4	product([1, 2, 3, 4])	24
+the-empty-product-is-1-by-convention-matching	product([])	1
+prod-i-1-6-i-2-6-2	product(i ^ 2, (i, 1, 6))	518_400
+a-symbolic-upper-limit-prod-i-1-n-i-2-n-2	product(i ^ 2, (i, 1, n))	n! ^ 2
+a-symbolic-upper-limit-prod-k-1-n-k-n-see	product(k, (k, 1, n))	n!
+exponents-add-prod-k-1-n-x-k-x-n-n-1-2	product(x ^ k, (k, 1, n))	x ^ (1 / 2 * n * (n + 1))
+a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	product((k + 1) / k, (k, 1, n))	n + 1
+an-undefined-function-expanded-term-by-term	product(f(i), (i, 1, 4))	f(1) * f(2) * f(3) * f(4)
+a-step-of-2-takes-every-other-index	product(f(i), (i, 1, 4, 2))	f(1) * f(3)
+over-an-explicit-list-of-values	product(f(i), i in [a, b, c])	f(a) * f(b) * f(c)
+a-polynomial-with-roots-1-2-and-3	product(x - k, (k, 1, 3))	(x - 3) * (x - 2) * (x - 1)
+a-double-product-over-a-3-times-3-grid	product(i + j, (i, 1, 3), (j, 1, 3))	172_800
+an-inner-limit-that-depends-on-the-outer-index-a	product(i + j, (i, 1, 3), (j, 1, i))	2_880
+a-symbolic-triangular-product-prod-i-1-p-prod-j	product(2 ^ (i + j), (i, 1, p), (j, 1, i))	2 ^ (1 / 2 * p * (p + 1) ^ 2)
+an-infinite-product-with-a-closed-form-prod-k-1	product(1 + 1 / k ^ 2, (k, 1, PositiveInfinity))	sinh(pi) / pi
+an-infinite-telescoping-product-prod-k-2-infty-1	product(1 - 1 / k ^ 2, (k, 2, PositiveInfinity))	1 / 2
+prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	product(1 - 1 / i ^ 4, (i, 2, PositiveInfinity))	sinh(pi) / (4Pi)
+exact-rationals-in-a-collection	product([1 / 2, 2 / 3, 3 / 4])	1 / 4
+symbolic-elements	product([a, b, c])	a * b * c
+product-a-pow-i-i-nothing-n		
+product-a-pow-i-j-nothing-m-i-nothing-j		
+product-i-times-j-i-nothing-nothing-j-nothing		
+product-i-times-j-i-1-n-j-nothing-nothing		
+product-3-times-q-pow-2i-plus-5-i-nothing		
+product-1-over-q-pow-8i-plus-11-times-q-pow-8		
+range-stays-lazy-on-its-own-but-product-forces	product(Range(1, 6))	720
+the-product-of-1-through-n-is-n-see-factorial	product([1, 2, 3, 4]) == 4!	True
+the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	product(4 * k ^ 2 / (4 * k ^ 2 - 1), (k, 1, PositiveInfinity))	1 / 2 * pi
+an-asymmetric-infinite-product-n-n-3-n-1-n-2	product(n * (n + 3) / ((n + 1) * (n + 2)), (n, 1, PositiveInfinity))	1 / 3

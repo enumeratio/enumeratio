@@ -1,10 +1,10 @@
 id	in
 transpose-list-list-a-x-list-b-y-list-c-z	Transpose[List[List[a, x], List[b, y], List[c, z]]]
-transpose-m	Transpose[m]
-transpose-s	Transpose[s]
+transpose-m	
+transpose-s	
 chop-dot-u-transpose-u	Chop[Dot[u, Transpose[u]]]
 chop-dot-v-transpose-v	Chop[Dot[v, Transpose[v]]]
-s-eq-transpose-s	Equal[s, Transpose[s]]
-transpose-s-eq-s	Equal[Transpose[s], s]
-conjugate-transpose-m	Conjugate[Transpose[m]]
-shape-transpose-a-perm	Dimensions[Transpose[a, perm]]
+s-eq-transpose-s	
+transpose-s-eq-s	
+conjugate-transpose-m	
+shape-transpose-a-perm	

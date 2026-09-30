@@ -1,3 +1,0 @@
-id	in
-sum-i-pow-neg-6-i-1-positiveinfinity	Sum[Power[i, -6], Limits[i, 1, Infinity]]
-sum-i-pow-2-i-nothing-10	Sum[Power[i, 2], Limits[i, Null, 10]]

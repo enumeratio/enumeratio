@@ -8,4 +8,4 @@ a-two-term-sum-declines	DifferentialRootReduce[Plus[Exp[x], Sin[x]], x]
 log-one-plus-x-order-2	DifferentialRootReduce[Log[Plus[1, x]], x]	
 single-pole-rational-function	DifferentialRootReduce[Divide[1, Subtract[x, 2]], x]	
 besselj-anchored-off-the-singular-point	DifferentialRootReduce[BesselJ[2, x], x]	
-differentialrootreduce-x-pow-2-plus-1-x	DifferentialRootReduce[Plus[Power[x, 2], 1], x]	
+differentialrootreduce-x-pow-2-plus-1-x		

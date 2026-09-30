@@ -32,4 +32,4 @@ totient-13	totient(13)	12
 totient-14	totient(14)	6
 totient-15	totient(15)	8
 totient-16	totient(16)	8
-assuming-p-in-primes-r-in-integers-r-gt-0	Assuming(p in primes && r in integers && r > 0, FunctionExpand(totient(p ^ r)))	totient(p ^ r)
+assuming-p-in-primes-r-in-integers-r-gt-0		

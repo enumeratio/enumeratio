@@ -14,8 +14,8 @@ at-level-2-matrices-are-joined-side-by-side	join([[a, b], [c, d]], [[1, 2], [3, 
 ragged-rows-join-at-level-2-too	join([[1], [5, 6]], [[2, 3], [7]], [[4], [8]], 2)	[[1, 2, 3, 4], [5, 6, 7, 8]]	
 a-row-missing-from-the-shorter-array-simply-isn	join([[x]], [[1, 2], [3, 4]], 2)	[[x, 1, 2], [3, 4]]	
 any-head-as-long-as-all-the-arguments-share-it	join(f(a), f(b))	f(a, b)	
-join-aa-bb	join(aa, bb)	nothing	
+join-aa-bb			
 join-a-b-flatten-a-b-1-see-flatten	join([1, 2], [3, 4]) == flatten([[1, 2], [3, 4]], 1)	True	
 join-is-associative	"join(join([a, b, c], [x, y]), [u, v, w]) == join(\n                                                  [a, b, c],\n                                                  join([x, y], [u, v, w]),\n                                                )"	True	
 nestlist-function-join-1-1-1-list-x-4	NestList(Function(join(_1, _1), _1), [x], 4)	"[\n  [x],\n  [x, x],\n  [x, x, x, x],\n  [x, x, x, x, x, x, x, x],\n  [x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x],\n]"	Unreadable
-nestlist-function-list-1-neg-1-plus-1-1-list-1-5	NestList(Function([_1, -_1 + 1], _1), [1], 5)	"[\n  [1],\n  [[1, 0]],\n  [[[1, 0], [0, 1]]],\n  [[[[1, 0], [0, 1]], [[0, 1], [1, 0]]]],\n  [[[[[1, 0], [0, 1]], [[0, 1], [1, 0]]], [[[0, 1], [1, 0]], [[1, 0], [0, 1]]]]],\n  [[[\n      [[[1, 0], [0, 1]], [[0, 1], [1, 0]]],\n      [[[0, 1], [1, 0]], [[1, 0], [0, 1]]],\n    ], [\n        [[[0, 1], [1, 0]], [[1, 0], [0, 1]]],\n        [[[1, 0], [0, 1]], [[0, 1], [1, 0]]],\n      ]]],\n]"	Unreadable
+nestlist-function-list-1-neg-1-plus-1-1-list-1-5			

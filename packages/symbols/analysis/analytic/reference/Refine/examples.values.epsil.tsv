@@ -28,4 +28,4 @@ refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	Refine(ln(x ^ y), x > 0 && y in realNu
 refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	Refine(sqrt(x ^ 2 + 2 * x * y + y ^ 2), x + y >= 0)	abs(x + y)
 an-undecidable-inequality-is-left-alone	Refine(x ^ 2 > 0)	0 < x ^ 2
 refine-x-in-realnumbers-x-pow-2-lt-1	Refine(x in realNumbers, x ^ 2 < 1)	x in realNumbers
-refine-neg-1-lt-x-lt-1-x-pow-2-lt-1	Refine(-1 < x < 1, x ^ 2 < 1)	-1 < x
+refine-neg-1-lt-x-lt-1-x-pow-2-lt-1		

@@ -1,5 +1,5 @@
 id	in	out
-cdf-weibulldistribution-2-5-n-4-25	<CDF><WeibullDistribution>2 5</WeibullDistribution> <N>4 25</N></CDF>	<CDF><WeibullDistribution>2 5</WeibullDistribution> 4</CDF>
-cdf-negativebinomialdistribution-20-n-1-over-3	<CDF><NegativeBinomialDistribution>20 <N><Rational>1 3</Rational> 30</N></NegativeBinomialDistribution> 5</CDF>	<CDF><NegativeBinomialDistribution>20 0.333333333333333333333333333333</NegativeBinomialDistribution> 5</CDF>
+cdf-weibulldistribution-2-5-n-4-25		
+cdf-negativebinomialdistribution-20-n-1-over-3		
 cdf-normaldistribution-negativeinfinity	<CDF><Apply>NormalDistribution</Apply> NegativeInfinity</CDF>	<ToExpression>0</ToExpression>
 cdf-normaldistribution-positiveinfinity	<CDF><Apply>NormalDistribution</Apply> PositiveInfinity</CDF>	<ToExpression>1</ToExpression>

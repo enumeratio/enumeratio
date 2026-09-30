@@ -1,7 +1,7 @@
-id	in	out	back
-a-parabola-is-convex	FunctionConvexity(x ^ 2, x)	1	
-a-cubic-has-an-inflection-point	FunctionConvexity(x ^ 3, x)	FunctionConvexity(x ^ 3, x)	
-exp-is-always-convex	FunctionConvexity(exp(x), x)	1	
-map-function-functionconvexity-1-list-x-y-1-list	map(Function(FunctionConvexity(_1, [x, y]), _1), [x ^ 2, x ^ 2 + y ^ 2])	[FunctionConvexity(x ^ 2, [x, y]), FunctionConvexity(x ^ 2 + y ^ 2, [x, y])]	Unreadable
-functionconvexity-x-pow-2-minus-1-x	FunctionConvexity(x ^ 2 - 1, x)	1	
-a-restricted-domain-answers-indeterminate	FunctionConvexity(1 / x, x)	FunctionConvexity(1 / x, x)	
+id	in	out
+a-parabola-is-convex	FunctionConvexity(x ^ 2, x)	1
+a-cubic-has-an-inflection-point	FunctionConvexity(x ^ 3, x)	FunctionConvexity(x ^ 3, x)
+exp-is-always-convex	FunctionConvexity(exp(x), x)	1
+map-function-functionconvexity-1-list-x-y-1-list		
+functionconvexity-x-pow-2-minus-1-x	FunctionConvexity(x ^ 2 - 1, x)	1
+a-restricted-domain-answers-indeterminate	FunctionConvexity(1 / x, x)	FunctionConvexity(1 / x, x)

@@ -46,8 +46,8 @@ functionsurjective-cos-x-x	<FunctionSurjective><Cos>x</Cos> x</FunctionSurjectiv
 functionsingularities-cos-x-x	<FunctionSingularities><Cos>x</Cos> x</FunctionSingularities>	<False />
 functiondiscontinuities-cos-x-x	<FunctionDiscontinuities><Cos>x</Cos> x</FunctionDiscontinuities>	<False />
 matrixfunction-function-cos-1-1-list-list-5-over	<MatrixFunction><Function><Block><Cos>_1</Cos></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> 0</List> <List><Multiply><Rational>3 2</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate> 0</List> <List><Multiply><Rational>-9 16</Rational> <Sqrt>3</Sqrt></Multiply> 0</List></List>
-assuming-m-in-integers-refine-cos-pi-times-1	<Assuming><Element>m Integers</Element> <Refine><Cos><Multiply>Pi <Add><Multiply>1 <Power>2 -1</Power></Multiply> m</Add></Multiply></Cos></Refine></Assuming>	<Cos><Multiply>Pi <Add>m <Rational>1 2</Rational></Add></Multiply></Cos>
-assuming-m-in-integers-fullsimplify-refine-cos	<Assuming><Element>m Integers</Element> <FullSimplify><Refine><Cos><Multiply>Pi m</Multiply></Cos></Refine></FullSimplify></Assuming>	<Power>-1 m</Power>
+assuming-m-in-integers-refine-cos-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cos		
 threads-element-wise-over-a-list	<Cos><List>0 <Divide>Pi 2</Divide> Pi</List></Cos>	<List>1 0 -1</List>
 even-function-cos-x-cos-x	<Equal><Cos><Negate><Divide>Pi 3</Divide></Negate></Cos> <Cos><Divide>Pi 3</Divide></Cos></Equal>	<True />
 co-function-identity-cos-x-sin-pi-2-x	<Equal><Cos><Divide>Pi 6</Divide></Cos> <Sin><Subtract><Divide>Pi 2</Divide> <Divide>Pi 6</Divide></Subtract></Sin></Equal>	<True />

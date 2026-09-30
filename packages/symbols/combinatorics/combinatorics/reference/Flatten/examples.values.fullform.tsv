@@ -21,4 +21,4 @@ a-list-with-no-nesting-is-unchanged	Flatten[List[1, 2, 3]]
 flattening-an-m-times-n-matrix-gives-mn-elements	Length[Flatten[List[List[1, 2, 3], List[4, 5, 6]]]]	
 flatten-array-a-list-3-4	Flatten[Array[a, List[3, 4]]]	
 flatten-array-function-100-times-1-plus-10-times	Flatten[Array[Function[Plus[Times[100, Slot[1]], Times[10, Slot[2]], Slot[3]]], List[3, 3, 3]]]	[Flatten, [Array, [Function, [Add, [Multiply, 100, _1], [Multiply, 10, _2], _3]], [List, 3, 3, 3]]]
-flatten-array	Flatten[array]	
+flatten-array		

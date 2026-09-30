@@ -24,6 +24,7 @@ fullsimplify-matrixfunction-sign-list-list-1	Scope		[FullSimplify, [MatrixFuncti
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2	Scope		[PiecewiseExpand, [Sign, x], [Less, -2, x, 2]]	[Piecewise, [List, [List, -1, [Less, x, 0]], [List, 1, [Less, 0, x]]], 0]								
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	Scope		[Equal, [Sign, [Conjugate, [Complex, 1, 2]]], [Conjugate, [Sign, [Complex, 1, 2]]]]	True								
 d-sign-x-x	Scope	triage	[D, [Sign, x], x]	0				gap		D(Sign(x),x) reduces to a blanket 0, but Sign has a delta-function derivative at 0 so this only holds a.e.; Wolfram deliberately leaves it symbolic (Derivative(1)(Sign)(x)). The rule lives in compute-engine's own native derivative table (nothing in our analytic/arithmetic packages declares it), so fixing it means a new ce-patches derivative override, not a change in this lane's files.		
+sign-positiveinfinity-times-i	Scope	triage	[Sign, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate				ours?	unclassified	""		
 tells-you-the-temperature-dropped-but-not-by-how	Applications		[Sign, [Subtract, 70, 95]]	-1			Tells you the temperature dropped, but not by how much -- for that, see [[Abs]]					
 sign-z-z-z-see-abs	Properties		[Equal, [Sign, [Complex, 3, 4]], [Divide, [Complex, 3, 4], [Abs, [Complex, 3, 4]]]]	True			$\operatorname{sign}(z) = z/|z|$. See [[Abs]]					
 x-cdot-sign-x-x-here-at-x-5	Properties		[Equal, [Multiply, -5, [Sign, -5]], [Abs, -5]]	True			$x \cdot \operatorname{sign}(x) = |x|$, here at $x = -5$					

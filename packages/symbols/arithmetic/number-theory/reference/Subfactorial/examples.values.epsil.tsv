@@ -11,7 +11,7 @@ complex-arguments-evaluate-as-frac-gamma-n-1-1-e	subfactorial(1.6 + i)	0.296_830
 threads-over-a-matrix-element-wise	subfactorial([[2, 0], [0, 2]])	[[1, 1], [1, 1]]	
 subfactorial-list-5-10-20	subfactorial([5, 10, 20])	[44, 1_334_961, 895_014_631_192_902_121]	
 matrixfunction-function-subfactorial-1-1-list	MatrixFunction(Function(subfactorial(_1), _1), [[2, 0], [0, 2]])	[[1, 0], [0, 1]]	Unreadable
-n-subfactorial-1-over-3-50	N(subfactorial(1 / 3), 50)	"0.581_679_279_998_131_672_022_145_854_600_800_766_694_770_024_369_59 +\n0.438_504_127_935_786_822_095_938_732_777_114_222_868_562_950_472_47i"	
+n-subfactorial-1-over-3-50			
 the-hat-check-problem-the-number-of-ways-6	subfactorial(6)	265	
 recurrence-d-n-n-d-n-1-1-n	subfactorial(4) == 4 * subfactorial(3) + (-1) ^ 4	True	
 d-n-is-frac-n-e-rounded-to-the-nearest-integer	subfactorial(10) == round(10! / exponentialE)	True	

@@ -7,4 +7,4 @@ list-numberq-c-numberq-d	<List><NumberQ>c</NumberQ> <NumberQ>d</NumberQ></List>	
 list-numberq-o-numberq-u	<List><NumberQ>o</NumberQ> <NumberQ>u</NumberQ></List>	<List>False False</List>
 numberq-sqrt-2	<NumberQ><Sqrt>2</Sqrt></NumberQ>	<True />
 numberq-positiveinfinity	<NumberQ>PositiveInfinity</NumberQ>	<True />
-ismatrix-m-numberq	<IsMatrix>m NumberQ</IsMatrix>	<False />
+ismatrix-m-numberq		

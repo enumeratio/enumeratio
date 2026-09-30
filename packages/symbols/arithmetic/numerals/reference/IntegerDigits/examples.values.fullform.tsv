@@ -32,7 +32,7 @@ ostrowski-9-over-2-2-2-is-1-2-0	IntegerDigits[9, OstrowskiNumerals[List[2, 2, 2]
 bijective-base-26-27-is-aa	IntegerDigits[27, BijectiveNumerals[26]]	
 bijective-base-26-702-is-zz	IntegerDigits[702, BijectiveNumerals[26]]	
 integerdigits-137-mixedradixnumerals-list-3-12	IntegerDigits[137, MixedRadix[List[3, 12]]]	
-integerdigits-1-084-mixedradixnumerals-list-17	IntegerDigits[1084, MixedRadix[List[17, 15, 11]], 2]	
+integerdigits-1-084-mixedradixnumerals-list-17		
 the-3-argument-form-keeps-only-the-4-least	IntegerDigits[6345354, 10, 4]	
 all-3-bit-words-by-threading-a-padded-form-over	IntegerDigits[Range[0, 7], 2, 3]	
 the-lehmer-code-of-the-6th-permutation-of-four	IntegerDigits[5, FactorialNumerals, 4]	
