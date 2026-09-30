@@ -4,15 +4,16 @@
 // standard run checks a few heads across the packages; `DEEP_TESTS=1` checks every one.
 
 import { runCases } from "@enumeratio/evaluation/src/node";
-import { DECLARERS, packagesNeeded, plan } from "@enumeratio/manifest";
+import { CANONICAL, DECLARERS, packagesNeeded, plan } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
-import { declarers } from "../scripts/declarers.ts";
+import { canonicalNames, declarers } from "../scripts/declarers.ts";
 import { LIBRARIES } from "../scripts/engines.ts";
 import { referenceData } from "../src/node.ts";
 
 test("DECLARERS is what declaring each library finds", () => {
   // Regenerate with `vp node packages/reference/scripts/collect-declarers.ts`.
   expect(declarers(LIBRARIES, plan)).toEqual(DECLARERS);
+  expect(canonicalNames(LIBRARIES)).toEqual(CANONICAL);
 });
 
 // The heads whose overloads live in tables (defineOverload), whatever order declares them, among them.

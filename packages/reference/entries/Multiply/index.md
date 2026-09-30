@@ -21,16 +21,24 @@ signatures:
     library: enumeratio-residues
     type: (number*) -> number
     overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-numerals
     type: (number*) -> number
     overrides: enumeratio-residues
+    on:
+      - AdicNumeral
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-adeles
     type: (number*) -> number
     overrides: enumeratio-numerals
+    on:
+      - Adele
+      - Idele
+      - ProfiniteNumber
 names:
   wikidataConfirmed: true
   wolfram: Times

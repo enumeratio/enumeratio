@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
 seeAlso:
   - Sign
   - Chop

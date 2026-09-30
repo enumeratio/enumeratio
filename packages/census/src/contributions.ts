@@ -4,7 +4,7 @@
 // the head before. The manifest must say the same; `tests/manifest.test.ts` holds it to it.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { joinSignatures, overloadTable } from "@enumeratio/engine";
+import { joinSignatures, type OverloadTable, overloadTable } from "@enumeratio/engine";
 import { PACKAGE_DECLARATIONS } from "./engine.ts";
 
 export const ENGINE = "compute-engine";
@@ -17,6 +17,8 @@ export interface Contribution {
   lazy: boolean;
   /** Who had the head before this package: the engine, an earlier package, or nobody. */
   readonly previous?: string;
+  /** The carriers this package's rows apply to, when every one of them names some (`on`). */
+  on?: string[];
 }
 
 interface Scope {
@@ -55,9 +57,32 @@ export function contributions(): Map<string, Contribution[]> {
   let before = snapshot(ce);
   const owner = new Map<string, string>();
   const out = new Map<string, Contribution[]>();
+  // `name@pkg` where the package did more to a head with a table than add rows to it.
+  const beyondRows = new Set<string>();
   for (const [pkg, declare] of PACKAGE_DECLARATIONS) {
+    const tablesBefore = new Map<string, OverloadTable | undefined>();
+    for (const name of before.keys()) tablesBefore.set(name, overloadTable(ce, name));
     declare(ce);
     const after = snapshot(ce);
+    for (const [name, seen] of after) {
+      const table = overloadTable(ce, name);
+      if (table === undefined || !table.rows.some((row) => row.package === pkg)) continue;
+      const was = before.get(name);
+      const prior = tablesBefore.get(name);
+      // Rows only: the handler around the table, the one under it and the head's own signature
+      // are as they were (a table this step made wraps the head's handler, and nothing else).
+      const outer = prior === undefined ? !table.wrapped : seen.evaluate === was?.evaluate;
+      const native = prior?.native ?? was?.evaluate;
+      const signature = prior !== undefined && !prior.resigned ? prior.nativeSignature : was?.type;
+      if (
+        !outer ||
+        table.resigned ||
+        table.native !== native ||
+        table.nativeSignature !== signature ||
+        seen.lazy !== was?.lazy
+      )
+        beyondRows.add(`${name}@${pkg}`);
+    }
     for (const [name, seen] of after) {
       const was = before.get(name);
       if (was !== undefined && was.type === seen.type && was.lazy === seen.lazy && was.evaluate === seen.evaluate)
@@ -93,6 +118,9 @@ export function contributions(): Map<string, Contribution[]> {
       // Rows that add no shape leave the package's say to whatever else it did to the head.
       const own = table.rows.filter((row) => row.package === c.pkg).flatMap((row) => row.signature ?? []);
       if (own.length > 0) c.type = ce.type(joinSignatures(own)).toString();
+      const rows = table.rows.filter((row) => row.package === c.pkg);
+      if (!beyondRows.has(`${name}@${c.pkg}`) && rows.length > 0 && rows.every((row) => row.on !== undefined))
+        c.on = [...new Set(rows.flatMap((row) => row.on!))].toSorted();
     }
   }
   return out;

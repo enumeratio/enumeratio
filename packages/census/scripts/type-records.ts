@@ -98,6 +98,8 @@ for (const [name, list] of [...contributions].toSorted(([a], [b]) => (a < b ? -1
       ...(c.previous !== undefined ? { overrides: libraryOf(c.previous) } : {}),
     };
     if (c.previous === undefined) delete (row as { overrides?: string }).overrides;
+    if (c.on !== undefined) (row as { on?: readonly string[] }).on = c.on;
+    else delete (row as { on?: readonly string[] }).on;
     if (at >= 0) rows[at] = row;
     else rows.push(row);
     typed++;

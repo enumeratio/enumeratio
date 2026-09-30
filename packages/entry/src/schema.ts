@@ -108,6 +108,7 @@ const REFERENCE_SIGNATURE: JsonSchema = {
     arity: { type: "integer" },
     type: { type: "string" },
     overrides: { type: "string" },
+    on: { type: "array", items: { type: "string" } },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },
   },
   required: ["call", "description"],

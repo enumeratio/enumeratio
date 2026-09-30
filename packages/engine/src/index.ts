@@ -149,7 +149,7 @@ export function wrapOperator(
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";
 export { checkpoint, DeadlineExceededError, withDeadline } from "./deadline.ts";
-export { defineOverload, joinSignatures, type Overload, overloadTable } from "./overloads.ts";
+export { defineOverload, joinSignatures, type Overload, type OverloadTable, overloadTable } from "./overloads.ts";
 
 /**
  * Widen the signature of an operator the engine already defines, in place, so arguments its

@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-hypercomplex
@@ -21,16 +25,24 @@ signatures:
     library: enumeratio-residues
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-numerals
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: enumeratio-residues
+    on:
+      - AdicNumeral
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-adeles
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: enumeratio-numerals
+    on:
+      - Adele
+      - Idele
+      - ProfiniteNumber
 names:
   fungrim: Pow
   wolframIdentity: true

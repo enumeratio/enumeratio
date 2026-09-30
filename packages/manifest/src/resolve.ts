@@ -3,7 +3,7 @@
 // packages' own dependencies, declared into an engine in the host's order. Loads nothing
 // itself: a host lists its libraries and how to declare each.
 
-import { DECLARERS } from "./declarers-data.ts";
+import { CANONICAL, DECLARERS } from "./declarers-data.ts";
 import { PACKAGES } from "./generated/packages.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { SymbolInfo } from "./types.ts";
@@ -46,20 +46,34 @@ export function namesOf(json: unknown, into: Set<string> = new Set()): Set<strin
   return into;
 }
 
+/** What `json` names, and the heads those canonicalise to, transitively (`Lb` brings `Log`). */
+export function reachedNames(json: unknown, canonical = CANONICAL): Set<string> {
+  const names = namesOf(json);
+  for (const name of names) for (const next of canonical[name] ?? []) names.add(next);
+  return names;
+}
+
 /**
  * The packages that declare what `json` names: what declaring them found (`DECLARERS`), or the
- * records' overloads for a name that isn't there. Every package that redeclares a head counts,
- * a widening included: their types (`(value+) -> value`) don't say whose values a widening is
- * for, and some apply to plain numbers (structures' `Floor(x, m)`, number-theory's
- * `Fibonacci(1.5)`).
+ * records' overloads for a name that isn't there. A package whose only say in a head is rows on
+ * carriers it declares (`on`: adeles' `Add` on `Adele`) doesn't count for it: its rows matter
+ * only where one of those exists, and whatever makes one brings the package. Any other widening
+ * counts: general ones (structures' `Floor(x, m)`, number-theory's `Fibonacci(1.5)`), and rows
+ * on a carrier someone else declares (analytic's on compute-engine's `Interval`).
  */
 export function packagesFor(json: unknown, lookup: Lookup = manifest, declarers = DECLARERS): Set<string> {
   const packages = new Set<string>();
-  for (const name of namesOf(json)) {
+  for (const name of reachedNames(json)) {
+    const overloads = lookup(name)?.overloads ?? [];
     const declared = Object.hasOwn(declarers, name)
       ? declarers[name]!
-      : (lookup(name)?.overloads ?? []).map((overload) => overload.package).filter((pkg) => pkg !== ENGINE);
-    for (const pkg of declared) packages.add(pkg);
+      : overloads.map((overload) => overload.package).filter((pkg) => pkg !== ENGINE);
+    for (const pkg of declared) {
+      const own = overloads.filter((overload) => overload.package === pkg);
+      const carries = (carrier: string): boolean => declarers[carrier]?.includes(pkg) === true;
+      if (own.length > 0 && own.every((overload) => overload.on?.every(carries) === true)) continue;
+      packages.add(pkg);
+    }
   }
   return packages;
 }
@@ -70,7 +84,7 @@ export function packagesNeeded(
   libraries: readonly Library<never>[],
   lookup: Lookup = manifest,
 ): Set<string> {
-  const names = namesOf(json);
+  const names = reachedNames(json);
   const packages = packagesFor(json, lookup);
   for (const library of libraries) if (library.names?.some((name) => names.has(name))) packages.add(library.name);
   return packages;
