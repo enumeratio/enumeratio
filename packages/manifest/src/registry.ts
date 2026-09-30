@@ -312,7 +312,7 @@ function plainNamesOf(json: unknown, into: Set<string>): Set<string> {
 }
 
 /** `json` with each qualified name `heads` has replaced by its head: a call by a call of it. */
-function withHeads(json: unknown, heads: ReadonlyMap<string, string>): unknown {
+export function withHeads(json: unknown, heads: ReadonlyMap<string, string>): unknown {
   if (!Array.isArray(json)) return json;
   const name = qualifiedNameAt(json);
   const head = name === undefined ? undefined : heads.get(name);

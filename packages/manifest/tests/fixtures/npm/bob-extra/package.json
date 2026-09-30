@@ -4,6 +4,14 @@
   "keywords": [
     "enumeratio-symbols"
   ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./symbols/*": "./symbols/*"
+  },
   "dependencies": {
     "@ada/primes": "1.0.0"
   },
