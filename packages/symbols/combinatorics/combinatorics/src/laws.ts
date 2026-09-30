@@ -1,3 +1,2 @@
-// Checking a map's laws is generic machinery, not combinatorics-specific — moved to
-// @enumeratio/structures. Re-exported here so nothing outside this package has to know that.
+// Law checking lives in @enumeratio/structures; this keeps the package's own path.
 export { checkLaws, type LawFailure } from "@enumeratio/structures";
