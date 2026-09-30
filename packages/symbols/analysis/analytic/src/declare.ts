@@ -18,6 +18,7 @@ import {
   ceilFloorInfinity,
   exactRounding,
   infinityArgs,
+  rangeRationalStep,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
@@ -192,6 +193,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, sqrtInfinity);
   applyPatch(ce, ceilFloorInfinity);
   applyPatch(ce, exactRounding);
+  applyPatch(ce, rangeRationalStep);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);
