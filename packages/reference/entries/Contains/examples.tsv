@@ -8,4 +8,4 @@ elements-can-themselves-be-lists	Scope		[Contains, [List, [List, 1, 2], [List, 3
 only-the-top-level-elements-are-searched	Scope		[Contains, [List, [List, 1, 2], [List, 3, 4]], 1]	False	Only the top-level elements are searched		
 a-lazy-range-is-searched-without-being	Scope		[Contains, [Range, 100], 50]	True	A lazy [[Range]] is searched without being materialised		
 compared-after-canonical-ordering-so-b-a-matches	Properties		[Contains, [List, [Add, a, b]], [Add, b, a]]	True	Compared after canonical ordering, so $b + a$ matches $a + b$		
-an-exact-and-an-approximate-number-with-the-same	Possible issues		[Contains, [List, [Rational, 1, 2]], 0.5]	True	An exact and an approximate number with the same value match	unclassified	MemberQ compares structurally: $\mathrm{MemberQ}[\{1/2\}, 0.5]$ is False.
+an-exact-and-an-approximate-number-with-the-same	Possible issues		[Contains, [List, [Rational, 1, 2]], 0.5]	True	An exact and an approximate number with the same value match	convention	compute-engine's Contains compares by numeric value (1/2 matches 0.5); Wolfram's MemberQ uses SameQ, which treats an exact and an approximate number as distinct.

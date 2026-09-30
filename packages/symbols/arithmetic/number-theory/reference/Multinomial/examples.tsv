@@ -5,7 +5,7 @@ threads-element-wise-over-a-list-as-wolfram-s	Scope		[Multinomial, [List, 2, 3, 
 zero-parts-contribute-0-1	Scope		[Multinomial, 0, 0, 1]	1	Zero parts contribute $0! = 1$		
 real-arguments-evaluate-via-the-gamma-function	Scope		[Multinomial, 2, 0.2, 5]	34.31780351999995	Real arguments evaluate via the Gamma function, $\frac{\Gamma(8.2)}{2!\,\Gamma(1.2)\,5!}$		
 complex-arguments-evaluate-via-the-gamma	Scope		[Multinomial, [Complex, 1, 1], 0.2, 4]	[Complex, 2.894060302449624, 9.104625875691285]	Complex arguments evaluate via the Gamma function too		
-an-around-argument-should-propagate-its	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	An Around argument propagates its uncertainty through the head as one function: $\frac{(a+2)(a+1)}{2}$ at $a = 2 \pm 0.01$ is $6 \pm 0.035$	unclassified	""
+an-around-argument-should-propagate-its	Scope		[Multinomial, [Around, 2, 0.01], 2]	[Around, 6, 0.035]	An Around argument propagates its uncertainty through the head as one function: $\frac{(a+2)(a+1)}{2}$ at $a = 2 \pm 0.01$ is $6 \pm 0.035$	precision	Agrees to ~5 significant digits in the uncertainty; the tail digits are float-rounding noise in the Around propagation.
 the-number-of-distinct-letter-arrangements-of	Applications		[Multinomial, 1, 4, 4, 2]	34650	The number of distinct letter arrangements of MISSISSIPPI: 1 M, 4 I's, 4 S's, 2 P's		
 the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Applications		[Multinomial, 2, 3, 1]	60	The coefficient of $a^2 b^3 c$ in $(a+b+c)^6$		
 with-two-arguments-it-reduces-to-binomial-binom	Properties		[Equal, [Multinomial, 7, 3], [Binomial, 10, 3]]	True	With two arguments it reduces to [[Binomial]]: $\binom{n_1+n_2}{n_1}$		

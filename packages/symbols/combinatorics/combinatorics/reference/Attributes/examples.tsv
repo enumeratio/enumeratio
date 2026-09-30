@@ -1,2 +1,2 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine	unclassified	""
+adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine	convention	compute-engine and Wolfram track different attribute vocabularies for Plus (ours flags HoldAll, which Wolfram doesn't, for a fully-evaluating head; Wolfram flags NumericFunction/OneIdentity/Protected, which we don't model).

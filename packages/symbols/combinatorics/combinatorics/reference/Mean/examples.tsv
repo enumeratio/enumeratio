@@ -10,4 +10,4 @@ of-a-matrix-of-symbols-the-exact-mean-of-each	Scope		[Mean, [List, [List, a, u],
 the-mean-of-a-lazy-range-exactly	Scope		[Mean, [Range, 1, 100]]	[Rational, 101, 2]	The mean of a lazy [[Range]], exactly		
 mean-is-total-divided-by-count-mean-c-frac-sum-c	Properties		[Equal, [Mean, [List, 1, 2, 3, 4]], [Divide, [Add, 1, 2, 3, 4], [Length, [List, 1, 2, 3, 4]]]]	True	Mean is total divided by count: $Mean(c) = \dfrac{\sum c}{Length(c)}$. See [[Length]]		
 a-single-outlier-drags-the-mean-far-from-the	Possible issues		[Mean, [List, -100, 1, 1, 1, 1, 20]]	[Rational, -38, 3]	A single outlier drags the mean far from the rest of the data, here to $-\frac{38}{3} \approx -12.67$. See [[Median]] for a more robust alternative		
-the-mean-of-no-data-is-nan	Possible issues		[Mean, [List]]	NaN	The mean of no data is $NaN$	unclassified	Wolfram leaves Mean[{}] unevaluated (with a Mean::rectn message).
+the-mean-of-no-data-is-nan	Possible issues		[Mean, [List]]	NaN	The mean of no data is $NaN$	undefined-form	Both decline on empty data: compute-engine answers NaN, Wolfram's Mean[{}] stays unevaluated.
