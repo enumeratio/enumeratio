@@ -7,4 +7,4 @@ hyperfactorial-6-25		test	[Hyperfactorial, 6.25]	92229745540487.84
 listable			[Hyperfactorial, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, 4, 108, 27648, 86400000, 4031078400000]	Listable		
 continued-off-the-integers			[Hyperfactorial, 0.5]	0.8804492351734234	Continued off the integers		
 h-10-well-past-double-range-exact-bigint			[Hyperfactorial, 10]	{num: "215779412229418562091680268288e+15"}	$H(10)$, well past double range — exact bigint arithmetic, not a rounded double.		
-hyperfactorial-one-half-stays-exact	Scope		[Hyperfactorial, [Rational, 1, 2]]	[Hyperfactorial, [Rational, 1, 2]]	An exact non-integer argument stays symbolic — `N()` gives the float continuation	unclassified	""
+hyperfactorial-one-half-stays-exact	Scope		[Hyperfactorial, [Rational, 1, 2]]	[Hyperfactorial, [Rational, 1, 2]]	An exact non-integer argument stays symbolic — `N()` gives the float continuation	unevaluated	We keep the exact form symbolic on purpose; Wolfram continues to the closed form in Glaisher's constant.
