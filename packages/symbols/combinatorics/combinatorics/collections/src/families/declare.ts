@@ -61,19 +61,29 @@ const decoderFor = (kind: FamilyKernel["kind"]) =>
 function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): CollectionHandlers {
   const bareEncode = encoderFor(family.kind);
   const bareDecode = decoderFor(family.kind);
+  // How many of the family's own params (from the front) ride along inside the carrier's
+  // Tuple, alongside the element -- e.g. Tournament(n, edges). 0 for every carrier whose shape
+  // is just the element's own shape (`Permutation([2, 1])`).
+  const carrierParams = family.carrierParams ?? 0;
   // A carrier's elements are its values, `Permutation([2, 1])`; membership takes either form.
-  const encode =
-    carrier === undefined ? bareEncode : (element: never) => [carrier, (bareEncode as (x: never) => unknown)(element)];
-  const decode = (b: Boxed) =>
-    bareDecode(
-      (carrier !== undefined && (b as unknown as BoxedExpression).operator === carrier ? b.ops?.[0] : b) as never,
-    );
+  const encode = (p: number[], value: unknown): unknown => {
+    const encoded = (bareEncode as (x: never) => unknown)(value as never);
+    if (carrier === undefined) return encoded;
+    if (carrierParams === 0) return [carrier, encoded];
+    return [carrier, ["Tuple", ...p.slice(0, carrierParams), encoded]];
+  };
+  const decode = (b: Boxed): unknown => {
+    if (carrier === undefined || (b as unknown as BoxedExpression).operator !== carrier) return bareDecode(b as never);
+    const inner = b.ops?.[0];
+    if (carrierParams === 0) return bareDecode(inner as never);
+    const tupleOps = inner?.ops;
+    return bareDecode(tupleOps?.[tupleOps.length - 1] as never);
+  };
   const params = (c: BoxedExpression): number[] => {
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
   };
-  const element = (p: number[], rank: bigint): BoxedExpression =>
-    ce.box(encode(family.unrank(p, rank) as never) as BoxInput);
+  const element = (p: number[], rank: bigint): BoxedExpression => ce.box(encode(p, family.unrank(p, rank)) as BoxInput);
   // Whether reaching an element (or, for `count`, the count) would enumerate past the limit.
   const cost = family.declared?.cost;
   const tooBig = (p: number[], ops: readonly ("count" | "unrank")[]): boolean => {

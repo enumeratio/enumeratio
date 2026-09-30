@@ -1,22 +1,21 @@
-// Tableaux, trees and graphs — the "easy wins" batch of catalogued-but-undeclared collections:
-// Prüfer sequences, tournaments, labeled graphs, recursive/increasing-binary trees, and the
-// standard-Young-tableaux family (all shapes, and the ≤2-row / ≤2-column / hook restrictions).
+// Tableaux and trees — the "easy wins" batch of catalogued-but-undeclared collections: Prüfer
+// sequences, recursive/increasing-binary trees, and the standard-Young-tableaux family (all
+// shapes, and the ≤2-row / ≤2-column / hook restrictions).
 // Pure rank/unrank kernels over plain JS values — no compute-engine dependency, same contract as
 // core.ts (see ./types.ts). Kept in its own file (rather than folded into kernels-extra.ts +
 // core.ts) so parallel authoring on the same catalog sweep doesn't collide.
 // ParkingFunctions/NonDecreasingParkingFunctions moved to words/src/families/tableaux-trees.ts
-// (wire-carriers lane A-91): both now carry "ParkingFunction". PruferSequences/Tournaments/
-// LabeledGraphs/... below declare no carrier at all and stay here per step 5 rule 4.
+// (wire-carriers lane A-91): both now carry "ParkingFunction". Tournaments/LabeledGraphs/
+// LabeledGraphsByEdges moved to graphs/src/families/core.ts (wire-carriers lane A-92): all
+// three now carry "Tournament"/"LabeledGraph". PruferSequences below declares no carrier at
+// all and stays here per step 5 rule 4.
 import type { NumberKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
-import { Binomial, PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
+import { PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import {
   SubsetCount,
   SubsetUnrank,
   SubsetRank,
-  KSubsetCount,
-  KSubsetUnrank,
-  KSubsetRank,
   TupleCount,
   TupleUnrank,
   TupleRank,
@@ -44,104 +43,6 @@ export function PruferSequenceRank(seq: number[], n: number): number {
 export function IsPruferSequenceOf(seq: unknown, n: number): boolean {
   if (n <= 2) return Array.isArray(seq) && seq.length === 0;
   return Array.isArray(seq) && IsTupleOf(seq as number[], n, n - 2);
-}
-
-// ─── edge indexing shared by LabeledGraphs/LabeledGraphsByEdges/Tournaments: the C(n,2) unordered
-// pairs of [n] in lexicographic order, so "which edges are present/oriented" reduces to an
-// existing Subset/KSubset/Tuple kernel over the index space [1..C(n,2)]. ──────────────────────────
-function edgePairs(n: number): number[][] {
-  const edges: number[][] = [];
-  for (let i = 1; i < n; i++) for (let j = i + 1; j <= n; j++) edges.push([i, j]);
-  return edges;
-}
-function edgeIndexOf(edges: number[][], u: number, v: number): number {
-  const [a, b] = u < v ? [u, v] : [v, u];
-  for (let k = 0; k < edges.length; k++) if (edges[k][0] === a && edges[k][1] === b) return k + 1;
-  return 0;
-}
-
-// ─── LabeledGraphs(n): simple undirected graphs on [n] — subsets of K_n's edges. Count 2^C(n,2).
-// Element = edge list, matching LabeledTrees' convention. ─────────────────────────────────────────
-export function LabeledGraphCount(n: number): number {
-  return SubsetCount(Binomial(n, 2));
-}
-export function LabeledGraphUnrank(n: number, rank: number): number[][] {
-  const edges = edgePairs(n);
-  return SubsetUnrank(edges.length, rank).map((i) => edges[i - 1]);
-}
-export function LabeledGraphRank(e: number[][], n: number): number {
-  const edges = edgePairs(n);
-  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v));
-  idx.sort((a, b) => a - b);
-  return SubsetRank(idx);
-}
-export function IsLabeledGraphOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e)) return false;
-  const edges = edgePairs(n);
-  const seen = new Set<number>();
-  for (const pair of e as unknown[]) {
-    if (!Array.isArray(pair) || pair.length !== 2) return false;
-    const [u, v] = pair as number[];
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
-    const idx = edgeIndexOf(edges, u, v);
-    if (idx === 0 || seen.has(idx)) return false;
-    seen.add(idx);
-  }
-  return true;
-}
-
-// ─── LabeledGraphsByEdges(n,m): the (n,m) refinement — graphs on [n] with exactly m edges. Same
-// edge list as LabeledGraphs, just a KSubset instead of a Subset. ─────────────────────────────────
-export function LabeledGraphByEdgesCount(n: number, m: number): number {
-  return KSubsetCount(Binomial(n, 2), m);
-}
-export function LabeledGraphByEdgesUnrank(n: number, m: number, rank: number): number[][] {
-  const edges = edgePairs(n);
-  return KSubsetUnrank(edges.length, m, rank).map((i) => edges[i - 1]);
-}
-export function LabeledGraphByEdgesRank(e: number[][], n: number): number {
-  const edges = edgePairs(n);
-  const idx = e.map(([u, v]) => edgeIndexOf(edges, u, v));
-  idx.sort((a, b) => a - b);
-  return KSubsetRank(idx);
-}
-export function IsLabeledGraphByEdgesOf(e: unknown, n: number, m: number): boolean {
-  return Array.isArray(e) && e.length === m && IsLabeledGraphOf(e, n);
-}
-
-// ─── Tournaments(n): orientations of K_n — for every edge, a direction. Count 2^C(n,2), reusing
-// Tuples(2, C(n,2)) over the same edge order; element = the directed edge list [winner,loser]. ───
-export function TournamentCount(n: number): number {
-  return TupleCount(2, Binomial(n, 2));
-}
-export function TournamentUnrank(n: number, rank: number): number[][] {
-  const edges = edgePairs(n);
-  const bits = TupleUnrank(2, edges.length, rank);
-  return edges.map(([i, j], k) => (bits[k] === 1 ? [i, j] : [j, i]));
-}
-export function TournamentRank(e: number[][], n: number): number {
-  const edges = edgePairs(n);
-  const bits = new Array(edges.length).fill(0);
-  for (const [u, v] of e) {
-    const idx = edgeIndexOf(edges, u, v);
-    const [i, j] = edges[idx - 1];
-    bits[idx - 1] = u === i && v === j ? 1 : 2;
-  }
-  return TupleRank(bits, 2);
-}
-export function IsTournamentOf(e: unknown, n: number): boolean {
-  if (!Array.isArray(e) || e.length !== Binomial(n, 2)) return false;
-  const edges = edgePairs(n);
-  const seen = new Set<number>();
-  for (const pair of e as unknown[]) {
-    if (!Array.isArray(pair) || pair.length !== 2) return false;
-    const [u, v] = pair as number[];
-    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
-    const idx = edgeIndexOf(edges, u, v);
-    if (idx === 0 || seen.has(idx)) return false;
-    seen.add(idx);
-  }
-  return true;
 }
 
 // ─── RecursiveTrees(n): increasing trees on [n] — rooted at 1, every root-to-leaf path increasing
@@ -462,33 +363,6 @@ export const entriesBeforeParkingFunctions: NumberKernel[] = [
 ];
 
 export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
-  {
-    head: "Tournaments",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => TournamentCount(n),
-    unrank: ([n], r) => TournamentUnrank(n, r),
-    valid: (e, [n]) => IsTournamentOf(e, n),
-    rank: (e, [n]) => TournamentRank(e as number[][], n),
-  },
-  {
-    head: "LabeledGraphs",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => LabeledGraphCount(n),
-    unrank: ([n], r) => LabeledGraphUnrank(n, r),
-    valid: (e, [n]) => IsLabeledGraphOf(e, n),
-    rank: (e, [n]) => LabeledGraphRank(e as number[][], n),
-  },
-  {
-    head: "LabeledGraphsByEdges",
-    paramCount: 2,
-    kind: "blocks",
-    count: ([n, m]) => LabeledGraphByEdgesCount(n, m),
-    unrank: ([n, m], r) => LabeledGraphByEdgesUnrank(n, m, r),
-    valid: (e, [n, m]) => IsLabeledGraphByEdgesOf(e, n, m),
-    rank: (e, [n]) => LabeledGraphByEdgesRank(e as number[][], n),
-  },
   {
     head: "RecursiveTrees",
     paramCount: 1,

@@ -39,6 +39,7 @@ import {
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
 import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
+import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
   coreSurjectionsEntries as setPartitionsSurjectionsEntries,
   coreEntries as setPartitionsCoreEntries,
@@ -86,6 +87,7 @@ const numberEntries = [
   ...latticePathsPathsPartitionsEntries,
   ...tableauxTreesBeforeParkingFunctions,
   ...wordsTableauxTreesEntries,
+  ...graphsCoreEntries,
   ...tableauxTreesAfterNonDecreasingParkingFunctions,
   ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
