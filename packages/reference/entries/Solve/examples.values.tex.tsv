@@ -25,3 +25,5 @@ solve-x-eq-exponentiale-pow-1-times-x-pow-neg-1
 solve-cos-exp-x-eq-3-times-exp-neg-x-plus-1-0-lt		
 solve-list-x-plus-2y-plus-3z-eq-4-3x-plus-4y		
 a-2-2-linear-system-each-solution-is-a-tuple	\mathrm{Solve}(\begin{cases}x+y=3\\x-y=1\end{cases}, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack(2,1)\bigr\rbrack
+solve-x-eq-x-for-x	\mathrm{Solve}(x=x, x)	\bigl\lbrack\bigl\lbrack\bigr\rbrack\bigr\rbrack
+solve-0-eq-0-for-x	\mathrm{Solve}(0=0, x)	\bigl\lbrack\bigl\lbrack\bigr\rbrack\bigr\rbrack

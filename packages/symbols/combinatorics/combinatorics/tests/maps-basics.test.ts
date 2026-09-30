@@ -22,13 +22,12 @@ test("extending a built-in keeps everything the built-in did", () => {
   expect(ce.box(["Count", ["Reverse", ["List", 1, 2, 3]]]).evaluate().re).toBe(3);
   expect(ce.box(["At", ["Reverse", ["List", 1, 2, 3]], 1]).evaluate().re).toBe(3);
 
-  // An evaluate-backed head (Inverse) needs no second symbol and leaks nothing. A
-  // collection-backed one (Complement) does, and a HELD built-in result prints under that
-  // private name. The alternative — declaring our clause `-> collection` so the handlers can
-  // sit on our own definition — removes the leak but breaks written composition, because the
-  // head's declared return type stops being the carrier. Composition is worth more than the
-  // cosmetics; see the composition test below.
-  expect(JSON.stringify(ce.box(["Complement", ["Set", 1, 2]]).evaluate().json)).toContain("Complement_");
+  // Extending is done by `defineOverload` (`@enumeratio/engine`), attached to the operator
+  // object already on `ce` in place — evaluate-backed (Inverse) and collection-backed
+  // (Complement) heads both take the same row, no second definition declared for either, so
+  // neither leaks a private name: a HELD built-in result prints under its own head.
+  expect(JSON.stringify(ce.box(["Complement", ["Set", 1, 2]]).evaluate().json)).not.toContain("Complement_");
+  expect(ce.box(["Complement", ["Set", 1, 2]]).evaluate().operator).toBe("Complement");
   expect(JSON.stringify(ce.box(["Inverse", 4]).evaluate().json)).not.toContain("Primitive");
 });
 

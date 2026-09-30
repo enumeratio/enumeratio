@@ -23,7 +23,7 @@ signatures:
   - call: Reverse(Permutation)
     description: The word read backwards.
     library: enumeratio-combinatorics
-    type: "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T) & ((permutation) -> permutation)"
+    type: (permutation) -> permutation
     overrides: compute-engine
 laws:
   - involution

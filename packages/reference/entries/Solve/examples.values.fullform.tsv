@@ -25,3 +25,5 @@ solve-x-eq-exponentiale-pow-1-times-x-pow-neg-1
 solve-cos-exp-x-eq-3-times-exp-neg-x-plus-1-0-lt	
 solve-list-x-plus-2y-plus-3z-eq-4-3x-plus-4y	
 a-2-2-linear-system-each-solution-is-a-tuple	Solve[List[Equal[Plus[x, y], 3], Equal[Subtract[x, y], 1]], List[x, y]]
+solve-x-eq-x-for-x	Solve[Equal[x, x], x]
+solve-0-eq-0-for-x	Solve[Equal[0, 0], x]
