@@ -51,8 +51,11 @@ for (const latex of CORPUS) {
 // form nests `Power`/`Multiply`/`Add`/`Sqrt` about a dozen levels deep, deep enough
 // that compute-engine's Epsil formatter -- which re-lays out a node's line-vs-wrap
 // choice from scratch on every `serialize`/`nextCol`/`cost` call -- multiplied its
-// way to a hang. `toInputForm` now keeps every `serializeEpsil` call shallow (see
-// `renderSafely` in `inputform.ts`), so this should print in well under a second.
+// way to a hang (~47 s unbounded). `toInputForm` keeps every `serializeEpsil` call shallow
+// (see `renderSafely` in `inputform.ts`): ~1 s locally, ~3 s on a CI runner, so the budget
+// separates bounded from exponential without timing the runner.
+const HANG_BUDGET_MS = 10_000;
+
 test("InputForm: a deeply nested closed form prints instead of hanging", () => {
   const json = JSON.parse(
     readFileSync(fileURLToPath(new URL("./inputform-hang-repro.json", import.meta.url)), "utf8"),
@@ -62,7 +65,7 @@ test("InputForm: a deeply nested closed form prints instead of hanging", () => {
   const printed = toInputForm(json);
   const elapsedMs = performance.now() - start;
 
-  expect(elapsedMs, `printed in ${elapsedMs.toFixed(1)}ms`).toBeLessThan(2000);
+  expect(elapsedMs, `printed in ${elapsedMs.toFixed(1)}ms`).toBeLessThan(HANG_BUDGET_MS);
   expect(reparse(printed)).toEqual(ce.box(json as Parameters<ComputeEngine["box"]>[0]).json);
 });
 
