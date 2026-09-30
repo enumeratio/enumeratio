@@ -1,23 +1,34 @@
 // A map's Epsil definition, compiled to JavaScript by compute-engine's own compiler, and
-// memoized by value. The Epsil is the definition; this is only how it runs fast. When the
-// compiler can't take a definition yet, or a result isn't one it can hand back exactly (only
-// integers and lists of them), the interpreter answers instead. tests/map-definitions.test.ts
-// holds the two to the same answers.
+// memoized by value. The Epsil is the definition; this is only how it runs fast. The compiled
+// form comes from compiled-maps.generated.js (written ahead of time by scripts/compile-maps.ts)
+// while its hash matches the definition, else from compiling on first use. When the compiler
+// can't take a definition yet, or a result isn't one it can hand back exactly (only integers and
+// lists of them), the interpreter answers instead. tests/compiled-maps.test.ts holds the two to
+// the same answers.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compileTyped,
   definitionHash,
   fromJs,
+  type GeneratedRun,
   isCacheableDefinition,
   type MathJSON,
   pureResult,
+  runtimeHelpers,
   toJs,
 } from "@enumeratio/engine/compiled";
 
 export { compileTyped, freshen, fromJs, toJs } from "@enumeratio/engine/compiled";
 
-type Compiled = NonNullable<ReturnType<typeof compileTyped>>;
+type Compiled = Pick<NonNullable<ReturnType<typeof compileTyped>>, "run">;
+
+/** A map's definition compiled ahead of time, with the hash of the definition it came from. */
+export interface GeneratedMap {
+  readonly hash: string;
+  readonly run: GeneratedRun;
+  readonly guard?: GeneratedRun;
+}
 
 /** One map's definition as a function of its argument's contents: compiled where it compiles,
  *  interpreted otherwise. A pure definition's answers are cached across engines (`pureResult`);
@@ -31,10 +42,21 @@ export function fastDefinition(options: {
   to?: string;
   interpret: (contents: unknown) => unknown;
   cache?: boolean;
+  generated?: GeneratedMap;
 }): (contents: unknown) => MathJSON | undefined {
-  const { ce, body, guard, from, to, interpret, cache = true } = options;
+  const { ce, body, guard, from, to, interpret, cache = true, generated } = options;
+  const hash = definitionHash({ body, guard });
   let compiled: { body: Compiled; guard?: Compiled } | null | undefined;
   const compile = (): { body: Compiled; guard?: Compiled } | null => {
+    if (generated !== undefined && generated.hash === hash) {
+      const sys = runtimeHelpers(ce);
+      const run = generated.run;
+      const check = generated.guard;
+      return {
+        body: { run: (vars) => run(sys, vars) },
+        ...(check === undefined ? {} : { guard: { run: (vars) => check(sys, vars) } }),
+      };
+    }
     if (from === undefined || to === undefined) return null;
     const main = compileTyped(ce, body, { _raw: from });
     if (main === undefined) return null;
@@ -59,7 +81,6 @@ export function fastDefinition(options: {
     }
     return interpret(contents) as MathJSON | undefined;
   };
-  const hash = definitionHash({ body, guard });
   let pure: boolean | undefined;
   return (contents) => {
     pure ??=
