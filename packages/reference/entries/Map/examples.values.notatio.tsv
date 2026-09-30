@@ -9,6 +9,7 @@ map-f-list-list-list-list-list-a	<Map>f <List><List><List><List><List>a</List></
 map-f-list-a-b-c	<Map>f <List>a b c</List></Map>	<List><f>a</f> <f>b</f> <f>c</f></List>
 map-f-list-list-list-list-list-a-list-2	<Map>f <List><List><List><List><List>a</List></List></List></List></List> <List>2</List></Map>	<List><f><List><List><List><List>a</List></List></List></List> 2</f></List>
 map-reverse-list-list-a-b-list-c-d-list	<Map>Reverse <List><List>a b</List> <List>c d</List> <List>ExponentialE f</List></List></Map>	<List><List>b a</List> <List>d c</List> <List>f ExponentialE</List></List>
+map-function-1-plus-list-x-y-1-list-list-1-1	<Map><Function><Block><Add>_1 <List>x y</List></Add></Block> _1</Function> <List><List>1 1</List> <List>2 2</List> <List>3 3</List> <List>4 4</List></List></Map>	<List><List><Add>x 1</Add> <Add>y 1</Add></List> <List><Add>x 2</Add> <Add>y 2</Add></List> <List><Add>x 3</Add> <Add>y 3</Add></List> <List><Add>x 4</Add> <Add>y 4</Add></List></List>
 mapping-over-an-empty-collection-returns-empty	<Map>Square <Apply>List</Apply></Map>	<Apply>List</Apply>
 map-sqrt-list-1-2-3-4	<Map>Sqrt <List>1 2 3 4</List></Map>	<List>1 <Sqrt>2</Sqrt> <Sqrt>3</Sqrt> 2</List>
 map-f-list-x-y-z	<Map>f <List>x y z</List></Map>	<List><f>x</f> <f>y</f> <f>z</f></List>

@@ -1,4 +1,5 @@
-id	section	role	expr	expected	caption
-runs-of-the-same-parity			[SplitBy, [List, 1, 3, 5, 2, 4, 7, 9], [Function, [Mod, _1, 2]]]	[List, [List, 1, 3, 5], [List, 2, 4], [List, 7, 9]]	Runs of the same parity
-runs-with-the-same-value-of-lfloor-x-4-rfloor			[SplitBy, [List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [Function, [Floor, [Divide, _1, 4]]]]	[List, [List, 1, 2, 3], [List, 4, 5, 6, 7], [List, 8, 9, 10]]	Runs with the same value of $\lfloor x/4 \rfloor$
-splitby-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5	Applications		[SplitBy, [List, 3, 0, -4, 3, 3, -2, 0, -3, -4, 5], Sign]	[List, [List, 3], [List, 0], [List, -4], [List, 3, 3], [List, -2], [List, 0], [List, -3, -4], [List, 5]]	
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+runs-of-the-same-parity			[SplitBy, [List, 1, 3, 5, 2, 4, 7, 9], [Function, [Mod, _1, 2]]]	[List, [List, 1, 3, 5], [List, 2, 4], [List, 7, 9]]	Runs of the same parity		
+runs-with-the-same-value-of-lfloor-x-4-rfloor			[SplitBy, [List, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [Function, [Floor, [Divide, _1, 4]]]]	[List, [List, 1, 2, 3], [List, 4, 5, 6, 7], [List, 8, 9, 10]]	Runs with the same value of $\lfloor x/4 \rfloor$		
+splitby-range-1-5-1-over-2-integerpart			[SplitBy, [Range, 1, 5, [Rational, 1, 2]], IntegerPart]	[List, [List, 1], [List, 5], [List, [Rational, 1, 2]]]		precision	compute-engine's own Range materialization turns the Rational(1,2) step into floats (0.5-stepped decimals) rather than keeping exact rationals — a CE-native numerics issue (Range's materialize path, not our SplitBy), outside packages/symbols/combinatorics; SplitBy's own grouping-by-IntegerPart logic is correct once given exact input
+splitby-list-3-0-neg-4-3-3-neg-2-0-neg-3-neg-4-5	Applications		[SplitBy, [List, 3, 0, -4, 3, 3, -2, 0, -3, -4, 5], Sign]	[List, [List, 3], [List, 0], [List, -4], [List, 3, 3], [List, -2], [List, 0], [List, -3, -4], [List, 5]]			

@@ -4,6 +4,7 @@ the-nontrivial-character-mod-4-chi-2-3-1-this-is	\chi_{4,2}(3)	-1
 chi-2-2-i-mod-5-2-is-a-primitive-root-so-it	\chi_{5,2}(2)	i
 values-are-roots-of-unity-3-generates-z-7-times	\chi_{7,3}(3)	\frac{\sqrt{3}}{2}i-\frac{1}{2}
 listable-in-n-the-nontrivial-character-mod-3		
+dirichletcharacter-20-factorial-300-23	\chi_{20!,300}(23)	0
 a-character-vanishes-where-gcd-n-k-1	\chi_{5,2}(5)	0
 chi-3-mod-5-is-the-quadratic-character-its	\chi_{5,3}(2)	-1
 the-trivial-character-mod-1-is-1-everywhere-its	\chi_{1,1}(7)	1

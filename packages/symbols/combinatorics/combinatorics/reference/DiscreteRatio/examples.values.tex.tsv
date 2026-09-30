@@ -16,3 +16,4 @@ discreteratio-fallingfactorial-x-a-1-times	\mathrm{DiscreteRatio}(\frac{\mathrm{
 discreteratio-catalannumber-x-x	\mathrm{DiscreteRatio}(\mathrm{CatalanNumber}(x), x)	\frac{\mathrm{CatalanNumber}(x+1)}{\mathrm{CatalanNumber}(x)}
 list-discreteratio-f-n-discreteratio-f-k	\bigl\lbrack\mathrm{DiscreteRatio}(f, n), \mathrm{DiscreteRatio}(f, k)\bigr\rbrack	\bigl\lbrack1, 1\bigr\rbrack
 discreteratio-gammaregularized-n-z-n	\mathrm{DiscreteRatio}(\operatorname{GammaRegularized}(n, z), n)	\frac{\operatorname{GammaRegularized}(n+1, z)}{\operatorname{GammaRegularized}(n, z)}
+list-discreteratio-binomial-n-k-n-discreteratio	\bigl\lbrack\mathrm{DiscreteRatio}(\binom{n}{k}, n), \mathrm{DiscreteRatio}(\binom{n}{k}, k)\bigr\rbrack	\bigl\lbrack\frac{\binom{n+1}{k}}{\binom{n}{k}}, \frac{\binom{n}{k+1}}{\binom{n}{k}}\bigr\rbrack

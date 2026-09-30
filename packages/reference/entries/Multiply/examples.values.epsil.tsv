@@ -1,3 +1,4 @@
 id	in	out
 2-times-list-x-y-z	2 * [x, y, z]	[2x, 2y, 2z]
+list-list-a-b-list-c-d-times-list-x-y	[[a, b], [c, d]] * [x, y]	[a * x + b * y, c * x + d * y]
 interval-neg-1-2-times-interval-2-3	interval(-1, 2) * interval(2, 3)	interval(-3, 6)

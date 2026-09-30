@@ -20,3 +20,4 @@ rank-list-1-2	<Rank><List>1 2</List></Rank>	<ToExpression>1</ToExpression>
 rank-list-list-1-2	<Rank><List><List>1 2</List></List></Rank>	<ToExpression>2</ToExpression>
 rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	<Equal><Rank><Array>a <List>2 1 4 3</List></Array></Rank> <Length><List>2 1 4 3</List></Length></Equal>	<True />
 a-singular-2-2-matrix-still-has-rank-2-its	<Rank><List><List>1 2</List> <List>2 4</List></List></Rank>	<ToExpression>2</ToExpression>
+rank-sqrt-2	<Rank><Sqrt>2</Sqrt></Rank>	<ToExpression>0</ToExpression>

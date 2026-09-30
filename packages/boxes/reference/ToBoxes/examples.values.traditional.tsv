@@ -3,6 +3,11 @@ power
 evaluates-first		
 binomial	\mathrm{ToBoxes}(\binom{n}{k})	\mathrm{RowBox}(\bigl\lbrack\text{(}, \mathrm{FractionBox}(\text{n}, \text{k}, (\mathrm{FractionLine},\mathrm{False})), \text{)}\bigr\rbrack)
 square-root-over-y		
+toboxes-b-pow-2-plus-a		
+toboxes-beta-a-b		
 map-toboxes-list-i-pi-exponentiale		
 toboxes-list-list-a-b-c-list-d-exponentiale-f		
+map-toboxes-n-list-10-over-3-10-over-3-times-i		
+map-toboxes-list-a-pow-x-a-pow-x-sqrt-a-sqrt-a		
+toboxes-list-1-2-3		
 toboxes-1-over-10		

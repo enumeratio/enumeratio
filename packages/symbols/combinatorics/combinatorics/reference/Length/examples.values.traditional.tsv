@@ -17,6 +17,7 @@ length-x
 length-123-456		
 length-1-over-10		
 length-3-plus-i		
+length-string		
 length-list-list-a-b-c-list-d-exponentiale-f		
 length-x-pow-9-plus-x-pow-2-plus-x-plus-1		
 length-integerdigits-1-000-factorial		
@@ -26,3 +27,4 @@ length-filter-issquarefree-past-iteration-budget
 length-1-over-3		
 length-2-plus-i		
 length-7		
+length-sqrt-7		

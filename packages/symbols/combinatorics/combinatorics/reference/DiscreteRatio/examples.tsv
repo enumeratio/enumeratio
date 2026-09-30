@@ -1,18 +1,19 @@
-id	section	role	expr	expected	caption
-factorial-ratio			[DiscreteRatio, [Factorial, n], n]	[Add, n, 1]	$(n+1)!/n! = n + 1$
-geometric-ratio			[DiscreteRatio, [Power, 2, n], n]	2	a constant ratio for a geometric sequence
-discreteratio-x-pow-2-x	Scope		[DiscreteRatio, [Power, x, 2], x]	[Divide, [Power, [Add, x, 1], 2], [Power, x, 2]]	
-discreteratio-x-minus-r-1-times-x-minus-r-2-x	Scope		[DiscreteRatio, [Multiply, [Add, x, [Multiply, -1, r_1]], [Add, x, [Multiply, -1, r_2]]], x]	[Divide, [Multiply, [Add, [Negate, r_1], x, 1], [Add, [Negate, r_2], x, 1]], [Multiply, [Add, [Negate, r_1], x], [Add, [Negate, r_2], x]]]	
-discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	Scope		[DiscreteRatio, [Multiply, [Add, 1, x], [Power, [Add, 1, [Power, x, 2]], -1]], x]	[Divide, [Add, [Power, x, 3], [Multiply, 2, [Power, x, 2]], x, 2], [Multiply, [Add, x, 1], [Add, [Power, [Add, x, 1], 2], 1]]]	
-discreteratio-x-minus-r-1-times-x-minus-r-2	Scope		[DiscreteRatio, [Multiply, [Add, x, [Multiply, -1, r_1]], [Add, x, [Multiply, -1, r_2]], [Power, [Multiply, [Add, x, [Multiply, -1, p_1]], [Add, x, [Multiply, -1, p_2]]], -1]], x]	[Divide, [Multiply, [Add, [Negate, r_1], x, 1], [Add, [Negate, r_2], x, 1], [Add, [Negate, p_1], x], [Add, [Negate, p_2], x]], [Multiply, [Add, [Negate, p_1], x, 1], [Add, [Negate, p_2], x, 1], [Add, [Negate, r_1], x], [Add, [Negate, r_2], x]]]	
-discreteratio-fallingfactorial-a-x-x	Scope		[DiscreteRatio, [FallingFactorial, a, x], x]	[Divide, [FallingFactorial, a, [Add, x, 1]], [FallingFactorial, a, x]]	
-discreteratio-pochhammer-a-x-x	Scope		[DiscreteRatio, [Pochhammer, a, x], x]	[Divide, [Pochhammer, a, [Add, x, 1]], [Pochhammer, a, x]]	
-discreteratio-x-factorial-x	Scope		[DiscreteRatio, [Factorial, x], x]	[Add, x, 1]	
-discreteratio-gamma-x-x	Scope		[DiscreteRatio, [Gamma, x], x]	[Divide, [Gamma, [Add, x, 1]], [Gamma, x]]	
-discreteratio-binomial-x-k-x	Scope		[DiscreteRatio, [Binomial, x, k], x]	[Divide, [Binomial, [Add, x, 1], k], [Binomial, x, k]]	
-discreteratio-binomial-n-x-x	Scope		[DiscreteRatio, [Binomial, n, x], x]	[Divide, [Binomial, n, [Add, x, 1]], [Binomial, n, x]]	
-discreteratio-r-pow-x-x	Scope		[DiscreteRatio, [Power, r, x], x]	r	
-discreteratio-fallingfactorial-x-a-1-times	Scope		[DiscreteRatio, [Multiply, [Multiply, [FallingFactorial, x, a_1], [Binomial, x, a_2], [Power, [Multiply, [Pochhammer, x, b_1], [Factorial, x]], -1]], [Power, r, x]], x]	[Divide, [Multiply, [Factorial, x], [Pochhammer, x, b_1], [FallingFactorial, [Add, x, 1], a_1], [Binomial, [Add, x, 1], a_2], [Power, r, [Add, x, 1]]], [Multiply, [Factorial, [Add, x, 1]], [Pochhammer, [Add, x, 1], b_1], [FallingFactorial, x, a_1], [Binomial, x, a_2], [Power, r, x]]]	
-discreteratio-catalannumber-x-x	Scope		[DiscreteRatio, [CatalanNumber, x], x]	[Divide, [CatalanNumber, [Add, x, 1]], [CatalanNumber, x]]	
-list-discreteratio-f-n-discreteratio-f-k	Scope		[List, [DiscreteRatio, f, n], [DiscreteRatio, f, k]]	[List, 1, 1]	
-discreteratio-gammaregularized-n-z-n	Scope		[DiscreteRatio, [GammaRegularized, n, z], n]	[Divide, [GammaRegularized, [Add, n, 1], z], [GammaRegularized, n, z]]	
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+factorial-ratio			[DiscreteRatio, [Factorial, n], n]	[Add, n, 1]	$(n+1)!/n! = n + 1$		
+geometric-ratio			[DiscreteRatio, [Power, 2, n], n]	2	a constant ratio for a geometric sequence		
+discreteratio-x-pow-2-x	Scope		[DiscreteRatio, [Power, x, 2], x]	[Divide, [Power, [Add, x, 1], 2], [Power, x, 2]]			
+discreteratio-x-minus-r-1-times-x-minus-r-2-x	Scope		[DiscreteRatio, [Multiply, [Add, x, [Multiply, -1, r_1]], [Add, x, [Multiply, -1, r_2]]], x]	[Divide, [Multiply, [Add, [Negate, r_1], x, 1], [Add, [Negate, r_2], x, 1]], [Multiply, [Add, [Negate, r_1], x], [Add, [Negate, r_2], x]]]			
+discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	Scope		[DiscreteRatio, [Multiply, [Add, 1, x], [Power, [Add, 1, [Power, x, 2]], -1]], x]	[Divide, [Add, [Power, x, 3], [Multiply, 2, [Power, x, 2]], x, 2], [Multiply, [Add, x, 1], [Add, [Power, [Add, x, 1], 2], 1]]]			
+discreteratio-x-minus-r-1-times-x-minus-r-2	Scope		[DiscreteRatio, [Multiply, [Add, x, [Multiply, -1, r_1]], [Add, x, [Multiply, -1, r_2]], [Power, [Multiply, [Add, x, [Multiply, -1, p_1]], [Add, x, [Multiply, -1, p_2]]], -1]], x]	[Divide, [Multiply, [Add, [Negate, r_1], x, 1], [Add, [Negate, r_2], x, 1], [Add, [Negate, p_1], x], [Add, [Negate, p_2], x]], [Multiply, [Add, [Negate, p_1], x, 1], [Add, [Negate, p_2], x, 1], [Add, [Negate, r_1], x], [Add, [Negate, r_2], x]]]			
+discreteratio-fallingfactorial-a-x-x	Scope		[DiscreteRatio, [FallingFactorial, a, x], x]	[Divide, [FallingFactorial, a, [Add, x, 1]], [FallingFactorial, a, x]]			
+discreteratio-pochhammer-a-x-x	Scope		[DiscreteRatio, [Pochhammer, a, x], x]	[Divide, [Pochhammer, a, [Add, x, 1]], [Pochhammer, a, x]]			
+discreteratio-x-factorial-x	Scope		[DiscreteRatio, [Factorial, x], x]	[Add, x, 1]			
+discreteratio-gamma-x-x	Scope		[DiscreteRatio, [Gamma, x], x]	[Divide, [Gamma, [Add, x, 1]], [Gamma, x]]			
+discreteratio-binomial-x-k-x	Scope		[DiscreteRatio, [Binomial, x, k], x]	[Divide, [Binomial, [Add, x, 1], k], [Binomial, x, k]]			
+discreteratio-binomial-n-x-x	Scope		[DiscreteRatio, [Binomial, n, x], x]	[Divide, [Binomial, n, [Add, x, 1]], [Binomial, n, x]]			
+discreteratio-r-pow-x-x	Scope		[DiscreteRatio, [Power, r, x], x]	r			
+discreteratio-fallingfactorial-x-a-1-times	Scope		[DiscreteRatio, [Multiply, [Multiply, [FallingFactorial, x, a_1], [Binomial, x, a_2], [Power, [Multiply, [Pochhammer, x, b_1], [Factorial, x]], -1]], [Power, r, x]], x]	[Divide, [Multiply, [Factorial, x], [Pochhammer, x, b_1], [FallingFactorial, [Add, x, 1], a_1], [Binomial, [Add, x, 1], a_2], [Power, r, [Add, x, 1]]], [Multiply, [Factorial, [Add, x, 1]], [Pochhammer, [Add, x, 1], b_1], [FallingFactorial, x, a_1], [Binomial, x, a_2], [Power, r, x]]]			
+discreteratio-catalannumber-x-x	Scope		[DiscreteRatio, [CatalanNumber, x], x]	[Divide, [CatalanNumber, [Add, x, 1]], [CatalanNumber, x]]			
+list-discreteratio-f-n-discreteratio-f-k	Scope		[List, [DiscreteRatio, f, n], [DiscreteRatio, f, k]]	[List, 1, 1]			
+discreteratio-gammaregularized-n-z-n	Scope		[DiscreteRatio, [GammaRegularized, n, z], n]	[Divide, [GammaRegularized, [Add, n, 1], z], [GammaRegularized, n, z]]			
+list-discreteratio-binomial-n-k-n-discreteratio	Scope		[List, [DiscreteRatio, [Binomial, n, k], n], [DiscreteRatio, [Binomial, n, k], k]]	[List, [Divide, [Binomial, [Add, n, 1], k], [Binomial, n, k]], [Divide, [Binomial, n, [Add, k, 1]], [Binomial, n, k]]]		convention	mathematically the same ratio (Binomial(n+1,k)/Binomial(n,k) vs Wolfram's algebraically-reduced (1+n)/(1-k+n)); ours doesn't simplify Binomial ratios into cancelled polynomial form

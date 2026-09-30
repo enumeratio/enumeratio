@@ -1,8 +1,10 @@
-id	in	out	tex.in	tex.out
-4-eq-4	(4 == 4)	True	4=4	\text{True}
-n-pi-20-eq-pi	(N[Pi, 20] == Pi)	True	N[\pi ,20]=\pi	\text{True}
-sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	(Plus[Sqrt[2], Sqrt[3]] == Sqrt[Plus[5, Times[2, Sqrt[6]]]])	True	\sqrt{2}+\sqrt{3}=\sqrt{5+2 \sqrt{6}}	\text{True}
-x-eq-x	(x == x)	True	x=x	\text{True}
-3-eq-3-eq-3	Equal[3, 3, 3]	True	3=3=3	\text{True}
-list-1-2-eq-list-1-2	(List[1, 2] == List[1, 2])	True	\{1,2\}=\{1,2\}	\text{True}
-list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	List[(x == x), (x == y), (Plus[Sqrt[2], Sqrt[3]] == Sqrt[Plus[5, Times[2, Sqrt[6]]]]), (Pi == N[Pi])]	{True, x == y, True, True}	\left\{x=x,x=y,\sqrt{2}+\sqrt{3}=\sqrt{5+2 \sqrt{6}},\pi =N[\pi ]\right\}	\{\text{True},x=y,\text{True},\text{True}\}
+id	in	out	tex.in	tex.out	verdict
+4-eq-4	(4 == 4)	True	4=4	\text{True}	
+n-pi-20-eq-pi	(N[Pi, 20] == Pi)	True	N[\pi ,20]=\pi	\text{True}	
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	(Plus[Sqrt[2], Sqrt[3]] == Sqrt[Plus[5, Times[2, Sqrt[6]]]])	True	\sqrt{2}+\sqrt{3}=\sqrt{5+2 \sqrt{6}}	\text{True}	
+x-eq-x	(x == x)	True	x=x	\text{True}	
+3-eq-3-eq-3	Equal[3, 3, 3]	True	3=3=3	\text{True}	
+list-1-2-eq-list-1-2	(List[1, 2] == List[1, 2])	True	\{1,2\}=\{1,2\}	\text{True}	
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	(N[Pi, 20] == Times[Pi, Plus[1, Times[256, Power[10, -20]]]])	False			disagree
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	List[(x == x), (x == y), (Plus[Sqrt[2], Sqrt[3]] == Sqrt[Plus[5, Times[2, Sqrt[6]]]]), (Pi == N[Pi])]	{True, x == y, True, True}	\left\{x=x,x=y,\sqrt{2}+\sqrt{3}=\sqrt{5+2 \sqrt{6}},\pi =N[\pi ]\right\}	\{\text{True},x=y,\text{True},\text{True}\}	
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	Solve[(Plus[Times[a, Power[x, 2]], Times[b, x], c] == 0), x]	{{x -> (-b - Sqrt[b^2 - 4*a*c])/(2*a)}, {x -> (-b + Sqrt[b^2 - 4*a*c])/(2*a)}}			disagree

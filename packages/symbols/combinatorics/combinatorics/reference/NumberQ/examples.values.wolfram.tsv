@@ -1,7 +1,9 @@
-id	in	out	tex.in	tex.out
-an-integer-literal	NumberQ[2]	True	\text{NumberQ}[2]	\text{True}
-a-symbolic-constant-is-not-numberq	NumberQ[Pi]	False	\text{NumberQ}[\pi ]	\text{False}
-a-plain-symbol-is-not-numberq	NumberQ[x]	False	\text{NumberQ}[x]	\text{False}
-numberq-n-sqrt-2	NumberQ[N[Sqrt[2]]]	True	\text{NumberQ}\left[N\left[\sqrt{2}\right]\right]	\text{True}
-list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]	{False, False}	\{\text{NumberQ}[c],\text{NumberQ}[d]\}	\{\text{False},\text{False}\}
-list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]	{False, False}	\{\text{NumberQ}[o],\text{NumberQ}[u]\}	\{\text{False},\text{False}\}
+id	in	out	tex.in	tex.out	verdict
+an-integer-literal	NumberQ[2]	True	\text{NumberQ}[2]	\text{True}	
+a-symbolic-constant-is-not-numberq	NumberQ[Pi]	False	\text{NumberQ}[\pi ]	\text{False}	
+a-plain-symbol-is-not-numberq	NumberQ[x]	False	\text{NumberQ}[x]	\text{False}	
+numberq-n-sqrt-2	NumberQ[N[Sqrt[2]]]	True	\text{NumberQ}\left[N\left[\sqrt{2}\right]\right]	\text{True}	
+list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]	{False, False}	\{\text{NumberQ}[c],\text{NumberQ}[d]\}	\{\text{False},\text{False}\}	
+list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]	{False, False}	\{\text{NumberQ}[o],\text{NumberQ}[u]\}	\{\text{False},\text{False}\}	
+numberq-sqrt-2	NumberQ[Sqrt[2]]	False			disagree
+numberq-positiveinfinity	NumberQ[Infinity]	False			disagree

@@ -71,6 +71,7 @@ neg-27-over-10-mod-23-over-5	-\frac{27}{10}\bmod\frac{23}{5}	\frac{19}{10}
 pi-mod-exponentiale	\pi\bmod e	\pi-e
 0-mod-2	0\bmod2	0
 1-mod-1	1\bmod1	0
+15-mod-7	15\bmod7	1
 division-by-a-0-modulus-yields-nan-rather-than	5\bmod0	\operatorname{Indeterminate}
 periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\bot
 rounding-ties-to-even-means-1-and-1-both-appear	\bigl\lbrack(1+2i)\bmod2, (3+2i)\bmod2\bigr\rbrack	\bigl\lbrack1, -1\bigr\rbrack

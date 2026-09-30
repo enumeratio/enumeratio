@@ -9,5 +9,6 @@ the-divisors-common-to-45-and-78	<Intersection><Divisors>45</Divisors> <Divisors
 intersection-is-idempotent-a-cap-a-a	<Equal><Intersection><Set>1 2 3</Set> <Set>1 2 3</Set></Intersection> <Set>1 2 3</Set></Equal>	<True />
 the-same-inclusion-exclusion-count-rearranged-a	<Equal><Add><Length><List>1 2 3</List></Length> <Length><List>2 3 4</List></Length></Add> <Add><Length><Union><List>1 2 3</List> <List>2 3 4</List></Union></Length> <Length><Intersection><List>1 2 3</List> <List>2 3 4</List></Intersection></Length></Add></Equal>	<True />
 intersecting-with-the-empty-set-gives-the-empty	<Intersection><List>1 2 3</List> EmptySet</Intersection>	<EmptySet />
+intersection-list-a-b-c-list-d-exponentiale-f	<Intersection><List>a b c</List> <List>d ExponentialE f</List></Intersection>	<EmptySet />
 disjoint-collections-intersect-to-the-special	<Intersection><List>1 2</List> <List>3 4</List></Intersection>	<EmptySet />
 the-result-keeps-the-order-elements-were-met-in	<Intersection><List>c b a</List> <List>a b</List></Intersection>	<Set>b a</Set>

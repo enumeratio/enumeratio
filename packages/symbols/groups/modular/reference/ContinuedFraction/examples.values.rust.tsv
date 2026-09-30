@@ -16,6 +16,7 @@ a-cube-root-algebraic-degree-3-not-periodic-so-a
 symbolic-terms-build-the-nested-fraction-left	
 25-terms-past-the-double-precision-wall	
 continuedfraction-n-pi	nf(x(std::f64::consts::PI))
+continuedfraction-n-pi-20	nf(x(std::f64::consts::PI))
 continuedfraction-sqrt-exponentiale-25	
 n-root-product-continuedfraction-pi-1-000-1-000	
 continuedfraction-exponentiale-pow-sqrt-163	

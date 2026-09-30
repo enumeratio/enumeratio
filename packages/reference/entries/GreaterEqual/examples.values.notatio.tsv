@@ -4,4 +4,6 @@ id	in	out
 pi-lt-eq-n-pi-20	<LessEqual>Pi <N>Pi 20</N></LessEqual>	<True />
 pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	<LessEqual><Power>Pi ExponentialE</Power> <Power>ExponentialE Pi</Power></LessEqual>	<True />
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	<LessEqual><Sqrt><Add>5 <Multiply>2 <Sqrt>6</Sqrt></Multiply></Add></Sqrt> <Add><Sqrt>2</Sqrt> <Sqrt>3</Sqrt></Add></LessEqual>	<True />
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	<LessEqual><Multiply>Pi <Add>1 <Multiply>256 <Power>10 -20</Power></Multiply></Add></Multiply> <N>Pi 20</N></LessEqual>	<True />
+x-lt-eq-x	<LessEqual>x x</LessEqual>	<True />
 refine-sqrt-x-pow-2-x-gt-eq-0	<Refine><Sqrt><Power>x 2</Power></Sqrt> <GreaterEqual>x 0</GreaterEqual></Refine>	<x />

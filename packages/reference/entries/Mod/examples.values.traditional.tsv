@@ -71,6 +71,7 @@ neg-27-over-10-mod-23-over-5
 pi-mod-exponentiale		
 0-mod-2		
 1-mod-1		
+15-mod-7		
 division-by-a-0-modulus-yields-nan-rather-than		
 periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\mathrm{False}
 rounding-ties-to-even-means-1-and-1-both-appear		

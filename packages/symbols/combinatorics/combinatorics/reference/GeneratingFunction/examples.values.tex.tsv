@@ -6,3 +6,4 @@ fixed-k-binomial	\mathrm{GeneratingFunction}(\binom{n}{3}, n, x)	\frac{x^3}{x^4-
 geometric	\mathrm{GeneratingFunction}(2^{n}, n, x)	\frac{1}{1-2x}
 generatingfunction-1-n-x	\mathrm{GeneratingFunction}(1, n, x)	\frac{1}{1-x}
 no-closed-form	\mathrm{GeneratingFunction}(n!, n, x)	\mathrm{GeneratingFunction}(n!, n, x)
+list-generatingfunction-n-n-z-generatingfunction	\bigl\lbrack\mathrm{GeneratingFunction}(n, n, z), \mathrm{GeneratingFunction}(n^2, n, z)\bigr\rbrack	\bigl\lbrack(z)(z^2-2z+1)^{-1}, \frac{z^2+z}{-z^3+3z^2-3z+1}\bigr\rbrack

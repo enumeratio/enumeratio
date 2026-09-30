@@ -28,4 +28,5 @@ catalannumber-neg-7	CatalanNumber[-7]	0	C_{-7}	0
 catalannumber-neg-6	CatalanNumber[-6]	0	C_{-6}	0	
 catalannumber-neg-4	CatalanNumber[-4]	0	C_{-4}	0	
 catalannumber-neg-3	CatalanNumber[-3]	0	C_{-3}	0	
+differencerootreduce-catalannumber-k-k	DifferenceRootReduce[CatalanNumber[k], k]	DifferenceRoot[Function[{\[FormalY], \[FormalN]}, {(-2 - 4*\[FormalN])*\[FormalY][\[FormalN]] + (2 + \[FormalN])*\[FormalY][1 + \[FormalN]] == 0, \[FormalY][0] == 1}]][k]			inconclusive
 they-grow-fast-c-15-already-passes-nine-million	CatalanNumber[15]	9694845	C_{15}	9694845	

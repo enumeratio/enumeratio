@@ -3,4 +3,6 @@ accumulate-1-2-3-4
 accumulate-list-a-b-c-d		
 accumulate-list-list-a-b-list-c-d-list		
 accumulate-empty		
+accumulate-range-1-10		
 accumulate-last-is-total	\mathrm{Last}(\mathrm{Accumulate}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=1+2+3+4+5	\mathrm{True}
+transpose-nestlist-accumulate-range-1-5-5		

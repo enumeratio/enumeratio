@@ -1,8 +1,11 @@
-id	in	out	tex.in	tex.out
-2-times-list-1-2-3	Times[2, List[1, 2, 3]]	{2, 4, 6}	2 \{1,2,3\}	\{2,4,6\}
-a-times-list-list-1-2-list-3-4	Times[a, List[List[1, 2], List[3, 4]]]	{{a, 2*a}, {3*a, 4*a}}	a \left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)	\left( \begin{array}{cc}  a & 2 a \\  3 a & 4 a \\ \end{array} \right)
-exponentiale-pow-list-list-1-2-3-list-4-5-6	Power[E, List[List[1, 2, 3], List[4, 5, 6]]]	{{E, E^2, E^3}, {E^4, E^5, E^6}}	e^{\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\ \end{array} \right)}	\left( \begin{array}{ccc}  e & e^2 & e^3 \\  e^4 & e^5 & e^6 \\ \end{array} \right)
-outer-f-list-1-2-list-a-b-c	Outer[f, List[1, 2], List[a, b, c]]	{{f[1, a], f[1, b], f[1, c]}, {f[2, a], f[2, b], f[2, c]}}	\text{Outer}[f,\{1,2\},\{a,b,c\}]	\left( \begin{array}{ccc}  f(1,a) & f(1,b) & f(1,c) \\  f(2,a) & f(2,b) & f(2,c) \\ \end{array} \right)
-prepend-list-1-2-3-list-a-b-c	Prepend[List[1, 2, 3], List[a, b, c]]	{{a, b, c}, 1, 2, 3}	\text{Prepend}[\{1,2,3\},\{a,b,c\}]	\{\{a,b,c\},1,2,3\}
-flatten-list-list-1-2-list-a-b-c	Flatten[List[List[1, 2], List[a, b, c]]]	{1, 2, a, b, c}	\text{Flatten}[\{\{1,2\},\{a,b,c\}\}]	\{1,2,a,b,c\}
-map-f-list-1-2-3-4	Map[f, List[1, 2, 3, 4]]	{f[1], f[2], f[3], f[4]}	f\text{/@}\{1,2,3,4\}	\{f(1),f(2),f(3),f(4)\}
+id	in	out	tex.in	tex.out	verdict
+2-times-list-1-2-3	Times[2, List[1, 2, 3]]	{2, 4, 6}	2 \{1,2,3\}	\{2,4,6\}	
+a-times-list-list-1-2-list-3-4	Times[a, List[List[1, 2], List[3, 4]]]	{{a, 2*a}, {3*a, 4*a}}	a \left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)	\left( \begin{array}{cc}  a & 2 a \\  3 a & 4 a \\ \end{array} \right)	
+exponentiale-pow-list-list-1-2-3-list-4-5-6	Power[E, List[List[1, 2, 3], List[4, 5, 6]]]	{{E, E^2, E^3}, {E^4, E^5, E^6}}	e^{\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\ \end{array} \right)}	\left( \begin{array}{ccc}  e & e^2 & e^3 \\  e^4 & e^5 & e^6 \\ \end{array} \right)	
+outer-f-list-1-2-list-a-b-c	Outer[f, List[1, 2], List[a, b, c]]	{{f[1, a], f[1, b], f[1, c]}, {f[2, a], f[2, b], f[2, c]}}	\text{Outer}[f,\{1,2\},\{a,b,c\}]	\left( \begin{array}{ccc}  f(1,a) & f(1,b) & f(1,c) \\  f(2,a) & f(2,b) & f(2,c) \\ \end{array} \right)	
+prepend-list-1-2-3-list-a-b-c	Prepend[List[1, 2, 3], List[a, b, c]]	{{a, b, c}, 1, 2, 3}	\text{Prepend}[\{1,2,3\},\{a,b,c\}]	\{\{a,b,c\},1,2,3\}	
+flatten-list-list-1-2-list-a-b-c	Flatten[List[List[1, 2], List[a, b, c]]]	{1, 2, a, b, c}	\text{Flatten}[\{\{1,2\},\{a,b,c\}\}]	\{1,2,a,b,c\}	
+map-f-list-1-2-3-4	Map[f, List[1, 2, 3, 4]]	{f[1], f[2], f[3], f[4]}	f\text{/@}\{1,2,3,4\}	\{f(1),f(2),f(3),f(4)\}	
+list-a-b-c-plus-list-1-2-3	Plus[List[a, b, c], List[1, 2, 3]]	{1 + a, 2 + b, 3 + c}			disagree
+subsets-list-1-2-3	Subsets[List[1, 2, 3]]	{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}			disagree
+solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	Solve[List[(Plus[x, Times[-1, y]] == 1), (Plus[x, y] == 0)], x, y]	{{x -> 1/2}}			disagree

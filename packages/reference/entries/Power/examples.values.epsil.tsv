@@ -10,5 +10,6 @@ interval-1-over-3-2-pow-3	interval(1 / 3, 2) ^ 3	interval(1 / 27, 8)
 2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	2 ^ [[1 / 2, -1], [-5 / 3, 1 / 2]]	[[sqrt(2), 1 / 2], [2 ^ (-5 / 3), sqrt(2)]]
 fullsimplify-functioncontinuous-list-x-pow-n-x	FullSimplify(FunctionContinuous([x ^ n, x >= 0], x))	FunctionContinuous([x ^ n, 0 <= x], x)
 d-x-pow-n-x	D(x ^ n, x)	n * x ^ (n - 1)
+root-neg-1-3	root(-1, 3)	-1
 power-1-complexinfinity-is-indeterminate	1 ^ complexInfinity	Indeterminate
 power-e-complexinfinity-is-indeterminate-exp	exponentialE ^ complexInfinity	Indeterminate

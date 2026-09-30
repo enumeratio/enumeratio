@@ -11,6 +11,7 @@ combining-the-divisors-of-10-and-15-into-one-set	Union[Divisors[10], Divisors[15
 combining-the-divisors-of-10-12-and-20-into-one	Union[Divisors[10], Divisors[12], Divisors[20]]	
 counting-the-distinct-values-in-a-list-see	Length[Union[List[1, 2, 1, 3, 6, 2, 2]]]	
 union-partition-integerdigits-10-factorial-2-3-1	Union[Partition[IntegerDigits[Factorial[10], 2], 3, 1]]	
+union-nestlist-function-5-times-1-mod-11-1-1-100	Union[NestList[Function[Mod[Times[5, Slot[1]], 11]], 1, 100]]	[Union, [NestList, [Function, [Mod, [Multiply, 5, _1], 11]], 1, 100]]
 union-is-commutative-argument-order-doesn-t	Equal[Union[List[1, 2, 3], List[2, 3, 4]], Union[List[2, 3, 4], List[1, 2, 3]]]	
 inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	Equal[Length[Union[List[1, 2, 3], List[2, 3, 4]]], Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]]]	
 the-empty-set-is-the-identity-for-union-a-cup	Union[Union[List[1, 2]], EmptySet]	[Union, [Union, [List, 1, 2]], EmptySet]

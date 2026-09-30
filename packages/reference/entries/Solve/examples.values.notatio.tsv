@@ -2,6 +2,9 @@ id	in	out
 solve-x-2-1-for-x	<Solve><Equal><Power>x 2</Power> 1</Equal> x</Solve>	<List>1 -1</List>
 solve-x-2-4-0-a-bare-expression-reads-as-0	<Solve><Subtract><Power>x 2</Power> 4</Subtract> x</Solve>	<List>2 -2</List>
 solve-x-1-0-a-single-real-root	<Solve><Equal><Add>x 1</Add> 0</Equal> x</Solve>	<List>-1</List>
+solve-x-pow-2-plus-a-times-x-plus-1-eq-0-x	<Solve><Equal><Add><Power>x 2</Power> <Multiply>a x</Multiply> 1</Add> 0</Equal> x</Solve>	<List><Multiply><Rational>1 2</Rational> <Add><Negate>a</Negate> <Sqrt><Add><Power>a 2</Power> -4</Add></Sqrt></Add></Multiply> <Multiply><Rational>1 2</Rational> <Add><Negate>a</Negate> <Negate><Sqrt><Add><Power>a 2</Power> -4</Add></Sqrt></Negate></Add></Multiply></List>
+solve-x-pow-2-plus-2-times-x-pow-2-minus-2-eq-0	<Solve><Equal><Multiply><Add><Power>x 2</Power> 2</Add> <Add><Power>x 2</Power> -2</Add></Multiply> 0</Equal> <Element>x RealNumbers</Element></Solve>	<List><Sqrt>2</Sqrt> <Negate><Sqrt>2</Sqrt></Negate></List>
 solve-x-2-1-0-yields-complex-roots	<Solve><Equal><Add><Power>x 2</Power> 1</Add> 0</Equal> x</Solve>	<List><Complex>0 1</Complex> <Complex>0 -1</Complex></List>
 solve-x-eq-1-x-eq-2-x	<Solve><And><Equal>x 1</Equal> <Equal>x 2</Equal></And> x</Solve>	<Apply>List</Apply>
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	<Solve><Equal><Add><Multiply>a <Power>x 2</Power></Multiply> <Multiply>b x</Multiply> c</Add> 0</Equal> x</Solve>	<List><Divide><Add><Negate>b</Negate> <Sqrt><Add><Power>b 2</Power> <Multiply>-4 a c</Multiply></Add></Sqrt></Add> <Multiply>2 a</Multiply></Divide> <Divide><Add><Negate>b</Negate> <Negate><Sqrt><Add><Power>b 2</Power> <Multiply>-4 a c</Multiply></Add></Sqrt></Negate></Add> <Multiply>2 a</Multiply></Divide></List>
 a-2-2-linear-system-each-solution-is-a-tuple	<Solve><List><Equal><Add>x y</Add> 3</Equal> <Equal><Subtract>x y</Subtract> 1</Equal></List> <List>x y</List></Solve>	<List><Tuple>2 1</Tuple></List>

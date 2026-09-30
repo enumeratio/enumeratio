@@ -3,3 +3,7 @@ geometric	<FindSequenceFunction><List>1 2 4 8 16</List> n</FindSequenceFunction>
 polynomial	<FindSequenceFunction><List>1 4 9 16 25</List> n</FindSequenceFunction>	<Add><Power>n 2</Power> <Multiply>2 n</Multiply> 1</Add>
 catalan-numbers	<FindSequenceFunction><List>1 1 2 5 14 42 132</List> n</FindSequenceFunction>	<CatalanNumber>n</CatalanNumber>
 factorial	<FindSequenceFunction><List>1 1 2 6 24 120</List> n</FindSequenceFunction>	<Factorial>n</Factorial>
+findsequencefunction-list-1-1-2-3-5-8-13-n	<FindSequenceFunction><List>1 1 2 3 5 8 13</List> n</FindSequenceFunction>	<Add><Multiply><Rational>1 10</Rational> <Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add> <Power><Multiply><Rational>1 2</Rational> <Add>1 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply> n</Power></Multiply> <Multiply><Divide><Sqrt>5</Sqrt> 10</Divide> <Add>1 <Sqrt>5</Sqrt></Add> <Power><Multiply><Rational>1 2</Rational> <Add>1 <Sqrt>5</Sqrt></Add></Multiply> n</Power></Multiply></Add>
+findsequencefunction-list-neg-1-1-neg-1-1-neg-1	<FindSequenceFunction><List>-1 1 -1 1 -1 1</List> n</FindSequenceFunction>	<Negate><Power>-1 n</Power></Negate>
+findsequencefunction-list-2-5-10-17-26-37-50-n	<FindSequenceFunction><List>2 5 10 17 26 37 50</List> n</FindSequenceFunction>	<Add><Power>n 2</Power> <Multiply>2 n</Multiply> 2</Add>
+findsequencefunction-list-3-7-13-21-31-43-57-n	<FindSequenceFunction><List>3 7 13 21 31 43 57</List> n</FindSequenceFunction>	<Add><Power>n 2</Power> <Multiply>3 n</Multiply> 3</Add>

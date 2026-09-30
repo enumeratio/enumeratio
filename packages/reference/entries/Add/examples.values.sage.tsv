@@ -1,8 +1,10 @@
 id	in
 list-10-20-30-plus-list-1-2-3	([10, 20, 30] + [1, 2, 3])
+x-plus-list-1-2-3	(SR.var("x") + [1, 2, 3])
 list-a-b-plus-list-c-d	([SR.var("a"), SR.var("b")] + [SR.var("c"), SR.var("d")])
 x-plus-list-a-b-c	(SR.var("x") + [SR.var("a"), SR.var("b"), SR.var("c")])
 x-plus-list-list-a-b-list-c-d	(SR.var("x") + [[SR.var("a"), SR.var("b")], [SR.var("c"), SR.var("d")]])
 interval-0-1-plus-interval-neg-1-1	
+list-list-a-b-list-c-d-plus-list-list-1-2-list-3	([[SR.var("a"), SR.var("b")], [SR.var("c"), SR.var("d")]] + [[1, 2], [3, 4]])
 length-a-plus-b-plus-c-plus-d	(len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")).operands()) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), 'operands') else 0))
 foldlist-add-0-list-a-b-c	

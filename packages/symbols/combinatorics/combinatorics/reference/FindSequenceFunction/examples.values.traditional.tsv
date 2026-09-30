@@ -3,3 +3,7 @@ geometric
 polynomial		
 catalan-numbers	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)	C_{n}
 factorial		
+findsequencefunction-list-1-1-2-3-5-8-13-n		
+findsequencefunction-list-neg-1-1-neg-1-1-neg-1		
+findsequencefunction-list-2-5-10-17-26-37-50-n		
+findsequencefunction-list-3-7-13-21-31-43-57-n		

@@ -15,10 +15,12 @@ foldlist-append-list-x-list-a-b-c-d	<FoldList>Append <List>x</List> <List>a b c 
 foldlist-list-x-list-a-b-c-d	<FoldList>List x <List>a b c d</List></FoldList>	<List>x <List>x a</List> <List><List>x a</List> b</List> <List><List><List>x a</List> b</List> c</List> <List><List><List><List>x a</List> b</List> c</List> d</List></List>
 foldlist-function-10-times-1-plus-2-1-2-0-list-4	<FoldList><Function><Block><Add><Multiply>10 _1</Multiply> _2</Add></Block> _1 _2</Function> 0 <List>4 5 1 6 7 8</List></FoldList>	<List>0 4 45 451 4516 45167 451678</List>
 foldlist-function-1-list-2-1-2-a-plus-b-times-x	<FoldList><Function><Block><At>_1 _2</At></Block> _1 _2</Function> <Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <List>2 1 1</List></FoldList>	<List><Multiply><Add>a b</Add> <Add><Power>x 2</Power> <Power>y 2</Power></Add></Multiply> <Add><Power>x 2</Power> <Power>y 2</Power></Add> <Power>x 2</Power> x</List>
+foldlist-multiply-1-range-1-10	<FoldList>Multiply 1 <Range>1 10</Range></FoldList>	<List>1 1 2 6 24 120 720 5040 40320 362880 3628800</List>
 foldlist-length-is-one-more	<Equal><Length><FoldList>Add 0 <List>1 2 3 4 5</List></FoldList></Length> <Add><Length><List>1 2 3 4 5</List></Length> 1</Add></Equal>	<True />
 foldlist-last-is-fold	<Equal><Last><FoldList>Add 0 <List>1 2 3</List></FoldList></Last> <Fold>Add 0 <List>1 2 3</List></Fold></Equal>	<True />
 rest-foldlist-add-0-list-a-b-c-d-exponentiale	<Rest><FoldList>Add 0 <List>a b c d ExponentialE</List></FoldList></Rest>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add> <Add>a b c d ExponentialE</Add></List>
 foldlist-f-x-list	<FoldList>f x <Apply>List</Apply></FoldList>	<List>x</List>
 foldlist-f-x-list-a-b-c	<FoldList>f x <List>a b c</List></FoldList>	<List>x <f>x a</f> <f><f>x a</f> b</f> <f><f><f>x a</f> b</f> c</f></List>
 foldlist-add-list-a-b-c-d	<FoldList>Add <List>a b c d</List></FoldList>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add></List>
+length-foldlist-f-x-range-1-10	<Length><FoldList>f x <Range>1 10</Range></FoldList></Length>	<ToExpression>11</ToExpression>
 foldlist-f-list	<FoldList>f <Apply>List</Apply></FoldList>	<Apply>List</Apply>

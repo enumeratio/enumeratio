@@ -3,6 +3,7 @@ asking-for-up-to-5-of-3-elements-takes-all-3	Take[List[1, 2, 3], UpTo[5]]	{1, 2,
 when-enough-elements-are-available-exactly-n-is	Take[List[1, 2, 3, 4, 5, 6], UpTo[2]]	{1, 2}	\text{Take}[\{1,2,3,4,5,6\},\text{UpTo}[2]]	\{1,2\}
 take-list-a-b-c-d-upto-6	Take[List[a, b, c, d], UpTo[6]]	{a, b, c, d}	\text{Take}[\{a,b,c,d\},\text{UpTo}[6]]	\{a,b,c,d\}
 take-list-a-b-c-d-upto-2	Take[List[a, b, c, d], UpTo[2]]	{a, b}	\text{Take}[\{a,b,c,d\},\text{UpTo}[2]]	\{a,b\}
+partition-range-1-10-upto-3	Partition[Range[1, 10], UpTo[3]]	{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10}}	\text{Partition}[\text{Range}[1,10],\text{UpTo}[3]]	\{\{1,2,3\},\{4,5,6\},\{7,8,9\},\{10\}\}
 in-partition-a-shorter-final-chunk-is-allowed	Partition[List[1, 2, 3, 4, 5, 6], UpTo[4]]	{{1, 2, 3, 4}, {5, 6}}	\text{Partition}[\{1,2,3,4,5,6\},\text{UpTo}[4]]	\{\{1,2,3,4\},\{5,6\}\}
 in-ordering-at-most-6-positions-of-a-5-element	Ordering[List[2, 6, 1, 9, 2], UpTo[6]]	{3, 1, 5, 2, 4}	\text{Ordering}[\{2,6,1,9,2\},\text{UpTo}[6]]	\{3,1,5,2,4\}
 partition-list-a-b-c-d-exponentiale-f-g-upto-3	Partition[List[a, b, c, d, E, f, g], UpTo[3]]	{{a, b, c}, {d, E, f}, {g}}	\text{Partition}[\{a,b,c,d,e,f,g\},\text{UpTo}[3]]	\{\{a,b,c\},\{d,e,f\},\{g\}\}

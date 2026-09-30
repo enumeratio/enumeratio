@@ -6,3 +6,6 @@ outer-f-list-1-2-list-a-b-c	\mathrm{Outer}(f, \bigl\lbrack1, 2\bigr\rbrack, \big
 prepend-list-1-2-3-list-a-b-c	\mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, 1, 2, 3\bigr\rbrack
 flatten-list-list-1-2-list-a-b-c	\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack)	\bigl\lbrack1, 2, a, b, c\bigr\rbrack
 map-f-list-1-2-3-4	\mathrm{Map}(f, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack f(1), f(2), f(3), f(4)\bigr\rbrack
+list-a-b-c-plus-list-1-2-3	\bigl\lbrack a, b, c\bigr\rbrack+\bigl\lbrack1, 2, 3\bigr\rbrack	\bigl\lbrack a+1, b+2, c+3\bigr\rbrack
+subsets-list-1-2-3	\mathrm{Subsets}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\bigr\rbrack, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack
+solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	\mathrm{Solve}(\begin{cases}x-y=1\\x+y=0\end{cases}, x, y)	\bigl\lbrack(\frac{1}{2},-\frac{1}{2})\bigr\rbrack

@@ -16,3 +16,4 @@ discreteratio-fallingfactorial-x-a-1-times	\mathrm{DiscreteRatio}(\frac{x^{\unde
 discreteratio-catalannumber-x-x	\mathrm{DiscreteRatio}(C_{x}, x)	\frac{C_{x+1}}{C_{x}}
 list-discreteratio-f-n-discreteratio-f-k		
 discreteratio-gammaregularized-n-z-n	\mathrm{DiscreteRatio}(Q(n, z), n)	\frac{Q(n+1, z)}{Q(n, z)}
+list-discreteratio-binomial-n-k-n-discreteratio		

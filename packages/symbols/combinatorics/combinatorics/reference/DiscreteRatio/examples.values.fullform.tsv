@@ -16,3 +16,4 @@ discreteratio-fallingfactorial-x-a-1-times	DiscreteRatio[Times[Times[FactorialPo
 discreteratio-catalannumber-x-x	DiscreteRatio[CatalanNumber[x], x]
 list-discreteratio-f-n-discreteratio-f-k	List[DiscreteRatio[f, n], DiscreteRatio[f, k]]
 discreteratio-gammaregularized-n-z-n	DiscreteRatio[GammaRegularized[n, z], n]
+list-discreteratio-binomial-n-k-n-discreteratio	List[DiscreteRatio[Binomial[n, k], n], DiscreteRatio[Binomial[n, k], k]]

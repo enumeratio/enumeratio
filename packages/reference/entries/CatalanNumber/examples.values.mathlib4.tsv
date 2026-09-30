@@ -28,4 +28,5 @@ catalannumber-neg-7	(catalan (-7))
 catalannumber-neg-6	(catalan (-6))	
 catalannumber-neg-4	(catalan (-4))	
 catalannumber-neg-3	(catalan (-3))	
+differencerootreduce-catalannumber-k-k		
 they-grow-fast-c-15-already-passes-nine-million	(catalan 15)	9694845

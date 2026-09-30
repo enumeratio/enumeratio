@@ -3,6 +3,7 @@ asking-for-up-to-5-of-3-elements-takes-all-3	\mathrm{Take}(\bigl\lbrack1, 2, 3\b
 when-enough-elements-are-available-exactly-n-is	\mathrm{Take}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{UpTo}(2))	\bigl\lbrack1, 2\bigr\rbrack
 take-list-a-b-c-d-upto-6	\mathrm{Take}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{UpTo}(6))	\bigl\lbrack a, b, c, d\bigr\rbrack
 take-list-a-b-c-d-upto-2	\mathrm{Take}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{UpTo}(2))	\bigl\lbrack a, b\bigr\rbrack
+partition-range-1-10-upto-3	\mathrm{Partition}(1..10, \mathrm{UpTo}(3))	\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack, \bigl\lbrack10\bigr\rbrack\bigr\rbrack
 in-partition-a-shorter-final-chunk-is-allowed	\mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{UpTo}(4))	\bigl\lbrack\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack
 in-ordering-at-most-6-positions-of-a-5-element	\mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 2\bigr\rbrack, \mathrm{UpTo}(6))	\bigl\lbrack3, 1, 5, 2, 4\bigr\rbrack
 partition-list-a-b-c-d-exponentiale-f-g-upto-3	\mathrm{Partition}(\bigl\lbrack a, b, c, d, e, f, g\bigr\rbrack, \mathrm{UpTo}(3))	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack, \bigl\lbrack g\bigr\rbrack\bigr\rbrack

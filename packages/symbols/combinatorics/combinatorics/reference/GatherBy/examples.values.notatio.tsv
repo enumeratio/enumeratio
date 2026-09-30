@@ -4,3 +4,4 @@ grouped-by-absolute-value	<GatherBy><List>-2 1 2 -1 3</List> Abs</GatherBy>	<Lis
 gatherby-list-1-2-3-4-5-isodd	<GatherBy><List>1 2 3 4 5</List> IsOdd</GatherBy>	<List><List>1 3 5</List> <List>2 4</List></List>
 gatherby-list-list-a-1-list-b-1-list-a-2-list-d	<GatherBy><List><List>a 1</List> <List>b 1</List> <List>a 2</List> <List>d 1</List> <List>b 3</List></List> First</GatherBy>	<List><List><List>a 1</List> <List>a 2</List></List> <List><List>b 1</List> <List>b 3</List></List> <List><List>d 1</List></List></List>
 pairs-grouped-by-their-last-element	<GatherBy><List><List>a 1</List> <List>b 2</List> <List>c 1</List></List> Last</GatherBy>	<List><List><List>a 1</List> <List>c 1</List></List> <List><List>b 2</List></List></List>
+gatherby-range-1-10-function-1-mod-3-1	<GatherBy><Range>1 10</Range> <Function><Block><Mod>_1 3</Mod></Block> _1</Function></GatherBy>	<List><List>1 4 7 10</List> <List>2 5 8</List> <List>3 6 9</List></List>

@@ -3,5 +3,9 @@ padded-with-zeros-on-the-right	PadRight[List[1, 2, 3], 5]	{1, 2, 3, 0, 0}	\text{
 a-padding-element	PadRight[List[1, 2, 3], 5, x]	{1, 2, 3, x, x}	\text{PadRight}[\{1,2,3\},5,x]	\{1,2,3,x,x\}
 padright-list-a-b-c-10	PadRight[List[a, b, c], 10]	{a, b, c, 0, 0, 0, 0, 0, 0, 0}	\text{PadRight}[\{a,b,c\},10]	\{a,b,c,0,0,0,0,0,0,0\}
 padright-list-a-b-c-10-x	PadRight[List[a, b, c], 10, x]	{a, b, c, x, x, x, x, x, x, x}	\text{PadRight}[\{a,b,c\},10,x]	\{a,b,c,x,x,x,x,x,x,x\}
+padright-list-a-b-c-10-list-x-y-z	PadRight[List[a, b, c], 10, List[x, y, z]]	{a, b, c, x, y, z, x, y, z, x}	\text{PadRight}[\{a,b,c\},10,\{x,y,z\}]	\{a,b,c,x,y,z,x,y,z,x\}
 a-shorter-length-drops-elements-from-the-right	PadRight[List[1, 2, 3, 4, 5], 3]	{1, 2, 3}	\text{PadRight}[\{1,2,3,4,5\},3]	\{1,2,3\}
 with-no-length-a-ragged-array-is-padded-to-a	PadRight[List[List[1], List[2, 3]]]	{{1, 0}, {2, 3}}	\text{PadRight}[\{\{1\},\{2,3\}\}]	\left( \begin{array}{cc}  1 & 0 \\  2 & 3 \\ \end{array} \right)
+padright-list-a-b-c-neg-10	PadRight[List[a, b, c], -10]	{0, 0, 0, 0, 0, 0, 0, a, b, c}	\text{PadRight}[\{a,b,c\},-10]	\{0,0,0,0,0,0,0,a,b,c\}
+padright-list-a-b-c-7-list-list-u-v	PadRight[List[a, b, c], 7, List[List[u, v]]]	{a, b, c, {u, v}, {u, v}, {u, v}, {u, v}}	\text{PadRight}\left[\{a,b,c\},7,\left( \begin{array}{cc}  u & v \\ \end{array} \right)\right]	\{a,b,c,\{u,v\},\{u,v\},\{u,v\},\{u,v\}\}
+padright-list-a-b-c-7-list-u-v	PadRight[List[a, b, c], 7, List[u, v]]	{a, b, c, v, u, v, u}	\text{PadRight}[\{a,b,c\},7,\{u,v\}]	\{a,b,c,v,u,v,u\}

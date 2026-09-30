@@ -5,4 +5,6 @@ sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	Equal[Plus[Sqrt[2], Sqrt[3]], S
 x-eq-x	Equal[x, x]
 3-eq-3-eq-3	Equal[3, 3, 3]
 list-1-2-eq-list-1-2	Equal[List[1, 2], List[1, 2]]
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	Equal[N[Pi, 20], Times[Pi, Plus[1, Times[256, Power[10, -20]]]]]
 list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	List[Equal[x, x], Equal[x, y], Equal[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]], Equal[Pi, N[Pi]]]
+solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	Solve[Equal[Plus[Times[a, Power[x, 2]], Times[b, x], c], 0], x]

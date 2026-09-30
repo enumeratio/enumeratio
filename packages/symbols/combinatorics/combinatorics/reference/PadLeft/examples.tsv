@@ -3,5 +3,9 @@ padded-with-zeros-on-the-left			[PadLeft, [List, 1, 2, 3], 5]	[List, 0, 0, 1, 2,
 a-padding-element			[PadLeft, [List, 1, 2, 3], 5, x]	[List, x, x, 1, 2, 3]	A padding element
 padleft-list-a-b-c-10			[PadLeft, [List, a, b, c], 10]	[List, 0, 0, 0, 0, 0, 0, 0, a, b, c]	
 padleft-list-a-b-c-10-x			[PadLeft, [List, a, b, c], 10, x]	[List, x, x, x, x, x, x, x, a, b, c]	
+padleft-list-a-b-c-10-list-x-y-z			[PadLeft, [List, a, b, c], 10, [List, x, y, z]]	[List, z, x, y, z, x, y, z, a, b, c]	
 a-shorter-length-drops-elements-from-the-left	Scope		[PadLeft, [List, 1, 2, 3, 4, 5], 3]	[List, 3, 4, 5]	A shorter length drops elements from the left
 with-no-length-a-ragged-array-is-padded-to-a	Scope		[PadLeft, [List, [List, 1], [List, 2, 3]]]	[List, [List, 0, 1], [List, 2, 3]]	With no length, a ragged array is padded to a full matrix
+padleft-list-a-b-c-neg-10	Scope		[PadLeft, [List, a, b, c], -10]	[List, a, b, c, 0, 0, 0, 0, 0, 0, 0]	
+padleft-list-a-b-c-7-list-list-u-v	Possible issues		[PadLeft, [List, a, b, c], 7, [List, [List, u, v]]]	[List, [List, u, v], [List, u, v], [List, u, v], [List, u, v], a, b, c]	
+padleft-list-a-b-c-7-list-u-v	Possible issues		[PadLeft, [List, a, b, c], 7, [List, u, v]]	[List, v, u, v, u, a, b, c]	

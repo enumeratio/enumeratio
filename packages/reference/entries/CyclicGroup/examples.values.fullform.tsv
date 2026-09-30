@@ -1,2 +1,6 @@
 id	in
 grouporder-cyclicgroup-10	GroupOrder[CyclicGroup[10]]
+groupelements-cyclicgroup-10	GroupElements[CyclicGroup[10]]
+groupelements-cyclicgroup-1	GroupElements[CyclicGroup[1]]
+groupelements-cyclicgroup-2	GroupElements[CyclicGroup[2]]
+groupelements-cyclicgroup-3	GroupElements[CyclicGroup[3]]

@@ -1,2 +1,6 @@
 id	in	out
 grouporder-cyclicgroup-10	GroupOrder(CyclicGroup(10))	10
+groupelements-cyclicgroup-10	GroupElements(CyclicGroup(10))	"[\n  GroupBasis(\"0\"),\n  GroupBasis(\"1\"),\n  GroupBasis(\"2\"),\n  GroupBasis(\"3\"),\n  GroupBasis(\"4\"),\n  GroupBasis(\"5\"),\n  GroupBasis(\"6\"),\n  GroupBasis(\"7\"),\n  GroupBasis(\"8\"),\n  GroupBasis(\"9\"),\n]"
+groupelements-cyclicgroup-1	GroupElements(CyclicGroup(1))	[GroupBasis("0")]
+groupelements-cyclicgroup-2	GroupElements(CyclicGroup(2))	[GroupBasis("0"), GroupBasis("1")]
+groupelements-cyclicgroup-3	GroupElements(CyclicGroup(3))	[GroupBasis("0"), GroupBasis("1"), GroupBasis("2")]

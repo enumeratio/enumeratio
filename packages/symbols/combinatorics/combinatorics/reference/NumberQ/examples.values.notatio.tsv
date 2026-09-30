@@ -5,3 +5,5 @@ a-plain-symbol-is-not-numberq	<NumberQ>x</NumberQ>	<False />
 numberq-n-sqrt-2	<NumberQ><N><Sqrt>2</Sqrt></N></NumberQ>	<True />
 list-numberq-c-numberq-d	<List><NumberQ>c</NumberQ> <NumberQ>d</NumberQ></List>	<List>False False</List>
 list-numberq-o-numberq-u	<List><NumberQ>o</NumberQ> <NumberQ>u</NumberQ></List>	<List>False False</List>
+numberq-sqrt-2	<NumberQ><Sqrt>2</Sqrt></NumberQ>	<True />
+numberq-positiveinfinity	<NumberQ>PositiveInfinity</NumberQ>	<True />
