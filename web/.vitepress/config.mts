@@ -1,10 +1,11 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
 import { generate } from "@enumeratio/frontend/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
@@ -67,6 +68,42 @@ for (const area of ["collections"]) {
 const dev = process.argv.includes("dev");
 const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+// Pages that moved into package docs keep their old URLs as redirects: Pages hosting has no
+// server-side redirects, so each is a static page that forwards.
+const moved: [string, string][] = [
+  ["/guide/collections/", "/docs/combinatorics/ranking-and-unranking"],
+  ["/guide/numerals/adic", "/docs/numerals/adic"],
+  ["/guide/numerals/", "/docs/numerals/numeral-systems"],
+  ["/guide/adeles/", "/docs/adeles/adeles-and-ideles"],
+  ["/guide/hypercomplex/finite", "/docs/hypercomplex/finite"],
+  ["/guide/hypercomplex/", "/docs/hypercomplex/hypercomplex-algebras"],
+  ["/guide/diagram-algebras/", "/docs/diagram/diagram-algebras"],
+  ["/guide/hecke/", "/docs/hecke/hecke-algebras"],
+  ["/guide/incidence/", "/docs/incidence/incidence-algebras"],
+  ["/guide/quiver/", "/docs/quiver/path-algebras"],
+  ["/guide/hopf/", "/docs/hopf/hopf-algebras"],
+  ["/guide/groupalgebra/", "/docs/groupalgebra/group-algebras"],
+  ["/guide/modular/", "/docs/modular/modular-group"],
+  ["/guide/braid/torus-knots", "/docs/braid/torus-knots"],
+  ["/guide/braid/lorenz", "/docs/braid/lorenz"],
+  ["/guide/braid/", "/docs/braid/knots-and-braids"],
+  ["/packages/", "/docs/"],
+  ...workspacePackages().map((p): [string, string] => [`/packages/${p.slug}`, docRoute(p.slug)]),
+];
+
+function writeRedirects(outDir: string): void {
+  for (const [from, to] of moved) {
+    const file = resolve(outDir, from.endsWith("/") ? `.${from}index.html` : `.${from}.html`);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(
+      file,
+      `<!doctype html><meta charset="utf-8"><title>Moved</title>` +
+        `<link rel="canonical" href="${to}"><meta http-equiv="refresh" content="0; url=${to}">` +
+        `<p>Moved to <a href="${to}">${to}</a>.</p>\n`,
+    );
+  }
+}
+
 const config = defineConfig({
   // The page map in one shared file, not inlined into every page's HTML.
   metaChunk: true,
@@ -90,6 +127,7 @@ const config = defineConfig({
   srcExclude: dev ? [] : ["review/**"],
   // Dynamic reference routes carry their name in params; use it as the page title
   // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
+  buildEnd: (site: { outDir: string }) => writeRedirects(site.outDir),
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
     if (pageData.params?.name) pageData.title = pageData.params.name;
   },
@@ -124,31 +162,31 @@ const config = defineConfig({
         text: "Guides",
         items: [
           { text: "Overview", link: "/guide/" },
-          { text: "Ranking and unranking", link: "/guide/collections/" },
+          { text: "Ranking and unranking", link: "/docs/combinatorics/ranking-and-unranking" },
           {
             text: "Numeral systems",
-            link: "/guide/numerals/",
-            items: [{ text: "b-adic numbers", link: "/guide/numerals/adic" }],
+            link: "/docs/numerals/numeral-systems",
+            items: [{ text: "b-adic numbers", link: "/docs/numerals/adic" }],
           },
-          { text: "Adèles and idèles", link: "/guide/adeles/" },
+          { text: "Adèles and idèles", link: "/docs/adeles/adeles-and-ideles" },
           {
             text: "Hypercomplex algebras",
-            link: "/guide/hypercomplex/",
-            items: [{ text: "Finite: ℤ/m and the places", link: "/guide/hypercomplex/finite" }],
+            link: "/docs/hypercomplex/hypercomplex-algebras",
+            items: [{ text: "Finite: ℤ/m and the places", link: "/docs/hypercomplex/finite" }],
           },
-          { text: "Diagram algebras", link: "/guide/diagram-algebras/" },
-          { text: "Hecke algebras", link: "/guide/hecke/" },
-          { text: "Incidence algebras", link: "/guide/incidence/" },
-          { text: "Path algebras", link: "/guide/quiver/" },
-          { text: "Hopf algebras", link: "/guide/hopf/" },
-          { text: "Group algebras", link: "/guide/groupalgebra/" },
-          { text: "The modular group", link: "/guide/modular/" },
+          { text: "Diagram algebras", link: "/docs/diagram/diagram-algebras" },
+          { text: "Hecke algebras", link: "/docs/hecke/hecke-algebras" },
+          { text: "Incidence algebras", link: "/docs/incidence/incidence-algebras" },
+          { text: "Path algebras", link: "/docs/quiver/path-algebras" },
+          { text: "Hopf algebras", link: "/docs/hopf/hopf-algebras" },
+          { text: "Group algebras", link: "/docs/groupalgebra/group-algebras" },
+          { text: "The modular group", link: "/docs/modular/modular-group" },
           {
             text: "Knots and braids",
-            link: "/guide/braid/",
+            link: "/docs/braid/knots-and-braids",
             items: [
-              { text: "Torus knots", link: "/guide/braid/torus-knots" },
-              { text: "The Lorenz flow", link: "/guide/braid/lorenz" },
+              { text: "Torus knots", link: "/docs/braid/torus-knots" },
+              { text: "The Lorenz flow", link: "/docs/braid/lorenz" },
             ],
           },
         ],
@@ -182,7 +220,7 @@ const config = defineConfig({
               { text: "One-shot (live)", link: "/docs/cli/command-line" },
             ],
           },
-          { text: "Packages", link: "/packages/" },
+          ...docsSidebar(),
         ],
       },
       {

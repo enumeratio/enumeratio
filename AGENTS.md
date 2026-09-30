@@ -36,6 +36,12 @@ entries, tests, git, code), [CI-and-Deployment](https://github.com/enumeratio/en
 [Lanes](https://github.com/enumeratio/enumeratio/wiki/Lanes) parallel work across sessions. When a rule here changes, change it there
 too; when the wiki grows a rule an agent must follow, add its one line here.
 
+User-facing docs are not design docs: they ship with their package, as its `README.md` (the
+landing page) and `docs/**/*.md` (further pages, `order` in front matter), and the site serves
+them under `/docs/<package>/`, never copied into `web/`. A guide is a package doc page. Link
+another package's docs by relative file path and the site absolutely (`https://enumeratio.dev/…`),
+so a page reads the same on GitHub and on the site.
+
 ## Names
 
 - **enumeratio** is the mathematics: the symbol definitions (collections, domains,

@@ -1,18 +1,34 @@
-// The package index: names and descriptions, read in node, shipped as data.
+// The package index for /docs: names, descriptions and pages by group, read in node, shipped as data.
 
 import { defineLoader } from "vitepress";
-import { workspacePackages } from "./repo-docs.ts";
+import { docRoute, groups, workspacePackages } from "./repo-docs.ts";
 
 export interface RepoDocs {
-  packages: { slug: string; name: string; description?: string }[];
+  groups: {
+    name: string;
+    packages: { slug: string; name: string; description?: string; pages: { title: string; link: string }[] }[];
+  }[];
 }
 
 declare const data: RepoDocs;
 export { data };
 
 export default defineLoader({
-  watch: ["../../../packages/**/package.json"],
-  load: (): RepoDocs => ({
-    packages: workspacePackages().map(({ slug, name, description }) => ({ slug, name, description })),
-  }),
+  watch: ["../../../{packages,tools,upstream}/**/{package.json,README.md,docs/**/*.md}"],
+  load: (): RepoDocs => {
+    const packages = workspacePackages();
+    return {
+      groups: groups.map((name) => ({
+        name,
+        packages: packages
+          .filter((p) => p.group === name)
+          .map(({ slug, name, description, pages }) => ({
+            slug,
+            name,
+            description,
+            pages: pages.map((d) => ({ title: d.title, link: docRoute(slug, d.page) })),
+          })),
+      })),
+    };
+  },
 });
