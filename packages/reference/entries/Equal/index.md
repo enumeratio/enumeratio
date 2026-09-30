@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-adeles
     type: (any, any) -> boolean
     overrides: compute-engine
+    on:
+      - Adele
+      - Idele
+      - ProfiniteNumber
 names:
   wolframIdentity: true
 stub: engine

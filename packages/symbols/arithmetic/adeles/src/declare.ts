@@ -7,8 +7,6 @@ import {
   mayBeInteger,
   operandsOf,
   symbolNameOf,
-  widenSignature,
-  wrapOperator,
 } from "@enumeratio/engine";
 import { ADIC, adicOf, adic } from "@enumeratio/numerals";
 import { isPrime, mod } from "@enumeratio/residues";
@@ -28,8 +26,8 @@ import { SUMMARIES } from "@enumeratio/manifest/package/adeles";
 //   Idele(r, q)                  the principal idèle of q at every finite prime
 //   Idele(r, s, {c_p, …})        p^{v_p(s)}·c_p at each listed prime, a unit elsewhere
 //
-// Like AdicNumeral they are function expressions, so the arithmetic heads are wrapped to
-// answer when one turns up. Existing heads learn the new values rather than new heads
+// Like AdicNumeral they are function expressions, so the arithmetic heads get rows (on these
+// carriers) to answer when one turns up. Existing heads learn the new values rather than new heads
 // appearing: Fibonacci and LucasL take profinite arguments (Lenstra's profinite
 // Fibonacci), Numerator/Denominator split a profinite number, AdicNumeral(p, z) projects
 // one to Q_p, and ProfiniteNumber({AdicNumeral(…), …}) glues p-adics back by CRT.
@@ -324,24 +322,21 @@ export function declareAdeles(ce: ComputeEngine): void {
     const [x, y] = [profiniteOf(a), profiniteOf(b)];
     return x === undefined || y === undefined ? undefined : P.equal(x, y);
   };
-  const onAny = (ops: readonly BoxedExpression[]): boolean =>
-    ops.some((op) => op.operator === PROFINITE || op.operator === ADELE || op.operator === IDELE);
   for (const [head, negate] of [
     ["Equal", false],
     ["NotEqual", true],
   ] as const) {
-    wrapOperator(
-      ce,
-      [head, "x", "y"],
-      onAny,
-      () => (ops) => {
+    defineOverload(ce, head, {
+      package: "adeles",
+      on: [PROFINITE, ADELE, IDELE],
+      arity: 2,
+      evaluate: (ops) => {
         const [a, b] = ops;
         if (a === undefined || b === undefined) return undefined;
         const answer = equalValues(a, b);
         return answer === undefined ? undefined : ce.symbol(answer !== negate ? "True" : "False");
       },
-      2,
-    );
+    });
   }
 
   // ── the constructors ──────────────────────────────────────────────────────────
@@ -404,37 +399,38 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   // Natively `(number)`: the gate keeps the native handler to what its signature took.
   const isNumber = (op: BoxedExpression): boolean => op.type.matches("number");
-  widenSignature(ce, "Numerator", "(number | value) -> nothing | number | value", isNumber);
-  wrapOperator(
-    ce,
-    ["Numerator", "x"],
-    (ops) => ops[0]?.operator === PROFINITE,
-    () => (ops) => {
+  defineOverload(ce, "Numerator", {
+    package: "adeles",
+    signature: "(value) -> value",
+    on: [PROFINITE],
+    arity: 1,
+    native: isNumber,
+    evaluate: (ops) => {
       const x = profiniteOf(ops[0]);
       return x === undefined ? undefined : writeProfinite(P.numerator(x));
     },
-    1,
-  );
+  });
   // Unlike Numerator, a profinite's denominator is always a plain integer level, never a
   // profinite value itself.
-  widenSignature(ce, "Denominator", "(number | value) -> nothing | number", isNumber);
-  wrapOperator(
-    ce,
-    ["Denominator", "x"],
-    (ops) => ops[0]?.operator === PROFINITE,
-    () => (ops) => {
+  defineOverload(ce, "Denominator", {
+    package: "adeles",
+    signature: "(value) -> integer",
+    on: [PROFINITE],
+    arity: 1,
+    native: isNumber,
+    evaluate: (ops) => {
       const x = profiniteOf(ops[0]);
       return x === undefined ? undefined : ce.number(P.denominator(x));
     },
-    1,
-  );
+  });
 
   // AdicNumeral(p, z): the image of z in Q_p, known modulo p^{v_p(m)}.
-  wrapOperator(
-    ce,
-    [ADIC, "b", "x"],
-    (ops) => ops[1]?.operator === PROFINITE,
-    () => (ops) => {
+  defineOverload(ce, ADIC, {
+    package: "adeles",
+    on: [PROFINITE],
+    arity: { min: 2, max: 3 },
+    when: (ops) => ops[1]?.operator === PROFINITE,
+    evaluate: (ops) => {
       const p = bigIntegerAt(ops[0]);
       const x = profiniteOf(ops[1]);
       if (p === undefined || x === undefined || !isPrime(p)) return undefined;
@@ -446,8 +442,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       if (prec !== undefined) args.push(ce.number(prec));
       return ce.function(ADIC, args).evaluate();
     },
-    { min: 2, max: 3 },
-  );
+  });
 
   // ── the matrix factorisation ──────────────────────────────────────────────────
 
