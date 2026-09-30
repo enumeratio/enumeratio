@@ -3,7 +3,8 @@
 // collections/src/families/compiled-families.generated.js. Each entry carries the hash of the
 // definitions it came from: at run time it is used only while the hash matches, so an edited
 // family is compiled on first use until this is rerun. Operations the compiler can't take yet
-// are left out, and interpreted.
+// are left out, and interpreted; so are operations whose compiled code disagrees with the
+// interpreter on a sample, which are listed so they are never compiled on first use either.
 //
 //   vp node packages/symbols/combinatorics/combinatorics/scripts/compile-families.ts
 
@@ -12,9 +13,13 @@ import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped } from "@enumeratio/engine/compiled";
+import { evaluateEpsil } from "@enumeratio/structures";
 import {
+  elementJson,
+  elementOf,
   type EpsilFamily,
   familyHash,
+  integerOf,
   isEpsilFamily,
   OPERATIONS,
   type Operation,
@@ -26,6 +31,64 @@ interface Entry {
   readonly head: string;
   readonly hash: string;
   readonly code: Partial<Record<Operation, string>>;
+  readonly interpreted: readonly Operation[];
+}
+
+type Run = (vars: Record<string, unknown>) => unknown;
+
+/** Params each in 0..4 and summing to at most 6: the small fibers compiled code is checked on. */
+function sampleParams(count: number): number[][] {
+  if (count === 0) return [[]];
+  return sampleParams(count - 1).flatMap((p) =>
+    [0, 1, 2, 3, 4].filter((x) => p.reduce((a, b) => a + b, x) <= 6).map((x) => [...p, x]),
+  );
+}
+
+/** A member one entry away from itself, which the family may or may not contain. */
+const nearMiss = (element: unknown): unknown =>
+  Array.isArray(element) && element.length > 0 ? [nearMiss(element[0]), ...element.slice(1)] : Number(element) + 1;
+
+/**
+ * Whether each operation's compiled code gives the interpreter's answers over the sample: the
+ * count, the element at the first, middle and last ranks, their ranks, and membership of each
+ * and of a near miss. Compiled code is otherwise trusted below 2^53, so a miscompile would
+ * answer wrong silently.
+ */
+export function disagreements(
+  ce: ComputeEngine,
+  family: EpsilFamily,
+  runs: Partial<Record<Operation, Run>>,
+): Operation[] {
+  const wrong = new Set<Operation>();
+  const attempt = (run: Run, vars: Record<string, unknown>): unknown => {
+    try {
+      return run(vars);
+    } catch {
+      return undefined;
+    }
+  };
+  for (const p of sampleParams(family.paramCount)) {
+    const bind = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
+    const total = integerOf(evaluateEpsil(ce, family.epsil.count, bind));
+    if (total === undefined || total > BigInt(Number.MAX_SAFE_INTEGER)) continue;
+    if (runs.count !== undefined && attempt(runs.count, bind) !== Number(total)) wrong.add("count");
+    if (total === 0n) continue;
+    for (const r of new Set([0n, total / 2n, total - 1n])) {
+      const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
+      if (
+        runs.unrank !== undefined &&
+        JSON.stringify(attempt(runs.unrank, { ...bind, _r: Number(r) })) !== JSON.stringify(element)
+      )
+        wrong.add("unrank");
+      if (runs.rank !== undefined && attempt(runs.rank, { ...bind, _x: element }) !== Number(r)) wrong.add("rank");
+      if (runs.valid !== undefined)
+        for (const candidate of [element, nearMiss(element)]) {
+          const expected = evaluateEpsil(ce, family.epsil.valid, { ...bind, _x: elementJson(candidate) }) === "True";
+          if (attempt(runs.valid, { ...bind, _x: candidate }) !== expected) wrong.add("valid");
+        }
+    }
+  }
+  return OPERATIONS.filter((operation) => wrong.has(operation));
 }
 
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
@@ -34,12 +97,17 @@ export function compiledFamilies(): Entry[] {
   const out: Entry[] = [];
   for (const family of allFamilies.filter(isEpsilFamily) as EpsilFamily[]) {
     const code: Partial<Record<Operation, string>> = {};
+    const runs: Partial<Record<Operation, Run>> = {};
     for (const operation of OPERATIONS) {
       const types = operationTypes(family, operation);
       const compiled = types === undefined ? undefined : compileTyped(ce, family.epsil[operation], types);
-      if (compiled !== undefined) code[operation] = compiled.code;
+      if (compiled === undefined) continue;
+      code[operation] = compiled.code;
+      runs[operation] = compiled.run;
     }
-    out.push({ head: family.head, hash: familyHash(family), code });
+    const interpreted = disagreements(ce, family, runs);
+    for (const operation of interpreted) delete code[operation];
+    out.push({ head: family.head, hash: familyHash(family), code, interpreted });
   }
   return out.toSorted((a, b) => (a.head < b.head ? -1 : a.head > b.head ? 1 : 0));
 }
@@ -50,6 +118,7 @@ function render(entries: readonly Entry[]): string {
       [
         `  ${e.head}: {`,
         `    hash: ${JSON.stringify(e.hash)},`,
+        ...(e.interpreted.length === 0 ? [] : [`    interpreted: ${JSON.stringify(e.interpreted)},`]),
         ...OPERATIONS.flatMap((operation) =>
           e.code[operation] === undefined ? [] : [`    ${operation}: (_SYS, _) => ${e.code[operation]},`],
         ),
@@ -77,4 +146,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const operations = entries.reduce((sum, e) => sum + Object.keys(e.code).length, 0);
   console.log(`${operations} of ${entries.length * OPERATIONS.length} family operations compiled`);
+  for (const e of entries.filter((entry) => entry.interpreted.length > 0))
+    console.log(`${e.head}: compiled ${e.interpreted.join(", ")} disagreed with the interpreter; left interpreted`);
 }
