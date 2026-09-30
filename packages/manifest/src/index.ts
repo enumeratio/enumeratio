@@ -47,19 +47,4 @@ export {
   searchPath,
   withHeads,
 } from "./registry.ts";
-export {
-  type FetchJson,
-  npmRegistry,
-  type NpmRegistryOptions,
-  type SymbolIndex,
-  symbolIndexOf,
-  type SymbolPackageField,
-} from "./npm-registry.ts";
-export {
-  jsdelivrVersions,
-  type ListVersions,
-  type LockOptions,
-  lockPackages,
-  type PackageLock,
-  specsOf,
-} from "./npm-lock.ts";
+export { SYSTEM_VERSION } from "./system.ts";

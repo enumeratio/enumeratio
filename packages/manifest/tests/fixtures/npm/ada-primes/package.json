@@ -2,7 +2,7 @@
   "name": "@ada/primes",
   "version": "1.0.0",
   "keywords": [
-    "enumeratio-symbols"
+    "enumeratio-library"
   ],
   "type": "module",
   "exports": {
@@ -15,6 +15,6 @@
   "enumeratio": {
     "namespace": "ada",
     "index": "./symbols/index.json",
-    "system": ">=0.1"
+    "system": "0.x"
   }
 }
