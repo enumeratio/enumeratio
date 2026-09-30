@@ -1,11 +1,17 @@
 // Shared setup and reference helpers for the map.test.ts shards (maps-*.test.ts). Pulled
 // out so each shard pays for its own engine instance without duplicating the reference
-// algorithms. Lives in @enumeratio/statistics (moved from combinatorics' domains area) because
-// it wires declareStatistics into the shared engine: keeping it in combinatorics would devDep
-// back on statistics, cycling with statistics' own devDep on combinatorics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible).
+// algorithms. Used to live in @enumeratio/statistics (moved from combinatorics' domains area)
+// because it wired declareStatistics into the shared engine, which would have devDepped back
+// on statistics from combinatorics — moot since step 6b moved declareStatistics here.
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
-import { CARRIERS, declareCombinatoricsCarriers, declareMaps, MAPS } from "@enumeratio/combinatorics/src";
+import {
+  ALL_STATISTICS,
+  CARRIERS,
+  declareCombinatoricsCarriers,
+  declareMaps,
+  declareStatistics,
+  MAPS,
+} from "../src/index.ts";
 
 export { CARRIERS, MAPS };
 

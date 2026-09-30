@@ -1,5 +1,4 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
 import { readEntries } from "@enumeratio/entry/node";
@@ -18,11 +17,10 @@ const entries = [
 ];
 
 // The same stack both engines declare, in the same order (A-94: declareCombinatorics is now
-// the one call -- each area mints its own carriers alongside its own families).
+// the one call -- each area mints its own carriers alongside its own families, and its own
+// statistics after them, step 6b).
 const ce = new ComputeEngine();
 declareCombinatorics(ce);
-const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
-declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
 for (const entry of entries) {

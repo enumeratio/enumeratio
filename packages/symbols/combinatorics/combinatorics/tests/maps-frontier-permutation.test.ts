@@ -1,7 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatoricsCarriers, declareMaps } from "@enumeratio/combinatorics/src";
+import {
+  ALL_STATISTICS,
+  CARRIERS,
+  declareCombinatoricsCarriers,
+  declareMaps,
+  declareStatistics,
+} from "../src/index.ts";
 
 // Four maps taken off the UNDEFINED_MAPS frontier: BinarySearchTree (permutation ->
 // binary_tree), KnuthClassRepresentative and KrewerasComplement (both permutation ->

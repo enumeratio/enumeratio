@@ -5,16 +5,16 @@
 // and pins the answer. scripts/collect-map-entries.ts writes them; tests/map-
 // generated.test.ts checks they're current.
 //
-// Lives here, not in combinatorics, because it needs declareStatistics: combinatorics already
-// devDeps statistics would cycle back (statistics needs declareCollections for its own
-// generator and tests), so the generator that needs the OTHER package's declare function moved
-// to the side that already depends one-way (statistics -> combinatorics), per enumeratio#408.
+// Used to live in @enumeratio/statistics, not combinatorics, because it needed
+// declareStatistics and combinatorics couldn't devDep statistics without cycling back
+// (per enumeratio#408) — moot since step 6b moved declareStatistics into combinatorics itself.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
-import { ALL_STATISTICS, declareStatistics } from "../src/index.ts";
+import { ALL_STATISTICS } from "../src/statistics/all.ts";
+import { declareStatistics } from "../src/statistics/declare.ts";
 import {
   CARRIERS,
   type CombinatorialMap,
@@ -22,7 +22,7 @@ import {
   declareMaps,
   MAPS,
   UNDEFINED_MAPS,
-} from "@enumeratio/combinatorics/src";
+} from "../src/index.ts";
 
 /** A sample value per carrier TYPE, as the contents a constructor wraps. */
 const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
