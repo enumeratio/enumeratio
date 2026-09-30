@@ -21,11 +21,7 @@ import {
   size,
 } from "../../src/map-helpers.ts";
 import { bstParents } from "../../trees/src/bst.ts";
-import {
-  fromPermutationLeftChild,
-  fromPermutationRightChild,
-  fromPermutationRoot,
-} from "../../trees/src/increasing-binary-tree.ts";
+import { fromPermutationTree } from "../../trees/src/increasing-binary-tree.ts";
 import {
   insertionReadingWord,
   insertionRows,
@@ -273,11 +269,15 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "DescentSet",
     from: "permutation",
     to: "finset",
-    extra: [["Length", "_raw"]],
-    body: [
-      "Filter",
-      ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
-      ["Function", ["Greater", at("i"), at(["Add", "i", 1])], "i"],
+    // Finset's shape is params-first (`tuple<integer, list<integer>>`) -- n as `body`, the
+    // filtered positions as the sole `extra`.
+    body: ["Length", "_raw"],
+    extra: [
+      [
+        "Filter",
+        ["Range", 1, ["Subtract", ["Length", "_raw"], 1], 1],
+        ["Function", ["Greater", at("i"), at(["Add", "i", 1])], "i"],
+      ],
     ],
     summary: "The positions where the word falls.",
     note: "The statistics Descents and MajorIndex are the size and the sum of this set — which is the reduction worth having: a statistic of a map's output rather than a fresh walk.",
@@ -344,14 +344,17 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "PeakSet",
     from: "permutation",
     to: "finset",
-    extra: [["Length", "_raw"]],
-    body: [
-      "Filter",
-      ["Range", 2, ["Subtract", ["Length", "_raw"], 1], 1],
+    // Params-first, same as DescentSet above.
+    body: ["Length", "_raw"],
+    extra: [
       [
-        "Function",
-        ["And", ["Less", at(["Subtract", "i", 1]), at("i")], ["Greater", at("i"), at(["Add", "i", 1])]],
-        "i",
+        "Filter",
+        ["Range", 2, ["Subtract", ["Length", "_raw"], 1], 1],
+        [
+          "Function",
+          ["And", ["Less", at(["Subtract", "i", 1]), at("i")], ["Greater", at("i"), at(["Add", "i", 1])]],
+          "i",
+        ],
       ],
     ],
     summary: "The interior positions that rise then fall.",
@@ -454,11 +457,10 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     name: "FromPermutation",
     from: "permutation",
     to: "increasing_binary_tree",
-    body: fromPermutationRoot,
-    extra: [fromPermutationLeftChild, fromPermutationRightChild],
+    body: fromPermutationTree,
     summary:
       "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right.",
-    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
+    note: "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. Built by real recursion (increasing-binary-tree.ts), the same [label, left, right] nesting IncreasingBinaryTrees' cartesianTree builds -- the nearest-smaller-value fact still finds each position's parent without folding over a list taken out of the accumulator (tableau.ts).",
   },
   {
     name: "KnuthClassRepresentative",

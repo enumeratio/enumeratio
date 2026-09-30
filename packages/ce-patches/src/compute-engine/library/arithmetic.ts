@@ -33,3 +33,51 @@ export function evaluateCeilFloorAtComplexInfinity(ce: ComputeEngine): void {
     );
   }
 }
+
+// --- Multiply at the infinities ----------------------------------------------------------
+// cortex-js/compute-engine#341: Multiply(c, ±Infinity) collapses straight to the undirected
+// ComplexInfinity once c is complex, throwing away the direction a real infinity times a
+// finite nonzero complex number still has (Wolfram: DirectedInfinity[c/Abs[c]]). A real c
+// already gets the correct ±Infinity natively -- this only steps in off the real axis.
+
+// A real (signed) infinity: PositiveInfinity/NegativeInfinity evaluate to a numeric value
+// with `isInfinity === true` and a zero imaginary part, not a "PositiveInfinity" symbol --
+// evaluate() has already folded the symbol into that numeric value by the time a wrapped
+// Multiply handler sees it.
+const isSignedInfinity = (op: BoxedExpression): boolean => op.isInfinity === true && op.im === 0;
+
+// The finite product of every factor but the one signed infinity at `infIndex` -- `undefined`
+// when a second infinite factor is present (Infinity * Infinity, Infinity * ComplexInfinity,
+// two signed infinities, ...), so the native handler keeps those.
+function finiteFactor(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  infIndex: number,
+): BoxedExpression | undefined {
+  if (ops.some((op, i) => i !== infIndex && op.isInfinity === true)) return undefined;
+  const rest = ops.filter((_, i) => i !== infIndex);
+  if (rest.length === 0) return undefined;
+  return ce.function("Multiply", rest).evaluate();
+}
+
+export function evaluateMultiplyDirectedInfinity(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Multiply"],
+    (ops: readonly BoxedExpression[]) => {
+      const infIndex = ops.findIndex(isSignedInfinity);
+      if (infIndex === -1) return false;
+      const finite = finiteFactor(ce, ops, infIndex);
+      return finite !== undefined && finite.isFinite === true && !finite.is(0) && finite.im !== 0;
+    },
+    () => (ops) => {
+      const infIndex = ops.findIndex(isSignedInfinity);
+      const finite = finiteFactor(ce, ops, infIndex);
+      if (finite === undefined) return undefined;
+      const magnitude = ce.function("Abs", [finite]).evaluate();
+      const signed = (ops[infIndex]?.re ?? 0) < 0 ? ce.function("Negate", [finite]).evaluate() : finite;
+      const direction = ce.function("Divide", [signed, magnitude]).evaluate();
+      return ce.function("DirectedInfinity", [direction]).evaluate();
+    },
+  );
+}

@@ -1,2 +1,2 @@
 id	in	out
-the-one-line-word-231	<PeakSet><Permutation><List>2 3 1</List></Permutation></PeakSet>	<Finset><Tuple><List>2</List> 3</Tuple></Finset>
+the-one-line-word-231	<PeakSet><Permutation><List>2 3 1</List></Permutation></PeakSet>	<Finset><Tuple>3 <List>2</List></Tuple></Finset>

@@ -15,16 +15,24 @@ export const SET_PARTITIONS_CARRIERS: readonly Carrier[] = [
   {
     name: "Finset",
     type: "finset",
-    shape: "tuple<list<integer>, integer>",
+    // Params first (n, then the element list) — `carrierParams`'s packing convention
+    // (declare.ts: `Tuple(...params, encoded)`), matching LabeledGraph/Tournament's own
+    // `tuple<integer, list<integer>>`. Flipped from element-first (A-116); `carrierParams: 1`
+    // has to be declared here too, matching the families that pack it (Subsets/KSubsets), so
+    // the oracle's packed-tuple unwrap (emit.ts/structural.ts, #455) reads the same count.
+    shape: "tuple<integer, list<integer>>",
     id: "finset",
     plural: "Finsets",
+    carrierParams: 1,
   },
   {
     name: "Multiset",
     type: "multiset",
-    shape: "tuple<list<integer>, integer>",
+    // Params first — see Finset above.
+    shape: "tuple<integer, list<integer>>",
     id: "multiset",
     plural: "Multisets",
+    carrierParams: 1,
   },
   {
     name: "PerfectMatching",

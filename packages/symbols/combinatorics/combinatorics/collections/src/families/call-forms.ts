@@ -279,7 +279,15 @@ function resolveSubsetsOfList(elements: readonly BoxedExpression[]): Resolved<nu
   };
 }
 
-function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | undefined {
+/** Elements over 1..n go through `wrapElement` -- Finset when the carrier is declared,
+ *  the bare list otherwise (`carrierTypeForName`, checked once by the caller). The list form
+ *  (`resolveSubsetsOfList`) stays unwrapped either way: its elements are the ORIGINAL list's,
+ *  not necessarily a Finset's `1..n` shape, matching SetPartitions(list)'s own carrier-free
+ *  encode. */
+function resolveSubsets(
+  ops: readonly BoxedExpression[],
+  wrapElement: (n: number, idxs: number[]) => unknown,
+): Resolved<number[]> | undefined {
   if (ops.length === 1) {
     const elements = elementsOf(ops[0]);
     if (elements !== undefined) return resolveSubsetsOfList(elements);
@@ -287,12 +295,14 @@ function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | u
 
   const n = integerAt(ops[0]);
   if (n === undefined) return undefined;
+  const encode = (idxs: number[]) => wrapElement(n, idxs);
 
   if (ops.length <= 1) {
     return {
       count: SubsetCount(n),
       unrank: (r) => SubsetUnrank(n, r),
       valid: (e) => IsSubsetOf(e as number[], n),
+      encode,
     };
   }
 
@@ -312,6 +322,7 @@ function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | u
         count: KSubsetCount(n, k),
         unrank: (r) => KSubsetUnrank(n, k, r),
         valid: (e) => IsKSubsetOf(e as number[], n, k),
+        encode,
       };
     }
     const [kmin, kmax, step = 1] = vals;
@@ -320,6 +331,7 @@ function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | u
       count: subsetsInSizesCount(n, sizes),
       unrank: (r) => subsetsInSizesUnrank(n, sizes, r),
       valid: (e) => subsetsInSizesValid(e, n, sizes),
+      encode,
     };
   }
 
@@ -330,6 +342,7 @@ function resolveSubsets(ops: readonly BoxedExpression[]): Resolved<number[]> | u
     count: subsetsAtMostKCount([n, k]),
     unrank: (r) => subsetsAtMostKUnrank([n, k], r),
     valid: (e) => subsetsAtMostKValid(e, [n, k]),
+    encode,
   };
 }
 
@@ -397,8 +410,33 @@ export function declareCallForms(ce: ComputeEngine): void {
         ),
   );
 
-  widenSignature(ce, "Subsets", "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>");
-  setCollection(ce, "Subsets", polyCollection(ce, listMJ, asIntList, resolveSubsets));
+  // Typed by its carrier when it has one, over 1..n; the list form stays untyped (see
+  // resolveSubsets's comment) -- same split SetPartitions makes above.
+  const finset = carrierTypeForName(ce, "Finset");
+  widenSignature(
+    ce,
+    "Subsets",
+    finset === undefined
+      ? "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>"
+      : `(integer | collection<any>, (integer | list<integer>)?) -> list<${finset} | list<any>>`,
+  );
+  const wrapSubset = (n: number, idxs: number[]): unknown =>
+    finset === undefined ? listMJ(idxs) : ["Finset", ["Tuple", n, listMJ(idxs)]];
+  setCollection(
+    ce,
+    "Subsets",
+    polyCollection(
+      ce,
+      listMJ,
+      (b) =>
+        asIntList(
+          (finset !== undefined && (b as unknown as BoxedExpression).operator === "Finset"
+            ? (b.ops![0]!.ops![b.ops![0]!.ops!.length - 1]! as Boxed)
+            : b) as never,
+        ),
+      (ops) => resolveSubsets(ops, wrapSubset),
+    ),
+  );
 
   // `Permutations(n)`: the permutations of [n], the family `SymmetricGroup(n)` already is.
   // compute-engine's own `Permutations` takes a collection (the permutations of a given

@@ -7,7 +7,7 @@ signatures:
   - call: Multisets(n, k)
     description: size-$k$ multisets over $n$ symbols
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<multiset>
 seeAlso:
   - KSubsets
   - Tuples

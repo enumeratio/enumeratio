@@ -62,19 +62,8 @@ export const COMPILED_MAPS = {
       ),
   },
   "DescentSet@permutation": {
-    hash: "3108df9b",
-    run: (_SYS, _) =>
-      ((_f) =>
-        Array.from({ length: _SYS.rangeCount(1, _._raw.length + -1, 1) }, (_e, i) => 1 + i * 1).filter((_x) => _f(_x)))(
-        (
-          (_tv1) => (_tv2) =>
-            Array.isArray(_tv2) ? _SYS.bcastFn(_tv1, _tv2) : _tv1(_tv2)
-        )((_v1) => _SYS.atNumeric(_._raw, _v1 + 1, "integer") < _SYS.atNumeric(_._raw, _v1, "integer")),
-      ),
-  },
-  "FromPermutation@permutation": {
-    hash: "95fc3352",
-    run: (_SYS, _) => 1,
+    hash: "2c8d853a",
+    run: (_SYS, _) => _._raw.length,
   },
   "Inverse@permutation": {
     hash: "b3a805eb",
@@ -115,19 +104,8 @@ export const COMPILED_MAPS = {
       ),
   },
   "PeakSet@permutation": {
-    hash: "1fe23621",
-    run: (_SYS, _) =>
-      ((_f) =>
-        Array.from({ length: _SYS.rangeCount(2, _._raw.length + -1, 1) }, (_e, i) => 2 + i * 1).filter((_x) => _f(_x)))(
-        (
-          (_tv1) => (_tv2) =>
-            Array.isArray(_tv2) ? _SYS.bcastFn(_tv1, _tv2) : _tv1(_tv2)
-        )(
-          (_v1) =>
-            _SYS.atNumeric(_._raw, _v1 + -1, "integer") < _SYS.atNumeric(_._raw, _v1, "integer") &&
-            _SYS.atNumeric(_._raw, _v1 + 1, "integer") < _SYS.atNumeric(_._raw, _v1, "integer"),
-        ),
-      ),
+    hash: "2c8d853a",
+    run: (_SYS, _) => _._raw.length,
   },
   "RestrictedGrowthString@set_partition": {
     hash: "1eb95494",

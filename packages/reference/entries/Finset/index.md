@@ -19,5 +19,5 @@ signatures:
   - call: Finset(...)
     description: Catalogued in the enumeratio database, with crosswalk rows in mathlib4; not yet written up here.
     library: enumeratio-combinatorics
-    type: (tuple<list<integer>, integer>) -> finset
+    type: (tuple<integer, list<integer>>) -> finset
 ---

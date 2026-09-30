@@ -7,7 +7,7 @@ signatures:
   - call: KSubsets(n, k)
     description: the $\binom{n}{k}$ subsets of size $k$
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<finset>
 seeAlso:
   - Subsets
   - Multisets
