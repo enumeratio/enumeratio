@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, integerAt, operandsOf, wrapOperator } from "@enumeratio/engine";
+import { bigIntegerAt, bigRationalAt, defineOverload, integerAt, operandsOf } from "@enumeratio/engine";
 import * as adic from "./adic.ts";
 import type { Adic } from "./adic.ts";
 
@@ -83,8 +83,6 @@ export function declareAdic(ce: ComputeEngine): void {
     return values.every((v): v is Adic => v !== undefined) ? values : undefined;
   };
 
-  const anyAdic = (ops: readonly BoxedExpression[]): boolean => ops.some(isAdic);
-
   const fold =
     (step: (x: Adic, y: Adic) => Adic | undefined) =>
     (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
@@ -98,25 +96,25 @@ export function declareAdic(ce: ComputeEngine): void {
       return acc === undefined ? undefined : toExpression(ce, acc);
     };
 
-  wrapOperator(ce, ["Add", "x", "y"], anyAdic, () => fold(adic.add));
-  wrapOperator(ce, ["Multiply", "x", "y"], anyAdic, () => fold(adic.multiply));
-  wrapOperator(ce, ["Divide", "x", "y"], anyAdic, () => fold(adic.divide), 2);
-  wrapOperator(
-    ce,
-    ["Negate", "x"],
-    anyAdic,
-    () => (ops) => {
+  defineOverload(ce, "Add", { package: "numerals", on: [ADIC], evaluate: fold(adic.add) });
+  defineOverload(ce, "Multiply", { package: "numerals", on: [ADIC], evaluate: fold(adic.multiply) });
+  defineOverload(ce, "Divide", { package: "numerals", on: [ADIC], arity: 2, evaluate: fold(adic.divide) });
+  defineOverload(ce, "Negate", {
+    package: "numerals",
+    on: [ADIC],
+    arity: 1,
+    evaluate: (ops) => {
       const [x] = lift(ops) ?? [];
       const result = x === undefined ? undefined : adic.negate(x);
       return result === undefined ? undefined : toExpression(ce, result);
     },
-    1,
-  );
-  wrapOperator(
-    ce,
-    ["Power", "x", "y"],
-    (ops) => ops[0] !== undefined && isAdic(ops[0]),
-    () => (ops) => {
+  });
+  defineOverload(ce, "Power", {
+    package: "numerals",
+    on: [ADIC],
+    arity: 2,
+    when: (ops) => ops[0] !== undefined && isAdic(ops[0]),
+    evaluate: (ops) => {
       const [base, exponent] = ops;
       const x = base === undefined ? undefined : adicOf(base);
       const e = integerAt(exponent);
@@ -124,8 +122,7 @@ export function declareAdic(ce: ComputeEngine): void {
       const result = adic.power(x, e);
       return result === undefined ? undefined : toExpression(ce, result);
     },
-    2,
-  );
+  });
 
   const unary = (
     head: string,

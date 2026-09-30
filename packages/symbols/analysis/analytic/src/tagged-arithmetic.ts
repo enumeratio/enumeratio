@@ -1,43 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { defineOverload, type EvaluateOptions, operandsOf } from "@enumeratio/engine";
 
 // A shared, low-overhead registration for the arithmetic heads Interval, CenteredInterval
 // and Around all extend (Add, Negate, Multiply, Divide, Power, Abs, Sin, plus Sqrt/Erf for
 // Around alone) — see interval.ts, centered-interval.ts and around.ts for the actual math.
 //
-// Deliberately NOT `wrapOperator` (@enumeratio/engine): that helper re-evaluates every lazy
-// operand just to run its predicate, and a separate `wrapOperator` call per tagged type per
-// head (three, for Add) means three redundant evaluate passes over every operand stacked on
-// top of the real one — a measured ~4x slowdown on Add/Multiply-heavy code (large sums,
-// the statistics/domains exhaustive suites) even when nothing tagged is anywhere near the
-// expression. Registering once per head here means the untagged path (the overwhelming
-// majority of calls) costs one `.operator` read per operand and calls the native handler
-// exactly once, on the original operands — no evaluate, no re-boxing, no `.json`.
+// Each head gets rows in its table (defineOverload, @enumeratio/engine) rather than one
+// `wrapOperator` per tagged type: a wrapper re-evaluates every lazy operand just to test it,
+// three of them on Add stacked three evaluate passes on every sum, a measured ~4x slowdown on
+// Add/Multiply-heavy code. The table reads the operands' heads as written first (one level
+// under a `Negate`, which is how `Subtract` arrives), so an untagged call evaluates nothing
+// extra and reaches the native handler once, on the original operands.
 
 const TAGS: ReadonlySet<string> = new Set(["Interval", "CenteredInterval", "Around"]);
-
-/**
- * Does `op` structurally carry one of our tagged types, without evaluating anything? Checks
- * `op`'s own operator, and — since `Subtract(a, b)` canonicalizes to `Add(a, Negate(b))`
- * before any hook sees a `Subtract` head (see interval.ts) — one level through a bare
- * `Negate`, which is the only wrapper any of our examples put around a tagged value.
- */
-function isTaggedOperand(op: BoxedExpression): boolean {
-  const name = op.operator;
-  if (name === undefined) return false;
-  if (TAGS.has(name)) return true;
-  if (name === "Negate") {
-    const inner = operandsOf(op)[0];
-    return inner !== undefined && TAGS.has(inner.operator ?? "");
-  }
-  return false;
-}
-
-/** O(n), allocation-free: bails out on the first tagged operand. */
-function hasTaggedOperand(ops: readonly BoxedExpression[]): boolean {
-  for (const op of ops) if (isTaggedOperand(op)) return true;
-  return false;
-}
 
 /**
  * One head's handling of already-evaluated operands; `undefined` means "not mine". `raw` is
@@ -56,16 +31,14 @@ export type Resolver = (
 ) => BoxedExpression | undefined;
 
 /** A cheap, allocation-free structural test over the raw (pre-evaluate) operands: does this
- * call look worth the full evaluate-and-resolve path? Every head gets `hasTaggedOperand` for
- * free; a head can add more (e.g. Multiply's e^a·e^b combiner in exp-combine.ts) so a second
- * unrelated reason to fire doesn't need its own `wrapOperator` and its own extra evaluate
- * pass over every operand (see this file's top comment for why that's expensive). */
+ * call look worth the full evaluate-and-resolve path, when no operand is tagged? (Multiply's
+ * e^a·e^b combiner in exp-combine.ts.) */
 export type Gate = (ops: readonly BoxedExpression[]) => boolean;
 
 /**
- * Register a single evaluate hook for `head` that tries each resolver in turn once one of
- * its gates fires (a tagged operand, or an extra per-head gate), and otherwise defers to the
- * native handler untouched.
+ * Rows in `head`'s table (defineOverload) that try each resolver in turn: one for a tagged
+ * operand, and one for the head's extra gates when there are any. A call with neither passes
+ * them over without evaluating anything.
  */
 export function registerTaggedHead(
   ce: ComputeEngine,
@@ -74,31 +47,26 @@ export function registerTaggedHead(
   extraGates: readonly Gate[] = [],
 ): void {
   if (resolvers.length === 0) return;
-  const definition = ce.lookupDefinition(head);
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  const native = operator.evaluate;
-  const gates: readonly Gate[] = [hasTaggedOperand, ...extraGates];
-  operator.evaluate = (ops, options) => {
-    if (!gates.some((gate) => gate(ops))) return native?.(ops, options);
-    const values = ops.map((op) => op.evaluate());
-    // `operandsOf`, not `.expression.ops` directly: `.ops` lives on compute-engine's narrowed
-    // FunctionInterface, which the `Expression` union type doesn't expose a typed route to
-    // (see @enumeratio/engine's own note on `operandsOf`).
+  const evaluate = (values: readonly BoxedExpression[], options: EvaluateOptions): BoxedExpression | undefined => {
     const rawOps = operandsOf(options.expression);
     const raw = rawOps.length === values.length ? rawOps : values;
     for (const resolve of resolvers) {
       const result = resolve(values, raw);
       if (result !== undefined) return result;
     }
-    return native?.(ops, options);
+    return undefined;
   };
+  // A tagged value is written as itself, so its rows can be matched before evaluating.
+  defineOverload(ce, head, { package: "analytic", on: [...TAGS], written: true, evaluate });
+  if (extraGates.length > 0)
+    defineOverload(ce, head, {
+      package: "analytic",
+      unless: [...TAGS],
+      gate: (ops) => extraGates.some((gate) => gate(ops)),
+      evaluate,
+    });
 }
 
-/** Merge several `{head: Resolver}` maps and register each head once, in the order given —
- * the order resolvers are tried when more than one map handles the same head. `extraGates`
- * adds a head-specific gate (e.g. Multiply's exp-combine check) on top of the shared
- * tagged-operand gate every head already gets. */
 export function registerTaggedHeads(
   ce: ComputeEngine,
   heads: readonly string[],

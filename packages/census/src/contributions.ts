@@ -77,16 +77,22 @@ export function contributions(): Map<string, Contribution[]> {
     }
     before = after;
   }
-  // A head with a table: a package contributes its rows' own shapes (or the head's own, for rows
-  // that add none), not the head's whole signature after it.
+  // A head with a table: a package contributes its rows' own shapes, not the head's whole
+  // signature after it.
   for (const [name, list] of out) {
     const table = overloadTable(ce, name);
     if (table === undefined) continue;
+    // A row that adds no shape changes neither the head's handler nor its type once the table
+    // is in place, so the loop above can't see its package: every package with a row counts.
+    for (const pkg of new Set(table.rows.map((row) => row.package))) {
+      if (list.some((c) => c.pkg === pkg)) continue;
+      const lazy = list[0]?.lazy ?? false;
+      list.push({ pkg, type: ce.type(table.nativeSignature).toString(), lazy, previous: list.at(-1)?.pkg ?? ENGINE });
+    }
     for (const c of list) {
-      const rows = table.rows.filter((row) => row.package === c.pkg);
-      if (rows.length === 0) continue;
-      const own = rows.flatMap((row) => row.signature ?? []);
-      c.type = ce.type(own.length > 0 ? joinSignatures(own) : table.nativeSignature).toString();
+      // Rows that add no shape leave the package's say to whatever else it did to the head.
+      const own = table.rows.filter((row) => row.package === c.pkg).flatMap((row) => row.signature ?? []);
+      if (own.length > 0) c.type = ce.type(joinSignatures(own)).toString();
     }
   }
   return out;

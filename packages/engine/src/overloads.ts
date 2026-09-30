@@ -3,7 +3,8 @@
 // head dispatches from. Rows are ordered by what they are, never by who declared first, and
 // the head's signature is computed from them, never assigned.
 
-import type { BoxedExpression, ComputeEngine, EvaluateOptions } from "@cortex-js/compute-engine";
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { EvaluateOptions } from "./index.ts";
 
 type Arity = number | { readonly min: number; readonly max?: number };
 
@@ -19,6 +20,13 @@ export interface Overload {
   readonly arity?: Arity;
   /** Any further condition, over the evaluated operands. */
   readonly when?: (ops: readonly BoxedExpression[]) => boolean;
+  /** Match `on` against the operands as written (one level under a `Negate`), before any is
+   *  evaluated: cheap on a hot head, and sound only where the carrier is always written as
+   *  itself, never produced by evaluating an operand (`Add(HenselLift(…), …)` is). */
+  readonly written?: boolean;
+  /** A cheap test over the operands as written, for a row with no `on`: when it fails, the row
+   *  is passed over without evaluating anything (a hot head's sums and products mostly fail). */
+  readonly gate?: (ops: readonly BoxedExpression[]) => boolean;
   /** Packages whose rows this one is tried before, where both would apply. */
   readonly overrides?: readonly string[];
   /** What the head's own handler accepts, when this row's signature lets more through: the
@@ -38,7 +46,10 @@ interface Operator {
 
 interface Table {
   readonly native: Evaluate | undefined;
-  readonly nativeSignature: string;
+  /** The head's own signature, and whatever `widenSignature` has since assigned it. */
+  nativeSignature: string;
+  /** The signature the table last computed, to notice one assigned from outside it. */
+  computed?: string;
   readonly rows: Overload[];
   ordered: Overload[];
 }
@@ -96,6 +107,27 @@ export function overloadTable(
   return table === undefined ? undefined : { nativeSignature: table.nativeSignature, rows: table.rows };
 }
 
+const operands = (op: BoxedExpression): readonly BoxedExpression[] =>
+  (op as unknown as { ops?: readonly BoxedExpression[] }).ops ?? [];
+
+/** The heads among the operands as written, and one level under a bare `Negate`, which is how
+ *  `Subtract(a, x)` arrives. */
+function writtenHeads(ops: readonly BoxedExpression[]): Set<string> {
+  const heads = new Set<string>();
+  for (const op of ops) {
+    heads.add(op.operator);
+    if (op.operator === "Negate") for (const inner of operands(op)) heads.add(inner.operator);
+  }
+  return heads;
+}
+
+/** Could `row` apply, judged from the operands as written, before evaluating any? */
+const mayApply = (row: Overload, ops: readonly BoxedExpression[], heads: () => Set<string>): boolean => {
+  if (!fits(row.arity, ops.length)) return false;
+  if (row.written === true && row.on !== undefined) return row.on.some((head) => heads().has(head));
+  return row.gate === undefined || row.gate(ops);
+};
+
 const matches = (row: Overload, ops: readonly BoxedExpression[]): boolean =>
   fits(row.arity, ops.length) &&
   (row.on === undefined || ops.some((op) => row.on!.includes(op.operator))) &&
@@ -126,14 +158,20 @@ export function defineOverload(ce: ComputeEngine, head: string, overload: Overlo
     tables.set(operator, created);
     const lazy = operator.lazy === true;
     operator.evaluate = (ops, options) => {
+      let values = ops;
       if (created.ordered.length > 0) {
-        // A lazy head (`Add`) hands over its operands as written; rows see them evaluated,
-        // once per call however many rows there are.
-        const values = lazy ? ops.map((op) => op.evaluate()) : ops;
-        for (const row of created.ordered) {
-          if (!matches(row, values)) continue;
-          const answer = row.evaluate(values, options);
-          if (answer !== undefined) return answer;
+        let written: Set<string> | undefined;
+        const heads = (): Set<string> => (written ??= writtenHeads(ops));
+        const candidates = created.ordered.filter((row) => mayApply(row, ops, heads));
+        if (candidates.length > 0) {
+          // A lazy head (`Add`) hands over its operands as written; rows see them evaluated,
+          // once per call however many rows there are.
+          if (lazy) values = ops.map((op) => op.evaluate());
+          for (const row of candidates) {
+            if (!matches(row, values)) continue;
+            const answer = row.evaluate(values, options);
+            if (answer !== undefined) return answer;
+          }
         }
         const gates = created.rows.flatMap((row) => row.native ?? []);
         if (gates.length > 0 && !values.every((op) => gates.every((accepts) => accepts(op)))) return undefined;
@@ -141,8 +179,11 @@ export function defineOverload(ce: ComputeEngine, head: string, overload: Overlo
       return created.native?.(ops, options);
     };
   }
+  const current = String(operator.signature);
+  if (table.computed !== undefined && current !== table.computed) table.nativeSignature = current;
   table.rows.push(overload);
   table.ordered = order(table.rows);
   operator.signature = ce.type(signatureOf(table));
+  table.computed = String(operator.signature);
   return true;
 }

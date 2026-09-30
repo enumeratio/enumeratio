@@ -668,6 +668,9 @@ importers:
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
