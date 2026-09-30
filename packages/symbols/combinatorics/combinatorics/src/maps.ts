@@ -21,6 +21,7 @@ import {
   registerOperation,
 } from "@enumeratio/structures";
 import { CARRIERS } from "./carriers.ts";
+import { COMPILED_MAPS } from "./compiled-maps.generated.js";
 import { fastDefinition } from "./compiled.ts";
 import {
   dyckPathBody,
@@ -851,6 +852,7 @@ export function declareMaps(
             from: shapeOf.get(map.from),
             to: shapeOf.get(map.to),
             interpret: (contents) => evaluateDefinition(ce, map, contents),
+            generated: COMPILED_MAPS[`${map.name}@${map.from}`],
           });
 
     const handle = (subject: BoxedExpression): BoxedExpression | undefined => {
