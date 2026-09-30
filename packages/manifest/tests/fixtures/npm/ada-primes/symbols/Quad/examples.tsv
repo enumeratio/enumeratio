@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+quad-3			[MemberCall, ada, "'Quad'", 3]	12

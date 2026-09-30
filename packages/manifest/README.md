@@ -27,7 +27,9 @@ the resolver possible (below).
   over jsDelivr: a package marks itself with an `enumeratio` field (`namespace`, its scope;
   `index`), ships `symbols/<Name>/definition.json`, and `scripts/pack-symbols.ts <dir>` writes
   its `symbols/index.json`. Only the index and the definitions an expression uses are
-  fetched, and each is checked against its pin. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  fetched, and each is checked against its pin. With `check`, `createRegistryResolver` runs
+  a definition's examples (from its record, packed as `examples.json`) in a scratch engine
+  before declaring it, once per pin: a failure refuses it, or with `mode: "flag"` is reported. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 

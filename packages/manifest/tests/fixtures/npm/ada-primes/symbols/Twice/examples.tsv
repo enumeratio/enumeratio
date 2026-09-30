@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+twice-3			[MemberCall, ada, "'Twice'", 3]	6
+twice-half			[MemberCall, ada, "'Twice'", 0.25]	0.5

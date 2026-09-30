@@ -1,0 +1,12 @@
+[
+  {
+    "id": "twice-3",
+    "expr": ["MemberCall", "ada", "'Twice'", 3],
+    "expected": 6
+  },
+  {
+    "id": "twice-half",
+    "expr": ["MemberCall", "ada", "'Twice'", 0.25],
+    "expected": 0.5
+  }
+]

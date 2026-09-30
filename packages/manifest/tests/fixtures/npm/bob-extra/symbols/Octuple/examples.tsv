@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+octuple-1			[MemberCall, bob, "'Octuple'", 1]	8

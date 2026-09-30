@@ -111,3 +111,33 @@ test("beside the system: a search path over npm namespaces, and system names unp
   expect(ensured.expression).toEqual(["Add", ["MemberCall", "ada", "'Quad'", 1], ["MemberCall", "bob", "'Zh'", 2]]);
   expect(log).toEqual(["analytic"]);
 });
+
+test("install check over npm: each package's examples, fetched only to check", async () => {
+  const { fetch, log } = cdn();
+  const resolver = createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch }), {
+    check: { engine: () => new ComputeEngine() },
+  });
+  const ce = new ComputeEngine();
+  const ensured = await resolver.ensure(ce, ["MemberCall", "bob", "'Octuple'", 2]);
+  expect([ensured.errors, ensured.failed]).toEqual([[], {}]);
+  expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 2])).toBe(16);
+  expect(log.filter((url) => url.endsWith("examples.json")).toSorted()).toEqual([
+    "@ada/primes@1.0.0/symbols/Quad/examples.json",
+    "@ada/primes@1.0.0/symbols/Twice/examples.json",
+    "@bob/extra@2.0.0/symbols/Octuple/examples.json",
+  ]);
+});
+
+test("install check over npm: a published example the definition doesn't meet refuses it", async () => {
+  const { fetch } = cdn((url, json) =>
+    url.endsWith("Quad/examples.json")
+      ? [{ id: "quad-3", expr: ["MemberCall", "ada", "'Quad'", 3], expected: 13 }]
+      : json,
+  );
+  const resolver = createRegistryResolver(npmRegistry<Engine>(SPECS, { fetch }), {
+    check: { engine: () => new ComputeEngine() },
+  });
+  const ensured = await resolver.ensure(new ComputeEngine(), ["MemberCall", "bob", "'Octuple'", 2]);
+  expect(ensured.failed).toEqual({ "ada.Quad": ["quad-3: 12, expected 13"] });
+  expect(ensured.errors).toEqual(["ada.Quad: 1 example(s) fail"]);
+});
