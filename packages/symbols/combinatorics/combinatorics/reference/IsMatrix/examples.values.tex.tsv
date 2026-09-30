@@ -8,3 +8,4 @@ a-ragged-list-of-lists-is-not-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrac
 an-empty-list-is-not-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack\bigr\rbrack)	\bot
 a-test-function-must-hold-of-every-entry	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack6, 8\bigr\rbrack\bigr\rbrack, \mathrm{IsEven})	\top
 list-ismatrix-mat-ismatrix-expr	\bigl\lbrack\mathrm{IsMatrix}(\mathrm{mat}), \mathrm{IsMatrix}(\mathrm{expr})\bigr\rbrack	\bigl\lbrack\bot, \bot\bigr\rbrack
+ismatrix-m	\mathrm{IsMatrix}(m)	\bot

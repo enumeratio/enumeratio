@@ -18,3 +18,4 @@ rj-0-2-3-1-cpv	<N><CarlsonRJ>0 2 3 -1</CarlsonRJ></N>	<ToExpression>-0.873288980
 rj-1-2-3-2-5-cpv	<N><CarlsonRJ>1 2 3 -2.5</CarlsonRJ></N>	<ToExpression>-0.2477681083527569</ToExpression>
 rj-0-5-1-5-4-0-3-cpv	<N><CarlsonRJ>0.5 1.5 4 -0.3</CarlsonRJ></N>	<ToExpression>0.42049102982144165</ToExpression>
 rj-2-2-2-1-cpv	<N><CarlsonRJ>2 2 2 -1</CarlsonRJ></N>	<ToExpression>-0.045338760426563075</ToExpression>
+n-carlsonrj-1-over-3-1-over-5-1-over-7-1-50	<N><CarlsonRJ><Rational>1 3</Rational> <Rational>1 5</Rational> <Rational>1 7</Rational> 1</CarlsonRJ> 50</N>	<ToExpression>3.5284517618885305</ToExpression>

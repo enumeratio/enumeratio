@@ -2,3 +2,13 @@ id	in	out
 one-over-s-squared	\mathrm{InverseLaplaceTransform}(\frac{1}{s^2}, s, t)	t
 one-over-s-minus-a	\mathrm{InverseLaplaceTransform}(\frac{1}{s-a}, s, t)	e^{at}
 s-over-s-squared-plus-a-squared	\mathrm{InverseLaplaceTransform}((s)(s^2+a^2)^{-1}, s, t)	\cos(at)
+inverselaplacetransform-1-over-s-plus-1-s-t	\mathrm{InverseLaplaceTransform}(\frac{1}{s+1}, s, t)	e^{-t}
+inverselaplacetransform-ln-1-over-b-plus-s-times	\mathrm{InverseLaplaceTransform}(\ln(\frac{a+s}{b+s}), s, t)	\mathrm{InverseLaplaceTransform}(\ln(a+s)-\ln(b+s), s, t)
+inverselaplacetransform-a-times-1-over-a-pow-2	\mathrm{InverseLaplaceTransform}((a)(a^2+s^2)^{-1}, s, t)	\sin(at)
+inverselaplacetransform-s-times-1-over-a-pow-2	\mathrm{InverseLaplaceTransform}((s)(a^2+s^2)^{-1}, s, t)	\cos(at)
+fullsimplify-inverselaplacetransform-a-times-1	\mathrm{FullSimplify}(\mathrm{InverseLaplaceTransform}((a)(s^2-a^2)^{-1}, s, t))	\sinh(at)
+fullsimplify-inverselaplacetransform-s-times-1	\mathrm{FullSimplify}(\mathrm{InverseLaplaceTransform}((s)(s^2-a^2)^{-1}, s, t))	\cosh(at)
+inverselaplacetransform-s-times-a-pow-2-plus-s	\mathrm{InverseLaplaceTransform}((s)((a^2+s^2)^2)^{-1}, s, t)	\mathrm{InverseLaplaceTransform}((s)((a^2+s^2)^2)^{-1}, s, t)
+inverselaplacetransform-s-times-1-over-a-pow-2-2	\mathrm{InverseLaplaceTransform}((s)((a^2+s^2)(b^2+s^2))^{-1}, s, t)	\mathrm{InverseLaplaceTransform}((s)((a^2+s^2)(b^2+s^2))^{-1}, s, t)
+fullsimplify-inverselaplacetransform-1-over-neg	\mathrm{FullSimplify}(\mathrm{InverseLaplaceTransform}(\frac{s^2}{(s^2-a^2)(s^2-b^2)}, s, t))	\mathrm{InverseLaplaceTransform}(\frac{s^2}{(s^2-a^2)(s^2-b^2)}, s, t)
+inverselaplacetransform-1-over-s-minus-2-times	\mathrm{InverseLaplaceTransform}(\frac{\exp(-5s)}{(s-2)\sqrt{s}}, s, t)	\mathrm{InverseLaplaceTransform}(\frac{\exp(-5s)}{(s-2)\sqrt{s}}, s, t)

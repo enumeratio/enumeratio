@@ -1,6 +1,7 @@
 id	in	out
 factorial-ratio	\mathrm{DiscreteRatio}(n!, n)	n+1
 geometric-ratio	\mathrm{DiscreteRatio}(2^{n}, n)	2
+discreteratio-r-pow-i-i	\mathrm{DiscreteRatio}(r^{i}, i)	r
 discreteratio-x-pow-2-x	\mathrm{DiscreteRatio}(x^2, x)	\frac{(x+1)^2}{x^2}
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	\mathrm{DiscreteRatio}((x-r_1)(x-r_2), x)	\frac{(-r_1+x+1)(-r_2+x+1)}{(x-r_1)(x-r_2)}
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	\mathrm{DiscreteRatio}(\frac{1+x}{1+x^2}, x)	\frac{x^3+2x^2+x+2}{(x+1)((x+1)^2+1)}
@@ -17,3 +18,11 @@ discreteratio-catalannumber-x-x	\mathrm{DiscreteRatio}(\mathrm{CatalanNumber}(x)
 list-discreteratio-f-n-discreteratio-f-k	\bigl\lbrack\mathrm{DiscreteRatio}(f, n), \mathrm{DiscreteRatio}(f, k)\bigr\rbrack	\bigl\lbrack1, 1\bigr\rbrack
 discreteratio-gammaregularized-n-z-n	\mathrm{DiscreteRatio}(\operatorname{GammaRegularized}(n, z), n)	\frac{\operatorname{GammaRegularized}(n+1, z)}{\operatorname{GammaRegularized}(n, z)}
 list-discreteratio-binomial-n-k-n-discreteratio	\bigl\lbrack\mathrm{DiscreteRatio}(\binom{n}{k}, n), \mathrm{DiscreteRatio}(\binom{n}{k}, k)\bigr\rbrack	\bigl\lbrack\frac{\binom{n+1}{k}}{\binom{n}{k}}, \frac{\binom{n}{k+1}}{\binom{n}{k}}\bigr\rbrack
+discreteratio-a-times-q-pow-x-plus-b-times-q-pow	\mathrm{DiscreteRatio}(aq^{x}+bq^{2x}, x)	\frac{aq^{x+1}+bq^{2(x+1)}}{aq^{x}+bq^{2x}}
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x	\mathrm{DiscreteRatio}((q^{x}-r_1)(q^{x}-r_2), x)	\frac{(q^{x+1}-r_1)(q^{x+1}-r_2)}{(q^{x}-r_1)(q^{x}-r_2)}
+discreteratio-a-times-q-pow-x-plus-b-times-q-p-2	\mathrm{DiscreteRatio}(\frac{aq^{x}+bq^{2x}}{1+q^{x}}, x)	\frac{(aq^{x+1}+bq^{2(x+1)})(q^{x}+1)}{(aq^{x}+bq^{2x})(q^{x+1}+1)}
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2	\mathrm{DiscreteRatio}(\frac{(q^{x}-r_1)(q^{x}-r_2)}{(q^{x}-p_1)(q^{x}-p_2)}, x)	\frac{(q^{x}-p_1)(q^{x}-p_2)(q^{x+1}-r_1)(q^{x+1}-r_2)}{(q^{x+1}-p_1)(q^{x+1}-p_2)(q^{x}-r_1)(q^{x}-r_2)}
+discreteratio-qpochhammer-a-q-x-x	\mathrm{DiscreteRatio}(\mathrm{QPochhammer}(a, q, x), x)	\frac{\mathrm{QPochhammer}(a, q, x+1)}{\mathrm{QPochhammer}(a, q, x)}
+discreteratio-qbinomial-a-x-q-times-qfactorial-x	\mathrm{DiscreteRatio}(\frac{\mathrm{QBinomial}(a, x, q)\mathrm{QFactorial}(x, q)}{\mathrm{QPochhammer}(b, q, x)}, x)	\frac{\mathrm{QPochhammer}(b, q, x)\mathrm{QFactorial}(x+1, q)\mathrm{QBinomial}(a, x+1, q)}{\mathrm{QPochhammer}(b, q, x+1)\mathrm{QFactorial}(x, q)\mathrm{QBinomial}(a, x, q)}
+discreteratio-barnesg-x-x	\mathrm{DiscreteRatio}(\mathrm{BarnesG}(x), x)	\frac{\mathrm{BarnesG}(x+1)}{\mathrm{BarnesG}(x)}
+discreteratio-hyperfactorial-x-x	\mathrm{DiscreteRatio}(\mathrm{Hyperfactorial}(x), x)	\frac{\mathrm{Hyperfactorial}(x+1)}{\mathrm{Hyperfactorial}(x)}

@@ -1,5 +1,6 @@
 id	in
 add-of-two-wildcards-matches-an-add	MatchQ[Plus[x, 1], Plus[_a, _b]]
 matchq-1-plus-1-times-goldenratio-pow-neg-1	MatchQ[Plus[1, Times[1, Power[GoldenRatio, -1]], Times[-1, GoldenRatio]], 0]
+matchq-simplify-1-plus-1-times-goldenratio-pow	MatchQ[Simplify[Plus[1, Times[1, Power[GoldenRatio, -1]], Times[-1, GoldenRatio]]], 0]
 a-product-does-not-match-an-add-pattern	MatchQ[Times[x, y], Plus[_a, _b]]
 a-sequence-wildcard-matches-the-rest-of-a-list	MatchQ[List[1, 2, 3], List[_a, __rest]]

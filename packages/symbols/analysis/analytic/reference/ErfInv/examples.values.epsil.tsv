@@ -20,5 +20,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	IsNumeric(erfInv(1 / pi, 1 / 2))	True
 erfinv-0-0	erfInv(0, 0)	0
 erfinv-0-1	erfInv(0, 1)	positiveInfinity
 erfinv-1-0	erfInv(1, 0)	erfInv(erf(1))
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	solve(erfInv(x) ^ 3 + 2 * erfInv(x) == 1, x)	[]
+attributes-erfinv	Attributes(erfInv)	[Listable]
 outside-its-real-domain-1-1-compute-engine	erfInv(2)	erfInv(2)
 blows-up-near-the-boundary-erfinv-0-9999-is	erfInv(0.999_9)	2.751_063_905_712_060_796_15

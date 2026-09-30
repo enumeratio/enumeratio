@@ -1,6 +1,7 @@
 id	in	out
 factorial-ratio	DiscreteRatio(n!, n)	n + 1
 geometric-ratio	DiscreteRatio(2 ^ n, n)	2
+discreteratio-r-pow-i-i	DiscreteRatio(r ^ i, i)	r
 discreteratio-x-pow-2-x	DiscreteRatio(x ^ 2, x)	(x + 1) ^ 2 / x ^ 2
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio((x - r_1) * (x - r_2), x)	(-r_1 + x + 1) * (-r_2 + x + 1) / ((-r_1 + x) * (-r_2 + x))
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio((1 + x) * (1 + x ^ 2) ^ -1, x)	(x ^ 3 + 2 * x ^ 2 + x + 2) / ((x + 1) * ((x + 1) ^ 2 + 1))
@@ -17,3 +18,11 @@ discreteratio-catalannumber-x-x	DiscreteRatio(catalanNumber(x), x)	catalanNumber
 list-discreteratio-f-n-discreteratio-f-k	[DiscreteRatio(f, n), DiscreteRatio(f, k)]	[1, 1]
 discreteratio-gammaregularized-n-z-n	DiscreteRatio(gammaRegularized(n, z), n)	gammaRegularized(n + 1, z) / gammaRegularized(n, z)
 list-discreteratio-binomial-n-k-n-discreteratio	[DiscreteRatio(binomial(n, k), n), DiscreteRatio(binomial(n, k), k)]	[binomial(n + 1, k) / binomial(n, k), binomial(n, k + 1) / binomial(n, k)]
+discreteratio-a-times-q-pow-x-plus-b-times-q-pow	DiscreteRatio(a * q ^ x + b * q ^ (2x), x)	(a * q ^ (x + 1) + b * q ^ (2 * (x + 1))) / (a * q ^ x + b * q ^ (2x))
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x	DiscreteRatio((q ^ x - r_1) * (q ^ x - r_2), x)	(-r_1 + q ^ (x + 1)) * (-r_2 + q ^ (x + 1)) / ((-r_1 + q ^ x) * (-r_2 + q ^ x))
+discreteratio-a-times-q-pow-x-plus-b-times-q-p-2	DiscreteRatio((a * q ^ x + b * q ^ (2x)) * (1 + q ^ x) ^ -1, x)	"(a * q ^ (x + 1) + b * q ^ (2 * (x + 1))) * (q ^ x + 1) / ((a * q ^ x + b * q ^\n                                                                            (2x)) *\n                                                           (q ^ (x + 1) + 1))"
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2	"DiscreteRatio((q ^ x - r_1) * (q ^ x - r_2) * ((q ^ x - p_1) * (q ^ x - p_2)) ^\n                                              -1, x)"	"(-p_1 + q ^ x) * (-p_2 + q ^ x) * (-r_1 + q ^ (x + 1)) * (-r_2 + q ^ (x + 1)) /\n((-p_1 + q ^ (x + 1)) * (-p_2 + q ^ (x + 1)) * (-r_1 + q ^ x) * (-r_2 + q ^ x))"
+discreteratio-qpochhammer-a-q-x-x	DiscreteRatio(QPochhammer(a, q, x), x)	QPochhammer(a, q, x + 1) / QPochhammer(a, q, x)
+discreteratio-qbinomial-a-x-q-times-qfactorial-x	"DiscreteRatio(\n               QBinomial(a, x, q) * QFactorial(x, q) * QPochhammer(b, q, x) ^ -1,\n               x,\n             )"	"QPochhammer(b, q, x) * QFactorial(x + 1, q) * QBinomial(a, x + 1, q) / (QPochhammer(b, q, x + 1) *\n                                                                        QFactorial(x, q) *\n                                                                        QBinomial(a, x, q))"
+discreteratio-barnesg-x-x	DiscreteRatio(BarnesG(x), x)	BarnesG(x + 1) / BarnesG(x)
+discreteratio-hyperfactorial-x-x	DiscreteRatio(Hyperfactorial(x), x)	Hyperfactorial(x + 1) / Hyperfactorial(x)

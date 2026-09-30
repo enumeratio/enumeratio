@@ -1,5 +1,6 @@
 id	in
 collect-everything-sown	Reap[Last[List[Sow[1], Sow[2], 3]]]
 nothing-sown-gives-an-empty-group-list	Reap[5]
+reap-sum-sow-i-pow-2-plus-1-i-10	Reap[Sum[Plus[Sow[Power[i, 2]], 1], List[i, 10]]]
 reap-only-a-matching-tag	Reap[Last[List[Sow[1, a], Sow[2, b], Sow[3, a], 0]], a]
 reap-x	Reap[x]

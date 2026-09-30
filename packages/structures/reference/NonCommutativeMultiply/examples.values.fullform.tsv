@@ -1,6 +1,7 @@
 id	in
 the-canonical-order	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2]]
 noncommutativemultiply-a-b-c-eq	Equal[NonCommutativeMultiply[a, b, c], NonCommutativeMultiply[a, b, c]]
+list-a-times-b-eq-a-times-b	List[Equal[Times[a, b], Times[a, b]], Equal[NonCommutativeMultiply[a, b], NonCommutativeMultiply[b, a]]]
 scalars-the-implied-identity-factor	CircleTimes[2, 3]
 commuting-units-agrees-with-times	CircleTimes[Subscript[i, 2], Subscript[i, 1]]
 the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	NonCommutativeMultiply[Plus[1, Times[2, Subscript[f, 1]], Times[3, Subscript[f, 2]], Times[4, Subscript[f, 1], Subscript[f, 2]]], Plus[2, Minus[Subscript[f, 1]], Subscript[f, 2], Times[-3, Subscript[f, 1], Subscript[f, 2]]]]
@@ -8,5 +9,7 @@ reversing-the-operands-flips-the-sign	NonCommutativeMultiply[Subscript[e, 2], Su
 e-1e-2-2-1	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2], Subscript[e, 1], Subscript[e, 2]]
 associative-nested-products-flatten	NonCommutativeMultiply[a, NonCommutativeMultiply[b, c]]
 undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply[b, a]
+list-noncommutativemultiply-0-a	List[NonCommutativeMultiply[0, a], NonCommutativeMultiply[1, a]]
+neg-a-times-c-plus-noncommutativemultiply-a-plus	Plus[Minus[Times[a, c]], NonCommutativeMultiply[Plus[a, b], c]]
 plain-times-declines-both-orders-arrive	Times[Subscript[e, 2], Subscript[e, 1]]
 noncommutativemultiply-a	NonCommutativeMultiply[a]

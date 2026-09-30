@@ -47,7 +47,11 @@ const MATHJSON: JsonSchema = {
   ],
 };
 
-const EXAMPLE_ROLE: JsonSchema = { enum: ["demo", "test"] };
+const EXAMPLE_ROLE: JsonSchema = { enum: ["demo", "test", "aspirational", "triage"] };
+
+const TRIAGE_BUCKET: JsonSchema = {
+  enum: ["adapt", "emit", "compare", "ours?", "wolfram?", "unscanned", "gap", "print"],
+};
 
 const OTHER_SYSTEM_VERDICT: JsonSchema = { enum: ["agree", "disagree", "inconclusive", "error"] };
 
@@ -85,7 +89,7 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     caption: { type: "string" },
     category: { type: "string" },
     role: EXAMPLE_ROLE,
-    aspirational: { type: "boolean" },
+    triage: TRIAGE_BUCKET,
     volatile: { type: "array", items: { type: "string" } },
     group: {
       type: "string",
@@ -95,7 +99,7 @@ const REFERENCE_EXAMPLE: JsonSchema = {
   },
   required: ["id", "expr", "expected"],
   // A known value carries where it comes from; a tolerance or source means nothing without one.
-  dependentRequired: { known: ["source"], source: ["known"], tolerance: ["known"] },
+  dependentRequired: { known: ["source"], source: ["known"], tolerance: ["known"], triage: ["role"] },
   additionalProperties: false,
 };
 

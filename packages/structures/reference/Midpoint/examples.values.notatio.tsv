@@ -6,6 +6,7 @@ of-two-point-primitives	<Midpoint><Point><List>1 1</List></Point> <Point><List>2
 midpoint-list-1-1-list-3-4	<Midpoint><List>1 1</List> <List>3 4</List></Midpoint>	<List>2 <Rational>5 2</Rational></List>
 midpoint-list-1-2-neg-1-3-list-4-2-neg-3-neg-2	<Midpoint><List>1 2 -1 3</List> <List>4 2 -3 -2</List></Midpoint>	<List><Rational>5 2</Rational> 2 -2 <Rational>1 2</Rational></List>
 midpoint-point-list-1-2-point-list-neg-2-3	<Midpoint><Point><List>1 2</List></Point> <Point><List>-2 3</List></Point></Midpoint>	<Point><List><Rational>-1 2</Rational> <Rational>5 2</Rational></List></Point>
+midpoint-list-a-b-list-c-d	<Midpoint><List>a b</List> <List>c d</List></Midpoint>	<List><Midpoint>a c</Midpoint> <Midpoint>b d</Midpoint></List>
 of-two-matrices	<Midpoint><List><List>1 1</List> <List>0 2</List></List> <List><List>3 3</List> <List>4 0</List></List></Midpoint>	<List><List>2 2</List> <List>2 1</List></List>
 of-two-complex-numbers	<Midpoint><Complex>1 2</Complex> <Complex>3 0</Complex></Midpoint>	<Complex>2 1</Complex>
 midpoint-list-1-2-list-neg-3-5	<Midpoint><List>1 2</List> <List>-3 5</List></Midpoint>	<List>-1 <Rational>7 2</Rational></List>

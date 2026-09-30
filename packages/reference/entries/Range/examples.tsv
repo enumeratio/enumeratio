@@ -1,8 +1,10 @@
-id	section	role	expr	expected
-range-1-4			[Range, 1, 4]	[List, 1, 2, 3, 4]
-range-1-10-2	Scope		[Range, 1, 10, 2]	[List, 1, 3, 5, 7, 9]
-range-10-1-neg-1	Scope		[Range, 10, 1, -1]	[List, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-range-0-10-3p141-592-653-589-793-238-462-643	Scope		[Range, 0, 10, {num: "3.141592653589793238462643"}]	[List, 0, 3.141592653589793, 6.283185307179586, 9.42477796076938]
-range-0-10-3p141-592-653-589-793-238-462-64	Scope		[Range, 0, 10, {num: "3.14159265358979323846264"}]	[List, 0, 3.141592653589793, 6.283185307179586, 9.42477796076938]
-range-neg-4-9-3	Properties		[Range, -4, 9, 3]	[List, -4, -1, 2, 5, 8]
-range-0-10-3	Possible issues		[Range, 0, 10, 3]	[List, 0, 3, 6, 9]
+id	section	role	expr	expected	triage	wolfram.note
+range-1-4			[Range, 1, 4]	[List, 1, 2, 3, 4]		
+range-1-10-2	Scope		[Range, 1, 10, 2]	[List, 1, 3, 5, 7, 9]		
+range-10-1-neg-1	Scope		[Range, 10, 1, -1]	[List, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]		
+range-0-10-3p141-592-653-589-793-238-462-643	Scope		[Range, 0, 10, {num: "3.141592653589793238462643"}]	[List, 0, 3.141592653589793, 6.283185307179586, 9.42477796076938]		
+range-0-10-3p141-592-653-589-793-238-462-64	Scope		[Range, 0, 10, {num: "3.14159265358979323846264"}]	[List, 0, 3.141592653589793, 6.283185307179586, 9.42477796076938]		
+range-2-pow-225-5-plus-2-pow-225	Scope	triage	[Range, [Power, 2, 225], [Add, 5, [Power, 2, 225]]]	[List, 5.391989333430128e+67]	gap	Range with bigint bounds beyond double range (2^225) collapses into a single floated approximation (5.39e67) instead of the 6 consecutive big integers; Range's bound/step arithmetic coerces through a JS double somewhere instead of staying in bigint at this magnitude.
+q-pow-range-1-5	Applications	triage	[Power, q, [Range, 1, 5]]	[List, q, [Power, q, 2], [Power, q, 3], [Power, q, 4], [Power, q, 5]]	unscanned	
+range-neg-4-9-3	Properties		[Range, -4, 9, 3]	[List, -4, -1, 2, 5, 8]		
+range-0-10-3	Possible issues		[Range, 0, 10, 3]	[List, 0, 3, 6, 9]		

@@ -15,6 +15,7 @@ c-1-2-frac-8-3-pi-by-analytic-continuation	catalan_number((1/2))	TypeError: no c
 an-interval-argument-should-give-an-enclosing			
 the-5-ways-to-balance-3-pairs-of-parentheses	catalan_number(3)	5	
 the-14-triangulations-of-a-hexagon-and-the-14	catalan_number(4)	14	
+assuming-n-in-integers-n-gt-eq-0-fullsimplify			
 closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(binomial((2 * 5), 5) / (5 + 1))	42	
 the-closed-form-through-a-negative-n-in-binomial	(binomial((2 * -13), 5) / (4 + 1))	-142506/5	
 equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(10, 5) - binomial(10, 6))	42	

@@ -1,15 +1,18 @@
-id	in	out
-matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized(2, 0.5)	1.271_723_456_312_136_5
-b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized(-1, 0.5)	0.147_179_736_722_106_7
-at-the-pole-b-1-under-n	N(Hypergeometric0F1Regularized(-1, 2))	3.715_035_560_458_436_4
-b-1-5-at-neg-0-7	Hypergeometric0F1Regularized(1.5, -0.7)	0.670_794_625_574_135_2
-rational-order-7-3-at-2-5	Hypergeometric0F1Regularized(7 / 3, 2.5)	2.150_351_150_907_756
-complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1Regularized(1 + i, 0.5))	2.476_270_194_944_867 + 0.188_853_295_620_278_78i
-order-2-at-a-complex-argument	N(Hypergeometric0F1Regularized(2, 0.5 + 0.5i))	1.248_175_636_885_929 + 0.293_401_296_264_334_1i
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized(-0.5, 0.3)	-0.058_572_402_140_824_23
-complex-order-and-argument	N(Hypergeometric0F1Regularized(-2.5 + 1.5i, 1.2 - 0.8i))	2.735_665_297_487_038_6 + 25.894_454_183_167_475i
-order-0	Hypergeometric0F1Regularized(0, 0.5)	0.635_861_728_156_068_6
-order-neg-2-at-0-7	Hypergeometric0F1Regularized(-2, 0.7)	0.067_899_051_474_626_27
-order-0-at-a-complex-argument	N(Hypergeometric0F1Regularized(0, 0.3 + 0.4i))	0.254_883_343_005_815_44 + 0.523_422_395_184_101_5i
-order-neg-1-at-a-complex-argument	N(Hypergeometric0F1Regularized(-1, -0.5 + 0.2i))	0.094_271_666_089_704_03 - 0.078_024_919_432_037_83i
-exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized(-1, 2)	Hypergeometric0F1Regularized(-1, 2)
+id	in	out	back
+matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized(2, 0.5)	1.271_723_456_312_136_5	
+b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized(-1, 0.5)	0.147_179_736_722_106_7	
+at-the-pole-b-1-under-n	N(Hypergeometric0F1Regularized(-1, 2))	3.715_035_560_458_436_4	
+b-1-5-at-neg-0-7	Hypergeometric0F1Regularized(1.5, -0.7)	0.670_794_625_574_135_2	
+rational-order-7-3-at-2-5	Hypergeometric0F1Regularized(7 / 3, 2.5)	2.150_351_150_907_756	
+complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1Regularized(1 + i, 0.5))	2.476_270_194_944_867 + 0.188_853_295_620_278_78i	
+order-2-at-a-complex-argument	N(Hypergeometric0F1Regularized(2, 0.5 + 0.5i))	1.248_175_636_885_929 + 0.293_401_296_264_334_1i	
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized(-0.5, 0.3)	-0.058_572_402_140_824_23	
+complex-order-and-argument	N(Hypergeometric0F1Regularized(-2.5 + 1.5i, 1.2 - 0.8i))	2.735_665_297_487_038_6 + 25.894_454_183_167_475i	
+order-0	Hypergeometric0F1Regularized(0, 0.5)	0.635_861_728_156_068_6	
+order-neg-2-at-0-7	Hypergeometric0F1Regularized(-2, 0.7)	0.067_899_051_474_626_27	
+order-0-at-a-complex-argument	N(Hypergeometric0F1Regularized(0, 0.3 + 0.4i))	0.254_883_343_005_815_44 + 0.523_422_395_184_101_5i	
+order-neg-1-at-a-complex-argument	N(Hypergeometric0F1Regularized(-1, -0.5 + 0.2i))	0.094_271_666_089_704_03 - 0.078_024_919_432_037_83i	
+n-hypergeometric0f1regularized-0-neg-48-50	N(Hypergeometric0F1Regularized(0, -48), 50)	-0.753_564_080_448_271_8	
+n-hypergeometric0f1regularized-4-0-25	N(Hypergeometric0F1Regularized(4, 0), 25)	0.166_666_666_666_666_82	
+matrixfunction-function	"MatrixFunction(\n                Function(Hypergeometric0F1Regularized(1 / 2, _1), _1),\n                [[1 / 2, 0], [0, 1 / 2]],\n              )"	"[\n  [Hypergeometric0F1Regularized(1 / 2, 1 / 2), 0],\n  [0, Hypergeometric0F1Regularized(1 / 2, 1 / 2)],\n]"	Unreadable
+exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized(-1, 2)	Hypergeometric0F1Regularized(-1, 2)	

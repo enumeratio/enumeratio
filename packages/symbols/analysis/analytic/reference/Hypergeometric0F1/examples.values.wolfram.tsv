@@ -6,4 +6,6 @@ complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]	1.2624841
 order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]	1.2481756368859287 + 0.2934012962643341*I	N[\, _0F_1(;2;0.5\, +0.5 i)]	1.24818\, +0.293401 i	
 negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]	0.20763375946258103	\, _0F_1(;-0.5;0.3)	0.207634	
 complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	0.6321864778017544 + 0.022553192547214943*I	N[\, _0F_1(;-2.5+1.5 i;1.2\, -0.8 i)]	0.632186\, +0.0225532 i	
+n-hypergeometric0f1-1-neg-2-50	N[Hypergeometric0F1[1, -2], 50]	-0.19654809527046820004079337208793223132588978731089307719576721397639035174596`50.			disagree
+matrixfunction-function-hypergeometric0f1-1-over	MatrixFunction[Function[Hypergeometric0F1[Rational[1, 2], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{Sqrt[Pi]*BesselI[-1/2, 2], 0}, {0, Sqrt[Pi]*BesselI[-1/2, 2]}}			disagree
 b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]	ComplexInfinity	\, _0F_1(;0;0.5)	\text{ComplexInfinity}	disagree

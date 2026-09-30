@@ -8,4 +8,6 @@ a-non-list-is-not-a-vector	<IsVector>3</IsVector>	<False />
 a-test-function-must-hold-of-every-element	<IsVector><List>2 4 6</List> IsEven</IsVector>	<True />
 a-test-function-failing-on-one-element	<IsVector><List>2 3 6</List> IsEven</IsVector>	<False />
 isvector-range-1-10-ismachinenumber	<IsVector><Range>1 10</Range> IsMachineNumber</IsVector>	<False />
+isvector-range-1-10-isinteger	<IsVector><Range>1 10</Range> IsInteger</IsVector>	<False />
+isvector-n-range-1-10-ismachinenumber	<IsVector><N><Range>1 10</Range></N> IsMachineNumber</IsVector>	<False />
 list-isvector-vec-isvector-expr	<List><IsVector>vec</IsVector> <IsVector>expr</IsVector></List>	<List>False False</List>

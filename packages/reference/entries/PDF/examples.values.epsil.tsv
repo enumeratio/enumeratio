@@ -1,2 +1,5 @@
 id	in	out
 pdf-normaldistribution-0-1-x	pdf(normalDistribution(0, 1), x)	sqrt(2) * exponentialE ^ (-1 / 2 * x ^ 2) / (2 * sqrt(pi))
+pdf-weibulldistribution-2-5-n-4-25	pdf(WeibullDistribution(2, 5), N(4, 25))	pdf(WeibullDistribution(2, 5), 4)
+pdf-negativebinomialdistribution-20-n-1-over-3	pdf(NegativeBinomialDistribution(20, N(1 / 3, 30)), 5)	"pdf(\n     NegativeBinomialDistribution(20, 0.333_333_333_333_333_333_333_333_333_333),\n     5,\n   )"
+pdf-poissondistribution-m-5	pdf(poissonDistribution(m), 5)	1 / 120 * m ^ 5 * exponentialE ^ (-m)

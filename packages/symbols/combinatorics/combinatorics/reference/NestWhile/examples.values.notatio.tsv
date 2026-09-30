@@ -5,4 +5,5 @@ nestwhile-ln-100-function-1-gt-0	<NestWhile>Ln 100 <Function><Greater>_1 0</Grea
 nestwhile-function-1-times-2-pow-neg-1-123-456-2	<NestWhile><Function><Multiply>_1 <Power>2 -1</Power></Multiply></Function> 123456 IsEven 1 4</NestWhile>	<ToExpression>7716</ToExpression>
 nestwhile-function-1-plus-1-888-function	<NestWhile><Function><Add>_1 1</Add></Function> 888 <Function><Not><IsPrime>_1</IsPrime></Not></Function></NestWhile>	<ToExpression>907</ToExpression>
 nestwhile-function-1-plus-1-1-function-fibonacci	<NestWhile><Function><Add>_1 1</Add></Function> 1 <Function><LessEqual><Fibonacci>_1</Fibonacci> <Power>10 6</Power></LessEqual></Function></NestWhile>	<ToExpression>31</ToExpression>
+nestwhile-function-1-plus-1-888-function-2	<NestWhile><Function><Add>_1 1</Add></Function> 888 <Function><Or><Not><IsPrime>_1</IsPrime></Not> <Not><IsPrime>_3</IsPrime></Not></Or></Function> 3</NestWhile>	<ToExpression>888</ToExpression>
 nestwhile-function-floor-1-times-2-pow-neg-1-10	<NestWhile><Function><Floor><Multiply>_1 <Power>2 -1</Power></Multiply></Floor></Function> 10 <Function><Greater>_1 0</Greater></Function></NestWhile>	<ToExpression>0</ToExpression>

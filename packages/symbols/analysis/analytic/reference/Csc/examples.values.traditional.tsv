@@ -23,6 +23,9 @@ derivative-csc-x-cot-x
 antiderivative-ln-csc-x-cot-x		
 n-csc-6-over-5-50		
 matrixfunction-function-csc-1-1-list-list-1-over		
+assuming-m-in-integers-refine-csc-pi-times-m		
+assuming-m-in-integers-fullsimplify-refine-csc		
+csc-positiveinfinity		
 reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\mathrm{True}
 csc-1-over-8-times-pi		
 csc-3-over-10-times-pi		

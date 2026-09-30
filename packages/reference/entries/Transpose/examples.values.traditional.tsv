@@ -1,0 +1,10 @@
+id	in	out
+transpose-list-list-a-x-list-b-y-list-c-z		
+transpose-m		
+transpose-s		
+chop-dot-u-transpose-u		
+chop-dot-v-transpose-v		
+s-eq-transpose-s	s=s^T	\mathrm{True}
+transpose-s-eq-s	s^T=s	\mathrm{True}
+conjugate-transpose-m		
+shape-transpose-a-perm		

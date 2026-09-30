@@ -40,6 +40,9 @@ functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\top
 functionsingularities-tan-x-x	\mathrm{FunctionSingularities}(\tan(x), x)	\cos(x)=0
 functiondiscontinuities-tan-x-x	\mathrm{FunctionDiscontinuities}(\tan(x), x)	\cos(x)=0
 matrixfunction-function-tan-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\tan(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \pi\bigr\rbrack, \bigl\lbrack\frac{\pi}{3}, -\pi\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\frac{3^{1/2}}{39}, \frac{2\sqrt{3}}{13}\bigr\rbrack, \bigl\lbrack\frac{2\sqrt{3}}{39}, -\frac{4\sqrt{3}}{13}\bigr\rbrack\bigr\rbrack
+assuming-m-in-integers-refine-tan-pi-times-m	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{Refine}(\tan(\pi m)))	\tan(\pi m)
+assuming-m-in-integers-fullsimplify-refine-tan	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{FullSimplify}(\mathrm{Refine}(\tan(\pi(1/2+m)))))	\tan(\pi(m+\frac{1}{2}))
+tan-positiveinfinity	\tan(\infty)	\operatorname{Indeterminate}
 threads-element-wise-over-a-list	\tan(\bigl\lbrack0, \frac{\pi}{4}\bigr\rbrack)	\bigl\lbrack0, 1\bigr\rbrack
 tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\top
 odd-function-tan-x-tan-x	\tan(-\frac{\pi}{4})	-1

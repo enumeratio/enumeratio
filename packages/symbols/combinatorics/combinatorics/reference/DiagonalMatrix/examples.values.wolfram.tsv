@@ -1,5 +1,6 @@
-id	in	out	tex.in	tex.out
-main-diagonal	DiagonalMatrix[List[1, 2, 3]]	{{1, 0, 0}, {0, 2, 0}, {0, 0, 3}}	\text{DiagonalMatrix}[\{1,2,3\}]	\left( \begin{array}{ccc}  1 & 0 & 0 \\  0 & 2 & 0 \\  0 & 0 & 3 \\ \end{array} \right)
-super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]	{{0, 1, 0}, {0, 0, 2}, {0, 0, 0}}	\text{DiagonalMatrix}[\{1,2\},1]	\left( \begin{array}{ccc}  0 & 1 & 0 \\  0 & 0 & 2 \\  0 & 0 & 0 \\ \end{array} \right)
-sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]	{{0, 0, 0}, {1, 0, 0}, {0, 2, 0}}	\text{DiagonalMatrix}[\{1,2\},-1]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  1 & 0 & 0 \\  0 & 2 & 0 \\ \end{array} \right)
-diagonalmatrix-list-a-b-c-d	DiagonalMatrix[List[a, b, c, d]]	{{a, 0, 0, 0}, {0, b, 0, 0}, {0, 0, c, 0}, {0, 0, 0, d}}	\text{DiagonalMatrix}[\{a,b,c,d\}]	\left( \begin{array}{cccc}  a & 0 & 0 & 0 \\  0 & b & 0 & 0 \\  0 & 0 & c & 0 \\  0 & 0 & 0 & d \\ \end{array} \right)
+id	in	out	tex.in	tex.out	verdict
+main-diagonal	DiagonalMatrix[List[1, 2, 3]]	{{1, 0, 0}, {0, 2, 0}, {0, 0, 3}}	\text{DiagonalMatrix}[\{1,2,3\}]	\left( \begin{array}{ccc}  1 & 0 & 0 \\  0 & 2 & 0 \\  0 & 0 & 3 \\ \end{array} \right)	
+super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]	{{0, 1, 0}, {0, 0, 2}, {0, 0, 0}}	\text{DiagonalMatrix}[\{1,2\},1]	\left( \begin{array}{ccc}  0 & 1 & 0 \\  0 & 0 & 2 \\  0 & 0 & 0 \\ \end{array} \right)	
+sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]	{{0, 0, 0}, {1, 0, 0}, {0, 2, 0}}	\text{DiagonalMatrix}[\{1,2\},-1]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  1 & 0 & 0 \\  0 & 2 & 0 \\ \end{array} \right)	
+diagonalmatrix-list-a-b-c-d	DiagonalMatrix[List[a, b, c, d]]	{{a, 0, 0, 0}, {0, b, 0, 0}, {0, 0, c, 0}, {0, 0, 0, d}}	\text{DiagonalMatrix}[\{a,b,c,d\}]	\left( \begin{array}{cccc}  a & 0 & 0 & 0 \\  0 & b & 0 & 0 \\  0 & 0 & c & 0 \\  0 & 0 & 0 & d \\ \end{array} \right)	
+thread-shape-diagonalmatrix-list-k-eq-length	Thread[Unevaluated[Equal[Dimensions[DiagonalMatrix[list, k]], Plus[Length[list], Abs[k]]]]]	{2} == Abs[k]			disagree

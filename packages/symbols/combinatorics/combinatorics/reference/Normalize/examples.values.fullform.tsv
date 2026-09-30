@@ -2,3 +2,7 @@ id	in
 3-4-5	Normalize[List[3, 4]]
 normalize-list-1-5-1	Normalize[List[1, 5, 1]]
 zero-vector	Normalize[List[0, 0]]
+normalize-list-x-y-f	Normalize[List[x, y], f]
+normalize-s	Normalize[s]
+normalize-list-x-y	Normalize[List[x, y]]
+normalize-1-plus-x-plus-x-pow-2-function	Normalize[Plus[1, x, Power[x, 2]], Function[Integrate[Power[Slot[1], 2], List[x, -1, 1]]]]

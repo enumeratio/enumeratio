@@ -2,6 +2,16 @@ id	in	out
 re-of-3-plus-4i-is-3	\mathrm{Re}(3+4i)	3
 re-of-a-real-number-is-itself	\mathrm{Re}(5)	5
 re-of-pi-is-pi-a-real-symbolic-constant	\mathrm{Re}(\pi)	\pi
+real-2-plus-3i	\Re(2+3i)	2
+real-2-times-exponentiale-pow-1-over-3-times-i	\Re(2\exp((\frac{1}{3}i)\pi))	1
+real-3-over-2-plus-4-over-5-times-i	\Re(\frac{3}{2}+\frac{4}{5}i)	\frac{3}{2}
+n-real-exponentiale-plus-i-times-pi-25	N(\Re(e+i\pi), 25)	2.718\,281\,828\,459\,045\,235\,36
+real-41-over-25-minus-2i	\Re(\frac{41}{25}-2i)	\frac{41}{25}
+real-list-list-1-u-list-v-neg-i	\Re(\bigl\lbrack\bigl\lbrack1, u\bigr\rbrack, \bigl\lbrack v, -i\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, \Re(u)\bigr\rbrack, \bigl\lbrack\Re(v), 0\bigr\rbrack\bigr\rbrack
+real-0	\Re(0)	0
+real-positiveinfinity	\Re(\infty)	\infty
+real-positiveinfinity-times-i	\Re(\infty i)	\operatorname{Indeterminate}
+real-complexinfinity	\Re(\tilde\infty)	\operatorname{Indeterminate}
 re-of-a-symbolic-value-stays-unevaluated	\mathrm{Re}(x)	\Re(x)
 real-1	\Re(1)	1
 real-neg-1	\Re(-1)	-1

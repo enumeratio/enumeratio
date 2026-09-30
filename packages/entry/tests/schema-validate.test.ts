@@ -66,7 +66,7 @@ test("rejects a malformed id", () => {
 
 test("rejects an invalid role", () => {
   expect(validateSchema(REFERENCE_EXAMPLES_SCHEMA, [{ ...EXAMPLE, role: "hidden" }])).toEqual([
-    '$[0].role: expected one of ["demo","test"], got "hidden"',
+    '$[0].role: expected one of ["demo","test","aspirational","triage"], got "hidden"',
   ]);
 });
 

@@ -2,3 +2,13 @@ id	in	out
 one-over-s-squared	InverseLaplaceTransform(s ^ -2, s, t)	t
 one-over-s-minus-a	InverseLaplaceTransform((s - a) ^ -1, s, t)	exponentialE ^ (a * t)
 s-over-s-squared-plus-a-squared	InverseLaplaceTransform(s / (s ^ 2 + a ^ 2), s, t)	cos(a * t)
+inverselaplacetransform-1-over-s-plus-1-s-t	InverseLaplaceTransform(1 / (s + 1), s, t)	exponentialE ^ (-t)
+inverselaplacetransform-ln-1-over-b-plus-s-times	InverseLaplaceTransform(ln(1 / (b + s) * (a + s)), s, t)	InverseLaplaceTransform(ln(a + s) - ln(b + s), s, t)
+inverselaplacetransform-a-times-1-over-a-pow-2	InverseLaplaceTransform(a * (1 / (a ^ 2 + s ^ 2)), s, t)	sin(a * t)
+inverselaplacetransform-s-times-1-over-a-pow-2	InverseLaplaceTransform(s * (1 / (a ^ 2 + s ^ 2)), s, t)	cos(a * t)
+fullsimplify-inverselaplacetransform-a-times-1	FullSimplify(InverseLaplaceTransform(a * (1 / (-a ^ 2 + s ^ 2)), s, t))	sinh(a * t)
+fullsimplify-inverselaplacetransform-s-times-1	FullSimplify(InverseLaplaceTransform(s * (1 / (-a ^ 2 + s ^ 2)), s, t))	cosh(a * t)
+inverselaplacetransform-s-times-a-pow-2-plus-s	InverseLaplaceTransform(s * (a ^ 2 + s ^ 2) ^ -2, s, t)	InverseLaplaceTransform(s / (a ^ 2 + s ^ 2) ^ 2, s, t)
+inverselaplacetransform-s-times-1-over-a-pow-2-2	InverseLaplaceTransform(s * (1 / ((a ^ 2 + s ^ 2) * (b ^ 2 + s ^ 2))), s, t)	InverseLaplaceTransform(s / ((a ^ 2 + s ^ 2) * (b ^ 2 + s ^ 2)), s, t)
+fullsimplify-inverselaplacetransform-1-over-neg	"FullSimplify(InverseLaplaceTransform(1 / ((-a ^ 2 + s ^ 2) * (-b ^ 2 + s ^ 2)) *\n                                     s ^ 2, s, t))"	InverseLaplaceTransform(s ^ 2 / ((-a ^ 2 + s ^ 2) * (-b ^ 2 + s ^ 2)), s, t)
+inverselaplacetransform-1-over-s-minus-2-times	InverseLaplaceTransform(1 / ((s - 2) * sqrt(s)) * exponentialE ^ (-5 * s), s, t)	InverseLaplaceTransform(exponentialE ^ (-5 * s) / ((s - 2) * sqrt(s)), s, t)

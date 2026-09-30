@@ -1,4 +1,7 @@
 id	in	out
 prints-a-list-as-notatio-source	ToString([1, 2, 3])	"\"[1, 2, 3]\""
+tostring-x-pow-2	ToString(x ^ 2)	"\"x ^ 2\""
 prints-an-arithmetic-expression	ToString(x + 1)	"\"x + 1\""
+tostring-exponentiale-pow-x	ToString(exponentialE ^ x)	"\"exponentialE ^ x\""
+tostring-cos-x-plus-cos-y	ToString(cos(x) + cos(y))	"\"cos(x) + cos(y)\""
 tostring-kappa	ToString(kappa)	"\"kappa\""

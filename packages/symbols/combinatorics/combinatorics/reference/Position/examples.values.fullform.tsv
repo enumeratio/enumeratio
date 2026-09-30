@@ -2,4 +2,5 @@ id	in
 position-list-1-2-3-2-2	Position[List[1, 2, 3, 2], 2]
 a-value-absent-from-the-collection-has-no	Position[List[1, 2, 3], 9]
 position-list-a-b-a-a-b-c-b-b	Position[List[a, b, a, a, b, c, b], b]
+position-list-list-a-a-b-list-b-a-a-list-a-b-a-b	Position[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
 position-s-first-entry-agrees-with-indexof	Part[Position[List[1, 2, 3, 2], 2], 1]

@@ -4,7 +4,7 @@
 //
 // Reads `package.json`'s `enumeratio` field and every `symbols/<Name>/definition.json` beside
 // the index it names, writes each symbol's examples (from its record, `index.md` and
-// `examples.tsv`, less the aspirational ones) as `examples.json` for the install check, and
+// `examples.tsv`, less the aspirational and triage ones) as `examples.json` for the install check, and
 // writes the index (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2), and the package's
 // JavaScript entry, `dist/index.js` and `dist/index.d.ts` (symbol-entry.ts).
 
@@ -31,7 +31,7 @@ export async function packSymbols(dir: string): Promise<string> {
     if (!existsSync(file)) continue;
     const definition = JSON.parse(readFileSync(file, "utf8")) as Definition;
     const examples: Example[] = (records.get(name)?.examples ?? [])
-      .filter((e) => e.aspirational !== true)
+      .filter((e) => e.role !== "aspirational" && e.role !== "triage")
       .map(({ id, expr, expected, tolerance }) => ({
         id,
         expr,

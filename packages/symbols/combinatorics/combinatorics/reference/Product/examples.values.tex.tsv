@@ -18,6 +18,12 @@ an-infinite-telescoping-product-prod-k-2-infty-1	\prod_{k=2}^{\infty}(1-\frac{1}
 prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	\prod_{i=2}^{\infty}(1-\frac{1}{i^4})	\frac{\sinh(\pi)}{4\pi}
 exact-rationals-in-a-collection	\prod\bigl\lbrack\frac{1}{2}, \frac{2}{3}, \frac{3}{4}\bigr\rbrack	\frac{1}{4}
 symbolic-elements	\prod\bigl\lbrack a, b, c\bigr\rbrack	abc
+product-a-pow-i-i-nothing-n	\prod_{i}^{n}a^{i}	\sqrt{a}^{(n-1)(n+2)}
+product-a-pow-i-j-nothing-m-i-nothing-j	\prod_{j, i}^{m, j}a^{i}	a^{\frac{1}{6}(m\times(m-1)(m+4))}
+product-i-times-j-i-nothing-nothing-j-nothing	\prod_{i, j}ij	\prod_{i}\prod_{j}ij
+product-i-times-j-i-1-n-j-nothing-nothing	\prod_{i=1, j}^{n}ij	\prod_{i=1}^{n}\prod_{j}ij
+product-3-times-q-pow-2i-plus-5-i-nothing	\prod_{i}(3q^{2i}+5)	3q^2+5
+product-1-over-q-pow-8i-plus-11-times-q-pow-8	\prod_{i}\frac{q^{8(i+1)}+11}{q^{8i}+11}	1
 range-stays-lazy-on-its-own-but-product-forces	\prod(1..6)	720
 the-product-of-1-through-n-is-n-see-factorial	\prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack=4!	\top
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	\prod_{k=1}^{\infty}\frac{4k^2}{4k^2-1}	\frac{\pi}{2}

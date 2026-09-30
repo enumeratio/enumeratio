@@ -18,6 +18,8 @@ x-3-y-3-has-no-repeated-factor	\mathrm{IsSquareFree}(x^3-y^3)	\top
 issquarefree-3-plus-10-pow-70	\mathrm{IsSquareFree}(3+10^{70})	\top
 issquarefree-2	\mathrm{IsSquareFree}(2)	\top
 issquarefree-x-pow-2-minus-3	\mathrm{IsSquareFree}(x^2-3)	\top
+n-1-over-100-000-times-length-filter-range-1-100	N(\frac{1}{100\,000}(\mathrm{Length}(\mathrm{Filter}(1..100\,000, \mathrm{IsSquareFree}))))	0.000\,02
+issquarefree-q	\mathrm{IsSquareFree}(q)	\top
 n-is-squarefree-exactly-when-mu-n-neq-0-see	\mathrm{IsSquareFree}(10)=\lnot(\mathrm{MoebiusMu}(10)=0)	\top
 issquarefree-210	\mathrm{IsSquareFree}(210)	\top
 issquarefree-14	\mathrm{IsSquareFree}(14)	\top

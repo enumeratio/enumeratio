@@ -1,4 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 prints-a-list-as-notatio-source	ToString[List[1, 2, 3]]	"\"{1, 2, 3}\""	\text{ToString}[\{1,2,3\}]	\text{$\{$1, 2, 3$\}$}	disagree
+tostring-x-pow-2	ToString[Power[x, 2]]	"\" 2\\nx\""			disagree
 prints-an-arithmetic-expression	ToString[Plus[x, 1]]	"\"1 + x\""	\text{ToString}[x+1]	\text{1 + x}	disagree
+tostring-exponentiale-pow-x	ToString[Power[E, x]]	"\" x\\nE\""			disagree
+tostring-cos-x-plus-cos-y	ToString[Plus[Cos[x], Cos[y]]]	"\"Cos[x] + Cos[y]\""			disagree
 tostring-kappa	ToString[kappa]	"\"kappa\""	\text{ToString}[\kappa ]	\text{kappa}	

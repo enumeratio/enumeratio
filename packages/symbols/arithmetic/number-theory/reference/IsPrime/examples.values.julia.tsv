@@ -52,6 +52,9 @@ isprime-list-7-11	is_prime(ZZ([7, 11]))
 isprime-list-5-7-2	is_prime(ZZ([5, 7, 2]))		
 isprime-19	is_prime(ZZ(19))		
 divisorsum-19-function-1-1-isprime			
+filter-divisors-625-isprime			
+filter-divisors-2-434-500-isprime			
+filter-divisors-65-isprime			
 non-integers-are-not-prime	is_prime(ZZ((1 // 2)))	AssertionError: denominator(x) == 1	error
 another-non-integer-3-halves	is_prime(ZZ((3 // 2)))		
 a-symbol-stays-unevaluated			

@@ -1,5 +1,6 @@
-id	in	out
-a-cubic-is-increasing-everywhere	FunctionMonotonicity(x ^ 3, x)	1
-a-parabola-is-not-globally-monotonic	FunctionMonotonicity(x ^ 2, x)	FunctionMonotonicity(x ^ 2, x)
-exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity(exp(x), x)	1
-a-restricted-domain-answers-indeterminate	FunctionMonotonicity(sqrt(x), x)	FunctionMonotonicity(sqrt(x), x)
+id	in	out	back
+a-cubic-is-increasing-everywhere	FunctionMonotonicity(x ^ 3, x)	1	
+a-parabola-is-not-globally-monotonic	FunctionMonotonicity(x ^ 2, x)	FunctionMonotonicity(x ^ 2, x)	
+exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity(exp(x), x)	1	
+map-function-functionmonotonicity-1-x-1-list	map(Function(FunctionMonotonicity(_1, x), _1), [Ramp(x) + 1, x + Ramp(x)])	[FunctionMonotonicity(Ramp(x) + 1, x), FunctionMonotonicity(x + Ramp(x), x)]	Unreadable
+a-restricted-domain-answers-indeterminate	FunctionMonotonicity(sqrt(x), x)	FunctionMonotonicity(sqrt(x), x)	

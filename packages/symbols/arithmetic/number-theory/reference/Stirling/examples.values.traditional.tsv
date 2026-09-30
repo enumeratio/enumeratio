@@ -5,6 +5,7 @@ stirling-20-10	\left\lbrace\begin{matrix}20\\10\end{matrix}\right\rbrace	5\,917\
 exact-for-large-n	\left\lbrace\begin{matrix}50\\2\end{matrix}\right\rbrace	562\,949\,953\,421\,311
 threads-element-wise-over-a-list-as-wolfram-s		
 the-ways-to-split-10-distinct-items-among-3	\left\lbrace\begin{matrix}10\\3\end{matrix}\right\rbrace	9\,330
+stirling-n-range-1-n	\left\lbrace\begin{matrix}n\\1..n\end{matrix}\right\rbrace	\mathrm{Map}(()\mapsto\left\lbrace\begin{matrix}n\\\operatorname{\_1}\end{matrix}\right\rbrace, 1..n)
 one-block-means-one-partition-s-n-1-1	\left\lbrace\begin{matrix}5\\1\end{matrix}\right\rbrace	1
 singletons-only-s-n-n-1	\left\lbrace\begin{matrix}5\\5\end{matrix}\right\rbrace	1
 row-sums-give-the-bell-numbers	\sum_{k=0}^4\left\lbrace\begin{matrix}4\\k\end{matrix}\right\rbrace=B_{4}	\mathrm{True}

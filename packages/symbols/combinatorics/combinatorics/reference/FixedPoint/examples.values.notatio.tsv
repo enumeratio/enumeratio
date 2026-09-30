@@ -2,6 +2,8 @@ id	in	out
 halving-and-flooring-until-nothing-changes	<FixedPoint><Function><Floor><Divide>_1 2</Divide></Floor></Function> 100</FixedPoint>	<ToExpression>0</ToExpression>
 the-dottie-number-the-fixed-point-of-cos	<FixedPoint>Cos 0.5</FixedPoint>	<ToExpression>0.739085133215160641658</ToExpression>
 fixedpoint-function-1-plus-floor-1-times-2-pow	<FixedPoint><Function><Add>1 <Floor><Multiply>_1 <Power>2 -1</Power></Multiply></Floor></Add></Function> 1000</FixedPoint>	<ToExpression>2</ToExpression>
+fixedpoint-function-1-plus-2-times-1-pow-neg-1	<FixedPoint><Function><Multiply><Add>_1 <Multiply>2 <Power>_1 -1</Power></Multiply></Add> <Power>2 -1</Power></Multiply></Function> 1</FixedPoint>	<Rational>1572584048032918633353217 1111984844349868137938112</Rational>
 fixedpoint-function-1-plus-floor-1-times-2-pow-2	<FixedPoint><Function><Add>1 <Floor><Multiply>_1 <Power>2 -1</Power></Multiply></Floor></Add></Function> <Power>10 6</Power></FixedPoint>	<ToExpression>2</ToExpression>
 newton-s-method-for-sqrt-2-run-to-this-engine-s	<FixedPoint><Function><Divide><Add>_1 <Divide>2 _1</Divide></Add> 2</Divide></Function> 1.5</FixedPoint>	<ToExpression>1.4142135623730950488016875</ToExpression>
 fixedpoint-function-d-1-x-x-pow-10	<FixedPoint><Function><D>_1 x</D></Function> <Power>x 10</Power></FixedPoint>	<ToExpression>0</ToExpression>
+fixedpoint-function-x-plus-2-times-x-pow-neg-1	<FixedPoint><Function><Multiply><Add>x <Multiply>2 <Power>x -1</Power></Multiply></Add> <Power>2 -1</Power></Multiply> x</Function> 1</FixedPoint>	<Rational>1572584048032918633353217 1111984844349868137938112</Rational>

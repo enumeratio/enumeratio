@@ -1,37 +1,38 @@
-id	section	role	expr	expected	known	source	caption	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
-stirling-5-2			[Stirling, 5, 2]	15									
-stirling-6-3			[Stirling, 6, 3]	90									
-stirling-20-10			[Stirling, 20, 10]	5917584964655									
-exact-for-large-n	Scope		[Stirling, 50, 2]	562949953421311			Exact for large n						
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[Stirling, [List, 2, 4, 6], 2]	[List, 1, 7, 31]			Threads element-wise over a list, as Wolfram's Listable heads do						
-the-ways-to-split-10-distinct-items-among-3	Applications		[Stirling, 10, 3]	9330			The ways to split 10 distinct items among 3 identical non-empty boxes						
-one-block-means-one-partition-s-n-1-1	Properties		[Stirling, 5, 1]	1			One block means one partition: $S(n, 1) = 1$						
-singletons-only-s-n-n-1	Properties		[Stirling, 5, 5]	1			Singletons only: $S(n, n) = 1$						
-row-sums-give-the-bell-numbers	Properties		[Equal, [Sum, [Stirling, 4, k], [Tuple, k, 0, 4]], [BellNumber, 4]]	True			Row sums give the Bell numbers						
-two-blocks-s-n-2-2-n-1-1	Properties		[Equal, [Stirling, 10, 2], [Subtract, [Power, 2, 9], 1]]	True			Two blocks: $S(n, 2) = 2^{n-1} - 1$						
-s-n-n-1-binom-n-2-one-block-is-a-pair	Properties		[Equal, [Stirling, 6, 5], [Binomial, 6, 2]]	True			$S(n, n-1) = \binom{n}{2}$: one block is a pair						
-explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	Properties		[Equal, [Stirling, 6, 3], [Divide, [Sum, [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]], [Tuple, j, 0, 3]], [Factorial, 3]]]	True			Explicit formula $S(n, k) = \frac{1}{k!}\sum_j (-1)^{k-j}\binom{k}{j} j^n$						
-orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Properties		[Sum, [Multiply, [StirlingS1, 4, k], [Stirling, k, 2]], [Tuple, k, 0, 4]]	0			Orthogonality with [[StirlingS1]]: $\sum_k s(n, k)\,S(k, m) = \delta_{nm}$						
-n-stirling-120-10	Properties		[N, [Stirling, 120, 10]]	{num: "275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780"}									
-stirling-10-4	Properties		[Stirling, 10, 4]	34105									
-stirling-1-0	Properties		[Stirling, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-1-1	Properties		[Stirling, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-1-2	Properties		[Stirling, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-2-0	Properties		[Stirling, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-2-1	Properties		[Stirling, 2, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-2-2	Properties		[Stirling, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-2-3	Properties		[Stirling, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-3-0	Properties		[Stirling, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-3-1	Properties		[Stirling, 3, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-3-2	Properties		[Stirling, 3, 2]	3	3	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-3-3	Properties		[Stirling, 3, 3]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-3-4	Properties		[Stirling, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-4-0	Properties		[Stirling, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-4-1	Properties		[Stirling, 4, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-4-2	Properties		[Stirling, 4, 2]	7	7	Wolfram MathematicalFunctionData, StirlingS2							
-stirling-4-3	Properties		[Stirling, 4, 3]	6	6	Wolfram MathematicalFunctionData, StirlingS2							
-the-empty-set-has-one-partition-into-no-blocks	Possible issues		[Stirling, 0, 0]	1			The empty set has one partition (into no blocks)						
-no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Possible issues		[Stirling, 5, 0]	0			No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$						
-k-n-is-0	Possible issues		[Stirling, 3, 5]	0			$k > n$ is 0						
-stirling-0-1-is-also-0	Possible issues	test	[Stirling, 0, 1]	0			$S(0, 1) = 0$ too -- there is no way to split the empty set into one nonempty block						
-a-negative-k-stays-symbolic	Possible issues	test	[Stirling, 10, -5]	[Stirling, 10, -5]			A negative $k$ is outside the textbook domain and stays unevaluated	undefined-form	Both decline: compute-engine leaves Stirling(10, -5) unevaluated since a negative k is outside its textbook domain, and Sage's stirling_number2 raises OverflowError trying to convert -5 to an unsigned long.	undefined-form	Both decline: compute-engine leaves Stirling(10, -5) symbolic, as Wolfram does, and SymPy's stirling fails on a negative k.	domain	A negative k is outside Stirling's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings2 extends past it and answers 0.
+id	section	role	expr	expected	known	source	caption	triage	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
+stirling-5-2			[Stirling, 5, 2]	15											
+stirling-6-3			[Stirling, 6, 3]	90											
+stirling-20-10			[Stirling, 20, 10]	5917584964655											
+exact-for-large-n	Scope		[Stirling, 50, 2]	562949953421311			Exact for large n								
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[Stirling, [List, 2, 4, 6], 2]	[List, 1, 7, 31]			Threads element-wise over a list, as Wolfram's Listable heads do								
+the-ways-to-split-10-distinct-items-among-3	Applications		[Stirling, 10, 3]	9330			The ways to split 10 distinct items among 3 identical non-empty boxes								
+stirling-n-range-1-n	Applications	triage	[Stirling, n, [Range, 1, n]]	[Map, [Function, [Block, [Stirling, n, _1]], _1], [Range, 1, n]]				gap	Stirling(n, Range(1,n)) with symbolic n leaks an internal Map/Function/Block threading scaffold into the result instead of staying unevaluated like Wolfram's StirlingS2(n, Range(1,n)) — Range(1,n) can't concretize for symbolic n, and the Listable-threading machinery doesn't recognize that and fall back cleanly. Likely a generic Listable/unresolved-Range interaction, not specific to Stirling; out of scope to chase into the engine's threading machinery from this lane.						
+one-block-means-one-partition-s-n-1-1	Properties		[Stirling, 5, 1]	1			One block means one partition: $S(n, 1) = 1$								
+singletons-only-s-n-n-1	Properties		[Stirling, 5, 5]	1			Singletons only: $S(n, n) = 1$								
+row-sums-give-the-bell-numbers	Properties		[Equal, [Sum, [Stirling, 4, k], [Tuple, k, 0, 4]], [BellNumber, 4]]	True			Row sums give the Bell numbers								
+two-blocks-s-n-2-2-n-1-1	Properties		[Equal, [Stirling, 10, 2], [Subtract, [Power, 2, 9], 1]]	True			Two blocks: $S(n, 2) = 2^{n-1} - 1$								
+s-n-n-1-binom-n-2-one-block-is-a-pair	Properties		[Equal, [Stirling, 6, 5], [Binomial, 6, 2]]	True			$S(n, n-1) = \binom{n}{2}$: one block is a pair								
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	Properties		[Equal, [Stirling, 6, 3], [Divide, [Sum, [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]], [Tuple, j, 0, 3]], [Factorial, 3]]]	True			Explicit formula $S(n, k) = \frac{1}{k!}\sum_j (-1)^{k-j}\binom{k}{j} j^n$								
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Properties		[Sum, [Multiply, [StirlingS1, 4, k], [Stirling, k, 2]], [Tuple, k, 0, 4]]	0			Orthogonality with [[StirlingS1]]: $\sum_k s(n, k)\,S(k, m) = \delta_{nm}$								
+n-stirling-120-10	Properties		[N, [Stirling, 120, 10]]	{num: "275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780"}											
+stirling-10-4	Properties		[Stirling, 10, 4]	34105											
+stirling-1-0	Properties		[Stirling, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-1-1	Properties		[Stirling, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-1-2	Properties		[Stirling, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-2-0	Properties		[Stirling, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-2-1	Properties		[Stirling, 2, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-2-2	Properties		[Stirling, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-2-3	Properties		[Stirling, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-3-0	Properties		[Stirling, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-3-1	Properties		[Stirling, 3, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-3-2	Properties		[Stirling, 3, 2]	3	3	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-3-3	Properties		[Stirling, 3, 3]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-3-4	Properties		[Stirling, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-4-0	Properties		[Stirling, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-4-1	Properties		[Stirling, 4, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-4-2	Properties		[Stirling, 4, 2]	7	7	Wolfram MathematicalFunctionData, StirlingS2									
+stirling-4-3	Properties		[Stirling, 4, 3]	6	6	Wolfram MathematicalFunctionData, StirlingS2									
+the-empty-set-has-one-partition-into-no-blocks	Possible issues		[Stirling, 0, 0]	1			The empty set has one partition (into no blocks)								
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Possible issues		[Stirling, 5, 0]	0			No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$								
+k-n-is-0	Possible issues		[Stirling, 3, 5]	0			$k > n$ is 0								
+stirling-0-1-is-also-0	Possible issues	test	[Stirling, 0, 1]	0			$S(0, 1) = 0$ too -- there is no way to split the empty set into one nonempty block								
+a-negative-k-stays-symbolic	Possible issues	test	[Stirling, 10, -5]	[Stirling, 10, -5]			A negative $k$ is outside the textbook domain and stays unevaluated			undefined-form	Both decline: compute-engine leaves Stirling(10, -5) unevaluated since a negative k is outside its textbook domain, and Sage's stirling_number2 raises OverflowError trying to convert -5 to an unsigned long.	undefined-form	Both decline: compute-engine leaves Stirling(10, -5) symbolic, as Wolfram does, and SymPy's stirling fails on a negative k.	domain	A negative k is outside Stirling's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings2 extends past it and answers 0.

@@ -4,7 +4,14 @@ solve-x-2-4-0-a-bare-expression-reads-as-0	\mathrm{Solve}(x^2-4, x)	\bigl\lbrack
 solve-x-1-0-a-single-real-root	\mathrm{Solve}(x+1=0, x)	\bigl\lbrack-1\bigr\rbrack
 solve-x-pow-2-plus-a-times-x-plus-1-eq-0-x	\mathrm{Solve}(x^2+ax+1=0, x)	\bigl\lbrack\frac{1}{2}(\sqrt{a^2-4}-a), \frac{1}{2}(-a-\sqrt{a^2-4})\bigr\rbrack
 solve-x-pow-2-plus-2-times-x-pow-2-minus-2-eq-0	\mathrm{Solve}((x^2+2)(x^2-2)=0, x\in\mathbb{R})	\bigl\lbrack\sqrt{2}, -\sqrt{2}\bigr\rbrack
+solve-a-times-x-plus-y-eq-7-b-times-x-minus-y-eq	\mathrm{Solve}(ax+y=7\land bx-y=1, x, y)	\bigl\lbrack(\frac{1}{a}(\frac{(7b)/a-1}{-b/a-1}+7),\frac{1-\frac{7b}{a}}{-b/a-1})\bigr\rbrack
 solve-x-2-1-0-yields-complex-roots	\mathrm{Solve}(x^2+1=0, x)	\bigl\lbrack i, -i\bigr\rbrack
 solve-x-eq-1-x-eq-2-x	\mathrm{Solve}(x=1\land x=2, x)	\bigl\lbrack\bigr\rbrack
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	\mathrm{Solve}(ax^2+bx+c=0, x)	\bigl\lbrack\frac{\sqrt{b^2-4ac}-b}{2a}, \frac{-b-\sqrt{b^2-4ac}}{2a}\bigr\rbrack
+solve-x-eq-x-x	\mathrm{Solve}(x=x, x)	\bigl\lbrack\bigr\rbrack
+solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-0	\mathrm{Solve}((x^4-1)(x^4-4)=0, x\in\mathbb{C})	\bigl\lbrack1, -1, \sqrt{2}, -\sqrt{2}\bigr\rbrack
+solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2	\mathrm{Solve}((x^4-1)(x^4-4)=0, x\in\mathbb{R})	\bigl\lbrack1, -1, \sqrt{2}, -\sqrt{2}\bigr\rbrack
+solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3	\mathrm{Solve}((x^4-1)(x^4-4)=0, x\in\mathbb{Z})	\bigl\lbrack1, -1\bigr\rbrack
+solve-x-pow-4-minus-x-pow-2-minus-5-eq-0-x	\mathrm{Solve}(x^4-x^2-5=0, x)	\bigl\lbrack\sqrt{\frac{1}{2}+\frac{\sqrt{21}}{2}}, -\sqrt{\frac{1}{2}+\frac{21^{1/2}}{2}}\bigr\rbrack
+solve-x-pow-2-minus-1-times-x-pow-4-minus-1-eq-0	\mathrm{Solve}((x^2-1)(x^4-1)=0, x)	\bigl\lbrack1, -1\bigr\rbrack
 a-2-2-linear-system-each-solution-is-a-tuple	\mathrm{Solve}(\begin{cases}x+y=3\\x-y=1\end{cases}, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack(2,1)\bigr\rbrack

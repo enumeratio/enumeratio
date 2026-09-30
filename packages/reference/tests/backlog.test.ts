@@ -12,7 +12,7 @@ const documented = new Set(entries.map((entry) => entry.name));
 
 test("no backlog head is already documented", () => {
   // Documenting a head means moving its record into an entry file: its examples become the
-  // entry's, flagged `aspirational` where they are still not met.
+  // entry's, `role: aspirational` where they are still not met.
   expect(backlog.map((head) => head.name).filter((name) => documented.has(name))).toEqual([]);
 });
 

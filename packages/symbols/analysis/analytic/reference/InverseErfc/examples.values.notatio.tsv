@@ -13,4 +13,6 @@ sqrt-2-times-this-2-5758-is-the-two-sided-99	<InverseErfc>0.01</InverseErfc>	<To
 erfc-erfc-1-x-x	<Erfc><InverseErfc>x</InverseErfc></Erfc>	<x />
 list-erfc-inverseerfc-z-inverseerfc-erfc-z	<List><Erfc><InverseErfc>z</InverseErfc></Erfc> <InverseErfc><Erfc>z</Erfc></InverseErfc></List>	<List>z <InverseErfc><Erfc>z</Erfc></InverseErfc></List>
 isnumeric-inverseerfc-1-over-2	<IsNumeric><InverseErfc><Rational>1 2</Rational></InverseErfc></IsNumeric>	<True />
+solve-inverseerfc-x-pow-2-plus-inverseerfc-x-eq	<Solve><Equal><Add><Power><InverseErfc>x</InverseErfc> 2</Power> <InverseErfc>x</InverseErfc></Add> 1</Equal> x</Solve>	<Apply>List</Apply>
+attributes-inverseerfc	<Attributes>InverseErfc</Attributes>	<List>Listable</List>
 deep-in-the-tail-it-keeps-full-precision-where	<InverseErfc>1e-10</InverseErfc>	<ToExpression>4.572824967389485</ToExpression>

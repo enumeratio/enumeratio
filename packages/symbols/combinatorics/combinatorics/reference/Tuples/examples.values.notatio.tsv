@@ -1,3 +1,4 @@
 id	in	out
 2-3	<Count><Tuples>2 3</Tuples></Count>	<ToExpression>8</ToExpression>
 tuples-2-3-list-1	<At><Tuples>2 3</Tuples> 1</At>	<List>1 1 1</List>
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30	<Thread><KeyValuePair><Tuples><List>1 0</List> 3</Tuples> <IntegerDigits>30 2 8</IntegerDigits></KeyValuePair></Thread>	<KeyValuePair><Tuples><List>1 0</List> 3</Tuples> <IntegerDigits>30 2 8</IntegerDigits></KeyValuePair>

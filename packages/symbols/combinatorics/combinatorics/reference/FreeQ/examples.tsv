@@ -1,7 +1,8 @@
-id	section	role	expr	expected	caption
-x-occurs-in-x-2-plus-1			[FreeQ, [Add, [Power, x, 2], 1], x]	False	
-freeq-list-1-2-4-1-0-0			[FreeQ, [List, 1, 2, 4, 1, 0], 0]	False	
-freeq-list-list-1-1-3-0-list-2-1-2-2-0			[FreeQ, [List, [List, 1, 1, 3, 0], [List, 2, 1, 2, 2]], 0]	False	
-freeq-association-a-neg-gt-1-1			[FreeQ, [Association, [KeyValuePair, a, 1]], 1]	False	
-y-never-occurs	Scope		[FreeQ, [Add, [Power, x, 2], 1], y]	True	
-looks-inside-subexpressions-not-just-top-level	Scope		[FreeQ, [List, [List, a, b]], b]	False	b is found two levels deep
+id	section	role	expr	expected	caption	triage	wolfram.note
+x-occurs-in-x-2-plus-1			[FreeQ, [Add, [Power, x, 2], 1], x]	False			
+freeq-list-1-2-4-1-0-0			[FreeQ, [List, 1, 2, 4, 1, 0], 0]	False			
+freeq-list-list-1-1-3-0-list-2-1-2-2-0			[FreeQ, [List, [List, 1, 1, 3, 0], [List, 2, 1, 2, 2]], 0]	False			
+freeq-association-a-neg-gt-1-1			[FreeQ, [Association, [KeyValuePair, a, 1]], 1]	False			
+freeq-association-a-neg-gt-1-a		triage	[FreeQ, [Association, [KeyValuePair, a, 1]], a]	False		gap	FreeQ traverses into our Association's internal structure and matches the key symbol `a`; Wolfram treats Association as opaque/atomic to structural search functions like FreeQ. Not fixed — would need FreeQ (and likely Position/Cases) to special-case Dictionary/Association
+y-never-occurs	Scope		[FreeQ, [Add, [Power, x, 2], 1], y]	True			
+looks-inside-subexpressions-not-just-top-level	Scope		[FreeQ, [List, [List, a, b]], b]	False	b is found two levels deep		

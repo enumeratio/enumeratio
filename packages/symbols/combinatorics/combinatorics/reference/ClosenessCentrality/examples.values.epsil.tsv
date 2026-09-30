@@ -1,2 +1,3 @@
 id	in	out
 star-hub-is-maximally-close	ClosenessCentrality(StarGraph(5), 1)	1
+reverse-sortby-transpose-list-vertexlist-g	reverse(SortBy(transpose([VertexList(g), ClosenessCentrality(g)]), last))	[ClosenessCentrality(g), VertexList(g)]

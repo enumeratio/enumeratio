@@ -23,6 +23,7 @@ sign-123-minus-456i	<Sign><Complex>123 -456</Complex></Sign>	<Complex><Multiply>
 fullsimplify-matrixfunction-sign-list-list-1	<FullSimplify><MatrixFunction>Sign <List><List><Rational>1 2</Rational> -1</List> <List><Rational>-5 3</Rational> <Rational>1 2</Rational></List></List></MatrixFunction></FullSimplify>	<List><List>0 <Negate><Divide><Sqrt>15</Sqrt> 5</Divide></Negate></List> <List><Negate><Divide><Sqrt>15</Sqrt> 3</Divide></Negate> 0</List></List>
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2	<PiecewiseExpand><Sign>x</Sign> <Less>-2 x 2</Less></PiecewiseExpand>	<Piecewise><List><List>-1 <Less>x 0</Less></List> <List>1 <Less>0 x</Less></List></List> 0</Piecewise>
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	<Equal><Sign><Conjugate><Complex>1 2</Complex></Conjugate></Sign> <Conjugate><Sign><Complex>1 2</Complex></Sign></Conjugate></Equal>	<True />
+d-sign-x-x	<D><Sign>x</Sign> x</D>	<ToExpression>0</ToExpression>
 tells-you-the-temperature-dropped-but-not-by-how	<Sign><Subtract>70 95</Subtract></Sign>	<ToExpression>-1</ToExpression>
 sign-z-z-z-see-abs	<Equal><Sign><Complex>3 4</Complex></Sign> <Divide><Complex>3 4</Complex> <Abs><Complex>3 4</Complex></Abs></Divide></Equal>	<True />
 x-cdot-sign-x-x-here-at-x-5	<Equal><Multiply>-5 <Sign>-5</Sign></Multiply> <Abs>-5</Abs></Equal>	<True />

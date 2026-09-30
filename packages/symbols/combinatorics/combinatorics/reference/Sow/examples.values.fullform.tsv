@@ -1,4 +1,6 @@
 id	in
 sow-feeds-the-nearest-reap	Reap[Sow[5]]
 sow-outside-any-reap-is-a-no-op	Sow[7]
+reap-sum-sow-i-pow-2-plus-1-i-10	Reap[Sum[Plus[Sow[Power[i, 2]], 1], List[i, 10]]]
+reap-do-sow-i-i-pow-2-mod-10-list-i-20	Reap[Do[Sow[i, Mod[Power[i, 2], 10]], List[i, 20]]]
 sow-x	Sow[x]

@@ -1,6 +1,9 @@
 id	in	out
 abs-resolves-once-the-sign-is-known	<Assuming><Greater>x 0</Greater> <Abs>x</Abs></Assuming>	<x />
 sign-of-x-plus-sign-of-y-under-opposite-signs	<Assuming><List><Greater>x 0</Greater> <Less>y 0</Less></List> <Add><Sign>x</Sign> <Sign>y</Sign></Add></Assuming>	<ToExpression>0</ToExpression>
+assuming-a-gt-0-list-refine-sqrt-a-pow-2	<Assuming><Greater>a 0</Greater> <List><Refine><Sqrt><Power>a 2</Power></Sqrt></Refine> <Integrate><Power>x a</Power> <Limits>x 0 1</Limits></Integrate></List></Assuming>	<List>a <Divide>1 <Add>a 1</Add></Divide></List>
 assuming-n-in-integers-p-in-primes-n-gt-0	<Assuming><And><Element>n Integers</Element> <Element>p Primes</Element> <Greater>n 0</Greater></And> operations</Assuming>	<operations />
+assuming-a-gt-0-list-integrate-1-times-x-plus-a	<Assuming><Greater>a 0</Greater> <List><Integrate><Multiply>1 <Power><Add>x a</Add> -1</Power></Multiply> <Limits>x 0 1</Limits></Integrate> <FourierTransform><Multiply>1 <Power><Add><Power>x 2</Power> a</Add> -1</Power></Multiply> x w</FourierTransform></List></Assuming>	<List><Add><Negate><Ln>a</Ln></Negate> <Ln><Add>a 1</Add></Ln></Add> <FourierTransform><Divide>1 <Add><Power>x 2</Power> a</Add></Divide> x w</FourierTransform></List>
 the-assumption-does-not-leak	<List><Assuming><Greater>z 0</Greater> <Sign>z</Sign></Assuming> <Sign>z</Sign></List>	<List>1 <Sign>z</Sign></List>
 assuming-x-gt-eq-0-assuming-y-lt-0-refine-sqrt-x	<Assuming><GreaterEqual>x 0</GreaterEqual> <Assuming><Less>y 0</Less> <Refine><Sqrt><Multiply><Power>x 2</Power> <Power>y 2</Power></Multiply></Sqrt></Refine></Assuming></Assuming>	<Negate><Multiply>x y</Multiply></Negate>
+assuming-m-mod-2-eq-0-simplify-cos-k-times-pi	<Assuming><Equal><Mod>m 2</Mod> 0</Equal> <Simplify><Power><Cos><Multiply>k Pi</Multiply></Cos> m</Power> <Element>k Integers</Element></Simplify></Assuming>	<Power><Power>-1 k</Power> m</Power>

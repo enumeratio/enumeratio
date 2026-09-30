@@ -3,11 +3,15 @@ commonest-list-1-1-2-2-3	Commonest[List[1, 1, 2, 2, 3]]	{1, 2}		\text{Commonest}
 with-a-unique-mode-commonest-returns-a-single	Commonest[List[1, 2, 2, 3]]	{2}		\text{Commonest}[\{1,2,2,3\}]	\{2\}	
 every-element-tied-for-most-frequent-symbols-and	Commonest[List[b, a, c, 2, a, b, 1, 2]]	{b, a, 2}		\text{Commonest}[\{b,a,c,2,a,b,1,2\}]	\{b,a,2\}	
 a-single-most-frequent-element-still-comes-back	Commonest[List[1, 2, 2, 3, 3, 3, 4]]	{3}		\text{Commonest}[\{1,2,2,3,3,3,4\}]	\{3\}	
+commonest-list-b-a-c-2-a-b-1-2-4	Commonest[List[b, a, c, 2, a, b, 1, 2], 4]	{b, a, c, 2}				disagree
+commonest-list-b-a-c-2-a-b-1-2-upto-6	Commonest[List[b, a, c, 2, a, b, 1, 2], UpTo[6]]	{b, a, c, 2, 1}				disagree
 all-distinct-all-tie	Commonest[List[1, 2, 3]]	{1, 2, 3}		\text{Commonest}[\{1,2,3\}]	\{1,2,3\}	
 the-n-commonest-most-frequent-first	Commonest[List[1, 2, 2, 3, 3, 3, 4], 2]	{2, 3}		\text{Commonest}[\{1,2,2,3,3,3,4\},2]	\{2,3\}	disagree
 commonest-list-a-exponentiale-sin-y-exponentiale	Commonest[List[a, E, Sin[y], E, a, 7]]	{a, E}		\text{Commonest}[\{a,e,\sin (y),e,a,7\}]	\{a,e\}	
 commonest-n-list-1-2-2-3-3-3-4	Commonest[N[List[1, 2, 2, 3, 3, 3, 4]]]	{3.}		\text{Commonest}[N[\{1,2,2,3,3,3,4\}]]	\{3.\}	
 commonest-n-list-1-2-2-3-3-3-4-30	Commonest[N[List[1, 2, 2, 3, 3, 3, 4], 30]]	{3.`30.}	{3.00000000000000000000000000000}	\text{Commonest}[N[\{1,2,2,3,3,3,4\},30]]	\{3.00000000000000000000000000000\}	
+commonest-data	Commonest[data]	Commonest[data]				disagree
+commonest-heights	Commonest[heights]	Commonest[heights]				disagree
 with-a-unique-mode-commonest-c-mode-c-see-mode	First[Commonest[List[1, 2, 2, 3]]]	2		\text{First}[\text{Commonest}[\{1,2,2,3\}]]	2	
 without-a-tie-the-single-commonest-element-is	(First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]] == First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]])	True		\text{First}[\text{Commonest}[\{1,2,2,3,3,3,4\}]]=\text{First}[\text{Commonest}[\{1,2,2,3,3,3,4\}]]	\text{True}	
 a-frequency-tie-between-4-and-1-is-broken-by	Commonest[List[4, 1, 1, 4], 1]	{4}		\text{Commonest}[\{4,1,1,4\},1]	\{4\}	

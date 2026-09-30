@@ -1,2 +1,3 @@
 id	in	out
 turn-on-orderless	<List><SetAttributes>HarmonicMean Orderless</SetAttributes> <Attributes>HarmonicMean</Attributes></List>	<List><List>Orderless</List></List>
+attributes-setattributes	<Attributes>SetAttributes</Attributes>	<List>HoldAll</List>

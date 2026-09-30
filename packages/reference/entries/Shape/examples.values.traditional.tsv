@@ -4,3 +4,5 @@ shape-1
 shape-list-1-2		
 shape-list-list-1-2		
 length-shape-list-list-a-b-list-c-d-eq-rank-list	\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))=\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	\mathrm{True}
+shape-array-a-list-2-1-4-3		
+shape-sqrt-2		

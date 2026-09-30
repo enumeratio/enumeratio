@@ -6,6 +6,7 @@ of-two-point-primitives	Midpoint(Point([1, 1]), Point([2, 3]))	Point([3 / 2, 2])
 midpoint-list-1-1-list-3-4	Midpoint([1, 1], [3, 4])	[2, 5 / 2]
 midpoint-list-1-2-neg-1-3-list-4-2-neg-3-neg-2	Midpoint([1, 2, -1, 3], [4, 2, -3, -2])	[5 / 2, 2, -2, 1 / 2]
 midpoint-point-list-1-2-point-list-neg-2-3	Midpoint(Point([1, 2]), Point([-2, 3]))	Point([-1 / 2, 5 / 2])
+midpoint-list-a-b-list-c-d	Midpoint([a, b], [c, d])	[Midpoint(a, c), Midpoint(b, d)]
 of-two-matrices	Midpoint([[1, 1], [0, 2]], [[3, 3], [4, 0]])	[[2, 2], [2, 1]]
 of-two-complex-numbers	Midpoint(1 + 2i, 3 + 0i)	2 + i
 midpoint-list-1-2-list-neg-3-5	Midpoint([1, 2], [-3, 5])	[-1, 7 / 2]

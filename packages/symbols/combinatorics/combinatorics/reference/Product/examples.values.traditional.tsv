@@ -18,6 +18,12 @@ an-infinite-telescoping-product-prod-k-2-infty-1
 prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet		
 exact-rationals-in-a-collection		
 symbolic-elements		
+product-a-pow-i-i-nothing-n		
+product-a-pow-i-j-nothing-m-i-nothing-j		
+product-i-times-j-i-nothing-nothing-j-nothing		
+product-i-times-j-i-1-n-j-nothing-nothing		
+product-3-times-q-pow-2i-plus-5-i-nothing		
+product-1-over-q-pow-8i-plus-11-times-q-pow-8		
 range-stays-lazy-on-its-own-but-product-forces		
 the-product-of-1-through-n-is-n-see-factorial	\prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack=4!	\mathrm{True}
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2		

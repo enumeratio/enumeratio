@@ -19,6 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1
 ceil-0	ceil(0)		
 ceil-positiveinfinity	ceil(inf)		
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
+d-ceil-x-x			
 how-many-5-seat-vans-are-needed-to-carry-17			
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	almosteq(ceil((mpf(7)/2)), (floor((mpf(7)/2)) + 1), 1e-20)	True	

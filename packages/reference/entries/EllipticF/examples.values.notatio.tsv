@@ -1,7 +1,10 @@
 id	in	out
 ellipticf-list-list-1-0-list-0-1-0	<EllipticF><List><List>1 0</List> <List>0 1</List></List> 0</EllipticF>	<List><List><EllipticF>1 0</EllipticF> 0</List> <List>0 <EllipticF>1 0</EllipticF></List></List>
 matrixfunction-function-ellipticf-1-0-1-list	<MatrixFunction><Function><Block><EllipticF>_1 0</EllipticF></Block> _1</Function> <List><List>1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List><EllipticF>1 0</EllipticF> 0</List> <List>0 <EllipticF>1 0</EllipticF></List></List>
+n-ellipticf-12-over-5-3-50	<N><EllipticF><Rational>12 5</Rational> 3</EllipticF> 50</N>	<Complex>1.0010773804561055 -1.923166189504625</Complex>
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m	<List><EllipticF>0 m</EllipticF> <EllipticF><Multiply><Rational>1 2</Rational> Pi</Multiply> m</EllipticF></List>	<List>0 <EllipticF><Multiply><Rational>1 2</Rational> Pi</Multiply> m</EllipticF></List>
 ellipticf-0-1	<EllipticF>0 1</EllipticF>	<ToExpression>0</ToExpression>
 ellipticf-0-0	<EllipticF>0 0</EllipticF>	<ToExpression>0</ToExpression>
 ellipticf-jacobiamplitude-0-0-0	<EllipticF><JacobiAmplitude>0 0</JacobiAmplitude> 0</EllipticF>	<ToExpression>0</ToExpression>
 ellipticf-jacobiamplitude-0-1-1	<EllipticF><JacobiAmplitude>0 1</JacobiAmplitude> 1</EllipticF>	<ToExpression>0</ToExpression>
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq	<Solve><Equal><Add><Power><EllipticF>z m</EllipticF> 3</Power> <EllipticF>z m</EllipticF></Add> x</Equal> z</Solve>	<Apply>List</Apply>

@@ -2,5 +2,6 @@ id	in	out
 a-parabola-is-convex	<FunctionConvexity><Power>x 2</Power> x</FunctionConvexity>	<ToExpression>1</ToExpression>
 a-cubic-has-an-inflection-point	<FunctionConvexity><Power>x 3</Power> x</FunctionConvexity>	<FunctionConvexity><Power>x 3</Power> x</FunctionConvexity>
 exp-is-always-convex	<FunctionConvexity><Exp>x</Exp> x</FunctionConvexity>	<ToExpression>1</ToExpression>
+map-function-functionconvexity-1-list-x-y-1-list	<Map><Function><Block><FunctionConvexity>_1 <List>x y</List></FunctionConvexity></Block> _1</Function> <List><Power>x 2</Power> <Add><Power>x 2</Power> <Power>y 2</Power></Add></List></Map>	<List><FunctionConvexity><Power>x 2</Power> <List>x y</List></FunctionConvexity> <FunctionConvexity><Add><Power>x 2</Power> <Power>y 2</Power></Add> <List>x y</List></FunctionConvexity></List>
 functionconvexity-x-pow-2-minus-1-x	<FunctionConvexity><Add><Power>x 2</Power> -1</Add> x</FunctionConvexity>	<ToExpression>1</ToExpression>
 a-restricted-domain-answers-indeterminate	<FunctionConvexity><Divide>1 x</Divide> x</FunctionConvexity>	<FunctionConvexity><Divide>1 x</Divide> x</FunctionConvexity>

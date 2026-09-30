@@ -19,6 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1
 ceil-0	ceiling(0)		
 ceil-positiveinfinity	ceiling(oo)		
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
+d-ceil-x-x	diff(ceiling(Symbol("x")), Symbol("x"))		
 how-many-5-seat-vans-are-needed-to-carry-17	ceiling((S(17) / 5))	4	
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))	True	

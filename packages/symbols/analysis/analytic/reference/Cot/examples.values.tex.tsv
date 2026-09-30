@@ -23,6 +23,9 @@ derivative-csc-2-x	\frac{\mathrm{d}\cot(x)}{\mathrm{d}x}	-\csc(x)^2
 antiderivative-ln-sin-x	\int\!\cot(x)\, \mathrm{d}x	\ln(\vert\sin(x)\vert)
 n-cot-6-over-5-50	N(\cot(\frac{6}{5}), 50)	0.388\,779\,569\,368\,204\,911\,634
 matrixfunction-function-cot-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\cot(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, \frac{\pi}{2}\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{6}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\sqrt{3}}{3}, 0\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{3}}{3}\bigr\rbrack\bigr\rbrack
+assuming-m-in-integers-refine-cot-pi-times-1	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{Refine}(\cot(\pi(\frac{1}{2}+m))))	\cot(\pi(m+\frac{1}{2}))
+assuming-m-in-integers-fullsimplify-refine-cot	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{FullSimplify}(\mathrm{Refine}(\cot(\pi m))))	\cot(\pi m)
+cot-positiveinfinity	\cot(\infty)	\operatorname{Indeterminate}
 reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\top
 pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\top
 cot-1-over-10-times-pi	\cot(\frac{\pi}{10})	\sqrt{5+2\sqrt{5}}

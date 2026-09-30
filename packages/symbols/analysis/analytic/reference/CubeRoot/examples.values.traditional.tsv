@@ -14,5 +14,10 @@ cuberoot-x-eq-surd-x-3	\mathrm{CubeRoot}(x)=\mathrm{Surd}(x, 3)	\mathrm{True}
 fullsimplify-d-integrate-cuberoot-x-x-nothing	\mathrm{FullSimplify}(\frac{\mathrm{d}\int\!\mathrm{CubeRoot}(x)\, \mathrm{d}x}{\mathrm{d}x}=\mathrm{CubeRoot}(x))	\mathrm{True}
 fullsimplify-integrate-sin-x-times-cuberoot-x-x		
 d-cuberoot-x-x		
+solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
+fullsimplify-d-cuberoot-x-list-x-k		
+seriescoefficient-cuberoot-x-list-x-1-n		
+fullsimplify-fourierseries-cuberoot-x-x-1		
+fullsimplify-integrate-cuberoot-x-times		
 the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\mathrm{True}
 cuberoot-neg-8		

@@ -1,11 +1,13 @@
-id	in	out	tex.in	tex.out
-a-flat-list-is-a-vector	VectorQ[List[1, 2, 3]]	True	\text{VectorQ}[\{1,2,3\}]	\text{True}
-isvector-list-a-b-c	VectorQ[List[a, b, c]]	True	\text{VectorQ}[\{a,b,c\}]	\text{True}
-isvector-list-list-1-list-2	VectorQ[List[List[1], List[2]]]	False	\text{VectorQ}\left[\left( \begin{array}{c}  1 \\  2 \\ \end{array} \right)\right]	\text{False}
-isvector-vector	VectorQ[vector]	False	\text{VectorQ}[\text{vector}]	\text{False}
-a-list-of-lists-is-not-a-vector	VectorQ[List[List[1, 2], List[3, 4]]]	False	\text{VectorQ}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	\text{False}
-a-non-list-is-not-a-vector	VectorQ[3]	False	\text{VectorQ}[3]	\text{False}
-a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]	True	\text{VectorQ}[\{2,4,6\},\text{EvenQ}]	\text{True}
-a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]	False	\text{VectorQ}[\{2,3,6\},\text{EvenQ}]	\text{False}
-isvector-range-1-10-ismachinenumber	VectorQ[Range[1, 10], MachineNumberQ]	False	\text{VectorQ}[\text{Range}[1,10],\text{MachineNumberQ}]	\text{False}
-list-isvector-vec-isvector-expr	List[VectorQ[vec], VectorQ[expr]]	{False, False}	\{\text{VectorQ}[\text{vec}],\text{VectorQ}[\text{expr}]\}	\{\text{False},\text{False}\}
+id	in	out	tex.in	tex.out	verdict
+a-flat-list-is-a-vector	VectorQ[List[1, 2, 3]]	True	\text{VectorQ}[\{1,2,3\}]	\text{True}	
+isvector-list-a-b-c	VectorQ[List[a, b, c]]	True	\text{VectorQ}[\{a,b,c\}]	\text{True}	
+isvector-list-list-1-list-2	VectorQ[List[List[1], List[2]]]	False	\text{VectorQ}\left[\left( \begin{array}{c}  1 \\  2 \\ \end{array} \right)\right]	\text{False}	
+isvector-vector	VectorQ[vector]	False	\text{VectorQ}[\text{vector}]	\text{False}	
+a-list-of-lists-is-not-a-vector	VectorQ[List[List[1, 2], List[3, 4]]]	False	\text{VectorQ}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	\text{False}	
+a-non-list-is-not-a-vector	VectorQ[3]	False	\text{VectorQ}[3]	\text{False}	
+a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]	True	\text{VectorQ}[\{2,4,6\},\text{EvenQ}]	\text{True}	
+a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]	False	\text{VectorQ}[\{2,3,6\},\text{EvenQ}]	\text{False}	
+isvector-range-1-10-ismachinenumber	VectorQ[Range[1, 10], MachineNumberQ]	False	\text{VectorQ}[\text{Range}[1,10],\text{MachineNumberQ}]	\text{False}	
+isvector-range-1-10-isinteger	VectorQ[Range[1, 10], IntegerQ]	True			disagree
+isvector-n-range-1-10-ismachinenumber	VectorQ[N[Range[1, 10]], MachineNumberQ]	True			disagree
+list-isvector-vec-isvector-expr	List[VectorQ[vec], VectorQ[expr]]	{False, False}	\{\text{VectorQ}[\text{vec}],\text{VectorQ}[\text{expr}]\}	\{\text{False},\text{False}\}	

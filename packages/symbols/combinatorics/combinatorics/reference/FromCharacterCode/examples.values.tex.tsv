@@ -4,3 +4,6 @@ fromcharactercode-list-97-98-99	\mathrm{FromCharacterCode}(\bigl\lbrack97, 98, 9
 inverts-tocharactercode	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{hello}))	\text{hello}
 round-trips-a-non-ascii-string-emoji-astral	\mathrm{FromCharacterCode}(\mathrm{ToCharacterCode}(\text{\text{a😀b→c}}))	\text{a😀b→c}
 fromcharactercode-97	\mathrm{FromCharacterCode}(97)	\text{a}
+fromcharactercode-list-61-726-62-520-62-521-62	\mathrm{FromCharacterCode}(\bigl\lbrack61\,726, 62\,520, 62\,521, 62\,522, 63\,309, 63\,310, 63\,311, 63\,373, 63\,374, 63\,375, 63\,418, 63\,419, 63\,420, 63\,421, 63\,422, 63\,423, 63\,440, 63\,511, 63\,512, 63\,513, 63\,514, 63\,515, 63\,516, 63\,517\bigr\rbrack)	\text{}
+fromcharactercode-list-128-512-128-513-128-514	\mathrm{FromCharacterCode}(\bigl\lbrack128\,512, 128\,513, 128\,514, 128\,515, 128\,516, 128\,517, 128\,518, 128\,519\bigr\rbrack)	\text{😀😁😂😃😄😅😆😇}
+fromcharactercode-list-128-105-127-997-8-205-127	\mathrm{FromCharacterCode}(\bigl\lbrack128\,105, 127\,997, 8\,205, 127\,891\bigr\rbrack)	\text{👩🏽‍🎓}
