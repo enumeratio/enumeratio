@@ -136,3 +136,16 @@ test("RealDigits cross-checked against long division for terminating rationals",
     expect(flatDigits, `${p}/${q}`).toEqual([...lead, ...trimmedFrac]);
   }
 });
+
+// Wolfram farm sweep (A-130): RealDigits(19/7, 10, 25) ignored the explicit length for a
+// rational operand, returning the compact {lead, {period}} form (6 digits) instead of 25
+// literal digits — the repeating block repeated out and truncated/padded to `len`.
+test("RealDigits with an explicit length flattens a repeating rational to exactly that many digits", () => {
+  expect(value(["RealDigits", ["Rational", 19, 7], 10, 25])).toEqual([
+    "List",
+    ["List", 2, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5, 7, 1, 4, 2, 8, 5],
+    1,
+  ]);
+  // A terminating rational zero-pads to `len` rather than dropping the trailing digits.
+  expect(value(["RealDigits", ["Rational", 1, 2], 10, 5])).toEqual(["List", ["List", 5, 0, 0, 0, 0], 0]);
+});

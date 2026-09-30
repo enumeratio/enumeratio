@@ -170,6 +170,17 @@ test("JacobiZN(0,m) = 0, JacobiZN(u,0) = 0", () => {
   expect(ce.box(["JacobiZN", 0.7, 0]).evaluate().json).toEqual(0);
 });
 
+// Wolfram farm sweep (A-130): JacobiZN(u,1) = Tanh(u) held symbolically unevaluated —
+// only the numeric AGM path answered, and only for a concrete float u. Z(u,1) = sin(am(u,1))
+// = sin(gd(u)) = tanh(u) (the E(1)/K(1)·u term vanishes), so this holds for any u.
+test("JacobiZN(u,1) = Tanh(u), symbolic or concrete", () => {
+  expect(ce.box(["JacobiZN", "u", 1]).evaluate().json).toEqual(["Tanh", "u"]);
+  const u = ce.box(["Multiply", ["Complex", 0, ["Rational", -1, 3]], "Pi"]);
+  const z = ce.box(["JacobiZN", u, 1]).N();
+  expect(z.re).toBeCloseTo(0, 10);
+  expect(z.im).toBeCloseTo(-Math.sqrt(3), 10);
+});
+
 test("JacobiAmplitude and JacobiZN decline outside m in [0,1]", () => {
   expect(ce.box(["JacobiAmplitude", 0.3, 1.5]).N().operator).toBe("JacobiAmplitude");
   expect(ce.box(["JacobiZN", 0.3, -0.5]).N().operator).toBe("JacobiZN");

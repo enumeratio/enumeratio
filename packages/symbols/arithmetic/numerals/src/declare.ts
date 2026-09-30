@@ -21,6 +21,7 @@ import {
   bigIntToBaseString,
   digitLength,
   digitsOfBigInt,
+  flattenRealDigits,
   integerOfRomanNumeral,
   integerReverse,
   numberExpand,
@@ -677,6 +678,9 @@ export function declareNumerals(ce: ComputeEngine): void {
       const rational = bigRationalAt(ops[0]);
       if (rational !== undefined) {
         const { digits, exponent } = realDigitsOfRational(rational[0], rational[1], base);
+        // An explicit `len` asks for that many literal digits — a repeating tail (or a
+        // terminating one, zero-padded) rather than the compact periodic-block form.
+        if (len !== undefined && len > 0) return realDigitsExpr(flattenRealDigits(digits, len), exponent);
         return realDigitsExpr(digits, exponent);
       }
 

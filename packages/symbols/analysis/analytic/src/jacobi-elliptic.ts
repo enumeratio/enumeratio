@@ -338,6 +338,9 @@ function declareJacobiZN(ce: ComputeEngine): void {
       const [u, m] = ops;
       if (u === undefined || m === undefined) return undefined;
       if (isZeroExpr(u) || isZeroExpr(m)) return finish(ce.Zero, options);
+      // Z(u,1) = E(am(u,1),1) − 0 (the E(1)/K(1)·u term vanishes, as above) =
+      // sin(am(u,1)) = sin(gd(u)) = tanh(u) — exact for any u, not just a numeric one.
+      if (isOneExpr(m)) return finish(ce.function("Tanh", [u]), options);
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;

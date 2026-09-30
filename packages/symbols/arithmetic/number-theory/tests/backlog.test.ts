@@ -159,6 +159,40 @@ test("RamanujanTau: brute force against the q-expansion of Δ = q∏(1-q^n)^24",
   }
 });
 
+// Wolfram farm sweep (A-130): RamanujanTau[{{1,0},{-1,2}}] left τ(0) and τ(-1) unevaluated
+// (only the n<1 lower guard existed, not n=0) — Wolfram's τ is 0 off the positive integers.
+test("RamanujanTau: 0 off the positive integers", () => {
+  expect(run(["RamanujanTau", 0])).toBe(0);
+  expect(run(["RamanujanTau", -1])).toBe(0);
+  expect(run(["RamanujanTau", -24])).toBe(0);
+});
+
+// Wolfram farm sweep (A-130): a single List argument to GCD/LCM should broadcast
+// elementwise (Wolfram's GCD/LCM are Listable), not fold the list's own contents — that
+// shape was already handled when a list sits alongside other arguments (`GCD(12, {3,7,40})`)
+// but not when it is the only argument.
+test("GCD/LCM: a lone List argument broadcasts, it isn't folded", () => {
+  expect(run(["LCM", ["List", 2, 2]])).toEqual(["List", 2, 2]);
+  expect(run(["GCD", ["List", 4, 6, 9]])).toEqual(["List", 4, 6, 9]);
+  expect(run(["LCM", ["CarmichaelLambda", ["List", 3, 8]]])).toEqual(["List", 2, 2]);
+});
+
+// Wolfram farm sweep (A-130): compute-engine's native IsSquareFree answers False once its
+// own factoring gives up on a large cofactor, rather than declining — a density sweep over
+// Range(1, 10000) silently collapsed from ~6079 squarefree integers to 2. Route plain
+// integers through this package's own budgeted `factorInteger` and decline on failure.
+test("IsSquareFree: correct (not silently wrong) past compute-engine's native factoring limit", () => {
+  expect(run(["IsSquareFree", 9973 * 9973])).toBe("False"); // a large prime squared
+  expect(run(["IsSquareFree", 9973 * 9967])).toBe("True"); // a large squarefree semiprime
+  const naiveSquareFree = (n: number): boolean => {
+    for (let p = 2; p * p <= n; p++) if (n % (p * p) === 0) return false;
+    return true;
+  };
+  for (let n = 1900; n < 2000; n++) {
+    expect(run(["IsSquareFree", n])).toBe(naiveSquareFree(n) ? "True" : "False");
+  }
+});
+
 test("SquaresR: brute force lattice-point count for small d, n", () => {
   const naive = (d: number, n: number): number => {
     const bound = Math.floor(Math.sqrt(Math.max(n, 0)));
