@@ -58,6 +58,8 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   Arrangements: ["combinatorics"],
   Array: ["combinatorics"],
   Arsech: ["analytic"],
+  Arsinh: ["analytic"],
+  Artanh: ["analytic"],
   AscentSequence: ["combinatorics"],
   AscentSequences: ["combinatorics"],
   Ascents: ["combinatorics"],

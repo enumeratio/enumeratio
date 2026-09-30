@@ -6,10 +6,10 @@ summary: Inverse hyperbolic cosine (area hyperbolic cosine).
 signatures:
   - call: Arcosh(complex | signed_infinity) -> number
     description: as compute-engine declares it
-  - call: Arcosh(complex | signed_infinity) -> number
+  - call: Arcosh(complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
     description: Inverse hyperbolic cosine (area hyperbolic cosine).
     library: enumeratio-analytic
-    type: (complex | signed_infinity) -> number
+    type: (complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
     overrides: compute-engine
 names:
   fungrim: Acosh

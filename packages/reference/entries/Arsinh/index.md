@@ -6,6 +6,11 @@ summary: Inverse hyperbolic sine (area hyperbolic sine).
 signatures:
   - call: Arsinh(complex | signed_infinity) -> number
     description: as compute-engine declares it
+  - call: Arsinh(complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
+    description: Inverse hyperbolic sine (area hyperbolic sine).
+    library: enumeratio-analytic
+    type: (complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
+    overrides: compute-engine
 names:
   fungrim: Asinh
   dlmf: inverse hyperbolic sine function

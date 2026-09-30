@@ -16,6 +16,7 @@ import {
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
+  infinityArgs,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
@@ -276,4 +277,16 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareNSum(ce);
   declareCorrectlyRoundedN(ce);
   declareSignals(ce);
+
+  // Applied last, deliberately: several earlier `declare*` calls above (trig-reduction.ts's
+  // `isHugeReal` chief among them -- it tests `Math.abs(op.re) > HUGE_THRESHOLD` without also
+  // requiring finiteness, so it claims PositiveInfinity/NegativeInfinity as "huge" too, then
+  // declines because it can't reduce an infinite value, swallowing whatever ran underneath) already
+  // wrap Tan/Cot/Sec/Csc/Arcsin/Arccos and friends with handlers that mis-claim an infinite operand
+  // and decline, which (per `wrapOperator`'s doc comment) returns undefined instead of falling
+  // through to a layer attached earlier. Applying this patch last makes it the outermost, most
+  // recently attached layer, so its narrow (exact `PositiveInfinity`/`NegativeInfinity`/
+  // `ComplexInfinity` only) predicates intercept before any earlier layer gets a chance to
+  // mis-claim the call.
+  applyPatch(ce, infinityArgs);
 }
