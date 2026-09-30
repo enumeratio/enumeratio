@@ -15,3 +15,4 @@ expand-x-plus-imaginaryunit-times-x-minus	\mathrm{Expand}((x+i)(x-i))	x^2+1
 expand-1-minus-x-times-neg-1-minus-x-times-1	\mathrm{Expand}((1-x)(-x-1)(1-x)(-x-1))	x^4-2x^2+1
 expand-1-plus-x-plus-y-times-2-minus-x-pow-3	\mathrm{Expand}((1+x+y)(2-x)^3)	-x^4-yx^3+5x^3+6yx^2-6x^2-12xy-4x+8y+8
 expand-1-plus-x-times-2-plus-x-times-3-plus-x	\mathrm{Expand}((1+x)(2+x)(3+x))	x^3+6x^2+11x+6
+expand-product-x-plus-i-i-6	\mathrm{Expand}(\prod_{i=6}(x+i))	\prod_{i}^6(i+x)

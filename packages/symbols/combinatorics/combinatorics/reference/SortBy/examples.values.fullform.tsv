@@ -10,3 +10,7 @@ sortby-list-exponentiale-pi-sin-1-sqrt-2-n	SortBy[List[E, Pi, Sin[1], Sqrt[2]], 
 sortby-list-dog-zebra-donkey-anteater-fish	SortBy[List["dog", "zebra", "donkey", "anteater", "fish"], StringLength]	
 sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	SortBy[List[1, Sqrt[Plus[1, Power[E, -10]]], Power[E, Complex[2, 1]], Power[E, Complex[-1, 2]], Power[E, Complex[0, 1]]], Function[N[Abs[Slot[1]]]]]	[SortBy, [List, 1, [Sqrt, [Add, 1, [Power, ExponentialE, -10]]], [Power, ExponentialE, [Complex, 2, 1]], [Power, ExponentialE, [Complex, -1, 2]], [Power, ExponentialE, [Complex, 0, 1]]], [Function, [N, [Abs, _1]]]]
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	SortBy[List[Sqrt[Plus[1, Power[E, Complex[0, -10]]]], Power[E, Complex[2, 1]], Power[E, Complex[-1, 2]], Power[E, Complex[0, 1]]], Abs]	
+sortby-tab-function-slot-age	SortBy[tab, Function[Slot["age"]]]	[SortBy, tab, [Function, [Slot, "'age'"]]]
+sortby-exprs-err	SortBy[exprs, err]	
+sortby-list-first	SortBy[list, First]	
+sortby-list-abs	SortBy[list, Abs]	

@@ -7,3 +7,6 @@ b-0-at-0-5	\mathrm{Hypergeometric1F1Regularized}(1, 0, 0.5)	0.824\,360\,635\,350
 a-2-b-neg-2-at-0-4	\mathrm{Hypergeometric1F1Regularized}(2, -2, 0.4)	0.420\,097\,834\,855\,781\,7
 a-complex-argument-at-b-2	N(\mathrm{Hypergeometric1F1Regularized}(1, 2, 0.5+0.5i))	1.237\,328\,119\,797\,784\,1+0.343\,550\,046\,629\,445\,77i
 a-complex-argument-at-a-nonpositive-integer-b	N(\mathrm{Hypergeometric1F1Regularized}(1, -1, 0.3-0.4i))	-0.213\,189\,507\,662\,140\,1-0.261\,596\,366\,272\,892\,1i
+n-hypergeometric1f1regularized-2-neg-4-2-50	N(\mathrm{Hypergeometric1F1Regularized}(2, -4, 2), 50)	1\,891.598\,361\,326\,245\,8
+n-hypergeometric1f1regularized-1-0-1-30	N(\mathrm{Hypergeometric1F1Regularized}(1, 0, 1), 30)	2.718\,281\,828\,459\,045\,5
+matrixfunction-function	\mathrm{MatrixFunction}(()\mapsto\mathrm{Hypergeometric1F1Regularized}(\frac{1}{2}, 1, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{Hypergeometric1F1Regularized}(\frac{1}{2}, 1, \frac{1}{2}), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{Hypergeometric1F1Regularized}(\frac{1}{2}, 1, \frac{1}{2})\bigr\rbrack\bigr\rbrack

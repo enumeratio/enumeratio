@@ -1,7 +1,8 @@
-id	in	out
-powersrepresentations-25-2-2	PowersRepresentations(25, 2, 2)	[[0, 5], [3, 4]]
-the-smallest-number-that-is-a-sum-of-two	PowersRepresentations(50, 2, 2)	[[1, 7], [5, 5]]
-powersrepresentations-100-3-2	PowersRepresentations(100, 3, 2)	[[0, 0, 10], [0, 6, 8]]
-powersrepresentations-87-539-319-2-3	PowersRepresentations(87_539_319, 2, 3)	[[167, 436], [228, 423], [255, 414]]
-powersrepresentations-102-3-2	PowersRepresentations(102, 3, 2)	[[1, 1, 10], [2, 7, 7]]
-the-taxicab-number-1729-1-3-12-3-9-3-10-3	PowersRepresentations(1_729, 2, 3)	[[1, 12], [9, 10]]
+id	in	out	back
+powersrepresentations-25-2-2	PowersRepresentations(25, 2, 2)	[[0, 5], [3, 4]]	
+the-smallest-number-that-is-a-sum-of-two	PowersRepresentations(50, 2, 2)	[[1, 7], [5, 5]]	
+powersrepresentations-100-3-2	PowersRepresentations(100, 3, 2)	[[0, 0, 10], [0, 6, 8]]	
+powersrepresentations-87-539-319-2-3	PowersRepresentations(87_539_319, 2, 3)	[[167, 436], [228, 423], [255, 414]]	
+powersrepresentations-102-3-2	PowersRepresentations(102, 3, 2)	[[1, 1, 10], [2, 7, 7]]	
+filter-powersrepresentations-7-3-1-function	filter(PowersRepresentations(7, 3, 1), Function(FreeQ(_1, 0), _1))	[[1, 1, 5], [1, 2, 4], [1, 3, 3], [2, 2, 3]]	Unreadable
+the-taxicab-number-1729-1-3-12-3-9-3-10-3	PowersRepresentations(1_729, 2, 3)	[[1, 12], [9, 10]]	

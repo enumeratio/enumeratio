@@ -1,6 +1,8 @@
-id	in	out	tex.in	tex.out
-shape-list-list-list-list-a-b	Dimensions[List[List[List[List[a, b]]]]]	{1, 1, 1, 2}	\text{Dimensions}\left[\left( \begin{array}{c}  \left( \begin{array}{cc}  a & b \\ \end{array} \right) \\ \end{array} \right)\right]	\{1,1,1,2\}
-shape-1	Dimensions[1]	{}	\text{Dimensions}[1]	\{\}
-shape-list-1-2	Dimensions[List[1, 2]]	{2}	\text{Dimensions}[\{1,2\}]	\{2\}
-shape-list-list-1-2	Dimensions[List[List[1, 2]]]	{1, 2}	\text{Dimensions}\left[\left( \begin{array}{cc}  1 & 2 \\ \end{array} \right)\right]	\{1,2\}
-length-shape-list-list-a-b-list-c-d-eq-rank-list	(Length[Dimensions[List[List[a, b], List[c, d]]]] == ArrayDepth[List[List[a, b], List[c, d]]])	True	\text{Length}\left[\text{Dimensions}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]\right]=\text{ArrayDepth}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]	\text{True}
+id	in	out	tex.in	tex.out	verdict
+shape-list-list-list-list-a-b	Dimensions[List[List[List[List[a, b]]]]]	{1, 1, 1, 2}	\text{Dimensions}\left[\left( \begin{array}{c}  \left( \begin{array}{cc}  a & b \\ \end{array} \right) \\ \end{array} \right)\right]	\{1,1,1,2\}	
+shape-1	Dimensions[1]	{}	\text{Dimensions}[1]	\{\}	
+shape-list-1-2	Dimensions[List[1, 2]]	{2}	\text{Dimensions}[\{1,2\}]	\{2\}	
+shape-list-list-1-2	Dimensions[List[List[1, 2]]]	{1, 2}	\text{Dimensions}\left[\left( \begin{array}{cc}  1 & 2 \\ \end{array} \right)\right]	\{1,2\}	
+length-shape-list-list-a-b-list-c-d-eq-rank-list	(Length[Dimensions[List[List[a, b], List[c, d]]]] == ArrayDepth[List[List[a, b], List[c, d]]])	True	\text{Length}\left[\text{Dimensions}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]\right]=\text{ArrayDepth}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]	\text{True}	
+shape-array-a-list-2-1-4-3	Dimensions[Array[a, List[2, 1, 4, 3]]]	{2, 1, 4, 3}			disagree
+shape-sqrt-2	Dimensions[Sqrt[2]]	{2}			disagree

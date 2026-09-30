@@ -23,6 +23,7 @@ sign-123-minus-456i
 fullsimplify-matrixfunction-sign-list-list-1		
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2		
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	\mathrm{sgn}(\overline{1+2i})=\overline{\mathrm{sgn}(1+2i)}	\mathrm{True}
+d-sign-x-x		
 tells-you-the-temperature-dropped-but-not-by-how		
 sign-z-z-z-see-abs	\mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}	\mathrm{True}
 x-cdot-sign-x-x-here-at-x-5	-5\mathrm{sgn}(-5)=\vert-5\vert	\mathrm{True}

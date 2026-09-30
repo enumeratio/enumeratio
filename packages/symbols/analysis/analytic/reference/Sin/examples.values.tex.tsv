@@ -58,6 +58,8 @@ functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\bot
 functionsingularities-sin-x-x	\mathrm{FunctionSingularities}(\sin(x), x)	\bot
 functiondiscontinuities-sin-x-x	\mathrm{FunctionDiscontinuities}(\sin(x), x)	\bot
 matrixfunction-function-sin-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\sin(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack\frac{27}{16}, -1\bigr\rbrack\bigr\rbrack
+assuming-m-in-integers-refine-sin-pi-times-m	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{Refine}(\sin(\pi m)))	0
+assuming-m-in-integers-fullsimplify-sin-pi-times	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{FullSimplify}(\sin(\pi(\frac{1}{2}+m))))	\sin(\pi(m+\frac{1}{2}))
 threads-element-wise-over-a-list	\sin(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)	\bigl\lbrack0, 1, 0\bigr\rbrack
 degrees-d-converts-a-degree-measure-to-radians	\sin(30^{\circ})	\frac{1}{2}
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	\sin(\frac{\pi}{6})^2+\cos(\frac{\pi}{6})^2	1

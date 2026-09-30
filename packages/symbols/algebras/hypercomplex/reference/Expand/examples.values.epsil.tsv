@@ -15,3 +15,4 @@ expand-x-plus-imaginaryunit-times-x-minus	expand((x + imaginaryUnit) * (x - imag
 expand-1-minus-x-times-neg-1-minus-x-times-1	expand((1 - x) * (-1 - x) * (1 - x) * (-1 - x))	x ^ 4 - 2 * x ^ 2 + 1	[Expand, [Multiply, [Multiply, [Multiply, [Subtract, 1, x], [Subtract, -1, x]], [Subtract, 1, x]], [Subtract, -1, x]]]
 expand-1-plus-x-plus-y-times-2-minus-x-pow-3	expand((1 + x + y) * (2 - x) ^ 3)	-x ^ 4 - y * x ^ 3 + 5 * x ^ 3 + 6 * y * x ^ 2 - 6 * x ^ 2 - 12 * x * y - 4x + 8y + 8	[Expand, [Multiply, [Add, [Add, 1, x], y], [Power, [Subtract, 2, x], 3]]]
 expand-1-plus-x-times-2-plus-x-times-3-plus-x	expand((1 + x) * (2 + x) * (3 + x))	x ^ 3 + 6 * x ^ 2 + 11x + 6	[Expand, [Multiply, [Multiply, [Add, 1, x], [Add, 2, x]], [Add, 3, x]]]
+expand-product-x-plus-i-i-6	expand(product(x + i, (i, 6)))	product(i + x, (i, Nothing, 6))	

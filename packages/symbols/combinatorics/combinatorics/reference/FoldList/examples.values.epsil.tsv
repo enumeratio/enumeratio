@@ -16,6 +16,10 @@ foldlist-list-x-list-a-b-c-d	FoldList(List, x, [a, b, c, d])	[x, [x, a], [[x, a]
 foldlist-function-10-times-1-plus-2-1-2-0-list-4	FoldList(Function(10 * _1 + _2, _1, _2), 0, [4, 5, 1, 6, 7, 8])	[0, 4, 45, 451, 4_516, 45_167, 451_678]	Unreadable
 foldlist-function-1-list-2-1-2-a-plus-b-times-x	FoldList(Function(_1[_2], _1, _2), (a + b) * (x ^ 2 + y ^ 2), [2, 1, 1])	[(a + b) * (x ^ 2 + y ^ 2), x ^ 2 + y ^ 2, x ^ 2, x]	Unreadable
 foldlist-multiply-1-range-1-10	FoldList(Multiply, 1, Range(1, 10))	[1, 1, 2, 6, 24, 120, 720, 5_040, 40_320, 362_880, 3_628_800]	
+foldlist-function-1-over-1-plus-2-1-2-x-reverse	FoldList(Function(1 / (_1 + _2), _1, _2), x, reverse([a, b, c]))	[x, 1 / (c + x), 1 / (b + 1 / (c + x)), 1 / (a + 1 / (b + 1 / (c + x)))]	Unreadable
+foldlist-function-1-times-x-plus-2-1-2-0-list-a	FoldList(Function(_1 * x + _2, _1, _2), 0, [a, b, c, d])	[0, a, a * x + b, x * (a * x + b) + c, x * (x * (a * x + b) + c) + d]	Unreadable
+foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c	FoldList(Function(-_1 + _2, _1, _2), 0, [a, b, c, d, exponentialE])	[0, a, -a + b, a - b + c, -a + b - c + d, a - b + c - d + exponentialE]	Unreadable
+foldlist-function-list-2-1-1-2-x-list-a-b-c-d	FoldList(Function([_2, _1], _1, _2), x, [a, b, c, d])	"[\n  x,\n  [a, x],\n  [[b, a], [b, x]],\n  [[[c, b], [c, a]], [[c, b], [c, x]]],\n  [[[[d, c], [d, b]], [[d, c], [d, a]]], [[[d, c], [d, b]], [[d, c], [d, x]]]],\n]"	Unreadable
 foldlist-length-is-one-more	length(FoldList(Add, 0, [1, 2, 3, 4, 5])) == length([1, 2, 3, 4, 5]) + 1	True	
 foldlist-last-is-fold	last(FoldList(Add, 0, [1, 2, 3])) == fold(Add, 0, [1, 2, 3])	True	
 rest-foldlist-add-0-list-a-b-c-d-exponentiale	rest(FoldList(Add, 0, [a, b, c, d, exponentialE]))	[a, a + b, a + b + c, a + b + c + d, a + b + c + d + exponentialE]	

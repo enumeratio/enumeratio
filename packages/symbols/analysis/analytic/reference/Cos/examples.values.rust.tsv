@@ -46,6 +46,8 @@ functionsurjective-cos-x-x
 functionsingularities-cos-x-x			
 functiondiscontinuities-cos-x-x			
 matrixfunction-function-cos-1-1-list-list-5-over			
+assuming-m-in-integers-refine-cos-pi-times-1			
+assuming-m-in-integers-fullsimplify-refine-cos			
 threads-element-wise-over-a-list	cos(list(vec![n(0), (x(std::f64::consts::PI) / n(2)), x(std::f64::consts::PI)]))	panic: threading: a list where the crate takes a scalar	error
 even-function-cos-x-cos-x	equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))	true	
 co-function-identity-cos-x-sin-pi-2-x	equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))	true	

@@ -107,8 +107,12 @@ const id = (entryName: string, exampleId: string): string => `${entryName}/${exa
 // cap, and pin it to `expected`. A change in compute-engine's behaviour (or a bad example)
 // fails here instead of shipping a wrong reference page; a runaway example fails as
 // "Aborted" instead of hanging the whole suite.
+// A row in triage (`role: triage`) holds our current answer, not a claim: it isn't run, and
+// shows as a skipped test until a lane settles it.
 const cases = entries.flatMap((entry) =>
-  entry.examples.map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
+  entry.examples
+    .filter((example) => example.role !== "triage")
+    .map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
 );
 const results = await runCases(cases, {
   setup,
@@ -122,8 +126,12 @@ const resultById = new Map(results.map((result) => [result.id, result]));
 
 for (const entry of entries) {
   for (const example of entry.examples) {
-    const label = example.aspirational ? " (gap)" : "";
-    test(`${entry.name} example/${example.id}${label}`, () => {
+    if (example.role === "triage") {
+      test.skip(`${entry.name} example/${example.id} (triage: ${example.triage ?? "unbucketed"})`, () => {});
+      continue;
+    }
+    const aspirational = example.role === "aspirational";
+    test(`${entry.name} example/${example.id}${aspirational ? " (gap)" : ""}`, () => {
       const result = resultById.get(id(entry.name, example.id));
       if (result === undefined) {
         throw new Error(`runCases: no result for ${entry.name} example/${example.id}`);
@@ -140,9 +148,9 @@ for (const entry of entries) {
       const expected = masked(example.expected, volatile);
       // Matching means the same thing either way: equal up to `settled`'s tolerance.
       const matched = settled(output, expected, asksForDigits(example.expr));
-      if (example.aspirational) {
+      if (aspirational) {
         // A documented capability gap: CE should NOT yet match the borrowed
-        // target. If this starts matching, promote it (drop `aspirational`).
+        // target. If this starts matching, promote it (drop `role: aspirational`).
         expect(matched).not.toEqual(expected);
       } else {
         expect(matched).toEqual(expected);

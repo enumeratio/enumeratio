@@ -2,6 +2,8 @@ id	in
 the-first-occurrence-of-b-nested-inside-the	FirstPosition[List[List[a, a, b], List[b, a, a], List[a, b, a]], b]
 the-empty-list-when-the-value-isn-t-found	FirstPosition[List[a, List[a, c]], b]
 firstposition-list-a-b-a-a-b-c-b-b	FirstPosition[List[a, b, a, a, b, c, b], b]
+firstposition-list-x-y-z-b	FirstPosition[List[x, y, z], b]
 firstposition-list-list-1-2-list-2-3-list-3-1-3	FirstPosition[List[List[1, 2], List[2, 3], List[3, 1]], 3]
+firstposition-x-pow-2-plus-y-pow-2-power	FirstPosition[Plus[Power[x, 2], Power[y, 2]], Power]
 a-match-nested-inside-an-earlier-sublist-beats-a	FirstPosition[List[a, List[a, b], b], b]
 firstposition-list-a-b-b-a-a-c-a	FirstPosition[List[a, b, b, a, a, c], a]

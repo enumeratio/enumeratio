@@ -6,3 +6,4 @@ rescale-neg-3-over-2-list-neg-2-2	\mathrm{Rescale}(-\frac{3}{2}, \bigl\lbrack-2,
 rescale-3-list-neg-9-7-list-11-28	\mathrm{Rescale}(3, \bigl\lbrack-9, 7\bigr\rbrack, \bigl\lbrack11, 28\bigr\rbrack)	\frac{95}{4}
 rescale-list-neg-2-0-2	\mathrm{Rescale}(\bigl\lbrack-2, 0, 2\bigr\rbrack)	\bigl\lbrack0, \frac{1}{2}, 1\bigr\rbrack
 piecewiseexpand-d-rescale-x-list-a-b-list-x-k	\mathrm{PiecewiseExpand}(\operatorname{D}(\mathrm{Rescale}(x, \bigl\lbrack a, b\bigr\rbrack), \bigl\lbrack x, k\bigr\rbrack))	\operatorname{D}(\mathrm{Rescale}(x, \bigl\lbrack a, b\bigr\rbrack), \bigl\lbrack x, k\bigr\rbrack)
+n-rescale-1-over-11-list-1-over-7-5-50	N(\mathrm{Rescale}(\frac{1}{11}, \bigl\lbrack\frac{1}{7}, 5\bigr\rbrack), 50)	-0.010\,695\,187\,165\,775\,4

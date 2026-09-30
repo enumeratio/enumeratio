@@ -1,3 +1,4 @@
-id	in	out	tex.in	tex.out
-2-3	Length[Tuples[Range[2], 3]]	8	\text{Length}[\text{Tuples}[\text{Range}[2],3]]	8
-tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	{1, 1, 1}	\text{Tuples}[\text{Range}[2],3][[1]]	\{1,1,1\}
+id	in	out	tex.in	tex.out	verdict
+2-3	Length[Tuples[Range[2], 3]]	8	\text{Length}[\text{Tuples}[\text{Range}[2],3]]	8	
+tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	{1, 1, 1}	\text{Tuples}[\text{Range}[2],3][[1]]	\{1,1,1\}	
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30	Thread[Rule[Tuples[List[1, 0], 3], IntegerDigits[30, 2, 8]]]	{{1, 1, 1} -> 0, {1, 1, 0} -> 0, {1, 0, 1} -> 0, {1, 0, 0} -> 1, {0, 1, 1} -> 1, {0, 1, 0} -> 1, {0, 0, 1} -> 1, {0, 0, 0} -> 0}			disagree

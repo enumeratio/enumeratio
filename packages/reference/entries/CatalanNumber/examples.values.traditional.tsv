@@ -15,6 +15,7 @@ c-1-2-frac-8-3-pi-by-analytic-continuation	C_{\frac{1}{2}}	\frac{8}{3\pi}
 an-interval-argument-should-give-an-enclosing	C_{\mathrm{Interval}(0.5, 0.6)}	\mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)
 the-5-ways-to-balance-3-pairs-of-parentheses	C_{3}	5
 the-14-triangulations-of-a-hexagon-and-the-14	C_{4}	14
+assuming-n-in-integers-n-gt-eq-0-fullsimplify	\mathrm{Assuming}(n\in\mathbb{Z}\land n\ge0, \mathrm{FullSimplify}(C_{n}=\frac{2^{2n+1}(2n-1)!!}{(2n+2)!!}))	C_{n}=\frac{(2n-1)!!\times2^{2n+1}}{(2n+2)!!}
 closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n		
 the-closed-form-through-a-negative-n-in-binomial		
 equivalently-c-n-binom-2n-n-binom-2n-n-1		

@@ -15,4 +15,5 @@ through-an-elementary-function-delta-cdot-e-2	Exp[Around[2, 0.01]]	Around[7.3890
 through-a-special-function-with-its-derivative	Erf[Around[2, 0.01]]	Around[0.9953222650189527, 0.00020666985354092054]	\text{erf}(2\pm 0.010)	0.99532\pm 0.00021	
 first-order-propagation-the-uncertainty-scales	N[Sin[Around[1, 0.1]]]	Around[0.8414709848078965, 0.05403023058681398]	N[\sin (1\pm 0.10)]	0.84\pm 0.05	
 ln-around-2-0p01	Log[Around[2, 0.01]]	Around[0.6931471805599453, 0.005]	\log (2\pm 0.010)	0.693\pm 0.005	
+around-21-pow-21-19-pow-19	Around[Power[21, 21], Power[19, 19]]	Around[5.842587018385982*^27, 1.9784196556603136*^24]			disagree
 around-10-1-pow-2	Power[Around[10, 1], 2]	Around[100., 20.]	(10\pm 1)^2	100\pm 20	

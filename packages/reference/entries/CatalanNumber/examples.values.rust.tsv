@@ -15,6 +15,7 @@ c-1-2-frac-8-3-pi-by-analytic-continuation
 an-interval-argument-should-give-an-enclosing			
 the-5-ways-to-balance-3-pairs-of-parentheses			
 the-14-triangulations-of-a-hexagon-and-the-14			
+assuming-n-in-integers-n-gt-eq-0-fullsimplify			
 closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	(binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))	42	
 the-closed-form-through-a-negative-n-in-binomial	(binomial((n(2) * n(-13)), n(5)) / (n(4) + n(1)))	0	disagree
 equivalently-c-n-binom-2n-n-binom-2n-n-1	(binomial(n(10), n(5)) - binomial(n(10), n(6)))	42	

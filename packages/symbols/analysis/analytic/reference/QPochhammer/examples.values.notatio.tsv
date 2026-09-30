@@ -10,6 +10,7 @@ qpochhammer-3-5-9	<QPochhammer>3 5 9</QPochhammer>	<ToExpression>-17525816313726
 functionexpand-qpochhammer-a-2-1	<FunctionExpand><QPochhammer>a 2 1</QPochhammer></FunctionExpand>	<Add><Negate>a</Negate> 1</Add>
 qpochhammer-1-over-2-plus-1-over-2-times-i-1	<QPochhammer><Complex><Rational>1 2</Rational> <Rational>1 2</Rational></Complex> <Complex><Rational>1 2</Rational> <Rational>-1 2</Rational></Complex> 10</QPochhammer>	<Complex><Rational>95264271 268435456</Rational> <Rational>-25488603 268435456</Rational></Complex>
 matrixfunction-function-qpochhammer-3-1-5-1-list	<MatrixFunction><Function><Block><QPochhammer>3 _1 5</QPochhammer></Block> _1</Function> <List><List>-1 0</List> <List>0 5</List></List></MatrixFunction>	<List><List>-128 0</List> <List>0 -1452215072</List></List>
+functionexpand-qpochhammer-2-q-5	<FunctionExpand><QPochhammer>2 q 5</QPochhammer></FunctionExpand>	<Multiply><Add><Multiply>-2 <Power>q 4</Power></Multiply> 1</Add> <Add><Multiply>-2 <Power>q 3</Power></Multiply> 1</Add> <Add><Multiply>-2 <Power>q 2</Power></Multiply> 1</Add> <Add><Multiply>2 q</Multiply> -1</Add></Multiply>
 the-empty-product	<QPochhammer>a q 0</QPochhammer>	<ToExpression>1</ToExpression>
 qpochhammer-0-0-0	<QPochhammer>0 0 0</QPochhammer>	<ToExpression>1</ToExpression>
 qpochhammer-0-0-1	<QPochhammer>0 0 1</QPochhammer>	<ToExpression>1</ToExpression>

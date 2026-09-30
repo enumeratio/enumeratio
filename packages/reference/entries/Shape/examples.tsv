@@ -1,6 +1,8 @@
-id	section	role	expr	expected
-shape-list-list-list-list-a-b	Scope		[Shape, [List, [List, [List, [List, a, b]]]]]	[Tuple, 1, 1, 1, 2]
-shape-1	Properties		[Shape, 1]	[Tuple]
-shape-list-1-2	Properties		[Shape, [List, 1, 2]]	[Tuple, 2]
-shape-list-list-1-2	Properties		[Shape, [List, [List, 1, 2]]]	[Tuple, 1, 2]
-length-shape-list-list-a-b-list-c-d-eq-rank-list	Properties		[Equal, [Length, [Shape, [List, [List, a, b], [List, c, d]]]], [Rank, [List, [List, a, b], [List, c, d]]]]	True
+id	section	role	expr	expected	triage	wolfram.note
+shape-list-list-list-list-a-b	Scope		[Shape, [List, [List, [List, [List, a, b]]]]]	[Tuple, 1, 1, 1, 2]		
+shape-1	Properties		[Shape, 1]	[Tuple]		
+shape-list-1-2	Properties		[Shape, [List, 1, 2]]	[Tuple, 2]		
+shape-list-list-1-2	Properties		[Shape, [List, [List, 1, 2]]]	[Tuple, 1, 2]		
+length-shape-list-list-a-b-list-c-d-eq-rank-list	Properties		[Equal, [Length, [Shape, [List, [List, a, b], [List, c, d]]]], [Rank, [List, [List, a, b], [List, c, d]]]]	True		
+shape-array-a-list-2-1-4-3	Properties	triage	[Shape, [Array, a, [List, 2, 1, 4, 3]]]	[Tuple]	gap	Dimensions(Array(a, {2,1,4,3})) returns an empty Tuple instead of {2,1,4,3} -- Array with an explicit literal dims list should be able to answer Dimensions directly from the dims argument without constructing the full array; a real, scoped structural-inference gap.
+shape-sqrt-2	Possible issues	triage	[Shape, [Sqrt, 2]]	[Tuple]	adapt	Dimensions(Sqrt(2)) -- Wolfram's shown answer ({2}) is not a return value Dimensions of a plain scalar could ever produce; this reads as a doc-scraping artifact (a stray reference to an unrelated line) rather than a real example. For the row-adaptation owner.

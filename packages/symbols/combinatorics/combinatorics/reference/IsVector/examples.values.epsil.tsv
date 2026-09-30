@@ -8,4 +8,6 @@ a-non-list-is-not-a-vector	IsVector(3)	False
 a-test-function-must-hold-of-every-element	IsVector([2, 4, 6], isEven)	True	
 a-test-function-failing-on-one-element	IsVector([2, 3, 6], isEven)	False	
 isvector-range-1-10-ismachinenumber	IsVector(Range(1, 10), IsMachineNumber)	False	
+isvector-range-1-10-isinteger	IsVector(Range(1, 10), IsInteger)	False	
+isvector-n-range-1-10-ismachinenumber	IsVector(N(Range(1, 10)), IsMachineNumber)	False	
 list-isvector-vec-isvector-expr	[IsVector(vec), IsVector(expr)]	[False, False]	

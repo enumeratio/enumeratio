@@ -7,5 +7,6 @@ arcosh-1	arcosh(1)	0
 integrate-arcosh-x-x-0-1	integrate(arcosh(x), (x, 0, 1))	i
 d-arcosh-x-x	D(arcosh(x), x)	1 / sqrt(x ^ 2 - 1)
 integrate-arcosh-x-x-nothing-nothing	integrate(arcosh(x), (x, Nothing, Nothing))	x * arcosh(x) - sqrt(x ^ 2 - 1)
+arcosh-complexinfinity	arcosh(complexInfinity)	complexInfinity
 arcosh-1-over-2-times-sqrt-1-over-2-times-5	arcosh(1 / 2 * sqrt(1 / 2 * (5 - sqrt(5))))	arcosh(sqrt(2) / 4 * sqrt(5 - sqrt(5)))
 arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	arcosh(-1 / 2 * sqrt(1 / 2 * (5 - sqrt(5))))	arcosh(-(sqrt(2) / 4) * sqrt(5 - sqrt(5)))

@@ -4,4 +4,7 @@ n-riemannzetazero-2	N(RiemannZetaZero(2))	0.5 + 21.022_039_638_771_556i
 n-riemannzetazero-50	N(RiemannZetaZero(50))	0.5 + 143.111_845_807_620_63i
 n-riemannzetazero-10	N(RiemannZetaZero(10))	0.5 + 49.773_832_477_672_3i
 n-list-riemannzetazero-1-riemannzetazero-2	N([RiemannZetaZero(1), RiemannZetaZero(2), RiemannZetaZero(3)])	"[\n  0.5 + 14.134_725_141_734_695i,\n  0.5 + 21.022_039_638_771_552i,\n  0.5 + 25.010_857_580_145_69i,\n]"
+n-riemannzetazero-54-50	N(RiemannZetaZero(54), 50)	0.5 + 150.925_257_612_241_47i
+n-riemannzetazero-46-20	N(RiemannZetaZero(46), 20)	0.5 + 134.756_509_753_373_85i
+n-riemannzetazero-neg-1-eq-conjugate	N(RiemannZetaZero(-1) == conjugate(RiemannZetaZero(1)))	RiemannZetaZero(-1) == 0.5 - 14.134_725_141_734_695i
 n-riemannzetazero-0	N(RiemannZetaZero(0))	RiemannZetaZero(0)

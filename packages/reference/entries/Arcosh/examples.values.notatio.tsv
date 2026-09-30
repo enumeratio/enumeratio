@@ -7,5 +7,6 @@ arcosh-1	<Arcosh>1</Arcosh>	<ToExpression>0</ToExpression>
 integrate-arcosh-x-x-0-1	<Integrate><Function><Block><Arcosh>x</Arcosh></Block> x</Function> <Limits>x 0 1</Limits></Integrate>	<Complex>0 1</Complex>
 d-arcosh-x-x	<D><Arcosh>x</Arcosh> x</D>	<Divide>1 <Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt></Divide>
 integrate-arcosh-x-x-nothing-nothing	<Integrate><Function><Block><Arcosh>x</Arcosh></Block> x</Function> <Limits>x Nothing Nothing</Limits></Integrate>	<Add><Multiply>x <Arcosh>x</Arcosh></Multiply> <Negate><Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt></Negate></Add>
+arcosh-complexinfinity	<Arcosh>ComplexInfinity</Arcosh>	<ComplexInfinity />
 arcosh-1-over-2-times-sqrt-1-over-2-times-5	<Arcosh><Multiply><Rational>1 2</Rational> <Sqrt><Multiply><Rational>1 2</Rational> <Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply></Sqrt></Multiply></Arcosh>	<Arcosh><Multiply><Divide><Sqrt>2</Sqrt> 4</Divide> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Arcosh>
 arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	<Arcosh><Multiply><Rational>-1 2</Rational> <Sqrt><Multiply><Rational>1 2</Rational> <Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply></Sqrt></Multiply></Arcosh>	<Arcosh><Multiply><Negate><Divide><Sqrt>2</Sqrt> 4</Divide></Negate> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Arcosh>

@@ -8,7 +8,7 @@ import { DEFAULT_TOLERANCE, disagreement } from "../src/known.ts";
 import { referenceData } from "../src/node.ts";
 
 const known = referenceData().heads.flatMap(({ head, entry }) =>
-  entry.examples.filter((e) => e.known !== undefined).map((e) => ({ head, example: e })),
+  entry.examples.filter((e) => e.known !== undefined && e.role !== "triage").map((e) => ({ head, example: e })),
 );
 
 test("every example's expected agrees with its known value", { timeout: 60_000 }, () => {

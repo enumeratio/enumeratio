@@ -13,6 +13,7 @@ n-dirichletl-4-2-1p0001-near-the-removable-point	<N><DirichletL>4 2 1.0001</Diri
 complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i	<N><DirichletL>2 1 <Complex>1 1</Complex></DirichletL></N>	<Complex>0.6543589174072331 -0.3843763502147996</Complex>
 listable-in-s-threads-over-a-list	<DirichletL>1 1 <List>1 2 3 4</List></DirichletL>	<List>ComplexInfinity <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply> <Zeta>3</Zeta> <Multiply><Rational>1 90</Rational> <Power>Pi 4</Power></Multiply></List>
 interval-arithmetic-in-s-decreasing-here	<DirichletL>5 1 <Interval>1.23 1.24</Interval></DirichletL>	<Interval>4.113958567039058 4.25898895010849</Interval>
+n-dirichletl-3-2-1-over-2-50	<N><DirichletL>3 2 <Rational>1 2</Rational></DirichletL> 50</N>	<ToExpression>0.48086755769682804</ToExpression>
 a-principal-character-drops-the-euler-factors-at	<DirichletL>12 1 s</DirichletL>	<Multiply><Add><Negate><Power>2 <Negate>s</Negate></Power></Negate> 1</Add> <Add><Negate><Power>3 <Negate>s</Negate></Power></Negate> 1</Add> <Zeta>s</Zeta></Multiply>
 and-keeps-zeta-s-pole-a-non-principal-l-is	<DirichletL>12 1 1</DirichletL>	<ComplexInfinity />
 l-0-chi-frac-35-frac-15-i-exact-from-the	<DirichletL>5 2 0</DirichletL>	<Complex><Rational>3 5</Rational> <Rational>1 5</Rational></Complex>

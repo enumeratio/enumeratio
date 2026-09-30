@@ -1,4 +1,14 @@
-id	section	role	expr	expected	caption
-one-over-s-squared			[InverseLaplaceTransform, [Power, s, -2], s, t]	t	$\mathcal{L}^{-1}\{1/s^2\} = t$
-one-over-s-minus-a			[InverseLaplaceTransform, [Power, [Add, s, [Negate, a]], -1], s, t]	[Power, ExponentialE, [Multiply, a, t]]	$\mathcal{L}^{-1}\{1/(s-a)\} = e^{at}$
-s-over-s-squared-plus-a-squared			[InverseLaplaceTransform, [Divide, s, [Add, [Power, s, 2], [Power, a, 2]]], s, t]	[Cos, [Multiply, a, t]]	$\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$
+id	section	role	expr	expected	caption	triage
+one-over-s-squared			[InverseLaplaceTransform, [Power, s, -2], s, t]	t	$\mathcal{L}^{-1}\{1/s^2\} = t$	
+one-over-s-minus-a			[InverseLaplaceTransform, [Power, [Add, s, [Negate, a]], -1], s, t]	[Power, ExponentialE, [Multiply, a, t]]	$\mathcal{L}^{-1}\{1/(s-a)\} = e^{at}$	
+s-over-s-squared-plus-a-squared			[InverseLaplaceTransform, [Divide, s, [Add, [Power, s, 2], [Power, a, 2]]], s, t]	[Cos, [Multiply, a, t]]	$\mathcal{L}^{-1}\{s/(s^2+a^2)\} = \cos(at)$	
+inverselaplacetransform-1-over-s-plus-1-s-t		triage	[InverseLaplaceTransform, [Divide, 1, [Add, s, 1]], s, t]	[Power, ExponentialE, [Negate, t]]		unscanned
+inverselaplacetransform-ln-1-over-b-plus-s-times		triage	[InverseLaplaceTransform, [Ln, [Multiply, [Divide, 1, [Add, b, s]], [Add, a, s]]], s, t]	[InverseLaplaceTransform, [Add, [Ln, [Add, a, s]], [Negate, [Ln, [Add, b, s]]]], s, t]		unscanned
+inverselaplacetransform-a-times-1-over-a-pow-2	Scope	triage	[InverseLaplaceTransform, [Multiply, a, [Divide, 1, [Add, [Power, a, 2], [Power, s, 2]]]], s, t]	[Sin, [Multiply, a, t]]		unscanned
+inverselaplacetransform-s-times-1-over-a-pow-2	Scope	triage	[InverseLaplaceTransform, [Multiply, s, [Divide, 1, [Add, [Power, a, 2], [Power, s, 2]]]], s, t]	[Cos, [Multiply, a, t]]		unscanned
+fullsimplify-inverselaplacetransform-a-times-1	Scope	triage	[FullSimplify, [InverseLaplaceTransform, [Multiply, a, [Divide, 1, [Add, [Negate, [Power, a, 2]], [Power, s, 2]]]], s, t]]	[Sinh, [Multiply, a, t]]		unscanned
+fullsimplify-inverselaplacetransform-s-times-1	Scope	triage	[FullSimplify, [InverseLaplaceTransform, [Multiply, s, [Divide, 1, [Add, [Negate, [Power, a, 2]], [Power, s, 2]]]], s, t]]	[Cosh, [Multiply, a, t]]		unscanned
+inverselaplacetransform-s-times-a-pow-2-plus-s	Scope	triage	[InverseLaplaceTransform, [Multiply, s, [Power, [Add, [Power, a, 2], [Power, s, 2]], -2]], s, t]	[InverseLaplaceTransform, [Divide, s, [Power, [Add, [Power, a, 2], [Power, s, 2]], 2]], s, t]		unscanned
+inverselaplacetransform-s-times-1-over-a-pow-2-2	Scope	triage	[InverseLaplaceTransform, [Multiply, s, [Divide, 1, [Multiply, [Add, [Power, a, 2], [Power, s, 2]], [Add, [Power, b, 2], [Power, s, 2]]]]], s, t]	[InverseLaplaceTransform, [Divide, s, [Multiply, [Add, [Power, a, 2], [Power, s, 2]], [Add, [Power, b, 2], [Power, s, 2]]]], s, t]		unscanned
+fullsimplify-inverselaplacetransform-1-over-neg	Scope	triage	[FullSimplify, [InverseLaplaceTransform, [Multiply, [Divide, 1, [Multiply, [Add, [Negate, [Power, a, 2]], [Power, s, 2]], [Add, [Negate, [Power, b, 2]], [Power, s, 2]]]], [Power, s, 2]], s, t]]	[InverseLaplaceTransform, [Divide, [Power, s, 2], [Multiply, [Add, [Negate, [Power, a, 2]], [Power, s, 2]], [Add, [Negate, [Power, b, 2]], [Power, s, 2]]]], s, t]		unscanned
+inverselaplacetransform-1-over-s-minus-2-times	Scope	triage	[InverseLaplaceTransform, [Multiply, [Divide, 1, [Multiply, [Add, s, -2], [Sqrt, s]]], [Power, ExponentialE, [Multiply, -5, s]]], s, t]	[InverseLaplaceTransform, [Divide, [Power, ExponentialE, [Multiply, -5, s]], [Multiply, [Add, s, -2], [Sqrt, s]]], s, t]		unscanned

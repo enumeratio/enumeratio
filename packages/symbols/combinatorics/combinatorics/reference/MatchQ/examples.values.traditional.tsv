@@ -1,5 +1,6 @@
 id	in	out
 add-of-two-wildcards-matches-an-add	\mathrm{MatchQ}(x+1, \operatorname{\_a}+\operatorname{\_b})	\mathrm{True}
 matchq-1-plus-1-times-goldenratio-pow-neg-1	\mathrm{MatchQ}(1+\frac{1}{\varphi}-\varphi, 0)	\mathrm{False}
+matchq-simplify-1-plus-1-times-goldenratio-pow	\mathrm{MatchQ}(\mathrm{Simplify}(1+\frac{1}{\varphi}-\varphi), 0)	\mathrm{False}
 a-product-does-not-match-an-add-pattern	\mathrm{MatchQ}(xy, \operatorname{\_a}+\operatorname{\_b})	\mathrm{False}
 a-sequence-wildcard-matches-the-rest-of-a-list	\mathrm{MatchQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\operatorname{\_a}, \operatorname{\_\_rest}\bigr\rbrack)	\mathrm{True}

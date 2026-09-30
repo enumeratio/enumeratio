@@ -12,4 +12,7 @@ order-0	Hypergeometric0F1Regularized[0, 0.5]	0.6358617281560685	\, _0\tilde{F}_1
 order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]	0.06789905147462626	\, _0\tilde{F}_1(;-2;0.7)	0.0678991	
 order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]	0.2548833430058154 + 0.5234223951841014*I	N[\, _0\tilde{F}_1(;0;0.3\, +0.4 i)]	0.254883\, +0.523422 i	
 order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]	0.09427166608970398 - 0.07802491943203788*I	N[\, _0\tilde{F}_1(;-1;-0.5+0.2 i)]	0.0942717\, -0.0780249 i	
+n-hypergeometric0f1regularized-0-neg-48-50	N[Hypergeometric0F1Regularized[0, -48], 50]	-0.75356407978144308380327864211537660841009027837077692848127362590882490312817`50.			disagree
+n-hypergeometric0f1regularized-4-0-25	N[Hypergeometric0F1Regularized[4, 0], 25]	0.16666666666666666666666666666666666667`25.			disagree
+matrixfunction-function	MatrixFunction[Function[Hypergeometric0F1Regularized[Rational[1, 2], Slot[1]]], List[List[Rational[1, 2], 0], List[0, Rational[1, 2]]]]	{{BesselI[-1/2, Sqrt[2]]/2^(1/4), 0}, {0, BesselI[-1/2, Sqrt[2]]/2^(1/4)}}			disagree
 exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]	4*Hypergeometric0F1Regularized[3, 2]	\, _0\tilde{F}_1(;-1;2)	4 \, _0\tilde{F}_1(;3;2)	disagree

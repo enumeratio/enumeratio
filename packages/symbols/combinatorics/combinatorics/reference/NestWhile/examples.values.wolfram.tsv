@@ -1,8 +1,9 @@
-id	in	out	tex.in	tex.out
-halve-while-even	NestWhile[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]	3	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,96,(\text{$\#$1} \bmod 2)=0\&\right]	3
-nestwhile-function-1-times-2-pow-neg-1-123-456	NestWhile[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ]	1929	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,123456,\text{EvenQ}\right]	1929
-nestwhile-ln-100-function-1-gt-0	NestWhile[Log, 100, Function[Greater[Slot[1], 0]]]	Log[Log[Log[Log[100]]]]	\text{NestWhile}[\text{Log},100,\text{$\#$1}>0\&]	\log (\log (\log (\log (100))))
-nestwhile-function-1-times-2-pow-neg-1-123-456-2	NestWhile[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ, 1, 4]	7716	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,123456,\text{EvenQ},1,4\right]	7716
-nestwhile-function-1-plus-1-888-function	NestWhile[Function[Plus[Slot[1], 1]], 888, Function[Not[PrimeQ[Slot[1]]]]]	907	\text{NestWhile}[\text{$\#$1}+1\&,888,\neg \text{PrimeQ}[\text{$\#$1}]\&]	907
-nestwhile-function-1-plus-1-1-function-fibonacci	NestWhile[Function[Plus[Slot[1], 1]], 1, Function[LessEqual[Fibonacci[Slot[1]], Power[10, 6]]]]	31	\text{NestWhile}\left[\text{$\#$1}+1\&,1,F_{\text{$\#$1}}\leq 10^6\&\right]	31
-nestwhile-function-floor-1-times-2-pow-neg-1-10	NestWhile[Function[Floor[Times[Slot[1], Power[2, -1]]]], 10, Function[Greater[Slot[1], 0]]]	0	\text{NestWhile}\left[\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,10,\text{$\#$1}>0\&\right]	0
+id	in	out	tex.in	tex.out	verdict
+halve-while-even	NestWhile[Function[Divide[Slot[1], 2]], 96, Function[(Mod[Slot[1], 2] == 0)]]	3	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,96,(\text{$\#$1} \bmod 2)=0\&\right]	3	
+nestwhile-function-1-times-2-pow-neg-1-123-456	NestWhile[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ]	1929	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,123456,\text{EvenQ}\right]	1929	
+nestwhile-ln-100-function-1-gt-0	NestWhile[Log, 100, Function[Greater[Slot[1], 0]]]	Log[Log[Log[Log[100]]]]	\text{NestWhile}[\text{Log},100,\text{$\#$1}>0\&]	\log (\log (\log (\log (100))))	
+nestwhile-function-1-times-2-pow-neg-1-123-456-2	NestWhile[Function[Times[Slot[1], Power[2, -1]]], 123456, EvenQ, 1, 4]	7716	\text{NestWhile}\left[\frac{\text{$\#$1}}{2}\&,123456,\text{EvenQ},1,4\right]	7716	
+nestwhile-function-1-plus-1-888-function	NestWhile[Function[Plus[Slot[1], 1]], 888, Function[Not[PrimeQ[Slot[1]]]]]	907	\text{NestWhile}[\text{$\#$1}+1\&,888,\neg \text{PrimeQ}[\text{$\#$1}]\&]	907	
+nestwhile-function-1-plus-1-1-function-fibonacci	NestWhile[Function[Plus[Slot[1], 1]], 1, Function[LessEqual[Fibonacci[Slot[1]], Power[10, 6]]]]	31	\text{NestWhile}\left[\text{$\#$1}+1\&,1,F_{\text{$\#$1}}\leq 10^6\&\right]	31	
+nestwhile-function-1-plus-1-888-function-2	NestWhile[Function[Plus[Slot[1], 1]], 888, Function[Or[Not[PrimeQ[Slot[1]]], Not[PrimeQ[Slot[3]]]]], 3]	1021			disagree
+nestwhile-function-floor-1-times-2-pow-neg-1-10	NestWhile[Function[Floor[Times[Slot[1], Power[2, -1]]]], 10, Function[Greater[Slot[1], 0]]]	0	\text{NestWhile}\left[\left\lfloor \frac{\text{$\#$1}}{2}\right\rfloor \&,10,\text{$\#$1}>0\&\right]	0	

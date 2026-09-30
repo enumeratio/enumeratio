@@ -20,5 +20,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	NumericQ[InverseErf[Divide[1, Pi], Rational[
 erfinv-0-0	InverseErf[0, 0]
 erfinv-0-1	InverseErf[0, 1]
 erfinv-1-0	InverseErf[1, 0]
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	Solve[Equal[Plus[Power[InverseErf[x], 3], Times[2, InverseErf[x]]], 1], x]
+attributes-erfinv	Attributes[InverseErf]
 outside-its-real-domain-1-1-compute-engine	InverseErf[2]
 blows-up-near-the-boundary-erfinv-0-9999-is	InverseErf[0.9999]

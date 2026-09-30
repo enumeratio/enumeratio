@@ -3,11 +3,15 @@ commonest-list-1-1-2-2-3
 with-a-unique-mode-commonest-returns-a-single		
 every-element-tied-for-most-frequent-symbols-and		
 a-single-most-frequent-element-still-comes-back		
+commonest-list-b-a-c-2-a-b-1-2-4		
+commonest-list-b-a-c-2-a-b-1-2-upto-6		
 all-distinct-all-tie		
 the-n-commonest-most-frequent-first		
 commonest-list-a-exponentiale-sin-y-exponentiale		
 commonest-n-list-1-2-2-3-3-3-4		
 commonest-n-list-1-2-2-3-3-3-4-30		
+commonest-data		
+commonest-heights		
 with-a-unique-mode-commonest-c-mode-c-see-mode		
 without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\mathrm{True}
 a-frequency-tie-between-4-and-1-is-broken-by		

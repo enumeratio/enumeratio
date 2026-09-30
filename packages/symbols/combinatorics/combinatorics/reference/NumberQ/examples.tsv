@@ -1,9 +1,10 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-an-integer-literal			[NumberQ, 2]	True		
-a-symbolic-constant-is-not-numberq	Scope		[NumberQ, Pi]	False		
-a-plain-symbol-is-not-numberq	Scope		[NumberQ, x]	False		
-numberq-n-sqrt-2	Scope		[NumberQ, [N, [Sqrt, 2]]]	True		
-list-numberq-c-numberq-d	Scope		[List, [NumberQ, c], [NumberQ, d]]	[List, False, False]		
-list-numberq-o-numberq-u	Scope		[List, [NumberQ, o], [NumberQ, u]]	[List, False, False]		
-numberq-sqrt-2	Scope		[NumberQ, [Sqrt, 2]]	True	convention	compute-engine folds Sqrt(2) into an exact numeric-literal value with .numericValue set, same representational choice noted in Length/length-sqrt-7 — our NumberQ heuristic (presence of .numericValue) can't distinguish that from a true literal the way Wolfram's FullForm-based NumberQ (False for the unevaluated Power[2,1/2]) can
-numberq-positiveinfinity	Scope		[NumberQ, PositiveInfinity]	True	convention	Infinity carries a .numericValue (Infinity) in our engine's representation; Wolfram's Infinity is DirectedInfinity[1], not itself a number, so NumberQ[Infinity] is False there. Same representational tradeoff as numberq-sqrt-2 — the doc comment on declareNumberQ already flags this heuristic as deliberate/imperfect
+id	section	role	expr	expected	triage	wolfram.kind	wolfram.note
+an-integer-literal			[NumberQ, 2]	True			
+a-symbolic-constant-is-not-numberq	Scope		[NumberQ, Pi]	False			
+a-plain-symbol-is-not-numberq	Scope		[NumberQ, x]	False			
+numberq-n-sqrt-2	Scope		[NumberQ, [N, [Sqrt, 2]]]	True			
+list-numberq-c-numberq-d	Scope		[List, [NumberQ, c], [NumberQ, d]]	[List, False, False]			
+list-numberq-o-numberq-u	Scope		[List, [NumberQ, o], [NumberQ, u]]	[List, False, False]			
+numberq-sqrt-2	Scope		[NumberQ, [Sqrt, 2]]	True		convention	compute-engine folds Sqrt(2) into an exact numeric-literal value with .numericValue set, same representational choice noted in Length/length-sqrt-7 — our NumberQ heuristic (presence of .numericValue) can't distinguish that from a true literal the way Wolfram's FullForm-based NumberQ (False for the unevaluated Power[2,1/2]) can
+numberq-positiveinfinity	Scope		[NumberQ, PositiveInfinity]	True		convention	Infinity carries a .numericValue (Infinity) in our engine's representation; Wolfram's Infinity is DirectedInfinity[1], not itself a number, so NumberQ[Infinity] is False there. Same representational tradeoff as numberq-sqrt-2 — the doc comment on declareNumberQ already flags this heuristic as deliberate/imperfect
+ismatrix-m-numberq	Applications	triage	[IsMatrix, m, NumberQ]	False	unscanned		

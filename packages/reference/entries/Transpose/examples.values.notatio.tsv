@@ -1,4 +1,10 @@
 id	in	out
 transpose-list-list-a-x-list-b-y-list-c-z	<Transpose><List><List>a x</List> <List>b y</List> <List>c z</List></List></Transpose>	<List><List>a b c</List> <List>x y z</List></List>
+transpose-m	<Transpose>m</Transpose>	<m />
+transpose-s	<Transpose>s</Transpose>	<s />
 chop-dot-u-transpose-u	<Chop><Dot>u <Transpose>u</Transpose></Dot></Chop>	<Chop><MatrixMultiply>u <Transpose>u</Transpose></MatrixMultiply></Chop>
 chop-dot-v-transpose-v	<Chop><Dot>v <Transpose>v</Transpose></Dot></Chop>	<Chop><MatrixMultiply>v <Transpose>v</Transpose></MatrixMultiply></Chop>
+s-eq-transpose-s	<Equal>s <Transpose>s</Transpose></Equal>	<True />
+transpose-s-eq-s	<Equal><Transpose>s</Transpose> s</Equal>	<True />
+conjugate-transpose-m	<Conjugate><Transpose>m</Transpose></Conjugate>	<Conjugate>m</Conjugate>
+shape-transpose-a-perm	<Shape><Transpose>a perm</Transpose></Shape>	<Apply>Tuple</Apply>

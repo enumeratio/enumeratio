@@ -11,11 +11,9 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  bySection,
   type HeadImplementations,
   type OtherSystemRun,
   type ReferenceEntry,
-  type ReferenceExample,
   type SystemImplementation,
 } from "@enumeratio/entry";
 import {
@@ -56,10 +54,6 @@ export interface LoadResult {
   readonly issues: readonly LoadIssue[];
 }
 
-/** True when the rows are in page order: each section's together, the sections in order. */
-const inPageOrder = (examples: readonly ReferenceExample[]): boolean =>
-  JSON.stringify(bySection(examples).map((e) => e.id)) === JSON.stringify(examples.map((e) => e.id));
-
 /**
  * Scan every package's record directory (see `recordDirs` in `@enumeratio/entry/node`) for head
  * folders (`<Head>/index.md`, `examples.tsv`, `examples.values.<system>.tsv`), parse and validate
@@ -92,11 +86,6 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
       if (examples.length > 0)
         for (const message of validateSchema(REFERENCE_EXAMPLES_SCHEMA, examples))
           issues.push({ file: examplesPath, message });
-      if (!inPageOrder(examples))
-        issues.push({
-          file: examplesPath,
-          message: "rows aren't in page order (each section's together, in SECTIONS order): run format-records",
-        });
       const implementations = record.implementations;
       if (implementations !== undefined)
         for (const message of validateSchema(HEAD_IMPLEMENTATIONS_SCHEMA, implementations))

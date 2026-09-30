@@ -5,11 +5,16 @@ map-add-over-two-collections-zips-them	MapThread[Plus, List[List[1, 2, 3], List[
 map-f-list-a-b-c-d-exponentiale	Map[f, List[a, b, c, d, E]]	{f[a], f[b], f[c], f[d], f[E]}	f\text{/@}\{a,b,c,d,e\}	\{f(a),f(b),f(c),f(d),f(e)\}	
 map-f-list-list-a-b-list-c-d-exponentiale	Map[f, List[List[a, b], List[c, d, E]]]	{f[{a, b}], f[{c, d, E}]}	f\text{/@}\{\{a,b\},\{c,d,e\}\}	\{f(\{a,b\}),f(\{c,d,e\})\}	
 map-function-x-pow-2-x-list-1-2-3-4	Map[Function[x, Power[x, 2]], List[1, 2, 3, 4]]	{1, 4, 9, 16}	\left(x\unicode{f4a1}x^2\right)\text{/@}\{1,2,3,4\}	\{1,4,9,16\}	
+map-f-list-list-a-b-list-c-d-exponentiale-list-2	MapThread[f, List[List[List[a, b], List[c, d, E]], List[2]]]	MapThread[f, {{{a, b}, {c, d, E}}, {2}}]			disagree
 map-f-list-list-list-list-list-a	Map[f, List[List[List[List[List[a]]]]]]	{f[{{{{a}}}}]}	f\text{/@}\left( \begin{array}{c}  \left( \begin{array}{c}  \{a\} \\ \end{array} \right) \\ \end{array} \right)	\left\{f\left(\left( \begin{array}{c}  \left( \begin{array}{c}  a \\ \end{array} \right) \\ \end{array} \right)\right)\right\}	
 map-f-list-a-b-c	Map[f, List[a, b, c]]	{f[a], f[b], f[c]}	f\text{/@}\{a,b,c\}	\{f(a),f(b),f(c)\}	
 map-f-list-list-list-list-list-a-list-2	MapThread[f, List[List[List[List[List[List[a]]]]], List[2]]]	{f[{{{{a}}}}, 2]}	\text{MapThread}\left[f,\left( \begin{array}{c}  \left( \begin{array}{c}  \left( \begin{array}{c}  a \\ \end{array} \right) \\ \end{array} \right) \\  2 \\ \end{array} \right)\right]	\left\{f\left(\left( \begin{array}{c}  \left( \begin{array}{c}  a \\ \end{array} \right) \\ \end{array} \right),2\right)\right\}	
+map-f-list-list-list-list-list-a-list-0-2	MapThread[f, List[List[List[List[List[List[a]]]]], List[0, 2]]]	MapThread[f, {{{{{{a}}}}}, {0, 2}}]			disagree
+map-f-list-list-list-list-list-a-list-0	MapThread[f, List[List[List[List[List[List[a]]]]], List[0, Infinity]]]	MapThread[f, {{{{{{a}}}}}, {0, Infinity}}]			disagree
+map-f-list-list-list-list-list-a-list-2-neg-3	MapThread[f, List[List[List[List[List[List[a]]]]], List[2, -3]]]	MapThread[f, {{{{{{a}}}}}, {2, -3}}]			disagree
 map-reverse-list-list-a-b-list-c-d-list	Map[Reverse, List[List[a, b], List[c, d], List[E, f]]]	{{b, a}, {d, c}, {f, E}}	\text{Reverse}\text{/@}\left( \begin{array}{cc}  a & b \\  c & d \\  e & f \\ \end{array} \right)	\left( \begin{array}{cc}  b & a \\  d & c \\  f & e \\ \end{array} \right)	
 map-function-1-plus-list-x-y-1-list-list-1-1	Map[Function[Plus[Slot[1], List[x, y]]], List[List[1, 1], List[2, 2], List[3, 3], List[4, 4]]]	{{1 + x, 1 + y}, {2 + x, 2 + y}, {3 + x, 3 + y}, {4 + x, 4 + y}}			disagree
 mapping-over-an-empty-collection-returns-empty					
 map-sqrt-list-1-2-3-4	Map[Sqrt, List[1, 2, 3, 4]]	{1, Sqrt[2], Sqrt[3], 2}	\text{Sqrt}\text{/@}\{1,2,3,4\}	\left\{1,\sqrt{2},\sqrt{3},2\right\}	
 map-f-list-x-y-z	Map[f, List[x, y, z]]	{f[x], f[y], f[z]}	f\text{/@}\{x,y,z\}	\{f(x),f(y),f(z)\}	
+map-f-list-list-a-b-list-c-list-list-d-list-0	MapThread[f, List[List[List[a, b], List[c], List[List[d]]], List[0, Infinity]]]	MapThread[f, {{{a, b}, {c}, {{d}}}, {0, Infinity}}]			disagree

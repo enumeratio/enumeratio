@@ -13,6 +13,7 @@ n-dirichletl-4-2-1p0001-near-the-removable-point	N[DirichletL[4, 2, 1.0001]]	0.7
 complex-s-l-s-chi-1-bmod-2-1-2-s-zeta-s-at-s-1-i	N[DirichletL[2, 1, Complex[1, 1]]]	0.6543589174072333 - 0.3843763502148*I	N[L_{2,1}(1+i)]	0.654359\, -0.384376 i	
 listable-in-s-threads-over-a-list	DirichletL[1, 1, List[1, 2, 3, 4]]	{ComplexInfinity, Pi^2/6, Zeta[3], Pi^4/90}	L_{1,1}(\{1,2,3,4\})	\left\{\text{ComplexInfinity},\frac{\pi ^2}{6},\zeta (3),\frac{\pi ^4}{90}\right\}	
 interval-arithmetic-in-s-decreasing-here	DirichletL[5, 1, Interval[List[1.23, 1.24]]]	Interval[{4.091451935058389, 4.280870671205154}]	L_{5,1}(\text{Interval}[\{1.23,1.24\}])	\text{Interval}[\{4.09145,4.28087\}]	disagree
+n-dirichletl-3-2-1-over-2-50	N[DirichletL[3, 2, Rational[1, 2]], 50]	0.4808675576968286261812200632355898777768297308323718631792041258300085983451`50.			disagree
 a-principal-character-drops-the-euler-factors-at					
 and-keeps-zeta-s-pole-a-non-principal-l-is	DirichletL[12, 1, 1]	DirichletL[12, 1, 1]	L_{12,1}(1)	L_{12,1}(1)	disagree
 l-0-chi-frac-35-frac-15-i-exact-from-the	DirichletL[5, 2, 0]	3/5 + I/5	L_{5,2}(0)	\frac{3}{5}+\frac{i}{5}	

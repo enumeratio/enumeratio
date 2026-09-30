@@ -114,7 +114,7 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry 
             // and the test asserts the gap is still open.
             expected: ["List"],
             caption: `${sample.caption} — once there is a definition to evaluate`,
-            aspirational: true,
+            role: "aspirational" as const,
           },
         ];
   return {

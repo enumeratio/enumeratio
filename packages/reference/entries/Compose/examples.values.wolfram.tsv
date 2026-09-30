@@ -1,0 +1,2 @@
+id	in	out	verdict
+apply-compose-f-g-h-list-x-y-z	Composition[f, g, h][List[x, y, z]]	f[g[h[{x, y, z}]]]	disagree

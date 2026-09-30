@@ -10,4 +10,5 @@ unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	\mathrm{Unique}(\bigl\lbrack1, 7, 8, 4
 count-the-distinct-elements	\mathrm{Length}(\mathrm{Unique}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack))	3
 the-residues-mod-3-that-occur-in-order-of-first	\mathrm{Unique}((1..10)\bmod3)	\bigl\lbrack1, 2, 0\bigr\rbrack
 idempotent	\mathrm{Unique}(\mathrm{Unique}(\bigl\lbrack1, 1, 2\bigr\rbrack))	\bigl\lbrack1, 2\bigr\rbrack
+unique-list-function-sum-1-eq-sum-2-1-2	\mathrm{Unique}(\mathrm{list}, ()\mapsto\sum\operatorname{\_1}=\sum\operatorname{\_2})	\bigl\lbrack\bigr\rbrack
 unique-list-3-3-3-function-false	\mathrm{Unique}(\bigl\lbrack3, 3, 3\bigr\rbrack, ()\mapsto\bot)	\bigl\lbrack3, 3, 3\bigr\rbrack

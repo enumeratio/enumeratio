@@ -1,24 +1,30 @@
-id	section	role	expr	expected	caption
-product-list-1-2-3-4			[Product, [List, 1, 2, 3, 4]]	24	
-the-empty-product-is-1-by-convention-matching			[Product, [List]]	1	The empty product is 1 by convention, matching [[Factorial]] of 0
-prod-i-1-6-i-2-6-2			[Product, [Power, i, 2], [Tuple, i, 1, 6]]	518400	$\prod_{i=1}^{6} i^2 = (6!)^2$
-a-symbolic-upper-limit-prod-i-1-n-i-2-n-2			[Product, [Power, i, 2], [Tuple, i, 1, n]]	[Power, [Factorial, n], 2]	A symbolic upper limit: $\prod_{i=1}^{n} i^2 = (n!)^2$
-a-symbolic-upper-limit-prod-k-1-n-k-n-see	Scope		[Product, k, [Tuple, k, 1, n]]	[Factorial, n]	A symbolic upper limit: $\prod_{k=1}^{n} k = n!$. See [[Factorial]]
-exponents-add-prod-k-1-n-x-k-x-n-n-1-2	Scope		[Product, [Power, x, k], [Tuple, k, 1, n]]	[Power, x, [Multiply, [Rational, 1, 2], n, [Add, n, 1]]]	Exponents add: $\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$
-a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	Scope		[Product, [Divide, [Add, k, 1], k], [Tuple, k, 1, n]]	[Add, n, 1]	A telescoping product: $\prod_{k=1}^{n} \frac{k+1}{k} = n+1$
-an-undefined-function-expanded-term-by-term	Scope		[Product, [f, i], [Tuple, i, 1, 4]]	[Multiply, [f, 1], [f, 2], [f, 3], [f, 4]]	An undefined function, expanded term by term
-a-step-of-2-takes-every-other-index	Scope		[Product, [f, i], [Tuple, i, 1, 4, 2]]	[Multiply, [f, 1], [f, 3]]	A step of 2 takes every other index
-over-an-explicit-list-of-values	Scope		[Product, [f, i], [Element, i, [List, a, b, c]]]	[Multiply, [f, a], [f, b], [f, c]]	Over an explicit list of values
-a-polynomial-with-roots-1-2-and-3	Scope		[Product, [Subtract, x, k], [Tuple, k, 1, 3]]	[Multiply, [Add, x, -3], [Add, x, -2], [Add, x, -1]]	A polynomial with roots 1, 2 and 3
-a-double-product-over-a-3-times-3-grid	Scope		[Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, 3]]	172800	A double product over a $3 \times 3$ grid
-an-inner-limit-that-depends-on-the-outer-index-a	Scope		[Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, i]]	2880	An inner limit that depends on the outer index, a triangular product
-a-symbolic-triangular-product-prod-i-1-p-prod-j	Scope		[Product, [Power, 2, [Add, i, j]], [Tuple, i, 1, p], [Tuple, j, 1, i]]	[Power, 2, [Multiply, [Rational, 1, 2], p, [Power, [Add, p, 1], 2]]]	A symbolic triangular product: $\prod_{i=1}^{p}\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$
-an-infinite-product-with-a-closed-form-prod-k-1	Scope		[Product, [Add, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 1, PositiveInfinity]]	[Divide, [Sinh, Pi], Pi]	An infinite product with a closed form: $\prod_{k=1}^{\infty} (1 + 1/k^2) = \frac{\sinh \pi}{\pi}$
-an-infinite-telescoping-product-prod-k-2-infty-1	Scope		[Product, [Subtract, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 2, PositiveInfinity]]	[Rational, 1, 2]	An infinite telescoping product: $\prod_{k=2}^{\infty} (1 - 1/k^2) = \frac{1}{2}$
-prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	Scope		[Product, [Subtract, 1, [Divide, 1, [Power, i, 4]]], [Tuple, i, 2, PositiveInfinity]]	[Divide, [Sinh, Pi], [Multiply, 4, Pi]]	A quartic infinite product, via a Gamma product over a conjugate pair of Gaussian-integer roots $\pm i$ alongside the real roots $\pm 1$: $\prod_{i=2}^{\infty} (1 - 1/i^4) = \frac{\sinh \pi}{4\pi}$
-exact-rationals-in-a-collection	Scope		[Product, [List, [Rational, 1, 2], [Rational, 2, 3], [Rational, 3, 4]]]	[Rational, 1, 4]	Exact rationals in a collection
-symbolic-elements	Scope		[Product, [List, a, b, c]]	[Multiply, a, b, c]	Symbolic elements
-range-stays-lazy-on-its-own-but-product-forces	Applications		[Product, [Range, 1, 6]]	720	[[Range]] stays lazy on its own, but Product forces it to compute $6!$
-the-product-of-1-through-n-is-n-see-factorial	Properties		[Equal, [Product, [List, 1, 2, 3, 4]], [Factorial, 4]]	True	The product of $1$ through $n$ is $n!$. See [[Factorial]]
-the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	Neat examples		[Product, [Divide, [Multiply, 4, [Power, k, 2]], [Subtract, [Multiply, 4, [Power, k, 2]], 1]], [Tuple, k, 1, PositiveInfinity]]	[Multiply, [Rational, 1, 2], Pi]	The Wallis product, via the same Gamma-product method: $\prod_{k=1}^{\infty} \frac{4k^2}{4k^2-1} = \frac{\pi}{2}$
-an-asymmetric-infinite-product-n-n-3-n-1-n-2	Neat examples		[Product, [Divide, [Multiply, n, [Add, n, 3]], [Multiply, [Add, n, 1], [Add, n, 2]]], [Tuple, n, 1, PositiveInfinity]]	[Rational, 1, 3]	Roots need not pair off as $\pm r$ -- $0$ and $-3$ each close on their own, straight to a factorial: $\prod_{n=1}^{\infty} \frac{n(n+3)}{(n+1)(n+2)} = \frac{1}{3}$
+id	section	role	expr	expected	caption	triage
+product-list-1-2-3-4			[Product, [List, 1, 2, 3, 4]]	24		
+the-empty-product-is-1-by-convention-matching			[Product, [List]]	1	The empty product is 1 by convention, matching [[Factorial]] of 0	
+prod-i-1-6-i-2-6-2			[Product, [Power, i, 2], [Tuple, i, 1, 6]]	518400	$\prod_{i=1}^{6} i^2 = (6!)^2$	
+a-symbolic-upper-limit-prod-i-1-n-i-2-n-2			[Product, [Power, i, 2], [Tuple, i, 1, n]]	[Power, [Factorial, n], 2]	A symbolic upper limit: $\prod_{i=1}^{n} i^2 = (n!)^2$	
+a-symbolic-upper-limit-prod-k-1-n-k-n-see	Scope		[Product, k, [Tuple, k, 1, n]]	[Factorial, n]	A symbolic upper limit: $\prod_{k=1}^{n} k = n!$. See [[Factorial]]	
+exponents-add-prod-k-1-n-x-k-x-n-n-1-2	Scope		[Product, [Power, x, k], [Tuple, k, 1, n]]	[Power, x, [Multiply, [Rational, 1, 2], n, [Add, n, 1]]]	Exponents add: $\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$	
+a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	Scope		[Product, [Divide, [Add, k, 1], k], [Tuple, k, 1, n]]	[Add, n, 1]	A telescoping product: $\prod_{k=1}^{n} \frac{k+1}{k} = n+1$	
+an-undefined-function-expanded-term-by-term	Scope		[Product, [f, i], [Tuple, i, 1, 4]]	[Multiply, [f, 1], [f, 2], [f, 3], [f, 4]]	An undefined function, expanded term by term	
+a-step-of-2-takes-every-other-index	Scope		[Product, [f, i], [Tuple, i, 1, 4, 2]]	[Multiply, [f, 1], [f, 3]]	A step of 2 takes every other index	
+over-an-explicit-list-of-values	Scope		[Product, [f, i], [Element, i, [List, a, b, c]]]	[Multiply, [f, a], [f, b], [f, c]]	Over an explicit list of values	
+a-polynomial-with-roots-1-2-and-3	Scope		[Product, [Subtract, x, k], [Tuple, k, 1, 3]]	[Multiply, [Add, x, -3], [Add, x, -2], [Add, x, -1]]	A polynomial with roots 1, 2 and 3	
+a-double-product-over-a-3-times-3-grid	Scope		[Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, 3]]	172800	A double product over a $3 \times 3$ grid	
+an-inner-limit-that-depends-on-the-outer-index-a	Scope		[Product, [Add, i, j], [Tuple, i, 1, 3], [Tuple, j, 1, i]]	2880	An inner limit that depends on the outer index, a triangular product	
+a-symbolic-triangular-product-prod-i-1-p-prod-j	Scope		[Product, [Power, 2, [Add, i, j]], [Tuple, i, 1, p], [Tuple, j, 1, i]]	[Power, 2, [Multiply, [Rational, 1, 2], p, [Power, [Add, p, 1], 2]]]	A symbolic triangular product: $\prod_{i=1}^{p}\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$	
+an-infinite-product-with-a-closed-form-prod-k-1	Scope		[Product, [Add, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 1, PositiveInfinity]]	[Divide, [Sinh, Pi], Pi]	An infinite product with a closed form: $\prod_{k=1}^{\infty} (1 + 1/k^2) = \frac{\sinh \pi}{\pi}$	
+an-infinite-telescoping-product-prod-k-2-infty-1	Scope		[Product, [Subtract, 1, [Divide, 1, [Power, k, 2]]], [Tuple, k, 2, PositiveInfinity]]	[Rational, 1, 2]	An infinite telescoping product: $\prod_{k=2}^{\infty} (1 - 1/k^2) = \frac{1}{2}$	
+prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	Scope		[Product, [Subtract, 1, [Divide, 1, [Power, i, 4]]], [Tuple, i, 2, PositiveInfinity]]	[Divide, [Sinh, Pi], [Multiply, 4, Pi]]	A quartic infinite product, via a Gamma product over a conjugate pair of Gaussian-integer roots $\pm i$ alongside the real roots $\pm 1$: $\prod_{i=2}^{\infty} (1 - 1/i^4) = \frac{\sinh \pi}{4\pi}$	
+exact-rationals-in-a-collection	Scope		[Product, [List, [Rational, 1, 2], [Rational, 2, 3], [Rational, 3, 4]]]	[Rational, 1, 4]	Exact rationals in a collection	
+symbolic-elements	Scope		[Product, [List, a, b, c]]	[Multiply, a, b, c]	Symbolic elements	
+product-a-pow-i-i-nothing-n	Scope	triage	[Product, [Power, a, i], [Limits, i, Nothing, n]]	[Power, a, [Multiply, [Rational, 1, 2], [Add, n, -1], [Add, n, 2]]]		unscanned
+product-a-pow-i-j-nothing-m-i-nothing-j	Scope	triage	[Product, [Power, a, i], [Limits, j, Nothing, m], [Limits, i, Nothing, j]]	[Power, a, [Multiply, [Rational, 1, 6], m, [Add, m, -1], [Add, m, 4]]]		unscanned
+product-i-times-j-i-nothing-nothing-j-nothing	Scope	triage	[Product, [Multiply, i, j], [Limits, i, Nothing, Nothing], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, i, j], [Limits, j, Nothing, Nothing]], [Limits, i, Nothing, Nothing]]		unscanned
+product-i-times-j-i-1-n-j-nothing-nothing	Scope	triage	[Product, [Multiply, i, j], [Limits, i, 1, n], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, i, j], [Limits, j, Nothing, Nothing]], [Limits, i, 1, n]]		unscanned
+product-3-times-q-pow-2i-plus-5-i-nothing	Scope	triage	[Product, [Add, [Multiply, 3, [Power, q, [Multiply, 2, i]]], 5], [Limits, i, Nothing, Nothing]]	[Add, [Multiply, 3, [Power, q, 2]], 5]		unscanned
+product-1-over-q-pow-8i-plus-11-times-q-pow-8	Scope	triage	[Product, [Multiply, [Divide, 1, [Add, [Power, q, [Multiply, 8, i]], 11]], [Add, [Power, q, [Multiply, 8, [Add, i, 1]]], 11]], [Limits, i, Nothing, Nothing]]	1		unscanned
+range-stays-lazy-on-its-own-but-product-forces	Applications		[Product, [Range, 1, 6]]	720	[[Range]] stays lazy on its own, but Product forces it to compute $6!$	
+the-product-of-1-through-n-is-n-see-factorial	Properties		[Equal, [Product, [List, 1, 2, 3, 4]], [Factorial, 4]]	True	The product of $1$ through $n$ is $n!$. See [[Factorial]]	
+the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	Neat examples		[Product, [Divide, [Multiply, 4, [Power, k, 2]], [Subtract, [Multiply, 4, [Power, k, 2]], 1]], [Tuple, k, 1, PositiveInfinity]]	[Multiply, [Rational, 1, 2], Pi]	The Wallis product, via the same Gamma-product method: $\prod_{k=1}^{\infty} \frac{4k^2}{4k^2-1} = \frac{\pi}{2}$	
+an-asymmetric-infinite-product-n-n-3-n-1-n-2	Neat examples		[Product, [Divide, [Multiply, n, [Add, n, 3]], [Multiply, [Add, n, 1], [Add, n, 2]]], [Tuple, n, 1, PositiveInfinity]]	[Rational, 1, 3]	Roots need not pair off as $\pm r$ -- $0$ and $-3$ each close on their own, straight to a factorial: $\prod_{n=1}^{\infty} \frac{n(n+3)}{(n+1)(n+2)} = \frac{1}{3}$	

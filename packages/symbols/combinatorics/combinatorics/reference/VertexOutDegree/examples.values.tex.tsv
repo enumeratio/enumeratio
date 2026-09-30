@@ -1,3 +1,4 @@
 id	in	out
 directed-edge-counts-once-at-the-tail	\mathrm{VertexOutDegree}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(1, 3)\bigr\rbrack), 1)	2
 undirected-edge-ignored-on-a-mixed-graph	\mathrm{VertexOutDegree}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack))	\bigl\lbrack1, 0, 1\bigr\rbrack
+union-vertexoutdegree-g	\mathrm{Union}(\mathrm{VertexOutDegree}(g))	\lbrace\mathrm{VertexOutDegree}(g)\rbrace

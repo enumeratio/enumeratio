@@ -4,6 +4,9 @@ m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiNC}(0.3, -2))	1.049\,687
 the-quarter-period-is-a-pole-even-when-m-is-0	\mathrm{JacobiNC}(\mathrm{EllipticK}(0), 0)	\tilde\infty
 matrixfunction-function-jacobinc-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiNC}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack
 list-jacobinc-z-0-jacobinc-z-1	\bigl\lbrack\mathrm{JacobiNC}(z, 0), \mathrm{JacobiNC}(z, 1)\bigr\rbrack	\bigl\lbrack\frac{1}{\cos(z)}, \cosh(z)\bigr\rbrack
+n-jacobinc-2-1-over-3-50	N(\mathrm{JacobiNC}(2, \frac{1}{3}), 50)	\mathrm{JacobiNC}(2, 0.\overline{3})
+list-jacobinc-0-m-jacobinc-1-over-2-times	\bigl\lbrack\mathrm{JacobiNC}(0, m), \mathrm{JacobiNC}(\frac{\mathrm{EllipticK}(m)}{2}, m), \mathrm{JacobiNC}(i\mathrm{EllipticK}(1-m), m)\bigr\rbrack	\bigl\lbrack1, \mathrm{JacobiNC}(\frac{\mathrm{EllipticK}(m)}{2}, m), \mathrm{JacobiNC}(i\mathrm{EllipticK}(1-m), m)\bigr\rbrack
+list-jacobinc-elliptick-m-m-jacobinc-3-times	\bigl\lbrack\mathrm{JacobiNC}(\mathrm{EllipticK}(m), m), \mathrm{JacobiNC}(3\mathrm{EllipticK}(m), m), \mathrm{JacobiNC}(2i\mathrm{EllipticK}(1-m)+\mathrm{EllipticK}(m), m)\bigr\rbrack	\bigl\lbrack\tilde\infty, \mathrm{JacobiNC}(3\mathrm{EllipticK}(m), m), \mathrm{JacobiNC}(2i\mathrm{EllipticK}(1-m)+\mathrm{EllipticK}(m), m)\bigr\rbrack
 u-0-is-1-for-any-m	\mathrm{JacobiNC}(0, m)	1
 jacobinc-0-0	\mathrm{JacobiNC}(0, 0)	1
 jacobinc-1-over-2-times-pi-0	\mathrm{JacobiNC}(\frac{\pi}{2}, 0)	\tilde\infty

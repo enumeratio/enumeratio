@@ -12,4 +12,5 @@ export { isCanonicalYaml, parseYaml, type StringifyOptions, stringifyFlow, strin
 export { orderImplementations } from "./order.ts";
 export { captionId, dedupeId, EXAMPLE_ID, EXAMPLE_ID_MAX, slugId } from "./id.ts";
 export { bySection, SECTIONS } from "./sections.ts";
+export { isSettled } from "./roles.ts";
 export { expandLaw, type ExpandedLaw, type LawContext, lawsFor } from "./laws.ts";

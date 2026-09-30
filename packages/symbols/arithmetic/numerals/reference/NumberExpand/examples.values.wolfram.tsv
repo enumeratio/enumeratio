@@ -1,10 +1,12 @@
-id	in	out	tex.in	tex.out
-numberexpand-1-234	NumberExpand[1234]	{1000, 200, 30, 4}	\text{NumberExpand}[1234]	\{1000,200,30,4\}
-numberexpand-157	NumberExpand[157]	{100, 50, 7}	\text{NumberExpand}[157]	\{100,50,7\}
-numberexpand-157-2	NumberExpand[157, 2]	{128, 0, 0, 16, 8, 4, 0, 1}	\text{NumberExpand}[157,2]	\{128,0,0,16,8,4,0,1\}
-base-2-zero-terms-kept	NumberExpand[10, 2]	{8, 0, 2, 0}	\text{NumberExpand}[10,2]	\{8,0,2,0\}
-every-term-carries-the-sign	NumberExpand[-123]	{-100, -20, -3}	\text{NumberExpand}[-123]	\{-100,-20,-3\}
-numberexpand-1-437	NumberExpand[1437]	{1000, 400, 30, 7}	\text{NumberExpand}[1437]	\{1000,400,30,7\}
-numberexpand-neg-14-379	NumberExpand[-14379]	{-10000, -4000, -300, -70, -9}	\text{NumberExpand}[-14379]	\{-10000,-4000,-300,-70,-9\}
-numberexpand-1-532	NumberExpand[1532]	{1000, 500, 30, 2}	\text{NumberExpand}[1532]	\{1000,500,30,2\}
-numberexpand-1-532-10	NumberExpand[1532, 10]	{1000, 500, 30, 2}	\text{NumberExpand}[1532,10]	\{1000,500,30,2\}
+id	in	out	tex.in	tex.out	verdict
+numberexpand-1-234	NumberExpand[1234]	{1000, 200, 30, 4}	\text{NumberExpand}[1234]	\{1000,200,30,4\}	
+numberexpand-157	NumberExpand[157]	{100, 50, 7}	\text{NumberExpand}[157]	\{100,50,7\}	
+numberexpand-157-2	NumberExpand[157, 2]	{128, 0, 0, 16, 8, 4, 0, 1}	\text{NumberExpand}[157,2]	\{128,0,0,16,8,4,0,1\}	
+numberexpand-157-2-3	NumberExpand[157, 2, 3]	{128, 0, 29}			disagree
+base-2-zero-terms-kept	NumberExpand[10, 2]	{8, 0, 2, 0}	\text{NumberExpand}[10,2]	\{8,0,2,0\}	
+every-term-carries-the-sign	NumberExpand[-123]	{-100, -20, -3}	\text{NumberExpand}[-123]	\{-100,-20,-3\}	
+numberexpand-1-437	NumberExpand[1437]	{1000, 400, 30, 7}	\text{NumberExpand}[1437]	\{1000,400,30,7\}	
+numberexpand-neg-14-379	NumberExpand[-14379]	{-10000, -4000, -300, -70, -9}	\text{NumberExpand}[-14379]	\{-10000,-4000,-300,-70,-9\}	
+numberexpand-1-532	NumberExpand[1532]	{1000, 500, 30, 2}	\text{NumberExpand}[1532]	\{1000,500,30,2\}	
+numberexpand-1-532-10	NumberExpand[1532, 10]	{1000, 500, 30, 2}	\text{NumberExpand}[1532,10]	\{1000,500,30,2\}	
+numberexpand-1-437-10-8	NumberExpand[1437, 10, 8]	{1000, 400, 30, 7, 0, 0, 0, 0}			disagree

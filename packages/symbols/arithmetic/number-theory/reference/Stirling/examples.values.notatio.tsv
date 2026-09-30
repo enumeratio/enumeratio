@@ -5,6 +5,7 @@ stirling-20-10	<Stirling>20 10</Stirling>	<ToExpression>5917584964655</ToExpress
 exact-for-large-n	<Stirling>50 2</Stirling>	<ToExpression>562949953421311</ToExpression>
 threads-element-wise-over-a-list-as-wolfram-s	<Stirling><List>2 4 6</List> 2</Stirling>	<List>1 7 31</List>
 the-ways-to-split-10-distinct-items-among-3	<Stirling>10 3</Stirling>	<ToExpression>9330</ToExpression>
+stirling-n-range-1-n	<Stirling>n <Range>1 n</Range></Stirling>	<Map><Function><Block><Stirling>n _1</Stirling></Block> _1</Function> <Range>1 n</Range></Map>
 one-block-means-one-partition-s-n-1-1	<Stirling>5 1</Stirling>	<ToExpression>1</ToExpression>
 singletons-only-s-n-n-1	<Stirling>5 5</Stirling>	<ToExpression>1</ToExpression>
 row-sums-give-the-bell-numbers	<Equal><Sum><Stirling>4 k</Stirling> <Tuple>k 0 4</Tuple></Sum> <BellNumber>4</BellNumber></Equal>	<True />

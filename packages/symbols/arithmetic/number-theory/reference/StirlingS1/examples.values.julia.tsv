@@ -8,6 +8,7 @@ threads-element-wise-over-a-list-as-wolfram-s	[Combinatorics.stirlings1(big(2), 
 exact-for-large-n	Combinatorics.stirlings1(big(50), 2)	2724619372591264761651711494187624530726005154239846809600000000	
 a-mid-sized-n-and-k-past-the-fast-paths	Combinatorics.stirlings1(big(40), 14)	julia: killed (memory, peak 3088 MB)	error
 the-number-of-permutations-of-5-elements-with	Combinatorics.stirlings1(big(5), 3)	35	
+abs-stirlings1-n-range-1-n			
 the-unsigned-values-in-a-row-sum-to-n			
 the-signed-row-sum-vanishes-for-n-ge-2			
 s-n-n-1-binom-n-2	(Combinatorics.stirlings1(big(6), 5) == (-(binomial(ZZ(6), ZZ(2)))))	false	disagree

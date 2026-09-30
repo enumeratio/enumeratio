@@ -20,5 +20,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	\mathrm{IsNumeric}(\mathrm{ErfInv}(\frac{1}{
 erfinv-0-0	\mathrm{ErfInv}(0, 0)	0
 erfinv-0-1	\mathrm{ErfInv}(0, 1)	\infty
 erfinv-1-0	\mathrm{ErfInv}(1, 0)	\mathrm{ErfInv}(\operatorname{erf}(1))
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	\mathrm{Solve}(\mathrm{ErfInv}(x)^3+2\mathrm{ErfInv}(x)=1, x)	\bigl\lbrack\bigr\rbrack
+attributes-erfinv	\mathrm{Attributes}(\mathrm{ErfInv})	\bigl\lbrack\mathrm{Listable}\bigr\rbrack
 outside-its-real-domain-1-1-compute-engine	\mathrm{ErfInv}(2)	\mathrm{ErfInv}(2)
 blows-up-near-the-boundary-erfinv-0-9999-is	\mathrm{ErfInv}(0.999\,9)	2.751\,063\,905\,712\,060\,796\,15

@@ -35,4 +35,5 @@ two-adjacent-ones-is-not-a-numeral-so-it-denotes	<FromDigits><List>1 1</List> Ze
 ostrowski-declines-a-string-past-its-ceiling	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>
 non-coprime-residues-an-inconsistent-string	<FromDigits><List>1 2</List> <ResidueNumerals><List>4 6</List></ResidueNumerals></FromDigits>	<FromDigits><List>1 2</List> <ResidueNumerals><List>4 6</List></ResidueNumerals></FromDigits>
 a-malformed-roman-numeral-declines	<FromDigits>"IIII" "Roman"</FromDigits>	<FromDigits>"IIII" "Roman"</FromDigits>
+map-fromdigits-list-7-8-9-a-b-c-d	<Map>FromDigits <List>"7" "8" "9" "A" "B" "C" "D"</List></Map>	<List>7 8 9 <FromDigits>"A"</FromDigits> <FromDigits>"B"</FromDigits> <FromDigits>"C"</FromDigits> <FromDigits>"D"</FromDigits></List>
 digits-the-base-carry-into-higher-place-values-7	<FromDigits><List>7 11 0 0 0 122</List></FromDigits>	<ToExpression>810122</ToExpression>

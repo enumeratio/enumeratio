@@ -1,19 +1,21 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-join-list-1-2-list-3-4			[Join, [List, 1, 2], [List, 3, 4]]	[List, 1, 2, 3, 4]			
-join-list-1-2-list-3-4-list-5			[Join, [List, 1, 2], [List, 3, 4], [List, 5]]	[List, 1, 2, 3, 4, 5]			
-join-list-a-b-c-list-x-y-list-u-v-w			[Join, [List, a, b, c], [List, x, y], [List, u, v, w]]	[List, a, b, c, x, y, u, v, w]			
-join-tolerates-shorter-array-second		test	[Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, x]], 2]	[List, [List, 1, 2, x], [List, 3, 4]]			
-join-splices-any-shared-head		test	[Join, [f, a], [f, b], [f, c]]	[f, a, b, c]			
-join-associations-first-seen-order		test	[Join, [Association, [Rule, a, b]], [Association, [Rule, c, d], [Rule, a, f]]]	[Association, [Rule, a, f], [Rule, c, d]]		shape	Same key/value pairs in the same order; Wolfram prints its native <|...|> association literal instead of our Association(...) form.
-a-trailing-integer-argument-joins-at-that-level	Scope		[Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]], 2]	[List, [List, 1, 2, 5, 6], [List, 3, 4, 7, 8]]	A trailing integer argument joins at that level rather than the top level		
-joining-matrices-stacks-their-rows	Scope		[Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, a, b], [List, c, d], [List, 1, 2], [List, 3, 4]]	Joining matrices stacks their rows		
-sets-as-well-as-lists-as-long-as-all-arguments	Scope		[Join, [Set, 1, 2], [Set, 3]]	[Set, 1, 2, 3]	Sets as well as lists, as long as all arguments share the head		
-a-lazy-range-is-spliced-in	Scope		[Join, [List, 1, 2], [Range, 3, 5]]	[List, 1, 2, 3, 4, 5]	A lazy [[Range]] is spliced in		
-with-no-arguments-the-empty-list	Scope		[Join]	[List]	With no arguments, the empty list		
-at-level-2-matrices-are-joined-side-by-side	Scope		[Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]], 2]	[List, [List, a, b, 1, 2], [List, c, d, 3, 4]]	At level 2, matrices are joined side by side		
-ragged-rows-join-at-level-2-too	Scope		[Join, [List, [List, 1], [List, 5, 6]], [List, [List, 2, 3], [List, 7]], [List, [List, 4], [List, 8]], 2]	[List, [List, 1, 2, 3, 4], [List, 5, 6, 7, 8]]	Ragged rows join at level 2 too		
-a-row-missing-from-the-shorter-array-simply-isn	Scope		[Join, [List, [List, x]], [List, [List, 1, 2], [List, 3, 4]], 2]	[List, [List, x, 1, 2], [List, 3, 4]]	A row missing from the shorter array simply isn't merged in		
-any-head-as-long-as-all-the-arguments-share-it	Scope		[Join, [f, a], [f, b]]	[f, a, b]	Any head, as long as all the arguments share it		
-join-a-b-flatten-a-b-1-see-flatten	Properties		[Equal, [Join, [List, 1, 2], [List, 3, 4]], [Flatten, [List, [List, 1, 2], [List, 3, 4]], 1]]	True	$Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]]		
-join-is-associative	Properties		[Equal, [Join, [Join, [List, a, b, c], [List, x, y]], [List, u, v, w]], [Join, [List, a, b, c], [Join, [List, x, y], [List, u, v, w]]]]	True	$Join$ is associative		
-nestlist-function-join-1-1-1-list-x-4	Neat examples		[NestList, [Function, [Block, [Join, _1, _1]], _1], [List, x], 4]	[List, [List, x], [List, x, x], [List, x, x, x, x], [List, x, x, x, x, x, x, x, x], [List, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x]]			
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+join-list-1-2-list-3-4			[Join, [List, 1, 2], [List, 3, 4]]	[List, 1, 2, 3, 4]				
+join-list-1-2-list-3-4-list-5			[Join, [List, 1, 2], [List, 3, 4], [List, 5]]	[List, 1, 2, 3, 4, 5]				
+join-list-a-b-c-list-x-y-list-u-v-w			[Join, [List, a, b, c], [List, x, y], [List, u, v, w]]	[List, a, b, c, x, y, u, v, w]				
+join-tolerates-shorter-array-second		test	[Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, x]], 2]	[List, [List, 1, 2, x], [List, 3, 4]]				
+join-splices-any-shared-head		test	[Join, [f, a], [f, b], [f, c]]	[f, a, b, c]				
+join-associations-first-seen-order		test	[Join, [Association, [Rule, a, b]], [Association, [Rule, c, d], [Rule, a, f]]]	[Association, [Rule, a, f], [Rule, c, d]]			shape	Same key/value pairs in the same order; Wolfram prints its native <|...|> association literal instead of our Association(...) form.
+a-trailing-integer-argument-joins-at-that-level	Scope		[Join, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]], 2]	[List, [List, 1, 2, 5, 6], [List, 3, 4, 7, 8]]	A trailing integer argument joins at that level rather than the top level			
+joining-matrices-stacks-their-rows	Scope		[Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, a, b], [List, c, d], [List, 1, 2], [List, 3, 4]]	Joining matrices stacks their rows			
+sets-as-well-as-lists-as-long-as-all-arguments	Scope		[Join, [Set, 1, 2], [Set, 3]]	[Set, 1, 2, 3]	Sets as well as lists, as long as all arguments share the head			
+a-lazy-range-is-spliced-in	Scope		[Join, [List, 1, 2], [Range, 3, 5]]	[List, 1, 2, 3, 4, 5]	A lazy [[Range]] is spliced in			
+with-no-arguments-the-empty-list	Scope		[Join]	[List]	With no arguments, the empty list			
+at-level-2-matrices-are-joined-side-by-side	Scope		[Join, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]], 2]	[List, [List, a, b, 1, 2], [List, c, d, 3, 4]]	At level 2, matrices are joined side by side			
+ragged-rows-join-at-level-2-too	Scope		[Join, [List, [List, 1], [List, 5, 6]], [List, [List, 2, 3], [List, 7]], [List, [List, 4], [List, 8]], 2]	[List, [List, 1, 2, 3, 4], [List, 5, 6, 7, 8]]	Ragged rows join at level 2 too			
+a-row-missing-from-the-shorter-array-simply-isn	Scope		[Join, [List, [List, x]], [List, [List, 1, 2], [List, 3, 4]], 2]	[List, [List, x, 1, 2], [List, 3, 4]]	A row missing from the shorter array simply isn't merged in			
+any-head-as-long-as-all-the-arguments-share-it	Scope		[Join, [f, a], [f, b]]	[f, a, b]	Any head, as long as all the arguments share it			
+join-aa-bb	Scope	triage	[Join, aa, bb]	Nothing		emit		
+join-a-b-flatten-a-b-1-see-flatten	Properties		[Equal, [Join, [List, 1, 2], [List, 3, 4]], [Flatten, [List, [List, 1, 2], [List, 3, 4]], 1]]	True	$Join(A, B) = Flatten(\{A, B\}, 1)$. See [[Flatten]]			
+join-is-associative	Properties		[Equal, [Join, [Join, [List, a, b, c], [List, x, y]], [List, u, v, w]], [Join, [List, a, b, c], [Join, [List, x, y], [List, u, v, w]]]]	True	$Join$ is associative			
+nestlist-function-join-1-1-1-list-x-4	Neat examples		[NestList, [Function, [Block, [Join, _1, _1]], _1], [List, x], 4]	[List, [List, x], [List, x, x], [List, x, x, x, x], [List, x, x, x, x, x, x, x, x], [List, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x]]				
+nestlist-function-list-1-neg-1-plus-1-1-list-1-5	Neat examples	triage	[NestList, [Function, [Block, [List, _1, [Add, [Negate, _1], 1]]], _1], [List, 1], 5]	[List, [List, 1], [List, [List, 1, 0]], [List, [List, [List, 1, 0], [List, 0, 1]]], [List, [List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 0, 1], [List, 1, 0]]]], [List, [List, [List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 0, 1], [List, 1, 0]]], [List, [List, [List, 0, 1], [List, 1, 0]], [List, [List, 1, 0], [List, 0, 1]]]]], [List, [List, [List, [List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 0, 1], [List, 1, 0]]], [List, [List, [List, 0, 1], [List, 1, 0]], [List, [List, 1, 0], [List, 0, 1]]]], [List, [List, [List, [List, 0, 1], [List, 1, 0]], [List, [List, 1, 0], [List, 0, 1]]], [List, [List, [List, 1, 0], [List, 0, 1]], [List, [List, 0, 1], [List, 1, 0]]]]]]]		ours?		

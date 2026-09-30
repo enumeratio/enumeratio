@@ -1,8 +1,11 @@
-id	section	role	expr	expected	caption
-riemannsiegelz-1p5			[RiemannSiegelZ, 1.5]	-0.595568336782887	
-riemannsiegelz-20p5			[RiemannSiegelZ, 20.5]	0.5993287025147513	
-riemannsiegelz-100		test	[N, [RiemannSiegelZ, 100]]	2.6926970566644637	
-n-riemannsiegelz-1-over-3	Scope		[N, [RiemannSiegelZ, [Rational, 1, 3]]]	-1.2321867790632623	
-n-riemannsiegelz-neg-12	Scope		[N, [RiemannSiegelZ, -12]]	-1.2598888341244696	
-z-0-zeta-1-2	Properties		[N, [RiemannSiegelZ, 0]]	-1.4603545088095868	$Z(0) = \zeta(1/2)$
-fullsimplify-zeta-i-times-t-plus-1-over-2-minus	Properties		[FullSimplify, [Add, [Zeta, [Add, [Multiply, [Complex, 0, 1], t], [Rational, 1, 2]]], [Negate, [Multiply, [RiemannSiegelZ, t], [Power, ExponentialE, [Multiply, [Complex, 0, -1], [RiemannSiegelTheta, t]]]]]]]	[Add, [Zeta, [Add, [Multiply, [Complex, 0, 1], t], [Rational, 1, 2]]], [Negate, [Multiply, [Add, [Multiply, [Complex, 0, -1], [Sin, [RiemannSiegelTheta, t]]], [Cos, [RiemannSiegelTheta, t]]], [RiemannSiegelZ, t]]]]	
+id	section	role	expr	expected	caption	triage	wolfram.note
+riemannsiegelz-1p5			[RiemannSiegelZ, 1.5]	-0.595568336782887			
+riemannsiegelz-20p5			[RiemannSiegelZ, 20.5]	0.5993287025147513			
+riemannsiegelz-100		test	[N, [RiemannSiegelZ, 100]]	2.6926970566644637			
+n-riemannsiegelz-1-over-3	Scope		[N, [RiemannSiegelZ, [Rational, 1, 3]]]	-1.2321867790632623			
+n-riemannsiegelz-neg-12	Scope		[N, [RiemannSiegelZ, -12]]	-1.2598888341244696			
+n-riemannsiegelz-5-over-4-50	Scope	triage	[N, [RiemannSiegelZ, [Rational, 5, 4]], 50]	-0.650818895379209		compare	
+n-riemannsiegelz-4-over-3-20	Scope	triage	[N, [RiemannSiegelZ, [Rational, 4, 3]], 20]	-0.6296391504434825		compare	
+n-riemannsiegelz-4-plus-i	Scope	triage	[N, [RiemannSiegelZ, [Complex, 4, 1]]]	[RiemannSiegelZ, [Complex, {num: "4.0"}, {num: "1.0"}]]		gap	RiemannSiegelZ has no evaluator for a complex argument (only presumably real); extending Z off the critical line is a real numeric feature, out of scope here.
+z-0-zeta-1-2	Properties		[N, [RiemannSiegelZ, 0]]	-1.4603545088095868	$Z(0) = \zeta(1/2)$		
+fullsimplify-zeta-i-times-t-plus-1-over-2-minus	Properties		[FullSimplify, [Add, [Zeta, [Add, [Multiply, [Complex, 0, 1], t], [Rational, 1, 2]]], [Negate, [Multiply, [RiemannSiegelZ, t], [Power, ExponentialE, [Multiply, [Complex, 0, -1], [RiemannSiegelTheta, t]]]]]]]	[Add, [Zeta, [Add, [Multiply, [Complex, 0, 1], t], [Rational, 1, 2]]], [Negate, [Multiply, [Add, [Multiply, [Complex, 0, -1], [Sin, [RiemannSiegelTheta, t]]], [Cos, [RiemannSiegelTheta, t]]], [RiemannSiegelZ, t]]]]			

@@ -4,6 +4,7 @@ elliptice-list-list-1-0-list-0-1	\mathrm{EllipticE}(\bigl\lbrack\bigl\lbrack1, 0
 matrixfunction-elliptice-list-list-1-0-list-0-1	\mathrm{MatrixFunction}(\mathrm{EllipticE}, \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
 list-elliptice-0-elliptice-1	\bigl\lbrack\mathrm{EllipticE}(0), \mathrm{EllipticE}(1)\bigr\rbrack	\bigl\lbrack\mathrm{EllipticE}(0), 1\bigr\rbrack
 list-elliptice-positiveinfinity-elliptice	\bigl\lbrack\mathrm{EllipticE}(\infty), \mathrm{EllipticE}(\tilde\infty)\bigr\rbrack	\bigl\lbrack\tilde\infty, \tilde\infty\bigr\rbrack
+n-elliptice-2-over-3-2-50	N(\mathrm{EllipticE}(\frac{2}{3}, 2), 50)	0.560\,575\,729\,788\,691\,5
 elliptice-0-1	\mathrm{EllipticE}(0, 1)	0
 elliptice-0-0	\mathrm{EllipticE}(0, 0)	0
 elliptice-1	\mathrm{EllipticE}(1)	1

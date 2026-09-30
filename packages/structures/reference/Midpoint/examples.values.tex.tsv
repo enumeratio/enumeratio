@@ -6,6 +6,7 @@ of-two-point-primitives	\mathrm{Midpoint}(\mathrm{Point}(\bigl\lbrack1, 1\bigr\r
 midpoint-list-1-1-list-3-4	\mathrm{Midpoint}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack)	\bigl\lbrack2, \frac{5}{2}\bigr\rbrack
 midpoint-list-1-2-neg-1-3-list-4-2-neg-3-neg-2	\mathrm{Midpoint}(\bigl\lbrack1, 2, -1, 3\bigr\rbrack, \bigl\lbrack4, 2, -3, -2\bigr\rbrack)	\bigl\lbrack\frac{5}{2}, 2, -2, \frac{1}{2}\bigr\rbrack
 midpoint-point-list-1-2-point-list-neg-2-3	\mathrm{Midpoint}(\mathrm{Point}(\bigl\lbrack1, 2\bigr\rbrack), \mathrm{Point}(\bigl\lbrack-2, 3\bigr\rbrack))	\mathrm{Point}(\bigl\lbrack-\frac{1}{2}, \frac{5}{2}\bigr\rbrack)
+midpoint-list-a-b-list-c-d	\mathrm{Midpoint}(\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack)	\bigl\lbrack\mathrm{Midpoint}(a, c), \mathrm{Midpoint}(b, d)\bigr\rbrack
 of-two-matrices	\mathrm{Midpoint}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack4, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack\bigr\rbrack
 of-two-complex-numbers	\mathrm{Midpoint}(1+2i, 3)	2+i
 midpoint-list-1-2-list-neg-3-5	\mathrm{Midpoint}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-3, 5\bigr\rbrack)	\bigl\lbrack-1, \frac{7}{2}\bigr\rbrack

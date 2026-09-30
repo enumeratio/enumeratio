@@ -2,6 +2,7 @@ id	in	back
 a-3-by-4-grid	VertexCount[GridGraph[List[3, 4]]]	
 edge-count-of-a-3-by-4-grid	EdgeCount[GridGraph[List[3, 4]]]	
 list-gridgraph-list-2-2-2-gridgraph-list-2-2-2-2	List[GridGraph[List[2, 2, 2]], GridGraph[List[2, 2, 2, 2]]]	
+gridgraph-list-2-3	GridGraph[List[2, 3]]	
 map-function-vertexeccentricity-gridgraph-list-3	Map[Function[VertexEccentricity[GridGraph[List[3, 3]], Slot[1]]], VertexList[GridGraph[List[3, 3]]]]	[Map, [Function, [VertexEccentricity, [GridGraph, [List, 3, 3]], _1]], [VertexList, [GridGraph, [List, 3, 3]]]]
 ispathgraph-gridgraph-list-1-4	PathGraphQ[GridGraph[List[1, 4]]]	
 ispathgraph-gridgraph-list-4-1	PathGraphQ[GridGraph[List[4, 1]]]	

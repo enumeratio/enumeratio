@@ -7,6 +7,7 @@ integerreverse-1-234-10-6	\mathrm{IntegerReverse}(1\,234, 10, 6)	432\,100
 padded-to-5-digits-first-00123-reversed	\mathrm{IntegerReverse}(123, 10, 5)	32\,100
 listable	\mathrm{IntegerReverse}(\bigl\lbrack12, 345\bigr\rbrack)	\bigl\lbrack21, 543\bigr\rbrack
 integerreverse-list-123-234-345-456	\mathrm{IntegerReverse}(\bigl\lbrack123, 234, 345, 456\bigr\rbrack)	\bigl\lbrack321, 432, 543, 654\bigr\rbrack
+integerreverse-1-234-mixedradixnumerals-list-7	\mathrm{IntegerReverse}(1\,234, \mathrm{MixedRadixNumerals}(\bigl\lbrack7, 11\bigr\rbrack))	4\,321
 a-palindrome-is-its-own-reversal	\mathrm{IntegerReverse}(12\,321)	12\,321
 integerreverse-842	\mathrm{IntegerReverse}(842)	248
 integerreverse-84-200	\mathrm{IntegerReverse}(84\,200)	248

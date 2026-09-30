@@ -1,6 +1,6 @@
 // Rewrite every head's record through the one writer (@enumeratio/entry/node's writeHead),
-// leaving the data as it is: after a merge, or a hand edit that left a file in another style
-// or its rows out of page order.
+// leaving the data as it is: after a merge, or a hand edit that left a file in another style.
+// The writer puts each section's rows together, in page order, keeping their order within it.
 //
 //   node packages/reference/scripts/format-records.ts
 

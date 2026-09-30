@@ -1,8 +1,9 @@
-id	section	role	expr	expected	caption
-isnumeric-pi			[IsNumeric, Pi]	True	
-isnumeric-literal			[IsNumeric, 5]	True	
-isnumeric-sin-sqrt-2			[IsNumeric, [Sin, [Sqrt, 2]]]	True	
-isnumeric-plain-symbol	Scope		[IsNumeric, x]	False	A plain symbol carries no definite numeric value
-isnumeric-sqrt-2	Scope		[IsNumeric, [Sqrt, 2]]	True	Built from numeric literals and a known numeric function
-isnumeric-expr	Scope		[IsNumeric, expr]	False	
-isnumeric-exponentiale	Scope		[IsNumeric, ExponentialE]	True	
+id	section	role	expr	expected	caption	triage
+isnumeric-pi			[IsNumeric, Pi]	True		
+isnumeric-literal			[IsNumeric, 5]	True		
+isnumeric-sin-sqrt-2			[IsNumeric, [Sin, [Sqrt, 2]]]	True		
+isnumeric-plain-symbol	Scope		[IsNumeric, x]	False	A plain symbol carries no definite numeric value	
+isnumeric-sqrt-2	Scope		[IsNumeric, [Sqrt, 2]]	True	Built from numeric literals and a known numeric function	
+isnumeric-expr	Scope		[IsNumeric, expr]	False		
+isnumeric-exponentiale	Scope		[IsNumeric, ExponentialE]	True		
+ismatrix-m-isnumeric	Applications	triage	[IsMatrix, m, IsNumeric]	False		unscanned

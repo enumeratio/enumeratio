@@ -1,6 +1,6 @@
 // Heads we do not have yet, that Wolfram's reference pages reach for.
 //
-// An aspirational example (`aspirational: true` on an entry's example) records a gap in a
+// An aspirational example (`role: aspirational` on an entry's example) records a gap in a
 // head we already document. This is the other half of that backlog: heads with no entry at
 // all, found while porting the examples of Wolfram's pages for heads we do have
 // (`neededBy`), or as the obvious missing sibling of one. Each carries examples in the same
@@ -25,7 +25,7 @@ export interface BacklogHead {
   readonly home: string;
   /** Documented heads whose Wolfram examples reach for this one. */
   readonly neededBy: readonly string[];
-  /** Never `aspirational`-flagged: every example here is a target not yet met. */
+  /** Never `role: aspirational`: every example here is a target not yet met. */
   readonly examples: readonly ReferenceExample[];
 }
 

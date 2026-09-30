@@ -2,4 +2,5 @@ id	in	out
 a-cubic-is-increasing-everywhere	\mathrm{FunctionMonotonicity}(x^3, x)	1
 a-parabola-is-not-globally-monotonic	\mathrm{FunctionMonotonicity}(x^2, x)	\mathrm{FunctionMonotonicity}(x^2, x)
 exp-of-an-affine-argument-is-always-monotonic	\mathrm{FunctionMonotonicity}(e^{x}, x)	1
+map-function-functionmonotonicity-1-x-1-list	\mathrm{Map}(()\mapsto\mathrm{FunctionMonotonicity}(\operatorname{\_1}, x), \bigl\lbrack\mathrm{Ramp}(x)+1, x+\mathrm{Ramp}(x)\bigr\rbrack)	\bigl\lbrack\mathrm{FunctionMonotonicity}(\mathrm{Ramp}(x)+1, x), \mathrm{FunctionMonotonicity}(x+\mathrm{Ramp}(x), x)\bigr\rbrack
 a-restricted-domain-answers-indeterminate	\mathrm{FunctionMonotonicity}(\sqrt{x}, x)	\mathrm{FunctionMonotonicity}(\sqrt{x}, x)

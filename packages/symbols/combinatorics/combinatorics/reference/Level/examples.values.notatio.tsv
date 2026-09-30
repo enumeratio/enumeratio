@@ -10,3 +10,4 @@ level-list-list-list-list-a-3	<Level><List><List><List><List>a</List></List></Li
 level-list-list-list-list-a-4	<Level><List><List><List><List>a</List></List></List></List> 4</Level>	<List>a <List>a</List> <List><List>a</List></List> <List><List><List>a</List></List></List></List>
 level-list-list-list-list-a-5	<Level><List><List><List><List>a</List></List></List></List> 5</Level>	<List>a <List>a</List> <List><List>a</List></List> <List><List><List>a</List></List></List></List>
 level-list-list-list-list-a-list-2-3	<Level><List><List><List><List>a</List></List></List></List> <List>2 3</List></Level>	<List><List>a</List> <List><List>a</List></List></List>
+level-list-list-list-list-a-neg-1	<Level><List><List><List><List>a</List></List></List></List> -1</Level>	<List>a</List>

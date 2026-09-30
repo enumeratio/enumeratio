@@ -8,3 +8,4 @@ divides-11-918-082	divides(11, 918_082)	True
 list-isinteger-5-divides-2-10	[IsInteger(5), divides(2, 10)]	[True, True]
 divides-8-48	divides(8, 48)	True
 divides-12-25	divides(12, 25)	False
+simplify-divides-a-b-times-a-list-a-b-in	simplify(divides(a, b * a), [a, b] in integers)	divides(a, a * b)

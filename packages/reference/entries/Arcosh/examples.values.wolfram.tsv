@@ -7,5 +7,6 @@ arcosh-1	ArcCosh[1]	0		\cosh ^{-1}(1)	0
 integrate-arcosh-x-x-0-1	Integrate[ArcCosh[x], List[x, 0, 1]]	I		\int_0^1 \cosh ^{-1}(x) \, dx	i	
 d-arcosh-x-x	D[ArcCosh[x], x]	Indeterminate				inconclusive
 integrate-arcosh-x-x-nothing-nothing	Integrate[ArcCosh[x], x]	Indeterminate				inconclusive
+arcosh-complexinfinity	ArcCosh[ComplexInfinity]	Infinity				disagree
 arcosh-1-over-2-times-sqrt-1-over-2-times-5	ArcCosh[Times[Rational[1, 2], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]	ArcCosh[Sqrt[(5 - Sqrt[5])/2]/2]		\cosh ^{-1}\left(\frac{1}{2} \sqrt{\frac{1}{2} \left(5-\sqrt{5}\right)}\right)	\cosh ^{-1}\left(\frac{1}{2} \sqrt{\frac{1}{2} \left(5-\sqrt{5}\right)}\right)	
 arcosh-neg-1-over-2-times-sqrt-1-over-2-times-5	ArcCosh[Times[Rational[-1, 2], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]	ArcCosh[-1/2*Sqrt[(5 - Sqrt[5])/2]]		\cosh ^{-1}\left(-\frac{1}{2} \sqrt{\frac{1}{2} \left(5-\sqrt{5}\right)}\right)	\cosh ^{-1}\left(-\frac{1}{2} \sqrt{\frac{1}{2} \left(5-\sqrt{5}\right)}\right)	

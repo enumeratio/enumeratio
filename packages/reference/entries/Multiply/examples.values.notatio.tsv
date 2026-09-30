@@ -2,3 +2,5 @@ id	in	out
 2-times-list-x-y-z	<Multiply>2 <List>x y z</List></Multiply>	<List><Multiply>2 x</Multiply> <Multiply>2 y</Multiply> <Multiply>2 z</Multiply></List>
 list-list-a-b-list-c-d-times-list-x-y	<Multiply><List><List>a b</List> <List>c d</List></List> <List>x y</List></Multiply>	<List><Add><Multiply>a x</Multiply> <Multiply>b y</Multiply></Add> <Add><Multiply>c x</Multiply> <Multiply>d y</Multiply></Add></List>
 interval-neg-1-2-times-interval-2-3	<Multiply><Interval>-1 2</Interval> <Interval>2 3</Interval></Multiply>	<Interval>-3 6</Interval>
+product-1-over-i-plus-2-times-i-plus-1-i-1-n	<Product><Multiply><Divide>1 <Add>i 2</Add></Divide> <Add>i 1</Add></Multiply> <Limits>i 1 n</Limits></Product>	<Divide>2 <Add>n 2</Add></Divide>
+neg-noncommutativemultiply-b-a-plus	<Add><Negate><NonCommutativeMultiply>b a</NonCommutativeMultiply></Negate> <NonCommutativeMultiply>a b</NonCommutativeMultiply></Add>	<ToExpression>0</ToExpression>

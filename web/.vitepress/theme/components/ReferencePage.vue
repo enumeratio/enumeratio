@@ -167,8 +167,9 @@ const targetedExample = computed((): number =>
     : -1,
 );
 const shown = (ex: { role?: string }, i: number): boolean =>
-  // Kept as data, not rendered -- unless a deep link asks for it.
-  ex.role !== "test" || i === targetedExample.value;
+  // Kept as data, not rendered -- unless a deep link asks for it. A row waiting in triage
+  // holds our unsettled answer, so it isn't shown even then.
+  ex.role !== "triage" && (ex.role !== "test" || i === targetedExample.value);
 const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
   const was = entry.value!.examples[cases[activeCase[key] ?? 0]!]!;
@@ -310,9 +311,9 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
           :id="anchorOf(ex)"
           class="ref-example"
           :class="{
-            'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
-            'is-diagnostic': status[i] === 'error' && !ex.aspirational,
-            'is-planned': ex.aspirational,
+            'is-mismatch': status[i] === 'mismatch' && ex.role !== 'aspirational' && !dirty[i],
+            'is-diagnostic': status[i] === 'error' && ex.role !== 'aspirational',
+            'is-planned': ex.role === 'aspirational',
             'is-divergent': divergences(ex).length > 0 && !dirty[i],
             'is-edited': dirty[i],
           }"
@@ -331,12 +332,12 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
             :out-form="entry.outForm ?? 'standard'"
             :evaluate.prop="entry.outEvaluate !== false"
             :expect="entry.outEvaluate === false || ex.volatile ? '' : toJson(ex.expected)"
-            :planned.prop="entry.outEvaluate !== false && !!ex.aspirational"
+            :planned.prop="entry.outEvaluate !== false && ex.role === 'aspirational'"
             :resolveHead.prop="resolveHead"
             @notatio-dirty="onDirty(i, $event)"
             @notatio-assert="onAssert(i, $event)"
           >
-            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge">not yet implemented</span>
+            <span v-if="ex.role === 'aspirational'" slot="aside" class="ref-planned-badge">not yet implemented</span>
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
               slot="aside"

@@ -19,6 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1
 ceil-0	ceil(0)		
 ceil-positiveinfinity	ceil(oo)		
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
+d-ceil-x-x	diff(ceil(SR.var("x")), SR.var("x"))		
 how-many-5-seat-vans-are-needed-to-carry-17	ceil((17 / 5))	4	
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	bool(ceil((7/2)) == (floor((7/2)) + 1))	True	

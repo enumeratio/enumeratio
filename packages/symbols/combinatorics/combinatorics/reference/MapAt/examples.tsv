@@ -1,7 +1,11 @@
-id	section	role	expr	expected	caption
-single-position			[MapAt, f, [List, a, b, c], 2]	[List, a, [f, b], c]	
-mapat-f-list-a-b-c-d-2			[MapAt, f, [List, a, b, c, d], 2]	[List, a, [f, b], c, d]	
-mapat-f-list-a-b-c-d-list-list-1-list-4			[MapAt, f, [List, a, b, c, d], [List, [List, 1], [List, 4]]]	[List, [f, a], b, c, [f, d]]	
-negative-position	Scope		[MapAt, f, [List, a, b, c], -1]	[List, a, b, [f, c]]	A negative position counts from the end
-several-positions	Scope		[MapAt, f, [List, a, b, c], [List, [List, 1], [List, 3]]]	[List, [f, a], b, [f, c]]	A list of positions applies f at each independently
-mapat-f-a-plus-b-plus-c-plus-d-2	Scope		[MapAt, f, [Add, a, b, c, d], 2]	[Add, a, c, d, [f, b]]	
+id	section	role	expr	expected	caption	triage	wolfram.note
+single-position			[MapAt, f, [List, a, b, c], 2]	[List, a, [f, b], c]			
+mapat-f-list-a-b-c-d-2			[MapAt, f, [List, a, b, c, d], 2]	[List, a, [f, b], c, d]			
+mapat-f-list-a-b-c-d-list-list-1-list-4			[MapAt, f, [List, a, b, c, d], [List, [List, 1], [List, 4]]]	[List, [f, a], b, c, [f, d]]			
+negative-position	Scope		[MapAt, f, [List, a, b, c], -1]	[List, a, b, [f, c]]	A negative position counts from the end		
+several-positions	Scope		[MapAt, f, [List, a, b, c], [List, [List, 1], [List, 3]]]	[List, [f, a], b, [f, c]]	A list of positions applies f at each independently		
+mapat-f-a-plus-b-plus-c-plus-d-2	Scope		[MapAt, f, [Add, a, b, c, d], 2]	[Add, a, c, d, [f, b]]			
+mapat-h-list-list-a-b-c-list-d-e-f-g-2	Scope	triage	[MapAt, h, [List, [List, a, b, c], [List, d, e], f, g], 2]	[List, [List, a, b, c], [h, [List, d, ExponentialE]], f, g]		unscanned	
+mapat-h-list-list-a-b-c-list-d-e-f-g-neg-3	Scope	triage	[MapAt, h, [List, [List, a, b, c], [List, d, e], f, g], -3]	[List, [List, a, b, c], [h, [List, d, ExponentialE]], f, g]		unscanned	
+mapat-h-list-list-a-b-c-list-d-e-f-g-list-list-2	Scope	triage	[MapAt, h, [List, [List, a, b, c], [List, d, e], f, g], [List, [List, 2], [List, 1]]]	[List, [h, [List, a, b, c]], [h, [List, d, ExponentialE]], f, g]		unscanned	
+mapat-f-list-a-b-c-d-list-list-1-list-3-list-1	Properties	triage	[MapAt, f, [List, a, b, c, d], [List, [List, 1], [List, 3], [List, 1]]]	[List, [f, a], b, [f, c], d]		gap	position List[1] given TWICE in the position spec should apply f twice at that position (f[f[a]]) per Wolfram; ours applies f once per distinct position (dedupes via a Set), so a repeated position only gets one application

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	triage	wolfram.note
+apply-compose-f-g-h-list-x-y-z	Scope	triage	[Apply, [Compose, f, g, h], [List, x, y, z]]	[Function, [Block, [Apply, [Function, [Block, [Compose, f, g, h]], f, g, h], [List, x, y, z], _1, _2]], _1, _2]	gap	Composition(f,g,h)({x,y,z}) (a curried call on an anonymous composition) doesn't reduce to f(g(h({x,y,z}))); it stays as an unevaluated Function/Block/Apply tangle. A real evaluation gap in how a curried Composition value gets invoked.

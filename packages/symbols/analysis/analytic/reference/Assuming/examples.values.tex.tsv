@@ -1,6 +1,9 @@
 id	in	out
 abs-resolves-once-the-sign-is-known	\mathrm{Assuming}(x\gt0, \vert x\vert)	x
 sign-of-x-plus-sign-of-y-under-opposite-signs	\mathrm{Assuming}(\begin{cases}x\gt0\\y\lt0\end{cases}, \mathrm{sgn}(x)+\mathrm{sgn}(y))	0
+assuming-a-gt-0-list-refine-sqrt-a-pow-2	\mathrm{Assuming}(a\gt0, \bigl\lbrack\mathrm{Refine}(\sqrt{a^2}), \int_{0}^{1}\!x^{a}\, \mathrm{d}x\bigr\rbrack)	\bigl\lbrack a, \frac{1}{a+1}\bigr\rbrack
 assuming-n-in-integers-p-in-primes-n-gt-0	\mathrm{Assuming}(n\in\mathbb{Z}\land p\in\mathbb{P}\land n\gt0, \mathrm{operations})	\mathrm{operations}
+assuming-a-gt-0-list-integrate-1-times-x-plus-a	\mathrm{Assuming}(a\gt0, \bigl\lbrack\int_{0}^{1}\!\frac{1}{x+a}\, \mathrm{d}x, \mathrm{FourierTransform}(\frac{1}{x^2+a}, x, w)\bigr\rbrack)	\bigl\lbrack\ln(a+1)-\ln(a), \mathrm{FourierTransform}(\frac{1}{x^2+a}, x, w)\bigr\rbrack
 the-assumption-does-not-leak	\bigl\lbrack\mathrm{Assuming}(z\gt0, \mathrm{sgn}(z)), \mathrm{sgn}(z)\bigr\rbrack	\bigl\lbrack1, \mathrm{sgn}(z)\bigr\rbrack
 assuming-x-gt-eq-0-assuming-y-lt-0-refine-sqrt-x	\mathrm{Assuming}(x\ge0, \mathrm{Assuming}(y\lt0, \mathrm{Refine}(\sqrt{x^2y^2})))	-(xy)
+assuming-m-mod-2-eq-0-simplify-cos-k-times-pi	\mathrm{Assuming}(m\bmod2=0, \mathrm{Simplify}(\cos(k\pi)^{m}, k\in\mathbb{Z}))	((-1)^{k})^{m}

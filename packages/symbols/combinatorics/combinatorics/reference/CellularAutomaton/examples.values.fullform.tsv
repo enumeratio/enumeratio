@@ -4,5 +4,7 @@ cellularautomaton-30-list-0-0-0-1-0-0-0-2	CellularAutomaton[30, List[0, 0, 0, 1,
 rule-90-explicit-init	CellularAutomaton[90, List[List[1, 0, 0], 0], 2]
 cellularautomaton-30-list-list-1-0-2	CellularAutomaton[30, List[List[1], 0], 2]
 cellularautomaton-30-list-1-0-0-0-0-0-2	CellularAutomaton[30, List[1, 0, 0, 0, 0, 0], 2]
+grid-cellularautomaton-73-list-list-1-0-4	Grid[CellularAutomaton[73, List[List[1], 0], 4]]
+grid-cellularautomaton-30-list-1-0-0-0-0-0-2	Grid[CellularAutomaton[30, List[1, 0, 0, 0, 0, 0], 2]]
 cellularautomaton-30-list-1-0-1-1-3	CellularAutomaton[30, List[1, 0, 1, 1], 3]
 cellularautomaton-90-list-list-1-0-2	CellularAutomaton[90, List[List[1], 0], 2]
