@@ -1,21 +1,22 @@
 ---
-name: DoubleRises
+name: Dinv
 domain: Dyck path statistics
-signature: DoubleRises(path)
-summary: Occurrences of two consecutive up steps.
+signature: Dinv(path)
+summary: The dinv statistic, read from the area sequence.
 catalog:
   - system: findstat
-    identity: St000024
-    url: https://www.findstat.org/St000024
+    identity: St000006
+    url: https://www.findstat.org/St000006
     on: DyckPath
 statOn:
   - DyckPath
 signatures:
-  - call: DoubleRises(path)
-    description: Occurrences of two consecutive up steps.
-    library: enumeratio-statistics
+  - call: Dinv(path)
+    description: The dinv statistic, read from the area sequence.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- dinv = #{i<j : a_i=a_j} + #{i<j : a_i=a_j+1}; the two counts never overlap (a_i=a_j and a_i=a_j+1 can't both hold), so this is one pass over the pairs.

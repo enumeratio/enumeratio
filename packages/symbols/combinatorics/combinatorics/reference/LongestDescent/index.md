@@ -1,14 +1,14 @@
 ---
-name: LongestAscent
+name: LongestDescent
 domain: Dyck path statistics
-signature: LongestAscent(path)
-summary: The longest run of consecutive up steps.
+signature: LongestDescent(path)
+summary: The longest run of consecutive down steps.
 statOn:
   - DyckPath
 signatures:
-  - call: LongestAscent(path)
-    description: The longest run of consecutive up steps.
-    library: enumeratio-statistics
+  - call: LongestDescent(path)
+    description: The longest run of consecutive down steps.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

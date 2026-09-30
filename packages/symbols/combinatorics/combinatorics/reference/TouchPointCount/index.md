@@ -8,7 +8,7 @@ formerly:
 signatures:
   - call: TouchPointCount(path)
     description: Points where the path touches the axis — the returns.
-    library: enumeratio-statistics
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

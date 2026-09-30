@@ -1,22 +1,25 @@
 ---
-name: Dinv
+name: Returns
 domain: Dyck path statistics
-signature: Dinv(path)
-summary: The dinv statistic, read from the area sequence.
+signature: Returns(path)
+summary: Points where the path comes back to height 0.
 catalog:
   - system: findstat
-    identity: St000006
-    url: https://www.findstat.org/St000006
+    identity: St000011
+    url: https://www.findstat.org/St000011
     on: DyckPath
 statOn:
+  - ColoredMotzkinPath
+  - DelannoyPath
   - DyckPath
+  - KDyckPath
+  - MotzkinPath
 signatures:
-  - call: Dinv(path)
-    description: The dinv statistic, read from the area sequence.
-    library: enumeratio-statistics
+  - call: Returns(path)
+    description: Points where the path comes back to height 0.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
-- dinv = #{i<j : a_i=a_j} + #{i<j : a_i=a_j+1}; the two counts never overlap (a_i=a_j and a_i=a_j+1 can't both hold), so this is one pass over the pairs.

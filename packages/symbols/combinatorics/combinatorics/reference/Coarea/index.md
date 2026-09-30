@@ -1,17 +1,17 @@
 ---
-name: Hills
+name: Coarea
 domain: Dyck path statistics
-signature: Hills(path)
-summary: Peaks at height 1 — an up step from the axis immediately followed by a down step.
+signature: Coarea(path)
+summary: The complement of the area within the enclosing triangle.
 statOn:
   - DyckPath
-  - SchroederPath
 signatures:
-  - call: Hills(path)
-    description: Peaks at height 1 — an up step from the axis immediately followed by a down step.
-    library: enumeratio-statistics
+  - call: Coarea(path)
+    description: The complement of the area within the enclosing triangle.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 
 - Defined over `DyckPath` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
 - Takes a `DyckPath` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.
+- Defined against the n(n+1)/2 triangle for a path of 2n steps.

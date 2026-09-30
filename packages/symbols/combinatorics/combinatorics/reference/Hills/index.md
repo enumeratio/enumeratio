@@ -1,23 +1,15 @@
 ---
-name: Returns
+name: Hills
 domain: Dyck path statistics
-signature: Returns(path)
-summary: Points where the path comes back to height 0.
-catalog:
-  - system: findstat
-    identity: St000011
-    url: https://www.findstat.org/St000011
-    on: DyckPath
+signature: Hills(path)
+summary: Peaks at height 1 — an up step from the axis immediately followed by a down step.
 statOn:
-  - ColoredMotzkinPath
-  - DelannoyPath
   - DyckPath
-  - KDyckPath
-  - MotzkinPath
+  - SchroederPath
 signatures:
-  - call: Returns(path)
-    description: Points where the path comes back to height 0.
-    library: enumeratio-statistics
+  - call: Hills(path)
+    description: Peaks at height 1 — an up step from the axis immediately followed by a down step.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

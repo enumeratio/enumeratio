@@ -1,14 +1,17 @@
 ---
-name: InteriorReturns
+name: Area
 domain: Dyck path statistics
-signature: InteriorReturns(path)
-summary: Returns to height 0 strictly before the end.
+signature: Area(path)
+summary: "The area between the path and the axis: the total of the heights after each step."
 statOn:
+  - DelannoyPath
   - DyckPath
+  - MotzkinPath
+  - PythagoreanTriple
 signatures:
-  - call: InteriorReturns(path)
-    description: Returns to height 0 strictly before the end.
-    library: enumeratio-statistics
+  - call: Area(path)
+    description: "The area between the path and the axis: the total of the heights after each step."
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

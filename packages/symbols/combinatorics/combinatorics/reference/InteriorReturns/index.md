@@ -1,14 +1,14 @@
 ---
-name: LongestDescent
+name: InteriorReturns
 domain: Dyck path statistics
-signature: LongestDescent(path)
-summary: The longest run of consecutive down steps.
+signature: InteriorReturns(path)
+summary: Returns to height 0 strictly before the end.
 statOn:
   - DyckPath
 signatures:
-  - call: LongestDescent(path)
-    description: The longest run of consecutive down steps.
-    library: enumeratio-statistics
+  - call: InteriorReturns(path)
+    description: Returns to height 0 strictly before the end.
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

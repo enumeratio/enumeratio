@@ -26,7 +26,7 @@ statOn:
 signatures:
   - call: Height(path)
     description: The greatest height the path reaches.
-    library: enumeratio-statistics
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 

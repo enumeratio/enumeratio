@@ -13,7 +13,7 @@ statOn:
 signatures:
   - call: Bounce(path)
     description: The bounce statistic, which walks the path bouncing off its own peaks.
-    library: enumeratio-statistics
+    library: enumeratio-combinatorics
     type: (dyck_path) -> number
 ---
 
